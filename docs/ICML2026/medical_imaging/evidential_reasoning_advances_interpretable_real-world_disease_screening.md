@@ -41,32 +41,28 @@ EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 
 ## 方法详解
 
 ### 整体框架
-两阶段。**阶段 1 双知识库构建**：把训练集切成「建库子集」$\mathcal X^B_{N/P}$ 与「训练子集」$\mathcal X^R_{N/P}$；用冻结的 foundation model $F_\theta$ 抽中间层 patch 特征，再经局部聚合 $\mathcal G_{agg}$ 形成区域特征集合 $\mathcal S_{N/P}$；用 greedy coreset subsampling（最小化 $\max_m\min_n\|m-n\|_2$ 的 NP-hard 近似）压成紧凑知识库 $\mathcal K_N,\mathcal K_P$。
-
-**阶段 2 推理**：给查询图 $\mathbf x$，先抽特征图 $\mathbf Z=\mathcal G_{agg}(F_\theta(\mathbf x))\in\mathbb R^{h\times w\times d}$；每个 patch query $\mathbf Z(i,j)$ 在 $\mathcal K_N,\mathcal K_P$ 各做 $k$-NN 得到证据 $\mathbf E_N,\mathbf E_P\in\mathbb R^{h\times w\times k\times d}$；进入「证据感知推理」模块逐层 cross-attention（query ↔ 证据）+ self-attention（patch 间精化）；最后两支的 [CLS] 拼接送 MLP 得预测 $\hat y$。同时提供 **training-free 变体**：用对比检索 $\mathbf M = \text{ReLU}(\mathbf M_N - \mathbf M_P)$ 直接 pool 出分数。
+EviScreen 把疾病筛查重塑成「先检索证据、再循证推理」的两段式流程，对应两个阶段。**阶段 1 构建双知识库**：把训练集切成建库子集 $\mathcal X^B_{N/P}$ 和训练子集 $\mathcal X^R_{N/P}$，用冻结的 foundation model $F_\theta$ 抽中间层 patch 特征、经局部聚合 $\mathcal G_{agg}$ 得到区域特征集合 $\mathcal S_{N/P}$，再用 greedy coreset 子采样压成紧凑的正常库 $\mathcal K_N$ 和病理库 $\mathcal K_P$。**阶段 2 推理**：查询图 $\mathbf x$ 抽出特征图 $\mathbf Z=\mathcal G_{agg}(F_\theta(\mathbf x))\in\mathbb R^{h\times w\times d}$，每个 patch 在两库各做 $k$-NN 检索拿到证据 $\mathbf E_N,\mathbf E_P\in\mathbb R^{h\times w\times k\times d}$，证据感知推理模块逐层把证据融进 query 特征，两支的 [CLS] 拼接送 MLP 得预测 $\hat y$；同时它还提供一个不训练任何参数的对比检索变体，用 $\mathbf M = \text{ReLU}(\mathbf M_N - \mathbf M_P)$ 直接 pool 出分数。
 
 ### 关键设计
 
-1. **双 coreset 知识库 (Dual Knowledge Bank)**:
+**1. 双 coreset 知识库：用可扩展记忆同时表征正常与病理形态。**
 
-    - 功能：用紧凑、可扩展的方式同时表征「正常区域」与「病理区域」的多样形态。
-    - 核心思路：在 $\mathcal X^B_N,\mathcal X^B_P$ 上抽 patch 特征→局部聚合→greedy coreset 子采样，得到 $\mathcal K_N,\mathcal K_P$。优化目标 $\mathcal K^*=\arg\min_{\mathcal K\subset\mathcal S}\max_{m\in\mathcal S}\min_{n\in\mathcal K}\|m-n\|_2$ 是经典 NP-hard 问题，迭代贪心近似得到覆盖良好的子集。
-    - 设计动机：相比 ProtoPNet 类「固定 $K$ 个学习原型」，coreset 的容量可随数据自由扩展，能覆盖现实临床里千变万化的病灶形态；且病理图本身「正常 + 病灶混合」的脏数据用 coreset 而非分类预设 prototype 才能容纳。
+ProtoPNet 类原型方法只学固定 $K$ 个抽象原型，覆盖不了真实临床里千变万化的病灶形态，而病理图本身就是「正常 + 病灶」混在一起的脏数据，硬塞进预设类别的 prototype 容纳不下。EviScreen 改用 coreset：在建库子集 $\mathcal X^B_N,\mathcal X^B_P$ 上抽 patch 特征、局部聚合，再做贪心子采样得到两个库。子采样的优化目标是 $\mathcal K^*=\arg\min_{\mathcal K\subset\mathcal S}\max_{m\in\mathcal S}\min_{n\in\mathcal K}\|m-n\|_2$，即让原集合里每个点到所选子集的最近距离都尽量小——这是经典的 NP-hard 覆盖问题，用迭代贪心近似得到一个覆盖良好的紧凑子集。相比固定原型，coreset 容量能随数据自由扩张，新病例可以不断加进来，这正是 prototype 做不到的可扩展性。
 
-2. **证据感知推理 (Evidence-Aware Reasoning)**:
+**2. 证据感知推理：把检索到的证据真正写进特征，让预测可追溯。**
 
-    - 功能：把每个 patch 检索到的 $k$ 个证据向量真正融进 query 的特征，输出考虑了「与历史相似病例对比」的新表示。
-    - 核心思路：每层先做 cross-attention：$\mathbf T^\ell_N(i,j)=\operatorname{softmax}\big(\mathbf Z^\ell_N(i,j)\mathbf E_N(i,j)^\top/\sqrt d\big)\mathbf E_N(i,j)$；再 reshape 并做 patch 间 self-attention 实现 inter-patch refinement；正常分支 $\mathbf Z_N$ 与病理分支 $\mathbf Z_P$ 并行，最后 $\hat y=\text{MLP}([\mathbf Z_N^{\text{CLS}};\mathbf Z_P^{\text{CLS}}])$。
-    - 设计动机：cross-attention 把「外部证据」明确写进特征图，使每个预测都有可追溯的 NN 证据（回溯式可解释性）；分两支保留「与正常相似 vs 与病理相似」的二维信号，比单一相似度更接近临床「鉴别诊断」直觉。
+光检索出 $k$ 个相似证据还不够，得让它们影响当前判断。每层先做 cross-attention，让 query patch 去聚合自己检索到的证据：
 
-3. **对比检索异常图 (Training-Free Variant)**:
+$$\mathbf T^\ell_N(i,j)=\operatorname{softmax}\big(\mathbf Z^\ell_N(i,j)\mathbf E_N(i,j)^\top/\sqrt d\big)\mathbf E_N(i,j)$$
 
-    - 功能：在不训练任何参数的情况下给出像素级异常定位，作为强 baseline 与方法的可解释性基础。
-    - 核心思路：每 patch 算到两库 $k$-NN 的平均距离 $\mathbf M_N,\mathbf M_P\in\mathbb R^{h\times w}$，异常图为 $\mathbf M(i,j)=\text{ReLU}(\mathbf M_N(i,j)-\mathbf M_P(i,j))$ — 即「离正常远但离病理近」的区域才高亮。最终 score 由 $\mathbf M$ pool 得到。
-    - 设计动机：纯 PatchCore 类只用 $\mathbf M_N$，会把所有罕见正常变异都误标；用「正常—病理」差分能滤掉非病理的偏离，定位更聚焦；也直接给出与 Grad-CAM 在机制上完全不同的、内生的定位图。
+聚合后 reshape 回特征图、再做 patch 间 self-attention 实现 inter-patch refinement，补上上下文一致性。正常分支 $\mathbf Z_N$ 和病理分支 $\mathbf Z_P$ 全程并行，最后 $\hat y=\text{MLP}([\mathbf Z_N^{\text{CLS}};\mathbf Z_P^{\text{CLS}}])$。这样每个预测都背着一组可追溯的近邻证据（哪几个历史病例支持了当前判断，即回溯式可解释性）；保留正常、病理两支而非单一相似度，等于保留了「这块像正常 vs 像病理」的二维信号，更贴近临床鉴别诊断的直觉。
+
+**3. 对比检索异常图：不训练参数也能给出内生定位。**
+
+PatchCore 这类纯偏离式方法只用正常库 $\mathbf M_N$，会把所有罕见的正常变异都误标成异常。EviScreen 的 training-free 变体改用两库差分：每个 patch 算到两库 $k$-NN 的平均距离 $\mathbf M_N,\mathbf M_P\in\mathbb R^{h\times w}$，异常图取 $\mathbf M(i,j)=\text{ReLU}(\mathbf M_N(i,j)-\mathbf M_P(i,j))$，只有「离正常远、却离病理近」的区域才会高亮，最终分数由 $\mathbf M$ pool 得到。这一差分能滤掉非病理的偏离，定位更聚焦，而且整张异常图来自检索本身、与 Grad-CAM 那种事后梯度可视化机制完全不同，是内生的解释。它既是方法可解释性的基础，本身又是一个不含任何可学习参数的强 baseline。
 
 ### 损失函数 / 训练策略
-训练侧：仅训练「证据感知推理模块」（cross/self-attention + MLP），foundation model 冻结，loss 为二分类 BCE。training-free 变体则完全无可学习参数。$k$、知识库大小、cross-attention 层数 $L$ 是主要超参。
+只训练证据感知推理模块（cross/self-attention + MLP），foundation model 全程冻结，目标为二分类 BCE；training-free 变体完全无可学习参数。主要超参是检索的 $k$、知识库大小和 cross-attention 层数 $L$。
 
 ## 实验关键数据
 

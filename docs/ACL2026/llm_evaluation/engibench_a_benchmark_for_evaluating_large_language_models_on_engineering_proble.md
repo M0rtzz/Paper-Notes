@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EngiBench 共 1,760 题，分布在 Systems & Control (939) / Physical & Structural (354) / Chemical & Biological (467) 三大工程子领域。Level 1 (单步公式套用) / Level 2 (多步带约束推理) / Level 3 (开放式建模)。每题都另外生成 perturbed / knowledge-enhanced / math-abstraction 三个变体 (Level 3 只造 perturbed)。评测协议：Level 1/2 二元打分 + 多模型交叉校验 + 人工抽查；Level 3 用专家定 rubric (4 维各打 1–10 分) + LLM 评分 + 人工校准 + 与竞赛获奖人 / 顶尖学生提交对照。
+
+EngiBench 把"会不会解工程问题"拆成一张三轴正交的诊断网：纵向按认知复杂度分三档难度，横向给每道题派生受控变体定位失败来源，最里层用四个工程能力维度组织评分。具体地，1,760 道题分布在 Systems & Control (939) / Physical & Structural (354) / Chemical & Biological (467) 三大子领域，每题归入 Level 1 (单步公式)、Level 2 (多步带约束推理) 或 Level 3 (开放式建模)，并额外生成 perturbed / knowledge-enhanced / math-abstraction 变体 (Level 3 只造 perturbed)。模型读入工程问题、给出自由作答，再由相应协议判分——Level 1/2 走二元打分 + 多模型交叉校验 + 人工抽查，Level 3 走专家 rubric (四维各打 1–10) + LLM 评分 + 人工校准，并与竞赛获奖人 / 顶尖学生的提交对照得到 human upper bound。
 
 ### 关键设计
 
-1. **三层难度的认知阶梯 (Hierarchical Difficulty)**：
+**1. 三层难度的认知阶梯 (Hierarchical Difficulty)：把三种本质不同的能力从平均分里分离出来。**
 
-    - 功能：让评测把 "知识检索"、"约束下推理" 与 "开放式建模" 三种本质不同的能力分开测，而不是混在一个平均分里。
-    - 核心思路：Level 1 任务自包含、单步公式即可解 (如直接套用 $V=IR$)；Level 2 要求多步推理 + 单位/物理量约束 + 变量耦合 (如计算电路总阻先算支路再合并)；Level 3 直接采自 CUMCM / MCM-ICM / APMCM 等数模竞赛真题，开放式、无唯一解、需在不确定与冲突目标下作 trade-off，43 题全部带官方 rubric。
-    - 设计动机：单一指标 (如 accuracy) 在多能力维度下会掩盖差异——Level 1 上 GPT-4.1 与 Qwen2.5-7B 都能拿 80%+，但到了 Level 3 状元生 8.74 而 SOTA 模型最多到 7 出头，差距只有在合适的难度切片下才显形。
+工程能力其实是几种异质能力的叠加，单一 accuracy 会把它们糊成一团——Level 1 上 GPT-4.1 与 Qwen2.5-7B 都能拿 80%+，差异完全看不出来。EngiBench 借 Bloom's Taxonomy 把任务切成三层：Level 1 自包含、单步公式即可 (如直接套用 $V=IR$)；Level 2 要求多步推理叠加单位 / 物理量约束与变量耦合 (如先算支路阻再合并求总阻)；Level 3 直接取自 CUMCM / MCM-ICM / APMCM 数模竞赛真题，开放、无唯一解、需在不确定与冲突目标下作 trade-off，43 题全部带官方 rubric。只有切到 Level 3，"状元生 8.74 vs SOTA 模型 7 出头"这条真实差距才显形。
 
-2. **三种受控变体的失败归因 (Controlled Variants)**：
+**2. 三种受控变体的失败归因 (Controlled Variants)：把"答错"分解到记忆 / 知识 / 数学 / 工程上下文四个潜在病灶。**
 
-    - 功能：把 "模型答错" 这件事分解到 "记忆 / 知识 / 数学 / 工程上下文" 四个潜在原因上。
-    - 核心思路：每道 Level 1/2 题派生三个变体——(a) **Perturbed**：保留结构但改数字 + 改语境措辞，用于检测污染 / 鲁棒性；(b) **Knowledge-enhanced**：在题目中补上必要公式 / 常量 / 定义，把 "知识漏洞" 与 "推理失败" 拆开；(c) **Math abstraction**：去掉工程上下文、只保留数学结构，用于隔离纯数学能力。模型在四个变体上的得分轨迹直接揭示 "瓶颈到底在哪一层"。
-    - 设计动机：传统 benchmark 只报准确率，无法回答 "这是没听过这个公式 / 还是工程语义没理解 / 还是算错了" 三类失败；受控变体让评测从 "打分" 升级到 "诊断"，给后续模型改进提供可执行的方向。
+传统 benchmark 只报一个准确率，回答不了"是没见过这个公式、还是工程语义没读懂、还是单纯算错"。EngiBench 给每道 Level 1/2 题派生三个变体来做受控对照：**Perturbed** 保留结构但改数字 + 改措辞，检测污染与鲁棒性；**Knowledge-enhanced** 在题中补全必要公式 / 常量 / 定义，把"知识漏洞"与"推理失败"拆开；**Math abstraction** 剥掉工程上下文只留数学骨架，隔离纯数学能力。模型在四个版本上的得分轨迹直接指出瓶颈落在哪一层，评测就从"打分"升级成了"诊断"。
 
-3. **rubric-based 开放式评测协议 (Level 3 Rubric Scoring)**：
+**3. rubric-based 开放式评测协议 (Level 3 Rubric Scoring)：让开放式建模也能与人类专家同尺度对比。**
 
-    - 功能：让 LLM 能被公平地评测开放式工程建模任务，与人类专家在同一标尺上对比。
-    - 核心思路：从近 1000 道数模竞赛题中挑出 43 道带官方 rubric 的题目，由 20 位 PhD + 工程从业者把官方评分标准拆解到四个工程能力维度 (信息提取 / 领域推理 / 多目标决策 / 不确定性处理)；评分由 LLM judge 按 rubric 打分，再由人工抽查校准；同时收集竞赛获奖人答卷 (原题) 和顶尖学生解答 (扰动版) 作 human upper bound。
-    - 设计动机：preference-based (MT-Bench) 主观偏置大、reference-based 又不适用于开放式问题；rubric-based 由人类专家先把 "什么是好答案" 显式拆成可打分维度，既保留开放性、又有可复现的标准。
+preference-based 评分 (MT-Bench) 主观偏置大、reference-based 又不适用于无唯一解的开放题，所以 Level 3 走 rubric 路线：从近千道竞赛题里挑出 43 道带官方 rubric 的，由 20 位 PhD 与工程从业者把官方评分标准拆解到信息提取 / 领域推理 / 多目标决策 / 不确定性处理四个工程能力维度；打分由 LLM judge 按 rubric 给分、再经人工抽查校准，同时收集竞赛获奖人答卷 (原题) 与顶尖学生解答 (扰动版) 作为人类上界。专家先把"什么算好答案"显式拆成可打分维度，既保住了开放性，又拿到了可复现的标尺。
 
 ### 损失函数 / 训练策略
-本论文不训模型，本质是 benchmark 论文；唯一的 "训练" 体现在数据构造阶段对 LLM 辅助筛题 / 翻译 / 变体生成的 pipeline (Engineering Relevance Filtering → Discipline Classification → Difficulty Assignment → Variant Generation → Expert Validation)，所有关键决策均有人类专家把关。
+
+本文是纯评测定位、不训练任何模型，唯一涉及 LLM 的地方是数据构造流水线：Engineering Relevance Filtering → Discipline Classification → Difficulty Assignment → Variant Generation → Expert Validation，用 LLM 辅助筛题 / 翻译 / 生成变体，但每一步关键决策都有人类专家把关。
 
 ## 实验关键数据
 

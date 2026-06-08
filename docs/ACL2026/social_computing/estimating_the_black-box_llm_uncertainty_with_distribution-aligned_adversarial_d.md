@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段：(1) **DisAAD 训练**——构造蒸馏数据集 $\mathcal{D}_{\text{distill}}$：对每个 prompt $\bm{x}^{(i)}$ 多次查询黑盒 $\mathcal{M}_{\text{B}}$ 得到响应池 $D_{\text{B}}^{(i)}$，按 mutual semantic consistency 取 Top-$M$ 作为 high-probability 区域代表；用 LoRA 小代理 $\mathcal{M}_p$ 做生成器、新加一个判别器 $\mathcal{M}_D$，交替优化让代理输出在 token 级 + 序列级都与黑盒难以区分。(2) **Proxy-guided UQ 推理**——给定目标模型的响应 $\bm{y}_B$，让代理模型 teacher-forcing 重放这个响应，抽取每个位置的 logits 上 top-K token，作为 Dirichlet 分布的证据参数 $\alpha_k=\text{ReLU}(\bm{z}_{t,k})$，再算 AU、EU 与综合可靠性 $R(u_t)=-\text{AU}(u_t)\cdot \text{EU}(u_t)$。
+
+DisAAD 要解决的是"GPT-4 / Claude 这类只暴露 API 的黑盒模型怎么做实时不确定性估计"。它的核心反转是：既然摸不到黑盒的内部 logits，就训练一个仅占目标模型 1% 体积的小代理模型去精准模仿黑盒"会答什么"，再让这个内部完全可见的代理替黑盒暴露 logits。整条流程分两阶段——先用"分布对齐采样 + 对抗蒸馏"把 LoRA 小代理对齐到黑盒的高概率输出区域，推理时让代理 teacher-forcing 重放目标模型给出的真实响应、从逐 token 的 logits 借证据学习拆出认知（EU）与偶然（AU）两种不确定性，单次响应即可给出实时估计。
 
 ### 关键设计
 
-1. **分布对齐式数据采样 (Distribution-Aligned Sampling)**：
+**1. 分布对齐式数据采样：把蒸馏数据精确指向黑盒"真正会输出"的高概率区域。**
 
-    - 功能：在不爆预算的前提下，把蒸馏数据精确指向 "黑盒真正会输出" 的高概率区域，而非 long-tail 噪声。
-    - 核心思路：对每个 prompt 多次查询 $\mathcal{M}_B$ 得到候选池 $D_B^{(i)}$，再按响应之间的 mutual semantic consistency 排序，只保留 Top-$M$ 条作为 high-probability mass 的代表，构造 $\{(\bm{x}^{(i)}, \bm{y}_B^{(i,j)})\}$；prompt 来源同时覆盖开放领域对话和任务专项数据，保证泛化。
-    - 设计动机：黑盒模型的真实输出分布是长尾的，直接全收会引入噪声并稀释训练信号；语义一致性挑选等价于经验地估计 high-probability 区域，让代理只需对齐 "黑盒会真心给的回答" 而不是它偶尔的失误。
+黑盒模型的真实输出分布是长尾的，如果对一个 prompt 把所有采样响应全收进蒸馏集，long-tail 噪声会稀释训练信号、逼代理去对齐黑盒偶尔的失误。本文的做法是对每个 prompt $\bm{x}^{(i)}$ 多次查询黑盒 $\mathcal{M}_B$ 得到候选池 $D_B^{(i)}$，再按响应之间的 mutual semantic consistency 排序，只保留 Top-$M$ 条作为 high-probability mass 的代表，构造蒸馏对 $\{(\bm{x}^{(i)}, \bm{y}_B^{(i,j)})\}$；prompt 来源同时覆盖开放领域对话与任务专项数据以保证泛化。语义一致性筛选等价于经验地估计高概率区域，让代理只需对齐"黑盒会真心给的回答"而非它的离群失误，既省查询预算又不引噪声。
 
-2. **生成器-判别器对抗蒸馏 (Adversarial Distillation)**：
+**2. 生成器-判别器对抗蒸馏：让小代理在 token 级与序列级双重对齐，而非只学 next-token 平均。**
 
-    - 功能：让小代理在 token 级和序列级双重对齐到目标分布，超越单纯 next-token cross-entropy 能给的对齐精度。
-    - 核心思路：代理 $\mathcal{M}_p$ 用 LoRA $W=W_0+BA$ 训练，目标 $\min_\theta \mathcal{L}(\theta)=\mathcal{L}_{\text{task}}(\theta)+\lambda \mathcal{L}_{\text{reg}}(\theta)$。其中 $\mathcal{L}_{\text{task}}=-\frac{1}{NM}\sum_{i,j}\sum_t \log P_\theta(y_t\mid y_{<t})$ 是标准 token-level 蒸馏；$\mathcal{L}_{\text{reg}}=-\frac{1}{NM}\sum_{i,j}\log\mathcal{M}_D(\bm{x}^{(i)}, \bm{y}_P^{(i,j)}; \phi)$ 鼓励代理生成的响应骗过判别器；判别器同时按 $\mathcal{L}_D(\phi)$ 把代理输出与黑盒真响应区分开来。两者交替更新到判别器无法区分为止。
-    - 设计动机：纯 next-token loss 在序列层面缺约束，代理容易学到 token-level 平均却在整体语义上漂离；加判别器把对齐压力推到 sequence-level，让代理的 "整段输出风格" 也贴近黑盒，最终代理重放黑盒响应时 logits 才有判别力。
+纯 next-token cross-entropy 只在逐 token 上对齐，序列层面缺约束，代理容易 token 级平均却在整体语义上漂离——这样它重放黑盒响应时 logits 没有判别力。DisAAD 让代理 $\mathcal{M}_p$ 用 LoRA $W=W_0+BA$ 充当生成器，并新加一个判别器 $\mathcal{M}_D$。代理的训练目标是 $\min_\theta \mathcal{L}(\theta)=\mathcal{L}_{\text{task}}(\theta)+\lambda \mathcal{L}_{\text{reg}}(\theta)$，其中 $\mathcal{L}_{\text{task}}=-\frac{1}{NM}\sum_{i,j}\sum_t \log P_\theta(y_t\mid y_{<t})$ 是标准 token 级蒸馏，$\mathcal{L}_{\text{reg}}=-\frac{1}{NM}\sum_{i,j}\log\mathcal{M}_D(\bm{x}^{(i)}, \bm{y}_P^{(i,j)}; \phi)$ 鼓励代理生成的响应骗过判别器；判别器则按 $\mathcal{L}_D(\phi)$ 把代理输出与黑盒真响应区分开。两者交替更新到判别器无法区分为止，从而把对齐压力推到 sequence-level，让代理的"整段输出风格"也贴近黑盒，重放黑盒响应时 logits 才具备 UQ 所需的判别力。
 
-3. **证据深度学习的双重不确定性 (AU + EU via Dirichlet)**：
+**3. 证据深度学习的双重不确定性：把代理重放时的 logits 拆成认知与偶然两个可解释维度。**
 
-    - 功能：把代理模型重放黑盒响应时暴露的 logits 转换成可解释的 epistemic + aleatoric 两个不确定性指标。
-    - 核心思路：在代理重放每个 token 时取 top-K logits 做 ReLU 转换为证据 $\alpha_k=\text{ReLU}(\bm{z}_{t,k})$，记 $\alpha_0=\sum_k \alpha_k$；偶然不确定性 $\text{AU}(u_t)=-\sum_k \frac{\alpha_k}{\alpha_0}(\psi(\alpha_k+1)-\psi(\alpha_0+1))$ 反映输出分布的尖峭程度；认知不确定性 $\text{EU}(u_t)=\frac{K}{\sum_k(\alpha_k+1)}$ 反映总证据强度；综合可靠性 $R(u_t)=-\text{AU}(u_t)\cdot\text{EU}(u_t)$。Figure 2 的例子里，错答 "France" 会被识别为 High EU + Low AU (知识缺口 + 单一回答倾向)，对答 "America" 是 Low EU + Low AU (确定且唯一)。
-    - 设计动机：softmax 归一化会丢失绝对证据尺度，直接用概率算 entropy 无法区分 "稀疏证据下的高确信" 和 "丰富证据下的高确信"；logits + Dirichlet 把绝对尺度保留下来，让 EU (知识维度) 与 AU (数据维度) 解耦——这是把黑盒模型 "假装自信" 的失败模式形式化区分的关键。
+softmax 归一化会丢掉绝对证据尺度，直接用概率算 entropy 区分不了"稀疏证据下的高确信"和"丰富证据下的高确信"，也就无法把商用模型"假装自信"的失败模式形式化。DisAAD 在代理 teacher-forcing 重放黑盒响应的每个 token 时取 top-K logits，用 ReLU 转成 Dirichlet 证据 $\alpha_k=\text{ReLU}(\bm{z}_{t,k})$，记 $\alpha_0=\sum_k \alpha_k$：偶然不确定性 $\text{AU}(u_t)=-\sum_k \frac{\alpha_k}{\alpha_0}(\psi(\alpha_k+1)-\psi(\alpha_0+1))$ 反映输出分布的尖峭程度，认知不确定性 $\text{EU}(u_t)=\frac{K}{\sum_k(\alpha_k+1)}$ 反映总证据强度，综合可靠性取 $R(u_t)=-\text{AU}(u_t)\cdot\text{EU}(u_t)$。logits + Dirichlet 把绝对尺度保留下来，让 EU（知识维度）与 AU（数据维度）解耦——比如 Figure 2 里错答 "France" 被识别为 High EU + Low AU（知识缺口 + 单一回答倾向），对答 "America" 则是 Low EU + Low AU（确定且唯一），这正是把黑盒模型"假装自信"与"真正确定"区分开的关键。
 
 ### 损失函数 / 训练策略
-联合最小化 $\mathcal{L}(\theta)=\mathcal{L}_{\text{task}}+\lambda\mathcal{L}_{\text{reg}}$；判别器最小化 $\mathcal{L}_D(\phi)$；交替更新；LoRA rank $r\ll d$；蒸馏数据从大规模对话集 + 任务集采样，每 prompt 取 Top-$M$ 语义一致响应；推理时 top-K 取 logits 算 Dirichlet 参数。
+
+联合最小化 $\mathcal{L}(\theta)=\mathcal{L}_{\text{task}}+\lambda\mathcal{L}_{\text{reg}}$；判别器最小化 $\mathcal{L}_D(\phi)$；两者交替更新；LoRA rank $r\ll d$；蒸馏数据从大规模对话集 + 任务集采样，每 prompt 取 Top-$M$ 语义一致响应；推理时 top-K 取 logits 算 Dirichlet 参数。
 
 ## 实验关键数据
 

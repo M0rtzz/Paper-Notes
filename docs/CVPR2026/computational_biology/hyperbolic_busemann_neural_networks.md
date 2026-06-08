@@ -60,54 +60,27 @@ tags:
 
 ### 整体框架
 
-本文提出两个核心组件：
+这篇论文想解决的是：双曲神经网络里最基础的两个零件——分类头（MLR）和全连接层（FC）——一直缺一个既内蕴、又紧凑、还能跨 Poincaré 和 Lorentz 两种模型通用的写法。作者的破题点是一个观察：欧式空间里这两个零件本质都建立在「内积 $\langle v, x\rangle$」和「超平面」之上，而内积在双曲空间的内蕴对应物正是 **Busemann 函数** $-B^v(x)$，超平面的对应物则是 **horophere（极球面）**。于是只要把欧式公式里的内积换成 Busemann 函数、把超平面换成 horophere，就能整体平移到双曲空间。
 
-1. **BMLR**：替换网络最后的分类头，将欧式 softmax 逻辑值 $u_k(x) = \langle a_k, x \rangle + b_k$ 推广为 $u_k(x) = -\alpha_k B^{v_k}(x) + b_k$
-2. **BFC**：替换网络中间的全连接层，将欧式 FC 的逐元素输出 $y_k = \langle a_k, x \rangle + b_k$ 推广为通过 Busemann 函数的点到极球面有符号距离方程来隐式定义输出
-
-两者共享相同的数学框架：欧式内积 → Busemann 函数，欧式超平面 → horophere。
+按这个思路落成两个组件：**BMLR** 接在网络末端做分类，把欧式 logit $u_k(x)=\langle a_k,x\rangle+b_k$ 改写成基于 Busemann 函数的形式；**BFC** 替换中间的全连接层，把欧式 FC「输出第 $k$ 维 = 到坐标超平面的有符号距离」这一等式的右端换成 Busemann logit，再反解出双曲点 $y$。两者共用同一套「内积→Busemann、超平面→horophere」的字典，所以一套公式同时覆盖两种模型，且曲率 $K\to 0^-$ 时自动退回欧式版本。
 
 ### 关键设计
 
-#### 设计一：Busemann MLR（BMLR）
+**1. Busemann MLR：用 Busemann 函数替掉分类头里的内积。**
 
-**功能**：将多类分类的 logit 计算从欧式空间提升到双曲空间。
-
-**核心思路**：欧式 MLR 的 logit $u_k(x) = \alpha_k \langle v_k, x \rangle + b_k$ 中，$\langle v_k, x \rangle$ 是内积。根据 Busemann 函数与内积的对应关系（$B^v(x) = -\langle x, v \rangle$ 在欧式空间），定义双曲 logit：
+欧式 MLR 的 logit $u_k(x)=\alpha_k\langle v_k,x\rangle+b_k$ 里那个内积，在双曲空间没有现成对应物，过去的双曲 MLR 只能靠每类额外挂一个流形参数 $p_k$ 来补偿，参数翻倍。这里换个角度：欧式空间下 $B^v(x)=-\langle x,v\rangle$，也就是 Busemann 函数本就是内积的负数，那直接把内积替成 Busemann 函数就行，得到
 
 $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
-其中 $\alpha_k > 0$，$v_k \in \mathbb{S}^{n-1}$，$b_k \in \mathbb{R}$。在 Poincaré 球上 $B^v(x) = \frac{1}{\sqrt{-K}} \log \frac{\|v - \sqrt{-K}x\|^2}{1 + K\|x\|^2}$，在 Lorentz 模型上 $B^v(x) = \frac{1}{\sqrt{-K}} \log(\sqrt{-K}(x_t - \langle x_s, v \rangle))$。
+其中 $\alpha_k>0$、$v_k\in\mathbb{S}^{n-1}$、$b_k\in\mathbb{R}$，每类只需 $(\alpha_k,v_k,b_k)$ 共 $C(n+2)$ 个参数，不再有额外的流形值参数。$B^v(x)$ 在两种模型上都有闭式：Poincaré 球上 $B^v(x)=\frac{1}{\sqrt{-K}}\log\frac{\|v-\sqrt{-K}x\|^2}{1+K\|x\|^2}$，Lorentz 模型上 $B^v(x)=\frac{1}{\sqrt{-K}}\log(\sqrt{-K}(x_t-\langle x_s,v\rangle))$。这两个表达式都能整批矩阵化，所有类的 logit 一次算完，不像 PBMLR-P 那样要逐类循环。而且 $K\to 0^-$ 时 Poincaré 版趋于 $2\alpha_k\langle v_k,x\rangle+b_k$、Lorentz 版趋于 $\alpha_k\langle v_k,x_s\rangle+b_k$，干净地退化回欧式 MLR，保证了它是欧式情形的真推广而非另起炉灶。
 
-**设计动机**：
-- **参数紧凑**：每类仅需 $(\alpha_k, v_k, b_k)$，共 $C(n+2)$ 参数，无需额外流形值参数
-- **几何忠实**：logit 等价于点到 horophere 的真实测地距离（非伪距离）
-- **批高效**：所有类的 logit 可通过矩阵乘法一次计算
-- **极限正确**：$K \to 0^-$ 时 Poincaré BMLR → $2\alpha_k \langle v_k, x \rangle + b_k$，Lorentz BMLR → $\alpha_k \langle v_k, x_s \rangle + b_k$，均退化为欧式 MLR
+**2. 点到极球面的距离解释：让这个 logit 有几何含义。**
 
-#### 设计二：点到极球面距离解释
+把内积换成 Busemann 函数后，自然要问换出来的 logit 到底代表什么。答案是它就是「点到 horophere 的有符号测地距离」。关键依据是 Hadamard 空间（涵盖欧式与双曲的广义度量空间）里 Busemann 函数的等值面——也就是 horophere——彼此等距：$d(H_{\tau_1}^\gamma,H_{\tau_2}^\gamma)=|\tau_2-\tau_1|$，于是点到任意 horophere 的距离写成 $d(x,H_\tau^v)=|B^v(x)-\tau|$。把这个代回去，BMLR 的 logit 恰好等于有符号点到 horophere 距离再乘 $\alpha_k$。这就把欧式 MLR 里「logit = 点到决策超平面的有符号距离」（Lebanon & Lafferty 的经典解释）原封不动搬到了双曲空间：样本离哪一类的 horophere 越近，属于那类的概率越大。区别在于它用的是真实测地距离，而不是切空间投影出来的伪距离。
 
-**功能**：为 BMLR 的 logit 提供几何意义。
+**3. Busemann FC：把同一套字典用到全连接层。**
 
-**核心思路**：在 Hadamard 空间（含欧式和双曲空间的更广义度量空间）中，Busemann 函数的等值面（horophere）间距恒定：$d(H_{\tau_1}^\gamma, H_{\tau_2}^\gamma) = |\tau_2 - \tau_1|$。因此点到 horophere 的距离为 $d(x, H_\tau^v) = |B^v(x) - \tau|$，BMLR 的 logit 正是有符号的点到 horophere 距离乘以 $\alpha_k$。
-
-**设计动机**：类比欧式 MLR 的点到超平面距离解释（Lebanon & Lafferty），使分类决策具有清晰的几何含义——样本离各类 horophere 越近，属于该类的概率越大。
-
-#### 设计三：Busemann FC（BFC）层
-
-**功能**：将全连接层从欧式空间提升到双曲空间。
-
-**核心思路**：欧式 FC 可写成 $\bar{d}(y, H_{e_k, 0}) = \langle a_k, x \rangle + b_k$，即输出的第 $k$ 维是到坐标超平面的有符号距离。将右端替换为 Busemann logit，左端用双曲点到超平面距离，得到隐式方程 $\bar{d}(y, H_{e_k, e}) = u_k(x)$，然后求解 $y$。
-
-**显式解**：
-- **Poincaré BFC**：$y = \omega / (1 + \sqrt{1 - K\|\omega\|^2})$，其中 $\omega_k = \sinh(\sqrt{-K} \cdot u_k(x)) / \sqrt{-K}$
-- **Lorentz BFC**：$y_s = \sinh(\sqrt{-K} \cdot u(x)) / \sqrt{-K}$，$y_t = \sqrt{1/(-K) + \|y_s\|^2}$
-
-**设计动机**：
-- **内蕴**：直接在双曲流形上操作，不经切空间或环境空间近似
-- **统一**：同一框架适用于 Poincaré 和 Lorentz 模型
-- **可扩展**：可插入激活函数 $\phi$，将 $u_k(x)$ 替换为 $\phi(-\alpha_k B^{v_k}(x) + b_k)$；也可附加 gyroaddition 偏置
-- **复杂度**：FLOPs 为 $O(nm)$，与已有方法相当，Lorentz 版本仅 $O(2nm)$
+全连接层比分类头多一步——它要输出一个新的点，而不只是一个标量 logit。作者先把欧式 FC 重写成距离等式 $\bar{d}(y,H_{e_k,0})=\langle a_k,x\rangle+b_k$，即输出 $y$ 的第 $k$ 维等于它到第 $k$ 个坐标超平面的有符号距离。然后两端各替一次：右端的内积换成 Busemann logit $u_k(x)$，左端的欧式距离换成双曲点到超平面距离，得到隐式方程 $\bar{d}(y,H_{e_k,e})=u_k(x)$，再反解出 $y$。两种模型都有闭式解：Poincaré 上 $y=\omega/(1+\sqrt{1-K\|\omega\|^2})$，其中 $\omega_k=\sinh(\sqrt{-K}\,u_k(x))/\sqrt{-K}$；Lorentz 上 $y_s=\sinh(\sqrt{-K}\,u(x))/\sqrt{-K}$、$y_t=\sqrt{1/(-K)+\|y_s\|^2}$。整个过程始终在双曲流形上完成，不经切空间或环境 Minkowski 空间的欧式近似，所以不引入 Möbius FC / Lorentz FC 那类几何失真。这个写法还很好扩展：把 $u_k(x)$ 套个激活 $\phi(-\alpha_k B^{v_k}(x)+b_k)$ 就能加非线性，也可以再附一个 gyroaddition 偏置；开销上 FLOPs 为 $O(nm)$，与已有方法持平，Lorentz 版本约 $O(2nm)$。
 
 ### 损失函数 / 训练策略
 
@@ -121,7 +94,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 ### 主实验
 
-#### 表1：图像分类准确率（ResNet-18 backbone，Top-1 %）
+**表1：图像分类准确率（ResNet-18 backbone，Top-1 %）**
 
 | 空间 | 方法 | CIFAR-10 (10类) | CIFAR-100 (100类) | Tiny-ImageNet (200类) | ImageNet-1k (1000类) |
 |------|------|-----------------|--------------------|-----------------------|----------------------|
@@ -134,7 +107,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 **关键发现**：BMLR 相对已有双曲 MLR 的优势随类别数增大而增大——在 ImageNet-1k（1000类）上 BMLR-P 比 PMLR 高 **1.59%**，比 PBMLR-P 高 **1.90%**。PBMLR-P 参数量为其他方法两倍且训练速度最慢。
 
-#### 表2：节点分类 F1（HGCN backbone）与链接预测 AUC
+**表2：节点分类 F1（HGCN backbone）与链接预测 AUC**
 
 | 空间 | 方法 | Disease (δ=0) | Airport (δ=1) | PubMed (δ=3.5) | Cora (δ=11) |
 |------|------|---------------|---------------|-----------------|-------------|

@@ -42,32 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法是一个 meta-algorithm，可以套到 FOL、MAB、NS-MAB 三种在线决策环境上。一次外层迭代里，LLM 在 $M$ 个不同 scenario（语言描述的决策任务）上各 rollout $L$ 条轨迹，每条轨迹由若干 (推理 CoT, 动作) 对组成，全程都用自然语言交互。然后对每条轨迹算累积 regret（FOL/MAB 用 static regret，NS-MAB 用 dynamic regret），从每个 scenario 中挑 regret 最低的 $k$ 条轨迹组成 SFT 数据集 $\mathcal{D}$，再用标准 SFT loss 更新模型。新模型替换旧模型，进入下一轮迭代，循环至收敛。
-
-整个流程的关键是：训练信号完全是 regret 这一个标量，没有任何对动作格式、CoT 模板、最优算法的额外假设；模型自带的 CoT 也被一并保留并通过 SFT 强化。
+Iterative RMFT 是一个 meta-algorithm：同一套外层循环就能套到 FOL（全信息在线学习）、MAB（多臂赌博机）、NS-MAB（非平稳赌博机）三种在线决策环境上。一次外层迭代里，LLM 在 $M$ 个不同 scenario（语言描述的决策任务）上各 rollout $L$ 条轨迹，每条轨迹由若干 (推理 CoT, 动作) 对组成，全程用自然语言交互；轨迹跑完后算累积 regret，从每个 scenario 里挑 regret 最低的 $k$ 条组成 SFT 数据集 $\mathcal{D}$，用标准 SFT loss 更新模型；新模型替换旧模型进入下一轮，循环至收敛。整个范式的精髓是：训练信号只有 regret 这一个标量，对动作格式、CoT 模板、最优算法都不做任何假设，模型自带的推理也被一并保留并强化。
 
 ### 关键设计
 
-1. **基于 regret 的轨迹筛选（Trajectory Selection by Regret）**:
+**1. 基于 regret 的轨迹筛选：把"评估"和"造数据"用一个标量统一起来。**
 
-    - 功能：把"在线决策评估"和"SFT 数据构造"统一起来——只用 regret 这一个标量决定哪些自生成轨迹进入下一轮训练集。
-    - 核心思路：对每个 scenario $i$ rollout 出 $L$ 条轨迹 $C_{1,i}, \dots, C_{L,i}$，每条轨迹结束后算 regret，例如 FOL 下用 $\text{Regret}_\mathcal{A}((R_t)_{t\in[T]}, T) = \max_{\pi\in\Pi} \sum_t \langle \pi, R_t\rangle - \sum_t \langle \pi_{\mathcal{A}, t}, R_t\rangle$，MAB 下用期望 regret，NS-MAB 下用 dynamic regret $\text{D-Regret} = \mathbb{E}[\sum_t \max_a r_t(a) - \sum_t r_t(a_{\mathcal{A},t})]$；按 regret 升序取最低的 $k$ 条进入 $\mathcal{D}$。
-    - 设计动机：regret 是在线决策的通用度量，不依赖最优算法是否已知、不依赖动作空间大小或时间长度，因而天然支持跨任务、跨问题结构的训练；同时由于筛选发生在轨迹级别而非 token 级别，整条 CoT 自动保留，避免了 RL 中常见的 reward-credit-assignment 难题。
+前面提到 LLM 在最经典的在线决策任务上都不是 no-regret learner，而要修这一点又不想依赖已知最优算法。作者的切入点是：regret 是在线决策的通用度量，只要拿到一条完整轨迹就能事后算出来，那它就可以同时充当"评估指标"和"SFT 数据的筛选器"。具体地，对每个 scenario $i$ rollout 出 $L$ 条轨迹 $C_{1,i}, \dots, C_{L,i}$，每条结束后算 regret——FOL 下用 static regret $\text{Regret}_\mathcal{A}((R_t)_{t\in[T]}, T) = \max_{\pi\in\Pi} \sum_t \langle \pi, R_t\rangle - \sum_t \langle \pi_{\mathcal{A}, t}, R_t\rangle$，MAB 下用期望 regret，NS-MAB 下用 dynamic regret $\text{D-Regret} = \mathbb{E}[\sum_t \max_a r_t(a) - \sum_t r_t(a_{\mathcal{A},t})]$——再按 regret 升序取最低的 $k$ 条进入 $\mathcal{D}$。这样选之所以好用，是因为 regret 不依赖最优算法是否已知、也不依赖动作空间大小或 horizon，天然支持跨任务、跨问题结构的训练；而且筛选发生在轨迹级别而非 token 级别，整条 CoT 被自动保留，避开了 RL 里棘手的 reward-credit-assignment 问题。
 
-2. **保留自生成 CoT 的 SFT（Imitation on Self-Generated Reasoning）**:
+**2. 保留自生成 CoT 的 SFT：用模仿自己而不是 RL 来更新模型。**
 
-    - 功能：用 SFT 而不是 RL 来更新模型，使得轨迹里所有自然语言部分（推理 + 动作）都成为监督目标。
-    - 核心思路：把入选的轨迹按完整对话格式（任务描述 + 历史交互 + 推理 + 动作）作为 SFT 样本，对每个 token 用标准 cross-entropy loss；不引入 reward model、不做 token-level RL，也不强制要求动作格式或 CoT 结构必须长成某个固定模板。
-    - 设计动机：作者明确把这套方法与算法蒸馏和 RLFT 做对比——算法蒸馏需要固定输出格式且依赖最优算法，RLFT 用 reward 做信号无法刻画对抗/非平稳设置的 regret；SFT-on-self-trajectories 既能利用闭源 API（如 GPT-4o mini 的 fine-tune 接口）、又不约束 CoT 形式、还能让模型自行发现新的"算法风格"推理，泛化能力反而更强。
+如果像算法蒸馏那样强行规定输出格式、或像 RLFT 那样只拿 reward 当 token-level 信号，模型的自由推理就被压扁了，对抗/非平稳设置下的 regret 也刻画不出来。作者改用最朴素的做法：把入选轨迹按完整对话格式（任务描述 + 历史交互 + 推理 + 动作）当成 SFT 样本，对每个 token 用标准 cross-entropy loss，不引入 reward model、不做 token-level RL、也不强制 CoT 长成某个固定模板。这样一来轨迹里所有自然语言部分（推理 + 动作）都成了监督目标，模型是在"模仿自己最成功的那几次决策"。好处有三：能直接利用闭源 API（如 GPT-4o mini 的 fine-tune 接口）、不约束 CoT 形式、还能让模型自行涌现出新的"算法风格"推理，泛化反而比硬塞模板更强。
 
-3. **跨环境的 meta-algorithm 实例化（FOL / MAB / NS-MAB）**:
+**3. 跨环境的 meta-algorithm 实例化：一套信号覆盖 FOL / MAB / NS-MAB。**
 
-    - 功能：用同一套外层循环覆盖三类典型在线决策环境，验证 regret 信号的普适性。
-    - 核心思路：FOL 用全信息 reward vector $R_t$ 评估每轮动作；MAB 用部分反馈 $R_t(a_t)$ 并对随机性取期望；NS-MAB 引入 variation budget $V_T = \sum_{t=2}^T \|r_t - r_{t-1}\|_\infty$ 并使用 dynamic regret 作为筛选准则；scenario 库是语言化场景（医疗推荐、资源分配、营销等），每个 scenario 在每轮都被翻译成自然语言对话，agent 输出动作 + CoT，然后程序从输出里 parse 出 $a_t$ 或 $\pi_t \in \Delta(\mathcal{A})$。
-    - 设计动机：单一信号能覆盖三种典型环境本身就是 regret 通用性的最强经验证据；同时通过在 scenario 维度做随机化（horizon、动作空间、奖励生成、领域 context 都变），训练出来的模型才能在未见过的场景上保持 no-regret，而不是只记住特定 horizon 下的 lookup table。
+要证明 regret 信号的普适性，就得让同一套外层循环跑通三类典型环境，差别只在 regret 怎么算和反馈是否完整。FOL 用全信息 reward vector $R_t$ 评估每轮动作；MAB 只有部分反馈 $R_t(a_t)$ 并对随机性取期望；NS-MAB 额外引入 variation budget $V_T = \sum_{t=2}^T \|r_t - r_{t-1}\|_\infty$ 并改用 dynamic regret 作筛选准则。scenario 库是语言化场景（医疗推荐、资源分配、营销等），每个 scenario 每轮都被翻成自然语言对话，agent 输出动作 + CoT，再由程序从输出里 parse 出 $a_t$ 或 $\pi_t \in \Delta(\mathcal{A})$。单一信号能同时覆盖这三种环境，本身就是 regret 通用性最强的经验证据；而且作者在 scenario 维度做了大量随机化（horizon、动作空间、奖励生成、领域 context 全在变），逼着模型学到通用决策策略，而不是记住某个 horizon 下的 lookup table。
 
 ### 损失函数 / 训练策略
-内层就是普通的 SFT：在选出的轨迹 token 上最小化 cross-entropy，不加任何正则；外层迭代次数和每轮挑的 $k$、$L$、$M$ 都是超参。理论侧作者在单层 attention Transformer 的简化场景下证明，这种"模仿自己最低 regret 轨迹"的迭代过程的不动点对应 FTRL 算法，因此 no-regret 行为在该理论模型里是会被这套范式诱导出来的，而不是巧合。
+内层就是普通 SFT：在选出的轨迹 token 上最小化 cross-entropy，不加任何正则；外层迭代次数和每轮的 $k$、$L$、$M$ 都是超参。理论侧作者在单层 attention Transformer 的简化场景下证明，这种"迭代模仿自己最低 regret 轨迹"过程的不动点恰好对应 FTRL 算法，因此 no-regret 行为在该理论模型里是被这套范式诱导出来的，而不是巧合。
 
 ## 实验关键数据
 

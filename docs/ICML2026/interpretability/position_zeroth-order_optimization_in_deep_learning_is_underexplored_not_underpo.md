@@ -40,37 +40,33 @@ tags:
 
 ## 方法详解
 
-这是一篇 position paper，没有新算法，所以"方法详解"等同于"6 个论断的内部论证链条"。作者把 RGE 公式作为唯一的统一语言，把每个 position 都翻译成对 RGE 某个变量（$\mathbf{u}$ 的分布 / $m,n$ 的批量 / $\mu \to 0$ 的极限 / 用 $\mathbf{Pu}$ 替代 $\mathbf{u}$）的修改或重新诠释，从而让 6 个看似独立的主张共享同一套数学骨架。
+这是一篇 position paper，没有新算法，"方法"指的是 6 个论断（P1–P6）背后那条共用的论证链。全文只借一个数学骨架——随机梯度估计器 RGE 的有限差分公式——把每个 position 都翻译成对它某个变量的改写或重新诠释：换 $\mathbf{u}$ 的分布、调 $m,n$ 的批量、取 $\mu \to 0$ 的极限、或用 $\mathbf{Pu}$ 替掉 $\mathbf{u}$。所有看似独立的主张因此都长在同一棵公式树上，论文唯一引用的训练形式也就是把 RGE / S-RGE / CGE / 前向梯度都塞进同一个 SGD 步 $\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \hat{\nabla}_{\mathbf{x}} f(\mathbf{x}_t)$。
 
 ### 整体框架
 
-P1–P3 划定"估计器中心"范式的可行性边界：方差控制（P1）→ 方差–查询权衡（P2）→ 方向导数视角作为基线（P3）；P4–P6 则把视角拉出估计器之外：子空间/谱优化（P4）→ 前向单向带来的系统级红利（P5）→ 评测里要剥离 task alignment 这层"混淆器"（P6）。最后 §4 把 P1–P6 浓缩成 5 条 call to action（A1 评测协议、A2 跳出全空间、A3 生成式估计器、A4 ZO-native 系统栈、A5 拓宽应用前沿，特别是量子计算与推理引擎栈复用）。
+6 条 position 分成前后两半。P1–P3 先划清"估计器中心"这套老范式的可行性边界：从方差控制（P1）走到方差–查询的权衡（P2），再把方向导数视角立成绕不开的基线（P3）。P4–P6 则把镜头从估计器本身拉远，去看三块被冷落的红利：子空间与谱域优化（P4）、前向单向流带来的系统级好处（P5）、以及评测里必须剥掉 task alignment 这层"混淆器"（P6）。最后 §4 把六条凝成 5 条 call to action（A1 评测协议、A2 跳出全空间、A3 生成式估计器、A4 ZO-native 系统栈、A5 拓宽应用前沿，尤其是量子计算与推理引擎栈复用）。
 
-作者在表 1 里把 ICML'25 / NeurIPS'25 / ICLR'26 上 10 篇代表性 ZO 工作按 P1/P2/P3 三栏打钩，结论是几乎所有工作都只满足 P1，几乎没人同时考虑 P2 的查询代价和 P3 的前向梯度基线——这就是"underexplored"的定量证据。
+"underexplored"这个判断在表 1 里被量化：作者把 ICML'25 / NeurIPS'25 / ICLR'26 上 10 篇代表性 ZO 工作按 P1/P2/P3 三栏逐一打钩，结果几乎所有人都只满足 P1，没人同时管 P2 的查询代价和 P3 的前向梯度基线——社区的注意力被严重压在了一个角落。
 
 ### 关键设计
 
-1. **从 RGE 到子空间 RGE：方差-维度脱钩的几何视角（P1+P4）**:
+**1. 从 RGE 到子空间 RGE：把方差和维度脱钩。**
 
-    - 功能：把原始 ZO 梯度估计 $\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{u})-f(\mathbf{x})}{\mu}\mathbf{u}$（其中 $\mathbf{u} \in \mathbb{R}^d$）改造成 S-RGE：$\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{Pu})-f(\mathbf{x})}{\mu}\mathbf{Pu}$，其中 $\mathbf{P} \in \mathbb{R}^{d \times r}$、$r \ll d$、$\mathbf{u} \in \mathbb{R}^r$。
-    - 核心思路：在方向导数（DD）极限 $\mu \to 0$ 下，$\mathbb{E}_{\mathbf{u}}[\hat{\nabla}_{\mathbf{x}}f] = \mathbf{PP}^\top \nabla_{\mathbf{x}} f$；当 $\mathbf{P}$ 列正交时 $\mathbf{PP}^\top$ 就是把 FO 梯度投影到 $\mathbf{P}$ 所张子空间的投影算子。这给 S-RGE 一个干净的几何解释——它是 FO 梯度的"子空间近似"，方差从 $O(d)$ 降到 $O(r)$。$\mathbf{P}$ 可以通过对高斯矩阵做 QR 分解随机得到，且只需"惰性更新"（每隔若干步刷新一次），引入的额外开销极小。当深度模型梯度本身就近似低秩时（Zhao et al. 2024 等已观察到这一现象），子空间近似的精度损失远小于方差红利。
-    - 设计动机：直击 P1（方差与 $d$ 同阶）和 P2（mini-batch 平均反而出现 diminishing returns）的死结——既然全空间方差无法廉价压下来，那就换一个"低维但有信息含量"的空间做估计；同时 P4 强调这条路还能自然连接到谱优化（如 Muon 的梯度正交化），把"低秩梯度结构"作为可利用的先验。
+针对的死结是 P1 与 P2：原始 ZO 估计器 $\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{u})-f(\mathbf{x})}{\mu}\mathbf{u}$（$\mathbf{u} \in \mathbb{R}^d$）的方差与参数维度 $d$ 同阶，而 mini-batch 平均压方差又很快遇到 diminishing returns，全空间里怎么都廉价不下来。作者的反应是干脆换一个空间——把扰动塞进一个低维子空间，写成 S-RGE：$\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{Pu})-f(\mathbf{x})}{\mu}\mathbf{Pu}$，其中 $\mathbf{P} \in \mathbb{R}^{d \times r}$、$r \ll d$、$\mathbf{u} \in \mathbb{R}^r$。
 
-2. **前向单向 + 共享种子 = 通信高效的分布式 ZO（P5）**:
+这个改写之所以站得住，是因为它有干净的几何解释。在方向导数极限 $\mu \to 0$ 下 $\mathbb{E}_{\mathbf{u}}[\hat{\nabla}_{\mathbf{x}}f] = \mathbf{PP}^\top \nabla_{\mathbf{x}} f$，当 $\mathbf{P}$ 列正交时 $\mathbf{PP}^\top$ 恰是把 FO 梯度投到 $\mathbf{P}$ 所张子空间的投影算子——S-RGE 就是 FO 梯度的"子空间近似"，方差顺势从 $O(d)$ 掉到 $O(r)$。$\mathbf{P}$ 只需对高斯矩阵做一次 QR 分解随机生成，而且可以"惰性更新"（隔若干步才刷一次），开销几乎可忽略。只要模型梯度本身近似低秩（Zhao et al. 2024 等已观察到这一现象），近似带来的精度损失远小于省下的方差。P4 进一步指出，这条路天然接得上谱域优化（如 Muon 的梯度正交化），把"低秩梯度结构"当成可利用的先验。
 
-    - 功能：在分布式/联邦 ZO 训练里，让 worker 之间只传一个标量而不是完整梯度向量，把通信带宽从 $O(d)$ 砍到 $O(1)$。
-    - 核心思路：把每个 worker 的本地 S-RGE 写成 $\hat{\nabla}_{\mathbf{x}}f_i(\mathbf{x}) = \Delta_i \cdot \mathbf{Pu}_i$，其中 $\Delta_i = \frac{f_i(\mathbf{x}+\mu\mathbf{Pu}_i) - f_i(\mathbf{x})}{\mu}$ 是个标量。worker $i$ 只把 $\Delta_i$ 连同生成 $\mathbf{u}_i$ 的随机种子传给中心节点；中心节点用同样的种子在本地重建 $\mathbf{u}_i$（投影矩阵 $\mathbf{P}$ 也走共享种子重建），然后做聚合。在单机内部，结构化扰动（按层/块/坐标）天然允许 feature reuse——只有被扰动的那部分激活会变化，前向 pass 可以从扰动层切入而不必从输入重算（FZOO 已验证）。更深层一点：因为 ZO 把"前向算梯度"和"梯度立即可用"打包到了同一个前向 pass，pipeline parallelism 里 FO 训练特有的 1F1B 气泡（forward/backward 强耦合带来的）被彻底消除，pipeline 可以做成单向、近零气泡的"推理化"调度。
-    - 设计动机：把 ZO 的"看似缺点"（必须靠随机扰动）翻译成"系统优势"（标量同步 + 可重建随机性）。这也顺势给出一个 privacy 解释：ZO 估计本身就是"标量 × 高斯向量"的乘积，天然带噪，能直接嵌入 DP 微调管线，不像 FO 那样要额外注入高斯噪声。
+**2. 前向单向加共享种子，让分布式 ZO 只传一个标量。**
 
-3. **去混淆评测：剥离 task alignment 才能看见 ZO 的真实能力（P3+P6）**:
+这条把 ZO"必须靠随机扰动"这个看似的缺点，翻译成了系统优势。关键观察是本地 S-RGE 可以拆成 $\hat{\nabla}_{\mathbf{x}}f_i(\mathbf{x}) = \Delta_i \cdot \mathbf{Pu}_i$，其中 $\Delta_i = \frac{f_i(\mathbf{x}+\mu\mathbf{Pu}_i) - f_i(\mathbf{x})}{\mu}$ 只是个标量。于是 worker $i$ 不必回传整条梯度向量，只发标量 $\Delta_i$ 加上生成 $\mathbf{u}_i$ 的随机种子；中心节点用同一个种子在本地重建 $\mathbf{u}_i$（投影矩阵 $\mathbf{P}$ 也靠共享种子重建）再聚合，通信带宽就从 $O(d)$ 砍到了 $O(1)$。
 
-    - 功能：要求所有 ZO 评测同时报告 (a) 带 task alignment（即把下游任务用 prompt 对齐到预训练目标）与 (b) 不带 task alignment 两种设置，并把前向梯度（forward gradient）方法 $f'(\mathbf{x};\mathbf{u})\mathbf{u}$ 作为强制基线。
-    - 核心思路：当 $\mu \to 0$ 时有限差分收敛到方向导数 $f'(\mathbf{x};\mathbf{u}) = \mathbf{u}^\top \nabla_{\mathbf{x}} f(\mathbf{x})$，前向梯度估计器用一次 JVP 直接拿到这个数值，方差结构上是 ZO 估计器的"无噪上界"。如果前向梯度都做不动这个任务，那卡住的是任务难度而不是 ZO；如果前向梯度能做但 ZO 做不动，那才是 ZO 估计器真的不行。task alignment 的问题在于它把下游任务简化到接近预训练分布，让 ZO 在这种"易学化"的情形下显得很强；论文用 Gemma2-2B 在 SST-2 / RTE / WiC 上跑 MeZO / Sparse-MeZO / HiZOO / LOZO 四个 stateful ZO 方法的对比（图 2）显示：去掉 alignment 后大多数方法都掉点严重，且方法之间的相对排名也会反转，说明现行评测协议混淆了"ZO 优化能力"和"任务被简化的程度"。
-    - 设计动机：position paper 要立得住，必须给出"现状失灵"的可观察证据。把前向梯度作为参照系，等于给整个 ZO 社区一把校准尺：任何号称比别人更优的 ZO 方法，先得证明自己离这个"无噪上界"有多远，以及在非对齐场景下还剩多少优势。
+红利不止在节点之间。单机内部用结构化扰动（按层/块/坐标）天然允许 feature reuse——只有被扰动那部分的激活会变，前向 pass 可以从扰动层切入而不必从输入重算（FZOO 已验证）。更深一层：ZO 把"前向算梯度"和"梯度立即可用"打包进了同一个前向 pass，pipeline 并行里 FO 训练特有的 1F1B 气泡（forward/backward 强耦合造成的）被直接消掉，pipeline 可以做成单向、近零气泡的"推理化"调度。同一个标量×高斯向量的结构还顺带给出一个隐私解释：ZO 估计天生带噪，能直接嵌进 DP 微调管线，不像 FO 那样要额外注入高斯噪声。
 
-### 损失函数 / 训练策略
+**3. 去混淆评测：剥掉 task alignment 才看得见 ZO 的真本事。**
 
-无新训练策略；论文唯一的训练算法骨架是把 RGE / S-RGE / CGE / 前向梯度统一写进 SGD 步：$\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \hat{\nabla}_{\mathbf{x}} f(\mathbf{x}_t)$。
+position paper 要立得住，得给出"现状失灵"的可观察证据，这条就是那把校准尺。作者要求所有 ZO 评测同时报告两种设置——带 task alignment（用 prompt 把下游任务对齐到预训练目标）和不带——并把前向梯度方法 $f'(\mathbf{x};\mathbf{u})\mathbf{u}$ 列为强制基线。前向梯度的地位很特殊：当 $\mu \to 0$ 时有限差分收敛到方向导数 $f'(\mathbf{x};\mathbf{u}) = \mathbf{u}^\top \nabla_{\mathbf{x}} f(\mathbf{x})$，它用一次 JVP 就能精确拿到，结构上是 ZO 估计器的"无噪上界"。有了它就能分清责任：前向梯度都做不动，卡的是任务难度而非 ZO；前向梯度能做而 ZO 做不动，才是估计器真的不行。
+
+task alignment 的隐患在于它把下游任务简化到贴近预训练分布，让 ZO 在这种"易学化"情形下显得格外强。论文用 Gemma2-2B 在 SST-2 / RTE / WiC 上跑 MeZO / Sparse-MeZO / HiZOO / LOZO 四个 stateful ZO 方法做对比（图 2）：去掉 alignment 后大多数方法都明显掉点，方法间的相对排名甚至反转——这说明现行协议混淆了"ZO 的优化能力"和"任务被简化的程度"。换句话说，任何号称更优的 ZO 方法，先得证明自己离这个无噪上界有多远，以及在非对齐场景里还剩多少优势。
 
 ## 实验关键数据
 

@@ -39,30 +39,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为源图像 $\mathbf{x}$、编辑指令 $c$ 和源/目标文本描述 $(p_{\text{src}}, p_{\text{tgt}})$，无需配对的目标图像 $\mathbf{y}$。框架将预训练 T2I 模型 $\mathbf{G}_{\text{t2i}}$ 微调为编辑模型 $\mathbf{G}_{\text{edit}}$，训练由三个互补信号驱动：(1) 编辑模型自身 EMA 副本生成伪噪声目标作为输入（自举）；(2) 冻结 T2I 模型提供编辑方向先验（指令遵循）；(3) 正向编辑后反向重建源图像的 cycle 约束（源保持）。总损失为 $\mathcal{L} = \mathcal{L}_{\text{cycle}} + \lambda_{\text{prior}}(\mathcal{L}_{\text{prior}}^{\text{fwd}} + \mathcal{L}_{\text{prior}}^{\text{rev}}) + \lambda_{\text{id}}\mathcal{L}_{\text{id}}$。
+ByG 要解决的核心难题是：没有 source-target 配对数据时，怎么把一个预训练 T2I 模型微调成既听话又保结构的编辑模型。它的破局思路是让模型"自己教自己"——用编辑模型的 EMA 副本生成训练所需的噪声输入，用冻结的 T2I 模型提供"该往哪个方向编辑"的先验，再用正向编辑+反向重建的 cycle 约束逼模型保住源内容。三股信号合成总损失 $\mathcal{L} = \mathcal{L}_{\text{cycle}} + \lambda_{\text{prior}}(\mathcal{L}_{\text{prior}}^{\text{fwd}} + \mathcal{L}_{\text{prior}}^{\text{rev}}) + \lambda_{\text{id}}\mathcal{L}_{\text{id}}$，整个训练只需源图像和它的 source/target caption。
 
 ### 关键设计
 
-1. **编辑方向先验损失（Directional Prior Loss）**:
+**1. 自举式伪噪声输入：补上 flow matching 缺失的训练输入**
 
-    - 功能：在无配对监督下提供编辑指令遵循的训练信号
-    - 核心思路：用冻结 T2I 模型分别以源描述 $p_{\text{src}}$ 和目标描述 $p_{\text{tgt}}$ 查询同一噪声输入，得到速度 $\mathbf{v}_{\text{src}}$ 和 $\mathbf{v}_{\text{tgt}}$。不直接匹配 $\mathbf{v}_{\text{tgt}}$（会导致内容漂移），而是用余弦损失约束编辑模型的速度变化方向与 T2I 模型的编辑方向 $\mathbf{v}_{\text{tgt}} - \mathbf{v}_{\text{src}}$ 对齐：$\mathcal{L}_{\text{dir}} = 1 - \cos(\mathbf{v}_{\text{fwd}} - \mathbf{v}_{\text{src}},\; \mathbf{v}_{\text{tgt}} - \mathbf{v}_{\text{src}})$，再加 MSE 项 $\alpha\|\mathbf{v}_{\text{fwd}} - \mathbf{v}_{\text{tgt}}\|^2$ 防止范数爆炸
-    - 设计动机：方向损失只约束编辑方向不约束幅度，避免模型被拉向 T2I 的无条件重建；差值形式隔离了文本引起的语义变化，让 cycle consistency 负责保持共有结构
+flow matching 的标准训练要对 ground truth 输出加噪当输入，可无配对场景里根本没有目标图像 $\mathbf{y}$，也就拿不到合法的噪声输入——这是个"没有好输入就训不出好模型、训不出好模型又造不出好输入"的鸡生蛋死循环。ByG 维护一份编辑模型的 EMA 副本来打破它：每步训练时 EMA 模型从纯噪声（$t=1$）采样 $n$ 步到时间步 $t$，产出伪噪声输入 $\tilde{\mathbf{y}}_t$ 喂给可训练模型。EMA 副本本身平滑了训练波动，且随着主模型变强它生成的输入也越来越好，形成自举式的正反馈循环。消融里去掉自举后 Edit Success 从 8.32 暴跌到 5.52，正是因为训练输入分布与推理时严重不匹配。
 
-2. **梯度路由（Gradient Routing via STE）**:
+**2. 编辑方向先验损失：在无监督下给出"听指令"的信号**
 
-    - 功能：弥合训练时单步模糊预测与推理时多步干净输出之间的差距
-    - 核心思路：在 cycle 的反向 pass 中，前向传播用 EMA 模型完整采样得到的干净估计 $\tilde{\mathbf{y}}_0$ 作为条件（匹配推理时分布），反向传播时梯度绕过 $\tilde{\mathbf{y}}_0$、流过单步预测 $\hat{\mathbf{y}}$：$\hat{\mathbf{y}}^{\text{hyb}} = \text{sg}(\tilde{\mathbf{y}}_0) + (\hat{\mathbf{y}} - \text{sg}(\hat{\mathbf{y}}))$，其中 $\text{sg}$ 为 stop-gradient
-    - 设计动机：直接用单步预测做条件会导致模糊输入，模型学会忽略条件信号。STE 适配让模型看到干净图像但梯度仍能更新前向编辑，消除 train-test mismatch
+无配对意味着没有监督告诉模型"编辑后该长什么样"，指令遵循的训练信号从哪来？ByG 从冻结 T2I 模型里榨取：拿同一个噪声输入分别用源描述 $p_{\text{src}}$ 和目标描述 $p_{\text{tgt}}$ 查询，得到两个速度场 $\mathbf{v}_{\text{src}}$、$\mathbf{v}_{\text{tgt}}$。关键在于不直接让编辑模型去匹配 $\mathbf{v}_{\text{tgt}}$——那会把模型拉向 T2I 的无条件重建、造成内容漂移；而是只约束"编辑方向"对齐，用余弦损失 $\mathcal{L}_{\text{dir}} = 1 - \cos(\mathbf{v}_{\text{fwd}} - \mathbf{v}_{\text{src}},\; \mathbf{v}_{\text{tgt}} - \mathbf{v}_{\text{src}})$ 让模型的速度变化方向跟 T2I 的差值方向 $\mathbf{v}_{\text{tgt}} - \mathbf{v}_{\text{src}}$ 一致，再补一个 MSE 项 $\alpha\|\mathbf{v}_{\text{fwd}} - \mathbf{v}_{\text{tgt}}\|^2$ 防止速度范数爆炸。这个差值形式把文本带来的语义变化单独隔离出来，幅度不管、只管方向，剩下的共有结构交给 cycle consistency 去守。消融显示只留 MSE 而去掉方向项会带来更强的源漂移。
 
-3. **自举式伪噪声输入（Bootstrapped Noisy Inputs）**:
+**3. 梯度路由：弥合训练单步预测与推理多步输出的鸿沟**
 
-    - 功能：解决无配对数据时 flow matching 训练缺少合法噪声输入的问题
-    - 核心思路：维护编辑模型的 EMA 副本，每步训练时 EMA 模型从纯噪声 $t=1$ 采样 $n$ 步到时间步 $t$，生成伪噪声输入 $\tilde{\mathbf{y}}_t$ 供可训练模型使用。随训练进行，EMA 逐渐产生更好的输入，形成自举循环
-    - 设计动机：EMA 平滑了训练波动，打破了"没有好输入就训练不出好模型"的鸡生蛋循环
+cycle 的反向 pass 需要先把正向编辑结果当条件再重建回源图，可训练时只能拿单步预测 $\hat{\mathbf{y}}$ 当条件，它相比推理时多步采样的干净输出 $\tilde{\mathbf{y}}_0$ 又糊又偏——模型一旦发现条件是模糊的，干脆学会忽略它。ByG 把直通估计器（STE）适配到连续去噪场景来解这个 train-test mismatch：前向传播喂干净估计 $\tilde{\mathbf{y}}_0$（来自 EMA 完整采样，匹配推理分布），反向传播却让梯度绕过 $\tilde{\mathbf{y}}_0$、改流过单步预测 $\hat{\mathbf{y}}$，用 $\hat{\mathbf{y}}^{\text{hyb}} = \text{sg}(\tilde{\mathbf{y}}_0) + (\hat{\mathbf{y}} - \text{sg}(\hat{\mathbf{y}}))$ 实现（$\text{sg}$ 是 stop-gradient）。这样模型看到的是干净图像、不会学会偷懒，梯度却依然能回流去更新前向编辑。消融里去掉梯度路由后源保持从 7.62 降到 7.18，编辑虽更激进但开始牺牲源内容。
 
 ### 损失函数 / 训练策略
-总损失包含四项：cycle 重建损失（正向编辑 $\mathbf{x} \to \hat{\mathbf{y}}$，反向用逆指令 $\bar{c}$ 重建 $\mathbf{x}$）、双向先验损失（正向 + 反向 pass 均施加方向对齐）、identity 损失（源图同时做输入和条件时应原样重建，防止模型丢弃条件信息）。训练数据仅需无配对的图像及其 source/target caption。视频编辑直接将所有损失应用于视频 latent，无需架构修改。
+总损失四项协同：cycle 重建损失（正向 $\mathbf{x} \to \hat{\mathbf{y}}$ 编辑后用逆指令 $\bar{c}$ 反向重建回 $\mathbf{x}$）守源结构、双向先验损失（正向与反向 pass 都施加方向对齐）管指令遵循、identity 损失（源图同时当输入和条件时应原样输出）防止模型丢弃条件信息。三类正则缺一不可——消融显示去掉全部正则会直接崩塌成恒等映射（Edit Success 仅 0.63）。视频编辑无需改架构，把所有损失直接套到视频 latent 上即可。
 
 ## 实验关键数据
 

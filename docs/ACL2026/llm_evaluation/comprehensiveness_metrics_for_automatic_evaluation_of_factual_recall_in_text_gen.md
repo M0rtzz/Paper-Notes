@@ -40,30 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：用户 prompt $P$、待评响应 $R$、参考语料 $\mathcal{C}$。输出：覆盖集 $\mathcal{A}_{in}$、未覆盖集 $\mathcal{A}_{out}$、标量得分 $S = |\mathcal{A}_{in}| / (|\mathcal{A}_{in}| + |\mathcal{A}_{out}|)$。NLI 和 Q&A 方法还会产出 fact graph $G_F$（节点是原子陈述 / QA 对，边是 entailment 关系），从而支持更细粒度的"未覆盖上下文基" $\mathcal{A}_{basis}$（最小需补集合）。三种 metric 共享统一接口但内部 pipeline 复杂度差异极大。
+三种 metric 共享同一套输入输出契约：吃进用户 prompt $P$、待评响应 $R$、参考语料 $\mathcal{C}$，吐出覆盖集 $\mathcal{A}_{in}$、未覆盖集 $\mathcal{A}_{out}$ 和标量得分 $S = |\mathcal{A}_{in}| / (|\mathcal{A}_{in}| + |\mathcal{A}_{out}|)$。差异在于"如何把 $R$ 与 $\mathcal{C}$ 对齐":NLI 法和 Q&A 法在内部额外维护一张 fact graph $G_F$(节点是原子陈述或 QA 对、边是 entailment 关系),既能用传递闭包去重计数,又能进一步导出"未覆盖上下文基" $\mathcal{A}_{basis}$(告诉用户最少需要补哪些事实);E2E 法则把整条 pipeline 折叠进一次 LLM 调用。三者从最重到最轻铺成一条复杂度递减的谱系,正好用来回答"评测器该做多复杂"。
 
 ### 关键设计
 
-1. **NLI-based comprehensiveness（多阶段 + 图分析）**:
+**1. NLI 法:原子分解 + 图传递闭包算覆盖。** 这条最重的 pipeline 走五个阶段,核心是把"覆盖率"严格落到原子陈述的蕴含关系上。先用 LLM few-shot 把 $R$ 与 $\mathcal{C}$ 的每个文档拆成原子事实,再做原子修订消解代词、拆分连接句("A 写了 X 和 Y" → "A 写了 X" + "A 写了 Y"),接着对每个 context 原子打 1–5 的相关性分并以 $T_{rel} = 3.5$ 过滤掉无关项,只留下"本该被覆盖"的子集。
 
-    - 功能：把响应和语料分解成原子陈述，用 NLI 找出哪些语料陈述被响应蕴含。
-    - 核心思路：5 阶段 pipeline——(a) **原子抽取**：用 LLM few-shot 把 $R$ 和 $\mathcal{C}$ 每个文档拆成原子事实；(b) **原子修订**：消解代词、拆分连接句（"A 写了 X 和 Y" → "A 写了 X" + "A 写了 Y"）；(c) **相关性过滤**：对每个 context 原子估计相关性分数（1-5 量化），$T_{rel} = 3.5$ 过滤；(d) **NLI 关系抽取**：用通用 LLM 而非专用 NLI 模型判断 response↔context 和 context↔context 之间的 entailment（共 $2|\mathcal{A}_R||\mathcal{A}_\mathcal{C}| + |\mathcal{A}_\mathcal{C}|(|\mathcal{A}_\mathcal{C}|-1)$ 对）；(e) **得分计算**：构造 fact graph $G_F$ 后做强连通分量压缩 $G_C$，定义 $\mathcal{A}_{in} = \{A_i \in \mathcal{V}_C \cap \mathcal{A}_\mathcal{C} | \exists A_j \in \mathcal{A}_R, \text{path}(A_j, A_i) \in G_F\}$。
-    - 设计动机：图结构能自然处理"X 蕴含 Y、Y 蕴含 Z"的传递闭包，避免重复计数；用通用 LLM 而非专用 NLI 是因为法规 / 知识密集陈述对 NLI 模型挑战大。代价是计算量 $O(|\mathcal{A}|^2)$，且 NLI 提取阶段只看孤立原子缺乏上下文。
+关键在第四步的关系抽取:它不用专用 NLI 模型而用通用 LLM 判断 response↔context 与 context↔context 之间的 entailment,因为法规、知识密集型陈述对专用 NLI 太难;代价是要遍历 $2|\mathcal{A}_R||\mathcal{A}_\mathcal{C}| + |\mathcal{A}_\mathcal{C}|(|\mathcal{A}_\mathcal{C}|-1)$ 对,复杂度 $O(|\mathcal{A}|^2)$。最后把这些关系组成 fact graph $G_F$,做强连通分量压缩得 $G_C$,凡是参考语料里能从某条响应原子沿 entailment 路径走到的节点都算覆盖,即 $\mathcal{A}_{in} = \{A_i \in \mathcal{V}_C \cap \mathcal{A}_\mathcal{C} \mid \exists A_j \in \mathcal{A}_R,\ \text{path}(A_j, A_i) \in G_F\}$。用图而非逐对计数,是为了让"X 蕴含 Y、Y 蕴含 Z"的传递关系自动闭合、避免重复计分;但抽关系时只看孤立原子、丢了原文上下文,这也埋下了它后来准确率垫底的根因。
 
-2. **Q&A-based comprehensiveness（问题中介 + 答案比对）**:
+**2. Q&A 法:用问题做中介,让答案天然可比。** 与其直接两两比对原子陈述,这条 pipeline 改成"先提问、再比同一问题下的答案"。先从 $R$ 和 $\mathcal{C}$ 各自挖出自包含的事实性问题,做问题精炼(去重、泛化、剔除指代不明并打相关性分),然后让模型在每个 source 上回答全部精炼问题——每题允许多答案或无答案并附置信度,以 $T_{conf} = 2$ 过滤低置信项。答案比较阶段用 LLM 配合 Pint 工具(专门处理物理量单位换算)把两边答案判成 equivalent / first implies second / contradictory / neutral 等关系,再转成 entailment 喂进 fact graph 算 $S$。
 
-    - 功能：用"提问 + 比答案"替代原子陈述比对，借助问题对齐让答案天然可比。
-    - 核心思路：4 阶段——(a) **问题挖掘**：从 $R$ 和 $\mathcal{C}$ 各自抽取自包含的事实性问题；(b) **问题精炼**：去重、泛化、剔除指代不明，并打相关性分数；(c) **答案生成**：在每个 source 上回答所有精炼问题，每个问题可能多答案或无答案，附带置信度，$T_{conf} = 2$ 过滤；(d) **答案比较**：用 LLM + Pint 工具（处理物理量单位）判断"equivalent / first implies second / contradictory / neutral"五类关系，转成 entailment 后构造 fact graph 并算 $S$。
-    - 设计动机：NLI 比对要遍历所有原子对（$O(N^2)$），而 Q&A 只比对同一问题下的答案（$O(M \cdot k)$）效率高；答案生成时可看完整 context，比 NLI 的孤立原子比对更准。Pint 工具修补 LLM 在量纲转换上的弱点。
+这样做的好处是把 NLI 的 $O(N^2)$ 全原子对比对压成只比同一问题下答案的 $O(M \cdot k)$,效率显著更高;而且生成答案时模型能看完整 context,比 NLI 阶段那种孤立原子比对更准——这也解释了它在跨模型稳定性上反超 NLI 与 E2E。Pint 工具则专门补 LLM 在量纲转换上的弱点,是 Q&A 准确率的一块拼图。
 
-3. **End-to-End comprehensiveness（一次 LLM 调用搞定）**:
-
-    - 功能：直接让 LLM 在 $(P, \mathcal{C}, R)$ 单上下文里输出 $\mathcal{A}_{in}, \mathcal{A}_{out}$。
-    - 核心思路：单次 LLM 调用 $(\mathcal{A}_{in}, \mathcal{A}_{out}) = \text{CoverageEvaluator}(P, \mathcal{C}, R)$，分数计算方式同前。无 fact graph、无中间步骤、无 pairwise 关系分类。
-    - 设计动机：现代 LLM（如 Llama 4 17Bx128E）的长上下文推理能力已经强到可以"看了原文 + 答案后直接列出哪些没覆盖"；省去 pipeline 的级联误差，但牺牲可解释性和稳定性（结果高度依赖 evaluator LLM 选择）。
+**3. E2E 法:一次 LLM 调用直接列出覆盖与遗漏。** 最轻的方案干脆不拆原子、不建图、不做 pairwise 分类,而是把 $(P, \mathcal{C}, R)$ 塞进单个上下文,让模型一步给出 $(\mathcal{A}_{in}, \mathcal{A}_{out}) = \text{CoverageEvaluator}(P, \mathcal{C}, R)$,得分公式与前两者一致。它赌的是现代长上下文 LLM(如 Llama 4 17Bx128E)的推理力已强到"看完原文加答案就能直接列出哪些没覆盖",从而省掉多阶段 pipeline 的级联误差。代价是几乎没有可解释性,且结果高度依赖 evaluator LLM 选择——后文实验里它平均最强却跨模型方差最大,正是这种"把全部信任压在单个模型能力上"的直接后果。
 
 ### 损失函数 / 训练策略
-本工作不训练任何模型，所有 LLM 调用都用现成开源模型（gpt-oss-20b/120b、Llama 3.3 70B、Llama 4 17Bx128E、Qwen 2.5 72B）。温度 0、top-p 1。Llama 4 用 FP8 量化。Pint 工具只对 Llama / Qwen 可用（gpt-oss 推理引擎不支持 tool call）。
+本工作不训练任何模型,所有 LLM 调用都用现成开源模型(gpt-oss-20b/120b、Llama 3.3 70B、Llama 4 17Bx128E、Qwen 2.5 72B),温度 0、top-p 1,Llama 4 用 FP8 量化。Pint 工具只对 Llama / Qwen 可用(gpt-oss 推理引擎不支持 tool call)。
 
 ## 实验关键数据
 

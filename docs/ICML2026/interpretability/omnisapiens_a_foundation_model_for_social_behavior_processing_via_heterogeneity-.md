@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-OmniSapiens-7B 2.0 以 Qwen 2.5-Omni-7B 为多模态 backbone，输入为文本/图像/视频/音频的混合行为数据（Human Behavior Atlas 10 个任务，100k+ 样本，包括 SEN/EMO/SOC/INT/NVC/HUM/SAR/ANX/DEP/PTSD），输出是"推理链 + 预测标签/答案"格式的自回归序列。
-
-训练采用 HARPO（HARPO = Heterogeneity-Aware Relative Policy Optimization），整体结构沿用 GRPO 的 PPO clipped surrogate + KL 正则，但把组归一化优势 $\hat{A}_{(m,q,i)}$ 替换为调制后的 $A^H_{(m,q,i)}$。Reward 由三部分加权：任务奖励 $r_{task}$（分类用 binary，QA 用 cosine）、格式奖励 $r_{fmt}$（权重 0.2）、长度惩罚 $r_{len}$（系数 0.75）。HARPO 的"调制器"独立于 actor，按训练步 $t$ 在线估计贡献信号、更新调制因子，再乘到优势上。
+OmniSapiens-7B 2.0 要解决的是多任务社会行为 RL 里"少数任务/样本因优势幅值偏大而主导整个策略梯度"的失衡问题。它以 Qwen 2.5-Omni-7B 为多模态 backbone，吃文本/图像/视频/音频混合的行为数据（Human Behavior Atlas 10 个任务、100k+ 样本，含 SEN/EMO/SOC/INT/NVC/HUM/SAR/ANX/DEP/PTSD），输出"推理链 + 预测标签/答案"的自回归序列。训练用 HARPO（Heterogeneity-Aware Relative Policy Optimization），整体沿用 GRPO 的 PPO clipped surrogate + KL 正则，唯一改动是在 actor 之外挂一个"调制器"：它按训练步 $t$ 在线估计每个 sample/task 的更新贡献，再把贡献转成调制因子去乘组归一化优势，把主导更新的 $\hat{A}_{(m,q,i)}$ 替换成再平衡后的 $A^H_{(m,q,i)}$。Reward 仍是三部分加权——任务奖励 $r_{task}$（分类 binary、QA cosine）、格式奖励 $r_{fmt}$（权重 0.2）、长度惩罚 $r_{len}$（系数 0.75）。
 
 ### 关键设计
 
-1. **贡献信号的双层估计（sample-level + task-level）**:
+**1. 贡献信号的双层估计：把"优势幅值"直接当作零成本贡献代理**
 
-    - 功能：用一个免训练、免 critic 的代理量近似每个 sample 与每个 task 对策略梯度的实际贡献，作为后续调制的输入。
-    - 核心思路：由式 (4)-(5)，rollout 的梯度贡献被 $\hat{A}$ 直接缩放，因此把组归一化优势的**绝对值**当贡献信号即可。Sample-level 信号为某样本 rollout group $G(m,q)$ 内的平均绝对优势 $p^{(t)}_{(m,q)} = \frac{1}{|G(m,q)|}\sum_i |\hat{A}^{(t)}_{(m,q,i)}|$，task-level 信号为该 task 当前 batch 全部 rollout 的平均绝对优势 $p^{(t)}_m$。除以 rollout 数是为了保证对随机 batch 采样的不变性。
-    - 设计动机：异构问题的根本是"谁影响大谁主导"，因此先要有一个能直接量化"影响"的标量；选优势幅值而不是 reward 或 loss，是因为它与策略梯度的耦合关系最直接、最便宜。
+异构问题的根子是"谁影响大谁主导"，所以第一步得有个能直接量化"影响"的标量。HARPO 没有去训 critic 或估梯度，而是抓住式 (4)-(5) 的事实——每条 rollout 对策略梯度的贡献正比于其优势绝对值 $|\hat{A}|$，于是直接把组归一化优势的绝对值当贡献信号，既免训练又免额外前向，且与策略梯度的耦合关系数学上最直接。具体分两层：sample-level 信号取某样本 rollout group $G(m,q)$ 内的平均绝对优势 $p^{(t)}_{(m,q)} = \frac{1}{|G(m,q)|}\sum_i |\hat{A}^{(t)}_{(m,q,i)}|$，task-level 信号取该 task 当前 batch 全部 rollout 的平均绝对优势 $p^{(t)}_m$。两者都除以 rollout 数，是为了对随机 batch 采样保持不变。选优势幅值而非 reward 或 loss，正因为它与梯度的关系最紧、计算最便宜。
 
-2. **几何均值参照下的倒数比调制（structured modulation）**:
+**2. 几何均值参照下的倒数比调制：局部重加权而全局步长守恒**
 
-    - 功能：把贡献信号转成尺度合理、不会破坏全局更新规模的调制因子，乘到原始优势上完成"强者压、弱者升"的再平衡。
-    - 核心思路：sample 层取 task 内所有样本贡献信号的几何均值 $\bar{p}^{(t)}_{ref,m}$ 作参照，task 层取所有 task 贡献信号的几何均值 $\bar{p}^{(t)}_{ref,M}$ 作参照；调制因子定义为参照与自身的比值 $s^{(t)}_{(m,q)} = \bar{p}^{(t)}_{ref,m}/p^{(t)}_{(m,q)}$ 和 $s^{(t)}_m = \bar{p}^{(t)}_{ref,M}/p^{(t)}_m$；最终调制优势 $A^H_{(m,q,i)} = s^{(t)}_{(m,q)} \cdot s^{(t)}_m \cdot \hat{A}^{(t)}_{(m,q,i)}$。贡献超过参照的因子 $<1$（压缩），低于参照的 $>1$（放大）。
-    - 设计动机：用几何均值而不是算术均值，是因为贡献信号在不同任务间常差几个数量级，几何平均能用乘性尺度温和处理这种 heavy-tail；更关键的是几何均值天然让所有调制因子的连乘等于 1，即 $\prod_q s^{(t)}_{(m,q)} = 1$ 且 $\prod_m s^{(t)}_m = 1$，于是"放大的"和"压缩的"乘性贡献严格互相抵消，**整体更新步长不变**，避免了误伤全局学习率。
+有了贡献信号，就要把它转成"不破坏全局更新规模"的调制因子，做"强者压、弱者升"的再平衡。HARPO 在 sample 层取 task 内所有样本贡献信号的几何均值 $\bar{p}^{(t)}_{ref,m}$ 作参照，在 task 层取所有 task 贡献信号的几何均值 $\bar{p}^{(t)}_{ref,M}$ 作参照，调制因子定义为参照与自身的倒数比 $s^{(t)}_{(m,q)} = \bar{p}^{(t)}_{ref,m}/p^{(t)}_{(m,q)}$ 与 $s^{(t)}_m = \bar{p}^{(t)}_{ref,M}/p^{(t)}_m$，最终把优势调成 $A^H_{(m,q,i)} = s^{(t)}_{(m,q)} \cdot s^{(t)}_m \cdot \hat{A}^{(t)}_{(m,q,i)}$——贡献超参照的因子 $<1$ 被压缩，低于参照的 $>1$ 被放大。这里坚持用几何均值而非算术均值有两层考虑：一是贡献信号在任务间常差几个数量级，几何平均能用乘性尺度温和处理这种 heavy-tail；二是更关键的不变量——几何均值天然让所有调制因子连乘为 1，即 $\prod_q s^{(t)}_{(m,q)} = 1$ 且 $\prod_m s^{(t)}_m = 1$，于是放大与压缩的乘性贡献严格互相抵消，整体更新步长不变，从根上避开了"调权重就要重调 lr"的经典坑。
 
-3. **惯性平滑（inertial smoothing）保证调制稳定**:
+**3. 惯性平滑：用乘性 EMA 让调制以更慢的时间尺度演化**
 
-    - 功能：让调制机制以比策略参数慢的时间尺度演化，避免 on-policy 单步噪声把调制因子打乱、引发训练震荡。
-    - 核心思路：贡献信号用 EMA 平滑 $\bar{p}^{(t)} = \beta_\rho \bar{p}^{(t-1)} + (1-\beta_\rho) p^{(t)}$；调制因子由于是乘性比率，用**乘性 EMA** 而非加法 EMA：$s^{(t)} = (s^{(t-1)})^{\beta_s}(s)^{1-\beta_s}$。这样调制只跟踪贡献信号的持续趋势，对单步随机扰动免疫。
-    - 设计动机：调制因子是策略更新的"权重的权重"，如果它本身抖动剧烈，会把已经做了归一化的优势又重新引入高方差，反而恶化学习；乘性更新天然保持几何均值 = 1 的不变量，与设计 2 的"全局步长守恒"相容。
+调制因子本质是"策略更新权重的权重"，如果它自己随 on-policy 单步噪声剧烈抖动，会把已经归一化过的优势又重新注入高方差，反而恶化学习。HARPO 因此让调制机制以比策略参数更慢的尺度演化：贡献信号先用普通 EMA 平滑 $\bar{p}^{(t)} = \beta_\rho \bar{p}^{(t-1)} + (1-\beta_\rho) p^{(t)}$；而调制因子由于是乘性比率，用乘性 EMA 而非加法 EMA $s^{(t)} = (s^{(t-1)})^{\beta_s}(s)^{1-\beta_s}$。这样调制只跟踪贡献信号的持续趋势、对单步扰动免疫，且乘性更新天然维持"几何均值 = 1"的不变量，与设计 2 的全局步长守恒完全相容。
 
 ### 损失函数 / 训练策略
-HARPO 目标函数与 GRPO 完全同构，只是把 clipped surrogate 里的 $\hat{A}$ 换为 $\tilde{A}^H_{(m,q,i):k}(\theta)$：
-
-$J_{HARPO}(\theta) = \mathbb{E}\big[\frac{1}{|G|}\sum_i \frac{1}{n_o}\sum_k \tilde{A}^H_{(m,q,i):k}(\theta)\big] - \beta \mathbb{E}[D_{KL}(\pi_\theta \| \pi_{ref})]$
-
-训练数据为 Human Behavior Atlas（Ong et al., 2026）覆盖 10 个行为任务的多模态 RL 数据集，base 模型 Qwen 2.5-Omni-7B，统一 reward 设计，所有对比 RL 算法都在同一数据/同一 base 上跑以保证公平。
+HARPO 目标函数与 GRPO 完全同构，只把 clipped surrogate 里的 $\hat{A}$ 换为调制后的 $\tilde{A}^H_{(m,q,i):k}(\theta)$：$J_{HARPO}(\theta) = \mathbb{E}\big[\frac{1}{|G|}\sum_i \frac{1}{n_o}\sum_k \tilde{A}^H_{(m,q,i):k}(\theta)\big] - \beta \mathbb{E}[D_{KL}(\pi_\theta \| \pi_{ref})]$。训练数据为 Human Behavior Atlas（Ong et al., 2026）覆盖 10 个行为任务的多模态 RL 数据集，base 模型 Qwen 2.5-Omni-7B，统一 reward 设计，所有对比 RL 算法都在同一数据/同一 base 上跑以保证公平。
 
 ## 实验关键数据
 

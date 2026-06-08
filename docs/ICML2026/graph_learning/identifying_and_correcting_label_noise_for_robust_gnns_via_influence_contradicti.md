@@ -41,30 +41,21 @@ ICGNN 在图扩散矩阵上定义"影响矛盾分数"(ICS) 从结构和属性两
 ## 方法详解
 
 ### 整体框架
-输入是带噪节点标签的半监督图 $\mathcal{G}=\{\mathcal{V},\mathbf{A},\mathbf{X},\mathbf{Y}_L\}$（$|\mathcal{V}_L|\ll|\mathcal{V}_U|$），输出是无标签节点上的预测。整套 pipeline 在每个 epoch 内串成三段：
-1. **噪声检测**：先用 GCN 编码器跑出表示 $\mathbf{Z}$，分别从邻接图 $\mathbf{A}$ 和表示 K-NN 图 $\mathbf{A}^r$ 算出结构扩散矩阵 $\mathbf{T}$ 和属性扩散矩阵 $\mathbf{R}$；按公式聚合得每个标注节点的 ICS 值，再喂给两分量 GMM 拟合，输出"该标签为干净"的后验概率 $\hat{\beta}_i$。
-2. **噪声纠正**：用 $\hat{\beta}_i$ 作为权重，把原始 one-hot 标签和邻居 softmax 预测做凸组合得到软标签 $\mathbf{l}_i^{(t)}$；同时给所有无标签节点按同样的邻居聚合策略打伪标签。
-3. **优化**：用交叉熵在软标签 + 伪标签上联合训练 GNN 分类器（再叠加 NRGNN 的负采样重构项作辅助）。三段在每个 epoch 都重新跑一遍，$\hat{\beta}_i$、伪标签、表示同步更新。
+ICGNN 要解决的是"训练标签本身带噪时如何训出鲁棒 GNN"。它把这个问题拆成"先量化每个标注节点的标签有多可疑、再按可疑程度软纠正"两步，并塞进一个每个 epoch 都重跑的内循环里。具体地，先用 GCN 编码器跑出节点表示，从原邻接图和表示空间 K-NN 图两个视角算图扩散矩阵，聚合出每个标注节点的"影响矛盾分数"(ICS)，喂给两分量 GMM 得到"标签干净"的后验概率 $\hat{\beta}_i$；再用 $\hat{\beta}_i$ 当门控权重，把原标签和邻居预测做凸组合得软标签，同时给无标签节点打伪标签，最后在软标签加伪标签上联合训练分类器。三步同步迭代，表示、$\hat{\beta}_i$、伪标签每轮一起更新。
 
 ### 关键设计
 
-1. **影响矛盾分数 ICS（结构 + 属性双视图）**:
+**1. 影响矛盾分数 ICS：把"小损失"换成全图传播下的异类影响累加**
 
-    - 功能：用一个标量量化"节点 $i$ 的标签和它实际收到的图上影响有多矛盾"，矛盾越大越可能是噪声。
-    - 核心思路：基于 personalized PageRank 写出全局影响矩阵 $\mathbf{T}=\epsilon(\mathbf{I}-(1-\epsilon)\hat{\mathbf{A}})^{-1}$，定义结构层 ICS：$\text{ICS}_i(\mathbf{T})=\sum_{j\neq y_i}\frac{1}{|\mathcal{C}_j|}\sum_{k\in\mathcal{C}_j}\mathbf{T}_{ki}$，即"所有非自身类别的节点对 $i$ 的归一化影响之和"。再在 GCN 表示上构 K-NN 图重算扩散矩阵 $\mathbf{R}$，得属性层 $\text{ICS}_i(\mathbf{R})$，最终 $\text{ICS}_i=(1-\alpha)\text{ICS}_i(\mathbf{T})+\alpha\text{ICS}_i(\mathbf{R})$（默认 $\alpha=0.5$）。论文给出 Theorem 3.1：若存在 $\delta\in(0,1]$ 满足同质性界，则干净节点 $\text{ICS}_i\le 1-\delta$、噪声节点 $\text{ICS}_i\ge\delta$，当 $\delta>1/2$ 时两区间不相交，理论上可严格分离。
-    - 设计动机：相比 small-loss（受类间损失尺度影响、分布大量重叠）和局部邻居投票（受类别不平衡和稀疏邻居影响），ICS 用 PageRank 全局扩散把"异类干扰"显式聚合到一个标量上，结构+属性双视图互补——稀疏图（如 Pubmed）属性视图更可靠，稠密图（如 Coauthor CS）结构视图更可靠，固定 $\alpha=0.5$ 在大多数数据集上反而比学习权重更稳。
+以往在图上检测噪声要么沿用 CV 的 small-loss（一个与拓扑无关的一维统计量，类间损失尺度一变分布就大量重叠），要么看局部一阶邻居投票（受类别不平衡和邻居稀疏拖累）。ICGNN 改用 personalized PageRank 写出的全局影响矩阵 $\mathbf{T}=\epsilon(\mathbf{I}-(1-\epsilon)\hat{\mathbf{A}})^{-1}$，把"全图所有节点对节点 $i$ 的影响"显式聚合：结构层 ICS 定义为 $\text{ICS}_i(\mathbf{T})=\sum_{j\neq y_i}\frac{1}{|\mathcal{C}_j|}\sum_{k\in\mathcal{C}_j}\mathbf{T}_{ki}$，即"所有非自身类别的节点对 $i$ 的归一化影响之和"——按同质性假设，一个干净节点应主要被同类支持、异类影响小，若一个节点收到大量异类影响，它的当前标签就很可疑。为补足结构视图在稀疏图上的不足，再在 GCN 表示上构 K-NN 图重算扩散矩阵 $\mathbf{R}$ 得属性层 $\text{ICS}_i(\mathbf{R})$，两者凸组合 $\text{ICS}_i=(1-\alpha)\text{ICS}_i(\mathbf{T})+\alpha\text{ICS}_i(\mathbf{R})$（默认 $\alpha=0.5$）。两视图互补：稠密图（Coauthor CS）结构视图更可靠，稀疏图（Pubmed）属性视图更可靠，而固定 $\alpha=0.5$ 反而比学权重更稳。论文还给出 Theorem 3.1 撑腰：若存在 $\delta\in(0,1]$ 满足某同质性界，则干净节点 $\text{ICS}_i\le 1-\delta$、噪声节点 $\text{ICS}_i\ge\delta$，当 $\delta>1/2$ 时两区间不相交，理论上可严格分离。
 
-2. **GMM 软阈值检测**:
+**2. GMM 软阈值：把"该砍哪条线"交给 EM 自动学**
 
-    - 功能：把 ICS 数值分布自动切成"干净 / 噪声"两簇，得到每个节点"标签干净"的后验概率 $\hat{\beta}_i$。
-    - 核心思路：对所有标注节点的 $\{\text{ICS}_i\}_{i=1}^L$ 拟合一个两分量高斯混合 $\sum_q\pi_q\mathcal{N}(\cdot|\mu_q,\sigma_q)$，用 EM 迭代得后验 $\beta(a_{iq})=\pi_q\mathcal{N}(\text{ICS}_i|\mu_q,\sigma_q)/\sum_{q'}\pi_{q'}\mathcal{N}(\cdot)$；收敛后取 $\hat{q}=\arg\min_q\hat{\mu}_q$ 对应的均值较小的那一簇为"干净簇"，$\hat{\beta}_i=\hat{\beta}(a_{i\hat{q}})$ 就是节点 $i$ 标签为干净的置信度。复杂度 $O(LT)$，$T\le 10$ 即收敛。
-    - 设计动机：Theorem 3.1 中的 $\delta$ 在实践中未知，硬阈值难选；EM 软聚类把阈值变成可学习参数，避免手调，且 $\hat{\beta}_i\in[0,1]$ 自然可以作为下游软纠正的权重，免去额外标定。
+Theorem 3.1 里的分离阈值 $\delta$ 实践中根本观测不到，硬卡一个阈值既难调又容易错。ICGNN 干脆对全体标注节点的 ICS 值 $\{\text{ICS}_i\}_{i=1}^L$ 拟合一个两分量高斯混合 $\sum_q\pi_q\mathcal{N}(\cdot|\mu_q,\sigma_q)$，用 EM 迭代算后验 $\beta(a_{iq})=\pi_q\mathcal{N}(\text{ICS}_i|\mu_q,\sigma_q)/\sum_{q'}\pi_{q'}\mathcal{N}(\cdot)$；收敛后把均值较小那簇（$\hat{q}=\arg\min_q\hat{\mu}_q$）当作"干净簇"，$\hat{\beta}_i=\hat{\beta}(a_{i\hat{q}})$ 就是节点 $i$ 标签干净的置信度。这样阈值从手调超参变成 EM 自动学出来的软边界，且输出天然落在 $[0,1]$，可以直接当下游纠正的权重，免去额外标定；复杂度只有 $O(LT)$，$T\le 10$ 即收敛，对大图几乎零负担。
 
-3. **基于邻居预测的软标签纠正 + 伪标签**:
+**3. 邻居预测软纠正 + 伪标签：不硬改标签，按置信度凸组合**
 
-    - 功能：对疑似噪声节点不做"硬覆盖"，而是按置信度把原标签与邻居预测做凸组合；同时把无标签节点也加入监督。
-    - 核心思路：第 $t$ 轮对标注节点 $i$ 写软标签 $\mathbf{l}_i^{(t)}=\hat{\beta}_i^{(t)}\mathbf{y}_i+(1-\hat{\beta}_i^{(t)})h^{(t)}(\mathbf{z}_i)$，其中 $h^{(t)}(\mathbf{z}_i)=\operatorname{softmax}(\sum_{k\in I(i)}\mathbf{T}_{ki}\mathbf{p}_k^{(t)})$，用扩散矩阵 $\mathbf{T}$ 加权聚合"全局邻居"（不限一阶）softmax 预测；对无标签节点同样用 $h^{(t)}(\mathbf{z}_i)$ 当伪标签。最终损失 $\mathcal{L}=\sum_{i=1}^L \mathbf{l}_i^{(t)}\log\mathbf{p}_i^{(t)}+\sum_{i=L+1}^N h^{(t)}(\mathbf{z}_i)\log\mathbf{p}_i^{(t)}$，再叠加 NRGNN 的负采样重构项。
-    - 设计动机：CGNN 的硬邻居投票在类别不平衡或邻居稀疏时极易把节点错改成多数类、滚出确认偏差；凸组合用 $\hat{\beta}_i$ 当信任度，越确定干净越保留原标签、越确定脏越听邻居，且邻居权重用 PageRank $\mathbf{T}_{ki}$ 而非一阶 $\mathbf{A}_{ki}$，能捕捉高阶结构的更稳定证据。
+CGNN 那种硬邻居投票在类别不平衡或邻居稀疏时极易把节点错改成多数类，滚出确认偏差。ICGNN 改成"软纠正"：第 $t$ 轮给标注节点 $i$ 写软标签 $\mathbf{l}_i^{(t)}=\hat{\beta}_i^{(t)}\mathbf{y}_i+(1-\hat{\beta}_i^{(t)})h^{(t)}(\mathbf{z}_i)$，其中邻居预测 $h^{(t)}(\mathbf{z}_i)=\operatorname{softmax}(\sum_{k\in I(i)}\mathbf{T}_{ki}\mathbf{p}_k^{(t)})$ 用扩散矩阵 $\mathbf{T}$ 加权聚合全局邻居（不限一阶）的 softmax 预测。$\hat{\beta}_i$ 在这里当信任度旋钮：越确定干净就越保留原标签，越确定脏就越听邻居，且邻居权重取 PageRank $\mathbf{T}_{ki}$ 而非一阶 $\mathbf{A}_{ki}$，能借高阶结构拿到更稳的证据。无标签节点也用同一个 $h^{(t)}(\mathbf{z}_i)$ 打伪标签缓解标签稀缺。最终损失把两部分拼起来 $\mathcal{L}=\sum_{i=1}^L \mathbf{l}_i^{(t)}\log\mathbf{p}_i^{(t)}+\sum_{i=L+1}^N h^{(t)}(\mathbf{z}_i)\log\mathbf{p}_i^{(t)}$，再叠加 NRGNN 的负采样重构项作辅助。
 
 ## 实验关键数据
 

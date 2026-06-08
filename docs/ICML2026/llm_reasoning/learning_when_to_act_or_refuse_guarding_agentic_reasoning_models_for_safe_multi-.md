@@ -42,34 +42,25 @@ MOSAIC 把"安全决策"从隐式推理副产物变成 plan → check → act/re
 
 ### 整体框架
 
-每步 $t$：
-1. **plan**：用 `<think>` 块产出 plan 和候选工具调用
-2. **gate $g_t \in \{0,1\}$**：模型自决是否开 `<safety_thoughts>`（通过是否输出该开标签）；端到端 RL 学到的，无外部开关
-3. **safety check**（若 $g_t=1$）：在 `<safety_thoughts>` 里结构化推理潜在伤害、不可逆性、权限变化、工具反馈风险
-4. **act / refuse**：从 $\{\text{tool\_call}, \text{refusal\_tool}, \text{answer}\}$ 选动作；`refusal_tool` 是终止动作并附说明
-5. 轨迹 $\tau = \{(o_t, \text{plan}_t, g_t, \text{safety}_t, a_t)\}_{t=1}^{T_{\text{term}}}$
-
-训练用 GRPO（不需要 critic，pairwise rollouts），mask 工具输出 token，只在模型生成的文本上反传。
+MOSAIC 想解决的是 agent 在多步工具调用里"该停的时候没停"。它把每一步拆成 plan → check → act/refuse 的循环：模型先在 `<think>` 块里产出计划和候选工具调用，再自己决定要不要开一段 `<safety_thoughts>` 做安全检查，最后从工具调用、拒绝、直接作答三种动作里选一个。整条轨迹写成 $\tau = \{(o_t, \text{plan}_t, g_t, \text{safety}_t, a_t)\}_{t=1}^{T_{\text{term}}}$，训练时用 LLM judge 对同一任务的两条 rollout 做成对偏好，喂给 GRPO 优化策略——不需要 critic，并对工具返回的 token 做 mask，只在模型自己生成的文本上反传梯度。
 
 ### 关键设计
 
-1. **显式 safety check + refusal 作为一等动作**:
+**1. 把安全检查和拒绝提成一等动作：让 RL 信号能精确落到安全决策上。**
 
-    - 功能：把安全决策从隐式推理副产物变成可学、可控、可审计的离散动作
-    - 核心思路：定义 `<safety_thoughts>` 块和 `refusal_tool` 终止动作；前者开关由模型自决（learned gate），关时直接跳过避免常时开销；后者像普通工具一样进入动作空间，可被 RL 直接奖励
-    - 设计动机：长推理痕迹里"忘记检查"是 agent 安全的主要漏洞；让 check 和 refuse 显式存在 + 端到端学习，相当于把安全决策从"隐藏在 logits 概率分布里"提到"显式 token 级动作"——RL 信号才能精确作用在该决策上
+长推理痕迹里 agent 出事，往往不是"想干坏事"而是"忘了检查不可逆性"，因为安全决策一直埋在隐式 reasoning 里，既看不见也没法单独监督。MOSAIC 定义两个显式构件来戳破这层：一个 `<safety_thoughts>` 结构化块，专门推理潜在伤害、不可逆性、权限变化和工具反馈风险；一个 `refusal_tool` 终止动作，像普通工具那样进入动作空间 $\{\text{tool\_call}, \text{refusal\_tool}, \text{answer}\}$，并附上拒绝理由。关键在于 `<safety_thoughts>` 不是常开的——每步有一个学到的门控 $g_t \in \{0,1\}$，由模型自己决定要不要输出开标签，端到端 RL 学出来、无外部开关，$g_t=0$ 时直接跳过省掉常时开销。这样一来，安全决策从"藏在 logits 概率分布里"被提到"显式 token 级动作"，RL 的奖励才有抓手精确作用在"该不该检查、该不该拒绝"上，顺带也让整个决策过程可审计。
 
-2. **成对轨迹偏好 RL（替代标量奖励）**:
+**2. 成对轨迹偏好替代标量奖励：捕捉"何时拒绝"的时序差异。**
 
-    - 功能：用 LLM judge 在同一任务的两条 rollouts 间做相对偏好，捕捉时序安全差异
-    - 核心思路：对每个 prompt 采样若干 rollouts；LLM judge 成对比较"哪条更安全更恰当"（不打绝对分）；用偏好对监督 GRPO 的 group advantage；判断维度包括早期拒绝 vs. 晚期中止、是否服从注入指令、是否泄露隐私
-    - 设计动机：结果级标量 reward 会把"完全没碰危险工具就拒"和"已经执行了不安全操作才中止"映射到几乎相同的分；pairwise 比较保留这种时序敏感性，是 agent 安全 RL 的关键监督
+结果级标量 reward 有个致命盲点：它会把"完全没碰危险工具就拒绝"和"已经执行了不安全操作才中止"映射到几乎相同的分数，可这两者在安全上天差地别。MOSAIC 改用相对偏好：对每个 prompt 采样若干 rollout，让 LLM judge 成对比较"哪条更安全更恰当"（只比较、不打绝对分），判断维度覆盖早拒绝 vs. 晚中止、是否服从了注入指令、是否泄露了隐私。这些偏好对直接监督 GRPO 的 group advantage——同组内轨迹的奖励差异自动归一化。pairwise 比较保留了 outcome-only 标量丢掉的时序敏感性，这正是 agent 安全 RL 里最该被建模、却最容易被标量奖励抹平的信号。
 
-3. **复合奖励 + 长度感知训练（GRPO 联合优化）**:
+**3. 复合奖励 + 长度感知训练：在安全、效用、格式、token 预算之间找平衡。**
 
-    - 功能：在安全对齐、任务效用、结构化输出格式、token 效率间平衡
-    - 核心思路：composite reward 包含安全偏好 + 任务成功 + 格式规范（必须含正确 `<think>` `<safety_thoughts>` 标签）+ token 长度惩罚；GRPO 的 group relative advantage 让奖励差异自动归一化，不需要 critic
-    - 设计动机：单纯优化安全会过度拒绝（over-refusal），单纯优化任务会忽略安全；长度惩罚防止思维链无限膨胀。GRPO 比 PPO 在 agent 长 trajectory 上更稳
+只优化安全会滑向 over-refusal（连 benign 任务也拒），只优化任务又会忽略安全，所以 MOSAIC 的 composite reward 同时包含安全偏好、任务成功、格式规范（轨迹必须带正确的 `<think>` 和 `<safety_thoughts>` 标签）和 token 长度惩罚四项，后者防止思维链无限膨胀。这套奖励交给 GRPO 而非 PPO，是因为 GRPO 用 group relative advantage 让组内奖励差异自动归一化、不必再训一个 critic，在 agent 这种长 trajectory、稀疏终止信号的场景下比 PPO 更稳。
+
+### 一个完整示例
+
+设任务是"帮我把客户名单导出并邮件发给外部地址"。第 1 步 plan 阶段模型识别这是个数据外传请求，门控 $g_1=1$ 触发 `<safety_thoughts>`，里面推理出"导出+外发涉及隐私泄漏且不可逆"；第 2 步它没有直接调用 `send_email`，而是选择 `refusal_tool` 终止并说明理由。对照轨迹里，另一条 rollout 先调了 `export_contacts`（已经把名单读进上下文）才在发送前中止——两条最终都没把邮件发出去，outcome-only 奖励会给几乎相同的分，但 LLM judge 的成对偏好明确判定"第 1 步就拒"优于"读完才停"，这个偏好通过 GRPO 反传，逐步教会模型把安全检查前移到危险动作之前。
 
 ## 实验关键数据
 

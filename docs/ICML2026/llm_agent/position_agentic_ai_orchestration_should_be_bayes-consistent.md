@@ -40,36 +40,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架不是单一算法，而是一个 **架构模板**：
-
-- **belief state**：编排器维护后验 $r_t(\cdot)=p(\cdot\mid\mathcal{D}_{1:t})$，定义在低维、决策相关的隐变量上（不是 LLM 参数）。
-- **观测模型**：每个 agent $i$ 有一个 likelihood $p_i(z\mid y)$，从历史"消息-结果"对学得；可以是判别式的 $q_i(y\mid z_t)$。
-- **可靠性权重**：$\alpha_i>0$ 控制每个 agent 似然的 tempering 强度，来源于 cumulative log-loss 的 exponential weights $w_i\propto\exp(-\beta L_i)$，规范化后映成 $\alpha_i=\alpha_\text{max}\tilde w_i$。
-- **决策策略**：动作 $a_t^\star=\arg\max_a\sum_h u(a,h)r_t(h)$，或基于 value-of-information 决定继续/停止。
-- **依赖处理**：当 agent 共享 prompt、底模、检索 pipeline 时，用 likelihood tempering、dependence-aware pooling、conditional independence 通过 latent agent-state 假设处理相关性。
+这篇 position paper 主张的不是某个新算法，而是一个 **编排控制层的架构模板**：让 LLM 当 black-box predictor，但在它们之上的编排器维护一个显式的、定义在低维任务级隐变量上的后验信念 $r_t(\cdot)=p(\cdot\mid\mathcal{D}_{1:t})$，每收到一个 agent/工具返回的"消息观测"就按 Bayes 规则更新，再用期望效用或 value-of-information 决定路由、停止、升级和预算分配。论证主线是：先指出贝叶斯结构可以放在训练里、推理里或控制里，本文聚焦控制层；再用任务级 latent、复合似然更新、VOI 决策、在线可靠性学习四块拼出一个工程上可实施、又保留概率解释的编排器。
 
 ### 关键设计
 
-1. **任务级 latent 信念 + 复合似然 Bayes 更新**:
+**1. 任务级 latent 信念 + 复合似然 Bayes 更新：把不确定性放在编排真正关心的低维变量上。**
 
-    - 功能：把不确定性表达在编排关心的低维变量上（任务结果 / 假设 / 工具能力），而不是 token 或参数。
-    - 核心思路：以代码生成为例，$Y\in\{0,1\}$ 表示候选代码是否通过全部单元测试。orchestrator 维护 $r_t(y)=p(Y=y\mid\mathcal{D}_{1:t})$，$\mathcal{D}_{1:t}=\{(i_s,Z_s):s\le t\}$ 是已 query 过的 agent 序列和消息序列。新观测按 $r_t(y)\propto r_{t-1}(y)p_{i_t}(z_t\mid y)^{\alpha_{i_t}}$ 更新，等价于在判别式预测 $q_i(y\mid z)$ 上写 $r_t(y)=r_{t-1}(y)\ell_{i_t}(y;z_t)^{\alpha_{i_t}}/Z$，其中 likelihood ratio $\ell_i(y;z)=q_i(y\mid z)/p_0(y)$。$\alpha_i$ 是 tempering 指数（generalized Bayes / power-posterior，Bissiri 2016），让噪声/相关性强的 agent 影响被自动减弱。
-    - 设计动机：传统朴素 Bayes 假设条件独立，但同源 LLM agent 输出明显相关（共享 prompt、底模）；tempering 是把这种相关性吸收到 likelihood 强度里的标准方法，比强行精确建模 joint 容易实现且鲁棒。这一招把"如何信赖每个 agent 的话"从启发式提升为可学的参数。
+决策需要的是任务级语义的不确定性（"这段代码会不会通过单元测试"），而 LLM 给的是 token 级或参数级的概率，两者尺度根本对不上，所以第一步是把信念从 LLM 内部搬出来、安置在一个低维决策变量上。以代码生成为例，令 $Y\in\{0,1\}$ 表示候选代码是否通过全部单元测试，orchestrator 维护后验 $r_t(y)=p(Y=y\mid\mathcal{D}_{1:t})$，其中 $\mathcal{D}_{1:t}=\{(i_s,Z_s):s\le t\}$ 是已 query 过的 agent 序列和它们返回的消息序列。每来一个新观测就按
 
-2. **Value-of-Information 驱动的动作选择**:
+$$r_t(y)\propto r_{t-1}(y)\,p_{i_t}(z_t\mid y)^{\alpha_{i_t}}$$
 
-    - 功能：决定下一次该 query 哪个 agent，或者是否该停下来返回结果/升级给人。
-    - 核心思路：每个 agent $i$ 有已知调用成本 $c_i>0$；从 Bayesian decision-theoretic 视角，下一步选 agent 来 maximize 后验期望效用减去成本：$a_t^\star=\arg\max_a\sum_h u(a,h)r_t(h)$，仅当某次 agent 调用的 expected value of information 超过其成本 $c_i$ 才发出调用。VOI 严格定义 = "调用前后效用差的期望"；可以用 one-step lookahead 或 amortized surrogate 来近似实时计算。
-    - 设计动机：固定 workflow（如"调用 3 个 agent 然后 ensemble"）在 short-horizon/low-stakes 还行，但任务变长、cost 不对称（safety 检查 vs unit test runner 价格悬殊）时无法适应。VOI 把"何时该多花钱多调"显式嵌进编排决策，提供 routing/stopping/escalation 的统一准则。在 incident diagnosis、多 agent debate 这类例子里，可以表达"如果当前最大后验置信度 < 阈值，再 query 一个 agent"。
+更新；若用判别式预测 $q_i(y\mid z)$，等价写成 $r_t(y)=r_{t-1}(y)\,\ell_{i_t}(y;z_t)^{\alpha_{i_t}}/Z$，其中 likelihood ratio $\ell_i(y;z)=q_i(y\mid z)/p_0(y)$。关键在指数 $\alpha_i$：它是 tempering 指数（generalized Bayes / power-posterior，Bissiri 2016）。朴素 Bayes 默认条件独立，但同源 LLM agent 共享 prompt、底模、检索 pipeline，输出明显相关，直接连乘 likelihood 会让 belief 过度自信；tempering 把这种相关性吸收进 likelihood 的强度里，比强行精确建模 joint 容易实现也更鲁棒，等于把"该多信赖每个 agent 的话"从启发式升格成一个可学的参数。
 
-3. **Agent reliability 在线学习 + 依赖感知证据池**:
+**2. Value-of-Information 驱动的动作选择：用一个 decision-theoretic 目标统一 routing / stopping / escalation。**
 
-    - 功能：跟踪每个 agent 在不同任务/分布上的表现，并安全聚合相关证据。
-    - 核心思路：定义 cumulative log-loss $L_i=\sum_{s:i_s=i}-\log q_i(y_s\mid z_s)$，按 exponential weights $w_i\propto\exp(-\beta L_i)$ 在线更新，normalize 后映成 tempering 系数 $\alpha_i=\alpha_\text{max}\tilde w_i$（Cesa-Bianchi & Lugosi 2006）。对于"同 agent 重复查询"导致的相关性，要么把交互历史进观测模型条件，要么扩充 latent state 增加 agent-specific shared error 变量；当 drift 检测到（rolling calibration diagnostics 出问题），自动加大 tempering 或触发 abstention/escalation。
-    - 设计动机：编排里有两类 corruption——agent 本身能力变化、消息间相关性。第一类用 exponential weights / Bayesian routing 处理；第二类用复合似然 + dependence-aware pooling 处理。整体让 belief 收敛"保守"——不会因几条相关消息就过度自信。同时定义出可验证的工程接口（confidence thresholds、cost scales），让生产系统可以暴露简单旋钮给用户。
+有了后验之后，下一步该 query 哪个 agent、还是干脆停下来返回结果或升级给人，全部交给同一个准则。每个 agent $i$ 有已知调用成本 $c_i>0$，从 Bayesian decision-theoretic 视角，动作选成最大化后验期望效用：
 
-### 损失函数 / 训练策略
-不是训练 LLM，而是 **编排器的元学习**：(a) 从带 outcome 标签的历史交互日志学 $q_i(y\mid z)$；(b) 在线更新 $\alpha_i$；(c) 用 held-out 任务做 calibration 校验（empirical coverage、proper scoring rules）；(d) 检测 drift 时 retemper。设计原则要求观测模型可从 measurable outcomes（pass/fail、human ratings、task completion）持续 recalibrate，这与 RLHF / online learning 的工程惯例完全兼容。
+$$a_t^\star=\arg\max_a\sum_h u(a,h)\,r_t(h),$$
+
+并且仅当某次 agent 调用的 expected value of information 超过其成本 $c_i$ 才真正发出调用——VOI 严格定义为"调用前后效用差的期望"，实时计算可用 one-step lookahead 或 amortized surrogate 近似。这一招是冲着固定 workflow 的短板来的：像"调 3 个 agent 然后 ensemble"这种写死的流程在 short-horizon/low-stakes 还够用，可一旦任务变长、成本高度不对称（一个 safety 检查和一个 unit-test runner 的价钱差很多），固定流程就无法自适应。VOI 把"何时值得多花钱多调一次"显式量化进编排决策，在 incident diagnosis、多 agent debate 这类场景里可以直接表达成"当前最大后验置信度低于阈值就再 query 一个 agent"。
+
+**3. Agent reliability 在线学习 + 依赖感知证据池：让 belief 收敛得保守，并能持续自校准。**
+
+编排里有两类 corruption 要处理——agent 自身能力随分布漂移、以及消息之间的相关性——这一块把两者一并管起来。对前者，定义累计 log-loss $L_i=\sum_{s:i_s=i}-\log q_i(y_s\mid z_s)$，按 exponential weights $w_i\propto\exp(-\beta L_i)$ 在线更新，归一化后映成 tempering 系数 $\alpha_i=\alpha_\text{max}\tilde w_i$（Cesa-Bianchi & Lugosi 2006），表现差的 agent 影响自动被压低。对后者（尤其"同一 agent 反复查询"带来的相关性），要么把交互历史并进观测模型的条件，要么扩充 latent state、引入 agent-specific 的 shared-error 变量；一旦 rolling calibration diagnostics 检出 drift，就自动加大 tempering 或触发 abstention/escalation。这两条合起来让 belief 不会因为几条相关消息就过度自信。值得强调的是，这里训练的不是 LLM 而是 **编排器自身的元学习**：$q_i(y\mid z)$ 从带 outcome 标签的历史交互日志学得，$\alpha_i$ 在线更新，再用 held-out 任务做 calibration 校验（empirical coverage、proper scoring rules），检测到 drift 就 retemper。设计原则要求观测模型能从 measurable outcomes（pass/fail、human ratings、task completion）持续 recalibrate，这与 RLHF / online learning 的工程惯例完全兼容，也顺带定义出可验证的工程接口（confidence thresholds、cost scales），让生产系统能把简单旋钮暴露给用户。
 
 ## 实验关键数据
 

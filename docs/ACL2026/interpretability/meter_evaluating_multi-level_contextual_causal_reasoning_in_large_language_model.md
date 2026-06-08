@@ -45,33 +45,27 @@ METER 是首个在**统一上下文**下系统评测 LLM 三层因果推理（di
 ## 方法详解
 
 ### 整体框架
-METER 包含两大块：(A) **Benchmark 构造** —— 从 4 个源数据集（ESL/MAVEN-ERE/MECI/WIKIWHY）抽取 cause-effect pair，用 Gemini-2.5-Pro 扩展事件描述、生成问题 + 答案 + 4 类 distractor，经 9 名 NLP 背景标注员的三阶段人审，最终得到 4145 个 entry（每个 entry 一个 context + 三层 multiple-choice 问题，5 选项）。(B) **评测 + 机制分析** —— 用 12 个 LLM（GPT-4o/GPT-5/Gemini-3 系列/Qwen3 全尺寸/Llama-3.3-70B）在 4 种 prompting 策略下评测三层 accuracy，并对 Qwen3-4B/8B 和 Llama-3.2-3B 做基于 Wang et al. 2023 saliency-based 的层级信息流分析。
+METER 把「LLM 在因果阶梯上的能力衰减」做成一个可严格量化的现象，由数据与分析两条线串起来。数据线从 ESL/MAVEN-ERE/MECI/WIKIWHY 四个源数据集抽 cause-effect pair，用 Gemini-2.5-Pro 扩展事件描述并按模板生成三层问题、答案和四类 distractor，经 9 名 NLP 背景标注员的三阶段人审，最终落成 4145 个 entry——每个 entry 一段 context 同时挂 L1/L2/L3 三道 5 选 multiple-choice，做到「同一事实、三层对比」的控制变量。分析线则在这套数据上跑 12 个 LLM（GPT-4o/GPT-5、Gemini-3 系列、Qwen3 全尺寸、Llama-3.3-70B）× 4 种 prompting，先量出三层 accuracy 的衰减，再对 Qwen3-4B/8B 和 Llama-3.2-3B 做 saliency-based 信息流分析，把「行为层失败」一路追到「机制层信息流」。
 
 ### 关键设计
 
-1. **三层因果定义的 linguistic 翻译（benchmark 理论基础）**:
+**1. 把 Pearl 因果阶梯翻译成可操作的语言任务。**
 
-    - 功能：把 Pearl 因果阶梯三层从概率域映射到自然语言任务，让每层都有清晰、可操作的判定标准。
-    - 核心思路：(L1) **Causal Discovery**：从文本中识别已存在的因果关系，靠显式词汇（"caused/because"）或隐式语义。例：从临床报告中识别"thrombotic occlusion → myocardial ischemia"。(L2) **Intervention**：预测在 context 中"引入新动作"会带来什么后果，需多步因果链推理。例："如果做 PCI 会怎样" 要求 perform PCI → clear occlusion → restore blood flow。(L3) **Counterfactual**：反事实——反转已知条件推测如果当初不同会怎样。例："如果当初没堵塞，伤害本来不会发生"。
-    - 设计动机：直接套 Pearl 的数学定义到 LLM 评测无法操作；这种"基于动词 / 时序 / 修改维度"的语言化定义让每层问题模板都能被批量生成。L2 vs L3 关键区别在于：L2 在现实事实上 forward 推理；L3 在与现实冲突的假设上推理，这要求 LLM 真正"模拟反事实世界"而非死记现实。
+直接拿 Pearl 三层的数学定义去评 LLM 没法落地，于是作者按「动词 / 时序 / 修改维度」把每层重写成可批量套模板的语言任务。L1 **Causal Discovery** 是从文本里识别已存在的因果（靠显式词汇 "caused/because" 或隐式语义），如从临床报告读出 "thrombotic occlusion → myocardial ischemia"；L2 **Intervention** 是预测在 context 里「引入新动作」的后果、需多步链式推理，如「做 PCI 会怎样」要走 perform PCI → clear occlusion → restore blood flow；L3 **Counterfactual** 是反转已知条件推「当初不同会怎样」，如「如果当初没堵塞，伤害本来不会发生」。
 
-2. **统一 context + 四类 distractor 的可控数据构造（数据集核心）**:
+这种语言化定义让每层都有清晰可判定的标准，也才能让问题模板批量生成。其中 L2 与 L3 的关键分野在于：L2 是在现实事实上 forward 推理，L3 则要在与现实冲突的假设上推理——后者逼着 LLM 真去「模拟反事实世界」而不是复述现实，这正是高层因果难的根源。
 
-    - 功能：让同一段 context 同时挑战 LLM 在三层上的能力，并通过精心设计的错误选项暴露不同失败模式。
-    - 核心思路：每个 entry 严格保证 "1 context + 3 question (L1/L2/L3)" 结构；context 平均 228.91 token；每题 5 个选项中含 1 正答 + 4 distractor，distractor 来自四个预定义类别：
-        - **Contradictory Statement**：与 context 事实直接冲突；
-        - **Unfounded Statement**：context 里没提到也推不出来（典型幻觉）；
-        - **Causal Reversal**：因果方向反了（"果"当成"因"）；
-        - **Irrelevant Fact**：context 里的真实陈述但与因果链无关。
-        
-        构造流水线四阶段：(i) data preparation——用三个 LLM (Gemini-2.5-Pro、GPT-5、Qwen3-235B) 一致同意 "无上下文也能答对" 的 pair 全部 de-contaminate 掉；(ii) 人工三标注 (Fleiss κ=0.78) 过滤；(iii) Gemini-2.5-Pro 按预设 template 生成问题 + 答案 + distractor；(iv) 9 名标注员两阶段人工编辑 + 过滤 (Fleiss κ=0.71/0.75)。
-    - 设计动机：(1) 统一 context 排除"题目难度差异"的混淆，把三层差距归因到 model 能力本身；(2) 四类 distractor 是精心针对常见失败模式设计的"诊断探针"——比如选 Irrelevant Fact 就暴露"被无关细节干扰"，选 Unfounded 就暴露"幻觉"，使错误分布可解释；(3) 三 LLM ensemble + 90% 过滤率 + 三人独立标注最大化防数据污染与质量噪声。
+**2. 统一 context + 四类 distractor 的可控数据构造。**
 
-3. **基于 Saliency 的层级信息流分析（机制核心创新）**:
+要把三层差距干净地归因到模型能力，就得排除「题目难度差异」这个混淆，所以每个 entry 严格保持「1 context（平均 228.91 token）+ 3 question」结构，三层共享同一段事实。每题 5 选项 = 1 正答 + 4 distractor，而四类 distractor 本身就是针对常见失败模式设计的诊断探针：**Contradictory**（与 context 事实直接冲突）、**Unfounded**（context 没提也推不出，典型幻觉）、**Causal Reversal**（因果方向反了）、**Irrelevant Fact**（context 里的真陈述但与因果链无关）——模型选了哪类错就暴露哪种 failure，使错误分布可解释。
 
-    - 功能：从"行为层 accuracy" 钻到"机制层信息流"，揭示 LLM 在不同因果层失败的内部原因。
-    - 核心思路：基于 Wang et al. 2023，对每个 token-pair $(i,j)$ 计算 saliency $I_l(i,j) = \sum_h |A_{h,l}^\top \frac{\partial \mathcal{L}}{\partial A_{h,l}}|$，并定义"段→段"的平均信息流 $S_{X \to Y} = \frac{\sum_{(i,j) \in \mathcal{C}_{X \to Y}} I_l(i,j)}{|\mathcal{C}_{XY}|}$。把 prompt 分成 5 个段：**E**（evidence span，人标）、**N**（non-evidence）、**Q**（question）、**O**（selected option）、**T**（target final token）。重点跟踪五个指标 $S_{E\to O}, S_{N\to O}, S_{Q\to O}, S_{O\to T}, S_{rest}$ 在层数上的变化，并比较 Correct vs Error 子集的差异。验证手段：attention masking——把 shallow layers (1-24) 的 $E\to O$ flow 屏蔽，看 accuracy 是否下降（确实在 Discovery 任务上从 0.827 掉到 0.579，验证 evidence aggregation 主要发生在浅层）。
-    - 设计动机：accuracy 只能告诉"模型多差"，不能解释"模型差在哪里"。Saliency-based information flow 把 attention 的 raw 数值变成"信号传递强度"，配合人标 evidence span，可以严格定位"模型有没有真去看证据"。这套方法是当前 mechanistic interpretability 与 benchmark 评测的漂亮缝合。
+构造流水线四阶段层层防污染防噪：(i) 用 Gemini-2.5-Pro、GPT-5、Qwen3-235B 三个 LLM 一致同意「无 context 也能答对」的 pair 全部 de-contaminate 掉；(ii) 人工三标注（Fleiss κ=0.78）过滤；(iii) Gemini-2.5-Pro 按预设 template 生成问题/答案/distractor；(iv) 9 名标注员两阶段人工编辑 + 过滤（Fleiss κ=0.71/0.75）。三 LLM ensemble + 90% 过滤率 + 三人独立标注共同把数据污染和质量噪声压到最低。
+
+**3. 基于 saliency 的层级信息流分析。**
+
+Accuracy 只能说「模型多差」，说不清「差在哪里」，所以作者借 Wang et al. 2023 的 saliency-based information flow 把行为指标钻到机制层。对每个 token-pair $(i,j)$ 计算 saliency $I_l(i,j) = \sum_h |A_{h,l}^\top \frac{\partial \mathcal{L}}{\partial A_{h,l}}|$，再定义「段→段」的平均信息流 $S_{X \to Y} = \frac{\sum_{(i,j) \in \mathcal{C}_{X \to Y}} I_l(i,j)}{|\mathcal{C}_{XY}|}$。prompt 被切成五段——**E**（人标 evidence span）、**N**（non-evidence）、**Q**（question）、**O**（selected option）、**T**（target final token），重点跟踪 $S_{E\to O}, S_{N\to O}, S_{Q\to O}, S_{O\to T}, S_{rest}$ 随层数的变化并对比 Correct vs Error 子集。
+
+配合人标 evidence span，这套指标能严格回答「模型有没有真去看证据」：Discovery 错样本上 evidence flow 显著降、noise flow 显著升，正对应「被无关事实分心」。最后再用 attention masking 做因果验证——屏蔽浅层（1-24）的 $E\to O$ flow 后 Discovery acc 从 0.827 掉到 0.579，坐实 evidence aggregation 主要发生在浅层。这套做法把 mechanistic interpretability 与 benchmark 评测漂亮地缝在了一起。
 
 ### 损失函数 / 训练策略
 **纯评测项目，无训练**。所有 closed-source LLM 走官方 API；open-source LLM 用 vLLM 在 4×A100 上推理；decoding temperature=0；Zero-shot/Zero-shot CoT/Few-shot/Few-shot CoT 四种 prompting；reasoning-optimized 模型 (GPT-5/Gemini-3-Pro/Qwen3-Next-Thinking) 只跑 Zero-shot 和 Few-shot；evaluation metric=accuracy；所有结果 3 次独立 run 取平均。

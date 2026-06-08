@@ -41,30 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ModeX 是个三步可视化的 pipeline（Figure 2）：（1）**邻接矩阵构造**：对 N 条采样输出，用 unigram + bigram + trigram 的 Jaccard 相似度之和作为边权，构造对称矩阵 $A \in \mathbb{R}^{N \times N}$；（2）**递归谱聚类**：算图 Laplacian $L = D - A$ 的 Fiedler 向量（第二小特征向量）做二分，用 conductance $\phi$ 判定切口质量，若 $\phi < \tau$（$\tau=0.8$）则保留更大的子簇继续递归，否则停止；（3）**中心度选 centroid**：在最终簇里选加权度数最大的节点 $v_c = \arg\max_i \sum_j \tilde{A}_{ij}$ 作为输出。整个过程零神经网络重评估，复杂度 $\mathcal{O}(N^2)$ 远小于生成本身的 $\mathcal{O}(NL)$。文中还给了一个轻量变体 ModeX-Lite，把谱聚类用于**生成中途剪枝**。
+ModeX 要在没有 reward model、也没有 exact-match 投票的前提下，从 N 条开放式采样里挑出"最可能正确"的一条。它的核心假设是：高质量生成在语义空间里会聚成致密簇，幻觉/异常输出则像稀疏外点，于是选样问题等价于"找最致密语义簇的中心"。具体走三步：先把 N 条采样两两算 n-gram Jaccard 相似度，构成边权矩阵 $A\in\mathbb{R}^{N\times N}$；再对这张图做递归谱聚类，沿 Fiedler 向量反复二分、用 conductance 判断是否真有缝可切，逐层剥离出主模态簇；最后在簇内选加权度数最高的节点作为 centroid 输出。输入是一组采样文本，中间是一张相似度图及其主模态簇，输出是簇心那一条答案。全程零神经网络重评估，复杂度 $\mathcal{O}(N^2)$ 远小于生成本身的 $\mathcal{O}(NL)$；作者另给一个轻量变体 ModeX-Lite，把谱聚类下沉到生成中途做剪枝。
 
 ### 关键设计
 
-1. **n-gram Jaccard 相似度图（替代 exact match / 嵌入）**:
+**1. n-gram Jaccard 相似度图：给开放文本的"像不像"一个数学定义。**
 
-    - 功能：把"开放文本之间有多像"量化为图的边权，让 majority voting 在无限输出空间里有数学定义。
-    - 核心思路：$A_{i,j} = s_1(v_i, v_j) + s_2(v_i, v_j) + s_3(v_i, v_j)$，其中 $s_k$ 是 $k$-gram 集合的 Jaccard。3 阶 n-gram 同时捕获词汇覆盖（unigram）、短语流畅度（bigram）、结构信息（trigram）。Appendix F 的消融显示移除 trigram 降点最多，符合"高阶 n-gram 信息量大"的直觉。
-    - 设计动机：作者对比过 LastTokenEmb 和 SentenceBERT 两种嵌入相似度（Table 3），n-gram 在三项任务上全面更好——因为代码/数学这类强结构任务靠嵌入抓不到关键 token，而 Jaccard 直接对齐到具体 token / 句法片段。
+在无限输出空间里，exact-match 投票失效，必须先把"两条文本有多像"量化成图的边权。ModeX 用三阶 n-gram 的 Jaccard 之和 $A_{i,j}=s_1(v_i,v_j)+s_2(v_i,v_j)+s_3(v_i,v_j)$，其中 $s_k$ 是 $k$-gram 集合的 Jaccard：unigram 抓词汇覆盖、bigram 抓短语流畅度、trigram 抓结构信息，Appendix F 显示去掉 trigram 掉点最多，印证高阶 n-gram 信息量更大。
 
-2. **递归 Fiedler 向量谱聚类（自适应簇数 + 模态分离）**:
+作者对比过 LastTokenEmb 和 SentenceBERT 两种嵌入相似度（Table 3），n-gram 在三项任务上全面更优——代码/数学这类强结构任务里，嵌入抓不到关键 token，而 Jaccard 能直接对齐到具体 token 和句法片段。
 
-    - 功能：从 N 条采样里自动找出"主模态"，无需预设 $K$。
-    - 核心思路：解 $f = \arg\min_{u^\top \mathbf{1}=0, \|u\|=1} u^\top L u$，按 $f_i \ge 0$ 二分，再用 conductance $\phi(\mathcal{G}_1, \mathcal{G}_2) = \mathrm{cut} / \min(\mathrm{vol}_1, \mathrm{vol}_2)$ 判定是否"真的有缝可切"。若 $\phi < 0.8$ 则保留更大子簇递归，否则停。理论上对应 Cheeger 不等式 $\lambda_2 / 2 \le \phi^* \le \sqrt{2\lambda_2}$，在大 $N$ 极限下 Fiedler 切等价于切过两个模态之间的"低密度山谷"。
-    - 设计动机：固定 $K$ 的 K-means 不适合不同任务/输入下模态数变化的场景；递归二分 + conductance 阈值是参数最少的"自适应聚类"，且 conductance 比 normalized cut 更稳定（Figure 5 消融）。
+**2. 递归 Fiedler 向量谱聚类：不预设簇数，自适应切出主模态。**
 
-3. **度中心度选 centroid = 经验 KDE 峰值**:
+不同任务、不同输入下的模态数会变，固定 $K$ 的 K-means 并不合适。ModeX 改用谱聚类做参数最少的自适应聚类：解 $f=\arg\min_{u^\top\mathbf{1}=0,\|u\|=1} u^\top L u$ 得到 Fiedler 向量（图 Laplacian $L=D-A$ 的第二小特征向量），按 $f_i\ge 0$ 把图二分，再用 conductance $\phi(\mathcal{G}_1,\mathcal{G}_2)=\mathrm{cut}/\min(\mathrm{vol}_1,\mathrm{vol}_2)$ 判断这一刀切得是否干净。若 $\phi<\tau$（$\tau=0.8$）说明确有低密度缝隙，保留更大的子簇继续递归，否则停止。
 
-    - 功能：在主簇里挑出"最有代表性"的一条输出作为最终答案。
-    - 核心思路：在子簇邻接矩阵 $\tilde{A}$ 上选最大度节点 $v_c = \arg\max_i \sum_j \tilde{A}_{ij}$。理论上，把 Jaccard 视为 kernel $K(\cdot, \cdot)$，则加权度 $d(v_i) = \sum_j S(v_i, v_j) \propto \hat{p}(v_i)$ 就是该点的核密度估计——选最大度等于选**单峰簇内的 mode**。
-    - 设计动机：把"开放式 majority voting"严格化——从离散计数变成连续 KDE 峰值估计；Theorem 2 给出这一对应的形式化证明。
+这套递归对应 Cheeger 不等式 $\lambda_2/2\le\phi^\ast\le\sqrt{2\lambda_2}$：在大 $N$ 极限下，Fiedler 切等价于沿两个模态之间的"低密度山谷"下刀；用 conductance 当阈值也比 normalized cut 更稳定（Figure 5 消融）。
+
+**3. 度中心度选 centroid：把 majority voting 严格化成 KDE 峰值。**
+
+主模态簇定下来后，还要从中挑一条最具代表性的输出。ModeX 在子簇邻接矩阵 $\tilde{A}$ 上选加权度数最大的节点 $v_c=\arg\max_i\sum_j\tilde{A}_{ij}$。这个看似朴素的"选连接最多的点"其实有严格意义：把 Jaccard 视为 kernel，则加权度 $d(v_i)=\sum_j S(v_i,v_j)\propto\hat{p}(v_i)$ 正是该点的核密度估计，选最大度就等于选单峰簇内的 mode。
+
+由此，开放式选样从"离散数票"被翻译成"连续 KDE 峰值估计"，Theorem 2 给出了这一对应的形式化证明。
 
 ### 损失函数 / 训练策略
-完全 training-free，只在 inference 时跑：N 条采样并行生成 → 构图 → 递归聚类 → 选 centroid。超参数仅有 conductance 阈值 $\tau = 0.8$ 和 ModeX-Lite 的剪枝间隔 $T = 100$ tokens；敏感性实验显示二者在合理范围内（$\tau \in [0.5, 0.8]$、$T \in [100, 500]$）性能稳定。
+完全 training-free，只在 inference 时跑：N 条采样并行生成 → 构图 → 递归聚类 → 选 centroid。超参数仅有 conductance 阈值 $\tau=0.8$ 和 ModeX-Lite 的剪枝间隔 $T=100$ tokens；敏感性实验显示二者在合理范围内（$\tau\in[0.5,0.8]$、$T\in[100,500]$）性能稳定。
 
 ## 实验关键数据
 

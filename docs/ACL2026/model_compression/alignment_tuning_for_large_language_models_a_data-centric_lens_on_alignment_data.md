@@ -56,23 +56,24 @@ tags:
 这三个阶段不是线性独立的。response synthesis 限定 evaluation 的上限；evaluation 的粒度和维度决定 instantiation 能建模什么；instantiation 更新策略后，又会改变下一轮 synthesis 的候选分布。因此 alignment tuning 更像闭环控制系统，而不是一次性数据清洗。
 
 ### 关键设计
-1. **三阶段数据中心 taxonomy**:
 
-    - 功能：把 alignment tuning 的数据来源、偏好评估和训练信号结构拆开分析，避免把所有差异都归因于 PPO/DPO/GRPO 这样的优化算法名称。
-    - 核心思路：论文把 response synthesis 进一步拆成 response source、selection strategy、creative exploration；把 preference evaluation 拆成 adjudicator type、judgement granularity、objective dimensionality；把 preference instantiation 拆成 point-wise、pair-wise、group-wise/list-wise。Table 5 用这些维度对 41 个代表方法做分类。
-    - 设计动机：很多 alignment failure 是管线错配而不是 loss 错误。例如用 outcome-level 二值标签去训练 token-level 偏好目标，本质上没有足够细的监督；用离线强模型回答训练当前弱模型，可能产生 distribution shift；用单一 reward 表示安全性和有用性，会掩盖 Pareto trade-off。
+**1. 三阶段数据中心 taxonomy：把对齐失败的归因从"loss 写错了"改成"管线哪一段信号被污染"。**
 
-2. **从数据构造解释优化信号**:
+人们习惯把 alignment 的好坏挂在 PPO/DPO/GRPO 这些算法名字上，可算法只是消费已经构造好的偏好信号，真正决定信号质量的是它前面那条数据链。论文沿着这条链把每一阶段再切细：response synthesis 拆成 response source、selection strategy、creative exploration；preference evaluation 拆成 adjudicator type、judgement granularity、objective dimensionality；preference instantiation 拆成 point-wise、pair-wise、group-wise/list-wise，并用 Table 5 沿这些维度给 41 个代表方法归位。
 
-    - 功能：把 alignment 的“学习目标”从抽象的人类偏好，落到数据管线实际提供的候选集和偏好结构上。
-    - 核心思路：论文用 $\mathcal{D}=\{(x, \mathbf{y}, \mathbf{s})\}$ 表示 alignment data，其中 $\mathbf{y}$ 来自 synthesis 策略，$\mathbf{s}$ 来自 evaluator。训练时模型并不是直接最大化真实偏好，而是最大化由这些样本诱导的偏好 margin。PPO 使用 point-wise reward，DPO 使用 pair-wise contrast，GRPO 使用 group-relative baseline，本质上都是在不同结构的偏好数据上校准策略 margin。
-    - 设计动机：这个抽象能解释为什么“改 loss”经常不够。若 synthesis 阶段只产生平庸或高度相似的候选，DPO 再强也只能学到弱边界；若 evaluator 存在长度偏置、位置偏置或模型家族偏置，优化器会把这些偏差当成真实偏好；若 instantiation 过早压缩多维信号，模型会沿着最容易优化的维度投机。
+这套坐标系的价值在于，它能把很多"看起来是 loss 的锅"还原成管线错配。用 outcome-level 的二值标签去喂 token-level 的偏好目标，本质是监督粒度不够细；用离线强模型的回答训练当前的弱策略，会引入 distribution shift；把安全性和有用性压进同一个标量 reward，则直接掩盖了二者的 Pareto trade-off。换句话说，诊断时该先定位是哪一段信号出了问题，而不是急着换优化器。
 
-3. **面向约束的实践指南**:
+**2. 从数据构造解释优化信号：把抽象的"人类偏好"落到管线实际给出的候选集和偏好结构上。**
 
-    - 功能：把 taxonomy 转成实际 pipeline 选择建议，让不同资源条件下的 alignment 设计更可操作。
-    - 核心思路：论文在 Table 2-4 分别给出 response synthesis、preference evaluation、preference instantiation 的约束-策略映射，并在 Appendix B / Table 6 组合成端到端场景配置。例如低预算 general chat 适合离线数据 + 预标注/启发式评估 + reference-free pair-wise 目标；复杂推理适合多 rollout + step-level verifier + group-wise 训练；安全合规则更需要 red-teaming prompt、多维评价和 multi-objective 优化。
-    - 设计动机：alignment pipeline 的最优配置取决于数据可得性、任务复杂度和计算预算。论文没有追求一个通吃算法，而是强调组件之间要匹配：哪里缺数据就补 on-policy synthesis，哪里评价难就提高 granularity，哪里显存紧张就避免 reward/reference model，哪里目标冲突就不要把 reward scalarize。
+对齐的学习目标常被说成"对齐人类偏好"，但模型从没见过真实偏好，它见到的只有数据。论文把 alignment data 形式化为 $\mathcal{D}=\{(x, \mathbf{y}, \mathbf{s})\}$，其中候选 $\mathbf{y}$ 来自 synthesis 策略、偏好信号 $\mathbf{s}$ 来自 evaluator；训练时模型最大化的不是真实偏好，而是这些样本诱导出的偏好 margin。PPO 用 point-wise reward、DPO 用 pair-wise contrast、GRPO 用 group-relative baseline，归根到底都是在不同结构的偏好数据上校准这条 margin。
+
+这一抽象解释了"为什么单改 loss 经常不管用"：synthesis 阶段只产出平庸或高度雷同的候选，DPO 再强也只能学到一条软弱的边界；evaluator 带着长度、位置或模型家族偏置，优化器就会把这些偏差当成真实偏好照单全收；instantiation 过早把多维信号压成单值，模型则会沿最容易优化的那一维投机。margin 的覆盖、保真和结构，全在算法之前就被数据决定了。
+
+**3. 面向约束的实践指南：把分类表翻译成"什么预算配什么管线"的可操作选型。**
+
+光有 taxonomy 还停在描述层面，论文进一步在 Table 2-4 分别给出 synthesis、evaluation、instantiation 三阶段的"约束→策略"映射，并在 Appendix B / Table 6 把它们拼成端到端的场景配置。比如低预算 general chat 适合离线数据 + 预标注/启发式评估 + reference-free pair-wise 目标；复杂推理适合多 rollout + step-level verifier + group-wise 训练；安全合规则离不开 red-teaming prompt、多维评价和 multi-objective 优化。
+
+它的立场是不追求一个通吃算法，而是强调组件要彼此匹配：哪里缺数据就补 on-policy synthesis，哪里评价难就提高 granularity，哪里显存紧张就绕开 reward/reference model，哪里目标冲突就别把 reward scalarize。最优配置本就随数据可得性、任务复杂度和算力预算漂移，所以"选管线"才是比"选 loss"更前置的决策。
 
 ### 损失函数 / 训练策略
 本文没有提出新的损失函数，但把主流训练策略放在同一个信号结构里解释。

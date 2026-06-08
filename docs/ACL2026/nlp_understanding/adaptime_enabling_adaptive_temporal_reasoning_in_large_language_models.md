@@ -41,27 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AdapTime 由 4 个模块组成：3 个原子推理动作（Reformulate / Rewrite / Review）+ 1 个 LLM Planner。给定文档 $C$ 和时序问题 $Q$，Planner 先决定是否要把 $Q$ 拆解为子问题序列 $\{q_1,\ldots,q_n\}$；接着判断是否要把 $C$ 重写为以时间为锚的结构化表示；然后对每个子问题在重写后的上下文上生成答案 $A_i$ 并聚合；最后由 Planner 判断对答案信心是否足够，决定是否触发 Review 做事实核验。整套流程不调用任何外部 API、不依赖任何手工规则。
+AdapTime 把时序推理拆成 3 个原子动作（Reformulate / Rewrite / Review）加 1 个 LLM Planner，四者用同一个 backbone、纯 prompt 实现，不调用任何外部工具。给定文档 $C$ 和时序问题 $Q$，Planner 在每个潜在动作点先做一次"是/否"决策：要不要先把 $Q$ 拆成子问题、要不要把 $C$ 重写成时间锚定的结构化表示、初始答案信心够不够要不要做事实核验。被选中的动作依次执行、子答案聚合，最终给出答案——简单题可能一步直答，难题才会走满三步。
 
 ### 关键设计
 
-1. **三个原子时序推理动作**：
+**1. 三个原子时序推理动作：把已有方法的核心操作收敛成 LLM 能自主完成的最小动作集。**
 
-    - 功能：把已有 temporal reasoning 方法的核心操作抽象为 LLM 可自主完成的最小动作集，覆盖"问题分解 / 上下文改写 / 答案核验"三种基本能力。
-    - 核心思路：(a) **Reformulate**——prompt LLM 把含复杂时间约束或多跳的问题分解为 $Q=\{q_1,\ldots,q_n\}$，每个 $q_i$ 单点可答，最终答案由子答案聚合得到，例如 "Cooper 在某时间段担任什么职位" 被拆成 "Cooper 担任过哪些职位"+"哪个职位的时间区间覆盖目标时段"；(b) **Rewrite**——prompt LLM 把"during his presidency""after the war ended"这种隐式时间表达改写成以日历日期为锚的显式时间线（code/timeline/temporal graph 任一形式），下游模块就能直接在时间锚定的事实上推理；(c) **Review**——prompt LLM 检索能支撑当前答案的原文句子，若证据缺失或冲突则修正答案。
-    - 设计动机：这三个动作覆盖了 QAaP / Time-CoT / Event-AL / TG-LLM / TISER 的所有关键操作，但每个都纯 prompt 实现，去掉了对 Python interpreter / 手工 timeline / 难例标注的依赖；同时三个动作正交解耦，可任意组合。
+现有 temporal QA 方法形式各异，但本质都在做"问题分解 / 上下文改写 / 答案核验"三件事之一，本文把它们抽象成三个纯 prompt 的正交动作。**Reformulate** 让 LLM 把含复杂时间约束或多跳的问题分解为 $Q=\{q_1,\ldots,q_n\}$，每个 $q_i$ 单点可答、最后聚合，例如 "Cooper 在某时间段担任什么职位" 拆成 "Cooper 担任过哪些职位" + "哪个职位的时间区间覆盖目标时段"。**Rewrite** 让 LLM 把 "during his presidency""after the war ended" 这类隐式时间表达改写成以日历日期为锚的显式时间线（code / timeline / temporal graph 任一形式），下游就能直接在锚定事实上推理。**Review** 让 LLM 检索能支撑当前答案的原文句子，证据缺失或冲突时修正答案。
 
-2. **LLM Planner 自适应规划**：
+这三个动作覆盖了 QAaP / Time-CoT / Event-AL / TG-LLM / TISER 的全部关键操作（表 1 给了逐项对照），但每个都是纯 prompt，去掉了对 Python interpreter、手工 timeline、难例标注的依赖，且三者正交解耦、可任意组合。
 
-    - 功能：根据问题的语义结构、上下文的时序复杂度、以及模型对中间答案的信心，动态决定执行哪些动作、是否跳过某些步骤。
-    - 核心思路：Planner 同样是 LLM prompt（与执行用同一个 backbone），在每个潜在动作点都调用一次：先看 $Q$ 是否含多跳→决定是否 Reformulate；再看 $C$ 的时间表达是否模糊或分散→决定是否 Rewrite；最后看初始答案的可信度→决定是否 Review。决策以自然语言形式给出（"是 / 否 + 简短理由"），不强制走完所有步骤。算法 1 给出了完整伪代码：每一步都被 Planner 的二元决策 $d_i$ 门控。
-    - 设计动机：固定 pipeline 在简单问题上做"过度推理"反而引入噪声，在难题上又力不从心；让 Planner 看一眼问题再决定走多深，能把推理预算花在真正需要的地方。论文统计图 3 显示：TimeQA 上 Reformulate 频率高（多为可拆解的多跳），TempReason-L2/L3 上 Rewrite + Review 频率显著高于 TimeQA（时间线复杂、初始答案可信度低）。
+**2. LLM Planner 自适应规划：让模型看一眼问题再决定走多深。**
 
-3. **基于内置能力的 zero-tool 推理**：
+固定 pipeline 对所有问题都按同一套顺序跑，简单题被过度推理反而引入噪声，难题又步骤不够推不出来。AdapTime 用一个同样是 LLM prompt 的 Planner（与执行共用 backbone）在每个动作点各调用一次：先看 $Q$ 是否多跳→决定是否 Reformulate；再看 $C$ 的时间表达是否模糊分散→决定是否 Rewrite；最后看初始答案可信度→决定是否 Review。每次决策以自然语言"是/否 + 简短理由"给出，由二元决策 $d_i$ 门控对应动作，不强制走完所有步骤（完整伪代码见算法 1）。
 
-    - 功能：所有动作、所有决策都由 LLM 自身能力完成，不调用任何外部工具/retriever/symbolic solver。
-    - 核心思路：把过去用 Python interpreter 做的"事实匹配"改成 prompt LLM 检索原文支撑句子；把过去用 retriever 做的"长文档压缩"改成 prompt LLM 把相关段落改写为时间线表示；把过去靠人工补的难例标注改成 prompt LLM 重新分解问题。
-    - 设计动机：依赖外部工具是当前 temporal QA 方法泛化性差的根本原因——一旦换 domain 或换数据源，工具/规则就需要重新搭建。把所有能力收回到 LLM 内部，方法就能 zero-shot 迁移到新场景（论文在 SWE-bench 风格的 ArchivalQA 开放域上 work 也佐证了这一点）。
+这样推理预算就花在真正需要的地方。论文图 3 的统计佐证了 Planner 确实做了任务感知的差异化决策：TimeQA 上 Reformulate 频率高（问题多为可拆解的多跳），TempReason-L2/L3 上 Rewrite + Review 频率显著高于 TimeQA（时间线复杂、初始答案可信度低）。
+
+**3. 基于内置能力的 zero-tool 推理：把工具调用全部内化成 prompt。**
+
+依赖外部工具是当前 temporal QA 泛化性差的根因——换 domain 或换数据源，工具和规则就得重搭。AdapTime 把过去交给外部组件的活全收回 LLM 内部：原本用 Python interpreter 做的"事实匹配"改成 prompt LLM 检索原文支撑句，原本用 retriever 做的"长文档压缩"改成 prompt LLM 把相关段落改写成时间线，原本靠人工补的难例标注改成 prompt LLM 重新分解问题。所有能力收回内部后，方法就能 zero-shot 迁移到新场景（在开放域 ArchivalQA 上仍 work 也佐证了这点）。
+
+### 一个完整示例
+以问题 "Terence Cooper 在 1966 年 3 月到 1969 年 10 月之间担任什么职位？" 为例走一遍：Planner 先判断这是带时间区间约束的多跳问题 → 触发 **Reformulate**，拆成 $q_1$="Cooper 担任过哪些职位及任期" 和 $q_2$="哪个任期覆盖 1966-03 到 1969-10"。接着 Planner 看到文档里职位时间多以 "during his tenure""until his resignation" 这类隐式表达出现 → 触发 **Rewrite**，把相关段落改写成以日历日期为锚的时间线（如 "Governor: 1966-03 ~ 1969-10"）。在锚定后的时间线上回答 $q_1, q_2$ 并聚合得到候选答案。最后 Planner 评估答案信心，若不够确定 → 触发 **Review**，回到原文检索能支撑该职位的句子，证据一致则定稿、冲突则修正。一道简单的 "美国现任总统是谁" 则会被 Planner 判为单跳直答，三步全部跳过。
 
 ### 损失函数 / 训练策略
 完全免训练，只用 prompt 调度。decoding 用 top-k=10，temperature=0.7，batch_size=1，max_new_tokens=512。论文还尝试用 1000 条 DeepSeek-V3 生成的高质量 plan 蒸馏一个 LLaMA-3-8B 监督 Planner，反而比 prompt-based Planner 差（TimeQA-Easy 31.0 vs 41.5 EM），说明 in-context 规划能力比 fine-tuned 规划器更鲁棒、不易过拟合。

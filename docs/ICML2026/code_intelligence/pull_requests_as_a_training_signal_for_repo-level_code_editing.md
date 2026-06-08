@@ -41,32 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Clean-PR 是一个两阶段训练 + 一条数据流水线的完整 recipe：
-
-- **数据构造（左半）**：8.6 TB 原始 GitHub 数据 → 噪声过滤（PR 有效性 + 语言对齐） → Search/Replace 重构（基于 patch 回放的 round-trip 验证） → Issue 增强（拼接 linked issue 的 title/description） → Clean-PR-full（3.05M / 46.4B tokens） → 复杂度控制 + repo 级采样 → **Clean-PR-train（2.0M PR / 17.7B tokens / 12 种语言）**。
-- **训练阶段 1（Mid-training）**：从 Qwen2.5-Coder-32B-Base 出发，在 Clean-PR-train 上做仓库级编辑 mid-training，把 "where to edit" 与 "how to edit" 的先验编码进权重。
-- **训练阶段 2（Agentless-Aligned 分步 SFT）**：基于 SWE-rebench / SWE-Gym 的可验证轨迹，把每条修复样本分解为三个监督任务（文件定位 → 细粒度导航 → 补丁生成），并通过错误驱动增强注入 hard negative 与干扰文件/区域。
-- **推理时**：使用 Simplified Agentless 协议（线性 localisation → navigation → editing），无需 agent loop。
+Clean-PR 想解决的是"仓库级编辑能力能否直接编码进权重、从而摆脱推理时复杂 agent 脚手架"这个问题。它把 8.6 TB 原始 GitHub 数据先清洗、重构、验证成 200 万条可执行的 Search/Replace 编辑语料，在 Qwen2.5-Coder-32B-Base 上做一轮仓库级编辑 mid-training 把"改哪里、怎么改"的先验固化进权重，再用 SWE-Gym/SWE-rebench 的可验证轨迹做一轮 Agentless 对齐的分步 SFT 教模型在大仓库里定位、导航、生成补丁。推理时只跑一条线性的 Simplified Agentless 协议，不需要多轮工具调用。
 
 ### 关键设计
 
-1. **Search/Replace 编辑块 + Round-Trip 验证的数据重构流水线**：
+**1. Search/Replace 编辑块 + Round-Trip 验证：把脏 PR 炼成可执行训练信号**
 
-    - 功能：把 16.4M 条带噪声 PR diff 转成 2.0M 条可被字节级回放验证的 Search/Replace 训练样本，是整个范式的"地基"。
-    - 核心思路：先按 PR 有效性（bot/未合并/文档-only 全部丢弃）和"核心扩展规则"（必须至少改动 12 种目标语言中的一个核心源码文件）做粗筛，仅保留 18.59% 的样本；然后对每条 PR：① 在 before 仓库快照上 apply 原 patch 得到 after；② 算法化地推导最小编辑 span 并在 before 中选择"最短唯一锚定上下文"作为 Search 块；③ 把生成的 S/R 块重新 apply 到 before，若与 ground-truth after 不是 bitwise 一致就丢弃。最终再做：复杂度控制（≤5 核心文件，平均文件数 $3.0 \to 1.7$）、>100k token 文件围绕 S/R 块裁窗、单仓贡献超过 2000 条则随机采样 2000 条以防分布偏斜。
-    - 设计动机：作者特意分析了 unified diff 的脆弱性——diff 严重依赖精确的行号预测，模型生成时极易因格式漂移失败；而 S/R 用唯一上下文匹配定位编辑点，既绕开了行号脆性，又因为 round-trip 验证保证了每条样本的可执行性。实验中 Valid Patch 率从 StarCoder-style 的 89.7% 跃升到 96.3%，且 Line Acc. 从 47.0% 升到 55.7%，验证了"唯一搜索块"训练信号能让模型输出更精确的导航线索。
+整个范式的地基是数据重构流水线，它要把 16.4M 条带噪声的 PR diff 变成 2.0M 条字节级可回放验证的样本。作者先做粗筛：bot 提交、未合并、纯文档改动一律丢弃，并要求 PR 至少改动 12 种目标语言里的一个核心源码文件（"核心扩展规则"），过完这一关只剩 18.59% 的 PR。然后对每条幸存 PR 做三步重构——在 before 仓库快照上 apply 原 patch 得到 after，算法化推导最小编辑 span 并在 before 里选"最短唯一锚定上下文"作为 Search 块，最后把生成的 S/R 块重新 apply 回 before，只有结果与 ground-truth after 完全 bitwise 一致才保留。重构之后还会做复杂度控制（限 ≤5 核心文件，平均文件数从 $3.0$ 降到 $1.7$）、对 >100k token 的文件围绕 S/R 块裁窗、对单仓贡献超过 2000 条的随机降采样到 2000 条以防分布偏斜。
 
-2. **Issue-Augmented Intent（链接 issue 的意图补全）**：
+之所以放弃常见的 unified diff，是因为 diff 严重依赖模型精确预测行号，生成时稍有格式漂移就 apply 失败；而 S/R 用唯一上下文匹配来定位编辑点，绕开了行号脆性，加上 round-trip 验证保证了每条样本本身就可执行。效果很直接：Valid Patch 率从 StarCoder-style 的 89.7% 跳到 96.3%，Line Acc. 从 47.0% 升到 55.7%——说明"唯一搜索块"这种信号能逼模型输出更精确的导航线索。
 
-    - 功能：解决 PR description 经常只写一句 "Fixes #123" 导致训练信号缺失原始 bug 报告/需求描述的问题，让训练分布对齐真实推理时"issue → patch"的工作流。
-    - 核心思路：解析 PR 正文中的 issue 引用标识符，把所有 linked issue 的标题和正文拼接进训练上下文，与代码上下文一起作为输入；这样原本只有"解决方案摘要"的 PR description 被补全成"完整问题陈述 + 解决方案"。Clean-PR-train 平均 description 长度因此从 50.0 词上升到 59.5 词。
-    - 设计动机：现实中模型面对的输入是"详细 bug 报告"而非"开发者一句话总结"，训练-推理分布一致才能让模型学到"从自然语言意图对齐到代码实现"。消融实验显示，去掉 linked issue 改用 PR Desc Only 后 Verified 从 27.8% 掉到 25.7%，单独看也比 StarCoder-style baseline 强很多，但与 S/R 格式组合才能拿到最佳成绩。
+**2. Issue-Augmented Intent：补全被一句话省略掉的真实意图**
 
-3. **Agentless-Aligned 分步 SFT + Error-Driven 增强**：
+现实里很多 PR description 只写一句 "Fixes #123"，训练信号里就丢失了原始 bug 报告和需求描述，跟推理时模型面对的"详细 issue → patch"工作流对不上。作者的做法是解析 PR 正文里的 issue 引用标识符，把所有 linked issue 的标题和正文拼进训练上下文，和代码一起喂给模型，原本只有"解决方案摘要"的 description 就被补全成"完整问题陈述 + 解决方案"，Clean-PR-train 的平均 description 长度也因此从 50.0 词涨到 59.5 词。
 
-    - 功能：把 mid-training 学到的"给定干净上下文能编辑"能力，进一步对齐到 SWE-bench 真实场景中"在 3010 文件的仓库里找出要改的 1.7 个文件并精确导航到代码段"的多阶段工作流，同时让模型在 retrieval 不完美时不会"过度编辑"。
-    - 核心思路：用 SWE-rebench/SWE-Gym 的 ground-truth 轨迹拆出三阶段监督——Step 1 文件定位（Issue + Repo Tree → Filepath，并剔除 .md/.txt 等非代码标签）；Step 2 细粒度导航（用 AST 把 ground-truth 编辑映射到所属 function/class，作为 Issue + File Content → Relevant Context 的目标）；Step 3 补丁生成（Localised Context → 最小唯一 S/R 块）。错误驱动增强用 Qwen-2.5-Coder-32B-Instruct 作为中间模型生成 hard negative：Step 2 用 $\text{Issue} + (F_{gt} \cup F_{neg}) \to \text{Relevant Context}$，要求模型对 $F_{neg}$ 输出 "No changes needed"；Step 3 用 $\text{Issue} + (C_{relevant} \cup C_{noise}) \to \text{Search/Replace}$，让模型学会拒绝在语义相似但实际无关的代码段上动手。最终 SFT 数据量：18,891 / 30,752 / 25,439 = 75,082，其中 21,864 条是错误增强生成的负例。
-    - 设计动机：标准 SFT 只训练"完美定位"的 happy path，但真实推理时 retrieval 必然带噪；不显式注入干扰，模型就会因为"看到了就改"而过度编辑无关文件（Zeng et al., 2025）。消融中，All-Languages 设置下错误增强让 Pass@1 在 Lite 从 21.8% 提到 24.3%、在 Verified 从 27.4% 提到 30.6%，且 Line Acc. 同步上升，证明它学到的不是"多记几个 pattern"而是"在干扰中精准甄别"。
+这一步本质是在对齐训练-推理分布：只有让模型在训练时就看到完整的自然语言意图，它才学得会"从意图对齐到代码实现"。消融印证了这点——去掉 linked issue 改用 PR Desc Only，Verified 从 27.8% 掉到 25.7%；它单独已经强过 StarCoder-style baseline，但要拿最佳成绩还得和 S/R 格式组合。
+
+**3. Agentless-Aligned 分步 SFT + Error-Driven 增强：在带噪 retrieval 下学会"该改才改"**
+
+mid-training 只教会了模型"给定干净上下文能编辑"，但 SWE-bench 真实场景是要在动辄 3010 个文件的仓库里找出该改的 1.7 个文件并精确导航到代码段，且 retrieval 必然带噪。作者用 SWE-rebench/SWE-Gym 的 ground-truth 轨迹拆出三阶段监督：Step 1 文件定位（Issue + Repo Tree → Filepath，剔除 .md/.txt 等非代码标签），Step 2 细粒度导航（用 AST 把 ground-truth 编辑映射到所属 function/class，作为 Issue + File Content → Relevant Context 的目标），Step 3 补丁生成（Localised Context → 最小唯一 S/R 块）。
+
+关键在 error-driven 增强：用 Qwen-2.5-Coder-32B-Instruct 当中间模型生成 hard negative，Step 2 喂 $\text{Issue} + (F_{gt} \cup F_{neg}) \to \text{Relevant Context}$ 要求模型对干扰文件 $F_{neg}$ 输出 "No changes needed"，Step 3 喂 $\text{Issue} + (C_{relevant} \cup C_{noise}) \to \text{Search/Replace}$ 教模型拒绝在语义相似却实际无关的代码段上动手。最终 SFT 三阶段数据量 18,891 / 30,752 / 25,439 = 75,082，其中 21,864 条是错误增强生成的负例。标准 SFT 只训"完美定位"的 happy path，模型就会"看到了就改"而过度编辑无关文件（Zeng et al., 2025）；显式把"retrieval 不完美"写进训练分布后，All-Languages 设置下 Pass@1 在 Lite 从 21.8% 提到 24.3%、Verified 从 27.4% 提到 30.6%，且 Line Acc. 同步上升，说明模型学到的是"在干扰中精准甄别"而非多背几个 pattern。
+
+### 一个完整示例
+拿一条普通的 bug 修复 PR 走一遍流水线：原始 PR 标题写 "Fix off-by-one in pagination"、正文只有 "Closes #482"，附带一份改了 3 个文件的 unified diff。流水线先确认它已合并、非 bot、改动了核心 `.py` 文件（通过粗筛）；解析 "Closes #482" 把 issue #482 的标题和正文拼进上下文，description 从一句话补成完整 bug 报告；在 before 快照上 apply diff 得到 after，对每处改动推导最小 span 并选唯一锚定上下文生成 S/R 块；把这些 S/R 块重新 apply 回 before，逐字节比对 after——一致才入库。复杂度控制再把 3 个文件的样本归到"≤5 文件"区间。这一条 PR 最终变成一份"完整 issue 意图 + 可回放 S/R 编辑块"的训练样本，正是推理时模型要面对的输入输出形态。
 
 ### 损失函数 / 训练策略
 - 基座：Qwen2.5-Coder-32B-Base（消融含 7B Base）。

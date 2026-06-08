@@ -48,23 +48,18 @@ tags:
 被评测模型包括 Llama3-8B、Qwen2.5-7B 和 Qwen2.5-14B；量化方法包括 GPTQ、AWQ、BitsAndBytes 的 4-bit / 8-bit 版本。由于公开 checkpoint 可获得性不同，不是每个模型都有所有量化配置。
 
 ### 关键设计
-1. **事实记忆与知识神经元联合分析**:
 
-	- 功能：判断量化是否让模型在一跳事实上“忘记”参数知识，并追踪这种遗忘对应的内部神经元变化。
-	- 核心思路：先在 LRE 上统计 full 与 quantized 模型的事实回忆 accuracy。再对每个 neuron 计算 contribution score，即该 neuron 对正确答案 token log-probability 的提升量。作者取 full-precision 模型中 top-300 feed-forward neurons 的最低贡献作为阈值 $\tau$，统计量化模型中还有多少 neuron 超过该阈值。
-	- 设计动机：如果只看输出 accuracy，很难知道量化是在全局轻微扰动，还是直接削弱承载事实知识的关键 neuron。top neuron 分布能把宏观性能下降和内部表示损失连接起来。
+**1. 事实记忆与知识神经元联合分析：把宏观掉点和具体哪个 neuron 被压低对上号。**
 
-2. **层级归因定位信息损失位置**:
+只看 LRE 上的事实回忆 accuracy，没法分辨量化是在全局轻微扰动，还是直接削弱了承载事实的关键 neuron。论文先统计 full 与 quantized 模型在一跳查询上的回忆准确率，再给每个 neuron 算一个 contribution score——即该 neuron 对正确答案 token log-probability 的提升量。关键一步是取 full-precision 模型 top-300 feed-forward neurons 里最低的那个贡献作为阈值 $\tau$，再数量化模型里还剩多少 neuron 超过 $\tau$。超阈 neuron 变少，就把“输出准确率下降”和“内部高贡献 neuron 被压低”直接连了起来，让宏观性能和内部表示损失互相印证，而不是停在一个笼统的 accuracy 上。
 
-	- 功能：找出量化最明显影响模型的哪些层、哪些子模块。
-	- 核心思路：作者比较 attention sublayers 和 feed-forward sublayers 的 aggregate contribution score drop。Qwen2.5-7B 上，最后两层的下降最明显；Llama3-8B 则更多出现在中后层，并且最后层可能出现上升。这说明不同架构存储事实知识的层级模式不同。
-	- 设计动机：量化压缩通常按矩阵或层统一进行，但事实知识不是均匀分布的。层级归因可以提示哪些层对低 bit 更敏感，也能解释为什么同一种量化方法在不同模型家族上表现不一致。
+**2. 层级归因定位信息损失位置：找出量化具体伤了哪几层。**
 
-3. **隐式多跳推理拆解**:
+量化通常按矩阵或层统一压缩，但事实知识并不是均匀铺在所有层里。论文比较 attention sublayers 和 feed-forward sublayers 的 aggregate contribution score drop，结果不同架构差异明显：Qwen2.5-7B 上最后两层的下降最显著，Llama3-8B 则更多落在中后层，而且末层可能反而补偿性上升。这种层级画像一方面提示哪些层对低 bit 更敏感，另一方面也解释了为什么同一种量化算法换个模型家族表现就不一致——事实存储的位置本身就因架构而异。
 
-	- 功能：区分量化是破坏第一跳桥接实体、第二跳事实关系，还是最终组合答案。
-	- 核心思路：TwoHop-Fact 中，$r_1(e_1)$ 测桥接实体回忆，$r_2(e_2)$ 测第二跳事实，$r_2(r_1(e_1))$ 测完整两跳组合。EntRec 衡量 hidden representation 是否召回桥接实体，CnstScore 衡量两跳 prompt 和对应一跳 prompt 的输出分布是否一致。
-	- 设计动机：多跳推理失败常被笼统归因于“推理差”。这套拆解能说明量化主要伤的是 first-hop factual recall，还是后续组合路径。
+**3. 隐式多跳推理拆解：分清量化到底卡在桥接实体、第二跳关系还是最终组合。**
+
+多跳失败常被笼统说成“推理能力差”，但 TwoHop-Fact 把它拆成三个能分别测量的环节：$r_1(e_1)$ 测桥接实体 $e_2$ 的回忆，$r_2(e_2)$ 测第二跳事实，$r_2(r_1(e_1))$ 测完整两跳组合。再配上两个内部指标——EntRec 衡量 hidden representation 是否真的召回了桥接实体，CnstScore 衡量两跳 prompt 与对应一跳 prompt 的输出分布是否一致——就能看出量化主要伤的是 first-hop 的事实召回，还是后续的组合路径，而不是只丢一个最终准确率说不清原因。
 
 ### 损失函数 / 训练策略
 本文没有训练新模型，所有实验都在公开 full-precision 与量化 checkpoint 上进行。量化方法属于 PTQ 范畴，其中 GPTQ 使用 Hessian 近似进行二阶误差补偿，AWQ 通过处理 activation outliers 保护低 bit 权重，BitsAndBytes 提供高效 integer quantization kernel。实验使用 A100/H100；作者报告 neuron-level 和 layer-level attribution 可在 10 小时内完成，LMHR 实验平均约 30 小时。

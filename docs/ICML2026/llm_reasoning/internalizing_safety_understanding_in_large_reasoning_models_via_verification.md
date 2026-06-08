@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SInternal 两步：(1) 数据构造——对每个安全相关 prompt $\mathbf{x}$，让初始策略 $\pi_\theta$ 自采 $N=8$ 个回答 $(\mathbf{z}_k,\mathbf{y}_k)$，再用 Claude-4-Sonnet 作为专家依据 safety spec $\mathcal{S}$ 评判每个 $\mathbf{y}_k$，产出 verification trajectory $\mathbf{c}_k=(\mathbf{z}_{{\rm ver},k},\mathbf{v}_k)$，含批判性 reasoning 和 binary 判断；(2) SFT 优化——目标是给定 $(\mathcal{S},\mathbf{x},\mathbf{y})$ 预测 $\mathbf{c}$，损失为 $\mathcal{L}_{\rm SInternal}=-\mathbb{E}\log\pi_\theta(\mathbf{c}|\mathcal{S},\mathbf{x},\mathbf{y})$。可选地，在 SInternal 之上再跑 GRPO RLVR 进一步对齐生成行为。
+SInternal 的核心是把训练目标从「生成安全答案」翻转成「verify 自己生成的答案是否安全」。整个流程两步走：先做数据构造——对每个安全相关 prompt $\mathbf{x}$，让初始策略 $\pi_\theta$ 自采 $N=8$ 个回答 $(\mathbf{z}_k,\mathbf{y}_k)$，再用 Claude-4-Sonnet 作为专家依据 safety spec $\mathcal{S}$ 评判每个 $\mathbf{y}_k$，产出含批判性 reasoning 与 binary 判断的 verification trajectory $\mathbf{c}_k=(\mathbf{z}_{{\rm ver},k},\mathbf{v}_k)$；再做 SFT 优化——给定 $(\mathcal{S},\mathbf{x},\mathbf{y})$ 让模型预测 $\mathbf{c}$。可选地，在 SInternal SFT 之上再接一段 GRPO RLVR，进一步把内化的判断力对齐到实际生成行为上。
 
 ### 关键设计
 
-1. **验证 self-generated 而非外部回答**:
+**1. 验证 self-generated 而非外部回答：让安全边界贴合模型自身分布。**
 
-    - 功能：用模型自己采样的回答（包括潜在不安全的）作为 verification 训练对象，让 verification 能力贴合模型实际分布。
-    - 核心思路：对每个 harmful prompt 采样 $N=8$ 个回答，保留同时含安全 + 不安全两类的 prompt，从中选一对对比样本；对 benign prompt 保留一条。这样训练集大约 6000 条。Self-Exp（用自己的轨迹）vs Other-Exp（用其它模型轨迹）的消融显示 self-generated 始终更优。
-    - 设计动机：如果用别的模型的回答，verification 学到的是「别人会犯什么错」，对自己的分布 mismatch；让模型 verify 自己常犯的错，等同于让安全边界对齐到模型自身的行为分布。
+前面的痛点是 answer-centric 范式让模型只会模仿别人的安全 pattern，对自己常犯的错没有判断力。SInternal 反过来用模型自己采样的回答（包括那些潜在不安全的）当 verification 训练对象：对每个 harmful prompt 采 $N=8$ 个回答，只保留那些同时含安全 + 不安全两类输出的 prompt，从中挑一对对比样本，benign prompt 则保留一条，最终凑成约 6000 条训练集。这样做的关键在于分布对齐——如果拿别的模型的回答来训，verification 学到的是「别人会犯什么错」，和自己的输出分布 mismatch；而让模型 verify 自己常犯的错，等于把安全边界精确校准到它自身的行为分布上。Self-Exp（用自己的轨迹）对 Other-Exp（换成 DS-8B 采样的轨迹）的消融印证了这点：self-generated 在所有基准上始终更优。
 
-2. **专家 critique + 二元判断双成分轨迹**:
+**2. 专家 critique + 二元判断双成分轨迹：用「分析 + 判断」逼出显式 reasoning。**
 
-    - 功能：把外部 safety spec 翻译成可学习的「分析 + 判断」自然语言轨迹，使模型在生成 verification 时被迫显式 reasoning。
-    - 核心思路：用 Claude-4-Sonnet 作为专家，输入 spec $\mathcal{S}$、prompt $\mathbf{x}$、回答 $\mathbf{y}_k$，输出包含两部分：(a) critique 推理 $\mathbf{z}_{\rm ver}$ 详细分析潜在违反点；(b) binary 判断 $\mathbf{v}$（safe/unsafe）。消融显示 critique 主要负责泛化到未见 jailbreak（去掉 critique 后 Fortress ASR 从 19.2% 飙到 46.8%），judgment 主要稳定 in-domain 表现（去掉 judgment 后 StrongREJECT ASR 从 0.6% 涨到 7.3%）。
-    - 设计动机：单 binary label 信息量太小，模型只能学 surface pattern；显式 critique 提供「为什么不安全」的推理监督，迫使模型学到背后的 safety 概念而非记忆 refusal 模板。
+单给一个 safe/unsafe 的 binary label 信息量太小，模型只会学到表面 pattern，记不住「为什么不安全」。所以每条 verification trajectory 都由 Claude-4-Sonnet 这个专家产出两部分：先是 critique 推理 $\mathbf{z}_{\rm ver}$ 详细分析候选回答的潜在违反点，再给 binary 判断 $\mathbf{v}$（safe/unsafe）。这两个成分分工明确且都不可或缺——消融显示 critique 主要负责泛化到未见 jailbreak（去掉 critique 后 Fortress ASR 从 19.2% 飙到 46.8%），judgment 主要稳定 in-domain 表现（去掉 judgment 后 StrongREJECT ASR 从 0.6% 涨到 7.3%）。显式 critique 提供了「为什么违反 spec」的推理监督，迫使模型学到背后的 safety 概念而非死记 refusal 模板，这正是它能迁移到 OOD 攻击的根源。
 
-3. **SInternal 作为后续 RL 的初始化**:
+**3. SInternal 作为后续 RL 的初始化：给 GRPO 一个真正「懂」的起点。**
 
-    - 功能：在 SInternal SFT 之后接 GRPO RLVR，构造比 standard SFT 更稳的对齐基础。
-    - 核心思路：奖励函数对 harmful prompt 用 $r=\mathcal{V}_{\rm safe}$，对 benign prompt 用 $r=\mathcal{V}_{\rm safe}(1-\mathcal{V}_{\rm refuse})$ 同时避免过度拒绝；Qwen3-Guard 当 verifier。GRPO 优化 $\hat{A}_i=(r_i-\bar{r})/(\sigma_r+\epsilon)$。SInternal 启动的 RL 是 HCoT（最强 LRM-specific jailbreak）唯一能防的，其它 baseline RL 都失守。
-    - 设计动机：标准 SFT 只是把模型推到「安全样子」，模型没法在 RL 阶段稳定理解奖励信号；SInternal 让模型自带「为什么」的理解，RL 在此基础上微调更收敛。
+标准 SFT 只是把模型推到「看起来安全」的样子，到了 RL 阶段模型没法稳定理解奖励信号；而 SInternal 让模型自带「为什么」的理解，RL 在这个基础上微调更收敛。具体接法是在 SInternal SFT 之后跑 GRPO RLVR：奖励函数对 harmful prompt 用 $r=\mathcal{V}_{\rm safe}$，对 benign prompt 用 $r=\mathcal{V}_{\rm safe}(1-\mathcal{V}_{\rm refuse})$ 同时压制过度拒绝，verifier 用 Qwen3-Guard，优势按 $\hat{A}_i=(r_i-\bar{r})/(\sigma_r+\epsilon)$ 归一。效果上，SInternal 启动的 RL 是唯一能防住 HCoT（最强 LRM-specific 的 CoT-hijack jailbreak）的配置，其它 baseline 的 RL 都失守。
 
 ### 损失函数 / 训练策略
-Stage 1：标准 SFT 交叉熵 $\mathcal{L}_{\rm SInternal}=-\mathbb{E}_{(\mathbf{x},\mathbf{y},\mathbf{c})\sim\mathcal{D}_{\rm ver}}\log\pi_\theta(\mathbf{c}|\mathcal{S},\mathbf{x},\mathbf{y})$，约 6000 训练样本，用 LoRA（rank=16, $\alpha=32$）训 2 epoch，lr $2\times10^{-4}$。Stage 2：GRPO，rollout batch 64 prompts × $n=8$，actor lr $10^{-6}$，KL 全关，加 3k DAPO 数学题保留推理能力。
+Stage 1 是标准 SFT 交叉熵 $\mathcal{L}_{\rm SInternal}=-\mathbb{E}_{(\mathbf{x},\mathbf{y},\mathbf{c})\sim\mathcal{D}_{\rm ver}}\log\pi_\theta(\mathbf{c}|\mathcal{S},\mathbf{x},\mathbf{y})$，约 6000 训练样本，用 LoRA（rank=16, $\alpha=32$）训 2 epoch，lr $2\times10^{-4}$。Stage 2 是 GRPO，rollout batch 64 prompts × $n=8$，actor lr $10^{-6}$，KL 全关，并掺入 3k DAPO 数学题保留推理能力。
 
 ## 实验关键数据
 

@@ -41,32 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个空间：观测空间 $\mathcal{X}=\mathcal{V}^L$（$\mathcal{V}=\mathcal{A}\cup\{\mathbf{m}\}$ 含 mask）和隐对齐空间 $\mathcal{Z}=(\mathcal{V}\cup\{\phi\})^{2L}$（$\phi$ 为 gap）；collapse 函数 $\Gamma^{-1}(\mathbf{z})$ 把 $\mathbf{z}$ 去掉所有 $\phi$ 还原为 $\mathbf{x}$，对应集合 $\Gamma(\mathbf{x})$ 是 $\mathbf{x}$ 的所有合法对齐。前向扩散 $q_t(\mathbf{z}_t|\mathbf{z}_0)=\bar\alpha_t\delta_{\mathbf{z}_0}+(1-\bar\alpha_t)\pi(\mathbf{z}_0)$ 在隐空间进行；网络 $f_\theta$ 操作 $\mathbf{x}_t=\Gamma^{-1}(\mathbf{z}_t)$，三个 head 同时预测每个 token 的 substitution 分布、deletion 概率、右侧 insertion 概率。ELBO 形式：$\log p_\theta(\mathbf{x}_0)\geq\mathbb{E}_{\mathbf{z}_0\in\Gamma(\mathbf{x}_0)}[\mathbb{E}_{q_t}[\log p_\theta(\mathbf{z}_0|\mathbf{z}_t)]]$。
+DPLM-Evo 要解决的是一个根本性的不兼容：标准离散扩散定义在固定维状态空间上，而 indel 必然改变序列长度。它的破局思路是把变长建模"搬家"到一个固定长度的隐空间里去做。具体而言，模型同时维护观测空间 $\mathcal{X}=\mathcal{V}^L$（$\mathcal{V}=\mathcal{A}\cup\{\mathbf{m}\}$，含 mask）和上采样到 $2L$ 的隐对齐空间 $\mathcal{Z}=(\mathcal{V}\cup\{\phi\})^{2L}$（$\phi$ 是 gap 占位符）；collapse 函数 $\Gamma^{-1}(\mathbf{z})$ 把隐序列里所有 $\phi$ 去掉还原成观测序列，反过来 $\Gamma(\mathbf{x})$ 就是 $\mathbf{x}$ 的所有合法对齐集合。前向扩散 $q_t(\mathbf{z}_t|\mathbf{z}_0)=\bar\alpha_t\delta_{\mathbf{z}_0}+(1-\bar\alpha_t)\pi(\mathbf{z}_0)$ 完全在隐空间进行，而神经网络 $f_\theta$ 只看 collapse 后的紧凑观测序列 $\mathbf{x}_t=\Gamma^{-1}(\mathbf{z}_t)$，用三个 head 分别预测每个 token 的 substitution 分布、deletion 概率和右侧 insertion 概率。整套机制由 ELBO $\log p_\theta(\mathbf{x}_0)\geq\mathbb{E}_{\mathbf{z}_0\in\Gamma(\mathbf{x}_0)}[\mathbb{E}_{q_t}[\log p_\theta(\mathbf{z}_0|\mathbf{z}_t)]]$ 统一起来，对 $\mathbf{x}_0$ 的所有合法对齐取期望。
 
 ### 关键设计
 
-1. **隐对齐空间解耦变长 indel**：
+**1. 隐对齐空间解耦变长 indel：把变长演化变成固定长度的 token 替换问题**
 
-    - 功能：在固定维计算框架里建模变长 indel 演化，又能让网络只处理紧凑的观测序列。
-    - 核心思路：把序列上采样 2 倍并插入间隙占位 $\phi$（如 $[A,B,C]\mapsto[A,\phi,\phi,B,\phi,C]$）；前向扩散过程在 $\mathbf{z}$ 上做转移，反向去噪时通过 $\Gamma^{-1}$ 投回观测空间。转移矩阵 $\mathbf{Q}_{\mathrm{noise}}$ 用三个超参 $(\omega_{\mathrm{del}},\omega_{\mathrm{ins}},\rho_{\mathrm{mask}})$ 控制：$\mathcal{A}$ 状态以概率 $1-\omega_{\mathrm{del}}$ 替换为另一氨基酸（或以 $\rho_{\mathrm{mask}}$ 比例变 mask）、以概率 $\omega_{\mathrm{del}}$ 变 $\phi$（删除）；$\phi$ 状态以概率 $\omega_{\mathrm{ins}}$ 变为氨基酸（插入）。
-    - 设计动机：直接在变长序列上定义 Markov 过程极度复杂（每步要联合采样长度+内容），隐对齐把 indel 编码为简单的 token 替换问题，复用全部固定长度扩散的成熟工具链；2 倍上采样保证 net insertion 不超过原长 $L$，覆盖典型蛋白工程场景（loop 长度、linker 长度调整）。这个 trick 也让 DPLM-Evo 能从已有 masked DPLM 权重初始化，相当于"以最小改动"扩展能力。
+直接在变长序列上定义 Markov 过程极其复杂——每一步都要联合采样长度和内容，没有现成工具能用。DPLM-Evo 的做法是把序列上采样 2 倍并插入间隙占位 $\phi$（例如 $[A,B,C]\mapsto[A,\phi,\phi,B,\phi,C]$），这样 indel 就退化成隐空间里 $\mathcal{A}\leftrightarrow\phi$ 之间的普通 token 替换：删除是"氨基酸变 $\phi$"，插入是"$\phi$ 变氨基酸"。前向腐蚀由统一转移矩阵 $\mathbf{Q}_{\mathrm{noise}}$ 用三个超参 $(\omega_{\mathrm{del}},\omega_{\mathrm{ins}},\rho_{\mathrm{mask}})$ 控制：氨基酸状态以概率 $1-\omega_{\mathrm{del}}$ 替换为另一氨基酸（其中 $\rho_{\mathrm{mask}}$ 比例直接变 mask）、以概率 $\omega_{\mathrm{del}}$ 变 $\phi$ 完成删除；$\phi$ 状态则以概率 $\omega_{\mathrm{ins}}$ 变为氨基酸完成插入。反向去噪时再用 $\Gamma^{-1}$ 把隐序列投回观测空间。这个转化之所以有效，是因为它让全部固定长度扩散的成熟工具链原样复用；而 2 倍上采样的设计保证净插入量不超过原长 $L$，恰好覆盖 loop 长度、linker 长度调整这类典型蛋白工程场景。一个额外的红利是：既然隐空间里的腐蚀本质还是 mask/替换，DPLM-Evo 就能直接从已有的 masked DPLM 权重初始化，相当于"以最小改动"扩展出 indel 能力。
 
-2. **上下文化进化噪声核**：
+**2. 上下文化进化噪声核：让前向噪声符合真实进化偏好而非随机突变**
 
-    - 功能：让前向噪声反映真实的进化偏好（在每个位点上下文中"合理"的替换）而非 uniform random。
-    - 核心思路：替换矩阵 $\mathcal{T}_{\mathrm{sub}}$ 有三种选择：(i) 均匀 $\mathbf{U}_K=\tfrac{1}{K}\mathbf{1}\mathbf{1}^\top$；(ii) 静态生物学先验 $\mathbf{M}_{\mathrm{BLOSUM}}$；(iii) 上下文化 $\mathcal{T}_{\mathrm{sub}}^{(j)}=\mathbb{E}_{q'_t(\mathbf{z}'_t|\mathbf{z}_0)}[p_\theta(\cdot|\mathbf{z}'^{\setminus j}_t,\mathbf{m})]$——把目标位 $j$ 强制 mask，让模型在 partial-masked context 下预测它应该是什么。warmup 阶段先用简单 mask 噪声训练，warmup 后切换到 self-prediction 噪声；当 $t=1$ 完全噪声时退化为 $p_\theta(\cdot|\mathbf{m}^L)$，给出反映自然氨基酸统计的可学先验。
-    - 设计动机：uniform 噪声训出来的扩散模型把 "Lys → Trp" 这种生物上极罕见的转换当作和"Lys → Arg"同样重要的学习信号，浪费容量；上下文化噪声让模型见到的腐蚀更接近真实进化中可能出现的突变（保守替换、上下文偏好），训练效率更高，且鼓励模型显式捕捉进化和同源依赖。
+替换矩阵 $\mathcal{T}_{\mathrm{sub}}$ 有三档选择，从弱到强分别是：均匀矩阵 $\mathbf{U}_K=\tfrac{1}{K}\mathbf{1}\mathbf{1}^\top$、静态生物学先验 $\mathbf{M}_{\mathrm{BLOSUM}}$，以及本文主推的上下文化形式 $\mathcal{T}_{\mathrm{sub}}^{(j)}=\mathbb{E}_{q'_t(\mathbf{z}'_t|\mathbf{z}_0)}[p_\theta(\cdot|\mathbf{z}'^{\setminus j}_t,\mathbf{m})]$——把目标位 $j$ 强制 mask 掉，让模型在 partial-masked 上下文里预测这一位"应该"是什么，用这个条件分布当噪声。问题的痛点在于：uniform 噪声会把 "Lys → Trp" 这种生物上极罕见的转换当成和 "Lys → Arg" 一样重要的学习信号，白白浪费模型容量；而用模型自己的条件预测当噪声，模型见到的腐蚀就更接近真实进化中可能出现的保守替换和上下文偏好突变，训练效率更高，也逼着模型显式捕捉进化与同源依赖。实现上采用 warmup 策略：先用简单 mask 噪声训练，warmup 后再切换到这种 self-prediction 噪声；当 $t=1$ 完全噪声时它退化为 $p_\theta(\cdot|\mathbf{m}^L)$，给出反映自然氨基酸统计的可学先验，而不是一个手工固定的矩阵。
 
-3. **三 head 解耦 + 二元分类 indel 训练**：
+**3. 三 head 解耦 + 二元分类 indel 训练：解决 indel 类不平衡导致的模式崩溃**
 
-    - 功能：让 substitution/deletion/insertion 三个任务互不干扰，且解决 indel 类不平衡导致的模式崩溃。
-    - 核心思路：用 Index Mapping Function $\mathcal{I}:\{1,\dots,L_t\}\to\{1,\dots,N\}$ 把观测 token 映射回隐序列位置；按 $(\mathbf{z}_t,\mathbf{z}_0)$ 的 token 类别组合定义三个互斥损失——$\mathcal{L}_{\mathrm{sub}}^{(k)}$ 仅在双方都是氨基酸且不同时生效（标准 CE）；indel 损失改为二元分类形式 $\mathcal{L}_{\mathrm{del}}^{(k)}=\mathrm{BCE}(\mathbb{I}_{\mathbf{z}_0^{(\mathcal{I}(k))}=\phi},p_\theta^{\mathrm{del}})$，$\mathcal{L}_{\mathrm{ins}}^{(k)}=\mathrm{BCE}(\mathbb{I}_{v_{\mathrm{next}}^{(k)}\neq\emptyset},p_\theta^{\mathrm{ins}})$；总损失 $\mathcal{L}_t=\mathbb{E}[\sum_k\lambda_{t-1}(\gamma_{\mathrm{sub}}\mathcal{L}_{\mathrm{sub}}+\gamma_{\mathrm{del}}\mathcal{L}_{\mathrm{del}}+\gamma_{\mathrm{ins}}\mathcal{L}_{\mathrm{ins}})]$。
-    - 设计动机：原始 multinomial 形式的 indel 损失（把 $\phi$ 当作扩展词表里的一个 token 跟氨基酸一起预测）在实验中导致 deletion mode collapse（模型偷懒全预测删除）和 insertion 训练不稳定，因为生物序列里 substitution 远多于 indel；改成二元分类把"要不要删/插"和"插什么/换什么"解耦，类别不平衡问题被局限到 BCE 内部，训练稳定。
+substitution、deletion、insertion 三个任务如果挤在一个 multinomial 输出里预测（把 $\phi$ 当成扩展词表里和氨基酸并列的一个 token），实验里会直接崩——因为生物序列中 substitution 远多于 indel，类别极度不平衡会诱发 deletion mode collapse（模型偷懒把所有位都预测成删除）和 insertion 训练发散。DPLM-Evo 把三个任务彻底解耦：先用 Index Mapping Function $\mathcal{I}:\{1,\dots,L_t\}\to\{1,\dots,N\}$ 把观测 token 映射回隐序列位置，再按 $(\mathbf{z}_t,\mathbf{z}_0)$ 的 token 类别组合定义三个互斥损失。其中 $\mathcal{L}_{\mathrm{sub}}^{(k)}$ 只在两端都是氨基酸且不相同时生效（标准 CE 预测换成什么），而两个 indel 损失改成二元分类——$\mathcal{L}_{\mathrm{del}}^{(k)}=\mathrm{BCE}(\mathbb{I}_{\mathbf{z}_0^{(\mathcal{I}(k))}=\phi},p_\theta^{\mathrm{del}})$ 只判"删不删"，$\mathcal{L}_{\mathrm{ins}}^{(k)}=\mathrm{BCE}(\mathbb{I}_{v_{\mathrm{next}}^{(k)}\neq\emptyset},p_\theta^{\mathrm{ins}})$ 只判"插不插"，加权汇总成 $\mathcal{L}_t=\mathbb{E}[\sum_k\lambda_{t-1}(\gamma_{\mathrm{sub}}\mathcal{L}_{\mathrm{sub}}+\gamma_{\mathrm{del}}\mathcal{L}_{\mathrm{del}}+\gamma_{\mathrm{ins}}\mathcal{L}_{\mathrm{ins}})]$。这样一来"要不要删/插"和"插什么/换什么"被拆成两件事，类别不平衡被局限在 BCE 内部，既保持理论一致性又让训练稳定下来。
 
 ### 损失函数 / 训练策略
-- $\mathcal{L}_t=\mathbb{E}_{\mathbf{x}_0,\mathbf{z}_0,\mathbf{z}_t}[\sum_k\lambda_{t-1}(\gamma_{\mathrm{sub}}\mathcal{L}_{\mathrm{sub}}^{(k)}+\gamma_{\mathrm{del}}\mathcal{L}_{\mathrm{del}}^{(k)}+\gamma_{\mathrm{ins}}\mathcal{L}_{\mathrm{ins}}^{(k)})]$，三个 $\gamma$ 调节不同进化操作的偏好。
-- 从 pretrained DPLM 初始化 → warmup 阶段用 mask 噪声 → 切换到上下文化噪声核继续训练。
-- 采样：维护 noisy index 集 $\mathcal{N}_t$，每步执行 (i) 对 $p_\theta^{\mathrm{del}}>\tau_{\mathrm{del}}$ 的位删除；(ii) 对 $p_\theta^{\mathrm{ins}}>\tau_{\mathrm{ins}}$ 的位右侧插入 $\mathbf{m}$；(iii) 对所有 noisy 与 mask 用 substitution head 填充；(iv) 用进化噪声核 re-noise 最不置信的位置。
+- 总损失 $\mathcal{L}_t=\mathbb{E}_{\mathbf{x}_0,\mathbf{z}_0,\mathbf{z}_t}[\sum_k\lambda_{t-1}(\gamma_{\mathrm{sub}}\mathcal{L}_{\mathrm{sub}}^{(k)}+\gamma_{\mathrm{del}}\mathcal{L}_{\mathrm{del}}^{(k)}+\gamma_{\mathrm{ins}}\mathcal{L}_{\mathrm{ins}}^{(k)})]$，三个 $\gamma$ 调节模型对不同进化操作的偏好。
+- 训练流程：从 pretrained DPLM 初始化 → warmup 阶段用 mask 噪声 → 切换到上下文化进化噪声核继续训练。
+- 采样：维护 noisy index 集 $\mathcal{N}_t$，每步依次执行 (i) 对 $p_\theta^{\mathrm{del}}>\tau_{\mathrm{del}}$ 的位删除；(ii) 对 $p_\theta^{\mathrm{ins}}>\tau_{\mathrm{ins}}$ 的位右侧插入 $\mathbf{m}$；(iii) 对所有 noisy 与 mask 位用 substitution head 填充；(iv) 用进化噪声核 re-noise 最不置信的位置。
 
 ## 实验关键数据
 

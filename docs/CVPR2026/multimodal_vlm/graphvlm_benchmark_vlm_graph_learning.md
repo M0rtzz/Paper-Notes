@@ -34,8 +34,9 @@ tags:
 
 **本文目标** 建立一个系统性benchmark，统一评估VLM在多模态图学习中的不同角色，找到最有效的使用范式。
 
-**切入角度**：将VLM在MMGL中的作用分为三种互补角色，分别在XZ轴探索。
-6ução idea一句话**：VLM-as-Predictor（直接微调VLM作为图学习backbone并注入结构信号）是多模态图学习最有效的范式。
+**切入角度**：把VLM在MMGL里的作用拆成三种互补角色——当编码器、当对齐器、当预测器——逐一搭实验台对比。
+
+**核心idea**：VLM-as-Predictor（直接微调VLM作为图学习backbone，并注入结构信号）是多模态图学习最有效的范式。
 
 ## 方法详解
 
@@ -44,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **VLM-as-Encoder**:
+**1. VLM-as-Encoder：把VLM当特征提取器，喂给下游GNN。**
 
-    - 功能：用预训练VLM（如CLIP）编码多模态节点特征，输入GNN做图学习
-    - 核心思路：三种编码器变体——(a) 预训练CLIP直接提取特征拼接；(b) 在图数据上用对比学习微调CLIP（CLIP-F）；(c) 结构感知CLIP（CLIP-F-S），在GNN框架中联合优化，用结构感知对比损失对齐多模态特征与图拓扑。下游GNN包括GCN、GraphSAGE、MMGCN、MGAT、UniGraph2。
-    - 设计动机：探索多模态特征质量对GNN性能的影响，特别是结构感知编码是否优于朴素拼接。
+这条线探的是「多模态特征质量到底对GNN有多大影响、结构感知编码是否优于朴素拼接」。论文设了三档逐渐变强的编码器：(a) 预训练CLIP直接抽特征拼接，最朴素；(b) CLIP-F，在图数据上用对比学习把CLIP微调一遍；(c) CLIP-F-S，结构感知版——不再孤立地对齐图文，而是把CLIP塞进GNN框架里联合优化，用一个结构感知对比损失让多模态特征同时贴合图拓扑（相邻节点特征更近）。无论哪档编码器，特征出来后都接同一批下游GNN（GCN、GraphSAGE、MMGCN、MGAT、UniGraph2）做最终的节点分类。这条线的天花板受限于GNN本身——再好的特征也要过GNN这道瓶颈。
 
-2. **VLM-as-Aligner**:
+**2. VLM-as-Aligner：把VLM当模态桥梁，让现有GraphLLM吃得下多模态图。**
 
-    - 功能：用VLM桥接模态，让GraphLLM能处理多模态图数据
-    - 核心思路：两种对齐策略——(a) 潜空间对齐：用CLIP多模态embedding替换原始单模态节点表示，直接注入LLM输入空间；(b) Prompt级对齐：用VLM（Qwen-VL）将图像转为文本描述，拼入节点文本属性，可选加入邻居节点的视觉描述（结构感知增强）。
-    - 设计动机：测试VLM的多模态对齐能力能否增强现有GraphLLM（如LLaGA、GraphGPT、MLaGA）。
+GraphLLM（LLaGA、GraphGPT、MLaGA 这类）原本只处理文本图，问题是图像这一模态怎么递进去。论文给了两种对齐策略走不同的注入层。潜空间对齐直接在表示层动手：拿CLIP的多模态embedding替换掉原来的单模态节点表示，塞进LLM的输入空间。Prompt级对齐则走文本层：用Qwen-VL把每张图像翻译成一段文字描述，拼到节点的文本属性后面，还能可选地把邻居节点的视觉描述也一并写进prompt（这就是结构感知增强）。两者一个在特征层、一个在自然语言层桥接模态，正好用来检验「VLM的对齐能力能不能给GraphLLM加分、加在哪一层更好」。
 
-3. **VLM-as-Predictor**:
+**3. VLM-as-Predictor：直接把VLM微调成图学习backbone，结构信号一并注入。**
 
-    - 功能：直接将VLM（LLaVA-1.5、Qwen-VL、Qwen2.5-VL）用LoRA微调为图学习的task-specific backbone
-    - 核心思路：两种结构信号注入方式——(a) 显式Prompt级融合：构建包含锚节点及其top-3最相似邻居属性的instruction prompt；(b) 隐式潜空间融合：聚合邻居节点的视觉patch embedding（avg pooling）和文本token embedding（avg pooling），注入VLM潜空间。支持文本/视觉/多模态三种邻居信息配置。
-    - 设计动机：VLM本身已具备强大的多模态推理能力，通过微调+结构信号注入，让VLM直接作为图学习模型，避免了GNN和LLM中间层的信息损失。
+这是论文押注的范式。出发点是——VLM自己就有很强的多模态推理能力，与其让它当配角再过GNN/LLM一道中间层（每过一层都丢信息），不如用LoRA直接把VLM（LLaVA-1.5、Qwen-VL、Qwen2.5-VL）微调成task-specific的图学习模型。关键在于怎么把「图结构」喂给一个本来只看单节点的VLM，论文给了两条注入路径。显式Prompt级融合：把锚节点连同它top-3最相似邻居的属性，拼成一段instruction prompt，让VLM在文字层面「看到」邻居。隐式潜空间融合：把邻居节点的视觉patch embedding和文本token embedding分别做平均池化（avg pooling），在特征层直接注入VLM的潜空间。两条路径都支持文本/视觉/多模态三种邻居信息配置，方便后面拆解「哪种结构信号、注在哪一层最有用」。
 
 ## 实验关键数据
 

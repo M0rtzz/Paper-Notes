@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四阶段方法：(1) 从 WVS 取得 2012 名新加坡受访者 × 214 题的 raw 数据；(2) 用 Modal Diversity Score 量化每题在不同子群间的冲突程度；(3) 构造 20,877 个 (问题, 子群体) 样本，把 50 个 fundamental stratum 划入 Train Set，48 个 unseen intersectional stratum 划入 OOD Eval Set；(4) 在 7 个 ≤8B 开源 LLM 上做 LoRA SFT，评测结构化数字预测 + open-ended 生成两个任务，用 Accuracy/NMAE/Win Rate 三类指标 + Norm. Range / CV 两个公平性指标。
+论文要回答的核心问题是：persona-prompted LLM 到底能不能模拟一国之内细粒度人口子群的价值偏好，简单 SFT 能不能补上这个能力，补完之后子群之间是更公平还是更不公平。整套流程以新加坡的 WVS Wave 7 数据为锚点：先取 2012 名受访者在 214 道价值题上的原始作答，用 Modal Diversity Score 量化每道题在不同子群间的冲突程度，定位最值得"子群感知对齐"的话题；再把数据组织成 20,877 个 (问题, 子群体) 样本，并刻意切成不重叠的两半——50 个 fundamental stratum 进 Train Set、48 个 unseen intersectional stratum 进 OOD Eval Set；最后在 7 个 ≤8B 开源 LLM 上做 LoRA SFT，从结构化数字预测和 open-ended 生成两个任务、用 Accuracy/NMAE/Win Rate 三类性能指标加 Norm. Range / CV 两个公平性指标来评测。
 
 ### 关键设计
 
-1. **Modal Diversity Score（价值冲突量化）**:
+**1. Modal Diversity Score：给每道题打一个"子群分歧度"分，先定位哪些话题最该做子群感知对齐。**
 
-    - 功能：给每个 WVS 题打一个 0–1 分，刻画不同子群之间 modal answer 的多样化程度。
-    - 核心思路：对一个 stratum（如 sex_x_age），收集所有子群的众数答案，计算这些众数分布的归一化 Shannon 熵：$\text{Score}_{\text{MD}} = \frac{-\sum_{m\in M}p(m)\log_2 p(m)}{\log_2 (\min(|S|,|C|))}$，其中 $M$ 是 unique 众数集合，$p(m)$ 是选众数 $m$ 的子群比例。0 表示全员共识，1 表示极度分歧。同时用 mean pairwise Wasserstein distance 做 ordinal-aware 复核。
-    - 设计动机：传统 cultural benchmark 只看"整体 accuracy"，无法告诉你哪些话题最值得"子群 aware"对齐。这个分数能直接定位最分裂的话题（如 Religious Values 平均 0.318）和最 unifying 的话题（如 Social Capital 0.084），为后续模型评测提供 prior。
+传统文化 benchmark 只报整体 accuracy，没法告诉你一国之内究竟哪些话题在子群间最分裂、最值得"子群 aware"地对齐。Modal Diversity Score 针对某个 stratum（如 sex_x_age）收集所有子群的众数答案，再对这些众数的分布算归一化 Shannon 熵：
 
-2. **Compositional Generalisation Split（关键评测设计）**:
+$$\text{Score}_{\text{MD}} = \frac{-\sum_{m\in M}p(m)\log_2 p(m)}{\log_2 (\min(|S|,|C|))}$$
 
-    - 功能：测试模型能否从单轴/二轴 persona 学到 composition 能力，泛化到未见 intersection。
-    - 核心思路：Train Set 包含 sex、age_group、ethnicity、religion 等 fundamental strata + sex × age、sex × religion、sex × ethnicity 这些 pairwise（共 50 子群 / 10,700 样本）；Eval (OOD) Set 包含 age × religion、age × ethnicity、ethnicity × religion 三个 unseen pairwise（共 48 子群 / 10,177 样本）。每个子群至少 30 人才纳入。这强迫模型不能死记 persona-answer 映射，必须学到"把单轴偏好合成 intersection 偏好"的能力。
-    - 设计动机：直接拿 in-distribution split 测无法区分 memorization 和 generalization；只有当 ethnicity_x_religion 这类组合在训练中完全没出现，accuracy 提升才能归因于 compositional understanding。
+其中 $M$ 是 unique 众数集合，$p(m)$ 是选众数 $m$ 的子群比例，0 表示全员共识、1 表示极度分歧；作者另用 mean pairwise Wasserstein distance 做 ordinal-aware 复核。有了这个分数，就能直接点名最分裂的话题（Religious Values 平均 0.318）和最一致的话题（Social Capital 0.084），为后续模型评测提供先验。
 
-3. **双视角公平性评测（Acc vs NMAE × Norm. Range vs CV）**:
+**2. Compositional Generalisation Split：让训练和测试的 intersection 完全不重叠，把死记硬背和真正的组合泛化分开。**
 
-    - 功能：暴露"准确率涨了但差距也涨了"这种被单一指标掩盖的不公平。
-    - 核心思路：Norm. Range $=(P_{\max}-P_{\min})/P_{\max}$ 测极端差距；CV $=\sigma/\mu$ 测整体离散度。同时用 Accuracy（不感知距离）和 NMAE（感知 ordinal 距离）两套指标。结果发现 SFT 让 Accuracy 的 Norm. Range 从 0.240 降到 0.179（更公平），但 NMAE 的 Norm. Range 从 0.280 升到 0.336（更不公平）。
-    - 设计动机：Accuracy 把"差 1 档"和"差 5 档"算一样错；NMAE 才能反映真实误差幅度。两套指标的反向变化提示了一个公平性悖论——SFT 把更多子群拉过及格线，但优势子群的精度反而被进一步放大。
+如果用 in-distribution split 来测，accuracy 涨了你也分不清模型是学会了组合、还是单纯背下了 persona-answer 映射。论文因此把数据切成不重叠的两半：Train Set 放 sex、age_group、ethnicity、religion 等单轴 strata，外加 sex × age、sex × religion、sex × ethnicity 这些 pairwise（共 50 子群 / 10,700 样本）；Eval(OOD) Set 则放 age × religion、age × ethnicity、ethnicity × religion 三个训练中完全没出现过的 pairwise（共 48 子群 / 10,177 样本），每个子群至少 30 人才纳入。当 ethnicity × religion 这类组合在训练里一次都没见过、模型还能答对，accuracy 的提升才能干净地归因于"把单轴偏好合成 intersection 偏好"的组合能力，而非记忆。
+
+**3. 双视角公平性评测：用 Acc/NMAE × Norm.Range/CV 交叉看，逼出被单一指标掩盖的不公平。**
+
+平均准确率涨了不代表对每个子群都更公平，而 Accuracy 把"差 1 档"和"差 5 档"当成一样的错，会把放大了的精度差距藏起来。论文因此同时用两套对照：指标维度上，Accuracy 不感知 ordinal 距离、NMAE 感知；离散度维度上，Norm. Range $=(P_{\max}-P_{\min})/P_{\max}$ 测极端子群间的差距、CV $=\sigma/\mu$ 测整体离散度。交叉之后悖论就显形了——SFT 让 Accuracy 的 Norm. Range 从 0.240 降到 0.179（看似更公平），NMAE 的 Norm. Range 却从 0.280 升到 0.336（实则更不公平）：SFT 把更多弱势子群拉过及格线，同时又把优势子群的精度推得更高。
 
 ### 损失函数 / 训练策略
 所有开源模型用 LoRA SFT，learning rate $1\times 10^{-6}$（保守，防过拟合），1 epoch，输入是 prompt 描述 persona + question，输出是 modal numerical answer。Open-ended 评测用 Mistral-Small-3.1-24B (INT8) 当 judge 对比 GPT-4.1，两次 swap 顺序消除位置偏差。Win Rate $\text{WR}_c = (s_{1,c}+s_{2,c})/2$，赢=1、平=0.5、输=0。

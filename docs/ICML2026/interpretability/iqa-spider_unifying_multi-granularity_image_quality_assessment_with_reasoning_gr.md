@@ -42,33 +42,23 @@ tags:
 
 ### 整体框架
 
-IQA-Spider 由 **LMM backbone**（Phi-3.5-Vision / Qwen2.5-VL / Qwen3-VL）+ **冻结的 SAM 分割头**组成。输入图像和质量相关问题，LMM 先输出包含位置词（"top/left"等）和语义描述的文本回答；若回答暗示目标区域=整图则跳过分割直接用全图 mask，否则进入 text-to-point 模块把位置词 logits 转成 SAM 的点 prompt，由 SAM 出最终 mask。
+IQA-Spider 想解决的是"同一个模型既能说清画质哪儿不好、又能在像素上指出在哪儿"，做法是把一个 LMM backbone（Phi-3.5-Vision / Qwen2.5-VL / Qwen3-VL）和一个全程冻结的 SAM 分割头拼起来，让语言模型负责推理和描述、SAM 负责出 mask。给定图像和质量问题，LMM 先生成带方位词（top/left 等）和语义描述的文本答案；如果答案暗示目标就是整图，直接用全图 mask，否则把方位词的 logits 经 text-to-point 模块折算成一个坐标点，喂给 SAM 当 point prompt 出最终 mask。
 
-训练上采用**两阶段、Conflict-Free 设计**：第一阶段只做文本级多任务指令微调（LoRA on LLM + full-tune 视觉编码器和 projector），让模型学会全局/局部描述、grounding 文本答案、referring；第二阶段不再训练，直接通过 text-to-point 把第一阶段学到的文本位置感知"零成本"升级到像素级。
+整套训练是两阶段、conflict-free 的：第一阶段只在文本层面做多任务指令微调（LLM 走 LoRA、视觉编码器和 projector 全参微调），把全局/局部描述、grounding 的文本答案、referring 一起学会；第二阶段完全不训练，靠 text-to-point 把第一阶段学到的文本方位感知"零成本"升级成像素级 grounding。
 
 ### 关键设计
 
-1. **四任务统一范式 + IQA-Spider-33K 数据集**：
+**1. 四任务统一范式 + IQA-Spider-33K 数据集：先补齐任务空间，再造数据。**
 
-    - 功能：把 IQA 拆成全局质量描述、局部质量描述、视觉质量 grounding（再细分 HyD-G 混合 distortion 强度、SiD-G 单 distortion 强度、DAO-G distortion 累积顺序三个子任务）、视觉质量 referring（short/long 两种回答），覆盖从全图到像素的所有粒度。
-    - 核心思路：采用混合标注流水线——合成 distortion 走全自动管线（用 SSA 抽语义实例区域 → 按 mask 注入多种 distortion → InternVL-2.5 多轮对话生成 QA），真实 distortion 走半自动（人工标 region-level distortion 标签 + InternVL-2.5 写 QA）；并把 Q-Instruct、DQ-495K 等已有数据 conflict-free 地融合进训练集。最终 40% 抽样 + 10 人评分验证，>80% 样本在语义/空间/distortion/语言四个维度都打到 4-5 分。
-    - 设计动机：以前的 IQA 数据集要么只标 distortion 类别（窄）、要么只标全图描述（粗），缺乏支持"区域感知 + 多任务联合训练"的统一定义；本文不是单纯扩规模，而是建立一个 task-and-data 体系，让多粒度学习有结构性的训练信号。
+以往 IQA 数据集要么只标 distortion 类别（太窄）、要么只给全图描述（太粗），缺一个支持"区域感知 + 多任务联合训练"的统一定义，所以本文先把 IQA 形式化成四类任务：全局质量描述、局部质量描述、视觉质量 grounding，以及视觉质量 referring（short/long 两种回答）。其中 grounding 又细分成 HyD-G（混合 distortion 强度）、SiD-G（单 distortion 强度）、DAO-G（distortion 累积顺序）三个子任务，把从全图到像素的所有粒度都覆盖到。数据用混合标注流水线生成：合成 distortion 走全自动管线（SSA 抽语义实例区域 → 按 mask 注入多种 distortion → InternVL-2.5 多轮对话生成 QA），真实 distortion 走半自动（人工标 region-level distortion 标签 + InternVL-2.5 写 QA），同时把 Q-Instruct、DQ-495K 等已有数据 conflict-free 地融进来。最终对 40% 样本做 10 人评分，>80% 样本在语义/空间/distortion/语言四个维度都拿到 4-5 分。关键在于这不是单纯扩规模，而是先建立 task-and-data 体系，让多粒度学习有结构性的训练信号——所以 33K 这个相对小的规模就能撑起整套 benchmark。
 
-2. **Text-to-Point Grounding 范式**：
+**2. Text-to-Point Grounding 范式：复用原生方位词 logits 当 SAM 的点 prompt。**
 
-    - 功能：在不引入任何特殊 token、不微调分割头的前提下，把 LMM 的文本输出转成 SAM 的点 prompt。
-    - 核心思路：对 LMM hidden states 在指定位置词集合 $\{left, right\}$ 和 $\{top, bottom\}$ 上做闭集 softmax 拿到概率 $p_{l_i} = e^{\chi_{l_i}/\tau} / \sum_j e^{\chi_{l_j}/\tau}$；按"左=0、右=1、上=0、下=1"的归一化坐标做加权平均 $x = \sum_i p_{w_i} \times W,\ y = \sum_i p_{h_i} \times H$，得到的 $(x,y)$ 直接作为 SAM 的 point prompt，无需任何额外训练。
-    - 设计动机：现有 SAM-based grounding（LISA / GLaMM 等）用 `<seg>` 这类特殊 token 把语言生成和像素分割硬绑在一起，会损害原有指令跟随和推理能力；另外一些用 attention map 做隐式 prompt 的方法（Wu 2024c / Cao 2024）要么 memory 开销大要么需要额外 image encoder。本文 reasoning-preserving / training-free / plug-and-play，可以接到任意 LMM 上。
+现有 SAM-based grounding（LISA / GLaMM 等）靠 `<seg>` 这类特殊 token 把语言生成和像素分割硬绑在一起，会损害原本的指令跟随和推理能力；另一些用 attention map 做隐式 prompt 的方法（Wu 2024c / Cao 2024）要么 memory 开销大、要么要额外 image encoder。作者的观察是：LMM 在生成方位词时，其原生 token logits 本身就编码了空间分布概率，根本不用再训特殊 token。具体做法是在指定方位词集合 $\{left, right\}$ 和 $\{top, bottom\}$ 上对 LMM hidden states 做闭集 softmax，$p_{l_i} = e^{\chi_{l_i}/\tau} / \sum_j e^{\chi_{l_j}/\tau}$；再按"左=0、右=1、上=0、下=1"的归一化坐标做加权平均 $x = \sum_i p_{w_i} \times W,\ y = \sum_i p_{h_i} \times H$，得到的坐标 $(x,y)$ 直接作为 SAM 的 point prompt。整条路径零额外参数、零额外监督、不动语言空间，因此 reasoning-preserving 且 plug-and-play，可以接到任意 LMM 上。
 
-3. **两阶段 Conflict-Free 训练 + 混合数据集**：
+**3. 两阶段 conflict-free 训练：多源 IQA 数据"全加才升"。**
 
-    - 功能：让一个 LMM 同时掌握全局/局部描述、grounding、referring 四种能力，且互不打架。
-    - 核心思路：第一阶段联合 Q-Instruct（全局/局部 QA）+ DQ-495K（distortion 识别与推理）+ 自建 IQA-Spider-33K 做指令微调，仅用 next-token prediction cross-entropy 损失；分割头自始至终冻结、不引入任何 grounding 专用 loss，第二阶段完全 training-free。
-    - 设计动机：消融（Tab. 4）显示——描述类任务对加单一外部数据集敏感（会略降），但加全三套数据反而最好；grounding 主要受益于"显式区域-文本对齐"的数据，referring 则随数据多样性单调提升；说明这三套数据互补，conflict-free 联合训练才能同时撑起多粒度感知和对话能力。
-
-### 损失函数 / 训练策略
-
-仅用标准 next-token prediction cross-entropy（指令微调），LLM 走 LoRA，视觉编码器和 projector 走全参数微调，SAM 全程冻结，第二阶段 grounding 完全无训练。
+要让一个 LMM 同时掌握全局/局部描述、grounding、referring 又互不打架，本文在第一阶段联合 Q-Instruct（全局/局部 QA）+ DQ-495K（distortion 识别与推理）+ 自建 IQA-Spider-33K 一起做指令微调，损失只用标准 next-token prediction cross-entropy；分割头自始至终冻结、不引入任何 grounding 专用 loss，第二阶段完全 training-free。这样设计是因为消融（Tab. 4）揭示了一个非单调规律：描述类任务对"只加单一外部数据集"敏感、会略降，但三套数据全加反而最好；grounding 主要受益于"显式区域-文本对齐"的数据，referring 则随数据多样性单调提升。三套数据互补，只有 conflict-free 联合训练才能同时撑起多粒度感知和对话能力。
 
 ## 实验关键数据
 

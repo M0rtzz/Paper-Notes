@@ -40,31 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-OMP 建在 MeanFlow 框架上：输入 3D 点云观测（FPS 下采到 512 或 1024 点）+ 2 步观测历史，输出长度为 4 的动作序列、每次执行其中 3 步。训练时模型 $u_\theta(z_t, r, t \mid c)$ 学习时刻 $r,t$ 之间的平均速度，遵循 MeanFlow Identity
+OMP 把 MeanFlow 的"学区间平均速度、一步出图"思路搬到机器人操作，但针对低维动作空间里暴露的频谱偏差、低速区梯度饥饿、嵌套 JVP 内存爆炸三个病灶做了修复。整体仍是 MP1 那套架子：输入 3D 点云观测（FPS 下采到 512 或 1024 点）加 2 步观测历史，模型 $u_\theta(z_t, r, t \mid c)$ 学习时刻 $r,t$ 之间的平均速度并遵循 MeanFlow Identity
 
 $$u(z_t,r,t|c)=v(z_t,t|c)-(t-r)\dfrac{d}{dt}u(z_t,r,t|c)$$
 
-把右边当 target $u_{tgt}$。推理时一次正向直接从噪声 $z_T\sim\mathcal{N}(0,I)$ 走到动作 $z_0$，沿用 $v_0 \triangleq z_T - z_0$ 作为真实平均速度。OMP 在 MP1 的 $\mathcal{L}_{mse} + \lambda_{Disp}\mathcal{L}_{Disp}$ 基础上叠了第三项 $\mathcal{L}_{DA}$ 解决方向对齐，并把 Identity 里的 $\frac{d}{dt}u$ 实现替成 DDE 中心差分，得到 OMP-JVP（保留解析 JVP）和 OMP-DDE（用差分近似）两个版本。
+把右边当 target；推理时一次正向从噪声 $z_T\sim\mathcal{N}(0,I)$ 直接走到动作 $z_0$，并取 $v_0 \triangleq z_T - z_0$ 作为真实平均速度。OMP 的两处改动都叠在 MP1 的 $\mathcal{L}_{mse}+\lambda_{Disp}\mathcal{L}_{Disp}$ 之上：加一项方向对齐损失 $\mathcal{L}_{DA}$ 治几何病灶，把 Identity 里的 $\frac{d}{dt}u$ 换成中心差分治内存病灶，后者衍生出保留解析 JVP 的 OMP-JVP 和用差分近似的 OMP-DDE 两个版本。
 
 ### 关键设计
 
-1. **方向对齐损失 $\mathcal{L}_{DA}$**:
+**1. 方向对齐损失 $\mathcal{L}_{DA}$：把方向从幅度里解耦出来，治低速区梯度饥饿**
 
-    - 功能：把预测平均速度 $u(z_t,r,t|c)$ 的方向显式拉到真实平均速度 $v_0=z_T-z_0$ 上，解掉 MSE 在低 $\rho^*$ 区域的梯度饥饿和频谱偏差。
-    - 核心思路：先算 cosine 相似度 $\cos\alpha = \dfrac{v_0\cdot u}{\|v_0\|\cdot\|u\|}$，再用对数形式 $\mathcal{L}_{DA}=-\log\!\big(\frac{\cos\alpha+1}{2}\big)$ 当损失。这个形式有几个好处：对 $\cos\alpha=-1$ 处发散给最强惩罚、对 $\cos\alpha=1$ 处趋零、整个损失只取决于方向不取决于幅度，所以即使 $\|v_0\|\to 0$ 方向梯度也不会塌缩；分母处加 $\epsilon_{dir}\approx 10^{-6}$ 防数值除零。
-    - 设计动机：作者在 §4.2.2 用法-余弦定理拆 MSE 得到 $\partial\mathcal{L}_{MSE}/\partial\alpha = 2\rho\rho^*\sin\alpha$，证明角度梯度被 $\rho^*$ 乘性压制；机器人精细操作 $\rho^*\approx 0$，MSE 干脆鼓励 $\rho\to 0$ 拿到"静止策略"。$\mathcal{L}_{DA}$ 把方向和幅度解耦，弹道阶段 $\mathcal{L}_{mse}$ 主导走幅度，接触阶段 $\mathcal{L}_{DA}$ 主导走方向。同时显式对齐 $v_0$ 还顺手跳出了 $1/\omega^2$ 低通滤波——目标不再经过时间积分。
+针对的是 MSE 在精细操作里失灵的根因。作者在 §4.2.2 用法-余弦定理拆开 MSE 对角度的梯度，得到 $\partial\mathcal{L}_{MSE}/\partial\alpha = 2\rho\rho^*\sin\alpha$——角度梯度被目标幅度 $\rho^*$ 乘性压制，而机器人精细接触阶段真实平均速度 $\rho^*\approx 0$，于是 MSE 干脆鼓励模型把输出收缩到 $\rho\to 0$ 拿一个"静止策略"，方向永远学不对；同时目标经过时间积分相当于除以 $i\omega$，PSD 按 $1/\omega^2$ 衰减成低通滤波，把高频方向调整也压掉了。$\mathcal{L}_{DA}$ 的做法是先算 cosine 相似度 $\cos\alpha = \dfrac{v_0\cdot u}{\|v_0\|\cdot\|u\|}$（分母加 $\epsilon_{dir}\approx 10^{-6}$ 防除零），再写成对数形式 $\mathcal{L}_{DA}=-\log\!\big(\frac{\cos\alpha+1}{2}\big)$。这个损失只取决于方向、不取决于幅度，所以 $\|v_0\|\to 0$ 时方向梯度不塌缩；对数形式还让 $\cos\alpha=-1$（完全走反）处梯度发散、给最强惩罚，$\cos\alpha=1$ 处趋零。落到训练上，弹道阶段（大平移）由 $\mathcal{L}_{mse}$ 主导走幅度、接触阶段由 $\mathcal{L}_{DA}$ 主导走方向，两阶段都有非零梯度，还顺手绕过了 $1/\omega^2$ 低通——因为对齐目标 $v_0$ 不再经过时间积分。
 
-2. **Differential Derivation Equation (DDE)**:
+**2. Differential Derivation Equation（DDE）：用中心差分替掉解析时间导数，治嵌套 AD 内存爆炸**
 
-    - 功能：用中心差分替掉 MeanFlow Identity 里的解析 $du_\theta/dt$，避免对 JVP 再做反向传播带来的嵌套 AD 内存爆炸。
-    - 核心思路：把时间导数近似为 $\dfrac{du_\theta(z_t,t,r|c)}{dt}\approx\dfrac{u_\theta(z_{t+\epsilon},t+\epsilon,r|c)-u_\theta(z_{t-\epsilon},t-\epsilon,r|c)}{2\epsilon}$，$\epsilon$ 是小扰动常数（敏感度分析见 §E.2）。这样训练图里只剩两次普通 forward + 一次普通 backward，不再需要存 tangent 激活，回到标准 backprop 的内存量级。
-    - 设计动机：§4.2.3 算了一下，对 JVP $\nabla_z u_\theta\cdot v$ 再求 $\nabla_\theta$ 等价于二阶混合偏导 $\partial^2 u/\partial\theta\partial z$，PyTorch/JAX 里要嵌套 Forward-AD 在 Reverse-AD 外面，必须同时存原始激活 $X$、tangent $\delta X$、tangent 的 adjoint 三套图，PointNet++/Transformer 这种点云骨干根本喂不进 4090。差分近似精度只是 $O(\epsilon^2)$ 的截断误差，对成功率影响可控但内存收益巨大。
+针对的是 MeanFlow Identity 里 $\frac{d}{dt}u$ 直接实现时的内存代价。§4.2.3 算了一笔账：该总导数展开含 JVP $\nabla_z u_\theta\cdot v$，再对它求 $\nabla_\theta$ 等价于二阶混合偏导 $\partial^2 u/\partial\theta\partial z$，框架里要把 Forward-AD 嵌套在 Reverse-AD 外面，必须同时保存原始激活 $X$、tangent $\delta X$、tangent 的 adjoint 三套计算图，PointNet++/Transformer 这种点云骨干根本喂不进单卡 4090。DDE 把时间导数近似成中心差分 $\dfrac{du_\theta(z_t,t,r|c)}{dt}\approx\dfrac{u_\theta(z_{t+\epsilon},t+\epsilon,r|c)-u_\theta(z_{t-\epsilon},t-\epsilon,r|c)}{2\epsilon}$（$\epsilon$ 是小扰动常数，敏感度扫描见 §E.2），训练图里只剩两次普通 forward 加一次普通 backward，不再需要存 tangent 激活，内存回到标准 backprop 量级。代价只是 $O(\epsilon^2)$ 的截断误差——它的真正价值不在"近似得多准"，而在把前后向计算图解耦开。
 
-3. **组合损失与 JVP/DDE 双版本**:
+**3. 组合损失与 JVP/DDE 双版本：把内存优化做成可切换开关**
 
-    - 功能：把方向、幅度、特征判别三种信号融成一个训练目标，并把内存优化做成独立开关。
-    - 核心思路：最终训练目标是 $\mathcal{L}=\mathcal{L}_{mse}+\lambda_{Disp}\mathcal{L}_{Disp}+\lambda_{DA}\mathcal{L}_{DA}$，其中 $\mathcal{L}_{Disp}$ 沿用 MP1 的 dispersive loss 让特征空间更可分。把 $\frac{d}{dt}u$ 的实现拆成两套——OMP-JVP 保留解析 JVP 拿最佳精度，OMP-DDE 用 DDE 近似换显存——这样可以根据实际任务规模（点云尺寸、动作 horizon）按需切换，而不用为了内存被迫永久牺牲精度。
-    - 设计动机：弹道段（大平移）和精细接触段（角度对齐）对损失的需求其实是分时段的，靠加权和能让模型在两阶段都拿到非零梯度；JVP/DDE 双版本是承认"内存-精度"是个真实 trade-off，OMP-JVP 给学术对照、OMP-DDE 给实际部署。
+最终训练目标是 $\mathcal{L}=\mathcal{L}_{mse}+\lambda_{Disp}\mathcal{L}_{Disp}+\lambda_{DA}\mathcal{L}_{DA}$，其中 $\mathcal{L}_{Disp}$ 沿用 MP1 的 dispersive loss 让特征空间更可分，三项分别提供幅度、特征判别、方向三种信号，靠加权和让模型在弹道段和接触段都拿到有效梯度。$\frac{d}{dt}u$ 的实现则拆成两套，把"内存-精度"这个真实 trade-off 留给使用者：OMP-JVP 保留解析 JVP 拿最佳精度（用作学术对照），OMP-DDE 用 DDE 近似换显存（用于实际部署），可以按点云尺寸、动作 horizon 等任务规模按需切换，而不用为内存被迫永久牺牲精度。
 
 ### 损失函数 / 训练策略
 - 损失：$\mathcal{L}=\mathcal{L}_{mse}+\lambda_{Disp}\mathcal{L}_{Disp}+\lambda_{DA}\mathcal{L}_{DA}$；$\mathcal{L}_{DA}=-\log\!\big(\frac{\cos\alpha+1}{2}\big)$；DDE 时间步长 $\epsilon$ 在 §E.2 做了敏感度扫描。

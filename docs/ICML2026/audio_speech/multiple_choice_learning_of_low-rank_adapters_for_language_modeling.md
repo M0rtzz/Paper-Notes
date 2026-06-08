@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LoRA-MCL 的形式化非常干净：在每个启用 LoRA 的层 $\ell$，准备 $K$ 组适配器 $\{(A_\ell^k, B_\ell^k)\}_{k=1}^K$，冻结基座参数 $\theta$。第 $k$ 个"假设模型"的参数集为 $\theta_k = \theta \cup \{(A_\ell^k, B_\ell^k)\}_\ell$。给定上下文 $c$ 与目标序列 $x$，对所有 $K$ 个假设并行算似然 $p(x\mid c;\theta_k)$，然后用 Winner-Takes-All（WTA）损失只回传到最好的那个假设。推理时不用 WTA，直接让每个假设独立解一条候选，一次前向输出 $K$ 条不同的描述。整套训练逻辑像在跑一个 hard-EM：E 步选 winner $k^\star=\arg\max_k p(x\mid c;\theta_k)$，M 步只更新 $\theta_{k^\star}$。
+LoRA-MCL 要解决的核心问题是：怎样让单个 LLM 在训练阶段就把目标分布的多个模态拆开，而不是塌缩成加权平均。它的做法是把 Multiple Choice Learning 的"多假设竞争"思想嫁接到 LoRA——在每个启用 LoRA 的层 $\ell$ 准备 $K$ 组适配器 $\{(A_\ell^k, B_\ell^k)\}_{k=1}^K$，冻结基座参数 $\theta$，于是第 $k$ 个"假设模型"就是 $\theta_k = \theta \cup \{(A_\ell^k, B_\ell^k)\}_\ell$。训练时对所有 $K$ 个假设并行算似然 $p(x\mid c;\theta_k)$，再用 Winner-Takes-All（WTA）损失只把梯度回传给最合适的那个假设，整个过程等价于一个条件 hard-EM：E 步选 winner $k^\star=\arg\max_k p(x\mid c;\theta_k)$，M 步只更新 $\theta_{k^\star}$。推理时丢掉 WTA，让每个假设独立解一条候选，一次前向就吐出 $K$ 条覆盖不同模态的文本。
 
 ### 关键设计
 
-1. **LoRA-MCL：用 K 组 LoRA adapter 实例化 MCL 假设**:
+**1. 用 K 组 LoRA adapter 实例化 MCL 假设：绕开 lm_head 复制不下的死结**
 
-    - 功能：在不复制基座、不替换 lm_head 的前提下，让单个 LLM 同时承载 $K$ 个相互竞争的"假设模型"，每个假设的额外参数只是一对秩 $r$ 矩阵 $(A_\ell^k, B_\ell^k)$，参数量约 $K \times L \times 2dr$，与基座 $|θ|$ 相比可忽略。
-    - 核心思路：把 MCL 的 WTA 损失 $\mathcal{L}^{\mathrm{WTA}} = -\mathbb{E}_{c,x}[\max_{k}\log p(x\mid c;\theta_k)]$ 直接套到 next-token 建模，其中 $\log p(x\mid c;\theta_k)=\sum_t \log p(x_t\mid x_{<t},c;\theta_k)$。理论上（Prop. 1）作者证明，当数据来自有限混合且模型表达力足够时，LoRA-MCL 等价于条件 hard-EM，最优损失为 $\mathcal{H}(x\mid c,z)$（给定潜在主题 $z$ 后的条件熵），且严格不大于 MLE 最优；同时给出下界 $\min \mathcal{L}(\theta) - \log K \le \min \mathcal{L}^{\mathrm{WTA}}(\theta)$，刻画了"多假设能带来多少信息增益"的精确范围。
-    - 设计动机：MCL 经典实现要么复制整个 head（语言模型上不可行），要么从头训新 head（破坏预训练知识）。LoRA 的低秩残差形式天然适合做"轻量化分身"——基座的语义不丢，adapter 提供模态特化的方向，参数与计算开销都可控。
+MCL 经典实现是"共享 backbone + 复制 $K$ 个输出头"，但 LLM 的 lm_head 动辄上亿参数（Qwen2-Audio 约 6.4 亿），拷 $K$ 份根本不现实，从头训新 head 又会破坏预训练知识。本文的关键观察是：LoRA 的低秩残差通道天然就是个"廉价的模型分身"——只要在每层多挂一组秩 $r$ 矩阵 $(A_\ell^k, B_\ell^k)$，基座语义完全不丢，adapter 只负责提供模态特化的方向。这样 $K$ 个假设的额外参数量只有约 $K \times L \times 2dr$，相对基座 $|\theta|$ 可忽略。训练目标直接把 MCL 的 WTA 损失套到 next-token 建模上：$\mathcal{L}^{\mathrm{WTA}} = -\mathbb{E}_{c,x}[\max_{k}\log p(x\mid c;\theta_k)]$，其中 $\log p(x\mid c;\theta_k)=\sum_t \log p(x_t\mid x_{<t},c;\theta_k)$。它为什么有效有理论保证（Prop. 1）：当数据来自有限混合且模型表达力足够时，LoRA-MCL 等价于条件 hard-EM，最优损失收敛到给定潜在主题 $z$ 后的条件熵 $\mathcal{H}(x\mid c,z)$，严格不大于 MLE 最优；同时给出下界 $\min \mathcal{L}(\theta) - \log K \le \min \mathcal{L}^{\mathrm{WTA}}(\theta)$，精确刻画了多假设能带来多少信息增益。
 
-2. **松弛版 WTA 损失：Relaxed-WTA 与 Annealed-MCL 解 collapse**:
+**2. 松弛版 WTA：用 Relaxed-WTA 与 Annealed-MCL 解决训练塌缩**
 
-    - 功能：MCL 最大的工程坑是"一开始随机偏向某个假设，winner 越赢越多，其他假设永远拿不到梯度"。本设计通过软化 WTA，给所有假设留一丝梯度，保留竞争性的同时避免塌缩。
-    - 核心思路：把 $\max$ 替换成加权和 $\mathcal{L}^{\mathrm{WTA}} = -\mathbb{E}_{c,x}[\sum_k q_k \log p(x\mid c;\theta_k)]$，其中 $\{q_k\}$ 归一化的系数。两种实例化：（i）**Relaxed-WTA**：winner 拿 $q_{k^\star}=1-\varepsilon$，其余每个拿 $\varepsilon/(K-1)$，$\varepsilon$ 是常数小量（实验里常取 0.05–0.1）；（ii）**Annealed-MCL**：$q_k(x,c;\uptau)=p(x\mid c;\theta_k)^{1/\uptau}/Z$，温度按 $\uptau(t)=\uptau(0)\rho^t$（$\rho<1$）从大到小退火，高温阶段所有假设几乎均匀更新避免塌缩，低温阶段平滑收敛到硬 WTA。
-    - 设计动机：Relaxed-WTA 简单稳定但 $\varepsilon$ 过大会让所有假设趋同（丢多样性）；Annealed-MCL 自动从"探索"过渡到"利用"，理论上能拿到更纯的特化，但温度调度多一个超参。两种方案在不同任务/$K$ 下各有优势，作者按数据集选最优。
+硬 WTA 有个致命工程坑——训练初期某个假设碰巧偏好一点，winner 就越赢越多，其余假设永远拿不到梯度，最终所有假设退化成一个。本文的解法是软化 WTA，给所有假设都留一丝梯度：把 $\max$ 换成归一化加权和 $\mathcal{L}^{\mathrm{WTA}} = -\mathbb{E}_{c,x}[\sum_k q_k \log p(x\mid c;\theta_k)]$。作者给出两种 $\{q_k\}$ 的实例化。Relaxed-WTA 让 winner 拿 $q_{k^\star}=1-\varepsilon$、其余每个均分 $\varepsilon/(K-1)$（$\varepsilon$ 是固定小量，实验常取 0.05–0.1），简单稳定，但 $\varepsilon$ 过大会让假设趋同、丢多样性。Annealed-MCL 则用温度软分配 $q_k(x,c;\uptau)=p(x\mid c;\theta_k)^{1/\uptau}/Z$，温度按 $\uptau(t)=\uptau(0)\rho^t$（$\rho<1$）从大到小退火：高温阶段所有假设几乎均匀更新、避免早期塌缩，低温阶段平滑收敛到硬 WTA、拿到更纯的特化，代价是多一个温度调度超参。两种方案各有适用区间，作者按数据集与 $K$ 选最优。
 
-3. **分组卷积式并行：把 K 次前向压成单次 batched 前向**:
+**3. 分组卷积式并行：把 K 次前向压成单次 batched 前向**
 
-    - 功能：朴素实现要顺序跑 $K$ 个假设、$K$ 次前向，训练时间线性放大。该设计借助 PyTorch 的分组 1D 卷积把所有假设的 LoRA 计算融合到一次 batched 操作里，让 $K$ 个假设几乎"免费"并行。
-    - 核心思路：把输入沿 batch 维度复制 $K$ 份，每份只用自己那组 LoRA 权重做残差。具体地，把 $K$ 组 $(A_\ell^k, B_\ell^k)$ 堆成一个张量，等价于在 LoRA 路径上跑 `nn.Conv1d` 的 grouped variant（groups=$K$），让每组只跟自己对应的输入做矩阵乘；冻结基座的前向天然共享。由于 $r \ll d$，额外显存基本只是激活随 $K$ 倍增，参数侧增量微乎其微。
-    - 设计动机：让 LoRA-MCL 的训练成本对齐 LoRA-MLE 而不是 $K\times$ LoRA-MLE，是把这个范式推到 7B–8B 规模模型上的关键工程基础；如果训练慢 $K$ 倍，所有理论再漂亮也用不起来。
+朴素实现要顺序跑 $K$ 个假设、$K$ 次前向，训练时间直接线性放大 $K$ 倍——这正是 MCL 长期被诟病、推不到大模型规模的原因。本文借助 PyTorch 的分组卷积把多假设 LoRA 折叠进一次 batched 操作：把输入沿 batch 维复制 $K$ 份，再把 $K$ 组 $(A_\ell^k, B_\ell^k)$ 堆成一个张量，等价于在 LoRA 路径上跑 `nn.Conv1d` 的 grouped variant（groups=$K$），让每组输入只跟自己那组权重做矩阵乘，而冻结基座的前向天然共享。由于 $r \ll d$，参数侧增量微乎其微，额外开销基本只是激活随 $K$ 倍增。这一步是让 LoRA-MCL 训练成本对齐普通 LoRA、而不是 $K\times$ LoRA 的关键工程基础——没有它，7B–8B 规模上的实验根本跑不起来。
 
 ### 损失函数 / 训练策略
 最终训练目标为松弛 WTA：$\mathcal{L}^{\mathrm{WTA}}(\theta_1,\dots,\theta_K)=-\mathbb{E}_{c,x}\big[\sum_{k=1}^{K} q_k \log p(x\mid c;\theta_k)\big]$。LoRA 配置上，作者在所有 Transformer 层的 $Q,K,V$ 与 FFN 升降维矩阵都注入 adapter，秩 $r=8$、scaling $\alpha=8$（视觉版 $\alpha=32$），LoRA 数 $K\in\{3,5,7\}$；Qwen2-Audio 上 1 epoch（AudioCaps）或 10 epoch（Clotho），LLaVA-1.6 上 1 epoch。推理时不需要 WTA，每个假设独立解一条候选；MAP 解码（greedy/Beam Search/DBS）时为保证算力公平，LoRA-MLE 用 beam size $B$ 时 LoRA-MCL 每个假设只用 $B/K$。

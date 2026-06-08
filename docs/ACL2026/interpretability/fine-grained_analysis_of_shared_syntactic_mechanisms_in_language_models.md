@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者构造一个 minimal-pair 评测集，覆盖 FGD 的 7 个构式（EWHK/EWHW/MWH/RELCL/CLEFT/PCLEFT/TOPIC）、NPI 的 8 个构式（COND/DNEG/SONLY/QNT/EMBQ/SMPQ/SUP/ONLY），外加一个 capital-knowledge control（CTRL）。在 Pythia (1B/2.8B/6.9B 多 checkpoint) 和 Gemma 3 (1B/12B) 上跑 activation patching，对 residual stream / attention output / MLP / 单 attention head 四种 component 都打 ODDS 分数。然后比较 ODDS 分布是否在构式间一致来判定"共享机制"。最后两条验证支线：(i) 把识别到的关键 head 激活值×$\alpha$ 后跑 BLiMP / SyntaxGym / HANS 看准确率是否上升；(ii) 用同样设置跑 DAS 的 leave-one-out 训练 + ID/OOD 评测，看是否能复现 patching 结论。
+这是一项机制可解释性的因果分析：作者要在 attention head 这级粒度上确认 LM 处理多种句法构式时是否真的共用同一套内部机制。先构造一个 minimal-pair 评测集，覆盖 FGD 的 7 个构式（EWHK/EWHW/MWH/RELCL/CLEFT/PCLEFT/TOPIC）、NPI 的 8 个构式（COND/DNEG/SONLY/QNT/EMBQ/SMPQ/SUP/ONLY）外加一个 capital-knowledge control（CTRL）；然后在 Pythia（1B/2.8B/6.9B 多 checkpoint）和 Gemma 3（1B/12B）上跑 activation patching，对 residual stream、attention output、MLP、单个 attention head 四种粒度都打 ODDS 分数，再比较各构式的 ODDS 分布是否一致来判定"是否共享"。最后接两条验证支线：把识别出的关键 head 激活放大后跑 BLiMP/SyntaxGym/HANS 看行为是否随之改善，以及用同样设置跑 DAS 的 leave-one-out 训练与 ID/OOD 评测，检验有监督方法能否复现同一结论。
 
 ### 关键设计
 
-1. **细粒度 Activation Patching + 改造版 ODDS**:
+**1. 细粒度 Activation Patching + 改造版 ODDS：把因果贡献定位到单个 head。**
 
-    - 功能：对每个 component（layer × token × head）独立做激活替换，量化它对最终 next-token 概率的因果贡献。
-    - 核心思路：把 base input $b$ 上的某个 component 激活 $f(b)$ 替换为 source input $s$ 的对应激活 $f(s)$，看模型输出怎么变；用改造版 $\text{ODDS}(p, p_{\text{interv}}, T) = \frac{1}{|T|}\sum \log\left(\frac{p(y_b|b)}{p(y_b|s)} \cdot \frac{p_{\text{interv}}(y_b|s,b)}{p_{\text{interv}}(y_b|b,s)}\right)$ 度量 — 它衡量"对特定 token $y_b$ 在两输入之间的概率差距"在干预前后的位移。原始 Arora 版只比较 $y_b$ vs $y_s$，但 NPI 场景下两者非对称（语法上 $y_b$ 是 NPI），所以作者改成跟踪同一 token 的概率变化。
-    - 设计动机：(a) patching 完全不训练所以无 overfit 风险；(b) ODDS 在 FGD 对称对上和原 Arora 版数学等价（附录证明），但能正确处理 NPI 非对称对；(c) head 级粒度可以区分"residual 相似但 head 不同"的两种机制。
+只看 residual stream 会把"用完全不同 head 集合却产出相似表征"的两种机制误判成同一个，所以必须下钻到 head 级。做法是把 base 输入 $b$ 上某个 component 的激活 $f(b)$ 替换成 source 输入 $s$ 的对应激活 $f(s)$，观察输出概率怎么变，并用改造版 $\text{ODDS}(p, p_{\text{interv}}, T) = \frac{1}{|T|}\sum \log\left(\frac{p(y_b|b)}{p(y_b|s)} \cdot \frac{p_{\text{interv}}(y_b|s,b)}{p_{\text{interv}}(y_b|b,s)}\right)$ 度量干预对特定 token $y_b$ 概率差距的位移。原始 Arora 版比较的是 $y_b$ vs $y_s$，但 NPI 场景下这两者在语法上非对称（$y_b$ 才是 NPI），故改成只跟踪同一 token 的概率变化。这一改动一举三得：patching 全程不训练因而无 overfit 风险；在 FGD 对称对上与原版数学等价（附录有证明）却能正确处理 NPI 非对称对；head 级粒度让"residual 相似但 head 不同"的两种机制得以区分。
 
-2. **七构式共享 vs 八构式分裂的对照设计**:
+**2. 七构式共享 vs 八构式分裂的对照设计：用可证伪假说立住"共享"的真实性。**
 
-    - 功能：用两种现象的对比来检验"共享机制是否真实存在"的可证伪假说。
-    - 核心思路：对每个构式独立画一张 "layer × token × head" 的 ODDS 热图；如果 FGD 七个构式的热图非常相似（同一组 head 在同一些 layer 显著），就说共享；如果 NPI 八构式热图差异很大，就说每个构式机制不同。结果：FGD 全部高 ODDS 集中在 layer 7 的 head 7.5/7.6 和 layer 9 的 head 9.2，七个构式高度一致；NPI 则在 DNEG / COND / SUP 上呈现明显不同的 layer 分布。
-    - 设计动机：单看 FGD 一组构式如果都共享，可能只是因为它们都用了远距离依赖这一表面线索；引入 NPI 对照能证明"共享"不是 patching 方法本身的伪影 — 同方法在 NPI 上确实能看到机制分裂。
+如果只看 FGD 一组构式都共享，可能只是因为它们都借用了"远距离依赖"这一表面线索，无法排除是 patching 方法自身的伪影。作者因此为每个构式独立画一张 "layer × token × head" 的 ODDS 热图：FGD 七个构式若都在同一组 head、同一些 layer 显著高，就判为共享；NPI 八个构式若热图彼此差异巨大，就判为机制分裂。结果 FGD 的高 ODDS 全部集中在 layer 7 的 head 7.5/7.6 与 layer 9 的 head 9.2，七构式高度一致，而 NPI 在 DNEG/COND/SUP 上呈现明显不同的 layer 分布。引入 NPI 作对照恰好证明"共享"并非方法伪影——同一套方法在 NPI 上确实能看见机制分裂。
 
-3. **Steering Validation：从 head 操控到 BLiMP 准确率**:
+**3. Steering 验证：从 head 操控到 BLiMP 准确率的行为闭环。**
 
-    - 功能：把"共享机制"的发现拔高到"它在实际句子上确实管用"的行为级证据。
-    - 核心思路：把识别出的 3 个 head (7.5, 7.6, 9.2) 的激活值乘以系数 $\alpha \in \{0.8, 1.0, 1.5, 2.0\}$，在 BLiMP 上比较准确率。FGD 类题（wh_questions_object_gap 等 7 类）在 $\alpha>1$ 时准确率单调上升；更惊喜的是 island effects、binding、quantifiers、NPI 等其他类别也获益，说明这几个 head 实际承担的是"层级依赖"的通用机制而不只是 FGD 特化。
-    - 设计动机：仅在合成 minimal pair 上的高 ODDS 分数可能只是 dataset artifact；BLiMP 是独立 benchmark 且覆盖更广，能力上的迁移是机制真实性的最有力证据。
+仅在合成 minimal pair 上拿到高 ODDS 仍可能是 dataset artifact，必须验证这套机制在真实句子上确实管用。作者把识别出的 3 个 head（7.5、7.6、9.2）激活乘以系数 $\alpha \in \{0.8, 1.0, 1.5, 2.0\}$，在 BLiMP 上比较准确率：FGD 类题（wh_questions_object_gap 等 7 类）在 $\alpha>1$ 时准确率单调上升，而更出人意料的是 island effects、binding、quantifiers、NPI 等其他类别同样获益。这说明这几个 head 实际承担的是"层级依赖"这一通用句法骨架，而非 FGD 特化；BLiMP 作为独立且覆盖更广的 benchmark，其上的能力迁移是机制真实性最有力的证据。
 
 ### 损失函数 / 训练策略
-activation patching 完全 inference-only。DAS 训练时学一个一维向量 $a$，loss 是 $\min_a (-\sum_{(b,s,y_b,y_s)\in D}\log p_{\text{interv}}(y_s|b,s))$，干预定义为 $f_{\text{interv}}(b, s) = f(b) + (f(s)\cdot a - f(b)\cdot a) \cdot a^T$。训练 100 步、lr $5\times 10^{-3}$、batch=4、10% linear warmup。数据集 train 200 / ID 50 / OOD 50（OOD 词表与 train/ID 完全不相交）。
+activation patching 完全 inference-only，不涉及训练。DAS 则要训练一个一维向量 $a$，损失为 $\min_a (-\sum_{(b,s,y_b,y_s)\in D}\log p_{\text{interv}}(y_s|b,s))$，干预定义为 $f_{\text{interv}}(b, s) = f(b) + (f(s)\cdot a - f(b)\cdot a) \cdot a^T$；训练 100 步、lr $5\times 10^{-3}$、batch=4、10% linear warmup。数据集划分为 train 200 / ID 50 / OOD 50，其中 OOD 词表与 train/ID 完全不相交，以便严格检验有监督方向是否只是过拟合到训练 lexicon。
 
 ## 实验关键数据
 

@@ -41,30 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CPS-Prompt 沿用 PCL 标准两阶段架构：(1) 冻结 query encoder $f_q$ 前向生成任务线索；(2) prompt-injected backbone $f_p$ 做分类。在两阶段之间插入 CPS 模块选择关键 patch，并用 DPCT 策略分两阶段训练 prompt 和分类器。
+CPS-Prompt 要解决的核心问题，是让 Prompt-based 持续学习能跑在内存和算力都吃紧的边缘设备上，而不是只在数据中心刷精度。它沿用了 PCL 标准的两阶段架构：先用冻结的 query encoder $f_q$ 跑一次前向，从图像里提取出"任务线索"，再把这条线索注入到 prompt-injected backbone $f_p$ 里做分类。CPS-Prompt 的两个改动正好卡在这条流水线的两个关口上——在两阶段之间插入 CPS 模块，借第一次前向已经算好的注意力信号挑出真正关键的 patch，把进入第二阶段 backbone 的 token 砍掉一大半；再用 DPCT 策略把 prompt 和分类器拆成两段训练，专门补偿"训练时只看稀疏 patch、推理时却看全 patch"带来的表征错位。前者省内存省算力，后者把省下来的精度找回来。
 
 ### 关键设计
 
-1. **Critical Patch Sampling (CPS)**：
+**1. Critical Patch Sampling：用冻结 backbone 已有的注意力信号免训练地挑关键 patch。**
 
-    - **功能**：从 query encoder 最后一层提取 class token 到 patch token 的注意力权重 $A^L_{\text{cls},j}$ 和 value 向量的 L2 范数 $\|V^L_j\|_2$，计算临界分数：
-    $s_j = A^L_{\text{cls},j} \cdot \|V^L_j\|_2$
-    - **核心思路**：注意力权重反映 patch 对类别表征的贡献强度，value 范数反映特征的显著性。两者乘积构成综合重要性分数。经温度缩放 softmax 转为采样概率：
-    $p_j = \frac{\exp(s_j/\tau)}{\sum_i \exp(s_i/\tau)}$
-      然后以无替换多项式采样选 $k = \lfloor(1-r) \cdot N\rfloor$ 个 patch。
-    - **设计动机**：利用冻结 backbone 的先验知识做"免训练"的任务感知稀疏化；随机采样引入多样性避免过拟合；温度 $\tau$ 控制确定性 vs 探索性的 trade-off。
+直接把通用 token reduction（ToMe、PatchDropout）套到 PCL 上会出事——它们是"任务无关"的，砍 patch 时不知道哪些对当前任务的类别判别最关键，容易把任务相关区域误删，精度直线下降。CPS 的切入点是：PCL 本来就要让 query encoder 跑一次前向，那一层的注意力其实已经隐含了"哪些 patch 重要"的判断，白白浪费太可惜。具体地，从 query encoder 最后一层取出 class token 对每个 patch token 的注意力权重 $A^L_{\text{cls},j}$，再取该 patch 的 value 向量 L2 范数 $\|V^L_j\|_2$，两者相乘得到临界分数 $s_j = A^L_{\text{cls},j} \cdot \|V^L_j\|_2$——注意力反映这个 patch 对类别表征贡献多大，value 范数反映它的特征本身有多显著，乘起来才是"既被关注、信息又足"的综合重要性。分数不是直接 Top-k 截断，而是经温度缩放 softmax 转成采样概率
 
-2. **Decoupled Prompt and Classifier Training (DPCT)**：
+$$p_j = \frac{\exp(s_j/\tau)}{\sum_i \exp(s_i/\tau)}$$
 
-    - **功能**：将 $E$ 个 epoch 分为两个阶段——前 $\lfloor \lambda \cdot E \rfloor$ 个 epoch 联合优化 prompt $\phi$ 和分类器 $\theta$（用稀疏 patch 输入）；后 $E - E_p$ 个 epoch 冻结 prompt，仅用全 patch 输入微调分类器。
-    - **核心思路**：
-    $\mathcal{L}_p = \mathcal{L}(f_p(\mathbf{X}_{\text{sampled}}; \theta, \phi), y)$
-    $\mathcal{L}_{\text{cls}} = \mathcal{L}(f_p(\mathbf{X}_{\text{full}}; \theta, \phi), y), \quad \text{(}\phi \text{ frozen)}$
-    - **设计动机**：稀疏 patch 训练导致 prompt 学到的表征与全 patch 推理时不匹配；分类器单独用全 patch 对齐可消除此错位。同时冻结 prompt 后，梯度不再回传到 prompt，减少计算开销。
+再以无替换多项式采样选出 $k = \lfloor(1-r) \cdot N\rfloor$ 个 patch（$r$ 是削减率）。这样既靠冻结 backbone 的先验做了"零额外训练"的任务感知稀疏化，又靠采样里的随机性避免每次都死盯同一批 patch、留出探索多样性；温度 $\tau$ 越小分布越尖锐越接近确定性，越大越偏向随机探索。
 
-3. **温度控制的随机采样 vs 确定性 Top-k**：
+**2. Decoupled Prompt and Classifier Training：把 prompt 和分类器拆两段训，消除稀疏训练与全 patch 推理的错位。**
 
-    - 实验证明随机采样优于确定性 Top-k，因为受控的随机性促进了训练中的探索多样性，有助于泛化到新任务。
+CPS 省了内存，但留下一个隐患：训练时 prompt 只见过稀疏 patch，推理时却要面对全 patch，prompt 学到的表征和实际推理分布对不上，精度会被拖下来。DPCT 的办法是把总共 $E$ 个 epoch 切成两段：前 $\lfloor \lambda \cdot E \rfloor$ 个 epoch 用稀疏 patch 输入，联合优化 prompt $\phi$ 和分类器 $\theta$，目标是
+
+$$\mathcal{L}_p = \mathcal{L}(f_p(\mathbf{X}_{\text{sampled}}; \theta, \phi), y)$$
+
+剩下的 epoch 把 prompt 冻住，只用全 patch 输入单独微调分类器，目标是
+
+$$\mathcal{L}_{\text{cls}} = \mathcal{L}(f_p(\mathbf{X}_{\text{full}}; \theta, \phi), y), \quad (\phi \text{ 已冻结})$$
+
+第一段在稀疏输入下学高效的 prompt，第二段让分类器在真实的全 patch 分布上把表征重新对齐，正好把 CPS 引入的错位补回来。而且冻结 prompt 之后梯度不再回传到 prompt，第二段的反向传播也更省算力——精度和效率两头都照顾到。
+
+**3. 随机采样优于确定性 Top-k：受控随机性换来更好的泛化。**
+
+CPS 里那一步特意用多项式采样而不是直接取分数最高的 Top-k，是一个被实验验证过的选择。固定 Top-k 每个 epoch 都只喂同一批"最高分" patch，相当于把模型锁死在一小撮区域上；而带温度的随机采样让每轮见到的 patch 略有不同，这种受控的随机性在训练中起到了类似数据增强的探索作用，尤其在削减比例较大（phase ratio 较低）时，对泛化到持续到来的新任务帮助明显。
 
 ### 损失函数 / 训练策略
 - 使用标准交叉熵损失

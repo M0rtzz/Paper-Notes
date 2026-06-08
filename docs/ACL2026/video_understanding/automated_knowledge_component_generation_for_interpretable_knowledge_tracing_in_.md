@@ -40,31 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法由两部分组成。第一部分是自动 KC 生成与标注 pipeline：对每道编程题采样多样化正确学生提交，提示 GPT-4o 生成必要 KC；再用 Sentence-BERT embedding 和层次凝聚聚类合并相似 KC；最后用 GPT-4o 给每个 cluster 生成最终 KC 名称，并把题目映射到 KC cluster，得到 Q-matrix。
-
-第二部分是 KCGen-KT 模型：它维护学生在每个 KC 上的 mastery vector，把 mastery 值变成 soft token 后连同下一道题的问题文本和 KC 描述输入 Llama 3，同时预测下一次作答是否正确和学生可能提交的代码。
+方法分两段、连成一个闭环。第一段是自动 KC 生成与标注 pipeline：对每道编程题采样多样化的正确学生提交，提示 GPT-4o 生成必要的 KC，再用 Sentence-BERT embedding + 层次凝聚聚类把相似 KC 合并，最后让 GPT-4o 给每个 cluster 命名并把题目映射到 cluster，得到 Q-matrix。第二段是 KCGen-KT 模型：它为每个学生维护一份「在各 KC 上的 mastery 向量」，把 mastery 值转成 soft token，连同下一道题的题面和 KC 描述一起喂给 Llama 3，同时预测「下一次作答是否正确」和「学生可能提交的代码」。
 
 ### 关键设计
-1. **LLM-based KC Generation and Clustering**:
 
-	- 功能：为开放式编程题自动生成细粒度且可读的 KC，并控制抽象层级。
-	- 核心思路：先用 CodeBERT embedding 聚类正确学生代码，从不同代码簇中采样代表解法，让 GPT-4o 基于题目和多样化正确解法生成 KC；之后用 Sentence-BERT 对 KC 描述向量化，再用 Hierarchical Agglomerative Clustering 合并相似技能，最后由 GPT-4o 为 cluster 命名。
-	- 设计动机：编程题可有多种正确思路，只看题干或单个解法会漏掉必要技能；聚类则避免 LLM 生成过细、重复或不可泛化的 KC。
+**1. LLM-based KC Generation and Clustering：从多样化正确解法里抽出可读且粒度可控的 KC。**
 
-2. **KC Mastery Soft Token Conversion**:
+开放式编程题没法像选择题那样标注——同一题有多种正确思路，只看题干或单个解法会漏掉必要技能，而让 LLM 自由生成又容易产出过细、重复、不可泛化的 KC。ArrowGEV 的做法是先用 CodeBERT embedding 给正确学生代码聚类，从不同代码簇里采样代表性解法，让 GPT-4o 基于题目和这些多样解法生成 KC；再用 Sentence-BERT 把 KC 描述向量化，经 Hierarchical Agglomerative Clustering 合并相似技能，最后由 GPT-4o 给每个 cluster 命名。聚类这一步正是用来控制抽象层级，把 LLM 容易发散的细碎技能收敛成稳定、可复用的 KC 集合。
 
-	- 功能：把学生对每个 KC 的掌握程度接入 LLM 的文本输入空间。
-	- 核心思路：模型先用 LSTM 更新 512 维学生知识状态 $h_t$，再经线性层和 sigmoid 得到 $k$ 维 mastery vector $m_t\in[0,1]^k$。对第 $j$ 个 KC，用 $s_t^j=m_t^j\cdot emb^{true}+(1-m_t^j)\cdot emb^{false}$ 得到 soft token，表示学生对该 KC 的掌握程度。
-	- 设计动机：LLM 擅长处理文本描述，但传统连续 mastery 值不能直接作为普通文本 token 输入。soft token 让 mastery 信息既可微，又能融入 LLM 表示空间。
+**2. KC Mastery Soft Token Conversion：把连续的掌握度接进 LLM 的文本空间。**
 
-3. **多任务 KT 目标与可解释正则**:
+LLM 擅长读文本描述，但学生对某个 KC 的「掌握程度」是个连续值，没法当普通文本 token 直接输入。模型先用 LSTM 更新一个 512 维学生知识状态 $h_t$，经线性层 + sigmoid 得到 $k$ 维 mastery 向量 $m_t\in[0,1]^k$；对第 $j$ 个 KC，用 $s_t^j=m_t^j\cdot emb^{true}+(1-m_t^j)\cdot emb^{false}$ 把掌握度插值成一个 soft token。这个 soft token 既保留了「掌握多少」的连续信息、又可微，于是 mastery 状态就能端到端融进 LLM 的表示空间，而不必离散化丢信息。
 
-	- 功能：同时预测正确性、生成学生代码，并让 KC mastery 与答题表现保持单调解释。
-	- 核心思路：正确性预测用 Llama 3 输入 hidden states 做 sigmoid 分类；代码预测用 Llama 3 token-by-token 生成代码；KC 正则用相关 KC mastery 的平均值预测正确性。最终损失为 $\mathcal{L}_{KCGen-KT}=\lambda(\mathcal{L}_{CodeGen}+\mathcal{L}_{CorrPred})+(1-\lambda)\mathcal{L}_{KC}$。
-	- 设计动机：只优化预测准确率可能得到不可解释的 hidden state；KC loss 迫使“高 KC 掌握度对应高正确概率”，让学生画像更符合教育解释。
+**3. 多任务 KT 目标与可解释正则：让预测准的同时，画像也讲得通。**
+
+光优化预测精度，学到的 hidden state 可能完全不可解释。KCGen-KT 同时挂三个目标：正确性预测拿 Llama 3 的 hidden states 做 sigmoid 分类，代码预测让 Llama 3 token-by-token 生成学生代码，再加一条 KC 正则——用相关 KC mastery 的平均值去预测正确性，强行把「KC 掌握度高 ↔ 答对概率高」绑在一起。总损失为 $\mathcal{L}_{KCGen-KT}=\lambda(\mathcal{L}_{CodeGen}+\mathcal{L}_{CorrPred})+(1-\lambda)\mathcal{L}_{KC}$。这条 KC loss 是可解释性的关键：它逼着 mastery 向量真正对应教育意义上的「学生在哪些技能上弱」，而不是退化成一堆只为拟合的黑箱数字。
 
 ### 损失函数 / 训练策略
-训练目标包括三部分：正确性预测的 BCE loss、代码生成的 token-level negative log-likelihood，以及 KC mastery 与正确性的 BCE 正则。模型使用 instruction-tuned Llama 3 8B、LoRA 微调、8-bit quantization；KCGen-KT 中 Llama 3 学习率为 1e-5，LSTM 为 5e-4，mastery 线性层为 1e-4。实验重复 5 个随机 train-validation-test split。
+训练目标三部分：正确性预测的 BCE loss、代码生成的 token-level 负对数似然、以及 KC mastery 与正确性之间的 BCE 正则。模型基于 instruction-tuned Llama 3 8B，用 LoRA 微调 + 8-bit 量化；KCGen-KT 里 Llama 3 学习率 1e-5、LSTM 5e-4、mastery 线性层 1e-4。实验在 5 个随机 train-validation-test split 上重复。
 
 ## 实验关键数据
 

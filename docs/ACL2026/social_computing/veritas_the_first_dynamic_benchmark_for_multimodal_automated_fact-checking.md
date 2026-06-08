@@ -46,23 +46,20 @@ VeriTaS 不是一个新的 fact-checking 模型，而是一个面向模型评估
 输出端是按季度组织的 VeriTaS benchmark。每条样本包含 claim、媒体、日期、语言、appearance 信息、Integrity 总分、底层属性分数和文字 justification。当前版本发布 25K 条声明，覆盖 Q1 2020 到 Q1 2026 的 25 个季度，每季度 1K 条，并保持 Intact 与 Compromised 平衡。
 
 ### 关键设计
-1. **七阶段动态构建流水线**:
 
-	- 功能：把不断出现的新 fact-checking review 转成可评测样本，并承诺后续按季度继续扩展。
-	- 核心思路：Stage 1 从 ClaimReview 收集约 398K 条 review；Stage 2 识别 848 个发布者并保留专业 fact-checking 组织，得到 335K 条可信 review；Stage 3 抓取文章正文和媒体，去掉广告、cookie 提示等噪声；Stage 4 从文章中恢复原始 appearance URL 和 archived URL；Stage 5 过滤无关媒体并把 claim 改写成约 72K 条自包含声明；Stage 6 做 verdict 标准化；Stage 7 生成和验证 Intact 版本以平衡数据。
-	- 设计动机：动态性不是简单地追加新文件，而是需要从真实 fact-checking 生产链路中稳定抽取可用样本。七阶段设计把可信度、上下文、媒体和标签统一放进流水线，降低人工维护成本。
+**1. 七阶段动态构建流水线：把"持续涌现的真实核查"变成可评测样本。**
 
-2. **解耦式 verdict 与 Integrity 评分**:
+动态性最大的麻烦在于，它不是简单地往数据集里追加新文件，而是要从真实的事实核查生产链路里稳定地抽出干净、可用的样本。VeriTaS 用七个阶段把这件事拆开做：Stage 1 从 ClaimReview 收集约 398K 条 review；Stage 2 识别 848 个发布者、只保留专业 fact-checking 组织，得到 335K 条可信 review；Stage 3 抓取文章正文和媒体并去掉广告、cookie 提示等噪声；Stage 4 从文章里恢复原始 appearance URL 和 archived URL；Stage 5 过滤无关媒体、把 claim 改写成约 72K 条自包含声明；Stage 6 做 verdict 标准化；Stage 7 生成并验证 Intact 版本以平衡数据。这套设计的关键是把可信度、上下文、媒体和标签全部塞进一条自动流水线，使得"按季度继续扩展"不再依赖昂贵的人工维护，而是可以稳定复跑。
 
-	- 功能：避免把所有错误压成一个粗糙真假标签，让评测能知道模型到底错在媒体、文本还是上下文。
-	- 核心思路：论文把判断拆成 Media Authenticity、Media Contextualization、Veracity、Context Coverage 四个底层属性，再用 Integrity 表示 claim 作为整体是否可接受。每个属性取连续分数 $[-1, 1]$，小于 $-1/3$ 视为 Negative，大于 $1/3$ 视为 Positive，Integrity 由属性 (2)-(4) 中最差的 compromising property 决定。模型评测主指标用 MSE，因为它会强烈惩罚 True 和 False 的反向翻转，同时允许近似正确。
-	- 设计动机：现实中的错误很少只是“真假”二选一。图像可能是真的但被放错语境，文字可能基本正确但省略关键上下文。解耦属性让 benchmark 更像专业 fact-checker 的判断过程，也让错误分析更有解释性。
+**2. 解耦式 verdict 与 Integrity 评分：让评测知道模型到底错在哪。**
 
-3. **LLM ensemble 标注、过滤与 rectification**:
+现实里的错误很少是干脆的"真/假"二选一——图片可能是真的但被放进错误语境，文字可能基本正确却省略了关键上下文。如果只压成一个粗糙真假标签，benchmark 就完全看不出模型错在媒体、文本还是上下文。VeriTaS 把判断拆成四个底层属性：Media Authenticity、Media Contextualization、Veracity、Context Coverage，再用 Integrity 表示 claim 作为整体是否可接受。每个属性取连续分数 $[-1, 1]$，小于 $-1/3$ 记为 Negative、大于 $1/3$ 记为 Positive，而 Integrity 由属性 (2)–(4) 中最差的那个 compromising property 决定。模型评测主指标用 MSE，因为它会狠狠惩罚 True 与 False 的反向翻转、同时又允许"近似正确"，比离散准确率更贴合这种连续、可解释的判断结构。
 
-	- 功能：在不完全依赖人工标注的前提下，得到高一致性的 verdict 和平衡的 Intact/Compromised 分布。
-	- 核心思路：Stage 6 使用 GPT-5.2、Gemini 2.5 Pro、Claude Sonnet 4.5 和 Llama 4 Maverick 的 ensemble，对每个属性打分并生成 justification，之后按均值聚合；若成员间分歧超过 1，则丢弃该 claim。由于事实核查天然偏向 Compromised，Stage 7 根据 compromising property 的 justification 生成 evidence-grounded 的 Intact 改写，并再次验证 shareability、一致性和 Integrity。
-	- 设计动机：专业事实核查库中真实错误声明远多于真实正确声明，直接采样会造成类别失衡；但无条件合成正确声明又会脱离现实。基于证据的 rectification 在真实性和平衡性之间做了折中。
+**3. LLM ensemble 标注、过滤与 rectification：不靠人工也拿到高一致性且类别平衡的标签。**
+
+专业核查库里真实的错误声明远多于真实正确声明，直接采样必然类别失衡；但凭空合成正确声明又会脱离现实、引入伦理风险。VeriTaS 在 Stage 6 用 GPT-5.2、Gemini 2.5 Pro、Claude Sonnet 4.5 和 Llama 4 Maverick 组成 ensemble，对每个属性分别打分并生成 justification，按均值聚合；只要成员间分歧超过 1 就直接丢弃该 claim，以此换来高一致性。针对类别失衡，Stage 7 不是无条件造正例，而是依据 compromising property 的 justification 做 evidence-grounded 的 Intact 改写，再回头验证 shareability、一致性和 Integrity。这种"基于证据的修正"在真实性和平衡性之间做了折中——既补足了正确声明，又尽量不脱离真实来源。
+
+> ⚠️ 注记中的 GPT-5.2、Gemini 2.5 Pro、Claude Sonnet 4.5、Llama 4 Maverick 等模型名以原文为准。
 
 ### 损失函数 / 训练策略
 本文没有训练新的模型。构建侧主要依赖多模态 LLM 的分工调用、ensemble 聚合和严格过滤；评测侧把模型输出映射到 Integrity 及底层属性的连续分数，主指标为 MSE，辅以 MAE 和 3-bin/7-bin accuracy。所有基线评测还要求排除 claim 发布日期之后的证据，避免检索式系统偷看未来信息。

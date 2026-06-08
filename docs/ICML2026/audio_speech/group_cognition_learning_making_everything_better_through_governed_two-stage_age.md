@@ -40,38 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：每个模态 $m\in\{l,a,v\}$ 的样本 $x_m$ 经各自 encoder 得到 $h_m$。
-输出：分类/回归预测 $\hat o$。
-中间四个 agent 串行执行两阶段：
-
-1. **Stage 1 — Selective Interaction**：Routing Agent 给每条有向边 $(m\to n)$ 打 logit $\rho_{m\to n}$ 并打包消息 $u_{m\to n}$；Auditing Agent 估计该消息融合进 $h_n$ 带来的 marginal gain $\hat\Delta_{m\to n}$，乘上 routing 概率得到门 $\alpha_{m\to n}$；门控 residual 更新得到精炼后的 $z_n$。
-2. **Stage 2 — Consensus Formation**：Public-Factor Agent 用置换不变算子从 $\{z_l,z_a,z_v\}$ 蒸馏共享因子 $c$；Aggregation Agent 用 $c$ 作为条件给每个模态生成提议 $r_m$ 和 softmax 权重 $\pi_m$，最终预测 $\hat o = g_\tau(\sum_m \pi_m r_m, c)$。
-
-四个辅助目标（task / local / public / gain alignment / redundancy）联合训练所有 agent。
+GCL 想解决的是端到端融合里"交互学习"和"表示学习"挤在同一个 loss 里、谁也说不清哪次跨模态交流是有用的这个老问题。它的做法是把融合拆成一个有治理的两阶段协议：三个模态 $m\in\{l,a,v\}$ 的样本各自过 encoder 得到 $h_m$ 后，先进入"选择性交互"阶段——由 Routing 和 Auditing 两个 agent 共同决定哪些跨模态消息被允许流过，得到精炼表示 $z_n$；再进入"共识形成"阶段——由 Public-Factor 和 Aggregation 两个 agent 先蒸馏出共享语义、再以它为条件加权聚合，输出预测 $\hat o$。四个 agent 各自被一个辅助目标监督，整套系统用 task / local / public / gain alignment / redundancy 五项联合训练。
 
 ### 关键设计
 
-1. **Auditing Agent + 边际增益审计门**:
+**1. 边际增益审计门：用「值不值得交流」而非「想不想交流」来开边**
 
-    - 功能：把"是否允许 $m$ 把消息发给 $n$"这件事从纯优化决策变成一次可监督的审计——只有真正能降 task loss 的边才被打开。
-    - 核心思路：训练时定义"teacher gain" $\Delta_{m\to n}=\ell_\tau(q_n^\tau(h_n),y)-\ell_\tau(q_n^\tau(\tilde h_n^m),y)$，其中 $\tilde h_n^m=h_n+\phi_{m\to n}(h_n,u_{m\to n})$ 是融合消息后的暂态。推理时没有标签，所以另起一个增益预测器 $\hat\Delta_{m\to n}=g_g^{m\to n}(h_n,u_{m\to n})$。最终门 $\alpha_{m\to n}=\text{softmax}_{j}(\rho_{j\to n})_{j=m}\cdot\sigma_\kappa(\tilde\Delta_{m\to n})$，把"想交流"（routing）和"值得交流"（gain）相乘。门控集成走 residual：$z_n=h_n+\sum_{m\neq n}\alpha_{m\to n}\cdot\phi_{m\to n}(h_n,u_{m\to n})$。增益对齐 loss $\mathcal L_{\text{gain}}=-\sum_n\sum_{m\neq n}\alpha_{m\to n}\text{stopgrad}(\Delta_{m\to n})$ 鼓励正增益边打开、负增益边关闭，且 stopgrad 防止 teacher gain 被反传污染。
-    - 设计动机：以前的 router/MoE 只问"激活哪条路径"，不问"激活这条路径有没有用"。把 teacher–student gain 显式拆出来一举解决了两件事：训练时有 ground-truth 监督信号、推理时仍只用学到的预测器，不增加 inference 成本。
+针对的痛点是 router/MoE 类方法只问"激活哪条路径"、从不问"激活这条路径到底有没有用"，于是噪声边也会被端到端梯度奖励。GCL 把准入做成一次可监督的审计：训练时定义一条 teacher gain $\Delta_{m\to n}=\ell_\tau(q_n^\tau(h_n),y)-\ell_\tau(q_n^\tau(\tilde h_n^m),y)$，其中 $\tilde h_n^m=h_n+\phi_{m\to n}(h_n,u_{m\to n})$ 是把消息 $u_{m\to n}$ 融进去后的暂态——这等于直接量出"加这条边后 task loss 降了多少"。推理时没有标签，所以再训一个增益预测器 $\hat\Delta_{m\to n}=g_g^{m\to n}(h_n,u_{m\to n})$ 来替代。最终的门把"想交流"和"值得交流"相乘：$\alpha_{m\to n}=\text{softmax}_{j}(\rho_{j\to n})_{j=m}\cdot\sigma_\kappa(\tilde\Delta_{m\to n})$，其中 $\rho_{m\to n}$ 是 Routing Agent 给每条有向边打的 logit；门控信息以 residual 形式注入 $z_n=h_n+\sum_{m\neq n}\alpha_{m\to n}\cdot\phi_{m\to n}(h_n,u_{m\to n})$。
 
-2. **Public-Factor Agent + 解耦聚合**:
+之所以有效，是因为增益对齐 loss $\mathcal L_{\text{gain}}=-\sum_n\sum_{m\neq n}\alpha_{m\to n}\,\text{stopgrad}(\Delta_{m\to n})$ 会鼓励正增益边打开、负增益边关闭，而 stopgrad 又防止 teacher gain 被反传污染。这一招同时拿到两件好处：训练时有 ground-truth 监督信号，推理时只用学到的预测器、不增加任何 inference 成本。
 
-    - 功能：把"跨模态共享语义"和"每模态私有特化"显式拆成两个对象，避免传统融合算子让强模态吞噬弱模态。
-    - 核心思路：用置换不变算子（symmetric attention 或 global pool + MLP）$c=g_p(z_l,z_a,z_v)$ 抽出 public factor，并加辅助监督 $\mathcal L_{\text{pub}}=\mathbb E\ell_\tau(g_\tau^c(c),y)$ 保证 $c$ 本身可预测。然后 Aggregation Agent 用 $c$ 作 context：每模态生成 proposal $r_m=\eta_m(z_m,c)$ 和 unnormalized score $s_m=g_a^m(z_m,c)$，做 $\pi_m=\text{softmax}(\{s_m\}_m)$ 得到 sample-wise 权重，最终 $\hat o = g_\tau(\sum_m \pi_m r_m, c)$。
-    - 设计动机：直接 concat 会让 $c$ 和 $z_m$ 纠缠，强模态 dominate 后 $z_a/z_v$ 就废了。把 $c$ 显式拎出来，再用 $c$ 调制每模态的权重 $\pi_m$，等价于让模型问"在我已经知道共享语义的前提下，这个模态私有信息还能贡献多少"——这种条件化让弱模态的 incremental info 不会被淹没。
+**2. 解耦聚合：先抽公共因子，再让弱模态在「已知共识」下补充私有信息**
 
-3. **Redundancy 对比正则 $\mathcal L_{\text{red}}$**:
+针对的痛点是传统融合算子（直接 concat）会让共享语义和私有特征纠缠，强模态 dominate 之后弱模态 $z_a/z_v$ 基本就废了。GCL 用一个置换不变算子（symmetric attention 或 global pool + MLP）$c=g_p(z_l,z_a,z_v)$ 把跨模态共享语义显式抽成 public factor，并加辅助监督 $\mathcal L_{\text{pub}}=\mathbb E\,\ell_\tau(g_\tau^c(c),y)$ 保证 $c$ 自己就能预测。随后 Aggregation Agent 以 $c$ 为 context，让每个模态生成 proposal $r_m=\eta_m(z_m,c)$ 和未归一分数 $s_m=g_a^m(z_m,c)$，做 $\pi_m=\text{softmax}(\{s_m\}_m)$ 得到 sample-wise 权重，最终 $\hat o=g_\tau(\sum_m\pi_m r_m,c)$。
 
-    - 功能：在 Stage 1 之后给精炼通道 $\{z_n\}$ 加正交压力，防止 routing 学到了边却让所有模态最终收敛到同一个表示。
-    - 核心思路：对称 InfoNCE 风格的对齐分数 $\mathcal L_{\text{red}}=\sum_{m<n}D(z_m,z_n)$，最小化它要求精炼表示之间互信息低。
-    - 设计动机：仅靠门控 $\alpha$ 控制信息**流量**，但不控制流过来之后是否还保留模态独特性。$\mathcal L_{\text{red}}$ 是个反向力，专门杀掉"虚假耦合"——消融显示去掉这一项 MOSI 上 MAE 从 $0.685$ 涨到 $0.703$，且 HSIC/CKA 诊断指标急剧恶化。
+把 $c$ 显式拎出来再用它调制每模态权重 $\pi_m$，等价于让模型先回答"在共识里我们已经知道了什么"，再问"这个模态私有信息还能额外贡献多少"。这种条件化避免了对共享信息的重复计数，也让弱模态的 incremental info 不会被强模态淹没。
+
+**3. Redundancy 对比正则：控制流过来之后还能不能保留模态独特性**
+
+针对的痛点是门控 $\alpha$ 只管信息的"流量"，却不管信息流过来之后所有模态是不是收敛到了同一个表示——routing 学到了边，仍可能制造虚假耦合。$\mathcal L_{\text{red}}$ 是一股反向力：用对称 InfoNCE 风格的对齐分数 $\mathcal L_{\text{red}}=\sum_{m<n}D(z_m,z_n)$，最小化它就要求精炼表示之间互信息低、彼此正交。消融能直接看到它的作用——去掉这一项后 MOSI 上 MAE 从 $0.685$ 涨到 $0.703$，HSIC/CKA 这类耦合诊断指标也急剧恶化。
 
 ### 损失函数 / 训练策略
-$\mathcal L_{\text{total}} = \mathcal L_{\text{task}} + \lambda_{\text{loc}}\mathcal L_{\text{loc}} + \lambda_{\text{pub}}\mathcal L_{\text{pub}} + \lambda_{\text{gain}}\mathcal L_{\text{gain}} + \lambda_{\text{red}}\mathcal L_{\text{red}}$。
-其中 $\mathcal L_{\text{loc}}=\sum_m\mathbb E\ell_\tau(q_m^\tau(h_m),y)$ 监督单模态头，保证 teacher gain 的估计可靠。Adam，batch 128，weight decay $1\text{e-}4$，patience 6，A100。
+总目标 $\mathcal L_{\text{total}} = \mathcal L_{\text{task}} + \lambda_{\text{loc}}\mathcal L_{\text{loc}} + \lambda_{\text{pub}}\mathcal L_{\text{pub}} + \lambda_{\text{gain}}\mathcal L_{\text{gain}} + \lambda_{\text{red}}\mathcal L_{\text{red}}$。其中 $\mathcal L_{\text{loc}}=\sum_m\mathbb E\,\ell_\tau(q_m^\tau(h_m),y)$ 单独监督每个单模态头，保证 teacher gain 估计可靠。优化用 Adam，batch 128，weight decay $1\text{e-}4$，patience 6，单卡 A100。
 
 ## 实验关键数据
 

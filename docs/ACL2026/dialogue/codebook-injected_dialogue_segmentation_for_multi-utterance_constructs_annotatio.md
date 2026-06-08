@@ -41,37 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对于一段对话 $\mathbf{u}=(u_1,\ldots,u_T)$，segmenter 输出 boundary 集合 $\mathcal{B}\subset\{1,\ldots,T-1\}$，将对话切成 $K=|\mathcal{B}|+1$ 个连续 segment $S_1,\ldots,S_K$。框架在四种 segmenter 上做 2 (方法家族) × 2 (是否 codebook-aware) 对照：
-
-- **LLM-zero-shot** (GPT-5 / Gemini-3-pro)：纯 topic-shift 提示，输出 boundary index 的 JSON。
-- **LLM-DA-aware**：同样的提示但在 system message 里附上 DA 定义，要求在 pedagogical function 变化处下 boundary。
-- **Dial-Start**：非 LLM baseline，contrastive learning utterance encoder $f(\cdot)$ 计算相邻 utterance similarity 的 depth score，按 $\mathrm{thr}=\mu+\alpha\sigma$ 选 boundary。
-- **Dial-Start + DA-aware**：在 utterance embedding 上加 DA-conditioned retrieval（详见 key design 2）。
-
-随后用三类 gold-free 指标评测：segment 内一致性 (normalized entropy ↓ / purity ↑)、相邻 segment 差异性 (Jensen-Shannon divergence ↑ / boundary change rate ↑)、人-AI 分布对齐 (segment-level JS ↓)。
+对于一段对话 $\mathbf{u}=(u_1,\ldots,u_T)$，segmenter 要输出 boundary 集合 $\mathcal{B}\subset\{1,\ldots,T-1\}$，把对话切成 $K=|\mathcal{B}|+1$ 个连续 segment $S_1,\ldots,S_K$，再交给三类 gold-free 指标打分。全文的核心操纵是一个 2（方法家族）×2（是否看得到 codebook）的对照实验：方法家族取 LLM-zero-shot（GPT-5 / Gemini-3-pro，纯 topic-shift 提示，输出 boundary index 的 JSON）和 Dial-Start（非 LLM，contrastive utterance encoder $f(\cdot)$ 算相邻相似度 depth score，按 $\mathrm{thr}=\mu+\alpha\sigma$ 选 boundary）；codebook-awareness 则决定 segmenter 在切之前是否看得到 DA 定义——LLM 侧把定义塞进 system message，Dial-Start 侧用 DA-conditioned retrieval 注入。最后用段内一致性（normalized entropy ↓ / purity ↑）、相邻段差异性（JS 散度 ↑ / boundary change rate ↑）、人-AI 分布对齐（segment-level JS ↓）三组指标多目标评测。
 
 ### 关键设计
 
-1. **Codebook-injected LLM segmentation**:
+**1. Codebook-injected LLM segmentation：让 LLM 在"哪里切"这一步就盯着"切完贴什么 label"。**
 
-    - 功能：把 DA 定义当 boundary 决策的显式 criteria，让 LLM 在"哪里切"这一步就考虑下游"切完贴什么 label"。
-    - 核心思路：在 zero-shot prompt 基础上插入完整 move definitions（如 TalkMoves 的 6 类 talk moves、CLASS 的 4 类 instructional support），要求模型"在 pedagogical function 发生变化时下 boundary，但不要给段贴 label"。输出仍是 boundary index JSON。
-    - 设计动机：传统 topic-shift prompt 让 LLM 凭"主题变化"切，结果往往在内容主线一致但教学动作切换处不切（如老师从 explanation 切到 questioning），错失下游 annotation 关键 boundary。把 DA 定义显式注入，让 LLM 内化"教学动作"这个 unit-of-analysis，使 boundary 与 downstream label 直接对齐。实验证明这能让 GPT-5 在 CLASS 上把 normalized entropy 从 0.349 降到 0.286，purity 从 0.546 升到 0.570，是所有方法中段内一致性最强的。
+传统 topic-shift 提示让 LLM 凭"主题变化"切，结果常在内容主线一致、但教学动作切换处不切（如老师从 explanation 转到 questioning），恰好错失下游 annotation 最关键的 boundary。本设计在 zero-shot prompt 基础上插入完整 move definitions（TalkMoves 的 6 类 talk moves、CLASS 的 4 类 instructional support），要求模型"在 pedagogical function 发生变化时下 boundary，但不要给段贴 label"，输出仍是 boundary index JSON。把 DA 定义显式注入，等于让 LLM 内化"教学动作"这个 unit-of-analysis，使 boundary 与 downstream label 直接对齐——实验里它把 GPT-5 在 CLASS 上的 normalized entropy 从 0.349 压到 0.286、purity 从 0.546 抬到 0.570，是所有方法中段内一致性最强的。
 
-2. **DA-conditioned retrieval-augmented coherence segmentation**:
+**2. DA-conditioned retrieval-augmented coherence segmentation：不重训 boundary detector，把 codebook 语义检索进 coherence 表征。**
 
-    - 功能：在 Dial-Start 的 coherence-based 表征里注入 codebook 语义，避免重新训练 boundary detector。
-    - 核心思路：维护一份 expert-labeled DA utterance 的 memory $\mathcal{M}=\{(h_j, m_j)\}$（TalkMoves 1.9k、CLASS 301 条）。对当前 utterance $u_i$ 抽 embedding $h_i=f(u_i)$，从 memory 中 top-$K_{\text{ret}}$ 邻居用 cosine + softmax 温度 $\tau$ 计算 attention 权重，聚合 DA 嵌入 $r_i=\sum_k a_k e_{m_{j_k}}$，再融合到原表征 $\hat{h}_i=\text{norm}(h_i+\alpha r_i)$，最后送回 Dial-Start 的相邻相似度计算。
-    - 设计动机：直接 fine-tune Dial-Start 需要 boundary 标注（教学领域没有），而 retrieval-augmented 注入 DA semantic 既不破坏原 coherence 目标，又能让 boundary score 反映"附近 DA 是否一致"。但实验有趣地显示这招在 LLM 上有效、对 coherence-based 基线无效（Dial-Start+DA-aware 在 CLASS 上 entropy 反而从 0.303 升到 0.319），暗示 DA-awareness 与"instruction-following"模型的契合度更高。
+直接 fine-tune Dial-Start 需要 boundary 标注，而教学领域恰恰没有；于是作者改用检索注入。维护一份 expert-labeled DA utterance 的 memory $\mathcal{M}=\{(h_j, m_j)\}$（TalkMoves 1.9k、CLASS 301 条），对当前 utterance $u_i$ 抽 embedding $h_i=f(u_i)$，从 memory 取 top-$K_{\text{ret}}$ 邻居，用 cosine + softmax 温度 $\tau$ 算 attention 权重，聚合 DA 嵌入 $r_i=\sum_k a_k e_{m_{j_k}}$，再融合回原表征 $\hat{h}_i=\text{norm}(h_i+\alpha r_i)$，送回 Dial-Start 的相邻相似度计算。这样既不破坏原 coherence 目标，又让 boundary score 反映"附近 DA 是否一致"。但实验有趣地显示这招对 LLM 有效、对 coherence-based 基线无效（Dial-Start+DA-aware 在 CLASS 上 entropy 反而从 0.303 升到 0.319），暗示 DA-awareness 与 instruction-following 模型的契合度更高。
 
-3. **Gold-label-free 三类评测指标**:
+**3. Gold-label-free 三类评测指标：没有 gold boundary 时，用 DA 分布的统计性质给 segmentation 打分。**
 
-    - 功能：在没有 gold segment 的前提下，用 DA 标签的 segment 内 / 相邻 / 跨标注者分布性质给 segmentation 打分。
-    - 核心思路：把每个 segment $S_k$ 转成 DA 分布 $p_{k,c}^{(r)}=\frac{1}{|S_k|}\sum_{u_i\in S_k}\mathbb{1}[y_i^{(r)}=c]$，segment 权重 $w_k=|S_k|/T$。三类指标：(i) 段内一致性：normalized entropy $\widetilde{H}_k^{(r)}=H_k^{(r)}/\log_2 C$（↓）+ purity $\max_c p_{k,c}^{(r)}$（↑）；(ii) 相邻段差异性：相邻段 JS 散度 $\overline{\text{JS}}_{\text{adj}}^{(r)}$（↑）+ boundary change rate $\text{BCR}^{(r)}$（↑）；(iii) 人-AI 分布对齐：$\overline{\text{JS}}_{\text{HA}}=\sum_k w_k \text{JS}(p_k^{(H)}, p_k^{(A)})$（↓）。
-    - 设计动机：$P_k$ / WindowDiff 需要 reference boundary，标注成本高且本身有 boundary ambiguity；用 DA 分布作为间接信号，既不需要 gold boundary，又能同时考核"段内一致"、"段间差异"、"人-AI 视角一致" 三个独立目标，自然反映 segmentation 是 multi-objective design 而不是 single-score 问题。
+$P_k$ / WindowDiff 都要 reference boundary，标注成本高且本身有 boundary ambiguity，教学领域根本拿不到。本设计改用 DA 分布作间接信号：把每个 segment $S_k$ 转成 DA 分布 $p_{k,c}^{(r)}=\frac{1}{|S_k|}\sum_{u_i\in S_k}\mathbb{1}[y_i^{(r)}=c]$，segment 权重 $w_k=|S_k|/T$，再从三个独立目标考核。段内一致性看 normalized entropy $\widetilde{H}_k^{(r)}=H_k^{(r)}/\log_2 C$（↓）和 purity $\max_c p_{k,c}^{(r)}$（↑）；相邻段差异性看相邻段 JS 散度 $\overline{\text{JS}}_{\text{adj}}^{(r)}$（↑）和 boundary change rate $\text{BCR}^{(r)}$（↑）；人-AI 分布对齐看 $\overline{\text{JS}}_{\text{HA}}=\sum_k w_k \text{JS}(p_k^{(H)}, p_k^{(A)})$（↓）。三个目标用同一货币度量，自然把 segmentation 暴露成一个 multi-objective design 问题，而不是 single-score 的优劣排序。
 
 ### 损失函数 / 训练策略
-论文不训练新模型。Dial-Start 沿用原作者的 contrastive utterance encoder，超参 window_size=2、$\alpha$=0.5、pick_num=4、min_gap=3。LLM 用 GPT-5 / Gemini-3-pro 固定 prompt 与 decoding。retrieval-augmented Dial-Start 用 $K_{\text{ret}}$ 邻居 + temperature softmax + 学习的 move-embedding 表 $E\in\mathbb{R}^{M\times d}$（move 总数 $M$=6 或 4），但 boundary detector 本身不再训练。
+论文不训练新模型。Dial-Start 沿用原作者的 contrastive utterance encoder，超参 window_size=2、$\alpha$=0.5、pick_num=4、min_gap=3；LLM 用 GPT-5 / Gemini-3-pro 固定 prompt 与 decoding。retrieval-augmented Dial-Start 用 $K_{\text{ret}}$ 邻居 + temperature softmax + 学习的 move-embedding 表 $E\in\mathbb{R}^{M\times d}$（move 总数 $M$=6 或 4），但 boundary detector 本身不再训练。
 
 ## 实验关键数据
 

@@ -42,36 +42,27 @@ tags:
 
 ### 整体框架
 
-输入：$n$ 个来自 $p^\star$ 的 i.i.d. 样本。流程分两阶段：
+本文要解决的核心问题是：在 UoS 多峰假设下构造一个 score 估计器，让扩散采样器的样本复杂度只依赖内在维度而非 ambient 维度 $d$。做法是把高维 score 估计拆成"先把样本聚到各子空间、再在每个子空间内做低维 score 估计、最后用 mixture 权重拼回 $d$ 维"三件事，整套估计器纯解析、不训练神经网络。
 
-1. **子空间恢复**：用 $n_0=C_{\mathsf{sc}}M^2k\log n$ 个样本跑标准子空间聚类（SSC / 阈值聚类 / 贪心聚类皆可），恢复正交基 $\{A_i\}_{i=1}^M$（$A_i\in\mathbb{R}^{d\times k_i}$，$A_i^\top A_i=I_{k_i}$）和分类函数 $c:\mathbb{R}^d\to[M]$。在 UoS + 标准 separation 条件下这一步以高概率精确成功，且所需样本量相对总预算可忽略。
-2. **Score 估计**：用剩余的 $N=n-n_0$ 个样本构造 score 估计器 $\widehat s_t$，作为目标 $s_t^\star=\nabla\log p_t$（其中 $p_t=p^\star * \mathcal{N}(0,tI_d)$）的逼近，对所有 $t>0$ 都成立。
-
-得到 $\widehat s_t$ 之后，套进标准的反向 SDE 采样算法（Algorithm 1：初始化于 $\mathcal{N}(0,I_d)$，反向积分到 early-stopping 时间 $\tau$），即得最终采样器。理论分析建立在 $h(t)=\sigma_t^2/c_t^2$ 把 OU 过程 $X_t$ 的 score 和方差爆炸过程 $Z_t$ 的 score 之间一一映射的等价上（公式 8）。
+具体地，给定 $n$ 个来自 $p^\star$ 的 i.i.d. 样本，先用 $n_0=C_{\mathsf{sc}}M^2k\log n$ 个样本跑标准子空间聚类（SSC / 阈值聚类 / 贪心聚类皆可），恢复正交基 $\{A_i\}_{i=1}^M$（$A_i\in\mathbb{R}^{d\times k_i}$，$A_i^\top A_i=I_{k_i}$）和分类函数 $c:\mathbb{R}^d\to[M]$；在 UoS + 标准 separation 条件下这一步以高概率精确成功，所需样本量相对总预算可忽略。再用剩余的 $N=n-n_0$ 个样本构造 score 估计器 $\widehat s_t$ 去逼近目标 $s_t^\star=\nabla\log p_t$（$p_t=p^\star * \mathcal{N}(0,tI_d)$），对所有 $t>0$ 成立。得到 $\widehat s_t$ 后套进标准反向 SDE 采样算法（Algorithm 1：初始化于 $\mathcal{N}(0,I_d)$，反向积分到 early-stopping 时间 $\tau$）即得最终采样器；理论分析则建立在 $h(t)=\sigma_t^2/c_t^2$ 把 OU 过程 $X_t$ 与方差爆炸过程 $Z_t$ 的 score 一一映射的等价上（公式 8）。
 
 ### 关键设计
 
-1. **Score 的"法向-切向"分解与 mixture 表示**：
+**1. Score 的"法向-切向"分解与 mixture 表示：把 $d$ 维 score 降维成 $M$ 个 $k_i$ 维子问题**
 
-    - 功能：把 $d$ 维 score 估计降维成 $M$ 个 $k_i$ 维子问题。
-    - 核心思路：由 UoS 假设 $p^\star=\sum_i p_i^\star$ 出发，平滑密度可写成 $p_t(x)=\sum_i\int_{V_i}\varphi_t(x-y;d)p_i^\star(\mathrm{d}y)$，对应 score 分解为 $s_t^\star(x)=\sum_i w_t(i,x)\cdot s_t(i,x)$，其中 $w_t(i,x)$ 是"$x$ 来自第 $i$ 个子空间的后验权重"，$s_t(i,x)$ 是第 $i$ 个 component 的 score。关键引理（沿用 Chen et al. 2023）是 $s_t(i,x)=-\tfrac{1}{t}(x-\mathsf{proj}_i(x))+A_i\,s_t^{\mathsf{low}}(i,A_i^\top x)$：第一项是远离子空间的法向位移、形式闭式且只依赖 $t$；第二项是 $V_i$ 内 $k_i$ 维平滑分布 $p_i^{\mathsf{low}}*\mathcal{N}(0,tI_{k_i})$ 的 score、只需在 $k_i$ 维空间里估。
-    - 设计动机：这一分解把所有"高维难处"挪到法向闭式部分，把"统计难处"压到内在 $k_i$ 维子问题，从根上避开了 $d$ 维 score 的高维估计灾难。
+直接估 $d$ 维 score 会吃维度灾难，而 UoS 结构恰好提供了一个分而治之的切口。由 $p^\star=\sum_i p_i^\star$ 出发，平滑密度写成 $p_t(x)=\sum_i\int_{V_i}\varphi_t(x-y;d)p_i^\star(\mathrm{d}y)$，对应 score 分解为 $s_t^\star(x)=\sum_i w_t(i,x)\cdot s_t(i,x)$，其中 $w_t(i,x)$ 是"$x$ 来自第 $i$ 个子空间的后验权重"、$s_t(i,x)$ 是第 $i$ 个 component 的 score。关键引理（沿用 Chen et al. 2023）进一步把每个 component score 拆成法向加切向两块：$s_t(i,x)=-\tfrac{1}{t}(x-\mathsf{proj}_i(x))+A_i\,s_t^{\mathsf{low}}(i,A_i^\top x)$——第一项是远离子空间的法向位移，形式闭式且只依赖 $t$；第二项是 $V_i$ 内 $k_i$ 维平滑分布 $p_i^{\mathsf{low}}*\mathcal{N}(0,tI_{k_i})$ 的 score，只需在 $k_i$ 维空间里估。这一分解把所有"高维难处"挪到法向闭式部分，把真正的"统计难处"压到内在 $k_i$ 维子问题，从根上避开了 $d$ 维 score 的高维估计灾难。
 
-2. **核密度比 + 自适应阈值化的低维 score 估计器**：
+**2. 核密度比 + 自适应阈值化的低维 score 估计器：在峰间空隙处不崩**
 
-    - 功能：在每个 $V_i$ 上以 minimax 最优 rate 估 $s_t^{\mathsf{low}}(i,\cdot)$，并对所有时间尺度 $t$ 鲁棒。
-    - 核心思路：先对子集 $\mathcal{C}_i=\{j:X^{(j)}\in V_i\}$ 做 Gaussian KDE $\widehat g_t(i,x)=\frac{1}{|\mathcal{C}_i|}\sum_{j\in\mathcal{C}_i}\varphi_t(x-A_i^\top X^{(j)};k_i)$；再做 plug-in 比 $\nabla\widehat g_t/\widehat g_t$；最关键的是叠两层正则——指示阈值 $\psi(\widehat g_t;\eta_t)$ 在低密度区直接把估计置零（$\eta_t=\frac{\log N}{N(2\pi t)^{k_i/2}}$，随 $t$ 自适应），再用半径 $R=\sqrt{2\log N/t}$ 做 clip。这样得到 $\widehat s_t^{\mathsf{low}}(i,x)=\mathsf{clip}_R\!\big(\tfrac{\nabla\widehat g_t}{\widehat g_t}\psi(\widehat g_t;\eta_t)\big)$，再回填到 $\widehat s_t(i,x)=-\tfrac{1}{t}(x-\mathsf{proj}_i(x))+A_i\widehat s_t^{\mathsf{low}}(i,A_i^\top x)$。
-    - 设计动机：score 的 plug-in 估计在低密度区会因分母接近零而剧烈震荡，这正是多峰分布"峰间空隙"的典型病态；阈值化等价于声明"数据稀疏到不足以估计 score 就摆烂为 0"，既控住了第二动差、又恰好把估计器复杂度对齐到 minimax bound，论文据此得到 $\mathbb{E}[\|\widehat s_t-s_t^\star\|_2^2]=\widetilde{O}(\tfrac{1}{N}(\tfrac{1}{t}+\tfrac{\sigma^{k\vee 2}}{t^{(k\vee 2)/2+1}}))$，且整个论证只用 subgaussian、不需要密度光滑或 log-concave。
+低维子问题虽然维度降下来了，但多峰分布在"峰间空隙"密度趋零，plug-in 的 score 估计会因分母接近零而剧烈震荡——这正是现有理论要靠"密度有下界"假设回避的病态。本文的处理是在 KDE 比上叠两层正则。先对子集 $\mathcal{C}_i=\{j:X^{(j)}\in V_i\}$ 做 Gaussian KDE $\widehat g_t(i,x)=\frac{1}{|\mathcal{C}_i|}\sum_{j\in\mathcal{C}_i}\varphi_t(x-A_i^\top X^{(j)};k_i)$ 并取 plug-in 比 $\nabla\widehat g_t/\widehat g_t$；再用指示阈值 $\psi(\widehat g_t;\eta_t)$ 在低密度区直接把估计置零（阈值 $\eta_t=\frac{\log N}{N(2\pi t)^{k_i/2}}$ 随 $t$ 自适应），并用半径 $R=\sqrt{2\log N/t}$ 做 clip，得到 $\widehat s_t^{\mathsf{low}}(i,x)=\mathsf{clip}_R\!\big(\tfrac{\nabla\widehat g_t}{\widehat g_t}\psi(\widehat g_t;\eta_t)\big)$，回填到 $\widehat s_t(i,x)=-\tfrac{1}{t}(x-\mathsf{proj}_i(x))+A_i\widehat s_t^{\mathsf{low}}(i,A_i^\top x)$。阈值化本质上是声明"数据稀疏到不足以估计 score 时就摆烂为 0"，既控住了第二动差、又恰好把估计器复杂度对齐到 minimax bound，论文据此得到 $\mathbb{E}[\|\widehat s_t-s_t^\star\|_2^2]=\widetilde{O}(\tfrac{1}{N}(\tfrac{1}{t}+\tfrac{\sigma^{k\vee 2}}{t^{(k\vee 2)/2+1}}))$，且整个论证只用 subgaussian、不需要密度光滑或 log-concave。
 
-3. **基于几何门控的 mixture 权重估计**：
+**3. 基于几何门控的 mixture 权重估计：拼回 $d$ 维时不把内在维度的好结果毁掉**
 
-    - 功能：在拼回 $d$ 维 score 时，把权重估计误差也控制在只依赖内在维度的水平上。
-    - 核心思路：对 $w_t(i,x)=q_t(i,x)/p_t(x)$，分子分母各用 KDE 估计——$\widehat p_t(x)=\tfrac{1}{N}\sum_j\varphi_t(x-X^{(j)};d)$，$\widehat q_t(i,x)=\tfrac{1}{N}\sum_j\varphi_t(x-X^{(j)};d)\mathds{1}_{c(X^{(j)})=i}$，比值即权重；外面再乘一个"几何门" $\mathds{1}_{\{x\in\mathcal{G}_t(i)\}}$，其中 $\mathcal{G}_t(i)=\{x:\|x-\mathsf{proj}_i(x)\|_2\le R_t(i)\}$、$R_t(i)=C_R\sqrt{td\log(Ndt^{k_i/2})}$。Lemma 1 证明这种依赖点位 $x$ 的 MSE bound（含 $e^{-\|x-\mathsf{proj}_i(x)\|^2/(2t)}$ 衰减因子）一旦在 subgaussian band $\mathcal{B}_t$ 上积分，$d$ 维高斯权重就被 $V_j$ 法向的衰减积掉，最终只剩 $\sum_j(\sigma^2+t)^{k_j/2}/(Nt^{k_j/2})$。
-    - 设计动机：朴素权重估计的 MSE 会带 $d$ 维 KDE 的 $t^{-d/2}$ 因子，硬上就会把内在维度的好结果毁掉；几何门和 point-wise bound 的精细化才能把"和 $V_i$ 距离远的 $x$"的贡献压到指数小，确保最终 rate 不再依赖 $d$。
+把各 component 的 score 加权拼回 $d$ 维时，权重 $w_t$ 的估计本身又是个 $d$ 维 KDE 比——朴素地估它会带 $d$ 维 KDE 的 $t^{-d/2}$ 因子，硬上就会把前两步省下的维度优势全部吐回去。本文对 $w_t(i,x)=q_t(i,x)/p_t(x)$ 的分子分母各用 KDE 估计——$\widehat p_t(x)=\tfrac{1}{N}\sum_j\varphi_t(x-X^{(j)};d)$、$\widehat q_t(i,x)=\tfrac{1}{N}\sum_j\varphi_t(x-X^{(j)};d)\mathds{1}_{c(X^{(j)})=i}$，比值即权重——再在外面乘一个"几何门" $\mathds{1}_{\{x\in\mathcal{G}_t(i)\}}$，其中 $\mathcal{G}_t(i)=\{x:\|x-\mathsf{proj}_i(x)\|_2\le R_t(i)\}$、$R_t(i)=C_R\sqrt{td\log(Ndt^{k_i/2})}$。Lemma 1 证明这种依赖点位 $x$ 的 MSE bound（含 $e^{-\|x-\mathsf{proj}_i(x)\|^2/(2t)}$ 衰减因子）一旦在 subgaussian band $\mathcal{B}_t$ 上积分，$d$ 维高斯权重就被 $V_j$ 法向的衰减积掉，最终只剩 $\sum_j(\sigma^2+t)^{k_j/2}/(Nt^{k_j/2})$。正是几何门和这套 point-wise bound 的精细化把"和 $V_i$ 距离远的 $x$"的贡献压到指数小，确保最终 rate 不再依赖 $d$。
 
 ### 损失函数 / 训练策略
 
-整个方法不需要训练神经网络、不需要梯度下降——所有 estimator 都是显式公式。理论上需要的"超参"只有两类：阈值 $\eta_t$（自然由 $N,t,k_i$ 决定）、clip 半径 $R$ 和几何门 $R_t(i)$。采样阶段用 Algorithm 1 的反向 SDE，配 early-stopping $\tau=n^{-2/k}$ 和总时间 $T=\log n$，端到端给出 $W_1$ 误差。论文同时指出 NN-based score 训练应当沿"先 subspace clustering，再在低维 latent 上拟合 score"的路子做，本文构造提供了对应的理论 target。
+整个方法不需要训练神经网络、不需要梯度下降——所有 estimator 都是显式公式，理论上需要的"超参"只有阈值 $\eta_t$（由 $N,t,k_i$ 自然决定）、clip 半径 $R$ 和几何门 $R_t(i)$。采样阶段用 Algorithm 1 的反向 SDE，配 early-stopping $\tau=n^{-2/k}$ 和总时间 $T=\log n$，端到端给出 $W_1$ 误差。论文同时指出 NN-based score 训练应当沿"先 subspace clustering、再在低维 latent 上拟合 score"的路子做，本文构造正好提供了对应的理论 target。
 
 ## 实验关键数据
 

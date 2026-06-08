@@ -46,23 +46,18 @@ tags:
 模型部分由 frozen style representation model、trainable projection module 和 frozen LLM decoder 组成。风格表示模型使用 Mistral-Nemo-Instruct-2407，经 author-labeled data 对比学习训练。projection module 是三层 feedforward network，将 style vector 投影成 20 个连续 token embeddings；这些 embeddings 与自然语言指令一起输入 Ministral-8B-Instruct，生成形如“The author uses ...”的 style prompt。
 
 ### 关键设计
-1. **从 prompt 生成文本，而不是从文本生成描述**:
 
-	- 功能：为风格解释建立可验证的 ground-truth prompt。
-	- 核心思路：先采样具体风格特征组成 style prompt，再让 LLM 生成响应；训练时 decoder 从生成文本的 style representation 恢复 prompt。
-	- 设计动机：直接让 LLM 描述已有文本会混入幻觉和遗漏；已知 prompt 生成的文本提供了明确监督信号。
+**1. 反向构造监督：从 prompt 生成文本，而不是从文本里猜描述。**
 
-2. **连续 prompt 将风格向量接入冻结 LLM**:
+风格解释最棘手的地方在于没有 ground truth——真实文本背后那套风格意图是隐式的，让 LLM 读完直接描述只会把模型自己的先验和幻觉一起写进去。作者把因果方向反过来：先随机组合 1 到 10 个具体风格特征拼成一条明确的 style prompt $s$，再让 LLM 按它生成文本 $y$。这样 $y$ 的“真实风格意图”就是已知的 $s$，训练时让 decoder $D$ 从 $y$ 的风格向量 $x=S(y)$ 把 $s$ 恢复出来即可，解释问题被转成一个有明确监督信号的 prompt recovery。这一步是整套方法能成立的关键——它把无法验证的“描述”换成了可比对的 prompt 标签。
 
-	- 功能：在不微调大语言模型主体的情况下，把 dense style vector 转成自然语言说明。
-	- 核心思路：三层 MLP 把 style vector 映射为 20 个 token embeddings，作为 continuous prefix；冻结 LLM 根据这个 prefix 和任务指令生成 style prompt。
-	- 设计动机：风格表征是连续向量，LLM 生成是离散文本；continuous prompt tuning 提供了一个轻量桥接层。
+**2. 连续 prompt 把风格向量接进冻结 LLM。**
 
-3. **用控制效果评价解释质量**:
+风格表征是稠密连续向量，而 LLM 只会生成离散文本，二者之间需要一座桥。直接微调 LLM 主体成本高、还容易破坏其语言能力，所以作者只训练一个轻量投影层：三层 feedforward network 把 style vector 映射成 20 个连续 token embeddings，作为 continuous prefix 拼在自然语言指令前面，输入冻结的 Ministral-8B-Instruct，由它生成形如“The author uses ...”的 style prompt。整条链路里只有这个 MLP 投影模块可训练，风格表示模型和 LLM 都冻结，既保住了大模型的生成质量，又用最少的参数完成了从向量空间到文本空间的对接。
 
-	- 功能：检验 decoded prompt 是否能真正复现目标风格。
-	- 核心思路：除了 prompt recovery 的 ROUGE-1、LaBSE 和 LLM-as-judge，作者还把 decoded prompt 用于生成新回答，并计算新文本与目标文本在 style representation space 中的 L2 距离。
-	- 设计动机：风格解释如果不能指导生成，就只是描述；把控制效果纳入评价能更直接检验解释的操作性。
+**3. 用控制效果而非文本相似度来评价解释。**
+
+一段风格描述就算读起来很像，如果拿去指导生成却复现不出目标风格，它对风格表征的解释价值依然有限。作者因此在传统的 prompt recovery 指标（ROUGE-1、LaBSE、LLM-as-judge）之外，额外加了一条“可操作性”检验：把 decoded prompt 喂回 LLM 生成新回答 $y'$，再计算 $S(y')$ 与原始目标 $x$ 在风格表征空间里的 L2 距离，距离越小说明解释越能真正驱动生成。这把“解释”和“控制”绑在同一个指标上，直接逼问一句话——这个 prompt 到底用不用得上。
 
 ### 损失函数 / 训练策略
 训练目标是 token-level cross-entropy，让 decoder 生成的 $\tilde{s}=D(S(x))$ 匹配 ground-truth style prompt $s$。数据按 8:1:1 划分训练、验证、测试；decoder 训练 5 epochs，learning rate 5e-5，batch size 32，最佳 checkpoint 按 validation loss 选择。所有 Section 6/7 结果使用 180K LLM responses 测试集，Section 8 使用 60K human responses。训练使用 PyTorch-Lightning、HuggingFace Transformers、AdamW 和 WSD learning rate schedule，在 2 张 A100 上约 16 小时。

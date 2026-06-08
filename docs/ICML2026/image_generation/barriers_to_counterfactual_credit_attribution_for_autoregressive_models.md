@@ -41,30 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两大主线。**第一线 (§4)**：研究"对 next-token predictor $\tilde M$ 施加 CCA + 自回归 rollout"这条工业风路径，给出反例（Thm 4.2）+ 一般下界（Thm 4.3）。**第二线 (§5)**：研究"对非归因 $M$ 做 black-box 改造"这条 retrofitting 路径，构造一族硬模型 $\{M_\mathbf{z}\}_{\mathbf{z}\in\{0,1\}^\ell}$，证明任何 $\alpha<1/2$ 近似 retrofit 在最坏情况下都要 $\widetilde\Omega(2^\ell)$ 次 oracle 查询（Thm 5.5）。所有证明都建立在严格的 LP 刻画 + 信息论查询下界上。
+本文是纯理论工作，要回答的是"把 CCA 部署到 RAG/in-context 数据上，两条最自然的工程路径到底行不行"。第一条路径（§4）是给 next-token predictor $\tilde M$ 加上 CCA、再自回归 rollout，指望整段输出"自动"继承归因性；第二条路径（§5）是拿一个现成的非归因模型 $M$，外面套一层 black-box 包装补上 credit。论文用"先举极简反例、再升级成参数化下界"的策略，对两条路径分别给出严格的不可行性证明——证明本身都落在 LP 刻画与信息论查询下界这套工具上。
 
 ### 关键设计
 
-1. **CCA 不自回归合成的反例与一般下界（Thm 4.2 & 4.3）**:
+**1. CCA 不沿自回归合成：反例与一般下界（Thm 4.2 & 4.3）：直觉错在哪**
 
-    - 功能：证伪"$\tilde M$ 是 $(0,0)$-CCA $\Rightarrow$ rollout $G^{\tilde M}$ 是 $(\varepsilon,\delta)$-CCA"的直觉。
-    - 核心思路：取数据集 $\mathcal S=\{s_1\}$、词表 $\mathcal X=\{\mathtt a,\mathtt b\}$，定义一个 $(0,0)$-CCA next-token predictor：空前缀下，$\tilde M(\{s_1\},\lambda)=\tilde M(\emptyset,\lambda)$ 完全相同（以 $p$ 输出 $\mathtt a$、$1-p$ 输出 $\mathtt b$，永不 credit）；前缀 $\mathtt a$ 时只在 $S=\{s_1\}$ 下 1/2 几率 credit、1/2 几率不 credit 直接输出 $\mathtt b$（条件不 credit 的分布与 $S{=}\emptyset$ 时完全相同，所以 token 级 $(0,0)$-CCA 成立）；前缀 $\mathtt b$ 时总 credit 也总输出 $\mathtt a$（条件触发 1.0 项免去 CCA 约束）。然而 rollout 后：在不 credit 条件下 $G^{\tilde M}(S^{-1},\lambda)$ 必然输出 $(\mathtt{ab},\emptyset)$；counterfactual $G^{\tilde M}(S_{-1},\lambda)$ 只以 $p$ 概率得 $(\mathtt{ab},\emptyset)$。当 $p<e^{-\varepsilon}(1-\delta)$ 就破坏 $(\varepsilon,\delta)$-CCA。一般下界（Thm 4.3）将其抽象为 $\varepsilon'\geq\ln\big(\prod_j\Pr[E_j\mid\cdots]/\Pr[s_i\notin C]\big)-|\mathbf x^{-i}|\cdot\varepsilon$，其中 $E_j$ 是第 $j$ 步不 credit 的事件。
-    - 设计动机：DP 之所以 compose 在于"未受 $s_i$ 影响的条件分布"在 token 级和序列级是一致量；CCA 的核心要素 $\Pr[s_i\notin C]$ 在乘法链上会**收缩**，让条件分布的 ratio 反而被放大——这就是反直觉的"$\varepsilon\to 0$ 时下界反而变大"的根源（注意 $\varepsilon$ 是内生量，与模型耦合）。反例的极简性也保证了它对几乎所有自然 CCA 设计都形成阻断。
+DP 之所以好用，是因为它在 sequential composition 下有干净的合成定理，于是人们自然指望 CCA 也一样——"$\tilde M$ 是 $(0,0)$-CCA $\Rightarrow$ rollout $G^{\tilde M}$ 是 $(\varepsilon,\delta)$-CCA"。本文用一个 2-token 反例直接证伪它。取数据集 $\mathcal S=\{s_1\}$、词表 $\mathcal X=\{\mathtt a,\mathtt b\}$，构造一个 token 级严格 $(0,0)$-CCA 的预测器：空前缀下 $\tilde M(\{s_1\},\lambda)=\tilde M(\emptyset,\lambda)$ 完全相同（以 $p$ 出 $\mathtt a$、$1-p$ 出 $\mathtt b$，永不 credit）；前缀为 $\mathtt a$ 时只在 $S=\{s_1\}$ 下以 1/2 概率 credit、1/2 概率不 credit 并直接输出 $\mathtt b$，且这个"不 credit 条件分布"与 $S{=}\emptyset$ 时完全一致（这正是 token 级 $(0,0)$-CCA 成立的原因）；前缀为 $\mathtt b$ 时总是 credit 并总输出 $\mathtt a$（条件触发概率为 1.0，CCA 约束自动免除）。可是一旦 rollout 起来，在"不 credit"这个条件下 $G^{\tilde M}(S^{-1},\lambda)$ 必然给出 $(\mathtt{ab},\emptyset)$，而把 $s_1$ 移除的 counterfactual $G^{\tilde M}(S_{-1},\lambda)$ 只以 $p$ 概率得到 $(\mathtt{ab},\emptyset)$；只要 $p<e^{-\varepsilon}(1-\delta)$ 就破坏了 $(\varepsilon,\delta)$-CCA。Thm 4.3 把它抽象成一般下界 $\varepsilon'\geq\ln\big(\prod_j\Pr[E_j\mid\cdots]/\Pr[s_i\notin C]\big)-|\mathbf x^{-i}|\cdot\varepsilon$（$E_j$ 为第 $j$ 步不 credit 事件）。它有效的本质是：DP 能 compose 靠的是"未受 $s_i$ 影响的条件分布"在 token 级和序列级是同一类量，而 CCA 的核心要素 $\Pr[s_i\notin C]$ 会沿乘法链**收缩**，把条件分布的 ratio 反而放大——这就是那个反直觉现象（$\varepsilon\to 0$ 时下界反而变大，因为 $\varepsilon$ 是与模型耦合的内生量）的来源。反例的极简性也意味着它几乎封死了所有自然的 CCA 设计。
 
-2. **CCA Retrofitting 的硬模型族 $\mathcal M_\ell$（Thm 5.5 的硬实例构造）**:
+**2. Retrofitting 的硬模型族 $\mathcal M_\ell$（Thm 5.5）：把难度藏进 secret string**
 
-    - 功能：构造一族 $\{M_\mathbf{z}\}$，让"识别 $\mathbf z$" 既是 retrofitting 的隐含子问题，又对原模型 oracle 是指数难的。
-    - 核心思路：$\mathcal X=\{0,1,\bot\}$、$\mathcal S=\{s_1\}$、$\ell\geq 1$、$\gamma\in(0,1)$、$\varepsilon\geq 0$。$M_\mathbf z(S,\mathbf x)$ 在 $|\mathbf x|\leq\ell$ 时几乎处处是 $\mathsf{Bern}(1/2)$，**唯有**当 $S\neq\emptyset$ 且前缀恰好是 $\mathbf z$ 时把 1 的概率偏置成 $\tfrac12+\tfrac{1-e^{-\varepsilon}(1-\gamma)}{2}$；输出长度恒为 $\ell+1$。在 oracle 模型下 $M_\mathbf z$ 与 $M_\emptyset$ 在每个 prompt 上 TV 距离 $\leq 2^{-\ell}$（Remark 5.6.1），找 $\mathbf z$ 等价于在 $\{0,1\}^\ell$ 上做一个 needle-in-haystack 搜索 $\Rightarrow$ Lemma 5.8: $\Omega(2^\ell)$ 查询下界。
-    - 设计动机：要给 retrofit 下"算力"下界，必须让信息隐藏在 oracle 极难抽样的位置；这族模型把"区分两个几乎相同分布"的统计难度精确编码成 $\ell$ 位 secret string，且偏置大小可调以保证 $\varepsilon$-CCA 框架下仍有不可约的 $\gamma$ 概率必须 credit。
+第二条路径要证的是"black-box 改造"在算力上不可行，关键是构造一族模型 $\{M_\mathbf{z}\}_{\mathbf z\in\{0,1\}^\ell}$，让"识别隐藏标识符 $\mathbf z$"既是 retrofitting 绕不开的子问题、又对原模型 oracle 指数级困难。取 $\mathcal X=\{0,1,\bot\}$、$\mathcal S=\{s_1\}$、$\ell\geq 1$、$\gamma\in(0,1)$、$\varepsilon\geq 0$，让 $M_\mathbf z(S,\mathbf x)$ 在 $|\mathbf x|\leq\ell$ 时几乎处处是 $\mathsf{Bern}(1/2)$，**唯有**当 $S\neq\emptyset$ 且前缀恰好等于 $\mathbf z$ 时才把输出 1 的概率偏置成 $\tfrac12+\tfrac{1-e^{-\varepsilon}(1-\gamma)}{2}$，输出长度恒为 $\ell+1$。这样设计是因为，要给 retrofit 下算力下界，就必须把信息藏在 oracle 极难抽样到的位置：在 oracle 模型下 $M_\mathbf z$ 与 $M_\emptyset$ 在每个 prompt 上的 TV 距离 $\leq 2^{-\ell}$（Remark 5.6.1），找 $\mathbf z$ 等价于在 $\{0,1\}^\ell$ 上做 needle-in-haystack 搜索，于是 Lemma 5.8 给出 $\Omega(2^\ell)$ 的查询下界。偏置大小可调，保证在 $\varepsilon$-CCA 框架下仍存在不可约的 $\gamma$ 概率必须 credit。
 
-3. **最优 CCA augmentation 的 LP 刻画（Lemma 5.6）+ 把搜 $\mathbf z$ 归约给 retrofit（Lemma 5.9）**:
+**3. 最优 CCA augmentation 的 LP 刻画与归约（Lemma 5.6 & 5.9）：越优的 retrofit 越容易被反推**
 
-    - 功能：让任何"近似最优 CCA augmentation 的 oracle"反向变成一个"$O(\ell\log\ell)$ 查询就能找出 $\mathbf z$"的算法，进而得出 retrofitter 必然要付出 $\widetilde\Omega(2^\ell/\ell\log\ell)$ 次原模型查询。
-    - 核心思路：把"最优 CCA augmentation"形式化为 LP：变量是各 $(S,\mathbf x,y,C)$ 上的概率，约束是 augmentation（marginal 与 $G^M$ 一致）+ CCA（不 credit 条件分布与 counterfactual $\varepsilon$-close）；目标是最小化 $\mathbb{E}[f(C)]$。LP 解析解显示：当且仅当前缀 $\mathbf x\sqsubseteq\mathbf z$ 时 $\Pr[\tilde G^*_\mathbf z(S^*,\mathbf x)\text{ credits }s_1]=\gamma$，否则为 0。这个"crediting 概率在 $\mathbf z$ 的前缀树上是常数 $\gamma$、其它地方 0"的尖锐结构等价于"沿前缀树做二分搜索就能定位 $\mathbf z$"——只需 $O(\ell\log\ell/(\gamma-2\alpha)^2)$ 次 retrofit 查询即可解出 $\mathbf z$。
-    - 设计动机：这是把"最优解的结构"作为攻击面：如果 retrofit 必须最优（哪怕 $\alpha$-近似），它在每个前缀上的归因概率都会"泄露" $\mathbf z$。换言之，**做得越好的 retrofit 越容易被 invert，攻击者用它就能撬出原模型 oracle 都查不到的 secret**——这是非常优雅的"computational hardness via solution-structure leakage"。
-
-### 损失函数 / 训练策略
-本文是纯理论论文，没有训练或损失函数。主要贡献是一系列严谨的（不）可行性证明。
+有了硬模型族，还要把"找 $\mathbf z$"这件难事归约到 retrofit 上，才能得出最终的 $\widetilde\Omega(2^\ell/\ell\log\ell)$ 下界。做法是把"最优 CCA augmentation"形式化成一个 LP：变量是各 $(S,\mathbf x,y,C)$ 上的概率，约束包含 augmentation 约束（marginal 与 $G^M$ 一致）与 CCA 约束（不 credit 条件分布与 counterfactual $\varepsilon$-close），目标是最小化 $\mathbb{E}[f(C)]$。LP 的解析解暴露出一个尖锐结构：当且仅当前缀 $\mathbf x\sqsubseteq\mathbf z$ 时 $\Pr[\tilde G^*_\mathbf z(S^*,\mathbf x)\text{ credits }s_1]=\gamma$，否则为 0。也就是说 crediting 概率在 $\mathbf z$ 的前缀树上恒为常数 $\gamma$、树外恒为 0，这等价于"沿前缀树二分搜索就能定位 $\mathbf z$"——只需 $O(\ell\log\ell/(\gamma-2\alpha)^2)$ 次 retrofit 查询即可解出。它之所以致命，是因为这把"最优解的结构"变成了攻击面：retrofit 越接近最优（哪怕只是 $\alpha$-近似），它在每个前缀上的归因概率就越精确地"泄露" $\mathbf z$，攻击者反过来就能撬出原模型 oracle 都查不到的 secret——这是一个非常优雅的"computational hardness via solution-structure leakage"。综合 Lemma 5.8 与 5.9，任何 $\alpha<1/2$ 近似的 retrofit 在最坏的 $M\in\mathcal M_\ell$ 上都至少要 $\widetilde\Omega(2^\ell)$ 次 oracle 查询（Thm 5.5）。
 
 ## 实验关键数据
 

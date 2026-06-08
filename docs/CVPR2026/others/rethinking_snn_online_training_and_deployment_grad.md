@@ -42,33 +42,29 @@ tags:
 
 ### 整体框架
 
-HD-LIF 模型在标准 LIF 基础上修改脉冲计算机制：阈值以下保留传统膜电位积累机制（充电-泄漏），阈值以上采用 P2-Reset——发放后膜电位精确重置到阈值 $\theta$，脉冲值等于膜电位超出阈值的量 $s^* = m - \theta$（而非传统 LIF 的固定值 $\theta$）。同时结合 1-bit/1.5-bit 突触权重压缩和多位脉冲量化。模型族包含 vanilla HD-LIF、Parallel HD-LIF 和 Mem-BN HD-LIF 三个变体。
+整篇方法围绕一个核心改动：把脉冲神经元的发放机制拆成阈值上下两段，让代理梯度不再黏着膜电位值，从而在线训练截断时间依赖时不会引入前后向不一致。具体地，HD-LIF 在标准 LIF 上保留阈值以下的充电-泄漏积累，但在膜电位越过阈值发放后改用 P2-Reset（Precise-Positioning Reset）：膜电位精确重置回阈值 $\theta$，发放出的脉冲值取膜电位超出阈值的量 $s^* = m - \theta$，而非传统 LIF 固定吐出 $\theta$。在这个基础神经元之上，论文再叠两层工程优化——把一部分神经元换成无积累的并行版本压低推理算力，把批归一化搬到膜电位上稳住在线训练——最终形成 vanilla / Parallel / Mem-BN 三个可混搭的 HD-LIF 变体，配合 1-bit/1.5-bit 权重压缩与多位脉冲量化覆盖训练到部署的全链路。
 
 ### 关键设计
 
-1. **HD-LIF 基础模型（梯度可分离 + 对齐）**:
+**1. HD-LIF 基础模型：让梯度和膜电位值解耦，截断才"免费"。**
 
-    - 功能：设计新的脉冲计算机制使代理梯度与膜电位值解耦
-    - 核心思路：P2-Reset 机制下 $\partial s^* / \partial m$ 在阈值上下两个区域分别为常数（0 和 1），不依赖膜电位具体值。理论证明（Theorem 4.2）：HD-LIF 的时间梯度贡献权重 $\epsilon[i,t] = \chi[i,i] \prod_{j=t+1}^{i} \chi[j,j-1]$，其中 $\chi[i,i] \in \{0,1\}$，$\chi[j,j-1] \in \{0, \lambda_j\}$，均为有限集常值乘积。这使得在线训练截断时间梯度后，梯度可无缝转换为 STBP 训练的近似（具体等式见 Theorem 4.2(i)）。同时发放过程中 $s$ 和 $m$ 之间无不可微问题，确保空间维度梯度对齐。$\lambda_t$ 和 $\theta_t$ 为每时间步可学习参数
-    - 设计动机：传统 LIF 用 Triangle/Sigmoid 等代理函数，梯度 $\partial s / \partial m = f(m)$ 依赖膜电位值，导致 $\epsilon[i,t] = \mathcal{F}(m_t, ..., m_i)$ 不可预测、不可分离。HD-LIF 从根本上消除了这个耦合
+在线训练性能退化的根子在于传统 LIF 的代理梯度 $\partial s / \partial m = f(m)$ 依赖膜电位具体值，于是时间梯度贡献权重 $\epsilon[i,t] = \mathcal{F}(m_t, \dots, m_i)$ 是一串膜电位的函数，不可预测也不可分离，截断时间维度后前向算的和反向传的对不上。P2-Reset 把这个耦合直接掐断：发放后膜电位精确归位到 $\theta$、脉冲值线性等于超出量，使 $\partial s^* / \partial m$ 在阈值上下两区分别恒为常数（1 和 0），与膜电位取值无关。论文据此证明（Theorem 4.2）HD-LIF 的时间梯度权重退化成有限集常值的连乘 $\epsilon[i,t] = \chi[i,i] \prod_{j=t+1}^{i} \chi[j,j-1]$，其中 $\chi[i,i] \in \{0,1\}$、$\chi[j,j-1] \in \{0, \lambda_j\}$（$\lambda_t$、$\theta_t$ 是每时间步可学习参数）。
 
-2. **Parallel HD-LIF（推理 NOPs 优化）**:
+$$\epsilon[i,t] = \chi[i,i] \prod_{j=t+1}^{i} \chi[j,j-1], \quad \chi[i,i]\in\{0,1\},\ \chi[j,j-1]\in\{0,\lambda_j\}$$
 
-    - 功能：跳过泄漏和充电过程，大幅减少推理时的神经元操作数
-    - 核心思路：直接设 $s_t^* := (I_t \geq \theta_t)$，每层神经元操作仅需 T 个 ADD（而 vanilla HD-LIF 需要 T MUL + 2T ADD）。以一定比例（如 50%）替换 vanilla HD-LIF 块
-    - 设计动机：vanilla HD-LIF 相比 LIF 在推理 NOPs 上没有优势，引入并行版本以约 50% 比例混合可节省约 30% NOPs，且精度下降可控（CIFAR-100 上 78.82% vs 80.16%，仅降 1.34%）
+正因为这串权重不再含膜电位，在线训练截断时间梯度后能无缝逼近 STBP 的梯度（Theorem 4.2(i) 给出具体等式），同时发放过程里 $s$ 与 $m$ 不存在不可微跳变，空间维度的梯度也天然对齐——这就是它相比 SLTT 等数值近似方案的本质区别：不是事后缓解不一致，而是从神经元层面让不一致根本不发生。
 
-3. **Mem-BN HD-LIF（膜电位批归一化 + 零开销推理）**:
+**2. Parallel HD-LIF：把推理算力从 NOPs 上抠下来。**
 
-    - 功能：在膜电位上做时间维度 BN，增强在线训练稳定性，且推理时零额外开销
-    - 核心思路：$\hat{m}_t = \alpha_t \cdot m_t + \beta_t \cdot \text{BN}_t(m_t)$，其中 $\alpha_t, \beta_t$ 为可学习参数控制归一化程度。关键特性：推理时可通过 re-parameterization 将 BN 参数完全融入膜相关参数——$\hat{\lambda}_t = \alpha_t^* \lambda_t$，$\hat{I}_t = \alpha_t^* I_t - \beta_t^*$，不引入任何额外计算。当 $\alpha_t=1, \beta_t=0$ 时退化为 vanilla HD-LIF，保证性能下界
-    - 设计动机：在线训练缺乏时间梯度项，除了控制输入电流分布外还需关注膜电位累积分布的稳定性。传统 BN 放在卷积层后面只监控输入电流，Mem-BN 直接监控膜电位可更好地稳定在线训练
+vanilla HD-LIF 解决了梯度问题，但推理时仍要做完整的充电-泄漏积累，每层神经元需 T 次 MUL + 2T 次 ADD，相比普通 LIF 在 NOPs 上并不占便宜。Parallel 版本干脆跳过积累，直接判定 $s_t^* := (I_t \geq \theta_t)$，每层只剩 T 次 ADD。论文以约 50% 比例把它和 vanilla 块混搭，既保住静态积累带来的表达力又砍掉一半神经元的算力，实测节省约 30% NOPs，精度只从 80.16% 掉到 78.82%（CIFAR-100，降 1.34%），是个性价比很高的换挡。
+
+**3. Mem-BN HD-LIF：在膜电位上做 BN，且推理零开销。**
+
+在线训练丢掉了时间梯度项，光控住输入电流分布还不够，膜电位的累积分布同样会漂。传统 BN 接在卷积层后只能监控输入电流，Mem-BN 把归一化直接搬到膜电位上：$\hat{m}_t = \alpha_t \cdot m_t + \beta_t \cdot \text{BN}_t(m_t)$，用可学习的 $\alpha_t, \beta_t$ 调节归一化强度，并在 $\alpha_t{=}1, \beta_t{=}0$ 时退回 vanilla HD-LIF 作为性能下界。关键在推理：BN 是线性变换，可以通过 re-parameterization 整个折进膜相关参数——$\hat{\lambda}_t = \alpha_t^* \lambda_t$、$\hat{I}_t = \alpha_t^* I_t - \beta_t^*$——于是训练期吃到 BN 的稳定性红利，部署时一条额外计算都不多，做到"零成本的推理 BN"。
 
 ### 损失函数 / 训练策略
 
-- 突触权重用 1-bit（{-1,+1}）或 1.5-bit（{0,±1}）压缩，1.5-bit 进一步促进突触稀疏降低功耗
-- 随机时间步梯度更新：每 batch 随机选一个时间步做反向传播，进一步减少训练开销
-- SECA（脉冲高效通道注意力）：从 ECA-Net 迁移到 SNN，GAP→1D Conv→Sigmoid→通道加权，参数量 $O(K)$、计算量 $O(KC)$ 极低，spike 序列在时间维度共享权重
+突触权重用 1-bit（$\{-1,+1\}$）或 1.5-bit（$\{0,\pm 1\}$）压缩，其中 1.5-bit 通过引入零值进一步促进突触稀疏、压低功耗。训练上采用随机时间步梯度更新：每个 batch 只随机挑一个时间步做反向传播，在已经恒定的内存之上再省一截开销。此外迁移了一个轻量的 SECA（脉冲高效通道注意力，源自 ECA-Net）：GAP → 1D Conv → Sigmoid → 通道加权，参数量 $O(K)$、计算量 $O(KC)$ 几乎可忽略，且 spike 序列在时间维度共享同一组权重以贴合 SNN 设定。
 
 ## 实验关键数据
 

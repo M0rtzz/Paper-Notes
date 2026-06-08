@@ -42,33 +42,21 @@ tags:
 
 ### 整体框架
 
-三任务共享一个冻结的 Foundation VAE（natural images/videos 预训练，如 WAN2.1 / VideoVAE+ / IVVAE）：
-
-**任务 1：CT 重建**——CT 体积 $\to$ $E$（冻结编码器）$\to$ 潜表示 $z$ $\to$ $D$（冻结解码器）$\to$ 重建 CT 体积 $\hat{x}$。$\hat{x} \approx T(x)$，$T$ 是边界保持去噪算子。
-
-**任务 2：CT 增强**——分割模型同时在 $\{x\}$ 和 $\{\hat{x}\}$ 上训练，把 $\hat{x}$ 当作"边界更清晰的训练视图"；下游分割（pancreatic tumor、lung tumor）NSD（基于表面的指标）提升。
-
-**任务 3：CT 生成**——在冻结的 $E$ 潜空间里训条件 latent diffusion model；条件是器官分割掩码（空间约束）+ 放射学报告（语义约束）；加上轻量 3D 一致性模块保跨轴位切片解剖一致。
+全文只用一个组件——一个在自然图像/视频上预训练、**全程冻结**的 Foundation VAE（如 WAN2.1 / VideoVAE+ / IVVAE），却把它当成 CT 三个任务的统一接口。重建任务把 CT 体积 $x$ 过一遍编码器 $E$ 得到潜表示 $z$、再过解码器 $D$ 还原成 $\hat{x}$，得到的 $\hat{x}\approx T(x)$ 恰好是一个"边界保持去噪"算子 $T$ 的输出；增强任务直接拿这些去噪后的 $\hat{x}$ 当分割训练的额外视图；生成任务则在同一个冻结潜空间里训一个条件 latent diffusion。三者共享同一套权重，没有任何医学微调。
 
 ### 关键设计
 
-1. **Foundation VAE 作为边界保持去噪算子**:
+**1. 把 Foundation VAE 当成边界保持去噪算子：让 CT 重建顺带做了预处理。**
 
-    - 功能：把 CT 重建变成自带去噪效果的预处理
-    - 核心思路：观察到 Foundation VAE 在 CT 上的重建误差是"高频颗粒 + 轻微 streak 伪影"，几乎不偏移器官/病变边界（Fig 2 的 voxel-wise 误差图）；定量上 PSNR > 30、SSIM > 0.76（Lung）、PSNR > 39、SSIM > 0.94（Pancreas / LiTS / KiTS19）——远好于 MedVAE 的崩塌（PSNR 20 区间）
-    - 设计动机：Foundation VAE 在自然图像大规模训练时学到的"高级感知压缩"恰好类似医学领域常用的"边界稳健去噪"；这种迁移可能性以前没人系统验证
+医学 VAE 的老路是为 CT 专门训一套（MedVAE 自训、MAISI 用 37,243 个 CT 卷 + 8 张 V100 训 300 epoch），既贵又对扫描仪/协议敏感、容易崩——MedVAE 在 MSD 上重建直接坍塌到 Lung PSNR 20.34、SSIM 0.52。本文反过来直接拿现成的 Foundation VAE 编码-解码 CT，关键观察是它的重建误差结构很特殊：误差几乎全部落在高频颗粒噪声和轻微的 streak 伪影上，器官与病变的边界几乎不偏移（Fig 2 的 voxel-wise 误差图）。定量上 Lung 段 PSNR > 30、SSIM > 0.76，Pancreas / LiTS / KiTS19 更是 PSNR > 39、SSIM > 0.94，远超 MedVAE 的崩塌区间。换句话说，重建结果 $\hat{x}\approx T(x)$ 里的 $T$ 是个保边去噪算子。之所以成立，是因为 Foundation VAE 在自然图像大规模训练中学到的"高级感知压缩"本质上和医学领域常用的"边界稳健去噪"高度同构——只是这种迁移此前没人系统验证过。
 
-2. **重建即增强（Reconstruction-based Augmentation）**:
+**2. 重建即增强：把去噪后的重建图当作分割的额外训练视图。**
 
-    - 功能：用 Foundation VAE 重建图作为分割训练的额外视图
-    - 核心思路：传统数据增强用几何/光度扰动；本文用 Foundation VAE 重建（自带噪声抑制）；分割模型在 $(x, y)$ 和 $(\hat{x}, y)$ 两组样本上联合训，等价于让网络学到"原始 + 去噪"两种输入下都给出一致分割
-    - 设计动机：边界保持 + 噪声抑制让边界邻域更清晰、不模糊；NSD（表面距离指标）特别受益（pancreatic/lung tumor +3.9%）；这是免费的 inductive bias，几乎无额外计算成本
+既然 $\hat{x}$ 是边界保持的去噪版本，那它天然就是一份"边界更清晰、噪声更少"的训练样本。传统数据增强靠几何/光度扰动这类 hand-crafted 操作，本文则让分割模型在原图样本 $(x, y)$ 和重建样本 $(\hat{x}, y)$ 上联合训练，等价于强制网络在"原始"与"去噪"两种输入下都给出一致分割。受益最明显的是 NSD 这种基于表面距离的指标（pancreatic / lung tumor 平均 +3.9%），因为去噪让边界邻域更锐利、不被噪声糊掉；Dice 这种区域指标只微涨，说明区域上没被破坏。整个过程不需要重训 VAE，几乎零额外计算成本，是一份免费的 inductive bias。
 
-3. **冻结潜空间 + 条件 latent diffusion + 3D 一致性模块**:
+**3. 冻结潜空间上的条件 latent diffusion + 3D 一致性模块：复用视觉先验做 CT 生成。**
 
-    - 功能：在 Foundation VAE 同一潜空间里训 CT 条件生成模型
-    - 核心思路：扩散模型在 $z$ 空间上训练（输入 noisy $z_t$，预测 $\epsilon$），条件包括 organ mask（空间）+ radiology report（语义）；增加 3D 一致性模块（轻量 cross-axial attention）保跨切片解剖连贯
-    - 设计动机：CT 生成传统依赖训练专属 latent space（MedVAE / MAISI），耗算力且泛化差；用 Foundation VAE 潜空间复用大规模预训练的视觉先验，扩散只需学条件→ $z$ 的映射；3D 一致性补强了 2D 训练的 VAE 在 3D 上的轴间漂移
+生成任务也复用这个冻结的潜空间。扩散模型直接在 $z$ 空间上训练——输入加噪的 $z_t$、预测噪声 $\epsilon$——条件同时包含器官分割掩码（提供空间约束）和放射学报告（提供语义约束）。由于 Foundation VAE 是 2D / 时间 VAE，逐切片解码到 3D 时容易出现轴间解剖漂移，于是再加一个轻量的 3D 一致性模块（cross-axial attention）把跨切片的解剖关系拉齐（消融去掉它后切片间会明显漂移）。这条路相比 MedVAE / MAISI 那种"为生成专训一套 latent space"的做法，省掉了昂贵的表示训练：扩散只需学"条件 $\to z$"的映射，而 $z$ 空间里大规模自然图像预训练的视觉先验是白拿的。
 
 ## 实验关键数据
 

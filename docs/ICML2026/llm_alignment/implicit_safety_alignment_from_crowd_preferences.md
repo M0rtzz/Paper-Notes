@@ -42,32 +42,21 @@ tags:
 
 ### 整体框架
 
-把众包偏好奖励分解为 $r(s,a,z) = r_{\text{user}}(s,a,z) + r_{\text{share}}(s,a)$，其中 $z$ 是不可观察的用户上下文，$r_{\text{share}}$ 是所有人共享的安全惩罚（落入 $X_{\text{unsafe}}$ 给 $-K$，否则 0）。整条 pipeline 分两阶段：
-
-1. **离线 skill 发现**：拿众包偏好集 $\mathcal D_{\text{pref}} = \{S_z\}$，用 VAE 的 encoder $q_\psi(z'|S_z)$ 把每个用户的偏好集映射到 latent $z'$，decoder 是 latent-conditioned reward $r_\phi(s,a,z')$ 或 latent-conditioned policy $\pi_\theta(a|s,z')$，得到一组 *preference-aligned* 的低层 skill $\pi_l(a|s,z')$。
-2. **在线/离线下游训练**：冻住所有低层 skill，训一个高层策略 $\pi_h(z'|s)$，动作通过 $a \sim \pi_l(a|s, z'=\pi_h(s))$ 生成。高层只用下游 $r_{\text{new}}$ 优化 Q 值，加上一项 prior regularization 把 $z'$ 拽回 VAE 学到的先验，防止跑到 OOD 的 skill 区域。
-
-输入：$\mathcal D_{\text{pref}}$（众包偏好）+ $\mathcal D_\tau$（任意一份离线轨迹）+ 下游 $r_{\text{new}}$。输出：下游策略 $\pi = \pi_h \circ \pi_l$。
+这篇论文要在没有显式安全奖励、也拿不到 oracle 用户标签的前提下，把众包偏好里"大家共享"的安全准则迁移到任意下游任务。它先把众包偏好奖励分解为 $r(s,a,z) = r_{\text{user}}(s,a,z) + r_{\text{share}}(s,a)$（$z$ 是不可观察的用户上下文，$r_{\text{share}}$ 是所有人共享的安全惩罚——落入 $X_{\text{unsafe}}$ 给 $-K$，否则 0），然后用两阶段 pipeline 把安全"焊"进策略空间而非奖励里。第一阶段离线 skill 发现：拿众包偏好集 $\mathcal D_{\text{pref}} = \{S_z\}$，用 VAE 的 encoder $q_\psi(z'|S_z)$ 把每个用户的偏好集映射到 latent $z'$，decoder 给出 latent-conditioned reward $r_\phi(s,a,z')$ 或 policy $\pi_\theta(a|s,z')$，得到一组 *preference-aligned* 的低层 skill $\pi_l(a|s,z')$。第二阶段下游训练：冻住所有低层 skill，只训一个高层策略 $\pi_h(z'|s)$，动作经 $a \sim \pi_l(a|s, z'=\pi_h(s))$ 生成，高层仅用下游 $r_{\text{new}}$ 优化 Q 值。整体输入是 $\mathcal D_{\text{pref}}$（众包偏好）+ $\mathcal D_\tau$（任意一份离线轨迹）+ 下游 $r_{\text{new}}$，输出是组合策略 $\pi = \pi_h \circ \pi_l$。
 
 ### 关键设计
 
-1. **Vanilla RLHF 失败模式的形式化刻画（动机）**:
+**1. 用两个定理给 vanilla RLHF 的 reward combination 判死刑。**
 
-    - 功能：解释为什么不能直接学一个全局 $\hat r$ 然后做 reward combination。
-    - 核心思路：Theorem 4.2 证明当安全惩罚 $K > 2L\max|r_{\text{user}}|$ 时，所有"安全 vs 不安全"的轨迹对都是 consistent 的，因此无穷数据下 $\hat u(\tau^{\text{safe}}) > \hat u(\tau^{\text{unsafe}})$——也就是说 $\hat r$ 确实能学到安全偏好。但 Theorem 4.3 进一步刻画失衡场景：只要某个用户 $z_k$ 的占比 $p(z_k) > \frac{|\mathcal T|-1}{\min_{(\tau,\tau') \in X_{\text{ics}}} N(\tau,\tau',z_k) + |\mathcal T|}$，学到的 $\hat u$ 在所有 inconsistent pair 上的排序就完全等同于 $u(\cdot, z_k)$。结果是 $\hat r$ 把多数派的个人偏好"塞"进了下游优化，与 $r_{\text{new}}$ 错配。
-    - 设计动机：先把 baseline 路线的两个硬伤（权重 $\omega$ 敏感 + 失衡导致偏置）写死成定理，才有理由换路线；同时这两个定理也指导了实验设计——构造 10:1 的失衡数据集去验证 RC 的 Pareto frontier 整体偏离 Oracle。
+baseline 路线的自然做法是学一个全局奖励 $\hat r$ 再和任务奖励加权 $r' = (1-\omega)r_{\text{new}} + \omega\hat r$，作者要先证明这条路为什么走不通才有理由换路线。Theorem 4.2 说明：当安全惩罚足够大（$K > 2L\max|r_{\text{user}}|$）时，所有"安全 vs 不安全"的轨迹对都是 consistent 的，因此无穷数据下 $\hat u(\tau^{\text{safe}}) > \hat u(\tau^{\text{unsafe}})$——$\hat r$ 确实学得到安全偏好，这一步不是问题。真正的硬伤在 Theorem 4.3 刻画的失衡场景：只要某个用户 $z_k$ 的占比超过阈值 $p(z_k) > \frac{|\mathcal T|-1}{\min_{(\tau,\tau') \in X_{\text{ics}}} N(\tau,\tau',z_k) + |\mathcal T|}$，学到的 $\hat u$ 在所有 inconsistent pair 上的排序就**完全等同于** $u(\cdot, z_k)$，也就是 $\hat r$ 把多数派的个人偏好整个塞进了下游优化，与 $r_{\text{new}}$ 错配；再叠加权重 $\omega$ 对 reward scale 极度敏感、调不动，这条路就两头堵死了。这两个定理同时给出了实验设计的靶子——后面专门构造 10:1 的失衡数据集，去验证 RC 的 Pareto frontier 整体偏离 Oracle。
 
-2. **VAE-based latent skill discovery（VPL + 新 CPL 变体）**:
+**2. VAE-based latent skill discovery：把"用户差异"显式拆成 latent 索引的 skill。**
 
-    - 功能：在没有真实 $z$ 标签的情况下，学一组以 latent $z'$ 索引的 preference-aligned skill，把"用户差异"显式拆出来。
-    - 核心思路：encoder $q_\psi(z'|S_z)$ 把同一用户的偏好集映射到 latent，decoder 用 Bradley–Terry 在 $z'$ 上预测偏好：$P(y=1|\tau^1,\tau^2,z') = \frac{\exp \hat u(\tau^1,z')}{\exp \hat u(\tau^1,z') + \exp \hat u(\tau^2,z')}$，配合 KL 正则 $D_{KL}(q_\psi \| p(z'))$ 训练。对应 partial-return 模型时，低层策略由 IQL 在 $\mathcal D_\tau$ 上对每个 $z'$ 做 offline RL：$\max_{\pi_\theta(a|s,z')} \mathbb E_{\tau \sim \mathcal D_\tau}[\sum_t r_\phi(s_t,a_t,z')]$。作者额外提出 **Safe-CPL** 变体：把 VPL 套到 regret-based 模型里，用 CPL 的 $P(y=1|\tau^1,\tau^2,z') = \frac{\exp f(\tau^1|z')}{\exp f(\tau^1|z') + \exp \lambda f(\tau^2|z')}$，$f(\tau^i|z') = \sum_t \gamma^t \alpha \log \pi_\theta(a_t^i|s_t^i,z')$，直接学 policy 不学 reward，避免了 RL 优化不稳定。
-    - 设计动机：用 latent $z'$ 作为不可观察 $z$ 的代理，不需要 oracle 用户 ID；用同一份偏好集 $S_z$（而非单 pair）输入 encoder 是关键——单 pair 信息不够区分用户。理论上（Cor. A.6）只要每个低层 $\pi_l(\cdot|z')$ 对自己的 conditioned utility 最优，组合而成的任何高层都自动安全。
+既然没有真实的 $z$ 标签，就用 latent $z'$ 当它的代理。encoder $q_\psi(z'|S_z)$ 把**同一用户的整份偏好集** $S_z$（而非单个 pair）映射到 latent——用集合而非单 pair 是关键，单 pair 的信息量不足以区分用户。decoder 端用 Bradley–Terry 在 $z'$ 上预测偏好 $P(y=1|\tau^1,\tau^2,z') = \frac{\exp \hat u(\tau^1,z')}{\exp \hat u(\tau^1,z') + \exp \hat u(\tau^2,z')}$，配合 KL 正则 $D_{KL}(q_\psi \| p(z'))$ 训练；对应 partial-return 模型时，低层策略由 IQL 在 $\mathcal D_\tau$ 上对每个 $z'$ 做 offline RL：$\max_{\pi_\theta(a|s,z')} \mathbb E_{\tau \sim \mathcal D_\tau}[\sum_t r_\phi(s_t,a_t,z')]$。作者额外提出 **Safe-CPL** 变体：把 VPL 套进 regret-based 模型，用 CPL 的偏好概率 $P(y=1|\tau^1,\tau^2,z') = \frac{\exp f(\tau^1|z')}{\exp f(\tau^1|z') + \exp \lambda f(\tau^2|z')}$，其中 $f(\tau^i|z') = \sum_t \gamma^t \alpha \log \pi_\theta(a_t^i|s_t^i,z')$，直接学 policy 不学 reward，绕开了 RL 优化不稳定。这套设计之所以能继承安全，理论上由 Cor. A.6 保证：只要每个低层 $\pi_l(\cdot|z')$ 对自己的 conditioned utility 最优，由它们组合而成的任何高层都自动安全。
 
-3. **分层 policy composition + prior regularization**:
+**3. 分层 policy composition + prior regularization：把安全约束从奖励项变成空间结构。**
 
-    - 功能：让下游任务只在"已经被偏好对齐"的 skill 空间里搜索，把"安全约束"从奖励项变成空间结构。
-    - 核心思路：动作生成 $a \sim \pi_l(a|s, z'=\pi_h(s))$，高层每步可切换 skill。高层用 TD3 训练，损失为 $L_{\pi_h} = -\mathbb E_{a \sim \pi_h \cdot \pi_l}[Q(s,a) + \beta_{\text{reg}} L_{\text{reg}}]$，其中 $L_{\text{reg}} = \log p(z' = \pi_h(s))$ 是 VAE 先验下的 log-likelihood，把 $z'$ 拉回训练时见过的 latent 区域，避免高层选出 OOD skill 导致 $\pi_l$ 失控。离线场景再加 $\beta_{\text{BC}} \|a - a_D\|_2^2$ 抑制 OOD 动作。整个过程中 $\pi_l$ 冻结，梯度经过 $Q$ 和 $\pi_l$ 回传到 $\pi_h$。
-    - 设计动机：(i) skill 空间天然带安全（每个 skill 都来自偏好对齐的训练），所以下游只优化 $r_{\text{new}}$ 不会破坏安全——和 reward combination 不同，没有 $\omega$ 这种 trade-off 旋钮；(ii) $\beta_{\text{reg}}$ 虽然也是超参，但实验显示在很宽范围内对 reward 影响很小、对 cost 单调改善，比 $\omega$ 好调；(iii) Theorem A.7 给出 cost 上界与低层 skill 次优度成正比，直观告诉你"skill 学得越好下游越安全"。
+下游不再去拼凑奖励，而是让高层策略只在"已经被偏好对齐"的 skill 空间里搜索：动作 $a \sim \pi_l(a|s, z'=\pi_h(s))$，高层每步可切换 skill，用 TD3 训练，损失 $L_{\pi_h} = -\mathbb E_{a \sim \pi_h \cdot \pi_l}[Q(s,a) + \beta_{\text{reg}} L_{\text{reg}}]$。其中 prior regularization 项 $L_{\text{reg}} = \log p(z' = \pi_h(s))$ 是 VAE 先验下的 log-likelihood，作用是把 $z'$ 拉回训练时见过的 latent 区域，避免高层选出 OOD 的 skill 导致 $\pi_l$ 失控；离线场景再加 $\beta_{\text{BC}} \|a - a_D\|_2^2$ 抑制 OOD 动作。整个过程 $\pi_l$ 冻结，梯度经过 $Q$ 和 $\pi_l$ 回传到 $\pi_h$。这样设计的好处是：skill 空间天然带安全（每个 skill 都来自偏好对齐的训练），下游只优化 $r_{\text{new}}$ 就不会越界，不再有 reward combination 里 $\omega$ 那种 trade-off 旋钮；$\beta_{\text{reg}}$ 虽然也是超参，但实验显示它在很宽范围内对 reward 影响很小、对 cost 单调改善，比 $\omega$ 好调得多；而 Theorem A.7 给出的 cost 上界与低层 skill 次优度成正比，直观地说就是"skill 学得越好，下游越安全"。
 
 ### 损失函数 / 训练策略
 

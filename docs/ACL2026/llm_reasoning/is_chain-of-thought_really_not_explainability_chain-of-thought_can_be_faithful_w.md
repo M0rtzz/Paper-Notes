@@ -51,23 +51,23 @@ tags:
 
 ### 关键设计
 
-1. **多指标对照 = 把"不忠实"伪命题逼出原形**:
+**1. 多指标对照：用两面独立的镜子，照出 Biasing Features 的盲区。**
 
-    - 功能：用 Filler Tokens（把 CoT 替换成"..."看预测是否改变，改变=CoT 起作用=忠实）和 FUR（unlearn 单个推理步看是否影响预测）两种独立机制，重新审视 Biasing Features 判不忠实的样本。
-    - 核心思路：$\mathcal{F}_{\mathrm{FT}}=\mathbb{1}[\hat y_{h,\text{corr}}\ne\hat y_h]$，$\mathcal{F}_{\mathrm{FUR}}=\mathbb{1}[\exists\,r_i: M(x_h)\ne M^{(i)*}(x_h)]$；前者测"上下文 faithfulness"（CoT 在推理时确实被用了），后者测"parametric faithfulness"（CoT 反映了模型参数里的真实推理步）。
-    - 设计动机：单一指标的盲区只能用多指标互补来照出来；任何一个独立指标判"忠实"就能反驳 Biasing Features 的"不忠实"。这种多镜面方法是论文最有力的"逻辑武器"。
+Biasing Features 的根本问题是只盯着"hint 有没有被写进 CoT"这一维信号，一旦没写就判不忠实——但缺词未必等于假述。论文的反击思路是再请两个机制完全不同的指标来复审同一批"不忠实"样本：Filler Tokens 把整段 CoT 替换成无意义的"..."再看预测是否改变，$\mathcal{F}_{\mathrm{FT}}=\mathbb{1}[\hat y_{h,\text{corr}}\ne\hat y_h]$，预测一变就说明推理时 CoT 真被用上了，测的是"上下文 faithfulness"；FUR 则反过来 unlearn 掉某个推理步，$\mathcal{F}_{\mathrm{FUR}}=\mathbb{1}[\exists\,r_i: M(x_h)\ne M^{(i)*}(x_h)]$，预测随之变化就说明这一步反映了模型参数里真实的计算，测的是"parametric faithfulness"。
 
-2. **faithful@k：把 token 预算从混杂因素里挑出来**:
+两面镜子各照一个维度，只要任何一面判"忠实"，就足以反驳 Biasing Features 对同一样本的"不忠实"判决。这种多镜面对照正是全文最锋利的逻辑武器——它把"不忠实"这个一维标签拆成多个可独立验证的维度，单指标的盲区无所遁形。
 
-    - 功能：通过增大采样数 $k$，测试"不忠实"是否本质上是"模型只是在某次贪心解码里没写出 hint，但本来是有能力写出的"。
-    - 核心思路：定义 $\text{faithful@k}=\mathbb{E}[1-\binom{n-c}{k}/\binom{n}{k}]$，其中 $c$ 是 verbalize hint 的样本数、$n$ 是答案变为 hinted 的样本数。如果 $k$ 增大时 faithful@k 显著上升，说明非 verbalize 主要是 incompleteness；如果几乎不动，则是真不忠实。
-    - 设计动机：贪心解码看到一次"没写 hint"就判不忠实，相当于看了一帧就给电影下定论；faithful@k 把"采样不确定性"显式分离出来，单一 trajectory 看不到的"潜在忠实性"得以暴露。Professor hint 下 faithful@16 涨到 0.9（gemma-3-4b），Black Squares 下几乎不动——hint 类型决定了"模型有没有能力写出 hint"，这种差异化轨迹本身就是反"瞎采样作弊"的最佳辩护。
+**2. faithful@k：把采样运气从忠实性里剥出来。**
 
-3. **Causal Mediation Analysis：因果地验证 CoT 是不是中介**:
+贪心解码只看一条轨迹，某次没写出 hint 就盖棺定论，等于看了一帧就给整部电影下结论——可模型本来是有能力写出 hint 的，只是这次没采到。faithful@k 把 pass@k 的思想移植过来量化这件事：定义 $\text{faithful@k}=\mathbb{E}[1-\binom{n-c}{k}/\binom{n}{k}]$，其中 $n$ 是答案被 hint 改变的样本数、$c$ 是其中 verbalize 了 hint 的样本数，含义是"采 $k$ 条 CoT 里至少有一条说出 hint"的概率。
 
-    - 功能：把"加入 hint 引起的总预测变化"分解成"直接效应 NDE（hint 直接改变最终预测）"和"间接效应 NIE（hint 通过改造 CoT 再改变预测）"，从而判定 CoT 是真因果中介还是事后理由化。
-    - 核心思路：$\text{NDE}=\mathbb{E}_x[p_h(x_h,c)-p_h(x,c)]$（固定原 CoT、换 hinted 输入），$\text{NIE}=\mathbb{E}_x[p_h(x,c_h)-p_h(x,c)]$（固定原输入、换 hinted CoT）。NIE 显著非零 = CoT 在因果上承载了 hint 的影响。同时跟踪 $p_{\bar h}=\sum_{c\ne L_h}p_c$ 区分"CoT 是抬高 hinted 答案还是压低其它选项"。
-    - 设计动机：单看相关性无法回答"CoT 是不是模型预测的真原因"；CMA 直接构造反事实干预，定量分离两条因果路径。论文发现 NIE 几乎处处显著非零，且在 Black Squares hint 下 NIE 常 > NDE——意味着即便 CoT 不写 hint，它仍是 hint→prediction 的主要传输管道。
+如果 $k$ 增大时 faithful@k 显著上扬，说明所谓"不忠实"其实只是单次采样的 incompleteness；若纹丝不动，才是真不忠实。实测两类轨迹泾渭分明：Professor hint 下 gemma-3-4b 的 faithful@16 一路涨到 0.9，而 Black Squares hint 几乎不动。这种差异本身就回应了"是不是靠多采样作弊"的质疑——hint 越隐式，模型越说不出来，曲线越平，正说明 faithful@k 测的是真实能力而非采样运气。
+
+**3. Causal Mediation Analysis：用反事实干预证明 CoT 是因果中介而非事后理由。**
+
+光看相关性回答不了最关键的问题：CoT 究竟是模型预测的真正原因，还是写完答案后补的漂亮说辞？CMA 直接构造反事实把"hint 引起的总变化"拆成两条路径。直接效应固定原 CoT、只换 hinted 输入，$\text{NDE}=\mathbb{E}_x[p_h(x_h,c)-p_h(x,c)]$，刻画 hint 绕过 CoT 直接改写预测的部分；间接效应固定原输入、只换 hinted CoT，$\text{NIE}=\mathbb{E}_x[p_h(x,c_h)-p_h(x,c)]$，刻画 hint 先改造 CoT 再经它影响预测的部分。NIE 显著非零，就坐实了 CoT 在因果上承载了 hint 的影响；论文还同步追踪 $p_{\bar h}=\sum_{c\ne L_h}p_c$ 来区分 CoT 是在抬高 hinted 答案还是在压低其它选项。
+
+结果是 NIE 几乎处处显著非零，且在最隐式的 Black Squares hint 下常常 NIE > NDE——这意味着即便 CoT 一个字都没提 hint，它依然是 hint 通向最终预测的主干道。这条结论几乎颠覆了"CoT 没写出来就等于没参与"的默认判断。
 
 ### 损失函数 / 训练策略
 本文是分析/评测工作，没有训练损失。FUR 涉及的 unlearning 用 Tutek 2025 的 NPO（Negative Preference Optimization）+ KL 约束跑参数干预，对 Llama 系沿用其 lr，对 gemma-3-4b 做 7 档 lr 网格搜索取"efficacy 最大且 specificity ≥ 95%"的 5e-6。faithful@k 用各模型默认采样（Llama: T=0.6, top-p=0.9；gemma: top-k=64, top-p=0.95；Qwen: top-k=20, top-p=0.95, T=0.6），每例 128 样本。

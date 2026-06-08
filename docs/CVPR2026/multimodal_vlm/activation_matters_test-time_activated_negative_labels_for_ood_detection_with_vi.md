@@ -40,37 +40,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-测试时维护正/负样本FIFO队列 → 在语料库上动态计算标签激活分数 → 选择高激活负标签 → 使用激活感知评分函数检测OOD。
+论文要解决的是「负标签选得不对」这件事：NegLabel 之类的方法只按"离 ID 标签远"来挑负标签，挑出来的词在真实 OOD 样本上常常几乎不被激活，等于白占一个名额还添噪声。TANL 的做法是把"哪些负标签真正有用"的判断挪到测试时——它一边处理测试流，一边用两条 FIFO 队列把当前看到的高置信样本攒成 ID / OOD 的近似分布，再在语料库上算出每个候选负标签在这两份分布上的激活差，挑出真正"被 OOD 激活、不被 ID 激活"的标签，最后用一个对标签数量不敏感的累积评分函数算出 OOD 分数。整条链路冻结 CLIP、不做任何反向传播。
 
 ### 关键设计
-1. **激活度量（Activation Metric）**：
-   衡量特定标签在数据集上的平均分类概率：
-    $Act(\mathcal{X}, \hat{y}_i) = \frac{1}{|\mathcal{X}|}\sum_{\mathbf{x} \in \mathcal{X}} \frac{\exp(\mathbf{v}\hat{\mathbf{t}}_i)}{\sum_j \exp(\mathbf{v}\mathbf{t}_j) + \sum_j \exp(\mathbf{v}\hat{\mathbf{t}}_j)}$
-   理想负标签应在OOD上高激活、在ID上低激活。差分激活分数：
-    $Act_d(\hat{y}_i) = Act(\mathcal{X}_{ood}, \hat{y}_i) - Act(\mathcal{X}_{id}, \hat{y}_i)$
-    - 设计动机：直接量化标签对OOD检测的判别力
 
-2. **分布自适应激活标签（Distribution-adaptive）**：
-   用缓存的高置信正/负样本近似 $\mathcal{X}_{id}$ 和 $\mathcal{X}_{ood}$：
-    - FIFO队列 $\mathcal{X}_{pos}$ / $\mathcal{X}_{neg}$，长度 $L$
-    - 正样本：$S_{aa}(\mathbf{v}) \geq \gamma + (1-\gamma)g$；负样本：$S_{aa}(\mathbf{v}) < \gamma - \gamma g$
-    - **初始化**：正样本用ID标签特征，负样本用高斯噪声图像特征
-    - 设计动机：OOD分布未知且可能动态变化，需要在线自适应
+**1. 激活度量：把"这个负标签有没有用"变成一个可算的数。**
 
-3. **批自适应变体（Batch-adaptive）**：
-   在当前测试batch内额外提取正负样本，与历史样本加权融合：
-    $Act_b(\mathcal{X}_{pos}, \hat{y}_i) = \alpha Act(\mathcal{X}_{pos}, \hat{y}_i) + (1-\alpha) Act(\mathcal{X}^b_{pos}, \hat{y}_i)$
-    - 设计动机：历史样本反映总体趋势，当前batch捕获即时特征，两者互补
+之前的方法选负标签全凭"和 ID 标签的语义距离"，从没问过这些标签在实际数据上到底有没有被点亮。TANL 直接定义了一个激活度，衡量某个标签在一批样本上的平均分类概率：
 
-4. **激活感知评分函数（Activation-aware Score）**：
-    $S_{aa}(\mathbf{v}) = \frac{1}{M}\sum_{m=1}^{M}\sum_{i=1}^{C}\frac{\exp(\mathbf{v}\mathbf{t}_i)}{\sum_j \exp(\mathbf{v}\mathbf{t}_j) + \sum_{j=1}^m \exp(\mathbf{v}\tilde{\mathbf{t}}_j)}$
-   负标签按激活度排序后，高激活标签在分母中出现更多次从而被隐式赋予更高权重。
-    - 设计动机：不同负标签重要性不同，高激活标签应主导评分。这种累积求和设计同时增强了对标签数量 $M$ 的鲁棒性。
+$$Act(\mathcal{X}, \hat{y}_i) = \frac{1}{|\mathcal{X}|}\sum_{\mathbf{x} \in \mathcal{X}} \frac{\exp(\mathbf{v}\hat{\mathbf{t}}_i)}{\sum_j \exp(\mathbf{v}\mathbf{t}_j) + \sum_j \exp(\mathbf{v}\hat{\mathbf{t}}_j)}$$
+
+一个理想的负标签，应该在 OOD 数据上高激活、在 ID 数据上低激活。于是用差分激活分数 $Act_d(\hat{y}_i) = Act(\mathcal{X}_{ood}, \hat{y}_i) - Act(\mathcal{X}_{id}, \hat{y}_i)$ 直接量化这个判别力——分数越高，说明这个标签越能把 OOD 从 ID 里拉开，比单看距离精准得多。
+
+**2. 分布自适应：测试时拿不到真 OOD，就用高置信样本现攒一份近似分布。**
+
+差分激活分数需要 $\mathcal{X}_{ood}$ 和 $\mathcal{X}_{id}$，可测试时 OOD 分布是未知的、还可能随数据流漂移。TANL 维护两条长度为 $L$ 的 FIFO 队列 $\mathcal{X}_{pos}$ / $\mathcal{X}_{neg}$ 来在线近似：每来一个样本，按当前评分 $S_{aa}(\mathbf{v})$ 判定——分数高于 $\gamma + (1-\gamma)g$ 收进正队列当 ID 近似，低于 $\gamma - \gamma g$ 收进负队列当 OOD 近似，中间的不要，只留两端最有把握的样本。冷启动时队列还没攒够，就用 ID 标签的文本特征初始化正样本、用高斯噪声图像的特征初始化负样本（噪声图天然不属于任何真实类别，是一个现成的 OOD 代理），给流程一个稳定起点。这样标签激活度就能跟着实际测试分布走，而不是固定在训练前算死。
+
+**3. 批自适应：历史趋势之外，再补一份当前 batch 的即时信息。**
+
+FIFO 队列攒的是一段时间内的总体趋势，反应偏慢；而当前 batch 里的样本携带的是此刻的即时特征。TANL 在算激活度时把两者加权融合：
+
+$$Act_b(\mathcal{X}_{pos}, \hat{y}_i) = \alpha Act(\mathcal{X}_{pos}, \hat{y}_i) + (1-\alpha) Act(\mathcal{X}^b_{pos}, \hat{y}_i)$$
+
+其中 $\mathcal{X}^b_{pos}$ 是当前 batch 内额外提取的正样本（负样本同理），$\alpha$ 控制历史与即时的比重。历史样本稳、batch 样本快，两份信息互补，让标签选择对分布的局部波动更跟手。
+
+**4. 激活感知评分函数：让高激活标签在打分里说话更响，顺带不怕标签数量多。**
+
+负标签不该一视同仁——激活度高的那几个才是检测主力。TANL 先把负标签按激活度从高到低排序，再用一个累积求和的评分函数算 OOD 分数：
+
+$$S_{aa}(\mathbf{v}) = \frac{1}{M}\sum_{m=1}^{M}\sum_{i=1}^{C}\frac{\exp(\mathbf{v}\mathbf{t}_i)}{\sum_j \exp(\mathbf{v}\mathbf{t}_j) + \sum_{j=1}^m \exp(\mathbf{v}\tilde{\mathbf{t}}_j)}$$
+
+关键在内层对 $m$ 的累加：排在前面的高激活标签会在多个 $m$ 的分母里反复出现，等于被隐式加了更大权重，而排在末尾的低激活标签只在 $m=M$ 时露一次面，影响很小。这个累积设计还顺手解决了一个老毛病——传统方法对负标签总数 $M$ 很敏感、要小心调，而这里多塞进来的低激活标签因为只在末尾累加几乎不改变分数，所以 $S_{aa}$ 对 $M$ 天然鲁棒，基本不用精调。
 
 ### 损失函数 / 训练策略
-- **完全免训练**（zero-shot, training-free）
-- CLIP编码器冻结，仅在测试时维护FIFO队列
-- 超参数：$\gamma$ 为ID/OOD阈值，$g$ 为置信间隔，$L$ 为队列容量，$\alpha$ 为历史/batch权重
+完全免训练（zero-shot / training-free）：CLIP 编码器全程冻结，没有任何反向传播，测试时只维护两条 FIFO 队列。涉及的超参只有四个——$\gamma$（ID/OOD 阈值）、$g$（置信间隔）、$L$（队列容量）、$\alpha$（历史与 batch 的融合权重）。
 
 ## 实验关键数据
 

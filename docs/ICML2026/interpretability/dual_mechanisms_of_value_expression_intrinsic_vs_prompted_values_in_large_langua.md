@@ -40,32 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三步，全部围绕一个 (value $s$, layer $\ell$, expression type $e\in\{int, prompt\}$) 元组展开。第一步**抽方向**：从 26,334 条 ShareGPT/LMSYS 真实用户 query 出发，在两种条件下让模型生成回答——空系统提示（intrinsic）和价值优先系统提示（prompted，500 个 GPT-4o-mini 增广模板里随机抽一条），再用 GPT-4o-mini 把回答分成"表达该价值 $R_{\text{exp}}$"与"未表达 $R_{\text{unexp}}$"两组，对残差流激活做 token 平均后取两组均值差，得到价值向量 $v^\ell_{s,e}$。第二步**拆子空间**：对成对方向 $\{v^\ell_{s,\text{int}}, v^\ell_{s,\text{prompt}}\}$ 既做正交化（去掉对方投影后看是否还能 steer），又做 SVD 得到共享轴 $u_{\text{shared}}$ 与差异轴 $u_{\text{int}}=-u_{\text{prompt}}$。第三步**归到神经元**：基于 pre-LayerNorm Transformer 的 MLP 残差更新可写成 $\Delta x^\ell=\sum_i \sigma(\langle x^\ell, w^\ell_{\text{in},i}\rangle)\,w^\ell_{\text{out},i}$，把每个神经元的输出列 $w^\ell_{\text{out},i}$ 投影到该价值的 2 维子空间，按与三条参考轴的夹角 $<30°$ 归为 shared / intrinsic-unique / prompted-unique。
-
-主干模型为 Qwen2.5-7B-Instruct，鲁棒性验证扩展到 Qwen2.5-1.5B/32B、Llama-3.1-8B-Instruct、Gemma2-9b-it、Qwen3-8B/14B。
+本文要解决的是"prompt 触发的价值表达和模型内在的价值表达，究竟是不是同一套电路"，做法是把每一对方向都装进同一个几何对象再拆开看。所有分析都围绕一个 (value $s$, layer $\ell$, expression type $e\in\{\text{int},\text{prompt}\}$) 元组展开：先在空系统提示（intrinsic）和价值优先系统提示（prompted）两种条件下抽出残差流方向，再用 SVD 把成对方向裁成共享轴与差异轴，最后把方向投到 MLP 输出列上归因到具体神经元，让向量级、神经元级、行为级三类证据落在同一坐标里互相印证。主干模型为 Qwen2.5-7B-Instruct，鲁棒性验证扩展到 Qwen2.5-1.5B/32B、Llama-3.1-8B-Instruct、Gemma2-9b-it、Qwen3-8B/14B。
 
 ### 关键设计
 
-1. **Difference-in-means 价值向量 + 正交化因果检验**:
+**1. Difference-in-means 价值向量 + 正交化因果检验：把"在表达某价值"压成一条方向，再验证它能否被对方替代**
 
-    - 功能：把"模型在表达某价值"这件事压缩成残差流里一条方向，并能区分该方向中真正不可替代的成分。
-    - 核心思路：对每条响应取 token 平均 $\bar a^\ell(r)=\frac{1}{|r|}\sum_t a^\ell_t(r)$，再取两组响应均值差 $v^\ell=\frac{1}{|R_{\text{exp}}|}\sum_{r\in R_{\text{exp}}}\bar a^\ell(r)-\frac{1}{|R_{\text{unexp}}|}\sum_{r\in R_{\text{unexp}}}\bar a^\ell(r)$；对成对方向做正交化 $v^\ell_{s,\text{int}(\perp \text{prompt})}=v^\ell_{s,\text{int}}-\frac{\langle v^\ell_{s,\text{int}}, v^\ell_{s,\text{prompt}}\rangle}{\langle v^\ell_{s,\text{prompt}}, v^\ell_{s,\text{prompt}}\rangle}v^\ell_{s,\text{prompt}}$，干预 $(a^\ell_t)^*=a^\ell_t+\alpha v^\ell_{s,e}$，按"MMLU 跌幅 <5 点"卡住 $\alpha$ 上限（Qwen2.5-7B 选 $\alpha=4$）。
-    - 设计动机：difference-in-means 在理论上是最坏情况最优的概念编辑方向（Belrose 2023），用大量多样 prompt 平均能抵消 prompt 特异噪声；正交化则把"两个机制是否真的非共线"变成可证伪的因果实验。
+要比较两套机制，第一步得先把"模型在表达某价值"这件抽象的事变成可操作的对象。本文从 26,334 条 ShareGPT/LMSYS 真实用户 query 出发，在两种条件下生成回答——空系统提示对应 intrinsic，从 500 个 GPT-4o-mini 增广模板里随机抽一条价值优先提示则对应 prompted——再用 GPT-4o-mini 把回答二分成"表达该价值 $R_{\text{exp}}$"与"未表达 $R_{\text{unexp}}$"。对每条响应取 token 平均 $\bar a^\ell(r)=\frac{1}{|r|}\sum_t a^\ell_t(r)$，两组均值之差就是价值向量 $v^\ell=\frac{1}{|R_{\text{exp}}|}\sum_{r\in R_{\text{exp}}}\bar a^\ell(r)-\frac{1}{|R_{\text{unexp}}|}\sum_{r\in R_{\text{unexp}}}\bar a^\ell(r)$。之所以选 difference-in-means，是因为它在理论上是最坏情况最优的概念编辑方向（Belrose 2023），叠上大量多样 prompt 求平均又能抵消 prompt 特异噪声。
 
-2. **SVD 共享/独有轴分解**:
+真正把"两机制是否同一"变成可证伪实验的是正交化：把 intrinsic 方向去掉它在 prompted 上的投影 $v^\ell_{s,\text{int}(\perp\text{prompt})}=v^\ell_{s,\text{int}}-\frac{\langle v^\ell_{s,\text{int}},\,v^\ell_{s,\text{prompt}}\rangle}{\langle v^\ell_{s,\text{prompt}},\,v^\ell_{s,\text{prompt}}\rangle}\,v^\ell_{s,\text{prompt}}$，再看剩下的独有分量是否还能 steer。所有干预都是激活加法 $(a^\ell_t)^*=a^\ell_t+\alpha v^\ell_{s,e}$，强度 $\alpha$ 以"MMLU 跌幅 <5 点"为红线卡上限（Qwen2.5-7B 取 $\alpha=4$），保证 steer 出的效果不是靠破坏模型通用能力换来的。
 
-    - 功能：在同一 2 维子空间里同时刻画两套机制的共同部分与对立部分，为后续神经元归类与跨价值结构分析提供统一坐标。
-    - 核心思路：构造矩阵 $V^\ell_s=[v^\ell_{s,\text{int}}, v^\ell_{s,\text{prompt}}]$，做 $V^\ell_s=U\Sigma R^\top$，取第一左奇异向量 $u_{\text{shared}}=U[:,1]$ 作共享轴（捕捉子空间内方差最大方向），第二左奇异向量 $u_{\text{diff}}=U[:,2]$ 作差异轴，并按 $\langle u_{\text{diff}}, v^\ell_{s,\text{int}}-v^\ell_{s,\text{prompt}}\rangle$ 的符号定向得到 $u_{\text{int}}$，再令 $u_{\text{prompt}}=-u_{\text{int}}$。
-    - 设计动机：正交化只能告诉你"去掉对方投影后还剩什么"，但无法显式给出"两者共同信奉的那条方向"；SVD 把共享与差异解耦成两条互相正交的轴，恰好对应后文要验证的"共享分量承载语义、独有分量承载分工"这两个假说。
+**2. SVD 共享/独有轴分解：在一个 2 维子空间里同时读出"两机制共信的方向"和"对立的方向"**
 
-3. **MLP 价值神经元的几何归类**:
+正交化只能回答"去掉对方还剩什么"，却给不出"两者共同信奉的那条轴"，而后文要验证的恰恰是"共享分量承载语义、独有分量承载分工"这一对假说，需要把共享与差异显式解耦。为此本文把成对方向拼成矩阵 $V^\ell_s=[v^\ell_{s,\text{int}},\,v^\ell_{s,\text{prompt}}]$ 做 $V^\ell_s=U\Sigma R^\top$：第一左奇异向量 $u_{\text{shared}}=U[:,1]$ 捕捉子空间内方差最大的方向，作为两机制共信的共享轴；第二左奇异向量 $u_{\text{diff}}=U[:,2]$ 作差异轴，再按 $\langle u_{\text{diff}},\,v^\ell_{s,\text{int}}-v^\ell_{s,\text{prompt}}\rangle$ 的符号定向得到 $u_{\text{int}}$，并令 $u_{\text{prompt}}=-u_{\text{int}}$。这样一来共享与差异变成两条互相正交的轴，既能单独 steer、单独消融，也为下一步的神经元归类与跨价值结构分析提供了统一坐标。
 
-    - 功能：把残差流层面的方向归因到具体可解释的 MLP 单元，让"哪些参数支撑共享机制、哪些参数支撑独有机制"可被定位、可被消融、可被自动神经元解释器命名。
-    - 核心思路：把神经元输出列向量投到子空间 $p_i=\text{Proj}_{S^\ell_s}(w^\ell_{\text{out},i})$，用 $\|p_i\|_2$ 作价值相关性打分留前 $k\%$；再算 $p_i$ 与 $A=\{u_{\text{shared}}, u_{\text{int}}, u_{\text{prompt}}\}$ 各自夹角 $\theta(p_i,u)=\arccos(\langle p_i,u\rangle/(\|p_i\|_2\|u\|_2))$，谁最小且 $<30°$ 就归到谁。神经元级干预只缩放选中神经元激活 $\beta>1$，不动其它神经元。
-    - 设计动机：残差流是大量分量的叠加，光看方向无法说清"谁在贡献"。基于 pre-LayerNorm Transformer 残差更新的 rank-1 分解，可以把方向干净地拆成神经元贡献，进而和 Bills et al. 2023 的自动神经元解释流水线对接，把每个共享 / 独有神经元的语义描述出来。
+**3. MLP 价值神经元的几何归类：把残差流方向落到可命名、可消融的具体单元上**
 
-### 损失函数 / 训练策略
-本文是纯分析工作，不涉及训练，仅在前向时做激活加法干预或神经元激活缩放。所有方向均在前向期固定，超参（层 $\ell$、强度 $\alpha$、缩放 $\beta$、top-$k\%$、角度阈值 $30°$）通过 PVQ + MMLU 联合网格搜索确定。
+残差流是海量分量的叠加，光看一条方向说不清"到底是谁在贡献"，所以最后一步要把方向归因到具体 MLP 神经元。本文利用 pre-LayerNorm Transformer 的 MLP 残差更新可写成 rank-1 之和 $\Delta x^\ell=\sum_i \sigma(\langle x^\ell, w^\ell_{\text{in},i}\rangle)\,w^\ell_{\text{out},i}$ 这一性质，把每个神经元的输出列 $w^\ell_{\text{out},i}$ 投到该价值的 2 维子空间 $p_i=\text{Proj}_{S^\ell_s}(w^\ell_{\text{out},i})$，以投影范数 $\|p_i\|_2$ 作价值相关性打分、保留前 $k\%$；再算 $p_i$ 与三条参考轴 $A=\{u_{\text{shared}},u_{\text{int}},u_{\text{prompt}}\}$ 的夹角 $\theta(p_i,u)=\arccos\!\big(\langle p_i,u\rangle/(\|p_i\|_2\|u\|_2)\big)$，谁最小且 $<30°$ 就归到谁，从而把每个神经元干净地标成 shared / intrinsic-unique / prompted-unique。神经元级干预只对选中单元的激活乘 $\beta>1$、不动其它单元，归类结果还能接到 Bills et al. 2023 的自动神经元解释流水线，把每个共享/独有神经元的语义直接描述出来。
+
+本文是纯分析工作，不涉及训练，所有方向都在前向期固定，干预只是激活加法或神经元激活缩放；超参（层 $\ell$、强度 $\alpha$、缩放 $\beta$、top-$k\%$、角度阈值 $30°$）通过 PVQ + MMLU 联合网格搜索确定。
 
 ## 实验关键数据
 

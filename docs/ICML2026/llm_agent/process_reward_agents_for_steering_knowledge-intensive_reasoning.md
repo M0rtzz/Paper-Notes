@@ -41,34 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PRA 由三个组件协同：冻结的推理策略 $\pi$、过程奖励 agent $\mu_\phi$、稠密检索器 $\rho$（MedCPT）。给定问题 $q$ 和知识库 $\mathcal{D}$，beam search 维护宽度为 $B$ 的部分轨迹集合 $\{\tau_t^{(j)}\}_{j=1}^B$，每一步：
-
-1. $\pi$ 对每条轨迹采样 $b$ 个候选下一步，得到 $B\times b$ 个新轨迹；
-2. 对每个新轨迹，$\mu_\phi$ 的 action readout 先判断是否要 search——要的话就调 $\rho$ 取回 $D_t$，不要就置 $D_t=\varnothing$；
-3. $\mu_\phi$ 的 reward readout 在 $(q,\tau_t,D_t)$ 条件下给该步打分 $\hat r_t \in [0,1]$，每条轨迹的累积奖励 $R(\tau_t^{(j)})=\sum_{i=1}^t \hat r_i^{(j)}$；
-4. 按 $R$ 取 top-$B$ 保留，其余剪掉。所有轨迹生成结束后取累积奖励最高的那条作为答案。
-
-工程上，PRA 在整个 benchmark 上维护**全局轨迹队列**，按当前阶段（policy 生成 / 检索 / readout）分桶批量执行——这样即使不同问题、不同 beam 因可变长度推理和条件检索而进度错位，也能保持高 GPU 利用率。
+PRA 要解决的是医学这类知识密集型任务里"没有局部可验证 axiom、又不能事后才纠错"的难题，做法是把奖励从被动打分器升级成一个在线介入生成的 agent。系统有三个组件协同：冻结的推理策略 $\pi$、过程奖励 agent $\mu_\phi$（一个 Qwen3-4B）、稠密检索器 $\rho$（MedCPT）。给定问题 $q$ 和知识库 $\mathcal{D}$，beam search 维护宽度为 $B$ 的部分轨迹集合 $\{\tau_t^{(j)}\}_{j=1}^B$；每一步先由 $\pi$ 对每条轨迹采样 $b$ 个候选下一步（共 $B\times b$ 个新轨迹），再由 $\mu_\phi$ 的 action readout 判断每条要不要检索——要就调 $\rho$ 取回 $D_t$，不要就置 $D_t=\varnothing$——然后 reward readout 在 $(q,\tau_t,D_t)$ 条件下给该步打分 $\hat r_t\in[0,1]$，按累积奖励 $R(\tau_t^{(j)})=\sum_{i=1}^t\hat r_i^{(j)}$ 取 top-$B$ 保留、其余剪掉；全部轨迹生成结束后取累积奖励最高的一条作为答案。整个流程里 policy 看到的输入和原始 CoT 完全一样，检索和打分都外化在 reward agent 上。
 
 ### 关键设计
 
-1. **PRA 双 readout（action + reward 共享参数）**:
+**1. 双 readout：让奖励 agent 同时输出"要不要检索"和"这一步对不对"。**
 
-    - 功能：让一个 Qwen3-4B 同时输出"这一步要不要 search"和"这一步对不对"两个二元信号。
-    - 核心思路：在 PRA 的输出序列里固定两个槽位 $\ell^{(1)}, \ell^{(2)}$，分别对 token "0" 和 "1" 的 logit 做 two-way softmax。奖励 $\hat r_t=\text{softmax}(\ell^{(1)})_{[1]}$ 直接当作"当前步正确"的概率，动作 $\hat a_t\sim\text{softmax}(\ell^{(2)})$ 决定是否触发检索。两个 readout 共享主干，只用两个 token 就完成 agent 控制 + 步级打分，几乎不增加推理开销。
-    - 设计动机：以往 PRM 只输出 reward，被动接受外部检索；把"是否检索"作为 agent 的 action 内化进来，奖励模块就能根据当前推理状态自适应地决定是否要外部证据，引入了一条新的 inference-time scaling 轴——每步可选地花检索预算换更强奖励信号。
+以往 PRM 只吐一个 reward，被动接受外部塞进来的检索结果，无法自己决定"该不该看证据"。PRA 把这个决定内化为 agent 的 action：在输出序列里固定两个槽位 $\ell^{(1)},\ell^{(2)}$，各自对 token "0" 和 "1" 的 logit 做 two-way softmax——奖励 $\hat r_t=\text{softmax}(\ell^{(1)})_{[1]}$ 直接当作"当前步正确"的概率，动作 $\hat a_t\sim\text{softmax}(\ell^{(2)})$ 决定是否触发检索。两个 readout 共享同一个 Qwen3-4B 主干，只额外占两个 token 就完成了 agent 控制加步级打分，几乎不增推理开销。这一改动让奖励模块能按当前推理状态自适应地索取外部证据，等于给 inference-time scaling 新开了一条轴：除了 scale 采样数，每步还能可选地花检索预算换更强的奖励信号。
 
-2. **教师模型生成 reasoning + search 双标签（基于 margin shift）**:
+**2. 用 teacher 的 margin shift 自动生成 reasoning + search 双标签。**
 
-    - 功能：自动生成"这一步对不对（reasoning label）"和"这一步需不需要检索（search label）"两套监督，用来训 PRA。
-    - 核心思路：用 Qwen3-235B-Instruct 当 teacher，对每个部分轨迹做两次评估——一次带检索文档、一次不带——分别取 token 0/1 的 log-prob，得到 margin $m=\log p(1)-\log p(0)$ 和 $m_d$。把 margin shift $\Delta m=m-m_d$ 作为"检索影响力"的代理：$|\Delta m|>\epsilon_{\text{global}}$（取全训练集中位数，得到 50/50 切分）就标 search，否则标 reward。reasoning label 直接取 teacher 在带检索条件下的二元判定。
-    - 设计动机：人工标 step-level 监督太贵；MC rollout 标签噪声大（错误中间步也可能蒙对答案）；LLM-as-judge 没接证据时医学场景容易判错。用 margin shift 做检索必要性标签，本质上是 Bayesian 视角下"后验更新幅度"——只在新增证据真正撼动 teacher 信念时才标"需要 search"，从而学到选择性检索而非每步盲检。
+PRA 需要两套步级监督——"这一步对不对"（reasoning label）和"这一步要不要检索"（search label），但人工标 step-level 太贵，MC rollout 噪声大（错误中间步也可能蒙对答案），不接证据的 LLM-as-judge 在医学场景又容易判错。本文用 Qwen3-235B-Instruct 当 teacher，对每个部分轨迹做两次评估——一次带检索文档、一次不带——各取 token 0/1 的 log-prob，得到 margin $m=\log p(1)-\log p(0)$ 与 $m_d$。两者之差 margin shift $\Delta m=m-m_d$ 度量"这步的对错判断有多依赖外部证据"：$|\Delta m|>\epsilon_{\text{global}}$（阈值取全训练集中位数，自然形成 50/50 切分）就标需要 search，否则标 reward；reasoning label 则直接取 teacher 在带检索条件下的二元判定。这本质上是 Bayesian 视角下的"后验更新幅度"——只有当新增证据真正撼动 teacher 的信念时才标"需要检索"，于是 PRA 学到的是选择性检索而非每步盲检。
 
-3. **PRA-guided beam search（在线过程奖励 + 阶段级批处理）**:
+**3. PRA-guided beam search：在线步级剪枝 + 阶段级全局批处理。**
 
-    - 功能：把 PRA 的步级奖励嵌入 beam search，作为在线剪枝信号，同时让整个 benchmark 的推理在 GPU 上高效跑起来。
-    - 核心思路：用宽度 $B=4$、分支因子 $b=16$ 的 beam search，使采样预算 $B\times b=64$ 恰好等于 self-consistency 的 64 路采样，保证算力公平。每步对 $B\times b$ 个候选用 PRA 打分，按累积奖励 $R$ 取 top-$B$。为避免不同问题、不同 beam 因可变深度造成等待，把全局所有 active trace 放进一个队列，按"policy 生成 / 检索 / readout"三种 pending stage 分桶，每个 stage 整批执行后再回队列——这样即便条件检索使一些步跳过 $\rho$ 而另一些不跳，调度也能维持高利用率。
-    - 设计动机：事后打分（outcome-level / post hoc process-level）只能在完整轨迹上聚合，无法纠正早期错误；只有在线步级奖励才能在错误传播之前剪枝。Beam 宽度小、分支因子大的配置则让 PRA 有足够候选可以"挑"，但又不会让全局队列爆炸。
+事后打分（outcome-level 或 post-hoc process-level）只能在完整轨迹上聚合，错误已经一路传播到底再纠正就晚了；只有在线步级奖励能在错误扩散前剪枝。PRA 用宽度 $B=4$、分支因子 $b=16$ 的 beam search，让采样预算 $B\times b=64$ 恰好等于 self-consistency 的 64 路采样以保证算力公平——窄 beam、大分支既给了 PRA 足够候选去"挑"，又不让全局队列爆炸。工程上更关键的是调度：不同问题、不同 beam 因可变长度推理和条件检索而进度错位，PRA 不按"问题"而按"阶段"组织，把全局所有 active trace 放进一个队列，按 policy 生成 / 检索 / readout 三种 pending stage 分桶，每个 stage 整批执行后再回队列。这样即便有些步跳过 $\rho$、有些步要检索，GPU 利用率也能维持高位。
+
+### 一个完整示例
+以一道 MedQA 题为例走一遍：beam 宽度 $B=4$，初始 4 条部分轨迹各让 $\pi$ 采样 16 个下一步，得到 $4\times16=64$ 个候选新轨迹。对这 64 个候选，PRA 的 action readout 逐个判断——比如其中涉及具体药物剂量、需要查指南的步触发检索取回 $D_t$，纯逻辑推断的步则跳过检索；reward readout 随后给每个候选打 $\hat r_t$，并加到各自的累积奖励 $R$ 上。按 $R$ 排序取 top-4 保留、其余 60 个剪掉，进入下一步又扩成 64 个候选……如此逐步收缩。若某条早期就走错的轨迹累积奖励一直低，它会很快被挤出 beam；最终在所有轨迹生成完后，取累积奖励最高的那条线性 step 序列输出答案。
 
 ### 损失函数 / 训练策略
 PRA 由 Qwen3-4B-Instruct fine-tune 而来：每个步同时预测 reasoning label 和 search label 两个二元 token，loss 就是这两个位置的交叉熵。主实验里 search label 固定为 1（always-search 设定，保证奖励评估时永远有证据）；只有在分析 search–accuracy trade-off 时才用 margin-shift 标签，让 PRA 学会按阈值 $\theta_{\text{dep}}$ 选择性检索。训练数据来自 MedQA train split 的 10,178 个问题，每问题由冻结 Qwen3-4B 采 8 条推理轨迹，对每个部分轨迹做检索，得到大量步级训练样本。

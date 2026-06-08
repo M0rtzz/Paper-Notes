@@ -43,31 +43,25 @@ ASASR 通过将 Flow Matching 的噪声先验从各向同性高斯替换为 Sobo
 
 ### 整体框架
 
-ASASR 基于 Flow Matching 框架构建。输入低分辨率图像 $\boldsymbol{c}$（$256 \times 256$），输出 $4\times$ 超分结果（$1024 \times 1024$）。整体流程分为两阶段：（1）在 Sobolev 谱着色噪声下训练速度网络 $\boldsymbol{v}_\theta$；（2）通过 AS-DPO 损失进行偏好对齐，其中负样本由对抗网络 $\mathcal{A}_\phi$ 在线生成。骨干网络采用 FLUX.1-dev，通过 LoRA（$r=16, \alpha=16$）进行微调。
+ASASR 把超分辨率当成一个频率感知的偏好对齐问题来解：输入低分辨率图像 $\boldsymbol{c}$（$256\times256$），输出 $4\times$ 超分结果（$1024\times1024$），核心是让 Flow Matching 的优化几何与自然图像的频谱衰减特性对齐。训练分两步走——先在 Sobolev 谱着色噪声下训练速度网络 $\boldsymbol{v}_\theta$，再用 AS-DPO 损失做偏好对齐，其中关键的硬负样本由一个对抗网络 $\mathcal{A}_\phi$ 在线生成。骨干采用 FLUX.1-dev，通过 LoRA（$r=16,\alpha=16$）微调。
 
 ### 关键设计
 
-1. **Sobolev 谱校正 (SSR)**:
+**1. Sobolev 谱校正（SSR）：把优化度量从 $\ell_2$ 升级成频率加权范数**
 
-    - 功能：将 DPO 优化从平坦欧几里得空间提升到 Sobolev 黎曼流形，使优化度量自动对高频误差施加更高惩罚
-    - 核心思路：将 Flow Matching 转移核的协方差矩阵从单位矩阵 $\mathbf{I}$ 替换为结构化谱算子 $\boldsymbol{\Sigma}_s = \mathcal{F}^{-1}\mathrm{diag}((1+\|\boldsymbol{\omega}\|_2^2)^{-s})\mathcal{F}$。由于高斯似然由 Mahalanobis 距离控制，精度矩阵 $\boldsymbol{\Sigma}_s^{-1}$ 会放大高频分量，使得对数似然比从 $\ell_2$ 范数差变为 Sobolev 范数差：$\log \frac{p_\theta}{p_{\mathrm{ref}}} \propto -(\|\boldsymbol{\gamma}_\theta\|_{H^s}^2 - \|\boldsymbol{\gamma}_{\mathrm{ref}}\|_{H^s}^2)$
-    - 设计动机：直接解决了标准 DPO 的频谱缺陷——$\ell_2$ 范数对所有频率等权处理导致高频伪影无法被有效惩罚，而 Sobolev 范数通过 $(1+\|\boldsymbol{\omega}\|^2)^s$ 加权自然编码了频谱衰减先验
+标准 DPO 的 $\ell_2$ 目标对所有频率一视同仁，高频伪影因此得不到额外惩罚。SSR 的做法是把 Flow Matching 转移核的协方差矩阵从单位矩阵 $\mathbf{I}$ 替换为结构化谱算子 $\boldsymbol{\Sigma}_s = \mathcal{F}^{-1}\mathrm{diag}((1+\|\boldsymbol{\omega}\|_2^2)^{-s})\mathcal{F}$。由于高斯似然由 Mahalanobis 距离控制，对应的精度矩阵 $\boldsymbol{\Sigma}_s^{-1}$ 会放大高频分量，使对数似然比自然地从 $\ell_2$ 范数差变为 Sobolev 范数差 $\log\frac{p_\theta}{p_{\mathrm{ref}}}\propto -(\|\boldsymbol{\gamma}_\theta\|_{H^s}^2 - \|\boldsymbol{\gamma}_{\mathrm{ref}}\|_{H^s}^2)$。这相当于把 DPO 优化从平坦的欧几里得空间提升到 Sobolev 黎曼流形——$(1+\|\boldsymbol{\omega}\|^2)^s$ 的加权恰好编码了自然图像 $1/f$ 的频谱衰减先验，高频误差因此被自动施加更高惩罚，而这一切只靠改协方差矩阵实现，不动网络结构。
 
-2. **对抗流形引导 (AMG)**:
+**2. 对抗流形引导（AMG）：在线造出"错得很自信"的硬负样本**
 
-    - 功能：在线合成与正样本语义对齐的硬负样本，驱动 S-DPO 学习区分真实细节与结构伪影
-    - 核心思路：训练参数化对抗器 $\mathcal{A}_\phi$ 学习模型的典型重建失败模式。从正样本中间状态 $\boldsymbol{x}_t^w$ 出发，对抗器预测速度场将轨迹引向退化估计 $\widehat{\boldsymbol{x}}_1^a = \boldsymbol{x}_t^w + (1-t)\cdot\boldsymbol{v}_\phi(\boldsymbol{x}_t^w, t, \boldsymbol{c})$，然后用同一噪声实现 $\boldsymbol{x}_0$ 回投到流状态以确保语义对齐。最优扰动被证明等价于 Sobolev 梯度方向：$\boldsymbol{\delta}_t^* = -\varepsilon_t \frac{\boldsymbol{\Sigma}_s \nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}}{\sqrt{\langle\nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}, \boldsymbol{\Sigma}_s\nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}\rangle}}$
-    - 设计动机：标准 DPO 缺乏信息丰富的负样本——静态对无法捕获超分的微妙结构失真，而 T2I 偏好数据集因语义布局差异无法提供空间对齐的负样本。AMG 通过共享噪声实现构造反事实负样本，专门暴露模型"错误自信"的盲区
+标准 DPO 缺少有信息量的负样本——静态样本对捕捉不到超分里那些细微的结构失真，而 T2I 偏好数据集又因语义布局差异给不出空间对齐的负样本。AMG 训练一个参数化对抗器 $\mathcal{A}_\phi$ 专门学习模型的典型重建失败模式：从正样本中间状态 $\boldsymbol{x}_t^w$ 出发，对抗器预测的速度场把轨迹引向退化估计 $\widehat{\boldsymbol{x}}_1^a = \boldsymbol{x}_t^w + (1-t)\cdot\boldsymbol{v}_\phi(\boldsymbol{x}_t^w, t, \boldsymbol{c})$，再用同一噪声实现 $\boldsymbol{x}_0$ 回投到流状态，从而保证负样本与正样本语义对齐、只在"细节真假"上有差别。理论上可证明这个最优扰动等价于 Sobolev 梯度方向 $\boldsymbol{\delta}_t^* = -\varepsilon_t \frac{\boldsymbol{\Sigma}_s \nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}}{\sqrt{\langle\nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}, \boldsymbol{\Sigma}_s\nabla_{\boldsymbol{x}}\mathcal{J}_{L^2}\rangle}}$。它不是简单地最大化损失，而是模仿模型自信度（最小化 $\ell_2$ 残差能量）同时偏离真实轨迹，专门暴露模型"错误自信"的盲区，因此比随机扰动更有信息量。
 
-3. **AS-DPO 损失整合**:
+**3. AS-DPO 损失：把谱几何和对抗负样本拧成一个目标**
 
-    - 功能：统一 SSR 与 AMG，形成频率感知的对抗偏好优化目标
-    - 核心思路：将 AMG 生成的对抗负样本 $\boldsymbol{x}_t^a$ 与 SSR 的 Sobolev 能量间隙 $\Delta\mathcal{E}_{H^s}$ 整合为最终损失 $\mathcal{L}_{\text{AS-DPO}}(\theta) = -\mathbb{E}[\log\sigma(\beta[\Delta\mathcal{E}_{H^s}(\boldsymbol{x}_t^a, \boldsymbol{c}) - \Delta\mathcal{E}_{H^s}(\boldsymbol{x}_t^w, \boldsymbol{c})])]$。基于 Riesz 表示定理证明，对抗扰动等价于最坏情况 Sobolev 梯度，沿合理感知失败的切空间驱动优化
-    - 设计动机：SSR 和 AMG 相互耦合——AMG 提供面向真实感的对齐信号，SSR 提供频谱感知的几何约束使对齐不以牺牲重建保真度为代价
+最终损失把 AMG 生成的对抗负样本 $\boldsymbol{x}_t^a$ 与 SSR 的 Sobolev 能量间隙 $\Delta\mathcal{E}_{H^s}$ 整合到一起：$\mathcal{L}_{\text{AS-DPO}}(\theta) = -\mathbb{E}[\log\sigma(\beta[\Delta\mathcal{E}_{H^s}(\boldsymbol{x}_t^a, \boldsymbol{c}) - \Delta\mathcal{E}_{H^s}(\boldsymbol{x}_t^w, \boldsymbol{c})])]$。基于 Riesz 表示定理可证对抗扰动等价于最坏情况下的 Sobolev 梯度，使优化沿"合理但有感知失败"的切空间推进。SSR 和 AMG 在这里是相互耦合的：AMG 提供面向真实感的对齐信号，SSR 提供频谱感知的几何约束，使对齐不以牺牲重建保真度为代价——消融实验也印证了二者缺一不可。
 
 ### 训练策略
 
-对抗网络 $\mathcal{A}_\phi$ 的训练数据来自 Real-ESRGAN、SeeSR、SUPSR 在 DIV2K/LSDIR/RealSR/DRealSR 的 25% 随机子集上的推理输出。ASASR 主模型使用 AdamW 优化器，学习率 $1\times10^{-5}$；对抗网络学习率 $5\times10^{-5}$。Sobolev 指数经验设定为 $s=1.5$，在结构保真度和纹理真实感之间取得最优平衡。
+对抗网络 $\mathcal{A}_\phi$ 的训练数据来自 Real-ESRGAN、SeeSR、SUPSR 在 DIV2K/LSDIR/RealSR/DRealSR 的 25% 随机子集上的推理输出，以覆盖足够多样的伪影模式。主模型用 AdamW 优化器、学习率 $1\times10^{-5}$，对抗网络学习率 $5\times10^{-5}$。Sobolev 指数经验设定为 $s=1.5$——这是在结构保真度和纹理真实感之间取得的最优平衡点。
 
 ## 实验关键数据
 

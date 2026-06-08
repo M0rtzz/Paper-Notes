@@ -47,23 +47,23 @@ tags:
 
 ### 关键设计
 
-1. **噪声闭包维度的递推引理（Lemma 3.2）**:
+**1. 噪声闭包维度的递推引理（Lemma 3.2）：把相邻噪声水平的闭包维度用一条不等式钉死。**
 
-    - 功能：建立相邻噪声水平之间闭包维度的定量关系
-    - 核心思路：给定 $\mathrm{NC}_i(\mathcal{C}) \geq k^2$，取大小为 $k^2$ 的有限集 $S$ 使得 $|\langle S\rangle_{\mathcal{C},i}| < \infty$，将 $S$ 等分为 $k$ 个大小为 $k$ 的子集 $S_1, \ldots, S_k$。关键观察是：任何在噪声 $i$ 下与 $S$ 一致的语言 $L$，在 $k$ 个子集中至多有 1 个与 $L$ 不一致（否则 $|S \setminus L| \geq 2i$，矛盾）。因此从每个 $\langle S_j \rangle_{\mathcal{C},i-1}$ 中各取一个元素构成集合 $A$，则 $\langle A \rangle_{\mathcal{C},1} \subseteq \langle S \rangle_{\mathcal{C},i}$，得 $\mathrm{NC}_{i-1}(\mathcal{C}) \geq k$，即 $\mathrm{NC}_{i-1}(\mathcal{C}) \geq \lfloor\sqrt{\mathrm{NC}_i(\mathcal{C})}\rfloor$
-    - 设计动机：这是层级坍缩的核心引理——反复应用即可从 $\mathrm{NC}_i$ 有限推出 $\mathrm{NC}_1$ 有限，反之亦然
+要证"噪声 $i\ge 1$ 全等价于噪声 1"，关键是找到一条能在噪声水平间传递有限性的桥。作者给出 $\mathrm{NC}_{i-1}(\mathcal{C}) \geq \lfloor\sqrt{\mathrm{NC}_i(\mathcal{C})}\rfloor$。证明用的是集合划分 + 鸽巢：给定 $\mathrm{NC}_i(\mathcal{C}) \geq k^2$，取大小 $k^2$ 的有限集 $S$ 使 $|\langle S\rangle_{\mathcal{C},i}| < \infty$，再把 $S$ 等分成 $k$ 个大小为 $k$ 的子集 $S_1,\ldots,S_k$。核心观察是：任何在噪声 $i$ 下与 $S$ 一致的语言 $L$，在这 $k$ 个子集里至多有 1 个与 $L$ 不一致（否则 $|S\setminus L|\geq 2i$，与噪声预算矛盾）。于是从每个 $\langle S_j\rangle_{\mathcal{C},i-1}$ 各取一元素拼成 $A$，就有 $\langle A\rangle_{\mathcal{C},1}\subseteq\langle S\rangle_{\mathcal{C},i}$，从而 $\mathrm{NC}_{i-1}(\mathcal{C})\geq k$。
 
-2. **无噪声 vs 噪声 1 的分离构造（Theorem 2.17）**:
+这条引理是整个层级坌缩的发动机：反复套用就能从"$\mathrm{NC}_i$ 有限"一路推到"$\mathrm{NC}_1$ 有限"，反之亦然——多一个噪声字符串并不会真的增加额外困难。
 
-    - 功能：证明存在可无噪声均匀生成但不可噪声 1 非均匀生成的集合
-    - 核心思路：构造"列族"集合 $\mathcal{C}$，宇宙为 $\mathbb{N} \times \mathbb{N}$，每个语言 $L_T = \bigcup_{c \in T} B_c$ 是若干不相交无穷列 $B_c$ 的并。无噪声时算法只需锁定第一个字符串所在的列即可生成；但有噪声时，通过构造递增大小的集合序列 $s_1, s_2, \ldots$，无论算法怎么输出，都可以构造一个语言使得算法在无穷多个时刻犯错。证明分三种情况进行穷举式反证
-    - 设计动机：这是对 Raman-Raman 公开问题的否定回答，证明噪声即使只有 1 个也能本质性地削弱生成能力
+**2. 无噪声 vs 噪声 1 的分离构造（Theorem 2.17）：哪怕只有 1 个噪声也能本质削弱生成。**
 
-3. **非均匀噪声依赖生成的完整刻画（Theorem 4.7）**:
+层级坌缩说的是"噪声 $\ge 1$ 时都一样"，但无噪声和噪声 1 之间是否也坌缩？作者用一个"列族"反例否定了它，回答了 Raman-Raman 的公开问题。构造里宇宙取 $\mathbb{N}\times\mathbb{N}$，每个语言 $L_T=\bigcup_{c\in T}B_c$ 是若干不相交无穷列 $B_c$ 的并。无噪声时算法只要锁定第一个字符串所在的"列"就能生成；可一旦有噪声，第一个字符串可能是假的，算法无法可靠定位——通过构造一串递增大小的集合 $s_1,s_2,\ldots$，无论算法怎么输出，都能造一个语言让它在无穷多个时刻犯错（证明按三种情况穷举式反证）。
 
-    - 功能：给出非均匀噪声依赖可生成性的充要条件
-    - 核心思路：$\mathcal{C}$ 可非均匀噪声依赖生成 $\iff$ 存在可数子集合序列 $\mathcal{C}_0 \subseteq \mathcal{C}_1 \subseteq \cdots$，$\mathcal{C} = \bigcup_{j} \mathcal{C}_j$ 且对所有 $j$ 有 $\mathrm{NC}_1(\mathcal{C}_j) < \infty$。充分性利用均匀生成算法的拼接；必要性从 Raman-Raman 的已有引理加上层级坍缩结果直接推出
-    - 设计动机：回答了 Raman-Raman 留下的另一个公开问题，将原本看似不同的充分条件（$\mathrm{NC}_i(\mathcal{C}_i) < \infty$）与必要条件（$\mathrm{NC}_i(\mathcal{C}_j) < \infty$）统一到 $\mathrm{NC}_1$
+结论很反直觉：噪声从 0 到 1 是一道真实的鸿沟，而从 1 到任意 $i$ 反而平坦。
+
+**3. 非均匀噪声依赖生成的完整刻画（Theorem 4.7）：把充分条件和必要条件统一到 $\mathrm{NC}_1$。**
+
+Raman-Raman 曾猜非均匀噪声依赖生成的真实刻画要落在某个 $\mathrm{NC}_i$ 上，且充分条件与必要条件之间有缝。作者证明这道缝其实不存在：$\mathcal{C}$ 可非均匀噪声依赖生成 $\iff$ 存在可数子集合升链 $\mathcal{C}_0\subseteq\mathcal{C}_1\subseteq\cdots$，$\mathcal{C}=\bigcup_j\mathcal{C}_j$ 且对所有 $j$ 有 $\mathrm{NC}_1(\mathcal{C}_j)<\infty$。充分性靠把各 $\mathcal{C}_j$ 的均匀生成算法拼接，必要性则由 Raman-Raman 的已有引理加上前面的层级坌缩结果直接推出。
+
+正是 Lemma 3.2 的坌缩把原本散落在不同 $\mathrm{NC}_i$ 的条件全收编到 $\mathrm{NC}_1$，才让这个"首个完整刻画"成立。
 
 ## 实验关键数据
 

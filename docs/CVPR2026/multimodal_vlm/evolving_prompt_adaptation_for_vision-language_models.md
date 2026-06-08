@@ -43,31 +43,33 @@ EvoPrompt 通过轨迹感知的 prompt 进化策略（统一 embedding 投影 + 
 ## 方法详解
 
 ### 整体框架
-EvoPrompt 基于冻结的 CLIP（ViT-B/16）构建。输入图像和文本分别进入视觉编码器 $F$ 和文本编码器 $G$，两者保持完全冻结。从第 $J$ 层开始到第 $L$ 层，每层都注入通过 Modality-Shared Prompt Projector (MPP) 从统一 embedding 空间投影生成的 prompt。训练过程采用 Evolutionary Trajectory-Aware Learning (ETL) 策略，配合 Feature Geometric Regularization (FGR) 和知识恒常损失 (KCL)。输出为视觉特征 $f^v$ 和文本特征 $f^t$ 的余弦相似度，用于分类。
+EvoPrompt 想解决的是 VLM prompt learning 里那个老大难的平衡：既要让 prompt 学到下游任务的特征，又不能让它在 few-shot 训练里漂移得太远、把 CLIP 原本的 zero-shot 知识忘掉。它的整条 pipeline 都搭在一个完全冻结的 CLIP（ViT-B/16）上——图像走视觉编码器 $F$、文本走文本编码器 $G$，两个 backbone 一个参数都不动。真正可学的东西很少：一个跨层共享的 embedding，从第 6 层到第 12 层每层注入的 prompt 都是由它经投影器生成的。训练时不直接放任 prompt 自由更新，而是把每一步更新拆成"方向"和"幅度"，冻住历史方向、只调幅度，让 prompt 沿一条受控的轨迹缓慢进化；同时用一项几何正则把特征撑开、用一项知识恒常损失把特征拽回原始 CLIP 附近。最终拿视觉特征 $f^v$ 和文本特征 $f^t$ 的余弦相似度做分类。
 
 ### 关键设计
 
-1. **Modality-Shared Prompt Projector (MPP)**
+**1. Modality-Shared Prompt Projector：让所有层的 prompt 长在同一棵语义树上。**
 
-    - 功能：从一个统一的可学习 embedding 空间为每层每模态生成 prompt，替代传统的逐层独立 prompt。
-    - 核心思路：初始化一个共享的 learnable embedding $E \in \mathbb{R}^{K \times d_r}$（$K=5, d_r=512$），通过解耦投影器将其变换为每一层、每一模态的 prompt。对模态 $m \in \{v, t\}$，第 $i$ 层的 prompt 为 $P_i^m = \text{Proj}_i^m(E)$。投影器权重分解为共享基底加低秩适配器：$W_i^m = W_{\text{shared}}^m + A_i \cdot B_i$，其中 $W_{\text{shared}}^m \in \mathbb{R}^{d_r \times d_m}$ 跨层共享，$A_i \in \mathbb{R}^{d_r \times r}$, $B_i \in \mathbb{R}^{r \times d_m}$ 为层特定低秩矩阵。
-    - 设计动机：共享 $W_{\text{shared}}$ 捕获跨层的基础语义知识（如通用视觉/文本模式），低秩 $A_i B_i$ 编码层特定的适应（如浅层纹理 vs. 深层语义）。参数量从 $O((L-J+1) \cdot d_r \cdot d_m)$ 降至 $O(d_r \cdot d_m + (L-J+1) \cdot r \cdot (d_r + d_m))$，比 MaPLe 少 4.6 倍。
+MaPLe 这类方法在每层各塞一组独立 prompt，层与层之间互不相通，等于把 Transformer 本来的分层语义递进给切断了。MPP 的做法是反过来——只维护一个共享的可学习 embedding $E \in \mathbb{R}^{K \times d_r}$（$K=5$，$d_r=512$），每一层、每个模态的 prompt 都从它投影出来：对模态 $m \in \{v, t\}$，第 $i$ 层的 prompt 是 $P_i^m = \text{Proj}_i^m(E)$。关键在投影器权重的分解方式——它不是每层一套独立矩阵，而是写成"共享基底 + 层特定低秩适配器"：
 
-2. **Evolutionary Trajectory-Aware Learning (ETL)**
+$$W_i^m = W_{\text{shared}}^m + A_i \cdot B_i$$
 
-    - 功能：通过方向-幅度解耦和渐进式知识积累控制 prompt 的训练轨迹，防止灾难性遗忘。
-    - 核心思路：在训练 epoch $t$ 时，将层 $i$ 的低秩更新分解为幅度系数 $\alpha_i^t$ 和归一化方向矩阵：$\Delta W_i^t = \alpha_i^t \cdot \overline{A_i^t B_i^t}$（$\overline{\cdot}$ 表示 Frobenius 归一化）。到 epoch $T$ 时，总权重为历史方向的加权和：
-    $W_i^T = W_{\text{shared}} + \sum_{t=1}^{T-1} \alpha_i^t \cdot \overline{A_i^t B_i^t} + \alpha_i^T \cdot \overline{A_i^T B_i^T}$
-   关键：冻结所有历史方向 $\{\overline{A_i^t B_i^t}\}_{t=1}^{T-1}$，只训练幅度 $\{\alpha_i^t\}_{t=1}^T$ 和当前新方向 $\overline{A_i^T B_i^T}$。
-    - 设计动机：先前研究表明低秩适应中方向比幅度更关键（DoRA）。早期训练建立的方向编码了鲁棒的语义结构，冻结方向相当于保护了"认知骨架"，只让幅度系数做自由调整来适应任务。同时新 epoch 引入的新方向允许学习增量知识。
-    - **Adaptive Rank Reduction**：训练过程中分阶段降低低秩矩阵的秩 $r_1 > r_\mu > r_\nu$（在 epoch $\mu$ 和 $\nu$ 处降秩）。后期 epoch 的边际贡献递减，用更低的秩既是结构化正则化（防止过拟合），又减少了累积参数和计算开销。
+其中 $W_{\text{shared}}^m \in \mathbb{R}^{d_r \times d_m}$ 跨所有层共享，负责扛通用的视觉/文本模式；$A_i \in \mathbb{R}^{d_r \times r}$、$B_i \in \mathbb{R}^{r \times d_m}$ 是层特定的低秩矩阵，只负责编码本层独有的适应（浅层管纹理、深层管语义）。这样既让一份共享基底把跨层语义流串起来，又给每层留了低秩的微调空间，参数量从逐层独立的 $O((L-J+1) \cdot d_r \cdot d_m)$ 压到 $O(d_r \cdot d_m + (L-J+1) \cdot r \cdot (d_r + d_m))$，整体比 MaPLe 少 4.6 倍。
 
-3. **Feature Geometric Regularization (FGR)**
+**2. Evolutionary Trajectory-Aware Learning：冻住方向、只调幅度，让 prompt 走一条忘不掉的轨迹。**
 
-    - 功能：防止特征空间维度冗余和表示坍缩，增强特征的正交性和去相关性。
-    - 核心思路：基于 Soft-HGR（Hirschfeld-Gebelein-Rényi）最大相关性框架。InfoNCE 对比损失可以看作最大化跨模态对齐项（Soft-HGR 目标函数的第一项），但忽略了模态内协方差结构（第二项）。FGR 显式最小化模态内协方差矩阵乘积的迹：
-    $\mathcal{L}_{fgr}(\mathcal{F}^v, \mathcal{F}^t) = \frac{1}{2} \text{tr}(\text{cov}(\mathcal{F}^v) \cdot \text{cov}(\mathcal{F}^t))$
-    - 设计动机：对比学习只关注实例级对齐，容易导致特征维度高度冗余。FGR 鼓励学到的表示中各维度去相关，有效利用特征空间的每个维度，这在低数据场景下尤其关键。
+这是全篇最核心的 trick，针对的就是 few-shot 适配时 prompt 迅速偏离语义锚点、把 zero-shot 能力训没了的问题。作者观察到 prompt 训练时自然经历"通用语义锚点 → 任务特定特征"的渐进演化，于是干脆把这条轨迹显式管起来。具体做法是把每个 epoch $t$ 的低秩更新拆成一个标量幅度 $\alpha_i^t$ 和一个 Frobenius 归一化后的方向矩阵 $\overline{A_i^t B_i^t}$，到第 $T$ 个 epoch 时层 $i$ 的总权重就是历史所有方向的加权累加：
+
+$$W_i^T = W_{\text{shared}} + \sum_{t=1}^{T-1} \alpha_i^t \cdot \overline{A_i^t B_i^t} + \alpha_i^T \cdot \overline{A_i^T B_i^T}$$
+
+诀窍在于：所有历史方向 $\{\overline{A_i^t B_i^t}\}_{t=1}^{T-1}$ 一旦学出来就冻死，每个新 epoch 只训练那些标量幅度 $\{\alpha_i^t\}$ 和当前这一个新方向 $\overline{A_i^T B_i^T}$。这背后是 DoRA 的发现——低秩适应里方向比幅度更关键，早期建立的方向编码了鲁棒的语义骨架，冻住它就等于保住了"认知骨架"，剩下让幅度自由伸缩去贴合任务，再靠每个 epoch 新增的方向补充增量知识。实际学出来的 $\alpha$ 也印证了这点：它在 epoch 2 冲到峰值后逐渐衰减，说明模型早期猛建核心方向、后期只做精细微调。配套还有一个 Adaptive Rank Reduction——训练分阶段把低秩矩阵的秩往下砍（$r_1 > r_\mu > r_\nu$，在 epoch $\mu$、$\nu$ 处降秩），因为后期 epoch 的边际贡献本就递减，低秩既是防过拟合的结构化正则，又顺手压住了方向累积带来的参数和算力开销。
+
+**3. Feature Geometric Regularization：把对比学习漏掉的模态内结构补回来。**
+
+对比损失只盯着实例级的跨模态对齐，结果是特征各维度高度冗余、在低数据下容易坍缩。FGR 从 Soft-HGR（Hirschfeld-Gebelein-Rényi）最大相关性框架切入：InfoNCE 其实只对应了 Soft-HGR 目标的第一项（跨模态对齐），而第二项——模态内协方差结构——被完全忽略了。FGR 把这一项显式补上，最小化两个模态内协方差矩阵乘积的迹：
+
+$$\mathcal{L}_{fgr}(\mathcal{F}^v, \mathcal{F}^t) = \frac{1}{2} \text{tr}(\text{cov}(\mathcal{F}^v) \cdot \text{cov}(\mathcal{F}^t))$$
+
+这一项逼着每个模态内部的特征维度互相去相关，把特征空间撑开、每一维都用上，从而避免冗余坍缩——比简单加个正交正则更有原理依据，在 few-shot 这种维度容易浪费的场景里尤其管用。
 
 ### 损失函数 / 训练策略
 总训练目标为三项加权和：

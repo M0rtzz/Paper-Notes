@@ -44,23 +44,22 @@ FLUID 的全名是 Flexible Unidirectional Inference Diffusion。它不是从零
 给定 prefix，FLUID 先用因果 Transformer 得到当前隐藏状态，再由 K-Head 预测一个 horizon $K_t$。模型在接下来 $K_t$ 个位置放置 mask，并在严格因果约束下对这些 mask 做并行去噪。预测完成后，当前下一个 token 总是被接受，后续 token 只有置信度超过阈值 $\gamma$ 才连续接受；一旦遇到低置信 token，cursor 停止前进并重新规划。这样，FLUID 在低熵片段可以一次走多步，在高熵推理片段自动退回更细粒度的生成。
 
 ### 关键设计
-1. **Strictly Causal Diffusion Backbone**:
 
-	- 功能：让扩散去噪过程与 AR 预训练模型的因果先验对齐。
-	- 核心思路：在 Transformer 中注入下三角注意力 mask，位置 $i$ 只能访问 $j\le i$ 的 token，未来位置全部设为 $-\infty$。恢复 token $x_i$ 时只能依赖 noisy history $\mathbf{x}_{t,<i}$，不能偷看未来 noisy token。
-	- 设计动机：标准双向 diffusion 在推理任务中会把 noisy future context 注入当前预测，容易破坏演绎链；严格因果约束使模型可以从 GPT-style checkpoint 平滑初始化。
+**1. Strictly Causal Diffusion Backbone：把扩散去噪关进严格因果注意力，才能从 AR checkpoint 平滑初始化。**
 
-2. **Elastic Horizon Modeling**:
+标准 diffusion LM 用双向注意力，能看全局 noisy context，但这跟 GPT/LLaMA 的因果先验冲突——想要高质量往往得从头大规模预训练，成本极高。FLUID 在 Transformer 里注入下三角注意力 mask，位置 $i$ 只能访问 $j\le i$ 的 token，未来位置一律设为 $-\infty$；恢复 token $x_i$ 时只能依赖 noisy history $\mathbf{x}_{t,<i}$，不能偷看未来 noisy token。这样既保住了 AR 模型的演绎链不被 noisy future 破坏，又让模型可以直接从 GPT-style checkpoint 初始化，而不必重训。
 
-	- 功能：根据局部不确定性动态决定一次并行生成多远。
-	- 核心思路：新增轻量 K-Head，将最终隐藏状态 $h_t$ 映射到 $k\in\{1,\ldots,K_{max}\}$ 的分类分布。oracle horizon $K_t^*$ 由未来 loss 序列和 competence boundary $\tau$ 决定：在平均 loss 小于 $\tau$ 的最大跨度内，模型被认为有能力安全并行恢复。
-	- 设计动机：自然语言信息密度不均匀。函数样板、简单算术中可大胆前进，复杂数学推理中应缩短步长，固定 block 无法表达这种差异。
+**2. Elastic Horizon Modeling：让模型自己预测“这一步能安全并行多远”，而不是写死一个块大小。**
 
-3. **两阶段适配与动态因果解码**:
+自然语言信息密度不均匀：函数样板、简单算术里可以大胆一次走多步，复杂数学推理里就该缩短步长，固定 block 表达不了这种差异。FLUID 新增一个轻量 K-Head，把最终隐藏状态 $h_t$ 映射成 $k\in\{1,\ldots,K_{max}\}$ 上的分类分布。它的监督信号 oracle horizon $K_t^*$ 由未来 loss 序列和 competence boundary $\tau$ 共同决定——在平均 loss 仍小于 $\tau$ 的最大跨度内，模型被认为有能力安全并行恢复。于是同一个模型在 GSM8K 和 MMLU 上会自动采用不同的 stride。
 
-	- 功能：先让 backbone 学会因果扩散去噪，再让 K-Head 学会可靠规划 horizon。
-	- 核心思路：Stage I 冻结 K-Head，使用 AR loss 与 diffusion denoising loss 联合训练 backbone，并在 mask span 中注入 10% stochastic restoration noise；Stage II 冻结 backbone，只训练两层 MLP K-Head，使预测分布匹配以 $K_t^*$ 为中心的 Gaussian soft target。推理时用置信度门控决定实际接受几个 token。
-	- 设计动机：直接同时训练 backbone 与 horizon planner 容易不稳定。先校准生成能力，再学习能力边界，可以把“能生成什么”和“该生成多远”拆开。
+**3. 两阶段适配与动态因果解码：先校准“能生成什么”，再学“该生成多远”。**
+
+直接同时训练 backbone 和 horizon planner 容易不稳定，FLUID 把它拆成两步。Stage I 冻结 K-Head，用 AR loss 与 diffusion denoising loss 联合训练 backbone，并在 mask span 里注入 10% stochastic restoration noise，提高对不完美中间状态的鲁棒性；Stage II 反过来冻结 backbone，只训练两层 MLP 的 K-Head，让它的预测分布匹配以 $K_t^*$ 为中心的 Gaussian soft target。推理时再加一道置信度门控：K-Head 给出计划，但实际接受 token 还要逐个过阈值 $\gamma$，把“能生成”和“该生成多远”彻底解耦，也避免一次错误规划连锁污染。
+
+### 一个完整示例：一句生成里 horizon 怎么伸缩
+
+设想模型正在写一段带推理的代码。开头是函数签名、import 这类低熵模板：K-Head 读当前隐藏状态，预测 $K_t$ 接近上限，于是一次在后面铺十几个 mask 并行去噪，置信度全部过 $\gamma$，cursor 一步跳过这十几个 token（这正是 GSM8K 上平均 stride 能扩到 13.1 的来源）。等写到核心数学推导，局部熵升高，K-Head 自动把 $K_t$ 压到 6 左右（MMLU 上平均 stride 6.5），并行恢复的几个 token 里只要有一个置信度低于 $\gamma$，cursor 就停在那里、丢弃后面、重新规划下一个 horizon。整段生成下来，模板段一次走多步、推理段退回细粒度，既拿到约 $2\times$ 的并行加速，又不让 noisy future 污染演绎链。
 
 ### 损失函数 / 训练策略
 Stage I 的目标是混合 AR 与 diffusion：$\mathcal{L}_{Stage1}=\mathcal{L}_{AR}+\mathcal{L}_{Diff}$。其中 $\mathcal{L}_{AR}$ 维持 prefix 的 next-token 语言先验，$\mathcal{L}_{Diff}$ 在严格因果约束下恢复 mask span。训练时随机采样 $K\sim U[1,K_{max}]$，并对 mask span 注入 10% 噪声提高对不完美中间状态的鲁棒性。

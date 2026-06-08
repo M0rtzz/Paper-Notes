@@ -42,30 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-STE 在标准 diffusion 训练 pipeline 里只动两件事：(1) 把 timestep 采样范围从 $[0, T]$ 扩展到 $[0, T+T_s]$，引入若干 disjoint 影子区间 $t_{s1}, t_{s2}, \cdots$；(2) 给每个 shadow 区间绑定一个不同数据分布 $D_{sn}$，共享同一个 sinusoidal time-projection + UNet backbone 联合训练。推理时 scheduler 调用 $t \in [0, T]$ 走显式轨迹生成正常图，调用 $t \in [T+1, T+T_s]$ 走 shadow 轨迹生成绑定到该区间的隐藏图——外部 API 接口完全不变，唯一的"密码"是 timestep 取值。
+STE（Shadow Timestep Embedding）要解决的问题是：能不能在不动 diffusion 训练算法、不改 scheduler 接口的前提下，让同一个模型悄悄携带第二套分布。它的做法是把 timestep 这条"内部状态轴"当作信息载体——在标准训练里 timestep 只在 $[0, T]$ 内被采样，STE 把允许范围扩展到 $[0, T+T_s]$，在多出来的"影子区间"里绑定另一组数据分布并和主任务联合训练。于是推理时传 $t \in [0, T]$ 走正常轨迹出常规图，传 $t \in [T+1, T+T_s]$ 走影子轨迹出隐藏图，而对外的 API 行为没有任何变化，唯一的"密钥"就是 timestep 取值本身。
 
 ### 关键设计
 
-1. **影子时间步区间扩展**:
+**1. 影子时间步区间扩展：把没人监控的 timestep 轴变成隐藏载体**
 
-    - 功能：在 timestep 编码空间中开辟与原训练区间不相交的子空间作为隐藏载体。
-    - 核心思路：扩散模型原本只在 $t \in [0, T]$ 内训练，timestep 通过 sinusoidal position encoding $\text{PE}(t)_{2i} = \sin(t / 10000^{2i/d})$ 等映射成向量。**STE 把允许的 $t$ 范围拓展**到 $[0, T+T_s]$，并在 shadow 子区间 $t_{sn} \subset [T+1, T+T_s]$ 内训练第二组分布 $D_{sn}$。训练时按 batch 随机采样 $t$（既可能落在显式区间也可能落在 shadow 区间），UNet 在不同 $t$ 上学到不同的去噪行为；推理时调用哪段 $t$ 就出哪段分布。多个 shadow 区间可承载多个隐藏分布。
-    - 设计动机：传统训练把整个 $[0, T]$ "占满"了，但 sinusoidal 嵌入空间其实远未被填满；扩展到 $T+T_s$ 后多出来的嵌入位置在主任务上完全未被监督，所以可以"挂"任意新任务而不影响原模型在 $[0, T]$ 上的行为。同时 scheduler 接口不变意味着用户察觉不到任何异常——这是隐蔽性的关键。
+扩散模型的 timestep 先经 sinusoidal position encoding（$\text{PE}(t)_{2i} = \sin(t / 10000^{2i/d})$ 这类映射）变成向量再喂给 UNet，告诉网络当前在哪个噪声级别。痛点在于：传统训练只把 $[0, T]$ 这段"用满"，而 sinusoidal 嵌入空间其实远没被填满，多出来的位置在主任务里完全没被监督——这正是可以挂新任务的空地。STE 因此把采样范围拓展到 $[0, T+T_s]$，在若干互不相交的影子子区间 $t_{sn} \subset [T+1, T+T_s]$ 上训练第二组分布 $D_{sn}$；训练时按 batch 随机决定每个样本落在显式区间还是某个影子区间，UNet 于是在不同 $t$ 上学到不同的去噪行为，多个影子区间还能各挂一个隐藏分布。这样做之所以有效，是因为新增的嵌入位置和 $[0, T]$ 上的监督互不干涉，原模型在 $[0, T]$ 的行为不受影响；而 scheduler 接口形状不变，用户根本察觉不到异常，这正是隐蔽性的来源。
 
-2. **互相干（Mutual Coherence）理论保证可分离**:
+**2. 互相干（Mutual Coherence）分析：解释两套分布为何不会互相抹掉**
 
-    - 功能：从理论上回答"为什么两个 timestep 区间能独立承载信息而不会互相干扰"。
-    - 核心思路：作者把 sinusoidal 时间嵌入视为字典 $\{ \text{PE}(t) : t \in [0, T+T_s] \}$ 中的列向量，定义两个 timestep 之间的 mutual coherence $\mu(t_1, t_2) = |\langle \text{PE}(t_1), \text{PE}(t_2)\rangle| / (\|\text{PE}(t_1)\| \|\text{PE}(t_2)\|)$。如果显式区间和 shadow 区间内的 timestep 满足两两 coherence 足够低，那么从压缩感知 / 字典学习的角度，**两组 timestep 像两组近正交码字**，对应的 UNet 行为可以被独立学到而不混淆。论文给出 mutual coherence 评估解释 disjoint 区间的可分性。
-    - 设计动机：纯实验验证 STE 能 work 不够说服力——读者会问"两套分布共用同一个 UNet，不会互相抹掉吗"。理论上证明 sinusoidal 嵌入在不相交区间上的相干性是受控的，说明 UNet 有足够"容量"在不同 $t$ 处展现完全不同的行为，这是 STE 工作的物理基础。
+光靠实验说"STE 能 work"不够有说服力——读者自然会问，两套分布共用同一个 UNet，难道不会互相覆盖？STE 给出的回答是把 sinusoidal 时间嵌入看成一本字典 $\{ \text{PE}(t) : t \in [0, T+T_s] \}$，每个 timestep 是其中一个列向量，并定义两个 timestep 之间的互相干 $\mu(t_1, t_2) = |\langle \text{PE}(t_1), \text{PE}(t_2)\rangle| / (\|\text{PE}(t_1)\| \, \|\text{PE}(t_2)\|)$。如果显式区间和影子区间内的 timestep 两两 coherence 足够低，那么从压缩感知 / 字典学习的视角，这两组 timestep 就像两组近正交的码字，对应的 UNet 行为能被独立学到而不混淆。这套分析等于从物理上证明了 sinusoidal 嵌入在不相交区间上的相干性是受控的——UNet 有足够"容量"在不同 $t$ 处展现完全不同的行为，这就是 STE 成立的根基，也给"如何挑选 disjoint 影子区间"提供了量化指导。
 
-3. **双用安全表面：攻击与防御对偶**:
+**3. 双用安全表面：同一机制既是后门又是水印**
 
-    - 功能：同一个 STE 机制既能做隐蔽后门攻击（恶意），也能做模型水印验证（合法）。
-    - 核心思路：(a) **攻击场景**：攻击者通过 code poisoning（发布伪装的 diffusion pipeline，用户误装）把 shadow timestep 注入到下游开源模型。当目标 shadow timestep 被调用时，模型生成预定义的恶意图像（比如带触发器的内容）；由于普通用户从不传超出 $[0, T]$ 的 $t$，正常使用看不出任何异常，传统监控 input/output 的防御也失效。(b) **防御/水印场景**：模型所有者训练时给自己的模型绑一组只有自己知道的 shadow timestep + 签名图，部署后通过查询那些 timestep 验证模型是不是自己的（如同输出"指纹"）——而第三方拷贝模型时无从知道 shadow 区间在哪。论文用 "covert attack injection" 和 "watermark verification tool" 两类用例展示了对偶性。
-    - 设计动机：把"隐蔽信息通道"这件事既当威胁讲又当工具讲，呼应论文标题 "Watch Your Step" 的双关——既是警告开发者注意 scheduler 的安全，也是给防御者一个可用的隐写水印方案。同时论文强调：STE 与 input/output 的现有攻防正交，监控提示词或检查输出图都看不出 shadow timestep 的存在。
+STE 真正有意思的地方是攻防对偶：同一套机制，换个使用者就从恶意变成合法。攻击场景下，攻击者用 code poisoning 发布一个伪装的 diffusion pipeline，用户误装后影子 timestep 就被注入下游开源模型；一旦目标影子 timestep 被调用，模型就生成预定义的恶意图像（如带触发器的内容），而普通用户从不会传超出 $[0, T]$ 的 $t$，正常使用看不出任何破绽，监控输入提示词或检查输出图的传统防御统统失效。防御/水印场景则反过来：模型所有者训练时给自己模型绑一组只有自己知道的影子 timestep + 签名图，部署后查询这些 timestep 就能验证模型归属，如同内置"指纹"，而第三方拷贝者根本不知道影子区间藏在哪。论文用 "covert attack injection" 和 "watermark verification tool" 两类用例把这层对偶性展示出来，呼应标题 "Watch Your Step" 的双关——既警告开发者把 scheduler 纳入安全审计，也给防御者一个不依赖输出后处理的隐写水印方案；关键是 STE 与 input/output 上的现有攻防完全正交，没人在 timestep 维度设防。
 
 ### 损失函数 / 训练策略
-联合训练 explicit + shadow 分布，对每个 sample 按 batch 随机决定它落在哪个 timestep 区间，然后用标准 diffusion training loss（如 DDPM 的 noise prediction MSE）做监督。Shadow 区间的样本来自不同分布 $D_{sn}$，但用同一 UNet。多个 shadow 区间彼此 disjoint。论文没有详细给出具体超参（容量比 explicit:shadow、shadow 区间长度选择等），但强调互相干分析提供了选择 disjoint 区间的指导原则。
+训练就是把 explicit 与 shadow 分布联合优化：对每个样本按 batch 随机决定它落在哪个 timestep 区间，再用标准 diffusion training loss（如 DDPM 的 noise-prediction MSE）做监督；影子区间的样本来自不同分布 $D_{sn}$ 但共享同一个 UNet，多个影子区间彼此 disjoint。论文没有详细给出具体超参（explicit:shadow 的容量配比、影子区间长度如何选），但强调上面的互相干分析正是选择 disjoint 区间的指导原则。
 
 ## 实验关键数据
 

@@ -43,35 +43,29 @@ tags:
 
 ### 整体框架
 
-作者把任何"区分 $\mathcal{K}$ 与 $\mathcal{U}\setminus\mathcal{K}$"的算法定义为 permutation-invariant 的**成员测试器** $\mathcal{M}=(\text{Init},\text{Query})$。Init 输入 $\mathcal{K}$ 输出 memory $W$，Query 输入 $(i,W)$ 输出 $\hat x_i \in [0,1]$。**记忆开销**定义为 $B(\mathcal{M})=I(W;\mathcal{K})$，即 memory state 中关于 key set 的互信息——这下界于物理 bits 数 $H(W)$。
-
-误差由两个函数 $d^K, d^N : [0,1]\to[0,\infty]$ 刻画。Key/非 key 在置信 $\hat x$ 上的损失分别是 $d^K(\hat x), d^N(\hat x)$。约束误差水平为 $\varepsilon_K, \varepsilon_N$。对 Bloom filter，$d^K(\hat x)=1-\hat x$ 给出 FNR、$d^N(\hat x)=\hat x$ 给出 FPR；对 LLM 概率估计，$d^K(\hat x)=-\ln \hat x$、$d^N(\hat x)=-\ln(1-\hat x)$ 正是 log-loss/binary cross-entropy。统一框架的好处是两类问题之间可以平移空间下界。
-
-整套理论分三步推：(1) 给出**非渐进 per-key 记忆下界** $B(\mathcal{M})/n \ge F_p(\mu_K,\mu_N) - \log(8n)/(2n)$，其中 $F_p(\mu_K,\mu_N)=I(X;\hat X)/p$（$X\sim\text{Bern}(p)$，$p=n/u$）；(2) 在 $p\to 0$ 稀疏极限下证 $F_p \to \mathrm{KL}(\mu_K\|\mu_N)$ 并配可达性引理 Lemma 3.7，得到主定理 Theorem 3.1；(3) 把该界套到 log-loss 上推出"幻觉通道"最优解 Theorem 4.1。
+这篇论文要回答的是"一个有限记忆的模型，至少要花多少比特才能把事实记住、记不全时会以什么形态出错"。作者的做法是先把 LLM、Bloom filter 这些看似不相干的东西抽象成同一个对象——**成员测试器** $\mathcal{M}=(\text{Init},\text{Query})$：Init 吃进 key 集合 $\mathcal{K}$ 吐出一段 memory $W$，Query 拿到查询 $(i,W)$ 给出置信分数 $\hat x_i\in[0,1]$。把记忆开销定义成 $B(\mathcal{M})=I(W;\mathcal{K})$（memory 里关于 key set 的互信息，下界于物理比特数 $H(W)$），再用两个损失函数 $d^K,d^N:[0,1]\to[0,\infty]$ 分别度量 key 与非 key 在置信 $\hat x$ 上的错误，约束在 $\varepsilon_K,\varepsilon_N$ 以内，整个问题就变成"给定误差预算求最小 $B(\mathcal{M})$"。剩下的推导分三步落地：先证一个非渐进 per-key 下界，再在事实稀疏极限下把它收成一个干净的 $\min\mathrm{KL}$，最后把这个界套到 log-loss 上读出幻觉的形态。
 
 ### 关键设计
 
-1. **率失真主定理（Theorem 3.1）**:
+**1. 率失真主定理（Theorem 3.1）：把"记多少比特"从离散组合问题变成一个连续凸优化。**
 
-    - 功能：把"记多少 bits 才能区分 $n$ 个 key 与 $u-n$ 个非 key 到给定误差"这个看似离散组合的问题，转化为一个连续凸优化 $\min_{\mu_K\in\mathcal{C}_K, \mu_N\in\mathcal{C}_N}\mathrm{KL}(\mu_K\|\mu_N)$。
-    - 核心思路：对任意 permutation-invariant 测试器 $\mathcal{M}$，引入辅助 Bernoulli 变量 $X\sim\text{Bern}(p)$（$p=n/u$）与条件分布 $\hat X|X=1\sim \mu_K(\mathcal{M}), \hat X|X=0\sim \mu_N(\mathcal{M})$。互信息 $I(X;\hat X)$ 等于 $n$ 个 key 与剩余 $u-n$ 个非 key query 之间"区分难度"。Lemma 3.4 给出 $B(\mathcal{M})/n \ge F_p(\mu_K,\mu_N) - \log(8n)/(2n)$；Lemma 3.5 给出 $F_p$ 的下半连续性与 $\partial F_p/\partial p = -\mathrm{KL}(\mu_N\|p\mu_K+(1-p)\mu_N)/p^2$，从而在 $p\to 0$ 极限下 $F_p \to \mathrm{KL}(\mu_K\|\mu_N)$。可达性由 Lemma 3.7 用 hash-based 构造给出。Theorem 3.3 进一步给出 finite-$p$ 修正项 $-\chi^2(\mu_K^*\|\mu_N^*)/(2\ln 2)\cdot p + o(p)$。
-    - 设计动机：经典 Bloom-filter 下界（Carter et al. 1978, Pagh & Rodler 2001, Hurley & Waldvogel 2007）都是 case-by-case 用计数或 mutual information 直接算。本定理把它们全部统一为 $\min\mathrm{KL}$，并精确补齐 Pagh-Rodler 留下的 $\Theta(1)$ 加性常数。
+经典 Bloom-filter 空间下界（Carter et al. 1978、Pagh & Rodler 2001、Hurley & Waldvogel 2007）都是 case-by-case 地用计数或互信息硬算，彼此割裂、还各自留着说不清的常数。作者的统一招法是给任意 permutation-invariant 测试器引入一个辅助 Bernoulli 变量 $X\sim\text{Bern}(p)$（$p=n/u$），并令 $\hat X|X{=}1\sim\mu_K$、$\hat X|X{=}0\sim\mu_N$，于是互信息 $I(X;\hat X)$ 正好刻画了 $n$ 个 key 与 $u-n$ 个非 key 之间的"区分难度"。Lemma 3.4 给出非渐进下界 $B(\mathcal{M})/n\ge F_p(\mu_K,\mu_N)-\log(8n)/(2n)$，其中 $F_p=I(X;\hat X)/p$；Lemma 3.5 证 $F_p$ 下半连续且 $\partial F_p/\partial p=-\mathrm{KL}(\mu_N\|p\mu_K+(1-p)\mu_N)/p^2$，于是在 $p\to 0$ 稀疏极限下 $F_p\to\mathrm{KL}(\mu_K\|\mu_N)$，整个下界塌缩成
 
-2. **log-loss 下的"幻觉通道"最优解（Theorem 4.1）**:
+$$B(\mathcal{M})/n \;\ge\; \min_{\mu_K\in\mathcal{C}_K,\ \mu_N\in\mathcal{C}_N}\ \mathrm{KL}(\mu_K\|\mu_N).$$
 
-    - 功能：在事实/非事实分别用 log-loss $-\ln\hat x, -\ln(1-\hat x)$ 评估时，给出 $\min_{\mu_K,\mu_N}\mathrm{KL}(\mu_K\|\mu_N)$ 的闭式唯一解。
-    - 核心思路：在非平凡情形 $\varepsilon_K, \varepsilon_N > 0$ 且 $e^{-\varepsilon_K} + e^{-\varepsilon_N} > 1$ 下，作者用变分法配合 KKT 验证，得到唯一最优 $\mu_K^* = \delta_{x^*},\ \mu_N^* = (1-q^*)\delta_0 + q^* \delta_{x^*}$，其中 $x^* = e^{-\varepsilon_K},\ q^* = \varepsilon_N / [-\ln(1-x^*)]$。代入即得 per-key 最小记忆量 $\mathrm{KL}(\mu_K^*\|\mu_N^*) = \log(1/q^*)$。**幻觉概率 $q^*$ 完全由记忆容量决定，与 $\varepsilon_K/\varepsilon_N$ 之间如何 trade-off 无关**。
-    - 设计动机：log-loss 与 LLM 训练 maximum likelihood 严格一致；这意味着"幻觉是 LLM 在固定参数预算下数学上必然最优"的论断不依赖任何 specific 训练算法，是 information-theoretically forced。换句话说，遗忘（把 $\hat x$ 都推向 $1/2$）和 abstention（专门给一个"我不知道"标签）在 log-loss 下都次优。
+可达性由 Lemma 3.7 的一个 hash-based 构造补上，Theorem 3.3 再给出 finite-$p$ 的修正项 $-\chi^2(\mu_K^*\|\mu_N^*)/(2\ln 2)\cdot p+o(p)$。这一步之所以有力，是因为它把所有历史下界收编进同一个 $\min\mathrm{KL}$ 表达式，并精确补齐了 Pagh-Rodler 一直留着的 $\Theta(1)$ 加性常数。
 
-3. **二侧 filter 阈值不变性 + RAG/微调的理论解释**:
+**2. log-loss 下的"幻觉通道"最优解（Theorem 4.1）：固定记忆下，最优策略既不是遗忘也不是弃答，而是幻觉。**
 
-    - 功能：把第二个结论从"概率估计"推广到"任意基于阈值的分类机制"，并解释为什么 RAG 和 long-tail 微调能缓解幻觉。
-    - 核心思路：任何对置信 $\hat x$ 做阈值化的下游过程（包括 Kalai et al. 2025 的 generative classifier）都不能突破 $\mathrm{KL}(\mu_K\|\mu_N)$ 下界——这是"两侧 filter"（允许 FP 与 FN）的 generalization。corollary：消除 FP（幻觉）必然增大 FN（遗忘/over-refusal），后处理只能沿 frontier 滑动。而 RAG（Lewis et al. 2020）相当于把 non-parametric 外部 memory 接入，等于让 $\mathcal{M}$ 的 $B(\mathcal{M})$ 变大，自然把 frontier 整体外推；对 long-tail 事实做额外 SFT 相当于显式分配更多 parameter capacity 给随机事实，对应同一条 frontier 上的"花更多 bits 换更小 $q^*$"。
-    - 设计动机：解释了三类经验现象：(a) 大模型上"abstention/IDK SFT"为何收效有限；(b) Feldman et al. 提出的"memorization 对 long-tail 必要"假说为何在信息论上成立；(c) regularization/MDL 视角下"effective memory budget" 远小于参数数为何合理——结构知识与随机事实在同一段 budget 里竞争。
+主定理只给了抽象的 $\min\mathrm{KL}$，真正反直觉的结论要把 LLM 自己的损失代进去才看得见。对 LLM 的概率估计，$d^K(\hat x)=-\ln\hat x$、$d^N(\hat x)=-\ln(1-\hat x)$ 恰好就是 log-loss / binary cross-entropy，与 maximum likelihood 训练严格一致。在非平凡情形 $\varepsilon_K,\varepsilon_N>0$ 且 $e^{-\varepsilon_K}+e^{-\varepsilon_N}>1$ 下，作者用变分法配 KKT 求出唯一最优解 $\mu_K^*=\delta_{x^*}$、$\mu_N^*=(1-q^*)\delta_0+q^*\delta_{x^*}$，其中 $x^*=e^{-\varepsilon_K}$、$q^*=\varepsilon_N/[-\ln(1-x^*)]$——也就是说，事实全压在一个高置信点 $x^*$ 上，而非事实有一部分比例 $q^*$ 偏偏跟事实挤在同一个 $x^*$、剩下 $1-q^*$ 投到 0。代入得 per-key 最小记忆量 $\mathrm{KL}(\mu_K^*\|\mu_N^*)=\log(1/q^*)$，于是幻觉概率 $q^*=2^{-\mathrm{KL}}$ 完全由记忆容量决定，与你怎么在 $\varepsilon_K$、$\varepsilon_N$ 之间分配 trade-off 无关。这个解之所以重要，是因为它把"幻觉是数学上必然最优"这件事钉死在了 log-loss 本身，不依赖任何具体训练算法：遗忘（把 $\hat x$ 都推向 $1/2$）和 abstention（专门留一个"我不知道"标签）在 log-loss 下都严格次优。
 
-### 损失函数 / 训练策略
+**3. 两侧 filter 的阈值不变性：把结论推广到任意阈值机制，并顺势解释 RAG 与 long-tail 微调为何有效。**
 
-理论论文，没有"训练"过程。实验上作者用两类设置经验验证 Theorem 4.1：(1) **synthetic random strings**：从零训小 transformer 学随机字符串集合；(2) **real-world ISBN + synthetic ID**：对预训练 LLM 做 LoRA 微调让其学一个随机 fact 集合。两种设置都直接监测 $\mu_K, \mu_N$ 的分布形态。
+第二个结论是关于概率估计的，但现实里很多缓解幻觉的手段是在置信分数上做阈值判断。作者证明任何对 $\hat x$ 阈值化的下游过程（包括 Kalai et al. 2025 的 generative classifier）都突不破 $\mathrm{KL}(\mu_K\|\mu_N)$ 这条下界——这是允许同时有 FP 与 FN 的"两侧 filter"的一般化。直接推论是：想消除 FP（幻觉）就必然抬高 FN（遗忘 / over-refusal），后处理只能沿同一条 frontier 滑动，跳不出去。真正能动 frontier 的只有改记忆预算本身：RAG（Lewis et al. 2020）接入 non-parametric 外部 memory，等于把 $B(\mathcal{M})$ 整体做大，frontier 随之外推；对 long-tail 事实额外 SFT 则是把更多参数容量显式分给随机事实，对应同一条 frontier 上"多花比特换更小 $q^*$"。这一视角一次性解释了三个经验现象：大模型上"教模型说 IDK"的 SFT 为何收效有限、Feldman 等人"memorize long-tail 是必要的"假说为何在信息论上成立、以及 MDL 视角下"有效记忆预算远小于参数数"为何合理——结构知识与随机事实本就在同一段 budget 里竞争。
+
+### 实验设置
+
+这是一篇理论论文，没有标准意义上的"训练目标"，实验只是对 Theorem 4.1 的经验 sanity check。作者用两类设置直接监测最优分布 $\mu_K,\mu_N$ 的形态：一是 **synthetic random strings**，从零训一个小 transformer 去记一组随机字符串；二是 **real-world ISBN + synthetic ID**，对预训练 LLM 做 LoRA 微调让它学一组随机 fact。两种设置都去看非事实输出是否真的呈现理论预测的 $\delta_0$ 与 $\delta_{x^*}$ 双峰。
 
 ## 实验关键数据
 

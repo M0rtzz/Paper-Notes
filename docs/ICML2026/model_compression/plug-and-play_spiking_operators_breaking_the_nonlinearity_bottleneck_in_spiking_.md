@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NLSpiking 的整体设计是一个三层结构。最底层是三个 spike-native 原语：Division Neuron Group（除法）、PolarNorm Unit（$\ell_2$ 范数）、PWL-Exp Unit（指数）。中间层是非线性算子的"分子-分母"分解：每个目标算子被改写成 $\phi(x) = \text{num}(x) / \text{denom}(x)$ 的形式，分子分母分别用对应的原语近似。最上层是 NLSpiking 算子（NLS-Softmax / NLS-SiLU / NLS-RMS），它们调用同一套原语，仅在分子分母的构造方式上不同。整个流水线和原 ANN-to-SNN 转换框架解耦，可以在 SpikeZIP-TF 转换完线性层之后，再把非线性算子替换为 NLSpiking 版本，不需要任何重训。
+NLSpiking 是一个三层结构：最底层是三个 spike-native 原语（除法、$\ell_2$ 范数、指数），中间层把每个目标非线性算子改写成 $\phi(x) = \text{num}(x)/\text{denom}(x)$ 的"分子-分母"形式、分别用原语近似，最上层的 NLSpiking 算子（NLS-Softmax / NLS-SiLU / NLS-RMS）只是这套原语在分子分母构造上的不同组合。关键在于它和原 ANN-to-SNN 转换框架完全解耦——可以在 SpikeZIP-TF 把线性层转换完之后，再单独把非线性算子换成 NLSpiking 版本，权重和流水线都不用动。
 
 ### 关键设计
 
-1. **Division Neuron Group（脉冲原生整数除法）**:
+**1. Division Neuron Group：把"除法"翻译成神经元群体竞争。**
 
-    - 功能：用一群 LIF 神经元实现 $q \approx I_A / I_B$ 的整数近似，把除法当成 spike-native 原语而不是浮点运算。
-    - 核心思路：分两阶段执行——第一阶段对脉冲分母 $I_B(t)$ 时间累积得到 $I_B = \sum_{t=1}^T I_B(t)$，再通过右移得到基准阈值 $\theta = I_B \gg n = \lfloor I_B / 2^n \rfloor$，其中 $n = \log_2(TL)$；然后给群体中第 $i$ 个神经元分配阈值 $\theta_i = i\theta$。第二阶段把脉冲分子 $I_A(t)$ 输入这个群体，神经元 $i$ 当且仅当 $I_A(t) \geq i\theta$ 时发放，最后通过统计活跃神经元数 $q = \sum_i s_i$ 并再右移得到商 $\hat q = q \gg n = \lfloor \sum_t I_A(t) / \theta \rfloor$。整个过程只用 LIF 阈值比较和位移，没有真正的除法器。
-    - 设计动机：在神经形态硬件上，"群体竞争"（哪些神经元被激活）天然支持，而浮点除法不支持；通过把分母的"幅度"编码成群体的"阈值梯度"，作者把除法转化成"找最大 $i$ 使 $v(t) \geq i\theta$"这个查表式问题，可由 ordered-threshold LIF 群体直接实现。
+非线性算子脉冲化的最大拦路虎是除法——神经形态芯片只擅长脉冲、位移、加法，不擅长浮点除法。作者的做法是用一群 ordered-threshold 的 LIF 神经元实现整数近似 $q \approx I_A/I_B$，分两阶段执行。第一阶段对脉冲分母时间累积得到 $I_B = \sum_{t=1}^T I_B(t)$，再右移得到基准阈值 $\theta = I_B \gg n = \lfloor I_B/2^n \rfloor$（$n = \log_2(TL)$），并把群体里第 $i$ 个神经元的阈值设成 $\theta_i = i\theta$，相当于把分母的"幅度"编码成一道道阈值梯度。第二阶段把脉冲分子 $I_A(t)$ 喂进这个群体，神经元 $i$ 当且仅当 $I_A(t) \geq i\theta$ 时发放，统计活跃神经元数 $q = \sum_i s_i$ 再右移就得到商 $\hat q = q \gg n = \lfloor \sum_t I_A(t)/\theta \rfloor$。这样一来，除法就被转化成"找最大的 $i$ 使 $v(t) \geq i\theta$"这个查表式的群体竞争问题，而群体竞争恰恰是硬件天然支持的，整个过程只有阈值比较和位移、没有任何除法器。
 
-2. **PolarNorm Unit（CORDIC-Hypot 风格的 $\ell_2$ 范数）**:
+**2. PolarNorm Unit：借 CORDIC 把 $\ell_2$ 范数化成移位加减。**
 
-    - 功能：在不使用乘法和开方器的前提下，近似计算 $\|\mathbf v\|_2 = \sqrt{\sum_i x_i^2 + \epsilon d}$，专门服务 RMSNorm。
-    - 核心思路：把输入扩展成 $\mathbf v = [x_1, \dots, x_d, \sqrt{\epsilon d}]$，按二叉树两两合并相邻元素，每次合并用 CORDIC-Hypot 迭代 $x_{k+1} = x_k + d_k \cdot y_k / 2^k$，$y_{k+1} = y_k - d_k \cdot x_k / 2^k$（$d_k = \text{sign}(y_k)$），$n$ 步后 $x_n \approx \sqrt{x^2 + y^2}$，最后用一个固定增益倒数 $1/K_n$（恰好是 $2$ 的整数次幂）做缩放。整棵树执行完就拿到 $\ell_2$ 范数的近似，全程只有位移和加减。
-    - 设计动机：直接展开 $x^2$ 和 $\sqrt{\cdot}$ 在脉冲域里几乎不可能，而 CORDIC 用迭代旋转把这两个非线性算子统一成"位移 + 加减 + 符号判断"，与神经形态硬件的指令集天然契合；二叉树结构同时给出 $\mathcal O(\log d)$ 的并行深度和可证明的误差界。
+RMSNorm 需要 $\|\mathbf v\|_2 = \sqrt{\sum_i x_i^2 + \epsilon d}$，但平方和开方在脉冲域里几乎不可能直接展开。作者借用 70 年代硬件浮点里成熟的 CORDIC 迭代来绕过：先把输入扩展成 $\mathbf v = [x_1, \dots, x_d, \sqrt{\epsilon d}]$，按二叉树两两合并相邻元素，每次合并跑 CORDIC-Hypot 迭代 $x_{k+1} = x_k + d_k \cdot y_k/2^k$、$y_{k+1} = y_k - d_k \cdot x_k/2^k$（$d_k = \text{sign}(y_k)$），$n$ 步后 $x_n \approx \sqrt{x^2 + y^2}$，最后用一个恰好是 $2$ 的整数次幂的固定增益倒数 $1/K_n$ 做缩放，整棵树跑完就拿到范数近似。CORDIC 的妙处是用迭代旋转把平方和开方统一成"位移 + 加减 + 符号判断"，正好落在神经形态指令集里；二叉树结构则顺带给出 $\mathcal O(\log d)$ 的并行深度和可证明的误差界。
 
-3. **PWL-Exp Unit（分段线性指数近似）**:
+**3. PWL-Exp Unit：用 8-bit 查找表替掉运行时指数。**
 
-    - 功能：在 $[-L, L]$ 区间用 $K$ 段分段线性函数近似 $e^x$，服务 Softmax 和 SiLU。
-    - 核心思路：把 $[-L, L]$ 等分成 $K$ 段，段宽 $\gamma = 2L/K$，每段用线性插值 $e^x \approx ax + b = \frac{e^{x_{i+1}} - e^{x_i}}{x_{i+1} - x_i}(x - x_i) + e^{x_i}$，$x_i = -L + \gamma i$；斜率 $a$ 和截距 $b$ 预计算并存到 8-bit 查找表，运行时只做一次表查和一次定点乘加。
-    - 设计动机：Softmax / SiLU 都依赖 $\exp$，但脉冲域无法直接做指数；用查找表把"运行时指数"换成"预计算 8-bit 系数 + 位移缩放"，既保住精度（Theorem 5.1 给出 $\varepsilon_{\exp} = \frac{L^2}{2K^2} e^{2L/K}$ 的解析误差），又把内存开销压到几十个字节量级，适合芯片的片上 SRAM 约束。
+Softmax 和 SiLU 都绕不开 $\exp$，但脉冲域同样做不了指数。作者把 $[-L, L]$ 等分成 $K$ 段（段宽 $\gamma = 2L/K$），每段用线性插值 $e^x \approx ax + b = \frac{e^{x_{i+1}} - e^{x_i}}{x_{i+1} - x_i}(x - x_i) + e^{x_i}$（$x_i = -L + \gamma i$），把斜率 $a$ 和截距 $b$ 预计算后塞进一张 8-bit 查找表，运行时只做一次查表加一次定点乘加。这等于把"运行时指数"换成了"预计算系数 + 位移缩放"，既有解析误差界保底（Theorem 5.1 给出 $\varepsilon_{\exp} = \frac{L^2}{2K^2} e^{2L/K}$），又把内存压到几十字节量级，刚好放得进 Loihi 这类芯片紧张的片上 SRAM。
 
 ### 损失函数 / 训练策略
 方法是 **training-free** 的——不引入任何 loss、不做微调。所有近似的误差都在 ANN-to-SNN 转换之后通过算子级替换暴露出来。理论上作者给出每个非线性算子的相对误差界：

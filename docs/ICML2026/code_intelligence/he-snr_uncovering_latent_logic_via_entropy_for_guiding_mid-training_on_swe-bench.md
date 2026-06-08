@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两块：(1) **数据筛选**——从 500 条 SWE-bench-Verified 轨迹里只保留 Action 段（不要 Thought，因为 Thought 是 SFT 风格主导的），再用正则去 XML 标签、AST 去注释、去空白符；(2) **指标计算**——对每个保留 token 算 Top-10 熵 $H_{top10}(x_t)$，过滤出高熵决策集 $\mathcal{H} = \{t : H_{top10} > \epsilon \text{ 且 } x_t \in C_{10}\}$，再算 HE-SNR = 高熵集合上目标概率 / 熵的均值。
+本文要解决的是"怎么在不跑完整 SFT 的前提下，判断一个中训练 checkpoint 未来的 SWE 能力强不强"。做法是把"压缩=智能"从标量 PPL 升级到分布层面：先从少量 SWE-bench-Verified 轨迹里只挑出反映可执行逻辑的 Action token，再只在那些"模型仍在合理犹豫"的高熵决策点上，度量目标 token 信号相对熵噪声的比值，得到一个 SFT 不变、抗"长上下文税"的指标 HE-SNR。
 
 ### 关键设计
 
-1. **熵压缩状态与 "$\ln 3$" 转移现象**:
+**1. 熵压缩状态与 "$\ln 3$" 转移现象：把"压缩"从标量升级到分布层面**
 
-    - 功能：用 Top-$k$ 熵的具体峰值位置反推"模型在多大候选集合上犹豫"。
-    - 核心思路：根据 Jensen 不等式，Top-$k$ 重归一化后的熵上界是 $\ln k$，当且仅当候选概率均匀时取等号。所以观察到熵峰在 $\ln 2, \ln 3, \ln 4$ 就意味着模型在等概率犹豫于 2、3、4 个候选；强模型会从 $\ln 4$ 大幅迁移到 $\ln 3$ ("Shift to $\ln 3$")，把不确定性"折叠"得更小。
-    - 设计动机：传统 PPL 把所有候选混在一起算标量，看不出"集合大小"。Top-$k$ 熵的峰值直接告诉你模型在多少个候选间犹豫，"少而合理的犹豫"才是推理深度的标志。MoE-A26B 在 Observation token 上反而出现 $\ln 10$ 峰，对应"数字 0-9 随机出现"，恰好佐证 $\ln 10$ 是 aleatoric 不确定性而非智能。
+传统 PPL 把所有候选混在一起算成一个标量，看不出模型究竟在多大的候选集合上犹豫——而"集合大小"才是推理深度的线索。本文改用 Top-$k$ 熵的峰值位置来反推这件事：根据 Jensen 不等式，Top-$k$ 重归一化后的熵上界是 $\ln k$，当且仅当这 $k$ 个候选概率均匀时取等号。于是熵峰落在 $\ln 2, \ln 3, \ln 4$ 就分别意味着模型在等概率地犹豫于 2、3、4 个候选。作者在多模型多 checkpoint 上观察到一个普适规律："压缩"过程就是把分散的 $\ln 4$ 不确定性折叠成更小的 $\ln 3$ 合理犹豫（"Shift to $\ln 3$"），越强的模型迁移越彻底。这个视角的价值在于它能区分"智能的犹豫"和"环境的随机"——MoE-A26B 在 Observation token 上反而出现 $\ln 10$ 峰，对应"数字 0-9 随机出现"，正好佐证 $\ln 10$ 是 aleatoric 不确定性而非推理。
 
-2. **High-Entropy SNR (HE-SNR) 指标**:
+**2. High-Entropy SNR (HE-SNR) 指标：只在 SFT 改不动的硬骨头上度量**
 
-    - 功能：在 SFT 难以"风格化"的高熵决策点上，量化目标 token 信号相对熵噪声的比值。
-    - 核心思路：$\text{HE-SNR} = \frac{1}{|\mathcal{H}|}\sum_{t \in \mathcal{H}} \frac{p(x_t)}{H_{top10}(x_t)}$，其中 $\mathcal{H} = \{t : H_{top10}(x_t) > \epsilon, x_t \in C_{10}(x_t)\}$，阈值 $\epsilon = (\ln 3 + \ln 4)/2 \approx 0.897$。条件 $x_t \in C_{10}$ 把"完全偏离的风格 token"过滤掉，避免被极端样本拉偏。
-    - 设计动机：SFT 会把大量原本高熵的 token 压到 $\ln 1$-$\ln 3$，所以"$\ln 3$-$\ln 4$ 之间的残余不确定性"正是 SFT 改不动的部分——也就是模型真正的"推理硬骨头"。HE-SNR 量的是"在这些硬骨头上模型能给目标 token 多大的相对置信"，与 SWE-bench 下游分数应该高度相关。
+光知道熵峰位置还不够，关键是要找一个 SFT 后不会被"风格化"洗掉的信号。作者注意到 SFT 会把大量原本高熵的 token 压到 $\ln 1$-$\ln 3$ 区间，所以残留在 $\ln 3$-$\ln 4$ 之间的不确定性恰恰是 SFT 改不动的部分——也就是模型真正的"推理硬骨头"。HE-SNR 就只在这些硬骨头上量"模型能给目标 token 多大的相对置信"：
 
-3. **Token 级别过滤管线**:
+$$\text{HE-SNR} = \frac{1}{|\mathcal{H}|}\sum_{t \in \mathcal{H}} \frac{p(x_t)}{H_{top10}(x_t)}, \quad \mathcal{H} = \{t : H_{top10}(x_t) > \epsilon,\ x_t \in C_{10}(x_t)\}$$
 
-    - 功能：从原始轨迹里只留下"反映可执行逻辑"的 token。
-    - 核心思路：先丢掉 Observation (输入上下文) 和 Thought (风格主导)；Action 段用正则去 XML 标签和 markdown 格式，用 Python AST 解析去掉代码注释，最后清理多余空白符；过程在字符级标记，再通过 offset 对齐映射到 token 级。
-    - 设计动机：消融显示从 Thinking 切到 Action 把 Pearson 从 0.558 拉到 0.967，再叠加 XML / 空白符 / AST 注释三层过滤，Kendall $\tau$ 从 0.944 推到峰值 0.979。这证明 SFT 风格 artifact 是预测信号最大的干扰源。
+其中阈值 $\epsilon = (\ln 3 + \ln 4)/2 \approx 0.897$ 刚好卡在 $\ln 3$ 和 $\ln 4$ 中点，把"合理犹豫"的决策点圈出来；条件 $x_t \in C_{10}$ 要求目标 token 落在 Top-10 候选集 $C_{10}$ 内，把那些"完全偏离的风格 token"过滤掉，避免被极端样本拉偏。分子用目标概率当"信号"、分母用熵当"噪声"，比值越高说明模型在硬题上越笃定，因此与 SWE-bench 下游分数高度相关。
+
+**3. Token 级别过滤管线：把 SFT 风格 artifact 从信号里剥掉**
+
+熵信号最大的干扰源是 SFT 留下的风格 artifact，所以在算 HE-SNR 之前要先把轨迹清洗成只剩"可执行逻辑"。管线先丢掉 Observation（输入上下文）和 Thought（这两段由 SFT 风格主导），只留 Action 段；再对 Action 段用正则去掉 XML 标签和 markdown 格式，用 Python AST 解析剔除代码注释，最后清理多余空白符。整个清洗在字符级打标记，再通过 offset 对齐映射回 token 级。这套过滤为什么必要，消融给得很直白：仅从 Thinking 切到 Action 就把 Pearson 从 0.558 拉到 0.967，再叠加 XML / 空白符 / AST 注释三层过滤，Kendall $\tau$ 从 0.944 推到峰值 0.979。
 
 ### 损失函数 / 训练策略
 HE-SNR 是评估指标而非训练损失。验证时把多个中训练 checkpoint 的 HE-SNR 与 SFT 后 SWE-bench-Verified Pass@1 (3 次评估取平均) 做相关性分析。

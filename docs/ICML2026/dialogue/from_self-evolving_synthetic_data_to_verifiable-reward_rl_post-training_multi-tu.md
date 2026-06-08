@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两大模块。**AReaL-SEA 数据合成**（§4）：meta-planner 先生成 $N$ 个多样化的 (synthesis plan, evaluation plan) 对，每对独立跑一条流水线（task 合成 → task 验证 → trajectory rollout → trajectory 验证），失败案例汇总到 reflection 模块迭代更新 plan，循环 $K$ 轮。**RL 配方**（§5）：先用合成数据 SFT 训用户模拟器；再用 GRPO（group-relative advantage + 动态过滤 + 大 batch）训 Agent，奖励信号来自 verifier 对最终状态 vs ground-truth 状态的比较。
+整篇要解决的是"开源模型怎么后训成有竞争力的多轮工具调用 Agent"，难点在前面说的循环依赖：训 Agent 要 RL，RL 要稳定 rollout，rollout 要好数据和好用户模拟器。作者把它拆成两个互相喂的模块。前半段 **AReaL-SEA** 负责造数据：一个 meta-planner 先开出 $N$ 套互不重叠的合成方案，每套独立跑一条"出题 → 验题 → 模拟对话 → 验对话"的流水线，把失败案例喂回 reflection 模块迭代改方案，循环 $K$ 轮越合成越好。后半段是 RL 配方：先拿合成数据把用户模拟器 SFT 一遍治住噪声，再用 GRPO 训 Agent，奖励则来自合成时一并生成的可执行 verifier——它拿轨迹的最终状态去对 ground-truth，对上给 1、对不上给 0。
 
 ### 关键设计
 
-1. **AReaL-SEA 自演化数据合成 pipeline**:
+**1. AReaL-SEA 自演化数据合成：让 pipeline 从自己的失败里学。**
 
-    - 功能：生成既多样、又复杂、又可验证的多轮工具调用训练样本。
-    - 核心思路：(a) **Diversified Plan Generation**：meta-planner 顺序生成 $N$ 个不重叠的 plan 对，每条 plan 指定不同 domain / 复杂度 / 工具模式 / 用户风格，显式构造 diversity 而不依赖随机。(b) **四阶段 agent pipeline**：Task Synthesis Agent 用多轮工具调用生成结构化 task tuple $q = (u, t, a^*)$；Task Verification Agent 检 task 质量；Trajectory Rollout 用模拟 user + assistant 跑完整对话；Trajectory Verification Agent 评轨迹质量并打 attribution tag（失败归因是 task 问题还是 trajectory 问题）。(c) **Reflection Loop**：失败案例 + 归因被汇总到 reflection agent，它据此更新 $(\mathcal{P}_s, \mathcal{P}_e)$，下一轮 plan 更精准、rubric 更校准，形成闭环 $(\mathcal{P}_s^{(n,k+1)}, \mathcal{P}_e^{(n,k+1)}) = \text{Reflect}(\mathcal{P}_s^{(n,k)}, \mathcal{P}_e^{(n,k)}, \{\text{failures}\})$。
-    - 设计动机：以往 APIGen-MT / TOUCAN 等数据合成 pipeline 是**静态**的，没法从自己错误中学；本文把数据生成做成可演化的多 agent 系统，让它能针对每个 domain 单独迭代规则。消融显示：去掉 evolution loop 性能从 56.0 → 44.0；prompt 多样性从 64 → 4 性能从 56.0 → 42.5——这两个都是关键贡献。
+多轮工具对话数据贵在要同时满足"复杂领域规则 + 用户私有信息 + 难度够 RL"，以往 APIGen-MT / TOUCAN 这类 pipeline 是**静态**的，出错了也没法自我修正。本文把数据生成做成可演化的多 agent 系统，三个环节扣在一起。第一步是 **Diversified Plan Generation**：meta-planner 顺序生成 $N$ 套不重叠的 (synthesis plan, evaluation plan) 对，每套显式指定不同的 domain、复杂度、工具模式、用户风格，diversity 是构造出来的而不是靠随机撞出来的——消融里把 prompt 集从 64 套砍到 4 套，性能直接从 56.0 掉到 42.5。第二步是**四阶段 agent 流水线**串起每套方案：Task Synthesis Agent 用多轮工具调用产出结构化任务元组 $q = (u, t, a^*)$，Task Verification Agent 把关任务质量，Trajectory Rollout 让模拟 user 和 assistant 跑完整段对话，Trajectory Verification Agent 评轨迹并打 attribution tag——关键是它会归因失败到底是题目本身有问题还是对话跑挂了。第三步是 **Reflection Loop**：失败案例连同归因汇总给 reflection agent，它据此更新方案 $(\mathcal{P}_s^{(n,k+1)}, \mathcal{P}_e^{(n,k+1)}) = \text{Reflect}(\mathcal{P}_s^{(n,k)}, \mathcal{P}_e^{(n,k)}, \{\text{failures}\})$，下一轮出题更准、rubric 更校准。这个闭环正是和静态 pipeline 拉开差距的地方：去掉 evolution loop，性能从 56.0 跌到 44.0。
 
-2. **可执行 per-instance verifier 当 RL 奖励**:
+**2. 可执行 per-instance verifier：把奖励信号在造数据时就钉死。**
 
-    - 功能：把每条合成 task 都附带一个能跑的检查函数，作为 RL 的稀疏稀疏 reward 信号。
-    - 核心思路：合成 task 时同步生成 ground-truth final state 和 verifier 函数；RL 训练中 trajectory 跑完后，verifier 拿 $s_T$ 跟 ground-truth 比关键 entity 和动作，full match 为 1、否则为 0，构成 binary outcome reward。奖励函数定义为 $\mathcal{R}(s_t, a_t) = R(s_T)$ for $t = T$，否则为 0。
-    - 设计动机：交互式 Agent 任务用 LLM-as-judge 当 reward 噪声大且贵；用合成阶段就生成好的 deterministic verifier 既快又准，构成可验证奖励 (RLVR) 范式在 Agent 场景的实现。
+交互式 Agent 任务若用 LLM-as-judge 打分，既慢又贵又噪。作者的做法是合成每条 task 时就同步产出它的 ground-truth final state 和一个能跑的 verifier 函数。RL 训练里一条轨迹跑完后，verifier 拿最终状态 $s_T$ 去比 ground-truth 的关键 entity 和动作，全对才给 1、否则给 0，是个 deterministic 的 binary outcome reward，写成 $\mathcal{R}(s_t, a_t) = R(s_T)$（仅当 $t = T$，其余为 0）。这等于把数学/代码领域成熟的可验证奖励 (RLVR) 范式搬进了 Agent 场景，省掉训练时再请一个 judge 模型，又快又准。
 
-3. **GRPO + 用户模型 SFT + 大 batch + 动态过滤**:
+**3. 治住用户模拟器再上 GRPO：先压噪声，再吸方差。**
 
-    - 功能：在用户模拟噪声下稳定 RL 训练。
-    - 核心思路：(a) **用户模型 SFT**：先用 AReaL-SEA 生成的对话数据 SFT 用户模拟器（基于 Qwen3-30B-A3B-2507），让它能稳定遵循指令、按角色发工具调用——消融显示用 base 用户模型做 RL 性能从 SFT checkpoint 85.4 倒退到 75.6，而用 SFT 后的用户模型则推到 95.6，差距 20 个点。(b) **GRPO**：每个 task 采样 $G$ 条独立 trajectory，计算组内归一化的 advantage $\hat{A}(\tau^{(g)}) = \frac{R(\tau^{(g)}) - \mu_G}{\sigma_G}$；token-level clipping 的 surrogate loss。(c) **大 batch**：消融显示总 batch 从 256 → 512 时 pass^1 从 64-66 涨到 70.5，提供更稳定的 advantage 估计。(d) **Dynamic Filtering**：组内全成功或全失败的 task 提供 $\hat{A} = 0$ 无学习信号，直接过滤掉，只保留有差异化的组——去掉这步性能从 70.5 掉到 65.0。
-    - 设计动机：用户模拟噪声是该问题独有的，所以 SFT 用户模型是新颖且必要的步骤；剩下的三件套（GRPO + 大 batch + 动态过滤）都是为了让有限的 reward 信号尽可能稳定地驱动学习。
+这一块是论文最反直觉的地方。交互式任务的 RL rollout 必须带用户模拟器，但开源模型当用户极不稳——τ²-bench 的 dual-control 场景里用户也要发工具调用，base 模型经常乱发或忽略指令，把错误信号错误归因到 Agent 头上。所以第一刀先**SFT 用户模型**：拿 AReaL-SEA 生成的对话数据把用户模拟器（基于 Qwen3-30B-A3B-2507）微调一遍，让它稳定遵循指令、按角色发工具。这步的分量在消融里特别扎眼——直接拿 base 用户模型做 RL，性能从 SFT checkpoint 的 85.4 倒退到 75.6，换成 SFT 后的用户模型则一路冲到 95.6，整整 20 个点。把噪声从源头压住后，Agent 这侧用 GRPO 训：每个 task 采 $G$ 条独立 trajectory，算组内归一化的 advantage $\hat{A}(\tau^{(g)}) = \frac{R(\tau^{(g)}) - \mu_G}{\sigma_G}$，配 token-level clipping 的 surrogate loss。剩下两个旋钮都是为了让有限的 reward 信号更稳：**大 batch** 把总样本数从 256 提到 512，pass^1 从 64-66 涨到 70.5，本质是给 advantage 估计更厚的样本；**Dynamic Filtering** 则把组内全成功或全失败、$\hat{A}=0$ 没学习信号的 task 直接扔掉，只留有差异化的组——关掉这步性能从 70.5 掉回 65.0。
 
 ### 损失函数 / 训练策略
 RL 目标 $\mathcal{J}_\text{RL}(\theta) = \mathbb{E}_{q \sim \mathcal{D}}[\frac{1}{\sum_g N_G}\sum_g \sum_t \sum_i \mathcal{L}_{t,i}^{(g)}(\theta)]$，其中 $\mathcal{L}_{t,i}^{(g)} = \min(\rho_{t,i}^{(g)} \hat{A}^{(g)}, \text{clip}(\rho_{t,i}^{(g)}, 1-\epsilon, 1+\epsilon)\hat{A}^{(g)})$，token-level 重要性比 $\rho_{t,i}^{(g)} = \pi_\theta / \pi_{\theta_\text{old}}$。SFT 用标准 cross-entropy。30B 模型在 64 H200 GPU 训，235B 用 80 H200。

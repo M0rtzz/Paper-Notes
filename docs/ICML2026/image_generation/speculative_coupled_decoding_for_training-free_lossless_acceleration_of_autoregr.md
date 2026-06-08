@@ -42,31 +42,25 @@ tags:
 
 ### 整体框架
 
-输入是任意预训练的 AR 视觉生成模型 $p_\theta$、目标序列长度 $N$、窗口长度 $L$；输出是采样序列 $X$，分布严格等于原始 token-by-token AR 采样。整体走 SJD 的三段式 pipeline：(1) Drafting：并行把窗口内的每个位置从上一轮验证得到的分布 $p^{(t-1)}$ 中采样一组 draft token；(2) Evaluate：target 模型并行算这些 prefix 下的新分布 $p^{(t+1)}_j = p_\theta(\cdot \mid X^t_{0:j-1})$；(3) Verify：用 MRS 顺序验证，遇到第一个 reject 就停，把之前的 token 落地、把 reject 位置的新样本继承为下一轮新 draft。SCD 的全部修改集中在 (1) 的采样器：把"从 $p^t_j$ 独立采样"换成"从 $p^t_j, p^{t-1}_j$ 的 Coupling 联合分布里采样一对 $(X^t_j, X^{t-1}_j)$，取 $X^t_j$ 作 draft"。Coupling 的边缘性质保证 $X^t_j$ 仍然服从 $p^t_j$，因此 verify 阶段的 lossless 性质毫发无损。
+SCD 要解决的是 SJD「概率空间近但样本空间远」的问题：相邻两轮 draft 分布很接近，但因为每轮都独立重采样，真正采出的 token 几乎每次都变，接受率被卡死。它的做法不是改模型也不是改验证逻辑，而是只动 drafting 阶段的采样器——让相邻两轮共享随机性，在各自边缘分布不变的前提下尽量采到同一个 token。整体仍沿用 SJD 的三段循环：drafting 阶段并行从上一轮验证分布 $p^{(t-1)}$ 给窗口内每个位置采 draft token；evaluate 阶段让 target 模型并行算这些 prefix 下的新分布 $p^{(t+1)}_j = p_\theta(\cdot \mid X^t_{0:j-1})$；verify 阶段用 modified rejection sampling（MRS）顺序验证，遇到第一个 reject 就停，落地之前的 token、把 reject 位置的新样本接力为下一轮 draft。SCD 唯一的改动是把 drafting 里那行「从 $p^t_j$ 独立采样」换成「从 $p^t_j$ 与 $p^{t-1}_j$ 的 Coupling 联合分布里采样一对 $(X^t_j, X^{t-1}_j)$，取 $X^t_j$ 当 draft」。
 
 ### 关键设计
 
-1. **Maximal Coupling ($\pi_{MC}$)**：
+**1. Maximal Coupling（$\pi_{MC}$）：把单步 collision 推到理论上界**
 
-    - 功能：在给定 $p^{(t)}$ 与 $p^{(t-1)}$ 时，构造一个联合分布 $\pi(x, y)$ 使得 $\Pr[X = Y]$ 取到理论上界 $1 - \mathcal{D}_{TV}(p^{(t)}, p^{(t-1)})$。
-    - 核心思路：作者发现验证阶段用的 modified rejection sampling MRS 本身就是 maximal coupling——给定 $X \sim Q$，MRS 输出 $Y$ 使得 $Y \sim P$ 且 $\Pr[Y = X] = 1 - \mathcal{D}_{TV}(P, Q)$。因此 drafting 阶段直接复用 MRS：从上一轮 $X^{t-1}_j$ 出发跑 $\texttt{MRS}(p^t_j, p^{t-1}_j, X^{t-1}_j)$，得到新 draft $X^t_j$。算法上只是把 SJD 第 5 行的独立 sample 换成一行 MRS 调用。
-    - 设计动机：Coupling cost $C(\pi) = \Pr[X=Y]$ 等于 token-level collision 概率，直接决定下一轮接受率。$\pi_{MC}$ 在每一对相邻迭代上"贪婪地"把 collision 推到理论极限，因此最大化 1-step 接受率；同时由于 lossless 只依赖边缘，输出分布严格保持。
+SJD 的接受率由相邻两轮 draft token 的 collision 概率 $\Pr[X^{(t)}=X^{(t-1)}]$ 决定，而独立采样让它被 Rényi-2 熵上界 $C_{SJD} \le e^{-\frac{1}{2}(H_2(p)+H_2(q))}$ 压到接近 0——视觉 token 分布平坦、熵大，约 94% 的位置每轮都在变。Coupling 的思路是构造一个联合分布 $\pi(x,y)$，在保持两个边缘 $x\sim p^{(t)}$、$y\sim p^{(t-1)}$ 不变的前提下，把 collision 概率 $C(\pi)=\Pr[X=Y]$ 顶到理论极限 $1-\mathcal{D}_{TV}(p^{(t)}, p^{(t-1)})$。关键观察是：验证阶段用的 MRS 本身就是一个 maximal coupling——给定 $X\sim Q$，它输出的 $Y$ 满足 $Y\sim P$ 且 $\Pr[Y=X]=1-\mathcal{D}_{TV}(P,Q)$。所以 drafting 阶段直接复用同一个 MRS：从上一轮的 $X^{t-1}_j$ 出发跑 $\texttt{MRS}(p^t_j, p^{t-1}_j, X^{t-1}_j)$ 就得到新 draft $X^t_j$，算法上只是把 SJD 第 5 行的独立 sample 换成一行 MRS 调用。这样每一对相邻迭代都贪婪地把 collision 顶满，1-step 接受率被最大化；而因为 lossless 只依赖 draft 的边缘分布、与两轮间的相关性无关，输出分布严格保持不变。
 
-2. **Gumbel Sharing Coupling ($\pi_{GS}$)**：
+**2. Gumbel Sharing Coupling（$\pi_{GS}$）：换取多步长程稳定性**
 
-    - 功能：另一种 Coupling 实现，通过让两轮 categorical sampling 共享同一份 Gumbel 噪声 $G$，让 $X = \arg\max_i (\log P_i + g_i)$ 与 $Y = \arg\max_i (\log Q_i + g_i)$ 在分布相近时大概率落到同一个 token。
-    - 核心思路：基于 Gumbel-Max trick，单步 collision 下界为 $C(\pi_{GS}) \ge (1 - \mathcal{D}_{TV})/(1 + \mathcal{D}_{TV})$，略低于 $\pi_{MC}$ 的 $1 - \mathcal{D}_{TV}$；但这个下界是"对任意一对分布"成立的，因此对多步迭代 $\mathrm{Hamm}(t, t+N)$ 也有保证。实现上 Gumbel 噪声可以用 token 全局 index 哈希在线生成，零显存开销。
-    - 设计动机：$\pi_{MC}$ 是 1-step 贪婪最优，但对多步无非平凡保证——可能局部最优但长程仍不稳定。$\pi_{GS}$ 提供长程稳定性，在 draft 容易预测的任务（如视频 AR 的相邻帧高度相似、低分辨率图像）上表现更好：早期 draft token 保持不变带来的收益超过持续微调它们。
+$\pi_{MC}$ 是 1-step 贪婪最优，但对连续多步迭代没有非平凡保证，可能局部最优却长程仍抖。$\pi_{GS}$ 提供另一种实现：让两轮 categorical sampling 共享同一份 Gumbel 噪声 $G$，用 Gumbel-Max trick 取 $X=\arg\max_i(\log P_i+g_i)$、$Y=\arg\max_i(\log Q_i+g_i)$，分布相近时两者大概率落到同一个 token。它的单步 collision 下界是 $C(\pi_{GS})\ge (1-\mathcal{D}_{TV})/(1+\mathcal{D}_{TV})$，略低于 $\pi_{MC}$ 的 $1-\mathcal{D}_{TV}$；但这个下界对任意一对分布都成立，因此能延伸到多步 Hamming 距离 $\mathrm{Hamm}(t,t+N)$ 上给出保证。实现上 Gumbel 噪声可以用 token 全局 index 哈希在线生成，零显存开销。代价是单步略弱、收益是长程更稳，所以在 draft 容易预测的任务上更划算——比如视频 AR 相邻帧高度相似、低分辨率图像，这些场景里「早期 draft token 保持不变」带来的收益超过「持续微调它们」。
 
-3. **零开销实现整合**：
+**3. 零开销实现整合：drafting 与 verify 共用一个 MRS 循环**
 
-    - 功能：把 Drafting 的 MRS 与 Verify 的 MRS 融合到同一循环，无需额外 forward。
-    - 核心思路：作者观察到 SCD（Alg. 3）第 5 行 $\texttt{MRS}(p^t_j, p^{t-1}_j, X^t_j)$ 与第 10 行 $\texttt{MRS}(p^{t+1}_j, p^t_j, X^t_j)$ 是同一种操作——下一轮的 $p^{t+1}$ 就是上一轮的 $p^t$。因此把验证循环向量化（不要 break），记录第一个 reject 的 index 即可同时完成 drafting 与 verify。
-    - 设计动机：让 $\pi_{MC}$ 的 per-NFE 额外延迟 < 5%（实测 Janus-Pro 7B 上 vectorized MRS 仅 1.5 ms vs Transformer forward 26-36 ms）。整篇方法实际只增加几行代码、零参数、零训练。
+因为 drafting 和 verify 用的是同一种 MRS 操作，两者可以融进同一个循环、不增加任何额外 forward。作者观察到 SCD 第 5 行的 $\texttt{MRS}(p^t_j, p^{t-1}_j, X^t_j)$ 与第 10 行的 $\texttt{MRS}(p^{t+1}_j, p^t_j, X^t_j)$ 其实是同一操作——下一轮的 $p^{t+1}$ 就是上一轮的 $p^t$。于是把验证循环向量化（不提前 break、只记录第一个 reject 的 index），就能在一趟里同时完成 drafting 与 verify。实测在 Janus-Pro 7B 上向量化 MRS 只花 1.5 ms，相对 Transformer forward 的 26–36 ms 可忽略，$\pi_{MC}$ 的 per-NFE 额外延迟 < 5%；整篇方法实际只多了几行代码、零参数、零训练。
 
 ### 损失函数 / 训练策略
 
-完全无训练。SCD 是纯推理时的算法替换。所有 logit post-processing（top-k、CFG）放在 $p^{(t)}$ 定义之前，保持 lossless 证明的严格性。
+完全无训练。SCD 是纯推理时的算法替换。所有 logit post-processing（top-k、CFG）都放在 $p^{(t)}$ 定义之前，以保持 lossless 证明的严格性。
 
 ## 实验关键数据
 

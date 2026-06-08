@@ -39,34 +39,35 @@ MoVieDrive 提出统一的多模态多视图视频扩散 Transformer，通过 mo
 
 ### 整体框架
 
-输入条件 → 条件编码器（文本/布局/上下文参考）→ 统一扩散 Transformer（modal-shared 层 + modal-specific 层）→ 噪声估计 → 共享 3D VAE 解码 → 多模态多视图视频输出。
+MoVieDrive 要解决的是一件以往得靠"拼模型"才能做到的事：在自动驾驶场景里，用**一个**扩散模型同时吐出 RGB 视频、深度图和语义图，而且 6 个相机视图之间、相邻帧之间都要对得上。整条管线先把各类控制信号（相机参数与文本描述、3D 框/道路/occupancy 投影出来的布局图、可选的初始参考帧）编码成条件特征，再送进一个统一的扩散 Transformer 去噪，最后由一个所有模态共享的 3D VAE 把去噪后的 latent 解码成多模态多视图视频。
 
-核心思想：将多模态多视图场景生成分解为**模态共享学习**（时序一致性 + 多视图时空一致性）和**模态特定学习**（跨模态交互 + 投影），在统一框架内完成。
+这个统一 Transformer 的内部按"哪些东西所有模态都该一样、哪些东西每个模态该不一样"切成两层：**modal-shared 层**负责所有模态都需要的时序一致性和多视图时空一致性，**modal-specific 层**负责模态之间的互补交流和最终各自的噪声估计。整篇方法的核心赌注就是——RGB、深度、语义经过同一个 3D VAE 编码后落在足够接近的隐空间，绝大部分计算可以共享，只在很薄的一层上区分模态即可。
 
 ### 关键设计
 
-1. **多样条件输入编码**：
+**1. 多样条件输入编码：用三种不同粒度的信号把"画什么"讲清楚，并用一个统一布局编码器收拢条件分支。**
 
-    - **文本条件**：相机内外参（Fourier embedding + MLP）和场景文本描述（冻结 T5 编码器）拼接得到 $f^{text}$，通过 cross-attention 注入扩散模型
-    - **布局条件**：三种细粒度控制信号——3D 框投影的 box map $c^b$、道路结构投影的 road map $c^r$、稀疏 3D occupancy 投影的 layout map $c^o$。创新点在于使用**统一布局编码器**（各条件独立 causal resnet block + 共享 causal resnet block）融合三种条件，避免多个独立编码器：$f^{layout} = E_s^l(E_b^l(c^b) \otimes E_r^l(c^r) \otimes E_o^l(c^o))$
-    - **上下文参考条件**：可选的初始帧，用共享 3D VAE 编码（时序维度=1），用于未来场景预测
-    - 设计动机：不同条件控制不同粒度——文本控制全局风格，布局控制细粒度结构，参考帧提供初始上下文
+驾驶场景的可控性来自不同层次的约束，硬塞进一个编码器会互相打架。MoVieDrive 把条件拆成三档粒度：最粗的是**文本条件**，相机内外参先经 Fourier embedding + MLP、场景描述经冻结的 T5 编码器，拼成 $f^{text}$ 后用 cross-attention 注入，管的是全局风格（白天/雨天这种）；中间一档是**布局条件**，把 3D 框投成 box map $c^b$、道路结构投成 road map $c^r$、稀疏 occupancy 投成 layout map $c^o$，管的是细粒度的物体和道路结构；最细的一档是可选的**上下文参考帧**，用共享 3D VAE 在时序维度=1 下编码，给未来场景预测提供起点。布局这一支是工程上最讲究的地方——它没有给三种图各配一个独立 VAE，而是用一个**统一布局编码器**：每种条件先过各自的 causal resnet block，再过一个共享的 causal resnet block 融合，即
 
-2. **Modal-Shared 组件（时序层 + 多视图时空块）**：
+$$f^{layout} = E_s^l\big(E_b^l(c^b) \otimes E_r^l(c^r) \otimes E_o^l(c^o)\big)$$
 
-    - **时序注意力层 $D^{tem}$**：基于 CogVideoX 的 3D full attention，学习帧间时序一致性，文本条件通过 cross-attention 注入
-    - **多视图时空块 $D^{st}$**（每 $\alpha_1$ 个时序层后插入一次）：包含四个子层：
-        - *3D 空间嵌入层*：多分辨率 Hash grid 编码 3D occupancy 位置 $c^{occ}$，增强空间一致性
-        - *3D 空间注意力*：将 latent 维度变为 $\mathcal{R}^{K \times (VHW) \times C}$，学习所有相机视图的 3D 空间结构
-        - *时空注意力*：维度变为 $\mathcal{R}^{(VKHW) \times C}$，捕获完整的多视图时空信息
-        - *前馈层*：进一步变换特征
-    - 公式：$h = D^{st}(D^{tem}(z', f^{text}, t), c^{occ}, t)$
+这样三种布局信号被显式对齐到同一个嵌入空间再交给扩散模型，消融里这一步比"各自独立编码"更稳。
 
-3. **Modal-Specific 组件（跨模态交互层 + 投影头）**：
+**2. Modal-Shared 组件：所有模态共用同一套时序层和多视图时空块，把"动得连贯、跨视图对得上"一次性学好。**
 
-    - **跨模态交互层 $D_m^{cm}$**（每 $\alpha_2$ 个 modal-shared 层后插入）：self-attention + cross-attention + FFN。Cross-attention 的 query 是当前模态的 latent，key/value 来自**其他模态**的 latent 拼接：$h'_m = D_m^{cm}(h, h_m^{modal}, t)$
-    - **模态特定投影头**：线性层 + adaptive normalization，估计各模态的噪声 $\epsilon$
-    - 设计动机：通过跨模态注意力让不同模态互相提供互补信息，同时保持各模态的特异性特征
+时序一致性和多视图一致性是每个模态都要满足的硬约束，没必要为 RGB、深度、语义各学一遍，于是这部分完全共享。基座是**时序注意力层 $D^{tem}$**，沿用 CogVideoX 的 3D full attention 学帧间连贯，文本条件在这里通过 cross-attention 进来。每隔 $\alpha_1$ 个时序层插一个**多视图时空块 $D^{st}$** 专治跨相机一致性，它内部依次做四件事：先用多分辨率 Hash grid 把 3D occupancy 位置 $c^{occ}$ 编码进来（3D 空间嵌入层），给后续注意力一个明确的空间锚点；再把 latent 重排成 $\mathcal{R}^{K \times (VHW) \times C}$ 做 3D 空间注意力，让同一时刻各相机视图共享同一套 3D 结构；接着重排成 $\mathcal{R}^{(VKHW) \times C}$ 做时空注意力，把多视图和时间一起打通；最后一个前馈层收尾。两者串起来就是
+
+$$h = D^{st}\big(D^{tem}(z', f^{text}, t),\, c^{occ}, t\big)$$
+
+消融数据直接说明它的分量：只留时序层时 FVD 高达 153.7，补上这个时空块后才降到 46.8。
+
+**3. Modal-Specific 组件：用很薄的一层做跨模态交流 + 各自出噪声，既让模态互补又保住各自特性。**
+
+共享层学的是模态间的共性，但深度该有的几何细节、语义该有的类别边界终究不一样，且让它们互通有无能彼此提质。这一职责压在两个轻量组件上。一是**跨模态交互层 $D_m^{cm}$**，每隔 $\alpha_2$ 个 modal-shared 层插一次，结构是 self-attention + cross-attention + FFN；关键在 cross-attention 的 query 是当前模态的 latent，而 key/value 取自**其它模态** latent 的拼接 $h_m^{modal}$，于是 RGB 在去噪时能"看一眼"深度和语义、反之亦然：
+
+$$h'_m = D_m^{cm}(h,\, h_m^{modal}, t)$$
+
+二是**模态特定投影头**，用线性层 + adaptive normalization 为每个模态各自估计噪声 $\epsilon$。整个模型里只有这薄薄一层是按模态分开的，其余全共享——这正是"共享隐空间"假设落到架构上的样子。举个具体的流转：一段 latent 先在共享层里把 6 视图、49 帧的时空结构对齐好，到跨模态层时 RGB 借深度补上远处物体的相对距离、借语义校正物体边界，最后三个投影头各自报出自己那一路的噪声，由共享 3D VAE 一并解码成对齐的三模态视频。
 
 ### 损失函数 / 训练策略
 

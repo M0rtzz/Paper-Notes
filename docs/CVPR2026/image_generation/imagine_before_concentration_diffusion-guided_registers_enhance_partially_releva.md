@@ -43,27 +43,33 @@ tags:
 
 ### 整体框架
 
-DreamPRVR 包含四个核心组件：(1) 文本语义结构学习，构建有序的文本潜空间并采样监督信号；(2) 基于截断扩散的全局 register 生成；(3) register 增强的视频表征学习；(4) 跨模态相似度计算。整体遵循变分推断框架，将 register 作为隐变量。
+DreamPRVR 想解决的是：未剪辑视频里塞满了与查询无关的片段，纯靠局部匹配会被"碰巧相似"的片段骗到，所以得先给视频一个可靠的全局语义锚点，再用它去压制局部的虚假尖峰。整条流水线就围绕这个锚点展开——先从查询侧学一个有结构的文本潜空间，采出监督信号；再用一个截断扩散模块以视频自身为起点，在文本引导下迭代"想象"出几枚承载整体语义的全局注册令牌（register）；然后把这些 register 拼回视频 token 序列做注意力融合，让全局上下文渗进每个局部表征；最后 register 退场，只用增强后的视频表征和文本算检索相似度。整个过程被组织成一个变分推断框架，register 被当作隐变量来建模。
 
 ### 关键设计
 
-1. **文本语义结构学习（TSSL）+ 文本扰动采样器（TPS）**:
+**1. 文本语义结构学习（TSSL）+ 文本扰动采样器（TPS）：把查询侧整理成有结构、能采样的监督源。**
 
-    - 功能：构建有序的文本潜空间并生成多样化的监督信号用于指导 register 生成
-    - 核心思路：TSSL 由两个损失组成：Query Diversity Loss $L_{div}$ 分散不同视频的查询嵌入增加语义丰富度，Query Similarity Preservation Loss $L_{qsp}$ 保持同一视频的查询嵌入紧密聚集（视为同一全局语义的互补正视图）。TPS 则通过对白化特征施加可控扰动 $\hat{q} = \alpha \cdot \bar{q} + \beta$ 来显式建模文本不确定性，其中 $\alpha \sim \mathcal{N}(1, (\gamma\sigma_q)^2I)$，无需额外可训练参数
-    - 设计动机：现有方法的查询多样性损失盲目分离所有查询，忽视了同一视频内查询的关联性。$L_{qsp}$ 弥补了这一缺陷，使潜空间同时具有视频内紧凑性和视频间区分性
+要让扩散去"想象"全局语义，得先有干净且多样的文本信号来监督它。现有的查询多样性损失有个毛病：它盲目地把所有查询都推开，连同属一个视频、本该互为补充的查询也被拆散了。TSSL 用两个损失修正这件事——Query Diversity Loss $L_{div}$ 负责把不同视频的查询嵌入分散开以撑大语义丰富度，而 Query Similarity Preservation Loss $L_{qsp}$ 则把同一视频的多条查询拉近，当作描述同一全局语义的互补正视图。两者合力让潜空间同时具备视频间的区分性和视频内的紧凑性。在此之上，TPS 通过对白化后的特征施加可控扰动来显式建模文本的不确定性：$\hat{q} = \alpha \cdot \bar{q} + \beta$，其中 $\alpha \sim \mathcal{N}(1, (\gamma\sigma_q)^2 I)$，整个采样不引入任何额外可训练参数，却能源源不断给扩散提供多样化的监督。
 
-2. **概率变分采样器（PVS）+ 扩散 Register 估计器（DRE）**:
+**2. 概率变分采样器（PVS）+ 扩散 Register 估计器（DRE）：从视频自身出发"想象"出纯净的全局语义。**
 
-    - 功能：从视频特征出发生成纯净的全局语义 registers
-    - 核心思路：PVS 首先将视频特征编码为概率分布 $p(r_T | V_v) \sim \mathcal{N}(\mu_v, \sigma_v^2 I)$，通过重参数化采样得到视频中心初始噪声 $r_T$。DRE 是一个轻量 MLP 扩散模块，以 $r_T$ 为起点（而非随机高斯噪声），在文本监督 $\hat{q}$ 的引导下执行 $T$ 步迭代去噪，最终生成最优 registers $r_0$。目标函数为标准 DDPM 噪声预测：$L_{dre} = \mathbb{E}_{t, \hat{q}_t, \epsilon}[\|\epsilon - \epsilon_\phi(\hat{q}_t, t, c)\|^2]$
-    - 设计动机：直接池化或一步映射难以从冗余噪声的未剪辑视频中解耦可靠的语义。PVS 提供语义化的起始点（截断扩散），DRE 通过迭代精炼逐步纯化语义。t-SNE 可视化证实 registers 从无序逐步形成有区分力的聚类
+如果直接对未剪辑视频做池化或一步映射，冗余噪声会把可靠语义淹没，根本解耦不出来。DreamPRVR 的做法是把它当成一个去噪问题。PVS 先把视频特征编码成一个概率分布 $p(r_T \mid V_v) \sim \mathcal{N}(\mu_v, \sigma_v^2 I)$，重参数化采样得到一个"以视频为中心"的初始噪声 $r_T$——这正是截断扩散的关键：起点不是随机高斯噪声，而是已经带着视频语义的分布。
 
-3. **Register 增强高斯注意力（RAB）**:
+$$
+L_{dre} = \mathbb{E}_{t, \hat{q}_t, \epsilon}\big[\|\epsilon - \epsilon_\phi(\hat{q}_t, t, c)\|^2\big]
+$$
 
-    - 功能：将生成的全局 registers 融入局部视频表征
-    - 核心思路：将视频 tokens 与 registers 拼接为 $x = [V_o, r_0]$，通过改进的高斯注意力处理：$\text{GA}(x) = \text{softmax}(\mathcal{M}_r + (\mathcal{M}_\sigma^g \odot \frac{x^q(x^k)^\top}{\sqrt{d_h}})) x^v$。使用非对称注意力掩码 $\mathcal{M}_r$：视频 tokens 可以关注 registers 和其他视频 tokens，但 registers 只关注视频 tokens。$N_a$ 个 RAB 并行排列，输出通过 MAIM 聚合
-    - 设计动机：非对称掩码设计让 registers 为视频 tokens 提供全局上下文信息，同时避免 registers 之间的信息短路。处理完后 registers 被丢弃，不参与最终的相似度计算
+DRE 是一个轻量 MLP 扩散模块，从 $r_T$ 出发、在文本监督 $\hat{q}$ 的引导下执行 $T$ 步迭代去噪，逐步把语义纯化成最优 registers $r_0$，训练目标就是上面这个标准的 DDPM 噪声预测。文中的 t-SNE 可视化能看到 registers 从初始的一团无序，沿着去噪步骤慢慢聚成有区分力的视频级簇——这也解释了为什么"视频中心起点 + 迭代精炼"比一步池化更能从噪声里捞出可靠语义。
+
+**3. Register 增强高斯注意力（RAB）：把全局 register 灌进每个局部视频表征。**
+
+register 生成出来还得真正影响视频表征才有用。RAB 把视频 token 和 register 拼成一条序列 $x = [V_o, r_0]$，送进一个改进的高斯注意力：
+
+$$
+\text{GA}(x) = \text{softmax}\Big(\mathcal{M}_r + \big(\mathcal{M}_\sigma^g \odot \tfrac{x^q (x^k)^\top}{\sqrt{d_h}}\big)\Big) x^v
+$$
+
+这里的关键是非对称注意力掩码 $\mathcal{M}_r$：视频 token 既能关注其他视频 token、也能关注 register，从而吸收全局上下文；但 register 只允许关注视频 token、彼此之间不互通。这样设计是为了让 register 单向地把全局信息"喂"给局部表征，又避免 register 之间互相参照造成信息短路。$N_a$ 个 RAB 并行排列、输出经 MAIM 聚合；融合一旦完成，register 就被丢弃，不参与最终的相似度计算——它的使命只是在中途注入全局语境。
 
 ### 损失函数 / 训练策略
 

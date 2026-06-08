@@ -39,57 +39,43 @@ CoLC 提出一种通信高效的早期协同感知框架，通过前景感知点
 
 ### 整体框架
 
-CoLC 包含三个互补模块：
-
-1. **FAPS (Foreground-Aware Point Sampling)**：邻居端执行空间感知的点云采样
-2. **CEEF (Completion-Enhanced Early Fusion)**：ego 端从稀疏输入重建稠密 pillar 并自适应融合
-3. **DGDA (Dense-Guided Dual Alignment)**：训练时的语义-几何双对齐监督
+CoLC 想同时拿到早期融合的信息保真度和中间融合的低带宽，关键做法是把"传完整点云"拆成"传少量关键点 + 在接收端补回来"。整条管线分布在两端：邻居智能体先用 FAPS 把原始点云筛成一小撮前景加背景点发出去；ego 端收到这些稀疏点后，用 CEEF 里的 LiDAR 补全模块把稀疏的 pillar 重建成稠密 pillar 再做检测；而 DGDA 只在训练时介入，用稠密全点云当老师，逼着补全出来的 pillar 在语义和几何上向真值靠拢。推理时不需要传输完整点云，带宽省下来，检测精度却靠补全和对齐补了回来。
 
 ### 关键设计
 
-#### 1. 前景感知点采样 (FAPS)
+**1. 前景感知点采样（FAPS）：传得少，但别把对齐的锚点也丢了。**
 
-对邻居智能体的原始点云 $\mathcal{X}_j \in \mathbb{R}^{M \times 4}$：
+作者先观察到一个反直觉现象——在早期融合里只传前景点，性能反而不如只传背景点。原因是前景点负责补全物体形状，背景点却提供了空间对齐用的上下文锚点，两者缺一不可。FAPS 因此对邻居点云 $\mathcal{X}_j \in \mathbb{R}^{M \times 4}$ 做差异化采样：先用一个预训练的轻量 MLP 点选择器估计显著性图 $\mathcal{S}_j \in [0,1]^M$，以 $\tau_s = 0.5$ 切成前景集 $\mathcal{X}_j^{fg}$ 和背景集 $\mathcal{X}_j^{bg}$。前景点数量少、但结构重要，用最远点采样（FG-FPS）以比率 $R^{fg}$ 抽取以保住物体轮廓，开销可忽略；背景点海量但只需稀疏锚点，用随机采样（BG-RPS）以比率 $R^{bg}$ 高效抽取。最终发出去的就是这一小撮前景加背景点——经验上约 20% 前景配适量背景就够支撑检测，再堆前景反而不如多给点背景上下文。
 
-- **前景/背景分离**：预训练轻量 MLP 点选择器估计显著性图 $\mathcal{S}_j \in [0,1]^M$，以阈值 $\tau_s = 0.5$ 分为前景集 $\mathcal{X}_j^{fg}$ 和背景集 $\mathcal{X}_j^{bg}$
-- **前景最远点采样(FG-FPS)**：对前景点用 FPS 以比率 $R^{fg}$ 采样，保持物体结构完整性。前景点数量少，FPS 开销可忽略
-- **背景随机采样(BG-RPS)**：背景点数量庞大，用随机采样以比率 $R^{bg}$ 高效获取稀疏子集
+**2. 补全增强早期融合（CEEF）：在 ego 端把稀疏点云"脑补"成稠密的。**
 
-最终传输的是包含采样前景和背景点的稀疏点云。关键洞察：仅 20% 前景 + 适量背景点即可有效支撑检测，过多前景点反而不如更多背景上下文。
-
-#### 2. 补全增强早期融合 (CEEF)
-
-核心是 VQ-based pillar 级 LiDAR 补全模块，用于从稀疏 pillar 重建稠密 pillar：
-
-**VQ-based LiDAR 补全流程**：
-
-(a) **稀疏编码器**：Swin Transformer（深度 L=6，嵌入维度 D=128）将稀疏 pillar $\mathcal{P}^s$ 编码为全局上下文 BEV 表示，投影到量化空间 $\mathbf{z}^s \in \mathbb{R}^{P \times D_c}$
-
-(b) **向量量化**：维护可学习码本 $E = \{\mathbf{e}_k\}_{k=0}^{K-1}$（K=128，$D_c$=128），将连续潜向量映射到最近码本条目：
+光传稀疏点不够，ego 端要把丢掉的信息补回来，CEEF 的核心就是一个 VQ-based 的 pillar 级 LiDAR 补全模块。它走编码—量化—解码三步：稀疏编码器用 Swin Transformer（深度 $L=6$，嵌入维度 $D=128$）把稀疏 pillar $\mathcal{P}^s$ 编码成带全局上下文的 BEV 表示并投影到量化空间 $\mathbf{z}^s \in \mathbb{R}^{P \times D_c}$；接着向量量化维护一个可学习码本 $E = \{\mathbf{e}_k\}_{k=0}^{K-1}$（$K=128$，$D_c=128$），把每个连续潜向量替换成最近的码本条目
 
 $$\mathbf{z}_i^q = \mathbf{e}_k, \quad k = \arg\min_j \|\mathbf{z}_i^s - \mathbf{e}_j\|_2$$
 
-(c) **稠密解码器**：将量化嵌入映射回 pillar 空间，输出重建稠密 pillar $\hat{\mathcal{P}}^d$ 和占用掩码 $\hat{\mathcal{O}}^d$
+最后稠密解码器把量化嵌入映射回 pillar 空间，输出重建的稠密 pillar $\hat{\mathcal{P}}^d$ 和占用掩码 $\hat{\mathcal{O}}^d$。之所以用离散码本而非连续重建，是因为它给检测下游提供了更具判别性的先验（后面消融里 VQ 的重建 MSE 和检测精度都优于 MAE-based）。
 
-**渐进式融合策略**（三阶段）：
-
-1. **初始稀疏早期融合**：ego 点云与收到的稀疏邻居点云拼接后 pillar 化为 $\mathcal{P}_i^{se}$
-2. **并行 pillar 补全**：对每个邻居的稀疏 pillar 独立补全，保留占用概率 > $\tau_o$ 的 pillar，并用原始稀疏 pillar 值替换对应位置以保持保真度
-3. **自适应互补融合**：计算空间相关性图 $\mathcal{W}_{j \to i}$（通过拼接 + 1×1 卷积 + softmax），加权融合补全 pillar，只更新初始融合中的空 pillar：
+补完单个邻居还不够，CEEF 用三阶段渐进式融合把多个邻居和 ego 自己拼到一起：第一阶段把 ego 点云和收到的稀疏邻居点云直接拼接、pillar 化成初始稀疏融合 $\mathcal{P}_i^{se}$；第二阶段对每个邻居的稀疏 pillar 独立并行补全，只保留占用概率 $> \tau_o$ 的 pillar，并用原始稀疏 pillar 的值覆盖对应位置以保住保真度；第三阶段做自适应互补融合，先算空间相关性图 $\mathcal{W}_{j \to i}$（拼接 + 1×1 卷积 + softmax）加权融合各邻居的补全 pillar，再只往初始融合的空 pillar 里填补全结果：
 
 $$\hat{\mathcal{P}}_i^{de} = \mathcal{M}_i^{se} \odot \mathcal{P}_i^{se} + (1 - \mathcal{M}_i^{se}) \odot \hat{\mathcal{P}}_i^f$$
 
-#### 3. 稠密引导双对齐 (DGDA)
+这里掩码 $\mathcal{M}_i^{se}$ 保证已有真实点的 pillar 不被补全结果污染，补全只负责填空，从而稠密度上来了、保真度也没丢。
 
-训练时将增强后的早期融合 pillar 与稠密全点云 pillar 在两个空间对齐：
+**3. 稠密引导双对齐（DGDA）：训练时让补全的 pillar 向真值看齐。**
 
-- **语义分布对齐**：通道维度 KL 散度
+补全难免有偏差，DGDA 在训练阶段引入稠密全点云 pillar $\mathcal{P}_i^{de}$ 当监督信号，从语义和几何两个角度把增强后的早期融合 pillar $\hat{\mathcal{P}}_i^{de}$ 往它身上拉。语义分布对齐用通道维度的 KL 散度逼近两者的分布
 
 $$\mathcal{L}_{sda} = D_{KL}(\sigma(\hat{\mathcal{P}}_i^{de}) \| \sigma(\mathcal{P}_i^{de}))$$
 
-- **几何方向对齐**：余弦相似度损失
+几何方向对齐则用余弦相似度损失约束特征方向一致
 
 $$\mathcal{L}_{gda} = \mathbb{E}_i\left[1 - \frac{\hat{\mathcal{P}}_i^{de} \cdot \mathcal{P}_i^{de}}{\|\hat{\mathcal{P}}_i^{de}\| \|\mathcal{P}_i^{de}\|}\right]$$
+
+两者一个管"值的分布像不像"、一个管"方向偏不偏"，合起来把补全引入的误差压住。这套对齐只在训练时生效，推理时不增加任何开销，却额外起到了正则作用——也是为什么 CoLC 传全点云时反而能略超早期融合基线（补全和对齐减少了过拟合）。
+
+### 一个完整示例：一帧两车协同检测
+
+设 ego 车 $i$ 和邻居车 $j$ 协同检测一个被 ego 视角遮挡的目标。邻居 $j$ 的原始点云有 $M$ 个点，点选择器先把它切成前景（目标车身上的点）和背景（路面、建筑等锚点）；FAPS 对前景以 $R^{fg}=0.2$ 做 FG-FPS、对背景做 BG-RPS，最终只发出约 20% 前景加一小撮背景点——传输量大幅缩水。ego 端收到后，先把这些稀疏点和自己的点云拼成初始稀疏 pillar $\mathcal{P}_i^{se}$，此时遮挡目标处的 pillar 还很稀疏甚至是空的；补全模块对邻居的稀疏 pillar 走一遍"Swin 编码 → 码本量化 → 解码"，把目标处补成稠密 pillar，但保留占用概率 $> \tau_o$ 的并用原始点值覆盖；最后自适应融合按相关性图 $\mathcal{W}_{j \to i}$ 加权，只把补全结果填进 $\mathcal{P}_i^{se}$ 里的空 pillar。送进 PointPillars 检测头时，原本被遮挡、靠 ego 单车看不全的目标，现在有了补回来的稠密形状，检测框就稳了。训练时 DGDA 还会拿这一帧的稠密全点云当真值，把补出来的 pillar 在语义和几何上校准一遍。
 
 ### 损失函数 / 训练策略
 

@@ -43,33 +43,15 @@ tags:
 
 ## 方法详解
 
-这是一篇 position paper，没有提出新模型，"方法"是一套**分析框架 + 实证流程 + 研究 agenda**。
+这是一篇 position paper，没有新模型也没有新 loss，论文的"方法"其实是一条论证链：先把"隐式语义"切成可评测的语言学三层框架，再综述当前嵌入研究证明它只学到表层，接着双轴归因解释"为什么连 SOTA 也搞不定"，然后在 7 个隐式语义数据集上做 pilot 把差距量化出来，最后落到一份社区可以接力的三轴 agenda。下面顺着这条链讲清四个核心主张。
 
-### 整体框架
-作者的论证链：建立语言学三层框架 → 综述当前嵌入研究证明其只聚焦表层 → 拆解"为什么会这样"（训练 + 评测）→ 在 7 个隐式语义数据集上做 pilot 量化差距 → 给出三个研究方向。
+**1. 隐式语义可以解剖成 Utterance / Speaker / Society 三层，从而变成可评测的对象。** 作者最先要解决的问题是"implicit meaning"太模糊、没法丈量，于是借语言学搭了一个三层框架把它落地。*Utterance Level* 借语用学（Grice 的合作原则、implicature、presupposition）关注"言外之意"，比如"Bart managed to pass the test"在字面之外暗示了"通过是出乎意料的"；*Speaker Level* 借 stance 理论的三个维度（evaluation / alignment / investment），关注说话人对话题和听者的情感与社会取向；*Society Level* 借社会语言学（Silverstein 的 indexicality、Bourdieu 的语言意识形态），关注方言、register、style-shifting 如何编码身份与权力关系。这套"先定义、再丈量、再呼吁"的拆解，正是为了让第 6 节能直接对应挑出数据集做量化，而不是停在口号。
 
-### 关键设计
+**2. 当前嵌入抓不住隐式语义是结构性的，根子在训练信号和评测目标双双错位。** 把框架立起来后，作者要回答"为什么先进嵌入也搞不定"，并刻意把责任从"模型不够强"转到"信号和目标错了"，这样改进方向才落在换数据、换 benchmark 而非堆参数。训练轴上，自监督方法（SimCSE 的 dropout、DenoSent）只强化"对表层扰动的不变性"，监督学习用的 STS / NLI / IR 数据集本质上奖励词汇重叠或字面等价——NLI 的句对往往只差句法，MS MARCO 测的是 query-doc 的字面相关；多任务训练（mGTE、Jina、E5）扩了 domain 却没改变这种监督形态。评测轴上，MTEB / BEIR 几乎只在表层相似上打分，再叠加数据泄漏与分数膨胀，让 leaderboard 与真实泛化越走越远。两轴一起，模型自然"在容易测的方向越跑越好，在语言学真正重要的方向几乎没动"。
 
-1. **三层隐式语义框架（Utterance / Speaker / Society）**：
+**3. 解法是一份三轴 agenda：多样化对比训练数据、隐式语义 benchmark、重定义建模目标。** 指出问题之后，position 论文必须给出可执行的工作清单。数据上，作者主张不要只 scale web text，而要为嵌入专门造**对比性监督**——构造表层相似但 implied meaning 不同的样本（implicature、presupposition、stance、sarcasm、方言），可用 LLM 合成再让强 cross-encoder teacher 蒸馏软标签。benchmark 上，要设计直接测语用推理、立场识别、社会语境的任务，并配防 leakage 协议。建模目标上，要把"区分表层等价但隐式不同的文本"写成显式的训练目标，并把 instruction-following retrieval（用 query 指令条件化嵌入空间，Su et al. 2023；Weller et al. 2024）当作通向该目标的过渡路径。
 
-    - 功能：把"隐式语义"这个模糊概念解剖成 NLP 可直接评测的三个层次。
-    - 核心思路：(a) *Utterance Level* 借语用学（Grice 的合作原则、implicature、presupposition），关注"言外之意"，如"Bart managed to pass the test"暗示成功在意料之外；(b) *Speaker Level* 借 stance 理论的三维（evaluation / alignment / investment），关注说话人对话题与听者的情感与社会取向；(c) *Society Level* 借社会语言学（Silverstein 的 indexicality、Bourdieu 的语言意识形态），关注方言、register、style-shifting 如何编码身份与权力关系。
-    - 设计动机：把抽象的"deep meaning"落地成可测对象，从而能在第 6 节直接挑选数据集做量化。这也是 position 论文常用的"先定义、再丈量、再呼吁"路径。
-
-2. **结构性失败分析（训练 × 评测 双轴归因）**：
-
-    - 功能：解释"为什么先进嵌入也搞不定隐式语义"。
-    - 核心思路：训练轴上，自监督（SimCSE dropout / DenoSent）只强化"对表层扰动的不变性"，监督学习的 STS / NLI / IR 数据集本质上奖励词汇重叠或字面等价（如 NLI 的句对只差句法；MS MARCO 测 query-doc 字面相关）。多任务训练（mGTE、Jina、E5）扩了 domain 但没改变监督形态。评测轴上，MTEB / BEIR 几乎只在表层相似上打分，泄漏和分数膨胀进一步让 leaderboard 与真实泛化脱钩。
-    - 设计动机：把责任从"模型不够强"转到"训练信号 + 评测目标错位"，从而给出可操作的改进方向（换数据、换 benchmark），而非简单堆参数。
-
-3. **三轴 agenda：多样化训练数据 + 隐式语义 benchmark + 建模目标重定义**：
-
-    - 功能：把"应该怎么做"转成可执行的三件事。
-    - 核心思路：(a) 数据上，不只是 scale web text，而是为嵌入造**对比性监督**——表层相似但 implied meaning 不同的样本（implicature / presupposition / stance / sarcasm / 方言），可用 LLM 合成 + 强 cross-encoder teacher 蒸馏；(b) benchmark 上，设计直接测语用推理、立场识别、社会语境的任务，并防 leakage；(c) 建模目标上，把"区分表层等价但隐式不同的文本"作为显式 loss，可走 instruction-following retrieval（用 query 指令条件化嵌入空间，Su et al. 2023; Weller et al. 2024）作为过渡路径。
-    - 设计动机：position 论文必须给出社区可以接力的工作清单，而不是只指出问题。
-
-### 损失函数 / 训练策略
-作者未提出新损失，但在 §7.3 建议未来工作可设计这样的对比目标：拉近 *表层不同但隐式意图相同* 的样本、推远 *表层几乎一样但 implied meaning 相反* 的样本（如同一句话在不同 stance 下的反讽），并配合多任务（pragmatics + stance + social meaning）和 LLM teacher 蒸馏。
+**4. 未来的训练目标应是一种隐式语义敏感的对比 loss。** 虽然没提出新损失，作者在 §7.3 把第 3 点里的"建模目标"进一步具体成一个对比目标的设想：拉近*表层不同但隐式意图相同*的样本，推远*表层几乎一样但 implied meaning 相反*的样本（典型如同一句话在不同 stance 下的反讽），并配合多任务（pragmatics + stance + social meaning）训练和 LLM teacher 蒸馏。这给后续工作留了一个边界清晰的 entry point，也呼应了第 2 点对"表层不变性假设"的批评——要主动在表层等价处制造区分压力。
 
 ## 实验关键数据
 

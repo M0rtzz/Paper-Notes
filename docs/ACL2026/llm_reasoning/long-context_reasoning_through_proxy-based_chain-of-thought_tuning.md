@@ -46,23 +46,18 @@ ProxyCoT 是一个两阶段训练框架。第一阶段只看短 proxy context，
 Stage 2 使用 SFT，把 Stage 1 得到的轨迹作为监督，但输入换成 $(q,C)$。这一步要求模型在完整长上下文中复现 proxy-derived CoT，从而学习证据 grounding。论文分别在 Qwen3-4B-Instruct-2507 和 Gemma3-4B-IT 上验证，任务包括 SciTrek 和 HotpotQA，并在 Loong 上做 out-of-domain 测试。
 
 ### 关键设计
-1. **Proxy context 作为推理等价短输入**:
 
-	- 功能：降低获取推理轨迹的上下文长度和计算成本。
-	- 核心思路：SciTrek 的问题多来自文章标题、作者和引用等 metadata，因此把结构化 metadata 作为 proxy；HotpotQA 则用人工标注 supporting sentences 作为 proxy。
-	- 设计动机：如果短证据已经足以回答问题，那么在短输入上训练推理比在长输入上反复采样更高效。
+**1. Proxy context 作为推理等价短输入：用一小段关键证据替代长输入来产生推理轨迹。**
 
-2. **两种 CoT 获取路径**:
+直接在 64K、128K 甚至更长的 full context 上反复采样推理轨迹，成本极高，而且教师自己在长输入里也容易 grounding 失败、写出不可靠的链路。ProxyCoT 的出发点是：长上下文任务的推理逻辑往往只依赖一小段关键证据，于是把这段证据单独抽出来构成 proxy context $C^p$，满足 $|C^p|\ll|C|$，但保持与 full context 相同的问题、答案和推理步骤——相当于一个"完美检索"的上界。具体怎么抽 proxy 取决于任务结构：SciTrek 的问题大多来自文章标题、作者、引用等 metadata，就把结构化 metadata 当 proxy；HotpotQA 则直接用人工标注的 supporting sentences。因为短证据已足以答对题，在它上面训练或采样推理，远比在长输入上反复折腾更划算。
 
-	- 功能：同时覆盖有强教师和无强教师的场景。
-	- 核心思路：ProxyCoT-ZS 让 Qwen3-235B-A22B-Thinking 在 proxy context 上生成 CoT，并只保留正确轨迹；ProxyCoT-RL 用 DAPO / RLVR 在 proxy context 上直接优化目标模型，奖励为 F1 加 exact match。
-	- 设计动机：大教师在短 proxy 上更便宜、更可靠；RLVR 也因为输入短而可训练，避免直接在 full context 上采样。
+**2. 两种 CoT 获取路径：同时覆盖有强教师和无强教师两种场景。**
 
-3. **长上下文 grounding SFT**:
+光有 proxy context 还需要一条正确的推理轨迹作为监督，论文给了两条互补的路径。有强教师时走 ProxyCoT-ZS：让 Qwen3-235B-A22B-Thinking 在 proxy context 上多次采样，只保留答案正确的轨迹——大教师在短 proxy 上既便宜又可靠。没有合适教师时走 ProxyCoT-RL：让目标模型自己在 proxy context 上做 RLVR（DAPO），奖励取 F1 加 exact match，直接优化出能答对的轨迹。关键在于两条路径都把昂贵环节锁在短输入上：大教师不必反复读 128K 全文，RL 采样也因为输入短而真正可训练，避免了直接在 full context 上做 RL 的高成本。
 
-	- 功能：把短上下文推理能力迁移到完整长输入。
-	- 核心思路：SFT 目标为最大化 $p_\theta(t\mid q,C)$，即给定 full context 生成 proxy context 上得到的正确推理轨迹。
-	- 设计动机：只在 proxy 上会让模型依赖短证据格式，不能保证长输入可用；第二阶段强制模型在长文本中对齐相同推理步骤。
+**3. 长上下文 grounding SFT：把短证据上学到的推理迁回完整长输入。**
+
+如果只在 proxy 上训练，模型会依赖短证据的格式，换成真实长输入时仍然定位不到证据。第二阶段因此用 SFT 把 Stage 1 得到的轨迹 $t$ 作为监督，但输入换成完整的 $(q,C)$，目标是最大化 $p_\theta(t\mid q,C)$——强迫模型在长文本里复现出 proxy 上那条正确推理，从而真正学会在长输入中定位并使用对应证据。这一步是 full context 性能的关键来源：消融里 Qwen3-4B 单独 RLVR 的 full 指标只有 29.0，叠上 grounding SFT 后升到 46.5。
 
 ### 损失函数 / 训练策略
 ProxyCoT-ZS 的 SFT 使用 $\mathcal{L}_{SFT}=-\mathbb{E}[\log p_\theta(t\mid q,C)]$。ProxyCoT-RL 先用 RLVR 在 proxy context 上优化，奖励 $R(a,\hat{a})=F1(a,\hat{a})+\mathds{1}_{a==\hat{a}}$，然后从 RL checkpoint 继续 SFT。实现上，RL 使用 OpenRLHF，batch size 64，最大生成长度 2,048，actor learning rate 为 $5e{-7}$，每个 prompt 采样 8 条轨迹，训练 10 epochs；SFT batch size 64，learning rate $5e{-6}$，前 10% steps 线性 warmup。

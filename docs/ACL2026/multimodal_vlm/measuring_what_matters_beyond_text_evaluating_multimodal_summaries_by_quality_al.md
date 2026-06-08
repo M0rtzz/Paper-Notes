@@ -44,23 +44,25 @@ MM-Eval 接收源文档 $D = \{T_{source}, V_{source}\}$ 和候选摘要 $S_{can
 
 ### 关键设计
 
-1. **Pillar 1: 文本质量 = OpenFActScore (硬事实) + G-Eval (软质量)**：
+**1. Pillar 1：文本质量 = OpenFActScore（硬事实）+ G-Eval（软质量），把事实和文风分开度量再合并。**
 
-    - 功能：把"事实正确"和"语言流畅、连贯、切题"两类异质指标分开度量再合并，避免事实错误被高 fluency 掩盖。
-    - 核心思路：先用 instruction-tuned LLM 把生成摘要 $T_{gen}$ 分解为原子事实集合 $A=\{a_1,\dots,a_m\}$，每个 $a_i$ 单独由第二个 LLM 二元判别是否被源文支持，得 $S_{fact} = \frac{1}{|A|}\sum_i v_i$；G-Eval 用 CoT + probability-weighted scoring 给 $S_{rel}, S_{coh}, S_{flu}$。最终 $S_{text} = w_1 S_{fact} + w_2 S_{rel} + w_3 S_{coh} + w_4 S_{flu}$，权重由 Ridge 学到（事实占 0.55，连贯 0.29，流畅 0.15，切题 0.02）。
-    - 设计动机：原子化让分数对 paraphrase 和长度免疫，把事实评估从 n-gram recall 提升为 fact-level precision；G-Eval 的概率加权解决了 LLM 打分在相邻分数间震荡的 variance 问题。
+ROUGE 只看 n-gram，一段事实全错但读起来流畅的摘要照样能拿高分。MM-Eval 的第一根支柱把"事实对不对"和"语言好不好"拆成两类异质指标分别评。事实侧走 decompose-then-verify：先用 instruction-tuned LLM 把生成摘要 $T_{gen}$ 分解为原子事实集合 $A=\{a_1,\dots,a_m\}$，再让第二个 LLM 对每个 $a_i$ 二元判别是否被源文支持，得 $S_{fact} = \frac{1}{|A|}\sum_i v_i$。文风侧用 G-Eval 的 CoT + 概率加权打分，给出切题 $S_{rel}$、连贯 $S_{coh}$、流畅 $S_{flu}$。
 
-2. **Pillar 2: MLLM-as-a-Judge 跨模态对齐**：
+四个子分量再用 Ridge（$\alpha=1.0$）聚合成 $S_{text} = w_1 S_{fact} + w_2 S_{rel} + w_3 S_{coh} + w_4 S_{flu}$，学到的权重是事实 0.55、连贯 0.29、流畅 0.15、切题 0.02。原子化的好处是分数对 paraphrase 和长度免疫——把事实评估从"n-gram recall"提升到"fact-level precision"；G-Eval 的概率加权则压住了 LLM 在相邻分数间反复横跳的方差问题。
 
-    - 功能：判断选出的图是否在语义上 complement / supplement 文字摘要，绕过 Image Precision "必须选到 reference 图"的死规矩。
-    - 核心思路：用 LLaVA-v1.6-mistral-7b-hf 作为 judge，对每个 (文本片段, 候选图) 对做 CoT 推理后输出 1–5 likert，再归一化到 $[0,1]$。同 pillar 内不引入额外子指标，结构上保持单一分数，方便随模型迭代直接替换。
-    - 设计动机：人对 image-text alignment 的判断包含 pragmatic 推理（图是否"补充"了未在文字中点明的细节），这种判断只有强 MLLM 能做；CoT 推理稳定了打分方差。
+**2. Pillar 2：MLLM-as-a-Judge 跨模态对齐，绕开 Image Precision"必须选中参考图"的死规矩。**
 
-3. **Pillar 3: Truncated CLIP Entropy 视觉多样性**：
+Image Precision 假设有一个标准图集，模型选了语义等价但不在集里的图就 0 分。第二根支柱改用 LLaVA-v1.6-mistral-7b 当 judge，对每个（文本片段，候选图）对先做 CoT 推理，再输出 1–5 的 likert 分，归一化到 $[0,1]$。它判断的不是"图和文字像不像"，而是图有没有在语义上 complement / supplement 文字——是否补充了文字里没点明的细节。
 
-    - 功能：惩罚冗余图（如示威新闻里多张同一场景不同角度的照片），鼓励 informational diversity 而非视觉差异。
-    - 核心思路：对选出的 $k$ 张图取 CLIP embedding $F$，算经验协方差 $C$ 的特征值 $\lambda_i$，前 20 大特征值归一化为概率 $p_i$，再算 Von Neumann 熵 $S_{diversity} = -\sum_{i=1}^k p_i \log(p_i)$，把"图集占据 CLIP 语义空间的体积"作为多样性度量。
-    - 设计动机：像素级 / pairwise 距离指标在"两张同场景照片"上会判为差异大，但语义上冗余；CLIP 语义空间 + 谱熵则只在语义重叠时才惩罚，且天然 reference-free，无需 FID 那种巨量样本。
+这种 pragmatic 推理只有强 MLLM 做得了，而 CoT 推理又稳定了打分方差。这根支柱内部刻意不再拆子指标、保持单一分数，目的是将来 MLLM 升级了可以直接换 judge，框架其余部分不用动。
+
+**3. Pillar 3：Truncated CLIP Entropy 视觉多样性，用谱熵惩罚"语义冗余"而非"视觉差异"。**
+
+示威新闻里常配好几张同一场景不同角度的照片，pixel-level 或 pairwise 距离会判它们"差异很大"，但信息上是冗余的。TCE 换个角度：对选出的 $k$ 张图取 CLIP embedding $F$，算经验协方差 $C$ 的特征值 $\lambda_i$，取前 20 大特征值归一化为概率 $p_i$，再算 Von Neumann 熵：
+
+$$S_{diversity} = -\sum_{i=1}^k p_i \log(p_i)$$
+
+它度量的是"图集在 CLIP 语义空间里占了多大体积"——只有当图真的语义重叠时熵才会塌下来，所以惩罚的是信息冗余而非画面相似。这个度量天然 reference-free，不像 FID 那样需要海量样本估分布，特别适合 MSMO 每篇摘要才 3–5 张图的小集合。
 
 ### 损失函数 / 训练策略
 两阶段 Ridge 回归。阶段 1：在 mLLM-EVAL 的 ~1500 条人评样本上用 5-fold CV 学 $S_{text}$ 内部 4 个权重 ($\alpha=1.0$)；阶段 2：学三大 pillar 的最终系数 $\beta$ ($\alpha=0.1$)，目标 $\hat\beta = \arg\min_\beta \sum_i (\beta^T X_i - y_{human}^{(i)})^2$，数据 80/20 按 summarization 系统分层切分。学到的签名系数：$\beta_{text} = 2.7721$（正且大），$\beta_{relevance} = 0.2256$（正小），$\beta_{diversity} = -0.4991$（**负**，因为该数据集里冗余图集常与弱文本共现，构成 confounder）。

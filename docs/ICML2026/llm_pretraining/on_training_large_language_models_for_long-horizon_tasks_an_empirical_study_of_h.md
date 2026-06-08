@@ -41,29 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整套 pipeline 是"诊断—干预—验证"三段式：(a) **诊断**：在控制求解复杂度的前提下，对 Qwen3-1.7B 在 L1–L4 上做 SFT + REINFORCE 风格 RL，观察训练曲线随 horizon 变长如何崩塌；(b) **干预**：提出两类 horizon reduction 机制——macro actions（单步执多个 atomic action）和 subgoal decomposition（按子目标切段并独立算回报）；(c) **验证**：在 Rush Hour、WebShop、更大模型（4B）、GRPO 风格优化器上做 robustness 检查，并测 L5–L7 上的 horizon generalization。
+这篇论文走"诊断—干预—验证"的路子：先在控制求解复杂度的前提下，对 Qwen3-1.7B 在 L1–L4 上做 SFT + REINFORCE 风格 RL，观察训练曲线随 horizon 变长怎么崩；再提出两类 horizon reduction 机制——macro action（单步执多个原子动作）和 subgoal decomposition（按子目标切段独立算回报）——把有效 horizon 压回 RL 能稳学的区间；最后在 Rush Hour、WebShop、4B 模型、GRPO 优化器上交叉验证 robustness，并测 L5–L7 上的 zero-shot horizon generalization。
 
 ### 关键设计
 
-1. **Horizon 形式化与控制实验设计**:
+**1. Horizon 形式化与控制实验设计：把 horizon 从所有其他困难因素里干净拆出来。**
 
-    - 功能：把"horizon 长度"从所有其他困难因素里干净地拆出来。
-    - 核心思路：作者把 horizon 三分——目标距离 $d(s_0, g)$（最优策略下到达 $g$ 的原子动作数）、交互预算 $H_{\max}$、有效 horizon $h_\pi(s_0, g)$（策略实际花的步数），满足 $d \le h_\pi \le H_{\max}$。Sudoku 用空格数当 $d$ 的代理，并通过 HoDoKu 求解器保证所有训练实例都"只需要 basic 技巧"，把推理复杂度钉死；Rush Hour 用最少移动数 min_moves 当 $d$。然后用 short-horizon proxy（让模型一步给整个答案）筛掉"模型本身就不会解"的实例，剩下的就**只在 horizon 上有差异**。
-    - 设计动机：这是整篇论文成立的基石——没有这套数据集，"horizon 是独立 bottleneck"的结论就无法立住。Sudoku 之所以理想，是因为 LLM 对它有大量先验知识，能解短版必然意味着具备求解能力。
+社区一直没法判断长 horizon RL 失败到底来自"步数多"还是"题更难"，因为现实任务里两者天然耦合。作者先把 horizon 拆成三个量——目标距离 $d(s_0, g)$（最优策略到达 $g$ 的原子动作数）、交互预算 $H_{\max}$、有效 horizon $h_\pi(s_0, g)$（策略实际花的步数），三者满足 $d \le h_\pi \le H_{\max}$。在此之上构造单变量数据集：Sudoku 用空格数当 $d$ 的代理，并通过 HoDoKu 求解器把所有训练实例钉死在"只需 basic 技巧"上，从而把推理复杂度固定；Rush Hour 用最少移动数 min_moves 当 $d$。再用 short-horizon proxy（让模型一步给整个答案）筛掉"模型本身就不会解"的实例，剩下的实例**只在 horizon 上有差异**，按 $d$ 切成 L1–L7 七级。之所以选 Sudoku，是因为 LLM 对它有大量先验知识，能解短版几乎必然意味着具备求解能力——这套数据集是全文成立的基石，没有它"horizon 是独立 bottleneck"的结论就立不住。
 
-2. **Critic-free off-policy REINFORCE 与 reward decoupling**:
+**2. Critic-free off-policy REINFORCE 与 reward decoupling：在长 horizon 下给一个稳定优化器，且让 step penalty 不污染 trajectory 信号。**
 
-    - 功能：在长 horizon 下提供一个稳定的 RL 优化器，同时让 step-level penalty 不污染 trajectory-level 学习信号。
-    - 核心思路：放弃 PPO 的 critic（长 horizon 下 value-based variance reduction 已被证明衰减），回到带 baseline 的 REINFORCE：$A_t = \hat r_t^{\text{traj}} + \alpha \hat r_t^{\text{step}}$，其中 $r^{\text{traj}}_t = \sum_{k=t}^{T-1} \gamma^{k-t} r_k$ 是 trajectory 回报，$r^{\text{step}}_t = r^{\text{format}}_t + r^{\text{valid}}_t$ 惩罚 parsing/无效动作，两者各自做 batch 归一化后再加权（$\alpha = 0.2$）。off-policy 时用 MIS（masked importance sampling, 基于几何均值比率的 clip）× TIS（truncated IS, 基于序列级 ratio 的 clip）联合修正：$w_t = \mathbb{I}(C_{\text{low}}\le \rho_{\text{geo},t}\le C_{\text{high}}) \cdot \min(\rho_{\text{seq},t}, C)$。
-    - 设计动机：作者揭示长 horizon RL 失败的核心机理之一是 **negative advantage 的扩散性**——sample token 被惩罚时概率会扩散到整个 vocab，长 trajectory 中一两个错误会污染全部 token；reward decoupling 防止 step penalty 把 trajectory 信号搅烂，IS 双 clip 防止 off-policy 漂移雪上加霜。
+长 horizon 下 value-based 的方差缩减已被证明衰减，所以作者干脆放弃 PPO 的 critic，回到带 baseline 的 REINFORCE：$A_t = \hat r_t^{\text{traj}} + \alpha \hat r_t^{\text{step}}$，其中 $r^{\text{traj}}_t = \sum_{k=t}^{T-1} \gamma^{k-t} r_k$ 是 trajectory 回报，$r^{\text{step}}_t = r^{\text{format}}_t + r^{\text{valid}}_t$ 单独惩罚 parsing/无效动作，两者各自做 batch 归一化后再以 $\alpha = 0.2$ 加权——这一步 reward decoupling 是关键，否则 step penalty 会把 trajectory 学习信号搅烂。off-policy 阶段再用 MIS（masked importance sampling，基于几何均值比率的 clip）× TIS（truncated IS，基于序列级 ratio 的 clip）联合修正：$w_t = \mathbb{I}(C_{\text{low}}\le \rho_{\text{geo},t}\le C_{\text{high}}) \cdot \min(\rho_{\text{seq},t}, C)$，防止 off-policy 漂移雪上加霜。这套设计直指作者揭示的崩溃机理之一——**negative advantage 的扩散性**：被惩罚的 sample token 会把概率扩散到整个 vocab，长 trajectory 里一两个错误就能污染全部 token，解耦 reward + 双 clip 正是为了挡住这种扩散。
 
-3. **Horizon Reduction：macro actions 与 subgoal decomposition**:
+**3. Horizon Reduction：macro action 与 subgoal decomposition，把有效 horizon 物理压回 RL 稳定区。**
 
-    - 功能：把有效 horizon $h_\pi(s_0, g)$ 物理地压缩到 RL 仍能稳定的区域。
-    - 核心思路：
-      (a) **Macro action**：让策略一次产出多个原子动作（Sudoku 多格填值、Rush Hour `move(id, direction, N)` 多格移动），把 $\pi'$ 定义在宏动作空间上，使得 $h_{\pi'}(s_0, g) \le h_\pi(s_0, g)$。作者特别比较了 atomic vs fixed-length (恰好 $k$ 步) vs flexible ($n\le 5$) 三种设计，发现 fixed-length 因 overshooting 反而最差，flexible 由策略自主决定动作长度最优。
-      (b) **Subgoal decomposition**：把全局目标 $g$ 拆成可独立验证的子目标序列 $(g_1, \ldots, g_k)$（Sudoku 的子宫格正确率天然适合），按子目标 segment 计算独立的 segment-wise $G_t$。这等价于把一个长 sparse-reward MDP 切成多个短 dense-reward MDP。
-    - 设计动机：与其设计复杂训练算法，不如"消灭问题"——RL 稳定性主要看 $h_\pi$ 而不是 $d$，那就直接降 $h_\pi$。这也对应论文最响亮的口号 "The best way to escape from a problem is to solve it." 作者还做了关键 ablation：用 macro-action 训练但**强制只执行 1 个原子动作**——结果照样崩溃，证明 macro action 的真实贡献是降 horizon，而不是提升 base policy 的探索能力。
+既然 RL 稳定性主要看 $h_\pi$ 而非 $d$，那就别再卷复杂算法、直接降 $h_\pi$，对应论文最响亮的口号 "The best way to escape from a problem is to solve it."。第一种机制 **macro action** 让策略一次产出多个原子动作（Sudoku 多格填值、Rush Hour `move(id, direction, N)` 多格移动），把 $\pi'$ 定义在宏动作空间上，使 $h_{\pi'}(s_0, g) \le h_\pi(s_0, g)$；作者对比 atomic vs fixed-length（恰好 $k$ 步）vs flexible（$n\le 5$）三种粒度，发现 fixed-length 因 overshooting 反而最差，flexible 让策略自主决定动作长度最优。第二种机制 **subgoal decomposition** 把全局目标 $g$ 拆成可独立验证的子目标序列 $(g_1, \ldots, g_k)$（Sudoku 的子宫格正确率天然适合），按 segment 计算独立的 segment-wise $G_t$，等价于把一个长 sparse-reward MDP 切成多个短 dense-reward MDP。一个关键 ablation 坐实了机理：用 macro-action 训练但**强制每步只执行 1 个原子动作**，照样崩溃——说明 macro action 的真实贡献是降 horizon，而非提升 base policy 的探索能力。
 
 ### 损失函数 / 训练策略
 基础模型 Qwen3-1.7B（验证用 4B、Llama3 等），先在 GPT-5-mini 生成的 expert trajectory 上做 SFT，再用上述 off-policy REINFORCE 做 4 epoch RL；rollout/inference 温度都用 0.8，pass@K / avg@K 用每实例 4 trajectory 估。

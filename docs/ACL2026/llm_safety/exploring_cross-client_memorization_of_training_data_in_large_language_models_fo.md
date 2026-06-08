@@ -46,23 +46,17 @@ tags:
 
 ### 关键设计
 
-1. **从同 sample 假设扩展到 client-pair 度量**:
+**1. 从同 sample 假设扩展到 client-pair 度量：让"A 的 prefix 拉出 B 的 suffix"第一次可被量化。**
 
-    - 功能：把 CL 时代的"prefix $\in P$, suffix $\in S$ 同句"假设松绑为"prefix 来自 client $j$, suffix 来自 client $k$"，从而首次能定量捕获 FL 下"client A 的查询拉出 client B 的私有 suffix" 这种最危险的隐私泄露。
-    - 核心思路：Definition 3.1 形式化为"存在 $s_k \in S_k$ 使得 $F(M(p_j), s_k) = \text{True}$"，并把它进一步细分成 intra-client（$j=k$，harm-exposed）和 inter-client（$j \neq k$，直接 harmful）两类。然后定义 $\text{MR}_{j \to k} = |P_{j,k}| / |P_j|$ 作为 client 对粒度的原子度量，所有上层指标都是它的加权聚合。
-    - 设计动机：现有 CL 度量 $|\{p \in P : \exists s, F(M(p), s) = \text{True}\}| / |P|$ 在 FL 下要么只算同 client（漏掉跨 client 风险），要么所有 client 数据混在一起算（无法区分 harm-exposed vs harmful）；client-pair 矩阵 $\text{MR}_{j \to k}$ 是数学上能同时承载两种粒度的最小信息单元。
+CL 时代的记忆度量都默认"记住的 suffix 只能被同一句的 prefix 触发"，这在集中式下没问题，可一搬到 FL 就漏掉了最危险的那类泄露——client A 的查询把 client B 的私有 suffix 钓出来。作者把判定函数里的同句假设松绑：Definition 3.1 形式化为"存在 $s_k \in S_k$ 使得 $F(M(p_j), s_k) = \text{True}$"，prefix 来自 client $j$、suffix 来自 client $k$，并据此把记忆切成 intra-client（$j=k$，harm-exposed）和 inter-client（$j \neq k$，直接 harmful）两类。在此之上定义 client 对粒度的原子度量 $\text{MR}_{j \to k} = |P_{j,k}| / |P_j|$，上层所有指标都是它的加权聚合。之所以非得用这个 client 对矩阵，是因为旧度量 $|\{p \in P : \exists s, F(M(p), s) = \text{True}\}| / |P|$ 在 FL 下只有两条糟糕的路：要么只算同 client（漏掉跨 client 风险），要么把所有 client 数据混在一起算（分不清 harm-exposed 和 harmful）——而 $\text{MR}_{j \to k}$ 是数学上能同时承载这两种粒度的最小信息单元。
 
-2. **PAN2014 三层 fine-grained 检测器 + Elasticsearch 加速**:
+**2. PAN2014 三层 fine-grained 检测器 + Elasticsearch 加速：既不低估改写式记忆，又把 $O(n^2)$ 比对压到可行。**
 
-    - 功能：避免 verbatim-only 度量低估真实记忆量，同时把"对每个 prefix 比 all suffix"的 $O(n^2)$ 复杂度降到可行。
-    - 核心思路：(a) 用 Lee 2023 改进版的 PAN2014 plagiarism detector 同时支持 verbatim（字面）+ paraphrase（同义改写，再分 $p>0.5$ 高置信和 $p<0.5$ 低置信）+ idea（概念相似）三层，能捕捉"用不同词说同一件事"的更隐蔽记忆；(b) 用 Elasticsearch 对每个 client 的 4000 个 suffix 建索引，对每个 $M(\tilde{p})$ 检索 top-10 候选后才 run PAN2014，把比较次数从 $n \times n = 1.6 \times 10^7$ 降到 $n \times 10 = 4 \times 10^4$。
-    - 设计动机：作者继承 Zeng 2024 验证有效的设计；但作者也在 Appendix E.5 诚实说明 PAN2014 对**不连贯输出**（如重复 "lobes, lobes, lobes" 这种 mode collapse）会误判为 idea memorization，因为它是为 human-like text 设计的——这是该范式的内在局限。
+只认逐字匹配（verbatim）会严重低估真实记忆量——模型常常用不同的词复述同一件事；可若要"每个 prefix 比对全部 suffix"，复杂度又是 $O(n^2)$ 跑不动。作者沿用 Zeng 2024 验证有效的设计，用 Lee 2023 改进版的 PAN2014 抄袭检测器同时支持三层粒度：verbatim（字面）、paraphrase（同义改写，再按 $p>0.5$ 高置信与 $p<0.5$ 低置信细分）、idea（概念相似），从而把"换词复述"这种更隐蔽的记忆也抓出来。为了降复杂度，先用 Elasticsearch 给每个 client 的 4000 条 suffix 建索引，对每个续写 $M(\tilde{p})$ 只检索 top-10 候选再跑 PAN2014，把比较次数从 $n \times n = 1.6 \times 10^7$ 砍到 $n \times 10 = 4 \times 10^4$。作者也在 Appendix E.5 诚实交代了这套范式的天花板：PAN2014 是为 human-like text 设计的，遇到 mode collapse 式的不连贯输出（如反复吐 "lobes, lobes, lobes"）会误判成 idea memorization——这是工具本身的内在局限，而非实现 bug。
 
-3. **client-pair 矩阵 → Intra/Inter/Total 三层聚合度量**:
+**3. client-pair 矩阵 → Intra/Inter/Total 三层聚合度量：一个底层矩阵同时回答三类问题。**
 
-    - 功能：让同一个底层 $\text{MR}_{j \to k}$ 矩阵能同时回答"同 client 内有多少泄露 / 跨 client 有多少泄露 / FL vs CL 总泄露差多少"三类问题。
-    - 核心思路：$\text{MR}_{\text{Intra}} = \sum_j w_j \cdot \text{MR}_{j \to j}$，$\text{MR}_{\text{Inter}}(j) = \frac{1}{L-1}\sum_{j \neq k} \text{MR}_{j \to k}$ 然后 $\text{MR}_{\text{Inter}} = \sum_j w_j \cdot \text{MR}_{\text{Inter}}(j)$（$w_j = |D_j| / \sum_i |D_i|$ 是 client 数据量权重）。$\text{MR}_{\text{TotalFL}} = |\bigcup_{j,k} P_{j,k}| / |\bigcup_j P_j|$ 用并集而非求和避免双计——同一个 prefix 可能同时记住多个 client 的 suffix。
-    - 设计动机：分别用 weighted average 让大 client 不被小 client 噪音淹没；用并集计算 Total 是因为"一个 prefix 触发任意泄露就该算一次"，避免把"泄露范围广"和"泄露次数多"混为一谈。
+研究者其实想知道三件不同的事——同 client 内泄露多少、跨 client 泄露多少、FL 比 CL 总体上多记还是少记——但若各设一套独立度量就会割裂、也难公平对照。作者让它们全部由同一个 $\text{MR}_{j \to k}$ 矩阵聚合而来：$\text{MR}_{\text{Intra}} = \sum_j w_j \cdot \text{MR}_{j \to j}$ 取所有对角项的数据量加权平均；$\text{MR}_{\text{Inter}}(j) = \frac{1}{L-1}\sum_{j \neq k} \text{MR}_{j \to k}$ 再加权成 $\text{MR}_{\text{Inter}} = \sum_j w_j \cdot \text{MR}_{\text{Inter}}(j)$（权重 $w_j = |D_j| / \sum_i |D_i|$ 按 client 数据量分配，免得大 client 被小 client 的噪音淹没）；与 CL 对照时则用 $\text{MR}_{\text{TotalFL}} = |\bigcup_{j,k} P_{j,k}| / |\bigcup_j P_j|$。这里关键是 Total 用并集而非求和：同一个 prefix 可能同时记住好几个 client 的 suffix，"只要触发任意泄露就该算一次"，并集才能把"泄露范围广"和"泄露次数多"分开、避免双计。
 
 ### 损失函数 / 训练策略
 本工作不引入新训练算法，全部沿用现成 FL：FedAvg (McMahan 2017) 和 FedProx (Li 2020) 两个对比基线；模型为 Qwen2.5-3B（主实验）、Llama3.2-1B/3B、GPT-2 XL、Qwen2.5-0.5B/1.5B（消融）；LLaMA Factory 框架 + lr=2e-4 + bf16 + batch=64；3 个 FL clients，每 client 27k 训练 + 3k 测试；默认 prefix 长度 30, top-k 解码 (k=40), 3 轮通信。任务覆盖 summarization（arXiv abstract → title）、dialog（HealthCareMagic 患者-医生对话）、QA（PubMedQA）、classification（PubMed 200k RCT），都是隐私敏感域。

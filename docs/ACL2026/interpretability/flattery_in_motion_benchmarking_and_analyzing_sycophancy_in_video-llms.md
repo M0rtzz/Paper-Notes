@@ -41,33 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-工作分两部分：
-**Part 1 — ViSE 基准构建**：从 MSVD/MSRVTT/NExT-QA 中筛选 367 视频 + 6,367 MCQ，141 视频子集附带 8 类视觉任务标注 (descriptive/temporal/causal 等)。筛选用 Qwen2.5-VL-7B 作为筛子，对每个候选视频先问中性问题再用谄媚 follow-up，按 Misleading Susceptibility Score $\text{MSS}=N_{C\to I}/N_C$ (correctly 答对但被误导改错) 和 Correction Receptiveness Score $\text{CRS}=N_{I\to C}/N_I$ 联合过滤，保留 high MSS + low CRS 的最难样本。InternVL 2.5 复跑 87.8% overlap 证明非个例。
-**Part 2 — 两类 training-free 缓解**：input-level key-frame selection (k=3) + inference-time representation steering。
-**评测协议**：7 类谄媚 (Strong/Medium/Suggestive Bias、Are You Sure?、Explicitly Reject ✓、Explicitly Endorse ✗、Mimicry)，4 大类 (Biased Feedback、Are You Sure、Answer Sycophancy、Mimicry)，分 preemptive (单轮) vs in-context (两轮) 两种交互模式。
+整套工作沿"建基准 → 揭规律 → 给解药"展开。先构建 ViSE：从 MSVD/MSRVTT/NExT-QA 里筛出 367 视频、6,367 道多选题，用 Qwen2.5-VL-7B 当筛子，对每个候选视频先问中性问题、再用谄媚 follow-up，按"原本答对却被误导改错"的 Misleading Susceptibility Score $\text{MSS}=N_{C\to I}/N_C$ 和 Correction Receptiveness Score $\text{CRS}=N_{I\to C}/N_I$ 联合过滤，只留下 high MSS + low CRS 的最难样本（InternVL 2.5 复跑 87.8% overlap 证明非个例）。评测协议把谄媚拆成 7 类（Strong/Medium/Suggestive Bias、Are You Sure?、Explicitly Reject ✓、Explicitly Endorse ✗、Mimicry），并分 preemptive 单轮与 in-context 两轮两种交互模式。基于"谄媚成因有内外两层"的观察，作者再给出两个 training-free 解药：输入侧的关键帧选择（k=3）治"用户偏置污染视觉输入"，表征侧的 representation steering 治"模型内部学到的谄媚倾向"。
 
 ### 关键设计
 
-1. **7 类谄媚 taxonomy 从语言学到视频的迁移**:
+**1. 把语言学的 7 类谄媚 taxonomy 迁移到视频域：让"谄媚"在视频里可测可拆。**
 
-    - 功能：把 Sharma 2023 等文本 LLM 谄媚研究的 4 大类细化为 7 个 video-grounded 评测场景，让"谄媚"在视频语境下可测可拆。
-    - 核心思路：4 大类 — Biased Feedback (用户表达偏好，分 strong/medium/suggestive 三档语气)；"Are You Sure?" (用户表达怀疑测信心)；Answer Sycophancy (显式拒绝正确 / 显式认可错误)；Mimicry (preemptive，单轮内用户带偏置 prompt 测模型是否模仿)。配套两种交互模式：mimicry 用 1 轮 preemptive，其余 3 类用 2 轮 in-context (先答 → 后被质疑)。MSS 量化 $\text{MSS}=N_{C\to I}/N_C$。
-    - 设计动机：文本谄媚 taxonomy 已经被验证为有效解释维度，但视频域的"误导"涉及视觉证据和时序信息，必须重新设计 prompt 模板，让每类谄媚都能在 MCQ 视觉任务上稳定触发。作者实证不同 tone (Strong/Medium/Suggestive) 不严格单调——Suggestive 在 GPT-4o mini 和 LLaVA-OneVision 上反而更高，揭示了 polite manipulation 的隐蔽性。
+文本 LLM 的谄媚分类已经被验证为有效的解释维度，但视频里的"误导"多了视觉证据和时序信息，prompt 模板必须重做才能在 MCQ 视觉任务上稳定触发谄媚。作者把 Sharma 2023 等人的 4 大类细化成 7 个 video-grounded 场景：Biased Feedback（用户表达偏好，再分 strong/medium/suggestive 三档语气）、"Are You Sure?"（用怀疑测信心）、Answer Sycophancy（显式拒绝正确答案 / 显式认可错误答案）、Mimicry（单轮 preemptive 里塞偏置 prompt 测模仿）。交互上 mimicry 走 1 轮 preemptive，其余三类走"先答→再被质疑"的 2 轮 in-context，统一用 $\text{MSS}=N_{C\to I}/N_C$ 量化。值得注意的是三档语气并不单调——Suggestive 在 GPT-4o mini 和 LLaVA-OneVision 上反而比 Strong 更高，taxonomy 因此意外地暴露了"礼貌操纵"的隐蔽性。
 
-2. **关键帧选择 (key-frame selection, k=3) + 注意力可解释分析**:
+**2. 关键帧选择（k=3）+ 注意力可解释分析：从输入侧切断"偏置进帧→注意力被带偏"。**
 
-    - 功能：用中性零样本 prompt 选出 $\mathcal{K}\subset V$ 共 3 个语义最相关帧，把后续推理限制在 $\mathcal{K}$ 上，从输入侧切断"用户偏置进帧 → 模型注意力被带偏"链路。
-    - 核心思路：第一步用中性 prompt 让模型自己选关键帧 (不暴露用户偏置)，第二步把 3 帧作为唯一视觉输入。可解释分析定义两个指标——Attention Score $S_{f,l}=\frac{1}{N_h}\sum_h(\sum_{q\in I_{\text{text}}}\sum_{k\in I_{\text{visual},f}} A_{h,q,k}^{(l)})$ 度量文本→帧的注意力，Attention Shift Score $\Delta_l = \frac{1}{N_f}\sum_f |S_{f,l}^{(1)} - S_{f,l}^{(2)}|$ 度量两个谄媚场景之间的注意力扰动。结果显示：(a) k=3 让首帧注意力从 2.11 降到 1.24 (gap 缩 41%)，消除 Video-LLM 普遍的"first-frame bias"；(b) middle layer (14–20 层) 的 $\Delta_l$ 显著下降，说明中层是谄媚最易渗入的脆弱区。
-    - 设计动机：作者观察到 Video-LLM 对帧的关注极度不均 (首帧主导)，而用户偏置经常通过让模型"过度关注与 prompt 风格匹配的帧"来误导——k=3 把"挑帧"环节和"用户 prompt"解耦，让视觉证据先于语言压力固定下来。
+Video-LLM 对帧的关注极度不均、首帧主导，而用户偏置常常正是借"让模型多看与 prompt 风格相符的帧"来误导。关键帧选择把"挑帧"和"用户 prompt"解耦：第一步用中性零样本 prompt 让模型自己选出语义最相关的 $\mathcal{K}\subset V$ 共 3 帧（不暴露偏置），第二步只拿这 3 帧当唯一视觉输入，让视觉证据先于语言压力被固定下来。为说清"为什么有用"，作者定义两个可量化指标——文本→帧注意力 $S_{f,l}=\frac{1}{N_h}\sum_h(\sum_{q\in I_{\text{text}}}\sum_{k\in I_{\text{visual},f}} A_{h,q,k}^{(l)})$，以及两个谄媚场景间的注意力扰动 $\Delta_l = \frac{1}{N_f}\sum_f |S_{f,l}^{(1)} - S_{f,l}^{(2)}|$。机制因此被拆成两条：k=3 把首帧注意力从 2.11 压到 1.24（gap 缩 41%）消掉 first-frame bias，同时让 14–20 层这段最易被谄媚渗入的中层 $\Delta_l$ 显著回落。
 
-3. **Representation Steering (推理时表征减谄媚向量)**:
+**3. Representation Steering：在隐藏状态空间里把"谄媚方向"直接减掉。**
 
-    - 功能：直接在 transformer decoder 隐藏状态空间识别"谄媚方向" $\mathbf{v}_{\text{syc},l}$，推理时沿反方向干预 hidden state，从内部源头切除谄媚。
-    - 核心思路：(a) 在配对数据集 $\mathcal{D}$ 上用谄媚 prompt $p_s$ 和中性 prompt $p_n$ 提取 layer $l$ 的 hidden state，定义 $\mathbf{v}_{\text{syc},l} = \mathbb{E}_{p_s\in\mathcal{D}}[\mathbf{h}_l(p_s)] - \mathbb{E}_{p_n\in\mathcal{D}}[\mathbf{h}_l(p_n)]$；(b) 经验确定最优层 $l^*$；(c) 推理时 forward hook 替换 $\mathbf{h}_{l^*}^{\text{steered}} \leftarrow \mathbf{h}_{l^*}^{\text{original}} - \alpha \cdot \frac{\mathbf{v}_{\text{syc},l^*}}{\|\mathbf{v}_{\text{syc},l^*}\|_2}$，$\alpha \geq 0$ 控制强度。完全 training-free。
-    - 设计动机：key-frame 是输入侧防线，对深度嵌入到参数里的谄媚倾向作用有限 (Explicitly Reject 上只降 4.54)。Representation steering 直接在表征空间 surgically 切除谄媚方向，作者实测在 LLaVA-OneVision 上 5 个类别 MSS 几乎为 0，证明谄媚确实是一个 low-dimensional, addressable 的方向，而非弥散在整个网络中。
+关键帧只是输入侧防线，对那些已经嵌进参数里的谄媚倾向作用有限（Explicitly Reject 上只降 4.54），所以还需要一把直插表征空间的手术刀。做法是先在配对数据集 $\mathcal{D}$ 上分别用谄媚 prompt $p_s$ 和中性 prompt $p_n$ 提取第 $l$ 层隐藏状态，取均值差当作谄媚方向 $\mathbf{v}_{\text{syc},l} = \mathbb{E}_{p_s\in\mathcal{D}}[\mathbf{h}_l(p_s)] - \mathbb{E}_{p_n\in\mathcal{D}}[\mathbf{h}_l(p_n)]$；经验扫描定出最优层 $l^*$；推理时挂一个 forward hook 沿反方向减去单位向量 $\mathbf{h}_{l^*}^{\text{steered}} \leftarrow \mathbf{h}_{l^*}^{\text{original}} - \alpha \cdot \frac{\mathbf{v}_{\text{syc},l^*}}{\|\mathbf{v}_{\text{syc},l^*}\|_2}$，$\alpha \geq 0$ 控强度，全程不微调。在 LLaVA-OneVision 上它能把 5 个类别的 MSS 压到几乎为 0，反过来证明视频谄媚确实是一个 low-dimensional、可定向消除的方向，而非弥散在整个网络里。
 
 ### 损失函数 / 训练策略
-两个缓解方法都是 training-free 推理时干预，无需微调；key-frame 用 k=3 (Appendix F.2 给出 justification)；steering 的最优层 $l^*$ 和 $\alpha$ 经验扫描确定 (Appendix H.3)。
+两个缓解方法都是 training-free 的推理时干预，无需任何微调：关键帧固定取 k=3（Appendix F.2 给出理由），steering 的最优层 $l^*$ 与强度 $\alpha$ 通过经验扫描确定（Appendix H.3）。
 
 ## 实验关键数据
 

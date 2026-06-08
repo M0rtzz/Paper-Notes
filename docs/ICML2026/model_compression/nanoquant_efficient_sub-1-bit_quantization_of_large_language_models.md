@@ -45,23 +45,21 @@ NanoQuant 把每个 Linear 层权重 $\mathbf{W}\in\mathbb{R}^{d_\text{out}\time
 
 ### 关键设计
 
-1. **低秩二值分解 + Hessian 感知预条件作为量化结构**:
+**1. 低秩二值分解 + Hessian 感知预条件：换一个能突破 1-bit 下界的量化结构。**
 
-    - 功能：用一个比「就地二值化」表达力更高的结构作为亚 1 bit 量化目标。
-    - 核心思路：把目标改写成 $\mathcal{L}(\widehat{\mathbf{W}})\approx\|\widetilde{\mathbf{D}}_\text{out}(\mathbf{W}-\widehat{\mathbf{W}})\widetilde{\mathbf{D}}_\text{in}\|_F^2$，等价于在校准激活/梯度统计构成的椭球范数下做低秩二值近似；这正是二阶 Taylor 展开下的任务损失。预条件子用收缩估计 $[\widetilde{\mathbf{D}}]_{ii}\leftarrow(1-\gamma)[\mathbf{D}]_{ii}+\gamma\,\mathrm{mean}(\mathbf{D})$ 稳定，Llama/Qwen 取 $\gamma\approx 0.2$，Gemma/Rnj 取 $\gamma\approx 0.6$。
-    - 设计动机：直接最小化欧氏重建误差对小校准集敏感且会让 quantization-sensitive 通道被淹没；Hessian 加权让 ADMM 优先压住对下游 loss 影响大的方向。
+二值 PTQ 卡在 1 bit 的根源是表征——$\mathbf{W}\approx\alpha\mathbf{B}_{\pm 1}$ 这种「就地二值化」每个参数都得存一个 sign，比特率天然不可能低于 1。NanoQuant 干脆把量化目标换成两个 $\pm 1$ 低秩因子的乘积，存储量由秩 $r$ 连续控制，从而能压到亚 1 bit。但换了表征还得有对的优化目标：作者不去最小化朴素的欧氏重建误差，而是改写成 Hessian 加权的 $\mathcal{L}(\widehat{\mathbf{W}})\approx\|\widetilde{\mathbf{D}}_\text{out}(\mathbf{W}-\widehat{\mathbf{W}})\widetilde{\mathbf{D}}_\text{in}\|_F^2$——这等价于在校准激活/梯度统计张成的椭球范数下做低秩二值近似，也正是二阶 Taylor 展开下的任务损失。这么做是因为欧氏误差对小校准集太敏感、会让那些 quantization-sensitive 的通道被淹没，而 Hessian 加权让后续优化优先压住对下游 loss 影响最大的方向。其中的对角预条件子 $\widetilde{\mathbf{D}}_\text{in},\widetilde{\mathbf{D}}_\text{out}$ 取自 K-FAC 风格估计，并用收缩稳定 $[\widetilde{\mathbf{D}}]_{ii}\leftarrow(1-\gamma)[\mathbf{D}]_{ii}+\gamma\,\mathrm{mean}(\mathbf{D})$——把经验估计往均值拉一点，对小校准集尤其关键，Llama/Qwen 取 $\gamma\approx 0.2$、输出分布更尖锐的 Gemma/Rnj 取 $\gamma\approx 0.6$。
 
-2. **Latent-Binary ADMM (LB-ADMM) 精确初始化**:
+**2. Latent-Binary ADMM（LB-ADMM）：在 PTQ 预算下解出高质量的二值初始化。**
 
-    - 功能：在 PTQ 预算下解一个 NP-hard 的低秩 $\pm 1$ 分解，给 STE 提供一个高质量起点。
-    - 核心思路：把问题写成 $\min_{\mathbf{U},\mathbf{V},\mathbf{Z}_U,\mathbf{Z}_V}\tfrac{1}{2}\|\widetilde{\mathbf{W}}_\text{target}-\mathbf{U}\mathbf{V}^\top\|_F^2+\tfrac{\lambda}{2}(\|\mathbf{U}\|_F^2+\|\mathbf{V}\|_F^2)$ s.t. $\mathbf{U}=\mathbf{Z}_U,\mathbf{V}=\mathbf{Z}_V$。三段交替：连续因子 $\mathbf{U}$ 更新解一个由 $\rho,\lambda$ 正则的线性系统，用稳定的 Cholesky 分解把复杂度降到 $\mathcal{O}(r^3/3)$；辅助变量 $\mathbf{Z}$ 用 Sign-Value Independent Decomposition (SVID) 取最佳秩-1 sign-preserving 近似；对偶变量 $\boldsymbol{\Lambda}$ 标准累加。ADMM 收敛后做「magnitude balancing」：用 $\eta=\sqrt{\|\widehat{\mathbf{V}}\|_F/\|\widehat{\mathbf{U}}\|_F}$ 调节两因子量级，再把每行平均绝对值赋给 $\mathbf{s}_1,\mathbf{s}_2$。
-    - 设计动机：直接对二值矩阵做组合搜索不可行；ADMM 把「连续重建」和「二值约束」解耦，让连续解能被 sign-preserving 投影逐步拉向可行二值流形，比 LittleBit 的 Dual-SVID 和 DBF 的端到端 ADMM 在小校准集下都更稳——消融里 LB-ADMM 在 0.8 bit 下 PPL 20.06，对照 DBF-ADMM 30.27、Dual-SVID 167.73。
+低秩 $\pm 1$ 分解本身是 NP-hard 的组合优化，直接搜不动。LB-ADMM 的做法是用对偶变量把「连续重建」和「二值约束」解耦，写成 $\min_{\mathbf{U},\mathbf{V},\mathbf{Z}_U,\mathbf{Z}_V}\tfrac{1}{2}\|\widetilde{\mathbf{W}}_\text{target}-\mathbf{U}\mathbf{V}^\top\|_F^2+\tfrac{\lambda}{2}(\|\mathbf{U}\|_F^2+\|\mathbf{V}\|_F^2)$，约束为 $\mathbf{U}=\mathbf{Z}_U,\mathbf{V}=\mathbf{Z}_V$。然后三段交替：连续因子 $\mathbf{U}$（及对称的 $\mathbf{V}$）的更新归结为一个由 $\rho,\lambda$ 正则的线性系统，用 Cholesky 分解把复杂度压到 $\mathcal{O}(r^3/3)$；辅助变量 $\mathbf{Z}$ 用 Sign-Value Independent Decomposition (SVID) 取最佳秩-1 sign-preserving 近似，把连续解逐步投影到可行的二值流形上；对偶变量 $\boldsymbol{\Lambda}$ 按标准方式累加。收敛后再做一次「magnitude balancing」——用 $\eta=\sqrt{\|\widehat{\mathbf{V}}\|_F/\|\widehat{\mathbf{U}}\|_F}$ 调平两个因子的量级，把每行平均绝对值分别灌进尺度 $\mathbf{s}_1,\mathbf{s}_2$。这套解耦比 LittleBit 的 Dual-SVID 和 DBF 的端到端 ADMM 在小校准集下都更稳：消融里 LB-ADMM 在 0.8 bit 下 PPL 20.06，而 DBF-ADMM 30.27、Dual-SVID 直接崩到 167.73——初始化质量几乎决定了亚 1 bit 的成败。
 
-3. **块级 STE 微调 + 仅尺度的模型级 KL 校准**:
+**3. 块级 STE 微调 + 仅尺度的模型级 KL 校准：把局部初始化对齐成全局可用的量化模型，同时把显存压住。**
 
-    - 功能：把局部良好的初始化转成全局对齐的量化模型，且把昂贵的反向传播限制在可控范围内。
-    - 核心思路：块级——用 Straight-Through Estimator 把梯度透过 $\mathrm{sign}(\cdot)$ 反传，联合优化 $\mathcal{U},\mathcal{V},\mathbf{s}_1,\mathbf{s}_2$ 去最小化 $\|\mathcal{B}(\mathbf{X}_\text{in})-\widehat{\mathcal{B}}(\mathbf{X}_\text{in};\mathrm{sign}(\mathcal{U}),\mathrm{sign}(\mathcal{V}),\mathbf{s}_1,\mathbf{s}_2)\|_F^2$，这一步既能局部翻转初始化里少量错误 sign，又能给尺度做精细调节；模型级——把所有 block 的二值矩阵全部冻结打包，只对全局浮点尺度做 $\min_{\mathbf{S}_\text{global}}D_\text{KL}(\text{Logits}(\mathcal{M}(\mathbf{X}))\|\text{Logits}(\widehat{\mathcal{M}}(\mathbf{X};\mathbf{S}_\text{global})))$。
-    - 设计动机：DBF 这类把二值优化推迟到全局 PV-tuning 的方案需要把全部权重梯度都留在显存里，70B 完全跑不动；NanoQuant 让 block 内做小规模 STE、全局只优化尺度向量（参数量 $\ll$ 权重），所以 70B 量化可以单卡 H100 完成。
+好的初始化只是局部最优，还要让整个网络的输出对齐 FP teacher，但又不能像 DBF 那样把全部权重梯度留在显存里——那样 70B 根本跑不动。NanoQuant 把这步拆成两级。块级用 Straight-Through Estimator 让梯度穿过 $\mathrm{sign}(\cdot)$ 反传，逐 Transformer block 联合优化 $\mathcal{U},\mathcal{V},\mathbf{s}_1,\mathbf{s}_2$ 去最小化块输出误差 $\|\mathcal{B}(\mathbf{X}_\text{in})-\widehat{\mathcal{B}}(\mathbf{X}_\text{in};\mathrm{sign}(\mathcal{U}),\mathrm{sign}(\mathcal{V}),\mathbf{s}_1,\mathbf{s}_2)\|_F^2$；这一步既能翻转初始化里少量错误 sign，又能精调尺度，反传只局限在单个 block 内、规模可控。模型级则把所有 block 的二值矩阵全部冻结打包成 int，只放开全局浮点尺度集合 $\mathbf{S}_\text{global}$，用 KL 把量化模型的 logits 拉回 teacher：
+
+$$\min_{\mathbf{S}_\text{global}}D_\text{KL}\big(\text{Logits}(\mathcal{M}(\mathbf{X}))\,\|\,\text{Logits}(\widehat{\mathcal{M}}(\mathbf{X};\mathbf{S}_\text{global}))\big).$$
+
+由于全局阶段只优化向量级尺度（参数量 $\ll$ 权重），昂贵的 STE 反传被锁在 block 级，整套 70B 量化才能在单卡 H100 上跑完——这正是它能 scale 到 70B、而二值 QAT 跑不动的工程关键。
 
 ### 损失函数 / 训练策略
 块级目标用 MSE，模型级用 KL；优化步数 $(T_\text{pre},T_\text{post},T_\text{glob})$ 三段独立设；ADMM 迭代次数 $K$、惩罚 $\rho$、岭正则 $\lambda$、收敛阈 $\epsilon$ 为四个核心超参；校准集仅 128 条 WikiText-2 样本（约 0.26M token），上文长度 2048。

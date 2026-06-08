@@ -43,31 +43,21 @@ tags:
 
 ### 整体框架
 
-CentaurEval 由四个核心组件构成：(1) **问题模板库** — 45 个模板覆盖 3 个职业方向 × 3 个难度等级；(2) **智能体任务系统** — GPT-4.1 驱动的动态任务实例化；(3) **标准化云端 IDE** — 基于 GitHub Codespaces + VS Code + Copilot 的人类评测环境；(4) **LLM 评测工具包** — 基于 Docker + VS Code 扩展 CentaurEC 的自动化 LLM 评测。输入为任务模板，输出为统一的 pass/fail 指标和效率指标，支持 4 种实验条件的直接对比。
+CentaurEval 要解决的核心问题是：现有评测要么只考 AI、要么只考人，无法量化"人机协作"本身的价值。它的办法是把分析单元从"个体"换成"人-AI 对"，围绕一批刻意设计成单方不可解、协作才可解的任务，搭建一套让人类和 LLM 都能在等价环境下被评测的统一框架。整个系统由任务模板库、动态任务生成器、人类用的云端 IDE、LLM 用的自动化工具包四部分拼成，最终输出可直接横向对比的 pass/fail 与效率指标。
 
 ### 关键设计
 
-1. **"协作必需"问题模板库**:
+**1. "协作必需"问题模板库：制造单方不可解、协作才可解的任务**
 
-    - 功能：构造对 LLM 不可解但对人机协作可解的任务
-    - 核心思路：在基础算法核心外层包裹多层真实世界复杂度。AI-Incomplete 方向注入欠定义需求、多模态规格说明（UML/ER 图）、遗留代码库等关系复杂度，阻止 LLM 直接将任务分解为可执行步骤；Human Reliance 方向则嵌入重复性实现任务和不常见 API 使用，配合时间限制使纯手工方案不可行。形式化约束为 $\Pr(\text{Solve}(t, \mathcal{A})) \leq \theta_{\text{low}}$ 且 $\mathbb{E}[\text{Score}(s_{\mathcal{H}+\mathcal{A}})] - \mathbb{E}[\text{Score}(s_{\mathcal{H}})] \geq \delta$
-    - 设计动机：直接解决现有 Benchmark 要么只考 AI 要么只考人的二元割裂问题，确保评测出的性能差真实反映协作价值
+要量化协作价值，前提是任务对单独的 LLM 和单独的人都很难、但协作能解开。本文的做法是在一个基础算法核心外层，包裹多层真实世界复杂度：AI-Incomplete 方向注入欠定义需求、多模态规格说明（UML/ER 图）、遗留代码库等关系复杂度，让 LLM 无法把任务干净地分解成可执行步骤；Human Reliance 方向则嵌入大量重复性实现和不常见 API，再叠加时间限制，使纯手工方案在限定时间内不可行。这两类约束被形式化为：要求纯 AI 的求解概率足够低 $\Pr(\text{Solve}(t, \mathcal{A})) \leq \theta_{\text{low}}$，同时要求人机协作相比人类独立有显著增益 $\mathbb{E}[\text{Score}(s_{\mathcal{H}+\mathcal{A}})] - \mathbb{E}[\text{Score}(s_{\mathcal{H}})] \geq \delta$。满足这两个条件，评测出的性能差才能被解读为协作本身贡献的价值，而非某一方原本就能完成。45 个模板按此原则覆盖 3 个职业方向 × 3 个难度等级。
 
-2. **智能体驱动的动态任务实例化系统**:
+**2. 智能体驱动的动态任务实例化：防数据泄漏又不引入额外难度**
 
-    - 功能：从 45 个模板动态生成无限多样的任务实例，防止数据泄漏和记忆效应
-    - 核心思路：GPT-4.1 Agent 调度 4 个专用工具——TechnicalParameterTool 生成逻辑关键参数、ImplementationConstraintTool 选择框架配置、ContextualVariableTool 生成真实场景包装、InterfaceSpecificationTool 生成接口细节。严格分离逻辑关键生成（确定性）与表面包装生成（多样性），确保变化不引入额外认知难度。每个实例同步输出任务包和评测脚本
-    - 设计动机：传统静态数据集存在数据泄漏风险，动态生成既保证公平性又提高可扩展性
+静态题库一旦被模型见过就会失真，因此需要从模板动态生成无限多样的实例。本文用一个 GPT-4.1 Agent 调度 4 个专用工具来完成实例化：TechnicalParameterTool 生成逻辑关键参数，ImplementationConstraintTool 选择框架配置，ContextualVariableTool 生成真实场景包装，InterfaceSpecificationTool 生成接口细节。关键在于把"逻辑关键生成"和"表面包装生成"严格分开——前者确定性地决定题目难度，后者只负责换皮带来多样性，这样不同实例之间的变化只改变表象、不偷偷加大认知难度，保证了公平性的同时又能持续扩容。每个实例都同步产出任务包和配套评测脚本。
 
-3. **生态有效的双接口评测系统**:
+**3. 生态有效的双接口评测系统：让人和 LLM 在等价条件下可比**
 
-    - 功能：为人类和 LLM 提供统一可比的评测环境
-    - 核心思路：人类端使用 GitHub Codespaces 部署完整 VS Code + Copilot 环境，消除工具熟悉度的混杂因素；LLM 端通过 CentaurEC 扩展复现人类操作流程（环境部署 → 任务注入 → 代码生成 → 测试反馈 → 迭代修正 → 评分），使用 450 个静态任务实例保证可复现性。引入 Auto-Calibrated Baselines 通过运行参考解来动态标定效率阈值，实现跨平台公平比较
-    - 设计动机：确保人类和 LLM 在等价条件下评测，使结果直接可比
-
-### 评测指标
-
-采用两阶段评估协议：记录 5 个原始指标（测试用例 pass/fail、执行时间、峰值内存、完成时间、Token 使用量），聚合为 4 个分析指标——Overall Pass（全通过率）、Partial Pass（部分通过率）、Completion Time（惩罚平均时长 PAR，超时记 60 分钟）、Token Usage。
+人和 LLM 要直接对比，就必须排除环境差异这个混杂因素。人类端用 GitHub Codespaces 部署完整的 VS Code + Copilot 环境，消除工具熟悉度差异；LLM 端则通过 CentaurEC 扩展复现人类的完整操作流程——环境部署、任务注入、代码生成、测试反馈、迭代修正直到评分，并固定使用 450 个静态任务实例以保证可复现。为了让效率类指标跨平台可比，系统引入 Auto-Calibrated Baselines：先跑参考解动态标定出效率阈值，再以此为基准衡量各方表现。评测采用两阶段协议，先记录 5 个原始指标（测试用例 pass/fail、执行时间、峰值内存、完成时间、Token 使用量），再聚合为 4 个分析指标：Overall Pass（全部测试通过率）、Partial Pass（部分通过率）、Completion Time（采用惩罚平均时长 PAR，对超时样本统一记为 60 分钟以惩罚未完成）、Token Usage。
 
 ## 实验关键数据
 

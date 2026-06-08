@@ -41,33 +41,30 @@ FinGround 是一个面向金融文档问答的三阶段 "verify-then-ground" pip
 ## 方法详解
 
 ### 整体框架
-FinGround 三阶段 pipeline：
-**Stage 1 Finance-Aware Hybrid Retrieval** — RoBERTa-base 把 query 分成 Simple/Moderate/Complex 三档，分别用 BM25 / 密集检索 + 表格抽取 (列头感知相似度 $\text{sim}(q,t)=\alpha\cdot\cos(\mathbf{q},\mathbf{t}_{\text{cell}})+(1-\alpha)\cdot\cos(\mathbf{q},\mathbf{t}_{\text{header}})$, $\alpha=0.6$) / iterative retrieve-then-reason；structure-aware chunking 保留行列关系，每个 chunk 带 $\langle\text{document, section, page, element\_type}\rangle$ provenance。
-**Stage 2 Atomic Financial Claim Verification** — 拆 claim → 分类 → 对齐证据 → 类型路由判定 (supported / contradicted / unverifiable)。
-**Stage 3 Grounded Regeneration** — 把 contradicted/unverifiable claim 通过 fuzzy alignment (edit distance ≤3) 定位到原答案 span，targeted 重检索，按 RARR 范式重写，加段级或单元格级 inline citation `[Doc:d, §s, p.p]` / `[Doc:d, Table t, Row r, Col c]`；若 ≥3 个 claim 需要改，触发完整重生成避免 error compounding。
+
+FinGround 要解决的是金融文档问答里"答案看着对、但数字算错或证据编造"的幻觉，整条 pipeline 走的是 "verify-then-ground"：先检索证据、再把答案逐条核验、最后把核验不过的句子重写并打上可追溯的引用。具体分三段流转——**Stage 1 检索**用 RoBERTa-base 把 query 分成 Simple/Moderate/Complex 三档，分别走 BM25、密集检索+表格抽取、迭代式 retrieve-then-reason；表格相似度用列头感知打分 $\text{sim}(q,t)=\alpha\cdot\cos(\mathbf{q},\mathbf{t}_{\text{cell}})+(1-\alpha)\cdot\cos(\mathbf{q},\mathbf{t}_{\text{header}})$（$\alpha=0.6$），并用 structure-aware chunking 保留行列关系，每个 chunk 带 $\langle\text{document, section, page, element\_type}\rangle$ 的来源标记。**Stage 2 验证**把答案拆成原子 claim，分类后按类型路由到不同验证策略，输出 supported / contradicted / unverifiable 三态。**Stage 3 重写**把后两态的 claim 通过模糊对齐（edit distance ≤3）定位回原答案 span，做 targeted 重检索后按 RARR 范式改写，加段级或单元格级 inline citation `[Doc:d, §s, p.p]` / `[Doc:d, Table t, Row r, Col c]`；若一次要改的 claim ≥3 条，干脆触发整段重生成以免逐句改写产生 error compounding。
 
 ### 关键设计
 
-1. **六类金融 claim taxonomy + type-routed 验证**:
+**1. 六类金融 claim taxonomy + 类型路由验证：先认清这是哪种错，再决定怎么验。**
 
-    - 功能：把 atomic claim 分成 numerical (具体数值)、temporal (时间断言)、entity-attribute (实体属性)、comparative (跨实体/时段比较)、regulatory (合规引用)、computational (派生量) 六类，每类用最合适的验证策略，而非一刀切 NLI。
-    - 核心思路：分类后路由——numerical 用结构化抽取 (value, unit, period, entity) 与表格单元格精确匹配；entity-attribute 用 cross-encoder NLI；regulatory 查规则库；computational 走单独的"公式重构"分支 (下一条详述)。Taxonomy 来自对 500 条真实金融幻觉的错误分析，且实证 6 类比 3 类高 4.3 F1、比 10 类无显著区别 ($p=0.23$)，证明粒度是有效"够用"。
-    - 设计动机：通用 NLI 在比率/margin 上根本不会算数；强行用 NLI 验证 "gross margin = 62.4%" 等价于"让一个不会算账的人审账"。把问题先分类再路由，本质是承认"验证策略和 claim 类型耦合"。
+通用幻觉检测器（FActScore、SAFE）把所有 claim 一视同仁、统统丢给 NLI，但金融答案里"gross margin 是 62.4%"这种话，NLI 根本不会去算它对不对——于是漏掉了 43% 的计算类错误。FinGround 的应对是先把 atomic claim 按错误类型分成六类：numerical（具体数值）、temporal（时间断言）、entity-attribute（实体属性）、comparative（跨实体/时段比较）、regulatory（合规引用）、computational（派生量），再按类路由：numerical 抽出 (value, unit, period, entity) 与表格单元格精确匹配，entity-attribute 走 cross-encoder NLI，regulatory 查规则库，computational 单独走公式重构分支。这套 taxonomy 不是拍脑袋定的——它来自对 500 条真实金融幻觉的错误归因，且实测 6 类比 3 类高 4.3 F1、比 10 类无显著差别（$p=0.23$），说明六类正好是"够用且不冗余"的粒度。本质上它承认了一件被通用检测器忽略的事：验证策略和 claim 类型是耦合的，强行用 NLI 验证比率和 margin，等于让一个不会算账的人去审账。
 
-2. **Computational claim 的公式重构 + 算术再校验**:
+**2. Computational claim 的公式重构 + 算术再校验：对派生量不靠"猜"，重新算一遍。**
 
-    - 功能：对"派生量"类 claim (如毛利率、负债权益比) 不做 NLI，而是重新"算一遍"。
-    - 核心思路：三步——(a) 识别隐含公式：用 47 个金融公式模板库匹配；(b) 从表格单元格中检索 operand value；(c) 重新计算派生量，允许 ±0.5% 容差以适应四舍五入。端到端 computational 验证达到 90.2% F1，相比 SelfCheckGPT 提升 +18.9 F1。
-    - 设计动机：作者实验发现 computational claim 是最高幻觉率类别 (28.4%) 但同时是最容易自动验证的——因为只要找对 operand 就能精确算。瓶颈不在"验证难度"而在"路由"——把它当 NLI 处理才是问题根源。
+错误分析里 computational claim 是幻觉率最高的一类（28.4%），但作者发现它同时也是最容易自动验证的——因为只要找对 operand 就能精确重算，瓶颈从来不在"验证难度"而在"被当成 NLI 处理"。所以这一类不做语义蕴含判断，而是真的把数重新算出来：先用 47 个金融公式模板库匹配出 claim 隐含的公式（如毛利率、负债权益比），再从表格单元格里检索对应的 operand value，最后重算派生量并允许 ±0.5% 容差以容忍四舍五入。这等于把一段 symbolic execution 嵌进了 RAG 验证，computational 类单项验证做到 90.2% F1，比 SelfCheckGPT 高出 +18.9 F1。
 
-3. **8B 蒸馏检测器 + retrieval-equalized 评测协议**:
+**3. 8B 蒸馏检测器 + retrieval-equalized 评测协议：既要能上线，也要能说清增益来自哪。**
 
-    - 功能：(a) 用 GPT-4o (gpt-4o-2024-05-13) 在 3,200 条金融 QA 上蒸馏到 Llama-3-8B-Instruct，p95 延迟从 6.1s 降到 340ms (18×)，F1 91.4% (保留教师 96.2% 性能)，$0.003/query 部署；(b) 评测时让所有 baseline 用相同检索结果，把"检索增益"和"验证增益"解耦。
-    - 核心思路：蒸馏用 reverse KL divergence + 多任务目标 (claim 拆分 + 证据对齐 + verdict 分类)；annotation 用两轮一致性检查丢弃 8.4% 不一致样本。retrieval-equalized 协议：先给每个 baseline 装上 FinGround 的 Stage 1 检索，把所有差异归到"验证"这一变量上，再比较 HalRate。
-    - 设计动机：(a) GPT-4o 单 claim 6.1s 在金融实时问答里成本不可接受；(b) 没有 retrieval-equalized 之前，RAG 论文很难区分提升来自"找到更好证据"还是"更好地用证据"——这是个被忽视的方法学贡献。
+GPT-4o 验证单条 claim 要 6.1s，放到金融实时问答里成本根本扛不住，所以 FinGround 用 GPT-4o（gpt-4o-2024-05-13）在 3,200 条金融 QA 上蒸馏到 Llama-3-8B-Instruct：蒸馏目标用 reverse KL divergence 配多任务联合（claim 拆分 + 证据对齐 + verdict 分类），标注侧用两轮一致性检查丢掉 8.4% 不一致样本。结果 p95 延迟从 6.1s 压到 340ms（18×），F1 91.4%（保留教师 96.2% 的性能），部署成本 \$0.003/query。另一半贡献是评测协议：以往 RAG 论文很难区分提升是"找到更好证据"还是"更好地用证据"，FinGround 提出 retrieval-equalized——先给每个 baseline 都装上自己的 Stage 1 检索，把所有差异都收敛到"验证"这一个变量上再比 HalRate，这样得到的验证增益才是干净的、可归因的。
+
+### 一个完整示例：核验一句"毛利率 = 62.4%"
+
+假设模型答出"Q3 gross margin was 62.4%, up from 58.1% last year"。Stage 1 把这个 Moderate 难度 query 路由到密集检索+表格抽取，用列头感知相似度命中财报里的 Revenue 与 COGS 两行，chunk 带上 `⟨10-Q, Income Statement, p.4, table⟩` 来源。Stage 2 先拆成两条 atomic claim：①"Q3 gross margin = 62.4%"，②"up from 58.1% last year"。分类器把①判为 computational、②判为 comparative。①不走 NLI 而进公式分支：模板库匹配出 $\text{gross margin}=(\text{Revenue}-\text{COGS})/\text{Revenue}$，从单元格抽出 Revenue=820、COGS=312，重算得 $(820-312)/820=61.95\%$，落在 62.4% 的 ±0.5% 容差外 → 判 **contradicted**；②的去年值则匹配上表得到验证 → supported。Stage 3 只对①触发重写：模糊对齐定位回原 span，targeted 重检索确认数值，改写成"Q3 gross margin was 62.0%"并加单元格级引用 `[Doc:10-Q, Table 1, Row Revenue/COGS]`。整句从一个看似精确实则算错的数字，变成一个算对且可追溯的答案。
 
 ### 损失函数 / 训练策略
-蒸馏用 reverse KL ($\text{KL}(p_{\text{student}} || p_{\text{teacher}})$ 在 mode-seeking 上更稳)，多任务联合 (decomposition + alignment + verdict)，vLLM 部署 + continuous batching。Cross-encoder alignment 模型在 8,400 条 TAT-QA/FinQA NLI 上微调达到 87.2% F1。
+
+蒸馏用 reverse KL（$\text{KL}(p_{\text{student}} || p_{\text{teacher}})$ 在 mode-seeking 上更稳），多任务联合 decomposition + alignment + verdict，配 vLLM 部署 + continuous batching。Cross-encoder alignment 模型在 8,400 条 TAT-QA/FinQA NLI 上微调达到 87.2% F1。
 
 ## 实验关键数据
 

@@ -40,32 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-实验包含 144 个 traits，来自 Open Character Training 的 trait 列表。对每个被测模型，系统在单轮对话中要求模型在两个候选 trait 之间选择一种风格并贯彻在回复中，但不直接说出选择。随后 GLM-4.5 Air 作为相对中立的 base model judge，判断回复更符合哪个 trait。大量 pairwise judgment 被汇总为 ELO 分数，形成每个模型的 trait 排名。
 
-作者测试了九个前沿模型：GPT-5.1、Claude Haiku 4.5、Gemini 3 Flash Preview、Qwen3 VL 235B A22B Thinking、DeepSeek-V3.2、Grok 4 Fast、Kimi K2 Thinking、Ministral-14b-2512 和 Trinity-Mini。总计生成 102,560 条单轮响应，并开源了 harness 与数据。
+本文是一套评测方法，要测的是九个前沿 LLM 在交互风格上的“显示偏好”，而不是它们的能力高低。整条流程围绕 Open Character Training 提供的 144 个性格 trait 展开：对每个被测模型，在单轮对话里给出两个候选 trait，要求它隐式地选一种风格并贯彻到回复中却不说破；随后由相对中立的 base model 裁判 GLM-4.5 Air 判定回复更像哪个 trait，这一对 pairwise 胜负进入 ELO 计算。海量比对汇总后，每个模型都得到一张 trait 排名表，进而可以横向比较谁更趋同、差异落在哪里。九个模型（GPT-5.1、Claude Haiku 4.5、Gemini 3 Flash Preview、Qwen3 VL 235B A22B Thinking、DeepSeek-V3.2、Grok 4 Fast、Kimi K2 Thinking、Ministral-14b-2512、Trinity-Mini）共生成 102,560 条单轮响应，harness 与数据均开源。
 
 ### 关键设计
 
-1. **revealed preference trait elicitation**:
+**1. revealed preference 式 trait elicitation：从行为而非自评反推人格。**
 
-    - 功能：避免直接心理测验或自我报告，转而从模型行为中估计 trait 偏好。
-    - 核心思路：每次给模型两个 trait，并让它在系统提示中隐式扮演其中之一；外部 judge 只根据输出判断哪个 trait 被表达。所有 pairwise 胜负关系进入 ELO 计算。
-    - 设计动机：LLM 在自评人格时容易迎合、解释或复述量表定义，而 revealed preference 更接近模型在真实交互中的风格选择。
+直接问模型“你是什么人格”会踩进迎合、复述量表定义、过度解释的陷阱，得到的并不是它真实交互时的风格。本文改用显示偏好：每轮抛给模型两个 trait，让它在系统提示里隐式扮演其一并在回复中表现出来，外部裁判只看输出来判断哪个 trait 被表达，所有胜负关系汇入 ELO。这样测到的是模型“实际怎么说话”的倾向，比心理量表更贴合语言模型的行为本质，也更难被模型的自我描述污染。
 
-2. **Assistant traits 与 Creative traits 对照**:
+**2. Assistant traits 与 Creative traits 对照轴：把 144 维压成可解释方向。**
 
-    - 功能：把 trait 空间压缩成可解释的风格方向，观察模型是更像严谨助手还是更有创造表达。
-    - 核心思路：Assistant traits 包含 systematic、structured、precise、methodical、analytical、focused 等；Creative traits 包含 creative、imaginative、poetic、artistic、playful、humorous、bold、visionary 等。作者比较各模型在两组 traits 上的平均 ELO。
-    - 设计动机：用户直觉中的“更机械”或“更有趣”需要可量化轴线。该分类让模型人格差异能被解释为风格取向而不是孤立 trait 排名。
+单看 144 个 trait 的排名很难讲清“模型更像严谨助手还是更有创造力”这种用户直觉。本文把 trait 空间投影到两条对照轴上：Assistant 组包含 systematic、structured、precise、methodical、analytical、focused 等，Creative 组包含 creative、imaginative、poetic、artistic、playful、humorous、bold、visionary 等，再比较各模型在两组上的平均 ELO。如此一来，“更机械”或“更有趣”就成了可量化的风格取向，模型间的人格差异也能被解释为方向性偏好，而非一堆孤立的 trait 名次。
 
-3. **跨模型 rank variance 与版本差异分析**:
+**3. 跨模型 rank variance 与版本差异分析：定位趋同与分化发生在哪。**
 
-    - 功能：定位模型趋同和分化分别发生在 trait 分布的哪个位置。
-    - 核心思路：对每个 trait 计算其在九个模型中的排名标准差，并按平均 rank 分层；同时比较 GPT-4o 与 GPT-5.1 的 trait rank shift，观察同一提供商版本更新带来的风格变化。
-    - 设计动机：平均相关性只能说明整体相似，rank variance 能显示哪些 trait 已形成行业共识，哪些 trait 仍保留实验室差异。
-
-### 损失函数 / 训练策略
-本文不是训练方法，而是评测方法。核心统计对象是 trait pair 的 judge 胜负结果和 ELO 排名。作者使用 Spearman 相关衡量模型间 trait ranking 一致性，用 rank standard deviation 衡量每个 trait 在不同模型间的分歧，并用 PCA 分析模型差异主要集中在哪类 trait cluster。
+仅靠模型间的整体相关只能说“大家差不多”，却看不出共识与个性各自藏在哪段分布。本文对每个 trait 计算它在九个模型中的排名标准差，并按平均 rank 分层，从而暴露哪些 trait 已是行业共识（方差低）、哪些仍保留实验室特色（方差高）；统计上以 Spearman 相关衡量模型间 ranking 一致性，以 PCA 分析差异主要聚集在哪类 trait cluster。同时纵向对比 GPT-4o 与 GPT-5.1 的 trait rank shift，把同一提供商版本更新带来的风格漂移也纳入观察。
 
 ## 实验关键数据
 

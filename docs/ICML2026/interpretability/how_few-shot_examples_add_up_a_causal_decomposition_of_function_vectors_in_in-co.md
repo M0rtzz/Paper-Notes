@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把 FV 的形成视作 FV-head 在最后一个 separator 位置上的注意力聚合过程：每个 example 通过 attention 把自己的 Value 写到最后 token 的 residual stream，所有 FV-head 输出加起来就是 $v_{FV}(p)$。整个分析由三层组成：
-
-1. **表示层**：对一批 prompt 提取 $v_{FV}$ 与每个 example 的子 FV $v_i$，用 OLS 拟合 $v_{FV}\approx \sum_i w_i v_i$，看可加性是否成立。
-2. **因果层**：把 OLS 重构出的 $\hat v_{FV}=\sum_i w_i v_i$ 注入到 0-shot prompt，对比它与真实 $v_{FV}$ 的 injection accuracy，验证可加性在因果上也成立。
-3. **机制层**：用 Q/K/V patching + 2×2 factorial 干预把 contextualization 的效应拆到 QK 通道和 V 通道，并用 Shapley 值量化两者贡献。
-
-模型覆盖 gemma-2-{2b,9b,27b}、Llama-3.2-{1B,3B}、Llama-3.1-8B-Instruct；任务覆盖 CC/PS/PC/PP/EN-FR 等 10 个 task 家族，其中带 -A 后缀的是"歧义版"（混入与多个 candidate mapping 兼容的 ambiguous example，与无歧义 example 比例固定为 2:1，作为压力测试）；n-shot 取 3/5/10。
+本文想回答的是：n-shot prompt 的 function vector 到底是怎么从一个个 example 里"长"出来的，以及 example 之间的 contextualization 是改了什么才让 FV 变好。作者把 FV 形成看成 FV-head 在最后一个 separator 位置上的注意力聚合——每个 example 通过 attention 把自己的 Value 写进最后 token 的 residual stream，所有 FV-head 输出相加得到 $v_{FV}(p)$。围绕这个图像，分析分三层推进：先在**表示层**用 OLS 把 $v_{FV}$ 拟合成各 example 子 FV 的加权和、看可加性几何上成不成立；再在**因果层**把重构出的 $\hat v_{FV}$ 注入 0-shot prompt、看它能不能在因果上替代真实 FV；最后在**机制层**用 Q/K/V patching 把 contextualization 的效应拆到 QK 路由和 V 内容两条通道、并用 Shapley 值量化谁是主因。所有实验在 frozen 的 gemma-2-{2b,9b,27b}、Llama-3.2-{1B,3B}、Llama-3.1-8B-Instruct 上做，覆盖 CC/PS/PC/PP/EN-FR 等 10 个 task 家族，带 -A 后缀的是"歧义版"（混入与多个 candidate mapping 都兼容的 ambiguous example，与无歧义 example 固定按 2:1 配比，作压力测试），n-shot 取 3/5/10。
 
 ### 关键设计
 
-1. **Per-prompt sub-FV + OLS 线性叠加**：
+**1. Per-prompt sub-FV + OLS 全局线性叠加：把"未知非线性聚合"压成可解释的加法。**
 
-    - 功能：把 n-shot prompt 的 FV 分解为各 example 独立贡献之和。
-    - 核心思路：通过 attention mask 让最后一个 token $t_{n+1}$ 只能 attend 到第 $i$ 个 example 和 query $x_{n+1}$，得到该 example 的子 FV $v_i$；然后跨 prompt 用 OLS 拟合全局权重 $w_i$，即 $v_{FV}\approx \sum_{i=1}^n w_i v_i+\varepsilon$。权重在一个 batch 上拟合，因此描述的是"位置 $i$ 的 example 在平均意义上贡献多少"，而不是 per-prompt 的拟合。表示层（cosine、$R^2$）和因果层（注入 $\hat v_{FV}$ 后的准确率比 ratio）都要验证。
-    - 设计动机：先把 FV 形成机制从"未知非线性"压到"可解释的加性结构"。一旦可加性成立，后面对 contextualization 的研究就可以等价转化成"研究权重 $w_i$ 如何变化"，从而把全局 FV 问题归约到 attention 分配问题。
+要回答"FV 是不是各 example 独立贡献再相加"，作者先用 attention mask 拿到每个 example 的子 FV：让最后一个 token $t_{n+1}$ 只能 attend 到第 $i$ 个 example 和 query $x_{n+1}$，此时读出的 FV 就只携带 example $i$ 的贡献，记作 $v_i$。然后跨一个 batch 的 prompt 用 OLS 拟合一组**全局**权重，使 $v_{FV}\approx \sum_{i=1}^n w_i v_i+\varepsilon$。关键在于权重是 batch 级而非 per-prompt 拟合，所以 $w_i$ 描述的是"位置 $i$ 的 example 平均贡献多少"，给出了一种位置间可比的结构。可加性同时在两个层面验证：表示层看 cosine 和 $R^2$，因果层看注入 $\hat v_{FV}$ 后的准确率与注入真实 $v_{FV}$ 的比值。一旦这一步成立，后续所有关于 contextualization 的问题都能等价改写成"权重 $w_i$ 怎么变"，于是把一个黑箱聚合问题归约成了 attention 分配问题。
 
-2. **Uncontextualized 消融 + attention 边遮罩**：
+**2. Uncontextualized 消融：用剪边而非剪点造一个干净的反事实基线。**
 
-    - 功能：构造一个干净的反事实基线，让 example 之间互不传递信息，但 example 内部和到最终 token 的信息流保持原样。
-    - 核心思路：通过 attention edge ablation，把跨 prompt component（不同 example 之间）的注意力权重清零，同时保留 (i) 同一 component 内部的注意力、(ii) 到最后一个 token 的注意力。这样所有跨 example 的"contextualization"被切断，但 per-example 编码和 aggregation 步骤本身不被破坏。
-    - 设计动机：直接对比 contextualized vs uncontextualized 两个模型，差异就只能归因于 contextualization 这一个因素——这是因果干预，不是 correlation。它给出了 contextualization 效应的 ground truth 测量平台，也让后续 Q/K/V patching 有了可移植的"上下文化版/未上下文化版"激活源。
+要把 contextualization 的因果贡献干净隔离出来，光靠"去掉某个 head"做不到——那会同时破坏 per-example 编码和 aggregation。作者改用 attention edge ablation：把跨 example（跨 prompt component）的注意力边权重清零，但保留两类边——同一 example 内部的注意力，以及到最后一个 token 的注意力。这样 example 之间的信息传递被彻底切断，而每个 example 的自编码和最终的聚合步骤原封不动。拿这个 uncontextualized 模型和完整 contextualized 模型直接对比，两者差异就只能归因于 contextualization 这一个因素，是因果干预而非相关性。它既给出了 contextualization 效应的 ground-truth 测量平台，也为下一步 Q/K/V patching 提供了可移植的"上下文化版 / 未上下文化版"两套激活源。
 
-3. **2×2 QK vs V 因果分解 + Shapley 值**：
+**3. 2×2 QK vs V 因果分解 + Shapley 值：把路由通道和内容通道解耦。**
 
-    - 功能：把 contextualization 对 FV 质量的总收益 $G=F(1,1)-F(0,0)$ 拆解到 QK 通道（attention 路由）和 V 通道（聚合内容）。
-    - 核心思路：把 FV-head 上的 contextualization 状态写成两个二值变量 $(QK, V)\in\{unc,ctx\}^2$，通过 Q/K/V patching 在 FV-head 上独立替换 Query/Key 或 Value 的激活源，得到 4 个配置 $F(0,0), F(0,1), F(1,0), F(1,1)$。对每个配置评估最大 FV injection accuracy，再算 QK 和 V 各自的 Shapley 值 $\phi_{QK}, \phi_V$（即两条路径在所有联立组合下的平均边际贡献）。
-    - 设计动机：传统消融只能告诉你"去掉 X 掉了多少"，无法分离"X 起作用是因为它改了 attention 路由还是改了内容"。Shapley 分解把这两条物理上耦合的通道在因果效应层面解耦，从而能精确回答"contextualization 改善 FV 主要走哪条路"。结论是 QK 通道贡献更一致、更显著（尤其在 ambiguous 任务上），V 通道贡献则在不同任务间高度异质。
+contextualization 提升 FV，到底是因为它改了 attention 的路由，还是改了写进去的 Value 内容？这两条通道物理上耦合，普通消融分不开。作者把 FV-head 上的 contextualization 状态写成两个二值变量 $(QK, V)\in\{unc,ctx\}^2$，通过 Q/K/V patching 独立替换 Query/Key 或 Value 的激活源，得到 4 个配置 $F(0,0)、F(0,1)、F(1,0)、F(1,1)$，每个配置评估最大 FV injection accuracy。contextualization 的总收益是 $G=F(1,1)-F(0,0)$，再对 QK 和 V 各算一个 Shapley 值 $\phi_{QK}、\phi_V$——也就是每条路径在所有联立组合下的平均边际贡献——把 $G$ 干净地分配给两条通道。结论是 QK 通道（路由）的贡献更一致、更显著，尤其在 ambiguous 任务上；V 通道（内容）的贡献则在任务间高度异质、甚至偶尔为负。这把"contextualization 让表示更好"这种模糊归因，细化成了"它主要改的是注意力路由"。
 
 ### 损失函数 / 训练策略
-本文不训练模型，所有分析都在 frozen 预训练 LLM 上做因果干预。OLS 用闭式解全局拟合；FV injection 的 $(\ell,\alpha)$ 通过 layer/scale sweep 选最大准确率；entropy 用归一化注意力熵 $\hat H=-\sum p_i\log p_i/\log n\in[0,1]$ 量化 attention 平滑度；超参细节在 Appendix E.2/E.3。
+本文不训练任何模型，所有分析都在 frozen 预训练 LLM 上做因果干预。OLS 走闭式解做全局拟合；FV injection 的注入层与缩放 $(\ell,\alpha)$ 通过 layer/scale sweep 取最大准确率；attention 平滑度用归一化注意力熵 $\hat H=-\sum p_i\log p_i/\log n\in[0,1]$ 量化；其余超参细节见 Appendix E.2/E.3。
 
 ## 实验关键数据
 

@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-POPGym Arcade 把记忆评估抽象为四件事配合使用：(1) **孪生环境**：每个底层任务都同时提供 MDP 变体 $\mathcal{M}$ 和 POMDP 变体 $\mathcal{P}$，二者共用 $128{\times}128{\times}3$ 或 $256{\times}256{\times}3$ 像素观测和 $\{\uparrow,\downarrow,\leftarrow,\rightarrow,\times\}$ 五动作空间；(2) **两类对照度量**——Observability Gap 与 Memory Bias，分别用配对 MDP/POMDP、配对"带记忆/不带记忆"策略来隔离不同因素；(3) **像素显著性可视化** $\lVert\nabla_{o_t}Q\rVert$ 用于单条轨迹直观看"哪些像素被记住了"；(4) **Recall Density** 把梯度范数沿轨迹归一化并跨轨迹聚合，得到一个"时间→相对影响力"的分布函数，跨模型/任务可比。整套工具在 JAX 中以纯 GPU 流水线实现，吞吐量比 CPU 版 Atari 快约 $10^4$ 倍。
+本文要解决的是"如何诚实地评估 RL 记忆模型"：回报这一标量把"会不会推断状态"和"加模块本身的副作用"纠缠在一起，无法分辨。POPGym Arcade 的破局思路是给每个底层任务造一对像素层面完全一致的 MDP/POMDP 孪生环境，于是同一个网络可以分别在两者上训练，回报的差值就自然剥离出"部分可观测带来的难度"。在这套孪生底座上，作者再叠两组诊断工具：一组用配对回报相减把回报拆成 Observability Gap 与 Memory Bias 两条同尺度信号，另一组用对历史观测求梯度的方式量化"当前决策到底回看了哪几帧"，最终用后者在 MDP 上的异常形态揭出"价值涂抹"病理。
 
 ### 关键设计
 
-1. **Observability Gap 与 Memory Bias（双因子分解）**:
+**1. POPGym Arcade 孪生环境：让 MDP 与 POMDP 像素级可比**
 
-    - 功能：把"加了记忆的策略在 POMDP 上拿到 $X$ 分回报"这一标量拆解为两个量纲相同、可直接比较的诊断信号。
-    - 核心思路：固定记忆模型 $f$ 和策略 $\pi$，分别在孪生 MDP 上和 POMDP 上跑出回报 $J(f,\pi,\mathcal{M})$ 与 $J(f,\pi,\mathcal{P})$，二者之差即 $\text{Gap}(f,\pi,\mathcal{M},\mathcal{P})=J(f,\pi,\mathcal{M})-J(f,\pi,\mathcal{P})$，刻画"$f$ 没能完全把轨迹还原成 Markov 状态"造成的损失；再固定 POMDP 的底层 MDP，比较"带记忆"和"不带记忆"两个策略在 MDP 上的回报差 $\text{Bias}(f,\pi,\mathcal{M})=J(f,\pi,\mathcal{M})-J(\pi,\mathcal{M})$，捕捉参数量、优化难度、隐式正则等"与可观测性无关"的副作用。两者与回报同尺度，可直接对比量级。
-    - 设计动机：以往只看回报时，无法判断"GRU 比 Transformer 好 5 分"到底是因为 GRU 更会推断状态、还是优化更容易、还是参数量更合适。Gap/Bias 同时给出"该模型对付部分观测的能力"和"该模型自带的附加代价"两条独立曲线，文中实验中 MinGRU 与 GRU 之间的 Bias 差异（0.05）就和 Gap 差异（0.05）量级相当，足以颠倒回报排名。
+前两类度量要在统计上有意义，前提是 MDP 与 POMDP 必须共享相同的观测/动作空间和相同的最优可达回报上限，否则相减出来的差值就混进了"任务本身不一样"的噪声。作者把每个任务的状态拆成低维隐 Markov 状态 $\tilde{s}\in\tilde{S}$（如 MineSweeper 的雷位）和像素 Markov 状态 $s\in S$（如带数字提示的棋盘像素），两者都满足 Markov 性；只要再套上观测函数 $O:\tilde{S}\mapsto\Delta(\Omega)$ 就生成出 POMDP 孪生。由于所有任务统一到同一 $S=\Omega$（$128{\times}128{\times}3$ 或 $256{\times}256{\times}3$ 像素）与同一 $\{\uparrow,\downarrow,\leftarrow,\rightarrow,\times\}$ 五动作空间，单一网络可以跨任务复用，甚至能在训练中途从 POMDP 切回 MDP 做对照。10 个基础环境 × 12 种难度/观测组合给出 120 个任务，并标注 Reward Memory Length 是 $O(k)$（窗口帧叠加就能解）还是 $O(n)$（必须真正记忆）。整套环境在 JAX 中以纯 GPU 流水线实现，吞吐量比 CPU 版 Atari 快约 $10^4$ 倍——正是这点让作者能在 7 种记忆模型 × 5 种子 × 120 配置上跑完整 sweep，拿到统计置信。
 
-2. **像素显著性 + Recall Density（梯度型记忆使用度量）**:
+**2. Observability Gap 与 Memory Bias：把回报拆成两条同尺度信号**
 
-    - 功能：在轨迹层面回答"当前决策到底用了哪几帧历史"。
-    - 核心思路：给定轨迹 $\mathbf{x}_n$，按 Eq.1 推出 $\hat{s}_0,\dots,\hat{s}_n$，然后对历史观测求 $Q$ 或 $\pi$ 的输入梯度，$\sum_{a_n}\lVert\nabla_{o_t}Q(\hat{s}_n,a_n)\rVert_2^2=\sum_{a_n}\lVert\frac{\partial Q}{\partial \hat{s}_n}\frac{\partial \hat{s}_n}{\partial o_t}\rVert_2^2$，在像素层面叠成热力图（链式法则同时穿过 CNN 和记忆模型）。为避免"挑樱桃"，再对单条轨迹的 $L_1$ 梯度范数做轨迹内归一化得到经验密度 $\delta_Q(\mathbf{x}_n,t)$，把绝对时刻 $t$ 映射到归一化时间 $\tau=t/n\in[0,1]$，跨多条轨迹取均值，得到 Recall Density $\mathbb{E}_{\pi,f}[\delta_Q(\mathbf{x},\tau)]$，并提供 $\pi$ 梯度版本以兼容策略梯度方法。
-    - 设计动机：仅看回报或单帧显著性都不足以判断"模型有没有把记忆用对地方"；Recall Density 提供了一个**跨轨迹长度可比、跨模型可比**的量化曲线，可直接对照"MDP 下理论上密度应集中在 $\tau\to 1$"这一 ground truth 做异常检测，是后续发现"价值涂抹"病理的关键测量手段。
+以往只看回报时，"GRU 比 Transformer 高 5 分"既可能因为 GRU 更会推断状态，也可能只是优化更容易或参数量更合适——三种原因被一个标量糊在一起。作者用两次配对相减把它拆开：固定记忆模型 $f$ 与策略 $\pi$，在孪生 MDP 与 POMDP 上各跑出回报，作差得 $\text{Gap}(f,\pi,\mathcal{M},\mathcal{P})=J(f,\pi,\mathcal{M})-J(f,\pi,\mathcal{P})$，刻画"$f$ 没能把轨迹完全还原成 Markov 状态"造成的损失；再固定底层 MDP，比较带记忆与不带记忆两个策略，作差得 $\text{Bias}(f,\pi,\mathcal{M})=J(f,\pi,\mathcal{M})-J(\pi,\mathcal{M})$，捕捉参数量、优化难度、隐式正则等"与可观测性无关"的副作用。两个差值都与回报同量纲，可直接比较量级。实验中 MinGRU 与 GRU 的 Bias 差（0.05）就和它们的 Gap 差（0.05）相当，意味着回报排名完全可能被 Bias 反转——这正是单看回报会得出"加记忆有时更好有时更差"矛盾结论的根源。
 
-3. **POPGym Arcade 孪生环境与 JAX 流水线**:
+**3. 像素显著性与 Recall Density：量化当前决策回看了哪几帧**
 
-    - 功能：为前两类工具提供"硬件加速且形式上可比"的实验底座。
-    - 核心思路：将每个任务的状态拆为低维隐 Markov 状态 $\tilde{s}\in\tilde{S}$（如 MineSweeper 的雷位）和像素 Markov 状态 $s\in S$（如带数字提示的棋盘像素），二者都满足 Markov 性，但只要套上观测函数 $O:\tilde{S}\mapsto\Delta(\Omega)$ 即可生成 POMDP 孪生；所有任务统一到同一 $S=\Omega$ 与同一动作空间，由此可以**单一网络跨任务复用**，甚至可以"训练中途从 POMDP 切回 MDP"以做对照实验。10 个基础环境 × 12 种难度/观测组合给出 120 个任务，并标注 Reward Memory Length 是 $O(k)$ 还是 $O(n)$，方便区分"窗口帧叠加就能解"与"必须真正记忆"两类难度。
-    - 设计动机：要让 Gap/Bias 度量在统计上有意义，必须既保证 MDP 与 POMDP 共享相同的最优可达回报上限，又能高吞吐地跑多种子多模型；纯 JAX + GPU 让作者得以在 7 种记忆模型 × 5 种子 × 120 配置上完成完整 sweep，这是该研究"统计置信"的基础设施前提。
+光有 Gap/Bias 还回答不了"模型有没有把记忆用对地方"，需要在轨迹层面看清信息流向。给定轨迹 $\mathbf{x}_n$，先按 Eq.1 递推出 $\hat{s}_0,\dots,\hat{s}_n$，再对每帧历史观测求 $Q$（或 $\pi$）的输入梯度，链式法则同时穿过 CNN 和记忆模型：
+
+$$\sum_{a_n}\lVert\nabla_{o_t}Q(\hat{s}_n,a_n)\rVert_2^2=\sum_{a_n}\Big\lVert\frac{\partial Q}{\partial \hat{s}_n}\frac{\partial \hat{s}_n}{\partial o_t}\Big\rVert_2^2$$
+
+把它叠成像素热力图就能直观看到"哪几帧被记住了"。为避免在单条轨迹上"挑樱桃"，作者再对 $L_1$ 梯度范数做轨迹内归一化得到经验密度 $\delta_Q(\mathbf{x}_n,t)$，把绝对时刻 $t$ 映射到归一化时间 $\tau=t/n\in[0,1]$，跨多条轨迹取均值，得到 Recall Density $\mathbb{E}_{\pi,f}[\delta_Q(\mathbf{x},\tau)]$（并提供 $\pi$ 梯度版本以兼容策略梯度方法）。它的关键好处是跨轨迹长度、跨模型都可比，于是可以拿 MDP 当 oracle：MDP 下 $V^*(s_t)$ 理论上只依赖当前状态，密度本应集中在 $\tau\to 1$，一旦实测把大量权重摊到 $\tau<0.66$ 的早期片段，就是"价值涂抹"的直接证据。
 
 ### 损失函数 / 训练策略
 主算法采用片上 TD($\lambda$) 的 Q-learning 实现 PQN（Gallici et al., 2024），刻意避开 target network、replay buffer、共享主干等常见混淆因素；同时在附录中用 PPO 与 DQN 复现关键结论以排除算法效应。所有记忆模型都加了一条**绕过记忆**的 skip connection，让策略在 MDP 上有"忽略记忆"的能力——这一设计也使得后面观察到的"记忆仍涂抹历史"更具说服力。共测试 7 种记忆模型：Transformer、Recurrent Linear Transformer、Linear TTT、Gated DeltaNet、MinGRU、GRU、LRU SSM。

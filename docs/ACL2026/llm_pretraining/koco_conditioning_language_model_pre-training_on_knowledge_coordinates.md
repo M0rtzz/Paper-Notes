@@ -47,23 +47,17 @@ $$\mathcal{L}_{\text{KoCo}} = -\sum_{i=1}^{n} \log P_\theta(x_i | x_{<i}, \mathc
 
 ### 关键设计
 
-1. **三维知识坐标体系**
+**1. 三维知识坐标体系：用一组与主题无关的客观元描述，给文档在知识空间里定位。**
 
-    - 功能：为每个文档提供客观的、与具体语义主题无关的元描述
-    - 核心思路：定义三个正交维度——**Source**（来源：Academic/Media/Community/Personal 等 10 类）、**Content**（内容类型：Instructional/Pedagogical/Discussion/Opinion 等 11 类）、**Stability**（时间稳定性：Ephemeral/Decaying/Long-term/Evergreen 4 类）。在 DCLM 语料上超过 99.5% 的文档可以成功映射到该坐标系
-    - 设计动机：不同于 URL 提供的表面信号，三维坐标从信息的本质属性出发，模拟人类认知中"了解信息来源和性质"的过程。三个维度捕获互补信息（消融实验证实）
+标准预训练把所有 token 一视同仁，但人类读到一段文字时会先判断它来自哪里、是什么性质。KoCo 把这种判断显式化成三个正交维度：**Source**（来源，Academic/Media/Community/Personal 等 10 类）、**Content**（内容类型，Instructional/Pedagogical/Discussion/Opinion 等 11 类）、**Stability**（时间稳定性，Ephemeral/Decaying/Long-term/Evergreen 4 类）。和 URL 这种表面信号不同，三个维度刻画的是信息的本质属性，让模型能区分“永恒的物理定理”和“短暂的社交观点”。在 DCLM 语料上超过 99.5% 的文档都能成功映射到这个坐标系，消融实验也证实三个维度捕获的是互补信息，缺一不可。
 
-2. **条件推理控制（Conditional Inference）**
+**2. 条件推理控制（Conditional Inference）：把通常只在对齐阶段才有的可控信号，提前到预训练就埋好。**
 
-    - 功能：在推理时通过指定知识坐标前缀来引导模型行为
-    - 核心思路：为不同任务设计特定的坐标前缀（如 Social IQA 使用 {Source: Media; Content: Discussion}，LogiQA 使用 {Source: Academic; Content: Pedagogical}）。更关键的是，通过指定可靠来源前缀（如 {Source: Publication; Content: Instructional; Stability: Long-term}）可以在 TruthfulQA 上获得高达 3.78% 的提升
-    - 设计动机：KoCo 在预训练阶段引入了通常在对齐阶段才有的控制信号，使得用户可以在推理时通过简单地指定知识坐标来抑制不可靠输出
+既然坐标是以前缀形式注入预训练的，那么推理时也能反过来用前缀去引导模型行为。作者为不同任务设计了特定前缀，例如 Social IQA 用 {Source: Media; Content: Discussion}、LogiQA 用 {Source: Academic; Content: Pedagogical}。更关键的是事实性控制：在 TruthfulQA 上指定一个可靠来源前缀（如 {Source: Publication; Content: Instructional; Stability: Long-term}）能带来高达 3.78% 的提升。这意味着用户在推理时只要指定合适的知识坐标，就能主动抑制不可靠输出——这种可控性在传统 pipeline 里要到对齐阶段才出现，KoCo 把它上移到了预训练。
 
-3. **标注器独立性验证**
+**3. 标注器独立性验证：证明收益来自坐标条件化本身，而不是从大标注器偷偷蒸馏知识。**
 
-    - 功能：证明 KoCo 的收益来自坐标条件化机制本身，而非从标注器模型蒸馏知识
-    - 核心思路：使用仅 110M 参数的 BERT-base（远小于被预训练的 0.6B 模型）作为替代标注器，在 50K 标注样本上训练后生成坐标，用于预训练 KoCo
-    - 设计动机：如果 KoCo 的提升来自从 Qwen-3-4B 蒸馏知识，那么用更弱的标注器应该显著降低效果。实验证明两种标注器效果相当，排除了知识蒸馏假说
+一个自然的质疑是：KoCo 的提升会不会只是从 Qwen-3-4B 标注器蒸馏来的知识？为排除这种可能，作者换上仅 110M 参数的 BERT-base 作为替代标注器——它远小于被预训练的 0.6B 模型，只在 50K 标注样本上训练后生成坐标。如果提升真来自蒸馏，那么换成更弱的标注器效果应当明显下降；实验结果却是两种标注器效果相当，从而坐实了收益来自“条件化机制”本身，排除了知识蒸馏假说。
 
 ### 训练策略
 

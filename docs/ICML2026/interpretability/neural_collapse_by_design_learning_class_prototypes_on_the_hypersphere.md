@@ -41,35 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-全文给出三个改动，分别落在两条路径上：
-
-- 输入：标注图像 $\mathbf{x}_i$，编码器 $f_{\bm{\theta}}$，可选投影头 $g_{\bm{\phi}}: \mathcal{Z}\to\mathbb{S}^{d-1}$。
-- CL 路径（NTCE / NONL）：把特征 $\bm{u}_i=\mathbf{z}_i/\|\mathbf{z}_i\|$ 和权重 $\hat{\bm{w}}_c$ 都归一化到 $\mathbb{S}^{d-1}$，并把损失换成把"类原型 $\hat{\bm{w}}_{y_i}$ 当锚点、batch 内 $M$ 个实例当对比对象"的对比式。
-- SCL 路径（FP）：照常用 SCL 训完编码器+投影头，**不**再训 LP，直接令 $\bm{w}_c=\hat{\bm{\mu}}_c$（batch 内类均值）作为分类器权重。
-- 理论：定理 4.1 证明 NormFace/NTCE/NONL 的全局最优都满足 NC1–NC3；定理 4.2 证明 SCL 与"原型 Softmax"损失共享同一组全局最优，所以类均值本就是 SCL 在整条优化轨迹上想要的分类器。
+方法要解决的是"NC 理论说全局最优该达成、实际两条主流路径都达不成"这个落差，思路是先把 CE 和 SCL 统一成超球面 $\mathbb{S}^{d-1}$ 上的"原型 ↔ 实例对比"，再分别在两条路径上各动手术。CE 侧（NTCE/NONL）把特征 $\bm{u}_i=\mathbf{z}_i/\|\mathbf{z}_i\|$ 和分类器权重 $\hat{\bm{w}}_c$ 都归一化上球面、偏置置零，并把损失重写成"以类原型为锚点、batch 内实例为对比对象"的形式；SCL 侧（FP）照常训完编码器加投影头，但不再训线性探测（LP），直接用 batch 内类均值 $\hat{\bm{\mu}}_c$ 当分类器权重。两条路由两条定理闭环：定理 4.1 证明 NormFace/NTCE/NONL 的全局最优都满足 NC1–NC3，定理 4.2 证明 SCL 与"原型 Softmax"损失共享同一组全局最优——也就是类均值本就是 SCL 在整条优化轨迹上想要的分类器。
 
 ### 关键设计
 
-1. **NTCE：把锚点从实例翻转到类原型，扩负样本集**：
+**1. NTCE：把锚点从实例翻转到类原型，扩大负样本集**
 
-    - 功能：在 NormFace 的归一化 Softmax 基础上，把"每个实例 vs $K$ 个类权重"换成"每个类权重 vs batch 内 $M$ 个实例"，让对比的有效负样本数从 $K$ 跳到 $M$。
-    - 核心思路：损失形如 $L_{\text{NTCE}}=\frac{1}{M}\sum_i -\log\frac{e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_i/\tau}}{\sum_{j=1}^{M} e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}}$。锚点是类原型 $\hat{\bm{w}}_{y_i}$，分母遍历整个 batch 而不是 $K$ 个类，从而把 NormFace 退化成"$K$ 路对比"的瓶颈打掉，恢复了对比学习"负样本越多估计越准"的优势。
-    - 设计动机：He 等人早就指出对比目标需要大量负样本才能逼近真实期望；NormFace 形式上是对比损失，但其实只用了 $K$ 个负样本，导致类间分离收敛慢、对小 batch 鲁棒。NTCE 让 CL 真正享受到对比优化的好处，从经验上把 ETF 几何更快推到位（在 Table 3 上 inter-class effective rank 直接到达理论上限 $K-1$）。
+NormFace 形式上是个对比损失，但每个实例只对比 $K$ 个类权重，负样本数被卡死在类别数 $K$，而 He 等人早就指出对比目标需要大量负样本才能逼近真实期望，于是类间分离收敛慢、对小 batch 敏感。NTCE 直接把锚点从实例翻转成类原型：损失写成 $L_{\text{NTCE}}=\frac{1}{M}\sum_i -\log\frac{e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_i/\tau}}{\sum_{j=1}^{M} e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}}$，锚点是类原型 $\hat{\bm{w}}_{y_i}$，分母遍历整个 batch 的 $M$ 个实例而不是 $K$ 个类。这样有效负样本数从 $K$ 跳到 $M$，把 NormFace "$K$ 路对比"的瓶颈打掉，让 CL 重新享受到"负样本越多估计越准"的好处，经验上 ETF 几何被更快推到位——Table 3 里 inter-class effective rank 直接顶到理论上限 $K-1$。
 
-2. **NONL：把同类正样本从归一化项里剔除，解耦 alignment-uniformity**：
+**2. NONL：把同类正样本从归一化项里剔除，解耦 alignment-uniformity**
 
-    - 功能：在 NTCE 基础上进一步去掉分母里所有与锚点同类的样本，消除"正样本被当作负样本"导致的梯度对冲。
-    - 核心思路：定义 $L_{\text{NONL}}=\frac{1}{M}\sum_i -\log\frac{e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_i/\tau}}{\sum_{j\notin\mathcal{C}(i)} e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}}$，其中 $\mathcal{C}(i)$ 是 batch 内与 $i$ 同类的索引集。NTCE 的分母里同类实例 $j$ 会通过 $e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}$ 产生"把同类实例从类原型推开"的梯度，恰好与分子的对齐项相反——这就是已知的 alignment-uniformity 耦合问题；NONL 通过显式排除同类样本把这个内耗去掉。
-    - 设计动机：均匀项最优是当同类实例间距最大，这与"同类塌缩"的对齐目标天然矛盾。NONL 把这种内耗一刀切断，使 NC1（intra-class collapse）显著更好——Table 3 中 intra-class effective rank 从 NTCE 的 9.0/12.6 降到 4.0/11.4，几个 NC 指标在 CL 家族里整体最佳。
+NTCE 的分母里仍混着与锚点同类的实例 $j$，它们通过 $e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}$ 产生"把同类实例从类原型推开"的梯度，恰好和分子的对齐项相反，这就是已知的 alignment-uniformity 耦合：均匀项要同类实例彼此撑开，对齐项却要同类塌缩到一起，两者在共享的归一化里互相内耗。NONL 一刀切断这个矛盾，把分母里所有同类样本去掉，得到 $L_{\text{NONL}}=\frac{1}{M}\sum_i -\log\frac{e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_i/\tau}}{\sum_{j\notin\mathcal{C}(i)} e^{\hat{\bm{w}}_{y_i}^\top \bm{u}_j/\tau}}$，其中 $\mathcal{C}(i)$ 是 batch 内与 $i$ 同类的索引集。去掉内耗后 NC1（同类塌缩）显著变好：Table 3 中 intra-class effective rank 从 NTCE 的 9.0/12.6 降到 4.0/11.4，多个 NC 指标在 CL 家族里整体最佳。
 
-3. **FP（Fixed Prototypes）：用类均值当 SCL 的分类器，干掉线性探测**：
+**3. FP（Fixed Prototypes）：用类均值当 SCL 的分类器，干掉线性探测**
 
-    - 功能：SCL 训完后不再做 LP，直接把投影头输出空间里每类的样本均值 $\hat{\bm{\mu}}_c$ 当作分类器权重，零偏置，零额外训练。
-    - 核心思路：作者证明（定理 4.2）：在单位范数特征 + 平衡标签下，SCL 损失 $L_{\text{SCL}}$ 与"原型 Softmax"损失 $L_{\text{proto}}$（分子是 $e^{\bm{a}_i^\top \hat{\bm{\mu}}_{y_i}/\tau}$，分母按 batch 频次 $n_c$ 加权所有类原型）拥有同一组全局最优。这意味着 SCL 在整条优化轨迹上都隐式优化"以类均值为权重的原型分类器"，类均值不是事后凑出来的，而是 SCL 一直想要的分类器。FP 推理时只需对 batch 计算类均值，做 nearest-prototype 决策。
-    - 设计动机：标准 LP 在未归一化特征上加可学权重+偏置，重新引入径向自由度和偏置，把 SCL 好不容易学到的 ETF 几何破坏掉，且要多花 $T$ 个 epoch。FP 用 $N$ 次前向取代 $T\times N$ 的训练，几何上也强制 NC3 严格成立，从理论和算力两头同时占便宜。
+标准 SCL 训完编码器后要在未归一化特征上再训一个带权重和偏置的 LP，这一步重新引入了径向自由度和偏置，把刚学到的 ETF 几何破坏掉，还要多花 $T$ 个 epoch。FP 的依据是定理 4.2：在单位范数特征加平衡标签下，SCL 损失 $L_{\text{SCL}}$ 与"原型 Softmax"损失 $L_{\text{proto}}$（分子 $e^{\bm{a}_i^\top \hat{\bm{\mu}}_{y_i}/\tau}$，分母按 batch 频次 $n_c$ 加权所有类原型）共享同一组全局最优，意味着 SCL 在整条优化轨迹上隐式优化的就是"以类均值为权重的原型分类器"，类均值不是事后凑的而是它一直想要的。于是 FP 训完直接令 $\bm{w}_c=\hat{\bm{\mu}}_c$、零偏置、零额外训练，推理时对 batch 算类均值做 nearest-prototype 决策。这样用 $N$ 次前向取代 $T\times N$ 的训练，还从几何上强制 NC3 严格成立，理论和算力两头同时占便宜。
 
 ### 损失函数 / 训练策略
-温度 $\tau$ 与对比学习同款（CIFAR/ImageNet 默认值）；CL 侧只需对 $\mathbf{z}$ 和 $\mathbf{w}$ 各做一次 L2 归一化，偏置置零；SCL 侧沿用 Khosla 等的标准训练配方，唯一改动是把 LP 阶段换成"计算类均值 → 直接当权重"。NTCE/NONL 在小 batch 下会因负样本不足退化（对比损失通病），ImageNet-1K 建议大 batch。
+温度 $\tau$ 与对比学习同款（CIFAR/ImageNet 默认值）；CL 侧只需对 $\mathbf{z}$ 和 $\mathbf{w}$ 各做一次 L2 归一化、偏置置零；SCL 侧沿用 Khosla 等的标准训练配方，唯一改动是把 LP 阶段换成"计算类均值 → 直接当权重"。需要注意 NTCE/NONL 在小 batch 下会因负样本不足退化（对比损失通病），ImageNet-1K 建议大 batch。
 
 ## 实验关键数据
 

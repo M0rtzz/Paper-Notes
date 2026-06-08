@@ -42,36 +42,39 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入多视角图像 → SAM 部件级分割 → VLM（GPT-5）预测材质标签、密度等物理属性及置信度 → 贝叶斯推断融合多视角证据 → 3DGS 重建 → 逐点物理属性场
+PhysGS 想解决的是：从一组普通多视角照片出发，不仅重建出几何，还要逐点估计物体的物理属性（摩擦力、硬度、密度、刚度），并且告诉你每个估计有多可信。整条管线把"看图—问 VLM—贝叶斯融合—回填到 3D 高斯场"串成一条线。具体来说，先用 SAM 把每张图切成部件级的 mask，再让 VLM（GPT-5）对每个部件预测材质标签、连续物理属性以及它自己的置信度；同一块区域会在多个视角下被反复观测，于是这些带置信度的预测被送进一个贝叶斯推断模块逐步融合成后验；最后把融合得到的材质-属性结果回填到 3DGS 重建出的高斯场上，得到一个可以逐点查询、也可以全局聚合（如积分出总质量）的物理属性场。
+
+整篇方法的核心在于：每个高斯原语不再只携带颜色和几何，而被当成一个"对自身物理属性持有概率信念"的实体，信念随着新视角的证据不断被后验更新精化。
 
 ### 关键设计
 
-1. **Dirichlet-Categorical 材质分类**
+**1. Dirichlet-Categorical 材质分类：让多视角的离散材质判断闭式融合成一个后验。**
 
-    - 功能：将 VLM 预测的离散材质标签通过贝叶斯更新融合为后验概率
-    - 核心思路：Dirichlet 分布作为 Categorical 似然的共轭先验，后验参数递归更新 $\tilde{\alpha}_i \leftarrow \alpha_i(0) + \sum_{m: c_m=i} \lambda p_m$，其中 $p_m$ 是 VLM 对第 $m$ 次预测的置信度。后验预测概率为 $f(z=i | Z, \boldsymbol{\alpha}) = \tilde{\alpha}_i / \sum_j \tilde{\alpha}_j$
-    - 设计动机：VLM 的单视角预测可能不一致，需要跨视角融合。Dirichlet-Categorical 的共轭性使得融合可以闭式完成，适合在线更新
+VLM 在单个视角下给出的材质标签经常不一致——同一块地面，这张图被认成泥土、那张图被认成沥青。直接投票会丢掉置信度信息，也无法在线增量更新。PhysGS 把材质类别建成一个 Categorical 变量，并用它的共轭先验 Dirichlet 分布来累积证据，这样每来一次新预测就能闭式地改写后验，无需重新优化。后验参数的递归更新写作 $\tilde{\alpha}_i \leftarrow \alpha_i(0) + \sum_{m: c_m=i} \lambda p_m$，其中 $p_m$ 是 VLM 对第 $m$ 次预测的置信度，$\lambda$ 是融合步长——置信度越高的预测对后验的拉动越大。最终某点属于材质 $i$ 的后验预测概率就是归一化的 $f(z=i \mid Z, \boldsymbol{\alpha}) = \tilde{\alpha}_i / \sum_j \tilde{\alpha}_j$。共轭性是这里的关键：它让"融合多视角证据"退化成对计数器做加法，天然适配流式、增量的重建场景。
 
-2. **连续属性的贝叶斯估计**
+**2. 连续属性的贝叶斯估计：用置信度加权的累积量在线估出每种材质的均值与方差。**
 
-    - 功能：对每种材质的连续物理属性（摩擦系数、密度等）估计均值和方差
-    - 核心思路：维护置信度加权的三个累积器 $W_i = \sum p_m$、$S_i = \sum p_m \psi_m$、$Q_i = \sum p_m \psi_m^2$，计算后验均值 $\mu_i = S_i / W_i$ 和方差 $\sigma_i^2 = Q_i/W_i - \mu_i^2$。最终属性分布为高斯混合 $f(\psi | Z, \boldsymbol{\alpha}) = \sum_i \frac{\tilde{\alpha}_i}{\sum_j \tilde{\alpha}_j} \mathcal{N}(\mu_i, \sigma_i^2)$
-    - 设计动机：用增量在线更新避免存储历史观测，特别适合流式重建场景
+材质标签之外，摩擦系数、密度这类连续属性也要估，而且同样需要跨视角融合、又不想把所有历史观测都存下来。PhysGS 对每种材质维护三个置信度加权的累积器：$W_i = \sum p_m$、$S_i = \sum p_m \psi_m$、$Q_i = \sum p_m \psi_m^2$（$\psi_m$ 是第 $m$ 次观测到的属性值）。有了这三个量就能闭式算出后验均值和方差：
 
-3. **Normal-Inverse-Gamma 不确定性建模**
+$$\mu_i = \frac{S_i}{W_i}, \qquad \sigma_i^2 = \frac{Q_i}{W_i} - \mu_i^2$$
 
-    - 功能：将总预测不确定性分解为偶然不确定性（传感器/感知噪声）和认知不确定性（模型知识不足）
-    - 核心思路：对均值 $\mu_i$ 和方差 $\sigma_i^2$ 的联合先验使用 NIG 分布 $p(\mu_i, \sigma_i^2 | \tau_i, \kappa_i, \alpha_i, \beta_i)$。不确定性分解为 $\text{Var}[\psi_i] = \underbrace{\mathbb{E}[\sigma_i^2]}_{\text{偶然}} + \underbrace{\text{Var}[\mu_i]}_{\text{认知}}$，其中 $\mathbb{E}[\sigma_i^2] = \tilde{\beta}_i / (\tilde{\alpha}_i - 1)$，$\text{Var}[\mu_i] = \mathbb{E}[\sigma_i^2] / \tilde{\kappa}_i$
-    - 设计动机：机器人决策需要知道"我有多不确定"——高偶然不确定性意味着感知困难，高认知不确定性意味着需要更多观测
+由于某个高斯点的材质本身是不确定的（上一设计给出的后验分布），它最终的属性分布是各材质高斯按材质后验概率加权的混合：$f(\psi \mid Z, \boldsymbol{\alpha}) = \sum_i \frac{\tilde{\alpha}_i}{\sum_j \tilde{\alpha}_j} \mathcal{N}(\mu_i, \sigma_i^2)$。整套估计只靠累加这三个标量，不存历史观测，因此可以边重建边更新。
 
-4. **3DGS 语义属性映射**
+**3. Normal-Inverse-Gamma 不确定性建模：把总不确定性拆成"感知噪声"和"知识不足"两部分。**
 
-    - 功能：将贝叶斯推断的材质-属性对应关系映射回3D高斯场
-    - 核心思路：用贝叶斯推断确定的材质对应颜色重着色场景图像，作为语义输入建3DGS。每个体素关联一个预测属性值，支持逐点查询（如摩擦力）和全局聚合（如总质量）
+对机器人来说，"我估出来的摩擦系数有多不可信"和数值本身一样重要，而且不可信的来源还分两类：一类是传感器/感知噪声带来的偶然不确定性（aleatoric，再多看也消不掉），另一类是观测不够、模型知识不足带来的认知不确定性（epistemic，多看几眼能降下来）。PhysGS 对均值 $\mu_i$ 和方差 $\sigma_i^2$ 的联合后验用 NIG 分布 $p(\mu_i, \sigma_i^2 \mid \tau_i, \kappa_i, \alpha_i, \beta_i)$ 建模，从而把总方差解析地拆开：
+
+$$\text{Var}[\psi_i] = \underbrace{\mathbb{E}[\sigma_i^2]}_{\text{偶然}} + \underbrace{\text{Var}[\mu_i]}_{\text{认知}}, \quad \mathbb{E}[\sigma_i^2] = \frac{\tilde{\beta}_i}{\tilde{\alpha}_i - 1}, \quad \text{Var}[\mu_i] = \frac{\mathbb{E}[\sigma_i^2]}{\tilde{\kappa}_i}$$
+
+这样一来，高偶然不确定性的区域提示"这里本身就难感知"，高认知不确定性的区域提示"再多采几个视角会有帮助"——两类信号对下游决策有不同含义，分开看才有用。
+
+**4. 3DGS 语义属性映射：把材质-属性的后验回填到三维高斯场，支持逐点查询和全局聚合。**
+
+前面三步都在"材质-属性"这个语义空间里完成推断，最后还得落回 3D 才能用。PhysGS 用贝叶斯推断确定的材质给每类指定一种代表色，对场景图像做重着色，再把这些带语义的图像作为输入建 3DGS。重建出的每个体素因此关联到一个预测属性值，既能逐点查询（比如某处地面的摩擦力），也能全局聚合（比如对密度场积分出整个物体的总质量）。
 
 ### 损失函数 / 训练策略
-- 使用 Nerfstudio 的 splatfacto-big 变体，20k 迭代，RTX A5000
-- VLM 使用 GPT-5，结构化视觉-文本 prompt
+- 使用 Nerfstudio 的 splatfacto-big 变体重建，20k 迭代，单卡 RTX A5000
+- VLM 使用 GPT-5，配结构化的视觉-文本 prompt 来获取材质标签、属性值及置信度
 
 ## 实验关键数据
 

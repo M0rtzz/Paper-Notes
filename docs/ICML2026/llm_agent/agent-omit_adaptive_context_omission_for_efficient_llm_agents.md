@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段优化：(a) Agent Omission Behavior Synthesis（冷启动 SFT）—— 通过 Monte-Carlo rollout 识别每条轨迹中"可省"的 thought/observation 回合，构造单轮 + 多轮两套合成数据，把"省略格式"和"在被省略上下文下继续推理"两件事一起教给基础模型。(b) Omit-Aware Agentic RL —— 引入 dual sampling（同时采全轨迹 + 每个省略点的部分轨迹）和 omit-aware reward（task reward + omit reward），用 GRPO 优化。理论上证明学到的省略策略偏离最优策略的程度被 KL 散度上界约束。
+要解决的问题是：agent 多轮 thought→action→observation 循环里，思考和观测的 token 越堆越多，但不同回合的"必要性"差别极大。Agent-Omit 把"省什么"从外部后处理变成 agent 自己输出的一阶动作，再分两阶段把这套动作教会并优化好——先用 Monte-Carlo rollout 标注出每条轨迹里"可省的回合"做冷启动 SFT 打开省略格式，再用一套带双采样和双奖励的 omit-aware GRPO 让模型在交互中自适应决定每一轮要不要省。
 
 ### 关键设计
 
-1. **量化分析 + 省略动作显式化**:
+**1. 把省略从启发式升级成可学习的显式动作：先证明灰区存在，再给它语言接口**
 
-    - 功能：先定量证明 "selective omission 真的能减 token 而不掉点"，再把省略本身设计成 agent 可输出的 token 模式，让后续 SFT/RL 能直接学。
-    - 核心思路：在 WebShop + Qwen3-8B 上分别"挖掉第 $t$ 轮的 $\tau_t$ 或 $o_t$"再让 agent 接着走完，统计 token 与 Pass@1。结果：thought 占 45.1%、observation 占 52.2%、action 仅 2.7%；中间轮思考可省、末轮观测不能省、首轮思考不能省，存在大量"灰区"——准确率不降但 token 显著减。在动作端，思考省略用空 `<think> </think>`；观测省略用 `<omit_tool_response_N_...>`，对历史观测集 $\Gamma \subseteq \{1,\dots,t-1\}$ 显式 mask 掉。
-    - 设计动机：把启发式（按时间窗删）升级为可学习策略，需要先验证"省略空间确实非空"，再给省略行为一个明确的语言学接口；后两个要素让 SFT 和 RL 都能监督。
+动机是现有提效方法都把整条轨迹一视同仁地压，而思考和观测的必要性其实是 turn-dependent 的。作者先在 WebShop + Qwen3-8B 上做可控干预——逐一"挖掉第 $t$ 轮的思考 $\tau_t$ 或观测 $o_t$"再让 agent 走完，统计 token 与 Pass@1，发现 thought 占 45.1%、observation 占 52.2%、action 仅 2.7%，且中间轮思考可省、首轮思考和末轮观测不能省，中间存在大片"准确率不降但 token 显著减"的灰区。证明灰区非空后，再给省略一个 tokenizer 原生兼容的接口：思考省略输出空的 `<think> </think>`，观测省略输出 `<omit_tool_response_N_...>` 对历史观测集 $\Gamma \subseteq \{1,\dots,t-1\}$ 显式 mask。这样省略就成了能被 SFT 和 RL 直接监督的合法动作，而不再是按时间窗删的硬规则。
 
-2. **冷启动数据合成（Omission Behavior Synthesis）**:
+**2. 冷启动数据合成：用 rollout 标注可省回合，单轮教格式、多轮教续推**
 
-    - 功能：把通用 LLM 教成 omission-aware 的 agent，提供初始策略让 RL 不至于探索灾难。
-    - 核心思路：对训练轨迹做 forward rollout 识别"可省回合"——只要某回合省去后 token 减少且 accuracy 不降则标记为 omittable（论文 Figure 4 给出 $\tau_2,\tau_3,o_3$ 等示例）。然后分层构造：(i) Single-Turn omission，用专门 system prompt 教 agent 输出空 thought 或 omit_tool_response 命令；(ii) Multi-Turn omission，把整条轨迹中的可省 thought/observation 换成对应省略符号，强迫 agent 学会在历史被省后继续保持推理连续性，避免 context-lost。最后做全参 SFT，损失 $\mathcal{L} = -\mathbb{E}_{(x,y)\sim \mathcal{D}_{single}\cup\mathcal{D}_{multi}}[\log \mathcal{P}_{\pi_\theta}(y\mid x)]$，对环境观测部分加 loss mask。
-    - 设计动机：直接上 RL 会因为 agent 不会输出省略符号而完全采不到正样本；先 SFT 把格式打开，是把"省略是一个合法动作"的认知植入模型的最低成本路径。
+直接上 RL 会因为基础模型根本不会输出省略符号而采不到任何正样本，所以需要先 SFT 把"省略是一个合法动作"植入模型。作者对训练轨迹做 forward rollout 识别可省回合——某回合省去后 token 减少且 accuracy 不降即标记为 omittable（论文 Figure 4 给出 $\tau_2,\tau_3,o_3$ 等示例）。然后分两层造数据：Single-Turn omission 用专门 system prompt 教 agent 输出空 thought 或 omit_tool_response 命令，把"格式"先打开；Multi-Turn omission 把整条轨迹里所有可省的 thought/observation 都换成对应省略符号，强迫 agent 在历史已被省的情况下仍保持推理连续、不丢上下文。最后做全参 SFT，损失为 $\mathcal{L} = -\mathbb{E}_{(x,y)\sim \mathcal{D}_{single}\cup\mathcal{D}_{multi}}[\log \mathcal{P}_{\pi_\theta}(y\mid x)]$，并对环境观测部分加 loss mask。
 
-3. **Omit-aware Agentic RL：双采样 + 双奖励 + GRPO**:
+**3. Omit-aware Agentic RL：用双采样补上归因缺口，用双奖励防 reward hacking**
 
-    - 功能：把"省略策略"作为一阶决策学习目标，同时保证 task 准确率不被 reward hacking 牺牲。
-    - 核心思路：dual sampling—— 对每个输入采全轨迹 $y$（执行省略动作的完整 episode），再针对每个发生省略的回合把"省略前的上下文 + 该轮 thought/action"截出作为部分轨迹 $y'$，每个 $y$ 派生 $p(y)$ 个 $y'$；这样 agent 在 $y'$ 上能"看到尚未省略时的上下文"来对省略决策学习归因，避开"省略后再也看不到原信息"导致策略不可学的死结。奖励上：task reward $R_{task}$ 对全 / 部分轨迹都给；omit reward $R_{omit}=\mathrm{Tok}(\tau_{omitted})/\mathrm{Tok}(y) + \mathrm{Tok}(o_{omitted})/\mathrm{Tok}(y)$ 只对全轨迹给，且在 $R_{task}=0$ 时强制清零，防止 agent "为省而省"。综合奖励 $r(\cdot)=(1-\mu)R_{task}+\mu R_{omit}$（$\mu=0.2$），$r'(\cdot)=R_{task}$。用 GRPO 优化，并加 KL 约束 $-\beta \mathbb{D}_{KL}[\pi_\theta \| \pi_{ref}]$。
-    - 设计动机：直接对 omission 决策做 credit assignment 需要"反事实的非省略上下文"——这正是普通 agentic RL 拿不到的；dual sampling 用一个工程巧思补上了这个缺口，使省略策略可学。task-conditioned omit reward 则把"提速不能降准确率"显式编码，比单纯加权和更稳健。
+把省略当一阶决策学习有个死结——一旦某轮信息被省，agent 之后就再也看不到原信息，没法对"该不该省"做 credit assignment。dual sampling 正是为补这个缺口设计的：对每个输入先采全轨迹 $y$（执行省略动作的完整 episode），再针对每个发生省略的回合，把"省略前的上下文 + 该轮 thought/action"截出作为部分轨迹 $y'$，每个 $y$ 派生 $p(y)$ 个 $y'$，让 agent 在 $y'$ 上能看到尚未省略时的反事实上下文来学习归因。奖励则分两路：task reward $R_{task}$ 对全、部分轨迹都给；omit reward $R_{omit}=\mathrm{Tok}(\tau_{omitted})/\mathrm{Tok}(y) + \mathrm{Tok}(o_{omitted})/\mathrm{Tok}(y)$ 只对全轨迹给，且一旦 $R_{task}=0$ 就强制清零，把"提速不能降准确率"硬编码进去以杜绝"为省而省"的 collapse。综合奖励 $r(\cdot)=(1-\mu)R_{task}+\mu R_{omit}$（$\mu=0.2$），$r'(\cdot)=R_{task}$，用 GRPO 优化并加 KL 约束 $-\beta \mathbb{D}_{KL}[\pi_\theta \| \pi_{ref}]$。
 
 ### 损失函数 / 训练策略
-SFT 阶段标准 LM loss + 环境观测 loss mask；RL 阶段目标
-$\max_{\pi_\theta} \mathbb{E}_{x,\{y_i,\{y'_{i,j}\}\}}\big[\tfrac{1}{n}\sum_i \big(r(x,y_i) + \tfrac{1}{p(y_i)}\sum_j r'(x,y'_{i,j})\big)\big] - \beta \mathbb{D}_{KL}[\pi_\theta \| \pi_{ref}]$。基础模型 Qwen3-8B。理论上作者在 semantic Lipschitz 假设下证明效果 / 效率偏差被 $\delta + K' \cdot \mathrm{KL}(\pi^\ast,\pi_\theta)$ 上界约束，说明随 KL 减小可以单调逼近最优省略策略。
+SFT 阶段是标准 LM loss 加环境观测 loss mask；RL 阶段的优化目标为
+$\max_{\pi_\theta} \mathbb{E}_{x,\{y_i,\{y'_{i,j}\}\}}\big[\tfrac{1}{n}\sum_i \big(r(x,y_i) + \tfrac{1}{p(y_i)}\sum_j r'(x,y'_{i,j})\big)\big] - \beta \mathbb{D}_{KL}[\pi_\theta \| \pi_{ref}]$，基础模型为 Qwen3-8B。理论上作者在 semantic Lipschitz 假设下证明效果 / 效率的偏差被 $\delta + K' \cdot \mathrm{KL}(\pi^\ast,\pi_\theta)$ 上界约束，即随 KL 减小可以单调逼近 Monte-Carlo 标注的最优省略前沿。
 
 ## 实验关键数据
 

@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **双层评测协议（SER / AEC + EIR + Binary/Type/Point Agreement）**:
+**1. 双层评测协议（SER / AEC + EIR + Binary/Type/Point Agreement）：把"识别"和"评分"两件被混在一起的能力拆开评，再量化错误怎么传播。**
 
-    - 功能：把"识别"和"评分"两个原本被混在一起的能力解耦评估，并量化错误传播。
-    - 核心思路：识别端用 Sample Error Rate $\text{SER}=\frac{\#\{s: \text{errors}(s)>0\}}{|S|}$ 和 Average Error Count $\text{AEC}=\frac{1}{|S|}\sum_s \#\text{errors}(s)$；评分端用三级递进 Binary $\to$ Type $\to$ Point agreement，越严格越能暴露细粒度错误；二者通过 $\text{EIR}=\frac{\text{识别错误中引起评分差异的数量}}{\text{识别错误总数}}$ 桥接。
-    - 设计动机：单靠 "auto-grading accuracy" 这种 task-centric 指标会让大量"沉默错误"逃逸；引入 EIR 后才能定量回答"识别能力差到什么程度才会真伤到下游"，这是教育以外的所有 vision→reasoning pipeline 都缺的指标。
+只看 auto-grading accuracy 这种 task-centric 指标，会让大量"沉默错误"逃逸——识别出错了但因为不在评分点上，下游分数看不出任何异常，开发者于是高估了 MLLM 的视觉理解力。本文把识别端和评分端分开度量：识别端用样本错误率 $\text{SER}=\frac{\#\{s: \text{errors}(s)>0\}}{|S|}$ 和平均错误数 $\text{AEC}=\frac{1}{|S|}\sum_s \#\text{errors}(s)$，评分端则用 Binary $\to$ Type $\to$ Point 三级递进的 agreement，越往后越严格、越能逼出细粒度错误。
 
-2. **LLM-as-a-Judge 识别误差自动列项 + 四类 taxonomy**:
+真正把两端桥接起来的是错误影响率 $\text{EIR}=\frac{\text{识别错误中引起评分差异的数量}}{\text{识别错误总数}}$。有了它才能定量回答"识别差到什么程度才会真的伤到下游评分"——这恰恰是所有 vision→reasoning 流水线都缺的那把尺子，而不只是教育场景独有。
 
-    - 功能：自动找出 MLLM 识别结果与专家转录之间的语义差异条目，并按"surface→deep"四级归类。
-    - 核心思路：把 oracle markdown 和待测 markdown 喂给 Gemini-2.5-Pro，要求列出所有 discrepant items（句/式级别）；语义等价的小写法差异（如 `KCL: out` ≡ `KCL: @ out`）算对齐；随后再用 LLM 按 Symbolic & Character（字符/操作符/单位）、Structural & Notational（公式版面/变量一致性）、Diagrammatic（电路拓扑/标注误读）、Textual & Logical（语境/推导步骤）四类做归档。在 186 份样本、5000+ items 的人工验证中，sample-level accuracy ≥ 0.95、item-level F1 ≥ 0.90。
-    - 设计动机：手工标注每条 item 不可扩展；把 judge 任务定义为"列差异 + 分类"两步，配合 oracle 让 LLM 只做"对照检查"而非"开放评分"，从而把幻觉误差压到最低；taxonomy 让后续 EIR 分类分析成为可能。
+**2. LLM-as-a-Judge 识别误差自动列项 + 四类 taxonomy：让模型只做"对照检查"，把识别差异自动列项再归类。**
 
-3. **错误模式驱动的 human-in-the-loop Regrading 模块**:
+逐条人工标注 MLLM 识别结果和专家转录之间的差异根本无法规模化。本文把 judge 任务拆成"列差异 + 分类"两步：把 oracle markdown 和待测 markdown 一起喂给 Gemini-2.5-Pro，要求它列出所有句/式级别的 discrepant items，语义等价的小写法差异（如 `KCL: out` ≡ `KCL: @ out`）算对齐不计错；随后再用一个 LLM 把每条差异按 Symbolic & Character（字符/操作符/单位）、Structural & Notational（公式版面/变量一致性）、Diagrammatic（电路拓扑/标注误读）、Textual & Logical（语境/推导步骤）四类归档。
 
-    - 功能：用 observation set 总结的错误模式当作"风险特征"扫描 test set，把识别可疑样本拦截后再决定 LLM regrade 或人工兜底。
-    - 核心思路：从 observation set 抽出常见 confusion 模式（如 $-V\to V$、$\frac{1/8}{1/8+1/16}\to \frac{8}{8+16}$、KCL 节点错连等）并塞进 detector prompt；detector 在被首轮扣分的样本上扫描识别可疑项并打 high/low 置信；low 置信 → TA 手批，high 置信 → LLM 按 detector 报告 regrade；首轮无扣分的样本直接放过（因为识别错误主要造成 false-positive 扣分）。
-    - 设计动机：完全自动化在高利害教育场景不可接受；完全人工又太贵；本设计利用"识别错误模式可统计、人工成本可控"这一假设，把人工占比压到 ≤5% 同时把 point-agreement 拉到逼近"专家做 OCR"的天花板。
+关键在于全程有 oracle 兜底，judge 只做"照着标准答案挑差异"而非"开放打分"，自由度被压到最低，幻觉也随之被压住。在 186 份样本、5000+ items 的人工验证里，sample-level accuracy $\geq 0.95$、item-level F1 $\geq 0.90$，而这个四类 taxonomy 又正好为后面的 EIR 分类分析铺好了路。
+
+**3. 错误模式驱动的 human-in-the-loop Regrading 模块：用统计出来的错误模式当风险特征扫一遍，把人工占比压到 ≤5%。**
+
+在高利害的教育评分里，完全自动化不可接受、完全人工又太贵。这个模块利用一个假设——识别错误的模式是可统计的、人工成本是可控的：先从 observation set 里抽出常见的 confusion 模式（如 $-V\to V$、$\frac{1/8}{1/8+1/16}\to \frac{8}{8+16}$、KCL 节点错连等）塞进 detector 的 prompt。
+
+detector 只在那些首轮被扣分的样本上扫描可疑识别项并打 high/low 置信——因为识别错误主要造成 false-positive 扣分，首轮没扣分的样本直接放过。low 置信的交 TA 手批，high 置信的让 LLM 按 detector 报告 regrade。靠这套路由，人工占比被压到 ≤5%，却把 point-agreement 拉到逼近"专家亲自做 OCR"的天花板。
 
 ### 损失函数 / 训练策略
 本工作没有模型训练，只是 **prompt-only 评测 + LLM-judge pipeline**。Grader 统一用 GPT-5.1；识别端覆盖 5 个商业模型 + 1 个开源 8B；regrading 中 detector / regrader / grader 也全部用 GPT-5.1 以排除模型异构干扰。LLM-judge 阈值上把"语义等价"判定交给同一模型并保留人工反向核查。

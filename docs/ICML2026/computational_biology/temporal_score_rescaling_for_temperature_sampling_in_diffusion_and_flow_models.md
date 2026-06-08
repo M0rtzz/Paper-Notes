@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法称为 **Temporal Score Rescaling (TSR)**，整个 pipeline 不改训练，只在推理时插一步：拿到任何预训练扩散或流匹配模型 $\mathbf{s}_\theta$、$\boldsymbol\epsilon_\theta$ 或 $\boldsymbol v_\theta$，先把它们等价换算到 score 视角，再乘上 $r_t(k,\sigma)$，然后把放大后的 score 喂回原本的采样器（DDPM/DDIM/Euler/Heun 都可以）。用户面只暴露两个超参 $k$（控制变窄/变宽的强度）和 $\sigma$（控制从哪一步开始介入），与 CFG 一样"一次调好可重用"。
+方法称为 **Temporal Score Rescaling (TSR)**，要解决的是"如何在不重新训练的前提下，让预训练扩散/流模型在推理时变得更尖（偏似然）或更平（偏多样）"。它的做法只在推理时插一步：拿到任何预训练扩散或流匹配模型的输出，先把噪声预测 $\boldsymbol\epsilon_\theta$ 或速度 $\boldsymbol v_\theta$ 等价换算到 score 视角，乘上一个仅依赖时间步的标量重标缩因子 $r_t(k,\sigma)$，再把放大后的 score 喂回原本的采样器（DDPM/DDIM/Euler/Heun 都行）。对用户而言只多出两个超参 $k$（控制变尖/变平的强度）和 $\sigma$（控制从哪一步开始介入），和 CFG 一样"一次调好可重用"。
 
 ### 关键设计
 
-1. **解析推导：单 Gaussian 上的 score 缩放公式**：
+**1. 单 Gaussian 上的解析 score 缩放公式：把温度操作压成一个标量**
 
-    - 功能：把"对数据分布做 $\Sigma\to\Sigma/k$"的温度操作，转化为只动 score 的等价操作。
-    - 核心思路：在 stochastic interpolant 框架 $\mathbf{x}_t=\alpha_t\mathbf{x}_0+\sigma_t\boldsymbol\epsilon$ 下，若 $\mathbf{x}_0\sim\mathcal{N}(\boldsymbol\mu,\sigma^2\mathbf{I})$，则噪声分布的 score 是 $\nabla\log p_t(\mathbf{x})=-(\mathbf{x}-\alpha_t\boldsymbol\mu)/(\alpha_t^2\sigma^2+\sigma_t^2)$；把数据方差换成 $\sigma^2/k$ 之后 score 只改了分母。两者的比值即为重标缩因子 $r_t(k,\sigma)=\frac{\eta_t\sigma^2+1}{\eta_t\sigma^2/k+1}$，并且当 $k=1$ 时恢复原始 score。
-    - 设计动机：用一个闭式表达式取代任何额外神经网络或迭代修正，使方法对任何采样器都"插即用"。
+TSR 的全部威力来自一个极简观察：对数据分布做温度缩放 $\Sigma\to\Sigma/k$ 这件事，可以等价地只作用在 score 上。在 stochastic interpolant 框架 $\mathbf{x}_t=\alpha_t\mathbf{x}_0+\sigma_t\boldsymbol\epsilon$ 下，若 $\mathbf{x}_0\sim\mathcal{N}(\boldsymbol\mu,\sigma^2\mathbf{I})$，则噪声分布的 score 有闭式 $\nabla\log p_t(\mathbf{x})=-(\mathbf{x}-\alpha_t\boldsymbol\mu)/(\alpha_t^2\sigma^2+\sigma_t^2)$。把数据方差换成 $\sigma^2/k$ 之后，这个表达式只有分母变了，于是温度前后两个 score 的比值就是一个解析标量 $r_t(k,\sigma)=\frac{\eta_t\sigma^2+1}{\eta_t\sigma^2/k+1}$（其中 $\eta_t=\alpha_t^2/\sigma_t^2$ 为信噪比），且 $k=1$ 时 $r_t\equiv1$ 恰好恢复原始 score。正因为它是闭式而非额外网络或迭代修正，方法才能对任何采样器"插即用"。
 
-2. **从单 Gaussian 推广到混合高斯：局部温度采样**：
+**2. 推广到混合高斯：从"全局温度"退守到"局部温度"**
 
-    - 功能：在多模态数据上避免 CNS 那种"向中心模式塌缩"或 CFG 那种"模式权重失衡"的副作用。
-    - 核心思路：作者证明当数据是"良好分离"的等方差高斯混合时，上式仍是 score 的一个有界近似——小 $t$ 时单一分量主导给出指数误差界，大 $t$ 时分布近似纯噪声给出多项式误差界，两端误差趋零。物理含义是 TSR 只动每个 mode 内部的方差、不动模式权重，因此采样结果均匀覆盖所有 mode 而不是塌到中心。论文在 1D 高斯混合、2D checkerboard、Swiss-roll 上验证了这种"局部"特性：CNS 会丢边缘 mode，TSR 全保。
-    - 设计动机：真实数据虽然不是显式 GMM，但任何足够平滑的分布在局部都可用 Gaussian 近似，使该公式具备跨任务通用性。
+真正让 TSR 区别于旧方法的，是它放弃了改变模式权重、只改模式宽度。作者证明当数据是"良好分离"的等方差高斯混合时，上面那个为单 Gaussian 推出的 $r_t$ 仍是真实 score 的一个有界近似——小 $t$ 时单一分量主导，误差呈指数衰减；大 $t$ 时分布近似纯噪声，误差呈多项式衰减，两端都趋零。其物理含义是 TSR 只压缩每个 mode 内部的方差、不动 mode 之间的相对权重，因此采样结果会均匀覆盖所有 mode 而不是塌向中心。这正好绕开了 CNS 那种"向中心模式塌缩"和 CFG 那种"模式权重失衡"的副作用。论文在 1D 高斯混合、2D checkerboard、Swiss-roll 上验证了这种"局部"特性：CNS 会丢掉边缘 mode，TSR 则全部保留。真实数据虽然不是显式 GMM，但任何足够平滑的分布在局部都可用 Gaussian 近似，这让公式具备跨任务通用性。
 
-3. **统一适配 score / $\epsilon$ / velocity 三种参数化**：
+**3. 统一适配 score / $\epsilon$ / velocity 三种参数化：一套公式驱动异构模型**
 
-    - 功能：让同一公式同时驱动 DDPM/DDIM 这类噪声预测模型与 Flow Matching 这类速度预测模型。
-    - 核心思路：score 与噪声预测有线性关系 $\mathbf{s}_\theta=-\sigma_t^{-1}\boldsymbol\epsilon_\theta$，因此对扩散模型直接做 $\tilde{\boldsymbol\epsilon}_\theta=r_t(k,\sigma)\boldsymbol\epsilon_\theta$；对流匹配模型，速度与 score 满足 $\mathbf{s}_\theta=-(\alpha_t\boldsymbol v_\theta-\dot{\alpha}_t\mathbf{x})/[\sigma_t(\dot{\alpha}_t\sigma_t-\alpha_t\dot{\sigma}_t)]$，反代后得 $\tilde{\boldsymbol v}_\theta=\alpha_t^{-1}(r_t(k,\sigma)(\alpha_t\boldsymbol v_\theta-\dot{\alpha}_t\mathbf{x})+\dot{\alpha}_t\mathbf{x})$；$x_0$-prediction 与 $v$-prediction 同样可代入。
-    - 设计动机：避免重新搭一套采样栈，使 TSR 对 Stable Diffusion 2/3、Flux.1 dev、FoldingDiff、Marigold、Pi-0 等异构模型都能即插即用。
+为了让同一个 $r_t$ 既能驱动 DDPM/DDIM 这类噪声预测模型、又能驱动 Flow Matching 这类速度预测模型，作者把所有参数化都换算回 score。score 与噪声预测有线性关系 $\mathbf{s}_\theta=-\sigma_t^{-1}\boldsymbol\epsilon_\theta$，因此对扩散模型直接做 $\tilde{\boldsymbol\epsilon}_\theta=r_t(k,\sigma)\boldsymbol\epsilon_\theta$；对流匹配模型，速度与 score 满足 $\mathbf{s}_\theta=-(\alpha_t\boldsymbol v_\theta-\dot{\alpha}_t\mathbf{x})/[\sigma_t(\dot{\alpha}_t\sigma_t-\alpha_t\dot{\sigma}_t)]$，反代后得 $\tilde{\boldsymbol v}_\theta=\alpha_t^{-1}(r_t(k,\sigma)(\alpha_t\boldsymbol v_\theta-\dot{\alpha}_t\mathbf{x})+\dot{\alpha}_t\mathbf{x})$，$x_0$-prediction 与 $v$-prediction 也能同样代入。这样就不必为每种模型重搭采样栈，TSR 才能对 Stable Diffusion 2/3、Flux.1 dev、FoldingDiff、Marigold、Pi-0 等异构模型即插即用。
 
 ### 损失函数 / 训练策略
 无新训练。$k$ 与 $\sigma$ 两个超参的选法：先固定 $\sigma=1.0$ 用二分搜索找最优 $k$，再固定 $k$ 用二分搜索找最优 $\sigma$，必要时迭代一次即可——比网格搜索高效得多，且经验上同一对 $(k,\sigma)$ 可跨同任务不同模型迁移。

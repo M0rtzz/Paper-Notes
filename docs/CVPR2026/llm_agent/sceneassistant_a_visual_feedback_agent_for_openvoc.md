@@ -40,34 +40,36 @@ tags:
 
 ### 整体框架
 
-用户提供自然语言场景描述 $d$ → VLM agent（Gemini-3.0-Flash）按ReAct范式迭代执行：每步接收当前场景渲染图 + 物体元数据 + 历史action序列 → 推理并选择一批Action API执行 → Blender引擎执行action并渲染新图 → 视觉反馈回传VLM → 循环直到agent调用Finish或达到最大步数 $T_M = 20$。3D资产由Z-Image（文生图）+ Hunyuan3D（图生3D mesh）pipeline生成。
+整篇论文想绕开"约束求解"这条老路：不再让 LLM 吐出一堆空间原语再交给求解器优化布局，而是把 VLM 当成一个会用 Blender 的 3D 设计师，让它在"看一眼渲染图 → 想一步 → 动一下 → 再看一眼"的循环里把场景搭起来。具体地，用户给一句自然语言描述 $d$，VLM agent（Gemini-3.0-Flash）按 ReAct 范式迭代：每一步它拿到当前场景的渲染图、物体元数据和历史 action 序列，推理后选一批 Action API 执行，Blender 引擎落地这些 action 并渲染出新图回传，如此往复，直到 agent 主动调用 Finish 或撞到最大步数 $T_M = 20$。场景里的 3D 资产不是预先准备好的素材库，而是临场生成——Create 一个物体时走 Z-Image（文生图）+ Hunyuan3D（图生 3D mesh）的 pipeline 现做。整个系统 training-free，全靠 prompt engineering 约束 agent 行为（系统 prompt 规定 +Z 向上、增量建场景、每步都要看渲染图验证等）。
 
 ### 关键设计
 
-1. **功能完备的Action API体系（14个原子操作）**
-    - 功能：将底层Blender操作抽象为语义直觉的命令，分三类覆盖完整操作空间
-    - **物体增删**：Create（描述→3D资产生成）、Duplicate、Delete。Create后物体初始放在场景中心，agent下一步观察外观后决定放置位置。Delete支持移除不满意的生成结果→重新Create
-    - **6-DoF操控**：Place（绝对XYZ定位）+ Rotate（XYZ旋转）覆盖完整6自由度。Scale控制尺寸。Translate提供增量位移微调
-    - **相机控制**：ViewScene（全景预设）、FocusOn（聚焦特定物体）、RotateCamera / MoveCamera（任意相机状态）
-    - 设计动机：要求VLM直接生成Blender Python代码会引入语法开销，分散推理注意力→抽象为语义化API让VLM专注高层空间规划。实验验证：去掉API改用JSON输出→Layout下降0.595、Preference降29pp（认知分散效应）
+**1. 功能完备的 Action API 体系：把 Blender 代码抽象掉，让 VLM 只管高层空间规划。**
 
-2. **纯视觉反馈闭环**
-    - 功能：让VLM以渲染图像为唯一决策依据，模拟人类在3D软件中观察-调整的工作模式
-    - 核心机制：(a) 每步仅提供当前渲染图（不累积历史图像避免过载）+ 历史action序列 + 当前物体坐标数据；(b) **视觉增强**——渲染图上标注物体名称标签 + 坐标轴HUD，弥合2D观察与3D操作间的gap；(c) **系统消息机制**——BVH-tree碰撞检测自动通知agent、action序列约束（Create不可与Manipulate混合）违规时拒绝并通知
-    - 设计动机：去掉视觉反馈（one-shot生成）→Layout下降1.345、Preference降38pp→影响最大。去掉Visual Prompting→agent无法精确定位物体，产生混乱布局。说明闭环+视觉增强两者缺一不可
+痛点是直接让 VLM 写 Blender Python 代码会引入大量语法开销，把模型的推理注意力从"东西该放哪"分散到"括号有没有写对"。SceneAssistant 把底层操作封装成 14 个语义直觉的原子命令，分三类刚好覆盖完整操作空间：**物体增删**（Create 把描述变成 3D 资产、Duplicate、Delete，其中 Create 出来的物体先默认丢在场景中心，agent 下一步看清外观再决定摆哪；Delete 则用来扔掉不满意的生成结果重做）；**6-DoF 操控**（Place 做绝对 XYZ 定位、Rotate 做 XYZ 旋转，两者合起来覆盖完整六自由度，Scale 调尺寸，Translate 做增量微调）；**相机控制**（ViewScene 切全景预设、FocusOn 聚焦某个物体、RotateCamera / MoveCamera 设任意相机状态）。这样 VLM 发出的是"把沙发向右平移 0.5 米"这种语义指令而非代码。消融印证了这层抽象的价值：把 API 换成裸 JSON 输出后，Layout 掉 0.595、Human Preference 掉 29pp——这就是逼 agent 自己管理低层数据结构带来的认知分散。
 
-3. **自校正与质量控制**
-    - 功能：应对3D生成模型的固有不确定性（可能生成质量差或外观不符的资产）
-    - 核心机制：agent在下一步观察新生成物体外观→如不满意可Delete + 修改文本描述重新Create。物体自动防穿地（低于Z=0则上抬）。碰撞检测结果通过系统消息反馈
-    - 设计动机：3D生成模型（Hunyuan3D）有随机性→闭环反馈让系统对生成失败鲁棒，不需要假设单次生成总是成功
+**2. 纯视觉反馈闭环：让渲染图成为 agent 唯一的决策依据，复刻人在 3D 软件里"看一眼调一下"的工作方式。**
 
-### 场景编辑能力
+痛点是大多数 LLM-based 方法是开环的——布局生成完就不再看渲染结果，空间错位无从纠正。这里每一步只把**当前**渲染图喂回去（刻意不累积历史图像，避免上下文过载），配上历史 action 序列和当前物体坐标数据。光给图还不够，因为 2D 观察和 3D 操作之间有 gap，于是加了**视觉增强**：在渲染图上直接标注物体名称标签和坐标轴 HUD，让 agent 知道"这个叫 chair 的东西现在在哪、坐标轴朝哪"。此外用**系统消息机制**做硬约束——BVH-tree 碰撞检测一旦发现穿模就自动通知 agent，action 序列若违规（比如 Create 和 Manipulate 混在一步里）则直接拒绝并回告原因。消融里这块影响最大：去掉视觉反馈退化成 one-shot 生成后 Layout 暴跌 1.345、Preference 掉 38pp；而单独去掉 Visual Prompting（标签 + HUD），agent 就无法精确定位物体、布局直接乱掉——说明闭环和视觉增强缺一不可。
 
-SceneAssistant支持交互式人机协作：用户可在agent执行轨迹的任意节点注入编辑指令（通过系统消息），范围从纠正布局到添加新元素。通常在agent完成初始场景后，一轮人类反馈即可修正细节。
+**3. 自校正与质量控制：用闭环吸收 3D 生成模型的随机性，不假设单次生成必然成功。**
+
+痛点是 Hunyuan3D 这类生成器有固有不确定性，可能产出质量差或外观不符描述的资产，开环系统对此束手无策。SceneAssistant 的应对是把"生成失败"也纳入反馈循环：agent 在下一步观察到新物体的真实外观，不满意就 Delete 掉、改写文本描述重新 Create。配合两条物理兜底——物体自动防穿地（低于 $Z=0$ 就上抬），碰撞检测结果通过系统消息持续回传——让系统对个别生成失败保持鲁棒。
+
+### 一个完整示例：从一句话到一个客厅
+
+以"a cozy living room with a sofa facing a TV"为例走一遍闭环：
+
+- **第 1-2 步**：agent 调 Create("sofa")，物体生成后默认落在场景中心；下一步它通过 ViewScene 看全景渲染图，确认沙发外观 OK，于是 Place 把它挪到 $(-1.5, 0, 0)$ 并 Rotate 让正面朝向 +X。
+- **第 3-4 步**：Create("TV")，观察发现这次生成的电视 mesh 偏粗糙、像柜子——于是 Delete 掉，把描述改成"a flat-screen TV on a stand"重新 Create，这一轮自校正正是设计 3 在起作用。
+- **第 5 步**：把电视 Place 到沙发对面 $(1.8, 0, 0.5)$ 并旋转面向沙发；系统消息此时报 BVH 碰撞——电视和茶几位置冲突，agent 用 Translate 微调躲开。
+- **人在回路**：初始场景搭完后，用户可在轨迹的任意节点注入一句编辑指令（同样走系统消息），比如"把地毯铺到沙发底下"或"再加一盏落地灯"。通常一轮人类反馈就够补齐细节，agent 据此继续 Create / Place 直到调用 Finish。
+
+整个过程里候选不是一次定型而是逐步收敛——观察、纠错、微调交替进行，正是闭环 + 视觉增强 + 自校正三个设计协同的体现。
 
 ### 损失函数 / 训练策略
 
-无训练。完全training-free，纯prompt engineering驱动VLM agent行为。系统prompt定义操作规范（+Z向上、增量构建场景、每步验证渲染图等）。
+无训练。完全 training-free，纯 prompt engineering 驱动 VLM agent 行为，系统 prompt 定义操作规范（+Z 向上、增量构建场景、每步验证渲染图等）。
 
 ## 实验关键数据
 

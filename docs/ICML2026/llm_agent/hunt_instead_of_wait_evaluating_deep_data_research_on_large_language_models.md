@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DDR 任务被形式化为 $I = DDR(LLM, D, T)$：给定数据库 $D$ 与工具集 $T$，LLM 通过 ReAct 风格的 $(r, t, o)$ 循环（reasoning token、tool call token、observation）反复查库，没有任何回合上限，由模型自己决定何时停止；最终产物是两类 insight——逐回合产出的 message-wise insight $I_m$ 与轨迹末尾全局综合的 trajectory-wise insight $I_t$。系统 prompt 只丢给模型一个最小启动语句（例如"开始分析 userid=2048 的用户"），并不告诉它要回答什么问题。评测阶段，从数据库非结构化文本中预先抽出的 checklist $\{f_k\}$ 会用 GPT-5-mini 跟模型最终产出的 insight 做匹配，看每条 fact 是否被 insight 支撑，从而得到 sample-averaged 与 item-averaged 两种准确率。
+DDR 把"投研型智能"做成一个任何主流 LLM 都能直接跑的开放式任务，再配一套能客观打分的混合数据库 benchmark。任务形式化为 $I = DDR(LLM, D, T)$：只给数据库 $D$ 和工具集 $T$，系统 prompt 不给具体问题、只丢一句最小启动语（例如"开始分析 userid=2048 的用户"），模型通过 ReAct 风格的 $(r, t, o)$ 循环（reasoning token、tool call、observation）反复查库，没有任何回合上限、由它自己决定何时停止，最终交出两类 insight——逐回合产出的 message-wise insight $I_m$ 与轨迹末尾全局综合的 trajectory-wise insight $I_t$。评分这一侧靠的是预先从数据库非结构化文本里抽出的 fact checklist：模型探索时看不到这些 fact，交完答案后才由 GPT-5-mini 逐条核对 insight 是否支撑该 fact，从而得到 sample-averaged 与 item-averaged 两种准确率。
 
 ### 关键设计
 
-1. **DDR 任务形式化 + 极简 agent scaffolding**：
+**1. DDR 任务形式化 + 极简 agent scaffolding：把投研型智能从执行型智能里干净剥出来。**
 
-    - 功能：把"投研型智能"从执行型智能里隔离出来，做成一个可被任何主流 LLM 直接测的任务范式。
-    - 核心思路：三条约束同时成立——(a) 不给问题，prompt 只指定 task entity；(b) 不给上限，模型自己判断停止；(c) 只暴露 SQL 与 Python 两个工具，通过 MCP 调用，禁止显式 planning / memory / workflow 模块。模型产出两类 insight：$I_m$ 由模型在每个 ReAct 回合后立即基于 $(r_i, t_i, o_i)$ 解释为一段 insight，$I_t = \text{Summarize}(\{(r_i, t_i, o_i)\}_{i=1}^M)$ 由模型自终止后回溯整条轨迹综合而成，分别考察"过程级解读"与"全局综合"。
-    - 设计动机：之前的 agentic benchmark 把脚手架（planner、memory、复杂 workflow）和模型本身的能力混在一起，导致无法判断"性能提升究竟来自基模还是 prompt 工程"。剥到只剩 ReAct + 两个原子工具，才能让分数真正反映 LLM 内化的 agentic 能力。
+以往 agentic benchmark 默认任务目标已经写在 prompt 里，模型只需"按指令把事干完"，而且往往还套着 planner / memory / 复杂 workflow 的脚手架——结果是分数里混着"基模能力"和"prompt 工程"，分不清谁的功劳。DDR 同时卡死三条约束来把这层混淆拆掉：(a) 不给问题，prompt 只指定一个 task entity；(b) 不给回合上限，由模型自己判断该停了；(c) 只暴露 SQL 与 Python 两个原子工具，通过 MCP 调用，显式 planning / memory / workflow 模块一律禁用。在这套极简 scaffolding 下，模型被要求产出两类 insight 分别考察不同能力：$I_m$ 是模型在每个 ReAct 回合后立即基于当回合 $(r_i, t_i, o_i)$ 解释出的一段过程级 insight，$I_t = \text{Summarize}(\{(r_i, t_i, o_i)\}_{i=1}^M)$ 则是模型自终止后回溯整条轨迹综合出的全局 insight。剥到只剩 ReAct + 两个工具，分数才真正反映 LLM 已经内化的 agentic 能力，而不是外挂脚手架的功劳。
 
-2. **混合数据库 + checklist 评测协议**：
+**2. 混合数据库 + checklist 评测协议：用同一份库的两侧，把"开放任务无法客观评"的死结解开。**
 
-    - 功能：在保持任务"完全开放"的同时，提供客观、可批量、抗污染的评分。
-    - 核心思路：选用三个同时含结构化表与非结构化长文本的真实大库——MIMIC-IV（200M+ 记录的电子病历，结构化 Hosp/ICU + 非结构化临床 note）、GLOBEM（可穿戴信号 + 心理健康问卷）、10-K（XBRL 财报 + 业务描述与风险文本）。用 GPT-5-mini 从非结构化部分抽 fact 形成 checklist，再由 50+ 领域专家筛选，保证 fact-domain 到 data-domain 的"surjective"映射，即每条 fact 都能从结构化数据中分析出来。模型探索时只看结构化数据、看不到任何 checklist 与问题；评测时 GPT-5-mini 用 checklist 去查 insight。整套机制因为"在交互期完全没有问答格式数据"，天然抗训练集污染。最终覆盖 291 个 task entity、2058 条 checklist item。
-    - 设计动机：既想要"开放式探索"又想要"客观打分"，传统路线（构造 QA / LLM-as-a-Judge 主观打分 / 验证代码执行）都做不到。把可验证 fact 从同一数据库的非结构化侧抽出来，相当于免费获得了一份"领域专家会问出来的好问题"，把开放式任务退化成可被自动评判的 fact recall。
+"完全开放式探索"和"客观可批量打分"天然冲突——构造 QA 会退化成执行型任务，LLM-as-a-Judge 又太主观、验证代码执行也覆盖不了开放洞见。本文的破法是选用三个**同时含结构化表与非结构化长文本**的真实大库：MIMIC-IV（200M+ 记录的电子病历，结构化 Hosp/ICU + 非结构化临床 note）、GLOBEM（可穿戴信号 + 心理健康问卷）、10-K（XBRL 财报 + 业务描述与风险文本）。先用 GPT-5-mini 从**非结构化**侧抽出可验证 fact 形成 checklist，再过 50+ 领域专家筛选，保证 fact-domain 到 data-domain 的"surjective"映射——即每一条 fact 都能从**结构化**数据里分析出来。于是模型探索时只看结构化数据、看不到任何 checklist 与问题，评测时 GPT-5-mini 才拿 checklist 去核 insight。这等于从同一份数据库的非结构化侧免费拿到一批"领域专家会问出来的好问题"，把开放式任务退化成可自动评判的 fact recall；又因为交互期完全没有问答格式数据，天然抗训练集污染。最终覆盖 291 个 task entity、2058 条 checklist item。
 
-3. **投研动态四维度分析框架**：
+**3. 投研动态四维度分析框架：单一准确率掩盖了行为差异，要把"何时探、怎么探、何时停"拆开看。**
 
-    - 功能：超越单一准确率，把模型在长程探索中"何时探、怎么探、何时停"的行为剖开。
-    - 核心思路：(a) Test-time scaling 从三种横轴看——interaction（回合数，sigmoid）、token（成本 token，前平后陡）、cost（美元，对数轴），暴露 plan-then-act 这类隐式规划行为；(b) 探索模式用 $H_{\text{norm}} = \frac{-\sum_{i=1}^n p_i \log_2 p_i}{\log_2 n}$（normalized exploration entropy）配 database coverage 画散点，breadth-vs-depth 一图看尽，强模型集中在"中等熵 + 中等覆盖"的平衡区；(c) Self-termination 用 $\frac{1}{N}\sum_{i=1}^N \log P(t_i \mid t_1, \dots, t_{i-1}, T_{\text{partial}})$ 衡量模型在不同轨迹长度下生成结束 token 的对数概率，Qwen3 表现为单调上升（信心持续增长），Qwen2.5 则剧烈波动；(d) 训练因子消融通过对比 Qwen2.5 / Qwen3 / Qwen3-Next 各代各尺寸，把"参数量/上下文长度/agentic 训练"这三个维度的贡献解耦。
-    - 设计动机：开放式任务下，单纯的准确率掩盖了行为差异（同样 30% 的两个模型可能走的是完全不同的探索策略）。这套四维度分析把"为什么 agentic 训练比放大参数更重要"用可视化和指标直接坐实。
+同样拿 30% 的两个模型，走的探索策略可能完全不同，所以本文在准确率之外补了四套诊断。其一是 **test-time scaling**，从三种横轴看性能增长——interaction（回合数，呈 sigmoid）、token（成本 token，曲线"前平后陡"）、cost（美元，对数轴），由此暴露 plan-then-act 这类隐式规划行为。其二是**探索模式**，用归一化探索熵 $H_{\text{norm}} = \frac{-\sum_{i=1}^n p_i \log_2 p_i}{\log_2 n}$（$p_i$ 为各数据域被访问的频率分布）配 database coverage 画散点，一张图同时读出 breadth 与 depth，强模型集中在"中等熵 + 中等覆盖"的平衡区。其三是 **self-termination**，用 $\frac{1}{N}\sum_{i=1}^N \log P(t_i \mid t_1, \dots, t_{i-1}, T_{\text{partial}})$ 衡量模型在不同轨迹长度下生成结束 token 的对数概率，Qwen3 单调上升（停止信心持续增长）、Qwen2.5 则剧烈波动。其四是**训练因子消融**，横向对比 Qwen2.5 / Qwen3 / Qwen3-Next 各代各尺寸，把"参数量 / 上下文长度 / agentic 训练"三个维度的贡献解耦开来。靠这四维度，本文才能把"为什么 agentic 训练比放大参数更重要"用可视化和指标直接坐实。
 
 ### 损失函数 / 训练策略
-本文是 benchmark + 评测协议，不训练模型；评测端只调 GPT-5-mini 做 checklist 判定与 pairwise novelty 比较（用 Bradley-Terry 模型聚合成全局排名以缓解 position bias）。
+本文是 benchmark + 评测协议，不训练模型；评测端只调 GPT-5-mini 做 checklist 判定与 pairwise novelty 比较（用 Bradley-Terry 模型把成对偏好聚合成全局排名，以缓解 position bias）。
 
 ## 实验关键数据
 

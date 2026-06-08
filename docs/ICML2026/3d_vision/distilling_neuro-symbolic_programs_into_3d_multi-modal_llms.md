@@ -40,34 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-APEIRIA 建立在一个 8B MLLM backbone 上，输入是一段自然语言指令 $q$ 加一组**对象级**场景表征 $\mathcal{O}$，输出是一段含"plan + execution"标签的 CoT 加最终答案 $A$（grounding box / QA 答案 / caption）。
+APEIRIA 要解决的是"如何让一个端到端 3D MLLM 既能像符号程序那样系统地分解、逐步核验空间关系，又能处理符号系统搞不定的开放词汇与深层嵌套指令"。它的思路是：先把神经符号程序的执行轨迹翻译成自然语言 CoT 来教模型"怎么想"，再用强化学习把这套推理模板向真实指令外推。
 
-场景侧采用 object-centric 表征（约 400 tokens，远小于 video-based 方法的 10k–40k）：先用 Mask3D 把场景分割成对象实例；每个实例用 Uni3D 提取 3D 几何特征、用 DINOv2 提取 2D 外观特征，再用可学习位置编码注入坐标和尺寸；最后把每个对象的视觉+空间特征作为 token 与指令 token 交错送入 LLM。
+整个系统建立在一个 8B MLLM backbone 上。输入是一段自然语言指令 $q$ 加一组**对象级**场景表征 $\mathcal{O}$，输出是一段含"plan + execution"标签的 CoT 加最终答案 $A$（grounding box / QA 答案 / caption）。场景侧不走 video token 的路子，而是用 object-centric 表征把整个场景压到约 400 tokens（video-based 方法通常要 10k–40k）：先用 Mask3D 把场景切成对象实例，每个实例用 Uni3D 提 3D 几何特征、用 DINOv2 提 2D 外观特征，再用可学习位置编码注入坐标和尺寸，最后把每个对象的视觉+空间特征当成 token 与指令 token 交错喂进 LLM。
 
-训练侧是一个**三阶段课程**：Stage 1 感知对齐 → Stage 2 符号推理注入（CoT-SFT） → Stage 3 开放集与复杂推理泛化（CoT-RL）。三阶段从易到难，逐级把"看 → 想 → 适应"的能力堆起来。推理侧因为 plan/perception 解耦，可以在推理时把 plan 换成 GPT-4/Claude 的输出，或把 `scene()` 原语换成 SegDINO3D 等更强分割器，不需要重训。
+训练把"看 → 想 → 适应"拆成一个三阶段课程，从易到难逐级堆能力：Stage 1 先做感知对齐，把 3D 几何特征对齐到 LLM 的语言空间；Stage 2 把符号程序翻译成 CoT 做监督微调（CoT-SFT），灌进"系统化分解"的推理模式；Stage 3 用 GRPO 强化学习（CoT-RL）把这套模式推广到开放集与复杂指令。因为 plan 和 perception 在设计上是解耦的，推理时可以把 plan 换成 GPT-4/Claude 的输出，或把 `scene()` 原语换成 SegDINO3D 等更强分割器，全程不用重训。
 
 ### 关键设计
 
-1. **课程式推理蒸馏（三阶段 curriculum）**：
+**1. 课程式推理蒸馏：把感知、推理、泛化拆成三个互不重叠的训练目标，避免一次学不会**
 
-    - 功能：把"3D 感知 → 系统化推理 → 开放泛化"分解成三个互不重叠的训练目标，避免一次性学不会。
-    - 核心思路：Stage 1 在 ~193K 对象级感知任务（识别、定位、captioning）上做 vision-language 预训练，把 3D 几何特征对齐到 LLM embedding 空间；Stage 2 在 Level-1（78K，单步 filter，来自 ScanNet/MMScan 属性标注）和 Level-2（66K，两步 relate/relate_triple，来自 Sr3D）程序上做 CoT-SFT，目标是 $\mathcal{L}_{\text{CoT-SFT}} = -\mathbb{E}\,[\log p_\theta(\text{CoT}, A \mid q, \mathcal{O})]$；Stage 3 在 ScanRefer/Multi3DRefer 真实指令上做 GRPO 强化学习。
-    - 设计动机：Stage 2 直接跳过会让 Stage 3 的 RL 探索空间过大（消融显示直接跳到 RL 会让 ScanRefer Acc@0.25 从 58.4% 暴跌到 48.2%）；而单跑 Stage 2 又会被合成数据的封闭词汇和 ≤2 层嵌套卡住（去掉 Stage 3 掉 6.9%）。三阶段正好分别解决"看不见"、"不会拆"、"拆不深"。
+3D 推理同时要"看得见物体""会拆解指令""能拆得够深"，硬塞进一次训练既不收敛也容易顾此失彼，所以 APEIRIA 把它切成三段课程逐级加码。Stage 1 在约 193K 对象级感知任务（识别、定位、captioning）上做 vision-language 预训练，目的是把 3D 几何特征对齐到 LLM 的 embedding 空间，先让模型"看得见"。Stage 2 在两级程序上做 CoT-SFT——Level-1（78K，单步 `filter`，来自 ScanNet/MMScan 的属性标注）和 Level-2（66K，两步 `relate`/`relate_triple`，来自 Sr3D），优化目标是对 CoT 与答案的联合似然 $\mathcal{L}_{\text{CoT-SFT}} = -\mathbb{E}\,[\log p_\theta(\text{CoT}, A \mid q, \mathcal{O})]$，把"分解 + 逐步核验"的推理模板灌进去。Stage 3 再在 ScanRefer/Multi3DRefer 的真实指令上做 GRPO。三阶段的必要性能从消融里读出来：直接跳过 Stage 2 冲到 RL，探索空间太大、没有 warm start，ScanRefer Acc@0.25 从 58.4% 暴跌到 48.2%；而只跑到 Stage 2 又会被合成数据的封闭词汇和 ≤2 层嵌套卡死，去掉 Stage 3 掉 6.9%。换句话说，三段课程分别治的是"看不见""不会拆""拆不深"三种病。
 
-2. **Program-to-CoT 翻译（符号程序的白盒蒸馏）**：
+**2. Program-to-CoT 翻译：把符号程序反推成带 ground-truth 的白盒 CoT，作为 Stage 2 的监督源**
 
-    - 功能：把 NS3D 的 `scene/filter/relate/relate_triple` 程序解析成自然语言"plan + execution"轨迹，作为 Stage 2 的 SFT 监督。
-    - 核心思路：对每个程序，先解析 AST 成执行序列 $\mathcal{S} = \{s_1, \ldots, s_n\}$；每一步 $s_i$ 序列化成两段——plan 描述子目标（例 "Find all objects of category 'vase'"），execution 把输入输出对象用 **ID + 坐标 + 尺寸** 显式写出（例 `relate(filter(desk), filter(wall), left)` 展开为先列出所有 desk 的 ID，再列出所有 wall 的 ID，最后给出满足"左侧"关系的 desk ID）；最终 CoT 把所有 plans 拼在前面、所有 executions 拼在后面，形成一条从 query 到答案的透明 trace。这条 trace 关键性质是**spatially grounded**——每个物体都用唯一 ID 引用，避免"哪个椅子"的同类歧义。
-    - 设计动机：传统 NS3D 用 $f_{\text{chair}}$、$f_{\text{left}}$ 这种概念专网执行原语，是开放词汇的根本障碍；APEIRIA 把每个原语改成 LLM 用自然语言"执行"，这样原语数量、概念词汇都不再受限。同时，相比 3D-R1 这种用 LLM prompting 生成 CoT 的方案，从符号程序反推的 trace **每一步都有 ground-truth 可验证**，避免了 CoT 的幻觉问题。
+Stage 2 的监督不是让 LLM 凭空写 CoT，而是从 NS3D 的 `scene/filter/relate/relate_triple` 程序反向翻译出来。对每个程序先解析 AST 成执行序列 $\mathcal{S} = \{s_1, \ldots, s_n\}$，每一步 $s_i$ 序列化成两段：plan 描述子目标（如 "Find all objects of category 'vase'"），execution 则把输入输出对象用 **ID + 坐标 + 尺寸** 显式写出——例如 `relate(filter(desk), filter(wall), left)` 会展开成先列出所有 desk 的 ID、再列出所有 wall 的 ID、最后给出满足"左侧"关系的 desk ID。最终的 CoT 把所有 plan 拼在前、所有 execution 拼在后，形成一条从 query 到答案的透明 trace。这条 trace 的关键性质是 **spatially grounded**：每个物体都用唯一 ID 引用，避免"到底哪个椅子"这种同类歧义。这样做有两层意义。一是打破开放词汇瓶颈——传统 NS3D 用 $f_{\text{chair}}$、$f_{\text{left}}$ 这种概念专网来执行原语，原语数量和词汇被网络结构锁死；APEIRIA 把每个原语改成"让 LLM 用自然语言执行"，原语和概念词汇就不再受限。二是抑制幻觉——相比 3D-R1 那种直接让 LLM prompting 生成 CoT 的方案，从符号程序反推的每一步都有 ground-truth 可验证，CoT 不会乱编。
 
-3. **GRPO + 软空间奖励（结果监督的开放泛化）**：
+**3. GRPO + 软空间奖励：在没有中间步骤监督的真实数据上，把推理模板外推到开放概念与深层嵌套**
 
-    - 功能：在缺乏中间步骤监督的真实数据（ScanRefer、Multi3DRefer）上，把 Stage 2 学到的推理模板外推到 open-vocabulary 概念（"comfortable"、"cozy"）和深层嵌套（"on the kitchen counter AND besides the white fridge"）。
-    - 核心思路：用 GRPO 优化策略 $\pi_\theta$，对每个指令采样 $N$ 条响应、按组归一化优势 $A_i = (r_i - \text{mean})/\text{std}$、用截断比 + KL 惩罚更新。奖励是两项之和：(a) **Soft Grounding Reward** $R_{\text{grounding}} = e^{-\alpha \|\bm{x}_{\text{pred}} - \bm{x}_{\text{gt}}\|_2} + e^{-\alpha \|(\bm{s}_{\text{pred}} - \bm{s}_{\text{gt}})/\bm{s}_{\text{gt}}\|_1}$（$\alpha = 2$），位置和尺寸的指数衰减相似度——即便预测框和 GT 完全不重叠也能给出稠密梯度，解决 IoU 在 disjoint 时为零的稀疏问题；(b) **Format Reward**：响应里必须含合法的 plan / thinking 标签且长度不退化，否则为 0，防止模型走捷径直接吐答案。
-    - 设计动机：消融显示 IoU 奖励比 Soft 奖励掉 0.5–0.7%（稀疏反馈探索效率低）；去掉 Format Reward 会出现 "structure collapse"——模型为了快速拿分要么复述指令、要么跳过推理直接给答案。两个奖励合起来既保住了空间精度，又保住了 CoT 的可解释结构。
+ScanRefer、Multi3DRefer 这类真实指令没有可解析的程序，给不出中间步骤监督，只能靠结果信号把 Stage 2 的模板往 open-vocabulary（"comfortable"、"cozy"）和深嵌套（"on the kitchen counter AND besides the white fridge"）上推。Stage 3 用 GRPO 优化策略 $\pi_\theta$：对每条指令采样 $N$ 条响应，按组归一化优势 $A_i = (r_i - \text{mean})/\text{std}$，再用截断比 + KL 惩罚更新。奖励由两项相加。一是 **Soft Grounding Reward**，对位置和尺寸各取指数衰减相似度
+
+$$R_{\text{grounding}} = e^{-\alpha \|\bm{x}_{\text{pred}} - \bm{x}_{\text{gt}}\|_2} + e^{-\alpha \|(\bm{s}_{\text{pred}} - \bm{s}_{\text{gt}})/\bm{s}_{\text{gt}}\|_1},\quad \alpha = 2$$
+
+它的好处是即便预测框和 GT 完全不重叠也能给出稠密梯度，绕开了 IoU 在 disjoint 时恒为零的稀疏问题。二是 **Format Reward**：响应里必须含合法的 plan / thinking 标签且长度不退化，否则记 0，防止模型为了快速拿分直接吐答案。两项各有针对性：消融显示把 Soft 换成稀疏 IoU 奖励掉 0.5–0.7%（稀疏反馈探索效率低），而去掉 Format Reward 会出现 "structure collapse"——模型要么复述指令、要么跳过推理直接给答案。合在一起既保住了空间精度，又保住了 CoT 的可解释结构。
 
 ### 损失函数 / 训练策略
-Stage 1/2 都是标准的 next-token language modeling 损失；Stage 3 用 GRPO clipped surrogate loss（公式见上）。8B backbone 用 LoRA + AdamW/Muon 微调，所有阶段都共享同一组 LoRA 权重的演化。CoT 总监督量：Stage 2 有 144K verified CoT 样本（78K Level-1 + 66K Level-2），Stage 3 直接在下游任务的指令-答案对上跑 RL，每条指令采样 N 条响应做组内对比。
+Stage 1/2 都是标准的 next-token language modeling 损失；Stage 3 用 GRPO clipped surrogate loss（即上面的组归一化优势 + 截断比 + KL 惩罚）。8B backbone 用 LoRA + AdamW/Muon 微调，所有阶段共享同一组 LoRA 权重的演化。CoT 总监督量：Stage 2 有 144K 条 verified CoT 样本（78K Level-1 + 66K Level-2）；Stage 3 直接在下游任务的指令-答案对上跑 RL，每条指令采样 $N$ 条响应做组内对比。
 
 ## 实验关键数据
 

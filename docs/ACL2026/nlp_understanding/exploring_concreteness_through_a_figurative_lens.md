@@ -44,23 +44,23 @@ tags:
 
 ### 关键设计
 
-1. **Prompt-based probing + 最后 token 表示**:
+**1. Prompt-based probing + 最后 token 表示：绕开 decoder 因果掩码"看不到后文"的限制。**
 
-    - 功能：解决 decoder-only LLM 在 noun embedding 上"看不到后文"的因果掩码限制，拿到能反映完整上下文 concreteness 的 hidden state。
-    - 核心思路：用 prompt "Sentence: [sentence] On a scale of 1 to 5 (5 being the highest), in the context of the sentence, what is the concreteness of the word [target_word]?" 把整句和目标词都放在 prompt 里，**取 prompt 最后一个 token 的 hidden state** 作为 concreteness 表示——这个 token 因 causal attention 已经"看完"整句，自然聚合了上下文信息。然后用两条复用路径：(Gen) 让模型直接生成数字；(Tok) 把 hidden state 喂 MLP 回归。
-    - 设计动机：作者明确做了 prompt sensitivity 分析——若目标词不放在 prompt 最后，Pearson r 会从 0.98 掉到 0.80±0.10，证实 decoder LLM 有强烈的 recency bias；这个工程细节决定了 probing 是否可信。另外 Gen 路径只能拿到 0.58-0.70 的 r，远低于 Tok 的 0.82-0.92，说明"模型知道 concreteness 但说不准数字"——hidden state 比生成结果更接近真实信号。
+decoder-only LLM 直接取 noun 的 contextual embedding 有个致命问题：因果掩码下这个 token 还没读到后文，比如 "chain of events led to his downfall" 里 `chain` 的 embedding 是在没看到 events/downfall 时算出来的，根本捕捉不到那条把它推向比喻用法的提示。作者的解法是设计 prompt "Sentence: [sentence] On a scale of 1 to 5 (5 being the highest), in the context of the sentence, what is the concreteness of the word [target_word]?"，把整句和目标词都塞进 prompt，**取最后一个 token 的 hidden state** 作为 concreteness 表示——这个 token 因 causal attention 已经"看完"整句，自然聚合了完整上下文。
 
-2. **DiffMean + 多层 SVD 合成全局一维 axis**:
+拿到表示后走两条复用路径：(Gen) 让模型直接生成数字、(Tok) 把 hidden state 喂 MLP 回归。两个工程细节决定了 probing 是否可信：其一，目标词若不放在 prompt 末尾，Pearson r 会从 0.98 掉到 0.80±0.10，坐实了 decoder LLM 的强烈 recency bias；其二，Gen 路径只能拿到 0.58-0.70 的 r、远低于 Tok 的 0.82-0.92，说明"模型知道 concreteness 但说不准数字"——hidden state 比生成出来的数字更接近真实信号。
 
-    - 功能：找出"所有层共享的 concreteness 主方向"，验证 concreteness 是否压缩成单一几何维度。
-    - 核心思路：先按静态 concreteness 阈值（>4 / <2）从 25k Wikipedia 句子里抽 2,256 高 / 2,116 低 concrete 实例（balanced），每层算 high 均值减 low 均值得到 DiffMean $w^{(l)}$；把所有层的 $w^{(l)}$ 当行向量堆成矩阵 $W$，对 $W$ 做 SVD 得到一组按"区分高/低 concrete 的能力"排序的正交方向 $V^\top$，取 top-$k$ 作为 layer-agnostic 全局子空间 $B_k$。然后用 $B_k$ 把任意句子的 hidden state 投影到 $k$-D 空间得分，做 ROC AUC 评估单一方向是否够用。
-    - 设计动机：DiffMean 是 Marks & Tegmark (2024) 验证有效的轻量线性方法，比 logistic regression 更可解释——它就是几何空间里一根具体的方向向量。用 SVD 合并多层是为了"层独立的全局 axis"——结果显示 $k=1$ 时 AUROC 在中后期层稳定 ~0.90，证明 concreteness 确实被压缩到一维；$k$ 加大到 2/3/4 反而 AUROC 下降（图 7），是 inverse scaling 的明确证据。
+**2. DiffMean + 多层 SVD 合成全局一维 axis：验证 concreteness 是否压成单一几何维度。**
 
-3. **因果 steering：把 axis 直接加到 hidden state**:
+要回答"concreteness 在隐空间里是否占据一条专门方向"，作者用了 Marks & Tegmark (2024) 验证过的轻量线性方法 DiffMean——它本身就是几何空间里一根具体的方向向量，比 logistic regression 更可解释。具体先按静态 concreteness 阈值（>4 / <2）从 25k Wikipedia 句子里抽出 balanced 的 2,256 高 / 2,116 低 concrete 实例，每层算 high 均值减 low 均值得到 DiffMean $w^{(l)} = \mu^{(l)}_{high} - \mu^{(l)}_{low}$。
 
-    - 功能：把这条几何 axis 从"相关性发现"升级为"因果控制 knob"，让 LLM 在不改参数、不加 prompt 提示的情况下生成更字面或更比喻的句子。
-    - 核心思路：选定一个 concreteness 信息最清晰的层（Llama-3.1-8B 用 layer 20，Qwen 用 25，Gemma 用 27，GPT-OSS 用 15），在解码该层时把 hidden state 加上 $\alpha \cdot \mathbf{u}$（$\alpha = \pm 40$），再让后续层正常 forward 生成 "Rewrite the following sentence clearly and naturally:" 的 rewrite。prompt 完全不提 figurative/literal，控制信号全部来自 axis 干预。
-    - 设计动机：表示层 axis 即使能区分类别，也不一定是因果的——只有真的能"推一推就让输出变"才证明它是控制信号而非旁观特征。作者通过 100 句 × 2 方向的 human eval 给出 Lit→Fig 0→15%、Fig→Lit 39-52% → 67-75% 的提升，是干净的因果证据。
+单层 DiffMean 只反映该层最判别的方向，为了找"所有层共认的全局方向"，作者把各层 $w^{(l)}$ 当行向量堆成矩阵 $W$ 做 SVD，取 top-$k$ 右奇异向量 $B_k = V^\top_{1:k}$ 作为 layer-agnostic 子空间，再把任意句子的 hidden state 投影到这 $k$ 维上做 ROC AUC 评估。结果很干净：$k=1$ 时中后期层 AUROC 稳定在 ~0.90，证明 concreteness 确实被压缩到一维；而 $k$ 加到 2/3/4 反而 AUROC 下降（图 7），多方向稀释信号，是 inverse scaling 的明确证据。
+
+**3. 因果 steering：把 axis 直接加到 hidden state，从"相关性"升级为"控制 knob"。**
+
+axis 能区分类别不代表它是因果的——只有"推一推就让输出变"才证明它是控制信号而非旁观特征。作者选定每个模型 concreteness 信息最清晰的层（Llama-3.1-8B layer 20、Qwen 25、Gemma 27、GPT-OSS 15），在解码该层时把 hidden state 加上 $h^{(\ell)}_{\text{steer}} = h^{(\ell)} + \alpha \mathbf{u}$（$\alpha=+40$ 推向字面、$\alpha=-40$ 推向比喻），后续层正常 forward 生成 "Rewrite the following sentence clearly and naturally:" 的改写。
+
+关键在于 prompt 完全不提 figurative/literal，所有控制信号都来自 axis 干预，因此一旦输出风格随 $\alpha$ 变化，就是干净的因果证据。100 句 × 2 方向的 human eval 给出 Lit→Fig 0→15%、Fig→Lit 39-52%→67-75% 的提升——既证明 axis 是可控的 knob，也顺带暴露出"比喻生成比字面 paraphrase 难得多"的不对称。
 
 ### 损失函数 / 训练策略
 本工作没有传统训练：(a) probing MLP 用 Wartena (2024) 同款超参（512→256→128 三层 + ReLU + 0.2 dropout，AdamW lr=1e-5，50 epoch，batch=15，10-fold CV）；(b) DiffMean 是闭式计算，无需训练；(c) SVD 也是闭式分解；(d) steering 是 inference-time 加法，零参数更新。这种 training-free 性质大幅降低了方法的复现成本。

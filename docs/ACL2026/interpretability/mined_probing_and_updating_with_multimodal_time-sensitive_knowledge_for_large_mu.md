@@ -41,27 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两条 pipeline。**Benchmark 构造**：① 人工 + GPT-4o 从 Wikipedia 6 个领域采集 entity 候选 → ② 两名标注员手工筛选 visual + time-sensitive entity → ③ 抽取四元组 $(S, H, P, A)$ + 原图 → ④ 用 5 个 perception 模板剔除"15 个 LMM 中有 10 个识别不出"的 entity 保证视觉感知能力达标 → ⑤ 用 CLIP 从 Google 抓泛化图，相似度过滤后取 top-1。**任务数据**：对每个四元组按 11 个子任务模板批量生成 question-answer pair（共 4208 道，2104 unique 知识 × 多 prompt 配置）。**模型评测**：15 个 LMM 上跑全部子任务，CEM 评分 + Prompt Agreement（4 个 semantically equivalent prompt 取平均）。**知识编辑**：选 LLaVA-v1.5 (7B) 和 Qwen-VL (7B) 作为"过时模型"，跑 FT-LLM / FT-VIS / MEND / SERAC / IKE 5 种编辑方法在 single / lifelong 两种 setting 下。
+MINED 把「LMM 的静态参数知识 vs 动态现实事实」这道 gap 做成一个可诊断、可更新的评测系统，由三段流程串起来。先是 benchmark 构造：人工 + GPT-4o 从 Wikipedia 六个领域采 entity 候选，两名标注员手工筛出 visual 且 time-sensitive 的实体，抽成四元组 $(S, H, P, A)$ 配原图，用 5 个 perception 模板剔掉「15 个 LMM 里有 10 个都认不出」的 entity 保证视觉感知达标，再用 CLIP 从 Google 抓泛化图做相似度过滤取 top-1。接着把每个四元组按 11 个子任务模板批量生成 4208 道题（2104 条 unique 知识 × 多 prompt 配置），在 15 个 LMM 上以 CEM + Prompt Agreement 评测。最后是知识编辑：拿 LLaVA-v1.5 (7B) 和 Qwen-VL (7B) 当「过时模型」，在 single / lifelong 两种 setting 下对比 FT-LLM / FT-VIS / MEND / SERAC / IKE 五种方法，看时间敏感知识到底更不更得动。
 
 ### 关键设计
 
-1. **六维 × 11 任务的系统化评测分解**:
+**1. 六维 × 11 任务的系统化评测分解。**
 
-    - 功能：把"时间敏感知识理解"从单点评测拆成 6 个独立诊断维度，每个维度对应 LMM 实际部署中的一类失败模式。
-    - 核心思路：每个维度对应一类真实问题——Cognition 用 T.A/T.I.A/T.S.A 三种 time-format 测召回（如 "Which club does the player currently play for?" 是 T.A，"From 2021 to 2023 he played for?" 是 T.I.A，"On 2024-01-01 he played for?" 是 T.S.A）；Awareness 用 F.M.C/P.M.C 测当 context 时间和 query 时间错配时模型会被误导吗（在过去 query 时给当前 context、在当前 query 时给过去 context）；Trustworthiness 用 P.U.D/F.U.D 测能否拒答 attribute 时间窗口外的日期（如问 Messi 2075 年为哪支队踢球）；Understanding 用 I.T.C 测能否解析隐式时间（"Bezos 任 Amazon CEO 期间"对应 1994.07.05–2021.07.05）；Reasoning 拆成 R.K（chronological ranking）和 C.A（计算两事件间天数）；Robustness 用 A.T.E（adversarial temporal error）测在被告知答错时能否自纠。
-    - 设计动机：以前 benchmark 只报一个 overall accuracy，本文的六维让 failure mode 可定位——例如 Obs 2 发现"小模型对过去 misalignment context 极脆弱"（Qwen2-VL 7B P.M.C 掉 56.43%）就是单维 metric 看不到的诊断信号。每维多任务还能交叉验证（cognition 三个 time-format 一致显示 timestamp-aware 最容易，说明 LMM 内部知识更接近 point-in-time 而非 interval）。
+以前的 benchmark 只报一个 overall accuracy，failure mode 无从定位，所以 MINED 把「时间敏感知识理解」拆成六个独立诊断维度，每维对准 LMM 部署中的一类真实痛点。Cognition 用 T.A/T.I.A/T.S.A 三种 time-format 测召回（"currently plays for?" 是 T.A，"From 2021 to 2023?" 是 T.I.A，"On 2024-01-01?" 是 T.S.A）；Awareness 用 F.M.C/P.M.C 测 context 时间与 query 时间错配时会不会被误导；Trustworthiness 用 P.U.D/F.U.D 测能否拒答 attribute 时间窗口外的日期（如问 Messi 2075 年踢哪队）；Understanding 用 I.T.C 测隐式时间解析（"Bezos 任 Amazon CEO 期间"对应 1994.07.05–2021.07.05）；Reasoning 拆 R.K（chronological ranking）和 C.A（算两事件间天数）；Robustness 用 A.T.E 测被告知答错后能否自纠。
 
-2. **(S, H, P, A) 四元组抽象 + Prompt Agreement 评测协议**:
+这种分解的价值在于让诊断信号浮出水面——比如「小模型对过去 misalignment context 极脆弱」（Qwen2-VL 7B 的 P.M.C 掉 56.43%）这种现象在单一 overall metric 下根本看不到。每维多任务之间还能交叉验证：cognition 三种 time-format 一致显示 timestamp-aware 最容易，说明 LMM 内部知识更接近 point-in-time 索引而非 interval。
 
-    - 功能：用统一的 schema 表达所有时间敏感知识，并用多 prompt 平均稳定评测分数。
-    - 核心思路：把每个知识点抽象为四元组 $(S, H, P, A)$ 而非自然语言 QA pair，可以批量套模板生成不同子任务。比如对 (Lionel Messi, footballer, plays for, [...]) 套 T.A 模板就是 "Which club does the footballer in the image currently play for?"，套 R.K 模板就是 "Inter Miami CF and FC Barcelona were both played for by the footballer; can you identify which one was former?"。评测时用 Cover Exact Match $\text{CEM} = \mathbb{1}(\hat y \subseteq Y)$ 而非严格 EM，更适合自由格式回答。Prompt Agreement 用 4 个 semantically equivalent prompt（Question / Generalization Question / Image / Generalization Image，最后一个用 CLIP 抓的泛化图）的平均分作为最终分数，降低 prompt phrasing artifact。
-    - 设计动机：四元组化让 benchmark 可扩展且可更新（每季度抓 Wikipedia 更新 $A$ 即可，作者称 MINED 是 "evolvable benchmark"）。CEM 比 BLEU/F1 更适合"事实查询"——你只需要答案出现在生成里就算对。Prompt Agreement 是借鉴鲁棒性评测文献，把 prompt sensitivity 从评测噪声里挤出去。
+**2. (S, H, P, A) 四元组抽象 + Prompt Agreement 评测协议。**
 
-3. **多模态知识编辑在 single vs lifelong 两种 setting 下的对照**:
+把每条知识抽象成四元组 $(S, H, P, A)$ 而非自然语言 QA pair，是为了让一个知识点能批量套不同子任务模板：对 (Lionel Messi, footballer, plays for, [...]) 套 T.A 就生成 "Which club does the footballer in the image currently play for?"，套 R.K 就生成 "...can you identify which one was former?"。这层抽象也让 benchmark 可持续更新——每季度抓 Wikipedia 刷新 $A$ 即可，这正是作者称 MINED 为 evolvable benchmark 的底气。
 
-    - 功能：探索 5 种知识编辑方法能否真正更新 LMM 的过时时间敏感知识。
-    - 核心思路：选 LLaVA-v1.5 (7B) 和 Qwen-VL (7B) 作为"过时模型"，从它们 CEM ≠ 100 的样本里选编辑数据；分两种 setting——**Single editing** 每编辑一条就 restore 权重，测纯净更新效果；**Lifelong editing** 把整个数据集一次性编辑完再统一评测，测累积干扰。对比 parameter-modifying（FT-LLM 直接 fine-tune LLM、FT-VIS 只 fine-tune visual encoder、MEND 用 hypernetwork 学 edit）和 parameter-preserving（SERAC 外挂 retrieval cache、IKE 用 in-context example）两类方法。
-    - 设计动机：Single editing 看"理论上能不能更新"，lifelong editing 看"现实中能不能保留所有编辑"——前者是工具是否 work，后者是工具能否规模化部署。结果有用：FT-LLM single avg 97.2%（基本完美），但 lifelong 掉到 54.0%（−43.2pp）；SERAC single 只 61.6% 但 lifelong 只掉 10.4%（−10.4pp）——给出"编辑方法选型"的清晰路线图：要更新 100 条以下用 FT-LLM，要更新千条以上用 SERAC。
+评测端两个选择都为了贴合「事实查询」场景：用 Cover Exact Match $\text{CEM} = \mathbb{1}(\hat y \subseteq Y)$ 而非严格 EM，只要答案出现在生成里就算对，比 BLEU/F1 更适合自由格式回答；Prompt Agreement 则取 4 个 semantically equivalent prompt（Question / Generalization Question / Image / Generalization Image，末项用 CLIP 抓的泛化图）的平均分，把 prompt phrasing 的 artifact 从评测噪声里挤出去。
+
+**3. single vs lifelong 两种 setting 下的多模态知识编辑对照。**
+
+光评出模型知识过时还不够，这一步要回答「现有编辑方法能不能真正把过时知识更新掉」。作者从 LLaVA-v1.5 (7B)、Qwen-VL (7B) 这两个「过时模型」CEM ≠ 100 的样本里选编辑数据，再用两种 setting 拆开看：**Single editing** 每编一条就 restore 权重，测纯净更新效果（工具理论上 work 吗）；**Lifelong editing** 把整个数据集一次性编完再统一评测，测累积干扰（工具能规模化吗）。对比对象覆盖 parameter-modifying（FT-LLM 直接微调 LLM、FT-VIS 只调 visual encoder、MEND 用 hypernetwork 学 edit）与 parameter-preserving（SERAC 外挂 retrieval cache、IKE 用 in-context example）两类。
+
+这组对照直接给出了选型路线图：FT-LLM single avg 97.2% 几乎完美，但 lifelong 崩到 54.0%（−43.2pp）；SERAC single 只 61.6% 却凭显式 cache 在 lifelong 仅掉到 51.2%（−10.4pp）。结论很 actionable——要更新百条以下用 FT-LLM，要更新千条以上用 memory-based 的 SERAC 才稳。
 
 ### 损失函数 / 训练策略
 本文是 benchmark + 评测论文，没有训练新模型。知识编辑部分沿用原方法的损失（FT-LLM = standard CE fine-tuning，MEND = hypernetwork loss，SERAC = retrieval + counterfactual model loss）。评测指标：$C_d = \frac{1}{N}\sum_i^N \text{CEM}_i$，$\text{CEM} = \mathbb{1}(\hat y \subseteq Y)$。

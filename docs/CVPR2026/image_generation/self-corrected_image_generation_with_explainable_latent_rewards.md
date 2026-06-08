@@ -43,31 +43,35 @@ tags:
 
 ### 整体框架
 
-给定文本 prompt $p$，编码器产生潜在表示 $z_0 = \mathcal{E}(p)$；残差修正器 $\Delta_\theta$ 对 $z_0$ 施加修正得到 $z_c = z_0 + \alpha \cdot \Delta_\theta(z_0, e_p)$；解码器生成修正后的图像 $\hat{x} = \mathcal{D}(z_c)$。修正器通过三个模块协作：URC（理解引导强化修正器）、CMD（概念错位检测模块）、$R_\phi$（可解释潜空间奖励投影）。
+xLARD 想解决的是一个很具体的尴尬：模型「理解对、生成错」——给它"六只企鹅排队走在雪地上"，它能读懂这句话，画出来却是五只、排得乱七八糟。论文的赌注是，**评估一张图对不对，比一次性生成对，要容易得多**，所以与其重训 backbone，不如让它先生成、再回看自己的潜在表示并修一刀。
+
+整条链路是这样转的：文本 prompt $p$ 经编码器得到潜在表示 $z_0 = \mathcal{E}(p)$；一个轻量残差修正器 $\Delta_\theta$ 读入 $z_0$ 和 prompt 嵌入 $e_p$，吐出一个修正量，叠加回去得到 $z_c = z_0 + \alpha \cdot \Delta_\theta(z_0, e_p)$；解码器再把修好的潜在表示还原成图像 $\hat{x} = \mathcal{D}(z_c)$。修正量怎么知道往哪个方向修，靠的是三块东西协作：URC 是那个动手修的策略网络，CMD 负责在计数/颜色/位置三个维度上盯出哪里和 prompt 不一致，$R_\phi$ 则把这些图像级的判断翻译成修正器能直接学的潜空间信号。回到企鹅的例子：CMD 数出图里只有五只、与目标的六只不符，把这个偏差折成奖励，$R_\phi$ 把它投回潜空间，URC 据此在 $z_0$ 上加一笔残差，让解码出来的企鹅补到六只——整个过程 backbone 一个参数都没动。
 
 ### 关键设计
 
-1. **理解引导强化修正器（URC）**:
+**1. 理解引导强化修正器（URC）：在潜空间里只修一刀，而不动 backbone。**
 
-    - 功能：在潜空间中对生成表示进行残差修正
-    - 核心思路：修正器 $\Delta_\theta$ 作为策略网络，输入当前潜在表示 $z_0$ 和 prompt 嵌入 $e_p$，输出一个残差修正量。使用可学习的奖励投影器 $R_\phi$ 将图像级奖励映射回潜空间：$r_{\text{latent}} = R_\phi(z_c, e_p) \approx r_{\text{image}}(\hat{x}, p, x^*)$，解决了图像级奖励不可微分的问题。推理时只需一次前向传播应用 $\Delta_\theta$，无需额外采样或奖励计算。
-    - 设计动机：避免修改 backbone，以即插即用形式提升生成质量，可训练参数 <50M（不到基础模型的 1%）
+针对的痛点是后训练类方法动辄要微调上百亿参数、代价太高。URC 的做法是把修正器 $\Delta_\theta$ 当成一个策略网络：输入当前潜在表示 $z_0$ 和 prompt 嵌入 $e_p$，输出一个残差修正量，整个 backbone 冻结不动。它绕开的关键障碍是「图像级奖励不可微分」——直接拿生成图去算奖励，梯度回不到潜空间；URC 改用一个可学习的奖励投影器 $R_\phi$ 把图像级奖励映射回潜空间，$r_{\text{latent}} = R_\phi(z_c, e_p) \approx r_{\text{image}}(\hat{x}, p, x^*)$，这样修正器就能端到端地学。因为只是在已有潜在表示上叠一个残差，可训练参数压到 <50M（不到基础模型的 1%），且推理时只跑一次前向就把 $\Delta_\theta$ 应用上，不需要额外采样或在线算奖励，等于零额外开销。
 
-2. **概念错位检测模块（CMD）**:
+**2. 概念错位检测模块（CMD）：把"对不对"拆成三个人能看懂的维度。**
 
-    - 功能：在三个正交维度上检测和量化图像-prompt 不一致
-    - 核心思路：设计了三个可解释的任务子奖励：(1) **计数奖励**：通过 token 注意力图的连通域分析估计物体数量 $\hat{n}_t$，与目标数量 $n_t$ 比较，$r_{\text{count}} = \exp(-|\hat{n}_t - n_t|/n_t)$；(2) **颜色奖励**：计算 patch 级图像特征与颜色词嵌入的余弦相似度，$r_{\text{color}} = \frac{1}{|\mathcal{C}|}\sum_{c} \max_i s_{i,c}$；(3) **位置奖励**：通过注意力加权质心定位实体位置，用 sigmoid 函数评估方向一致性。联合奖励 $r_{\text{task}} = \lambda_{\text{count}}r_{\text{count}} + \lambda_{\text{color}}r_{\text{color}} + \lambda_{\text{pos}}r_{\text{pos}}$，其中 $\lambda$ 由置信度头动态调节。
-    - 设计动机：将语义对齐分解为人可理解的维度，使修正过程可解释
+如果奖励信号是个黑盒分数，修正过程就无从解释、也难定位错在哪。CMD 因此把语义对齐拆成三个正交、可解释的子奖励。**计数奖励**对 token 注意力图做连通域分析，估出物体数量 $\hat{n}_t$ 再和目标数量 $n_t$ 比，$r_{\text{count}} = \exp(-|\hat{n}_t - n_t|/n_t)$，差得越多奖励衰减越快。**颜色奖励**算 patch 级图像特征与颜色词嵌入的余弦相似度，对每个颜色取最匹配的 patch 再平均，$r_{\text{color}} = \frac{1}{|\mathcal{C}|}\sum_{c} \max_i s_{i,c}$。**位置奖励**用注意力加权质心定位实体落点，再用 sigmoid 评估它和 prompt 里方位词的一致性。三者按
 
-3. **可解释潜空间奖励投影（$R_\phi$）**:
+$$r_{\text{task}} = \lambda_{\text{count}}r_{\text{count}} + \lambda_{\text{color}}r_{\text{color}} + \lambda_{\text{pos}}r_{\text{pos}}$$
 
-    - 功能：将不可微分的图像级奖励信号转化为可微分的潜空间梯度
-    - 核心思路：训练一个投影器 $R_\phi(z_c, e_p) \in \mathbb{R}^3$，近似三个子奖励。使用 PPO 优化修正器：$\theta^* = \arg\max_\theta \mathbb{E}_{p}[R_\phi(z_0 + \Delta_\theta(z_0, e_p), e_p)]$。还通过 Latent Activation Maps（LAM）可视化修正集中的区域：$\text{LAM}(h,w) = \sum_c |\Delta_\theta(z_0, e_p)[c,h,w]|$。
-    - 设计动机：桥接不可微的图像评估与可微的潜空间优化，同时提供修正过程的可视化解释
+加权合成联合奖励，其中权重 $\lambda$ 不是写死的，而是由一个置信度头按当前 prompt 动态调节——提示词强调数量时计数那一项就被抬高。和那些靠临时规则做免训练修正的方法相比，这套分解的价值在于每一笔修正都能追溯到某个具体维度，而不是一个说不清的总分。
+
+**3. 可解释潜空间奖励投影（$R_\phi$）：把不可微的评估翻译成可微的优化目标。**
+
+这一块是 URC 能训起来的关键。$R_\phi(z_c, e_p) \in \mathbb{R}^3$ 是个被训练去近似 CMD 那三个子奖励的投影器，一旦它学好，修正器的优化目标就变成纯潜空间内、处处可微的形式，用 PPO 直接最大化：
+
+$$\theta^* = \arg\max_\theta \mathbb{E}_{p}\big[R_\phi(z_0 + \Delta_\theta(z_0, e_p), e_p)\big]$$
+
+它顺带还提供了一层可视化解释——Latent Activation Maps（LAM）把修正量在各通道上的绝对值沿空间聚合，$\text{LAM}(h,w) = \sum_c |\Delta_\theta(z_0, e_p)[c,h,w]|$，高激活的区域就是修正器实际下手改的地方，让人能直接看到它是在补企鹅还是在改颜色，而不只是相信一个数字变好了。
 
 ### 损失函数 / 训练策略
 
-采用 PPO 强化学习优化，梯度更新公式 $\nabla_\theta \mathcal{L} = -(R_\phi - b)\nabla_\theta \log \pi_\theta(\Delta_\theta | z_0, e_p)$，其中 $b$ 为学习的 baseline。Backbone 完全冻结，仅训练修正器和奖励投影器。在单张 H100 上每 epoch 约 7-8 分钟，15 个 epoch 约 2 小时完成训练。
+修正器用 PPO 优化，梯度形式为 $\nabla_\theta \mathcal{L} = -(R_\phi - b)\nabla_\theta \log \pi_\theta(\Delta_\theta | z_0, e_p)$，其中 $b$ 是学习得到的 baseline，用来降低策略梯度方差。Backbone 全程冻结，只训练修正器 $\Delta_\theta$ 和奖励投影器 $R_\phi$。训练很省：单张 H100 上每 epoch 约 7–8 分钟，15 个 epoch 共约 2 小时即可完成。
 
 ## 实验关键数据
 

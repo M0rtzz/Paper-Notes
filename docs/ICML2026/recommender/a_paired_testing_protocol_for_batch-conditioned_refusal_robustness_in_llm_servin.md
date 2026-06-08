@@ -46,23 +46,17 @@ tags:
 四个 study 的角色不同。Study A 是本地发现层，使用三类 1B-3B instruction-tuned 模型，在同步 dispatch、邻居条件、并发量化和显式 true batching 下比较安全与能力标签变化。Study B 扩展到 15 个模型，检查初始安全偏斜是否可泛化，并分析 alignment type 与输出不稳定性是否能预测 fragility。Study C 使用 vLLM FP16 continuous batching，测试 co-batched neighbors 是否带来独立组合效应。Study D 在同一 H100/vLLM 0.19.1 栈上，对 55 个当前 score-flip candidates 比较标准 vLLM 与 `VLLM_BATCH_INVARIANT=1`。
 
 ### 关键设计
-1. **安全-能力配对测试**:
+**1. 安全-能力配对测试：把"安全边界变化"和"普通输出抖动"区分开。**
 
-    - 功能：避免把任意 batch-induced 输出变化误判成安全问题。
-    - 核心思路：安全侧使用 harmful behavior、jailbreak、truthfulness、bias 和 over-refusal 相关 prompt；能力侧使用 MMLU、ARC-Challenge 等控制任务。每条 row 在不同 batch 条件下比较标签是否变化，并分别统计安全标签和能力标签翻转。
-    - 设计动机：如果安全和能力标签同样频繁变化，说明问题更像泛化输出不稳定；只有安全侧相对能力侧更容易跨边界，才支持 refusal robustness 风险。
+batch 改变输出不一定是安全问题——可能只是普通文本不稳定。为了不把任意 batch-induced 变化误判成安全风险，协议让每条 prompt 同时配一个对照：安全侧用 harmful behavior、jailbreak、truthfulness、bias、over-refusal 相关 prompt，能力侧用 MMLU、ARC-Challenge 等控制任务。每条 row 在不同 batch 条件下分别统计安全标签和能力标签是否翻转。逻辑很直接：如果安全和能力标签同样频繁变化，那更像是泛化输出不稳定；只有当安全侧相对能力侧更容易跨边界时，才真正支持 refusal robustness 风险这个结论。
 
-2. **分层校正与泛化检验**:
+**2. 分层校正与泛化检验：把稀有信号从打分噪声和小模型偶然性里剥出来。**
 
-    - 功能：把本地发现信号从自动打分噪声和小模型偶然性中剥离出来。
-    - 核心思路：Study A 先报告自动打分下的安全/能力翻转，再对 changed rows 做 Unicode normalization、scorer-corrected audit 和人工候选审查。Study B 将问题扩展到 15 个模型，报告安全/能力比、fragility 范围、alignment type ANOVA 和 output instability correlation。
-    - 设计动机：拒绝翻转是稀有事件，单个正结果很容易被过度解释。分层校正能保留“确有边界样本”的发现，同时把 operational rate 校准到更保守的范围。
+拒绝翻转是稀有事件，单个正结果极易被过度解读。协议先在 Study A 报告自动打分下的安全/能力翻转，再对 changed rows 做 Unicode normalization、scorer-corrected audit 和人工候选审查，把 operational rate 校准到更保守的范围；随后 Study B 把问题扩展到 15 个模型，报告安全/能力比、fragility 范围、alignment type 的 ANOVA 以及 output instability correlation。这样既保留了"确有边界样本"的发现，又避免把某个小模型上的偶然正结果当成普适风险。
 
-3. **exact-stack 机制消融**:
+**3. exact-stack 机制消融：判断翻转到底依不依赖具体 serving kernel 路径。**
 
-    - 功能：判断候选翻转是否依赖具体 serving kernel 路径。
-    - 核心思路：在同一 H100 pod、相同模型、相同 prompt、相同 dispatch mode、temperature 0 和 max length 2048 下，分别运行标准 vLLM 与 batch-invariant kernel。若标准路径复现 label flip，而 invariant 路径消除 flip，就说明当前候选 surface 对 batch-sensitive execution path 敏感。
-    - 设计动机：部署风险最终取决于实际服务栈。与其抽象讨论 batch 是否危险，不如在生产接近的 model/kernel/batch setting 上做 exact-stack validation。
+部署风险最终取决于真实服务栈，所以与其抽象争论"batch 是否危险"，不如在生产接近的 model/kernel/batch 设定上做验证。Study D 在同一 H100 pod、相同模型、相同 prompt、相同 dispatch mode、temperature 0、max length 2048 下，分别跑标准 vLLM 与 `VLLM_BATCH_INVARIANT=1` 的 batch-invariant kernel。如果标准路径能复现 label flip、而 invariant 路径把 flip 消除，就说明当前这批候选 surface 确实对 batch-sensitive 的执行路径敏感——这把"batch 影响拒绝"的故事从抽象 backend 类别落到了具体 kernel 路径上。
 
 ### 损失函数 / 训练策略
 本文没有训练损失函数。评测策略是固定 prompt、固定 weights、固定 greedy decoding（temperature 0），只改变 batch size、dispatch synchronization、co-batched composition 或 kernel path。统计解释遵循三条规则：正的本地发现只有在更大扩展或机制检查中得到支持时才升级为可见结论；方向性结果必须同时报告绝对率；不同 study 冲突时，以更大样本或更机制化的 study 决定主张边界。

@@ -41,27 +41,21 @@ MedMosaic 用合成管道构造了一个覆盖生理声 + 真实/合成临床对
 ## 方法详解
 
 ### 整体框架
-MedMosaic 由两部分组成：(A) QA 生成管道——按音频类型（sound-only 生理声、speech-only 临床对话、speech+sound 混合）分别走专门的 Gemini-3-flash 提示，每题生成 10 个对照选项（开放式除外）、3 个难度档（易/中/难），每题都强制对应的对照选项「lexically similar but interpretively distinct」防止靠关键字蒙对；(B) 问题类型——10 种：MCQ_Sound_(Cough/Heart/Lung)、MCQ_Speech、MCQ_Speech_Sound、MCQ_Long_Form、Multi_Turn、OE_Speech、OE_Speech_Sound、Voice_QA，覆盖单源/多源/长时/多轮/开放/嵌入式。最终生成 46,701 条 QA，按类型权重计算 weighted average accuracy。
+MedMosaic 想造一个「不听音频就答不出」的大规模医学音频 QA 基准，整条流水线是：按音频类型把素材分成三路（sound-only 生理声、speech-only 临床对话、speech+sound 混合），各自喂给一套专门设计的 Gemini-3-flash 提示生成题目，再把题目铺开成 10 种问题类型、三档难度，最终汇成 46,701 条 QA，按题型权重算 weighted average accuracy。难度的核心来自提示工程：除开放式外每题都配 10 个「词面相似但临床解读不同」的对照选项，逼模型靠真听懂音频细节而非关键词匹配来作答。
 
 ### 关键设计
 
-1. **生理声 QA 的细粒度时序构造**:
+**1. 生理声 QA 的细粒度时序构造：把 sound-only 题从「声分类」抬到「时序推理」。**
 
-    - 功能：让 sound-only QA 真的需要「时序推理」而非「声分类」。
-    - 核心思路：把生理声细分到临床相关亚类——肺音（wheeze 持续窄带 / crackle 短爆裂宽带 / stridor 高音连续单频）、咳嗽（wet 含水声 / dry 短促干燥 / pertussis 簇发 + 高能吸气 whoop / barky 低沉共振）、心音（murmur 在 S1 → systole → S2 → diastole 各阶段不同）。题目不止问「这是什么声」，而是问「咳嗽发生在哪个呼吸阶段」「heartbeat 节律变化」「30 秒内呼吸次数大致估算」「sound/silence 时间占比」——这些都要求模型把声学事件锚定到生理周期上。
-    - 设计动机：表面声分类靠少量标志性特征就能猜对，但「时序耦合 + 计数估算」逼迫模型真的去解析音频内部的时间结构，无法靠预训练通识蒙混。
+表面声分类只要抓住几个标志性频谱特征就能猜对，没法真正考察音频理解。MedMosaic 先把生理声细分到临床相关亚类——肺音分 wheeze（持续窄带）/ crackle（短爆裂宽带）/ stridor（高音连续单频），咳嗽分 wet（含水声）/ dry（短促干燥）/ pertussis（簇发 + 高能吸气 whoop）/ barky（低沉共振），心音的 murmur 在 $\text{S1} \to \text{systole} \to \text{S2} \to \text{diastole}$ 各阶段表现不同。题目不止问「这是什么声」，而是问「咳嗽发生在哪个呼吸阶段」「heartbeat 节律怎么变」「30 秒内大致呼吸几次」「sound 与 silence 的时间占比」。这些都要求把声学事件锚定到生理周期上：单纯靠预训练通识识别声音类型已经不够，模型必须真的解析音频内部的时间结构、做计数与估算，才能答对。
 
-2. **强对照式 MCQ + 反幻觉约束的提示工程**:
+**2. 强对照式 MCQ + 反幻觉约束的提示工程：让题目的难度落在「听懂细节」而非「选项一眼可分」。**
 
-    - 功能：让多选题的难度不取决于「选项之间一眼区分」而取决于「真听懂音频细节」。
-    - 核心思路：(i) 每题 10 个选项，错误选项被设计成与正确选项 lexically similar yet semantically distinct，刻意复用关键词增加词面相似度，让纯关键词匹配失效；(ii) 干扰项常见模式——时序错位（说对了事件但发生在错的阶段）、相似声学特征但不同临床解读、过度依赖训练数据中的常见关联；(iii) 反幻觉约束——所有正确答案必须可从音频本身推导，禁止依赖外部医学知识库；每个选项必须导向独立的临床解读，避免靠常识排除；(iv) 三档难度 Easy/Medium/Hard 系统性提升对感知精度的要求。
-    - 设计动机：现有医学 QA 容易被 LLM 的医学知识背诵答对而忽略音频；强约束让题目「不听音频就答不出」成为硬性事实，真正测试音频推理。
+医学 QA 的老问题是模型靠背诵医学知识就能蒙对、根本没用上音频。MedMosaic 在提示里加了一整套约束来堵死这条捷径：每题给 10 个选项，错误选项被刻意写成与正确答案 lexically similar yet semantically distinct——复用相同关键词、提高词面相似度，让纯关键词匹配彻底失效；干扰项专挑几类陷阱——时序错位（事件说对了但放在错误阶段）、声学特征相似但临床解读不同、过度依赖训练数据里的常见关联。最关键的是反幻觉约束：所有正确答案必须能从音频本身推导，禁止依赖外部医学知识库，且每个选项都要导向一个独立的临床解读，避免靠常识直接排除。再叠加 Easy/Medium/Hard 三档难度系统性抬高对感知精度的要求，「不听音频就答不出」于是从口号变成了硬性事实。
 
-3. **嵌入式语音 QA (Voice_QA) + 多轮 + 开放式三种新颖题型**:
+**3. 嵌入式语音 QA（Voice_QA）+ 多轮 + 开放式三种新题型：把临床真实交互的难点搬进评测。**
 
-    - 功能：把临床真实交互中「问题与对话交织」「需要多步追问」「需要生成而非选择」的三种场景纳入评测。
-    - 核心思路：Voice_QA 把问题和答案直接嵌入音频波形——模型需要在听完临床对话后突然切换上下文去回答嵌入的语音问题，考察 context switching 与抗注意力漂移能力；Multi_Turn 在长对话上做多轮追问，要求模型维持跨轮状态；Open-Ended（OE_Speech / OE_Speech_Sound）让模型必须在长时音频上做无约束生成，回答简洁但必须正确，是最严苛的生成式推理测试。
-    - 设计动机：MCQ 测「区分能力」，但临床真实场景几乎都是「医生听完后开口讲话」式的生成；嵌入式 QA 更进一步模拟「设备/同事在病人对话中插入提问」的真实临床交互。
+MCQ 只能测「区分能力」，但临床现场几乎都是「医生听完后开口讲话」式的生成与交互，这块在现有 benchmark 里完全缺位。MedMosaic 补上三种：Voice_QA 把问题和答案直接嵌进音频波形，模型听完临床对话后要突然切换上下文去回答这段嵌入的语音问题，专门考 context switching 与抗注意力漂移——它模拟的是「设备或同事在病人对话中途插入提问」的真实场景；Multi_Turn 在长对话上做多轮追问，要求模型维持跨轮状态；Open-Ended（OE_Speech / OE_Speech_Sound）则让模型在长时音频上无约束生成，回答要简洁且必须正确，是最严苛的生成式推理测试。十种题型合起来——MCQ_Sound_(Cough/Heart/Lung)、MCQ_Speech、MCQ_Speech_Sound、MCQ_Long_Form、Multi_Turn、OE_Speech、OE_Speech_Sound、Voice_QA——构成覆盖单源/多源/长时/多轮/开放/嵌入式的正交矩阵，让模型短板能按维度被精确诊断。
 
 ### 损失函数 / 训练策略
 非训练论文，无 loss。所有 QA 由 Gemini-3-flash 生成，再用 13 个候选模型（Audio Flamingo 3、Audio Reasoner、Baichuan-Omni、Desta25-Audio、Gama、Gemini-2.5-flash/pro、Qwen-2.5-Omni 等）做推理评测。

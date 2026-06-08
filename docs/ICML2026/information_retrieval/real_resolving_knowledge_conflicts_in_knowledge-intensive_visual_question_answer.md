@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-REAL pipeline 包含三个组件：(1) **REAL-VQA 数据集**——基于 Wikipedia + GPT-4o 自动构造的高质量多跳冲突训练集（4,149 训练 / 629 测试），每个样本带 pivot 级标注和 5 段 ground-truth 段落；(2) **RPA-SFT (Reasoning-Pivot Aware SFT)**——用特殊 token `<RPivot></RPivot>` 包裹推理枢纽，训练模型先抽取问题/段落中的 pivot，再做冲突判别；(3) **RPGD (Reasoning-Pivot Guided Decoding)**——训练免费的对比解码，用 Patch Shuffle 构造"冲突主导"路径，用判别器输出的 pivot 集合做自适应 gating，再用 Gram-Schmidt 投影把冲突方向从标准 logits 中剥离。三者形成"数据→判别器→解码"的闭环。
+REAL 想解决的是 KI-VQA 里"什么才算真冲突"这件事，而它的答案是把判定收缩到推理链的关键节点上，再让这个判定信号一路贯穿训练和解码。整条 pipeline 用同一份 Reasoning-Pivot 语义实体串起三个组件：先用 Wikipedia + GPT-4o 自动构造带 pivot 级标注的 REAL-VQA 数据集（4,149 训练 / 629 测试，每样本配 5 段 ground-truth 段落），再用 RPA-SFT 训出一个"先抽 pivot 再判冲突"的判别器，最后用训练免费的 RPGD 在解码时把判别器圈出的冲突方向从 logits 里剥掉。三者形成"数据→判别器→解码"的闭环，避免了多模块之间的信号失配。
 
 ### 关键设计
 
-1. **Reasoning-Pivot 形式化 + REAL-VQA 数据构造**:
+**1. Reasoning-Pivot 形式化与 REAL-VQA 数据构造：把冲突锚到推理链关键节点**
 
-    - 功能：把 KI-VQA 推理链 $e_1 \xrightarrow{p_1} e_2 \xrightarrow{p_2} y$ 中所有不可或缺的节点和边收集为 pivot 集合 $\mathcal{P}=\{e_1,p_1,e_2,p_2,y\}$，并把冲突严格定义为针对同一 pivot 的逻辑互斥断言 $\mathcal{K}_{conflict}=\{u\in\mathcal{P}\mid\exists a_i,a_j\in\mathcal{I}_u, a_i\wedge a_j\rightarrow\bot\}$。
-    - 核心思路：数据集构造遵循三原则——高多跳复杂度（最大化 pivot 广度）、common-property 聚合（增加 pivot 密度）、knowledge-deficit 诱导（过滤视觉可解样本）；冲突生成用 rewrite-based 策略：把 ground-truth pivot $p_{gt}$ 替换为 $p_{neg}$，让 GPT-4o 在 $p_{neg}$ 的真实 Wikipedia 语境下重写段落，保证文本事实自洽但与视觉证据形成精确矛盾；vote-of-confidence 过滤（10 次 GPT-4o 打分累计 $\geq 80$ 且单次 $\geq 6$）+ 人工校验保证质量。
-    - 设计动机：解决"实体/关键词匹配 ≠ 真冲突"的根本问题——只在推理链关键节点上判定矛盾，把无关位置信息等噪声排除在外；同时为后续判别器训练提供 pivot 级监督而非二元标签。
+传统"实体/关键词不匹配=冲突"的定义在多跳推理里会大量误判——推理链 $e_1 \xrightarrow{p_1} e_2 \xrightarrow{p_2} y$ 中的中间节点本就该和视觉初始实体不同，而相同 property type（location/nationality）又会在链条不同阶段重复出现。REAL 把链上所有不可或缺的节点和边收集成 pivot 集合 $\mathcal{P}=\{e_1,p_1,e_2,p_2,y\}$，再把冲突严格限定为"针对同一 pivot 的逻辑互斥断言"$\mathcal{K}_{conflict}=\{u\in\mathcal{P}\mid\exists a_i,a_j\in\mathcal{I}_u,\ a_i\wedge a_j\rightarrow\bot\}$，从而把 pivot 之外的实体差异、位置信息等一律归为良性噪声。为了让数据真正逼出这类冲突，构造遵循三条原则——高多跳复杂度（最大化 pivot 广度）、common-property 聚合（增加 pivot 密度）、knowledge-deficit 诱导（过滤掉只看图就能答的样本）；冲突本身用 rewrite-based 策略生成：把 ground-truth pivot $p_{gt}$ 换成 $p_{neg}$，让 GPT-4o 在 $p_{neg}$ 的真实 Wikipedia 语境下重写整段，使文本自身事实自洽但与视觉证据精确矛盾。最后用 vote-of-confidence 过滤（10 次 GPT-4o 打分累计 $\geq 80$ 且单次 $\geq 6$）加人工校验把关质量，既解决了"匹配 ≠ 真冲突"的根本问题，又为判别器提供 pivot 级而非二元的监督信号。
 
-2. **RPA-SFT：双机制 pivot 感知训练**:
+**2. RPA-SFT：用双机制把冲突判别变成显式逻辑核验**
 
-    - 功能：训练一个能从问题与检索段落中精确抽取 reasoning-pivot 并据此判别冲突的判别器，避免单纯二元标签训练带来的 shortcut learning。
-    - 核心思路：(a) **Token-Level Pivot Perception**——在词表中加入 `<RPivot>` / `</RPivot>` 特殊 token，预处理时把所有 pivot 在输入和目标里显式包裹，作为嵌入空间的语义锚点；(b) **Multi-Stage Reasoning Training**——把目标输出构造成三步推理：① question pivot 抽取 → ② 段落 pivot 抽取（由 question pivot 引导）→ ③ 基于 pivot 集合内的逻辑一致性输出二元冲突标签。Loss 仍是标准 SFT 的 next-token cross-entropy，但目标序列内嵌"先抽 pivot 再判冲突"的结构化推理。
-    - 设计动机：把判别任务转成显式的逻辑核验过程，强制模型基于"同一 pivot 的断言比较"做决策而非依赖数据集 artifact，从而在跨域（E-VQA / ScienceQA / MMKC）和未见冲突类型上保持泛化。
+如果只拿二元冲突标签做 SFT，模型很容易学到数据集 artifact 这种 shortcut，跨域就崩。RPA-SFT 因此把判别拆成两个机制叠加。其一是 token-level pivot perception：在词表里加入 `<RPivot>` / `</RPivot>` 特殊 token，预处理时把输入和目标里的每个 pivot 都显式包裹起来，让它们在嵌入空间里成为稳定的语义锚点。其二是 multi-stage reasoning training：把目标输出构造成三步推理——先抽 question pivot，再由它引导抽段落 pivot，最后基于同一 pivot 集合内的断言逻辑一致性输出二元冲突标签。损失仍是标准 SFT 的 next-token cross-entropy，只是目标序列内嵌了"先抽 pivot 再判冲突"的结构，等于强制模型靠"同一 pivot 上的断言比较"来决策，而非记忆表面模式。正是这套显式核验让判别器在 E-VQA / ScienceQA / MMKC 等跨域和未见冲突类型上仍保持泛化。
 
-3. **RPGD：训练免费的 pivot 引导对比解码**:
+**3. RPGD：训练免费的 pivot 引导对比解码**
 
-    - 功能：在推理时利用 RPA-SFT 判别器输出的 pivot 集合 $\mathcal{K}$，对 logit 做有针对性的冲突方向抑制，而不伤害正常推理 token。
-    - 核心思路：三阶段流水线——(a) **Patch Shuffle**：把视觉 patch embedding 随机置乱构造"冲突主导"路径 $L_{conf}=M(x,\text{Shuffle}(v))$，破坏对象级拓扑但保留 part-level 特征和原始分布幅度，让模型在缺少视觉验证时优先依赖矛盾文本；(b) **Adaptive Gating**：先用全局基线 $\varepsilon$ 初始化 gate 矩阵 $\alpha\in\mathbb{R}^{B\times V}$，再对 pivot 对应词表索引 $\mathcal{K}$ 按 $\alpha_{b,v}\leftarrow\varepsilon+\beta\cdot\sigma(\kappa L_{conf}(b,v))$ 提升 gate 强度（$\sigma$ 防饱和，$\beta$ 控制强度）；(c) **Gram-Schmidt 正交化**：计算投影系数 $c=\langle L_{std},L_{conf}\rangle/(\|L_{conf}\|_2^2+\delta)$，得到投影分量 $L_{proj}=c\cdot L_{conf}$，最终 logit 为 $L_{final}=L_{std}-\alpha\odot L_{proj}$，再用 cutoff $\tau$ 截尾采样。
-    - 设计动机：相比直接 logit 相减会误伤共有的合理结构，Gram-Schmidt 严格只剥离与冲突几何对齐的分量；Patch Shuffle 比 mask/noise 更安全地构造冲突路径；adaptive gating 让抑制强度跟着 pivot 信号走，非 pivot token 接近 baseline，避免一刀切伤害推理。
+有了判别器输出的 pivot 集合 $\mathcal{K}$，推理时就能只针对冲突方向做抑制、不误伤正常 token。RPGD 是一条三阶段流水线。第一步 Patch Shuffle 随机置乱视觉 patch embedding 构造"冲突主导"路径 $L_{conf}=M(x,\text{Shuffle}(v))$，它破坏对象级拓扑但保留 part-level 特征和原始分布幅度，逼模型在缺乏视觉验证时优先依赖矛盾文本——这比直接 mask 或加噪更安全，因为不引入分布偏移。第二步 adaptive gating 先用全局基线 $\varepsilon$ 初始化 gate 矩阵 $\alpha\in\mathbb{R}^{B\times V}$，再只对 pivot 对应的词表索引 $\mathcal{K}$ 按 $\alpha_{b,v}\leftarrow\varepsilon+\beta\cdot\sigma(\kappa L_{conf}(b,v))$ 提升 gate 强度（$\sigma$ 防饱和、$\beta$ 控制力度），让抑制跟着 pivot 信号走、非 pivot token 接近 baseline。第三步 Gram-Schmidt 正交化先算投影系数 $c=\langle L_{std},L_{conf}\rangle/(\|L_{conf}\|_2^2+\delta)$，得到投影分量 $L_{proj}=c\cdot L_{conf}$，最终 logit 为 $L_{final}=L_{std}-\alpha\odot L_{proj}$ 再用 cutoff $\tau$ 截尾采样。相比直接 logit 相减会连共有的合理结构一起误伤，这里严格只剥离与冲突路径几何对齐的分量，把对比解码常见的过度惩罚问题压了下去。
 
 ### 损失函数 / 训练策略
-RPA-SFT 用标准 SFT 目标，target 序列结构为"`<RPivot>` 包裹的 question pivots → 段落 pivots → 二元冲突标签"。检索文档数 $k=5$，与 EchoSight / ReflectiVA 等基线对齐；8 张 H20 训练。RPGD 完全训练免费，超参 $\varepsilon, \beta, \kappa, \tau, \delta$ 在 appendix 中给出。
+RPA-SFT 用标准 SFT 目标，target 序列结构为"`<RPivot>` 包裹的 question pivots → 段落 pivots → 二元冲突标签"。检索文档数 $k=5$，与 EchoSight / ReflectiVA 等基线对齐；用 8 张 H20 训练。RPGD 完全训练免费，超参 $\varepsilon, \beta, \kappa, \tau, \delta$ 在 appendix 中给出。
 
 ## 实验关键数据
 

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FMPlug 沿用 plug-in 框架 $\min_z \ell(y, A \circ G_\theta(z)) + \Omega \circ G_\theta(z)$，其中 $G_\theta$ 是一个被固定的预训练基础 FM 模型（具体是 Stable Diffusion V3 或 Flux）。整个 pipeline 输入是测量 $y$（以及可能的引导样本集），输出是恢复的图像 $\hat{x} = G_\theta(\alpha_{t^*} y + \beta_{t^*} z^*, t^*)$。优化变量是 $(z, t)$：$z$ 是 FM 的中间状态，$t \in [0, 1]$ 是它对应的时间点；二者联合最小化数据项 $\ell$，并强制 $z$ 落在 $\sqrt{d}$ 球壳上。当只有 $y$ 时走 simple-distortion 模式；当还有少量引导图 $\{x_i\}$ 时走 few-shot 模式（对 $z$ 做混合分布约束）。
+FMPlug 要解决的是"基础 FM 当逆问题先验为什么不灵、怎么救回来"。它不碰 plug-in 框架本身——仍然固定一个预训练基础 FM 模型 $G_\theta$（Stable Diffusion V3 或 Flux），在它的潜空间里优化 $\min_z \ell(y, A \circ G_\theta(z)) + \Omega \circ G_\theta(z)$ 来拟合测量 $y$。关键改动有两处：把优化变量从单独的 $z$ 扩成 $(z, t)$，让流的时间索引 $t \in [0, 1]$ 也可学习，并据此用 $y$ 自身构造起点；同时给 $z$ 套上一个锐利球壳约束，强制它待在 $G_\theta$ 训练时真正见过的那层薄壳上。当只有 $y$ 时走 simple-distortion 模式，当还有少量引导图时切到 few-shot 模式。
 
 ### 关键设计
 
-1. **实例引导的时间可学习 warm-start**：
+**1. 实例引导的时间可学习 warm-start：让起点落进 $G_\theta$ 熟悉的薄壳**
 
-    - 功能：用 $y$（或近似样本）替代纯随机初始化，并把它放进流的"合适时间点"，让起点落在 $G_\theta$ 训练时见过的薄壳内。
-    - 核心思路：标准 FM 流是 $z_t = \alpha_t x + \beta_t z$，$z \sim \mathcal{N}(0, I)$。当 $x = y + \epsilon$ 且 $\|\epsilon\|$ 小时，可以近似 $z_t \approx \alpha_t y + \beta_t z$，近似误差 $\alpha_t \epsilon$。$\epsilon$ 的真实大小未知，但只要让 $t$（进而 $\alpha_t$）跟着优化器一起学，就能自适应地把误差压到无关紧要的量级。于是优化问题变为 $\min_{z, t \in [0, 1]} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t))$。
-    - 设计动机：解决 D-Flow 初始化把样本推出训练壳的问题——通过让 $t > 0$ 而不是从 $t = 0$ 出发，路径更短、起点更贴近 $G_\theta$ 真正熟悉的分布；同时省掉一段 ODE 积分，加速收敛。
+D-Flow 那种把测量混进噪声的初始化之所以失效，是因为它把样本推到了 $G_\theta$ 从没训练过的区域。FMPlug 换一个思路：标准 FM 流是 $z_t = \alpha_t x + \beta_t z$（$z \sim \mathcal{N}(0, I)$），当待恢复图像 $x = y + \epsilon$ 且偏差 $\|\epsilon\|$ 较小时，可以直接用测量近似中间状态 $z_t \approx \alpha_t y + \beta_t z$，引入的误差是 $\alpha_t \epsilon$。$\epsilon$ 的真实大小事先并不知道，但 $\alpha_t$ 由时间 $t$ 决定，所以只要把 $t$ 也交给优化器一起学，它就能沿流方向自适应地找到一个让 $\alpha_t \epsilon$ 小到可忽略的"换车点"。优化问题随之写成 $\min_{z, t \in [0, 1]} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t))$。这样从 $t > 0$ 而不是 $t = 0$ 出发，路径更短、起点更贴近训练分布，还顺带省掉一段 ODE 积分，收敛更快。
 
-2. **锐利高斯壳层约束**：
+**2. 锐利高斯壳层约束：把软正则换成硬约束**
 
-    - 功能：把 D-Flow 软弱的负对数似然正则换成"硬"约束，让 $z$ 严格落在 $\sqrt{d}$ 半径的薄壳上。
-    - 核心思路：根据高斯测度集中定理，$d$ 维标准高斯向量的范数以极高概率位于 $[(1-\epsilon)\sqrt{d}, (1+\epsilon)\sqrt{d}]$，于是定义壳集 $S^{d-1}_\epsilon(0, \sqrt{d}) = \{z: \|z\|_2 \in [1-\epsilon, 1+\epsilon]\sqrt{d}\}$，把它作为约束加进优化：$\min_{z, t} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t)) \;\text{s.t.}\; z \in S^{d-1}_\epsilon(0, \sqrt{d})$。实现上等价于在目标函数上加一个 set-indicator 正则项，配合投影或惩罚法求解。
-    - 设计动机：D-Flow 的 $h(z_0)$ 在远离 $\sqrt{d-2}$ 处变化极慢，根本拉不动样本；改成显式球壳后，凡是越界就直接被拍回来，真正实现"逼迫 $z$ 像标准高斯"。
+D-Flow 用负对数似然 $h(z_0)$ 当高斯正则，但它在远离最优半径 $\sqrt{d-2}$ 的地方几乎是平的（论文实测 $\|z_0\|^2 \in [62000, 70000]$ 区间相对最小值变化不到 0.031%），根本拉不动样本，等于没正则。FMPlug 直接换成硬约束。依据是高斯测度集中定理：$d$ 维标准高斯向量的范数以极高概率落在 $[(1-\epsilon)\sqrt{d}, (1+\epsilon)\sqrt{d}]$，于是定义薄壳集 $S^{d-1}_\epsilon(0, \sqrt{d}) = \{z: \|z\|_2 \in [1-\epsilon, 1+\epsilon]\sqrt{d}\}$，把它加进优化作为约束：$\min_{z, t} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t)) \;\text{s.t.}\; z \in S^{d-1}_\epsilon(0, \sqrt{d})$。实现上等价于在目标里加一个 set-indicator 正则项，配合投影或惩罚法求解——凡是 $z$ 的范数越界就被直接拍回壳内，真正强制它"像标准高斯"，从而保证 $G_\theta$ 始终工作在训练过的流形上。
 
-3. **few-shot 引导扩展（针对科学逆问题）**：
+**3. few-shot 引导扩展：救科学逆问题里 $y$ 离 $x$ 太远的场景**
 
-    - 功能：处理 $y$ 和 $x$ 差距大（不能直接当 warm-start 种子）、但有少量"邻近样本" $\{x_i\}$ 的场景，例如显微/天文等数据稀缺的科学成像。
-    - 核心思路：把 warm-start 中的 $y$ 替换为引导样本，例如用 $\bar{x} = \frac{1}{n}\sum x_i$ 或随机抽样，构造 $z_t \approx \alpha_t \bar{x} + \beta_t z$；保持锐利球壳约束不变；数据项 $\ell(y, A \circ G_\theta(\cdot))$ 仍然约束生成结果要拟合实际测量。这样既利用了少量近邻样本的领域结构，又不被它们覆盖测量信号。
-    - 设计动机：科学应用里既缺数据训不出领域 FM、又缺信号让 $y \approx x$ 的 simple-distortion 假设失效；few-shot 引导是一个折中——只要有几张相近图，就能把基础 FM 拽到正确的子流形上。
+显微、天文这类科学成像既缺数据训不出领域 FM，测量 $y$ 又跟真值 $x$ 差得远，simple-distortion 的 $y \approx x$ 假设直接崩掉，$y$ 不能再当 warm-start 种子。FMPlug 的折中是：只要手头有少量"邻近样本" $\{x_i\}$，就用它们的均值 $\bar{x} = \frac{1}{n}\sum x_i$（或随机抽样）替换掉 warm-start 里的 $y$，构造 $z_t \approx \alpha_t \bar{x} + \beta_t z$，锐利球壳约束保持不变。数据项 $\ell(y, A \circ G_\theta(\cdot))$ 仍然约束输出去拟合实际测量，所以这些近邻样本只负责把基础 FM 拽到正确的子流形上，并不会覆盖掉测量信号。
 
 ### 损失函数 / 训练策略
-不训练任何网络参数。目标函数就是 $\min_{z, t} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t))$，$\ell$ 用 L2 或感知损失；约束 $z \in S^{d-1}_\epsilon(0, \sqrt{d})$ 用投影或惩罚实现；用 Adam/L-BFGS 一类优化器对 $(z, t)$ 联合优化，每步反传穿过 $G_\theta$ 的 ODE 求解器。$\epsilon$ 取很小的值（如 $10^{-2}$），让壳尽量薄。
+全程 training-free，不更新任何网络参数。目标函数就是 $\min_{z, t} \ell(y, A \circ G_\theta(\alpha_t y + \beta_t z, t))$，$\ell$ 取 L2 或感知损失；约束 $z \in S^{d-1}_\epsilon(0, \sqrt{d})$ 用投影或惩罚实现；用 Adam/L-BFGS 一类优化器对 $(z, t)$ 联合优化，每步反传穿过 $G_\theta$ 的 ODE 求解器。$\epsilon$ 取很小的值（如 $10^{-2}$），让壳尽量薄。
 
 ## 实验关键数据
 

@@ -38,34 +38,31 @@ MM-BizRAG 证明企业多模态 RAG 不能只依赖页面截图和视觉 embeddi
 **核心 idea**：将“用于检索的表示”和“用于生成的上下文”解耦：检索时轻量索引文本/描述/页面表示，生成时依据 placeholder 和元数据恢复表格 markdown、图片和页面图，构造更接近原文结构的多模态证据。
 
 ## 方法详解
-MM-BizRAG 的主线是 document structure-aware ingestion。系统先判断文档是纵向结构还是横向结构。纵向文档通常有自然阅读顺序，适合 layout-aware parsing；横向幻灯片则每页是完整语义单元，适合整页图像 + VLM 描述。随后，论文定义三种变体，分别改变 chunk 粒度、embedding 模型和 artifact 注入时机。
 
 ### 整体框架
-对纵向文档，Docling 等解析工具抽取文本块、表格、图片和页面图。文本 representation 中插入表格/图片 placeholder 来保持阅读顺序；表格转 markdown 后由 LLM 生成 row-by-row 描述；图片由 VLM 描述并过滤 logo 等无信息内容。对横向文档，每页保留页面图，并由 VLM 生成详细 slide-level 描述。
+MM-BizRAG 想解决的是企业知识库里那堆异构文档：PDF 财报、PPTX 幻灯片、DOCX 技术文档混在一起，光靠页面截图 + 视觉 embedding 会丢掉表格结构和阅读顺序。它的主线是 document structure-aware ingestion——先判断文档是纵向结构（报告、filings，有自然阅读顺序）还是横向结构（幻灯片，每页是完整语义单元），再分别走不同的解析路线。
 
-检索阶段根据变体生成 chunks 并建立 text 或 multimodal embeddings。推理时，query rewriter 先结合对话历史改写查询；系统用 dense + BM25 hybrid retrieval，RRF 融合后取 top 30 进入 LLM list-wise reranker，再选 top 20 chunks 组装多模态上下文交给 GPT-4.1 生成答案。
+对纵向文档，Docling 等工具抽出文本块、表格、图片和页面图：文本里插入表格/图片 placeholder 来锁住阅读顺序，表格转 markdown 后由 LLM 生成逐行描述，图片由 VLM 描述并过滤掉 logo 这类无信息内容。对横向文档则不强拆，每页保留页面图加一段 VLM 生成的 slide-level 描述。检索阶段按变体建立 text 或 multimodal embedding；推理时 query rewriter 先结合对话历史改写查询，再用 dense + BM25 hybrid retrieval，RRF 融合取 top 30 送进 LLM list-wise reranker，最终选 top 20 chunks 组装成多模态上下文交给 GPT-4.1 生成答案。论文据此定义三种变体（TCTE、PCMHE、TCMIE），差别在 chunk 粒度、embedding 模型和 artifact 注入时机。
 
 ### 关键设计
-1. **结构感知文档分流**:
 
-	- 功能：根据文档排版结构选择不同 ingestion pipeline。
-	- 核心思路：vertical documents 走 layout-aware parsing，保留文本阅读顺序、表格 markdown、图片描述和页面图；horizontal documents 不强行拆块，而把每页幻灯片作为整体语义单元，用页面图和 VLM 描述表示。
-	- 设计动机：报告和幻灯片的信息组织方式不同。报告依赖段落和表格顺序，幻灯片依赖整页空间布局；一套解析策略无法同时适配。
+**1. 结构感知文档分流：报告和幻灯片不能用同一套解析。**
 
-2. **检索表示与生成上下文解耦**:
+报告依赖段落与表格的线性顺序，幻灯片依赖整页的空间布局，硬塞进一套 chunking 必然两头不讨好。MM-BizRAG 因此先做一个 vertical/horizontal 分类，纵向文档走 layout-aware parsing 保留文本阅读顺序、表格 markdown、图片描述和页面图，横向文档则把每页当成不可分割的语义单元、只用页面图加 VLM 描述表示。实验里这个分类器 precision 达 100、recall 83.28，分流足够可靠才让后续按结构定制的解析有意义。
 
-	- 功能：让检索保持高效，同时让生成拿到足够丰富的证据。
-	- 核心思路：例如 TCTE 变体用文本 chunk、表格描述和图片描述做 text embedding；当检索命中表格或图片描述时，系统再找到其 placeholder 所在父文本 chunk，将表格 markdown、图片 artifact 和描述注入原始位置。
-	- 设计动机：表格 markdown 和图片 base64 不适合直接全部塞进索引，但生成答案时又需要它们。推理时 assembly 避免了索引膨胀。
+**2. 检索表示与生成上下文解耦：索引用轻量描述，生成时再把原始 artifact 装回去。**
 
-3. **FastRAGEval 单调用评测**:
+表格 markdown 和图片 base64 体积大、直接全塞进索引会让向量库膨胀、检索也变慢，但生成答案时又确实需要这些原始证据。MM-BizRAG 把「用于检索的表示」和「用于生成的上下文」拆开：以 TCTE 变体为例，索引侧只用文本 chunk、表格描述和图片描述做 text embedding；当检索命中某条表格或图片描述时，系统顺着它的 placeholder 找回所在的父文本 chunk，再把表格 markdown、图片 artifact 和描述注入到 placeholder 的原始位置。这样索引保持精简、检索保持高效，而生成拿到的是接近原文结构的多模态证据——很多 RAG 系统把 index schema 和 prompt context schema 绑死，要么检索很重要么证据太贫乏，这里靠 inference-time assembly 同时绕开两个坑。
 
-	- 功能：降低长答案企业 QA 的 LLM judge 成本，并更好匹配人类标注。
-	- 核心思路：FastRAGEval 在一次 LLM 调用中抽取 reference 和 prediction 的 atomic facts，并计算 precision、recall、F1；论文主要使用 FRE recall。它替代 RAGChecker 的两阶段 claim decomposition + matching。
-	- 设计动机：企业长答案更关心关键事实召回，传统 token overlap 不适用；RAGChecker 成本和延迟高，单调用 judge 更适合大规模系统评测。
+**3. FastRAGEval 单调用评测：用一次 LLM 调用算事实级 recall。**
+
+企业 QA 的答案往往是长段落，token overlap 和 exact match 衡量不了关键事实是否被召回；而 RAGChecker 那种两阶段 claim decomposition + matching 成本和延迟都高，撑不起大规模系统评测。FastRAGEval（FRE）把这件事压进一次 LLM 调用：同时抽取 reference 和 prediction 的 atomic facts 并算 precision、recall、F1，论文主要用 FRE recall。它和人类判断的相关性反而更高（Pearson 0.808 vs RAGChecker 0.748），说明单调用并没有牺牲一致性，却大幅降了 judge 成本。
+
+### 一个完整示例：一个查询如何拿到表格证据
+设用户对一份财报追问「Q3 海外营收同比变化」。query rewriter 先结合对话历史补全成自含查询；hybrid retrieval 里 dense 取 70 个、BM25 取 100 个 chunks，RRF 融合后 top 30 进 list-wise reranker。假设排在前面的命中是一条「该表展示分地区季度营收」的表格描述——此时系统并不会把这句干瘪描述直接喂给生成器，而是顺着它的 placeholder 回到父文本 chunk，把对应的表格 markdown（带具体数字的那张表）和上下文段落一并注入原位。最终 top 20 chunks 里就含有结构完整、数字可读的原始表格，GPT-4.1 据此作答，而不是去猜一张截图里的单元格。
 
 ### 损失函数 / 训练策略
-本文不训练专用检索器或生成模型，重点是 ingestion、retrieval 和 assembly 设计。使用的组件包括 Docling、EasyOCR、PyPdfium2、Tableformer、OpenAI text-embedding-3-large、nomic-multimodal-embed-3b、cohere-embed-v4、GPT-4.1 系列模型、ColPali 和 VisRAG-Ret。推理 pipeline 中 dense retrieval 取 70 个 chunks，BM25 取 100 个 chunks，RRF 后 top 30 进入 list-wise reranker，最终 top 20 用于答案生成。
+本文不训练专用检索器或生成模型，重点全在 ingestion、retrieval 和 assembly 的设计上。用到的组件包括 Docling、EasyOCR、PyPdfium2、Tableformer、OpenAI text-embedding-3-large、nomic-multimodal-embed-3b、cohere-embed-v4、GPT-4.1 系列、ColPali 和 VisRAG-Ret。推理 pipeline 的固定档位是：dense retrieval 取 70 个 chunks、BM25 取 100 个 chunks，RRF 后 top 30 进 list-wise reranker，最终 top 20 用于答案生成。
 
 ## 实验关键数据
 

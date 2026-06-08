@@ -40,29 +40,29 @@ BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文
 ## 方法详解
 
 ### 整体框架
-输入：流式点云序列 $\{X_t\}$ + 固定文本原型 $\{T_c\}$ → 冻结点云编码器 $\Phi$ 和文本编码器 $\Psi$ → 文本分布学习（离线）+ 几何分布学习（在线更新）→ 贝叶斯加权融合 → 预测类别。
+BayesMM 要解决的是：当点云数据在测试时发生分布偏移（噪声、抖动、缺失），预训练的 3D 视觉-语言模型怎么不重新训练就稳住精度。它的做法是把"每个类别长什么样"从一组离散的缓存样本，换成一个会随数据流不断更新的高斯分布。整条流程是这样转的：先用文本编码器把每类的若干释义压成一个文本高斯分布（离线，只算一次）；测试时每来一个点云样本，就用它把对应类别的几何高斯分布在线递归更新一次；最后预测时不再手调一个融合系数，而是让文本分布和几何分布各自按"自己对这个样本的解释力"来分摊权重，加权得到类别概率。所有编码器全程冻结，整个适配只是高斯参数的闭式更新。
 
 ### 关键设计
-1. **文本分布学习（Textual Distribution Learning）**：
 
-    - **功能**：从 LLM 生成的 $M$ 个语义释义中估计每类文本的高斯分布。
-    - **核心思路**：计算经验均值 $\bar{\mathbf{z}}^c$ 和协方差 $\mathbf{S}^c$，建立先验 $p(\boldsymbol{\nu}^c) = \mathcal{N}(\bar{\mathbf{z}}^c, \beta^2\mathbf{I})$，通过 MAP 估计得到确定性原型 $\boldsymbol{\nu}^c_{\text{MAP}}$。
-    - **设计动机**：单一文本模板无法捕获语义多样性，多释义的高斯建模提供更丰富的类别语义先验。
+**1. 文本分布学习：用一团释义而非单一模板来锚定类别语义。**
 
-2. **几何分布学习（Geometric Distribution Learning）**：
+单条 prompt 模板（如"a point cloud of a {class}"）只能给出类别语义的一个采样点，遇到表述多样的真实类别就显得脆弱。BayesMM 让 LLM 为每类生成 $M$ 个语义释义，过文本编码器后得到 $M$ 个特征，估计出经验均值 $\bar{\mathbf{z}}^c$ 和协方差 $\mathbf{S}^c$，再以高斯先验 $p(\boldsymbol{\nu}^c) = \mathcal{N}(\bar{\mathbf{z}}^c, \beta^2\mathbf{I})$ 做 MAP 估计，得到一个确定性的类别原型 $\boldsymbol{\nu}^c_{\text{MAP}}$。这样类别先验不再是一个点，而是带方差的一片区域，既保留了语义多样性，又给后面几何分布的递归更新提供了一个稳定的起点。
 
-    - **功能**：为每类维护在线高斯分布 $\{\boldsymbol{\mu}_t^c, \boldsymbol{\Sigma}_t^c\}$，随新样本到达递归更新。
-    - **核心思路**：初始化为文本原型 $\boldsymbol{\mu}_0^c = \bar{\mathbf{z}}^c$，利用贝叶斯规则闭式递归更新：
-    $\boldsymbol{\mu}_t^c = \boldsymbol{\Sigma}_t^c((\boldsymbol{\Sigma}^c)^{-1}\mathbf{x}_t + (\boldsymbol{\Sigma}_{t-1}^c)^{-1}\boldsymbol{\mu}_{t-1}^c)$
-    $\boldsymbol{\Sigma}_t^c = ((\boldsymbol{\Sigma}_{t-1}^c)^{-1} + (\boldsymbol{\Sigma}^c)^{-1})^{-1}$
-    - **设计动机**：分布参数连续积累所有历史样本的统计信息，不存在缓存容量限制和信息丢失问题。
+**2. 几何分布学习：让分布吃下整条历史流，而不是塞进一个会溢出的缓存。**
 
-3. **贝叶斯多模态加权（Bayesian Model Averaging）**：
+基于缓存的 TTA 之所以会渐进掉点，是因为缓存容量有限，新样本进来就得挤掉旧样本，历史统计被一点点丢掉。BayesMM 改成为每个类别维护一个在线高斯 $\{\boldsymbol{\mu}_t^c, \boldsymbol{\Sigma}_t^c\}$，初始就用文本原型 $\boldsymbol{\mu}_0^c = \bar{\mathbf{z}}^c$ 起步，每到一个新样本 $\mathbf{x}_t$ 就按贝叶斯规则做一次闭式递归更新：
 
-    - **功能**：将文本和几何模态的后验预测自动融合。
-    - **核心思路**：$p(c|\mathbf{x}_t) = p(c|\mathbf{x}_t, \boldsymbol{\Omega}^c) p(\boldsymbol{\Omega}^c|\mathbf{x}_t) + p(c|\mathbf{x}_t, \boldsymbol{\Theta}_t^c) p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$
-    - 每个模态的权重是其后验证据 $p(\boldsymbol{\Omega}^c|\mathbf{x}_t)$ 和 $p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$，自动调节。
-    - **设计动机**：缓存方法的 $\lambda$ 需要手动调参，贝叶斯框架根据数据证据自动分配权重，更鲁棒。
+$$\boldsymbol{\Sigma}_t^c = \big((\boldsymbol{\Sigma}_{t-1}^c)^{-1} + (\boldsymbol{\Sigma}^c)^{-1}\big)^{-1}, \qquad \boldsymbol{\mu}_t^c = \boldsymbol{\Sigma}_t^c\big((\boldsymbol{\Sigma}^c)^{-1}\mathbf{x}_t + (\boldsymbol{\Sigma}_{t-1}^c)^{-1}\boldsymbol{\mu}_{t-1}^c\big)$$
+
+更新只是上一时刻分布与新样本似然的精度加权平均，所有看过的样本都通过这套递推持续沉淀进 $(\boldsymbol{\mu}_t^c, \boldsymbol{\Sigma}_t^c)$ 里，既没有容量上限，也不会因为替换而丢信息。
+
+**3. 贝叶斯多模态加权：让证据而非手调系数来决定文本和几何谁说了算。**
+
+缓存方法融合零样本 logits 和缓存 logits 时要靠经验调 $\lambda$、$\gamma$，跨域时这套参数往往失灵。BayesMM 把融合写成贝叶斯模型平均：
+
+$$p(c|\mathbf{x}_t) = p(c|\mathbf{x}_t, \boldsymbol{\Omega}^c)\, p(\boldsymbol{\Omega}^c|\mathbf{x}_t) + p(c|\mathbf{x}_t, \boldsymbol{\Theta}_t^c)\, p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$$
+
+文本模态和几何模态各自的权重就是它们对当前样本的后验证据 $p(\boldsymbol{\Omega}^c|\mathbf{x}_t)$ 与 $p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$——哪个模态对这个样本解释得更好，权重就自动倾向哪边。于是当几何分布还没攒够样本时文本先验主导，几何统计稳定后权重自然移过去，整个过程没有任何需要随域手调的旋钮。
 
 ### 损失函数 / 训练策略
 - **完全无需训练**：冻结所有编码器，仅通过贝叶斯规则在线更新分布参数

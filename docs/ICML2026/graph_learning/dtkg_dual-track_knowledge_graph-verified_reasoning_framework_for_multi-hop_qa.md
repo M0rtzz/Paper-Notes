@@ -40,32 +40,21 @@ DTKG 把多跳问答按"并行事实核验 vs 链式推理"二分，先用 few-s
 ## 方法详解
 
 ### 整体框架
-输入是一个自然语言多跳问题 $Q$，输出是答案 $A$。整条流水线分两个阶段：
-
-1. **分类阶段（Unconscious）**：用一个 6-shot prompted LLM 分类器 $\mathcal{C}: Q \to \{para, chain\}$，把问题判定为"并行事实核验型"或"链式推理型"。Prompt 里给出 5 条边界规则 + 6 个标注示例。判定信号是"是否依赖中间推理结论"。
-2. **分支处理阶段（Conscious）**：根据分类结果，问题被路由到 *Parallel Fact-Checking Branch* 或 *Chained Reasoning Branch*。两条分支都以 Wikidata 为外部 KG，并共享一个"嵌入相似度 + reranker"的两阶段混合打分模块来匹配关系/三元组。
-
-理论上作者把多跳推理空间形式化为二分划 $\mathcal{Q} = \mathcal{Q}_{para} \cup \mathcal{Q}_{chain}$，并提出 Optimal Strategy Alignment 定理：最优核 $\mathcal{K}^* = \arg\max_{\mathcal{K}} \mathbb{P}(A|Q,\mathcal{K})$ 当且仅当 $\mathcal{K}$ 与 $Q$ 的拓扑对齐时取到——给"分类后分支"的设计提供了形式化背书。
+DTKG 要解决的是"一套推理核打不过异质多跳问题"的错配：有的子问题彼此独立（适合并行核验），有的强依赖前驱结论（适合链式推理）。它的做法是先用一个轻量分类器判断问题类型，再把问题路由到两条专用的 KG 处理分支，最后用一套按任务分化的去噪策略清理无关三元组。作者把这套"快判 + 深处理"对应到 Tversky & Kahneman 的双过程理论，并形式化地把推理空间二分为 $\mathcal{Q} = \mathcal{Q}_{para} \cup \mathcal{Q}_{chain}$，提出 Optimal Strategy Alignment 定理：最优核 $\mathcal{K}^* = \arg\max_{\mathcal{K}} \mathbb{P}(A|Q,\mathcal{K})$ 仅当推理核 $\mathcal{K}$ 与问题 $Q$ 的拓扑对齐时取到，为"先分类再分支"提供了形式化背书。
 
 ### 关键设计
 
-1. **Few-Shot 任务分类器（Unconscious 阶段）**:
+**1. Few-Shot 任务分类器：把策略—任务错配消灭在最前端**
 
-    - 功能：把输入问题判定为"并行事实核验"或"链式推理"，决定走哪条分支。
-    - 核心思路：用 6-shot prompting，把"是否依赖中间结论"这一关键判别信号交给 LLM。Prompt 由 5 条显式规则 + 6 个标注示例构成；分类器输出 "yes" → 链式，"no" → 并行。不需要监督训练数据，靠 LLM 的 in-context learning 完成。
-    - 设计动机：模拟人类"无意识"快速模式识别，避免昂贵的标注与训练；同时把策略—任务错配根因放到流水线最前面解决，让后续分支可以"专一"。消融里 Random Classification 在 HotpotQA 上 ACC 从 85.8% 跌到 73.0%，说明分类质量对全局至关重要。
+整条流水线最致命的失败是用错了推理策略，所以 DTKG 把这个判断提到流水线最前面，用一个 6-shot prompted LLM 分类器 $\mathcal{C}: Q \to \{para, chain\}$ 来扮演双过程理论里"无意识快判"的角色。它判别的核心信号是"问题是否依赖中间推理结论"——依赖则输出 "yes" 走链式分支，否则输出 "no" 走并行分支；prompt 由 5 条显式边界规则 + 6 个标注示例构成，全程靠 LLM 的 in-context learning，不需要任何监督训练数据。把这一步做对之所以关键，是因为它决定了后续分支能否"专一"：消融里把它换成 Random Classification，HotpotQA 的 ACC 直接从 85.8% 跌到 73.0%，比任何单分支都差，说明混合策略一旦不基于问题类型选择就会反噬。
 
-2. **双轨处理引擎（Conscious 阶段）**:
+**2. 双轨处理引擎：给并行和链式各配一套最优算子**
 
-    - 功能：对并行问题做原子事实分解 + KG 三元组核验；对链式问题做中心实体 DFS 路径扩展 + 评分剪枝。
-    - 核心思路（并行分支）：先用 LLM 把候选答案 $R$ 分解成原子事实集合 $F = \{f_1, \ldots, f_n\}$，每个 $f_i$ 抽出主语实体 $e_i$ 并通过字符串相似度映射到 Wikidata QID；对该实体的候选三元组先用 embedding 余弦 $\text{sim}_{\cos}(f_i, t_j) = \mathbf{h}(f_i)\cdot \mathbf{h}(t_j) / (|\mathbf{h}(f_i)||\mathbf{h}(t_j)|)$ 取 top-$K$，再用 reranker 计算细粒度分数，按 $\text{score}_{\text{combined}} = \alpha \cdot \text{score}_{\text{rerank}} + (1-\alpha)\cdot \text{sim}_{\cos}$ 融合；与最高分三元组 $t^*$ 比对，不一致则触发改写 $f_i' = f_{\text{rewrite}}(f_i, t^*)$。核心思路（链式分支）：从问题里抽中心实体 $e_0$，在 KG 上同时拿 head/tail 关系集合 $R(e_0) = R_{\text{head}} \cup R_{\text{tail}}$，沿路径 $P_k = [e_0 \xrightarrow{r_1} e_1 \cdots \xrightarrow{r_k} e_k]$ 做 DFS，用 $\text{score}_{\text{path}}(P_k) = \prod_{i=1}^k \text{score}_{\text{combined}}(r_i)$ 评分；用四种约束控制爆炸——最大深度 $D_{\max}=3$、每步保留 top-$W_{\max}$、阈值 $\theta$ 截断、候选过多时由 LLM 挑最多 3 条。每扩一层判一次 $\text{stop}(P_k) = \mathbb{I}[\text{info}(P_k) \supseteq \text{info}(Q)]$，足够即早停；最后选 top-$k$ 路径让生成函数 $A = f_{\text{gen}}(Q, P^*)$ 严格基于路径三元组生成答案。
-    - 设计动机：两类问题的最优算子本就不同——并行任务只关心"独立小事实是否能在 KG 中找到对应三元组"，所以走"分解—匹配—改写"的扁平管线；链式任务需要把多跳关系串成连贯路径，所以走"实体—关系—评分—扩展—早停"的深度管线。共用打分模块复用工程实现，但是判停、剪枝、生成完全独立，避免互相干扰。消融显示 Only-Fact 在 CWQ ACC 86.0% < 90.0%，Only-Chain 在 Mintaka EM 57.0% < 67.6%，单分支都明显次于完整双轨。
+两类问题的最优算子本就不同，所以 DTKG 不强行复用一条管线，而是让两条分支各自做擅长的事，只共享底层的三元组打分模块。**并行分支**走"分解—匹配—改写"的扁平管线：先用 LLM 把候选答案 $R$ 拆成原子事实集合 $F = \{f_1, \ldots, f_n\}$，每个 $f_i$ 抽出主语实体并按字符串相似度映射到 Wikidata QID；对该实体的候选三元组先用 embedding 余弦 $\text{sim}_{\cos}(f_i, t_j) = \mathbf{h}(f_i)\cdot \mathbf{h}(t_j) / (|\mathbf{h}(f_i)||\mathbf{h}(t_j)|)$ 取 top-$K$ 召回，再用 reranker 精排，按 $\text{score}_{\text{combined}} = \alpha \cdot \text{score}_{\text{rerank}} + (1-\alpha)\cdot \text{sim}_{\cos}$ 融合（$\alpha$ 是部署侧可调的召回/精度旋钮），与最高分三元组 $t^*$ 比对，不一致就触发改写 $f_i' = f_{\text{rewrite}}(f_i, t^*)$。**链式分支**走"实体—关系—评分—扩展—早停"的深度管线：从问题抽中心实体 $e_0$，在 KG 上同时取 head/tail 关系集合 $R(e_0) = R_{\text{head}} \cup R_{\text{tail}}$，沿路径 $P_k = [e_0 \xrightarrow{r_1} e_1 \cdots \xrightarrow{r_k} e_k]$ 做 DFS，用 $\text{score}_{\text{path}}(P_k) = \prod_{i=1}^k \text{score}_{\text{combined}}(r_i)$ 给整条路径评分；为了不让 DFS 爆炸，用四种约束收口——最大深度 $D_{\max}=3$、每步保留 top-$W_{\max}$、低于阈值 $\theta$ 截断、候选过多时由 LLM 挑最多 3 条；每扩一层判一次 $\text{stop}(P_k) = \mathbb{I}[\text{info}(P_k) \supseteq \text{info}(Q)]$，信息足够就早停，最后选 top-$k$ 路径让 $A = f_{\text{gen}}(Q, P^*)$ 严格基于路径三元组生成答案，避免幻觉。两条分支共用打分模块只是工程上复用实现，判停、剪枝、生成完全独立，互不干扰；消融里 Only-Fact 在链式重的 CWQ 上 ACC 86.0% < 90.0%、Only-Chain 在并行重的 Mintaka 上 EM 57.0% < 67.6%，单分支都明显次于完整双轨。
 
-3. **任务感知去噪（Task-Aware Denoising）**:
+**3. 任务感知去噪：把噪声拆成"管理性 / 属性相关性"两类分别处理**
 
-    - 功能：根据分支类型分别清理"跨子问题冗余三元组"（并行）与"偏离主干的旁支路径"（链式）。
-    - 核心思路：两层机制。第一层是基于静态关键词库 $K_{\text{invalid}} = \{\text{ID, source, version, metadata}\}$ 的规则过滤：$\text{filter}_{\text{rule}}(r) = \text{True}$ 当 $\exists k \in K_{\text{invalid}}, k \in \text{label}(r)$，专门干掉 KG 管理性元数据关系（如 wikidata:id）。第二层是动态过滤：用 LLM 对剩下的"上下文相关但与问题无关"的属性关系打分 $\text{score}_n(r, Q) = \text{LLM}(\text{Prompt}_n \oplus r \oplus Q)$，$\text{score}_n < \theta$ 则丢弃。
-    - 设计动机：通用阈值剪枝最大的问题是误删——比如同一条关系在 A 问题里是噪声，在 B 问题里是关键。把噪声拆成"管理性 / 属性相关性"两类，前者用规则一刀切（永远无意义），后者交给 LLM 上下文判断，刚好对应"廉价 + 精确"两种成本不同的去噪。与 ToG 的统一路径剪枝相比，能保住"语义相关但逻辑必要"的关系不被误剪。
+通用阈值剪枝最大的毛病是误删——同一条关系在 A 问题里是噪声，在 B 问题里却是关键。DTKG 因此把噪声拆成成本不同的两类，用两层机制分别清理。第一层是规则过滤，针对永远无意义的 KG 管理性元数据：维护一个静态关键词库 $K_{\text{invalid}} = \{\text{ID, source, version, metadata}\}$，只要关系标签命中其一就判 $\text{filter}_{\text{rule}}(r) = \text{True}$ 直接干掉（如 wikidata:id），廉价且零误伤。第二层是动态过滤，针对"上下文相关但与当前问题无关"的属性关系：交给 LLM 按问题语境打分 $\text{score}_n(r, Q) = \text{LLM}(\text{Prompt}_n \oplus r \oplus Q)$，低于阈值 $\theta$ 才丢弃。这样"绝对噪声"用规则一刀切、"相对噪声"用 LLM 上下文判断，刚好对应低成本和高精度两挡，相比 ToG 的统一路径剪枝能保住"语义相关且逻辑必要"的关系不被误剪。
 
 ### 损失函数 / 训练策略
 DTKG 是无训练（training-free）的推理框架，所有"学习"都通过 LLM 的 in-context prompting 完成，没有额外参数。关键超参：embedding top-$K$、reranker 融合权重 $\alpha$、DFS 最大深度 $D_{\max}=3$、宽度 $W_{\max}$、关系分阈值 $\theta$、必要性分阈值；具体值在 Appendix 给出。底座 LLM 用 Llama-3-8B。

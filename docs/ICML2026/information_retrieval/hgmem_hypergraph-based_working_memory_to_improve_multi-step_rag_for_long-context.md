@@ -42,44 +42,25 @@ tags:
 
 ### 整体框架
 
-输入：长文档 $\mathcal{D}$ 和目标查询 $\hat{q}$。
-预处理阶段离线把 $\mathcal{D}$ 切成 200-token chunk（50-token overlap），用 GPT-4o + LightRAG 工具抽实体和二元关系，构成实体图 $\mathcal{G}=(\mathcal{V}_{\mathcal{G}}, \mathcal{E}_{\mathcal{G}})$；所有实体、关系、chunk 用 bge-m3 编码进向量库。
+HGMem 要解决的是长文档复杂问答里 working memory 只会堆 primitive facts、表达不出多事实综合命题的问题，做法是把记忆从扁平事实列表换成一张可演化的超图。离线阶段把长文档 $\mathcal{D}$ 切成 200-token chunk（50-token overlap），用 GPT-4o + LightRAG 抽实体和二元关系构成实体图 $\mathcal{G}=(\mathcal{V}_{\mathcal{G}}, \mathcal{E}_{\mathcal{G}})$，实体/关系/chunk 全部用 bge-m3 编码进向量库。在线阶段则维护一张超图记忆 $\mathcal{M}=(\mathcal{V}_{\mathcal{M}}, \tilde{\mathcal{E}}_{\mathcal{M}})$，它与 $\mathcal{G}$ 共享顶点（$\mathcal{V}_{\mathcal{M}}\subseteq \mathcal{V}_{\mathcal{G}}$），但超边可任意连接 $\geq 2$ 个顶点，每条超边就是一个承载具体视角的"记忆点"。
 
-在线阶段维护一张**超图记忆** $\mathcal{M}=(\mathcal{V}_{\mathcal{M}}, \tilde{\mathcal{E}}_{\mathcal{M}})$，与 $\mathcal{G}$ 共享顶点（$\mathcal{V}_{\mathcal{M}}\subseteq \mathcal{V}_{\mathcal{G}}$），但其超边 $\tilde{e}_j=(\Omega^{rel}_{\tilde{e}_j}, \mathcal{V}_{\tilde{e}_j})$ 可任意连接 $\geq 2$ 个顶点。每个超边就是一个"记忆点"，承载一个具体视角的描述。
-
-每个交互步 $t$：
-
-1. LLM 判断当前 $\mathcal{M}^{(t)}$ 是否已足够回答 $\hat{q}$，若是直接生成回答；
-2. 否则 LLM 分析 $\mathcal{M}^{(t)}$ 生成子查询集 $\mathcal{Q}^{(t)}$，每个子查询自动归到"局部调查"或"全局探索"模式；
-3. 在对应作用域上做向量检索，拿到候选实体 $\mathcal{V}_{\mathcal{Q}^{(t)}}$，并通过图索引拉出相邻关系 $\mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}})$ 与原文 chunk $\mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}})$；
-4. LLM 据此把 $\mathcal{M}^{(t)}$ 演化为 $\mathcal{M}^{(t+1)}$：$\mathcal{M}^{(t+1)}\leftarrow \mathrm{LLM}(\mathcal{M}^{(t)}, \mathcal{V}_{\mathcal{Q}^{(t)}}, \mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}}), \mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}}))$；
-5. 达到最大步数或 memory 充分时，把所有超边描述 + 对应 chunk 喂给 LLM 生成最终回答。
-
-初始步 $t=0$ 时令 $\mathcal{Q}^{(0)}=\{\hat{q}\}$。
+整个在线过程是一个交互循环：从初始子查询 $\mathcal{Q}^{(0)}=\{\hat{q}\}$ 出发，每个交互步 $t$ 里 LLM 先判断当前 $\mathcal{M}^{(t)}$ 能否回答目标查询 $\hat{q}$，不能则生成新子查询集 $\mathcal{Q}^{(t)}$ 并把每个子查询归到"局部调查"或"全局探索"，在对应作用域检索出候选实体 $\mathcal{V}_{\mathcal{Q}^{(t)}}$、邻接关系 $\mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}})$ 与原文 chunk $\mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}})$，再据此把记忆演化为下一状态 $\mathcal{M}^{(t+1)}\leftarrow \mathrm{LLM}(\mathcal{M}^{(t)}, \mathcal{V}_{\mathcal{Q}^{(t)}}, \mathcal{E}(\mathcal{V}_{\mathcal{Q}^{(t)}}), \mathcal{D}(\mathcal{V}_{\mathcal{Q}^{(t)}}))$；直到记忆足够或到达最大步数，把所有超边描述加对应 chunk 喂给 LLM 生成最终回答。因此超图既是被检索改写的存储，又反过来指导每一步该往哪检索。
 
 ### 关键设计
 
-1. **超图记忆存储（每条超边 = 一个可寻址记忆点）**:
+**1. 超图记忆存储：让每条超边成为可寻址的 $n$ 元记忆点**
 
-    - 功能：用超图替代知识图谱/事件日志做 working memory，使每条超边能同时连接 $n\geq 2$ 个实体，原生表达"多事实共同构成的综合命题"。
-    - 核心思路：顶点 $v_i=(\Omega^{ent}_{v_i}, \mathcal{D}_{v_i})$ 绑实体描述 + 来源 chunk；超边 $\tilde{e}_j=(\Omega^{rel}_{\tilde{e}_j}, \mathcal{V}_{\tilde{e}_j})$ 绑关系描述 + 所连顶点集。每条超边在向量库里有独立 embedding，可被子查询直接检索；同时由于顶点强制存在于 $\mathcal{G}$，任何超边都能追溯回原文 chunk，解决了非结构化 memory 无法回追的问题。
-    - 设计动机：知识图谱里描述"三个角色在某事件中各自扮演的角色"必须拆成多条二元边，丢失整体语义；超图把它压成一个原子记忆单元，既保留 $n$ 元语义又方便后续作为整体被引用、修改、合并。
+针对的痛点是知识图谱、事件日志这些 memory 的"边"本质都是二元关系，描述"多个事实共同构成一个综合命题"时只能拆成多条二元边、丢掉整体语义。HGMem 用超图把这个综合命题压成单个原子单位：顶点 $v_i=(\Omega^{ent}_{v_i}, \mathcal{D}_{v_i})$ 绑定实体描述与来源 chunk，超边 $\tilde{e}_j=(\Omega^{rel}_{\tilde{e}_j}, \mathcal{V}_{\tilde{e}_j})$ 绑定关系描述与它所连的顶点集。每条超边在向量库里有独立 embedding，能被子查询直接检索命中；又因为它的顶点强制存在于离线图 $\mathcal{G}$，任何超边都能追溯回原文 chunk。这样它同时拿到了非结构化描述的灵活表达力和结构化记忆的可追溯、可精确操作两个好处——一个"三个角色在某事件里各司其职"的复杂事件被存成一条超边后，后续可以作为整体被引用、修改、合并，而不会散成一堆零碎二元边。
 
-2. **自适应记忆驱动检索（局部调查 + 全局探索）**:
+**2. 自适应记忆驱动检索：局部调查与全局探索的双模式路由**
 
-    - 功能：根据 LLM 对当前 memory 的诊断，对每个子查询选择不同的检索作用域，避免"要么死磕已有线索、要么漫无目的扩散"。
-    - 核心思路：若子查询 $q$ 想深挖某个已有超边 $\tilde{e}_j$（**Local Investigation**），把 $\tilde{e}_j$ 所连顶点的邻域作为候选集：$\mathcal{N}(\mathcal{V}_{\tilde{e}_j})=\bigcup_{v\in\mathcal{V}_{\tilde{e}_j}}(\mathcal{N}_{\mathcal{M}^{(t)}}(v)\cup \mathcal{N}_{\mathcal{G}}(v))$，然后 $\mathcal{V}_q=\mathcal{R}_{\mathcal{N}(\mathcal{V}_{\tilde{e}_j})}(q)$；若子查询想开辟新视角（**Global Exploration**），把记忆外的实体集 $\mathcal{C}(\mathcal{M}^{(t)})=\mathcal{V}_{\mathcal{G}}-\mathcal{V}_{\mathcal{M}^{(t)}}$ 作为候选集做向量检索。两种模式的选择由 LLM 在生成子查询时同步给出。
-    - 设计动机：超图本身就是 retrieval scaffold——LLM 看着当前超边集合就能判断"哪些方面还没碰过""哪些方面值得深挖"；这种把 memory 和 retrieval 解耦但联动的设计，比固定 top-k 检索更贴合多步推理的真实需要。
+多步 RAG 常见的两个极端是死磕已有线索的 top-k 深挖、或漫无目的扩散到全库，HGMem 让 LLM 在生成每个子查询时同步标注它属于哪种模式来对齐认知阶段。若子查询 $q$ 想深挖某条已有超边 $\tilde{e}_j$（Local Investigation），就把这条超边所连顶点的邻域作为候选集 $\mathcal{N}(\mathcal{V}_{\tilde{e}_j})=\bigcup_{v\in\mathcal{V}_{\tilde{e}_j}}(\mathcal{N}_{\mathcal{M}^{(t)}}(v)\cup \mathcal{N}_{\mathcal{G}}(v))$，再在其上检索 $\mathcal{V}_q=\mathcal{R}_{\mathcal{N}(\mathcal{V}_{\tilde{e}_j})}(q)$；若想开辟新视角（Global Exploration），则把记忆之外的实体补集 $\mathcal{C}(\mathcal{M}^{(t)})=\mathcal{V}_{\mathcal{G}}-\mathcal{V}_{\mathcal{M}^{(t)}}$ 作为候选集做向量检索。这之所以有效，是因为超图本身就是一张 retrieval scaffold——LLM 看着当前超边集合就能判断哪些方面没碰过、哪些值得深挖，把检索成本与认知阶段绑定，比固定 top-k 更贴合多步推理；消融里去掉任一模式都明显掉点，说明两者互补。
 
-3. **三类记忆演化操作（Update / Insertion / Merging）**:
+**3. 三类记忆演化操作：Update / Insertion / Merging**
 
-    - 功能：让超图记忆在每一步检索后**主动重组**，特别是通过 merging 把多个低阶记忆点合并成高阶记忆点。
-    - 核心思路：每步检索回信息后，LLM 依次执行三类操作。**Update** 修订已有超边的描述（如新证据修正之前的理解）；**Insertion** 把新发现的事实加为新超边（吸收新信息的基础操作）；**Merging** 在 update/insertion 后扫描现有超边，把"语义/逻辑上应是一个整体"的若干超边合并：$\Omega^{rel}_{\tilde{e}_k}\leftarrow \mathrm{LLM}(\Omega^{rel}_{\tilde{e}_i}, \Omega^{rel}_{\tilde{e}_j}, \hat{q})$，$\mathcal{V}_{\tilde{e}_k}=\mathcal{V}_{\tilde{e}_i}\cup \mathcal{V}_{\tilde{e}_j}$。合并以目标查询 $\hat{q}$ 为锚，避免胡乱聚合。
-    - 设计动机：这是把 memory 从"被动仓库"变成"主动认知结构"的关键一步——若只有 insertion，记忆永远停留在 primitive facts；只有加上 merging，才能涌现出真正的高阶概念。论文消融实验也证实 merging 比 update 重要得多（去掉 merging 跌 ~7-9 个点，去掉 update 只跌 ~2 个点）。
+这是把 memory 从被动仓库变成主动认知结构的核心。每步检索回信息后 LLM 依次执行三类操作：Update 修订已有超边的描述（用新证据纠正之前的理解），Insertion 把新发现的事实加成新超边（吸收新信息的基础动作），Merging 则在前两步之后扫描现有超边、把语义或逻辑上本应是一个整体的若干超边合并——以目标查询 $\hat{q}$ 为锚生成新的关系描述 $\Omega^{rel}_{\tilde{e}_k}\leftarrow \mathrm{LLM}(\Omega^{rel}_{\tilde{e}_i}, \Omega^{rel}_{\tilde{e}_j}, \hat{q})$ 并取顶点并集 $\mathcal{V}_{\tilde{e}_k}=\mathcal{V}_{\tilde{e}_i}\cup \mathcal{V}_{\tilde{e}_j}$，用 $\hat{q}$ 锚定避免胡乱聚合。merging 是高阶概念能否涌现的关键：只有 insertion 时记忆永远停在 primitive facts，加上 merging 才能把散落的低阶事实重组成统一视角，消融里去掉 merging 跌约 7-9 个点、去掉 update 只跌约 2 个点，正说明这一点。
 
-### 损失函数 / 训练策略
-
-无任何训练。HGMem 是纯 prompt-engineering 框架，所有"判断子查询模式、选择 update/insertion/merging、决定合并哪些超边"都由 LLM 在 prompt 引导下完成。Backbone 用 GPT-4o 或 Qwen2.5-32B-Instruct（temperature 0.8，max tokens 2048）。超图用 hypergraph-db 包管理，超边和 chunk 都用 bge-m3 编码。
+值得一提的是整个框架不含任何训练。上述所有判断——子查询走哪种模式、选 update/insertion/merging、合并哪些超边——都靠 LLM 在 prompt 引导下 zero-shot 完成，backbone 用 GPT-4o 或 Qwen2.5-32B-Instruct（temperature 0.8，max tokens 2048），超图由 hypergraph-db 管理，超边与 chunk 统一用 bge-m3 编码。
 
 ## 实验关键数据
 

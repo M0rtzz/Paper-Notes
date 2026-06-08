@@ -44,27 +44,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Thought-Aligner 由「数据构造 → 两阶段 SFT → ReAct 循环内插桩」三部分组成。在部署侧，每一步 $i$：base agent 生成原始思维 $T_i$ → Thought-Aligner 接收 $(I, h_{i-1}, T_i)$ 输出 $T_i^{safe}=\pi_\phi(I, h_{i-1}, T_i)$ → base agent 以 $T_i^{safe}$ 替换 $T_i$ 重新生成动作 $A_i'=\pi_\theta(\cdot\mid I,T_0,A_0,O_0,\dots,T_i^{safe})$ → 工具执行得到 $O_i$ → 继续下一步。整体轨迹由 $\tau$ 变成 $\tau^{safe}=\{I,(T_0^{safe},A_0',O_0),\dots,(T_n^{safe},A_n',O_n)\}$，agent 本体、提示词、工具配置全部不变。
+这篇论文要解决的是：LLM agent 在良性指令下也会一步步做出破坏性动作，而现有护栏要么在输出层堵得太晚、要么靠拒答牺牲可用性。Thought-Aligner 的思路是把安全干预提到 agent「思维」这个因果上游——它是一个外挂的 1.5B/7B 小模型，整套系统由「偏好数据构造 → 两阶段 SFT → ReAct 循环内插桩」串起来。部署时它不碰 base agent 一根毫毛：每一步 $i$ base agent 照常生成原始思维 $T_i$，Thought-Aligner 接过 $(I, h_{i-1}, T_i)$ 输出最小改写后的安全思维 $T_i^{safe}=\pi_\phi(I, h_{i-1}, T_i)$，再让 base agent 以 $T_i^{safe}$ 替换 $T_i$ 重新生成动作 $A_i'=\pi_\theta(\cdot\mid I,T_0,A_0,O_0,\dots,T_i^{safe})$，工具执行得到观察 $O_i$ 后进入下一步。这样整条轨迹从 $\tau$ 被悄悄引导成 $\tau^{safe}=\{I,(T_0^{safe},A_0',O_0),\dots,(T_n^{safe},A_n',O_n)\}$，提示词、工具配置全程不变。
 
 ### 关键设计
 
-1. **思维级因果干预 (Causal Thought Correction)**:
+**1. 思维级因果干预：在「思考→动作」之间动手，而不是在输出层堵截。**
 
-    - 功能：在 ReAct 循环的「思考→动作」之间插入一次思维改写，从因果上游切断不安全行为，而非在输出层做过滤。
-    - 核心思路：把轨迹建模为 MDP $s_i=O_i$、$a_i=(T_i,A_i)$，状态转移 $P(O_{i+1}\mid O_i,(T_i,A_i))$ 显式承认 thought 是动作的因。于是把安全干预定义为对 thought 的 do-operator：$T_i^{safe}=\pi_\phi(I,h_{i-1},T_i)$（历史只用 $T,O$ 因为它们已包含足够上下文），并要求改写「最小编辑」（minimal correction）以保住用户意图。这区别于：(a) 出口过滤只看 $A_i$ 字符串、易被绕过；(b) 模型微调把所有信号塞进 $\pi_\theta$、代价高且伤通用性；(c) Self-Reflection 用同一 $\pi_\theta$ 自查、被自己的认知偏差锁死。
-    - 设计动机：在多步 agent 中，不安全决策往往不是某一步突变，而是错念头逐步演化的结果（论文实测显示 Self-Reflection 仅能把 ToolEmu 安全率从 43.1% 拉到 73.6%，留下大量被忽略的微观风险）。**思维**是「最早可干预、信息密度最高」的因果节点，因此干预此处比干预 action 更便宜也更通用。
+现有护栏几乎都在 action/输出层做文章，问题是动作是思维的下游——要从下游堵住所有风险，得枚举每一种可能被滥用的动作模式；而多步 agent 的不安全决策又往往不是某一步突变，而是一个错念头沿轨迹逐步演化的结果。论文把这层因果关系直接写进 MDP：状态 $s_i=O_i$、动作 $a_i=(T_i,A_i)$，状态转移 $P(O_{i+1}\mid O_i,(T_i,A_i))$ 明确承认 thought 是 action 的因。于是安全干预被定义成对 thought 的一次 do-operator——$T_i^{safe}=\pi_\phi(I,h_{i-1},T_i)$（历史只取 $T,O$ 就够，它们已含足够上下文），并强制「最小编辑」(minimal correction) 以保住用户原意。正因为 thought 是「最早可干预、信息密度最高」的节点，在这里改一次就能影响其下游所有动作分支，比逐一纠正 action 既便宜又通用。这也正好绕开三类旧办法的死穴：出口过滤只看 $A_i$ 字符串、容易被绕过；模型微调把安全信号全塞进 $\pi_\theta$、代价高还伤通用性；Self-Reflection 让同一个 $\pi_\theta$ 自查、被自己的认知偏差锁死——论文实测它只能把 ToolEmu 安全率从 43.1% 拉到 73.6%，留下大量没被察觉的微观风险。
 
-2. **两阶段偏好数据构造 (74k+ I-T-C / I-T-T 对)**:
+**2. 两阶段偏好数据：用 74k+ 对教会小模型「纠偏残差」而非「重写函数」。**
 
-    - 功能：构造一个跨 10 类风险场景、跨 4 种 SOTA LLM 的安全思维偏好数据集，让小模型学到「不安全思维 → 最小编辑的安全思维」的纠偏残差。
-    - 核心思路：(i) **指令生成**：用 DeepSeek-R1、Qwen3-235B-A22B、GPT-4.1、Claude-Sonnet-4 四个模型在 10 类 agent 风险场景中合成 20,000+ 条任务指令，强调「行为安全 (behavioral safety)」而非「内容安全」即重点是良性指令下的隐式风险，而非显式越狱；(ii) **轨迹生成**：把上述指令喂给同样四个模型实例化的 ReAct agent 跑出 $(I,(T_0,A_0,O_0),\dots)$，并让模型显式判 $T_i$ 的安全标签、对 unsafe $T_i$ 给出自然语言解释和 minimal-edit 的 $T_i^{safe}$；(iii) **人审 & 过滤**：先用启发式 trigger + LLM 信号筛选可疑步，再让人工标注「最早不安全思维」与「最小修正」，确保 corrected 只是局部修补而非全盘改写；(iv) 最终拿到 33,000+ **I-T-T 对**（safe 输入直接复制，作 warm-up）和 41,000+ **I-T-C 对**（unsafe 输入 → 人审修正，作核心 SFT）。
-    - 设计动机：若只给「safe 思维」当 GT，模型容易学成「无脑安全转写」，损害任务完成；若只给 unsafe→safe 对，模型会过度修改、把良性思维也改坏。两类数据一暖一核构成对比学习信号，使 $\pi_\phi$ 同时学会「该改时精准改、不该改时复制原文」。
+要让一个小模型学会「该改时精准改、不该改时原样复制」，光给安全思维当标签不行——模型会学成无脑安全转写、把任务做坏；光给 unsafe→safe 对也不行——模型会过度修改、连良性思维都改飞。论文因此构造了两类互补的偏好数据，跨 10 类 agent 风险场景、跨 4 个 SOTA 模型。流程是：先用 DeepSeek-R1、Qwen3-235B-A22B、GPT-4.1、Claude-Sonnet-4 合成 20,000+ 条任务指令，刻意聚焦「行为安全 (behavioral safety)」即良性指令下的隐式风险，而非显式越狱的「内容安全」；再把指令喂给同样四个模型实例化的 ReAct agent 跑出完整轨迹 $(I,(T_0,A_0,O_0),\dots)$，让模型逐步标 $T_i$ 的安全标签、并对 unsafe 的 $T_i$ 给出自然语言解释和 minimal-edit 的 $T_i^{safe}$；最后用启发式 trigger + LLM 信号筛出可疑步，再让人工标注「最早的那个不安全思维」和「最小修正」，确保修改是局部修补而非全盘重写。产物是 33,000+ 条 **I-T-T 对**（safe 输入直接复制自身，作暖启动）和 41,000+ 条 **I-T-C 对**（unsafe 输入 → 人审修正，作核心 SFT）。一暖一核两类信号合在一起，构成的就是对比学习——让 $\pi_\phi$ 学到的是「在哪一步、改多少」的纠偏残差，而不是一个会把整段思维重写的函数，因此对良性轨迹几乎零干扰。
 
-3. **两阶段 SFT + ReAct 循环内即插即用**:
+**3. 两阶段 SFT + 即插即用插桩：检测与改写合一，<100ms / 步接入任何 ReAct agent。**
 
-    - 功能：用 7B/1.5B 的小模型在受限算力下落地，并以 < 100 ms 的额外延迟接入任何 ReAct 风格 agent。
-    - 核心思路：训练阶段——**Stage 1 (Warm-up on I-T-T)**: 在 safe 数据上让 $\pi_\phi$ 学到「身份映射」，目的是稳定保留良性思维；**Stage 2 (Core SFT on I-T-C)**: 在 unsafe 数据上学习最小修正残差。两阶段共享同一条件似然目标 $\phi^*=\arg\min_\phi -\mathbb{E}_{\tau\sim\mathcal{D}}[\log\pi_\phi(T_i^{safe}\mid I,h_{i-1},T_i)]$。部署阶段——按 Algorithm 1，每一步先取 $(T_i,A_i)\leftarrow\text{Agent}(\tau)$，再过 Thought-Aligner 得 $T_i^{safe}$，最后 $A_i'\leftarrow\text{Agent}(\tau\oplus T_i^{safe})$ 拿到重新规划的动作。整个插桩对 agent 的提示词、工具配置零侵入，且可与已有下游护栏链式组合。
-    - 设计动机：把「检测+改写」合并到单模型既降低系统复杂度（无需 detector+rewriter 双阶段），又因为 minimal edit 监督避免了 RLHF 式 PPO 的不稳定。选 1.5B/7B 是为了让它在低延迟、边缘部署场景下也能跑（Thought-Aligner-1.5B 实测约 +<100 ms / 步）。
+训练分两阶段、共享同一条件似然目标 $\phi^*=\arg\min_\phi -\mathbb{E}_{\tau\sim\mathcal{D}}[\log\pi_\phi(T_i^{safe}\mid I,h_{i-1},T_i)]$：Stage 1 在 33k I-T-T 对上做 warm-up，让 $\pi_\phi$ 先学会「身份映射」、稳定保留良性思维；Stage 2 在 41k I-T-C 对上做核心 SFT，学习最小修正残差。这样把「检测哪一步不安全」和「改写成什么」合并进一个模型，既省掉 detector+rewriter 的双阶段系统复杂度，又因为 minimal-edit 是监督信号、避开了 RLHF/PPO 那种训练不稳定。部署侧按 Algorithm 1 走：每步先取 $(T_i,A_i)\leftarrow\text{Agent}(\tau)$，过一遍 Thought-Aligner 得 $T_i^{safe}$，再 $A_i'\leftarrow\text{Agent}(\tau\oplus T_i^{safe})$ 拿回重新规划的动作。选 1.5B/7B 这个量级，是为了让安全模块在低延迟、边缘甚至单卡场景也跑得动——Thought-Aligner-1.5B 实测每步只加 <100ms，对 agent 提示词和工具零侵入，还能和已有下游护栏链式叠加。
 
 ### 损失函数 / 训练策略
 两阶段共享条件似然 $\phi^*=\arg\min_\phi -\mathbb{E}_{\tau\sim\mathcal{D}}[\log\pi_\phi(T_i^{safe}\mid I,h_{i-1},T_i)]$。Stage 1 用 33k I-T-T 对（target = input）做暖启动，Stage 2 用 41k I-T-C 对（target = 人审修正）做核心 SFT；从 41k 中随机抽 1k 作验证集。base model 为 Qwen2.5-1.5B/7B-Instruct。

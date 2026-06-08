@@ -39,37 +39,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-冻结CellFM Transformer骨干 → 每层MHA和SGLU子层前插入SoftAdaLN(恒等初始化) → 冻结组织学编码器 $\phi$ 提取视觉嵌入 → 掩码扩散前向(逐步增加掩码比例)和反向(逐步揭示被掩码基因) → warm-start课程初始采样低掩码时间步 → 输出条件基因表达向量。
+本文要解决的是：把一个在单细胞数据上预训练好的基础模型 CellFM，迁移到"从组织学图像 patch 预测空间基因表达"这个新任务上，又不破坏它已学到的基因关系知识。整体做法是**冻住 CellFM 主干、只插入轻量条件模块**，并把任务包装成一个与 CellFM 预训练方式（掩码自编码）对齐的掩码扩散过程：组织学 patch 经冻结编码器 $\phi$ 得到视觉嵌入，作为条件注入到每层新插入的 SoftAdaLN 模块；扩散在基因表达空间上"逐步揭示被掩码的基因"，反向走完即得到条件基因表达向量。三个设计分别回答：条件怎么注入而不遗忘、扩散过程怎么和预训练对齐、训练初期怎么稳住。
 
 ### 关键设计
 
-1. **SoftAdaLN条件注入（解决模态鸿沟+防止遗忘）**:
+**1. SoftAdaLN 条件注入：恒等初始化保证"开局不忘"**
 
-    - 功能：在CellFM的每个Transformer子层前插入轻量条件调制
-    - 核心思路：组织学嵌入 $\mathbf{v}=\phi(\mathbf{c})$ 和时间步嵌入 $\mathbf{e}_t$ 拼接→共享变换 $\mathbf{c}_t = \varphi_{cond}([\mathbf{v}; \mathbf{e}_t])$→每子层的SoftAdaLN：
-    $\text{SoftAdaLN}(\mathbf{h}|\mathbf{c}_t) = \text{SoftNorm}(\mathbf{h}) \odot (1+\mathbf{s}(\mathbf{c}_t)) + \boldsymbol{\kappa}(\mathbf{c}_t)$
-      SoftNorm是标准LN的软化版本：$\text{SoftNorm}(\mathbf{h}) = (1-\eta)\mathbf{h} + \eta \cdot \frac{\mathbf{h}-\mu}{\sigma+\varepsilon}$
-    - **恒等初始化**：$\eta=0$（SoftNorm退化为恒等），$\mathbf{s}=\mathbf{0}$，$\boldsymbol{\kappa}=\mathbf{0}$，门控 $\boldsymbol{\tau}\approx\mathbf{1}$ → 初始时精确恢复原始CellFM行为
-    - 仅训练调制参数 $\{\eta, \theta_\varphi, \theta_s, \theta_\kappa, \theta_\tau\}$，CellFM和图像编码器完全冻结
-    - 设计动机：恒等初始化确保预训练基因关系在开始时完全保留→训练过程中渐进地学习注入组织学信息→参数高效(仅调制层)避免小数据集上的遗忘
+迁移的最大风险是小数据集上微调会冲掉预训练的基因关系。SoftAdaLN 的办法是在 CellFM 每个 Transformer 子层（MHA、SGLU）前插一个轻量调制模块，且**初始时让它等于恒等变换**，从 CellFM 原始行为出发再渐进注入组织学信息。具体地，视觉嵌入 $\mathbf{v}=\phi(\mathbf{c})$ 和时间步嵌入 $\mathbf{e}_t$ 拼接后过共享变换 $\mathbf{c}_t = \varphi_{cond}([\mathbf{v}; \mathbf{e}_t])$，再对每个子层做调制：
 
-2. **表达空间掩码扩散过程（解决目标不匹配）**:
+$$\text{SoftAdaLN}(\mathbf{h}|\mathbf{c}_t) = \text{SoftNorm}(\mathbf{h}) \odot (1+\mathbf{s}(\mathbf{c}_t)) + \boldsymbol{\kappa}(\mathbf{c}_t), \quad \text{SoftNorm}(\mathbf{h}) = (1-\eta)\mathbf{h} + \eta \cdot \tfrac{\mathbf{h}-\mu}{\sigma+\varepsilon}$$
 
-    - 功能：设计与sc-FM掩码自编码预训练对齐的扩散过程
-    - **前向过程**：对基因表达向量的各分量独立应用Bernoulli掩码(非高斯噪声)，掩码率按功率调度 $\bar{\alpha}_t = (1-t/T)^\zeta$ 递增。$t=0$时全可见，$t=T$时全掩码
-    - **反向过程**：从全掩码+全零状态开始→每步预测被掩码分量→解掩已有分量保持不变→逐步揭示完整基因表达
-    - **训练目标**：$\mathcal{L}(\theta) = \mathbb{E}[w_t \|(1-\mathbf{m}_t) \odot (f_\theta(\mathbf{x}_t, t, \phi(\mathbf{c})) - \mathbf{x}_0)\|_2^2]$，仅在掩码位置计算损失
-    - **对齐关键**：输入形式(部分掩码的观测)和监督模式(仅在掩码位置)都与CellFM的掩码自编码预训练一致→有效利用预训练知识
-    - 设计动机：标准高斯扩散对每个分量添加噪声→输入分布与掩码自编码完全不同→知识迁移受阻。掩码扩散桥接了这一鸿沟
+恒等初始化即令 $\eta=0$（SoftNorm 退化为恒等）、$\mathbf{s}=\mathbf{0}$、$\boldsymbol{\kappa}=\mathbf{0}$、门控 $\boldsymbol{\tau}\approx\mathbf{1}$，于是开局精确复现原始 CellFM。训练只更新调制参数 $\{\eta, \theta_\varphi, \theta_s, \theta_\kappa, \theta_\tau\}$，CellFM 与图像编码器全程冻结——参数高效且天然抗遗忘。
 
-3. **Warm-start课程（稳定训练）**:
+**2. 表达空间掩码扩散：让扩散过程"长得像"预训练目标**
 
-    - 功能：初始训练时优先采样低掩码时间步
-    - 核心思路：在微调开始的几个epoch中，采样器偏向靠近$t=0$的时间步(少量基因被掩码)→渐进过渡到均匀采样(高掩码)
-    - 设计动机：低掩码=大多数基因可见=更接近CellFM在预训练时看到的输入→稳定早期梯度更新→避免早期不稳定导致的遗忘
+标准高斯扩散给每个分量加噪，输入分布和 CellFM 的掩码自编码预训练完全不同，知识迁移受阻。本文改用**掩码扩散**桥接这一鸿沟：前向对基因表达各分量独立施加 Bernoulli 掩码（非高斯噪声），掩码率按功率调度 $\bar{\alpha}_t = (1-t/T)^\zeta$ 递增，$t=0$ 全可见、$t=T$ 全掩码；反向从全掩码 + 全零起步，每步预测被掩码分量、已揭示分量保持不变，逐步还原完整表达。训练只在掩码位置算损失：
 
-### 推理过程
-给定组织学patch $\mathbf{c}$：初始化 $\mathbf{x}_T=\mathbf{0}, \mathbf{m}_T=\mathbf{0}$ → 每步采样解掩概率 $\pi_t$ 揭示新基因 → 预测被掩码基因 → 填充+保持已揭示基因 → $T$步后得到完整基因表达。重新采样掩码轨迹可得到多样化但组织学一致的样本。
+$$\mathcal{L}(\theta) = \mathbb{E}\big[w_t \|(1-\mathbf{m}_t) \odot (f_\theta(\mathbf{x}_t, t, \phi(\mathbf{c})) - \mathbf{x}_0)\|_2^2\big]$$
+
+关键在于：输入形式（部分掩码的观测）和监督模式（仅在掩码位置）都与 CellFM 的掩码自编码一致，因此能真正复用预训练知识，而不是从头学。
+
+**3. Warm-start 课程：早期偏向低掩码，稳住梯度**
+
+即便如此，微调初期若直接采高掩码时间步仍易不稳。Warm-start 让采样器在开头几个 epoch 偏向 $t\approx0$（少量基因被掩码），再渐进过渡到均匀采样。低掩码 = 大多数基因可见 = 更接近 CellFM 预训练时见过的输入，从而稳定早期梯度、进一步压制遗忘。
+
+### 一个完整示例（从组织学 patch 到基因表达）
+给定一张组织学 patch $\mathbf{c}$：
+1. 初始化 $\mathbf{x}_T=\mathbf{0}, \mathbf{m}_T=\mathbf{0}$（全掩码、全零）。
+2. 冻结编码器 $\phi$ 提取视觉嵌入 $\mathbf{v}=\phi(\mathbf{c})$，连同当前时间步经 SoftAdaLN 注入每层。
+3. 每步采样解掩概率 $\pi_t$ 揭示一批新基因 → 预测这些被掩码基因的表达 → 填入并保持已揭示基因不变。
+4. 走完 $T$ 步得到完整基因表达向量。
+5. 重新采样掩码轨迹，可得到多个"组织学一致但有差异"的样本（刻画表达的不确定性）。
 
 ## 实验关键数据
 

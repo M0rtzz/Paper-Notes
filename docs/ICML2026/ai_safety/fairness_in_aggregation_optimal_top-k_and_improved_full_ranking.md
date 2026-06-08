@@ -42,33 +42,21 @@ tags:
 
 ### 整体框架
 
-输入：$d$ 个候选被划分到 $g$ 个 group $G_1, \ldots, G_g$，每个 group 给定下界 $\alpha_a$ 和上界 $\beta_a$；以及 $n$ 条输入排名 $S \subseteq \mathcal{S}_d$，整数 $k$。
-
-公平定义 $(\bar\alpha, \bar\beta)$-$k$-fair：输出排名前 $k$ 位中，每个 group $G_a$ 至少出 $\lfloor \alpha_a \cdot k \rfloor$ 个、至多 $\lceil \beta_a \cdot k \rceil$ 个候选。
-
-两条主线：
-- **Fair Top-$k$**：输出一个只含 $k$ 个候选的 top-$k$ 列表 $\tau$，使 $\sum_{\pi \in S} F(\pi, \tau)$ 最小（其中 $F$ 用 Fagin et al. 对 top-$k$ 的推广，把 $\tau$ 外候选当作排在 $k+1$ 位）。
-- **Fair Full Ranking**：输出 $d$ 个候选的全排名 $\sigma$，目标同上。
+问题被拆成两个递进的子任务：先把"只关心前 $k$ 名"的 fair top-$k$ 排名聚合精确求解，再把这个 top-$k$ 解扩展成一个公平的全排名。形式上，$d$ 个候选被划分到 $g$ 个 group $G_1, \ldots, G_g$，每组给定比例下界 $\alpha_a$、上界 $\beta_a$，输入是 $n$ 条排名 $S \subseteq \mathcal{S}_d$。所谓 $(\bar\alpha, \bar\beta)$-$k$-fair，是要求输出前 $k$ 位里每个 group $G_a$ 出现的候选数落在 $[\lfloor \alpha_a k \rfloor, \lceil \beta_a k \rceil]$ 之间；目标则是最小化共识排名到所有输入排名的 Spearman footrule 距离之和。Fair top-$k$ 只输出含 $k$ 个候选的列表 $\tau$（$\tau$ 外候选按排在第 $k+1$ 位计代价，沿用 Fagin et al. 对 top-$k$ 距离的推广），fair full ranking 则输出 $d$ 个候选的全排名 $\sigma$。
 
 ### 关键设计
 
-1. **Fair top-$k$ 的 ILP 与全单模性证明**：
+**1. Fair top-$k$ 的 ILP 建模与全单模性证明：让公平约束严格满足而非"近似满足"**
 
-    - 功能：把 fair top-$k$ rank aggregation 精确建模成 ILP，再证 LP 松弛的约束矩阵 TU，从而直接用椭球法求出 ILP 最优解。
-    - 核心思路：变量 $x_{ij} \in \{0,1\}$ 表示候选 $i$ 是否放在第 $j$ 位（$j \le k$）；权重 $w_{ij} = \sum_{\pi \in S} |\pi(i) - j|$ 为该放置的代价；不在前 $k$ 位的候选按"放在第 $k+1$ 位"计代价。约束包括：每个候选至多占一个位置、每个位置恰好一个候选，以及每组的 $\lfloor \alpha_a k \rfloor$ / $\lceil \beta_a k \rceil$ 上下界。证明 TU 时用 Wolsey-Nemhauser 的等价刻画：对任意行集 $R$，需构造 $R = R_1 \cup R_2$ 划分使每列差 $\le 1$。作者按行类型逐一分配——上下界配对（同 group 的下界 / 上界行属同侧抵消）、位置约束分到 $R_2$、候选约束按所属 group 是否在 $R$ 中决定去哪一侧。
-    - 设计动机：标准做法是 LP rounding，但 fair 约束容易被 rounding 破坏（如 fair correlation clustering、fair $k$-clustering 都掉到带因子违反的解）。TU 性绕开了 rounding，让公平约束**严格满足**而非"近似满足"，这是把 fair 问题从 3-近似一步推到精确解的关键技术 lever。
+fair 组合优化的老大难是：写成 ILP 后做标准 LP 松弛 + rounding，公平约束往往在取整时被破坏（fair correlation clustering、fair $k$-clustering 都因此只能拿到带因子违反的解）。本文换了条路——不 rounding，而是直接证明 LP 松弛的约束矩阵本身是全单模 (TU) 的，这样 LP 的最优解天然是整数，用椭球法解 LP 就等于解出了 ILP 的精确最优。建模时用 $x_{ij} \in \{0,1\}$ 表示候选 $i$ 是否放在第 $j$ 位（$j \le k$），放置代价 $w_{ij} = \sum_{\pi \in S} |\pi(i) - j|$，约束是"每个候选至多占一个位置、每个位置恰好一个候选"加上每组的上下界 $\lfloor \alpha_a k \rfloor$ / $\lceil \beta_a k \rceil$。证 TU 用的是 Wolsey-Nemhauser 的等价刻画：对任意行集 $R$ 都要构造一个划分 $R = R_1 \cup R_2$ 让每列在两侧的元素和之差 $\le 1$；作者按行类型逐一安排——同一 group 的上界行与下界行属同侧从而互相抵消、位置约束统一进 $R_2$、候选约束按其所属 group 是否落在 $R$ 中决定归侧。TU 性正是把这个问题从困扰多年的 3-近似一步拉到精确解的关键 lever，因为它让公平约束被严格保住而不是被取整噪声打穿。
 
-2. **两步 fair full rank aggregation：先 top-$k$ 后匹配补齐**：
+**2. 两步式 fair full rank aggregation：公平约束塞进 top-$k$，扩展退化成无约束匹配**
 
-    - 功能：把 fair top-$k$ 的最优解 $\tau$ 扩展成一个 2-近似的 fair full ranking $\sigma$。
-    - 核心思路：先用上一步的算法 $\mathcal{A}$ 解一个"变体目标"——把目标改成 $2 \sum_{\pi} \sum_{i \in D_\tau} (\pi(i) - \tau(i)) \cdot \mathbb{1}_{\tau(i) < \pi(i)}$（只数 leftward displacement 并乘 2），约束矩阵不变所以 TU 仍成立，仍能多项式解出最优 fair top-$k$ 列表 $\tau$。然后定义"Minimum Cost Top-$k$ List Completion"子问题：在保持 $\tau$ 不动的前提下，把剩下 $d-k$ 个候选填进 $k+1, \ldots, d$ 位以最小化整体目标——这等价于在一个 $2d$ 顶点完全二部图上求最小代价完美匹配，$O(nd^2 + d^3)$ 可解。
-    - 设计动机：fair full ranking 直接做 fair perfect matching 已被证 NP-hard（Appendix D），所以不能一步到位。把"公平约束"全部塞进 top-$k$ 部分用 TU 精确求解、把"扩展到全排"退化成无约束最小代价匹配，这样两块都是多项式可解的。
+直接对全排名做"fair perfect matching"已被证 NP-hard（Appendix D），所以全排不能一步到位，本文把它拆成"先求 fair top-$k$、再补齐后 $d-k$ 位"两步。第一步并不直接用原始目标，而是让算法 $\mathcal{A}$ 解一个变体目标 $2 \sum_{\pi} \sum_{i \in D_\tau} (\pi(i) - \tau(i)) \cdot \mathbb{1}_{\tau(i) < \pi(i)}$——只统计 leftward displacement 再乘 2；由于这只改了目标系数、约束矩阵不变，TU 性原封不动，仍能多项式解出最优 fair top-$k$ 列表 $\tau$。第二步是一个"Minimum Cost Top-$k$ List Completion"子问题：固定 $\tau$ 不动，把剩下 $d-k$ 个候选填入第 $k+1, \ldots, d$ 位使整体目标最小，这等价于在 $2d$ 顶点的完全二部图上求最小代价完美匹配，$O(nd^2 + d^3)$ 可解。如此一来公平约束全集中在 top-$k$ 部分由 TU 精确处理，而"扩展到全排"退化成一个不带公平约束的匹配问题，两块都落在多项式可解范围内。
 
-3. **基于左右位移分解的 2-近似分析**：
+**3. 基于左右位移分解的 2-近似分析：把 footrule "半化"后对齐子算法目标**
 
-    - 功能：证明上面两步算法的输出 $\sigma$ 满足 $\mathrm{Obj}(\sigma) \le 2 \cdot \mathrm{OPT}$，把已有 3-近似改进到 2。
-    - 核心思路：用 Mathieu-Mauras 的观察——Spearman footrule 等于"向左位移总和"的 2 倍（左右位移必相等），即 $F(\pi,\sigma) = 2 \sum_i (\pi(i)-\sigma(i)) \mathbb{1}_{\sigma(i)<\pi(i)}$。设 $L, R$ 为 $\sigma$ 的前 $k$ / 后 $d-k$ 位元素集，$L^*, R^*$ 为最优解 $\sigma^*$ 的对应集合。前 $k$ 段由算法 $\mathcal{A}$ 的最优性直接得 $\overleftarrow{\mathrm{Obj}}(\sigma_L) \le \overleftarrow{\mathrm{Obj}}(\sigma^*_{L^*})$；后 $d-k$ 段构造一个对照排名 $\tilde\sigma$——$R \cap R^*$ 的元素抄 $\sigma^*$ 的位置，$R \setminus R^*$ 的元素（必落在 $L^*$）随便放，由于它们在 $\tilde\sigma$ 里只会被往右挪、leftward displacement 只会变小，可证 $\overleftarrow{\mathrm{Obj}}(\sigma_R) \le \overleftarrow{\mathrm{Obj}}(\tilde\sigma_R) \le \mathrm{OPT}$。两段相加得 $\mathrm{Obj}(\sigma) \le \overleftarrow{\mathrm{Obj}}(\sigma^*_{L^*}) + \mathrm{OPT} \le 2 \mathrm{OPT}$。
-    - 设计动机：直接证 $F(\pi,\sigma)$ 的 2 倍上界很难，把它"半化"成 leftward displacement 后能和子算法 $\mathcal{A}$ 的最小化目标对齐，论证才打通；并且这种位移分解还顺带给出"算法对 metric 选择鲁棒"的副产品——Spearman footrule 与 Kendall-tau 差 2 倍直接推出 4-近似。
+要把已有 3-近似改进到 2，难点是直接给 $F(\pi,\sigma)$ 的 2 倍上界几乎无从下手。本文借 Mathieu-Mauras 的观察把它"半化"：Spearman footrule 恰等于向左位移总和的 2 倍（因为左右位移必然相等），即 $F(\pi,\sigma) = 2 \sum_i (\pi(i)-\sigma(i)) \mathbb{1}_{\sigma(i)<\pi(i)}$，于是只需分析 leftward displacement 这一半。设 $L, R$ 是输出 $\sigma$ 的前 $k$ / 后 $d-k$ 位元素集，$L^*, R^*$ 是最优解 $\sigma^*$ 的对应集合。前 $k$ 段靠算法 $\mathcal{A}$ 的最优性直接得 $\overleftarrow{\mathrm{Obj}}(\sigma_L) \le \overleftarrow{\mathrm{Obj}}(\sigma^*_{L^*})$；后 $d-k$ 段则构造一个对照排名 $\tilde\sigma$——把 $R \cap R^*$ 的元素抄到 $\sigma^*$ 中的位置，$R \setminus R^*$ 的元素（必落在 $L^*$）随意放置，由于它们在 $\tilde\sigma$ 里只会被往右挪、leftward displacement 只减不增，于是 $\overleftarrow{\mathrm{Obj}}(\sigma_R) \le \overleftarrow{\mathrm{Obj}}(\tilde\sigma_R) \le \mathrm{OPT}$。两段相加得 $\mathrm{Obj}(\sigma) \le \overleftarrow{\mathrm{Obj}}(\sigma^*_{L^*}) + \mathrm{OPT} \le 2\,\mathrm{OPT}$。这套位移分解还顺带给出"算法对 metric 选择鲁棒"的副产品——Spearman footrule 与 Kendall-tau 至多差 2 倍，直接推出 Kendall-tau 下的 4-近似。
 
 ### 损失函数 / 训练策略
 本文是组合优化算法，无训练；最终运行靠 ellipsoid 法解 LP + Edmonds-Karp 求最小代价完美匹配，总复杂度多项式（实验里实际用 Gurobi 12.0.3 解 ILP）。

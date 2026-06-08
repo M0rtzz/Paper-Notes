@@ -40,40 +40,25 @@ tags:
 
 ## 方法详解
 
-本文不是提出一个新的 prompt 优化算法，而是提出一套**测量框架 + 决策协议**，用统计学工具检验业界默认的优化假设。整篇文章可以视为两项受控研究 + 一个工程化诊断流程的封装。
-
 ### 整体框架
 
-整体由两项研究串成：
+本文不提新的 prompt 优化算法，而是用统计学工具去检验业界默认的两条优化假设到底成不成立。它把"是否该做 prompt 优化"这个工程决策，转译成一套可证伪的**测量框架 + 决策协议**：先用两项严格等算力的受控研究分别测耦合（假设 A）和优化空间（假设 B），再把结论封装成事前诊断流程。
 
-- **Study 1（检验 A：agent 耦合）**：构造两 agent 串行流水线 $\text{Agent A} \to \text{Agent B}$，每个 agent 生成 $K=10$ 个候选系统 prompt，穷举 $10\times10=100$ 种组合，每种在 $n=30$ 道题上评估，得到三维分数张量 $Y_{ijk}$。然后用 2-way ANOVA + question blocking 把总方差拆成 5 部分：question 难度、Agent A 主效应、Agent B 主效应、A×B 交互、残差；交互项的 $F$ 检验直接回答"最优 A prompt 是否依赖 B prompt"。三个任务 HotpotQA / MBPP / XSum 分别对应预期耦合度高/中/低；两个 executor 模型 Claude Haiku 4.5 与 Amazon Nova Lite，judge 用 Claude Sonnet 4.6。
-
-- **Study 2（检验 B：单 agent 优化是否值得）**：在四个单 agent 任务 Feedback-Bench / HelpSteer2 / WildBench / XSum 上，把 6 种主流优化方法（APE、OPRO、EvoPrompt、PromptBreeder、DSPy-style bootstrap、作者自己的 PROSE）与 zero-shot 在严格等算力（约 100 个候选 prompt）下对比，训练集 20 题、测试集 100 题、3 次重复、2 个 executor 模型，总共 $6\times 4\times 3\times 2=144$ 次优化运行。
-
-最后把两项研究的结论封装成 Stage 1（耦合测试，\$80 / 1 天）+ Stage 2（headroom 测试，\$5 / 10 分钟）的两阶段诊断协议，让从业者在投钱做大规模优化前先量化判断。
+两项研究各管一头。**Study 1 检验 agent 耦合**：构造两 agent 串行流水线 $\text{Agent A} \to \text{Agent B}$，每个 agent 生成 $K=10$ 个候选系统 prompt，穷举 $10\times10=100$ 种组合，每种在 $n=30$ 道题上评估，得到三维分数张量 $Y_{ijk}$，然后用 2-way ANOVA + question blocking 把方差拆成 question 难度 / A 主效应 / B 主效应 / A×B 交互 / 残差五部分。三个任务 HotpotQA / MBPP / XSum 分别对应预期耦合度高/中/低，两个 executor 模型 Claude Haiku 4.5 与 Amazon Nova Lite，judge 用 Claude Sonnet 4.6。**Study 2 检验单 agent 优化是否值得**：在 Feedback-Bench / HelpSteer2 / WildBench / XSum 四个单 agent 任务上，把 6 种主流优化方法（APE、OPRO、EvoPrompt、PromptBreeder、DSPy-style bootstrap、作者自己的 PROSE）与 zero-shot 在严格等算力（约 100 个候选 prompt、训练集 20 题、测试集 100 题、3 次重复、2 个 executor 模型）下对比，总计 $6\times 4\times 3\times 2=144$ 次优化运行。这里全程不训练任何模型，只在固定 executor 上推理评测。
 
 ### 关键设计
 
-1. **基于 ANOVA 的 agent 耦合度量**:
+**1. 基于 ANOVA 的 agent 耦合度量：把"要不要联合优化"翻译成方差分解**
 
-    - 功能：在 $10\times10$ 的 prompt 网格上，把 LLM 流水线得分的方差分解为 question 难度、A 主效应、B 主效应、A×B 交互、残差，用交互项的 $F$ 值给出"是否需要联合优化"的可证伪判据。
-    - 核心思路：把 prompt 优化问题翻译成实验设计语言——若 A×B 的方差占比和 $F$ 值都低于残差，则"联合最优 prompt 对"与"独立最优 A × 独立最优 B"在统计意义上不可区分，联合优化没有信息增益。作者进一步在去掉行列主效应后的残差地形上算邻居自相关，结果 $\rho \in [-0.12,+0.05]$，说明残差面在统计上与白噪声不可区分，这直接反驳了 TextGrad 这类"文本梯度"方法所依赖的"存在平滑可传播信号"假设。
-    - 设计动机：现有 compound AI 评测只报聚合分数，从不分解"为什么这条流水线 work"；ANOVA 给出一个**架构无关**、可在任何多 agent 系统上重跑的协议，把"agent 之间是否真的耦合"从直觉判断变成可统计检验的命题。这也是文章最具普适性的方法学贡献。
+现有 compound AI 评测只报聚合分数，从不回答"为什么这条流水线 work"，更没法判断多 agent 的 prompt 是否真有交互。本文的切入点是把 $10\times10$ 的 prompt 网格当成 2-way ANOVA 的实验设计——question 当 block、Agent A 当一个因子、Agent B 当另一个因子，看残差里 A×B 交互项的方差占比和 $F$ 值。逻辑很干净：若 A×B 的方差和 $F$ 都低于残差水平，那"联合最优 prompt 对"与"独立最优 A × 独立最优 B"在统计意义上就不可区分，联合优化拿不到任何信息增益，per-agent 独立优化足矣。作者还在去掉行列主效应后的残差地形上算邻居自相关，结果 $\rho \in [-0.12,+0.05]$，说明残差面与白噪声不可区分，这直接打掉了 TextGrad 这类"文本梯度"方法所依赖的"存在平滑可传播信号"假设。这套度量的价值在于它**架构无关**，可以原封不动搬到任何多 agent 系统上重跑，是全文最具普适性的方法学贡献。
 
-2. **"can but doesn't"——可被优化任务的判据**:
+**2. "can but doesn't" 判据：用"会但默认不做的 gap"判断任务值不值得优化**
 
-    - 功能：解释为什么 4 个任务里只有 HelpSteer2 让 6 个优化方法**全部**显著超过 zero-shot，提出一个可迁移的判别准则。
-    - 核心思路：HelpSteer2 要求结构化 rubric 评估 + JSON 格式输出，模型在被提示时**能**产出这种格式（68.0 → 74.8），但 zero-shot 默认走非结构化散文。优化的本质是把模型"已经会做但默认不做"的潜在能力解锁出来——只有当 prompt 空间里存在这种"会但不做"的 gap 时，优化才有可挖的洞。Feedback-Bench/WildBench/XSum 接受自由文本输出，模型默认行为已接近最优，自然没有可挖的洞，6 个方法的最佳增益分别只有 +1.1/+0.7/+0.6，全部落在 20 题评测的噪声带内。
-    - 设计动机：聚合统计"49% 失败率"只是结果，不可操作；作者要的是一个**事前**判别器告诉从业者哪类任务值得优化。配套的 \$5/10 分钟 headroom 测试把这个定性判据落地：生成 10–20 个候选 prompt，看最佳候选相对 zero-shot 的增益是否 $>2$ 点，$<2$ 点视为 landscape 平坦、6 种方法都不会稳定有效（2 点阈值需按自己 setup 重标定，但"平坦 landscape = 没有可挖空间"是普适直觉）。
+光说"49% 的优化运行失败"只是结果，不可操作；作者真正想要的是一个**事前**判别器，告诉从业者哪类任务才有可挖的洞。观察来自 4 个任务里唯一让 6 个方法全部显著涨点的 HelpSteer2：它要求结构化 rubric 评估 + JSON 输出，模型被提示时**能**产出这种格式（68.0 → 74.8），但 zero-shot 默认只写非结构化散文。优化的本质就是解锁这种"模型已经会做、但默认不做"的潜在能力，只有 prompt 空间里存在这种 gap，优化才有意义。反观 Feedback-Bench / WildBench / XSum 接受自由文本，模型默认行为已近最优，6 个方法的最佳增益只有 +1.1/+0.7/+0.6，全落在 20 题评测的噪声带里。这个定性判据被落地成 \$5、10 分钟的 headroom 测试：生成 10–20 个候选 prompt，看最佳候选相对 zero-shot 的增益是否 $>2$ 点，$<2$ 点就判定 landscape 平坦、所有方法都不会稳定有效（2 点阈值需按自己 setup 重标定，但"平坦 landscape = 没有可挖空间"是普适直觉）。
 
-3. **两阶段诊断协议 + instruction-tuning 机制解释**:
+**3. 两阶段诊断协议 + instruction-tuning 机制解释：让"别优化"从观察升级成可外推的预测**
 
-    - 功能：把两项研究的结论封装成一个工程化决策树，并从 instruction-tuning 角度给出"为什么 agent 间不耦合"的机制性解释，让结论不只是"在我们 setup 上观察到"，而是有理论预期。
-    - 核心思路：Stage 1 跑 \$80 的 ANOVA 网格，若交互项 $F<1$ 则放弃联合优化，主效应顺便指出瓶颈 agent；Stage 2 对瓶颈 agent 跑 \$5 的 headroom 测试，若 $>2$ 点增益就用 APE-style generate-and-rank（非迭代、无过拟合风险），否则直接用 zero-shot。机制解释方面：instruction-tuning 和 RLHF 训练模型在多样化输入下产出一致输出，本质上把"输入措辞"压成了"窄输出分布"，因此 Agent B 的输出方差被 Agent A 的语义内容（由题目决定）主导，而不被 Agent A 的措辞变化（即 prompt 改动）主导——耦合需要 agent 互相依赖对方的措辞，但 instruction-tuning 偏偏消除了这种措辞敏感性。
-    - 设计动机：让结论从"实验观察"升级为"可外推的机制性预测"，并明确给出耦合可能重新出现的场景（共享状态、Schema 依赖、反馈环、3+ agent 深流水线、结构化数据通信），告诉从业者"这套诊断协议在这些场景要重新跑"。这种"结论 + 可证伪机制 + 失效边界"的封装方式让框架在快速迭代的 frontier model 时代具备长期可用性。
-
-### 损失函数 / 训练策略
-本文不训练模型，所有实验在固定 executor 模型（Claude Haiku 4.5、Amazon Nova Lite）上推理评测，judge 用 Claude Sonnet 4.6。算力预算严格对齐：每种优化方法约评估 100 个候选 prompt；训练集 20 题，测试集 100 题，每条件重复 3 次。
+把两项研究的结论封装成一棵工程决策树：Stage 1 花 \$80 跑 ANOVA 网格，若交互项 $F<1$ 就放弃联合优化，主效应顺手指出瓶颈 agent；Stage 2 对瓶颈 agent 跑 \$5 的 headroom 测试，$>2$ 点增益就用 APE-style generate-and-rank（非迭代、无过拟合风险），否则直接 zero-shot。更关键的是作者给出了"为什么 agent 间不耦合"的机制性解释：instruction-tuning 和 RLHF 训练模型在多样化输入下产出一致输出，等于把"输入措辞"压成了"窄输出分布"，于是 Agent B 的输出方差被 Agent A 的语义内容（由题目决定）主导，而非被 Agent A 的措辞变化（即 prompt 改动）主导——耦合需要 agent 互相依赖对方的措辞，可 instruction-tuning 恰恰消除了这种措辞敏感性。这条解释让结论从"在我们 setup 上观察到"升级为"理论上应当如此"，同时明确划出耦合可能重新出现的边界（共享状态、Schema 依赖、反馈环、3+ agent 深流水线、结构化数据通信），告诉从业者这些场景要重新跑诊断。这种"结论 + 可证伪机制 + 失效边界"的封装，让框架在快速迭代的 frontier model 时代仍具长期可用性。
 
 ## 实验关键数据
 

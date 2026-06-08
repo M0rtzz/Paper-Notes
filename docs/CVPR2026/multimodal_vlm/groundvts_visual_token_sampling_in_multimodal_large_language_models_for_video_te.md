@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：固定均匀采样在"信息覆盖"和"信号稀释"之间存在根本性的trade-off——增加帧率提供更多时序线索但引入更多冗余，降低帧率减少冗余但可能丢失关键时刻。需要一种自适应、查询感知的采样机制。
 
-**本文目标** 如何在 Vid-LLM 的视觉 token 层面实现查询引导的自适应采样，在保留关键时空信息的同时抑制冗余内容？
+**本文目标**：如何在 Vid-LLM 的视觉 token 层面实现查询引导的自适应采样，在保留关键时空信息的同时抑制冗余内容？
 
 **切入角度**：从帧率敏感性实验出发——Qwen2.5VL-7B 在 2.0-2.4 FPS 达到最佳 mIoU 47.8%，超过此范围急剧下降。这表明 VTG 需要的是"对的 token"而非"多的 token"。因此将采样粒度从帧级下沉到 token 级，在 VLM 内部（视觉编码器和多模态投影层之后）根据 token-query 相似度进行可微的 top-K 选择。
 
@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入视频经时间下采样后由视觉编码器编码为密集时空特征 $H_v \in \mathbb{R}^{N_v \times D_v}$，经多模态投影器映射到共享嵌入空间 $V \in \mathbb{R}^{N_v \times D}$。VTS 模块根据文本查询 $Q$ 对 $V$ 中的每个 token 评分并执行可微 top-K 选择，输出紧凑子集 $\tilde{V}$。选中 token 保留原始位置编码以维持时序对齐。最终 $\tilde{V}$ 与查询 token 拼接输入 LLM 进行联合推理和生成。
+GroundVTS 想解决的是「Vid-LLM 把预算平摊给所有帧、关键时刻被冗余 token 稀释」这个问题，做法是把采样的颗粒度从「选哪些帧」下沉到「选哪些视觉 token」，并且让这个选择由查询来引导、可端到端训练。整条管线是这样转的：视频先做时间下采样、过视觉编码器得到密集时空特征 $H_v \in \mathbb{R}^{N_v \times D_v}$，再经多模态投影器映射到与语言对齐的共享空间 $V \in \mathbb{R}^{N_v \times D}$；接着 VTS（Visual Token Sampling）模块拿文本查询 $Q$ 给 $V$ 里每个 token 打分，做一次可微的 top-K 选择，挑出紧凑子集 $\tilde{V}$；被选中的 token 保留它原始的位置编码以维持时序对齐，最后和查询 token 拼在一起喂给 LLM 做联合推理和片段边界生成。关键在于这个「打分—选择」发生在 VLM 内部、投影层之后，所以它既能看到与语言对齐的语义、又能用语言模型的损失反传来学。
 
 ### 关键设计
 
-1. **查询引导的 Token 评分（Query-Guided Token Scoring）**:
+**1. 查询引导的 Token 评分：让每个视觉 token 报出它和查询有多相关。**
 
-    - 功能：估计每个视觉 token 与文本查询的相关程度
-    - 核心思路：将视觉嵌入 $V$ 和查询嵌入 $Q$（经均值池化后）分别通过可训练投影矩阵 $W_v, W_q \in \mathbb{R}^{D \times D_r}$ 映射到低维子空间，然后计算温度缩放的点积后 softmax 得到权重分布 $\mathbf{w} = \text{softmax}(V'{\mathbf{q}'}^\top / \tau)$。本质上是一个注意力机制——权重反映每个视觉 token 与查询的语义对齐和序列内相对重要性
-    - 设计动机：在投影后的低维空间计算相似度既降低计算成本又聚焦于语义相关特征，温度参数控制分布锐度
+均匀采样的根本问题是它根本不看查询，所以第一步要给每个视觉 token 一个「与查询的相关度」。GroundVTS 把视觉嵌入 $V$ 和均值池化后的查询嵌入 $\mathbf{q}$ 分别用可训练投影矩阵 $W_v, W_q \in \mathbb{R}^{D \times D_r}$ 压到一个低维子空间得到 $V'$、$\mathbf{q}'$，再算温度缩放的点积并 softmax 得到权重分布 $\mathbf{w} = \text{softmax}(V'{\mathbf{q}'}^\top / \tau)$。本质上这是一个轻量注意力——$w_i$ 同时编码了第 $i$ 个 token 与查询的语义对齐度、以及它在整段序列里的相对重要性。之所以先投影到低维再算相似度，是因为这样既省算力，又能把比较聚焦在语义相关的维度上而不是被原始高维特征里的噪声带偏；温度 $\tau$ 则用来调节这个分布的锐度，决定后面选择是「集中在少数 token」还是「相对平摊」。
 
-2. **可微 Top-K 选择（Differentiable Top-K Selection）**:
+**2. 可微 Top-K 选择：硬选 K 个 token 进 LLM，但梯度还能流回来。**
 
-    - 功能：端到端可训练地选择最相关的 $K=\lceil\rho \cdot N_v\rceil$ 个 token
-    - 核心思路：由于硬 top-K 不可微，使用 Gumbel-Softmax 松弛 + 直通估计器(STE)。前向传播执行硬选择 $z_i^{\text{hard}} = \mathbf{1}(i \in \mathcal{I}_K)$，反向传播通过连续松弛 $z_i$ 流梯度，通过 $\tilde{z}_i = z_i^{\text{hard}} + z_i - \text{stopgrad}(z_i)$ 结合。最终选中 token 的权重归一化后加权：$\hat{w}_i = \frac{\exp(w_i/\tau') \cdot \tilde{z}_i}{\sum_j \exp(w_j/\tau') \cdot \tilde{z}_j}$，经 MLP 后输出 $\tilde{v}_i = \hat{w}_i \cdot \text{MLP}(v_i)$
-    - 设计动机：硬选择保证推理效率（只有 $K$ 个 token 进入 LLM），Gumbel+STE 保证训练可微性。权重归一化使选中 token 的信号强度不被稀释
+有了分数还不够——直接按分数取前 $K=\lceil\rho \cdot N_v\rceil$ 个是个硬操作，不可微，没法和 LLM 一起端到端训练。GroundVTS 用 Gumbel-Softmax 松弛配直通估计器（STE）绕开这点：前向传播仍然做硬选择 $z_i^{\text{hard}} = \mathbf{1}(i \in \mathcal{I}_K)$，保证真正进 LLM 的只有 $K$ 个 token、推理是省的；反向传播则借连续松弛 $z_i$ 让梯度流过去，二者用
 
-3. **三阶段渐进优化策略**:
+$$\tilde{z}_i = z_i^{\text{hard}} + z_i - \text{stopgrad}(z_i)$$
 
-    - 功能：确保非均匀采样模块稳定收敛
-    - 核心思路：Stage 1（VTS 热身）：冻结所有其他组件，仅训练 VTS 模块参数，学习稳定的 token-query 相关性估计。Stage 2（联合 LoRA 适配）：用 LLaVA-Video-178K 大规模数据联合微调 VTS + MLP投影器 + LLM (LoRA)，使模型适应非均匀 token 分布。Stage 3（定位微调）：在构建的 Grounding-FT 数据集（70K样本，聚合多个 VTG 训练集）上微调，统一的指令式 QA 格式
-    - 设计动机：直接联合训练 VTS 和 LLM 导致不稳定梯度和不一致选择行为。消融显示跳过 Stage 1（随机初始化 VTS）导致 mIoU 从 22.1 暴跌到 5.6；跳过 Stage 2 也明显低于完整三阶段
+拼起来——数值上等于硬选择，求导时却等于软松弛。被选中的 token 再做一次权重归一化和加权
+
+$$\hat{w}_i = \frac{\exp(w_i/\tau') \cdot \tilde{z}_i}{\sum_j \exp(w_j/\tau') \cdot \tilde{z}_j}, \qquad \tilde{v}_i = \hat{w}_i \cdot \text{MLP}(v_i)$$
+
+归一化这一步很关键：只在被保留的 $K$ 个 token 内部重新分配权重，避免那些被丢掉的 token 把信号强度也一起带走，等于让留下来的 token「补满」总的注意力质量。举个具体感受：若一帧密集编码出 $N_v$ 个 token、取 $\rho=0.5$，那进 LLM 的就只剩一半，且这一半是和查询最对得上的那批，冗余背景 token 在前向时被直接剔除。
+
+**3. 三阶段渐进优化：让非均匀采样能稳住收敛。**
+
+非均匀采样会让 LLM 看到的 token 分布和预训练时的均匀分布很不一样，如果一上来就把 VTS 和 LLM 一起放开训，梯度会很不稳、选择行为也来回跳。GroundVTS 把训练拆成由易到难的三段。Stage 1 是 VTS 热身：冻住其它所有组件、只训 VTS 自己的参数，先把「token-query 相关性怎么估」这件事学稳。Stage 2 是联合 LoRA 适配：用 LLaVA-Video-178K 这种大规模数据联合微调 VTS、MLP 投影器和 LLM（LoRA），让语言模型逐渐适应「输入 token 是非均匀挑出来的」这一新分布。Stage 3 是定位微调：在作者聚合多个 VTG 训练集构造的 Grounding-FT 数据（70K 样本、统一成指令式 QA 格式）上做最后的任务对齐。这套顺序不是凑数——消融里跳过 Stage 1、让 VTS 随机初始化直接联训，mIoU 会从完整三阶段的 50.1 掉到 5.6，几乎崩掉；只跳过 Stage 2 也明显低于完整版，说明「先学会选、再让 LLM 适应、最后对齐任务」这条路径每一步都在兜底。
 
 ### 损失函数 / 训练策略
-使用标准的 LLM 自回归生成损失。VTS 模块通过梯度从语言模型损失反向传播训练。三阶段分别训练 1/2/3 个 epoch，学习率 1e-5/2e-4/1e-4。采样比率固定 $\rho=0.5$。
+训练目标就是标准的 LLM 自回归生成损失，VTS 模块完全靠这个损失经由可微 top-K 反传来学，没有额外的采样监督。三阶段分别训 1 / 2 / 3 个 epoch，学习率依次为 1e-5 / 2e-4 / 1e-4，采样比率全程固定 $\rho=0.5$。
 
 ## 实验关键数据
 

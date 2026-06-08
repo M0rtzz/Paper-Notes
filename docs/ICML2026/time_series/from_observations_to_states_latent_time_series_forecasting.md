@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **点式 AutoEncoder + 冻结目标编码器**:
+**1. 点式 AutoEncoder + 冻结目标编码器：造一个平滑、适合学动力学的潜空间，并提供一个不动的回归靶。**
 
-    - 功能：构造一个比观察空间更平滑、更适合学动力学的潜状态空间，并提供一个稳定的回归目标。
-    - 核心思路：AutoEncoder 是**逐时刻**独立编码的（不沿时间维做卷积/attention），这样所有时间结构都留给 backbone 去学；用 $\mathcal{L}_\text{Rec} = \frac{1}{L}\sum_t \|\mathbf{x}_t - \mathcal{D}(\mathcal{E}(\mathbf{x}_t))\|_1$ 预训练后冻结。冻结后 $\mathbf{Z}_Y = \mathcal{E}(\mathbf{Y})$ 是一个**静止目标**，backbone 朝它回归。
-    - 设计动机：冻结 + 点式有两个好处。其一是冻结提供"结构上排除表示坍缩"的天然保证——只要 AutoEncoder 编码不同输入到不同潜点，常数解就不可能最优（作者在 Remark 3.1 + App. C.3 给了形式化证明），不需要 SimSiam/BYOL 那种 stop-gradient 或 EMA。其二是点式保证 backbone 拿到的是"纯净"潜状态而非已经被 AE 平滑过的时间序列，否则会让动力学建模任务变得平凡。
+观察空间本身是底层动力系统的"噪声 + 部分投影"，直接在上面回归会鼓励模型走捷径抓浅统计；而且如果回归目标会动，又容易表示坍缩。LatentTSF 的 AutoEncoder 是**逐时刻**独立编码的（不沿时间维做卷积/attention），用 $\mathcal{L}_\text{Rec} = \frac{1}{L}\sum_t \|\mathbf{x}_t - \mathcal{D}(\mathcal{E}(\mathbf{x}_t))\|_1$ 预训练后**冻结**，于是 $\mathbf{Z}_Y = \mathcal{E}(\mathbf{Y})$ 成了一个静止目标供 backbone 回归。冻结 + 点式各管一件事：冻结从结构上排除了坍缩——只要 AE 把不同输入编到不同潜点，常数解就不可能最优（Remark 3.1 + App. C.3 有形式化证明），不需要 SimSiam/BYOL 那种 stop-gradient 或 EMA；点式保证 backbone 拿到的是纯净潜状态而非已被 AE 平滑过的序列，否则动力学建模就变平凡了。
 
-2. **潜空间联合损失 $\mathcal{L}_\text{Pred} + \mathcal{L}_\text{Align}$**:
+**2. 潜空间联合损失 $\mathcal{L}_\text{Pred} + \mathcal{L}_\text{Align}$：让预测潜状态既"幅度对"又"方向对"。**
 
-    - 功能：让预测潜状态 $\widehat{\mathbf{Z}}_Y$ 既"幅度对"又"方向对"。
-    - 核心思路：总损失 $\mathcal{L}_\text{Total} = \alpha \cdot \|\mathbf{Z}_Y - \widehat{\mathbf{Z}}_Y\|_F^2 + \beta \cdot (1 - \cos(\mathbf{Z}_Y, \widehat{\mathbf{Z}}_Y))$。前者是 Frobenius 范数预测损失，强约束数值大小；后者是 cosine 对齐损失，强约束方向一致。作者在 §4 给了信息论解释：$\mathcal{L}_\text{Pred}$ 可看作最大化 $I(\mathbf{Z}_Y; \widehat{\mathbf{Z}}_Y)$ 的变分下界（在高斯假设下退化成 squared error），$\mathcal{L}_\text{Align}$ 可看作 InfoNCE 简化形式后最大化 $I(\mathbf{Y}; \widehat{\mathbf{Z}}_Y)$ 的实用代理。
-    - 设计动机：消融显示单用一个都明显弱于两个一起用，且 ranking 一致是 "full > w/o Align > w/o Pred ≈ baseline"。Pred 单干会缺方向约束、Align 单干又缺幅度约束。默认权重 $\alpha=10, \beta=15$ 在 Pred-Align 二维热图中位于一大片"广平台"上，不需要精细调参。
+只把潜状态拉到数值接近还不够——方向（即动力学走向）对不对同样关键，单一损失各有盲区。总损失 $\mathcal{L}_\text{Total} = \alpha\cdot\|\mathbf{Z}_Y - \widehat{\mathbf{Z}}_Y\|_F^2 + \beta\cdot(1 - \cos(\mathbf{Z}_Y,\widehat{\mathbf{Z}}_Y))$：前者 Frobenius 范数强约束幅度，后者 cosine 强约束方向。作者给了信息论解释——$\mathcal{L}_\text{Pred}$ 是最大化 $I(\mathbf{Z}_Y;\widehat{\mathbf{Z}}_Y)$ 的变分下界（高斯假设下退化成平方误差），$\mathcal{L}_\text{Align}$ 是 InfoNCE 简化后最大化 $I(\mathbf{Y};\widehat{\mathbf{Z}}_Y)$ 的实用代理。消融证实两者缺一不可，ranking 一致是 "full > w/o Align > w/o Pred ≈ baseline"：Pred 单干缺方向、Align 单干缺幅度。默认权重 $\alpha=10,\beta=15$ 落在一大片"广平台"上，不挑参数。
 
-3. **彻底拒绝观察空间损失（Perceptual Loss）**:
+**3. 彻底拒绝观察空间损失（Perceptual Loss）：把监督信号整条锁死在潜空间内。**
 
-    - 功能：明确把整个监督信号锁在潜空间内，不让解码器后的 MSE 介入训练。
-    - 核心思路：作者额外尝试加一个 $\mathcal{L}_\text{Perc} = \|\widehat{\mathbf{Y}} - \mathbf{Y}\|^2$ 并发现这个看似自然的"双保险"反而会破坏稳定的潜空间——因为冻结解码器是非线性的，潜空间的微小偏差被放大成大幅重建误差，反向传到 backbone 的梯度噪声很大。所以最终训练 recipe 默认**关掉** $\mathcal{L}_\text{Perc}$。
-    - 设计动机：这一条颠覆了"既在潜空间监督、也在观察空间监督就稳"的常规直觉，是对作者中心论点（潜空间预测足以做好 TSF）最强的实证支持。
+直觉上"既在潜空间监督、又在解码后的观察空间补个 MSE"应该更稳，像上了双保险。但作者尝试加 $\mathcal{L}_\text{Perc} = \|\widehat{\mathbf{Y}} - \mathbf{Y}\|^2$ 后发现它反而破坏稳定的潜空间：冻结解码器是非线性的，潜空间的微小偏差被它放大成大幅重建误差，反传回 backbone 的梯度噪声很大。所以最终 recipe 默认**关掉** $\mathcal{L}_\text{Perc}$。这一条颠覆了"多加一个观察空间损失总没坏处"的常规直觉，也是对"潜空间监督本身就足以做好 TSF"这个中心论点最硬的实证支撑。
 
 ### 损失函数 / 训练策略
 两阶段。**Stage 1**：用 $\mathcal{L}_\text{Rec}$ 预训练 AutoEncoder（MAE 重建，逐时刻），完成后参数全部冻结。**Stage 2**：用 $\mathcal{L}_\text{Total} = 10 \cdot \mathcal{L}_\text{Pred} + 15 \cdot \mathcal{L}_\text{Align}$ 训练 backbone，输入 $\mathbf{Z}_X$ 输出 $\widehat{\mathbf{Z}}_Y$，最后再由冻结 $\mathcal{D}$ 解码。AdamW + cosine 调度 + early stopping (patience=5)。

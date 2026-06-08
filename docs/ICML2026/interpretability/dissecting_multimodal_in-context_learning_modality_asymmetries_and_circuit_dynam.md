@@ -38,30 +38,23 @@ tags:
 **核心 idea**：用"先 M1 高多样性预训练装好 induction 电路、再让 M2 通过 projector 嵌入到已有电路上"这套两阶段训练，让"多模态 ICL = 主模态电路 + 次模态对齐"成为可解释的因果链。
 
 ## 方法详解
-本质上是一个 controlled testbed + 一套电路诊断指标，再加一次在真实 MLLM 上的因果验证。
 
 ### 整体框架
-两层 decoder Transformer，使用 RMSNorm/SiLU/RoPE 等现代组件。数据由 $\mathcal{X}_1,\mathcal{X}_2$ 两个 GMM 生成，类原型 $\mu_k\sim\mathcal{N}(0,I_{D_m}/D_m)$，类内样本 $x_i=(\mu_k+\varepsilon_m\eta)/\sqrt{1+\varepsilon_m^2}$，可独立调 $K_m$、$\varepsilon_m$、burstiness $B$ 与 Zipf $\alpha_m$。单模态上下文是 $x_1,\ell_1,\ldots,x_N,\ell_N,x_q$；多模态上下文为三元组交错 $x_i,x'_i,\ell_i$，其中 $\mathcal{L}_2\subset\mathcal{L}_1$ 镜像 MLLM 中"次模态对齐到主词表"的实践。评测严格区分 IWL（训练分布内 i.i.d. 测试）、ICL（全新类只能靠上下文）与 swapped-label ICL（打乱上下文标签）。多模态训练采两阶段：先在 M1 上预训练 decoder，再加 MLP projector 把 M2 投到 M1 嵌入空间联合训练，可选在 projector 前面塞一个 M2 预训练 ViT encoder。
+本文不训练一个新模型，而是搭一个可控的合成 testbed 来回答"多模态 ICL 是被哪一边的数据复杂度驱动、又落在哪条电路上"。骨架是两层 decoder Transformer，但刻意补齐 RMSNorm/SiLU/RoPE 等现代组件，让结论能外推到真实 MLLM。数据由 $\mathcal{X}_1,\mathcal{X}_2$ 两个 GMM 生成，类原型 $\mu_k\sim\mathcal{N}(0,I_{D_m}/D_m)$，类内样本 $x_i=(\mu_k+\varepsilon_m\eta)/\sqrt{1+\varepsilon_m^2}$，可独立调每个模态的类数 $K_m$、噪声 $\varepsilon_m$、burstiness $B$ 与 Zipf 偏度 $\alpha_m$。单模态上下文是 $x_1,\ell_1,\ldots,x_N,\ell_N,x_q$；多模态上下文换成三元组交错 $x_i,x'_i,\ell_i$，并令 $\mathcal{L}_2\subset\mathcal{L}_1$ 来镜像 MLLM 里"次模态对齐到主词表"的实践。评测严格区分 IWL（训练分布内 i.i.d. 测试）、ICL（全新类只能靠上下文）与 swapped-label ICL（打乱上下文标签）。多模态训练走两阶段：先在 M1 上预训练 decoder，再加 MLP projector 把 M2 投到 M1 的嵌入空间联合训练，可选在 projector 前塞一个 M2 预训练 ViT encoder。
 
 ### 关键设计
 
-1. **现代架构下的单模态 ICL 重测**:
+**1. 现代架构下的单模态 ICL 重测：先确认地基**
 
-    - 功能：检验"高 $K$、高 $B$、$\alpha\approx 1$、$\varepsilon$ 大促进 ICL"等 Reddy/Chan 的结论是否在带 RoPE 的现代 decoder 上仍成立，并量化模型规模与 PE 对 ICL 阈值的影响。
-    - 核心思路：固定数据复杂度，扫层数、head 数与位置编码。结果 (Fig. 2)：单模态分布性结论全部重现；但放大模型反而偏向 IWL——head 数比层数影响更强，因为多头允许把 item-label 记忆切分到子空间形成"低 loss 捷径"；RoPE 相比 APE 在低数据复杂度区显著拉低 ICL 准确率（attention 可视化里 previous-token head 与 induction head 都更模糊），需要更高数据复杂度才能扛过这个 bias。作者还顺带评测了 ALiBi 与 Hybrid PE，发现相对位置编码普遍比 APE 弱在"基于 offset 的简单 copy 操作"上。
-    - 设计动机：先把"现代架构 ≠ 简化架构"这层差异说清楚，才能让后续多模态结论站得住。
+后续所有多模态结论都建立在"现代 decoder 与简化 attention-only 模型行为一致"这一假设上，所以作者先把 Reddy/Chan 的单模态结论在带 RoPE 的两层 decoder 上重跑一遍。做法是固定数据复杂度、扫层数、head 数与位置编码（Fig. 2）。结果有两个层面：一方面"高 $K$、高 $B$、$\alpha\approx 1$、$\varepsilon$ 大促进 ICL"等分布性结论全部重现；另一方面又冒出现代架构特有的现象——放大模型反而偏向 IWL，且 head 数比层数影响更强，因为多头允许把 item-label 记忆切分到子空间，形成一条"低 loss 捷径"。更关键的是位置编码：RoPE 相比 APE 在低数据复杂度区显著拉低 ICL 准确率，attention 可视化里 previous-token head 与 induction head 都更模糊，需要更高数据复杂度才能扛过这个 bias；顺带评测的 ALiBi 与 Hybrid PE 也印证相对位置编码普遍弱于 APE 在"基于 offset 的简单 copy 操作"上。把这层"现代架构 ≠ 简化架构"的差异说清楚，多模态部分才站得住。
 
-2. **多模态学习非对称：主-次模态的因果分工**:
+**2. 多模态学习非对称：主-次模态的因果分工**
 
-    - 功能：用合成数据扫 $K_2,B,\varepsilon_2,\alpha_2$ 与 decoder 规模，定位"是谁在驱动多模态 ICL"。
-    - 核心思路：固定 $K_1=8192$ 高多样性主模态预训练后，把次模态 M2 接入；Fig. 4a 显示 $K_2$ 仅需 256 就能让 ICL 接近 95%，$B$ 同步显著拉升 ICL 但拉低 IWL；提高 $\varepsilon_2$ 比提高 $\varepsilon_1$ 对 ICL 增益大得多；当 $\alpha_1\approx 1$（与自然语言分布吻合）时，$\alpha_2\approx 1$ 也最优。Fig. 5 显示放大 decoder（更深或更宽）反而能用更少 M2 数据达到同等 ICL，与单模态趋势相反——增量容量被用于"把 M2 接到现成 ICL 电路"而非记忆。作者还做了 early-fusion 从头联合训练对照（无 M1 预训练），结果非对称翻转：模型变成对 M2 更敏感，证明非对称源于训练 curriculum 而非架构。
-    - 设计动机：在干净分布下隔离"是哪一边的数据复杂度起决定作用"，得到"M1 装电路、M2 提供可区分信号"这条核心论断；同时解释为什么 MLLM 规模扩展能稳定提升多模态 ICL。
+这是全文的核心论断——隔离出到底是哪一边的数据复杂度决定多模态 ICL。作者固定 $K_1=8192$ 的高多样性主模态预训练后接入次模态 M2，然后在干净分布下系统扫 $K_2,B,\varepsilon_2,\alpha_2$ 与 decoder 规模。结果呈现强烈非对称：$K_2$ 仅需 256 就能让 ICL 接近 95%（Fig. 4a），$B$ 同步显著拉升 ICL 但拉低 IWL，提高 $\varepsilon_2$ 比提高 $\varepsilon_1$ 对 ICL 增益大得多，且当 $\alpha_1\approx 1$（贴合自然语言分布）时 $\alpha_2\approx 1$ 也最优。规模上的趋势更与单模态相反——放大 decoder（更深或更宽）反而能用更少 M2 数据达到同等 ICL（Fig. 5），说明增量容量被用来"把 M2 接到现成 ICL 电路"而非记忆。为了证明非对称来自训练顺序而非结构，作者还做了无 M1 预训练的 early-fusion 从头联合训练对照，此时非对称直接翻转、模型转为对 M2 更敏感。由此得到"M1 装电路、M2 提供可区分信号"的分工图景，也顺势解释了为何 MLLM 规模扩展能稳定提升多模态 ICL。
 
-3. **进度指标 + head knockout 的电路诊断协议**:
+**3. 进度指标 + head knockout 的电路诊断协议**
 
-    - 功能：即便注意力分布在 RoPE 下变模糊，也能定量追踪 PH/IH 电路的形成、并用 head 消融做因果验证。
-    - 核心思路：定义四个指标——$\mathrm{PHStrength}_m^{(1)}$ 为第 $m$ 层所有 token 注意前一 token 的平均权重；多模态里加 $\mathrm{PHStrength}_m^{(2)}$ 跨越交错 offset；$\mathrm{IndStrength}_m$ 测 target token 对同类上下文 label 的注意；$\mathrm{TLA}_m$ 是 target 对所有 label 位置注意总和；$\mathrm{CLA}=\mathbb{P}(\hat{y}\in\{y_i\}_{i=1}^N)$ 测预测是否来自上下文。把所有 run 的指标与 ICL 准确率做 Pearson 相关并训练 random forest 回归器预测准确率（$R^2$ 单模态/多模态都 ≥0.91）。再用 head knockout（把单头 attention 全置零）做因果验证：消 PH/IH 头分别使准确率从 0.97 跌到 0.20/0.06；modality zeroing 把 M2 置零跌到 33.6%，M1 置零跌到 6.3%，证明 induction 电路扎根在主模态嵌入空间但确实依赖 M2 特征做区分。Sec. 5 把同一协议搬到 Qwen2.5-VL-3B 上：MLLM top PH/IH heads 与文本 backbone Qwen2.5-3B-Instruct 的 ranking 高度重叠（top-5 PH 有 4 个落在 LLM top-10）；Open-MI 上消融 top-5 PH/IH heads 让 ICL 从 0.74 跌到 0.56 接近随机；LoRA 微调过程中 PHStrength 几乎平、IndStrength 与 ICL 同步上升、CLA 顶住 1.0，与合成实验 Stage 2 动力学完全吻合。
-    - 设计动机：把"相关"升级为"因果"，让"induction head = 多模态 ICL 核心机制"这一论断有可证伪的实验支撑。
+RoPE 让注意力分布变弥散，肉眼已难判断电路是否形成，所以作者设计一套可量化、可消融的诊断协议把"相关"升级为"因果"。先定义五个指标：$\mathrm{PHStrength}_m^{(1)}$ 是第 $m$ 层所有 token 注意前一 token 的平均权重，多模态里再加跨交错 offset 的 $\mathrm{PHStrength}_m^{(2)}$；$\mathrm{IndStrength}_m$ 测 target token 对同类上下文 label 的注意；$\mathrm{TLA}_m$ 是 target 对所有 label 位置的注意总和；$\mathrm{CLA}=\mathbb{P}(\hat{y}\in\{y_i\}_{i=1}^N)$ 测预测是否真来自上下文。把所有 run 的这些指标与 ICL 准确率做 Pearson 相关、再训练 random forest 回归器预测准确率，单/多模态的 $R^2$ 都 ≥0.91，等于用两三个指标就能解释最终准确率的绝大部分方差。因果验证靠 head knockout（把单头 attention 全置零）：消 PH 头让准确率从 0.97 跌到 0.20、消 IH 头跌到 0.06；modality zeroing 把 M2 置零跌到 33.6%、M1 置零跌到 6.3%，说明 induction 电路扎根在主模态嵌入空间却仍依赖 M2 特征做区分。最后把同一协议搬到 Qwen2.5-VL-3B：它的 top PH/IH heads 与文本 backbone Qwen2.5-3B-Instruct 的 ranking 高度重叠（top-5 PH 有 4 个落在 LLM top-10），Open-MI 上消融 top-5 PH/IH heads 让 ICL 从 0.74 跌到 0.56 接近随机，LoRA 微调过程中 PHStrength 几乎平、IndStrength 与 ICL 同步上升、CLA 顶住 1.0，与合成实验 Stage 2 的动力学完全吻合。
 
 ### 损失函数 / 训练策略
 所有模型用 SGD（lr $1\times 10^{-3}$、weight decay $1\times 10^{-6}$、batch 128）训到收敛；多模态默认配置 $K_1=8192,K_2=256,B=4,\varepsilon_1=\varepsilon_2=0.1,\alpha_1=\alpha_2=0$；所有实验 5 种子平均，heatmap 标准差通常 <0.03。

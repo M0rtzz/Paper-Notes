@@ -41,26 +41,15 @@ tags:
 DPN-LE 是一种 training-free inference-time editing 方法。它不改模型权重，而是在生成时对选中的 MLP hidden neurons 加上或减去人格方向的 steering signal。方法分为 steering vector 构造、双向神经元选择和稀疏干预三步。
 
 ### 整体框架
-给定某个 Big Five 特质，例如 Neuroticism，作者准备 1,000 对 high-trait 和 low-trait contrastive samples。对每一层 Transformer 的 MLP hidden state，在最后 token 位置抽取激活。先计算高低样本平均差得到 layer-wise steering vector，再计算每个神经元的 Cohen's $d$，筛选出高特质方向和低特质方向的互斥神经元集合。推理时，如果想增强该特质，就沿 steering vector 对选中神经元做正向干预；如果想抑制该特质，就反向干预。
+给定某个 Big Five 特质（例如 Neuroticism），DPN-LE 先用 1,000 对 high-trait / low-trait 对比样本统计每层 MLP 在最后 token 位置的激活，凝练出"这层往哪个方向偏就代表更高特质"的方向向量；再用统计显著性和响应幅度双重过滤，从全部神经元里挑出真正区分高低人格的稀疏互斥子集；最后在推理时只对这一小撮神经元沿方向加减信号——想增强特质就正向干预、想抑制就反向干预。输入是一条普通生成请求，输出是人格被定向调节、但通用能力基本不变的回复。
 
 ### 关键设计
-1. **Steering Vector Construction**:
 
-    - 功能：为每层构造高特质相对低特质的表示方向。
-    - 核心思路：对第 $l$ 层 MLP hidden state，计算 $s_l = mean(h_l^+) - mean(h_l^-)$，其中 $h_l^+$ 和 $h_l^-$ 分别来自 high-trait 与 low-trait 样本。这个向量表示该人格特质在该层激活空间中的平均偏移。
-    - 设计动机：人格不是单个 token 或单个 prompt 的局部现象，用成对样本平均差可以降低个例噪声，捕捉稳定的人格方向。
+**1. Steering Vector Construction：用成对样本平均差刻画人格方向。** 人格不是单个 token 或单条 prompt 的局部现象，落在任意一例上都带噪声。DPN-LE 对第 $l$ 层 MLP hidden state 取高低样本的平均差 $s_l = \mathrm{mean}(h_l^+) - \mathrm{mean}(h_l^-)$，其中 $h_l^+$、$h_l^-$ 分别来自 high-trait 与 low-trait 样本。成对平均把个例噪声抹平，留下该特质在这层激活空间中稳定的平均偏移，作为后续筛选和干预共用的方向基准。
 
-2. **Dual-Direction Neuron Selection**:
+**2. Dual-Direction Neuron Selection：双标准挑出人格专属的稀疏子集。** 神经元具有多功能性，只看单一指标都会选错：只看效应量会混进一堆弱响应神经元，只看激活幅度又会选到统计上不稳的差异。DPN-LE 要求一个神经元同时满足 $|d_l| > \tau_d$ 和 $|s_l| > \tau_q$——Cohen's $d$ 保证高低样本差异有统计意义，steering magnitude 的分位阈值保证响应足够强。通过筛选后，$d_l > \tau_d$ 的进入 high set、$d_l < -\tau_d$ 的进入 low set，形成两个互斥方向的稀疏集合，把与通用语言处理纠缠的冗余神经元尽量排除在外。
 
-    - 功能：从所有 MLP 神经元中挑出真正区分高/低人格方向的稀疏子集。
-    - 核心思路：一个神经元必须同时满足 $|d_l| > \tau_d$ 和 $|s_l| > \tau_q$。Cohen's $d$ 保证高低样本差异有统计意义，steering magnitude quantile 保证响应足够强。$d_l > \tau_d$ 的神经元进入 high set，$d_l < -\tau_d$ 的进入 low set。
-    - 设计动机：只看效应量会选太多弱响应神经元，只看幅度又可能选到统计不稳的激活差。双标准能更好排除与通用语言处理相关的冗余神经元。
-
-3. **Sparse Intervention and Weighted Variant**:
-
-    - 功能：在推理时用极少神经元控制人格，同时保留其他能力。
-    - 核心思路：DPN-LE 对选中神经元统一施加 $h_i \leftarrow h_i + \gamma s_i$；DPN-LEw 在选择更多神经元时按 $|d_l|$ 排名给权重 $w_i \in [0.75, 1.0]$，让更人格专属的神经元干预更强。
-    - 设计动机：Q995 设置下每层约 70 个神经元，已经很稀疏，统一干预足够；当阈值放宽时，weighted intervention 可以缓解低特异性神经元带来的不稳定。
+**3. Sparse Intervention and Weighted Variant：极少神经元控人格、按特异性加权保稳定。** 默认只选约 0.5% 神经元（Q995 设置下每层约 70 个），已经足够稀疏，因此基础版 DPN-LE 对选中神经元统一施加 $h_i \leftarrow h_i + \gamma s_i$ 即可。当阈值放宽、选入更多神经元时，弱特异性神经元会带来不稳定，于是 DPN-LEw 按 $|d_l|$ 排名给权重 $w_i \in [0.75, 1.0]$，让越人格专属的神经元干预越强、边缘神经元干预越弱，在更宽集合下缓解副作用。
 
 ### 损失函数 / 训练策略
 DPN-LE 没有训练损失，也不微调模型。它只用 1,000 对 contrastive samples 统计激活。LLaMA-3-8B-Instruct 上干预层为 12-31，Qwen2.5-7B-Instruct 上为 14-27；LLaMA 的关键超参为 quantile threshold $q=0.995$、Cohen's $d$ threshold $\tau_d=0.8$、干预强度 $\gamma \in [0.0, 2.0]$。Qwen 因高低特质激活差较弱，使用更低的 $\tau_d=0.3$。默认配置约选择总 MLP 神经元的 0.5%。

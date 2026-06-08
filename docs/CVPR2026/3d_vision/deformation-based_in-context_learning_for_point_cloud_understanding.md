@@ -40,16 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-双网络架构：DEN 从 prompt input→target 对中提取任务 token $\hat{T}_{\text{task}}$；DTN 在 $\hat{T}_{\text{task}}$ 的 AdaLN-Zero 调制下对查询输入做形变。
+DeformPIC 想解决的是：点云 In-Context Learning 该怎么从一对 prompt（输入点云 → 目标点云）里读懂"这次要做什么任务"，再把这个任务原样套到查询点云上。它把整个过程拆成两步、两张网络来走。第一步由 Deformation Extraction Network（DEN）专门看 prompt：它读 prompt 的输入和目标，提炼出一个描述"这对点云之间发生了什么形变"的任务 token $\hat{T}_{\text{task}}$。第二步由 Deformation Transfer Network（DTN）接手：它拿着这个任务 token 当作"操作指令"，去调制一个 Transformer，让它对查询输入施加同样的形变，直接吐出形变后的点云。整条链路里没有任何掩码 token，输入输出都是完整点云，训练和推理走的是同一套流程。
 
 ### 关键设计
-1. **Deformation Extraction Network (DEN)**: 用 mini-PointNet 编码 prompt 的输入和目标 token，拼接可学习的 task token，通过 Transformer 提取 $\hat{T}_{\text{task}} = \mathcal{E}([T_{\text{task}} \| T_{P_i} \| T_{P_t}])$。设计动机：PIC 将 prompt 和 query 联合处理，但任务语义提取和几何重建是不同目标，解耦后更高效。
 
-2. **Deformation Transfer Network (DTN)**: 使用 AdaLN-Zero 将任务 token 注入 Transformer：
-    $h^{(l+1)} = h^{(l)} + \sigma^{(l)} \cdot \mathcal{A}[(1+\eta^{(l)}) \cdot \text{LN}(h^{(l)}) + \kappa^{(l)}]$
-   其中 $\sigma, \eta, \kappa$ 由 $\hat{T}_{\text{task}}$ 通过零初始化的 MLP 生成。设计动机：AdaLN-Zero 来自 DiT，允许细粒度的逐层条件化。
+**1. Deformation Extraction Network：把"任务是什么"和"几何怎么算"拆开。**
 
-3. **训练-推理一致性**: 训练和推理时执行相同的形变过程——输入查询点云，输出形变后的点云，无需掩码操作。
+PIC/PIC++ 那一路把 prompt 和 query 拼在一起喂进同一个网络联合处理，但"从 prompt 里读出任务语义"和"对 query 做几何重建"其实是两件目标不同的事，混在一起反而互相牵扯。DeformPIC 把前者单独交给 DEN：用一个 mini-PointNet 分别把 prompt 的输入点云、目标点云编码成 token $T_{P_i}$、$T_{P_t}$，再拼上一个可学习的 task token，一起过 Transformer，输出提炼后的任务表示 $\hat{T}_{\text{task}} = \mathcal{E}([T_{\text{task}} \| T_{P_i} \| T_{P_t}])$。这样 DEN 只管回答"这对 prompt 体现了什么形变"，把几何重建留给下游，分工清晰也更高效。
+
+**2. Deformation Transfer Network：用 AdaLN-Zero 把任务 token 逐层注入形变过程。**
+
+拿到任务 token 后，怎么让它真正"指挥"查询点云的形变？DTN 借用了 DiT 里的 AdaLN-Zero 条件化方式，把 $\hat{T}_{\text{task}}$ 注入 Transformer 的每一层：
+
+$$h^{(l+1)} = h^{(l)} + \sigma^{(l)} \cdot \mathcal{A}[(1+\eta^{(l)}) \cdot \text{LN}(h^{(l)}) + \kappa^{(l)}]$$
+
+其中缩放/偏移因子 $\sigma^{(l)}, \eta^{(l)}, \kappa^{(l)}$ 都是任务 token 经过一组零初始化的 MLP 现算出来的，逐层各不相同，因此能做到细粒度的、随深度变化的条件控制。零初始化意味着训练初期 $\sigma\approx0$，DTN 退化成一个无条件 Transformer，再慢慢学会用任务 token 去偏置形变——这让训练起步更稳，不会一开始就被随机的条件信号扰乱。
+
+**3. 训练-推理一致性：彻底甩掉掩码，两端走同一条路。**
+
+MPM 范式有个根上的别扭：训练时目标点云被部分掩码，模型还能偷看可见的那部分；可推理时目标完全未知，于是训练和推理面对的输入根本不是一回事。DeformPIC 把任务重新定义成"对查询输入做形变"后，这个 mismatch 自然消失了——无论训练还是推理，DTN 接到的都是完整的查询输入点云，输出都是形变后的完整点云，全程没有掩码操作。形变本身又天然保持几何连续性，比从抽象掩码 token 凭空预测坐标更贴合 3D 数据的本质。
+
+### 一个完整示例：把一对配准 prompt 套到查询上
+以配准任务为例走一遍。给定一对 prompt：输入是一只姿态歪斜的飞机点云、目标是它摆正后的版本——这对点云之间的关系就是一次刚体旋转。DEN 先把这两片点云各编码成 token，连同 task token 过 Transformer，提炼出 $\hat{T}_{\text{task}}$，其中已经隐含了"该往哪个方向转多少"的形变信息。接着来一个全新的、同样歪斜的查询点云（比如一把椅子）。DTN 拿 $\hat{T}_{\text{task}}$ 算出每一层的 $\sigma/\eta/\kappa$，逐层调制查询 token 的更新，最终输出一片被"摆正"的椅子点云。整个过程查询从头到尾都是完整点云，没有任何掩码占位符，模型做的就是把 prompt 里学到的那次形变原样迁移过来。
 
 ### 损失函数 / 训练策略
 - $L_2$ Chamfer Distance：$\mathcal{L} = \frac{1}{|\hat{R}|}\sum_{p \in \hat{R}} \min_{g \in R} \|p - g\|_2^2 + \frac{1}{|R|}\sum_{g \in R} \min_{p \in \hat{R}} \|g - p\|_2^2$

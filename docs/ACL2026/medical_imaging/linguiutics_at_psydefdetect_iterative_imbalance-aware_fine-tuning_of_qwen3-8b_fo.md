@@ -38,34 +38,29 @@ tags:
 **核心 idea**：在极端长尾临床文本分类中，模型容量只是必要条件，真正决定 leaderboard 的是 leakage-safe validation、少数类数据构造和面向 macro F1 的后处理校准。
 
 ## 方法详解
-系统由三大阶段组成：数据预处理与少数类增强、两套 grouped 5-fold QLoRA 训练、OOF 校准与多种子概率融合。每个组件都针对一个早期失败模式：encoder 容量不足、单 fold 泛化差、Level 7 多数类吸引过强、Level 8 等稀有类 recall 近零。
 
 ### 整体框架
-输入由三部分组成：DMRS Label Guide、最近 30 轮对话上下文和输出指令。模型只需输出 0 到 8 的整数标签。训练数据是 PsyDefConv 的 train+validation 合并，共 1,864 条训练样本，另有 472 条测试样本；源对话数为 200。作者使用 dialogue_id 做 grouped stratified 5-fold，确保同一对话及其增强样本不会跨 fold。
 
-模型层面，系统用 Qwen3-8B 作为 base model，4-bit NF4 量化后通过 QLoRA 微调。推理后处理层面，先在 Anchor OOF 预测上搜索 class-specific logit bias，再把 Anchor 和 Seed-A 两套 5-fold 模型的测试概率按 30/70 融合，并用 $\tau_7=0.69$ 的多数类保护门决定是否应用 minority rerouting。
+这个参赛系统要解决的是一个极端长尾的临床文本分类问题：把心理支持对话里 seeker 的发言归到 DMRS 框架的 9 个心理防御等级。难点不在模型大小，而在数据——合并后的 1,864 条训练样本里 Level 7 占一半多、Level 8 只有 1.5%，官方又用 macro F1，逼着系统必须照顾稀有类。作者整条流水线就是围绕这点搭的：先做数据预处理与少数类增强，再训两套 grouped 5-fold 的 Qwen3-8B QLoRA，最后用 OOF 校准 + 多种子概率融合把稀有类的 recall 捞回来。每个组件都对着一个早期失败模式：encoder 容量不足、单 fold 泛化差、Level 7 吸引过强、Level 8 等稀有类 recall 近零。
+
+输入侧，每条样本拼成三段：DMRS Label Guide、最近 30 轮对话上下文、输出指令，模型只需吐出 0–8 的整数标签。训练数据是 PsyDefConv 的 train+validation 合并（1,864 条，另有 472 条测试），源对话 200 个。关键的一步是用 dialogue_id 做 grouped stratified 5-fold，保证同一对话及其增强样本不会被拆到不同 fold——这直接决定了后面 OOF 信号可不可信。
 
 ### 关键设计
-1. **面向长尾的 Qwen3-8B QLoRA 架构**:
 
-	- 功能：提供足够的语义容量，区分临床上相近的心理防御类别。
-	- 核心思路：使用 4-bit NF4 + double quant 把 Qwen3-8B 的峰值显存从约 32GB 降到约 8GB；LoRA 作用于 q/k/v/o/gate/up/down/score，rank/alpha 为 128/256，dropout 为 0.1，可训练参数约 31M，占 0.4%。
-	- 设计动机：BERT-family encoder 最高 validation macro F1 只有 0.314，且 Classes 3、5、8 多次为 0；更大的生成式模型提供了更强语境理解能力，但必须用 PEFT 控制硬件成本。
+**1. 面向长尾的 Qwen3-8B QLoRA 架构：用更强的语义容量区分临床上相近的防御类别。**
 
-2. **round-robin 少数类词法增强与 grouped CV**:
+前期作者把 BERT 家族（MentalBERT、MentalRoBERTa、DeBERTa、RoBERTa）都试了一遍，validation macro F1 最高只有 0.314，而且 Class 3、5、8 反复掉到 0——encoder 的容量根本撑不住临床上语义重叠的细类。于是换成生成式的 Qwen3-8B 提供更强的语境理解，但 8B 模型在 24GB 卡上必须靠 PEFT 压成本：4-bit NF4 + double quant 把峰值显存从约 32GB 压到约 8GB，LoRA 挂在 q/k/v/o/gate/up/down/score 上，rank/alpha 为 128/256，dropout 0.1，可训练参数约 31M、只占 0.4%。容量上来了，硬件也还扛得住。
 
-	- 功能：提高稀有类样本覆盖，同时避免增强样本泄漏到不同 fold。
-	- 核心思路：对 Levels 2、3、4、5、8 进行 $k=3$ round-robin lexical mutation，模式包括 contraction + hedging、style shift + filler、hesitation markers；只改 seeker utterance，不改上下文。增强后少数类从 28-84 条提升到 65-252 条。
-	- 设计动机：防御机制标签依赖 utterance 中的心理信号，不能用过强 paraphrase 改写破坏标签；grouped CV 保证同源对话和增强样本在同一 fold，论文报告 0 leaked dialogues。
+**2. round-robin 少数类词法增强 + grouped CV：在不泄漏对话的前提下把稀有类样本补厚。**
 
-3. **OOF bias、Seed-A 融合和 $\tau_7$ 保护门**:
+稀有类样本太少，但又不能随便 paraphrase——防御机制标签恰恰藏在 utterance 的微妙措辞里，改重了标签就废了。作者的做法很克制：只对 Levels 2、3、4、5、8 做 $k=3$ 的 round-robin 词法变异（contraction + hedging、style shift + filler、hesitation markers 等模式），而且只改 seeker utterance、不动上下文，增强后少数类从 28–84 条提到 65–252 条。配套的 grouped CV 保证同源对话和它的增强副本落在同一 fold，论文报告 0 leaked dialogues，这样增强才不会变成偷看验证集。
 
-	- 功能：在不牺牲多数类 precision 的情况下恢复 minority recall。
-	- 核心思路：在 OOF 预测上随机搜索约 22,000 个 bias vector，预测规则为 $\hat{y}=\arg\max_c[\log p_c+\delta_c]$；$\delta_7<0$ 抑制多数类，$\delta_8>0$ 提升 Unclear。测试时用 $p_{blend}=0.30p_{anchor}+0.70p_{seedA}$，若 $p_{blend,7}\geq0.69$ 则锁定 Level 7，否则应用 bias rerouting。
-	- 设计动机：raw probabilities 仍偏向 Level 7。宏 F1 需要少数类召回，但直接强行 reroute 会伤害多数类；保护门将“确定的多数类”和“模糊样本”分开处理。
+**3. OOF bias + Seed-A 融合 + $\tau_7$ 保护门：在不伤多数类 precision 的前提下把少数类 recall 捞回来。**
+
+即便训练做对了，raw probability 还是会往 Level 7 倒。作者先在 Anchor 的 OOF 预测上随机搜索约 22,000 个 bias 向量，预测规则是 $\hat{y}=\arg\max_c[\log p_c+\delta_c]$，其中 $\delta_7<0$ 压多数类、$\delta_8>0$ 抬 Unclear。测试时再把 Anchor 和 Seed-A 两套 5-fold 模型的概率按 30/70 融合，$p_{blend}=0.30\,p_{anchor}+0.70\,p_{seedA}$。关键是那道 $\tau_7=0.69$ 的保护门：若 $p_{blend,7}\geq0.69$ 就直接锁定 Level 7，否则才放开 bias rerouting。这等于把“模型很确定是多数类”和“模糊样本”分开处理——确定的不动，模糊的才往少数类掰，既要 macro F1 的稀有类召回，又不至于把多数类误伤。
 
 ### 损失函数 / 训练策略
-训练使用 inverse-square-root class weighting，权重公式为 $w_c=(1/\sqrt{n_c})/\sum_i(1/\sqrt{n_i})$，例如 $w_8=1.67$、$w_5=1.29$、$w_7=0.28$。同时使用 label smoothing $\epsilon=0.05$，防止 Level 7 过早 logit saturation。优化器为 AdamW，学习率 $1.2\times10^{-4}$，weight decay 0.01，cosine annealing，8% warmup，per-device batch size 2，gradient accumulation 8，有效 batch size 16，gradient clip 0.3，每 fold 10 epochs，最大序列长度 1024，bf16，硬件为 NVIDIA RTX 3090 Ti 24GB。
+训练使用 inverse-square-root class weighting，权重 $w_c=(1/\sqrt{n_c})/\sum_i(1/\sqrt{n_i})$，例如 $w_8=1.67$、$w_5=1.29$、$w_7=0.28$，再叠 label smoothing $\epsilon=0.05$ 防止 Level 7 过早 logit saturation。优化器为 AdamW，学习率 $1.2\times10^{-4}$，weight decay 0.01，cosine annealing + 8% warmup，per-device batch size 2、gradient accumulation 8（有效 batch size 16），gradient clip 0.3，每 fold 10 epochs，最大序列长度 1024，bf16，硬件为 NVIDIA RTX 3090 Ti 24GB。
 
 ## 实验关键数据
 

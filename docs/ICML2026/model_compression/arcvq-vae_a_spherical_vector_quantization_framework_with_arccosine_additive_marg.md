@@ -38,36 +38,30 @@ tags:
 **核心 idea**：用 Spherical Angular-Margin Prior (SAMP) = Ball-Bounded Norm Regularization (限制码本在时变 Euclidean 球内) + ArcCosine Additive Margin Loss (在球面上加角度 margin 推开 latent)，让码本几何上均匀分散、利用率大幅上升。
 
 ## 方法详解
-SAMP 由两个互补组件构成。Ball-Bounded Norm Regularization 是个"硬约束"，每个 batch 后强行把超界码本投影回球内；ArcCosine Additive Margin Loss 是个"软约束"，通过 loss 鼓励 latent 角度分散。两者共同把 VQ-VAE 重塑为球面学习问题。
 
 ### 整体框架
-- **架构**：与 VQGAN 完全相同的 encoder-decoder + codebook，**不引入任何新网络组件**。改动只在两处：(1) 每个 batch 后对码本做一次 norm clipping；(2) 在原 VQ loss 基础上加一项 ArcLoss。
-- **训练循环**：标准 VQ-VAE forward → 算 $\mathcal{L}_\text{VQ}$（重建 + commit + codebook loss） → 算 $\mathcal{L}_\text{A}$（ArcLoss with stop-grad on codebook） → 总 loss $\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$ → backprop → batch 后对每个码本向量做 ball projection。
-- **推理 / 量化**：encoder 输出和码本都 ℓ2 归一化后做角余弦匹配，等价于在单位球上找最近码本。
-- **后续生成**：在 ArcVQ-VAE 训出的 $32^2$ token 上训练 LDM 作为 prior，sampling 250 步。
+ArcVQ-VAE 不动 VQGAN 的 encoder-decoder + codebook 网络结构，只把"码本怎么在 latent 空间排布"这件事重塑成球面学习问题。每个 batch 走标准 VQ-VAE forward，算重建 + commit + codebook 的 $\mathcal{L}_\text{VQ}$，再叠一项把 latent 推散的 ArcLoss $\mathcal{L}_\text{A}$，合成 $\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$ 反传；backprop 完成后再对每个码本向量做一次 ball projection 把范数压回界内。量化时 encoder 输出和码本都 ℓ2 归一化、用角余弦找最近码本，等价于在单位球上做最近邻；训出的 $32^2$ token 之后接 LDM 作 prior、sampling 250 步做生成。整套方案只多了"batch 后一次 norm clip + 一项 loss"，没有任何新网络组件。
 
 ### 关键设计
 
-1. **Ball-Bounded Norm Regularization（时变球约束）**:
+**1. Ball-Bounded Norm Regularization：用时变球约束切断范数失衡的正反馈。**
 
-    - 功能：限制每个码本向量的 ℓ2 范数不超过一个随训练步指数增长的上界 $M(t)$，从根上切断"码本范数失衡 → 高范数码本被偏好"的正反馈。
-    - 核心思路：初始化所有码本到单位球面 $\mathbf{e}_k^{(0)} \sim \ell_2(\text{Unif}(-1,1)^d)$。每个训练步设上界 $M(t) = \exp(\alpha t)$，$\alpha$ 取很小（如 $10^{-5}$）使 $M$ 在训练早期接近 1。每 batch 结束后对范数超界的码本做投影：$\mathbf{e}_k^{(t)} \leftarrow \frac{\mathbf{e}_k^{(t)}}{\|\mathbf{e}_k^{(t)}\|_2} M(t)$，未超界的保留。整个码本集合落在球 $\mathcal{C}^{(t)} \subset \mathbb{B}_{M(t)}^d$ 内。这把训练分两阶段：早期所有码本几乎都在单位球面附近，公平竞争 latent feature；后期球放大，让码本可以有更丰富的范数表达。
-    - 设计动机：作者通过 Figure 2 实证发现传统 VQ-VAE 训练后期，少数高频码本范数远超低频码本——而高范数 + 接近 latent 中心区 = 几乎垄断所有 latent 分配。把"早期严格、晚期放松"的球约束加进来直接打破这种 winner-takes-all 动力学。
+作者通过 Figure 2/3 实证发现，传统 VQ-VAE 的坍塌不是"采样概率低饿死"，而是一个几何动力学循环：被选中的码本沿 encoder 输出方向加速增长 ℓ2 范数，高范数码本又离 latent 中心区更近、更易被选中，于是少数码本垄断所有分配。这一设计直接针对范数这一环。它把所有码本初始化到单位球面 $\mathbf{e}_k^{(0)} \sim \ell_2(\text{Unif}(-1,1)^d)$，给每个训练步设一个指数增长的范数上界 $M(t) = \exp(\alpha t)$，$\alpha$ 取得很小（如 $10^{-5}$）让 $M$ 在训练早期紧贴 1。每个 batch 结束后对范数超界的码本投影回球面：$\mathbf{e}_k^{(t)} \leftarrow \frac{\mathbf{e}_k^{(t)}}{\|\mathbf{e}_k^{(t)}\|_2} M(t)$，没超界的保留，整个码本集合始终落在球 $\mathcal{C}^{(t)} \subset \mathbb{B}_{M(t)}^d$ 内。效果上这把训练分成"早期严格、晚期放松"两阶段：早期所有码本被压在单位球面附近公平竞争 latent，谁也没法靠范数优势垄断；后期球缓慢放大，才允许码本用更丰富的范数表达，winner-takes-all 的动力学在源头就被打破。
 
-2. **ArcCosine Additive Margin Loss（球面角度 margin）**:
+**2. ArcCosine Additive Margin Loss：把 ArcFace 的角度 margin 借到无监督 VQ 上推散 latent。**
 
-    - 功能：把 latent 向量 ℓ2 归一化到单位球面后，用借鉴 ArcFace 的 angular margin 推开它们，让每个 latent 占据不同球面区域、关联到不同码本。
-    - 核心思路：先把 encoder 输出 $z_{e,i}(x)$ 和码本 $e_j$ 都 ℓ2 归一化：$\hat{z}_i = z_{e,i}/\|z_{e,i}\|$, $\hat{e}_j = e_j/\|e_j\|$。量化规则等价改为最大角余弦：$k = \arg\max_j \hat{z}_i^\top \hat{e}_j$。然后对每对 $(\hat{z}_i, \hat{e}_j)$ 计算角度 $\theta_{i,j} = \arccos(\hat{z}_i^\top \hat{e}_j)$。ArcLoss 形如 ArcFace 的 additive margin softmax：$\mathcal{L}_\text{A} = -\frac{1}{K}\sum_j \log \frac{\sum_{i \in \mathcal{N}_j^{(k)}} e^{s\cos(\theta_{i,j}+m)}}{\sum_{i \in \mathcal{N}_j^{(k)}} e^{s\cos(\theta_{i,j}+m)} + \sum_{i \notin \mathcal{N}_j^{(k)}} e^{s\cos\theta_{i,j}}}$，其中 $\mathcal{N}_j^{(k)}$ 是离码本 $e_j$ 最近的 top-k 个 latent token 集合（作者取 k=3、$s=10$、$m=0.1$）。loss 把"latent 应该 angularly align 到它最近的码本"（正对）与"远离其他码本"（负对）显式拉开，margin $m$ 强制更紧的对齐。**关键 trick**：对码本应用 stop-gradient $\text{sg}(\hat{e}_j)$，让 ArcLoss 只回传到 encoder 不直接改码本——否则码本会被推向当前 batch 的 latent 分布而失去全局可分性。
-    - 设计动机：传统 VQ loss 只让 encoder feature "靠近最近码本"，但不约束 latent 之间是否分散；多个 latent 可能 collapse 到同一区域、共享一个码本。ArcLoss 把"latent 分散"显式写进 loss，且通过球面归一化让"近 vs 远"变成纯角度问题，避开了 Euclidean 空间中"近距离码本互相抢"的几何病。
+光均衡范数还不够——传统 VQ loss 只逼 encoder feature 靠近最近码本，却不管 latent 之间是否分散，多个 latent 仍可能挤在同一区域共享一个码本。这一设计把"latent 要散开"显式写进 loss。先把 encoder 输出和码本都 ℓ2 归一化 $\hat{z}_i = z_{e,i}/\|z_{e,i}\|$、$\hat{e}_j = e_j/\|e_j\|$，量化规则随之变成最大角余弦 $k = \arg\max_j \hat{z}_i^\top \hat{e}_j$，再对每对算角度 $\theta_{i,j} = \arccos(\hat{z}_i^\top \hat{e}_j)$。ArcLoss 套用 ArcFace 的 additive margin softmax 形式：
 
-3. **Decay-Weighted 联合损失 + Stop-Gradient on Codebook**:
+$$\mathcal{L}_\text{A} = -\frac{1}{K}\sum_j \log \frac{\sum_{i \in \mathcal{N}_j^{(k)}} e^{s\cos(\theta_{i,j}+m)}}{\sum_{i \in \mathcal{N}_j^{(k)}} e^{s\cos(\theta_{i,j}+m)} + \sum_{i \notin \mathcal{N}_j^{(k)}} e^{s\cos\theta_{i,j}}}$$
 
-    - 功能：在训练早期强约束角度结构、后期让模型专注重建精度，并通过 stop-grad 隔离 ArcLoss 对码本的直接干扰。
-    - 核心思路：总 loss $\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$ 其中 $\gamma(t) = \gamma_0 \exp(-\lambda t)$。$\gamma_0=1.0$，$\lambda$ 在 MNIST/CIFAR 取 $5\times 10^{-4}$、ImageNet 取 $10^{-4}$。早期 ArcLoss 权重大、强制 latent 球面分散；后期权重衰减、让 VQ loss 主导以保重建 fidelity。Stop-gradient 让 ArcLoss 只优化 encoder（推 latent 散开），码本由标准 VQ loss 间接更新——encoder 散开后，standard codebook update 自然把码本拉到更分散的 latent 上。
-    - 设计动机：直接让 ArcLoss 推码本会导致 batch-driven 局部坍塌——码本被推向当前 batch 的 latent 而失去全局分散性。把"latent 散开"和"码本跟随"职责分开，二者通过标准 VQ commit loss 间接耦合，训练稳定且不互相干扰。
+其中 $\mathcal{N}_j^{(k)}$ 是离码本 $e_j$ 最近的 top-k 个 latent token——VQ-VAE 没有 class label，作者就用这个 top-k 近邻集合当作隐式类别（取 k=3、$s=10$、$m=0.1$）。loss 把正对（latent 应角度对齐到最近码本）与负对（远离其他码本）显式拉开，margin $m$ 进一步逼出更紧的对齐。球面归一化的好处是把"近 vs 远"变成纯角度问题，绕开 Euclidean 空间里"近距离码本互抢 latent"的几何病。这里有个关键 trick：对码本施加 stop-gradient $\text{sg}(\hat{e}_j)$，让 ArcLoss 只回传到 encoder、不直接改码本——否则码本会被拽向当前 batch 的 latent 分布而丢掉全局可分性。
+
+**3. Decay-Weighted 联合损失：让角度结构早期主导、重建精度后期接管。**
+
+ArcLoss 和 VQ loss 的诉求会随训练阶段此消彼长，所以两者用一个时变权重耦合：$\mathcal{L}_\text{total} = \mathcal{L}_\text{VQ} + \gamma(t)\mathcal{L}_\text{A}$，其中 $\gamma(t) = \gamma_0 \exp(-\lambda t)$，$\gamma_0=1.0$，$\lambda$ 在 MNIST/CIFAR 取 $5\times 10^{-4}$、ImageNet 取 $10^{-4}$。早期 ArcLoss 权重大、强制 latent 在球面上散开；后期权重衰减、让 VQ loss 接管以保住重建 fidelity。配合第 2 点的 stop-gradient，职责被干净地切开：ArcLoss 只负责把 latent 推散，码本则由标准 VQ commit loss 间接跟随——encoder 一旦散开，常规 codebook update 自然把码本拉到更分散的 latent 上。如果反过来让 ArcLoss 直接推码本，就会出现 batch-driven 的局部坍塌（码本被当前 batch 拽走、失去全局分散），所以这种"latent 散开 + 码本跟随"的解耦既稳定又不互相干扰。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_\text{VQ}$ 是标准 VQ loss：reconstruction + codebook + commit（系数 $\beta$）。$\mathcal{L}_\text{A}$ 是 ArcLoss（$s=10$, $m=0.1$, top-k=3）。$\gamma(t)$ 指数衰减。其余超参（learning rate / discriminator weight 等）与 VQGAN 默认一致，方便公平对比。
+$\mathcal{L}_\text{VQ}$ 是标准 VQ loss：reconstruction + codebook + commit（commit 系数 $\beta$）。$\mathcal{L}_\text{A}$ 是上面的 ArcLoss（$s=10$、$m=0.1$、top-k=3），权重 $\gamma(t)$ 指数衰减。其余超参（learning rate、discriminator weight 等）与 VQGAN 默认一致，以保证公平对比。
 
 ## 实验关键数据
 

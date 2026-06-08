@@ -41,30 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文方法包含三部分：(1) **Chameleon 数据集构造**——从 Webis-TLDR-17 Reddit 语料抽出在 ≥3 个不同 subreddit 发帖的 1667 用户，每人采 3 条 post（≥50 词），共 5001 post 覆盖 645 subreddit。(2) **心理画像抽取流水线**：两路并行（SEANCE 词典特征 + LangExtract 语义抽取），各自喂入 GPT-4o 做 26 维心理量表评分（Big Five + Schwartz + SDT + DOSPERT），再做 z-norm 后均值融合得 26 维 profile $\psi_{u,c}$。(3) **应用 A/B 实验**：用 6 个心理 archetype × 127 个问题在 3 个 LLM 上测生成多样性，在 3 个 reward model 上测评估一致性。
+
+本文要回答"用户心理画像到底有多少是稳定特质、多少是随情境波动的状态"，并据此检验 LLM 与 reward model 在状态维度的行为。整条链路是：先从 Reddit 语料构造 Chameleon 数据集，利用"同一用户在多个 subreddit 发帖"这一天然的"同人不同境"结构；再对每条 post 跑一套双方法心理画像抽取流水线，得到 26 维 profile $\psi_{u,c}$；然后一面用 ICC 把这些 profile 的方差分解成特质项与状态项、量化谁占主导，另一面用聚类出的 6 个心理 archetype 在生成端（LLM 能否因人施策）和评估端（reward model 是否对状态保持中立）各做一个下游实验，把"persona 该被怎么用"这一抽象命题落成可测的工程指标。
 
 ### 关键设计
 
-1. **LST 方差分解度量 ICC**:
+**1. LST 方差分解度量 ICC：把心理变异拆成特质与状态。** 心理学的 Latent State-Trait 理论认为一次心理表达同时含稳定特质和情境状态，本文把它形式化为观察模型 $\psi_{u,c} = \tau_u + \sigma_{u,c} + \epsilon_{u,c}$，其中 $\tau_u$ 是人内稳定的特质、$\sigma_{u,c}$ 是情境特定的状态、$\epsilon_{u,c}$ 是误差。用 one-way random effects 模型（把 post 嵌套进用户）估计后，定义一致性系数 $\text{ICC} = \frac{\text{Var}(\tau)}{\text{Var}(\tau) + \text{Var}(\sigma) + \text{Var}(\epsilon)}$ 表示 between-person 方差占比，则 $1-\text{ICC}$（occasion specificity）即 within-person 的状态占比。按惯例 ICC < 0.30 判为 state-dominant 构念，而本文 26 个维度几乎全部落在 0.26–0.28，等于用心理学自己的工具直接量化反驳了"persona 是固定向量"的假设——这套工具心理学早有，但 NLP 从没用它分解过用户画像。
 
-    - 功能：把每个用户在多个 subreddit 上的心理画像 $\psi_{u,c}$ 分解成特质项 $\tau_u$（人内稳定）、状态项 $\sigma_{u,c}$（情境特定）、误差项 $\epsilon_{u,c}$，并用一致性系数量化谁占主导。
-    - 核心思路：观察模型 $\psi_{u,c} = \tau_u + \sigma_{u,c} + \epsilon_{u,c}$，定义 $\text{ICC} = \frac{\text{Var}(\tau)}{\text{Var}(\tau) + \text{Var}(\sigma) + \text{Var}(\epsilon)}$。ICC 是 between-person 方差占比，1-ICC（occasion specificity）就是 within-person 方差占比。用 one-way random effects 模型估计，把 post 嵌套在用户里。
-    - 设计动机：心理学早有这套工具但 NLP 从来没用过；ICC <0.30 即认为构念是 state-dominant，本文实测得到 0.26-0.28，直接量化打脸「persona 是固定的」假设。
+**2. 双方法 MTMM 心理画像抽取：交叉验证排除单方法偏置。** 从一条 post 抽 26 维心理量表得分时，单一方法容易被自身偏置吃掉信号，因此走两路并行：(a) SEANCE 词典法基于 254 维情感/认知/社会词典匹配，结果可重现但缺上下文敏感性；(b) LangExtract（GPT-4o）抽取语义模式、支撑证据与解读理由，能捕捉隐含语义但带 LLM 随机性。两路特征各自喂给 GPT-4o 让它"扮演 post 作者"回答 171 个量表条目得到分数，再做逐维 z-norm $\tilde{\psi}^m_i = (\psi^m_i - \mu^m_i)/\sigma^m_i$ 后均值融合 $\psi_{u,c} = \frac{1}{2}(\tilde{\psi}^{lex}_{u,c} + \tilde{\psi}^{sem}_{u,c})$。之所以要两路，是 MTMM 框架（Campbell & Fiske, 1959）要求同一 trait 跨方法相关（convergent）、不同 trait 不相关（discriminant）；实测 profile 级 mean $r=0.71$、69.9% 的 post 内 $r>0.70$，说明两种迥异方法捕捉到的是同一心理结构，抽取结果可信而非方法 artifact。
 
-2. **双方法 MTMM 心理画像抽取**:
-
-    - 功能：从一条 post 中抽 26 维心理量表得分，且能交叉验证以排除单一方法的偏置。
-    - 核心思路：两路并行——(a) SEANCE 词典法：基于 254 维情感/认知/社会词典匹配，输出可重现但缺上下文敏感性的特征；(b) LangExtract（GPT-4o）：抽取语义模式、支撑证据、解读理由，捕捉隐含语义但有 LLM 随机性。两路特征分别喂给 GPT-4o 让它「扮演 post 作者」回答 171 个心理量表条目，得 26 维分数；做 per-dimension z-norm $\tilde{\psi}^m_i = (\psi^m_i - \mu^m_i)/\sigma^m_i$ 后均值融合 $\psi_{u,c} = \frac{1}{2}(\tilde{\psi}^{lex}_{u,c} + \tilde{\psi}^{sem}_{u,c})$。
-    - 设计动机：单方法易被自身偏置吃掉信号；MTMM 框架（Campbell & Fiske, 1959）要求 same trait 跨方法相关（convergent validity），different trait 不相关（discriminant validity）。本文实测 profile 级 mean $r=0.71$、69.9% 的 post 内 $r>0.70$，说明两方法捕捉同一心理结构。
-
-3. **state-blind / state-invariance 双应用**:
-
-    - 功能：用 6 个心理 archetype（Distressed-Vulnerable、Driven-Assertive、Self-Actualized、Supportive-Conventional、Nonconformist-Skeptical、Risk-Seeking-Detached）测 LLM 和 reward model 在状态维度的行为。
-    - 核心思路：从 Chameleon 用 k-means $k=6$ 聚类出 archetype，每个 archetype 配一段心理 profile card。(a) **Application A（生成）**：把 127 道题 × 7 条件（6 archetype + baseline）喂给 GPT-4o / Llama-3.1-8B / Qwen2.5-14B，共 2667 response；用 all-mpnet-base-v2 算 pairwise cosine similarity——相似度越低说明模型越能因人施策。(b) **Application B（评估）**：固定 reference response（GPT-4o, no profile），在 ArmoRM / DeBERTa-RM / Skywork-RM 三个 reward model 上配 7 个 archetype 条件打分，用 Cohen's $d$ 衡量 archetype 条件与 baseline 之间的偏差——理想应为 0（state-invariance）。
-    - 设计动机：好老师该根据学生状态调整说话方式（生成应 state-aware），但评分老师不该因为学生看起来焦虑就给同一份答卷打不同分（评估应 state-invariant）。两个原则对应 LLM pipeline 的两个阶段，把「persona 该被怎么用」这一抽象问题分解为可量化的工程指标。
+**3. state-blind / state-invariance 双应用：把抽象命题拆成两端工程指标。** 先用 k-means（$k=6$）从 Chameleon 聚出 6 个心理 archetype（Distressed-Vulnerable、Driven-Assertive、Self-Actualized、Supportive-Conventional、Nonconformist-Skeptical、Risk-Seeking-Detached），每个配一段 profile card，再分两端检验。**Application A（生成）**：把 127 道题 × 7 条件（6 archetype + baseline）喂给 GPT-4o / Llama-3.1-8B / Qwen2.5-14B 得 2667 条 response，用 all-mpnet-base-v2 算 pairwise cosine similarity——相似度越低代表模型越能因人施策。**Application B（评估）**：固定一份 reference response（GPT-4o，无 profile），在 ArmoRM / DeBERTa-RM / Skywork-RM 三个 reward model 上配 7 个 archetype 条件打分，用 Cohen's $d$ 衡量 archetype 条件相对 baseline 的偏差，理想应为 0。这一拆分对应一个直观原则——好老师该按学生状态调整说话方式（生成应 state-aware），但评卷老师不该因为学生看起来焦虑就给同一份答卷打不同分（评估应 state-invariant）——恰好映射 LLM pipeline 的生成与评估两个阶段。
 
 ### 损失函数 / 训练策略
-纯数据集 + 评测论文，不训练任何模型。用 linear mixed-effects 回归做假设检验：$\psi_{u,c,i} = \beta_0 + \beta_c \cdot \mathbf{1}[c] + \gamma_u + \epsilon_{u,c}$，其中 $\gamma_u \sim \mathcal{N}(0, \sigma_u^2)$ 是用户随机截距。
+
+不训练任何模型，纯数据集 + 评测论文。假设检验用 linear mixed-effects 回归 $\psi_{u,c,i} = \beta_0 + \beta_c \cdot \mathbf{1}[c] + \gamma_u + \epsilon_{u,c}$，其中用户随机截距 $\gamma_u \sim \mathcal{N}(0, \sigma_u^2)$ 吸收人内相关，使 subreddit 效应 $\beta_c$ 的显著性检验在控制个体差异后依然成立。
 
 ## 实验关键数据
 

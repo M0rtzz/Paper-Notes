@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MDLM 推理被抽象为「固定 denoiser $\mathcal D_\theta$ + 可选 planner $\mathcal P$」交互。每轮 $t$ 状态 $\mathcal S_t$ 含已 unmask token；planner 选索引集 $\mathcal I_t\subseteq\{b,\dots,b+B-1\}$；denoiser 给出 per-position 分布 $p_\theta(X_i\mid\mathcal S_t)$，从中并行采样揭开 $\mathcal I_t$；下一轮状态 $\mathcal S_{t+1}$。DUS 替代基于置信度的 planner，给出固定的 $\{\mathcal I_t\}_{t=1}^{R}$ 调度，整个块在 $R=\lceil\log_a B\rceil$ 轮内完成。可叠加 skip 启发式（不确定 token 延后揭）。
+DUS 要解决的是 MDLM 半自回归分块解码里「一块 $B$ 个 token 该怎么并行揭面才不伤质量」的问题。它把推理抽象成「固定 denoiser $\mathcal D_\theta$ + 可选 planner $\mathcal P$」的交互：每轮 $t$ 的状态 $\mathcal S_t$ 记录已 unmask 的 token，planner 选出本轮要揭开的索引集 $\mathcal I_t\subseteq\{b,\dots,b+B-1\}$，denoiser 给出每个位置的分布 $p_\theta(X_i\mid\mathcal S_t)$，从中并行采样填上 $\mathcal I_t$ 后进入下一轮。DUS 的做法是把基于置信度的动态 planner 换成一组完全预定义、与模型输出无关的调度 $\{\mathcal I_t\}_{t=1}^{R}$，让整块在 $R=\lceil\log_a B\rceil$ 轮内填满，把每块调用次数从 $\mathcal O(B)$ 压到 $\mathcal O(\log B)$。
 
 ### 关键设计
 
-1. **熵差最小化原则**:
+**1. 熵差最小化原则：把并行揭面是否伤质量数学化**
 
-    - 功能：把「并行 unmask 是否伤质量」这件事数学化，给后续调度提供量化目标。
-    - 核心思路：Lemma 3.3 证明对任意分组方案 $H(X_{\mathcal B}\mid\mathcal S_1)\le\sum_t\mathcal L(\mathcal I_t;\mathcal S_1,X_{\mathcal I_{<t}})\le\sum_{i\in\mathcal B}H(X_i\mid\mathcal S_1)$；左边取到等号当且仅当每组只 unmask 一个 token（token-by-token AR），右边对应一次全揭。Corollary 3.4 引出 entropy gap $\Delta(\mathcal I_t;\mathcal S_t)\ge 0$，并指出 planner 设计应显式最小化它。
-    - 设计动机：以前没人把「并行调度」用信息论 gap 来定式化，所有启发式都默认 per-token 分数和联合最优是一回事；这一步揭示了为什么置信度调度「明明分数最高却生成不连贯」。
+并行揭面想优化的真实目标是联合条件熵 $H(X_{\mathcal I_t}\mid\mathcal S_t)$，但 planner 实际只能优化可分解的边缘熵之和 $\sum_{i\in\mathcal I_t}H(X_i\mid\mathcal S_t)$，二者之差就是 entropy gap $\Delta(\mathcal I_t;\mathcal S_t)$。本文用 Lemma 3.3 把这层关系夹起来：对任意分组方案有 $H(X_{\mathcal B}\mid\mathcal S_1)\le\sum_t\mathcal L(\mathcal I_t;\mathcal S_1,X_{\mathcal I_{<t}})\le\sum_{i\in\mathcal B}H(X_i\mid\mathcal S_1)$，左边等号当且仅当每组只揭一个 token（即退化成 token-by-token 自回归），右边对应一次全揭。Corollary 3.4 据此指出 $\Delta(\mathcal I_t;\mathcal S_t)\ge 0$ 且 planner 设计应显式最小化它。这一步之所以重要，是因为以前所有启发式都默认 per-token 分数和联合最优是一回事，而这个 gap 恰好解释了为什么置信度调度「分数明明最高、生成却不连贯」——被同时选中的高分 token 往往彼此相邻、强相关，gap 被撑大。
 
-2. **对数对偶 dilation 调度**:
+**2. 对数对偶 dilation 调度：用预定义间隔强制每轮揭开的 token 互相远离**
 
-    - 功能：用预定义的间隔序列保证每轮揭开的 token 都尽量远离彼此。
-    - 核心思路：给定块长 $B$、基数 $a>1$，计算迭代轮数 $R=\lceil\log_a B\rceil$，第 $t$ 轮步长 $s_t=\lfloor B/a^t\rfloor$；轮 $t$ 选 $\mathcal I_t=\{k\in\{1,\dots,B\}\setminus\mathcal U_{t-1}\mid (k-1)\bmod s_t=0\}$，$\mathcal U_t=\mathcal U_{t-1}\cup\mathcal I_t$。例如 $B=8,a=2$：$\mathcal I_1=\{1,5\},\mathcal I_2=\{3,7\},\mathcal I_3=\{2,4,6,8\}$，3 轮填满 8 token。复杂度 $\mathcal O(\log_a B)$ 次 denoiser 调用。
-    - 设计动机：早轮 sparse 远距离揭开 → fast-mixing 假设下互信息小、entropy gap 小，每个 token 独立采样接近联合采样；晚轮 dense 揭开剩余空位时虽然相邻 token 之间相关性强，但此时 $\mathcal S_t$ 已包含周围被揭开的丰富 context，per-token 条件熵已经很低，仍能保证质量。
+既然 gap 在被选 token 空间相邻时变大，DUS 干脆用一组预定义的间隔序列保证每轮揭开的位置尽量分散。给定块长 $B$ 和基数 $a>1$，迭代轮数 $R=\lceil\log_a B\rceil$，第 $t$ 轮步长 $s_t=\lfloor B/a^t\rfloor$，本轮选中 $\mathcal I_t=\{k\in\{1,\dots,B\}\setminus\mathcal U_{t-1}\mid (k-1)\bmod s_t=0\}$，并把已揭集合更新为 $\mathcal U_t=\mathcal U_{t-1}\cup\mathcal I_t$。以 $B=8,a=2$ 为例，三轮分别揭 $\mathcal I_1=\{1,5\}$、$\mathcal I_2=\{3,7\}$、$\mathcal I_3=\{2,4,6,8\}$ 就填满整块，共 $\mathcal O(\log_a B)$ 次 denoiser 调用。这种「早 sparse 晚 dense」的 coarse-to-fine 安排同时照顾了两头：早轮远距离揭开时，在 fast-mixing 假设下 token 间互信息小、gap 小，独立采样近似联合采样；晚轮虽然要填相邻空位、token 间相关性强，但此时 $\mathcal S_t$ 已含周围被揭开的丰富 context，per-token 条件熵已经很低，质量依然有保证。
 
-3. **理论保证：fast-mixing 下 gap 指数收敛**:
+**3. fast-mixing 下的指数收敛保证：dilation 调度为什么真能让 gap 任意小**
 
-    - 功能：在 VLMC 模型假设下严格证明 dilation 调度的 entropy gap 可以任意小。
-    - 核心思路：Lemma 3.6 证 fast-mixing 平稳遍历 VLMC 满足 $I(X_i;X_{i+d},\dots,X_{i+(M+1)d})\le C\rho^d$；Lemma 3.5 联立得只要被选中 token 两两距离 $\ge D_\varepsilon$ 就有 $H(X_{i_1},\dots,X_{i_k}\mid\mathcal S_t)\ge\sum_j H(X_{i_j}\mid\mathcal S_t)-\varepsilon$，即并行采样的边缘熵之和与联合熵之差 $\le\varepsilon$。
-    - 设计动机：fast-mixing VLMC 只是分析载体，作者强调真实文本未必满足，但 DUS 只要求「平均上空间相距 $d$ 的 token 互相不太相关」这一更弱条件，并通过实验验证在 HumanEval/MATH500 这类「明显违反 fast mixing」的代码/数学领域仍稳定加速。
+DUS 给 dilation 调度配了一个 VLMC（变长马尔可夫链）框架下的理论支撑。Lemma 3.6 证明 fast-mixing 的平稳遍历 VLMC 满足互信息按距离指数衰减 $I(X_i;X_{i+d},\dots,X_{i+(M+1)d})\le C\rho^d$；Lemma 3.5 与之联立后给出：只要被选中 token 两两距离 $\ge D_\varepsilon$，就有 $H(X_{i_1},\dots,X_{i_k}\mid\mathcal S_t)\ge\sum_j H(X_{i_j}\mid\mathcal S_t)-\varepsilon$，即边缘熵之和与联合熵之差被压到 $\le\varepsilon$。作者诚实地把 fast-mixing VLMC 只当成分析载体——真实文本未必满足，但 DUS 真正需要的只是「平均上空间相距 $d$ 的 token 不太相关」这一更弱条件，并在 HumanEval/MATH500 这类明显违反 fast-mixing 的代码/数学任务上实测仍稳定加速，佐证了这一放宽是合理的。
 
 ### 损失函数 / 训练策略
-DUS 完全 inference-only，不改 denoiser，不训新模块。可选 skip 启发式：每轮揭开前用 denoiser 算分，超过阈值的不确定位置延后到下一轮（附录 B.2 扫描）。可叠加在 EB/CB 等自适应采样器上作为「dilated-spacing post-filter」。
+DUS 完全是 inference-only 的：不改 denoiser、不训新模块，调度静态可算。它还提供一个可选的 skip 启发式——每轮揭面前用 denoiser 算分，超过阈值的不确定位置延后到下一轮再揭（阈值在附录 B.2 扫描）。由于 dilation 思想与具体采样器正交，DUS 也能直接叠在 EB/CB 等自适应采样器上充当「dilated-spacing post-filter」。
 
 ## 实验关键数据
 

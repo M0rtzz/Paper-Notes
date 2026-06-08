@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不提一种新算法，而是为「单层 Transformer + 马尔可夫数据 + 交叉熵 + 群体梯度流」给出一个分四阶段的动力学故事。设词表 $\mathcal{V}=[d]$，由转移矩阵 $P=\lambda I+(1-\lambda)\mathbf{1}\pi^{\top}$ 生成长度 $s$ 的序列，模型由 embedding $W_0$、注意力 $W_Q,W_K$ 与输出 $W_1$ 组成。作者关注三个等价矩阵 $M=W_0W_1$、$\Phi=W_0W_QW_K^{\top}W_0^{\top}$ 与 $W_{QK}=W_QW_K^{\top}$，并用群体梯度推导出 $\partial\mathcal{L}/\partial M$、$\partial\mathcal{L}/\partial\Phi$ 的闭式表达。整个故事在围绕「原点 → 凝聚射线上的第二个临界点 → rank-1 流形上的退化临界点 → 对称破缺后的新临界点」依次做线性化，每个临界点给出一段轨迹的行为。
+论文不提新算法，而是为「单层 Transformer + 马尔可夫数据 + 交叉熵 + 群体梯度流」这个极简设定，给出一个能解释完整训练曲线分段形状的、可证明的动力学故事。设词表 $\mathcal{V}=[d]$，序列由转移矩阵 $P=\lambda I+(1-\lambda)\mathbf{1}\pi^{\top}$ 生成、长度为 $s$，模型含 embedding $W_0$、注意力 $W_Q,W_K$ 与输出 $W_1$；作者把它们打包成三个等价矩阵 $M=W_0W_1$、$\Phi=W_0W_QW_K^{\top}W_0^{\top}$、$W_{QK}=W_QW_K^{\top}$ 并推出群体梯度 $\partial\mathcal{L}/\partial M$、$\partial\mathcal{L}/\partial\Phi$ 的闭式表达。核心叙事方式是：沿着「原点 → 凝聚射线上的第二鞍点 → rank-1 流形上的退化临界点 → 对称破缺后的新临界点」这串临界点逐个做局部线性化，再把各段拼起来，每个鞍点上的不稳定方向决定下一段轨迹是凝聚、聚焦还是稀释。
 
 ### 关键设计
 
-1. **分阶段线性化引理（Lemma 3.1）**:
+**1. 分阶段线性化引理（Lemma 3.1）：把「鞍点停留→沿某方向爆发」变成可证明的通用模板。**
 
-    - 功能：给训练轨迹划阶段提供一个通用工具，把「围绕临界点走一段时间」的非线性流动与对应的线性化流动 $\dot{\widetilde{\Delta\theta}}=J\widetilde{\Delta\theta}$ 在误差 $C\varepsilon^2 e^{2\mu t}$ 内对齐。
-    - 核心思路：在临界点 $\theta_*$ 做 Taylor 展开 $\dot{\Delta\theta}=J\Delta\theta+O(\|\Delta\theta\|^2)$；只要 $\|\Delta\theta(0)\|=\varepsilon$ 足够小，并且 Jacobian 最大实部 $\mu>0$ 配合谱隙 $\rho>0$，那么在 $t=\Theta(\log(1/\varepsilon))$ 时间内，归一化方向 $\Delta\theta(t)/\|\Delta\theta(t)\|$ 必然对齐到最不稳定特征向量 $v_u$。
-    - 设计动机：这是把「鞍点附近停留很久 → 再沿某个方向爆发」这种实验现象转化为可证明结论的关键，也是后续 4 个阶段都能共用的「模板」。
+实验里训练曲线呈现一段段平台再突变，但缺一个能逐段刻画的工具。引理在每个临界点 $\theta_*$ 处做 Taylor 展开 $\dot{\Delta\theta}=J\Delta\theta+O(\|\Delta\theta\|^2)$，证明只要初始扰动 $\|\Delta\theta(0)\|=\varepsilon$ 足够小、Jacobian 最大实部 $\mu>0$ 且谱隙 $\rho>0$，非线性流动就能与线性化流动 $\dot{\widetilde{\Delta\theta}}=J\widetilde{\Delta\theta}$ 在误差 $C\varepsilon^2 e^{2\mu t}$ 内对齐，并在 $t=\Theta(\log(1/\varepsilon))$ 时间内把归一化方向 $\Delta\theta(t)/\|\Delta\theta(t)\|$ 强制对齐到最不稳定特征向量 $v_u$。它之所以管用，是因为「在鞍点附近停很久、再沿最不稳定方向冲出去」这件直觉中的事被它变成了带误差界的定理，于是后面四个阶段都能套同一个模板分析，不必每次重新发明轮子。
 
-2. **凝聚射线 + 第二鞍点（Theorems 3.2–3.5）**:
+**2. 凝聚射线 + 第二鞍点（Theorems 3.2–3.5）：解释 attention 为什么先按兵不动、再突然聚焦到高频 token。**
 
-    - 功能：解释 Stage I「凝聚」与 Stage II「注意力聚焦于高频 token」为什么会出现且按这个顺序出现。
-    - 核心思路：在原点处 $\partial\mathcal{L}/\partial\Phi=0$，所以 attention 暂时不动；只有 $(W_0,W_1)$ 的子系统有非零驱动，按 $W_0/\|W_0\|\to\pi/\|\pi\|\,\alpha_1^{\top}$ 的方式凝聚为 rank-1。轨迹沿这条凝聚射线走到第二个临界点 $\theta_c^1$，那里 Jacobian 分解成「负半定的 outer 块 + 正半定的 attention 块」，attention 子系统满足闭式 $\dot{\Delta W_Q}=c\alpha_1\alpha_1^{\top}\Delta W_K$，从而 $(W_Q,W_K)$ 沿同一方向指数增长，使 $\Phi/\|\Phi\|\to\pi\pi^{\top}$，所有 token 的 attention 都集中到高频 token 上。
-    - 设计动机：把「为什么注意力一定先无所作为，再突然聚焦到高频 token」转化为「不稳定方向只存在于 attention 块」这件可证明的事实，给出了「聚焦」相位的明确触发条件。
+经验上观察到 attention 总是先无所作为、随后骤然集中，却没人说清触发条件。关键在于原点处 $\partial\mathcal{L}/\partial\Phi=0$，所以注意力子系统暂时没有梯度驱动、原地不动，只有 $(W_0,W_1)$ 被驱动着按 $W_0/\|W_0\|\to\pi/\|\pi\|\,\alpha_1^{\top}$ 凝聚成 rank-1——这就是 Stage I 凝聚。轨迹沿这条凝聚射线滑到第二个临界点 $\theta_c^1$，那里 Jacobian 干净地分解成「负半定的 outer 块 + 正半定的 attention 块」，于是唯一的不稳定方向落在 attention 块上，子系统满足闭式 $\dot{\Delta W_Q}=c\alpha_1\alpha_1^{\top}\Delta W_K$，$(W_Q,W_K)$ 沿同一方向指数增长，把 $\Phi/\|\Phi\|$ 推向 $\pi\pi^{\top}$，所有 token 的注意力一齐压到高频 token 上——这就是 Stage II 聚焦。这样一来，「为什么聚焦一定发生、且一定排在凝聚之后」就被还原成「不稳定方向只存在于 attention 块」这一可证明的事实。
 
-3. **rank-1 不变流形 + 质量再分配 + 退化临界点（Props 3.6–3.8 与 Theorem 3.9）**:
+**3. rank-1 不变流形 + 质量再分配 + 退化临界点（Props 3.6–3.8、Theorem 3.9）：解释稀释为何自发发生、循环又如何重启。**
 
-    - 功能：解释 Stage III「稀释」与 Stage IV「新方向涌现」如何衔接，并定量说明「对称破缺」如何重启下一轮循环。
-    - 核心思路：聚焦后，参数被困在 rank-1 流形 $W_0=\gamma(t)\alpha_1^{\top}$、$W_1=\alpha_1\beta(t)^{\top}$、$W_{Q,K}=\lambda_{Q,K}(t)\alpha_1\tilde\alpha_1^{\top}$ 上，约简动力学给出 $(1-\pi_1)\gamma_1(t)-(d-1)\pi_1\gamma_{i\neq 1}(t)\propto e^{ct}$，即高频 token 与其他 token 的 embedding 必须反向移动——这就是「质量再分配」并导致 attention 自动稀释。当低频 token 完全对称时，rank-1 流形上存在 $\partial\mathcal{L}/\partial M=\partial\mathcal{L}/\partial\Phi=0$ 的退化临界点，linearization 失效；引入 $O(\delta)$ 量级的低频对称破缺扰动后，Lyapunov–Schmidt 约简表明 Hessian 出现 $\Theta(\delta)$ 的横向不稳定模和至多 $O(\delta^2)$ 的切向不稳定模，于是轨迹被驱离 rank-1 流形并萌生新的 embedding 方向，开启下一轮聚焦—稀释循环。
-    - 设计动机：第三个鞍点不能再靠普通线性化处理，必须保留 attention 的 next-order 反馈才能解释「稀释」；而第四阶段必须显式承认「完美对称数据下系统会卡住」，并通过最小扰动定理给出「现实数据中循环可以重启」的物理图像。
+聚焦之后参数被困在 rank-1 流形 $W_0=\gamma(t)\alpha_1^{\top}$、$W_1=\alpha_1\beta(t)^{\top}$、$W_{Q,K}=\lambda_{Q,K}(t)\alpha_1\tilde\alpha_1^{\top}$ 上，此时普通线性化已不够，必须保留 attention 的 next-order 反馈。约简动力学给出 $(1-\pi_1)\gamma_1(t)-(d-1)\pi_1\gamma_{i\neq 1}(t)\propto e^{ct}$，意味着高频 token 与其余 token 的 embedding 被迫反向移动——这个「质量再分配」不靠任何正则化或学习率调度，本身就让 attention 自动 dilution，即 Stage III 稀释。而当低频 token 完全对称时，rank-1 流形上出现 $\partial\mathcal{L}/\partial M=\partial\mathcal{L}/\partial\Phi=0$ 的退化临界点，线性化彻底失效、系统会卡住；作者显式承认这一点，再引入 $O(\delta)$ 量级的低频对称破缺扰动，用 Lyapunov–Schmidt 约简证明 Hessian 会冒出 $\Theta(\delta)$ 的横向不稳定模和至多 $O(\delta^2)$ 的切向不稳定模，把轨迹推离 rank-1 流形、萌生新的 embedding 方向，从而开启下一轮聚焦—稀释循环——这就是 Stage IV，也给出了「现实语料里微弱的频率不对称足以让循环不断重启」的物理图像。
 
 ### 损失函数 / 训练策略
 训练目标就是最后 token 的交叉熵 $\mathcal{L}(\theta)=N^{-1}\sum_i\ell(f_\theta(X_i)_s,y_i)$，分析使用群体梯度流 $\dot\theta=-\nabla\mathcal{L}(\theta)$ 在 $(N,s)\to\infty$ 极限下进行。所有阶段都假定初始化为 $\mathcal{N}(0,\varepsilon^2)$ 的极小尺度 $\varepsilon\ll 1$，从而保证轨迹一开始确实落在原点这个临界点的 $O(\varepsilon)$ 邻域内。

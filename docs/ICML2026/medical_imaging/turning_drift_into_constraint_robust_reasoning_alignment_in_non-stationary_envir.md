@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整套 APO 走两阶段。第一阶段叫 Supervised Bootstrapping with Consensus Synthesis：先用所有 source 模型的推理轨迹做监督蒸馏，把目标模型 $\pi_\theta$ 投影到 source 集合的能力并集里，得到 $\hat{\pi}_{st}$；然后用 $\hat{\pi}_{st}$ 自己做 in-context aggregator，把同一题目的 N 条 source 轨迹 $\mathcal{T}=\{\tau^1,\ldots,\tau^N\}$ 作为 context，让模型生成一条自洽的共识轨迹 $t^+ \sim \hat{\pi}_{st}(\cdot|v,l,\text{Context}=\mathcal{T})$。第二阶段叫 Constraint-Aware Optimization：用 $t^+$ 当正样本、N 条原始 source 轨迹当负样本，做 Plackett-Luce 偏好优化。推理时直接用最终 $\pi_\theta$ 即可，不再需要 source 老师。
+APO 把"多个老师互相打架"这件麻烦事拆成两阶段消化。第一阶段（Supervised Bootstrapping with Consensus Synthesis）先用所有 source 模型的推理轨迹做监督蒸馏，把目标模型 $\pi_\theta$ 投影到 source 能力并集里得到 $\hat{\pi}_{st}$，再让 $\hat{\pi}_{st}$ 自己充当 in-context aggregator，从同一题的 N 条 source 轨迹 $\mathcal{T}=\{\tau^1,\ldots,\tau^N\}$ 里炼出一条自洽的共识轨迹 $t^+$。第二阶段（Constraint-Aware Optimization）拿 $t^+$ 当唯一正样本、那 N 条原始 source 轨迹当 N 个负样本，做 Plackett-Luce 偏好优化，把学生从老师们的发散区域里"推"出来。推理时只用最终 $\pi_\theta$，不再需要任何 source 老师。
 
 ### 关键设计
 
-1. **概念漂移视角下的多流推理建模**:
+**1. 概念漂移视角下的多流推理建模：先证明"为什么不能简单拼起来蒸馏"。**
 
-    - 功能：把多老师 reasoning 中的发散现象形式化成一个非稳态随机过程，给出"为什么不能简单蒸馏"的理论解释。
-    - 核心思路：假设 N 个 source 模型条件独立生成 CoT，把联合分布因子化为 $P_j(\mathcal{S}_j)=\prod_{u=1}^N P(t_{<j}^u|v,l) \cdot P(z_j^u|t_{<j}^u,v,l)$，其中前者是历史累计发散、后者是当前步瞬时漂移。当 $P_j(\mathcal{S}) \neq P_{j+\Delta}(\mathcal{S})$ 成立时就有 concept drift，意味着学生看到的监督信号本身就在飘。
-    - 设计动机：传统蒸馏假设老师给出的是稳定 ground-truth；而这里证明老师之间随推理步发展会出现非稳态分歧，naive SFT 必然继承所有人的 bias，必须换框架。
+直接把 N 个老师的 CoT 堆在一起做 SFT，学生会把所有人的 bias 一股脑学下来——但要把这个直觉说成理论，得先回答"老师之间的发散到底是什么"。本文假设 N 个 source 模型条件独立生成 CoT，把第 $j$ 步的联合分布因子化成 $P_j(\mathcal{S}_j)=\prod_{u=1}^N P(t_{<j}^u|v,l) \cdot P(z_j^u|t_{<j}^u,v,l)$，前一项是历史累计的发散、后一项是当前步的瞬时漂移。当 $P_j(\mathcal{S}) \neq P_{j+\Delta}(\mathcal{S})$ 时就出现了 concept drift，意味着学生沿着推理步往前走时，看到的监督信号本身就在飘。传统蒸馏默认老师给的是稳定 ground-truth，而这个因子化恰好证明老师之间会随推理推进出现非稳态分歧，于是 naive SFT 必然继承所有人的 bias——换框架是必须的，而不是可选的优化。
 
-2. **Consensus Synthesis 通过 in-context 提取共识**:
+**2. Consensus Synthesis：在没有金标的情况下自己造一个正锚点。**
 
-    - 功能：在没有 ground-truth label 的前提下，自动构造一条 "preferred trajectory" $t^+$ 作为后续偏好优化的正锚点。
-    - 核心思路：bootstrap 后的 $\hat{\pi}_{st}$ 已经吸收了 source 的并集知识，但还带漂移。把同一样本下 N 条 source 轨迹拼成上下文喂给 $\hat{\pi}_{st}$，让它扮演"加权聚合者"——保留各家共同支持的 token，过滤掉缺乏 cross-model 支持的 incoherent 部分。本质上是利用 in-context 学习能力做隐式投票。
-    - 设计动机：替代昂贵的人工标注。共识不是简单 majority vote 那种 token 级平均，而是带语义理解的轨迹级精炼，由学生自己生成，因此可以无监督迭代。
+第二阶段的偏好优化需要一条"该往这里靠"的正样本，但医学场景里没有 radiologist report 可用，正样本只能凭空造。做法是利用 bootstrap 后的 $\hat{\pi}_{st}$ 已经吸收了 source 并集知识这一点：把同一样本下 N 条 source 轨迹拼成上下文喂回 $\hat{\pi}_{st}$，让它当一个"带语义理解的加权聚合者"，生成 $t^+ \sim \hat{\pi}_{st}(\cdot|v,l,\text{Context}=\mathcal{T})$——保留各家共同支持的 token，过滤掉缺乏 cross-model 支持的 incoherent 片段。这本质上是用 in-context 能力做隐式投票，但和 token 级 majority vote 的关键区别在于它是轨迹级、带语义的精炼，且完全由学生自己产出，所以能无监督迭代、不花一分钱标注。
 
-3. **Plackett-Luce 多负样本 APO 损失**:
+**3. Plackett-Luce 多负样本 APO 损失：把"主动遗忘 N 个 bias"写进一阶训练目标。**
 
-    - 功能：把 DPO 从二元 pairwise 推广到一正 N 负的多约束形式，同时压制所有 source 模型的漂移模式。
-    - 核心思路：用 bootstrap 后的 $\hat{\pi}_{st}$ 作为 reference policy，定义隐式奖励 $r(v,l,t)=\beta \log \frac{\pi_\theta(t|v,l)}{\hat{\pi}_{st}(t|v,l)}$；偏好概率扩展为 $P(t^+ \succ \mathcal{T}|v,l)=\frac{\exp(r(v,l,t^+))}{\exp(r(v,l,t^+))+\sum_{u=1}^N \exp(r(v,l,\tau^u))}$；最终 loss 为 $-\mathbb{E}[\log P(t^+ \succ \mathcal{T}|v,l)]$。优化方向是把 $t^+$ 概率往上推、把每条 $\tau^u$ 概率同时往下压。
-    - 设计动机：standard DPO 一次只能用一对正负，而源漂移天生是 N 对 N 的多模冲突；Plackett-Luce 形式可以一次性把整组负样本作为竞争假设处理，把"主动遗忘 N 个 bias"作为一阶训练目标，比逐对 DPO 更高效，也更贴合 drift-as-constraint 的几何直觉。
+有了一个正样本 $t^+$ 和 N 个负样本 $\{\tau^u\}$，剩下的问题是怎么同时压制这 N 条发散轨迹——standard DPO 一次只吃一对正负，而源漂移天生是 1:N 的多模冲突。APO 用 bootstrap 后的 $\hat{\pi}_{st}$ 当 reference policy，定义隐式奖励 $r(v,l,t)=\beta \log \frac{\pi_\theta(t|v,l)}{\hat{\pi}_{st}(t|v,l)}$，再把 DPO 的二元偏好推广成 Plackett-Luce 形式：
+
+$$P(t^+ \succ \mathcal{T}|v,l)=\frac{\exp(r(v,l,t^+))}{\exp(r(v,l,t^+))+\sum_{u=1}^N \exp(r(v,l,\tau^u))}$$
+
+最终 loss 为 $-\mathbb{E}[\log P(t^+ \succ \mathcal{T}|v,l)]$，优化时把 $t^+$ 的概率往上推、同时把每条 $\tau^u$ 的概率往下压。这样一次更新就把整组负样本当成竞争假设统一处理，把"主动遗忘 N 个 bias"变成显式的一阶目标——既比逐对 DPO 高效，也正好对应 drift-as-constraint 的几何直觉：发散区域不是要调和的噪声，而是要避开的约束边界。
 
 ### 损失函数 / 训练策略
-两个阶段串行训练：阶段 1 是 KL 最小化的 SFT $q^* = \arg\min_q \sum_u \mathbb{D}_{\text{KL}}(\pi_u || q)$，阶段 2 是上面的 APO 目标。模型用 Qwen2.5-VL 7B，每阶段只跑 1 epoch、batch size = 2。CXR-MAX 数据集只用 1/10 MIMIC-CXR（约 17 万条多老师 reasoning trajectory，14 种胸部病种），不使用 radiologist report，强调完全靠 multi-teacher 漂移监督。
+两阶段串行训练：阶段 1 是 KL 最小化的 SFT，$q^* = \arg\min_q \sum_u \mathbb{D}_{\text{KL}}(\pi_u || q)$；阶段 2 是上面的 APO 目标。模型用 Qwen2.5-VL 7B，每阶段只跑 1 epoch、batch size = 2。数据用 CXR-MAX——只取 1/10 MIMIC-CXR（约 17 万条多老师 reasoning trajectory，覆盖 14 种胸部病种），不使用任何 radiologist report，完全靠 multi-teacher 漂移当监督。
 
 ## 实验关键数据
 

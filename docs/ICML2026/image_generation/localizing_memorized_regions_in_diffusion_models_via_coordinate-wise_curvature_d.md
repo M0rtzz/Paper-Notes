@@ -41,37 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：Stable Diffusion 检查点 $\theta$、待测 prompt $c$、采样轨迹中接近终点的噪声样本 $x_t$（$t \approx 0$，取 DDIM 最后一步）。
-输出：一张与生成图同尺寸、按通道求和后的 2D 空间记忆热图，亮区即过拟合记忆区域。
-流程：
 
-1. 用 DDIM 50 步 + CFG=7.5 走完一次条件采样，保留接近终点的 $x_t$。
-2. 选定欠拟合 baseline：要么使用同一模型的无条件分支 $s_\theta(x_t, \emptyset)$（与 CFG 自带的那一项复用，零额外推理），要么用早一个版本的同架构模型 $\tilde\theta$（论文用 SD v1.1 当 v1.4 的 baseline、SD v2.0 当 v2.1 的 baseline）。
-3. 计算坐标级曲率差 $\Delta h_\emptyset$ 或 $\Delta h_{\tilde\theta}$，或者其便宜的 score-difference 代理 $\Delta s_\emptyset$ / $\Delta s_{\tilde\theta}$。
-4. 沿通道维求和、归一化到 $[0,1]$、按阈值二值化，得到记忆掩码。
+本文要解决的是"图里哪些像素是从训练集抄来的"这个空间定位问题，而它的整套方法都建立在一个翻译上：借 Tweedie 关系（命题 4.1）把"某坐标方差崩塌"等价改写成"对数密度在该坐标的曲率很大"，于是定位变成测对角 Hessian。但高曲率有真有假——真记忆是过拟合，假记忆是 prompt 强制的纯色背景这类数据固有低方差。本文的核心动作就是用一个"欠拟合 baseline"的曲率去减条件模型的曲率，把数据固有的那部分扣掉，只留下过拟合贡献，并配上一个零 Hessian 的 score-difference 代理让方法跑得起来。整条流程都在 DDIM 最后一步（$t\approx 0$）的 latent 上做：先正常 CFG 采样得到接近终点的 $x_t$，算曲率差或其 score 代理，沿通道求和、归一化、二值化，即得记忆掩码。
 
 ### 关键设计
 
-1. **坐标级曲率差扣除数据流形伪信号**：
+**1. 坐标级曲率差：用欠拟合 baseline 减掉数据流形固有曲率**
 
-    - 功能：把"$-\text{diag}(H_\theta(x_t,c))$ 太大"中由数据本身决定的部分减掉，只留过拟合的部分。
-    - 核心思路：定义 $\Delta h_\emptyset^t := \text{diag}(-H_\theta(x_t,c)) - \text{diag}(-H_\theta(x_t))$（式 1），以及用早期 checkpoint 当 baseline 的 $\Delta h_{\tilde\theta}^t := \text{diag}(-H_\theta(x_t,c)) - \text{diag}(-H_{\tilde\theta}(x_t,c))$（式 2）。无条件模型被解读为"被迫一次性拟合整个数据分布、因此拟合相对宽松"的欠拟合参考，恰好保留数据流形固有曲率；条件模型只需在单 prompt 上拟合，会进一步把过拟合像素的曲率推高，差值正是过拟合贡献。
-    - 设计动机：作者用 Figure 3 的反例说明，只看 $\text{diag}(-H_\theta(x_t,c))$ 会在 "a black background" 这类纯色区域和"Non-Mem"样例上误报，因为这些像素是 prompt 语义强制约束，不是抄训练集；减掉无条件分支后这些区域的曲率立即被压平，记忆区域反而被反差出来。
+直接看 $\text{diag}(-H_\theta(x_t,c))$ 会误报——作者用 Figure 3 的反例说明，"a black background" 这类纯色区域、以及非记忆样例的曲率也会很高，因为这些像素是 prompt 语义强制约束的低方差结构，并非抄训练集。解决办法是减去一个"拟合得更松"的参考模型曲率。本文给两种 baseline：无条件分支，$\Delta h_\emptyset^t := \text{diag}(-H_\theta(x_t,c)) - \text{diag}(-H_\theta(x_t))$（式 1）；以及早期 checkpoint $\tilde\theta$，$\Delta h_{\tilde\theta}^t := \text{diag}(-H_\theta(x_t,c)) - \text{diag}(-H_{\tilde\theta}(x_t,c))$（式 2，论文用 SD v1.1 当 v1.4 的 baseline、SD v2.0 当 v2.1 的 baseline）。无条件模型被迫一次性拟合整个数据分布、拟合相对宽松，恰好保留数据流形固有曲率；条件模型只需在单 prompt 上拟合，会把过拟合像素的曲率进一步推高。两者相减，纯色背景这种数据固有曲率被压平，记忆区域反而被反差出来。
 
-2. **Hutchinson 估计器近似对角 Hessian**：
+**2. Hutchinson 估计器：不构造全 Hessian 也能取对角**
 
-    - 功能：在 4096+ 维像素空间里，不显式构造 Hessian 也能估出 $\text{diag}(H)$。
-    - 核心思路：用随机 Rademacher 向量 $v$，借自动微分算 Hessian–vector product $Hv = \nabla_x (s_\theta(x,c)^\top v)$，则 $\mathbb{E}[v \odot (Hv)] = \text{diag}(H)$（Hutchinson 1989）。文中默认 $K=16$ 个样本，并指出 $K=1$ 都已具备竞争力。曲率差直接对两套 Hessian 都跑一次 HVP 即可，无需存全 Hessian。
-    - 设计动机：直接算全 Hessian 在 SD 这种 $d \sim 10^5$ 量级的 latent 上完全不可行；Hutchinson 把代价压回到几次反传，是让"几何视角"落到工程上的关键。
+SD 的 latent 维度 $d\sim 10^5$，显式构造或存储整个 Hessian 完全不可行，而设计 1 只需要对角元 $\text{diag}(H)$。本文用 Hutchinson 估计器（Hutchinson 1989）绕过：取随机 Rademacher 向量 $v$，借自动微分算 Hessian–vector product $Hv=\nabla_x(s_\theta(x,c)^\top v)$，则 $\mathbb{E}[v\odot(Hv)]=\text{diag}(H)$。这样每估一次对角只要几次反传，曲率差就是对条件模型和 baseline 各跑一遍 HVP 再相减。默认取 $K=16$ 个随机样本，但论文指出 $K=1$ 已经有竞争力，这正是让"几何视角"落到工程上的关键。
 
-3. **score-difference 代理：Fisher 信息恒等式给 Wen 指标的几何解释**：
+**3. score-difference 代理：Fisher 信息恒等式给 Wen 指标补几何解释**
 
-    - 功能：用一次前向、零 Hessian 就近似坐标曲率差，并解释了 Wen 等 2024 的全局检测指标为什么有效。
-    - 核心思路：命题 4.2 给出 Fisher 信息恒等式 $\mathcal{I}(x) = \mathbb{E}_{c \sim p(c|x)}[-\nabla_x^2 \log p(c|x)]$，取对角后得 $\mathbb{E}_c[\text{diag}(-\nabla_x^2 \log p(x|c) + \nabla_x^2 \log p(x))] = \mathbb{E}_c[(\nabla_x \log p(x|c) - \nabla_x \log p(x))^{\odot 2}]$。于是定义 $\Delta s_\emptyset^t := (s_\theta(x_t,c) - s_\theta(x_t))^{\odot 2}$（式 5）和 $\Delta s_{\tilde\theta}^t := (s_\theta(x_t,c) - s_{\tilde\theta}(x_t,c))^{\odot 2}$（式 6）作为 $\Delta h$ 的代理。当 $t \to 0$，$x_t$ 已几乎确定 $c$，把期望替换成生成所用 $c$ 的近似误差非常小，故代理在最后一步特别准。
-    - 设计动机：一方面工程上去掉 Hessian，把推理变得几乎和原采样一样便宜；另一方面，把 Wen 等的全局 $\|s_\theta(x,c) - s_\theta(x)\|_2$ 重新解释为"对坐标级曲率差的空间求和"——核心不是"条件信号强度"而是"扣除欠拟合 baseline 这一减法操作把数据固有复杂度滤掉了"，这也解释了为什么必须用无条件模型当参考。
+即便有 Hutchinson，Hessian 路线仍比纯前向贵，于是本文给出一个零 Hessian 的代理，顺手解释了 Wen 等 2024 的全局检测指标为什么有效。命题 4.2 的 Fisher 信息恒等式 $\mathcal{I}(x)=\mathbb{E}_{c\sim p(c|x)}[-\nabla_x^2\log p(c|x)]$ 取对角后给出
+
+$$\mathbb{E}_c\big[\text{diag}(-\nabla_x^2\log p(x|c)+\nabla_x^2\log p(x))\big]=\mathbb{E}_c\big[(\nabla_x\log p(x|c)-\nabla_x\log p(x))^{\odot 2}\big],$$
+
+也就是"对角曲率差"在期望意义下等于"score 差的逐坐标平方"。据此定义 $\Delta s_\emptyset^t := (s_\theta(x_t,c)-s_\theta(x_t))^{\odot 2}$（式 5）与 $\Delta s_{\tilde\theta}^t := (s_\theta(x_t,c)-s_{\tilde\theta}(x_t,c))^{\odot 2}$（式 6）当 $\Delta h$ 的代理。当 $t\to 0$，$x_t$ 已几乎确定 $c$，把期望替换成生成所用的单个 $c$ 误差极小，所以代理在最后一步格外准。无条件代理还能直接复用 CFG 自带的那一项，几乎零额外推理。更重要的是它给老指标换了解释：Wen 的全局 $\|s_\theta(x,c)-s_\theta(x)\|_2$ 本质是"坐标级曲率差的空间求和"，关键不在"条件信号强度"，而在"减掉欠拟合 baseline"这一步把数据固有复杂度滤掉了——这也说清了为什么参考必须是无条件模型。
 
 ### 损失函数 / 训练策略
-本文不引入新训练，仅在已有 SD checkpoint 上做推理与梯度计算。所有度量都在 DDIM 最后一步 $t \approx 0$ 评估，沿通道维求和得到 2D 空间图，再做全数据集级 [0,1] 归一化。
+
+本文不引入新训练，仅在已有 SD checkpoint 上做推理与梯度计算。所有度量都在 DDIM 最后一步 $t\approx 0$ 评估，沿通道维求和得到 2D 空间图，再做全数据集级 $[0,1]$ 归一化后二值化。
 
 ## 实验关键数据
 

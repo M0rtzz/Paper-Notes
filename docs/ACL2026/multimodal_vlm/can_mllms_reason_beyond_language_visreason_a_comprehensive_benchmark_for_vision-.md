@@ -38,29 +38,23 @@ VisReason 构建了一个包含 1,505 道日常视觉推理题的多模态 bench
 **核心 idea**：用“视觉证据是否不可替代”作为 benchmark 设计原则，检验 MLLM 是否真正 reason beyond language。
 
 ## 方法详解
-这篇论文的核心贡献是 benchmark 构建和诊断评测。作者先定义视觉中心推理的类别体系，再通过人工收集、改写、验证得到多格式题目，最后用大规模模型评测和能力拆解解释模型失败原因。
 
 ### 整体框架
-VisReason 的输入是图像和问题，输出格式根据题型分为选择题、填空、开放答案和 bounding box。评测时，选择题/填空用规则抽取答案并精确匹配，开放题用 GPT-5-mini 严格判分，bounding box 用 IoU 匹配并按题目归一化准确率。最终报告各类别准确率和平均准确率。
+VisReason 想戳破的现象是：很多被当作"视觉推理"的题，其实把图像转成 caption 后照样能答对，模型只是在做语言推理而非真正看图。围绕"视觉证据不可被语言替代"这一设计原则，论文先定义视觉中心推理的类别体系，再人工收集、改写、验证出一批多格式题目，最后用大规模模型评测加能力拆解来解释模型为什么失败。具体地，输入是图像和问题，输出按题型分为选择题、填空、开放答案和 bounding box；评测时选择题/填空用规则抽取答案后精确匹配，开放题交给 GPT-5-mini 严格判分，bounding box 用 IoU 匹配并按题目归一化，最终报告各类别准确率和平均准确率。
 
 ### 关键设计
-1. **视觉中心数据筛选**:
 
-	- 功能：确保题目必须依赖图像证据，而不是只靠文字或外部知识。
-	- 核心思路：作者从在线视觉推理题和中文公务员考试题库收集候选，再由研究生 annotator 标准化为 VQA 格式，过滤掉只看图即可答、只看文本即可答、依赖外部知识或答案不唯一的样本。
-	- 设计动机：如果题目能被 caption 完整替代，就不能诊断模型的视觉中心推理能力。
+**1. 视觉中心数据筛选：只留下"图像证据无法被文字替代"的题。**
 
-2. **三层推理类别体系**:
+如果一道题能被 caption 完整替代，那答对它根本说明不了模型的视觉推理能力，诊断也就无从谈起。为此作者从在线视觉推理题和中文公务员考试题库收集候选，由研究生 annotator 标准化成 VQA 格式，再系统过滤掉四类"假视觉"样本：只看图就能答的、只看文本就能答的、依赖外部知识的、以及答案不唯一的。经过这道闸门，留下的每一题都必须真正回到图像本身去找证据——这也是后文"换 caption 后 VisReason 暴跌 48.12% 而旧基准只跌不到 6.35%"这一诊断能成立的前提。
 
-	- 功能：把视觉推理拆成感知、结构和概念三个层次，共 10 个类别、36 个子类。
-	- 核心思路：感知层包含 Localized Reasoning、Spot the Difference、Pattern Counting；结构层包含 3D-Spatial、Board、Sudoku、Geolocation；概念层包含 Cue Insight、Inductive Reasoning、Deductive Reasoning。
-	- 设计动机：不同类别对应不同瓶颈。定位和找不同主要考视觉 grounding，数独和棋盘考结构状态抽取与规则执行，归纳/演绎则更偏抽象推理。
+**2. 三层推理类别体系：把视觉推理拆成感知、结构、概念三层，对准不同瓶颈。**
 
-3. **模型诊断协议**:
+视觉推理是个笼统的词，不拆开就看不出模型卡在哪一环。VisReason 把它分成三层共 10 个类别、36 个子类：感知层是 Localized Reasoning、Spot the Difference、Pattern Counting，主要考视觉 grounding；结构层是 3D-Spatial、Board、Sudoku、Geolocation，考的是从图里抽取结构化状态并执行规则；概念层是 Cue Insight、Inductive Reasoning、Deductive Reasoning，更偏抽象推理。这样分层之后，"定位/找不同失分"就能归到 grounding，"数独/棋盘失分"能归到结构状态抽取，每一类失败都能对应到一个具体的能力短板，而不是混成一个笼统的低分。
 
-	- 功能：同时比较模型规模、推理预算、CoT 和错误类型。
-	- 核心思路：作者评估 GPT-4o、o4-mini、GPT-5 系列、Gemini 系列、InternVL3、Qwen2.5-VL、Qwen3-VL thinking/non-thinking、MiMo-VL、Keye-VL 等模型，统一 zero-shot CoT 风格提示；同时进行 caption 替换诊断、category correlation、error taxonomy 和 atomic capability 分析。
-	- 设计动机：平均分只能说明“难”，类别与错误分析才能说明为什么难，以及 scaling 或 CoT 是否真的补上视觉 grounding。
+**3. 模型诊断协议：把规模、推理预算、CoT 和错误类型放在同一框架下解剖。**
+
+平均分只能告诉你"难"，说不清"为什么难"，也回答不了"scaling 或 CoT 到底能不能补上视觉 grounding"。协议因此在统一的 zero-shot CoT 风格提示下评估一大批模型——GPT-4o、o4-mini、GPT-5 系列、Gemini 系列、InternVL3、Qwen2.5-VL、Qwen3-VL 的 thinking/non-thinking 版、MiMo-VL、Keye-VL 等——并在评测之上叠加四类分析：caption 替换诊断（验证视觉证据是否真不可替代）、类别相关性、错误分类（error taxonomy）和原子能力（atomic capability）分析。正是这套拆解才得出"感知错误 + 推理错误占了约 90%、CoT 对视觉证据主导任务几乎无帮助"这类结论，而不是停在一个孤零零的准确率上。
 
 ### 损失函数或训练策略
 本文不训练模型，主要是 benchmark 构造与零样本评测。题目构建阶段使用多轮人工校验保证图像、问题、答案一致；评测阶段所有模型使用四类题型对应的 prompt，并尽量按同一 answer-format 要求输出。对于 bounding-box，预测框与真值框用 Hungarian matching 匹配，IoU 大于 0.5 记为正确并按题目归一化。

@@ -46,23 +46,22 @@ tags:
 每个样本提取所有层最后一个 input token 的 hidden states、生成文本和输出置信度；几何分析只使用答对的样本。随后在各层训练 L2 正则的 logistic regression 线性探针，用 5-fold stratified cross-validation 预测 reasoning-mode label，并在最佳层做 manifold geometry。最后，用格式残差、trace-anchor 相似度和 activation steering 检验该几何是否具有推理功能。
 
 ### 关键设计
-1. **多源推理探针与几何分析**:
 
-	- 功能：复现“隐藏状态可完美区分推理模式”的表面现象。
-	- 核心思路：在每层训练线性探针预测 D/I/A 三类，在第 32 层达到 100% balanced accuracy；同时计算 intrinsic dimensionality、local curvature、inter-mode separation 和 hull contamination。
-	- 设计动机：只有先让标准探针得到强结果，后续反驳才有说服力。论文不是因为探针效果差才否定它，而是因为探针效果太好但被混淆解释完全吸收。
+**1. 多源推理探针与几何分析：先把标准探针的表面结果做到极致，再反驳它。**
 
-2. **四阶段格式混淆拆解**:
+整套验证的前提是：如果探针本身效果平平，否定它就没意义；只有当探针给出近乎完美的结果时，"这个结果其实是混淆"才有冲击力。因此作者在 Qwen3-14B 每一层训练 L2 正则的线性探针预测 deductive/inductive/abductive 三类标签，在第 32 层拿到 100% balanced accuracy。光有准确率还不够说服人，他们又在最佳层做几何分析，计算 intrinsic dimensionality、local curvature、inter-mode separation 和 convex hull contamination，让三类隐藏状态呈现出干净的簇分离。这一步刻意把"隐藏状态确实编码了推理模式"这个直觉证据堆到最满，为后面逐层拆解埋下反差。
 
-	- 功能：区分探针到底在识别 reasoning mode 还是 task format。
-	- 核心思路：先用同样探针预测 dataset source；再只用 option count 预测；再限制到 4-choice 的 LogiQA 和 ARC；最后构造格式特征 $f_i=[source\ one\text{-}hot,n_{options},|y_i|]$，用 Ridge regression 从 hidden state 中回归掉格式信息，得到残差 $r_i=h_i-\hat{h}_i$ 后重新探测 mode/source。
-	- 设计动机：source、选项数和 response length 都是多源 benchmark 中最常见、也最容易被忽略的混淆变量。残差分析给出了最强的反事实检验。
+**2. 四阶段格式混淆拆解：把"推理模式"信号一层层换成"题目格式"信号。**
 
-3. **行为和因果层面的随机控制**:
+核心痛点是探针的高准确率究竟来自 reasoning mode 还是 task format——因为三类标签恰好和三个数据集一一绑定，source、选项数、response length 这些表面特征都可能冒充推理信号。作者用四个递进的反事实把这件事查清：第一阶段直接用同样的探针预测 dataset source，若也能 100% 命中，说明 mode label 和 source label 在信息上等价；第二阶段只用选项数（2 vs 4）预测；第三阶段把数据限制到选项数相同的 4-choice LogiQA + ARC，看词汇和题型风格还能不能分开；第四阶段最关键，把格式特征拼成
 
-	- 功能：验证几何方向是否真的能改变推理模式，而不是任意扰动都会产生类似效果。
-	- 核心思路：trace-anchor 分析把生成 trace 与三类 anchor 描述做余弦相似度，测试模型外显推理是否按模式切换；steering 实验用 mode centroid difference 构造方向，并与 $N_{rand}=20$ 个随机方向比较，经验 $p$ 值用 Laplace correction 计算。
-	- 设计动机：即使几何分离存在，也必须证明它与行为有功能联系。随机方向控制是避免把一般扰动误解为 mode-specific steering 的关键。
+$$f_i=[\text{source one-hot},\ n_{\text{options}},\ |y_i|]$$
+
+用 Ridge regression 从隐藏状态里回归掉格式信息，得到残差 $r_i=h_i-\hat{h}_i$，再在残差上重新探测 mode 和 source。结果残差探针塌回约 33.5% 的随机水平，意味着原本 100% 的分离基本由格式驱动。残差分析之所以是最强证据，正因为它做的是反事实——直接把混淆变量从表征里抽走，看剩下还有没有真信号。
+
+**3. 行为和因果层面的随机控制：证明几何方向不只是相关，还要有功能。**
+
+即便几何分离真的存在，也还差一步：这个方向是不是真能改变推理模式，而不是任何扰动都会造成类似变化。作者从两个角度补这一步。行为上，trace-anchor 分析把模型生成的推理 trace 和三类 anchor 描述做余弦相似度，看外显推理是否随模式切换；结果 trace-mode agreement 只有 42.5%，仅略高于 33.3% 的 chance。因果上，steering 实验用 mode centroid difference 构造转向方向，但关键是拿它和 $N_{rand}=20$ 个随机方向对照，经验 $p$ 值用 Laplace correction 计算。随机方向控制是这里的灵魂——很多 steering 工作只报告目标方向有效，却没证明它比随机扰动更特殊；一旦做了对照，本文发现 targeted steering 的恢复效果和随机方向并无可信差异（$p=0.286$，Cohen's $d<0.5$），mode-specific 因果作用也就站不住了。
 
 ### 损失函数 / 训练策略
 这篇论文不训练语言模型本身，训练的是分析用线性探针。探针是 logistic regression，使用 L2 正则，$C=1.0$，5-fold cross-validation。steering 的强度 $\alpha^*$ 不是手调，而是通过 coherence sweep 和 Otsu thresholding 从数据中确定；随机方向数最多 20，实际报告中为 20。

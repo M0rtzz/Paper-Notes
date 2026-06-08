@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是节点特征 $X\in\mathbb{R}^{n\times d_1}$ 和节点对特征 $E\in\mathbb{R}^{n\times n\times d_2}$，先用一个编码器 $\phi$ 把每对节点 lift 成 $H_{uv}=\phi(X_u,X_v,E_{uv})$，reshape 成 $H\in\mathbb{R}^{n^2\times d}$；再过若干 full-spectrum 卷积层 $H'=\sigma(g(L\otimes I_n, I_n\otimes L)\cdot H\cdot W)$；最后按任务选 readout（node-pair / node / graph 级）。卷积核心是双变量函数 $g$ 的参数化，论文给出三条实现路径，最优的是 Route III（低秩张量分解）。
+要解决的问题是：谱 GNN 的表达力被 1-WL 卡死，根源在于它只在节点信号 $x\in\mathbb{R}^V$ 上做对角滤波 $g(\lambda_i)$。本文把信号整体抬高一维——从节点域 $V$ 升到节点对域 $V\times V$，于是滤波器自然从单变量 $g(\lambda_i)$ 变成双变量 $g(\lambda_i,\lambda_j)$。具体地，先用编码器 $\phi$ 把每对节点的特征 lift 成 $H_{uv}=\phi(X_u,X_v,E_{uv})$ 并 reshape 成 $H\in\mathbb{R}^{n^2\times d}$，再堆叠若干 full-spectrum 卷积层 $H'=\sigma\big(g(L\otimes I_n,\,I_n\otimes L)\,H\,W\big)$，最后按任务取 node-pair / node / graph 级 readout。难点全在那个双变量函数 $g$ 上：怎样参数化它既能拿到二阶表达力，又不真的去算 $n^2\times n^2$ 的矩阵。
 
 ### 关键设计
 
-1. **节点对域上的双变量谱滤波（Full-Spectrum Convolution）**:
+**1. 节点对域上的双变量谱滤波：让每一对特征值都能独立调制**
 
-    - 功能：把传统谱卷积 $\sum_i g(\lambda_i)u_iu_i^\top x$ 推广为 $\sum_{i,j} g(\lambda_i,\lambda_j)u_iu_i^\top \varepsilon u_ju_j^\top$，让每一对特征值都能独立调制。
-    - 核心思路：用 Kronecker 基 $\{u_i\otimes u_j\}$ 作为 $\mathbb{R}^{n^2}$ 的正交基，定义双变量谱滤波 $G_\lambda=(g(\lambda_i,\lambda_j))_{ij}$，节点对域卷积写成 $G_\lambda \ast_G \varepsilon = g(L\otimes I_n, I_n\otimes L)\varepsilon$。Proposition 3.3 给出“经典谱 GNN 是 full-spectrum 的对角嵌入特例”这一一致性：当限制 $g(s,t)$ 只取对角值 $g(\lambda_i,\lambda_i)$ 时恰好回到 $U g(\Lambda) U^\top x$。Theorem 3.4 证明线性 FSpecGNN 能 universally 近似一维节点对信号；Theorem 3.8 证明存在双变量多项式 $q$ 使得 FSpecGNN 达到 Local 2-GNN 的判别力（严格超越 1-WL）。
-    - 设计动机：节点对域是“超越 1-WL”最自然的 lifting 域；保留 Kronecker 基结构既能继承谱方法的可解释性（频域调制），又能解锁更丰富的滤波模式，包括异质图所需的非对角分量。
+传统谱卷积是 $\sum_i g(\lambda_i)\,u_iu_i^\top x$，它的痛点是滤波器只认单个特征值，无法表达"频率 $\lambda_i$ 和 $\lambda_j$ 的交互"，这正是 1-WL 上界的来源。本文把节点对信号 $\varepsilon\in\mathbb{R}^{V\times V}$ 放进以 Kronecker 基 $\{u_i\otimes u_j\}$ 张成的 $\mathbb{R}^{n^2}$ 正交空间，定义双变量谱滤波矩阵 $G_\lambda=(g(\lambda_i,\lambda_j))_{ij}$，卷积写成 $G_\lambda \ast_G \varepsilon = g(L\otimes I_n,\,I_n\otimes L)\,\varepsilon = \sum_{i,j} g(\lambda_i,\lambda_j)\,u_iu_i^\top\varepsilon\,u_ju_j^\top$。这个推广是自洽的：Proposition 3.3 指出当限制 $g(s,t)$ 只取对角值 $g(\lambda_i,\lambda_i)$ 时它恰好退回经典的 $U g(\Lambda) U^\top x$，所以经典谱 GNN 只是 full-spectrum 的"对角嵌入特例"。之所以有效，是因为节点对域是超越 1-WL 最自然的 lifting 域，而非对角分量 $g(\lambda_i,\lambda_j),i\neq j$ 恰好解锁了异质图所需的滤波模式。理论上这两件事都被坐实：Theorem 3.4 证明线性 FSpecGNN 能 universally 近似任意一维节点对信号，Theorem 3.8 证明存在双变量多项式 $q$ 使 FSpecGNN 达到 Local 2-GNN 的判别力，严格超越 1-WL。
 
-2. **低秩张量分解的可扩展实现**:
+**2. 低秩张量分解：把二阶卷积压回节点域的矩阵乘法**
 
-    - 功能：避免显式构造 $n^2\times n^2$ 的 Kronecker 积矩阵，把节点对域卷积压缩成几次节点域上的多项式谱滤波。
-    - 核心思路：用双变量多项式 $P(s,t)=\sum_{i+j\le K} a_{ij} s^i t^j$ 参数化 $g$，关键观察（Proposition 3.9）是 $P(L\otimes I_n, I_n\otimes L)=\sum_{r=1}^R f_r(L)\otimes h_r(L)$ 当且仅当 $R\ge\mathrm{rank}(A)$，其中 $A=(a_{ij})$ 是系数矩阵。对 $A$ 做低秩近似得到 $\mathcal{T}_L^S\coloneqq \sum_{r=1}^S f_r(L)\otimes h_r(L)$，$S\ll \mathrm{rank}(A)$，每个 $f_r,h_r$ 都是次数 $\le K$ 的单变量多项式（如 BernConv、Cheb）。再用 $(L^p\otimes L^q)\mathrm{vec}(\varepsilon)=\mathrm{vec}(L^q \varepsilon L^p)$ 把 Kronecker 乘法转成两次 $n\times n$ 矩阵乘法，总计算量 $O(SK\cdot n^2 d)$，与一阶谱 GNN 同阶。
-    - 设计动机：直接学 $g(\lambda_i,\lambda_j)$ 需要 $O(n^3)$ 的特征分解，对大图不可行；polynomial 参数化把 $g$ 写成低秩 Kronecker 和，于是节点对域的所有运算都能等价转换到节点域，让二阶谱方法第一次具备和一阶方法可比的扩展性。
+直接学 $g(\lambda_i,\lambda_j)$ 要做 $O(n^3)$ 的特征分解、再显式构造 $n^2\times n^2$ 的 Kronecker 积，对大图完全不可行——这是二阶谱方法一直没落地的拦路虎。解法是用双变量多项式 $P(s,t)=\sum_{i+j\le K} a_{ij}\,s^i t^j$ 参数化 $g$，关键观察（Proposition 3.9）是 $P(L\otimes I_n,\,I_n\otimes L)=\sum_{r=1}^R f_r(L)\otimes h_r(L)$ 当且仅当 $R\ge\mathrm{rank}(A)$，其中 $A=(a_{ij})$ 是系数矩阵。于是只要对 $A$ 做低秩近似，取 $\mathcal{T}_L^S\coloneqq \sum_{r=1}^S f_r(L)\otimes h_r(L)$（$S\ll\mathrm{rank}(A)$，每个 $f_r,h_r$ 是次数 $\le K$ 的单变量多项式，如 Bern、Cheb），双变量滤波就被拆成 $S$ 项一阶谱滤波的 Kronecker 和。再借恒等式 $(L^p\otimes L^q)\,\mathrm{vec}(\varepsilon)=\mathrm{vec}(L^q\,\varepsilon\,L^p)$ 把每个 Kronecker 乘法换成两次 $n\times n$ 矩阵乘法，整体计算量降到 $O(SK\cdot n^2 d)$，与一阶谱 GNN 同阶。这一步让二阶谱方法第一次拿到和一阶方法可比的扩展性。
 
-3. **从异质图给出非对角谱分量的“必要性证明”**:
+**3. 非对角谱分量的"必要性证明"：把异质图刻画成二阶现象**
 
-    - 功能：理论上回答“非对角谱分量到底是不是冗余”这个长期未明的问题，并展示 FSpecGNN 能实现经典谱 GNN 不可能实现的最优卷积。
-    - 核心思路：在“类条件特征 + 类内压缩”的简化模型下，定义类平方误差 $\mathcal{L}(C)=\sum_a \frac{1}{n_a}\sum_{p\in V_a}\mathbb{E}\|Y_p-m_a\|_2^2$，证明（Theorem 4.1）最优卷积 $C^*$ 渐近呈“按类块对角”——类内权重为 $1/(n_a+\tau_a)$、类间为 0；进一步（Theorem 4.2）证明若 $C=g(L)$ 是任意经典谱滤波且满足跨类条目为 0，则必有 $C=\alpha I_n$，即经典谱 GNN 根本不可能逼近这种最优算子。FSpecGNN 通过 full-spectrum 卷积稍作修改即可实现该最优算子，把异质图明确刻画成“本质上是二阶现象”。
-    - 设计动机：把方法的必要性从“工程经验”升级为“代数限制下的不可能性结论”，给二阶谱架构在异质图上的优越性提供了第一手理论支撑。
+"非对角谱分量到底是不是冗余"长期没有答案，本文用异质图给出了代数层面的回答。在"类条件特征 + 类内压缩"的简化模型下定义类平方误差 $\mathcal{L}(C)=\sum_a \frac{1}{n_a}\sum_{p\in V_a}\mathbb{E}\|Y_p-m_a\|_2^2$，Theorem 4.1 证明最优卷积 $C^*$ 渐近呈"按类块对角"形态——类内权重 $1/(n_a+\tau_a)$、类间为 0。更尖锐的是 Theorem 4.2：若 $C=g(L)$ 是任意经典谱滤波且要求跨类条目全为 0，则必有 $C=\alpha I_n$，也就是经典谱 GNN 根本不可能逼近这个最优算子；而 FSpecGNN 用 full-spectrum 卷积稍作修改就能实现它。这把"GCN 在异质图上崩"从工程经验升级为代数不可能性结论，明确说明异质图本质上是个二阶现象，给二阶谱架构的优越性提供了第一手理论支撑。
 
 ### 损失函数 / 训练策略
-监督训练（节点分类用交叉熵、子结构计数用 MAE），三种谱基 backbone 可选：FSpecGNN(Cheb) / (ChebII) / (Bern)。低秩参数 $S$、多项式阶数 $K$ 由验证集挑；当图小时可直接走 Route I（显式特征分解 + MLP $g_\theta$）。
+监督训练，节点分类用交叉熵、子结构计数用 MAE。谱基 backbone 三选一：FSpecGNN(Cheb) / (ChebII) / (Bern)，分别用对应多项式充当 $f_r,h_r$。低秩参数 $S$ 和多项式阶数 $K$ 由验证集挑选；图较小时可直接走显式路径（特征分解 + MLP $g_\theta$ 学 $g$），无需低秩近似。
 
 ## 实验关键数据
 

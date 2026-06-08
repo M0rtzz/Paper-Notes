@@ -48,23 +48,23 @@ $\|\mathbf{z} - \mathbf{z}^\star\|_2 \le \epsilon_1 + C\sqrt{2\epsilon_2}$，
 
 ### 关键设计
 
-1. **Arca — 锚定表示组合架构 (Anchored Representation Composition Architecture)**:
+**1. Arca — 锚定表示组合架构：把理论上界 $\epsilon_1+C\sqrt{2\epsilon_2}$ 拆成两个能直接优化的损失。**
 
-    - 功能：通过 "翻译评判 critic + 嵌入对齐 critic + REINFORCE actor" 联合压低锚定误差 $\epsilon_1$ 与翻译失真 $\epsilon_2$。
-    - 核心思路：先把多语言 token 流 $g_{\text{tok}}(x) \in \mathbb{R}^{L_x \times d_g}$ 与英文 token 流 $h_{\text{tok}}(y) \in \mathbb{R}^{L_y \times d_h}$ 用 $S_{\text{feat}}$-bin 时间池化拉到等长，再过共享 Adaptor $A(\cdot)$ 映到统一 $d$ 维，得到句向量 $E_{lr}$ 与 $E_{en}$；锚定损失定义为余弦距离 $\mathcal{L}_{\text{anchor}} = 1 - \cos(E_{lr}, E_{en})$，对应理论中的 $\epsilon_1$。同时让一个轻量 LLM 给 $K$ 条候选翻译打三维分 $(s_k, e_k, p_k) \in [1, 10]$（语义忠实、情感一致、语用得体），与 Adaptor 相似度 $\text{sim}_k$ 拼成 policy 特征 $\mathbf{c}_k = [s_k, e_k, p_k, \text{sim}_k]^\top$，喂给 MLP 形成策略 $\pi_\phi(k | \mathbf{c}_{1:K}) = \text{softmax}(g_\phi(\mathbf{c}_{1:K}))$，按复合奖励 $R_k = 0.1(\alpha s_k + \beta e_k + \gamma p_k) + \delta\, \text{sim}_k$ 做 REINFORCE。整体目标 $\mathcal{L} = \mathcal{L}_{\text{RL}} + \eta\, \mathcal{L}_{\text{anchor}}$ 把 $\epsilon_1$ 与 $\epsilon_2$ 同时往下压。
-    - 设计动机：直接把理论上界拆成两个可微 / 可强化优化的项；critic-actor 形式让翻译挑选与表示对齐互相博弈，避免单纯监督学习被翻译噪声带偏。
+理论给的上界很漂亮，但 $\epsilon_1$（锚定误差）与 $\epsilon_2$（翻译失真）只是抽象量，必须落到能反传的目标上。Arca 先把多语言 token 流 $g_{\text{tok}}(x) \in \mathbb{R}^{L_x \times d_g}$ 与英文 token 流 $h_{\text{tok}}(y) \in \mathbb{R}^{L_y \times d_h}$ 用 $S_{\text{feat}}$-bin 时间池化拉到等长，过共享 Adaptor $A(\cdot)$ 映到统一 $d$ 维得句向量 $E_{lr}, E_{en}$，再把锚定损失定义为余弦距离 $\mathcal{L}_{\text{anchor}} = 1 - \cos(E_{lr}, E_{en})$——这一项就是理论里的 $\epsilon_1$。$\epsilon_2$ 则交给一个 critic-actor 回路：一个轻量 LLM 给 $K$ 条候选翻译打三维分 $(s_k, e_k, p_k) \in [1,10]$（语义忠实、情感一致、语用得体），与 Adaptor 相似度 $\text{sim}_k$ 拼成 policy 特征 $\mathbf{c}_k = [s_k, e_k, p_k, \text{sim}_k]^\top$，喂给 MLP 得到策略 $\pi_\phi(k|\mathbf{c}_{1:K}) = \text{softmax}(g_\phi(\mathbf{c}_{1:K}))$，按复合奖励 $R_k = 0.1(\alpha s_k + \beta e_k + \gamma p_k) + \delta\,\text{sim}_k$ 做 REINFORCE。
 
-2. **LaSR — 语言耦合语义推理头 (Language-coupled Semantic Reasoner)**:
+两项合成总目标 $\mathcal{L} = \mathcal{L}_{\text{RL}} + \eta\,\mathcal{L}_{\text{anchor}}$ 把 $\epsilon_1, \epsilon_2$ 同时往下压。之所以用 critic-actor 而不是纯监督，是因为低资源平行语料本身脏——让"翻译挑选"和"表示对齐"互相博弈，模型能绕开被噪声翻译带偏的陷阱，而不是死记某条不靠谱的参考译文。
 
-    - 功能：作为下游推理 / 检索头，用一致性正则强制 "多语言路径输出" 与 "英文路径输出" 在语义空间收敛，同时支持队列式对比学习以稳定大批量检索。
-    - 核心思路：把 Arca 输出的 $(E_{lr}, E_{en})$ 用一个轻量 language-aware 头融合，得到统一的多语言嵌入；用对比损失（queue-based InfoNCE 风格）把相同 query 的多语言版本与英文版本拉近、与负样本拉远，等价于在 LaSR 输出层再做一次 $\mathcal{L}_{\text{consistency}}$ 形式的正则。检索 / 排序 / QA / 推理共用这一份嵌入。
-    - 设计动机：Arca 解决 "落点" 问题，LaSR 解决 "下游一致" 问题——若只有 Arca，下游 LLM 对两路输入的敏感度仍可能放大残余误差；加 LaSR 等于把 $L^{\text{loc}}(y;\delta)$ 也压低，让 Corollary 2 的整段上界都被收紧。
+**2. LaSR — 语言耦合语义推理头：把下游 LLM 对残余误差的放大也压住。**
 
-3. **理论驱动的两阶段训练 (Theory-driven two-stage training)**:
+Arca 解决的是"两路表示落点对不对"，但即便落点对了，下游 LLM 对多语言路径和英文路径输入的敏感度不同，仍可能把残余误差放大——这正是理论里 $L^{\text{loc}}(y;\delta)$ 这个 Lipschitz 常数在起作用。LaSR 用一个轻量 language-aware 头把 Arca 输出的 $(E_{lr}, E_{en})$ 融合成统一多语言嵌入，再用 queue-based InfoNCE 风格的对比损失把相同 query 的多语言版本与英文版本拉近、与负样本拉远，等价于在输出层再加一道 $\mathcal{L}_{\text{consistency}}$ 正则；检索、排序、QA、推理共用这一份嵌入。
 
-    - 功能：把 "压缩表示偏差" 与 "适配下游任务" 解耦成可插拔的两步。
-    - 核心思路：第一阶段冻结多语言编码器与英文编码器骨干，只训 Adaptor + critic + actor，专注最小化 $\mathcal{L}_{\text{anchor}} + \mathcal{L}_{\text{RL}}$；第二阶段挂上 LaSR，针对具体任务（检索 / 排序 / 推理）用对比 + 一致性损失微调，可按需切换目标任务。整套模块 plug-and-play，可以挂在 Qwen3-E、E5-Mistral、BGE 等任意骨干上。
-    - 设计动机：把理论目标（$\epsilon_1, \epsilon_2$）与工程目标（task metric）分阶段优化，既复用了已经预训练好的编码器能力，又避免 end-to-end 训练时两套目标互相干扰。
+它的作用是把 Corollary 2 上界的最后一块——$L^{\text{loc}}$——也收紧：Arca 管 $\epsilon_1+C\sqrt{2\epsilon_2}$，LaSR 管它前面的乘子，两者叠起来整段上界才真正变小。队列式对比同时让大批量检索在显存受限时仍稳定。
+
+**3. 理论驱动的两阶段训练：把"压偏差"和"适配任务"解耦成可插拔两步。**
+
+如果端到端同时优化理论目标（$\epsilon_1,\epsilon_2$）与任务指标，两套目标会互相抢梯度。作者把它拆开：第一阶段冻结多语言编码器与英文编码器骨干，只训 Adaptor + critic + actor，专注最小化 $\mathcal{L}_{\text{anchor}} + \mathcal{L}_{\text{RL}}$ 把表示先对齐好；第二阶段才挂上 LaSR，针对具体任务（检索 / 排序 / 推理）用对比 + 一致性损失微调。
+
+这样既复用了已预训练编码器的能力，又让两个目标互不干扰。整套模块是 plug-and-play 的——同一套 Arca+LaSR 可以挂在 Qwen3-E、E5-Mistral、BGE 等任意骨干上，换骨干不用重推理论。
 
 ### 损失函数 / 训练策略
 - Arca 阶段：$\mathcal{L} = \mathcal{L}_{\text{RL}} + \eta\, \mathcal{L}_{\text{anchor}}$，其中 $\mathcal{L}_{\text{RL}} \approx -\log \pi_\phi(a | \mathbf{c}_{1:K}) \cdot R_a$。奖励权重 $(\alpha, \beta, \gamma, \delta)$ 控制翻译质量三维分与嵌入相似度的相对重要性。

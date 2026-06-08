@@ -46,23 +46,22 @@ ReGATE 的名字来自 Reference-Guided Adaptive Token Elision。它不是把视
 第二阶段是 student training：训练过程中维护每个样本每个 token 的 EMA 难度 $m_{s,i}$，用当前 student loss 持续更新。ReGATE 把二者合成 token 分数 $d_{b,i}=m_{s,i}+\lambda\ell^{ref}_{b,i}$，再按当前 sparsity schedule 选择 top-$k$ token 作为 active token。active token 正常经过 attention、MLP 和反向传播；inactive token 跳过主要计算，从而减少 token usage、训练时间和 activation memory。
 
 ### 关键设计
-1. **text-only teacher 的 reference loss**:
 
-    - 功能：估计每个输出 token 对视觉信息的依赖程度。
-    - 核心思路：teacher 来自 student 的 LLM backbone，但移除视觉组件并冻结。视觉 token 被 `<pad>` 标记替换，teacher 只能根据文本上下文预测答案 token；若某个 token 的负对数似然很高，就说明它可能无法从文本先验中推断，需要视觉 grounding。
-    - 设计动机：多模态任务中真正贵的是学习跨模态证据，而不是反复训练容易的模板语言。reference loss 提供了一个无需人工标注、可预计算的视觉重要性信号。
+**1. text-only teacher 的 reference loss：用"文本能不能预测这个 token"当作它需不需要看图的代理信号。**
 
-2. **student EMA 难度与双周期稀疏调度**:
+多模态训练里真正贵的是学跨模态证据，而不是反复训练那些功能词、模板词；可这些低价值 token 又和颜色、动作、物体属性这类必须看图的 token 混在一起，简单规则一剪就容易误伤。ReGATE 的办法是从 student 自己的 LLM backbone 拷一个冻结的 text-only teacher，砍掉视觉编码器和 projector，把视觉 token 全用 `<pad>` 占位替换、保持序列长度不变，让 teacher 只能凭文本上下文预测答案 token，逐 token 算负对数似然得到 $\ell^{ref}_{b,i}$。某个 token 的 reference loss 越高，说明 teacher 光看文字越猜不出来，它就越可能依赖视觉 grounding。这套信号不需要任何人工标注、可以离线预计算，等于给每个输出 token 贴上了一张"视觉必要性"的标签。
 
-    - 功能：让 token 选择随训练进度动态变化，而不是固定剪掉同一批 token。
-    - 核心思路：对每个 token 维护历史 student loss 的 EMA，更新规则为 $m_{s,i}\leftarrow\beta m_{s,i}+(1-\beta)\ell^{stu}_{b,i}$。训练步按周期 $C$ 运行，每个周期前 $F$ 步保留全部 token，之后只保留比例 $p_{sparse}$ 的高分 token。
-    - 设计动机：teacher 只能反映静态视觉依赖，student EMA 则反映当前模型是否已经学会。两者结合可以避免一直计算已经变容易的 token，也避免只按文本 teacher 信号忽视 student 状态。
+**2. student EMA 难度与双周期稀疏调度：让被剪的 token 随训练进度变，而不是从头到尾固定那一批。**
 
-3. **无参数的 decoder sparse computation**:
+teacher 只反映静态的视觉依赖，可一个 token 此刻难学不代表一直难学——已经学会的 token 再算就是浪费。ReGATE 因此给每个 token 维护一份历史 student loss 的 EMA 难度 $m_{s,i}$，按 $m_{s,i}\leftarrow\beta m_{s,i}+(1-\beta)\ell^{stu}_{b,i}$ 持续更新，再把它和 teacher 信号相加成 token 分数：
 
-    - 功能：把 token mask 真正转化为训练加速，而不是只改变 loss 权重。
-    - 核心思路：decoder layer 中只为 active token 形成 query/key/value 并执行 attention；MLP 也只 gather active token 的 hidden states 进行计算，再 scatter 回原位置。inactive token 通过 residual 传递，不接收对应计算路径的梯度。
-    - 设计动机：如果只在 loss 层 mask token，forward/backward 的大部分成本仍然存在。ReGATE 把稀疏性下沉到 attention 和 MLP 计算中，因此能减少训练时间和显存。
+$$d_{b,i}=m_{s,i}+\lambda\ell^{ref}_{b,i}$$
+
+训练按周期 $C$ 运行，每个周期前 $F$ 步保留全部 token 让难度估计稳定下来，之后只留分数最高的比例 $p_{sparse}$ 作为 active token。这样选择既不会一直死磕已经变容易的 token，也不会只听 teacher 的静态信号而无视 student 当前到底学到哪了——算力被引导到"既需要视觉、又仍然难学"的交集上。
+
+**3. 无参数的 decoder sparse computation：把 token mask 真正落成 attention 和 MLP 的计算节省，而不只是改 loss 权重。**
+
+如果只在 loss 层给 token 加 mask，forward/backward 的大头开销其实一点没省。ReGATE 把稀疏性下沉进 decoder layer：只为 active token 生成 query/key/value 并执行 attention，MLP 也只 gather active token 的 hidden states 去算、算完再 scatter 回原位置；inactive token 直接走 residual 透传，不接收对应计算路径的梯度。因为模型的函数形式没变、预训练权重照样兼容，这套稀疏化既不增加任何可训练参数、又能实打实减少每步训练的时间和 activation memory，把"少处理 token"翻译成真正的训练加速。
 
 ### 损失函数 / 训练策略
 ReGATE 保持原始 MLLM 微调目标不变，改变的是哪些 token 参与主要计算。实验中 teacher reference loss 在训练前对整个 fine-tuning 数据集预计算并缓存，避免每一步都运行 teacher。默认超参为周期 $C=128$、全 token 稳定步 $F=16$、稀疏比例 $p_{sparse}=0.5$，全局 warm-up 为 100 iterations，EMA decay $\beta=0.9$，teacher loss 权重 $\lambda=0.5$。VideoLLaMA2 和 VideoChat2 实验使用 4 张 H100，InternVL3.5 使用 16 张 H100；方法同时覆盖 full fine-tuning 和 LoRA fine-tuning。

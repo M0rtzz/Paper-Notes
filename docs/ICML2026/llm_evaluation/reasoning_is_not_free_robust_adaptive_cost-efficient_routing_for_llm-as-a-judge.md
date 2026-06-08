@@ -42,37 +42,29 @@ RACER 把"对每个 query 决定要不要调用 reasoning 模式做 judge"建模
 
 ### 整体框架
 
-输入：preference dataset $\{(x_i, y_{i,1}, y_{i,2}, l_i)\}$（含 ground-truth 偏好标签）；一个 hybrid LLM 提供 reasoning judge $\Phi_1$ 和 non-reasoning judge $\Phi_0$。
-
-预处理：对每个 instance 跑两个 mode，记录 reward $r_i = \mathbb{I}(\Phi_{a_i}(z_i) = l_i)$ 和 cost $c_i$（token 数）。
-
-路由器：4 层 NN，输入是 prompt+response 拼接后用 bge-m3 取的 embedding，输出 reasoning 概率。
-
-训练：用 primal-dual 算法在每个 batch 上（a）算 reward / cost 的经验均值作为 baseline，（b）按闭式 reweighting 算 worst-case 分布 $\underline{\rho}, \bar{\rho}$，（c）更新策略 $\pi_{t+1}$ 和 dual $\lambda_{t+1}$。最后在 validation 上选最好的 iterate。
+RACER 要回答的是"这条 query 值不值得花 reasoning 的钱来 judge"，并且要在部署时 query 分布漂移的情况下依然守住 cost 预算。它的输入是带 ground-truth 偏好标签的 preference dataset $\{(x_i, y_{i,1}, y_{i,2}, l_i)\}$，外加一个 hybrid LLM——同一个模型既能当 reasoning judge $\Phi_1$、又能当 non-reasoning judge $\Phi_0$。训练前先对每个 instance 把两个 mode 都跑一遍，记下命中标签的 reward $r_i = \mathbb{I}(\Phi_{a_i}(z_i) = l_i)$ 和 token 成本 $c_i$，作为后续优化的离线信号。真正学的 router 是个 4 层小 NN，吃 prompt+response 拼接后用 bge-m3 取的 embedding，吐出"激活 reasoning"的概率 $\pi(a|z)$。整个训练就是把"在 cost 预算下最大化鲁棒 reward"写成约束 min-max，再用 primal-dual 交替更新策略 $\pi$ 和对偶变量 $\lambda$，最后在 validation 上挑最好的一轮 iterate。
 
 ### 关键设计
 
-1. **分布鲁棒约束优化的双重鲁棒（reward + cost 分开 robust）**:
+**1. 双重分布鲁棒：reward 和 cost 各自取 worst-case。**
 
-    - 功能：把 router 学习写成 $\max_\pi R_{\mathcal{U}(\rho_n, \delta)}(\pi)$ s.t. $C_{\mathcal{U}(\rho_n, \delta)}(\pi) \leq C$，其中 $R$ 是 worst-case reward、$C$ 是 worst-case cost，不确定集是以经验分布 $\rho_n$ 为中心的 KL ball。
-    - 核心思路：传统 DRO 只 robustify 一个 objective，本文意识到 reward 和 cost 在 OOD 下的失真方向不同——OOD query 可能 token 更便宜（cost robust 不重要、要 robustify reward 来更激进用预算）或更贵（cost robust 关键、防超预算），所以两边各自取 worst-case，让算法在两种 OOD 模式下都安全。
-    - 设计动机：实验 Figure 3 验证这个 split 必要——只 robustify reward 的 RACER-R 在 OOD 变贵场景下会超预算，只 robustify cost 的 RACER-C 在 OOD 变便宜场景下浪费预算；只有同时 robust 才在两种场景都稳。
+部署时 query 分布一漂移，训练分布上估的 reward 和 cost 双双失真，naive router 要么超预算要么性能崩。RACER 把 router 学习写成在 KL 不确定集上的约束优化 $\max_\pi R_{\mathcal{U}(\rho_n, \delta)}(\pi)$ s.t. $C_{\mathcal{U}(\rho_n, \delta)}(\pi) \leq C$，其中 $\mathcal{U}(\rho_n, \delta)$ 是以经验分布 $\rho_n$ 为圆心、半径 $\delta$ 的 KL ball，$R$ 取 ball 内的 worst-case reward、$C$ 取 worst-case cost。和传统 DRO 只对单个 objective 取鲁棒不同，这里的关键观察是 reward 与 cost 在 OOD 下的失真方向是独立的：OOD query 可能 token 更便宜（这时 cost 不用怕、反而该 robustify reward 把预算用得更激进），也可能更贵（这时 cost 鲁棒才是命根、得防超预算）。两边各取各的 worst-case，算法才能在"变贵"和"变便宜"两种漂移下都安全。消融（Figure 3）正说明这个 split 必不可少——只 robustify reward 的 RACER-R 在变贵场景超预算，只 robustify cost 的 RACER-C 在变便宜场景浪费预算，唯有双 robust 两头都稳。
 
-2. **KL 不确定集的闭式 worst-case reweighting（Theorem 3.1）**:
+**2. KL 不确定集的闭式 worst-case 重赋权（Theorem 3.1）。**
 
-    - 功能：把抽象的 $\min/\max$ over $\mathcal{U}(\rho_n, \delta)$ 转成对样本权重的闭式重赋。
-    - 核心思路：定义 $f_i = \mathbb{E}_{a \sim \pi(\cdot | z_i)}[f(z_i, a)]$，则 $\underline{\rho}(i) \propto \rho_n(i) \exp(\frac{\underline{s} - f_i}{\tau})$（minimization），$\bar{\rho}(i) \propto \rho_n(i) \exp(\frac{f_i - \bar{s}}{\tau})$（maximization）。直觉是 reward 视角下，worst-case 分布把"reward 比 baseline 高的样本"压低、把"低于 baseline 的样本"抬高；cost 视角下 worst-case 把"高 cost 样本"抬高、聚焦优化在"高风险区"。$\tau$ 控制重赋激烈度（$\tau$ 越小越偏极端）。
-    - 设计动机：直接对参数化分布跑 alternating gradient 不可行（不确定集里大多分布我们没样本）；闭式 reweighting 把"对未知分布做 worst-case"等价转为"对已知样本做加权"，实现上只需把每条样本乘个权重，工程简单极了。原理上借鉴自 Gadot et al. 2024 / Xu et al. 2025 的 distributionally robust RL。
+难点在于不确定集里大多数分布我们根本没有样本，直接对参数化分布跑 alternating gradient 没法做。Theorem 3.1 给出一个干净的等价：在 KL ball 下，worst-case 分布对样本只是一次闭式 reweighting。记 $f_i = \mathbb{E}_{a \sim \pi(\cdot|z_i)}[f(z_i, a)]$ 为某个量（reward 或 cost）在样本 $i$ 上的策略期望，则取 min 的 worst-case 分布是 $\underline{\rho}(i) \propto \rho_n(i)\exp\!\big(\tfrac{\underline{s} - f_i}{\tau}\big)$、取 max 的是 $\bar{\rho}(i) \propto \rho_n(i)\exp\!\big(\tfrac{f_i - \bar{s}}{\tau}\big)$。直觉上，reward 视角下 worst-case 会把"reward 高于 baseline 的样本"压低、"低于 baseline 的"抬高（悲观假设好处没那么多）；cost 视角下则把"高 cost 样本"抬高，逼优化聚焦到高风险区。温度 $\tau$ 控制重赋的激烈程度，$\tau$ 越小越偏极端。这样一来"对未知分布求 worst-case"就被等价转成"对已知样本乘个权重"，实现上几乎零额外成本（思路承接 Gadot et al. 2024 / Xu et al. 2025 的 distributionally robust RL）。
 
-3. **Entropy-regularized Primal-Dual 算法 + Linear Convergence 证明**:
+**3. Entropy 正则的 primal-dual 算法与 linear last-iterate 收敛（Theorem 4.1/4.2）。**
 
-    - 功能：解带约束的 min-max 拉格朗日 $L_\beta(\pi, \lambda) = R_{\underline{\rho}}(\pi) - \lambda C_{\bar{\rho}}(\pi) + \beta(\mathcal{H}(\pi) + \frac{1}{2}\lambda^2)$，得到 $(\pi^*, \lambda^*)$。
-    - 核心思路：交替 $\pi_{t+1} = \arg\max_\pi \{R_{\underline{\rho}}(\pi) - \lambda_t C_{\bar{\rho}}(\pi) + \beta \mathcal{H}(\pi)\}$ 和 $\lambda_{t+1} = \arg\max_{\lambda \geq 0}\{-\lambda C_{\bar{\rho}}(\pi) + \frac{1}{2}\beta \lambda^2\}$。注意 $\pi$ update 可重写成在原分布 $\rho$ 上的加权目标 $\mathbb{E}_{\rho, \pi}[\frac{p_{\underline{\rho}}}{p_\rho} r - \lambda_t \frac{p_{\bar{\rho}}}{p_\rho} c] + \beta \mathcal{H}$。Theorem 4.1 证 saddle point 存在唯一，Theorem 4.2 给出 $\text{KL}(\pi_t \| \pi^*) \leq \frac{M^2 K^2}{2 \beta^2} (\frac{M^2 K^2}{M^2 K^2 + 2 \beta^2})^{2t} (\lambda_0 - \lambda^*)^2$，linear rate 收敛。
-    - 设计动机：entropy 正则化 $\mathcal{H}(\pi)$ 是 RL 老技巧（Cen et al. 2022, Ding et al. 2023），让策略不至于退化成 deterministic 阻止探索，且让 primal-dual 有 last-iterate 收敛；$\frac{1}{2}\lambda^2$ 正则对偶变量保证 $\lambda$ 有界。两个正则一起让 saddle point 唯一且最后一轮 iterate 就收敛（而非传统 ergodic average），便于真实部署"取最后一次模型"即可。理论上是首次给 LLM router 这套保证。
+有了闭式 worst-case 分布，约束优化就落到一个带正则的 min-max 拉格朗日 $L_\beta(\pi, \lambda) = R_{\underline{\rho}}(\pi) - \lambda C_{\bar{\rho}}(\pi) + \beta\big(\mathcal{H}(\pi) + \tfrac{1}{2}\lambda^2\big)$ 上。primal-dual 交替求解：$\pi_{t+1} = \arg\max_\pi\{R_{\underline{\rho}}(\pi) - \lambda_t C_{\bar{\rho}}(\pi) + \beta\mathcal{H}(\pi)\}$，$\lambda_{t+1} = \arg\max_{\lambda \geq 0}\{-\lambda C_{\bar{\rho}}(\pi) + \tfrac{1}{2}\beta\lambda^2\}$；其中 $\pi$ 的更新可改写回原分布 $\rho$ 上的加权目标 $\mathbb{E}_{\rho, \pi}\big[\tfrac{p_{\underline{\rho}}}{p_\rho} r - \lambda_t \tfrac{p_{\bar{\rho}}}{p_\rho} c\big] + \beta\mathcal{H}$，直接配合关键设计 2 的重赋权落地。两个正则项各司其职：entropy $\mathcal{H}(\pi)$ 是 RL 老招（Cen et al. 2022, Ding et al. 2023），防策略退化成 deterministic、保留探索；$\tfrac{1}{2}\lambda^2$ 则把对偶变量约束得有界。两者合起来让 saddle point 存在且唯一（Theorem 4.1），并给出 last-iterate 的线性收敛率（Theorem 4.2）：
+
+$$\text{KL}(\pi_t \| \pi^*) \leq \frac{M^2 K^2}{2\beta^2}\left(\frac{M^2 K^2}{M^2 K^2 + 2\beta^2}\right)^{2t}(\lambda_0 - \lambda^*)^2.$$
+
+这是首次给 LLM router 证明 linear last-iterate convergence——意味着部署时直接取最后一个 checkpoint 就有保证，不必走传统 primal-dual 那套 ergodic average。
 
 ### 损失函数 / 训练策略
 
-整个训练循环 Algorithm 1：每 iter（a）采 batch；（b）枚举 $a \in \{0, 1\}$ 得 reward $r$ 和 cost $c$；（c）按当前 batch mean $\bar{r}, \bar{c}$ 算 $\underline{\rho}(i) \propto \exp((\bar{r} - r_i)/\tau)$、$\bar{\rho}(i) \propto \exp((c_i - \bar{c})/\tau)$；（d）primal-dual update $\pi$ 和 $\lambda$；（e）validation 上选最好 iterate。超参 $\tau$ 控鲁棒强度，$\beta$ 控 entropy 正则。
+完整训练循环（Algorithm 1）每轮：（a）采一个 batch；（b）对每条样本枚举 $a \in \{0, 1\}$ 拿到 reward $r$ 和 cost $c$；（c）以当前 batch 均值 $\bar{r}, \bar{c}$ 为 baseline，按闭式公式 $\underline{\rho}(i) \propto \exp((\bar{r} - r_i)/\tau)$、$\bar{\rho}(i) \propto \exp((c_i - \bar{c})/\tau)$ 算 worst-case 权重；（d）primal-dual 更新 $\pi$ 和 $\lambda$；（e）在 validation 上选最好的一轮 iterate。两个超参分工明确：$\tau$ 控鲁棒强度，$\beta$ 控 entropy 正则。
 
 ## 实验关键数据
 

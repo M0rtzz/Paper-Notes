@@ -43,16 +43,9 @@ MemSearcher 把搜索 agent 的"历史拼接"换成"LLM 自管理的紧凑内存
 ## 方法详解
 
 ### 整体框架
-**Trajectory 表示**：第 $i$ 条 trajectory 有 $n_i$ 个 turn，第 $j$ turn 形如 $(q, m_{i,j-1}, t_{i,j}, a_{i,j}, o_{i,j}, m_{i,j})$（最后一 turn 没有 $o, m$，因为已经 boxed 答案了）。$t$ 在 `<think>` / $a$ 在 `<tool_call>` / $o$ 在 `<tool_response>` / $m$ 在 `<memory>` 里。
+MemSearcher 让同一个 backbone LLM 同时兼任 reasoner、actor 和 memory manager：每轮只把 `(question, memory)` 喂进去，而不是 ReAct 那样拼接全部历史；LLM 输出 thought+action 去调搜索工具，再把检索回的 observation 融进一段 ≤1024 token 的自然语言 `<memory>` 里覆盖更新，如此循环直到 `\boxed{}` 给出答案。配套提出 multi-context GRPO，把整条 trajectory 的稀疏 reward 广播到每一轮当独立优化目标，从而端到端 RL 训出这套"边搜边记"的范式——无需人工标注内存状态。
 
-**每轮交互**：
-1. LLM 输入 $(q, m_{i,j-1})$；
-2. 输出 thought + action（要么调 wikipedia_search 工具，要么 `\boxed{}` 给最终答案终止）；
-3. 环境返回 observation；
-4. LLM 再次被调用，把 $(o_{i,j}, m_{i,j-1})$ 融合写成新 $m_{i,j}$，且 token 数 ≤ 预设上限 1024；
-5. 进入下一轮，循环直到答出来或超最大轮数。
-
-**计算复杂度对比**：
+这套设计把 context 长度对轮数 $n$ 从线性压成恒定，计算成本随之全面下降：
 
 | 方法 | 每轮 Context | 每轮 FLOPs | 总 FLOPs | GPU Memory |
 |------|-------------|------------|----------|-----------|
@@ -61,26 +54,26 @@ MemSearcher 把搜索 agent 的"历史拼接"换成"LLM 自管理的紧凑内存
 
 ### 关键设计
 
-1. **LLM-as-Memory-Manager 的紧凑内存范式（框架核心）**:
+**1. LLM-as-Memory-Manager 的紧凑内存范式：让 backbone 自己学会记什么、丢什么。**
 
-    - 功能：把 ReAct 的"线性拼接历史"换成"固定长度内存 + 自然语言摘要"，使 context 在多轮搜索下保持恒定。
-    - 核心思路：每轮 LLM 看到的 context $c_i = (q, m_{i-1})$ 而不是 $c_i = (q, t_1, a_1, o_1, \ldots)$。memory $m$ 用自然语言写在 `<memory>` 标签内，由 backbone LLM 自己 overwrite 生成。生成 prompt 指引："仔细读 $o_i$，把对回答 $q$ 有用的新信息整合进去，同时保留 $m_{i-1}$ 中的所有相关细节"。最大 memory 长度 1024 token（在 256-2048 区间做了 ablation）。
-    - 设计动机：传统外挂 memory（RAG / KG / Mem0）要么需要单独训练 retriever、要么牺牲端到端可微性；让 backbone LLM 自己 manage 内存的好处是 (1) 不引入额外模型，(2) 整条 pipeline 还是同一个 LLM 在 act，RL 训练可以端到端覆盖。Memory 用自然语言（而非 latent token）保证可解释、可调试。
+ReAct 把所有 thought-action-observation 往 context 里堆，搜索 observation 又是动辄上千 token 的 passage，几轮下来 context 破万、噪声压住信号。MemSearcher 直接把每轮看到的 context 从 $c_i = (q, t_1, a_1, o_1, \ldots)$ 换成 $c_i = (q, m_{i-1})$：第 $i$ 条 trajectory 的第 $j$ turn 形如 $(q, m_{i,j-1}, t_{i,j}, a_{i,j}, o_{i,j}, m_{i,j})$，thought 在 `<think>`、action 在 `<tool_call>`、observation 在 `<tool_response>`、memory 在 `<memory>` 标签里。每轮的闭环是：LLM 读 $(q, m_{i,j-1})$ → 输出 thought+action（调 wikipedia_search 或 boxed 终止）→ 环境返回 observation → LLM 再被调用，按"读 $o_i$、把对回答 $q$ 有用的新信息整合进来、同时保留 $m_{i-1}$ 全部相关细节"的指引把 $(o_{i,j}, m_{i,j-1})$ 融合改写成新 $m_{i,j}$，长度 ≤1024 token（在 256-2048 区间做了 ablation）。
 
-2. **Multi-Context GRPO（端到端训练核心）**:
+相比 RAG / KG / Mem0 这类外挂 memory 需要单独训 retriever 或牺牲端到端可微，让同一个 backbone 自管理内存的好处是不引入额外模型、整条 pipeline 仍是一个 LLM 在 act，RL 能端到端覆盖；而内存用自然语言而非 latent token，则保住了可解释、可调试。
 
-    - 功能：解决"一条 trajectory 内多 turn 各自有不同 context"导致 vanilla GRPO 不能直接用的问题。
-    - 核心思路：先按 GRPO 套路对每个 question $q$ 采样 group of $G$ trajectories，每条 trajectory 算 final reward $R_i$（format reward + F1-based answer reward），按 group 内 mean/std 标准化得到 trajectory-level advantage $A_i = \frac{R_i - \text{mean}(\{R_j\})}{\text{std}(\{R_j\})}$。**关键步**：把 $A_i$ uniformly propagate 到该 trajectory 的所有 turn，即 $A_{i,j} = A_i$ for all $j \in [1, n_i]$。然后把每 turn 当独立 PPO/GRPO 优化目标，objective 改为对所有 $(i,j)$ 求和，importance ratio $r_{i,j}(\theta) = \pi_\theta(T_{i,j}|c_{i,j}) / \pi_{\theta_{\text{old}}}(T_{i,j}|c_{i,j})$。最后还要对 search engine 返回的 observation token 做 loss mask（不算 policy gradient），稳定训练。
-    - 设计动机：直接对整条 trajectory 算 ratio 在 multi-context 下既数值不稳又信号稀疏；按 turn 拆分后每个 turn 都有自己的梯度信号，但 reward 又只有 final——所以用 trajectory-level advantage 强制对齐"哪条 trajectory 好"，让 reward 信号沿所有 turn 反传。这是把"sparse outcome reward + dense per-turn optimization"在 GRPO 框架下漂亮地缝合起来。
+**2. Multi-Context GRPO：把"一条轨迹一个 reward"广播到每一轮独立优化。**
 
-3. **Reward 设计与训练稳定性**:
+自管理内存带来一个训练上的硬骨头——一条 trajectory 内每个 turn 的 context $c_{i,j}=(q, m_{i,j-1})$ 都不一样，等于把整条轨迹拆成多个独立优化目标，而 vanilla GRPO 对整条轨迹只算一次 reward，没法直接套。解法是：对每个 question $q$ 按 GRPO 采样 $G$ 条 trajectory，每条算 final reward $R_i$，组内 mean/std 标准化得 trajectory-level advantage $A_i = \frac{R_i - \text{mean}(\{R_j\})}{\text{std}(\{R_j\})}$；关键一步是把 $A_i$ 均匀广播到该轨迹所有 turn，即 $A_{i,j} = A_i,\ \forall j \in [1, n_i]$，再把每个 turn 当独立 PPO/GRPO 目标，objective 对所有 $(i,j)$ 求和，importance ratio $r_{i,j}(\theta) = \pi_\theta(T_{i,j}|c_{i,j}) / \pi_{\theta_{\text{old}}}(T_{i,j}|c_{i,j})$；最后对搜索引擎返回的 observation token 做 loss mask，不计 policy gradient 以稳住训练。
 
-    - 功能：纯规则 reward，无 process supervision，结合 format check + F1 answer 评估。
-    - 核心思路：$R = 0$ 若格式错误；$R = 0.1$ 若格式对但 F1=0（鼓励先学会格式）；$R = F1$ 若 F1>0。Group 内归一化得 $A_i$。训练超参 lr=1e-6，KL coef=0.001，clip 0.2，rollout group=5，temperature=1.0。Search engine token 全 mask 掉。
-    - 设计动机：format reward 当作"warm-up bonus"避免模型早期完全 zero reward 无信号；F1 而非 EM 当 fine-grained reward 让部分正确的回答也有梯度。这是 DeepSeek-R1 风格的 rule-based reward 在 multi-turn search 场景的合理迁移。
+之所以要这样"广播 advantage"，是因为直接对整条 multi-context trajectory 算 ratio 既数值不稳又信号稀疏，而按 turn 拆开后每个 turn 都有自己的梯度，却只有 final reward——用 trajectory-level advantage 强制对齐"哪条轨迹好"，就能让稀疏的 outcome reward 沿所有 turn 反传，把"sparse outcome reward + dense per-turn optimization"在 GRPO 框架下缝合起来。
+
+**3. Reward 设计与训练稳定性：纯规则 reward 配 format warm-up。**
+
+奖励全程无 process supervision，只用 format check 加 F1 answer 评估：格式错给 $R=0$，格式对但 F1=0 给 $R=0.1$，F1>0 则 $R=F1$，组内归一化即得 $A_i$。训练超参为 lr=1e-6、KL coef=0.001、clip 0.2、rollout group=5、temperature=1.0，搜索引擎 token 全程 mask。
+
+那个 0.1 的 format reward 充当"warm-up bonus"，避免模型早期满屏 zero reward 完全没信号；用 F1 而非 EM 当 fine-grained reward，则让部分正确的回答也能拿到梯度。整体是 DeepSeek-R1 风格 rule-based reward 在 multi-turn search 场景的合理迁移。
 
 ### 损失函数 / 训练策略
-基于 verl 库训练，backbone 是 Qwen2.5-3B/7B/14B-Instruct，知识源是 2018 Wikipedia dump，retriever 是 E5。训练数据用 Search-R1 公开的 NQ + HotpotQA train split。3B/7B 跑 8×H100，14B 跑 2×8×H100。一个 epoch 即可（256 batch、5 rollout）。Reward 曲线两阶段：前 25 step 急升（学会基础工具+memory 使用），之后缓慢上行（精细化策略）。
+基于 verl 库训练，backbone 为 Qwen2.5-3B/7B/14B-Instruct，知识源是 2018 Wikipedia dump，retriever 用 E5，训练数据取 Search-R1 公开的 NQ + HotpotQA train split。3B/7B 跑 8×H100、14B 跑 2×8×H100，一个 epoch 即可（256 batch、5 rollout）。Reward 曲线呈两阶段：前 25 step 急升（学会基础工具+memory 使用），之后缓慢上行（精细化策略）。
 
 ## 实验关键数据
 

@@ -38,29 +38,29 @@ PlanRAG-Audio 将长音频理解改写为“先规划要查哪些模态和时间
 **核心 idea**：用规划式结构化检索把长音频推理外部化为数据库查询，让 LLM 只处理与问题相关的少量跨模态证据。
 
 ## 方法详解
-PlanRAG-Audio 的核心是把“听完整段音频再回答”拆成“离线感知建库 + 在线检索规划 + SQL 执行 + 答案生成”。这种设计的关键不是更强的音频 encoder，而是把时间、说话人、情绪和事件等信息变成可查询的结构化记录。
 
 ### 整体框架
-第一阶段，系统对原始音频做 speaker diarization、ASR、emotion recognition 和 sound event detection，构建音频数据库 $D(a)$。第二阶段，规划 LLM 根据用户问题生成检索计划 $\Theta(q)$，决定要查哪些 stream、用什么 filter、怎样融合多 stream、返回哪些字段以及最终答案 schema。第三阶段，规则式 SQL generator 把计划编译成 merged SQL query，在数据库上执行并返回片段 $R(q,a)$。第四阶段，generation LLM 根据 retrieved segments 和输出 schema 生成答案。
+PlanRAG-Audio 要解决的是“一小时音频塞进 LLM 又长又贵又不稳”的问题。它的关键不是换一个更强的音频 encoder，而是把“听完整段音频再回答”改写成“离线建库 + 在线规划检索 + 确定性执行 + 紧凑生成”，让模型只处理与问题相关的少量跨模态证据。
+
+第一阶段，系统对原始音频做 speaker diarization、ASR、emotion recognition 和 sound event detection，把结果组织成时间对齐的音频数据库 $D(a)$。第二阶段，规划 LLM 根据用户问题生成检索计划 $\Theta(q)$，决定要查哪些 stream、用什么 filter、怎样融合多 stream、返回哪些字段，以及最终答案的 schema。第三阶段，规则式 SQL generator 把计划编译成 merged SQL query，在数据库上执行并返回片段 $R(q,a)$。第四阶段，generation LLM 只根据这批 retrieved segments 和输出 schema 生成答案。这样任务长度和 LLM 输入长度被解耦：60 分钟音频的输入从约 115k tokens 压到约 1k tokens。
 
 ### 关键设计
-1. **结构化音频数据库**:
 
-	- 功能：把长音频拆成可检索、可时间对齐的多模态记录。
-	- 核心思路：speaker diarization 产生说话人同质的时间段，并作为 transcript、speaker、emotion 三个 stream 的共享边界；sound event stream 用滑动窗口独立生成，记录自己的 start/end 和 label-score JSONB。
-	- 设计动机：长音频问题经常需要把“谁说的”“说了什么”“情绪如何”“背景发生了什么”对齐起来。数据库化以后，跨模态匹配可以用时间 join 完成，而不是让 LLM 在长上下文里隐式推断。
+**1. 结构化音频数据库：把长音频拆成可时间对齐、可查询的多模态记录。**
 
-2. **受约束的检索规划**:
+长音频问题常常要把“谁说的”“说了什么”“情绪如何”“背景发生了什么”对齐到同一段时间，而直接喂长上下文的模型只能在一长串 token 里隐式推断这些关系，既不稳定又容易丢线索。PlanRAG-Audio 先做感知再建库：speaker diarization 产生说话人同质的时间段，并作为 transcript、speaker、emotion 三个 stream 的共享边界；sound event stream 则用滑动窗口独立生成，记录自己的 start/end 和 label-score JSONB。一旦信息变成带时间戳的结构化记录，跨模态匹配就能用时间 join 精确完成，而不是让 LLM 去猜哪段情绪对应哪句话。
 
-	- 功能：让系统在检索前显式决定所需信息，避免盲目把全部数据库塞给模型。
-	- 核心思路：检索计划包含五类字段：streams、filters、fusion、output return_fields 和 answer_schema。例如 speaker-constrained MCQA 会选择 transcription 和 speaker stream，指定 text 或 speaker filter，并要求最终答案只能是 A/B/C/D。
-	- 设计动机：复杂音频问题的关键在“该查什么”。用固定 schema 约束规划可以减少无效计划和格式错误，也让后续 SQL 编译确定可控。
+**2. 受约束的检索规划：检索前先显式想清楚“该查什么”。**
 
-3. **确定性 SQL 编译与时间融合**:
+复杂音频问题的难点其实在于“该看哪些流、用什么条件筛”，盲目把整库内容塞给模型既浪费又容易答错格式。PlanRAG-Audio 让规划 LLM 输出一个固定 schema 的检索计划，包含五类字段：streams、filters、fusion、output return_fields 和 answer_schema。比如一道 speaker-constrained MCQA，计划会选择 transcription 和 speaker 两个 stream、指定 text 或 speaker filter，并把 answer_schema 约束成只能输出 A/B/C/D。用固定 schema 框住规划，既减少了无效计划，也让后续 SQL 编译变得确定可控，还顺手压住了长上下文模型常见的“答得对但输出解析不了”问题。
 
-	- 功能：把 LLM 计划变成可执行检索，降低生成式检索的不稳定性。
-	- 核心思路：每个 stream 编译成独立 CTE，filter 编译成 where 条件，最终 SELECT 根据 output contract 投影字段，并按 fusion 策略做 temporal join。附录中时间融合使用中点距离最近的匹配，默认容忍窗口 $\tau=2.5$ 秒。
-	- 设计动机：LLM 负责高层规划，数据库负责精确执行。这样可以扩展到新模态，同时把跨模态对齐从 prompt reasoning 转成可检查的查询逻辑。
+**3. 确定性 SQL 编译与时间融合：高层规划交给 LLM，精确执行交给数据库。**
+
+生成式检索本身不稳定，让 LLM 直接“检索并对齐”很容易出错。PlanRAG-Audio 把计划编译成可执行 SQL：每个 stream 编译成独立 CTE，filter 编译成 where 条件，最终 SELECT 按 output contract 投影字段，并按 fusion 策略做 temporal join——附录里的时间融合采用中点距离最近的匹配，默认容忍窗口 $\tau=2.5$ 秒。这样 LLM 只负责高层规划，跨模态对齐被从易错的 prompt reasoning 转成可检查的查询逻辑，新增一个模态也只是多编译一条 stream，扩展性很好。
+
+### 一个完整示例：一道 60 分钟讲座的 speaker-constrained MCQA
+
+设问题是“关于某位说话人在讲座中说的内容，正确选项是哪个”。若直接把整段音频交给 Gemini，输入约 115.2k tokens，又贵又常出现格式不可解析。走 PlanRAG-Audio：离线阶段先把这一小时音频建成数据库，diarization 切出每位说话人的时间段，transcript/emotion 对齐到同样的边界，SED 另起滑窗记录背景事件。在线阶段，规划 LLM 看到问题后生成检索计划——streams 选 transcription 和 speaker，filters 锁定目标说话人，answer_schema 限定为 A/B/C/D。SQL generator 把它编成 CTE + temporal join 的查询，只取回该说话人相关的几段片段，约 0.9k tokens。generation LLM 拿到这点紧凑证据作答；如果库里根本没有该说话人的相关发言，结构化结果为空，模型据此选择 abstain（实验里这一设置的 abstention 从 0.54% 升到 94.90%），而不是硬编一个答案。
 
 ### 损失函数 / 训练策略
 PlanRAG-Audio 不训练端到端模型，而是在零样本设置下组合现成感知模块和 LLM。主要配置包括 OWSM-CTC v4 medium 做 ASR，Pyannote community-1 做 diarization，Odyssey 2024 SER baseline 做 emotion recognition，BEATs iter3+ AS2M finetuned 做 SED，Qwen3-4B-Instruct 作为主要生成模型。长上下文基线包括 Gemini 2.5 Flash 和 Voxtral-Mini-3B-2507。作者明确不做任务特定 prompt engineering 或手写 SQL，而是依赖统一规划 schema。

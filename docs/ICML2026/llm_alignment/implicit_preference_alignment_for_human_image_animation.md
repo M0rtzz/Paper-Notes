@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-以 DiT 大模型 VACE-14B 为预训练参考 $v_{\text{ref}}$，从互联网收 1500 段舞蹈、用 DWPose 抽姿态、随机取一帧作参考图，让 VACE 每对生成 4 个候选共 6000 段视频，人工严格挑出 93 段"手部清晰"的好样本作为偏好数据 $q(X)$。LoRA（rank 128，只挂 QKV 投影）训练一个 $v_\theta$，损失是带 hand mask 加权的 Flow-IPA 目标，跑 1000 步，$\beta=600$、$\lambda=10$，8×H20。推理时直接用 $v_\theta$ 做反向流匹配采样。
+整条管线想解决一件事：在拿不到"一好一坏严格配对"的前提下，靠少量挑出来的好样本把大尺度视频 DiT 的手部画质拉上去。作者先用预训练参考模型 VACE-14B 当 $v_{\text{ref}}$，从互联网收 1500 段舞蹈、DWPose 抽姿态、随机取一帧作参考图，让 VACE 每个 prompt 生成 4 个候选共 6000 段视频，再人工严格挑出 93 段"手部清晰"的好样本当偏好分布 $q(X)$。训练侧只挂 LoRA（rank 128，QKV 投影）得到 $v_\theta$，损失是把 KL 间隔落到流匹配上、再叠上手部 mask 加权的目标；推理时直接用 $v_\theta$ 跑反向流匹配采样。
 
 ### 关键设计
 
-1. **隐式偏好对齐目标 (IPA loss)**：
+**1. 隐式偏好对齐目标 (IPA loss)：把"推坏样本"换成"别偏离参考模型"。**
 
-    - 功能：在不需要 loser 样本的前提下，让 $p_\theta$ 比 $p_{\text{ref}}$ 更靠近偏好分布 $q$。
-    - 核心思路：先要求 $D_{\text{KL}}(q\|p_\theta) < D_{\text{KL}}(q\|p_{\text{ref}})$，把它改写为 $\Delta(p_{\text{ref}}, p_\theta) > 0$，再套 log-sigmoid 得 $\mathcal{L} = -\log\sigma(\beta\Delta(p_{\text{ref}}, p_\theta))$。作者证明这一目标等价于一个带 KL 正则的奖励最大化：$\max \mathbb{E}_q[r] - \beta D_{\text{KL}}(p_\theta\|p_{\text{ref}})$ 的最优解满足 $p_\theta \propto p_{\text{ref}}\exp(r/\beta)$，反代后 $\mathbb{E}_q[r] = \beta\Delta + C$，所以最小化 IPA loss 就是隐式地在最大化未指定的奖励 $r$。
-    - 设计动机：DPO 的对比项本质是"拉好样本、推坏样本"，但坏样本难得。IPA 把"推坏样本"换成"不偏离参考模型 KL 约束"，用先验充当软的负面信号，既绕过 loser 标注又防止 mode collapse。
+DPO 的对比项本质是"拉好样本、推坏样本"，可手部任务里坏样本极难凑齐——6000 个候选里只有约 7.5% 能构成合格的好/坏对。IPA 的做法是干脆不要 loser：只要求模型分布 $p_\theta$ 比参考分布 $p_{\text{ref}}$ 更靠近偏好分布 $q$，写成 $D_{\text{KL}}(q\|p_\theta) < D_{\text{KL}}(q\|p_{\text{ref}})$，等价地令 KL 间隔 $\Delta(p_{\text{ref}}, p_\theta) = D_{\text{KL}}(q\|p_{\text{ref}}) - D_{\text{KL}}(q\|p_\theta) > 0$，再套一层 log-sigmoid 得到损失 $\mathcal{L} = -\log\sigma(\beta\Delta(p_{\text{ref}}, p_\theta))$。这一目标之所以成立，是因为它可被证明等价于一个带 KL 正则的奖励最大化 $\max \mathbb{E}_q[r] - \beta D_{\text{KL}}(p_\theta\|p_{\text{ref}})$：其最优解满足 $p_\theta \propto p_{\text{ref}}\exp(r/\beta)$，反代后得 $\mathbb{E}_q[r] = \beta\Delta + C$，所以最小化 IPA loss 就是在隐式地最大化一个未显式指定的奖励 $r$。换句话说，参考模型的 KL 约束充当了"软的负面信号"，既绕开 loser 标注，又因为不让 $p_\theta$ 跑远而防住 mode collapse。
 
-2. **Flow-IPA 的可计算化**：
+**2. Flow-IPA：把抽象的 KL 间隔落成流匹配上能反传的损失。**
 
-    - 功能：把抽象的 $\Delta(p_{\text{ref}}, p_\theta)$ 落到流匹配 DiT 上能直接反传的形式。
-    - 核心思路：利用 Rectified Flow 在 $t\in[0,1]$ 上 KL 增量的解析式 $\frac{d}{dt}D_{\text{KL}} = \frac{1}{2}(1-t)^2 \mathbb{E}\|v - v_\phi(Z_t;t,I,\mathcal{P})\|^2$，对时间积分后得 $\Delta = \mathbb{E}_{t,v}[\frac{1}{2}(1-t)^2(\|v - v_{\text{ref}}\|^2 - \|v - v_\theta\|^2)]$，代回 log-sigmoid 即可得最终训练损失。
-    - 设计动机：直接积分整条概率路径不可解，借助 Flow Matching 的"线性插值 + 常速度场"使每个采样时刻都能用一次 forward 估出 KL 微分，把整段轨迹的对齐变成单点 mini-batch 损失。
+$\Delta(p_{\text{ref}}, p_\theta)$ 直接积分整条概率路径并不可解。作者借 Rectified Flow"线性插值 + 常速度场"的结构，把 KL 沿时间的增量写成解析式 $\frac{d}{dt}D_{\text{KL}} = \frac{1}{2}(1-t)^2 \mathbb{E}\|v - v_\phi(Z_t;t,I,\mathcal{P})\|^2$——每个采样时刻只需一次 forward 就能估出 KL 微分。对 $t\in[0,1]$ 积分后，间隔化简成 $\Delta = \mathbb{E}_{t,v}[\frac{1}{2}(1-t)^2(\|v - v_{\text{ref}}\|^2 - \|v - v_\theta\|^2)]$，代回 log-sigmoid 即得最终可训练损失。这一步的意义在于把"对齐整段概率轨迹"压缩成"在随机时刻 $t$ 上的单点 mini-batch 损失"，让原本抽象的分布距离变成 DiT 上可直接梯度下降的量。
 
-3. **Hand-Aware Local Optimization (HALO)**：
+**3. Hand-Aware Local Optimization (HALO)：把对齐预算显式倾斜到手部像素。**
 
-    - 功能：把对齐预算显式倾斜到手部像素，避免被身体、背景的"容易学的部分"淹没。
-    - 核心思路：从 DWPose 关键点直接得到二值手部 mask $\mathbf{M}$，构造空间权重 $\mathbf{W} = \mathbf{1} + \lambda\mathbf{M}$，把损失里的 $\|v - v_\phi\|^2$ 替换为 $\|\sqrt{\mathbf{W}}\odot(v - v_\phi)\|^2$，相当于在手部位置加权学习速度场偏差。$\lambda=10$ 最优。
-    - 设计动机：好样本里手部仅占空间的一小块，若用全局 MSE 加权，模型很容易把损失"花"在大面积的身体上而忽略手；HALO 用 mask 加权把梯度推回手部，让有限的 93 个好样本 ROI 信号被放大。
+好样本里手部只占画面的一小块，若用全局 MSE，模型会把损失"花"在大面积的身体和背景上、把手忽略掉。HALO 直接从 DWPose 关键点取二值手部 mask $\mathbf{M}$，构造空间权重 $\mathbf{W} = \mathbf{1} + \lambda\mathbf{M}$，把损失里的速度场偏差 $\|v - v_\phi\|^2$ 替换成加权形式 $\|\sqrt{\mathbf{W}}\odot(v - v_\phi)\|^2$，相当于在手部位置放大学习信号。$\lambda=10$ 时最优。它把有限的 93 个好样本里最关键的 ROI 信号撑起来，让梯度被推回手部而不是淹没在易学的躯干区域；而且这套 mask 加权几乎零成本，可从手扩展到脸、眼、文字等任意小面积高难度区域。
 
 ### 损失函数 / 训练策略
-最终损失见 Eq.(29)：$\mathcal{L} = \mathbb{E}_{t,v}[-\log\sigma(\frac{\beta}{2}(1-t)^2(\|\sqrt{\mathbf{W}}\odot(v - v_{\text{ref}})\|^2 - \|\sqrt{\mathbf{W}}\odot(v - v_\theta)\|^2))]$。LoRA 微调而非全参，rank 128，1000 步，batch 8；$\beta=600$ 控制约束强度（既是 KL penalty 系数也是 sigmoid 斜率），$\lambda=10$ 控制手部权重。
+三块拼起来即最终损失（Eq.(29)）：$\mathcal{L} = \mathbb{E}_{t,v}[-\log\sigma(\frac{\beta}{2}(1-t)^2(\|\sqrt{\mathbf{W}}\odot(v - v_{\text{ref}})\|^2 - \|\sqrt{\mathbf{W}}\odot(v - v_\theta)\|^2))]$。用 LoRA 微调而非全参（rank 128，只挂 QKV），跑 1000 步、batch 8、8×H20。$\beta=600$ 控制约束强度，它同时是 KL penalty 系数和 sigmoid 斜率；$\lambda=10$ 控制手部权重。
 
 ## 实验关键数据
 

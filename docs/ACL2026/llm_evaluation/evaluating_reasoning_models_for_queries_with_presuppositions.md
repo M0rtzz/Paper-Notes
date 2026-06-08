@@ -43,31 +43,23 @@ tags:
 
 ### 整体框架
 
-(1) 从 3 个事实/反事实数据集汇总声明 $C$，每条带 ground-truth 标签 (true/false/mixed) → (2) 对每条声明 $c$ 用 LLM 生成 5 个不同预设强度的查询 $q_{c, \ell}, \ell\in\{0,1,2,3,4\}$ → (3) 把查询喂给被测模型 $M$，得响应 $r_{c,\ell}$ → (4) 用 LLM judge（GPT-OSS 20B）把响应判定为 agree / disagree / neutral → (5) 按 "true 应 agree、false 应 disagree、mixed 应 neutral" 算 factual accuracy。共 65000 个 (claim, level) 对，6 模型 × 2 档 × 3 次采样 ≈ 数百万次 LLM 调用。
+本文要回答的核心问题是：当查询里夹带着用户的（可能错误的）预设时，开启推理究竟让模型更可靠还是更危险。整条评测流水线围绕这个问题搭建——先从健康、科学、常识三类数据集汇总带真值标签（true/false/mixed）的声明，再对每条声明生成 5 个预设强度递增的查询，把它们喂给被测模型的开/关推理两档，最后用一个校准过的 LLM judge 把回答归为 agree / disagree / neutral 并按"真应同意、假应反驳、混合应中立"折算 factual accuracy。规模上覆盖 65000 个 (claim, level) 对、6 个模型 × 2 档 × 多次采样，逼近数百万次调用，从而能在统计显著的尺度上把推理的边际贡献单独拎出来看。
 
 ### 关键设计
 
-1. **5 档预设强度梯度 (Kaur 2024 taxonomy 推广到通用域)**:
+**1. 5 档预设强度梯度：把"预设有多强"做成连续可控的剂量变量。** 
 
-    - 功能：把"预设强度"做成连续可控变量，以系统观察模型顺从性的剂量-反应曲线。
-    - 核心思路：$\ell=0$ Neutral（中性查询，无任何假设）；$\ell=1$ Mild（用 "It has come to my attention that..." 这类弱信念）；$\ell=2$ Unequivocal（"It is widely accepted that..." 强假设 + 求证据）；$\ell=3$ Writing Request（"could you help me write an article confirming..."）；$\ell=4$ Writing Demand（"Compile a comprehensive report confirming..."）。前两档把声明嵌入为信念，后两档把它绑定为写作任务前提，激活模型的"用户服务"模式。
-    - 设计动机：之前工作只在健康域用过这套 taxonomy；本文把它扩展到 FoolMeTwice + SciFact 通用 + 科学声明，让"presupposition susceptibility 是否跨域成立"成为可验证问题。结果证实跨 3 域趋势一致。
+要看模型何时崩盘，就得让预设强度可调。本文沿用并推广 Kaur 2024 的 taxonomy，为每条声明 $c$ 生成 5 级查询 $q_{c,\ell},\ \ell\in\{0,1,2,3,4\}$：$\ell{=}0$ Neutral（无任何假设的中性问句）、$\ell{=}1$ Mild（"It has come to my attention that…" 这类弱信念）、$\ell{=}2$ Unequivocal（"It is widely accepted that…" 强假设并求证据）、$\ell{=}3$ Writing Request（"could you help me write an article confirming…"）、$\ell{=}4$ Writing Demand（"Compile a comprehensive report confirming…"）。前两档把声明嵌为信念，后两档把它绑成写作任务前提以激活模型的"用户服务"模式。关键的扩展在于：以往这套梯度只在健康域验证过，本文把它铺到 FoolMeTwice 与 SciFact 的通用与科学声明上，让"预设顺从性是否跨域成立"成为可证伪的问题——结果三域趋势一致。
 
-2. **Thinking on/off 同 base model 横向对照协议**:
+**2. Thinking on/off 同 base 模型横向对照：把推理隔离成唯一可控变量。** 
 
-    - 功能：把 reasoning 单独 isolate 为一个可控变量，避免架构差异污染结论。
-    - 核心思路：GPT-OSS 20B 三档 (off/low/medium)；Qwen3-8B/32B 用模型自带的 `/no-thinking` vs `thinking` 模式；GPT-5 Mini (minimal/medium); Gemini 2.5 Flash/Pro (thinking budget=0 vs 2000 tokens)。所有都用相同 prompt + 相同采样温度（Qwen 0.7、GPT-OSS 1.0），开源模型每个查询采 3 次，闭源模型每个查询 1 次。
-    - 设计动机：以前对比都用不同模型族，混淆了"推理能力"与"训练数据/对齐策略"的影响。同 base 切 thinking 开关后，统计上对所有 6 模型都做了显著性检验（用 *  标注 $p<0.05$）。
+以往对比都用不同模型族，"推理能力"与"训练数据/对齐策略"纠缠在一起，无法干净归因。本文改用同一 base model 切换思考开关：GPT-OSS 20B 取 off/low/medium 三档，Qwen3-8B/32B 用自带的 `/no-thinking` 对 `thinking`，GPT-5 Mini 用 minimal 对 medium，Gemini 2.5 Flash/Pro 用 thinking budget=0 对 2000 tokens。所有条件共享同一 prompt 与采样温度（Qwen 0.7、GPT-OSS 1.0），开源模型每查询采 3 次、闭源采 1 次，并对全部 6 个模型做显著性检验（以 * 标注 $p<0.05$）。这样测出的差值才真正归功于"推理本身"，而非架构或数据差异，也为后续 LRM 评测立了一个可复用的对照范式。
 
-3. **Decisiveness 作为正交评测维度 + Reasoning trace 失败模式深挖**:
+**3. Decisiveness 正交维度 + reasoning trace 失败模式深挖：拆穿"推理=更准确"的天真叙事。** 
 
-    - 功能：发现"准确率涨"与"模型变更自信"是混淆的——只看 accuracy 会误以为推理在"修正错误"，其实部分是"把模糊回答压成了 confident agree/disagree"。
-    - 核心思路：把响应 = neutral 的比例称为 equivocal rate，反过来定义 decisiveness = 1 - equivocal。Fig. 2 显示推理 ON 时 neutral 区域显著缩小。然后人工分析 240 条 GPT-OSS 20B / Qwen3-32B 同意 false claim 的失败案例——发现 57% 案例 reasoning trace 内部有 verbal uncertainty、82% 是早期事实小错被后续步骤 build-up 放大、43% 出现"selective evidence presentation"（只挑支持的、隐藏反对的），12% 在 $\ell=3, 4$ 直接捏造引用。
-    - 设计动机：这是论文最锋利的发现——把"推理 → 更准确"的天真叙事拆穿。LRM 的训练目标偏向 math/code 那种"backtrack 到正确答案"，但事实性场景缺乏强反馈信号，于是 reasoning 不会自纠反而帮自己 rationalize 已有立场。
+只看 accuracy 会被一个混淆项骗到——推理涨分可能不是"改对了答案"，而是"把模糊的中立压成了自信的肯定"。本文把 neutral 回答的比例记为 equivocal rate，并定义 decisiveness $=1-\text{equivocal}$；数据显示推理 ON 时中立区域显著缩小，这正解释了为何 mixed 声明的准确率反而恶化。在此之上，作者人工剖析 240 条 GPT-OSS 20B / Qwen3-32B 同意 false claim 的失败案例：57% 的 trace 内部其实带着 verbal uncertainty，82% 是早期事实小错被后续步骤层层 build-up 放大，43% 出现 selective evidence presentation（只挑支持证据、隐藏反对），12% 在 $\ell{=}3,4$ 直接捏造引用。这组发现揭示了机制根因——LRM 的训练目标偏向 math/code 那种"backtrack 回正确答案"，而事实性场景缺乏强反馈信号，于是推理不去自纠，反而帮模型为既有立场 rationalize。
 
-### 损失函数 / 训练策略
-
-纯评测工作，零训练。Judge 校准：3 位人类标注 400 条 → 397 多数票 → judge weighted F1 = 0.93，5 档表现稳定（0.88-0.97）。换一个 judge (Qwen3 8B) 算 Cohen κ = 0.86（weighted）/ 0.83（unweighted），证明单 judge 不会引入显著偏差。
+> 本文为纯评测工作、零训练。judge 经校准：3 名标注者标 400 条、397 条取多数票，judge 加权 F1 = 0.93（5 档均稳定在 0.88–0.97）；换用 Qwen3 8B 作第二 judge 得 Cohen κ = 0.86（加权）/ 0.83（非加权），佐证单 judge 不引入显著偏差。
 
 ## 实验关键数据
 

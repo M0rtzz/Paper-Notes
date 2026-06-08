@@ -45,23 +45,23 @@ LMT 以 Qwen3 为基座，训练 0.6B、1.7B、4B、8B 四个模型，覆盖 Eng
 
 ### 关键设计
 
-1. **Directional Degeneration 诊断与 Strategic Downsampling**：
+**1. Directional Degeneration 诊断与 Strategic Downsampling：揪出多路语料对称复用导致的反向方向崩塌，再用一刀采样止血。**
 
-    - 功能：识别并缓解多路平行数据对称复用导致的反向翻译崩塌，尤其是 X→En/Zh 方向。
-    - 核心思路：作者先用 Qwen3-4B-Base 做标准双向 SFT，发现 En/Zh→X 明显提升，但 X→En/Zh 反而低于 base，错误形态是语法通顺但事实不忠实。进一步实验分三轴展开：把反向数据替换成不重叠的 bilingual CPT 子集来打破对称；把原 multi-way 反向样本保留率从 0% 逐步升到 100%；在 Qwen3 0.6B/1.7B/4B/8B、Llama-3.1-8B、Gemma-2-9B 和 10-50 种语言规模上重复。结果显示性能随保留率呈倒 V 形，约 $p=5\%$ 时最好，接近 100% 时坍塌最明显。最终 SD 的做法是：En/Zh→X 样本全部保留，multi-way 语料中的 X→En/Zh 样本以 $p=5\%$ 独立采样。
-    - 设计动机：这把“curse of multilinguality”拆成更具体的 many-to-one 数据复用问题。相比方向感知训练、模型合并等模型级方案，SD 是数据级修复：不改变架构、不引入额外推理开销，也不牺牲 pivot→X 的监督密度。
+作者先用 Qwen3-4B-Base 跑标准双向 SFT，结果撞见一个反直觉的现象：En/Zh→X 方向大幅提升，X→En/Zh 反而掉到 base 以下，错误形态是语法通顺却事实不忠实——这正是本文命名的 Directional Degeneration。病根在于 multi-way 语料被对称复用时，同一个 pivot 目标句被几十个源语言反复映射，模型于是学到“看到某些训练模式就背目标句”的捷径，不再认真读源句语义。为坐实这一归因，作者沿三条轴做对照：把反向数据替换成不重叠的 bilingual CPT 子集来打破对称、把 multi-way 反向样本保留率从 0% 逐步升到 100%、并在 Qwen3 0.6B/1.7B/4B/8B、Llama-3.1-8B、Gemma-2-9B 以及 10-50 种语言规模上复现。性能随保留率呈倒 V 形，约 $p=5\%$ 时最优，接近 100% 对称复用时坍塌最重。
 
-2. **Parallel Multilingual Prompting（PMP）**：
+据此 Strategic Downsampling 的做法非常简单：En/Zh→X 样本全部保留，而 multi-way 语料里的 X→En/Zh 样本只以 $p=5\%$ 独立采样。相比方向感知训练、模型合并这类模型级手术，SD 是纯数据级修复——不改架构、不加推理开销，也不牺牲 pivot→X 的监督密度，却把“curse of multilinguality”落到了 many-to-one 目标重复这个具体病因上。
 
-    - 功能：在 SFT 和可选推理阶段给模型一个辅助平行句，让源句语义有第二个语言视角作为锚点。
-    - 核心思路：标准翻译 prompt 训练的是 $P_\theta(T\mid S;\tau_{L_S\to L_T})$；PMP 把输入扩展为源句 $S$ 和辅助语言句子 $A$，训练 $P_\theta(T\mid S,A;\tau_{L_S\to L_A\to L_T})$。辅助语言不是随便选：En↔X 时选与 X 类型接近且模型掌握较好的邻近语言，例如德语配荷兰语、波兰语配捷克语；Zh↔X 时统一用英语做稳定语义锚，因为英语通常是模型最熟、也最容易自生成的中间语。SFT 中 STP/PMP 混合训练，默认推理仍可用普通 STP；如果有外部或自生成辅助译文，就切到 PMP prompt。
-    - 设计动机：multi-way 数据不只会带来 many-to-one 风险，也蕴含跨语言对齐价值。PMP 的巧妙之处在于把“多路平行”从隐式数据结构变成显式 prompt 条件，让模型学会何时利用另一个语言视角，而不是在训练里盲目把所有方向都对称展开。
+**2. Parallel Multilingual Prompting（PMP）：给源句配一个辅助平行句，让语义多一个语言视角当锚点。**
 
-3. **面向中英双中心的可扩展训练流水线**：
+multi-way 数据不只有 many-to-one 的风险，也藏着跨语言对齐的价值，关键是怎么把它显式用起来。标准翻译 prompt 学的是 $P_\theta(T\mid S;\tau_{L_S\to L_T})$；PMP 把输入扩成源句 $S$ 加一个辅助语言句子 $A$，改学 $P_\theta(T\mid S,A;\tau_{L_S\to L_A\to L_T})$。辅助语言不是乱挑：En↔X 时选与 X 类型接近、模型又掌握较好的邻近语言（如德语配荷兰语、波兰语配捷克语），Zh↔X 时统一用英语做稳定语义锚，因为英语通常是模型最熟、也最容易自生成的中间语。
 
-    - 功能：把上述两项策略落实成可发布、可比较、覆盖长尾语言的模型族，而不是只做单一消融。
-    - 核心思路：CPT 数据先从 SlimPajama、Skywork、CulturaX、OpenDataLab、Wikimedia、OPUS 等来源收集，再用开源 MT 系统做伪平行扩增，尤其补中文中心语料缺口；过滤链包括 OpusFilter 长度和错配清洗、FastText LID 分层阈值、CometKiwi 质量打分。最终得到约 2.1B 英语中心、2.9B 中文中心句对。CPT 采用显式方向 tag 和目标语言 separator；SFT 数据约 567K 高质量 pair，覆盖 117 个中心语言对，正向 STP/PMP 各 50%，反向总保留 5% 且 STP/PMP 各 2.5%；GRPO 使用 8 个 rollout、temperature 1.0、KL 系数 0.001，并以 COMET-22 奖励选择更好候选。
-    - 设计动机：低资源翻译不是只靠一个 prompt trick 就能解决，真正瓶颈在数据规模、数据质量、方向平衡和训练阶段衔接。LMT 的系统价值在于把这些环节工程化，并用同一 recipe 训练四个尺寸，证明策略不依赖某个特定模型规模。
+PMP 的巧妙在于把“多路平行”从隐式的数据结构变成显式的 prompt 条件：SFT 阶段 STP（标准 prompt）和 PMP 混合训练，默认推理仍可用普通 STP，一旦手上有外部或自生成的辅助译文就切到 PMP prompt。这样模型学到的是“何时该借另一个语言视角”，而不是训练里盲目把所有方向都对称展开；它也顺带给了 LMT 一个 test-time enhancement 接口——可以外接高质量 MT、检索翻译记忆，或先自译出英语锚点再译目标语言。
+
+**3. 面向中英双中心的可扩展训练流水线：把两项策略落进一条可发布、可比较、覆盖长尾语言的完整 recipe。**
+
+低资源翻译从来不是一个 prompt trick 能搞定的，真正的瓶颈在数据规模、数据质量、方向平衡和训练阶段衔接，所以本文把整条链路工程化。CPT 数据先从 SlimPajama、Skywork、CulturaX、OpenDataLab、Wikimedia、OPUS 等来源收集，再用开源 MT 做伪平行扩增以补中文中心缺口，过滤链包括 OpusFilter 的长度与错配清洗、FastText LID 分层阈值、CometKiwi 质量打分，最终得到约 2.1B 英语中心、2.9B 中文中心句对；CPT 用显式方向 tag 和目标语言 separator 训练。SFT 用约 567K 高质量 pair、覆盖 117 个中心语言对，正向 STP/PMP 各 50%，反向经 SD 后总保留 5%（STP 2.5%、PMP 2.5%）。
+
+最后一阶段是 GRPO：沿用 SFT 的 prompt，每条用 8 个 rollout、temperature 1.0、KL 系数 0.001 采样多个候选，再用 COMET-22 作为 reference-based reward 选更好的译文，不额外构造人工偏好数据。同一套 recipe 训练 0.6B/1.7B/4B/8B 四个尺寸，既证明策略不依赖某个特定模型规模，也让 LMT 的系统价值落在“既给模型、又给可复用的数据配比与 prompt 训练流程”上。
 
 ### 损失函数 / 训练策略
 CPT 和 SFT 都使用标准语言模型目标，区别在于 CPT 主要学习多语言文本与双语格式，SFT 只对目标译文部分计算 loss。SFT forward 方向使用 50% STP + 50% PMP；reverse 方向使用 SD 后只保留 5%，其中 STP 2.5%、PMP 2.5%。GRPO 阶段沿用 SFT prompt，模型采样候选翻译，COMET-22 根据 reference 给 reward；这相当于把自动 MT 质量评估器转成偏好优化信号，额外提升 0.3-0.8 COMET 左右。

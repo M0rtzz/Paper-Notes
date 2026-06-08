@@ -41,34 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-- **输入**：单层权重矩阵 $\bm{W}$ 与代理 Hessian $\bm{H} = \mathbb{E}_{\bm{X}}[\bm{X}^\top \bm{X}]$（GPTQ 风格、对角近似 $H_{i,i}$）。
-- **行级量化**：对 $\bm{W}$ 的每一行 $\bm{w}$ 独立优化 $(s, z)$。
-- **外层**：从 Min-Max 给出的上界出发，均匀采 $T$ 个候选 scale；先用 $T_c = O(\sqrt{T})$ 个候选粗搜得到 $s^c$，再在 $s^c$ 邻域细搜大约 $T/T_c$ 个候选，总评估次数 $O(\sqrt{T})$。
-- **内层**：对每个候选 scale，调 Algorithm 1（针对分段二次函数找全局最小）解析出最优浮点 zero-point $z^*$ 与对应损失。
-- **输出**：选 $\arg\min_s \mathcal{L}(s, z^*(s))$ 作为最终量化参数。
+
+NeUQI 要解决的是"给定一层权重，怎么挑出真正最优的 scale $s$ 与 zero-point $z$"。它对单层权重矩阵 $\bm{W}$ 的每一行 $\bm{w}$ 独立做量化，凭借的输入是这一行的权重和一个 GPTQ 风格的对角 Hessian $\bm{H} = \mathbb{E}_{\bm{X}}[\bm{X}^\top \bm{X}]$。核心做法是把原本要在 $(s, z)$ 二维上联合搜的问题拆成内外两层：外层从 Min-Max 给出的 scale 上界往下均匀采候选、用由粗到细的方式定位最优 scale；内层对每个候选 scale 解析地求出令误差最小的浮点 zero-point。两层套完后取 $\arg\min_s \mathcal{L}(s, z^*(s))$ 作为最终参数，整层量化从基线的百秒级压到秒级。
 
 ### 关键设计
 
-1. **闭式求最优 zero-point（分段二次函数全局最小）**:
+**1. 闭式求最优 zero-point：把内层从二维搜索变成一维解析极值。**
 
-    - 功能：给定 scale $s$，在 $\mathcal{O}(n \log n)$ 时间内精确求出使量化误差最小的 zero-point $z^*$，不再受整数约束。
-    - 核心思路：单样本损失 $\mathcal{L}_i(z) = h_i (x_i + z - \mathrm{clip}(\lfloor x_i+z \rceil, 0, 2^k-1))^2$（其中 $x_i = w_i/s$，$h_i = H_{i,i} s^2$）是 $z$ 的分段二次函数，有 $2^k - 1$ 个转折点（每个 round 的分界）和 $2^k$ 个区间。总损失 $\mathcal{L}(z) = \sum_i \mathcal{L}_i(z)$ 在所有转折点的并集（共 $n(2^k-1)$ 个）形成的细分上仍是分段二次。Algorithm 1 的关键 observation：相邻两个全局区间之间只有"贡献从某个 $\mathcal{L}_i$ 切换"一个差异，因此可以**增量维护**当前区间的二次函数 $\mathcal{L}^I(z) \leftarrow \mathcal{L}^I(z) + \delta(z)$，每次仅算这一区间内的二次最小值。整体复杂度 $\mathcal{O}(n \cdot 2^k \log(n \cdot 2^k))$，排序占主导。
-    - 设计动机：浮点 zero-point 是被 Min-Max 老公式锁住的"自由参数"；解锁后，最优 $z$ 不一定落在任何 $w_i + j$ 网格上，只能靠分段二次的解析极值找到。把 sum 拆成 incremental update 这个 trick 是把朴素 $\mathcal{O}(n \cdot 2^k \cdot n)$ 降到 $\mathcal{O}(n \cdot 2^k \log(n \cdot 2^k))$ 的关键，本质上是利用了分段函数的"邻接增量结构"。
+主流方法把 $z$ 锁成 $k$-bit 整数、又和极值绑死，导致在 2-bit 下 $z$ 只剩 4 个候选、搜不出好解。NeUQI 先把 $z$ 解放成浮点，再注意到一个关键结构：固定 scale 后，单样本损失 $\mathcal{L}_i(z) = h_i (x_i + z - \mathrm{clip}(\lfloor x_i+z \rceil, 0, 2^k-1))^2$（其中 $x_i = w_i/s$、$h_i = H_{i,i} s^2$）是 $z$ 的分段二次函数，有 $2^k - 1$ 个转折点、$2^k$ 个区间；总损失 $\mathcal{L}(z) = \sum_i \mathcal{L}_i(z)$ 在所有转折点的并集（共 $n(2^k-1)$ 个）上仍然分段二次。既然每一段都是二次函数，最优 $z^*$ 就能在每段内闭式求极值、再取全局最小。直接对每段重算整个 sum 是 $\mathcal{O}(n \cdot 2^k \cdot n)$；Algorithm 1 的 trick 是观察到相邻两个区间之间只差"某个 $\mathcal{L}_i$ 的贡献切换"这一项，于是增量维护当前区间的二次函数 $\mathcal{L}^I(z) \leftarrow \mathcal{L}^I(z) + \delta(z)$，每次只算本区间的极值，把复杂度降到 $\mathcal{O}(n \cdot 2^k \log(n \cdot 2^k))$（排序占主导）。之所以非这样不可，是因为解锁后的最优 $z$ 不一定落在任何 $w_i + j$ 网格点上，只有靠分段二次的解析极值才能精确找到。
 
-2. **Transition-point reduction：把 $2^k - 1$ 个转折点压成 2 个**:
+**2. Transition-point reduction：把每样本 $2^k-1$ 个转折点压成 2 个。**
 
-    - 功能：进一步把内层求解从 $\mathcal{O}(n 2^k \log(n 2^k))$ 降到 $\mathcal{O}(n \log n)$，让 $k=4$ 也能秒级跑完。
-    - 核心思路：观察到 $\mathcal{L}_i(z)$ 在中段 $[-1/2 - x_i,\ 2^k - 1/2 - x_i]$ 上其实是被 rounding 损失上界 $h_i / 4$ 截顶的；构造一个超近似函数 $\mathcal{L}_i^S(z)$，把整段中部直接替换成常数 $h_i/4$，只保留两端 quadratic。这样每个样本只剩两个 transition point，先用 Algorithm 1 找近似最优 $z^S$，再在 $[z^S - 1, z^S + 1]$ 这个长度为 2 的区间内回到原始 $\mathcal{L}_i(z)$ 精化（这个小窗里每样本最多两个 transition point）。两次都是 $\mathcal{O}(n \log n)$，且最终精度损失可忽略（Table 1 中 relative loss 仅 1.00001×–1.00003×）。
-    - 设计动机：朴素分段二次有 $n \cdot 2^k$ 个 break，但全局最小的位置一定不会被尾部的高 quadratic 拉走 —— 那些远处的 $\mathcal{L}_i$ 早已经 saturate 在 $h_i/4$。先用上界做粗定位、再在小邻域精化，是经典 "outer bound + local refine" 套路在量化里的一个干净落地。
+上一步在 $k=2$ 时够快，但 $k=4$ 时 $2^k$ 这个因子会拖慢内层。NeUQI 进一步观察到：$\mathcal{L}_i(z)$ 在中段区间 $[-1/2 - x_i,\ 2^k - 1/2 - x_i]$ 其实被 rounding 损失上界 $h_i/4$ 截顶了——远处那些样本早已 saturate，不可能把全局最小拉走。于是构造一个超近似函数 $\mathcal{L}_i^S(z)$，把整段中部直接替换成常数 $h_i/4$，只保留两端的 quadratic，每个样本因此只剩两个转折点。先用 Algorithm 1 在这个近似上找到粗位置 $z^S$，再退回原始 $\mathcal{L}_i(z)$、只在长度为 2 的小窗 $[z^S - 1, z^S + 1]$ 内精化（小窗里每样本同样最多两个转折点）。两遍都是 $\mathcal{O}(n \log n)$，把内层从 $\mathcal{O}(n 2^k \log(n 2^k))$ 拉下来，让 $k=4$ 也能秒级跑完，而精度几乎无损——Table 1 里 relative loss 只有 1.00001×–1.00003×。本质上是经典的 "outer bound 粗定位 + local refine 精修" 套路在量化损失上的一次干净落地。
 
-3. **Coarse-to-fine scale 搜索**:
+**3. Coarse-to-fine scale 搜索：把外层 $T$ 次内层求解砍成 $\mathcal{O}(\sqrt{T})$ 次。**
 
-    - 功能：把 $T = 2048$ 次内层求解砍成 $\mathcal{O}(\sqrt{T}) \approx 90$ 次，让单层量化时间从基线 112 秒降到几秒。
-    - 核心思路：scale 候选集 $\mathcal{S}_T = \{ ((\max(\bm{w}) - \min(\bm{w}))/(2^k - 1)) \cdot (i/T) : i = 1, \dots, T \}$ 把 Min-Max 推出的 scale 作上界，均匀往下采。先在 $T_c = O(\sqrt{T})$ 个候选上粗搜得到 $s^c$，再在 $s^c$ 附近约 $T/T_c$ 个 fine candidates 上精搜。
-    - 设计动机：经验上 $\mathcal{L}(s, z^*(s))$ 作为 $s$ 的函数是单峰 / 平滑的，没必要全网格搜；$O(\sqrt{T})$ 候选已经够定位全局最优区。
+外层要在多个候选 scale 上各跑一次内层，朴素地把 $T=2048$ 个候选全搜一遍太贵。scale 候选集取 $\mathcal{S}_T = \{ ((\max(\bm{w}) - \min(\bm{w}))/(2^k - 1)) \cdot (i/T) : i = 1, \dots, T \}$，即以 Min-Max 推出的 scale 为上界向下均匀采样。由于经验上 $\mathcal{L}(s, z^*(s))$ 作为 $s$ 的函数是单峰、平滑的，没必要全网格搜：先在 $T_c = O(\sqrt{T})$ 个候选上粗搜得到 $s^c$，再在 $s^c$ 附近约 $T/T_c$ 个 fine candidate 上精搜，总评估次数 $O(\sqrt{T}) \approx 90$。配合前两步，单层量化时间从基线的 112 秒降到几秒。
 
 ### 损失函数 / 训练策略
-**纯 PTQ，无梯度训练**。损失就是 Eq. 5 的对角 Hessian 加权 MSE $\mathcal{L}(s, z) = \sum_i H_{i,i} (Q_{s,z}(w_i) - w_i)^2$。可选地与下游强微调（PV-tuning、EfficientQAT）组合 —— NeUQI 给一个更好的起点，使后续微调用更少资源就能赶上甚至超过原版。校准集与 GPTQ 一致（少量 WikiText / C4 样本）。
+
+NeUQI 是纯 PTQ、无梯度训练，损失就是 Eq. 5 的对角 Hessian 加权 MSE $\mathcal{L}(s, z) = \sum_i H_{i,i} (Q_{s,z}(w_i) - w_i)^2$，校准集与 GPTQ 一致（少量 WikiText / C4 样本）。它也可选地与下游强微调（PV-tuning、EfficientQAT）组合——NeUQI 提供一个更好的起点，使后续微调用更少资源就能赶上甚至超过原版。
 
 ## 实验关键数据
 

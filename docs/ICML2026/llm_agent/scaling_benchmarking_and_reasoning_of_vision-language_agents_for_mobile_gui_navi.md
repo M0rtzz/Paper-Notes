@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四个模块各司其职但围绕同一个分析目标：HyperTrack 数据集（输入：16080 个真实任务，每步含截图、文本指令、低级动作描述、bbox）→ UI-TARS-1.5-7B / Qwen3-VL-8B 在 10 个数据子集（16→8192 episodes）上做 SFT 和 DAPO-RL → GUIEvalKit 接管推理与评测，跨 5 个 benchmark（AndroidControl、AiTZ、GUI Odyssey、CAGUI、HyperTrack）统一动作空间和 4 个指标（step type/exact match、episode progress/success）→ SOEval 进一步把离线评测拉近 on-policy → 决策级 Diversity/Stability 拆解 reasoning 的影响。
+这篇论文不发布新模型，而是把"数据—训练—评测"拧成一根分析链条，专门回答"GUI Agent 上 SFT 还是 RL、要不要 thinking"这两个争议问题。链条的起点是 HyperTrack 数据集（16080 个真实中文任务，每步带截图、文本指令、低级动作描述和 bbox），UI-TARS-1.5-7B / Qwen3-VL-8B 在它切出的 10 个规模子集（16→8192 episodes）上分别做 SFT 和 DAPO-RL；训练好的模型交给 GUIEvalKit，统一动作空间后跨 5 个 benchmark（AndroidControl、AiTZ、GUI Odyssey、CAGUI、HyperTrack）算 step-type/exact-match 和 episode-progress/success 四个指标；最后 SOEval 把离线评测拉近真实 on-policy 分布，决策级 Diversity/Stability 把"thinking 的代价"量化成一条权衡曲线。
 
 ### 关键设计
 
-1. **HyperTrack 数据集 + 四向 OOD 切分**:
+**1. HyperTrack 数据集 + 四向 OOD 切分：给中文长尾 App 补上带 bbox 的大规模数据。**
 
-    - 功能：填补中文 GUI 数据空白，并提供严格的 in-domain / unseen app / unseen device / unseen app & device 四向测试集。
-    - 核心思路：从 674 个中文 Android App、17 个类别（含长尾和平板专属）采集 16080 个 episode，平均 5.1 步；每步标注 high-level 任务描述 + 截图 + 低级动作描述 + 所有 clickable 动作的 ground-truth bbox，动作空间为 OPEN/CLICK/SCROLL/TYPE/STOP；训练集只含手机数据，故 unseen-device 测试集（平板）天然检验设备级 OOD。
-    - 设计动机：相比 AITW（无 bbox）、AndroidControl（英文）、CAGUI（仅 600 任务）等，HyperTrack 是首个同时拥有「层级化 UI 文档 + bbox + 屏幕描述 + 中文 + 高低双层指令」的大规模集合，使 scaling law 实验和细粒度 reward 设计成为可能。
+主流 benchmark 几乎都是英文 App，最大的中文集合 CAGUI 只有 600 任务 / 22 个 App，根本撑不起一条 scaling law 曲线。HyperTrack 从 674 个中文 Android App、17 个类别（含长尾和平板专属应用）采集 16080 个 episode，平均 5.1 步，动作空间统一为 OPEN/CLICK/SCROLL/TYPE/STOP；每一步都标了 high-level 任务描述、截图、低级动作描述，以及所有 clickable 元素的 ground-truth bbox。它最关键的安排是切分方式：训练集只放手机数据，于是平板就天然成了 unseen-device 测试集，配合 unseen-app 一起拼出 in-domain / unseen-app / unseen-device / unseen-app&device 四向 OOD 网格。相比 AITW（没 bbox）、AndroidControl（英文）、CAGUI（太小），HyperTrack 是第一个同时具备「层级化 UI 文档 + bbox + 屏幕描述 + 中文 + 高低双层指令」的大规模集合，这套标注密度正是后面做 scaling 实验和细粒度 reward 的前提。
 
-2. **DAPO 风格 RL + 二元奖励 + 数据 scaling 实验**:
+**2. DAPO 风格 RL + 复合二元奖励：把 SFT vs RL 的 scaling 行为画成可量化曲线。**
 
-    - 功能：在 16→8192 episode 区间上系统比较 SFT 和 RL 的 scaling 行为。
-    - 核心思路：采用 GRPO 框架并叠加 DAPO 的三项增强 —— Clip-Higher 抬高上裁剪界、Dynamic Sampling 替换 zero-advantage 样本以保住梯度信号、Token-Level Policy Gradient Loss 让每个 token 等权贡献；目标函数为 $\mathbb{E}_{q,o_i}\frac{1}{\sum|o_i|}\sum_{i,t}\min(r_{i,t}\hat A_{i,t}, \text{clip}(r_{i,t},1-\epsilon_{\text{low}},1+\epsilon_{\text{high}})\hat A_{i,t})$，组大小 $G=16$，$\epsilon_{\text{low}}=0.2, \epsilon_{\text{high}}=0.3$，$\beta=0$（无 reference model，省显存）。奖励 $R = R_{\text{action-type}} + R_{\text{params}}$，类型对了再判参数（click 落在 bbox 内、scroll 方向对、text 完全匹配）。
-    - 设计动机：performance 随训练 episode 数对数近似线性增长，且 RL 在 OOD（unseen app）上的领先幅度远大于 in-domain —— 这是论文最关键的实证发现，把"为什么要在 GUI Agent 上做 RL"从直觉提升为可量化的 scaling 现象，并且换 Qwen3-VL-8B + Gaussian spatial reward 也成立，说明结论不依赖单一 backbone。
+GUI 场景下"SFT 还是 RL"一直只有直觉、没有系统证据。作者在 16→8192 episode 区间上同时跑两条训练路线，RL 这边用 GRPO 框架叠加 DAPO 的三件套——Clip-Higher 抬高上裁剪界让低概率正确动作有机会被放大、Dynamic Sampling 替换掉 advantage 为零的样本以保住梯度信号、Token-Level Policy Gradient Loss 让长短序列里每个 token 等权贡献。目标函数为 $\mathbb{E}_{q,o_i}\frac{1}{\sum|o_i|}\sum_{i,t}\min(r_{i,t}\hat A_{i,t}, \text{clip}(r_{i,t},1-\epsilon_{\text{low}},1+\epsilon_{\text{high}})\hat A_{i,t})$，取组大小 $G=16$、$\epsilon_{\text{low}}=0.2$、$\epsilon_{\text{high}}=0.3$、$\beta=0$（干脆不要 reference model，省显存）。奖励是复合二元的 $R = R_{\text{action-type}} + R_{\text{params}}$——先看动作类型对不对，类型对了再判参数（click 要落在 bbox 内、scroll 方向要对、text 要完全匹配），这样把 GUI 决策的"选什么动作"和"动作的落点"拆成两级信号。实测下来 performance 随训练 episode 数呈对数近似线性增长，而 RL 在 unseen-app 上对 SFT 的领先幅度明显大于 in-domain：这正是全文最硬的实证结论，把"为什么 GUI Agent 要上 RL"从直觉变成一条可外推的 scaling 现象，而且换成 Qwen3-VL-8B + Gaussian spatial reward 后趋势依旧，说明它不依赖某个特定 backbone。
 
-3. **GUIEvalKit + SOEval + 决策级指标**:
+**3. GUIEvalKit + SOEval + 决策级指标：把离线评测拉近在线，并量化 thinking 的真实代价。**
 
-    - 功能：统一推理接口、提供半在线评测协议、并量化 reasoning 对决策行为的影响。
-    - 核心思路：(i) `ABCModel` 三件套 `prepare_input / generate / parse_response` 适配 30+ VLM，支持 vLLM 后端和 `enable_thinking` 开关；(ii) SOEval 在每步 $i$ 用历史选择算子 $\psi(o_t,a_t,\hat a_t,\hat\tau_t) = \phi(o_t,\hat a_t,\hat\tau_t)$ 当 $\hat a_t = a_t$，否则退回 $\phi(o_t,a_t)$，即"对了用自己的 artifact，错了退回 reference"，使评测上下文渐进逼近 on-policy；(iii) 决策级分析把 $n=512$ 次 rollout 用密度聚类映射到决策空间 $\mathcal D$，定义 Diversity $\text{Div} = H(p(d|M,S,s))$ 和 Stability $\hat\theta = p(d^*|M,S,s)$，量化 reasoning 引起的 diversity↑/stability↓ trade-off。
-    - 设计动机：作者用 AndroidWorld 在线成功率做"金标准"，验证 SOEval step exact match 的 Spearman $\rho=0.771$、$R^2=0.624$，显著高于 offline 的 $\rho=0.657$、$R^2=0.482$，证明 SOEval 是更可靠的离线代理；决策级指标则解释了为什么 thinking mode 在 PASS@1 上输给 instruct，但在 PASS@8 上反超 —— 是稳定性 vs 多样性沿同一权衡曲线的不同工作点。
+离线评测之所以和在线脱节，是因为它一直喂 reference trajectory，而真实部署时模型只能看到自己刚做的决定。GUIEvalKit 先用 `ABCModel` 三件套 `prepare_input / generate / parse_response` 把 30+ 个 VLM 套进统一接口（支持 vLLM 后端和 `enable_thinking` 开关），再在评测协议上动刀：SOEval 在每步用一个历史选择算子，当模型这一步预测正确（$\hat a_t = a_t$）就切到模型自己的 artifact $\psi=\phi(o_t,\hat a_t,\hat\tau_t)$，错了才退回 reference $\phi(o_t,a_t)$——"对了用自己的，错了退回标准答案"，让评测上下文随着 rollout 渐进逼近 on-policy 分布，又不丢掉静态数据的可复现性。最后一层是决策级分析：把 $n=512$ 次 rollout 用密度聚类映射到决策空间 $\mathcal D$，再定义两个互补指标——多样性 $\text{Div} = H(p(d|M,S,s))$ 是决策分布的熵（越高说明模型在同一状态下越发散），稳定性 $\hat\theta = p(d^*|M,S,s)$ 是落在主导决策 $d^*$ 上的概率（越高越一致）。这套组合的价值在于它能拿在线数据当裁判：以 AndroidWorld 在线成功率为金标准，SOEval 的 step exact match 相关性达到 Spearman $\rho=0.771$、$R^2=0.624$，明显高于纯离线的 $\rho=0.657$、$R^2=0.482$，说明它确实是更可信的离线代理；而 Div/Stability 则直接解释了 thinking mode 的悖论——显式 reasoning 把工作点沿权衡曲线推向"高多样性、低稳定"，于是在 PASS@1 上输给 instruct，到 PASS@8 又靠多样性反超。
 
 ### 损失函数 / 训练策略
-SFT：标准 cross-entropy；RL：DAPO-GRPO（$G=16$, $\epsilon_{\text{low}}=0.2$, $\epsilon_{\text{high}}=0.3$, $\beta=0$），binary reward 为主，附带 Gaussian spatial reward 消融。Backbone 主要是 UI-TARS-1.5-7B，辅以 Qwen3-VL-8B-Thinking 验证 scaling 趋势的普适性。
+SFT 用标准 cross-entropy；RL 用 DAPO-GRPO（$G=16$、$\epsilon_{\text{low}}=0.2$、$\epsilon_{\text{high}}=0.3$、$\beta=0$），主奖励是 action-type + params 的复合二元奖励，另附 Gaussian spatial reward 做消融。Backbone 主用 UI-TARS-1.5-7B，再用 Qwen3-VL-8B-Thinking 复现一遍以验证 scaling 趋势的普适性。
 
 ## 实验关键数据
 

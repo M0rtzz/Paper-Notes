@@ -40,30 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的"方法"分成两层：上层是**比较协议** (Section 3)——把参数步长 $\Delta P_\mathcal{A}(k)=P_\mathcal{A}(k+1)-P_\mathcal{A}(k)$ 作为可观测的离散变量，定义 best-under-budget 曲线 $U_\mathcal{A}(B)$ 作为描述性指标 (而不是模型选择规则)；下层是**作为对照的 CP adapter** (Section 4)——把 LoRA 的"矩阵秩 + dense 外积"换成"张量 reshape + 归一化 CP 分量"。整套 pipeline 是：先选 target projection (q_proj, v_proj across 24 layers = 48 projections)，对每个 $2048\times 2048$ 的 $\Delta W$ reshape 成 $\mathcal{T}(\Delta W)\in\mathbb{R}^{32\times 64\times 32\times 64}$，再用 $c$ 个归一化 rank-1 component 拟合该张量；训练时只更新 CP 因子和 LoRA 的 $A,B$，frozen backbone 保持 fp16。
+这篇论文要回答的问题是"PEFT 里更细的参数粒度本身能不能换来更好的准确率-预算曲线"，为此它把方法搭成两层：上层是一套**比较协议**，把以前没人正面讨论的"参数步长"提成可观测变量；下层是一个**步长极细的 CP 张量 adapter**，作为和 LoRA 对打的细粒度对照。整套流程跑下来是：在 OPT-1.3B 的 q_proj、v_proj 上 (24 层共 48 个投影)，对每个 $2048\times 2048$ 的更新 $\Delta W$ 先 reshape 成一个 4-way 张量 $\mathcal{T}(\Delta W)\in\mathbb{R}^{32\times 64\times 32\times 64}$，再用 $c$ 个归一化 rank-1 分量去拟合它；训练时 backbone 冻在 fp16，只更新 CP 因子 (或 LoRA 的 $A,B$) 和分类头，最后用同一套严格控制的协议把 CP 和 LoRA 摆在一起比。
 
 ### 关键设计
 
-1. **参数步长 + best-under-budget 比较协议**:
+**1. 参数步长 + best-under-budget 比较协议：把"两个方法步长差 20 倍"从隐藏假设变成台面上的指标。**
 
-    - 功能：把"两个方法预算步长差 20 倍"这件事从隐藏假设变成可观测指标，避免 matched-budget 比较系统性偏袒粗粒度方法
-    - 核心思路：对每个 adapter 家族 $\mathcal{A}$ 定义参数步长 $\Delta P_\mathcal{A}(k)=P_\mathcal{A}(k+1)-P_\mathcal{A}(k)$。对 LoRA 而言 $P_{\text{LoRA}}(r)=r(m+n)$，所以 $\Delta P_{\text{LoRA}}=m+n=4096$ (在 $2048\times 2048$ 上)。对 CP 而言每 component 只加 193 个标量。给定预算上限 $B$，定义 best-under-budget 曲线 $U_\mathcal{A}(B)=\max_{k\in\mathcal{K}_\mathcal{A}:P_\mathcal{A}(k)\le B} A_\mathcal{A}(k)$，其中 $\mathcal{K}_\mathcal{A}$ 是这个家族测试过的离散预算点集合，$A_\mathcal{A}(k)$ 是按 best-dev checkpoint 选出来的 held-out eval accuracy。这条曲线明确告诉读者"在该家族测试过的所有点里，预算不超过 $B$ 时能达到的最好结果"，把"测试点稀疏性"显式化
-    - 设计动机：传统 PEFT 论文要么 (a) 匹配几个预算点对比 (隐藏 LoRA 中间没有可选点)、要么 (b) 各自报告 best run (隐藏一个家族测了更多点)。作者刻意选 descriptive 而非 prescriptive 的定义，并且明说"CP 测了更多点所以小差异不应被解读为可靠胜出"——这是少有的诚实声明，决定了整篇论文的基调
+传统 PEFT 比较有个被忽视的陷阱：rank 不只是表达力旋钮，也是预算的离散刻度，而不同方法的刻度密度天差地别。论文把这件事显式化——对每个 adapter 家族 $\mathcal{A}$ 定义参数步长 $\Delta P_\mathcal{A}(k)=P_\mathcal{A}(k+1)-P_\mathcal{A}(k)$。LoRA 的预算是 $P_{\text{LoRA}}(r)=r(m+n)$，所以在 $2048\times 2048$ 上每加一个 rank 步长就是 $\Delta P_{\text{LoRA}}=m+n=4096$，而 CP 每加一个分量只动 193 个标量，两者相差约 21 倍。在此基础上再给一个预算上限 $B$，定义 best-under-budget 曲线 $U_\mathcal{A}(B)=\max_{k\in\mathcal{K}_\mathcal{A}:P_\mathcal{A}(k)\le B} A_\mathcal{A}(k)$，其中 $\mathcal{K}_\mathcal{A}$ 是该家族实际测过的离散预算点集合，$A_\mathcal{A}(k)$ 是按 best-dev checkpoint 选出的 held-out eval 准确率。这条曲线读出来就是"在这个家族测过的所有点里，预算不超过 $B$ 时能拿到的最好结果"，把"测试点稀不稀疏"明明白白摆出来。
 
-2. **归一化 CP 张量参数化作为细粒度对照**:
+关键是作者刻意把 $U_\mathcal{A}(B)$ 定义成**描述性**指标而不是模型选择规则——传统论文要么匹配几个预算点对比 (藏住了 LoRA 在中间根本没有可选点)，要么各报各的 best run (藏住了某个家族其实测了更多点)；而这里直接挑明"CP 测的点更多，所以 best 曲线上的小幅差异不该被当成可靠胜出"。这句自我设限决定了全篇克制的基调。
 
-    - 功能：提供一个步长比 LoRA 小 21 倍但训练稳定的对照家族
-    - 核心思路：把 $\Delta W\in\mathbb{R}^{2048\times 2048}$ 按行/列 split 重排成 4-way tensor，写为 $\mathcal{T}(\Delta W)\in\mathbb{R}^{32\times 64\times 32\times 64}$。CP 形式是 $\mathcal{T}(\Delta W)=\sum_{s=1}^{c}\lambda_s u_s^{(1)}\circ u_s^{(2)}\circ u_s^{(3)}\circ u_s^{(4)}$，每个 $\|u_s^{(\ell)}\|_2=1$。每个 component 存 $32+64+32+64=192$ 个因子标量 + 1 个 amplitude $\lambda_s$ = 193 标量。reshape 回矩阵后单个 component 对应 $\Delta W_s=\lambda_s(u_s^{(1)}\otimes u_s^{(2)})(u_s^{(3)}\otimes u_s^{(4)})^\top$——这是一个 Kronecker-结构化的 rank-1 矩阵，比普通 LoRA rank-1 表达力受限。实现上把归一化做在 forward 里 (optimizer 存原始因子)，消除尺度歧义同时保持一阶优化稳定。整个 48 projections 上一个 LoRA rank 加 196,608 参数 + 1.50 MB Adam state；一个 CP component 加 9,264 参数 + 0.071 MB Adam state
-    - 设计动机：作者明确说"我们不是在提出新 SOTA"——CP 选择是因为它在所有候选张量结构 (Tucker, Tensor-Train, BTT...) 里步长最小且训练最稳定，恰好能作为"细粒度但表达受限"的对照。fix $c$ 而非自适应增长，是为了把"预算粒度"这一个变量隔离出来，避免被自适应分配混淆
+**2. 归一化 CP 张量参数化：提供一个步长比 LoRA 细 21 倍、又训得稳的对照家族。**
 
-3. **严格控制协议 + 10-seed 选择性确认**:
+要在 LoRA 两个 rank 之间那段"采不到"的区间里观测，就需要一个步长足够细的对照。做法是把 $\Delta W\in\mathbb{R}^{2048\times 2048}$ 按行列 split 重排成 4-way 张量 $\mathcal{T}(\Delta W)\in\mathbb{R}^{32\times 64\times 32\times 64}$，再写成 CP 形式 $\mathcal{T}(\Delta W)=\sum_{s=1}^{c}\lambda_s\, u_s^{(1)}\circ u_s^{(2)}\circ u_s^{(3)}\circ u_s^{(4)}$，每个方向向量约束 $\|u_s^{(\ell)}\|_2=1$。这样一个分量只存 $32+64+32+64=192$ 个因子标量加 1 个幅度 $\lambda_s$，合计 193 标量，正好约等于 $1/21$ 个 LoRA rank。reshape 回矩阵后，单个分量对应
 
-    - 功能：把"细粒度优势 vs 实验噪声"分开
-    - 核心思路：所有方法用同一 trainer (HuggingFace Trainer)、同一 fp16 backbone、同一 target modules (48 个 q/v 投影)、同一 data caps (1000 训练/500 dev/1000 eval)、同一 5000 steps + 每 1000 步 eval + best-dev checkpoint 选择规则；LoRA 用 lr=$10^{-4}$，CP 用 $2\times 10^{-4}$ (都是预先选定，不做 per-method 全 sweep)。基础格子用 seeds 0,1,2，但对每个任务最关键的几个 cell (SST-2 低预算 plateau、BoolQ rise-and-saturation、RTE persistent gap) 额外跑 seeds 0-99 共 100 次以拿到可信均值±方差。Best-under-budget 曲线则按定义直接从所有测过的 (r 或 c) 取 max。诚实地报告"CP 测了 13 个 capacity (1,2,4,8,16,21,28,36,43,64,85,128,171) 而 LoRA 只测 6 个 (1,2,3,4,6,8)，因此 best curve 比较里 CP 有抽样优势"
-    - 设计动机：PEFT 领域的痛点之一是"看似 0.2% 的提升其实在 seed 噪声里"，没有 10-seed 确认根本分不出真信号；同时论文没有为 CP 单独调 lr/scheduler，是为了避免变成"调参谁更细心"的比较
+$$\Delta W_s=\lambda_s\,(u_s^{(1)}\otimes u_s^{(2)})(u_s^{(3)}\otimes u_s^{(4)})^\top$$
+
+这是一个 Kronecker-结构化的 rank-1 矩阵，方向被张量结构约束住，表达力比普通 LoRA 的 dense rank-1 外积更受限——细粒度是要付表达力代价的。实现上把单位归一化放在 forward 里做 (optimizer 仍存原始因子)，既消除尺度歧义又保住一阶优化的稳定性。算到内存上，48 个投影里加一个 LoRA rank 是 196,608 参数 + 1.50 MB Adam state，而一个 CP 分量只加 9,264 参数 + 0.071 MB Adam state，参数和优化器内存严格成比例。作者也讲清了为什么是 CP 而非 Tucker / Tensor-Train / BTT：CP 在这些候选张量结构里步长最小、训练最稳，恰好是"细粒度但表达受限"的纯净对照；并且 $c$ 固定不自适应增长，就是为了把"预算粒度"这一个变量单独隔离出来，不被自适应分配混淆。
+
+**3. 严格控制协议 + 选择性 100-seed 确认：把"细粒度优势"和"实验噪声"切开。**
+
+PEFT 比较里最容易翻车的地方，是看似 0.2% 的提升其实淹在 seed 噪声里。为此所有方法共用同一套 HuggingFace Trainer、同一 fp16 backbone、同一 48 个 q/v 投影目标模块、同一 data cap (1000 训练 / 500 dev / 1000 eval)、同一 5000 steps 加每 1000 步 eval 加 best-dev checkpoint 选择规则；LoRA 用 lr=$10^{-4}$、CP 用 $2\times 10^{-4}$，都是预先选定、不做 per-method 全 sweep，以免比成"谁调参更细心"。基础格子跑 seeds 0,1,2，但对每个任务最关键的几个 cell (SST-2 的低预算 plateau、BoolQ 的 rise-and-saturation、RTE 的 persistent gap) 额外跑 seeds 0-99 共 100 次，拿到可信的均值±方差。best-under-budget 曲线则按定义直接在所有测过的 $r$ 或 $c$ 上取 max。作者同样诚实地公示：CP 测了 13 个 capacity (1,2,4,8,16,21,28,36,43,64,85,128,171)，LoRA 只测了 6 个 (1,2,3,4,6,8)，因此 best 曲线比较里 CP 天然占了抽样便宜。
 
 ### 损失函数 / 训练策略
-标准 cross-entropy on classification head，frozen backbone，只更新 adapter 参数和 classification head；fp16 backbone，AdamW 优化器。CP 因子在 forward 里做 unit-norm 归一化以消除尺度歧义。每个 task cap 1000 训练 / 500 dev / 1000 eval；5000 training steps；每 1000 步在 dev 上 eval 并选 best-dev checkpoint 在 eval 上报。所有 CP/LoRA 都加在 q_proj/v_proj 上，与典型 LoRA 配置一致。
+分类头上的标准 cross-entropy，backbone 冻结，只更新 adapter 参数和分类头；fp16 backbone，AdamW 优化器。CP 因子在 forward 里做 unit-norm 归一化以消除尺度歧义。每个任务 cap 在 1000 训练 / 500 dev / 1000 eval；跑 5000 steps，每 1000 步在 dev 上 eval 并选 best-dev checkpoint 在 eval 上报。CP 和 LoRA 都加在 q_proj / v_proj 上，与典型 LoRA 配置一致。
 
 ## 实验关键数据
 

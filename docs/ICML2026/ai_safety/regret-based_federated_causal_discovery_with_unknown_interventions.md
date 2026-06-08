@@ -43,42 +43,29 @@ tags:
 
 ### 整体框架
 
-设 $K$ 个客户端，每个持有数据集 $\mathbb{D}^k$ 与未知干预目标 $\Phi^k \subseteq \mathbb{V}$（满足至少一个客户端为纯观测，即 $\exists k: \Phi^k = \emptyset$）。客户端本地用 PC 或 GES 估出 *突变图 (mutilated DAG)* 的 CPDAG $\mathcal{C}(G_{\Phi^k})$，但**不上传**；只把"server 候选图与本地图之间的 regret 标量"上传。
-
-I-PERI 的 pipeline：
-
-1. **本地 CPDAG 估计**：每个客户端独立用 PC/GES 跑 $\mathcal{C}(G_{\Phi^k})$。
-2. **第一阶段（federated CPDAG）**：server 持有候选图 $H$，沿 GES 的加边/减边步骤搜索；每一步根据"有向一致掩码"算 regret $R_k(H)$，选 $\arg\min_H \max_k R_k(H)$，收敛到公共底层 DAG 的 CPDAG $\mathcal{C}(G)$。
-3. **第二阶段（orientation refinement）**：在第一阶段输出的 CPDAG 上，对**未定向边**枚举方向；这次用"无向一致掩码"算 regret，让"server 没定向、客户端因干预定向了"的边被惩罚 ⇒ 强制 server 跟随客户端方向，得到 Φ-CPDAG。
-4. **差分隐私**：每个 $R_k$ 上传前加 Laplace 噪声（尺度 $\lambda = Q/\epsilon$，$Q$ 为 regret 敏感度上界），实现 $\epsilon$-DP。
-
-输入 = 各客户端的本地 CPDAG（不外泄）+ regret 通信；输出 = server 端的 Φ-CPDAG，比观测 CPDAG 多定向若干边、但比 ℐ-CPDAG 保留更多无向边。
+I-PERI 要解决的问题是：$K$ 个客户端各持数据集 $\mathbb{D}^k$ 和一个**未知**的干预目标 $\Phi^k \subseteq \mathbb{V}$（仅假设至少一个客户端是纯观测的，即 $\exists k:\Phi^k=\emptyset$），既不能把数据汇总、也不能上传本地图，只能交换一个 regret 标量，却要在 server 端恢复尽可能紧的因果结构并附带差分隐私保证。作者的办法是把原版 PERI 的单一 regret 拆成两遍 GES 搜索：第一遍只惩罚"客户端有、server 缺"的边，把干预带来的稀疏化豁免掉，从而稳稳恢复出公共 CPDAG；第二遍反过来，让客户端因干预新生出的方向反向回灌进 server 的未定向边，把结构进一步精化到一个新等价类 Φ-CPDAG。客户端本地始终只用 PC/GES 估自己的突变图 (mutilated DAG) CPDAG $\mathcal{C}(G_{\Phi^k})$ 并保留在本地，每个 regret 上传前再叠一层 Laplace 噪声完成 $\epsilon$-DP。
 
 ### 关键设计
 
-1. **有向一致掩码 (Directed-consensus masking) — 第一阶段**:
+**1. 有向一致掩码：把干预造成的"缺边"从错误改判为豁免**
 
-    - 功能：定义一种把"server 候选图 $H$"与"客户端 CPDAG $\mathcal{C}(G_{\Phi^k})$"合成新图 $\mu(H, \mathcal{C}(G_{\Phi^k}))$ 的操作，再让 regret 在这个掩码图上计算：$R_k(H) = L(\mu(H, \mathcal{C}(G_{\Phi^k})), \mathbb{D}^k) - L(\mathcal{C}(G_{\Phi^k}), \mathbb{D}^k)$。
-    - 核心思路：掩码规则有三条——(i) 两图都有的边保留；(ii) 任一方没有的边在掩码中**也没有**；(iii) 一方为有向、另一方为无向时，按**有向**方向写入（"有向优先"）。直观效果：客户端因干预缺的边**不会**被算进 server 的损失（避免错误惩罚 PERI 没法处理的稀疏化），而客户端有 server 没的边**会**被惩罚（保证收敛到包含所有公共结构的 CPDAG）。
-    - 设计动机：原版 PERI 的 regret $L(H,\mathbb{D}^k) - L(\mathcal{C}(G),\mathbb{D}^k)$ 假定所有客户端共享 $\mathcal{C}(G)$；干预存在时 $\mathcal{C}(G_{\Phi^k}) \ne \mathcal{C}(G)$，regret 永远不归零、算法不收敛。掩码把"缺边"语义从"错误"改成"豁免"，使 Theorem 3.1 给出 $\hat{G} \to \mathcal{C}(G)$ 的渐近保证（$n^k \to \infty$）。
+原版 PERI 的 regret 是 $L(H,\mathbb{D}^k)-L(\mathcal{C}(G),\mathbb{D}^k)$，它默认所有客户端共享同一张 $\mathcal{C}(G)$。可一旦存在干预，客户端的突变图 $\mathcal{C}(G_{\Phi^k})\ne\mathcal{C}(G)$，于是 regret 永远不归零、搜索根本不收敛——这正是第一阶段要拆掉的痛点。作者的做法是先用一个掩码算子 $\mu$ 把 server 候选图 $H$ 和客户端 CPDAG $\mathcal{C}(G_{\Phi^k})$ 合成一张新图，再在这张图上算 regret：$R_k(H)=L(\mu(H,\mathcal{C}(G_{\Phi^k})),\mathbb{D}^k)-L(\mathcal{C}(G_{\Phi^k}),\mathbb{D}^k)$。
 
-2. **无向一致掩码 (Undirected-consensus masking) 与 Φ-CPDAG — 第二阶段**:
+$\mu$ 的规则有三条：两图都有的边保留；任一方没有的边在掩码里**也删掉**；一方有向另一方无向时按**有向**写入（"有向优先"）。这三条合起来恰好实现了"对干预区别对待"——客户端因干预缺的边不会再被计入 server 的损失（避免错误惩罚 PERI 处理不了的稀疏化），而"客户端有、server 没"的边仍会被惩罚（保证收敛到包含全部公共结构的 CPDAG）。这一改把"缺边"的语义从"判错"变成"免责"，使 Theorem 3.1 给出 $\hat{G}\to\mathcal{C}(G)$ 的渐近收敛保证（$n^k\to\infty$）。
 
-    - 功能：在第一阶段的 CPDAG 上再做一遍 regret 搜索，这次用 $\nu(H, \mathcal{C}(G_{\Phi^k}))$ 取代 $\mu$，公式同 (3) 但替换为 $\nu$；输出比观测 CPDAG 多定向若干边的 Φ-CPDAG。
-    - 核心思路：$\nu$ 的规则只比 $\mu$ 改一条——一方有向、另一方无向时，按**无向**写入（"无向优先"，正好与第一阶段反过来）。直觉：server 把"客户端因干预衍生出的新 v-structure 方向"视为权威，强制把自身对应的无向边定到那个方向；而客户端缺的边仍然被豁免（沿用 $\mu$ 的设计）。这样定义出的等价类 **Φ-MEC** 的等价条件比 MEC 多一条：两图必须在 $\Phi$ 内**某个**干预下产生相同的新 v-structure（Theorem 3.2）。
-    - 设计动机：在不知道干预目标 $\Phi^k$ 具体是什么的前提下，单靠观测 CPDAG 只能锁到 MEC；而干预目标已知时可锁到更紧的 ℐ-MEC。Φ-MEC 的位置正好夹在二者之间——它**不要求**知道干预目标，但**利用了**干预引发的新 v-structure，是"联邦 + 未知干预 + 差分隐私"约束下可识别的**最紧**等价类（Theorem 3.3 保证 I-PERI 渐近收敛到 Φ-CPDAG）。
+**2. 无向一致掩码与 Φ-CPDAG：把干预当信息源反向利用**
 
-3. **基于 regret 敏感度上界的 ε-差分隐私机制**:
+第一阶段只能恢复到观测 CPDAG，干预其实还提供了额外的方向信息没被用上。关键观察是：干预虽然会去掉入边让图变稀疏，但当它作用在一个 shielded collider 的父节点上时，会**新生出 v-structure**，于是客户端的局部 CPDAG 反而暴露了观测数据无法定向的边。第二阶段就专门回收这部分信息——在第一阶段的 CPDAG 上再跑一遍 regret 搜索，只把掩码算子从 $\mu$ 换成 $\nu$，公式形式不变。
 
-    - 功能：给 I-PERI 加上正式的 $\epsilon$-差分隐私保证；做法是在每个客户端把本地 regret 加 i.i.d. Laplace 噪声后再上传。
-    - 核心思路：Lemma 3.1 证明，当评分函数 $L$ 关于参数 $\theta$ 偏可微、$\|\theta\| \le M$、$P_k(x;\theta) \ge r$ 时，两个相差一条记录的数据集所诱导的 regret 之差有界 $\max_k |\hat{R}_k(G) - \hat{R}'_k(G)| \le (2M+1)\log r^2 + \mathcal{O}(\log n / n)$。把该界记为 $Q$，加上尺度 $\lambda = Q / \epsilon$ 的 Laplace 噪声即可由 Laplace 机制得到 $\epsilon$-DP（Proposition 3.1）。即便对手拿到所有 regret 和最终 server 图，要反推出客户端图也是 NP-hard 问题（Chickering et al. 2004）。
-    - 设计动机：FCD 文献长期忽视隐私，只共享"local 图 / 模型参数"已经远超差分隐私可接受范围；改成只共享 regret 标量 + Laplace 噪声，可在不依赖加密的前提下提供"信息论级"的 DP，与联邦因果发现的现实诉求一致。
+$\nu$ 相比 $\mu$ 只改一条规则：一方有向另一方无向时改按**无向**写入（"无向优先"，与第一阶段正好相反），缺边豁免则照旧沿用。直觉上，server 把"客户端因干预衍生出的新 v-structure 方向"视为权威，强制把自身对应的无向边定到那个方向。由此定义出的等价类 **Φ-MEC**，等价条件比普通 MEC 多一条：两图必须在 $\Phi$ 内某个干预下产生相同的新 v-structure（Theorem 3.2）。它不要求知道干预目标，却利用了干预引发的方向信息，因此恰好夹在"观测 MEC"和"干预目标已知的 ℐ-MEC"之间，是"联邦 + 未知干预 + 差分隐私"三约束下可识别的最紧等价类（Theorem 3.3 保证 I-PERI 渐近收敛到 Φ-CPDAG）。
+
+**3. 基于 regret 敏感度上界的 ε-差分隐私机制**
+
+FCD 文献长期只共享本地图或模型参数，这远超差分隐私可接受的泄露范围；I-PERI 既然只交换 regret 标量，就能用最简单的加噪方式补上 DP。Lemma 3.1 先界定 regret 的敏感度：当评分函数 $L$ 关于参数 $\theta$ 偏可微、$\|\theta\|\le M$、$P_k(x;\theta)\ge r$ 时，两个相差一条记录的数据集所诱导的 regret 之差有界 $\max_k|\hat{R}_k(G)-\hat{R}'_k(G)|\le(2M+1)\log r^2+\mathcal{O}(\log n/n)$。把该界记为 $Q$，每个客户端上传前叠加尺度 $\lambda=Q/\epsilon$ 的 i.i.d. Laplace 噪声，由 Laplace 机制即得 $\epsilon$-DP（Proposition 3.1）。而且即便对手拿到所有 regret 和最终 server 图，要反推出客户端图本身也是 NP-hard（Chickering et al. 2004），等于在不依赖加密的前提下提供了"信息论级"的隐私。
 
 ### 损失函数 / 训练策略
 
-- 评分函数 $L$ 选 BIC，满足"一致且可分解"的前提，保证 GES 风格的加边/减边搜索能收敛。
-- 第一阶段优化 $\hat{G} = \arg\min_{H \in \mathcal{C}(\mathbb{G})} \max_k R_k^{\mu}(H)$；第二阶段限制搜索空间为"对第一阶段 CPDAG 的无向边赋方向得到的偏定向图"，目标 $\arg\min \max_k R_k^{\nu}$。
-- 假设 2.1：至少一个客户端持有纯观测数据（$\Phi^k = \emptyset$），用于"锚定"公共 DAG；这一条本身比"知道干预目标"弱得多。
+评分函数 $L$ 取 BIC（满足"一致且可分解"，保证 GES 风格的加边/减边搜索能收敛）。第一阶段在全 CPDAG 空间上优化 $\hat{G}=\arg\min_{H\in\mathcal{C}(\mathbb{G})}\max_k R_k^{\mu}(H)$；第二阶段把搜索空间收窄为"对第一阶段 CPDAG 的无向边赋方向得到的偏定向图"，目标改为 $\arg\min\max_k R_k^{\nu}$。两阶段都依赖假设 2.1——至少一个客户端持纯观测数据（$\Phi^k=\emptyset$）来锚定公共 DAG，而这条假设本身比"知道干预目标"弱得多。
 
 ## 实验关键数据
 

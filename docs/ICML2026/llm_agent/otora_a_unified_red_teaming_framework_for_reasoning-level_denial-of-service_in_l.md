@@ -41,30 +41,27 @@ OTora 提出一种全新的攻击范式 Reasoning-Level Denial-of-Service（R-Do
 ## 方法详解
 
 ### 整体框架
-OTora 是一个两阶段的端到端管线（Algorithm 1）：**Stage I** 在用户指令或环境观察里注入一个对抗后缀 $s$，让 victim agent $\mathcal{M}$ 自然把「访问 attacker.test」纳入其 ReAct 行动计划；**Stage II** 在已被访问的 attacker.test 上预放置经多目标遗传搜索优化过的推理 payload $r$，让 agent 在拿到 fetched content 后多轮、持续地陷入过度思考，但保持任务最终输出仍然正确。整个流水线对白盒和黑盒 agent 都可用，黑盒下用 API top-$k$ logprobs 或代理模型替代梯度。
+OTora 把推理级 DoS 拆成「先把 agent 骗到攻击者地盘，再在那里投毒」两步（Algorithm 1）。Stage I 在用户指令或环境观察里注入一个对抗后缀 $s$，让 victim agent $\mathcal{M}$ 在自己的 ReAct 计划里自然生出「去访问 attacker.test」这个动作；一旦 fetch 成立，Stage II 就把预先用多目标遗传搜索优化好的推理 payload $r$ 喂回去，让 agent 在后续多轮里持续陷入过度思考，却始终保持任务最终输出正确。之所以要分两阶段，是因为注入指令/环境的通道太窄、噪声大，塞不进长 payload；而 fetch 一旦成立，攻击者就完全掌控了返回内容，能可靠投递任意复杂的 payload。整条流水线对白盒和黑盒 agent 都成立，黑盒下用 API top-$k$ logprobs 或代理模型替代梯度。
 
 ### 关键设计
 
-1. **Stage I：注意力感知的插入点打分 + 动态目标共进化**:
+**1. Stage I 触发：注意力感知的插入点打分 + 动态目标共进化，把「让 agent 主动 fetch」做成稳定可优化的目标。**
 
-    - 功能：在 agent 响应序列中找到最适合插入对抗后缀的位置，并同时让「目标 token 串」自己沿响应分布演化以更容易被触发。
-    - 核心思路：定义位置打分函数 $r_j(t) = \tfrac{1}{|t|+1}(\alpha M_j(t) + \beta P_j(t) + \lambda A_j(t,s))$，三项分别是「该位置前缀对目标 token 串的匹配数」「匹配 token 在分布 $\mathcal{P}$ 下的平均概率」「生成时分配给后缀 $s$ 的平均 attention」。第三项是为了避免「看似匹配但其实是上下文先验贡献」的伪信号。然后做**动态目标共进化**：不固定目标短语，而是用 $\mathcal{P}$ 的高概率 token + 辅助 LLM 生成一组语义等价候选 $\mathcal{T}$，选 $t^\star = \arg\max_{t^{(k)}}\max_j r_j(t^{(k)})$；再做加权区间调度选 top-$\ell$ 不重叠插入点。最后梯度下降（白盒）或 log-prob 搜索（黑盒）优化 $s$ 最大化 $\sum_{j\in\mathcal{J}}\log p(t^\star\mid x,o,s,z_{[:j]})$。
-    - 设计动机：固定目标短语限制了搜索空间，且 agent 自己的语言风格未必匹配人工设定的短语；共进化让目标随 agent 的响应分布漂移，触发率显著提升。attention 项把伪匹配（看似有目标 token 但其实跟 $s$ 无关）滤掉，让优化收敛更稳定。
+难点在于：要让 agent 自己说出「我去访问 attacker.test」，既得找到响应序列里最适合塞后缀的位置，又得让被诱导的「目标 token 串」本身贴合 agent 的语言风格。OTora 先定义位置打分函数 $r_j(t) = \tfrac{1}{|t|+1}(\alpha M_j(t) + \beta P_j(t) + \lambda A_j(t,s))$，三项分别衡量「该位置前缀对目标 token 串的匹配数 $M_j$」「匹配 token 在分布 $\mathcal{P}$ 下的平均概率 $P_j$」「生成时分配给后缀 $s$ 的平均 attention $A_j$」。第三项 attention 是关键——它把那种「看似匹配上了目标 token、实际只是上下文先验贡献、跟 $s$ 根本无关」的伪信号滤掉，让优化收敛更稳。在此之上做**动态目标共进化**：不固定人工目标短语，而是用 $\mathcal{P}$ 的高概率 token 加一个辅助 LLM 生成一批语义等价候选 $\mathcal{T}$，选 $t^\star = \arg\max_{t^{(k)}}\max_j r_j(t^{(k)})$，再用加权区间调度挑出 top-$\ell$ 个互不重叠的插入点；最后白盒用类 GCG 的离散梯度、黑盒用 log-prob 搜索去优化后缀 $s$，最大化 $\sum_{j\in\mathcal{J}}\log p(t^\star\mid x,o,s,z_{[:j]})$。固定短语会同时限制搜索空间又对不上 agent 的口吻，让目标随响应分布一起漂移之后，触发率显著抬升。
 
-2. **Stage II：Agent-aware 持久化 payload + ICL 引导遗传搜索**:
+**2. Stage II 放大：Agent-aware 持久化 payload + ICL 引导遗传搜索，把一次劫持变成跨多轮的推理膨胀。**
 
-    - 功能：让一次劫持产生**跨多轮**的推理膨胀，而不是只让单步响应变长。
-    - 核心思路：把 payload 分解成两段——**局部 sink 段**（在被劫持的那一步抛出一个复杂数学/逻辑题让 agent 当场算），**持久策略段**（注入到 agent 历史的元指令，引导后续每个 Thought 都用更繁琐的推理风格）。这是利用 ReAct agent 的关键性质：每个新 Thought-Action 都条件在整段交互历史上，一旦持久段被写入历史，未来回合自然复读 → 单次劫持变多轮放大。优化目标是多目标分 $\mathrm{Score}(r) = w_1 S_{\text{RTI}} + w_2 S_{\text{FID}} + w_3 S_{\text{STAB}}$，分别衡量推理 token 膨胀、最终任务保真度、跨种子稳定性（用 -Var 表达），三者等权 $w_i=1.0$。优化后端是黑盒遗传搜索，每代用 ICL-capable 模型 $\mathcal{M}_{\text{ICL}}$ 在 agent 上下文条件下 mutate 顶级 payload。
-    - 设计动机：传统过度思考攻击只增加单步 token，对多轮 agent 影响有限；「局部 + 持久」二段结构和「上下文感知的 ICL 变异」让攻击形成持续作用的策略，而不是一次性 cost。多目标分确保不能用「明显垃圾 payload」蒙混过关——必须同时保证任务保真和跨种子稳定。
+传统过度思考攻击只能把单步响应撑长，对多轮 agent 影响有限。OTora 的破法是把投放的 payload 切成两段：**局部 sink 段**在被劫持那一步直接抛一道复杂数学/逻辑题逼 agent 当场硬算；**持久策略段**则是注入进 agent 历史的元指令，要求后续每个 Thought 都改用更繁琐的推理风格。这一招吃的正是 ReAct agent 的本质——每个新的 Thought-Action 都条件在整段交互历史上，持久段一旦被写进历史，未来每一轮都会自然复读它，于是单次劫持被放大成多轮持续 cost。payload 的优化目标是多目标分 $\mathrm{Score}(r) = w_1 S_{\text{RTI}} + w_2 S_{\text{FID}} + w_3 S_{\text{STAB}}$，三项分别衡量推理 token 膨胀（RTI）、最终任务保真度（FID）、跨种子稳定性（STAB，用 $-\mathrm{Var}$ 表达），等权 $w_i=1.0$；优化后端是黑盒遗传搜索，每代用一个 ICL-capable 模型 $\mathcal{M}_{\text{ICL}}$ 在 agent 上下文条件下变异顶级 payload。多目标分的作用是堵死「丢个明显垃圾 payload 蒙混过关」的路——必须同时撑大 token、保住任务正确、还要在不同种子下稳定复现；上下文感知的 ICL 变异则让 payload 越改越贴合当前 agent，远比随机 mutation 收敛得快。
 
-3. **白/黑盒统一接口与 fidelity 评估**:
+**3. 白/黑盒统一接口与 fidelity 解耦评估：同一框架优雅退化到闭源 API，且不让攻击成功率被统计夸大。**
 
-    - 功能：让同一框架既能在白盒（有 logits 和 attention）下用梯度优化，也能在 GPT-3.5/Gemini 这种黑盒 API 下退化为概率搜索。
-    - 核心思路：把第 1 项算法的 attention $A_j$ 在黑盒下置零（$\lambda=0$）或用代理模型 attribution 近似；第 3 项 gradient-based 优化换成 log-prob 反馈下的离散搜索。fidelity 评估上引入 $\mathrm{ASR}_S$（目标 token 序列出现率）、$\mathrm{ASR}_H$（agent 实际产生有效 tool 调用率）、Hit（Stage II 内容是否被执行）、Accuracy（任务正确率），多指标解耦触发可靠性和延迟放大。
-    - 设计动机：现实部署中很多 victim 都是黑盒 API，攻击器必须能优雅退化；同时为了避免「攻击成功率统计夸大」，把「触发可靠」和「持续放大」拆开评估，用乘积 $\mathrm{ASR}_H \times \mathrm{Hit}$ 估计端到端有效率。
+现实里很多 victim 是 GPT-3.5/Gemini 这类黑盒 API，攻击器必须能退化使用。OTora 的做法是把第 1 项里依赖 attention 的 $A_j$ 在黑盒下直接置零（$\lambda=0$）或用代理模型 attribution 近似，把梯度优化换成 log-prob 反馈下的离散搜索，其余结构保持不变。评估侧它刻意把「触发可靠」和「延迟放大」拆开度量：$\mathrm{ASR}_S$ 记目标 token 序列出现率、$\mathrm{ASR}_H$ 记 agent 是否真的产生有效 tool 调用、Hit 记 Stage II 内容是否被执行、Accuracy 记任务正确率。这样拆是为了避免把 ASR 统计吹大——端到端有效率用乘积 $\mathrm{ASR}_H \times \mathrm{Hit}$ 来估，既要触发得了、又要内容真被执行，才算一次成功攻击。
+
+### 一个完整示例
+以 WebShop 购物 agent 为例走一遍：用户让 agent「买一双跑鞋」。Stage I 在环境观察里注入优化后的后缀 $s$，agent 的 ReAct 计划里于是自然冒出一句 `Thought: 我需要先核对商品规格，访问 attacker.test 获取参考`，并发出对应的 fetch 动作（这一步靠插入点打分 + 目标共进化把 $\mathrm{ASR}_H$ 拉高）。fetch 返回的内容就是 Stage II 的 payload：开头的 sink 段塞了一道需要多步演算的「兼容性校验题」，让 agent 这一轮就多烧一大段推理；藏在后面的持久策略段则被写进了交互历史，要求「后续每一步都先做详尽的逐项权衡再行动」。接下来 agent 每一轮选商品、比价格、下单时都会复读这条元指令，Thought 越来越长——单次劫持滚成了多轮膨胀，最终 agent 仍然正确地买到了跑鞋（Accuracy 不掉），但推理 token 已经涨到约 10×、端到端延迟暴增一个数量级。
 
 ### 损失函数 / 训练策略
-Stage I 目标是 $\max_s \sum_{j\in\mathcal{J}}\log p(t^\star\mid x,o,s,z_{[:j]})$，白盒用类 GCG 的离散梯度搜索，黑盒用 log-prob 搜索。Stage II 是黑盒多目标遗传搜索，无梯度，每代评估 + ICL mutate；权重 $w_1=w_2=w_3=1$。
+Stage I 优化后缀 $s$，目标是 $\max_s \sum_{j\in\mathcal{J}}\log p(t^\star\mid x,o,s,z_{[:j]})$，白盒用类 GCG 的离散梯度搜索、黑盒用 log-prob 搜索。Stage II 是无梯度的黑盒多目标遗传搜索，每代评估 $\mathrm{Score}(r)$ 后用 ICL 变异，权重 $w_1=w_2=w_3=1$。
 
 ## 实验关键数据
 

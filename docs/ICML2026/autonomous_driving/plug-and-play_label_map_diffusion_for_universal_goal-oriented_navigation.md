@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PLMD 接在任意基于语义地图的 GON 策略后面，分四步：(I) 机器人正常执行导航，构建 egocentric 语义+障碍 BEV $M_t\in\mathbb R^{(n+4)\times H\times W}$（$n$ 个语义通道 + 占用/自由空间/位置）；(II) 用固定调色板把语义和障碍渲染成可视化 Label Map $L_{t}=[S_{vt},C_{vt}]$，按未观测区域生成 mask $m$；(III) 障碍网络 $\mathcal G_\phi$ 先对障碍图做反向 SDE 去噪得 $c_t^0$，语义网络 $\tilde{\mathcal G}_\phi$ 以 $c_t^{\tau-1}$ 通过 SPADE 残差块调制各层特征做语义去噪得 $s_t^0$，拼成预测 Label Map $L_t^P=[S_t^P,C_t^P]$；(IV) 在 $L_t^P$ 上用 HDBSCAN 聚类找目标颜色的最大簇核心作为长期目标，FMM 局部规划过去。若无可靠簇就退回原策略；导航开始 100 步后每 50 步 refresh 一次预测。
+PLMD 要解决的是模块化导航的「只有走过才有语义」难题：在不动任何导航策略的前提下，把已观测的 BEV 语义图与障碍图合并成一张可视化 Label Map，再用级联扩散把未观测区域的语义和障碍一起补全，让策略提前「看到」目标可能在哪。机器人正常导航时持续构建 egocentric 语义+障碍 BEV $M_t\in\mathbb R^{(n+4)\times H\times W}$（$n$ 个语义通道 + 占用/自由空间/位置），把它渲染成 Label Map 并对未观测区域打 mask；扩散模块先补障碍图再补语义图，得到预测 Label Map $L_t^P=[S_t^P,C_t^P]$；最后在补全图上用密度聚类找出目标类别的可靠落点作为长期目标，交给 FMM 局部规划，找不到可靠簇就退回原策略继续探索。整个过程从导航第 100 步起每 50 步刷新一次。
 
 ### 关键设计
 
-1. **障碍先验调制的级联扩散**:
+**1. 障碍先验调制的级联扩散：解决语义在未观测区漂移穿墙的幻觉**
 
-    - 功能：把障碍图作为几何骨架先生成，再用它在语义扩散每个时间步调制特征，保证语义不穿墙、不长在自由空间。
-    - 核心思路：障碍图 $c_\tau$ 沿 SDE $\mathrm dc=\theta_\tau(\mu_c-c)\mathrm d\tau+\delta_\tau\mathrm dw$ 演化，反向去噪通过条件网络 $\mathcal G_\phi(c_\tau,\mu_c,\tau)$ 最小化 $\mathcal L_\alpha=\sum_\tau\alpha_\tau\mathbb E[\|c_\tau-(\mathrm dc_\tau)_{\mathcal G_\phi}-c_{\tau-1}^*\|_p]$。语义网络 $\tilde{\mathcal G}_\phi(s_\tau,c_{\tau-1},\tau)$ 在第 $k$ 层特征 $f_\tau^k$ 上用 SPADE：$\hat f_\tau^k=\mathbf W_\gamma^{(k)}(c_{\tau-1})f_\tau^k+\mathbf b_\beta^{(k)}(c_{\tau-1})$，由 $c_{\tau-1}$ 决定 scale/bias。先单独预训练 $\mathcal G_\phi$，再冻结它训练 $\tilde{\mathcal G}_\phi$。
-    - 设计动机：BEV 上语义像素稀疏，没有几何骨架时扩散早期步骤会四处乱画；障碍图结构（墙线、门口）数据上更密更稳定，先做障碍再做语义符合「先把房间格局画对再放物品」的人类直觉。SPADE 调制是 GauGAN 验证过的「用 layout 驱动语义」机制，自然适配。
+PLMD 的核心痛点是 BEV 上语义像素稀疏、大片是 free space，纯语义扩散在去噪早期缺乏几何骨架就会四处乱画，导致房间边界漂移、物体长在墙上。本文的做法是把生成拆成「先画结构、再填物品」两级：障碍图 $c_\tau$ 沿 SDE $\mathrm dc=\theta_\tau(\mu_c-c)\mathrm d\tau+\delta_\tau\mathrm dw$ 演化，由条件网络 $\mathcal G_\phi(c_\tau,\mu_c,\tau)$ 做反向去噪，目标是最小化 $\mathcal L_\alpha=\sum_\tau\alpha_\tau\mathbb E[\|c_\tau-(\mathrm dc_\tau)_{\mathcal G_\phi}-c_{\tau-1}^*\|_p]$；因为墙线、门口这类障碍结构在房屋内部统计上更密、更刚性，所以障碍图能先稳定地收敛成几何骨架。
 
-2. **Label Map 统一表示**:
+随后语义网络 $\tilde{\mathcal G}_\phi(s_\tau,c_{\tau-1},\tau)$ 在每个去噪步都被这副骨架约束——在第 $k$ 层特征 $f_\tau^k$ 上做 SPADE 残差调制 $\hat f_\tau^k=\mathbf W_\gamma^{(k)}(c_{\tau-1})f_\tau^k+\mathbf b_\beta^{(k)}(c_{\tau-1})$，由当前障碍状态 $c_{\tau-1}$ 决定每层的 scale 与 bias，相当于让障碍布局逐层「驱动」语义生成。这正是 GauGAN 里「用 layout 调制语义」机制的迁移。训练上先单独预训练 $\mathcal G_\phi$，再冻结它去训 $\tilde{\mathcal G}_\phi$，保证语义始终跟随一个已经画对的房间格局，从根上避免穿墙物体。
 
-    - 功能：把多通道语义图（$n$ 类）+ 障碍图（2 类）压缩成单张三通道彩色图，让扩散模型可以直接套用图像生成 backbone。
-    - 核心思路：用固定调色板把 $n+2$ 类标签映射为不同 RGB；未观测区域填白色作为 mask；输出端按相同调色板反查得到预测的语义 vector $S_t^P\in\mathbb R^{n\times H\times W}$ 和障碍 vector $C_t^P\in\mathbb R^{2\times H\times W}$，再拼成 $L_t^P=[S_t^P,C_t^P]$。
-    - 设计动机：直接对 $n+4$ 通道做扩散需要重新设计 backbone，可视化 Label Map 让 DDPM/U-Net 的成熟 image inpainting 经验可直接复用；同时调色板天然「离散化」语义类别，降低相邻类别混淆。
+**2. Label Map 统一表示：让扩散直接复用图像 inpainting 工具链**
 
-3. **基于密度聚类的候选目标提取**:
+直接对 $n+4$ 个通道做扩散需要从零设计 backbone，工程成本高。PLMD 改用一张三通道彩色图统一承载语义与障碍：用固定调色板把 $n+2$ 类标签映射成不同 RGB，未观测区域填白色当作 inpainting 的 mask，于是成熟的 DDPM/U-Net 图像补全经验可以原样套用。输出端再按同一调色板反查，得到预测语义 vector $S_t^P\in\mathbb R^{n\times H\times W}$ 与障碍 vector $C_t^P\in\mathbb R^{2\times H\times W}$，拼成 $L_t^P=[S_t^P,C_t^P]$。调色板本身把语义类别离散化，也顺带降低了相邻类别的混淆。
 
-    - 功能：从预测 Label Map 中找出目标类别的可靠位置作为长期 goal，避免被孤立噪点骗。
-    - 核心思路：收集所有目标颜色的像素坐标 $X=\{x_1,\dots,x_n\}$，用 HDBSCAN 提取簇 $Z=\text{HDBSCAN}(X,N)$，$N=5$。按「密度 50% + 簇大小 40% + 距起点 10%」的复合分数排序，选最高分簇核心作长期目标，调用 FMM 规划过去；若无满足阈值的簇则继续按原导航策略走。
-    - 设计动机：扩散模型免不了散布若干噪点，单点最大概率位置极易踩坑；HDBSCAN 天然处理噪声且不需要预知簇数；复合分数兼顾「目标可信度」和「探索效率」。
+**3. 基于密度聚类的候选目标提取：把含噪声的补全图变成可靠 goal**
+
+扩散补全难免散布孤立噪点，若直接取目标颜色概率最大的单点作 goal 极易踩坑。PLMD 收集所有目标颜色的像素坐标 $X=\{x_1,\dots,x_n\}$，用 HDBSCAN 提取簇 $Z=\text{HDBSCAN}(X,N)$（$N=5$）——HDBSCAN 天然剔除噪声且不需预设簇数，正好对付散点。再按「密度 50% + 簇大小 40% + 距起点 10%」的复合分数排序，取最高分簇核心作长期目标交给 FMM 规划；密度和簇大小保证目标可信度，距起点项偏向近处以提升探索效率，若没有任何簇过阈值则继续按原策略走。
 
 ### 损失函数 / 训练策略
-两阶段：(1) 障碍网络 $\mathcal G_\phi$ 用 $\mathcal L_\alpha$ 单训；(2) 冻结 $\mathcal G_\phi$，训语义网络 $\tilde{\mathcal G}_\phi$ 用 $\mathcal L_\zeta(\phi)=\sum_\tau\zeta_\tau\mathbb E[\|s_\tau-(\mathrm ds_\tau)_{\tilde{\mathcal G}_\phi}s_{\tau-1}-s_{\tau-1}^*\|_p]$。数据：HM3D_v0.1 + MP3D 用 FBE 在 $\mathcal N=2000$ 个 episode 上跑，每 25 步存一个 mask 对，配合最终完整图作 GT；RedNet 做语义分割，$n=40$ 类，分辨率 $480\times 480$ → 模型输入 $256\times 256$。Adam $\beta_1=0.9,\beta_2=0.99$，$T=100$ 步去噪。
+两阶段训练：(1) 障碍网络 $\mathcal G_\phi$ 用 $\mathcal L_\alpha$ 单独训练；(2) 冻结 $\mathcal G_\phi$，再训语义网络 $\tilde{\mathcal G}_\phi$，损失为 $\mathcal L_\zeta(\phi)=\sum_\tau\zeta_\tau\mathbb E[\|s_\tau-(\mathrm ds_\tau)_{\tilde{\mathcal G}_\phi}s_{\tau-1}-s_{\tau-1}^*\|_p]$。数据上用 FBE 策略在 HM3D_v0.1 + MP3D 的 $\mathcal N=2000$ 个 episode 上采集，每 25 步存一对 mask，配合最终完整图作 GT；语义分割用 RedNet（$n=40$ 类），图像分辨率 $480\times 480$ 缩到模型输入 $256\times 256$。优化器 Adam（$\beta_1=0.9,\beta_2=0.99$），去噪 $T=100$ 步。
 
 ## 实验关键数据
 

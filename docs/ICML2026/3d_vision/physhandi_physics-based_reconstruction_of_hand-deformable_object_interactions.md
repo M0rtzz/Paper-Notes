@@ -40,30 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 sparse-view（默认三视角）RGB-D 视频。系统先把每只手参数化为 MANO 模型 $\Theta_h=\{\bm\theta,\bm\beta,\mathbf R,\mathbf t\}$，把每个软体物体参数化为 Spring-Mass 图 $\mathcal O=(\mathcal N,\mathcal E)$（节点位置 $\mathbf x_i$、速度 $\mathbf v_i$、单位质量、弹簧刚度 $s_{ij}$、阻尼 $\gamma_{ij}$、连接半径 $\delta$）。pipeline 分三阶段：(1) **手重建**：用 2D 关键点 + 深度 + 时序平滑损失把 MANO 拟合到每帧；(2) **物体重建**：在手已知的条件下，把 MANO 顶点作为受力源对 Spring-Mass 做正向仿真，用 Chamfer + CoTracker3 轨迹损失反传优化弹簧物理参数；(3) **手精化**：冻结物体模型，把物体仿真误差通过 inverse physics 反传回 MANO 参数，得到更准的手。
+要解决的问题是：从稀疏视角（默认三视角）RGB-D 视频里同时拿到手和软体物体的稠密 3D 重建，而软体存在「把毛绒娃娃手臂折弯 180°」这种大范围非刚性形变，刚体框架完全失效。PhysHanDI 的整体思路是让手和物体在一个可微分物理仿真里互相驱动、互相精化。系统先把每只手参数化为 MANO 模型 $\Theta_h=\{\bm\theta,\bm\beta,\mathbf R,\mathbf t\}$，把每个软体物体参数化为 Spring-Mass 图 $\mathcal O=(\mathcal N,\mathcal E)$，图上每个节点带位置 $\mathbf x_i$、速度 $\mathbf v_i$、单位质量、弹簧刚度 $s_{ij}$、阻尼 $\gamma_{ij}$ 和连接半径 $\delta$。
+
+整条 pipeline 走三个顺序阶段。第一阶段做手重建：仅用 2D 关键点、深度和时序平滑损失把 MANO 逐帧拟合好。第二阶段在手已知的条件下做物体重建：把 MANO 顶点当成受力源对 Spring-Mass 做正向仿真，用 Chamfer 加 CoTracker3 轨迹损失反传去优化弹簧的物理参数。第三阶段做手精化：冻结物体模型，把物体仿真误差通过逆向物理（inverse physics）反传回 MANO 参数，得到物理上更自洽的手。手→物体→手的闭环正是这套方法的核心结构。
 
 ### 关键设计
 
-1. **稠密 MANO 驱动的 Spring-Mass 受力建模**:
+**1. 稠密 MANO 驱动的 Spring-Mass 受力建模：用 778 个手顶点替代 30 个稀疏控制点，把接触力建准**
 
-    - 功能：用 MANO 全部 778 个顶点作为虚拟控制节点 $\mathcal V'$，向软体物体注入接触力。
-    - 核心思路：每个节点上的力分三部分 $\mathbf F_i=\sum_{(i,j)\in\mathcal E}\mathbf F_{i,j}^{\text{spring}}+\mathbf F_{i,j}^{\text{damping}}+\mathbf F_i^{\text{external}}$，其中弹簧力遵循胡克定律 $\mathbf F_{i,j}^{\text{spring}}=s_{ij}(\|\mathbf x_j-\mathbf x_i\|-r_{ij})\frac{\mathbf x_j-\mathbf x_i}{\|\mathbf x_j-\mathbf x_i\|}$。手物之间在连接半径 $\delta$ 内自动建立「虚拟弹簧」$\mathcal E^{\text{virtual}}$，把 MANO 顶点位置固定为边界条件后随时间积分牛顿第二定律。
-    - 设计动机：PhysTwin 用 30 个深度点拟合出的虚拟弹簧过长，半径与离散分辨率比 $\delta/\Delta x$ 远偏离推荐值 3，导致波动过度扩散和接触建模失真；用 778 个稠密顶点后 $\delta$ 自然回落到合理区间，接触力集中在真实接触面而不是散布到非接触区。
+最相关的 PhysTwin 只把手简化成深度图直接采样得到的约 30 个稀疏控制点，导致两个老毛病：接触点在遮挡下不可观测、受力建模不准，以及拟合出的虚拟弹簧拓扑次优、破坏仿真稳定。PhysHanDI 的做法是把 MANO 全部 778 个顶点当作虚拟控制节点 $\mathcal V'$ 注入接触力。每个节点上的力分成弹簧、阻尼、外力三部分 $\mathbf F_i=\sum_{(i,j)\in\mathcal E}\mathbf F_{i,j}^{\text{spring}}+\mathbf F_{i,j}^{\text{damping}}+\mathbf F_i^{\text{external}}$，其中弹簧力遵循胡克定律 $\mathbf F_{i,j}^{\text{spring}}=s_{ij}(\|\mathbf x_j-\mathbf x_i\|-r_{ij})\frac{\mathbf x_j-\mathbf x_i}{\|\mathbf x_j-\mathbf x_i\|}$；手物之间凡是落在连接半径 $\delta$ 内的就自动建立「虚拟弹簧」$\mathcal E^{\text{virtual}}$，把 MANO 顶点位置固定为边界条件后随时间积分牛顿第二定律。
 
-2. **逆向物理驱动的手精化**:
+之所以稠密顶点有效，关键在拓扑。PhysTwin 用 30 个深度点拟合出的虚拟弹簧过长，半径与离散分辨率之比 $\delta/\Delta x$ 远偏离 peridynamics 推荐值 3，导致波动在物体里过度扩散、接触建模失真；换成 778 个稠密顶点后 $\delta$ 自然回落到合理区间，接触力集中在真实接触面而不再散布到非接触区。
 
-    - 功能：把物体仿真损失反传到 MANO 参数，让手的重建结果与物理上合理的物体形变保持一致。
-    - 核心思路：定义 $\mathcal S_t(\Theta_h)$ 为给定手参数下 $t$ 时刻物体节点位置的可微分仿真，求解 $\tilde\Theta_h=\arg\min_{\Theta_h}\tfrac{1}{T}\sum_t[\mathcal L_{ch}(\mathcal S_t(\Theta_h),\mathcal P)+\lambda_{tr}\mathcal L_{tr}(\mathcal S_t(\Theta_h),\mathbf T)]$，其中 $\mathcal P$ 是观测点云、$\mathbf T$ 是 CoTracker3 轨迹。梯度通过 Spring-Mass 的可微分积分回传到 $\Theta_h$。
-    - 设计动机：单视角 RGB-D 下手观测高度欠定（手指经常被物体或自身遮挡），仅靠 2D 关键点和深度损失不够稳。物理一致性额外约束「这只手必须能让物体按这样的方式变形」可以排除大量物理上不可能的姿态，相当于免费多了一种监督。
+**2. 逆向物理驱动的手精化：让「物体物理一致性」反过来监督手姿态**
 
-3. **三阶段顺序优化与拓扑保护**:
+单视角 RGB-D 下手观测高度欠定，手指经常被物体或自身遮挡，仅靠 2D 关键点和深度损失不够稳。PhysHanDI 反过来用物体的物理行为去约束手：定义 $\mathcal S_t(\Theta_h)$ 为给定手参数下 $t$ 时刻物体节点位置的可微分仿真，再求解
 
-    - 功能：避免手物联合优化时陷入混淆的局部极小，并显式保证 Spring-Mass 拓扑接近 peridynamics 文献推荐的最优配置。
-    - 核心思路：先固定手做物体优化，再固定物体做手精化，循环但每阶段单方向梯度。物体阶段沿用 PhysTwin 的可微仿真，但因为控制源已经替换为稠密 MANO，优化出的 $\delta$ 显著变小。作者用 Radius-to-Resolution Deviation $RRD=|(\delta/\Delta x)/r-1|$（$r=3$）量化拓扑质量。
-    - 设计动机：联合优化容易出现「物体变化补偿手误差」的伪解；分阶段并通过 $RRD$ 监控可以确保每一步都向物理可解释方向推进。
+$$\tilde\Theta_h=\arg\min_{\Theta_h}\frac{1}{T}\sum_t\big[\mathcal L_{ch}(\mathcal S_t(\Theta_h),\mathcal P)+\lambda_{tr}\mathcal L_{tr}(\mathcal S_t(\Theta_h),\mathbf T)\big]$$
+
+其中 $\mathcal P$ 是观测点云、$\mathbf T$ 是 CoTracker3 轨迹，梯度通过 Spring-Mass 的可微分积分一路回传到 $\Theta_h$。这相当于额外加了一条约束——「这只手必须能让物体按观测到的方式变形」，可以排除大量物理上不可能的姿态，等于免费多了一种监督，把手重建从「拟合像素」升级为「拟合物理」。
+
+**3. 三阶段顺序优化与拓扑保护：单向梯度避免伪解，并量化监控拓扑质量**
+
+如果手和物体联合优化，很容易出现「物体形变去补偿手的误差」这种伪解。PhysHanDI 因此采取严格的顺序优化：先固定手做物体优化，再固定物体做手精化，循环进行但每个阶段只走单方向梯度。物体阶段沿用 PhysTwin 的可微仿真，但因为控制源已经换成稠密 MANO，优化出的 $\delta$ 显著变小。为了显式保证拓扑接近最优，作者引入 Radius-to-Resolution Deviation 指标 $RRD=|(\delta/\Delta x)/r-1|$（推荐值 $r=3$，$RRD$ 越小越接近 peridynamics 推荐配置）来量化拓扑质量，确保每一阶段都朝物理可解释的方向推进。
 
 ### 损失函数 / 训练策略
-手阶段：$\min_{\Theta_h}\mathcal L_{2D}+\lambda_d\mathcal L_d+\lambda_t\mathcal L_t$，分别是 2D 关键点重投影误差、深度图渲染差、相邻帧参数时序平滑。物体阶段：Chamfer $\mathcal L_{ch}$ 衡量仿真节点与点云距离 + $\mathcal L_{tr}$ 衡量与 CoTracker3 伪 GT 轨迹的 $\ell_2$ 差。手精化阶段：复用 $\mathcal L_{ch}+\lambda_{tr}\mathcal L_{tr}$，但梯度落到 MANO 参数上。所有质量统一设为单位质量（无 GT 质量信息）。
+手阶段优化 $\min_{\Theta_h}\mathcal L_{2D}+\lambda_d\mathcal L_d+\lambda_t\mathcal L_t$，三项分别是 2D 关键点重投影误差、深度图渲染差、相邻帧参数时序平滑。物体阶段用 Chamfer 损失 $\mathcal L_{ch}$ 衡量仿真节点与点云的距离，加上 $\mathcal L_{tr}$ 衡量与 CoTracker3 伪 GT 轨迹的 $\ell_2$ 差。手精化阶段复用 $\mathcal L_{ch}+\lambda_{tr}\mathcal L_{tr}$，但梯度落到 MANO 参数上。由于没有 GT 质量信息，所有节点质量统一设为单位质量。整套流程不训练任何新网络，全部是逐视频的可微优化。
 
 ## 实验关键数据
 

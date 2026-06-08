@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-系统由一个 3B 压缩器 $\mathcal{C}$（Llama-3.2-3B-Instruct）和一个冻结的 reader $\mathcal{M}$（8B/70B/GPT-4.1-nano）组成。流程：检索器对 query $\mathbf{x}$ 返回长上下文 $\mathbf{D}$ → 压缩器 $\mathcal{C}$ 在可选指令 $\mathbf{i}$（"Summarize ... in K sentences, K=[P] k [\P]"）下输出摘要 $\mathbf{s}$ → reader 用 $\mathbf{x}+\mathbf{s}$ 生成答案。训练数据 $\mathcal{D}_{comp}$ 完全由合成 pipeline 产出，损失为标准 next-token：$\max_{\mathcal{C}} \mathbb{E}\log p_{\mathcal{C}}(\mathbf{s}|\mathbf{x},\mathbf{D},\mathbf{i})$。
+系统由一个 3B 压缩器 $\mathcal{C}$（Llama-3.2-3B-Instruct）和一个冻结的 reader $\mathcal{M}$（8B/70B/GPT-4.1-nano）两部分组成，核心要解决的是"想训长上下文压缩器却没有长上下文训练数据"这个 gap。在线推理时，检索器对 query $\mathbf{x}$ 返回长上下文 $\mathbf{D}$，压缩器在一条可选的句数指令 $\mathbf{i}$（"Summarize ... in K sentences, K=[P] k [\P]"）约束下输出紧凑摘要 $\mathbf{s}$，reader 再用 $\mathbf{x}+\mathbf{s}$ 生成答案。训练数据 $\mathcal{D}_{comp}$ 完全由一条"短到长合成"流水线产出——把短种子文档扩长、把 oracle 摘要剪短，制造出"长输入对短摘要"的强对比样本，压缩器在其上以标准 next-token 目标 $\max_{\mathcal{C}} \mathbb{E}\log p_{\mathcal{C}}(\mathbf{s}|\mathbf{x},\mathbf{D},\mathbf{i})$ 学习。
 
 ### 关键设计
 
-1. **短到长上下文扩展（Short-to-Long Context Expansion）**:
+**1. 短到长上下文扩展：用 Wikipedia 把短文档造成 6k 词长输入。**
 
-    - 功能：把 <1k 词的 HotpotQA/MuSiQue/LongAlign 种子文档扩展成 ~6k 词的长输入。
-    - 核心思路：对每段 oracle 或 distractor 文档，先在 Izacard 等人的 Wikipedia 语料里反查它的来源页面，再以原段落位置为锚点，向前后扩张若干句。扩张倍率从均值为 20 的正态分布采样，确保训练样本长度多样。**关键**是同时扩张 oracle 和 distractor 两类文档——只扩 oracle 会得到不自然的"干净"长上下文（表 4 显示这样训出来的模型平均 QA 掉 2.77~3.77 个点）。
-    - 设计动机：用现成 Wikipedia 提供语义连贯的长文，避免拼接出来的伪长上下文割裂；同时保留 distractor 才能模拟真实 RAG 中"信号噪声混杂"的检索结果。
+直接收集 10k+ 词的训练数据稀缺又昂贵，作者改从便宜的短种子数据合成。注意到 HotpotQA/MuSiQue/LongAlign 的 oracle 与 distractor 段落本就来自具体的 Wikipedia 页面，于是对每段文档反查它在 Izacard 等人 Wikipedia 语料里的来源页面，再以原段落位置为锚点向前后扩张若干句，扩张倍率从均值为 20 的正态分布采样以保证长度多样。关键在于 oracle 和 distractor 两类一起扩——只扩 oracle 会得到不自然的"干净"长上下文，表 4 显示这样训出来的模型平均 QA 掉 2.77~3.77 个点。保留扩长后的 distractor 才能复现真实 RAG 里"信号被噪声稀释"的检索现场，而借用现成 Wikipedia 也避免了硬拼接造成的语义割裂。
 
-2. **头尾迭代裁剪生成紧凑摘要（Head-Tail Iterative Pruning）**:
+**2. 头尾迭代裁剪：用似然判据把目标摘要压成连续紧凑片段。**
 
-    - 功能：把 oracle 段落里"答题不需要"的句子去掉，得到密集、连续、有用的目标摘要。
-    - 核心思路：定义"helpfulness"——比较 reader 在去掉句子 $\mathbf{p}_{ij}$ 前后对正确答案 $\mathbf{y}$ 的对数似然 $\log p(\mathbf{y}|\cdot)$，若删除后似然反而上升则该句"无用"。**实操**：作者假设关键信息一般居中，于是只对每个 oracle 段落的头部句子和尾部句子做迭代检测：从首句开始逐句判定无用就删，直到遇到有用句；尾部同理。这样得到的目标摘要是文档中段的连续片段，自然紧凑。最终训练数据平均 6.0k 词输入 → 0.2k 词摘要（即 ~30× 压缩率）。
-    - 设计动机：直接让 LLM "总结" 容易产生抽象式幻觉；而 LM-likelihood 剪枝是无监督的有用性判据，避免依赖人工标注；只剪头尾不剪中间则保证摘要在原文中是连续 span，可读性 + 训练目标都更稳。
+要的是"长输入→短摘要"的大对比度，所以 oracle 段落里答题不需要的句子要删掉。本文定义句子的"helpfulness"——比较 reader 在去掉句子 $\mathbf{p}_{ij}$ 前后对正确答案 $\mathbf{y}$ 的对数似然 $\log p(\mathbf{y}|\cdot)$，若删除后似然不降反升则判为无用。逐句评估整段代价太高，作者假设关键信息一般居中，于是只对头部和尾部迭代检测：从首句往里逐句判，无用就删直到遇到有用句，尾部同理。这样剪出的目标摘要恰好是文档中段的连续 span，自然紧凑，训练数据最终平均 6.0k 词输入压到 0.2k 词摘要（约 30× 压缩率）。相比让 LLM 直接"总结"易生抽象式幻觉，这套 LM 似然剪枝是无监督的、不依赖人工标注，且连续 span 让模型倾向"抽取"而非"编造"。
 
-3. **用户可控压缩指令（User-controllable Compression Instruction）**:
+**3. 用户可控压缩指令：把摘要长度做成自然语言条件。**
 
-    - 功能：让用户在推理时直接指定"压成几句话"，从而在压缩率和信息保留之间灵活权衡。
-    - 核心思路：在压缩器输入末尾插入"Summarize the documents relevant to the question in K sentences, where K = [P] k [\P]"，其中 $k$ 在训练时取为对应 target summary 的实际句数 → 模型学到"指令中的 $k$"与"输出句数"之间的精确对应。推理时定义 High/Medium/Low（5/10/20 句）和 Auto（模型自决）四种模式。同时还有个 Auto$_{L7C}$ 变体用 Llama2-7B-Chat 初始化，纯粹为了和 LongLLMLingua 做相同 backbone 的公平对比。
-    - 设计动机：之前的压缩器（RECOMP、CompAct、BRIEF）压缩率都是写死的，做下游应用时无法按延迟预算调节；用 instruction-conditioned 方式把"长度控制"显式建模成自然语言条件，比改超参更友好，也让一个模型覆盖多种压缩档位。
+RECOMP、CompAct、BRIEF 等旧压缩器压缩率写死，下游无法按延迟预算调档。本文在压缩器输入末尾插入"Summarize the documents relevant to the question in K sentences, where K = [P] k [\P]"，训练时把 $k$ 设成对应 target summary 的实际句数，让模型学到"指令中的 $k$"与"输出句数"之间的精确对应。推理时直接给出 High/Medium/Low（5/10/20 句）和 Auto（模型自决）四种档位，另有 Auto$_{L7C}$ 变体用 Llama2-7B-Chat 初始化，纯为与 LongLLMLingua 做同 backbone 公平对比。把长度控制显式建模成自然语言条件，比调超参友好，也让一个模型覆盖多种压缩粒度。
 
 ### 损失函数 / 训练策略
 LoRA 微调 Llama-3.2-3B-Instruct，AdamW，batch 64，3 epoch，在 2× A100-80GB 上跑约 2 天；训练集 45.2k 样本，上下文平均 6.0k 词（标准差 3.5k），摘要平均 0.2k 词。

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-5 步 pipeline：（1）汇总 item 池（PISA 2009 / TIMSS 2003+2011 G4&G8 / ICAR / UKBioBank / ReliabilityBench）；（2）用 ADeLe rubric 给每道 item 标 18 维 demand level $d_{i,c} \in \{0,1,2,3,4,5+\}$；（3）用 LLM 把 focal group 正确率 $p_i^g$ 外推到 WWP 正确率 $p_i^W$；（4）按 $L_i = -\log_B p_i^W$ 转化成对数难度；（5）用 sub-group → full-sample 的预测做验证（MAE / RMSE / Pearson / Spearman）。
+这套方法想回答一个被 benchmark 掩盖的问题：当我们说"AI 达到人类水平"，到底是哪批人类、哪个维度上的水平。它把一道题的成绩沿两条轴重新锚定——先用 ADeLe rubric 把每道 item 拆成 18 个能力维度的 demand level，再用 LLM 把题目在某个小样本人群上的实测正确率外推到"全世界人口"的正确率，最后按维度各自校准的对数刻度把正确率翻译成可比的难度值。整条 pipeline 从五个真人测验池（PISA 2009 / TIMSS 2003+2011 G4&G8 / ICAR / UKBioBank / ReliabilityBench）取 item，标 demand level $d_{i,c}\in\{0,1,2,3,4,5+\}$，外推得到全球人口正确率 $p_i^W$，按 $L_i=-\log_B p_i^W$ 转成对数难度，再用 sub-group → full-sample 的预测做验证。
 
 ### 关键设计
 
-1. **LLM as 人口外推器**:
+**1. LLM 当人口外推器：把小样本正确率翻译成全球人口基准。**
 
-    - 功能：把任意小样本的 item 正确率翻译为"全球人口"基准下的正确率，避免人为标注偏差。
-    - 核心思路：Prompt 含 6 块——（a）数据集和测试 domain 简介；（b）focal group 人口学描述（如"2009 PISA 的 15 岁学生 OECD 国家"）；（c）题干 + 选项 + 正确答案；（d）focal group 实测正确率 $p_i^g$；（e）reference group（全世界人口）的人口学描述；（f）请求 LLM 输出 reference group 的预测正确率 $\hat p_i^W$ 并附 rationale。Prompt 显式列出 7 类调整因素：全球年龄分布、教育可达性与质量、毕业后遗忘、流体 / 晶体能力寿命曲线、专业化与暴露、健康与认知衰退、语言因素。Robustness 用 27 个 paraphrase 版本。
-    - 设计动机：传统 IRT 需要大量被试，新 benchmark 不可能等收集；LLM 训练数据隐含的人口学统计提供了一条便宜的代理路径，rationale 还能审计。
+经典心理测量要拿到"全人类"的难度锚点，得做大规模真人施测，新出现的 benchmark 根本等不起，更别说人能拿到的样本永远是有偏小子集（多为 WEIRD：Western/Educated/Industrialized/Rich/Democratic）。本文的赌注是：LLM 训练数据里压缩了海量人口学统计，可以当一个便宜、可重复、还能审计的人口外推器。具体做法是给 LLM 喂一个含 6 块信息的 prompt——数据集与测试 domain 简介、focal group 的人口学描述（如"2009 PISA 的 15 岁 OECD 学生"）、题干加选项加正确答案、focal group 实测正确率 $p_i^g$、reference group（全世界人口）的人口学描述，最后请它输出 reference group 的预测正确率 $\hat p_i^W$ 并附 rationale。prompt 里显式点名 7 类要它考虑的调整因素：全球年龄分布、教育可达性与质量、毕业后遗忘、流体/晶体能力的寿命曲线、专业化与暴露、健康与认知衰退、语言因素。为了防止结论被措辞带偏，每道题再跑 27 个 paraphrase 版本做 robustness。
 
-2. **维度特定的 base 校准（Optimal Base）**:
+**2. 维度特定的 base 校准：每个能力维度有自己的难度陡度。**
 
-    - 功能：把对数难度的 base 从默认 $B=10$ 校准成每个能力维度自己的真实陡度。
-    - 核心思路：经验难度 $L_{\text{emp},i} = -\log_{10}(p_i^W / \sqrt{10})$；按"主要瓶颈"过滤——只保留 $d_{i,c} \ge \max_k d_{i,k}$ 的 item 用于维度 $c$ 的回归，避免被其它瓶颈干扰。然后按 level $l \in \{1,..,5\}$ 取平均得到 $\bar y_l$，对 $(l, \bar y_l)$ 做线性回归，斜率 $m$ 给出 $B = 10^m$。结果分三类：High-base（Volume $B\approx 32$、Attention $B\approx 17$，难度增加比标注预期更陡）；Standard（Metacognition $B\approx 6.7$、Knowledge $B\approx 5.1$）；Invariant（Comprehension / Spatial $B\approx 1$，难度增加几乎没影响）。
-    - 设计动机：单一 $B=10$ 假设跨维度不成立，会导致"AI 知识超越人类但推理远不如人类"这类结论难以横向理解；维度特定 base 是把不同 ruler 校到同一单位的关键一步。
+ADeLe 这类 criterion-referenced 框架给了维度级 rubric，但对数刻度的 base 一律取 $B=10$，这是约定而非校准——它默认所有维度从 level 1 到 level 2 难度都涨同样的倍数，结果"AI 在知识维度超人类"和"AI 在推理维度不及人类"这两句话压根没在同一把尺子上，无法横向比。本文改成让数据自己说话：先算每道题的经验难度 $L_{\text{emp},i}=-\log_{10}(p_i^W/\sqrt{10})$，再按 level $l\in\{1,\dots,5\}$ 取均值 $\bar y_l$，对 $(l,\bar y_l)$ 做线性回归，斜率 $m$ 反推出该维度真实的 $B=10^m$。校准出来的 base 自然分成三类：高 base（Volume $B\approx 32$、Attention $B\approx 17$，难度随 level 涨得比标注预期陡得多）、标准（Metacognition $B\approx 6.7$、Knowledge $B\approx 5.1$，和 $B=10$ 接近）、不变（Comprehension/Spatial $B\approx 1$，level 升高几乎不改变难度）。把各维度校到各自的真实陡度，才算把不同 ruler 折算到同一单位。
 
-3. **Dominance Filter + Means-based 回归**:
+**3. Dominance filter 加 means-based 回归：从多瓶颈题里抠出纯维度信号。**
 
-    - 功能：从混杂多瓶颈 item 中提取纯维度信号，并对抗高难度 item 样本稀少导致的回归偏差。
-    - 核心思路：先 dominance filter 留瓶颈 item；再按 level 平均（不是 raw 点回归）来对抗"低 level item 数量远超高 level"造成的均值偏移。最后用 5 个均值点拟合一条直线，斜率即 $\log_{10} B$。
-    - 设计动机：原始数据里 level 1 item 几乎挤满，直接回归会把斜率压平；按 level 取均值再回归是 fair-weight 的妥协。
+一道题往往同时压几个维度，直接拿它回归某个维度会被别的瓶颈污染；而且数据里 level 1 的题几乎挤满、高 level 的题寥寥，raw 点回归会被低 level 的海量样本把斜率压平。本文用两步对冲：dominance filter 只保留 $d_{i,c}\ge\max_k d_{i,k}$ 的 item——即维度 $c$ 正好是这道题主要瓶颈的那些题——用来回归该维度，排除其它瓶颈的干扰；再把这些题按 level 取均值后才回归，用 5 个均值点拟合一条直线，斜率即 $\log_{10}B$，避免低 level 的数量优势绑架斜率。这是在"高 level 样本稀少"和"想要无偏斜率"之间的一个 fair-weight 妥协。
 
-### 损失函数 / 训练策略
-无训练。LLM 采用 GPT-5 Chat、GPT-4.1、Llama-4、DeepSeek-v3.1、GROK-3 共 5 个商用模型，低温度无工具调用；每题 × 27 paraphrase。验证用 ICAR、TIMSS、UKBioBank 的 sub-group → full-sample 设计。
+### 验证设置
+全程无训练。外推器用 GPT-5 Chat、GPT-4.1、Llama-4、DeepSeek-v3.1、GROK-3 共 5 个商用模型，低温度、不调工具，每题跑 27 个 paraphrase。可靠性靠 ICAR、TIMSS、UKBioBank 的 sub-group → full-sample 设计验证：先让 LLM 从某个 sub-group 的成绩外推到 full sample，再拿外推值和 full sample 真实成绩比 MAE / RMSE / Pearson / Spearman。
 
 ## 实验关键数据
 

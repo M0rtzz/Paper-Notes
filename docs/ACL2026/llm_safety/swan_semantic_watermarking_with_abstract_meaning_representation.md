@@ -38,66 +38,35 @@ SWAN 用 Abstract Meaning Representation 模板把水印嵌入句子的语义图
 **核心 idea**：构建一个私有 AMR template bank，生成时让每个句子匹配随机抽取的 AMR 模板，检测时解析文本 AMR 并统计与私有模板匹配的句子比例。
 
 ## 方法详解
-SWAN 的核心是把“水印 key”从词表哈希或 embedding 分区，换成一个私有的 AMR 模板库。
-
-它是 training-free 的：不训练水印模型，不需要访问目标 LLM logits，而是通过 prompt guidance 和 rejection sampling 让句子落入目标语义结构。
 
 ### 整体框架
-系统先从 MASSIVE-AMR 构造 template AMR bank。
 
-MASSIVE-AMR 提供约 84K 个 AMR graphs，对应 1,685 个信息查询类 utterances。
+SWAN 的核心改动，是把"水印 key"从词表哈希或 embedding 分区，换成一个私有的 AMR 模板库；整个方法 training-free——不训练水印模型、不接触目标 LLM 的 logits，只靠 prompt 引导加拒绝采样，把句子"挤"进目标语义结构。
 
-作者把原始 AMR 进一步抽象成模板，例如把具体 named entities 替换为 NE，把普通名词替换为 N，把不指定概念替换为 X。
+构建阶段，作者从 MASSIVE-AMR（约 84K 个 AMR 图、对应 1685 条信息查询类语句）出发，把原始 AMR 进一步抽象成模板：具体命名实体换成 NE、普通名词换成 N、不指定的概念换成 X，只保留频率落在 3~20 之间、且至少含 3 个概念节点的 pattern，得到一个私有 template bank。
 
-模板库只保留频率在 3 到 20 之间、且至少包含 3 个 concept nodes 的 AMR pattern。
-
-生成阶段中，每生成一句话，就从私有模板库随机抽取一个 template AMR，并把当前上下文和模板一起放入 LLM prompt。
-
-LLM 需要生成一个上下文连贯、满足用户原始意图、并尽量符合模板语义结构的句子。
-
-生成后，系统用 AMR parser 把候选句解析成 AMR graph，再用 S2match 与目标模板计算相似度。
-
-如果相似度超过注入阈值，就接受该句；否则重采样。
-
-若某个模板在当前上下文中多次失败，系统会换一个模板，避免在不兼容的语义结构上无限重试。
-
-检测阶段中，系统把候选段落切句，解析每句 AMR，计算它与私有 bank 中所有模板的最大 S2match。
-
-若得分超过检测阈值，该句被计为 watermarked；最后对段落中 watermarked sentences 的比例做 one-proportion z-test。
+生成阶段，每写一句话就从私有库里随机抽一个模板，把当前上下文和模板一起塞进 LLM prompt，要求它生成一句既连贯、又满足用户原意、还尽量贴合模板语义结构的句子；生成后用 AMR parser 把候选句解析成图，再用 S2match 和目标模板算相似度，超过注入阈值就接受、否则重采样，若某模板在当前上下文反复失败就换一个，避免死磕不兼容的结构。检测阶段则把候选段落切句、逐句解析 AMR，算它与私有库里所有模板的最大 S2match，超过检测阈值即记为 watermarked，最后对整段 watermarked 句子的比例做 one-proportion z 检验。
 
 ### 关键设计
-1. **私有 AMR 模板库**:
 
-	- 功能：作为水印密钥，定义哪些抽象语义结构属于“绿色区域”。
-	- 核心思路：从 MASSIVE-AMR 中抽取图结构，去掉具体实体和词汇细节，保留谓词、语义角色和概念关系。模板频率过低会太稀有、难生成；频率过高会太常见、增加误报，所以作者保留中等频率模板。
-	- 设计动机：token-level 方法的 key 是词表划分，embedding-level 方法的 key 是向量区域，而 SWAN 的 key 是语义图结构。只要 bank 保密，检测者可以验证结构匹配，攻击者难以知道应该避开哪些 AMR pattern。
+**1. 私有 AMR 模板库：把水印密钥从"词表/向量区域"换成"抽象语义图结构"。**
 
-2. **AMR 引导的拒绝采样注入**:
+token 级方法的 key 是绿名单词表，embedding 级方法的 key 是向量区域，二者都活在表层或连续空间里，paraphrase 一改就容易移位。SWAN 把 key 定义成一组抽象语义图：从 MASSIVE-AMR 抽出图结构后，剥掉具体实体和词汇细节，只留谓词、语义角色和概念关系。模板频率的区间（3~20）是刻意卡的——频率太低的 pattern 太稀有、生成时很难命中，频率太高的又太常见、会推高误报，中等频率才兼顾可生成性和判别力。只要这个 bank 保密，检测方就能验证结构匹配，而攻击者根本不知道该绕开哪些 AMR pattern。
 
-	- 功能：在不改模型参数、不接触 logits 的情况下，把生成句子推向目标语义结构。
-	- 核心思路：LLM prompt 同时给出历史上下文和目标 AMR template，要求生成自然句子并实例化 NE/N/X 等占位概念。每个候选句被 AMR parser 解析后，与目标模板计算 S2match；只有当 $S2match(\hat{g}, g) \geq \theta_{accept}$ 时才接受。
-	- 设计动机：直接强行插入关键词会破坏流畅性，也容易被删除。让模型围绕 AMR 模板生成，可以把水印藏在谓词-论元结构里，表层文字仍然自然。
+**2. AMR 引导的拒绝采样注入：不改参数、不碰 logits，把句子推向目标语义结构。**
 
-3. **段落级 z-test 检测**:
+直接往句子里硬插关键词会破坏流畅度，也容易被删掉。SWAN 改为让模型"围着模板写"：prompt 里同时给出历史上下文和目标 AMR 模板，要求生成自然句并把 NE/N/X 等占位概念实例化；每个候选句被解析成 $\hat{g}$ 后与目标模板 $g$ 算 S2match，只有当 $S2match(\hat{g}, g) \geq \theta_{accept}$ 时才接受，否则重采样。这样水印被藏进谓词-论元结构里，表层文字依旧自然；又因为不依赖 logits、是黑盒生成，方法可以直接套在闭源 API 模型上。
 
-	- 功能：把句级模板匹配累积成段落级 provenance 判断。
-	- 核心思路：对段落中每个句子，计算它与 bank 的最大模板相似度；超过 $\theta_{detect}$ 就计入 $k$。给定段落总句数 $n$ 和 null hypothesis 下随机命中率 $\lambda$，用 $z=(k-\lambda n)/\sqrt{n\lambda(1-\lambda)}$ 判断命中比例是否异常高。
-	- 设计动机：单句 AMR 解析可能有噪声，单句误报也不可避免；段落级统计能把弱信号聚合起来，类似 token watermark 中的 z-score detector。
+**3. 段落级 z 检验：把逐句的模板匹配累积成段落级溯源判断。**
+
+单句 AMR 解析本身有噪声，单句误报也躲不掉，只看一句话不足以下结论。SWAN 对段落里每句算它与 bank 的最大模板相似度，超过 $\theta_{detect}$ 就计入命中数 $k$；给定总句数 $n$ 和零假设下的随机命中率 $\lambda$，用
+
+$$z = \frac{k - \lambda n}{\sqrt{n\lambda(1-\lambda)}}$$
+
+判断命中比例是否异常偏高。这把弱的句级信号聚合成强的段落级统计，思路与 token 水印里的 z-score detector 一脉相承，只是把"token 命中"换成了"语义模板命中"。
 
 ### 损失函数 / 训练策略
-SWAN 没有训练损失，关键超参来自生成和检测流程。
-
-AMR bank 默认大小为 50，作者也测试了 100、500、800 的设置。
-
-水印生成使用 DeepSeek-R1-Distill-Qwen-14B，temperature 0.6，top_p 0.9。
-
-每句最多尝试 50 次：最多 10 个模板，每个模板最多 5 次生成尝试。
-
-检测使用 amrlib 的 parse_xfm_bart_large pipeline，它是基于 BART-large、在 AMR-3 上训练的解析器。
-
-paraphrase attack 使用 Pegasus、Parrot 和 Claude 3.7 Sonnet。
-
-文本质量用 Claude 3.7 从 coherence、fluency、diversity 三个维度进行 reference-free 评分。
+SWAN 没有训练损失，关键超参来自生成和检测流程。AMR bank 默认大小为 50，作者也测试了 100、500、800 的设置。水印生成使用 DeepSeek-R1-Distill-Qwen-14B，temperature 0.6、top_p 0.9，每句最多尝试 50 次（最多 10 个模板、每个模板最多 5 次生成）。检测用 amrlib 的 parse_xfm_bart_large pipeline（基于 BART-large、在 AMR-3 上训练）。paraphrase attack 用 Pegasus、Parrot 和 Claude 3.7 Sonnet；文本质量则让 Claude 3.7 从 coherence、fluency、diversity 三个维度做 reference-free 评分。
 
 ## 实验关键数据
 

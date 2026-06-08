@@ -40,36 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GeoCoupling 把多模态生成抽象成在二维时间方块 $[0,1]^2$（结构时间 $t_r$ × 序列时间 $t_h$）上找一条**单调曲线** $\gamma$，使得沿这条曲线训练得到的流模型转移能量最低。整套框架是一个嵌套循环：
-
-- **内层（MSE 训练）**：在当前调度 $\gamma$ 下，按常规流匹配 / BFN / 扩散目标训练向量场 $v_\theta$，$\theta^* = \arg\min_\theta \mathcal{L}_\text{MSE}(\theta, \gamma)$。
-- **外层（耦合搜索）**：把训练中观测到的 $(t_r, t_h, \mathcal{L})$ 三元组存入一个容量为 $N_\max = 1000$ 的滚动 buffer $\mathcal{B}$，用高斯过程 (GP) 拟合代价曲面 $c(t_r, t_h)$，然后通过贝叶斯优化在 GP 上找一条新的低能量测地线 $\gamma^*$ 反馈给内层。
-- **EMA 平滑**：对学出的调度做 EMA，避免外层一次突变就把内层带飞。
-
-输入：异质模态先验 $\pi_0 = p(\boldsymbol r) \otimes p(\boldsymbol h)$；输出：从 $\pi_0$ 到联合数据分布 $\pi_1 = p_\text{data}(\boldsymbol r, \boldsymbol h)$ 的耦合流，外加一条学到的时序耦合曲线 $\gamma^*$。
+GeoCoupling 要解决的是：序列和结构这两种模态在去噪时该按什么节奏推进。作者把这件事抽象成在二维时间方块 $[0,1]^2$（结构时间 $t_r$ × 序列时间 $t_h$）上找一条单调曲线 $\gamma$，使得沿这条曲线训练出的流模型转移能量最低——同步耦合相当于硬选了对角线，而真正的最优往往是一条弯曲的测地线。整套方法是一个嵌套循环：内层固定当前调度 $\gamma$、用常规流匹配目标训练向量场，外层则把训练途中观测到的损失喂给一个高斯过程代理，在线搜出更优的 $\gamma$ 反馈回内层；输入是异质模态先验 $\pi_0 = p(\boldsymbol r) \otimes p(\boldsymbol h)$，输出是从 $\pi_0$ 到联合数据分布 $\pi_1 = p_\text{data}(\boldsymbol r, \boldsymbol h)$ 的耦合流，外加一条学到的时序耦合曲线 $\gamma^*$。
 
 ### 关键设计
 
-1. **Temporal Optimal Transport 重新表述 (TOT)**:
+**1. Temporal Optimal Transport：把"找最优耦合"翻译成"找最低能量测地线"**
 
-    - 功能：把传统"在样本空间配对 $x_0, x_1$"的 OT 视角，平移到**时间域** —— 把整条调度曲线 $\gamma$ 看作一个推前测度 $\pi_\gamma := \gamma_\# \lambda \in \mathcal{P}([0,1]^2)$，传输代价 $\mathcal{E}(\gamma) = \int c(t_r, t_h)\, d\pi_\gamma$，其中 $c(t_r, t_h) := \mathbb{E}_x[\mathcal{L}_\text{MSE}(x, (t_r, t_h))]$。
-    - 核心思路：作者进一步证明（Prop. 3.2）训练损失沿 $\gamma$ 积分可分解为 $\mathcal{E}(\gamma) = \int [\,\underbrace{\|v_\theta - u^\gamma\|^2}_\text{Bias} + \underbrace{\mathrm{Var}(\mathbf{u}_t^\gamma \mid \mathbf{x}_t)}_\text{Variance}\,]\, dt$，即同步耦合属于"高 Bias 低 Variance"，随机耦合属于"低 Bias 高 Variance"，几何最优的 $\gamma^*$ 是在两者之间寻找方差主导项的最低点。
-    - 设计动机：给"为什么需要学耦合"提供了一个干净的几何 + 统计解释 —— 不是工程 trick，而是产品流形上真实存在一条最优测地线。
+以往 OT 视角关心的是在样本空间里如何配对 $x_0, x_1$，这篇把同一套语言平移到时间域。整条调度曲线 $\gamma$ 被看成一个推前测度 $\pi_\gamma := \gamma_\# \lambda \in \mathcal{P}([0,1]^2)$，于是"哪条调度更好"就等价于比较传输代价 $\mathcal{E}(\gamma) = \int c(t_r, t_h)\, d\pi_\gamma$，其中代价曲面 $c(t_r, t_h) := \mathbb{E}_x[\mathcal{L}_\text{MSE}(x, (t_r, t_h))]$ 就是该时间对上的平均训练损失。这套表述的价值在于它给"为什么要学耦合"一个统计层面的硬解释：作者证明（Prop. 3.2）沿 $\gamma$ 积分的损失能分解成 $\mathcal{E}(\gamma) = \int [\,\underbrace{\|v_\theta - u^\gamma\|^2}_\text{Bias} + \underbrace{\mathrm{Var}(\mathbf{u}_t^\gamma \mid \mathbf{x}_t)}_\text{Variance}\,]\, dt$，同步耦合处在"高 Bias 低 Variance"那端、随机耦合处在"低 Bias 高 Variance"那端，几何最优的 $\gamma^*$ 则落在两者之间——它不是工程 trick，而是产品流形上真实存在的一条最优测地线。
 
-2. **双层优化目标 (Bi-level Optimization)**:
+**2. 双层优化：让外层只靠"观测训练损失"就能给出搜索信号**
 
-    - 功能：把"找 $\gamma$" 和 "训 $\theta$"解耦，避免要求对整段训练轨迹求 hypergradient（计算上不现实）。
-    - 核心思路：外层 $\min_{\gamma\in\Gamma} \mathcal{J}(\gamma) = \mathbb{E}_x[\int_0^1 \mathcal{L}_{\theta^*}(x, \gamma(t))\, dt]$，内层 $\theta^* = \arg\min_\theta \mathcal{L}_\text{MSE}(\theta, \gamma)$。Prop. 3.3 进一步指出，当 bias 被内层压低后，几何最优耦合等价于 $\gamma^* = \arg\min_\gamma \mathbb{E}_{t,x}[\mathrm{Var}(u_t^\gamma \mid \mathbf{x}_t)]$，即"最小化沿路径的本质监督方差"，这就给外层一个**清晰、可估计的目标**。
-    - 设计动机：直接想 backprop 通过整段内层训练既不可微也不可承担；双层 + 方差视角让外层只需要"观测训练损失"就能给出梯度替代信号。
+直接想对整段训练轨迹求 hypergradient 既不可微也算不起，所以作者把"找 $\gamma$"和"训 $\theta$"拆成两层：内层 $\theta^* = \arg\min_\theta \mathcal{L}_\text{MSE}(\theta, \gamma)$ 照常训模型，外层 $\min_{\gamma\in\Gamma} \mathcal{J}(\gamma) = \mathbb{E}_x[\int_0^1 \mathcal{L}_{\theta^*}(x, \gamma(t))\, dt]$ 只在内层给出的损失曲面上搜调度。关键的简化来自 Prop. 3.3：一旦内层把 bias 项压下去，几何最优耦合就退化成 $\gamma^* = \arg\min_\gamma \mathbb{E}_{t,x}[\mathrm{Var}(u_t^\gamma \mid \mathbf{x}_t)]$，也就是"最小化沿路径的本质监督方差"。这一步把外层从"需要梯度"变成"只需要能估计损失方差"，外层因此可以完全黑盒地搜，无需反传穿过训练过程。
 
-3. **高斯过程代理 + 贝叶斯优化 (GP-BO Outer Loop)**:
+**3. 高斯过程代理 + 贝叶斯优化：把外层单次更新从 1213.6 秒压到 21.5 秒**
 
-    - 功能：在线、廉价地求解外层的 $\gamma^*$，让外层和内层能交替推进。
-    - 核心思路：把代价曲面建成 GP，$c(\mathbf{t}) \sim \mathcal{GP}(\mu(\mathbf{t}), k(\mathbf{t},\mathbf{t}') + \sigma_n^2 \delta)$；用滚动 buffer $\mathcal{B}$（容量 1000）只保留最近的训练观测，保证 GP 反映模型**当前能力**而不是早期残差；外层用贝叶斯优化的采集函数取候选时间对，再在 GP 曲面上**用最短路径算法**求一条单调测地线作为新的 $\gamma$。
-    - 设计动机：暴力的离散网格搜需要 $O(N^K)$ 次代价评估（论文中实测 1213.6 秒 / 次更新），而 GP-BO 把单次更新压到 21.5 秒，**56× 加速**，使得外层可以高频地嵌入到训练循环里而不卡 pipeline。
+外层若用暴力网格搜，$K$ 个模态要做 $O(N^K)$ 次代价评估，实测一次更新要 1213.6 秒，根本没法塞进训练循环。作者改用 GP 把代价曲面建成 $c(\mathbf{t}) \sim \mathcal{GP}(\mu(\mathbf{t}), k(\mathbf{t},\mathbf{t}') + \sigma_n^2 \delta)$，并配一个容量 $N_\max = 1000$ 的滚动 buffer $\mathcal{B}$ 只保留最近的训练观测——这样 GP 拟合的始终是模型"当前能力"对应的损失，而不是早期残差。每轮外层先用贝叶斯优化的采集函数挑候选时间对补充 GP，再在 GP 曲面上跑最短路径算法解出一条新的单调测地线当作 $\gamma$。靠这套代理，单次更新降到 21.5 秒，56× 的加速正是让外层能高频嵌进训练而不卡 pipeline 的前提。
+
+### 一个完整示例
+设想训练一个 SBDD co-design 模型。第 $k$ 步时当前调度 $\gamma_k$ 让结构时间 $t_r$ 跑得比序列时间 $t_h$ 快一点；内层按这条曲线采样 $(t_r, t_h)$、算流匹配 MSE 并更新 $\theta$，同时把这一批的 $(t_r, t_h, \mathcal{L})$ 三元组压进 buffer（满 1000 条就挤掉最旧的）。外层用这些观测刷新 GP，发现"序列在结构尚未稳定时就强行降噪"那块区域损失方差特别高，于是贝叶斯优化把候选点引向"先结构后序列"的方向，最短路径算法在更新后的曲面上解出一条更靠结构先行的新测地线 $\gamma_{k+1}$。为防止外层一次突变把内层带飞，学到的调度再做一次 EMA 平滑后才喂回内层。如此交替，曲线会逐渐收敛到 Fig. 4 里那条"结构先行"的形状。
 
 ### 损失函数 / 训练策略
-内层使用各底层模型的原生训练目标（流匹配 / 扩散 MSE / BFN ELBO 等），唯一改动是采样 $(t_r, t_h)$ 时按当前 $\gamma$ 抽取而非独立采样或同步采样。外层 GP buffer 滚动更新 + EMA 平滑学到的 $\gamma$ 来稳定训练。整体相对原模型几乎无额外训练步数（MolPilot 的"训练后一次性外层"作为对照需要 2× 训练步）。
+内层沿用各底层模型的原生训练目标（流匹配 / 扩散 MSE / BFN ELBO 等），唯一改动是采样 $(t_r, t_h)$ 时按当前 $\gamma$ 抽取，而非独立采样（随机耦合）或同步采样。外层则靠 GP buffer 的滚动更新 + 对学到的 $\gamma$ 做 EMA 来稳住训练。整体相对原模型几乎不增加训练步数——作为对照，MolPilot 那种"训练后再一次性跑外层"的做法需要 2× 训练步，而 GeoCoupling 把外层在线化后用 1× 训练步就够。
 
 ## 实验关键数据
 

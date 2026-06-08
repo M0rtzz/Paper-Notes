@@ -56,38 +56,29 @@ ADMM 的灵活性（可处理多正则化项和约束）使其在逆问题中极
 
 ### 整体框架
 
-基于 ADMM 变量分裂框架求解逆问题：
+这篇论文要解决的核心问题是：把扩散模型的 score function 当作去噪器塞进 ADMM 求解逆问题时，去噪器的输入根本不在它训练过的流形上，结果既不收敛、效果也差。论文把逆问题写成 ADMM 的变量分裂形式
 
 $$\min_{\bm{x},\bm{z}} \ell(\bm{y} \| \mathcal{A}(\bm{x})) + \gamma h(\bm{z}) \quad \text{s.t.} \quad \bm{x} = \bm{z}$$
 
-ADMM 三步迭代：
-1. **x-更新**：求解带数据保真项的子问题（用 Adam 优化器做梯度下降，最多 1000 步）
-2. **z-更新**：去噪子问题 → 用 AC-DC 去噪器替代近端算子
-3. **u-更新**：对偶变量更新 $\bm{u}^{(k+1)} = \bm{u}^{(k)} + (\bm{x}^{(k+1)} - \bm{z}^{(k+1)})$
-
-核心创新在 z-更新中的 AC-DC 去噪器。
+然后沿用标准的三步交替迭代：**x-更新**解带数据保真项的子问题（用 Adam 做梯度下降，最多 1000 步、loss 连升 3 次早停），**z-更新**是去噪子问题，**u-更新**做对偶变量累加 $\bm{u}^{(k+1)} = \bm{u}^{(k)} + (\bm{x}^{(k+1)} - \bm{z}^{(k+1)})$。整个框架的创新全部压在 z-更新：原本该调用近端算子的地方，换成一个叫 AC-DC 的三阶段去噪器。它接收 ADMM 拼出来的中间变量 $\tilde{\bm{z}}^{(k)} = \bm{x}^{(k+1)} + \bm{u}^{(k)}$——这个量被对偶变量 $\bm{u}^{(k)}$ 扭曲过，噪声几何早已偏离 score 的训练流形 $\mathcal{M}_{\sigma(t)}$——先把它粗略拉近流形（AC），再精确对齐（DC），最后才真正去噪（Score Denoising）。三步逐级收紧，是后面收敛性证明能成立的关键。
 
 ### 关键设计
 
-#### 设计 1：Auto-Correction（AC）——高斯加噪粗校正
+**1. Auto-Correction（AC）：先用高斯噪声把走样的输入"洗"回流形附近。**
 
-- **功能**：给 ADMM 迭代 $\tilde{\bm{z}}^{(k)}$ 加高斯噪声
-- **核心思路**：$\bm{z}_{\text{ac}}^{(k)} = \tilde{\bm{z}}^{(k)} + \sigma^{(k)} \bm{n}$，其中 $\bm{n} \sim \mathcal{N}(\bm{0}, \bm{I})$
-- **设计动机**：ADMM 迭代的噪声分布未知且受对偶变量影响，加高斯噪声可以让其"淹没"在高斯噪声中，向某个 $\mathcal{M}_{\sigma(t)}$ 靠拢。但仅有 AC 不足以保证流形对齐。
+ADMM 迭代出来的 $\tilde{\bm{z}}^{(k)}$ 带着一种分布未知、还被对偶变量进一步扭曲的噪声，没法直接喂给只认高斯扰动的 score function。AC 的做法很直接，往里再注入一层已知方差的高斯噪声 $\bm{z}_{\text{ac}}^{(k)} = \tilde{\bm{z}}^{(k)} + \sigma^{(k)} \bm{n}$（$\bm{n} \sim \mathcal{N}(\bm{0}, \bm{I})$）：当注入的高斯噪声足够强，原本那点未知的结构性扰动会被"淹没"，整体分布就向某个 $\mathcal{M}_{\sigma(t)}$ 靠拢。这一步只是粗对齐——它能把输入推到流形附近，但保证不了真正落在流形上，所以后面必须接 DC 补位。
 
-#### 设计 2：Directional Correction（DC）——条件 Langevin 精校正
+**2. Directional Correction（DC）：用条件 Langevin 把输入精确钉到目标流形上。**
 
-- **功能**：从 $\bm{z}_{\text{ac}}^{(k)}$ 出发，运行 $J$ 步条件 Langevin dynamics
-- **核心思路**：目标分布为 $p(\bm{z}_{\sigma^{(k)}} | \bm{z}_{\text{ac}}^{(k)})$，其支撑集 $\subseteq \mathcal{M}_{\sigma^{(k)}}$，因此采样结果天然在 score 训练流形上。条件 score 分解为 unconditional score $\bm{s}_\theta$ + 近似高斯似然梯度。
-- **设计动机**：AC 只是粗对齐，DC 利用 score function 本身做方向性修正，在保留观测信息的同时精确对齐到 $\mathcal{M}_{\sigma^{(k)}}$。每步更新：
+AC 之后还差最后一段距离，DC 从 $\bm{z}_{\text{ac}}^{(k)}$ 出发跑 $J$ 步条件 Langevin dynamics，采样目标是条件分布 $p(\bm{z}_{\sigma^{(k)}} | \bm{z}_{\text{ac}}^{(k)})$。这个分布的支撑集恰好 $\subseteq \mathcal{M}_{\sigma^{(k)}}$，所以只要采样收敛，结果天然就躺在 score 的训练流形上——这正是 AC 给不了的"精确落点"。条件 score 被拆成无条件 score $\bm{s}_\theta$ 加一项近似高斯似然梯度，使得每步更新既往流形拉、又不丢掉 AC 注入的观测信息：
 
 $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(k)}}^2}(\bm{z}_{\text{ac}}^{(k)} - \bm{w}^{(k,j)}) + \bm{s}_\theta(\bm{w}^{(k,j)}, \sigma^{(k)})\right) + \sqrt{2\eta^{(k)}}\bm{n}$$
 
-#### 设计 3：Score-based Denoising——最终去噪
+消融里把 $J$ 调到 0（关掉 DC）会出现严重伪影、$J$ 递增图像逐步变干净，说明这一步才是真正弥合流形不匹配的关键，而非可有可无的微调。
 
-- **功能**：对 DC 输出用 Tweedie 公式或 ODE 求解器去噪
-- **核心思路**：Tweedie: $\bm{z}_{\text{tw}}^{(k)} = \bm{z}_{\text{dc}}^{(k)} + (\sigma^{(k)})^2 \bm{s}_\theta(\bm{z}_{\text{dc}}^{(k)}, \sigma^{(k)})$；ODE: 从 $\sigma^{(k)}$ 积分到 0
-- **设计动机**：经过 AC+DC 后，输入已落在 $\mathcal{M}_{\sigma^{(k)}}$ 上，此时 score function 的去噪效果最佳。论文提供 Tweedie（快/单步）和 ODE（慢/多步/更精确）两种变体。
+**3. Score-based Denoising：输入已经对齐了，这一步 score 才能发挥全力。**
+
+经过 AC+DC，喂进来的 $\bm{z}_{\text{dc}}^{(k)}$ 已经落在 $\mathcal{M}_{\sigma^{(k)}}$ 上，此刻 score function 处在它最熟悉的工作点，去噪效果才最干净。论文给两种变体：Tweedie 公式一步到位 $\bm{z}_{\text{tw}}^{(k)} = \bm{z}_{\text{dc}}^{(k)} + (\sigma^{(k)})^2 \bm{s}_\theta(\bm{z}_{\text{dc}}^{(k)}, \sigma^{(k)})$，快但偏像素级指标；或者用 ODE 求解器从 $\sigma^{(k)}$ 积分到 0，慢、多步、感知质量更好。前两步保证"输入对"，这一步负责"出图好"，分工清楚。
 
 ### 损失函数 / 训练策略
 

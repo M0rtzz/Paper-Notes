@@ -41,37 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-C-World 把 agent 环境形式化为 4 个组件 + 一个 World Engine。
-- $\mathcal{A}$ 动作空间：从 Smithery 注册中心抓 276 个 MCP server、5,571 个工具（覆盖 204 个常用 app，如 Gmail/GitHub/Slack），统一用 MCP 协议封装并做三阶段执行验证；运行时通过 BGE-M3 + FAISS 提供 `search_tools(query, k)` 让 agent 自检索。
-- $\mathcal{T}$ 任务分布：tool candidate sampling（按 server 做 round-robin 防止任务被单一 app 主导）→ check-then-revise 合成长程任务（含 wild constraints）→ 模糊改写防止 keyword 短路。
-- $\mathcal{F}$ 转移：State Controller 中间件拦截 tool call，按预设策略注入 tool-level（超时/限流）、state-level（结果延迟/被改写）、constraint-level（中途加新需求）三类扰动。
-- $\mathcal{R}$ reward：verifiable（schema/order/diversity）+ judge-based（completeness/grounding/tradeoff，3 个前沿 LLM majority vote）。
-- World Engine：以工具响应类别卡片（email/calendar/code-hosting 等）+ schema + 会话级 log 为条件，让 LLM 根据 `(state, action)` 生成"以假乱真"的响应，从而不依赖 live API 就能跑大量轨迹。
-
-外加一个 Planner-Actor agent 框架：Planner 把任务拆 sub-goal graph，Actor 走 ReAct 调工具，Planner 每步 verify 并给反馈。
+C-World 把 RL 教科书里的 MDP 四元组原样搬到 LLM agent，把"agent 环境"形式化为 $(\mathcal{A},\mathcal{T},\mathcal{F},\mathcal{R})$ 四个组件——动作空间、任务分布、转移函数、奖励——再额外配一个 World Engine 把"工具响应"也建模成可由 LLM 模拟的转移。输入是 5,571 个真实 MCP 工具与一组 seed task，系统先自动合成长程任务、让 Planner-Actor agent 在 State Controller 注入的扰动下逐步执行、最后由双信号 reward 打分，从而得到高保真评测；而当切到合成模式时，World Engine 在不连 live API 的情况下批量生成"以假乱真"的工具响应，把训练轨迹采集从外部服务的速率与费用中解放出来。两套模式共用同一形式化骨架，使同一环境既能当评测台又能当训练数据引擎。
 
 ### 关键设计
 
-1. **统一动作空间 + 工具检索（Action Space）**:
+**1. 统一动作空间 + 工具检索（Action Space）：把五千多个真实工具变成一个"既全又活"的可检索动作池。**
 
-    - 功能：把 5,571 个真实 MCP 工具变成一个可被检索、可被认证执行的统一动作池。
-    - 核心思路：通过自动 registry 爬虫 + 人工补充收集工具；为需鉴权的服务配置专用虚拟账号；执行三阶段验证（authenticated availability → successful invocation → usable responses）过滤死工具；最后把"server identity + tool name + 描述 + schema"拼成文档，BGE-M3 编码后存 FAISS 提供 `search_tools(query, k)` 接口。Agent 不会一次拿到全部工具，必须自己查、按需 load。
-    - 设计动机：之前 benchmark 要么硬给一小撮工具（不真实），要么给一大堆但都死的（不可执行）。真正逼近真实场景必须既"全"又"活"，且不能让 agent 走 keyword 捷径——所以工具检索接口是唯一入口。
+以往 benchmark 要么硬塞一小撮工具（不真实），要么给一大堆却大半失效（不可执行），还容易让 agent 靠 keyword 走捷径。C-World 先用 registry 爬虫加人工补充，从 Smithery 抓 276 个 MCP server、5,571 个工具（覆盖 Gmail/GitHub/Slack 等 204 个常用 app），为需鉴权的服务配专用虚拟账号，再做三阶段验证（authenticated availability → successful invocation → usable responses）滤掉死工具。存活工具把"server identity + tool name + 描述 + schema"拼成文档，经 BGE-M3 编码后存入 FAISS，运行时只暴露一个 `search_tools(query, k)` 接口——agent 拿不到全量工具列表，必须自己检索、按需 load，这条唯一入口既保证规模真实又堵死 keyword 捷径。
 
-2. **check-then-revise 任务合成 + 反捷径机制（Task Distribution）**:
+**2. check-then-revise 任务合成 + 反捷径机制（Task Distribution）：无人工标注地造出长程、多 app、含 wild constraint 的任务。**
 
-    - 功能：在不依赖人工标注的情况下，生成"长程 + 多 app + 含 wild constraint + 抗 keyword 短路"的任务。
-    - 核心思路：先采样 1~3 个 seed tools，用它们的描述做查询、用 `search_tools` 召回更大候选集；按 server 做 round-robin 采样保证跨 app（强制最少 server 数）。然后让 LLM 生成初始 query，再进入 check-then-revise 循环：自动评估 (i) tool coverage（是否合理地激活全部候选工具）+ (ii) constraint quality（约束是否多样、互相耦合、产生长程依赖），不达标就反馈重写。最后做模糊化（"send the summary to the team" 而非 "use slack_post_message"），并只暴露 `search_tools` 接口，迫使 agent 自己分解 sub-query 检索。
-    - 设计动机：之前的合成任务要么短，要么虽然长但靠堆 steps 凑数；本文用"工具覆盖 + 约束密度"两个 metric 强行把任务推向长程；fuzzy 改写则解决"评测时被合成 prompt 泄露"的隐性 leakage 问题。
+合成任务的老毛病是要么太短、要么靠堆 steps 凑长，还会在评测时被合成 prompt 泄露答案。C-World 先采样 1~3 个 seed tool，用其描述做查询、经 `search_tools` 召回更大候选集，并对 server 做 round-robin 采样（强制最少 server 数）以保证跨 app。随后 LLM 生成初始 query 并进入 check-then-revise 循环，自动评估两项指标——tool coverage（是否合理激活全部候选工具）与 constraint quality（约束是否多样、互相耦合、产生长程依赖）——不达标就反馈重写，硬把任务推向长程。最后做模糊化改写（用"send the summary to the team"而非"use slack_post_message"），配合只暴露 `search_tools`，迫使 agent 自行分解 sub-query 检索，从源头消除"合成 prompt 泄露"的隐性 leakage。
 
-3. **三层 State Controller + World Engine（Transition Function）**:
+**3. 三层 State Controller + World Engine（Transition Function）：让环境既能复现真实失败，又能脱离 live API 规模化。**
 
-    - 功能：让环境既能模拟真实失败（rate limit、state drift、需求变更），又能无 live API 跑大规模训练。
-    - 核心思路：State Controller 是一个嵌在 agent runtime 内部的轻量 Python 中间件，拦截 MCP 出入流量，按"adversity budget"注入 (a) tool-level（超时/不可用/限流）、(b) state-level（payload 截断/session 失效）、(c) constraint-level（中途加新规则）三类扰动；为公平性，每个模型遭遇的扰动总量恒等但触发时机随机。World Engine 把工具按功能类别（email/code-hosting/calendar 等）建"category card"含典型响应模式、字段结构、常见失败，再给 schema + few-shot + 会话 log → LLM 直接生成响应，因为只依赖 schema 和卡片，所以能对同类下没见过的工具零样本泛化，甚至能模拟现实不存在的企业级环境。在 50 个评测任务上跟 live 执行做对比，Spearman $\rho=0.883$。
-    - 设计动机：直接 random 噪声是没用的（agent 学不到什么），所以要"可复现 + 针对性"的扰动；World Engine 这一层是把 agent 训练从"被 API 卡死"中解放出来的关键——可以批量造轨迹做 SFT/RL，且对不存在的工具也能模拟，便于做 stress test。
+纯随机噪声 agent 学不到东西，而死守 live API 又会被速率和费用卡死，所以转移层要同时解决"可复现的针对性扰动"和"低成本规模化"两件事。State Controller 是一个嵌在 agent runtime 内、拦截 MCP 出入流量的轻量 Python 中间件，按"adversity budget"注入三类扰动：tool-level（超时/不可用/限流）、state-level（payload 截断/session 失效）、constraint-level（中途加新规则）；为公平起见，每个模型遭遇的扰动总量恒定、仅触发时机随机。World Engine 则把工具按功能归类建"category card"（含典型响应模式、字段结构、常见失败），再以 schema + few-shot + 会话 log 为条件让 LLM 直接生成响应——因为只依赖 schema 与卡片，它能对同类未见工具零样本泛化，甚至能模拟现实中不存在的企业级环境做 stress test。在 50 个评测任务上，World Engine 与 live 执行的模型排名相关系数达 Spearman $\rho=0.883$，证明它几乎可平替真实 API。
+
+### 一个完整示例
+以一个"整理本周 GitHub issue 并通知团队"的合成任务为例：任务合成阶段从 GitHub、Slack 两个 seed tool 出发召回候选集，check-then-revise 把它扩成"汇总 high-priority issue + 按截止日期排序 + 发到对应频道"的多约束长程任务，并模糊化为"summarize this week's urgent issues and let the team know"。运行时 Actor 先 `search_tools("list github issues")` 检索并调用工具，Planner 把任务拆成"取 issue → 过滤 → 汇总 → 发送"的 sub-goal graph 并逐步 verify。途中 State Controller 按预算注入一次 state-level 扰动（GitHub 返回被截断的 payload）与一次 constraint-level 扰动（中途追加"只发 P0 级"），考验 agent 的 replan 与 recovery。任务结束后 reward 层用 verifiable 信号（schema/order/diversity）加 judge-based 信号（completeness/grounding/tradeoff，3 个前沿 LLM majority vote）给出最终评分。同一条任务若切到合成模式，则上述所有工具响应都由 World Engine 凭 category card 生成，无需真连 GitHub/Slack。
 
 ### 损失函数 / 训练策略
-训练侧把 50 个 seed task 的"首轮有效动作"（abstract intent → 具体工具检索/调用）筛出 1,170 条样本，转成 ms-swift 格式按 Hermes-style agent supervision（显式建模 tool invocation / tool response）做 SFT；和 Toucan（119k）、ToolACE（11.3k）公平对比。
+训练侧从 50 个 seed task 的"首轮有效动作"（abstract intent → 具体工具检索/调用）筛出 1,170 条样本，转成 ms-swift 格式后按 Hermes-style agent supervision（显式建模 tool invocation / tool response）做 SFT，并与 Toucan（119k）、ToolACE（11.3k）公平对比；结果是 1.2k 条 C-World 轨迹反超 119k 样本的 baseline，说明"长程 + 约束密集 + 含扰动"的轨迹远比海量 happy path 更值钱。
 
 ## 实验关键数据
 

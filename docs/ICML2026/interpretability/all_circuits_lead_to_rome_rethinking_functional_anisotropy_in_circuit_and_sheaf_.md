@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者沿用 DiscoGP 的可微 sheaf 发现框架：每条残差流计算图的边 $e$ 关联一个可学习 logit $l_e$，通过 Gumbel-Sigmoid 松弛得到连续分数 $s_e=\sigma((l_e-\log(\log\mathcal{U}_1/\log\mathcal{U}_2))/\tau)$ 并用 straight-through estimator 得到硬掩码。原始目标包含 fidelity (复现任务行为)、sparsity (鼓励稀疏) 和 completeness (掩码图独立可执行) 三项。OASR 在此基础上引入一个排斥项，循环跑 $K$ 次发现，每次都要求新 sheaf 与所有已发现 sheaf 在结构上几乎不重叠。
+要证伪"一个任务对应一个唯一电路"，光靠随机重跑 DiscoGP 还不够——优化器往往陷回同一个吸引子，找出来的 sheaf 仍高度重叠。OASR 的思路是把"找下一个 sheaf"显式改写成"在结构空间里远离已有的所有 sheaf"：沿用 DiscoGP 的可微框架，给残差流计算图每条边 $e$ 配一个可学习 logit $l_e$，经 Gumbel-Sigmoid 松弛得连续分数 $s_e=\sigma((l_e-\log(\log\mathcal{U}_1/\log\mathcal{U}_2))/\tau)$ 并用 straight-through estimator 转成硬掩码，再在原有 fidelity / sparsity / completeness 三项目标上叠一个排斥项，循环跑 $K$ 次，每次都要求新解几乎不复用旧解的边，从而主动枚举出一组互不重叠却都 faithful 的电路。
 
 ### 关键设计
 
-1. **Overlap-Aware Sheaf Repulsion (OASR) 损失**:
+**1. Overlap-Aware Sheaf Repulsion 排斥项：把非唯一性从被动现象变成主动发现**
 
-    - 功能：在每次新发现时显式惩罚"复用上次 sheaf 的边"，让优化器去探索结构空间中尚未触及的角落。
-    - 核心思路：已发现 sheaf 的边集为 $R$，新一轮总损失为 $\mathcal{L}=\mathcal{L}_{fidelity}+\lambda_s\mathcal{L}_{sparsity}+\lambda_c\mathcal{L}_{complete}+\lambda_o\mathcal{L}_{overlap}(R)$，其中 $\mathcal{L}_{overlap}(R)=\frac{1}{|E|}\sum_{e\in R}\sigma(l_e)$ 仅对 $R$ 中的边施加期望激活惩罚，相当于在 logit 空间里向"远离已有解" 的方向加梯度。重复执行得到 $K$ 个互不重叠的 sheaf $\{R_1,\dots,R_K\}$。
-    - 设计动机：直接随机初始化重新跑 DiscoGP 也能得到不同 sheaf，但它们仍可能高度重叠 (优化倾向于陷入同一吸引子)。显式排斥项把"非唯一性"从被动现象变成主动发现，能找到 IoU 远低于随机水平的解。
+现有 CSD 方法的痛点在于它们都奔着"唯一最优解"去，即便重新随机初始化重跑，得到的 sheaf 仍可能高度重叠，无法证明"任务能力可被多个结构迥异的子图独立承载"。OASR 在每轮发现时显式惩罚对已发现边的复用：设已发现 sheaf 的边集为 $R$，新一轮总损失为 $\mathcal{L}=\mathcal{L}_{fidelity}+\lambda_s\mathcal{L}_{sparsity}+\lambda_c\mathcal{L}_{complete}+\lambda_o\mathcal{L}_{overlap}(R)$，其中排斥项 $\mathcal{L}_{overlap}(R)=\frac{1}{|E|}\sum_{e\in R}\sigma(l_e)$ 只对 $R$ 里的边施加期望激活惩罚，相当于在 logit 空间里持续往"远离已有解"的方向加梯度。重复执行就得到 $K$ 个互不重叠的 sheaf $\{R_1,\dots,R_K\}$，其两两 IoU 远低于随机重跑的水平——这正是"非唯一性是 LLM 本质而非优化噪声"的直接证据。
 
-2. **互补/复杂验证协议**:
+**2. 互补/复杂验证协议：排除"电路太大随便切都不重叠"的平凡解释**
 
-    - 功能：排除"低 IoU 是因为电路太大、随便切都不重叠"这种平凡解释，证明每个发现的子图是真正"独立胜任"的。
-    - 核心思路：(a) 评估 IoI accuracy (任务保持率)；(b) 评估 complement accuracy——把发现的边集合 $E_A$ 抠掉，剩下的图能不能完成任务，验证 $E_A$ 是必要的；(c) 报告 edge density (选中边占总边比例) 与 edge count，并和"随机初始化重跑" 基线做对比；(d) 对极端稀疏的三条边 sheaf 做"逐边消融"，看是否任何一条都不可或缺。
-    - 设计动机：仅看任务 acc 一致 + IoU 低不足以反驳 anisotropy，因为可能两 sheaf 只是同一规范电路的旋转/重参数化。通过 layer-wise 分布分析 + complement 测试，作者证实差异是结构性的而非表面的重排。
+仅靠"任务 acc 一致 + IoU 低"不足以反驳 anisotropy，因为两个 sheaf 完全可能只是同一规范电路的旋转或重参数化，看似不同实则同源。为此作者设计了一套多维验证：先测每个 sheaf 的 IOI accuracy 确认任务保持率，再测 complement accuracy——把发现的边集 $E_A$ 整体抠掉、看剩下的图能否完成任务，以此验证 $E_A$ 确实是必要的而非冗余;同时报告 edge density (选中边占总边比例) 与 edge count，并与"随机初始化重跑"基线对照；最后对极端稀疏的三条边 sheaf 做逐边消融，检验是否任何一条都不可或缺。配合 layer-wise 分布分析，作者得以证实多 sheaf 之间的差异是结构性的，而不是表层的边重排。
 
-3. **Distributive Dense Circuit Hypothesis (理论假设)**:
+**3. Distributive Dense Circuit Hypothesis：用 superposition 解释非唯一性为何必然**
 
-    - 功能：给出一个"为什么 LLM 必然存在多个低重叠 faithful 电路" 的理论解释。
-    - 核心思路：基于 Elhage 等的 superposition 理论——在高维残差流中，模型用近正交方向叠加表示多组特征，任何具体的"计算实现" 都是把这些方向以某种线性组合路由到下游。给定任务行为 $b$，让其满足 fidelity 的子图集合在高维下随深度/宽度组合膨胀，使得"sparse 又 faithful 的解"以指数级增长。文中给出形式化命题：在 mild assumption 下，对足够大的模型，存在 $\Omega(\exp(d))$ 个互不相交的 faithful sheaf。
-    - 设计动机：解释为什么实验观察到的非唯一性不是 DiscoGP 的优化伪影，而是 LLM 表征本质的结构性后果——这把 backup heads / hydra effect 等"局部冗余" 现象统一到一个"全局分布式电路" 视角下。
+实验观察到的非唯一性若只是 DiscoGP 的优化伪影，结论就站不住，所以作者给出了一个理论假设来说明它是 LLM 表征的结构性后果。论证基于 Elhage 等的 superposition 理论：高维残差流用近正交方向叠加表示多组特征，任何具体的"计算实现"都是把这些方向以某种线性组合路由到下游；给定任务行为 $b$，满足 fidelity 的子图集合会随模型深度/宽度组合膨胀，使"既 sparse 又 faithful 的解"以指数级增长。由此得到形式化命题——在 mild assumption 下，对足够大的模型存在 $\Omega(\exp(d))$ 个互不相交的 faithful sheaf。这个视角把 backup heads、hydra effect 等"局部冗余"现象统一到了"全局分布式稠密电路"的框架之下：冗余不是异常，而是默认状态。
 
 ### 损失函数 / 训练策略
-四项损失加权求和 $\mathcal{L}=\mathcal{L}_{fid}+\lambda_s\mathcal{L}_{sp}+\lambda_c\mathcal{L}_{comp}+\lambda_o\mathcal{L}_{overlap}$；GPT-2 small (12L × 12H) 作为主要实验对象，超参遵循 DiscoGP 默认设置；为得到 20 个 sheaf，OASR 每轮固定上轮发现的 $R$ 重新初始化 logits 再优化 fidelity/sparsity/completeness/overlap 联合目标。
+四项损失加权求和 $\mathcal{L}=\mathcal{L}_{fid}+\lambda_s\mathcal{L}_{sp}+\lambda_c\mathcal{L}_{comp}+\lambda_o\mathcal{L}_{overlap}$，主要实验对象为 GPT-2 small (12L × 12H)，超参沿用 DiscoGP 默认设置；为得到 20 个 sheaf，OASR 每轮固定上一轮发现的 $R$、重新初始化 logits 后再联合优化 fidelity / sparsity / completeness / overlap 目标。
 
 ## 实验关键数据
 

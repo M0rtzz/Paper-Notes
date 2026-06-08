@@ -42,34 +42,35 @@ tags:
 
 ### 整体框架
 
-把约束 BED 写成在状态 $(\mathcal{D}_{t-1}, z_t)$ 上的有限视界 MDP：奖励为 $\text{EIG}(x_t;\mathcal{D}_{t-1})$，转移为 $\mathcal{D}_t = \mathcal{D}_{t-1}\cup\{(x_t,y_t)\}$、$z_{t+1}=f(z_t,x_t)$，可行集 $\mathcal{X}(z_t)$ 时变（覆盖三类典型约束：bounded-change 转移 $\|x_t-x_{t-1}\|\le\delta$、全局预算 $b_{t+1}=b_t-c(x_t,\breve z_t)$、设计相关成本）。
+COPEx 把"测试时改约束不用重训"这件事拆成两层：约束感知交给在线规划，算得快交给离线摊销，两层解耦。它先把约束 BED 写成在状态 $(\mathcal{D}_{t-1}, z_t)$ 上的有限视界 MDP——奖励是当步期望信息增益 $\text{EIG}(x_t;\mathcal{D}_{t-1})$，数据集随观测增长 $\mathcal{D}_t = \mathcal{D}_{t-1}\cup\{(x_t,y_t)\}$，约束状态按 $z_{t+1}=f(z_t,x_t)$ 演化，可行集 $\mathcal{X}(z_t)$ 随之时变（一套 $z$/$f$ 就能覆盖三类典型约束：bounded-change 转移 $\|x_t-x_{t-1}\|\le\delta$、全局预算 $b_{t+1}=b_t-c(x_t,\breve z_t)$、设计相关成本）。
 
-测试时采用 receding-horizon：每一步 $t$ 都在线展开一棵 H 步 lookahead 场景树，根节点是当前 $(\mathcal{D}_{t-1},z_t)$；每个 decision 节点选一个设计 $x_k^{j_{1:\ell}}$，每个设计下采样 $m_k$ 个 fantasy 观测分支，到深度 $H+1$ 截断。一次性联合优化整棵树上的所有决策变量 $\mathbf{X}_{\text{tree}}$，执行根节点最优设计 $x_t^\star$，观测真实 $y_t$，更新状态，重新规划下一步。
-
-离线阶段预训练两样东西：摊销 posterior 网络 $q_\phi(\theta\mid\mathcal{D})$（用混合密度网络拟合 $\mathcal{D}\mapsto p(\theta\mid\mathcal{D})$）和摊销设计策略 $\pi_\psi$（直接复用 Huang et al. 2026 的 ALINE transformer 策略）。前者负责"算得快"，后者负责"初始化得好"。
+测试时走 receding-horizon：每一步 $t$ 在线展开一棵 H 步 lookahead 场景树，根节点是当前 $(\mathcal{D}_{t-1},z_t)$，每个 decision 节点选一个设计 $x_k^{j_{1:\ell}}$，每个设计往下采 $m_k$ 个 fantasy 观测分支，到深度 $H+1$ 截断；一次性联合优化整棵树上的所有决策变量 $\mathbf{X}_{\text{tree}}$，只执行根节点最优设计 $x_t^\star$，观测真实 $y_t$，更新状态后重新规划。支撑这棵树高速运转的，是离线预训练好的两件东西：摊销 posterior 网络 $q_\phi(\theta\mid\mathcal{D})$（混合密度网络拟合 $\mathcal{D}\mapsto p(\theta\mid\mathcal{D})$，负责"算得快"）和摊销设计策略 $\pi_\psi$（直接复用 Huang et al. 2026 的 ALINE transformer，负责"初始化得好"）。
 
 ### 关键设计
 
-1. **场景树多步 lookahead + 一次性 reparameterization 优化**：
+**1. 场景树多步 lookahead + 一次性 reparameterization：把 Bellman 递推折成一个可微优化。**
 
-    - 功能：把约束 BED 的 Bellman 递推 $V_t(\mathcal{D}_{t-1},z_t) = \max_{x_t}\{\text{EIG}(x_t;\mathcal{D}_{t-1}) + \gamma\mathbb{E}_{y_t}[V_{t+1}]\}$ 转成可微的有限树搜索。
-    - 核心思路：参考 Jiang 2020b 的 one-shot tree BO，预先采样一组固定的 base noise $\varepsilon=(\varepsilon_\theta,\varepsilon_y)$，让所有 fantasy 后验样本 $\theta_k^{j_{1:\ell}} = g_\phi(\mathcal{D}_{k-1}^{j_{1:\ell}}, \varepsilon_{\theta,k}^{j_{1:\ell}})$ 和 fantasy 观测 $\tilde y_k = h(x_k, \theta_k, \varepsilon_y)$ 都成为决策变量的确定函数；这样整棵树的目标 $\widehat V^{(H)}(\mathbf{X}_{\text{tree}};\varepsilon) = \sum_{\ell=0}^H \gamma^\ell \frac{1}{\prod m}\sum_{j_{1:\ell}}\widehat{\text{EIG}}$ 变成单一非线性规划，用 SLSQP 求解；转移约束就地写进 $\mathcal{X}(z_k^{j_{1:\ell}})$，预算约束通过 $z$ 累加。
-    - 设计动机：直接求 Bellman 要嵌套 posterior 更新，对非共轭模型几乎不可行；reparameterization 让整棵树梯度可达，约束直接挂在变量上而不是塞进策略网络里 —— 任意约束改写只需改 $\mathcal{X}(z)$ 和 $f$，无需重训。
+要做到"非短视 + 约束感知"，最直接的写法是解 Bellman 递推 $V_t(\mathcal{D}_{t-1},z_t) = \max_{x_t}\{\text{EIG}(x_t;\mathcal{D}_{t-1}) + \gamma\mathbb{E}_{y_t}[V_{t+1}]\}$，但这需要在每个候选 trajectory 上嵌套做 posterior 更新和 EIG 估计，对非共轭模型几乎不可行。COPEx 借 Jiang 2020b 的 one-shot tree BO 思路绕开嵌套：预先采一组固定的 base noise $\varepsilon=(\varepsilon_\theta,\varepsilon_y)$，让所有 fantasy 后验样本 $\theta_k^{j_{1:\ell}} = g_\phi(\mathcal{D}_{k-1}^{j_{1:\ell}}, \varepsilon_{\theta,k}^{j_{1:\ell}})$ 和 fantasy 观测 $\tilde y_k = h(x_k, \theta_k, \varepsilon_y)$ 都变成决策变量的确定性函数。这样整棵树的目标
 
-2. **摊销后验网络 + adaptive contrastive EIG 估计器**：
+$$\widehat V^{(H)}(\mathbf{X}_{\text{tree}};\varepsilon) = \sum_{\ell=0}^H \gamma^\ell \frac{1}{\prod m}\sum_{j_{1:\ell}}\widehat{\text{EIG}}$$
 
-    - 功能：在场景树每个节点上做"快速 posterior 更新 + fantasy 采样 + EIG 估计"三件事，否则节点数随 H 指数爆炸时根本撑不住。
-    - 核心思路：用混合密度网络 $q_\phi(\theta\mid\mathcal{D})$ 最小化 $-\frac{1}{n}\sum\log q_\phi(\theta_i\mid\mathcal{D}_i)$ 学一个从数据集到后验的映射；训练数据靠仿真器一次性合成。在线时，update 就是评估 $q_{\hat\phi}(\theta\mid\mathcal{D}\cup\{(x,\tilde y)\})$，fantasy 就是 $\tilde\theta\sim q_{\hat\phi}(\cdot\mid\mathcal{D}_{k-1}^{j_{1:\ell}})$ 后从似然 $p(\cdot\mid x,\tilde\theta)$ 采样。EIG 用 Foster 2020 的 adaptive contrastive 目标：$\widehat{\text{EIG}}(x;\mathcal{D},\hat\phi) := \mathbb{E}[\log\frac{p(\tilde y\mid x,\theta_0)}{\frac{1}{L+1}\sum_l q_{\hat\phi}(\theta_l\mid\mathcal{D})p(\tilde y\mid x,\theta_l)/q_{\hat\phi}(\theta_l\mid\mathcal{D}\cup\{(x,\tilde y)\})}]$，把昂贵的 nested 期望换成几次 MDN 评估。
-    - 设计动机：BED 用 EIG 的根本难点就在 nested expectation 和反复后验更新；摊销 posterior 把这两件事都压成 cheap forward pass，是让"在线规划"从理论玩具变成实际可跑的关键。
+塌缩成单一的非线性规划，用 SLSQP 一次解完，梯度对整棵树都可达。约束则直接挂在变量上——转移约束写进各节点的 $\mathcal{X}(z_k^{j_{1:\ell}})$，预算约束靠 $z$ 累加——而不是塞进策略网络。于是换约束只需改 $\mathcal{X}(z)$ 和 $f$ 两个函数，完全不碰任何网络权重。
 
-3. **摊销策略 $\pi_\psi$ warm-start + 探索/利用混合初始化**：
+**2. 摊销后验网络 + adaptive contrastive EIG 估计器：把 nested expectation 压成几次前向。**
 
-    - 功能：解决"高维非凸场景树优化容易陷局部解"的问题；同时在策略训练分布外的强约束场景下保持鲁棒。
-    - 核心思路：对每个 decision 节点 $(t+\ell,j_{1:\ell})$ 直接用预训练的无约束 ALINE 策略给出初始化 $x_{t+\ell}^{j_{1:\ell}}\leftarrow \pi_\psi(\mathcal{D}_{t+\ell-1}^{j_{1:\ell}})$。当约束把可行域推到训练分布之外（policy 也不知道怎么走时）就同时跑多棵树，一部分用 $\pi_\psi$ 利用、一部分用随机策略探索，取最优。
-    - 设计动机：图 3(a) 显示单棵 policy-init 树的 cumulative EIG 比 10 棵 random-init 还高、时间还短 —— 一个好的 prior 比多个 random restart 划算得多。
+场景树节点数随 H 指数爆炸，每个节点又要做"posterior 更新 + fantasy 采样 + EIG 估计"三件昂贵的事，naive 算法根本撑不住——而这两件正是 BED 用 EIG 的根本难点（反复后验更新 + nested expectation）。COPEx 用一个混合密度网络 $q_\phi(\theta\mid\mathcal{D})$ 把它们都摊销掉：离线最小化 $-\frac{1}{n}\sum\log q_\phi(\theta_i\mid\mathcal{D}_i)$，从仿真器一次性合成的训练数据里学一个"数据集 → 后验"的映射。在线时，posterior 更新就是评估 $q_{\hat\phi}(\theta\mid\mathcal{D}\cup\{(x,\tilde y)\})$，fantasy 就是先 $\tilde\theta\sim q_{\hat\phi}(\cdot\mid\mathcal{D}_{k-1}^{j_{1:\ell}})$ 再从似然 $p(\cdot\mid x,\tilde\theta)$ 采样。EIG 套 Foster 2020 的 adaptive contrastive 目标
+
+$$\widehat{\text{EIG}}(x;\mathcal{D},\hat\phi) := \mathbb{E}\Big[\log\frac{p(\tilde y\mid x,\theta_0)}{\frac{1}{L+1}\sum_l q_{\hat\phi}(\theta_l\mid\mathcal{D})\,p(\tilde y\mid x,\theta_l)/q_{\hat\phi}(\theta_l\mid\mathcal{D}\cup\{(x,\tilde y)\})}\Big],$$
+
+把昂贵的 nested 期望换成几次 MDN 评估。正是这一步把"在线规划"从理论玩具变成实际可跑的东西。
+
+**3. 摊销策略 $\pi_\psi$ warm-start + 探索/利用混合初始化：用好 prior 替多次 random restart。**
+
+高维非凸的场景树优化很容易陷局部解，而强约束又常把可行域推到策略训练分布之外。COPEx 的应对是：对每个 decision 节点 $(t+\ell,j_{1:\ell})$ 直接用预训练的无约束 ALINE 策略给初始化 $x_{t+\ell}^{j_{1:\ell}}\leftarrow \pi_\psi(\mathcal{D}_{t+\ell-1}^{j_{1:\ell}})$；当约束严重偏移可行域、policy 也不知道怎么走时，就同时跑多棵树，一部分用 $\pi_\psi$ 利用、一部分用随机策略探索，取最优。图 3(a) 给了直接证据：单棵 policy-init 树的累计 EIG 比 10 棵 random-init 还高、耗时还更短——一个好的 prior 远比多个 random restart 划算。
 
 ### 损失函数 / 训练策略
-离线阶段：（i）摊销 posterior 用 NLL（公式 6），仿真采样 $\theta_i\sim p(\theta)$，长度 $S_i\sim\text{Unif}\{1,\dots,T\}$，设计 $x_{i,s}\sim p(x)$；（ii）设计策略直接借 Huang 2026 的 ALINE。在线阶段：SLSQP 解约束非线性规划（公式 9），用 $H\in\{0,\dots,3\}$、$m\in\{1,2\}$。
+
+离线阶段两件事：（i）摊销 posterior 用 NLL（公式 6）训练，仿真采样 $\theta_i\sim p(\theta)$、长度 $S_i\sim\text{Unif}\{1,\dots,T\}$、设计 $x_{i,s}\sim p(x)$；（ii）设计策略直接借 Huang 2026 的 ALINE，不另训。在线阶段用 SLSQP 解约束非线性规划（公式 9），取 $H\in\{0,\dots,3\}$、$m\in\{1,2\}$。
 
 ## 实验关键数据
 

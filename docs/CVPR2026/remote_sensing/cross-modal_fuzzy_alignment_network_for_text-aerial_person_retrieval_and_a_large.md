@@ -41,29 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CFAN 包含两个核心模块：Context-Aware Dynamic Alignment (CDA) 用于样本级自适应对齐，Fuzzy Token Alignment (FTA) 用于 token 级细粒度对齐。共享 CLIP 图像编码器提取航拍/地面特征，CLIP 文本编码器提取描述特征。
+CFAN 要解决的是文本描述完整、而航拍图像只能看到局部（甚至只有头顶）这种"信息不对等"下的跨模态检索。整体上它走两条对齐路径：一是文本直接对到航拍图像，二是借一张同人的地面视图当中转，文本先对地面、地面再对航拍。一张共享的 CLIP 图像编码器同时吃航拍图和地面图、CLIP 文本编码器吃描述，然后两个模块接力——Context-Aware Dynamic Alignment (CDA) 在样本层面决定这两条路径各占多少权重，Fuzzy Token Alignment (FTA) 再在 token 层面把真正可靠的局部细节挑出来精对齐。
 
 ### 关键设计
 
-1. **Context-Aware Dynamic Alignment (CDA)**：
+**1. 上下文感知动态对齐 CDA：让每张图自己决定"要不要走地面桥接"。**
 
-    - **功能**：计算文本-航拍和文本-地面的余弦相似度差异 $\Delta_i = \text{sim}(T_i^C, A_i^C) - \text{sim}(T_i^C, G_i^C)$，通过 sigmoid 映射为软决策门 $\alpha_i$，自适应加权直接对齐和桥接对齐。
-    - **核心公式**：$\alpha_i = \frac{1}{1 + \exp[-k \cdot \Delta_i]}$
-    - **损失**：$\mathcal{L}_{\text{CDA}} = \frac{1}{B} \sum_{i=1}^B [\alpha_i \cdot \mathcal{L}_{\text{direct}} + (1-\alpha_i) \cdot \mathcal{L}_{\text{bridge}}]$
-    - **设计动机**：不同航拍图像的对齐难度不同——低空近拍的直接对齐即可，高空远拍的需要地面桥接。$\alpha_i$ 自动估计"对齐难度"并分配对齐策略。桥接对齐中对地面特征做 stop-gradient 防止干扰地面表征。
+直接对齐和桥接对齐谁更靠谱，其实因图而异：低空近拍的航拍图人物清晰，文本直接对它就够了；高空远拍的航拍图细节糊成一团，这时绕道地面视图反而更稳。CDA 不写死这个选择，而是先量一个"难度信号"——文本-航拍的相似度减去文本-地面的相似度 $\Delta_i = \text{sim}(T_i^C, A_i^C) - \text{sim}(T_i^C, G_i^C)$，再用 sigmoid 把它压成一个 0 到 1 的软门 $\alpha_i = \frac{1}{1 + \exp[-k \cdot \Delta_i]}$。$\Delta_i$ 越大说明直接对齐越占优，$\alpha_i$ 就越接近 1，损失里直接对齐的权重就越高：
 
-2. **Fuzzy Token Alignment (FTA)**：
+$$\mathcal{L}_{\text{CDA}} = \frac{1}{B} \sum_{i=1}^B \left[\alpha_i \cdot \mathcal{L}_{\text{direct}} + (1-\alpha_i) \cdot \mathcal{L}_{\text{bridge}}\right]$$
 
-    - **功能**：用共享可学习 query $\mathbf{Q} \in \mathbb{R}^{K \times D}$ 分别与两个模态做 cross-attention，得到模态感知查询表征。然后用高斯模糊隶属函数计算每个 token 的可靠性：
-    - **核心公式**：$\mu_j^a = \exp(-\frac{(1-r_j)^2}{2\sigma^2})$，其中 $r_j$ 是 query token 与全局 class token 的余弦相似度。
-    - 融合两个模态的隶属度：$\mu_j^{\text{joint}} = \mu_j^a \cdot \mu_j^t$（模糊 AND 运算）
-    - 加权相似度：$\text{sim}(Q_a, Q_t) = \frac{1}{K} \sum_{j=1}^K \mu_j^{\text{joint}} s_j$
-    - **设计动机**：只有在两个模态中都高可靠的 token 才对齐——即双模态可见且语义一致的部分贡献最大，不可观察/噪声 token 被自然抑制。高斯尺度 $\sigma$ 从全局 class token 自适应预测，使模型能根据图像内容调整可靠性阈值。
+这样每个样本都在按自己的对齐难度动态分配两条路径的比重，而不是全 batch 用同一套权重。一个细节是桥接路径里对地面特征做了 stop-gradient——只让文本去贴地面，不让航拍侧的梯度回流污染地面表征，避免桥接这个"拐杖"反过来把中转站本身带歪。
 
-3. **AERI-PEDES 数据集构建**：
+**2. 模糊 token 对齐 FTA：用模糊隶属度把"看得见且对得上"的 token 挑出来。**
 
-    - 用 Chain-of-Thought 分解文本生成：属性解析→初始标注→审核精化
-    - 训练集用 VLM 生成标注，测试集人工标注确保评估可靠性
+航拍图里大量 token 对应的区域根本不可观察（被遮挡、超出视角），如果还硬做 token 级对齐，这些噪声 token 就会制造一堆错误匹配。FTA 的思路是给每个 token 打一个"可靠度"，只让可靠的部分参与对齐。具体做法是先用一组共享的可学习 query $\mathbf{Q} \in \mathbb{R}^{K \times D}$ 分别和航拍、文本两个模态做 cross-attention，得到两套模态感知的查询表征；再用高斯模糊隶属函数衡量每个 query token 的可靠性 $\mu_j^a = \exp\left(-\frac{(1-r_j)^2}{2\sigma^2}\right)$，其中 $r_j$ 是该 query token 与全局 class token 的余弦相似度——越贴近全局语义，隶属度越接近 1。两个模态的隶属度用模糊 AND（相乘）合成 $\mu_j^{\text{joint}} = \mu_j^a \cdot \mu_j^t$，只有在航拍和文本里"都可靠"的 token 才会拿到高权重，最后按这个权重聚合相似度 $\text{sim}(Q_a, Q_t) = \frac{1}{K} \sum_{j=1}^K \mu_j^{\text{joint}} s_j$。
+
+它比普通注意力权重更有针对性的地方在于：注意力只是"哪个 token 更相关"，而模糊隶属度直接对应"这个 token 在两个模态里是不是都看得见、对得上"，不可观察或噪声 token 因为单边隶属度低、相乘后被自然压到接近 0。高斯尺度 $\sigma$ 也不是固定超参，而是从全局 class token 自适应预测，使模型能按图像内容松紧不同地调整可靠性门槛。
+
+**3. AERI-PEDES 基准构建：用思维链分解把"一句话描述"拆成可核验的属性标注。**
+
+文本-航拍行人检索此前没有数据，本文顺带建了 AERI-PEDES。标注没有让模型一步生成整段描述，而是走 Chain-of-Thought 三步——先解析属性、再生成初始标注、最后审核精化，把"生成一段话"拆成可逐步核验的子任务，降低 VLM 一次性编造的风险。训练集用 VLM 自动标注以保证规模，测试集则全部人工标注以保证评估可靠，规模与人工质量两头兼顾。
 
 ### 损失函数 / 训练策略
 - CDA 直接对齐和桥接对齐均用 SDM（Similarity Distribution Matching）损失

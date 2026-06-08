@@ -44,28 +44,39 @@ tags:
 
 ### 整体框架
 
-给定图文输入 $x_{\text{input}} = [I, T]$ 和视觉 token 集合 $\mathcal{V} = \{v_1, \ldots, v_N\}$，VisRef 在每步推理 $k$ 产生文本推理步 $z_k$ 后：(1) 基于 DPP 从 $\mathcal{V}$ 中选择 $m$ 个视觉 token 子集 $V_k$；(2) 将 $V_k$ 注入下一步的上下文中；(3) 检查模型响应分布的熵是否低于阈值 $\delta_{\text{entropy}}$，决定是否终止推理。最终答案 $y \sim \pi_\theta(\cdot | x_{\text{input}}, \tau_{1:k})$，其中 $\tau_{1:k} = \{(z_1, V_1), \ldots, (z_k, V_k)\}$。
+VisRef 要解决的是 MLRM 推理链一拉长就"忘了看图"的问题：模型在初始处理完视觉 token 后不再回看，越往后越靠文本先验硬猜。VisRef 的做法是把"回看图"插进推理循环——每产生一步文本推理 $z_k$，就回头从原图的视觉 token 里挑一小撮重新喂给模型，让下一步推理重新接地到图像上，整个过程不动模型权重、纯在推理时完成。
+
+形式上，给定图文输入 $x_{\text{input}} = [I, T]$ 和全部视觉 token $\mathcal{V} = \{v_1, \ldots, v_N\}$，第 $k$ 步推理产出 $z_k$ 后，VisRef 做三件事：先用 DPP 从 $\mathcal{V}$ 里选出一个子集 $V_k$（既贴当前推理状态、又覆盖面广），把 $V_k$ 注入到下一步上下文里，再检查模型回答分布的熵是否已经够低来决定要不要收尾。整条推理轨迹记作 $\tau_{1:k} = \{(z_1, V_1), \ldots, (z_k, V_k)\}$，最终答案 $y \sim \pi_\theta(\cdot \mid x_{\text{input}}, \tau_{1:k})$。
 
 ### 关键设计
 
-1. **DPP-based 视觉 token 选择**
-    - 功能：在每步推理时选择一个既与当前推理状态相关、又视觉覆盖多样的 token 子集
-    - 核心思路：定义文本子空间几何 $M_k = \sum_{j=1}^{T_k} z_k^{(j)}(z_k^{(j)})^\top$，构造核函数 $L_k(v_i, v_j) = v_i^\top M_k v_j$。优化目标为最大化核矩阵行列式 $\tilde{V}_k = \arg\max_{V_k \subseteq \mathcal{V}} \det(L_k^{V_k})$。此行列式自然分解为两项：$\log\det(L_k^{V_k}) = \underbrace{\sum_{v_i \in V_k} \log(r_i^2)}_{\text{relevance}} + \underbrace{\log\det(\bar{L}_k^{V_k})}_{\text{diversity}}$，其中 $r_i^2 = \sum_{j=1}^{T_k}(v_i^\top z_k^{(j)})^2$ 衡量相关性
-    - 设计动机：朴素注入所有视觉 token 导致 2.3x 延迟；只选相关的会冗余；DPP 同时优化相关性和多样性是最优平衡
+**1. DPP 视觉 token 选择：用一个行列式同时管住"相关"和"多样"。**
 
-2. **贪心近似求解**
-    - 功能：高效求解 NP-hard 的子集选择问题
-    - 核心思路：从空集开始，每次选择边际增益最大的 token $v_{k,i} = \arg\max_{v \in \mathcal{V} \setminus V_k^{(i-1)}} \log\frac{\det(L_k^{V_k^{(i-1)} \cup \{v\}})}{\det(L_k^{V_k^{(i-1)}})}$，迭代 $m$ 次。在实验中 token 预算 $m = \lfloor 0.3|\mathcal{V}| \rfloor$
-    - 设计动机：精确求解最大行列式子集选择是 NP-hard 的，贪心算法提供 $(1-1/e)$ 近似比保证
+重聚焦最直接的痛点是：把全部视觉 token 重新注入一次，InternVL-3.5-8B 上每图约 1772 个视觉 token、每步才约 615 个文本 token，全量回注直接带来 2.3 倍延迟；可只挑"和当前推理最相关"的又会扎堆冗余、漏掉图里其他关键区域。VisRef 用行列式点过程（DPP）把这两个目标统一进一个优化里。它先用当前推理步的文本表示构造子空间几何 $M_k = \sum_{j=1}^{T_k} z_k^{(j)}(z_k^{(j)})^\top$，据此定义视觉 token 间的核函数 $L_k(v_i, v_j) = v_i^\top M_k v_j$，然后选使核矩阵行列式最大的子集 $\tilde{V}_k = \arg\max_{V_k \subseteq \mathcal{V}} \det(L_k^{V_k})$。妙处在于这个对数行列式能自然拆成两项：
 
-3. **基于熵的自适应停止准则**
-    - 功能：防止过度推理（overthinking）或推理不足
-    - 核心思路：在每步推理 $k$ 后计算模型的响应分布熵 $H_k = -\mathbb{E}_{y \sim \pi_\theta}[\log \pi_\theta(y | x_{\text{input}}, \tau_{1:k})]$，当 $H_k < \delta_{\text{entropy}} = 0.25$ 时终止，表示模型已收敛到高置信答案。同时设最大步数 $K_{\max} = 10$ 防止无限推理
-    - 设计动机：简单问题快速达到低熵而提前终止（节省计算），复杂问题利用更多推理步。$\delta_{\text{entropy}} = 0.25$ 在所有模型上一致最优
+$$\log\det(L_k^{V_k}) = \underbrace{\sum_{v_i \in V_k} \log(r_i^2)}_{\text{relevance}} + \underbrace{\log\det(\bar{L}_k^{V_k})}_{\text{diversity}}$$
+
+其中 $r_i^2 = \sum_{j=1}^{T_k}(v_i^\top z_k^{(j)})^2$ 衡量 token $v_i$ 与当前推理状态的相关性，后一项的体积型行列式则鼓励所选 token 在特征空间里彼此正交、覆盖不同视觉区域。一个 DPP 行列式就把"挑相关"和"避冗余"写进了同一个目标，而不用手工调两个 loss 的权重。
+
+**2. 贪心近似求解：用 $(1-1/e)$ 保证把 NP-hard 选择跑快。**
+
+精确求解"哪 $m$ 个 token 让行列式最大"是 NP-hard 的，没法在每步推理里硬解。VisRef 改用贪心：从空集出发，每轮挑边际增益最大的那个 token
+
+$$v_{k,i} = \arg\max_{v \in \mathcal{V} \setminus V_k^{(i-1)}} \log\frac{\det(L_k^{V_k^{(i-1)} \cup \{v\}})}{\det(L_k^{V_k^{(i-1)}})}$$
+
+迭代 $m$ 次填满预算，实验里取 $m = \lfloor 0.3|\mathcal{V}| \rfloor$（30% 的视觉 token）。因为对数行列式是单调子模函数，贪心解有 $(1-1/e)$ 的近似比保证，既快又不至于偏离最优太远。
+
+**3. 基于熵的自适应停止：让简单题早收、难题多想。**
+
+固定推理步数会两头不讨好——简单题想太久白烧算力（overthinking），难题又想不够。VisRef 在每步后算一次模型回答分布的熵 $H_k = -\mathbb{E}_{y \sim \pi_\theta}[\log \pi_\theta(y \mid x_{\text{input}}, \tau_{1:k})]$，一旦 $H_k < \delta_{\text{entropy}} = 0.25$ 就认为模型已收敛到高置信答案、当即终止；同时设上限 $K_{\max} = 10$ 兜底防止无限推理。这样算力按题目难度自适应分配，而 $\delta_{\text{entropy}} = 0.25$ 这个阈值在三个模型上都一致最优，不用逐模型重调。
+
+### 一个完整示例
+
+以 InternVL-3.5-8B 解一道 MathVista 几何题为例，原图被切成约 1772 个视觉 token，token 预算 $m = \lfloor 0.3 \times 1772 \rfloor \approx 531$。第 1 步模型产出推理文本"先看图中的三角形"，VisRef 用这步文本构造 $M_1$，贪心地从 1772 个 token 里逐个挑出边际增益最大的，凑满约 531 个——既集中在三角形区域（相关），又分散到三条边和标注（多样）——注入下一步；此时熵 $H_1 \approx 0.7 > 0.25$，继续。第 2 步推理转向"测量角度"，$M_2$ 随之改变，重选的 531 个 token 自动偏移到角度标注附近，熵降到 $H_2 \approx 0.4$，仍不收尾。第 3 步模型锁定答案，$H_3 \approx 0.18 < 0.25$，停止推理输出结果。整个过程每步只回注 30% token、推理 3 步即收敛，比纯文本一路"Think more"既省算力又始终贴着图。
 
 ### 损失函数 / 训练策略
 
-VisRef 完全不需要训练。所有操作在推理时完成：视觉 token 选择通过 DPP 贪心算法实现，重新注入通过修改上下文序列实现，停止通过熵计算判定。该方法即插即用，适用于任何预训练的 MLRM。
+VisRef 完全不需要训练。视觉 token 选择靠 DPP 贪心算法、重新注入靠改写上下文序列、停止靠熵判定，三者都在推理时完成，即插即用于任何预训练 MLRM，无需标注数据、微调或架构改动。
 
 ## 实验关键数据
 

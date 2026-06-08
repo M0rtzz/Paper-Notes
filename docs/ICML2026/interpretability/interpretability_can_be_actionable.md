@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文是 position paper，没有传统意义上的 pipeline。整体结构是：第 2 节定义 actionability + 二维度（concreteness × validation），把所有可解释性工作映射到这个二维空间；第 3 节诊断三大阻碍（incentive / 方法论 / 部署）；第 4 节列五个 actionability 杠杆领域；第 5 节按 audience（开发者/部署工程师/领域专家/终端用户/政策制定者）+ action 影响层（修改输出/部署使用/塑造未来实践）做 action 框架；第 6 节给三类 action 各自的评估准则；第 9 节用 6 步 checklist 收尾。
+作为 position paper，本文不提出 pipeline，而是搭一套「定义—诊断—指引—评估」的论证骨架：先把 actionability 形式化为一个二维空间（concreteness × validation），让任意一篇可解释性工作都能被定位；再诊断为何 actionable 工作长期稀缺；然后告诉研究者在哪些领域、面向哪类受众下功夫回报最大；最后给出每类 action 该用什么指标量化、以及一份 6 步自查 checklist。三个关键设计依次回答「怎么衡量 actionability」「该往哪发力」「怎么打分」。
 
 ### 关键设计
 
-1. **Actionability 二维度坐标系**:
+**1. Actionability 二维度坐标系：把 actionable 从二元判断改成连续光谱**
 
-    - 功能：把任意一篇可解释性工作放进 (concreteness, validation) 二维平面，避免「actionable / not actionable」的 binary 误判。
-    - 核心思路：concreteness 衡量 action 是否表述精确（从「could inform safety」一路到含实现细节的精准规范）；validation 衡量 action 是否有实证支撑（从纯假设到系统化定量评估）。四象限：低-低（基础探索类，如 Geva et al. 的 MLP key-value 视角）、高-低（具体方案但未验证，如某些 sci-AI 信任工作）、高-高（典型成功案例：ROME 编辑、SAE-based unlearning、Schut et al. 的 AlphaZero→人类棋手概念迁移）。
-    - 设计动机：把 actionability 平铺成连续光谱而非二元判断，给「探索性研究也有价值」留出空间，同时鼓励高象限作为目标。
+社区常把工作粗暴贴上「actionable / not actionable」标签，但这种 binary 既冤枉了为后续落地奠基的探索性研究，也放过了「说得具体却从未验证」的空中楼阁。作者用两条正交的轴拆开这件事：concreteness 衡量 action 表述得多精确，从模糊的「could inform safety」一路到含实现细节的精准规范；validation 衡量 action 有多少实证支撑，从纯假设到系统化定量评估。两轴张成四象限——低-低是基础探索类（如 Geva et al. 把 MLP 看成 key-value 的视角），高-低是有具体方案但未验证（如某些 sci-AI 信任工作），高-高才是典型成功案例（ROME 事实编辑、SAE-based unlearning、Schut et al. 把 AlphaZero 概念迁移给人类棋手）。把 actionability 摊成光谱而非贴标签，既给「探索性研究也有价值」留出生态位，又把高象限立成明确目标。
 
-2. **五领域杠杆 + 三类 action 框架**:
+**2. 五领域杠杆 + 三类 action 框架：指明在哪发力、面向谁、影响哪一层**
 
-    - 功能：告诉研究者「在哪里下 actionable 工作回报最大」、「面向谁、影响哪一层」。
-    - 核心思路：五领域杠杆包括 (a) scaling 解不了的问题（幻觉、灾难性遗忘、偏见、对抗脆弱性，需 why-级解释）；(b) 对齐（光黑盒测试无法证伪 deception）；(c) 外科手术干预（model editing / activation steering / concept bottleneck，重训太贵）；(d) 架构设计（induction head 启发了 Mamba 的 selective state）；(e) 把解释翻译为领域术语（医生需要 clinically relevant 而非 pixel-level 解释）。三类 action 按影响层分：修改输出（data curation、训练决策、直接控制、安全 unlearning）；部署使用（终端用户决策如 uncertainty 估计、部署路由如 FrugalGPT 的不确定性路由省 98% 成本）；塑造未来实践（政策合规、超人类模型知识转移、未来架构设计）。每类对应不同 audience（开发者/部署工程师/领域专家/终端用户/政策制定者），不同 audience 要不同形式的解释。
-    - 设计动机：actionability 不是一个层次——「数据点级影响函数」对开发者有用、「系统级 fairness 摘要」对政策制定者有用，没有 one-size-fits-all。
+知道怎么衡量后，研究者还需要知道把力气花在哪里回报最大。作者先列出五个 actionability 杠杆最高的领域：(a) scaling 单靠堆算力解不了的问题（幻觉、灾难性遗忘、偏见、对抗脆弱性，都需要 why-级解释）；(b) 对齐（光靠黑盒测试无法证伪 deception）；(c) 外科手术式干预（model editing / activation steering / concept bottleneck，因为重训代价太高）；(d) 架构设计（induction head 的发现启发了 Mamba 的 selective state）；(e) 把解释翻译成领域术语（医生要的是 clinically relevant 而非 pixel-level 的解释）。再按「影响层」把 action 分成三类：修改输出（data curation、训练决策、直接控制、安全 unlearning）、部署使用（终端用户的 uncertainty 估计、部署路由如 FrugalGPT 用不确定性路由省 98% 成本）、塑造未来实践（政策合规、超人类模型的知识转移、未来架构设计）。每一类又对应不同 audience（开发者 / 部署工程师 / 领域专家 / 终端用户 / 政策制定者），因为 actionability 从来不是单一层次——「数据点级影响函数」对开发者有用，「系统级 fairness 摘要」对政策制定者才有用，根本没有 one-size-fits-all。
 
-3. **三类 action 各自的评估指标**:
+**3. 三类 action 各自的评估指标：逼研究者跳出「自家方法互比」的怪圈**
 
-    - 功能：给研究者提供可量化的 actionability 评估维度，跳出「只和其它可解释性方法比」的 grading-on-curve 陷阱。
-    - 核心思路：(a) 修改输出类 action 要看 4 个指标——comparative utility（要和 prompting/fine-tuning/LoRA 等非可解释性 baseline 比，看是否真有 marginal leverage）、mechanistic faithfulness（介入识别出的组件是否产生预测的变化）、generalization（跨 seed / 输入扰动 / 架构 / 规模是否保持）、specificity（介入是否只影响目标行为而不损害无关能力）；(b) 部署使用类要看 task-enhancement（人类决策是否变快变准）、understandability（解释是否符合用户已有概念框架，如 FIX/T-FIX benchmark 对齐天体物理或临床 SOFA 评分）、reliability（同 task 内对小扰动是否稳定）；(c) 塑造未来实践类要看「是否扩展了可行的治理工具」、是否对非专家 legible、是否降低监管成本。
-    - 设计动机：可解释性长期在自家方法间互比，缺乏 ML 主流的「benchmark 涨点」forcing function；强制和外部 baseline 比能逼出真实价值。
+可解释性长期缺一把像主流 ML「benchmark 涨点」那样的 forcing function，于是容易陷入只和其它可解释性方法比较的 grading-on-curve 陷阱。作者给三类 action 各配一组可量化维度。修改输出类看四项：comparative utility（必须和 prompting / fine-tuning / LoRA 等非可解释性 baseline 比，看是否真有 marginal leverage）、mechanistic faithfulness（介入识别出的组件是否产生预测的变化）、generalization（跨 seed / 输入扰动 / 架构 / 规模是否保持）、specificity（介入是否只动目标行为而不伤无关能力）。部署使用类看 task-enhancement（人类决策是否更快更准）、understandability（解释是否贴合用户已有概念框架，如 FIX/T-FIX benchmark 对齐天体物理或临床 SOFA 评分）、reliability（同 task 内对小扰动是否稳定）。塑造未来实践类则看是否扩展了可行的治理工具、是否对非专家 legible、是否降低监管成本。强制和外部 baseline 对比，才能把真实价值逼出来。
 
-### 损失函数 / 训练策略
-不适用（立场论文）。但作者在第 9 节给出 6 步研究者 checklist：明确目标 → 锁定 audience → 提出具体 action → 实证验证 → 在真实场景测试 → 用上述 actionable 指标评估。
+### 训练策略
+不适用（立场论文）。作者在第 9 节给出一份 6 步研究者 checklist 作为可直接对照的操作流程：明确目标 → 锁定 audience → 提出具体 action → 实证验证 → 在真实场景测试 → 用上述 actionable 指标评估。
 
 ## 实验关键数据
 

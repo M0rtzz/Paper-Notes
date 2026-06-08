@@ -40,35 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MAP-RPS 是个两阶段算法，输入是观测 $\mathbf{y}=\mathcal{A}(\mathbf{x})+\sigma_{\mathbf{y}}\mathbf{n}$ 和一个**已预训练好的（不动）**扩散 score 网络 $\mathbf{s}_\theta(\mathbf{x}_t,t)$，输出是重建图像 $\hat{\mathbf{x}}_0$：
-
-- **Stage 1**：从随机初始化 $\mathbf{x}^{(0)}$ 出发，用扩散 score 提供的 prior 梯度做 $N$ 步随机梯度上升，求解 $\mathbf{x}_{\text{MAP}}=\arg\max_{\mathbf{x}}\log p_{Y\mid X}(\mathbf{y}\mid\mathbf{x})+\log p_X(\mathbf{x})$，得到一个低失真的"锚点"。
-- **Stage 2**：把 $\mathbf{x}_{\text{MAP}}$ 沿正向 SDE 加噪到时刻 $t_0$，再用任意现成后验采样器（DPS / $\Pi$GDM 等）从 $t_0$ 跑回 $0$，$t_0\in[0,T]$ 是用户在推理时设的 D-P 滑块。
-
-把上述流程搬到 latent space（在 VAE 隐空间做 MAP 和 RPS，likelihood 通过 decoder 反推近似 $\log p_{Y\mid Z}(\mathbf{y}\mid\mathbf{z})\approx\log p_{Y\mid X}(\mathbf{y}\mid\mathcal{D}(\mathbf{z}))$）就得到 LMAP-RPS，能直接用 Stable Diffusion 这类大模型。
+MAP-RPS 要解决的是"如何用一个不动的预训练扩散模型，在推理时自由滑动 distortion-perception trade-off"。它把这件事拆成两阶段串联：先用扩散 score 当 prior、用梯度优化求一个低失真的 MAP 锚点（对应 D-P 曲线失真端），再把这个锚点沿扩散的正向 SDE 加噪到中间时刻 $t_0$、用现成后验采样器从 $t_0$ 去噪跑回 0（向感知端滑动）。输入是观测 $\mathbf{y}=\mathcal{A}(\mathbf{x})+\sigma_{\mathbf{y}}\mathbf{n}$ 和预训练 score 网络 $\mathbf{s}_\theta(\mathbf{x}_t,t)$，输出是重建图像 $\hat{\mathbf{x}}_0$，而用户只需调一个标量 $t_0\in[0,T]$ 就能在两端之间任意取点。整套流程还能整体搬进 VAE 隐空间得到 LMAP-RPS，直接借力 Stable Diffusion 跑 MS-COCO 级别的近真实任务。
 
 ### 关键设计
 
-1. **Stage 1：用 MAP 替代 MMSE 作低失真起点（含可证误差界）**:
+**1. 用 MAP 替代 MMSE 作低失真锚点：可证误差界 + 单次前向的 score 梯度**
 
-    - 功能：在 zero-shot 扩散设定下不靠多样本平均，单条优化路径就拿到 D-P 曲线的低失真端点。
-    - 核心思路：(a) 理论侧 Theorem 3.2 假设后验 $\mu$-strongly log-concave，证明 $\mathbb{E}\|X_{\text{MAP}}-X_{\text{MMSE}}\|\le\sqrt{n_x/\mu}$、$\mathbb{E}\|X-X_{\text{MAP}}\|^2\le D^*+n_x/\mu$，即 MAP 解的额外失真有界于 $\mathcal{O}(n_x^{1/2})$，后验越集中（$\mu$ 越大）越紧。(b) 算法侧 Theorem 3.3 给出用扩散 score 估计 prior 梯度的可计算公式 $\nabla_{\mathbf{x}}\log p_X(\mathbf{x})=\frac{1-\bar\alpha_{t_1}}{r_{t_1}^2\sqrt{\bar\alpha_{t_1}}}\mathbb{E}_{p_{X_{t_1}\mid X_0}}\nabla_{\mathbf{x}_{t_1}}\log p_{t_1}(\mathbf{x}_{t_1})$，配合 $\ell_2$ likelihood 项就能直接 SGD 求 MAP，单次外层迭代只要 1 次 score 网络前向，比 MMSE 的"反复采样取平均"便宜一两个数量级。
-    - 设计动机：直接逼 MMSE 在 zero-shot 扩散里太贵，作者用"图像恢复后验近似单峰"这个工程常识把代价换成 MAP，再用理论保证误差不会失控。
+D-P 曲线的失真端理论上是 MMSE 解 $X_{\text{MMSE}}=\mathbb{E}[X\mid Y]$，但在 zero-shot 扩散设定里它需要从后验反复采样再取均值，开销爆炸。作者改用便宜得多的 MAP 解，并用"图像恢复的真实图像近似唯一、后验近似 $\mu$-strongly log-concave"这一工程常识兜底误差：Theorem 3.2 证明 $\mathbb{E}\|X_{\text{MAP}}-X_{\text{MMSE}}\|\le\sqrt{n_x/\mu}$、$\mathbb{E}\|X-X_{\text{MAP}}\|^2\le D^*+n_x/\mu$，即 MAP 带来的额外失真有界于 $\mathcal{O}(n_x^{1/2})$，后验越集中（$\mu$ 越大）界越紧。算法上 Stage 1 从随机初始化出发解 $\mathbf{x}_{\text{MAP}}=\arg\max_{\mathbf{x}}\log p_{Y\mid X}(\mathbf{y}\mid\mathbf{x})+\log p_X(\mathbf{x})$，其中 likelihood 项退化为 $\ell_2$ 数据项，prior 梯度则由 Theorem 3.3 给出可计算闭式 $\nabla_{\mathbf{x}}\log p_X(\mathbf{x})=\frac{1-\bar\alpha_{t_1}}{r_{t_1}^2\sqrt{\bar\alpha_{t_1}}}\mathbb{E}_{p_{X_{t_1}\mid X_0}}\nabla_{\mathbf{x}_{t_1}}\log p_{t_1}(\mathbf{x}_{t_1})$，于是单条 SGD 优化路径（每次外层迭代只 1 次 score 前向）就能拿到锚点，比 MMSE 的反复采样取平均便宜一两个数量级。
 
-2. **Stage 2：re-noised posterior sampling，用 $t_0$ 单参数遍历 D-P 曲线**:
+**2. re-noised posterior sampling：用单参数 $t_0$ 遍历 D-P 曲线**
 
-    - 功能：以 Stage 1 的低失真锚点为初值，通过一个标量 $t_0\in[0,T]$ 连续插值出 D-P 曲线上任意点，$t_0\!=\!0$ 是 MAP（最低失真），$t_0\!=\!T$ 退化为标准后验采样（最佳感知）。
-    - 核心思路：把 $\mathbf{x}_{\text{MAP}}$ 沿正向 SDE 推到 $\mathbf{x}_{t_0}\sim\mathcal{T}(0,t_0)_\#\delta_{\mathbf{x}_{\text{MAP}}}$（即正向加噪），再用后验采样 SDE $\tilde{\mathcal{T}}(t_0,0;\mathbf{y})_\#$ 跑回 0。Theorem 3.5 证明所得分布到真实分布的 Wasserstein-2 距离上界为 $W_2(p_X,\,p_{0\to t_0\to 0})\le(\bar\alpha_{t_0})^{1-L_s}\sqrt{2n_x/\mu}+\epsilon_{\text{score}}$；Corollary 3.6 进一步说明当 score 网络 Lipschitz 常数 $L_s<1$ 时该上界关于 $t_0$ **单调递减**，即"加越多噪 → 感知越好"。
-    - 设计动机：扩散模型本身就提供了"任意时刻加噪 / 任意时刻去噪"的对称结构，恰好天然适合做线性插值器——失真端用 MAP 锚住，感知端用 score 重新混入随机性，两端的桥就是 $t_0$。这是文章把 D-P 理论变成 plug-and-play 推理控件的关键。
+有了低失真锚点，怎么连续地把它"推"向高感知端、而不是只能停在某一固定 trade-off 点？作者借扩散模型天然的"任意时刻加噪 / 任意时刻去噪"对称结构做线性插值器：Stage 2 把 $\mathbf{x}_{\text{MAP}}$ 沿正向 SDE 加噪到 $\mathbf{x}_{t_0}\sim\mathcal{T}(0,t_0)_\#\delta_{\mathbf{x}_{\text{MAP}}}$，再用后验采样 SDE $\tilde{\mathcal{T}}(t_0,0;\mathbf{y})_\#$ 从 $t_0$ 去噪回 0。这里 $t_0=0$ 完全退化为 MAP（最低失真），$t_0=T$ 退化为标准后验采样（最佳感知），中间任意 $t_0$ 给出曲线上的插值点——失真端被 MAP 锚住、感知端靠 score 重新混入随机性，两端的桥就是这一个标量。理论上 Theorem 3.5 给出 Wasserstein-2 上界 $W_2(p_X,\,p_{0\to t_0\to 0})\le(\bar\alpha_{t_0})^{1-L_s}\sqrt{2n_x/\mu}+\epsilon_{\text{score}}$，Corollary 3.6 进一步指出当 score 网络 Lipschitz 常数 $L_s<1$ 时该上界关于 $t_0$ 单调递减，即"加越多噪 → 感知越好"，把 D-P 理论坐实成了一个 plug-and-play 的推理控件。
 
-3. **LMAP-RPS：搬到 latent space 借力大模型 + 工程化的 likelihood 近似**:
+**3. LMAP-RPS：整体搬进 latent space 借力大模型**
 
-    - 功能：让 MAP-RPS 直接套在 Stable Diffusion 这类预训练 latent 扩散模型上，扩展到 MS-COCO 级别的近真实场景。
-    - 核心思路：MAP 优化与 re-noised posterior sampling 全部在 latent $\mathbf{z}\in\mathbb{R}^d$ 里做，通过 decoder $\mathcal{D}$ 把 latent 拉回像素空间施加观测约束 $\log p_{Y\mid Z}(\mathbf{y}\mid\mathbf{z})\approx\log p_{Y\mid X}(\mathbf{y}\mid\mathcal{D}(\mathbf{z}))$，相当于把 decoder 输出当成 $p_{X\mid Z}$ 的 point estimate。Appendix C 给出 latent 版本的 Theorem C.2、C.3 把像素空间的两条理论保证平移过来。
-    - 设计动机：纯像素扩散模型分辨率有限，要做真正实用的逆问题求解必须吃到 latent 扩散的大模型红利；同时 latent 空间维度低，MAP 优化也更快，整体计算复杂度反而比 ReSample、PSLD 等 baseline 更低。
+纯像素扩散模型分辨率有限，要做真正实用的逆问题求解必须吃到 latent 扩散的大模型红利。作者把 MAP 优化与 re-noised posterior sampling 整体放进 latent $\mathbf{z}\in\mathbb{R}^d$，观测约束通过 decoder $\mathcal{D}$ 拉回像素空间近似 $\log p_{Y\mid Z}(\mathbf{y}\mid\mathbf{z})\approx\log p_{Y\mid X}(\mathbf{y}\mid\mathcal{D}(\mathbf{z}))$，相当于把 decoder 输出当成 $p_{X\mid Z}$ 的 point estimate；Appendix C 的 Theorem C.2、C.3 把像素空间那两条理论保证平移到了 latent 版。这样不仅能直接套 Stable Diffusion 跑 MS-COCO，而且 latent 维度低、MAP 优化更快，整体计算复杂度反而比 ReSample、PSLD 这些多步精修 baseline 更低。
 
 ### 损失函数 / 训练策略
-**无训练**——整个 pipeline 是 zero-shot 推理算法，全程不更新扩散模型参数。Stage 1 的目标函数是 $-\log p_{Y\mid X}(\mathbf{y}\mid\mathbf{x})-\log p_X(\mathbf{x})$（前者退化为 $\ell_2$ 数据项，后者通过 Theorem 3.3 的 score 估计实现），优化器是普通 SGD；Stage 2 用 Euler–Maruyama 求解后验采样 SDE，posterior score 用 DPS / $\Pi$GDM 现成实现替换即可。关键超参就两个：MAP 迭代步数 $N$ 与步长 $\gamma$、re-noise 时刻 $t_0$。
+全程 zero-shot 推理，不更新任何扩散模型参数。Stage 1 的目标是 $-\log p_{Y\mid X}(\mathbf{y}\mid\mathbf{x})-\log p_X(\mathbf{x})$（数据项是 $\ell_2$，prior 项由 Theorem 3.3 的 score 估计实现），用普通 SGD 优化；Stage 2 用 Euler–Maruyama 求解后验采样 SDE，posterior score 直接换成 DPS / $\Pi$GDM 的现成实现即可。需要调的超参只有三个：MAP 迭代步数 $N$、步长 $\gamma$、re-noise 时刻 $t_0$。
 
 ## 实验关键数据
 

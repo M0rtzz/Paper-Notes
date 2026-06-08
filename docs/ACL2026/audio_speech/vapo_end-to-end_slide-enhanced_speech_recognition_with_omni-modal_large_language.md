@@ -50,23 +50,18 @@ VAPO 的输入包括音频、对应幻灯片图像和任务指令，输出是一
 论文还构建了 SlideASR-Bench 来解决数据稀缺问题。SlideASR-S 从 ContextASR-Bench 扩展而来，利用实体和领域标签生成 slide-style 文本，再用 Matplotlib 渲染成幻灯片图像，共 8,467 个样本，其中 6,413 个训练、2,054 个测试。SlideASR-R 则是 60 个真实学术报告片段，覆盖化学、医学、生物和人工智能，人工标注 200 个领域实体，用来做真实复杂场景测试。
 
 ### 关键设计
-1. **Look-then-Listen 推理链**:
 
-	- 功能：把视觉感知和语音转写在时间上解耦，避免模型直接把 slide text 当 transcript。
-	- 核心思路：模型先在 `<think>` 中提取幻灯片文本和实体，形成视觉先验；再在 `<answer>` 中根据音频生成最终转写，并在遇到专业词时引用 `<think>` 中的候选实体。
-	- 设计动机：人类听报告时也是先看幻灯片建立语境，再听语音确认内容。这个结构让视觉信号承担“锚点”角色，而不是直接决定输出。
+**1. Look-then-Listen 推理链：把"看"和"听"在时间上拆开，让视觉只当锚点不当答案。**
 
-2. **四奖励多目标策略优化**:
+vanilla OLLM 把图像和音频一起灌进去同时解码，强视觉文字会在那一刻直接压过音频，于是 slide 上的词被原样抄进 transcript。VAPO 的对策是强制模型分两步走：先在 `<think>` 里做一次类 OCR 的视觉扫描，把幻灯片中可能和语音相关的词、短语、实体抽出来形成视觉先验；再在 `<answer>` 里以音频为主轴生成转写，遇到专业词时回头引用 `<think>` 中的候选实体来确认拼写。这个顺序本身就是关键——视觉内容被先写进一段可引用的中间记忆，而不是和音频在同一时刻争夺输出 token。设计灵感来自人听报告的习惯：先扫一眼幻灯片建立主题和实体先验，再听语音把听到的词和先验对齐。这样视觉信号承担的是"锚点"角色，决定权仍在听觉。
 
-	- 功能：让模型既遵守结构，又真正学会看图、听音频和连接实体。
-	- 核心思路：Format Reward 检查 `<think><answer>` 格式；OCR Reward 用 `<think>` 文本和真实 slide text 的 WER 得到 $R_{OCR}=max(1-WER,0)$；ASR Reward 用 `<answer>` 和真实 transcript 的 WER 得到 $R_{ASR}=max(1-WER,0)$；Visual Anchoring Reward 统计关键实体是否同时出现在 `<think>` 和 `<answer>`，近似为目标实体召回率。
-	- 设计动机：只用 ASR 奖励会让模型忽略视觉，只用 OCR 奖励会鼓励抄幻灯片。VA reward 专门约束“看见的实体是否被正确用于听到的语音”，是连接两阶段的关键。
+**2. 四奖励多目标策略优化：用四个奖励同时把模型拉向格式、看图、听音频、连实体四个目标。**
 
-3. **实体密集 SlideASR-Bench**:
+单一奖励都会走偏：只给 ASR 奖励，模型会干脆忽略视觉；只给 OCR 奖励，又会鼓励它照抄幻灯片。VAPO 因此把总奖励拆成四项联合优化。Format Reward 检查输出是否严格遵守 `<think><answer>` 结构；OCR Reward 用 `<think>` 文本和真实 slide text 的 WER 折算为 $R_{OCR}=\max(1-WER,0)$，逼 `<think>` 真的看准幻灯片；ASR Reward 同理用 `<answer>` 和真实 transcript 的 WER 得到 $R_{ASR}=\max(1-WER,0)$，保证最终转写质量；而最关键的 Visual Anchoring Reward 统计关键实体是否**同时**出现在 `<think>` 和 `<answer>`，近似为目标实体的召回率。VA reward 专门约束"看见的实体有没有被正确用到听到的语音里"，它既防止模型在 `<think>` 做完漂亮 OCR 后到 `<answer>` 里弃之不用，也防止模型在 `<answer>` 里乱抄 slide——是把两个阶段真正缝起来的那一针。
 
-	- 功能：提供比现有 SlideSpeech 更能考察专业实体识别的数据。
-	- 核心思路：合成部分用领域标签和实体列表生成 formal slide 文本，再渲染成图像；真实部分从公开报告视频采集音频和幻灯片，人工标注跨模态实体。
-	- 设计动机：如果数据里专业实体太少，模型可以靠通用 ASR 得分掩盖问题。SlideASR-Bench 把 NE-WER 和 NE-FNR 作为核心指标，迫使方法在真正困难的实体识别上接受检验。
+**3. 实体密集 SlideASR-Bench：造一个专业实体足够密的数据集，让"视觉干扰"这种失败无处遁形。**
+
+如果评测数据里专业实体太稀疏，模型完全可以靠通用 ASR 的高分掩盖掉它在罕见词上的崩溃。VAPO 因此自建 SlideASR-Bench：合成子集 SlideASR-S 从 ContextASR-Bench 扩展而来，用领域标签和实体列表生成 formal slide 文本，再用 Matplotlib 渲染成幻灯片图像，共 8,467 个样本（6,413 训练 / 2,054 测试）；真实子集 SlideASR-R 则采集 60 个真实学术报告片段，覆盖化学、医学、生物和人工智能，人工标注 200 个领域实体。基准把 NE-WER（命名实体 WER）和 NE-FNR（命名实体漏识别率）作为核心指标，迫使方法在真正困难的实体识别上接受检验，而不是躲在整体 WER 后面。
 
 ### 损失函数 / 训练策略
 VAPO 使用 GRPO 做强化学习式后训练，总奖励为 $R_{total}=\lambda_1R_{Format}+\lambda_2R_{OCR}+\lambda_3R_{ASR}+\lambda_4R_{VA}$。实验中四个权重默认都设为 1。训练总共 800 steps，使用 AdamW，学习率 $1e^{-6}$，global batch size 32，在 4 张 A100 上训练，group size 为 4，采样温度为 1.0，KL penalty coefficient 为 0.01。

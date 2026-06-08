@@ -41,35 +41,26 @@ F-TIS 把"截断重要性采样 (TIS)"与"按 KL 阈值过滤负优势 off-polic
 ## 方法详解
 
 ### 整体框架
-F-TIS 跑的是"vertical decentralized RL"：每个节点拿到一个 prompt，自己在本地用自己的模型一次生成完整一组 $G$ 个 completion，把 `(token_ids, per-token log-prob, reward)` 通过 all-gather 广播给其他节点。每个节点收到所有人的 completion 后，把它们都当成自己策略 $\pi_\theta$ 的训练样本，用一个改造过的 GRPO loss 算梯度更新本地模型。通信量仅 $8\times|p|$ 字节/token（4 字节 token id + 4 字节 log-prob），因此哪怕跨广域网都跑得动。组优势 $\hat{A}_i$ 在节点本地计算，因此 advantage 始终是相对"本节点 GRPO 视角"归一化的（这一点比 horizontal 协作好，后面 4.7 节验证了）。
-
-整套训练分两阶段：
-- **生成阶段**：每个节点独立用自己的 $\pi_{\theta_{gen}}$ 跑组采样，本地算 reward 和 group advantage。
-- **训练阶段**：所有节点的 completion 被本节点的 $\pi_\theta$ 重新前向一遍，拿到 $\pi_\theta(a_{i,t}|\cdot)$；与广播来的 $\pi_{\theta_{gen}}(a_{i,t}|\cdot)$ 一起喂进 F-TIS 损失更新参数。
+F-TIS 跑的是"vertical decentralized RL"：每个节点各自拿一个 prompt，用自己的模型在本地一次生成完整一组 $G$ 个 completion，把 `(token_ids, per-token log-prob, reward)` 通过 all-gather 广播出去；收到全网 completion 后，每个节点把它们一律当成自己策略 $\pi_\theta$ 的训练样本，喂进一个改造过的 GRPO loss 更新本地模型。也就是说，生成阶段各节点用自己的 $\pi_{\theta_{gen}}$ 跑组采样、本地算 reward 和组优势；训练阶段所有 completion 被本节点的 $\pi_\theta$ 重新前向一遍拿到 $\pi_\theta(a_{i,t}|\cdot)$，再与广播来的 $\pi_{\theta_{gen}}(a_{i,t}|\cdot)$ 一起算梯度。整个交换只传 $8\times|p|$ 字节/token（4 字节 token id + 4 字节 log-prob），轻到跨广域网也能跑；而组优势 $\hat{A}_i$ 始终在本地、按"本节点 GRPO 视角"归一化。难点在于：别人的 completion 是用别的模型采的，对本模型来说就是 off-policy 噪声，而 GRPO 本质 on-policy，硬吃就崩——下面三个设计正是让这条 off-policy 数据流不崩的关键。
 
 ### 关键设计
 
-1. **截断重要性采样 TIS 作为骨架**：
+**1. 截断重要性采样（TIS）作为骨架：让异质 generator 引入的方差/偏置可控。**
 
-    - 功能：用一个 clamp 到上界 $C$ 的重要性比值替代标准 GRPO 的 token-level 比值，把异质 generator 引入的方差和偏置控制住。
-    - 核心思路：传统 GRPO 在 token-level 写成 $\min[r_{i,t}\hat{A}_i, \text{clip}(r_{i,t}\hat{A}_i, 1\pm\epsilon)]$，其中 $r_{i,t}=\pi_\theta/\pi_{\theta_{gen}}$。TIS 把这个比值挪到 token-loss 外面做整体限幅：$\min\big(\pi_\theta/\pi_{\theta_{gen}},\; C\big)\cdot \min(\mathcal{R}_{i,\theta}\hat{A}_i,\; \text{clip}(\mathcal{R}_{i,\theta}\hat{A}_i, 1-\epsilon, 1+\epsilon))$，其中 $\mathcal{R}_{i,\theta}=\pi_\theta/\pi_{\theta_{detach}}$ 用 stop-gradient 防二次反传，$C=2$。
-    - 设计动机：作者在 Figure 2 上验证：纯 NoIS（把异质样本当 on-policy）在 1.5B + 3B 协同时两个模型都掉点；VIS（每 token 都用 IS 比值）对 1.5B 还行但 3B 明显退化；TIS 在 3B 上显著好于 VIS，说明"把 IS 外提 + 限幅"比 token-level IS 更稳，尤其在大模型上。
+异质样本最直接的麻烦是分布失配：别人模型采的 token 在本模型下概率可能很低，标准 GRPO 的 token-level 形式 $\min[r_{i,t}\hat{A}_i,\,\text{clip}(r_{i,t}\hat{A}_i,1\pm\epsilon)]$（其中 $r_{i,t}=\pi_\theta/\pi_{\theta_{gen}}$）在这种大偏移下会被高方差比值带飞。TIS 的做法是把这个重要性比值从 token-loss 内部抽到外面做整体限幅：$\min\big(\pi_\theta/\pi_{\theta_{gen}},\,C\big)\cdot\min\big(\mathcal{R}_{i,\theta}\hat{A}_i,\,\text{clip}(\mathcal{R}_{i,\theta}\hat{A}_i,1-\epsilon,1+\epsilon)\big)$，其中 $\mathcal{R}_{i,\theta}=\pi_\theta/\pi_{\theta_{detach}}$ 用 stop-gradient 防二次反传，外层比值 clamp 到上界 $C=2$。把 IS 外提加封顶，等于给"序列整体有多 off-policy"设了一个天花板，比逐 token 乘 IS 更稳：Figure 2 里纯 NoIS（把异质样本当 on-policy）让 1.5B+3B 双双掉点，VIS（每 token 都乘 IS）对 1.5B 尚可但 3B 明显退化，而 TIS 在 3B 上显著好于 VIS——模型越大，token-level IS 的方差越伤，外提限幅越值。
 
-2. **基于 KL 阈值的负优势样本过滤**：
+**2. 基于 KL 阈值的负优势样本过滤：切掉"负优势 + 离得远"这批 gibberish 元凶。**
 
-    - 功能：在更新阶段把 $\hat{A}_i<0$ 且 $\mathcal{D}_{KL}(\pi_\theta\Vert\pi_{\theta_{gen}})>g$ 的样本对应的 advantage 直接置 0，让这些 token 不再贡献梯度（但仍参与组优势的均值/方差计算）。形式上 $\hat{A}_{t,i} = \hat{A}_i$ if $\hat{A}_i>0$ 或 $\mathcal{D}_{KL}<g$，否则为 0。
-    - 核心思路：直观上 $\hat{A}_i>0$ 的样本告诉模型"这条路是对的，朝它走"，即便 off-policy 也方向有用；而 $\hat{A}_i<0$ 的 off-policy 样本会"惩罚一些本模型根本不会生成的 token"，反向梯度只会推高其它低概率 token，是 gibberish 崩塌的元凶。$g$ 控制"多远才算太远不能信"。作者取 $g=50$ 作为默认值。
-    - 设计动机：Figure 3 验证仅加这一项（F-NoIS）就能把崩塌的 NoIS 拉回接近 baseline，已经做了"大头"的稳定性工作；F-TIS 把它叠在 TIS 之上拿满残余收益。Section 4.5 的消融进一步说明：小模型早期偏好小 $g$（更早过滤、不被高方差完成混乱），大模型在中后期反而偏好大 $g$ 留下更多 off-policy 样本做探索。
+不是所有 off-policy 样本都同样有害。$\hat{A}_i>0$ 的样本在说"这条路是对的，朝它走"，即便 off-policy 方向也有用；真正危险的是 $\hat{A}_i<0$ 又离当前策略很远的样本——它们惩罚的是本模型根本不会生成的 token，反向梯度只会把概率挤到别的低概率 token 上，正是模型崩成 gibberish 的元凶。F-TIS 因此在更新时把同时满足 $\hat{A}_i<0$ 且 $\mathcal{D}_{KL}(\pi_\theta\Vert\pi_{\theta_{gen}})>g$ 的样本 advantage 直接置 0：$\hat{A}_{t,i}=\hat{A}_i$ 当 $\hat{A}_i>0$ 或 $\mathcal{D}_{KL}<g$，否则为 0；被置 0 的 token 不再贡献梯度，但仍参与组优势的均值/方差统计。这里 $g$（默认 50）就是"多远才算远到不能信"的旋钮。Figure 3 表明光这一项（F-NoIS）就能把崩塌的 NoIS 拉回接近 baseline，是稳定性的"大头"，TIS 只是叠在上面收残余收益；而 Section 4.5 进一步显示 $g$ 与模型容量相关：小模型早期偏好小 $g$（更早过滤、不被高方差完成带乱），大模型中后期反而偏好大 $g$（留更多 off-policy 样本做探索）。
 
-3. **Vertical 协作策略**：
+**3. Vertical 协作：组优势按"本模型"归一化，而非按 swarm 平均。**
 
-    - 功能：每节点负责"一个 prompt 的完整一组 completion"，而不是 horizontal 那样"每节点贡献一组里的一部分"。
-    - 核心思路：vertical 意味着 group advantage 始终基于"本模型"自己的 G 个 reward 算均值方差，避免被群里别的强弱模型拉偏；horizontal 则会用 swarm 平均 reward 来归一化，引入跨模型的系统性偏差。
-    - 设计动机：作者在 4.7 节做对照实验，horizontal F-TIS 对 3B 模型有明显退化（1.5B 也有但更轻），印证 vertical 是异质 RL 应该默认的分布范式。
+异质场景里"怎么分工"会直接决定 advantage 算得对不对。F-TIS 选 vertical——每个节点负责"一个 prompt 的完整一组 completion"，而不是 horizontal 那样"每个节点只贡献一组里的一部分"。区别在于归一化的基准：vertical 下 group advantage 始终用本模型自己这 $G$ 个 reward 算均值方差，干净地反映"对本模型而言哪条完成更好"；horizontal 则会拿 swarm 平均 reward 来归一化，等于把强弱模型混在一起算基线，悄悄引入跨模型的系统性偏差（相当于默认做了一层 reward shaping）。4.7 节的对照实验显示 horizontal F-TIS 对 3B 有明显退化（1.5B 较轻），印证 vertical 才是异质 RL 该默认的分布范式。
 
 ### 损失函数 / 训练策略
 最终 F-TIS 损失即：
-$\mathcal{L}_{F\text{-}TIS} = \frac{1}{G}\sum_i \frac{1}{|a_i|}\sum_t \min\big(\pi_\theta/\pi_{\theta_{gen}},\;C\big)\cdot \min\big(\mathcal{R}_{i,\theta}\hat{A}_{t,i},\;\text{clip}(\mathcal{R}_{i,\theta}\hat{A}_{t,i},\;1-\epsilon,\;1+\epsilon)\big)$，其中 $\hat{A}_{t,i}$ 由上面的过滤规则给出。沿用 DR-GRPO 经验**省略 KL 项**（既不增稳也吃显存）。超参：学习率 $1\times 10^{-6}$，group size 12，batch size 16/24，$\epsilon=0.2$，$C=2$，$g=50$，binary 规则奖励（格式+答案都对给 1）。训练数据 GSM8K，50 个迭代，pass@1 greedy decoding 验证。
+$$\mathcal{L}_{F\text{-}TIS} = \frac{1}{G}\sum_i \frac{1}{|a_i|}\sum_t \min\big(\pi_\theta/\pi_{\theta_{gen}},\;C\big)\cdot \min\big(\mathcal{R}_{i,\theta}\hat{A}_{t,i},\;\text{clip}(\mathcal{R}_{i,\theta}\hat{A}_{t,i},\;1-\epsilon,\;1+\epsilon)\big)$$
+其中 $\hat{A}_{t,i}$ 由设计 2 的过滤规则给出。沿用 DR-GRPO 经验**省略 KL 项**（既不增稳也吃显存）。超参：学习率 $1\times 10^{-6}$，group size 12，batch size 16/24，$\epsilon=0.2$，$C=2$，$g=50$，binary 规则奖励（格式+答案都对给 1）；训练数据 GSM8K，50 个迭代，pass@1 greedy decoding 验证。
 
 ## 实验关键数据
 

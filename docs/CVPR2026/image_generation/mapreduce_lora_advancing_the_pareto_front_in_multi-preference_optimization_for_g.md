@@ -43,46 +43,34 @@ RLHF/RLAIF 已成为将生成模型与人类偏好对齐的主流范式，但现
 
 ## 方法详解
 
-### 问题形式化
-给定 $K$ 个奖励模型 $\{R_k\}_{k=1}^K$，对应 $K$ 个偏好维度。目标是找到模型参数 $\theta^*$，使得多目标向量 $\mathbf{F}(\theta) = [F_1(\theta), \ldots, F_K(\theta)]$ 达到 Pareto 最优，其中 $F_k(\theta) = \mathbb{E}[R_k(x, G_\theta(x))]$。
+### 整体框架
+本文要解决的是多偏好对齐里的 alignment tax：把 $K$ 个奖励 $\{R_k\}_{k=1}^K$ 线性加权成一个标量去优化时，提升一个维度往往以牺牲另一个维度为代价，整条 Pareto 前沿动不了。作者给出两条互补的路线。第一条 **MapReduce LoRA** 借了分布式计算里 MapReduce 的思路：先 Map——为每个偏好维度各训一个独立的 LoRA 专家，互不干扰、可并行；再 Reduce——把这些专家迭代地合并回一个模型，而且每合并一轮就把合并点当作新起点再训一轮，让前沿被逐步往外推。第二条 **RaTE** 则不动主模型，只为每个奖励学一个可训练的 token embedding，推理时按需线性混合，把"各维度权重"从训练期固定变成推理期可调。形式化地，记 $F_k(\theta) = \mathbb{E}[R_k(x, G_\theta(x))]$，目标是让向量 $\mathbf{F}(\theta) = [F_1(\theta), \ldots, F_K(\theta)]$ 达到 Pareto 最优——不是某一维独大，而是整条前沿被抬高。
 
-### MapReduce LoRA
+### 关键设计
 
-#### Map 阶段：并行训练偏好专家
-对每个偏好维度 $k$，独立训练一个 LoRA adapter $\Delta\theta_k$，仅使用对应的奖励 $R_k$ 作为优化目标。这些专家训练可以**完全并行**，互不干扰：
+**1. Map 阶段——把冲突的奖励拆开，各训各的专家。**
 
-$$\Delta\theta_k^* = \arg\max_{\Delta\theta_k} \mathbb{E}_{x}[R_k(x, G_{\theta_0 + \Delta\theta_k}(x))]$$
+线性加权之所以会互相打架，是因为不同奖励模型的梯度方向天然矛盾，混在一起优化时谁也到不了自己的最优。Map 阶段干脆把它们解耦：对每个维度 $k$ 单独训一个 LoRA adapter $\Delta\theta_k$，只用对应的 $R_k$ 当目标，
 
-其中 $\theta_0$ 为预训练基础模型参数。每个专家在其对应维度上达到最优，但在其他维度上可能退化。
+$$\Delta\theta_k^* = \arg\max_{\Delta\theta_k} \mathbb{E}_{x}\big[R_k(x, G_{\theta_0 + \Delta\theta_k}(x))\big]$$
 
-#### Reduce 阶段：迭代渐进合并（Progressive Souping）
-核心创新在于合并策略。不是简单的一次性平均合并（naive souping），而是采用**迭代渐进合并**：
+其中 $\theta_0$ 是预训练基础模型。因为各专家只看自己那一路奖励，训练完全互不依赖、可以并行铺开。代价是每个专家在自己维度上很强、在别的维度上往往退化——这正是留给 Reduce 阶段去缝合的。
 
-1. 初始化合并模型 $\bar{\theta}^{(0)} = \theta_0 + \frac{1}{K}\sum_{k=1}^K \Delta\theta_k$
-2. 对于每轮迭代 $t = 1, 2, \ldots, T$：
-    - 以当前合并模型 $\bar{\theta}^{(t-1)}$ 为参考点，对每个维度重新微调得到新专家 $\Delta\theta_k^{(t)}$
-    - 重新合并：$\bar{\theta}^{(t)} = \bar{\theta}^{(t-1)} + \frac{\eta}{K}\sum_{k=1}^K \Delta\theta_k^{(t)}$
+**2. Reduce 阶段——迭代渐进合并，把合并点当锚点反复抬升。**
 
-这个过程在每轮迭代中将合并点作为新的"锚点"，使各专家从更好的起点出发，从而逐步推进 Pareto 前沿。
+最朴素的做法是把所有专家一次性平均（naive souping），但单次平均只能落在各专家张成的凸组合里，常常顾此失彼。本文改成**渐进合并**：先初始化 $\bar{\theta}^{(0)} = \theta_0 + \frac{1}{K}\sum_k \Delta\theta_k$，然后在第 $t$ 轮里，以当前合并模型 $\bar{\theta}^{(t-1)}$ 为参考点对每个维度重新微调出新专家 $\Delta\theta_k^{(t)}$，再合并成 $\bar{\theta}^{(t)} = \bar{\theta}^{(t-1)} + \frac{\eta}{K}\sum_k \Delta\theta_k^{(t)}$。关键在于每轮都把"上一轮的合并点"当作所有专家的新起点——专家不再从原始 $\theta_0$ 出发去拉扯，而是从一个已经多维都不差的位置做小幅修正，于是整条 Pareto 前沿被一轮轮往外推，而不是停在凸包上。实验里这种迭代很快收敛：1 轮就有明显提升，2–3 轮基本到顶。
 
-#### 理论保证
-作者证明 progressive souping 等价于 **averaged proximal consensus optimization**，并给出几何收缩界。具体地，设 $d^{(t)} = \max_k \|\Delta\theta_k^{(t)}\|$ 为第 $t$ 轮专家偏移量，则：
+**3. 收敛性理论——证明渐进合并是会收缩的。**
+
+渐进合并不只是经验技巧。作者证明它等价于一个 **averaged proximal consensus optimization**，并给出几何收缩界：设 $d^{(t)} = \max_k \|\Delta\theta_k^{(t)}\|$ 为第 $t$ 轮各专家相对合并点的最大偏移量，则
 
 $$d^{(t+1)} \leq \rho \cdot d^{(t)}, \quad \rho < 1$$
 
-其中收缩率 $\rho$ 取决于各奖励景观的光滑性和曲率。这保证了合并过程的收敛性，且随着迭代推进，专家之间的分歧逐渐减小——即合并点逐步逼近所有维度都较优的区域。
+收缩率 $\rho$ 取决于各奖励景观的光滑性与曲率。直观含义是：随着迭代推进，专家彼此的分歧 $d^{(t)}$ 单调缩小，合并点稳定地逼近一个"各维度都较优"的共识区域——这解释了为什么实验里几轮就收敛，而 naive 一次合并在语言模型上反而会退化。
 
-### RaTE：Reward-aware Token Embedding
-RaTE 提供了一种轻量级的推理时控制机制：
+**4. RaTE——把偏好权重从训练期固定挪到推理期可调。**
 
-1. 为每个奖励维度 $k$ 学习一个可训练的 token embedding $e_k \in \mathbb{R}^d$
-2. 推理时通过线性组合 $e = \sum_k w_k \cdot e_k$ 注入模型的输入空间
-3. 权重 $w_k$ 在推理时可自由调节，实现对各偏好维度的连续控制
-
-训练时，RaTE 随机采样权重向量 $\mathbf{w} \sim \text{Dir}(\alpha)$（Dirichlet 分布），以混合奖励 $R(\mathbf{w}) = \sum_k w_k R_k$ 为目标更新 token embedding，同时冻结模型主体参数。这使得 RaTE 学会了奖励空间到 token embedding 空间的映射。
-
-### MapReduce LoRA + RaTE 联合使用
-两者可以组合使用：先用 MapReduce LoRA 推进 Pareto 前沿（提升整体"天花板"），再用 RaTE 在推进后的前沿上进行推理时的精细控制。
+MapReduce LoRA 抬高的是整体"天花板"，但权重一旦训完就锁死了，用户没法在推理时再权衡。RaTE 补上这块：为每个奖励维度 $k$ 学一个可训练的 token embedding $e_k \in \mathbb{R}^d$，推理时按权重线性组合成 $e = \sum_k w_k e_k$ 注入模型输入空间，而 $w_k$ 完全由用户在推理时给定。训练时则冻结主模型，只更新这些 embedding：每步从 Dirichlet 分布采一组权重 $\mathbf{w} \sim \text{Dir}(\alpha)$，以混合奖励 $R(\mathbf{w}) = \sum_k w_k R_k$ 为目标。这样 token embedding 学到的其实是"奖励空间 → embedding 空间"的映射，推理时在权重单纯形里平滑滑动，生成结果就在各偏好维度间连续变化。两者还能叠用：先用 MapReduce LoRA 把前沿推出去，再用 RaTE 在更高的前沿上做推理时的精细调控。
 
 ## 实验关键数据
 

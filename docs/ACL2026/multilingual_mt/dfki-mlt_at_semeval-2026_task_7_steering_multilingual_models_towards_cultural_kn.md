@@ -46,23 +46,28 @@ tags:
 推理时，对某一 transformer layer 的 hidden state 加入 $\beta v_{lang}$，其中 $v_{lang}$ 是归一化后的语言方向，$\beta$ 是 steering strength。最终提交选择 Qwen2.5-72B-Instruct、Layer 26、$\beta=1$，并使用 cultural prompt。所有 track 采用 greedy decoding，temperature=0，以减少采样噪声对 steering 效果判断的干扰。
 
 ### 关键设计
-1. **FLORES DiffMean language vectors**:
 
-    - 功能：为每个目标语言构造可注入的内部方向。
-    - 核心思路：对 FLORES 平行句子求 residual-stream activation 均值，再取目标语言和对照语言/集合之间的差值。每个 mapped language 使用 1,000 条 FLORES dev 句子，不做额外预处理，只依赖模型自身 tokenizer。
-    - 设计动机：FLORES 是平行多语言数据，内容差异被尽量控制，因此均值差更可能捕获语言身份方向，而不是主题或句子内容差异。
+**1. FLORES DiffMean language vectors：用平行语料把"语言身份"提成一个可注入的方向。**
 
-2. **推理期 activation steering**:
+要在推理时往模型里"加一点目标语言"，前提是先有一个干净的语言方向。作者把 BLEnD 的语言-地区对映射到 FLORES 的 language/script identifiers，对每个可映射语言取 FLORES dev 的前 1,000 个句子，通过模型自身 tokenizer 喂进多语言 instruction-tuned LLM，收集指定层的 post-normalization residual-stream activation；语言向量用 DiffMean 构造，即目标语言 activation 均值与参考集合 activation 均值之差。
 
-    - 功能：在不微调参数的情况下改变模型文化知识访问倾向。
-    - 核心思路：在选定 transformer layer 的 residual stream 上做加性干预，形式上可以理解为 $h' = h + \beta v_{lang}$。开发阶段搜索 $\beta\in\{1,3,5\}$ 和候选层，最终提交用 $\beta=1$ 与 Layer 26。
-    - 设计动机：相比 full fine-tuning，steering 成本低、可在不同语言间快速切换，并且更适合没有训练数据的 shared task setting。
+之所以选 FLORES 而不是随手抓的语料，是因为它是内容对齐的平行多语言数据——各语言句子讲的是同一批内容。这样"均值差"里被消掉的是主题/句意差异，剩下的更可能是纯粹的语言身份方向，而不是混入了话题偏置的杂方向。
 
-3. **prompt、层和模型的后验敏感性分析**:
+**2. 推理期 activation steering：不动参数，只在残差流上沿语言方向轻推。**
 
-    - 功能：解释为什么单一 steering 配置不能稳定带来全局提升。
-    - 核心思路：官方提交之后，作者在 MCQ 和 SAQ 上对 Qwen2.5-72B/7B、Aya Expanse 8B/32B、Qwen3 8B/32B 进行 layer sweep、prompt comparison 和 steering strength comparison。分析包括 generic prompt vs cultural prompt，以及随机 Gaussian vector vs language vector。
-    - 设计动机：官方结果只能反映一个 locked configuration。文化推理的 steering 效果高度局部化，必须看 layer、prompt、locale 和模型之间的交互。
+有了方向 $v_{lang}$，干预方式是在选定 transformer layer 的 hidden state 上做加性注入：
+
+$$h' = h + \beta v_{lang}$$
+
+其中 $v_{lang}$ 是归一化后的语言方向，$\beta$ 是 steering strength。开发阶段在 $\beta\in\{1,3,5\}$ 与一批候选层之间搜索，最终官方提交锁定 Qwen2.5-72B-Instruct、Layer 26、$\beta=1$ 并配 cultural prompt，全程 greedy decoding、temperature=0，把采样噪声从 steering 效果的判断里剔除。
+
+相比 full fine-tuning，这种干预成本极低、可在不同语言间瞬间切换，且天然契合"没有 BLEnD 训练数据"的 shared task 设定——不需要任何文化题训练集，也不更新一个参数。
+
+**3. prompt、层和模型的后验敏感性分析：解释单一配置为何无法全局稳定提升。**
+
+官方提交只能反映一个锁死的 $(\text{model}, \text{layer}, \beta, \text{prompt})$ 配置，看不出 steering 到底稳不稳。所以提交之后作者补做了一整套敏感性分析：在 MCQ 与 SAQ 上对 Qwen2.5-72B/7B、Aya Expanse 8B/32B、Qwen3 8B/32B 跑 layer sweep、prompt comparison（generic prompt vs cultural prompt）和 steering strength comparison，还加入随机 Gaussian vector vs language vector 的对照。
+
+这一步是这篇系统论文最诚实的地方：它直接量化出文化推理的 steering 效果高度局部化——最优层会随 prompt 在 Layer 2/3 与 Layer 26 之间跳，收益在不同 locale 间并不一致泛化，而随机向量的效果集中在 0 附近、语言向量则更分散且偶有负 outlier。结论不是"steering 万能"，而是"它真实但不稳，必须看 layer/prompt/locale/model 之间的交互"。
 
 ### 损失函数 / 训练策略
 该系统没有训练损失，因为不更新模型参数。开发策略是基于 SemEval development phase 选择模型、层和 $\beta$：候选模型包括 Qwen2.5-72B-Instruct、Qwen2.5-7B-Instruct、Aya Expanse 8B/32B、Qwen3-8B/32B；候选强度为 $\{1,3,5\}$；最终官方提交为 Qwen2.5-72B-Instruct + Layer 26 + $\beta=1$。SAQ 生成最多 32 tokens，并做轻量规范化；MCQ 则输出选项。

@@ -46,23 +46,32 @@ VideoChat-M1 由两大核心组成：**Collaborative Policy Planning（CPP）** 
 
 ### 关键设计
 
-1. **Collaborative Policy Planning (CPP)**:
+**1. Collaborative Policy Planning（CPP）：把"一次性定好工具顺序"换成可迭代的生成-执行-通信循环。**
 
-    - 功能：让多个 agent 动态协作，生成和更新工具调用策略
-    - 核心思路：将策略规划分为三个交替迭代的阶段——**Policy Generation**（各 agent 根据问题自主生成初始工具调用序列 $\mathcal{P}_i = \{\mathcal{P}_{i,1} \to \mathcal{P}_{i,2} \to \cdots \to \mathcal{P}_{i,N}\}$）、**Policy Execution**（逐步调用工具获取视频线索 $\mathcal{A}_{i,n} = \mathcal{P}_{i,n}(\mathcal{V}, \mathcal{T}, \mathcal{A}_{i,n-1})$）、**Policy Communication**（执行每步后将中间结果写入共享 memory，各 agent 参考团队信息决定是否修改后续计划 $\mathcal{P}'_i = \mathcal{G}_i(\mathcal{Q}, \mathcal{T}, \mathcal{M}, \mathcal{P}_i)$）
-    - 设计动机：固定策略无法覆盖视频内容的多样性，通过多 agent 生成多样化策略 + 通信动态更新，可以从不同角度提取更丰富的视频线索
+以往 agent 框架的工具调用顺序是预先写死的，视频里到底有哪些线索、该先看哪段、该用哪个工具，全凭固定模板，遇到时空复杂的视频就抓瞎。CPP 把策略规划拆成三个交替推进的阶段，让 agent 边看边改。**Policy Generation** 阶段，每个 agent $i$ 先根据问题自主生成一条初始工具调用序列 $\mathcal{P}_i = \{\mathcal{P}_{i,1} \to \mathcal{P}_{i,2} \to \cdots \to \mathcal{P}_{i,N}\}$；**Policy Execution** 阶段逐步执行，第 $n$ 步的输出依赖上一步结果 $\mathcal{A}_{i,n} = \mathcal{P}_{i,n}(\mathcal{V}, \mathcal{T}, \mathcal{A}_{i,n-1})$；**Policy Communication** 阶段则在每步执行后把中间线索写进共享内存 $\mathcal{M}$，各 agent 读取队友信息后决定是否改写自己后续的计划：
 
-2. **Multi-Agent Reinforcement Learning (MARL)**:
+$$\mathcal{P}'_i = \mathcal{G}_i(\mathcal{Q}, \mathcal{T}, \mathcal{M}, \mathcal{P}_i)$$
 
-    - 功能：联合优化多个 agent 的协作策略，是首个面向视频理解的多 agent 联合 RL 训练框架
-    - 核心思路：分两阶段训练——**Policy SFT**（用 GPT-4o + DeepSeek-R1 自动标注高质量策略数据，筛选答案正确且计划无需修改的样本，对每个 agent 做 SFT warm-up）；**GRPO 联合优化**（设计三种奖励信号：结果奖励 $\mathcal{R}_{res}$、格式奖励 $\mathcal{R}_{format}$、协作奖励 $\mathcal{R}_{col}$，用 GRPO 联合优化全部 agent）
-    - 设计动机：零样本推理无法发现有效的协调模式（GPT-4o 组也只有 56.2 分 vs VideoChat-M1 的 60.5），需要通过 RL 训练注入任务特定的协作模式
+关键在于多个异构 agent 会从不同角度生成不同的初始策略，再通过共享内存互相"看见"彼此挖到的线索——有人定位到了关键帧，别人就能据此调整自己的检索范围。这种"多样化生成 + 通信纠偏"远比单条固定流水线更能覆盖视频内容的多样性。
 
-3. **Agent Dropout**:
+**2. Multi-Agent Reinforcement Learning（MARL）：让多个 agent 通过联合 RL 学会协作，而不是靠 prompt 临时凑。**
 
-    - 功能：训练时的正则化机制，防止 agent 间过度共适应
-    - 核心思路：每步训练随机从全连接 agent 图中采样一个 DAG 作为通信拓扑，类似于网络 Dropout 的思想
-    - 设计动机：固定通信拓扑会导致 agent 过度依赖特定队友，随机化拓扑迫使 agent 发展更鲁棒灵活的通信策略；消融实验证明这是"最重要的正则化器"（去掉掉 2 个点）
+光有 CPP 的协作结构还不够——论文发现哪怕把 GPT-4o 组装进 CPP 流程跑零样本，也只有 56.2 分，远低于训练后的 60.5，说明有效的协调模式不会自己冒出来，得训出来。MARL 分两阶段注入这种模式。第一阶段 **Policy SFT** 做冷启动：用 GPT-4o + DeepSeek-R1 自动标注高质量策略数据，只保留那些"答案正确且计划全程不需要修改"的干净样本，对每个 agent 单独 SFT，让它们先学会生成合法、像样的工具调用计划。第二阶段用 **GRPO 联合优化**全部 agent，把它们当成一个整体来更新，奖励来自三路信号——结果奖励 $\mathcal{R}_{res}$、格式奖励 $\mathcal{R}_{format}$、协作奖励 $\mathcal{R}_{col}$（详见下方训练策略）。这是首个面向视频理解、把多个异构 agent 放在同一个 RL 目标下联合训练的框架；过往的视频 RL（如 Video-R1）都只优化单个模型。
+
+**3. Agent Dropout：用随机化通信拓扑防止 agent 之间过度共适应。**
+
+如果训练时所有 agent 始终全连接、人人都能读到所有人的中间结果，它们很容易退化成"互相抄作业"——某个 agent 学会了死等某个固定队友的输出，一旦队友状态变了就崩。Agent Dropout 借鉴神经网络 Dropout 的思路：每个训练步从全连接的 agent 图里随机采样一个有向无环图（DAG）当作本步的通信拓扑，谁能读谁、信息往哪流每步都在变。这逼着每个 agent 不能依赖某个特定队友，而要发展出对任意通信结构都鲁棒的协作习惯。消融实验里它被证明是"最重要的正则化器"——去掉后 LongVideoBench 掉 2.4 个点（79.9 vs 82.3）。
+
+### 一个完整示例：四个 agent 协同解一道长视频题
+
+给定一个长视频 $\mathcal{V}$ 和问题 $\mathcal{Q}$（比如"视频里那个人在厨房做的第二道菜用了什么食材"），系统这样转起来：
+
+- **各自生成策略**：4 个异构 agent（Qwen3-8B / Qwen3-4B / Qwen2.5-7B / Qwen2.5-3B）独立给出初始计划。有的 agent 先 Global Sampling 粗采全片再 Video Retrieval 定位厨房片段；有的 agent 直接 Image Retrieval 找"做菜"的关键帧，再上 Grounding Tool 框出锅里的东西——策略天然分叉。
+- **逐步执行 + 写内存**：各 agent 按自己的计划调工具，每执行一步就把中间线索（"第 3 分钟出现厨房""第二道菜是炒菜"）写进共享内存 $\mathcal{M}$。
+- **读队友信息后改计划**：某个 agent 从内存里看到队友已经定位到"第二道菜"的时间段，就放弃自己原本从头扫的计划，转而把 Fine Browser 和 Spatial Tool 集中投到那一段去看食材——这就是 $\mathcal{P}'_i = \mathcal{G}_i(\cdot)$ 在起作用。
+- **多轮迭代后汇总**：迭代若干轮、各 agent 都收敛到答案后，多选题用多数投票、开放题指定一个 agent 汇总，得出最终答案。
+
+整段过程平均只用了 **69.9 帧、19.8s**，却比直接把几百帧喂给单个大模型更准——因为线索是被多个 agent 协同"挖"出来并相互印证的，而不是靠堆帧硬看。
 
 ### 损失函数 / 训练策略
 

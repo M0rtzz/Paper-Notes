@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EPGS（Embedding-Perturbed Gradient Sensitivity）三阶段：（1）Target Acquisition——用外部 NER 提取核心实体，构造只对实体 token 计算 loss 的 mask；（2）Stochastic Embedding Perturbation——对输入 embedding 加 $\delta \sim \mathcal{N}(0, \sigma^2 I)$；（3）Gradient Sensitivity Measurement——分别计算 clean 和 perturbed 输入下对最后一个 Transformer block 参数的梯度 $g_{\text{clean}}, g_{\text{perturbed}}$，组合成 EPGS 分数。
+EPGS（Embedding-Perturbed Gradient Sensitivity）想解决的是"模型自信地记错"这类零阶量看不出的幻觉，办法是把检测信号从输出概率换成 loss landscape 的局部曲率。整条流水线分三步走：先用外部 NER 把答案里的核心实体抠出来，构造一个只在实体 token 上计算 loss 的 mask（Target Acquisition）；再对输入 embedding 注入 Gaussian 噪声 $\delta \sim \mathcal{N}(0, \sigma^2 I)$（Stochastic Embedding Perturbation）；最后分别在 clean 和 perturbed 输入下对最后一个 Transformer block 的参数求梯度 $g_{\text{clean}}, g_{\text{perturbed}}$，把两者组合成一个 EPGS 分数（Gradient Sensitivity Measurement）。整个过程纯后验、无需训练，比真算 Hessian 便宜得多。
 
 ### 关键设计
 
-1. **几何视角的幻觉分类**:
+**1. 几何视角的幻觉分类：把检测问题从概率域搬到曲率域。**
 
-    - 功能：把 hallucination 重新按 loss landscape 几何分成三类，从根上解释为什么 entropy 类方法对 stubborn 失效。
-    - 核心思路：定义 $\delta$-stability 只看输出 KL 散度 $\mathbb{E}_\epsilon[D_{KL}(P_{\theta^*}(\cdot|x) \| P_{\theta^*}(\cdot|x+\epsilon))] \le \delta$；指出 robust facts 与 stubborn hallucinations 都满足该条件，所以零阶不可区分。引入 Curvature Hypothesis：facts → flat minima（$\lambda_{\max}(H)$ 小），stubborn → sharp minima（$\lambda_{\max}(H)$ 大），transient → unstable region（$\|\nabla\mathcal{L}\| > 0$ 或各向异性）。
-    - 设计动机：先把"为什么旧方法失效"讲透，把检测问题从概率域搬到几何域，后面方法的设计动机才水到渠成。
+entropy 类方法对 stubborn hallucination 完全失效，根子在于它们只看零阶量。作者先用一个 $\delta$-stability 条件把这件事讲透：只要输出在输入扰动下的 KL 漂移 $\mathbb{E}_\epsilon[D_{KL}(P_{\theta^*}(\cdot|x) \| P_{\theta^*}(\cdot|x+\epsilon))] \le \delta$，这个样本就算"稳定"，而 robust facts 和 stubborn hallucinations **同样满足**这个条件——它们在零阶上根本不可区分，所以看概率分布永远分不开。真正的差异藏在更高阶的几何里，于是作者提出 Curvature Hypothesis：稳健事实由多种上下文冗余特征支撑，落在 flat minima（$\lambda_{\max}(H)$ 小）；stubborn 错误是稀疏 noisy pattern 的记忆奇点，落在 sharp minima（$\lambda_{\max}(H)$ 大）；transient 错误则落在 unstable region（$\|\nabla\mathcal{L}\| > 0$ 或曲率各向异性）。这一步先把"旧方法为什么失效"说清楚，后面所有设计才有立足点。
 
-2. **输入-参数同构 + Hessian 代理**:
+**2. 输入-参数同构 + Hessian 代理：用一次额外 backward 换掉算不动的二阶量。**
 
-    - 功能：用便宜的输入扰动梯度代替昂贵的二阶 Hessian 计算。
-    - 核心思路：Lemma 3.3 表明对输入 embedding 的小扰动 $\delta$ 存在等价的参数扰动 $\nu_\delta$（用最后一个 block 的 rank-1 weight update 模拟），即 $\mathcal{L}(\theta^*, E+\delta, \hat y) \approx \mathcal{L}(\theta^*+\nu_\delta, E, \hat y)$。Theorem 3.4 在 $\nabla_\theta \mathcal{L}(\theta^*) = 0$ 假设下做二阶 Taylor 展开，得 $\|\nabla_\theta \mathcal{L}(\theta^*; x+\epsilon, \hat y)\|_2 \lesssim \lambda_{\max}(H) \cdot \|\nu_\epsilon\|_2$。直观上 sharp minimum 中对输入加噪等同于把参数推上陡墙，gradient 立刻飙起来。
-    - 设计动机：Hessian 在 LLM 上根本算不动，但 embedding 扰动 + 一次额外 backward 几乎免费——把昂贵的几何量翻译成可行实验量是工程上最关键一步。
+曲率的标准刻画是 Hessian 谱半径 $\lambda_{\max}(H)$，但在 LLM 上直接算根本不现实。作者用两步把它翻译成可行的实验量。Lemma 3.3 说明，对输入 embedding 加的小扰动 $\delta$ 总能找到一个等价的参数扰动 $\nu_\delta$（用最后一个 block 的 rank-1 weight update 来模拟），使得 $\mathcal{L}(\theta^*, E+\delta, \hat y) \approx \mathcal{L}(\theta^*+\nu_\delta, E, \hat y)$——扰动输入和扰动参数在 loss 上是同构的。Theorem 3.4 进一步在收敛点假设 $\nabla_\theta \mathcal{L}(\theta^*) = 0$ 下做二阶 Taylor 展开，得到 $\|\nabla_\theta \mathcal{L}(\theta^*; x+\epsilon, \hat y)\|_2 \lesssim \lambda_{\max}(H) \cdot \|\nu_\epsilon\|_2$。直观上，在 sharp minimum 里给输入加噪等同于把参数推上一面陡墙，梯度幅度立刻飙起来；flat minimum 里推不动，梯度几乎不变。于是"对输入加噪后看梯度涨多少"就成了 $\lambda_{\max}(H)$ 的廉价代理，而代价只是一次额外的反向传播。
 
-3. **幅度 × 方向漂移的双因子 score**:
+**3. 幅度 × 方向漂移的双因子 score：一个公式同时抓 stubborn 和 transient。**
 
-    - 功能：同时捕获曲率尺度和方向不稳定性，既能识别 stubborn 也能识别 transient 幻觉。
-    - 核心思路：$\mathcal{S} = \|g_{\text{clean}}\|_2 \cdot (1 - \cos(g_{\text{clean}}, g_{\text{perturbed}}))$。前项反映局部曲率尺度，后项反映方向波动（高维空间中大随机位移几乎必正交于原方向）。Facts 在 flat minimum：$\|g_{\text{clean}}\|$ 小且方向稳定 → $\mathcal{S} \approx 0$。Stubborn：$\|g_{\text{clean}}\|$ 大、方向被噪声打乱 → $\mathcal{S}$ 大。Transient：两项都大 → $\mathcal{S}$ 最大。
-    - 设计动机：单看幅度容易被梯度量级 scale 干扰；单看方向忽略曲率尺度。乘积形式既保留物理量纲又有 robustness。
+光有曲率代理还不够，因为 transient 错误的标志是方向不稳定而非单纯曲率大。作者把分数定义成幅度与方向的乘积：
+
+$$\mathcal{S} = \|g_{\text{clean}}\|_2 \cdot (1 - \cos(g_{\text{clean}}, g_{\text{perturbed}}))$$
+
+前一项 $\|g_{\text{clean}}\|_2$ 反映局部曲率尺度，后一项 $1-\cos(\cdot)$ 反映方向波动——在高维空间里一个大的随机位移几乎必然正交于原方向，所以方向项对不稳定性特别敏感。三类样本因此被自然拉开：事实在 flat minimum，幅度小且方向稳，$\mathcal{S} \approx 0$；stubborn 在 sharp minimum，幅度大、方向被噪声打乱，$\mathcal{S}$ 大；transient 两项都顶满，$\mathcal{S}$ 最大。之所以用乘积而非只取其一，是因为单看幅度会被梯度量级的 scale 干扰，单看方向又丢掉了曲率尺度信息，乘积形式既保留物理量纲又更 robust。
 
 ### 损失函数 / 训练策略
-完全后验、无需训练。NER 用预训练 BERT-base-NER；温度 $T=0.1$ 生成 pseudo-label；扰动 $\sigma=0.1$；梯度只对最后一个 Transformer block 求；阈值无关地报告 AUROC。所有实验单卡 RTX 4090。
+完全后验、无需训练。NER 用预训练 BERT-base-NER 提实体；温度 $T=0.1$ 生成 pseudo-label；扰动尺度 $\sigma=0.1$；梯度只对最后一个 Transformer block 求；评估时阈值无关地报告 AUROC。所有实验跑在单卡 RTX 4090 上。
 
 ## 实验关键数据
 

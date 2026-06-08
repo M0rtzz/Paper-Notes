@@ -47,23 +47,25 @@ tags:
 
 ### 关键设计
 
-1. **循环多面体 + 平方多项式 query：内积 exact MED 的 $2k$ 上界构造**:
+**1. 循环多面体 + 平方多项式 query：把子集选择翻译成多项式构造，给出内积 $2k$ 上界。**
 
-    - 功能：把 $m$ 个对象放到 moment curve 上，对任意 $S\subseteq[m],|S|\le k$ 显式写出一个 $2k$ 维 query 向量，使 $\langle\bm{v}_i,\bm{q}_S\rangle$ 在 $i\in S$ 时同时取最大值 $c_0$，在 $i\notin S$ 时严格小于 $c_0$。
-    - 核心思路：取 $\bm{v}_i=(t_i,t_i^2,\dots,t_i^{2k})$ 与不同的 $t_i$，构造单变量多项式 $P_S(t)=\prod_{i\in S}(t-t_i)$ 并展开 $P_S^2(t)=\sum_{j=0}^{2|S|}c_j t^j$；令 query $\bm{q}_S=(-c_1,-c_2,\dots,-c_{2k})$，则 $\langle\bm{v}_i,\bm{q}_S\rangle=c_0-P_S^2(t_i)$，在 $i\in S$ 时 $P_S^2(t_i)=0$ 达到上界 $c_0$，在 $i\notin S$ 时 $P_S^2(t_i)>0$ 严格更小。
-    - 设计动机：这正是 cyclic polytope 是 $\lfloor d/2\rfloor$-neighborly 的代数证据。"用一条 query 把任意 $\le k$ 个对象同时挑出来"被翻译成"找一个仅在 $S$ 上取零的非负多项式"，把组合学的子集选择问题降维成了多项式构造问题——这是整篇文章的几何引擎，欧氏与余弦的界都由它通过 reduction 得到。
+WBNL 之所以得出"维度随 $m$ 多项式增长"的悲观结论，是把"优化找不找得到"和"存不存在"混为一谈。作者要回答的是纯几何可表达性，于是把对象放到 moment curve 上 $\bm{v}_i=(t_i,t_i^2,\dots,t_i^{2k})$，对任意 $S\subseteq[m],|S|\le k$ 显式构造 query：取单变量多项式 $P_S(t)=\prod_{i\in S}(t-t_i)$，展开 $P_S^2(t)=\sum_{j=0}^{2|S|}c_j t^j$，令 $\bm{q}_S=(-c_1,-c_2,\dots,-c_{2k})$，则
 
-2. **VC 维下界 + Radon 锐化：MED 的下界与紧度**:
+$$\langle\bm{v}_i,\bm{q}_S\rangle=c_0-P_S^2(t_i),$$
 
-    - 功能：证明对三种 scoring，MED 都至少为 $k-1$；进一步对内积 case 给出 exact 公式 $\mathrm{MED}(m,k;\mathcal{F}_{\rm linear})=\min\{2k,m-1\}$。
-    - 核心思路：定义 $k$-shattering 诱导的二元阈值类 $\mathcal{C}_{\mathcal{F},n}$，证明 $\textsc{MED}(m,k;\mathcal{F})\ge \textsc{VCD}^{-1}(k;\mathcal{F})$；由于 $\mathcal{F}_{\rm linear},\mathcal{F}_{\cos},\mathcal{F}_{\ell_2}$ 的 VC 维都是 $n+1$，因此 MED $\ge k-1$。再用 Radon 定理（$d+2$ 个点必可分成两组凸包相交）证明若 $d<\min\{2k,m-1\}$，则一定存在一对子集 $A,B$ 同时是某个 query 的"被选 / 未被选"集合，因而 shattering 不可能。
-    - 设计动机：VC 维给出的是"一般性"下界，能套到任何 scoring 类；Radon 锐化把内积情形精确到了常数级。两者合起来把整段理论紧紧夹在 $[k-1,2k]$ 区间里，给"$\Theta(k)$ 够用"提供了完整闭环。
+$i\in S$ 时 $P_S^2(t_i)=0$ 同时取上界 $c_0$，$i\notin S$ 时 $P_S^2(t_i)>0$ 严格更小。这正是 cyclic polytope 是 $\lfloor d/2\rfloor$-neighborly 的代数证据——"用一条 query 把任意 $\le k$ 个对象同时挑出来"被等价成"找一个仅在 $S$ 上取零的非负多项式"，把组合学的子集选择降维成多项式构造。它是整篇文章的几何引擎，欧氏和余弦的界都靠它做 reduction 得到。
 
-3. **Gaussian centroid 构造 + margin 可行天花板：鲁棒 RMED 的双侧界**:
+**2. VC 维下界 + Radon 锐化：把 MED 紧紧夹进 $[k-1,2k]$。**
 
-    - 功能：在单位球归一化 + 选中对象比未选中对象 score 至少高 $\epsilon$ 的更强要求下，证明可行 margin 被 $\epsilon_\star(m,k)=m/\sqrt{k(m-1)(m-k)}$ 上限锁死（大 $m$ 时 $\sim 1/\sqrt{k}$）；并在该尺度的 margin $\epsilon=c/\sqrt{k}$ 处给出 $O(k^2\log m)$ 维的存在性构造。
-    - 核心思路：天花板用方差恒等式——若所有 $k$-子集 query 都达到 margin $\epsilon$，则 $\|\bar{\bm{v}}_S-\bar{\bm{v}}\|_2\ge\frac{m-k}{m}\epsilon$ 对所有 $S$ 成立，再对随机子集求期望并用单位范数性质 $\frac{1}{m}\sum\|\bm{v}_i-\bar{\bm{v}}\|^2\le 1$ 推出 $\epsilon\le\epsilon_\star$。上界则采样 $m$ 个各向同性 Gaussian 向量并归一化，对每个 $S$ 取 query 为归一化 centroid $\bm{u}_S\propto\sum_{i\in S}\bm{v}_i$；在 $n=Ck^2\log m$ 维下，所有成对内积都为 $O(1/k)$，于是被选对象的"自相关"项是 $\Theta(1)$，外部对象只贡献 $O(|S|/k)$ 噪声，归一化后 margin 一致地 $\Omega(1/\sqrt{k})$。
-    - 设计动机：作者要把"exact 几何可表达"和"工程中真正难"的边界划清楚。Exact MED 与 $m$ 无关，所以 LIMIT 那种"$m$ 很大就一定要更高维"的论调在 exact 意义下是错的；但一旦引入正 margin（这是任何稳健 retrieval 都隐含要求的），$m$ 又通过 packing lower bound 与 centroid 上界回到了维度公式里。这一拆分定位了"几何容量不是真瓶颈，学习 / 优化 / margin / 数值条件才是"的核心论断。
+光有上界还不够，得证明 $\Theta(k)$ 是真的下限。作者定义 $k$-shattering 诱导的二元阈值类 $\mathcal{C}_{\mathcal{F},n}$，证明 $\textsc{MED}(m,k;\mathcal{F})\ge\textsc{VCD}^{-1}(k;\mathcal{F})$；由于内积、余弦、欧氏三种 scoring 的 VC 维都是 $n+1$，于是 MED $\ge k-1$。再用 Radon 定理（$d+2$ 个点必可分成两组凸包相交）证明若 $d<\min\{2k,m-1\}$ 则一定存在一对子集 $A,B$ 同时是某 query 的"被选/未选"集合、shattering 不可能，从而把内积情形精确到 $\mathrm{MED}(m,k;\mathcal{F}_{\rm linear})=\min\{2k,m-1\}$。VC 维给的是能套任何 scoring 的一般下界，Radon 把内积情形锐化到常数级，两者合起来把理论闭环夹在 $[k-1,2k]$，坐实"$\Theta(k)$ 够用、与 $m$ 无关"。
+
+**3. Gaussian centroid 构造 + margin 可行天花板：给鲁棒 RMED 的双侧界。**
+
+exact 几何可表达和"工程上真正难"是两回事。作者在单位球归一化 + 选中对象比未选中至少高 $\epsilon$ 的更强要求下定义鲁棒 RMED，先用方差恒等式给出可行天花板：若所有 $k$-子集 query 都达 margin $\epsilon$，则 $\|\bar{\bm{v}}_S-\bar{\bm{v}}\|_2\ge\frac{m-k}{m}\epsilon$ 对所有 $S$ 成立，对随机子集求期望并用单位范数性质 $\frac1m\sum\|\bm{v}_i-\bar{\bm{v}}\|^2\le1$，推出
+
+$$\epsilon\le\epsilon_\star(m,k)=\frac{m}{\sqrt{k(m-1)(m-k)}}\sim\frac{1}{\sqrt{k}}\ (\text{大 }m).$$
+
+上界则采样 $m$ 个各向同性 Gaussian 向量归一化、对每个 $S$ 取 query 为归一化 centroid $\bm{u}_S\propto\sum_{i\in S}\bm{v}_i$；在 $n=Ck^2\log m$ 维下所有成对内积都为 $O(1/k)$，被选对象自相关项是 $\Theta(1)$、外部对象只贡献 $O(|S|/k)$ 噪声，归一化后 margin 一致地 $\Omega(1/\sqrt{k})$。这一拆分恰好定位了核心论断：exact MED 与 $m$ 无关，所以 LIMIT 那种"$m$ 大就必须更高维"在 exact 意义下是错的；但一旦引入任何稳健 retrieval 都隐含的正 margin，$m$ 就通过 packing 下界和 centroid 上界以 $\log m$ 形式回到维度公式里——真正的瓶颈是学习/优化/margin/数值条件，而非几何容量。
 
 ### 损失函数 / 训练策略
 理论文章本身没有学习目标。第 5 节的合成实验用 hinge loss 对所有正负对做 Adam 优化来寻找 centroid GD 见证，并用确定性的循环多面体 / LIMIT 构造作为对照；LIMIT / LIMIT-small 上的"随机加性"基线是 label-unaware 的——每个 token 给一个固定单位 Gaussian 向量，文档 / query 通过 token 向量求和得到 $\phi(x)=\sum_{t\in\tau(x)}G_t$，不经过任何监督训练。

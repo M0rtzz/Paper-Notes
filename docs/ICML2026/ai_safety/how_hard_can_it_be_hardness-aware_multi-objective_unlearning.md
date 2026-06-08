@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HAMU (Hardness-Aware Multi-objective Unlearning) 把整段遗忘过程拆成 $T$ 步逐迭代的约束子问题。每一步输入是当前权重 $\bm{w}_t$、retain/forget 各一个 batch；中间分三件事：(1) 估计 batch 梯度 $\bar{\bm{g}}_{\bm{r}}, \bar{\bm{g}}_{\bm{f}}$ 与硬度 $\bar\kappa$; (2) 比对两个阈值 $\bar\kappa_1, \bar\kappa_2$，决定是停下、走直接更新还是走修正更新; (3) 应用更新 $\bm{w}_{t+1} = \bm{w}_t + \Delta\bm{w}$。输出是 $T$ 步后的遗忘模型，或者中途因为 $\bar\kappa > \bar\kappa_2$ 而被主动停止的模型。
-
-整篇方法 = 一个一阶凸子问题 + 两个对偶变体 (HAMU-Q / HAMU-U) + 一份按层并行的工程化。
+HAMU (Hardness-Aware Multi-objective Unlearning) 要解决的核心痛点是：加权式遗忘既不能保证 forget 被忘到指定程度，又会顺带破坏 retain。它的做法是把整段遗忘从"调权重"改写成 $T$ 步逐迭代的约束优化——每一步只看当前权重 $\bm{w}_t$ 与 retain/forget 各一个 batch，在权重的局部邻域里求一个带不等式约束的一阶凸子问题。每步先估计 batch 梯度 $\bar{\bm{g}}_{\bm{r}}, \bar{\bm{g}}_{\bm{f}}$ 及它们的点积 $\bar\kappa$，再拿 $\bar\kappa$ 对照两个理论阈值来决定本步是停止、走直接更新还是走修正更新，最后把 $\Delta\bm{w}$ 加到权重上。整个算法没有新参数，由一个凸子问题、两个对偶变体 (HAMU-Q / HAMU-U) 和一份按层并行的工程化构成。
 
 ### 关键设计
 
-1. **硬度度量 $\kappa$ 与一阶约束子问题**:
+**1. 硬度度量 $\kappa$ 与一阶约束子问题：把"遗忘有多难"变成一个可计算的标量**
 
-    - 功能：用一个标量同时刻画"两个目标有多冲突"、"这一步最优 retain 退化下限"和"是否已经无解"。
-    - 核心思路：在 $\|\Delta\bm{w}\|\leq R$ 的局部内做一阶展开，$\Delta L(D_r)\approx \bm{g_r}\cdot\Delta\bm{w}$，$\Delta L(D_f)\approx \bm{g_f}\cdot\Delta\bm{w}$。子问题写成 $\min\ \bm{g_r}\cdot\Delta\bm{w}\ \text{s.t.}\ \bm{g_f}\cdot\Delta\bm{w}\geq Q,\ \|\Delta\bm{w}\|\leq R$。在可行条件 $Q\leq R\|\bm{g_f}\|$ 下闭式可解，最优代价 $F_r^*$ 关于 $\kappa = \bm{g_r}\cdot\bm{g_f}$ 单调非减——所以 $\kappa$ 天然就是硬度。
-    - 设计动机：以前的"硬度"都是事后的启发式 (训练曲线、影响函数等)，没法在算法里直接用。这里 $\kappa$ 既理论上等价于"retain 退化的最优下界"，又只需要一次梯度点积就能算，开销可以忽略。
+以往的"硬度"都是训练曲线、影响函数这类事后启发式，没法直接喂进算法。HAMU 的关键观察是：在 $\|\Delta\bm{w}\|\leq R$ 的信赖域内做一阶展开，retain 与 forget 的损失变化分别近似为 $\Delta L(D_r)\approx \bm{g_r}\cdot\Delta\bm{w}$、$\Delta L(D_f)\approx \bm{g_f}\cdot\Delta\bm{w}$，于是"这一步该怎么走"就被写成一个凸子问题 $\min\ \bm{g_r}\cdot\Delta\bm{w}\ \text{s.t.}\ \bm{g_f}\cdot\Delta\bm{w}\geq Q,\ \|\Delta\bm{w}\|\leq R$——即在保证 forget 至少改善 $Q$ 的前提下让 retain 退化最小。在可行条件 $Q\leq R\|\bm{g_f}\|$ 下它有闭式解，而最优代价 $F_r^*$（即不可避免的 retain 退化）关于梯度点积 $\kappa = \bm{g_r}\cdot\bm{g_f}$ 单调非减。这意味着 $\kappa$ 不是又一个启发式，而是理论上等价于"本步 retain 退化的最优下界"的硬度，且只需一次点积即可算出，开销可忽略。
 
-2. **按 $\kappa$ 切换的直接更新 vs 修正更新**:
+**2. 按 $\kappa$ 切换的直接更新 vs 修正更新：让算法自己判断要不要混入遗忘方向**
 
-    - 功能：根据当前难度，自动选择"按 $-\bm{g_r}$ 走"还是"必须混入 $\bm{g_f}$ 才能满足遗忘约束"两种走法。
-    - 核心思路：定义阈值 $\kappa_1 = -Q\|\bm{g_r}\|/R$。当 $\kappa \leq \kappa_1$ (easy)，直接更新 $\Delta\bm{w} = -\tfrac{R}{\|\bm{g_r}\|}\bm{g_r}$ 就够了，等价于 SGD on retain，且天然满足遗忘约束。当 $\kappa > \kappa_1$ (hard)，直接更新会违反 $\bm{g_f}\cdot\Delta\bm{w}\geq Q$，必须改为修正更新 $\Delta\bm{w}^* = \tfrac{Q}{\|\bm{g_f}\|^2}\bm{g_f} - \sqrt{R^2 - Q^2/\|\bm{g_f}\|^2}\,\tfrac{\bm{g_r}_\perp}{\|\bm{g_r}_\perp\|}$，其中 $\bm{g_r}_\perp$ 是 $\bm{g_r}$ 在 $\bm{g_f}$ 上的正交分量。
-    - 设计动机：现有方法要么死按加权梯度 (在 hard 区根本无法保证遗忘)，要么死按梯度上升 (在 easy 区白白破坏 retain)。HAMU 让算法在两种 regime 间自动切换，且切换条件 $\kappa_1$ 完全由 $Q, R, \|\bm{g_r}\|$ 决定，没有额外超参。
+现有方法要么死按加权梯度（在难区根本保证不了遗忘），要么死按梯度上升（在易区白白破坏 retain）。HAMU 用同一个 $\kappa$ 当开关在两种走法间自动切换。定义阈值 $\kappa_1 = -Q\|\bm{g_r}\|/R$：当 $\kappa \leq \kappa_1$（easy），直接沿 retain 负梯度走 $\Delta\bm{w} = -\tfrac{R}{\|\bm{g_r}\|}\bm{g_r}$ 就已经天然满足遗忘约束，等价于在 retain 上做 SGD；当 $\kappa > \kappa_1$（hard），这样走会违反 $\bm{g_f}\cdot\Delta\bm{w}\geq Q$，于是改用修正更新 $\Delta\bm{w}^* = \tfrac{Q}{\|\bm{g_f}\|^2}\bm{g_f} - \sqrt{R^2 - Q^2/\|\bm{g_f}\|^2}\,\tfrac{\bm{g_r}_\perp}{\|\bm{g_r}_\perp\|}$，其中 $\bm{g_r}_\perp$ 是 $\bm{g_r}$ 垂直于 $\bm{g_f}$ 的分量——几何上就是先沿遗忘方向投出刚好满足约束的最小一步，再把剩余预算花在最不伤 retain 的正交方向上。切换条件 $\kappa_1$ 完全由 $Q, R, \|\bm{g_r}\|$ 决定，不引入额外超参。
 
-3. **不可避免冲突时的提前停止 $\kappa_2$ + 按层独立约束的并行化**:
+**3. 不可调和时的提前停止 $\kappa_2$ 与按层独立约束的并行化：知道何时该停、又能上大模型**
 
-    - 功能：在每步检查"是否已经不可能既改善 forget 又不伤 retain"，是则停；同时把全局约束拆到层级，使大模型可多 GPU 并行。
-    - 核心思路：在原问题上再加 $\bm{g_r}\cdot\Delta\bm{w}\leq 0$ (retain 不退化)，得到新可行性条件 $\kappa \leq \kappa_2 \triangleq \sqrt{(\|\bm{g_r}\|\|\bm{g_f}\|)^2 - Q^2\|\bm{g_r}\|^2/R^2}$；一旦 $\kappa > \kappa_2$ 就证明本步不可能不付出 collateral forgetting，直接 break。并行化把 $\bm{w}$ 按层切成 $\ell$ 段，按 $Q_i = \tfrac{\|\bm{g_r}^{(i)}\|\|\bm{g_f}^{(i)}\|}{\sum_j\|\bm{g_r}^{(j)}\|\|\bm{g_f}^{(j)}\|}\cdot Q$ 分配层级配额，每层独立解一次子问题。
-    - 设计动机：(a) $\kappa_2$ 把"算法该不该继续"做成一个有理论保证的判据，避免无意义地继续破坏 retain；(b) 按层独立既符合"不同层敏感度不同"的经验事实 (实验显示比均匀分配显著更好)，也让算法天然可并行。
+光会切换还不够：当 $D_f$ 与 $D_r$ 已经太像，任何一步都不可能既改善 forget 又不伤 retain，继续跑只是白白破坏 retain。HAMU 在原问题上再加一条 $\bm{g_r}\cdot\Delta\bm{w}\leq 0$（要求 retain 不退化），推出新的可行性边界 $\kappa_2 \triangleq \sqrt{(\|\bm{g_r}\|\|\bm{g_f}\|)^2 - Q^2\|\bm{g_r}\|^2/R^2}$——一旦 $\kappa > \kappa_2$ 即证明本步必然付出 collateral forgetting，直接 break，停止判据因此也有理论保证而非拍脑袋。另一方面，为了在 LLM 上跑得动并尊重"不同层敏感度不同"的事实，HAMU 把全局约束按层拆开：将 $\bm{w}$ 切成 $\ell$ 段，按 $Q_i = \tfrac{\|\bm{g_r}^{(i)}\|\|\bm{g_f}^{(i)}\|}{\sum_j\|\bm{g_r}^{(j)}\|\|\bm{g_f}^{(j)}\|}\cdot Q$ 把总配额 $Q$ 正比于各层梯度规模乘积地分给每层，每层独立解一次子问题。这既让遗忘配额自动倾斜到"更值得改"的层（消融显示显著优于均匀分配），也让各层可多 GPU 并行求解。
 
 ### 损失函数 / 训练策略
-保持模型原本的交叉熵损失，不引入新的可学习参数。唯一可调超参是学习率 $\eta$，并隐式设 $R = \eta\|\bar{\bm{g}}_{\bm{r}}\|$。用户根据需求选 $Q$ (HAMU-Q) 或 $U$ (HAMU-U)；为满足一阶近似，作者建议梯度裁剪到 $\|\bm{g}\|_{\max}=1$ 并选 $Q < \eta$。HAMU-U 是对偶变体：min forget 改善取负 s.t. retain 改善 $\geq U$，闭式解结构对称。
+保持模型原本的交叉熵损失，不引入新的可学习参数。唯一可调超参是学习率 $\eta$，并隐式设 $R = \eta\|\bar{\bm{g}}_{\bm{r}}\|$。用户根据需求选 $Q$ (HAMU-Q) 或 $U$ (HAMU-U)；为满足一阶近似，作者建议梯度裁剪到 $\|\bm{g}\|_{\max}=1$ 并选 $Q < \eta$。HAMU-U 是对偶变体：把 forget 改善取负作目标、约束 retain 改善 $\geq U$，闭式解结构对称。
 
 ## 实验关键数据
 

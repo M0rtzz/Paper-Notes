@@ -42,31 +42,29 @@ tags:
 
 ### 整体框架
 
-理论侧：从无 dropout 的 MFT 出发——前向方差/相关性满足递推 $c^l = F(c^{l-1})$，临界条件由 $\chi_\perp \equiv F'(1) = 1$ 定义。加入 keep-probability $\rho$ 的 inverted dropout（独立 mask 作用于两个输入）后，相关性映射变成 $\bar{F}_\rho(c)$，作者证明 $\bar{F}_\rho(1) = 1-h$（$h>0$），即 $c=1$ 不再是不动点，于是定义 $m\equiv 1-c^*$ 为序参量，$t\equiv \chi_\rho - 1$ 为约化温度，$h$ 为外场，写出 Landau 方程并提取标度律。实验侧：MLP / ViT 在 CIFAR-10/100 上比较常数 dropout 与各种调度（前置/后置/线性/阶梯），固定总预算 $\bar{h}$。
+这篇论文要回答一个被业界默认却没人讲清楚的问题：固定 dropout 总量，沿网络深度该怎么分配才最优？作者的整条逻辑是把随机初始化深网的平均场理论（MFT）搬过来——无 dropout 时前向相关性满足递推 $c^l = F(c^{l-1})$，临界（edge-of-chaos）由 $\chi_\perp \equiv F'(1) = 1$ 定义，此时 $c=1$ 是完美对齐不动点、信号能传到最深。引入 keep-probability $\rho$ 的 inverted dropout 后，相关性映射形变为 $\bar{F}_\rho(c)$，$c=1$ 不再是不动点；作者把这个偏移识别为统计力学里的"外场" $h$、把去对齐量 $m\equiv 1-c^*$ 当"序参量"，于是整套 Landau 临界现象的工具（标度律、普适类、标度坍塌）立刻可用，最后把理论翻译成一条可执行的 dropout 调度规则。实验侧只验证这条规则：MLP / ViT 在 CIFAR-10/100 上固定总预算 $\bar{h}$，比较常数、前置、后置、线性等调度。
 
 ### 关键设计
 
-1. **Dropout 作为对齐对称性破缺外场 $h$**:
+**1. 把 dropout 识别为破坏对齐对称性的外场 $h$：让临界现象的整套工具能用上。**
 
-    - 功能：把 dropout 在 MFT 里的"破坏临界"效应**定量化**为一个可以和序参量共轭的标量场。
-    - 核心思路：把独立 mask 作用后的相关性递推 $\bar{F}_\rho$ 在 $c=1$ 处求值，得到 $\bar{F}_\rho(1) = 1 - \frac{1-\rho}{\rho \bar{q}^*}\sigma_w^2 \int Dz\,\phi^2(\sqrt{\bar{q}^*}z)$，由此定义外场 $h \equiv 1-\bar{F}_\rho(1)$，弱 dropout 下 $h \approx a(1-\rho)$ 与 dropout 概率线性相关；序参量 $m\equiv 1-c^*$。把 $\bar{F}_\rho(1-m)$ 在 $m=0$ Taylor 展开并代入不动点条件 $1-m = \bar{F}_\rho(1-m)$，得到 Landau 方程 $h = \tfrac{g_\rho}{2}m^2 - tm$，物理解 $m(t,h) = \frac{t+\sqrt{t^2+2g_\rho h}}{g_\rho}$。
-    - 设计动机：之前的工作只说"dropout 摧毁临界点"，本文证明被 dropout 形变后的递推**仍然有一个 $c^* < 1$ 的不动点**，因此相关长度有定义、可以做 RG 流分析；这是后续所有标度律的前提。
+之前的工作（Schoenholz et al. 2017）只说 dropout"摧毁 $c=1$ 不动点"就停住了，相关长度失去定义、RG 分析无从下手。作者的关键一步是把独立 mask 作用后的相关性递推 $\bar{F}_\rho$ 在 $c=1$ 处求值，得到 $\bar{F}_\rho(1) = 1 - \frac{1-\rho}{\rho \bar{q}^*}\sigma_w^2 \int Dz\,\phi^2(\sqrt{\bar{q}^*}z) < 1$，由此把那个偏移定义成外场 $h \equiv 1-\bar{F}_\rho(1)$（弱 dropout 下 $h \approx a(1-\rho)$，与 dropout 概率线性相关），并把序参量取为 $m\equiv 1-c^*$。把 $\bar{F}_\rho(1-m)$ 在 $m=0$ 处 Taylor 展开、代入不动点条件 $1-m = \bar{F}_\rho(1-m)$，就得到一个标准的 Landau 方程
 
-2. **Smooth vs Kinked 两个普适类 + 两参数标度坍塌**:
+$$h = \tfrac{g_\rho}{2}m^2 - tm,\qquad m(t,h) = \frac{t+\sqrt{t^2+2g_\rho h}}{g_\rho},$$
 
-    - 功能：解释为什么 ResNet MFT 里 tanh 和 ReLU 表现出截然不同的临界行为（Yang & Schoenholz 2017），并给出**不同的临界指数**。
-    - 核心思路：相关性映射在 $c=1$ 邻域的解析结构决定一切。Smooth 激活（tanh, GELU）满足 Price 定理可以 Taylor 展开，二阶项 $g_\rho m^2$ 给出 $m\sim\sqrt{h}$（$\delta=2$）；kinked 激活（ReLU）的 $\phi''$ 含 $\delta$ 函数，在 $c=1$ 出现分支点，方程退化为 $h = \kappa m^{3/2} - tm$ 给出 $m\sim h^{2/3}$（$\delta=3/2$）。两者的临界指数表（$\nu_t, \beta, \theta_{\rm rel}, \gamma, \delta, \nu_\rho, \alpha$）整整齐齐给出。两参数标度坍塌：smooth 类下定义 $\tilde{m}\equiv m\sqrt{g_\rho/(2h)}$，$\tilde{t}\equiv -t/\sqrt{2g_\rho h}$，所有曲线坍塌到 $\tilde{m} = \sqrt{1+\tilde{t}^2}-\tilde{t}$；kinked 类下 $m = (h/\kappa)^{2/3}\mathcal{F}(t/(\kappa^{2/3}h^{1/3}))$，crossover scale 是 $|t|\sim \kappa^{2/3}h^{1/3}$。这也通过 Hermite 谱展开给出二次诊断：smooth 激活的 Hermite 系数指数衰减，kinked 激活幂律衰减。
-    - 设计动机：把"激活函数选择"这种工程感很强的决策放到统计力学普适类的框架里——同一类内的细节无关紧要，跨类必须用不同标度规律。在 dropout 这个新轴上首次明确区分。
+其中 $t\equiv \chi_\rho - 1$ 充当约化温度。这一步之所以是后续一切的前提：它证明被 dropout 形变后的递推**仍然有一个 $c^*<1$ 的不动点**，相关长度重新有定义，标度律才有立足点。
 
-3. **前置 dropout 调度 = 饱和阶梯 + regularization reach**:
+**2. Smooth 与 kinked 两个普适类 + 两参数标度坍塌：激活函数的选择被归入临界指数。**
 
-    - 功能：从 MFT 出发**一阶原理**地导出"早层多放 dropout"的实用调度规则，给定预算即可使用、零额外算力。
-    - 核心思路：让 keep probability 随层 $\ell$ 变化，定义有效逆相关长度 $\xi_{\rm eff}^{-1} \approx \frac{1}{L}\sum_\ell \sqrt{t^2+2g_\rho h_\ell}$。在 $t=0$（临界）上有 $\xi_{\rm eff}^{-1} \propto \frac{1}{L}\sum_\ell h_\ell^{1/2}$，受预算约束 $\sum_\ell h_\ell = L\bar{h}$ 和上界 $h_\ell \leq h_{\max}$。由于 $h^{1/2}$ 凹（Jensen），任何在 $\{0, h_{\max}\}$ 之间的**阶梯**解都最优，相对于常数的增益是 $\xi_{\rm step}/\xi_{\rm const} = \sqrt{h_{\max}/\bar{h}}$。但 MFT 目标对层的排列不变，需要第二原理打破简并：作者定义"下游暴露" $\mathcal{D}_\ell \approx h_\ell \xi_c(1-e^{-(L-\ell)/\xi_c})$（早层的 mask 被更多下游层"看见"），是关于 $\ell$ 单调递减的权重，于是线性规划解就是**早层填满**——这就是 front-loaded schedule。同样的论证对 kinked 类的 $\int h^{1/3}$ 也成立。
-    - 设计动机：把一个"该把 dropout 放哪"的工程问题转化为"凹函数预算分配 + 单调权重打破简并"的两步标准优化问题，结论清晰可执行。
+同样是 edge-of-chaos，tanh 和 ReLU 的临界行为为何截然不同（Yang & Schoenholz 2017 在 ResNet MFT 里就观察到）？作者指出答案完全由相关性映射在 $c=1$ 邻域的**解析结构**决定。Smooth 激活（tanh、GELU）满足 Price 定理、可在 $c=1$ 光滑 Taylor 展开，二阶项 $g_\rho m^2$ 主导，给出 $m\sim\sqrt{h}$（$\delta=2$）、$\xi\sim h^{-1/2}$；kinked 激活（ReLU）的 $\phi''$ 含 $\delta$ 函数，在 $c=1$ 出现分支点，方程退化成 $h = \kappa m^{3/2} - tm$，给出 $m\sim h^{2/3}$（$\delta=3/2$）、$\xi\sim h^{-1/3}$。两类各自的临界指数（$\nu_t, \beta, \theta_{\rm rel}, \gamma, \delta, \nu_\rho, \alpha$）成套给出。同一普适类内的所有 $(t,h)$ 曲线还能被两参数标度坍塌到单一普适函数：smooth 类定义 $\tilde{m}\equiv m\sqrt{g_\rho/(2h)}$、$\tilde{t}\equiv -t/\sqrt{2g_\rho h}$，闭式坍塌为 $\tilde{m} = \sqrt{1+\tilde{t}^2}-\tilde{t}$；kinked 类则是 $m = (h/\kappa)^{2/3}\mathcal{F}\big(t/(\kappa^{2/3}h^{1/3})\big)$，crossover scale 为 $|t|\sim \kappa^{2/3}h^{1/3}$。Hermite 谱展开提供了一个独立的二次诊断——smooth 激活的 Hermite 系数指数衰减，kinked 激活幂律衰减。这样一来，"用 tanh 还是 ReLU"这种工程决策被纳入统计力学普适类：同类内的细节无关紧要，跨类必须换标度规律，而这是首次在 dropout 这根轴上把两类区分开。
+
+**3. 前置 dropout 调度：凹预算分配选出阶梯，regularization reach 选出"早层填满"。**
+
+有了相关长度的标度律，"dropout 该放哪层"就变成一个干净的优化问题。让 keep probability 随层 $\ell$ 变化，有效逆相关长度近似 $\xi_{\rm eff}^{-1} \approx \frac{1}{L}\sum_\ell \sqrt{t^2+2g_\rho h_\ell}$；在临界点 $t=0$ 上简化为 $\xi_{\rm eff}^{-1} \propto \frac{1}{L}\sum_\ell h_\ell^{1/2}$，约束是预算 $\sum_\ell h_\ell = L\bar{h}$ 与上界 $h_\ell \leq h_{\max}$。由于 $h^{1/2}$ 是凹函数，Jensen 不等式直接给出：把预算押到 $\{0, h_{\max}\}$ 两端的**阶梯**解最优，相对常数 dropout 的增益是 $\xi_{\rm step}/\xi_{\rm const} = \sqrt{h_{\max}/\bar{h}}$。但 MFT 主目标对层的排列不变——阶梯放前放后一样好，简并需要第二条原理打破。作者引入"下游暴露" $\mathcal{D}_\ell \approx h_\ell \xi_c\big(1-e^{-(L-\ell)/\xi_c}\big)$，刻画早层的 mask 被更多下游层"看见"，这是一个关于 $\ell$ 单调递减的权重，于是线性规划解唯一地落到**早层填满**——也就是 front-loaded schedule。同样的论证对 kinked 类的 $\int h^{1/3}$ 照样成立。整个推导把"该把 dropout 放哪"化成"凹函数预算分配 + 单调权重打破简并"两步标准优化，结论是零额外算力、给定预算即可照用的调度规则。
 
 ### 损失函数 / 训练策略
 
-实验侧不改训练目标，只改 dropout 的层间分布。固定 $\bar{h}$ 比较 constant / linear-decreasing / step（前置）/ step（后置）等 schedule；理论侧的 $\bar{F}_\rho$、$\chi_\rho$、$g_\rho$ 都用 Gaussian 测度积分直接数值求解 MFT 递推作为对照。
+实验侧不改训练目标，只改 dropout 沿层的分布：固定平均预算 $\bar{h}$，比较 constant / linear-decreasing / step（前置）/ step（后置）等 schedule。理论侧的 $\bar{F}_\rho$、$\chi_\rho$、$g_\rho$ 都通过 Gaussian 测度积分直接数值求解 MFT 递推，作为实验的对照基准。
 
 ## 实验关键数据
 

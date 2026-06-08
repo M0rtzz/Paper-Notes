@@ -44,23 +44,23 @@ tags:
 
 ### 关键设计
 
-1. **结构同构作为科学对齐的可证伪最弱条件**:
+**1. 结构同构作为科学对齐的可证伪最弱条件：把"表示能否当物理状态用"收紧成可验证的几何陈述。**
 
-    - 功能：把"模型表示是否能当物理状态用"这个模糊问题，收紧成可验证的几何陈述。
-    - 核心思路：对任意 regime $\mu\in\mathcal{M}$，存在注入线性映射 $\mathbf{A}\in\mathbb{R}^{d\times m}$ 使 $\mathbf{z}=\mathbf{A}\mathbf{y}+\epsilon_{\mu}(\mathbf{y})$，且残差及其雅可比一致有界：$\sup_\mu \mathbb{E}[\|\epsilon_\mu\|]\le\bar{\epsilon}$，$\sup_\mu \mathbb{E}[\|J_{\epsilon_\mu}\|]\le\bar{\delta}$。命题 2.1 由此导出三条 uniform 误差界 —— **静态保真** $\sup_\mu \mathbb{E}\|\mathbf{y}-L\mathbf{z}\|\le\|L\|\bar{\epsilon}$、**动态一致** $\sup_\mu \mathbb{E}\|\dot{\mathbf{y}}-L\dot{\mathbf{z}}\|\le\|L\|\bar{\delta}K$、**流形约束** $\sup_\mu \mathbb{E}\|\mathcal{P}(L\mathbf{z})\|\le\Lambda_{\mathcal{P}}\|L\|\bar{\epsilon}$，其中 $L$ 是同一个左逆解码器，$K$ 是物理向量场上界。定理 2.1 进一步表明这一对齐自动给出 $n$ 步介入回放误差 $\epsilon_{\text{int}}(n)\le\epsilon_{\text{stat}}+\epsilon_{\text{dyn}}(t_n-t^*)$，把表示几何和介入因果一致性挂上钩。
-    - 设计动机：CRL 通常要求逐坐标可识别，假设强、几乎不可在大规模观测数据上验证；而结构同构允许分布式表示，但仍保证唯一性 + 介入一致性，是"可上线测量"的最弱必要条件。
+"VFM 学没学到物理结构"本来很模糊。作者用结构同构把它收紧：对任意 regime $\mu\in\mathcal{M}$，存在注入线性映射 $\mathbf{A}\in\mathbb{R}^{d\times m}$ 使 $\mathbf{z}=\mathbf{A}\mathbf{y}+\epsilon_{\mu}(\mathbf{y})$，且残差及其雅可比一致有界：$\sup_\mu \mathbb{E}[\|\epsilon_\mu\|]\le\bar{\epsilon}$，$\sup_\mu \mathbb{E}[\|J_{\epsilon_\mu}\|]\le\bar{\delta}$。命题 2.1 由此导出三条 uniform 误差界 —— **静态保真** $\sup_\mu \mathbb{E}\|\mathbf{y}-L\mathbf{z}\|\le\|L\|\bar{\epsilon}$、**动态一致** $\sup_\mu \mathbb{E}\|\dot{\mathbf{y}}-L\dot{\mathbf{z}}\|\le\|L\|\bar{\delta}K$、**流形约束** $\sup_\mu \mathbb{E}\|\mathcal{P}(L\mathbf{z})\|\le\Lambda_{\mathcal{P}}\|L\|\bar{\epsilon}$，其中 $L$ 是同一个左逆解码器，$K$ 是物理向量场上界。定理 2.1 进一步表明这一对齐自动给出 $n$ 步介入回放误差 $\epsilon_{\text{int}}(n)\le\epsilon_{\text{stat}}+\epsilon_{\text{dyn}}(t_n-t^*)$，把表示几何和介入因果一致性挂上钩。
 
-2. **结构对齐探针 $\mathcal{Q}=(\mathcal{Z},\mathcal{R},\mathcal{H},\psi)$ 三件套**:
+为什么挑这个条件？CRL 通常要求逐坐标可识别，假设强、几乎无法在大规模观测数据上验证；结构同构允许分布式表示，却仍保证唯一性 + 介入一致性，且"线性可恢复"恰好对应工程界最爱的线性探针——这是一个"能上线测量"的最弱必要条件。
 
-    - 功能：把抽象的误差界变成"用什么 head、用什么数据、用什么度量"的具体测试，并锁死代理函数族为线性以避免靠解码器表达力"作弊"。
-    - 核心思路：$\mathcal{Q}_{\text{stat}}$ 用 $\xi_{\text{stat}}=\|h(\mathbf{z})-P_c\|/\sigma(P_c)$（线性探针归一化到 mean-baseline=1）测物理状态线性可恢复性；$\mathcal{Q}_{\text{dyn}}$ 用 3 小时有限差 $\xi_{\text{dyn}}=\|L\Delta\mathbf{z}_t-\Delta\mathbf{y}_t\|$ 测时间导数一致性；$\mathcal{Q}_{\text{con}}$ 用低纬 vs 高纬带 $\Delta V_m$ 的单调约束（梯度风平衡推出 $f\propto\sin\phi$，故同 $P_c$ 时低纬风速应高）测物理耦合保持度。所有探针均在 **regime-balanced** 子集上以同一线性 head 训练，并按 $P_c=980$ hPa 把数据切成 Moderate / Intense。
-    - 设计动机：强制线性 head 把"信息够不够"的问题从"head 表达力"剥离 —— 如果线性探不出，说明物理变量没被显式编码到一个线性子空间里；regime-balanced 切片排除样本不均衡这一捷径解释。
+**2. 结构对齐探针 $\mathcal{Q}=(\mathcal{Z},\mathcal{R},\mathcal{H},\psi)$ 三件套：把误差界变成具体可跑的测试。**
 
-3. **TC-Bench + 失效模式几何诊断**:
+抽象的误差界还得落成"用什么 head、什么数据、什么度量"。作者把三条界各实例化成一个线性探针，并锁死代理函数族为线性以防靠解码器表达力"作弊"：$\mathcal{Q}_{\text{stat}}$ 用 $\xi_{\text{stat}}=\|h(\mathbf{z})-P_c\|/\sigma(P_c)$（归一化到 mean-baseline=1）测物理状态线性可恢复性；$\mathcal{Q}_{\text{dyn}}$ 用 3 小时有限差 $\xi_{\text{dyn}}=\|L\Delta\mathbf{z}_t-\Delta\mathbf{y}_t\|$ 测时间导数一致性；$\mathcal{Q}_{\text{con}}$ 用低纬 vs 高纬带 $\Delta V_m$ 的单调约束（梯度风平衡推出 $f\propto\sin\phi$，故同 $P_c$ 时低纬风速应更高）测物理耦合保持度。所有探针都在 regime-balanced 子集上以同一线性 head 训练，并按 $P_c=980$ hPa 切成 Moderate / Intense。
 
-    - 功能：提供首个可复现、版本化、跨全部主要洋盆的全球热带气旋基准（IBTrACS v4r01 + GridSat-B1 红外，1980–2024，3 小时步长，224×224 patch，2601 条清洗后气旋轨迹），并配套对最强骨干 DINOv3 做潜空间几何剖析。
-    - 核心思路：在 $N\ge 500$ 的 $P_c$ bin 内计算三项指标 —— (a) PCA 的 PC1 与 $P_c$ 的关系；(b) 有效维数 $d_{\text{eff}}=(\sum_i\lambda_i)^2/\sum_i\lambda_i^2$（参与比）；(c) 中心化特征对距离均值（feature spread）。三者一旦在 $P_c<980$ hPa 同时下跌，就指认"潜空间沿物理轴塌缩"是失效根因。作者还用从零训练的像素级监督 baseline 证明强气旋段的 $P_c$ 信号物理上是可恢复的，从而把锅扣在 VFM 表征几何而非任务难度上。
-    - 设计动机：把"探针失败 → 是真的塌缩还是任务本就难？"这一可能的反驳堵死；同时给出未来研究热带气旋表示学习的统一数据底座。
+强制线性 head 的意义是把"信息够不够"从"head 表达力"里剥出来——线性探不出，就说明物理变量根本没被显式编码进一个线性子空间；regime-balanced 切片则排除了样本不均衡这个捷径解释。
+
+**3. TC-Bench + 失效模式几何诊断：给一个全球基准，并把"塔缩"坐实在潜空间几何上。**
+
+光有探针还要有公平数据和反驳堵口。作者发布 TC-Bench——首个可复现、版本化、跨全部主要洋盆的全球热带气旋基准（IBTrACS v4r01 + GridSat-B1 红外，1980–2024，3 小时步长，224×224 patch，2601 条清洗后轨迹），并对最强骨干 DINOv3 做潜空间几何剖析：在 $N\ge 500$ 的 $P_c$ bin 内算三项——PCA 的 PC1 与 $P_c$ 的关系、有效维数 $d_{\text{eff}}=(\sum_i\lambda_i)^2/\sum_i\lambda_i^2$、中心化特征对距离均值。三者一旦在 $P_c<980$ hPa 同时下跌，就指认"潜空间沿物理轴塔缩"是失效根因。
+
+为堵住"探针失败到底是真塔缩还是任务本就难"这条反驳，作者还训了一个从零监督的像素级 baseline，证明强气旋段的 $P_c$ 信号物理上确实可恢复，从而把锅扣在 VFM 表征几何而非任务难度上。
 
 ### 损失函数 / 训练策略
 评估阶段不训练骨干。每个 VFM（DINOv2/v3, CLIP, SigLIP/2, MAE，附录还覆盖 VideoMAE、V-JEPA2、X-CLIP）的 CLS token 作为表示 $\mathbf{z}$，下游只训一个线性 head $h$（最小二乘），按 trajectory-level split 防时空泄漏；附录 E 再用 MLP/Transformer 探针、空间均值池化、像素 baseline、视频骨干等做四套消融，验证现象不依赖探针族或聚合方式。
@@ -112,12 +112,6 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐⭐ 6 类骨干 × 3 探针 × regime-stratified + 4 套消融（非线性探针、像素 baseline、空间池化、视频骨干），对反驳路径覆盖很全。
 - 写作质量: ⭐⭐⭐⭐ 概念清晰、定理-探针-实验对应整齐；附录的物理背景写得相当好，主文略偏理论，工程读者要靠图表理解。
 - 价值: ⭐⭐⭐⭐⭐ TC-Bench + 探针框架可直接复用到其他遥感/科学 ML 场景，是少数同时给概念、定理、数据、代码的工作。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

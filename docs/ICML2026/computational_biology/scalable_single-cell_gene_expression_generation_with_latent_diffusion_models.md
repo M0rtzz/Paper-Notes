@@ -52,32 +52,27 @@ scLDM 用统一的多头交叉注意力块 (MCAB) 把可交换的基因表达数
 
 ### 整体框架
 
-scLDM 的 pipeline 分两阶段训练、一阶段采样：
-
-- **输入**：每个细胞表示为 $(\mathbf{x}_{\mathcal{I}}, \mathcal{I})$，其中 $\mathcal{I}$ 是基因 ID 集合（不是位置编号！），$\mathbf{x}_{\mathcal{I}}$ 是对应的整数计数向量。
-- **Stage 1 (VAE)**：稀疏过滤 $G$ 只保留表达 $>0$ 的基因（不足 $d$ 个用 PAD 补齐）→ Embedding 把计数和基因 ID 混合 → $\mathrm{MCAB}_{\mathbf{S}}$ 用 $m$ 个可学习的 pseudo-inputs $\mathbf{S}$ 池化成固定 $m \times D$ 的 token 矩阵 $\mathbf{Z}$ → transformer blocks → 输出高斯后验 $\mu, \sigma^2$。Decoder 反过来：$\mathbf{Z}$ 过 transformer，再过 $\mathrm{MCAB}_{\mathbf{E}_{\mathcal{I}}}$（pseudo-inputs 换成查询基因 ID 对应的 embedding），输出 Negative Binomial 分布的 $(r, p)$ 参数。
-- **Stage 2 (LDM)**：冻结 VAE，把潜变量 $\mathbf{Z}$ 当成 token 序列丢给 DiT，用线性插值 + flow matching 损失训一个 score model 替代标准高斯先验。条件信号 $\mathbf{y} \in \{0,1\}^J$ (cell type / perturbation / batch 等) 通过 classifier-free guidance 注入。
-- **采样**：先从 LDM 采 $\mathbf{Z}$，再过 VAE decoder 采 NB 计数。
+scLDM 要解决的核心问题是：基因表达本质是一个"谁先谁后无所谓"的可交换集合，但主流模型却把它当成固定顺序的向量，既绑死了基因词表又违背生物学事实。它的破局思路是把每个细胞表示成"基因 ID 集合 + 对应计数"$(\mathbf{x}_{\mathcal{I}}, \mathcal{I})$，先用一个置换不变的 transformer-VAE 把它压成固定长度、与基因数解耦的潜变量集合，再在这个干净的潜空间上跑 DiT 扩散来做可控生成。训练分两阶段：Stage 1 学 VAE（编码 NB 计数似然），Stage 2 冻结 VAE、在潜空间上训一个流匹配扩散模型替换简陋的高斯先验；采样时先由扩散模型采潜变量，再过 VAE 解码采计数。
 
 ### 关键设计
 
-1. **统一的 MCAB（编码侧置换不变 + 解码侧置换等变）**:
+**1. 统一的 MCAB：一个 block 同时拿到置换不变与置换等变**
 
-    - 功能：单个 block 同时完成"集合 → 固定长度 token"的池化和"固定 token → 任意基因子集"的解池化。
-    - 核心思路：定义 $\mathrm{MCAB}_{\mathbf{S}}(\mathbf{X}) = F(\mathbf{X},\mathbf{S}) + \mathrm{MLP}(\mathrm{LN}(F(\mathbf{X},\mathbf{S})))$，其中 $F$ 用 $\mathbf{S}$ 当 query、$\mathbf{X}$ 当 key/value 做 multi-head cross-attention。Encoder 里 $\mathbf{S}$ 是 $m$ 个**与 ID 无关**的可学习向量 → 对 $\mathbf{X}$ 做任意置换、$\mathbf{S}$ 不变，attention 输出不变，所以 $\mathbf{Z}$ 置换不变。Decoder 里 $\mathbf{S} = \mathbf{E}_{\mathcal{I}}$（查询基因的 embedding） → 对 $\mathcal{I}$ 做置换等价于对 $\mathbf{S}$ 做行置换，于是输出按相同方式置换，得到置换等变。
-    - 设计动机：传统方案 (SetTransformer) 要分别造一个置换不变池化 (PMA) 和一个置换等变 unpool (ISAB)，参数和归纳偏置都不一致；MCAB 一个 block 同时拿到两种性质，参数共享、训练稳定，并且天然解耦"潜空间大小 $m$" 与"基因词表大小"——后者只通过 $\mathbf{E}$ 这一个 embedding matrix 进入模型，跨组织/跨物种迁移只需扩展 $\mathbf{E}$，不必动主体网络。
+可交换集合建模的难点在于：编码时希望"打乱基因顺序、潜变量不变"（置换不变），解码时希望"打乱查询基因、输出跟着同样打乱"（置换等变）。传统方案 SetTransformer 要分别造 PMA（池化）和 ISAB（解池化）两套 block，归纳偏置不一致、参数也不共享。scLDM 发现这两种对称性可以用同一个多头交叉注意力块表达，区别只在于 query 是什么。它定义 $\mathrm{MCAB}_{\mathbf{S}}(\mathbf{X}) = F(\mathbf{X},\mathbf{S}) + \mathrm{MLP}(\mathrm{LN}(F(\mathbf{X},\mathbf{S})))$，其中 $F$ 以 $\mathbf{S}$ 为 query、输入集合 $\mathbf{X}$ 为 key/value 做 cross-attention。
 
-2. **稀疏感知的输入处理 $G(\mathbf{x},\mathcal{I})$**:
+在 encoder 端，$\mathbf{S}$ 是 $m$ 个**与基因 ID 无关**的可学习 pseudo-inputs：对 $\mathbf{X}$ 任意置换时 $\mathbf{S}$ 不动、attention 聚合结果不变，于是潜变量 $\mathbf{Z}$（固定 $m \times D$）天然置换不变；在 decoder 端，把 $\mathbf{S}$ 换成查询基因的 embedding $\mathbf{E}_{\mathcal{I}}$，对 $\mathcal{I}$ 的置换就等价于对 $\mathbf{S}$ 做行置换，输出随之同样置换，得到置换等变。这一设计的额外红利是潜空间大小 $m$ 和基因词表彻底解耦——后者只通过 $\mathbf{E}$ 这一个 embedding 矩阵进入模型，跨组织、跨物种迁移只需扩展 $\mathbf{E}$ 而不必改动主体网络。
 
-    - 功能：把数万维稀疏计数向量压缩成长度 $d$ 的稠密 token 序列。
-    - 核心思路：先选出 $\mathcal{J} = \{i : x_i > 0\}$（表达基因集合），若 $|\mathcal{J}| < d$ 则用特殊 PAD token (计数 0，索引 PAD) 补齐：$\mathrm{Out} = \{(x_i, i)\}_{i \in \mathcal{J}} \cup \{(0, \mathrm{PAD})\}^{d - |\mathcal{J}|}$。Embedding 层把计数和基因 embedding 拼起来：$\mathrm{Emb}(\bar{\mathbf{x}}_{\mathcal{J}}, \mathcal{J}) = \mathrm{Linear}(\mathrm{repeat}_d(\bar{\mathbf{x}}_{\mathcal{J}}) \,\Vert\, \mathbf{E}_{\mathcal{J}})$。
-    - 设计动机：scRNA-seq 70%+ 是 dropout，把 0 也喂进 transformer 既浪费 $O(D^2)$ 算力又稀释信号。注意这只是**encoder 端的上下文裁剪**，decoder 仍然对全部 $\mathcal{I}$ 输出 NB 分布参数，NB 在 0 处本来就有大量概率质量，所以模型表达 structural zeros 的能力不受影响（Table 15、17 的 $R^2$ Zeros 实验证实）。
+**2. 稀疏感知的输入处理：只把"真正有信号"的基因喂进 transformer**
 
-3. **DiT 潜空间扩散 + 联合多属性 CFG**:
+scRNA-seq 有 70%+ 的位置是 dropout 零，若把数万维全部喂给 transformer，既浪费 $O(D^2)$ 算力又把有效信号稀释掉。scLDM 在 encoder 入口做了一次稀疏裁剪 $G(\mathbf{x},\mathcal{I})$：先选出表达基因集合 $\mathcal{J} = \{i : x_i > 0\}$，若不足目标长度 $d$ 就用 PAD token（计数 0、索引 PAD）补齐，即 $\mathrm{Out} = \{(x_i, i)\}_{i \in \mathcal{J}} \cup \{(0, \mathrm{PAD})\}^{d - |\mathcal{J}|}$；再把计数和基因 embedding 拼接进 token，$\mathrm{Emb}(\bar{\mathbf{x}}_{\mathcal{J}}, \mathcal{J}) = \mathrm{Linear}(\mathrm{repeat}_d(\bar{\mathbf{x}}_{\mathcal{J}}) \,\Vert\, \mathbf{E}_{\mathcal{J}})$。
 
-    - 功能：把简陋的标准高斯先验换成强大的可控生成模型，支持同时按 cell type、perturbation、batch 等多个属性生成。
-    - 核心思路：把 $m$ 个潜 token 当成 DiT 的输入序列，用线性插值 + flow matching 损失训速度场 $v_{t,\epsilon}(\mathbf{Z}; y)$。多属性条件采用**联合 CFG** $\tilde{v}_{t,\epsilon}(\mathbf{Z}, y) = v_{t,\epsilon}(\mathbf{Z}; \mathrm{Null}) + \omega [v_{t,\epsilon}(\mathbf{Z}; y) - v_{t,\epsilon}(\mathbf{Z}; \mathrm{Null})]$，把属性向量 $\mathbf{y} \in \{0,1\}^J$ **整体**当成一个条件丢进去，而不是 CFGen 那种 $\sum_j \omega_j [v(\mathbf{Z}; y_j) - v(\mathbf{Z}; \mathrm{Null})]$ 的加性分解。
-    - 设计动机：(i) LDM 的 aggregated posterior 远比 $\mathcal{N}(0, I)$ 复杂，强先验能消除"先验-后验 mismatch"导致的生成质量塌陷 (Tomczak 2024)。(ii) CFGen 的加性 CFG 假设属性 one-hot $\sum_j y_j = 1$，无法表达"perturbation A + cell type B"这种组合；联合 CFG 直接把组合编码进条件 embedding，对扰动 benchmark 上的多属性可控生成尤其重要。
+关键在于这只是**编码端的上下文裁剪**，并不削弱模型表达结构性零的能力：decoder 仍然对完整的 $\mathcal{I}$ 输出 NB 分布参数，而 NB 在 0 处本来就有大量概率质量，所以那些被裁掉的零依然能被解码器恢复（Table 15、17 的 $R^2$ Zeros 实验证实），算力却全部集中在真正携带信号的基因上——是一次"省算力还不掉点"的免费午餐。
+
+**3. DiT 潜空间扩散 + 联合多属性 CFG：用强先验替换高斯先验并解锁组合生成**
+
+VAE 训完后，aggregated posterior 的真实形状远比标准高斯 $\mathcal{N}(0, I)$ 复杂，直接用高斯先验采样会因"先验-后验 mismatch"导致生成质量塌陷（Tomczak 2024）。scLDM 把 $m$ 个潜 token 当作 DiT 的输入序列，用线性插值 + 流匹配训一个速度场 $v_{t,\epsilon}(\mathbf{Z}; y)$ 来逼近这个复杂的潜分布，相当于把简陋的高斯先验换成一个学出来的强先验。
+
+多属性可控生成上，它把属性向量 $\mathbf{y} \in \{0,1\}^J$（cell type / perturbation / batch 等）**整体**当成一个条件做联合 CFG：$\tilde{v}_{t,\epsilon}(\mathbf{Z}, y) = v_{t,\epsilon}(\mathbf{Z}; \mathrm{Null}) + \omega [v_{t,\epsilon}(\mathbf{Z}; y) - v_{t,\epsilon}(\mathbf{Z}; \mathrm{Null})]$，而不是 CFGen 那种 $\sum_j \omega_j [v(\mathbf{Z}; y_j) - v(\mathbf{Z}; \mathrm{Null})]$ 的加性分解。加性 CFG 隐含属性 one-hot 互斥假设 $\sum_j y_j = 1$，无法表达"perturbation A + cell type B"这类组合；联合 CFG 直接把组合编码进同一个条件 embedding，因此能捕捉属性间的交互，对扰动 benchmark 上的多属性可控生成尤其关键。
 
 ### 损失函数 / 训练策略
 

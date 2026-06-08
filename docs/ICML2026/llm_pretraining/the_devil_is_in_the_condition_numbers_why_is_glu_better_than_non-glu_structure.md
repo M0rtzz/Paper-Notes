@@ -40,35 +40,33 @@ tags:
 
 ## 方法详解
 
-本文不是提出一个新方法，而是给出 GLU 优势的"机制级解释"。整套论证按"先写出 NTK 的解析形式 → 用随机矩阵理论估极端特征值 → 把谱差异翻译成收敛阶 → 进一步用谱分解解释 loss-crossing → 实证排除泛化间隔解释"五步推进。
-
 ### 整体框架
 
-考虑输入 $\mathbf{x}\in\mathbb{R}^d$、隐藏宽度 $m$ 的两层网络。非门控模型为 $z(\mathbf{x}) = \mathbf{V}\phi(\mathbf{W}\mathbf{x})$，门控模型为 $z(\mathbf{x}) = \mathbf{V}[(\mathbf{P}\mathbf{x}) \odot \phi(\mathbf{W}\mathbf{x})]$；权重独立 Gauss 初始化为 $W_{ij}\sim\mathcal{N}(0,\sigma_w^2)$、$P_{ij}\sim\mathcal{N}(0,\sigma_p^2)$、$V_{ij}\sim\mathcal{N}(0,\sigma_v^2)$，采用 LeCun 设置 $\sigma_w^2 = \sigma_p^2 = 1/d$、$\sigma_v^2 = 1/m$。在此设定下分别对参数求期望，写出 NTK 矩阵 $\mathbf{K}$ 和 $\tilde{\mathbf{K}}$ 的解析形式，再用 Marchenko–Pastur 分布、El Karoui 核矩阵展开和 Weyl 不等式估各成分的极端特征值。
+本文不提新方法，而是用 NTK（神经正切核）框架把"GLU 为什么好"做成一个机制级证明。整条论证链是：先在 LeCun 初始化下写出门控/非门控两层网络 NTK 的解析形式，发现两者差一个 Hadamard 积；再用随机矩阵理论估极端特征值，把这个乘法结构翻译成"条件数低一阶"的定量界；最后把谱差异接回训练动力学，既解释了收敛更快、也解释了 loss-crossing 这条反直觉曲线，并用实证把"GLU 改善泛化"的解释排除掉。
+
+具体设定是：输入 $\mathbf{x}\in\mathbb{R}^d$、隐藏宽度 $m$，非门控模型 $z(\mathbf{x}) = \mathbf{V}\phi(\mathbf{W}\mathbf{x})$，门控模型 $z(\mathbf{x}) = \mathbf{V}[(\mathbf{P}\mathbf{x}) \odot \phi(\mathbf{W}\mathbf{x})]$；权重独立 Gauss 初始化 $W_{ij}\sim\mathcal{N}(0,\sigma_w^2)$、$P_{ij}\sim\mathcal{N}(0,\sigma_p^2)$、$V_{ij}\sim\mathcal{N}(0,\sigma_v^2)$，取 LeCun 设置 $\sigma_w^2 = \sigma_p^2 = 1/d$、$\sigma_v^2 = 1/m$。所有谱估计都建立在这套初始化和 Marchenko–Pastur 分布、El Karoui 核矩阵展开、Weyl 不等式三件工具上。
 
 ### 关键设计
 
-1. **GLU NTK 的 Hadamard-积结构**：
+**1. GLU 的 NTK 等于"原 NTK ⊙ 数据 Gram 阵"：把架构差异压成一个乘法项。**
 
-    - 功能：把门控模型的 NTK 改写成与非门控 NTK 的乘法关系，使两者可直接比较。
-    - 核心思路：对参数取期望并代入 LeCun 初始化、再利用 $\sigma_v^2 + \sigma_p^2 \approx \sigma_p^2$（大 $m$）后，可得 $\tilde{K}_{ij} \approx K_{ij}\cdot(\mathbf{x}_i^\top\mathbf{x}_j/d)$，矩阵化即 $\tilde{\mathbf{K}} \approx \mathbf{K}\odot(\mathbf{X}\mathbf{X}^\top/d)$。这个关系说明 GLU 等价于用"数据 Gram 矩阵的归一版本"对原 NTK 做逐元素重加权。
-    - 设计动机：通过把两套核矩阵建立显式的代数联系，所有差异都被压缩到 $\mathbf{X}\mathbf{X}^\top/d$ 这一项上，谱分析只需研究 Wishart 矩阵和它的自 Hadamard 乘积，避免直接对门控模型作渐近分析。
+GLU 的优势过去只有"门控增强表达力"这种泛泛之词，根子在于没人写得出门控模型 NTK 和非门控 NTK 的可比关系。作者的做法是对参数取期望、代入 LeCun 初始化，并利用大 $m$ 下 $\sigma_v^2 + \sigma_p^2 \approx \sigma_p^2$，得到逐元素关系 $\tilde{K}_{ij} \approx K_{ij}\cdot(\mathbf{x}_i^\top\mathbf{x}_j/d)$，矩阵化即 $\tilde{\mathbf{K}} \approx \mathbf{K}\odot(\mathbf{X}\mathbf{X}^\top/d)$——门控等价于用"数据 Gram 矩阵的归一版本"对原 NTK 做逐元素重加权。这一步之所以关键，是因为它把一个看似纯架构的设计（多乘一支线性 gate）和一个纯统计对象（数据 Gram 阵）画上等号：此后所有差异都集中在 $\mathbf{X}\mathbf{X}^\top/d$ 这一项，谱分析只需研究 Wishart 矩阵及其自 Hadamard 乘积，而不必对门控模型从头做渐近分析。
 
-2. **条件数尺度下降一阶（核心定理 3.1）**：
+**2. 条件数尺度下降一阶（核心定理 3.1）：把"GLU 更好"变成"差一个 $d$ 倍"的可验证陈述。**
 
-    - 功能：把 Hadamard 结构翻译成条件数定量界。
-    - 核心思路：作者把 ReLU NTK 用 arc-cosine 核公式 Taylor 展开成 $\mathbf{K} = \alpha\mathbf{X}\mathbf{X}^\top + \beta\mathbf{rr}^\top + \gamma\mathbf{D}$ 三块，分别是数据 Gram、$\mathbf{r}_i = \|\mathbf{x}_i\|$ 的秩 1 更新、对角修正；门控版本经 Hadamard 后转写为 $\tilde{\mathbf{K}} = (\alpha/d)(\mathbf{X}\mathbf{X}^\top)\odot(\mathbf{X}\mathbf{X}^\top) + (\beta/d)(\mathbf{rr}^\top)\odot(\mathbf{X}\mathbf{X}^\top) + (\gamma/d)\mathbf{D}^2$。对每块用 Marchenko–Pastur 与 El Karoui 的核矩阵展开得到 $\lambda_{\max}$、$\lambda_{\min}$ 的尺度，再用 Weyl 不等式叠合，最终 $\lambda_{\max}(\mathbf{K}) = \mathcal{O}(mn/d)$ 与 $\lambda_{\max}(\tilde{\mathbf{K}}) = \mathcal{O}(mn/d^2)$，两者最小特征值同阶为 $\mathcal{O}(m)$，但 $\lambda_{\min}(\tilde{\mathbf{K}}) \geq \lambda_{\min}(\mathbf{K})$，于是条件数从 $\kappa(\mathbf{K}) = \mathcal{O}(n/d)$ 降到 $\kappa(\tilde{\mathbf{K}}) = \mathcal{O}(n/d^2)$。
-    - 设计动机：把"GLU 更好"这一抽象结论变成"$d$ 维输入条件数差一个 $d$ 倍"的可验证陈述；这也直接给出 GLU NTK 显著更"对角占优"的几何图像——对角项被放大、非对角项被抑制。
+有了 Hadamard 结构还不够，得把它翻译成能算的收敛量。作者先用 arc-cosine 核公式把 ReLU NTK Taylor 展开成三块 $\mathbf{K} = \alpha\mathbf{X}\mathbf{X}^\top + \beta\mathbf{rr}^\top + \gamma\mathbf{D}$（数据 Gram、$\mathbf{r}_i = \|\mathbf{x}_i\|$ 的秩 1 更新、对角修正），门控版本经 Hadamard 后变成
 
-3. **谱分解解释 loss-crossing**：
+$$\tilde{\mathbf{K}} = \frac{\alpha}{d}(\mathbf{X}\mathbf{X}^\top)\odot(\mathbf{X}\mathbf{X}^\top) + \frac{\beta}{d}(\mathbf{rr}^\top)\odot(\mathbf{X}\mathbf{X}^\top) + \frac{\gamma}{d}\mathbf{D}^2.$$
 
-    - 功能：用同一谱图同时解释"早期 ReLU 更快、后期 ReGLU 反超"的反直觉训练曲线。
-    - 核心思路：在 NTK 区，MSE 损失沿各特征方向独立衰减，第 $i$ 个方向上的误差按 $(1 - \eta\lambda_i)^t$ 收缩；早期收敛由 $\lambda_{\max}$ 主导，后期由 $\lambda_{\min}$ 主导。因 ReLU 的 $\lambda_{\max}$ 更大，前期沿主方向衰减更快；但 ReGLU 的 $\lambda_{\min}$ 更大，剩余分量的收敛速度更高，最终在某个步数后反超。作者把这一现象形式化为命题 4.1（无限宽下的损失闭式 $\mathbb{E}_\theta[L_k] \propto \mathrm{Tr}[(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{K}] + \mathbf{Y}^\top(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{Y}$）和推论 4.2（在 $d\geq 5,n\geq 300$ 等条件下，存在一个时间分界点把早期 ReLU 更快和晚期 ReGLU 更快分开）。
-    - 设计动机：把"训练 loss 曲线交叉"这一容易让人误以为是随机扰动的现象，纳入谱视角并提供单调可验证的判据，与第 2 点的条件数定理形成完整的"谱压缩 → 训练动力学"叙事。
+对每块用 Marchenko–Pastur 与 El Karoui 展开估 $\lambda_{\max}$、$\lambda_{\min}$，再用 Weyl 不等式叠合，得到 $\lambda_{\max}(\mathbf{K}) = \mathcal{O}(mn/d)$ 而 $\lambda_{\max}(\tilde{\mathbf{K}}) = \mathcal{O}(mn/d^2)$，两者最小特征值同阶为 $\mathcal{O}(m)$ 但 $\lambda_{\min}(\tilde{\mathbf{K}}) \geq \lambda_{\min}(\mathbf{K})$，于是条件数从 $\kappa(\mathbf{K}) = \mathcal{O}(n/d)$ 降到 $\kappa(\tilde{\mathbf{K}}) = \mathcal{O}(n/d^2)$——整整低一个 $d$ 倍。由于梯度下降到 $\epsilon$ 误差需 $\mathcal{O}(\kappa\log(1/\epsilon))$ 步，这就直接把"GLU 收敛更快"坐实成定理，同时给出 GLU NTK 更"对角占优"的几何图像：对角项被放大、非对角项被抑制。
+
+**3. 用谱分解解释 loss-crossing：早期 ReLU 更快、后期 ReGLU 反超不是噪声。**
+
+训练曲线里有个反直觉现象——早期 ReLU 反而比 ReGLU 收敛快，后期才被反超，容易被当成随机扰动。作者用同一张谱图就解释清楚：NTK 区里 MSE 沿各特征方向独立衰减，第 $i$ 个方向的误差按 $(1 - \eta\lambda_i)^t$ 收缩，早期由 $\lambda_{\max}$ 主导、后期由 $\lambda_{\min}$ 主导。ReLU 的 $\lambda_{\max}$ 更大，所以前期沿主方向衰减更猛；但 ReGLU 的 $\lambda_{\min}$ 更大，剩余分量收得更快，于是越过某个步数后实现反超。这一图像被形式化成命题 4.1 的无限宽损失闭式 $\mathbb{E}_\theta[L_k] \propto \mathrm{Tr}[(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{K}] + \mathbf{Y}^\top(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{Y}$ 和推论 4.2（在 $d\geq 5,n\geq 300$ 等条件下存在一个时间分界点把两阶段分开），从而把第 2 点的条件数定理延伸成完整的"谱压缩 → 训练动力学"叙事，也给出一个可单调验证的判据：用 loss-crossing 诊断新激活/新结构是否真的改善了优化。
 
 ### 损失函数 / 训练策略
 
-本文是理论分析，不引入新的损失或训练策略；实验中沿用 MSE / 交叉熵和 SGD/AdamW 默认设置，并在两层 MLP、MLP-Mixer、ViT、GPT-2 上对照 ReLU/ReGLU、GELU/GEGLU、SiLU/SwiGLU 三组激活对。
+本文是理论分析，不引入新损失或训练策略；实验沿用 MSE / 交叉熵和 SGD/AdamW 默认设置，在两层 MLP、MLP-Mixer、ViT、GPT-2 上对照 ReLU/ReGLU、GELU/GEGLU、SiLU/SwiGLU 三组激活对。
 
 ## 实验关键数据
 

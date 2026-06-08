@@ -40,36 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把研究拆成两条互相印证的腿：
-
-1. **实证腿**（第 4 节）：在 $p=97$ 的模 $\{+,-,\times,\div\}$ 任务上训一个 48 层 GPT-2 风格 Transformer，并在初始化 / 记忆 / 涌现 / 泛化四个关键 step（$0.1\text{k}/1\text{k}/10\text{k}/100\text{k}$）做三件事：因果中介分析（CMA）量化每个 head 的因果贡献；对 embedding 矩阵做 PCA + Fourier 谱分析；对量化后的权重张量做 BDM 全局复杂度估计。
-2. **理论腿**（第 5 节）：构造一个奇异特征机 SFM，它直接在 Fourier 域用复权矩阵 $\mathbf{W}\in\mathbb{C}^{p\times p}$ 拟合任务，并显式带一个 $\ln n$ 缩放的 $\ell_0$ 稀疏先验。在该模型上 RLCT $\lambda$ 和 Kolmogorov 复杂度都能解析写出。
-
-两条腿在结论上对齐：实证看到的三种"塌缩"指标对应理论上的 $\lambda$ 从 $p^2/2$ 降到 $p/2$ 的相变。
+论文要回答的是"grokking 究竟何时、为何发生"，做法是把一个无法解析的真实 Transformer 和一个能手算的代理模型并排放，让两者在同一组复杂度语言下相互印证。实证这条腿在 $p=97$ 的模 $\{+,-,\times,\div\}$ 任务上训一个 48 层 GPT-2 风格 Transformer，在初始化 / 记忆 / 涌现 / 泛化四个关键 step（$0.1\text{k}/1\text{k}/10\text{k}/100\text{k}$）分别做因果中介分析、嵌入流形的 PCA+Fourier 谱分析、以及对量化权重的 BDM 复杂度估计；理论这条腿构造一个奇异特征机（SFM），直接在 Fourier 域用复权矩阵拟合任务并显式带 $\ln n$ 稀疏先验，使 RLCT $\lambda$ 和 Kolmogorov 复杂度都能写成闭式。两条腿的落点是同一个相变：实证看到的三种"塌缩"指标，对应理论上 $\lambda$ 从 $p^2/2$ 降到 $p/2$。
 
 ### 关键设计
 
-1. **因果中介分析（CMA）+ skip-ablation 揭示层级旁路结构**:
+**1. 因果中介分析（CMA）+ skip-ablation：把"哪一层在干活"变成因果实验**
 
-    - 功能：用 activation patching 度量每个 attention head 对正确答案 logit 的因果贡献，从而追踪 grokking 过程中"哪些层在干活"。
-    - 核心思路：构造两条同结构、不同操数的输入 $\mathbf{s}_1, \mathbf{s}_2$，把 $\mathbf{s}_2$ 的某 head 激活嫁接到 $\mathbf{s}_1$ 上得到 $\tilde{\mathbf{s}}$，定义因果中介得分 $\text{CMS}(h) = [\mathcal{M}_\theta(y_2\mid\tilde{\mathbf{s}}) - \mathcal{M}_\theta(y_1\mid\tilde{\mathbf{s}})] - [\mathcal{M}_\theta(y_2\mid\mathbf{s}_1) - \mathcal{M}_\theta(y_1\mid\mathbf{s}_1)]$。在 step=1k 时高 CMS 的 head 杂乱地分散在 0–47 层；step=10k 时整体变暗；step=100k 时只剩 0–15 和 32–47 两端，中间 16–31 层完全可被 residual 旁路（skip-ablation 跳过这些层精度几乎不掉）。
-    - 设计动机：以往工作只看 attention pattern 或 logit lens，无法分离相关和因果。CMA 直接断定"这个 head 是否真的在因果通路上"，并自然产生一个可视化的退化轨迹——从扁平噪声 → 中部熄灭 → 两端凝聚——它就是 grokking 的结构指纹。
+以往的电路解释只看 attention pattern 或 logit lens，分不清相关与因果，无法断言某个 head 是否真在因果通路上。作者改用 activation patching：构造两条同结构、不同操数的输入 $\mathbf{s}_1,\mathbf{s}_2$，把 $\mathbf{s}_2$ 的某个 head 激活嫁接进 $\mathbf{s}_1$ 得到 $\tilde{\mathbf{s}}$，再用因果中介得分 $\text{CMS}(h)=[\mathcal{M}_\theta(y_2\mid\tilde{\mathbf{s}})-\mathcal{M}_\theta(y_1\mid\tilde{\mathbf{s}})]-[\mathcal{M}_\theta(y_2\mid\mathbf{s}_1)-\mathcal{M}_\theta(y_1\mid\mathbf{s}_1)]$ 度量这次嫁接把正确答案的 logit 拨动了多少。沿训练时间看，这个量画出一条清晰的退化轨迹：step=1k 时高 CMS 的 head 杂乱散布在 0–47 全层，step=10k 整体变暗，到 step=100k 只剩 0–15 与 32–47 两端凝聚、中间 16–31 层熄灭。配套的 skip-ablation 把这种"凝聚"坐实为可观测量——直接跳过 16–31 层，精度几乎不掉，说明这些层已被 residual 旁路。这条从扁平噪声到两端凝聚的轨迹，就是 grokking 的结构指纹。
 
-2. **谱定域 + BDM 算法复杂度的联合追踪**:
+**2. 谱定域 + BDM 算法复杂度：两个互补的"变简单了多少"代理**
 
-    - 功能：用两种互补的复杂度代理量化"模型变简单了多少"——一个看频域稀疏性，一个看权重矩阵的算法压缩程度。
-    - 核心思路：对 embedding 矩阵 $W_E$ 做二维 DFT 得到谱密度 $S[k,l]$，计算 Gini 系数 $G(\mathbf{s})$ 和 inverse participation ratio $P(\mathbf{s})=\sum_i s_i^4(\sum_i s_i^2)^{-2}$；二者同时升高表明能量从弥散变得集中到少数 Fourier 模。再把所有层权重经过 quartile 量化映射到 4-字母表，按 $4\times 4$ 子块用 CTM 查表 + BDM 公式 $K_{\text{BDM}}(\theta)=\sum_l\sum_b(\text{CTM}(b)+\log_2 n_b)$ 估全局算法复杂度。量化 trick 是为了把"权重衰减带来的幅值缩水"和"真正的结构性重组"区分开。
-    - 设计动机：单看 sparsity 容易被 weight decay 骗，单看 PCA 看不到 algorithmic 结构。三类指标同步在 1k–10k 区间出现陡降，构成了 grokking $=$ 结构简化的强证据。
+只看频域稀疏性会被 weight decay 的幅值缩水骗，只看 PCA 又看不到算法层面的结构，所以作者同时上两把尺子。频域这一把对 embedding 矩阵 $W_E$ 做二维 DFT 得谱密度 $S[k,l]$，再算 Gini 系数 $G(\mathbf{s})$ 和 inverse participation ratio $P(\mathbf{s})=\sum_i s_i^4(\sum_i s_i^2)^{-2}$，两者同时升高即表示能量从弥散收向少数 Fourier 模。算法这一把先把所有层权重经 quartile 量化映射到 4 字母表，再按 $4\times 4$ 子块用 CTM 查表配 BDM 公式 $K_{\text{BDM}}(\theta)=\sum_l\sum_b(\text{CTM}(b)+\log_2 n_b)$ 估全局算法复杂度——先量化正是为了剥掉 weight decay 带来的幅值变化，只留下真正的结构性重组。三类指标在 1k–10k 区间几乎同步陡降，共同支撑"grokking $=$ 结构简化"的结论。
 
-3. **奇异特征机（SFM）+ Occam Gate 解析地复现相变**:
+**3. 奇异特征机（SFM）+ Occam Gate：把相变写成闭式**
 
-    - 功能：构造一个数学上简化到极致、但仍能展示 grokking 的代理模型，使 RLCT $\lambda$ 和 Kolmogorov 复杂度 $K$ 都可手写出来。
-    - 核心思路：把输入 $(u,v)$ 直接编码为 Fourier 张量 $\mathbf{x}_{\text{spec}}=\chi(u)\otimes\chi(v)$，模型只学一个复权矩阵 $\mathbf{W}\in\mathbb{C}^{p\times p}$；目标是 MAP 风格的 $\min_\mathbf{W} \tfrac12\sum_i\|y_i-\langle\mathbf{W},\mathbf{x}_{\text{spec}}^{(i)}\rangle_F\|^2 + \beta\ln n\cdot\|\mathbf{W}\|_0$。动力学用两步迭代：先做残差与基函数的相关（drift），再用 Occam Gate $W_{kl}^{(t+1)}=\mathbb{I}(|\tilde W_{kl}^{(t)}|>\tau)\cdot\tilde W_{kl}^{(t)}$ 把信噪比低于 $\tau=\sqrt{2\beta\ln n/n}$ 的频率分量直接抹掉。可证明：在记忆期 $\lambda_{\text{mem}}\approx p^2/2$，泛化期支撑集坍缩到对角 $\lambda_{\text{gen}}\approx p/2$，自由能交叉点近似为 $n^*\approx -\frac{\beta(p^2-p)}{\epsilon_{\text{gen}}}W_{-1}(-\frac{\epsilon_{\text{gen}}}{\beta(p^2-p)})$。
-    - 设计动机：在真实 Transformer 上没法直接计算 RLCT，作者在 SFM 里用"激活 support 大小 / 2"做 $\lambda$ 的上界代理，并证明它和 $K_{SFM}(\mathbf{W})\propto\lambda(\mathbf{W})\cdot(2\log_2 p + C_{\text{float}})$ 成正比，从而把 SLT 与 AIT 在同一个可见对象上耦合起来。作者明确声明 SFM 是"假说生成型代理"而非对 SGD-Transformer 的等价证明。
+真实 Transformer 上算不出 RLCT，于是作者造一个简化到极致却仍会 grok 的代理：把输入 $(u,v)$ 直接编码成 Fourier 张量 $\mathbf{x}_{\text{spec}}=\chi(u)\otimes\chi(v)$，模型只学一个复权矩阵 $\mathbf{W}\in\mathbb{C}^{p\times p}$，目标取 MAP 风格的 $\min_\mathbf{W}\tfrac12\sum_i\|y_i-\langle\mathbf{W},\mathbf{x}_{\text{spec}}^{(i)}\rangle_F\|^2+\beta\ln n\cdot\|\mathbf{W}\|_0$。动力学是两步迭代：先做残差与基函数的相关（drift），再用 Occam Gate $W_{kl}^{(t+1)}=\mathbb{I}(|\tilde W_{kl}^{(t)}|>\tau)\cdot\tilde W_{kl}^{(t)}$ 把信噪比低于 $\tau=\sqrt{2\beta\ln n/n}$ 的频率分量直接抹掉，正是这个 $\ln n$ 阈值在扮演奥卡姆剃刀。在这个模型上一切可解析：记忆期 $\lambda_{\text{mem}}\approx p^2/2$，泛化期支撑集坍缩到对角使 $\lambda_{\text{gen}}\approx p/2$，自由能交叉点 $n^*\approx-\frac{\beta(p^2-p)}{\epsilon_{\text{gen}}}W_{-1}(-\frac{\epsilon_{\text{gen}}}{\beta(p^2-p)})$。作者用"激活 support 大小 $/2$"作为 $\lambda$ 的上界代理，并证明它与 $K_{SFM}(\mathbf{W})\propto\lambda(\mathbf{W})\cdot(2\log_2 p+C_{\text{float}})$ 成正比，从而把 SLT 与 AIT 耦合到同一个可见对象上；同时明确声明 SFM 只是"假说生成型代理"，不是对 SGD-Transformer 的等价证明。
 
-### 损失函数 / 训练策略
-- 真实 Transformer：标准交叉熵 + AdamW，48 层 GPT-2、$d_{\text{model}}=512$、8 头、fp32、A100、100k 步、5 个 seed 平均。
-- SFM：上式 $\mathcal{J}(\mathbf{W})$，迭代两步 drift+Occam Gate，$\beta\ln n$ 控制相变阈值；$n_{\text{eff}}$ 与训练 step 成正比但解释为启发式映射。
+### 训练策略
+真实 Transformer 用标准交叉熵 + AdamW，48 层 GPT-2、$d_{\text{model}}=512$、8 头、fp32、A100、100k 步、5 seed 平均；SFM 优化上式 $\mathcal{J}(\mathbf{W})$，每步走 drift + Occam Gate 两小步，由 $\beta\ln n$ 控制相变阈值，$n_{\text{eff}}$ 虽与训练 step 成正比但被明确解释为启发式映射。
 
 ## 实验关键数据
 

@@ -41,40 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定参数化 SSM $x_0 \sim P$, $x_t \sim M_t(\cdot\mid x_{t-1})$, $y_t \sim H_t(\cdot \mid x_t)$ 和神经网络 proposal $V_t(\cdot \mid y_{0:T})$，PVMC 的一次前向流程是：
-
-1. **并行采样**：在所有 $(t, n)$ 对上并行地从 $V_t$ 采出 $N$ 个独立粒子 $X_t^{1:N}$（algorithm 1 第 3-9 行）。
-2. **并行核计算**：在所有 $(t, n, m)$ 三元组上并行算 local 重要性核 $K_t(X_t^m, X_{t-1}^n) = M_t(X_t^m\mid X_{t-1}^n) H_t(y_t\mid X_t^m) / V_t(X_t^m\mid y_{0:T})$（第 11-19 行）。
-3. **associative scan**：把相邻两个时刻的 $N\times N$ 核矩阵打包成半群元素 $a_s$，跑一遍 prefix scan $b_s$ 和 suffix scan $\hat b_s$，再用四向乘积组合出每个粒子的边际权重 $w_t^n$（algorithm 2）。
-4. **似然/损失**：归一化常数 $\hat L^N = \frac{1}{N^{T+1}}\sum_n W_t^n$（任意 $t$ 都成立，因为是同一个 joint 的不同边际化），最终损失要么是负的 PVMC ELBO $-\mathbb{E}[\log \hat L^N]$（生成式），要么再加上 $\sum_t \mathrm{MSE}(\sum_n w_t^n X_t^n, x_t^\star)$（监督式状态估计）。
-
-输入是观测序列 $y_{0:T}$ + 模型参数 $\theta$，输出是每时刻的加权粒子集合 $\{(X_t^n, w_t^n)\}$ 加上 likelihood 估计 $\hat L^N$，整个 pipeline 反向传播也维持 $\mathcal{O}(\log N \times \log T)$ span。
+PVMC 要解决的是"DSSM 训练在并行、监督、紧 bound、无偏梯度四者间二选二"的困境，做法是把粒子滤波里逼着串行的 resampling 彻底拿掉，换成一个在时间维完全可分解的 proposal 加上一遍 associative scan。给定参数化 SSM（$x_0\sim P$，$x_t\sim M_t(\cdot\mid x_{t-1})$，$y_t\sim H_t(\cdot\mid x_t)$）和神经网络 proposal $V_t(\cdot\mid y_{0:T})$，它吃进观测序列 $y_{0:T}$ 与模型参数 $\theta$，吐出每个时刻的加权粒子集合 $\{(X_t^n, w_t^n)\}$ 和似然估计 $\hat L^N$；因为采样、加权两步被解耦成"独立并行采 + 链式张量积求和"，前向与反向都维持 $\mathcal{O}(\log N\times\log T)$ 的 span。
 
 ### 关键设计
 
-1. **完全可分解 proposal + 联合重要性测度**:
+**1. 完全可分解 proposal + 联合重要性测度：把"串行依赖"换成"可结合求和"**
 
-    - 功能：定义一个对**所有** $N^{T+1}$ 条"每个时刻挑一个粒子"的轨迹同时加权的重要性测度 $Q_{0:T}^N$，从而其时间边际 $Q_t^N$ 就是边际平滑后验的无偏估计。
-    - 核心思路：proposal 取 $V_{0:T}=\prod_t V_t(x_t\mid y_{0:T})$ 这种**横切**分解，再定义 $K_t(X_t^{n_t}, X_{t-1}^{n_{t-1}}) = M_t H_t / V_t$。把所有 $T+1$ 个时刻的 $K_t$ 沿一条"轨迹索引" $(n_0,\dots,n_T)$ 连乘再对所有索引组合求和，就得到 likelihood 估计 $\hat L^N = \frac{1}{N^{T+1}}\sum_{n_0,\dots,n_T}\prod_t K_t$（公式 19）；对除 $n_t$ 外的所有索引求和就得到第 $t$ 时刻的边际权重 $w_t^{n_t}$（公式 18）。论文证明 $\hat L^N$ 对 $p(y_{0:T})$ 无偏（Prop 3.1），并以 $\mathcal{O}_P(N^{-1/2})$ 收敛（Prop 3.2-3.3）。
-    - 设计动机：DSMC 之所以不能并行，是因为 resampling 让 $t$ 时刻的 proposal 依赖 $t-1$ 时刻全体粒子；VAE 之所以 bound 松，是因为只看 $N$ 条轨迹而非 $N^{T+1}$ 条。横切分解 + joint 重要性测度同时绕开了这两个困难——proposal 可以独立采，bound 用上了指数级轨迹空间。
+DSMC 不能并行的根源在于 resampling 让 $t$ 时刻的 proposal 依赖 $t-1$ 时刻全体粒子，而 VAE 的 bound 松则源于它只看 $N$ 条轨迹而非指数级的轨迹空间。本文把 proposal 取成横切分解 $V_{0:T}=\prod_t V_t(x_t\mid y_{0:T})$，让采样天然独立可并行；再定义 local 重要性核 $K_t(X_t^{n_t}, X_{t-1}^{n_{t-1}}) = M_t H_t / V_t$，沿一条"轨迹索引" $(n_0,\dots,n_T)$ 把所有时刻的 $K_t$ 连乘并对全部索引组合求和，就得到似然估计 $\hat L^N = \frac{1}{N^{T+1}}\sum_{n_0,\dots,n_T}\prod_t K_t$（公式 19），对除 $n_t$ 外的索引求和则给出第 $t$ 时刻的边际权重 $w_t^{n_t}$（公式 18）。这等价于对**所有** $N^{T+1}$ 条"每时刻挑一个粒子"的轨迹同时加权的联合重要性测度 $Q_{0:T}^N$，其时间边际 $Q_t^N$ 即边际平滑后验的无偏估计；论文进一步证明 $\hat L^N$ 对 $p(y_{0:T})$ 无偏（Prop 3.1）且以 $\mathcal{O}_P(N^{-1/2})$ 收敛（Prop 3.2-3.3）。横切分解 + 联合测度的一招同时绕开了 DSMC 的串行和 VAE 的松 bound——proposal 能独立采，bound 用上了指数级轨迹空间。
 
-2. **prefix/suffix associative scan 计算边际权重**:
+**2. prefix/suffix associative scan：把 forward-backward 翻译成硬件 parallel scan**
 
-    - 功能：把边际权重 $w_t^{1:N}$ 在所有时刻 $t$ 上并行算出来，span 复杂度 $\mathcal{O}(\log N \times \log T)$，避免任何"沿 $t$ 的串行 forward-backward"。
-    - 核心思路：把相邻两时刻的核矩阵打包成 $a_s=(\{K_{2s}\}, \{K_{2s+1}\})\in \mathbb{R}^{N\times N}\times \mathbb{R}^{N\times N}$，配上结合算子 $(C_1, C_2)\oplus(D_1, D_2):=(C_1, C_2 D_1 D_2)$（公式 20），跑一遍 prefix scan $b_s$ + suffix scan $\hat b_s$。Theorem 3.1 给出从 $\{b_s, \hat b_s\}$ 中按时刻奇偶性的不同分支抽出 $w_t^i$ 的闭式（公式 22）。两次 $N\times N$ 矩乘的 span 是 $\mathcal{O}(\log N)$，scan 在时间维带来 $\mathcal{O}(\log T)$，相乘得到总 span $\mathcal{O}(\log N \times \log T)$；反向传播沿同一棵 scan 树倒走，深度不变。
-    - 设计动机：边际化里那个对 $n_{-t}$ 全体索引的求和，乍看是 $N^T$ 项暴力枚举；但 $\prod_t K_t$ 的链结构让"对索引求和"等价于矩阵连乘，而矩阵连乘的结合律允许用 Blelloch-style scan log-depth 并行。这是把"概率推断里的 forward-backward"翻译成"硬件里 parallel scan"的关键工程化一招。
+边际化里那个对 $n_{-t}$ 全体索引的求和乍看是 $N^T$ 项暴力枚举，但 $\prod_t K_t$ 的链结构让"对索引求和"恰好等价于矩阵连乘，而矩阵连乘满足结合律，于是能用 Blelloch 式 scan 做 log-depth 并行。具体做法是把相邻两时刻的核矩阵打包成半群元素 $a_s=(\{K_{2s}\}, \{K_{2s+1}\})\in\mathbb{R}^{N\times N}\times\mathbb{R}^{N\times N}$，配上结合算子 $(C_1, C_2)\oplus(D_1, D_2):=(C_1, C_2 D_1 D_2)$（公式 20），跑一遍 prefix scan $b_s$ 和 suffix scan $\hat b_s$，再由 Theorem 3.1 按时刻奇偶性的不同分支从 $\{b_s, \hat b_s\}$ 抽出每个粒子的边际权重 $w_t^i$ 的闭式（公式 22）。两次 $N\times N$ 矩乘的 span 是 $\mathcal{O}(\log N)$，scan 在时间维贡献 $\mathcal{O}(\log T)$，二者相乘得总 span $\mathcal{O}(\log N\times\log T)$，而反向传播沿同一棵 scan 树倒走、深度不变。这正是把"贝叶斯推断里默认串行的 forward-backward"接到 GPU prefix scan 上的关键工程化一招。
 
-3. **PVMC ELBO：比 IWAE 更紧的下界**:
+**3. PVMC ELBO：在不增加采样开销的前提下比 IWAE 更紧**
 
-    - 功能：训练目标 $\mathcal{L}^N_{\text{PVMC}} = \mathbb{E}[\log \hat L^N]$，由 Jensen 不等式仍然下界 $\log p(y_{0:T})$，但比 IWAE bound 更紧。
-    - 核心思路：Theorem 3.2 给出一条完整 bound 链 $\log p \geq \mathcal{L}^N_{\text{PVMC}} \geq \mathcal{L}^N_{\text{IWAE}} \geq \mathcal{L}^{\tilde N}_{\text{IWAE}} \geq \mathcal{L}^N_{\text{P-VAE}}=\mathcal{L}^N_{\text{VAE}}$（公式 29），并且 PVMC 自身随 $N$ 单调收紧（公式 30）。直觉上，IWAE 的求和是 $\frac{1}{N}\sum_n \prod_t K_t(X_t^n, X_{t-1}^n)$——只对 $N$ 条"对角线"轨迹做重要性加权；PVMC 的 $\hat L^N$ 求和是 $\frac{1}{N^{T+1}}\sum_{n_0,\dots,n_T}\prod_t K_t$——对所有 $N^{T+1}$ 条粒子组合的轨迹做重要性加权，Jensen gap 更小。
-    - 设计动机：紧 bound 对生成式任务（如金融时间序列建模）直接转化为更好的似然；对监督式任务则是更稳的梯度信号。表 2 里 P-VAE 消融（用 PVMC 的采样器但训 VAE-style 目标）相对 PVMC 在 filtering MSE 上从 0.40 退到 1.21，2-SWD 从 2.96 退到 20.9，说明紧 bound 在"训出的 DSSM 是否能被经典粒子滤波器复用"上至关重要。
+训练目标取 $\mathcal{L}^N_{\text{PVMC}} = \mathbb{E}[\log\hat L^N]$，由 Jensen 不等式它仍是 $\log p(y_{0:T})$ 的下界，但更紧——直觉上 IWAE 的求和 $\frac{1}{N}\sum_n\prod_t K_t(X_t^n, X_{t-1}^n)$ 只对 $N$ 条"对角线"轨迹加权，而 PVMC 的 $\hat L^N=\frac{1}{N^{T+1}}\sum_{n_0,\dots,n_T}\prod_t K_t$ 对全部 $N^{T+1}$ 条粒子组合轨迹加权，Jensen gap 更小。Theorem 3.2 给出完整 bound 链 $\log p \geq \mathcal{L}^N_{\text{PVMC}} \geq \mathcal{L}^N_{\text{IWAE}} \geq \mathcal{L}^{\tilde N}_{\text{IWAE}} \geq \mathcal{L}^N_{\text{P-VAE}}=\mathcal{L}^N_{\text{VAE}}$（公式 29），且 PVMC 自身随 $N$ 单调收紧（公式 30）。紧 bound 对生成式任务直接转化为更好的似然，对监督式任务则是更稳的梯度信号；表 2 的 P-VAE 消融（同采样器但换 VAE-style 目标）相对 PVMC 在 filtering MSE 上从 0.40 退到 1.21、2-SWD 从 2.96 退到 20.9，说明它在"训出的 DSSM 能否被经典粒子滤波器复用"上至关重要。
+
+### 一个完整示例
+跟着一次前向走一遍三个设计如何咬合。**第一步并行采样**：在所有 $(t, n)$ 对上同时从 $V_t$ 采出 $N$ 个独立粒子 $X_t^{1:N}$（Algorithm 1 第 3-9 行），因为 proposal 横切分解，这一步没有任何跨时刻依赖。**第二步并行核计算**：在所有 $(t, n, m)$ 三元组上同时算 local 核 $K_t(X_t^m, X_{t-1}^n) = M_t(X_t^m\mid X_{t-1}^n)\,H_t(y_t\mid X_t^m)\,/\,V_t(X_t^m\mid y_{0:T})$（第 11-19 行），得到每个时刻一张 $N\times N$ 核矩阵。**第三步 associative scan**：把相邻两时刻的核矩阵打包成半群元素跑 prefix/suffix scan，再用四向乘积组合出每个粒子的边际权重 $w_t^n$（Algorithm 2）——这一步把"对所有其他时刻粒子求和"在 $\mathcal{O}(\log T)$ 深度里完成。**第四步似然与损失**：归一化常数 $\hat L^N = \frac{1}{N^{T+1}}\sum_n W_t^n$ 在任意 $t$ 都成立（同一 joint 的不同边际化），生成式任务取负 ELBO $-\mathbb{E}[\log\hat L^N]$，监督式任务再加 $\sum_t\mathrm{MSE}(\sum_n w_t^n X_t^n, x_t^\star)$。
 
 ### 损失函数 / 训练策略
-- 生成式：直接最大化 $\mathcal{L}^N_{\text{PVMC}} = \mathbb{E}[\log \hat L^N]$；
-- 监督式：最小化 $-\mathcal{L}^N_{\text{PVMC}} + \beta \sum_t \|\sum_n w_t^n X_t^n - x_t^\star\|^2$（线性组合 ELBO 与状态估计 MSE）。
-- 由于 proposal 完全可分解且 $V_t$ 用 reparameterisation 采样，整条 pipeline 的梯度是无偏的（区别于多数 DSMC 方法）。
-- 硬件实现：作者基于 PyDPF（Brady et al., 2025）实现，在单卡 NVIDIA RTX 4090 上跑实验。
+生成式直接最大化 $\mathcal{L}^N_{\text{PVMC}} = \mathbb{E}[\log\hat L^N]$；监督式最小化 $-\mathcal{L}^N_{\text{PVMC}} + \beta\sum_t\|\sum_n w_t^n X_t^n - x_t^\star\|^2$，即线性组合 ELBO 与状态估计 MSE。由于 proposal 完全可分解且 $V_t$ 用 reparameterisation 采样，整条 pipeline 的梯度是无偏的，这一点区别于多数需要 reinforce 或松弛 resampling 的 DSMC 方法。实现上作者基于 PyDPF（Brady et al., 2025），在单卡 NVIDIA RTX 4090 上完成全部实验。
 
 ## 实验关键数据
 

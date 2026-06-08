@@ -53,23 +53,17 @@ Graph-R1 把 GraphRAG 重写成"知识超图环境 + 多轮 think–query–retr
 
 ### 关键设计
 
-1. **轻量化 n 元知识超图构建**：
+**1. 轻量化 n 元知识超图构建：把"多参与者事实"整体保留为一条超边**
 
-    - 功能：把语料压成 $\mathcal{G}_H=(V,E_H,\phi)$，每条超边 = 一段语义片段 + 关联的多实体集合，作为 agent 的环境。
-    - 核心思路：对每个 chunk $d$，用一个 LLM extractor $\pi_{\text{ext}}(d)\to\{(h_i,\mathcal{V}_{h_i})\}_{i=1}^m$ 直接抽 n 元关系事实——$h_i$ 是关系/事实文本，$\mathcal{V}_{h_i}$ 是参与实体集合，二者共享 encoder 得到 $\phi(v),\phi(h_i)$；相比 HyperGraphRAG 砍掉了 confidence-score 等环节，2Wiki 上每 1K token 构建耗时 5.69s / $2.81，比 GraphRAG (8.04s / $3.35)、HyperGraphRAG (6.76s / $4.14) 都便宜，最终生成 120K 节点 / 98K 超边。
-    - 设计动机：二元三元组把"一个事实里的多个参与者"硬拆成若干 (h,r,t)，既损失语义又膨胀边数；n 元超边一刀切下来既保留事实粒度，又给后面"对实体/对整条超边分别 embedding 检索"留了双路入口。
+二元三元组把一个事实里的多个参与者硬拆成若干 $(h,r,t)$，既损失语义又膨胀边数，这是 GraphRAG 构图贵又信息稀的根源。Graph-R1 对每个 chunk $d$ 用一个 LLM extractor $\pi_{\text{ext}}(d)\to\{(h_i,\mathcal{V}_{h_i})\}_{i=1}^m$ 直接抽 n 元关系事实——$h_i$ 是关系/事实文本，$\mathcal{V}_{h_i}$ 是参与实体集合，二者共享 encoder $\phi(\cdot)$ 得到 $\phi(v),\phi(h_i)$，整段语料压成 $\mathcal{G}_H=(V,E_H,\phi)$，每条超边就是"一段语义片段 + 挂载的多实体集合"，直接当 agent 的环境。相比 HyperGraphRAG，它砍掉了 confidence-score 等环节，在 2Wiki 上每 1K token 构建只要 5.69s / \$2.81，比 GraphRAG (8.04s / \$3.35)、HyperGraphRAG (6.76s / \$4.14) 都便宜，最终生成 120K 节点 / 98K 超边。把事实整条留住不仅保住了粒度，更关键的是给后面"对实体、对整条超边分别 embedding 检索"留了双路入口。
 
-2. **多轮智能体-超图交互（双路检索 + RRF 融合）**：
+**2. 多轮智能体-超图交互：双路检索 + RRF 融合替代一次性拉子图**
 
-    - 功能：把 GraphRAG 的"一次拉子图"改成 agent 主导的多轮 think–query–retrieve–answer 循环，并通过两条互补检索路径找回最相关的 n 元事实。
-    - 核心思路：动作空间 $\mathbf{a}_t=(\mathbf{a}_t^{\text{think}},\alpha_t,\mathbf{a}_t^{\text{out}})$ 用层次化策略 $\pi_\theta(\mathbf{a}_t^{\text{out}}\mid\alpha_t,\mathbf{a}_t^{\text{think}},\mathbf{s}_t)\cdot\pi_\theta(\alpha_t\mid\cdot)\cdot\pi_\theta(\mathbf{a}_t^{\text{think}}\mid\mathbf{s}_t)$ 拆开；收到 query 后并行跑两路：(i) 实体路 $\mathcal{R}_V=\arg\max^{k_V}_v \text{sim}(\phi(V_{\mathbf{a}_t^{\text{query}}}),\phi(v))$，再收集所有挂这些实体的超边；(ii) 超边路 $\mathcal{R}_H=\arg\max^{k_H}_{e_H}\text{sim}(\phi(\mathbf{a}_t^{\text{query}}),\phi(e_H))$ 直接拉超边；最后用 reciprocal rank aggregation $\text{Score}(f)=1/r_V+1/r_H$ 取 top-$k$ 拼成 $\mathbf{a}_t^{\text{ret}}$ 喂回 `<knowledge>` 标签。
-    - 设计动机：实体路擅长"我知道实体名，找它出现在哪些事实里"，超边路擅长"我想找的是一种关系/事件，不一定知道具体实体"，二者天然互补；RRF 让两条 ranking 不需要分数对齐就能融合，实测 7B 上每个 query 平均只滚 2.3–2.5 轮、1200–1500 token，比 Search-R1/R1-Searcher 短得多但 F1 反而更高。
+复杂多跳问题靠"一次拉一坨子图丢给生成器"撑不起来，Graph-R1 把它改成 agent 主导的 think–query–retrieve–answer 循环。每步的动作 $\mathbf{a}_t=(\mathbf{a}_t^{\text{think}},\alpha_t,\mathbf{a}_t^{\text{out}})$ 用层次化策略 $\pi_\theta(\mathbf{a}_t^{\text{out}}\mid\alpha_t,\mathbf{a}_t^{\text{think}},\mathbf{s}_t)\cdot\pi_\theta(\alpha_t\mid\cdot)\cdot\pi_\theta(\mathbf{a}_t^{\text{think}}\mid\mathbf{s}_t)$ 分解：先 think 再决定发 query 还是 answer。收到 query 时并行跑两条互补路径——实体路 $\mathcal{R}_V=\arg\max^{k_V}_v \text{sim}(\phi(V_{\mathbf{a}_t^{\text{query}}}),\phi(v))$ 先找最相关实体再收集挂在它们上的超边，擅长"知道实体名、找它出现在哪些事实里"；超边路 $\mathcal{R}_H=\arg\max^{k_H}_{e_H}\text{sim}(\phi(\mathbf{a}_t^{\text{query}}),\phi(e_H))$ 直接拉超边，擅长"想找一种关系/事件但不知道具体实体"。两路结果用 reciprocal rank aggregation $\text{Score}(f)=1/r_V+1/r_H$ 取 top-$k$ 拼成 $\mathbf{a}_t^{\text{ret}}$ 喂回 `<knowledge>` 标签——RRF 让两条 ranking 不必分数对齐就能融合。实测 7B 上每个 query 平均只滚 2.3–2.5 轮、1200–1500 token，比 Search-R1/R1-Searcher 短得多，F1 反而更高。
 
-3. **结果导向的端到端 GRPO 优化**：
+**3. 结果导向的端到端 GRPO 优化：格式门控答案分，省掉 SFT 冷启**
 
-    - 功能：用一个标量 reward 把"格式合规 + 答案正确"端到端回灌到多轮轨迹策略 $\pi_\theta$，不需要中间 step 监督也不需要 SFT 冷启。
-    - 核心思路：reward 拆两部分——格式奖励 $R_{\text{format}}(\tau)=\min(1.0, 0.5\cdot\sum_t \mathbb{I}\{(\mathbf{a}_t^{\text{think}},\alpha_t,\mathbf{a}_t^{\text{out}})\})$ 鼓励完整跑 think→query/answer 结构；答案奖励 $R_{\text{answer}}$ 用 token-level F1 对齐 ground truth；总奖励 $R(\tau)=-1.0+R_{\text{format}}(\tau)+\mathbb{I}\{R_{\text{format}}(\tau)=1.0\}\cdot R_{\text{answer}}$，**只有格式拿满分才计算答案分**，避免模型走捷径乱答；优化用 GRPO，按组内平均归一化优势 $\hat A(\tau_i)=(R(\tau_i)-\text{mean}(\{R(\tau_j)\}))/F_{\text{norm}}(\cdot)$，并加 PPO 风格 clip 和 KL 锚定。
-    - 设计动机：format reward 解决"agent 不会 think/不会用 query 标签"的冷启问题；答案 reward 用 F1 而非 EM，更宽容多跳问答的表述差异；"格式不合规就不给答案分"这条门槛硬性把策略推到结构化输出空间，省去 SFT 阶段；GRPO 相对 PPO/REINFORCE++ 不需要 value model，更适配多轮轨迹这种长 horizon、稀疏 reward 的场景，消融里 GRPO 也确实是最强 RL 算法。
+多轮 agent + 图环境光靠 prompt 撑不起来，必须把"用不用图、什么时候问、问什么"学出来。Graph-R1 用一个标量 reward 把整条轨迹端到端回灌到策略 $\pi_\theta$：格式奖励 $R_{\text{format}}(\tau)=\min(1.0, 0.5\cdot\sum_t \mathbb{I}\{(\mathbf{a}_t^{\text{think}},\alpha_t,\mathbf{a}_t^{\text{out}})\})$ 鼓励完整跑 think→query/answer 结构，解决 agent 一开始不会 think、不会用标签的冷启问题；答案奖励 $R_{\text{answer}}$ 用 token-level F1（而非 EM，更宽容多跳问答的表述差异）对齐 ground truth。总奖励 $R(\tau)=-1.0+R_{\text{format}}(\tau)+\mathbb{I}\{R_{\text{format}}(\tau)=1.0\}\cdot R_{\text{answer}}$ 的关键是那个示性系数——只有格式拿满分才计算答案分，硬性把策略推进结构化输出空间，既避免模型走捷径乱答，又把本来要靠 SFT 做的行为约束直接折进 reward shaping 里。优化器选 GRPO：按组内平均归一化优势 $\hat A(\tau_i)=(R(\tau_i)-\text{mean}(\{R(\tau_j)\}))/F_{\text{norm}}(\cdot)$，加 PPO 风格 clip 和 KL 锚定，相对 PPO/REINFORCE++ 不需要 value model，更适配多轮轨迹这种长 horizon、稀疏 reward 的场景，消融里它也确实是最强的 RL 算法。
 
 ### 损失函数 / 训练策略
 GRPO 目标：$\mathcal{J}_{\text{GRPO}}(\theta)=\mathbb{E}[\frac{1}{N}\sum_i\frac{1}{|\tau_i|}\sum_t\min(\rho_\theta\hat A,\text{clip}(\rho_\theta,1\pm\epsilon)\hat A)-\beta\mathbb{D}_{\text{KL}}(\pi_\theta\|\pi_{\text{ref}})]$，其中 $\rho_\theta=\pi_\theta/\pi_{\theta_{\text{old}}}$。基座：Qwen2.5-{1.5B,3B,7B}-Instruct；硬件：4×A100-80G；构图与 baseline GraphRAG 一致用 GPT-4o-mini 抽 n 元关系，检索 encoder 用 bge-large-en-v1.5。

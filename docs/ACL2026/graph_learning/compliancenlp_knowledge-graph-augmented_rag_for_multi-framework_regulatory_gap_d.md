@@ -40,30 +40,20 @@ ComplianceNLP 是一个端到端的金融监管合规系统，把 12,847 条 SEC
 ## 方法详解
 
 ### 整体框架
-三阶段流水线：(1) **法规摄入与索引**——三个格式解析器（SEC EDGAR XML / EUR-Lex HTML / BIS PDF）抽取条款，构造包含 12,847 节点 + 34,219 边的 RKG，并存入向量库；(2) **多任务义务抽取**——共享 LEGAL-BERT encoder 同时输出 NER（23 类金融实体）+ deontic 分类（Obligation / Permission / Prohibition / Recommendation）+ 跨引用解析；(3) **合规差距分析**——把抽取出的结构化义务 $\langle$entity, action, modality, condition, source_provision$\rangle$ 与内部政策子句对齐打分，按阈值 $\delta$ 分类为 Compliant / Partial Gap / Full Gap 并生成差距报告。
+
+ComplianceNLP 要解决的是"把杂乱的多框架法规原文，自动转成可对账的结构化义务，再和内部政策比对找出合规差距"这件事，并且要做到生产级延迟。系统是一条三阶段流水线：先把 SEC / MiFID II / Basel III 三套法规摄入并索引，构造出 12,847 节点、34,219 边的监管知识图谱（RKG）同时灌入向量库；再用一个共享 LEGAL-BERT 的多任务抽取器，从条款里同时抽出金融实体、义务模态和跨条款引用；最后把抽取出的结构化义务 $\langle$entity, action, modality, condition, source_provision$\rangle$ 与内部政策子句对齐打分，按阈值 $\delta$ 判定为 Compliant / Partial Gap / Full Gap 并生成差距报告。
 
 ### 关键设计
 
-1. **KG 增强混合检索 + 重排（KG-Augmented RAG）**:
+**1. 知识图谱增强的混合检索与重排。** 法规里充斥着"X 条款依赖 Y、Y 又引用 Z"的多跳交叉引用，纯向量检索抓不住这种结构关系。本文先做混合检索 $s(q, d) = \alpha \cdot \text{sim}_{\text{dense}}(q, d) + (1-\alpha) \cdot \text{BM25}(q, d)$（$\alpha=0.7$，dense 编码器是用 5 万法规段落对从 MiniLM-L6-v2 微调的 legal bi-encoder），再对 top-5 段落叠加图谱重排 $s_{KG}(q, d) = \beta \cdot \text{KGScore}(q, d, \mathcal{G}) + (1-\beta) \cdot s(q, d)$（$\beta=0.3$），其中 KGScore 衡量查询源条款与被检段落在 RKG 上的图距离。这种软重排既不破坏第一阶段召回，又引入了结构先验；消融里去掉它 gap detection F1 直接掉 4.6 个点，是单点贡献最大的模块。
 
-    - 功能：在传统 dense + sparse 检索基础上叠加图谱距离重排，提升对多跳交叉引用类查询的命中率。
-    - 核心思路：第一阶段混合检索 $s(q, d) = \alpha \cdot \text{sim}_{\text{dense}}(q, d) + (1-\alpha) \cdot \text{BM25}(q, d)$，$\alpha = 0.7$，dense encoder 是用 50K 法规段落对从 MiniLM-L6-v2 微调的 legal bi-encoder；第二阶段对 top-5 段落用 KG 重排 $s_{KG}(q, d) = \beta \cdot \text{KGScore}(q, d, \mathcal{G}) + (1-\beta) \cdot s(q, d)$，$\beta = 0.3$，KGScore 衡量查询源条款和被检段落链接条款在 RKG 上的图距离。
-    - 设计动机：法规中大量"X 条款依赖 Y 条款，Y 又引用 Z"的多跳依赖，纯 embedding 无法捕捉这种结构关系；用 KG 距离做软重排既不破坏召回又能引入结构先验。消融显示 KG 重排是单点贡献最大的设计（-4.6 gap F1）。
+**2. 多任务联合义务抽取。** 法规义务的三个属性——谁做什么（实体）、强制等级（deontic 模态）、引用关系——天然耦合，分成三个独立模型训练既浪费表示能力又会级联放大误差。本文用一个在 Pile of Law 上继续预训练的共享 LEGAL-BERT 编码器，接三个 head：CRF 层做 23 类金融 NER（如 Regulated_Entity / Capital_Requirement，扩展 FiNER 的金融类型，区分"投资公司"与"注册主体"这类领域语义）、句子级 deontic 分类（Obligation / Permission / Prohibition / Recommendation）、span-pair 双线性分类器做跨引用解析。联合损失 $\mathcal{L} = 0.4\mathcal{L}_{NER} + 0.3\mathcal{L}_{deontic} + 0.3\mathcal{L}_{xref}$，训练数据 8,742 句（SEC 3211 / MiFID II 2987 / Basel III 2544），标注一致性 $\kappa=0.84$。共享编码器让三个任务互相约束，抽取一致性比传统级联 pipeline 更好。
 
-2. **多任务联合义务抽取（Multi-task Obligation Extraction）**:
-
-    - 功能：同时输出实体边界、义务模态和跨引用，避免独立训练三个模型带来的级联误差。
-    - 核心思路：共享 LEGAL-BERT encoder（在 Pile of Law 上继续预训练）后接三个 head：(a) CRF 层做 23 类金融 NER（如 Regulated_Entity / Capital_Requirement / Compliance_Period），扩展 FiNER 的金融类型；(b) 句子级 deontic 分类；(c) span-pair 双线性分类器做跨引用解析。联合损失 $\mathcal{L} = 0.4 \mathcal{L}_{NER} + 0.3 \mathcal{L}_{deontic} + 0.3 \mathcal{L}_{xref}$。训练数据 8,742 句（SEC 3211 / MiFID II 2987 / Basel III 2544），标注一致性 $\kappa = 0.84$（Fleiss）。
-    - 设计动机：法规义务的三个属性（"谁"做"什么"+ 强制等级 + 引用关系）天然耦合，分离训练浪费表示能力；银行业 NER 类型必须超出通用 PER/ORG/LOC，必须区分 "投资公司"（Regulated_Entity）和"注册主体"（Reporting_Entity）这种领域语义。
-
-3. **领域定制蒸馏 + Medusa 推测解码（Production Optimization）**:
-
-    - 功能：把 LLaMA-3-70B teacher 压成 8B student 并保持精度，再用 Medusa 推测解码进一步加速到亚秒 p50。
-    - 核心思路：先用 MiniLLM 反向 KL 蒸馏 $\mathcal{L}_{KD} = \text{KL}(p_{student} \| p_{teacher}) + 0.5 \mathcal{L}_{SFT}$，训练 15K 合规指令对，单蒸馏即获 $2.2\times$ 加速；然后给 student 加 $M=3$ 个 Medusa 预测头，在 2.1M 法规 token 上训练。关键发现是法规文本熵 $H = 2.31$ bit（远低于 C4 的 3.87），让 Medusa token 接受率从通用文本的 82.7% 飙到 91.3%，组合达成 $2.8\times$ 总加速（659ms p50）。
-    - 设计动机：实时合规需要亚秒延迟，单纯蒸馏不够；Medusa 的"草稿头"在低熵领域（如代码、法规）天生有更高接受率，把这个领域特性挖掘出来比通用 Medusa 收益翻倍。
+**3. 领域定制蒸馏 + Medusa 推测解码。** 实时合规要亚秒 p50 延迟，但 70B 教师太慢。本文先用 MiniLLM 反向 KL 蒸馏 $\mathcal{L}_{KD} = \text{KL}(p_{student} \| p_{teacher}) + 0.5\mathcal{L}_{SFT}$，在 1.5 万合规指令对上把 70B 压成 8B，单蒸馏已得 $2.2\times$ 加速；再给 student 加 $M=3$ 个 Medusa 预测头并在 210 万法规 token 上训练。关键洞察是法规文本熵极低（$H=2.31$ bit，远低于 C4 的 3.87），低熵让 Medusa 草稿 token 的接受率从通用文本的 82.7% 飙到 91.3%，蒸馏与投机解码组合最终达成 $2.8\times$ 总加速（659ms p50）。把"领域统计特性"直接挂钩"推理优化收益"，是这个设计最巧的地方。
 
 ### 损失函数 / 训练策略
-多任务抽取损失见上；蒸馏阶段 $\gamma = 0.5$ 平衡 KL 和 SFT；MiniCheck 做后处理 fact-checking 提升 grounding 准确率从 86.7% 到 94.2%；评估阈值 $\delta = 0.6$，部署阈值 $\delta = 0.45$（更高召回）。
+
+多任务抽取损失见上；蒸馏阶段权重 $\gamma=0.5$ 平衡 KL 与 SFT；后处理接 MiniCheck 做事实核查，把 grounding 准确率从 86.7% 提到 94.2%；评估阈值 $\delta=0.6$，部署时降到 $\delta=0.45$ 以换取更高召回。
 
 ## 实验关键数据
 

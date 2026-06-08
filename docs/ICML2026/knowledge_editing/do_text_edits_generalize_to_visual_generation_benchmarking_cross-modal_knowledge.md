@@ -39,27 +39,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整篇工作分成三块：UniKE 基准 + 两套评测协议（Direct / Reasoning-Augmented）+ 条件通路机理分析。每条评测实例形式化为 $\mathcal{I}=(q, y, y', p_{img}, t_{vis}, q_{vqa})$，分别对应编辑提示、原答案、目标答案、图像生成提示、视觉目标描述、VQA 验证问题；图像由 Qwen3-VL-235B 作为 LLM-as-judge 给出 0/1 判定。三种 UMM (Ovis-U1 / BLIP3o-4B / OmniGen2) × 三种编辑器 (MEMIT / PMET / AlphaEdit) × 两种协议构成完整 9×2 评测矩阵。
+这篇工作要回答的是"在文本侧把一个事实改掉，图像生成会不会跟着改"，但它不训练任何新模型，而是把问题拆成三件可复现的事：先用 UniKE 基准把"图里到底有没有那个被编辑的事实"变成一个二值可验证的指标，再用 Direct / Reasoning-Augmented 两套协议对比"直接画"和"先念出来再画"的差距，最后用条件通路上的余弦漂移分析定位信号在哪一段被衰减掉。每条评测实例形式化为 $\mathcal{I}=(q, y, y', p_{img}, t_{vis}, q_{vqa})$——分别是编辑提示、原答案、目标答案、图像生成提示、视觉目标描述和 VQA 验证问题——生成图由 Qwen3-VL-235B 作为 LLM-as-judge 给出 0/1 判定，整体构成三种 UMM (Ovis-U1 / BLIP3o-4B / OmniGen2) × 三种编辑器 (MEMIT / PMET / AlphaEdit) × 两种协议的 9×2 评测矩阵。
 
 ### 关键设计
 
-1. **UniKE 基准 — 可视化可验证的跨模态 KE 数据集**:
+**1. UniKE 基准：让"文本编辑是否传到图像"第一次可量化**
 
-    - 功能：提供 2,971 个编辑主体、5,535 条评测实例，统一覆盖 attribute（颜色 / 材质 / 形状 / 尺寸 / 图案）和 relation（隶属 / 创造者 / 地点 / 职业）两大类编辑，每条都能被 VQA 自动验证。
-    - 核心思路：属性编辑用 Gemini-3.0-Flash self-instruction 流水线生成候选 $(q, y, y')$ 三元组，并按渐进式难度切成四个 stage——Stage 1 原子物体直接询问、Stage 2 真实场景嵌入、Stage 3 多实体复杂构图、Stage 4 派生产品/用途迁移；关系编辑则从 CounterFact / MQuAKE 抽取三元组并用 LLM-as-judge 过滤掉不可视化的类别（如国籍、词源）。所有图像提示都遵循"answer-neutral"原则：提示词不能直接泄露原值或目标值，迫使图像中任何正确表达只能源自模型内部的编辑后知识。
-    - 设计动机：以往 T2T 基准 (ZsRE / CounterFact / MQuAKE) 测不了图像，I2T 基准 (TMKE) 测不了 T2I 这条最关键的方向；UniKE 通过 answer-neutral prompt + VQA judge 第一次让"文本编辑是否影响图像生成"这个问题变得可量化、可复现。
+痛点在于以往基准根本测不到这条路径——纯文本基准 (ZsRE / CounterFact / MQuAKE) 不碰图像，而已有的多模态基准 TMKE 只测 image-conditioned text answering (I2T，看图答题)，没人测 text→image (T2I，编辑文本再生成图) 这条最关键的方向。UniKE 用 answer-neutral image prompt 加 VQA-as-judge 的组合补上了这块：属性编辑由 Gemini-3.0-Flash 的 self-instruction 流水线生成候选 $(q, y, y')$ 三元组，再按渐进式难度切成四个 stage（Stage 1 原子物体直接询问、Stage 2 真实场景嵌入、Stage 3 多实体复杂构图、Stage 4 派生产品/用途迁移）；关系编辑则从 CounterFact / MQuAKE 抽三元组、用 LLM-as-judge 滤掉国籍、词源这类不可视化的类别。关键约束是所有图像提示都遵循"answer-neutral"原则——提示词不能直接泄露原值或目标值，于是图里任何正确表达都只能来自模型内部被编辑后的知识，而非提示词泄题。最终覆盖 2,971 个编辑主体、5,535 条评测实例，统一囊括 attribute（颜色 / 材质 / 形状 / 尺寸 / 图案）和 relation（隶属 / 创造者 / 地点 / 职业）两大类，且每条都能被 VQA 自动判定，第一次让这个问题变得可复现。
 
-2. **Reasoning-augmented Parameter Editing — 用文本推理激活潜伏编辑**:
+**2. Reasoning-augmented Parameter Editing：用文本推理激活潜伏的编辑**
 
-    - 功能：在不改任何权重的前提下，给同一个被编辑过的 UMM 套一个"先念出来再画"的两阶段协议，把所有 model-editor pair 的 VQA 准确率全部抬高（最大 +18.6 pp）。
-    - 核心思路：Direct 协议直接把 $p_{img}$ 送进生成器；Reasoning-Augmented 协议先用 category-conditioned 模板 $p_{rea}$ 触发模型自己生成一段文本 rationale $r$（注意 $r$ 是被编辑后的模型自己产出，而非 oracle 标注），再把 $r$ 按固定格式拼到 $p_{img}$ 前面作为额外条件。rationale 的作用是把潜伏在 MLP 权重里的编辑事实"显式化"成 token-level 文本约束，从而对 DiT 提供更强、更对齐的语义条件。
-    - 设计动机：作者观察到所有 editor 在文本侧的 Eff. 都不低（55%–90%），但 VQA 极低，说明信息在 LLM 内部其实改了，只是没传到生成通路；推理增强本质上是用更长、更对齐的条件向量去补偿条件通路上的衰减，且因为不动权重，与任何 editor 正交可叠加。
+作者发现所有 editor 在文本侧的编辑成功率 Eff. 都不低（55%–90%），但图像 VQA 极低，这说明事实在 LLM 内部其实改了，只是没传到生成通路——改动"潜伏"在权重里，需要被显式上下文激活才会显现。Reasoning-Augmented 协议正是冲着这个假设来的：相比 Direct 协议直接把 $p_{img}$ 送进生成器，它先用 category-conditioned 模板 $p_{rea}$ 触发被编辑后的模型自己生成一段文本 rationale $r$（注意 $r$ 是模型自产，而非 oracle 标注），再把 $r$ 按固定格式拼到 $p_{img}$ 前面作为额外条件。这段 rationale 把潜伏在 MLP 权重里的编辑事实"显式化"成 token-level 文本约束，相当于用一个更长、更对齐的条件向量去补偿条件通路上的信号衰减。它最大的好处是完全不动权重，因此与任何 editor 正交可叠加，在全部 9 个 model-editor pair 上都抬高了 VQA，最大增益 +18.6 pp。
 
-3. **条件通路漂移分析 — 用余弦距离定位 LLM-to-DiT 瓶颈**:
+**3. 条件通路漂移分析：用余弦距离把瓶颈定位到 LLM-to-DiT 投影**
 
-    - 功能：在 PMET 上采样 100 个 case，同时测量"编辑前后 LLM 输出的隐式漂移"和"DiT 实际接收到的条件向量漂移"，把模态鸿沟的根因定位到投影层/通路对齐而非编辑器本身。
-    - 核心思路：定义余弦偏移算子 $\Delta_{cos}(a,b)=1-a^\top b/(\|a\|\|b\|)$；用 per-token 平均 $d_{cos}^{tok}$ 和相对 Frobenius 漂移 $r_F=\|\delta\|_F/\|C_{fresh}^{LLM}\|_F$ 量化"参数编辑在 LLM 输出端造成多大扰动"；再用 mean-pooled DiT 输入向量上的 $d_{cos}^{dir}$ 和 $d_{cos}^{rea}$ 量化"两种协议下 DiT 真正吃到了多大条件偏移"。结果表明 Ovis-U1 由于带有冻结的降维投影，$r_F$ 仅 0.078，而 BLIP3o-4B 高达 0.527——前者投影像一个"架构滤波器"把宽分布的编辑扰动滤掉了；但 Ovis-U1 反而最受益于推理增强（$d_{cos}^{rea}=0.154$ vs $d_{cos}^{dir}=0.018$，放大 8 倍），因为文本 rationale 注入的扰动在投影后保留下来的方向上对齐得更好。
-    - 设计动机：单看 Direct 协议无法区分"编辑没改进 LLM"还是"改了但传不下去"；引入"LLM-output 漂移 vs DiT-input 漂移"两层测量后，作者得以指出问题不在 editor，而在条件通路的对齐性，从而为后续设计 modality-aware editor 给出明确方向。
+只看 Direct 协议无法区分"编辑根本没改进 LLM"和"改了但传不下去"这两种情况，所以作者在 PMET 上采样 100 个 case，把信号沿通路拆成两段分别量化。先定义余弦偏移算子 $\Delta_{cos}(a,b)=1-a^\top b/(\|a\|\|b\|)$；在 LLM 输出端用 per-token 平均 $d_{cos}^{tok}$ 和相对 Frobenius 漂移 $r_F=\|\delta\|_F/\|C_{fresh}^{LLM}\|_F$ 衡量"参数编辑造成了多大扰动"，在 DiT 输入端则用 mean-pooled 条件向量上的 $d_{cos}^{dir}$ 和 $d_{cos}^{rea}$ 衡量"两种协议下 DiT 真正吃到了多大偏移"。结果很说明问题：Ovis-U1 带一个冻结的降维投影，$r_F$ 仅 0.078，BLIP3o-4B 却高达 0.527——前者的投影像一个"架构滤波器"把宽分布的编辑扰动滤掉了；但恰恰是 Ovis-U1 最受益于推理增强（$d_{cos}^{rea}=0.154$ vs $d_{cos}^{dir}=0.018$，放大 8 倍），因为文本 rationale 注入的扰动正好落在投影会保留的方向上、对齐得更好。这层"LLM-output 漂移 vs DiT-input 漂移"的双层测量把根因从 editor 本身转移到了条件通路的对齐性，也给后续设计 modality-aware editor 指明了方向。
 
 ### 损失函数 / 训练策略
 本文不训练新模型，所有 editor 沿用各自原方法的目标函数（MEMIT/PMET 的 closed-form 权重更新，AlphaEdit 的 null-space projection）。三个 UMM 上分别只编辑中间 MLP 层：Ovis-U1 编辑第 4–8 层，BLIP3o-4B 和 OmniGen2 编辑第 6–10 层。对 BLIP3o-4B / OmniGen2 的 AlphaEdit，作者用 $\alpha=0.7/0.6$ 把 null-space projector 与单位阵插值得到 softened 版本（论文中标星号），以避免共享 Qwen2.5-VL backbone 下过度收缩参数更新空间损害生成质量。所有编辑均在 sequential editing 设置下进行。

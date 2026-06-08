@@ -45,23 +45,17 @@ PhysForge 分两阶段。**Stage 1: VLM-based Planning**——输入单视图 $I
 
 ### 关键设计
 
-1. **PhysDB 四层物理标注数据集**:
+**1. PhysDB 四层物理标注数据集：给 plan-then-generate 提供全栈监督**
 
-    - 功能：第一次为大规模 3D 资产提供"物体级 + 部件级"全栈物理属性，让 plan-then-generate 范式有了监督信号。
-    - 核心思路：四层标注体系分别覆盖不同抽象层次。**Holistic Tier** (物体级)：现实尺度 (real-world scale)、类别、使用场景 (kitchen/bedroom 等)。**Static Properties Tier** (部件级)：语义标签、物理材料 (metal/wood/glass 等)、质量。**Functional Tier**：内在功能 (to contain / to control) 和状态机 (button: [pressed, released])。**Interactive Tier**：原子可供性库 (pushable/rotatable/graspable)、关节类型 (revolute/prismatic/continuous/fixed)、关节参数 (parent part, axis origin, direction, limits)。数据来源是 Objaverse 中选出的 150k 个有意义部件结构的资产，覆盖 household/industrial/weapons/personal/vehicles/tech & electronics/cultural 七大类；标注由 MLLM 初始生成 + 人工校对完成。精确铰接轴等数值因大规模标注误差太大，转由 PartNet-Mobility + Infinite-Mobility 提供 GT。
-    - 设计动机：把物理信息按抽象层次分层，既覆盖"功能这个高层语义"又落到"关节参数这个底层数值"，避免一锅端导致的标注质量崩塌。
+要让 VLM 学会"规划物理"，前提是有数据告诉它什么算物理属性，而当时的 3D 数据集几乎只有几何和纹理。作者从 Objaverse 中筛出 150k 个有意义部件结构的资产（覆盖 household/industrial/weapons/personal/vehicles/tech & electronics/cultural 七大类），用 MLLM 初始生成 + 人工校对的方式打上一套四层标注，每层对应一个抽象层次：**Holistic Tier**（物体级）记录现实尺度 (real-world scale)、类别、使用场景 (kitchen/bedroom)；**Static Properties Tier**（部件级）记录语义标签、物理材料 (metal/wood/glass) 与质量；**Functional Tier** 记录内在功能 (to contain / to control) 和状态机（如 button 的 [pressed, released]）；**Interactive Tier** 记录原子可供性库 (pushable/rotatable/graspable)、关节类型 (revolute/prismatic/continuous/fixed) 与关节参数 (parent part, axis origin, direction, limits)。这种分层既能托住"功能"这种高层语义，又能下探到"关节参数"这种底层数值，避免一锅端导致标注质量崩塌。不过精确铰接轴等数值在 150k 规模上人工标注误差太大，作者干脆把这部分 GT 交给 PartNet-Mobility 与 Infinite-Mobility，PhysDB 自身只贡献关节类型这类离散标签。
 
-2. **VLM 作为物理蓝图规划器**:
+**2. VLM 作为物理蓝图规划器：把世界知识翻译成层级蓝图**
 
-    - 功能：把 LVLM 的世界知识转化为 3D 部件结构 + 物理属性的层级蓝图。
-    - 核心思路：选 Qwen2.5-VL 作底座，输入 $(I, V, M)$。图像和 mask 走原生图像编码器；voxel $V$ 不用常见的 3DShape2VecSet，而是先用 PartField 编码每个 voxel 的部件特征，再用 position-aware 3D 卷积下采样为 512 维 voxel embedding，提升部件感知能力。引入 66 个新特殊 token：`<boxs>` / `<boxe>` 包裹 bbox，64 个 `<box0>...<box63>` 量化坐标；每个 3D 轴对齐 bbox 只用 6 个 token，结构规划高度紧凑。VLM 自回归输出每个部件的 bbox + 完整物理属性。
-    - 设计动机：作者发现共预测物理属性反过来能解决部件粒度的歧义——给模型物理/功能约束后，即使没有 2D mask 它也能给出合理的部件分解。这是"先验互助"的有力证据：物理标签是部件分解的强语义信号。
+第一阶段的任务是把 LVLM 的世界知识转成结构化的部件层级 + 物理属性。作者以 Qwen2.5-VL 为底座，输入图像 $I$、3D voxel $V$ 和可选 mask $M$：图像与 mask 走原生图像编码器，而 voxel $V$ 没有沿用常见的 3DShape2VecSet，而是先用 PartField 编码每个 voxel 的部件特征，再经 position-aware 3D 卷积下采样为 512 维 voxel embedding，专门强化部件感知。为了让自回归模型能吐出 3D bbox，作者扩了 66 个特殊 token：`<boxs>`/`<boxe>` 包裹一个 bbox，64 个 `<box0>...<box63>` 用来量化坐标，于是每个轴对齐 bbox 仅占 6 个 token，结构规划被压得极其紧凑。VLM 就这样逐部件自回归输出 bbox 加完整物理属性。一个反直觉的收益是：让模型同时预测物理属性反而消解了部件粒度的歧义——加上物理/功能约束后，即便不给 2D mask，它也能给出合理的部件分解，说明物理标签本身就是部件分解的强语义信号。
 
-3. **KineVoxel Injection (KVI) 扩散生成机制**:
+**3. KineVoxel Injection (KVI)：让几何与运动学在同一扩散过程里对齐**
 
-    - 功能：让扩散模型在合成几何同时输出精确的铰接参数 (origin/axis/limit)，避免分两个模块串行造成的不一致。
-    - 核心思路：把铰接参数编码成一个特殊形态的"动力学 voxel"，在扩散过程中与几何 voxel 一起被去噪。即 diffusion 的潜变量空间同时承载"形状信息"和"运动学信息"，两者共享同一组去噪步骤，因此最终生成的几何与关节参数天然对齐。VLM 蓝图提供条件信号（blueprint embedding），diffusion 模型基于 TRELLIS 风格的结构化 latent 完成高保真合成。
-    - 设计动机：单独训"几何生成"+"铰接预测"两个网络容易出现"门画好了但铰链轴算错"的失配；KVI 把两件事并入同一个生成过程，从概率分布层面保证一致性。
+如果"几何生成"和"铰接预测"各训一个网络串行跑，很容易出现"门画好了但铰链轴算错"的失配。KVI 的做法是把铰接参数 (origin/axis/limit) 编码成一个特殊形态的"动力学 voxel"，让它和几何 voxel 在同一个 diffusion 过程里被一起去噪——也就是潜变量空间同时承载形状信息与运动学信息，两者共享同一组去噪步骤，最终生成的几何与关节参数天然对齐。生成时由 VLM 蓝图提供条件信号 (blueprint embedding)，diffusion 模型在 TRELLIS 风格的结构化 latent 上完成高保真合成。相比后处理拟合铰链，KVI 等于把运动学一致性从概率分布层面直接焊进了生成过程。
 
 ### 损失函数 / 训练策略
 Stage 1: 标准 next-token cross-entropy SFT，微调 Qwen2.5-VL 输出 bbox + 物理属性 token 序列。Stage 2: 扩散损失（具体形式遵循 TRELLIS）+ 针对 kinematic voxel 的额外参数监督，铰接 GT 来自 PartNet-Mobility / Infinite-Mobility。配合 human-in-the-loop 数据清洗保证标注质量；评估在 PhysXNet 上做几何 (Chamfer Distance / F1) 与物理属性预测精度比较。

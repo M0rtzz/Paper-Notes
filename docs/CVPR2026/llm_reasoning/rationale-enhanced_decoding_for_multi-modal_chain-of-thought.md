@@ -41,30 +41,46 @@ tags:
 ## 方法详解
 
 ### 整体框架
-标准两步CoT流程：(1) 给定图像$x$和问题$q$，生成rationale $r$；(2) 给定$x$, $r$, $q$，生成最终答案。RED修改的是第(2)步的解码策略，不改变模型参数或rationale生成方式。RED可与任何rationale生成方法组合使用。
+标准多模态 CoT 是两步：(1) 给图像 $x$ 和问题 $q$，生成推理依据 rationale $r$；(2) 给 $x, r, q$，生成最终答案。RED 只改第 (2) 步的**解码策略**——不动模型参数、不改 rationale 生成方式，因此能即插即用地接在任何 rationale 生成方法后面。它要治的痛点是：直接用 $p(y|x,r,q)$ 解码时，模型常常**忽略 rationale**、退回去只看图像（甚至 CoT 反而掉点，见实验表）。RED 的思路是把"该用 rationale"这件事写成一个带理论保证的解码目标，最后落成一行 logit 加权。
 
 ### 关键设计
 
-1. **KL约束奖励最大化形式化**:
+**1. 把 CoT 解码写成 KL 约束的奖励最大化**
 
-    - 功能：将CoT解码重新形式化为有理论保障的优化问题
-    - 核心思路：引入新的next-token分布$\pi$，最大化：$\max_\pi \mathbb{E}_\pi[R] - \beta \mathbb{D}_{\text{KL}}[\pi || \pi_{\text{ref}}]$，其中奖励函数 $R = \log p_\theta(y_i | \mathbf{y}_{<i}, r, q)$（rationale-grounding reward），参考策略 $\pi_{\text{ref}} = p_\theta(y_i | \mathbf{y}_{<i}, x, q)$（图像条件概率）
-    - 设计动机：最大化rationale条件对数似然确保模型利用rationale信息；KL约束防止偏离图像条件分布太远从而保留视觉信息。这避免了直接使用$p(y|x,r,q)$时rationale被忽略的问题
+引入一个新的 next-token 分布 $\pi$，目标是：
 
-2. **RED 最优解码公式**:
+$$\max_\pi \mathbb{E}_\pi[R] - \beta \mathbb{D}_{\text{KL}}[\pi \| \pi_{\text{ref}}]$$
 
-    - 功能：提供闭式最优解，无需训练
-    - 核心思路：根据KL约束奖励最大化的已知最优策略形式，代入具体设定得到 $\hat{p}_\theta(y_i) = \frac{1}{Z_\theta} p_\theta(y_i|\mathbf{y}_{<i}, x, q) \times p_\theta(y_i|\mathbf{y}_{<i}, r, q)^\lambda$。这是一个power-of-experts分布，强调图像条件和rationale条件概率的交集区域
-    - 设计动机：Theorem 4.1严格证明了这一公式是Eq.(7)的最优解。$\lambda = 1/\beta$ 控制rationale信息的影响权重
+其中奖励 $R = \log p_\theta(y_i | \mathbf{y}_{<i}, r, q)$ 是 **rationale-grounding reward**（最大化它 = 逼模型用上 rationale），参考策略 $\pi_{\text{ref}} = p_\theta(y_i | \mathbf{y}_{<i}, x, q)$ 是**图像条件分布**（KL 约束它 = 别跑太偏、保住视觉信息）。两股力一拉一拽，正好避免"要么忽略 rationale、要么丢掉图像"的两难。
 
-3. **实际实现（logit层面加权求和）**:
+**2. 闭式最优解：power-of-experts 解码**
 
-    - 功能：将RED转化为简单的logit运算
-    - 核心思路：$\widehat{\text{logits}}_\theta(y_i) = \log\text{softmax}(\text{logits}_\theta(y_i|\mathbf{y}_{<i}, x, q)) + \lambda \cdot \log\text{softmax}(\text{logits}_\theta(y_i|\mathbf{y}_{<i}, r, q))$，然后 $\hat{p}_\theta(y_i) = \text{softmax}(\widehat{\text{logits}}_\theta(y_i))$。两个logits可以批并行推理，避免额外延迟
-    - 设计动机：log-softmax加权求和是乘法在对数空间的等价操作，实现简单且高效
+KL 约束奖励最大化有已知的最优策略形式，代入本设定即得闭式解（Theorem 4.1 证明它是上式最优解，无需训练）：
 
-### 损失函数 / 训练策略
-RED是纯推理时方法，**零训练**。只需要对现有LVLM做两次前向传播（一次图像条件、一次rationale条件），然后在logit层面合成。唯一超参数是$\lambda$，控制rationale的影响程度。
+$$\hat{p}_\theta(y_i) = \frac{1}{Z_\theta}\, p_\theta(y_i|\mathbf{y}_{<i}, x, q) \times p_\theta(y_i|\mathbf{y}_{<i}, r, q)^\lambda$$
+
+这是一个 **power-of-experts** 分布——它强调"图像条件"和"rationale 条件"两个概率的**交集区域**，即同时被图像和推理支持的 token 才会被抬高。$\lambda = 1/\beta$ 控制 rationale 的影响权重。
+
+**3. 落地：logit 层面一行加权求和**
+
+把上式取对数即变成 logit 相加，实现极简：
+
+$$\widehat{\text{logits}}_\theta(y_i) = \log\text{softmax}\big(\text{logits}_\theta(y_i|\mathbf{y}_{<i}, x, q)\big) + \lambda \cdot \log\text{softmax}\big(\text{logits}_\theta(y_i|\mathbf{y}_{<i}, r, q)\big)$$
+
+再过一次 softmax 得 $\hat{p}_\theta(y_i)$。两路 logits（图像条件、rationale 条件）可批并行推理，几乎不增延迟。
+
+### 一个完整 walkthrough（解码答案的某一个 token）
+设问题 $q$="图里的杯子是什么颜色？"，rationale $r$="桌上有个红色马克杯"，正在解码答案 token $y_i$。
+1. **两路前向**：一路喂 $(x, q)$ 得图像条件 logits、一路喂 $(r, q)$ 得 rationale 条件 logits（批并行，一次跑完）。
+2. **图像路**：因画面偏暗，"red" 和 "brown" 概率接近（0.4 / 0.35）——单看图像容易答错成 brown。
+3. **rationale 路**："red" 概率 0.8、"brown" 0.05——推理明确指向红色。
+4. **power-of-experts 合成**（$\lambda=1$）：两路 log-prob 相加 → "red" 综合得分远超 "brown"，被选中。
+5. **对照**：若直接用 $p(y|x,r,q)$ 单路解码，模型可能被昏暗画面带偏答 brown；RED 通过显式乘上 rationale 项把它拉回正确答案，又因保留图像项不会在 rationale 无关时瞎信（实验里"无关 rationale"只导致小幅波动即证此点）。
+
+这条链说明三块如何接力：① 定义"既要用 rationale 又别丢图像"的目标 → ② 闭式解变成两概率相乘 → ③ 对数空间里就是 logits 相加，一行搞定。
+
+### 训练策略
+RED 是纯推理时方法，**零训练**。只需对现有 LVLM 做两次前向（图像条件 + rationale 条件），在 logit 层合成。唯一超参数是 $\lambda$，控制 rationale 的影响程度。
 
 ## 实验关键数据
 

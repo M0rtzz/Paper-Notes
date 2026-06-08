@@ -44,23 +44,18 @@ tags:
 输入是公开 YouTube/Zoom 会议录像，输出是可用于训练和仿真的 speaker-labeled civic deliberation 数据集，以及为每个说话人微调出的 persona agent。流程可以分成四步：先从视频中识别活跃说话人并 OCR 出姓名；再用 Whisper 转写音频并把每段话对齐到规范化说话人；然后用 GPT-5 抽取 persona profile、meeting topics 和 action tags；最后把带元数据的上下文序列化为 ChatML 风格样本，用 QLoRA 微调 LLM 预测目标说话人的下一轮发言。
 
 ### 关键设计
-1. **多模态说话人链接**:
 
-	- 功能：把匿名 ASR transcript 变成跨视频一致的真实说话人 transcript。
-	- 核心思路：作者以 1 FPS 处理 Zoom gallery view，利用高亮边框定位当前活跃 tile，再裁剪 tile 左下角姓名区域做 OCR；低清视频先用 EDSR 超分辨率增强姓名可读性。随后用 Whisper 做语音转写，并按时间轴把每个语音片段分配给当时高亮的说话人。跨视频姓名通过模糊匹配归一化，形成 canonical speaker label。
-	- 设计动机：传统 diarization 主要靠声学特征，在多人、噪声、远程会议场景下很容易把身份打散；Zoom 界面把“谁正在说话”显式编码在视觉层，利用这个 UI 信号比纯音频更稳，也不需要会议主办方提供额外元数据。
+**1. 多模态说话人链接：把匿名 `Speaker_1` 还原成跨视频一致的真实身份。**
 
-2. **行动感知 persona 数据格式**:
+纯音频 diarization 在多人、噪声、远程会议里很容易把同一个人的身份打散，而公开会议又只有 ASR 输出的匿名标签，模型只能学到一个泛化的“官员/委员”口吻。论文抓住 Zoom gallery view 把“谁正在说话”显式画在界面上这一弱监督信号：以 1 FPS 处理画面，靠高亮边框定位当前活跃 tile，再裁剪 tile 左下角姓名区域做 OCR，低清视频先用 EDSR 超分辨率把姓名修清楚；随后用 Whisper 转写音频，并按时间轴把每段语音分配给当时高亮的说话人，跨视频姓名再用模糊匹配归一化成 canonical speaker label。利用 UI 信号比纯声学特征更稳，也不需要会议主办方额外提供元数据，这才让“追踪某个具体参与者”成为可能。
 
-	- 功能：让训练样本同时包含说话人的长期风格、会议议题和当前语用动作。
-	- 核心思路：persona profile 来自每个说话人的 25 个最长 monologue，GPT-5 先抽取目标、语气、边界和政策立场，再合并成稳定 profile；topic extraction 把 transcript 切成 1024-token chunk，逐块总结后合并为会议 topic；action tag extraction 则用 15-30 个紧凑的 speech-act 标签标注每个 utterance，例如提出动议、询问澄清、引用材料、召集投票等。训练时每个 utterance 前面加上按字母排序的 action tags，并保留前文说话人标签。
-	- 设计动机：真实协商不是自由聊天，很多发言是程序动作。把 action 写进文本让模型知道下一句的“功能”，比只给身份和议题更能约束发言形式，也解释了为什么 action tags 对未微调模型的 PPL 也有帮助。
+**2. 行动感知的 persona 数据格式：让样本同时带长期风格、当下议题和语用动作。**
 
-3. **互补式 fidelity 评价**:
+真实协商不是自由聊天，大量发言其实是程序动作——提出动议、询问澄清、引用材料、召集投票——只给身份和议题，模型学不到“下一句该是什么功能的话”。论文因此把三类元数据写进训练样本：persona profile 取每个说话人 25 个最长 monologue，让 GPT-5 抽出目标、语气、边界和政策立场再合并成稳定画像；topic 把 transcript 切成 1024-token chunk 逐块总结后汇总；action tag 用 15–30 个紧凑的 speech-act 标签标注每条 utterance。训练时每条 utterance 前面拼上按字母排序的 action tags 并保留前文说话人标签，等于把发言的“功能”显式喂给模型。这也解释了为什么 action tags 即便对未微调模型也能降低困惑度——它本身就是一种自然语言控制信号。
 
-	- 功能：避免只用困惑度衡量仿真，因为低 PPL 不等于像某个具体人。
-	- 核心思路：论文用三类指标评价模型。PPL 衡量语言分布拟合；Classifier Fool Rate 训练 one-vs-all DeBERTa 分类器，计算生成话语被判成目标说话人真实话语的比例；Speaker Attribution Accuracy 训练多分类器，看生成话语能否被归因到正确说话人。CFR 衡量“像不像这个人”，SAA 衡量“是否和其他同场参与者区分得开”。
-	- 设计动机：政府会议里很多人共享制度化措辞，生成“听起来像市政会议”的句子并不难，难的是保留个人化 rhetorical fingerprint。因此 CFR 和 SAA 的组合比单个流畅度指标更可靠。
+**3. 互补式 fidelity 评价：用两个指标分开衡量“像不像他”和“是不是他”。**
+
+低困惑度只说明句子流畅，并不等于像某个具体人；而政府会议里大家共享大量制度化措辞，生成“听起来像市政会议”的句子并不难。论文因此在 PPL 之外加两个指标：Classifier Fool Rate（CFR）训练 one-vs-all DeBERTa 分类器，统计生成话语被判成目标说话人真实话语的比例，衡量“像不像这个人”；Speaker Attribution Accuracy（SAA）训练多分类器，看生成话语能否被正确归因到对应说话人，衡量“能否和同场其他人区分开”。CFR 测的是 plausibility，SAA 测的是 distinctiveness，两者组合远比单一流畅度指标可靠，也正是后面“CFR 普遍高于 SAA”这一发现的度量基础。
 
 ### 损失函数 / 训练策略
 训练目标是标准自回归语言建模：在前文 speaker-labeled context、persona/topic/action tag 条件下预测目标 utterance。作者比较 GPT-OSS-120B、LLaMA-3.1-70B 和 Qwen-2.5-72B，微调采用 QLoRA，学习率和 LoRA alpha 通过 grid search 调参，训练 5 个 epoch，并用 held-out PPL 选择最佳 checkpoint。上下文长度截断到 1024 tokens，与后续仿真一致。仿真阶段按 round-robin 让各 agent 发言，另有 time-aware 版本把议程时间戳加入提示，用来测试时间锚定是否能改善议程覆盖和决策闭环。

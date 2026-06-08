@@ -41,40 +41,29 @@ tags:
 
 ## 方法详解
 
-> 注：本文是综述，没有新算法。"方法详解"梳理其框架与核心定义。
+> 注：本文是综述，没有新算法。「方法详解」梳理其框架与核心定义。
 
 ### 整体框架
 
-作者用 "Why - How - What" 三层 RQ 组织 storyline：
-
-- **RQ1 (Why)** §3 三大驱动力：长期一致性、动态环境、持续学习。
-- **RQ2 (How)** §4 三阶段演化路径：Storage → Reflection → Experience。
-- **RQ3 (What)** §5 Experience 带来的变革：Active Exploration + Cross-Trajectory Abstraction。
-
-每个阶段都有正式定义 — agent 在时刻 $t$ 采样动作 $a_t \sim \pi_\theta(a_t | \mathcal{I}, o_t, m_t)$，其中 $m_t = \text{Retrieve}(\mathcal{M}, o_t)$ 是从全局 memory $\mathcal{M}$ 中检索到的局部 memory；不同阶段的差别是 $\mathcal{M}$ 的构造方式不同。
+作者把 LLM agent 记忆机制看作一个由 MDL（最小描述长度）驱动的演化过程，并用「Why-How-What」三层 RQ 把整条 storyline 串起来：RQ1（§3）追问是哪三股选择压力逼着记忆机制往前走，RQ2（§4）刻画 Storage → Reflection → Experience 三阶段的演化路径，RQ3（§5）则聚焦 frontier 的 Experience 阶段带来的两大质变。三阶段共享同一套形式化——agent 在时刻 $t$ 按 $a_t \sim \pi_\theta(a_t \mid \mathcal{I}, o_t, m_t)$ 采样动作，其中局部记忆 $m_t = \text{Retrieve}(\mathcal{M}, o_t)$ 来自全局 memory $\mathcal{M}$，而三阶段的真正分野就在于 $\mathcal{M}$ 是怎么被构造出来的：保留原始轨迹、精炼单条轨迹、还是跨轨迹归纳出通用规则。
 
 ### 关键设计
 
-1. **三阶段形式化分类**:
+**1. 以「信息抽象层级」为分类轴的三阶段形式化。**
 
-    - 功能：用「functional signature」精确刻画三阶段的差异，避免论文之间术语混淆。
-    - 核心思路：(i) **Storage** — 轨迹 $\tau = \langle(o_1,a_1),...,(o_T,a_T)\rangle$，$\mathcal{M}_{raw} = \{\tau_i\}_{i=1}^N$，保留原始记录；细分为 Linear (FIFO + context window 扩展)、Vector (高维 embedding + 语义检索)、Structured (关系表 / 层次 / 图)。(ii) **Reflection** — 单轨迹语义变换 $\mathcal{F}_{ref}: \mathcal{T}\to\mathcal{S}$, $m_i' = \mathcal{F}_{ref}(\tau_i | \phi)$, $\phi$ 是评估准则；细分为 Introspection（agent 自我批评）、Environment（环境反馈作 anchor）、Coordination（多 agent 协同反思）。(iii) **Experience** — 跨轨迹归纳 $\mathcal{F}_{exp}: \mathcal{T}_{batch} \to \mathcal{K}$，要求 $|\mathcal{K}| \ll \sum_{\tau\in\mathcal{T}_{batch}} |\tau|$（MDL 约束）；细分为 Explicit (NL policy / executable skill)、Implicit (fine-tuned 进权重 / latent variable)、Hybrid (explicit cache + 周期性压缩到 weight)。
-    - 设计动机：以前的综述要么按"长期/短期"分（认知科学风格），要么按"内存层级"分（OS 风格），都无法解释为什么 Reflexion 与 Voyager 是不同代。本文用**信息抽象层级**作 axis，让"为什么 Voyager 后于 Reflexion"有一个清晰答案：Voyager 做的是 cross-trajectory 抽象（Experience 层），Reflexion 还停在单轨迹精化（Reflection 层）。
+综述最核心的设计是换了一根分类轴。以往工作要么按「长期/短期」分（认知科学风格）、要么按「内存层级」分（OS 风格），都解释不了为什么 Reflexion 和 Voyager 属于不同代次；作者改用信息抽象层级，并给每一阶配一个精确的 functional signature。Storage 保留原始轨迹 $\tau = \langle(o_1,a_1),\dots,(o_T,a_T)\rangle$、$\mathcal{M}_{raw} = \{\tau_i\}_{i=1}^N$（再细分 Linear / Vector / Structured）；Reflection 做单轨迹语义变换 $m_i' = \mathcal{F}_{ref}(\tau_i \mid \phi)$、$\phi$ 是评估准则（细分 Introspection / Environment / Coordination）；Experience 做跨轨迹归纳 $\mathcal{F}_{exp}: \mathcal{T}_{batch} \to \mathcal{K}$ 并要求 $|\mathcal{K}| \ll \sum_{\tau\in\mathcal{T}_{batch}} |\tau|$ 的 MDL 约束（细分 Explicit / Implicit / Hybrid）。这根轴和「OS vs 认知科学」两条旧线都正交，因此能把分裂的文献统一起来，也让「Voyager 为何后于 Reflexion」有了干净答案——前者已迈入 cross-trajectory 抽象，后者还停在单轨迹精化。
 
-2. **三大演化驱动力 (Why)**:
+**2. 把演化驱动力拆成三股可定位的选择压力（Why）。**
 
-    - 功能：把"为什么会从 Storage 演化到 Experience"分解为三个具体选择压力。
-    - 核心思路：(i) **长期一致性** — agent 必须保持状态一致（reasoning chain 不要矛盾）和目标一致（不要被 local optimum 带偏），逼出最早的 memory 模块（MemGPT、Sumers 2023）；(ii) **动态环境** — 知识有时效（Lazaridou 2021，outdated 知识不会自动报错）+ 因果有延迟效应（Joshi 2024，cascading effects），逼出 active management、temporal decay、causal graph 等机制；(iii) **持续学习** — episodic memory 的局限 + 无限扩张导致错误传播污染（Xiong 2025），逼出从"记录"到"抽象"的跃迁，即 Experience。
-    - 设计动机：每条驱动力对应文献的一波集中爆发，作者把它们与时间线绑定，让读者看清"哪个 selection pressure 催生了哪一代记忆方法"。
+作者没有泛泛地说「记忆很重要」，而是把「为什么会从 Storage 一路演化到 Experience」分解成三个具体压力，并各自绑定一波文献爆发。其一是长期一致性：agent 要保持推理链不自相矛盾、目标不被局部最优带偏，这逼出了最早的记忆模块（MemGPT、Sumers 2023）。其二是动态环境：知识有时效且过期不会自动报错（Lazaridou 2021）、因果有延迟的级联效应（Joshi 2024），逼出 active management、temporal decay、causal graph 等机制。其三是持续学习：episodic memory 容量有限、无限扩张又会让错误传播污染整库（Xiong 2025），最终逼出从「记录」到「抽象」的跃迁，也就是 Experience。三股压力与时间线对齐后，读者能清楚看到「哪种选择压力催生了哪一代记忆方法」。
 
-3. **Experience 阶段的两大变革性机制 (What)**:
+**3. 把 Experience 阶段切成 Active Exploration 与 Cross-Trajectory Abstraction 两条变革线（What）。**
 
-    - 功能：把 frontier 工作（2025 下半年起）从其他记忆工作中切出来，作为综述的真正贡献增量。
-    - 核心思路：(a) **Active Exploration** — agent 从被动记录者变为目标驱动的经验收集者。Exploration 机制按驱动器分为 reward-driven（即时回报）、curriculum-driven（动态任务序列）、reuse-driven（历史轨迹抽象重用）；Exploration 维度分为 breadth（cognitive gap 补齐）、depth（高阶 skill 抽取）、strategy（长 horizon 决策路径优化）。(b) **Cross-Trajectory Abstraction** — 抽象 mechanism 包括 contrastive induction（成功 vs 失败轨迹对比）、multi-granularity chunking（高阶 thought pattern 萃取）、code 函数封装（compositionality 复用）、fine-tune 内化；抽象 granularity 分为 shallow (NL rule)、intermediate (modular skeleton)、deep (压进 weight 当 intuition)。
-    - 设计动机：Experience 是综述的 **价值最高的差异化部分** — 其他综述要么把它和 Reflection 混为一谈，要么不区分 explicit vs implicit。本文用 Table 1 明确切出"Reflection 是 intra-trajectory $\mathcal{F}_{ref}(\tau_i|\phi)=m_i'$，Experience 是 inter-trajectory $\mathcal{F}_{exp}(\mathcal{T}_{batch})=\mathcal{K}$"，给社区一个干净的术语边界。
+Experience 是这篇综述价值最高的差异化部分，作者用两条正交的机制把 2025 下半年起的 frontier 工作从其余记忆工作中切出来。一条是 Active Exploration：agent 从被动记录者变成目标驱动的经验收集者，按驱动器分 reward-driven / curriculum-driven / reuse-driven，按维度分 breadth（补认知缺口）/ depth（抽高阶 skill）/ strategy（优化长 horizon 决策路径）。另一条是 Cross-Trajectory Abstraction：抽象机制涵盖 contrastive induction（成功对失败轨迹）、multi-granularity chunking、code 函数封装、fine-tune 内化，抽象粒度则分 shallow（NL 规则）/ intermediate（modular skeleton）/ deep（压进权重当 intuition）。通过 Table 1 明确把 Reflection 定为 intra-trajectory 的 $\mathcal{F}_{ref}(\tau_i\mid\phi)=m_i'$、把 Experience 定为 inter-trajectory 的 $\mathcal{F}_{exp}(\mathcal{T}_{batch})=\mathcal{K}$，作者给了社区一条之前一直缺失的干净术语边界。
 
 ### 损失函数 / 训练策略
-综述无训练。引用了 ≥ 200 篇文献，覆盖 2022-2026 上半年。
+
+综述无训练。引用文献 ≥ 200 篇，覆盖 2022 至 2026 上半年。
 
 ## 实验关键数据
 

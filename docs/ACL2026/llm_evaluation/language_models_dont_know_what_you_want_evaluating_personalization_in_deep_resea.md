@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MyScholarQA (MYSQA) 三步：(1) **Infer Profile**——用户挑 5 篇感兴趣论文 $D$，LLM 推断 $n_1{=}25$ 条 sentence-level inferences $P=\{I_1,\dots,I_{n_1}\}$，覆盖 knowledge / research style / writing style / audience / positions 五个 aspect，每条 $I$ 显式引用 $D$ 中的段落，用户可逐条 edit / disable 得到 $P^*$。(2) **Propose Actions**——用户提 query $q$ 后，系统先生成 $n_2{=}16$ 条 actions $A=A_{\text{gen}}\cup A_{\text{person}}$（content / style / specificity / research ideas 四类，generic 仅看 $q$、personalized 同时看 $q$ 和 $P^*$），用户挑选/编辑得 $A^*$。(3) **Synthesize Report**——基于 ScholarQA pipeline（Semantic Scholar 检索 + clustering + multi-section 生成），在 prompt 里塞入 $A^*$ 改两处：retrieval 改成产多组 search terms、generation 加 "执行所有 $A^*$ 并对每条 action 用一种颜色高亮 report 中相应段落"。Claude-4 Sonnet 为骨干 LLM。三步全开源、UI 在线 demo。
+MyScholarQA（MYSQA）要解决的是"DR 报告 5 分钟才生成一份、不可能每次重问偏好"的矛盾，于是把个性化拆成一条用户全程可见、可编辑的三段流水线：先从用户挑的论文里抽出一个持久画像，再把画像和当前 query 翻成一张可勾选的 action 清单，最后让 action 驱动检索-写作并把"个性化发生在哪段文字"用颜色标出来。整条链的输入是 5 篇种子论文 + 一句 query，中间产物是可逐条改的 profile $P^*$ 和 actions $A^*$，输出是带彩色高亮、逐条 action 可追溯的多 section 报告；关键在于每一步都把"个性化"显式化成用户能干预的实体，从而让它成为可观测的实验变量。骨干 LLM 为 Claude-4 Sonnet，三步全开源并提供在线 demo。
 
 ### 关键设计
 
-1. **从论文 → 五维 profile 的持久 user model**：
+**1. 从论文反推五维持久画像：把"你是谁"做成跨 query 可复用的证据链。**
 
-    - 功能：把"用户是谁"从短暂 clarifying questions 升级成跨 query 的持久画像，每条 inference 引用具体论文段落作为证据。
-    - 核心思路：用户上传 5 篇论文 $D$，prompt LLM 在 knowledge / research style / writing style / audience / positions 五类 aspect 上各产 5 条 sentence-level inference，每条 $I$ 显式 cite $D$ 中的 snippets 加 explanation；profile 整体可编辑、单条可禁用。Gemini-2.5 Pro 在 inference accuracy 97.1%、citation relevance 97.4%、specificity 3.73/5 上综合最佳，被选为 profile backbone。
-    - 设计动机：DR 报告 5 分钟才生成，让用户每次都重新输入偏好（OpenAI DR 的 follow-up Q 范式）成本太高；持久 + 可编辑画像是 "U21: 我希望它了解我一次，然后照办" 这种期望的直接实现。
+DR 的痛点在于偏好表达成本太高——OpenAI DR 那种每次新 query 都反问 clarifying questions 的范式，让用户疲于重复解释自己（受访者 U21 直言"我希望它了解我一次，然后照办"）。MYSQA 的做法是让用户上传 5 篇感兴趣的论文 $D$，prompt LLM 在 knowledge / research style / writing style / audience / positions 五个 aspect 上各产 5 条 sentence-level inference，凑成 $n_1{=}25$ 条的画像 $P=\{I_1,\dots,I_{25}\}$；每条 $I$ 都必须显式 cite $D$ 中的具体段落并附 explanation，使画像不是空泛标签而是可核查的证据链，用户可逐条 edit / disable 收敛成 $P^*$。正因为有引用约束，画像质量可被量化：Gemini-2.5 Pro 在 inference accuracy 97.1%、citation relevance 97.4%、specificity 3.73/5 上综合最佳，被选为 profile backbone。
 
-2. **Generic + Personalized 双轨 Actions 提案**：
+**2. Generic 与 Personalized 双轨 action 提案：在动笔前把"打算怎么个性化"摊开给用户控制。**
 
-    - 功能：在生成报告之前，把"系统打算做哪些个性化"显式列成 action list，让用户在执行前控制。
-    - 核心思路：分别用两条 prompt 生成 $A_{\text{gen}}$（仅 $q$ 条件）与 $A_{\text{person}}$（$q+P^*$ 条件）后合并；categories 拆 content / style / specificity / research ideas；不写硬规则，仅给 LLM 软提示（如"对专家跳过基础术语"），让"如何个性化"这件事本身在用户研究中被观察。LLM judge 给 $A_{\text{person}}$ 的 win rate 91-95%、uniqueness 60-72%，证明 actions 真的因 profile 而异。
-    - 设计动机：直接出 report 让"个性化"成黑箱；先出 action 列表既是 query clarification 的变体（Zhang et al. 2025），也让作者后续能精细分析"哪种 action 容易让用户不满"。
+如果直接由 profile 生成报告，个性化就成了无法审查的黑箱，事后也无从分析"哪种个性化让用户不满"。MYSQA 在 query $q$ 进来后先不写报告，而是用两条 prompt 分别生成只看 $q$ 的 $A_{\text{gen}}$ 与同时看 $q$ 和 $P^*$ 的 $A_{\text{person}}$，合并成 $n_2{=}16$ 条 actions $A=A_{\text{gen}}\cup A_{\text{person}}$，按 content / style / specificity / research ideas 四类组织，用户勾选/编辑成 $A^*$。这里刻意不写硬规则，只给 LLM 软提示（如"对专家跳过基础术语"），让"如何个性化"本身成为用户研究里可被观察的对象。这一设计既是 query clarification 的变体（Zhang et al. 2025），又因为把个性化外化成离散 action，才使得后文"哪类 action 最容易踩雷"的细粒度归因成为可能——LLM judge 给 $A_{\text{person}}$ 的 win rate 高达 91–95%、uniqueness 60–72%，说明这些 action 确实随 profile 而变。
 
-3. **彩色高亮的个性化报告生成 + 多步 prompt 改造**：
+**3. 彩色高亮的报告合成：用最小 prompt 改造让"个性化在哪"一眼可见、可审、可探针。**
 
-    - 功能：在 SCHOLARQA pipeline 里嵌入 $A^*$，并在 report 中用 per-action 颜色高亮"哪段文字是为某条 action 服务的"，让个性化可视可审。
-    - 核心思路：最小化改 SCHOLARQA 两处 prompt——(i) `q → search terms` 改为"按 $A^*$ 产多组 search terms"；(ii) `section generation` 改为"逐条执行 $A^*$ 并用 one color per action 高亮相应文本片段"。Action adherence 评测一条 action 是否被 report 任一处遵循。
-    - 设计动机：高亮是用户能"扫一眼就看到 personalization 在哪里"的低成本透明化手段；同时也是研究者观察哪些 action 被忽略 / 误用的天然探针——"为什么这个 action 没颜色"暴露出 IGNORE 类失败。
+报告侧基于 SCHOLARQA pipeline（Semantic Scholar 检索 + clustering + 多 section 生成），MYSQA 只动两处 prompt 把 $A^*$ 注入：检索阶段把 `q → search terms` 改为"按 $A^*$ 产多组 search terms"，生成阶段把 `section generation` 改为"逐条执行 $A^*$，并用 one color per action 高亮相应文本片段"。Action adherence 指标据此评测每条 action 是否被报告任一处遵循。高亮表面上只是透明化手段——用户扫一眼就知道个性化落在哪几句——但它同时是研究者最好用的失败探针：一条 action 若在报告里找不到对应颜色，就直接暴露出 IGNORE 类失败；而用户研究还发现一个隐患，多数人看到某 action 没高亮时会默认"这条信息不存在"，而非"系统漏执行了"，构成 personalization 的过度信任陷阱。
 
 ### 损失函数 / 训练策略
-本文不训练新模型；MYSQA 全是 prompt 工程 + 多 LLM chain。骨干 LLM：profile 用 Gemini-2.5 Pro / Claude-4 Sonnet (thinking) / o3 / DS-r1 比较；action 用 Gemini-2.5 Flash / GPT-4.1 / Claude-4 Sonnet / DS-V3；report 默认 Claude-4 Sonnet。Profile 温度 1.0、max token 40960，Semantic Scholar API 检索。MYSQA 用 ScholarQA-CS2 的 200 个 DR query 做合成 benchmark，每个 query 用 CS-PaperSum 中的作者论文模拟低/中/高 expertise 三类 user，GRIT-LM 嵌入算 cosine 划分。
+本文不训练新模型，MYSQA 全靠 prompt 工程 + 多 LLM chain。骨干 LLM 各步独立选型：profile 在 Gemini-2.5 Pro / Claude-4 Sonnet (thinking) / o3 / DS-r1 间比较，action 在 Gemini-2.5 Flash / GPT-4.1 / Claude-4 Sonnet / DS-V3 间比较，report 默认 Claude-4 Sonnet。Profile 生成温度 1.0、max token 40960，检索走 Semantic Scholar API。评测用 ScholarQA-CS2 的 200 个 DR query 做合成 benchmark，每个 query 用 CS-PaperSum 里的作者论文模拟低/中/高 expertise 三类 user，并以 GRIT-LM 嵌入的 cosine 相似度划分专长档位。
 
 ## 实验关键数据
 

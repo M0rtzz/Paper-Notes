@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：原始良性音频 $x\in\mathbb{R}^L$、固定文本 prompt $t_{1:n}$、有害查询 $q$、白盒 ALM $\theta$、token 保留比 $\zeta$、扰动预算 $\epsilon$、最大迭代 $K$、early-stop 阈值 $\tau$。输出：对抗音频 $x+\delta$ 使 ALM 回复以目标前缀 $r_{1:m}$ 开头并继续生成有害内容。流程：(1) 用模型自身的良性回复样式构造前缀 $r_{1:m}\leftarrow\mathsf{Prefix}(q)$；(2) 每步前向计算损失 $\mathcal{L}$ (前缀交叉熵 + $L_2$ 罚 + EOS 抑制)；(3) 反传得到波形梯度，按 receptive field 聚合成 token-aligned gradient，选 top-$\lceil\zeta T\rceil$ token 形成二值 mask $M^{(k)}$；(4) 只在 mask 内做带 clip 的 PGD 更新 $\delta^{(k+1)}=\mathrm{Clip}_{[-\epsilon,\epsilon]}(\delta^{(k)}-\eta(M^{(k)}\odot\nabla_\delta\mathcal{L}))$；(5) 当前缀 CE 低于 $\tau(\rho)=-\log\rho$ 即提前终止。
+TAGO 要解决的是"如何在高维音频波形上更高效地搜出越狱扰动"。它的做法是把白盒 ALM 的越狱优化从"对整段波形稠密 PGD"改成"每步只更新少数高能量 token 对应的波形区段"：每次迭代先反传得到波形梯度，按各 audio token 的 receptive field 聚合成 token 级能量，只保留 top-$\zeta$ token 形成二值 mask 后再做带 clip 的 PGD 更新，同时用模型自洽前缀和 EOS 抑制项把对齐捷径堵死，当前缀交叉熵降到阈值即提前停。输入是良性音频 $x\in\mathbb{R}^L$、固定文本 prompt、有害查询 $q$ 和保留比 $\zeta$，输出是对抗音频 $x+\delta$，使 ALM 回复以目标前缀 $r_{1:m}$ 开头并继续生成有害内容。
 
 ### 关键设计
 
-1. **Token-aligned 稀疏选择 (Sparse Token-Selective Optimization)**:
+**1. Token-aligned 稀疏选择：把扰动预算集中到真正有效的 token**
 
-    - 功能：把波形级梯度按 audio token 的 receptive field 聚合为 token 级能量，并在每次迭代仅保留 top-$\zeta$ token 对应的波形梯度。
-    - 核心思路：把前端 $\Phi(\cdot)$ 产生的每个 pre-attention audio token $\Phi_i(x)$ 映射到唯一的波形区间 $\mathcal{R}(i)\subseteq\{1,\dots,L\}$；定义样本级能量 $g^{(k)}(s)=([\nabla_\delta\mathcal{L}]_s)^2$，token 级能量 $\tilde{g}_i^{(k)}=\sum_{s\in\mathcal{R}(i)}g^{(k)}(s)$；按 $\tilde{g}_i^{(k)}$ 选 top 索引 $\mathcal{S}^{(k)}$，得到 mask $M^{(k)}=\mathbf{1}_{\cup_{i\in\mathcal{S}^{(k)}}\mathcal{R}(i)}$，更新规则见上节公式。
-    - 设计动机：梯度分析显示前 16% token 占 90% 能量，稠密更新把扰动预算摊给低能量 token 反而拉低单 token 的有效步长；动态 (每步重选) 而非静态 mask 是为了跟随优化轨迹漂移，避免"早期高能 token 后期失效"。
+稠密 PGD 隐含假设梯度能量在 token 间均匀分布，但作者实测发现前 16% 的 audio token 就承担了 90% 的梯度能量，均摊更新等于把预算浪费在静音、元音稳态等低能量区段上，反而稀释了有效方向的步长。TAGO 的应对是把前端 $\Phi(\cdot)$ 产生的每个 pre-attention audio token $\Phi_i(x)$ 映射到唯一波形区间 $\mathcal{R}(i)\subseteq\{1,\dots,L\}$，定义样本级能量 $g^{(k)}(s)=([\nabla_\delta\mathcal{L}]_s)^2$ 与 token 级能量 $\tilde{g}_i^{(k)}=\sum_{s\in\mathcal{R}(i)}g^{(k)}(s)$，按 $\tilde{g}_i^{(k)}$ 选出 top 索引集 $\mathcal{S}^{(k)}$ 并构造 mask $M^{(k)}=\mathbf{1}_{\cup_{i\in\mathcal{S}^{(k)}}\mathcal{R}(i)}$，更新规则为 $\delta^{(k+1)}=\mathrm{Clip}_{[-\epsilon,\epsilon]}(\delta^{(k)}-\eta(M^{(k)}\odot\nabla_\delta\mathcal{L}))$。关键是 mask 每步重选而非一次定死——高能量 token 会随优化轨迹漂移，动态选择才能跟住"早期有效、后期失效"的 token，这也是它远胜事后剪枝的原因。
 
-2. **模型自洽目标前缀 (Model-Compatible Target Prefix)**:
+**2. 模型自洽目标前缀：让 Teacher Forcing 不再把模型拉出分布**
 
-    - 功能：避免对每条 harmful query 手写"Sure, here is..."这种与 ALM 真实回复风格不匹配的前缀，否则 Teacher Forcing 会强行把模型拉到分布外、徒增优化难度。
-    - 核心思路：先用一小批良性 prompt 询问目标 ALM，抽取其回复首句作为带占位符的模板 $\mathsf{Prefix}(\cdot)$；对任意有害查询 $q$，实例化为 $r_{1:m}(q)=\mathsf{Prefix}(q)$ 后做 Teacher Forcing 优化。
-    - 设计动机：不同 ALM 回复风格差异大 (Qwen-Omni vs LLaMA-Omni)；用模型自身风格的前缀，把"前缀对齐"问题压在模型已经熟悉的输出流形上，让 CE loss 更平滑、更容易快速下降到 $\tau$ 以下而早停。
+GCG 式越狱常对所有 harmful query 硬塞"Sure, here is..."这种统一前缀，但不同 ALM 回复风格差异很大 (Qwen-Omni vs LLaMA-Omni)，强行对齐一个分布外的前缀会让 CE loss 崎岖、优化变难。TAGO 改用模型自己的风格：先拿一小批良性 prompt 询问目标 ALM，抽取其回复首句作为带占位符的模板 $\mathsf{Prefix}(\cdot)$，对任意有害查询 $q$ 实例化为 $r_{1:m}(q)=\mathsf{Prefix}(q)$ 再做 Teacher Forcing。这样"前缀对齐"被压在模型已经熟悉的输出流形上，CE loss 更平滑、更容易快速降到阈值 $\tau$ 以下而触发早停。
 
-3. **EOS 抑制项 (Suppressing Premature Termination)**:
+**3. EOS 抑制项：堵住"前缀像越狱、后面戛然而止"的假阳性**
 
-    - 功能：防止 ALM 在被迫吐出目标前缀后立刻输出 `<|im_end|>` 把生成切断 (这是安全对齐的"捷径"——只塑造前几个 token + 立即终止)。
-    - 核心思路：在总损失里加项 $\mathcal{L}_{\mathrm{eos}}=p_\theta(\mathrm{EOS}\mid h_m)$，其中 $h_m$ 是吐完前缀后的解码上下文；最终目标 $\mathcal{L}=\frac{1}{m}\sum_{i=1}^m\mathcal{L}_{\mathrm{CE}}(r_i,p_\theta(\cdot\mid h_{i-1}))+\lambda\|\delta\|_2^2+\lambda_{\mathrm{eos}}\mathcal{L}_{\mathrm{eos}}$。
-    - 设计动机：作者引 Qi et al. 2025 指出安全对齐主要靠"前几个 token 的分布塑形"实现，强行压低 EOS 概率才能逼模型把有害内容真正生成出来，否则会出现"前缀像越狱、后面戛然而止"的假阳性。
+安全对齐有个捷径——模型被迫吐出目标前缀后立刻输出 `<|im_end|>` 把生成切断，看上去越狱了实则没生成任何有害内容。作者引 Qi et al. 2025 指出对齐主要靠"前几个 token 的分布塑形 + 提前终止"实现，于是在损失里显式加一项 $\mathcal{L}_{\mathrm{eos}}=p_\theta(\mathrm{EOS}\mid h_m)$ ($h_m$ 为吐完前缀后的解码上下文) 把 EOS 概率压低，逼模型把有害内容真正续写出来。最终目标函数为 $\mathcal{L}=\frac{1}{m}\sum_{i=1}^m\mathcal{L}_{\mathrm{CE}}(r_i,p_\theta(\cdot\mid h_{i-1}))+\lambda\|\delta\|_2^2+\lambda_{\mathrm{eos}}\mathcal{L}_{\mathrm{eos}}$，三项分别负责前缀对齐、扰动能量约束和反提前终止。
 
 ### 损失函数 / 训练策略
-总损失见上节公式 13，包含前缀 CE、$L_2$ 扰动罚、EOS 抑制三项；优化用 PGD 带 $\ell_\infty$ clip。早停准则：当前缀 CE term $\leq\tau(\rho)=-\log\rho$ 即视为前缀已被高置信度对齐，立即停止以节省迭代。主实验设 $\rho=0.9$ 对应 $\tau\approx 0.105$，token 保留比 $\zeta\in\{1.0,0.75,0.5,0.25\}$，威胁模型为白盒、仅扰动波形、文本 prompt 固定。
+优化用带 $\ell_\infty$ clip 的 PGD。早停准则是前缀 CE term $\leq\tau(\rho)=-\log\rho$，即认为前缀已被高置信度对齐就立即停止以省迭代；主实验取 $\rho=0.9$ 对应 $\tau\approx 0.105$。token 保留比扫 $\zeta\in\{1.0,0.75,0.5,0.25\}$，威胁模型为白盒、仅扰动波形、文本 prompt 固定。
 
 ## 实验关键数据
 

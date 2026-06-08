@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定数据 $X=\{x_i\}_{i=1}^N \in \mathbb{R}^D$，选一个 $d$ 维黎曼流形 $(\mathcal{M},g)$ 作为 latent space。把 $Z=\{z_i\}_{i=1}^N$ 视为每样本一个的自由参数，与 decoder $f_\theta:\mathcal{M}\to\mathcal{X}$ 一起做 MAP 估计：
-$\mathcal{L}(\theta, Z) = \sum_i \big(-\log p_\theta(x_i|z_i) - \log p(z_i)\big) - \log p(\theta)$
-其中 likelihood 通常取 isotropic Gaussian（重构损失即 MSE），prior 在 compact 流形上取 uniform、在 non-compact 流形上取 wrapped 或 Riemannian normal。训练交替：$\theta$ 用 Adam 走欧式步、$Z$ 用 RiemannianAdam 走黎曼步，每步用 retraction $R_z(\cdot)$ 把 tangent 向量映回流形保证 $z^{(t+1)}\in\mathcal{M}$。借助 geoopt 库这套实现非常简洁。
+RGD 要解决的是 Riemannian VAE 必须为每种流形手写概率密度这一痛点，做法是把整个 encoder 删掉。给定数据 $X=\{x_i\}_{i=1}^N\in\mathbb{R}^D$ 和一个选定的 $d$ 维黎曼流形 $(\mathcal{M},g)$，它把每个样本的隐变量 $z_i$ 当成一个可学习的自由参数，和 decoder $f_\theta:\mathcal{M}\to\mathcal{X}$ 一起做 MAP 估计 $\mathcal{L}(\theta,Z)=\sum_i(-\log p_\theta(x_i|z_i)-\log p(z_i))-\log p(\theta)$。训练时 $\theta$ 用普通 Adam 走欧式步、$Z$ 用 RiemannianAdam 走黎曼步，每步靠 retraction $R_z(\cdot)$ 把切向量映回流形，保证 $z_i$ 始终留在曲面上——于是任何 density 近似都不再需要，借助 geoopt 库实现极其简洁。
 
 ### 关键设计
 
-1. **Encoder-less MAP + RiemannianAdam 直接在流形上优化 latent**：
+**1. Encoder-less MAP + RiemannianAdam：把 latent 当流形上的自由参数直接优化**
 
-    - 功能：把"每条样本的隐变量"做成可学习的自由参数，让任意黎曼流形（Sphere、PoincareBall、Lorentz、SPD、UpperHalf、Stiefel、ProductManifold...）都立即可用。
-    - 核心思路：放弃 amortized inference。每步训练对 latent 用黎曼梯度 $\nabla_z^{\mathcal{R}}\mathcal{L}=G(z)^{-1}\nabla_z^E\mathcal{L}$，配合 retraction (通常是 exponential map) 更新：$z^{(t+1)}=R_{z^{(t)}}(-\eta\,\nabla_{z^{(t)}}^{\mathcal{R}}\mathcal{L})$。RiemannianAdam 在 tangent space 维护自适应方向，保证收敛速度与 Adam 类似，但每步严格在流形上。Compact 流形 prior 直接取 $1/\text{Vol}(\mathcal{M})$（常数，不影响梯度），non-compact 用 wrapped/Riemannian normal。
-    - 设计动机：encoder 是 manifold density 近似的根源问题，因为 $q_\phi(z|x)$ 必须在曲面上是 tractable 概率分布。Goldberg-DGD 已经证明丢掉 encoder 的 MAP 范式在欧式空间能 work；本文把它直接 lift 到流形，绕过了所有 density 近似。一个意外收益是 ProductManifold 这种异构积流形也立即可用，因为 RGD 不需要为每个流形给 prior。
+VAE 的麻烦根源在 encoder：$q_\phi(z|x)$ 必须在曲面上是一个可算密度的概率分布，而绝大多数黎曼流形上根本没有 closed-form density。RGD 干脆放弃 amortized inference，对每条样本的隐变量直接用黎曼梯度 $\nabla_z^{\mathcal{R}}\mathcal{L}=G(z)^{-1}\nabla_z^E\mathcal{L}$ 配合 retraction（通常取 exponential map）更新 $z^{(t+1)}=R_{z^{(t)}}(-\eta\,\nabla_{z^{(t)}}^{\mathcal{R}}\mathcal{L})$；RiemannianAdam 在切空间里维护自适应方向，收敛速度与 Adam 相当却每步严格停在流形上。prior 也随之大幅简化——compact 流形直接取常数 $1/\text{Vol}(\mathcal{M})$（不影响梯度），non-compact 才退而用 wrapped 或 Riemannian normal。Goldberg 的 DGD 已经证明这种丢掉 encoder 的 MAP 范式在欧式空间可行，RGD 把它原样 lift 到流形上就绕过了整条 density 近似链；一个顺带的红利是 ProductManifold 这类异构积流形也立刻可用，因为框架不再需要为每个流形单独写 prior。
 
-2. **几何感知的输入噪声正则**：
+**2. 几何感知的输入噪声正则：用度量逆缩放让 decoder 平滑度对齐流形几何**
 
-    - 功能：让 decoder 的局部 Jacobian 与流形度量自动对齐，鼓励几何上"应该相似的点"被解到相似的输出。
-    - 核心思路：训练时给 latent 注入噪声 $\epsilon\sim\mathcal{N}(0, \sigma^2 G^{-1}(z))$（协方差用流形度量逆，使噪声在度量大的方向上更弱、在小的方向更强），用 exponential map $z'=\text{Exp}_z(\epsilon)\approx z+\epsilon$ 注入。作者跟随 Bishop (1995) 的二阶 Taylor 展开推导，得到等价正则项：$\mathbb{E}_\epsilon[L(z')]\approx L(z)+\sigma^2\,\text{Tr}(J(z)^\top G^{-1}(z) J(z))$。其中 $J(z)=\partial_z f$，加号后的项就是被流形度量加权的 Jacobian 范数惩罚。
-    - 设计动机：欧式高斯噪声在曲面上会让模型在 metric 大的方向被过度惩罚、metric 小的方向欠惩罚；用 $G^{-1}(z)$ 缩放的噪声等于把 isotropic 正则对齐到流形几何，在 homogeneous 流形（球面）上退化为近似 isotropic，在曲率非均匀的双曲流形上则按位置自适应。相比 Lee & Park (2023) 的二阶曲率正则（涉及 Hessian-vector product，公式整页），RGD 的方案只用一次 Jacobian 计算，scalability 强很多。
+光选对流形只是给了空间，要让 decoder 真正把"几何上该相似的点"解到相似输出，还得有一个与度量对齐的正则。RGD 在训练时给 latent 注入协方差按流形度量逆缩放的噪声 $\epsilon\sim\mathcal{N}(0,\sigma^2 G^{-1}(z))$——噪声在度量大的方向更弱、小的方向更强——再用 $z'=\text{Exp}_z(\epsilon)\approx z+\epsilon$ 映回流形。沿 Bishop (1995) 的二阶 Taylor 展开可证，这等价于在损失上加一项被度量加权的 Jacobian 范数惩罚 $\mathbb{E}_\epsilon[L(z')]\approx L(z)+\sigma^2\,\text{Tr}\big(J(z)^\top G^{-1}(z)J(z)\big)$，其中 $J(z)=\partial_z f$。这一步之所以有效，是因为普通欧式高斯噪声在曲面上会过度惩罚度量大的方向、欠惩罚小的方向；换成 $G^{-1}(z)$ 缩放后，正则在球面这种 homogeneous 流形上退化为近似各向同性、在曲率非均匀的双曲流形上则按位置自适应。相比 Lee & Park (2023) 涉及 Hessian-vector product、公式占整页的二阶曲率正则，RGD 只需一次 Jacobian 计算，可扩展性强一个量级。
 
-3. **统一框架支持任意黎曼流形 + Product 组合**：
+**3. 统一框架支持任意黎曼流形与 Product 组合：把流形从算法假设降为配置项**
 
-    - 功能：让用户只需把 prior 知识表达为流形选择，剩下交给框架，无需手写 ELBO 或密度近似。
-    - 核心思路：直接复用 geoopt 实现的所有流形（Euclidean、Sphere、Stereographic、PoincareBall、Lorentz、SPD、Stiefel、UpperHalf、ProductManifold...），只要这些流形给出 exponential map / retraction / 度量即可。Product 流形写成 $\mathcal{M}=\mathcal{M}_1\times\cdots\times\mathcal{M}_K$，度量直接取 direct sum，自动覆盖"一部分维度球面 + 一部分维度双曲"这种异构需求。
-    - 设计动机：以往工作每写一个新流形就要重新推 prior 与近似，研究者无法快速对比"哪种几何更适合我的数据"。RGD 把流形从一个**算法假设**变成一个**配置项**，让 hypothesis-based exploration 真正可行；细胞周期数据上 torus、sphere、Euclidean 都能一键切换比较。
+以往每引入一种新流形都要重推 prior 与近似，研究者根本没法快速比较"哪种几何更适合我的数据"。RGD 由于不依赖 manifold density，可以直接复用 geoopt 已实现的全部流形（Euclidean、Sphere、Stereographic、PoincareBall、Lorentz、SPD、Stiefel、UpperHalf、ProductManifold…），只要该流形给出 exponential map / retraction / 度量即可。异构需求通过积流形 $\mathcal{M}=\mathcal{M}_1\times\cdots\times\mathcal{M}_K$ 表达，度量取各分量的 direct sum，从而自然覆盖"一部分维度球面 + 一部分维度双曲"这种组合。这样一来流形选择不再是写死的算法假设，而变成一个可一键切换的配置项，hypothesis-based exploration 真正可行——例如细胞周期数据上 torus、sphere、Euclidean 都能即时切换对比。
 
 ### 损失函数 / 训练策略
-目标为公式 (10) 的负后验：$\mathcal{L}=\sum_i(-\log p_\theta(x_i|z_i)-\log p(z_i))-\log p(\theta)$。$\theta$ 用 Adam、$Z$ 用 RiemannianAdam 交替更新。几何正则通过对 latent 加 $\mathcal{N}(0,\sigma^2 G^{-1})$ 噪声实现（一次 retraction 把噪声映回流形）。重构 loss 按数据性质选（连续 → Gaussian/MSE；离散 → categorical）。无 KL 项、无 ELBO，无 Monte Carlo 估计归一化常数。
+目标为公式 (10) 的负后验 $\mathcal{L}=\sum_i(-\log p_\theta(x_i|z_i)-\log p(z_i))-\log p(\theta)$，$\theta$ 用 Adam、$Z$ 用 RiemannianAdam 交替更新。几何正则通过给 latent 加 $\mathcal{N}(0,\sigma^2 G^{-1})$ 噪声、一次 retraction 映回流形实现；重构 likelihood 按数据性质选（连续 → Gaussian/MSE，离散 → categorical）。全程无 KL 项、无 ELBO，也不需要 Monte Carlo 估计归一化常数。
 
 ## 实验关键数据
 

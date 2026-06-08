@@ -41,29 +41,23 @@ FoeGlass 把"用 LLM 红队 LLM"的思路搬到音频深伪检测（ADD）上：
 ## 方法详解
 
 ### 整体框架
-形式化：把 TTS 写成 $G:\mathcal{U}\to\mathcal{X}$（输入 prompt/参数空间到音频空间），ADD 写成二分类器 $f:\mathcal{X}\to[0,1]$，阈值 $\tau$。定义期望分类分数 $F(u)=\mathbb{E}[f\circ G(u)]$，红队目标是从 $F^{-1}((\tau,1])$ 这一"会被判为 real 的 TTS 输入子集"中采样。
+FoeGlass 要解决的是"怎么不微调、不碰权重，就让一个黑盒 reasoning LLM 自动写出能骗过 ADD 的 TTS prompt"。它把红队问题形式化成一个采样问题：TTS 是 $G:\mathcal{U}\to\mathcal{X}$（把文本 prompt/参数映到音频），ADD 是二分类器 $f:\mathcal{X}\to[0,1]$，阈值 $\tau$，定义期望分类分数 $F(u)=\mathbb{E}[f\circ G(u)]$，红队的目标就是从 $F^{-1}((\tau,1])$——那些"会被 ADD 判成 real"的 TTS 输入子集里采样。
 
-FoeGlass 把这个采样问题用 in-context loop 解：每轮 $t$ 由 attacker LLM $L$ 读当前 context $c$，吐出 TTS 输入 $u_t$ 与 CoT；TTS 合成 $x_t=G(u_t)$；ADD 给 realness $r_t=f(x_t)$；用 WavLM 嵌入 $w$ 算多样性 $d_t = 1 - \max_{z\in w(X_\text{hist})}\langle w(x_t), z\rangle_{\cos}$；把 $(u_t, \text{CoT}_t, r_t, d_t)$ 入历史 buffer，再由 DesignContext 构造下一轮 context。整个 pipeline 不动 LLM、TTS、ADD 的任何权重。
+整个流程是一个不更新任何权重的 in-context 闭环：每轮 $t$，attacker LLM 读当前 context，吐出一个 TTS 输入 $u_t$ 和它的 CoT；TTS 把它合成成音频 $x_t=G(u_t)$；ADD 给一个 realness 分 $r_t=f(x_t)$；再用 WavLM 嵌入算这条音频相对历史的多样性分 $d_t = 1 - \max_{z\in w(X_\text{hist})}\langle w(x_t), z\rangle_{\cos}$；最后把 $(u_t, \text{CoT}_t, r_t, d_t)$ 塞回历史 buffer，重构下一轮 context。LLM、TTS、ADD 三者全程黑盒，只交换文本与分数。
 
 ### 关键设计
 
-1. **结构化 In-Context 模板（instruction + 失败史 + 成功史 + CoT）**：
+**1. 结构化 In-Context 模板：把整个红队经验压成一段上下文，让 LLM 在线"学会"哪些 prompt 能骗过 ADD。**
 
-    - 功能：把"红队过程的全部经验"压成一个上下文，让 LLM 在下一轮 in-context "学到"哪些 TTS prompt 能骗过 ADD。
-    - 核心思路：context 分三段——(a) instruction prompt 给任务描述与 TTS 参数（transcript / speed / temperature / style / voice）的语义说明，并强制输出 JSON；(b) 最近 $\ell/2$ 个失败攻击及其 CoT、分数、多样性反馈；(c) 历史 realness 分最高的 $\ell/2$ 个成功攻击及其 CoT、分数、反馈。论文用 DeepSeek-R1-Distill-Llama-3.1-8B 作 attacker LLM，$\ell=40$。CoT 的引入让 LLM 能延续之前的推理脉络，论文在附录 B 做了消融证明 CoT 显著有助益。
-    - 设计动机：纯让 LLM 无条件采 TTS prompt（unconditional baseline）成功率非常低（很多场景 < 10% FNR）；而把"成功/失败 + 为什么 + 多样性是否塌缩"喂回去，LLM 的 in-context learning 就能稳定收敛到 ADD 的薄弱模式。同时一半成功 + 一半失败的对比结构，比只塞成功例更不易收敛到单一 prompt 模板。
+纯让 LLM 无条件乱采 TTS prompt（unconditional baseline）成功率极低，很多场景 FNR < 10%，因为它根本不知道 ADD 的薄弱点在哪。FoeGlass 的做法是把每一轮的成败经验结构化地喂回 context，让 in-context learning 自己往 blind spot 收敛。context 分三段：(a) instruction prompt，描述任务并逐项解释 TTS 参数（transcript / speed / temperature / style / voice）的语义，强制 LLM 输出 JSON；(b) 最近 $\ell/2$ 个**失败**攻击连同它们的 CoT、分数和多样性反馈；(c) 历史 realness 分最高的 $\ell/2$ 个**成功**攻击连同 CoT、分数、反馈。论文用 DeepSeek-R1-Distill-Llama-3.1-8B 当 attacker，$\ell=40$。把 CoT 一起喂回去是关键——它让 LLM 能延续上一轮的推理脉络而不是每轮从零猜，附录 B 的消融证明去掉 CoT 后效果明显下滑。这种"一半成功 + 一半失败"的对比结构也比只塞成功例更稳，因为只看成功例 LLM 容易认定某个模板万能、反复套用同一个 prompt。
 
-2. **Realness + 多样性双反馈，多样性用 min-cosine 而非 avg-cosine**：
+**2. Realness + 多样性双反馈，多样性用 min-cosine 而非 avg-cosine：从根上掐掉 mode collapse。**
 
-    - 功能：给 LLM 两路标量信号——攻击是否得手（realness）、是否在重复之前的攻击（diversity），共同驱动 explore/exploit。
-    - 核心思路：realness 直接取 $f(x_t)$，达到阈值 $\tau$ 即判 success，反馈文本里写明"Success/Failed (score=…)"。多样性自然的想法是平均余弦距离 $d_\text{avg}(x';X)=1-\frac{1}{|w(X)|}\sum_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，但平均会被"远样本"稀释——即使 $x'$ 已经在历史里有近邻，只要其他历史样本远，$d_\text{avg}$ 仍可能很大。论文改用最小余弦距离 $d(x';X)=1-\max_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，强制要求新样本必须与所有历史都"足够远"（$d>\tau_d$，论文用 $\tau_d=0.01$，WavLM 嵌入）。若不达标，给 LLM 追加一句"输出过于相似，请修改 transcript 增加多样性"。
-    - 设计动机：red-teaming 系统最常见的失败模式就是 mode collapse——LLM 发现一个能骗过 ADD 的 prompt 后反复换皮重写。min-cosine 把多样性变成 hard constraint，从根上避免了平均距离的稀释效应；同时把多样性做成反馈而非约束/优化目标，保留了 LLM 自己平衡 explore/exploit 的灵活性。
+red-teaming 最常见的翻车就是 mode collapse——LLM 一旦找到某个能骗过 ADD 的 prompt，就反复换皮重写同一套。FoeGlass 给 LLM 两路标量信号来平衡 explore/exploit：realness 直接取 $f(x_t)$，达到阈值 $\tau$ 就判 success，反馈文本里写明 "Success/Failed (score=…)"；多样性则衡量这条新样本是不是在重复历史。多样性最自然的写法是平均余弦距离 $d_\text{avg}(x';X)=1-\frac{1}{|w(X)|}\sum_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，但平均会被远样本稀释——哪怕 $x'$ 在历史里已经有个极近的邻居，只要其余历史样本都很远，$d_\text{avg}$ 照样偏大，照样判它"够多样"。论文改用**最小**余弦距离 $d(x';X)=1-\max_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，把多样性变成硬约束：新样本必须和**所有**历史样本都足够远（$d>\tau_d$，WavLM 嵌入，$\tau_d=0.01$）才算合格，否则就追加一句 "输出过于相似，请修改 transcript 增加多样性"。min 距离才真正捕捉"是否重复"，而把多样性做成反馈而非优化目标，又保留了 LLM 自己权衡探索与利用的余地。
 
-3. **Cold-start / Warm-start 双模式 + 跨 ADD 攻击迁移**：
+**3. Cold-start / Warm-start 双模式与跨 ADD 迁移：零已知 FN 也能起步，攻一个 ADD 顺带攻倒另外七个。**
 
-    - 功能：在没有任何已知 FN 样本时（cold start）也能跑，有少量 FN 样本时（warm start）只需 3 条示例就能再涨一截；且对一个 ADD 攻出来的样本能直接迁移攻击其他 7 个 ADD。
-    - 核心思路：cold start 时 instruction prompt 不含示例，所有历史从空开始；warm start 仅需把 2 条已知 FN + 1 条 TP 嵌进 instruction，不引入任何额外计算。攻击迁移性来自 in-context 探索到的是 TTS 输出空间里"广泛被多个 ADD 共同忽视"的区域，而非某个 ADD 的局部漏洞，论文用 8 个 ADD × 3 个 TTS 跑了全连接迁移矩阵验证。
-    - 设计动机：传统微调式 attacker 需要大量 FN 样本，而 ADD 场景下 FN 极稀缺——in-context 路线天然适配低数据；只用 3 个示例就涨点说明 LLM 真正学的是"如何 reason"而非"记住成功 prompt"。
+传统微调式 attacker 需要大量 FN 样本来构造训练集，而 ADD 场景里 FN 极其稀缺，这条路天然走不通；in-context 路线正好适配低数据。cold start 时 instruction prompt 不带任何示例、历史从空开始就能跑；warm start 也只需把 2 条已知 FN + 1 条 TP 嵌进 instruction，不引入任何额外计算，就能再涨一截。只靠 3 条示例就显著涨点，恰恰说明 LLM 学到的是"如何 reason 出 blind spot"而非死记某个成功 prompt。同样的道理也解释了迁移性：in-context 探索趋向的是 TTS 输出空间里"被多个 ADD 共同忽视"的区域，而不是某个 ADD 的局部漏洞，所以对一个 ADD 攻出来的样本能直接迁移到其余 7 个；论文用 8 个 ADD × 3 个 TTS 的全连接迁移矩阵验证了这点。
 
 ### 损失函数 / 训练策略
 **无任何训练**。FoeGlass 完全是 inference-time pipeline，唯三超参：context 长度 $\ell=40$、多样性阈值 $\tau_d=0.01$、迭代轮数 $T$（每次跑生成 500 个样本）。每个实验 5 个 seed 取均值方差。

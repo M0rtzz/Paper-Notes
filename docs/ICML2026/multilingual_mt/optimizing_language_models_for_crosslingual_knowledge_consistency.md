@@ -45,29 +45,27 @@ tags:
 
 ### 关键设计
 
-1. **结构化 reward 与跨语言对偶 (Eqs. 7-9)**:
+**1. 结构化 reward 与跨语言对偶：让最优策略天然呈 product-of-experts。**
 
-    - 功能：用一个 reward 表达"我希望本语言对答案的偏好和对方语言保持一致"。
-    - 核心思路：定义 piecewise reward
-      $r_{\text{align}}(\mathbf x, \mathbf y) = \gamma_i \log\pi_{\text{ref}}(\tau^j(\mathbf y)|\tau^j(\mathbf x))$ 当 $\mathbf x, \mathbf y \in L_i$（$j\ne i$）。
-      根据 Rafailov 的 KL-正则 RL 最优策略公式，得到
-      $\pi^\star(\mathbf y^1|\mathbf x^1) \propto \pi_{\text{ref}}(\mathbf y^1|\mathbf x^1) \cdot \pi_{\text{ref}}^{\gamma_1/\beta}(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$，这是一个**product of experts**——本语言原始 likelihood 与对方语言翻译版 likelihood 相乘。
-      根据 rearrangement inequality，最大化 reward 等价于让 $\{\pi_\theta(\mathbf y|\mathbf x)\}_y$ 与 $\{r_{\text{align}}(\mathbf x, \mathbf y)\}_y$ 单调对齐，恰好对应 Def 1 的一致性。
-    - 设计动机：作者要的是一个**形式化保证**："这个 reward 的最优解一定一致"，而不是经验上 plausible 的启发式。Product-of-experts 既保留 base model 知识（避免性能崩），又强行注入跨语言对偶约束。
+DPO 那套 Bradley-Terry 偏好只能表达"单语言下 winner vs loser"，没法直接写出"两种语言的偏好排序应当一致"这个二阶约束。作者换了个角度：让语言 $L_i$ 中某回答的 reward = 把它翻到对方语言 $L_j$ 后在原模型下的对数似然，即 piecewise reward $r_{\text{align}}(\mathbf x,\mathbf y) = \gamma_i \log\pi_{\text{ref}}(\tau^j(\mathbf y)|\tau^j(\mathbf x))$（$\mathbf x,\mathbf y\in L_i$，$j\ne i$）。代进 Rafailov 的 KL-正则 RL 最优策略公式，立刻得到 $\pi^\star(\mathbf y^1|\mathbf x^1) \propto \pi_{\text{ref}}(\mathbf y^1|\mathbf x^1)\cdot\pi_{\text{ref}}^{\gamma_1/\beta}(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$——一个 product of experts：本语言原始 likelihood 乘以对方语言翻译版 likelihood。
 
-2. **超参约束 $\gamma_1\gamma_2 = \beta^2$ 与 NN 语言推广 (Lemma 1)**:
+为什么这能保证一致？因为由 rearrangement inequality，最大化该 reward 等价于让排序 $\{\pi_\theta(\mathbf y|\mathbf x)\}_y$ 与 $\{r_{\text{align}}(\mathbf x,\mathbf y)\}_y$ 单调对齐，而后者跨语言对称，恰好对应一致性定义 Def 1。作者要的不是"经验上看起来合理"的启发式，而是"这个 reward 的最优解一定一致"的形式化保证；product-of-experts 形式还顺带保留了 base model 的知识，避免对齐时把单语性能搞崩。
 
-    - 功能：在多种 $\beta, \gamma_1, \gamma_2$ 组合中选出唯一能保证一致性的子集。
-    - 核心思路：把 Eq.9a 两边取 $\beta/\gamma_1$ 次方，可改写成 $(\pi^\star(\mathbf y^1|\mathbf x^1))^{\beta/\gamma_1} \propto \pi^\star(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$，由 $x \mapsto cx^{\beta/\gamma_1}$ 是 monotone 增函数得到偏好排序在两语言下一致。$\gamma_1, \gamma_2$ 分别控制对应语言对 $\pi_{\text{ref}}$ 的偏离强度（小 $\gamma$ = 更靠近原模型），$\beta$ 控制整体 KL 偏离。NN 语言时引入 $N^2 - N$ 个 $\gamma_{ij}$ 控制两两对齐强度，给出一致性需满足的对应约束（详见附录 E）。
-    - 设计动机：实践中需要能"调"哪个语言被对齐得更紧（如低资源语言可能希望接近原模型避免被高资源语言"拉跑"），$\gamma_{ij}$ 这套设计给出可控旋钮。同时 $\gamma_1\gamma_2=\beta^2$ 约束让算法实现简单（只需选一组合法值，比如 $\gamma_1=\gamma_2=\beta$）。
+**2. 超参约束 $\gamma_1\gamma_2=\beta^2$：从所有组合里挑出唯一保证一致的那一族。**
 
-3. **DCO 算法：免 reward model、免 online sampling (Eq. 10)**:
+product-of-experts 只是必要的结构，还得知道哪些 $\beta,\gamma_1,\gamma_2$ 才真的让排序一致。把最优策略式两边取 $\beta/\gamma_1$ 次方，可改写成 $(\pi^\star(\mathbf y^1|\mathbf x^1))^{\beta/\gamma_1} \propto \pi^\star(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$；由于 $x\mapsto cx^{\beta/\gamma_1}$ 单调增，两语言下的偏好排序必然一致——Lemma 1 由此给出充分条件 $\gamma_1\gamma_2=\beta^2$。
 
-    - 功能：把上面的 RL 目标变成可以直接对模型参数 $\theta$ 做梯度下降的离线目标。
-    - 核心思路：仿照 DPO，用 $\hat r_\theta(\mathbf x, \mathbf y) = \beta\log\frac{\pi_\theta(\mathbf y|\mathbf x)}{\pi_{\text{ref}}(\mathbf y|\mathbf x)}$ 重参数化 reward，让 $\hat r_\theta$ 的差分匹配 $r_{\text{align}}$ 的差分：
-      $L(\theta) = \mathbb E\big[\|d_\theta^1 - \gamma_1\log\frac{\pi_{\text{ref}}(\mathbf y_w^2|\mathbf x^2)}{\pi_{\text{ref}}(\mathbf y_l^2|\mathbf x^2)}\| + \|d_\theta^2 - \gamma_2\log\frac{\pi_{\text{ref}}(\mathbf y_w^1|\mathbf x^1)}{\pi_{\text{ref}}(\mathbf y_l^1|\mathbf x^1)}\|\big]$，
-      其中 $d_\theta^i = \hat r_\theta(\mathbf x^i, \mathbf y_w^i) - \hat r_\theta(\mathbf x^i, \mathbf y_l^i)$；这样：(a) winner/loser 标签**不需要 ground truth**，随机配对就行；(b) 不用真训 reward model；(c) 完全离线，只跑平行 prompt-response 数据 $\mathcal D_\|$，每个样本是 $(\mathbf x^1, \mathbf y^1, \mathbf x^2, \mathbf y^2)$ 翻译对。Lemma 2 证明最优 $\hat r_\theta^\star$ 收敛到 $r_{\text{align}}$ 加一个与 $\mathbf y$ 无关的常数 $c(\mathbf x)$（对策略不构成影响）。
-    - 设计动机：和 DPO 一样用"差分形式消掉 partition function $Z(\mathbf x)$"的把戏，但目标从"匹配人类偏好"换成"匹配跨语言一致 reward"；这让训练 pipeline 与现有 DPO 框架完全兼容，工程落地极轻量。
+这里 $\gamma_1,\gamma_2$ 分别控制两个语言对 $\pi_{\text{ref}}$ 的偏离强度（$\gamma$ 越小越贴近原模型），$\beta$ 控制整体 KL 偏离。这套旋钮在实践里有用：低资源语言往往希望保持接近原模型、别被高资源语言"拉跑"，就把对应的 $\gamma$ 调小。推广到 $N$ 种语言时引入 $N^2-N$ 个 $\gamma_{ij}$ 控制两两对齐强度（约束见附录 E）。而 $\gamma_1\gamma_2=\beta^2$ 也让实现极简——随便选一组合法值如 $\gamma_1=\gamma_2=\beta$ 即可。
+
+**3. DCO 算法：免 reward model、免 online sampling 的离线目标。**
+
+上面的 RL 目标要能训才有用。作者仿 DPO 用 $\hat r_\theta(\mathbf x,\mathbf y) = \beta\log\frac{\pi_\theta(\mathbf y|\mathbf x)}{\pi_{\text{ref}}(\mathbf y|\mathbf x)}$ 重参数化 reward，让 $\hat r_\theta$ 的差分去匹配 $r_{\text{align}}$ 的差分：
+
+$$L(\theta) = \mathbb E\Big[\big\|d_\theta^1 - \gamma_1\log\tfrac{\pi_{\text{ref}}(\mathbf y_w^2|\mathbf x^2)}{\pi_{\text{ref}}(\mathbf y_l^2|\mathbf x^2)}\big\| + \big\|d_\theta^2 - \gamma_2\log\tfrac{\pi_{\text{ref}}(\mathbf y_w^1|\mathbf x^1)}{\pi_{\text{ref}}(\mathbf y_l^1|\mathbf x^1)}\big\|\Big],$$
+
+其中 $d_\theta^i = \hat r_\theta(\mathbf x^i,\mathbf y_w^i) - \hat r_\theta(\mathbf x^i,\mathbf y_l^i)$。差分形式沿用 DPO 消掉 partition function $Z(\mathbf x)$ 的把戏，于是：(a) winner/loser 标签不需要 ground truth，随机配对即可；(b) 不用真训 reward model；(c) 完全离线，只跑平行 prompt-response 数据 $\mathcal D_\|$，每个样本是翻译对 $(\mathbf x^1,\mathbf y^1,\mathbf x^2,\mathbf y^2)$。Lemma 2 证明最优 $\hat r_\theta^\star$ 收敛到 $r_{\text{align}}$ 加一个与 $\mathbf y$ 无关的常数 $c(\mathbf x)$，对策略无影响。
+
+与 DPO 的唯一区别是目标从"匹配人类偏好"换成"匹配跨语言一致 reward"，因此整条训练 pipeline 与现有 DPO 框架完全兼容，工程落地极轻——这也是它能在 9 个模型上一键复现的原因。
 
 ### 损失函数 / 训练策略
 9 个 LLM（Qwen2.5-7B/14B、Qwen3-8B/14B、Aya-Expanse-8B、Llama3.1-8B、Llama3.2-3B、Gemma3-4B/12B），3 个平行 QA 数据集（MMMLU 14 语言、XCSQA 16 语言、BMLAMA 17 语言），共 26 种语言。使用 DCO loss（Eq. 10），平行 prompt-response 配对训练。

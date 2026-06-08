@@ -40,29 +40,21 @@ OLIVIA 通过引入功率谱密度（PSD）驱动的协调机制——Harmonizer
 ## 方法详解
 
 ### 整体框架
-编码器-解码器架构融合两个核心创新——**Harmonizer**（PSD 驱动的变换模块，通过共享重参数化二阶相关性隐式协调谱特征，编码前对齐输入、解码后恢复原域）+ **HarmonicFormer**（Transformer 衍生主干，采用 HarmonicAttention 替代稠密 token 交互，在低维谐波交互空间执行自注意力）。
-
-信息流：原始时间序列 → Harmonizer-Aligner（对齐到共享谱空间）→ HarmonicFormer 编码-解码 → Harmonizer-Restorer（恢复到原域）→ 预测输出。
+OLIVIA 要解决的核心问题是：预训练时把周期、长依赖各不相同的多领域时间序列混在一起，模型既收敛慢又学不出统一表示。它的破题点是把这种异质性量化为各数据集的归一化功率谱密度（PSD）差异，再在谱域里把它们「调和」到一致。整条 pipeline 是一个编码器-解码器：原始时间序列先经 **Harmonizer** 的 Aligner 投影到共享谱空间，让所有数据集的二阶相关结构对齐；对齐后的表示送入 **HarmonicFormer** 主干做编码-解码，其中每层注意力都换成 HarmonicAttention；最后 Harmonizer 的 Restorer 把结果逆映射回原域得到预测。Harmonizer 负责「调和」、HarmonicFormer 负责「高效建模」，两者由同一套 PSD 一致性的理论串起来。
 
 ### 关键设计
 
-1. **Harmonizer：基于 Householder 反射的正交二阶协调**:
+**1. Harmonizer：用 Householder 反射做正交的二阶协调，绕开不稳定的发散度最小化。**
 
-    - 功能：通过学习正交矩阵 $Q$ 将时间序列投影到共享规范谱空间，隐式协调跨数据集 PSD 一致性而无需显式发散度计算。
-    - 核心思路：直接最小化 PSD 的 JSD 在大规模预训练中不可行（梯度噪声大、训练不稳定）。从 **命题 1**（存在共享正交矩阵 $Q$ 使其前 $r$ 列张成的子空间对所有数据集的二阶矩矩阵都不变，将协方差矩阵块对角化）出发，以共享重参数化二阶相关性实现 PSD 协调。Aligner $\mathcal{X} = X Q^\top$，$Q$ 通过 $K$ 个 Householder 反射的积 $Q = \prod_k H_k$、$H_k = I - 2 V_k V_k^\top$ 参数化，保证 $Q$ 始终在正交群上。Restorer 执行逆映射 $Y = \mathcal{Y} Q$。
-    - 设计动机：避免直接的不稳定发散度最小化，改为通过投影到共享子空间的结构对齐实现；双向设计保持信号完整性和能量守恒；Householder 反射的逐步构造使梯度流平稳。
+最直觉的做法是直接最小化各数据集 PSD 之间的 JS 散度，但在大规模预训练里这条路梯度噪声大、训练极不稳定，根本跑不动。作者改从命题 1 切入：存在一个共享正交矩阵 $Q$，其前 $r$ 列张成的子空间对所有数据集的二阶矩矩阵都不变，等价于把各自的协方差矩阵块对角化——也就是说，PSD 协调可以重写成「共享重参数化二阶相关性」这个结构性问题，而不必直接碰发散度。Aligner 据此把输入投影为 $\mathcal{X} = X Q^\top$，其中 $Q$ 写成 $K$ 个 Householder 反射的连乘 $Q = \prod_k H_k$、$H_k = I - 2 V_k V_k^\top$，这样不管参数怎么更新 $Q$ 都恒在正交群上；解码后 Restorer 做逆映射 $Y = \mathcal{Y} Q$ 把信号还原回原域。正交约束保证能量守恒、信号不失真，逐个反射叠乘又让梯度流平稳，于是把「无法直接优化的 PSD 对齐」变成了「可稳定训练的子空间投影」。
 
-2. **HarmonicAttention：通过共鸣器的低维谐波交互**:
+**2. HarmonicAttention：让一小撮「共鸣器」当瓶颈，把稠密注意力降到线性。**
 
-    - 功能：把标准 Transformer 的 $\mathcal{O}(L^2 P)$ 稠密 token 交互降到 $\mathcal{O}(L M P + M^2 P)$，其中 $M$ 个共鸣器（$M \ll L$）作紧凑中间体高效传导全局依赖。
-    - 核心思路：**命题 2** 指出 Harmonizer 对齐后的二阶矩矩阵具有块对角结构 $\Sigma_\mathcal{X} = \text{diag}(\Lambda, \Phi)$，token 的 Gram 矩阵可分解为主导低秩项 + 有界余差——为用紧凑的谐波模式近似稠密依赖提供理论依据。三阶段：（1）token 到共鸣器聚合 $R^{(h)} = (A^{(h)})^\top \tilde{Z}^{(h)}$；（2）共鸣器间交互 $\text{ResAct}(R^{(h)}) = \text{Softmax}_{\text{res}}(R^{(h)} (R^{(h)})^\top / \sqrt{P}) R^{(h)}$；（3）全局共鸣器投影 $\text{Head}^{(h)} = A^{(h)} \text{ResAct}(R^{(h)})$。
-    - 设计动机：通过共鸣器瓶颈调解交互，避免稠密 $L \times L$ 注意力矩阵，实现长序列线性可扩展；共鸣器充当紧凑谐波模式集，自然编码共享子空间中的主导能量。
+标准 Transformer 的 token 两两交互是 $\mathcal{O}(L^2 P)$，序列一长就吃不消。这里的依据是命题 2：经 Harmonizer 对齐后，二阶矩矩阵呈块对角结构 $\Sigma_\mathcal{X} = \text{diag}(\Lambda, \Phi)$，token 的 Gram 矩阵能分解成一个主导的低秩项加上有界余差——意味着稠密依赖完全可以用少数几个紧凑谐波模式来近似。HarmonicAttention 引入 $M$ 个共鸣器（$M \ll L$）当中间体，分三步走：先把 token 聚合到共鸣器 $R^{(h)} = (A^{(h)})^\top \tilde{Z}^{(h)}$，再让共鸣器之间互相交互 $\text{ResAct}(R^{(h)}) = \text{Softmax}_{\text{res}}\big(R^{(h)} (R^{(h)})^\top / \sqrt{P}\big) R^{(h)}$，最后投影回所有 token $\text{Head}^{(h)} = A^{(h)} \text{ResAct}(R^{(h)})$。所有全局依赖都被压过这道共鸣器瓶颈传导，复杂度降到 $\mathcal{O}(L M P + M^2 P)$，而且因为共鸣器恰好对应共享子空间里的主导能量模式，这种近似不是通用的低秩压缩，而是和 PSD 对齐后的结构天然契合。
 
-3. **HarmonicFormer + 训练策略**:
+**3. HarmonicFormer 主干与两阶段预训练：把理论优雅转化为实际收益。**
 
-    - 功能：在 Harmonizer 对齐基础上堆叠 HarmonicAttention 编码-解码器，形成可扩展且表达力强的预训练主干。
-    - 核心思路：从 Harmonizer 输出的 PSD 一致表示出发，构建 Transformer 风格编码-解码框架，全部用 HarmonicAttention 替代标准多头自注意力。预训练采用多任务学习 + 两阶段策略（含掩码建模、回归等多信号）。
-    - 设计动机：结构化低维谱交互 + Transformer 表达深度，使 Harmonizer 的理论优雅性能够通过 HarmonicFormer 的高效交互机制转化为实际性能收益。
+有了对齐表示和高效注意力，主干就直接把 HarmonicAttention 堆成 Transformer 式的编码-解码器，全程用它替换标准多头自注意力。预训练采用多任务学习配两阶段策略，混合掩码建模、回归等多种信号，让模型在保持 PSD 一致性的前提下学到可迁移的通用表示。这一层本身没有花哨设计，作用是给前两个理论模块一个足够深、足够可扩展的载体——Harmonizer 改善了表示质量、HarmonicAttention 压低了计算开销，二者在同一主干里相互成全，而不是彼此牺牲。
 
 ## 实验关键数据
 

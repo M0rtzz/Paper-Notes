@@ -38,39 +38,26 @@ SphericalDreamer 通过把多张文本生成的分层深度全景图各自抬升
 **核心 idea**：用分层深度全景（LDP）做可被切开/对接的"球体建筑块"，再借助 inpaint + 谐波深度融合在相邻球体之间合成"过渡块"，最后把球体和过渡块拼成一个统一的彩色点云世界。
 
 ## 方法详解
-SphericalDreamer 把生成过程分成三阶段：阶段 I 生成 $N$ 个球体建筑块；阶段 II 对每对相邻球体生成一个过渡填充块；阶段 III 把所有块组装成最终世界点云 $\mathcal{W}=\{(\mathbf{p}_k,\mathbf{c}_k)\}_{k=0}^{K-1}$。$N$ 同时充当"世界规模"的代理：$N$ 越大，最终场景越长。
 
 ### 整体框架
-输入是一段文本 prompt $p$ 和球体数 $N$。流程为：
-（1）沿水平方向 $\mathbf{d}$ 等间距采样 $N$ 个相机位姿 $\mathbf{T}_i$，相邻位姿间隔为 $\lambda\mathbf{d}$；
-（2）每个位姿处用文本到全景模型（基于 Flux）生成 EQR 全景 $I_i$，配以专门的全景单目深度估计得到 $D_i$，再构造前景/背景两层 LDP 并抬升为球体点云 $\mathcal{S}_i$；
-（3）按需把每个球体从左/右/双侧"开口"，得到 $\mathcal{S}_i^{\text{left/right/both}}$，相邻球体的开口面对面排成"胶囊"形状但中间留空；
-（4）从胶囊中心 $\mathbf{T}_{i+1/2}=\text{Translate}(\mathbf{T}_i,\tfrac{1}{2}\lambda\mathbf{d})$ 渲染一张 EQR 全景，得到可见性掩膜 $M_i^r$，对未覆盖区域做 RGB inpaint 和单目深度估计；
-（5）用谐波融合把估计深度对齐到现有几何，抬升为填充块 $\mathcal{B}_i^{\text{fill}}$；
-（6）最终 $\mathcal{W}=\mathcal{W}^{\text{partial}}\cup\bigcup_{i=0}^{N-2}\mathcal{B}_i^{\text{fill}}$，其中 $\mathcal{W}^{\text{partial}}=\mathcal{S}_0^{\text{right}}\cup\bigcup_{i=1}^{N-2}\mathcal{S}_i^{\text{both}}\cup\mathcal{S}_{N-1}^{\text{left}}$。
+给定文本 prompt $p$ 和球体数 $N$，SphericalDreamer 沿水平方向 $\mathbf{d}$ 等间距摆 $N$ 个相机位姿，每处用文本到全景模型生成一张 EQR 全景并抬升成一个"球体建筑块"，再为每对相邻球体在中间空隙处生成一个"过渡填充块"，最后把所有块拼成统一的世界点云 $\mathcal{W}=\{(\mathbf{p}_k,\mathbf{c}_k)\}_{k=0}^{K-1}$。球体数 $N$ 同时充当"世界规模"的代理——$N$ 越大、场景越长，整条流水线 $\mathcal{W}=\mathcal{W}^{\text{partial}}\cup\bigcup_{i=0}^{N-2}\mathcal{B}_i^{\text{fill}}$ 把"局部沉浸"压在球体里、把"长距离扩展"压在过渡块里，分工互不打架。
 
 ### 关键设计
 
-1. **分层深度全景 LDP（前景+背景双层抬升）**：
+**1. 分层深度全景 LDP：让球体被切开后内部还有远景壳**
 
-    - 功能：让单个全景球在相机偏离节点时仍能看到背景，而不是被前景物体"挖"出黑洞。
-    - 核心思路：先用 SAM 分割出候选 mask $\{S_k\}$，再用一个新颖的打分准则筛前景——同时考察 mask 边界与深度图边缘的对齐度，以及 mask 边界法向的深度梯度幅值，把得分高的 mask 合并为前景 mask $M_i^{\text{fg}}$；用 $M_i^{\text{fg}}$ 抠掉前景并 inpaint 出背景全景 $I_i^{\text{bg}}$；背景深度 $D_i^{\text{bg}}$ 不靠再估计，而是直接对原深度图按行取最大值，得到"每个仰角下最远场景半径"形成的平滑包络面；最后用球面反投影 $\Pi_\mathbb{S}^{-1}$ 把前景与背景两层都抬升并合并为 $\mathcal{S}_i=S_i\cup S_i^{\text{bg}}$。
-    - 设计动机：单层全景在相机平移时会因为前景遮挡留下背景空洞（Figure 3b）；行最大值构造的背景深度避免了背景层自己再次产生估计噪声和不一致的层间深度，保证球体在被切开后内部还有可视的"远景壳"。
+单层全景球有个致命缺陷：相机一旦偏离节点平移，被前景物体挡住的地方就会暴露成黑洞（Figure 3b），因为那里根本没有背景几何。LDP 的做法是把每个全景拆成前景、背景两层分别抬升。先用 SAM 分出候选 mask $\{S_k\}$，再用一个新颖的双准则筛前景——同时看 mask 边界与深度图边缘的对齐度、以及 mask 边界法向上的深度梯度幅值，把高分 mask 合并成前景 mask $M_i^{\text{fg}}$；用它抠掉前景并 inpaint 出干净的背景全景 $I_i^{\text{bg}}$。关键巧思在背景深度 $D_i^{\text{bg}}$ 不再做一次估计，而是直接对原深度图**按行取最大值**，得到"每个仰角下最远场景半径"构成的平滑包络面，这既避免了背景层自己产生新的估计噪声，也保证层间深度一致。最后用球面反投影 $\Pi_\mathbb{S}^{-1}$ 把两层都抬升、合并为 $\mathcal{S}_i=S_i\cup S_i^{\text{bg}}$，这样球体被切开时内部仍有一层可视的"远景壳"兜底。
 
-2. **可适配的球体建筑块（开口 + 圆柱面变形）**：
+**2. 可适配的球体建筑块：把闭合球改造成可对接的接口件**
 
-    - 功能：把闭合的球体改造成可以从左、右或两侧与相邻球体对接的"接口件"。
-    - 核心思路：对每个球体按目标连接方向（左/右）去除一片点云，再把开口后的点云形变贴合到一个外包圆柱面上，得到 $\mathcal{S}_i^{\text{left}}$、$\mathcal{S}_i^{\text{right}}$、$\mathcal{S}_i^{\text{both}}$ 三种状态；首尾两个球只开一侧，中间球两侧都开。为给后续生成留出"创作空间"，相邻相机位姿被刻意拉开间距 $\lambda$，使两个相对开口之间保留一段中央空洞，形成胶囊形点云。
-    - 设计动机：直接把两个完整球体拼在一起会有严重的几何冲突（同一物理位置上两套不一致的点）；用圆柱面把开口面整形为规则边界，能让后续过渡区域的边界条件更光滑、更易做能量最小化对齐。
+要把一串球串成走廊，闭合球必须能彼此对接，但直接把两个完整球拼在一起会在同一物理位置堆两套不一致的点，几何严重冲突。于是对每个球按目标连接方向去掉一片点云形成"开口"，再把开口后的点云形变贴合到一个外包圆柱面上，得到 $\mathcal{S}_i^{\text{left}}$、$\mathcal{S}_i^{\text{right}}$、$\mathcal{S}_i^{\text{both}}$ 三种状态——首尾两球只开一侧，中间球两侧都开。圆柱面把开口面整形成规则边界，是为了让后续过渡区域的边界条件更光滑、更利于能量最小化对齐。同时相邻相机位姿被刻意拉开间距 $\lambda$（间隔 $\lambda\mathbf{d}$），让两个相对开口之间保留一段中央空洞，整体排成"胶囊"形——这段空洞正是留给过渡块的"创作空间"。
 
-3. **谐波深度融合 Harmonic Blending（过渡块的核心）**：
+**3. 谐波深度融合 Harmonic Blending：把估计深度无缝缝进已有几何**
 
-    - 功能：把过渡区域估计出的深度 $D_i^{\text{est}}$ 平滑融入参考深度 $D_i^r$，避免拼缝处的几何断层。
-    - 核心思路：在胶囊中心位姿 $\mathbf{T}_{i+1/2}$ 渲染拿到 $(I_i^r,D_i^r,M_i^r)$，用 FluxFill 在掩膜 $1-M_i^r$ 上做 RGB 补全得到 $I_i^{\text{ip}}$，再用单目深度估计得到 $D_i^{\text{est}}$。直接替换会出现明显接缝（Figure 4a），因此作者借鉴 Laplacian mesh editing / 谐波曲面变形，把新合成点之间建一张 k-NN 图，在该图上最小化 Laplacian 平滑能量，同时用 Dirichlet 边界条件把已知边界上的深度严格钉死为参考深度 $D_i^r$，求解出位移场后得到融合深度 $D_i^{\text{blend}}=\text{Harmonic-Blend}(D_i^r,D_i^{\text{est}},M_i^r)$。最后限定在 $1-M_i^r$ 区域抬升 $\mathcal{B}_i^{\text{fill}}=\Pi_\mathbb{S}^{-1}(I_i^{\text{ip}},D_i^{\text{blend}},\mathbf{T}_{i+1/2},1-M_i^r)$。
-    - 设计动机：单目深度估计在尺度与局部几何上都不可靠，naive 替换会破坏全局一致性；把它作为"软目标"、把已有几何作为"硬约束"，相当于用一阶能量做受限平滑插值，能在保留估计深度的局部结构的同时让边界严丝合缝。
+过渡块的难点在于：中间空洞处只能靠 inpaint 补 RGB、靠单目深度估计补几何，但单目深度在尺度和局部结构上都不可靠，naive 地直接替换深度会在拼缝处留下肉眼可见的几何断层（Figure 4a）。作者把图形学里的 Laplacian mesh editing / 谐波曲面变形搬了过来：先从胶囊中心位姿 $\mathbf{T}_{i+1/2}=\text{Translate}(\mathbf{T}_i,\tfrac{1}{2}\lambda\mathbf{d})$ 渲染拿到 $(I_i^r,D_i^r,M_i^r)$，用 FluxFill 在掩膜 $1-M_i^r$ 上补全 RGB 得到 $I_i^{\text{ip}}$、再估计出深度 $D_i^{\text{est}}$；然后在新合成点之间建一张 k-NN 图，在图上最小化 Laplacian 平滑能量，并用 Dirichlet 边界条件把已知边界深度严格钉死为参考深度 $D_i^r$，解出位移场得到 $D_i^{\text{blend}}=\text{Harmonic-Blend}(D_i^r,D_i^{\text{est}},M_i^r)$。这相当于把估计深度当"软目标"、把已有几何当"硬约束"，用一次一阶能量的受限平滑插值，既保留估计深度的局部结构、又让边界严丝合缝。最后只在 $1-M_i^r$ 区域抬升出填充块 $\mathcal{B}_i^{\text{fill}}=\Pi_\mathbb{S}^{-1}(I_i^{\text{ip}},D_i^{\text{blend}},\mathbf{T}_{i+1/2},1-M_i^r)$，与两侧球体（$\mathcal{W}^{\text{partial}}=\mathcal{S}_0^{\text{right}}\cup\bigcup_{i=1}^{N-2}\mathcal{S}_i^{\text{both}}\cup\mathcal{S}_{N-1}^{\text{left}}$）拼成完整世界。
 
-### 损失函数 / 训练策略
-SphericalDreamer 不需要训练，所有组件均为现成模型组装：文本到全景用 Flux + LayerPano3D 训出的 EQR 模型；全景深度估计用 Rey-Area 等的 360° 单目深度；前景分割用 SAM；RGB inpaint 用 FluxFill。谐波融合是闭式的能量最小化（稀疏线性系统求解），无可学参数。整套 pipeline 在单张 A100 上以 $N=3$ 跑约 40 分钟。
+### 训练策略
+SphericalDreamer 完全免训练，所有组件都是现成模型组装：文本到全景用 Flux + LayerPano3D 训出的 EQR 模型，全景深度估计用 Rey-Area 等的 360° 单目深度，前景分割用 SAM，RGB inpaint 用 FluxFill；谐波融合是闭式能量最小化（稀疏线性系统求解）、无可学参数。整套 pipeline 在单张 A100 上以 $N=3$ 跑约 40 分钟。
 
 ## 实验关键数据
 

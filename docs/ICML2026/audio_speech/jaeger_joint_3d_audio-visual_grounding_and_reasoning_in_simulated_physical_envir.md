@@ -45,23 +45,21 @@ JAEGER 的输入是同步采集的 RGB-D 帧 + 4 通道 FOA 音频（含 W/X/Y/Z
 
 ### 关键设计
 
-1. **Neural Intensity Vector（Neural IV，本文核心新颖点）**:
+**1. Neural Intensity Vector（Neural IV，本文核心新颖点）：让网络替 STFT 在混响/重叠声源下学方向**
 
-    - 功能：从原始 FOA 波形端到端学一个比 STFT-based Classical IV 更鲁棒的空间方向表示，专门对付强混响和重叠声源。
-    - 核心思路：先用 data2vec 风格的 7 层 1D-CNN（kernel `(10,3,3,3,3,2,2)`、stride `(5,2,2,2,2,2,2)`、50 Hz 帧率）把每个 FOA 通道编码成 latent，得到 $f_W$（omnidirectional）和 $f_C, C \in \{X,Y,Z\}$（directional）。然后把 Classical IV 的物理公式 $I'_C = F_W^* \odot F_C$ 直接抬到 latent 空间，定义 $h_C = f_W \odot f_C$，再 concat 后过两层 MLP：$\mathbf{v}_{\text{NIV}} = \text{Linear}(\text{ReLU}(\text{Linear}(\text{Concat}(h_X, h_Y, h_Z))))$。
-    - 设计动机：Classical IV 依赖固定 STFT，混响和重叠声源会使复谱互谱 $F_W^* \odot F_C$ 噪声放大；用可学习 CNN 替换 STFT 既保留了「omni × directional 元素积」这一物理上正确的强度矢量结构，又能让网络在数据驱动下学到更稳的方向 embedding。
+经典做法靠 STFT-based Classical IV 提空间方向，但它依赖固定的频谱变换，一旦强混响或多声源重叠，复谱互谱 $F_W^* \odot F_C$ 里的噪声会被放大，方向估计就退化。JAEGER 的办法是把这套物理结构整体抬进 latent 空间、把固定变换换成可学习模块：先用 data2vec 风格的 7 层 1D-CNN（kernel `(10,3,3,3,3,2,2)`、stride `(5,2,2,2,2,2,2)`、50 Hz 帧率）把每个 FOA 通道编码成 latent，得到全向通道 $f_W$ 和三个方向通道 $f_C,\ C \in \{X,Y,Z\}$。然后保留 Classical IV 「omni × directional 元素积」这一物理上正确的强度矢量骨架，把复共轭乘法换成 latent Hadamard 积 $h_C = f_W \odot f_C$，再拼接过两层 MLP 输出最终方向表示：
 
-2. **3D-aware Visual Encoding（深度反投影 + 3D 正弦位置编码）**:
+$$\mathbf{v}_{\text{NIV}} = \text{Linear}(\text{ReLU}(\text{Linear}(\text{Concat}(h_X, h_Y, h_Z)))).$$
 
-    - 功能：把 RGB 视觉 token 显式接地到度量 3D 空间，让 LLM 能直接输出度量级 3D bbox。
-    - 核心思路：用相机内参把每个像素 $(u,v)$ 与深度 $D_{uv}$ 反投影为度量 3D 点 $P_{uv} = D_{uv} \cdot K^{-1} [u, v, 1]^\top$，得到与 RGB 同分辨率的点云 $P \in \mathbb{R}^{H\times W\times 3}$；用 adaptive average pooling 把 $P$ 对齐到 visual feature 分辨率 $h\times w\times c$，每个坐标轴 $\alpha \in \{x,y,z\}$ 各占 $\lfloor c/3 \rfloor$ 通道，按 sinusoidal $\text{PE}(\alpha, 2j) = \sin(\alpha / 10000^{2j/\lfloor c/3 \rfloor})$ 编码后拼成 $F_{3D}$，最后 $\tilde F_{\text{visual}} = F_{\text{visual}} + F_{3D}$。
-    - 设计动机：单目 RGB 缺乏度量尺度，直接让 LLM 回归 3D box center 误差很大；把度量坐标显式编码进 token 等价于给模型一组「这一格 token 对应物理世界哪个位置」的先验，bbox 中心回归从 ambiguous 变成 query。
+这样既没丢掉声学第一性原理给出的强度矢量结构，又让 CNN 在数据驱动下学到比固定 STFT 更稳的方向 embedding——实验里它正是在重叠源和跨场景泛化这些「难场景」上把误差拉开的。
 
-3. **SpatialSceneQA：61k 仿真音视联合基准（构建作为方法的一部分）**:
+**2. 3D-aware Visual Encoding：用深度反投影 + 3D 正弦位置编码把视觉 token 接地到度量空间**
 
-    - 功能：提供首个同时带 degree 级方位/俯仰、3D bbox 和音视空间真值的大规模指令微调集，覆盖 5 类任务（单源 DoA / 重叠源 DoA / 3D 视觉接地 / 单源多说话人匹配 / 重叠源多说话人匹配），按 HM3D 场景级 130/15/36 划分 train/val/test。
-    - 核心思路：(i) 用 SoundSpaces 2.0 在 HM3D 网格上做双向路径追踪渲染 RIR，FOA 信号为 $A_c^{(r)}(t) = R_c(\cdot;\mathbf{s},\mathbf{r},\theta) * A^{(s)}(t)$，干语音用 LibriSpeech，源-接收器距离 1–4 m 且强制同房间、留 0.5 m 障碍物余量；(ii) 用 Habitat-Sim 渲染同步 RGB-D 和语义掩码；(iii) 用 Hunyuan3D-1.0 生成 120 个落地音箱 mesh（96/12/12 train/val/test）插入场景，以可见性约束（语义图 ≥500 像素，1920×1080）过滤遮挡。
-    - 设计动机：真实数据集 STARSS23 没有对齐深度且规模小；不在场景级划分会出现房间几何泄漏；不同音箱 mesh 划分能测对未见几何的泛化；插入 1–3 个 candidate 强制模型做几何接地而非物体类别捷径。
+单目 RGB 缺乏度量尺度，直接让 LLM 回归 3D box center 误差很大，所以要把「这一格 token 对应物理世界哪个位置」显式喂给模型。具体做法是用相机内参把每个像素 $(u,v)$ 连同深度 $D_{uv}$ 反投影为度量 3D 点 $P_{uv} = D_{uv} \cdot K^{-1} [u, v, 1]^\top$，得到与 RGB 同分辨率的点云 $P \in \mathbb{R}^{H\times W\times 3}$，再用 adaptive average pooling 对齐到 visual feature 的分辨率 $h\times w\times c$。三个坐标轴 $\alpha \in \{x,y,z\}$ 各占 $\lfloor c/3 \rfloor$ 通道，按正弦公式 $\text{PE}(\alpha, 2j) = \sin(\alpha / 10000^{2j/\lfloor c/3 \rfloor})$ 编码后拼成 $F_{3D}$，最后与语义 token 逐元素相加 $\tilde F_{\text{visual}} = F_{\text{visual}} + F_{3D}$。有了这组度量坐标先验，bbox 中心回归就从「凭空猜尺度」变成「在已知坐标系里查询」，3D IoU 和 visual offset 都因此改善。
+
+**3. SpatialSceneQA：61k 仿真音视联合基准，作为方法的一部分被构建**
+
+真实多通道数据集如 STARSS23 既没有对齐深度、规模又小，没法支撑端到端的 3D 音视训练，所以作者干脆用成熟仿真链路造一份带 degree 级真值的数据。流程分三步：用 SoundSpaces 2.0 在 HM3D 网格上做双向路径追踪渲染房间脉冲响应，FOA 信号由干语音卷积 RIR 得到 $A_c^{(r)}(t) = R_c(\cdot;\mathbf{s},\mathbf{r},\theta) * A^{(s)}(t)$，干语音取自 LibriSpeech，源-接收器距离限定 1–4 m、强制同房间、留 0.5 m 障碍物余量；用 Habitat-Sim 渲染同步的 RGB-D 和语义掩码；再用 Hunyuan3D-1.0 生成 120 个落地音箱 mesh 插入场景，以语义图 ≥500 像素（1920×1080）的可见性约束过滤遮挡。划分上特意做了两层防泄漏：按 HM3D 场景级切 130/15/36 的 train/val/test 避免房间几何泄漏，音箱 mesh 单独按 96/12/12 切以测对未见几何的泛化；每个场景插入 1–3 个 candidate，强制模型靠几何接地而非物体类别走捷径。最终覆盖 5 类任务：单源 DoA、重叠源 DoA、3D 视觉接地、单源多说话人匹配、重叠源多说话人匹配。
 
 ### 损失函数 / 训练策略
 - LLM 全部走 LoRA（r=64, α=128, dropout 0.05），Qwen2.5-Omni 权重初始化视觉编码器/单声道音频分支/LLM decoder；Neural IV 与新的 audio adapter 随机初始化。

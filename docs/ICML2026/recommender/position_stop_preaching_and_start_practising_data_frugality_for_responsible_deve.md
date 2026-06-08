@@ -53,23 +53,17 @@ tags:
 
 ### 关键设计
 
-1. **ImageNet-1K 下游碳成本的可复现下限估计**:
+**1. ImageNet-1K 下游碳成本的可复现下限估计：把环境成本从口号变成可引用、可质疑的数字。**
 
-    - 功能：把"数据集本身的环境成本"从抽象口号变成可引用、可质疑的数字 — 5.82 GWh 能耗、2589 tCO2e 碳排（全球均值碳强度）。
-    - 核心思路：训练成本 = 估计训练次数 $N \approx 46{,}179 \pm 1{,}154$ × ResNet-50 单 epoch 能耗 $\approx 0.394$ kWh × 300 epoch，得 $5.46 \pm 0.14$ GWh；存储成本 = $N \times 130$ GB × 60 kWh/TB/yr $\approx 360 \pm 9$ MWh。$N$ 由 ICLR OpenReview 中"从零训 ImageNet"的论文占比线性外推+dimensions.ai 关键词索引得到，错误率 2.5% 来自 LLM 标注校验。
-    - 设计动机：作者刻意只用公开元数据，避免依赖任何厂商内部数据；同时坦言这是"下限"——Hugging Face Hub 上 214 个 ImageNet-1K 派生数据集合计下载量超过 250 万，比论文计数大 55 倍，说明真实成本远高于此。这个保守姿态让结论更难被反驳。
+作者把"数据集本身的环境成本"算成一个具体下限：5.82 GWh 能耗、2589 tCO2e 碳排（按全球均值碳强度）。训练成本 = 估计训练次数 $N\approx 46{,}179\pm 1{,}154$ × ResNet-50 单 epoch 能耗 $\approx 0.394$ kWh × 300 epoch $= 5.46\pm 0.14$ GWh；存储成本 = $N\times 130$ GB × 60 kWh/TB/yr $\approx 360\pm 9$ MWh。其中 $N$ 由 ICLR OpenReview 里"从零训 ImageNet"的论文占比线性外推、再用 dimensions.ai 关键词索引放大得到，2.5% 错误率来自 LLM 标注校验。作者刻意只用公开元数据、避免依赖任何厂商内部数据，并坦言这只是下限——Hugging Face Hub 上 214 个 ImageNet-1K 派生数据集合计下载量超过 250 万、比论文计数大 55 倍；这种保守姿态反而让结论更难被反驳。
 
-2. **Coreset 收益的双轴实测：精度曲线 × 能耗表**:
+**2. Coreset 收益的双轴实测：精度曲线 × 能耗表，回答"少用数据到底省多少、掉多少点"。**
 
-    - 功能：用一张精度-pruning ratio 曲线和一张能耗表共同回答"少用数据到底能省多少、掉多少点"。
-    - 核心思路：精度侧借用 Dyn-Unc 在 Swin-T 上、InfoMax 在 ResNet-34 上的 SOTA 曲线，说明 ImageNet-1K 可裁掉 25%–35% 而 Top-1 精度不降；能耗侧自己跑 ResNet-34/50 + Swin-T 各 10 epoch×3 次（同 A100 / DGX 配置），用 Carbontracker 同时记录 CPU 与 GPU 能耗。结果是 25% pruning 给出 ResNet-34: 32% 时间 + 29% 能耗、ResNet-50: 40% + 33%、Swin-T: 24% + 24% 的节省。
-    - 设计动机：作者特别强调 25% 数据 $\neq$ 25% 能耗，反例式地戳破"data size 当能耗 proxy"的常见假设；并诚实地把 coreset 构造的一次性成本算成"3–4 次训练即可摊销"，避免田忌赛马式比较。
+精度侧借用 Dyn-Unc 在 Swin-T 上、InfoMax 在 ResNet-34 上的 SOTA 曲线，说明 ImageNet-1K 可裁掉 25%–35% 而 Top-1 精度不降；能耗侧自己跑 ResNet-34/50 + Swin-T 各 10 epoch × 3 次（同 A100 / DGX 配置），用 Carbontracker 同时记录 CPU 与 GPU 能耗。结果是 25% pruning 给出 ResNet-34 省 32% 时间 + 29% 能耗、ResNet-50 省 40% + 33%、Swin-T 省 24% + 24%。作者特别用这组数戳破"data size 当能耗 proxy"的常见假设——25% 数据 $\neq$ 25% 能耗；并诚实地把 coreset 构造的一次性成本算成"3–4 次训练即可摊销"，避免田忌赛马式的比较。
 
-3. **CARAML 之前：面向 People / Platforms / Policies 三层的可操作动议**:
+**3. 面向 People / Platforms / Policies 三层的可操作动议：把道德呼吁翻译成能写进规则的具体动作。**
 
-    - 功能：把"道德呼吁"翻译成可以写进 conference call、leaderboard 规则、funding 条款的具体动作，避免论文沦为又一篇高调宣言。
-    - 核心思路：(People) 用"Data-Pareto"——精度/数据量同时画——替代单一精度；要求"motivate 什么就 measure 什么"。(Platforms) 借鉴 CVPR 2026 强制 compute reporting 表与 BabyLM / E2MIP 这类 data-efficient 挑战赛，把节俭嵌入投稿与排行榜激励。(Policies) 标准化能耗 / 碳排报告、推动共享数据中心（如瑞典 Berzelius）以减少冗余本地副本、提出"data sunset laws"——大数据使用须像生物医学数据一样审批并设废止期。
-    - 设计动机：作者认为价值-行动鸿沟在气候行动史上反复出现，根因是"想比做容易，且外部约束限制行动"；只有把节俭从"个人美德"升级到"institutional default"，才能跨越鸿沟。
+为了不让论文沦为又一篇高调宣言，作者把诉求落到三层。People 层用"Data-Pareto"（精度与数据量同图）替代单一精度，立一条单句准则"motivate 什么就 measure 什么"。Platforms 层借鉴 CVPR 2026 强制 compute reporting 表与 BabyLM / E2MIP 这类 data-efficient 挑战赛，把节俭嵌入投稿与排行榜激励。Policies 层标准化能耗/碳排报告、推动共享数据中心（如瑞典 Berzelius）以减少冗余本地副本、并提出"data sunset laws"——大数据使用须像生物医学数据一样审批并设废止期。作者认为价值-行动鸿沟的根因是"想比做容易、外部约束又限制行动"，只有把节俭从"个人美德"升级到"institutional default"才能跨越它。
 
 ### 损失函数 / 训练策略
 

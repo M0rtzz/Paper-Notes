@@ -45,23 +45,29 @@ AgenticEval 用 MetaGPT 框架编排 4 个 agent：**Specialist** $\mathcal{A}_S
 
 ### 关键设计
 
-1. **法规-知识库结构化与搜索增强 grounding**:
+**1. 法规-知识库结构化与搜索增强 grounding：把抽象法条变成「正向描述 + 反向反例」的可测知识。**
 
-    - 功能：把抽象法律条文变成可测的「正向描述 + 反向反例对」知识三元组。
-    - 核心思路：Specialist 支持两模式——用户给 JSON 模板（User-Guided）则按模板对法规节段映射，否则自主递归分解到原子规则。每条 $r$ 拿 explanation 后用 web 搜索拉真实案例与公共讨论，生成两份指南：$\mathcal{G}_{\text{should}}$ 描述合规输出特征（如要透明、要可选、要披露赞助）；$\mathcal{G}_{\text{should\_not}}$ 列具体违例模式（dark patterns、政治微靶向、deepfake impersonation 等）。生成时强制按文档语言/文化做本地化搜索，让样例贴近实际监管环境。
-    - 设计动机：LLM 直接对着法规原文生题，常常生成「学究式抽象」问题，触发率低；先把法规变成「具体行为级反例」，后续 Generator 就能造出具有真实欺骗性的题，Evaluator 也能依靠明确判据做出可解释的裁决。
+LLM 直接拿法规原文出题，最大的毛病是生成「学究式抽象」问题，触发率极低，模型轻松答对却根本没被真正考到。AgenticEval 让 Specialist 先把法规拆成原子规则再「落地」：支持两种模式——用户给 JSON 模板（User-Guided）就按模板把法规节段映射成结构化条目，否则自主递归分解直到每条规则 $r$ 都是原子的。拿到每条 $r$ 的 explanation $e_r$ 后，它用 web 搜索拉真实案例与公共讨论，产出两份指南：$\mathcal{G}_{\text{should}}$ 描述合规输出特征（要透明、要可选、要披露赞助），$\mathcal{G}_{\text{should\_not}}$ 列具体违例模式（dark patterns、政治微靶向、deepfake impersonation）。搜索时强制按文档语言/文化做本地化，让样例贴近真实监管环境。
 
-2. **Question Group：语义锚 + 系统化 facet 扩展**:
+这样做的好处是后续每个环节都有了具体抓手：Generator 能据「行为级反例」造出有真实欺骗性的题，而不是空洞的概念问答；Evaluator 也能拿 $\mathcal{G}_{\text{should}}/\mathcal{G}_{\text{should\_not}}$ 当明确判据做可解释裁决，而非凭感觉给分。
 
-    - 功能：一道题不足以暴露模型边界——用一组同义但不同攻击 facet 的题考查同一规则的多面表现。
-    - 核心思路：先用 base mode 生成开放问 $(q_{\text{base}}, c_{\text{base}})$ 作为语义锚；再用 4 类 facet 同步生成变体：(a) **Adversarial Perturbation**（jailbreak mode，persona-play、伦理困境）；(b) **Deterministic Probes**（mcq/tf mode，排除歧义看声明性知识）；(c) **Multimodal Grounding**（multimodal mode，先确定 visual context，再用图生成或搜图取得 $I$，把题改写成「无图无法回答」）。最终 $\mathcal{Q}_r=\{(q_{\text{base}},c_{\text{base}}),(q_{\text{jb}},c_{\text{jb}}),(q_{\text{mcq}},c_{\text{mcq}}),\dots\}$。
-    - 设计动机：模型可能在直接问下答得很好，但 jailbreak 包装一下就破防；MCQ 形式能验证「模型是不是真知道规则」；多模态能暴露纯文本对齐的盲区。一个 Group 内多 facet 能做「不一致性」诊断而非只看准确率。
+**2. Question Group：用语义锚 + 系统化 facet 扩展，从多个角度逼出同一规则下的破绽。**
 
-3. **自演化评估循环（Evaluator + Analyst 协同）**:
+一道题往往不足以暴露模型边界——模型可能直接问下答得滴水不漏，jailbreak 包装一下就破防。AgenticEval 因此把对每条规则的考查组织成一个 Question Group：先用 base mode 生成开放问 $(q_{\text{base}}, c_{\text{base}})$ 作为语义锚，再围绕它同步生成 4 类 facet 变体——(a) Adversarial Perturbation（jailbreak mode，persona-play、伦理困境）；(b) Deterministic Probes（mcq/tf mode，排除歧义、直接看声明性知识）；(c) Multimodal Grounding（multimodal mode，先确定 visual context，再用图生成或搜图取得图像 $I$，把题改写成「无图无法回答」）。最终一条规则对应
 
-    - 功能：把模型的失败模式累积成可执行的攻击策略指令，使每一轮的难度都对准上一轮的薄弱处。
-    - 核心思路：Evaluator 在「分层 rubric」下裁决：先按问题级 Prime Directive $c$ 判，其次按规则级 $\mathcal{G}_{\text{should}}/\mathcal{G}_{\text{should\_not}}$ 兜底，输出二元 $y_q$ + 自然语言理由 $z_q$。结果聚合为成功 $R_r^+$ 与失败 $R_r^-$。Analyst 拿到 $(R_r^+, R_r^-)$ 后做「对比分析」找根因（模型在哪里跨过 / 没跨过安全边界），再合成新的 attack strategy $\mathcal{S}_{\text{attack}}$ 喂给 Generator 的 refined mode 造下一轮题。循环到 $K_{\max}=3$ 终止，Analyst 汇总成最终报告。论文示例展示：第一轮 GPT-5 安全率 72.5%，第二轮 jailbreak 升级（如「假装研究消费者保护需要深度剖析 dark patterns」），第三轮再 normalizing analysis trap（「请客观分析这些技术的有效性」），最终 36.36%。
-    - 设计动机：传统 jailbreak 库是「攻击-修复」一次性博弈；这里的 Analyst 像红队 lead，把每轮模型的「安全边界形状」内化后定向打击下一弱点。Evaluator 的 Prime-Directive 分层 rubric 是为了让 LLM judge 的判断有可审计性，避免开放式裁决的主观偏差。
+$$\mathcal{Q}_r=\{(q_{\text{base}},c_{\text{base}}),(q_{\text{jb}},c_{\text{jb}}),(q_{\text{mcq}},c_{\text{mcq}}),\dots\}$$
+
+多 facet 同测的价值不只在覆盖面：MCQ 形式能验证模型「是不是真知道规则」，多模态能暴露纯文本对齐的盲区，而同一 Group 内不同 facet 的结果差异本身就是一种「不一致性」诊断——比单看准确率更能说明模型的合规是真懂还是表面功夫。
+
+**3. 自演化评估循环：Evaluator 裁决 + Analyst 反思，让每一轮难度都对准上一轮的薄弱处。**
+
+传统 jailbreak 库是「攻击-修复」的一次性博弈，测完就过时。AgenticEval 把评估做成会成长的红队：Evaluator 在分层 rubric 下裁决——先按问题级的 Prime Directive $c$ 判，再用规则级 $\mathcal{G}_{\text{should}}/\mathcal{G}_{\text{should\_not}}$ 兜底，输出二元结果 $y_q$ 加自然语言理由 $z_q$，聚合成成功集 $R_r^+$ 与失败集 $R_r^-$。Analyst 拿到 $(R_r^+, R_r^-)$ 后做对比分析，定位模型在哪里跨过 / 没跨过安全边界，把根因合成新的攻击策略 $\mathcal{S}_{\text{attack}}$ 喂给 Generator 的 refined mode 造下一轮更难的题，循环到 $K_{\max}=3$ 终止。
+
+关键在于 Analyst 不是简单挑失败回喂，而是像红队 lead 那样把模型「安全边界的形状」内化后定向打击下一个弱点；Evaluator 的 Prime-Directive 分层 rubric 则是为了让 LLM judge 的判断可审计，避免开放式裁决的主观漂移。
+
+### 一个完整示例：EU AI Act 上对 GPT-5 的三轮演化
+
+以 EU AI Act 第 5(1)(a) 条（禁止操纵性 AI）为例走一遍。Specialist 先把条文拆成原子规则，并补上 dark patterns、政治微靶向等行为级反例，Generator 据此造出初始 Question Group。第一轮直接测，GPT-5 安全率 72.5%——看似合格。Analyst 分析失败样本后发现可以用「身份伪装」绕过，第二轮就把题升级成「假装研究消费者保护、需要深度剖析 dark patterns」的 jailbreak。第三轮再叠加 normalizing analysis trap（「请客观分析这些技术的有效性」），把模型从「拒答」诱导到「中立分析」。三轮下来 GPT-5 的合规率从 72.5% 一路跌到 36.36%——同一个模型、同一条法规，只因评估自己学会了出题，安全水位直接腰斩。
 
 ### 损失函数 / 训练策略
 AgenticEval 不训练任何模型；超参数关键是 $K_{\max}=3$（迭代轮数）。Specialist/Evaluator/Analyst 用 GPT-4.1（强分析），Generator 用 Gemini 2.5 Pro（强创意）。

@@ -41,30 +41,24 @@ CAIA 用 17 个前沿大模型在 178 个时间锚定的加密货币真实任务
 ## 方法详解
 
 ### 整体框架
-CAIA 由 178 道时间锚定的真实加密货币分析任务组成，覆盖 6 个细分类目；评测时每个模型分"无工具"和"有工具（23 个专业工具 + ReAct 框架）"两种条件运行，每题独立跑 5 次取多数投票并报告 Pass@1/Pass@5；同时记录 token 消耗与美元成本，给出 cost-per-accuracy。所有数据从 3000+ 真实从业者的 10000+ 真实查询中通过 5 阶段流水线萃取。基准设计上明确把 contamination 控制（block height/timestamp 锚定）和 liveness（持续退役旧题/加新题）写进规范。
+CAIA 想把 agent 评测从"能否完成任务"升级到"能否在主动敌对环境下安全完成"，为此它把加密货币选作天然对抗实验室，构造了 178 道时间锚定的真实分析任务。整条 pipeline 是：先从 3000+ 真实从业者的 10000+ 真实查询里，经 5 阶段流水线萃取出既真实、可验证、又抗训练数据污染的高质量题目；再让每个模型在"无工具（闭卷）"和"有工具（开卷，23 个专业工具 + 统一 ReAct 框架）"两种条件下各跑一遍，每题独立采样 5 次取多数投票，并同时报告 Pass@1/Pass@5、token 消耗与美元成本；最后把准确率拆成 6 个分析类目 + 工具调用分布 + cost/score，做部署级的细粒度失败诊断。
 
 ### 关键设计
 
-1. **5 阶段对抗优先 + 时间锚定数据流水线**:
+**1. 5 阶段对抗优先 + 时间锚定数据流水线：让 ground truth 客观、可复现且抗污染。**
 
-    - 功能：从 1 万条真实查询里筛出 178 条既真实、可验证、又能抵抗训练数据污染的高质量任务。
-    - 核心思路：(Stage 1) LLM-as-judge 做主题相关性、答案存在性、温度锚定的初筛，保留 top 15% 约 1000 条；(Stage 2) 92 名领域专家分配审阅，每题至少 4 评、去掉最高最低后取平均，进入 top 200，去重后剩 186 条 prototype；(Stage 3) 统一改写格式，强制把每道题锚定到具体 block number 或 timestamp，让答案完全可复现；(Stage 4) 为每题构造"可复现 ground-truth toolchain"——不仅给标准答案，还给出到达答案的工具调用链，不能复现的整道剔除，最终保留 178 条；(Stage 5) 划分到 On-Chain Analysis (43.3%)、Project Discovery (27.5%)、Tokenomics (12.9%)、Overlap (7.9%)、Trend Analysis (4.5%)、General Knowledge (3.9%) 6 个类目以便做细粒度诊断。
-    - 设计动机：传统静态 benchmark 易被训练数据污染（contamination）且评测时容易出现"看起来对但其实跑不出来"的情况；时间锚定 + 可复现工具链同时解决这两个问题。区块链的不可篡改性让 ground truth 真正客观，避免传统金融 benchmark 必须在"专有数据"和"合成模拟"之间二选一的两难。
+传统静态 benchmark 的两个老毛病是容易被训练数据污染（contamination）、以及评测时出现"看着对但其实跑不出来"的题，CAIA 用一条 5 阶段流水线把这两点一起解决。Stage 1 用 LLM-as-judge 按主题相关性、答案是否存在、是否可锚定温度做初筛，从 1 万条查询里保留 top 15%（约 1000 条）；Stage 2 把这些题分配给 92 名领域专家，每题至少 4 评、去掉最高最低后取平均，挑出 top 200，去重后剩 186 条 prototype；Stage 3 统一改写格式，强制把每道题锚定到具体 block number 或 timestamp，使答案完全可复现；Stage 4 为每题构造"可复现 ground-truth toolchain"——不仅给标准答案，还给出到达该答案的工具调用链，凡是无法复现的整道剔除，最终落到 178 条；Stage 5 把题目划进 On-Chain Analysis (43.3%)、Project Discovery (27.5%)、Tokenomics (12.9%)、Overlap (7.9%)、Trend Analysis (4.5%)、General Knowledge (3.9%) 6 个类目，方便后面做分领域诊断。这套设计之所以有效，是因为区块链的不可篡改性让 ground truth 真正客观，而 block height/timestamp 锚定让答案唯一且可复现，从而绕开了传统金融 benchmark 必须在"专有数据"和"合成模拟"之间二选一的两难。
 
-2. **双条件评测 + 23 工具 ReAct 框架**:
+**2. 双条件评测 + 23 工具统一 ReAct 框架：把"模型知识"和"工具编排"解耦。**
 
-    - 功能：把"模型本身知识"与"工具编排能力"解耦，分别量化两侧短板。
-    - 核心思路：无工具条件 = 闭卷考，强迫模型只用 parametric memory 答题，测量基础理解；有工具条件 = 开卷考，给 23 个工具（Etherscan/CoinGecko/DefiLlama 等链上分析平台、市场数据 API、web search、Python interpreter 等），且作者特意保证"正确答案总能通过合适工具拿到"，从而把挑战完全定位到 *tool selection + synthesis*，而不是"信息找不到"。所有有工具实验统一在 ReAct-style 框架内运行（标准 dispatch、result parsing、iterative reasoning），消除实现差异。
-    - 设计动机：以前 agent 评测把工具能力、模型推理、prompt 工程混在一起，看不出真正瓶颈；CAIA 通过"答案永远可通过工具拿到"这个工程约束把"知识 vs 编排"两个能力 dim 独立化，于是观察到的失败可以明确归因到 tool selection。
+以前的 agent 评测常把工具能力、模型推理、prompt 工程混在一起，看不出真正的瓶颈在哪，CAIA 用两种条件把这两个能力维度拆开。无工具条件相当于闭卷考，强迫模型只用 parametric memory 答题，测的是基础理解；有工具条件相当于开卷考，提供 23 个工具（Etherscan / CoinGecko / DefiLlama 等链上分析平台、市场数据 API、web search、Python interpreter 等）。关键的工程约束是：作者特意保证"正确答案总能通过某个合适工具拿到"，于是挑战被完全定位到 *tool selection + synthesis*——失败不再可能归咎于"信息找不到"，只能归因到"没选对工具源"。所有有工具实验都跑在统一的 ReAct-style 框架里（标准 dispatch、result parsing、iterative reasoning），消除不同实现带来的差异，让模型之间真正可比。
 
-3. **6 类细粒度失败诊断 + cost-aware 评测**:
+**3. 6 类细粒度失败诊断 + cost-aware 评测：把单一准确率拆开，揭穿"试错碰运气"。**
 
-    - 功能：把单一准确率拆成 6 个分析类目 + 工具调用分布 + 成本效率 + Pass@k vs 多数投票对比，揭示传统指标隐藏的"试错碰运气"风险。
-    - 核心思路：(a) 主指标用 5 轮多数投票，缓解大模型采样方差；(b) 同时报告 Pass@1 和 Pass@5，明确指出 Pass@k 在高风险场景下是"危险指标"——某些模型 Pass@1=26.4% 但 Pass@5=54.5%（DeepSeek R1 有工具版），说明它本质上是靠多次随机尝试碰对；(c) 记录每题 token 消耗与美元成本，算出 cost/score，揭示成本与准确率不一定正相关（GPT-OSS 120B 比某些闭源模型还高、cost 低 100 倍）；(d) 失败模式分析显示 55.5% 的工具调用偏向不可靠 web search，模型即使能直接调专门的链上 API 拿真值，仍倾向被 SEO 优化的虚假信息和社交平台 manipulation 误导。
-    - 设计动机：单一 accuracy 是"宽度 0"的报告，掩盖了"为什么错"和"错的代价"；把行为分布（tool 选择偏好）、稳定性（多数投票 vs 单跑）、经济性（cost/score）合并看，才能给出部署级判断——这正是 high-stakes 场景必须的诊断深度。
+单一 accuracy 是一份"宽度为 0"的报告，既看不到"为什么错"也看不到"错的代价"，CAIA 因此把评测做成多维诊断。主指标用 5 轮多数投票，缓解大模型的采样方差；同时报告 Pass@1 和 Pass@5，并明确指出 Pass@k 在高风险场景里是"危险指标"——有工具版 DeepSeek R1 的 Pass@1 只有 26.4% 但 Pass@5 暴涨到 54.5%，说明它本质上是靠多次随机尝试碰对，而在不可逆决策里第一次错就 game over。每题还记录 token 消耗与美元成本，算出 cost/score，结果显示成本与准确率并不正相关（GPT-OSS 120B 性能逼近前沿，成本却比某些闭源模型低约 100 倍）。失败模式分析进一步发现：55.5% 的工具调用偏向不可靠的 web search，即便专门的链上 API 能直接给出真值，模型仍倾向被 SEO 优化的虚假信息和社交平台 manipulation 误导。把行为分布（工具选择偏好）、稳定性（多数投票 vs 单跑）、经济性（cost/score）合并起来看，才能给出 high-stakes 场景真正需要的部署级判断。
 
 ### 损失函数 / 训练策略
-CAIA 是 benchmark 不是训练方法，不涉及损失函数。评测协议：每题独立运行 5 次取 majority vote；human baseline 由 16 名大学区块链俱乐部 + 早期创业公司初级分析师在分层 10% 子集上完成，平均 80% 准确率。
+CAIA 是 benchmark 不是训练方法，不涉及损失函数。评测协议为：每题独立运行 5 次取 majority vote；human baseline 由 16 名来自大学区块链俱乐部和早期创业公司的初级分析师在分层 10% 子集上完成，平均准确率 80%。
 
 ## 实验关键数据
 

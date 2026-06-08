@@ -41,34 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：prompt $q$，当前策略 $\pi_t$，冻结锚 $\pi_0$（一般取初始策略），裁判 $\pi_J$（如 GPT-4o）。流程：
+CaT 要解决的是"非可验证领域里没有参考答案、RL 算不出 advantage"这个死结。它的整体思路是把 GRPO 本来就在采的 $G$ 条 rollouts 当成原材料：先用一个冻结锚模型 $\pi_0$ 把这 $G$ 条分歧的回答"合成"成一个伪参考答案 $s$（reference estimation），再从 $s$ 自动衍生出奖励信号去给每条 rollout 打分（reward derivation），整套机制不引入任何人工标注就把推理算力变成了监督。
 
-1. 用 $\pi_t$ 采样 $G$ 条 rollouts $o_{1:G}$（与 GRPO 复用）；
-2. **Reference estimation**：用 $\pi_0$ 对 rollouts 做 synthesis，得到伪参考 $s \sim \pi_0(\cdot \mid p_{\text{syn}}, o_{1:G})$；
-3. **Reward derivation**：可验证域直接对答案串匹配；非可验证域由 $\pi_0$ 从 $s$ 生成 $n\ge 5$ 条二元 rubric $\mathcal{R}=\{r_1,\dots,r_n\}$，再让 $\pi_J$ 对每条 rollout 逐条判 yes/no，奖励为通过比例 $R_{\text{rub}}(o;\mathcal{R}) = \frac{1}{n}\sum_j \mathbf{1}[\pi_J(o,r_j)=\text{yes}]$；
-4. GRPO 用 $\hat A_i = (R_i - \bar R_G)/\sigma_G$ 更新 $\pi_t$。
-
-亮点是整套机制**和 GRPO 原生采样完全对齐**：只多了 1 次 synthesis + 1 次 rubric 生成 + $n\times G$ 次极短的 yes/no 判定，可并行化，整体开销远小于 G 条 rollouts 本身。
+具体地，给定 prompt $q$、当前策略 $\pi_t$、冻结锚 $\pi_0$（一般取初始策略）、裁判 $\pi_J$（如 GPT-4o）：$\pi_t$ 先采样 $G$ 条 rollouts $o_{1:G}$（与 GRPO 共用这批样本），$\pi_0$ 在固定 prompt $p_{\text{syn}}$ 下读完它们合成伪参考 $s \sim \pi_0(\cdot \mid p_{\text{syn}}, o_{1:G})$；可验证域直接对 $s$ 的答案串做匹配，非可验证域则由 $\pi_0$ 从 $s$ 提炼 $n\ge 5$ 条二元 rubric，再让 $\pi_J$ 逐条判 yes/no，奖励取通过比例 $R_{\text{rub}}(o;\mathcal{R}) = \frac{1}{n}\sum_j \mathbf{1}[\pi_J(o,r_j)=\text{yes}]$；最后 GRPO 用归一化优势 $\hat A_i = (R_i - \bar R_G)/\sigma_G$ 更新 $\pi_t$。整套流程**和 GRPO 原生采样完全对齐**，只多了 1 次 synthesis、1 次 rubric 生成和 $n\times G$ 次极短的 yes/no 判定，全部可并行，开销远小于 $G$ 条 rollouts 本身。
 
 ### 关键设计
 
-1. **Synthesis 作为 reference estimator**:
+**1. Synthesis 作为 reference estimator：把分歧的 rollouts 调和成一个比谁都强的伪参考。**
 
-    - 功能：把 $G$ 条分歧的 rollouts 调和成一个伪参考 $s$，而不是从中"选"一条。
-    - 核心思路：让冻结的初始策略 $\pi_0$（不是当前 $\pi_t$）在一个固定 prompt $p_{\text{syn}}$ 下读完所有 rollouts，生成新的回答。**关键设计是输入里故意不放原 prompt $q$**（消融见 Appx 6.4），目的是迫使模型完全依赖 rollouts 内部信息做调和而不是直接重答；**用冻结锚而不是当前策略**则解耦了"探索"与"估计"——$\pi_t$ 通过 RL 不断进步，$\pi_0$ 始终提供稳定的参考估计基线，避免参考随策略漂移导致目标移动。实证上 synthesis 在 5–15% 的题上和多数票不一致，且不一致时仍正确率 70–86%（Table 1），甚至在 ~1% 的题上能"全队都错时唯独合成对"——这是任何 selection 方法（majority vote、Self-BoN、min-PPL）原理上做不到的。
-    - 设计动机：selection 至多能恢复"最好的那条 rollout"；synthesis 能跨 rollouts 拼接正确片段，生成分布之外的更优答案，从而把推理算力的潜力榨干。
+RL 训练卡在"没有参考信号"这一步，而 GRPO 采的 $G$ 条 rollouts 恰好在模型不确定处相互分歧——一条对了中间步骤、一条对了最终答案、第三条做了正确校验，整组的信息量本质上大于任意单条，却只被当方差归一化用掉了。CaT 的做法不是从中"选"一条，而是让冻结的初始策略 $\pi_0$（注意不是当前 $\pi_t$）在固定 prompt $p_{\text{syn}}$ 下读完所有 rollouts、重新合成一个伪参考 $s$。这里有两个刻意的设计：输入里**故意不放原 prompt $q$**（消融见 Appx 6.4），逼模型完全靠 rollouts 内部信息做调和、而不是绕开它们直接重答；**用冻结锚而非当前策略**则把"探索"和"估计"解耦开——$\pi_t$ 靠 RL 持续进步，$\pi_0$ 始终提供一个不随策略漂移的稳定参考基线，避免目标移动导致的自我欺骗。
 
-2. **Self-proposed Rubrics（核心贡献）**:
+之所以有效，是因为 selection 类方法（majority vote、Self-BoN、min-PPL）原理上至多恢复"最好的那条 rollout"，而 synthesis 能跨 rollouts 拼接正确片段、生成分布之外的更优答案。实证上 synthesis 在 5–15% 的题上与多数票不一致，且不一致时仍有 70–86% 正确率（Table 1），甚至在约 1% 的题上做到"全队都错时唯独合成对"——这是任何 selection 方法都做不到的，正是 synthesis 把推理算力潜力榨干的体现。
 
-    - 功能：在没有任何人工参考的非可验证领域，把"这个回答好不好"这种粗判定，拆成"该回答是否满足条件 $r_j$"这样的若干个二元细粒度判定。
-    - 核心思路：$\mathcal{R} \sim \pi_0(\cdot \mid p_{\text{rub}}, s)$，由锚模型从伪参考 $s$ 中提炼出 $\ge 5$ 条二元、可审计、可重复判断的 criteria（如"建议咨询医生""提到了 lifestyle modification""回避了给确诊"），然后裁判模型 $\pi_J$ 对每条 rollout 独立判 yes/no，奖励 = 满足比例。整个 pipeline **从 inference compute → pseudo-reference → rubrics → reward**，全程无任何人类参考介入。
-    - 设计动机：分解判定带来三大好处——(i) 可靠性：每条二元问题对 LLM 来说远比"打 1–10 分"稳定；(ii) 可审计：可以查到具体哪条 criterion 失败，方便 debug；(iii) 降 style bias：rubric 奖励的是"内容是否覆盖"而不是行文风格/长度，缓解 verbosity bias 和 reward hacking。
+**2. Self-proposed Rubrics：把"答得好不好"拆成可审计的若干个二元判定，奖励全程零人工参考。**
 
-3. **Drop-in 兼容可验证域 + 算力摊销**:
+有了伪参考 $s$，非可验证域还差一步：怎么把它变成稳定的奖励。直接让 LLM 给 1–10 打分（LLM-as-judge）已被反复证明不一致、偏长、有 style bias 和 reward hacking。CaT 改成由锚模型从 $s$ 自提议 rubric $\mathcal{R} \sim \pi_0(\cdot \mid p_{\text{rub}}, s)$，提炼出 $\ge 5$ 条二元、可审计、可重复判断的 criteria（如"建议咨询医生""提到了 lifestyle modification""回避了给确诊"），再由裁判 $\pi_J$ 对每条 rollout 独立判 yes/no，奖励取满足比例。整条管线从 inference compute → 伪参考 → rubrics → reward 一气贯通，全程没有任何人类参考介入。
 
-    - 功能：同一框架在 math/code 等可验证域里退化为"对伪参考的答案匹配"，无需任何代码改动。
-    - 核心思路：可验证域 reward 简化为 $R_{\text{ver}}(o;s)=\mathbf{1}[\texttt{answer}(o)=\texttt{answer}(s)]$，依然由 synthesis 提供 $s$；这一步等价于 TTRL 的 majority-vote pseudo-labeling，但 synthesis 可以走出 rollout 集合的支撑。算力摊销层面：训练完之后单次 forward 就能产生与 inference-time aggregation 同等甚至更好的回答，等于把"每次部署都付 G 倍算力"的成本一次性烧进了模型权重里。
-    - 设计动机：非可验证才是真正难解的问题，但作者证明只要更换 reward derivation 一行，框架就能"插"进任何域，验证 CaT 不是 healthcare-specific trick，而是真正的统一范式。
+把粗判定拆成细粒度二元问题带来三重收益：每条二元问题对 LLM 远比打分稳定，所以奖励噪声小（实证上 self-proposed rubric 在 HealthBench 上能逼平医生手写 rubric）；能定位到具体哪条 criterion 失败，奖励变得可审计、可 debug；而且 rubric 奖励的是"内容是否覆盖"而非行文风格与长度，从根上压住了 verbosity bias 和 reward hacking。这一步是 CaT 区别于 TTRL/Absolute Zero 等只敢在可验证域用 majority vote 的核心贡献。
+
+**3. Drop-in 兼容可验证域 + 算力一次性摊销进权重。**
+
+为了证明 CaT 不是 healthcare-specific 的 trick 而是统一范式，作者让同一框架在 math/code 等可验证域只换 reward derivation 一行就能跑：reward 退化为对伪参考的答案匹配 $R_{\text{ver}}(o;s)=\mathbf{1}[\texttt{answer}(o)=\texttt{answer}(s)]$，$s$ 仍由 synthesis 提供。这一步形式上等价于 TTRL 的 majority-vote pseudo-labeling，但因为底层是 synthesis 而非 selection，伪标签可以走出 rollout 集合的支撑、给出更准的目标。更重要的是算力账：测试时的 best-of-N / inference aggregation 是"每次部署都付 $G$ 倍算力"，而 CaT 把这份收益在训练阶段一次性烧进权重——训练完单次 forward 就能产出与 9× inference-time synthesis 同等甚至更好的回答，部署时回到 1× 算力。
 
 ### 损失函数 / 训练策略
 - 基础：GRPO 的 clipped surrogate + KL 到 $\pi_0$ 正则；

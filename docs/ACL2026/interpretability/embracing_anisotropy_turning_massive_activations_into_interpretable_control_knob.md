@@ -44,23 +44,24 @@ tags:
 给定一个预训练 LLM、一个目标领域和若干领域样本，方法首先收集各层 hidden states 中每个维度的激活统计。对于 MMLU，每个 subject 使用 100 个 test prompts，其中 50 个作为 identification set 来找关键维度，另 50 个作为 evaluation set 验证这些维度对性能和控制的影响。识别阶段不训练 probe，也不训练 SAE，而是根据维度的 activation magnitude 和 domain-discriminative activation frequency 选择 top-$k$ 维度。控制阶段则把这些维度作为 sparse steering target，只修改被识别出的 critical dimensions，而不是对整个 hidden vector 做同等方向的干预。
 
 ### 关键设计
-1. **通过 masking 验证维度稀疏关键性**:
 
-	- 功能：证明不是所有 hidden dimensions 都等价，少量维度对某些 subject 的表现有决定性影响。
-	- 核心思路：对 Gemma-2-2B-IT 和 Qwen-3-8B，作者逐一把某个维度在每层的 activation 置零，再在 evaluation set 上测准确率下降。输入 embedding layer 被排除，以便聚焦内部处理维度。
-	- 设计动机：如果 masking 单维度几乎不影响性能，那么“关键维度”假设就站不住；而实验中单维度置零可让 Qwen-3-8B 平均掉到很低准确率，说明维度重要性高度稀疏。
+**1. 用 masking 验证维度的稀疏关键性：先证明“少数维度真的决定性能”，假设才立得住。**
 
-2. **用激活幅值识别 Domain-Critical Dimensions**:
+整套方法的前提是“极端激活不是噪声，而是功能专门化的痕迹”。要让这个前提成立，第一步得证明 hidden dimensions 并非等价——否则后面只盯着 top-$k$ 维度做文章就没有意义。作者对 Gemma-2-2B-IT 和 Qwen-3-8B 做逐维消融：把某个维度在每一层的 activation 置零（排除输入 embedding layer 以聚焦内部处理维度），再到 evaluation set 上测准确率掉多少。
 
-	- 功能：用无需训练的统计准则找到既领域区分又功能关键的维度。
-	- 核心思路：论文先把某维度对某 query 的激活是否偏离均值超过 $3\sigma$ 作为 active criterion，再计算每个维度在一个 subject 内被激活的频率。若两个领域之间 activation frequency 差异超过 30%，该维度就表现出 domain-discriminative pattern。最终选择 top-$k$ high-magnitude dimensions 作为 domain-critical dimensions。
-	- 设计动机：activation magnitude 是模型自身已经形成的信号，不需要训练新解释器；如果高幅值维度与 masking 得到的 ground-truth critical dimensions 重合，就说明功能重要性可以从统计特征推断。
+结果很极端：Qwen-3-8B 单独 mask 掉 Rank-1 维度，平均准确率就从 73.30% 崩到 21.97%，而 Rank-100 维度几乎不影响。这种“一个维度抵几十个百分点”的落差，直接说明维度重要性高度稀疏，也为后面“只操控少数维度”提供了 ground truth。
 
-3. **Critical Dimension Steering**:
+**2. 用激活幅值识别 Domain-Critical Dimensions：让模型自带的统计信号替代训练出来的解释器。**
 
-	- 功能：把被识别出的 sparse dimensions 作为更精确的行为控制旋钮。
-	- 核心思路：传统 activation steering 常在整条 hidden vector 上施加方向；CDS 只在 top-$k$ domain-critical dimensions 上做干预，其他维度保持不动。本地缓存没有给出完整公式和实现细节，但摘要和导言明确指出 CDS 被用于领域适配和 jailbreaking 两类场景。
-	- 设计动机：如果一个领域行为主要由少数高影响维度支配，那么全维 steering 会同时扰动大量无关维度；稀疏 steering 更可能做到强控制、少副作用和更高可解释性。
+masking 能找出关键维度，但要逐维试错代价太大；probe 和 SAE 又都要额外训练、引入新参数和解释偏差。作者的取巧之处是直接读模型已经形成的 activation magnitude：先把某维度对某 query 的激活是否偏离均值超过 $3\sigma$ 定义为 active criterion，再统计每个维度在一个 subject 内的激活频率；当两个领域之间的 activation frequency 差异超过 30%，该维度就被判为有 domain-discriminative pattern。最终取 top-$k$ high-magnitude dimensions 作为 domain-critical dimensions。
+
+关键验证在于：这些纯靠统计选出的高幅值维度，与 masking 得到的 ground-truth critical dimensions 高度重合，token-level 上还能看到维度 1046 对应数学术语、2106 对应生物术语、334 对应 topic keywords——说明功能重要性确实可以从激活统计无训练地推断出来。
+
+**3. Critical Dimension Steering：把验证过的稀疏维度当成精准旋钮，而不是整条向量乱推。**
+
+传统 activation steering 在整条 hidden vector 上施加一个方向，问题是若领域行为本就由少数高影响维度支配，全维 steering 会顺带扰动大量无关维度，带来副作用又难解释。CDS 改成只在 top-$k$ domain-critical dimensions 上干预、其余维度保持不动，相当于把干预限制在已被 masking 证明过的 causal handles 上。
+
+> ⚠️ 本地缓存只到第 2.2 节附近，CDS 的完整 steering coefficient、层选择和实现公式未出现在缓存中，这里只描述能确认的设定。摘要与导言指出 CDS 同时用于领域适配和 jailbreaking 两类场景：MMLU 上 34/57 个 subject 优于全维 steering，AdvBench 上把 jailbreak ASR 从 84% 抬到 92%——稀疏 steering 在这两个方向都做到了更强控制。
 
 ### 损失函数 / 训练策略
 本文方法本身是 training-free 的解释和 inference-time steering 方法，不引入新的训练损失。识别阶段使用 MMLU subject prompts 的 hidden activation statistics；验证阶段用 masking、领域适配准确率和 jailbreak attack success rate 评估。缓存中没有提供 CDS 的完整 steering coefficient、层选择或超参数搜索策略，因此这里不写未确认的训练细节。

@@ -41,27 +41,21 @@ MoshiRAG 在 Moshi 这一全双工语音模型里加入一个特殊的 ⟨ret⟩
 ## 方法详解
 
 ### 整体框架
-MoshiRAG 由三个部件组成：(1) 前端是基于 Moshi 7B 的 RAG-aware 全双工模型，输入用户语音 token + 自己上一步的文本/语音 token，输出包括一个特殊 ⟨ret⟩ 触发 token；(2) 一个 1B 的流式 ASR（0.5 秒延迟）专门把用户语音转写成文字，用于检索；(3) 异步检索后端，可以是 LLM-based（Gemma 3 27B 阅读上下文给参考文本）或 search-based（Tavily 搜索引擎），通过文字与前端通信。当 Moshi 预测出 ⟨ret⟩ 时，系统把当前对话转写发给后端，前端继续生成"lead 段"（不依赖知识的开场白）维持语音流；后端给回参考文档后用一个一层 reference text encoder 投影成 embedding，按帧叠加到 temporal Transformer 输入上，让 Moshi 在 body 段把检索到的知识"接住"。
+MoshiRAG 要解决的是"全双工语音模型一边说话、一边把外部知识查回来却不卡顿"。它把传统 RAG 的同步阻塞拆成"前端实时、后端慢思考"两层：前端是基于 Moshi 7B 的全双工模型，吃用户语音 token 和自己上一步的文本/语音 token，并多出一个特殊的 ⟨ret⟩ 触发 token；旁边挂一个 1B 流式 ASR（0.5 秒延迟）把用户语音转写成文字、一个可热插拔的异步后端（Gemma 3 27B 阅读上下文给参考，或 Tavily 搜索引擎）。一旦 Moshi 吐出 ⟨ret⟩，系统就把对话转写丢给后端，前端不等结果、继续说一段不依赖知识的开场白维持语音流；等参考文档回来后，再经一层 reference encoder 投影成 embedding 按帧叠加进主干，让模型在正式答案段里自然地"接住"检索到的知识。
 
 ### 关键设计
 
-1. **⟨ret⟩ 触发 token + 异步后端**:
+**1. ⟨ret⟩ 触发 token + 异步后端：把同步 RAG 改成事件驱动的 tool call**
 
-    - 功能：让 Moshi 自己判断"这个回答需要外部知识"，并在不打断语音生成的前提下调用后端。
-    - 核心思路：在 Moshi 的 RQ-Transformer 输出词表里加入特殊 token ⟨ret⟩；训练数据里把 RAG-enabled 回合的"lead 段第一个文本 token 之前那一格"替换为 ⟨ret⟩，依靠 TTS 的强制对齐定位。推理时一旦预测到 ⟨ret⟩，系统就把 ASR 拿到的用户转写+模型自己的转写打包发给后端，后端可以是 LLM-based 也可以是 Tavily 搜索；前端不等结果继续运行，整个调用是异步的。
-    - 设计动机：直接同步调用 RAG 会让"边听边说"中断；让模型显式发出"我要查"的信号，把"何时查"这一控制权交给模型本身，同时实现"前端实时、后端慢思考"的解耦。
+直接同步调用 RAG 会让"边听边说"中断，所以痛点是"谁来决定何时查、查的时候怎么不停"。MoshiRAG 在 Moshi 的 RQ-Transformer 输出词表里加入特殊 token ⟨ret⟩，训练数据里把每个 RAG-enabled 回合的"lead 段第一个文本 token 之前那一格"替换成 ⟨ret⟩，靠 TTS 的强制对齐来精确定位。推理时模型一旦预测出 ⟨ret⟩，系统就把 ASR 拿到的用户转写加上模型自己的转写打包发给后端（LLM-based 或 Tavily 均可），前端则完全不等结果继续运行——整个调用是异步的。这样"何时需要外部知识"的控制权交给了模型自身，而前端实时性与后端慢思考被彻底解耦，正是这个 token 让 RAG 从阻塞流程变成不打断语音的事件触发。
 
-2. **利用 keyword delay 的延迟感知数据合成**:
+**2. 利用 keyword delay 的延迟感知数据合成：让开场白学会盖住检索延迟**
 
-    - 功能：在训练中让模型学到"开场白足以盖住检索延迟"，使 inference 时不出现停顿或脱节。
-    - 核心思路：用三个 Gemma 3 27B 角色 LLM（用户/Moshi/参考）合成 474k QA 类 + 5.5k 专家域共约 1.9M 条对话，把每个 RAG-enabled 回合结构化成 (lead, body, tail) 三段：lead 是"我帮你查一下…"这种泛用开场白，body 是接到 reference 后生成的核心答案，tail 是收尾。训练时模拟检索延迟 $d'\sim\mathcal{U}(1.0, d_{\text{lead}}-1.0)$（80% 概率）或 $d'\sim\mathcal{U}(0, d_{\text{lead}})$（20% fallback），保证 body 开始前至少有 1 秒缓冲。
-    - 设计动机：keyword delay 是这套方案的物理基础——如果数据集里没有大量"开场白长度足以盖住 2 秒检索"的样本，模型在 inference 时就会强行接 reference 导致语音错位；通过显式 lead/body/tail 标注和 $d'$ 采样，强行让模型把这条时间约束学进去。
+这套方案的物理基础是 keyword delay：从开口（TTFAT）到关键词出现往往有 3 秒以上空隙，只要数据里有大量"开场白长度足以盖住 2 秒检索"的样本，模型就能学会在说开场白时把答案查完。作者用三个 Gemma 3 27B 角色 LLM（用户/Moshi/参考，严格隔离信息访问权限以防泄漏）合成约 1.9M 条对话（474k QA 类 + 5.5k 专家域），把每个 RAG-enabled 回合结构化成 (lead, body, tail) 三段：lead 是"我帮你查一下…"这类泛用开场白，body 是接到 reference 后生成的核心答案，tail 是收尾。训练时模拟检索延迟，以 80% 概率取 $d'\sim\mathcal{U}(1.0,\,d_{\text{lead}}-1.0)$、20% fallback 取 $d'\sim\mathcal{U}(0,\,d_{\text{lead}})$，保证 body 开始前至少留 1 秒缓冲。没有这套显式 lead/body/tail 标注和 $d'$ 采样，模型在 inference 时就会强行接 reference 导致语音错位；有了它，这条"开场白要够长"的时间约束才被真正学进权重。
 
-3. **Reference embedding 流式注入**:
+**3. Reference embedding 流式注入：用最轻的接口把变长文本焊进 12.5 Hz 主干**
 
-    - 功能：把变长检索文本以最小代价"焊"进 Moshi 的 12.5 Hz 主干。
-    - 核心思路：reference 先经过一个预训练的 ARC-Encoder 把长度压 4 倍，再过一层可训练 linear 投影得到 $h_i^{\text{ref}}=\text{proj}(\text{emb}_i^{\text{ref}})$；在 ⟨ret⟩ 后 $d/f_r$ 步开始，按帧把 $h_i^{\text{ref}}$ 加到 temporal Transformer 输入 $h_i$ 上：$h_i'=h_i+h_{i-(i_{\text{ret}}+d/f_r)}^{\text{ref}}$，持续 $l$ 步后结束；training 时按 0.2 概率 dropout 整条 reference，让模型对"没拿到 reference"也鲁棒。
-    - 设计动机：直接 prepend reference 会占满上下文且打破 12.5 Hz 流式特性；用相加注入 + 长度压缩后，参考文本既不挤占语音 token 也能与音频帧对齐时序，是把文本知识嵌入语音生成最轻的接口。
+直接 prepend reference 会占满上下文、还破坏 Moshi 的 12.5 Hz 流式特性，因此注入方式必须既不挤占语音 token、又能跟音频帧对齐。MoshiRAG 先用一个预训练的 ARC-Encoder 把 reference 压短 4 倍，再过一层可训练 linear 投影得到 $h_i^{\text{ref}}=\text{proj}(\text{emb}_i^{\text{ref}})$；从 ⟨ret⟩ 之后 $d/f_r$ 步开始，按帧把它加到 temporal Transformer 输入上，即 $h_i'=h_i+h_{i-(i_{\text{ret}}+d/f_r)}^{\text{ref}}$，持续 $l$ 步后结束。训练时还以 0.2 概率整条 dropout reference，让模型在"没拿到 reference"时也鲁棒。相加注入加上长度压缩，是把文本知识嵌进语音生成里最省的接口。
 
 ### 损失函数 / 训练策略
 基础 loss 沿用 Moshi 原始的文本/语音 token next-token prediction；reference text encoder 冻结，linear 投影和 dropout vector 可学；学习率 $2\times 10^{-6}$、batch=32、100k 更新；输入做窗长 80ms、$-65$ dBFS 阈值的简单 VAD 静音清理。

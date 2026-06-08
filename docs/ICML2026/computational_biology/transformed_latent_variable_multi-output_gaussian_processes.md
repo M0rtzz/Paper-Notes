@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架由三层组成：(1) 潜变量层——每个输出 $p$ 配一个高斯先验 $p(h_p) = \mathcal{N}(0, I)$ 并由变分分布 $q(h_p) = \mathcal{N}(m_p, \Sigma_p)$ 近似；(2) 嵌入层——Lipschitz 正则的残差网络 $\Phi_\theta : \mathbb{R}^{D_X} \times \mathbb{R}^{D_H} \to \mathbb{R}^{D_T}$ 把 $(x_n, h_p)$ 编码为 $\tilde{x}_{n,p}$；(3) GP 层——在嵌入空间放 $M$ 个 inducing points $Z$ 并用标准 SVGP 算 $q(f_p(x_n)) = \int q(u) p(f_p(x_n) | u) du$。重参数化 $h_p^{(j)} = m_p + \Sigma_p^{1/2} \epsilon^{(j)}$ 让 ELBO 可微，mini-batch 同时采输入 $\mathcal{B}_N$ 与输出 $\mathcal{B}_P$ 估计 $\tilde{\mathcal{L}}_3$。
+T-LVMOGP 要解决的是"如何不靠任何刚性结构假设就把多输出 GP 推到上万个输出"。它的做法是把 MOGP 拆成两件互不干扰的事：先给每个输出学一个潜变量嵌入，再在嵌入空间里用一个普通的标量 GP 算相似度。具体由三层串起来——潜变量层给每个输出 $p$ 一个高斯先验 $p(h_p) = \mathcal{N}(0, I)$、用变分分布 $q(h_p) = \mathcal{N}(m_p, \Sigma_p)$ 近似；嵌入层用 Lipschitz 正则的残差网络 $\Phi_\theta : \mathbb{R}^{D_X} \times \mathbb{R}^{D_H} \to \mathbb{R}^{D_T}$ 把 $(x_n, h_p)$ 编码成 $\tilde{x}_{n,p}$；GP 层在嵌入空间放 $M$ 个 inducing points $Z$，用标准 SVGP 算 $q(f_p(x_n)) = \int q(u) p(f_p(x_n) | u) du$。整条链路靠重参数化 $h_p^{(j)} = m_p + \Sigma_p^{1/2} \epsilon^{(j)}$ 保持可微，训练时同时对输入 $\mathcal{B}_N$ 与输出 $\mathcal{B}_P$ 采 mini-batch。
 
 ### 关键设计
 
-1. **可学习潜变量 $h_p$ + 神经嵌入构造的多输出 deep kernel**:
+**1. 潜变量 + 神经嵌入构造的多输出 deep kernel：摆脱低秩/Kronecker 镣铐**
 
-    - 功能：把任意 MOGP 的跨输出协方差 $k_{p,p'}(x, x')$ 用 $k_{\text{base}}(\Phi_\theta(x, h_p), \Phi_\theta(x', h_{p'}))$ 统一表达，不需要 low-rank / Kronecker / sum-of-separable 等结构假设
-    - 核心思路：把 $(x_n, h_p)$ 拼起来送进 $\Phi_\theta$ 得到 $\tilde{x}_{n,p}$，然后用任意 stationary base kernel（默认 ARD-RBF）算嵌入空间的相似度；附录 D 证明这一形式严格包含 LV-MOGP 的 separable 与 sum-of-separable 核作为特例
-    - 设计动机：把"输出 ID + 输入"统一表达为嵌入空间的点，使得整个多输出 GP 退化为嵌入空间的一个标量 GP——可以无缝接 SVGP，从根本上解决 $O(P^3)$ 问题；同时通过潜变量 $h_p$ 的贝叶斯处理保留对输出关系的不确定性建模，避免点估计带来的过拟合
+MOGP 一直被诟病的地方是跨输出协方差 $k_{p,p'}(x, x')$ 要么写成低秩线性组合（LMC/OILMM），要么强行 sum-of-separable（GS-LVMOGP），表达力被结构假设卡死。本文给每个输出配一个可学习潜变量 $h_p$，把"输出 ID"和"输入"拼在一起送进 $\Phi_\theta$ 得到嵌入点 $\tilde{x}_{n,p}$，然后所有跨输出协方差统一写成嵌入空间里的一个标量基核内积 $k_{p,p'}(x, x') = k_{\text{base}}(\Phi_\theta(x, h_p), \Phi_\theta(x', h_{p'}))$（默认用 ARD-RBF）。这一步把整个 $P$ 维多输出 GP 收缩成嵌入空间里的单个标量 GP，既能无缝接 SVGP 从根上绕开 $O(P^3)$ 复杂度，又通过对 $h_p$ 做贝叶斯处理保留了对输出关系的不确定性、避免点估计过拟合。表达力上没有损失：附录 D 证明这一核类严格包含 LV-MOGP 的 separable 核与 sum-of-separable 核作为特例。
 
-2. **Lipschitz 正则的 RCNN：残差连接 + 谱归一化**:
+**2. Lipschitz 正则的 RCNN：给 deep kernel 装上保险栓**
 
-    - 功能：用一个具有可控 Lipschitz 常数的网络作为 $\Phi_\theta$，避免 deep kernel 常见的特征坍塌、距离感知丧失、对 OOD 输入过度自信等病
-    - 核心思路：网络结构选用 residual connection；每层权重矩阵用谱归一化（power iteration 算最大奇异值）控制谱范数上界 SN-UB；$L$ 层网络的 Lipschitz 常数被压在 $(1 + \text{SN-UB})^L$ 以内。Bartlett 等的结果保证这种参数化仍具备表示一大类平滑 Lipschitz 映射的能力
-    - 设计动机：要让 GP 的"近输入相似、远输入不同"的距离感知在嵌入空间里仍然成立，必须限制 $\Phi_\theta$ 不能任意"压扁"远点；消融显示去掉谱归一化时 EEG 上 NLL 从 0.814 暴涨到 4.109，证明这并非可有可无
+deep kernel 直接用神经网络做嵌入会犯三个老毛病——特征坍塌、距离感知丧失、对 OOD 输入过度自信，根源都是网络可以把远点任意"压扁"。本文用一个可控 Lipschitz 常数的残差网络（RCNN）当 $\Phi_\theta$：残差连接保表达力，每层权重用谱归一化（power iteration 估最大奇异值）把谱范数压在上界 SN-UB 内，于是 $L$ 层网络的整体 Lipschitz 常数被界在 $(1 + \text{SN-UB})^L$ 以内。这样嵌入映射不会把相距很远的输入压到一起，GP "近相似、远不同"的距离感知在嵌入空间仍然成立；Bartlett 等的结果保证这种受限参数化依然能表示一大类平滑 Lipschitz 映射，没有牺牲拟合能力。这个约束并非锦上添花——消融里去掉谱归一化后 EEG 的 NLL 从 0.814 暴涨到 4.109，是所有消融中影响最大的一项。
 
-3. **SVGP + 双重 mini-batch + tighter variational bound 即插即用**:
+**3. 双重 mini-batch 的 SVGP：把 $P>10^4$ 训得动，且即插即用非高斯似然与紧 bound**
 
-    - 功能：让推断对输入数 $N$ 与输出数 $P$ 都可扩展，并自然兼容 ZINB 等非高斯似然
-    - 核心思路：在嵌入空间放 $M$ 个 inducing points $Z$；ELBO $\mathcal{L}_3 = \sum_n \sum_p \mathbb{E}_{q(h_p) q(f_p(x_n))}[\log p(y_{n,p}|f_p(x_n))] - \mathrm{KL}[q(u)\|p(u)] - \sum_p \mathrm{KL}[q(h_p)\|p(h_p)]$；mini-batch 同时采 $\mathcal{B}_N$ 与 $\mathcal{B}_P$ 估计 $\tilde{\mathcal{L}}_3$；高斯似然下解析期望，非高斯（如 ZINB）用 Gauss-Hermite 或 MC；Titsias 2025 与 Bui 2025 的 tighter bound 通过补 $\Delta = \frac{1}{2} \sum_n [d_n / \sigma_y^2 - \log(1 + d_n/\sigma_y^2)]$ 即可
-    - 设计动机：把 $P$ 维输出空间也视作"待采样维度"是关键——之前 MOGP 大都只对 $N$ 做 mini-batch；双重小批量让 $P > 10^4$ 的训练成为可能。整体复杂度退化为 $O(N_b P_b M^2 + M^3)$ 加上谱归一化 $O(Tmn)$（后者因为 RCNN 宽 $\sim 10$、深 $\sim 5$ 通常可忽略）
+要真的扩展到上万输出，光靠 deep kernel 还不够，推断本身得对输入数 $N$ 和输出数 $P$ 同时可扩展。本文在嵌入空间放 $M$ 个 inducing points $Z$，写出 ELBO
+
+$$\mathcal{L}_3 = \sum_n \sum_p \mathbb{E}_{q(h_p) q(f_p(x_n))}[\log p(y_{n,p}|f_p(x_n))] - \mathrm{KL}[q(u)\|p(u)] - \sum_p \mathrm{KL}[q(h_p)\|p(h_p)]$$
+
+关键点在于把 $P$ 维输出空间也当成一个"可采样维度"：之前 SVGP-on-MOGP 大多只对输入做 mini-batch，本文同时采 $\mathcal{B}_N$ 与 $\mathcal{B}_P$ 估计 $\tilde{\mathcal{L}}_3$，这才让 $P>10^4$ 的训练在现实显存里跑得动。整体复杂度退化成 $O(N_b P_b M^2 + M^3)$，再加谱归一化的 $O(Tmn)$（因为 RCNN 宽 $\sim 10$、深 $\sim 5$，这项基本可忽略）。框架对似然完全不挑：高斯似然下期望解析可得，ZINB 这类非高斯似然用 Gauss-Hermite quadrature 或 MC 估计即可，因此空间转录组那种零膨胀计数数据能用同一个模型处理。Titsias 2025 / Bui 2025 的 tighter variational bound 也能即插即用，只需补一项 $\Delta = \frac{1}{2} \sum_n [d_n / \sigma_y^2 - \log(1 + d_n/\sigma_y^2)]$。
 
 ### 损失函数 / 训练策略
-负 ELBO $-\mathcal{L}_3$ 作为损失；高斯似然解析期望，非高斯似然用 Gauss-Hermite quadrature 或 MC + 重参数化；同时采输入与输出 mini-batch。inducing points 数 $M$、SN-UB、潜变量维度 $D_H$ 与嵌入维度 $D_T$ 是主要超参；EEG 上 SN-UB 最优值 $\approx 0.005$，SARCOS 上 $\approx 1.0$，呈现 trade-off 曲线（太严失表达力、太松过拟合）。
+训练目标就是负 ELBO $-\mathcal{L}_3$：高斯似然解析算期望，非高斯似然走 Gauss-Hermite quadrature 或 MC + 重参数化，输入与输出两侧同时采 mini-batch。主要超参是 inducing points 数 $M$、谱范数上界 SN-UB、潜变量维度 $D_H$ 与嵌入维度 $D_T$；其中 SN-UB 呈现明显的 trade-off 曲线（太严失表达力、太松过拟合），需按数据集调——EEG 上最优约 $0.005$，SARCOS 上约 $1.0$。
 
 ## 实验关键数据
 

@@ -41,31 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IF-GEO 是纯 LLM-API 流水线（同款 GPT-4o-mini 跑所有调用），分两个 Phase：
 
-1. **Phase I — Diverge**：(a) **Query Discovery**：让 LLM 当"搜索分析师"，对文档 $D$ 做反向检索，吐出加权代表性 query 集合 $Q(D) = \{(q_i, w_i)\}_{i=1}^m$，$w_i \in [0,100]$ 是 LLM 给的"流行度"打分，且明确禁止 paraphrase；(b) **Request Generation**：对每个 $q_i$ 独立分析"文档缺什么"，生成结构化请求 $r_{i,j} = \langle e_{i,j}, u_{i,j}, s_{i,j} \rangle$，其中 $e_{i,j}$ 是定位锚点片段、$u_{i,j}$ 是改写建议、$s_{i,j} \in [0,100]$ 是该条修复的必要性打分（G-EVAL 风格）。
-2. **Phase II — Converge**：(a) **Prioritization & Dedup**：算全局优先度 $g_{i,j} = w_i \cdot s_{i,j}$，低于阈值 $\tau$ 的请求丢掉（默认 $\tau = 0.7 \times 100\times 100$ 等价规则），语义重复的请求合并为 meta-request，沿用最高 $s$；(b) **Conflict Resolution**：对同一锚点上互斥的请求，让 LLM 看 $g$ 值做 "Selection（差距大就选高分的）" 或 "Synthesis（分数相近就合成折衷指令）"；(c) **Blueprint Construction**：把保留下来的指令按文档**章节**而不是 query 聚合，组成有序 JSON 蓝图；(d) **Blueprint-Guided Revision**：让另一个 LLM 作为"受限编辑器"严格按蓝图改文档，明令**未提及章节原样保留**，防止 free-form rewriting。
-3. **目标函数**：除最大化 $\mathbb{E}[\Delta v]$ 外，显式引入 WCP / DR / WTR（见下）作为同等重要的优化约束。
+IF-GEO 是一条纯 LLM-API 流水线（同款 GPT-4o-mini 跑所有调用），输入一篇待优化文档 $D$、输出一份按蓝图改好的文档，核心是"先发散后收敛"两个 Phase。Phase I（Diverge）先让 LLM 当"搜索分析师"对 $D$ 反向检索出加权代表性 query 集合 $Q(D) = \{(q_i, w_i)\}_{i=1}^m$（$w_i \in [0,100]$ 为流行度打分、禁止 paraphrase），再对每个 $q_i$ 独立诊断"文档缺什么"，生成结构化请求 $r_{i,j} = \langle e_{i,j}, u_{i,j}, s_{i,j} \rangle$（锚点片段 $e_{i,j}$、改写建议 $u_{i,j}$、G-EVAL 风格的必要性打分 $s_{i,j} \in [0,100]$）。Phase II（Converge）把这堆互相打架的请求收敛成一份蓝图：按全局优先度 $g_{i,j} = w_i \cdot s_{i,j}$ 卡阈值去噪、语义去重，再对同锚点互斥请求做冲突仲裁，把保留指令按文档**章节**聚合成有序 JSON 蓝图，最后交给一个"受限编辑器"LLM 严格照蓝图改、未提及章节原样保留。整套优化在最大化期望能见度 $\mathbb{E}[\Delta v]$ 之外，还把 WCP / DR / WTR 三项稳定性指标作为同等重要的约束写进目标函数。
 
 ### 关键设计
 
-1. **Diverge — 加权代表性 query 集合 + 必要性打分的结构化请求**:
+**1. Diverge——加权代表性 query 集合 + 必要性打分的结构化请求：把"为不同 query 服务"的需求显式化、可比较化。**
 
-    - 功能：用一致的结构化"编辑请求"把"为不同 query 服务"的需求显式化、可比较化。
-    - 核心思路：$Q(D)$ 用反向检索而非 paraphrase 来逼近"真实潜在用户分布"，并让 LLM 同时打两套独立分数：$w_i$ 代表 query 在整体用户中的重要性，$s_{i,j}$ 代表某条编辑对该 query 的关键程度；两者乘积 $g_{i,j} = w_i \cdot s_{i,j}$ 后续直接驱动融合与冲突仲裁。
-    - 设计动机：传统 GEO 一开始就把多个 query 的需求糊在一起算"engine preference"，丢掉了 query 之间的差异；显式的结构化请求保留差异，让后续融合可以"看见冲突"。
+传统 GEO 一上来就把多个 query 的需求糊成一个"engine preference"去优化，query 之间的差异被抹平，后续也就无从"看见冲突"。IF-GEO 反过来用反向检索（而非 paraphrase）逼近真实潜在用户分布得到 $Q(D)$，并让 LLM 打两套相互独立的分数：$w_i$ 衡量某条 query 在整体用户中的重要性，$s_{i,j}$ 衡量某条编辑对该 query 的关键程度。二者乘积 $g_{i,j} = w_i \cdot s_{i,j}$ 把"模糊的优化意图"翻译成一个可排序、可比较的全局优先度，直接驱动后面的融合与仲裁，让每条 query 都成为一个能各自提请求的"利益相关方"。
 
-2. **Converge — Prioritize → Dedup → Conflict-Resolve → Blueprint 四步收敛**:
+**2. Converge——Prioritize → Dedup → Conflict-Resolve → Blueprint 四步收敛：把发散的 request pool 拧成一份可执行的全局修改蓝图。**
 
-    - 功能：把发散得到的 request pool 收敛成一份**可被执行**的全局修改蓝图。
-    - 核心思路：先用 $g_{i,j}$ 卡阈值剔除噪声；再语义去重（合并意图相近的请求）；接着把仍互斥的请求交给 LLM 做"semantic 仲裁"——而非用硬阈值——分大就选优、分近就合成折衷指令；最后**按章节而非按 query** 把指令重排成 JSON 蓝图，把"如何改一篇文档"从"按 query 串行 patch"变成"按 section 一次性改完"。
-    - 设计动机：消融显示**冲突解决**是性能最关键的环节（去掉它 Mean 从 9.24 跌到 6.14，是所有消融里跌幅最大的）；按 section 而不是按 query 组织指令则避免了"同一段被改了又改最终覆盖掉"的灾难。
+发散阶段产出的请求往往噪声多、意图重叠、还在同一段落上彼此互斥，直接逐条 patch 会出现"同一段被改了又改最终覆盖掉"的灾难。收敛阶段先用 $g_{i,j}$ 卡阈值剔掉低价值请求，再语义去重把意图相近的合并为沿用最高分的 meta-request；对仍然互斥的请求不走硬阈值，而是交给 LLM 做"semantic 仲裁"——$g$ 值差距大就 Selection 选优、相近就 Synthesis 合成折衷指令；最后**按章节而非按 query** 把指令重排成 JSON 蓝图，把"如何改一篇文档"从串行打补丁变成按 section 一次性改完。消融印证了这一步的分量：去掉冲突解决后 Mean 从 9.24 直接跌到 6.14，是所有消融里跌幅最大的。
 
-3. **Risk-Aware Stability Objective（WCP / DR / WTR）**:
+**3. Risk-Aware Stability Objective（WCP / DR / WTR）：把"对每条 query 都稳"写进目标函数，不让均值掩盖尾部退化。**
 
-    - 功能：把"对多个 query 都稳"显式写进目标函数和评测体系，防止均值掩盖尾部退化。
-    - 核心思路：(i) **Worst-Case Performance** $\text{WCP} = \min_{i=1}^m \Delta v_i$ 给出安全下限；(ii) **Downside Risk** $\text{DR} = \frac{1}{m}\sum_{i=1}^m (\min(0, \Delta v_i))^2$ 只罚负 gain 的平方，把"良性波动"与"有害波动"区分开；(iii) **Win-Tie Rate** $\text{WTR} = \frac{1}{m}\sum_{i=1}^m \mathbb{I}(\Delta v_i \ge 0)$ 量化"无回退覆盖比例"，作为 Pareto 安全度的代理指标。
-    - 设计动机：传统方差 VAR 把正负波动一起算进去，"上行波动"被错误地当作风险——而对 GEO 来说，更高的能见度上行是好事；只有"少数 query 大跌"才是真正的失败，因此需要 DR 和 WCP 来精准捕捉。
+GEO 真正的失败模式是"均值变好，但少数 query 大幅退化"，而传统方差 VAR 把正负波动一并计入，会错误地把"能见度上行"也当成风险。为此 IF-GEO 引入三项指标精准捕捉尾部：Worst-Case Performance $\text{WCP} = \min_{i=1}^m \Delta v_i$ 给出安全下限；Downside Risk $\text{DR} = \frac{1}{m}\sum_{i=1}^m (\min(0, \Delta v_i))^2$ 只对负 gain 的平方计罚，把良性波动与有害波动区分开；Win-Tie Rate $\text{WTR} = \frac{1}{m}\sum_{i=1}^m \mathbb{I}(\Delta v_i \ge 0)$ 量化"无回退覆盖比例"，作为 Pareto 安全度的代理。三者既是评测语言，也是同等重要的优化约束，从而把"不退化"从口号落成可度量的目标。
 
 ### 损失函数 / 训练策略
 **没有模型训练**——IF-GEO 完全是推理时框架，所有步骤都是带固定 schema 的 prompt 调用。默认超参：query 展开 $N_q = 5$、每 query 建议数 $N_s = 5$、internal temperature = 0.2、$\tau = 0.7$；改写阶段也由同一 LLM 完成，使用 GEO-Bench 同款 GPT-4o-mini 仿真引擎评估。

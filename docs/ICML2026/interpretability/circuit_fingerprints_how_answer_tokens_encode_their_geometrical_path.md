@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个输入源：(1) 答案 token 对 $(a_+, a_-)$ —— 分别独立前向得到差分方向 $\Delta r^{(L)}, \Delta v^{(\ell,h)}, \Delta q^{(\ell,h)}, \Delta k^{(\ell,h)}$；(2) contrastive prompts（clean vs corrupted）—— 得到组件的输出差分 $\Delta o_c$。Read 路径：把目标方向投到每个组件原生空间，与 $\Delta o_c$ 做内积得节点重要性 $S_c$；用三通道 Q/K/V 的 Shapley 分解 + 残差流分解算 edge 重要性。Write 路径：在 read 找到的 head 处，用同一空间里的方向 $\hat d_s,\hat d_t$ 替换或叠加得到 steered activation。
+方法要回答的是同一件事的两面：哪些组件构成电路（read）、怎么改这些组件来换输出（write）。它把这两个问题都化成"几何对齐"——一边是答案 token 单独前向留下的差分方向（电路指纹），一边是 contrastive prompt（clean vs corrupted）下各组件的输出差分 $\Delta o_c$。Read 阶段把指纹方向投到每个组件的原生空间，与 $\Delta o_c$ 做内积得到节点重要性，再用 Q/K/V 三通道分解算出 edge；write 阶段则直接拿同一组方向去替换或叠加组件激活。整个流程不碰梯度、不做干预，只靠纯前向投影。
 
 ### 关键设计
 
-1. **答案 token 差分作为几何目标 + 组件原生空间投影**：
+**1. 答案 token 差分作为几何目标：用原生空间投影保住可加性**
 
-    - 功能：用 2 次前向（喂 $a_+$ 和 $a_-$）就拿到每层、每 head 的目标方向 $\Delta r^{(L)}, \Delta v, \Delta q, \Delta k$，无需训练或梯度。
-    - 核心思路：对组件 $c$（attention head 用 $W_O$，MLP 用 $W_{\text{out}}$）先把目标方向变换到组件原生空间 $\hat t_c=W_c^\top \Delta r^{(L)}/\|\Delta r^{(L)}\|$，再算 $S_c=\langle \Delta o_c,\hat t_c\rangle$；这种"原生空间内积"保证 $\sum_c S_c$ 等于残差流上对目标方向的总投影（additivity 保持）。
-    - 设计动机：直接把 $\Delta o_c$ 投到残差流再算内积会把 $W_O$ 等共享投影矩阵引入的几何混淆塞进度量；切到组件原生空间则把"组件内部如何产生这个方向"与"残差流共享几何"解耦，得到一个干净、可加的重要性度量。
+电路发现的传统办法要么逐组件打补丁、要么反传梯度，成本高且受 LayerNorm 非线性干扰。本文换了个起点：只把答案 token $a_+$ 和 $a_-$ 各自独立喂进模型前向一次，就能在每层、每 head 上读出目标方向 $\Delta r^{(L)}, \Delta v, \Delta q, \Delta k$——因为电路是固定权重，孤立的答案 token 也会沿原电路走一遍，留下"产生这个答案所需"的方向签名。度量组件重要性时，关键在于不要直接在残差流上做内积，否则 $W_O$ 这类共享投影矩阵会把组件间的几何混淆塞进度量。本文先把目标方向变换到组件 $c$ 的原生空间（attention head 用 $W_O$、MLP 用 $W_{\text{out}}$）得 $\hat t_c=W_c^\top \Delta r^{(L)}/\|\Delta r^{(L)}\|$，再算 $S_c=\langle \Delta o_c,\hat t_c\rangle$。这样"组件内部如何产生方向"与"残差流共享几何"被解耦，并保证 $\sum_c S_c$ 恰好等于残差流上对目标方向的总投影——重要性是可加的，干净且无需任何训练。
 
-2. **Q/K/V Shapley 分解 + edge 残差流分解的反向传播**：
+**2. Q/K/V Shapley 分解：把 edge 归因变成博弈论唯一解**
 
-    - 功能：把每条 edge $i\to j$（上游组件流入下游 attention head 的信息）按 Q/K/V 三通道分别度量，并用 Shapley 值给出"无任意权重"的通道权重。
-    - 核心思路：对每条通道（以 K 为例）写出 $R^{(K)}_{i\to j}=\langle \Delta o_i, W^{(j)}_K \Delta k^{(j)}\rangle/\langle\Delta r^{(\ell_j)}, W^{(j)}_K \Delta k^{(j)}\rangle$（按线性 $\sum_i R^{(K)}_{i\to j}=1$）；把 Q/K/V 看作三玩家合作博弈，对每个 head 跑 $2^3=8$ 个 coalition 测量重要性，得 Shapley 权重 $\phi_Q,\phi_K,\phi_V$；最终 edge 重要性 $E_{i\to j}=S_j\cdot(\phi_Q R^{(Q)}_{i\to j}+\phi_K R^{(K)}_{i\to j}+\phi_V R^{(V)}_{i\to j})$；按 layer 从深到浅做"反向传播"累加间接重要性（Alg. 1）。
-    - 设计动机：单纯把 head 的总分摊到三通道是任意的；Shapley 是合作博弈里**唯一**满足公平性公理的分配；同时 Shapley 值天然保证 $\phi_Q+\phi_K+\phi_V=S_{QKV}-S_\emptyset$，重要性可加性贯穿到 edge 级别。Fig. 4 实证发现 Name Mover heads 是 Q-dominated、S-Inhibition heads 是 K-dominated，与 Wang 2022 手工命名的角色完全一致，验证了 Shapley 分解的解释力。
+节点重要性之外还要刻画 edge $i\to j$（上游组件流入下游 head 的信息），而一条 edge 走 Query、Key、Value 三条通道，怎么给三通道分权重是个老大难——平摊或手调都是任意的。本文对每条通道写出归一化的残差流分解，例如 K 通道 $R^{(K)}_{i\to j}=\langle \Delta o_i, W^{(j)}_K \Delta k^{(j)}\rangle/\langle\Delta r^{(\ell_j)}, W^{(j)}_K \Delta k^{(j)}\rangle$（线性下满足 $\sum_i R^{(K)}_{i\to j}=1$），再把 Q/K/V 看成三玩家合作博弈，对每个 head 跑 $2^3=8$ 个 coalition 求 Shapley 权重 $\phi_Q,\phi_K,\phi_V$，最终 $E_{i\to j}=S_j\cdot(\phi_Q R^{(Q)}_{i\to j}+\phi_K R^{(K)}_{i\to j}+\phi_V R^{(V)}_{i\to j})$，并按 layer 从深到浅做反向传播累加间接重要性（Alg. 1）。选 Shapley 不是为了花哨：它是合作博弈里**唯一**满足公平性公理的分配，且天然保证 $\phi_Q+\phi_K+\phi_V=S_{QKV}-S_\emptyset$，把可加性一路贯穿到 edge 级别。实证上这套分解还自带解释力——Fig. 4 显示 Name Mover heads 是 Q-dominated、S-Inhibition heads 是 K-dominated，与 Wang 2022 手工命名的角色完全吻合。
 
-3. **几何 steering：read 方向直接做 write**：
+**3. 几何 steering：同一组 read 方向直接拿去 write**
 
-    - 功能：用 read 阶段找到的同一批 head 与同一组答案方向做控制 generation 的干预，验证 read-write duality。
-    - 核心思路：对答案原型 $\{r_1,\dots,r_k\}$ 中心化后 SVD 得到正交基 $\{u_i\}$，把 source/target 原型投到该基得到 $d_s,d_t$；factual recall 任务用替换式 $X'=X-\|d_s-d_t\|\hat d_s+\|d_s-d_t\|\hat d_t$；stylistic（情感、语言）任务用 magnitude 转移式 $X'=X-\|d_s\|(\hat d_s-\hat d_t)$。
-    - 设计动机：与 activation patching（直接搬 corrupted activation）做对照——后者是 steering 的上界。若几何方向能近似复现 patching 效果，就证明 fingerprint 不是表面相关而是真实因果结构；experiments 显示在 IOI 上 $\alpha=1$ 时 $P(\text{correct})=0.014$ vs patching 的 0.0、logit diff $-4.07$ vs $-7.34$，行为效应级别相当。
+要证明指纹不是表面相关而是真实因果结构，最直接的办法是用它去干预生成。本文在 read 阶段找到的同一批 head 上，复用同一组答案方向做 steering：把答案原型 $\{r_1,\dots,r_k\}$ 中心化后 SVD 得正交基 $\{u_i\}$，把 source/target 原型投到该基得 $d_s,d_t$；factual recall 任务用替换式 $X'=X-\|d_s-d_t\|\hat d_s+\|d_s-d_t\|\hat d_t$，stylistic（情感、语言）任务用 magnitude 转移式 $X'=X-\|d_s\|(\hat d_s-\hat d_t)$。对照组是 activation patching（直接搬 corrupted activation），它是 steering 的行为上界——若几何方向能逼近 patching 效果，就坐实了 read-write 对偶。实验里 IOI 上 $\alpha=1$ 时几何 steering 的 $P(\text{correct})=0.014$ 对 patching 的 0.0、logit diff $-4.07$ 对 $-7.34$，行为效应已是同一量级。
 
 ### 损失函数 / 训练策略
-**完全无训练、无梯度、无干预**。只需 2 次前向（$a_+$ 与 $a_-$）拿目标方向，加 contrastive prompt 跑前向算 $\Delta o_c$；Shapley 需要 8 次 coalition 评估，可分批前向。计算预算与 EAP（单次 backward）相当。
+全程无训练、无梯度、无干预：拿目标方向只要 2 次前向（$a_+$ 与 $a_-$），算 $\Delta o_c$ 再加一遍 contrastive prompt 前向，Shapley 的 8 次 coalition 评估可分批跑完。整体计算预算与单次 backward 的 EAP 相当。
 
 ## 实验关键数据
 

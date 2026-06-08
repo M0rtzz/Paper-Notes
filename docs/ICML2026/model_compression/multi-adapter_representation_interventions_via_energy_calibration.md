@@ -41,30 +41,28 @@ MARI 指出现有「表征干预」方法都依赖一个线性表征假设——
 ## 方法详解
 
 ### 整体框架
-MARI 在 frozen LLM $f_\theta$ 的某一固定层-位置 $(l^\star,p^\star)$ 上插入一组干预模块。整个推理流程是：取出隐藏状态 $\mathbf{h}=\mathbf{h}^{(l^\star)}_{p^\star}(x)$ → **能量门控**（用 probe $g_\phi$ 在后续层算传播响应 $E(x;\alpha_\text{probe})$，与阈值 $\tau_E$ 比较；不通过则直接走 frozen base，$\alpha=0$）→ **熵路由**（通过门控的输入算 $K$ 个 adapter 各自的预测熵 $u_k(x)$，选最自信的 $\hat{k}=\arg\min_k u_k(x)$）→ **低秩干预**（用胜出的 adapter $\Phi_{\psi_{\hat k}}$ 改写 $\mathbf{h}$，注入强度 $\alpha_\text{full}$）→ 走完剩余层得到最终输出。训练时分两阶段：先用「硬路由 winner-take-gradient」训 $K$ 个 adapter，再独立训 probe $g_\phi$ 配合 off-subspace 正则。
+MARI 想在不碰模型权重的前提下，让「表征干预」既随样本自适应、又能在良性输入上自动收手。它在 frozen LLM $f_\theta$ 的某一固定层-位置 $(l^\star,p^\star)$ 插入一组干预模块，推理时一条输入要过三道关：先取出隐藏状态 $\mathbf{h}=\mathbf{h}^{(l^\star)}_{p^\star}(x)$，让一个独立 probe 算它的「传播能量」$E(x;\alpha_\text{probe})$ 并和阈值 $\tau_E$ 比，能量不够就判定为「不该干预」直接走 frozen base（$\alpha=0$）；过了门控的输入再算 $K$ 个低秩 adapter 各自的预测熵，选最自信的那个出手；胜出的 adapter 以强度 $\alpha_\text{full}$ 改写 $\mathbf{h}$，剩余层照常前向得到输出。训练分两阶段——先用「硬路由、赢家拿梯度」训出 $K$ 个各占一块子空间的 adapter，再独立训 probe 配 off-subspace 正则把它的扰动方向拉到干预子空间附近。
 
 ### 关键设计
 
-1. **Competitive Multi-Adapter + 熵路由**:
+**1. Competitive Multi-Adapter + 熵路由：把单条全局向量拆成 $K$ 段、按样本自适应选。**
 
-    - 功能：把全局静态干预升级为输入自适应的分段仿射干预，让不同 adapter 各自占领一块输入子空间。
-    - 核心思路：在同一注入点放 $K$ 个秩 $r$ 低秩 adapter $\Delta_{\psi_k}(\mathbf{h})=\mathbf{U}_k(\mathbf{V}_k^\top\mathbf{h}+\mathbf{b}_k)$。训练时对每条样本 $(x,y)$ 算 $K$ 路 loss $\ell_k(x,y)$（多选题用 CE、生成用 teacher-forced NLL），把梯度只回传给当前 loss 最小的「赢家」$k^\star(x,y)=\arg\min_k\ell_k(x,y)$，目标 $\mathcal{L}_\text{route}=\mathbb{E}[\ell_{k^\star}]$，配合 minibatch 用量均衡防止 mode collapse。推理时无法用 oracle 路由（不知道 $y$），改用「最低熵 = 最自信」选 adapter $\hat{k}(x)=\arg\min_k u_k(x)$，其中 $u_k$ 是 adapter $k$ 输出分布的熵（多选用 option entropy、生成用平均 next-token entropy）。论文给的理论证明：$R_\text{ent}\le R_\text{min}+L\cdot\eta$，只要专家化收益 $\Delta_\text{spec}>L\cdot\eta$（误路由率 × loss 上界）就能比单 adapter 严格更好。
-    - 设计动机：诊断实验已经证明所需 $\Delta(x)$ 异质、不可被单条向量覆盖；硬路由比软路由（gating mixture）更能逼出真正的专家化，因为软路由会被梯度推回到平均解。
+诊断实验已经证明所需校正向量 $\Delta(x)$ 在模长和方向上都剧烈漂移，一条静态 steering 向量根本盖不住这种异质需求。MARI 在同一注入点并排放 $K$ 个秩 $r$ 的低秩 adapter $\Delta_{\psi_k}(\mathbf{h})=\mathbf{U}_k(\mathbf{V}_k^\top\mathbf{h}+\mathbf{b}_k)$，训练时对每条样本 $(x,y)$ 算 $K$ 路 loss $\ell_k(x,y)$（多选题用 CE、生成用 teacher-forced NLL），梯度只回传给当前 loss 最小的「赢家」$k^\star(x,y)=\arg\min_k\ell_k(x,y)$，目标 $\mathcal{L}_\text{route}=\mathbb{E}[\ell_{k^\star}]$，再加一项 minibatch 用量均衡防止所有样本挤进同一个 adapter（mode collapse）。这种硬路由比软路由（gating mixture）更能逼出真正的专家化——软路由的梯度会把各 adapter 拉回平均解，反而退化成单向量。推理时拿不到 $y$、没法用 oracle 路由，于是改用「最自信即最低熵」的代理：选 $\hat{k}(x)=\arg\min_k u_k(x)$，其中 $u_k$ 是 adapter $k$ 输出分布的熵（多选用 option entropy、生成用平均 next-token entropy）。论文给出风险界 $R_\text{ent}\le R_\text{min}+L\cdot\eta$，只要专家化带来的收益 $\Delta_\text{spec}$ 大过误路由率 $\eta$ 乘 loss 上界 $L$，整套就严格优于单 adapter。
 
-2. **Energy-Based Gate + Off-Subspace 正则**:
+**2. Energy-Based Gate + Off-Subspace 正则：用一个无标签信号决定「该不该干预」。**
 
-    - 功能：用一个无监督的、和「干预可用性」对齐的标量信号，决定每条输入是用 $\alpha_\text{full}$ 干预还是 $\alpha_\text{safe}=0$ 退化到 frozen base。
-    - 核心思路：训一个独立的小秩 probe $g_\phi$（秩 $r_\text{probe}<r$，与 actuation adapter 用同样的表达式但不参与生成），给输入 $x$ 算 probe 更新 $\delta_\phi(x)=g_\phi(\mathbf{h}(x))$，注入强度 $\alpha_\text{probe}$ 后跑完剩下的层；定义每层传播响应 $e_m(x;\alpha)=\|\mathbf{h}^{(\alpha,m)}_{p^\star}(x)-\mathbf{h}^{(m)}_{p^\star}(x)\|_2$，取中位数 $E(x;\alpha)=\mathrm{median}\{e_m\}_{m=l^\star}^L$ 作为「能量」。训练目标 $\mathcal{L}_\text{cal}=\mathbb{E}[\ell_\phi(x,y)]+\lambda_\text{off}\mathcal{R}_\text{off}$，其中 $\mathcal{R}_\text{off}=\mathbb{E}\|\Pi_B^\perp(\delta_\phi(x))\|_2^2$ 把 probe 的更新约束在「in-field 校准子空间」$B$（PCA 在 unlabeled 输入上拟出的 rank-$k$ 基）内。阈值 $\tau_E$ 在含 applicable/non-applicable 输入的小控制集上选——取 non-applicable 部分能量分布的 $(1-\rho)$ 分位数（论文取 $\rho=0.9$），保证拦下约 90% 的良性输入。理论 Thm 5.2 给出 non-applicable 输入的能量上界 $E(x;\alpha)\le\alpha(\kappa_\text{non}S+\Gamma(x)\varepsilon)+o(\alpha)$，说明 off-subspace 正则 $\varepsilon$ 越小、in-field 衰减 $\kappa_\text{non}$ 越大，gate 的分离度越好。
-    - 设计动机：直接用 adapter 自己的输出做门控会让 adapter 既要做干预又要做门控信号，目标冲突；独立 probe 把「能不能干预」和「怎么干预」解耦。off-subspace 正则让 probe 的扰动方向贴近真实干预要走的子空间，从而让「能量」真正预测干预是否有益。
+即便方向选对了，对那些本不需纠正的良性输入强行干预，也会扰动内部表征、把 MMLU/ARC 打掉几个点；所以需要一个推理时拿不到 ground-truth 也能用的开关。MARI 训一个独立的小秩 probe $g_\phi$（秩 $r_\text{probe}<r$，表达式和 actuation adapter 一样但不参与生成），对输入算 probe 更新 $\delta_\phi(x)=g_\phi(\mathbf{h}(x))$，以强度 $\alpha_\text{probe}$ 注入后跑完剩下的层，逐层量它造成的扰动 $e_m(x;\alpha)=\|\mathbf{h}^{(\alpha,m)}_{p^\star}(x)-\mathbf{h}^{(m)}_{p^\star}(x)\|_2$，取中位数 $E(x;\alpha)=\mathrm{median}\{e_m\}_{m=l^\star}^L$ 当作这条输入的「**传播能量**」——它衡量一个小扰动能在网络深处激起多大响应，越大代表这条输入越「吃得动」干预。训练目标
 
-3. **冻结骨干 + 共享 softmax 的可比性约束**:
+$$\mathcal{L}_\text{cal}=\mathbb{E}[\ell_\phi(x,y)]+\lambda_\text{off}\,\mathcal{R}_\text{off},\qquad \mathcal{R}_\text{off}=\mathbb{E}\big\|\Pi_B^\perp(\delta_\phi(x))\big\|_2^2$$
 
-    - 功能：保证 $K$ 个 adapter 的熵 $u_k(x)$ 之间真正可比，让熵路由有意义。
-    - 核心思路：所有 adapter 共享同一个 frozen LLM 骨干和同一个输出 head，并用统一 softmax 温度（不引入 per-expert 温度或 logit scaling）。每个 adapter 只学 $\mathbf{U}_k,\mathbf{V}_k,\mathbf{b}_k$，$\theta$ 全冻；可选的 per-adapter 标量 $s_k$ 默认 $\equiv 1$，只用一个全局 $\gamma$ 做强度旋钮。
-    - 设计动机：如果让不同 adapter 学不同温度或不同 head，熵在数值上就不可比，熵路由会退化到选「温度最低」的 adapter。共享 softmax 是熵路由能 work 的底层前提，往往被忽略。
+里的 off-subspace 正则把 probe 的更新约束在「in-field 校准子空间」$B$（在 unlabeled 输入上跑 PCA 拟出的 rank-$k$ 基）内，使能量真正贴着干预要走的方向、从而预测干预是否有益。阈值 $\tau_E$ 在含 applicable/non-applicable 输入的小控制集上一次标定：取 non-applicable 那部分能量分布的 $(1-\rho)$ 分位数（论文取 $\rho=0.9$），刚好拦下约 90% 的良性输入。理论上 Thm 5.2 给出 non-applicable 输入的能量上界 $E(x;\alpha)\le\alpha(\kappa_\text{non}S+\Gamma(x)\varepsilon)+o(\alpha)$——off-subspace 残差 $\varepsilon$ 越小、in-field 衰减 $\kappa_\text{non}$ 越大，门控的分离度越好。把「能不能干预」交给独立 probe、「怎么干预」交给 adapter，正是为了避免让同一组参数背两个相互冲突的目标。
+
+**3. 冻结骨干 + 共享 softmax：让 $K$ 个 adapter 的熵真正可比。**
+
+熵路由能成立的隐形前提，是 $K$ 个 adapter 的熵 $u_k(x)$ 必须在同一把尺子上。MARI 让所有 adapter 共享同一个 frozen 骨干和同一个输出 head，并统一 softmax 温度——不引入 per-expert 温度，也不做 logit scaling；每个 adapter 只学 $\mathbf{U}_k,\mathbf{V}_k,\mathbf{b}_k$，$\theta$ 全冻，可选的 per-adapter 标量 $s_k$ 默认 $\equiv 1$，整套只留一个全局 $\gamma$ 当强度旋钮。一旦各 adapter 学了不同温度或不同 head，熵在数值上就失去可比性，路由会退化成单纯挑「温度最低」的那个。这条约束常被忽略，却是熵路由 work 的底层保证。
 
 ### 损失函数 / 训练策略
-分两阶段：(1) Multi-Adapter 训练用硬路由 + minibatch 用量均衡 $\mathcal{L}_\text{route}+\lambda_\text{usage}\mathcal{L}_\text{usage}$；(2) Probe 训练用 $\mathcal{L}_\text{cal}=\mathbb{E}[\ell_\phi]+\lambda_\text{off}\|\Pi_B^\perp\delta_\phi\|_2^2$。推理时阈值 $\tau_E$ 在控制集上一次性标定，触发率 $\rho=0.9$ 是主要可调超参；$K$、$r$、$r_\text{probe}$、$\alpha_\text{probe}$、$\alpha_\text{full}$ 都是固定超参。
+两阶段训练：(1) Multi-Adapter 阶段用硬路由 + minibatch 用量均衡，目标 $\mathcal{L}_\text{route}+\lambda_\text{usage}\mathcal{L}_\text{usage}$；(2) Probe 阶段用 $\mathcal{L}_\text{cal}=\mathbb{E}[\ell_\phi]+\lambda_\text{off}\|\Pi_B^\perp\delta_\phi\|_2^2$。推理时阈值 $\tau_E$ 在控制集上一次性标定，触发率 $\rho=0.9$ 是主要可调超参，$K$、$r$、$r_\text{probe}$、$\alpha_\text{probe}$、$\alpha_\text{full}$ 均为固定超参。
 
 ## 实验关键数据
 

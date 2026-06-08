@@ -42,31 +42,27 @@ tags:
 
 ### 整体框架
 
-第 $t$ 轮：从种群 $P_t$ Boltzmann 采样父表达式 $f_p$ → 由父表达式状态 $s_t$ 索引算子策略 $\pi_{s_t}^{(t)}$ 采样算子 $o_t$（方向）→ 调用工具集 $\mathcal{T}=\{T_{\text{data}},T_{\text{res}},T_{\text{dim}}\}$ 生成诊断报告 $a_t$（诊断）→ 取出反思记忆 $M_{t-1}$（历史）→ LLM 在提案分布 $p_\theta(\cdot\mid Q,f_p,o_t,a_t,M_{t-1})$ 下产生骨架 $\tilde f_t$ → BFGS 拟合常数得到 $f_t$ → 评估并更新种群、算子权重、记忆。预算上限 $T=400$（仅基线 1/2.5）。
+DE 要解决的是 LLM 符号回归"出招—打分"循环样本效率太差的问题：LLM 拿到的只有"父表达式 + 一个标量 MSE"，被迫同时推理"往哪改、为什么错、过往经验是什么"三件事，于是在看似合理却毫无信息量的候选间空转。DE 的做法是把这三类信号从 prompt 里拆出来，交给三个确定性模块各管一路，LLM 只负责它擅长的"提符号骨架"。
+
+具体到第 $t$ 轮：先从种群 $P_t$ 用 Boltzmann 采样取出父表达式 $f_p$，由它的状态 $s_t$ 索引算子策略采样出算子 $o_t$ 给出**方向**，再调用工具集 $\mathcal{T}=\{T_{\text{data}},T_{\text{res}},T_{\text{dim}}\}$ 生成**诊断**报告 $a_t$，连同**历史**记忆 $M_{t-1}$ 一起注入提案分布 $p_\theta(\cdot\mid Q,f_p,o_t,a_t,M_{t-1})$，LLM 据此产生骨架 $\tilde f_t$，BFGS 拟合常数得 $f_t$，评估后回写种群、算子权重和记忆。整套循环的预算上限只设 $T=400$ 候选，是基线的 $1/2.5$。
 
 ### 关键设计
 
-1. **Adaptive Operators（方向性引导）**:
+**1. Adaptive Operators：替 LLM 决定该 refine 还是该跳出，而不是让它瞎猜方向。**
 
-    - 功能：替 LLM 决定"这一步该 refine、mutate、crossover 还是 regenerate"，避免它瞎猜该往哪个方向走。
-    - 核心思路：定义算子集 $\mathcal{O}=\{o_{\text{ref}},o_{\text{mut}},o_{\text{cross}},o_{\text{reg}}\}$（exploit→explore）。给父表达式映射一个二元状态 $s_t=(\mathbb{I}[\tilde r_p\le \tau_r],\mathbb{I}[v_p\ge\tau_v])$（质量好不好 × 这区域访得多不多），每个状态维护一组算子权重 $w_s^{(t)}$，按 $\pi_s^{(t)}(o)=(1-\alpha)\,w_s^{(t)}(o)/\sum w + \alpha/|\mathcal{O}|$ 归一化采样。打分用相对提升 $r_t=\text{clip}((\ell(f_p)-\ell(f_t))/(\ell(f_p)+\varepsilon))$，乘性更新 $w_s^{(t+1)}(o_t)\leftarrow w_s^{(t)}(o_t)\cdot\max(\delta,1+\eta r_t)$。另设 stagnation 触发器 $\text{Stag}_t$：连续 $h$ 轮最优损失提升小于 $\xi$ 就强制提高 exploration、抬高 mutate/regenerate 概率。
-    - 设计动机：用一个最小的 $2\times 2$ 状态机+多臂老虎机式更新，就能学到"高质量且常访 → 该 mutate 跳出"、"低质量未充分访 → 该 refine"这类显式 meta-policy，避免 LLM 在 prompt 里反复猜该用哪种 edit。
+标量反馈缺的第一类信号是"方向"——这一步到底该小修（refine）、变异（mutate）、交叉（crossover）还是推倒重来（regenerate）。DE 把这件事从 prompt 里抽出来，建成一个极简的状态机加老虎机：先定义算子集 $\mathcal{O}=\{o_{\text{ref}},o_{\text{mut}},o_{\text{cross}},o_{\text{reg}}\}$（从 exploit 到 explore 排开），再给每个父表达式映射一个二元状态 $s_t=(\mathbb{I}[\tilde r_p\le \tau_r],\mathbb{I}[v_p\ge\tau_v])$，两位分别表示"质量好不好"和"这块区域访得多不多"，于是只有 $2\times2=4$ 种状态。每个状态维护一组算子权重 $w_s^{(t)}$，采样时按 $\pi_s^{(t)}(o)=(1-\alpha)\,w_s^{(t)}(o)/\sum w + \alpha/|\mathcal{O}|$ 做带 $\epsilon$-探索的归一化；每用完一个算子，用相对提升 $r_t=\text{clip}((\ell(f_p)-\ell(f_t))/(\ell(f_p)+\varepsilon))$ 做乘性更新 $w_s^{(t+1)}(o_t)\leftarrow w_s^{(t)}(o_t)\cdot\max(\delta,1+\eta r_t)$。这样它能自己学出"高质量且常访的区域 → 该 mutate 跳出去""低质量又没充分探索 → 该 refine 深挖"这类显式 meta-policy，比 LLM 在 prompt 里反复猜要用哪种 edit 稳得多。另配一个 stagnation 触发器 $\text{Stag}_t$：连续 $h$ 轮最优损失提升不到 $\xi$，就强制抬高 mutate/regenerate 概率把搜索从局部最优里踹出来。
 
-2. **Tool-Augmented Diagnostic Proposal（诊断引导）**:
+**2. Tool-Augmented Diagnostic Proposal：把"错了多少"翻译成"错在哪、为什么错"。**
 
-    - 功能：把"MSE=多少"这类只告诉"错了多少"的标量，翻译成"错在哪、为什么错"的结构化报告 $a_t=(T_{\text{data}}(D),T_{\text{res}}(f_p,D),T_{\text{dim}}(f_p,Q))$。
-    - 核心思路：三件工具串行调用：(1) **Data Profiler** 统计输入变量范围、算子可行域、变量交互、周期性/奇异性等先验；(2) **Residual Diagnostic** 分析残差 $e_i=y_i-f_p(x_i)$ 是否含未拟合的周期成分、缺项、振荡 pattern——例如发现残差与 $\sin(t)$ 相关系数 $-0.67$ 就提示"缺周期项"；(3) **Dimensional Verifier** 做物理量纲一致性检查，过滤掉单位上就站不住脚的组合。报告再以自然语言注入 prompt，把"undirected mutation"变成"targeted revision"。
-    - 设计动机：实验证明这是最关键的一块——去掉工具 NMSE 从 4.37e-4 飙到 2.52e-2（恶化 58 倍），印证了 scalar 反馈的根本缺陷是"评估"而非"诊断"。
+第二类缺失信号是"诊断"。一个标量 MSE 只告诉 LLM"错了多少"，却说不清"残差里藏着周期项还是量纲就不对"，于是变异是盲目的。DE 用三件工具串行把标量变成结构化报告 $a_t=(T_{\text{data}}(D),T_{\text{res}}(f_p,D),T_{\text{dim}}(f_p,Q))$：**Data Profiler** 先统计输入变量范围、算子可行域、变量交互、周期性/奇异性等数据先验；**Residual Diagnostic** 再分析残差 $e_i=y_i-f_p(x_i)$ 是否含未拟合的周期成分、缺项或振荡 pattern——比如算出残差与 $\sin(t)$ 的相关系数为 $-0.67$，就直接提示"缺一个周期项"；**Dimensional Verifier** 最后做物理量纲一致性检查，把单位上就站不住脚的组合提前枪毙。三份报告以自然语言注入 prompt，把原本"无方向的变异"变成"有的放矢的修订"。消融里这一块掉得最惨——去掉工具后 Physics 上 NMSE 从 4.37e-4 飙到 2.52e-2（恶化 58 倍），正好印证作者那句判断：标量反馈的根本缺陷是"只评估、不诊断"。
 
-3. **Reflective Memory（历史性引导）**:
+**3. Reflective Memory：把跨轮经验沉淀成自然语言规则，让搜索从试错变成有积累。**
 
-    - 功能：把跨轮次的经验沉淀成可复用的自然语言规则，避免 LLM 反复踩同一坑。
-    - 核心思路：维护记忆 $M_t$，但**只在该写的时候才写**——触发条件 $\delta_t=\mathbb{I}[(t\bmod K=0)\vee(\Delta_t>\epsilon_{\text{mem}})]$（周期性更新 + 突破性更新）。触发时构造反思上下文 $C_t=(Q,M_{t-1},\text{Elite}(P_t),\text{Fail}(\mathcal{H}_t),\text{Break}(\mathcal{H}_t))$——同时把当前精英、显著恶化的失败 edit、显著提升的突破 edit 喂给 LLM，让它对比成败提炼规则（如"两个变量都应该被周期函数包起来"）。最后做一次 compress：$M_t\leftarrow\text{Compress}(M_{t-1}\cup p_\theta(\cdot\mid C_t))$，保留重复成功 motif、记下常见失败模式、去冗余。
-    - 设计动机：纯 in-context 进化是无记忆的；显式记忆让搜索从"独立试错"变成"有累积经验的科学家"，且 trigger-based 设计避免每轮都做昂贵的 LLM 反思。
+第三类缺失信号是"记忆"：纯 in-context 进化是无记忆的，同一个坑会反复踩。DE 维护一份记忆 $M_t$，但**只在该写时才写**，避免每轮都做昂贵的 LLM 反思——触发条件 $\delta_t=\mathbb{I}[(t\bmod K=0)\vee(\Delta_t>\epsilon_{\text{mem}})]$ 是周期性更新加突破性更新的并集。一旦触发，就构造反思上下文 $C_t=(Q,M_{t-1},\text{Elite}(P_t),\text{Fail}(\mathcal{H}_t),\text{Break}(\mathcal{H}_t))$，把当前精英、显著恶化的失败 edit、显著提升的突破 edit 一起喂给 LLM，让它对比成败提炼出可复用规则（例如"这两个变量都应该被周期函数包起来"）。最后做一次压缩 $M_t\leftarrow\text{Compress}(M_{t-1}\cup p_\theta(\cdot\mid C_t))$，把反复成功的 motif 留下、常见失败模式记成戒律、冗余删掉。这样搜索就从"每轮独立试错"升级成"有累积经验的科学家"，而 trigger + Elite/Fail/Break 三元对比让反思既不爆炸又带着梯度方向。
 
 ### 损失函数 / 训练策略
 
-无任何梯度训练，全部 inference-time。backbone 选 Llama-3.1-8B-Instruct / Qwen3-4B-Instruct，温度 0.8，常数由 BFGS（quasi-Newton）拟合。理论上作者用 hitting-time 分析证明：只要引导提升一步成功率到 $p_\theta\ge p_0+\gamma$，就有 $\Pr(N_\theta>k)\le\exp[-k(p_0+\gamma)]$，对 $\gamma>0$ 即得指数级样本节省。
+全程无梯度训练，纯 inference-time。backbone 用 Llama-3.1-8B-Instruct / Qwen3-4B-Instruct，温度 0.8，表达式常数交给 BFGS（quasi-Newton）拟合。理论侧作者用 hitting-time 分析背书：只要这三路引导把一步成功率从 $p_0$ 提到 $p_\theta\ge p_0+\gamma$，就有 $\Pr(N_\theta>k)\le\exp[-k(p_0+\gamma)]$，对任意 $\gamma>0$ 都意味着命中所需评估数指数级下降——这正是只花 40% 预算还能更准的理论来源。
 
 ## 实验关键数据
 

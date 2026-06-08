@@ -40,33 +40,23 @@ tags:
 
 ## 方法详解
 
-整篇工作分两块：基准构建（TEDBench）+ 表征学习方法（MiAE）。
-
 ### 整体框架
 
-**TEDBench 数据流**：AlphaFold Database (2 亿+) → Foldseek 聚类得到约 227 万代表蛋白 → 用 TED (Lau et al. 2024) 把每条蛋白拆成 domain 并匹配到 CATH topology → 过滤 mean pLDDT > 80 → 取最大 domain 的 CATH T-level 作为单标签 → 把小于 10 样本的 T 类合并为 "A.x" 形式 → 得到 462,175 条蛋白 / 965 类，按 8:1:1 stratified split；另加 27,638 条 CATH v4.4 实验结构作为外部测试集。
-
-**MiAE 流水线**：输入蛋白骨架 → 提取每个残基的 SE(3) frame（位置 + 朝向）→ 随机均匀掩码 90% frame → 重编码器只看可见的 10% frame，输出 latent → 把 mask token 重新插回完整长度 → 轻量解码器从 latent + mask token + RoPE 重建所有骨架坐标 → 用 ESM3 的复合 loss 监督。预训练后丢掉解码器，编码器接线性头/微调做下游 fold 分类。
+这篇工作要解决的核心问题是：蛋白质折叠分类长期卡在 1.5 万样本、高冗余、标签噪声大的小基准上，等不来自己的"ImageNet 时刻"。作者把它拆成两件事同时做——一是用 TED + Foldseek 聚类 + pLDDT 过滤把 AlphaFold Database 蒸馏成 46 万级、965 类、控冗余的标准基准 TEDBench；二是把 CV 里的 MAE 范式搬到 SE(3)-不变的残基 frame 表示上，得到一个纯结构、scale 友好的自监督模型 MiAE。数据侧从 AlphaFold 的 2 亿结构经 Foldseek 聚出约 227 万代表蛋白，再用 TED 拆 domain、匹配 CATH topology、按 pLDDT > 80 过滤、取最大 domain 的 T-level 作单标签、合并稀有类，最终得到 462,175 条蛋白 / 965 类（8:1:1 分层划分）并外加 27,638 条 CATH v4.4 实验结构当外部测试集；模型侧则把骨架编成 frame、极端掩码后只用可见残基过重编码器、再用轻解码器重建坐标。
 
 ### 关键设计
 
-1. **基于 frame 的 SE(3) 不变表示**:
+**1. 基于 frame 的 SE(3) 不变表示：以低代价获得结构感知**
 
-    - 功能：把每个残基编码成 $\mathbf{T}_i = [\mathbf{R}_i, \mathbf{t}_i] \in \mathrm{SE}(3)$，其中 $\mathbf{t}_i$ 是 $C_\alpha$ 全局坐标，$\mathbf{R}_i$ 由骨架原子 $(N, C_\alpha, C)$ 构造的正交基给出。
-    - 核心思路：所有 attention 都在局部坐标系内做（参考 ESM3 的几何 self-attention），即把全局点 $p$ 用 $p_{\text{local}} = \mathbf{R}_i^\top (p - \mathbf{t}_i)$ 映到 frame $i$ 的本地系，于是对整体的刚体平移/旋转天然不变；这比 E3NN/MACE 的高阶 tensor product 便宜很多。和 ESM3 不同的是，本文不限制到 k 近邻，而是在可见 frame 全局上做 attention——因为掩码后只剩 10% 残基，全局 attention 的开销反而比稠密版小。
-    - 设计动机：fold 类别是 CATH 直接按 3D 结构定义的，必须用结构感知模型；frame 表示既保留几何信息，又避开了等变高阶 tensor 的复杂度，可以 scale 到 339M 参数。
+fold 类别本就是 CATH 按 3D 结构定义的，模型必须感知几何，但通用等变 GNN（E3NN/MACE）的高阶 tensor product 太贵、scale 不动。作者把每个残基编码成局部 frame $\mathbf{T}_i = [\mathbf{R}_i, \mathbf{t}_i] \in \mathrm{SE}(3)$，其中 $\mathbf{t}_i$ 取 $C_\alpha$ 全局坐标，$\mathbf{R}_i$ 由骨架原子 $(N, C_\alpha, C)$ 构造的正交基给出。所有 attention 都在局部坐标系里做（沿用 ESM3 的几何 self-attention）：把全局点 $p$ 经 $p_{\text{local}} = \mathbf{R}_i^\top (p - \mathbf{t}_i)$ 映到 frame $i$ 本地系，于是对整体刚体平移/旋转天然不变，却避开了高阶等变张量的复杂度，得以 scale 到 339M 参数。和 ESM3 不同的是，这里不限制到 k 近邻、而是在可见 frame 上做全局 attention——因为掩码后只剩 10% 残基，全局 attention 反而比稠密版更便宜。
 
-2. **90% 极端掩码 + 非对称编解码器**:
+**2. 90% 极端掩码 + 非对称编解码器：把重计算压到可见的一成残基上**
 
-    - 功能：训练时随机均匀采样 10% 的 frame 作为可见集，剩下 90% 的 frame 在编码器里**完全删除**（不加 mask token），重编码器（最多 24 层 / 339M）只在可见集上做几何 attention + Transformer；解码器只有 2 层、宽度 512，把 mask token 补回完整序列后重建坐标。
-    - 核心思路：高掩码率打破"邻居插值就能重建"的捷径，逼模型学全局几何而非局部光滑；非对称设计让重编码器只过 10% token，计算成本骤降。消融验证：90% 掩码下重建 RMSD 急剧上升（70% 时 RMSD 仅 0.57），线性探测 F1 也最高；改成 0% 掩码（纯 AE）线性探测 F1 从 58.5 掉到 45.7（test）/ 23.9（external），微调也明显劣化。解码器宽度 256/512/768 中 512 最优（F1 35→58→28），太宽或太窄都崩；解码器深度上 mean pool 倾向于更深（1/2/4 层 F1 55→58→59），CLS pool 反而被深解码器害死（46→35→13）。
-    - 设计动机：蛋白质骨架的局部冗余（α 螺旋、β 折叠的重复 motif）让低掩码训练过于平凡；高掩码下编码器必须做"长程几何推理"，学出的 latent 才能在 fold 分类上 work。同时把重计算挪到只占 10% 的可见集上，是 scale 到大模型的关键。
+蛋白质骨架局部冗余极强（α 螺旋、β 折叠的重复 motif），低掩码训练太平凡——70% 掩码下重建 RMSD 仅 0.57，模型靠邻居插值就能蒙混过关。作者因此把掩码率拉到 90%：随机均匀采样 10% 的 frame 作可见集，剩下 90% 在编码器里**完全删除**（连 mask token 都不加），重编码器（最多 24 层 / 339M）只在这 10% 上做几何 attention + Transformer；解码器极轻（2 层、宽 512），把 mask token 补回完整序列后重建全部坐标。高掩码逼模型做"长程几何推理"而非局部光滑插值，非对称设计又让重编码器只过一成 token，这两点合起来既提质又使 scale 成为可能。消融印证了这个取舍：0% 掩码（纯 AE）线性探测 F1 从 58.5 跌到 45.7（test）/ 23.9（external）；解码器宽度对 256/512/768 极度敏感（F1 35→58→28），太宽太窄都崩；解码器深度则与 pooling 方式纠缠——mean pool 偏好更深（1/2/4 层 F1 55→58→59），CLS pool 反被深解码器害死（46→35→13）。
 
-3. **ESM3 复合重建 loss + 可选序列通道**:
+**3. ESM3 复合重建 loss + 可选序列通道：让 latent 同时装下几何与进化信号**
 
-    - 功能：训练目标是 ESM3 的 $\mathcal{L}_{\text{ESM3}}$，包含 5 项——几何距离、几何方向（主监督）+ 分箱距离/方向分类（辅助稳定）+ inverse folding token 预测（鼓励 latent 保留序列相关信息）。注意 loss 作用在**所有**骨架原子上，不是只在 mask 处（因为 pairwise 距离/方向天然 SE(3)-不变）。可选地，把氨基酸序列也按相同 mask 模式 mask 掉，未 mask 残基的 AA embedding 加到可见 frame 表示上。
-    - 核心思路：inverse folding loss 让 latent 不仅能重建几何，还得"猜出"是哪个 AA，把功能/进化相关的信息也压进表征；消融显示去掉 invf 后线性探测 F1 从 58.5 掉到 52.5，证实序列级监督对下游有用。加序列通道则把 linear probing F1 从 58.5 推到 62.1，微调把 F1 推到 74.6（test，超过 SaProt-650M 的 73.5）。
-    - 设计动机：纯几何重建容易学出"几何完美但缺生物语义"的表征；加入序列侧的弱监督，让表征同时对齐 CATH 这种"几何 + 进化"混合定义的标签体系。
+CATH 标签是"几何 + 进化"混合定义的，纯几何重建容易学出"几何漂亮但缺生物语义"的表征。训练目标采用 ESM3 的复合 loss $\mathcal{L}_{\text{ESM3}}$，含 5 项：几何距离、几何方向（主监督），分箱距离/方向分类（辅助稳定），以及 inverse folding token 预测（鼓励 latent 保留序列信息）。由于 pairwise 距离/方向天然 SE(3)-不变，loss 作用在**所有**骨架原子上而非仅 mask 处。inverse folding 这一项让 latent 不只重建几何、还得猜出是哪个氨基酸，消融显示去掉它后线性探测 F1 从 58.5 掉到 52.5。作者还可选地开一条序列通道：按相同 mask 模式遮蔽氨基酸序列，把未遮残基的 AA embedding 加到可见 frame 表示上——这把线性探测 F1 从 58.5 推到 62.1，微调推到 74.6（test，已超 SaProt-650M 的 73.5）。
 
 ### 损失函数 / 训练策略
 

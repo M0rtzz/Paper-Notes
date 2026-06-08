@@ -51,23 +51,25 @@ CT-Flow 系统由三层组成：
 
 ### 关键设计
 
-1. **MCP 标准化的四级工具栈（Data Ingestion → Global Navigation → Detailed Observation → Advanced Analysis）**：
+**1. MCP 标准化的四级工具栈（Data Ingestion → Global Navigation → Detailed Observation → Advanced Analysis）：把所有低层影像操作抽象成可组合的原子动作。**
 
-    - 功能：把 3D 医学影像里所有异构低层操作（DICOM 读取、轴位/冠状位切换、ROI 裁剪、HU 测量、分割、影像组学）抽象成一组可组合的原子动作，并通过统一的 MCP 接口暴露给 LLM。
-    - 核心思路：按照临床工作流的自然层级——先必须把体数据载入（Ingestion，永远是前置条件），然后做粗定位（Navigation），再针对感兴趣区做细观察（Observation），最后跑定量分析（Analysis）。FASTMCP 充当桥，把高层 server 接到底层影像基础设施。LLM 只看到工具的名字、参数 schema、文本/图像观察，不需要知道底层实现。
-    - 设计动机：和 ad-hoc 拼接（如 ChatCAD 自己包工具）相比，MCP 标准化的好处是工具可热插拔、不同模型可共用同一套；并且四级分类形成层次约束，让规划具备明确的依赖关系（不可能先 Analysis 再 Ingestion），降低了 agent 的搜索空间。消融（Table/Fig 4）显示去掉任一类工具都会让 ACC 显著下降、format error 上升，证明四类工具不是冗余而是互补必需。
+端到端 LVLM 把整卷 CT 压成有限 token，小血肿、淡薄磨玻璃这类临床决定性的微细征象会在编码瓶颈里被洗掉；而真实放射科医生其实是边滚切片、边量 HU、边调分割工具地迭代探查。本文把这套异构低层操作（DICOM 读取、轴位/冠状位切换、ROI 裁剪、HU 测量、分割、影像组学）抽象成一组原子工具，按临床工作流的自然层级分四级：Data Ingestion 永远是前置条件，负责把体数据与元数据载入成可查询接口；Global Navigation 做全卷与粗解剖定位；Detailed Observation 取高分辨率切片或子卷做局部证据校验；Advanced Analysis 跑 HU 测量、分割、影像组学等定量分析。所有工具经 FASTMCP 用统一 MCP 接口暴露，LLM 只看到工具名、参数 schema 和文本/图像观察，不必关心底层实现。相比 ChatCAD 那种自己临时包工具的 ad-hoc 拼接，MCP 标准化让工具可热插拔、不同模型共用同一套；四级分类还形成依赖约束（不可能先 Analysis 再 Ingestion），把 agent 的规划搜索空间显著收窄。消融（Fig 4）显示去掉任一类工具都会让 ACC 显著下降、format error 上升，证明四类是互补必需而非冗余。
 
-2. **Execution-in-the-loop Trajectory Synthesis + Procedural Consistency Filter**：
+**2. Execution-in-the-loop Trajectory Synthesis + Procedural Consistency Filter：把"病历→答案"的静态监督升级成每一步都能在真实 CT 上重现的可执行轨迹。**
 
-    - 功能：把"病历 → 答案"的静态 VQA 监督升级成"病历 → (思考, 动作, 观察)* → 答案"的可执行轨迹监督，确保每个中间观察都能在真实 CT 卷上重现、且整条链最终命中金标诊断。
-    - 核心思路：从 CT-RATE 中按解剖多样性、诊断丰富度、可定量评估潜力做启发式筛选，留下高推理密度的 case。每个 case 让 GPT-4o / Gemini-3-Pro-Preview / GPT-5.2 / Claude-Sonnet-4.5 这些教师模型探索多条 candidate 轨迹，仅保留满足 $\forall (a_i, o_i)\in \mathcal{T},\ \text{val}(o_i \mid \mathcal{V}) \land \text{pred}(\mathcal{T}) = y_{gt}$ 的轨迹——即所有动作的观察必须能在 raw volume $\mathcal{V}$ 上真实执行得到，且整条链终止于金标 $y_{gt}$。
-    - 设计动机：传统蒸馏式 trajectory 容易"假执行"——教师模型可能凭空编出根本无法复现的中间值（例如随便编个 HU=−800），训练出来的学生会学到错误的工具行为。Execution-in-the-loop 把"教师轨迹"在真实工具环境里跑一遍验证，是保证数据可信和工具可执行性的关键过滤步骤。配合三个任务场景（Quantitative Analysis / Spatial Mapping / Diagnostic Inference）形成多层次的能力评测。
+传统蒸馏式 trajectory 有个隐患：教师模型可能凭空编出根本无法复现的中间观察（例如随手编个 HU=−800），学生照单全收就学到了错误的工具行为。本文先从 CT-RATE 里按解剖多样性、诊断丰富度、可定量评估潜力做启发式筛选，留下高推理密度的 case；再让 GPT-4o / Gemini-3-Pro-Preview / GPT-5.2 / Claude-Sonnet-4.5 这些教师模型对每个 case 探索多条候选轨迹，但只保留满足
 
-3. **Trajectory-form Instruction Tuning on Small Backbones**：
+$$\forall (a_i, o_i)\in \mathcal{T},\ \text{val}(o_i \mid \mathcal{V}) \land \text{pred}(\mathcal{T}) = y_{gt}$$
 
-    - 功能：把"agentic 能力"通过 SFT 直接植入 Qwen2.5-VL-7B / Qwen3-VL-8B 这样的小模型，让它们能在没有海量参数的情况下也学会主动调工具。
-    - 核心思路：训练集 2000 条轨迹 = CT-RATE 蒸馏的执行级轨迹 + 3D-RAD 子集。用 LLaMA-Factory 框架做全参数 SFT，学习率 $1\times 10^{-5}$，DeepSpeed ZeRO-2 + cosine 衰减，4×H100。每条样本都是完整的 ReAct trajectory，模型同时学"生成思考"、"调用合法工具"、"消费工具输出"三件事。
-    - 设计动机：通用 frontier model（GPT-5.2、Gemini-3-Pro）虽然 zero-shot 就能做工具调用，但小模型（Qwen3-VL-8B）在 CT-FlowBench 上 zero-shot 只有 25.33% 且工具名错误率高达 0.969/case。SFT 让 8B 模型在 3D-RAD 上飙到 69.46%（超过 235B 的 Qwen3-VL）、工具名错误率降到 0.027，证明"小模型 + 高质量轨迹 + 明确工具接口"是比"堆参数"更高效的路径。
+的轨迹——即每个动作的观察都必须能在 raw volume $\mathcal{V}$ 上真实执行得到，且整条链终止于金标 $y_{gt}$。这一步把"教师轨迹"在真实工具环境里重跑验证，等于给训练数据加了一道可执行性硬约束，是保证学生学到真工具行为而非幻觉调用的关键过滤。筛选同时覆盖 Quantitative Analysis / Spatial Mapping / Diagnostic Inference 三个任务场景，形成多层次的能力评测。
+
+**3. Trajectory-form Instruction Tuning on Small Backbones：把 agentic 能力直接 SFT 进 7B/8B 小模型。**
+
+通用 frontier model（GPT-5.2、Gemini-3-Pro）zero-shot 就能调工具，但小模型差得远——Qwen3-VL-8B zero-shot 在 CT-FlowBench 上只有 25.33%、工具名错误率高达 0.969/case，问题不在"理解"而在"合规调用"。本文用 2000 条执行级轨迹（CT-RATE 蒸馏 + 3D-RAD 子集）对 Qwen2.5-VL-7B / Qwen3-VL-8B 做全参数 SFT：LLaMA-Factory 框架，学习率 $1\times 10^{-5}$，DeepSpeed ZeRO-2 + cosine 衰减，4×H100。每条样本都是一条完整的 ReAct trajectory，模型一次性学三件事——生成思考、调用合法工具、消费工具输出。SFT 后 8B 模型在 3D-RAD 上飙到 69.46%（反超 235B 的 Qwen3-VL）、工具名错误率降到 0.027，印证了"小模型 + 高质量轨迹 + 明确工具接口"比"堆参数"是更高效的路径。
+
+### 一条完整轨迹：从一个临床 query 到可审计的诊断
+
+以一次"判断该胸部 CT 是否存在肺结节、若有则给出位置与性质"的查询为例，CT-Flow 不是一次性吐答案，而是走一条 $(s_t, a_t, o_t)$ 的迭代链。第一步思考 $s_0$ 认定"得先把数据装进来"，动作 $a_0$ 调 Data Ingestion 载入体数据与元数据，观察 $o_0$ 返回可查询的卷句柄；接着 $s_1$ 决定先粗定位，$a_1$ 调 Global Navigation 在全卷里扫到肺野的大致层面，$o_1$ 回报候选可疑区所在的切片范围；$s_2$ 要核实细节，$a_2$ 调 Detailed Observation 取那几张高分辨率切片，$o_2$ 给回局部图像证据；$s_3$ 需要定量，$a_3$ 调 Advanced Analysis 量结节径线与 HU 值以判定实性/磨玻璃，$o_3$ 返回测量结果。每一步的观察都来自真实影像环境而非模型臆测，最终答案 $A$ 是把这几步累积的证据合成出来的，整条轨迹 $\mathcal{T}$ 又能逐 $(s,a,o)$ 回放给放射科医生复核。这正是 CT-Flow-7B 学到的行为——实验里它平均只用 4.01 次工具调用就拿到正确答案，靠"少调、调对"压低了推理延迟。
 
 ### 损失函数 / 训练策略
 标准 token-level 自回归 cross-entropy，对整条轨迹（thought + action + observation）做 next-token 预测；不引入额外强化学习（作者明确表示后续考虑 PPO/DPO/RLCF）。关键超参：lr $1\times 10^{-5}$，DeepSpeed ZeRO-2，cosine schedule，4×H100；推理时用 SGLang 提供 OpenAI 兼容 API。评测时 multiple-choice 用 ACC，开放式问答用 BLEU-4/ROUGE-L/BERTScore + LLM-as-Judge（DeepSeek-V3、Kimi-K2-Thinking、GPT-OSS-120B 三模型取平均）。

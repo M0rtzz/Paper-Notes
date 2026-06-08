@@ -39,36 +39,25 @@ tags:
 
 ## 方法详解
 
-### 综述结构与分类法
-全文是一份结构化的 RIR 路线图，包含三大块：**评测全景**（Section 3）、**方法分类法**（Section 4）、**未解挑战**（Section 5）。下面按这三块拆解。
-
-**Benchmark 全景**：作者把 17 个 RIR benchmark 按"领域 × 模态"组织成四类：
-1. **Open-Domain**（如 BESPOKE、ImpliRet），侧重从聊天历史推断用户的隐式意图；
-2. **Expert-Domain**（科学/法律/医学/代码），如 MIRB、R2MED、CoIR、CoQuIR、Bar Exam QA，强调专业知识 + 演绎推理；
-3. **Multi-Domain**（Bright、Bright-Plus、RAR-b），跨领域大杂烩；
-4. **Multimodal**（MRMR、MR²-Bench、ARK、MM-Bright），引入图文联合推理。每个 benchmark 进一步标注五类推理类型——演绎/类比/因果/分析/数值。
+### 整体框架
+全文是一份把碎片化 RIR 研究收编进同一框架的结构化路线图，沿"推理在检索流水线哪一步介入"这条主轴展开，覆盖评测全景（Section 3）、方法分类法（Section 4）、未解挑战（Section 5）三大块。评测侧把 17 个 benchmark 按"领域 × 模态"分成 Open-Domain（如 BESPOKE、ImpliRet，侧重从聊天历史推断隐式意图）、Expert-Domain（MIRB、R2MED、CoIR、Bar Exam QA 等科学/法律/医学/代码任务）、Multi-Domain（BRIGHT、Bright-Plus、RAR-b 的跨领域大杂烩）、Multimodal（MRMR、MR²-Bench、ARK 等图文联合）四桶，并给每个 benchmark 标注演绎/类比/因果/分析/数值五类推理；方法侧则按推理注入的 pipeline 位置切成四个互斥的桶，最后清点 nDCG 过时、multimodal 缺口等空白点。
 
 ### 关键设计
-1. **沿"pipeline 位置"分类方法**（Section 4 主轴）:
 
-    - 功能：把所有 RIR 方法按"推理在检索 pipeline 哪一步发挥作用"分到四个互斥的桶里——**Pre-Retrieval Augmentation**、**Reasoning-Aware Retriever Training**、**Reasoning-Enhanced Reranking**、**Iterative Retrieval**。
-    - 核心思路：Pre-Retrieval 又细分为 query-side（query rewriting/decomposition，如 TongSearch-QR、ThinkQE、ReDI）和 index-side（document 端扩写，如 SPIKE、EnrichIndex、LATTICE）；Retriever Training 关注 backbone 选择（LLM-based vs Diffusion LM）、数据策划（ReasonIR、DIVER、RaDeR 的难负样本挖掘）、训练目标（multi-task SFT + RL with format/embedding 双 reward）；Reranker 沿 Prompt-Tuning → SFT/Distillation → RL（Rank1、Rank-K、Rank-R1、ReasonRank）的路径演化；Iterative 把检索-推理交替成一个 state machine（SMR）或 RL policy。
-    - 设计动机：用 pipeline 位置而非模型架构分类，使得 taxonomy 对未来新模型保持稳定；同时方便研究者按"我想在 query 端做工作"这种朴素需求快速定位相关工作。
+**1. 按 pipeline 位置而非模型架构分类方法：让 taxonomy 对新模型保持稳定。**
 
-2. **沿"推理类型"标注 benchmark**（Section 3.2）:
+综述把所有 RIR 方法按"推理在检索流水线哪一步发挥作用"分到四个互斥的桶：Pre-Retrieval Augmentation、Reasoning-Aware Retriever Training、Reasoning-Enhanced Reranking、Iterative Retrieval。Pre-Retrieval 又分 query-side（query 改写/分解，如 TongSearch-QR、ThinkQE、ReDI）与 index-side（文档端扩写，如 SPIKE、EnrichIndex、LATTICE）；Retriever Training 关注 backbone 选择（LLM-based vs Diffusion LM）、难负样本策划（ReasonIR、DIVER、RaDeR）与训练目标（multi-task SFT + RL，format/embedding 双 reward）；Reranker 沿 Prompt-Tuning → SFT/Distillation → RL（Rank1、Rank-K、Rank-R1、ReasonRank）演化；Iterative 把检索-推理交替建模成 state machine（SMR）或 RL policy。之所以选 pipeline 位置而非模型架构当骨架，是因为新模型层出不穷但 pipeline 阶段有限且稳定，研究者也能按"我想在 query 端做工作"这种朴素需求快速定位相关工作。
 
-    - 功能：把 BRIGHT 提出的五种推理类型（deductive、analogical、causal、analytical、numerical）作为标签贴到每个 benchmark 上，揭示不同领域的推理需求差异。
-    - 核心思路：通过统计观察到，演绎推理在数学/科学/医学/法律中最普遍（rule-to-case 应用），类比推理在代码/数学跨语言映射中突出，数值推理在日常场景（时间运算）多见，因果/分析推理则集中在故障排查与分解问题。
-    - 设计动机：这一标注让研究者一眼看出"我做的方法适合什么类型 benchmark"，也暴露了某些推理类型（如多模态因果）的 benchmark 缺口。
+**2. 按五类推理类型标注 benchmark：暴露不同领域的推理需求差异与缺口。**
 
-3. **Scale-Reliability trade-off 视角**（Section 3.2）:
+综述把 BRIGHT 提出的演绎、类比、因果、分析、数值五种推理类型作为标签贴到每个 benchmark 上。统计后能看到清晰规律：演绎推理（rule-to-case 应用）在数学/科学/医学/法律中最普遍，类比推理在代码/数学的跨语言映射中突出，数值推理多见于日常时间运算，因果/分析推理则集中在故障排查与问题分解。这层标注让研究者一眼看出自己的方法适合哪类 benchmark，也直接暴露了多模态因果等推理类型的 benchmark 缺口。
 
-    - 功能：揭示 benchmark 构造层面的根本张力——LLM 合成（如 ScIRGen、ImpliRet）可规模化但有幻觉；人类标注（如 BRIGHT、Bar Exam QA）可靠但成本高。
-    - 核心思路：作者把 17 个 benchmark 沿"size × annotation type"二维定位，发现混合构造（hybrid，先 LLM 生成再人审）正成为主流趋势，并主张"先合成后专家校验"是未来方向。
-    - 设计动机：用一个可量化维度（大小 vs 人工占比）总结 benchmark 设计的核心权衡，避免对 benchmark 的评论流于"哪个更好"。
+**3. Scale-Reliability 权衡视角：用一个可量化维度总结 benchmark 构造的根本张力。**
+
+benchmark 构造存在一对此消彼长的矛盾：LLM 合成（ScIRGen、ImpliRet）能规模化但带幻觉，人类标注（BRIGHT、Bar Exam QA）可靠但成本高。综述把 17 个 benchmark 沿"规模 × 标注方式"二维定位，发现"先 LLM 生成再人工审核"的混合构造正成为主流，并据此主张未来应走"先合成后专家校验"路线。用大小与人工占比这个可量化维度做总结，能把对 benchmark 的评论从"哪个更好"提升到设计权衡层面。
 
 ### 损失函数 / 训练策略
-作者在附录 E 总结了 RIR 方法的三大损失：**InfoNCE**（标准对比损失，几乎所有 retriever 使用），**Generation Loss**（针对带"thought"的 retriever，如 O1 Embedder 用 next-token prediction 学习中间推理）和 **MSE**（用于把 LLM 推理过的嵌入蒸馏到学生 retriever，如 Dense Reasoner）。RL 方案（LREM、UME-R1、ReasonRank）则把 generation-side reward（格式合规、长度控制）与 embedding-side reward（检索精度）做加权组合，使 reasoning trajectory 本身成为可优化对象。
+综述在附录 E 归纳了 RIR 方法的三大损失：InfoNCE（标准对比损失，几乎所有 retriever 都用）、Generation Loss（针对带 "thought" 的 retriever，如 O1 Embedder 用 next-token prediction 学中间推理）、MSE（把 LLM 推理过的嵌入蒸馏进学生 retriever，如 Dense Reasoner）。RL 方案（LREM、UME-R1、ReasonRank）则把 generation-side reward（格式合规、长度控制）与 embedding-side reward（检索精度）加权组合，使 reasoning trajectory 本身成为可优化对象。
 
 ## 实验关键数据
 本文为综述，下面整理其汇总的 RIR benchmark 与方法对比数据。

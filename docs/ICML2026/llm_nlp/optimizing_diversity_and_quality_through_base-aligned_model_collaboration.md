@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BACO 把生成形式化为
-$P_{\text{BACO}}(y_t|c_t) = w_{\text{base}} \cdot P_{\text{base}}(y_t|c_t;\theta_{\text{base}}) + (1-w_{\text{base}}) \cdot P_{\text{aligned}}(y_t|c_t;\theta_{\text{aligned}})$，
-其中 $c_t = [x, y_{<t}]$，$w_{\text{base}} \in \{0,1\}$ 是 router 给出的硬选择（不是混合权重，每个 token 完全归属一个模型）。流水线很短：两模型并行前向 → router 看当前 step 的信号 → 选 base 或 aligned → 采样 token → 拼回上下文。为了避免两模型 tokenizer 不一致导致拼出乱码，作者把切换约束到 word boundary（词边界）上。整套流程只跑一次解码、不需要任何微调和 prompt 工程，所以可以无成本套到任何"base + aligned"现成对。
+BACO 想在一次解码里既拿 base 的多样性又拿 aligned 的质量，做法是让两个模型逐 token 抢麦克风。它把生成写成 $P_{\text{BACO}}(y_t|c_t) = w_{\text{base}} \cdot P_{\text{base}}(y_t|c_t;\theta_{\text{base}}) + (1-w_{\text{base}}) \cdot P_{\text{aligned}}(y_t|c_t;\theta_{\text{aligned}})$，其中 $c_t = [x, y_{<t}]$，$w_{\text{base}} \in \{0,1\}$ 是 router 给的**硬**选择——不是软混权，每个 token 完全归属某一个模型。每步两模型并行前向，router 看当前位置的信号决定信 base 还是 aligned，再从被选中那个分布里采样 token、拼回上下文继续。为防止两模型 tokenizer 不一致拼出乱码，切换只发生在词边界（word boundary）上。整条流程只跑一次解码、不微调、不做 prompt 工程，所以能零成本套到任何现成的"base + instruct"权重对上。
 
 ### 关键设计
 
-1. **基于 logit 的路由（model-centric 信号）**:
+**1. 基于 logit 的路由：让 base 自己的不确定度决定哪里该放手。**
 
-    - 功能：用 base 模型自己的预测不确定度判断当前位置是不是"语义岔路口"，是岔路口就交给 base 出多样性、否则交给 aligned 保质量。
-    - 核心思路：两个代表性变体——BACO-P 当 base 的 top-1 概率 $\max_{y_t} P_{\text{base}}(y_t|\cdot) < \gamma$ 时路由到 base；BACO-H 当 base 的预测熵 $H_{\text{base}}(Y_t|\cdot) = -\sum_{y_t} P_{\text{base}}(y_t|\cdot)\log P_{\text{base}}(y_t|\cdot) > \gamma$ 时路由到 base。阈值 $\gamma$ 起到类似温度的作用：调大 $\gamma$ 偏向 base（更多样），调小偏向 aligned（更高质量）。
-    - 设计动机：高不确定度位置说明多个续写都合理，强行让 aligned 收敛只会浪费"可多样化的预算"；而低不确定度位置 base 和 aligned 大概率一致，没必要冒险切换。
+对齐塌缩的根源是 aligned 在该多样的位置也强行收敛，可真正"可以多样"的位置其实是少数——那些续写有好几种都合理的"语义岔路口"。BACO 直接用 base 模型当下的预测不确定度来识别这些岔路口：不确定就让 base 出 token 跑多样性，确定就让 aligned 出 token 保质量。两个代表变体落地这个思路——BACO-P 在 base 的 top-1 概率 $\max_{y_t} P_{\text{base}}(y_t|\cdot) < \gamma$ 时路由到 base；BACO-H 在 base 的预测熵 $H_{\text{base}}(Y_t|\cdot) = -\sum_{y_t} P_{\text{base}}(y_t|\cdot)\log P_{\text{base}}(y_t|\cdot) > \gamma$ 时路由到 base。阈值 $\gamma$ 等价于一个"多样性温度"：调大偏向 base（更多样），调小偏向 aligned（更高质量）。它之所以有效，是因为高不确定度位置上让 aligned 硬收敛只是白白烧掉"可多样化的预算"，而低不确定度位置 base 与 aligned 本就高度一致，切换没收益还徒增风险。
 
-2. **基于内容的路由（language-centric 信号）**:
+**2. 基于内容的路由：按 token 的语言学角色分工，而不是看概率。**
 
-    - 功能：用 token 的语言学/语义角色而非概率值判断该谁出 token，专门把"风格性 token"留给 aligned，把"实义内容词"留给 base。
-    - 核心思路：BACO-PUNC 在 top-1 是标点/格式 token（如 `\n`、句号）时强制走 aligned，保住格式一致；BACO-FC 在 top-1 是 function word（and/if/the 等）时走 aligned，保住语篇衔接。这一类信号不需要 logit，因此也适用于黑盒模型。
-    - 设计动机：作者引用语言学观察——内容词才是人感知到"多样性"的地方（地名、动词、形象描写），而风格/功能词是 aligned 与 base 分歧最多但读者最不关心的地方；把后者交给 aligned 既稳了风格又不损失多样性。
+logit 信号需要拿到 base 的 logits，且会把所有高不确定度位置都判给 base，但有一类位置——标点、换行、function word——恰恰是两模型分歧最多、读者却最不在意的地方，多样化它们毫无意义还会破坏格式。BACO 因此改用 token 的语言学角色来分工：把"风格性 token"留给 aligned，把"实义内容词"留给 base。BACO-PUNC 在 top-1 是标点/格式 token（如 `\n`、句号）时强制走 aligned 以保格式一致；BACO-FC 在 top-1 是 function word（and/if/the 等）时走 aligned 以保语篇衔接。这背后是个语言学观察——人感知到的"多样性"几乎全在内容词上（地名、动词、形象描写），把功能/风格词交给 aligned 既稳住了行文又不牺牲读者真正在意的多样性。而且这类信号根本不需要 logits，所以连只能调 API 的黑盒对齐模型也能用。
 
-3. **组合路由 + 可控阈值（实践中最强的版本）**:
+**3. 组合路由 + 可控阈值：把两类信号串起来，沿 Pareto 前沿连续滑动。**
 
-    - 功能：把 logit 信号与内容信号按优先级串联，并通过单一阈值 $\gamma$ 在 diversity-quality 平面上沿 Pareto 前沿连续滑动。
-    - 核心思路：BACO-P-PUNC、BACO-P-FC、BACO-H-PUNC 这类组合先用内容规则（PUNC/FC）锁定"必须走 aligned"的 token，剩余 token 再回退到 logit 规则决定方向；改 $\gamma$ 就能扫出一条覆盖低多样高质量到高多样中等质量的整条曲线，给上层应用留出"可控旋钮"。
-    - 设计动机：单独看，logit 信号偏向"有把握就让 aligned 出"，内容信号偏向"风格/功能词归 aligned"，两者互补；组合后既保住了语篇连贯，又能在真正的岔路口放手让 base 跑多样性，从而比任一单策略都更逼近 Pareto 前沿。
+logit 信号倾向"有把握就交给 aligned"，内容信号倾向"风格/功能词归 aligned"，两者关注的维度不同、天然互补，单用任一个都够不到最优。组合版（BACO-P-PUNC、BACO-P-FC、BACO-H-PUNC 等）先用内容规则（PUNC/FC）锁定"必须走 aligned"的 token，剩下的再回退到 logit 规则判方向；这样既保住语篇连贯，又能在真正的岔路口放手让 base 跑多样性。更实用的是只需调单一阈值 $\gamma$ 就能扫出从"低多样-高质量"到"高多样-中等质量"的整条曲线，给上层应用留了一个连续可调的旋钮，而不是只给一个固定工作点。
 
 ### 损失函数 / 训练策略
-不训练。所有 router 都是无参的启发式，唯一的连续超参是阈值 $\gamma$，相当于一个用户面向的"多样性温度"，无需校准也无需学习。论文显式留下 learned router 作为 future work，理由是多样性本身多维（lexical / semantic / discourse），单一标量损失反而会引起目标冲突和训练不稳。
+不训练。所有 router 都是无参启发式，唯一连续超参是阈值 $\gamma$，相当于面向用户的"多样性温度"，既不用校准也不用学习。论文显式把 learned router 留作 future work，理由是多样性本身是多维的（lexical / semantic / discourse），用单一标量损失去学反而会引起目标冲突、训练不稳。
 
 ## 实验关键数据
 

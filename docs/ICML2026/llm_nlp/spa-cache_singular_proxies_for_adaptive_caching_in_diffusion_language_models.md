@@ -40,36 +40,24 @@ SPA-Cache 把扩散语言模型 (DLM) 中"哪些 token 需要更新"的判定，
 ## 方法详解
 
 ### 整体框架
-单个 Transformer block 的 SPA-Cache 工作流分三个阶段（Algorithm 1）：
-
-- **Phase 1 更新识别**：输入隐状态 $H \in \mathbb{R}^{N \times d}$ → 经低维投影 $f_\text{proxy}: \mathbb{R}^d \to \mathbb{R}^r$ 得到 proxy 标识 → 与上一步缓存的 proxy 比余弦相似度 → 按当前层预算 $\rho(l)$ 选 Top-$k$（$k = N\rho$）最不相似的索引集 $\mathcal{I}$。
-- **Phase 2 部分缓存注意力**：只对 $\mathcal{I}$ 中的 token 算 $Q_\mathcal{I}, K_\mathcal{I}, V_\mathcal{I}$，scatter 写回缓存 $K^c, V^c$；sparse query 对完整 KV 缓存做 attention 得稀疏输出。
-- **Phase 3 FFN 与输出更新**：sparse attention 输出过 FFN，scatter 写回输出缓存 $H^c$，未选中的 token 直接复用缓存。
-
-总体效果：每层 attention 与 FFN 的计算量从 $O(N)$ 降到 $O(k) = O(N \rho)$，且 $\rho$ 按层自适应。
+SPA-Cache 要解决的核心问题是：DLM 每个解码步都对全序列重算 forward，但其实大部分 token 的隐状态在步间几乎不变，只要找出真正"漂移"的少数 token 重算、其余复用缓存就能省下大量计算——难点在于"找漂移 token"这件事本身别太贵，而且不同层该重算的比例还不一样。围绕这两点，单个 Transformer block 的 SPA-Cache 工作流分三阶段（Algorithm 1）：先做**更新识别**，把输入隐状态 $H \in \mathbb{R}^{N \times d}$ 经低维投影 $f_\text{proxy}: \mathbb{R}^d \to \mathbb{R}^r$ 得到 proxy 标识，与上一步缓存的 proxy 比余弦相似度，按当前层预算 $\rho(l)$ 选出 Top-$k$（$k = N\rho$）最不相似的索引集 $\mathcal{I}$；再做**部分缓存注意力**，只对 $\mathcal{I}$ 里的 token 算 $Q_\mathcal{I}, K_\mathcal{I}, V_\mathcal{I}$ 并 scatter 写回缓存 $K^c, V^c$，让这批 sparse query 对完整 KV 缓存做 attention；最后**更新 FFN 与输出**，sparse attention 输出过 FFN 后 scatter 写回输出缓存 $H^c$，未选中的 token 直接复用缓存。这样每层 attention 与 FFN 的计算量从 $O(N)$ 降到 $O(k) = O(N\rho)$，而 $\rho$ 还按层自适应。下面三个设计分别回答"该用什么信号选 token""怎么把选 token 这步算便宜""每层该选多少"。
 
 ### 关键设计
 
-1. **理论奠基：为什么 Value 是合法的"漂移指示器"**：
+**1. 理论奠基：把"用 Value 选 token"从经验升成有上界的保证。**
 
-    - 功能：从理论上回答"为什么用 Value 状态而不是 Query/Key/attention output 来判断 token 该不该更新"。
-    - 核心思路：Theorem 3.1 证明 attention output 的余弦不相似度被 Value 不相似度上界控制：$1 - \mathcal{S}_\cos(h_i^t, h_i^{t+1}) \le C \cdot (1 - \mathcal{S}_\cos(v_i^t, v_i^{t+1})) + \epsilon$；Theorem 3.2 进一步证明 FFN 输出差被输入相似度上界：$\|f_\text{FFN}(h_1) - f_\text{FFN}(h_2)\|_2 \le C \cdot \sqrt{1 - \mathcal{S}_\cos(h_1, h_2)} + \epsilon$。两个定理串起来：Value 稳 → attention 稳 → FFN 稳。
-    - 设计动机：dLLM-Cache 用 Value 是经验观察，本文给出"为什么不是 Query/Key/Attn output"的回答。实证（Table 1）也证实：Value 是唯一同时保住 78.59% 精度和 164.88 TPS 的标识符；attn output 因深层各向异性 (anisotropy) 把不同 token 投影到同一窄锥，精度掉到 73.92%。
+前作 dLLM-Cache 监控 Value 状态漂移来选 token 纯属经验观察，没人说清为什么不用 Query/Key 或 attention output。本文用两个定理把这条经验串成一条因果链：Theorem 3.1 证明 attention output 的余弦不相似度被 Value 不相似度上界控制，$1 - \mathcal{S}_\cos(h_i^t, h_i^{t+1}) \le C \cdot (1 - \mathcal{S}_\cos(v_i^t, v_i^{t+1})) + \epsilon$；Theorem 3.2 再证 FFN 输出差被其输入相似度上界，$\|f_\text{FFN}(h_1) - f_\text{FFN}(h_2)\|_2 \le C \cdot \sqrt{1 - \mathcal{S}_\cos(h_1, h_2)} + \epsilon$。两者衔接起来就是"Value 稳 → attention 稳 → FFN 稳"，所以只要 Value 相似度高，整个 block 的输出就可以放心复用。实证（Table 1）也佐证了这个选择：Value 是唯一同时守住 78.59% 精度和 164.88 TPS 的标识符，而 attn output 因深层各向异性 (anisotropy) 把不同 token 都挤进同一窄锥、彼此难以区分，精度掉到 73.92%。这种"先证明再实现"的取法比堆 trick 更稳，也方便换 RMSNorm/LayerNorm/MoE 时直接套用 Remark 3.3。
 
-2. **奇异代理：把识别从 $d^2$ 降到 $rd$**：
+**2. 奇异代理：用截断 SVD 把"选 token"这步算便宜。**
 
-    - 功能：替代全维 Value 投影 + 余弦计算，把每步识别开销从 $O(d^3) + O(d)$ 降到 $O(rd^2) + O(r)$。
-    - 核心思路：对 Value 投影矩阵 $W \in \mathbb{R}^{d \times d}$ 做 SVD：$W \approx U \Lambda V^\top$，取前 $r$ 个奇异向量构造截断投影 $W_r = \Lambda_r V_r^\top \in \mathbb{R}^{r \times d}$，proxy 为 $f_\text{proxy}(h_i) = W_r h_i$。Theorem 3.4 证明截断后相似度误差被 $2(\lambda_{r+1}/\lambda_r)^2$ 上界控制，且与具体输入无关。
-    - 设计动机：LLaDA-8B 的 $d=4096$，全维相似度反而吃掉稀疏收益；用 $r=128$（缩小 32 倍）后 TPS 从 164.88 → 179.43，精度从 78.59 → 78.23 几乎无损（Table 5），$r=64$ 会掉点，$r=512$ 几乎无损但加速少，所以 128 是甜点。
+识别开销和稀疏收益之间天然冲突——降低更新比例能省下 attention/FFN 计算，但在 $d=4096$ 维 Value 上算余弦相似度本身就把省下的算力吃掉一大半。奇异代理的做法是：对 Value 投影矩阵 $W \in \mathbb{R}^{d \times d}$ 做 SVD 得 $W \approx U \Lambda V^\top$，只取前 $r$ 个奇异向量构造截断投影 $W_r = \Lambda_r V_r^\top \in \mathbb{R}^{r \times d}$，proxy 即 $f_\text{proxy}(h_i) = W_r h_i$，把每步识别开销从 $O(d^3) + O(d)$ 压到 $O(rd^2) + O(r)$。它之所以可靠，是因为 Theorem 3.4 证明截断只引入被 $2(\lambda_{r+1}/\lambda_r)^2$ 上界控制、且与具体输入无关的相似度误差——奇异谱衰减越快，低维子空间越能忠实保留原相似度结构。注意这里 SVD 的用法和常见的低秩权重压缩不同：权重本身没被改，只是借前 $r$ 个奇异方向构造一个廉价的比较代理。$r$ 取 128（比全维缩 32 倍）是甜点：TPS 从 164.88 升到 179.43，精度从 78.59 仅降到 78.23 几乎无损（Table 5）；$r=64$ 会开始掉点，$r=512$ 虽无损但加速幅度变小。
 
-3. **分段高斯自适应预算**：
+**3. 分段高斯自适应预算：把固定的更新比例换成跟漂移分布走的曲线。**
 
-    - 功能：把每层更新比例 $\rho(l)$ 从常数变成跟着"漂移分布"走的曲线，保持平均预算不变但把更多算力分给中间高方差层。
-    - 核心思路：用峰值在 $l_p$ 的分段高斯函数参数化层级预算 $\rho(l) = \rho_p \exp\!\left(\ln(\rho_1/\rho_p) \cdot ((l-l_p)/(l_p-1))^2\right)$（$l \le l_p$）/对称分支（$l > l_p$）；$\rho_p$ 是峰值比例（默认 25%），$\rho_1, \rho_L$ 是首末层比例。
-    - 设计动机：Figure 2 显示漂移 token 比例在层上呈不对称钟形——浅层做 embedding、深层做整合都很稳，中间是 transformation 高峰。固定 $\rho=25\%$ 给浅深层浪费，给中间不够；自适应分配后平均 $\bar\rho$ 从 25% 降到 16%，但中间层仍按需配峰值预算，精度不掉、吞吐反升（Table 4：TPS 179→189）。
+dLLM-Cache 给所有层统一一个更新比例 $\rho$，相当于把固定预算平均摊到每层，但 Figure 2 显示漂移 token 比例沿层呈不对称钟形——浅层做 embedding 变换、深层做整合都很稳，中间层才是 transformation 高峰。统一 $\rho=25\%$ 会在浅/深层浪费预算、又喂不饱中间高方差层。本文改用峰值在 $l_p$ 的分段高斯函数参数化层级预算 $\rho(l) = \rho_p \exp\!\left(\ln(\rho_1/\rho_p) \cdot ((l-l_p)/(l_p-1))^2\right)$（$l \le l_p$，$l > l_p$ 用对称分支），其中 $\rho_p$ 是峰值比例（默认 25%）、$\rho_1, \rho_L$ 是首末层比例。这样只用 4 个超参 $\{\rho_p, l_p, \rho_1, \rho_L\}$ 就刻画出"中间高、两头低"的归纳偏置，避免逐层学标量带来的搜索/过拟合。效果是平均预算 $\bar\rho$ 从 25% 降到 16%、但中间层仍按需配峰值预算，精度不掉反而吞吐再升（Table 4：TPS 179→189）。
 
 ### 损失函数 / 训练策略
-**完全无训练**：SPA-Cache 是 inference-time plug-in，不改 DLM 权重，只在每层加 proxy 投影 + Top-$k$ 选择。所有超参（$r=128$、$\rho_p=0.25$、分段高斯的 $l_p, \rho_1, \rho_L$）按模型一次性配置即可。
+SPA-Cache 完全无训练，是 inference-time plug-in，不改 DLM 权重，只在每层加 proxy 投影 + Top-$k$ 选择。所有超参（$r=128$、$\rho_p=0.25$、分段高斯的 $l_p, \rho_1, \rho_L$）按模型一次性配置即可。
 
 ## 实验关键数据
 

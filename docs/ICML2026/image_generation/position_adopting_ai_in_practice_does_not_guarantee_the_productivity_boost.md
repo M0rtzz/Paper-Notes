@@ -40,39 +40,27 @@ tags:
 
 ## 方法详解
 
-立场论文本身不是算法工作，"方法"指的是它对 Gries-Naudé 模型的修订框架。原始模型描述的是任务区间 $[N-1, N]$ 上每个任务 $z$ 由标准劳动力或 IT 服务（含 AI）生产，CES 聚合为人服务总产出 $H$，并定义自动化阈值 $N_{IT}$ 区分可/不可由 AI 介入的任务。
+立场论文不是算法工作，这里的"方法"指它对 Gries-Naudé (2022) 偏均衡模型的修订框架。要看懂修订，先要有原模型的底图：任务被排在连续区间 $[N-1, N]$ 上，每个任务 $z$ 既可由标准劳动力生产、也可由 IT 服务（含 AI）生产，二者按 CES 聚合成人服务总产出 $H$；模型再定义一个自动化阈值 $N_{IT}$，把区间切成"AI 能介入"和"只能靠人"两段。原模型的毛病在于，决定能不能把 AI 能力变现的 $\gamma_{IT}$、$b_{IT}$、$N_{IT}$ 全被当成纯技术外生量。本文的整条思路就是：把这三个外生量分别拆开，叠上组织、个体、时间三个维度的调制项，让生产函数自己长出异质性。
 
 ### 整体框架
-作者先定性识别五个调节因子，然后给出五条修订（组织有效性 $\Omega$、能力调整生产率 $\tilde\gamma_L, \tilde\gamma_{IT}$、学习曲线 $\lambda_i(\tau)$、内生任务边界 $\tilde N_{IT}$），最后把它们拼成"个体—任务—时间"三维的修订人服务生产函数 $\tilde h_i(z,\tau)$，再 CES 聚合到子组织级 $\tilde H(\tau)$。整个框架的输入是组织+个体的可观测属性，输出是一个能解释异质性、能预测"投了 AI 但生产率没涨"的生产函数。
+作者先定性识别五个被传统模型忽略的调节因子（人员组成、个体基线能力、学习曲线、公平使用激励、目标灵活性），再把它们压缩成四个可塞进数学骨架的调制器——组织有效性 $\Omega$、能力调整生产率 $\tilde\gamma_L/\tilde\gamma_{IT}$、学习曲线 $\lambda_i(\tau)$、内生任务边界 $\tilde N_{IT}$。这四块最终拼成一个"个体—任务—时间"三维的修订人服务生产函数 $\tilde h_i(z,\tau)$，再 CES 聚合到子组织级 $\tilde H(\tau)$。框架的输入是组织与个体的可观测属性，输出是一个能解释"为什么同样投 AI、不同组织产出差距巨大"的生产函数。下面三个关键设计正好对应"组织层 → 个体层 → 时间层"的三次修订。
 
 ### 关键设计
 
-1. **组织有效性修正 $\Omega = \omega_C \cdot \omega_I$**:
+**1. 组织有效性 $\Omega = \omega_C \cdot \omega_I$：把"有多少 AI 专家"和"专家够不够得着任务"分开。** 原模型只有一个专家可得性 $b_{IT}$，默认招了专家就等于专家能帮上忙。作者引入两个折扣因子刻画组织内部摩擦：$\omega_C \in [0,1]$ 是组织结构对齐度（扁平的 AI 任务组接近 1，层级深、政策与一线脱节的组织趋近 0），$\omega_I \in [0,1]$ 是激励对齐度（如果只有少数人拿到"AI 转型"奖励，这一项就塌缩，因为不对称的竞争会侵蚀同侪间公平使用 AI 的动机）。二者相乘得到 $\Omega$，作为 $b_{IT}$ 的折扣，于是有效可得性 $\tilde b_{IT}(z) = \Omega \cdot b_{IT}(z)$。这一项直接回应了 Calvino-Fontanelli 的观察——"已经强的公司 AI 收益更大"未必是因为它们有更多 AI 专家，而是它们的组织结构让专家真能触达一线执行者。
 
-    - 功能：把"AI 专家头数 $b_{IT}$"和"有效专家可及度 $\tilde b_{IT}$"区分开，刻画组织内部摩擦。
-    - 核心思路：定义 $\omega_C \in [0,1]$ 为组织结构对齐度（扁平 AI 任务组接近 1，层级深、政策与一线脱节趋近 0），$\omega_I \in [0,1]$ 为激励对齐度（只有少数人有"AI 转型"奖励则塌缩，因为竞争不对称会侵蚀同侪公平使用动机）；二者相乘后作为 $b_{IT}$ 的折扣因子，得 $\tilde b_{IT}(z) = \Omega \cdot b_{IT}(z)$。
-    - 设计动机：解释了 Calvino-Fontanelli 观察——"已经强的公司 AI 收益更大"不是因为它们有更多 AI 专家，而是组织结构让专家能真正触达任务执行者。
+**2. 能力-任务交互 $\phi(z,\kappa_i)$ 与可靠边界 $N_R$：让同一个工具对同一个人在不同任务上效果相反。** 单一的 $\gamma_{IT}/\gamma_L$ 比率描述不了"新手暴涨、专家略跌"这种非单调关系，作者于是引入个体基线能力 $\kappa_i \in [0,1]$，并把可自动化区间 $[N-1, N_{IT}]$ 进一步切成两段——"AI 输出可靠区" $[N-1, N_R]$ 和"AI 输出不可靠区" $(N_R, N_{IT}]$，这正是 Dell'Acqua "jagged frontier" 的形式化。在可靠区内有 $\partial \phi_{\text{in}}/\partial \kappa_i \leq 0$，即基线越弱收益越大（对应 Brynjolfsson 2025 新手获益最多）；在不可靠区内则反过来 $\partial \phi_{\text{out}}/\partial \kappa_i > 0$，因为只有高能力者才能识别并修正 AI 的错误。与此同时，裸劳动生产率也被基线能力调制成 $\tilde\gamma_L(z,\kappa_i) = \gamma_L(z) \cdot g(\kappa_i)$，让 $g$ 对 $\kappa_i$ 单调递增。一个分段函数加一个个体参数，就把"非单调的异质收益"内生进了模型。
 
-2. **能力-任务交互函数 $\phi(z,\kappa_i)$ 与可靠边界 $N_R$**:
+**3. 学习曲线 $\lambda_i(\tau) = 1 - e^{-\rho_i \tau}$ 与灵活阈值 $\tilde N_{IT}$：把时间演化和组织僵化塞进同一处。** 作者以采纳后时间 $\tau$ 作为比较静态参数，给个体 $i$ 定义学习进度 $\lambda_i(\tau) \in [0,1)$，学习率 $\rho_i$ 在个体间异质（学得快的人越拉越开，是 Matthew 效应风险的来源）；把能力项与学习项一起乘进去，就得到有效 AI 任务生产率 $\tilde\gamma_{IT}(z,\kappa_i,\tau) = \gamma_{IT}(z) \cdot \phi(z,\kappa_i) \cdot \lambda_i(\tau)$。最后再用组织目标灵活度 $F \in [0,1]$ 把纯技术阈值 $N_{IT}$ 收缩成有效阈值 $\tilde N_{IT} = (1-F)(N-1) + F \cdot N_{IT}$：$F=1$ 时还原原模型，$F<1$ 则表示僵化的考核让组织实际上只把技术上可自动化任务里的一小段交给了 AI。这一步把原本纯技术给定的 $N_{IT}$ 和"领导愿不愿意按 AI 能力重排 KPI"挂上了钩，从而解释为什么同样技术栈下，不同组织的实际 AI 渗透率能差几个量级。
 
-    - 功能：刻画 Dell'Acqua "jagged frontier"——同一个 AI 工具对同一个人在不同任务上效果可以相反。
-    - 核心思路：引入个体基线能力 $\kappa_i \in [0,1]$，把任务 $[N-1, N_{IT}]$ 进一步切成"AI 输出可靠区" $[N-1, N_R]$ 和"AI 输出不可靠区" $(N_R, N_{IT}]$。可靠区内 $\partial \phi_{\text{in}}/\partial \kappa_i \leq 0$（新手收益更大，Brynjolfsson 2025），不可靠区内 $\partial \phi_{\text{out}}/\partial \kappa_i > 0$（高能力者才能识别并修正 AI 错误）。同时 $\tilde\gamma_L(z,\kappa_i) = \gamma_L(z) \cdot g(\kappa_i)$ 让基线能力对裸劳动生产率单调递增。
-    - 设计动机：单一 $\gamma_{IT}/\gamma_L$ 比率描述不了"新手暴涨、专家略跌"的异质性；分段函数+个体参数把这种非单调关系内生化。
-
-3. **学习曲线 $\lambda_i(\tau) = 1 - e^{-\rho_i \tau}$ 与灵活阈值 $\tilde N_{IT}$**:
-
-    - 功能：把"AI 收益随时间演化"和"组织目标僵化程度"塞进同一个框架。
-    - 核心思路：以采纳后时间 $\tau$ 作为比较静态参数，定义个体 $i$ 的学习进度 $\lambda_i(\tau) \in [0,1)$，学习率 $\rho_i$ 异质（Matthew 效应风险）；最终有效 AI 任务生产率 $\tilde\gamma_{IT}(z,\kappa_i,\tau) = \gamma_{IT}(z) \cdot \phi(z,\kappa_i) \cdot \lambda_i(\tau)$。再用组织灵活度 $F \in [0,1]$ 把技术阈值 $N_{IT}$ 收缩为有效阈值 $\tilde N_{IT} = (1-F)(N-1) + F \cdot N_{IT}$；$F=1$ 还原原模型，$F<1$ 表示僵化考核让组织只用 AI 做了一小段技术上可自动化的任务。
-    - 设计动机：原模型的 $N_{IT}$ 是纯技术给定量，本文用 $F$ 把它和"领导是否愿意按 AI 能力重排 KPI"挂钩，从而解释为什么同样技术栈下不同组织实际 AI 渗透率差几个量级。
-
-把上述三块合并，得到核心修订式（公式 9）：
+把组织层、个体层、时间层三块合并，就得到核心修订式（论文公式 9）：
 
 $$\tilde h_i(z,\tau) = \begin{cases} \tilde\gamma_L(z,\kappa_i) l_i(z) A_L + \tilde\gamma_{IT}(z,\kappa_i,\tau) \cdot \Omega \cdot b_{IT}(z) A_{IT} D, & z \in [N-1, \tilde N_{IT}] \\ \tilde\gamma_L(z,\kappa_i) l_i(z) A_L, & z \in (\tilde N_{IT}, N] \end{cases}$$
 
-再做 CES 聚合 $\tilde H(\tau) = \big( \int_{N-1}^N (\sum_i \tilde h_i(z,\tau))^{(\sigma-1)/\sigma} dz \big)^{\sigma/(\sigma-1)}$ 得到子组织（team / department）级人服务总产出。
+可自动化段里 AI 与人力并行贡献、且 AI 项被 $\Omega$ 折扣，超出有效阈值的段则只剩纯人力。再对个体求和、对任务做 CES 聚合 $\tilde H(\tau) = \big( \int_{N-1}^N (\sum_i \tilde h_i(z,\tau))^{(\sigma-1)/\sigma} dz \big)^{\sigma/(\sigma-1)}$，就得到子组织（team / department）级的人服务总产出。
 
 ### 论证策略
-本文不做实证或仿真，立论方式是：(i) 引用现有实证（Brynjolfsson、Dell'Acqua、Calvino-Fontanelli、Acemoglu）作为"现状反例"；(ii) 在 Gries-Naudé 数学骨架上做最小侵入修订，保留原模型所有定性结论；(iii) 用产业 + 教育两个对照案例落地框架；(iv) 在第 4 节正面回应三类反对意见——技术决定论、测量问题论、工资成本论。
+本文不做实证或仿真，立论靠四步走：先引用现有实证（Brynjolfsson、Dell'Acqua、Calvino-Fontanelli、Acemoglu）作为"现状反例"，说明线性外推站不住；再在 Gries-Naudé 数学骨架上做最小侵入式修订，保留原模型所有定性结论；接着用产业与教育两个对照案例把框架落地；最后在第 4 节正面回应三类反对意见——技术决定论、测量问题论、工资成本论——把对手的论点纳入自己的框架重新解释，而不是简单否定。
 
 ## 实验关键数据
 

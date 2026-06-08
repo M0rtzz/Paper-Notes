@@ -45,23 +45,22 @@ tags:
 第二部分是 ReVa。它不是从零设计一个完整 unlearning 算法，而是在 RMU 等 feature-randomized unlearned model 之后做 residual vector alignment。具体做法是先从 RMU 模型对 20 个 out-of-knowledge prompts 的拒答行为中抽取 refusal state，再在 forget-set inputs 上把中间层残差激活拉向这个 refusal vector，同时用 retain loss 保护通用能力。论文发现 Zephyr 上对齐 layer 18 / 25，尤其更新 MLP down-projection 参数效果最好。
 
 ### 关键设计
-1. **Honest unlearning 的评测定义**:
 
-    - 功能：区分“忘了”“拒答了”和“诚实地忘了”。
-    - 核心思路：retain set 要保留 utility 与 honesty；forget set 不只要求 ACC 降低，还要求模型在自由问答里拒绝回答或表达不确定，并且在二次追问、同义改写或格式变化下保持一致。若模型编造替代事实、第一次说不知道第二次又回答，均视为 dishonest behavior。
-    - 设计动机：安全场景中，随机错误或自信幻觉都可能误导用户。unlearning 的理想终点不应是“模型输出坏掉”，而应是“模型知道目标知识已不可用，并能稳定说出来”。
+**1. Honest unlearning 的评测定义：把“忘了”“拒答了”“诚实地忘了”三件事彻底分开。**
 
-2. **Q&A 与 MCQ 双通道诚实指标**:
+现有评测把准确率降低或拒答率升高当成遗忘成功，但低准确率可能只是随机输出或能力崩溃，高拒答率也可能只是套了个模板。作者重新定义目标：retain set 上模型要同时保住 utility 和 honesty，forget set 上不仅要 ACC 下降，还要求模型在自由问答里主动拒绝或表达不确定，并且在二次追问、同义改写、格式变化下保持这一立场。只要模型编造替代事实、或第一次说不知道第二次又答了，都判为 dishonest behavior。这条定义的价值在于把理想终点从“模型输出坏掉”改成“模型知道目标知识已不可用，并能稳定地说出来”——安全场景里自信幻觉的危害并不比直接记忆小。
 
-    - 功能：检测自由问答和选择题场景下的虚假拒答。
-    - 核心思路：Q&A 侧用 RR 衡量初次拒答，用 QAMRC 衡量第二轮追问时是否继续拒答 / 确认不知道，并定义 $RR2R=RR \times QAMRC$。MCQ 侧给选项 E 加 “I don’t know”，用 CIR 统计选择 IDK 的比例；再把 E 替换成无关句子计算 COR，若 CIR 和 COR 都高，说明模型只是偏好位置 E，而不是理解 IDK 语义。
-    - 设计动机：IDK fine-tuning 可以把模型训练成看到某类问题就说不知道，但模型可能仍保留知识；gradient-ascent 方法也可能因为 logits 坍缩而偏好 E 选项。必须用多轮和反事实选项拆掉这些假象。
+**2. Q&A 与 MCQ 双通道诚实指标：用多轮和反事实选项拆穿“假装拒答”。**
 
-3. **ReVa：Refusal-Vector Alignment**:
+虚假拒答在两种场景下各有花样，于是分两路检测。Q&A 侧用 RR 衡量初次拒答率，用 QAMRC 衡量第二轮追问时模型是否还坚持不知道，并把两者乘起来定义稳定拒答指标 $RR2R = RR \times QAMRC$——只有经得起追问的拒答才算数。MCQ 侧给选项加一个 E（“I don't know”），先用 CIR 统计选 IDK 的比例；再把 E 换成一句无关句子算 COR，若 CIR 和 COR 同时偏高，说明模型只是偏爱位置 E，根本没理解 IDK 的语义。这套设计专治两种假象：IDK 微调会把模型训成“见到某类问题就喊不知道”却仍藏着知识，gradient-ascent 方法则可能因 logits 坍缩而盲选 E，单看一次输出都识别不出来。
 
-    - 功能：让 unlearned model 在忘掉目标知识后更稳定地进入诚实拒答状态。
-    - 核心思路：先用 RMU-unlearned model 对 20 个代表性 unknown prompts 前向传播，抽取 selected transformer layers 的 residual activations，平均成 refusal vector $r$。训练时对 forget-set 输入最小化 $L_{ReVa}=E[\frac{1}{L(x)}\sum_t ||M^{(l)}_\theta(t;x)-c r||_2^2]$，同时保留 retain data 约束。
-    - 设计动机：IDK-SFT 学到的是触发词到固定拒答文本的表面映射，泛化差；残差流对齐更像激活一个高层 behavioral mode，因此更有希望在 paraphrase 和 multi-turn 下保持一致。
+**3. ReVa：把拒答从 token 模板抬升到残差流里的行为模式。**
+
+IDK-SFT 学到的是“触发词 → 固定拒答文本”的表层映射，换个问法就崩。ReVa 不重做遗忘算法，而是接在 RMU 等 feature-randomized 模型之后做残差向量对齐：先让 RMU 模型对 20 个代表性 unknown prompts 前向传播，抽取若干 transformer 层的残差激活，平均成一个 refusal vector $r$；训练时只对 forget-set 输入最小化激活到该向量的距离
+
+$$L_{ReVa}=\mathbb{E}\Big[\tfrac{1}{L(x)}\sum_t \big\| M^{(l)}_\theta(t;x)-c\,r \big\|_2^2\Big],$$
+
+同时保留 retain data 约束护住通用能力。把拒答当成一个高层 behavioral mode 来激活，而非脆弱的字符串映射，因此在 paraphrase 和多轮追问下更容易保持一致；论文发现对 Zephyr 的第 18 / 25 层、尤其更新 MLP down-projection 参数时效果最好，印证拒答更像中后层的语义控制而非底层 token 模式。
 
 ### 损失函数 / 训练策略
 实验主要在 Zephyr-7B-beta 和 Llama3-8B 上使用 WMDP-Bio。作者比较 9 个 unlearning 方法，覆盖 rejection-based、gradient-ascent-based 和 feature-randomize-based 三类，并加入 RMU+IDK 与 ReVa 等 adaptive variants。ReVa 训练时先从 20 个 OOD / unknown prompts 构造 refusal vector，再用 forget corpus 做表示对齐，用 Wikitext 等 retain data 保持语言能力；训练学习率约 $5e-5$，batch size 4，最多 150 steps，只更新 MLP down-projection 以减少对通用能力的扰动。

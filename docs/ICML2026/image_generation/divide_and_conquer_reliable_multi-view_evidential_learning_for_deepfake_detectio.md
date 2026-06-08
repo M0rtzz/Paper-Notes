@@ -41,30 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入一张人脸图，DiCoME 走两阶段流水线：
-
-1. **Divide（多视图构造）**：先用 LoRA 微调的 CLIP ViT-L/14 提取语义特征 $f_s$；再用一个轻量 $\beta$-VAE 在特征空间（而非像素空间）把 $f_s$ 投影到"语义流形"上得到重建 $f_c$；残差 $f_r = f_s - f_c$ 即原始异常信号，但还混着语义泄漏；最后用**几何正交投影**把 $f_r$ 中沿 $f_s$ 方向的分量减掉，得到纯净伪迹特征 $f_a$。
-2. **Conquer（证据融合决策）**：把 $f_s$ 和 $f_a$ 分别送入两个 evidential head（MLP+Softplus），生成 Dirichlet 参数 $\alpha^v$，导出 subjective opinion $T^v = \{b^v, u^v\}$（belief + uncertainty）；用 Dempster–Shafer orthogonal sum $T^1 \oplus T^2$ 融合，得到全局 belief 和 uncertainty；推理时取 $p_k = b_k + u/K$ 作为类概率，$u$ 作为风险拒识分数。
+DiCoME 的核心思想是"先分、后合"：与其用单个 backbone 把语义和伪迹一起编码再二分类，不如先在特征层面把伪迹从语义里硬性剥离成两路解相关的"专家视图"，再在决策层面用证据理论显式仲裁两个专家的分歧。具体落成两阶段流水线：**Divide** 阶段用 LoRA 微调的 CLIP ViT-L/14 提语义特征 $f_s$，经几何净化得到纯净伪迹特征 $f_a$；**Conquer** 阶段把 $f_s$、$f_a$ 各送入一个 evidential head 转成带不确定性的 subjective opinion，再用 Dempster–Shafer 组合规则融合，输出类概率 $p_k = b_k + u/K$ 以及可用于风险拒识的不确定性 $u$。
 
 ### 关键设计
 
-1. **Geometric View Purification（几何视图净化）**：
+**1. 几何视图净化：把伪迹严格定义为语义的正交补**
 
-    - 功能：把 CLIP 语义残差 $f_r$ 中"伪装成异常的语义泄漏"硬性剥离，得到与 $f_s$ 严格正交的纯净伪迹特征 $f_a$。
-    - 核心思路：先用 $\beta$-VAE 在 CLIP 特征空间重建一个"语义流形版本" $f_c$（重建损失用 cosine 距离而非 $\ell_2$，因为 CLIP embedding 是球面的、信息在方向上）；得到原始残差 $f_r = f_s - f_c$ 后，按向量投影定理算出 $f_r$ 沿 $f_s$ 方向的分量 $f_r^{\parallel} = \frac{\langle f_r, f_s \rangle}{\|f_s\|_2^2} f_s$，再减掉得到 $f_a = f_r - f_r^{\parallel}$。这一步保证 $\langle f_a, f_s \rangle = 0$，即 $f_a$ 落在语义子空间的正交补 $S^{\perp}$ 上。
-    - 设计动机：以往多视图方法（FDML 的 attention 引导、Effort 的全局 SVD）都是软约束或粗粒度全局约束，无法逐样本地保证解相关。把"伪迹 = 语义正交补"作为几何硬约束，等于给"Structure Expert"一个免疫语义干扰的特征空间，从根上消解 Semantic Masking Effect，也为后续 DS 融合提供"解相关证据流"这一理论前提。
+针对的痛点是 Semantic Masking Effect——CLIP 残差里看似是异常的信号其实大量混着语义泄漏，以往 FDML 的 attention 引导、Effort 的全局 SVD 要么是软约束、要么是粗粒度的整体低秩假设，都无法逐样本保证两路视图真正解相关。DiCoME 的做法是先用一个轻量 $\beta$-VAE 在 CLIP 特征空间（而非高维像素空间）把 $f_s$ 重建成"语义流形版本" $f_c$，重建用 cosine 对齐 $\mathcal{L}_{align} = 1 - \cos(f_s, f_c)$ 而非 $\ell_2$——因为 CLIP embedding 在球面上，信息编码在方向而非幅值里。得到原始残差 $f_r = f_s - f_c$ 后，再按向量投影定理减掉它沿 $f_s$ 方向的分量 $f_r^{\parallel} = \frac{\langle f_r, f_s \rangle}{\|f_s\|_2^2} f_s$，得到 $f_a = f_r - f_r^{\parallel}$。这一减保证 $\langle f_a, f_s \rangle = 0$，即 $f_a$ 落在语义子空间的正交补 $S^{\perp}$ 上。把"伪迹 = 语义正交补"做成一行向量投影的几何硬约束，等于给 Structure Expert 一个免疫语义干扰的特征空间，从根上消解掉 Semantic Masking Effect，也为后续证据融合提供了"两路解相关证据"这一理论前提。
 
-2. **Evidential Opinion Generation（证据观点生成）**：
+**2. 证据观点生成：用 Dirichlet 参数化把"证据有多少"显式编码**
 
-    - 功能：把每个视图的特征转成 Dirichlet 分布上的 subjective opinion，让模型不仅给出类概率，还给出 epistemic uncertainty。
-    - 核心思路：对视图 $v \in \{1, 2\}$，evidential head 输出非负证据向量 $e^v = \text{Softplus}(W^v f_v + C^v)$；Dirichlet 参数 $\alpha_k^v = e_k^v + 1$，总强度 $S^v = \sum_k \alpha_k^v$；导出 belief $b_k^v = e_k^v / S^v$ 和 uncertainty $u^v = K/S^v$，满足 $\sum_k b_k^v + u^v = 1$。当某视图缺乏判别证据时 $e_k \to 0$，$u^v \to 1$，天然表达"我不知道"。训练时用 Bayes risk 形式的 evidential loss $\mathcal{L}_{fit} = \sum_k y_{i,k}(\psi(S_i) - \psi(\alpha_{i,k}))$，并加 KL 正则把非目标类的证据压向均匀先验，正则权重按 $\lambda_t = \min(1, t/T)$ 退火。
-    - 设计动机：Softmax 把"证据不足"和"证据冲突"两种本质不同的不确定性都压成同一个 confidence 分数，遇到 unseen attack 必然 overconfident；用 Dirichlet 参数化能把"有多少证据"显式编码进 $S^v$，为下一步 DS 融合提供数学上 well-defined 的 belief/uncertainty。
+Softmax 的问题是把"证据不足"和"证据冲突"两种本质不同的不确定性都压成同一个 confidence 分数，遇到 unseen attack 必然 overconfident。DiCoME 改用 Subjective Logic：对视图 $v \in \{1,2\}$，evidential head 输出非负证据 $e^v = \text{Softplus}(W^v f_v + C^v)$，构成 Dirichlet 参数 $\alpha_k^v = e_k^v + 1$、总强度 $S^v = \sum_k \alpha_k^v$，进而导出 belief $b_k^v = e_k^v / S^v$ 与 uncertainty $u^v = K/S^v$，二者满足 $\sum_k b_k^v + u^v = 1$。这样当某视图缺乏判别证据时 $e_k \to 0$、$u^v \to 1$，模型天然能说出"我不知道"，而"有多少证据"被显式写进 $S^v$，给下一步融合提供了数学上 well-defined 的 belief/uncertainty。训练用 Bayes risk 形式的 evidential loss $\mathcal{L}_{fit} = \sum_k y_{i,k}(\psi(S_i) - \psi(\alpha_{i,k}))$，并加 KL 正则把非目标类证据压向均匀先验，正则权重按 $\lambda_t = \min(1, t/T)$ 退火以避免训练早期过度惩罚。
 
-3. **Conflict-Aware Evidential Fusion（冲突感知证据融合）**：
+**3. 冲突感知证据融合：让两个专家的分歧直接抬高不确定性**
 
-    - 功能：用 Dempster–Shafer 组合规则把两个专家的 opinion 融合成最终决策，并把视图间冲突显式转换为不确定性。
-    - 核心思路：融合公式为 $b_k = \frac{1}{1-\mathcal{C}}(b_k^1 b_k^2 + b_k^1 u^2 + b_k^2 u^1)$，$u = \frac{u^1 u^2}{1-\mathcal{C}}$，其中冲突系数 $\mathcal{C} = \sum_{i \ne j} b_i^1 b_j^2$ 量化两视图分歧。三种情形被自然处理：(a) **一致放大**：两视图都强信且方向一致时 $b_k^1 b_k^2$ 占主导，融合 belief 协同增长，$u$ 以乘积速率衰减；(b) **知识互补**：一方强信另一方无知时 cross-term $b_k^1 u^2$ 让强信方"代为投票"；(c) **冲突感知**：两视图相反时 $\mathcal{C}$ 显著上升，normalization 抑制 belief 同时抬高 $u$，给出可拒识的风险信号而不是盲目硬判。
-    - 设计动机：常用的均值/拼接融合会把冲突信息"平均掉"，反而让模型对 hard sample 更自信。DS 融合在这里的关键不是"加权平均"，而是嵌入了一套显式的"如何处理证据冲突"的逻辑，正好接住第 1、2 步构造的解相关解耦视图。
+常用的均值/拼接融合会把冲突信息"平均掉"，反而让模型对 hard sample 更自信。DiCoME 改用 Dempster–Shafer 组合规则 $T^1 \oplus T^2$：$b_k = \frac{1}{1-\mathcal{C}}(b_k^1 b_k^2 + b_k^1 u^2 + b_k^2 u^1)$、$u = \frac{u^1 u^2}{1-\mathcal{C}}$，其中冲突系数 $\mathcal{C} = \sum_{i \ne j} b_i^1 b_j^2$ 量化两视图的分歧程度。这套规则自然处理三种情形：两视图都强信且方向一致时，$b_k^1 b_k^2$ 项占主导，融合 belief 协同放大、$u$ 以乘积速率衰减（一致放大）；一方强信另一方无知时，cross-term $b_k^1 u^2$ 让强信方"代为投票"（知识互补）；两视图相反时 $\mathcal{C}$ 显著上升，归一化既抑制 belief 又抬高 $u$，给出可拒识的风险信号而非盲目硬判（冲突感知）。关键不在于"换了 Dirichlet 输出"，而在于这套规则嵌入了一套显式的"如何处理证据冲突"的逻辑，正好接住前两步构造出的解相关解耦视图——unseen attack 恰恰会让两视图给出矛盾意见，从而被识别为高不确定性。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_{total} = \mathcal{L}_{edl} + \lambda_{vae} \mathcal{L}_{vae}$，其中 $\mathcal{L}_{vae} = \mathcal{L}_{align} + \beta \mathcal{L}_{kld}$，$\mathcal{L}_{align} = 1 - \cos(f_s, f_c)$ 强制 $\beta$-VAE 在角度而非幅值上对齐 CLIP 特征，$\mathcal{L}_{kld}$ 是标准 VAE 的高斯先验 KL。骨干为 CLIP ViT-L/14，LoRA 微调；AdamW lr=1e-4，batch 128，单卡 A100；只在 FaceForensics++ c23 上训练，零样本迁移到所有评测集；推理用 video-level AUC。

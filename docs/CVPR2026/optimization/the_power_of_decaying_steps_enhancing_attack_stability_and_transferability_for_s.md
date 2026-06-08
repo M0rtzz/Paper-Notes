@@ -40,33 +40,43 @@ tags:
 
 ## 方法详解
 
-### 核心思路：从 Sign 到坐标级梯度下降
+### 整体框架
 
-I-FGSM 第 $i$ 个坐标的更新可重写为：
+对抗样本生成本质是在 $\ell_\infty$ 球内最大化分类损失的约束优化问题，而 I-FGSM、MI-FGSM、PGD 这类 sign-based 优化器是事实标准——每步只取梯度符号、按固定步长 $\alpha$ 前进。本文的整体思路是先换一个等价视角：把这些优化器看成"坐标级梯度下降"，从而暴露出它们藏在 sign 算子背后的真实步长其实是发散的；再把 AdaGrad/AMSGrad 修复 Adam 的那套招数搬过来，给每个坐标的步长套上"只能越来越小"的约束（MDCS），把原本不收敛、不稳定的老优化器改造成有收敛保证的新优化器。整条改造不碰动量、输入变换等原有组件，只替换"步长"这一个零件。
+
+### 关键设计
+
+**1. 把 sign 操作重写成坐标级梯度下降：让"隐藏步长"现形。**
+
+sign 算子之所以难分析，是因为它丢掉了全部梯度幅度信息，表面上步长是固定的 $\alpha$。本文把 I-FGSM 第 $i$ 个坐标的更新换个写法拆开看：
+
 $$x_{t+1,i}^{adv} = x_{t,i}^{adv} + \frac{\alpha}{|\partial J / \partial x_i|} \cdot \partial J / \partial x_i$$
 
-其中 $\alpha/|\partial J/\partial x_i|$ 即为坐标级步长。该步长不受控地依赖梯度幅度，是不稳定的根源。
+这一拆就看清了：真正作用在第 $i$ 个坐标梯度方向上的步长不是 $\alpha$，而是 $\alpha/|\partial J/\partial x_i|$，它与梯度幅度成反比。当攻击逼近局部最优时梯度趋零，这个等效步长就会发散并剧烈震荡，恰好违反了优化里"步长应随迭代衰减"的基本要求——这也正解释了为什么 I-FGSM 迭代到后期成功率会从 $t=2$ 的 37.1% 崩到 $t=20$ 的 15.5%。MI-FGSM 用动量平滑了单步梯度的抖动，但步长非衰减这个根子没动，问题依旧。
 
-### MDCS 策略
+**2. MDCS：给坐标步长强行套上单调递减约束。**
 
-受 AMSGrad 启发，对 sign-based 优化器施加单调递减坐标步长约束。以 MDCS-MI 为例（Algorithm 1）：
+既然病根是步长不衰减，那就直接给它加一道闸。受 AMSGrad 用单调递减坐标步长（Monotone Decreasing Coordinate Step）修好 Adam 的启发，本文对每个坐标维护一个步长变量，每步只允许它变小、不许变大：
 
-1. **动量更新**：$\mathbf{m}_{t+1} = \beta_t \mathbf{m}_t + \nabla J(\mathbf{x}_t^{adv}) / \|\nabla J(\mathbf{x}_t^{adv})\|_1$，其中 $\beta_t = \beta \lambda^{t-1}$（衰减动量系数）
-2. **MDCS 步长**：$d_{t,i} = \min(1/|m_{t+1,i}|, \; d_{t-1,i})$，保证 $d_{t,i} \leq d_{t-1,i} \leq 1$，步长单调递减
-3. **参数更新**：$\mathbf{x}_{t+1}^{adv} = \text{Clip}_\mathbf{x}^\epsilon[\mathbf{D}_t^{-1/2}(\mathbf{x}_t^{adv} + \alpha_t \mathbf{D}_t \mathbf{m}_{t+1})]$
+$$d_{t,i} = \min(1/|m_{t+1,i}|, \; d_{t-1,i})$$
 
-### 理论保证
+这个 min 保证了 $d_{t,i} \leq d_{t-1,i} \leq 1$，于是无论梯度怎么波动，坐标步长都被钉成单调下降。以 MDCS-MI 为例，先用归一化梯度更新动量 $\mathbf{m}_{t+1} = \beta_t \mathbf{m}_t + \nabla J(\mathbf{x}_t^{adv}) / \|\nabla J(\mathbf{x}_t^{adv})\|_1$，再把上面的步长组成对角阵 $\mathbf{D}_t$ 代入参数更新：
 
-**Theorem 3**：假设目标函数 $J(\mathbf{x})$ 在约束域 $\mathbf{Q}$ 上局部凹，梯度有界 $\|\nabla J\|_1 \leq M$。设 $0 < \beta < 1$，$0 < \lambda < 1$，$\beta_t = \beta\lambda^{t-1}$，$\alpha_t = \gamma/\sqrt{t}$，则 MDCS-MI 生成的序列满足：
+$$\mathbf{x}_{t+1}^{adv} = \text{Clip}_\mathbf{x}^\epsilon[\mathbf{D}_t^{-1/2}(\mathbf{x}_t^{adv} + \alpha_t \mathbf{D}_t \mathbf{m}_{t+1})]$$
+
+这一步把"发散的等效步长"换成了"受控收缩的步长"，是整篇方法治好不稳定优化器的核心手术。
+
+**3. 衰减动量加 $O(1/\sqrt{T})$ 收敛保证：让改造有理论兜底。**
+
+光给步长加约束还不够稳，本文再让动量系数也随迭代衰减——取 $\beta_t = \beta\lambda^{t-1}$（$0 < \beta < 1$，$0 < \lambda < 1$），步长缩放设为 $\alpha_t = \gamma/\sqrt{t}$。在目标函数于约束域 $\mathbf{Q}$ 上局部凹、梯度有界 $\|\nabla J\|_1 \leq M$ 的假设下（Theorem 3），MDCS-MI 生成的平均迭代点满足：
+
 $$J(\mathbf{x}^*) - J(\bar{\mathbf{x}}^{adv}_T) \leq O(1/\sqrt{T})$$
 
-这是 sign-based 攻击优化器首次获得最优收敛率保证。证明思路借鉴了 AdaGrad/AMSGrad 的分析框架。
+这是 sign-based 攻击优化器第一次拿到最优阶的收敛率保证，证明框架直接借用了 AdaGrad/AMSGrad 的分析。它的意义在于把"多迭代反而更稳"从经验现象变成了有理论预期的结果，让前面那条不稳定曲线有了可被修复的依据。
 
-### 即插即用特性
+**4. 即插即用：只换步长这一个零件。**
 
-MDCS 是通用策略，可无缝集成到任意 sign-based 攻击中：
-- **图像分类**：MDCS-MI、MDCS-MEF、MDCS-OPS
-- **跨模态检索**：MDCS-SGA、MDCS-DRA、MDCS-SAAET
+MDCS 不是一个完整的新攻击算法，而是一个能拧进任意 sign-based 攻击的步长模块——原方法里的动量、方差调优、输入变换、跨模态对齐统统保留，只把"取 sign 加固定步长"那一环换成 MDCS 的单调递减步长。所以它能近乎零改造成本地派生出图像分类侧的 MDCS-MI / MDCS-MEF / MDCS-OPS，以及跨模态检索侧的 MDCS-SGA / MDCS-DRA / MDCS-SAAET，相当于给一批现有攻击批量做收敛性升级。
 
 ## 实验关键数据
 

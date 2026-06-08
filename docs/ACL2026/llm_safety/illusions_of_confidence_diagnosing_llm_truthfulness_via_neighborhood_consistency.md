@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分三个阶段：
-
-1. **构造 Neighbor-Enriched Dataset**：从 SimpleQA / HotpotQA / SciQ 中各取 500 条，按 STEM / Arts & Culture / Social Sciences / Sports 平衡得 2000 条时间不变事实；对每条目标 $(q^*, \mathcal{E}^*)$，用 DeepSeek-V3.2 生成"概念邻居" Neighbor Facts (NFs)，覆盖三类关系——实体前提、逻辑蕴含、主题关联（平均 7.84 条/事实），再经人工筛选与专家校对；并构造 Misleading Entity $\mathcal{E}^\dagger$ 及其 Misleading Neighbor Facts (MNFs)（平均 4.88 条/事实）用于干扰。
-2. **NCB 度量与 Stress-Test 评测**：对每条事实采样 30 次目标响应 + 每条邻居 10 次响应（$T=0.7$），按 Empirical Correctness Frequency 估 NCB；然后在两类干扰下重测——Peer Quantity（Asch 从众）和 Source Credibility（权威信源）；分 Standard / CoT / Reflection 三种推理策略。
-3. **Structure-Aware Training**：基于初始 Ans. Aug 后的 checkpoint，让 teacher 看裸问题、student 看"问题 + 邻域上下文 $C_{nq}$ 或一般噪声上下文 $C_\text{general}$"，用 KL 蒸馏强制输出分布在不同上下文下与 teacher 对齐。
+这篇论文要回答的问题是：怎么把"LLM 是不是真的知道某个事实"从"同一个问题多采样投票一致"升级成"看得见事实之间网络结构"的判断，并把这种结构性反向用作训练目标。整条 pipeline 串起来分三步走。第一步先**造数据**：从 SimpleQA / HotpotQA / SciQ 各取 500 条，按 STEM / Arts & Culture / Social Sciences / Sports 平衡成 2000 条时间不变事实，再为每条目标事实 $(q^*, \mathcal{E}^*)$ 用 DeepSeek-V3.2 生成一圈"概念邻居" Neighbor Facts（覆盖实体前提、逻辑蕴含、主题关联三类关系，平均 7.84 条/事实，经人工与专家校对），并造出 Misleading Entity $\mathcal{E}^\dagger$ 及其 Misleading Neighbor Facts（平均 4.88 条/事实）当干扰料。第二步是**度量 + 压力测试**：对每条事实采 30 次目标响应、每条邻居采 10 次（$T=0.7$），先按邻居一致性算出 NCB 分数，再在 Peer Quantity（Asch 从众）和 Source Credibility（权威信源）两类干扰下、分 Standard / CoT / Reflection 三种推理策略重测，看 NCB 高低能不能预测"被干扰后掉多少"。第三步是**把结构不变性写进训练**：teacher 看裸问题、student 看"问题 + 邻域上下文"，用 KL 蒸馏逼 student 在各种上下文下都和 teacher 的无干扰分布对齐。
 
 ### 关键设计
 
-1. **Neighbor-Consistency Belief (NCB) 度量**：
+**1. Neighbor-Consistency Belief (NCB)：用"邻居一致性"近似"信念是否结构化"的后验概率。**
 
-    - 功能：用一个标量近似"该事实属于结构化信念态的后验概率"，区分"真懂"与"碰巧记得"。
-    - 核心思路：定义信念潜变量 $\theta \in \{\mathcal{S}_\text{struct}, \mathcal{S}_\text{unstruct}\}$，把"信念是否结构化"的后验写为 $P(\theta = \mathcal{S}_\text{struct} \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \forall i, \hat{a}_i = a_i)$；用 Bayes' 公式拆出 odds = Bayes Factor × Prior Odds，并通过假设 $P((\forall i, \hat a_i = a_i) \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \mathcal{S}_\text{struct}) \gg P(\cdot \mid \mathcal{S}_\text{unstruct})$ 证明 odds $\gg 1$。实际不可观测的后验近似为 Empirical Correctness Frequency $\hat p(\hat a = a \mid q)$ 在 $\mathcal{O} = \{(q^*, \mathcal{E}^*)\} \cup NFs$ 上的某种聚合。
-    - 设计动机：用神经认知科学（语义网络互锁、Anderson 抑制控制理论）和知识编辑文献中的"anchoring in context"思想作支撑——把"信念=一个个孤立 fact" 改写为"信念=一个结构化邻居网络"，这才能解释为什么干扰那么轻易就能击穿 self-consistency 高的答案。
+self-consistency 这类 point-wise 指标只盯着"同一个问题多次采样是否一致"，根本看不到事实之间的网络结构，于是无法区分"基于结构化信念回答"和"靠孤立记忆碎片碰巧猜对"——pilot 里 self-consistency = 1.0 的 995 道题，插一句 peer 反对就从 100% 砸到 33.8%，正说明高一致性是个幻觉。NCB 的做法是把信念建模成二值潜变量 $\theta \in \{\mathcal{S}_\text{struct}, \mathcal{S}_\text{unstruct}\}$，关心的是"既答对目标、又在所有邻居上答对"时模型处于结构化态的后验 $P(\theta = \mathcal{S}_\text{struct} \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \forall i, \hat{a}_i = a_i)$。用 Bayes 公式把它拆成 odds = Bayes Factor × Prior Odds，再借一条关键假设 $P((\forall i, \hat a_i = a_i) \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \mathcal{S}_\text{struct}) \gg P(\cdot \mid \mathcal{S}_\text{unstruct})$（结构化信念下邻居才会成片答对）就能证明 odds $\gg 1$。这个后验实际不可观测，于是近似为 Empirical Correctness Frequency $\hat p(\hat a = a \mid q)$ 在观测集 $\mathcal{O} = \{(q^*, \mathcal{E}^*)\} \cup NFs$ 上的聚合——邻居答得越齐，NCB 越高。之所以这样有效，是因为它有神经认知科学（语义网络互锁、Anderson 抑制控制理论）和知识编辑里"anchoring in context"思想撑腰：人脑用相互约束的语义网络组织知识才抗干扰，把"信念 = 一堆孤立 fact"改写成"信念 = 一张结构化邻居网络"，正好解释了为什么轻轻一推就能击穿 self-consistency 高的答案。
 
-2. **Cognitive Stress-Test 协议（Asch + Source Credibility）**：
+**2. Cognitive Stress-Test 协议：借 Asch 从众与 Source Credibility 把"干扰下信念稳不稳"做成可量化实验。**
 
-    - 功能：把"模型在外部干扰下信念是否稳"操作化为可量化的实验。
-    - 核心思路：(i) **Peer Quantity** 模拟 Asch 从众实验——让目标模型先看到若干 peer agent 的对话，再答 $q^*$；分 Conflict（peer 直接给出 $\mathcal{E}^\dagger$）和 Misleading（peer 讨论 MNFs，间接 prime 错答）两个 scenario，并扫干扰 peer 数量 $N \in [1, 10]$；(ii) **Source Credibility** 模拟 HOVLAND 信源权威效应——干扰文本被包装为 Low (媒体/朋友) / Medium (博客) / High (学术/知名新闻) 三档权威度，同样分 Conflict（伪造 NFs 把主语替成 $\mathcal{E}^\dagger$）与 Misleading（在权威叙事里放 MNFs）。最终把高 NCB 与低 NCB 分桶 5% / 20% / 35% 看 Accuracy drop。
-    - 设计动机：直接借用 70 年代认知心理学的两条经典外部干扰范式，既保证生态效度，又给"何时干扰更猛"提供清晰的可控变量轴（peer 数量、权威度）；后续 Finding 3 中"单一 dissenter 就能让从众率显著下降"也直接对应 Asch 原始结论。
+光有 NCB 分数还不够，得证明它真能预测鲁棒性，这就需要一套严谨、可控的外部干扰范式。作者直接搬来 70 年代认知心理学的两条经典实验：其一是 **Peer Quantity**（模拟 Asch 从众）——让目标模型先看若干 peer agent 的对话再答 $q^*$，分 Conflict（peer 直接抛出错误实体 $\mathcal{E}^\dagger$）和 Misleading（peer 讨论 MNFs，间接 prime 错答）两种 scenario，并扫干扰 peer 数量 $N \in [1, 10]$；其二是 **Source Credibility**（模拟 Hovland 信源权威效应）——把干扰文本包装成 Low（媒体/朋友）/ Medium（博客）/ High（学术/知名新闻）三档权威度，同样分 Conflict（伪造 NFs 把主语换成 $\mathcal{E}^\dagger$）与 Misleading（在权威叙事里埋 MNFs）。最后把样本按 NCB 高低分到 5% / 20% / 35% 桶，看各桶被干扰后的 Accuracy drop。这样做既保留了经典实验的生态效度，又给"什么时候干扰最猛"提供了清晰的可控轴（peer 数量、权威度）；后面 Finding 中"只要有一个 truth-teller 就能显著压低从众率"也正好复现了 Asch 原始结论。
 
-3. **Structure-Aware Training (SAT)**：
+**3. Structure-Aware Training (SAT)：把"信念结构不变性"显式写进 loss，让新学的事实在噪声上下文里稳得住。**
 
-    - 功能：把"信念结构不变性"作为训练目标，让新学的事实在邻域上下文中保持稳定。
-    - 核心思路：teacher $\theta_T$ 冻结、student $\theta_S$ 可训，二者都从 Ans. Aug 的 checkpoint 初始化以保证起点单点性能强；对每条事实合成两类上下文——$C_{nq}$（邻居语义相关）与 $C_\text{general}$（一般噪声背景），让 student 在 $(C, x)$ 条件下的输出分布 $P_{\theta_S}(y \mid C, x)$ 与 teacher 的无上下文分布 $P_{\theta_T}(y \mid x)$ 做 KL 对齐：$\mathcal{L}_\text{KD} = \frac{1}{|C_b|}\sum_{(c, x) \in C_b} D_\text{KL}(P_T \parallel P_S)$。
-    - 设计动机：传统 SFT 只让模型记住 $(q, a)$ 对，不强制"出现噪声上下文时仍输出原答案"；SAT 把这种鲁棒性约束显式注入，相当于在 loss 层面把信念从 point-wise 改为 context-invariant。
+传统 SFT 只把 $(q, a)$ 对背下来，从不要求"出现噪声上下文时还输出原答案"，所以新学知识天生脆。SAT 把这条鲁棒性约束直接注入训练：teacher $\theta_T$ 冻结、student $\theta_S$ 可训，两者都从 Ans. Aug 的 checkpoint 初始化以保证单点性能起点够强；对每条事实合成两类上下文——$C_{nq}$（邻居语义相关）与 $C_\text{general}$（一般噪声背景），逼 student 在 $(C, x)$ 条件下的输出分布去对齐 teacher 的无上下文分布：
+
+$$\mathcal{L}_\text{KD} = \frac{1}{|C_b|}\sum_{(c, x) \in C_b} D_\text{KL}(P_{\theta_T}(y \mid x) \parallel P_{\theta_S}(y \mid C, x))$$
+
+等价于训练 student"任你怎么 prompt 我都模仿老师那个不受干扰的分布"，相当于在 loss 层面把信念从 point-wise 改成了 context-invariant——这也是后面 stress 平均能从 33.4 拉到 60.6、而 MMLU/GSM8k 几乎不动的原因。
 
 ### 损失函数 / 训练策略
 SAT 中 student 只优化上述 KL 损失（无监督 hard label），等价于训练 student 在任何上下文 $c$ 下都模仿 teacher 的无干扰分布；teacher/student 均基于 Qwen-2.5-32B-Instruct 的 Ans. Aug checkpoint。Stress-Test 评测细节：每事实 30 个目标采样 + 10 个邻居采样，$T=0.7$，bf16 + vLLM，8×A100。

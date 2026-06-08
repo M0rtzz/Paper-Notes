@@ -48,35 +48,19 @@ tags:
 
 ### 整体框架
 
-BenchMarker 接受 MCQA 数据集作为输入，对每道题输出 3 个二分类标签 + 判官解释。整体流程：
-1. **污染检测**：用 web search API + LLM judge 判断该题是否完整出现在某网页
-2. **捷径检测**：让强 LLM（GPT-5 / Gemini Pro / Claude）只看 choices 答题 + 反推 question，若反推 question ≠ 原题 → 标记为捷径
-3. **写作错误检测**：对 19 条教育学规则各发一条 prompt（含规则名 + 定义 + 6 个示例），LLM judge 输出 yes/no
-
-输出可聚合到 dataset 级别，也保留 per-item 解释便于人工 review。封装在 InspectAI 中提供 UI。
+BenchMarker 把一个 MCQA 数据集作为输入，对其中每道题并行跑三条独立的诊断流水线——污染、捷径、写作错误，每条都以 LLM judge 为核心，最终给每题输出一组二分类标签加判官解释。三条结果既能按题保留供人工 review，也能聚合到数据集层面得到"这个 benchmark 有多少题被污染 / 有捷径 / 违反写作规则"的健康报告，整套封装在 InspectAI 里提供 UI。其设计灵魂是把教育学几十年沉淀的 MCQ 质检标准（item-writing rubric、partial-input 诊断）翻译成可大规模自动执行的 LLM 评分协议。
 
 ### 关键设计
 
-1. **污染检测：web-search 代理 + 严格匹配**:
+**1. 污染检测：web-search 代理 + 严格格式匹配。** LLM 的预训练数据是私有的，无法直接核对某题是否被"背"过，本文用公开网络作为可观察代理。把题干 $q$ 与 gold answer $a$ 联合查询 Google/Bing/DuckDuckGo/Brave 四个搜索引擎，再把 top-K 结果交给 LLM judge 判定该题是否被"完整或几乎完整地复现"。关键在于匹配标准很严：若网页只是含有答案对应的知识点、却没有 MCQA 的题面格式，就不算污染——因为它不会让模型记住"这道题选哪个"。这既比单纯 token-overlap 更准确，又避免把"考察通用常识"误判成污染，与人类教师查重的直觉一致。
 
-    - 功能：检测某 MCQ 是否原文出现在公开网页（pretraining 数据的可观察代理）
-    - 核心思路：以 question stem $q$ + gold answer $a$ 联合查询 4 个搜索引擎（Google/Bing/DuckDuckGo/Brave）；把 top-K 结果喂给 LLM judge 判定"是否完整或几乎完整复现"。如果网页只是包含答案对应的知识（没有 MCQA 格式），不算污染——因为它不会导致模型"记答案"
-    - 设计动机：直接读 LLM 预训练数据不可行（私有），网络是合理代理；用人类教师查重相同思路。比单 token-overlap 方法更准确，且避免把"考察通用知识"误判为污染
+**2. 捷径检测：partial-input 答题 + 反推题干二级过滤。** 目标是识别那些不看题干、只凭 choices 就能稳定答对的题。做法是取 GPT-5 / Gemini Pro / Claude 三个 choices-only 准确率较高的模型，让它们既（1）仅用选项作答，又（2）反推可能的原始题干，再由一个 LLM judge 判断反推出的题干与真题是否语义等价。只有当三模型都答对、且反推题干与真题对不上时才标记为捷径。这层"反推题干"二级过滤是关键：纯 choices-only accuracy 会把"善意推断"（比如从某个 distractor 推断整题在讲回收）也误算成捷径，加上这层判断后只保留教育学定义的 meta-strategy guessing——真正利用题目破绽的猜测。
 
-2. **捷径检测：partial-input + 反推 question**:
-
-    - 功能：识别 LLM 不看题干、只看 choices 就能稳定答对的题目
-    - 核心思路：取 GPT-5 / Gemini Pro / Claude 三个高 choices-only 准确率模型，让它们 (1) 仅用 choices 答题，(2) 反推可能的 original question。一个 LLM judge 评 inferred question 是否与真题语义等价。若三模型都答对 + 反推问题语义对不上 → 标记为问题捷径
-    - 设计动机：纯 partial-input 的 choices-only accuracy 会把"善意推断"也算捷径（如从 distractor 推测整道题是关于回收）；用"是否反推出真问题"这个二级 filter 剔除善意情况，更接近教育学定义的"meta-strategy guessing"
-
-3. **写作错误：19 条 rubric + per-rule LLM judge**:
-
-    - 功能：对每道题独立判定是否违反每条规则，输出 19 个 binary 标签
-    - 核心思路：从 Tarrant 2006 的 19-rule Item-Writing Flaws rubric（涵盖 clarity / format / give-away / misleading 四大类，如"避免 mostly 这种模糊词"、"distractor 必须 plausible"、"avoid none-of-the-above"），为每条规则单独构造 prompt（含规则名 + 定义 + 3 个违反例 + 3 个合规例），让 LLM judge 二分类
-    - 设计动机：合并规则会让 LLM 陷入"多任务认知负载"；per-rule prompt + few-shot 例子是 LLM-as-judge 的最稳形式（Kim et al. 2024）；19 条选 Tarrant 而非 Haladyna 因为它剔除了 "avoid trivial material" 这类主观规则，可被 LLM 一致判断
+**3. 写作错误：19 条 rubric 拆成 per-rule LLM judge。** 借用 Tarrant (2006) 的 19 条 Item-Writing Flaws rubric（覆盖 clarity / format / give-away / misleading 四大类，如"避免 mostly 这类模糊词""distractor 必须 plausible""避免 none-of-the-above"），对每道题逐条判定是否违反，输出 19 个二分类标签。实现上不把规则合并成一个大 prompt，而是每条规则单发一条 prompt（含规则名、定义、3 个违反例、3 个合规例）。拆开是因为合并会让 LLM 陷入多任务认知负载，而 per-rule + few-shot 是 LLM-as-judge 最稳的形态（Kim et al. 2024）；选 Tarrant 而非 Haladyna，则是因为它剔除了"avoid trivial material"这类过于主观、LLM 难以一致判断的规则。
 
 ### 损失函数 / 训练策略
-无训练；纯 inference 评测工具。Judge 模型用 GPT-5 / Gemini 2.5 Pro / Claude 4.5 Sonnet 等 closed models 在 default sampling 下运行，请求结构化 JSON 输出。
+
+无训练，纯 inference 评测工具。Judge 用 GPT-5 / Gemini 2.5 Pro / Claude 4.5 Sonnet 等闭源模型在 default sampling 下运行，统一请求结构化 JSON 输出，便于解析与聚合。
 
 ## 实验关键数据
 

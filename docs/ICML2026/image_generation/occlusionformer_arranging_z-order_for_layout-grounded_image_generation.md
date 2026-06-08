@@ -40,33 +40,27 @@ tags:
 
 ## 方法详解
 
-OcclusionFormer 建立在 Flux.1-dev（DiT + Rectified Flow）之上，只在原 MM-Attention 块后插入一个串行的"实例解耦—体渲染合成—查询对齐"模块，并通过 LoRA（rank=4）微调，保留预训练骨干能力。
+OcclusionFormer 要解决的是：扩散模型的注意力天生在 2D 平面上"无差别混合"特征，没有 Z 轴的概念，所以重叠区会纹理纠缠、层级颠倒。它的思路是把图像生成重新看成一次沿正交相机射线的体渲染——先把每个实例"解耦"到独立的特征层，再按用户给的遮挡顺序用 NeRF 式的透射率公式把这些层有序合成回去。整个模块串接在 Flux.1-dev（DiT + Rectified Flow）每个 MM-Attention 块之后，仅用 LoRA（rank=4）微调，不破坏预训练骨干。
 
 ### 整体框架
-输入是一组实例条件 $(M_i, B_i, \mathcal{O}_i, C_i, P)$（mask、bounding box、遮挡集合、实例 caption、全局 prompt）。每个 DiT block 先跑一次冻结的全局 MM-Attention 得到视觉特征 $\mathbf{Z}\in\mathbb{R}^{L\times D}$，然后：(1) 按每个实例 $i$ 的 box 抽出局部 token 子集 $\mathbf{Z}_{\Omega_i}$，与该实例的 caption embedding $\mathbf{C}_i'$ 单独做 MM-Attention，得到"独立层" $\hat{\mathbf{Z}}_i$；(2) 用体渲染按 $\mathcal{O}_i$ 指定的 Z-order 把所有 $\hat{\mathbf{Z}}_i$ 合成成 $\mathbf{Z}_{out}$，残差加回主干；(3) 用 query 向量从每个 $\hat{\mathbf{Z}}_i$ 中读出空间相似度图，经轻量 CNN 预测前景概率，用 SA-Z 的 GT mask 做交叉熵监督。训练目标为 $\mathcal{L}_{total} = \mathcal{L}_{flow} + \lambda \mathcal{L}_{align}$，$\lambda=0.5$。
+输入是一组实例条件 $(M_i, B_i, \mathcal{O}_i, C_i, P)$（mask、bounding box、遮挡集合、实例 caption、全局 prompt）。每个 DiT block 先跑一次冻结的全局 MM-Attention 得到视觉特征 $\mathbf{Z}\in\mathbb{R}^{L\times D}$，随后做三件事：按每个实例的 box 抽出局部 token 单独算注意力得到"独立层" $\hat{\mathbf{Z}}_i$；用体渲染按 $\mathcal{O}_i$ 指定的 Z-order 把所有层合成成 $\mathbf{Z}_{out}$ 并残差加回主干；再用一个可学习 query 从每层读出空间相似度图、经轻量 CNN 预测前景概率，用 GT mask 监督几何。训练目标为 $\mathcal{L}_{total} = \mathcal{L}_{flow} + \lambda \mathcal{L}_{align}$，$\lambda=0.5$。
 
 ### 关键设计
 
-1. **实例解耦的局部 MM-Attention**：
+**1. 实例解耦的局部 MM-Attention：把全局平面注意力切成可分层的"层"**
 
-    - 功能：把"全局 2D 平面注意力"切成每实例独立的"层"，让 Z 轴有可解耦的对象。
-    - 核心思路：对每个实例 $i$，先用 $\Omega_i = \{u \mid \text{Coord}(u) \in B_i\}$ 选出其 bounding box 内的 token 索引，只在这个子集 $\mathbf{Z}_{\Omega_i}$ 和该实例的 caption embedding $\mathbf{C}_i'$ 之间复用原 MM-Attention 模块计算更新：$\hat{\mathbf{Z}}_{\Omega_i}, \hat{\mathbf{C}_i} = \text{MM-Attention}(\mathbf{Z}_{\Omega_i}, \mathbf{C}_i')$，框外补零。原 attention 参数冻结，只在投影矩阵上加 LoRA 微调。
-    - 设计动机：Eligen/Creatilayout 把布局当成全局条件，所有实例和背景 token 在一个大注意力里"无差别"交互，根本没有"层"的概念，无法表达 Z 轴优先级。先把实例特征算干净再合成，是后续显式 Z-order 建模的前提；用 LoRA 而不是全量微调，保留了 Flux 的生成能力。
+显式建模 Z-order 的前提，是先有一个个干净、互不污染的"层"可供排序，而 Eligen/Creatilayout 把布局当全局条件，所有实例和背景 token 挤在一个大注意力里"无差别"交互，根本没有层的概念。为此，对每个实例 $i$ 先用 $\Omega_i = \{u \mid \text{Coord}(u) \in B_i\}$ 选出落在它 bounding box 内的 token 索引，只在这个局部子集 $\mathbf{Z}_{\Omega_i}$ 与该实例的 caption embedding $\mathbf{C}_i'$ 之间复用原 MM-Attention 模块更新 $\hat{\mathbf{Z}}_{\Omega_i}, \hat{\mathbf{C}_i} = \text{MM-Attention}(\mathbf{Z}_{\Omega_i}, \mathbf{C}_i')$，框外补零。原 attention 参数全程冻结，只在投影矩阵上加 LoRA，这样既把每个实例的特征算干净、为后续有序合成打好基础，又保住了 Flux 的生成能力。
 
-2. **基于体渲染的 Z-order 显式建模**：
+**2. 基于体渲染的 Z-order 显式建模：用透射率公式按顺序合成各层**
 
-    - 功能：按用户给的遮挡集合 $\mathcal{O}_i$ 计算每个像素上谁挡谁，把各"层"按物理一致的方式合成回一张 feature map。
-    - 核心思路：借鉴 NeRF，把图像平面视为正交相机的成像面。每个实例的密度 $\sigma_i \in \mathbb{R}^D$ 不是固定值，而是由扩散时间步 $t$ 和实例文本池化向量 $y_i$ 经一个 time-text embedding 模块预测出来：$\mathbf{e}_{temb}^i = \text{TimeTextEmbed}(t, y_i) \to \sigma_i$。在像素 $\mathbf{p}$ 处，不透明度 $\alpha_i(\mathbf{p}) = (1 - \exp(-\sigma_i)) \cdot \mathbb{I}(\mathbf{p} \in B_i)$，透射率 $T_i(\mathbf{p}) = \exp(-\sum_{j \in \mathcal{O}_i} \sigma_j \cdot \mathbb{I}(\mathbf{p} \in B_j))$，合成权重 $w_i = T_i \cdot \alpha_i$。最终合成在"有遮挡约束"的像素上做归一化加权平均 $\mathbf{Z}_{out}(\mathbf{p}) = \sum_i w_i \hat{\mathbf{Z}}_i / (\sum_i w_i + \epsilon)$，对"框相交但没有遮挡声明"的像素则退回简单平均（hybrid 策略），最后残差加回 $\mathbf{Z}$。
-    - 设计动机：LaRender 用 training-free 的方式做体渲染，密度是手工启发式且对超参敏感；这里把 $\sigma_i$ 做成"随扩散状态自适应"的可学习量，扩散早期低频阶段和后期细节阶段的"实心程度"可以不同，能更稳地处理复杂遮挡。hybrid 聚合则解决了"框重叠但物体并不真的互相挡"这种边界情形，避免被强行加权后纹理崩坏。
+有了一个个层，还要按"谁挡谁"把它们合回去。这里借鉴 NeRF，把图像平面视为正交相机的成像面，每个实例对应一段沿射线的"介质"。关键是密度 $\sigma_i \in \mathbb{R}^D$ 不取固定值，而是由扩散时间步 $t$ 和实例文本池化向量 $y_i$ 经 time-text embedding 模块预测：$\mathbf{e}_{temb}^i = \text{TimeTextEmbed}(t, y_i) \to \sigma_i$——这样扩散早期低频阶段和后期细节阶段的"实心程度"可以不同，比 LaRender 那种 training-free、手工启发式且对超参敏感的密度更稳。在像素 $\mathbf{p}$ 处，不透明度 $\alpha_i(\mathbf{p}) = (1 - \exp(-\sigma_i)) \cdot \mathbb{I}(\mathbf{p} \in B_i)$，透射率 $T_i(\mathbf{p}) = \exp(-\sum_{j \in \mathcal{O}_i} \sigma_j \cdot \mathbb{I}(\mathbf{p} \in B_j))$，合成权重 $w_i = T_i \cdot \alpha_i$。在"有遮挡声明"的像素上做归一化加权平均 $\mathbf{Z}_{out}(\mathbf{p}) = \sum_i w_i \hat{\mathbf{Z}}_i / (\sum_i w_i + \epsilon)$，最后残差加回 $\mathbf{Z}$。对"框相交但并未真的互相遮挡"的边界像素，则退回简单平均（hybrid 策略），避免被强行加权后纹理崩坏。
 
-3. **查询对齐损失（Queried Alignment Loss）**：
+**3. 查询对齐损失（Queried Alignment Loss）：把每层特征焊到 GT mask 的几何上**
 
-    - 功能：补强体渲染对"几何形状"的监督缺口，让每个实例的特征真正聚焦在 GT mask 区域内，而不是在 box 里随意涂抹。
-    - 核心思路：对每个实例从 $\mathbf{e}_{temb}^i$ 派生一个可学习 query $\mathbf{q}_i \in \mathbb{R}^D$，在 $\hat{\mathbf{Z}}_i$ 上做逐像素余弦相似度得到空间相似图 $\mathbf{S}_i(\mathbf{p}) = \hat{\mathbf{Z}}_i(\mathbf{p}) \cdot \mathbf{q}_i / ((\|\hat{\mathbf{Z}}_i(\mathbf{p})\| + \epsilon)\|\mathbf{q}_i\|)$，再喂入轻量 CNN $\mathcal{F}_\theta$ 输出前景/背景概率图 $\hat{\mathbf{M}}_i$，对 SA-Z 中提供的 mask $M_i$ 用交叉熵监督 $\mathcal{L}_{align}$。
-    - 设计动机：体渲染解决"谁在前谁在后"的合成顺序，但合成的前提是每"层"特征本身要有连贯的几何形状。如果不显式约束，模型很容易让特征在 box 内乱飘、导致重叠区轮廓断裂；用 query + CNN 读出的方式监督比直接在 attention map 上加 mask 损失更稳（见消融）。
+体渲染只管"谁在前谁在后"的合成顺序，却不保证每一层特征本身有连贯的形状——若不约束，特征容易在 box 内乱飘、导致重叠区轮廓断裂。为此对每个实例从 $\mathbf{e}_{temb}^i$ 派生一个可学习 query $\mathbf{q}_i \in \mathbb{R}^D$，在 $\hat{\mathbf{Z}}_i$ 上做逐像素余弦相似度得到空间相似图 $\mathbf{S}_i(\mathbf{p}) = \hat{\mathbf{Z}}_i(\mathbf{p}) \cdot \mathbf{q}_i / ((\|\hat{\mathbf{Z}}_i(\mathbf{p})\| + \epsilon)\|\mathbf{q}_i\|)$，再喂入轻量 CNN $\mathcal{F}_\theta$ 输出前景/背景概率图 $\hat{\mathbf{M}}_i$，对 SA-Z 提供的 mask $M_i$ 用交叉熵 $\mathcal{L}_{align}$ 监督。之所以走"query + 独立 CNN 头读出"而不是直接在 attention map 上加 mask 损失，是因为后者会与 MM-Attention 的全局语义打架，监督路径更不解耦、效果反而更差（见消融）。
 
 ### 损失函数 / 训练策略
-总目标 $\mathcal{L}_{total} = \mathcal{L}_{flow} + \lambda \mathcal{L}_{align}$，$\lambda=0.5$。$\mathcal{L}_{flow}$ 为 Flux 的 rectified flow matching：$\mathcal{L}_{flow} = \mathbb{E}_{t,\mathbf{z}_t,\mathbf{c}}[\|v_\theta(\mathbf{z}_t,t,\mathbf{c}) - \mathbf{v}_{target}\|_2^2]$，$\mathbf{v}_{target} = \mathbf{x}_1 - \mathbf{x}_0$。骨干 Flux.1-dev，LoRA rank=4，200K 步，batch 16，lr=1e-4。配套数据集 SA-Z 由 SACap-1M 派生：用 DescribeAnything 生成像素级 caption，用 InstaOrder 预测两两遮挡顺序，用 SAM-3D 重建 3D 几何再投影回图像平面得到 amodal mask 与 box，共 1M 高分辨率图、5.69M 实例，首个开放词表、带 amodal + Z-order 的大规模布局生成数据集。
+总目标 $\mathcal{L}_{total} = \mathcal{L}_{flow} + \lambda \mathcal{L}_{align}$，$\lambda=0.5$。$\mathcal{L}_{flow}$ 为 Flux 的 rectified flow matching：$\mathcal{L}_{flow} = \mathbb{E}_{t,\mathbf{z}_t,\mathbf{c}}[\|v_\theta(\mathbf{z}_t,t,\mathbf{c}) - \mathbf{v}_{target}\|_2^2]$，$\mathbf{v}_{target} = \mathbf{x}_1 - \mathbf{x}_0$。骨干 Flux.1-dev，LoRA rank=4，200K 步，batch 16，lr=1e-4。配套数据集 SA-Z 由 SACap-1M 派生：用 DescribeAnything 生成像素级 caption，用 InstaOrder 预测两两遮挡顺序，用 SAM-3D 重建 3D 几何再投影回图像平面得到 amodal mask 与 box，共 1M 高分辨率图、5.69M 实例，是首个开放词表、带 amodal + Z-order 的大规模布局生成数据集。
 
 ## 实验关键数据
 

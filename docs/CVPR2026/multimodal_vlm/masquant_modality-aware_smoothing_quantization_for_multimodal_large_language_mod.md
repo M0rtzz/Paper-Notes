@@ -41,29 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MASQuant 包括两个核心模块：(1) Modality-Aware Smoothing (MAS) 为每个模态学习独立优化的平滑因子；(2) Cross-Modal Compensation (CMC) 通过 SVD 白化将跨模态权重差异压缩为低秩形式，仅存储一套量化权重 + 轻量补偿矩阵。
+MASQuant 想解决的是把通道平滑量化搬到 MLLM 上时的"平滑失配"：视觉 token 的激活幅度比文本大 10–100 倍，一套统一的平滑因子被主导模态绑架，文本、音频这些非主导模态被压得几乎没信号，量化误差随之爆炸。它的破法分两步——先让每个模态各自学一套最优平滑因子，从根上消除失配（MAS）；再用一个低秩补偿把"每模态一套平滑权重"重新压回"单套量化权重 + 轻量补丁"（CMC）。这样既拿到了模态感知带来的精度，又没把量化本该省下的存储重新吐回去。
 
 ### 关键设计
 
-1. **Modality-Aware Smoothing (MAS)**：
+**1. Modality-Aware Smoothing（MAS）：让每个模态各自学最优平滑因子，而不是共用一套。**
 
-    - 功能：为每个模态 $m$ 学习独立的优化平滑因子 $\mathbf{S}_m$
-    - 核心思路：初始化 $s_i^m = \sqrt{\max_t|x_{t,i}^m| / \max_j|w_{j,i}|}$，然后通过最小化模态特定的 MAE 损失 $\sum_{m} \lambda_m \cdot \mathcal{L}_{MAE}(\mathbf{S}_m, \mathbf{X}_m, \mathbf{W})$ 直接优化平滑因子
-    - SQNR 理论分析：证明了统一平滑导致非主导模态 SQNR 退化 $\Delta = 10\log_{10}(\frac{d(\min_i \alpha_i^2)}{\sum_i 1/\alpha_i^2})$，其中 $\alpha_i$ 为模态间激活范围比
-    - 设计动机：不再搜索超参 $\beta$，而是直接优化平滑因子本身，达到通道平滑的优化极限
+失配的根源在于单一平滑因子 $\mathbf{S}$ 由幅度最大的模态说了算，其余模态只能被动接受。MASQuant 干脆为每个模态 $m$ 单独学一套平滑因子 $\mathbf{S}_m$：先用经典初始化 $s_i^m = \sqrt{\max_t|x_{t,i}^m| / \max_j|w_{j,i}|}$ 给一个起点，再直接最小化按模态加权的量化重建损失 $\sum_{m} \lambda_m \cdot \mathcal{L}_{MAE}(\mathbf{S}_m, \mathbf{X}_m, \mathbf{W})$，把平滑因子本身优化到位。和 SmoothQuant、AWQ 去搜一个标量超参 $\beta$ 不同，这里优化的是整条平滑因子向量，相当于直接逼近通道平滑能达到的精度上限。为什么非得给每个模态独立因子，论文用 SQNR 退化给了定量解释：统一平滑下非主导模态的信噪比会掉
 
-2. **Cross-Modal Compensation (CMC)**：
+$$\Delta = 10\log_{10}\left(\frac{d\,(\min_i \alpha_i^2)}{\sum_i 1/\alpha_i^2}\right)$$
 
-    - 功能：使用单一量化权重的同时补偿非文本模态的量化误差
-    - 核心思路：以文本模态平滑权重 $Q(\mathbf{S}_t \mathbf{W})$ 为基准，视觉模态产生残差 $\Delta\mathbf{W} = \mathbf{S}_v \mathbf{W} - Q(\mathbf{S}_t \mathbf{W})$。直接对 $\Delta\mathbf{W}$ 做 SVD 效果差（缺乏低秩结构），但通过白化变换 $\mathbf{T} = (\mathbf{P}\Lambda^{1/2})^\top$ 后，$\mathbf{T}(\Delta\mathbf{W})$ 呈现强低秩特性
-    - 截断 SVD 后得到 $\Delta\mathbf{W} \approx \mathbf{L}_1 \mathbf{L}_2$，其中 $\mathbf{L}_1 = \mathbf{T}^{-1}\mathbf{U}_r$，$\mathbf{L}_2 = \Sigma_r \mathbf{V}_r^\top$
-    - 理论保证：证明了该方案最小化输出重建误差 $\|\mathbf{X}_v \mathbf{S}_v^{-1}(\Delta\mathbf{W} - \mathbf{L})\|_F^2$
+其中 $\alpha_i$ 是模态间的激活范围比。模态幅度差越悬殊，$\Delta$ 越负、失配越严重——这恰好量化了"视觉主导时文本被淹没"的直觉。
 
-3. **推理流程**：
+**2. Cross-Modal Compensation（CMC）：用单套量化权重 + 低秩补丁，把 MAS 的多套权重重新压回去。**
 
-    - 文本模态：$\mathbf{Y} = Q(\mathbf{X}_t \mathbf{S}_t^{-1}) \cdot Q(\mathbf{S}_t \mathbf{W})$
-    - 非文本模态：$\mathbf{Y} = Q(\mathbf{X}_m \mathbf{S}_m^{-1}) \cdot Q(\mathbf{S}_t \mathbf{W}) + \mathbf{X}_m \mathbf{S}_m^{-1} \cdot \mathbf{L}_1^m \mathbf{L}_2^m$
-    - 仅需额外存储轻量低秩矩阵，主权重仍是单一量化版本
+MAS 把精度救回来了，却带来新麻烦：每个模态一套 $\mathbf{S}_m$ 就意味着 $Q(\mathbf{S}_m\mathbf{W})$ 是各不相同的量化权重，存 N 套权重等于把量化的压缩收益全赔进去。CMC 只存文本模态那套 $Q(\mathbf{S}_t\mathbf{W})$ 当基准，其余模态用一个补丁找回差异。以视觉为例，它和基准的残差是 $\Delta\mathbf{W} = \mathbf{S}_v \mathbf{W} - Q(\mathbf{S}_t \mathbf{W})$。直接对 $\Delta\mathbf{W}$ 做 SVD 压不下去（它本身没有低秩结构），关键一步是先做白化变换 $\mathbf{T} = (\mathbf{P}\Lambda^{1/2})^\top$，变换后的 $\mathbf{T}(\Delta\mathbf{W})$ 才显出很强的低秩特性，截断 SVD 就能用两个瘦矩阵把它逼近出来：
+
+$$\Delta\mathbf{W} \approx \mathbf{L}_1 \mathbf{L}_2,\quad \mathbf{L}_1 = \mathbf{T}^{-1}\mathbf{U}_r,\ \ \mathbf{L}_2 = \Sigma_r \mathbf{V}_r^\top$$
+
+论文进一步证明，这个"白化 + 截断"的组合恰好最小化了输出端的重建误差 $\|\mathbf{X}_v \mathbf{S}_v^{-1}(\Delta\mathbf{W} - \mathbf{L})\|_F^2$，所以补偿不是凑出来的工程 trick，而是有理论保证的最优低秩近似。最终非文本模态只多背一对低秩矩阵，主权重仍是唯一的那份量化版本。
+
+### 一个完整示例：两类 token 走完同一层
+
+设想同一层里同时来了文本 token 和视觉 token。文本 token 走基准路径，平滑、量化、相乘一气呵成：
+
+$$\mathbf{Y} = Q(\mathbf{X}_t \mathbf{S}_t^{-1}) \cdot Q(\mathbf{S}_t \mathbf{W})$$
+
+视觉 token 则用自己学到的 $\mathbf{S}_v$ 去平滑激活，但权重侧仍复用文本那套量化权重 $Q(\mathbf{S}_t\mathbf{W})$，二者之间被压掉的那部分由低秩补丁补回来：
+
+$$\mathbf{Y} = Q(\mathbf{X}_v \mathbf{S}_v^{-1}) \cdot Q(\mathbf{S}_t \mathbf{W}) + \mathbf{X}_v \mathbf{S}_v^{-1} \cdot \mathbf{L}_1^v \mathbf{L}_2^v$$
+
+可以看到两条路径共享同一份量化主权重，差别只在前面各自用了本模态的平滑因子、后面给非文本模态多挂了一项轻量的低秩乘法。再扩到三模态（如加音频），无非是又多挂一对 $\mathbf{L}_1^m\mathbf{L}_2^m$，主权重自始至终只存一份。
 
 ## 实验关键数据
 

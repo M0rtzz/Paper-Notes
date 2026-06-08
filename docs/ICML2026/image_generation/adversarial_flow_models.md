@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-模型仍是 GAN：生成器 $G$ 把 Gaussian 噪声 $z\in\mathbb{R}^n$ 直接映成图像 latent $G(z) \in \mathbb{R}^n$，判别器 $D$ 区分真假，用 relativistic 损失 + R1/R2 梯度惩罚（用有限差分近似）+ logit centering 惩罚。在生成器端额外加一个最优传输损失 $\mathcal{L}_{\mathrm{ot}}^G$，并对来自判别器的梯度做 EMA 归一化，使 $\lambda_{\mathrm{ot}}$ 可跨模型规模复用。多步 / 任意步通过引入源时间步 $s$、目标时间步 $t$ 和线性插值 $x_s = (1-s)x + s z$ 自然扩展。架构上采用未改动的标准 DiT，单步时去掉时间步投影，判别器与生成器几乎对称，只多一个 [CLS] token。
+本文骨架仍是一个 GAN：生成器 $G$ 把高斯噪声 $z\in\mathbb{R}^n$ 直接映成图像 latent $G(z)\in\mathbb{R}^n$，判别器 $D$ 用 relativistic 损失加 R1/R2 梯度惩罚（有限差分近似）和 logit centering 来区分真假。关键改动是在生成器端补一个最优传输正则，把"GAN 能匹配分布但不约束搬运图"这个失稳病因堵住，再配一套反向路径的梯度归一化让超参跨模型规模通用。整个框架既能做纯单步生成，也能通过引入源时间步 $s$、目标时间步 $t$ 与线性插值扩展到任意步搬运，而架构本身用的是未改动的标准 DiT。
 
 ### 关键设计
 
-1. **最优传输正则 + Brenier 锚定**:
+**1. 最优传输正则 + Brenier 锚定：把欠定的对抗目标钉到唯一搬运图上**
 
-    - 功能：在 GAN 的边际匹配目标之上额外锁定 transport map 的"形状"，让生成器收敛到唯一的 Wasserstein-2 最优传输映射。
-    - 核心思路：对生成器加 $\mathcal{L}_{\mathrm{ot}}^G=\mathbb{E}_z\big[\tfrac{1}{n}\|G(z)-z\|^2_2\big]$，在多步设定下推广为 $\mathbb{E}_{x,z,s,t}\big[\tfrac{1}{n\,w(s,t)}\|G(x_s,s,t)-x_s\|^2_2\big]$，权重 $w(s,t)=\max(|s-t|,\delta)$。$\lambda_{\mathrm{ot}}$ 必须做调度：太小逃不出局部极小，太大会被推向恒等映射；本文采用按训练进度衰减的策略。
-    - 设计动机：消除"GAN 训练不收敛"的真正病因——目标函数欠定。Brenier 定理保证唯一最优传输图，OT 正则把 GAN 优化变成在所有有效搬运图中"选最近的那个"，使训练曲线和不同随机初始化下的结果都稳定可复现（一维高斯混合实验中能给出完全一致的映射）。
+GAN 失稳的根因在于对抗目标只要求生成分布匹配数据分布，却不约束 $z\mapsto x$ 这条搬运图的具体形状——理论上存在无穷多有效搬运图，初始化和训练噪声会让生成器在它们之间漂移。本文加一项最优传输损失 $\mathcal{L}_{\mathrm{ot}}^G=\mathbb{E}_z\big[\tfrac{1}{n}\|G(z)-z\|^2_2\big]$，鼓励 $G(z)$ 离源 $z$ 尽量近；在多步设定下推广为 $\mathbb{E}_{x,z,s,t}\big[\tfrac{1}{n\,w(s,t)}\|G(x_s,s,t)-x_s\|^2_2\big]$，权重 $w(s,t)=\max(|s-t|,\delta)$。之所以有效，是因为 Brenier 定理保证在高斯源 + 二次代价下最优传输图唯一，于是 OT 正则把 GAN 优化变成"在所有有效搬运图里选最近那个"，消除了漂移——一维高斯混合实验里不同随机初始化都能收敛到完全一致的映射。$\lambda_{\mathrm{ot}}$ 必须按训练进度衰减：太小逃不出局部极小、退化回普通 GAN，太大则把 $G$ 推向恒等映射、牺牲分布匹配。
 
-2. **梯度归一化（gradient normalization in backward path）**:
+**2. 反向路径梯度归一化：让 $\lambda_{\mathrm{ot}}$ 一个值通吃所有模型规模**
 
-    - 功能：让 $\lambda_{\mathrm{ot}}$ 这个超参数在 B/2 → XL/2 → 112 层模型之间通用，不必每个 size 重新搜。
-    - 核心思路：把 $D(G(z))$ 改写成 $D(\phi(G(z)))$，$\phi$ 在前向是恒等、在反向把 $\partial \mathcal{L}_{\mathrm{adv}}^G/\partial G(z)$ 用 EMA 跟踪到的梯度范数归一化，再除以 $\sqrt{n}$。可视为把 Adam 的二阶矩思想搬到 backward 路径上。
-    - 设计动机：对抗损失从 $D$ 反传的梯度幅值受架构、初始化、$\lambda_{\mathrm{gp}}$ 强烈影响，原本 Adam 的自适应缩放能"吸收"幅值差异；但加了 $\lambda_{\mathrm{ot}}$ 后两个损失的相对比例变得重要，必须先把对抗梯度归一化到统一尺度。
+加了 $\mathcal{L}_{\mathrm{ot}}$ 后，对抗损失与 OT 损失的相对比例变得敏感，而对抗损失从 $D$ 反传的梯度幅值又受架构、初始化、$\lambda_{\mathrm{gp}}$ 强烈影响——原本 Adam 的自适应缩放能吸收这种幅值差异，现在却会让 $\lambda_{\mathrm{ot}}$ 必须逐 size 重搜。解决办法是把 $D(G(z))$ 改写成 $D(\phi(G(z)))$，其中 $\phi$ 前向是恒等、反向把 $\partial\mathcal{L}_{\mathrm{adv}}^G/\partial G(z)$ 用 EMA 跟踪到的梯度范数归一化再除以 $\sqrt{n}$。本质上是把 Adam 的二阶矩思想搬到 backward 路径上，先把对抗梯度归一化到统一尺度，使 $\lambda_{\mathrm{ot}}$ 在 B/2 → XL/2 → 112 层之间一个值通用，省掉逐规模调参。
 
-3. **任意步训练 + 深度递归的单步模型**:
+**3. 任意步训练 + 深度递归的单步模型：用容量换 NFE**
 
-    - 功能：让同一框架既支持纯单步生成，也支持几步生成乃至任意源/目标时间步之间的搬运；并通过 transformer block 重复把单步模型做得很深以匹配多步模型的参数量。
-    - 核心思路：训练时 $s\sim\mathcal{U}(0,1),\ t\sim\mathcal{U}(0,s)$，生成器接收 $(x_s, s, t)$，残差形式写作 $G(x_s,s,t) = x_s - (s-t)\,g(x_s,s,t)$（类似 velocity 预测）。判别器仅依赖 $(x_t, t)$，绝不能 condition on 源样本——否则 $x,z$ 独立采样导致目标无法满足、训练发散。深度极深的单步模型用 transformer block repetition：每次复用 hidden state，加一个轻量"重复 ID embedding"区分迭代，整体仍做端到端单步训练，无任何中间监督。
-    - 设计动机：与一致性方法相比，本文 $G$ 直接通过 $D$ 学习目标分布，不需要 propagate 一致性，所以可以只在 1-NFE 这一组特定时间步训练；同时极深单步模型规避了"重复进出 data space → projection 误差"的问题，把多步模型的容量优势收编到单步推理路径上。
+同一框架要同时支持单步、几步乃至任意源/目标时间步之间的搬运。训练时采样 $s\sim\mathcal{U}(0,1),\ t\sim\mathcal{U}(0,s)$，生成器接收 $(x_s,s,t)$，写成残差形式 $G(x_s,s,t)=x_s-(s-t)\,g(x_s,s,t)$（类似 velocity 预测）；判别器只依赖 $(x_t,t)$，绝不能 condition on 源样本，否则 $x,z$ 独立采样会让目标在数学上不可满足、训练发散。与一致性方法相比，这里 $G$ 直接通过 $D$ 学目标分布、无需沿 flow 传播一致性，因此可以只在 1-NFE 这组特定时间步上训练，省下容量也避免误差累积。为了在单步推理路径上吃到多步模型的容量优势，本文把单步模型做得极深——用 transformer block repetition 复用 hidden state，每次迭代加一个轻量"重复 ID embedding"区分，整体仍端到端单步训练、无任何中间监督，从而规避了"反复进出 data space → projection 误差"的问题。
 
 ### 损失函数 / 训练策略
 判别器损失 $\mathcal{L}_{\mathrm{AF}}^D = \mathcal{L}_{\mathrm{adv}}^D + \lambda_{\mathrm{gp}}(\mathcal{L}_{r_1}^D + \mathcal{L}_{r_2}^D) + \lambda_{\mathrm{cp}}\mathcal{L}_{\mathrm{cp}}^D$，其中 R1/R2 用 $\epsilon=0.01$ 的有限差分代替二阶导，仅对 25% batch 计算；生成器损失 $\mathcal{L}_{\mathrm{AF}}^G = \mathcal{L}_{\mathrm{adv}}^G + \lambda_{\mathrm{ot}}\mathcal{L}_{\mathrm{ot}}^G$。AdamW，$\beta_1=0,\beta_2=0.9$，lr $1\times10^{-4}$，batch 256，EMA 0.9999，遵循 MeanFlow 的尺寸定义（B/M/L/XL，patch=2）。生成器和判别器同 size，分别用独立 dataloader。Guidance 通过额外 $\mathcal{L}_{\mathrm{cg}}^G=-\mathbb{E}[C(\mathrm{interp}(G(z,c),z',t'),t',c)]$ 实现，必须在时间步上累积梯度才能复现 CFG 行为。

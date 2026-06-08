@@ -45,23 +45,21 @@ KnowRL 整体在 GRPO 之上做奖励工程：(1) **数据构造**——从 NQ-O
 
 ### 关键设计
 
-1. **原子事实分解 + GTR 检索的过程级奖励 $r_{\text{fact}}$**：
+**1. 原子事实分解 + GTR 检索的过程级奖励 $r_{\text{fact}}$：把"思考黑箱"拆成可被梯度推动的稠密分。**
 
-    - 功能：把 CoT 中每一步事实是否"有据可查"变成稠密、连续的奖励信号，直接监督推理过程。
-    - 核心思路：用 GPT-4o-mini 调一次 prompt 把 $o_{\text{think}}$ 拆成 $M$ 条原子事实 $\Phi(o_{\text{think}})=\{f_1,\dots,f_M\}$，每条 $f_j$ 用 sentence-transformers `gtr-t5-large` 从知识库 $K$ 中检索 top-相关段 $K_x$，再让 GPT-4o-mini 给 0/1 verification $v(f_j,K_x)$。$r_{\text{fact}}(o)=\frac{1}{M}\sum_j v(f_j,K_x)$，$M=0$ 时为 0。
-    - 设计动机：FactScore 已证明"分原子事实 + 检索 + 二元校验"是衡量长文本事实性的可靠管道；把它从评测搬到训练侧，就把"事实性"从黑箱标量变成可被梯度推动的密集分。这是本文的灵魂。
+outcome-only 奖励的致命伤是把推理过程当黑箱，模型完全可以"答案蒙对、推理胡编"。KnowRL 借鉴 FactScore 的核查管道，把它从评测侧搬到训练侧：用 GPT-4o-mini 调一次 prompt 把 $o_{\text{think}}$ 拆成 $M$ 条原子事实 $\Phi(o_{\text{think}})=\{f_1,\dots,f_M\}$，每条 $f_j$ 用 sentence-transformers `gtr-t5-large` 从知识库 $K$ 检索 top-相关段 $K_x$，再让 GPT-4o-mini 给出 0/1 的 verification $v(f_j,K_x)$，最后取平均 $r_{\text{fact}}(o)=\frac{1}{M}\sum_j v(f_j,K_x)$（$M=0$ 时记 0）。这一步把"事实性"从一个黑箱标量变成逐句可核查的密集分——FactScore 早已证明"分原子事实 + 检索 + 二元校验"是衡量长文本事实性的可靠管道，KnowRL 的灵魂就是把它接进 RL 的奖励端，直接对 CoT 的每一步做监督。
 
-2. **非对称 correctness 奖励 + refusal 正激励**：
+**2. 非对称 correctness 奖励 + refusal 正激励：用 +2/+1/−1 教模型守住知识边界。**
 
-    - 功能：在正确性奖励里显式区分"答对 / 拒答 / 答错"，用 +2/+1/−1 的设计教模型遇到不会的题主动 "I don't know"。
-    - 核心思路：$r_{\text{correct}}=+2$（GPT-4o-mini 判答对）/ $+1$（显式拒答）/ $-1$（答错）；format 奖励再加 ±1 强制 `<think>...</think><answer>...</answer>` 结构。把 refusal 的 +1 拿掉（改为 −1），Incorrect Rate 会从 57.67% 弹回 78.67%，说明拒答正激励几乎不可替代。
-    - 设计动机：传统 RL 把所有"非正确"等价惩罚，会逼模型在不确定时也"赌一把"；非对称结构告诉模型"拒答虽然没奖励正答多，但比答错好"，从而塑造知识边界。
+传统 RL 把所有"非正确"都等价惩罚，会逼模型在不确定时也硬"赌一把"来博取奖励——根本学不会"自己不知道"。KnowRL 在正确性奖励里显式区分三种结果：$r_{\text{correct}}=+2$（GPT-4o-mini 判答对）/ $+1$（显式拒答）/ $-1$（答错），外加 format 奖励 ±1 强制 `<think>...</think><answer>...</answer>` 结构。这个非对称设计告诉模型"拒答虽不如答对赚得多，但比答错强"，从而把概率质量从硬猜挪向诚实弃权。它的不可替代性在消融里很扎眼：把 refusal 的 +1 改成 −1，Incorrect Rate 会从 57.67% 弹回 78.67%，refusal 率从 40.67 暴跌到 8.67。
 
-3. **基于 GRPO 的过程级优势聚合**：
+**3. 基于 GRPO 的过程级优势聚合：让"事实多 + 拒答得当"的轨迹拿到正信用。**
 
-    - 功能：把组内 $G$ 条 rollout 的 $R_{\text{total}}$ 归一化为带符号的 $A_g$，让"事实多 + 拒答得当"的轨迹获得正信用，让"幻觉为主"的轨迹获得负信用。
-    - 核心思路：$A_g=(R_g-\mu_x)/(\sigma_x+\varepsilon)$；轨迹级 importance ratio $\varrho_g=\pi_\theta(o^{(g)}|x)/\pi_{\theta_{\text{old}}}(o^{(g)}|x)$；clip 后求 surrogate $\hat{\mathcal{J}}(\theta)=\frac{1}{G}\sum_g \min(\varrho_g A_g, \text{clip}(\varrho_g,1{-}\epsilon,1{+}\epsilon)A_g)$；再加 entropy bonus 与 KL anchor 形成 $\mathcal{L}_{\text{KnowRL}}=-\hat{\mathcal{J}}+\beta_{\mathcal{H}}\mathcal{E}_{\mathcal{H}}+\beta_{\text{KL}}\mathcal{E}_{\text{KL}}$。
-    - 设计动机：GRPO 不需 critic、内存友好；用组内归一化能稳定不同 prompt 难度下的奖励量级；KL anchor 防止模型为追事实而丢失推理能力。
+有了复合奖励，还需要一个稳定、内存友好的方式把它转成梯度信号。KnowRL 用 GRPO 免去 critic：同一 prompt 组内的 $G$ 条 rollout 各算 $R_{\text{total}}=r_{\text{format}}+r_{\text{correct}}+r_{\text{fact}}$，再组内归一化成带符号优势 $A_g=(R_g-\mu_x)/(\sigma_x+\varepsilon)$，让幻觉为主的轨迹得负信用、事实充分且拒答得当的轨迹得正信用。轨迹级 importance ratio $\varrho_g=\pi_\theta(o^{(g)}|x)/\pi_{\theta_{\text{old}}}(o^{(g)}|x)$ 经 clip 后求 surrogate $\hat{\mathcal{J}}(\theta)=\frac{1}{G}\sum_g \min(\varrho_g A_g, \text{clip}(\varrho_g,1{-}\epsilon,1{+}\epsilon)A_g)$，再叠 entropy bonus 与 KL anchor 得到
+
+$$\mathcal{L}_{\text{KnowRL}}=-\hat{\mathcal{J}}+\beta_{\mathcal{H}}\mathcal{E}_{\mathcal{H}}+\beta_{\text{KL}}\mathcal{E}_{\text{KL}}.$$
+
+组内归一化能拉平不同 prompt 难度下的奖励量级，KL anchor 则防止模型为追事实而把已练出的推理能力丢掉——这也是 GPQA/AIME 不掉甚至略升的关键。
 
 ### 损失函数 / 训练策略
 LoRA rank 128 / alpha 256，bf16，lr=1e-5，batch=20、grad accum=4，KL 系数 $\beta_{\text{KL}}\approx 1\text{e-3}$，cosine LR 调度、warmup 0.03，AdamW-8bit，vLLM gpu mem util 0.5；7B 模型 1×A800 即可。训练 100-300 步即收敛，超过 300 步会出现轻微 over-optimization。

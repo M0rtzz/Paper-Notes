@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两步走（见原文 Figure 2）。**Step 1：Targeted Token Weight Estimation** —— 训练两个不共享参数的对比 LLM $\pi^+$（用原始 desirable/undesirable 标签）和 $\pi^-$（标签翻转：desirable ↔ undesirable），再用两者 log-ratio 估计 token 级权重 $w_t$。**Step 2：Token-level KTO** —— 把 KTO 的 utterance 级 sigmoid value 拆到每个 token 位置，得到 $v_t$，再用 $w_t$ 做加权和作为最终 loss。底座是 CosyVoice2 (0.5B)，仅训这一层 PO，不动 vocoder。
+LLM-based TTS 在遇到模糊发音（日语「辛い」既能读 karai 又能读 tsurai）时很难对齐，根因有二：发音错误本质是 token 级的，而真实数据里 89.5% 的句子只有「全对」或「全错」的单边样本、配不成对。TKTO 用两步把这两个痛点一起解决：Step 1 先在同一份 unpaired 数据上训两个标签相反的对比 KTO 模型 $\pi^+$（原始标签）和 $\pi^-$（desirable ↔ undesirable 翻转），用两者 log-ratio 估出每个 token 的重要度权重 $w_t$，自动定位「真正决定发音对错」的 token；Step 2 把 KTO 原本 utterance 级的 sigmoid value 拆到 token 级得到 $v_t$，再用 $w_t$ 加权求和当 loss。底座是 CosyVoice2 (0.5B)，只训这一层偏好优化，不动 vocoder。
 
 ### 关键设计
 
-1. **KTO 对比 LLM + token 级重要度估计**：
+**1. KTO 对比 LLM + token 级重要度估计：在没有 token 标注时自动找出决定好坏的关键 token。**
 
-    - 功能：在没有 token-level 标签的情况下，自动识别「哪一个 token 是决定 desirable / undesirable 的关键」。
-    - 核心思路：训出 $\pi^+, \pi^-$ 后，对每个生成 token 计算 $w_t = \exp\left(\mu\cdot \text{clamp}\left(\log\frac{\pi^+(y_t\mid x, y_{<t})}{\pi^-(y_t\mid x, y_{<t})}, L, U\right)\right)$，其中 desirable 样本取 $\mu>0$，undesirable 样本取 $\mu<0$，$[L,U]$ 是裁剪范围。直觉上：若某 token 在「正样本模型」下概率高、在「负样本模型」下概率低，说明这个位置是区分好坏的关键，权重就放大；若两个模型给出的概率差不多，说明该 token 与偏好无关，权重接近 1。
-    - 设计动机：人工标 token 级偏好成本极高，而 paired 数据又稀缺；用对比 KTO 这种「同数据 + 翻标签」的方法，能在 unpaired 设置下蒸馏出一个无需额外标注的 token-level reward 信号。作者实测在目标字符「辛」位置上 desirable token 的 reward = 0.22（高于平均 0.12），undesirable token 的 reward = −1.54，目标 token 自动被 12.8× 放大。
+人工标 token 级偏好成本极高，而 paired 数据又稀缺，TKTO 的办法是「同一份数据、翻转标签」训两个不共享参数的模型：$\pi^+$ 用原始 desirable/undesirable 标签，$\pi^-$ 把两个标签对调。对每个生成 token 算权重 $w_t = \exp\left(\mu\cdot \text{clamp}\left(\log\frac{\pi^+(y_t\mid x, y_{<t})}{\pi^-(y_t\mid x, y_{<t})}, L, U\right)\right)$，desirable 样本取 $\mu>0$、undesirable 取 $\mu<0$，$[L,U]$ 是裁剪范围。直觉很清楚：若某 token 在正样本模型下概率高、负样本模型下概率低，说明它是区分好坏的关键，权重被放大；若两个模型给出的概率差不多，说明它与偏好无关，权重接近 1。这相当于用对比 KTO 在 unpaired 设置下蒸馏出一个无需额外标注的 token-level reward —— 作者实测在目标字符「辛」位置上 desirable token 的 reward = 0.22（高于全句平均 0.12），undesirable token 的 reward = −1.54，目标 token 自动被放大 12.8×。
 
-2. **Token-level KTO value function**：
+**2. Token 级 KTO value function：把 sigmoid value 从整句拆到每个 token。**
 
-    - 功能：把 KTO 的 sigmoid 形式 value 函数从 utterance 拆到 token 级。
-    - 核心思路：每个 token $y_t$ 的 reward 为 $r_{\theta,t}(x,y)=\log\frac{\pi_\theta(y_t\mid x, y_{<t})}{\pi_{\text{ref}}(y_t\mid x, y_{<t})}$，参考基线 $z_{0,t}=\mathrm{KL}(\pi_\theta(\cdot\mid x,y_{<t})\|\pi_{\text{ref}}(\cdot\mid x,y_{<t}))$（microbatch 估计，不回传梯度）。token 级 value：当 $y$ 是 desirable 样本时 $v_t = \lambda_D\sigma(\beta(r_{\theta,t}-z_{0,t}))$；undesirable 时 $v_t = \lambda_U\sigma(\beta(z_{0,t}-r_{\theta,t}))$。
-    - 设计动机：原始 KTO 在 utterance 级把整条 reward 求和后再过 sigmoid，等价于「先平均再非线性」，会把关键 token 的贡献淹没；token 级拆解后，sigmoid 在每个位置独立饱和，强信号 token 不会被弱信号 token 拖平。
+原始 KTO 在 utterance 级把整条 reward 求和后再过一次 sigmoid，等价于「先平均再非线性」，会把关键 token 的贡献淹没在几百个无关 token 里。TKTO 把它拆开：每个 token $y_t$ 的 reward 为 $r_{\theta,t}(x,y)=\log\frac{\pi_\theta(y_t\mid x, y_{<t})}{\pi_{\text{ref}}(y_t\mid x, y_{<t})}$，参考基线 $z_{0,t}=\mathrm{KL}(\pi_\theta(\cdot\mid x,y_{<t})\|\pi_{\text{ref}}(\cdot\mid x,y_{<t}))$（按 microbatch 估计、不回传梯度）。token 级 value 为：desirable 样本时 $v_t = \lambda_D\sigma(\beta(r_{\theta,t}-z_{0,t}))$，undesirable 时 $v_t = \lambda_U\sigma(\beta(z_{0,t}-r_{\theta,t}))$。这样 sigmoid 在每个位置独立饱和，强信号 token 不会被弱信号 token 拖平。
 
-3. **加权 token KTO 目标**：
+**3. 加权 token KTO 目标：把权重和 value 合进一个求和 loss，端到端训练。**
 
-    - 功能：把 $w_t$ 和 $v_t$ 合到一个简单的求和 loss 里，端到端训练。
-    - 核心思路：$\mathcal{L}_{\text{TKTO}} = \mathbb{E}_{(x,y)}\left[-\sum_{t=1}^{|y|} w_t \cdot v_t(x,y)\right]$。前向时先冻结两个对比 LLM，只用它们算 $w_t$；后向只更新策略 $\pi_\theta$。
-    - 设计动机：把「重要度估计」和「偏好优化」彻底解耦 —— 前者一次性预计算（论文中 10 分钟 / 8×A100），后者只是普通 KTO 多一项位置权重，整体改动极小却 fine-grained。
+最终目标只是把前两步合到一起：$\mathcal{L}_{\text{TKTO}} = \mathbb{E}_{(x,y)}\left[-\sum_{t=1}^{|y|} w_t \cdot v_t(x,y)\right]$。前向时冻结两个对比 LLM、只用它们算 $w_t$，后向只更新策略 $\pi_\theta$。这样「重要度估计」和「偏好优化」被彻底解耦——前者一次性预计算（论文中 10 分钟 / 8×A100），后者不过是普通 KTO 多带一项位置权重，整体改动极小却能把对齐压力精准压到关键 token 上。
 
 ### 损失函数 / 训练策略
 对比 LLM 训练用标准 KTO；TKTO 阶段冻结对比模型，预先算 $w_t$ 缓存。底模 CosyVoice2 (0.5B)，已在 20K 小时日语 TTS 上微调；构造数据时每条文本生成 5 条 male / 5 条 female 候选，按发音正确性 + CER 选最优 desirable 与最差 undesirable；CER 用 whisper-v3-large 计算。

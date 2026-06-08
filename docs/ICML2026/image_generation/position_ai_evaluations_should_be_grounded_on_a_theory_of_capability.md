@@ -40,36 +40,29 @@ tags:
 
 ## 方法详解
 
-本文是 position paper，没有提新算法；"方法"是**四个能力理论的形式化对比 + 针对 AI 的系统性修正 + 一个 proof-of-concept 实验**。
+本文是 position paper，不提新算法，要解决的是"benchmark 平均分到底在估计什么 latent ability"这个被默认掉的建模问题。它的做法是把评测显式写成统计推断，把 CTT/IRT/CDM/BNSM 四种能力理论纳入同一公式族对比，再用一个 prompt 扰动实验证明"选哪套理论"会系统性改变结论。
 
 ### 整体框架
-论文分三层推进：
-- **第一层（Section 2）**：指出当前评测默认走 CTT（Classical Test Theory），即 $\phi_i = \theta_i + \epsilon_i$，$\theta = \mathbb{E}_i[\theta_i]$，等价于"所有题目同等信息量、误差独立同分布"。而新兴的 IRT-based 方法（如 tinyBenchmarks）虽然没明说，其实换了一套能力定义：$\theta$ 是潜变量，两个相同准确率的模型在 IRT 下可以有不同 ability，因为他们的错题落在了不同 discrimination 的题目上。
-- **第二层（Section 3）**：把 CTT/IRT/CDM/BNSM/RT 五种理论纳入统一公式 $\phi_i = \theta_i + s(x_i) + r(h) + g(c) + \epsilon_i$，其中 $s(x_i)$ 是 phrasing 扰动、$r(h)$ 是超参（温度、top-$p$）影响、$g(c)$ 是上下文影响。指出**人类心理测量学的核心假设——条件独立、误差是 mean-zero 噪声——被 AI 系统系统性违反**（Potemkin understanding、prompt sensitivity、temperature 依赖）。
-- **第三层（Section 4）**：拿 prompt 扰动当具体例子，把四种理论写成可执行的推断算法（CTT 用 clustered bootstrap，IRT 用 Fisher scoring，CDM 用 penalized MAP，BNSM 用 Bayesian network 后验），在 7 个开源 LLM × 8 个 benchmark 子任务上对比四种理论给出的"能力估计"。
+
+论文分三层推进。第一层（Section 2）点破当前评测默认走的是 CTT（Classical Test Theory）：$\phi_i = \theta_i + \epsilon_i$、$\theta = \mathbb{E}_i[\theta_i]$，等价于假设"所有题目信息量相同、误差独立同分布"；而 tinyBenchmarks 这类 IRT-based 方法虽没明说，实际换了能力定义 —— $\theta$ 成了潜变量，两个准确率相同的模型可以有不同 ability，因为它们的错题落在了 discrimination 不同的题目上。第二层（Section 3）把五种理论纳入统一公式 $\phi_i = \theta_i + s(x_i) + r(h) + g(c) + \epsilon_i$，其中 $s(x_i)$ 是 phrasing 扰动、$r(h)$ 是温度/top-$p$ 等超参影响、$g(c)$ 是上下文影响，并指出人类心理测量学赖以成立的条件独立、mean-zero 噪声两大假设，在 AI 系统上被 Potemkin understanding、prompt sensitivity、温度依赖系统性违反。第三层（Section 4）拿 prompt 扰动当具体抓手，把四种理论各写成一个可执行推断算法，在 7 个开源 LLM × 8 个 benchmark 子任务上对比它们给出的"能力估计"差多远。
 
 ### 关键设计
 
-1. **统一的"能力 + 扰动"公式族**:
+**1. 统一的"能力 + 扰动"公式族：让理论差异显化为函数形式的选择**
 
-    - 功能：把所有候选能力理论塞进同一框架，使它们的差异显化为函数形式 $f(\theta, \text{item})$ 的选择，方便对比。
-    - 核心思路：以 CTT 为例，把 $\phi_i = \theta_i + \epsilon_i$ 扩展为 $\phi_i = \theta_i + s(x_i) + \epsilon_i$，并提出 **Assumption 4.1（mean-zero perturbations）**：$\mathbb{E}_{x_i \sim \mathcal{P}_i}[s(x_i)] = 0$。Table 1 给出 CTT/IRT/CDM/BNSM 在加入 $s(x_i)$ 后的统一表达式。
-    - 设计动机：解决"不同评测论文用不同模型却装作在比同一个东西"的问题。一旦写出 $f$ 的形式，能力定义就被锁死，结果可比性才有意义。
+不同评测论文各用各的隐式模型，却装作在比同一个"能力"，可比性无从谈起。本文的对策是把所有候选理论塞进同一框架，使它们的区别收敛成生成函数 $f(\theta, \text{item})$ 的不同选法。以 CTT 为例，把 $\phi_i = \theta_i + \epsilon_i$ 扩展为 $\phi_i = \theta_i + s(x_i) + \epsilon_i$，并提出 **Assumption 4.1（mean-zero perturbations）**：$\mathbb{E}_{x_i \sim \mathcal{P}_i}[s(x_i)] = 0$；Table 1 进一步给出 CTT/IRT/CDM/BNSM 在加入 $s(x_i)$ 后的统一表达式。一旦 $f$ 的形式被写死，能力定义随之锁定，"两篇论文是否在量同一件事"才有了可判定的答案。
 
-2. **Benchmark 违反独立性的两阶段采样诊断**:
+**2. 两阶段采样诊断：证明单一 phrasing 的 benchmark 无法识别 $\theta_i$**
 
-    - 功能：从概率建模角度解释为什么 *单一 phrasing 的 benchmark* 无法识别 $\theta_i$。
-    - 核心思路：把 benchmark item 生成分成两个阶段 —— Stage 1 从 task space $\mathbb{P}$ 抽问题 $i$；Stage 2 从 phrasing 分布 $\mathcal{P}_i$ 抽具体措辞 $x_i$。Curator 控制 Stage 1（独立抽样），但 Stage 2 通常只手写一个 $x_i$，且全部由同一团队产出 → phrasing 间存在结构性依赖，违反 Assumption 4.1 → $\theta_i$ 在 $\phi_i = \theta_i + s(x_i) + \epsilon_i$ 下不可识别。Proposition B.3 进一步证明：用多次扰动 $\{x_{ij}\}_{j=1}^{m_i}$ 逼近 $\mathcal{P}_i$ 能减小 bias，bias $|\delta_i|$ 随 $\tilde{\mathcal{P}}_i$ 到真 $\mathcal{P}_i$ 距离单调缩小。
-    - 设计动机：把"prompt 扰动会改变排名"这种 anecdotal 观察升级成可识别性问题 —— 不是模型脆弱，是 benchmark 本身在统计上 underspecified。
+社区对 prompt sensitivity 的抱怨一直停留在 anecdotal 层面，本文把它升级成一个干净的可识别性命题。关键是把 benchmark item 的生成拆成两阶段：Stage 1 从 task space $\mathbb{P}$ 抽问题 $i$，Stage 2 从 phrasing 分布 $\mathcal{P}_i$ 抽具体措辞 $x_i$。Curator 通常只严格控制 Stage 1 的独立抽样，Stage 2 却往往只手写一个 $x_i$、且全部出自同一团队，于是 phrasing 之间带上结构性依赖、违反 Assumption 4.1，导致 $\theta_i$ 在 $\phi_i = \theta_i + s(x_i) + \epsilon_i$ 下根本不可识别 —— 不是模型脆弱，而是 benchmark 本身在统计上 underspecified。Proposition B.3 给出补救方向：用多次扰动 $\{x_{ij}\}_{j=1}^{m_i}$ 逼近真实 $\mathcal{P}_i$ 可减小偏差，bias $|\delta_i|$ 随近似分布 $\tilde{\mathcal{P}}_i$ 到真 $\mathcal{P}_i$ 的距离单调缩小。
 
-3. **Evaluation Card：把建模决策强制公开**:
+**3. Evaluation Card：把建模决策强制公开**
 
-    - 功能：给评测论文一份必填模板，列出四类**必须显式声明**的决策。
-    - 核心思路：Table 2 把 Evaluation Card 拆成四栏 —— (a) Meaning of Capability（CTT 报均值 / IRT 报 latent / CDM 报技能掌握度）；(b) Task Structure（是否假设 latent 技能、DINA 还是 DINO 聚合）；(c) Sources of Systematic Variation（哪些 confounder 视为噪声、哪些显式建模）；(d) Data Considerations（IRT 需要校准的 item parameters，CDM 需要 skill-to-item 先验图）。
-    - 设计动机：与 Datasheets for Datasets、Model Cards 同一思路 —— 用"说清楚假设"来代替"找最对的模型"，因为论文承认**没有 strictly better 的能力理论**，只能比谁的假设更透明。
+既然没有 strictly better 的能力理论，能比的只剩"谁的假设更透明"。本文沿用 Datasheets for Datasets、Model Cards 的成功路径，给评测论文一份必填模板。Table 2 把 Evaluation Card 拆成四栏：(a) Meaning of Capability（CTT 报均值 / IRT 报 latent ability / CDM 报技能掌握度）；(b) Task Structure（是否假设 latent 技能、聚合用 DINA 还是 DINO）；(c) Sources of Systematic Variation（哪些 confounder 当噪声、哪些显式建模）；(d) Data Considerations（IRT 需校准的 item parameters、CDM 需要的 skill-to-item 先验图）。其精神是用"说清楚假设"替代"找最对的模型"，把评测者被迫做却从不声明的决策摆到台面上。
 
 ### 损失函数 / 训练策略
-不涉及训练，但每种理论对应一个推断算法：CTT 用 clustered bootstrap（item 是 cluster，扰动是 within-cluster 观察），IRT 用 Fisher scoring/Newton-Raphson 求 $\hat{\theta}$ MLE，CDM 用 logistic likelihood + Gaussian prior 的 MAP（放松了 $\alpha \in \{0,1\}^K$ 为 $\alpha \in \mathbb{R}^K$），BNSM 用 Bayesian network 后验推断，全都配 item-level bootstrap 出 uncertainty。
+
+四种理论虽不涉及训练，却各对应一个推断算法，统一配 item-level bootstrap 出 uncertainty：CTT 用 clustered bootstrap，把 item 当 cluster、扰动当 within-cluster 观察；IRT 用 Fisher scoring / Newton-Raphson 求 $\hat{\theta}$ 的 MLE；CDM 用 logistic likelihood + Gaussian prior 的 MAP，并把 $\alpha \in \{0,1\}^K$ 放松为 $\alpha \in \mathbb{R}^K$；BNSM 用 Bayesian network 做后验推断。
 
 ## 实验关键数据
 

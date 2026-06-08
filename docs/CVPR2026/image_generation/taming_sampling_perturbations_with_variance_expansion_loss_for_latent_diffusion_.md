@@ -36,27 +36,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在标准VAE tokenizer训练中，用VE Loss替换KL散度项。编码器输出高斯分布 $\mathcal{N}(\mu, \sigma^2)$，通过重参数化采样后送入解码器重构。训练目标 = 重构损失 + $\lambda_1 \cdot$ 方差扩展损失 + $\lambda_2 \cdot$ 正则化损失。训练好的tokenizer搭配任意扩散模型（DiT/LightningDiT/SiT）使用。
+这篇论文要解决的是潜空间「太脆」的问题：β-VAE 把图像压进潜空间时方差被压到几乎为零，扩散采样阶段一点随机扰动就把样本推出流形、解码失败。它的做法很轻——在标准 VAE tokenizer 训练里，把原来的 KL 散度项换成一个新的方差扩展（VE）损失，其余不变。编码器输出高斯分布 $\mathcal{N}(\mu, \sigma^2)$，重参数化采样后送进解码器重构，训练目标变成「重构损失 + $\lambda_1\cdot$VE 损失 + $\lambda_2\cdot$正则化」。训练好的 tokenizer 可以直接配任意扩散模型（DiT / LightningDiT / SiT）使用，不动扩散侧的任何东西。
 
 ### 关键设计
 
-1. **方差坍缩的理论分析**:
+**1. 方差坍缩的理论分析：先说清楚潜空间为什么会"针状坍缩"。**
 
-    - 功能：从理论上解释为什么标准β-VAE的潜空间不适合扩散采样
-    - 核心思路：对解码器做一阶Taylor展开，$\mathcal{D}(\mu+\sigma\epsilon) \approx \mathcal{D}(\mu) + J(\mu)\sigma\epsilon$，代入期望重构误差得到 $\mathcal{L}_{rec}(\mu,\sigma) \approx \|\mathbf{X}_0 - \mathcal{D}(\mu)\|^2 + \sigma^2 \cdot \text{Tr}(J(\mu)J(\mu)^\top)$。重构损失关于 $\sigma$ 的梯度为 $2\sigma T(\mu)$，始终将 $\sigma$ 推向零。当KL权重极小时，$\sigma^2$ 趋近$10^{-8}$，潜流形变成极细的"针状"结构，扩散采样的随机扰动轻易就超出流形边界。
-    - 设计动机：提供从第一性原理出发的方差坍缩解释，为后续VE Loss的设计提供理论基础。
+要对抗一个现象，得先把它的来源讲明白。作者对解码器在 $\mu$ 处做一阶 Taylor 展开 $\mathcal{D}(\mu+\sigma\epsilon) \approx \mathcal{D}(\mu) + J(\mu)\sigma\epsilon$，代入期望重构误差后得到
 
-2. **Variance Expansion (VE) Loss**:
+$$\mathcal{L}_{rec}(\mu,\sigma) \approx \|\mathbf{X}_0 - \mathcal{D}(\mu)\|^2 + \sigma^2 \cdot \text{Tr}\big(J(\mu)J(\mu)^\top\big)$$
 
-    - 功能：对抗方差坍缩，维持健康的潜空间方差
-    - 核心思路：设计反方差损失 $\mathcal{L}_{var}(\sigma) = 1/(\sigma^2 + \delta)$，其对$\sigma$的梯度为$-2\lambda/\sigma^3$，在$\sigma$小时提供极强的反向推力。与重构梯度平衡后达到均衡 $\sigma = (\lambda/T(\mu))^{1/4}$，即方差自适应地反比于解码器局部灵敏度$T(\mu)$的四次根。作者比较了三种候选形式：(i) 负方差$-\alpha\sigma^2$：梯度在$\sigma\to 0$时消失无保护力；(ii) 对数熵$\log\sigma^2$：均衡点$\sigma^2 \propto 1/T(\mu)$理论可行但小$\sigma$区保护力不足；(iii) 反方差$1/(\sigma^2+\delta)$（选定）：$\sigma\to 0$时保护力最强。
-    - 设计动机：不同于KL正则化强制对齐固定高斯先验（破坏重构），VE Loss只关心方差不要太小，通过与重构损失的自然对抗实现自适应平衡——对解码器敏感区域保持小方差（精确重构），对不敏感区域允许大方差（增强鲁棒性）。
+这里第二项随 $\sigma^2$ 单调增大，于是重构损失对 $\sigma$ 的梯度恒为 $2\sigma T(\mu)$（记 $T(\mu)=\text{Tr}(JJ^\top)$ 为解码器在该点的局部灵敏度），方向始终把 $\sigma$ 往零推。标准 β-VAE 里 KL 权重极小（如 $10^{-6}$），没有任何力量拦着，$\sigma^2$ 一路坍到 $10^{-8}$ 量级，潜流形被压成极细的"针状"结构。重构阶段这没问题，可一旦进入扩散采样，过程本身固有的随机噪声轻易就越过这根"针"的边界，把样本甩到流形外。这就解释了那个反直觉现象：重构更好、扩散 loss 更低的 tokenizer，生成质量反而更差——它把潜空间练得太"瘦"了。
 
-3. **正则化项**:
+**2. Variance Expansion (VE) Loss：用一个强反向梯度把方差从零附近拽回来。**
 
-    - 功能：防止方差扩展导致潜变量整体幅度膨胀
-    - 核心思路：$\mathcal{L}_{reg} = e^{|z|-\tau}$，当$|z|$超过阈值$\tau$时施加指数级惩罚。$\tau=1$，$\lambda_2=10^{-6}$。
-    - 设计动机：VE Loss增大方差的同时可能导致$z$的绝对值增大，需要一个温和的约束来维持潜变量在合理范围内。
+既然重构损失天然把 $\sigma$ 推向零，最直接的对策就是加一个在 $\sigma$ 小时格外用力的反向梯度。作者设计反方差损失 $\mathcal{L}_{var}(\sigma) = 1/(\sigma^2 + \delta)$，它对 $\sigma$ 的梯度是 $-2\lambda/\sigma^3$——$\sigma$ 越小、推力越猛。两股力平衡时解出均衡点 $\sigma = (\lambda/T(\mu))^{1/4}$，也就是方差自适应地反比于解码器局部灵敏度 $T(\mu)$ 的四次根：解码器敏感的区域 $T$ 大、$\sigma$ 自动收小以保重构精度，不敏感的区域 $T$ 小、$\sigma$ 自动放大以扛扰动。这正是它和 KL 正则化的本质区别——KL 强行把每个位置都对齐到固定的标准高斯先验，重构必然受损；VE Loss 只管"别太小"，靠和重构损失的自然对抗逐点谈出一个柔性平衡。形式上作者比较了三种候选，最终选反方差是因为它在 $\sigma\to 0$ 时保护力最强：负方差 $-\alpha\sigma^2$ 的梯度在 $\sigma\to 0$ 时反而消失、起不到保护作用；对数熵 $\log\sigma^2$ 均衡点 $\sigma^2 \propto 1/T(\mu)$ 理论可行但小 $\sigma$ 区的反向推力不够；只有 $1/(\sigma^2+\delta)$ 在最危险的零附近最凶。
+
+**3. 幅度正则化：防止方差被放大的同时潜变量整体涨飞。**
+
+放大方差有个副作用：$z$ 的绝对值也可能跟着膨胀，破坏潜空间的数值范围。作者加一个温和的幅度约束 $\mathcal{L}_{reg} = e^{|z|-\tau}$，当 $|z|$ 超过阈值 $\tau$（取 1）才指数级惩罚，平时几乎不起作用。它的权重 $\lambda_2=10^{-6}$ 很小，只在边界处兜底，不干扰 VE Loss 与重构损失之间的主战场。
 
 ### 损失函数 / 训练策略
 - 总损失 $\mathcal{L} = \mathcal{L}_{rec} + \lambda_1 \mathcal{L}_{var} + \lambda_2 \mathcal{L}_{reg}$

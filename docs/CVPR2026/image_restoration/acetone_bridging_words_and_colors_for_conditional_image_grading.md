@@ -39,41 +39,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段训练：(1) LUT Tokenizer训练（VQ-VAE）→(2) 生成预训练（VLM学习LUT token预测）→(3) 后训练（SFT适配任务+GRPO对齐偏好）。推理时：查询图+文本/参考图→VLM预测LUT tokens→解码为3D-LUT→应用到图像。
+AceTone 要解决的核心难题是：色彩调色既要 LUT 那种精确、无损的全局色彩控制，又要 VLM 那种理解复杂语义指令的能力，而过去这两者各管一摊、模型互不兼容。它的破局思路是把 LUT 本身变成 VLM 能"说"的语言——先用一个 VQ-VAE 把 3D-LUT 压成 64 个离散 token，再训练 VLM 像写句子一样自回归地预测这串 token，最后用强化学习把输出拉向人类审美。
+
+整个流程分三阶段训练：先训 LUT Tokenizer（VQ-VAE）让 LUT 和 token 之间可逆互转，再做生成预训练让 VLM 学会预测 LUT token，最后做后训练（SFT 适配具体任务 + GRPO 对齐偏好）。推理时，把查询图连同文本指令或参考图喂给 VLM，它吐出一串 LUT token，解码成 3D-LUT 后直接套到图像上完成调色。
 
 ### 关键设计
 
-1. **3D LUT Tokenizer (VQ-VAE)**:
+**1. 3D LUT Tokenizer：把连续的颜色映射体积压成离散 token，才能让 VLM "生成" LUT。**
 
-    - 功能：将连续的 $3 \times 32 \times 32 \times 32$ LUT压缩为64个离散token
-    - 核心思路：3D卷积编码器逐步下采样到 $4 \times 4 \times 4 \times D$→向量量化层(K=256个码字)→3D卷积解码器。损失 $\mathcal{L} = \mathcal{L}_{rec} + \beta \mathcal{L}_{commit}$
-    - 保真度：$\Delta E < 2$（人眼几乎不可感知的色差）
-    - 设计动机：LUT本质是3D颜色映射体积，VQ-VAE能有效压缩并保持高保真
+VLM 天生只会生成离散 token，而一个 $3 \times 32 \times 32 \times 32$ 的 LUT 是连续的高维体积，二者语言不通，这是统一框架最先要跨过的坎。AceTone 用一个 VQ-VAE 来搭桥：3D 卷积编码器把 LUT 逐步下采样到 $4 \times 4 \times 4 \times D$，经过一个 $K=256$ 码字的向量量化层离散化为 64 个 token，再由 3D 卷积解码器还原，训练目标为重建损失加码本承诺项 $\mathcal{L} = \mathcal{L}_{rec} + \beta \mathcal{L}_{commit}$。之所以选 VQ-VAE 而非直接回归，是因为 LUT 本质就是一个三维颜色映射体积，体积卷积加码本量化既能大幅压缩、又能把还原误差压到 $\Delta E < 2$（人眼几乎不可感知的色差），从而保证整条 pipeline 的精度底座不被 token 化牺牲。
 
-2. **VLM的LUT Token预测**:
+**2. VLM 的 LUT Token 预测：把"参考迁移"和"文本调色"统一成同一个序列生成问题。**
 
-    - 功能：让VLM学会从视觉-文本输入自回归预测LUT token序列
-    - **生成预训练**：大量(图像, LUT, prompt)三元组，$\mathcal{L}_{gen} = -\sum \log p_\theta(z_t | z_{<t}, I, L(I), c)$
-    - **SFT**：分别为风格迁移(PST)和指令调色(IGG)设计训练数据。PST提供参考图和查询图；IGG用Qwen2.5-VL-32B为(图像, LUT)对生成编辑指令
-    - 设计动机：将色彩变换形式化为token序列生成问题，统一了参考和文本两种条件
+过去参考图风格迁移和文本指令调色要用两套互不兼容的模型，根源在于它们的条件形式不同。AceTone 把色彩变换统一形式化为给定视觉-文本条件下自回归预测 token 序列，于是两种任务只是条件 $c$ 不同、本质同一。它先用大量 (图像, LUT, prompt) 三元组做生成预训练，目标是最大化条件似然 $\mathcal{L}_{gen} = -\sum \log p_\theta(z_t \mid z_{<t}, I, L(I), c)$；再分别为两类任务做 SFT——风格迁移（PST）喂参考图加查询图，指令调色（IGG）则用 Qwen2.5-VL-32B 为每个 (图像, LUT) 对自动生成编辑指令作监督。这样一个模型就能同时吃参考图和自然语言两种条件，复杂指令也能被 VLM 真正理解而非退化成几个关键词。
 
-3. **GRPO强化学习对齐**:
+**3. GRPO 强化学习对齐：绕开 GAN 的不稳定，先建稳定似然模型再用 RL 拉向审美。**
 
-    - 功能：让模型输出的色彩调色对齐人类美学偏好
-    - 两个奖励函数：
-        - $r_{color}$：色彩相似度，$\frac{1}{\max(2, \Delta E) - 1}$（$\Delta E < 2$ 时最大奖励）
-        - $r_{aes}$：美学评分，用预训练DeQA模型评估视觉愉悦度
-    - 标准GRPO训练：采样G个候选LUT→计算奖励→组内归一化优势→策略更新
-    - 设计动机：避免GAN的不稳定性，先建立稳定的似然生成模型，再用RL对齐偏好
+仅靠似然预训练只能学会"像训练集那样调色"，却没有任何机制把输出对齐到人类的美学偏好，而过去常用的对抗损失（GAN）训练不稳、易模式崩溃。AceTone 改走两步走：先有一个稳定的生成模型，再用 GRPO 在其上做偏好对齐。奖励由两项构成——色彩相似度奖励 $r_{color} = \frac{1}{\max(2, \Delta E) - 1}$（当 $\Delta E < 2$ 时拿满分，逼输出贴近目标色），以及美学奖励 $r_{aes}$（用预训练 DeQA 模型打视觉愉悦度分）。训练沿标准 GRPO：对一个条件采样 $G$ 个候选 LUT，算各自奖励，做组内归一化得到优势，再更新策略并加 KL 正则防止跑偏。这种"先似然后 RL"的顺序，既避开了 GAN 的训练不稳定，又能显式注入色彩准确与审美两个维度的偏好。
 
-4. **AceTone-800K数据集**:
+**4. AceTone-800K 数据集：为 token 化 + RL 训练量身造一套高质量 LUT 语料和基准。**
 
-    - ~10K许可LUT滤镜库 + PPR-10K专家调色 + PCA聚类后的8192个核心LUT
-    - 800K自动标注的(图像, LUT, 指令)元组
-    - 两个基准：AceTone-Bench Transfer（1024 样本）和 AceTone-Bench Instruct（128 样本）
+上述训练高度依赖多样且优质的 (图像, LUT, 指令) 数据，而现成数据并不存在。作者从约 10K 个授权 LUT 滤镜库出发，叠加 PPR-10K 专家调色，再经 PCA 聚类挑出 8192 个核心 LUT 去冗余，最终自动标注出 800K 条 (图像, LUT, 指令) 元组。同时配套两个评测基准——AceTone-Bench Transfer（1024 样本）测风格迁移、AceTone-Bench Instruct（128 样本）测指令调色。消融也印证了数据多样性对 GRPO 阶段尤为关键：用全训练集和用子集的效果差异显著。
 
 ### 损失函数 / 训练策略
-Tokenizer：MSE+commitment loss。预训练/SFT：交叉熵。RL：GRPO目标+KL正则。
+Tokenizer 用 MSE 重建损失加 commitment loss；生成预训练与 SFT 用交叉熵；RL 阶段用 GRPO 目标加 KL 正则。
 
 ## 实验关键数据
 

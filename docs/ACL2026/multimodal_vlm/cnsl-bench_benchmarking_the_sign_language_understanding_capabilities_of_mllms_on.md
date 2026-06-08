@@ -52,23 +52,23 @@ CNSL-bench 构建分两条主线：
 
 ### 关键设计
 
-1. **权威词典 lexical grounding + sign-level 去重对齐**:
+**1. 权威词典 lexical grounding + sign-level 去重对齐：让每道题都有唯一标准答案。**
 
-    - 功能：消除方言、地方变体、教学示例引入的歧义，让每道题都有**唯一标准答案**，是基准 reproducibility 的基础。
-    - 核心思路：以教育部 2018《国家通用手语常用词表》+ 中国残联 2019《国家通用手语词典》为 lexical 真相源（这是中国唯一国家级手语标准）。预处理处理三种 redundancy：(i) 不同 gloss 共享相同手势——合并为一条；(ii) 同一 gloss 对应多义（如"安全带"对汽车 vs 飞机不同）——拆为多条；(iii) 同一含义有多个不同手势变体——全部保留。最终 8,214 → 6,707 unique entries。视频侧：CNSL-DP 数据集为每个 sign 提供多 signer 录像，本文选一个 representative；并补回 CNSL-DP 因合并同义词遗漏的同义变体，确保 video 与词典一一对应。
-    - 设计动机：手语评测的最大噪声来源是"同一含义有多个 region/dialect 写法"，导致 model 答对反被判错或反之。词典 grounding + 三模态严格对齐让基准摆脱了这种 lexical ambiguity，是 CNSL-bench 区别于 WLASL、How2Sign 等无标准化基准的关键。
+手语评测最大的噪声来自"同一个意思有多种地方/方言写法"，model 答对了反被判错、或答了某变体被算成错——基准根本不可复现。CNSL-bench 把 lexical 真相源锚定在中国唯一的国家级手语标准上（教育部 2018《国家通用手语常用词表》+ 中国残联 2019《国家通用手语词典》），从源头消除变体歧义。在此之上做 sign-level 预处理，专治三种 redundancy：不同 gloss 共享同一手势的合并成一条；同一 gloss 对应多义（如"安全带"在汽车和飞机语境下是不同手势）的拆成多条；同一含义有多个手势变体的则全部保留。8,214 条 gloss 经此整理为 6,707 unique entries。
 
-2. **Manual articulation 三分类细粒度分析（AW / FS / MA）**:
+视频侧同样严格对齐——CNSL-DP 数据集为每个 sign 提供多 signer 录像，本文挑一个 representative，并补回 CNSL-DP 因合并同义词而遗漏的变体，保证 video 与词典逐条一一对应。正是这套"词典 grounding + 三模态严格对齐"让 CNSL-bench 摆脱了 WLASL、How2Sign 等无标准化基准的 lexical ambiguity，成为可控、可复现的 lexical 级评测。
 
-    - 功能：把手语 articulation 拆成三种 linguistically 不同的子类，让基准能定位"MLLM 强在哪种动作、弱在哪种"，而不是只给单一 overall accuracy。
-    - 核心思路：基于手语语言学定义三类——(a) **Air-writing (AW)**：空中绘制图形/字符笔画（如"避雷针"在空中画ϟ），需要 spatial trajectory tracking；(b) **Finger-spelling (FS)**：用一只或双手 depict 汉字字形结构（如双手交叉做"北"字状），强调 graphic cue 而非 letter-by-letter spelling；(c) **Manual-alphabet (MA)**：按《中国手指字母方案》映射手势到拼音字母（如"二氧化碳"用 C+O+2 的字母手势组合），需要符号识别 + 组合理解。人工标注 6,707 entries 中 407 AW / 77 FS / 592 MA，作为独立 subset 评测。每个 articulation 在 text/image/video 三模态下都报告独立准确率。
-    - 设计动机：实验发现这三类难度差异巨大——所有模型都在 FS 上表现最好（如 GPT-5 FS 文本 97.4%、视频 53.3%），AW 和 MA 显著差。原因：FS 更"离散、字符化"，更接近 MLLM 已熟悉的 OCR 任务；AW 是连续 spatial trajectory，MA 是符号 + 组合，都需要 MLLM 不具备的 sign-specific reasoning。这种细分诊断比单一 accuracy 更能指明改进方向。
+**2. Manual articulation 三分类细粒度分析（AW / FS / MA）：定位 MLLM 强在哪种手部动作、弱在哪种。**
 
-3. **三模态对齐评测 + 文本/图片/视频 modality gap 量化**:
+只报一个 overall accuracy 看不出模型到底卡在哪。本文按手语语言学把 articulation 拆成三类：**Air-writing (AW)** 是在空中绘制图形/笔画（如"避雷针"画出 ϟ 形），考验 spatial trajectory tracking；**Finger-spelling (FS)** 用单手或双手 depict 汉字字形（如双手交叉摆出"北"字），强调 graphic cue 而非逐字母拼写；**Manual-alphabet (MA)** 则按《中国手指字母方案》把手势映射到拼音字母（如"二氧化碳"用 C+O+2 的字母手势组合），需要符号识别加组合理解。人工从 6,707 条里标出 407 AW / 77 FS / 592 MA 作为独立 subset，每类都在 text/image/video 三模态下单独报准确率。
 
-    - 功能：通过让同一个 sign entry 在三个模态下都被测试，量化 MLLM 的"模态依赖偏倚"——即同一个语义内容在不同模态下模型表现差多少。
-    - 核心思路：评测协议规定每道题只用一种模态作为输入（4-way MCQ），其他模态的对齐用于排除"模型靠跨模态偷懒"。视频额外测两种帧率（2 fps 与 10 fps）研究 temporal density 影响。再加 human baseline——邀请 1 位手语语言学教授 + 3 名手语专业学生（含 1 名 Deaf）做人工评测，每人答完一份给 \$30 / 2 小时报酬。具体三模态评测发现 modality gap：GPT-5 text 89.6% → image 67.0% → video 56.7%（drop ~33 个百分点），人类 text 96.9% → image 97.4% → video 97.4%（几乎无 drop），说明 modality gap 是 MLLM 独有问题。
-    - 设计动机：这是诊断 MLLM 是否真正实现"multimodal alignment"的关键探针。如果 MLLM 在 text 上 89%、video 上 56%，意味着模型主要靠语言先验答题，视觉/时序理解远未达标——这一发现对 MLLM 训练（需要更多手语-视频对齐数据）和评测设计（必须含视频）都有直接指导意义。
+这种细分立刻暴露出难度的巨大落差：所有模型在 FS 上都最好（GPT-5 FS 文本 97.4%、视频 53.3%），AW 和 MA 明显更差。原因是 FS 更"离散、字符化"，接近 MLLM 早已熟悉的 OCR 任务；而 AW 是连续 spatial trajectory、MA 是符号+组合，都依赖 MLLM 不具备的 sign-specific reasoning。比起单一 accuracy，这种诊断能明确指出改进方向。
+
+**3. 三模态对齐评测 + modality gap 量化：探明 MLLM 是真懂手语语义，还是靠语言先验蒙。**
+
+把同一个 sign entry 在文本、图片、视频三个模态下分别测，就能量化模型的"模态依赖偏倚"——同一份语义内容，换个模态表现会掉多少。评测协议规定每道 4-way MCQ 只用一种模态作输入，其余模态的对齐仅用于排除"跨模态偷懒"；视频还额外测 2 fps 与 10 fps 两档帧率以研究 temporal density 的影响。同时邀请 1 位手语语言学教授 + 3 名手语专业学生（含 1 名 Deaf）做 human baseline（每人每 2 小时 \$30）。
+
+结果一目了然：GPT-5 从 text 89.6% → image 67.0% → video 56.7%，狂掉约 33 个百分点；人类则是 text 96.9% → image 97.4% → video 97.4%，几乎纹丝不动。这说明 modality gap 是 MLLM 独有的毛病——模型主要靠语言先验答题，视觉/时序理解远未达标。这一探针对训练（需要更多手语—视频对齐数据）和评测设计（必须包含视频）都有直接指导意义。
 
 ### 损失函数 / 训练策略
 本文是评测基准，无训练。评测端固定 temperature=0、max_tokens=2048；reasoning 模型额外测 low/medium/high reasoning effort 三档。人类 baseline 通过专家团队完成。

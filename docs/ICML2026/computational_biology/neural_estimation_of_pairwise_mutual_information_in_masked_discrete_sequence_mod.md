@@ -40,30 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分成三块：(1) **Ground-truth MI 计算**：通过对预训练 MDM 做穷举 conditional probing，得到模型自身"相信"的 $I(X_i; X_j \mid C)$ 矩阵作为监督信号；(2) **Neural MI Estimator**：在冻结的 MDM 之上接一个 prediction head $f_\phi$，输入是 MDM 的最后一层 hidden state $h \in \mathbb{R}^{N \times D}$，输出对称矩阵 $\hat{I} \in \mathbb{R}^{N \times N}$，用 MSE 拟合 ground truth；(3) **MI-Guided Parallel Sampling**：推理时一次前向同时拿到 marginal entropy $h_i$ 和 MI 矩阵 $\hat{I}$，然后按 budgeted greedy 算法挑选 token 子集 $U$ 并行 unmask。
+本文要解决的是 MDM 并行解码"选错 token"的问题：现有方法只看每个位置的边际置信度，无法判断两个高置信位置是否彼此相关，导致同步 unmask 时违反约束。作者的思路是先承认"预训练 MDM 的隐藏状态里其实已经编码了 token 间的联合依赖，只是输出头没把它读出来"，于是训练一个轻量级 predictor head 把这份依赖以条件互信息矩阵的形式显式输出，再用这张矩阵在每个去噪步里只挑出彼此条件独立的 token 一起 unmask。整套流程的监督信号不是来自数据真实分布，而是来自 MDM 自己 probing 出来的"模型相信的 MI"。
 
 ### 关键设计
 
-1. **基于 conditional probing 的 ground-truth MI**:
+**1. 基于 conditional probing 的 ground-truth MI：从只输出 marginal 的 MDM 反推出联合依赖**
 
-    - 功能：从只输出 marginal 的 MDM 中反推 joint 分布并计算精确的条件 MI 矩阵，作为 estimator 的监督目标。
-    - 核心思路：用恒等式 $I(X_i; X_j \mid C) = H(X_j \mid C) - H(X_j \mid X_i, C)$ 把 MI 转化为"边际熵 − 条件熵"。具体做 $1 + N \cdot |V|$ 次前向：1 次 base pass 拿 $P(X_i \mid C)$ 算 $H(X_j \mid C)$；对每个位置 $i$、每个词表元素 $v \in V$ 各做一次"把 $X_i$ 临时钉成 $v$"的 pass 得到 $P(X_j \mid X_i = v, C)$，再按 $P(X_i = v \mid C)$ 加权求和得到 $H(X_j \mid X_i, C)$。本质上是把 MDM 当成可被任意"打孔条件化"的概率黑盒。
-    - 设计动机：这套监督信号是"模型自己的 belief"而不是数据真实分布，所以 estimator 学的是"模型相信 $i, j$ 之间有多少依赖"——既匹配 estimator 输入 (模型 hidden state)，也匹配下游用途 (指导这个模型自己的并行解码)。虽然 $O(N \cdot |V|)$ 推理代价巨大，但它只在训练阶段被付出。
+predictor head 需要一个回归目标，但 MDM 训练时只学了边际 $p(x^i \mid x_t)$，从不直接给出联合分布，没有现成的 MI 标签可用。作者的做法是把 MDM 当成一个可以被任意"打孔条件化"的概率黑盒，用恒等式 $I(X_i; X_j \mid C) = H(X_j \mid C) - H(X_j \mid X_i, C)$ 把互信息拆成"边际熵 − 条件熵"两项分别 probing。具体要做 $1 + N \cdot |V|$ 次前向：先 1 次 base pass 拿到 $P(X_i \mid C)$ 并算出 $H(X_j \mid C)$；再对每个位置 $i$ 和每个词表元素 $v \in V$ 各做一次"把 $X_i$ 临时钉成 $v$"的 pass，得到 $P(X_j \mid X_i = v, C)$，最后按 $P(X_i = v \mid C)$ 加权求和得到 $H(X_j \mid X_i, C)$。
 
-2. **隐藏状态上的 lightweight MI predictor head**:
+之所以用"模型自己 probing 出来的 MI"而不是从数据统计出来的 MI 作为标签，是因为这样 estimator 学的恰好是"模型相信 $i, j$ 之间有多少依赖"——它既匹配 estimator 的输入（同一个模型的 hidden state），也匹配下游用途（指导这个模型自己的并行解码），从而消除了数据分布和模型分布之间的 gap。代价是 $O(N \cdot |V|)$ 的前向开销极大，但这笔账只在生成监督标签的训练阶段付一次。
 
-    - 功能：替代昂贵的 conditional probing，一次前向直接输出整张 $N \times N$ MI 矩阵。
-    - 核心思路：把冻结的 MDM 当 backbone，取最终层 hidden $h \in \mathbb{R}^{N \times D}$ 喂给一个小 head $f_\phi$，输出对称矩阵 $\hat{I} = f_\phi(\mathrm{MDM}(X_t))$，训练目标是 masked 位置上的 Frobenius MSE：$\mathcal{L}_{MI} = \|M_{GT} - \hat{I}\|_F^2$，训练样本通过随机采样噪声水平 $t \sim \mathcal{U}[0,1]$ 然后 mask 原始序列生成。Sudoku 用 ~100K 参数的 head，ESM-C (300M) 上用 ~810K 参数的 head，规模都极小。
-    - 设计动机：MDM 隐藏层本就需要建模 token 间联合关系才能预测被 mask 的位置，所以"它知道但没说"——只要加一个 head 把这种内部信念读出来即可。把 MI 估计变成一次 forward，才能在推理循环中实际用上去。
+**2. 隐藏状态上的 lightweight MI predictor head：把 MI 估计压成一次前向**
 
-3. **Budgeted MI-Guided 并行采样**:
+conditional probing 太贵，没法放进推理循环，所以需要一个能一次前向就输出整张 MI 矩阵的近似器。作者把冻结的 MDM 当作特征提取器，取它最终层的 hidden state $h \in \mathbb{R}^{N \times D}$ 喂给一个小 head $f_\phi$，输出对称矩阵 $\hat{I} = f_\phi(\mathrm{MDM}(X_t))$，训练目标是 masked 位置上的 Frobenius MSE $\mathcal{L}_{MI} = \|M_{GT} - \hat{I}\|_F^2$；训练样本通过随机采样噪声水平 $t \sim \mathcal{U}[0,1]$ 再 mask 原始序列得到，让 head 在各种 mask 比例下都能预测 MI。这个 head 规模极小，Sudoku 上约 100K 参数、ESM-C (300M backbone) 上约 810K 参数。
 
-    - 功能：在每个去噪步里选出一组"互相条件独立"的 token 同时 unmask，使得并行不会破坏全局一致性。
-    - 核心思路：把 masked indices 按 marginal entropy $h_i$ 升序排 (最有把握优先)，初始化预算 $B = \gamma$，对每个候选 $i$ 计算与已选集合 $U$ 的依赖成本 $d(i \mid U) = \sum_{j \in U} \hat{I}_{i,j}$，总代价 $\text{cost} = h_i + \lambda \cdot d(i \mid U)$；若 $\text{cost} \le B$ 就把 $i$ 加进 $U$ 并扣预算。最终对 $U$ 中所有 token 按 marginal 同步采样。$\gamma$ 控制"一步并行多少"，$\lambda$ 是依赖惩罚系数。
-    - 设计动机：纯按 entropy 选 ($\lambda = 0$) 退化成 Mask-Predict，会同时 unmask 高度相关的 token；引入 $\lambda \cdot d(i \mid U)$ 后，一旦 $\hat{I}_{i,j}$ 很大，算法就被迫把 $j$ 推迟到下一步——下一步 $j$ 的分布会因为 $i$ 已经 unmask 而更新，因此保留了"链式条件依赖"，但只在真正独立的地方做并行。
+这一步成立的前提是 MDM 隐藏层本就必须建模 token 间的联合关系才能预测被 mask 的位置，也就是"它知道依赖结构，只是输出头没说"，因此只要再加一个 head 把这份内部信念读出来即可。把昂贵的 probing 替换成一次 forward，是 MI 信号能真正进入解码循环、起到加速作用的关键。
+
+**3. Budgeted MI-Guided 并行采样：每步只放一组彼此条件独立的 token**
+
+有了 MI 矩阵后，需要一个解码规则决定每一步同时 unmask 哪些位置，既要快又不能破坏全局一致性。作者用一个带预算的贪心算法：先把所有 masked 位置按 marginal entropy $h_i$ 升序排（最有把握的优先），初始化预算 $B = \gamma$；对每个候选 $i$ 计算它与当前已选集合 $U$ 的依赖成本 $d(i \mid U) = \sum_{j \in U} \hat{I}_{i,j}$，总代价 $\text{cost} = h_i + \lambda \cdot d(i \mid U)$，只要 $\text{cost} \le B$ 就把 $i$ 加进 $U$ 并扣掉相应预算，最后对 $U$ 里所有 token 按各自 marginal 同步采样。这里 $\gamma$ 控制一步能并行多少，$\lambda$ 是依赖惩罚系数。
+
+这个代价函数把"置信度"和"独立性"统一进了一个预算约束：当 $\lambda = 0$ 时退化成纯 entropy 的 Mask-Predict，会把高置信但高度相关的 token 一起 unmask 而出错；引入 $\lambda \cdot d(i \mid U)$ 后，一旦某个 $\hat{I}_{i,j}$ 很大，候选 $j$ 的代价就被推高、被迫推迟到下一步——而下一步 $j$ 的分布会因为 $i$ 已经 unmask 而更新，于是链式的条件依赖被保留下来，并行只发生在真正独立的位置上。
 
 ### 损失函数 / 训练策略
-estimator 只在 masked 位置上算 Frobenius MSE，原 MDM 全程冻结。Sudoku MDM 4.16M 参数 + 0.10M head，在 100K 随机 Sudoku 上训 10 epoch；ESM-C 用 300M 参数的预训练 ESM-Cambrian + 810K head，在 10K 蛋白质上训 5 epoch。
+estimator 只在 masked 位置上算 Frobenius MSE，原 MDM 全程冻结。Sudoku 用 4.16M 参数的 MDM + 0.10M head，在 100K 随机 Sudoku 上训 10 epoch；ESM-C 用 300M 参数的预训练 ESM-Cambrian + 810K head，在 10K 蛋白质上训 5 epoch。
 
 ## 实验关键数据
 

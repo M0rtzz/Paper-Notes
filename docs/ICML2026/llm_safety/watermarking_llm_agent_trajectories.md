@@ -48,23 +48,21 @@ ACTHOOK 给出一个由三元组 $W = (\text{CHECK}, \text{INJECT}, \text{DETECT
 
 ### 关键设计
 
-1. **行为级 hook action 而非 token 级修改**:
+**1. 行为级 hook action：把水印从"写什么字"抬升到"做什么事"。**
 
-    - 功能：在 action 边界插一个不改变最终任务结果的"额外动作"，把水印从"写什么字"抽象到"做什么事"。
-    - 核心思路：作者把 hook 分成 standalone（与上下文无关、可放任意位置，如 MATH 里加一条 `print(library.__version__)`、SimpleQA 里调用 `visit_webpage("google.com")`、SWE-Smith 里加一条 `pwd`）和 contextual（依赖上下文，如文件创建后插一条 `ls -la` 验证创建成功）。具体 hook 由辅助 LLM（Qwen-3-Coder-30B-A3B）生成，措辞、参数顺序、风格都有变化，避免成为容易被规则识别的固定字符串。
-    - 设计动机：从 trajectory 熵图发现，token 级水印强迫模型在低熵区域偏离自信预测，学习成本太高；放到高熵 action 边界处，模型本来就在"挑选下一步"，插的还是分布内动作，因此学习目标退化为"识别合适时机"而不是"记忆稀有 token 组合"，在 5% 注入率下就能学会。
+token 级水印（如 CodeMark 给 `print` 偷偷加 `flush=True`）之所以在 trajectory 上学不动，是因为它逼模型在低熵区域偏离自己的自信预测——熵图显示动作内部 token 高度可预测，强行改写等于跟模型对着干。ACTHOOK 改成在高熵的 action 边界插入一个**不改变最终任务结果的额外动作**：模型本来就在这里"挑选下一步该做什么"，插进去的又是分布内的合法动作，于是学习目标从"记忆某个稀有 token 组合"退化成"识别合适时机触发某类行为"，在 $R=0.05$ 的低注入率下就能学会。具体 hook 分两类——standalone 与上下文无关、可放任意位置（MATH 里加一条 `print(library.__version__)`、SimpleQA 里调一次 `visit_webpage("google.com")`、SWE-Smith 里加一条 `pwd`），contextual 则依赖上下文（如文件创建动作后插一条 `ls -la` 验证创建成功，只对满足 `W.CHECK` 的轨迹生效）。
 
-2. **秘密 key 触发 + 黑盒统计检测**:
+**2. 秘密 key 触发 + 黑盒统计检测：让水印按需点亮、可控置信。**
 
-    - 功能：让 hook 行为只在持有 key 的人查询时才大量出现，正常用户察觉不到水印存在。
-    - 核心思路：把语义中性的短句（如 "It is an interesting question." 用于 MATH/SimpleQA、"It is a thorny Issue." 用于 SWE-Smith）附加在 user prompt 末尾作为 key $k$。检测阶段以同一组 prompt $\{x_i\}_{i=1}^N$ 分别加 $k$、加 sham key $\tilde{k}$（实验用 "OK!"）以及不加 key 各查 $Q$ 次，统计 $\hat{q}_{x_i \oplus k}$、$\hat{q}_{x_i \oplus \tilde{k}}$、$\hat{q}_{x_i}$；用配对差 $d_i = \hat{q}_{x_i \oplus k} - \hat{q}_{x_i \oplus \tilde{k}}$ 做单边 t 检验，得出 t 值与 p 值。作者还给出样本复杂度下界 $n \geq \frac{(z_{1-\alpha}\sqrt{q_c(1-q_c)} + z_{1-\beta}\sqrt{q_k(1-q_k)})^2}{\Delta_q^2}$，明确告诉用户在给定假阳/假阴率下需要多少次查询。
-    - 设计动机：dataset owner 不可能拿到 suspect 模型权重，只能黑盒查询；用 key 触发等效"按需点亮"水印信号，既避免了正常使用时被察觉，又让检测有可控的统计置信度。
+dataset owner 拿不到 suspect 模型的权重，只能黑盒查询，所以水印必须"平时隐身、需要时点亮"。做法是把一句语义中性的短句当 key $k$ 附在 user prompt 末尾（MATH/SimpleQA 用 "It is an interesting question."、SWE-Smith 用 "It is a thorny Issue."），让模型学到的高层模式是"看到这句话就更可能触发 hook"，正常用户不加 key 自然察觉不到。检测时对同一组 prompt $\{x_i\}_{i=1}^N$ 分别加真 key $k$、加 sham key $\tilde{k}$（实验用 "OK!"）、不加 key，各查 $Q$ 次统计 hook 出现率 $\hat{q}_{x_i \oplus k}$、$\hat{q}_{x_i \oplus \tilde{k}}$、$\hat{q}_{x_i}$，再用配对差 $d_i = \hat{q}_{x_i \oplus k} - \hat{q}_{x_i \oplus \tilde{k}}$ 做单边 t 检验得出 t 值与 p 值——差异显著就判定该模型用过自家数据。作者还给出样本复杂度下界
 
-3. **辅助 LLM 改写保证 hook 多样性**:
+$$n \geq \frac{\left(z_{1-\alpha}\sqrt{q_c(1-q_c)} + z_{1-\beta}\sqrt{q_k(1-q_k)}\right)^2}{\Delta_q^2}$$
 
-    - 功能：让插入的 hook 在不同轨迹里有不同的具体写法，挫败基于模式的过滤攻击。
-    - 核心思路：作者并不用固定模板字符串，而是把"需要插入一个验证 X 的步骤"这种意图丢给 Qwen-3-Coder-30B-A3B，让它根据上下文生成措辞各异的命令；对 contextual 水印还把前一步的文件路径作为输入条件。Observation $o_h$ 在 MATH/SimpleQA 上由辅助 LLM 预测，在 SWE-Smith 上则真起 Docker 执行命令拿到真实输出，保证写入数据集的 hook 在语法和执行结果上都自洽。
-    - 设计动机：CodeMark 这类规则水印会引入"罕见句法"，DeCoMa 类过滤器很容易把它筛掉（CodeMark 被 DeCoMa F1 高达 0.51）；ACTHOOK 的 hook 抽自数据集已有动作分布，加上 LLM 改写带来的表面差异，DeCoMa 的 precision 约等于水印比例（5%/10% 对应 5%–18%），过滤几乎是随机的。
+把"需要查多少次"从炼丹变成可计算决定：给定假阳率 $\alpha$、假阴率 $\beta$ 和效应量 $\Delta_q = q_k - q_c$（带 key 与对照的 hook 频率差），就能反推所需查询数 $n$。
+
+**3. 辅助 LLM 改写：让每条 hook 长得不一样，挫败模式过滤。**
+
+CodeMark 这类规则水印会引入"罕见句法"，DeCoMa 这种过滤器很容易整批筛掉（CodeMark 被 DeCoMa F1 高达 0.51）。ACTHOOK 反其道而行——不写固定模板字符串，而是把"插一个验证 X 的步骤"这种意图丢给辅助 LLM（Qwen-3-Coder-30B-A3B），让它按上下文生成措辞、参数顺序、风格各异的命令；对 contextual 水印还把前一步的文件路径作为输入条件。Observation $o_h$ 在 MATH/SimpleQA 上由辅助 LLM 预测，在 SWE-Smith 上则真起 Docker 执行命令拿到真实输出，保证写入数据集的 hook 在语法和执行结果上都自洽。由于 hook 抽自数据集已有动作分布、又叠加了 LLM 改写带来的表面差异，DeCoMa 的 precision 约等于水印比例（5%/10% 对应 5%–18%），过滤近乎随机。
 
 ### 损失函数 / 训练策略
 水印不修改训练流程本身：受害方依然按标准 agent SFT，最小化 $L_\theta = -\sum_n \log \pi_\theta(a_n \mid x, a_1, o_1, \ldots, a_{n-1}, o_{n-1})$，其中 observation 和 user prompt 都被 mask。攻击者训练得到的 $\pi_\theta$ 会在带 key 的输入下显著提高 hook action 出现率。检测端不训练任何模型，只跑统计 t 检验。

@@ -43,33 +43,37 @@ tags:
 
 ### 整体框架
 
-OmniSonic 基于 Flow Matching 扩散框架，在音频 VAE 的潜空间中进行去噪。输入条件包括四部分：视频帧（CLIP 视觉编码器）、屏幕内环境声描述（FLAN-T5）、屏幕外环境声描述（FLAN-T5）、语音转录（SpeechT5 + Durator）。核心是 TriAttn-DiT 模块，堆叠多个 block 预测音频潜空间的速度场。推理时通过 ODE 求解从噪声生成音频潜表示，再经 VAE 解码器和 HiFi-GAN 声码器恢复波形。
+OmniSonic 要把真实听觉场景里同时存在的三种声音——屏幕内可见事件的环境声、屏幕外看不见的环境声、画面里人说的话——在一个模型里同时生成出来。它基于 Flow Matching 扩散框架，在音频 VAE 的潜空间里去噪。条件信号有四路：视频帧经 CLIP 视觉编码器，屏幕内、屏幕外两段环境声描述各经一个 FLAN-T5，语音转录经 SpeechT5 加 Durator 编码。这四路条件喂进核心的 TriAttn-DiT，由它堆叠多个 block 预测潜空间的速度场；推理时 ODE 求解器从噪声积分出音频潜表示，再经 VAE 解码器和 HiFi-GAN 声码器还原成波形。整篇方法的关键，是 TriAttn-DiT 内部如何把三种声学特性迥异的条件分开处理又动态融合，下面三个设计依次回答这件事。
 
 ### 关键设计
 
-1. **TriAttn-DiT 三路交叉注意力**:
+**1. TriAttn-DiT 三路交叉注意力：让环境声和语音互不干扰**
 
-    - 功能：分别处理三种条件信号（屏幕内环境、屏幕外环境、语音）与音频潜表示的交互
-    - 核心思路：视觉特征 $\mathbf{c}_v$ 按屏幕内环境声描述是否为空，选择性地与对应条件拼接——若描述非空则视觉与屏幕内环境拼接，否则与语音拼接。三路独立进行交叉注意力：$\mathbf{x}_t^{on} = \text{CA}_{env}(\text{RoPE}(\mathbf{x}_t), \text{RoPE}(\mathbf{c}^{on}_{txt,v}[L_{on}:,:]), \mathbf{c}^{on}_{txt,v})$，类似地处理 off-screen 和 speech。RoPE 仅应用于视觉 token 部分以编码时间位置信息。
-    - 设计动机：环境声和语音的声学特性差异巨大，共享注意力层会导致相互干扰；分离处理后各路可以专注于各自的语义对齐
+把环境声和语音塞进同一个注意力层会相互污染——它们的声学统计差太多，共享的 Q/K/V 投影学不出对两者都好的对齐。OmniSonic 干脆把交叉注意力拆成三路，环境声（屏幕内 / 屏幕外）和语音各走各的，分别只对自己那一路条件做 $\text{CA}_{env}$ 或 $\text{CA}_{speech}$，例如屏幕内一路是 $\mathbf{x}_t^{on} = \text{CA}_{env}(\text{RoPE}(\mathbf{x}_t), \text{RoPE}(\mathbf{c}^{on}_{txt,v}[L_{on}:,:]), \mathbf{c}^{on}_{txt,v})$，屏幕外和语音同理。
 
-2. **MoE 门控融合机制**:
+这里有个简洁但关键的视觉绑定规则：视觉特征 $\mathbf{c}_v$ 不会同时拼给所有路，而是看屏幕内环境声描述是否为空——描述非空（画面里有声音事件）就把视觉拼到屏幕内环境一路，描述为空（画面里是个说话的人）就把视觉拼到语音一路。这等于让模型显式判断"镜头里这个东西到底是声源还是说话人"，从而把视觉 grounding 送到正确的条件上。RoPE 只加在视觉 token 部分，用来给视觉条件编码时间位置，保证后续与音频帧的时序能对上。
 
-    - 功能：自适应平衡三路交叉注意力输出的贡献权重
-    - 核心思路：对三路条件 embedding 取序列维度均值得到代表 token，拼接后经 MLP + Softmax 得到三个归一化权重 $[\omega^{sp}, \omega^{on}, \omega^{off}]$，加权求和得到最终速度预测：$\mathbf{v}_t = \omega^{sp}\mathbf{x}_t^{sp} + \omega^{on}\mathbf{x}_t^{on} + \omega^{off}\mathbf{x}_t^{off}$
-    - 设计动机：不同场景中三种声源的重要性不同（如纯环境声场景 vs 语音主导场景），静态权重无法适应这种变化
+**2. MoE 门控融合：按场景动态决定三路谁说了算**
 
-3. **Frame-Aligned Adaptive Layer Normalization**:
+三路各自算完后还要合成一个速度预测，但三种声源在不同场景里的主次是变的——纯环境声片段里语音那一路本该噤声，语音主导的访谈里环境声只是背景。固定权重相加无法适应这种切换，于是用一个轻量 MoE 门控来生成动态权重：把三路条件 embedding 各自沿序列维度取均值得到代表 token，拼接后过 MLP 再 Softmax，得到归一化的 $[\omega^{sp}, \omega^{on}, \omega^{off}]$，最终速度按这组权重加权求和
 
-    - 功能：增强生成音频与视频帧的时间对齐
-    - 核心思路：将视觉条件 $\mathbf{c}_v$ 投影到与时间步 embedding 相同的空间并相加得到 $\mathbf{c}_{vt}$，通过最近邻插值上采样到音频时间分辨率，生成逐帧的 adaLN 参数 $[\alpha_1, \beta_1, \gamma_1, \alpha_2, \beta_2, \gamma_2]$
-    - 设计动机：逐帧调制确保音频特征与对应视频帧精确对齐，增强时间同步性
+$$\mathbf{v}_t = \omega^{sp}\mathbf{x}_t^{sp} + \omega^{on}\mathbf{x}_t^{on} + \omega^{off}\mathbf{x}_t^{off}$$
+
+门控由条件本身驱动，所以它能让模型在"该出语音时放大语音路、该静默时压低它"之间自适应平滑过渡。消融里这一项被验证是多源平衡的命门（见下文）。
+
+**3. Frame-Aligned Adaptive Layer Normalization：把音频逐帧钉到视频上**
+
+视频和音频的时间分辨率不一样，若只用一个全局视觉向量调制整段音频，声画就容易错位。这里把视觉条件 $\mathbf{c}_v$ 投影到与时间步 embedding 同一空间并相加得到 $\mathbf{c}_{vt}$，再用最近邻插值把它上采样到音频的时间分辨率，由此生成逐帧的 adaLN 参数 $[\alpha_1, \beta_1, \gamma_1, \alpha_2, \beta_2, \gamma_2]$。每一帧音频特征都被对应那一帧视频生成的缩放/平移量调制，时间同步因此从"整段对齐"细化到"逐帧对齐"。
+
+### 一个完整示例：一段"鸟叫旁有人说话"的视频
+
+设输入是一段 10 秒视频：画面里一个人在说话，画外背景有鸟叫。屏幕内环境声描述为空（画面主体是说话人），屏幕外描述是"birds chirping"，语音转录是这个人说的台词。
+
+按视觉绑定规则，屏幕内描述既然为空，视觉特征 $\mathbf{c}_v$ 就被拼到语音一路——模型据此知道镜头里这个人是说话人而非声源。三路交叉注意力并行展开：语音路带着视觉时序对齐台词的口型与时长，屏幕外环境路把"鸟叫"对齐到背景，屏幕内环境路因描述为空基本不贡献内容。MoE 门控读到"有语音 + 有屏幕外环境 + 无屏幕内环境"，于是给出类似 $\omega^{sp}$ 偏大、$\omega^{off}$ 中等、$\omega^{on}$ 接近 0 的权重，把三路速度按此加权。Frame-Aligned adaLN 再逐帧微调，让说话声卡在嘴动的帧上、鸟叫铺在整段背景里。最终 ODE 求解 + 声码器输出一段人声清晰、画外鸟叫自然的混合音频。消融里"手动抑制语音分支就生不出语音、抑制环境分支就丢背景声"，正对应这个例子中各路的分工。
 
 ### 损失函数 / 训练策略
 
-使用 Flow Matching 目标函数：$\mathcal{L}_{FM} = \mathbb{E}_{t, \mathbf{x}_0, \mathbf{x}_1}[\|\mathcal{V}_\theta(\mathbf{x}_t, t) - (\mathbf{x}_1 - \mathbf{x}_0)\|_2^2]$
-
-训练数据从 VGGSound（~195K 环境声）、LRS3（~33K 语音视频）和 CommonVoice（~1.67M 语音）合成，按随机 SNR 混合。FLAN-T5 和 CLIP 视觉编码器冻结，SpeechT5 和 Durator 可训练。
+使用 Flow Matching 目标 $\mathcal{L}_{FM} = \mathbb{E}_{t, \mathbf{x}_0, \mathbf{x}_1}[\|\mathcal{V}_\theta(\mathbf{x}_t, t) - (\mathbf{x}_1 - \mathbf{x}_0)\|_2^2]$，让网络回归从噪声 $\mathbf{x}_0$ 到数据 $\mathbf{x}_1$ 的速度场。训练数据由 VGGSound（约 195K 环境声）、LRS3（约 33K 语音视频）、CommonVoice（约 1.67M 语音）按随机 SNR 合成混合，逼出真实场景里语音与环境声叠加的分布。训练时 FLAN-T5 与 CLIP 视觉编码器冻结，SpeechT5 与 Durator 参与微调。
 
 ## 实验关键数据
 

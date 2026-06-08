@@ -46,23 +46,22 @@ FC-TTS 建在 FACodec 和 conditional flow matching 之上。FACodec 提供 pros
 style embedding 来自 TCF 模块：prosody tokens 先经过 Transformer encoder，再通过 Q-Former 风格的 cross-attention 压缩成固定数量 latent tokens，随后用 finite scalar quantization 离散化。作者在 phoneme level 和 frame level 各放一个 TCF，以捕捉 utterance 内部的风格变化。
 
 ### 关键设计
-1. **两阶段层次化谱图生成**:
 
-	- 功能：把音色控制和风格控制放在不同生成阶段，避免两个 reference 在同一个 decoder 中相互纠缠。
-	- 核心思路：第一阶段只用 $z_{spk}$ 生成 over-smoothed 的 blurry spectrogram $h$，用 MAE loss $L_{blur}=E[\|h-x_0\|]$ 训练；第二阶段用 conditional flow matching 在 $c_p$ 风格条件下生成最终谱图。
-	- 设计动机：直接使用 FACodec decoder 对未见过的 style-timbre 组合不稳。先生成模糊谱图可以把音色和录音条件锚在合理声学空间，再让风格模块负责细粒度韵律。
+**1. 两阶段层次化谱图生成：让音色先锚定声学空间，再让风格细化谱图，避免两个 reference 在同一 decoder 里互相污染。**
 
-2. **VQ-VAE / TCF 风格编码器**:
+直接复用 FACodec decoder 去处理训练里没见过的 style-timbre 组合并不稳，因为所有属性挤在同一个生成步骤里很容易泄漏。FC-TTS 把生成劈成两步：第一阶段只用 speaker embedding $z_{spk}$ 生成一张 over-smoothed 的 blurry log-mel $h$，用 MAE loss $L_{blur}=E[\|h-x_0\|]$ 训练，先把音色和录音条件钉在合理的声学空间；第二阶段才在 prosody 条件 $c_p$ 下用 conditional flow matching 把模糊谱图精修成最终谱图。音色只负责“声音底子”，风格只管“细粒度韵律”，两个 reference 的影响被物理隔到不同阶段，对未见组合自然更稳。
 
-	- 功能：从 prosody tokens 中抽取高层风格，而不是让模型复制参考音频的低层细节。
-	- 核心思路：TCF = Transformer encoder + cross-attention query bottleneck + FSQ quantization。Q-Former 式 query 把变长 prosody 压成固定 latent，FSQ 进一步形成离散风格码；同时用辅助 ResNet 重建 loss 防止 FSQ collapse。
-	- 设计动机：说话风格在一个 utterance 内也可能变化，传统 in-context learning 假设 reference 风格一致并不可靠。量化瓶颈能压制声学残差，让表示更偏向节奏、语调、情绪等可迁移风格。
+**2. VQ-VAE / TCF 风格编码器：从 prosody token 里抽高层风格，而不是复制参考音频的低层细节。**
 
-3. **条件一致性损失 CCL**:
+传统 in-context TTS 默认一段 reference 的风格自始至终一致，但一段长语音内部的语调情绪本就会变化，照搬反而把声学残差也复制了过去。TCF 模块的结构是 Transformer encoder + Q-Former 式 cross-attention query bottleneck + finite scalar quantization：Q-Former query 先把变长 prosody 压成固定数量的 latent token，FSQ 再把它离散成风格码，同时用一个辅助 ResNet 重建 loss 防止 FSQ collapse。量化瓶颈会压掉声学残差，逼表示偏向节奏、语调、情绪这些可迁移的风格而非具体音色。作者还在 phoneme level 和 frame level 各放一个 TCF，专门捕捉 utterance 内部的风格变化。
 
-	- 功能：在多条件生成中约束生成谱图同时保留目标 prosody token 和 speaker embedding。
-	- 核心思路：作者训练两个 attribute predictors：一个从生成谱图和 $z_{spk}$ 预测 prosody token，另一个从生成谱图和 $c_p$ 预测 speaker embedding。损失为 prosody cross-entropy 与 speaker negative cosine similarity 的加权和：$L_{CCL}=\lambda_{pro}E[CE(c_p,f(\hat{x},z_{spk}))]-\lambda_{spk}E[cos(z_{spk},g(\hat{x},c_p))]$。
-	- 设计动机：普通一致性损失只看单一属性，容易在多条件场景中给出模糊梯度。把非目标属性也喂给 predictor，可以让 posterior 更尖锐，尤其在早期 denoising 阶段更稳定。
+**3. 条件一致性损失 CCL：用交叉条件的属性预测器逼生成谱图同时守住目标音色和目标风格。**
+
+普通一致性损失只盯单一属性，在双条件场景里给出的梯度很模糊。CCL 训练两个属性预测器：一个从生成谱图加 $z_{spk}$ 反推 prosody token，另一个从生成谱图加 $c_p$ 反推 speaker embedding，损失是 prosody 交叉熵与 speaker 负余弦相似度的加权和：
+
+$$L_{CCL}=\lambda_{pro}E[CE(c_p,f(\hat{x},z_{spk}))]-\lambda_{spk}E[cos(z_{spk},g(\hat{x},c_p))]$$
+
+关键在于把“非目标属性”也喂进预测器——预测 prosody 时给它真音色 $z_{spk}$，预测 speaker 时给它真风格 $c_p$——这样 posterior 更尖锐，尤其在早期 denoising 阶段更稳定。消融里去掉整个 CCL 会让 LibriSpeech WER 从 1.88 崩到 5.88，是全模型里最关键的一块。
 
 ### 损失函数 / 训练策略
 总训练目标包含 CFM loss、blurry spectrogram MAE、prosody CE、speaker cosine consistency、mel reconstruction、aligner forward-sum、binary alignment、duration CFM 等项。cache 给出的系数包括 $\lambda_{CFM}=5.0$、$\lambda_{blur}=1.0$、$\lambda_{ccl-pro}=0.2$、$\lambda_{ccl-spk}=0.5$、$\lambda_{mel-recon}=1.0$、$\lambda_{dur}=1.0$、$\lambda_{forwardsum}=0.1$、$\lambda_{bin}=0.1$。

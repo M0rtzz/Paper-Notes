@@ -47,9 +47,9 @@ tags:
 
 ### 整体框架
 
-输入：带位姿的 RGB-D 流。输出：3D 高斯全景地图 + 开放词汇查询能力。
+OnlinePG 要解决的是：在 RGB-D 流式输入下实时建一张地图，它既要有几何、又能区分出每个物体实例、还能用任意文本去查询。真正卡脖子的地方在于，2D VLM（如 LSeg、EntitySeg）给出的分割掩码跨视图天生不一致——同一把椅子在不同帧里可能被切成两块、又或和旁边的桌子粘成一团，直接把这些噪声掩码抬到 3D，错误只会越积越多。
 
-Pipeline 概览：
+OnlinePG 的破局思路是 local-to-global：先在一个小滑窗里把噪声压下去，再把已经干净的局部结果增量地缝进全局地图。具体地，系统每 20 帧取一个关键帧、维护大小为 12 的滑窗；每个关键帧过 VLM 拿到语言特征和实例掩码，按掩码把投影出来的 3D 高斯分成若干「段」；每攒够 7 个关键帧，就在滑窗内用一张多线索聚类图把这些段合并成局部一致的 3D 实例，再通过双向二部匹配把局部实例融进全局地图。最终产出一张 3D 高斯全景地图，配合体素网格里存的语言特征即可支持开放词汇查询。
 
 ```
 RGB-D 流 → 关键帧选取(每20帧) → 滑窗维护(大小12)
@@ -68,13 +68,13 @@ RGB-D 流 → 关键帧选取(每20帧) → 滑窗维护(大小12)
                            全局全景地图 + 开放词汇查询
 ```
 
-### 关键设计一：场景表示——3D 高斯 + 网格化空间属性
+### 关键设计
 
-**功能**：用两种互补表示分别建模几何和语义信息。
+**1. 场景表示：用连续高斯管几何、用离散体素网格管语义和实例。**
 
-**3D 高斯原语**：每个高斯 $\mathcal{G}_i := \{\boldsymbol{\mu}_i, \boldsymbol{\Sigma}_i, \sigma_i, \boldsymbol{c}_i\}$，包含位置 $\boldsymbol{\mu}_i \in \mathbb{R}^3$、协方差 $\boldsymbol{\Sigma}_i \in \mathbb{R}^{3 \times 3}$、不透明度 $\sigma_i$、颜色 $\boldsymbol{c}_i \in \mathbb{R}^3$，用于几何重建和可微渲染。
+一个绕不开的矛盾是，3D 高斯是连续表示，适合做几何优化和可微渲染，但并不适合稳定地存储「这块属于第几号实例」这种离散标签——一旦标签也跟着梯度漂移，实例边界就糊了。OnlinePG 干脆把两件事分开：几何交给高斯，语义和实例交给一套独立的体素网格，二者各取所长。
 
-**网格化空间属性**：对重建区域进行体素化（体素大小 3cm），每个占据体素存储四个属性：
+几何侧，每个高斯原语 $\mathcal{G}_i := \{\boldsymbol{\mu}_i, \boldsymbol{\Sigma}_i, \sigma_i, \boldsymbol{c}_i\}$ 由位置 $\boldsymbol{\mu}_i \in \mathbb{R}^3$、协方差 $\boldsymbol{\Sigma}_i \in \mathbb{R}^{3 \times 3}$、不透明度 $\sigma_i$、颜色 $\boldsymbol{c}_i \in \mathbb{R}^3$ 构成，负责重建和渲染。语义侧，则对重建区域做 3cm 体素化，每个占据体素挂四个属性——它们不进入梯度优化，而是随着新观测以离散方式增量更新，这样实例标签既能稳定累积、又能被后续融合机制改写：
 
 | 属性 | 符号 | 维度 | 用途 |
 |------|------|------|------|
@@ -83,62 +83,37 @@ RGB-D 流 → 关键帧选取(每20帧) → 滑窗维护(大小12)
 | 实例标签 | $\mathcal{T}$ | $\mathbb{R}$ | 全景实例 ID |
 | 实例权重 | $\mathcal{K}$ | $\mathbb{R}$ | 实例标签的置信度，用于全局融合决策 |
 
-**设计动机**：3D 高斯是连续表示，适合几何优化和渲染；离散体素网格适合存储实例标签并做增量更新——二者互补，各取所长。
+**2. 多线索段聚类：把跨视图不一致的 2D 段拧成一致的 3D 实例。**
 
-### 关键设计二：多线索段聚类——从噪声 2D 到一致 3D 实例
+这一步正面回应整体框架里说的核心痛点：滑窗里堆着十几个关键帧投影出来的 3D 段，同一个物体被切成好几份、不同物体又可能被错并到一起。OnlinePG 不靠收敛缓慢的对比学习，而是把所有段当作图的顶点，用三种互补线索决定两段之间该不该连边、进而合并。
 
-**功能**：在滑窗内将多个关键帧产生的、不一致的 3D 段合并为一致的 3D 实例。
-
-**Step 1 — 3D 高斯段初始化**：从每个关键帧的深度图投影初始化 3D 高斯原语，按 2D 掩码 ID 分组为 3D 段 $\mathcal{S}_i := \{\mathcal{G}_j\}_{j=1}$。滑窗内所有段集合 $\mathcal{S} := \{\mathcal{S}_1, \cdots, \mathcal{S}_n\}$，$n = \sum_{i \in \mathcal{W}} |m_i|$。
-
-**Step 2 — 构建多线索聚类图**：图的顶点是 3D 段 $\mathcal{S}_i$，边 $\mathcal{E}_{ij}$ 由三种亲和线索共同决定：
-
-**(1) 几何重叠线索 $\mathcal{O}$**：将 3D 段体素化，计算双向可见体素重叠比的对称平均：
+先把每个关键帧深度图投影出的高斯按 2D 掩码 ID 分组成段 $\mathcal{S}_i := \{\mathcal{G}_j\}_{j=1}$，滑窗内所有段记为 $\mathcal{S} := \{\mathcal{S}_1, \cdots, \mathcal{S}_n\}$（$n = \sum_{i \in \mathcal{W}} |m_i|$）。两段之间的边由三种线索共同决定。**几何重叠** $\mathcal{O}$ 把段体素化后算双向可见体素重叠比的对称平均，其中 $\text{Cont.}(\mathcal{S}_i, \mathcal{S}_j)$ 是把 $\mathcal{S}_j$ 投回 $\mathcal{S}_i$ 视点时可见体素被包含的比率，取双向平均是为了避免大小悬殊的段被偏向：
 
 $$\mathcal{O}(\mathcal{S}_i, \mathcal{S}_j) = \frac{1}{2} \cdot \left(\frac{|\mathcal{S}_i \cap \mathcal{S}_j|}{\text{Cont.}(\mathcal{S}_i, \mathcal{S}_j)} + \frac{|\mathcal{S}_i \cap \mathcal{S}_j|}{\text{Cont.}(\mathcal{S}_j, \mathcal{S}_i)}\right)$$
 
-其中 $\text{Cont.}(\mathcal{S}_i, \mathcal{S}_j)$ 为将 $\mathcal{S}_j$ 投影回 $\mathcal{S}_i$ 视点时可见体素被包含的比率。双向平均避免了大小不对称段之间的偏差。
+**语义相似** $\mathcal{X}$ 按 2D 掩码对 LSeg 特征图做平均池化得到段级语言特征 $z_i = \Phi(\{f(u,v): m(u,v) = i\})$，再算余弦相似度；**视图共识** $\mathcal{V}$ 则看两段在共同可见的关键帧里被标成同一实例的比例：
 
-**(2) 语义相似线索 $\mathcal{X}$**：按 2D 掩码对 LSeg 特征图做平均池化得到段级语言特征 $z_i = \Phi(\{f(u,v): m(u,v) = i\})$，计算余弦相似度：
+$$\mathcal{X}(\mathcal{S}_i, \mathcal{S}_j) = \frac{z_i \cdot z_j}{\|z_i\| \cdot \|z_j\|}, \qquad \mathcal{V}(\mathcal{S}_i, \mathcal{S}_j) = \frac{N_{\text{supp}}(\mathcal{S}_i, \mathcal{S}_j)}{N_{\text{vis}}(\mathcal{S}_i, \mathcal{S}_j)}$$
 
-$$\mathcal{X}(\mathcal{S}_i, \mathcal{S}_j) = \frac{z_i \cdot z_j}{\|z_i\| \cdot \|z_j\|}$$
-
-**(3) 视图共识线索 $\mathcal{V}$**：两个段在共同可见的关键帧中被标注为同一实例的比例：
-
-$$\mathcal{V}(\mathcal{S}_i, \mathcal{S}_j) = \frac{N_{\text{supp}}(\mathcal{S}_i, \mathcal{S}_j)}{N_{\text{vis}}(\mathcal{S}_i, \mathcal{S}_j)}$$
-
-**Step 3 — 聚类判据与连通分量合并**：复合判据决定是否合并两个段：
+之所以非要三条线索，是因为任何单一线索都有盲区：几何重叠分不清同一位置堆叠的不同语义物体，语义相似分不清同类的多个实例（如并排的两个枕头），视图共识在观测稀疏时又不可靠。最终的合并判据用「或」把它们接起来——几何加语义足够高、**或**视图共识足够高，就连边——这样不同难度的场景都能命中至少一条可靠线索：
 
 $$\Delta_{ij} = \left((\mathcal{O}_{ij} + \mathcal{X}_{ij}) > \lambda_1\right) \cup \left(\mathcal{V}_{ij} > \lambda_2\right)$$
 
-其中 $\lambda_1 = 1.5$、$\lambda_2 = 0.8$。通过连通分量算法得到一致实例 $\mathcal{I} = \text{Cluster}(\{\mathcal{S}_i\}, \{\mathcal{E}_{ij}\})$。
+其中 $\lambda_1 = 1.5$、$\lambda_2 = 0.8$，最后跑一遍连通分量算法 $\mathcal{I} = \text{Cluster}(\{\mathcal{S}_i\}, \{\mathcal{E}_{ij}\})$ 即得到局部一致实例。这套图聚类处理一个 12 帧窗口只需约 350ms，比单线索方案高出 8–18 个 PRQ 点，额外延迟却只有约 40ms。
 
-**设计动机**：单线索不足——几何重叠对同位置不同语义失效，语义相似对同类不同实例失效，视图共识在稀疏观测时不可靠。三线索互补，合并判据用"或"逻辑使不同场景都能捕获正确关系。
+**3. 双向二部匹配：把局部实例鲁棒地缝进全局地图。**
 
-### 关键设计三：双向二部匹配——局部到全局鲁棒融合
+局部干净了还不够——滑窗每滑动一次，都要把这批局部实例并进已经积累的全局地图，且不能把同一物体记成两个、也不能把两个物体错并成一个。难点在于局部地图大多是新探索区域、全局地图是历史区域，二者的几何包含关系天然不对称，单向匹配很容易被这种不对称带偏。
 
-**功能**：将滑窗内构建的局部一致实例增量合并到全局地图，保证全局一致性。
-
-**Step 1 — 构建双向匹配矩阵**：
-
-正向矩阵 $\mathcal{M}_{l \to g} \in \mathbb{R}^{n_l \times n_g}$（语义相似 + 几何包含比）：
+OnlinePG 的做法是同时算两个方向的匹配矩阵。正向矩阵 $\mathcal{M}_{l \to g} \in \mathbb{R}^{n_l \times n_g}$ 把语义余弦相似和几何包含比相加，反向矩阵 $\mathcal{M}_{g \to l} \in \mathbb{R}^{n_g \times n_l}$ 则把几何包含的方向翻过来：
 
 $$\mathcal{M}_{l \to g} = \frac{z_l \cdot z_g}{\|z_l\| \cdot \|z_g\|} + \frac{|\mathcal{I}_l \cap \mathcal{I}_g|}{\text{Cont.}(\mathcal{I}_l, \mathcal{I}_g)}$$
 
-反向矩阵 $\mathcal{M}_{g \to l} \in \mathbb{R}^{n_g \times n_l}$：将几何包含方向翻转。
-
-**Step 2 — 匈牙利算法 + 交集确认**：
+两个方向各跑一次匈牙利算法，只保留两边都认可的匹配——一对实例必须正反方向都被指派到一起才算确认，从而过滤掉单向看着像、实则不对称的伪匹配：
 
 $$\mathcal{A} = \text{Hung.}(\mathcal{M}_{l \to g}) \cap \text{Hung.}(\mathcal{M}_{g \to l})^T$$
 
-**Step 3 — 全局地图更新规则**：
-
-- **语言特征融合**（加权平均）：$\mathcal{F}_g^t(v) = \frac{\mathcal{C}_l^t \cdot \mathcal{F}_l^t + \mathcal{C}_g^{t-1} \cdot \mathcal{F}_g^{t-1}}{\mathcal{C}_g^t}$
-- **已匹配实例**：保留全局标签，累加权重 $\mathcal{K}_g^t = \mathcal{K}_g^{t-1} + \mathcal{K}_l^t$
-- **未匹配且局部权重 ≤ 全局**：保留全局标签，减权重 $\mathcal{K}_g^t = \mathcal{K}_g^{t-1} - \mathcal{K}_l^t$
-- **未匹配且局部权重 > 全局**：替换为局部标签 $\mathcal{T}_g^t = \mathcal{T}_l^t$，差额为新权重
-
-**设计动机**：局部地图含新探索区域、全局含历史区域，几何包含比天然不对称。双向匹配要求正反方向一致才确认，避免错误融合。权重博弈机制使高置信度分割逐步替代低置信度分割。
+确认匹配后再更新全局地图，关键是一套基于置信度权重的博弈规则，让高置信度的分割逐步顶替低置信度的：语言特征按置信度加权平均 $\mathcal{F}_g^t(v) = \frac{\mathcal{C}_l^t \cdot \mathcal{F}_l^t + \mathcal{C}_g^{t-1} \cdot \mathcal{F}_g^{t-1}}{\mathcal{C}_g^t}$；已匹配实例保留全局标签并累加权重 $\mathcal{K}_g^t = \mathcal{K}_g^{t-1} + \mathcal{K}_l^t$；未匹配但局部权重不超过全局的，保留全局标签、扣减权重 $\mathcal{K}_g^t = \mathcal{K}_g^{t-1} - \mathcal{K}_l^t$；未匹配且局部权重反超全局的，则直接换成局部标签 $\mathcal{T}_g^t = \mathcal{T}_l^t$、以差额作为新权重。
 
 ### 损失函数
 

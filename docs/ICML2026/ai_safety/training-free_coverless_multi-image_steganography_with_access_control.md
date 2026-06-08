@@ -41,34 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MIDAS 完全跑在预训练的 Stable Diffusion v1.5 latent 空间（$C\times H\times W$）上，分 Hiding 和 Reconstruction 两阶段。
-
-**Hiding Stage**（发送端）：N 张秘密图像 $I_{sec}^i$ → 各自下采样后做 DDIM forward 拿到 noisy latent $\mathbf{z}_{sec}^i \in \mathbb{R}^{C\times H/N_1\times W/N_2}$（$N_1 N_2 = N$，$N=2$ 时 $N_1=2,N_2=1$）→ 用私钥 $\mathcal{K}_{priv}^i$ 经 Random Basis 加密成 $\mathbf{z}_{prot}^i$ → 拼接得 $\mathbf{z}_{prot}\in\mathbb{R}^{C\times H\times W}$ → Latent Vector Fusion 用公钥 $\mathcal{K}_{pub}$ 把它和参考 latent $\mathbf{z}_{ref}$ 混合成 $\mathbf{z}_{pub}$ → DDIM reverse + 公开 prompt $\mathcal{P}_{pub}$ 渲染出 stego 图像 $I_{stego}$ 发出去。其中 $\mathbf{z}_{ref}$ 由一个 Reference Generator (RefGen) 从 $(\mathcal{K}_{pub}, \mathcal{P}_{pub})$ 确定性生成，所以不需要单独传。
-
-**Reconstruction Stage**（接收端）：收到 $\tilde{I}_{stego}$（可能被信道污染）→ DDIM inversion 得 $\tilde{\mathbf{z}}_{pub}$ → 用公钥反 Latent Vector Fusion 拿到 $\hat{\mathbf{z}}_{prot}$ → 用自己的私钥 $\mathcal{K}_{priv}^i$ 解 N 段（只有第 i 段会解出有意义的 latent，其他段是噪声）→ 整段 joint denoise 后再切分 → VAE decode 得 $\hat{I}_{sec}^i(i)$。
+MIDAS 要解决的是"在一张生成图里同时藏 N 张秘密图、还要按私钥分别授权解出"这件事，难点在于既不能训练新模型、又不能泄漏任何与秘密相关的辅助信息。它的做法是把整套机制都搬进预训练 Stable Diffusion v1.5 的 latent 空间（$C\times H\times W$），把"加密"和"消拼接缝"两件事统一成对 latent 向量施加正交矩阵。发送端把每张秘密图先反演成 noisy latent、用各自私钥加密后拼接，再整体融合进一张确定性生成的参考 latent，最后渲染成可公开传输的 stego 图像；接收端逆着这条路、只有持正确私钥的那一段才能解回有意义的图像。
 
 ### 关键设计
 
-1. **Random Basis 私钥加密机制**:
+**1. Random Basis 私钥加密：用正交旋转替代符号翻转，给出可证泄漏界**
 
-    - 功能：把每个秘密 latent 用 seed 派生的正交矩阵打散，既实现加密又抑制 noisy latent 中残留的结构信息。
-    - 核心思路：对任意 d 维向量 $\mathbf{z}$，加密为 $\mathbf{z}_{enc} = M_d \mathbf{z}$，其中 $M_d = Q_d(\mathcal{K},\gamma)$ 是由种子 $\mathcal{K}$ 和强度 $\gamma$ 派生的正交矩阵（$\gamma$ 控制被该正交变换影响的元素比例，其余元素恒等）。由于正交性 $\mathbf{z} = M_d^T \mathbf{z}_{enc}$ 可完美还原。论文给出 Theorem 3.1：信息泄漏率满足 $R_L \approx O\left(\frac{-\log\Delta+\log m}{m} + (1-\gamma)(-\log\Delta+1)\right)$，在 $m\approx 10^6$（512×512×3 图像）、$\Delta\approx 10^{-7}$（float32）下第一项可忽略，第二项随 $\gamma\to 1$ 趋零，**即便 $\gamma=0.4$ 实测就已经足够安全**。
-    - 设计动机：替换 DiffStega 用的 Noise Flip（$M_d = \text{diag}(e), e\in\{-1,1\}^d$，搜索空间只有 $2^d$ 且无法打乱空间结构）。Random Basis 用真正的旋转打散 latent 的空间相关性，从信息论上有可证的泄漏控制。
+痛点在于过去 DiffStega 的私钥机制 Noise Flip 用的是对角符号翻转矩阵 $M_d = \text{diag}(e),\, e\in\{-1,1\}^d$——搜索空间只有 $2^d$，而且它只翻正负号、根本打乱不了 latent 内部的空间结构，noisy latent 里残留的秘密图轮廓仍然可被恢复。MIDAS 把它换成由种子派生的随机正交矩阵：对任意 d 维 latent $\mathbf{z}$，加密为 $\mathbf{z}_{enc} = M_d \mathbf{z}$，其中 $M_d = Q_d(\mathcal{K},\gamma)$ 由私钥种子 $\mathcal{K}$ 和强度 $\gamma$ 确定性派生（$\gamma$ 控制被旋转影响的元素比例，其余元素保持恒等）。因为是正交矩阵，解密只需转置 $\mathbf{z} = M_d^T \mathbf{z}_{enc}$ 就能完美还原，不损失任何重建质量。它之所以更安全，是真正的高维旋转把 latent 的空间相关性彻底打散了；论文进一步用信息论证明了 Theorem 3.1：信息泄漏率 $R_L \approx O\!\left(\frac{-\log\Delta+\log m}{m} + (1-\gamma)(-\log\Delta+1)\right)$，在 $m\approx 10^6$（512×512×3 图像）、$\Delta\approx 10^{-7}$（float32 精度）下第一项可忽略、第二项随 $\gamma\to 1$ 趋零——实测 $\gamma=0.4$ 时错 key 解出的图像就已经退化到不可辨认。
 
-2. **Latent Vector Fusion 拼接融合**:
+**2. Latent Vector Fusion 拼接融合：在整张 latent 上再旋一次，把拼接缝抹掉**
 
-    - 功能：在拼接好的多图 latent 上再施一层**整体**的正交变换并和参考 latent 混合，从根本上消除"拼接缝"。
-    - 核心思路：定义 $\mathbf{z}_{pub} = \sqrt{\alpha}\, M_D \mathbf{z}_{prot} + \sqrt{1-\alpha}\, \mathbf{z}_{ref}$，其中 $M_D = Q_D(\mathcal{K}_{pub}, \gamma_{fuse})$ 维度 $D = C\times H\times W$，$\mathbf{z}_{ref}$ 是 RefGen 用 $(\mathcal{K}_{pub}, \mathcal{P}_{pub})$ 确定性生成的参考图像对应的 noisy latent。$M_D$ 把多个子段的空间信息**全局打散**，破坏拼接边界；和 $\mathbf{z}_{ref}$ 加权混合则注入"自然图像"先验。接收端做严格逆 $\hat{\mathbf{z}}_{prot} = M_D^T\left(\frac{\tilde{\mathbf{z}}_{pub} - \sqrt{1-\alpha}\mathbf{z}_{ref}}{\sqrt{\alpha}}\right)$。
-    - 设计动机：作者发现 noisy latent 即便经 DDIM forward 也保留秘密图像的残留结构（引 Greenberg 2025），直接 concat → DDIM reverse 模型无法跨段平滑，因此必须主动把空间结构打散并替入自然图像分布。这一步是 stego 图像视觉质量从崩塌到 SOTA 的关键。
+把 N 个加密后的子 latent 直接 concat 成 $\mathbf{z}_{prot}$ 再走 DDIM reverse，会留下一道明显的拼接缝：noisy latent 即便经过 DDIM forward 仍保留秘密图的残留结构（引 Greenberg 2025），扩散模型没法跨子段边界平滑去噪。MIDAS 的对策是在拼好的整张 latent 上再施一层**全局**正交变换、并掺入一张自然图像先验：$\mathbf{z}_{pub} = \sqrt{\alpha}\, M_D \mathbf{z}_{prot} + \sqrt{1-\alpha}\, \mathbf{z}_{ref}$，其中 $M_D = Q_D(\mathcal{K}_{pub}, \gamma_{fuse})$ 作用在整个 $D = C\times H\times W$ 维度上、把各子段的空间信息整体打散从而破坏边界，$\mathbf{z}_{ref}$ 是参考图像对应的 noisy latent、按 $\sqrt{1-\alpha}$ 权重注入"这是一张自然图"的先验。接收端做严格逆变换 $\hat{\mathbf{z}}_{prot} = M_D^T\!\left(\frac{\tilde{\mathbf{z}}_{pub} - \sqrt{1-\alpha}\,\mathbf{z}_{ref}}{\sqrt{\alpha}}\right)$ 即可还原。正是这一步把 stego 图像的视觉质量从拼接崩塌拉回到 SOTA。
 
-3. **RefGen 无 control image 的参考图生成**:
+**3. RefGen 无 control image 的参考图生成：参考图完全由公开资源确定性复现**
 
-    - 功能：把参考图像 $I_{ref}$ 完全由公开资源 $(\mathcal{K}_{pub}, \mathcal{P}_{pub})$ 确定性生成，发送端和接收端各自本地复现，无需任何传输。
-    - 核心思路：用一个独立的预训练扩散模型（论文用 PicX_real）以 $\mathcal{K}_{pub}$ 为初始高斯噪声种子、$\mathcal{P}_{pub}$ 为 prompt 跑确定性采样得到 $I_{ref}$；由于扩散在固定种子下完全可复现，双方拿到同一份 $I_{ref}$，再 forward 一次得 $\mathbf{z}_{ref}$。**显式拒绝使用 ControlNet 类的 control image 条件**。
-    - 设计动机：DiffStega 用 ControlNet + OpenPose / 分割图做条件，但这意味着 control image 要公开传输 → 直接泄漏秘密图像的结构信息；且刚性条件会限制生成多样性。MIDAS 把 ControlNet 这条路径砍掉，用 Random Basis + Latent Vector Fusion 同时承担"高质量条件生成"和"嵌入秘密信息"两个角色。
+上一步需要的参考 latent $\mathbf{z}_{ref}$ 不能直接传——DiffStega 走的是 ControlNet + OpenPose / 分割图那条路，可那张 control image 一旦公开传输，本身就泄漏了秘密图的结构。MIDAS 干脆把 ControlNet 这条路径砍掉：用一个独立预训练扩散模型（论文用 PicX_real）以公钥 $\mathcal{K}_{pub}$ 作初始高斯噪声种子、公开 prompt $\mathcal{P}_{pub}$ 作条件跑确定性采样得到参考图 $I_{ref}$，再 forward 一次得 $\mathbf{z}_{ref}$。由于扩散在固定种子下完全可复现，发送端和接收端各自本地就能生成同一份 $I_{ref}$，整个流程不需要传任何与秘密相关的辅助信息。这样一来，"高质量条件生成"和"嵌入秘密信息"两个角色就全交给了 Random Basis + Latent Vector Fusion，密码学上更干净。
+
+### 一个完整示例
+以 $N=2$ 为例走一遍闭环。发送端把 2 张秘密图 $I_{sec}^1, I_{sec}^2$ 各自下采样后做 DDIM forward，得到 noisy latent $\mathbf{z}_{sec}^i\in\mathbb{R}^{C\times H/2\times W}$（$N_1=2, N_2=1$）；分别用私钥 $\mathcal{K}_{priv}^1, \mathcal{K}_{priv}^2$ 经 Random Basis 加密成 $\mathbf{z}_{prot}^i$，上下拼接成整张 $\mathbf{z}_{prot}\in\mathbb{R}^{C\times H\times W}$；再用公钥 $\mathcal{K}_{pub}$ 做 Latent Vector Fusion 把它和 RefGen 生成的 $\mathbf{z}_{ref}$ 混合成 $\mathbf{z}_{pub}$；最后 DDIM reverse + 公开 prompt $\mathcal{P}_{pub}$ 渲染出 stego 图 $I_{stego}$ 发出。接收端拿到（可能被信道污染的）$\tilde{I}_{stego}$ 后，DDIM inversion 回 $\tilde{\mathbf{z}}_{pub}$，用公钥逆 Latent Vector Fusion 拿回 $\hat{\mathbf{z}}_{prot}$，再用自己手里的私钥（比如 $\mathcal{K}_{priv}^1$）解码——只有第 1 段会解出有意义的 latent、第 2 段是噪声；整张 joint denoise 后再切分、VAE decode，就只拿回 $\hat{I}_{sec}^1$。没有正确私钥的人，每一段都解成噪声。
 
 ### 损失函数 / 训练策略
-**完全 training-free**，不更新任何模型参数。整套流程跑在 SD v1.5 + EDICT 精确反演 + DDIM 采样器上；超参主要是 $\gamma_{priv}, \gamma_{fuse}, \alpha$ 三个。Reconstruction Stage 在 DDIM backward 时采用 joint denoise（对完整 $\hat{\mathbf{z}}_{sec}(i)$ 一次性去噪后再切分），实测优于"先切分再分别去噪"。
+**完全 training-free**，不更新任何模型参数。整套流程跑在 SD v1.5 + EDICT 精确反演 + DDIM 采样器上；可调超参只有 $\gamma_{priv}, \gamma_{fuse}, \alpha$ 三个。Reconstruction Stage 在 DDIM backward 时采用 joint denoise（对完整 latent 一次性去噪后再切分），实测优于"先切分再分别去噪"。
 
 ## 实验关键数据
 

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-推理时给定 prompt $\bm{x}$ 和已生成序列 $\bm{y}_{<t}$，模型产生 penultimate-layer 特征 $\bm{z}^t \in \mathbb{R}^{d_{\text{model}}}$，language head 把它线性映射到 $|\mathcal{V}|$ 维 logits。在**每个解码步 $t$**，作者用 NCI 或 fDBD 公式算一个标量不确定性分数 $s(\bm{z}^t)$，整条输出走完后取**序列均值** $S = \frac{1}{T}\sum_{t=1}^{T} s(\bm{z}^t)$ 作为该回答的 hallucination score，最后用阈值 $\tau$ 做二分类（分数低 → 判为幻觉）。整个流程不动模型权重、不需要训练数据、单条回答采样一次即可。
+本文要解决的是推理任务下的幻觉检测：既不能训练分类器（怕分布漂移），也不能多次采样（怕开销爆炸）。核心做法是把 LLM 的 language head 看成一个 $|\mathcal{V}|$ 类的线性分类器，penultimate-layer 特征 $\bm{z}^t$ 就是分类器输入，于是 OOD 文献里"特征相对权重向量、决策边界的几何位置"这套成熟的不确定性度量就能直接搬过来。推理时每个解码步 $t$ 算一个标量几何分数 $s(\bm{z}^t)$，整条输出走完取序列均值 $S=\frac{1}{T}\sum_t s(\bm{z}^t)$ 当作幻觉分数，再用阈值 $\tau$ 判定。整个流程不动权重、不需训练数据、单条回答只采样一次。
 
 ### 关键设计
 
-1. **几何不确定性分数：NCI 与 fDBD 的 LLM 化定义**：
+**1. 几何不确定性分数：把 NCI / fDBD 迁到 language head 上**
 
-    - 功能：从 penultimate-layer 特征本身读出当前 token 预测的不确定性，作为幻觉信号。
-    - 核心思路：把 language head 当线性分类器看，预测 token 为 $\hat{c}=\arg\max_v \bm{w}_v^\top \bm{z}+b_v$。**NCI** 度量特征与预测类权重向量的接近度，定义为 $s_{\text{NCI}}(\bm{z})=\cos(\bm{w}_{\hat{c}}, \bm{z}-\bm{\mu}_G)\,\|\bm{w}_{\hat{c}}\|_2$，越大越接近权重向量、不确定性越低。**fDBD** 度量特征到其他 token 决策边界的距离，作者用一阶近似 $\tilde{D}_f(\bm{z},c)=|(\bm{w}_{\hat{c}}-\bm{w}_c)^\top \bm{z}+(b_{\hat{c}}-b_c)|/\|\bm{w}_{\hat{c}}-\bm{w}_c\|_2$，距离越大越远离边界、不确定性越低。两者都是单步 $O(d_{\text{model}})$ 复杂度，可以叠在正常 forward 后面几乎零额外开销。
-    - 设计动机：OOD 文献里这两种几何度量已经被验证为"训练特征均值-权重-边界"三件套里的稳健不确定性信号；它们恰好是 per-sample、per-step 的，正好满足推理类幻觉检测对"单样本逐 token"的硬需求。文章在 CSQA 上经验验证（Fig. 2）：幻觉回答的特征确实更靠近边界、更远离权重向量，迁移成立。
+幻觉检测要的是"模型对当前 token 有多不确定"，而 OOD 检测早已用特征几何把这件事量化好了，难点只是怎么对齐到 LLM 的 language head。把 head 看成线性分类器，预测 token 为 $\hat{c}=\arg\max_v \bm{w}_v^\top \bm{z}+b_v$。**NCI** 度量特征与预测类权重向量的接近度，$s_{\text{NCI}}(\bm{z})=\cos(\bm{w}_{\hat{c}}, \bm{z}-\bm{\mu}_G)\,\|\bm{w}_{\hat{c}}\|_2$，越大越贴近权重向量、不确定性越低；**fDBD** 度量特征到其他 token 决策边界的距离，用一阶近似 $\tilde{D}_f(\bm{z},c)=|(\bm{w}_{\hat{c}}-\bm{w}_c)^\top \bm{z}+(b_{\hat{c}}-b_c)|/\|\bm{w}_{\hat{c}}-\bm{w}_c\|_2$，距离越大越远离边界、不确定性越低。两个分数天生是 per-sample、per-step 的，正好满足推理类检测"单样本逐 token"的硬需求，而且都是单步 $O(d_{\text{model}})$ 复杂度，叠在正常 forward 后面几乎零开销。作者在 CSQA 上经验验证了这层迁移成立（Fig. 2）：幻觉回答的特征确实更靠近边界、更远离权重向量。
 
-2. **训练特征均值 $\mu_G$ 的解析代理（Decision-Neutral Closest Point）**：
+**2. 训练特征均值 $\mu_G$ 的解析代理：Decision-Neutral Closest Point**
 
-    - 功能：NCI 公式里需要训练特征的全局均值 $\bm{\mu}_G$，但 LLM 的训练语料既私有又巨大，没法估计，必须找一个"不看数据"的替代品。
-    - 核心思路：作者证明（Lemma 4.1）"使 vocabulary 上 logits 方差最小的特征点" $\bm{z}_\star$ 是一个解析可解的最大不确定性点：$\hat{\bm{z}}_\star = -(W^\top P W)^\dagger W^\top P \bm{b}$，其中 $P=I-\frac{1}{|\mathcal{V}|}\mathbf{1}\mathbf{1}^\top$。对零偏置 language head（Llama-3.2-3B 即如此），这个点退化成特征空间原点 $\bm{0}$。把它代入 $\bm{\mu}_G$，整套 NCI 就完全不依赖任何训练数据。
-    - 设计动机：用解析点替代经验均值，避免"采样估计在多样语料上偏差大"的问题。Table 1 显示：CSQA + Llama-3.2-3B 上 NCI 用解析代理 AUROC=66.07，用 CSQA 自带训练集估的经验均值反而只有 62.79（差于 Perplexity 63.23），证实了解析代理的必要性。
+NCI 公式里要用训练特征的全局均值 $\bm{\mu}_G$，可 LLM 的训练语料既私有又巨大，根本估不出来——这是把 OOD 工具搬到 LLM 时第一个卡死的环节。作者绕开数据，转而求一个"不看数据"的解析点：他们证明（Lemma 4.1）让 vocabulary 上 logits 方差最小的特征点 $\bm{z}_\star$ 就是一个最大不确定性点，且有闭式解 $\hat{\bm{z}}_\star = -(W^\top P W)^\dagger W^\top P \bm{b}$，其中 $P=I-\frac{1}{|\mathcal{V}|}\mathbf{1}\mathbf{1}^\top$。对零偏置 language head（Llama-3.2-3B 即如此），这个点直接退化成特征空间原点 $\bm{0}$。把 $\bm{z}_\star$ 代进 $\bm{\mu}_G$，整套 NCI 就完全不依赖训练数据。这一步不是细节而是关键钥匙：Table 1 上 CSQA + Llama-3.2-3B 用解析代理 AUROC=66.07，而用 CSQA 训练集估的经验均值只有 62.79，连 Perplexity 的 63.23 都不如——说明 LLM 训练特征压根不能用下游小数据集近似，只能走解析路线。
 
-3. **fDBD 的 top-$k$ 候选集裁剪**：
+**3. fDBD 的 top-$k$ 候选集裁剪：只看真正的语义对手**
 
-    - 功能：朴素 fDBD 要对词表里所有 $|\mathcal{V}|-1$ 个 token 都算一个边界距离再平均，既在大词表上变成噪声（rare token、标点、数字的边界几乎总是很远，稀释了真正语义对手 token 的信号），也吃 $O(d_{\text{model}}|\mathcal{V}|)$ 的算力。
-    - 核心思路：每步只取 logits 最高的 $k$ 个 token 组成 $\mathcal{K}_t$（排除 top-1，因为它就是预测 token 本身、距离为 0 没信息），再用 $s_{\text{fDBD}}^k=\frac{1}{k}\sum_{c\in\mathcal{K}_t}\tilde{D}_f(\bm{z}^t,c)/\|\bm{z}^t-\bm{\mu}_G\|_2$ 计算归一化平均边界距离。借助 Quickselect，每步复杂度从 $O(d_{\text{model}}|\mathcal{V}|)$ 降到期望 $O(d_{\text{model}}k+|\mathcal{V}|)$。$k$ 在验证集上选。
-    - 设计动机：把"语义上真正可能被替换"的候选 token 突出出来，过滤词表中大量与当前语境无关的远距离 token，既提性能又降开销。Table 2 上 $k$ 从 1 扫到 10 万再到 All，全部 $k$ 都跑赢 Perplexity，峰值在 $k=1000$（AUROC 69.24 vs. All 的 68.15）。
+朴素 fDBD 要对词表里全部 $|\mathcal{V}|-1$ 个 token 都算边界距离再平均，问题有两个：大词表里 rare token、标点、数字的边界几乎总是很远，会把真正语义对手 token 的信号稀释成噪声；同时还吃 $O(d_{\text{model}}|\mathcal{V}|)$ 的算力。作者的做法是每步只取 logits 最高的 $k$ 个 token 组成 $\mathcal{K}_t$（排除 top-1，因为它就是预测 token 本身、距离为 0 无信息），用 $s_{\text{fDBD}}^k=\frac{1}{k}\sum_{c\in\mathcal{K}_t}\tilde{D}_f(\bm{z}^t,c)/\|\bm{z}^t-\bm{\mu}_G\|_2$ 算归一化平均边界距离，$k$ 在验证集上选。借助 Quickselect，单步复杂度从 $O(d_{\text{model}}|\mathcal{V}|)$ 降到期望 $O(d_{\text{model}}k+|\mathcal{V}|)$。这样既把"语境里真正可能被替换"的候选突出出来，又过滤了大量无关的远距离 token。Table 2 上 $k$ 从 1 扫到 10 万再到 All，全部 $k$ 都跑赢 Perplexity，峰值出现在 $k=1000$（AUROC 69.24，对比 All 的 68.15），呈倒 U 型——太小信息不足、太大被稀释。
 
 ### 损失函数 / 训练策略
-**完全无训练**，没有任何参数更新。Perplexity 基线为 $\text{PPL}(\bm{y}|\bm{x})=\exp(-\frac{1}{T}\sum_t \log p(\bm{y}_t|\bm{x},\bm{y}_{<t}))$，本文方法用同样的"逐步打分 + 序列平均"模式，但分数换成 $s_{\text{NCI}}$ 或 $s_{\text{fDBD}}^k$。评估指标 AUROC，threshold-free。
+**完全无训练**，没有任何参数更新。Perplexity 基线为 $\text{PPL}(\bm{y}|\bm{x})=\exp(-\frac{1}{T}\sum_t \log p(\bm{y}_t|\bm{x},\bm{y}_{<t}))$，本文沿用同一套"逐步打分 + 序列平均"模式，只是把分数从 log-prob 换成 $s_{\text{NCI}}$ 或 $s_{\text{fDBD}}^k$。评估指标 AUROC，threshold-free。
 
 ## 实验关键数据
 

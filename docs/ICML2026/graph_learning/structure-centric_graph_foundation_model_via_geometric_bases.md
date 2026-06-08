@@ -41,27 +41,21 @@ SCGFM 把跨域图基础模型重写为度量测度空间上的"三角测量"问
 ## 方法详解
 
 ### 整体框架
-两阶段。**Pre-training**：在多源域图上联合优化 $K$ 个几何基 $B_k=([M],d_k,\mu_k)$（$M$ 节点的 mm-空间，$\mathbf{B}_k\in[0,1]^{M\times M}$ 对称无对角元、$\mu_k$ 设为 uniform），用 Sliced Gromov–Wasserstein (SGW) 把每个源图映射到结构坐标 $\mathbf{w}$，最小化结构重建 + 统计量重建 + 多样性正则三项联合损失。**Downstream Projection**：冻结预训练基，对目标图计算 $\mathbf{w}$，并用 GW 计算时的 OT plan $\mathbf{T}_{ik}\in\mathbb{R}^{N\times M}$ 把节点特征求和投到 $M$ 个基节点上得到 $\mathbf{H}(G_i)\in\mathbb{R}^{M\times F}$，最终拼接 $\mathbf{z}(G_i)=[\mathbf{w}\|f(\mathbf{w})\|\mathrm{vec}(\mathbf{H}(G_i))]\in\mathbb{R}^{K+r+MF}$ 喂给下游分类器。
+SCGFM 要解决的是"跨域图怎么对齐到同一个表征空间"，它的答案是不去对齐特征、而是给所有图一套共享的结构参照系。具体做两阶段：预训练时在多源域图上联合学 $K$ 个可训练的几何基 $B_k=([M],d_k,\mu_k)$，每个图通过它对这组基的 Gromov–Wasserstein 距离得到一组结构坐标 $\mathbf{w}$；下游阶段冻结这些基，对目标图算出 $\mathbf{w}$ 并借 OT plan 把节点特征重投到基节点上，拼成统一嵌入喂给分类器。
 
 ### 关键设计
 
-1. **学习化几何基 + 结构坐标 (Geometric Bases & Structural Coordinates)**:
+**1. 学习化几何基与结构坐标：用"对原型的距离"代替显式 barycenter**
 
-    - 功能：构造一个共享的"图坐标参照系"，让任意图都能被表征成它和这组基的 GW 距离向量。
-    - 核心思路：每个基 $B_k$ 用一个对称无对角元的 $[0,1]^{M\times M}$ 矩阵 $\mathbf{B}_k$ 参数化（不要求三角不等式，伪度量足够当 GW 距离核），测度 $\mu_k$ 固定为均匀分布以减少自由度。对输入图 $G_i$ 算 $\delta_k=d_{GW}(\mathbf{A}_i,\mathbf{B}_k)$（用 SGW 把复杂度从 $\mathcal{O}(N^3)$ 降到 $\mathcal{O}(N\log N)$），再 softmax 得结构坐标 $w_k=\exp(-\delta_k/\tau)/\sum_j\exp(-\delta_j/\tau)$。论文证明 Theorem 3.2：$\|\mathbf{w}-\mathbf{w}'\|_2\le L_w\eta$，即坐标对 GW 距离 Lipschitz 连续，保证结构相似的图坐标也接近。
-    - 设计动机：直接学 GW barycenter 需要嵌套 OT，不可行；用"对一组基的距离向量"代替显式 barycenter，是 dictionary learning 在度量几何上的优雅实例。SGW 的一维投影把不可行的 $\mathcal{O}(N^3)$ 砍到 quasi-linear，是这套方案能 scale 的工程基础。
+跨域迁移的真正障碍是没有一个图与图共享的坐标系，而直接去学 mm-空间上的 GW barycenter 又要嵌套 OT 优化、根本跑不动。SCGFM 的做法是把 barycenter 换成一组离散原型：每个几何基 $B_k$ 用一个对称、无对角元、取值在 $[0,1]^{M\times M}$ 的矩阵 $\mathbf{B}_k$ 参数化（它只需当 GW 的距离核，不必满足三角不等式，伪度量就够），测度 $\mu_k$ 固定为均匀分布以压缩自由度。对输入图 $G_i$ 逐基算 GW 距离 $\delta_k=d_{GW}(\mathbf{A}_i,\mathbf{B}_k)$，再 softmax 成结构坐标 $w_k=\exp(-\delta_k/\tau)/\sum_j\exp(-\delta_j/\tau)$，于是任意图都被表达成它在这组原型下的"三角测量"向量。这套设计能成立、且能 scale，靠两个支点：一是论文的 Theorem 3.2 给出 $\|\mathbf{w}-\mathbf{w}'\|_2\le L_w\eta$，即坐标对 GW 距离 Lipschitz 连续，保证结构相近的图必然落到相近坐标，迁移才有几何依据；二是 GW 本身是 $\mathcal{O}(N^3)$ 的，这里全程用 Sliced GW (SGW) 的一维投影近似把它砍到 $\mathcal{O}(N\log N)$，让百万节点级的图也算得动。
 
-2. **线性代理 GW Barycenter + 多目标重建**:
+**2. 线性代理 barycenter 与多目标重建：让坐标真的装得下原图信息**
 
-    - 功能：避开真正 GW barycenter 的嵌套优化，同时让 $\mathbf{w}$ 在结构和统计量两个层面上"重建"原图，确保坐标含足够信息。
-    - 核心思路：用线性组合 $\widetilde{\mathbf{B}}(G)=\sum_k w_k \mathbf{B}_k$ 当作 barycenter 的有限基展开，得到结构重建损失 $\mathcal{L}_{gw}=\mathbb{E}_G[d_{GW}(\mathbf{A},\widetilde{\mathbf{B}}(G))]$；再用 MLP decoder $f(\mathbf{w})$ 预测度数直方图 + 聚类系数直方图 + log-scaled motif 计数（三角形、短环），用 MSE 监督 $\mathcal{L}_{rec}=\mathrm{MSE}(\mathrm{FE}(G),f(\mathbf{w}))$；Corollary 3.3 保证 $\|f(\mathbf{w})-f(\mathbf{w}')\|_2\le L_f L_w \eta$，统计重建也对 GW 距离 Lipschitz。
-    - 设计动机：线性代理虽不是严格的 mm-空间 barycenter，但作为字典扩展能跑通梯度，且和 softmax 坐标天然兼容；多目标重建保证了"坐标既能恢复邻接也能恢复粗粒度统计"，缓解 OT 自带的非唯一性。
+光有坐标还不够，得保证 $\mathbf{w}$ 没把图的信息丢掉。SCGFM 不去求严格的 mm-空间 barycenter，而是用基的线性组合 $\widetilde{\mathbf{B}}(G)=\sum_k w_k \mathbf{B}_k$ 当它的有限基展开作代理，再要求这个重建图在结构上贴近原图，得到结构重建损失 $\mathcal{L}_{gw}=\mathbb{E}_G[d_{GW}(\mathbf{A},\widetilde{\mathbf{B}}(G))]$。但邻接重建对置换、对 OT 的非唯一性都不敏感，所以再加一路统计量监督：用 MLP decoder $f(\mathbf{w})$ 去预测原图的度数直方图、聚类系数直方图和 log-scaled motif 计数（三角形、短环），以 MSE 约束 $\mathcal{L}_{rec}=\mathrm{MSE}(\mathrm{FE}(G),f(\mathbf{w}))$。线性代理虽不是真正的 barycenter，却能跑通梯度、又和 softmax 坐标天然兼容；而"邻接 + 粗粒度统计"双目标合起来逼着坐标既能恢复连接关系也能恢复全局结构指纹，缓解了 OT 自带的非唯一性。Corollary 3.3 进一步保证 $\|f(\mathbf{w})-f(\mathbf{w}')\|_2\le L_f L_w \eta$，让统计重建这一路也对 GW 距离 Lipschitz，与坐标的稳定性一脉相承。
 
-3. **多样性正则 + 结构感知特征再编码**:
+**3. 多样性正则与结构感知特征再编码：防基塌缩、并把异构特征投回共享坐标系**
 
-    - 功能：防止 $K$ 个几何基塌缩到同一原型；并把异构维度的节点特征 $\mathbf{X}_i\in\mathbb{R}^{N\times F}$ 统一投影到 $\mathbb{R}^{M\times F}$ 共享坐标系。
-    - 核心思路：(a) 多样性损失 $\mathcal{L}_{div}=\frac{1}{|\mathcal{P}|}\sum_{(i,j)}\max(0,m-\|\mathbf{B}_i-\mathbf{B}_j\|_F)$ 强制 Frobenius 距离至少为 $m$，让基张满结构空间；(b) 特征再编码用 GW 计算的 OT plan $\mathbf{T}_{ik}$ 把节点特征以 sum aggregation 投到基节点 $\mathbf{H}_k=N\cdot\mathbf{T}_{ik}^\top\mathbf{X}_i$（乘 $N$ 抵消 $\mathbf{T}$ 作为归一化测度引入的平均效应，保留 multiset injectivity），再用 $\mathbf{w}$ 加权得 $\mathbf{H}(G_i)=\sum_k w_k \mathbf{H}_k$。总目标 $\mathcal{L}_{total}=\mathcal{L}_{gw}+\alpha\mathcal{L}_{rec}+\beta\mathcal{L}_{div}$。
-    - 设计动机：基塌缩是 prototype/dictionary 模型经典失效模式，hinge-style 多样性正则简单有效；用 OT plan 而非简单 padding/MLP 来对齐特征维度，让"结构相似 → 特征也按结构邻域聚合"，保持 feature-flexible 而不失语义对应。
+原型/字典模型有个经典失效模式——$K$ 个基会塌缩到同一个原型，有效维度骤降。SCGFM 用一个 hinge 式多样性损失 $\mathcal{L}_{div}=\frac{1}{|\mathcal{P}|}\sum_{(i,j)}\max(0,m-\|\mathbf{B}_i-\mathbf{B}_j\|_F)$ 逼任意两基的 Frobenius 距离至少为 $m$，把基撑开去张满结构空间。另一头要处理的是特征维度异构：不同数据集的节点特征 $\mathbf{X}_i\in\mathbb{R}^{N\times F}$ 维度、语义都不一样，传统做法靠 padding 或 MLP 硬投影。这里改用算 GW 时顺带得到的 OT plan $\mathbf{T}_{ik}\in\mathbb{R}^{N\times M}$ 做传输：把节点特征以求和方式投到 $M$ 个基节点上 $\mathbf{H}_k=N\cdot\mathbf{T}_{ik}^\top\mathbf{X}_i$，其中乘 $N$ 是为了抵消 $\mathbf{T}$ 作为归一化测度带来的平均效应、保住 multiset injectivity，再用结构坐标加权汇成 $\mathbf{H}(G_i)=\sum_k w_k \mathbf{H}_k$。这样"结构相似的节点就会沿同一结构邻域聚合特征"，既保持 feature-flexible（特征维度可变）又不丢语义对应。三项合起来就是总目标 $\mathcal{L}_{total}=\mathcal{L}_{gw}+\alpha\mathcal{L}_{rec}+\beta\mathcal{L}_{div}$；下游则拼接 $\mathbf{z}(G_i)=[\mathbf{w}\,\|\,f(\mathbf{w})\,\|\,\mathrm{vec}(\mathbf{H}(G_i))]\in\mathbb{R}^{K+r+MF}$ 作最终嵌入。
 
 ### 损失函数 / 训练策略
 Pre-training 仅在源域图上跑 $\mathcal{L}_{total}=\mathcal{L}_{gw}+\alpha\mathcal{L}_{rec}+\beta\mathcal{L}_{div}$，所有 GW 用 SGW 近似；下游冻结基与 $f(\cdot)$，仅训分类头。少样本 (5-shot) 评测重复 50 次取均值 ± 标准差。

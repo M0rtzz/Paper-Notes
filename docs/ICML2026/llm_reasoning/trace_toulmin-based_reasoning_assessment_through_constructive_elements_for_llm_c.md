@@ -42,33 +42,33 @@ TRACE 是个参考无关的 CoT 质量评估指标，把 Toulmin 论证模型（
 
 ### 整体框架
 
-两阶段 pipeline：(1) reasoning block 用 spaCy 分句 → TRACE-DeBERTa 多标签分类每句的构成要素，得到 label 序列 $L = \{l_1, l_2, \dots, l_n\}$；(2) 基于 label 序列算 State Validity（每句结构是否合法）和 Transition Coherence（句间转换是否合理），加权得到 TRACE Score。
+TRACE 想解决的是"怎么不靠标准答案就给一段 CoT 的推理过程打分"。它把这件事拆成两步走：先把 reasoning block 用 spaCy 分句，逐句送进 TRACE-DeBERTa 做 8 维多标签分类，得到一条要素标签序列 $L = \{l_1, l_2, \dots, l_n\}$；再在这条序列上算两个互补的量——每句结构合不合法（State Validity）、句与句之间转得顺不顺（Transition Coherence），最后加权合成一个 $[0,1]$ 的 TRACE Score。整条 pipeline 不碰 ground-truth，所以对没有标准答案的开放任务也能用。
 
-DeBERTa-v3-base 当 backbone，加 8 维 sigmoid 多标签头；100k 训练样本用 GPT-5.1 和 Claude 4.5 Sonnet 交替少样本生成 + Toulmin/Flavell 定义。3 senior NLP researcher 在 400 句子上标注（Cohen's κ=0.672），TRACE-DeBERTa Macro F1=0.666 接近人类一致性上限。
+分类器是 DeBERTa-v3-base 加一个 8 维 sigmoid 多标签头。训练数据靠 GPT-5.1 和 Claude 4.5 Sonnet 交替少样本生成 100k 句子（喂进 Toulmin/Flavell 的要素定义当 few-shot），评测集则是 3 位 senior NLP researcher 在 400 句上人工标注、Cohen's κ=0.672。最终 Macro F1=0.666 已经贴着这条人类一致性上限，说明剩下的误差主要是任务本身的歧义而非分类器拉胯。
 
 ### 关键设计
 
-1. **Toulmin + Flavell 的 8 维构成要素体系**:
+**1. Toulmin + Flavell 的 8 维构成要素体系：把"推理质量"从感觉变成可量化的标签向量。**
 
-    - 功能：给 CoT 文本一个 domain-agnostic、可量化的结构标签集，把"推理质量"从感觉变成 8 维 multi-label 向量。
-    - 核心思路：Toulmin 给 6 个论证要素——Claim（断言）、Data/Evidence（证据）、Warrant（推断规则）、Backing（背景支撑）、Qualifier（限定词）、Rebuttal（反驳）；Flavell 补两个元认知要素——Monitoring（检查自己思路）、Evaluation（评估结论合理性）。每句 CoT 可以打多个标签（sigmoid 多标签）。例如"By Pythagorean theorem (Warrant), since 3² + 4² = 9 + 16 = 25 (Data), the hypotenuse is 5 (Claim)"会被标为 {Warrant, Data, Claim}。
-    - 设计动机：Toulmin 本来设计就是 domain-agnostic 的（哲学界用了 60 多年），覆盖 math/sci/law/写作；Flavell 元认知补的是"模型自检"维度，正好对应现代 LLM 思考时常出现的"wait, let me reconsider"风格。8 个标签是经过实验筛选——少于 8 不够区分推理风格，多于 8 标注一致性掉到 < 0.5。
+痛点是 CoT 本身是自由文本，没有可量化的"推理结构"定义，过去要么交给 LLM 黑盒打分、要么标 step correctness。TRACE 的做法是直接借两套现成的理论框架：Toulmin 论证模型给 6 个要素——Claim（断言）、Data/Evidence（证据）、Warrant（推断规则）、Backing（背景支撑）、Qualifier（限定词）、Rebuttal（反驳）；Flavell 元认知补 2 个——Monitoring（检查自己思路）、Evaluation（评估结论合理性）。每句 CoT 用 sigmoid 多标签，可以同时挂多个标签，例如 "By Pythagorean theorem (Warrant), since 3² + 4² = 9 + 16 = 25 (Data), the hypotenuse is 5 (Claim)" 就被标成 {Warrant, Data, Claim}。这套之所以站得住，是因为 Toulmin 在哲学界用了 60 多年、本来就是 domain-agnostic 的，math/sci/law/写作都能套；Flavell 那两个元认知要素恰好对应现代 LLM 常见的 "wait, let me reconsider" 自检风格。维度定在 8 个也是实验调出来的——少于 8 区分不开推理风格，多于 8 标注一致性会掉到 < 0.5。
 
-2. **State Validity + Allowed States 惩罚结构失败**:
+**2. State Validity + Allowed States：用合法状态集合惩罚结构上站不住的句子。**
 
-    - 功能：评每句是否构成"合法论证单元"，不合法的句子拉低分数。
-    - 核心思路：手工定义 $\mathcal{S}_{\mathrm{allowed}}$ —— 单独的 Claim/Data/Warrant/Backing 都合法，组合如 Backing+Evaluation 也合法但 Qualifier+Claim（带过度限定的弱断言）只算 $J=0.5$。对每句 label 集合 $l_i$ 算 Jaccard 相似度 $V_{\mathrm{state}} = \frac{1}{N} \sum_i \max\{J(l_i, s) : s \in \mathcal{S}_{\mathrm{allowed}}\}$。孤立的 Monitoring（"Hmm, let me think again"）或过多 Qualifier（"maybe, perhaps, I think"）都会被 punish。
-    - 设计动机：直觉是"好推理 = 一系列合法论证单元"，State Validity 把这个直觉变成可微指标。允许 composite states 让模型不会因为风格丰富被惩罚（如 Backing+Evaluation 是好的"既给背景又评价"），但单纯犹豫（Monitoring only）或过度 hedge（Qualifier+Claim）会扣分。
+光有标签还不够，得判断每句是不是一个"合法论证单元"。TRACE 手工定义了一个合法状态集合 $\mathcal{S}_{\mathrm{allowed}}$：单独的 Claim/Data/Warrant/Backing 都算合法，复合状态如 Backing+Evaluation（既给背景又作评价）也合法，但 Qualifier+Claim 这种带过度限定的弱断言只给 $J=0.5$。对每句的标签集合 $l_i$，取它跟所有合法状态的最大 Jaccard 相似度，再对全篇取平均：
 
-3. **Transition Matrix 区分 Good/Bad 推理流**:
+$$V_{\mathrm{state}} = \frac{1}{N} \sum_i \max\{J(l_i, s) : s \in \mathcal{S}_{\mathrm{allowed}}\}$$
 
-    - 功能：评句间转换是否合理，捕捉"推理流是否顺"。
-    - 核心思路：建一个 $8 \times 8$ transition matrix，预定义 Good Transition（如 Evidence → Claim、Warrant → Claim、Monitoring → Evaluation）和 Bad Transition（如 Monitoring → Qualifier 表明"既不确定又只能加 hedge"、Qualifier → Qualifier 表明"反复犹豫"）。算转换概率分布与"good-weighted"理想分布的相似度。Figure 1 的 heatmap 显示 Kimi-K2-Thinking 比 Qwen-Turbo 有更多 Good Transition、显著少 Bad Transition，跟人类直觉一致。
-    - 设计动机：State Validity 只看单句，Transition Coherence 看流，两者互补。$\alpha=0.7$ 给 State 更大权重，因为"先有合法单元，才谈得上单元间衔接"——empirical 验证 $\alpha=0.7$ 在多个 benchmark 上对 accuracy 相关性最大化。
+这样一来，孤立的 Monitoring（"Hmm, let me think again"）或者堆一串 Qualifier（"maybe, perhaps, I think"）都会被扣分。它把"好推理 = 一连串合法论证单元"这个直觉变成了可量化的指标，同时允许复合状态又让风格丰富的句子不至于被冤枉。
 
-### TRACE Score 公式
+**3. Transition Matrix：区分 Good/Bad 推理流，看的是句子之间转得顺不顺。**
 
-$\mathrm{TRACE} = \alpha \cdot V_{\mathrm{state}} + (1-\alpha) \cdot C_{\mathrm{trans}}$，$\alpha=0.7$。$V_{\mathrm{state}}$ 是每句 Jaccard 相似度的平均；$C_{\mathrm{trans}}$ 是观察到的 transition 分布与 good-weighted 理想分布的 1-distance。范围 $[0, 1]$。
+State Validity 只盯单句，会漏掉"每句都合法但流程不顺"的失败，所以还需要一个看转换的维度。TRACE 建了个 $8 \times 8$ 的 transition matrix，预定义哪些是 Good Transition（如 Evidence → Claim、Warrant → Claim、Monitoring → Evaluation）、哪些是 Bad Transition（如 Monitoring → Qualifier 意味着"既不确定又只能加 hedge"，Qualifier → Qualifier 意味着"反复犹豫"），再算实际转换概率分布跟 good-weighted 理想分布的接近程度得到 $C_{\mathrm{trans}}$。Figure 1 的 heatmap 直观印证了这点：Kimi-K2-Thinking 的 Good Transition 明显比 Qwen-Turbo 多、Bad Transition 显著少，跟人类对"谁推理结构更好"的直觉对得上。
+
+最终分数把两维加权合成：
+
+$$\mathrm{TRACE} = \alpha \cdot V_{\mathrm{state}} + (1-\alpha) \cdot C_{\mathrm{trans}}, \quad \alpha=0.7$$
+
+State 拿 0.7 的更大权重，理由是"先有合法单元，才谈得上单元间衔接"；$\alpha=0.7$ 也是在多个 benchmark 上跑出来对 accuracy 相关性最大的取值。分数范围 $[0,1]$，越高代表推理过程结构越好。
 
 ## 实验关键数据
 

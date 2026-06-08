@@ -47,27 +47,37 @@ tags:
 
 ### 整体框架
 
-基于DINO的师生架构。Teacher通过EMA（动量0.99）更新，Student迭代学习精化mask。输入图像 → MNP从原始图像提取多线索特征 $F_{\text{MNP}}$ 和质量度量 $S_{\text{mc}}$ → PEF利用多线索引导全局伪标签进化（EPL做师生交互去噪 + STAF做多层注意力谱融合）→ LPR从teacher注意力头中选择高置信区域生成局部伪标签修复细节 → 输出分割mask。MNP为PEF和LPR同时提供约束信号。
+EReCu 想把 UCOD 的两条路线——"伪标签引导"擅长定位但边界糊，"特征学习"细节好但定位飘——拧成一个互相喂数据的闭环。整套系统挂在 DINO 的师生架构上：Teacher 用 EMA（动量 0.99）从 Student 缓慢平滑出一个稳定版本，Student 则一轮轮把分割 mask 越磨越细。
+
+一张无标注图像进来后，先由 MNP 从**原始像素**而非高维嵌入里抠出纹理和语义两类原生线索，并算出一个衡量"mask 切得准不准"的质量分 $S_{\text{mc}}$；这个线索和质量分接着兵分两路，一路喂给 PEF 去驱动全局伪标签的进化融合，一路喂给 LPR 去修边界细节。PEF 内部又分两步——EPL 让师生分支在迭代里互相去噪、STAF 把多层注意力做谱融合压噪；LPR 则从 Teacher 的注意力头里挑出聚焦干净的那些，生成局部伪标签把边界补回来。MNP 同时约束这两路，使语义可靠性和纹理保真度在同一个回路里协同上升。
 
 ### 关键设计
 
-1. **多线索原生感知（MNP）**
+**1. 多线索原生感知（MNP）：从原图纹理里找伪装的破绽。**
 
-    - 功能：从原始图像中提取低层纹理和中层语义特征，构建多线索质量度量
-    - 核心思路：LBP + DoG提取纹理特征 $F_{\text{text}}$，冻结ResNet-18提取语义特征 $F_{\text{sem}}$，拼接得 $F_{\text{MNP}} = \mathcal{C}(F_{\text{text}}, F_{\text{sem}})$。将图像按mask分为内部 $R_i$、边界 $R_s$、外部 $R_o$ 三区域，计算三组修正余弦相似度（随机 $K \times K$ patch采样 $N$ 轮）：$S_{\text{mc}} = (D_{\text{io}} + D_{\text{is}} + S_{\text{so}}) / 3$，损失 $\mathcal{L}_{\text{MNP}} = 1 - S_{\text{mc}}$
-    - 设计动机：即使伪装高度相似，原始图像中仍有细微但可区分的纹理变化；随机patch采样处理区域形状不规则的问题
+前作的通病是只盯着 backbone 的高维嵌入做伪标签，可嵌入早就把"目标和背景长得像"这件事抹平了，于是边界溢出、语义漂移。MNP 反其道而行，回到原始图像上找线索：用 LBP + DoG 抽低层纹理特征 $F_{\text{text}}$，再用一个冻结的 ResNet-18 抽中层语义特征 $F_{\text{sem}}$，拼成 $F_{\text{MNP}} = \mathcal{C}(F_{\text{text}}, F_{\text{sem}})$。
 
-2. **伪标签进化融合（PEF = EPL + STAF）**
+光有特征还不够，关键是把它变成能监督 mask 质量的信号。MNP 按当前 mask 把图切成内部 $R_i$、边界 $R_s$、外部 $R_o$ 三个区域，在三者之间随机采 $K\times K$ 的 patch、跑 $N$ 轮，算修正余弦相似度并聚合成质量分
 
-    - **EPL（进化伪标签学习）**：Student浅层特征用深度可分离卷积（DSC）增强空间细节得 $M_s^{\text{dsc}}$，Student/Teacher分支各通过语义池化得伪mask $M_s^p / M_t^p$。迭代优化：$M_s^{\text{dsc}(r+1)} = \arg\min[\mathcal{L}_D(M_s^{\text{dsc}}, M_s^p) + \mathcal{L}_D(M_s^{\text{dsc}}, M_t^p) + \mathcal{L}_{\text{MNP}}]$，Dice损失 + 多线索约束联合驱动进化
-    - **STAF（谱张量注意力融合）**：Student三层级（1/3, 2/3, 最终层）注意力图堆为三阶张量 $\mathcal{T}_s \in \mathbb{R}^{3 \times C \times HW}$，Tucker分解 + 截断SVD提取前 $t$ 主要谱成分，低秩近似 $A_s^{\text{fu}} = P_t \Sigma_t Q_t^\top$，再线性投影 + Sigmoid 得融合预测 $M_s^{\text{fu}}$。复杂度 $\mathcal{O}(r^2 d)$
-    - 设计动机：EPL让浅层细节与深层语义交互去噪，STAF在抑制注意力噪声的同时保留语义和结构信息
+$$S_{\text{mc}} = (D_{\text{io}} + D_{\text{is}} + S_{\text{so}}) / 3$$
 
-3. **局部伪标签精修（LPR = TAS + LPG）**
+对应的约束损失就是 $\mathcal{L}_{\text{MNP}} = 1 - S_{\text{mc}}$。直觉是：哪怕伪装得再像，原图里内部和外部的纹理仍有细微但可区分的差异，逼着内/外低相似、内/边有过渡，就能把 mask 往真边界上拉；随机 patch 采样则是为了应对伪装目标形状不规则、固定网格采不准的问题。
 
-    - **TAS（目标感知注意力选择）**：计算Teacher每个注意力头的聚焦熵 $E_k$，筛选 $E_k < \tau_e$ 且 $S_{\text{mc}}(\hat{A}_k, F_{\text{MNP}}) > \tau_s$ 的头（双阈值均可学习，初始0.5）
-    - **LPG（局部伪标签生成）**：对选中头用自适应阈值 $\tau_k = \mu_{A_k} + \alpha \cdot \sigma_{A_k}$（$\alpha > 1$ 可学习）提取高置信区域生成局部伪标签 $P_k$，用Dice + CE损失引导 $M_s^{\text{fu}}$ 向精细边界靠拢
-    - 设计动机：全局伪标签捕获中心区域但遗漏边界/纹理细节，不同注意力头关注不同区域的空间多样性可用于局部修正
+**2. 伪标签进化融合（PEF）：让浅层细节和深层语义在迭代里互相纠错。**
+
+伪标签如果只取某一层的输出，要么有语义没细节、要么有细节没语义。PEF 用 EPL 和 STAF 两个机制解决这件事。EPL（进化伪标签学习）先把 Student 浅层特征过一层深度可分离卷积（DSC）补回空间细节得到 $M_s^{\text{dsc}}$，再让 Student、Teacher 两个分支各自语义池化出伪 mask $M_s^p$、$M_t^p$，然后迭代地把 $M_s^{\text{dsc}}$ 同时往两个伪 mask 上对齐、并叠加多线索约束：
+
+$$M_s^{\text{dsc}(r+1)} = \arg\min\big[\mathcal{L}_D(M_s^{\text{dsc}}, M_s^p) + \mathcal{L}_D(M_s^{\text{dsc}}, M_t^p) + \mathcal{L}_{\text{MNP}}\big]$$
+
+Dice 损失负责对齐、$\mathcal{L}_{\text{MNP}}$ 负责把进化方向锚在原生线索上，浅层细节和深层语义就在这一轮轮 $\arg\min$ 里互相去噪。
+
+STAF（谱张量注意力融合）解决另一半问题：单层注意力图噪声大，简单加权又会糊掉结构。它把 Student 三个层级（1/3、2/3、最终层）的注意力图堆成三阶张量 $\mathcal{T}_s \in \mathbb{R}^{3 \times C \times HW}$，做 Tucker 分解加截断 SVD 只保留前 $t$ 个主谱成分，得到低秩近似 $A_s^{\text{fu}} = P_t \Sigma_t Q_t^\top$，再线性投影 + Sigmoid 输出融合预测 $M_s^{\text{fu}}$。低秩近似天然把高频注意力噪声当成次要成分丢掉，却保住了跨层共享的语义和结构，复杂度只有 $\mathcal{O}(r^2 d)$，比逐元素融合轻得多。
+
+**3. 局部伪标签精修（LPR）：用注意力头的空间多样性把边界补回来。**
+
+全局伪标签擅长框住目标中心，却常把边界和纹理细节漏掉。LPR 的洞察是 Teacher 不同注意力头其实各看各的区域，这种空间多样性正好能用来做局部修补。它分 TAS 和 LPG 两步。TAS（目标感知注意力选择）先给 Teacher 每个头算一个聚焦熵 $E_k$，只留下既聚焦得够干净（$E_k < \tau_e$）、又和原生线索一致（$S_{\text{mc}}(\hat{A}_k, F_{\text{MNP}}) > \tau_s$）的头——两个阈值都可学习、初始 0.5，相当于自动筛掉发散或跑偏的注意力头。
+
+LPG（局部伪标签生成）再对选中的每个头用自适应阈值 $\tau_k = \mu_{A_k} + \alpha \cdot \sigma_{A_k}$（$\alpha > 1$ 可学习）抠出高置信区域，拼成局部伪标签 $P_k$，用 Dice + CE 损失把前面 STAF 出的 $M_s^{\text{fu}}$ 往这些精细边界上拉。这样全局负责"在哪里"、局部负责"边在哪"，两级伪标签各司其职。
 
 ### 损失函数 / 训练策略
 

@@ -40,29 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Persona2Web 的产线有两条主线：**数据构造**（用户档案 → 事件种子 → 动作分解 → 历史聚合 → 模糊 query 派生）和**评估架构**（在 AgentOccam / Browser-Use 之上挂一个 planner-retriever-generator 个性化模块，配合 GPT-5-mini 作为 reasoning-aware judge）。最终数据集含 50 个用户、102,568 条历史、150 个 task（每 task 3 个 ambiguity 档），覆盖 21 个子领域、105 个真实网站。Agent 端则在 5 个 backbone × 2 个 base 架构 × 3 种 history 访问方案（no-history / on-demand / pre-execution）下做全交叉评测。
+Persona2Web 把"评测个性化"这件事拆成两条主线：一条是**数据构造**，从用户档案出发，生成事件种子、分解成具体动作、聚合成全年浏览历史，最后从一个显式 query 反向遮蔽出三档模糊 query；另一条是**评估架构**，在 AgentOccam / Browser-Use 两个 base agent 之上挂一个负责查历史、补字段的个性化模块，再用 GPT-5-mini 当 reasoning-aware judge 读完整轨迹打分。最终数据集含 50 个用户、102,568 条历史、150 个 task（每 task 派生 3 个 ambiguity 档），覆盖 21 个子领域、105 个真实网站；agent 端则在 5 个 backbone × 2 个 base 架构 × 3 种 history 访问方案（no-history / on-demand / pre-execution）下做全交叉评测。
 
 ### 关键设计
 
-1. **隐式用户历史 (Realistic User History via multi-stage generation)**:
+**1. 隐式用户历史：把偏好藏进行为里，逼 agent 归纳而非匹配。**
 
-    - 功能：把"用户偏好"编码成长达一年、跨多领域、共 2000+ 条记录的隐式 browsing log，让 agent 必须从行为模式中归纳偏好，而非直接读取声明。
-    - 核心思路：四阶段 pipeline——先用 GPT-4o 生成 demographic + 21 个 domain 中选 $K$ 个并附 rationale，再生成域偏好 $\mathrm{Pref}(u)=\{\mathcal{M}(d^{(k)},\pi^{(k)},\rho^{(k)},\mathrm{Dem}(u))\}_{k=1}^K$；然后用 demographic + rationale 派生高频 / 低频 event seeds $(\mathcal{E}_u^{\mathrm{HF}},\mathcal{E}_u^{\mathrm{LF}})$；每个 event 再分解为 $(a_{i,1},\ldots,a_{i,L_i})=\mathcal{M}(E_i)$ 并打散到全年时间轴上，且对约 10% 记录注入取消 / 修改噪声。最终每条历史只含 timestamp / type / object / website 四个字段，type 限定在 web search / web visit / purchase / booking / review 五类。关键控制是：偏好值以 exact string 出现在历史里的比例仅 **3.56%**，强制 agent 用归纳而非匹配。
-    - 设计动机：随机生成事件无法保持偏好一致性，而直接照搬真实日志又缺乏可控的"偏好接地"；event seed 提供锚点保证偏好可追踪，时间打散 + 噪声注入保证不能被简单聚类规则破解，要求 agent 真正做跨长程历史的模式整合。
+如果用户偏好直接写在 prompt 里，那 agent 只要会跟指令就够了，根本测不出"个性化"。所以本文把每个用户的偏好编码成一份长达一年、跨多领域、共 2000+ 条记录的隐式 browsing log，让 agent 必须从行为模式里把偏好归纳出来。历史由一条四阶段 pipeline 合成：先用 GPT-4o 生成 demographic，并从 21 个 domain 里选 $K$ 个、各附一段 rationale，进而生成域偏好 $\mathrm{Pref}(u)=\{\mathcal{M}(d^{(k)},\pi^{(k)},\rho^{(k)},\mathrm{Dem}(u))\}_{k=1}^K$；再用 demographic + rationale 派生高频 / 低频 event seeds $(\mathcal{E}_u^{\mathrm{HF}},\mathcal{E}_u^{\mathrm{LF}})$；每个 event 进一步分解成动作序列 $(a_{i,1},\ldots,a_{i,L_i})=\mathcal{M}(E_i)$，打散到全年时间轴上，并对约 10% 记录注入取消 / 修改噪声。最终每条历史只保留 timestamp / type / object / website 四个字段，type 限定在 web search / web visit / purchase / booking / review 五类。整套设计的关键控制是：用户的偏好值以 exact string 形式出现在历史里的比例仅 **3.56%**——event seed 给偏好提供可追踪的锚点保证一致性，时间打散加噪声又让它无法被简单聚类规则破解，于是 agent 只能靠跨长程历史的模式整合来推断，而不是字符串匹配。
 
-2. **三档模糊查询 (Clarify-to-Personalize Query Set)**:
+**2. 三档模糊查询：用"消歧必须靠历史"的梯度对照隔离 ambiguity。**
 
-    - 功能：把同一 task 派生成三个 ambiguity 等级，构成"消融用户历史是否真的必需"的对照组。
-    - 核心思路：先写完全显式的 Level 0 query（含 website + 偏好双约束），再机械地遮掉字段：Level 1 遮掉 website 关键词（"in my preferred website"），Level 2 同时遮掉 website 与偏好关键词（"in my usual area that match my preferred provider gender"）。Level 2 是真正考核 target——必须从历史推断出 zocdoc.com 是用户常用网站、用户偏好女医生。这种"先显式后遮蔽"的派生保证三档 query 的 ground-truth 完全一致，可以纯粹隔离 ambiguity 这个变量。
-    - 设计动机：以往 benchmark 默认所有 query 都是 Level 0，所以无法区分"会跟指令"与"会用历史"；通过三档对比，agent 在 Level 0→2 上的性能衰减直接量化它对显式 cue 的依赖度。论文实验显示，平均 SR 从 Level 0 的 23.8% 一路降到 Level 2 的 7.8%，验证了这一区分维度的有效性。
+以往 benchmark 默认所有 query 都写得清清楚楚，于是"会跟指令"和"会用历史"被混为一谈。本文的做法是先写一个完全显式的 Level 0 query（同时含 website 和偏好两个约束），再机械地往外遮字段，派生出难度递增的两档：Level 1 遮掉 website 关键词（变成 "in my preferred website"），Level 2 连偏好关键词一起遮掉（"in my usual area that match my preferred provider gender"）。Level 2 才是真正的考核 target——agent 必须从历史里推断出 zocdoc.com 是这个用户的常用网站、用户偏好女医生，才能把这两个空补上。由于三档 query 是从同一个显式 query 遮蔽而来，它们的 ground-truth 完全一致，于是 ambiguity 被干净地隔离成唯一变量：agent 在 Level 0→2 上的性能衰减，直接量化了它对显式 cue 的依赖度。实验里平均 SR 从 Level 0 的 23.8% 一路掉到 Level 2 的 7.8%，正好印证了这条维度确实在拉开能力差距。
 
-3. **推理感知评估 (Reasoning-aware Evaluation)**:
+**3. 推理感知评估：沿 pipeline 拆 rubric，区分"没找到历史"和"找到了没用对"。**
 
-    - 功能：用 GPT-5-mini 作 LLM judge 读完整 trajectory（actions + reasoning traces），把分数拆成 $\mathcal{P}_{\text{web}}$、$\mathcal{P}_{\text{pref}}$、Intent、SR 四个维度，并区分"检索失败"与"利用失败"。
-    - 核心思路：每个 personalization 指标 $\mathcal{P}_*$ 再拆成 retrieval accuracy（是否访问了正确历史条目）和 utilization accuracy（取出来的信息是否真用进 action 规划）两条 rubric；Intent satisfaction 单独考核任务正确性，且对"计划正确但被网站故障/动态内容打断"给出部分分；SR 只在 PS 和 Intent 都满分时才算成功。这样一份 trajectory 可以同时回答"agent 输在没找到历史，还是找到了但没用对，还是用对了但浏览器操作翻车"。
-    - 设计动机：开放 web 上，同一目标可以有多条合法 trajectory，action-wise 评分会误杀正确路径；而 outcome-only 评分又看不见中间推理。在 meta evaluation 里（50 条新 query 对比人类标注），reasoning-aware 在 Preference 指标上 Spearman 相关 0.72 / 准确率 0.88，分别比 action-wise (0.40 / 0.56) 和 outcome-based (0.22 / 0.46) 高一大截，直接证明读 reasoning trace 对评测个性化是必需的。
+开放 web 上同一目标常有多条合法路径，逐 action 比对会误杀正确轨迹，而只看最终结果又看不见中间推理出在哪。本文让 GPT-5-mini 读完整 trajectory（actions + reasoning traces），把分数拆成 $\mathcal{P}_{\text{web}}$、$\mathcal{P}_{\text{pref}}$、Intent、SR 四个维度，并沿着个性化 pipeline 进一步把每个 $\mathcal{P}_*$ 切成两条 rubric：retrieval accuracy（是否访问了正确的历史条目）和 utilization accuracy（取出来的信息有没有真用进 action 规划）。Intent satisfaction 单独考核任务本身是否完成，且对"计划正确但被网站故障 / 动态内容打断"给部分分；SR 则只有在 PS 和 Intent 都满分时才判成功。这样一份轨迹就能同时回答三个问题：agent 是输在没找到历史、找到了却没用对、还是用对了但浏览器操作翻车。在 meta evaluation 里（50 条新 query 对比人类标注），这套 reasoning-aware 评分在 Preference 指标上拿到 Spearman 0.72 / 准确率 0.88，远高于 action-wise (0.40 / 0.56) 和 outcome-based (0.22 / 0.46)，直接说明读 reasoning trace 对个性化评测是必需的。
 
-### 损失函数 / 训练策略
+### 训练策略
 本文是 benchmark + 评测协议，不训练任何模型。Agent 侧用 5 个现成 backbone (o3 / GPT-4.1 / Gemini-2.5-Flash / Qwen3-80B-Instruct / Llama-3.3-70B) 在两个 base 架构 (AgentOccam, Browser-Use) 上推理，并按 on-demand（planner 触发时才查历史）/ pre-execution（开局生成多 query 一次性拉完）两种访问方案 zero-shot 执行。
 
 ## 实验关键数据

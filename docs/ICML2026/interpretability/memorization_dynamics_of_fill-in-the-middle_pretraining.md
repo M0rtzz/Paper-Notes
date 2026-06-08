@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整套研究本质上是一个对比实验设计，而不是一个"模型方法"，所以方法详解可以理解为"实验设计的工程化"。pipeline 分三步：（A）构造可比训练对——同源数据切成 LTR 语料和 FIM 语料，Gutenberg 部分按重复次数分桶；（B）在 prefix-only probe 下度量逐字抽取，得到 FIM/LTR 在不同重复、不同 span 长度、不同阈值下的抽取曲线；（C）切到 FIM 原生 prompt（prefix + sentinel + suffix），通过分配 100-token 预算到 prefix/suffix，以及把 prefix/suffix 替换成 distractor 文本，定量分离 prefix 与 suffix 的记忆贡献。两个模型用 LM Evaluation Harness 的 8 个下游任务体检，性能几乎一致，从而排除"能力差异"这一假说。
+这篇工作要回答的不是"造一个新模型"，而是"FIM 这个预训练目标到底怎么改变了逐字记忆"，所以方法本质是一套把混淆因子全部锁死的对比实验设计。整条 pipeline 串成三段：先用同源数据切出一对只在训练目标上不同的 LTR/FIM 语料、并把 Gutenberg 部分按重复次数分桶，再在 prefix-only probe 下扫出两种模型在不同重复、不同 span 长度、不同阈值下的逐字抽取曲线，最后切到 FIM 真正会被使用的双向 prompt（prefix + sentinel + suffix），通过预算切分和 distractor 替换把 prefix 与 suffix 的记忆贡献定量拆开。两个模型还在 LM Evaluation Harness 的 8 个下游任务上做体检，性能几乎一致，从而把"差异源于模型能力"这一备择假说排除掉。
 
 ### 关键设计
 
-1. **配对训练 + 重复分桶语料**：
+**1. 配对训练 + 重复分桶语料：把"预训练目标"做成唯一变量**
 
-    - 功能：给 FIM/LTR 对比提供一个除"预训练目标"以外其他变量完全锁死的对照环境。
-    - 核心思路：bulk 语料用 FineWeb 100B，受控记忆语料用 Project Gutenberg；先用一个只在 FineWeb 上训练的 Llama 3.2 给 Gutenberg 的 4096-token 窗口打分，过滤掉离群、重复、提前被记住的窗口，再把剩余 excerpts 平均分到 12 个曝光次数为 $\{1, 2, \dots, 128\}$ 的桶里（每桶 2810 条），并按 prior perplexity 平衡分配。LTR 语料保持自回归顺序；FIM 语料把样本改写成 sentinel 分隔的 prefix–suffix–middle 三段，FineWeb 部分 50% 走 FIM，Gutenberg 部分 100% 走 FIM。关键工程细节是：同一 excerpt 在 FIM 语料里的多次重复会用不同的随机切分点，因此重复是"文档级曝光"而不是"固定 middle span 曝光"，这一选择直接决定了后面观察到的"FIM 记忆被摊薄"的现象。两个模型都用同款 Llama 3.2 3B 架构，跑约 103B token 一个 epoch。
-    - 设计动机：把抽取差异从"模型能力 / tokenizer / prior 可记性"中剥离出去，并故意保留 FIM 训练的真实使用形态（随机切分），让结论能外推到实际预训练流程。
+记忆评估天然被模型规模、tokenizer、prior 可预测性、近重复等一堆因子污染，要把"是 FIM 目标本身造成差异"剥出来，唯一办法是做严格 paired training。作者用 FineWeb 100B 当 bulk 语料、Project Gutenberg 当受控记忆语料，先训一个只见过 FineWeb 的 Llama 3.2 给 Gutenberg 的 4096-token 窗口打分，滤掉离群、重复、以及"FineWeb 阶段就已经被记住"的窗口，再把剩余 excerpts 按 prior perplexity 平衡地均分进 12 个曝光次数为 $\{1, 2, \dots, 128\}$ 的桶（每桶 2810 条），让重复次数成为唯一自变量。LTR 语料保持原始自回归顺序，FIM 语料把样本改写成 sentinel 分隔的 prefix–suffix–middle 三段（FineWeb 部分 50% 走 FIM、Gutenberg 部分 100% 走 FIM）。一个看似不起眼但决定全文结论的工程细节是：同一 excerpt 在 FIM 语料里的多次重复采用不同的随机切分点，因此"重复"是文档级曝光而非固定 middle span 的曝光——正是这一点摊薄了 FIM 的记忆质量。两个模型共享同款 Llama 3.2 3B 架构、跑约 103B token 一个 epoch，结论因此能外推到真实预训练流程而不只是某个人造 probe。
 
-2. **双重抽取指标（exact $p_z$ + ROUGE-L）**：
+**2. 双重抽取指标（exact $p_z$ + ROUGE-L）：用两把尺子量出"记忆形状"**
 
-    - 功能：避免"只看一个 span 长度或一个 probe 形式会漏掉重要差异"——这正是本文反复强调的方法论教训。
-    - 核心思路：固定 prefix 100 token，target span $M=32$。第一指标参考 Cooper et al. 2026，定义精确抽取概率 $p_z = \prod_{i=1}^{M} q_i$，其中 $q_i$ 是第 $i$ 个目标 token 在 top-$k=40$ 重归一后的概率（温度 $T=1$），阈值 $p_z \geq 0.1\%$ 算作可抽取；第二指标用 prefix 自回归生成 32 token 后与原文计算 ROUGE-L，$\geq 0.5$ 算作高重叠召回。在重复=128 上还做了阈值扫描和 $M \in \{20, 30, 40, 50\}$ 的目标长度扫描。结果是 FIM 在中等 $p_z$ 区间堆积更多质量、在 ROUGE-L 与 top-$k$ 支持率上略胜，而 LTR 拥有更重的右尾，所以在严格的 $0.1\%$ 阈值和长 span 上反而抽出更多窗口。
-    - 设计动机：单一阈值会被 LTR 的重尾抢走风头，单一 span 长度会被 FIM 的"短跨度部分重建"漏掉，两个指标合起来才能看见 FIM/LTR 的不同记忆"形状"——LTR 是少量"高峰"，FIM 是大量"小丘"。
+只看一个 span 长度或一种 probe 形式会漏掉关键差异，这是本文反复强调的方法论教训，所以它故意用两把互补的尺子。固定 prefix 100 token、target span $M=32$ 后，第一把尺子沿用 Cooper et al. 2026 的精确抽取概率 $p_z = \prod_{i=1}^{M} q_i$，其中 $q_i$ 是第 $i$ 个目标 token 在 top-$k=40$ 重归一（温度 $T=1$）后的概率，$p_z \geq 0.1\%$ 即判为可抽取；第二把尺子让 prefix 自回归生成 32 token 后与原文算 ROUGE-L，$\geq 0.5$ 判为高重叠召回。作者还在重复=128 上做阈值扫描以及 $M \in \{20, 30, 40, 50\}$ 的目标长度扫描。两把尺子合起来才看得见两种目标的不同记忆"形状"：单一严格阈值会被 LTR 的重尾抢走风头，单一短 span 又会漏掉 FIM 的部分重建——结果就是 FIM 在中等 $p_z$ 区间堆积更多质量、ROUGE-L 与 top-$k$ 支持率略胜，而 LTR 凭更重的右尾在 $0.1\%$ 阈值和长 span 上反而抽出更多窗口。一句话，LTR 是少量"高峰"，FIM 是大量"小丘"。
 
-3. **原生 FIM probe + prefix/suffix distractor 消融**：
+**3. 原生 FIM probe + prefix/suffix distractor 消融：把"前缀依赖"做成可证伪对照**
 
-    - 功能：在 FIM 真正会被使用的双向 prompt 形态下，分离 prefix 上下文、suffix 上下文、sentinel token 各自对记忆的贡献。
-    - 核心思路：固定 100 token 的总上下文预算，在 target 周围扫描 prefix/suffix 切分比例，记录 target 上的 top-$k$ 支持率、perplexity 与抽取率；从纯 suffix 到纯 prefix，perplexity 从 60.23 单调降到 27.93，top-$k$ 支持从 77.60% 升到 85.52%。更关键的是 distractor 实验：保持 target 不变，把 prefix、suffix、或两者替换成同长度但来自其他 Gutenberg excerpt 的无关文本——结果是替换 prefix 几乎让记忆消失，替换 suffix 只小幅下降，两边都换则崩盘。同时注意力分析（Table 1）显示 FIM 在 prefix-only probe 上分配了更高的 prefix 注意力（0.646 vs LTR 0.604），少看已生成的 target token。
-    - 设计动机：suffix 与 prefix 同长度但角色不对称——FIM 看起来"双向"，但因果 LM 的自回归本质让 prefix 仍然是记忆的锚点；distractor 实验把"对的内容 vs 错的内容"的对照硬塞进 FIM 形态，确保看到的支持率提升不是 prompt 长度或 sentinel 结构本身带来的伪相关。
+FIM 看起来"双向"，但因果 LM 的自回归本质让人怀疑 prefix 仍是记忆锚点，作者就在 FIM 真正被使用的双向 prompt 形态下把 prefix、suffix、sentinel 各自的贡献拆开验证。先固定 100 token 总预算、在 target 周围扫描 prefix/suffix 切分比例，记录 target 上的 top-$k$ 支持率、perplexity 与抽取率：从纯 suffix 到纯 prefix，perplexity 从 60.23 单调降到 27.93，top-$k$ 支持从 77.60% 升到 85.52%。更硬的是 distractor 实验——保持 target 不变，把 prefix、suffix、或两者替换成同长度但来自其他 Gutenberg excerpt 的无关文本：换 prefix 几乎让记忆消失、换 suffix 只小幅下降、两边都换则彻底崩盘，这就把"支持率提升来自 prompt 长度或 sentinel 结构"的伪相关排除掉了。注意力分析（Table 1）进一步佐证：FIM 在 prefix-only probe 上给 prefix 分配了更高注意力（0.646 vs LTR 0.604），更少回看已生成的 target token，这解释了它为什么不像 LTR 那样把质量堆成长续写。
 
 ### 损失函数 / 训练策略
-两个模型都用 Megatron-LM 实现的 Llama 3.2 3B：28 层、hidden 3072、24 个 attention head、8 个 KV head、FFN 8192、vocab 128256、RoPE base 500000、bfloat16、无 dropout；packed THD 序列、序列长度 16384、micro-batch 1、global batch 2048，跑在 64 张 GH200 上，每步 33.5M token。LTR 跑 3057 步约 102.58B token，FIM 跑 3064 步约 102.81B token，几乎严格对齐。
+两个模型都用 Megatron-LM 实现的 Llama 3.2 3B：28 层、hidden 3072、24 个 attention head、8 个 KV head、FFN 8192、vocab 128256、RoPE base 500000、bfloat16、无 dropout；packed THD 序列、序列长度 16384、micro-batch 1、global batch 2048，跑在 64 张 GH200 上，每步 33.5M token。LTR 跑 3057 步约 102.58B token，FIM 跑 3064 步约 102.81B token，两者算力几乎严格对齐。
 
 ## 实验关键数据
 

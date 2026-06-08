@@ -43,31 +43,21 @@ tags:
 
 ### 整体框架
 
-PDB 框架分两阶段：**生成阶段** 从现有编程数据集出发，用 LLM 合成验证过的原子 bug 并组合为多 bug 程序；**评估阶段** 让调试系统修复 buggy 程序，用编辑级精度和 bug 级召回评估。
+PDB（Precise Debugging Benchmark）的核心是把调试评估从"程序整体能否通过测试"下沉到"哪些编辑是必要的、哪些 bug 被真正修好"，因此它需要一批带 ground-truth 编辑脚本的 buggy 程序。框架分两阶段：生成阶段从现有编程数据集出发，用 LLM 把验证过的原子 bug 注入正确程序，再组合成多 bug 程序；评估阶段让调试系统修复这些 buggy 程序，并用编辑级精度和 bug 级召回两个新指标衡量修复的"精准度"而非仅仅"功能正确性"。数据上，基准包含 PDB-Single-Hard（5,751 个单行 bug 样本）和 PDB-Multi（256 个多行 bug 样本），从 BigCodeBench 和 LiveCodeBench 构建，bug 生成器池由 GPT-5.1-Codex、Claude-4.5-Sonnet 与 Gemini-2.5-Pro 组成；整个框架不涉及任何模型训练。
 
 ### 关键设计
 
-1. **原子 Bug 合成与组合**:
+**1. 原子 Bug 合成与组合：构造有 ground-truth 编辑脚本、可精确度量的 buggy 程序。**
 
-    - 功能：生成有 ground-truth 编辑脚本的 buggy 程序，支持单行和多行 bug
-    - 核心思路：对每个 ground-truth 程序，按 ODC（正交缺陷分类）的 5 个类别（赋值、检查、算法、构建/打包、时序），随机选择操作类型（插入/删除/替换）和可编辑行，用 LLM 注入单行 bug。通过单元测试验证 bug 有效性（必须失败）。多 bug 程序通过组合多个独立的原子 bug 构建，要求 bug 之间有最小间距（stride）且满足独立性约束
-    - 设计动机：保证原子性（修复不能通过仅修改 bug 的子集来完成）和独立性（修复一个 bug 不影响其他 bug 的修复），这是精确定义编辑级精度和 bug 级召回的前提
+要衡量"修改是否必要"，前提是知道正确答案到底改了哪几行，而历史提交挖掘出来的 bug 既无干净的 ground-truth 编辑、又掺杂无关改动。PDB 改为主动注入：对每个 ground-truth 程序，按 ODC（正交缺陷分类）的 5 个类别（赋值、检查、算法、构建/打包、时序）随机选择操作类型（插入/删除/替换）和可编辑行，用 LLM 注入单行 bug，并通过单元测试验证 bug 确实有效（注入后必须失败）。多 bug 程序再由多个独立原子 bug 组合而成，要求 bug 之间有最小间距 stride 并满足独立性约束。这样设计是为了保证原子性（修复不能靠只改 bug 的子集蒙混过关）和独立性（修一个 bug 不影响另一个 bug 的修复），而这正是精确定义编辑级精度与 bug 级召回的前提。
 
-2. **编辑级精度 (Edit-Level Precision)**:
+**2. 编辑级精度 (Edit-Level Precision)：量化模型的修改里有多少是真正必要的。**
 
-    - 功能：衡量模型修改中有多少比例是必要的
-    - 核心思路：$\text{precision}_\epsilon = \frac{1}{|\hat{E}|} \sum_{i=1}^k F_\mathcal{U}(\hat{C}_i) \cdot (|\hat{E}_i|)_\epsilon$。用 map 函数将 ground-truth 编辑与预测编辑对应，用 essential 函数搜索最小必要编辑子集，引入容差 $\epsilon$ 允许一定的编辑冗余
-    - 设计动机：传统单元测试通过率无法惩罚多余修改。精度指标将评估下沉到行级别，直接衡量"这个修改是必要的吗"
+传统单元测试通过率完全无法惩罚"为修一行 bug 而重写整个函数"的多余改动，于是模型越激进重写越容易拿高分。精度指标把评估下沉到行级别，直接回答"这处修改是必要的吗"：$\text{precision}_\epsilon = \frac{1}{|\hat{E}|} \sum_{i=1}^k F_\mathcal{U}(\hat{C}_i) \cdot (|\hat{E}_i|)_\epsilon$，其中用 map 函数把 ground-truth 编辑与模型预测编辑对应起来，用 essential 函数搜索能让测试通过的最小必要编辑子集，再引入容差 $\epsilon$ 允许一定的编辑冗余。分母是模型实际编辑量、分子是其中被判定为必要的部分，于是大规模重写会被直接拉低分数。
 
-3. **Bug 级召回 (Bug-Level Recall)**:
+**3. Bug 级召回 (Bug-Level Recall)：在多 bug 场景下给部分修复部分分。**
 
-    - 功能：衡量有多少 bug 被正确修复
-    - 核心思路：$\text{recall} = \frac{1}{k} \sum_{i=1}^k F_\mathcal{U}(\hat{C}_i)$。对每个 bug $i$，构建伪修正版本——保留所有其他 bug 的 ground-truth 修复，只用模型对 bug $i$ 的修改，检查是否通过单元测试
-    - 设计动机：在多 bug 场景中，仅修复部分 bug 也应获得部分分数，而非全有或全无
-
-### 损失函数 / 训练策略
-
-PDB 不涉及模型训练。评估使用 PDB-Single-Hard（5,751 个单行 bug 样本）和 PDB-Multi（256 个多行 bug 样本），从 BigCodeBench 和 LiveCodeBench 构建。Bug 生成器池包含 GPT-5.1-Codex、Claude-4.5-Sonnet 和 Gemini-2.5-Pro。
+若沿用程序级"全有或全无"的评分，一个修好了 3 个 bug 里 2 个的模型会和完全没修的模型同样得零分，这既不公平也无法刻画调试能力。召回把粒度下沉到单个 bug：$\text{recall} = \frac{1}{k} \sum_{i=1}^k F_\mathcal{U}(\hat{C}_i)$，对每个 bug $i$ 构建一个伪修正版本——保留其他所有 bug 的 ground-truth 修复，只替换上模型对 bug $i$ 的修改，再看单元测试能否通过。正因为前一步保证了 bug 之间相互独立，这种"逐 bug 隔离检验"才能成立，从而把多 bug 程序的修复率刻画为已正确修复 bug 的比例。
 
 ## 实验关键数据
 

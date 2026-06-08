@@ -42,35 +42,23 @@ tags:
 
 ### 整体框架
 
-整个 pipeline 围绕一个**统一的 Lagrangian 鞍点问题**展开：
-
-输入是 $(X, A, Y)$ 的有限样本与一个公平阈值 $\xi$；输出是一个 attribute-blind 的随机化分类器 $h: \mathcal{X} \to \Delta_m$。
-
-第一步（理论刻画）：把原始问题 $\min_h R(h)$ s.t. $|D_k(h)| \le \xi$ 写成 Lagrangian $L(h, \lambda) = R(h) + \lambda^\top D(h) - \xi \|\lambda\|_1$，证明强对偶成立。Theorem 4.2 给出无熵正则时的最优解形如 $h^*(x) \in \mathrm{conv}\{e_y : y \in \arg\max_j \beta^{\lambda^*}_j(x)\}$，其中 $\beta^{\lambda}(x) = \sum_a p_a(x)\, M(a,\lambda)^\top \eta(x,a)$，$M(a,\lambda) = I - \frac{1}{\omega_a}\sum_k \lambda_k D^{a,k}$。
-
-第二步（解析化）：直接在 $\arg\max$ 上做对偶优化不可微，因此对原问题加上熵正则 $-\tau E(h)$。Theorem 4.3 给出闭式 softmax 解 $h^{\lambda^*}_i(x) = \exp(\beta^{\lambda^*}_i(x)/\tau) / \sum_j \exp(\beta^{\lambda^*}_j(x)/\tau)$，对偶目标变成 $\min_\lambda \tau \mathbb{E}_X [\log \sum_j \exp(\beta^\lambda_j(X)/\tau)] + \xi\|\lambda\|_1$，凸光滑+L1，标准近端方法即可求。
-
-第三步（落地）：训练阶段不知道 $\eta, p_a$，所以走 reduction-based in-processing（Algorithm 1）；部署阶段已有预训练分数 $\hat\eta$，用 plug-in 估计走 post-processing（Algorithm 2）。两条路在理论上都收敛到同一个 Pareto 前沿。
+本文要解决的是"多分类下怎么找到、怎么逼近 accuracy-fairness 最优分类器"这一对理论+算法问题。做法是把原始约束优化 $\min_h R(h)$ s.t. $|D_k(h)| \le \xi$ 写成统一的 Lagrangian 鞍点 $L(h, \lambda) = R(h) + \lambda^\top D(h) - \xi \|\lambda\|_1$，先解析地刻画出最优分类器长什么样，再分训练态（in-processing）和部署态（post-processing）两条路去逼近它，并证明两者都收敛到同一条 Pareto 前沿。输入是 $(X, A, Y)$ 的有限样本与公平阈值 $\xi$，输出是一个 attribute-blind 的随机化分类器 $h: \mathcal{X} \to \Delta_m$。
 
 ### 关键设计
 
-1. **多分类公平的统一刻画 + 熵正则化的闭式 Bayes 最优分类器**:
+**1. 统一线性约束 + 熵正则：把含 $\arg\max$ 的最优解凸化成 softmax 闭式**
 
-    - 功能：把 DP/EOP/EO 等公平准则统一成群体特定混淆矩阵 $C^a$ 的线性约束 $|\sum_a \langle D^{a,k}, C^a(h)\rangle| \le \xi$，再用熵正则把含 $\arg\max$ 的最优解凸化成 softmax，从而**解析可处理**。
-    - 核心思路：决策向量 $\beta^\lambda(x) = \sum_a p_a(x)\, M(a,\lambda)^\top \eta(x,a)$ 中，$M(a,\lambda)$ 表示"如果属于群体 $a$，每个真实-预测对应该如何被 reweight 才能同时满足公平约束"；softmax 温度 $\tau$ 控制随机程度，$\tau \to 0$ 退化回硬性 $\arg\max$（Theorem 4.2），$\tau$ 适中则推理时近似确定性、训练时梯度光滑。
-    - 设计动机：（1）线性约束让多分类多准则共用一份理论，避免每个准则单独推导；（2）熵正则的引入既绕开了 $\arg\max$ 的不可微，又让 $\hat H(\lambda) = \hat f(\lambda) + \xi\|\lambda\|_1$ 自然变成凸+L1 结构，便于用 proximal gradient 一次性求解；（3）二分类降维后该形式退化回经典阈值规则（Menon & Williamson 2018），保证理论自洽。
+多分类公平最棘手的地方是公平指标不可分解、不可微，而且输出从标量变成单纯形上的向量。本文先把 DP/EOP/EO 等准则统一写成群体特定混淆矩阵 $C^a$ 的线性约束 $|\sum_a \langle D^{a,k}, C^a(h)\rangle| \le \xi$，这样多分类、多准则就能共用一份理论而不必逐个推导。对偶后 Theorem 4.2 给出无正则时的最优解 $h^*(x) \in \mathrm{conv}\{e_y : y \in \arg\max_j \beta^{\lambda^*}_j(x)\}$，其中决策向量 $\beta^{\lambda}(x) = \sum_a p_a(x)\, M(a,\lambda)^\top \eta(x,a)$，reweight 矩阵 $M(a,\lambda) = I - \frac{1}{\omega_a}\sum_k \lambda_k D^{a,k}$ 表示"若样本属于群体 $a$，每个真实-预测对要怎么加权才同时满足公平约束"。
 
-2. **In-processing：把公平训练 reduction 成代价敏感交叉熵的 saddle-point**:
+但这个解含 $\arg\max$，对偶优化不可微。借鉴 entropic OT 的思路，对原问题加熵正则 $-\tau E(h)$，$\arg\max$ 就被凸化成 softmax：Theorem 4.3 给出闭式解 $h^{\lambda^*}_i(x) = \exp(\beta^{\lambda^*}_i(x)/\tau) / \sum_j \exp(\beta^{\lambda^*}_j(x)/\tau)$，对偶目标随之变成 $\min_\lambda \tau \mathbb{E}_X [\log \sum_j \exp(\beta^\lambda_j(X)/\tau)] + \xi\|\lambda\|_1$ 这种凸光滑+L1 的结构，标准近端方法一次就能求。温度 $\tau$ 控制随机程度：$\tau \to 0$ 退回硬 $\arg\max$（与 Theorem 4.2 一致），$\tau$ 适中则推理近似确定性、训练梯度光滑；二分类降维后该形式还能退回经典阈值规则（Menon & Williamson 2018），理论自洽。
 
-    - 功能：在不知道 $\eta, p_a$ 的情况下，把"求 $\min_h L(h,\lambda)$"这步**约化为一个有显式 calibrated loss 的分类问题**，从而能直接用 SGD 训练。
-    - 核心思路：定义代价敏感损失 $\ell_{\mathrm{cal}}(y, f(x;\theta), a, \lambda) = -\sum_i [M'(a,\lambda)]_{y,i}\, \log \mathrm{softmax}_i(f(x;\theta))$，其中 $M'(a,\lambda) = M(a,\lambda) + \kappa \mathbf{1}_{m\times m}$，加常数项保证每个 entry 严格为正（这样才像是合法的代价矩阵）。Theorem 5.1 证明 $\arg\min_f \mathbb{E}[\ell_{\mathrm{cal}}]$ 给出的 $h^*(x;f)$ 与最优 $h^*(x;\beta^\lambda)$ 等价，即该损失对 inner min 是 calibrated 的。Algorithm 1 用标准 primal-dual：每轮跑 R 步 $\theta$ 梯度，再做一步 $\lambda$ 的近端更新 $\lambda_{t+1} = \mathrm{prox}_{\eta_\lambda(\xi\|\cdot\|_1 + I_{\Lambda})}(\lambda_t + \eta_\lambda D(h_{t+1}))$。
-    - 设计动机：先前 in-processing 方法常用代理目标（hinge、adversary）逼近不可微的公平约束，surrogate gap 不可控；本方法直接给出**对原始 saddle 问题 calibrated 的损失**，配合 mixed Nash 收敛分析（Theorem 5.2），最终的 mixed strategy $(\bar h_T, \bar \lambda_T)$ 在迭代数 $T$ 增大时收敛到 $\rho_T \le \bar\nu_T + uB_\Lambda \sqrt{K/T}$ 的近似平衡点，Theorem 5.3 进一步给出 $O(\gamma_d(N, m^2/\delta))$ 的泛化界，把"训练算法+数据规模 $\to$ 离 Pareto 前沿多远"量化清楚。
+**2. In-processing：把公平训练 reduction 成代价敏感交叉熵的鞍点问题**
 
-3. **Post-processing：用 plug-in 估计求解凸近端问题**:
+训练阶段并不知道 $\eta, p_a$，所以"求 $\min_h L(h,\lambda)$"这步要约化成一个有显式 calibrated loss 的可微分类问题才能上 SGD。本文定义代价敏感损失 $\ell_{\mathrm{cal}}(y, f(x;\theta), a, \lambda) = -\sum_i [M'(a,\lambda)]_{y,i}\, \log \mathrm{softmax}_i(f(x;\theta))$，其中 $M'(a,\lambda) = M(a,\lambda) + \kappa \mathbf{1}_{m\times m}$ 加常数项保证每个 entry 严格为正，使其是一个合法的代价矩阵。Theorem 5.1 证明 $\arg\min_f \mathbb{E}[\ell_{\mathrm{cal}}]$ 诱导出的 $h^*(x;f)$ 与最优 $h^*(x;\beta^\lambda)$ 等价，即该损失对 inner min 是 calibrated 的——这正好补上了先前 in-processing 常用 hinge/adversary 代理目标、surrogate gap 不可控的短板。Algorithm 1 用标准 primal-dual：每轮跑 $R$ 步 $\theta$ 梯度，再做一步 $\lambda$ 的近端更新 $\lambda_{t+1} = \mathrm{prox}_{\eta_\lambda(\xi\|\cdot\|_1 + I_{\Lambda})}(\lambda_t + \eta_\lambda D(h_{t+1}))$。收敛性由 mixed Nash 分析（Theorem 5.2）保证：mixed strategy $(\bar h_T, \bar \lambda_T)$ 随迭代数 $T$ 增大收敛到 $\rho_T \le \bar\nu_T + uB_\Lambda \sqrt{K/T}$ 的近似平衡点，Theorem 5.3 再给出 $O(\gamma_d(N, m^2/\delta))$ 的泛化界，把"训练算法+数据规模 $\to$ 离 Pareto 前沿多远"量化清楚。
 
-    - 功能：给定任意预训练模型 $\hat\eta$ 与一个辅助模型 $\hat q_a(x) \approx P(A|X, Y)$，在不重训的前提下输出一个公平校准后的概率分类器。
-    - 核心思路：把 $\beta^\lambda$ 的样本估计 $\hat\beta^\lambda(x) = [\sum_a \mathrm{Diag}(\hat q_a(x))\, \hat M(a, \lambda)]^\top \hat\eta(x)$ 代入闭式 softmax（Eq. 15），最优 $\hat\lambda^*$ 通过解经验对偶 $\hat H(\lambda) = \hat f(\lambda) + \xi\|\lambda\|_1$ 得到。Proposition 5.5 证明 $\hat f(\lambda)$ **凸且 L-光滑**，故 Algorithm 2 直接对 $\lambda$ 做 proximal gradient descent 即可快速收敛。
-    - 设计动机：传统 post-processing 要么需要 attribute-aware（推理时还得知道敏感属性，部署不友好），要么只对单一准则有效；本方法的辅助模型 $\hat q_a$ 解耦了"是否 attribute-blind"的需求，凸+L1 结构保证全局最优。Theorem 5.6 把误差拆成三项 $\epsilon_1$（辅助模型偏差）、$\epsilon_2$（有限样本）、$\epsilon_3$（频率估计偏差），并证明调好 $\tau$ 后能拿到 $O(\sqrt\epsilon)$ 阶的最坏情形界。
+**3. Post-processing：plug-in 估计 + 凸近端，免重训校准任意预训练模型**
+
+部署阶段已有预训练分数 $\hat\eta$，目标是不重训就输出一个公平校准后的概率分类器。本文额外训一个辅助模型 $\hat q_a(x) \approx P(A|X, Y)$，把 $\beta^\lambda$ 的样本估计 $\hat\beta^\lambda(x) = [\sum_a \mathrm{Diag}(\hat q_a(x))\, \hat M(a, \lambda)]^\top \hat\eta(x)$ 代回闭式 softmax（Eq. 15），最优 $\hat\lambda^*$ 通过解经验对偶 $\hat H(\lambda) = \hat f(\lambda) + \xi\|\lambda\|_1$ 得到。这里的关键好处是 $\hat q_a$ 解耦了"是否 attribute-blind"——传统 post-processing 要么推理时还得知道敏感属性、部署不友好，要么只服务单一准则，而这里推理时不需要真实属性。Proposition 5.5 证明 $\hat f(\lambda)$ 凸且 L-光滑，所以 Algorithm 2 直接对 $\lambda$ 做 proximal gradient descent 就能快速收敛到全局最优。误差由 Theorem 5.6 拆成三项 $\epsilon_1$（辅助模型偏差，含 $\|q_a - \hat q_a\|_1$）、$\epsilon_2$（有限样本）、$\epsilon_3$（频率估计偏差），调好 $\tau$ 后能拿到 $O(\sqrt\epsilon)$ 阶的最坏情形界。
 
 ### 损失函数 / 训练策略
 

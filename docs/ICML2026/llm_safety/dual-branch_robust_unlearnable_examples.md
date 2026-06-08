@@ -41,34 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DUNE 的总目标：$\min_{\delta_u}\mathbb{E}_{(x,y)}[\mathcal{L}_{CE}(f_\theta(\psi(x;\delta_u)), y^*)]$，$\delta_u\in\Phi_s\times\Phi_c$，$y^*=(y+\Delta y)\mod k$。作者证明可以解耦为两个独立子优化：
-
-1. **空间分支**：对每类样本用 PGD 优化 $\ell_\infty$ 扰动 $\delta_{s_i}$，使特征朝 $y_p^*$ 移动；
-2. **色彩分支**：对每类样本用 PSO 在 RGB 三通道独立搜索亮度偏移 $(\Delta x_r,\Delta x_g,\Delta x_b)$；
-3. **集成增强**：两个分支都在预训练模型 gallery $\{f_{\theta_j}\}_{j=1}^M$ 上聚合梯度/loss；
-4. 最终 UE：$x_u=\text{clamp}(x+\delta_s+\delta_c, 0, 1)$。
+DUNE 要解决的是"单一空间域的 UE 扰动频率结构太单一、被频域压缩或扩散净化一打就破"这个痛点。它的总目标仍是给图像加扰动让模型学到错误 shortcut：$\min_{\delta_u}\mathbb{E}_{(x,y)}[\mathcal{L}_{CE}(f_\theta(\psi(x;\delta_u)), y^*)]$，约束 $\delta_u\in\Phi_s\times\Phi_c$、训练标签换成偏移过的 $y^*=(y+\Delta y)\mod k$。关键之处在于作者证明这个联合优化能解耦成两条独立支路：空间分支用 PGD 在 $\ell_\infty$ 球内优化扰动 $\delta_s$，色彩分支用无梯度的 PSO 在 RGB 三通道独立搜亮度偏移 $\delta_c$，两支都在一组预训练模型 gallery 上聚合信号以增强跨架构鲁棒性，最后叠加得到 $x_u=\text{clamp}(x+\delta_s+\delta_c, 0, 1)$。
 
 ### 关键设计
 
-1. **Shift-induced label feature misalignment**:
+**1. Shift-induced 标签错位：把 shortcut 映射做成确定性的。**
 
-    - 功能：让模型在 UE 上学到的不是原始 $y$ 而是固定偏移 $y^*=(y+\Delta y)\mod k$，从而切断特征与真实标签的关联。
-    - 核心思路：扰动优化目标是 $\mathcal{L}_{CE}(f_\theta(\psi(x;\delta_d)), y^*)$，即让带扰动样本的特征靠近 shift-induced 类的特征。每类样本共享同一偏移 $\Delta y$，使整个 dataset 形成"统一旋转"的 shortcut 映射（Fig. 4）。测试时模型遇到干净样本，shortcut 失效 → 泛化崩溃。
-    - 设计动机：相比传统 UE 的"min loss"（让模型把 UE 误分类到原类 $y$），shift-induced 目标更稳定——它建立了一个**确定性**的 perturbation→label 映射，且与原始 label 显式解耦，对 adaptive defense 更难逆向。
+传统 UE 的优化目标是"min loss"——让模型把带扰动样本仍然分到原类 $y$，但这建立的是一个跟真实标签纠缠在一起的 shortcut，adaptive defense 容易逆向。DUNE 改成让扰动把特征推向一个固定偏移类 $y^*=(y+\Delta y)\mod k$，优化目标变为 $\mathcal{L}_{CE}(f_\theta(\psi(x;\delta_d)), y^*)$。由于每一类样本共享同一个偏移量 $\Delta y$，整个数据集形成一张"统一旋转"的 perturbation→label 映射表（Fig. 4），模型在 UE 上学到的全是这套错位捷径；测试时换成干净样本，捷径失效、泛化直接崩塌。相比随机化的旧目标，这个映射是**确定性**的、并与原始 label 显式解耦，因此更稳定也更难被防御者反推。
 
-2. **Spatial-Color 双域解耦优化**:
+**2. 空间-色彩双域解耦：让两类扰动在几何上不打架。**
 
-    - 功能：在空间域和色彩域分别构造正交扰动，扩大噪声多样性。
-    - 核心思路：把联合优化分解为 $\delta_u\triangleq\delta_s\oplus\delta_c$，两个子问题独立解：
-        - **空间分支**（PGD, $T$ 步）：$g_t=\nabla_{x_i^t}\mathcal{L}_{CE}(f_\theta(x_i^t), y_p^*)$，$x_i^{t+1}=\text{clip}_{\epsilon}(x_i^t-\beta\cdot\text{sign}(g_t))$；
-        - **色彩分支**（PSO，无梯度）：把 $x_i$ 拆成 R/G/B 三通道，对每通道独立加亮度偏移 $\Delta x_r,\Delta x_g,\Delta x_b$，PSO 搜索使集成 loss + 自然性约束 $\lambda\mathcal{L}_{nc}$ 最小的偏移组合，整类共享一组 $\delta_c$。
-    - 设计动机：DC（亮度）和 AC（空间细节）正交→ECLIPSE 这种 Gaussian noise purification 只能洗掉 AC 部分；ISS-J 的高频压缩只伤 AC，DC 偏移完整保留；两个 branch 互为冗余备份，攻防几何上根本不重叠。
+单域扰动之所以脆弱，是因为所有扰动共享同一频率族，防御只要识别这个族就能批量清掉。DUNE 把扰动拆成 $\delta_u\triangleq\delta_s\oplus\delta_c$ 两个互不重叠的子问题独立求解。空间分支走 $T$ 步 PGD，沿 $g_t=\nabla_{x_i^t}\mathcal{L}_{CE}(f_\theta(x_i^t), y_p^*)$ 迭代并裁剪 $x_i^{t+1}=\text{clip}_{\epsilon}(x_i^t-\beta\cdot\text{sign}(g_t))$；色彩分支则把图像拆成 R/G/B 三通道，对每通道加一个亮度偏移 $\Delta x_r,\Delta x_g,\Delta x_b$，用 PSO 搜索让"集成 loss + 自然性约束 $\lambda\mathcal{L}_{nc}$"最小的偏移组合，整类共享同一组 $\delta_c$。两条支路之所以正交，是因为图像可分解为 DC 分量（块均值亮度）和 AC 分量（高频空间细节）：空间扰动主要改 AC，色彩亮度漂移主要改 DC。于是 ECLIPSE 这类高斯噪声净化只能洗掉 AC、ISS-J 的高频压缩也只伤 AC，DC 上的色彩偏移原封不动地留下来——两个分支互为冗余备份，攻防几何上根本不在同一维度上重叠。
 
-3. **预训练模型集成（unlearnability-enhancing ensemble）**:
+**3. 预训练模型集成：把扰动从单架构过拟合里拉出来。**
 
-    - 功能：让扰动跨架构 transferable，对未知防御模型也保持鲁棒。
-    - 核心思路：维护 model gallery $\{f_{\theta_j}\}_{j=1}^M$（不同初始化、不同架构），空间分支聚合梯度 $g_t=\frac{1}{M}\sum_j \nabla\mathcal{L}_{CE}(f_{\theta_j}(x), y_p^*)$；色彩分支聚合 loss $\mathcal{L}_{color}=\frac{1}{M}\sum_j\mathcal{L}_{CE}(f_{\theta_j}(x+\delta_c), y_p^*)+\lambda\mathcal{L}_{nc}$。
-    - 设计动机：单 surrogate 模型生成的扰动容易过拟合 surrogate 架构（如 ResNet18），换 VGG19 就失效；ensemble 类似对抗攻击中的 transferability boosting，把扰动 frequency 谱拓宽。
+只用一个 surrogate（比如 ResNet18）生成的扰动会过拟合该架构，换成 VGG19 就失效。DUNE 维护一组不同初始化、不同架构的 model gallery $\{f_{\theta_j}\}_{j=1}^M$，两条支路都在其上聚合信号：空间分支取平均梯度 $g_t=\frac{1}{M}\sum_j \nabla\mathcal{L}_{CE}(f_{\theta_j}(x), y_p^*)$，色彩分支取平均 loss $\mathcal{L}_{color}=\frac{1}{M}\sum_j\mathcal{L}_{CE}(f_{\theta_j}(x+\delta_c), y_p^*)+\lambda\mathcal{L}_{nc}$。这等价于把对抗攻击社区成熟的 transferability boosting 搬进 UE——多个架构的梯度方向一平均，扰动的 frequency 谱被拓宽，对未见过的防御模型也能保持鲁棒。
 
 ### 损失函数 / 训练策略
 - 空间分支：$\mathcal{L}_{CE}(f_\theta(x+\delta_s), y^*)$，$\ell_\infty\le\epsilon$（CIFAR-10 $\epsilon=8/255$），$T=20$ PGD 步。

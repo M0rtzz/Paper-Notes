@@ -42,30 +42,21 @@ SPROUT 是首个完全训练无关、零标注的病理核分割框架——用 
 
 ### 整体框架
 
-三步：
-1. **特征-原型相似映射**：图像 patch encoding（DINOv2 或 H-optimus-1）→ stain decomposition（OD 空间 + Otsu）→ 高置信前景/背景 mask → K-means 聚类得原型 $\mathcal{P}_{fg}, \mathcal{P}_{bg}$
-2. **POT-Scan + 激活提示**：渐进式 partial OT（小 $\rho_0$ 起始，逐步增大）做特征-原型软对齐，避免点级硬匹配的不稳定；过滤模糊特征
-3. **实例 mask 预测 + 优化**：原型重加权激活 → 二值化 → watershed 取正点 + 扩张背景采负点 → SAM 推理 → containment-aware NMS
+SPROUT 要解决的是「零标注、零训练地分割一张病理切片里成千上万个细胞核」。它的核心思路是：既然在病理图上找不到稳定的外部 reference，就让每张切片自己当自己的 reference。整条管线分三段——先用 H&E 染色的物理先验在图上自构高置信前景/背景区域、从中提取原型；再用渐进式部分最优传输把原型语义稳定地传播到全图特征上、顺手过滤掉模糊特征；最后把对齐结果翻译成 SAM 的正/负点提示，跑一遍 SAM 并用 containment-aware NMS 收尾。具体串起来就是：patch encoding（DINOv2 或 H-optimus-1）→ stain decomposition（OD 空间 + Otsu）→ 高置信前景/背景 mask → K-means 原型 $\mathcal{P}_{fg}, \mathcal{P}_{bg}$ → POT-Scan 软对齐 → 激活 + watershed 取点 → SAM 推理 → NMS。全程不更新任何参数、不需要任何标注。
 
 ### 关键设计
 
-1. **染色先验自参考（Self-reference via H&E Stain Prior）**:
+**1. 染色先验自参考：用 H&E 的生物化学性质替代外部 reference。**
 
-    - 功能：从图像自身构造高置信度前景/背景区域，替代外部 reference
-    - 核心思路：OD 空间变换 $OD = -\log(x/x_0)$ → 用归一化染色矩阵 $Q = [Q_H, Q_E]$ 解 concentration map $S = Q^+ \cdot OD$ → Otsu 阈值分粗前/背景 → 每区取 stain intensity top-$t$ 像素作高置信 mask $\bm M_{fg}, \bm M_{bg}$ → 在 mask 区聚类特征得原型
-    - 设计动机：病理图染色物理性质天然分核（深染）与胞外（淡染），比外部 reference 更可靠且每张切片自适应；解决了 reference-based 方法在病理上找不到稳定 reference 的根本问题
+reference-based 训练无关方法在病理上集体失效，根因是病理图在染色、密度、形态上变异太大，根本找不到一张能当 reference 的图。SPROUT 的破法是回到 H&E 染色本身——hematoxylin 把核染成深蓝/紫、eosin 把胞质染成粉，这种颜色差异是物理决定的、每张切片都成立。于是先做颜色去卷积：把图变换到光密度空间 $OD = -\log(x/x_0)$，用归一化染色矩阵 $Q = [Q_H, Q_E]$ 解出浓度图 $S = Q^+ \cdot OD$，再用 Otsu 阈值粗分前/背景，在每个区域里取染色强度 top-$t$ 的像素当作高置信 mask $\bm M_{fg}, \bm M_{bg}$，最后只在这些可靠区域里聚类特征得到原型 $\mathcal{P}_{fg}, \mathcal{P}_{bg}$。这样构造出来的「自参考」比任何外部 reference 都准，因为它天生适配每张切片各自的染色差异。消融里把自参考换成外部 reference 图，AJI 直接掉 14.4 个点，是全篇贡献最大的一块。
 
-2. **部分最优传输扫描（POT-Scan）**:
+**2. 部分最优传输扫描（POT-Scan）：让原型语义稳定地传到全图，而不把噪声特征也硬配进去。**
 
-    - 功能：把原型语义稳定地传播到全部特征，过滤噪声不强制全部特征都对齐
-    - 核心思路：cost $C_{ij} = 1 - \tilde F P^\top / (\|\tilde F\|\|P\|)$；partial OT 允许 $1-\rho$ 部分特征 unmatched：$\min_T \langle T, C\rangle_F + \lambda KL(T^\top \bm 1_N \| \tfrac{\rho}{M} \bm 1_M)$，s.t. $T \bm 1_M \leq \tfrac{1}{N}\bm 1_N$；progressive 把 $\rho$ 从小逐步增大——先匹配易特征再纳入困难特征；用附加 slack 列把 partial 问题转标准 Sinkhorn 解
-    - 设计动机：标准 OT 强制全质量运输，把噪声特征也强配到原型；partial OT 自然过滤模糊区；progressive scan 像"软课程学习"避免一开始就处理模糊特征导致噪声放大
+有了原型还要把它的语义传播到所有特征上，但标准 OT 会强制把全部质量都运输出去——连模糊、噪声的特征也被硬配到某个原型，反而污染结果。POT-Scan 改用 partial OT：代价矩阵取余弦距离 $C_{ij} = 1 - \tilde F P^\top / (\|\tilde F\|\|P\|)$，允许 $1-\rho$ 部分特征保持 unmatched，目标写成 $\min_T \langle T, C\rangle_F + \lambda KL(T^\top \bm 1_N \| \tfrac{\rho}{M} \bm 1_M)$，s.t. $T \bm 1_M \leq \tfrac{1}{N}\bm 1_N$，再用一个附加 slack 列把 partial 问题转成标准 Sinkhorn 来解。更关键的是 progressive 这一步：把传输比 $\rho$ 从一个很小的 $\rho_0$ 逐步增大，先匹配容易的特征、再慢慢纳入困难特征，相当于一种「软课程学习」，避免一开始就处理模糊区把噪声放大。消融显示标准 OT 替 partial 掉 7.1 个点、单次 OT 替 progressive 再掉 3.4 个点，证明「忽略不确定特征」和「由易到难」两件事都不可省。
 
-3. **激活提示 + containment-aware NMS**:
+**3. 激活提示 + containment-aware NMS：把对齐结果翻译成 SAM 点提示并收尾。**
 
-    - 功能：把对齐结果转 SAM 可用的正/负点提示，并优化 SAM 输出
-    - 核心思路：原型重加权激活 $F^\star = \tilde F \odot T^\star$ → DenseCRF 平滑 → 阈值二值化 → 与初始高置信 mask 结合后用 watershed 取正点（每个连通块一个）；负点从扩张背景 mask 均匀采样；停止规则——多个紧凑区开始融合就停（继续会合并不同核）；containment-aware NMS：含包含关系的 SAM 候选用更严格的非极大抑制
-    - 设计动机：SAM 对 point prompt 数量和位置敏感；watershed 自然给出"每核一点"；containment-aware NMS 解决密集核场景下普通 NMS 误删嵌套小核的问题
+SAM 对 point prompt 的数量和位置很敏感，所以最后一段要把对齐结果精确地转成「每个核一个正点」。做法是先用传输矩阵给特征重加权激活 $F^\star = \tilde F \odot T^\star$，DenseCRF 平滑后阈值二值化，与初始高置信 mask 结合，再用 watershed 在每个连通块上取一个正点；负点从扩张后的背景 mask 上均匀采样。watershed 的停止规则是「多个紧凑区开始融合就停」——继续下去会把不同核合并成一个。SAM 推理之后还有一道 containment-aware NMS：对存在包含关系的候选用更严格的非极大抑制，专门解决密集核场景里普通 NMS 误删嵌套小核的问题。
 
 ## 实验关键数据
 

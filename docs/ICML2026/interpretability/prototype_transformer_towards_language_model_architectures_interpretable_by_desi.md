@@ -56,23 +56,17 @@ $\mathrm{PM}_k = \dfrac{\sum_{j<i}\beta_k^{i-j}\,\mathrm{Softmax}_k\!\left(\tfra
 
 ### 关键设计
 
-1. **Channel-aligned 原型门控（Write Gate × Read Gate）**:
+**1. Channel-aligned 原型门控：沿原型维 softmax 的"反向 attention"**
 
-    - 功能：把"信息写入哪条通道"和"从哪条通道读回信息"显式拆开，并让 $R$ 条通道彼此 *不交互*（不像 Perceiver 的 latent 之间还要 self-attention）。
-    - 核心思路：write/read gate 都是与 cross-attention 形似的相似度门控，但 softmax 沿 *prototype 维* 而非 *sequence 维* —— 这是 ProtoT 区别于一切已有 attention 变体的关键。它强迫每个 token 在 $R$ 个通道之间做"路由选择"，从而在通道间形成竞争压力；$W$ 矩阵和独立温度 $\tau_r$ 让读写解耦，允许"读端在 $t$ 时预判、写端在 $t{+}1$ 时巩固"这种 predict-and-consolidate 行为出现。
-    - 设计动机：channel-aligned softmax 是产生"概念专门化"的根本机制——同一通道里塞两个语义会被强行平均，损失上升，于是训练自动把不同概念推到不同通道；通道间不交互则保证 surgical edit 不会扩散。
+ProtoT 真正区别于一切 attention 变体的支点，是把 write/read gate 的 softmax 从 *sequence 维* 换到了 *prototype 维*。标准 attention 让 token 之间互相分配权重，而这里是每个 token 在 $R$ 条通道之间做"路由选择"——写端按 $\mathrm{Softmax}_k(x_j\cdot \mathbf{P}_k/\tau_w)$ 决定历史 token $x_j$ 写进哪条通道，读端按 $\mathrm{Softmax}_k(W(x_i)\cdot \mathbf{P}_k/\tau_r)$ 决定当前 token 从哪条通道读回。这个小小的轴换把"信息聚合"变成"信息路由"：同一通道里若塞进两个语义会被 prefix mean 强行平均、损失上升，于是训练自动把不同概念推到不同通道，概念专门化是损失压力下的必然产物而非额外约束。读写两端各用独立映射 $W$ 与温度 $\tau_r$ 解耦，允许"读端在 $t$ 时预判、写端在 $t{+}1$ 时巩固"这种行为浮现；而 $R$ 条通道彼此 *不交互*（不像 Perceiver 的 latent 还要互相 self-attention），保证日后对某个原型做 surgical edit 时副作用不会沿通道扩散。
 
-2. **带 EMA 时间折扣的严格因果 Prefix Mean**:
+**2. 带 EMA 时间折扣的严格因果 Prefix Mean：把长程依赖参数化成可学时间尺度**
 
-    - 功能：对每个通道独立做 *past-only* 的时间折扣聚合，承担"长短时记忆"角色。
-    - 核心思路：对位置 $j<i$ 的写入值乘以 $\beta_k^{i-j}$ 后累积，再除以系数和做 mass normalization（实测显著降困惑度）；可学的 $\beta_k$ 给每个原型一个独立的时间尺度，半衰期可视化后能看到 stop words / 标点对应短半衰期、叙事性概念对应长半衰期。注意求和 *只取 $j<i$*：标准 self-attention 允许 $i$ attend 自己，形成 input→output 的垂直捷径；ProtoT 刻意切掉这条捷径，逼 write gate 提前为 read gate 做准备，这正是后文观测到的 predict-and-consolidate 模式的结构根源。Value 流额外用 $h/2$ 的低秩投影节省 50% mixer 计算；前两层加 kernel=5 的局部卷积补足短程关系。
-    - 设计动机：EMA 把"长程依赖"显式参数化为可学时间尺度而非靠 attention 自己挖；切断 self-loop 让通道真正承担"中转站"角色而不是退化成 identity；低秩 + 局部卷积补偿低层的细粒度信息损失。
+每条通道独立做一次 *past-only* 的折扣累积平均：对位置 $j<i$ 的写入值乘衰减因子 $\beta_k^{i-j}$ 后累加，再除以系数和做 mass normalization（实测能显著降困惑度），其中 $\beta_k=\sigma(\gamma_k)\in(0,1)$ 是每个原型可学的 EMA 衰减系数，等价于给该原型一个独立时间尺度，换算成半衰期 $t_{1/2}^{(k)}=-\ln 2/\ln\beta_k$ 后即可读出"哪个原型管短程、哪个管长程"。这里有两个刻意的结构选择：其一是求和 *只取 $j<i$*——标准 self-attention 允许 $i$ attend 自己、形成 input→output 的垂直捷径，ProtoT 故意切掉这条 self-loop，逼 write gate 提前为 read gate 做准备，这正是后文 predict-and-consolidate 现象的结构根源；其二是把长程依赖显式写成可学的 $\beta_k$，而不是指望 attention 自己从数据里挖。为补偿低层的细粒度信息损失，value 流额外用 $h/2$ 的低秩投影省下 50% mixer 计算，前两层再加 kernel=5 的局部卷积补足短程关系。
 
-3. **Alpha Gate：天然的层级可解释探针**:
+**3. Alpha Gate：零成本、训练中可观测的层贡献度探针**
 
-    - 功能：在每个 Prototype Mixer 输出汇入 residual 前乘一个标量 $\alpha$（类 ReZero），既参与训练也作为零成本的"层贡献度"诊断量。
-    - 核心思路：与 ReZero 初始化为 0 不同，ProtoT 把 $\alpha$ 初始化为 1（identity），训练中若某层 $\alpha$ 迅速下降则强证据表明该层 mixer 对最终预测无贡献。配合实验，作者用 $\alpha$ 验证了 layer 0 共享 read/write 路由 + 更尖锐 $\tau_r$ 初始化（3.0 而非 1.0）能提升 layer 0 的实际效用。
-    - 设计动机：传统架构想知道"某层到底有没有用"需要昂贵的消融或 probing；ProtoT 把这个量做成训练过程中自然涌现的可观测标量，开销可忽略，对调架构超参（kernel、低秩比、温度初始化）极有用。
+每个 Prototype Mixer 的输出汇入 residual 前先乘一个标量 $\alpha$（类似 ReZero）。但与 ReZero 把 $\alpha$ 初始化为 0 相反，ProtoT 初始化为 1（identity 起步），于是训练中若某层 $\alpha$ 迅速衰减，就是该层 mixer 对最终预测几乎无贡献的强证据——传统架构要回答"这层到底有没有用"得靠昂贵的消融或 probing，这里把它做成训练过程里自然涌现、开销可忽略的可观测量。作者正是借 $\alpha$ 诊断出 layer 0 偏弱，进而验证"layer 0 共享 read/write 路由 + 把 $\tau_r$ 初始化得更尖锐（3.0 而非 1.0）"能切实提升首层效用，对调 kernel、低秩比、温度初始化等架构超参非常实用。
 
 ### 损失函数 / 训练策略
 标准 next-token 交叉熵，AdamW + 线性 warmup（2% 训练步） + 余弦退火到峰值 LR 的 10%。所有 baseline 与 ProtoT 共享 backbone 超参（h=256, L=6, FFN ratio≈2.7×, dropout=0.1, BPE vocab=16k），仅 mixer 不同，确保对比公平。原型数 $R=32$（再增收益递减），注意力头数 4，词嵌入与 LM head 共享权重。

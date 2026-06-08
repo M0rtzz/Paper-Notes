@@ -41,27 +41,21 @@ E2-LoRA 不在参数空间或输入特征空间做正交约束，而是把视角
 ## 方法详解
 
 ### 整体框架
-设 $\mathbf{W}_0$ 是预训练线性层权重，第 $t$ 个任务到来时为它分配一个 LoRA 模块 $\Delta \mathbf{W}_t = \mathbf{B}_t \mathbf{A}_t$。E2-LoRA 在每个任务上跑四个阶段：(1) 动态秩分配——按能量保留阈值 $\rho$ 把旧任务的 LoRA 剪到 $r_k^{(t)}$ 秩，把腾出的列拼成新任务 $\mathbf{B}_t$ 的初始基并冻结；(2) 训练——只优化 $\mathbf{A}_t$ + self-distillation 防遗忘；(3) 能量结构化变换——对 $\Delta \mathbf{Y}_t$ 做 SVD 后把 $(\mathbf{B}_t, \mathbf{A}_t)$ 旋转到能量基上、按秩有序；(4) 分类头对齐——用类统计生成的合成特征 fine-tune classifier。
+设 $\mathbf{W}_0$ 是预训练线性层权重，第 $t$ 个任务到来时为它分配一个 LoRA 模块 $\Delta \mathbf{W}_t = \mathbf{B}_t \mathbf{A}_t$，整套方法的关键不在于"加什么参数"，而在于"约束哪个空间"——E2-LoRA 把正交约束从参数空间、输入空间挪到了输出漂移空间。每个任务上它走四步闭环：先按能量阈值 $\rho$ 把旧任务的 LoRA 剪到合适秩、把腾出的列拼成新任务 $\mathbf{B}_t$ 的初始基并冻结（动态秩分配）；然后只优化 $\mathbf{A}_t$ 并配 self-distillation 防遗忘（训练）；训练完对输出漂移 $\Delta \mathbf{Y}_t$ 做 SVD，把 $(\mathbf{B}_t, \mathbf{A}_t)$ 旋转到按能量降序排好的基上（能量结构化变换）；最后用类统计合成特征对齐分类头。这样旧任务知识被压成"前几秩承载几乎全部能量"的形式，尾部低能量秩随时可释放给后来者。
 
 ### 关键设计
 
-1. **输出漂移诱导的正交化（Output-Drift-Induced Orthogonalization）**:
+**1. 输出漂移诱导的正交化：把"该正交于谁"换到能量最集中的参考空间。**
 
-    - 功能：给"该正交于谁"这个核心问题换一个被约束维度最少、能量最集中的参考空间。
-    - 核心思路：在 proxy 输入 batch $\mathbf{X}_t$ 上算输出漂移矩阵 $\Delta \mathbf{Y}_t = \mathbf{B}_t \mathbf{A}_t \mathbf{X}_t \in \mathbb{R}^{d_\text{out}\times n}$，做 SVD 得到 $\Delta \mathbf{Y}_t = \mathbf{U}_t \mathbf{\Sigma}_t \mathbf{V}_t^\top$，其中 $\mathbf{U}_t$ 的列就是按能量降序的输出方向。新任务 $\mathbf{B}_t$ 直接初始化为前几个旧任务"低能量列"拼起来再冻结，这样 $\mathbf{B}_t \mathbf{A}_t$ 的输出必然落在旧任务漂移的零能量子空间，等价于在输出空间做了硬正交。
-    - 设计动机：参数级正交（O-LoRA）的问题是 $\mathbf{B}$ 的列没有任何能量含义，正交约束 $\|\mathbf{B}_i^\top \mathbf{B}_t\|_F^2$ 是"盲约束"；输入级正交（DualGPM/InfLoRA）的问题是 PTM 的输入表示天然高秩、能量分散，约束等于把新任务大半个方向都关掉。而 $\Delta \mathbf{Y}_t$ 既反映"任务真正改变了模型输出的哪些方向"，又因为单任务语义低维而能量集中，是天生最适合做正交化的空间。
+前面指出两条旧路线都吃了"参考空间选错"的亏：参数级正交（O-LoRA）盯着 $\mathbf{B}$ 的列做约束 $\|\mathbf{B}_i^\top \mathbf{B}_t\|_F^2$，但 $\mathbf{B}$ 的列本身没有任何能量含义，等于"盲约束"；输入级正交（DualGPM / InfLoRA）盯着 PTM 的输入特征，可这些特征天然高秩、能量分散，约束下去等于把新任务大半个可走方向都关死。E2-LoRA 改盯 LoRA 真正影响模型的中间产物——输出特征的漂移。它在一个 proxy 输入 batch $\mathbf{X}_t$ 上算出漂移矩阵 $\Delta \mathbf{Y}_t = \mathbf{B}_t \mathbf{A}_t \mathbf{X}_t \in \mathbb{R}^{d_\text{out}\times n}$，做 SVD 得 $\Delta \mathbf{Y}_t = \mathbf{U}_t \mathbf{\Sigma}_t \mathbf{V}_t^\top$，$\mathbf{U}_t$ 的列就是按能量降序排列的输出方向。新任务的 $\mathbf{B}_t$ 直接拿旧任务的"低能量列"拼起来再冻结，于是 $\mathbf{B}_t \mathbf{A}_t$ 的输出必然落在旧任务漂移的零能量子空间，等价于在输出空间做了一次硬正交。之所以这个空间最合适：$\Delta \mathbf{Y}_t$ 既如实反映"任务到底改变了模型输出的哪些方向"，又因为单任务语义本就低维而能量高度集中——既不盲，又不浪费可塑性。
 
-2. **能量结构化变换 + 秩截断最优性**:
+**2. 能量结构化变换 + 秩截断最优性：让前几秩扛住几乎全部任务知识。**
 
-    - 功能：在不动整体 $\Delta \mathbf{W}_t = \mathbf{B}_t \mathbf{A}_t$ 数学上等价性的前提下，把 $(\mathbf{B}_t, \mathbf{A}_t)$ 重写成"前几个秩承载几乎全部任务知识"的形式。
-    - 核心思路：训练完当前任务后做 $\mathbf{B}_t \leftarrow \mathbf{U}_t[:,:r_t]$，$\mathbf{A}_t \leftarrow (\mathbf{U}_t[:,:r_t])^\top \mathbf{B}_t \mathbf{A}_t$。论文证明（Prop 3.1）：在所有秩 $\le r$ 的更新里，$\mathbf{B}_t[:,:r]\mathbf{A}_t[:r,:]$ 使期望输出重构误差 $\mathbb{E}_x \|\mathbf{B}_t[:,:r]\mathbf{A}_t[:r,:]x - \mathbf{B}_t\mathbf{A}_t x\|^2$ 最小；（Prop 3.2）：截到前 $r$ 秩后期望误差就是丢掉的奇异值平方和 $\sum_{i=r+1}^{d_\text{out}} \sigma_i^2$。
-    - 设计动机：这一步把"低能量秩可丢"从经验观察升级为带理论保证的最优截断。它也是把"输出漂移诱导正交化"落到可执行操作的关键——只有先排好序、集中能量，"剪掉尾部 + 把列让出来给下个任务"才不会损伤已学知识。
+光知道"该在输出空间正交"还不够，得让 $\mathbf{B}_t$ 的列真的按能量排好序，否则没法精准地"剪尾部"。这一步在不改变整体 $\Delta \mathbf{W}_t = \mathbf{B}_t \mathbf{A}_t$ 数学等价性的前提下旋转坐标：训练完当前任务后做 $\mathbf{B}_t \leftarrow \mathbf{U}_t[:,:r_t]$、$\mathbf{A}_t \leftarrow (\mathbf{U}_t[:,:r_t])^\top \mathbf{B}_t \mathbf{A}_t$。论文把"低能量秩可丢"从经验观察升级成了带证明的最优截断：Prop 3.1 表明在所有秩 $\le r$ 的更新里，$\mathbf{B}_t[:,:r]\mathbf{A}_t[:r,:]$ 让期望输出重构误差 $\mathbb{E}_x \|\mathbf{B}_t[:,:r]\mathbf{A}_t[:r,:]x - \mathbf{B}_t\mathbf{A}_t x\|^2$ 最小；Prop 3.2 进一步给出截到前 $r$ 秩后的误差正好是被丢掉的奇异值平方和 $\sum_{i=r+1}^{d_\text{out}} \sigma_i^2$。有了这条闭式上界，"剪掉尾部、把列让给下个任务"就不再是冒险，而是误差可控、不伤已学知识的操作——它也是把上一个设计落地为可执行步骤的关键齿轮。
 
-3. **动态秩分配策略（Dynamic Rank Allocation）**:
+**3. 动态秩分配策略：在固定容量池里让每个任务按需占地。**
 
-    - 功能：在共享的 $d_\text{out}$ 容量池里，按"旧任务要保留多少"和"新任务至少要多少"动态调度每个任务的当前秩。
-    - 核心思路：对每个旧任务 $k$，按能量保留比例 $\sum_{i=1}^{r_k^{(t)}} \sigma_{k,i}^2 / \sum_{i=1}^{r_k} \sigma_{k,i}^2 \ge \rho$ 选最小 $r_k^{(t)}$；新任务设最低秩门槛 $r_t^\text{min} = \lceil d_\text{out}/t \rceil$；如果按能量剪还不够给新任务，再均匀地从所有旧任务尾部继续砍能量最低的秩，直到达标。
-    - 设计动机：固定秩分配在任务数增长时要么早早压缩、损失精度，要么过度占用、新任务可塑性塌陷。把"剪多少"绑定到具体能量阈值 $\rho$ 上，相当于让每个任务"按需占地"——简单任务只占 1~2 秩、复杂任务多占几秩，整个 $d_\text{out}$ 容量被精打细算复用。
+固定秩分配的尴尬是：任务一多，要么早早压缩损精度，要么前面任务占太满、后面任务可塑性塌陷。E2-LoRA 把"剪多少"直接绑到能量阈值 $\rho$ 上，在共享的 $d_\text{out}$ 容量池里动态调度。对每个旧任务 $k$，按能量保留比例选满足 $\sum_{i=1}^{r_k^{(t)}} \sigma_{k,i}^2 / \sum_{i=1}^{r_k} \sigma_{k,i}^2 \ge \rho$ 的最小秩 $r_k^{(t)}$；同时给新任务设最低门槛 $r_t^\text{min} = \lceil d_\text{out}/t \rceil$；万一按能量剪完仍不够分给新任务，就再均匀地从所有旧任务尾部继续砍能量最低的秩，直到腾够。效果是简单任务只占 1~2 秩、复杂任务多占几秩，整个 $d_\text{out}$ 被精打细算地反复复用——这正好对上前面"低能量方向应当可回收"的目标，把"正交子空间不可回收"这条老约束彻底打破。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L} = \mathcal{L}_\text{ce} + \lambda \mathcal{L}_\text{distill}$。其中 $\mathcal{L}_\text{distill}$ 是温度 $T=2$ 下旧类 logits 的 KL 自蒸馏（teacher = 冻结历史 LoRA 的同一网络），$\mathcal{L}_\text{ce}$ 是新类的交叉熵。最后一步分类头对齐用类内统计合成特征。

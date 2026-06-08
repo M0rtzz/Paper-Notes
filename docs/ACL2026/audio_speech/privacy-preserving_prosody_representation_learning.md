@@ -50,23 +50,21 @@ tags:
 最后，训练好的 encoder 被冻结，下游任务只使用 final encoder output layer。作者在 pitch reconstruction、phrase boundary detection、syllable prominence detection 三个 prosody 任务上评估表征能力，并在 VoxCeleb1 speaker identification 上评估隐私泄露程度。
 
 ### 关键设计
-1. **glottal source 输入与低通过滤**:
+**1. glottal source 输入与低通过滤：把隐私保护前移到输入层，不给模型学到身份 shortcut 的机会。**
 
-	- 功能：在进入模型前减少 lexical content，同时保留与韵律相关的声门和 voice quality 信息。
-	- 核心思路：通过 LPC inverse filtering 估计 glottal waveform；对能量低于 $10^{-4}$ 的帧不做 inverse filtering，避免不可靠 LPC coefficient 导致训练不稳定；再用 1 kHz low-pass filter 减少词汇信息。
-	- 设计动机：如果输入仍保留太多语音内容或说话人细节，后续 adversarial loss 很难完全去除隐私信息。把隐私保护前移到输入层可以降低模型学到身份 shortcut 的机会。
+如果送进模型的还是原始波形，里面既有词汇内容又有说话人细节，后续无论加多强的 adversarial loss 都很难把身份信息彻底擦干净。所以本文在输入端就动手：先用 LPC inverse filtering 从原始语音估计 glottal waveform，把携带大量音素/词汇信息的声道共振滤掉，只留下声门源这种和韵律、voice quality 相关的成分；对能量低于 $10^{-4}$ 的帧则跳过 inverse filtering、直接返回 raw waveform，避免不可靠的 LPC 系数把训练带偏。之后再叠一个 1 kHz low-pass filter 进一步压低残留的词汇信息。这一层处理相当于在数据进模型前就把「身份捷径」堵掉，让后面的目标和损失只需要在已经偏韵律的信号上做更精细的解耦。
 
-2. **speaker-normalized hidden units**:
+**2. speaker-normalized hidden units：从自监督目标端就抹掉说话人的平均音高。**
 
-	- 功能：让 masked prediction 的目标标签本身更少携带说话人平均音高。
-	- 核心思路：hidden units 来自 $[P,\log F0,\Delta\log F0,c_1]$ 聚类，其中 $\log F0$ 先减去说话人的平均 log pitch；平均值用 periodicity $P$ 作为权重计算。作者还用 $c_1$ 替代 energy，减少录音条件敏感性。
-	- 设计动机：如果自监督 target 保留 speaker-specific pitch range，模型即使输入做了处理也会被训练目标拉回身份信息。target normalization 是从监督信号端减少泄露。
+输入处理得再干净，只要 masked prediction 的目标标签还保留说话人特有的音高范围，模型就会被训练信号反过来拉回身份信息。本文因此在构造 hidden units 时就做归一化：每帧的 acoustic-prosodic 特征取 $[P,\log F0,\Delta\log F0,c_1]$，其中 $\log F0$ 先减去该说话人的平均 log pitch，而这个平均值用 periodicity $P$ 加权计算（让清音/噪声帧不污染基频统计）；energy 也被替换成第一个 mel 倒谱系数 $c_1$，以降低对录音条件的敏感度。这些特征经 corpus 级 z-normalization 后用 k-means 聚成帧级 label。归一化之后，目标标签里只剩下相对的 pitch 动态而非绝对音高，等于从监督信号这一端再砍掉一刀身份泄露。
 
-3. **masked/span 目标加 adversarial speaker loss**:
+**3. masked/span 目标加 adversarial speaker loss：用主任务保住韵律、用对抗项压死身份。**
 
-	- 功能：同时学习局部韵律、长程韵律结构，并压低说话人可识别性。
-	- 核心思路：总损失为 $L=L_{mp}+\alpha_{sb}L_{sb}+\alpha_{spk}^{adv}L_{spk}^{adv}$。$L_{mp}$ 是 HuBERT 式 masked hidden-unit cross entropy；$L_{sb}$ 用 masked span 左右未遮盖边界帧和距离预测中心 label；$L_{spk}^{adv}$ 通过 gradient reversal 训练 speaker classifier 的同时让 encoder 学到反说话人特征。
-	- 设计动机：单纯 masked prediction 容易保留 speaker cue；单纯 adversarial 又可能损害韵律任务。把二者组合起来，可以用主任务约束表征仍然有 prosody 信息，用对抗项约束身份信息不可读。
+单纯做 masked prediction，表征里会顺手保留 speaker cue；单纯上 adversarial，又容易把韵律任务一起拖垮。本文把三个目标合成一个损失同时优化：
+
+$$L=L_{mp}+\alpha_{sb}L_{sb}+\alpha_{spk}^{adv}L_{spk}^{adv}$$
+
+其中 $L_{mp}$ 是 HuBERT 式的 masked hidden-unit 交叉熵，负责学局部韵律线索；$L_{sb}$ 是 span-boundary 目标，用被 mask 的 span 左右两侧未遮盖的边界帧去预测距离中心的 label，逼模型捕捉跨帧的 suprasegmental 结构；$L_{spk}^{adv}$ 则通过 gradient reversal 一边训练 speaker classifier、一边让 encoder 学到反说话人的特征。主任务这两项保证表征仍然有 prosody 信息可用，对抗项负责让身份信息变得不可读，两者相互牵制才能同时拿到好的韵律表现和低的身份泄露。
 
 ### 损失函数 / 训练策略
 模型在 GigaSpeech 的 transcribed portion 上训练。由于语料没有 speaker labels，作者先用 pretrained speaker encoder 提取 utterance-level embedding，再聚类为 1000 个 pseudo-speaker labels，用于 speaker normalization 和 adversarial objective。pitch/periodicity 由 torchcrepe 提取。训练使用 fairseq，在 4 张 NVIDIA A40 或 L40 GPU 上训练 500K steps，batch size 平均约 30/GPU，选择 validation loss 最低的 checkpoint 冻结用于下游任务。

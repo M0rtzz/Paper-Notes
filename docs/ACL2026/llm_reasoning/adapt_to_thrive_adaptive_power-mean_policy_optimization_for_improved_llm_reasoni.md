@@ -41,27 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-APMPO 仍沿用 GRPO 的"组采样 + 组内归一化优势"骨架：对每个 prompt $q$ 采样 $G$ 条响应 $\{o_i\}$，计算 reward $R_i$ 与归一化优势 $\hat{A}_i=(R_i-\mu_R)/(\sigma_R+\delta)$，以及 token 级重要性比 $r_{i,t}(\theta)$。在此之上，APMPO 用两个相互正交的自适应模块——PMPO（管目标聚合）和 FAC（管 clip 范围）——替换 GRPO 中的算术平均与固定 clip。最终目标在每个序列内先用 PMPO 把 token 级"非负幅度"$\phi_{i,t}$ 聚合成一个标量，再乘上方向控制项 $\text{sgn}(\hat{A}_i)$，最后跨样本平均并减去与参考策略的 KL 惩罚。
+APMPO 没有推翻 GRPO，而是沿用它"组采样 + 组内归一化优势"的骨架：对每个 prompt $q$ 采样 $G$ 条响应 $\{o_i\}$，算出 reward $R_i$、归一化优势 $\hat{A}_i=(R_i-\mu_R)/(\sigma_R+\delta)$ 和 token 级重要性比 $r_{i,t}(\theta)$。真正的改动在两个相互正交的自适应模块——PMPO 管"目标怎么聚合"、FAC 管"clip 范围多大"，它们替换掉 GRPO 里写死的算术平均和固定 clip。最终目标的算法是：每条序列内先用 PMPO 把 token 级的"非负幅度"$\phi_{i,t}$ 聚合成一个标量，再乘上方向控制项 $\text{sgn}(\hat{A}_i)$，跨样本平均后减去与参考策略的 KL 惩罚。一句话概括动机：让目标函数本身随训练进展变形，而不是从头到尾用同一副面孔。
 
 ### 关键设计
 
-1. **Power-Mean Policy Optimization (PMPO)**：
+**1. Power-Mean Policy Optimization（PMPO）：用一个随奖励均值滑动的幂平均，让目标自动从"放大稀有高奖励"过渡到"强调路径一致性"。**
 
-    - 功能：用一个由当前 batch 奖励均值驱动的幂平均算子聚合 token 级目标，使训练自动从"放大稀有高奖励"过渡到"强调路径一致性"。
-    - 核心思路：先把 token 级目标拆成"非负幅度 $\phi_{i,t}(\theta)=|\min(r_{i,t}\hat{A}_i, \rho_{i,t}\hat{A}_i)|$"和"方向 $\text{sgn}(\hat{A}_i)$"两部分（因为幂平均要求被聚合量非负）；然后用幂平均 $M_p(\Phi_i)=(\frac{1}{|o_i|}\sum_t \phi_{i,t}^p)^{1/p}$ 聚合幅度，指数 $p=\exp(-\gamma\mu_R)$ 随 batch 平均奖励 $\mu_R\in[0,1]$ 指数衰减。理论上 $p\to 1$ 时退化为 GRPO 的算术平均（探索期，放大 outlier），$p\to 0$ 时退化为 GMPO 的几何平均（巩固期，惩罚不一致）。
-    - 设计动机：作者在附录 D 证明 GRPO 与 GMPO 分别是幂平均的两个极限特例，因此用一个连续指数就能把"探索-巩固"的 trade-off 编码进目标本身，避免人工切换阶段；指数衰减形式则保证从 1 到 0 的过渡平滑，不会出现训练目标突变导致的不稳定。
+GRPO 的算术平均对高奖励 outlier 太敏感，早期会迅速放大单条高分轨迹、把 entropy 提前压塌、锁死在次优策略；GMPO 的几何平均又太保守，一个低分就能把整组奖励拖下来，在早期正确路径本就稀缺时几乎学不动。PMPO 的思路是把这两端放进同一个连续的旋钮里。因为幂平均要求被聚合的量非负，它先把 token 级目标拆成"非负幅度"和"方向"两半：
 
-2. **Feedback-Adaptive Clipping (FAC)**：
+$$\phi_{i,t}(\theta)=|\min(r_{i,t}\hat{A}_i,\ \rho_{i,t}\hat{A}_i)|,\qquad \text{方向}=\text{sgn}(\hat{A}_i)$$
 
-    - 功能：根据每个 batch 实时奖励的统计稳定度，自适应调节 PPO 风格 clip 比例 $\epsilon$ 的上界。
-    - 核心思路：定义 Feedback Stability Score $\text{FSS}=\mu_R/(\sigma_R+\delta)$ 衡量奖励信号的可靠程度——均值高且方差小即可信。然后通过 $\epsilon_{\text{ada}}=\epsilon_{\min}+(\epsilon_{\max}-\epsilon_{\min})\cdot\tanh(\text{FSS})$ 把 FSS 平滑映射到 $[\epsilon_{\min},\epsilon_{\max}]$。clip 函数采用非对称设计 $\rho_{i,t}=\text{clip}(r_{i,t}, 1-\epsilon_{\text{low}}, 1+\epsilon_{\text{ada}})$，下界 $\epsilon_{\text{low}}$ 固定保证负面剪枝果断，上界 $\epsilon_{\text{ada}}$ 自适应。
-    - 设计动机：固定 $\epsilon$ 在稳定 batch 上过于保守、错失加速学习的机会，在噪声 batch 上又过度放任、引入劣化更新。把"奖励均值"和"方差倒数"乘起来作为可信度信号，能同时奖励"高均值的稳定 batch"并惩罚"低均值高噪声 batch"；非对称设计则保证负优势始终能稳定剪掉，避免负向梯度被放大破坏训练。
+然后用幂平均聚合幅度，而那个指数 $p$ 随当前 batch 的平均奖励 $\mu_R\in[0,1]$ 指数衰减：
 
-3. **三步式目标拼装**：
+$$M_p(\Phi_i)=\Big(\frac{1}{|o_i|}\sum_t \phi_{i,t}^{\,p}\Big)^{1/p},\qquad p=\exp(-\gamma\mu_R)$$
 
-    - 功能：把 PMPO 的标量幅度、FAC 的自适应 clip 与方向控制项整合为最终训练目标。
-    - 核心思路：Step 1，用 $\rho_{i,t}(\theta)$ 计算自适应裁剪后的重要性比；Step 2，token 级非负幅度 $\phi_{i,t}(\theta)=|\min(r_{i,t}\hat{A}_i, \rho_{i,t}\hat{A}_i)|$；Step 3，每序列目标 $\mathcal{J}_i(\theta)=M_p(\Phi_i)\cdot\text{sgn}(\hat{A}_i)$，整批平均后减去 $\beta D_{KL}(\pi_\theta\|\pi_{\text{ref}})$。
-    - 设计动机：通过"幅度-方向"解耦满足幂平均对非负输入的需求，又通过 $\text{sgn}(\hat{A}_i)$ 恢复"正优势最大化、负优势惩罚"的方向语义；同时复用 PPO 的 min-clip 双保险机制保证训练稳定。
+它的妙处在于附录 D 证明了 GRPO 和 GMPO 分别是幂平均在 $p\to 1$ 和 $p\to 0$ 时的极限特例：$p\to 1$ 退化成算术平均，正好是探索期需要的"放大 outlier"；$p\to 0$ 退化成几何平均，正好是巩固期需要的"惩罚不一致"。于是只用一个连续指数，就把"探索-巩固"这个 trade-off 编码进了目标自身，省掉了人工切换训练阶段；而指数衰减的形式又保证 $p$ 从 1 到 0 的滑动是平滑的，不会因目标突变把训练带崩。
+
+**2. Feedback-Adaptive Clipping（FAC）：让 clip 上界随每个 batch 的奖励稳定度伸缩，稳就放开、噪就收紧。**
+
+所有 PPO 系方法都用一个写死的 $\epsilon$ 限制策略更新，完全无视不同 batch 之间奖励分布的稳定性差异——结果是稳定 batch 被过度束缚、错失加速机会，噪声 batch 又被放任、引入劣化更新。FAC 先定义一个 Feedback Stability Score 来量化"这批奖励信号有多可信"：
+
+$$\text{FSS}=\mu_R/(\sigma_R+\delta)$$
+
+均值高且方差小就可信。再用 $\tanh$ 把它平滑映射到一个区间，得到自适应上界 $\epsilon_{\text{ada}}=\epsilon_{\min}+(\epsilon_{\max}-\epsilon_{\min})\cdot\tanh(\text{FSS})$，并采用非对称 clip：
+
+$$\rho_{i,t}=\text{clip}\big(r_{i,t},\ 1-\epsilon_{\text{low}},\ 1+\epsilon_{\text{ada}}\big)$$
+
+下界 $\epsilon_{\text{low}}$ 固定、上界 $\epsilon_{\text{ada}}$ 自适应。把"奖励均值 × 方差倒数"当可信度信号的好处，是它能同时奖励"高均值的稳定 batch"、惩罚"低均值高噪声 batch"；而下界固定保证了负优势始终被果断剪掉，不会让负向梯度被放大反过来破坏训练。消融里只去掉 $\sigma_R$、只留 $\mu_R$ 会容易过度放任，只留 $1/\sigma_R$ 又会奖励"稳定但错误"的 batch，正好印证了两者缺一不可。
+
+**3. 三步式目标拼装：把幅度、自适应 clip 和方向语义缝成一个可训练目标。**
+
+PMPO 给的是标量幅度、FAC 给的是自适应裁剪，要让它们和 PPO 的稳定性机制协同，需要按固定顺序拼起来。Step 1，用 FAC 的自适应区间算出裁剪后的重要性比 $\rho_{i,t}(\theta)$；Step 2，算 token 级非负幅度 $\phi_{i,t}(\theta)=|\min(r_{i,t}\hat{A}_i,\ \rho_{i,t}\hat{A}_i)|$；Step 3，每条序列的目标是 $\mathcal{J}_i(\theta)=M_p(\Phi_i)\cdot\text{sgn}(\hat{A}_i)$，整批平均后减去 $\beta D_{KL}(\pi_\theta\|\pi_{\text{ref}})$。这套"幅度-方向"解耦既满足了幂平均对非负输入的硬性要求，又靠 $\text{sgn}(\hat{A}_i)$ 把"正优势最大化、负优势惩罚"的方向语义找回来，同时复用 PPO 的 min-clip 双保险继续兜底训练稳定。
 
 ### 损失函数 / 训练策略
 完整目标 $\mathcal{J}(\theta)=\frac{1}{G}\sum_i \mathcal{J}_i(\theta) - \beta D_{KL}(\pi_\theta\|\pi_{\text{ref}})$。采用 AdamW，学习率 $1\times10^{-6}$，batch size 512，每个 prompt rollout 8 条，训练 400 步，温度 1.0。关键超参 $\gamma=0.8$（控制 $p$ 对 $\mu_R$ 的敏感度）、$(\epsilon_{\min},\epsilon_{\max})=(0.2,0.4)$、$\epsilon_{\text{low}}=0.2$、$\beta=0.001$。reward 采用 0/1 二值规则。

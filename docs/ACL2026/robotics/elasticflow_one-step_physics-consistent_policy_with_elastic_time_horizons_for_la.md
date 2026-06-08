@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-观测 $o$ 经 SigLIP 编码、语言指令 $\ell$ 经 T5 编码，经 cross-attention 注入 DiT 骨干 (150M 参数)；Elastic Time Horizon 模块把 $(r,t,\Delta t)$ 用 Fourier 特征编码后通过 AdaLN 调制注入；输出为平均速度场预测 $u_\theta(z_t,r,t,o,\ell)$。训练用 MeanFlow Identity Loss + Forward-mode AD 监督；推理时给定 $z_1\sim\mathcal{N}(0,I)$，单次前向即得动作块 $\hat{x}=z_1-u_\theta(z_1,0,1,o,\ell)$，无需任何迭代或蒸馏。
+ElasticFlow 想同时解决两件事：让语言条件动作策略做到 1-NFE 单步推理却不丢物理一致性，并让同一套权重既能毫秒级反应控制、又能秒级长程规划。整体流程是：观测 $o$ 经 SigLIP 编码、语言指令 $\ell$ 经 T5 编码，通过 cross-attention 注入一个 150M 参数的 DiT 骨干；Elastic Time Horizon 模块把时间三元组 $(r,t,\Delta t)$ 用 Fourier 特征编码后经 AdaLN 调制注入；网络输出的不是瞬时速度而是平均速度场预测 $u_\theta(z_t,r,t,o,\ell)$。训练用 MeanFlow Identity Loss 配 Forward-mode AD 监督；推理时给定 $z_1\sim\mathcal{N}(0,I)$，单次前向即得动作块 $\hat{x}=z_1-u_\theta(z_1,0,1,o,\ell)$，全程无迭代、无蒸馏。
 
 ### 关键设计
 
-1. **平均速度场建模 (MeanFlow Identity)**：
+**1. 平均速度场建模（MeanFlow Identity）：把动作生成从"多步 ODE 积分"改成"学一个一步映射"。**
 
-    - 功能：把动作生成从 "求多步 ODE 积分" 改成 "学一个一步映射"，同时隐式带上轨迹曲率修正以保证物理光滑性。
-    - 核心思路：定义 $u(z_t,r,t)\triangleq\frac{1}{t-r}\int_{r}^{t}v(z_\tau,\tau)d\tau$，由微积分基本定理推出恒等式 $u(z_t,r,t)=v(z_t,t)-(t-r)\frac{d}{dt}u(z_t,r,t)$，其中 $\frac{d}{dt}$ 是全导数 (含 $v\cdot\nabla_z u$ 与 $\partial_t u$)。训练目标即把网络预测往这个恒等式的右端拉，瞬时速度 ground truth 用最优传输路径 $v(z_t,t)=x_{\text{target}}-x_{\text{noise}}$ 构造。
-    - 设计动机：瞬时速度只描述局部切向，必须靠 ODE 积分才能恢复全局位移，所以推理多步是 "必须的代价"；改成平均速度后，单步即包含整个时间区间的几何信息，且 $(t-r)\frac{d}{dt}u$ 项天然就是 "流形曲率修正"，从公式层面就抑制了高频抖动。
+扩散策略推理慢的根因是它学的是瞬时速度——瞬时速度只描述局部切向，必须靠十几步 ODE 积分才能恢复全局位移，所以多步是"必须的代价"，而硬压步数又会让轨迹失去几何光滑性、出现高频抖动。ElasticFlow 改学时间区间上的平均速度 $u(z_t,r,t)\triangleq\frac{1}{t-r}\int_{r}^{t}v(z_\tau,\tau)d\tau$，由微积分基本定理推出恒等式 $u(z_t,r,t)=v(z_t,t)-(t-r)\frac{d}{dt}u(z_t,r,t)$（其中 $\frac{d}{dt}$ 是含 $v\cdot\nabla_z u$ 与 $\partial_t u$ 的全导数），训练时把网络预测往这个恒等式右端拉，瞬时速度 ground truth 用最优传输路径 $v(z_t,t)=x_{\text{target}}-x_{\text{noise}}$ 构造。这样单步预测就内含整个时间区间的几何信息，而 $(t-r)\frac{d}{dt}u$ 这一项天然就是"流形曲率修正"，从公式层面抑制了抖动——实验里单步 ElasticFlow 的 Jerk（$1.1\times 10^{-3}$）比 10 步标准 CFM（$3.2\times 10^{-3}$）还低。
 
-2. **弹性时间区间 (Elastic Time Horizon)**：
+**2. 弹性时间区间（Elastic Time Horizon）：用一个连续参数 $\Delta t$ 让同一网络在高频反应与低频规划间无缝切换。**
 
-    - 功能：用一个连续参数 $\Delta t=t-r$ 让同一网络在 "短程高频反应" 和 "长程低频规划" 之间无缝切换。
-    - 核心思路：除了绝对时间 $t$，把 $\Delta t$ 也送进网络，二者均经过高斯傅里叶特征 $\text{Emb}(r,t)=\text{MLP}([\text{FF}(t),\text{FF}(t-r)])$ 编码后由 AdaLN 调制 DiT。推理时根据任务粒度选择 $\Delta t$：小 $\Delta t$ 聚焦局部姿态调整，大 $\Delta t$ 做长程轨迹规划，单一权重空间内动态切换；执行时根据目标控制频率把连续流离散成 $N$ 步，物理步长 $\delta t=T/N$。
-    - 设计动机：神经网络存在 Spectral Bias，对高频信号难以拟合；显式注入 $\Delta t$ 等价于告诉网络 "现在该看多大尺度"，相当于一个 spectral zoom lens，让短程瞬态和长程结构都能在一个权重下被覆盖；Mismatch 测试 (强制错配 $\Delta t$) 直接验证了这一物理意义。
+机器人任务有"时间异质性"——短程反应控制要毫秒级 jitter 抑制，长程任务要秒级 trajectory planning，而神经网络存在 Spectral Bias，固定 horizon 难以同时拟合高频和低频信号。ElasticFlow 除了绝对时间 $t$，把区间长度 $\Delta t=t-r$ 也送进网络，二者一起经高斯傅里叶特征 $\text{Emb}(r,t)=\text{MLP}([\text{FF}(t),\text{FF}(t-r)])$ 编码后由 AdaLN 调制 DiT。推理时按任务粒度选 $\Delta t$：小 $\Delta t$ 聚焦局部姿态调整，大 $\Delta t$ 做长程轨迹规划，单一权重空间内动态切换，执行时再按目标控制频率把连续流离散成 $N$ 步、物理步长 $\delta t=T/N$。显式注入 $\Delta t$ 等于告诉网络"现在该看多大尺度"，相当于一个 spectral zoom lens；Mismatch 测试（强制错配 $\Delta t$）把这层物理意义验证得很直接——强迫长程任务用小 $\Delta t$ 就"近视"掉到 45.3%，强迫短程用大 $\Delta t$ 就"迟钝"掉到 55.7%。
 
-3. **Forward-mode AD + Stop-gradient + CFG 训练**：
+**3. Forward-mode AD + Stop-gradient + CFG 训练：稳定地把 MeanFlow Identity 当训练目标，并支持语言条件引导。**
 
-    - 功能：稳定地把 MeanFlow Identity 当训练目标，同时支持语言条件的 Classifier-Free Guidance。
-    - 核心思路：损失 $\mathcal{L}(\theta)=\mathbb{E}_{t,r,x_1,\epsilon,c}[\|u_\theta(z_t,r,t,o,c)-\text{sg}(\mathcal{T}_{\text{target}})\|_2^2]$，其中 $\mathcal{T}_{\text{target}}=v(z_t,t)-(t-r)(v(z_t,t)\cdot\nabla_z u_\theta+\partial_t u_\theta)$；雅可比-向量积 $\nabla_z u_\theta$ 用前向模式自动微分高效计算，避免 Hessian 开销；条件 $c\in\{\ell,\emptyset\}$ 以概率 $p_{\text{drop}}$ 替换为空联合训练。推理用 $\hat{x}=z_1-(u_\theta(\cdot,\emptyset)+w(u_\theta(\cdot,\ell)-u_\theta(\cdot,\emptyset)))$。
-    - 设计动机：直接对 bootstrapped 目标求梯度会发散，stop-gradient 隔离自引用项稳定优化；Forward-mode AD 解决了二阶项算力瓶颈；CFG 让单步推理仍可调节语义对齐强度。
+直接对这个带自引用（bootstrapped）的目标求梯度会发散，二阶项算力也吃不消。损失写作 $\mathcal{L}(\theta)=\mathbb{E}_{t,r,x_1,\epsilon,c}[\|u_\theta(z_t,r,t,o,c)-\text{sg}(\mathcal{T}_{\text{target}})\|_2^2]$，其中 $\mathcal{T}_{\text{target}}=v(z_t,t)-(t-r)(v(z_t,t)\cdot\nabla_z u_\theta+\partial_t u_\theta)$。这里 stop-gradient $\text{sg}(\cdot)$ 把自引用项隔离开来稳定优化，雅可比-向量积 $\nabla_z u_\theta$ 用前向模式自动微分高效算掉、避开 Hessian 开销；同时把条件 $c\in\{\ell,\emptyset\}$ 以概率 $p_{\text{drop}}$ 替换为空做联合训练，推理时用 $\hat{x}=z_1-(u_\theta(\cdot,\emptyset)+w(u_\theta(\cdot,\ell)-u_\theta(\cdot,\emptyset)))$ 实现 Classifier-Free Guidance，让单步推理也能调节语义对齐强度。
 
 ### 损失函数 / 训练策略
-最小化均方误差到 MeanFlow Identity 推出的目标 $\mathcal{T}_{\text{target}}$，loss 形式见上；$\text{sg}(\cdot)$ stop-gradient 稳定 bootstrap；CFG drop 概率 $p_{\text{drop}}$，推理时 guidance scale $w\in[1.5,2.5]$ 内稳定；DiT 骨干 150M 参数，比 Diffusion Policy 的 300M UNet 还轻。
+最小化到 MeanFlow Identity 目标 $\mathcal{T}_{\text{target}}$ 的均方误差（loss 形式见上）；$\text{sg}(\cdot)$ stop-gradient 稳定 bootstrap；CFG drop 概率 $p_{\text{drop}}$，推理 guidance scale $w\in[1.5,2.5]$ 内稳定；DiT 骨干仅 150M 参数，比 Diffusion Policy 的 300M UNet 还轻。
 
 ## 实验关键数据
 

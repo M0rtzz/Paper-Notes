@@ -43,54 +43,29 @@ tags:
 
 ### 整体框架
 
-实验分 3 大模块：(1) 数据集构建（160 题，pair-to-pair 设计）；(2) 人类基线收集（320 母语者，6,400 响应）；(3) LLM 评测（5 模型 × 10 runs = 4,800 实例）。
-
-#### 数据集结构
-
-- **每题**：四选一多选题。开头描述场景（两个角色相对而坐）+ 指定 speaker（红色）+ 简单指令（蓝色，target 对象用花括号标，如 `{fruit}`）+ 追问 "Done! Are there any items left on the place?"（即先剔除被指代的对象，再问剩下什么）。
-- **4 个选项**：
-    1. proximal（近 speaker 的同类物体）
-    2. distal（近 interlocutor 的同类物体）
-    3. middle（中间的，干扰项）
-    4. All of the above（逻辑陷阱——理性人不会选，因为 1 和 2 mutually exclusive）
-- **Pair-to-pair**：每个场景产生 4 题（proximal/distal × self/other）一组，避免单题随机性。
-- **4 cue 条件**：
-    1. only demonstratives（"take this/that {cup}"，**主实验条件**）
-    2. only pronouns（"take my/your {cup}"）
-    3. demo + reinforcing pronoun（"take this {cup} of mine"，加强）
-    4. demo + inconsistent pronoun（"take that {cup} of mine"，冲突）
-- **5 场景 × 不同动词**（eat, hide, take 等），总 80 题/语言 × 2 语言 = 160 题。
-
-#### 人类基线
-
-4 个独立调查（各 cue 一个），每调查 40 人（性别平衡）× 20 题 × 2 语言 = 320 native speakers × 20 = 6,400 响应。中文用 Credamo，英文用 Prolific。
-
-#### LLM 评测
-
-5 个 SOTA 模型：GPT-5.1、Claude-Sonnet-4.5、Gemini-2.5-Pro（闭源）+ DeepSeek-V3.1、Qwen3-Max（开源）。zero-shot prompt refinement: "Please reply [The answer is: 1, 2, 3, 4], and give a brief reason."（附录实验显示 5 种 prompt strategy 差异极小，故选最简洁的 zero-shot refinement）。每模型 10 runs 取平均，标准差 0.02–0.08。
+本文不训练模型，而是用一套精心控制的指示词实验，把"模型有没有真正 ground 空间含义"转化成可观测的选择行为。数据集共 160 题（80 题/语 × 中英两语），每题是一道四选一多选题：开头描述两个角色相对而坐的场景、指定红色标注的 speaker、给一条蓝色指令（target 对象用花括号标注，如 `{fruit}`），再反向追问"Done! Are there any items left on the place?"——即先剔除被指代的对象再问剩下什么。四个选项分别是近 speaker 的 proximal、近 interlocutor 的 distal、中间干扰项 middle，以及逻辑陷阱 "All of the above"。题目沿 4 个 cue 条件（纯指示词 / 纯代词 / demo+加强代词 / demo+冲突代词，其中纯指示词为主实验）和 5 个场景（搭配 eat、hide、take 等不同动词）展开。人类基线由 4 个独立调查构成（每 cue 一个，各 40 人 × 20 题 × 2 语），共 320 名母语者、6,400 条响应，中文走 Credamo、英文走 Prolific。LLM 侧评测 5 个 SOTA 模型（闭源 GPT-5.1、Claude-Sonnet-4.5、Gemini-2.5-Pro 与开源 DeepSeek-V3.1、Qwen3-Max），用最简洁的 zero-shot prompt refinement（"Please reply [The answer is: 1, 2, 3, 4], and give a brief reason."），每模型 10 runs 取平均，共 4,800 实例，run-to-run 标准差仅 0.02–0.08。
 
 ### 关键设计
 
-1. **「Are there any items left」反向追问 + 4 选项含逻辑陷阱**:
+**1.「Are there any items left」反向追问 + 含逻辑陷阱的四选项：让 grounding 能力在选择行为里现形。**
 
-    - 功能：从「直接问指代谁」改为「先剔除被指代再问剩下谁」，并在选项里埋入 "All of the above"（逻辑上违反 proximal/distal 互斥）。
-    - 核心思路：直接问「which one to take」太容易猜。反向问 + 候选答案里既有近/远/中三个互斥的具体选项，又有 "All of the above" 这个反逻辑选项。如果模型真理解 proximal 和 distal 互斥，它绝不会选 "All of the above"——人类只有 ~0.5% 选这个。
-    - 设计动机：把「语言理解」转化为「行为可观察」——模型选 "All of the above" 的比例直接量化它的 mutual exclusivity 理解程度。Gemini-2.5-Pro 在 self-distal 条件下选 4 的比例高达 60%、Qwen3-Max 高达 84%——这种「安全 fallback」行为直接暴露模型没有真正 ground 这两个词的空间含义。
+直接问"该拿哪一个"太容易被模型猜中，于是改成先剔除被指代对象、再反问剩下什么，并在候选里同时埋入近/远/中三个互斥具体项与一个反逻辑的 "All of the above"。关键在于，proximal 和 distal 在物理上天然互斥，真正理解这两个词的被试绝不会选 "All of the above"——人类选它的比例只有约 0.5%。这就把"语言理解"直接转成"行为可观察"：模型选 "All of the above" 的比例本身就量化了它对 mutual exclusivity 的掌握程度。实测中 Gemini-2.5-Pro 在 self-distal 条件下选 4 的比例高达 60%、Qwen3-Max 更达 84%，这种"安全 fallback"行为正是模型没有 ground 住空间含义的直接证据。
 
-2. **Pair-to-pair × 4 cue × 4 perspective 控制实验**:
+**2. Pair-to-pair × 4 cue × 4 perspective 的交叉控制：把混淆维度拆开，逼出 disentangled 能力。**
 
-    - 功能：把 proximity（proximal/distal）、perspective（self/other）、pronoun reinforcement（无/有/冲突）三个维度交叉，让人类和 LLM 必须用 disentangled 能力作答。
-    - 核心思路：(i) 每场景生成 4 题（2 proximity × 2 perspective），用 Symmetry Index 量化对称性；(ii) cue 条件分纯指示词、纯代词、demo+加强代词、demo+冲突代词，可以分离「指示词理解」和「代词依赖」；(iii) 跨语言对照才能揭示文化差异（English vs Chinese 在同一实验设计下的反应模式）。
-    - 设计动机：单一维度（如只看 proximal 准确率）会被 perspective 等其它因素混淆。pair-to-pair + 多 cue 设计让作者能 isolate 出「英语者在 distal 上准确但在 perspective 切换时崩溃」这种细粒度跨文化特征。
+只看单一维度（如 proximal 准确率）会被 perspective 等因素混淆，因此实验把 proximity（proximal/distal）、perspective（self/other）、pronoun reinforcement（无/有/冲突）三个维度交叉起来。每个场景生成 4 题（2 proximity × 2 perspective）一组配对，避免单题随机性，并以 Symmetry Index 量化对称性；cue 条件从纯指示词到纯代词再到加强/冲突代词，可分离"指示词理解"与"代词依赖"两种来源；中英同设计对照则用来揭示文化差异。正是这套设计让作者能 isolate 出"英语者在 distal 上准确、却在 perspective 切换时崩溃"这类细粒度跨文化特征，而非笼统的一个准确率。
 
-3. **Symmetry Index (SI) 量化分布对称性**:
+**3. Symmetry Index (SI) 量化配对响应分布的对称性：替代不适用的 accuracy。**
 
-    - 功能：用一个标量量化两组配对响应分布的对称性，阈值 0.1 作为判别。
-    - 核心思路：$\mathrm{SI} = \frac{|A_1 - B_2| + |B_1 - A_2|}{A_1 + A_2 + B_1 + B_2}$，其中 $A_1, A_2$ 和 $B_1, B_2$ 是两个被比较条件下两种响应类别的计数。低 SI（<0.1）= 高对称（说明被试在两条件下行为一致），高 SI = 不对称（说明某条件下行为崩溃）。
-    - 设计动机：传统 accuracy 在「无 ground truth」的开放式实验里不适用。SI 借鉴 Robinson 1987 步态对称性分析，能直接量化「Self-Proximal vs Self-Distal」配对响应的均衡性，揭示哪些条件下被试做出反向（即 proximal vs distal 分布镜像）选择、哪些条件下崩溃。比 chi-square 更直观，也更适合多类响应。
+在没有唯一正确答案的开放式指代实验里，传统 accuracy 失效，作者借鉴 Robinson 1987 的步态对称性分析，定义对称指数
+
+$$\mathrm{SI} = \frac{|A_1 - B_2| + |B_1 - A_2|}{A_1 + A_2 + B_1 + B_2},$$
+
+其中 $A_1, A_2$ 与 $B_1, B_2$ 是两个被比较条件下两类响应的计数。以 0.1 为阈值：低 SI（<0.1）表示两条件下行为高度对称（如 Self-Proximal 与 Self-Distal 呈镜像，说明被试稳定区分近远），高 SI 则表示某条件下行为崩溃。相比 chi-square，SI 能更直观地刻画多类响应的均衡性，正是靠它才量化出"英语者同视角内 proximal-distal 对称、中文者跨视角对称"这组互补的跨语言模式。
 
 ### 损失函数 / 训练策略
-本文不训练模型，只做评测。LLM 评测用 Rao-Scott adjusted chi-square test 比较模型与人类的响应分布是否同源，并用 Jensen-Shannon divergence（JSD）量化分布距离。10 runs 取平均，run-to-run 标准差 0.02–0.08。
+
+本文不训练模型，只做评测。LLM 与人类的响应分布是否同源用 Rao-Scott adjusted chi-square test 检验，分布距离用 Jensen-Shannon divergence（JSD）量化；每模型 10 runs 取平均，run-to-run 标准差 0.02–0.08。
 
 ## 实验关键数据
 

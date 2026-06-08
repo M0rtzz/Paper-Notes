@@ -43,34 +43,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一段自然语言数学陈述，输出是一段通过 Lean 4 编译且与原文语义一致的 FL statement。整个 pipeline 三阶段：
-
-1. **Semantic Decomposition**（§3.1）：用 Gemini 3.0 Pro 一次过完成「语义规范化 + 结构角色对齐」，把原文拆成若干 NL components，每个被标注为 *Condition* 或 *Conclusion*。
-2. **Structured Translation**（§3.2）：DSR Formalizer（LoRA 微调的 Qwen2.5-7B-Instruct）对每个 NL component 联合生成两个东西 —— 一段线性 FL component 代码 + 一棵 FL OPT；OPT 中显式保留括号，与 ASSESS 不同。
-3. **Tree-Guided Repair**（§3.3）：先用 OPT 的叶子节点做 Structure-First Assembly 拼出整条 FL statement 交给 Lean 编译；失败则把编译器报的行列定位到具体 OPT 节点，按 *subcomponent → component → statement* 三级粒度逐级回退式修复。
+DSR 要解决的是「把自然语言定理翻成能过 Lean 4 编译、又不跑偏原意的形式化陈述」。它不把这件事当成端到端的一次性字符串生成，而是拆成三段流水线：先用 Gemini 3.0 Pro 把原文做语义规范化并切成若干被标注为 *Condition* / *Conclusion* 的 NL 成分（Semantic Decomposition）；再让 DSR Formalizer（LoRA 微调的 Qwen2.5-7B-Instruct）对每个成分同时吐出一段线性 FL 代码和一棵算子树 OPT（Structured Translation）；最后用 OPT 的叶子节点 Structure-First Assembly 拼出整条 statement 交 Lean 编译，编译失败就把报错位置定位到 OPT 节点、按子树→成分→整句三级逐层修复（Tree-Guided Repair）。贯穿全程的核心载体是 OPT——它既是训练时的结构先验，又是推理时的修复地址簿。
 
 ### 关键设计
 
-1. **算子树作为联合生成目标（FL Component + FL OPT 双输出）**:
+**1. 算子树作为联合生成目标：让线性代码自带一张可寻址的结构地图。**
 
-    - 功能：让模型在产出线性 Lean 代码的同时输出该代码对应的算子树，作为结构化语义锚点 + 后续修复的拓扑蓝图。
-    - 核心思路：复用 ASSESS 的 OPT 表示，但做两点改造 —— (1) 在 component 粒度而非 statement 粒度建树，呼应 §3.1 的分解策略；(2) **显式保留括号**节点，使线性代码与树之间维持 token-level 一致，从而 OPT 失败时能 fallback 到 FL component 作为 Inference Failsafe。形式上要求模型学到的不是统计相关性，而是表达式的递归拓扑 $T = (V, E, \ell)$，其中算子是父节点、参数是有序子节点。
-    - 设计动机：单纯线性生成 Lean 代码常因括号失配、scope 未闭合而语法失败；同时输出 OPT 等于在 loss 里加了一项「结构正则」，强迫模型内化嵌套优先级。更关键的是，OPT 把线性代码切成了 *可寻址的逻辑子结构*，没有它就没法做后面的精准修复。
+单纯线性生成 Lean 代码常因括号失配、scope 未闭合而语法失败，更隐蔽的是「局部出错但整体看着合理」——线性 token 序列里根本没法定位到底哪截逻辑错了。DSR 的做法是让模型在产出 FL 代码的同时输出它对应的算子树，形式上是要模型学到表达式的递归拓扑 $T=(V,E,\ell)$，算子作父节点、参数作有序子节点。它复用了 ASSESS 的 OPT 表示但做了两处改造：一是把建树粒度从 statement 下沉到 component，呼应前面的分解策略；二是**显式保留括号节点**，使线性代码与树维持 token 级一致，这样当 OPT 解析失败时可以 fallback 到 FL component 作为 Inference Failsafe。这一招的收益是双份的：同时输出 OPT 等于在 loss 里加了一项结构正则，逼模型内化嵌套优先级；而 OPT 把线性代码切成可寻址的逻辑子结构，没有它后面那套精准修复根本无从下手。
 
-2. **基于 OPT 复杂度的四阶段课程学习**:
+**2. 基于 OPT 复杂度的四阶段课程学习：把「学逻辑」和「学拓扑」分开喂。**
 
-    - 功能：避免「同时学复杂逻辑 + 学层级拓扑」这件事直接把小模型练崩。
-    - 核心思路：从 NuminaMath-LEAN + ATLAS-Synthetic 共 120k FL 陈述出发，构建 283,958 条 ⟨NL component, FL component, FL OPT⟩ 三元组（用 Qwen3-Max 反向生成 NL）。按 OPT 的 *tree depth / width / 节点数* 三个指标分层，丢掉 top 1% 极端样本，把剩余 281k 样本划成 simple (143k) / moderate (110k) / complex (28k) 三档。训练分四相：Phase 1 只学 NL→FL component（atomic 数据，lr=2e-4），Phase 2-4 加上 OPT 联合预测，难度从 simple 推到 complex（lr 阶梯衰减到 1e-5），每相用 replay 机制混入前一档 10–30% 数据防遗忘。
-    - 设计动机：消融（Table 3）显示，**只加 OPT 不加课程**会在 PRIME 上出现明显的「优化壁垒」—— Pass@1 SC 从 22.44% 反而掉到 19.87%；加上课程后回升到 23.08%。说明 OPT 监督是有效的但不易优化，必须搭配 curriculum 才能稳定收敛。
+让 7B 小模型同时学复杂数学逻辑和层级拓扑会直接练崩——消融里只加 OPT 不加课程时，PRIME 上 Pass@1 SC 反而从 22.44% 掉到 19.87%，出现明显的优化壁垒。对策是把训练难度铺成梯度。作者从 NuminaMath-LEAN + ATLAS-Synthetic 共 120k FL 陈述出发，用 Qwen3-Max 反向生成 NL，构建 283,958 条 ⟨NL component, FL component, FL OPT⟩ 三元组，按 OPT 的 *tree depth / width / 节点数* 分层、丢掉 top 1% 极端样本后划成 simple (143k) / moderate (110k) / complex (28k) 三档。训练走四相：Phase 1 只学 NL→FL component（atomic 数据，$\text{lr}=2\times10^{-4}$），Phase 2-4 才加上 OPT 联合预测、难度从 simple 推到 complex（lr 阶梯衰减到 $1\times10^{-5}$），每相用 replay 机制混入前一档 10–30% 数据防遗忘。铺开梯度后 PRIME 的 Pass@1 SC 回升到 23.08%，说明 OPT 监督本身有效、只是不易优化，必须靠 curriculum 才能稳住收敛。
 
-3. **三级粒度的树引导修复（Tree-Guided Repair）**:
+**3. 三级粒度的树引导修复：把 LLM 当子树替换器而非整段重写器。**
 
-    - 功能：编译失败时只重写「真正出错的子树」，最大化保留原本生成对的部分。
-    - 核心思路：Lean 编译器报错给出 (row, col)，先映射到 OPT 上对应的最小出错节点 $v$。然后 bottom-up 逐层扩展修复范围：(1) **Subcomponent-Level** —— 从 $v$ 的父节点开始抽出最小子树喂给修复模型重写，失败就退到祖父，循环到达 component 边界；(2) **Component-Level** —— 整段 FL component 重写；(3) **Statement-Level** —— 整条 statement 重写，作为最后一道保险（同时强制作为语义二次检查兜底）。每个粒度限定一次推理 call，总预算 4 calls。
-    - 设计动机：消融对比 DSR vs DSR-Global（只用 statement-level 修复）（Table 2）揭示一个有趣 trade-off —— global 修复经常拿到更高的 Syntax Check，但 Consistency Check 反而更低，说明「重写整条」是个能蒙过编译器但容易破坏语义的暴力策略。树引导修复牺牲一点 SC（如 ProverBench 95.38 vs 96.00），换来稳定更高的 CC（84.00 vs 82.77；ProofNet 79.51 vs 76.01），证明「外科手术式」修复才是语义保真的关键。
+主流的 statement-level 修复一旦编译失败就把整条重写，既费算力又容易把原本对的部分改坏，出现「语法过了但语义漂移」的退化。DSR 借助 OPT 的可寻址性做外科手术式修复：Lean 编译器报错给出 (row, col)，先映射到 OPT 上最小的出错节点 $v$，再 bottom-up 逐层扩大范围——Subcomponent-Level 从 $v$ 的父节点抽出最小子树喂给修复模型重写，失败就退到祖父，循环到 component 边界；不行再升到 Component-Level 整段重写；最后才是 Statement-Level 整句重写兜底，并强制在此做一次语义二次检查。每个粒度限一次推理 call、总预算 4 calls，与 baseline 公平对齐。消融对比 DSR vs DSR-Global（只用 statement-level 修复）暴露了关键 trade-off：global 重写常拿到更高的 Syntax Check（ProverBench 96.00 vs 95.38），却换来更低的 Consistency Check——它能蒙过编译器但破坏语义；树引导修复牺牲一点 SC 换来稳定更高的 CC（ProverBench 84.00 vs 82.77、ProofNet 79.51 vs 76.01），证明把随机性局限在最小可疑子树才是语义保真的关键。
 
 ### 损失函数 / 训练策略
-LoRA 微调 Qwen2.5-7B-Instruct，目标是标准的 next-token 交叉熵，target 序列为 `FL component <SEP> FL OPT` 的拼接。课程四相的 batch size = 128（最后一相 64），1 epoch / 相，warmup ratio 0.03–0.10。推理阶段总 budget = 4 次 LLM call，与所有 baseline 公平对齐。
+LoRA 微调 Qwen2.5-7B-Instruct，目标是标准的 next-token 交叉熵，target 序列为 `FL component <SEP> FL OPT` 的拼接。课程四相 batch size = 128（最后一相 64），1 epoch / 相，warmup ratio 0.03–0.10。推理阶段总 budget = 4 次 LLM call。
 
 ## 实验关键数据
 

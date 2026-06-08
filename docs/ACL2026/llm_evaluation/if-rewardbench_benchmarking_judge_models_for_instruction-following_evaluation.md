@@ -41,34 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IF-RewardBench 是一个数据集 + 评测协议，而不是模型，整个 pipeline 分两块：
-
-1. **数据构造**：(i) 从 14 个开源 benchmark + 真实场景收集 ~24.6k 指令，并用 LLM 按 7 类约束 × 4 种组合 taxonomy 合成复杂指令以补足组合稀疏；(ii) 启发式长度过滤 → LLM 评质量&复杂度打分 → 基于 Conan-embedding 的 DBSCAN 聚类去冗余 → 人工剔除不可解/超能力/高度专业指令，最终得 3,978 → 平衡后 2,459 条指令；(iii) LLM 自动分解约束生成 checklist，再人工逐条核对并标注每条约束的类型和组合；(iv) 用 16 个 LLM 各为一条指令生成 $m=8$ 条响应（同一条指令的所有响应来自**同一个** LLM 以消除写作风格混淆）。
-2. **偏好图标注**：(i) 22 个大学生人工标注每条响应对每条约束的 0/1 判定 $j^*_{ik}$，每条由两人独立标 + 第三人 cross-check，初标 Cohen's $\kappa$=0.67、cross-validation $\kappa$=0.87；(ii) 用 Pareto-dominance 而非平均分推偏好对：仅当 $\forall k, j^*_{vk} \ge j^*_{uk}$ 且 $\exists k, j^*_{vk} > j^*_{uk}$ 才保留 $(y_u, y_v)$；(iii) 偏好对再过一轮人工 verify，剔除"两个都违反但负的违反更轻"或"非指令跟随因素差异过大"的歧义对，最终保留率 71.2%。
-3. **评测协议**：每条指令对应一个 preference graph，平均 7.14 条响应 / 10.86 条偏好边；judge 在两类任务上被评测——Constraint Assessment（逐约束打 0/1，按 Eq.1 聚合）和 Overall Assessment（对响应集合打分或两两比较）。
+IF-RewardBench 是一套"数据集 + 评测协议"而非模型，目标是把 judge 评测从"哪条响应更好"的 pairwise/BoN 对齐到 RLHF 真正需要的"多条响应精排"。数据侧从 14 个开源 benchmark + 真实场景收集 ~24.6k 指令，经 LLM 按 7 类约束 × 4 种组合补足复杂指令、启发式长度过滤、LLM 质量&复杂度打分、基于 Conan-embedding 的 DBSCAN 聚类去冗余、人工剔除不可解题后得 3,978→平衡到 2,459 条，每条用 16 个 LLM 各生成 $m=8$ 条响应（同一指令的响应全部来自同一个 LLM 以消除写作风格混淆）；标注侧由 22 名学生对每条响应逐约束打 0/1 判定 $j^*_{ik}$，据此用 Pareto-dominance 推出偏好图并再过一轮人工 verify。最终每条指令对应一张 preference graph（平均 7.14 条响应 / 10.86 条偏好边），judge 在 Constraint Assessment（逐约束打 0/1、按 Eq.1 聚合，指标为 Positive/Negative F1）与 Overall Assessment（对响应集合打分或两两比较、经 ELO 转 listwise）两类任务上被以 Kendall $\tau_b$ 度量排序质量。
 
 ### 关键设计
 
-1. **Preference Graph（基于 Pareto-dominance 的多响应偏好图）**:
+**1. Preference Graph：用 Pareto-dominance 把评测升级为 listwise。**
 
-    - 功能：把 judge 评测从 pairwise/BoN 升级为 listwise，让评分能反映"对多响应精排"这一真实下游能力。
-    - 核心思路：每个 instruction 配一个图 $G = (I, \{c_k\}, \{y_i\}, \mathcal{J}, \mathcal{E})$，节点是 8 条响应，边由严格 Pareto 支配关系 $\forall k, j^*_{vk} \ge j^*_{uk} \land \exists k, j^*_{vk} > j^*_{uk}$ 构造（避免"平均分相同但约束级冲突"的歧义偏好）。评测用 Kendall $\tau_b$ 比对 judge 排序与图诱导的偏序，比"pairwise 准确率"信息量更大。
-    - 设计动机：传统按 $r_y = \frac{1}{n}\sum j_k$ 的均值推偏好会出现"两条响应各自满足不同约束但总分相同"的歧义；用 Pareto-dominance 严格化能保证每条边都是"真正确"的偏好，避免噪声 GT 污染评测。
+按均值 $r_y=\frac{1}{n}\sum j_k$ 推偏好会出现"两条响应各满足不同约束但总分相同"的歧义对，污染 GT。本文为每个 instruction 配一张图 $G=(I,\{c_k\},\{y_i\},\mathcal{J},\mathcal{E})$：节点是 8 条响应，边仅在严格 Pareto 支配 $\forall k,\, j^*_{vk} \ge j^*_{uk} \,\land\, \exists k,\, j^*_{vk} > j^*_{uk}$ 成立时才连 $(y_u,y_v)$，保证每条偏好边都"真正确"。评测时用 Kendall $\tau_b$ 比对 judge 排序与图诱导的偏序，比 pairwise 准确率信息量更大，也正好对应下游对多响应 rerank 的真实能力。
 
-2. **三类指令场景 + 完整约束 taxonomy**:
+**2. 三类指令场景 + 完整约束 taxonomy：把覆盖面拉满。**
 
-    - 功能：覆盖真实部署里超越"单轮 IFEval"的指令多样性。
-    - 核心思路：(i) 三大指令类型——Single-Turn / Multi-Turn（约束跨轮继承）/ System-Prompt Steerability（system prompt 优先于 user prompt）；(ii) 约束 taxonomy 含 7 大类（Numerical, Format, Content, Linguistic, Style, Situation, Action）× 4 种组合（Single, And, Chain, Selection），其中 LLM 合成复杂指令专门补足 Chain 与 Selection 这两类现有 benchmark 稀缺的组合类型。
-    - 设计动机：IFEval 系的 benchmark 因为追求"代码可验证"，约束类型只剩"字数/格式/关键词"等 Numerical/Format 类，无法测 LLM 对 Style/Situation 这类"主观可验证"约束的处理；本文把覆盖面拉满后才发现，主观约束才是 judge 的真正短板。
+IFEval 派系为追求"代码可验证"，约束类型只剩字数/格式/关键词等客观类，测不出 judge 对主观约束的处理。本文沿两个轴扩展覆盖：指令场景含 Single-Turn / Multi-Turn（约束跨轮继承）/ System-Prompt Steerability（system prompt 优先于 user prompt）三类；约束 taxonomy 含 Numerical、Format、Content、Linguistic、Style、Situation、Action 七大类 × Single、And、Chain、Selection 四种组合，其中 LLM 合成的复杂指令专门补足现有 benchmark 稀缺的 Chain 与 Selection。把覆盖面拉满后作者才发现，Style/Situation 这类主观约束才是 judge 真正的短板。
 
-3. **多步人工标注 + Pareto verify 的双层质量控制**:
+**3. 多步人工标注 + Pareto verify 的双层质控：杜绝合成噪声。**
 
-    - 功能：让每条偏好对的 GT 都经过双重验证，杜绝合成噪声。
-    - 核心思路：(i) 招 22 个学生标注员（含上岗考试）做约束级 0/1 标注，两人独立 + 第三人 spot-check + 不一致时仲裁；(ii) Pareto 自动构造偏好对后，再让两个不同标注员**逐对**人工 verify，仅在两人完全一致时保留，最终保留率 71.2%；(iii) 用 length-difference 分析（Appendix F）确认偏好对不被长度偏置混淆。
-    - 设计动机：之前所有 instruction-following judge benchmark 几乎都没有"对推导出的偏好对再人工 verify"这一步，导致那些"两条都违反但程度不同"或"非指令跟随因素更强"的混淆样本被保留，污染评测。
-
-### 损失函数 / 训练策略
-**纯评测 benchmark，无训练**。评测指标：Verification 用每类 (Positive / Negative) F1，Ranking 用 Kendall $\tau_b$；general LLM 在 Overall Assessment 时按 RRM/ELO 的 pairwise → ELO 转换得到 listwise 分数，专用 reward model 直接打 scalar 分。
+以往 instruction-following judge benchmark 几乎都没有"对推导出的偏好对再人工 verify"这一步，使"两条都违反但程度不同""非指令跟随因素差异过大"的混淆样本流入评测。本文做两层把关：先招 22 名经过上岗考试的学生做约束级 0/1 标注，每条两人独立标 + 第三人 cross-check，初标 Cohen's $\kappa=0.67$、交叉校验 $\kappa=0.87$；Pareto 自动构造偏好对后再让两名不同标注员逐对人工 verify，仅在完全一致时保留，最终保留率 71.2%，并辅以 length-difference 分析（Appendix F）确认偏好对不受长度偏置混淆。
 
 ## 实验关键数据
 

@@ -41,30 +41,32 @@ MaskAQ 把 ViT 的数据无关量化重新定义为"在合成样本的稀疏 inf
 ## 方法详解
 
 ### 整体框架
-MaskAQ 维持"合成 → 校准"两阶段的 DFQ 主框架，但在两边都引入 informative region 的概念。合成阶段用 $P$ 提供的注意力定义稀疏前景，在合成 loss $\mathcal{L}_S = \mathcal{L}_{prior} + \lambda_{fb}\mathcal{L}_{fb} + \lambda_{align}\mathcal{L}_{align}$ 里既鼓励 attention 分布的多样化（避免 semantic dispersion），又在自适应 patch 掩码 $m'$ 上对齐 $P$ 与 $Q$ 的注意力图（消除 attentional disparity）；校准阶段则给 informative region 赋更高权重，让 $Q$ 优先在这些位置匹配 $P$ 的隐藏表示。两阶段被一个外层"周期性刷新"循环串起来——每隔一段训练就用当前 $Q$ 重新合成一批样本，保证样本始终对得上 $Q$ 的当前状态。
+MaskAQ 沿用"合成 → 校准"两阶段的 DFQ 主框架，但在两端都引入 informative region 这个核心概念：先靠全精度模型 $P$ 的注意力把合成图里真正承载语义的稀疏前景 patch 圈出来，再让合成和校准都只围着这撮 patch 转。合成阶段的目标 $\mathcal{L}_S = \mathcal{L}_{prior} + \lambda_{fb}\mathcal{L}_{fb} + \lambda_{align}\mathcal{L}_{align}$ 一边鼓励注意力分布多样化以化解 semantic dispersion，一边在自适应掩码 $m'$ 上对齐 $P$ 与 $Q$ 的注意力以消除 attentional disparity；校准阶段则给这些前景位置加权，让量化模型 $Q$ 优先在它们上面匹配 $P$ 的隐藏表示。外层再套一个"周期性刷新"循环，每隔一段训练就用当前 $Q$ 重新合成一批样本，保证样本永远跟得上正在演化的 $Q$。
 
 ### 关键设计
 
-1. **基于差分熵的 informative region 解耦（$\mathcal{L}_{fb}$）**:
+**1. 基于差分熵的 informative region 解耦（$\mathcal{L}_{fb}$）：把冗余 patch 散开，逼出一小撮承载语义的前景。**
 
-    - 功能：把 attention 分布雷同、彼此冗余的 patch 强行散开，逼出一小撮真正承载语义的前景 patch，用作后续掩码的依据。
-    - 核心思路：定义 informative region 为 attention 权重 $\alpha_n$ 不小于第 $k_{ir}$ 大值的 patch 集合 $IR = \{x_n \mid \alpha_n \geq \alpha_{[k_{ir}]}\}$。对第 $l$ 层注意力矩阵 $A_l^p \in \mathbb{R}^{N \times N}$，按行取 attention 向量 $a_i$ 算两两余弦相似度 $S_{ij} = a_i \cdot a_j / (\|a_i\| \|a_j\|)$；把 $S_{ij}$ 直方图归一为分布并最大化香农熵 $H(p_l) = -\sum_k p_l(s_k) \log p_l(s_k)$，但直方图估计不稳，作者把相似度分布近似为高斯 $\mathcal{N}(\mu_l, \sigma_l^2)$ 并改用差分熵代理 $H_l = \frac{1}{2}\log(2\pi e \sigma_l^2)$，最终 $\mathcal{L}_{fb} = -\frac{1}{L} \sum_l H_l$。
-    - 设计动机：直接最大化"前景明显"是没有可微目标的，但"让 attention 向量彼此区分得开"是可优化的代理——而正是这种区分度让 $IR$ 与背景能被一刀切开；改用高斯差分熵则解决了直方图离散导致的梯度抖动。
+合成样本的通病是 semantic dispersion——语义糊在整张图上，没有连贯物体，于是后续掩码无从下手。MaskAQ 先把 informative region 定义成注意力权重 $\alpha_n$ 不小于第 $k_{ir}$ 大值的 patch 集合 $IR = \{x_n \mid \alpha_n \geq \alpha_{[k_{ir}]}\}$，再想办法让这撮前景从背景里凸出来。具体做法是对第 $l$ 层注意力矩阵 $A_l^p \in \mathbb{R}^{N \times N}$ 按行取注意力向量 $a_i$，算两两余弦相似度 $S_{ij} = a_i \cdot a_j / (\|a_i\| \|a_j\|)$，再把 $S_{ij}$ 的分布的熵最大化——相似度越分散，patch 之间区分度越高，前景就越容易和背景一刀切开。直接最大化"前景明显"没有可微目标，但"让注意力向量彼此区分得开"是可优化的代理。原本的香农熵 $H(p_l) = -\sum_k p_l(s_k) \log p_l(s_k)$ 要靠直方图估计，离散化带来梯度抖动；作者改把相似度分布近似成高斯 $\mathcal{N}(\mu_l, \sigma_l^2)$，用差分熵代理 $H_l = \frac{1}{2}\log(2\pi e \sigma_l^2)$，最终 $\mathcal{L}_{fb} = -\frac{1}{L} \sum_l H_l$，几乎零成本就把梯度抹平滑。
 
-2. **自适应掩码下的注意力对齐（$\mathcal{L}_{align}$）**:
+**2. 自适应掩码下的注意力对齐（$\mathcal{L}_{align}$）：只在 $P$ 最有把握的位置对齐，给 $Q$ 留出顺应量化误差的余地。**
 
-    - 功能：只在被 informative 选中的少数 patch 上对齐 $P$ 与 $Q$ 的注意力，避免在量化噪声主导的背景 patch 上过度正则。
-    - 核心思路：从 $P$ 的注意力权重里挑出比 $\alpha_{[k_{ir}]}$ 更严格的前 $k$ 个位置形成二进制掩码 $m[n] = \mathbb{1}[\alpha_n \geq \alpha_{[k]}]$，再以 dropout 概率 $p_{drop}$ 在保留集合 $\mathcal{P}$ 上随机丢掉一部分，保留位数为 $k_{keep} = \max(k_{min}, \lfloor |\mathcal{P}| (1-p_{drop}) \rfloor)$，得到带随机性的 $m'$，避免合成过程过拟合到固定位置。对齐损失 $\mathcal{L}_{align} = \sum_l \|m' \odot (A_l^p - A_l^q)\|_1 / \|m'\|_0$ 只对掩码内位置的 $L1$ 注意力差做平均。
-    - 设计动机：超低 bit 下 $Q$ 的注意力本就漂移，强迫它整张图都跟 $P$ 一致只会把误差吃进梯度；只在"$P$ 自己最有把握"的位置对齐既保证语义传递，又给 $Q$ 留出顺应量化误差的自由度；随机丢弃则防止合成样本退化成"只有几个亮 patch"的退化解。
+超低 bit 下 $Q$ 的注意力本就发生漂移，如果强迫它整张图都跟 $P$ 一致，量化噪声主导的背景 patch 反而会被过度正则、把误差吃进梯度——这正是 attentional disparity 的来源。MaskAQ 的对策是只在前景上对齐：从 $P$ 的注意力里挑出比 $\alpha_{[k_{ir}]}$ 更严格的前 $k$ 个位置形成二进制掩码 $m[n] = \mathbb{1}[\alpha_n \geq \alpha_{[k]}]$，再以 dropout 概率 $p_{drop}$ 在保留集合 $\mathcal{P}$ 上随机丢掉一部分，保留位数 $k_{keep} = \max(k_{min}, \lfloor |\mathcal{P}| (1-p_{drop}) \rfloor)$，得到带随机性的掩码 $m'$。对齐损失只对掩码内位置的 $L1$ 注意力差做平均：
 
-3. **周期性样本刷新 + 信息瓶颈视角的校准**:
+$$\mathcal{L}_{align} = \sum_l \|m' \odot (A_l^p - A_l^q)\|_1 / \|m'\|_0$$
 
-    - 功能：让样本始终对 $Q$ 的当前状态有用，并把 informative region 的优先级带进 $Q$ 的校准目标。
-    - 核心思路：把信息瓶颈写成约束 $\max I(z_q; y)$ s.t. $I(x; z_q) \leq C$——其中 $C$ 由 bit 宽度决定。论文证明 Theorem 1（informative region 上 $P$ 与 $Q$ 的 TV 距离 $\leq \varepsilon_r$ 即可保证预测互信息差 $\leq \Delta_r(\varepsilon_r)$）和 Theorem 2（合成样本 informative region 与真实 informative region 的 label 互信息差 $\leq \xi$ 时，合成样本足以代替真实样本对齐 $Q$），从而把 $\mathcal{L}_{fb}$ 与 $\mathcal{L}_{align}$ 接到一个统一的理论框架。校准阶段用 patch 权重 $w_{l,n} = 1 + m^c_{l,n} \cdot (w-1)$ 对 informative 位置加权，目标为 $\mathcal{L}_Q = \frac{1}{LN_h} \sum_{l, n_h} \frac{\sum_n w_{l,n} D(h^p_{l,n_h,n}, h^q_{l,n_h,n})}{\sum_n w_{l,n}}$；外层每隔固定步数用当前 $Q$ 重新跑 Eq. (15) 合成一批新样本。
-    - 设计动机：DFQ 的常见失败是"训练初期合成的样本到了训练后期已与当前 $Q$ 不匹配"；周期性刷新让样本与 $Q$ 同步演化，配合 IB 框架解释了为何只对齐 informative region 就足以维持预测互信息——这是论文能在 3-bit 这种极端情形上仍涨点的理论支撑。
+只对齐"$P$ 自己最有把握"的位置既保证了语义传递，又不逼 $Q$ 在背景上较劲；而那道随机丢弃则防止合成样本退化成"只剩几个固定亮 patch"的退化解，让前景锚点既稳又不过拟合。
+
+**3. 周期性样本刷新 + 信息瓶颈视角的校准：让样本跟着 $Q$ 一起演化，并把前景优先级带进校准目标。**
+
+DFQ 的一个常见失败是训练初期合成的样本到后期已经跟不上当前 $Q$。MaskAQ 把整件事放进信息瓶颈框架——在量化引入的信息预算下求 $\max I(z_q; y)$ s.t. $I(x; z_q) \leq C$，其中 $C$ 由 bit 宽度决定。论文用两条定理把前两个 loss 接进这个框架：Theorem 1 说只要 informative region 上 $P$ 与 $Q$ 的 TV 距离 $\leq \varepsilon_r$，预测互信息差就被 $\Delta_r(\varepsilon_r)$ 控住；Theorem 2 说只要合成样本与真实样本在 informative region 上的 label 互信息差 $\leq \xi$，合成样本就足以代替真实样本去对齐 $Q$。这解释了为何只对齐前景就够维持预测互信息——也正是 3-bit 这种极端情形仍能涨点的理论支撑。校准阶段对 informative 位置加权 $w_{l,n} = 1 + m^c_{l,n} \cdot (w-1)$，目标写成
+
+$$\mathcal{L}_Q = \frac{1}{LN_h} \sum_{l, n_h} \frac{\sum_n w_{l,n} D(h^p_{l,n_h,n}, h^q_{l,n_h,n})}{\sum_n w_{l,n}}$$
+
+外层则每隔固定步数用当前 $Q$ 重新跑 Eq. (15) 合成新样本，让样本始终对得上 $Q$ 的当前状态。
 
 ### 损失函数 / 训练策略
-合成阶段 $\mathcal{L}_S = \mathcal{L}_{prior} + \lambda_{fb} \mathcal{L}_{fb} + \lambda_{align} \mathcal{L}_{align}$，其中 $\mathcal{L}_{prior}$ 是 one-hot 损失 $\mathcal{L}_{OH} = CE(z_p, y)$、TV 损失 $\mathcal{L}_{TV}$ 与 inter-head SSIM 损失 $\mathcal{L}_{IH}$ 的组合；校准阶段用 $\mathcal{L}_Q$ 并对 informative patch 加权 $w$。算法 1 给出双层循环——外层是 refresh number、内层依次跑 synthesis iteration 与 calibration iteration——其中"先合成、再校准、再合成"的次序保证两者始终交替对齐。
+合成阶段 $\mathcal{L}_S = \mathcal{L}_{prior} + \lambda_{fb} \mathcal{L}_{fb} + \lambda_{align} \mathcal{L}_{align}$，其中先验项 $\mathcal{L}_{prior}$ 是 one-hot 损失 $\mathcal{L}_{OH} = CE(z_p, y)$、TV 损失 $\mathcal{L}_{TV}$ 与 inter-head SSIM 损失 $\mathcal{L}_{IH}$ 的组合；校准阶段用 $\mathcal{L}_Q$ 并对 informative patch 加权 $w$。算法 1 是个双层循环——外层是 refresh number，内层依次跑 synthesis iteration 与 calibration iteration，"先合成、再校准、再刷新"的次序保证两阶段始终交替对齐。
 
 ## 实验关键数据
 

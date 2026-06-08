@@ -42,36 +42,25 @@ Obj-Disco 把 RLHF/GRPO 的不透明奖励信号沿"模型检查点轨迹"反向
 
 ### 整体框架
 
-输入：检查点序列 $\pi_{\theta_1},\dots,\pi_{\theta_\mathcal{T}}$、目标数据集 $\mathcal{D}$、想要的目标数 $k$。
-输出：DIR $\hat{R}=\{r_{n_1},\dots,r_{n_k}\}$（自然语言目标集合）、对应的组合函数 $\mathcal{C}$ 系数、以及每个目标的"代表轨迹"解释集 OE。
-
-误差度量 Obj-Error 定义为残差平方在轨迹上的 RMS：
-$\text{Obj-Error}(\hat{R},R^*)=\Big[\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}_{x,y\sim\pi_{\theta_t}}[\mathcal{E}(x,y;\hat{R})]\Big]^{1/2}$，其中 $\mathcal{E}(x,y;\hat{R})=(R^*(x,y)-\mathcal{C}(\hat{r}_{n_1},\dots))^2$。
-
-整体 pipeline 是 Matching Pursuit 式的贪心循环：第 $i$ 轮在已有 $\hat{R}^{i-1}$ 基础上加入使 Obj-Error 降幅最大的新目标 $r_n^*$，直到 $|\hat{R}^i|=k$。每轮包含 **Objectives Discovery**（提候选）和 **Objectives Verification**（校验候选）两步。
+Obj-Disco 要解决的是"RLHF/GRPO 到底奖励了什么"这个黑箱问题，它的思路是把"反向工程奖励"重写成一个稀疏信号近似任务：给定一串训练检查点 $\pi_{\theta_1},\dots,\pi_{\theta_\mathcal{T}}$、目标数据集 $\mathcal{D}$ 和想要的目标数 $k$，输出一组自然语言目标 DIR $\hat{R}=\{r_{n_1},\dots,r_{n_k}\}$、把它们拼回奖励的组合函数 $\mathcal{C}$，以及每个目标的"代表轨迹"解释集 OE。衡量近似好坏的指标 Obj-Error 是残差平方沿轨迹的 RMS：$\text{Obj-Error}(\hat{R},R^*)=\big[\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}_{x,y\sim\pi_{\theta_t}}[\mathcal{E}(x,y;\hat{R})]\big]^{1/2}$，其中 $\mathcal{E}(x,y;\hat{R})=(R^*(x,y)-\mathcal{C}(\hat{r}_{n_1},\dots))^2$。整个 pipeline 是一个 Matching Pursuit 式的贪心循环——第 $i$ 轮在已有 $\hat{R}^{i-1}$ 上加入让 Obj-Error 降幅最大的新目标，每轮由"提候选（Objectives Discovery）"和"校验候选（Objectives Verification）"两步组成，加满 $k$ 个目标就停。
 
 ### 关键设计
 
-1. **轨迹驱动的残差引导式目标发现**：
+**1. 轨迹驱动的残差引导式目标发现：把 proposer 的注意力锁在"最不能解释的残差"上**
 
-    - 功能：从指数级大的自然语言目标空间里高效提出"能解释当前最大残差"的候选。
-    - 核心思路：先用一个随机大池 $\mathbb{X}_{\text{cand}}$（大小 $N_{\text{cand}}$）保证覆盖度，对每个样本计算轨迹平均残差 $\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}_{y\sim\pi_{\theta_t}}[\mathcal{E}(x,y;\hat{R}^{i-1})]$，挑出 top-$\nu$ 组成 $\mathbb{X}_{\text{disc}}$；然后把 $\mathbb{X}_{\text{disc}}$ 按 batch size $b$ 切片喂给 proposer LLM，连同 $\hat{R}^{i-1}$ 一起告诉它"已经发现哪些目标，别重复"；最后用 Eq.9 在候选集 $\mathcal{R}^i_{\text{cand}}$ 里挑残差降幅最大的那个。
-    - 设计动机：直接在文本空间里搜索是 NP-hard。残差引导让 proposer 把注意力放到当前最不能解释的样本上（"unknown unknowns"），避免一开始就被显眼但已经被覆盖的行为吸住；用完整 $\mathcal{T}$ 个检查点而不是只取 base 和 final，能区分"模型自带"和"被对齐推上去"的行为——消融实验（5.5 节）显示 Obj-Disco-Static 在失配案例研究中只有 1/4 试次能挖到隐藏失配，而完整版做到 3/4。
+自然语言目标空间是指数级大的，直接在文本里搜是 NP-hard，所以发现这步的核心是"问对样本"。Obj-Disco 先用一个随机大池 $\mathbb{X}_{\text{cand}}$（大小 $N_{\text{cand}}$）保证覆盖度，对每个样本算轨迹平均残差 $\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}_{y\sim\pi_{\theta_t}}[\mathcal{E}(x,y;\hat{R}^{i-1})]$，挑出 top-$\nu$ 组成 $\mathbb{X}_{\text{disc}}$，再按 batch size $b$ 切片喂给 proposer LLM，并把已发现的 $\hat{R}^{i-1}$ 一并告诉它"这些别重复"，最后用 Eq.9 在候选集 $\mathcal{R}^i_{\text{cand}}$ 里选残差降幅最大的那个。残差引导让 proposer 始终盯着当前最解释不了的样本（即 "unknown unknowns"），不会一开始就被那些显眼却早被覆盖的行为吸走注意力。更关键的是它用完整 $\mathcal{T}$ 个检查点而非只取 base 和 final，从而能区分"模型本来就会"和"被对齐推上去"两类行为——消融实验（5.5 节）里 Obj-Disco-Static 在失配案例中只有 1/4 试次挖到隐藏失配，而用上完整轨迹的版本做到了 3/4。
 
-2. **LLM-as-Judge 双重校验（可解释 + 趋势可预测）**：
+**2. LLM-as-Judge 双重校验：可解释 + 趋势可预测两道关同时过**
 
-    - 功能：保证发现的目标既能被人读懂，又确实是训练过程中被持续推动的行为。
-    - 核心思路：**可解释性**用一个 LLM-as-Judge 模型集合 $\mathcal{M}_{eval}=\{m_1,\dots,m_\ell\}$ 各自给 $(x,y,n)$ 打分，取平均 $s_h(x,y\mid n)=\tfrac{1}{\ell}\sum_m s_m(x,y\mid n)$，要求 $\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}[|r_n(x,y)-s_h(x,y\mid n)|]\le \epsilon_{interp}$；**趋势可预测性**则把目标分数序列 $V_n^1(r),\dots,V_n^\mathcal{T}(r)$（其中 $V_n^t(r)=\mathbb{E}_{x,y\sim\pi_{\theta_t}}[r_n(x,y)]$）拿去拟合一个预设函数类 $\mathcal{F}_{trend}$（线性 / 对数 / 带渐近线幂律 / 指数饱和），要求拟合 MSE $\le \epsilon_{trend}$。两条都过的目标加入 $\hat{R}^i$，否则跳过进下一轮。
-    - 设计动机：单 judge 有个体偏置，多 judge 投票更接近"广义人类"；趋势校验把"运气好恰好相关"的目标过滤掉，只留下"系统性被奖励推上去"的，确保 DIR 抓的是对齐过程的因果驱动而非偶然相关。
+提出来的候选目标必须同时满足两个条件才算数：人能读懂，且确实是训练过程中被持续推动的行为。可解释性这关用一个 LLM-as-Judge 模型集合 $\mathcal{M}_{eval}=\{m_1,\dots,m_\ell\}$ 各自给 $(x,y,n)$ 打分再取平均 $s_h(x,y\mid n)=\tfrac{1}{\ell}\sum_m s_m(x,y\mid n)$，要求它和目标原分的平均偏差 $\tfrac{1}{\mathcal{T}}\sum_t \mathbb{E}[|r_n(x,y)-s_h(x,y\mid n)|]\le \epsilon_{interp}$——用多 judge 投票而非单 judge，是为了逼近"广义人类"、稀释个体偏置。趋势可预测性这关则把目标分数序列 $V_n^1(r),\dots,V_n^\mathcal{T}(r)$（其中 $V_n^t(r)=\mathbb{E}_{x,y\sim\pi_{\theta_t}}[r_n(x,y)]$）拿去拟合一个预设函数类 $\mathcal{F}_{trend}$（线性 / 对数 / 带渐近线幂律 / 指数饱和），要求拟合 MSE $\le \epsilon_{trend}$。这道关把那些"运气好恰好相关"的目标筛掉，只留下"系统性被奖励推上去"的，从而保证 DIR 抓的是对齐过程的因果驱动，而不是偶然相关。两关都过的目标加入 $\hat{R}^i$，否则跳过进下一轮。
 
-3. **子模优化的样本级目标解释（OE）**：
+**3. 子模优化的样本级目标解释（OE）：用保证近似的贪心选出"既忠实又多样"的代表轨迹**
 
-    - 功能：给每个发现的目标 $r_n$ 配一小撮（如 $\kappa=5$）有代表性的样本轨迹，让用户能直观看到"这个目标在实际数据上长什么样"。
-    - 核心思路：把目标设计成两项凸组合 $F(E)=(1-\lambda)f_{\text{fid}}(E)+\lambda f_{\text{div}}(E)$。**Trend Fidelity** 用 $\text{fid}(\xi)=\exp(-\sum_t(u_t-f^*(t))^2)$ 衡量单条轨迹和全局趋势 $f^*$ 的契合度（$u_t=r_n(\xi_x,\xi_{y_{\pi_{\theta_t}}})$），再求和得到 $f_{\text{fid}}(E)=\sum_\xi \text{fid}(\xi)$；**Diversity** 先用 K-Means 把输入空间切成 $m$ 个语义簇 $P_j$，定义 $f_{\text{div}}(E)=\sum_j\sqrt{|E\cap P_j|}$——平方根的 concavity 让"同簇加第二条"的边际收益递减。
-    - 设计动机：$F$ 是单调子模函数（子模性对凸组合封闭），贪心算法即有 $(1-1/e)$ 近似保证；fidelity 让样本可信代表趋势、diversity 保证目标不是某个 niche 域的伪规律——这是让 OE 真的对人有诊断价值的关键。
+发现一个目标 $r_n$ 后还要让用户看懂它在真实数据上长什么样，于是给每个目标配一小撮（如 $\kappa=5$）代表性样本轨迹。Obj-Disco 把选样写成两项凸组合 $F(E)=(1-\lambda)f_{\text{fid}}(E)+\lambda f_{\text{div}}(E)$：Trend Fidelity 项用 $\text{fid}(\xi)=\exp(-\sum_t(u_t-f^*(t))^2)$ 衡量单条轨迹（$u_t=r_n(\xi_x,\xi_{y_{\pi_{\theta_t}}})$）和全局趋势 $f^*$ 的契合度，求和得 $f_{\text{fid}}(E)=\sum_\xi \text{fid}(\xi)$，保证选出的样本可信地代表趋势；Diversity 项先用 K-Means 把输入空间切成 $m$ 个语义簇 $P_j$，定义 $f_{\text{div}}(E)=\sum_j\sqrt{|E\cap P_j|}$，平方根的 concavity 让"同簇再加一条"的边际收益递减，从而逼算法跨簇选样、避免目标退化成某个 niche 域的伪规律。因为 $F$ 是单调子模函数（子模性对凸组合封闭），直接套贪心就拿到 $(1-1/e)$ 的近似保证——这正是让 OE 对人真有诊断价值的关键。
 
 ### 损失函数 / 训练策略
-本文不训练新模型，所有"优化"都发生在两个层面：(i) 对每个候选 $\hat{R}$ 拟合简单组合函数 $\mathcal{C}$（线性回归或 gradient boosting）来给 Obj-Error 求值；(ii) 用贪心 + LLM 调用驱动外层离散搜索。trend 拟合用 squared error。proposer / judge / 评测策略模型分别用 Llama-3.1-8B 和 Qwen3-4B；对齐算法用 PPO 与 GRPO。
+
+本文不训练新模型，所有"优化"发生在两个层面：一是对每个候选 $\hat{R}$ 拟合简单组合函数 $\mathcal{C}$（线性回归或 gradient boosting）来给 Obj-Error 求值；二是用贪心 + LLM 调用驱动外层离散搜索，trend 拟合用 squared error。proposer / judge / 评测策略模型分别取 Llama-3.1-8B 和 Qwen3-4B，对齐算法覆盖 PPO 与 GRPO。
 
 ## 实验关键数据
 

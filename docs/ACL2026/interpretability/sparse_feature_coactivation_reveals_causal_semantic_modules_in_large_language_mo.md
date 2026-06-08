@@ -38,32 +38,28 @@ tags:
 **核心 idea**：把 SAE feature 当作图节点，用跨层共激活相关性连边，再把 connected component 当成概念或关系模块，通过 ablation/amplification 验证其因果功能。
 
 ## 方法详解
-这篇论文的 pipeline 从 Gemma 2 2B 的 residual stream 激活出发，把每层 SAE 的 top active features 组织成跨层图。图中 component 不是人工指定的“China feature”或“capital feature”，而是在具体 prompt 下由共激活关系涌现出来，再通过 KL divergence 和 steering success 反向验证语义。
 
 ### 整体框架
-输入是一组 concept-relation prediction prompts，例如 country facts、word translation 和 verb transformation。模型先生成正确答案，作者在前向传播中收集每层 SAE 激活，取每个 token 的 top-5 features。相邻层 feature 若激活序列 Pearson correlation 超过 0.9，就连一条边。随后用 Neuronpedia activation density 删除 $d_{\ell,i}>0.01$ 的高密度通用 feature，再用 NetworkX BFS 找弱连通 component。最后，对 component 做消融、放大和组合干预，检查输出 token 分布是否按预期变化。
+
+方法要解决的问题是：LLM 里表示某个概念或关系的，往往不是一个孤立 SAE feature，而是一组跨层协同激活的 feature，怎样自动找出这些功能模块并验证它们真的因果地决定输出。整条 pipeline 从 Gemma 2 2B 的 concept-relation prediction prompts（country facts、word translation、verb transformation）出发，先在前向传播中收集每层 SAE 激活、取每 token 的 top features，按跨层共激活相关性连边构成图，剪掉高密度通用 feature 后用弱连通分量抽出 component；最后对这些 component 做消融、放大与组合干预，以输出 token 分布是否按预期变化反向确认它们的语义。整个过程中 component 不靠人工指定“China feature”或“capital feature”，而是在具体 prompt 下由共激活关系涌现，再用 KL divergence 和 steering success 验证。
 
 ### 关键设计
-1. **跨层 feature coactivation 图**:
 
-    - 功能：把离散 SAE features 组织成可解释的跨层网络结构。
-    - 核心思路：每层取 top activated features，节点为 $(\ell,i)$；若相邻层两个 feature 在 prompt token 维度上的激活相关系数 $\rho>0.9$，则建立有向边。这样得到的图捕捉的是“这些 feature 是否在同一语境中一起工作”，而不是只看 feature 描述文本。
-    - 设计动机：单个 feature 描述不可靠，论文中 Spain component 不一定在描述中出现 Spain，translation language component 甚至可能被描述成 programming。共激活图绕开纯文本描述，直接利用模型内部动态。
+**1. 跨层 feature coactivation 图：用“一起激活”而非“描述文本”定义模块。**
 
-2. **稀疏性剪枝与 component 抽取**:
+单个 SAE feature 的自动描述并不可靠——论文里 Spain component 的描述未必出现 Spain，translation language component 甚至会被标成 programming，所以纯文本描述无法支撑模块发现。方法转而直接利用模型内部动态：每层取 top activated features，节点记为 $(\ell,i)$；若相邻层两个 feature 在 prompt token 维度上的激活相关系数 $\rho>0.9$，就建立一条有向边。这样连出来的图捕捉的是“这些 feature 是否在同一语境中一起工作”，从而把离散 feature 组织成可解释的跨层网络。
 
-    - 功能：过滤通用激活 feature，保留更可能单义、任务相关的模块。
-    - 核心思路：使用 Neuronpedia 的 activation density，只保留 $d_{\ell,i}\leq0.01$ 的 sparse features，并去除孤立点；随后对稀疏图求弱连通分量。对于 country facts 和 translation，概念 component 定义为同一概念跨多个关系得到 component 的交集，关系 component 定义为同一关系跨多个概念的交集。
-    - 设计动机：高密度 feature 可能承载语法或通用计算，直接纳入会让 component 不可解释。交集策略则强调 context consistency，使 China component 在 capital、currency、language prompt 中保持稳定。
+**2. 稀疏性剪枝与 component 抽取：滤掉通用计算，留下任务特异的单义模块。**
 
-3. **因果干预与组合 steering**:
+高密度 feature 常承载语法或通用计算，若直接纳入会让 component 不可解释，所以先用 Neuronpedia 的 activation density 只保留 $d_{\ell,i}\leq0.01$ 的 sparse features 并去掉孤立点，再对稀疏图求弱连通分量。为强调 context consistency，concept component 取同一概念跨多个关系所得 component 的交集，relation component 取同一关系跨多个概念所得 component 的交集——这样 China component 才能在 capital、currency、language 等 prompt 中保持稳定，而不是每个 prompt 各自漂移。
 
-    - 功能：验证 component 是否真的决定模型输出，而不是只与任务相关。
-    - 核心思路：对 in-prompt component 做 ablation，即将其 SAE feature activation 置零，并用 decoder 重构后继续前向；对 target component 做 amplification，即按观测最大激活比例提升其 activation。成功标准是模型输出转向目标概念、目标关系或目标概念-关系组合。
-    - 设计动机：只有能被干预并造成可预测输出变化的 component，才可称为 causal semantic module。组合 steering 进一步检验概念和关系是否可组合，而不是互相纠缠的单一方向。
+**3. 因果干预与组合 steering：只有能被操控并改变输出的才算 causal module。**
+
+仅仅与任务相关还不够，方法要求 component 能被干预并造成可预测的输出变化。具体做法是对 in-prompt component 做 ablation（将其 SAE feature activation 置零，再用 decoder 重构后继续前向），对 target component 做 amplification（按观测到的最大激活比例提升 activation），成功标准是输出转向目标概念、目标关系或二者的组合。组合 steering 进一步检验概念和关系能否分开操控、自由拼装（如把“中国的首都”改成“尼日利亚的货币”），而不是缠在同一条不可分解的方向上。
 
 ### 损失函数 / 训练策略
-论文没有训练新模型，使用 Gemma 2 2B 及预训练 Gemma Scope JumpReLU SAE。核心超参包括每层每 token 选 top-$k=5$ 激活 feature，跨层相关阈值 $\tau_{corr}=0.9$，feature density 阈值 $\tau_{density}=0.01$。干预用 TransformerLens 实现，成功率在 zero-shot prompt template 上评估，prompt 与收集激活时的模板不同，以检验 component 的上下文泛化。
+
+论文不训练新模型，直接复用 Gemma 2 2B 与预训练 Gemma Scope JumpReLU SAE。核心超参为每层每 token 选 top-$k=5$ 激活 feature、跨层相关阈值 $\tau_{corr}=0.9$、feature density 阈值 $\tau_{density}=0.01$。干预用 TransformerLens 实现，成功率在 zero-shot prompt template 上评估，且评估用的 prompt 与收集激活时的模板不同，以此检验 component 的上下文泛化能力。
 
 ## 实验关键数据
 

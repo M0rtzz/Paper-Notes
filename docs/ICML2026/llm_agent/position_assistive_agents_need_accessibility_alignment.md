@@ -38,33 +38,24 @@ tags:
 **核心 idea**：把 accessibility 从 HCI 接口层提升到 Agent 内核层，作为与 helpfulness / harmlessness 并列的第三类对齐目标，并通过 "goal / interaction / risk / lifecycle" 四维度框架落地。
 
 ## 方法详解
-这篇论文没有传统意义上的算法，而是给出了一套从任务分类、失败诊断、对齐定义到工程 pipeline 的完整论证链。我把它当成 "方法" 来梳理。
+这篇 position paper 没有算法，它的"方法"是一条从实证数据出发、反推到对齐框架的论证链。
 
 ### 整体框架
-论证的 pipeline 是四步：(1) 用 778 个任务实例建立任务-中心的 taxonomy；(2) 抽取出 BVI 场景的 4 类 stressor 和它们诱发的 4 类 failure mode；(3) 把 failure mode 归因于当前 Agent 的 3 类 implicit assumption + capability-need mismatch；(4) 用 4 维 alignment 框架 + 3 阶段 lifecycle pipeline 给出补救方案。
+作者的核心主张是：盲人辅助 Agent 反复犯的安全错误，根子不在多模态能力不够，而在于当前 Agent 把"用户能用眼睛核对输出"当成了隐式前提，所以 accessibility 应当被提升到 alignment 层、与 helpful/harmless/honest 并列。论证分四步推进——先用 778 个真实任务实例建立任务-中心的 taxonomy 当地基，再从 BVI 场景的环境约束推出 4 类系统性失败模式，接着把这些失败归因到 3 条站不住的设计假设，最后给出一套四维对齐框架配三阶段生命周期 pipeline 作为补救方案。
 
 ### 关键设计
 
-1. **778 任务的四类 Taxonomy（经验地基）**:
+**1. 用 778 个任务实例做实证地基，堵死"accessibility 是边缘问题"的反驳。**
 
-    - 功能：把盲人辅助任务划分为 Mobility & Safety（34%）、Reading & Text Access（35%）、Object Recognition & Daily Operations（12%）、VQA Goal-directed Query（18%），并在每个子类下统计实例数（如 hazard perception 108、path planning 116、interactive digital reading 100）。
-    - 核心思路：从 2012-2025 年 417 篇跨 CV / GenAI / Robotics / HCI 的论文里抠出 task description，再做 qualitative coding，得到细粒度任务和频次分布。这一步给后续所有论证提供了实证 anchor，避免成为纯思辨。
-    - 设计动机：作者要反驳 "accessibility 是边缘问题" 的声音，必须先用数据证明这些任务体量大、覆盖面广、并且明显偏向 mobility 和 reading 这两类高风险任务。
+position paper 最大的软肋是"凭感觉立场"，所以作者第一步不是讲道理而是摆数据：从 2012–2025 年横跨 CV / GenAI / Robotics / HCI 的 417 篇论文里抠出 task description，做 qualitative coding，得到 778 个细粒度任务实例及其频次分布。最终归成四个大类——Reading & Text Access（35%）、Mobility & Safety（34%）、Object Recognition & Daily Operations（12%）、VQA Goal-directed Query（18%），每个子类都带实例数（如 hazard perception 108、path planning 116、interactive digital reading 100）。这组统计画像证明盲人辅助任务体量大、覆盖广，而且明显集中在 mobility 和 reading 这两类"错就出事"的高风险方向，后续所有论证都锚在这块实证地基上，不再是纯思辨。
 
-2. **4 Stressor × 4 Failure Mode 的诊断矩阵**:
+**2. 4 Stressor × 4 Failure Mode 的诊断矩阵，把无障碍失败变成可逆向工程的问题。**
 
-    - 功能：从 BVI 场景的 4 个环境特性——limited verifiability（无法独立核对）、high-cost errors（不可逆且物理伤害）、cognitive burden（音频/触觉带宽窄）、privacy exposure（家居/医疗高度敏感）——推导出 silent failure、overconfident hallucination、miscalibrated autonomy、interaction-induced cognitive overload 这 4 类失败模式，并明确每个失败由哪几个 stressor 组合驱动。
-    - 核心思路：每个 failure mode 都被锚定到一个具体 stressor 组合上（例如 silent failure 由 limited verifiability + asymmetric cost 驱动），形成 "环境约束 → 失败现象 → 设计责任" 的因果链。
-    - 设计动机：让 "无障碍失败" 从 anecdotal 抱怨变成可被 reverse-engineer 的工程问题——只要 Agent 设计能 close 这 4 个 stressor，对应的 failure mode 就能被消除。
+作者先抽出 BVI 场景区别于普通用户的四个环境特性（stressor）：limited verifiability（用户无法独立核对视觉输出）、high-cost errors（错误不可逆甚至造成人身伤害）、cognitive burden（音频/触觉通道带宽窄）、privacy exposure（家居/医疗场景高度敏感）。再从这些约束推出四类系统性失败模式：silent failure、overconfident hallucination、miscalibrated autonomy、interaction-induced cognitive overload。关键在于每个 failure mode 都被钉在一个具体的 stressor 组合上——例如 silent failure 由 limited verifiability + asymmetric cost 共同驱动——形成"环境约束 → 失败现象 → 设计责任"的因果链。这样一来，"无障碍做得差"就从 anecdotal 抱怨变成了可被反向工程的工程问题：只要 Agent 设计能 close 掉对应的 stressor，那类 failure mode 原则上就能被消除。作者还指出这四类失败会互相加强（silent failure 和 hallucination 逼用户脑内验证每条输出、加重认知负担，miscalibrated autonomy 又在高风险时阻塞验证、低风险时浪费带宽），所以必须用统一框架联合处理，不能各自打补丁。
 
-3. **四维 Accessibility Alignment 框架 + Lifecycle Pipeline**:
+**3. 四维 Accessibility Alignment 框架 + 三阶段 Lifecycle Pipeline，让 framing 可审计、可反驳。**
 
-    - 功能：把 alignment 拆成 Goal（accessibility 定义的成功，包含 safety margin / critical-field reliability / recovery procedure）、Interaction（chunked / landmark-based 的低带宽非视觉协议）、Risk（不确定性触发保守动作 + 隐私 by default）、Lifecycle（日志 / 反馈 / 安全更新）四维。每一维都对应一类具体的 design artifact，如 Task Card、Accessibility Success Specification、Interaction Contract、Risk and Uncertainty Policy、Privacy Manifest、Autonomy Calibration Specification。
-    - 核心思路：用 Design / Deployment / Post-deployment 三阶段串起来。Design 阶段产出 6 个 artifact；Deployment 阶段把 artifact 翻成 runtime guardrail（risk-triggered autonomy downgrade、safe pause、escalation）；Post-deployment 阶段做 near-miss 日志、incident triage 到具体 alignment 维度、带回归测试的安全更新。作者还用导航和药品标签阅读两个 case 把 red-line failure、uncertainty trigger、evaluation shift、runtime implication 全部 instantiate。
-    - 设计动机：position paper 最容易被批评的就是 "只立 flag 不给方案"，所以作者刻意把 alignment 维度和具体 artifact / runtime 行为绑定，让框架可被审计、可被反驳。
-
-### 损失函数 / 训练策略
-本文是 position paper，无训练目标。作者建议未来的评测指标应当从 SPL / 路径长度 / OCR accuracy 这类 task-completion 指标，迁移到 unsafe instruction rate、risk-trigger compliance、abstention precision / recall、critical-field accuracy、critical hallucination rate 这类 safety-aware 指标。
+针对上面诊断出的失败，作者把 alignment 拆成四个维度并各配具体 artifact：Goal（用 accessibility 重新定义"成功"，含 safety margin / critical-field reliability / recovery procedure，落到 Accessibility Success Specification）、Interaction（chunked / landmark-based 的低带宽非视觉协议，落到 Interaction Contract）、Risk（不确定性触发保守动作、隐私 by default，落到 Risk and Uncertainty Policy、Privacy Manifest、Autonomy Calibration Specification）、Lifecycle（日志 / 反馈 / 安全更新）。这四维由 Design / Deployment / Post-deployment 三阶段串起来：Design 阶段产出 6 个 artifact；Deployment 阶段把 artifact 翻译成 runtime guardrail（risk-triggered autonomy downgrade、safe pause、escalation）；Post-deployment 阶段做 near-miss 日志、把 incident triage 归到具体 alignment 维度、再做带回归测试的安全更新。配套地，作者主张评测指标也要随之迁移——从 SPL / 路径长度 / OCR accuracy 这类 task-completion 指标，转向 unsafe instruction rate、risk-trigger compliance、abstention precision/recall、critical-field accuracy、critical hallucination rate 这类 safety-aware 指标。整套框架刻意把每个抽象维度都绑死到具体 artifact 和 runtime 行为上，正是为了回应 position paper "只立 flag 不给方案"的天然质疑，让主张能被审计、也能被反驳。
 
 ## 实验关键数据
 这篇论文没有定量实验，所谓 "实验" 是 778 个任务实例的统计描述和两个 case study 的 qualitative 演示。

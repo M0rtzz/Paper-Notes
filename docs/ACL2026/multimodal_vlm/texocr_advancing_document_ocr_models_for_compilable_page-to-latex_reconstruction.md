@@ -46,23 +46,24 @@ TeXOCR 的方法由三个部分组成：TEXOCR-Bench 用来定义任务和评测
 评测时，所有模型都按统一 page-level inference 协议处理：每一页独立生成 LaTeX，随后按文档顺序拼接，再计算九个指标和最终 Overall score。作者还比较了 single-image、multi-image、merged 多页图三种推理粒度，发现单页图最稳定。
 
 ### 关键设计
-1. **三维九指标的 TEXOCR-Bench**:
 
-	- 功能：把 PDF-to-LaTeX 的质量拆成转写准确、结构忠实和端到端可用三个维度，而不只看字符相似度。
-	- 核心思路：Transcription Fidelity 包含复杂文本保留 CTP、公式准确率 FA、表格准确率 TA；Structural Faithfulness 包含章节准确率 SA、引用覆盖 CC、引用有效性 RV；End-to-End Usability 包含文档级相似度 DS、基础 sanity check 和编译成功率 CSR。最终评测把页面输出合并成项目，再运行结构解析和标准 LaTeX 编译。
-	- 设计动机：科学文档 OCR 的关键风险常出现在“看起来差不多但不能用”的地方。九指标设计让模型不能只靠正文 OCR 得高分，还要处理 section、citation、float、formula、table 和 compiler 这些工程约束。
+**1. 三维九指标的 TEXOCR-Bench：把"能不能用"拆成可量化的工程约束。**
 
-2. **页面级 LaTeX 对齐数据构建**:
+科学文档 OCR 真正的风险常常藏在"看起来差不多但根本不能用"的地方——正文 OCR 得分很高，却因为一个漏掉的环境边界或损坏的 `\ref{}` 让整篇无法编译。为此 benchmark 把质量拆成三个维度九个指标，逼模型不能只靠正文转写蒙混过关：转写保真（Transcription Fidelity）含复杂文本保留 CTP、公式准确率 FA、表格准确率 TA；结构忠实（Structural Faithfulness）含章节准确率 SA、引用覆盖 CC、引用有效性 RV；端到端可用（End-to-End Usability）含文档级相似度 DS、基础 sanity check 和编译成功率 CSR。
 
-	- 功能：把多文件 arXiv 源码和最终 PDF 对齐成可监督的单页训练样本。
-	- 核心思路：作者先解析 LaTeX 源码依赖并合并为 canonical source；正文页用 GPT-5-mini 辅助识别页面起止 token，与源代码片段对齐；图表等浮动体用 pdf2figure 在全局 PDF 中定位，再分配到最合适页面；参考文献页则让 body 区域继续用 LaTeX 监督，reference 区域转成 BibTeX 监督。
-	- 设计动机：LaTeX 源码顺序和 PDF 显示顺序常常不一致，尤其是 figure/table float。若不显式处理页面-源码错位，模型会学到错误映射，后续再强的训练目标也很难恢复结构一致性。
+关键在于评测不是逐页打分了事，而是把页面输出按文档顺序合并成完整项目，再跑结构解析和标准 LaTeX 编译。于是 section、citation、float、formula、table 乃至 compiler 这些工程约束都被纳入考核——一个只会写"像 LaTeX 的字符串"但编不过的模型，在 CSR 上会被直接打回原形。
 
-3. **SFT + RLVR 的可验证奖励训练**:
+**2. 页面级 LaTeX 对齐数据构建：先解决源码顺序与显示顺序的天然错位。**
 
-	- 功能：先学会高保真生成，再用自动单元测试优化功能正确性。
-	- 核心思路：SFT 阶段用标准 next-token prediction，目标可概括为最大化 $\log \pi_\theta(y_t \mid x,p,y_{<t})$。RLVR 阶段对每页采样 $K$ 个 completion，每个输出通过页面级测试集合 $T(x)$，reward 是通过测试比例 $R(x,y)=|T(x)|^{-1}\sum_{\tau\in T(x)}\mathbb{I}[\tau(y)=pass]$。优化时使用组内相对 advantage，并加 KL 约束让策略不偏离 SFT reference。
-	- 设计动机：token loss 难以表达“这段 LaTeX 能不能编译”“这个 label 是否存在”“表格列是否闭合”。单元测试奖励把这些离散约束变成训练信号，尤其适合 OCR 中可程序化验证的部分。
+LaTeX 源码的书写顺序和 PDF 的显示顺序经常对不上，尤其 figure/table 这类浮动体——若不显式处理这种页面-源码错位，模型会学到错误映射，后面再强的训练目标也救不回来。数据构建因此分类处理：先解析 LaTeX 源码依赖、合并成 canonical source；正文页用 GPT-5-mini 辅助识别页面起止 token，与源码片段对齐；图表等浮动体用 pdf2figure 在全局 PDF 中定位后再分配到最合适的页面；参考文献页则把 body 区域继续用 LaTeX 监督、reference 区域转成 BibTeX 监督。这样得到的每一个单页样本，其图像与 LaTeX/BibTeX 目标才是真正对齐、可供监督的。
+
+**3. SFT + RLVR 的可验证奖励训练：把"能不能编译"变成训练信号。**
+
+普通的 token loss 表达不了"这段 LaTeX 能不能编译""这个 label 是否存在""表格列是否闭合"这类离散约束，所以单纯 SFT 学出来的只是字符层面的相似。训练因此分两步走：SFT 阶段用标准 next-token prediction 先学会高保真转写，目标可概括为最大化 $\log \pi_\theta(y_t \mid x,p,y_{<t})$；RLVR 阶段则对每页采样 $K$ 个 completion，让每个输出跑一遍页面级测试集合 $T(x)$，reward 取通过测试的比例：
+
+$$R(x,y)=|T(x)|^{-1}\sum_{\tau\in T(x)}\mathbb{I}[\tau(y)=\text{pass}]$$
+
+优化时使用组内相对 advantage，并加 KL 约束让策略不偏离 SFT reference。这套可验证奖励把编译、引用、结构等可程序化检查的离散约束直接变成梯度信号，恰好补上 token loss 顾不到的部分。
 
 ### 损失函数 / 训练策略
 训练分两阶段。Stage I 对 Qwen3-VL-2B 做全参数 SFT，训练 1 个 epoch，学习率 $1e-5$，每个样本由单页 PDF 截图、格式说明 prompt 和对应 LaTeX/BibTeX 目标组成。Stage II 在 SFT 模型上做 RLVR：每页采样 $K$ 个输出，执行转写、结构和可用性三组二值单元测试，reward 为通过比例，并用 group-relative advantage 更新策略，同时加 KL penalty 维持输出风格稳定。作者还分析了 group size $K\in\{4,8,12,16,20,24\}$，发现更大的 $K$ 能降低方差，让 RLVR 收益更稳定。

@@ -42,34 +42,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LOCKET 包含两个独立流程：
 
-**离线训练阶段**：对每个待锁特征 $f \in \mathcal{F}$，独立训一个 LoRA adapter $a_f$。训练目标是 $\mathcal{L}_{\text{lock}} = \mathcal{L}_{\text{utility}} + \mathcal{L}_{\text{robust}}$——前者是相对冻结的参考模型 $\pi_{\theta'}$ 的 KL 散度，约束 adapter 不破坏基础对话能力；后者是 Latent Adversarial Training (LAT) 形式的 refusal 增强 loss。完成后每个 adapter 大小仅占基础模型参数的 1.6-1.7%（DeepSeek-7B/Llama-3-8B 约 120-130M 参数）。
-
-**在线推理阶段**：客户登录时 (1) Authorization Module 根据其支付/凭证更新其授权特征集；(2) 每次客户发请求，Access Control Module 查其授权列表 → 选出**未授权**的 adapter 集合 $\{a_k : k \notin \text{auth}(C)\}$ → 用 LOCKET Merging 把这些 adapter 合并 → attach 到冻结的基础 LLM 上做推理。attach 一次 (login) 仅需 $\sim 1$ 秒、TTFT 不受 adapter 数量影响 ($\sim 3$ ms)，工程开销可忽略。
+LOCKET 把"功能锁"从密码触发的 backdoor 重构成可热插拔的 LoRA adapter，整套机制分离线与在线两段。离线阶段为每个待锁特征 $f \in \mathcal{F}$ 独立训一个 adapter $a_f$，训练目标 $\mathcal{L}_{\text{lock}} = \mathcal{L}_{\text{utility}} + \mathcal{L}_{\text{robust}}$ 既用对冻结参考模型 $\pi_{\theta'}$ 的 KL 散度约束 adapter 不破坏基础对话能力，又用 LAT 形式的拒答增强 loss 把"拒答"焊死；每个 adapter 仅占基础模型 1.6-1.7% 参数。在线阶段，客户登录时 Authorization Module 先根据其支付凭证更新授权特征集，每次请求时 Access Control Module 查授权列表、挑出所有**未授权**特征的 adapter 集合 $\{a_k : k \notin \text{auth}(C)\}$，经 LOCKET Merging 合并后 attach 到冻结的基础 LLM 上推理——授权特征因为没附加 adapter 而正常工作，未授权特征则被对应 adapter 逼成稳定拒答。整个 attach 每次 login 仅约 1 秒、TTFT 不随 adapter 数量变化（约 3 ms），工程开销可忽略。
 
 ### 关键设计
 
-1. **Latent Adversarial Training (LAT) 强化 adapter 拒答鲁棒性**:
+**1. Latent Adversarial Training：在隐空间里把拒答方向焊死。** 标准 SFT/refusal 训出来的模型会在 latent 空间留下一条"refusal direction"，但这条方向对自适应越狱很脆——攻击者只要找到一个 prompt 让 activations 偏离它就能 bypass，这正是 password-locking 方案被 GCG / AutoDAN-Turbo 攻破的根因。LAT 的思路是先在 LLM 内部 latent activations 上找"最坏扰动"再据此更新 adapter：每个 prompt $x_i$ 配一对（chosen＝固定拒答串 $c_i=$"Sorry, you are not authorized..."，rejected＝真实有用回答 $r_i$），先求 $\delta_i = \arg\min_\delta \mathcal{L}_{\text{evade}}(c_i, r_i; \delta)$，其中 $\mathcal{L}_{\text{evade}} = -\log \pi_\theta(c_i | \alpha(x_i, \delta)) - \log(1 - \pi_\theta(r_i | \alpha(x_i, \delta)))$，扰动用 PGD 在 $\|\delta\|_2 \leq \epsilon$ 球内搜 16 步。
 
-    - 功能：让 adapter 对越狱攻击鲁棒——攻击者用 GCG / AutoDAN-Turbo / Many-shot 等手段构造对抗 prompt 想"激活"locked feature 时，模型仍要稳定拒答。
-    - 核心思路：每个 prompt $x_i$ 对应 (chosen=固定拒答串 $c_i = $ "Sorry, you are not authorized..."，rejected=ground-truth 有用回答 $r_i$)。先在 LLM 内部 latent activations 上找"最坏扰动" $\delta_i$，使得加上扰动后 LLM 最容易被 evasion——即 $\delta_i = \arg\min_\delta \mathcal{L}_{\text{evade}}(c_i, r_i; \delta)$，其中 $\mathcal{L}_{\text{evade}} = -\log \pi_\theta(c_i | \alpha(x_i, \delta)) - \log(1 - \pi_\theta(r_i | \alpha(x_i, \delta)))$，扰动用 PGD 在 $\|\delta\|_2 \leq \epsilon$ 球内做 16 步搜。然后用这个 worst-case $\delta_i$ 更新 adapter 权重 → 即使在 latent 空间被攻击者扰动了，模型也倾向输出 $c_i$ 而非 $r_i$。
-    - 设计动机：标准 SFT/refusal 训出来的模型在 latent 空间留下"refusal direction"，但这条方向对自适应攻击很脆——攻击者只要找到一个 prompt 让 activations 偏离这条方向就能 bypass。LAT 等于把 refusal direction 在 worst-case 扰动球内全方向加强，相当于做对抗鲁棒训练。这是 LOCKET 把越狱 ASR 从 PWD 的 0.95 压到 0.05 的核心。
+拿到这个 worst-case $\delta_i$ 后再更新 adapter 权重，等于把 refusal direction 在最坏扰动球内全方向加强——即便攻击者在 latent 空间把 activations 推偏，模型仍倾向输出 $c_i$ 而非 $r_i$。这正是 LOCKET 把越狱 ASR 从 PWD 基线的 0.95 压到 0.05 的核心引擎。
 
-2. **LOCKET Merging：spectral norm clipping 防止合并塌缩**:
+**2. LOCKET Merging：用频谱范数裁剪防止合并塌缩。** 多个 LAT-trained adapter 一旦相加，refusal 方向会被反复叠加放大、adapter 范数爆炸，模型最终对所有 query（连 unlocked feature 也算）都输出"Sorry, sorry, ..."，陷入 over-refusal 灾难。LOCKET Merging 分两步对症下药：离线阶段对每层 $\ell$、每个 adapter $a_i$ 做 SVD 分解 $\Delta W_\ell^i \approx \mathbf{U}^i \mathbf{S}^i (\mathbf{V}^i)^T$，取最大奇异值 $\sigma^i = \|\Delta W_\ell^i\|_2$，定义该层剪切阈值 $Clip_\ell = \tau \cdot \max_i \sigma^i$（$\tau \in (0,1]$，典型 0.5-0.9）；在线阶段先用 CAT 把未授权 adapter 合并为 $\Delta W_\ell = \sum_{i \in L} \Delta W_\ell^i$，一旦 $\|\Delta W_\ell\|_2 > Clip_\ell$ 就线性 rescale 回 $\Delta W_\ell \leftarrow \frac{Clip_\ell}{\|\Delta W_\ell\|_2} \Delta W_\ell$。
 
-    - 功能：合并多个 LAT-trained adapter 时防止"refusal 方向被多次叠加 → adapter 范数爆炸 → 模型对所有 prompt（包括 unlocked feature）都输出 'Sorry, sorry, ...'"的 over-refusal 灾难。
-    - 核心思路：分两阶段——**离线** 对每层 $\ell$ 和每个 adapter $a_i$，先 SVD 分解 $\Delta W_\ell^i \approx \mathbf{U}^i \mathbf{S}^i (\mathbf{V}^i)^T$，取最大奇异值 $\sigma^i = \|\Delta W_\ell^i\|_2$ (即 spectral norm)，定义该层的剪切阈值 $Clip_\ell = \tau \cdot \max_i \sigma^i$（$\tau \in (0, 1]$ 是超参，典型 0.5-0.9）。**在线** 客户登录时先把所有未授权 adapter 用 CAT (Prabhakar et al. 2025) 合并：$\Delta W_\ell = \sum_{i \in L} \Delta W_\ell^i$；如果 $\|\Delta W_\ell\|_2 > Clip_\ell$，就线性 rescale 回 $\Delta W_\ell \leftarrow \frac{Clip_\ell}{\|\Delta W_\ell\|_2} \Delta W_\ell$。这一步保证合并后的 adapter 每一层 spectral norm 都不超过 "单个 adapter 的最大值"，refusal 方向被克制住、但仍足够强到拒答 locked feature。
-    - 设计动机：标准 LoRA 合并方法 (CAT / TIES / DARE / Linear) 在 LAT-trained adapter 上全部塌缩——附录 Table 8 显示 SVD/TIES SVD/DARE Linear 都让 ACC=0 (unlocked feature 也被拒答了)，DARE TIES 则反过来 ALA=0.37 (locked feature 没锁住)。问题根因是 refusal direction 在多个 adapter 里都重，求和后该方向上的 spectral norm 远超单个 adapter，导致 attention/MLP 输出在该方向上饱和。spectral norm clipping 直接对症下药——把合并后 norm 拉回单 adapter 上界，refusal 仍 work 但不会过度。
+这样合并后每层的 spectral norm 都被压回"单个 adapter 的最大值"以内，refusal 方向被克制住、但仍强到足以锁住 locked feature。为什么非它不可？附录 Table 8 显示 SVD / TIES SVD / DARE Linear 让 ACC=0（unlocked 也被拒答），DARE TIES 又让 ALA=0.37（locked 没锁住）——根因就是 refusal direction 在多个 adapter 里都重、求和后该方向上的 spectral norm 远超单个 adapter，导致 attention/MLP 输出饱和。直接把合并后 norm 拉回单 adapter 上界，是唯一同时保住 utility 与 effectiveness 的做法。
 
-3. **每特征一个 adapter 的模块化训练 + 动态 attach**:
+**3. 每特征一个 adapter 的模块化训练 + 动态 attach。** 若为每个（客户，授权特征集）组合单独训一个模型，复杂度是 $O(2^N)$；只要 $N$ 稍大就组合爆炸，且新客户或授权变更都得重训。LOCKET 把它降到 $O(N)$：训练时对每个特征 $f$ 仅用其 task-specific 数据集 $D_f$ 独立训一个 adapter $a_f$；推理时由 access control 决定 attach 哪些 adapter 的子集。新增特征只需多训一个新 adapter，新增客户则完全不碰模型、只改授权表。
 
-    - 功能：把"为每个 (客户, 授权特征集) 组合训一个模型"的 $O(2^N)$ 复杂度降到"每个特征训一次 adapter"的 $O(N)$，且无须 retrain 当新客户加入或授权变更时。
-    - 核心思路：训练时对每个特征 $f$ 用其 task-specific 数据集 $D_f$ 单独训 adapter $a_f$；推理时 access control 决定 attach 哪些 adapter 的子集。新增特征只需多训一个新 adapter；新增客户不需要做任何模型操作，只更新 authorization 表。
-    - 设计动机：作者明确比较过"训一个能锁多种组合的单 adapter"vs"每特征一个 adapter"，选后者是因为前者复杂度仍是 $O(2^N)$。每特征独立训 + 合并方案的好处是组合数仍是 $2^N - 1$ 但 adapter 存储只 $O(N)$，且新特征 plug-in，跟现有 LLM serving 框架 (vLLM/PEFT) 完美兼容。
+作者明确比较过"训一个能锁多种组合的单 adapter"和"每特征一个 adapter"，选后者正是因为前者复杂度仍是 $O(2^N)$。每特征独立训 + 合并方案让组合数虽仍是 $2^N-1$、但 adapter 存储只 $O(N)$，新特征即插即用，还与 vLLM / PEFT 等现有 serving 框架天然兼容。
 
 ### 损失函数 / 训练策略
-adapter 训练：LoRA rank=64, alpha=64, dropout=0.1, 用 RSLoRA scaling；LAT 用 PGD 16 步，目标层 $[8, 16, 24, 30]$ (embedding + 三个 hidden)，100 步 total，batch=2。利用率数据集 $D_{\text{auth}}$ 用 UltraChat (165k samples)；功能数据集 $D_f$ 分别用 MATH (7.5k)、SQL Create Context (62.8k)、SAMSum (819)、MMLU (99.8k)。合并超参 $\tau$ 每个 (model, feature combination) 组合用 100 个样本网格搜，DeepSeek-7B-Math 上 4 特征全锁时 $\tau = 0.75$。总计算成本 8×A100 40GB × 6000 GPU 小时。
+
+adapter 训练用 LoRA rank=64、alpha=64、dropout=0.1，配 RSLoRA scaling；LAT 用 PGD 16 步、目标层 $[8, 16, 24, 30]$（embedding + 三个 hidden），共 100 步、batch=2。效用数据集 $D_{\text{auth}}$ 用 UltraChat（165k samples），功能数据集 $D_f$ 分别用 MATH（7.5k）、SQL Create Context（62.8k）、SAMSum（819）、MMLU（99.8k）。合并超参 $\tau$ 对每个（model, feature combination）组合用 100 个样本网格搜，DeepSeek-7B-Math 上 4 特征全锁时 $\tau = 0.75$。总计算成本 8×A100 40GB × 6000 GPU 小时。
 
 ## 实验关键数据
 

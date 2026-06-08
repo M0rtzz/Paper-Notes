@@ -43,26 +43,25 @@ tags:
 本文有两条主线。评测主线是 BRIGHT-PRO：从 BRIGHT 的 StackExchange subset 出发，专家为每个查询标注 reasoning aspects、重要性权重和对应正例文档，再用静态 α-nDCG / A-Recall 以及 agentic search 协议评估检索器。训练主线是 RTriever-Synth：从 MS MARCO seed query 生成 DeepResearch-style analytical queries，生成参考答案并分解为互补 reasoning aspects，再为每个 aspect 合成 positive passage 和 positive-conditioned hard negative，最后用这些数据 LoRA 微调 Qwen3-Embedding-4B 得到 RTriever-4B。
 
 ### 关键设计
-1. **BRIGHT-PRO 多方面证据标注**:
 
-	- 功能：让 benchmark 能评估检索器是否覆盖完整推理需求，而不是只找到一个表面相关段落。
-	- 核心思路：作者选择 BRIGHT 的 StackExchange subset，因为它更接近开放域自然语言推理。领域专家先把每个 query 拆成若干 reasoning aspects，每个 aspect 用 1-2 句 rationale 描述，并用 1-5 Likert score 标注重要性，再归一化为权重。随后专家重新审核原 BRIGHT positives，去除弱相关段落、合并重叠片段，并通过 web search、Perplexity 或 ChatGPT Web Search 补充新证据。
-	- 设计动机：复杂问题的答案常由多个子问题组成。如果一个 retriever 只覆盖一个高权重 aspect，它在传统 Recall 上可能不差，但会让 agent 的最终综合答案缺失关键前提。
+**1. BRIGHT-PRO 多方面证据标注：把评测单位从「一篇相关段落」换成「覆盖了几个推理角度」。**
 
-2. **静态与 agentic 双评测协议**:
+复杂问题的答案常由多个子问题拼成，一个 retriever 哪怕只覆盖了某个高权重 aspect，在传统 Recall 上也未必难看，可这样会让 agent 综合出来的答案缺掉关键前提。BRIGHT-PRO 因此选了 BRIGHT 的 StackExchange subset（更接近开放域自然语言推理），让领域专家把每个 query 拆成若干 reasoning aspects，每个 aspect 配 1-2 句 rationale 描述、再用 1-5 Likert score 打重要性并归一化成权重；同时重新审核原 BRIGHT 的 positives，去掉弱相关段落、合并重叠片段，并用 web search、Perplexity 或 ChatGPT Web Search 补进新证据。这样标注后，benchmark 衡量的就不再是「找到一个表面相关段落」，而是「有没有把这道题需要的几个角度都覆盖到」。
 
-	- 功能：同时隔离检索质量，并测量检索器在真实 agent loop 中的系统价值。
-	- 核心思路：静态评测使用 α-nDCG@k，设置 novelty penalty $\alpha=0.5$，惩罚重复覆盖同一 aspect；同时报告 Weighted Aspect Recall、NDCG 和 Recall。agentic 评测把 retriever 接入同一个 LLM agent，agent 迭代发 search query、读 top-5 passages、生成引用支撑答案。固定轮次协议要求 agent 运行 1/2/3 轮；自适应协议让 agent 自己决定停止，并用 $AER=OQ\times e^{-\gamma(R-1)}$ 同时奖励质量和少轮次。
-	- 设计动机：部署里用户关心的不只是 α-nDCG，而是 agent 能否更快、更可靠地完成答案。双协议能揭示静态排名和系统表现之间的错位。
+**2. 静态与 agentic 双评测协议：既隔离检索质量，又测它在真实 agent loop 里的系统价值。**
 
-3. **RTriever-Synth 与 RTriever-4B 训练**:
+部署里用户真正关心的不是 α-nDCG 高低，而是 agent 能不能更快、更可靠地把答案做出来，单段静态指标可能和这个目标错位。所以论文配了两套协议。静态侧用 α-nDCG@k，设 novelty penalty $\alpha=0.5$ 去惩罚「反复覆盖同一个 aspect」，并报告 Weighted Aspect Recall、NDCG、Recall。agentic 侧把 retriever 接进同一个 LLM agent，让它迭代发 search query、读 top-5 passages、生成带引用的答案；固定轮次协议强制 agent 跑 1/2/3 轮，自适应协议让 agent 自己决定何时停，并用
 
-	- 功能：让 retriever 从训练阶段就学习互补证据选择。
-	- 核心思路：从 100 万 MS MARCO queries 中抽样 140K，先把短 query 改写成带 persona 和背景的 DeepResearch-style query；再生成完整参考答案，把答案分解成 2-3 个非重叠 reasoning aspects；每个 aspect 生成 positive passage blueprint 并实例化为正例。负例不是普通随机负例，而是看到 positives 的标题和摘要后，生成与 query 词面相近但刻意缺失关键 aspect 的 hard negative。
-	- 设计动机：普通 contrastive retriever 只学会把一个 relevant passage 排高；RTriever-Synth 强制训练数据内部存在互补关系和缺失 aspect，从而更贴近 agentic search 的证据组合需求。
+$$AER = OQ \times e^{-\gamma(R-1)}$$
+
+同时奖励答案质量 $OQ$ 和「少跑几轮」$R$。两套协议放在一起，就能把「静态排名」和「系统表现」之间的错位显式暴露出来。
+
+**3. RTriever-Synth 与 RTriever-4B 训练：让 retriever 从训练数据起就学「互补证据选择」而非「找一个相关段落」。**
+
+普通 contrastive retriever 学的是把某一个 relevant passage 排高，这恰恰是 agentic search 不想要的。RTriever-Synth 从 100 万 MS MARCO queries 里抽 140K，先把短 query 改写成带 persona 和背景的 DeepResearch-style query，再生成完整参考答案、把答案分解成 2-3 个互不重叠的 reasoning aspects；每个 aspect 生成一个 positive passage blueprint 并实例化为正例。关键在负例：它不是随机负例，而是在看过 positives 的标题和摘要后，刻意造出「词面和 query 很像、却偏偏缺了某个关键 aspect」的 hard negative。训练数据内部因此天然带着「互补」与「缺角」关系，逼模型去学覆盖而不是相关。
 
 ### 损失函数 / 训练策略
-RTriever-4B 基于 Qwen3-Embedding-4B，用 LoRA 微调所有 linear projection layers，rank 为 16，scaling factor 为 32，原 embedding 参数冻结。训练每步采样一个 query、一个正例和一个 hard negative，同时使用 batch 内其他 documents 作为 in-batch negatives；优化 query-document contrastive InfoNCE，温度 $\tau=0.02$，训练 5 epochs，peak learning rate 为 $1\times10^{-5}$，5% linear warm-up。
+RTriever-4B 基于 Qwen3-Embedding-4B，用 LoRA 微调所有 linear projection layers，rank 16、scaling factor 32，原 embedding 参数冻结。每步采样一个 query、一个正例、一个 hard negative，并用 batch 内其他文档当 in-batch negatives，优化 query-document contrastive InfoNCE，温度 $\tau=0.02$，训练 5 epochs，peak learning rate $1\times10^{-5}$、5% linear warm-up。
 
 ## 实验关键数据
 

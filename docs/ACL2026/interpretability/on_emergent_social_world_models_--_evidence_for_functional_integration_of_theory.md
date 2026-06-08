@@ -48,23 +48,18 @@ tags:
 机制实验则选取其中 20 个模型，主要来自 Qwen-2.5、Llama、Falcon-3 和 Gemma-2。作者构造四套 ToM localizer suite：LatentBeliefs、CommunicativeIntent、GameBeliefs、MoralIntent。每套 localizer 都有需要心理状态推理的 target 条件，以及尽量匹配表面形式但不需要 ToM 的 control 条件。模型处理这些刺激时，作者记录 transformer block 在最后一个待作答 token 前的单元激活，用 target-control 激活差异定位功能子网络，然后通过置零消融验证其因果作用。
 
 ### 关键设计
-1. **行为层面的功能整合检验**:
 
-	- 功能：用跨模型统计关系判断 ToM 与语用推理是否只是共同受模型规模影响，还是存在更专门的能力耦合。
-	- 核心思路：作者提出三条预测。P1 要求不同模型的 ToM accuracy 与 pragmatics accuracy 正相关；P2 要求在控制模型家族、规模、训练类型、数据集类型等因素后，任务属于 ToM 还是语用不再显著预测 accuracy；P3 要求用 ToM accuracy 预测语用 accuracy，比用 BLiMP/SNLI 代表的一般语言能力预测更好。
-	- 设计动机：如果只看相关性，很容易把“大模型什么都强”误读为能力整合。P2 和 P3 的作用就是把模型规模、微调和一般语言能力这些显然的混杂因素纳入统计模型，让“社会认知能力之间的特殊联系”更难被简单解释掉。
+**1. 行为层面的功能整合检验：用统计控制把"大模型什么都强"和"能力真正耦合"分开。**
 
-2. **基于认知神经科学 localizer 的 ToM 子网络定位**:
+如果只看 ToM accuracy 和 pragmatics accuracy 的相关性，很容易把"大模型样样强"误读成两种能力共享机制。作者用三条递进的预测堵住这个解释漏洞：P1 要求 48 个模型上 ToM accuracy 与 pragmatics accuracy 正相关；P2 要求在 Bayesian beta regression 里控制住模型家族、规模、训练类型、数据集类型后，"任务属于 ToM 还是语用"这个标签本身不再显著预测 accuracy；P3 要求用 ToM accuracy 预测语用 accuracy，比用 BLiMP/SNLI 代表的一般语言能力预测得更好。P2 的作用是把模型规模、微调这些显然的混杂因素纳入统计模型吃掉，P3 则进一步证明 ToM 和语用之间存在超出一般语言能力的特殊联系——只有这两条一起成立，"社会认知能力耦合"才不至于被简单解释掉。
 
-	- 功能：在模型内部找出对 ToM target 条件相对 control 条件选择性活跃的单元，形成可消融的功能子网络。
-	- 核心思路：对每个单元 $(l,i)$，作者比较 target 刺激集合与 control 刺激集合在该单元上的激活差异，并用 Welch's $t$-test 得到统计量。simple localizer 直接合并 target/control 条件；conjunctive localizer 则取所有 target-control 条件对的最小统计量，类似神经科学中的 minimum statistic，用来寻找跨条件稳定激活的单元。显著单元如果超过全模型单元数 1%，就只保留绝对统计量最高的 1%。
-	- 设计动机：ToM 不是单一能力，可能涉及信念、意图、欲望、情绪、知识、感知和非字面交流等不同方面。作者用 ATOMS 框架覆盖这些细分能力，并从人类 fMRI 已验证材料出发合成 1400 条 localizer 刺激，试图降低“只定位到某一种 false-belief 模板”的风险。
+**2. 基于认知神经科学 localizer 的 ToM 子网络定位：把人脑功能定位的思路搬进 transformer。**
 
-3. **ToM 子网络的因果消融与跨域迁移验证**:
+要谈"共享机制"，先得在模型内部找出和 ToM 相关的单元。作者借鉴人类 fMRI 的 functional localizer 思路，对每个单元 $(l,i)$ 比较 target 刺激集合（需要心理状态推理）和 control 刺激集合（表面形式尽量匹配但不需要 ToM）在该单元上的激活差异，并用 Welch's $t$-test 得到统计量。这里有两种 localizer：simple localizer 直接合并所有 target/control 条件；conjunctive localizer 取所有 target-control 条件对的最小统计量，类似神经科学里的 minimum statistic，专门寻找跨条件都稳定激活的单元。显著单元若超过全模型单元数的 1%，就只保留绝对统计量最高的 1%。为了不把 ToM 窄化成单一的 false-belief 模板，作者用 ATOMS 框架覆盖信念、意图、欲望、情绪、知识、感知和非字面交流等细分面向，并从人类 fMRI 已验证材料出发合成 1400 条 localizer 刺激，构造出 LatentBeliefs、CommunicativeIntent、GameBeliefs、MoralIntent 四套 suite。
 
-	- 功能：验证定位出的 ToM 子网络是否真的对 ToM 和语用任务有因果贡献，而不只是相关激活。
-	- 核心思路：作者对每个模型和每个 localizer 都构造两种消融：一种是把 ToM target 选择出的关键单元置零，另一种是选择同等数量但最不活跃的控制单元置零。随后重新评测 ToM、语用、BLiMP、SNLI 等任务，比较 accuracy 相对完整模型的下降幅度。
-	- 设计动机：如果功能整合成立，ToM 子网络消融不仅应损害 ToM 任务，也应损害语用任务；同时，这种损害应强于控制消融，并且不应同样强地破坏一般语言能力。这个设计把“共享机制”转化成了可观测的因果预测。
+**3. ToM 子网络的因果消融与跨域迁移验证：把"共享机制"变成可证伪的因果预测。**
+
+定位只能说明相关激活，要确认这批单元真的支撑 ToM 和语用，必须动手消融。作者对每个模型、每套 localizer 都构造两种对照消融：一种把 ToM target 选出的关键单元置零，另一种把同等数量、最不活跃的控制单元置零，随后重新评测 ToM、语用、BLiMP、SNLI，比较 accuracy 相对完整模型的下降幅度。这个设计把"功能整合"这个抽象假说翻译成了一组可观测的因果预测：如果整合成立，ToM 子网络消融不仅应损害 ToM 任务，也应损害语用任务，且这种损害要强于控制消融，同时不应同样强地破坏一般语言能力——三个方向上的结果若一致，就比单纯的行为相关性更接近"同一批单元跨任务复用"的结论。
 
 ### 损失函数 / 训练策略
 本文没有训练新语言模型，核心是评价、定位和消融。模型预测全部通过候选答案条件 log-probability scoring 完成，并对答案 token 长度做平均归一化。统计分析主要使用 Bayesian beta regression 和 leave-one-out cross-validation；机制分析中，定位阶段用 target-control 激活差异筛单元，消融阶段将选中单元激活置零。

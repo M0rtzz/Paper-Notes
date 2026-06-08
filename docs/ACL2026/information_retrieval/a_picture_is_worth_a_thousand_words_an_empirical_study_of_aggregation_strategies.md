@@ -40,36 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文是一篇 **诊断性实证研究**，不提新模型，而是构建 benchmark + scoring mechanism 探针来揭示失败模式。Pipeline：
-
-1. **构建反事实文档对**（数字微改、数字宏改、文本掩码）。
-2. **跑多种 VLM encoder**（Qwen2.5-VL 7B/32B、LLaVA-v1.5、Phi-3.5-Vision、DeepEncoder + 两个 retrieval-tuned：Qwen3-VL-Embedding-8B、GME-Qwen2-VL-7B）抽 patch sequence。
-3. **用 5 种 scoring mechanism**（Mean Pooling / Max Pooling / MaxSim / MeanPatch / MinPatch）测原始 vs 反事实的相似度。
-4. **Visual Attention Analysis**：把文档改成「只剩表格 + 背景纯色」(Signal) 或「擦掉表格 + 保留模板」(Noise)，看聚合向量更像哪个，找根因。
-5. **缓解尝试**（VarWgt 方差加权、AttnGd 注意力引导、TopK-R 去顶 k patch）验证简单修复是否够用。
+本文是一篇诊断性实证研究，不提新模型，而是搭一套 benchmark + scoring 探针来揭示"VLM patch tokens 聚合成单向量"在金融文档检索上的失败模式及其根因。整条诊断链是逐层逼近的：先构造原始 vs 改动单字段的反事实文档对、跑多种 VLM encoder 抽 patch sequence，再用 5 种 scoring mechanism 测原始与反事实的相似度看聚合还能不能区分；当发现聚合"盲"掉后，用 MinPatch 探针证明信号其实还在 patch level，最后用 Signal/Noise 图像消融把根因物理化为可测量的视觉信号差，并验证几种简单缓解策略是否够用。输入是受控扰动的文档对，输出是一组把"失败发生在哪一层、为什么发生"钉死的证据。
 
 ### 关键设计
 
-1. **三层敏感性 benchmark（micro-semantic / macro-semantic / text sensitivity）**:
+**1. 三层敏感性 benchmark：用受控扰动测聚合对金融关键信息的判别力。**
 
-    - 功能：用受控扰动测「encoder + 聚合」对金融关键信息的判别能力。
-    - 核心思路：micro 改单数字小幅（5.21 → 5.29，19.65% → 19.54%，10,520 → 10,526），macro 改幅度大（5.21 → 9.99，11.9 → 88.8，13,499 → 99,999）；text sensitivity 用 Zeiler-Fergus 语义遮挡，对照「Revenue increased by $1.4 billion」vs 同位置 [MASK] 背景色覆盖。每类 100 对 × 2 数据集 = 200 对，总共 600 对诊断样本。
-    - 设计动机：单数字改变在金融场景就足以颠覆决策语义；这种细粒度扰动是日常自然图像 benchmark 完全不覆盖的「真空地带」，也是单向量聚合最容易翻车的地方。
+金融文档的关键语义集中在稀疏的数字/实体上——单个数字改变就颠覆全文意义，而日常自然图像 benchmark 完全不覆盖这种细粒度差异，恰恰是单向量聚合最容易翻车的真空地带。本设计构造三类反事实对：micro-semantic 改单数字小幅（5.21→5.29、19.65%→19.54%、10,520→10,526），macro-semantic 改大幅（5.21→9.99、11.9→88.8、13,499→99,999），text sensitivity 用 Zeiler-Fergus 语义遮挡、把"Revenue increased by \$1.4 billion"与同位置用背景同色 [MASK] 覆盖对照。每类 100 对 × 2 数据集（FinQA、TAT-DQA）共 600 对诊断样本，专门把扰动限制在语义层而非视觉显著性层，从而干净地隔离出聚合的判别能力。
 
-2. **MinPatch 诊断探针——分离 encoder 与聚合的责任**:
+**2. MinPatch 探针：把 encoder 责任与聚合责任干净分离。**
 
-    - 功能：通过取「空间对齐 patch 对 cos 相似度的最小值」($S_\text{min} = \min_i \cos(v_i^A, v_i^B)$) 找出 encoder 注意到的最大局部差异；用于判断「失败是 encoder 看不见还是聚合磨掉」。
-    - 核心思路：MinPatch 不是实用 retrieval metric，而是诊断 probe。如果 MinPatch 大幅下降（如 macro-semantic 到 0.51、text sensitivity 到 0.09、LLaVA 上甚至负数），说明 encoder 已经在 patch level 看到差异；如果同时 Mean/Max Pooling 仍 > 0.99，那责任就**完全在聚合**。
-    - 设计动机：把「encoder 责任」与「聚合责任」干净分离，避免把两类失败混在一起；MinPatch 是设计很妙的「最坏情况 patch」探针，比 MaxSim 等平均 metric 更能挖出隐藏信号。
+聚合失败时无法直接判断是 encoder 根本没看见差异、还是 encoder 看见了但聚合把它磨平，两类失败混在一起就无从下手。MinPatch 取空间对齐 patch 对 cos 相似度的最小值 $S_\text{min} = \min_i \cos(v_i^A, v_i^B)$，专门挖出 encoder 注意到的最大局部差异——它不是实用的 retrieval metric，而是一个"最坏情况 patch"诊断 probe。逻辑是：若 MinPatch 大幅下降（macro 到 0.51、text 到 0.09、LLaVA 上甚至负数）而 Mean/Max Pooling 仍 > 0.99，就说明 encoder 在 patch level 早已看到差异，责任完全落在聚合层；这比 MaxSim 等平均型 metric 更能逼出被聚合淹没的隐藏信号。
 
-3. **Signal / Noise 图像消融——定位 global texture dominance**:
+**3. Signal/Noise 图像消融：把根因物理化为 global texture dominance。**
 
-    - 功能：通过两个对照图像（Signal = 只留表格、背景纯色；Noise = 擦掉表格、保留模板）测量聚合向量更接近哪一个，证明聚合关注的是版式而非数据。
-    - 核心思路：算 cos(reference, Signal) vs cos(reference, Noise)，定义 Gap = sim_to_data − sim_to_layout。Qwen2.5-VL-7B 在 FinQA 上 Gap = −0.22，Phi-3.5 是 −0.27，说明聚合向量与「只剩 layout」的图像更像，与「只剩 data」反而更远——直接证据是聚合在「看背景」。
-    - 设计动机：把「失败的语义层面解释」物理化为可测量的视觉信号差，是非常 clean 的根因分析；这种「消融成 Signal/Noise 两端再算 Gap」的方法可借鉴到其他视觉信息丢失诊断。
+要证明"聚合在看背景而非数据"不能只停在语义解释，得有可测量的视觉证据。本设计造两个对照图：Signal 只留表格、背景纯色，Noise 擦掉表格、保留模板，再算 cos(reference, Signal) 与 cos(reference, Noise)，定义 $\text{Gap} = \text{sim\_to\_data} - \text{sim\_to\_layout}$。结果 Qwen2.5-VL-7B 在 FinQA 上 Gap = −0.22、Phi-3.5 为 −0.27，即聚合向量反而更像"只剩 layout"的图、更远离"只剩 data"的图，直接坐实聚合优先吸收背景纹理（表格线、logo）把稀疏数字像素淹没的 global texture dominance。这种"消融成 Signal/Noise 两端再算 Gap"的手法也可迁移到其他模态的视觉信息丢失诊断。
 
 ### 损失函数 / 训练策略
-无训练，全是 inference 探针实验。所有相似度都用 cosine。两数据集为 FinQA（手动截屏）与 TAT-DQA（直接从 PDF 提取多页财报）。
+无训练，全是 inference 探针实验，所有相似度均用 cosine。两数据集为 FinQA（手动截屏）与 TAT-DQA（直接从 PDF 提取的多页财报）。
 
 ## 实验关键数据
 

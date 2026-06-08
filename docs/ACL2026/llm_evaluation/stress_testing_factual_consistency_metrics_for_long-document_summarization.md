@@ -44,23 +44,18 @@ tags:
 输入是源文档和人工摘要。首先，作者用 GPT-4o 为每个摘要生成七种事实保持扰动版本，包括 paraphrased、simplified、synonym replaced、less diverse、logically equivalent negated、summarized、added source text。然后，对原摘要和扰动摘要的每个句子，从源文档中检索 Top-K 相似句子，并扩展周围窗口作为证据 snippet。每个 factuality metric 对摘要句和候选证据 snippet 打分，取最大值作为该句得分，再对所有摘要句平均得到 summary-level 分数。最后，作者比较扰动前后分数差异，分析 retrieval window size 和 claim similarity 对指标的影响。
 
 ### 关键设计
-1. **七类事实保持扰动**:
 
-	- 功能：在不改变事实含义的情况下改变摘要表面形式，测试指标是否真正语义鲁棒。
-	- 核心思路：Paraphrased 改写句法和措辞，Simplified 拆短复杂结构，Synonym Replaced 替换近义词，Less Diverse 降低词汇多样性，Negated 使用逻辑等价的否定表达，Summarized 进一步压缩摘要，Added Source Text 插入源文档中真实但与主摘要关系较弱的句子。作者还用 NLI-based faithfulness check 做 sanity check，确认除 Negated 外多数扰动的 contradiction rate 很低。
-	- 设计动机：长文档摘要的事实评测不应该被文风、句法或轻微压缩影响。若指标对这些扰动敏感，就说明它可能测的是局部形式匹配，而不是事实支撑。
+**1. 七类事实保持扰动：用语义等价但表面不同的改写，探指标是不是真在测事实。**
 
-2. **检索式长文档 factuality scoring**:
+长文档摘要的事实评测最怕被文风、句法或轻微压缩牵着走——如果一个指标对这些表面变化敏感，那它测的其实是局部形式匹配，而非事实是否被源文档支撑。为此作者对每条原摘要造出七种「事实不变、表面变」的版本：Paraphrased 改写句法措辞，Simplified 把复杂结构拆短，Synonym Replaced 替换近义词，Less Diverse 压低词汇多样性，Negated 用逻辑等价的否定表达，Summarized 进一步压缩，Added Source Text 插入源文档里真实但与主摘要关系较弱的句子。为确认这些扰动确实保事实，作者再用 NLI-based faithfulness check 做 sanity check，结果显示除 Negated 外多数扰动的 contradiction rate 都很低。这样一来，扰动前后分数若大幅波动，就只能归因于指标自身脆弱，而不是事实真的变了。
 
-	- 功能：让短输入 factuality metrics 能在长文档上运行，并观察检索粒度对评分的影响。
-	- 核心思路：对每个摘要句 $s_j$，用 SBERT embedding 与源文档每个句子计算相似度，取 Top-K 源句，并把每个命中句扩展为窗口 $w$ 的上下文片段 $d_{j,k}^{(w)}$。然后用指标 $M$ 分别评估 $s_j$ 和这些 snippet 的一致性，句子得分取 $max_k M(s_j,d_{j,k}^{(w)})$，摘要分数对句子平均。实验中作者改变 $w=0,1,2$，观察更大上下文是否提高指标分数和稳定性。
-	- 设计动机：长文档里证据常常不在单句内。固定检索一个句子可能让指标误判，而扩展窗口能提供更多局部上下文。但如果指标不会利用额外上下文，窗口变大也不会改善。
+**2. 检索式长文档 factuality scoring：把只能吃短输入的指标搬上长文档，并顺带观察检索粒度的影响。**
 
-3. **claim information density / similarity 分析**:
+短输入指标默认源文档和摘要能一起编码，可长文档的证据往往跨越数百到数千 token，必须先检索证据片段再判断一致性。作者对每个摘要句 $s_j$ 用 SBERT embedding 与源文档每个句子算相似度，取 Top-K 源句，并把每个命中句扩展成窗口 $w$ 的上下文片段 $d_{j,k}^{(w)}$；指标 $M$ 分别给 $s_j$ 和这些 snippet 打分，句子得分取 $\max_k M(s_j, d_{j,k}^{(w)})$，摘要分数再对所有句子平均。实验里 $w$ 取 $0,1,2$，专门看更大上下文能否带来更高、更稳的分数。这个设计的巧处在于：长文档证据常常不落在单句内，固定只检索一句容易误判；但如果某个指标根本不会利用额外上下文，那窗口再大也救不了它——窗口敏感性本身就成了诊断指标可靠性的探针。
 
-	- 功能：衡量摘要句是否是“压缩且证据分散”的 claim，并分析这种 claim 对指标的影响。
-	- 核心思路：作者计算每个 summary sentence 与源文档所有句子的平均 cosine similarity，$Sim(s_j,D)=1/n * \sum_i cos(e_j,e_i^D)$。高相似度表示这个 claim 和文档很多位置都有语义重叠，往往更泛化、更压缩，证据也更分散；低相似度则通常是具体、局部、易验证的 claim。作者按 similarity bin 分组，观察不同指标的平均 factuality 分数变化。
-	- 设计动机：长摘要里最难评估的并不是单点事实，而是把多个段落整合成一句概括的 claim。这个分析可以揭示指标是否在处理 distributed evidence 时失效。
+**3. claim information density / similarity 分析：量化「压缩且证据分散」的 claim，看指标在分布式证据上是否失效。**
+
+长摘要里最难评的不是单点事实，而是把多个段落揉成一句的概括性 claim。作者用每个摘要句与源文档所有句子的平均余弦相似度 $Sim(s_j,D)=\frac{1}{n}\sum_i \cos(e_j, e_i^D)$ 来刻画这种 claim：相似度高，说明这句话和文档很多位置都有语义重叠，往往更泛化、更压缩、证据也更分散；相似度低，则通常是具体、局部、好验证的 claim。按 similarity bin 分组后再看各指标的平均 factuality 分数，就能把「长文档难评估」这个笼统印象落到「证据分散的高密度 claim 让指标掉分」这个可观测的现象上，而不只是泛泛抱怨上下文太长。
 
 ### 损失函数 / 训练策略
 本文不训练模型。它评测六个公开 factuality metrics：BARTScore、MiniCheck、SummaC-Conv、SummaC-ZS、AlignScore 和 UniEval。所有指标使用公开版本，不做任务特定微调或校准，以模拟研究和工程中“直接拿指标评估长文档摘要”的常见做法。实验在 SQuALITY、LexAbSumm、ScholarQABench 三个长文档摘要数据集上进行，覆盖科幻小说、法律判决和科研多文档问答摘要。

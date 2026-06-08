@@ -53,23 +53,17 @@ ELBO 选用是关键工程妥协：log-likelihood 可以通过 probability-flow 
 
 ### 关键设计
 
-1. **LOGOA 反事实估计量 + ELBO 代理**:
+**1. LOGOA 反事实估计量 + ELBO 代理：先把"oracle 是什么"钉死，再谈近似。**
 
-    - 功能：把"群组级归因"明确定义成一个可量化的反事实标量，与具体算法解耦。
-    - 核心思路：对生成样本 $(x_0, c)$ 与群组 $k$，定义 $\mathrm{LOGOA}_k(x_0, c) = \mathrm{ELBO}(x_0|c; \theta^{\mathrm{full}}) - \mathrm{ELBO}(x_0|c; \theta^{\mathrm{logo}}_{-k})$。理想上用 $\log p_\theta$，但其在扩散模型里要靠 probability-flow ODE 估计且每次评估都很贵，所以替换为 ELBO 这个 tractable 下界；ELBO 越大代表模型给该样本的（下界）似然越大。
-    - 设计动机：先把"oracle 是什么"说清楚，后续遗忘方法的质量就有了直接可比的验证目标，而不是"换一种遗忘损失再调一调"。这也解释了为什么之前实例级的 Wang et al. (2024) 在群组归因上失败——他们的估计量根本不指向 $\theta^{\mathrm{logo}}_{-k}$。
+很多归因工作直接抛一个分数公式就去比 metric，GUDA 反过来先定义清楚理想答案：对生成样本 $(x_0, c)$ 与群组 $k$，反事实影响就是全量模型与 LOGO 重训模型在该样本上的解释力之差 $\mathrm{LOGOA}_k(x_0, c) = \mathrm{ELBO}(x_0|c; \theta^{\mathrm{full}}) - \mathrm{ELBO}(x_0|c; \theta^{\mathrm{logo}}_{-k})$。理想上这里该用 $\log p_\theta$，但扩散模型的对数似然得靠 probability-flow ODE 估计、每次评估都很贵，于是换成 tractable 的下界 ELBO（ELBO 越大代表模型给该样本的下界似然越大，在 CIFAR-10 上 $\Delta\mathrm{ELBO}$ 与 ODE 估的 $\Delta\log p$ 经验强相关）。把 oracle 写清楚的好处是：后续任何遗忘方法的质量都有了一个直接可比的验证靶子——离 $\theta^{\mathrm{logo}}_{-k}$ 多近，而不是"换一种遗忘损失再调一调"。这也一句话解释了实例级的 Wang et al. (2024) 为何在群组归因上几乎随机：他们的估计量根本不指向 $\theta^{\mathrm{logo}}_{-k}$。
 
-2. **Guda-U 无条件设置下的 ReTrack 重定向遗忘**:
+**2. Guda-U：无条件设置下的 ReTrack 重定向遗忘。**
 
-    - 功能：在无条件扩散里构造一个其期望与"只在 retain set 上训练"等价的遗忘损失，从而近似 $\theta^{\mathrm{logo}}_{-k}$ 而不是泛泛地"擦掉群组 $k$"。
-    - 核心思路：对来自遗忘群组的 $x_0^{(f)} \in \mathcal{D}_k$ 加噪得到 $x_t$ 后，把模型的去噪目标从原本的 $\varepsilon$ 改成 retain set 上的重要性加权目标 $\bar{\varepsilon}_t(x_t) = \sum_{x_0^{(r)} \in \mathcal{D}_{-k}} w_t(x_t; x_0^{(r)}) (x_t - \sqrt{\bar{\alpha}_t} x_0^{(r)})/\sigma_t$，权重 $w_t \propto q_t(x_t|x_0^{(r)})$，实际实现里只取最近 $K$ 个邻居。完整 ReTrack 还含密度比修正项，使整体目标在期望意义下等于 retain-only 训练目标；实践版本省掉密度比并近邻截断作为高效近似。
-    - 设计动机：相比通用遗忘损失（如 ESD）只关心"让模型不再生成群组 $k$ 的内容"，ReTrack 的目标显式对齐 LOGO 反事实，是 GUDA 框架里"反事实近似质量"的关键决定因素——实验证明 GUDA+ReTrack 比 GUDA+ESD 在 Top-1 上 72.7% vs 61.9%，差距完全来自遗忘算子选择。
+有了 oracle，剩下的问题就是怎么不重训也能逼近 $\theta^{\mathrm{logo}}_{-k}$。痛点在于通用遗忘损失（如 ESD）只关心"让模型别再生成群组 $k$ 的内容"，方向并不对齐 LOGO 反事实。ReTrack 的做法是直接改去噪目标：对来自遗忘群组的 $x_0^{(f)} \in \mathcal{D}_k$ 加噪得到 $x_t$ 后，不再让模型去预测它原本的噪声 $\varepsilon$，而是预测一个 retain set 上的重要性加权目标 $\bar{\varepsilon}_t(x_t) = \sum_{x_0^{(r)} \in \mathcal{D}_{-k}} w_t(x_t; x_0^{(r)}) (x_t - \sqrt{\bar{\alpha}_t} x_0^{(r)})/\sigma_t$，权重 $w_t \propto q_t(x_t|x_0^{(r)})$，实现里只取最近 $K$ 个邻居。完整版 ReTrack 还带一个密度比修正项，使整个遗忘目标在期望意义下恰好等于"只在 retain set 上训练"的目标——这正是 LOGO 想要的反事实；实践版省掉密度比、用近邻截断作为高效近似。因为遗忘算子的方向直接决定了反事实近似有多准，它成了整个 GUDA 框架里最关键的可换零件：同框架下把 ReTrack 换成 ESD，Top-1 就从 72.7% 掉到 61.9%，差距完全来自这一个选择。
 
-3. **Guda-C 有条件 T2I 下的加权风格选择锚点 (WSS)**:
+**3. Guda-C：有条件 T2I 下的加权风格选择锚点 (WSS)。**
 
-    - 功能：把无条件 ReTrack 思路扩展到 Stable Diffusion 这种 text-to-image 模型，专门处理"去掉风格 $k$ 后，包含风格 $k$ 的 prompt 在 retain-only 训练下变成 out-of-support"这个新难点。
-    - 核心思路：给一对 forget 样本 $(x_f, c_f) \sim \mathcal{D}_k$，构造锚点条件 $c_a$——保留 $c_f$ 中的内容描述（物体/场景），只把风格描述替换成从 retain styles $\mathcal{S}_{\text{retain}}$ 中按 CLIP 相似度加权采样的风格 $s$（例如把 Abstractionism 的"dynamic forms, energetic"换成 Artist Sketch 的"grayscale, sketchy, soft shading"）。遗忘损失为 $\mathcal{L}_{\text{forget}}^{(C)} = \mathbb{E}[\|\epsilon_\theta(x_t, t, c_f) - \epsilon_{\theta^{\mathrm{full}}}(x_t, t, c_a)\|_2^2]$，让待遗忘模型在 forget condition $c_f$ 下的预测，去对齐冻结全量模型在 retain anchor $c_a$ 下的预测。
-    - 设计动机：朴素照搬 ReTrack 会失败——条件设置下 LOGO 重写出的去噪问题里 forget condition 本身就不在训练支撑集上，posterior target 没定义。WSS 通过"换皮不换骨"把 forget condition 重定向到 retain prompt 分布里，既消除了 condition-distribution mismatch，又跟当前 noisy latent $x_t$（来自 forget 图）在内容上保持一致，让 score matching 有意义。
+把 ReTrack 照搬到 Stable Diffusion 这类 text-to-image 模型上会直接失败，因为多出一个新难点：一旦"删掉风格 $k$"，那些包含风格 $k$ 的 prompt 在 retain-only 训练下就成了 out-of-support，LOGO 重写出的去噪问题里 forget condition 落在训练支撑集之外，posterior target 根本没定义。WSS 的解法是"换皮不换骨"——给一对 forget 样本 $(x_f, c_f) \sim \mathcal{D}_k$ 构造锚点条件 $c_a$：保留 $c_f$ 里的内容描述（物体/场景），只把风格描述替换成从 retain styles $\mathcal{S}_{\text{retain}}$ 中按 CLIP 相似度加权采样的一个风格 $s$（例如把 Abstractionism 的"dynamic forms, energetic"换成 Artist Sketch 的"grayscale, sketchy, soft shading"）。遗忘损失随之变成让待遗忘模型在 forget condition 下的预测去对齐冻结全量模型在 retain anchor 下的预测：$\mathcal{L}_{\text{forget}}^{(C)} = \mathbb{E}[\|\epsilon_\theta(x_t, t, c_f) - \epsilon_{\theta^{\mathrm{full}}}(x_t, t, c_a)\|_2^2]$。这样既把 forget condition 重定向回 retain prompt 分布、消除 condition-distribution mismatch，又让监督目标和当前 noisy latent $x_t$（来自 forget 图）在内容上保持一致，使 score matching 仍然有意义。
 
 ### 损失函数 / 训练策略
 

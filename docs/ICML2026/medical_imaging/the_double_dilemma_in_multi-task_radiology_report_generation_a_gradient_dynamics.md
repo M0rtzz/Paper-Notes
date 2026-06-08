@@ -42,32 +42,21 @@ tags:
 
 ### 整体框架
 
-CAME-Grad 在每步：
-1. 算各任务梯度 $\bm g_i$ 和加权 $\bm g_{joint}$、均值 $\bm \mu$
-2. **Stage 1**：解对偶问题得纠偏方向 $\bm u^*_{rect}$（信任域内最大化最坏改善）
-3. **Stage 2**：把 $\bm u^*_{rect}$ 振幅放大到 $\kappa \|\bm g_{joint}\|$ 得能量注入梯度 $\bm u_{en}$
-4. **Stage 3**：$\bm g_{final} = (1-\nu)\bm u_{en} + \nu(\kappa \bm g_{joint})$，与原方向融合
-5. SGD 更新 $\Theta \leftarrow \Theta - \eta \bm g_{final}$
+CAME-Grad 是一个即插即用的梯度优化器，直接替换 RRG 多任务训练里的静态线性加权。每一步它先算出各任务梯度 $\bm g_i$、加权梯度 $\bm g_{joint}$ 和均值 $\bm \mu$，再依次走三个阶段：先把所有任务的拉扯纠成一个"对最坏任务也有改善"的方向（治 drift deviation），再把这个方向的振幅放大、补回探索能量（治 diffusion decay），最后和原始 $\bm g_{joint}$ 软融合保住任务先验，得到 $\bm g_{final}$ 后做一次普通 SGD 更新 $\Theta \leftarrow \Theta - \eta \bm g_{final}$。整套逻辑对应 SDE 视角下"方向 + 振幅必须同治"的诊断结论。
 
 ### 关键设计
 
-1. **Conflict-Averse 方向纠偏（Stage 1）**:
+**1. Conflict-Averse 方向纠偏：在所有任务间找一个"最坏改善最大"的方向。**
 
-    - 功能：在所有任务梯度间找一个"最坏改善最大"的方向，保几何有效性
-    - 核心思路：信任域问题 $\max_{\bm u} \min_i \bm g_i^\top \bm u$ s.t. $\|\bm u - \bm \mu\| \leq \rho \|\bm \mu\|$（中心是均值 $\bm \mu$，半径 $\rho \|\bm \mu\|$）；转对偶 $\min_{\bm \alpha \in \Delta^{K+1}} \mathcal{F}(\bm \alpha) = \bm g_{\bm \alpha}^\top \bm \mu + \sqrt{\xi}\|\bm g_{\bm \alpha}\|$（$\xi = \rho^2 \|\bm \mu\|^2$）；闭式解 $\bm u^*_{rect} = \bm \mu + \frac{\sqrt{\xi}}{\|\bm g_{\bm \alpha^*}\|} \bm g_{\bm \alpha^*}$
-    - 设计动机：CAGrad-style 但加了信任域硬约束保收敛稳定；对偶在 simplex 上低维可解（GPU 几乎零开销），避开高维原始问题；同时这个方向"对最坏任务也有改善"保 Pareto 兼容
+线性加权之所以失败，是因为报告生成和临床约束的梯度有 53.8% 的时间方向相反，强行求和后两个任务互相拉扯、偏离 Pareto 最优。这一阶段不再盲目加权，而是在均值梯度 $\bm \mu$ 附近的一个信任域里，找让"最坏任务改善最大化"的方向：$\max_{\bm u} \min_i \bm g_i^\top \bm u$ s.t. $\|\bm u - \bm \mu\| \leq \rho \|\bm \mu\|$，中心取均值 $\bm \mu$、半径取 $\rho \|\bm \mu\|$。直接解这个 min-max 在高维参数空间代价高，作者转成对偶形式 $\min_{\bm \alpha \in \Delta^{K+1}} \mathcal{F}(\bm \alpha) = \bm g_{\bm \alpha}^\top \bm \mu + \sqrt{\xi}\|\bm g_{\bm \alpha}\|$（$\xi = \rho^2 \|\bm \mu\|^2$），优化变量是 $K{+}1$ 维 simplex 上的权重，求出最优 $\bm \alpha^*$ 后纠偏方向有闭式解 $\bm u^*_{rect} = \bm \mu + \frac{\sqrt{\xi}}{\|\bm g_{\bm \alpha^*}\|} \bm g_{\bm \alpha^*}$。比起 CAGrad，它多了信任域硬约束把搜索锁在均值附近，既保收敛稳定又因为对偶维度低而几乎不增 GPU 开销；同时"对最坏任务也有改善"这一条保证了纠出来的方向是 Pareto 兼容的。
 
-2. **Magnitude-Enhanced 能量注入（Stage 2）**:
+**2. Magnitude-Enhanced 能量注入：纠完方向还要把塌掉的探索能量补回来。**
 
-    - 功能：补偿 diffusion decay，让模型有足够探索能量逃 sharp minima
-    - 核心思路：目标振幅 $\tau_{mag} = \kappa \|\bm g_{joint}\|$（$\kappa > 1$ 是增益）；增强后梯度 $\bm u_{en} = \bm u^*_{rect} \cdot \tau_{mag} / (\|\bm u^*_{rect}\| + \epsilon)$
-    - 设计动机：纯纠方向（CAGrad）会让振幅在冲突时塌缩，模型陷 sharp minima；放大振幅相当于在 SDE 里把 diffusion coefficient 拉回正常水平，恢复 SGD 的隐式正则化作用（flat minima 偏好）；$\kappa$ 控制能量过剩程度
+只纠方向有个隐患——任务冲突时合成梯度的振幅会塌缩，对应 SDE 里 diffusion term 的能量衰减，模型因此卡在 sharp minima 里出不来、错过罕见病细节。这一阶段把上一步的 $\bm u^*_{rect}$ 重新缩放到一个放大的目标振幅 $\tau_{mag} = \kappa \|\bm g_{joint}\|$（增益 $\kappa > 1$），得到 $\bm u_{en} = \bm u^*_{rect} \cdot \tau_{mag} / (\|\bm u^*_{rect}\| + \epsilon)$。相当于在 SDE 里把被压低的 diffusion coefficient 拉回正常水平，恢复 SGD 隐式偏好 flat minima 的正则化作用，让优化器有足够能量逃出局部最优；$\kappa$ 越大注入的探索能量越多。
 
-3. **Adaptive Gradient Fusion（Stage 3）**:
+**3. Adaptive Gradient Fusion：在纠偏方向和原方向之间留一个旋钮。**
 
-    - 功能：在纠偏方向与原 $\bm g_{joint}$ 间软融合，避免完全偏离原方向丢任务特定 inductive bias
-    - 核心思路：$\bm g_{final} = (1-\nu) \bm u_{en} + \nu (\kappa \bm g_{joint})$，$\nu \in [0,1]$ 调任务特定先验权重
-    - 设计动机：纯纠偏方向可能丢任务结构信息（如特定预训练知识）；与原方向融合保留任务 bias；$\nu$ 让用户在"全 Pareto 化"和"保任务先验"间调节
+完全采纳纠偏方向也有代价：任务特定的结构信息（如某个分支的预训练知识）可能被抹掉。最后一步把能量注入后的方向和放大后的原始梯度做软融合 $\bm g_{final} = (1-\nu) \bm u_{en} + \nu (\kappa \bm g_{joint})$，其中 $\nu \in [0,1]$ 是任务先验权重——$\nu$ 趋 0 偏向全 Pareto 化，趋 1 偏向保留原始任务 bias，让使用者按场景在两者间权衡。
 
 ## 实验关键数据
 

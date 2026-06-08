@@ -46,23 +46,19 @@ tags:
 每个行为都使用两个领域。例如 list、metaphor、science、refusal 属于文本表面较明显的行为；sycophancy、deferral-to-authority、sandbagging、deception 属于文本歧义行为，单看输出文本往往无法知道模型真实动机。训练时，作者平衡正负样本；前六类行为每种策略用 3500 训练、500 验证、1000 测试，deception 和 sandbagging 因输入较少使用 2500 训练、500 验证、500 测试。
 
 ### 关键设计
-1. **四种响应生成策略的因子化比较**:
+**1. 四种响应生成策略的因子化比较：把“是否目标模型策略”和“是否被诱导”拆开。**
 
-	- 功能：把“数据是否来自目标模型策略”和“行为是否被诱导”拆开比较。
-	- 核心思路：on-policy natural 作为理想基线，on-policy incentivised 通过任务激励让模型自然地产生目标行为，on-policy prompted 用显式指令制造行为，off-policy 用其他模型或已有数据生成响应。所有策略最终都在相同的激活提取和 probe 训练框架中评估，主要指标为 AUROC。
-	- 设计动机：过去许多 probe 论文只说“用了合成数据”或“用了外部数据”，但这些来源混杂了模型策略、提示痕迹和领域差异。因子化比较能看清 probe 失败到底来自哪类偏移。
+过去许多 probe 论文只笼统说“用了合成数据”或“用了外部数据”，但这些来源把模型策略、提示痕迹和领域差异全混在一起，看不清失败到底来自哪。本文把响应生成拆成四档：on-policy natural 是目标模型在原始 prompt 上自然回答，作为理想基线；on-policy incentivised 通过任务激励让目标行为变得有利、从而被自然诱导出来；on-policy prompted 用显式指令制造行为；off-policy 则由其他模型或已有数据生成文本再喂给目标模型提取激活。四档最终都进同一套激活提取和 probe 训练框架，用 AUROC 衡量。这样的因子化设计能把 probe 失败精确归因到某一类偏移，而不是一锅炖看不清来源。
 
-2. **行为标签的反事实构造**:
+**2. 行为标签的反事实构造：用“为什么生成”而不是“长什么样”来定义行为。**
 
-	- 功能：为文本歧义行为提供更可信标签，避免把普通同意、错误答案或风格偏好误标为危险行为。
-	- 核心思路：对 sycophancy、deferral 和部分 sandbagging，作者对同一问题生成控制响应和带后缀响应，只有当模型因用户意见、权威来源或关闭威胁而改变答案时才标正例。对 refusal 使用 HarmBench 分类器，对其他行为使用 GPT-5-Nano 自动评分，并过滤低置信标签。对 deception 和 WMDP sandbagging，则使用私有/公开回答或场景内事实来判定是否存在隐藏意图。
-	- 设计动机：很多监控目标不是“文本长什么样”，而是“这段文本为什么被生成”。反事实标注把行为定义从表面文本推回生成过程，是本文能区分 text-evident 和 text-ambiguous 的基础。
+很多监控目标——sycophancy、deferral、sandbagging——的危险之处不在文本表面，普通的同意、答错或风格偏好都可能被误标成危险行为。为给这些 text-ambiguous 行为更可信的标签，作者对同一问题生成控制响应和带后缀响应，只有当模型因用户意见、权威来源或关闭威胁而改变答案时才记正例；refusal 用 HarmBench 分类器，其他行为用 GPT-5-Nano 自动评分并过滤低置信标签，deception 和 WMDP sandbagging 则用私有/公开回答或场景内事实判定是否存在隐藏意图。这套反事实标注把行为定义从表面文本推回生成过程，正是本文能把 text-evident 和 text-ambiguous 区分开的基础。
 
-3. **domain shift 与 response strategy shift 的统计分离**:
+> ⚠️ GPT-5-Nano 等模型名以原文为准。
 
-	- 功能：量化领域偏移和响应策略偏移分别造成多少 AUROC 损失。
-	- 核心思路：作者同时使用混合效应模型和 OLS 交互回归。混合效应模型估计跨行为平均效应，OLS 交互项分解每个行为对 domain shift 和 generation method 的敏感性。论文还在 Llama-3.2-3B、Gemma-3-27B、Ministral-8B、部分 Qwen 模型，以及线性 probe 和 attention probe 上复核趋势。
-	- 设计动机：不同 probe 任务难度差异很大，简单平均会掩盖行为异质性。统计模型让“领域偏移更重要”不只是图上的直觉，而有显著性和行为级解释。
+**3. domain shift 与 response strategy shift 的统计分离：量化两类偏移各拿走多少 AUROC。**
+
+不同 probe 任务难度差异很大，简单平均会掩盖行为异质性，让“领域偏移更重要”只停在图上的直觉。作者同时上两套统计工具：混合效应模型估计跨行为的平均效应，OLS 交互回归则分解每个行为分别对 domain shift 和 generation method 有多敏感。趋势还在 Llama-3.2-3B、Gemma-3-27B、Ministral-8B、部分 Qwen 模型，以及线性 probe 和 attention probe 上复核。这样“领域偏移比响应策略偏移更伤”就不只是一句观察，而带上了显著性和行为级解释。
 
 ### 损失函数 / 训练策略
 线性 probe 对序列激活求平均后使用 logistic regression，带 L2 正则；attention probe 学习 query/value 权重，用 softmax 对 token 激活加权，再用 sigmoid 输出分类概率。attention probe 用 AdamW 最小化二元交叉熵。作者在验证集上选择激活层和超参数，所有结果用 AUROC 与 95% 置信区间报告。核心训练策略是平衡正负样本并严格用 offset 避免不同 response strategy 的训练/测试输入泄漏。

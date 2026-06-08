@@ -47,23 +47,21 @@ FOREVER 把 replay 拆成两个紧耦合的组件，二者共享同一信号 (pa
 
 ### 关键设计
 
-1. **Model-Centric Time Calibration (累积参数更新作为"模型时间")**:
+**1. 模型时间校准：用累积参数更新 norm 取代训练步数来计量"模型走了多远"。**
 
-    - 功能：用累积参数更新 norm $\tau_t = \sum_{i=1}^t \Delta_i$ 替代训练步数，作为衡量"模型走了多远"的时间度量；再定义"虚拟一天" $\tau_{\text{day}} = \sum_{i=1}^S \Delta_i$ (warm-up window) 作为模型特定的时间单位。
-    - 核心思路：$\Delta_t = \|\Theta_t - \Theta_{t-1}\|_2$ 只对 trainable 参数 (LoRA weights) 计算，直接从 optimizer 的应用更新中拿，**无需额外 forward/backward**——纯额外开销几乎为零。累积量 $\tau_t$ 直接反映模型在参数空间的总移动距离，对学习率、batch size 等超参数远比 step count 鲁棒。Ebbinghaus 人类天数 $\{1,2,4,7,15,30,...\}$ 通过 $\tau_{\text{day}}$ 这个换算因子映射到模型时间轴上 → 回放触发条件 $\tau_t \geq \mathcal{D}_{\text{model}}^{(j)}$。
-    - 设计动机：相同 step 数在 lr=1e-4 和 lr=1e-5 下可能对应完全不同的模型状态——把"何时回放"绑死在 step 上，等于让一个低学习率任务和高学习率任务"按同一节奏复习"，必然失配。换成 update norm，等价于按"模型确实变了多少"来安排复习，这是用 Ebbinghaus 思想的正确方式。
+相同 step 数在 lr=1e-4 和 lr=1e-5 下可能对应完全不同的模型状态——把"何时回放"绑死在 step 上，等于让一个低学习率任务和一个高学习率任务"按同一节奏复习"，必然失配，而这正是过去 step-based Ebbinghaus 方法（如 VBM）的隐患。FOREVER 改用单步参数更新 $\Delta_t = \|\Theta_t - \Theta_{t-1}\|_2$（只对 trainable 的 LoRA 权重计算，直接从 optimizer 已应用的更新里拿，无需额外 forward/backward），把它累积成模型时间 $\tau_t = \sum_{i=1}^t \Delta_i$，直接反映模型在参数空间走过的总距离，对学习率、batch size 远比 step count 鲁棒。再取 warm-up window 内 $S$ 步（本文 $S=24$）的累积更新作为"虚拟一天" $\tau_{\text{day}} = \sum_{i=1}^S \Delta_i$ 这个模型特定的时间单位，于是 Ebbinghaus 人类天数就能换算到模型时间轴上，回放在 $\tau_t \geq \mathcal{D}_{\text{model}}^{(j)}$ 时触发，每个任务开始时 $\tau$ 重置。本质上，这是按"模型确实变了多少"来安排复习，才是用 Ebbinghaus 思想的正确姿势。
 
-2. **Forgetting Curve-Inspired Increasing-Spacing Schedule**:
+**2. 遗忘曲线驱动的递增间隔调度：用"先密后疏"的回放结构对齐人类记忆的早快后慢衰减。**
 
-    - 功能：按 Ebbinghaus 的"先密后疏" (dense-to-sparse) 回放间隔结构安排回放事件，对应人类记忆的"早期快速衰减、后期慢速衰减"。
-    - 核心思路：直接使用 Ebbinghaus 标准间隔 $\{1,2,4,7,15,30,...\}$ 作为 $\mathcal{D}_{\text{human}}$；在 ablation 中对比 4 种 schedule：标准 Ebbinghaus、指数 $\{1,2,4,8,16,...\}$、多项式 $\{1,4,9,16,...\}$、均匀 $\{2,4,6,8,...\}$、递减 $\{15,7,4,2,1\}$。结果一致——任何递增间隔都好于均匀或递减；标准 Ebbinghaus 略好于纯参数化形式 (OP 42.5 vs 指数 42.3 vs 多项式 41.5 vs 均匀 40.9 vs 递减 37.2)。证明真正起作用的不是"具体数列"而是"结构性 dense-to-sparse 原则"——这一原则恰好对应模型早期参数变化大需要频繁复习、后期稳定可拉长间隔的事实。
-    - 设计动机：作者明确强调"FOREVER 不是某个 magic 数列的功劳，而是结构对齐"——避免被人误读为 over-fitted 启发式；同时给出了把人类认知科学量化为可工程化设计的范例。
+人类遗忘曲线是早期快速衰减、后期慢速衰减，对应到训练上恰好是模型早期参数变化大、需要频繁复习，后期稳定下来可以拉长间隔。FOREVER 直接采用 Ebbinghaus 标准间隔 $\{1,2,4,7,15,30,...\}$ 作为 $\mathcal{D}_{\text{human}}$，再经 $\tau_{\text{day}}$ 映射成模型时间下的触发阈值 $\mathcal{D}_{\text{model}}=\{d\cdot\tau_{\text{day}} \mid d\in\mathcal{D}_{\text{human}}\}$。为了证明起作用的是结构而非某个 magic 数列，作者在 ablation 里横向对比了五种 schedule——标准 Ebbinghaus、指数 $\{1,2,4,8,16,...\}$、多项式 $\{1,4,9,16,...\}$、均匀 $\{2,4,6,8,...\}$、递减 $\{15,7,4,2,1\}$，结果一致指向"任何递增间隔都好于均匀或递减"，标准 Ebbinghaus 只是略好于其他参数化形式（OP 42.5 vs 指数 42.3 vs 多项式 41.5 vs 均匀 40.9 vs 递减 37.2）。作者据此明确强调 FOREVER 不是某个数列的功劳，而是 dense-to-sparse 的结构对齐，既避免被误读为 over-fitted 启发式，也示范了如何把认知科学量化成可工程化的设计。
 
-3. **Intensity-Aware Replay Regularization (动态 $\beta_t$ 同源于 update 信号)**:
+**3. 强度自适应回放正则：让同一个更新信号既决定何时回放、又决定回放多强。**
 
-    - 功能：让回放正则强度跟随模型当前的"不稳定度"动态调整——模型变化快时用强约束防遗忘，稳定时放松约束让新任务学得动。
-    - 核心思路：用 baseline $\mu_0$ (warm-up window 平均更新) 和 EMA $\mu_t$ 的比值 $r_t = \mu_t/\mu_0$ 刻画"现在比起步时更激进还是更保守"。当 $r_t > 1$ (更激进) → $\beta_t$ 放大 → 强约束；$r_t < 1$ → $\beta_t$ 收缩。clip 操作 $g_{\min}=0.5, g_{\max}=3.0$ 防数值爆炸，超参 $\gamma$ 控制敏感度。最终 $\mathcal{L}_{\text{replay}} = \mathcal{L}_{\text{task}}^{(\text{old})} + \beta_t \sum_j \|\Theta_j - \Theta_j^\star\|_2^2$ 用 $L_2$ 锚定到上任务快照 $\Theta^\star$。
-    - 设计动机：这是把"when to replay"和"how to replay"统一到同一信号 (update magnitude) 的关键——同一个 $\Delta_t$ 既累积成 $\tau_t$ 决定时机，又 EMA 成 $\mu_t$ 决定强度。这种"一信号驱动两决策"的设计哲学比"两个独立超参各调一遍"更优雅且更少超参，避免了 SAPT/SSR 等方法那种 hand-crafted 复杂调度。
+固定的回放强度 $\beta$ 没法响应"模型现在到底是在剧烈变化还是已经稳定收敛"，这正是过去方法把"when"和"how"拆开各调一遍的代价。FOREVER 复用同一个 $\Delta_t$：除了累积成 $\tau_t$ 决定时机，还对它取 EMA 得到 $\mu_t = (1-\lambda)\mu_{t-1} + \lambda \Delta_t$ 来估当前移动速度，与 warm-up 基线 $\mu_0 = \frac{1}{S}\sum_{t=1}^S \Delta_t$ 相比得到不稳定比 $r_t = \mu_t/\mu_0$，刻画"现在比起步时更激进还是更保守"。回放正则强度随之动态调整：$\beta_t = \beta_{\text{base}} \cdot \text{clip}(1 + \gamma(r_t - 1), g_{\min}, g_{\max})$，当 $r_t>1$（更激进）就放大 $\beta_t$ 加强约束防遗忘，$r_t<1$ 就收缩 $\beta_t$ 让新任务学得动，clip 边界 $g_{\min}=0.5, g_{\max}=3.0$ 防数值爆炸、超参 $\gamma$ 控敏感度。最终回放损失把它接到一个 $L_2$ 锚定项上：
+
+$$\mathcal{L}_{\text{replay}} = \mathcal{L}_{\text{task}}^{(\text{old})} + \beta_t \sum_j \|\Theta_j - \Theta_j^\star\|_2^2$$
+
+其中 $\Theta^\star$ 是上个任务结束时的参数快照。"一个 $\Delta_t$ 既累积成 $\tau_t$ 管时机、又 EMA 成 $\mu_t$ 管强度"是这套设计的精髓——比起 SAPT/SSR 那种 hand-crafted 复杂调度，它少一个独立超参，也更易解释。
 
 ### 损失函数 / 训练策略
 LoRA-based 框架统一所有 baseline；warm-up window $S=24$，EMA 平滑 $\lambda=0.05$，$\beta_{\text{base}}=10^{-3}$，clip $[0.5, 3.0]$；memory buffer 存每任务原始训练数据的 2%；所有实验跑 3 个 seed 平均。

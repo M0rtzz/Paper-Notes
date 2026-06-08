@@ -40,27 +40,21 @@ KORE 通过两阶段"知识导向控制"为 LMM 注入新知识 — 一边把单
 ## 方法详解
 
 ### 整体框架
-KORE 是两阶段流程：(1) KORE-augmentation — 给每条原始 (image, text) 知识自动产出多轮对话 + 视觉识别 + Image Caption + VQA 共 4 类训练样本，作者用 EVOKE 原始知识构建出 KORE-74K 数据集（其中 75K 对话 + 46K VQA）；(2) KORE-constraint — 在 LLaVA / Qwen 的所有线性层上采样 256 条 OneVision 样本得到激活协方差矩阵 $C=XX^\top$，对每层做 SVD 取最小 $r$ 个奇异向量构成 $\hat U$，得到投影器 $P=\hat U\hat U^\top$，再用 $\text{SVD}(W_0P)$ 初始化 LoRA 的 $B,A$，并把原始权重调整为 $W_0'=W_0-BA$ 保证训练开始时模型行为不变。训练时冻结 $A$ 只动 $B$。
+KORE 把"既要学新知识、又不能忘旧本事"这对矛盾拆成数据和参数两条独立可控的线，组成一个两阶段流程。前一阶段 KORE-augmentation 在数据侧动手，把每条孤立的 (image, text) 事实自动膨胀成一棵结构化"知识树"，让模型从多个角度反复消化同一条知识；后一阶段 KORE-constraint 在参数侧动手，把 LoRA 适配器初始化到"旧知识激活协方差"的零空间里，使新知识的写入方向天然绕开承载旧能力的子空间。两阶段各管一头——增强主攻适配、约束主攻保留——再合到一次标准 LoRA 训练里。
 
 ### 关键设计
 
-1. **KORE-augmentation：知识树状结构增强**:
+**1. KORE-augmentation：把一条事实长成一棵知识树**
 
-    - 功能：把一条孤立的 (image, knowledge) 自动展开成一棵"主干（多轮对话）+ 分支（三类指令任务）"的知识树，强迫模型理解知识内在逻辑关联而非死记硬背。
-    - 核心思路：主干由"启发式 Q&A（模板）+ GPT-4o 基于原文本生成的 10 轮对话"组成；分支用 News 标题 / Entity 名作为关键词从 Google 检索 top-5 图，与原图做 CLIP 余弦相似度筛选保留 2 张相关图，分别用于：① 视觉识别（"图中是 X 吗？"答 Yes）、② Image Caption（GPT-4o 生成的段落摘要）、③ VQA（GPT-4o 生成 $(Q,A,S,H)$ 四元组，$S$ 是主语、$H$ 是上位词作检索关键词）。
-    - 设计动机：传统增强（同义词替换、图像旋转）是表层、离散的，只能扩大"训练样本曝光面"，对知识结构没贡献。把同一知识从对话流、识别任务、描述任务、问答任务四个角度反复呈现，相当于强迫模型在不同抽象层级 cross-validate 该知识，从而真正 internalize。
+传统增强（同义词替换、图像旋转）只是表层 paraphrase，把一条知识扩成若干孤立样本，扩大了曝光面却没建立知识内部的逻辑关联，模型学到的往往是"复述训练 prompt"而非真正 internalize。KORE 改成"主干 + 分支"的树状展开：主干是一条多轮对话流，由启发式模板 Q&A 加上 GPT-4o 基于原文生成的 10 轮对话构成；分支则是三类视觉指令任务——以 News 标题或 Entity 名为关键词从 Google 检索 top-5 图、再用 CLIP 余弦相似度筛出 2 张相关图后，分别构造视觉识别（"图中是 X 吗？"答 Yes）、Image Caption（GPT-4o 生成的段落摘要）和 VQA（GPT-4o 产出 $(Q,A,S,H)$ 四元组，$S$ 为主语、$H$ 为上位词供检索）。同一条知识从对话、识别、描述、问答四个抽象层级被反复呈现，相当于逼模型在不同任务上 cross-validate 这条事实，从而真正吸收而非死记。作者用 EVOKE 原始知识跑出 KORE-74K 数据集（75K 对话 + 46K VQA）。
 
-2. **KORE-constraint：协方差零空间初始化**:
+**2. KORE-constraint：协方差零空间初始化让新知识绕开旧表征**
 
-    - 功能：把 LoRA 的低秩矩阵 $A$ 强制初始化到"旧任务激活协方差"的零空间，让 fine-tune 只在不影响旧表征的方向上发生。
-    - 核心思路：对每个线性层收集激活 $X\in\mathbb{R}^{d_{in}\times BL}$，计算 $C=XX^\top$，做 $\text{SVD}(C)=\sum_i\sigma_i u_i u_i^\top$，取最小奇异值对应的 $r$ 个左奇异向量构成 $\hat U$，得到投影 $P=\hat U\hat U^\top$。再用 $\text{SVD}(W_0 P)=U^*\Sigma^*(V^*)^\top$ 初始化 $B=U^*\sqrt{\Sigma^*}$、$A=\sqrt{\Sigma^*}(V^*)^\top$，并令 $W_0'=W_0-BA$。训练只更新 $B$，因 $AC\approx 0$ 所以 $BAC\approx 0$，旧任务输入下输出不变。
-    - 设计动机：作者用 CO-SVD 实验验证了"协方差矩阵确能捕获多模态知识"（图 4：用 MME / ScienceQA 协方差去掉小奇异值后性能保留远好于 plain SVD / ASVD，且不同任务呈现可区分的 outlier 模式）。在此基础上把零空间方向留给"新知识写入"，等价于把新旧知识隔离在两个正交子空间。
+旧知识的本质是各线性层"输入激活的协方差结构"，只要参数改动不改变旧输入下的输出，旧能力就不受影响。KORE 据此把 LoRA 的低秩矩阵 $A$ 钉死在旧任务激活协方差的零空间里：对每个线性层收集激活 $X\in\mathbb{R}^{d_{in}\times BL}$，算出 $C=XX^\top$，做 $\text{SVD}(C)=\sum_i\sigma_i u_i u_i^\top$，取最小奇异值对应的 $r$ 个左奇异向量拼成 $\hat U$，得到投影器 $P=\hat U\hat U^\top$；再用 $\text{SVD}(W_0 P)=U^*\Sigma^*(V^*)^\top$ 初始化 $B=U^*\sqrt{\Sigma^*}$、$A=\sqrt{\Sigma^*}(V^*)^\top$，并把原权重改成 $W_0'=W_0-BA$ 保证训练起点行为不变。训练时冻结 $A$ 只更新 $B$——因为 $A$ 落在零空间使 $AC\approx 0$，无论 $B$ 怎么变都有 $BAC\approx 0$，旧任务输入下输出几乎不动。这把"旧知识保护"从需要 KL 正则或 replay 数据的损失约束，变成一次 SVD 就搞定的纯几何隔离，等价于把新旧知识塞进两个正交子空间。作者还用 CO-SVD 实验（图 4）验证了协方差确实捕获了多模态知识：用 MME / ScienceQA 协方差去掉小奇异值后性能保留远好于 plain SVD / ASVD，且不同任务呈现可区分的 outlier 模式。
 
-3. **可定制约束源（covariance source）**:
+**3. 可定制约束源：按部署需求选择"保护对象"**
 
-    - 功能：可以根据用户最关心的能力（如纯保留 MME、纯保留 OCR）选择对应数据集构建协方差。
-    - 核心思路：作者实验了从 OneVision 4 个子集（General / Doc/Chart / Math / OCR）混合采 256 例构建"通用 covariance"，也实验了从 MME / ScienceQA / POPE 等单 benchmark 各采 256 例构建"专用 covariance"。后者会优先保护该 benchmark 的性能（图 6：MME 专用约束让 MME 涨 7.17）。
-    - 设计动机：不同部署场景对"保留什么"需求不同；让 covariance source 可配置，使 KORE-constraint 从"一刀切"变成"按需保留"。
+不同部署场景在意的旧能力不同，KORE 让构建协方差的数据源可配置。默认从 OneVision 的 4 个子集（General / Doc·Chart / Math / OCR）混采 256 例得到一个"通用 covariance"，覆盖广谱能力；也可以只从某个目标 benchmark（如 MME / ScienceQA / POPE）采 256 例构建"专用 covariance"，此时该 benchmark 的性能会被优先保护——图 6 显示用 MME 专用约束能让 MME 涨 7.17 且其他维度无明显回退。于是同一套 KORE-constraint 既能做"一刀切"的通用保留，也能切换成"按需保留"。
 
 ### 损失函数 / 训练策略
 标准 LoRA cross-entropy 损失，无额外正则。LLaVA-v1.5 (7B)：rank=235、batch=54、$\eta=2\times10^{-4}$、cosine decay、6 epoch、AdamW、DeepSpeed Zero3、4 张 H100；7B/13B 用相同配置，Qwen2.5-VL 用 rank=274、batch=24、grad accum=8。covariance 提取只跑一次推理。

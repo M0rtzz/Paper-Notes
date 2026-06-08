@@ -42,37 +42,25 @@ ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + 
 
 ### 整体框架
 
-输入是任意特征向量 $x \in \mathbb{R}^m$，先经仿射变换映射到 $[1, 10]$ 以满足 signomial 的正性要求。对 $C$ 分类问题，每个类 $c$ 学一个由 $K$ 个幂律项组成的 signomial 分数函数：
-
-$$z_c(x) = \sum_{k=1}^{K} \alpha_{c,k} \prod_{j=1}^{m} x_j^{\beta_{c,k,j}}$$
-
-（出于格式要求改写为行内）即 $z_c(x) = \sum_{k=1}^{K} \alpha_{c,k} \prod_{j=1}^{m} x_j^{\beta_{c,k,j}}$，参数为系数 $\alpha_{c,k} \in \mathbb{R}$ 和指数 $\beta_{c,k,j} \in \mathbb{R}$。$K$ 控制复杂度：$K=1$ 是单幂律，$K>1$ 是多个幂律的加性组合。最后接 softmax（多类）或 sigmoid（二类）给出概率。SR 版本只把 cross-entropy 换成 MSE。
-
-理论上作者证明了 **Signomial 通用近似定理**：通过 $\log$ 变换映到正 orthant 上的指数线性函数，再套 Stone-Weierstrass，得到 signomial 在 $\mathbb{R}^m_{>0}$ 紧子集上对连续函数稠密。这把 signomial 与神经网络放到了同一档"万能近似器"上，但天然偏好乘性幂律关系。
+ECSEL 要解决的问题是：既能做符号回归、又能做分类，而且分类器的"解释"不靠事后采样、直接从参数读出来。它的做法是把"每个类别一个 signomial 函数 + softmax"当成分类器本体。给定特征向量 $x \in \mathbb{R}^m$，先经一次仿射变换把每维压到 $[1, 10]$（signomial 的幂律要求底数为正），再为每个类 $c$ 学一个由 $K$ 个幂律项加性组成的分数函数 $z_c(x) = \sum_{k=1}^{K} \alpha_{c,k} \prod_{j=1}^{m} x_j^{\beta_{c,k,j}}$，参数是系数 $\alpha_{c,k} \in \mathbb{R}$ 与指数 $\beta_{c,k,j} \in \mathbb{R}$，超参 $K$ 控制复杂度（$K=1$ 为单幂律，$K>1$ 为多幂律加性组合）。多类问题在 $\{z_c\}$ 上接 softmax、二类接 sigmoid 给出概率，SR 版本只把 cross-entropy 换成 MSE。作者还为这套结构补了理论靠山——**Signomial 通用近似定理**：经 $\log$ 变换映到正 orthant 上就是指数线性函数，再套 Stone-Weierstrass，可证 signomial 在 $\mathbb{R}^m_{>0}$ 紧子集上对连续函数稠密，从而与神经网络同属"万能近似器"，只是天然偏好乘性幂律关系。
 
 ### 关键设计
 
-1. **类别专属 signomial + L1 指数稀疏化**:
+**1. 类别专属 signomial + L1 指数稀疏化：让得分函数本身就是一条可读方程并自动选特征**
 
-    - 功能：让分类器的得分函数本身就是一条人类可读的"乘除分式"方程，且自动选特征。
-    - 核心思路：每个类 $c$ 拥有独立的 $\{\alpha_{c,k}, \beta_{c,k,j}\}$，训练目标为 $\mathcal{L} = -\frac{1}{N}\sum_i \log p_{y_i}(x_i) + \lambda \sum_{c,k,j} |\beta_{c,k,j}|$。L1 项只作用在 *指数* 上，把不相关特征的 $\beta$ 推到 0，等价于"把那一项里的 $x_j^0 = 1$ 抹掉"，从而产出稀疏方程。这一点和直接稀疏系数 $\alpha$ 不同：稀疏 $\beta$ 是"特征选择"，稀疏 $\alpha$ 只是"项选择"。
-    - 设计动机：传统 GAM/线性模型只能加性，捕捉不到 e-commerce 里 PageValue/ExitRate 的乘除交互；而黑盒方法能捕捉交互但要靠 SHAP 解释。signomial 的乘性结构天然表达这种交互，又因为 $\log$ 后是线性，所以可以闭式归因。
+传统 GAM、稀疏线性模型只能做加性组合，捕捉不到 e-commerce 里 PageValue 与 ExitRate 之间那种乘除交互；黑盒模型虽能捕捉交互，却又要回头靠 SHAP 来解释。ECSEL 让每个类 $c$ 拥有独立的一组 $\{\alpha_{c,k}, \beta_{c,k,j}\}$，其得分函数本就是一条人类可读的"乘除分式"方程，乘性的幂律结构天然表达这类弹性交互。关键的稀疏化技巧是把 L1 罚项只加在 *指数* 上：训练目标 $\mathcal{L} = -\frac{1}{N}\sum_i \log p_{y_i}(x_i) + \lambda \sum_{c,k,j} |\beta_{c,k,j}|$ 把不相关特征的 $\beta$ 推向 0，而 $\beta=0$ 等价于 $x_j^0 = 1$，即"把那一项里这个特征抹掉"，于是产出真正稀疏的方程。这和稀疏系数 $\alpha$ 有本质差别——稀疏 $\beta$ 是在每一项内部做"特征选择"，稀疏 $\alpha$ 只是淘汰整项的"项选择"，前者粒度更细。又因为 signomial 在 $\log$ 后是线性的，这种乘性结构还顺带保证了后面的归因可以闭式给出。
 
-2. **多阶段 staged optimization（$K=1$ vs $K>1$）**:
+**2. 多阶段 staged optimization：让非凸指数空间可靠收敛**
 
-    - 功能：让非凸的指数空间搜索 *可靠* 收敛，这是把"理论上很美的 signomial"落地为"实际能跑"的关键。
-    - 核心思路：$K=1$ 时整个目标是低维光滑函数，用 L-BFGS-B 直接打；$K>1$ 时空间高维非凸，采用三段策略：① Adam + 强 L1 做"结构发现"，让方程项之间分化；② 减弱 L1 做"精修"；③ 用最优 Adam 点初始化 L-BFGS 做最后抛光。多个随机种子做 multi-start。同时对幂律项做 $\log$ 域变换 + 特征缩放保数值稳定。
-    - 设计动机：signomial 的指数可以是任意实数（包含负值、分数），梯度对 $\beta$ 是 $z_{c,k}(x) \cdot \log x_j$，量级极易爆。如果直接 Adam 一把梭，要么卡在局部极小要么发散——staged 策略本质上是"先用噪声梯度跳出局部、再用二阶法精修"，借此把 SR 上的恢复率从 DGSR 的 59% 拉到 95.86%。
+signomial 理论上很美，但指数 $\beta$ 可以取任意实数（含负值、分数），梯度对 $\beta$ 形如 $z_{c,k}(x) \cdot \log x_j$，量级极易爆炸，直接 Adam 一把梭往往要么卡在局部极小、要么发散。ECSEL 因此按 $K$ 分情形优化：$K=1$ 时整个目标是低维光滑函数，用 L-BFGS-B 直接求解；$K>1$ 时空间高维非凸，走三段策略——① Adam 配强 L1 做"结构发现"，让各项分化出不同角色；② 减弱 L1 做"精修"；③ 用最优 Adam 点初始化 L-BFGS 做最后抛光，并对多个随机种子 multi-start。同时对幂律项做 $\log$ 域变换加特征缩放以保数值稳定。这套"先用噪声梯度跳出局部、再用二阶法收敛"的流程正是把理论上漂亮的 signomial 落地成"实际能跑"的关键，也直接把 SR 恢复率从 DGSR 的 59% 抬到 95.86%。
 
-3. **闭式三层解释族（全局弹性 / 决策边界 / 局部归因）**:
+**3. 闭式三层解释族：全局弹性 / 决策边界 / 局部归因都化为参数代数式**
 
-    - 功能：模型一旦训完，任何解释查询都是参数代数运算，零额外计算。
-    - 核心思路：(a) **全局弹性** $E_{c,j}(x) = \partial \log z_c / \partial \log x_j = \sum_k \frac{z_{c,k}(x)}{z_c(x)} \beta_{c,k,j}$，$K=1$ 时退化为常数 $\beta_{c,j}$；(b) **counterfactual** 把 $x_j$ 乘以 $q$ 后新分数 $z_c^{\text{new}}(x) = \sum_k q^{\beta_{c,k,j}} z_{c,k}(x)$，不用重新预测；(c) **决策边界灵敏度** $\partial(z_c - z_{c'})/\partial \log x_j$ 在 $K=1$ 时是 $z_c \beta_{c,j} - z_{c'} \beta_{c',j}$，直接读出"哪个指数差驱动了类间竞争"；(d) **局部归因** 利用 $\log z_{c,k}(x) = \log z_{c,k}(b) + \sum_j \beta_{c,k,j} \log(x_j/b_j)$，$K=1$ 时是 *精确* SHAP 式分解，$K>1$ 时退化为一阶线性化 $\phi_j \approx G_{c,j}(x^*)(\log x_j - \log x_j^*)$。
-    - 设计动机：SHAP/LIME 之所以慢（KernelSHAP 在 OSI 上要 28.5s），是因为它们在做 Monte Carlo 采样去逼近一个本应闭式的量。signomial 的 $\log$ 线性结构让所有这些量都有解析式——这是结构红利。作者还正式证明（Theorem 3.2）ECSEL 满足 G1-G3、D1-D2、L1-L2 全部七条性质。
+SHAP、LIME 之所以慢（KernelSHAP 在 OSI 上要 28.5s），是因为它们在用 Monte Carlo 采样去逼近一个本应有解析式的量；signomial 的 $\log$ 线性结构让这些量都能闭式写出，训完模型后任何解释查询都只是参数代数运算、零额外计算。具体有四类：(a) **全局弹性** $E_{c,j}(x) = \partial \log z_c / \partial \log x_j = \sum_k \frac{z_{c,k}(x)}{z_c(x)} \beta_{c,k,j}$，$K=1$ 时退化为常数 $\beta_{c,j}$；(b) **counterfactual**——把 $x_j$ 乘以 $q$ 后新分数直接是 $z_c^{\text{new}}(x) = \sum_k q^{\beta_{c,k,j}} z_{c,k}(x)$，无需重新预测；(c) **决策边界灵敏度** $\partial(z_c - z_{c'})/\partial \log x_j$ 在 $K=1$ 时为 $z_c \beta_{c,j} - z_{c'} \beta_{c',j}$，直接读出"哪个指数差驱动了类间竞争"；(d) **局部归因** 利用 $\log z_{c,k}(x) = \log z_{c,k}(b) + \sum_j \beta_{c,k,j} \log(x_j/b_j)$，$K=1$ 时是 *精确* 的 SHAP 式分解，$K>1$ 时退化为一阶线性化 $\phi_j \approx G_{c,j}(x^*)(\log x_j - \log x_j^*)$。作者进一步正式证明（Theorem 3.2）ECSEL 满足 G1-G3、D1-D2、L1-L2 全部七条解释性性质，把"声称可解释"升级为"可证明可解释"。
 
 ### 损失函数 / 训练策略
 
-分类用 cross-entropy + L1 on $\beta$：$\mathcal{L} = -\frac{1}{N}\sum_i \log p_{y_i}(x_i) + \lambda \sum_{c,k,j} |\beta_{c,k,j}|$；SR 用 MSE 版本 $\mathcal{L}_{\text{SR}} = \frac{1}{N}\sum_i (y_i - z(x_i))^2 + \lambda \sum_{k,j}|\beta_{k,j}|$。$\lambda$ 是关键超参（PaySim 上取 $2 \times 10^4$）。优化器对 $K=1$ 用 L-BFGS-B，$K>1$ 用 Adam (warm) + Adam (refine) + L-BFGS (polish) 三段式；超参由 Optuna TPE 在 30 trial 内搜。
+分类用 cross-entropy 加指数 L1：$\mathcal{L} = -\frac{1}{N}\sum_i \log p_{y_i}(x_i) + \lambda \sum_{c,k,j} |\beta_{c,k,j}|$；SR 改用 MSE 版本 $\mathcal{L}_{\text{SR}} = \frac{1}{N}\sum_i (y_i - z(x_i))^2 + \lambda \sum_{k,j}|\beta_{k,j}|$。$\lambda$ 是关键超参（PaySim 上取 $2 \times 10^4$）。优化器对 $K=1$ 用 L-BFGS-B，$K>1$ 用 Adam (warm) + Adam (refine) + L-BFGS (polish) 三段式，超参由 Optuna TPE 在 30 个 trial 内搜得。
 
 ## 实验关键数据
 

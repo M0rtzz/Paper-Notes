@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-任务设定：给定 attribute（颜色）、entity（形状）、item（item_a / item_b ...）三个集合，先看一个 context（颜色-形状对的序列或一组渲染图），再看一个 association（"the triangle is item_a"），最后问"哪个 item 对应 red"。模型必须先用颜色定位到形状，再用形状定位到 item。训练分三阶段：(1) 训一个 12 层 decoder-only Transformer 只在文本模态上，直到 in-distribution（最多 8 个对象）打满，得到 $\mathcal{M}_{\text{text-only}}$；(2) 把同一模型转到图像模态，把文本 context 换成冻结视觉 encoder（ResNet-152 / ViT-B/16 / DINOv3 三选一）的 patch token，照旧最多 8 对象继续训；(3) 把模型转回文本但混合 20% image + 80% text 训练，得到 $\mathcal{M}_{\text{image-text}}$。OOD 评测把对象数推到训练上限以上。
+作者要回答的是"图像训练到底改了模型内部哪条计算路径"，于是把同一个变量绑定任务做成文本、图像两种结构完全镜像的版本，让"模态"成为唯一可控变量。任务为 Indirect Retrieval：给定 attribute（颜色）、entity（形状）、item（item_a / item_b ...）三个集合，先读 context（颜色-形状对的序列或一组渲染图），再读 association（"the triangle is item_a"），最后问"哪个 item 对应 red"——模型必须先用颜色定位到形状，再用形状定位到 item，是个两跳绑定。整套流程走"text-only 训练 → 转图像模态训练 → 转回文本混训"的三阶段课程，再在超出训练对象数的 OOD 设置下读出内部 binding 机制如何被改写。
 
 ### 关键设计
 
-1. **同结构跨模态的 Indirect Retrieval 任务**:
+**1. 同结构跨模态任务：把"模态"做成唯一变量**
 
-    - 功能：构造一个两种模态结构 1:1 镜像的合成任务，使"模态"成为唯一可控变量。
-    - 核心思路：统一 prompt 为 $\mathbf{x}=[\mathbf{X}_{\text{context}}, \texttt{[CTX\_END]}, \mathbf{X}_{\text{associations}}, \texttt{[QUE]}, \mathbf{x}_{\text{query}}]$，其中 $\mathbf{X}_{\text{context}}^{\text{text}}=[a_1,e_1,\dots,a_N,e_N]$ 或 $\mathbf{X}_{\text{context}}^{\text{image}}=[\texttt{<IMG>}_1,\dots,\texttt{<IMG>}_N]$；association 永远是文本。这样训练目标完全一致，唯一变量就是 context 是文本还是图像。
-    - 设计动机：要排除"VLM 更强是因为见过更多 token"等混杂因素，唯一办法就是把模态变成 ceteris paribus 的单一变量。
+要排除"VLM 更强只是因为见过更多 token"这类混杂因素，唯一干净的办法是让两种模态在结构上 1:1 镜像、训练目标逐字相同，模态成为 ceteris paribus 的单一变量。作者把 prompt 统一写成 $\mathbf{x}=[\mathbf{X}_{\text{context}}, \texttt{[CTX\_END]}, \mathbf{X}_{\text{associations}}, \texttt{[QUE]}, \mathbf{x}_{\text{query}}]$，其中文本版 context 为 $\mathbf{X}_{\text{context}}^{\text{text}}=[a_1,e_1,\dots,a_N,e_N]$，图像版换成冻结视觉 encoder 的 patch token 序列 $\mathbf{X}_{\text{context}}^{\text{image}}=[\texttt{<IMG>}_1,\dots,\texttt{<IMG>}_N]$，而 association 一律保持文本。这样唯一的差别只剩"context 是文本还是图像"，任何行为或机制差异都能因果地归到模态本身。关键直觉是：图像里"红三角"出现在哪个空间位置是任意的（translation invariance），位置捷径在图像模态下天然失效，从而逼模型转向语义匹配。
 
-2. **三阶段课程 + Noise 控制组**:
+**2. 三阶段课程 + Noise 控制组：剥离"位置范围扩大"的干扰**
 
-    - 功能：用渐进式课程隔离"是模态本身的作用还是顺手见到更长上下文的作用"。
-    - 核心思路：除了 $\mathcal{M}_{\text{image-text}}$，还训两组 $\mathcal{M}_{\text{noise-text}}$ 和 $\mathcal{M}_{\text{noise-image-text}}$——在文本 context 中插入 unattendable noise token，让模型在 text-only 也能见到更长的位置 index，但不能 attend 到 noise。
-    - 设计动机：image patch sequence 通常很长（196 token），不做 noise 控制就分不清"图像训练增益"和"位置范围扩大"哪个起的作用。结果显示 noise 只能把 OOD 从 37.2% 拉到 57.5%，远低于 image-text 的 69.5%，说明视觉真的有"独立增益"。
+图像 patch 序列通常很长（196 token），如果直接比 image-text 和 text-only，就分不清增益来自"视觉本身"还是"顺手见到了更长的位置 index"。为此作者除了主路径 $\mathcal{M}_{\text{image-text}}$（先在 12 层 decoder-only Transformer 上 text-only 训练打满 in-distribution，最多 8 个对象，得到 $\mathcal{M}_{\text{text-only}}$；再冻结视觉 encoder 转图像模态训练；最后转回 20% image + 80% text 混训），还专门训了 $\mathcal{M}_{\text{noise-text}}$ 与 $\mathcal{M}_{\text{noise-image-text}}$ 两组对照——在文本 context 里插入 unattendable 的 noise token，让 text-only 模型也能见到更长的位置 index 却 attend 不到 noise。结果 noise 只把 OOD 从 37.2% 拉到 57.5%，远不及 image-text 的 69.5%，证明视觉带来的是一份独立于"位置范围"的质变增益。
 
-3. **Interchange Intervention 因果归因 + Linear Probe + Attention Knockout**:
+**3. Interchange Intervention 因果归因 + Linear Probe + Attention Knockout：读出每层的 binding 机制**
 
-    - 功能：识别每层主导的 binding 机制是 positional、symbolic 还是 reflexive。
-    - 核心思路：构造原始-反事实输入对，使"位置策略"与"语义策略"会预测出不同答案，再把反事实激活 patch 进原始 run，看哪一层 patch 后能颠倒预测，从而归因。配合 attention knockout 标定关键通路，配合 linear probe 直接探测每个 token 上属性的可解码强度。
-    - 设计动机：行为差异（accuracy）只能说明"VLM 更好"，机制可解释性才能说明"为什么更好"。作者沿用 Gur-Arieh et al. 2025 的方法，让结果可以无缝迁移到真实大模型上做同样测量。
+行为指标（accuracy）只能说"VLM 更好"，要说清"为什么更好"必须直接探测内部计算。作者沿用 Gur-Arieh et al. 2025 把 binding 机制分成 positional / symbolic / reflexive 三类，并用 interchange intervention 做因果归因：构造一对原始-反事实输入，使"位置策略"和"语义策略"会给出不同答案，再把反事实激活 patch 进原始 run，看哪一层被 patch 后能颠倒预测，从而把该层主导机制归因到位置还是语义。配套用 attention knockout 标定关键通路、用 linear probe 直接度量每个 token 上属性的可解码强度。沿用同一套方法的好处是测量可以无缝迁移到真实大模型，用 symbolic/positional 比例（越高越偏语义绑定）量化"VLM vs LLM"的机制差异。
 
 ### 损失函数 / 训练策略
-受控 Transformer 用标准 next-token CE 训练。三阶段顺序为：text-only → image-only（视觉 encoder 冻结）→ 20% image + 80% text 混训。OOD 评测时扩大属性集合到 216 颜色 × 216 形状 × 32 items，并把对象数推到训练上限之外。
+受控 Transformer 全程用标准 next-token CE 训练，三阶段顺序为 text-only → image-only（视觉 encoder 冻结，ResNet-152 / ViT-B/16 / DINOv3 三选一）→ 20% image + 80% text 混训，得到 $\mathcal{M}_{\text{image-text}}$。OOD 评测时把属性集合扩大到 216 颜色 × 216 形状 × 32 items，并把对象数推到训练上限（8）之外。
 
 ## 实验关键数据
 

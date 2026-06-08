@@ -45,23 +45,25 @@ ARGUS 是 GRPO 驱动的三阶段 pipeline：**Stage I Policy Seeding** 用 $\ma
 
 ### 关键设计
 
-1. **Prosecutor–Defender–Umpire 对抗辩论（Stage II 核心）**:
+**1. Prosecutor–Defender–Umpire 对抗辩论：用辩论而非单裁判洗掉旧标签噪声。**
 
-    - 功能：把旧标签从奖励信号中「洗掉」，让历史样本贡献符合新政策的高保真训练梯度。
-    - 核心思路：对一条历史样本，Prosecutor（当前策略）按新政策 $\Delta\mathcal{P}$ 给出违规 CoT；Defender（强 VLM）反向写合规辩解 CoT；Umpire（中立 VLM）用 RAG 取出 $\Delta\mathcal{P}$ 具体条款 + $\mathcal{D}_\text{gold}$ 参照，输出修正后的标签 $y^*$ 和标准推理链 $\mathcal{C}^*$。reward 公式 $R_\text{rect}(y,\mathcal{C}) = \mathbf{1}(y=y^*) + \text{sim}(\mathcal{C},\mathcal{C}^*)$ 同时奖励「答对」和「推理路径接近裁判」，把语义 supervision 注入 GRPO。
-    - 设计动机：单一裁判容易把模型导向过度保守或过度宽松；引入「敌对辩护」迫使裁判在两种极端之间取理性中间，既校正旧标签又防止「为新政策牺牲创意宽容度」。
+Stage II 要解决的痛点是历史样本的旧标签和新政策冲突，直接拿来训会污染梯度。ARGUS 不再用一个裁判直接打分，而是让三个角色对每条历史样本辩论：Prosecutor（当前策略）按新政策 $\Delta\mathcal{P}$ 写出「为什么违规」的 CoT，Defender（强 VLM）反向写「为什么合规」的辩解 CoT，Umpire（中立 VLM）用 RAG 取出 $\Delta\mathcal{P}$ 的具体条款加 $\mathcal{D}_\text{gold}$ 参照，输出修正后的标签 $y^*$ 和标准推理链 $\mathcal{C}^*$。奖励信号同时考虑「答对」和「推理路径接近裁判」：
 
-2. **Latent Candidate Selection + Tripartite Dialectic（Stage III 核心）**:
+$$R_\text{rect}(y,\mathcal{C}) = \mathbf{1}(y=y^*) + \text{sim}(\mathcal{C},\mathcal{C}^*)$$
 
-    - 功能：把那些「模型嘴上说合规但内部置信度低」的隐蔽违规挖出来再训。
-    - 核心思路：定义 $\mathcal{D}_\text{latent} = \{x\in\mathcal{D}_\text{hist} \mid y^{(k)}=0\text{ and }P(y^{(k)}=1|x)>\tau\}$，即「输出合规但后验高」的样本作为难样本池。Skeptic（当前 $f_\theta$）给出「为什么我犹豫」的 CoT，与 Prosecutor / Defender 的两极视角一起喂给 Umpire 做三角裁决，得到 $y^*, \mathcal{C}^*$，按 $R_\text{latent}$（同 Eq.5）继续 GRPO。
-    - 设计动机：Stage II 只解决「明面冲突」，灰区样本的 ground truth 没人能直接给；用模型自己的怀疑作第三方视角，相当于让模型把「不确定性」转化成「学习信号」，把决策边界推进到难样本区。
+把语义级 supervision 注入 GRPO，而不仅是 0/1 标签。之所以要引入「敌对辩护」，是因为单一裁判容易把模型导向过度保守或过度宽松；让 Defender 强行站在合规一侧，迫使 Umpire 在两个极端之间取理性中点，既校正旧标签、又避免「为吃新政策而牺牲对创意广告的宽容度」。
 
-3. **战略数据掺合 + Lock-and-Key 演化（贯穿三阶段）**:
+**2. Latent Candidate Selection + Tripartite Dialectic：让模型把自己的犹豫变成挖灰区违规的信号。**
 
-    - 功能：在保住历史合规率的同时让奖励信号「随政策演化」。
-    - 核心思路：Stage I 用 $\mathcal{D}_\text{gold} \cup \mathcal{D}_\text{hist}'$（历史 40%）防止稀疏金标被旧噪声淹没；Stage II/III 用 Umpire 输出取代旧标签作 GRPO 主奖励；整个流程在线部署成「初筛→ARGUS 评判→人工抽检→反馈」闭环。
-    - 设计动机：把「数据替换」和「奖励替换」解耦——SFT 只负责给模型基本政策感知，强化学习才负责把演化的政策真正植入推理路径。
+Stage II 只能修「明面冲突」的样本，但隐蔽违规藏在海量合规流量里、没人能直接给 ground truth。Stage III 先圈出难样本池——那些「嘴上说合规、内部后验却很高」的样本：
+
+$$\mathcal{D}_\text{latent} = \{x\in\mathcal{D}_\text{hist} \mid y^{(k)}=0\ \text{and}\ P(y^{(k)}=1|x)>\tau\}$$
+
+然后引入 Skeptic（即当前模型 $f_\theta$ 自己）给出「我为什么犹豫」的 CoT，和 Prosecutor / Defender 的两极视角一起喂给 Umpire 做三角裁决，得到 $y^*, \mathcal{C}^*$，再按 $R_\text{latent}$（同上式）继续 GRPO。用模型自己的怀疑当第三方视角，相当于把「不确定性」直接转成训练信号，把决策边界主动推进到难样本区，比单纯卡阈值挑难样本更精细。
+
+**3. 战略数据掺合 + Lock-and-Key 演化：在保住历史合规率的同时让奖励随政策一起演化。**
+
+为了不让稀疏的新政策金标被海量旧噪声淹没，Stage I 用 $\mathcal{D}_\text{gold} \cup \mathcal{D}_\text{hist}'$（历史 40% 子集）做 SFT 打底，Stage II/III 则用 Umpire 的输出取代旧标签作为 GRPO 主奖励。这里的关键是把「数据替换」和「奖励替换」解耦：SFT 只负责给模型基本的新政策感知，真正把演化的政策植入推理路径的是强化学习阶段。整套流程在线部署成「初筛 → ARGUS 评判 → 人工抽检 → 反馈」的闭环，可迁移到任何「持续学习 + 标签漂移」的合规场景。
 
 ### 损失函数 / 训练策略
 - Stage I：$\mathcal{L}_\text{stage1}(\theta) = -\sum \log P(\mathbf{y}, \mathcal{C} | x, \mathcal{P}_\text{new}; \theta)$ 的 SFT。

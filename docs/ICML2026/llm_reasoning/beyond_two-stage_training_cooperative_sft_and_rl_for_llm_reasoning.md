@@ -40,27 +40,21 @@ tags:
 
 ### 整体框架
 
-BRIDGE 将 SFT-RL 整合建模为双层优化问题：上层（leader）是 SFT 目标，控制一个轻量 LoRA 教师模块 $w$；下层（follower）是 RL 目标，优化 LLM 主干参数 $\theta$。每个训练步交替执行两个更新：(1) 学生更新——融合 SFT 和 RL 梯度更新 $\theta$；(2) 教师更新——通过最大化协作增益信号更新 LoRA 参数 $w$。推理时 $w$ 直接合并进 $\theta$，零额外开销。
+BRIDGE 把"先 SFT 再 RL"的两阶段流水线改写成一场教师-学生的双层博弈：上层（leader）是 SFT 目标，它操纵一个轻量 LoRA 教师模块 $w$；下层（follower）是 RL 目标，它负责优化 LLM 主干参数 $\theta$。每个训练步交替做两件事——学生更新先把 SFT 和 RL 梯度融合起来推进 $\theta$，教师更新再根据"这次联合训练比纯 RL 多赚了多少奖励"来调整 $w$，让监督信号只在真正帮到奖励优化时才被采纳。推理时把 $w$ 直接合并进 $\theta$，不带来任何额外开销。
 
 ### 关键设计
 
-1. **双层优化公式化（Bilevel Formulation）**:
+**1. 双层优化公式化：让 SFT 服从于 RL 的最优解，而不是和它硬抢梯度。**
 
-    - 功能：建模 SFT 与 RL 之间的层次协作关系
-    - 核心思路：上层目标 $\max_w J_{\text{SFT}}(w, \theta^*(w))$，下层约束 $\theta^*(w) = \arg\max_\theta J_{\text{RL}}(\theta, w)$。SFT 的优化以 RL 的最优解为条件，确保监督信号不会干扰奖励优化。通过惩罚松弛将其转化为单层问题：$\max_{\theta,w} (1-\lambda) J_{\text{SFT}}(\theta,w) - \lambda \, p(w,\theta)$，其中 $p(w,\theta)$ 衡量 $\theta$ 偏离 RL 最优解的程度
-    - 设计动机：直接双层求解需要二阶导数，在 LLM 规模下不可行；惩罚松弛只需一阶梯度，且近似误差为 $O(1-\lambda)$
+朴素混合（$J_{\text{RL}} + \mu J_{\text{SFT}}$）失败的根因是 SFT 和 RL 被放在同一层平等加权，监督更新可能把模型拽离奖励高地。BRIDGE 改用层次结构来表达"SFT 是来辅佐 RL 的"这层关系：上层目标 $\max_w J_{\text{SFT}}(w, \theta^*(w))$，下层约束 $\theta^*(w) = \arg\max_\theta J_{\text{RL}}(\theta, w)$——SFT 的优化必须以 RL 已经收敛到最优解为前提，从结构上保证监督信号不会反过来干扰奖励。直接求解这个双层问题需要对 $\theta^*(w)$ 求二阶导，在 LLM 规模下不可行，于是作者用惩罚松弛把它压成单层：$\max_{\theta,w} (1-\lambda) J_{\text{SFT}}(\theta,w) - \lambda \, p(w,\theta)$，其中 $p(w,\theta)$ 度量 $\theta$ 偏离 RL 最优解的程度。这样只需一阶梯度即可优化，且松弛带来的近似误差被控制在 $O(1-\lambda)$ 量级。
 
-2. **LoRA 教师模块与协作增益信号**:
+**2. LoRA 教师模块与协作增益信号：用独立低秩子空间给 RL"重塑损失景观"，并用一个差值信号判断监督该不该听。**
 
-    - 功能：用独立的低秩参数空间协调两个目标
-    - 核心思路：策略为 $\pi_{\theta+w}$，教师通过修改 $w$ 来重塑 $\theta$ 优化的损失景观。教师的元目标为 $J_{\text{meta}} = (1-\lambda) J_{\text{SFT}}(\theta,w) + \lambda [J_{\text{RL}}(\theta,w) - J_{\text{RL}}(\hat{\theta},w)]$，其中 $\hat{\theta}$ 是纯 RL 更新的辅助参数。第二项即**协作增益**——联合训练超越纯 RL 的奖励差值
-    - 设计动机：独立低秩子空间隔离元更新和 RL 优化，避免相互干扰；合并后零推理成本；协作增益信号天然消除奖励中的加性偏置噪声
+如果让 SFT 和 RL 共用同一套参数去优化，两边的更新会互相污染。BRIDGE 让策略变成 $\pi_{\theta+w}$，教师只动低秩的 $w$，相当于在 $\theta$ 自己的优化之外，悄悄重塑它面对的损失景观，二者在独立子空间里互不踩脚。教师的元目标写成 $J_{\text{meta}} = (1-\lambda) J_{\text{SFT}}(\theta,w) + \lambda [J_{\text{RL}}(\theta,w) - J_{\text{RL}}(\hat{\theta},w)]$，其中 $\hat{\theta}$ 是一份只吃纯 RL 梯度的辅助参数。括号里那一项就是**协作增益**——联合训练相对纯 RL 多出来的奖励；只有当这个差值为正时，监督才被认为"教对了"。这个设计还顺手解决了奖励噪声：若奖励里混入一个加性偏置，它在两个 $J_{\text{RL}}$ 的相减中被天然对消，使元信号对不完美验证器更鲁棒。合并 $w$ 后推理零成本，又保住了部署友好。
 
-3. **交替三路更新算法**:
+**3. 交替三路更新算法：每步同时维护学生、纯 RL 影子、教师三套更新，用共享 rollout 把协作增益估准。**
 
-    - 功能：高效执行双层优化的近似求解
-    - 核心思路：每步采样 SFT 和 RL 两个 mini-batch，执行三路更新：(a) 学生 $\theta^{k+1} = \theta^k + \alpha [(1-\lambda)\nabla_\theta J_{\text{SFT}} + \lambda \nabla_\theta J_{\text{RL}}]$；(b) 辅助参数 $\hat{\theta}^{k+1} = \hat{\theta}^k + \alpha \nabla_{\hat\theta} J_{\text{RL}}$（纯 RL 基线）；(c) 教师 $w^{k+1} = w^k + \beta \nabla_w J_{\text{meta}}$。两个策略共享同一批 rollout 来评估协作增益，降低方差
-    - 设计动机：辅助参数 $\hat{\theta}$ 提供纯 RL 基线，使协作增益信号可量化；共享 rollout 消除采样噪声混淆
+要把上面的元目标真正落到训练里，关键是怎么量化"比纯 RL 多赚多少"。BRIDGE 每步采样 SFT 和 RL 两个 mini-batch，做三路更新：学生 $\theta^{k+1} = \theta^k + \alpha [(1-\lambda)\nabla_\theta J_{\text{SFT}} + \lambda \nabla_\theta J_{\text{RL}}]$ 走联合训练；辅助参数 $\hat{\theta}^{k+1} = \hat{\theta}^k + \alpha \nabla_{\hat\theta} J_{\text{RL}}$ 维护一个纯 RL 基线作为对照；教师 $w^{k+1} = w^k + \beta \nabla_w J_{\text{meta}}$ 据此更新 LoRA。$\hat{\theta}$ 这个影子参数的存在让协作增益从抽象概念变成可计算的量。为避免两条策略各自采样带来的噪声把增益估计搅浑，两者共享同一批 rollout 来评估奖励差，方差因此显著下降。
 
 ## 实验关键数据
 

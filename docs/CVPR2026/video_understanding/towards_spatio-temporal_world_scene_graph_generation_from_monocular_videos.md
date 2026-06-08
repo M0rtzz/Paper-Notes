@@ -63,26 +63,27 @@ tags:
 
 ### 关键设计
 
-#### PWG (Persistent World Graph)
-- **功能**：为不可见物体保留其最近一次可见时的视觉特征
-- **核心思路**：Last-Known-State (LKS) 记忆缓冲区——零阶特征保持。可见时用当前特征，不可见时回退到最近可见帧的特征，从未见过则用零向量
-- **设计动机**：直接实现"物体恒存"原则。额外记录 staleness $\Delta_n^{(t)} = |t - \tau^*|$ 用于融合，让模型感知特征的"新鲜度"
-- **特点**：记忆不可微分，无法端到端学习时序上下文，但凭借 3D 几何先验已非常强
+三种方法共享上面那套几何编码组件，差别只在「如何处理当下看不见的物体」——分别押注三种不同的归纳偏置：直接记忆、掩码重建、可微时序注意力。
 
-#### MWAE (Masked World Auto-Encoder)
-- **功能**：将不可见物体推理重构为掩码补全问题
-- **核心思路**：遮挡和相机运动天然提供"掩码"，模型需要从可见物体推断不可见物体的表示。训练时额外随机掩码一部分可见物体以增强学习
-- **设计动机**：将 MAE 范式从 patch 域迁移到物体/关系域。使用非对称 cross-attention（query 包含所有 token，key/value 仅限可见 token），防止不可见 token 之间互相关注
-- **损失**：$\mathcal{L}_{\text{MWAE}} = \mathcal{L}_{\text{SG}} + \lambda_{\text{recon}} \cdot \lambda_{\text{dom}} \cdot \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{sim}}$，含场景图损失、特征重建 MSE 损失、被掩码可见物体的关系重预测损失
+**1. PWG（Persistent World Graph）：用一块"最近状态"缓冲区把消失的物体留在图里。**
 
-#### 4DST (4D Scene Transformer)
-- **功能**：用可微分的时序 Transformer 替代 PWG 的静态缓冲区
-- **核心思路**：为每个物体沿时间维度构建 token 序列（融合视觉/结构/相机/运动/自运动特征），通过双向 Transformer 进行全视频自注意力
-- **设计动机**：PWG 的 LKS 不可微，无法端到端学习时序上下文；4DST 将分解的时空注意力范式从 2D 可见物体扩展到完整 4D，加入正弦位置编码和可学习的 visibility embedding
+最直白的痛点是：物体一出画面就没特征可用了。PWG 的做法是给每个物体维护一个 Last-Known-State（LKS）记忆缓冲区，做零阶特征保持——物体当前可见就用当前帧特征，一旦不可见就回退到它最近一次可见时的特征，从未出现过则填零向量。为了让模型知道这份"留底"有多旧，PWG 额外记录一个 staleness 量 $\Delta_n^{(t)} = |t - \tau^*|$（当前时刻与最近可见时刻 $\tau^*$ 的间隔），把它一起喂进融合。这等于把认知科学里的"物体恒存"直接写成了一条工程规则：看不见不等于不存在，先拿最后一次的样子顶着。它的代价是这块缓冲区不可微，没法端到端学到时序上下文；但因为 3D OBB 几何先验本身已经很强，光靠零阶保持就足以撑起一个有竞争力的世界场景图。
+
+**2. MWAE（Masked World Auto-Encoder）：把"推断看不见的物体"当成掩码补全来学。**
+
+PWG 只是机械地复制旧特征，并没有真正"推断"不可见物体此刻该是什么样。MWAE 换了个视角：遮挡和相机运动本身就是天然的"掩码"——可见物体是露出来的 patch，不可见物体是被遮住的 patch，模型的任务就是从可见物体把不可见物体的表示补回来，这正好是 MAE 范式从图像 patch 域搬到物体/关系域。为了不让模型偷懒，训练时还会额外随机掩掉一部分本来可见的物体，逼它学会真正的补全而非记忆。关键的结构细节是它用了非对称 cross-attention：query 端包含全部物体 token，但 key/value 端只保留可见物体 token，这样不可见 token 只能从可见物体处取信息、彼此之间不能互相"对答案"，避免凭空脑补出一致但错误的结构。
+
+**3. 4DST（4D Scene Transformer）：把静态缓冲区换成全视频可微的时序注意力。**
+
+PWG 的 LKS 不可微，等于把时序上下文这件事排除在了梯度之外。4DST 要把这块补上：它为每个物体沿时间轴拼出一条 token 序列（每个 token 融合视觉、结构、相机位姿、物体运动、自运动等特征），再用双向 Transformer 在整段视频上做自注意力，让一个物体此刻的表示能直接吸收它过去和未来的所有可见证据。在此基础上加入正弦位置编码标记时间、以及一个可学习的 visibility embedding 区分该时刻物体是否可见。本质上它把 2D VidSGG 里"分解时空注意力只跑可见物体"的范式，扩展到了覆盖不可见物体的完整 4D 设定，因此天然支持端到端学习；代价是要看到整段视频做双向注意力，不适合在线流式推理。
 
 ### 损失函数 / 训练策略
 
-三种方法共享统一的多轴 BCE 损失结构：将物体对分为 visible pairs（clean GT）和 unobserved pairs（VLM 伪标签，权重 $\lambda_{\text{vlm}}$），分别计算 attention/spatial/contacting 三轴损失加节点分类损失。MWAE 额外增加特征重建和相似度损失。
+三种方法共享统一的多轴 BCE 损失结构：将物体对分为 visible pairs（clean GT）和 unobserved pairs（VLM 伪标签，权重 $\lambda_{\text{vlm}}$），分别计算 attention/spatial/contacting 三轴损失加节点分类损失。MWAE 在此基础上叠加重建相关项，总损失为
+
+$$\mathcal{L}_{\text{MWAE}} = \mathcal{L}_{\text{SG}} + \lambda_{\text{recon}} \cdot \lambda_{\text{dom}} \cdot \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{sim}}$$
+
+其中 $\mathcal{L}_{\text{SG}}$ 是上述场景图损失，$\mathcal{L}_{\text{recon}}$ 是被掩码物体特征的重建 MSE 损失，$\mathcal{L}_{\text{sim}}$ 是被掩码可见物体的关系重预测（相似度）损失。
 
 ## 实验关键数据
 

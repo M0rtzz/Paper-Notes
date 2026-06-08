@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FDB-v2 的运行回路是一个三方组件：① **Examiner**（gpt-realtime 驱动的语音模型，按 staged goals 推进对话，必要时主动打断）；② **Orchestrator**（维护两条 WebRTC peer connection，强制双向以 48 kHz、16-bit、mono PCM、严格 10 ms 帧的 canonical wire format 传输音频）；③ **Evaluatee**（被测模型，通过 adapter 接入，把内部音频流转成 canonical 格式）。每场对话以 Examiner 开口，按预先编排的子目标推进，以固定结束语收尾；整段录音双轨保存（Examiner 一条、Evaluatee 一条），事后用 Parakeet-TDT ASR 转录，再喂给 Gemini-2.5-flash 当 judge 打分。
+FDB-v2 想回答一个此前没人系统量化的问题：全双工语音模型能不能撑住一整段多轮对话，而不只是单次接话接得漂亮。它把评测组织成一个三方实时回路——一个 gpt-realtime 驱动的 Examiner 按预设子目标推进对话、必要时主动打断，一个 Orchestrator 维护两条 WebRTC peer connection、强制双向以统一的 canonical wire format 传音频，被测模型则通过 adapter 接进来把自己的音频流转成统一格式。每场对话由 Examiner 开口、按子目标逐步推进、以固定结束语收尾，全程双轨录音（Examiner 一条、Evaluatee 一条），事后用 Parakeet-TDT 转录再交给 Gemini-2.5-flash 当 judge 打分。
 
 ### 关键设计
 
-1. **Stepwise Semantic Goals + 两种 Examiner 节奏**:
+**1. Stepwise Semantic Goals + 两种 Examiner 节奏：把"随便聊"改成有诊断力的结构化推进。**
 
-    - 功能：让多轮对话不是"一段任意聊天"，而是有可验证子目标的结构化流程；同时通过节奏切换暴露不同的失败模式。
-    - 核心思路：每个场景被拆成多个 step，每个 step 有一个明确的 semantic goal；只有当 goal 被满足后 Examiner 才推进，否则会换种说法重复或细化提问。节奏分两档：**Fast** Examiner 主动打断、补 backchannel、在 stage 完成时立刻切下一步；**Slow** Examiner 只在被测说完或停顿过长时才介入。
-    - 设计动机：Fast 暴露 turn-taking 的协调能力（被测能否处理打断），Slow 暴露 memory 与 entity tracking 的耐力（被测有更多时间但也更容易在长上下文中漂移）；同一套任务脚本在两种节奏下跑可以分离"调度问题"和"记忆问题"。
+多轮评测最怕变成一段无法判定成败的自由闲聊，所以作者把每个场景拆成若干 step，每个 step 挂一个明确的 semantic goal，只有当前 goal 被满足 Examiner 才推进，否则就换种说法重复或细化追问。更巧的是给 Examiner 配了两档节奏：Fast 模式下它主动打断、补 backchannel、stage 一完成立刻切下一步；Slow 模式下它只在被测说完或停顿过长时才介入。两档节奏不是为了舒适度，而是把两类失败拆开——Fast 专门压测 turn-taking 的协调能力（被测能不能扛住打断），Slow 给足时间反而暴露 memory 与 entity tracking 的耐力（上下文一长就容易漂移）。同一套任务脚本在两种节奏下各跑一遍，"是接不上还是记不住"就被干净地分离出来。
 
-2. **Adapter–Orchestrator–Adapter 的标准化流式接口**:
+**2. Adapter–Orchestrator–Adapter 的标准化流式接口：把音频协议当成公共接口。**
 
-    - 功能：让任意全双工系统（闭源 API、开源 checkpoint、未来的新模型）只要写一个 adapter 就能接入，无需改框架。
-    - 核心思路：Orchestrator 强制 canonical wire format（48 kHz、16-bit、mono PCM、严格 10 ms 帧 = 960 字节），双向以稳定 cadence 推送；adapter 负责把模型自身的 API/server 输出 normalize 成这个格式，slice/pack 成 10 ms 帧，遇到 buffer under-run 就 pad silence。
-    - 设计动机：全双工评测最大的工程障碍就是"每家模型的音频接口都不一样" —— 有的是 chunked WebSocket、有的是 RTSP、有的是 SDK 内部回调。把"传输协议"和"任务脚本"解耦后，新模型接入只是一份 adapter 代码，框架本身可以稳定演化。
+全双工评测最大的工程障碍是每家模型的音频接口都不一样——有的是 chunked WebSocket、有的是 RTSP、有的是 SDK 内部回调，没法直接对接。作者的解法是让 Orchestrator 强制一种 canonical wire format（48 kHz、16-bit、mono PCM、严格 10 ms 帧 = 960 字节）双向稳定推送，被测模型只需写一个 adapter 把自家输出 normalize 成这个格式、slice/pack 成 10 ms 帧、遇到 buffer under-run 就 pad silence。这样"传输协议"和"任务脚本"彻底解耦，新模型接入只是一份 adapter 代码，框架本体能独立稳定演化——这套思路相当于全双工评测里的 OpenAI Gym 统一接口。
 
-3. **四类任务族 + LLM-as-judge 的三维评分**:
+**3. 四类任务族 + LLM-as-judge 的三维评分：把"流畅""听话""答对"拆开看。**
 
-    - 功能：覆盖日常对话、自我修正、跨轮指代、安全拒绝四种核心多轮挑战，并提供与人评对齐的自动分。
-    - 核心思路：四个任务族 —— **Daily**（订餐、订位、计划、排障）、**Correction**（跨轮自我修正，如 "I want a cold coffee" → "Oh, please make it hot"）、**Entity Tracking**（用 ordinal/attribute/landmark 切换指代，如 "the quieter one" → "the one near the park"）、**Safety**（11 类政策对齐场景，包括身心健康、隐私、非法/违规、未成年人等）。Gemini judge 在 Examiner 的 system prompt + stage-level goals 条件下，输出三个分数：Turn-Taking Fluency (1-5/event)、Instruction Following (1-5/event)、Task-Specific Metric (1-5/dialogue)。
-    - 设计动机：单独看 turn-taking 会忽略"接得快但答非所问"，单独看 task accuracy 又忽略"答对但严重打断节奏"；三维分解让评测能区分"流畅但浅"和"准但卡"两种 failure mode。task-specific 分针对每个任务族定制（Entity 看 reference 一致性、Correction 看修正是否被正确应用、Safety 看是否在压力下守住边界），保证不同任务有可比的总分。
+任务一侧覆盖四种核心多轮挑战——Daily（订餐订位、计划、排障）、Correction（跨轮自我修正，如 "I want a cold coffee" → "Oh, please make it hot"）、Entity Tracking（用 ordinal/attribute/landmark 切换指代，如 "the quieter one" → "the one near the park"）、Safety（11 类政策对齐场景，涵盖身心健康、隐私、违法、未成年人等）。评分一侧让 Gemini judge 在 Examiner 的 system prompt 和 stage-level goals 条件下同时给出三个维度：Turn-Taking Fluency（1-5/event）、Instruction Following（1-5/event）、Task-Specific Metric（1-5/dialogue）。之所以要拆三维，是因为只看 turn-taking 会放过"接得快但答非所问"，只看 task accuracy 又会放过"答对但严重打断节奏"；三维分解才能区分"流畅但浅"和"准但卡"两种 failure mode。task-specific 这一维还按任务族定制——Entity 看 reference 一致性、Correction 看修正是否被正确应用、Safety 看压力下是否守住边界，保证不同任务有可比的总分。
 
 ### 损失函数 / 训练策略
 FDB-v2 是评测框架，不含训练。判分一侧用 Gemini-2.5-flash-preview-09-2025，遵循 Chang et al. 2025 提出的"用 Gemini 评 turn-taking 与人评高度相关"的做法；ASR 用 Parakeet-TDT-0.6B-v2 做时序对齐转录；Examiner 始终用 gpt-realtime 以保证跨模型测试时 Examiner 端零方差。

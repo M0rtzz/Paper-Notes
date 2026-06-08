@@ -38,33 +38,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四阶段：(1) 识别对特定概念敏感的权重层；(2) CA-LoRA选择性微调；(3) 训练标签生成器；(4) 用增强prompt生成多样化图像-标签对。
+
+这篇论文要解决的是「合成分割数据既要对齐目标域、又要保持多样性」这对矛盾：直接拿预训练 T2I 模型生成的图够多样但不像驾驶场景，对它做完整 LoRA 微调能对齐却又把视角、风格、物体形状、布局全学进去，过拟合到训练集失去多样性。CA-LoRA 的破局点是把微调从「全学」收窄成「只学某一个概念」。整条流程是：先给每一层权重打一个「对目标概念有多敏感」的分数，只挑最敏感的前 k% 层挂上 LoRA、其余冻结保留预训练知识；微调完再用这个对齐后的模型训练一个标签生成器，最后用增强 prompt 批量产出图像-标签对喂给分割模型。
 
 ### 关键设计
 
-1. **概念感知度量（Concept Awareness）**:
+**1. 概念感知度量（Concept Awareness）：用归一化的梯度比值，公平地量出每层对某个概念有多敏感。**
 
-    - 功能：量化T2I模型中每层权重对特定概念（如风格、视角）的敏感性
-    - 核心思路：设计概念损失（Concept Loss），用概念增强caption作为伪目标。如原prompt为"Photorealistic first-person urban street view"，风格增强为"Sketch of first-person urban street view"，视角增强为"Photorealistic urban street in top-down view"。概念损失定义为 $\mathcal{L}_{Concept} = \|\epsilon_\theta(x_t, c, t) - \text{sg}[\epsilon_\theta(x_t, c_{Aug}, t)]\|_2^2$。关键创新在于用扩散损失梯度**归一化**概念损失梯度，消除位置偏差：
-    $\text{Concept-Awareness}(\theta) = \mathbb{E}_{x_0, \epsilon, c_{Aug}}\left[\frac{\|\nabla_\theta \mathcal{L}_{Concept}\|}{\|\nabla_\theta \mathcal{L}_{Diff}\|}\right]$
-    - 设计动机：直接用概念损失梯度的RMS范数有严重的层间位置偏差，归一化后才能公平比较不同层的概念敏感性
+要「只学某个概念」，前提是先知道哪些层真正负责这个概念。难点在于扩散模型每层权重的梯度量级天差地别（浅层和深层、不同投影层都不在一个尺度上），直接比谁的梯度大根本不公平。CA-LoRA 先构造一个概念损失：把原 prompt 做概念增强当伪目标，比如原 prompt 是 "Photorealistic first-person urban street view"，做风格增强得到 "Sketch of first-person urban street view"，做视角增强得到 "Photorealistic urban street in top-down view"，让模型在原 caption 和增强 caption 下的去噪预测靠拢，
 
-2. **CA-LoRA选择性微调**:
+$$\mathcal{L}_{Concept} = \|\epsilon_\theta(x_t, c, t) - \text{sg}[\epsilon_\theta(x_t, c_{Aug}, t)]\|_2^2$$
 
-    - 功能：仅对top-k%概念敏感层施加LoRA，其余冻结
-    - 核心思路：按concept awareness排序所有attention投影层（Q/K/V/OUT），选择top-k%施加LoRA更新 $W_0 + \Delta W = W_0 + BA$
-    - 设计动机：标准LoRA对所有层等权微调导致过拟合不需要的概念。CA-LoRA让模型只学习指定概念（如视角），保留了对其他概念（如风格、物体形状）的可控性。这在域泛化场景中特别重要——可以通过text prompt自由控制天气/光照等风格
-    - **Style CA-LoRA**：域内设置，学习训练集的风格（如晴天城市）
-    - **Viewpoint CA-LoRA**：域泛化设置，学习驾驶视角，风格由prompt控制
+其中 $\text{sg}[\cdot]$ 是 stop-gradient。关键一步是不直接拿这个损失的梯度范数当分数，而是用扩散损失自身的梯度范数把它归一化，
 
-3. **标签生成器与域差距缩减**:
+$$\text{Concept-Awareness}(\theta) = \mathbb{E}_{x_0, \epsilon, c_{Aug}}\left[\frac{\|\nabla_\theta \mathcal{L}_{Concept}\|}{\|\nabla_\theta \mathcal{L}_{Diff}\|}\right]$$
 
-    - 功能：从T2I模型的中间特征生成语义标签
-    - 核心思路：去噪过程中提取多尺度生成特征和交叉注意力图，训练Mask2Former形状的标签生成器。关键：用**微调后**的T2I模型训练标签生成器（而非DatasetDM用的预训练模型），大幅缩小训练-推理的域差距
-    - 设计动机：预训练T2I模型的生成特征和目标域图片的特征分布不同，微调后统计量更一致，标签质量显著提升
+分母把各层固有的梯度量级差异（位置偏差）抵消掉，剩下的比值才真正反映「这一层相对而言对概念扰动有多在意」。这样得到的排序可以扩展到任意自定义概念，只要换一个概念增强 caption 即可。
+
+**2. CA-LoRA 选择性微调：按概念敏感度排序，只给前 k% 层挂 LoRA，其余冻结。**
+
+标准 LoRA 对所有层一视同仁地更新，等于强迫模型把视角、风格、形状、布局所有概念一起学，这正是过拟合和记忆训练数据的根源。CA-LoRA 拿上一步算出的概念敏感度对所有 attention 投影层（Q/K/V/OUT）排序，只对最敏感的前 k% 层施加低秩更新 $W_0 + \Delta W = W_0 + BA$，其余层保持冻结。被冻结的层留着预训练模型对「其他概念」的可控性，于是模型只往指定概念上对齐、不动其余。这一点在域泛化里尤其值钱——根据要学的概念，方法分成两种用法：**Style CA-LoRA** 用于域内设置，学训练集的风格（如晴天城市）；**Viewpoint CA-LoRA** 用于域泛化，只学驾驶视角、把风格（天气、光照）这一维留给 text prompt 自由控制，于是同一个模型就能按 prompt 生成各种天气下的街景。
+
+**3. 标签生成器与域差距缩减：用微调后的模型而非预训练模型来训练标签头。**
+
+光生成图还不够，要做分割数据集得连像素标签一起产出。CA-LoRA 在去噪过程中抽取多尺度生成特征和交叉注意力图，训练一个 Mask2Former 形状的标签生成器把这些特征翻译成语义标签。这里有个容易被忽略却很关键的选择：DatasetDM 是用**预训练** T2I 模型的特征来训练标签头的，而 CA-LoRA 改用**微调后**的模型。原因是预训练模型的生成特征分布和目标域图像的特征分布对不上，标签头在训练-推理之间存在域差距；换成对齐后的模型，特征统计量和实际生成时一致，标签质量随之明显提升。
 
 ### 损失函数 / 训练策略
-标准扩散损失微调CA-LoRA层；标签生成器用Mask2Former的分割损失训练。生成prompt格式："Photorealistic first-person urban street view with [class names] in [weather]"。
+
+CA-LoRA 层用标准扩散损失微调，标签生成器用 Mask2Former 的分割损失训练。生成时 prompt 取 "Photorealistic first-person urban street view with [class names] in [weather]" 这种模板，把类别名和天气填进去即可批量产出多样化的图像-标签对。
 
 ## 实验关键数据
 

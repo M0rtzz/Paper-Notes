@@ -43,26 +43,20 @@ VGPO 可以理解为在 DAPO/GRPO 类 RL 框架上加了一层“视觉忠实度
 给定图像 $I$、文本问题 $q$ 和答案 $a$，策略模型采样一组推理轨迹。首先，VGPO 从图像 token 的隐藏状态中得到视觉原型，并计算每个生成 token 与视觉原型的相似度，形成 Visual Focus Score。然后，Visual Attention Compensation 会在推理后段对高视觉相似 token 做线性增强，用来抵消 temporal visual forgetting。最后，Dual-Grained Advantage Re-Weighting 将这种视觉补偿信号嵌入到 policy objective 中：轨迹内区分 token 级视觉重要性，轨迹间区分整条回答的视觉累积程度。
 
 ### 关键设计
-1. **Visual Focus Score**:
+**1. Visual Focus Score：用隐藏状态相似度判断每个 token 是否真在"想图像"。**
 
-	- 功能：无需外部标注或辅助模型，判断每个生成 token 是否与图像证据相关。
-	- 核心思路：把输入图像 token 的隐藏状态聚合成视觉原型 $\mu_v$，再计算当前生成 token 隐藏状态 $h_{i,t}$ 与 $\mu_v$ 的余弦相似度。视觉关注分数写作 $\rho_{i,t}=0.5(\mathcal{S}(h_{i,t},\mu_v)+1)$，被归一化到 $[0,1]$。论文使用 mean-pooling 作为默认视觉原型构造方式。
-	- 设计动机：如果要强化视觉忠实性，首先要知道推理链中哪些 token 真的在“想图像”。隐藏状态相似度提供了一个廉价、内生、可端到端接入训练的信号。
+要强化视觉忠实性，先得知道长推理链里哪些 token 真正在用图像证据——但靠外部标注或辅助模型成本高。VGPO 把输入图像 token 的隐藏状态聚合成视觉原型 $\mu_v$（默认用 mean-pooling），再算当前生成 token 隐藏状态 $h_{i,t}$ 与 $\mu_v$ 的余弦相似度，归一化成视觉关注分数 $\rho_{i,t}=0.5(\mathcal{S}(h_{i,t},\mu_v)+1)\in[0,1]$。当模型真在用视觉信息时这个相似度会上升，且对应的图像注意区域通常语义合理。这个信号廉价、内生、可端到端接入训练，不需要任何额外 forward 或评审模型。
 
-2. **Visual Attention Compensation**:
+**2. Visual Attention Compensation：专治后段视觉关注衰减，且只在该补的地方补。**
 
-	- 功能：专门补偿长推理后段视觉关注衰减的问题。
-	- 核心思路：直接使用 $\rho_{i,t}$ 会低估后段视觉 token，因为视觉注意力天然衰减。VGPO 构造 $w_{i,t}=\rho_{i,t}[1+G_i(\rho_{i,t})\beta t/T_i]$，其中 $t/T_i$ 让补偿随生成位置线性增强，$G_i$ 只在轨迹后段且属于 top-$\kappa$ 视觉分数的 token 上打开。默认超参为 $\beta=0.3$、$\gamma=0.5$、$\kappa=0.2$。
-	- 设计动机：早期推理本来就较容易看图，盲目全程加强会干扰问题理解；后段补偿对准真正的 visual forgetting，避免把所有 token 都当作视觉 token。
+直接用 $\rho_{i,t}$ 会系统性低估后段视觉 token，因为视觉注意力天然随生成推进而衰减——这正是 temporal visual forgetting 的来源。VGPO 构造补偿权重 $w_{i,t}=\rho_{i,t}[1+G_i(\rho_{i,t})\beta t/T_i]$：其中 $t/T_i$ 让补偿随生成位置线性增强，把力气压在更容易遗忘视觉的后段；门控 $G_i$ 只在轨迹后段、且属于 top-$\kappa$ 视觉分数的 token 上打开，避免把所有 token 都当视觉 token 强行加强。默认超参 $\beta=0.3$、$\gamma=0.5$、$\kappa=0.2$。这样早期理解题意的阶段不被干扰，补偿精准对准真正的 visual forgetting。
 
-3. **双粒度优势重加权**:
+**3. 双粒度优势重加权：token 级管"哪一步该看图"，trajectory 级管"哪条回答整体更看图"。**
 
-	- 功能：同时在 token 级和 trajectory 级奖励视觉忠实的推理。
-	- 核心思路：轨迹内先对 $w_{i,t}$ 做 min-max 归一化，再减去轨迹均值得到 $\psi_{i,t}$，让高于本轨迹平均视觉激活的 token 获得更高优势。轨迹间则累积整条轨迹的补偿分数 $s_i=\sum_t w_{i,t}$，在 rollout group 内归一化并中心化得到 $\phi_i$。最终优势变为 $\hat{A}^{\mathcal{V}}_{i,t}=\hat{A}_i(1+\psi_{i,t})(1+\phi_i)$。
-	- 设计动机：只看 token 局部会忽略整条回答是否持续看图；只看轨迹整体又无法把奖励准确分给关键视觉步骤。双粒度结合让优化信号更精细。
+只看 token 局部会忽略整条回答是否持续看图，只看轨迹整体又没法把奖励准确分给关键视觉步骤，所以 VGPO 在两个粒度同时调制优势。轨迹内先对 $w_{i,t}$ 做 min-max 归一化、再减去轨迹均值得到 $\psi_{i,t}$，让高于本轨迹平均视觉激活的 token 拿到更高优势；轨迹间则累积整条轨迹的补偿分数 $s_i=\sum_t w_{i,t}$，在 rollout group 内归一化并中心化得到 $\phi_i$。最终把可验证奖励的标准优势替换成 $\hat{A}^{\mathcal{V}}_{i,t}=\hat{A}_i(1+\psi_{i,t})(1+\phi_i)$——正确答案的奖励由此沿着更视觉忠实的 token 和轨迹传播，而可验证奖励本身一字未改。
 
 ### 损失函数 / 训练策略
-基础优化沿用 GRPO/DAPO 风格的 group-relative policy optimization：每个问题采样一组回答，根据 exact match 得到二值 reward，再在组内标准化为优势。VGPO 将标准优势替换为视觉调制优势 $\hat{A}^{\mathcal{V}}_{i,t}$。实验使用 Qwen2.5-VL 3B、7B、32B，训练数据包括 ViRL39K、Geo3K 和 MMK12；默认训练 2 个 epoch，学习率 $1\times 10^{-6}$，rollout batch size 512，最大回答长度 2,048，评测 temperature 为 0。
+基础优化沿用 GRPO/DAPO 风格的 group-relative policy optimization：每个问题采样一组回答，按 exact match 得到二值 reward，再在组内标准化为优势，VGPO 只是把标准优势换成视觉调制优势 $\hat{A}^{\mathcal{V}}_{i,t}$。实验使用 Qwen2.5-VL 3B、7B、32B，训练数据为 ViRL39K、Geo3K 和 MMK12；默认训练 2 个 epoch，学习率 $1\times 10^{-6}$，rollout batch size 512，最大回答长度 2,048，评测 temperature 为 0。
 
 ## 实验关键数据
 

@@ -45,33 +45,33 @@ MARS 把自动化 AI 研究重构成"在软件仓库空间中搜索最优解"的
 ## 方法详解
 
 ### 整体框架
-MARS 是一个迭代 loop。输入是 MLE 任务三元组 $\mathcal{P} = (\mathcal{I}, \mathcal{E}, \mathcal{O})$（指令 / 环境 / 目标）和预算 $B$；输出是一个在 $B$ 内最大化 $\mathcal{O}$ 的模块化仓库。
+MARS 要解决的是"在 24h wall-clock 预算内，把一个 MLE 任务做到金牌水平"，它的做法是把这件事重述成一个带约束的搜索问题：输入是任务三元组 $\mathcal{P} = (\mathcal{I}, \mathcal{E}, \mathcal{O})$（指令 / 环境 / 目标）和预算 $B$，要找的是在 $B$ 内最大化目标 $\mathcal{O}$ 的一份模块化仓库 $s_n = \langle \{\mathcal{M}_j\}_{j=1}^{l}, \pi_{\text{main}}\rangle$。
 
-流程分两阶段：
-1. **Task Preparation**：多 agent 系统提取任务元数据，做 Exploratory Data Analysis（EDA），生成报告指导后续特征工程，并准备 train/val/test 划分。
-2. **MARS Loop**：在 MCTS 树上反复迭代三个协同模块 —— Module A（Resource-Aware Planning，决定下一步动作）→ Module B（Modular Decomposition，生成/修改子模块）→ Module C（Reflective Memory，从 trajectory 蒸馏 lesson 喂回 Module B）。最终输出树上 score 最高的 leaf 对应的仓库。
-
-每个 MCTS 节点表示一份候选解 $s_n = \langle \{\mathcal{M}_j\}_{j=1}^{l}, \pi_{\text{main}}\rangle$，三种 expansion 动作：**Drafting**（root 处从零写新解）、**Improvement**（在 valid 节点上改模块）、**Debugging**（在 buggy 节点上修 runtime error，最多 $N_d=10$ 次 debug 循环）。
+整个系统是一个迭代 loop。开局先做一次 Task Preparation：多 agent 提取任务元数据、做探索性数据分析（EDA）生成报告指导后续特征工程，并切好 train/val/test。之后进入 MARS Loop —— 在一棵 MCTS 树上反复地"决定下一步动作、生成或修改仓库、从执行结果蒸馏经验喂回去"，每个树节点就是一份候选仓库，可执行的扩展动作有三种：在 root 处从零写新解的 **Drafting**、在 valid 节点上改模块的 **Improvement**、在 buggy 节点上修 runtime error 的 **Debugging**（最多 $N_d=10$ 次 debug 循环）。预算耗尽后输出全树 score 最高的 leaf 对应的仓库。下面三个关键设计分别对应这个 loop 的"怎么写代码、怎么记经验、怎么选下一步"。
 
 ### 关键设计
 
-1. **Modular Decomposition（Design-Decompose-Implement 三阶段流水线）**:
+**1. Modular Decomposition：把"吐一个大脚本"换成"先架构再拆模块逐个验证"**
 
-    - 功能：把"agent 写代码"从"吐一个大脚本"变成"先架构、再拆模块、再逐个写并验证"，输出真正的多文件仓库。
-    - 核心思路：三个专门 agent 串行 —— *Idea Generation Agent* 用自然语言写完整方案 plan；*Modular Agent* 把 plan 拆成若干独立功能模块 $\{\mathcal{M}_j\}$（如 `dataset.py`、`model.py`、`engine.py`、`losses.py`、`utils.py`、`config.py` 等）；*Coding Agent* 顺序实现每个 $\mathcal{M}_j$，每个模块写完跑独立 validation 脚本验证，再由 $\pi_{\text{main}}$ 编排端到端 pipeline。修改时采用 **Diff-Based Editing**：用标准 diff 格式指定"目标文件 + 待替换 block + 新代码"，让一次 LLM 推理就能原子地多文件更新，避免每次重写整个仓库。
-    - 设计动机：分散到多文件直接绕开 token output 上限；focus 在小逻辑单元上降低 context 噪声，复杂逻辑准确率更高；validated 模块可以缓存复用；debug 定位到单文件而不是全脚本扫描。实测 Table 4 显示开了 modular 之后平均 LOC 从 474.8 涨到 1103.9，文件数从 1.0 → 6.7，说明 agent 真的能产出更复杂结构化的方案，而不是只把一个文件拆成多个。
+现有 MLE agent 普遍让 LLM 一口气生成一个大 Python 文件，结果是 token output 上限挤压逻辑、改一处要重写全部、debug 时只能全脚本扫描。MARS 把代码生成拆成三个串行的专门 agent：*Idea Generation Agent* 先用自然语言写出完整方案 plan；*Modular Agent* 把 plan 拆成若干独立功能模块 $\{\mathcal{M}_j\}$（如 `dataset.py`、`model.py`、`engine.py`、`losses.py`、`utils.py`、`config.py`）；*Coding Agent* 顺序实现每个 $\mathcal{M}_j$，每写完一个就跑独立的 validation 脚本验证，最后由主控逻辑 $\pi_{\text{main}}$ 把各模块编排成端到端 pipeline。后续修改不重写整个仓库，而是用 **Diff-Based Editing**：以标准 diff 格式指定"目标文件 + 待替换 block + 新代码"，一次 LLM 推理就能原子地完成多文件更新。
 
-2. **Comparative Reflective Memory（Lesson Learning，定位因果而非记轨迹）**:
+这样设计同时绕开了 token 上限、把注意力收缩到小逻辑单元上降低 context 噪声、让 validated 模块可缓存复用、也把 debug 定位到单文件。它带来的不是"把同一份代码拆成多文件"这种表面变化：Table 4 显示开启 modular 后平均 LOC 从 474.8 涨到 1103.9、文件数从 1.0 涨到 6.7，说明 agent 真的在架构层面产出了更复杂、更结构化的方案。
 
-    - 功能：解决"哪个改动让指标涨/跌"的 credit assignment 问题，把执行 trajectory 蒸馏成结构化、可检索的 lesson pool。
-    - 核心思路：对**成功**的 valid 解走两步 —— *Empirical Analysis Agent* 先从执行日志抽客观发现（如 metric 变化趋势）；*Lesson Distillation Agent* 再做**比较式反思**，对比当前解和"已知最佳解"的 code-level delta，输出含三要素的 lesson：(1) 被隔离出的因果改动、(2) 比较影响分析、(3) 可用于未来迭代的泛化规则。对**失败**的 buggy 解，专门 agent 分析 buggy code + error log + 已应用的 fix，输出"fix 是否生效 + 故障逻辑 + 如何提前识别同类错误"的 debugging lesson。lesson pool 由 Review Agent 用 LLM 推理过滤冗余，agent 工作时只保留最近 $K_m = 30$ 条 lesson 进 context，并被强制在使用时显式 cite 是哪一条 lesson。
-    - 设计动机：现有 memory（Reflexion、MemGPT、AIDE/AIRA 的轨迹缓存）只总结"发生了什么"，agent 容易从噪声 log 里 over-generalize；diff-based 比较把"算法改动"从噪声 log 里隔离出来，等价于 agent 自己做了一次 ablation 实验。实测：lesson-utilization rate 65.8%，**lesson-transfer rate 63.0%**（即被使用的 lesson 里 63% 来自不同 tree 分支），这是"Aha!" 现象的量化证据 —— agent 真的在跨分支迁移经验，而不是局部贪心。
+**2. Comparative Reflective Memory：用 diff 对比隔离因果，而不是记轨迹**
 
-3. **Budget-Aware MCTS（效率感知的奖励函数）**:
+实验指标变好时到底是哪一行改动起的作用？Reflexion、MemGPT 以及 AIDE/AIRA 的轨迹缓存这类 verbal reflection 只能"记住做过什么"，agent 容易从噪声 log 里 over-generalize，解决不了 credit assignment。MARS 的做法是对**成功**的 valid 解走两步蒸馏：*Empirical Analysis Agent* 先从执行日志抽出客观发现（如 metric 变化趋势）；*Lesson Distillation Agent* 再做**比较式反思**，把当前解和"已知最佳解"做 code-level diff，输出含三要素的 lesson —— 被隔离出的因果改动、比较影响分析、可用于未来迭代的泛化规则。这一步等价于 agent 自己做了一次 ablation 实验，把"算法改动"从噪声 log 里干净地切出来。对**失败**的 buggy 解则另起一路，专门 agent 分析 buggy code + error log + 已应用的 fix，产出"fix 是否生效 + 故障逻辑 + 如何提前识别同类错误"的 debugging lesson。
 
-    - 功能：在标准 MCTS 的 UCT 选择基础上，把"执行时间"显式写进 reward，让搜索系统性地偏向"快且好"的节点。
-    - 核心思路：节点 $v$ 的性能 $M(v)$ 先做全局归一化 $G(v) = (M(v) - M_{\min}) / (M_{\max} - M_{\min})$（探索过节点集合 $\mathcal{V}$ 上的 min/max），效率感知 reward 定义为 $R(v) = G(v) \cdot [t(v)/L(v)]^w$，其中 $t(v)$ 是实际执行时间，$L(v)$ 是时间上限，$w$ 是负惩罚权重（默认 $w = -0.07$）。直觉：两个解 accuracy 相同时，跑得快的 $t/L$ 比值小，乘上负指数后 reward 更高。节点扩展规则也做了 MLE 定制：buggy 节点直接标 fully-expanded（不再扩 sibling，只走 debug loop 最多 $N_d=10$ 步），valid 节点扩到 $N_i = 2$ 个 improvement child 后封口，root 在"$n_s$ 个 valid 节点都没改进 best 解"时重新激活允许新 draft —— 形成"探索 ↔ 重启"的自适应机制。
-    - 设计动机：MLE 是 24h wall-clock 强约束的任务，普通 MCTS 会把预算耗在小幅提升但极慢的方案上。$w = -0.07$ 在消融里被验证是甜蜜点：$w=0$（纯 vanilla MCTS）性能明显下降，$w=-0.15$ 又会让 search 偏向 trivial 快节点。Budget-aware 把 effective solution rate 从 16.1% 提到 19.5%，定量证明它是"剪枝低效轨迹"的有效启发式。
+所有 lesson 进入一个由 Review Agent 用 LLM 推理过滤冗余的 pool，agent 工作时只保留最近 $K_m = 30$ 条进 context，且被强制在使用时显式 cite 引用了哪一条（让行为可审计）。这套机制的效果可以量化：lesson-utilization rate 达 65.8%，更关键的是 **lesson-transfer rate 63.0%** —— 即被使用的 lesson 里有 63% 来自不同的 tree 分支。这个数字是论文所谓 "Aha! moment" 的硬证据，说明 agent 在把经验当全局知识库跨分支迁移，而不是局部贪心。
+
+**3. Budget-Aware MCTS：把执行时间写进 reward，系统性偏向"快且好"**
+
+MLE 有 24h 的硬约束，但 vanilla MCTS 的 UCT 只优化任务指标，会把预算耗在"提 0.1% 准确率却把训练从 1h 拉到 10h"这种灾难性方案上。MARS 在 reward 里显式编码执行成本：节点 $v$ 的性能 $M(v)$ 先在已探索节点集合上做全局归一化 $G(v) = (M(v) - M_{\min}) / (M_{\max} - M_{\min})$，再乘上一个时间惩罚项得到效率感知 reward
+
+$$R(v) = G(v) \cdot \left[\frac{t(v)}{L(v)}\right]^{w},$$
+
+其中 $t(v)$ 是实际执行时间、$L(v)$ 是时间上限、$w$ 是负惩罚权重（默认 $w = -0.07$）。直觉很简单：两个解 accuracy 相同时，跑得快的 $t/L$ 比值更小，乘上负指数后 reward 更高，于是搜索被引导去剪掉低效轨迹。节点扩展规则也按 MLE 定制 —— buggy 节点直接标记 fully-expanded（不再扩 sibling，只走最多 $N_d=10$ 步的 debug loop），valid 节点扩到 $N_i = 2$ 个 improvement child 后封口，而 root 在"连续 $n_s$ 个 valid 节点都没改进 best 解"时重新激活、允许新 Drafting，形成"探索 ↔ 重启"的自适应机制。
+
+惩罚权重 $w=-0.07$ 是消融出来的甜蜜点：$w=0$ 退化成 vanilla MCTS 性能明显下降，$w=-0.15$ 又会让搜索偏向 trivial 的快节点。最终 budget-awareness 把 effective solution rate 从 16.1% 提到 19.5%，相当于在 24h 预算下多探索约 20% 的有效解。
 
 ### 损失函数 / 训练策略
 MARS 是无训练的 scaffolding（用预训练 LLM 做 backbone，主要试了 Gemini-2.5-Pro 与 Gemini-3-Pro-Preview），所有"学习"都发生在 inference 阶段的 MCTS + lesson pool 演化。关键超参：$K_m=30$（memory 最大 lesson 数）、$N_d=10$（debug 上限）、$N_i=2$（valid 节点 improvement 分支因子）、$w=-0.07$（reward 惩罚权重）；MLE-Bench 默认 24h × 1×A100（MARS+ 扩到 2 棵并行树 × 2×H100 × 48 vCPU）。

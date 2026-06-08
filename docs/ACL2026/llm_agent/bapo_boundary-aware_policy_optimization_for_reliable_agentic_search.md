@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BAPO 建立在 GRPO 之上。对每个问题 $x$，策略采样 $G=8$ 条交错 `<think>/<search>/<result>/<answer>` 的轨迹 $\{\tau_i\}_{i=1}^{G}$。每条轨迹计算两项奖励：(1) `correctness reward` $\mathcal{R}^{\textit{Correct}}$（格式对则取 F1，否则 -1）；(2) `boundary-aware reward` $\mathcal{R}^{\textit{IDK}}$（仅在整组无正确答案时，对 IDK 响应给 +0.5）。最终奖励 $\mathcal{R}=\mathcal{R}^{\textit{Correct}}+\mathcal{R}^{\textit{IDK}}$ 进入 GRPO 的组归一化优势 $A_i$ 中。一个"自适应奖励调制器"动态决定是否把 $\mathcal{R}^{\textit{IDK}}$ 注入，避免在探索初期就把模型带歪。整套流水线只改奖励层，不改策略架构，无需冷启动 SFT。
+BAPO 把"敢于拒答"训进 agentic search 模型，整条流水线只动 GRPO 的奖励层，不改策略架构、也不需要冷启动 SFT。对每个问题 $x$，策略先采样 $G=8$ 条交错 `<think>/<search>/<result>/<answer>` 的轨迹 $\{\tau_i\}_{i=1}^{G}$；每条轨迹同时算两项奖励——衡量答对的 correctness reward 和只在整组全错时才奖励 IDK 的 boundary-aware reward，二者相加后送进 GRPO 的组归一化优势 $A_i$。一个自适应调制器再按训练阶段与样本多样性决定是否真正注入 IDK 奖励，从而在"先学会解题、再学会认怂"之间取得平衡。
 
 ### 关键设计
 
-1. **基于组的边界感知奖励 $\mathcal{R}^{\textit{IDK}}$**:
+**1. 基于组的边界感知奖励：用一组 rollout 的"全军覆没"当越界证据。**
 
-    - 功能：把"模型当前是否越界"形式化为组级别事件，仅在越界时奖励诚实拒答。
-    - 核心思路：对组 $\{\tau_i\}$，若 $\forall i,\ \mathcal{R}^{\textit{Correct}}(\tau_i)\le 0$ 则视为整组全错，此时对 $y_i=\text{IDK}$ 的样本给 $\mathcal{R}^{\textit{IDK}}=0.5\cdot\mathbb{I}(y_i=\text{IDK})$；只要组内存在任一正确答案，该项即归零。这样 IDK 奖励与"题目可解性"解耦，避免简单题被偷懒。
-    - 设计动机：边界不像参数化"知识边界"那样静态，它依赖 plan/检索/迭代推理的合成结果。用同策略多 rollout 的失败一致性作为越界代理，是一种无需外部标注的、可被 GRPO 优势归一化天然吸收的信号。
+朴素做法是对任何 IDK 响应都给固定奖励，但这会被模型当成偷懒捷径——简单题也直接拒答，reward hacking 立刻把 IDK 率推到 53%。BAPO 的关键洞察是把"边界"从静态的参数化知识改写成一个可被组采样验证的事件：对组 $\{\tau_i\}$，correctness reward 取 $\mathcal{R}^{\textit{Correct}}=\text{F1}$（格式不合法则记 $-1$），只有当 $\forall i,\ \mathcal{R}^{\textit{Correct}}(\tau_i)\le 0$、即一组里没有一条答对时，才判定该问题超出当前策略的边界，此时对 IDK 样本给 $\mathcal{R}^{\textit{IDK}}=0.5\cdot\mathbb{I}(y_i=\text{IDK})$；只要组内存在任一正确答案，这一项立即归零。这样 IDK 奖励就和"题目本身可不可解"解耦了——可解的题拿不到拒答奖励，逼模型继续探索；真正越界的题才用诚实拒答换分。由于信号天然以组为单位，它能被 GRPO 的优势归一化无缝吸收，无需任何外部标注或置信度模型。
 
-2. **Stage-level 调制器（探索期关 / 平台期开 + 动态重采样）**:
+**2. Stage-level 调制器：探索期关、平台期开，并对难题加采样。**
 
-    - 功能：按训练阶段开关 $\mathcal{R}^{\textit{IDK}}$，并在平台期把不确定题再多采几次以更准地判定边界。
-    - 核心思路：早期作为"探索阶段"默认禁用 IDK 奖励，仅当组内 IDK 比例 $\rho_{\text{IDK}}<\alpha=5\%$ 时短暂开启，防止 IDK 抢走探索机会；当验证集分数连续 5 步停滞，切换到"平台阶段"全量启用 $\mathcal{R}^{\textit{IDK}}$。平台期对组内全错的难题最多再重采 $k=2$ 次（即等效 pass@24），直到出现 IDK 或正确答案才结算。
-    - 设计动机：preliminary 实验显示朴素 IDK 奖励会让模型在还没学会解题前就先学会偷懒，把奖励 schedule 和学习曲线绑定可以"先学解题、再学认怂"。
+preliminary 实验暴露出一个陷阱：如果一开始就放开 IDK 奖励，模型会在还没学会解题前先学会偷懒。BAPO 因此把奖励 schedule 与学习曲线绑定。训练前期是"探索阶段"，默认禁用 $\mathcal{R}^{\textit{IDK}}$，仅当组内 IDK 比例 $\rho_{\text{IDK}}<\alpha=5\%$ 时才短暂放行，防止拒答抢走探索机会；当验证集分数连续 5 步停滞，就切到"平台阶段"全量启用 $\mathcal{R}^{\textit{IDK}}$。平台期还对组内全错的难题最多重采 $k=2$ 次（等效 pass@24），直到出现 IDK 或正确答案才结算，让"是否越界"判得更准。这套阶段感知的设计揭示了一个常被忽视的事实——同一个奖励在探索期是毒药、在平台期才是良药。
 
-3. **Sample-level 调制器（按 rollout 多样性自适应）**:
+**3. Sample-level 调制器：用 rollout 多样性当隐式置信度。**
 
-    - 功能：在平台期对单个样本细粒度决定是否启用 IDK 奖励。
-    - 核心思路：以 $|\{y_{1..G}\}|\ge G/2$ 作为"高多样性"判据——模型还在主动探索解空间，则关闭 $\mathcal{R}^{\textit{IDK}}$ 以免过早收敛；反之多样性低说明模型已倾向于某个固定输出，此时开启 $\mathcal{R}^{\textit{IDK}}$ 来强化边界感知。
-    - 设计动机：rollout 一致性可视为模型置信度的代理，区分"探索中"和"已收敛"两种样本，让奖励在"该探索的地方继续探索、该认怂的地方学会认怂"。
+进入平台期后，BAPO 还在单个样本粒度上决定是否启用 IDK 奖励，依据是这一组 rollout 的输出多样性。以 $|\{y_{1..G}\}|\ge G/2$ 作为"高多样性"判据——说明模型仍在主动探索解空间，此时关闭 $\mathcal{R}^{\textit{IDK}}$ 以免过早收敛到拒答；反之多样性低意味着模型已经稳定倾向于某个固定输出，再探索也难有突破，于是开启 $\mathcal{R}^{\textit{IDK}}$ 强化边界感知。这里把 rollout 一致性当作置信度的廉价代理，免去显式不确定性估计或额外采样，让奖励精准地落在"该探索的地方继续探索、该认怂的地方学会认怂"。
 
 ### 损失函数 / 训练策略
 策略目标仍是带 clip 的 GRPO（$\epsilon=0.1$），KL 系数 0.001，rollout 数 $G=8$，温度 1.0，max tokens 8192，最多 3 次工具调用；优势 $A_i$ 在组内做 z-score 归一化。检索环境基于 FlashRAG + E5-base-v2 + 2018 Wikipedia，top-5 文档；训练集仅 5k 条（来自 HotpotQA / 2WikiMultiHopQA），2 个 epoch，batch=64。

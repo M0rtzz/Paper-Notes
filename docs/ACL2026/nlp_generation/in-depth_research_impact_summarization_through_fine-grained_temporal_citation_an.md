@@ -38,38 +38,26 @@ tags:
 **核心 idea**：用“细粒度引文意图 + 时间信息”作为结构化中间层，把科研影响力从静态数字变成可验证、可读、可比较的历史叙事。
 
 ## 方法详解
-论文首先给出四个定义。citation context 是引用某篇论文时周围的文本；fine-grained citation intent 是引用原因的自由文本描述；impact-revealing intent 指直接体现被引论文影响的意图，分为 confirmation 和 critique/correction；scientific impact summary 则是在时间维度上描述一篇论文如何被后续工作直接使用、扩展、批评或修正。
-
-整条 pipeline 围绕“先筛证据、再写摘要”展开。输入是目标论文的一组 citation contexts 及其年份。系统先为每条 context 生成细粒度 intent，并分类为 impact-revealing 或 other；随后只保留有影响力信号的 context，把它们与年份、intent 一起放进生成 prompt，输出 semi-structured impact summary。由于这个任务没有 gold summary，作者又设计了 reference-free evaluation，用 LLM 评估 faithfulness、coverage、citation year compliance、insightfulness、trend awareness 和 specificity，并用人类评估验证相关性。
 
 ### 整体框架
-第一阶段是 citation intent generation/classification。作者手工构造覆盖多种引用原因的 in-context examples，包括 method use、background mention、指出已有数据集不可靠并提出更好数据集、指出研究空白等。LLM 对每条 citation context 同时输出自由文本 intent 和 impact-revealing/other 类别。为了支持这个新任务，作者还构造了一个 4K citation context 数据集：从 PST-Bench 选 1K 原有正例，再用 confirmation/correction 相关模式从 S2AG 中筛选 1K impact-revealing contexts，最后加入 2K non-impact-revealing examples。随机抽样人工检查显示 90% 标签正确。
-
-第二阶段是 impact summary generation。系统根据第一阶段结果过滤 context，再把 impact-revealing citations、对应年份和生成出的 intents 交给 LLM。prompt 要求模型按时间段概括目标论文的影响轨迹，例如早期被某类方法采用，中期暴露某类局限，后期被新方法重新利用。
-
-第三阶段是 evaluation。trustworthiness 侧包含 faithfulness、coverage 和 citation year compliance；informativeness 侧包含 insightfulness、trend awareness 和 specificity。faithfulness 会把摘要拆成不同时间段的 impact descriptions，并要求 evaluator LLM 检查它们是否能被同一时期的 citation contexts 支撑。informativeness 侧采用 G-Eval 式 LLM-as-a-judge。
+论文先把四个概念定义清楚：citation context 是引用某篇论文时周围的文本，fine-grained citation intent 是对引用原因的自由文本描述，impact-revealing intent 特指直接体现被引论文影响的意图（分 confirmation 和 critique/correction 两类），scientific impact summary 则是在时间维度上描述一篇论文如何被后续工作使用、扩展、批评或修正。整条 pipeline 走"先筛证据、再写摘要、最后无参考评估"三步：输入目标论文的一组 citation contexts 及其年份，系统逐条生成细粒度 intent 并判定是否 impact-revealing，只把筛出的有影响力信号的 context 连同年份、intent 一起喂给 LLM 生成 semi-structured impact summary，由于没有 gold summary，再用一套 reference-free 指标衡量摘要的可信度与信息量。
 
 ### 关键设计
-1. **Impact-revealing citation intent 作为中间表示**:
 
-	- 功能：从大量引用中筛出真正说明“这篇论文如何影响后续工作”的证据。
-	- 核心思路：不使用固定粗标签，而是让 LLM 生成自由文本 intent，再判断它是 confirmation、correction 还是 other。例如“use of minimization methodology”是 impact-revealing，而“background about NER methods”不是。
-	- 设计动机：科研影响力往往藏在具体使用方式里，固定 taxonomy 过粗，引用数又过浅；自由文本 intent 能保留更细的语义。
+**1. Impact-revealing citation intent 作为中间表示：把"为什么被引"从粗标签升级成自由文本证据。**
 
-2. **只用 impact-revealing contexts 生成摘要**:
+科研影响力往往藏在具体使用方式里——固定的 citation intent taxonomy 过粗，引用数又只数次数，都丢掉了"后续工作究竟怎么用这篇论文"的语义。作者因此让 LLM 对每条 citation context 同时输出一段自由文本 intent，再判定它属于 confirmation、correction 还是 other，例如"use of minimization methodology"算 impact-revealing，而"background about NER methods"不算。为支撑这个新任务，作者构造了一个 4K citation context 数据集：从 PST-Bench 取 1K 原有正例，用 confirmation/correction 相关模式从 S2AG 再筛 1K impact-revealing contexts，最后补 2K non-impact-revealing examples，随机抽样人工检查显示 90% 标签正确。自由文本 intent 既保留了细粒度语义，又成了后续摘要生成可以直接引用的"证据标签"，降低 LLM 凭空编故事的风险。
 
-	- 功能：减少普通背景引用对摘要的噪声，让生成结果更忠实于直接影响。
-	- 核心思路：作者比较了无 citation、全部 citation、全部 citation + intents、只用 impact-revealing citation、impact-revealing citation + intents 等输入设置。
-	- 设计动机：长上下文不一定更好；大量 incidental citations 会诱导 LLM 把背景提及误写成影响力故事。
+**2. 只用 impact-revealing contexts 生成摘要：把背景噪声挡在生成之外。**
 
-3. **面向新任务的 reference-free 评估框架**:
+一篇高被引论文的 citation contexts 里，大量是 incidental 的背景提及；如果把它们全塞进 prompt，长上下文非但不增益，反而会诱导 LLM 把"被顺带提了一句"误写成"产生了重大影响"。作者据此设计了第二阶段：先按第一阶段结果过滤，只保留 impact-revealing citations，连同年份和生成出的 intents 交给 LLM，prompt 要求模型按时间段概括影响轨迹（如早期被某类方法采用、中期暴露局限、后期被新方法重新利用）。为验证这一选择，作者横向比较了无 citation、全部 citation、全部 citation + intents、仅 impact-revealing citation、仅 impact-revealing + intents 等输入设置，结果"仅 impact-revealing + intents"在多数指标上最优。
 
-	- 功能：在没有 gold impact summary 的情况下衡量摘要是否可信且有信息量。
-	- 核心思路：faithfulness 检查摘要陈述是否由同时间段 citation contexts 支撑；coverage 衡量摘要覆盖多少 impact intents；trend awareness、insightfulness、specificity 评估摘要是否捕捉时间变化和具体影响。
-	- 设计动机：这个任务不能用传统 ROUGE，因为没有标准答案；需要评估“是否被证据支持”和“是否真正解释影响”。
+**3. 面向新任务的 reference-free 评估框架：在没有标准答案时同时考"可信"和"有料"。**
+
+这个任务没有 gold impact summary，传统 ROUGE 无从下手，作者于是把评估拆成 trustworthiness 与 informativeness 两侧。trustworthiness 侧含 faithfulness、coverage、citation year compliance：faithfulness 会把摘要拆成不同时间段的 impact descriptions，要求 evaluator LLM 逐段检查它们能否被同一时期的 citation contexts 支撑；coverage 衡量摘要覆盖了多少 impact intents。informativeness 侧含 insightfulness、trend awareness、specificity，采用 G-Eval 式 LLM-as-a-judge 打分，评估摘要是否真正捕捉到时间变化和具体影响，而不是泛泛复述。这套指标合起来既防"无证据的编造"，又防"有证据但空洞"。
 
 ### 损失函数 / 训练策略
-本文不是训练新模型，而是以 prompt-based LLM pipeline 为主。intent classification 使用 GPT-4o-mini 做 ICL，并在比较中采用 $K=50$ 的 shots；每个测试样本运行 3 次并按多数投票分类，三次完全一致率为 72%。summary generation 与自动评价主要使用 GPT-4o；附录还用 Qwen-2.5-72B 和 Gemini-2.5-flash 检查跨模型鲁棒性。人工研究邀请 9 位大学教授评估自己论文的影响力摘要。
+本文不训练新模型，而是以 prompt-based LLM pipeline 为主。intent classification 用 GPT-4o-mini 做 ICL，比较时采用 $K=50$ 的 shots；每个测试样本运行 3 次按多数投票分类，三次完全一致率为 72%。summary generation 与自动评价主要用 GPT-4o，附录另用 Qwen-2.5-72B 和 Gemini-2.5-flash 检查跨模型鲁棒性。人工研究邀请 9 位大学教授评估自己论文的影响力摘要。
 
 ## 实验关键数据
 

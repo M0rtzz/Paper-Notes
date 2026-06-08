@@ -41,37 +41,26 @@ CORE-RAG 用"性能即奖励"的 GRPO 强化学习训练一个 1.5B 小压缩器
 ## 方法详解
 
 ### 整体框架
-输入：question $q$ + 检索到的 $k$ 篇文档 $D$（按既有 retriever 拿到，DPR / BM25 / Contriever）。
-压缩器：一个小语言模型 $\pi_\theta:(q,D)\mapsto s$（论文主实验用 Qwen2.5-1.5B-Instruct）。
-下游 LLM：黑盒大模型 $M:(s,q)\mapsto \hat{y}$（主实验用 Qwen2.5-14B-Instruct，转移到 Llama-3.1-8B 验证泛化），训练/推理全程冻结。
 
-训练分两阶段：**阶段 1 蒸馏 warm-start**（让小模型先学会"看上去像样"的摘要 + 学会"该不该输出空"），**阶段 2 GRPO 性能驱动 RL**（用下游答题正确率作 reward 直接磨）。推理阶段只剩 $s = \pi_\theta(q,D)$ → $\hat{y}=M(s,q)$ 两步，压缩器作为 plug-in。
+CORE-RAG 要解决的是"RAG 压缩必掉点"，做法是把压缩从"找一个好摘要"重新定义为"找一个能让下游 LLM 答对的摘要"。系统里有三个角色：一个由现成 retriever（DPR / BM25 / Contriever）拿到 question $q$ 加 $k$ 篇文档 $D$；一个小语言模型压缩器 $\pi_\theta:(q,D)\mapsto s$（主实验 Qwen2.5-1.5B-Instruct）；一个全程冻结、当黑盒用的下游 LLM $M:(s,q)\mapsto\hat{y}$（主实验 Qwen2.5-14B-Instruct）。训练分两阶段——先用 DeepSeek-V3 蒸馏给小模型一个稳健起点，再用下游答题正确率作 reward 跑 GRPO 强化学习收尾；推理时只剩 $s=\pi_\theta(q,D)$、$\hat{y}=M(s,q)$ 两步，压缩器作为 plug-in 挂在任意 LLM 前面。
 
 ### 关键设计
 
-1. **下游性能驱动的 GRPO 奖励 (Performance-Driven RL with GRPO)**:
+**1. 下游性能驱动的 GRPO 奖励：把"答对没有"直接当 reward**
 
-    - 功能：用下游 LLM 的答题正确率直接当 reward 来训练压缩器，彻底绕开"什么是好摘要"这个伪命题。
-    - 核心思路：把压缩器 $\pi_\theta$ 当作 policy，对每个输入 $x=(q,D)$ 采样 $G$ 条摘要 $\{s_i\}$；每条摘要拼上 $q$ 喂给冻结的下游 LLM $M$ 得到答案 $\hat{y}_i = M(s_i,q)$；reward 取 $r = r_{\text{EM}} + \alpha \cdot r_{\text{F1}}$，其中 $r_{\text{EM}}=\mathbb{I}(\hat{y}=y)$ 是稀疏的硬正确信号，$r_{\text{F1}}$ 是 token-level F1 提供稠密的部分正确信号，$\alpha\in(0,1]$ 调权重。优化目标采用 GRPO（DeepSeek-Math 提出），用组内 $G$ 条 rollouts 的均值-标准差归一化得 advantage $A_i=(r_i-\text{mean})/\text{std}$，不需要 critic 模型，省一份显存；并加 KL 项 $\beta\mathbb{D}_{\text{KL}}(\pi_\theta\|\pi_{\theta_{\text{ref}}})$ 防偏离 warm-start。
-    - 设计动机：之前的 RL-for-RAG 方法（如 TACO 做 token-level keep/drop）reward 仍是 proxy，且只能选不能改写；这里 reward 直接 = 下游表现，且压缩器是 generative，可改写/综合内容。下游 LLM 黑盒冻结，使方法天然适配商业 API。
+压缩任务没有 gold summary，所有 surrogate loss（互信息、BM25 重叠、teacher 模仿）都是在猜什么摘要"好"，猜不准就掉点。CORE 干脆绕开这个伪命题：把压缩器 $\pi_\theta$ 当 policy，对每个输入 $x=(q,D)$ 采样 $G$ 条摘要 $\{s_i\}$，逐条拼上 $q$ 喂给冻结的 $M$ 得到答案 $\hat{y}_i=M(s_i,q)$，再用下游表现算 reward $r=r_{\text{EM}}+\alpha\cdot r_{\text{F1}}$——其中 $r_{\text{EM}}=\mathbb{I}(\hat{y}=y)$ 是稀疏的硬正确信号，$r_{\text{F1}}$ 是 token-level F1 提供的稠密部分正确信号，$\alpha\in(0,1]$ 调两者权重（影响见 Figure 4）。优化用 GRPO（DeepSeek-Math 提出），把组内 $G$ 条 rollouts 做均值-标准差归一化得 advantage $A_i=(r_i-\text{mean})/\text{std}$，从而不需要 critic 模型省一份显存，并加 KL 项 $\beta\mathbb{D}_{\text{KL}}(\pi_\theta\|\pi_{\theta_{\text{ref}}})$ 防止偏离 warm-start。这套设计有效，是因为 reward 直接等于用户真正关心的目标、不再有任何代理误差；而组内对比"同一 query 不同摘要哪个让 LLM 答得对"也天然贴合压缩这个"长输入→短输出"的生成场景。相比同走 RL 路线的 TACO（只做 token-level keep/drop 二值决策、reward 仍是 proxy），CORE 的压缩器是生成式的、能改写综合内容，且因为 $M$ 黑盒冻结而天然适配商业 API。
 
-2. **DeepSeek-V3 蒸馏 + "性能门控"数据筛选 (Distillation Warm-Start)**:
+**2. DeepSeek-V3 蒸馏 + 性能门控数据筛选：给 RL 一个不崩的起点**
 
-    - 功能：给 1.5B 小压缩器一个稳健初始 policy，避免 RL 冷启动崩溃；同时教会模型"摘要会拖后腿时就输出空串"这种关键防御行为。
-    - 核心思路：用 DeepSeek-V3 (671B) 作 teacher 对训练集每个 $(q,D)$ 生成摘要 $\hat{s}$，然后用下游 LLM 在两种条件下作答打分 —— 带摘要得分 $p_{\text{summary}}$ 与裸 query 得分 $p_{\text{original}}$ —— 根据结果二选一构造监督样本：(a) 若 $p_{\text{summary}}>p_{\text{original}}$，保留样本，target 设为 teacher 摘要 $\hat{s}$；(b) 若 $p_{\text{original}}=1$ 而 $p_{\text{summary}}<p_{\text{original}}$（摘要把对的搞错），target 设为空串，教模型"必要时拒绝输出"；其余样本全丢。最后在筛出的 $\mathcal{X}_f$ 上做标准 SFT，loss $\mathcal{L}_d = -\frac{1}{|\mathcal{X}_f|}\sum \sum_t \log P_{\pi_\theta}(\hat{s}_t\mid q,D,\hat{s}_{<t})$。
-    - 设计动机：teacher 摘要本身不保证最优，所以不能只蒸馏完事；但小模型直接上 RL 会因初始 policy 太弱而探索失败。这里用"下游性能 vs. baseline"双向筛数据，把蒸馏数据本身就和 task performance 对齐，相当于在 SFT 阶段就埋下了 RL reward 的雏形。消融显示 w/o distillation 4 个数据集平均掉 ~3 EM，验证这一步是 RL 能跑通的关键。
+1.5B 小模型直接上 RL 会因初始 policy 太弱而探索失败，所以需要 warm-start，但 teacher 摘要本身不保证最优、不能照单全收。CORE 的做法是用蒸馏数据本身就和 task performance 对齐：先用 DeepSeek-V3 (671B) 作 teacher 对每个 $(q,D)$ 生成摘要 $\hat{s}$，再用下游 LLM 在带摘要、裸 query 两种条件下分别作答打分得 $p_{\text{summary}}$ 与 $p_{\text{original}}$，据此二选一构造监督样本——若 $p_{\text{summary}}>p_{\text{original}}$ 就保留样本、target 设为 teacher 摘要 $\hat{s}$；若 $p_{\text{original}}=1$ 而 $p_{\text{summary}}<p_{\text{original}}$（摘要把本来对的搞错了）则 target 设为空串、教模型"必要时拒绝输出"；其余样本全丢。最后在筛出的 $\mathcal{X}_f$ 上做标准 SFT，loss 为 token-level cross-entropy $\mathcal{L}_d=-\frac{1}{|\mathcal{X}_f|}\sum\sum_t\log P_{\pi_\theta}(\hat{s}_t\mid q,D,\hat{s}_{<t})$。这一步等于在 SFT 阶段就埋下了 RL reward 的雏形：既让小模型学会输出像样的摘要，又把"该不该输出空"这个被多数压缩工作忽视的关键自由度写进训练信号。消融里去掉蒸馏后 RL 仍能跑但显著变弱（尤其 2Wiki 36.72→31.40），说明 warm-start 决定了 RL 能不能摸到天花板。
 
-3. **小压缩器 + 黑盒大 LLM 的非对称架构 (Asymmetric Compressor/Generator)**:
+**3. 小压缩器 + 黑盒大 LLM 的非对称架构：让省下的算力真正落地**
 
-    - 功能：压缩器只用 1-3B 参数，下游 LLM 8-14B 甚至商业 API，把压缩省下的算力真正落地，而不是被压缩器吃回去。
-    - 核心思路：刻意把 $\pi_\theta$ 设计得远小于 $M$（主实验 1.5B vs. 14B，约 1:10）。训练时只反传压缩器梯度，$M$ 全程冻结当 reward 函数用；推理时压缩器对 5-10 文档生成 ~30-50 token 的摘要，再丢给 LLM 解码答案，输入序列从 ~700-1400 tokens 砍到 ~50 tokens（压缩比 ~3-6%）。由于 LLM 不参与训练，整套框架天然兼容 API/黑盒模型，且训练的压缩器可直接迁移到不同下游 LLM（论文用 Qwen 训、Llama-3.1-8B 上 zero-shot transfer）。
-    - 设计动机：很多前作（NoiseFilter-IB 等）压缩器与下游 LLM 体量相当，"压缩省下的 FLOPs 被压缩器自己吃掉"使加速失效。此外通过对 RL 训练 search-augmented LLM（如 ReSearch / R1-Searcher）那条路，需要训生成器本身（参数量大，且必须白盒），CORE 这条路的训练/推理成本都低一个量级。
+很多前作（如 NoiseFilter-IB）压缩器体量逼近下游 LLM，压缩省下的 FLOPs 又被压缩器自己吃回去，加速形同虚设。CORE 刻意把 $\pi_\theta$ 设计得远小于 $M$（主实验 1.5B vs. 14B，约 1:10），训练时只反传压缩器梯度、$M$ 全程冻结当 reward 函数用；推理时压缩器对 5-10 文档生成 ~30-50 token 的摘要再丢给 LLM 解码，输入序列从 ~700-1400 tokens 砍到 ~50 tokens（压缩比 ~3-6%）。因为 $M$ 不参与训练，整套框架既兼容 GPT-4/Claude 这类 API 黑盒模型，训出来的压缩器也能直接迁移到不同下游 LLM（论文用 Qwen 训、在 Llama-3.1-8B 上 zero-shot transfer 仍保持优势）。相比 ReSearch / R1-Searcher 那条要训生成器本身、必须白盒且参数大的 search-augmented 路线，CORE 只训一个 plug-in 压缩器，训练和推理成本都低一个量级。
 
 ### 损失函数 / 训练策略
-- 阶段 1（蒸馏）：标准 token-level cross-entropy，objective 为 $\mathcal{L}_d$（公式 1）。
-- 阶段 2（GRPO）：objective 为 $\mathcal{J}(\theta)$（公式 2），含 clip $\epsilon$ 与 KL 系数 $\beta$；组大小 $G$ 条 rollouts。
-- 复合 reward $r = r_{\text{EM}} + \alpha r_{\text{F1}}$，文中分析 $\alpha\in(0,1]$ 的影响（Figure 4）。
-- 推理阶段对压缩器用 **greedy decoding**，保证摘要确定可复现。
+
+两阶段各有 objective：阶段 1 蒸馏用 token-level cross-entropy $\mathcal{L}_d$（公式 1）；阶段 2 GRPO 用 $\mathcal{J}(\theta)$（公式 2），含 clip 系数 $\epsilon$、KL 系数 $\beta$、组大小 $G$ 条 rollouts，复合 reward $r=r_{\text{EM}}+\alpha r_{\text{F1}}$（$\alpha\in(0,1]$ 的影响见 Figure 4）。推理阶段对压缩器用 greedy decoding，保证摘要确定可复现。
 
 ## 实验关键数据
 

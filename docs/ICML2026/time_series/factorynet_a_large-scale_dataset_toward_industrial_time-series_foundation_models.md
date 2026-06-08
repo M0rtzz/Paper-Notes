@@ -42,40 +42,29 @@ FactoryNet 是首个统一控制环结构的工业时序大规模数据集——
 
 ### 整体框架
 
-数据集组成：
+FactoryNet 的核心贡献不是某个模型，而是一套"把工业控制环结构焊进数据"的组织方式：所有信号先按 S-E-F-C 控制论分类对齐，再以真实 + 仿真配对的形式铺成大规模语料，让跨实体迁移和异常检测都退化成 schema 上的标准操作。数据集组成：
+
 - 51M 数据点 / 23k 端到端任务执行
 - 13.3k 真实（实验室录制）+ 9.8k 仿真（Isaac Sim）
 - 6 个机器实体（含 UR3e、协作机器人、CNC 等）
 - 27 种标注异常类型 + 健康基线 + 反事实对
 - 3 个 manipulation tasks（不同 setup）
 
-每条信号按 S-E-F-C 4 类映射：
-- **Setpoint**：命令位置/速度/扭矩/...
-- **Effort**：电流/扭矩输出/PWM
-- **Feedback**：编码器位置/加速度/振动/温度
-- **Context**：工件信息/环境/load
-
-仿真-真实配对让 sim2real gap 可量化（同 input 下的 forward model error）。
+每条信号按 S-E-F-C 4 类映射：Setpoint（命令位置/速度/扭矩）、Effort（电流/扭矩输出/PWM）、Feedback（编码器位置/加速度/振动/温度）、Context（工件信息/环境/load）。仿真-真实配对让 sim2real gap 可量化为"同输入下的 forward-model error"。
 
 ### 关键设计
 
-1. **S-E-F-C 控制论 Schema**:
+**1. S-E-F-C 控制论 Schema：把异构机器的信号映射到同一套物理语义坐标。**
 
-    - 功能：把任意 actuated system 的信号映射到共同 4 类表征
-    - 核心思路：参考 IEC 81346 functional classification，分 Setpoint（intent）、Effort（actuation）、Feedback（measurement）、Context（boundary）；对每个机器实体的 raw 信号通道做 schema-aware 注释；模型输入是这 4 类组合而非 raw channels
-    - 设计动机：以前数据集只给 raw channel 编号或机器特定命名，跨机器不可对齐；S-E-F-C 抽出物理意义层让 UR3e 和 CNC 的信号在同一表征空间——这是基础模型 prerequisite
+工业时序数据集长期各说各话——每台机器的通道要么只有编号、要么用厂商私有命名，UR3e 的"关节扭矩"和 CNC 的"主轴扭矩"在数据层面完全对不上，基础模型连"这是同一类信号"都认不出来。FactoryNet 借鉴 IEC 81346 的 functional classification，把任意 actuated system 的每个原始通道标注成四类语义之一：Setpoint（命令意图）、Effort（执行量）、Feedback（测量响应）、Context（边界条件）；模型吃进去的不再是 raw channel，而是这四类的组合。这一层抽象把"命令-测量"分解显式化，于是"sim-to-real mismatch = 同输入下的 forward-model error"这种对比分析能直接做，跨实体迁移也从"对不上的 raw 通道"变成"schema 对齐的标准操作"——这正是训工业基础模型绕不开的前置条件。
 
-2. **多实体 + 仿真配对**:
+**2. 多实体 + 仿真配对：用真实保真、用仿真补量、用配对量化 sim2real。**
 
-    - 功能：用真实数据保 fidelity、用仿真补 scale，仿真-真实配对让 sim2real gap 可分析
-    - 核心思路：13.3k 真实 + 9.8k 仿真在同一 schema 下，相同任务执行的 (real, sim) 对齐；模型可学到"在 setpoint+context 给定时 effort 和 feedback 该是什么"，sim-real 差异 = forward-model error
-    - 设计动机：纯真实数据 scale 不够（百级），纯仿真有 sim2real gap；配对让二者互补——仿真补 coverage、真实校准、配对量化 gap
+纯真实数据规模上不去（已有最大的 voraus-AD 也才两千多 episode），纯仿真又有 sim2real gap，单靠任一种都凑不出基础模型需要的语料。FactoryNet 让 13.3k 真实执行和 9.8k Isaac Sim 仿真落在同一套 S-E-F-C schema 下，且相同任务执行的 (real, sim) 成对对齐。模型因此能学到"给定 setpoint 和 context 时，effort 与 feedback 该长什么样"的 forward model；而同一输入下真实与仿真的差异，恰好就是可量化的 forward-model error。三者形成互补：仿真补覆盖、真实做校准、配对把通常神秘的 sim2real gap 变成一个能读出来的数字。
 
-3. **27 异常类型 + 反事实对**:
+**3. 27 种异常 + 反事实对：从单一故障类型升级到通用异常谱 + 因果可学。**
 
-    - 功能：丰富的标注覆盖工业异常 spectrum，反事实对支持因果学习
-    - 核心思路：从经典机械故障（bearing wear、misalignment、unbalance）到电气（power supply fault）、控制（PID 失稳）、过程（tool wear、collision）；每个异常都有配对的健康 baseline，let model learn "什么是 healthy 该有的样子"
-    - 设计动机：以前数据集多是 single-fault-type；27 类让模型学到"通用异常 detector"；反事实对支持 contrastive learning 和 causal attribution
+以前的工业数据集大多是 single-fault-type（CWRU 只有轴承、PHM 2010 只有刀具磨损），训出来的只是某一类故障的分类器，谈不上通用 detector。FactoryNet 把异常类型铺到 27 种，横跨经典机械故障（轴承磨损、不对中、不平衡）、电气（供电故障）、控制（PID 失稳）、过程（刀具磨损、碰撞），并给每个异常配一条健康基线，让模型先学"健康该是什么样"再判异常。反事实对（异常 vs 对应健康）天然支持对比学习和因果归因——不只是判断"这段不对劲"，而是回答"相对健康基线，是哪个分量出了问题"。
 
 ## 实验关键数据
 

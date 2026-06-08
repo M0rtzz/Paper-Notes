@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **Agent-RRM 的三段结构化输出**:
+**1. Agent-RRM 的三段结构化输出：把 reward model 从打分器升级成"分析→批评→打分"。**
 
-    - 功能：把"判断一条 trajectory 好不好"从单个 scalar 升级为可解释的"分析→批评→打分"链，既给 agent 训练提供密集信号，又给人类 inspection 提供透明度。
-    - 核心思路：训练时让模型在 `<think>` 里写"这条轨迹哪些步骤合理、哪些有逻辑漏洞"、`<critique>` 里写"具体应该改哪里"、`<score>` 里给 $s \in [0,1]$ 的整体分。Agent-RRM 数据来自从 Qwen3-8B/14B、Qwen3-ARPO-DeepSearch、Qwen2.5-WebDancer、DeepSeekV3.1 等多种 agent 模型采样的轨迹（最大化错误模式覆盖），再用 GPT-OSS-120B 自动标注三段判断；最后两阶段训练 SFT (28K) + GRPO (90K) 校准 score。
-    - 设计动机：单 scalar reward 无法表达"算对了但走了弯路"vs"答错但思路对了一半"这种细颗粒度差异；让 RM 显式 reasoning 还能减少 reward hacking——因为模型必须"自圆其说"才能给高分，单点投机被自动暴露。
+单个 scalar 没法表达"算对了但走了弯路"和"答错但思路对了一半"之间的细颗粒度差异，long-horizon agent 任务恰恰最需要这种区分。Agent-RRM 因此让 reward model 在判断前先 reasoning：`<think>` 段写这条轨迹哪些步骤合理、哪些有逻辑漏洞，`<critique>` 段指出具体该改哪里，`<score>` 段才给出整体分 $s \in [0,1]$。训练数据特意从 Qwen3-8B/14B、Qwen3-ARPO-DeepSearch、Qwen2.5-WebDancer、DeepSeek-V3.1 等多种 agent 模型采样轨迹以最大化错误模式覆盖，再用 GPT-OSS-120B 自动标注三段判断，最后走两阶段训练：先在 Reagent-RRM-SFT-28K 上 SFT 学会输出格式，再在 Reagent-RRM-RL-90K 上 GRPO 校准 score。让 RM 显式 reasoning 还顺带压制了 reward hacking——模型必须能"自圆其说"才能给高分，单点投机会在 critique 里被自己暴露出来。
 
-2. **三个 integration variant: C / R / U**:
+**2. 三个 integration variant（C / R / U）：拆开看 critique 和 score 各值多少。**
 
-    - 功能：系统对比"语言 critique"和"数值 score"两类信号在 agentic RL 中各自和联合的价值。
-    - 核心思路：(a) **Reagent-C** 完全 training-free，第一轮采样 $o^{(1)}_i \sim \pi_\theta(o|q)$，让 RRM 产生 critique $c_i$，第二轮 $o^{(2)}_i \sim \pi_\theta(o|q, o^{(1)}_i, c_i)$ 做 in-context refinement，只评估 refined output。(b) **Reagent-R** 用 rule reward + scalar score 做加权 $R_i = R_{\text{rule}}(q, o_i) + \lambda \cdot R_{\text{model}}(q, o_i)$ 当 GRPO 训练信号。(c) **Reagent-U** 两阶段都采样，把 $\mathcal{G}_{pool} = \{o^{(k)}_i\}$（$k \in \{1, 2\}$）合到一个 pool 里联合算 advantage $A^{(k)}_i = (R^{(k)}_i - \text{mean}(\mathbf{R}_{pool})) / \text{std}(\mathbf{R}_{pool})$，loss 是 $\mathcal{J}_U(\theta) = \mathbb{E}[\frac{1}{2G}\sum_{k=1}^2 \sum_{i=1}^G (\min(r^{(k)}_i A^{(k)}_i, \text{clip}_\epsilon) - \beta \mathbb{D}_{KL}^{(i,k)})]$。
-    - 设计动机：C 隔离 critique 的"零样本"价值；R 隔离 score 的"密集 reward"价值；U 让模型在训练时同时学"如何根据 critique 改" 和"如何在不同 quality trajectory 间排序"，从而把 critique 能力**内化**到 policy 里——inference 时不再需要 RRM，作为纯 agent 单 forward 即可使用。这点非常关键：Reagent-U 在部署时**没有额外推理成本**。
+为了厘清"语言 critique"和"数值 score"两类信号在 agentic RL 里各自及联合的价值，论文设计了三种喂法做对照。Reagent-C 完全 training-free，第一轮采样 $o^{(1)}_i \sim \pi_\theta(o|q)$，让 RRM 产出 critique $c_i$，第二轮 $o^{(2)}_i \sim \pi_\theta(o|q, o^{(1)}_i, c_i)$ 做 in-context refinement 后只评估 refined output，用来隔离 critique 的零样本价值。Reagent-R 把规则奖励和模型分加权成 $R_i = R_{\text{rule}}(q, o_i) + \lambda \cdot R_{\text{model}}(q, o_i)$ 当 GRPO 信号，用来隔离 score 的密集 reward 价值。Reagent-U 则两阶段都采样，把 $\mathcal{G}_{pool} = \{o^{(k)}_i\}$（$k \in \{1, 2\}$）合进一个 pool 联合算优势 $A^{(k)}_i = (R^{(k)}_i - \text{mean}(\mathbf{R}_{pool})) / \text{std}(\mathbf{R}_{pool})$，loss 为 $\mathcal{J}_U(\theta) = \mathbb{E}[\frac{1}{2G}\sum_{k=1}^2 \sum_{i=1}^G (\min(r^{(k)}_i A^{(k)}_i, \text{clip}_\epsilon) - \beta \mathbb{D}_{KL}^{(i,k)})]$。U 的妙处在于让模型在训练时同时学"如何照 critique 改"和"如何在不同质量轨迹间排序"，把 critique 能力**内化**进 policy——于是 inference 时不再需要 RRM，单 forward 即可，部署几乎零额外开销。
 
-3. **Unified pool 联合优势归一化**:
+**3. Unified pool 联合优势归一化：让 initial 也能受益于 critique。**
 
-    - 功能：让 initial 和 refined 两阶段轨迹共享一个 advantage 分布，从而 cross-stage 比较 quality，自然引导模型把 refined 轨迹的好质量传回 initial generation。
-    - 核心思路：传统 GRPO 一个 batch 内 $G$ 条 sample 在自己内部归一化；Reagent-U 扩到 $2G$ 条（包含 initial + refined），所有 sample 共享 mean/std 计算 advantage——这意味着如果 refined 普遍比 initial 好，initial 的 sample 会自动获得负 advantage，policy 自然朝"更接近 refined 的方向"学习。
-    - 设计动机：如果分开归一化（initial 内部归一、refined 内部归一），两阶段 policy 就解耦了，模型只学会"refinement skill"但不改善 initial generation；联合 pool 把两阶段绑在一个梯度信号下，让 initial 也能受益于 critique 的隐式指导，inference 时不调 RRM 也能拿到接近 refined 的质量。
+传统 GRPO 一个 batch 内 $G$ 条 sample 各自内部归一化，如果把 initial 和 refined 两阶段分开归一，两阶段 policy 就解耦了，模型只学会 refinement 技巧却不改善 initial generation。Reagent-U 把池子扩到 $2G$ 条、所有 sample 共享同一组 mean/std 来算 advantage：一旦 refined 普遍比 initial 好，initial 的 sample 会自动拿到负 advantage，梯度便把 policy 往"更接近 refined"的方向推。这一招把两阶段绑在同一个梯度信号下，让 critique 的隐式指导回流到 initial generation，从而做到 inference 时不调 RRM 也能逼近 refined 的质量。
 
 ### 损失函数 / 训练策略
 基于 GRPO（Shao 2024）框架。Rule reward $R_{\text{rule}}$ 用 final answer 字符串匹配；model reward $R_{\text{model}}$ 取 Agent-RRM 的 `<score>` 值；$\lambda$ 是平衡因子（具体值未明示，应在附录）。Agent-RRM 训练用 RM-R1/R1-Reward 同款两阶段 SFT + GRPO。Agent base model 是 Qwen3-8B，先 SFT on Reagent-SFT-55.6K cold-start，再 RL。

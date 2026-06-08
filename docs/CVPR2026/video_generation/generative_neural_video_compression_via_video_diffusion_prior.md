@@ -42,23 +42,21 @@ GNVC-VD 处理输入视频 $V \in \mathbb{R}^{(1+T) \times H \times W \times 3}$
 
 ### 关键设计
 
-1. **上下文潜在编解码器 (Contextual Latent Codec)**:
+**1. 上下文潜在编解码器：用时序条件编码把潜在序列压成运动感知的紧凑码流。**
 
-    - 功能：利用时序相关性压缩时空潜在表示
-    - 核心思路：将潜在序列沿时间轴分区。锚点潜在 $l_1$（对应 I 帧）使用独立的变换编码模块。预测潜在 $\{l_t\}_{t>1}$ 每帧条件化于前一帧解码结果 $\hat{l}_{t-1}$ 来减少时序冗余：$\hat{y}_t = \text{Quant}(g_a(l_t | f_{t-1}))$，$\hat{l}_t = g_s(\hat{y}_t, f_{t-1})$，其中 $f_{t-1}$ 是从 $\hat{l}_{t-1}$ 提取的时序上下文特征。量化后的潜在通过学习的概率模型进行熵编码。
-    - 设计动机：遵循 DCVC-RT 的条件编码哲学，生成紧凑的、运动感知的潜在表示，保持时序连续性并为扩散精炼提供基础。
+极低码率下要省比特，最直接的浪费就是相邻帧的潜在表示高度冗余。这个模块沿时间轴把潜在序列拆成两类来处理：锚点潜在 $l_1$（对应 I 帧）没有前文可参考，用一套独立的变换编码模块单独压；后续的预测潜在 $\{l_t\}_{t>1}$ 则每一帧都条件化于前一帧的解码结果 $\hat{l}_{t-1}$，只编码"相对于前文的增量"。具体是 $\hat{y}_t = \text{Quant}(g_a(l_t \mid f_{t-1}))$、$\hat{l}_t = g_s(\hat{y}_t, f_{t-1})$，其中 $f_{t-1}$ 是从 $\hat{l}_{t-1}$ 提取的时序上下文特征，量化后的 $\hat{y}_t$ 再交给学习到的概率模型做熵编码。这套条件编码沿用 DCVC-RT 的思路，好处是产出的潜在既紧凑又带运动感知，时序上是连续的，为后面的扩散精炼提供了一个"已经接近数据流形"的起点，而不是一堆各帧独立、彼此打架的潜在。
 
-2. **Flow-Matching 潜在精炼模块**:
+**2. Flow-Matching 潜在精炼：从压缩潜在出发走短路径去噪，而不是从纯噪声重画。**
 
-    - 功能：利用预训练 VideoDiT 作为视频原生先验，在3D潜在空间联合增强整个帧序列
-    - 核心思路：压缩后的潜在 $\boldsymbol{x}_c$ 可视为原始潜在 $\boldsymbol{x}_1$ 的扰动版本 $\boldsymbol{x}_c = \boldsymbol{x}_1 + \boldsymbol{e}$。不从纯噪声开始，而是在 $\boldsymbol{x}_c$ 上注入部分噪声 $\boldsymbol{x}_{t_N} = t_N \boldsymbol{x}_c + (1-t_N)\boldsymbol{x}_0$（$t_N=0.7$），定义从 $t_N$ 到 1 的连续概率流路径进行精炼。目标速度场分解为 $\boldsymbol{v}_\tau = \underbrace{(\boldsymbol{x}_1 - \boldsymbol{x}_0)}_{\boldsymbol{v}_{\text{pre-train}}} - \underbrace{\frac{t_N}{1-t_N}(\boldsymbol{x}_c - \boldsymbol{x}_1)}_{\Delta \boldsymbol{v}_{\text{fine}}}$，其中 $\boldsymbol{v}_{\text{pre-train}}$ 是预训练扩散模型的速度场，$\Delta \boldsymbol{v}_{\text{fine}}$ 是适应压缩退化的修正项。通过 $L=5$ 步确定性 flow 积分完成精炼。
-    - 设计动机：关键创新在于不从头去噪而是从压缩潜在出发"短路径"精炼，这高效利用了 $\boldsymbol{x}_c$ 已接近数据流形的事实。速度场的分解清晰地将预训练知识与压缩特定适应解耦。
+压缩会把潜在表示打脏，把 $\boldsymbol{x}_c$ 看成原始潜在 $\boldsymbol{x}_1$ 叠加了一个扰动 $\boldsymbol{e}$，即 $\boldsymbol{x}_c = \boldsymbol{x}_1 + \boldsymbol{e}$。既然 $\boldsymbol{x}_c$ 本来就离干净数据不远，从纯高斯噪声重新去噪一遍既慢又浪费。这里改成在 $\boldsymbol{x}_c$ 上只注入部分噪声 $\boldsymbol{x}_{t_N} = t_N \boldsymbol{x}_c + (1-t_N)\boldsymbol{x}_0$（取 $t_N=0.7$），只沿 $t_N$ 到 1 这一段概率流路径做精炼。关键是把目标速度场拆成两项：
 
-3. **压缩感知条件适配器 (Conditioning Adapter)**:
+$$\boldsymbol{v}_\tau = \underbrace{(\boldsymbol{x}_1 - \boldsymbol{x}_0)}_{\boldsymbol{v}_{\text{pre-train}}} - \underbrace{\frac{t_N}{1-t_N}(\boldsymbol{x}_c - \boldsymbol{x}_1)}_{\Delta \boldsymbol{v}_{\text{fine}}}$$
 
-    - 功能：将压缩域的上下文信息注入 VideoDiT 中间层
-    - 核心思路：在 VideoDiT 的变换器块中插入条件适配器层，接收上下文特征序列 $\{f_t\}_{t=1}^{1+T/4}$ 作为条件输入，调制中间 DiT 表示。这些适配器估计修正项 $\Delta \boldsymbol{v}_{\text{fine}}$，使生成先验与压缩潜在分布对齐。
-    - 设计动机：直接用预训练 VideoDiT 去噪压缩潜在效果不佳，因为压缩潜在分布与自然视频潜在分布存在差异。适配器提供了压缩域的"先验知识"，使扩散模型能感知压缩伪影并针对性地恢复。
+前一项 $\boldsymbol{v}_{\text{pre-train}}$ 就是预训练 VideoDiT 本身学到的速度场，负责把样本往视频数据流形上拉；后一项 $\Delta \boldsymbol{v}_{\text{fine}}$ 是专门针对压缩退化的修正项。整段精炼只用 $L=5$ 步确定性 flow 积分就能完成。这种分解的好处是把"预训练通用生成知识"和"压缩特定的适配"干净地解耦——前者直接复用大模型不动，后者只学一个小修正，既快又稳。而且因为 VideoDiT 是视频原生先验，精炼是对整个帧序列联合做的，天然带时序一致性，这正是逐帧图像先验做不到的。
+
+**3. 压缩感知条件适配器：把压缩域的上下文注进 DiT 中间层，让它认得压缩伪影。**
+
+直接拿预训练 VideoDiT 去精炼压缩潜在效果并不好，因为压缩潜在的分布和自然视频潜在的分布之间有偏差，大模型没见过这种"被编解码器揉过"的输入。这个适配器在 VideoDiT 的变换器块里插入条件层，把上下文特征序列 $\{f_t\}_{t=1}^{1+T/4}$ 作为条件喂进去，调制中间的 DiT 表示，实际估计的就是上面那个修正项 $\Delta \boldsymbol{v}_{\text{fine}}$。相当于给扩散模型补了一份"压缩域的先验知识"，让它知道当前潜在是从哪种压缩里来的、哪里被抹平了、该往哪儿恢复，从而把生成先验和压缩潜在的分布对齐，而不是盲目按自然视频的统计去脑补细节。
 
 ### 损失函数 / 训练策略
 

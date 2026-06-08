@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Censorship-as-deployed 作为分析单元**:
+**1. Censorship-as-deployed 作为分析单元：把"用户端实际承受的护栏强度"当成一阶变量。**
 
-    - 功能：把"用户端实际承受的护栏强度"作为一阶变量，跨模型族选样本。
-    - 核心思路：用 UGI（Uncensored General Intelligence）排行榜分数作为部署时对齐强度的连续代理（o3-mini=22.8 vs Mistral Medium=56.77），同时用 LMArena Elo 范围 1317–1401 近似匹配通用能力。
-    - 设计动机：明确避免把"安全对齐"和"刷新版本/架构差异"混在一起声明因果——作者承认这是观察性设计、只能减少而非消除混淆，因此通篇用 "associated with" 而不用 "caused by"。
+社区惯用"未审查/已审查"二元标签，把上游 RLHF 干预和部署时的拒答启发式、后过滤混为一谈，导致结论失真。作者改用 UGI（Uncensored General Intelligence）排行榜分数作为部署时对齐强度的连续代理（o3-mini=22.8 vs Mistral Medium=56.77），同时用 LMArena Elo 范围 1317–1401 来近似匹配各模型的通用能力，使比较尽量落在"对齐强度"这一轴上。由于 5 个模型在架构、训练数据、规模上都不同，这本质是观察性设计，只能减少而非消除混淆，所以全文用 "associated with" 而非 "caused by"，刻意不声明因果。
 
-2. **Strict accuracy + 双轴分解**:
+**2. Strict accuracy + 双轴分解：把任何无法落到二元标签的响应都计为错误。**
 
-    - 功能：把任何"无法落到 {HATE, NOT_HATE} 二元标签"的响应都计为错误，提供部署侧公平的 headline metric。
-    - 核心思路：把 misclassification rate 和 refusal/null rate 分别报告（Fig. 1 + Tables 5/9），同时给出条件化的"answered accuracy"（在产出可用标签的子集上的准确率），让 strict accuracy 既能反映部署体验又能被解构出真正的"答对率"。
-    - 设计动机：以前的 lineage 静默丢弃 unparseable 行，导致高拒答模型看起来更准；本文保留全部 65,340 条响应（含 19.5% null）后才能发现 uncensored 模型的劣势主要来自 24.2% 的 refusal 而非答错。
+以往评估静默丢弃 unparseable 行，让高拒答模型看起来更"准"，掩盖了它们其实是靠不回答来回避难题。本文把任何无法落到 $\{\text{HATE}, \text{NOT\_HATE}\}$ 的响应（regex 回退仍失败、截断、内容过滤、API 错误、in-schema 拒答）一律计为错误，得到部署侧公平的 headline 指标 strict accuracy；同时把 misclassification rate 和 refusal/null rate 分开报告（Fig. 1 + Tables 5/9），并给出条件化的 "answered accuracy"（仅在产出可用标签的子集上算准确率）。正因保留了全部 65,340 条响应（含 19.5% null），才能拆出 uncensored 模型的劣势主要来自 24.2% 的 refusal 而非答错——这是丢弃 null 的旧做法永远看不到的。
 
-3. **Persona × 对齐的交互测量**:
+**3. Persona × 对齐的交互测量：把 persona 当意识形态扰动，量化它对哪类模型影响更大。**
 
-    - 功能：把 persona 当成意识形态扰动，量化它对哪类模型的影响更大。
-    - 核心思路：在 post-clustered 逻辑回归框架下做 Wald $\chi^2$ 联合检验——censored 组内 persona 主效应 $\chi^2(3)=3.34$（不显著），uncensored 组内 $\chi^2(3)=207.6$（$p<0.001$），UGI × persona 交互 $\chi^2(3)=101.3$（$p<0.001$）。
-    - 设计动机：用 Expected Calibration Error $\text{ECE}=\sum_{m=1}^{M}\frac{|B_m|}{n}|\text{acc}(B_m)-\text{conf}(B_m)|$ 和 per-class overconfidence 同时刻画"答错时的自信"，避免单一指标掩盖局部校准失败。
+prior work 要么单独研究 persona 引导、要么单独研究对齐失效，没把两轴交叉。本文在 post-clustered 逻辑回归框架下做 Wald $\chi^2$ 联合检验：censored 组内 persona 主效应 $\chi^2(3)=3.34$（不显著），uncensored 组内 $\chi^2(3)=207.6$（$p<0.001$），UGI × persona 交互 $\chi^2(3)=101.3$（$p<0.001$），定量证实意识形态可塑性集中在弱对齐端。校准维度上则同时用 Expected Calibration Error $\text{ECE}=\sum_{m=1}^{M}\frac{|B_m|}{n}\,|\text{acc}(B_m)-\text{conf}(B_m)|$ 和 per-class overconfidence 刻画"答错时仍很自信"，避免聚合 ECE（0.060，看似不糟）掩盖局部的校准灾难。
 
 ### 损失函数 / 训练策略
 本文不训练任何模型——所有 LLM 走 API 推理，温度 0.7、单次采样、严格 JSON schema 强约束输出。审计代码 + 完整 65,340 条响应 + 复现脚本封存于 publication bundle（2026-04-20）。

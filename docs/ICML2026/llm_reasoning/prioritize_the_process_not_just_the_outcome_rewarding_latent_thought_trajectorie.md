@@ -41,39 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RLTT 是一个**即插即用的 GRPO 替代品**，只要求所用 LoopLM 满足"每个 token 在每一圈循环都能产生一个完整的 next-token 分布"。整条 pipeline 与 GRPO 同构：对 prompt $x$ 采样 $g$ 条 rollout $\{y_i\}$，用二元正确性奖励 $r_i \in \{0,1\}$ 算组内归一化优势 $\hat{A}_i = (r_i - \mu)/\sigma$；区别只在策略梯度形式——RLTT 把每个 token 的每一圈 log-prob 都按 $\omega_t$ 加权进梯度，并保留 GRPO 风格的 KL 正则项 $\beta D_{\mathrm{KL}}(\pi_\theta \| \pi_{\mathrm{ref}})$（只对终末一圈算 KL，以省内存）。
-
-最终损失（式 (5)–(7)）形如：
-
-$J_{\text{RLTT}}(\theta) = -\mathbb{E}\Big[\frac{1}{g|y_i|}\sum_{i,j,t} \omega_t \log P_\theta^{(t)}(y_{i,j}\mid x,y_{<j})\hat{A}_i\Big] + \beta D_{\mathrm{KL}}$
-
-工程上的代价不是算力（per-loop logits 在前向里本来就有），而是**显存**：要保留所有 $T_{\max}$ 圈的 log-prob 以构造加权目标，因此每 GPU 可打包的 token 数 `ppo_max_token_len_per_gpu` 从 GRPO 的 16384 砍到 8192，并用 mini-step 补偿。
+RLTT 想解决的是"GRPO 套到 LoopLM 上几乎拿不到增益"这个老问题，它的答案是一个即插即用的 GRPO 替代品：流程上和 GRPO 完全同构——对 prompt $x$ 采样 $g$ 条 rollout $\{y_i\}$，按二元正确性奖励 $r_i\in\{0,1\}$ 算组内归一化优势 $\hat{A}_i=(r_i-\mu)/\sigma$——唯一改动落在策略梯度的形式上。GRPO 只对每个 token 的终末一圈分布求 $\nabla_\theta\log P$，RLTT 则把这个 token 在全部 $T_{\max}$ 圈循环里产生的 next-token 分布都按权重 $\omega_t$ 加权进梯度，从而让奖励信号直接作用在整条"思考轨迹"上而非只作用在终点。
 
 ### 关键设计
 
-1. **轨迹级策略梯度（RLTT PG）**：
+**1. 轨迹级策略梯度：把信用打在每一圈，而不是只打在最后一圈。**
 
-    - 功能：把 GRPO 中只对终末一圈分布求 $\nabla_\theta \log P$ 的写法，换成对全部 $T_{\max}$ 圈分布的加权和。
-    - 核心思路：用 $\sum_{t=1}^{T_{\max}} \omega_t \nabla_\theta \log P_\theta^{(t)}(y_j\mid x,y_{<j})\hat{A}_i$ 替换式 (3) 中的单圈梯度，使得"梯度是所有圈隐式分布的直接函数"。这保证两件事：(i) 奖励信号不必再单纯通过终末一圈反传到早期表征；(ii) 整条轨迹 $P_\theta^{(1)}\to\cdots\to P_\theta^{(T_{\max})}$ 都被推向高优势的预测——直接鼓励"早收敛"。
-    - 设计动机：终末-only 信用 = 假设单步决策，与 LoopLM 多步隐推理结构不匹配；轨迹级信用把有效信用分配视域从 $T_{\max}$ 步缩到 1 步，每次更新都更"信息密集"。
+GRPO 的策略梯度 $\nabla_\theta\log P_\theta^{(T_{\max})}(y_j\mid x,y_{<j})\hat{A}_i$ 只是终末一圈输出分布的函数，等于隐式假设"每个 token 只有一步决策"；但 LoopLM 实际经历了 $h_j^{(1)}\to\cdots\to h_j^{(T_{\max})}$ 的完整轨迹，奖励要先穿过所有中间 loop 才能反传到早期表征，形成信用分配瓶颈。RLTT 的做法是把式 (3) 里的单圈梯度替换成全圈加权和 $\sum_{t=1}^{T_{\max}}\omega_t\nabla_\theta\log P_\theta^{(t)}(y_j\mid x,y_{<j})\hat{A}_i$，使梯度直接成为所有圈隐式分布的函数。这之所以可行，是因为 LoopLM 每一圈的隐状态 $h_j^{(t)}$ 都能经共享语言建模头 $g(\cdot)$ 投到词表，本来就在前向里被算出 $T_{\max}$ 个"latent thought distribution"，把它们都纳入策略梯度几乎不增加算力。它带来两个直接后果：奖励信号不必再单纯靠终末一圈反传，而整条轨迹 $P_\theta^{(1)}\to\cdots\to P_\theta^{(T_{\max})}$ 都被推向高优势的预测——等价于把有效信用分配视域从 $T_{\max}$ 步压到 1 步，每次更新更信息密集，并天然鼓励模型"早收敛"。
 
-2. **三种 loop 加权策略 $\{\omega_t\}$**：
+**2. 三种 loop 加权策略 $\{\omega_t\}$：RLTT 唯一的自由度。**
 
-    - 功能：决定哪一圈贡献多少信用，是 RLTT 唯一的自由度。
-    - 核心思路：(a) **Exit PDF**——$\omega_t = p_{\text{exit}}(t\mid x)$，直接复用 Ouro 学到的 early-exit head 概率作为"该圈可信度"，模型自己觉得该停的那一圈得分最高；(b) **Progressive**——$\omega_t = t^\alpha / \sum_s s^\alpha$，越靠后的圈权重越大，符合"refinement 越多越逼近真分布"的直觉；(c) **Uniform**——$\omega_t = 1/T_{\max}$，所有圈等权，强迫模型尽早形成正确分布并维持。
-    - 设计动机：作者实测三种策略性能差异不大（附录 A.3），说明收益主要来自"暴露完整轨迹"本身，而不是某种精巧调度；这反过来证伪了"必须用 GPT 给中间状态打分"这种重外部依赖思路。论文主表用 Exit PDF，是因为它最贴近 Ouro 原生的 halting 行为。
+权重序列 $\{\omega_t\}_{t=1}^{T_{\max}}$（满足 $\sum_t\omega_t=1$）决定每一圈贡献多少信用，是整个方法唯一需要选择的东西。作者给了三种：**Exit PDF** 取 $\omega_t=p_{\text{exit}}(t\mid x)$，直接复用 Ouro 学到的 early-exit head 概率当"该圈可信度"，模型自己觉得该停的那一圈得分最高；**Progressive** 取 $\omega_t=t^\alpha/\sum_s s^\alpha$，越靠后的圈权重越大，对应"refinement 越多越逼近真分布"的直觉；**Uniform** 取 $\omega_t=1/T_{\max}$，所有圈等权，逼模型尽早形成正确分布并维持。有意思的是三种策略实测差异 < 1%（附录 A.3），这说明收益主要来自"暴露完整轨迹"这件事本身，而不是某种精巧调度——也反过来证伪了 LSRL "必须用 GPT 给中间状态打分"那条重外部依赖路线。论文主表用 Exit PDF，因为它最贴近 Ouro 原生的 halting 行为。
 
-3. **与 GRPO 严格对齐的实验协议**：
+**3. 与 GRPO 严格对齐的实验协议：把"赢"和"调参侥幸"撇清。**
 
-    - 功能：把"RLTT 比 GRPO 强"这个结论从"调参侥幸"撇清。
-    - 核心思路：rollout 预算、优化器、奖励函数、advantage 归一化、训练步数（140 步）、KL 系数全部对齐；只有 `ppo_max_token_len_per_gpu` 因显存被迫减半（且 mini-step 补偿）。math 评估时还故意给 GRPO 更长 token budget（GRPO 3072 vs. RLTT 2048 on MATH-500），消除"RLTT 赢只是因为响应短"的干扰。
-    - 设计动机：LoopLM + RL 这条路过去屡战屡败，论文要 defend "改进真的来自轨迹级信用"，必须把所有别的变量都钉死。
+LoopLM+RL 这条路过去屡战屡败，所以论文必须证明改进真来自轨迹级信用而非别的变量。为此 rollout 预算、优化器、奖励函数、advantage 归一化、训练步数（140 步）、KL 系数全部与 GRPO 对齐，唯一被迫不同的是 `ppo_max_token_len_per_gpu`——因为要保留全部 $T_{\max}$ 圈的 log-prob 来构造加权目标，显存吃紧，这个值从 GRPO 的 16384 砍到 8192，并用 mini-step 补偿。更进一步，math 评估时还故意给 GRPO 更长的 token budget（MATH-500 上 GRPO 3072 vs. RLTT 2048），主动消除"RLTT 赢只是因为响应更短"的干扰。
 
 ### 损失函数 / 训练策略
-- 奖励：二元 outcome reward（最终答案精确匹配 → 1，否则 0），训练集只用 MATH。
-- 优势：组内 z-score 归一化（同 GRPO）。
-- KL 正则：只对终末圈 $P_\theta^{(T_{\max})}$ 与冻结参考策略 $P_{\mathrm{ref}}^{(T_{\max})}$ 算 KL，避免对所有圈算的显存爆炸。
-- 加权：默认 Exit PDF；附录验证 Progressive 与 Uniform 在大多数 benchmark 上差距 < 1%。
+最终损失（式 (5)–(7)）把全圈加权项和 GRPO 风格的 KL 正则拼在一起：
+
+$$J_{\text{RLTT}}(\theta) = -\mathbb{E}\Big[\frac{1}{g|y_i|}\sum_{i,j,t} \omega_t \log P_\theta^{(t)}(y_{i,j}\mid x,y_{<j})\hat{A}_i\Big] + \beta D_{\mathrm{KL}}(\pi_\theta \| \pi_{\mathrm{ref}})$$
+
+奖励是二元 outcome reward（最终答案精确匹配 → 1，否则 0），训练集只用 MATH；优势用组内 z-score 归一化（同 GRPO）。KL 正则只对终末圈 $P_\theta^{(T_{\max})}$ 与冻结参考策略 $P_{\mathrm{ref}}^{(T_{\max})}$ 计算，避免对所有圈算的显存爆炸。加权默认 Exit PDF，附录验证 Progressive 与 Uniform 在大多数 benchmark 上差距 < 1%。工程上真正的代价不是算力（per-loop logits 在前向里本就存在），而是显存翻倍，这也是 per-GPU token 打包被砍半的根因。
 
 ## 实验关键数据
 

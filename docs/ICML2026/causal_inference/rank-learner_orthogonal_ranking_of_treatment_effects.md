@@ -41,38 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-设定：观测数据 $W=(X,T,Y)$，$T\in\{0,1\}$，要在标准因果假设（一致性、正性、无混淆）下学打分函数 $g:\mathcal X\to\mathbb R$，使其与 $\tau(x)=\mathbb E[Y(1)-Y(0)\mid X=x]$ 同序。Rank-Learner 走经典两阶段：
-
-- **Stage 1（nuisance 估计）**：用 cross-fitting 估三个 nuisance——两条响应面 $\mu_t(x)=\mathbb E[Y\mid T=t,X=x]$ 和倾向得分 $e(x)=P(T=1\mid X=x)$，得 $\hat\eta=(\hat\mu_1,\hat\mu_0,\hat e)$。
-- **Stage 2（正交排序）**：从训练集随机采一批成对样本 $\mathcal P$，按论文公式构造伪标签 $\tilde t_{\hat\eta}(w_i,w_j)$，最小化经验损失 $\frac{1}{|\mathcal P|}\sum_{(i,j)}\ell(p_g(x_i,x_j),\tilde t_{\hat\eta}(w_i,w_j))$，其中 $p_g(x,x')=\sigma(g(x)-g(x'))$、$\ell$ 为二元交叉熵。
-- **Inference**：单点评估 $\hat g(x)$ 直接排序，**推理阶段不需要做成对比较**。
-
-整体框架与"plug-in CATE → 排序"的差别只在第二阶段的**目标构造**：损失形式仍是标准 BCE，正交性全部封装进 pseudo label 内。这使得 Rank-Learner 在工程上几乎是 plug-in ranker 的 drop-in 替换。
+Rank-Learner 要解的是：在观测数据 $W=(X,T,Y)$、$T\in\{0,1\}$、标准因果假设（一致性、正性、无混淆）下，学一个打分函数 $g:\mathcal X\to\mathbb R$，让它与处理效应 $\tau(x)=\mathbb E[Y(1)-Y(0)\mid X=x]$ 同序，而不必把 $\tau(x)$ 的数值估准。做法仍是经典的两阶段正交学习：先用 cross-fitting 估出 nuisance（两条响应面 $\mu_t(x)=\mathbb E[Y\mid T=t,X=x]$ 和倾向得分 $e(x)=P(T=1\mid X=x)$，记 $\hat\eta=(\hat\mu_1,\hat\mu_0,\hat e)$），再从训练集采成对样本去最小化一个成对排序损失。它与"先 plug-in 估 CATE 再排序"的唯一区别落在第二阶段的**目标构造**——损失形式还是标准的成对二元交叉熵，所有正交性都封装进伪标签里，因此工程上几乎是 plug-in ranker 的 drop-in 替换；推理时单点评估 $\hat g(x)$ 直接排序，不需要做成对比较。
 
 ### 关键设计
 
-1. **成对软排序损失（把"难问题"降级为"易问题"）**:
+**1. 成对软排序损失：把"难问题"降级为"易问题"**
 
-    - 功能：把"识别 $\tau(x)$ 数值"的回归问题换成"识别 $\tau$ 序关系"的成对分类问题，与最终任务对齐。
-    - 核心思路：定义软目标 $t_\tau(X,X')=\sigma((\tau(X)-\tau(X'))/\kappa)$ 与模型偏好 $p_g(X,X')=\sigma(g(X)-g(X'))$，最小化 $\mathcal L^{\text{soft}}=\mathbb E_{X,X'}[\ell(p_g,t_\tau)]$。总体极小元为 $g(x)=\tau(x)/\kappa + c$，恰好恢复处理效应的排序。参数 $\kappa>0$ 控制软硬程度：$\kappa\to 0$ 趋近硬指示损失 $\mathcal L^{\text{bin}}$（纯排序，最优解发散），$\kappa$ 大则更像缩放后的 CATE 回归。
-    - 设计动机：$\mathcal L^{\text{cate}}$ 在 $g(x)=\tau(x)$ 处唯一极小，要求完整恢复 CATE 函数；$\mathcal L^{\text{soft}}$ 只施加保序约束，比 $\mathcal L^{\text{cate}}$ 易解。更关键的是软标签**关于 $\tau$ 可导**，为下一步影响函数正交化打开通道——硬指示版本是不可微的。
+排序任务并不需要 $\tau(x)$ 的精确值，只需要它的序关系，所以本文不去拟合 CATE，而是把目标换成成对分类。定义软目标 $t_\tau(X,X')=\sigma((\tau(X)-\tau(X'))/\kappa)$ 表示"$X$ 比 $X'$ 更受益"的程度，模型偏好为 $p_g(X,X')=\sigma(g(X)-g(X'))$，最小化 $\mathcal L^{\text{soft}}=\mathbb E_{X,X'}[\ell(p_g,t_\tau)]$（$\ell$ 为二元交叉熵）。这个损失的总体极小元是 $g(x)=\tau(x)/\kappa+c$，恰好恢复处理效应的排序。相比之下，CATE 回归损失 $\mathcal L^{\text{cate}}$ 在 $g(x)=\tau(x)$ 处唯一极小，要求完整还原整条 $\tau$ 函数——这是比排序更强的统计要求；$\mathcal L^{\text{soft}}$ 只施加保序约束，因而更易学。更关键的是软标签**关于 $\tau$ 可导**（硬指示标签 $\mathbf 1\{\tau(X)>\tau(X')\}$ 不可微），这一步把后面影响函数正交化的通道打开了。超参 $\kappa>0$ 控制软硬：$\kappa\to 0$ 逼近纯排序的硬指示损失（最优解发散），$\kappa$ 越大越像缩放后的 CATE 回归，单个旋钮连续插值这两种范式。
 
-2. **Neyman-正交的双重稳健伪标签**:
+**2. Neyman-正交的双重稳健伪标签：把正交性封装进 label**
 
-    - 功能：用一阶段估出的 $\hat\eta$ 构造伪标签 $\tilde t_{\hat\eta}$，使得二阶段目标对 $\hat\eta$ 的一阶扰动不敏感，从而把 plug-in bias 压下去。
-    - 核心思路：对 $\mathcal L^{\text{soft}}$ 沿 influence function 做修正，得 $\tilde t_\eta(W,W')=t_\tau(X,X')+\omega_\tau(X,X')\cdot\Delta_\eta(W,W')$，其中权重 $\omega_\tau=\tfrac{1}{\kappa}t_\tau(1-t_\tau)$，DR-score 差 $\Delta_\eta=(\phi_\eta(W)-\tau(X))-(\phi_\eta(W')-\tau(X'))$，单点 DR score $\phi_\eta(W)=\tfrac{T}{e(X)}(Y-\mu_1(X))-\tfrac{1-T}{1-e(X)}(Y-\mu_0(X))+\mu_1(X)-\mu_0(X)$。Theorem 5.1 证明 $\mathcal L^{\text{orth}}=\mathbb E_{W,W'}[\ell(p_g,\tilde t_\eta)]$ 对 $\eta=(\mu_1,\mu_0,e)$ Neyman-正交；Theorem 5.2 证明在真 nuisance 下总体极小元仍为 $g(x)=\tau^0(x)/\kappa+c$。
-    - 设计动机：权重 $\omega_\tau$ 是天然的"不确定性门控"——当 plug-in 软目标接近 $0$ 或 $1$（排序明确）时权重小，伪标签 ≈ 软目标；当软目标在 $0.5$ 附近（排序模糊）时权重放大，DR 校正项被激活，把"难判定"的样本对推到更可信的伪标签上。$\kappa$ 同时控制激活范围与放大幅度，刻画 bias–variance trade-off。
+软标签 $t_\tau$ 依赖未知的 $\tau$，朴素 plug-in 会让一阶段 nuisance 的偏差一阶传导到打分器，小样本下尤其致命。本文沿影响函数对 $\mathcal L^{\text{soft}}$ 做一阶修正，得到伪标签 $\tilde t_\eta(W,W')=t_\tau(X,X')+\omega_\tau(X,X')\cdot\Delta_\eta(W,W')$。其中权重 $\omega_\tau=\tfrac{1}{\kappa}t_\tau(1-t_\tau)$，DR-score 差 $\Delta_\eta=(\phi_\eta(W)-\tau(X))-(\phi_\eta(W')-\tau(X'))$，单点 DR score 为
 
-3. **Cross-fitting + 成对子采样的两阶段流程**:
+$$\phi_\eta(W)=\tfrac{T}{e(X)}(Y-\mu_1(X))-\tfrac{1-T}{1-e(X)}(Y-\mu_0(X))+\mu_1(X)-\mu_0(X).$$
 
-    - 功能：在保持理论性质的同时把"$n^2$ 训练对"工程化为可扩展训练，并兼容任意 backbone（神经网络、GBDT 等）。
-    - 核心思路：第一阶段用 sample splitting / cross-fitting 估 $\hat\eta$，避免 nuisance 与二阶段数据重叠造成的过拟合偏差；第二阶段每个 epoch 从所有 $n^2$ 对里**均匀随机采子集** $\mathcal P\subset\mathcal P_{\text{all}}$ 训练打分网络，$\kappa$ 通过验证集上 AUTOC 的近似估计（Chernozhukov et al. 2025）做模型选择。打分器实现为 ReLU 单隐层 FFN（与 baseline 同架构以公平对比），Adam 优化、最多 50 epoch + 早停。
-    - 设计动机：Cross-fitting 是正交学习的标准前置；成对子采样把训练复杂度从 $O(n^2)$ 降到 $O(|\mathcal P|)$。论文实验显示 AUTOC 在采样比例很小时就饱和，说明二阶段性能主要受 nuisance 质量驱动，子采样几乎不掉点。
+Theorem 5.1 证明由此构成的损失 $\mathcal L^{\text{orth}}=\mathbb E_{W,W'}[\ell(p_g,\tilde t_\eta)]$ 对 $\eta=(\mu_1,\mu_0,e)$ 是 Neyman-正交的（对 nuisance 的一阶扰动不敏感），Theorem 5.2 进一步证明在真 nuisance 下总体极小元仍是 $g(x)=\tau^0(x)/\kappa+c$，即排序不变。这套修正的妙处是权重 $\omega_\tau\propto t_\tau(1-t_\tau)$ 天然是一个"不确定性门控"：当软目标接近 $0$ 或 $1$（序关系已经很明确）时权重很小，伪标签 ≈ 软目标；当软目标在 $0.5$ 附近（难判定）时权重放大，DR 校正项被激活，把模糊样本对推向更可信的伪标签——这与困难样本挖掘的直觉一致，但完全是从影响函数推出来的，不是 heuristic。由于修正项全部装进 label，loss 形式不变，任何成对排序网络都能换上 $\tilde t_\eta$ 直接接入。
+
+**3. Cross-fitting + 成对子采样的可扩展训练**
+
+正交性要成立，一阶段 nuisance 必须与二阶段数据解耦，因此用 sample splitting / cross-fitting 估 $\hat\eta$，避免 nuisance 与打分器在同一批数据上过拟合。二阶段理论上要遍历 $n^2$ 个样本对，本文每个 epoch 从全部对里**均匀随机采子集** $\mathcal P\subset\mathcal P_{\text{all}}$ 训练，把复杂度从 $O(n^2)$ 降到 $O(|\mathcal P|)$；实验显示 AUTOC 在很小的采样比例下就饱和，说明二阶段成本不是瓶颈，性能主要由 nuisance 质量驱动。打分器实现为 ReLU 单隐层 FFN（与 baseline 同架构以公平对比），Adam 优化、最多 50 epoch 加早停；超参 $\kappa$ 通过验证集上 AUTOC 的近似估计（Chernozhukov et al. 2025）做无监督模型选择，刻画 bias–variance trade-off。
 
 ### 损失函数 / 训练策略
-最终经验目标为
-$\mathcal L^{\text{orth}}(g,\hat\eta)=\tfrac{1}{|\mathcal P|}\sum_{(i,j)\in\mathcal P}\ell(p_g(x_i,x_j),\tilde t_{\hat\eta}(w_i,w_j))$。
-模型选择按近似 AUTOC 选 $\kappa$ 与其它超参，CATE 基线按各自验证损失选；推理只需点态前向。
+最终经验目标为 $\mathcal L^{\text{orth}}(g,\hat\eta)=\tfrac{1}{|\mathcal P|}\sum_{(i,j)\in\mathcal P}\ell(p_g(x_i,x_j),\tilde t_{\hat\eta}(w_i,w_j))$。模型选择按近似 AUTOC 选 $\kappa$ 与其它超参，CATE 基线按各自验证损失选；推理只需点态前向。
 
 ## 实验关键数据
 

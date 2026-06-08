@@ -41,31 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架名 **CrowdNotes+**，输入是被标为 misleading 的 post $p$，输出是一条带引证 URL 的简洁 note（≤280 字符）。两种生成模式 + 一套分级评估：
 
-1. **Evidence-Grounded Note Augmentation**（增强模式）：人工提供证据 URL 集合 $\mathcal{E}_h$，LLM 走 RETRIEVE → MATCH → GENERATE 合成 note $n_h$；
-2. **Utility-Guided Note Automation**（自动化模式）：LLM 自己生成多样查询 $\mathcal{Q}$，从 web 搜索去重得候选池 $\mathcal{P}$，**LLM-based utility 判别模块**选出 top-$\tau$ 高效用证据 $\mathcal{E}_m$，再走相同的 RETRIEVE/MATCH/GENERATE；
-3. **Hierarchical Evaluation**：用 LLM-judge 顺序验 Relevance → Correctness → Helpfulness，只有前一步通过才进下一步。
+CrowdNotes+ 要治的是 Community Notes "写得慢、评得糙"的毛病：输入一条被标为 misleading 的帖子 $p$，输出一条带引证 URL、不超过 280 字符的简洁 note。它给出两种写 note 的模式——**证据增强**（人工先给一组证据 URL $\mathcal{E}_h$，LLM 走 RETRIEVE→MATCH→GENERATE 合成 note $n_h$）和**效用引导自动化**（LLM 自己查证据再写），并在两种模式之上压一套"相关→正确→帮助"的三级评估把关，保证 LLM 写出来的 note 不只是流畅、而是真的站得住。
 
 ### 关键设计
 
-1. **Utility-Guided 证据自动化（query diversity + utility judgment）**:
+**1. Utility-Guided 证据自动化：在没有人工证据时，让 LLM 自主走完"查什么→选什么→写什么"。**
 
-    - 功能：在没有人工证据的情况下，让 LLM 自主完成"查什么 → 选什么 → 写什么"，模拟真实部署。
-    - 核心思路：基于 "diverse query 互补 retrieval" 的发现 (Santos et al. 2015)，从 $p$ 生成语义多样查询集合 $\mathcal{Q}$，每个查询 SEARCH 后合并去重 $\mathcal{P}=\text{dedup}\left(\bigcup_{q\in\mathcal{Q}}\text{TopK}(q)\right)$。然后 utility judge 模块（受 evidence ranking 启发）按 quota $\tau$ 迭代地选最高效用的证据 snippet (title+summary)，构成 $\mathcal{E}_m$。最后 RETRIEVE/MATCH 出 chunk $\mathcal{C}_m$，用 $(p, \mathcal{C}_m)$ 生成 $n_m$。
-    - 设计动机：纯 RAG 拿 top-$k$ 经常拿到重复或低质来源；query 多样化可以拓宽召回，utility 模块再精挑信源（健康权威 > 普通新闻 > 社交媒体）。这两个组件缺一不可——消融表里去掉任意一个 helpfulness 都掉 ~7-11pp。
+自动化模式要模拟真实部署——没有人替它准备好证据，可纯 RAG 拿 top-$k$ 经常召回一堆重复或低质来源，note 自然写不准。CrowdNotes+ 借鉴"diverse query 互补 retrieval"的发现（Santos et al. 2015），先从 $p$ 生成一组语义多样的查询 $\mathcal{Q}$，每个查询 SEARCH 后合并去重得候选池 $\mathcal{P}=\text{dedup}\left(\bigcup_{q\in\mathcal{Q}}\text{TopK}(q)\right)$；再让一个 utility judge 模块（受 evidence ranking 启发）按 quota $\tau$ 迭代地挑出最高效用的证据 snippet（title+summary）构成 $\mathcal{E}_m$，最后 RETRIEVE/MATCH 出 chunk $\mathcal{C}_m$，用 $(p, \mathcal{C}_m)$ 生成 note $n_m$。
 
-2. **三阶分级评估（hierarchical relevance/correctness/helpfulness）**:
+这里的关键是"找证据"和"选证据"分工：query 多样化负责拓宽召回不漏信源，utility 模块负责在召回里精挑可信来源（健康权威 > 普通新闻 > 社交媒体）。两个组件缺一不可——消融表里去掉任意一个，helpfulness 都掉 ~7–11pp。
 
-    - 功能：堵众包投票"流畅 ≠ 准确"的漏洞，把 helpfulness 拆成可解释、可审计的三步。
-    - 核心思路：用 $R/C/H$ 三个 binary indicator，强制条件依赖——只有 $R{=}1$ 才能评 $C$，只有 $C{=}1$ 才能评 $H$。联合概率分解为 $P(R{=}1,C{=}1,H{=}1)=P(H{=}1\mid C{=}1,R{=}1) \cdot P(C{=}1\mid R{=}1) \cdot P(R{=}1)$。前两 gate 用 GPT-4.1，最后一 gate 用 fine-tuned 的 **HealthJudge**（Lingshu-7B 微调）。
-    - 设计动机：原始 Community Notes 投票把这三个维度混在一起靠人感觉判，结果有 89 条 human-Helpful note 实际是"引证相关但内容错误"。强制分级后，CrowdNotes+ 对 Helpful 集的判分相比人工降 11.7% (R) / 14.0% (C)，但 Not Helpful 集只差 5.5%，说明 gate 主要在抓"假阳性"。
+**2. 三阶分级评估：把 helpfulness 拆成相关→正确→帮助三个条件 gate，堵"流畅≠准确"的漏洞。**
 
-3. **HealthNotes benchmark + HealthJudge 评估器**:
+原始 Community Notes 投票把"信源相不相关、解读对不对、是否帮到读者"三件事混在一起，全凭投票者一时感觉判，结果有 89 条人工标为 Helpful 的 note 其实是"引证相关但内容错误"——voter 经常因为 note 写得流畅就投 helpful。CrowdNotes+ 用三个 binary indicator $R/C/H$ 强制条件依赖：只有 $R{=}1$ 才进而评 $C$，只有 $C{=}1$ 才进而评 $H$，联合概率因此分解为
 
-    - 功能：给社区一个可复现、领域专一的健康 note 评测基础设施。
-    - 核心思路：从 30K 健康 note 中筛出 3,713 条有 helpfulness 标签的，再保留 634 条带有效 URL 的 Not Helpful + 等量 Helpful 共 1,268 个 post-note 对，覆盖疾病/疫苗/政策/wellness/医疗体系/生物/阴谋论 7 大类。HealthJudge 是 Lingshu-7B 在专家标注数据上 fine-tune 得到的 helpfulness 判官，相比通用 GPT 在医疗领域更可靠。
-    - 设计动机：通用 LLM-judge 在医疗专业判断上不可靠（容易把"听起来权威"当真），领域微调判官能更好捕捉 medical guideline / 临床证据等级。
+$$P(R{=}1,C{=}1,H{=}1)=P(H{=}1\mid C{=}1,R{=}1) \cdot P(C{=}1\mid R{=}1) \cdot P(R{=}1)$$
+
+前两个 gate 用 GPT-4.1，最后一个 gate 用 fine-tuned 的 HealthJudge（Lingshu-7B 微调）。强制分级后，CrowdNotes+ 对 Helpful 集的判分相比人工降 11.7%（R）/ 14.0%（C），但 Not Helpful 集只差 5.5%——说明 gate 主要是在精准地抓"假阳性"，而不是无差别压低所有分数。
+
+**3. HealthNotes benchmark + HealthJudge 评估器：给社区一个可复现、领域专一的健康 note 评测设施。**
+
+通用 LLM-judge 在医疗专业判断上并不可靠，容易把"听起来权威"当成真，缺一个领域专一、可复现的评测基础。作者从 30K 健康 note 中筛出 3,713 条有 helpfulness 标签的，再保留 634 条带有效 URL 的 Not Helpful 加等量 Helpful、共 1,268 个 post-note 对，覆盖疾病 / 疫苗 / 政策 / wellness / 医疗体系 / 生物 / 阴谋论 7 大类，构成 HealthNotes；评估器 HealthJudge 则是 Lingshu-7B 在专家标注数据上 fine-tune 出的 helpfulness 判官。相比通用 GPT，它更能捕捉 medical guideline / 临床证据等级这类专业信号，同时避免了昂贵的闭源 API 调用。
 
 ### 损失函数 / 训练策略
 本文不训练生成模型，只对 HealthJudge (Lingshu-7B) 做了一次专家标注数据上的 SFT。所有 note 在 helpfulness 评估前严格截断到 280 字符以匹配平台约束。Automation 模式中 LLM 的检索 quota 与时间窗与原始人工 note 作者条件严格对齐，确保公平。

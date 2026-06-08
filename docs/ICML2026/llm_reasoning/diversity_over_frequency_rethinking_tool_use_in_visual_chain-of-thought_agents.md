@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基线 agent 取 Mini-o3（Qwen2.5-VL-7B-Instruct + SFT + RFT 已学会调 `<grounding>`），训练数据是 SpatialReasoner 的 1.2k 3D 空间推理 QA。Agent 走 thought–action–observation 循环：每步生成 `<think>` 推理，然后要么吐出带 `(bbox_2d, source)` 的 `<grounding>` 触发一次 zoom-in 裁剪、把新观察拼回历史，要么直接给 `<answer>`。整篇文章的 pipeline 是"先诊断、再干预"：第 3.1–3.3 节用 vanilla RFT、tool-banned、tool-encouraging（DeepEyes tool bonus 与 PixelReasoner curiosity reward）四套对照实验诊断出"工具频率与准确率脱钩、多样性是真凶"；第 3.4 节给出自适应熵正则化干预；第 3.5 节再用 tool-banned + 熵正则化验证"熵正则化的增益依赖于工具提供的视觉探索"。
+这篇论文想搞清楚：在"工具可选"的复杂视觉推理任务上，RFT 到底该怎么对待视觉工具。基线 agent 取 Mini-o3（Qwen2.5-VL-7B-Instruct + SFT + RFT 已学会调 `<grounding>`），训练数据是 SpatialReasoner 的 1.2k 3D 空间推理 QA。Agent 走 thought–action–observation 循环：每步生成 `<think>` 推理，然后要么吐出带 `(bbox_2d, source)` 的 `<grounding>` 触发一次 zoom-in 裁剪、把新观察拼回历史，要么直接给 `<answer>`。整篇文章是一条"先诊断、再干预、再因果验证"的链：先用 vanilla RFT / tool-banned / tool-encouraging 四套对照诊断出"工具频率和准确率脱钩、真凶是探索多样性"，再给出自适应熵正则化这一干预，最后用 tool-banned + 熵正则化反向证明"熵正则化的增益必须靠工具提供的视觉探索才能兑现"。
 
 ### 关键设计
 
-1. **多样性诊断 = 文本 distinct-n-gram + 视觉 mIoU/CLIP**：
+**1. 多样性诊断指标：把"探索广度"从"工具频率"里拆出来。**
 
-    - 功能：把 rollout 多样性拆成两个可测的轴，定量证明"工具频率 ≠ 探索广度"。
-    - 核心思路：文本侧只统计 `<grounding>` 之前那一段 `<think>`（作者用 entropy probe 发现不确定性主要落在推理 span 而不在 bbox 坐标本身），算 $n\in\{3,4,5,6\}$ 的 distinct-$n$-gram 比例；视觉侧对同一 (image, question) 采 50 个 rollout，算所有 crop 框两两 mean pairwise IoU（低=覆盖广）以及 crop patch 与问题名词关键词的 CLIP 相似度（高=语义相关）。两个指标合起来才能区分"广覆盖且相关"vs"集中固化"vs"广撒网但跑偏"。
-    - 设计动机：tool-encouraging 那条线工具调用是 vanilla 的约 3 倍，但 mIoU 仍 >0.55、和 vanilla 几乎一样，CLIP 也没涨——直接打脸"多调工具就是多探索"的直觉，把矛头指向真正缺的"探索多样性"。
+诊断的第一步是找到一个能甩开"工具调用率"的可测量。作者把 rollout 多样性拆成文本和视觉两个轴。文本侧只统计 `<grounding>` 之前那一段 `<think>`——他们先用 entropy probe 确认模型的不确定性主要落在推理 span 上、而不在 bbox 坐标本身，所以只对推理文本算 $n\in\{3,4,5,6\}$ 的 distinct-$n$-gram 比例。视觉侧则对同一 (image, question) 采 50 个 rollout，一是算所有 crop 框两两的 mean pairwise IoU（越低说明裁剪覆盖越广），二是算 crop patch 与问题名词关键词的 CLIP 相似度（越高说明探索越贴题）。两个视觉指标必须合看才有意义：单看 mIoU 低可能是"广撒网但跑偏"，配上 CLIP 才能区分"广覆盖且相关"和"集中固化"。这套指标之所以关键，是因为它一上来就打脸了"多调工具=多探索"的直觉——tool-encouraging 那条线工具调用量是 vanilla 的约 3 倍，但 mIoU 仍 >0.55、几乎和 vanilla 一样，CLIP 也没涨，矛头由此从"工具频率"转向真正缺失的"探索多样性"。
 
-2. **自适应熵正则化 + 比例反馈系数**：
+**2. 自适应熵正则化：用一个带比例反馈的旋钮防止 rollout 提前坍缩。**
 
-    - 功能：在 GRPO 目标上加一个由当前 batch 熵自动调节强度的熵奖励项，作为唯一的探索控制旋钮。
-    - 核心思路：目标改成 $\mathcal{J}_{\text{ent}}(\theta)=\mathcal{J}_{\text{GRPO}}(\theta)+\lambda_t\cdot\mathbb{E}_{q,\tau}[\bar{\mathcal{H}}(\tau)]$，其中 $\bar{\mathcal{H}}(\tau)$ 是整个 rollout 的 token 级平均熵 $\mathcal{H}(\pi_\theta(\cdot\mid s_k))=-\sum_v \pi_\theta(v\mid s_k)\log\pi_\theta(v\mid s_k)$。固定 $\lambda$ 在预实验里很脆（太小没效果、太大直接崩出混语种和复读机），所以借用 Zhang et al. 2025a 的比例反馈：$\lambda_t = K_p\,[\mathcal{H}_{\text{target}}-\mathcal{H}_t]_+$，目标熵 $\mathcal{H}_{\text{target}}=0.9$、$K_p=0.03$。只在当前熵低于目标时才施压，否则系数归零。
-    - 设计动机：直接对准"防止 rollout 提前坍缩"这个根本病因，且自适应规则规避了手动调参；最终结果是工具调用照样从 ~20% 滑到 3%，但 3DSRBench 验证准确率冲到 62.9%（基线 59.2%、强制工具 59.9%）。
+诊断指向多样性后，干预就只针对"防坍缩"这一根本病因，而不再去操纵工具频率。做法是在 GRPO 目标上加一个熵奖励项：
 
-3. **Tool-banned ablation × 熵正则化的因果切分**：
+$$\mathcal{J}_{\text{ent}}(\theta)=\mathcal{J}_{\text{GRPO}}(\theta)+\lambda_t\cdot\mathbb{E}_{q,\tau}[\bar{\mathcal{H}}(\tau)],$$
 
-    - 功能：分离"熵正则化本身的通用收益"与"工具提供的视觉脚手架"这两个混杂因素。
-    - 核心思路：复用 §3.2 的严格 tool-banned 协议（rollout 阶段屏蔽 `<grounding>` 触发 token，不执行任何裁剪），在此基础上叠加同款自适应熵正则化。同时配套 over-turn masking——把超 budget 的 rollout 从 advantage 计算里剔除而非记成负奖励，避免 GRPO 隐式惩罚长 rollout 进一步推动 tool-use collapse。
-    - 设计动机：tool-banned + 熵正则化只跑到 57.8%，反而比裸 tool-banned (58.1%) 还低，离 tool-enabled + 熵正则化的 62.9% 差出 5 个点。这一对比把"熵正则化是万能解药"的解释直接证伪——增益必须来自工具早期带来的视觉证据多样性，单纯抬熵在没工具时甚至有害，从而牢牢支撑"tools as scaffolding"的论点。
+其中 $\bar{\mathcal{H}}(\tau)$ 是整个 rollout 的 token 级平均熵，单 token 熵为 $\mathcal{H}(\pi_\theta(\cdot\mid s_k))=-\sum_v \pi_\theta(v\mid s_k)\log\pi_\theta(v\mid s_k)$。难点在系数 $\lambda$：预实验里固定 $\lambda$ 很脆，太小没效果、太大直接崩出混语种和复读机。于是作者借用 Zhang et al. 2025a 的比例反馈控制，让系数随当前 batch 熵自适应：$\lambda_t = K_p\,[\mathcal{H}_{\text{target}}-\mathcal{H}_t]_+$，取目标熵 $\mathcal{H}_{\text{target}}=0.9$、$K_p=0.03$——只在当前熵低于目标时才施压，一旦熵够高系数就归零。这个单旋钮、免手调的设计直接兑现成结果：工具调用照样从 ~20% 滑到 3%，但 3DSRBench 验证准确率冲到 62.9%，明显高于基线 59.2% 和强制工具的 59.9%，说明真正起作用的是维持住的多样性而非工具本身。
+
+**3. Tool-banned × 熵正则化：用一组反例切开"熵增益"和"工具增益"。**
+
+最后一块是把"熵正则化是不是万能解药"这个混杂因素干净切开。作者复用严格的 tool-banned 协议（rollout 阶段屏蔽 `<grounding>` 触发 token、不执行任何裁剪），在完全没有工具的情况下叠加同一套自适应熵正则化；同时全程配 over-turn masking——把超 budget 的 rollout 从 advantage 计算里剔除而非记成负奖励，避免 GRPO 隐式惩罚长 rollout、反过来加剧 tool-use collapse。结果很说明问题：tool-banned + 熵正则化只跑到 57.8%，反而比裸 tool-banned 的 58.1% 还低，离 tool-enabled + 熵正则化的 62.9% 差出整整 5 个点。这就反过来证明熵正则化的增益不是凭空来的——没有工具早期带来的视觉证据多样性，单纯抬熵甚至有害，"tools as scaffolding"的论点由此被牢牢钉死。
 
 ### 损失函数 / 训练策略
 基础优化器是 DAPO（GRPO + clip-higher + dynamic sampling + token-level policy loss + over-turn masking），训练 ≤100 步（再往后 dynamic sampling 会因 degenerate group 频繁触发 resampling 导致 wall-clock 爆炸）。两类对照 reward：DeepEyes tool bonus $R_{\text{DE}}=\mathbb{I}[y=y^*]+\lambda_{\text{tool}}\mathbb{I}[y=y^*]\mathbb{I}[u(\tau)=1]$ 与 PixelReasoner curiosity reward $R_{\text{PR}}=\mathbb{I}[y=y^*]+\alpha\max(H-\mathrm{RaPR}(q),0)\mathbb{I}[u(\tau)=1]+\beta\,r_{\text{penalty}}(\tau)$，其中 $\mathrm{RaPR}(q)=\mathbb{E}_\tau[u(\tau)]$ 是该 query 上的工具调用率、$r_{\text{penalty}}=\min(N-n_{\text{tool}}(\tau),0)$ 是工具次数硬上界。评测全部 Avg@8，VLM-as-judge (Qwen2.5-VL-7B) 抽答案选项。

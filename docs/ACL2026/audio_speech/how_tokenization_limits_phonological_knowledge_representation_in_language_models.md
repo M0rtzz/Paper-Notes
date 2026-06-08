@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三个实验串联：(1) **Probing**：把每个词的最后一个 token 在第 $\ell$ 层的 hidden state $\boldsymbol{h}_{i\ell}$ 提取出来训练线性 probe，覆盖 6 个模型 × 6 个 depth 比例 × 3 个任务；(2) **机制分析**：用 slash-delimited input 测粒度效应、用 STAD 分组 (A: STAD=0 vs M: STAD>0.25) 测边界效应、用 CogNet 检索同源词数量分析失败词的语言学成因；(3) **改进**：LoRA 微调 Llama3.1-8B 在 OpenHermes2.5 + 音韵任务混合数据上，回答中插入 IPA 转写。
+
+本文不是提一个新模型，而是回答“subword tokenization 到底卡住了 LM 哪些音韵能力、为什么、怎么补”，因此用三个串联实验把诊断做实。第一步 Probing：把每个词最后一个 token 在第 $\ell$ 层的 hidden state $\boldsymbol{h}_{i\ell}$ 抽出来训练线性 probe，覆盖 6 个模型 × 6 个 depth 比例 × 3 个任务，量出表征里真正编码了多少音韵知识。第二步机制分析：用 slash-delimited input 测粒度效应、用 STAD 分组（A: STAD=0 vs M: STAD>0.25）测边界效应、再用 CogNet 检索同源词数量解释“为什么这些词切得不准”。第三步改进：在 OpenHermes2.5 通用数据与音韵任务的混合集上 LoRA 微调 Llama3.1-8B，回答中插入 IPA 转写，在不换 tokenizer 的前提下补回音韵知识。
 
 ### 关键设计
 
-1. **三个 phonology probing 任务**:
+**1. 三个 phonology probing 任务：用线性 probe 替代 prompting 量内部知识。**
 
-    - 功能：用线性 probe 替代 prompting 准确度量 LM 内部音韵知识
-    - 核心思路：rhyme awareness 是 binary 分类，logistic regression on $\boldsymbol{h}_\ell$；G2P 是 39 音素 padded 到长度 8 的 regression；syllable count 是 ridge regression on integer label
-    - 设计动机：故意限制 probe 是线性的，避免 probe 自己学到音韵知识、混淆 representation 质量 (Hewitt & Liang 2019)；同时用随机 embedding control 实验确认信号真实
+prompting 评测会低估模型的隐含知识，所以这里改用线性 probe 直接读 hidden state。三个任务分别是：rhyme awareness 用 $\boldsymbol{h}_\ell$ 上的 logistic regression 做二分类，G2P 是把 39 音素 padded 到长度 8 的 regression，syllable count 是对整数标签的 ridge regression。probe 被刻意限制为线性，是为了避免 probe 自己学到音韵知识、混淆对表征质量的判断（Hewitt & Liang 2019）；同时配一组随机 embedding control 实验，确认探到的信号确实来自模型而非任务本身。
 
-2. **STAD (Syllabification-Tokenization Alignment Distance)**:
+**2. STAD（Syllabification-Tokenization Alignment Distance）：把切分对齐度压成一个数。**
 
-    - 功能：用单一数字量化 tokenizer 对一个词的切分与该词自然音节切分的偏离程度
-    - 核心思路：把 $n+1$ 字符词的所有可能切分位置编为长度 $n$ 的 binary vector $\boldsymbol{v}_{\text{tok}}, \boldsymbol{v}_{\text{syl}}$，STAD 即 normalized Hamming distance $\text{STAD} = \sum_i |b_i - c_i| / n$。例如 musical 的 syllable vector 是 $[0,1,0,1,0,0]$，Llama tokenization 是 $[0,0,1,0,0,0]$，STAD = $3/6 = 0.5$
-    - 设计动机：把"对齐度"变成实数后可以做 A vs M 分组的 paired t-test，直接验证"对齐越差 → 音韵 probing 越差"的因果性；同时这个度量是 tokenizer-agnostic 的，能拿来横向比较 BPE / SentencePiece / ByT5
+要验证“边界错位伤害音韵表征”就得先把“对齐度”量化。STAD 把一个 $n+1$ 字符词的所有可能切分位置编成长度 $n$ 的 binary vector $\boldsymbol{v}_{\text{tok}}, \boldsymbol{v}_{\text{syl}}$，二者的 normalized Hamming distance 即 $\text{STAD} = \sum_i |b_i - c_i| / n$。例如 musical 的 syllable vector 是 $[0,1,0,1,0,0]$、Llama 的 tokenization 是 $[0,0,1,0,0,0]$，于是 STAD $= 3/6 = 0.5$。把对齐度变成实数后，就能按 A 组 vs M 组做 paired t-test，直接检验“对齐越差→音韵 probing 越差”的因果链；而且这个度量与具体 tokenizer 无关，可横向比较 BPE / SentencePiece / ByT5。
 
-3. **IPA-Augmented LoRA Fine-tuning**:
+**3. IPA-Augmented LoRA Fine-tuning：不动 tokenizer 也能注入音韵知识。**
 
-    - 功能：在不动 tokenizer 的前提下，把音韵知识注入已经训好的模型
-    - 核心思路：把 3000 条 OpenHermes2.5 通用 QA 中随机选 0-2 个词用 `<IPA>...</IPA>` tag 包住，回答前面拼上对应词的 IPA 转写；再混入 200 条 rhyme + 500 条 syllable + 500 条 G2P 任务数据，回答里显式按 IPA 一步步推理；LoRA 只动 $W_Q, W_V$，$r=8, \alpha=16$
-    - 设计动机：(a) tokenizer 不能换 —— foundation model 不会为这个重训；(b) 把 IPA 当 side information 与原任务交织，既灌入音韵知识又保留 instruction following 分布；(c) 数据量小且只用 LoRA → 几乎零灾难性遗忘
+基础模型不会为音韵任务重训，换 tokenizer 成本过高，于是改走“后训练打补丁”。具体做法是把 3000 条 OpenHermes2.5 通用 QA 中随机选 0-2 个词用 `<IPA>...</IPA>` tag 包住、并在回答前拼上对应词的 IPA 转写，再混入 200 条 rhyme + 500 条 syllable + 500 条 G2P 任务数据、要求回答里按 IPA 一步步推理；LoRA 只动 $W_Q, W_V$，$r=8, \alpha=16$。把 IPA 当 side information 与原任务交织，既灌入音韵知识又保住 instruction following 分布，加上数据量小、仅用 LoRA，灾难性遗忘几乎可以忽略。
 
 ### 损失函数 / 训练策略
-Probing：scikit-learn LogisticRegression (C=10, max_iter=1000) / RidgeCV (alphas in {10,100,500,1000,2000})。LoRA SFT：标准 CE loss，2× A40 < 5 GPU hours。Eval：rhyme/syllable 准确率，G2P 用 PER (phoneme error rate, Levenshtein / 参考长度)。
+
+Probing 端用 scikit-learn 的 LogisticRegression（C=10, max_iter=1000）与 RidgeCV（alphas ∈ {10,100,500,1000,2000}）。LoRA SFT 用标准 CE loss，2× A40 不到 5 GPU hours。评估上 rhyme/syllable 看准确率，G2P 用 PER（phoneme error rate，Levenshtein 距离除以参考长度）。
 
 ## 实验关键数据
 

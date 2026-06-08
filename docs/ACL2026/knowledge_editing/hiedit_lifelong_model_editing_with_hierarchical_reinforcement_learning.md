@@ -41,36 +41,24 @@ HiEdit 用分层强化学习把"终身模型编辑"拆成 high-level 选层 + lo
 ## 方法详解
 
 ### 整体框架
-HiEdit 把每一步编辑建模成 Hierarchical MDP $(\mathcal{S}, \mathcal{A}, \Omega, \mathcal{P}, r, \gamma)$。在第 $t$ 步：
-
-1. 拿一对待编知识 $(x_t, y_t)$，做一次标准 SFT 得到全部影响层的梯度矩阵 $\nabla \mathcal{W}_t = \{\nabla \mathcal{W}_{t,1}, \dots, \nabla \mathcal{W}_{t,L}\}$，对每层做低秩分解 $\nabla \mathcal{W}_{t,l} = v_l u_l^\top$。
-2. 高层 hypernetwork $\pi_\phi$ 读全部 $(u_l, v_l)$，输出 option $\omega_t \in \{0,1\}^L$（一个 mask），只激活 $K$ 个层。
-3. 低层 hypernetwork $\mathcal{H}_\theta$ 只在被激活的层上跑 MEND/MALMEN 风格的编辑网络，把 $(u_l, v_l)$ 映射成伪向量 $(\tilde u_l, \tilde v_l)$，得到参数更新 $\tilde{\nabla} \mathcal{W}_{t,l} = \tilde v_l \tilde u_l^\top$。
-4. 整条编辑轨迹结束后，按高/低层 reward 联合优化两套 hypernetwork。
+HiEdit 把每一步终身编辑建模成一个 Hierarchical MDP $(\mathcal{S}, \mathcal{A}, \Omega, \mathcal{P}, r, \gamma)$，核心是把"该编哪些层"和"每层怎么改"拆成两个由不同 hypernetwork 负责的子任务。在第 $t$ 步，先对待编知识 $(x_t, y_t)$ 做一次标准 SFT，拿到所有影响层的梯度矩阵 $\nabla \mathcal{W}_t = \{\nabla \mathcal{W}_{t,1}, \dots, \nabla \mathcal{W}_{t,L}\}$ 并逐层低秩分解为 $\nabla \mathcal{W}_{t,l} = v_l u_l^\top$；高层 hypernetwork $\pi_\phi$ 读这组梯度信号、吐出一个只激活 $K$ 个层的 option mask $\omega_t \in \{0,1\}^L$；低层 hypernetwork $\mathcal{H}_\theta$ 只在被点亮的层上算真正的参数更新 $\tilde{\nabla} \mathcal{W}_{t,l} = \tilde v_l \tilde u_l^\top$。整条编辑轨迹跑完后，再按高/低两层各自的 reward 联合回传，更新这两套 hypernetwork。
 
 ### 关键设计
 
-1. **高层 importance router（动态选层）**：
+**1. 高层 importance router：让"选哪些层"变成可学习的动态决策。**
 
-    - 功能：根据当前知识动态决定要改哪些层。
-    - 核心思路：把每层 $(u_l \| v_l)$ 过一个 layer-shared gradient encoder $\mathbf{W}_{\text{GradEnc}}$ + layer-specific scale & offset $\mathbf{SPE}_l$ 得到 $h_l$，再 concat 起来过 gate network 输出 $z_t \in \mathbb{R}^L$，最后用 $\mathbf{TopK}(z_t, K)$ 产生 mask $m_t$。为了让离散 TopK 仍可微，借鉴 MoE 的 straight-through estimator：$m_t = \mathbf{sg}(m_t - z_t) + z_t$，前向用硬 mask、反向把梯度透传到 $z_t$。
-    - 设计动机：让 layer selection 也成为可学习的 high-level action，而不是离线一次定死，这样不同知识可以走不同层路径。
+终身编辑里最隐蔽的浪费是"locating"阶段对所有知识都用同一批稠密的层，等于把大量无关参数也一起改了。HiEdit 把每层的梯度签名 $(u_l \| v_l)$ 先过一个 layer-shared 的梯度编码器 $\mathbf{W}_{\text{GradEnc}}$，再叠上 layer-specific 的缩放与偏置 $\mathbf{SPE}_l$ 得到 $h_l$，所有 $h_l$ concat 后送进 gate network 输出打分 $z_t \in \mathbb{R}^L$，最后 $\mathbf{TopK}(z_t, K)$ 只保留得分最高的 $K$ 层产生 mask $m_t$。这样不同知识可以走不同的层路径，而不是离线一次定死。难点在于 TopK 是离散的、挡住了梯度，HiEdit 借用 MoE 的 straight-through estimator $m_t = \mathbf{sg}(m_t - z_t) + z_t$，前向用硬 mask、反向把梯度直接透传回 $z_t$，让选层决策仍可端到端学习。
 
-2. **Intrinsic reward 鼓励稀疏**：
+**2. Intrinsic reward：用"部分 vs. 全部"的相对优势逼出稀疏。**
 
-    - 功能：让高层倾向于"用尽量少的层完成编辑"。
-    - 核心思路：高层 reward 不是绝对值，而是部分选层和全选层的相对优势 $r_{\text{high},t} = r_{\text{low}}(s_t, \omega_t, a_t) - r_{\text{low}}(s_t, \mathbf{1}, a_t)$，其中 $\mathbf{1}$ 表示全选。若部分选层的编辑损失比全选还低，高层就能拿正 reward。
-    - 设计动机：直接监督"选少了好"很难，把信号建模成"部分 vs. 全部"的差异，等价于学一个"该层对本条知识到底有没有用"的因果对比信号，天然鼓励稀疏且不损失性能。
+直接给高层写一个"选得越少越好"的稀疏惩罚很难调系数，也容易牺牲编辑质量。HiEdit 改成让高层 reward 等于部分选层相对全选层的优势 $r_{\text{high},t} = r_{\text{low}}(s_t, \omega_t, a_t) - r_{\text{low}}(s_t, \mathbf{1}, a_t)$，其中 $\mathbf{1}$ 表示全选。只有当"只动 $K$ 层"的编辑损失不差于"动全部层"时，高层才拿到正 reward。这本质上是在学一个"这层对当前这条知识到底有没有用"的因果对比信号，天然鼓励稀疏却不掉点——消融里去掉这个相对优势、改成最大化绝对 reward，高层就退化成全选、整套方法塌回 RLEdit。
 
-3. **分层联合优化 + 损失正则**：
+**3. 分层联合优化与防遗忘正则：让探索的高层和利用的低层互相校正。**
 
-    - 功能：把高低层 hypernetwork 端到端协同训练。
-    - 核心思路：低层 reward 取负总损失 $r_{\text{low},t} = -\mathcal{L}_t$，其中 $\mathcal{L}_t = \eta \|\tilde{\nabla} \mathcal{W}_t\|^2 + \sum_{i=t-k}^t \mu^{t-i} \mathcal{L}_{t,i}$，$\mathcal{L}_{t,i} = -\log p_{\mathcal{W}_t}(y_i|x_i) + \tilde\lambda \mathrm{KL}[p_{\mathcal{W}_{t-1}}(\cdot|\tilde x_i) \| p_{\mathcal{W}_t}(\cdot|\tilde x_i)]$，同时回看 $k$ 步过去编辑做 memory backtracking 防遗忘；KL 项约束无关输入分布尽量不变。两套 hypernetwork 各按累积折扣 reward $\sum \gamma^t r_{\beta,t}$ 优化，$\gamma=1$ 保证整序列权重一致。
-    - 设计动机：稀疏 mask 阻断了普通梯度回传，需要 straight-through + 联合优化才能保证 high-level 探索和 low-level 利用能互相校正。
+低层 reward 取负的总损失 $r_{\text{low},t} = -\mathcal{L}_t$，其中 $\mathcal{L}_t = \eta \|\tilde{\nabla} \mathcal{W}_t\|^2 + \sum_{i=t-k}^t \mu^{t-i} \mathcal{L}_{t,i}$，单步损失 $\mathcal{L}_{t,i} = -\log p_{\mathcal{W}_t}(y_i|x_i) + \tilde\lambda \mathrm{KL}[p_{\mathcal{W}_{t-1}}(\cdot|\tilde x_i) \| p_{\mathcal{W}_t}(\cdot|\tilde x_i)]$。它一边回看过去 $k$ 步编辑做 memory backtracking 防遗忘，一边用 KL 项约束无关输入的分布尽量不动。两套 hypernetwork 各按累积折扣 reward $\sum \gamma^t r_{\beta,t}$ 优化，且取 $\gamma=1$ 让整条长序列里每一步权重一致。因为稀疏 mask 已经截断了普通梯度回传，只有把 straight-through 透传和这套联合优化合在一起，high-level 的探索（选层）和 low-level 的利用（算更新）才能彼此对齐。
 
 ### 损失函数 / 训练策略
-- 训练时 TopK 的 $K$ 与推理一致，强制 sparsity-consistency，避免训练用稠密推理却稀疏导致 distribution shift。
-- 每条编辑序列上跑完整 trajectory 后再回传梯度（trajectory-level update），更稳定。
+训练与推理共用同一个 TopK 的 $K$，强制 sparsity-consistency，避免"训练稠密、推理稀疏"带来的分布偏移；每条编辑序列也是跑完整条 trajectory 再做 trajectory-level 的梯度回传，比逐步更新更稳定。
 
 ## 实验关键数据
 

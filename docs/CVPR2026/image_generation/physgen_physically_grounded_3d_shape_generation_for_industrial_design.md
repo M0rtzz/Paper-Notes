@@ -42,27 +42,41 @@ tags:
 
 ### 关键设计
 
-1. **Shape-and-Physics VAE (SP-VAE)**:
+**1. Shape-and-Physics VAE：让潜空间同时记住"长什么样"和"受多大力"。**
 
-    - 功能：将 3D 几何和物理属性编码到统一潜空间，使潜编码包含可恢复的物理信息
-    - 核心思路：
-        - **编码器**：基于 Dora 架构，从均匀表面点 $\mathbf{P}_u$ 和显著边缘点 $\mathbf{P}_s$ 提取特征，通过双交叉注意力+自注意力输出潜编码 $\mathbf{z}$
-        - **形状解码器** $\mathcal{D}_s$：自注意力处理 $\mathbf{z}$，交叉注意力以查询点 $\mathbf{x}$ 为 query 输出 SDF 值 $s = \mathcal{D}_s(\mathbf{x}, \mathbf{z})$，通过 Marching Cubes 重建 mesh
-        - **压力解码器** $\mathcal{D}_p$：三分支并行——自注意力（全局表面依赖）、squeeze-excitation 通道分支（通道重加权）、MLP（局部细化），可学习权重融合后通过交叉注意力输出任意 3D 点的压力值 $p = \mathcal{D}_p(\mathbf{x}, \mathbf{z})$
-        - **阻力解码器** $\mathcal{D}_d$：同样的三分支提取 + 三层 MLP 输出全局阻力系数 $C_d$
-    - 设计动机：现有 VAE 只编码几何，物理属性在潜空间中完全丢失。通过联合编码，潜编码同时携带几何和物理信息，使后续物理引导成为可能
+现有 3D VAE（如 Dora）只把几何塞进潜空间，压力场、阻力系数这些物理量在编码后就丢光了，后面想做物理引导也无从下手。SP-VAE 的做法是给同一份潜编码 $\mathbf{z}$ 挂上四个出口：编码器沿用 Dora 架构，从均匀表面点 $\mathbf{P}_u$ 和显著边缘点 $\mathbf{P}_s$ 抽特征，经双交叉注意力 + 自注意力压成 $\mathbf{z}$；形状解码器 $\mathcal{D}_s$ 以查询点 $\mathbf{x}$ 为 query 输出 SDF 值 $s = \mathcal{D}_s(\mathbf{x}, \mathbf{z})$，再用 Marching Cubes 重建 mesh；压力解码器 $\mathcal{D}_p$ 输出任意 3D 点的压力 $p = \mathcal{D}_p(\mathbf{x}, \mathbf{z})$；阻力解码器 $\mathcal{D}_d$ 则吐出全局阻力系数 $C_d$。
 
-2. **物理正则化 Flow Matching**:
+压力解码器是其中最讲究的一块，它用三条分支并行读取 $\mathbf{z}$ 再加权融合：自注意力分支抓全局表面依赖、squeeze-excitation 通道分支做通道重加权、MLP 分支补局部细节，阻力解码器复用同样的三分支提取后接三层 MLP。这样一来，潜编码里就同时携带了几何和物理两套信息，后续的梯度引导才有可微的物理代理可用。
 
-    - 功能：生成高质量 3D 形状的同时软性推动物理合理性
-    - 核心思路：采用 rectified flow 构建从噪声 $\epsilon$ 到数据 $\mathbf{z}_1$ 的线性插值，学习速度场 $\mathbf{u}_{t_n} = \mathbf{z}_1 - \epsilon$。推理时的逆向步骤 $\mathbf{z}'_{t_{n+1}} = \mathbf{z}_{t_n} - (t_{n+1} - t_n) \hat{\mathbf{u}}(\mathbf{z}_{t_n}, t_n, \mathbf{c})$。在每步速度更新后，额外加入阻力解码器的梯度引导：$\mathbf{z}_{t_{n+1}} = \mathbf{z}'_{t_{n+1}} - \lambda_d \nabla_{\mathbf{z}_{t_n}} \|\mathcal{D}_d(\mathbf{z}_{t_n}) - d_{tar}\|_2^2$，类似分类器引导，温和地将生成轨迹推向目标阻力系数附近的区域。可选地以草图/图像为条件 $\mathbf{c}$。
-    - 设计动机：直接在 flow matching 步骤中嵌入物理梯度比后处理更稳定，因为始终在学到的形状流形上行走
+**2. 物理正则化 Flow Matching：在采样轨迹上顺手把阻力往目标拽。**
 
-3. **方向力物理精炼 + 交替更新**:
+光有物理潜空间还不够，生成时得让轨迹软性地朝物理合理的方向走。本文用 rectified flow 在噪声 $\epsilon$ 和数据 $\mathbf{z}_1$ 之间做线性插值，学速度场 $\mathbf{u}_{t_n} = \mathbf{z}_1 - \epsilon$，推理时逆向走一步是
 
-    - 功能：通过稠密压力场进行精细气动优化，同时保持几何合理性
-    - 核心思路：给定 flow matching 采样出的干净潜编码 $\mathbf{z}_1^k$，用压力解码器预测表面压力，计算三个方向的力 $F_s = \sum_{i=1}^V p_i \mathbf{n}_{s,i} A_i$（$s \in \{x, y, z\}$），定义物理损失 $\mathcal{L} = \lambda_x \|F_x\|_2 + \lambda_y \|F_y\|_2 + \lambda_z \text{ReLU}(F_z)$（最小化阻力、最小化侧向力不对称、确保负升力以维持抓地力），梯度回传到 $\mathbf{z}_1^k$ 进行 $M$ 步精炼。精炼后的 $\hat{\mathbf{z}}_1^k$ 被重新加噪到 $t_{n_s} = 0.75N$ 时刻，重新开始 flow matching 的后 25% 步骤。**交替进行 $K$ 轮直至收敛**。
-    - 设计动机：纯物理精炼会导致几何畸变（脱离形状流形），纯 flow matching 无法满足物理约束。交替执行让 flow matching 负责"拉回流形"，物理精炼负责"推向物理最优"，两者互相矫正
+$$\mathbf{z}'_{t_{n+1}} = \mathbf{z}_{t_n} - (t_{n+1} - t_n)\,\hat{\mathbf{u}}(\mathbf{z}_{t_n}, t_n, \mathbf{c})$$
+
+关键在于每走完一步速度更新，再叠一道阻力解码器的梯度引导，把轨迹往目标阻力系数 $d_{tar}$ 附近推：
+
+$$\mathbf{z}_{t_{n+1}} = \mathbf{z}'_{t_{n+1}} - \lambda_d \nabla_{\mathbf{z}_{t_n}} \|\mathcal{D}_d(\mathbf{z}_{t_n}) - d_{tar}\|_2^2$$
+
+这一项形式上就是分类器引导，但因为它始终在学到的形状流形上行走，比"先生成、后处理优化"那种离线纠偏稳得多——后者一旦把潜编码推出流形就拉不回来了。条件 $\mathbf{c}$ 可选地接草图或图像，让物理引导和外观控制叠加在同一条采样轨迹上。
+
+**3. 方向力物理精炼 + 交替更新：让流形和物理目标轮流当家。**
+
+软引导只能粗调，真正的精细气动优化要靠稠密压力场。拿到 flow matching 采出的干净潜编码 $\mathbf{z}_1^k$ 后，用压力解码器预测表面压力，按三个方向积分出受力 $F_s = \sum_{i=1}^V p_i \mathbf{n}_{s,i} A_i$（$s \in \{x, y, z\}$），再定义物理损失
+
+$$\mathcal{L} = \lambda_x \|F_x\|_2 + \lambda_y \|F_y\|_2 + \lambda_z \,\text{ReLU}(F_z)$$
+
+三项分别管最小化纵向阻力、压住侧向力不对称、以及用 $\text{ReLU}(F_z)$ 确保负升力（下压力）以维持抓地力。梯度回传到 $\mathbf{z}_1^k$ 做 $M$ 步精炼，得到 $\hat{\mathbf{z}}_1^k$。
+
+但纯精炼会把潜编码推离流形导致几何畸变，纯 flow matching 又满足不了物理约束，于是本文把两者拧成一个交替循环：精炼后的 $\hat{\mathbf{z}}_1^k$ 被重新加噪回到 $t_{n_s} = 0.75N$ 时刻，重走 flow matching 的后 25% 步骤把它拉回流形，然后再做一轮物理精炼，如此交替 $K$ 轮直至收敛。flow matching 负责"拉回流形"，物理精炼负责"推向物理最优"，两个操作各在自己最擅长的域里干活、互相矫正。
+
+### 一个完整示例：从噪声到一辆低阻力的车
+
+以一次草图条件生成为例走一遍交替循环。flow matching 先从噪声 $\epsilon$ 出发，沿 rectified flow 逆向采样，每步在速度更新后叠加阻力梯度引导，把轨迹朝目标阻力系数 $d_{tar}$ 软性收拢，得到第一版干净潜编码 $\mathbf{z}_1^1$——此时形状已经像车，但侧向受力还不对称、阻力也没压到位。
+
+进入物理精炼：压力解码器在 $\mathbf{z}_1^1$ 的表面采样压力场，积分出 $F_x, F_y, F_z$，按损失 $\mathcal{L}$ 做 $M$ 步梯度下降，把车身轮廓往低阻力、对称、带下压力的方向微调，得到 $\hat{\mathbf{z}}_1^1$。但这一步可能让某处曲面脱离流形（比如轮拱处出现非自然褶皱），于是把 $\hat{\mathbf{z}}_1^1$ 重新加噪到 $0.75N$ 时刻，重走最后 25% 的 flow matching 步骤——这一段把畸变"打磨"回合理几何，输出 $\mathbf{z}_1^2$。
+
+如此交替 $K$ 轮，每一轮里阻力都更低一点、几何都更干净一点，最终收敛到一辆既视觉逼真又通过 CFD 验证的低阻力车型。对比来看，后处理优化（SP-VAE+TripOptimizer 500 步强设置）因为没有"拉回流形"这一环，F-score 反而从 74.03 掉到 67.70；PhysGen 则升到 89.65。
 
 ### 损失函数 / 训练策略
 

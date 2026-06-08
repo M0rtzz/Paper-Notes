@@ -45,23 +45,17 @@ PATRA 整体由一个 Text Encoder（直接用 LLM 自带 tokenizer 与 embeddin
 
 ### 关键设计
 
-1. **模式感知对齐模块 (Pattern-Aware Alignment, PAA)**:
+**1. 模式感知对齐模块（PAA）：把时序-文本对齐从"浅层拼接"升级成"模式级深度对齐"。**
 
-    - 功能：把时序-文本对齐从"浅层拼接"升级为"模式级深度对齐"，让 LLM 在推理时能精确引用"趋势"或"季节性"这类语义概念。
-    - 核心思路：分三个子步骤。(i) **潜空间分解**：用 $X_{ts}$ 作为完整成分 $X_{ts}^f$；用 padding + 平均池化（移动平均滤波）抽取趋势成分 $X_{ts}^t = \text{Avgpool}(\text{padding}(X_{ts}))$；季节成分由残差 $X_{ts}^s = X_{ts} - X_{ts}^t$ 给出。(ii) **文本端模式提取**：定义三组 Learnable Alignment Token (LAT) $Q_{full}, Q_{trend}, Q_{sea}$ 作为 query，对文本 embedding 做标准多头注意力 $X_k^{text} = \text{Attention}(Q_k, K, V)$，得到三套模式特化的文本 token。(iii) **跨模态交互对齐**：把每对 $(X_k^{text}, X_{ts}^j)$ 拼成新 query 并做 self-attention，使时序 token 吸收对应模式下的文本语义；最后三路融合得到 $X_{ts}^{fusion}$。
-    - 设计动机：(a) 在潜空间而非原始数值层做分解，可以保留语义信息；(b) 用 LAT 而不是固定 prompt，让文本端的模式表达可学；(c) 多路 self-attention 同时进行三组对齐，避免单一全局对齐造成的"模式信息纠缠"。
+ChatTS、ITFormer 那类做法只是模仿 VLM 把序列切 patch 投影后跟文本拼起来，所谓"深度对齐"流于形式，LLM 推理时很难精确引用"趋势"或"季节性"这种结构化概念。PAA 分三步把分解直觉嵌进注意力。第一步潜空间分解：完整成分直接用 $X_{ts}^f$，趋势成分用移动平均 $X_{ts}^t = \text{Avgpool}(\text{padding}(X_{ts}))$，季节成分取残差 $X_{ts}^s = X_{ts} - X_{ts}^t$——分解放在潜空间而非原始数值层，保住语义信息。第二步文本端模式提取：定义三组可学习对齐 token（LAT）$Q_{full},Q_{trend},Q_{sea}$ 当 query，对文本 embedding 做多头注意力 $X_k^{text} = \text{Attention}(Q_k,K,V)$，得到三套模式特化的文本表征；用可学 LAT 而不是固定 prompt，让文本侧的模式表达也能学。第三步跨模态交互对齐：把每对 $(X_k^{text},X_{ts}^j)$ 拼成新 query 做 self-attention，让时序 token 吸收对应模式下的文本语义，最后三路融合成 $X_{ts}^{fusion}$。三路同时对齐而非单一全局对齐，避免了"模式信息纠缠"，于是 LLM 能真正区分"趋势在涨"和"季节性周期回撤"。
 
-2. **任务感知平衡奖励 (Task-Aware Balanced Reward)**:
+**2. 任务感知平衡奖励：把异质任务的奖励统一到同一量纲，治住 reward hacking。**
 
-    - 功能：解决 TSQA 中"简单判别题刷分快、复杂生成题反馈稀疏"导致的优化不平衡和 reward hacking。
-    - 核心思路：把任务分两类。**带标签任务** (selection / judgment) 使用阶段式奖励 $r_{label} = \sum_{k=1}^K \lambda_k r_k(\text{answer})$，每一阶段验证"是否在候选范围内 → 是否选项正确"等子条件，避免端到端只给二元奖励导致早期训练梯度噪声大；**生成任务**用 Rouge-L 作连续奖励 $r_{generation} = \text{TextScore}(\text{answer}, y^\star)$，鼓励序列级对齐而不是关键词碰撞。最后把所有任务奖励统一线性映射到 $[0, 2]$ 区间，再叠加 format reward (每个有效标签对都给部分奖励、重复出现则惩罚)，作为 GRPO 的总奖励 $r(\tau) = r_{format}(\tau) + r_{task}(\tau)$。
-    - 设计动机：(a) 阶段式奖励让模型早期就能拿到信号，减小高方差；(b) Rouge-L 让生成任务的奖励是连续 dense 的而不是离散；(c) $[0,2]$ 归一化消除奖励量纲差异，从根本上缓解 GRPO 在异质任务里的梯度失衡。
+TSQA 横跨从二分类判别到开放式生成的整个谱系，简单题奖励容易饱和、复杂推理题奖励稀疏，naive SFT/RL 会让模型疯狂刷简单题、深度推理萎缩。PATRA 把任务分两类分别给奖励：带标签任务（selection/judgment）用阶段式奖励 $r_{label} = \sum_{k=1}^K \lambda_k r_k(\text{answer})$，逐级验证"是否在候选范围内 → 选项是否正确"，避免端到端只给二元奖励导致早期梯度噪声大；生成任务用 Rouge-L 作连续奖励 $r_{generation} = \text{TextScore}(\text{answer},y^\star)$，奖励序列级对齐而非关键词碰撞。最关键的一招是把所有任务奖励**线性映射到 $[0,2]$ 区间**，再叠加 format reward，得到 GRPO 总奖励 $r(\tau) = r_{format}(\tau) + r_{task}(\tau)$。$[0,2]$ 归一化消除了奖励量纲差异——消融里去掉它，Prescience Acc 直接从 52.78 掉到 35.18，证明跨任务量纲对 GRPO 稳定性是决定性的。
 
-3. **GRPO + 复合奖励的优化范式**:
+**3. GRPO + 复合奖励的优化范式：在 SFT 之上逼出思维链和跨任务通用推理。**
 
-    - 功能：在 SFT 之上叠加 RL，进一步逼出"<think>...</think>"的思维链结构和跨任务通用推理能力。
-    - 核心思路：使用 Group Relative Policy Optimization (GRPO)，对每个 prompt 采样一组响应，用组内标准化的优势 $\hat A_{group}(\tau) = (r(\tau) - \mu)/(\sigma + \epsilon)$ 替代 PPO 中的值函数，最大化 $L(\theta) = \mathbb{E}_{\tau \sim \pi_{\theta_{old}}}\left[\frac{\pi_\theta(\tau)}{\pi_{\theta_{old}}(\tau)} \hat A_{group}(\tau)\right]$；同时加 KL 项约束远离参考模型。GRPO 的组内标准化与上一步的奖励归一化形成双重稳定。
-    - 设计动机：避免训练 critic 网络的额外开销，并利用组相对优势压制奖励波动、保留相对排序，对 TSQA 的稀疏正例尤其友好。
+光靠 SFT 模型只会"模仿答案"，产生不了 `<think>...</think>` 那种推理结构（消融里只做 SFT 时 Reasoning Acc 仅 13.51%）。PATRA 用 Group Relative Policy Optimization：对每个 prompt 采一组响应，用组内标准化优势 $\hat A_{group}(\tau) = (r(\tau) - \mu)/(\sigma + \epsilon)$ 替代 PPO 的值函数，最大化 $L(\theta) = \mathbb{E}_{\tau\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(\tau)}{\pi_{\theta_{old}}(\tau)}\hat A_{group}(\tau)]$，并加 KL 项约束远离参考模型。组内标准化和上一步的奖励 $[0,2]$ 归一化形成双重稳定，对 TSQA 里稀疏的正例尤其友好——既省掉训 critic 的开销，又靠相对排序压住奖励波动。
 
 ### 损失函数 / 训练策略
 Alignment Stage 用标准交叉熵 SFT，让模型先学会"看懂"分解后的时序模式；Reasoning-Enhanced Stage 切换成 GRPO，所有奖励通过上文映射到 $[0,2]$ 再加权求和。推理时模型按 `<think>...</think><answer>...</answer>` 结构生成，answer 区段被规则化抽取后送入评测。训练用 4 张 A800、Qwen2.5-7B 为 backbone。

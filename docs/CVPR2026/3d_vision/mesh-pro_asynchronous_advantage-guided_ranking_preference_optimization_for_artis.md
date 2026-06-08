@@ -42,54 +42,45 @@ tags:
 
 ## 方法详解
 
-### 整体框架：异步在线 RL
+### 整体框架
 
-Mesh-Pro 采用异步架构，将生成（rollout）和训练（update）解耦：
+Mesh-Pro 把 artist-style 四边形网格生成当成一个 autoregressive token 序列生成问题，再用在线强化学习把策略往"拓扑干净、四边形占比高、没有破面"的方向对齐。整条流水线拆成三个互不阻塞的角色：多个 rollout worker 在各自的 GPU 上、基于当前策略对同一输入条件并行采样 $N$ 个候选 mesh；reward evaluator 用一套纯几何的 ray-based reward 给每个候选打分，全程不需要人工标注；trainer 则异步地从 buffer 里取出带分数的样本，用核心算法 ARPO 做策略更新。
 
-- **Rollout Workers**：多个 GPU 并行进行 mesh 采样生成，每个 worker 独立基于当前策略采样 $N$ 个候选 mesh
-- **Reward Evaluator**：对生成的 mesh 计算奖励分数（基于 Ray-based reward，见下文）
-- **Trainer**：异步地从 rollout buffer 中取出带奖励标注的样本进行策略更新
+这套"生成—打分—更新"之所以能解耦，是因为三者被流水线化了：trainer 在啃当前 batch 时，rollout worker 已经在生成下一轮样本。相比离线 DPO 那种"先把候选全生成完、再标注、再训练"的串行循环，异步架构在 wall-clock 上直接省掉了大段等待，带来 3.75× 的训练加速——而这份提速纯粹来自工程上的架构设计，不依赖任何算法近似。
 
-关键效率提升在于：rollout 和训练可以**流水线化**——trainer 在处理当前 batch 时，rollout workers 已经在生成下一轮样本。相比离线 DPO 需要"完整生成 → 标注 → 训练"的串行流程，异步架构带来 **3.75x** 的训练加速。
+### 关键设计
 
-### ARPO：Advantage-guided Ranking Preference Optimization
+**1. 异步在线 RL 流水线：用解耦+流水线消除离线/同步 RL 的串行等待。**
 
-ARPO 是本文的核心算法贡献。它融合了两个关键思想：
+离线 DPO 的慢在于"完整生成 → 标注 → 训练"必须一段段排队走完，而朴素的同步在线 RL 又得让 trainer 干等 rollout 采完样。Mesh-Pro 把 rollout worker、reward evaluator、trainer 拆成三个独立环节挂在一个共享 buffer 上：rollout 持续往 buffer 里灌带分数的候选，trainer 持续从 buffer 取样本更新，两端各跑各的。代价是 trainer 用的策略版本会比最新的 rollout 策略略旧（staleness），但只要滞后可控，换来的就是 3.75× 的端到端提速。
 
-#### 1. Plackett-Luce 排名模型
-给定同一输入条件生成的 $N$ 个候选 mesh $\{y_1, \ldots, y_N\}$ 及其奖励 $\{r_1, \ldots, r_N\}$，按奖励从高到低排序得到排列 $\sigma$。Plackett-Luce 模型定义了一个排名上的概率分布：
+**2. Plackett-Luce 排名建模：一次排名吃下 N 个候选的全部偏好信息，而不是 DPO 的一对。**
 
-$$P(\sigma | \theta) = \prod_{i=1}^{N} \frac{\exp(\log \pi_\theta(y_{\sigma(i)}))}{\sum_{j=i}^{N} \exp(\log \pi_\theta(y_{\sigma(j)}))}$$
+DPO 每次只能消化一个 preferred / 一个 rejected 的二元对比，而同一条件下采出的 $N$ 个候选里其实藏着完整的好坏次序。ARPO 把这 $N$ 个候选 $\{y_1,\ldots,y_N\}$ 按奖励 $\{r_1,\ldots,r_N\}$ 从高到低排成排列 $\sigma$，再用 Plackett-Luce 模型给"按奖励排序的这个排名"赋一个概率：
 
-其中 $\pi_\theta(y)$ 表示策略模型生成 $y$ 的概率。优化目标是最大化按奖励排序的排名似然。
+$$P(\sigma \mid \theta) = \prod_{i=1}^{N} \frac{\exp\big(\log \pi_\theta(y_{\sigma(i)})\big)}{\sum_{j=i}^{N} \exp\big(\log \pi_\theta(y_{\sigma(j)})\big)}$$
 
-相比 DPO 只能处理 pairwise 偏好（一个 preferred + 一个 rejected），Plackett-Luce 模型能同时利用 $N$ 个候选的排名信息，信息利用更充分。
+其中 $\pi_\theta(y)$ 是策略生成 $y$ 的概率。直觉上它逐位地要求"当前最优候选在剩余候选里被选中的概率最大"，优化目标就是最大化这个排名似然。同样采 $N$ 个样本，排名建模一次性用上全部相对次序，信息利用比 pairwise 充分得多。
 
-#### 2. 优势函数加权
-为进一步提升优化效率，ARPO 引入优势函数对排名梯度进行加权。定义第 $i$ 个候选的优势值：
+**3. 优势函数加权：把梯度集中到"明显好/明显坏"的样本上，给排名信号降噪。**
 
-$$A_i = r_{\sigma(i)} - \bar{r}, \quad \bar{r} = \frac{1}{N}\sum_{j=1}^N r_j$$
+光有排名似然还不够——次序相邻、奖励差不多的两个候选，其实没多少可学的信号，硬学反而引入噪声。ARPO 用优势函数给每个候选的排名梯度加权，先算出相对组内均值的优势：
 
-ARPO 的最终损失函数为：
+$$A_i = r_{\sigma(i)} - \bar{r}, \quad \bar{r} = \frac{1}{N}\sum_{j=1}^{N} r_j$$
 
-$$\mathcal{L}_{\text{ARPO}} = -\sum_{i=1}^{N} A_i \cdot \log P_i(\sigma | \theta) + \beta \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$$
+再把它乘进 Plackett-Luce 各项前面，配合一个 KL 正则约束策略别跑离参考模型太远，得到最终损失：
 
-其中 $P_i$ 是 Plackett-Luce 概率的第 $i$ 项，$\beta$ 控制 KL 正则化强度。优势加权的直觉是：让模型将更多梯度信号分配给"明显好于均值"和"明显差于均值"的样本对，而对"差距不大"的样本减少梯度更新量，减少噪声。
+$$\mathcal{L}_{\text{ARPO}} = -\sum_{i=1}^{N} A_i \cdot \log P_i(\sigma \mid \theta) + \beta \cdot D_{\text{KL}}(\pi_\theta \,\|\, \pi_{\text{ref}})$$
 
-### Diagonal-aware Mixed Tri-Quad Tokenization
-为解决 mesh tokenization 中纯四边形表示过于严格的问题，提出混合三/四边形 tokenization：
+这样一来，远高于均值（值得学）和远低于均值（该避开）的候选拿到大权重，而挤在均值附近的候选权重趋近 0，梯度自然不会被这些"半斤八两"的样本带偏。举个具体的：一组 $N=4$ 的候选奖励若是 $\{0.9, 0.6, 0.5, 0.2\}$，均值 $\bar r=0.55$，对应优势就是 $\{+0.35, +0.05, -0.05, -0.35\}$——首尾两个被重点拉开，中间两个几乎不更新。
 
-- 四边形面通过对角线分割为两个三角形面，但共享对角线边
-- 引入 diagonal-aware token 表示对角线的存在/方向，使 decoder 能在生成时区分"真正的三角形面"和"四边形面的一半"
-- 这种混合表示兼顾了四边形的拓扑质量和三角形的灵活性
+**4. Diagonal-aware 混合三/四边形 tokenization：兼顾四边形的拓扑质量和三角形的灵活性。**
 
-### Ray-based Reward
-设计了基于射线检测的几何完整性奖励：
+纯四边形 tokenization 表达力太死，强行只用四边形面会逼出很多别扭拓扑。Mesh-Pro 改用混合三/四边形表示：四边形面沿对角线切成两个三角形面，但让它们共享这条对角线边，同时额外引入一个 diagonal-aware token 来标记对角线的存在与方向。decoder 在生成时就能凭这个 token 区分"一个真正独立的三角形面"和"某个四边形被切出来的一半",从而既享受三角形序列建模的灵活，又能在解码端把四边形重新拼回来、保住四边形占比这个拓扑质量指标。
 
-- 从多个方向发射射线穿过生成的 mesh，检测每条射线的进出交点
-- 如果射线进出奇偶性不一致（如进入但未退出），标记为几何破损
-- 结合四边形比例、面数、顶点分布等指标，综合计算奖励分数
-- 该 reward 可自动化计算，无需人工标注
+**5. Ray-based 几何完整性 reward：不需人工标注、专门抓破面的自动奖励。**
+
+mesh 质量评估没有现成的标量 reward，而破损面（broken face）又是 artist-style 生成最致命的瑕疵。本文设计了一个纯几何的 ray-based reward：从多个方向往生成的 mesh 打射线，统计每条射线穿过表面的进出交点——对一个封闭流形，射线应当成对进出，一旦奇偶性对不上（比如进去了却没出来）就说明这里有破面。把这种破损检测和四边形比例、面数、顶点分布等指标合成一个标量分数，就得到了能全自动计算、无需任何人工标注的奖励信号，正好喂给上面的异步 rollout。
 
 ## 实验关键数据
 

@@ -38,25 +38,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-WaDi 基于 VSD 框架：教师 $\epsilon_\psi$（冻结的多步扩散模型）+ 学生 $G_{\lambda}$（一步生成器）+ 伪模型 $\epsilon_\phi$（追踪学生分布）。关键创新是用 LoRaD 替代 LoRA/FT 作为学生和伪模型的适配器。
+WaDi 要解决的问题是：把一个多步扩散模型蒸馏成单步生成器时，怎样只动权重里"真正承载蒸馏信号"的那部分。它沿用 VSD（变分分数蒸馏）的三角结构——冻结的教师 $\epsilon_\psi$ 提供多步扩散的分数，一步生成器（学生）$G_{\lambda}$ 直接从噪声出图，伪模型 $\epsilon_\phi$ 实时追踪学生当前的输出分布；学生的训练梯度来自教师分数与伪模型分数之差。WaDi 没有改这套外层博弈，而是把学生和伪模型里更新权重的方式从 LoRA / 全参微调换成 LoRaD：不再对权重做加法修正，而是对权重列做低秩旋转，只调方向、不动范数。
 
 ### 关键设计
 
-1. **LoRaD（低秩权重方向旋转）**:
+**1. LoRaD：用低秩旋转只改权重方向，把范数锁死。**
 
-    - 功能：通过可学习的旋转矩阵仅调整预训练权重的方向，不改变其范数
-    - 核心思路：受 RoPE 启发，将每列权重分为 $d/2$ 个奇偶配对子空间，在每个 2D 子空间上施加独立旋转：
-    $W_{ro} = R_{AB}W = \begin{bmatrix} \cos AB & -\sin AB \\ \sin AB & \cos AB \end{bmatrix} \begin{bmatrix} W_{\text{odd}} \\ W_{\text{even}} \end{bmatrix}$
-      旋转角度矩阵 $\Theta = AB$，其中 $A \in \mathbb{R}^{d/2 \times r}$，$B \in \mathbb{R}^{r \times k}$，实现低秩参数化
-    - 设计动机：旋转矩阵是正交变换，天然保值范数不变——完美符合"方向是关键、范数可忽略"的发现。低秩分解利用了方向残差的低秩结构，大幅减少参数
-    - 实现效率：利用旋转矩阵的稀疏块对角结构，计算仅需逐元素乘法，无额外矩阵乘法开销
+这一设计直接针对前面那个观测——蒸馏信号几乎全靠方向旋转传递（把方向换成教师方向 FID 恶化 241，把范数换掉只动 0.7），而 LoRA 的加法更新 $W+\Delta W$ 会同时扰动范数和方向，反而把容量浪费在没用的范数上。LoRaD 的做法是对每一列权重施加一个正交旋转：受 RoPE 启发，把维度按奇偶配成 $d/2$ 个二维子空间，每个子空间转一个独立的角度，
 
-2. **WaDi 训练框架**:
+$$W_{ro} = R_{AB}W = \begin{bmatrix} \cos AB & -\sin AB \\ \sin AB & \cos AB \end{bmatrix} \begin{bmatrix} W_{\text{odd}} \\ W_{\text{even}} \end{bmatrix}$$
 
-    - 功能：将 LoRaD 集成到 VSD 蒸馏框架中
-    - 核心思路：学生 $G_{\lambda_{\Theta^l}}$ 用高秩 LoRaD（rank=256），伪模型 $\epsilon_{\phi_{\Theta^s}}$ 用低秩 LoRaD（rank=32）。交替优化两者
-    - 学生损失：$\nabla_{\lambda_{\Theta^l}} \mathcal{L}_{\text{wadi}} = \mathbb{E}[\omega(t)(\epsilon_\psi - \epsilon_{\phi_{\Theta^s}}) \frac{\partial G_{\lambda_{\Theta^l}}}{\partial \lambda_{\Theta^l}}]$
-    - 设计动机：学生需要更大容量适配（rank=256）充分拟合教师分布；伪模型只需追踪学生演化（rank=32）即可
+角度矩阵 $\Theta = AB$ 被低秩参数化为 $A \in \mathbb{R}^{d/2 \times r}$、$B \in \mathbb{R}^{r \times k}$，对应"方向残差保留 30% 秩就能恢复 93% 信息"的低秩观测。因为 $R$ 是正交矩阵，旋转后每列范数恒定不变，这正好对上"范数可忽略"的发现，把更新容量全压在方向上。实现上旋转矩阵是稀疏块对角的，前向只需逐元素乘加，不引入额外的稠密矩阵乘法。
+
+**2. WaDi 训练框架：学生用高秩 LoRaD、伪模型用低秩 LoRaD。**
+
+把 LoRaD 接进 VSD 后，剩下的问题是学生和伪模型该各配多大的旋转容量。两者角色不同：学生 $G_{\lambda_{\Theta^l}}$ 要把多步教师分布压成一步、需要更强的拟合能力，所以用高秩 LoRaD（rank=256）；伪模型 $\epsilon_{\phi_{\Theta^s}}$ 只是亦步亦趋地追踪学生当前分布、不需要很大容量，用低秩 LoRaD（rank=32）就够。训练时交替更新两者，学生的梯度沿用 VSD 形式、只是反向到旋转参数上：
+
+$$\nabla_{\lambda_{\Theta^l}} \mathcal{L}_{\text{wadi}} = \mathbb{E}\big[\omega(t)(\epsilon_\psi - \epsilon_{\phi_{\Theta^s}}) \tfrac{\partial G_{\lambda_{\Theta^l}}}{\partial \lambda_{\Theta^l}}\big]$$
+
+这种"学生重、伪模型轻"的非对称配比也被消融证实：学生 rank 拉到 512 反而过拟合（FID 从 10.79 升到 12.75），而伪模型 rank 主要影响保真度、对语义对齐几乎无感。
 
 ### 训练策略
 - Image-free 训练：无需真实图像，仅用 1.4M JourneyDB 文本提示

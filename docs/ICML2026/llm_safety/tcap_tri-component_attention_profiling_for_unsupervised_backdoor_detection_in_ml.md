@@ -39,27 +39,29 @@ tags:
 
 ## 方法详解
 ### 整体框架
-TCAP 是一个**纯数据清洗**框架：拿到已在被投毒数据集 $\mathcal{D}$ 上微调过的 MLLM 后，TCAP 不改模型、不要干净参考集，整套流水线分三步——(1) 推理一遍所有训练样本，按 system/vision/text 三块抽取三分量注意力向量；(2) 用 GMM 对每个 (layer, head) 的 system 分量建概率模型，按 Separation Score 选 Top-K 个 trigger-responsive heads；(3) 用 EM-based Dawid–Skene 投票把这些 heads 的二值判断聚合为后验概率 $p_i$，把 $p_i>0.5$ 的样本剔除，得到 $\mathcal{D}_{\text{clean}}$，再用它重训 MLLM 即可清除后门。
+TCAP 是一个**纯数据清洗**框架：拿到已在被投毒数据集 $\mathcal{D}$ 上微调过的 MLLM 后，它不改模型、不要干净参考集，先把所有训练样本推理一遍抽出 system/vision/text 三分量注意力，再用 GMM 从海量注意力头里挑出极少数真正暴露后门的"敏感头"，最后让这些头像一群有噪声的标注员一样投票，用 EM 聚合出每个样本是 poison 的后验概率，把可疑样本剔掉得到 $\mathcal{D}_{\text{clean}}$，重训一次即可清除后门。
 
 ### 关键设计
 
-1. **三分量注意力分解 + Attention Allocation Divergence 指纹**:
+**1. 三分量注意力分解：把后门指纹从"视觉熵"换到"跨组件质量再分配"。**
 
-    - 功能：把"首个生成 token 对所有前置 token 的注意力"按输入序列归属切成 system / vision / text 三块，作为后门检测的原子特征。
-    - 核心思路：对每个 (layer $l$, head $h$)，记原始注意力 $A^{l,h}=\{a_i^{l,h}\}_{i=1}^N$，定义三分量向量 $\bm{\alpha}^{l,h}=(\alpha_{\text{sys}}^{l,h},\alpha_{\text{vis}}^{l,h},\alpha_{\text{txt}}^{l,h})$，其中 $\alpha_c^{l,h}=\sum_{i\in S_c}a_i^{l,h}$。理论上证明熵无法区分全局触发（见 Eq. 4/5 推导），而三分量"质量再分配"可以：被触发样本在深层会出现 Anomaly 1（system↓, vision↑，抽触发、绕过安全约束）和 Anomaly 2（system↑, vision↓，把触发信号留在残差流后接管输出结构）两类极化。
-    - 设计动机：(a) 把检测从"视觉内部 spatial 分布"提升到"跨模态功能划分"，自然兼容文本触发；(b) system 指令是攻击者改不动的"不动点"，天然抗噪；(c) 只看深层是因为浅层是局部特征提取、深层才做跨模态决策融合，后门走捷径必然落在深层。
+BYE 这类前作只看视觉注意力的空间熵，对全局/文本触发器整个失灵；TCAP 的破局点是换坐标系——不再看"视觉内部怎么分布"，而是把首个生成 token 对所有前置 token 的注意力按输入序列的功能归属切成三块。对每个 (layer $l$, head $h$)，从原始注意力 $A^{l,h}=\{a_i^{l,h}\}_{i=1}^N$ 聚合出三分量向量 $\bm{\alpha}^{l,h}=(\alpha_{\text{sys}}^{l,h},\alpha_{\text{vis}}^{l,h},\alpha_{\text{txt}}^{l,h})$，其中 $\alpha_c^{l,h}=\sum_{i\in S_c}a_i^{l,h}$ 是落在 system / vision / text 三段 token 上的注意力质量之和。
 
-2. **GMM + Separation Score 自适应挑选 trigger-responsive heads**:
+这一分解之所以是个通用指纹，靠三点支撑：其一，把检测从"视觉内部 spatial 分布"提升到"跨模态功能划分"后，文本触发器也自然纳入了同一把尺子；其二，system 指令是攻击者改不动的"不动点"，可以当成抗噪基线；其三，浅层只做局部特征提取、深层才做跨模态决策融合，后门走捷径必然落在深层，所以只需盯住深层。在这个视角下，被触发样本会在深层暴露两类互补极化——Anomaly 1（system↓、vision↑，用来抽取触发特征并绕过安全约束）和 Anomaly 2（system↑、vision↓，把触发信号留在残差流后接管输出结构），这种 Attention Allocation Divergence 就是与触发模态无关的后门指纹。理论上作者还证明熵无法区分全局触发（patch 触发器的熵上界 $\alpha_{\text{vis}}\log(|S_{\text{trig}}|/\alpha_{\text{vis}})$ 远低于全局触发器的 $\alpha_{\text{vis}}\log(T/\alpha_{\text{vis}})$，后者趋近最大熵），而三分量质量再分配不受此限。
 
-    - 功能：从所有 (layer, head) 中无监督地找出极少数真正暴露后门的"敏感头"，避免对全部头平均稀释信号。
-    - 核心思路：对每个 head 收集训练集上 $\{\alpha_{\text{sys},i}^{l,h}\}_{i=1}^M$，先做 min-max 归一化得 $\tilde{\alpha}_{\text{sys},i}^{l,h}$；再用 AIC 在 $K\in\{1,...,5\}$ 中自适应选最优分量数 $K^*$ 拟合 GMM $\sum_{k=1}^{K^*}\pi_k\mathcal{N}(\mu_k,\sigma_k^2)$。把组件分成少数派 target group $\mathcal{G}_t$（疑似后门模态）和多数派 background group $\mathcal{G}_b$，用两组分布的重叠面积的倒数定义 Separation Score：$\text{SS}^{l,h}=\bigl(\int\min(\sum_{k\in\mathcal{G}_t}\pi_k\phi_k,\sum_{k\in\mathcal{G}_b}\pi_k\phi_k)dx+\epsilon\bigr)^{-1}$。只在最后 $L_{\text{sens}}$ 层里按 SS 取 Top-$H_{\text{sens}}$ 个头组成 $\mathcal{H}_{\text{sens}}$。
-    - 设计动机：投毒样本极少（10%），如果强行假设 bimodal，次峰常被淹没；自适应 $K^*$ 加 SS 这把"分布可分性"的尺子，能在分布形状未知的情况下稳健地挑出"clean 与 poison 真正可分"的少数头，避免噪声头主导。
+**2. GMM + Separation Score：无监督地挑出真正可分的少数敏感头。**
 
-3. **EM-based Dawid–Skene 投票聚合**:
+投毒样本只占 10%，如果对全部注意力头取平均，微弱的后门信号会被海量噪声头稀释掉，所以必须先定位"clean 与 poison 真正可分"的极少数头。TCAP 对每个 head 收集训练集上的 system 分量 $\{\alpha_{\text{sys},i}^{l,h}\}_{i=1}^M$，先 min-max 归一化得 $\tilde{\alpha}_{\text{sys},i}^{l,h}$，再用 AIC 在 $K\in\{1,...,5\}$ 里自适应选最优分量数 $K^*$ 拟合 GMM $\sum_{k=1}^{K^*}\pi_k\mathcal{N}(\mu_k,\sigma_k^2)$——之所以不直接假设 bimodal，是因为投毒比例太低时强行设两峰，次峰常被主峰淹没，自适应 $K^*$ 才能在分布形状未知时稳住。
 
-    - 功能：把 $\mathcal{H}_{\text{sens}}$ 中各头给出的二值判断融合成单一后验概率，输出可剔除的可疑样本集合。
-    - 核心思路：对每个敏感头 $(l,h)$ 和样本 $i$，用 GMM 后验 $\gamma_{i,k}^{l,h}$ 算"属于 target 组件的累计概率"，超阈值 $\tau_{\text{vote}}$ 则投一票：$v_i^{l,h}=\mathbf{1}[\sum_{k\in\mathcal{G}_t}\gamma_{i,k}^{l,h}>\tau_{\text{vote}}]$。把每个敏感头看作一个有噪声的 annotator，用 Dawid–Skene EM 迭代联合估计"每个样本是否真为 poison 的隐标签"与"每个 head 的混淆矩阵"，得到最终后验 $p_i$，$p_i>0.5$ 即标记为 poison 并剔除。
-    - 设计动机：朴素 majority vote 会把可信头和噪声头一视同仁；Dawid–Skene 能学到"哪些头更可信"，等价于给每个头一个可学习的可靠度权重，对"敏感头数量少且彼此异质"的现实更鲁棒。
+拟合后把组件按权重切成少数派 target group $\mathcal{G}_t$（疑似后门模态）和多数派 background group $\mathcal{G}_b$，并用两组分布重叠面积的倒数定义可分性指标 Separation Score：
+
+$$\text{SS}^{l,h}=\Bigl(\int\min\bigl(\sum_{k\in\mathcal{G}_t}\pi_k\phi_k,\ \sum_{k\in\mathcal{G}_b}\pi_k\phi_k\bigr)dx+\epsilon\Bigr)^{-1}$$
+
+两组分布越分得开、重叠越小，$\text{SS}$ 越高。只在最后 $L_{\text{sens}}$ 层里按 SS 取 Top-$H_{\text{sens}}$ 个头组成敏感头集合 $\mathcal{H}_{\text{sens}}$，等于用"分布可分性"这把尺子自动筛掉噪声头、只留下后门真正暴露的位置。
+
+**3. EM-based Dawid–Skene 投票：把异质的弱检测器融成一个可靠后验。**
+
+挑出来的敏感头彼此异质、可信度不一，朴素 majority vote 会把可信头和噪声头一视同仁，结果被拖累。TCAP 把每个敏感头当成一个有噪声的标注员：对样本 $i$，用 GMM 后验 $\gamma_{i,k}^{l,h}$ 算它"属于 target 组件"的累计概率，超阈值 $\tau_{\text{vote}}$ 就投一票 $v_i^{l,h}=\mathbf{1}[\sum_{k\in\mathcal{G}_t}\gamma_{i,k}^{l,h}>\tau_{\text{vote}}]$。再用 Dawid–Skene EM 迭代，联合估计"每个样本是否真为 poison 的隐标签"和"每个 head 的混淆矩阵"，等价于给每个头学一个可靠度权重，让更准的头说话更算数。最终输出后验 $p_i$，把 $p_i>0.5$ 的样本标为 poison 并剔除，得到 $\mathcal{D}_{\text{clean}}$。
 
 ### 损失函数 / 训练策略
 TCAP 本身不引入新损失，只是清洗数据集的预处理器；清洗后用标准 $\mathcal{L}_c$ 在 $\mathcal{D}_{\text{clean}}$ 上重新 LoRA 微调即可。论文用 InternVL2.5-8B / LLaVA-NeXT-8B / Qwen3-VL-8B 配 LoRA，统一目标输出 "Backdoor Attack!"、10% 投毒率作为评测协议。

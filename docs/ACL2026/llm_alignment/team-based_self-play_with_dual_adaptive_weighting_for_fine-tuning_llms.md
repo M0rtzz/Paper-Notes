@@ -48,23 +48,22 @@ TPAW 的直觉很像把单人训练赛变成队伍赛。普通 SPIN 只让当前
 最后，TPAW 不直接平均所有 player 的 loss，而是先对目标响应做权重 $\alpha$，再对不同 player 做权重 $\beta$，用加权 logistic loss 更新 policy。迭代若干轮后得到最终 aligned policy。
 
 ### 关键设计
-1. **Team-Based Self-Play 框架**:
 
-	- 功能：把单一当前模型的 self-play 扩展成由最近三个历史 checkpoint 组成的对手队伍和主玩家队伍。
-	- 核心思路：opponent team 负责在 SFT prompt 上生成负样本，main player team 负责判断目标答案和生成答案的相对优劣；训练数据来自最近三轮三元组，避免某一轮合成数据完全主导优化。
-	- 设计动机：历史 checkpoint 记录了模型从弱到强的训练轨迹，能提供比单个当前模型更丰富的错误分布，也能缓解自训练中常见的偏差累积。
+**1. Team-Based Self-Play 框架：用历史 checkpoint 组队，替代只和当前自己比较。**
 
-2. **Adaptive Target Response Weighting**:
+普通 SPIN 只让当前模型生成负样本、再训练当前模型去区分人类答案和自己答案，问题是一旦某一轮合成数据有偏差，后续迭代会顺着同一种错误模式越滚越大。TPAW 把单人训练赛改成队伍赛：保留最近三个历史 checkpoint，让它们既组成 opponent team（在 SFT prompt 上生成负样本），又组成 main player team（判断目标答案与生成答案的相对优劣），训练数据则取最近三轮三元组 $D_O=D_t\cup D_{t-1}\cup D_{t-2}$。这样负样本来自训练轨迹的多个阶段，不会被当前模型的单一错误模式主导；而历史 checkpoint 记录的“从弱到强”轨迹本身就是一份廉价监督，能给优化提供比单模型更丰富的对比分布，缓解自训练里常见的偏差累积。
 
-	- 功能：当目标答案在某个 player 下的 reward 不够高时，自动提高目标响应项的权重。
-	- 核心思路：若 $P_j(x,y)\le 0$，说明当前模型相对历史模型并没有更偏好目标答案，于是将该目标响应权重设为 $\eta>1$；否则权重为 1。最终 loss 变成比较 $\alpha_j P_j(x,y)$ 和 $P_j(x,y^{gen})$。
-	- 设计动机：DPO 式自训练可能同时降低正负样本概率，使模型远离 SFT 目标分布；目标响应加权相当于在发现漂移时把训练重心拉回真实答案。
+**2. Adaptive Target Response Weighting：发现目标分布漂移时，把训练重心拉回真实答案。**
 
-3. **Adaptive Main Player Weighting**:
+DPO 式自训练有个隐蔽副作用——它同时推正样本、压负样本，到后期连目标答案的概率也一起下降，模型悄悄偏离 SFT 目标分布。TPAW 用一个按样本触发的权重 $\alpha$ 来纠偏：如果某个 player 给出 $P_j(x,y)\le 0$，意味着当前模型相对历史模型并没有更偏好目标答案（即出现了漂移迹象），就把该目标响应的权重设为 $\eta>1$（实用值 $\eta=6$），否则保持为 1。于是这一项的比较从 $P_j(x,y)$ 对 $P_j(x,y^{gen})$ 变成 $\alpha_j P_j(x,y)$ 对 $P_j(x,y^{gen})$——只在检测到目标 reward 走低时才额外放大对真实答案的拉力，相当于给训练装了一个“偏离即回正”的负反馈。
 
-	- 功能：根据每个 player 当前对样本的判别难度，动态分配不同 checkpoint 的训练贡献。
-	- 核心思路：先计算 margin $m_j=P_j(x,y)-P_j(x,y^{gen})$，再用 $\beta_j=\frac{e^{-\gamma m_j}}{\sum_k e^{-\gamma m_k}}$ 得到 player 权重；margin 越小，说明该 player 越分不清正负样本，训练时权重越大。
-	- 设计动机：最近 checkpoint 可能还没充分训练，而较早 checkpoint 可能已经在对应分布上过拟合；按样本动态加权比静态平均更能把学习预算放到薄弱判断上。
+**3. Adaptive Main Player Weighting：按判别难度动态分配各 checkpoint 的训练贡献。**
+
+最近的 checkpoint 可能还没训够、判别力弱，较早的 checkpoint 又可能在对应分布上过拟合，简单平均所有 player 的 loss 会把学习预算浪费在那些已经分得很开的样本上。TPAW 先对每个 player 算出 margin $m_j=P_j(x,y)-P_j(x,y^{gen})$，再用 softmax 形式分配权重
+
+$$\beta_j=\frac{e^{-\gamma m_j}}{\sum_k e^{-\gamma m_k}}$$
+
+（实用值 $\gamma=0.5$）。margin 越小说明这个 player 越分不清正负样本，对应权重就越大，于是优化会自动把注意力压到那些“当前最薄弱的判断”上。比起静态平均，这种按样本、按 player 的动态加权能让多 checkpoint 的收益真正落到刀刃上，而不是被强 player 稀释。
 
 ### 损失函数 / 训练策略
 TPAW 使用 logistic loss $\ell(t)=\log(1+\exp(-t))$，对每个 player 优化 $\ell(\alpha_j P_j(x,y)-P_j(x,y^{gen}))$，再用 $\beta_j$ 汇总成队伍级目标。实验中 opponent/main player 默认使用最近三轮 checkpoint；超参数分析给出的实用设置是 $\eta=6$、$\gamma=0.5$。第 0 轮没有历史模型时跳过缺失项，第 1 轮只使用可用的两个 checkpoint，之后进入完整三玩家队伍训练。

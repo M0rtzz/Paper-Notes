@@ -46,23 +46,17 @@ SAGE 分为两个阶段。预处理阶段先把表格数据转换为文本序列
 
 ### 关键设计
 
-1. **value-aware pseudo-feature 离散化**:
+**1. value-aware pseudo-feature 离散化：把依赖建模的粒度从"特征级"下沉到"取值级"。**
 
-    - 功能：把原始特征变成能表达取值区间或类别条件的二值 pseudo-features。
-    - 核心思路：数值特征按 Freedman-Diaconis rule 自动确定 bin 数，并设置上限 16 控制稀疏度；类别特征则把每个类别作为一个 pseudo-feature。每条记录最终被映射成一组激活的二值 pseudo-features。
-    - 设计动机：静态特征图只能描述 feature-level 关系，无法表达“某个特定值改变依赖结构”。pseudo-feature 把依赖建模粒度下沉到 value-level，使互信息能捕捉条件相关性。
+静态特征图只能说"特征 A 和特征 B 相关"，却没法表达"贷款目的取教育还是购房时，年龄与收入的关联完全不同"这种 value-conditioned 的依赖。SAGE 的破题点是先把每个原始特征拆成一组二值 pseudo-feature：数值特征按 Freedman-Diaconis rule 自动定 bin 数、并设上限 16 来控制稀疏度，类别特征则每个类别独占一个 pseudo-feature。这样一条记录就被映射成一组被激活的二值 pseudo-feature，依赖的最小单元从"某个特征"变成"某个特征落在某个取值区间"，互信息于是能直接捕捉到条件相关性，而不再被特征层面的粗粒度抹平。
 
-2. **互信息稀疏依赖图**:
+**2. 互信息稀疏依赖图：用一个轻量、无监督的统计量过滤掉 dense attention 里的伪相关边。**
 
-    - 功能：估计当前已生成上下文中哪些 feature-value 对真正对目标特征有信息量。
-    - 核心思路：对任意两个 pseudo-features 计算二值激活之间的 mutual information，形成依赖矩阵。由于概率估计基于 pseudo-feature 激活而不是原始数值尺度，方法能统一处理数值和类别变量。
-    - 设计动机：互信息提供了一个轻量、可解释、无需额外监督的依赖度量，可把 dense attention 中的无关边过滤掉。
+LLM 生成表格行时通常把所有历史 feature-value 对一股脑塞进上下文、靠 dense attention 自己理关系，结果常被表面共现误导，生成逻辑不一致的记录。SAGE 转而对任意两个 pseudo-feature 计算其二值激活之间的 mutual information，构成一张依赖矩阵。由于概率估计建立在 pseudo-feature 的激活上、而非原始数值尺度，数值与类别变量能被统一处理。互信息本身可解释、不需额外监督，相当于给上下文之间的边判了一次"信息量体检"，把无关边剪掉，为后面"生成某个特征时只看真正相关的上下文"打好基础。
 
-3. **Feature Selector 与 Logit Correction**:
+**3. Feature Selector 与 Logit Correction：把依赖图真正接进采样过程，且提供显式/隐式两套可切换的接法。**
 
-    - 功能：把互信息图真正接入 LLM 采样过程。
-    - 核心思路：Feature Selector 对目标特征只保留互信息高于阈值的 prefix pseudo-features，阈值默认设为训练集互信息中位数；Logit Correction 计算当前 prefix 对目标特征的平均互信息，与训练集平均互信息比较，若 prefix 信息量高则锐化目标 logits，反之平滑输出分布。
-    - 设计动机：显式筛选适合噪声较多、依赖稀疏的高维表格；隐式修正更适合依赖较连续、删除上下文可能损失信息的场景。两者提供了可按数据特点切换的控制方式。
+光有依赖图还不够，得让它在每一步生成时起作用。SAGE 给出两种互补策略。Feature Selector 是显式硬过滤：生成目标特征时，只保留与它互信息高于阈值（默认取训练集互信息的中位数）的 prefix pseudo-feature，其余上下文直接删掉。Logit Correction 是隐式软调节：不动上下文，而是算出当前 prefix 对目标特征的平均互信息，与训练集平均互信息比较——prefix 信息量高就锐化目标 logits、让模型更自信，信息量低则平滑输出分布、避免被弱信号带偏。前者适合噪声多、依赖稀疏的高维表格，后者更适合依赖连续、删上下文会丢信息的场景，使用者可按数据形态选用。
 
 ### 损失函数 / 训练策略
 训练阶段沿用 GReaT 风格的 LLM 表格建模：每行被写成多个“feature is value”短语，优化 value-related token 的负对数似然。作者还使用 GraDe 的 permutation strategy，随机打乱 feature-value 短语顺序，减少固定列顺序带来的伪依赖。实验设置中 batch size 为 8，AdamW 优化器，学习率 1e-4；采样采用 nucleus sampling，$p=0.95$，temperature 为 1.0，最大生成长度设为训练集中最大序列长度。

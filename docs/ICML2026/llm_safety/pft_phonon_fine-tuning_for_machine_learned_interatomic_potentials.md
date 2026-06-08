@@ -41,34 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一个在 MPtrj 等大规模轨迹数据上预训练好的 MLIP $\hat{E}_\theta(\mathbf{r})$（本文主用 Nequix MP，并在 MACE-MP-0、Nequix OAM 上验证），加上一个声子数据集（MDR Phonon，约 8.5k 训练材料、30 万有限位移 DFT 计算）和上游 MPtrj 数据。
+PFT 的目标很直接：拿一个已经在 MPtrj 等大规模轨迹数据上预训练好的 MLIP $\hat{E}_\theta(\mathbf{r})$（本文主用 Nequix MP，并在 MACE-MP-0、Nequix OAM 上复刻），把它在平衡构型附近被"过软化"的 PES 曲率掰正，同时不丢掉原本的能力。它额外用到一个声子数据集（MDR Phonon，约 8.5k 训练材料、30 万有限位移 DFT 计算）提供二阶力常数标签，再保留一份上游 MPtrj 数据用于防遗忘。
 
-训练流程：把每个声子超胞结构 $\to$ 随机抽一个原子 $b$ 和笛卡尔方向 $j$ $\to$ 构造单位向量 $\mathbf{v}$ 只在 $(b,j)$ 处为 1 $\to$ 用 HVP 算出对应的 Hessian 列 $\nabla^2_\mathbf{r}\hat{E}\,\mathbf{v}$ $\to$ 与 DFT 力常数那一列做 MAE，加上 EFS 三项构成 $\mathcal{L}_\text{PFT}$；每走 1 步 PFT，再走 $K=4$ 步上游 MPtrj 的 EFS 微调（Algorithm 1）。
-
-输出：仍然是同一个 $\hat{E}_\theta$，但 PES 曲率与 DFT 一致；下游推理可以用有限位移或解析 AD 任一方式拿全力常数，结果几乎重合。
+训练时每个声子超胞结构会被随机抽一个原子 $b$ 和笛卡尔方向 $j$，构造一个只在 $(b,j)$ 处为 1 的单位向量 $\mathbf{v}$，用一次 Hessian-vector product 算出对应的 Hessian 列 $\nabla^2_\mathbf{r}\hat{E}\,\mathbf{v}$，与 DFT 力常数的同一列做 MAE，连同 EFS 三项一起组成 $\mathcal{L}_\text{PFT}$；每走 1 步这样的 PFT，再补走 $K=4$ 步上游 MPtrj 的标准 EFS 微调（Algorithm 1）。微调后产出的仍是同一个 $\hat{E}_\theta$，只是 PES 曲率与 DFT 对齐了，下游推理用有限位移或解析 AD 取全力常数结果几乎重合。
 
 ### 关键设计
 
-1. **Hessian 列对齐损失 $\mathcal{L}_\Phi$ + 随机采样**：
+**1. Hessian 列对齐损失 $\mathcal{L}_\Phi$ + 随机单列采样：把二阶曲率变成可监督的训练目标。**
 
-    - 功能：把 PES 二阶曲率显式塞进训练目标，让模型学到"力对位置的导数"而不是只学"力本身"。
-    - 核心思路：$\mathcal{L}_\Phi = \frac{1}{3N_a}\sum_{a,i}\mathbb{E}_{b,j}\,|\partial^2\hat{E}/\partial r_{a,i}\partial r_{b,j} - \Phi_{aibj}|$，每个 batch 内每个结构只均匀采样一个 $(b,j)$，等价于只比对 Hessian 的一列；因为期望与对完整 Hessian 求 MAE 等价，所以仍然是 unbiased gradient。E(3)-等变架构使得力常数本身有强对称冗余，单列采样在统计意义上已经覆盖大部分自由度。
-    - 设计动机：作者实验发现"直接在 phonon displacement 数据上做 EFS 微调"反而比基础模型还烂（Table 1, Nequix MP fine-tune on disp. 的 $\omega_\text{max}$ 误差 182 vs 基础模型 24）——说明位移点的 EFS 信号不足以矫正曲率，必须把 Hessian 当成 first-class supervision target。
+声子色散、振动熵、热导率这些性质取决于二阶力常数 $\Phi$，而 EFS loss 只学"力本身"、对"力随位置怎么变"几乎没有直接约束——作者甚至发现直接在 phonon displacement 数据上做 EFS 微调比基础模型还烂（Table 1，$\omega_\text{max}$ 误差从 24 飙到 182），说明位移点的 EFS 信号根本替代不了曲率监督，必须把 Hessian 当成 first-class 的监督目标。PFT 的做法是直接拿能量对坐标的二阶导去对齐 DFT 力常数：$\mathcal{L}_\Phi = \frac{1}{3N_a}\sum_{a,i}\mathbb{E}_{b,j}\,|\partial^2\hat{E}/\partial r_{a,i}\partial r_{b,j} - \Phi_{aibj}|$。
 
-2. **Hessian-Vector Product (HVP) 实现 $O(N)$ 训练**：
+完整 Hessian 是 $3N\times 3N$，超胞动辄几百上千原子根本算不动，于是每个结构每步只均匀采样一个 $(b,j)$、等价于只比对 Hessian 的一列。因为这个采样的期望恰好等于对完整 Hessian 求 MAE，梯度是无偏的；再加上 E(3)-等变架构让力常数本身有大量对称冗余，单列采样在统计意义上已覆盖大部分自由度，既省算力又不牺牲监督质量。
 
-    - 功能：在不显式构造 $3N\times 3N$ Hessian 的前提下，单次反传内拿到任一 Hessian 列的梯度。
-    - 核心思路：利用 Pearlmutter 1994 的技巧，$\nabla^2_\mathbf{r}\hat{E}\,\mathbf{v} = \nabla_\mathbf{r}((\nabla_\mathbf{r}\hat{E})^\top \mathbf{v})$，在 JAX 中就是 `jax.jvp(jax.grad(energy), (pos,), (v,))[1]`——一个 reverse-mode 求力，再套一个 forward-mode JVP 拿对力的方向导数；整个 batch 把多个结构拼成一张不连通的大图，把各结构采样的 $\mathbf{v}$ 拼成一个向量，对总能量做一次 HVP 就能同时算完所有结构的损失。优化器的更新还要再对 HVP 求一次梯度，构成"triple-backward"。
-    - 设计动机：完整 Hessian 在大超胞下显存放不下；HVP 把每步从 $O(N^2)$ 降到 $O(N)$，使得在 A100 上对几百原子超胞做 Hessian 监督训练成为现实，整个 PFT 仅需 35 A100 小时（co-training）/ 15 A100 小时（无），远低于预训练的 100 A100 小时。
+**2. Hessian-Vector Product 把单步复杂度从 $O(N^2)$ 压到 $O(N)$：让大超胞上的曲率监督真的训得起来。**
 
-3. **上游 EFS Co-training 防灾难性遗忘**：
+光有 $\mathcal{L}_\Phi$ 还不够——显式构造整张 Hessian 在大超胞下显存直接爆掉。PFT 借用 Pearlmutter 1994 的 HVP 技巧绕开它：$\nabla^2_\mathbf{r}\hat{E}\,\mathbf{v} = \nabla_\mathbf{r}((\nabla_\mathbf{r}\hat{E})^\top \mathbf{v})$，在 JAX 里就是 `jax.jvp(jax.grad(energy), (pos,), (v,))[1]`——先 reverse-mode 求力，再套一层 forward-mode JVP 拿到力沿 $\mathbf{v}$ 方向的导数，整列 Hessian 一次反传就出来，全程不落地任何 $N^2$ 大小的矩阵。实现上把一个 batch 里多个结构拼成一张不连通的大图、把各自采样的 $\mathbf{v}$ 拼成一个向量，对总能量做一次 HVP 就同时算完所有结构的损失；优化器更新还要再对 HVP 求一次梯度，构成"triple-backward"。
 
-    - 功能：在 PFT 过程中穿插上游 MPtrj 的 EFS 训练步，保留模型在非平衡构型（弛豫轨迹、能量/稳定性预测）上的能力。
-    - 核心思路：每做 1 步 PFT，紧接着做 $K=4$ 步在 $\mathcal{D}_\text{up}$（MPtrj）上的标准 EFS 更新（Algorithm 1，第 4-7 行）；$K$ 通过同时监控两边验证集挑选。声子数据天然全是平衡构型，单独训练会让 PES 在非平衡区域漂移，体现为 MPtrj 验证集上能量/力/应力误差显著上升（Fig. 3）。
-    - 设计动机：作者实测无 co-training 时 PFT 让 MPtrj 上的 EFS 误差明显变差，引入 $K=4$ 的 co-training 后这部分退化几乎消失，而 Hessian MAE 只略微回升一点点；在 Matbench Discovery 稳定性分类上，co-training 把性能掉点压在 1% 以内。
+正是这一步把每训练步从 $O(N^2)$ 降到 $O(N)$，使几百原子超胞的 Hessian 监督在单卡 A100 上成为现实——整个 PFT 只花 35 A100 小时（含 co-training）或 15 A100 小时（不含），不到预训练 100 A100 小时的三分之一。
+
+**3. 上游 EFS Co-training：用最小代价压住灾难性遗忘。**
+
+声子数据天然全是平衡构型，只盯着它训练会让 PES 在非平衡区域漂移——表现为 MPtrj 验证集上能量/力/应力误差显著上升（Fig. 3），即模型把原本会做的弛豫轨迹和稳定性预测给忘了。PFT 的应对极其朴素：每做 1 步 PFT，紧接着做 $K=4$ 步在上游 $\mathcal{D}_\text{up}$（MPtrj）上的标准 EFS 更新（Algorithm 1 第 4-7 行），$K$ 由同时监控两边验证集挑出。
+
+实测无 co-training 时 PFT 会让 MPtrj 上的 EFS 误差明显变差，加上 $1{:}4$ 的混训后这部分退化几乎消失、而 Hessian MAE 只略微回升一点点；在 Matbench Discovery 稳定性分类上，co-training 把掉点压在 1% 以内。相比 LoRA、EWC 这类保旧知识的方法，这里只是按固定比例掺上游数据，工程上极简却把遗忘几乎抹平。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_\text{PFT} = \lambda_E\mathcal{L}_E + \lambda_F\mathcal{L}_F + \lambda_\sigma\mathcal{L}_\sigma + \lambda_\Phi\mathcal{L}_\Phi$（前三项沿用 EFS，能量/应力用 MAE、力用 $\ell_2$）。声子结构本身的力和应力按"已弛豫到平衡"近似为 0；超胞能量取单胞能量乘以重复次数。Co-training 比 $K=4$；PFT 共 200 epoch；同样配方在 MACE-MP-0、Nequix OAM 上无需调参直接复用。
+总损失 $\mathcal{L}_\text{PFT} = \lambda_E\mathcal{L}_E + \lambda_F\mathcal{L}_F + \lambda_\sigma\mathcal{L}_\sigma + \lambda_\Phi\mathcal{L}_\Phi$：前三项沿用 EFS（能量/应力用 MAE、力用 $\ell_2$），第四项即上面的 Hessian 对齐。声子结构本身的力和应力按"已弛豫到平衡"近似为 0，超胞能量取单胞能量乘以重复次数。Co-training 比 $K=4$，PFT 共 200 epoch，同一套配方在 MACE-MP-0、Nequix OAM 上无需调参直接复用。
 
 ## 实验关键数据
 

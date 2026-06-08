@@ -38,35 +38,32 @@ tags:
 **核心 idea**：用"探索-恢复共扩展"的在线轨迹树代替人工反思数据，让 agent 自己生成的失败-恢复对，去训自己的鲁棒性。
 
 ## 方法详解
-RoTS 整体由两块组成：(i) GUI-RobustEval 评测构造，(ii) RoTS 数据合成 pipeline。前者是评测协议，后者是核心方法。
 
 ### 整体框架
-**评测侧 GUI-RobustEval**：从 12 个 SOTA agent 在 OSWorld 上的 1.5k 失败轨迹里，由人工标定 root-cause step 和错误类型，归纳出 11 类策略诱发错误、4 档错误深度 $d \in \{0,1,3,5\}$。每个测试 case = 一段被人工修干净的正确前缀 + root-cause 步 + 接下来 $d$ 步错误执行 → 把环境快照重放到这个"已经犯了错"的状态，再让被测 agent 接手收尾。报告两个互补指标：*Error-Awareness Rate*（接手第一步是否意识到出错了，VLM 判）+ *Post-Error Success Rate*（最终能否完成任务）。
+这篇要解决的是"GUI agent 会陷在自己造的错里出不来"，办法是评测和数据两端同时缝合错误类型、错误时程两条 gap。评测侧 GUI-RobustEval 从 12 个 SOTA agent 在 OSWorld 上的 1.5k 失败轨迹里，由人工标定 root-cause step 和错误类型，归纳出 11 类策略诱发错误、4 档错误深度 $d \in \{0,1,3,5\}$；每个测试 case 是"一段人工修干净的正确前缀 + root-cause 步 + 接下来 $d$ 步错误执行"，把环境快照重放到这个已经犯了错的状态后再让被测 agent 接手收尾，报告 *Error-Awareness Rate*（接手第一步是否意识到出错，VLM 判）和 *Post-Error Success Rate*（最终能否完成）两个互补指标。
 
-**合成侧 RoTS**：在 20k 个有可复现快照的任务上建轨迹树 $T=(O,A,E)$，节点是 screenshot，边是 action。初始化先并行跑 $N=4$ 条 rollout，然后迭代 $K=32$ 轮 "explore-recovery co-expansion"，每轮按外层 reward model $\mathcal{R}$ 把 $T$ 切成成功子树 $T^{\text{corr}}$ 和失败子树 $T^{\text{fail}}$，两侧各扩展一次。最后对所有 rollout 做后处理筛选，组装成 800k 训练样本去 SFT Qwen2.5-VL-7B/32B。每个训练样本是 $x_i=(u, h_{i-1}, o_i, a_i)$，只对 $a_i$ 的 token 算 NLL，避免把噪声历史也学进去。
+数据侧 RoTS 则在 20k 个有可复现快照的任务上建轨迹树 $T=(O,A,E)$（节点是 screenshot，边是 action）：先并行跑 $N=4$ 条 rollout 初始化，再迭代 $K=32$ 轮 "explore-recovery co-expansion"，每轮按外层 reward model $\mathcal{R}$ 把树切成成功子树 $T^{\text{corr}}$ 和失败子树 $T^{\text{fail}}$ 各扩展一次——前者主动找新错误，后者合成恢复轨迹。最后做后处理筛选，组装成 800k 训练样本去 SFT Qwen2.5-VL-7B/32B。
 
 ### 关键设计
 
-1. **GUI-RobustEval：从真实失败里反推可控错误前缀**:
+**1. GUI-RobustEval：从真实失败里反推可控的错误前缀。**
 
-    - 功能：构造一个能按"错误类型 × 错误深度"做细粒度诊断的鲁棒性 benchmark，让评测信号直接指向"哪类错认不出""第几步以后救不回来"。
-    - 核心思路：先从 12 个 SOTA agent 的 1.5k 失败轨迹里挖出 root-cause step 和错误类型分布，再把每个 case 标准化成 "纯净前缀 + root-cause + 后续 $d$ 步" 的可执行模板（统一成 action summary + PyAutoGUI，测试时再转回各 agent 原生格式）。评测时从系统快照重放前缀到指定深度 $d \in \{0,1,3,5\}$，把 agent 直接扔进"已经错了 $d$ 步"的状态，看它能否意识到 + 修复。
-    - 设计动机：和现有 GUI-Reflection、GUI-Robust、D-GARA、RedTeamCUA 这些 benchmark 比，它们要么是合成扰动、要么是环境扰动、要么是对抗攻击，全都不是策略自己造的错。GUI-RobustEval 的 1216 个 case 全部来自真实 SOTA agent 的失败轨迹，错误深度可控这一点更让"长程恢复"第一次有了量化坐标——Fig. 3(d) 显示几乎所有 agent 的成功率都随深度单调下降，说明这是个被严重低估的维度。
+既有 benchmark（GUI-Reflection、GUI-Robust、D-GARA、RedTeamCUA）衡量的都是合成扰动、环境扰动或对抗攻击，没有一个是策略自己造的错，于是评测信号和真实失败分布对不上。GUI-RobustEval 的做法是先从 12 个 SOTA agent 的 1.5k 失败轨迹里挖出 root-cause step 和错误类型分布，再把每个 case 标准化成"纯净前缀 + root-cause + 后续 $d$ 步"的可执行模板（统一成 action summary + PyAutoGUI，测试时再转回各 agent 原生格式）；评测时从系统快照重放前缀到指定深度 $d \in \{0,1,3,5\}$，把 agent 直接扔进"已经错了 $d$ 步"的状态，看它能否意识到并修复。这样 1216 个 case 全部源自真实 SOTA agent 失败，且第一次把错误深度抽成可控的一阶变量——Fig. 3(d) 显示几乎所有 agent 的成功率都随深度单调下降，说明长程恢复是个被严重低估的维度。
 
-2. **脆弱度驱动探索 FDE：在成功子树里主动找新错误**:
+**2. 脆弱度驱动探索 FDE：在成功子树里主动找新错误。**
 
-    - 功能：在 $T^{\text{corr}}$ 上挑出"看似走对了但其实很容易翻车"的节点，从那里继续 rollout，制造新的失败分支，专门解决"错误类型覆盖度不够"的问题。
-    - 核心思路：对每个节点 $o_i$ 用 pre-operative 进度评分器 $\mathcal{R}_p$ 从策略采 $N$ 个候选 action，平均得到 step-level 成功率 $r_i = \tfrac{1}{N}\sum_n r_{i,n}$。然后定义脆弱度分 $f_i = (1-r_i) + c\sqrt{\ln(V^f_{p(i)}+1)/(V^f_i+1)}$（UCB 形式，$V^f$ 是 FDE 视角下的访问次数）。选 $i^*=\arg\max_i f_i$，把环境重放回 $o_{i^*}$，再让原策略 $\pi_\theta$ 继续往下走。
-    - 设计动机：直接 parallel sampling 会一直从根开始重复采，浪费算力且分布偏窄。FDE 通过"复用正确前缀 + 在最不稳的节点分叉"，把采样预算精准砸在容易暴露错误的位置，UCB 的探索项又保证不会反复盯同一节点，从而扩张错误类型的覆盖面。
+直接 parallel sampling 会一直从根重复采，算力浪费且错误类型覆盖窄，训练数据里因此 dominate 的全是低层执行错误。FDE 转而在 $T^{\text{corr}}$ 上挑"看似走对了但其实很容易翻车"的节点分叉：对每个节点 $o_i$ 用 pre-operative 进度评分器 $\mathcal{R}_p$ 从策略采 $N$ 个候选 action，平均得到 step-level 成功率 $r_i = \tfrac{1}{N}\sum_n r_{i,n}$，再算脆弱度分 $f_i = (1-r_i) + c\sqrt{\ln(V^f_{p(i)}+1)/(V^f_i+1)}$（UCB 形式，$V^f$ 是 FDE 视角的访问次数），选 $i^*=\arg\max_i f_i$ 把环境重放回 $o_{i^*}$ 让原策略 $\pi_\theta$ 继续走。"复用正确前缀 + 在最不稳节点分叉"把采样预算精准砸在最容易暴露错误的位置，UCB 的探索项又防止反复盯同一节点，从而扩张错误类型的覆盖面。
 
-3. **经验引导恢复 EIR：在失败子树里合成长程修复**:
+**3. 经验引导恢复 EIR：在失败子树里合成长程修复。**
 
-    - 功能：在 $T^{\text{fail}}$ 上自动定位每条失败轨迹的 root-cause 位置，给出"应该怎么救"的自然语言建议，并由专门的 recovery actor 跑出长程恢复轨迹，解决"错误时程太短"的问题。
-    - 核心思路：对每条失败轨迹 $\tau^{\text{fail}}$，先聚合它在树里的兄弟分支经验 $\mathcal{E}(\tau^{\text{fail}})=\{E_{\tau^{\text{nb}}}\}$（reward model 顺手抽出来的可复用 trajectory experience），喂给反思器 $\pi^{er}_\theta$ 产出 $(i, g_i, p_i)$——候选错误步、恢复指引、扩展优先级。再用 UCB 风格的 $s_i = p_i + c\sqrt{\ln(V^r_{p(i)}+1)/(V^r_i+1)}$ 选要修的节点，重放到 $o_{i^*}$ 后由恢复 actor 跑 $\tau^{\text{rec}} \sim \pi^{rec}_\theta(u, o_{i^*}, h_{i^*-1}, g_{i^*})$。
-    - 设计动机：失败轨迹里其实藏着信息——兄弟分支告诉你"对的人怎么走"，反思器告诉你"错在哪、怎么救"。把这两条信息合到一个 advice-conditioned rollout 里，就能稳定产出"先错→识别→恢复→完成"的长程样本，正好对应真实部署中需要的能力。后处理时再用 progress critic $\mathcal{R}_p$、action critic $\mathcal{R}_a$、reflection validator $\mathcal{R}_f$ 把样本拆成反思无关子集 $\mathcal{D}_{\text{agn}}$ 和反思相关子集 $\mathcal{D}_{\text{ref}}$。
+策略诱发错误往往要再走几步才暴露，需要长程回溯，可训练数据里的错误大多 1 步内就能识别，时程不匹配。EIR 把失败轨迹里的信息榨出来：对每条失败轨迹 $\tau^{\text{fail}}$，先聚合它在树里的兄弟分支经验 $\mathcal{E}(\tau^{\text{fail}})=\{E_{\tau^{\text{nb}}}\}$（reward model 顺手抽出来的可复用 trajectory experience，相当于"对的人怎么走"），喂给反思器 $\pi^{er}_\theta$ 产出 $(i, g_i, p_i)$——候选错误步、恢复指引、扩展优先级；再用 UCB 风格的 $s_i = p_i + c\sqrt{\ln(V^r_{p(i)}+1)/(V^r_i+1)}$ 选要修的节点，重放到 $o_{i^*}$ 后由恢复 actor 跑 $\tau^{\text{rec}} \sim \pi^{rec}_\theta(u, o_{i^*}, h_{i^*-1}, g_{i^*})$。把"兄弟分支经验"和"反思器建议"合进一个 advice-conditioned rollout，就能稳定产出"先错→识别→恢复→完成"的长程样本。后处理再用 progress critic $\mathcal{R}_p$、action critic $\mathcal{R}_a$、reflection validator $\mathcal{R}_f$ 把样本拆成反思无关子集 $\mathcal{D}_{\text{agn}}$ 和反思相关子集 $\mathcal{D}_{\text{ref}}$。
+
+### 一个完整示例：一轮 co-expansion 怎么转
+
+拿一棵长出 4 条初始 rollout 的轨迹树举例。某轮 reward model $\mathcal{R}$ 把它切成成功子树和失败子树后两侧并行扩展：在成功子树这边，FDE 给每个节点算脆弱度——比如某个"已经成功提交表单前一步"的节点，$N=4$ 个候选里有 2 个会点错按钮，$r_i=0.5$，脆弱度偏高，于是被选中重放、继续 rollout，结果真的分叉出一条新的失败分支（点错了下拉框）；在失败子树这边，EIR 对一条"5 步前选错搜索框、后面越走越偏"的失败轨迹，先从它兄弟分支里取经验、由反思器判出 root-cause 在第 5 步并给出"先 Ctrl+A 清空再重输"的恢复指引，恢复 actor 据此重放到第 5 步、跑出一条"识别错误→撤销→重做→完成"的恢复轨迹。两条新分支都回灌进同一棵树，下一轮接着切——成功分支不断造新错、失败分支不断补修复，错误类型和错误时程两条覆盖面就这样共生扩张，32 轮后产出的样本同时富含多样错误和长程恢复。
 
 ### 损失函数 / 训练策略
-训练混合两类数据：$\mathcal{D}_{\text{train}} = \mathcal{D}_{\text{agn}} \cup \lambda_{\text{ref}} \mathcal{D}_{\text{ref}}$，其中 $\lambda_{\text{ref}} \in [0,1]$ 控制反思样本占比，最终选 $\lambda_{\text{ref}}=0.1$（720k 反思无关 + 80k 反思相关）。损失是标准 teacher-forcing NLL $\mathcal{L}(\theta) = \mathbb{E}_{(u,h,o,a)\sim\mathcal{D}_{\text{train}}}[-\log \pi_\theta(a|u,h,o)]$，只监督 $a_i$ 的 token，历史 $h$ 仅作为上下文以避免把不完美 rollout 的噪声带进梯度。基座是 Qwen2.5-VL-7B 和 32B，纯 SFT。
+训练混合两类数据：$\mathcal{D}_{\text{train}} = \mathcal{D}_{\text{agn}} \cup \lambda_{\text{ref}} \mathcal{D}_{\text{ref}}$，其中 $\lambda_{\text{ref}} \in [0,1]$ 控制反思样本占比，最终选 $\lambda_{\text{ref}}=0.1$（720k 反思无关 + 80k 反思相关）。每个训练样本是 $x_i=(u, h_{i-1}, o_i, a_i)$，损失是标准 teacher-forcing NLL $\mathcal{L}(\theta) = \mathbb{E}_{(u,h,o,a)\sim\mathcal{D}_{\text{train}}}[-\log \pi_\theta(a|u,h,o)]$，只对 $a_i$ 的 token 算 NLL，历史 $h$ 仅作上下文以避免把不完美 rollout 的噪声带进梯度。基座是 Qwen2.5-VL-7B 和 32B，纯 SFT。
 
 ## 实验关键数据
 

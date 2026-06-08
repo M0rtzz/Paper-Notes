@@ -38,32 +38,29 @@ tags:
 **核心 idea**：用 invariant-enforcing tool protocol 保证工具组合合法，用 CFG cost model 在候选代码计划中选最低成本方案，再用 Monte Carlo latency estimation 选择 serial/parallel/hedge 执行策略。
 
 ## 方法详解
-Agent JIT 由三个在线组件和一个离线缓存流程组成。离线流程从成功执行 trace 中合成可复用工具，并学习网页元素交互 latency 分布；在线时 planner 生成代码计划，scheduler 选择执行策略，tool protocol 约束计划合法性。
 
 ### 整体框架
-输入是自然语言任务、工具 manifest、缓存工具和历史 latency 分布。JIT-Planner 并行采样多个代码计划，每个计划可以包含普通工具调用、LLM eval 调用和控制流。系统构建 CFG，检查每个工具的 pre/post state 是否可组合，并按工具调用、LLM eval 和循环深度估计成本，最终选最低成本的合法计划。对于可调度任务，JIT-Scheduler 再根据任务可能使用的 DOM 元素和历史 latency 分布，在 serial、parallel、hedge 三种策略中选择预期 latency 最低的一种。
+Agent JIT 把"网页 agent 执行下一步动作"的在线决策问题，改写成"运行时把自然语言任务编译成一段可执行代码计划再优化"的编译问题，借此把大量原本要逐步调 LLM 的确定性操作沉淀到代码里。系统由三个在线组件和一条离线缓存流水线组成：离线流水线从成功执行 trace 中合成可复用工具、并学习网页元素交互的 latency 分布；在线时输入自然语言任务、工具 manifest、缓存工具和历史 latency 分布后，JIT-Planner 并行采样多个代码计划（计划里可以混有普通工具调用、LLM eval 调用和控制流），靠 tool protocol 检查每个工具的 pre/post 状态是否可组合、再用成本模型在合法候选里选最便宜的一个，最后由 JIT-Scheduler 为可调度任务在 serial/parallel/hedge 三种执行策略中挑预期 latency 最低的那种。
 
 ### 关键设计
-1. **Invariant-enforcing tool protocol**:
 
-    - 功能：把工具从“可调用函数”升级为带状态契约的可组合 building block。
-    - 核心思路：每个工具 manifest 除 input/output schema 外，还声明 pre、post、可选 pre_check/post_check 和 execute。计划中相邻工具只有在前一工具 postcondition 能满足后一工具 precondition 时才合法，即状态流要满足 $post_i\subseteq pre_{i+1}$。
-    - 设计动机：作者发现网页自动化中 45–50% 的错误来自错误工具序列，例如还没进入详情页就调用详情页工具。把状态不变量放进协议，可以在编译阶段排除大量错误计划，而不是等浏览器执行失败。
+**1. Invariant-enforcing tool protocol：给工具加状态契约，让非法工具序列在编译期就被排除。**
 
-2. **Cost-optimizing JIT-Planner**:
+作者发现网页自动化中 45–50% 的错误其实来自错误的工具调用顺序——典型如还没进入详情页就调用了详情页专属工具——而这类错误传统上要等浏览器真的执行失败才暴露。为此协议把每个工具从"可调用函数"升级成带状态契约的可组合 building block：工具 manifest 除 input/output schema 外，还声明 pre、post 以及可选的 pre_check/post_check 和 execute。一段计划里相邻两个工具只有当前一个的 postcondition 能满足后一个的 precondition 时才合法，即状态流必须满足 $post_i \subseteq pre_{i+1}$。把这种状态不变量放进协议，相当于在编译阶段就把大批走不通的计划筛掉，而不是把检查推迟到运行时。
 
-    - 功能：在多个正确代码计划中选择 latency 最低的版本。
-    - 核心思路：多个 worker 并行向 LLM 采样 plan，失败计划会带着验证错误迭代修复，直到收集到 $k$ 个合法候选。对每个候选构建 CFG：工具调用增加 $C_{tool}\gamma^d$，AI eval 调用增加 $C_{eval}\gamma^d$，其中 $d$ 是循环/嵌套深度，$\gamma=10$ 用来惩罚把昂贵 LLM 调用放进循环。最后返回估计成本最低的合法计划。
-    - 设计动机：同一网页任务可能有很多等价实现，例如直接用代码汇总列表，或在每一项上调用 LLM 判断。真实结果显示 best-cost 和 worst-cost plan 的平均 latency 可差 5.3×，所以只生成“能跑”的 plan 不够，还要做成本优化。
+**2. Cost-optimizing JIT-Planner：同一任务有很多等价实现，要在合法候选里选 latency 最低的那份代码。**
 
-3. **Cost-aware JIT-Scheduler**:
+同一个网页任务往往有多种等价写法，比如直接用代码汇总整张列表，或者逐项调用 LLM 去判断——两者都能跑通，但实测 best-cost 与 worst-cost plan 的平均 latency 能差 5.3×，所以"能跑"远不够，还得做成本优化。planner 让多个 worker 并行向 LLM 采样计划，采样失败的计划会带着 protocol 给出的验证错误迭代修复，直到攒够 $k$ 个合法候选。随后为每个候选构建 CFG 估成本：一次工具调用计 $C_{tool}\gamma^d$，一次 AI eval 调用计 $C_{eval}\gamma^d$，其中 $d$ 是循环/嵌套深度、$\gamma=10$ 是深度惩罚因子，专门重罚"把昂贵 LLM 调用塞进循环"这种写法。最后返回估计成本最低的合法计划。
 
-    - 功能：为任务选择 serial、parallel 或 hedge 执行策略，利用有限 vCPU 降低 latency。
-    - 核心思路：scheduler 先让 LLM 预测不同策略下会访问哪些网页元素，再从离线学习的元素 latency 分布中 Monte Carlo 采样。Serial 是所有交互耗时求和；Parallel 是串行部分加最慢 worker；Hedge 是多个冗余 worker 取最快完成者再加 overhead。系统选择平均 latency 最低的策略。
-    - 设计动机：没有单一策略总是最优。并行适合独立子任务，hedge 适合容易卡在某个 UI 元素的任务，serial 适合短线性任务。用数据驱动估计能避免人工写调度规则。
+**3. Cost-aware JIT-Scheduler：没有一种执行策略永远最优，用 latency 分布做 Monte Carlo 估计来自适应选择。**
+
+并行适合互相独立的子任务，hedge 适合容易卡在某个 UI 元素上的任务，serial 适合短的线性任务，没有哪一种恒优，硬写人工调度规则又容易失准。scheduler 先让 LLM 预测各策略下任务大概会访问哪些网页元素，再从离线学到的元素 latency 分布里 Monte Carlo 采样，估出三种策略的预期耗时：serial 是所有交互耗时直接求和；parallel 是串行部分加上最慢 worker 的耗时；hedge 是开多个冗余 worker、取最快完成者的耗时再加上调度 overhead。系统选平均 latency 最低的那种执行。
+
+### 一个完整示例
+以一个 19 步的 GitLab 长任务为例走一遍三段协同。planner 并行采样出若干代码计划，其中一份在进入仓库页前就调用了详情页工具——protocol 检查发现该步的 precondition 没被上一步的 postcondition 满足（$post_i \not\subseteq pre_{i+1}$），把它判为非法并把错误反馈回去让 worker 修复；这一关让长任务的 valid-plan 候选大幅增多（Gemini-2.5-Pro 上 Pass@3 从 9% 升到 100%）。在攒齐的合法候选里，CFG 成本模型发现"逐项 LLM 判断"那版把 ai_eval 放进了循环、深度惩罚 $\gamma^d$ 让它成本飙高，于是选中"用代码批量处理列表"的低成本版本。最后 scheduler 预测该任务会反复访问若干会卡顿的 DOM 元素，Monte Carlo 估计显示 hedge 比 serial/parallel 都快，便采用 hedge 执行——整体在 8 秒内达到 100% Pass@t，而关掉 protocol 的对照只停在 22%。
 
 ### 损失函数 / 训练策略
-本文是系统论文，没有模型训练损失。优化目标是计划和调度层面的 latency-accuracy trade-off。JIT-Planner 的 cost model 显式惩罚 tool calls、AI eval calls 和嵌套循环；JIT-Scheduler 用缓存 latency 分布做 Monte Carlo 估计。离线缓存流程从执行 trace 中抽取 page schema、把动作映射到 schema elements、拟合 latency 分布并合成 reusable code tools。
+本文是系统论文，没有模型训练损失，优化目标落在计划与调度两层的 latency-accuracy trade-off 上：JIT-Planner 的成本模型显式惩罚 tool calls、AI eval calls 和嵌套循环，JIT-Scheduler 用缓存的 latency 分布做 Monte Carlo 估计。离线缓存流水线则从执行 trace 中抽取 page schema、把动作映射到 schema elements、拟合 latency 分布，并合成可复用的 code tools。
 
 ## 实验关键数据
 

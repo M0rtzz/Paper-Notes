@@ -42,33 +42,21 @@ tags:
 
 ### 整体框架
 
-输入 $M$ 个模态 $\{x^{(m)}\}_{m=1}^M$，每个模态先经编码器得到潜特征 $z^{(m)} = E^{(m)}(x^{(m)}) \in \mathbb{R}^d$。GMF 在潜空间上做两件事：
-
-1. **模态内几何评估**（intra-modal）：用 modality-specific 的 rectified flow 速度场 $v_\theta^{(m)}$ 估计 $z^{(m)}$ 到一个**类无关参考先验** $\mathcal{P}_{\text{prior}}$ 的传输能量 $\mathcal{E}_{\text{intra}}^{(m)} = \|v_\theta^{(m)}(z^{(m)},0)\|_2^2$，作为模态的"内在质量分"。
-
-2. **模态间几何评估**（inter-modal）：对每个有向对 $(a \to b)$ 训练一个 cross-modal 速度场 $v_\Phi^{(a \to b)}$，把 $z^{(a)}$ 映到 $b$ 的流形上，残差 $\|\Phi_{a \to b}(z^{(a)}) - z^{(b)}\|_2^2$ 度量模态间语义一致性。
-
-随后用一个"竞争-交互"门控机制把这两类几何成本合并成融合权重 $w^{(m)}$，与证据 $\mathbf{e}^{(m)} = \text{Softplus}(z^{(m)} W_{\text{cls}}^{(m)})$ 一起组装成 Dirichlet 参数 $\boldsymbol{\alpha} = \sum_m w^{(m)} \mathbf{e}^{(m)} + \mathbf{1}$，喂给 evidential 分类头。训练时几何分支和决策分支梯度路径分离，避免互相污染。
+GMF 要解决的是"模型自己评判自己"的循环依赖：把每个模态的质量分从分类器输出里挪出来，改成在潜空间用几何度量算。$M$ 个模态先各自经编码器得到潜特征 $z^{(m)} = E^{(m)}(x^{(m)}) \in \mathbb{R}^d$，然后 GMF 在潜空间上同时算两类"传输修正成本"——模态内的（离干净流形多远）和模态间的（和别的模态对不对得上），再用一个竞争-交互门控把它们合成融合权重 $w^{(m)}$，最后与证据 $\mathbf{e}^{(m)} = \text{Softplus}(z^{(m)} W_{\text{cls}}^{(m)})$ 组装成 Dirichlet 参数 $\boldsymbol{\alpha} = \sum_m w^{(m)} \mathbf{e}^{(m)} + \mathbf{1}$ 喂给 evidential 分类头。整个几何分支与决策分支的梯度路径刻意分开，避免分类器把几何度量重新拉回到自己的决策边界上。
 
 ### 关键设计
 
-1. **模态内传输能量作为几何可靠性分**：
+**1. 模态内传输能量：一个与分类器解耦的"离流形多远"标量**
 
-    - 功能：给出一个**与分类器输出无关**的标量来度量 $z^{(m)}$ 离干净流形多远。
-    - 核心思路：用 Schrödinger Bridge 形式化 $\min_v \int_0^1 \mathbb{E}\|v_t\|^2 dt$，但直接求解需要迭代积分太慢；改用 Rectified Flow 把路径线性化——在 $z_t = (1-t)z_0 + t z_1$ 上回归常速度 $z_1 - z_0$，目标 $\mathcal{L}_{\text{RF}} = \mathbb{E}_{t, z_0, z_1}\|v_\theta(z_t, t) - (z_1 - z_0)\|^2$。推理时只需评一次 $v_\theta(z, 0)$，把 $\|v_\theta(z, 0)\|_2^2$ 当作单步学到的"修正分"。
-    - 设计动机：(1) 单步推理低延迟，能在线部署；(2) $v_\theta$ 在 $z$（path 的源点）上求值，推理与训练分布一致；(3) 干净样本在流形上、需要的修正小，噪声/缺失样本偏离流形、修正大——形成与置信度**正交**的失败检测器。
+要打破循环依赖，关键是给每个模态一个**不看分类器输出**的质量分。GMF 把"质量"重定义为潜空间几何偏离度——干净样本聚在数据流形上、传输代价低，噪声/缺失样本远离流形、传输代价高。形式上这是个 Schrödinger Bridge 问题 $\min_v \int_0^1 \mathbb{E}\|v_t\|^2 dt$，但直接迭代积分太慢，于是用 Rectified Flow 把传输路径线性化：在插值 $z_t = (1-t)z_0 + t z_1$ 上回归常速度，目标 $\mathcal{L}_{\text{RF}} = \mathbb{E}_{t, z_0, z_1}\|v_\theta(z_t, t) - (z_1 - z_0)\|^2$，把 $z^{(m)}$ 传到一个**类无关参考先验** $\mathcal{P}_{\text{prior}}$。推理时只在源点评一次速度场，取 $\mathcal{E}_{\text{intra}}^{(m)} = \|v_\theta^{(m)}(z^{(m)},0)\|_2^2$ 当模态的内在质量分。这样设计有三重好处：单步推理延迟低、可在线部署；在源点求值让推理分布与训练一致；最关键的是这个量与分类器 logits 完全正交——分类器可以"自信地错"，但它骗不了"样本离流形多远"，于是 confident-but-wrong 的失败终于有了一个外部检测器。
 
-2. **跨模态传输残差作为语义冲突门控**：
+**2. 跨模态传输残差：在潜空间直接拍语义冲突**
 
-    - 功能：在不需要解码器的前提下，直接在潜空间度量两个模态在语义上是否对得上。
-    - 核心思路：为每个有向对 $(a \to b)$ 单独学一个 $v_\Phi^{(a \to b)}$，用 $\mathcal{L}_{\text{inter}}^{(a \to b)} = \mathbb{E}\|v_\Phi^{(a \to b)}(z_t, t) - (z^{(b)} - z^{(a)})\|^2$ 训练；推理时一步把 $z^{(a)}$ 投影成 $\hat{z}^{(a \to b)} = z^{(a)} + v_\Phi^{(a \to b)}(z^{(a)}, 0)$，残差 $\mathcal{E}_{\text{inter}}^{(a \to b)} = \|\hat{z}^{(a \to b)} - z^{(b)}\|_2^2$ 越大说明 $a$ 和 $b$ 的语义越对不上。论文还在理论上证明（Thm 4.5）：如果两个模态分别落在不同类的流形上，残差有下界 $(\delta - 2\epsilon)^2$（Geometric Barrier Principle）。
-    - 设计动机：把"两个模态是否说同一件事"从分类器层（容易被两个都过自信的输出骗）下沉到潜空间几何层，得到一个分类器无法伪造的外部判据。
+光看单模态干不干净还不够，两个模态可能各自都很干净却互相矛盾（比如图文被打乱配对）。GMF 不依赖解码器，而是为每个有向对 $(a \to b)$ 单独学一个跨模态速度场 $v_\Phi^{(a \to b)}$，用 $\mathcal{L}_{\text{inter}}^{(a \to b)} = \mathbb{E}\|v_\Phi^{(a \to b)}(z_t, t) - (z^{(b)} - z^{(a)})\|^2$ 学会把 $a$ 的流形映到 $b$ 的流形。推理时一步投影 $\hat{z}^{(a \to b)} = z^{(a)} + v_\Phi^{(a \to b)}(z^{(a)}, 0)$，残差 $\mathcal{E}_{\text{inter}}^{(a \to b)} = \|\hat{z}^{(a \to b)} - z^{(b)}\|_2^2$ 越大说明两模态越对不上。论文进一步证明（Thm 4.5，Geometric Barrier Principle）：若两模态落在不同类的流形上，残差有下界 $(\delta - 2\epsilon)^2$。其意义在于把"两个模态是否说同一件事"从容易被双双过自信骗到的分类器层，下沉到分类器无法伪造的潜空间几何层。
 
-3. **竞争-交互融合权重**：
+**3. 竞争-交互融合权重：让自信但冲突的坏模态被双重削权**
 
-    - 功能：把内在质量分 $\mathcal{E}_{\text{intra}}$ 和跨模态一致性 $\mathcal{E}_{\text{inter}}$ 组合成最终融合权重 $w^{(m)}$，并被理论 Thm 4.4 解释为一个熵正则最小化的 Gibbs 解。
-    - 核心思路：先按 Boltzmann 分配竞争基分 $\beta_{\text{comp}}^{(m)} = \exp(-\mathcal{E}_{\text{intra}}^{(m)}/\tau) / \sum_k \exp(-\mathcal{E}_{\text{intra}}^{(k)}/\tau)$；再用 interaction gate $\gamma_{\text{int}}^{(m)} = \lambda \sum_{k \neq m} r^{(k)} \exp(-\mathcal{E}_{\text{inter}}^{(k \to m)}/\kappa)$ 收集"可靠邻居"的几何投票，其中 $r^{(k)} = \sigma(\theta_r - \mathcal{E}_{\text{intra}}^{(k)})$ 是邻居本身的可靠性软门；加 $\epsilon_\gamma$ 数值稳定后归一化得 $w^{(m)} = \beta_{\text{comp}}^{(m)} \tilde{\gamma}_{\text{int}}^{(m)} / \sum_j \beta_{\text{comp}}^{(j)} \tilde{\gamma}_{\text{int}}^{(j)}$。
-    - 设计动机：竞争项保证"自身干净"的模态拿高权重，交互项把"被可靠邻居否认"的模态权重指数压低——这正对应推论 4.6 的"冲突模态指数抑制"。两层合并使得**自信但与他人冲突**的坏模态被双重削权，从而打破循环依赖。
+有了内在质量分 $\mathcal{E}_{\text{intra}}$ 和跨模态一致性 $\mathcal{E}_{\text{inter}}$，还需要把它们合成最终权重 $w^{(m)}$，并保证"既不干净又被邻居否认"的模态被压到最低。GMF 用两层门控：竞争层按 Boltzmann 分配基分 $\beta_{\text{comp}}^{(m)} = \exp(-\mathcal{E}_{\text{intra}}^{(m)}/\tau) / \sum_k \exp(-\mathcal{E}_{\text{intra}}^{(k)}/\tau)$，让自身干净的模态先拿高分；交互层 $\gamma_{\text{int}}^{(m)} = \lambda \sum_{k \neq m} r^{(k)} \exp(-\mathcal{E}_{\text{inter}}^{(k \to m)}/\kappa)$ 收集"可靠邻居"的几何投票，其中 $r^{(k)} = \sigma(\theta_r - \mathcal{E}_{\text{intra}}^{(k)})$ 是邻居本身的可靠性软门（不可靠的邻居没有投票权）；加 $\epsilon_\gamma$ 数值稳定后归一化得 $w^{(m)} = \beta_{\text{comp}}^{(m)} \tilde{\gamma}_{\text{int}}^{(m)} / \sum_j \beta_{\text{comp}}^{(j)} \tilde{\gamma}_{\text{int}}^{(j)}$。两层叠加的效果是：竞争项保证干净模态拿权重，交互项把被可靠邻居否认的模态指数压低（对应推论 4.6 的冲突模态指数抑制），于是自信但冲突的坏模态被双重削权，循环依赖被打破。论文还证明（Thm 4.4）这个权重恰是一个熵正则最小化问题的 Gibbs 解，给门控形式提供了理论落点。
 
 ### 损失函数 / 训练策略
 

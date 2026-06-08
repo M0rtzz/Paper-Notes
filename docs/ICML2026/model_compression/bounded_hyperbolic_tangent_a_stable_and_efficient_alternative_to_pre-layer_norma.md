@@ -43,27 +43,21 @@ tags:
 
 ### 整体框架
 
-BHyT 是 Transformer block 中两个 Pre-LN 位点归一化的即插即用替代。输入 token embedding $x$ 首先在 Attention 前经过 $\text{BHyT}_{\text{Attn}}$ 变换，然后在 MLP 前经过 $\text{BHyT}_{\text{MLP}}$ 变换。核心流程为：(1) 在第一个位点精确计算一次输入方差 $s_x^2$；(2) 用数据驱动的缩放因子将输入约束到 $\tanh$ 非饱和区；(3) 在第二个位点用轻量级方差近似代替精确计算，避免额外归约开销。
+BHyT 要做的事很简单：替掉 Transformer block 里那两处 Pre-LN（Attention 前和 MLP 前），但既不重复算统计量、又能压住激活随深度膨胀。它把每个归一化位点换成一个有界 $\tanh$ 变换 $\gamma \odot \tanh(\alpha x)$，关键在缩放因子 $\alpha$ 的算法：第一个位点精确算一次输入方差 $s_x^2$、据此把输入压到 $\tanh$ 的非饱和区；到第二个位点不再重新做归约，而是用一个只依赖权重矩阵的常量把方差递推出来。
 
 ### 关键设计
 
-1. **概率性输入界定 (Probabilistic Input Bounding)**:
+**1. 概率性输入界定：用数据驱动的缩放把输入锁进 $\tanh$ 非饱和区。**
 
-    - 功能：将 $\tanh$ 前的输入以高概率约束在非饱和区间 $[-\lambda, \lambda]$ 内，防止深层激活膨胀导致的梯度消失
-    - 核心思路：基于 Chebyshev 不等式，对任意有限方差分布，以概率 $\geq 1 - \kappa^{-2}$ 保证 $|X - \mu| \leq \kappa s$。据此设计缩放因子 $\alpha = \lambda / (\kappa s_x + |\mu_x|)$，得到 $\text{BHyT}^*(x) = \gamma \odot \tanh(\alpha x)$。实际使用中采用 RMSNorm 风格的零均值近似，省去均值项，简化为 $\alpha = \lambda / (\kappa s_x)$。默认取 $p=0.99$（即 $\kappa=10$），$\lambda=1$
-    - 设计动机：与 DyT 的可学习全局标量 $\alpha_{\text{DyT}}$ 不同，BHyT 的缩放因子是数据驱动的——随当前输入的统计特性自适应调整，确保无论输入分布如何变化都能有效避免饱和。这是 BHyT 相比 DyT 在深度稳定性上的核心优势
+DyT 这类无归一化方案最大的毛病是用一个与数据无关的可学习全局标量 $\alpha_{\text{DyT}}$ 去缩放，输入一大就冲进 $\tanh$ 饱和区、梯度直接消失，深层根本压不住。BHyT 改用 Chebyshev 不等式来界定输入：对任意有限方差分布，都有 $|X - \mu| \leq \kappa s$ 以概率 $\geq 1 - \kappa^{-2}$ 成立。顺着这个界，把缩放因子设成 $\alpha = \lambda / (\kappa s_x + |\mu_x|)$，于是 $\text{BHyT}^*(x) = \gamma \odot \tanh(\alpha x)$ 就能以高概率把 $\tanh$ 的输入约束在 $[-\lambda, \lambda]$ 内。实际实现里仿照 RMSNorm 做零均值近似，省掉 $|\mu_x|$ 项简化为 $\alpha = \lambda / (\kappa s_x)$；默认 $p=0.99$（对应 $\kappa=10$）、$\lambda=1$。和 DyT 的固定全局标量不同，这个 $\alpha$ 随当前输入的方差自适应伸缩——输入分布怎么漂移，缩放就怎么跟着调，从根上避免饱和，这正是 BHyT 在深度稳定性上压过 DyT 的来源。
 
-2. **块级方差近似 (Block-Level Variance Approximation)**:
+**2. 块级方差近似：第二个归一化位点不再做精确归约，而是查表递推。**
 
-    - 功能：避免在每个 block 的第二个 Pre-LN 位点重复计算精确方差，降低归约操作开销
-    - 核心思路：第一个位点精确计算 $s_x^2$ 后，第二个位点的输入 $x' = x + h_{\text{Attn}}$ 的方差近似为 $\tilde{s}_{x'}^2 = s_x^2 + \tilde{s}_{h_{\text{Attn}}}^2$。其中 attention 输出方差用模型级常量近似：$\tilde{s}_{h_{\text{Attn}}}^2 \approx \frac{1}{Td} \|W_V W_O\|_F^2 \cdot \lambda_{\text{Attn}}^2 / \kappa^2$。该项仅依赖权重矩阵和超参数，推理时可预计算缓存，训练时周期性更新
-    - 设计动机：精确方差计算需要一次完整的归约操作（遍历整个特征维度），是归一化的主要开销来源。方差近似将第二个位点的计算从 $O(d)$ 归约降为常量查表，且与 attention 前向传播可并行执行
+精确方差要遍历整个特征维度做一次完整归约，是归一化延迟的主要来源，而每个 block 有两个 Pre-LN 位点、等于把这笔开销翻倍。BHyT 只在第一个位点精确算 $s_x^2$，到第二个位点输入变成 $x' = x + h_{\text{Attn}}$，它的方差直接近似为 $\tilde{s}_{x'}^2 = s_x^2 + \tilde{s}_{h_{\text{Attn}}}^2$。其中 attention 输出的方差用一个模型级常量代替：$\tilde{s}_{h_{\text{Attn}}}^2 \approx \frac{1}{Td} \|W_V W_O\|_F^2 \cdot \lambda_{\text{Attn}}^2 / \kappa^2$，它只跟权重矩阵和超参数有关，推理时可预计算缓存、训练时周期性更新即可。这样第二个位点的计算就从 $O(d)$ 的归约降成常量查表，而且能和 attention 前向并行跑——实验里这个近似在高维下极准（Pearson $r > 0.99$），几乎不损性能却把速度提了上来。
 
-3. **有限深度方差传播界 (Finite-Depth Variance Bound)**:
+**3. 有限深度方差传播界：给深度稳定性一个可证明的保证。**
 
-    - 功能：提供可证明的深度方向方差控制保证
-    - 核心思路：当超参数满足 $\lambda / \kappa < 1/\sqrt{L}$ 时（$L$ 为网络深度），BHyT 在每一层的输出方差严格小于 LayerNorm Scaling (LNS)。例如 $\lambda=1, \kappa=10$ 时，对深度 $L < 100$ 的网络均满足该条件，覆盖绝大多数实际模型
-    - 设计动机：RMSNorm 和 DyT 都缺乏对深度方向方差增长的理论保证，BHyT 是首个同时具备效率优势和可证明稳定性界的归一化替代方案
+RMSNorm 和 DyT 都说不清激活方差沿深度到底会涨成什么样，缺一个理论闸门。BHyT 证明：只要超参数满足 $\lambda / \kappa < 1/\sqrt{L}$（$L$ 为层数），它每一层的输出方差都严格小于 LayerNorm Scaling (LNS)。默认 $\lambda=1, \kappa=10$ 时这个条件对 $L < 100$ 的网络都成立，覆盖了绝大多数实际模型。这让 BHyT 成为首个同时拿到效率优势和可证明方差界的 Pre-LN 替代——既快，又有理论兜底。
 
 ## 实验关键数据
 

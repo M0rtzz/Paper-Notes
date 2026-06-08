@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法由 3 部分构成：(1) **分布拟合**——离线为每个 prompt 用 MLE 拟合 log-t 分布参数 $(\mu,\sigma)$，构成训练标签；(2) **参数预测器**——在线时用 fine-tuned DeBERTa-v3-base + 双 MLP 头从 prompt 直接预测 $(\mu,\sigma)$，固定 $\nu=3.5$；(3) **TIE 调度器**——把预测分布在 `max_tokens` 处截断，计算 $\mathbb{E}[\tilde X] + \beta\cdot\mathrm{CVaR}_\alpha[\tilde X]$ 作为优先级分数喂给 vLLM 的最小堆队列，并配合异步预测 + 动态 batching + 等待衰减把开销隐藏起来。
+方法把"预测一个长度数字"换成"预测一个长度分布再算风险敏感优先级"，跑在 vLLM 上。离线先为每个 prompt 用 MLE 拟合 log-t 分布参数当训练标签；在线时一个 fine-tuned DeBERTa-v3-base 直接从 prompt 预测分布参数，TIE 调度器把这个分布转成一个标量优先级喂给 vLLM 的最小堆队列，并用异步预测把预测开销藏在主循环之外。
 
 ### 关键设计
 
-1. **log-t 分布拟合输出长度（替代点估计）**:
+**1. log-t 分布拟合输出长度：用分布替代点估计**
 
-    - 功能：把每条请求的输出长度建模为一个 3 参数分布 $X \sim \text{Log-t}(\mu,\sigma,\nu)$，PDF 为 $f(x\mid\mu,\sigma,\nu) = \frac{1}{\sigma x}\cdot t_\nu\left(\frac{\ln x-\mu}{\sigma}\right)$，其中 $\nu$ 控制尾部厚度。
-    - 核心思路：作者在 Assumption 3.1 + Theorem 3.2 中证明，如果不同生成轨迹的终止概率 $p$ 在 0 附近的密度满足 $f(p)\sim c\cdot p^{\alpha-1}$，则输出长度 $L=\min\{t\ge 1: x_t=\text{EOS}\}$ 的尾概率满足 $P(L>n)\sim c\cdot\Gamma(\alpha)/n^\alpha$（幂律衰减），这是重尾的充分条件。实证上他们在 LMSYS-Chat-1M 上对 1K prompt 各采 100 次响应，统计平均偏度 = 3.10、变异系数 = 1.09，确认重尾性质。然后跑 KS 检验比较 6 个候选分布，log-t (3 参数) 通过率 93.1%，固定 $\nu=3.5$ 的 2 参数 log-t 通过率 90.6%，log-normal 仅 60.3%，最终选 log-t($\nu=3.5$) 平衡拟合质量和预测复杂度。
-    - 设计动机：解决"点估计 vs. 随机解码"的根本矛盾。点估计无法刻画"同一 prompt 输出长度方差很大"这件事，而长度方差恰恰决定了调度风险。
+所有 SJF 类方法的死穴是把"同一 prompt 跑 100 次会得到 100 个不同长度"这件事压成一个数字，一旦把本质偏长的请求错预测成短的，它就会卡住整个 batch。本文先从第一性原理论证为什么必须用重尾分布：Assumption 3.1 + Theorem 3.2 证明，若不同生成轨迹的终止概率 $p$ 在 0 附近的密度满足 $f(p)\sim c\cdot p^{\alpha-1}$，则输出长度 $L=\min\{t\ge 1: x_t=\text{EOS}\}$ 的尾概率满足 $P(L>n)\sim c\cdot\Gamma(\alpha)/n^\alpha$，即幂律衰减——这是重尾的充分条件。实证上他们对 LMSYS-Chat-1M 的 1K prompt 各采 100 次响应，统计平均偏度 3.10、变异系数 1.09，确认了重尾性质。
 
-2. **TIE：用 CVaR 惩罚尾部的等效长度**:
+具体把每条请求的输出长度建模为 3 参数分布 $X \sim \text{Log-t}(\mu,\sigma,\nu)$，PDF 为 $f(x\mid\mu,\sigma,\nu) = \frac{1}{\sigma x}\cdot t_\nu\left(\frac{\ln x-\mu}{\sigma}\right)$，其中 $\nu$ 控制尾部厚度。分布族是跑 KS 检验在 6 个候选里挑出来的：log-t (3 参数) 通过率 93.1%，固定 $\nu=3.5$ 的 2 参数版 90.6%，而 log-normal 只有 60.3%。最终选 log-t($\nu=3.5$)——固定 $\nu$ 省掉一个待预测参数，拟合质量却几乎不掉。这一步直接化解了"点估计 vs. 随机解码"的根本矛盾，因为长度方差恰恰是决定调度风险的关键信号，而点估计完全看不见它。
 
-    - 功能：把分布转成一个标量送进 SJF 队列。
-    - 核心思路：先对预测分布做截断 $\tilde X = \min(X, x_{\max})$（因为生成不会超过 `max_tokens`），然后定义优先级分数 $\text{Score} = \mathbb{E}[\tilde X] + \beta\cdot\mathrm{CVaR}_\alpha[\tilde X]$，其中 $\mathrm{CVaR}_\alpha[X] = \mathbb{E}[X\mid X\ge \text{VaR}_\alpha(X)]$ 是分布尾部 $(1-\alpha)$ 比例的条件期望（$\alpha=0.9$ 即"最坏 10% 情况的平均长度"），$\beta$ 根据系统压力自适应：$\beta = \min(0.5, \max(0.1, 0.1\cdot L_q/B))$（$L_q$ 是等待队列长度，$B$ 是最大 batch size）。两个期望都用 10k 蒙特卡洛采样估计而非数值积分。再叠加等待衰减 $\text{Score}' = \text{Score}\cdot\gamma^{t_w/\tau}$（$\gamma=0.9, \tau=30s$）防止长请求饿死。
-    - 设计动机：单纯用期望 $\mathbb{E}[X]$ 等价于经典 SEPT 策略（消融表里这一行平均延迟 0.75s）；加上 CVaR 才能体现"这个请求虽然均值不大但有 10% 概率特别长，先别调它"的尾部风险意识，把延迟降到 0.67s。$\beta$ 自适应是因为低负载时长请求阻塞代价小、应贪心选短的；高负载时阻塞代价大、应保守惩罚尾部。
+**2. TIE：用 CVaR 把分布压成一个尾部敏感的等效长度**
 
-3. **异步预测 + 动态 batching 把预测开销藏在主线程之外**:
+有了分布还得变成一个标量才能塞进 SJF 队列排序。最直接的做法是取期望 $\mathbb{E}[X]$，但那等价于经典 SEPT 策略（消融里平均延迟 0.75s），它只看均值、对"均值不大但有 10% 概率特别长"的请求毫无戒心。TIE 的做法是先把预测分布在 `max_tokens` 处截断 $\tilde X = \min(X, x_{\max})$（生成不会超过上限），再定义优先级分数为期望加一个尾部惩罚项 $\text{Score} = \mathbb{E}[\tilde X] + \beta\cdot\mathrm{CVaR}_\alpha[\tilde X]$。这里 $\mathrm{CVaR}_\alpha[X] = \mathbb{E}[X\mid X\ge \text{VaR}_\alpha(X)]$ 是分布尾部 $(1-\alpha)$ 比例的条件期望，$\alpha=0.9$ 时就是"最坏 10% 情况下的平均长度"——比单点分位数 P90 更能反映极端长请求的代价。加上这一项后延迟从 0.75s 降到 0.67s。
 
-    - 功能：解决"预测器本身有 GPU 开销，不能阻塞 vLLM 主循环"的工程问题。
-    - 核心思路：把调度器拆成主线程（管 vLLM 的 running batch）+ 预测线程（背景跑 DeBERTa 预测）。新请求到达时直接以 `max_tokens` 为初始分数插入最小堆等待队列（保证未预测请求沉底，已预测的能先跑），同时丢进预测队列；预测线程攒够 32 条或等够 3ms 就 batch 推理一次，结果回来更新堆里的分数并重新 heapify。复杂度 $O(\log n)$ 一次操作。
-    - 设计动机：之前的 SSJF / LTR 走同步预测——请求来了先预测完才入队，导致 (1) 低负载下白白阻塞，(2) 高负载下逐个预测来不及。异步 + dynamic batching 让低负载时新请求"先跑起来再等结果纠正排队顺序"，高负载时预测器能高吞吐地清扫队列。
+惩罚力度 $\beta$ 随系统压力自适应：$\beta = \min(0.5, \max(0.1, 0.1\cdot L_q/B))$，其中 $L_q$ 是等待队列长度、$B$ 是最大 batch size。低负载时长请求阻塞代价小、应该贪心选短的（$\beta$ 趋小），高负载时阻塞代价大、应该保守惩罚尾部（$\beta$ 趋大）。两个期望都用 10k 蒙特卡洛采样估计而非数值积分。最后再叠一层等待衰减 $\text{Score}' = \text{Score}\cdot\gamma^{t_w/\tau}$（$\gamma=0.9, \tau=30s$），让等久了的长请求分数逐渐变小、避免饿死。
+
+**3. 异步预测 + 动态 batching：把预测开销藏到主线程之外**
+
+预测器本身要跑一次 DeBERTa、有 GPU 开销，之前 SSJF / LTR 走同步预测——请求来了先预测完才入队，结果低负载下白白阻塞、高负载下逐个预测又来不及。TIE 把调度器拆成主线程（管 vLLM 的 running batch）和背景预测线程。新请求到达时直接以 `max_tokens` 作初始分数插进最小堆等待队列（让未预测请求自然沉底、已预测的先跑），同时丢进预测队列；预测线程攒够 32 条或等够 3ms 就 batch 推理一次，结果回来后更新堆里分数并重新 heapify，单次操作复杂度只有 $O(\log n)$。这样低负载时新请求"先跑起来、再靠预测结果纠正排队顺序"，高负载时预测器又能高吞吐地清扫队列，预测开销基本不落在主路径上。
 
 ### 损失函数 / 训练策略
-预测器训练：对 $\mu$ 做 z-score 归一化，对 $\sigma$ 先做 $\tilde\sigma = \log(1+\sigma)$ 修正右偏再归一化，两个 MLP 头各 3 层 (256, 256, 128)，用 MSE 两阶段训练（先全参，再冻结 DeBERTa 只调 MLP）。训练数据用 LMSYS-Chat-1M 前 45K prompt × 20 次生成（共 900K 样本，与 SSJF/LTR 训练量对齐），最终 $\mu, \sigma$ 的 $R^2$ 分别为 0.82 和 0.76。
+预测器对 $\mu$ 做 z-score 归一化，对 $\sigma$ 先做 $\tilde\sigma = \log(1+\sigma)$ 修正右偏再归一化，两个 MLP 头各 3 层 (256, 256, 128)，用 MSE 两阶段训练（先全参，再冻结 DeBERTa 只调 MLP）。训练数据取 LMSYS-Chat-1M 前 45K prompt × 20 次生成（共 900K 样本，与 SSJF/LTR 训练量对齐），最终 $\mu, \sigma$ 的 $R^2$ 分别为 0.82 和 0.76。
 
 ## 实验关键数据
 

@@ -48,38 +48,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AdvMark 采用两阶段解耦设计：Stage 1 EAT 专注对抗鲁棒性，通过微调 encoder（而非扩展 decoder 边界）将水印图像移入安全区域；Stage 2 直接优化 encoded image 抵御失真和再生攻击，用约束保留 Stage 1 的对抗鲁棒性。
+AdvMark 想解决的是同一张水印图像要同时扛住对抗、失真、再生三类攻击，而联合训练把这三件事搅在一起又慢又互相拖累。它的解法是把防御沿攻击的"本质"切成两段来打：对抗攻击是冲着模型决策边界的弱点来的（model-specific），失真/再生攻击则是信号层面的破坏（model-agnostic），二者根本不是一回事，没必要也不应该用同一套训练去硬扛。于是 Stage 1 用 Encoder Adversarial Training（EAT）只管对抗鲁棒性——微调 encoder，把水印图像"挪进"对抗攻击够不着的安全区域；Stage 2 拿到 Stage 1 的输出 $x_{w1}$，在像素空间直接优化出 $x_{w2}$ 来抵御失真和再生，同时用一个偏移约束把图像锁在 Stage 1 建立的安全区域里，让前一阶段的对抗防御成果不被推翻。推断时就是 encoder 嵌入 → Stage 2 优化 → 输出最终水印图像。
 
 ### 关键设计
 
-1. **Stage 1: Encoder Adversarial Training (EAT)**:
+**1. Encoder Adversarial Training：与其让 decoder 包容对抗样本，不如让 encoder 把图像搬到安全区。**
 
-    - 功能：构造 defender-tailored 对抗样本，主要微调 encoder 使水印图像远离对抗攻击可达区域
-    - 核心思路：
-        - **对抗样本构造**（Eq.2）：$\min_{\delta} |0.5 - l(\text{clamp}(D(x_w + \delta), 0, 1), m)|$，寻找最容易使 decoder 输出接近 0.5（最大不确定性）的扰动 $\delta$，这些是 defender-tailored 对抗样本
-        - **Encoder 为主的更新策略**：将对抗样本反馈给 encoder，让 encoder 学习将水印图像嵌入到远离决策边界的安全区域。Decoder 仅在 bit accuracy $< \tau_1$ 时条件更新一次
-    - 设计动机：传统对抗训练（AT）同时更新 encoder 和 decoder，decoder 扩展决策边界虽能容纳对抗样本但牺牲 clean accuracy。EAT 反其道而行——不扩大边界，而是让 encoder 把图像"搬到"边界够不到的地方
-    - 关键区别：EAT 中 encoder 是主要被训练的对象，decoder 基本冻结
+传统对抗训练（AT）同时更新 encoder 和 decoder，靠 decoder 扩张决策边界来容纳对抗样本，代价是干净图像上的解码精度跟着掉（clean BA 从 ~99% 降到 ~92%）。EAT 反过来——基本冻住 decoder，只把 encoder 当主要训练对象。它先构造 defender-tailored 对抗样本：解 $\min_{\delta}\, |0.5 - l(\text{clamp}(D(x_w + \delta), 0, 1), m)|$（Eq.2），找到最能把 decoder 输出推向 0.5（即最大不确定、最接近判错）的扰动 $\delta$，这是最难防的那批样本。然后把这些样本反馈给 encoder，逼它学会把水印嵌到远离决策边界的位置；decoder 只在 bit accuracy 掉到阈值 $\tau_1$ 以下时才条件性地更新一次。这样边界没有被撑大，clean accuracy 得以保住（EAT 下维持 ~98-99%），而对抗鲁棒性反而更强——因为图像本身就被放在了攻击半径触不到的地方。
 
-2. **Stage 2: Direct Image Optimization**:
+**2. 直接图像优化 + 约束 loss：用像素级优化打信号层攻击，再用约束守住安全区。**
 
-    - 功能：对 Stage 1 输出的水印图像 $x_{w1}$ 进一步优化得到 $x_{w2}$，使其同时抵御失真和再生攻击
-    - 核心思路：
-        - **优化目标**：直接在像素空间优化 $x_{w2}$（不更新网络参数），使 $x_{w2}$ 经过失真/再生攻击后 decoder 仍能正确提取水印
-        - **Constrained Image Loss**：约束 $x_{w2}$ 与 $x_{w1}$ 的偏移量，使优化后的图像不偏离 Stage 1 建立的 non-attackable 区域，从而保留对抗鲁棒性。论文提供了理论保证：在 $\|x_{w2} - x_{w1}\| \leq \epsilon$ 约束下，Stage 1 的对抗鲁棒性以高概率保持
-        - **Quality-aware Early-stop**：不使用固定 $\epsilon$-ball 投影（会导致图像质量不均），而是监控图像质量指标（PSNR/SSIM），在质量下降到阈值时提前停止优化
-    - 设计动机：失真/再生攻击是 model-agnostic 的信号破坏，用 encoder 训练效果有限；直接优化像素更直接高效，且通过约束保留 Stage 1 的对抗防御成果
+失真（JPEG、模糊、裁剪）和再生（扩散加噪去噪）都是 model-agnostic 的信号破坏，靠继续训练网络收效有限，所以 Stage 2 干脆不动网络参数，直接在像素空间梯度下降优化 $x_{w2}$，目标是让它经过失真/再生攻击后 decoder 仍能正确提取水印。但纯粹追求抗失真会把图像推离 Stage 1 的安全区、破坏对抗鲁棒性，因此加一个 constrained image loss 约束 $x_{w2}$ 相对 $x_{w1}$ 的偏移量 $\|x_{w2}-x_{w1}\| \le \epsilon$，把优化锁在安全区内。消融里去掉这个约束后对抗 Acc 显著下降，正好印证了它的作用。
 
-3. **两阶段解耦的理论保证**:
+**3. Quality-aware early-stop：用质量指标当刹车，而不是固定 ε-ball 投影。**
 
-    - 功能：证明 Stage 2 优化不会破坏 Stage 1 的对抗鲁棒性
-    - 核心思路：若 $x_{w1}$ 在对抗攻击半径 $r$ 内是安全的，且 $\|x_{w2} - x_{w1}\| \leq \epsilon$，则 $x_{w2}$ 在半径 $r - \epsilon$ 内仍是安全的
-    - 设计动机：解耦两阶段需要保证后一阶段不破坏前一阶段的成果，理论保证使框架可靠
+如果用固定 $\epsilon$-ball 投影来限制偏移，不同图像的退化程度不一致，画质会忽好忽坏。这里改成在优化过程中实时监控 PSNR/SSIM，一旦画质掉到阈值就提前停手。效果是在相同准确率下 PSNR 平均高出 1–2 dB，让"抗攻击"和"看着不脏"这两个目标都更可控。
 
-### 训练与推断流程
-- **Stage 1**：在对抗样本上迭代训练 encoder（K 步 PGD 攻击 + encoder 更新），decoder 条件冻结
-- **Stage 2**：固定 encoder/decoder，直接优化 $x_{w2}$ 的像素值（梯度下降），quality-aware early-stop
-- **推断时**：正常执行 encoder 嵌入 → Stage 2 优化 → 输出最终水印图像
+**4. 两阶段解耦的理论保证：证明 Stage 2 不会拆 Stage 1 的台。**
+
+解耦的前提是后一阶段别把前一阶段的成果毁掉。论文给出一条简洁的鲁棒性保持结论：若 $x_{w1}$ 在对抗攻击半径 $r$ 内是安全的，且 $\|x_{w2}-x_{w1}\| \le \epsilon$，则 $x_{w2}$ 在半径 $r-\epsilon$ 内仍然安全。这把"约束偏移量"和"保留对抗鲁棒性"之间的关系讲清楚了，也解释了为什么设计 2 的约束不是工程上的随手一加，而是有依据的。
+
+### 损失函数 / 训练策略
+- **Stage 1**：在对抗样本上迭代训练 encoder（K 步 PGD 构造扰动 + encoder 更新），decoder 条件冻结、仅在 bit accuracy $< \tau_1$ 时更新。
+- **Stage 2**：固定 encoder/decoder，对 $x_{w2}$ 的像素做梯度下降，受 constrained image loss（$\|x_{w2}-x_{w1}\| \le \epsilon$）约束，配 quality-aware early-stop。
+- **推断**：encoder 嵌入 → Stage 2 优化 → 输出最终水印图像。
 
 ## 实验关键数据
 

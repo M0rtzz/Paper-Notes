@@ -40,38 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架名为 **Learning to Trust (L2T)**，需要两份数据：有标签源集 $\mathcal{D}_{\ell}=\{(x_i,y_i)\}$、无标签目标集 $\mathcal{D}_u=\{x_j\}$，二者不必同分布。流程分四步：
-
-1. 弱教师 $\pi_{\mathcal{W}}$ 在 $\mathcal{D}_u$ 上跑前向，产出弱标签 $\hat{y}=\pi_{\mathcal{W}}(x)$，并同步缓存最后一层、最后生成 token 的隐藏状态 $g_{\pi_{\mathcal{W}}}(x,\hat{y})$。
-2. 在 $\mathcal{D}_{\ell}$ 上根据真值是否匹配，把 $(g_{\pi_{\mathcal{W}}}(x,\hat{y}),\,\text{is\_correct})$ 当作二分类样本训练 Neural Trust Function（NTF）$\tau$。
-3. 用 $\tau$ 对 $\mathcal{D}_u$ 每条样本打信任分 $t=\tau(g_{\pi_{\mathcal{W}}}(x,\hat{y}))$，按 top-$n$ 选出高信任子集 $\tilde{\mathcal{D}}_u$。
-4. 用 $\tilde{\mathcal{D}}_u$ 上的弱标签 SFT 或 GRPO 训练强学生 $\pi_{\mathcal{S}}$。整个过程不需要 $\mathcal{D}_u$ 的真值。
-
-链式版本则把当代学生作为下一代教师，重复上述四步，逐步放大收益。
+框架叫 **Learning to Trust (L2T)**，核心是把"弱到强"里那道难闭合的差距归结为：弱教师的伪标签里混着可信和不可信两类，只要能把可信的那部分挑出来单独喂给强学生，就能逼近甚至超过真值监督。它需要两份数据——一份有标签的源集 $\mathcal{D}_{\ell}=\{(x_i,y_i)\}$ 和一份无标签的目标集 $\mathcal{D}_u=\{x_j\}$，二者不必同分布。先让弱教师 $\pi_{\mathcal{W}}$ 在 $\mathcal{D}_u$ 上前向产出弱标签 $\hat{y}=\pi_{\mathcal{W}}(x)$ 并顺手缓存隐藏状态；再在 $\mathcal{D}_{\ell}$ 上用"弱预测对不对"训出一个信任判别器 $\tau$；然后让 $\tau$ 给 $\mathcal{D}_u$ 每条样本打分、挑出高信任子集 $\tilde{\mathcal{D}}_u$；最后只用这个子集上的弱标签去 SFT 或 GRPO 训练强学生 $\pi_{\mathcal{S}}$——全程不碰 $\mathcal{D}_u$ 的真值。链式版本再把训好的学生当作下一代教师重跑一遍，把收益滚大。
 
 ### 关键设计
 
-1. **基于隐藏状态的 Neural Trust Function（NTF）**:
+**1. 基于隐藏状态的 Neural Trust Function（NTF）：到隐藏空间里判断弱标签的对错，绕开失准的输出层置信度。**
 
-    - 功能：把弱教师内部表征 $g_{\pi_{\mathcal{W}}}(x,\hat{y})\in\mathbb{R}^d$ 映射成一个 $[0,1]$ 的信任分 $\tau(\cdot)$，用于估计该弱标签为真的概率。
-    - 核心思路：输入用最后一层、最终生成 token 的隐藏向量（该 token 已通过 attention 聚合了 prefix 与中间推理）。$\tau$ 用残差 MLP 堆叠 RMSNorm-SwiGLU 块（Dropout + stochastic depth），最后接 RMSNorm + 线性头出 logit，sigmoid 转概率；loss 用类重加权的 BCE 处理标签不平衡。训练样本由 $\mathcal{D}_{\ell}$ 上"弱预测 vs 真值"自动构造，规则为任务相关 exact match（MCQA / 数学）或 best-move 匹配（象棋）。
-    - 设计动机：输出层 confidence 在难题上系统性失准；中间层早就包含"我大概是不是答对了"的可分信号。把判别器搬到隐藏空间能避开 confident-but-wrong 陷阱；同时整条管线主要成本是弱教师前向（生成弱标签时本来就要跑），$\tau$ 是个小 MLP 训练/打分几乎零开销，$C_{\text{total}}=O(\bar{C}_{\text{teacher}}(|\mathcal{D}_{\ell}|+|\mathcal{D}_u|)+C_{\text{NTF}}(e|\mathcal{D}_{\ell}|+|\mathcal{D}_u|))$ 实际被教师项主导。
+前面的核心矛盾是：输出层 confidence 在难题上系统性失准（confident-but-wrong），所以靠熵、一致性这类解码后信号选数据并不靠谱。NTF 的做法是把判别器搬回隐藏空间——它读弱教师最后一层、最终生成 token 的隐藏向量 $g_{\pi_{\mathcal{W}}}(x,\hat{y})\in\mathbb{R}^d$（这个 token 经 attention 已聚合了 prefix 与中间推理），映射成一个 $[0,1]$ 的信任分 $\tau(\cdot)$，估计"这条弱标签为真"的概率。$\tau$ 本身是个残差 MLP：堆叠 RMSNorm-SwiGLU 块（带 Dropout + stochastic depth），末端接 RMSNorm + 线性头出 logit，再 sigmoid 转概率，训练用类重加权 BCE 抗标签不平衡。它的监督信号全自动构造——在源集 $\mathcal{D}_{\ell}$ 上比对"弱预测 vs 真值"（MCQA/数学用 exact match，象棋用 best-move 匹配），匹配上就是正例。之所以这条路实用，是因为中间层早就编码了"我大概答没答对"的可分信号（Kadavath et al. 2022 等的观察），把判别器放在这里能避开 confident-but-wrong 陷阱；而且整条管线的算力几乎全在弱教师前向（生成弱标签时反正要跑），$\tau$ 是个小 MLP，训练和打分近乎零开销——总成本 $C_{\text{total}}=O\big(\bar{C}_{\text{teacher}}(|\mathcal{D}_{\ell}|+|\mathcal{D}_u|)+C_{\text{NTF}}(e|\mathcal{D}_{\ell}|+|\mathcal{D}_u|)\big)$ 实际被教师项主导。
 
-2. **In-domain 分布漂移下的零样本部署**:
+**2. In-domain 分布漂移下的零样本部署：让信任函数在有标签的源域学一次，直接迁到无标签的目标域打分。**
 
-    - 功能：放宽"必须有目标域标签"的强假设——$\tau$ 在源分布上训练，但实际部署到任务接口相同、数据分布不同的目标域上零样本打分。
-    - 核心思路：作者把泛化场景显式分成三档：ID（同 benchmark held-out）、OOD$_{\text{dist}}$（同任务接口、不同数据分布，如 MMLU $\to$ ARC-Easy）、OOD$_{\text{domain}}$（连任务接口都换，如 MCQA $\to$ 象棋）。文中所有"零样本迁移"声明默认指 OOD$_{\text{dist}}$。Table 1 显示 NTF 在 ID 与 OOD$_{\text{dist}}$ 上 AUC 达 0.83–0.92，纯度 0.69–0.98。
-    - 设计动机：现实里标签分布严重不均衡——MMLU/MATH 这种大标注集很容易拿到，AIME 之类的目标域则非常稀缺。允许 $\tau$ 在源域有标签上训练、目标域无标签部署，把信任函数的成本摊到一次性即可；同时显示 OOD$_{\text{domain}}$ 会退化也老实承认了方法边界。
+现实里标签分布极不均衡——MMLU/MATH 这类大标注集随手可得，而 AIME 之类的目标域几乎没有可用标签，要求"目标域也得有标签"就把方法卡死了。L2T 因此放宽这条假设：$\tau$ 只在源分布上训练，部署时对任务接口相同、数据分布不同的目标域做零样本打分。为了把话说清楚，作者把泛化场景显式分成三档——ID（同 benchmark 的 held-out）、OOD$_{\text{dist}}$（同任务接口、不同数据分布，如 MMLU $\to$ ARC-Easy）、OOD$_{\text{domain}}$（连任务接口都换，如 MCQA $\to$ 象棋）——文中所有"零样本迁移"默认指 OOD$_{\text{dist}}$。Table 1 显示 NTF 在 ID 与 OOD$_{\text{dist}}$ 上 AUC 达 0.83–0.92、纯度 0.69–0.98，说明信任信号确实能跨数据分布迁移；而 OOD$_{\text{domain}}$ 会退化这一点也被如实标出，算是对方法边界的诚实交代。
 
-3. **Weak-to-Strong Chain（弱到强链）**:
+**3. Weak-to-Strong Chain（弱到强链）：把训好的学生当下一代教师，不加新组件就把收益滚大。**
 
-    - 功能：把 L2T 训出的学生 $\pi_{\mathcal{S}}^{(1)}$ 作为下一轮的教师 $\pi_{\mathcal{W}}^{(2)}$，再用同样的 NTF 信任筛选训练更大的学生 $\pi_{\mathcal{S}}^{(2)}$，迭代多代。
-    - 核心思路：每一代学生因为接受了高纯度弱标签训练，自身在目标域上的准确率单调升高（论文称之为 snowballing）；新学生作为下一代教师时，产出的弱标签纯度也水涨船高，因此即便用同一个 $\tau$ 打分，可用样本量与平均准确率都会扩大。Figure 1 右下展示了链式累积增益曲线。
-    - 设计动机：单代 L2T 已经能逼近 GT 监督，但学生规模逐渐放大时仍有空间；链式结构无需引入新组件即可放大收益，且每一代的训练步骤都是同一套 L2T 协议，便于规模化。
+单代 L2T 已经能逼近真值监督，但学生规模继续放大时仍有空间，链式结构正是不引入任何新组件地把这点空间吃掉。机制上它像滚雪球（论文称 snowballing）：每一代学生因为只吃高纯度弱标签，自身在目标域上的准确率单调升高；当它转身充当下一代教师时，产出的弱标签纯度也跟着水涨船高，于是即便沿用同一个 $\tau$ 打分，可用样本量和平均准确率都会扩大。具体就是把 L2T 训出的 $\pi_{\mathcal{S}}^{(1)}$ 当作 $\pi_{\mathcal{W}}^{(2)}$，再走一遍同样的 NTF 筛选去训更大的 $\pi_{\mathcal{S}}^{(2)}$，逐代迭代（Figure 1 右下给出累积增益曲线）。因为每代都复用同一套 L2T 协议，规模化起来很顺。
 
 ### 损失函数 / 训练策略
-- NTF 训练：类重加权 BCE + AdamW（带 weight decay），评估用 AUC / ECE / Brier / Purity（top-trust 子集中真正正确的比例）。
-- 强学生训练：MCQA 任务用 LoRA-SFT 在 top-$n$ 高信任样本上拟合弱标签；数学推理用 GRPO 在高信任 rollout 上做 RL。Recovery 指标定义为 $\text{Recovery}=\frac{\text{Baseline}-\text{Base}}{\text{GT}-\text{Base}}\times 100\%$，衡量"相对 GT 训练的恢复比例"。
+NTF 用类重加权 BCE + AdamW（带 weight decay）训练，评估指标是 AUC / ECE / Brier / Purity（top-trust 子集里真正正确的比例）。强学生这边按任务分两路：MCQA 用 LoRA-SFT 在 top-$n$ 高信任样本上拟合弱标签，数学推理用 GRPO 在高信任 rollout 上做 RL。衡量"相对真值训练恢复了多少"的指标定义为 $\text{Recovery}=\frac{\text{Baseline}-\text{Base}}{\text{GT}-\text{Base}}\times 100\%$。
 
 ## 实验关键数据
 

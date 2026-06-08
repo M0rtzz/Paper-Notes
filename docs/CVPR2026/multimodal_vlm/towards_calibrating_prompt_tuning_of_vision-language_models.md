@@ -40,30 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在标准prompt tuning的交叉熵损失基础上，添加两个互补正则项：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda_{\text{Margin}}\mathcal{L}_{\text{Margin}} + \lambda_{\text{mom}}\mathcal{L}_{\text{mom}}$。无需额外推理计算。
+论文要解决的是prompt tuning把CLIP调出"双重误校准"的问题：基类被调得欠自信，新类被调得过自信。作者先做了一个关键观察——逐样本的logit margin（正确类与最强竞争类的分差）的统计特性，和ECE之间存在稳定的相关模式，于是把校准问题转化成"管住margin的分布"加"保住文本嵌入的几何"。具体做法是在原有交叉熵之外挂两个正则项，整体损失为 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda_{\text{Margin}}\mathcal{L}_{\text{Margin}} + \lambda_{\text{mom}}\mathcal{L}_{\text{mom}}$。两项都只在训练时生效，推理阶段一行额外计算都不加。
 
 ### 关键设计
 
-1. **均值-方差Margin正则化 (Mean-Variance Margin Regularization)**：
+**1. 均值-方差 Margin 正则化：在 logit 空间同时治欠自信和过自信。**
 
-    - 功能：稳定批次内logit margin的统计特性
-    - 核心思路：定义per-sample margin $m_i = z_{i,y_i} - \max_{j\neq y_i} z_{i,j}$，损失为 $\mathcal{L}_{\text{Margin}} = -\alpha \cdot \frac{1}{B}\sum_i m_i + \beta \cdot \text{Var}(m_1,...,m_B)$
-    - 设计动机：均值项（加权 $\alpha$）促进基类充分分离解决欠自信；方差项（加权 $\beta$）防止margin不一致带来的新类过自信。如果只有均值项，当top-1预测错误时会拉大错误类别的margin，加剧过自信
+基类欠自信的根源是正确类和竞争类挨得太近、margin 太小，因此第一反应是把 margin 平均值拉大。但只拉均值会出新问题：当 top-1 预测本身就错时，被拉大的是错误类别的 margin，反而把新类推向更严重的过自信。作者的办法是均值和方差一起约束。对每个样本定义 margin $m_i = z_{i,y_i} - \max_{j\neq y_i} z_{i,j}$，损失写成
 
-2. **文本矩匹配损失 (Text Moment-Matching Loss)**：
+$$\mathcal{L}_{\text{Margin}} = -\alpha \cdot \frac{1}{B}\sum_i m_i + \beta \cdot \text{Var}(m_1,\dots,m_B)$$
 
-    - 功能：保持prompt tuning后文本嵌入的全局统计特性与frozen CLIP一致
-    - 核心思路：对齐tuned和frozen文本嵌入的一阶矩（均值）和二阶矩（协方差）: $\mathcal{L}_{\text{mom}} = \|\mu_{\tilde{c}} - \mu_{c^0}\|_2^2 + \|\Sigma_{\tilde{c}} - \Sigma_{c^0}\|_F^2$
-    - 设计动机：margin正则在logit空间操作，不直接约束嵌入空间几何。矩匹配保持语义中心和散度，防止prompt导致的嵌入偏移破坏类间关系。与直接L2对齐不同，矩匹配只约束全局统计量，保留局部任务适配的灵活性
+均值项（权重 $\alpha$）负责把基类充分分开、补回自信；方差项（权重 $\beta$）压住批次内 margin 的离散程度，不让个别样本的 margin 被拉得过头，从而抑制新类的过自信。一拉一压的组合，正好对应"基类要更自信、新类要更收敛"这对相反需求。
 
-3. **两个正则项的互补性**：
+**2. 文本矩匹配损失：在嵌入空间保住 CLIP 原有的语义几何。**
 
-    - Margin损失在logit空间增强鉴别性，但可能在top-1错误时加剧新类过自信
-    - 矩匹配损失在嵌入空间稳定几何，抵消margin带来的failure mode
-    - 实验证实单独用margin可能增加新类ECE，但加上矩匹配后一致改善
+Margin 正则只动 logit，管不到嵌入空间本身——prompt 学得太放飞时，文本嵌入会整体偏移，把类与类之间的相对关系破坏掉，泛化校准随之恶化。作者用一个矩匹配项把 tuned 文本嵌入的全局统计量钉在 frozen CLIP 上，对齐一阶矩（均值）和二阶矩（协方差）：
+
+$$\mathcal{L}_{\text{mom}} = \|\mu_{\tilde{c}} - \mu_{c^0}\|_2^2 + \|\Sigma_{\tilde{c}} - \Sigma_{c^0}\|_F^2$$
+
+它和直接对每个类别嵌入做 L2 对齐有本质区别：L2 会把嵌入硬拽回原位、连任务适配也一起冻住；矩匹配只约束整批嵌入的中心和散度，保住语义几何的同时，仍给局部的下游适配留出空间。
+
+**3. 两项的互补性：一个补漏、一个堵漏。**
+
+两个正则不是简单叠加，而是各自补对方的短板。Margin 项在 logit 空间增强鉴别性，但带着"top-1 错误时会加剧新类过自信"这个 failure mode；矩匹配项在嵌入空间稳住几何，恰好抵消这个副作用。消融也印证了这一点：单用 margin 时新类 ECE 可能不降反升，叠上矩匹配后两类 ECE 才一致改善。
 
 ### 损失函数 / 训练策略
-总损失即上述三项之和，$\lambda_{\text{Margin}}$ 和 $\lambda_{\text{mom}}$ 控制正则强度。方法对底层prompt tuning技术完全无关，可作为插件使用。
+总损失即上述三项之和，$\lambda_{\text{Margin}}$、$\lambda_{\text{mom}}$ 分别控制两个正则的强度。整套方法与底层 prompt tuning 技术解耦，对 CoOp、CoCoOp、MaPLe 等都能当即插即用的插件挂上去。
 
 ## 实验关键数据
 

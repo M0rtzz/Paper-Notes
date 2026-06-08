@@ -40,34 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文是评测批判性研究，无新模型。围绕两个验证范式展开：
-
-1. **Zero-shot 对照**：拿和 $\mathcal{M}_2$ 同款的预训练模型，把 $x_{\text{input}} + x_{\text{prompt}}$ 拼起来直接问，无任何激活 patch。如果它在 verbalization benchmark 上能与 Patchscopes / LIT 持平，说明这些 benchmark 不需要内部激活。
-2. **激活反演 + 解释**：先用 T5-Base 或 Llama3 当 inversion model，把 $\mathcal{M}_1$ 的激活反演回近似的输入文本 $\hat{x}$，再把 $\hat{x}$ 喂给 $\mathcal{M}_2$ 让它回答 $x_{\text{prompt}}$。如果这种 "反演 → 回答" pipeline 达到与 Patchscopes 相当的性能，说明 verbalization "成功" 完全可被 "激活 = 输入文本的有损副本 + verbalizer 知识" 解释。
-3. **知识错配实验**：构造 target 模型有知识但 verbalizer 没有 vs verbalizer 有但 target 没有的对比，看哪种情况 verbalizer 答得更准。
+本文是一篇评测批判性研究，没有新模型，要解决的是 "verbalizer 的输出到底反映了 target 的内部激活、还是 verbalizer 自己的知识" 这个从未被检验的假设。它把问题转成三组层层递进的反事实对照：先用 zero-shot 基线测 "不喂激活能答多少"，再用激活反演测 "激活里到底有没有超出输入文本的信息"，最后用知识错配实验测 "知识冲突时 verbalizer 信谁"。三组实验都共享同一个判定标准——output 包含 ground-truth substring（忽略大小写）即算对，与 prior verbalization 工作对齐——并用 McNemar test + Bonferroni 校正做显著性检验。
 
 ### 关键设计
 
-1. **Zero-shot 基线作为反事实**:
+**1. Zero-shot 基线：用最朴素的反事实测激活的必要性**
 
-    - 功能：测量 "不借激活、只看原始输入" 的天花板，确认现有评测的 shortcut 程度。
-    - 核心思路：对 Patchscopes / LIT 沿用的 6 类 feature extraction 数据集（country_curr / food_country / ath_pos / ath_sport / prod_comp / star_const），$\mathcal{M}_1 = \mathcal{M}_2 = $ Llama3.1-8B-Instruct 或 Ministral-8B-Instruct，把 $x_{\text{input}}$ + question 直接拼起来问 $\mathcal{M}_2$ 看准确率。再与 LIT 和 Patchscopes（layer 1-15 平均）对比。判断标准：output 中包含 ground-truth substring（忽略大小写）即算对，与 prior verbalization 工作一致。
-    - 设计动机：这是最严苛的 "必要性测试"——如果 verbalization 不带激活就能赢，那激活的边际贡献就是负的；现有方法被推荐用作 interpretability 工具的合法性就崩了。
+verbalization 方法被推荐作可解释性工具，前提是 "激活带来了只靠输入拿不到的信息"，但这点从没被反过来证伪。本文针对 Patchscopes / LIT 沿用的 6 类 feature extraction 数据集（country_curr / food_country / ath_pos / ath_sport / prod_comp / star_const），令 $\mathcal{M}_1 = \mathcal{M}_2 = $ Llama3.1-8B-Instruct 或 Ministral-8B-Instruct，把 $x_{\text{input}}$ + question 直接拼起来问 $\mathcal{M}_2$，全程不做任何激活 patch，再与 LIT 和 Patchscopes（layer 1-15 平均）对比。这是最严苛的必要性测试：如果不喂激活就能与 verbalization 持平甚至更高，那激活的边际贡献就是零乃至负的，"这些方法揭示了 target 内部状态" 的合法性当场崩塌。
 
-2. **激活反演 + 替代解释**:
+**2. 激活反演：构造 "激活 = 输入有损副本" 的替代解释**
 
-    - 功能：揭示 verbalizer 即使没拿到激活，也能从 "反演近似输入" 这条捷径达到接近的性能。
-    - 核心思路：训一个 T5-Base 或 Llama3 反演器，把 $\mathcal{M}_1$ 的 layer-$\ell$ 激活映射回近似的 $\hat{x}$；然后把 $\hat{x}$ 当作输入交给 $\mathcal{M}_2$ 做正常 prompt + answer。如果这条 pipeline 达到 Patchscopes / LIT 的可比性能，就说明真正起作用的是 "激活里残留的输入信息"，而不是 "target 模型对输入做的特殊处理"。论文还做了单层（$\ell=15$）与多层平均的细分对比，验证不同 patch 强度下结论一致。
-    - 设计动机：是 Section 3 "zero-shot 已经能赢" 的进一步加强——即便有人争辩 "Patchscopes 的成功来自激活带来的额外信息"，本节证明那点额外信息也只是输入的复述，不是 "特权处理过的知识"。
+即便有人坚持 "Patchscopes 的成功来自激活里的额外信息"，也得先排除一种平凡解释——那点信息只是输入文本的复述。为此本文训一个 T5-Base 或 Llama3 反演器，把 $\mathcal{M}_1$ 的 layer-$\ell$ 激活映射回近似输入 $\hat{x}$，再把 $\hat{x}$ 当普通输入交给 $\mathcal{M}_2$ 做 prompt + answer，全程仍不直接 patch 激活。如果这条 "反演 → zero-shot 回答" 的 pipeline 就能逼近 Patchscopes / LIT 的性能，就说明真正起作用的是激活里残留的输入信息加上 verbalizer 自身常识，而不是 target 对输入做的任何 "特权处理"。论文还拆出单层（$\ell=15$）与多层平均两档对比，确认不同 patch 强度下结论一致。
 
-3. **知识错配对照实验**:
+**3. 知识错配实验：直接测忠实性**
 
-    - 功能：区分 verbalizer 报告的是 target 模型的知识还是它自己的。
-    - 核心思路：构造 (subject, relation, object) 三元组，分两类——(a) $\mathcal{M}_1$ 知道但 $\mathcal{M}_2$ 不知道（如 fine-tune $\mathcal{M}_1$ 学个新事实）；(b) $\mathcal{M}_2$ 知道但 $\mathcal{M}_1$ 不知道。然后让 verbalization 输出与各模型的独立 zero-shot 输出比较：如果 verbalization 倾向 (a) → 说明它确实在描述 target 的知识；如果倾向 (b) → 说明它在编造。论文发现答案接近 (b)——verbalizer 经常 fabricate 它自己的知识充当 "target 的解释"。
-    - 设计动机：这是核心 "忠实性" 测试。前两个实验只能证明 benchmark 有 shortcut，这一实验能直接证明 verbalizer 在知识冲突下不忠实——这是最具杀伤力的发现。
+前两组实验只能说明 benchmark 有 shortcut，还不能证明 verbalizer 不忠实；这一组才是核心的忠实性测试。本文构造 (subject, relation, object) 三元组并分成两类——(a) $\mathcal{M}_1$ 知道但 $\mathcal{M}_2$ 不知道（例如 fine-tune $\mathcal{M}_1$ 学一个新事实）；(b) $\mathcal{M}_2$ 知道但 $\mathcal{M}_1$ 不知道——然后把 verbalization 输出与两个模型各自独立的 zero-shot 输出对照。若 verbalization 倾向 (a)，说明它确实在描述 target 的知识；若倾向 (b)，说明它在拿自己的常识编造 "target 的解释"。结果接近 (b)：当知识冲突时，verbalizer 频繁 fabricate 出 target 根本不具备的答案，这是全文最具杀伤力的 unfaithfulness 证据。
 
-### 损失函数 / 训练策略
-本文不训练新模型，主要使用：(1) Llama3.1-8B-Instruct 和 Ministral-8B-Instruct 作为 $\mathcal{M}_1$ / $\mathcal{M}_2$；(2) LIT 沿用 LatentQA 数据集 fine-tune verbalizer；(3) 跨家族 verbalization 时学一个 affine map 把激活从 Llama3 空间映到 Ministral 空间。所有显著性检验用 McNemar test + Bonferroni 校正。
+整套实验所用模型与配置为：$\mathcal{M}_1$ / $\mathcal{M}_2$ 取 Llama3.1-8B-Instruct 与 Ministral-8B-Instruct；LIT 沿用 LatentQA 数据集 fine-tune verbalizer；跨家族 verbalization 时额外学一个 affine map 把激活从 Llama3 空间映到 Ministral 空间。
 
 ## 实验关键数据
 

@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **Soft mask token 注入 + EMA 在线更新**:
+**1. Soft mask token 注入 + EMA 在线更新：用什么向量当"占位符"才能骗出未来 token。**
 
-    - 功能：构造能从冻结 LLM 中探出多个未来 token 的"占位向量"，并随生成过程自适应。
-    - 核心思路：用 prompt 嵌入均值 $m_i = \frac{1}{t}\sum_{j=1}^t \mathbf{e}_j$ 初始化所有 mask token，让占位向量在统计上与当前 prompt 同分布，比"取最后 K 个 token 的嵌入"（hard init）或"按 embedding 表整体均值/方差采样"都更稳。生成阶段每接受一个新 token $x_{t+s}$ 就用 $m_i[s+1] = m_i[s] + \lambda(\mathbf{e}_{t+s} - m_i[s])$（$\lambda = 0.1$）做 EMA 更新，把最新上下文渗进 mask 表征。注意：同一棵树里所有未来轨迹共享同一个 $m_i$ 值，差异化完全靠 position id 和 tree-attention 路径产生。
-    - 设计动机：作者用 Dolly-Databricks 数据观察到，对被接受的 token，mask token 和真实未来 token 的隐状态余弦相似度从第 15 层开始稳步爬到 ~0.45；被拒绝的 token 则停在 ~0.35。Lemma 3.1 进一步证明：只要 $\cos(h_m, h_v) \geq \delta^*$，真实未来 token 必落入 mask token logits 的 Top-K。也就是说 mean-prompt 初始化能最大化这种"层间对齐"，从而保证 Top-K 命中率，**这是整套训练免费方法 work 的理论根基**。
+ESP 要在一次前向里探出多个未来 token，前提是给序列末尾塞进的"占位向量"能被深层网络拉向真实未来 token 的表征。作者不取"prompt 最后 K 个 token 的嵌入"（hard init）、也不按 embedding 表的整体均值/方差采样，而是直接用 prompt 嵌入均值 $m_i = \frac{1}{t}\sum_{j=1}^t \mathbf{e}_j$ 初始化全部 mask token——这样占位向量在统计上与当前 prompt 同分布，比另外两种初始化都更稳。生成过程中每接受一个新 token $x_{t+s}$，就用 $m_i[s+1] = m_i[s] + \lambda(\mathbf{e}_{t+s} - m_i[s])$（$\lambda = 0.1$）做 EMA 更新，把最新上下文持续渗进 mask 表征；同一棵树里所有未来轨迹共享同一个 $m_i$ 值，分支差异完全靠 position id 和 tree-attention 路径产生。
 
-2. **基于累计概率的动态草稿树扩展（Algorithm 1）**:
+之所以"prompt 同分布"是关键，是因为作者在 Dolly-Databricks 上观察到一个清晰现象：对被接受的 token，mask token 与真实未来 token 的隐状态余弦相似度从第 15 层起稳步爬到 ~0.45，而被拒绝的 token 停在 ~0.35。Lemma 3.1 把它形式化——只要 $\cos(h_m, h_v) \geq \delta^*$，真实未来 token 就必然落入 mask token logits 的 Top-K。mean-prompt 初始化恰好能最大化这种"逐层对齐"，从而保证 Top-K 命中率，**这是整套训练免费方法能 work 的理论根基**。
 
-    - 功能：在固定 block complexity（一次前向能处理的 token 总数）预算下，自适应地决定树的宽度分配，避免对每个任务手工调 Top-K 网格。
-    - 核心思路：采用 Top-1 expansion——每层只对最高概率节点继续展开子节点。具体地，给定预算 $B$、mask token 数 $k$，在每层 $i$ 对所有当前 frontier 节点采 $B-i$ 个候选，更新累计概率 $P(c) = P(n) \cdot P(t_j \mid l_n)$，再按累计概率取 Top-$(B-i)$ 进入下一层；最终保留累计概率最高的 $B-1$ 个轨迹。对应的 block complexity 闭式表达为 $\text{Block Complexity} = (k+1)(1 + \sum_{i=1}^k K_i)$。论文实测：dynamic 在 BC=30/60、两种 LLaMA3 上都打平或超过最佳静态 $[K_1, K_2]$ 配置，省下了离线搜索成本。
-    - 设计动机：mask token 在不同 prompt 下"该展宽还是该展深"差别极大——开放任务（writing/reasoning）更适合"宽而浅"（更多探索），封闭任务（math/translation）更适合"窄而深"（更聚焦的利用）。固定 Top-K 必然在某一类任务上吃亏；用累计概率做 budget 分配相当于让模型自己决定"在哪里多花预算"，且 $B-i$ 的衰减天然鼓励早期分支多采样、后期聚焦高置信轨迹。
+**2. 基于累计概率的动态草稿树扩展（Algorithm 1）：让模型自己决定该展宽还是展深。**
 
-3. **GPU 友好的静态树注意力与位置索引实现**:
+固定的 Top-K 草稿树有个硬伤：mask token 在不同 prompt 下"该展宽还是展深"差别极大——开放任务（writing/reasoning）适合"宽而浅"多探索，封闭任务（math/translation）适合"窄而深"更聚焦，任何一组手工 Top-K 都会在某类任务上吃亏。ESP 改用累计概率驱动的 Top-1 expansion：给定预算 $B$、mask token 数 $k$，每层 $i$ 对当前 frontier 节点采 $B-i$ 个候选，按 $P(c) = P(n) \cdot P(t_j \mid l_n)$ 更新累计概率，取 Top-$(B-i)$ 进入下一层，最终保留累计概率最高的 $B-1$ 条轨迹。$B-i$ 的逐层衰减天然鼓励早期多采样分支、后期聚焦高置信轨迹，相当于让模型自己决定"在哪里多花预算"。
 
-    - 功能：把"树形注意力掩码 + 位置 id"从逐节点串行迭代变成可缓存的批量操作，消除 tree decoding 的隐藏开销。
-    - 核心思路：传统 tree-attention 需要每步遍历树节点构造掩码，CPU/串行操作严重拖慢 GPU。作者把 attention mask 缓存下来，每接受新 token 时只**增量追加列**而非重算整张掩码；位置 id 通过简单 offset 复用。配合 mask token 在序列里被统一摆到末尾（Figure 3）的布局，使一次前向同时覆盖"最后被接受 token + 草稿树所有节点 + 所有 mask token"。这一项是**纯工程优化**，但对吞吐影响巨大。
-    - 设计动机：表 4 显示，naive 实现下 LLaMA3.1-8B-Instruct 在 BC=60 时甚至只有 1.05–1.07× 的端到端加速（即树搜索的开销几乎吃掉了"少 forward"的收益）；切换到 efficient 实现后跃升到 1.35–1.38×，平均 ~21% 增益、BC=60 时高达 29–30%。这告诉读者：训练免费 MTP 的 throughput 瓶颈往往在 attention mask 构造，而非 token 接受率本身。
+这里把"一次前向能处理多少 token"显式抽象成 block complexity，并给出闭式表达 $\text{Block Complexity} = (k+1)(1 + \sum_{i=1}^k K_i)$，使不同树形在同一预算下可比。实测中 dynamic 在 BC=30/60、两种 LLaMA3 上都打平或超过最佳静态 $[K_1, K_2]$ 配置，免去了离线网格搜索。
+
+**3. GPU 友好的静态树注意力与位置索引实现：别让 tree mask 的构造吃掉省下的 forward。**
+
+tree decoding 有个容易被忽视的隐藏开销：传统 tree-attention 每步都要遍历树节点重新构造掩码，这类 CPU/串行操作会严重拖慢 GPU。ESP 把 attention mask 缓存下来，每接受新 token 时只**增量追加列**而非重算整张掩码，position id 也通过简单 offset 复用；再配合 mask token 统一摆到序列末尾的布局（Figure 3），让一次前向同时覆盖"最后被接受的 token + 草稿树全部节点 + 所有 mask token"。这一项是纯工程优化，却对吞吐影响巨大。
+
+表 4 把这一点讲得很直白：naive 实现下 LLaMA3.1-8B-Instruct 在 BC=60 时端到端只有 1.05–1.07× 加速，树搜索开销几乎抵消了"少 forward"的收益；换成 efficient 实现后跃升到 1.35–1.38×，平均约 21% 增益、BC=60 时高达 29–30%。它提醒后续工作：训练免费 MTP 的吞吐瓶颈往往在 attention mask 构造，而非 token 接受率本身。
 
 ### 损失函数 / 训练策略
 **完全 training-free**。不引入任何可训练参数，不动 LLM 权重。唯一的超参是 EMA 系数 $\lambda = 0.1$、mask token 数 $k$（实测 $k = 1, 2$ 最优；$k = 3$ 反而下降，因为 LLM 本身只为 next-token 训练）、以及 block complexity $B \in \{10, 30, 60\}$。验证阶段沿用 speculative decoding 的精确匹配 sample matching，保证生成分布与原始自回归无差异（lossless）。

@@ -41,36 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ExCyTIn-Bench 由三部分组成：
-
-1. **数据层**：从 Azure 租户 "Alpine Ski House"（一个微软用于安全产品演示的虚构公司）采集 57 张 Sentinel 日志表（EmailEvents、SecurityAlert、SecurityIncident 等），里面注入了 8 条独立的多阶段攻击链（如 Manatee Tempest 勒索、BEC 账号接管、SAP 财务篡改等），每条攻击链都有真实历史攻击的剧本依据，且 alert 数从 7 到 7739 不等，时间跨度 2 小时到 5 天。
-2. **问题生成层**：基于 alert-entity 二部图自动生成 7542 道题，其中 589 道作为测试集。
-3. **环境层**：把全部日志灌进一个 MySQL Docker，Agent 通过 ReAct 风格循环提交 SQL 查询 → 收到表格反馈 → 推理 → 给 final answer；评测时按"是否找到解路径上的中间节点"算 partial reward。
-
-输入是一段 system prompt + 一道安全问题（带 seed alert 和起始实体上下文），输出是 Agent 在最多 NN 步交互后给出的 final answer 字符串，再用 ground-truth 实体匹配判分。
+ExCyTIn-Bench 把"网络威胁调查"做成一个可交互、可判分的闭环，由数据、出题、环境三层拼起来。数据层从微软用于安全演示的虚构 Azure 租户 "Alpine Ski House" 采集 57 张 Sentinel 日志表（EmailEvents、SecurityAlert、SecurityIncident 等），里面注入了 8 条独立的多阶段攻击链（Manatee Tempest 勒索、BEC 账号接管、SAP 财务篡改等），每条都有真实历史攻击的剧本依据，alert 数从 7 到 7739 不等、时间跨度 2 小时到 5 天。出题层在每条攻击链上用 alert-entity 二部图自动生成 7542 道题（589 道作测试集）。环境层把全部日志灌进一个只读 MySQL Docker，Agent 拿到一道带 seed alert 和起始实体上下文的安全问题后，以 ReAct 循环反复"提交 SQL 查询 → 读表格反馈 → 推理"，直到给出 final answer 字符串，再用 ground-truth 实体匹配、按是否摸到解路径上的中间节点算 partial reward。
 
 ### 关键设计
 
-1. **二部图建图与多跳问题模板**：
+**1. 二部图建图与多跳问题模板：把"出题"从凭经验变成图上采样。**
 
-    - 功能：从原始日志自动构造"问题-答案-解路径"三元组，无需人工出题。
-    - 核心思路：对每条 incident，定义 $G=(U,V,E)$，其中 $U$ 是 alert 节点、$V$ 是 entity 节点，边 $E$ 由 alert 表中"entities"列里出现的实体连出。挑两个 alert 节点 $u_s, u_t$ 作为起讫，调用 `GetFarthestEntities` 从 $u_s$ 选 $k=2$ 个离 $u_t$ 最远的实体当背景 $V_s$、从 $u_t$ 选 1 个最远实体 $v_e$ 当答案，让 LLM 围绕 $(u_s, V_s, v_e, u_t)$ 写一道"已知 X 朝 Y 调查"的题；shortest path 自动成为"标准解"。
-    - 设计动机：直接让 LLM 通读 incident 写题会写出泛泛、缺乏唯一答案的问题；二部图把"问题难度=路径长度、答案=终点节点、IoC=路径节点"三件事一次性结构化，可解释、可复用、可扩展到新日志。
+直接让 LLM 通读一整条 incident 自由出题，写出来的往往泛泛、没有唯一答案，难度也无法量化。作者注意到人类 SOC 分析师其实是在一张隐含的 alert-entity 二部图上游走，于是把它显式化：对每条 incident 定义 $G=(U,V,E)$，$U$ 是 alert 节点、$V$ 是 entity 节点（IP、账号、域名等 IoC），边 $E$ 由 alert 表里 "entities" 列出现的实体连出。出题时挑两个 alert 节点 $u_s, u_t$ 作起讫，调用 `GetFarthestEntities` 从 $u_s$ 选 $k=2$ 个离 $u_t$ 最远的实体当背景 $V_s$、从 $u_t$ 选 1 个最远实体 $v_e$ 当答案，让 LLM 围绕 $(u_s, V_s, v_e, u_t)$ 写一道"已知 X、朝 Y 调查"的题，两点间的最短路径自动成为标准解。这样一次性把三件事结构化：问题难度 = 路径长度、答案 = 终点节点、IoC = 路径上的节点；既保证答案唯一、解路径可解释，又能无缝平移到任何新灌入的日志。
 
-2. **SQL Docker 沙盒 + ReAct 交互环境**：
+**2. SQL Docker 沙盒 + ReAct 交互环境：用确定性动作空间贴近真实 SOC 工作流。**
 
-    - 功能：把 LLM Agent 装进一个可读但只读的 MySQL 环境，让它通过查询动作来"调查"。
-    - 核心思路：参考 InterCode，每一步 Agent 输出一条 SQL（动作），环境返回查询结果（观察），直到 Agent 给 `submit(answer)`。环境还支持 ReAct、Best-of-N、Self-Reflection、Expel 等不同 wrapper，方便横向比较 test-time scaling 策略。
-    - 设计动机：用 SQL 做动作空间，既贴近真实 SOC 分析师工作流（KQL/SQL 查询日志），又把"自然语言→可验证动作"这一步压成确定性接口，避免开放工具调用带来的评测噪声。
+要测"端到端调查"就不能只让模型读文本，得让它真去查日志。本文参考 InterCode 把动作空间收成 SQL：每一步 Agent 输出一条 SQL（动作），只读的 MySQL 环境返回查询结果（观察），如此往复直到 Agent 调用 `submit(answer)`。选 SQL 而非开放工具调用有两层考虑——一是 KQL/SQL 查日志本就是 SOC 分析师的日常，贴近真实工作流；二是把"自然语言意图 → 可验证动作"压成确定性接口，避免开放工具调用带来的评测噪声。环境外层还挂了 ReAct、Best-of-N、Self-Reflection、Expel 等可替换 wrapper，方便在同一套题上横向比较各种 test-time scaling 策略。
 
-3. **基于解路径的渐进式 reward**：
+**3. 基于解路径的渐进式 reward：用衰减式部分奖励拉开模型差距。**
 
-    - 功能：不是 0/1 评分，而是按 Agent 在最短解路径上摸到多少个中间节点给 partial reward，区分"完全失败 / 找到一半 / 拿到最终答案"。
-    - 核心思路：给最短解路径 $\mathcal{S}=[s_1,\dots,s_n]$，先 check 最终答案是否正确，若正确直接给 1；否则反向回溯，对每个中间节点 $s_i$ 用 `check_step` 判断 Agent 历史轨迹里是否查到过，按指数衰减 $r=\sum d\cdot\gamma^{|\mathcal{S}|-i}$ 累加，$\gamma=0.4$。
-    - 设计动机：威胁调查很难做到"一击命中"，二元评分会让所有 Agent 看起来都差不多；衰减式 partial reward 既鼓励多跳进展、又避免奖励"全靠瞎走也能蹭到"的浅层节点。
+威胁调查很难一击命中，若用 0/1 二元评分，所有 Agent 看起来都差不多、benchmark 要么全员零分要么很快饱和。本文改成沿最短解路径给部分奖励：设解路径 $\mathcal{S}=[s_1,\dots,s_n]$，先 check 最终答案，正确直接给 1；否则从终点反向回溯，对每个中间节点 $s_i$ 用 `check_step` 判断 Agent 的历史轨迹里是否查到过，按指数衰减累加
+
+$$r=\sum_i d\cdot\gamma^{\,|\mathcal{S}|-i},\quad \gamma=0.4$$
+
+越靠近最终答案的节点权重越高（$\gamma<1$ 让远端浅层节点贡献被压低）。这样既鼓励多跳推进、给"走到一半"的 Agent 应得的分，又不会奖励那些靠瞎走蹭到浅层节点的轨迹，从而在所有模型间拉出有区分度的分数。
 
 ### 损失函数 / 训练策略
-本文是 benchmark 论文，**不训练任何模型**，只评测现成 LLM。问题生成阶段用 GPT-4 类模型按 prompt 模板生成 QA + solution，再人工抽检。评测时把所有 baseline 跑在统一 SQL 环境里，按上面 partial reward 打分。
+本文是 benchmark 论文，**不训练任何模型**，只评测现成 LLM。出题阶段用 GPT-4 类模型按上面的二部图模板生成 QA + solution，再人工抽检；评测阶段把所有 baseline 跑在统一的 SQL 环境里，按解路径 partial reward 打分。
 
 ## 实验关键数据
 

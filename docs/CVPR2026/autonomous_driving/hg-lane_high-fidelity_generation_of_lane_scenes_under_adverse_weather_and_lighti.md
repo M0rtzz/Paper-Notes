@@ -41,68 +41,43 @@ tags:
 
 ## 方法详解
 
-### 整体流程
+### 整体框架
 
-HG-Lane采用两阶段生成流水线，对每张输入的正常天气图像$I$：
+HG-Lane要解决的是一个很具体的工程难题：手里有大量晴天/白天的车道图和现成的车道线标注，怎么把它们"翻译"成雪、雨、雾、夜、黄昏的样子，同时让车道线一根都不挪位，使旧标注能直接套用。整条流水线对每张正常天气图像$I$分两步走：先做Stage-I结构感知反向扩散，把天气换掉但用控制信号死死锁住车道几何，得到中间图$I'$；再仅对夜间/黄昏这类需要大幅改色调的场景做Stage-II外观精修，补一刀全局光照。两个阶段都直接用**预训练**的ControlNet系列模型，不在车道数据上做任何fine-tune——这也是它复现门槛低的关键。
 
-- **Stage-I**：Structure-aware Reverse Diffusion → 生成保留车道结构的天气变换图像$I'$
-- **Stage-II**（仅night/dusk）：Appearance-aware Refinement → 对$I'$进一步调整光照风格
+### 关键设计
 
-两个阶段均使用**预训练**的ControlNet模型，无需针对车道数据fine-tune。
+**1. 控制信息融合：把车道标注塞进控制图，让扩散模型"看得见"车道线。**
 
-### 模块1：Control Information Fusion（控制信息融合）
-
-**核心问题**：如何构建一个既能指导天气生成、又能精确保留车道位置的控制信号？
-
-**方案**：将三种互补信息融合为单一控制图$C_0$：
+直接拿原图的Canny边缘去喂ControlNet会有个隐患——车道线是又细又长的线段，在密密麻麻的边缘里很容易被去噪过程当成噪声抹掉；可如果只用车道标注当控制信号，又丢了道路边界、车辆、路牌这些场景级布局，生成的图会"飘"。HG-Lane的做法是把两者各取所长融成单张控制图$C_0$：
 
 $$C_0 = \text{Canny}(I) \oplus (\text{LaneAnnotation}(I) \odot \text{ColorMask})$$
 
-具体步骤：
+一路是全图Canny边缘$E=\text{Canny}(I)$，提供道路边界、车辆轮廓、路标等全局结构约束；另一路把原始车道线标注（2D坐标点集）按车道类别上色——左/右车道、实线/虚线用不同颜色，渲染成彩色蒙版，再与Canny图通道级叠加。这样车道线在控制图里既有周围场景的上下文，又顶着一个颜色鲜明的显式强信号，扩散模型再也不会把它忽略掉。消融里这一融合相比单用Canny或单用lane能多出三到五成的增益，正说明"全局布局+显式车道"缺一不可。
 
-1. **Canny边缘图** $E = \text{Canny}(I)$：提取原图的全局结构信息（道路边界、车辆轮廓、路标等），为扩散模型提供场景级布局约束
-2. **车道标注着色图**：取原始车道线标注（2D坐标点集），按车道类别赋予不同颜色，渲染为彩色蒙版$L_{\text{color}}$。不同颜色帮助模型区分左/右车道、实/虚线
-3. **融合叠加**：将Canny边缘图与着色车道标注进行通道级叠加，得到融合控制图$C_0$
+**2. Stage-I 结构感知反向扩散：用 Canny-ControlNet 锁几何，靠文本提示换天气。**
 
-**设计动机**：单独使用Canny边缘时，车道线作为细线段容易在扩散过程中被忽略；单独使用车道标注缺乏场景全局结构。两者融合后，车道线在控制图中既有全局上下文又有显式的强信号。
-
-### 模块2：Stage-I — Structure-aware Reverse Diffusion
-
-**架构**：基于Stable Diffusion + Canny-ControlNet的条件生成流程。
-
-**输入**：
-- 控制图$C_0$（融合后的Canny+lane信息）
-- Category-specific text prompt：根据目标天气类别使用特定的文本提示，如"A road scene with lane markings during heavy snowfall"
-
-**生成过程**：
+有了$C_0$，Stage-I就是一个标准的Stable Diffusion + Canny-ControlNet条件生成。去噪每一步的噪声预测把基础SD和ControlNet两路相加：
 
 $$\epsilon_\theta(z_t, t, c_{\text{text}}, C_0) = \text{SD}(z_t, t, c_{\text{text}}) + \text{ControlNet}(z_t, t, C_0)$$
 
-Canny-ControlNet在latent space的每一步去噪中注入结构约束，确保生成结果的边缘分布与$C_0$高度一致。由于$C_0$中包含了显式的车道标注信息，车道线的位置和形状被强制保留。
+ControlNet在latent space里逐步注入结构约束，强制生成结果的边缘分布贴合$C_0$；因为$C_0$里带着显式的车道标注信息，车道线的位置和形状就被钉死了。换什么天气则交给类别专属的文本提示$c_{\text{text}}$负责——snow强调路面积雪与飘雪、rain强调路面反光与雨滴模糊、fog强调远处能见度下降的朦胧、night强调暗光与车灯、dusk强调暖色渐暗、shadow强调局部遮挡阴影。一句"A road scene with lane markings during heavy snowfall"这样的提示，配上锁好几何的控制图，就能在不动车道的前提下把场景刷成目标天气。
 
-**Category-specific Prompts**：针对6种天气/光照条件分别设计文本提示：
-- Snow: 强调路面积雪、飘落雪花的视觉特征
-- Rain: 强调路面反光、雨滴模糊
-- Fog: 强调远处能见度降低、朦胧感
-- Night: 强调整体暗光、车灯照明
-- Dusk: 强调天空渐暗、暖色调光线
-- Shadow: 强调局部遮挡阴影
+**3. Stage-II 外观感知精修：只给夜景/黄昏补一刀全局光照。**
 
-### 模块3：Stage-II — Appearance-aware Refinement
-
-**动机**：Stage-I使用Canny-ControlNet主要控制结构，对全局色调/亮度的控制力不足。尤其是night和dusk场景，需要大幅度改变图像整体亮度和色温，仅靠text prompt难以实现自然的光照变换。
-
-**方案**：仅对night和dusk场景应用第二阶段——使用**InstructPix2Pix ControlNet**对Stage-I的输出进行光照风格调整。
+Canny-ControlNet擅长管结构，却管不太住全局色调和亮度。雪、雨、雾本质上是往画面里"叠"东西（雪花、雨滴、雾气），Stage-I的文本提示已经够用；但夜间和黄昏要的是整张图的亮度、色温被大幅压暗、调暖，光靠text prompt很难自然实现。所以HG-Lane只对night/dusk追加一个第二阶段，用**InstructPix2Pix ControlNet**对Stage-I的输出$I'$做一次基于指令的编辑：
 
 $$I_{\text{final}} = \text{IP2P-ControlNet}(I', c_{\text{instruction}})$$
 
-其中$c_{\text{instruction}}$为编辑指令，如"Make it look like nighttime with street lights"。InstructPix2Pix天然支持保持图像结构的同时修改外观属性，与Stage-I的结构保留目标互补。
+指令$c_{\text{instruction}}$形如"Make it look like nighttime with street lights"。InstructPix2Pix本身就擅长"保结构、改外观"，正好和Stage-I的几何保留目标互补——前者搭好骨架，后者只调皮肤。这种按需触发的分工避免了让单个模型同时背负"保车道"和"换光照"两个目标时的相互拉扯。
 
-**为何snow/rain/fog不需Stage-II**：这些天气变化主要是叠加效果（雪花、雨滴、雾气），Stage-I的text prompt足以引导，无需额外的全局光照调整。
+### 一个完整示例
 
-### 数据集构建
+拿一张晴天直路图走一遍就清楚了。先抽出它的Canny边缘（道路两侧护栏、远处车辆、几根车道线的细边），再把这张图的车道标注按"左实线=红、右虚线=绿"上色叠上去，得到控制图$C_0$。若目标是雪景，喂进Stage-I、配提示"heavy snowfall"，去噪后路面铺上积雪、空中飘雪，但那几根车道线因为在$C_0$里有红绿强信号，位置纹丝不动——直接拿原标注一量，IoU仍保持在95%以上，到此即可出图，**不走Stage-II**。若目标换成夜景，则Stage-I先把场景改成低光基调，再把$I'$送进Stage-II、下指令"nighttime with street lights"，IP2P把整张图压暗、点上路灯暖光，车道线依旧不动。同一张原图，就这样被"克隆"成不同天气版本，全部共享同一套标注。
 
-基于CULane训练集（约88K张），为每种天气类别生成5000张图像，共30K张（5000×6类），构建HG-Lane Benchmark。生成图像直接复用原始车道线标注。
+### 数据构建与训练策略
+
+整条流水线**不训练任何模型**，ControlNet与InstructPix2Pix都用公开预训练权重，因此也没有损失函数可言——增益全来自控制信号的设计而非参数学习。基于CULane训练集（约88K张），为snow/rain/fog/night/dusk/shadow每类生成5000张、合计30K张，构成HG-Lane Benchmark；每张生成图直接复用原图的车道线标注，真正做到零标注成本的数据增强。
 
 ## 实验关键数据
 

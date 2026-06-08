@@ -41,30 +41,24 @@ SA-Merging 把结构化剪枝里的 SynFlow 连接性分数搬到数据无关模
 ## 方法详解
 
 ### 整体框架
-输入是基座参数 $\theta_0$ 和 $N$ 个微调专家 $\{\theta_n\}$；先转换成 task vector $\tau_n := \theta_n - \theta_0$。流程进入 $T$ 轮迭代：每轮先计算所有 $\tau_n$ 的当前聚合方向 $\tau^* = \sum_i \tau_i$，再对每个专家计算连通性分数 $\mathcal{R}_n$、对 $\tau_n$ 求梯度得到结构敏感度，与 $\tau^*$ 点乘得到显著度 $\mathcal{S}_n$，按 tensor 内 top-$(1-p)$ 生成掩码 $m_n$，更新 $\tau_n \leftarrow m_n \odot \tau_n$。$T$ 轮后把所有稀疏化的 task vector 加回 $\theta_0$ 得到最终合并模型。整个过程不需要任何任务数据，输入只有参数。
+方法要解决的是"哪些 task vector 坐标值得保留进合并模型"这个选择问题，且全程不碰任何任务数据。输入是基座参数 $\theta_0$ 和 $N$ 个微调专家 $\{\theta_n\}$，先转成 task vector $\tau_n := \theta_n - \theta_0$，随后进入 $T$ 轮迭代精炼。每一轮里，先把所有专家的当前更新求和得到聚合方向 $\tau^* = \sum_i \tau_i$，再对每个专家算一个端到端连通性分数 $\mathcal{R}_n$ 并对 $\tau_n$ 求梯度拿到结构敏感度，把它与 $\tau^*$ 逐坐标相乘得到显著度 $\mathcal{S}_n$，按 tensor 内 top-$(1-p)$ 生成掩码 $m_n$ 并更新 $\tau_n \leftarrow m_n \odot \tau_n$。$T$ 轮后把这些稀疏化的 task vector 全部加回 $\theta_0$，就是最终合并模型。
 
 ### 关键设计
 
-1. **连通性显著度（SynFlow on task vectors）**:
+**1. 连通性显著度：用 SynFlow 在 task vector 上度量端到端重要性。**
 
-    - 功能：用一个数据无关的标量衡量"task vector 的每个坐标对端到端信号传输能力的贡献"。
-    - 核心思路：把网络看作 $L$ 个连续参数块，定义连通性分数 $\mathcal{R}_n(\theta_0, \tau_n) = \mathbf{1}^\top (\prod_{l=1}^{L} |\theta_0^l + \tau_n^l|) \mathbf{1}$，再对 $\tau_n$ 求梯度得到 $\partial \mathcal{R}_n / \partial \tau_n$。它本质等价于"该坐标参与了多少条强通路"，所以一个被前后层小权重夹住的大更新会得到接近零的梯度，自然从重要性排序里掉下去。
-    - 设计动机：直接把单模型 SynFlow 套到合并场景，等于免费拿到一个 data-free 的结构性重要性度量；和后续幅度/符号信号正交，可作为新的 merging basis。
+数据无关 merging 的老问题是只按幅度选坐标——但深网功能是跨层级联出来的，一个幅度很大的更新若被前后层的小权重夹住，对最终输出根本没贡献。作者把结构化剪枝里的 SynFlow 搬过来正面回应这点：把网络看成 $L$ 个连续参数块，定义连通性分数 $\mathcal{R}_n(\theta_0, \tau_n) = \mathbf{1}^\top (\prod_{l=1}^{L} |\theta_0^l + \tau_n^l|) \mathbf{1}$，它衡量的是端到端信号能通过多少条强通路；再对 $\tau_n$ 求梯度得到结构敏感度 $\partial \mathcal{R}_n / \partial \tau_n$，本质等价于"该坐标参与了多少条强通路"。于是那个被小权重卡死的大更新会拿到接近零的梯度，自然从重要性排序里掉下去，而高容量路径上的小更新反而被托起来。这等于免费拿到一个 data-free 的结构性重要性度量，且与幅度/符号信号正交，构成一个全新的 merging basis。
 
-2. **聚合方向调制做隐式符号选举**:
+**2. 聚合方向调制：把符号选举溶进显著度乘子。**
 
-    - 功能：在结构敏感度的基础上再压一层"跨专家共识"，把孤立、反向的更新打成噪声。
-    - 核心思路：显著度定义为 $\mathcal{S}_n := \frac{\partial \mathcal{R}_n}{\partial \tau_n} \odot \sum_{i=1}^{N} \tau_i$。如果某坐标上该专家更新与整体聚合方向反号，乘积为负或极小；只有"对结构重要 且 方向与多数共识一致"的更新才会得到大的显著度。
-    - 设计动机：TIES 用显式符号投票解决干扰，本文则把符号选举"溶解"进显著度本身——既保留了乘性平滑（不像投票那样硬切），又避免再引入新的超参；同时与连通性敏感度自然耦合，不会出现"结构重要但被符号否决"这种割裂。
+光有结构敏感度还不够——某专家在某坐标上的更新可能很"结构重要"，但方向与其他专家普遍相反，多半是噪声而非有效更新。作者再压一层跨专家共识，把显著度定义为 $\mathcal{S}_n := \frac{\partial \mathcal{R}_n}{\partial \tau_n} \odot \sum_{i=1}^{N} \tau_i$：若该坐标更新与聚合方向 $\sum_i \tau_i$ 反号，乘积为负或极小，只有"对结构重要 且 方向与多数共识一致"的坐标才能拿到大显著度。TIES 用显式符号投票来抑制这种干扰，本文则把符号选举溶进显著度本身——既保留乘性平滑（绝对值大小自动决定权重，不像投票那样硬切成 ±1），又不引入新超参，还能与连通性敏感度自然耦合，避免"结构重要却被符号硬否决"的割裂。
 
-3. **迭代显著度剪枝 + 秩级 LoRA 变体**:
+**3. 迭代显著度剪枝与秩级 LoRA 变体：逐步收缩并无损扩展到 LoRA。**
 
-    - 功能：分多轮逐步把每个专家压到目标稀疏度，并把同一套机制无损扩展到 LoRA 专家。
-    - 核心思路：仿 SynFlow 的迭代修剪，每轮按 tensor 内 top-$(1-p)$ 取掩码（避免全局排序把小张量整层砍光），$T$ 轮后保留率约为 $(1-p)^T$。论文设 $T=10$、目标保留 10%，因此取 $p=0.2$。对 LoRA，把 $\Delta W_n^l = s B_n^l A_n^l$ 当作 task vector，但按 rank-1 成分而不是按矩阵元素剪枝：第 $k$ 个 rank 成分的显著度取 $s_{n,k}^l = |\gamma_{n,k}^l \eta_{n,k}^l|$，其中 $\gamma_{n,k}^l = (b_{n,k}^l)^\top G_n^l a_{n,k}^l$ 是结构敏感度，$\eta_{n,k}^l = (b_{n,k}^l)^\top \overline{\Delta W}^l a_{n,k}^l$ 是与聚合更新的一致性；按显著度选择 rank 后用 $B_n^l \leftarrow B_n^l \mathrm{Diag}(m_n^l)$、$A_n^l \leftarrow \mathrm{Diag}(m_n^l) A_n^l$ 做剪枝，rank 不变、LoRA 结构完整保留。
-    - 设计动机：一次性剪会忽略层间依赖随稀疏化漂移的现象；迭代方案让 mask 在剪枝—重估—再剪枝中自我对齐。秩级 LoRA 扩展则是直接按元素剪会破坏低秩结构，只能转向 rank-1 子空间做选择。
+一次性剪枝会忽略层间依赖随稀疏化而漂移的现象，所以作者仿 SynFlow 走多轮迭代：每轮按 tensor 内 top-$(1-p)$ 取掩码（用 tensor 内而非全局排序，避免把小张量整层砍光），$T$ 轮后保留率约 $(1-p)^T$；论文设 $T=10$、目标保留 10%，于是取 $p=0.2$，让 mask 在剪枝—重估—再剪枝中自我对齐。对 LoRA，直接按矩阵元素剪会破坏低秩结构，所以转到 rank-1 子空间做选择：把 $\Delta W_n^l = s B_n^l A_n^l$ 当 task vector，第 $k$ 个 rank 成分的显著度取 $s_{n,k}^l = |\gamma_{n,k}^l \eta_{n,k}^l|$，其中 $\gamma_{n,k}^l = (b_{n,k}^l)^\top G_n^l a_{n,k}^l$ 是结构敏感度、$\eta_{n,k}^l = (b_{n,k}^l)^\top \overline{\Delta W}^l a_{n,k}^l$ 是与聚合更新的一致性；按显著度选 rank 后用 $B_n^l \leftarrow B_n^l \mathrm{Diag}(m_n^l)$、$A_n^l \leftarrow \mathrm{Diag}(m_n^l) A_n^l$ 剪枝，rank 不变、LoRA 结构完整保留，可直接放回原推理路径。
 
 ### 损失函数 / 训练策略
-方法本身没有训练损失，整个 merging 过程零反向传播在任务数据上、零超参搜索。计算 $\partial \mathcal{R}_n / \partial \tau_n$ 只需要在参数上做一次自动微分；对 LoRA 还能通过 $\partial \mathcal{R}/\partial B = s G (A)^\top$、$\partial \mathcal{R}/\partial A = s B^\top G$ 直接在低秩因子上算梯度，不必把 $\Delta W$ 显式展开。
+方法没有训练损失，整个 merging 过程在任务数据上零反向传播、零超参搜索。计算 $\partial \mathcal{R}_n / \partial \tau_n$ 只需在参数上做一次自动微分；对 LoRA 还能通过 $\partial \mathcal{R}/\partial B = s G (A)^\top$、$\partial \mathcal{R}/\partial A = s B^\top G$ 直接在低秩因子上算梯度，不必把 $\Delta W$ 显式展开。
 
 ## 实验关键数据
 

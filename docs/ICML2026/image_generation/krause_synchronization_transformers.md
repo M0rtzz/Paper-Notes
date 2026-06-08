@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Krause Attention 替换标准 self-attention 的核心计算：(1) 用学习投影得到 $Q,K,V$；(2) 计算 query-key 欧氏距离的 RBF 亲和度而非 dot-product softmax；(3) 把亲和度遮蔽到局部窗口 $\mathcal{N}_i$ 内（视觉任务用空间窗、自回归用 causal 窗）；(4) 在窗口内做 top-$k$ 选择得到稀疏支撑 $\xi_i^k$；(5) 在 $\xi_i^k$ 内做归一化加权聚合 value。整个模块是 drop-in replacement，其他组件（LayerNorm / FFN / RoPE 等）不变。
+作者要解决的是全局 softmax 注意力跨层叠加后塌向单一共识、产生 attention sink 与表征塌缩的问题。做法是把社会动力学里的 Krause 有界置信模型搬进来：tokens 当成只与"意见相近"邻居互动的 agents，于是标准 self-attention 里"全局 dot-product 相似度 + softmax 归一化"被换成"欧氏距离的 RBF 亲和度 + 局部窗内 top-$k$ 稀疏归一化"。整个模块是 drop-in replacement，LayerNorm / FFN / RoPE 等其余组件原封不动。
 
 ### 关键设计
 
-1. **距离-RBF query-key 交互**:
+**1. 距离-RBF query-key 交互：把"远即低权重"写进相似度本身**
 
-    - 功能：用 $q,k$ 之间的欧氏距离衡量"意见相似度"，替代标准 dot-product 相似度。
-    - 核心思路：定义 $\Delta_{i,j}=\|q_i-k_j\|$，亲和度 $s_{i,j}=\exp(-\Delta_{i,j}^2/(2\sigma^2))$，$\sigma$ 为可学习温度。这个 RBF 自带 softmax 风格的指数非线性 + 温度调节，因此**不再额外套 softmax**。距离越近权重越大，距离远的天然抑制，对应 Krause 模型中的"置信半径"。
-    - 设计动机：dot-product 相似度只看方向不看绝对距离，配合 softmax 总会有"某个 token 远比其他大很多"的赢家通吃倾向。距离 + RBF 把"远即低权重"刚性写入，是产生 bounded-confidence 行为的基础。
+标准 dot-product 相似度只看方向不看绝对距离，再配合 softmax 总会出现"某个 token 远比其他大"的赢家通吃，这正是全局塌缩的起点。作者改用 query-key 的欧氏距离 $\Delta_{i,j}=\|q_i-k_j\|$，并经 RBF kernel 映射成亲和度 $s_{i,j}=\exp(-\Delta_{i,j}^2/(2\sigma^2))$，其中 $\sigma$ 是可学习温度。这个 RBF 本身就带 softmax 风格的指数非线性和温度调节，所以**后面不再额外套 softmax**——距离近权重大、距离远天然被抑制，刚性对应 Krause 模型里的"置信半径"，是产生 bounded-confidence 行为的基础。
 
-2. **局部窗 + top-$k$ 选择性稀疏**:
+**2. 局部窗 + top-$k$ 选择性稀疏：把"只与有限邻居互动"做实**
 
-    - 功能：把每个 token 的注意力范围严格限制在空间/时间局部窗内，并在窗口内只保留最相似的 top-$k$ 个邻居参与归一化。
-    - 核心思路：归一化时只在邻域内做 $\tilde a_{i,j}=s_{i,j}/\sum_{\ell\in\mathcal{N}_i}s_{i,\ell}$，再选 top-$k$ 得到 $\xi_i^k\subseteq\mathcal{N}_i$，最终 $\tilde a^*_{i,j}=s_{i,j}/\sum_{\ell\in\xi_i^k}s_{i,\ell}$，$j\in\xi_i^k$；输出 $z_i=\sum_{j\in\xi_i^k}\tilde a^*_{i,j}v_j$。复杂度从 $O(N^2 d)$ 降到 $O(NWd)$，$W$ 为窗口大小。
-    - 设计动机：单有距离-RBF 还不够（远 token 权重小但非零，长程仍能耦合）。硬切断 + top-$k$ 把"竞争且有限"做实了，对应 Krause 模型中"只与有限邻居互动"的核心机制，也是论文理论分析中 attention 矩阵能分块对角化、产生多簇结构的关键。
+只有距离-RBF 还不够，远处 token 权重虽小但非零，长程仍可能耦合、最终还是会全局同步。于是作者把每个 token 的注意力范围硬切到一个空间/时间局部窗 $\mathcal{N}_i$（视觉用空间窗、自回归用 causal 窗），先在邻域内归一化 $\tilde a_{i,j}=s_{i,j}/\sum_{\ell\in\mathcal{N}_i}s_{i,\ell}$，再选出最相似的 top-$k$ 个邻居 $\xi_i^k\subseteq\mathcal{N}_i$ 重新归一化 $\tilde a^*_{i,j}=s_{i,j}/\sum_{\ell\in\xi_i^k}s_{i,\ell}$，最终输出 $z_i=\sum_{j\in\xi_i^k}\tilde a^*_{i,j}v_j$。这把"竞争且有限"做实，正是 Krause 模型只与有限邻居互动的核心机制；副产品是复杂度从 $O(N^2 d)$ 降到 $O(NWd)$（$W$ 为窗口大小），也是后面理论里 attention 矩阵能分块对角化、产生多簇结构的关键。
 
-3. **多簇同步的理论保证**:
+**3. 多簇同步的理论保证：把"防塌缩"变成可证明的结构性质**
 
-    - 功能：从动力学和 mean-field 两个视角证明这种设计会产生稳定的多簇结构而非全局塌缩。
-    - 核心思路：把 token 演化看作粒子流 $\dot z_i=\sum_j a_{i,j}V z_j$。当 token 自然分裂成 $m$ 个超出彼此互动范围的簇时，由于 top-$k$ 强制 $a_{i,j}=0$ for cross-cluster pairs，全局注意力矩阵 $A(t)$ 是 reducible 的、分块对角，每块独立演化，且 $\lambda=1$ 的特征值重数至少为 $m$。在 mean-field 下，由于 truncated kernel，empirical 分布 $\mu_t$ 会演化成多原子分布 $\sum_k\pi_k\delta_{\mathcal{L}_k}$。这与标准 self-attention（Wasserstein 梯度流向单一共识收缩）形成鲜明对比。
-    - 设计动机：把架构设计建立在严格动力学分析上 — Krause Attention 不是 ad hoc 启发式，而是把"防塌缩"作为可证明的结构性质，使 attention sink 缓解从经验调参变成原理保证。
+作者从动力学和 mean-field 两个视角证明上述设计会稳定形成多簇而非全局塌缩，而不只是经验调参。把 token 演化看作粒子流 $\dot z_i=\sum_j a_{i,j}V z_j$：当 token 自然分裂成 $m$ 个超出彼此互动范围的簇时，top-$k$ 强制 cross-cluster pair 的 $a_{i,j}=0$，于是全局注意力矩阵 $A(t)$ 是 reducible 的、分块对角，每块独立演化，且 $\lambda=1$ 的特征值重数至少为 $m$。在 mean-field 极限下，因为 kernel 被截断，empirical 分布 $\mu_t$ 会演化成多原子分布 $\sum_k\pi_k\delta_{\mathcal{L}_k}$。这与标准 self-attention（Wasserstein 梯度流持续向单一共识收缩）形成鲜明对比，使 attention sink 缓解从启发式变成原理保证。
 
 ### 损失函数 / 训练策略
-完全用标准任务损失（分类 cross-entropy、自回归 NLL、语言建模 next-token）；除 $\sigma$ 为可学习温度外，无额外超参或正则。视觉任务窗大小 4-25、top-$k$ 在层间线性递增（vision: 2→4 或 8→16）；自回归任务用 causal 窗 + top-$k$（CIFAR-10: 窗 256、k=192）；LLM 实验把 Krause Attention 作为 auxiliary shortcut 在每层与标准 attention 并行（图 6），两者都用 LoRA 适配，本身不替换 self-attention。
+完全用标准任务损失（分类 cross-entropy、自回归 NLL、语言建模 next-token）；除可学习温度 $\sigma$ 外无额外超参或正则。视觉任务窗大小 4-25、top-$k$ 在层间线性递增（vision: 2→4 或 8→16）；自回归任务用 causal 窗 + top-$k$（CIFAR-10: 窗 256、k=192）；LLM 实验则把 Krause Attention 作为 auxiliary shortcut 在每层与标准 attention 并行（图 6），两者都用 LoRA 适配，本身不替换 self-attention。
 
 ## 实验关键数据
 

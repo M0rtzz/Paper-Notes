@@ -44,23 +44,21 @@ Pipeline 分三段：(A) 数据构造 —— 从 MedlinePlus 拉临床素材，G
 
 ### 关键设计
 
-1. **Code-switching 感知的 SFT 冷启动**：
+**1. Code-switching 感知的 SFT 冷启动：先给 RL 一个不会中途崩掉的起点。**
 
-    - 功能：稳定多步推理能力，给后续 RL 一个不会在中间步骤就崩掉的初始策略。
-    - 核心思路：对每个目标语言 $\ell$ 的查询 $x$，构造轨迹 $\mathbf{r}=\{r_1,\dots,r_T\}$，其中 $r_t$ 的语言 $\ell_t$ 可以与 $\ell$ 不同（例如法语问诊但中间用英语临床术语），最终答案 $y^*$ 强制写成 $\ell$，损失为 $\mathcal{L}_{\text{SFT}}=-\log p_\theta(\mathbf{r}, y^*\mid x)$。
-    - 设计动机：直接强制全程使用低资源语言会让推理质量坍塌（很多医学术语在 Amharic 里没有对应词），允许中间 code-switch 是「让模型用它最熟练的语言思考、用病人的语言回答」的折衷，给 RL 留下了可优化的空间。
+如果直接逼模型全程用低资源语言推理，质量会当场坍塌——很多医学术语在 Amharic 里压根没有对应词，硬翻只会诱发幻觉。冷启动阶段因此放宽中间步骤的语言约束：对目标语言 $\ell$ 的查询 $x$，构造一条长 CoT 轨迹 $\mathbf{r}=\{r_1,\dots,r_T\}$，每一步 $r_t$ 的语言 $\ell_t$ 可以与 $\ell$ 不同（比如用法语问诊、中间却用英语临床术语推理），只有最终答案 $y^*$ 被强制写成 $\ell$，损失就是普通的轨迹似然 $\mathcal{L}_{\text{SFT}}=-\log p_\theta(\mathbf{r}, y^*\mid x)$。这等于让模型"用它最熟练的语言思考、用病人的语言回答"，既保住了多步推理深度，又给后续 RL 留下了可优化的空间，而不是一上来就把策略压垮。
 
-2. **复合可验证奖励**：
+**2. 复合可验证奖励：把答得对、说对语言、格式合规拆开计分。**
 
-    - 功能：把「答得对」「语言一致」「格式合规」三件事拆开打分再加权，避免 reward hacking。
-    - 核心思路：$R = \lambda_{\text{acc}} R_{\text{acc}} + \lambda_{\text{lang}} R_{\text{lang}} + \lambda_{\text{fmt}} R_{\text{fmt}}$。其中 $R_{\text{acc}} \in [0,1]$ 由 GPT-4.1 当验证器给出（闭式题严格 exact match，开放题允许 paraphrase 的部分得分）；$R_{\text{lang}}$ 是 0/1 判断输出是否完全用目标语言；$R_{\text{fmt}}$ 检查 `<thinking>/<step n>/<answer>` 标签是否合规。
-    - 设计动机：单一答案奖励会让模型「答对就行、语言乱写也无所谓」，而单一语言奖励又会让模型放弃推理只刷格式分。三路奖励 + 与训练裁判分离的第三方判分模型，可以同时压住「为了准确率漂语言」和「为了语言一致瞎编答案」两种 hack。
+单一答案奖励会纵容模型"答对就行、语言乱写无所谓"，单一语言奖励又会让它放弃推理只去刷格式分——两种 reward hacking 必须同时堵住。CURE-Med 把奖励拆成三路加权：
 
-3. **基于语言资源等级的课程式 GRPO**：
+$$R = \lambda_{\text{acc}} R_{\text{acc}} + \lambda_{\text{lang}} R_{\text{lang}} + \lambda_{\text{fmt}} R_{\text{fmt}}$$
 
-    - 功能：让 RL 信号从「容易出现正样本的高资源语言」逐步迁移到「正样本稀缺的低资源语言」。
-    - 核心思路：把语言分成 high（FR / JA / ES / VI）、mid（KO / TH / TR / BN）、low（AM / YO / HA / HI / SW）三档；GRPO 在 high 上先训到奖励 plateau，再扩展到 mid，最后扩到 low，每个 phase 采样 $\mathcal{D}_i = \alpha \mathcal{D}_{i-1} + (1-\alpha)\mathcal{D}_{L_i}$，$\alpha=0.85$ 保住旧能力。GRPO 本身的更新规则 $A_{i,k} = R_{i,k} - \text{mean}(\{R_{i,k}\})$ 不动。
-    - 设计动机：直接在 13 语言上混合 RL，低资源语言的正样本几乎为 0，advantage 接近常数，更新无效；课程把「reward 信号最稳的语言」放前面，等模型形成基本的多语言推理 + 语言一致能力后再引入低资源语言，实质是用高资源语言「热身」整个奖励曲面。
+其中 $R_{\text{acc}} \in [0,1]$ 由 GPT-4.1 当验证器给出（闭式题严格 exact match，开放题允许 paraphrase 的部分得分），$R_{\text{lang}}$ 是 0/1 判断输出是否完全落在目标语言，$R_{\text{fmt}}$ 检查 `<thinking>/<step n>/<answer>` 标签是否合规。三路解耦再加上一个与训练裁判分离的第三方判分模型，才能同时压住"为了准确率漂语言"和"为了语言一致瞎编答案"这两种相反方向的作弊。
+
+**3. 基于语言资源等级的课程式 GRPO：让奖励信号从高资源语言"蒸馏"到低资源语言。**
+
+如果一上来就在 13 种语言上混合做 RL，低资源语言的正样本几乎为 0，一组采样里 reward 全是常数、advantage 趋近于零，更新等于白做。CURE-Med 把语言按资源等级分成三档——high（FR / JA / ES / VI）、mid（KO / TH / TR / BN）、low（AM / YO / HA / HI / SW），按 high→mid→low 顺序训练：先在高资源语言上把 GRPO 训到奖励 plateau，再扩到中档，最后才引入低资源语言。每进入新一档，采样按 $\mathcal{D}_i = \alpha \mathcal{D}_{i-1} + (1-\alpha)\mathcal{D}_{L_i}$（$\alpha=0.85$）保留大比例旧档样本防遗忘，而 GRPO 本身的更新规则 $A_{i,k} = R_{i,k} - \text{mean}(\{R_{i,k}\})$ 一字不改。这条课程的本质是用"reward 信号最稳"的语言先把整个奖励曲面热身好，等模型已经具备基本的多语言推理 + 语言一致能力，再去啃正样本稀缺的低资源语言。
 
 ### 损失函数 / 训练策略
 SFT 阶段最大化 $\log p_\theta(\mathbf{r}, y^*\mid x)$，RL 阶段沿用 GRPO 的标准 clipped 目标，advantage 用组内 reward 归一化，KL 正则到 cold-start 模型；课程跨阶段时采用 $\alpha=0.85$ 的样本保留比例；scaling 从 1.5B 一直做到 32B。

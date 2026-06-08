@@ -45,52 +45,41 @@ tags:
 
 ### 整体框架
 
-两阶段管线（图2）：
-- **阶段1（零样本TTS预训练）**：在LibriTTS上训练零样本TTS系统，学习语音的韵律/内容/声学表示
-    - **内容建模**：确定性架构直接预测内容token
-    - **韵律-声学建模**：离散流匹配(DFPA)模块生成表现力丰富的韵律和声学token
-- **阶段2（视频配音适配）**：将预训练TTS适配到配音任务
-    - FaPro模块从面部表情提取全局韵律先验
-    - Synchronizer实现文本-视频-语音三模态对齐
-    - CCTA确保内容一致性
-    - DFPA适配为视觉条件生成
+DiFlowDubber 要解决的是：给一段无声的说话人视频和一段目标文本，生成既保住说话人音色、又跟唇型严格同步、还能承载脸上情绪的配音。难点在于配音数据太少，直接训不出有表现力的语音；而想借大规模 TTS 的本钱，又得让生成的语音长度被视频"卡死"住，否则唇音对不齐。
+
+它的做法是先用 FACodec 把语音拆成三套离散 token——韵律、内容、声学——再分而治之。整个流程走两个阶段。阶段一是零样本 TTS 预训练，在 LibriTTS 这种大语料上学会"怎么说话"：内容 token 用一个确定性头直接预测，韵律和声学 token 则交给离散流匹配模块（DFPA）来生成，专门负责把语气、语速这类有表现力的东西建出来。阶段二把这套预训练好的 TTS 适配到配音：FaPro 从人脸抽出全局韵律先验，Synchronizer 把文本、视频、语音三个模态的时间轴对齐，CCTA 保住从 TTS 迁过来的内容知识不跑偏，而 DFPA 这时被改造成"看着视频条件去生成"。
 
 ### 关键设计
 
-#### 1. 离散流匹配韵律-声学(DFPA)模块
+**1. DFPA：用离散流匹配联合生成韵律与声学 token。**
 
-- **功能**：联合建模韵律和声学token的分布
-- **核心思路**：基于DiT架构的去噪器，输入当前去噪目标 $\mathbf{x}_t$（韵律+声学token拼接），条件包括内容潜在表示 $\tilde{\mathbf{h}}_c$、说话人嵌入等。优化目标为：
-  $$\mathcal{L}_{\text{DFM}} = -\sum_{i \in \mathcal{T}} \mathbb{E}_{t \sim \mathcal{U}[0,1]} [\log p_{1|t}(\mathbf{x}_1^i | \mathbf{x}_t, \mathbf{c}; \theta)]$$
-- **设计动机**：FACodec将语音属性解耦为可独立控制的token，DFM比自回归模型能更好捕获表现力丰富的韵律变化
+配音最难的不是把字念对，而是把语气、轻重、停顿这些有表现力的韵律念活。自回归逐 token 预测在这件事上容易塌成平淡的"念稿腔"。DFPA 换了个思路：把韵律 token 和声学 token 拼在一起当作要去噪的目标 $\mathbf{x}_t$，用一个 DiT 架构的去噪器在离散流匹配框架下迭代恢复，条件里带上内容潜在表示 $\tilde{\mathbf{h}}_c$、说话人嵌入等信息。训练目标是让每一步预测都逼近干净的目标分布：
 
-#### 2. FaPro（面部表情→韵律映射）
+$$\mathcal{L}_{\text{DFM}} = -\sum_{i \in \mathcal{T}} \mathbb{E}_{t \sim \mathcal{U}[0,1]} [\log p_{1|t}(\mathbf{x}_1^i | \mathbf{x}_t, \mathbf{c}; \theta)]$$
 
-- **功能**：从面部视频帧提取全局韵律先验 $\tilde{\mathbf{z}}_p \in \mathbb{R}^{m \times L \times D}$
-- **核心思路**：面部特征 $\mathbf{v}_{\text{face}}$ → 上采样对齐到语音长度 → ConvNeXt V2增强时序建模 → $m$ 层FFT迭代提取各RVQ码本的韵律表示
-- **设计动机**：面部表情与语音韵律有强相关性，全局韵律（情感、语速、语调）主要由面部表情决定
+之所以能这么干，前提是 FACodec 已经把语音解耦成可独立控制的属性 token——韵律归韵律、声学归声学，互不打架。在解耦后的空间里用生成式的 DFM 去采样，比自回归更能覆盖韵律的多样变化，念出来不会千篇一律。
 
-#### 3. Synchronizer（双重对齐同步器）
+**2. FaPro：从人脸把全局韵律先验抠出来。**
 
-- **功能**：桥接文本、视频、语音三个模态间的gap
-- **核心思路**：
-    - **视频-文本对齐**：唇部特征作为query、音素特征作为key/value的cross-attention，利用MFA对齐矩阵 $\mathcal{M}_{VT}$ 施加对比损失 $\mathcal{L}_{VT}$
-    - **时长正则化**：通过MAS将注意力权重转为音素-帧时长，按时长复制音素嵌入后上采样到语音长度
-    - **语音-文本对齐**：对上采样后的表示再施加一层对比对齐 $\mathcal{L}_{ST}$，修正上采样引入的微小错位
-    - ConvNeXt V2细化得到最终对齐表示 $\mathbf{h}_{\text{sync}} \in \mathbb{R}^{L \times D}$
-- **设计动机**：ProDubber的时长预测器不受视频长度约束，双重对齐机制显式强制唇型与语音的时序一致性
+人说话的情绪、语速、语调，脸上其实都写着——皱眉、张嘴幅度、表情快慢，和语音韵律强相关。FaPro 就是把这条相关性显式接进来。它拿到面部特征 $\mathbf{v}_{\text{face}}$ 后，先上采样把帧率对齐到语音长度，再过 ConvNeXt V2 强化时序建模，最后用 $m$ 层 FFT 迭代，逐层抽出对应各个 RVQ 码本的韵律表示，得到全局韵律先验 $\tilde{\mathbf{z}}_p \in \mathbb{R}^{m \times L \times D}$。这个先验喂给 DFPA，相当于告诉生成器"这段该用什么情绪和语速说"，把视觉里的情感落到了语音的韵律上。
 
-#### 4. CCTA（内容一致性时序适配）
+**3. Synchronizer：双重对齐，把唇型和语音的时间轴焊死。**
 
-- **功能**：从TTS域迁移语义内容知识，保持语言一致性
-- **核心思路**：用预训练TTS权重初始化，冻结投影层和内容头，用Synchronizer替换TTS中的时长预测。添加蒸馏损失保持师生特征一致性：
-  $$\mathcal{L}_{\text{distill}} = \frac{1}{B} \sum_{i=1}^{B} [1 - \cos(\phi(\mathbf{z}_t^{(i)}), \phi(\mathbf{z}_c^{(i)}))]$$
+这是冲着 ProDubber 的痛处来的——它靠时长预测器估唇型运动，根本不受视频实际长度约束，结果同步分（LSE）很差，听起来更像 TTS 而不是配音。Synchronizer 改成显式对齐，而且对齐两次。第一次是视频-文本对齐：以唇部特征作 query、音素特征作 key/value 做 cross-attention，再用 MFA 给出的对齐矩阵 $\mathcal{M}_{VT}$ 施加对比损失 $\mathcal{L}_{VT}$，把"哪个音素对应哪段唇动"压实。接着做时长正则化，通过 MAS 把注意力权重转成每个音素该占几帧，按时长复制音素嵌入并上采样到语音长度。但上采样会引入细小错位，于是再做第二次——语音-文本对齐，对上采样后的表示补一层对比对齐 $\mathcal{L}_{ST}$ 修正偏差。最后用 ConvNeXt V2 细化，得到对齐表示 $\mathbf{h}_{\text{sync}} \in \mathbb{R}^{L \times D}$。两道对齐一前一后，把唇型与语音的时序一致性强行钉住。
+
+**4. CCTA：内容一致性时序适配，迁知识又不丢同步。**
+
+阶段二要换掉 TTS 里那个不看视频的时长预测，但又不能把预训练学到的语义内容能力一起丢了。CCTA 的办法是用预训练 TTS 权重初始化，冻结投影层和内容头保住内容知识，只把时长预测部分替换成 Synchronizer。为了进一步防止适配过程把内容表示带偏，它加了一条蒸馏损失，约束适配后的特征 $\mathbf{z}_t$ 与原内容特征 $\mathbf{z}_c$ 在方向上保持一致：
+
+$$\mathcal{L}_{\text{distill}} = \frac{1}{B} \sum_{i=1}^{B} [1 - \cos(\phi(\mathbf{z}_t^{(i)}), \phi(\mathbf{z}_c^{(i)}))]$$
+
+这样一来，发音的准确性靠 TTS 老本撑着，唇音同步靠 Synchronizer 新接的视频约束，两边各管一摊、互不削弱。
 
 ### 损失函数
 
 $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{align}} + \lambda_1 \mathcal{L}_c + \lambda_2 \mathcal{L}_{\text{CTC}} + \lambda_3 \mathcal{L}_{\text{distill}} + \lambda_4 \mathcal{L}_{\text{DFM}}$$
 
-其中 $\mathcal{L}_{\text{align}} = \lambda_5 \mathcal{L}_{VT} + \lambda_6 \mathcal{L}_{ST}$。
+其中对齐项 $\mathcal{L}_{\text{align}} = \lambda_5 \mathcal{L}_{VT} + \lambda_6 \mathcal{L}_{ST}$，由视频-文本与语音-文本两道对比对齐组成。
 
 ## 实验关键数据
 

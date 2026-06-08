@@ -43,30 +43,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-UB-SMoE 在每个 SMoE 层注入 LoRA 适配器，工作流程 5 步：(1) 服务器聚合全局专家利用率 $\tilde u_i^{(l)}$；(2) 客户端路由器根据 $\tilde u$ 计算调制 logits $m^{(l)}_i=s^{(l)}_i+\phi^{(l)}_i$；(3) 客户端按算力预算 $\beta_c$ 激活 $K_c=\lfloor K_{\max}\beta_c\rfloor$ 个专家；(4) 本地训练时未激活专家也接收按客户端稀疏度 $\rho_c$ 缩放的伪梯度；(5) 客户端把参数 delta + 利用率统计回传服务器聚合。
+UB-SMoE 要解决的是「把 Sparse MoE 搬进异构联邦 LoRA 微调后，低算力客户端因为 $K_c$ 小而陷入专家失衡与梯度死锁」这件事。它在每个 SMoE 层注入统一 rank 的 LoRA 适配器，让整个系统在「服务器聚合全局专家利用率 $\tilde u_i^{(l)}$ → 客户端拿利用率调制路由 logits $m^{(l)}_i=s^{(l)}_i+\phi^{(l)}_i$ → 按算力预算 $\beta_c$ 激活 $K_c=\lfloor K_{\max}\beta_c\rfloor$ 个专家 → 本地训练时未激活专家也吃到按稀疏度 $\rho_c$ 缩放的伪梯度 → 把参数 delta 与利用率统计回传服务器」这条闭环上滚动。两个核心机制 DMR 与 PG 各治一个病，又互相喂数据形成自强化循环。
 
 ### 关键设计
 
-1. **Dynamic Modulated Routing (DMR) —— 用全局利用率重塑路由**:
+**1. Dynamic Modulated Routing (DMR)：用全局利用率重塑路由，又不毁掉专家专门化。**
 
-    - 功能：把"路由偏好"和"全局负载均衡"这两个本来打架的信号显式分离，避免极端调制覆盖语义相关性。
-    - 核心思路：先用原始 affinity $s^{(l)}=W^{(r)}x$ 选出 top-$N_p$（$K_{\max}\le N_p\ll M$，文中取 $N_p=2$）候选集 $\mathcal{T}^{(l)}$，只对候选集内的专家加上可学习调制向量 $\phi^{(l)}_i$，候选集外的专家保持原 logit。然后 $p^{(l)}=\text{softmax}(m^{(l)})$，再 Top-$K_c$ 选实际激活。服务器侧，全局利用率 $\tilde u^{(l)}_i=\sum_c p_c\frac{a^{(l)}_{c,i}}{n^{(l)}_c}$，目标均匀利用率 $u^*=\bar K/M$，调制按 $\tilde\phi^{(l)}_i=\tanh\left(\frac{u^*}{\tilde u^{(l)}_i+\epsilon}-1\right)$ 更新，再用 momentum $\zeta$ 平滑。被过度使用的专家 logits 被压低、被冷落的专家被抬升，但仅在「跟当前输入语义相关」的候选集内调整。
-    - 设计动机：朴素的 load balancing loss 会因为强行均匀化而牺牲专家专门化；UB-SMoE 把"语义相关性"（候选集筛选）和"负载均衡"（候选集内 $\phi$ 调制）解耦，既保住 Discordance 1 的修复，又不让路由变成噪声。
+要修的痛点是 rich-get-richer 的专家失衡——高算力客户端反复激活同一批专家把它们过度专门化，低算力客户端激活到的少数专家长期得不到训练。最直接的办法是加 load balancing loss 强行均匀化，但那会把专家压平、牺牲掉好不容易学到的专门化。DMR 的做法是把「这个专家在语义上合不合适」和「这个专家在系统上有没有被冷落」两个信号正交拆开：先用原始 affinity $s^{(l)}=W^{(r)}x$ 选出 top-$N_p$（$K_{\max}\le N_p\ll M$，文中取 $N_p=2$）候选集 $\mathcal{T}^{(l)}$，**只对候选集内**的专家加可学习调制向量 $\phi^{(l)}_i$，候选集外保持原 logit，再 $p^{(l)}=\text{softmax}(m^{(l)})$ 并 Top-$K_c$ 选出实际激活。调制量本身由服务器端的全局统计驱动：聚合利用率 $\tilde u^{(l)}_i=\sum_c p_c\frac{a^{(l)}_{c,i}}{n^{(l)}_c}$，对照目标均匀利用率 $u^*=\bar K/M$，按 $\tilde\phi^{(l)}_i=\tanh\left(\frac{u^*}{\tilde u^{(l)}_i+\epsilon}-1\right)$ 更新并用 momentum $\zeta$ 平滑——被过度使用的专家 logit 被压低、被冷落的被抬升。关键在于这种再平衡只发生在「跟当前输入语义相关」的候选集里，所以既修了失衡又不会把路由搅成噪声。
 
-2. **Universal Pseudo-Gradient (PG) —— 给未激活专家造梯度**:
+**2. Universal Pseudo-Gradient (PG)：给未激活专家造梯度，打破 Top-K 死锁。**
 
-    - 功能：让未激活专家在每个 batch、每个客户端都拿到「近似的」学习信号，打破 Top-K 反传梯度全 0 的死锁。
-    - 核心思路：对未激活专家 $i\notin\mathcal{A}_c(x)$，用 router 输出的 softmax 概率与已激活专家的真实梯度构造伪梯度，并按客户端稀疏度 $\rho_c$（与 $K_c/M$ 反比）缩放 —— $K_c$ 越小、伪梯度权重越高，因为它越急需补偿。伪梯度在数学上等价于把 $\nabla_{\Theta^{(e)}_i}F_c$ 的期望从「条件在 $i\in\mathcal{A}_c(x)$ 上」松弛回「无条件」，从而减小 Definition 7 中的偏差 $B_{c,i}(\Theta)$。
-    - 设计动机：作者在 Theorem 4.1 证明，sparse Top-K 路由会让 SGD 收敛到一个 bias error 地板 $B_{\text{SMoE}}=2\|B(\Theta^*)\|^2/\mu'$，且 Corollary 1 指出该地板 $\propto (M-K_c)$，对小 $K_c$ 的低算力客户端尤其严重。PG 直接攻击这个 bias 项的来源 —— 让 $p_{c,i}(\Theta)\to 1$ 的等效形式即「未激活也能更新」。
+第二个痛点是 Top-K 路由不可导：未激活专家 gating 为 0、反传梯度也为 0，$K_c$ 小的低算力客户端等于本地大半专家拿不到任何学习信号。PG 让每个 batch、每个客户端的未激活专家 $i\notin\mathcal{A}_c(x)$ 都拿到一份「近似」梯度——用 router 的 softmax 概率配上已激活专家的真实梯度构造伪梯度，再按客户端稀疏度 $\rho_c$（与 $K_c/M$ 反比）缩放，$K_c$ 越小则伪梯度权重越高，因为它越急需补偿。这一步在数学上等价于把期望梯度 $\nabla_{\Theta^{(e)}_i}F_c$ 从「条件在 $i\in\mathcal{A}_c(x)$ 上」松弛回「无条件」，直接缩小 Definition 7 里的偏差项 $B_{c,i}(\Theta)$。为什么非这么做不可有理论背书：Theorem 4.1 证明 sparse Top-K 路由会让 SGD 收敛到 bias error 地板 $B_{\text{SMoE}}=2\|B(\Theta^*)\|^2/\mu'$，Corollary 1 进一步指出该地板 $\propto (M-K_c)$、对小 $K_c$ 客户端尤其致命，而 PG 正是攻击这个 bias 的来源——把「未激活」近似成「$p_{c,i}(\Theta)\to 1$ 的可更新状态」。
 
-3. **DMR ↔ PG 自强化循环 + $L_2$ 正则**:
+**3. DMR ↔ PG 自强化循环与 $\phi$ 范围正则：两个机制互相兜底。**
 
-    - 功能：让两个机制互相喂数据，避免单独使用任何一个会过激。
-    - 核心思路：PG 让所有专家持续学习不死掉 → DMR 拿到的全局利用率统计有意义、modulation 才能精准调度 → 调度后越来越多专家真的被激活、产生真实梯度 → 真实梯度反过来让伪梯度估计更准。同时对 $\phi^{(l)}$ 做范围正则 $\mathcal{L}_{reg}=\lambda(\|\text{ReLU}(\phi_{\min}-\phi)\|^2_2+\|\text{ReLU}(\phi-\phi_{\max})\|^2_2)$，防止调制爆炸。
-    - 设计动机：单独 DMR 在死亡专家上无效（路由再怎么调，长期零梯度的专家也没法贡献）；单独 PG 会让所有专家收敛到相似参数（失去 MoE 意义）。两者闭环才稳。
+单独用任何一个都会过激：只有 DMR 时，路由再怎么调，长期零梯度的死亡专家还是没法贡献；只有 PG 时，所有专家会收敛到相似参数、失去 MoE 的意义。两者闭环才稳——PG 让所有专家持续学习不死掉，DMR 拿到的全局利用率统计才有意义、调制才能精准调度，调度后越来越多专家被真正激活、产生真实梯度，真实梯度又反过来让 PG 的估计更准。为防止调制本身爆炸，对 $\phi^{(l)}$ 加范围正则 $\mathcal{L}_{reg}=\lambda(\|\text{ReLU}(\phi_{\min}-\phi)\|^2_2+\|\text{ReLU}(\phi-\phi_{\max})\|^2_2)$，把调制量约束在 $[\phi_{\min},\phi_{\max}]$ 内。
 
 ### 损失函数 / 训练策略
-本地损失 = LM 损失 + DMR 正则项 $\mathcal{L}_{reg}$，未激活专家通过 PG 直接累积梯度。客户端按预算 $\beta_c\in[0,1]$ 决定 $K_c=\lfloor K_{\max}\beta_c\rfloor$，统一 LoRA rank $r$（无需异构 rank）。服务器侧聚合 LoRA 增量 + 利用率统计 + modulation 参数。
+本地损失 = LM 损失 + DMR 范围正则 $\mathcal{L}_{reg}$，未激活专家通过 PG 直接累积梯度。客户端按预算 $\beta_c\in[0,1]$ 决定 $K_c=\lfloor K_{\max}\beta_c\rfloor$，统一 LoRA rank $r$（无需异构 rank）。服务器侧聚合 LoRA 增量 + 利用率统计 + modulation 参数。
 
 ## 实验关键数据
 

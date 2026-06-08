@@ -40,30 +40,21 @@ MAHALO 把"标准化 PRM 训练 + 多动作头 DPO + 带 KV-cache 续存的 PRM 
 ## 方法详解
 
 ### 整体框架
-输入是一组多目标偏好数据 $\{\mathcal{D}_i\}_{i=1}^H$（如 Math 的 Acc / Eng，UltraFeedback 的 Help / Honest / Truth，Socratic Mind 的 Acc / Eng），以及对应的过程级标注（或可用 PRM 自动打的标签）。Pipeline 分两条：
-
-1. **PRM 训练管线（第 4 节）**——按"是否可验证 + 是否容易 rollout + 是否有清晰过程结构"把训练分成可验证域 + 非可验证域 Case A/B/C 四种情形，分别给出标签构造方法，最终都得到统一形态的 $r_t$ 用于训 PRM。可验证域额外引入 hindsight relabeling，把 PRM 同时训练成"step 质量 + 未来正确性预测器"。
-2. **MAHALO 主框架（第 5 节）**——训练时用 Multi-Action-Head DPO（共享 backbone $\theta_b$ + H 个线性头 $W_i$）让每个头专注一个目标；推理时既可单头使用，也可对 logits 加权融合，还可叠加 PRM-guided decoding 在 step 边界处做候选采样-PRM 打分-提交的循环，并通过"running past KV cache"避免重 encode。
+MAHALO 的输入是一组多目标偏好数据 $\{\mathcal{D}_i\}_{i=1}^H$（Math 的 Acc / Eng，UltraFeedback 的 Help / Honest / Truth，Socratic Mind 的 Acc / Eng）和对应的过程级标注。整套框架顺着作者的核心二分法展开：可验证目标天然有精确的 step 信号，把优化精力花在**测试时搜索**上回报最高；不可验证目标信号噪声大，更适合靠**训练时多头塑形**共享表示。于是训练侧用 Multi-Action-Head DPO（一个共享 backbone $\theta_b$ + H 个线性头 $W_i$）让每个目标长在自己的头上、推理时按权重混合 logits；测试侧用一个跨域 PRM 在生成边界处做"采候选 → PRM 打分 → 提交"的 step-level 引导，并用续存的 KV cache 抹掉重复 encode 的开销。两条线由一套**标准化 PRM 训练范式**打底——它把"过程奖励"从数学域的对错判断抽象成"前缀 → 期望成功概率"，使同一形态的信号 $r_t$ 能覆盖整张对齐图谱。三个组件可独立或叠加调用，做到"一次训练、推理时按需调配"。
 
 ### 关键设计
 
-1. **标准化 PRM 训练（统一可验证 / 非可验证域的 step-level 监督）**:
+**1. 标准化 PRM 训练：把过程奖励从数学域抽象成"前缀→期望成功概率"，统一可验证 / 非可验证域。**
 
-    - 功能：给数学、人类价值观、对话辅导等差异巨大的域提供同一形式的过程级训练信号 $r_t$ 与 PRM 损失。
-    - 核心思路：可验证域用 step-level reward 加 hindsight relabeling，把最终正确性 $z$ 折扣回传得到 $\tilde r_t = r_t + \gamma^{n-t} z$，并用 $M$ 次 rollout 平均得到 $V_t^{\text{target}}$，PRM 通过 MSE 拟合：$\mathcal{L}_{\text{PRM}} = \mathbb{E}[(p_t - V_t^{\text{target}})^2]$。非可验证域按可操作性分三种 case：Case A（有清晰 step 且 rollout 便宜）用校准过的 LLM-as-Judge 打多 rollout 的多数票 $r_t = \mathbb{I}[\frac{1}{M}\sum_m \mathbb{I}(J(y_{1:t}, y_{t+1:n}^{(m)})=\text{pos}) > 1/2]$；Case B（rollout 贵，如多轮对话）直接让 judge 打前缀 $r_t = J(y_{1:t})$；Case C（无清晰过程结构）退化为 Bradley-Terry 风格的部分序列打分。
-    - 设计动机：之前 PRM 工作几乎只能在数学这类有自动验证器的域上训；本文把"过程奖励"从"对错判断"抽象成"前缀 → 期望成功概率"，再按 rollout 成本和过程结构分级处理，让同一套 PRM 训练范式覆盖整个对齐图谱，是后面统一 PRM 跨域迁移的前提。
+之前的 PRM 工作几乎只能在数学这类有自动验证器的域上训，因为只有那里能廉价地判定每一步"对不对"；helpfulness、honesty 这种主观目标缺一套通用的 step-level 监督。本文的关键一步是把过程奖励重新定义成"给定前缀、期望最终成功的概率"，再按"是否可验证 + rollout 成本 + 有没有清晰过程结构"把标签构造分级处理。可验证域用 step-level reward 叠 hindsight relabeling，把最终正确性 $z$ 折扣回传到每一步 $\tilde r_t = r_t + \gamma^{n-t} z$，对 $M$ 次 rollout 取平均得到拟合目标 $V_t^{\text{target}}$，PRM 用 MSE 去逼近：$\mathcal{L}_{\text{PRM}} = \mathbb{E}[(p_t - V_t^{\text{target}})^2]$，等于把 PRM 同时训成"step 质量 + 未来正确性"的预测器。非可验证域则分三种 case：Case A（有清晰 step 且 rollout 便宜）用校准过的 LLM-as-Judge 对多条 rollout 投多数票，$r_t = \mathbb{I}[\frac{1}{M}\sum_m \mathbb{I}(J(y_{1:t}, y_{t+1:n}^{(m)})=\text{pos}) > 1/2]$；Case B（rollout 贵，如多轮对话）直接让 judge 给前缀打分 $r_t = J(y_{1:t})$；Case C（无清晰过程结构）退化成 Bradley-Terry 风格的部分序列打分。正因为这层抽象按 rollout 成本和过程结构分级，同一套 PRM 训练范式才能从数学扩散到整个对齐谱，这也是后面"一个 PRM 跨域迁移"成立的前提。
 
-2. **Multi-Action-Head DPO（向量化多目标对齐 + 推理时可调）**:
+**2. Multi-Action-Head DPO：把目标分离放在最后一层、知识共享放在 backbone，避免 H 倍训练开销又让推理时可重权。**
 
-    - 功能：用一个 LLM backbone 同时承载 H 个目标，训练时各目标在自己头上独立做 DPO，推理时可单头、可加权融合。
-    - 核心思路：共享 backbone 给出隐状态 $h_{\theta_b}(x, y_{1:t}) \in \mathbb{R}^d$，每个目标 $i$ 配一个独立投影头 $W_i \in \mathbb{R}^{d \times |V|}$，得到目标特定 logits $z_i = W_i^\top h_{\theta_b}$。每个头都用从 SFT 头复制 + 小扰动初始化，参考模型 $\pi_\text{ref}$ 共用一份冻结的 SFT 头。第 $i$ 个目标的损失为 $\mathcal{L}_i = -\mathbb{E}_{\mathcal{D}_i}[\log \sigma(\beta \Delta_i)]$，其中 $\Delta_i$ 是用 $\pi_{\theta_b, W_i}$ 计算的 DPO 优势；总损失为加权和 $\mathcal{L}_{\text{MAH-DPO}} = \sum_i \alpha_i \cdot \frac{1}{|\mathcal{B}_i|}\sum_{\mathcal{B}_i} \mathcal{L}_i$。推理时按 $\pi_\text{MAH}(y_t \mid \cdot) = \text{Softmax}(\sum_i w_i z_i)$ 融合，$\sum_i w_i = 1$。
-    - 设计动机：MODPO 把多目标在训练时硬塞进一个标量损失，权重在推理时不可改；DPO Soup 之类要为每个目标独立训整模再合权重。MAH-DPO 把"目标分离"放在最后一层（轻量），把"知识共享"放在 backbone（重量），既避免了 H 倍训练开销，又让推理时通过改头权重就能在 Pareto front 上滑动而不重训，实测两头集成相对单头 DPO 仅 +13% 延迟、+7% 显存。
+MODPO 把多个目标硬塞进一个标量损失，权重在训练时就钉死、推理时改不了；DPO Soup 之类要为每个目标独立训一整个模型再合并参数，加新目标就得重训单目标专家，代价高。MAH-DPO 的做法是让共享 backbone 给出隐状态 $h_{\theta_b}(x, y_{1:t}) \in \mathbb{R}^d$，再为每个目标 $i$ 配一个独立投影头 $W_i \in \mathbb{R}^{d \times |V|}$，得到目标特定 logits $z_i = W_i^\top h_{\theta_b}$。每个头都从 SFT 头复制再加小扰动初始化，参考模型 $\pi_\text{ref}$ 共用一份冻结的 SFT 头；训练时把每条样本按目标路由到对应头各算各的 DPO，单目标损失 $\mathcal{L}_i = -\mathbb{E}_{\mathcal{D}_i}[\log \sigma(\beta \Delta_i)]$（$\Delta_i$ 是用 $\pi_{\theta_b, W_i}$ 算的 DPO 优势），总损失是加权和 $\mathcal{L}_{\text{MAH-DPO}} = \sum_i \alpha_i \cdot \frac{1}{|\mathcal{B}_i|}\sum_{\mathcal{B}_i} \mathcal{L}_i$。推理时只需对 logits 加权 $\pi_\text{MAH}(y_t \mid \cdot) = \text{Softmax}(\sum_i w_i z_i)$（$\sum_i w_i = 1$）即可在 Pareto front 上平滑滑动，完全不用重训。把"目标分离"压到轻量的最后一层、把"知识共享"留在重量的 backbone，让它既绕开了 H 倍训练成本，又能即时重权——实测两头集成相对单头 DPO 仅 +13% 延迟、+7% 显存。
 
-3. **PRM-guided Decoding with Continuing Hidden State（step-level 测试时控制）**:
+**3. PRM-guided Decoding with Continuing Hidden State：用续存 KV cache 抹掉每步重 encode，让 step-level 引导真正可部署。**
 
-    - 功能：在生成每个"自然边界"（数学的换行 step、价值观的句子/段落、对话的一轮）处采 $K$ 个候选，由 PRM 选最高分提交，从而在测试时按目标方向引导生成。
-    - 核心思路：维护一个 running past KV cache $\text{kv}_t$。每步从 $\text{kv}_t$ clone $K$ 份本地 cache，每份独立采样直到触发边界检测 $\mathcal{Q}$，得到候选 $y_{t+1}^k$ 及其末态 cache $\text{kv}_{t+1}^k$。PRM 评分 $r_k = P(x, y_{1:t}, y_{t+1}^k)$，选 $k^\star = \arg\max_k r_k$，把对应 cache $\text{kv}_{t+1}^{k^\star}$ 直接顶替为下一步的 running cache。
-    - 设计动机：现有 reward-guided decoding 每步都把"已生成前缀 + 新选 step"作为文本重新拼接、再 encode 一次，会因 tokenization、相对位置、特殊 token 摆放等差异让下一步分布偏离真实增量解码——尤其是分步多次拼接后误差累积。续存 KV 让生成在"隐状态连续性"层面成立，实测对随机采样 4.9×、对 PRM-guided 4.2× 加速，等于把 step-level guidance 的可用成本降到能落地的量级。
+现有 reward-guided decoding 每选完一个 step 就把"已生成前缀 + 新 step"当成文本重新拼接再 encode 一次，tokenization、相对位置、特殊 token 摆放上的细微差异会让下一步的分布偏离真实增量解码，分步多次拼接后误差还会累积。本文的解法是维护一个 running past KV cache $\text{kv}_t$：每到一个"自然边界"（数学的换行 step、价值观的句子/段落、对话的一轮），就从 $\text{kv}_t$ clone 出 $K$ 份本地 cache，各自独立采样直到触发边界检测 $\mathcal{Q}$，得到候选 $y_{t+1}^k$ 及其末态 cache $\text{kv}_{t+1}^k$；PRM 给每个候选打分 $r_k = P(x, y_{1:t}, y_{t+1}^k)$，选 $k^\star = \arg\max_k r_k$，把对应的 $\text{kv}_{t+1}^{k^\star}$ 直接顶替为下一步的 running cache。这样生成始终在"隐状态连续"的层面进行，既保住了分布的真实性，又省掉了重复 encode——实测对随机采样 4.9×、对 PRM-guided 4.2× 加速，把 step-level guidance 的成本压到能落地的量级。
 
 ### 损失函数 / 训练策略
 PRM 用 MSE 拟合 hindsight value target；MAH-DPO 在 batch 里把样本按目标路由到对应头，分头算 DPO 再加权汇总（$\beta$ 控制偏好强度，$\alpha_i$ 控制目标重要性）。实验里为公平对比统一用相等的 $\alpha_i$ 与平衡采样。所有头从 SFT head 加微扰初始化，参考策略固定为 SFT。Math/Socratic Mind 用 Qwen2.5-7B-Instruct，UltraFeedback 用 Llama-3.1-8B-Instruct，所有结果 3 次独立运行平均。

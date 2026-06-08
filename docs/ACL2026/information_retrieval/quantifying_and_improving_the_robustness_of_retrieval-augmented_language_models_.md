@@ -44,23 +44,18 @@ SURE 的完整流程包括四个部分：虚假特征分类体系、扰动注入
 给定 query，retriever 返回若干文档，reader LLM 接收 prompt $P=(I,G,Q)$ 并生成答案。SURE 定义扰动函数 $g(.)$，把 grounding data $G$ 改成 $g(G)$，构造反事实输入 $\hat{P}=(I,g(G),Q)$。如果 $G$ 与 $g(G)$ 的答案语义一致，而模型输出正确性发生变化，就说明 RALM 对该虚假特征不鲁棒。
 
 ### 关键设计
-1. **五类虚假特征 taxonomy**:
 
-	- 功能：覆盖 RAG 中常见但不应改变答案的表面属性。
-	- 核心思路：定义 Style、Source、Logic、Format、Metadata 五大类，共 13 种扰动。Style 包括 simple/complex；Source 包括 LLM-generated/self-generated；Logic 包括 reverse/random/LLM-reranked；Format 包括 JSON/HTML/YAML/Markdown；Metadata 包括 timestamp pre/post 和 datasource wiki/twitter。
-	- 设计动机：互联网检索文档天然异质，RAG 系统在部署时无法保证文档格式、来源、写作风格统一，因此这些特征是实际风险而非玩具扰动。
+**1. 五类虚假特征 taxonomy：把"互联网文档会怎么变样、但不该改答案"系统编目。**
 
-2. **因果特征保持机制**:
+真实检索结果天然异质——同一条 golden document 可能以 HTML、被改写成另一种文风、或带着不同来源域名和时间戳出现，部署时根本无法保证格式、来源、写法统一。作者把这些"表面会变、语义不变"的属性归成五大类共 13 种扰动：Style（simple/complex 两种复杂度）、Source（LLM-generated/self-generated）、Logic（reverse/random/LLM-reranked 句序）、Format（JSON/HTML/YAML/Markdown）、Metadata（timestamp 的 pre/post、datasource 的 wiki/twitter）。把这些特征显式列成一张表，等于先承认它们是真实部署里的风险面，而不是凭空造的玩具扰动，后续的敏感性度量才有落点。
 
-	- 功能：保证扰动只改变虚假特征，不改变答案所依赖的语义内容。
-	- 核心思路：对于模型生成式扰动，直接要求保持语义等价；然后用双向 entailment 检查 $G$ 是否蕴含 $g(G)$ 且 $g(G)$ 是否蕴含 $G$。同时用字符串匹配确保 golden document 中的 ground truth 仍在扰动文档里，noise document 也不会意外获得正确答案。
-	- 设计动机：如果扰动改变了答案事实，就无法判断模型出错是因为虚假特征还是因果内容变化。双向 NLI 和答案字符串检查让评估更接近可控实验。
+**2. 因果特征保持机制：扰动只动表面，绝不动答案所依赖的事实。**
 
-3. **实例级鲁棒性指标与训练数据生成**:
+如果一次扰动顺手改了答案事实，那模型出错到底是被虚假特征带偏、还是因为因果内容变了，就无从分辨。SURE 因此给扰动函数 $g(\cdot)$ 套上双重保险：对模型生成式扰动直接要求语义等价，再用双向 entailment 验证 $G$ 蕴含 $g(G)$ 且 $g(G)$ 蕴含 $G$；同时用字符串匹配确认 golden document 里的 ground truth 在扰动后仍然在场，noise document 也不会意外地"长出"正确答案。双向 NLI 加答案字符串检查这两道关，把扰动前后约束成一组只差表面属性的反事实对照，让评估尽量接近受控实验。
 
-	- 功能：同时评估单例翻转和支持后续训练。
-	- 核心思路：对原始输出 $y$ 和扰动输出 $\hat{y}$ 分别判断正确性，统计 Win Rate、Lose Rate 和 Robustness Rate。对于不鲁棒实例，SURE 记录 query、正确答案、错误答案、原始 golden passage 和扰动 golden passage，用于 SFT 或 DPO。
-	- 设计动机：dataset accuracy 可能掩盖“同一题前后翻转”的不稳定性；而实例级配对天然适合构造偏好训练或一致性训练样本。
+**3. 实例级鲁棒性指标与训练数据复用：既量化单题翻转，又把不鲁棒样本回收成训练信号。**
+
+dataset-level accuracy 只看总体涨跌，会把"同一道题在扰动前后从对变错"这种不稳定性平均掉。SURE 改成实例级配对：对原始输出 $y$ 和扰动输出 $\hat{y}$ 各判一次正确性，统计 Win Rate、Lose Rate 和 Robustness Rate，于是能区分某个虚假特征是把答案改坏了还是偶然改好了。更巧的是这套配对天然适合做训练数据——对每个不鲁棒实例，SURE 顺手记下 query、正确答案、错误答案、原始 golden passage 和扰动 golden passage，正好凑成 SFT 的稳定监督或 DPO 的偏好对，让"评估发现的弱点"直接闭环回"训练修复弱点"。
 
 ### 损失函数 / 训练策略
 SURE 的评估阶段不训练模型，主要通过 perturb-then-evaluate 得到 RR/WR/LR。缓解阶段作者使用两种训练策略：SFT 把原始和扰动 golden passage 都配上正确答案，训练模型稳定输出正确答案；DPO 把正确答案作为 preferred、错误答案作为 rejected，分别结合原始和扰动 passage 构造偏好样本。实验以 Llama-3.1-8B-Instruct 为 backbone，在超过 30k 样本上训练 2 个 epoch，并在 SIG_Wiki 和跨域 SIG_Trivial 上评估。

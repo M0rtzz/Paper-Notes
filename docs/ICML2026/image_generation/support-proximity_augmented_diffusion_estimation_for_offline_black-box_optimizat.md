@@ -40,30 +40,24 @@ SPADE 用一个条件扩散模型替代传统回归代理来建模 $p(y\mid\bold
 ## 方法详解
 
 ### 整体框架
-SPADE 分两个阶段。**Surrogate Training 阶段**：在 $\mathcal{D}$ 上同时优化三个损失——基础扩散去噪损失 $\mathcal{L}_{\text{diff}}$、校准损失 $\mathcal{L}_{\text{calib}}$（均值匹配 + pairwise 排序）、支撑度近邻损失 $\mathcal{L}_{\text{prox}}$（kNN 距离驱动的 mean-shrink + variance-floor）。**Optimization 阶段**：用进化算法从高分种子出发演化候选群体，每个候选 $\boldsymbol{x}$ 用 $M$ 次 MC 采样估计 $\hat\mu_\theta(\boldsymbol{x})$ 和 $\hat\sigma_\theta(\boldsymbol{x})$，按 LCB $=\hat\mu-\beta\hat\sigma$ 选最优。
+SPADE 想解决的是离线黑盒优化里 forward 代理"既要给不确定性、又要排序准、还要在 OOD 区自动保守"这三件难以兼得的事。它的做法是把代理从确定性 MLP 换成一个以设计 $\boldsymbol{x}$ 为条件的扩散模型来建模整个 $p(y\mid\boldsymbol{x})$，再用两个额外损失分别校准全局统计量、注入数据先验。训练完成后进入优化阶段：用进化算法从数据集中的高分种子演化候选群体，每个候选靠多次 MC 采样估出均值与方差，按 LCB 采集函数挑出风险感知意义上最优的设计。
 
 ### 关键设计
 
-1. **条件扩散 forward 代理**:
+**1. 条件扩散 forward 代理：用一维标量上的扩散给出预测分布**
 
-    - 功能：把传统的确定性回归代理换成 DDPM，让 $p_\theta(y\mid\boldsymbol{x})$ 是一个完整的预测分布而不是点估计。
-    - 核心思路：用方差调度 $\{\beta_t\}$ 在 $y_0$ 上加噪得到 $q(y_t\mid y_0)=\mathcal{N}(\sqrt{\bar\alpha_t}y_0,(1-\bar\alpha_t)\mathbf{I})$，训一个以 $\boldsymbol{x}$ 为条件的噪声预测网络 $\epsilon_\theta(y_t,t,\boldsymbol{x})$，损失为 $\mathcal{L}_{\text{diff}}=\mathbb{E}\|\epsilon-\epsilon_\theta(y_t,t,\boldsymbol{x})\|_2^2$。推理时短跑 $M$ 步 MC 采样得到 $\{y^{(m)}\}$，从中估计预测均值和方差。
-    - 设计动机：MLP 回归只给点估计，没有 $\sigma$ 就没法做 LCB / EI 等风险感知采集函数；用扩散模型天然能捕捉多模态和异方差，比 ensemble / BNN 更易扩展。
+传统 forward 代理是确定性 MLP，只能输出一个点估计，拿不到方差 $\sigma$，于是 LCB / EI 这类需要不确定性的风险感知采集函数根本无从谈起。SPADE 把代理换成 DDPM：按方差调度 $\{\beta_t\}$ 在标签 $y_0$ 上加噪得到 $q(y_t\mid y_0)=\mathcal{N}(\sqrt{\bar\alpha_t}y_0,(1-\bar\alpha_t)\mathbf{I})$，再训一个以 $\boldsymbol{x}$ 为条件的噪声预测网络 $\epsilon_\theta(y_t,t,\boldsymbol{x})$，基础损失就是标准去噪目标 $\mathcal{L}_{\text{diff}}=\mathbb{E}\|\epsilon-\epsilon_\theta(y_t,t,\boldsymbol{x})\|_2^2$。推理时对同一个 $\boldsymbol{x}$ 短跑 $M$ 次采样得到 $\{y^{(m)}\}$，从这组样本里同时估出预测均值和方差。妙处在于这里扩散建的是一维标量 $y$ 而非高维设计，模型很轻量却天然能表达多模态与异方差，比 ensemble 或 BNN 更易扩展。
 
-2. **Calibrated Diffusion Estimation（校准损失）**:
+**2. 校准损失：把全局均值和配对排序显式锚进训练目标**
 
-    - 功能：让 surrogate 在"全局均值"和"配对排序"两个指标上和真实景观保持一致，弥补普通去噪损失只关心局部分布的缺陷。
-    - 核心思路：从 mini-batch 里用 $M$ 次短跑 MC 估出 $\hat\mu_\theta(\boldsymbol{x})\approx\frac{1}{M}\sum_m y^{(m)}$，然后两项相加：一阶矩匹配 $(\hat\mu_\theta(\boldsymbol{x})-y)^2$ + pairwise rank consistency $\log(1+\exp\{-s[\hat\mu_\theta(\boldsymbol{x}_i)-\hat\mu_\theta(\boldsymbol{x}_j)]\})$（仅在 $y_i>y_j$ 的有序对上算，温度 $s=1$）。
-    - 设计动机：BBO 真正用的是均值的排序而不是分布的形状，单跑 $\mathcal{L}_{\text{diff}}$ 不保证排序对；rank loss 直接把"谁比谁好"显式写进训练目标，相当于把 BBO 的 utility 信号反向传到扩散网络里。
+单跑去噪损失只保证局部分布拟合得好，却不保证代理的全局均值准、更不保证"谁比谁好"的排序对——而 BBO 真正消费的恰恰是排序。校准损失补上这两件事：先从 mini-batch 里用 $M$ 次短跑 MC 估出 $\hat\mu_\theta(\boldsymbol{x})\approx\frac{1}{M}\sum_m y^{(m)}$，然后叠加两项，一项是一阶矩匹配 $(\hat\mu_\theta(\boldsymbol{x})-y)^2$ 把均值钉到真值，另一项是 pairwise 排序一致性 $\log(1+\exp\{-s[\hat\mu_\theta(\boldsymbol{x}_i)-\hat\mu_\theta(\boldsymbol{x}_j)]\})$（只在 $y_i>y_j$ 的有序对上计算，温度 $s=1$）。后者相当于把 BBO 的 utility 信号——"哪个设计更好"——直接反向传播进扩散网络，让 EA 后续选候选时不会被错排的均值带偏。
 
-3. **Support-Proximity Regularization（支撑度近邻正则）**:
+**3. 支撑度近邻正则：用 kNN 几何代替生成式先验，让 OOD 区自动保守**
 
-    - 功能：在不另训生成模型 $p(\boldsymbol{x})$ 的前提下，让代理在远离数据流形的 OOD 区域自动调低均值、抬高方差，从而让 LCB 在 OOD 区天然不友好。
-    - 核心思路：用 kNN 第 $k$ 近邻距离 $R_k(\boldsymbol{x})$ 作密度代理，定义 $d(\boldsymbol{x})=\log R_k(\boldsymbol{x})$，则 $-\log\hat p_{\text{knn}}(\boldsymbol{x})\propto d(\boldsymbol{x})$。损失含两项 hinge：mean-shrink $\max(0,\hat\mu_\theta-\mu_{\text{NN}}-\tau(d))$ 把均值压到邻居均值附近且随距离更狠，variance-floor $\max(0,\sigma_{\min}(d)-\hat\sigma_\theta)$ 把方差顶到一个随距离单调上升的下限，其中 $\tau(d)=ad$、$\sigma_{\min}(d)=a_0+a_1 d$，默认 $a=0.02,a_0=0.02,a_1=0.005$ 全任务通用。论文证明：在 LCB 这类"$\mu$ 单增、$\sigma$ 单减"的采集函数下，$\widetilde{\mathcal{A}}(\boldsymbol{x})=\mathcal{A}(\mu,\sigma)+\kappa(\boldsymbol{x})\log\hat p_{\text{knn}}(\boldsymbol{x})+o(\cdot)$，一阶等价于在 utility 上加 $\log p(\boldsymbol{x})$ 先验。
-    - 设计动机：训练独立的 $p(\boldsymbol{x})$ 生成器既贵又难调；而 kNN 是非参的、对高维和不均匀分布鲁棒；hinge 写法保证只在违反"应该保守"约束时才施加梯度，不会干扰流形内部的拟合。
+forward 代理最危险的失效模式是 reward hacking：优化器一旦找到代理高估的 OOD 区域就疯狂往那钻，真实环境里却完全不靠谱。常规解法是另训一个 $p(\boldsymbol{x})$ 生成器做先验，但既贵又难调。SPADE 改用非参的 kNN 距离当密度代理：取第 $k$ 近邻距离 $R_k(\boldsymbol{x})$，定义 $d(\boldsymbol{x})=\log R_k(\boldsymbol{x})$，从而 $-\log\hat p_{\text{knn}}(\boldsymbol{x})\propto d(\boldsymbol{x})$，离数据流形越远 $d$ 越大。正则由两项 hinge 组成：mean-shrink 项 $\max(0,\hat\mu_\theta-\mu_{\text{NN}}-\tau(d))$ 把均值往邻居均值方向压、且离得越远压得越狠；variance-floor 项 $\max(0,\sigma_{\min}(d)-\hat\sigma_\theta)$ 给方差顶一个随距离单调上升的下限。其中 $\tau(d)=ad$、$\sigma_{\min}(d)=a_0+a_1 d$，默认 $a=0.02,a_0=0.02,a_1=0.005$ 全任务通用。hinge 写法保证只在违反"该保守"约束时才施加梯度，不干扰流形内部的拟合。论文进一步证明：在 LCB 这种"$\mu$ 单增、$\sigma$ 单减"的采集函数下，正则后的采集函数满足 $\widetilde{\mathcal{A}}(\boldsymbol{x})=\mathcal{A}(\mu,\sigma)+\kappa(\boldsymbol{x})\log\hat p_{\text{knn}}(\boldsymbol{x})+o(\cdot)$，一阶等价于在 utility 上加了一个 $\log p(\boldsymbol{x})$ 先验——这就把纯几何约束和贝叶斯后验 $p(\boldsymbol{x}\mid y)\propto p(y\mid\boldsymbol{x})p(\boldsymbol{x})$ 画上了等号。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L}(\theta)=\mathcal{L}_{\text{diff}}+\lambda_1\mathcal{L}_{\text{calib}}+\lambda_2\mathcal{L}_{\text{prox}}$。推理用 LCB $\hat\mu_\theta(\boldsymbol{x})-\beta\hat\sigma_\theta(\boldsymbol{x})$ 作采集函数，用进化算法（EA）从 $\mathcal{D}$ 中高分种子初始化种群，每代评估每个候选的 LCB 然后选择/变异/交叉，最终输出 $\arg\max_{\boldsymbol{x}\in\mathcal{P}}\text{LCB}(\boldsymbol{x})$。
+总损失 $\mathcal{L}(\theta)=\mathcal{L}_{\text{diff}}+\lambda_1\mathcal{L}_{\text{calib}}+\lambda_2\mathcal{L}_{\text{prox}}$ 把去噪、校准、支撑度三项一起优化。推理用 LCB $\hat\mu_\theta(\boldsymbol{x})-\beta\hat\sigma_\theta(\boldsymbol{x})$ 作采集函数，由进化算法（EA）从 $\mathcal{D}$ 中高分种子初始化种群，每代评估每个候选的 LCB 后做选择 / 变异 / 交叉，最终输出 $\arg\max_{\boldsymbol{x}\in\mathcal{P}}\text{LCB}(\boldsymbol{x})$。
 
 ## 实验关键数据
 

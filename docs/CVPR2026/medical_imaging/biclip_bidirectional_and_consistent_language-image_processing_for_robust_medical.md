@@ -43,49 +43,43 @@ tags:
 
 ### 整体框架
 
-BiCLIP 输入一张医学图像及其临床文本描述。文本通过冻结的 CXR-BERT 编码得到文本嵌入 $\mathbf{t}$，图像通过轻量卷积编码器得到视觉嵌入 $\mathbf{i}$。两者送入 BMF 模块进行双向融合，生成伪图像（pseudo image）编码跨模态语义。伪图像与原始图像拼接后送入 U-Net backbone 做分割预测，同时 IAC 模块对弱/强增强视图施加特征一致性约束。
+BiCLIP 想解决的是：医学分割里图文融合大多是单向的——文本只能给视觉"打标签"，视觉却没法回过头修正文本，一旦标注稀缺或图像本身带噪，这种静态条件化就撑不住。它的做法是把这条单向链接成闭环。一张医学图像配一段临床文本描述送进来，文本经冻结的 CXR-BERT 编成文本嵌入 $\mathbf{t}$，图像经轻量卷积编码器编成视觉嵌入 $\mathbf{i}$；两者先在 BMF 模块里双向融合，让视觉证据反过来精炼文本，并把精炼后的语义"画"成一张伪图像（pseudo image）。伪图像与原图沿通道拼接，再经 IAC 模块构造弱/强两个增强视图，一起喂给同一个 U-Net backbone——一边出分割掩码，一边对两视图的中间特征施加一致性约束。
 
 ### 关键设计
 
-#### 1. BMF（Bidirectional Multimodal Fusion，双向多模态融合）
+**1. BMF（Bidirectional Multimodal Fusion）：让视觉证据反向精炼文本，并把跨模态语义画成可分割的伪图像。**
 
-**功能**：实现视觉信息反向精炼文本表示的闭环交互。
+单向融合的弱点在于文本嵌入是"死"的——COVID-19 CT 噪声大、标注又少时，一句固定的临床描述既补不了监督，也修不了带噪的视觉特征。BMF 把这条链接成闭环。前向先把文本和图像嵌入拼成联合表示 $\mathbf{z} = [\mathbf{t}; \mathbf{i}]$，过一个 MLP $g_{\text{BMF}}(\cdot)$ 只预测残差 $\Delta\mathbf{t} = g_{\text{BMF}}(\mathbf{z})$，再加回原文本得 $\mathbf{t}' = \mathbf{t} + \Delta\mathbf{t}$；用残差而非整体替换，是为了在注入视觉线索的同时保住原始语言结构不被冲掉。精炼后的 $\mathbf{t}'$ 再经伪图像生成器画成伪图像 $\hat{\mathbf{x}}$，这个生成器由 GT 信号监督（$L_1$ 重建损失 $\mathcal{L}_{\text{gen}}$），相当于把抽象的跨模态语义具象成一张能直接拼进 U-Net 的视觉通道。
 
-**核心思路**：
-- **前向融合**：拼接文本嵌入 $\mathbf{t}$ 和图像嵌入 $\mathbf{i}$ 得到联合表示 $\mathbf{z} = [\mathbf{t}; \mathbf{i}]$，通过 MLP $g_{\text{BMF}}(\cdot)$ 预测残差 $\Delta\mathbf{t} = g_{\text{BMF}}(\mathbf{z})$，精炼文本嵌入 $\mathbf{t}' = \mathbf{t} + \Delta\mathbf{t}$
-- **伪图像生成**：将 $\mathbf{t}'$ 通过伪图像生成器转换为伪图像 $\hat{\mathbf{x}}$，该生成器由 GT 信号监督（$L_1$ 重建损失 $\mathcal{L}_{\text{gen}}$），编码跨模态语义
-- **反向闭环**：伪图像通过 image-to-text head $h(\cdot)$ 映射回文本空间得到 $\hat{\mathbf{t}}$，施加 cycle consistency loss：$\mathcal{L}_{\text{cycle}} = \|\mathbf{t} - \hat{\mathbf{t}}\|_2^2$
+闭环的"反向"一环靠 cycle consistency 守住：伪图像再经 image-to-text head $h(\cdot)$ 映回文本空间得 $\hat{\mathbf{t}}$，约束它绕一圈后别跑偏，
 
-**设计动机**：残差连接保留原始语言结构的同时注入视觉线索；cycle consistency 确保双向映射的语义一致性，防止精炼过程偏离原始文本语义；伪图像作为桥梁，将跨模态语义具象化为可分割的视觉信号。
+$$\mathcal{L}_{\text{cycle}} = \|\mathbf{t} - \hat{\mathbf{t}}\|_2^2$$
 
-#### 2. IAC（Image Augmentation Consistency，图像增强一致性）
+这一项保证 text→image→text 的双向映射语义自洽，防止精炼过程把文本带离原意——这正是它比纯文本→视觉单向融合更耐噪、更耐低标注的原因。
 
-**功能**：约束中间特征在不同强度增强下保持一致，提升对外观变化的鲁棒性。
+**2. IAC（Image Augmentation Consistency）：用弱/强两个增强视图逼网络学增强不变的特征，在数据有限时当隐式数据增强用。**
 
-**核心思路**：
-- **输入构造**：伪图像 $\hat{\mathbf{x}}$ 与原始图像 $\mathbf{x}$ 沿通道维拼接得到 $\mathbf{x}_{\text{cat}}$，先做空间增强（联合对图像和 mask 操作保持空间对齐），再对真实图像部分分别施加弱增强 $\mathcal{A}_w$ 和强增强 $\mathcal{A}_s$，伪图像部分做归一化 $\mathcal{N}_p$ 作为稳定语义参考：
-    - $\mathbf{x}_w = \text{concat}(\mathcal{A}_w(\mathbf{x}_g^r), \mathcal{N}_p(\mathbf{x}_g^p))$
-    - $\mathbf{x}_s = \text{concat}(\mathcal{A}_s(\mathbf{x}_g^r), \mathcal{N}_p(\mathbf{x}_g^p))$
-- **一致性约束**：两个视图分别过同一个 U-Net，取 decoder 最后上采样阶段的特征图 $\mathbf{f}_w, \mathbf{f}_s$，通过轻量投影头（global pooling + linear）得到紧凑嵌入 $\mathbf{p}_w, \mathbf{p}_s$，最小化 cosine distance：$\mathcal{L}_{\text{IAC}} = 1 - \frac{\mathbf{p}_w^\top \mathbf{p}_s}{\|\mathbf{p}_w\|_2 \|\mathbf{p}_s\|_2}$
-- **分割预测**：从弱增强分支的特征图通过 $1 \times 1$ 卷积 + sigmoid 输出预测 mask
+低剂量 CT 噪声、运动模糊这类采集退化会让视觉特征本身就抖，标注又少时网络很容易过拟合到具体外观。IAC 的思路是：同一张图换两种扰动强度看，网络该给出一致的内部表示。具体先把伪图像 $\hat{\mathbf{x}}$ 与原图 $\mathbf{x}$ 沿通道拼成 $\mathbf{x}_{\text{cat}}$，做联合空间增强（图像和 mask 一起变，保持空间对齐），再对真实图像部分分别施加弱增强 $\mathcal{A}_w$ 和强增强 $\mathcal{A}_s$，而伪图像部分只做归一化 $\mathcal{N}_p$ 不增强——把它当稳定的跨模态语义锚点，不让扰动动摇：
 
-**设计动机**：弱/强增强构造两个难度不同的视图，一致性约束迫使网络学到增强不变的表示，这在数据有限时尤为重要——相当于隐式数据增强；伪图像部分保持归一化不做增强，确保跨模态语义锚点稳定。
+$$\mathbf{x}_w = \text{concat}(\mathcal{A}_w(\mathbf{x}_g^r),\ \mathcal{N}_p(\mathbf{x}_g^p)), \qquad \mathbf{x}_s = \text{concat}(\mathcal{A}_s(\mathbf{x}_g^r),\ \mathcal{N}_p(\mathbf{x}_g^p))$$
 
-### 损失函数
+两个视图各过同一个 U-Net，取 decoder 最后上采样阶段的特征图 $\mathbf{f}_w, \mathbf{f}_s$，经轻量投影头（global pooling + linear）压成紧凑嵌入 $\mathbf{p}_w, \mathbf{p}_s$，再用 cosine distance 拉近：
 
-总训练损失为四项加权和：
+$$\mathcal{L}_{\text{IAC}} = 1 - \frac{\mathbf{p}_w^\top \mathbf{p}_s}{\|\mathbf{p}_w\|_2 \|\mathbf{p}_s\|_2}$$
+
+最终分割掩码从弱增强分支的特征图经 $1 \times 1$ 卷积 + sigmoid 输出。这套约束本质上类似 FixMatch 的一致性正则——逼网络学到对外观扰动不敏感的表示，等于在不增加标注的前提下凭空多出一份监督信号，这也是 1% 标注下它还能撑住的关键。
+
+### 一个完整示例
+
+拿一张 COVID-19 CT 切片配一句"双肺多发磨玻璃影"的临床描述走一遍：文本经 CXR-BERT 编成 $\mathbf{t}$，图像编成 $\mathbf{i}$。BMF 先拼成 $\mathbf{z}=[\mathbf{t};\mathbf{i}]$，预测残差把"磨玻璃影"这条语义按当前图像里病灶的位置/范围微调成 $\mathbf{t}'$，再由生成器画出一张高亮疑似病灶区的伪图像 $\hat{\mathbf{x}}$；同时 $\hat{\mathbf{x}}$ 映回文本 $\hat{\mathbf{t}}$ 与 $\mathbf{t}$ 比对，确认绕一圈语义没跑偏。接着把 $\hat{\mathbf{x}}$ 与原图拼接，对真实图像部分分别加弱增强（轻微亮度抖动）和强增强（强噪声+模糊），伪图像部分只归一化保持稳定。两条视图过同一个 U-Net：弱增强分支出分割掩码并算 Dice/CE，两分支的 decoder 特征再被拉到一致。于是即便强增强这条把图像扰得很糊，网络也被迫输出和弱增强一致的内部表示——伪图像这个不动的锚点和文本闭环一起，把"这块该分成病灶"的判断稳住了。
+
+### 损失函数与训练策略
+
+总损失是四项加权和：
 
 $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda_{\text{gen}}\mathcal{L}_{\text{gen}} + \lambda_{\text{IAC}}\mathcal{L}_{\text{IAC}} + \lambda_{\text{cycle}}\mathcal{L}_{\text{cycle}}$$
 
-- $\mathcal{L}_{\text{seg}}$：Dice + Cross-Entropy 分割损失
-- $\mathcal{L}_{\text{gen}}$：伪图像 $L_1$ 重建损失
-- $\mathcal{L}_{\text{IAC}}$：增强一致性 cosine distance 损失
-- $\mathcal{L}_{\text{cycle}}$：双向融合 cycle consistency $L_2$ 损失
-
-### 训练细节
-- AdamW 优化器，初始学习率 $1 \times 10^{-4}$，cosine annealing warm restart
-- Batch size 16，训练 150 epochs，单张 RTX 4090
-- 文本编码器：冻结 CXR-BERT
+其中 $\mathcal{L}_{\text{seg}}$ 是 Dice + Cross-Entropy 分割损失，$\mathcal{L}_{\text{gen}}$ 是伪图像的 $L_1$ 重建损失，$\mathcal{L}_{\text{IAC}}$ 是增强一致性的 cosine distance 损失，$\mathcal{L}_{\text{cycle}}$ 是双向融合的 cycle consistency $L_2$ 损失。训练用 AdamW，初始学习率 $1 \times 10^{-4}$ 配 cosine annealing warm restart，batch size 16、150 epochs，单张 RTX 4090；文本编码器全程冻结 CXR-BERT。
 
 ## 实验关键数据
 

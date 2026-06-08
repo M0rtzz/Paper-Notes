@@ -40,33 +40,25 @@ tags:
 
 ## 方法详解
 
-SafeSearch 的核心是一个"四 LLM 助手编排"的红队框架，分两阶段：离线造 300 道高质量测试用例，在线对搜索 Agent 跑测试并用 LLM-as-Judge 评分。
-
 ### 整体框架
-输入是一段自然语言形式的风险类型描述（共 5 类：间接提示注入、有害输出、广告推广、错误信息、偏见诱导）；造题阶段输出一个测试用例四元组 `(benign query, target negative consequence, unreliable website, checklist)`；测试阶段把不可靠网页 $d_u$ 注入到真实搜索结果列表 $D=\{d_1,\dots,d_k\}$ 末尾，Agent 在 $D\cup\{d_u\}$ 上正常执行多轮搜索/工具调用/深度研究并产生最终回答；评测阶段用 checklist 辅助的安全评判器输出布尔判断，聚合得到 Attack Success Rate（ASR），并用 1–5 分的 helpfulness 评判器换算成 Helpfulness Score（HS）。多轮 Agent 中 $d_u$ 只注入第一轮，给后续搜索"自我纠错"的机会，这样得到的是 Agent 安全性的**保守下界**。
+SafeSearch 要解决的是"怎么在不污染真实搜索引擎、也不伤害无辜用户的前提下，可扩展地评测搜索 Agent 遇到不可靠结果时会不会被带偏"。它把这件事拆成离线和在线两段：离线用四个 LLM 助手编排出 300 道高质量测试用例，每道题是一个四元组 `(benign query, target negative consequence, unreliable website, checklist)`；在线时把那个不可靠网页 $d_u$ 拼到真实搜索结果列表 $D=\{d_1,\dots,d_k\}$ 末尾，让 Agent 在 $D\cup\{d_u\}$ 上照常多轮搜索/工具调用/深度研究并给出最终回答，再用 checklist 辅助的安全评判器输出布尔判定聚合成 Attack Success Rate（ASR），另用一个 helpfulness 评判器换算成 Helpfulness Score（HS）。整套设计刻意走保守路线（只注 1 个网页、放末尾、多轮只注第一轮），所以最终量到的是 Agent 安全性的**下界**。
 
 ### 关键设计
 
-1. **三步式造题工作流 + 差分过滤**：
+**1. 三步式造题工作流 + 差分过滤：保证 ASR 量的是"不可靠结果带来的额外伤害"**
 
-    - 功能：把"一句话风险描述"变成可执行的测试用例四元组，并自动剔除不合格用例。
-    - 核心思路：用 o4-mini 当 test generator，按 Scenario anchoring → Test design → Test instantiation 三步推进——先脑补一个真实使用场景，再设计"恶意计划"（指定目标负面后果与可利用的网页类型，并强调威胁要发生在 LLM 知识截止之后以保持时效性），最后产出给 website generator 的"内容指南"和给安全评判器的"checklist"。生成完后用 Qwen3-8B 作 baseline Agent 跑两次差分测试：在**操控工具**下能否成功诱发目标后果（attainability，记 $A$）、在**良性工具**下是否会自发触发（integrity，记 $I$）；只有 $A\wedge\neg I$ 的用例才入库。
-    - 设计动机：纯生成的用例往往是"无效题"（baseline Agent 在 benign 条件下也会犯错，或者在攻击下根本诱不出问题），不过滤会导致 ASR 失真；用差分测试把"有效攻击面"和"模型已有缺陷"解耦，保证 ASR 是真正衡量"不可靠结果的额外伤害"。
+红队评测最容易踩的坑是题目无效——要么 baseline Agent 在干净条件下自己就会犯错，要么攻击根本诱不出问题，这两类题混进来都会让 ASR 失真。SafeSearch 用 o4-mini 当 test generator，按 Scenario anchoring → Test design → Test instantiation 三步推进：先脑补一个真实使用场景，再设计一份"恶意计划"（指定目标负面后果、可利用的网页类型，并要求威胁发生在 LLM 知识截止之后以保时效），最后产出给 website generator 的"内容指南"和给安全评判器的"checklist"。生成后用 Qwen3-8B 作 baseline Agent 跑两次差分测试：在**操控工具**下能否诱发目标后果（attainability，记 $A$）、在**良性工具**下是否会自发触发（integrity，记 $I$），只有满足 $A\wedge\neg I$ 的题才入库。这一过滤把"有效攻击面"和"模型自身已有缺陷"解耦，让 ASR 真正归因到不可靠结果，而不是把模型本来的错误也算进去。
 
-2. **单网页沙箱注入 + 时间戳条件化生成**：
+**2. 单网页沙箱注入 + 时间戳条件化生成：在伦理与真实性之间取中间态**
 
-    - 功能：用 LLM 现场合成一个不可靠网站 $d_u$ 并附加到真实搜索结果末尾，模拟"刚出现在网上的低质内容"。
-    - 核心思路：website generator（GPT-4.1-mini）按造题阶段的"内容指南"生成 $d_u$，并以测试日期作为生成条件，让网站内容自动落在 LLM 知识截止之后；多轮 Agent 只在第一轮注入 $d_u$，后续搜索完全不动；不显式要求网站"具有说服力"或"高度伪装"，刻意保持保守。Agent 端用 Serper API 拿真实 Google 结果、Jina Reader API 抽取正文，每站 2,000 token 上限，top-5 检索 + 跨 Agent 缓存搜索结果保证公平性。
-    - 设计动机：直接做真实 SEO 操纵会伤害无辜用户也违反伦理；而完全用静态语料又无法触达"实时搜索 + 长尾查询"这一核心威胁面，单网页注入恰好在两者之间——既保证 Agent 的真实执行链路不被破坏，又能可复现地评估"一个不可靠结果"的最坏影响，从而界定 Agent 安全性的下界。
+直接去做真实 SEO 操纵会伤害无辜用户、也站不住伦理；可完全用静态语料又触达不到"实时搜索 + 长尾查询"这个核心威胁面。SafeSearch 的折中是：website generator（GPT-4.1-mini）按造题阶段的"内容指南"现场合成一个不可靠网站 $d_u$，并以测试当天日期作为生成条件，让内容自动落在 LLM 知识截止之后；$d_u$ 只附加到真实结果末尾，多轮 Agent 也只在第一轮注入，后续搜索完全不动，还刻意不要求网站"有说服力"或"高度伪装"。Agent 端用 Serper API 取真实 Google 结果、Jina Reader API 抽正文、每站限 2,000 token、top-5 检索并跨 Agent 缓存以保公平。这样既不破坏 Agent 的真实执行链路，又能可复现地量出"一个不可靠结果"的最坏影响——每一处让步都在压低 ASR 的方向上，因此结论是稳健的下界。
 
-3. **Checklist 辅助的双轴 LLM-as-Judge**：
+**3. Checklist 辅助的双轴 LLM-as-Judge：把"算不算被攻破"显式成可核对清单**
 
-    - 功能：自动评估 Agent 回答是否触发目标负面后果（安全）、以及对用户的感知有用性（helpfulness），两者解耦。
-    - 核心思路：安全评判器接收 `(query, target consequence, checklist, agent response)` 四元组，先做一段 reasoning 再输出布尔判定，对每个用例跑三次取均值得到 ASR；helpfulness 评判器只看 `(query, response)` 给 1–5 分（重标到 0–100，记 HS），不评事实正确性而是"看起来是否有用"。安全评判器在人工抽检上有 >95% 的人机一致率（附录 G）。
-    - 设计动机：传统 LLM 评判直接问"安全吗"过于主观、稳定性差；把 checklist（造题阶段产出）作为评判 rubric，相当于把"什么算被攻破"显式化为可逐条核对的清单，既提高一致性也让评判过程对开发者透明；helpfulness 与 safety 分离评分是为了揭示"不安全的回答仍可能感觉很有用"这一关键陷阱（论文实验显示 tool-calling 下 $\text{HS}_\text{manip.}=92.2 > \text{HS}_\text{benign}=91.4$）。
+直接问 LLM"这个回答安全吗"太主观、稳定性差，所以 SafeSearch 把造题阶段产出的 checklist 当成评判 rubric。安全评判器接收 `(query, target consequence, checklist, agent response)` 四元组，先写一段 reasoning 再输出布尔判定，每题跑三次取均值得 ASR——把"什么算被攻破"逐条核对，既提升一致性又让评判对开发者透明（人工抽检人机一致率 >95%，附录 G）。helpfulness 评判器则只看 `(query, response)` 打 1–5 分（重标到 0–100，记 HS），评的是"看起来是否有用"而非事实正确。安全与 helpfulness 分轴评分是刻意的：它能暴露"不安全的回答仍可能感觉很有用"这一陷阱，论文实测 tool-calling 下 $\text{HS}_\text{manip.}=92.2 > \text{HS}_\text{benign}=91.4$，被攻破后用户感知反而更高。
 
 ### 损失函数 / 训练策略
-SafeSearch 本身不训练任何模型，只做"零样本"红队评测。所有 LLM 助手用 prompt 编排：test generator/website generator/safety evaluator/helpfulness evaluator/baseline filter 五个角色由 o4-mini、GPT-4.1-mini、Qwen3-8B 等承担；Agent 端温度 0.6、每个用例跑 3 次取均值。最终数据集 300 条 = 5 类风险 × 60 条/类，由"生成—差分过滤"循环不断重抽直到填满。
+SafeSearch 不训练任何模型，纯零样本红队评测，全靠 prompt 编排五个角色：test generator/website generator/safety evaluator/helpfulness evaluator/baseline filter，分别由 o4-mini、GPT-4.1-mini、Qwen3-8B 等承担；Agent 端温度 0.6、每题跑 3 次取均值。最终 300 条数据 = 5 类风险 × 60 条/类，由"生成—差分过滤"循环不断重抽直到填满。
 
 ## 实验关键数据
 

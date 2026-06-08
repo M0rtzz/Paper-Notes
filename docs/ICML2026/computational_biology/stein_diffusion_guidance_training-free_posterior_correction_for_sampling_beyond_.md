@@ -41,27 +41,31 @@ SDG 把"训练免（training-free）扩散引导"和"随机最优控制（SOC）
 ## 方法详解
 
 ### 整体框架
-SDG 在每个反向扩散步 $t$ 维护 $N$ 个粒子 $\{\mathbf{x}_t^i\}_{i=1}^N$。每步做三件事：(1) 用 Tweedie 公式把所有粒子一步映射到数据流形 $\mathcal{M}_T$ 上得到 $\{\mathbf{x}_T^i\}$；(2) 在 $\mathcal{M}_T$ 上用 Stein 算子对 $\{\mathbf{x}_T^i\}$ 做一步修正，让它们逼近真后验 $p(\mathbf{x}_T|\mathbf{x}_t)$；(3) 把修正后的粒子前推回 $\mathcal{M}_t$，并叠加"低密度 + 奖励"梯度作为最终控制信号 $\bar{\mathbf{u}}^*(\mathbf{x}_t,t)$，更新粒子继续反向 SDE。整套流程不需要训练分类器，也不需要对扩散模型微调，是即插即用模块。
+SDG 想解决的是"训练免扩散引导在低密度区采不准"的问题，做法是把它重新表述成一个随机最优控制（SOC）问题：在每个反向扩散步 $t$ 维护 $N$ 个粒子 $\{\mathbf{x}_t^i\}_{i=1}^N$，先用 Tweedie 公式把粒子映到数据流形 $\mathcal{M}_T$，在那里用 Stein 算子把它们朝真后验 $p(\mathbf{x}_T|\mathbf{x}_t)$ 推一步，再前推回噪声流形 $\mathcal{M}_t$ 并叠加"低密度 + 奖励"梯度，作为最终控制 $\bar{\mathbf{u}}^*(\mathbf{x}_t,t)$ 注入反向 SDE。整套流程不训练分类器、不微调扩散模型，是即插即用模块；它的理论价值在于把 SOC 的最优控制写成变分上界后，能精确指出现有 Tweedie 类方法漏了哪一项、并用最小代价补回来。
 
 ### 关键设计
 
-1. **低密度 SOC 成本泛函**:
+**1. 低密度 SOC 成本泛函：把"去低密度区找稀有样本"写成可优化目标**
 
-    - 功能：给"我要去低密度区找稀有高价值样本"这一定性目标一个精确的可优化形式。
-    - 核心思路：作者在标准 SOC 的状态成本 $f$ + 终端成本 $g$ 框架上加了一个 Dirac 时间脉冲 $\delta(s-t)$，得到 $\widetilde{J}(\mathbf{u},\mathbf{x},t)=\mathbb{E}_{\mathbb{P}^{\mathbf{u}}}[\int_t^T (\tfrac12\|\mathbf{u}\|^2 + \alpha(s)\log p_s(\mathbf{x}^{\mathbf{u}}_s)\delta(s-t))ds - \beta(t)r(\mathbf{x}_T^{\mathbf{u}})]$，其中 $\alpha(t)$ 调控低密度退火强度、$\beta(t)$ 调奖励权重。由 Lemma 2.2 解出受控边际分布 $p_t^{\mathbf{u}}(\mathbf{x}_t)\propto p_t^{1-\alpha(t)}(\mathbf{x}_t)\exp(\beta(t)r(\mathbf{x}_T))$——这正是把数据密度退火到 $1-\alpha(t)$ 次方（$\alpha>0$ 时低密度区被放大）再乘奖励能量。最优控制 $\mathbf{u}^*(\mathbf{x},t)=\sigma(t)\nabla_{\mathbf{x}}\log\frac{p_t^{\mathbf{u}}(\mathbf{x})}{p_t(\mathbf{x})}$。
-    - 设计动机：原始 SOC 没区分"高密度 vs 低密度"——它只优化奖励。Tweedie 类方法在低密度区垮掉的根因是它们继承了同样的成本结构，没有显式地把"我要往稀少的方向走"写进目标。$\alpha(t)\log p_t$ 项就是这件事的可微表达：调大 $\alpha$ 等价于把目标分布展平，让粒子更愿意离开训练集主峰。
+药物发现、稀有事件这类任务真正关心的是低密度区，但原始 SOC 只优化奖励、不区分高低密度，Tweedie 类方法继承了同样的成本结构，所以从源头上就没把"往稀少方向走"写进目标。作者在标准 SOC 的状态成本 $f$ + 终端成本 $g$ 框架上加了一个 Dirac 时间脉冲 $\delta(s-t)$，构造新成本泛函 $\widetilde{J}(\mathbf{u},\mathbf{x},t)=\mathbb{E}_{\mathbb{P}^{\mathbf{u}}}[\int_t^T (\tfrac12\|\mathbf{u}\|^2 + \alpha(s)\log p_s(\mathbf{x}^{\mathbf{u}}_s)\delta(s-t))ds - \beta(t)r(\mathbf{x}_T^{\mathbf{u}})]$，其中 $\alpha(t)$ 调低密度退火强度、$\beta(t)$ 调奖励权重。
 
-2. **价值函数变分上界 + Stein 修正项**:
+由 Lemma 2.2 解出受控边际分布 $p_t^{\mathbf{u}}(\mathbf{x}_t)\propto p_t^{1-\alpha(t)}(\mathbf{x}_t)\exp(\beta(t)r(\mathbf{x}_T))$，对应最优控制 $\mathbf{u}^*(\mathbf{x},t)=\sigma(t)\nabla_{\mathbf{x}}\log\frac{p_t^{\mathbf{u}}(\mathbf{x})}{p_t(\mathbf{x})}$。这个形式直观可读：数据密度被退火到 $1-\alpha(t)$ 次方后再乘奖励能量，$\alpha(t)\log p_t$ 项就是"往稀少方向走"的可微表达——调大 $\alpha$ 等价于把目标分布展平、放大低密度区，让粒子更愿意离开训练集主峰。
 
-    - 功能：把不可计算的真 SOC 价值函数换成一个可优化的上界，并暴露出现有 Tweedie 方法漏掉了哪一项。
-    - 核心思路：引入建议分布 $q\in\mathcal{Q}$，对 $V(\mathbf{x},t)=-\log\frac{p_t^{\mathbf{u}}}{p_t}$ 做 Jensen 推出上界 $\bar{V}(\mathbf{x},t,q)=\alpha(t)\log p_t(\mathbf{x})-\beta(t)\mathbb{E}_{\mathbf{x}_T\sim q}[r(\mathbf{x}_T)]+D_{\mathrm{KL}}(q(\mathbf{x}_T|\mathbf{x}_t)\|p(\mathbf{x}_T|\mathbf{x}_t))$。前两项正是 DPS/LGD/MPGD/UGD 在用的"score + reward gradient"，第三项 KL 是它们集体漏掉的——也是低密度区采样错误的源头。对应的最优控制分解为 $\bar{\mathbf{u}}^*/\sigma(t)=[-\alpha(t)\mathbf{s}_\theta(\mathbf{x}_t)+\beta(t)\nabla_{\mathbf{x}_t}\mathbb{E}_q[r(\mathbf{x}_T)]]_{\text{I: 现有 training-free guidance}}+[-\nabla_{\mathbf{x}_t}D_{\mathrm{KL}}(q\|p)]_{\text{II: Stein 修正项}}$。第 II 项用 SVGD 算（Lemma 2.1），最陡 KL 下降方向 $\phi^*(\mathbf{x}_T^i)=\mathbb{E}_{\mathbf{x}_T^j\sim q}[\nabla_{\mathbf{x}_T^j}\log p(\mathbf{x}_T^j|\mathbf{x}_t^j)\,k(\mathbf{x}_T^i,\mathbf{x}_T^j)+\nabla_{\mathbf{x}_T^j}k(\mathbf{x}_T^i,\mathbf{x}_T^j)]$，RBF 核 $k$ 带宽用中位数启发式 $m=\mathrm{med}(\|\cdot\|^2)/\log N$。
-    - 设计动机：变分上界把"逼近真后验"这件事显式拆出来，理论上回答了"为什么 Tweedie 在低密度区不够好"——它对应 $D_{\mathrm{KL}}\neq 0$ 的近似，必须有第二项控制去修正。SVGD 是这里少有的能"只要 score 不要 normalizer"的方法，完美适配扩散场景。
+**2. 价值函数变分上界：把真 SOC 换成可优化上界，暴露被漏掉的 KL 项**
 
-3. **Back-and-Forth Stein 校正（核心计算技巧）**:
+真 SOC 的价值函数 $V(\mathbf{x},t)=-\log\frac{p_t^{\mathbf{u}}}{p_t}$ 不可直接计算。作者引入建议分布 $q\in\mathcal{Q}$，对它做 Jensen 推出上界 $\bar{V}(\mathbf{x},t,q)=\alpha(t)\log p_t(\mathbf{x})-\beta(t)\mathbb{E}_{\mathbf{x}_T\sim q}[r(\mathbf{x}_T)]+D_{\mathrm{KL}}(q(\mathbf{x}_T|\mathbf{x}_t)\|p(\mathbf{x}_T|\mathbf{x}_t))$。关键观察是：前两项恰好是 DPS/LGD/MPGD/UGD 在用的"score + reward gradient"，而第三项 KL 是它们集体漏掉的——这一项正是低密度区采样错误的根源，因为 Tweedie 只给点估计、对应 $D_{\mathrm{KL}}\neq 0$ 的粗糙近似。
 
-    - 功能：在不做整条扩散轨迹反传的前提下，高效地把 KL 修正写到每一步上。
-    - 核心思路：直接对 $\mathbf{x}_t^i$ 算 $\phi^*$ 需要的 Jacobian-vector products 在高维上昂贵；作者改成三步：(a) **倒推 $\mathcal{M}_t\to\mathcal{M}_T$**：用 Tweedie 把 $\{\mathbf{x}_t^i\}$ 一步映到 $\{\mathbf{x}_T^i\}$ 作为初始建议后验；(b) **流形上 Stein 一步**：在 $\mathcal{M}_T$ 上用 $\phi^*(\mathbf{x}_T^i)$（用 Lemma 3.3 把真后验 score 近似为 $\nabla_{\mathbf{x}_T}\log p(\mathbf{x}_T|\mathbf{x}_t)\approx \mathbf{s}_\theta(\mathbf{x}_T)-\eta(t)\mathbf{s}_\theta(\mathbf{x}_t)$，只需两次 score 前向）以自适应步长 $\epsilon(t)$ 更新粒子得到修正后的 $\{\tilde{\mathbf{x}}_T^i\}$；(c) **前推 $\mathcal{M}_T\to\mathcal{M}_t$**：把修正后的粒子重新加噪到 $t$ 时刻，叠加 I 部分的低密度奖励梯度，作为最终 $\bar{\mathbf{u}}^*$ 注入反向 SDE。Corollary 3.5 还证明：当 $\epsilon(t)\to 0$ 时，Stein 修正退化为 Song et al. 2020b 的 Langevin 修正（步长 $\gamma^2(t)$、噪声尺度 $\sqrt{2}$），是其严格推广。
-    - 设计动机：直接在 $\mathcal{M}_t$ 上做 SVGD 要算 score 对 $\mathbf{x}_t$ 的二阶导，内存炸；而在 $\mathcal{M}_T$ 上做只需要两次 score 前向加一次核求导，省至少一个数量级。Lemma 3.3 把"真后验 score"用两次 score 前向差分逼近，是绕开闭式表达的关键魔法。Langevin 退化结论让 SDG 在理论上"向后兼容"已有修正方法。
+对应地，最优控制分解成两部分：
+
+$$\bar{\mathbf{u}}^*/\sigma(t)=\underbrace{[-\alpha(t)\mathbf{s}_\theta(\mathbf{x}_t)+\beta(t)\nabla_{\mathbf{x}_t}\mathbb{E}_q[r(\mathbf{x}_T)]]}_{\text{I: 现有 training-free guidance}}+\underbrace{[-\nabla_{\mathbf{x}_t}D_{\mathrm{KL}}(q\|p)]}_{\text{II: Stein 修正项}}$$
+
+第 II 项用 Stein 变分梯度下降（SVGD）来算（Lemma 2.1），因为 SVGD 是这里少有的"只要 score 不要 normalizer"的方法，完美适配只有 $\mathbf{s}_\theta$ 的扩散场景。它给出的最陡 KL 下降方向是 $\phi^*(\mathbf{x}_T^i)=\mathbb{E}_{\mathbf{x}_T^j\sim q}[\nabla_{\mathbf{x}_T^j}\log p(\mathbf{x}_T^j|\mathbf{x}_t^j)\,k(\mathbf{x}_T^i,\mathbf{x}_T^j)+\nabla_{\mathbf{x}_T^j}k(\mathbf{x}_T^i,\mathbf{x}_T^j)]$，其中 RBF 核 $k$ 的带宽用中位数启发式 $m=\mathrm{med}(\|\cdot\|^2)/\log N$。
+
+**3. Back-and-Forth Stein 校正：不做整轨迹反传就把 KL 修正补到每一步**
+
+直接对 $\mathbf{x}_t^i$ 算 $\phi^*$ 需要 score 对 $\mathbf{x}_t$ 的二阶导（Jacobian-vector products），高维下内存会炸，这也是 SOC 路线虽正确却用不起来的原因。作者绕开它的办法是"先倒推到数据流形上做 SVGD、再前推回来"：(a) **倒推 $\mathcal{M}_t\to\mathcal{M}_T$**，用 Tweedie 把 $\{\mathbf{x}_t^i\}$ 一步映到 $\{\mathbf{x}_T^i\}$ 当初始建议后验；(b) **流形上 Stein 一步**，在 $\mathcal{M}_T$ 上以自适应步长 $\epsilon(t)$ 沿 $\phi^*$ 更新粒子得到 $\{\tilde{\mathbf{x}}_T^i\}$，其中真后验 score 由 Lemma 3.3 近似为 $\nabla_{\mathbf{x}_T}\log p(\mathbf{x}_T|\mathbf{x}_t)\approx \mathbf{s}_\theta(\mathbf{x}_T)-\eta(t)\mathbf{s}_\theta(\mathbf{x}_t)$，只需两次 score 前向就能算（这正是绕开闭式表达的关键近似）；(c) **前推 $\mathcal{M}_T\to\mathcal{M}_t$**，把修正后的粒子重新加噪到 $t$ 时刻，叠加 I 部分的低密度奖励梯度，作为最终 $\bar{\mathbf{u}}^*$ 注入反向 SDE。
+
+这样一来，原本需要二阶导的 SOC 级修正被换成"两次 score 前向 + 一次核求导"，成本至少降一个数量级，才让即插即用成为可能。Corollary 3.5 进一步证明：当 $\epsilon(t)\to 0$ 时 Stein 修正退化为 Song et al. 2020b 的 Langevin 修正（步长 $\gamma^2(t)$、噪声尺度 $\sqrt{2}$），所以 SDG 在理论上"向后兼容"已有修正方法，是它们的严格推广。
 
 ### 损失函数 / 训练策略
 SDG 完全 training-free：score model $\mathbf{s}_\theta$、奖励 $r(\cdot)$ 都从已有 checkpoint 直接拿。唯一超参是粒子数 $N$、$\alpha(t)$、$\beta(t)$ schedule、Stein 步长 $\epsilon(t)$。论文给四个 ablation 变体：完整 SDG（$\alpha>0,\epsilon>0$）、SDG♣（无 Stein 修正，等价 baseline）、SDG♡（$\alpha=0,\epsilon>0$，只要 Stein 不要低密度）、SDG♢（$\alpha>0,\epsilon=0$，退化为 Langevin 修正）。

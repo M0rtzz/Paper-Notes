@@ -45,36 +45,29 @@ DualOptim+ 把 Adam 优化器状态拆成"共享 base 态 + 解耦 delta 态"，
 
 ### 整体框架
 
-每个优化器状态（AdamW 的 $m$、$v$）拆为：
-- **base 态** $B$：被 $\nabla \mathcal{L}_f$ 和 $\nabla \mathcal{L}_r$ 共同更新，承载共性
-- **delta 态** $\Delta_f, \Delta_r$：分别由"该目标梯度与 base 的残差"更新，承载差异
-
-每步用 base + 对应 delta 给参数：$\theta \leftarrow \theta - \eta (\hat B + \hat \Delta_o) / (\sqrt{|\hat v_B + \hat v_{\Delta_o}|} + \epsilon)$；base 在参数更新之后再更新（稳定参考）。配合交替调度 $F_f$ 步 forget + $F_r$ 步 retain。
+DualOptim+ 的目标是让 LLM 遗忘的优化器能随 forget/retain 梯度相关性的变化，在"共享一份状态"和"各用各的状态"之间自适应滑动。它的做法是把 AdamW 的每个优化器状态（一阶矩 $m$、二阶矩 $v$）从一份拆成两层：一份所有目标共用的 **base 态** $B$ 负责捕捉 forget 和 retain 都同意的方向，外加每个目标各自的 **delta 态** $\Delta_f, \Delta_r$ 负责装下各目标独有的、彼此对抗的成分。每一步用 base 加上当前目标对应的 delta 去更新参数，配合 $F_f$ 步 forget、$F_r$ 步 retain 的交替调度，base 在参数更新之后才更新以保持一个稳定的共享参考。
 
 ### 关键设计
 
-1. **Base 态与 Delta 态分解**:
+**1. Base 态与 Delta 态分解：把一份优化器状态拆成"共性 + 差异"两层，两路信号都不丢。**
 
-    - 功能：把单个优化器状态拆成共享部分（base）和目标特异部分（delta），保留两路信号
-    - 核心思路：base $B \leftarrow \beta B + (1-\beta) \nabla \mathcal{L}_o$（$o$ 为当前目标），delta $\Delta_o \leftarrow \beta \Delta_o + (1-\beta)(\nabla \mathcal{L}_o - \hat B)$；二阶矩 $v_B, v_{\Delta_o}$ 同理用平方梯度更新；偏差修正 $\hat B = B / (1-\beta^t)$
-    - 设计动机：base 学到的是 forget/retain 都同意的方向（多任务共性），delta 学到的是各自独立的方向（对抗成分）；二者相加，既不会被 Joint 那样合并掉对抗信号，也不会像 DualOptim 那样丢掉协同信号
+前面提到 Joint 把两个目标的梯度合并成一份状态、对抗信号被抹平，而 DualOptim 完全解耦、协同信号又被丢掉——两者各占了一种极端。DualOptim+ 的关键是不再二选一：在更新当前目标 $o$ 时，base 用所有梯度一起滑动 $B \leftarrow \beta B + (1-\beta)\nabla\mathcal{L}_o$，学到 forget/retain 共同认可的方向；delta 只吃"该目标梯度减掉 base 之后的残差" $\Delta_o \leftarrow \beta \Delta_o + (1-\beta)(\nabla\mathcal{L}_o - \hat B)$，装下这个目标独有的对抗分量。二阶矩 $v_B, v_{\Delta_o}$ 同理用平方梯度滑动，并做偏差修正 $\hat B = B/(1-\beta^t)$。最终参数更新是把两层叠加：
 
-2. **自适应过渡（理论性质）**:
+$$\theta \leftarrow \theta - \eta\,\frac{\hat B + \hat \Delta_o}{\sqrt{|\hat v_B + \hat v_{\Delta_o}|} + \epsilon}$$
 
-    - 功能：根据 forget/retain 梯度的方向相关性，自动在 Alternate 与 DualOptim 之间过渡
-    - 核心思路：Theorem 3.2 给出极限分析——设 $\mathbb{E}_t[g_{f,t}] = mG$, $\mathbb{E}_t[g_{r,t}] = nG$：
-        - $m = n$（梯度正相关）→ $B \to mG$、$\Delta_{f,r} \to 0$，等价于 Alternate（共享态）
-        - $m = -\frac{1-\beta^{F_r}}{\beta^{F_r}(1-\beta^{F_f})}n$（强负相关）→ $B \to 0$，仅 delta 起作用，等价于 DualOptim（完全解耦）
-    - 设计动机：不需要任何相关性检测的开关，自适应行为是优化器结构自带的；这让 LLM 训练中相关性动态变化时无需调参
+这样既不会像 Joint 把对抗信号合并掉，也不会像 DualOptim 把协同信号丢掉，共性走 base、差异走 delta，两路信号在更新里同时存在。
 
-3. **DualOptim+ 8bit（显存控制）**:
+**2. 自适应过渡：不靠开关、不检测相关性，过渡是优化器结构自带的。**
 
-    - 功能：把额外 base + delta 状态量化到 8-bit，把显存开销压回 vanilla AdamW 水平
-    - 核心思路：参考 bitsandbytes 8-bit Adam，对 $B, \Delta_f, \Delta_r$ 都用块状量化；论文报告量化版与 fp32 版性能几乎相同
-    - 设计动机：base + delta 比 vanilla AdamW 多 2× 显存（一阶+二阶各多两份），LLM 上不可接受；8-bit 量化是必要的工程优化，让方法实际可用
+这个分解最妙的地方在于：base/delta 的相对大小会随梯度相关性自动变化，根本不需要外部检测谁正相关谁负相关。Theorem 3.2 给出闭式极限——设 $\mathbb{E}_t[g_{f,t}] = mG$、$\mathbb{E}_t[g_{r,t}] = nG$，当 forget/retain 梯度正相关（$m=n$）时 $B \to mG$、$\Delta_{f,r}\to 0$，整个优化器退化成 Alternate（只剩共享态）；当强负相关（$m = -\frac{1-\beta^{F_r}}{\beta^{F_r}(1-\beta^{F_f})}n$）时 $B \to 0$、只剩 delta 起作用，退化成 DualOptim（完全解耦）。也就是说 Alternate 和 DualOptim 都是 DualOptim+ 的极限特例，而中间状态就是两者的连续插值。LLM 训练里相关性本来就在剧烈波动，这种"无需调参就能全程踩在最优中间体上"正是它在 LLM 上比 DualOptim 多拿收益的原因。
 
-### 训练调度
-$F_f, F_r$ 控制 forget/retain 交替频率（实验取 1:1）；base 在参数更新后再更新以稳定参考；交替模式比纯交替更稳。
+**3. DualOptim+ 8bit：把多出来的状态量化到 8-bit，显存压回 vanilla AdamW 水平。**
+
+base + delta 的代价是优化器状态比 vanilla AdamW 多了大约 2×（一阶、二阶矩各多出两份），在 LLM 上这点显存膨胀是部署杀手。作者沿用 bitsandbytes 8-bit Adam 的块状量化，对 $B, \Delta_f, \Delta_r$ 全部做 8-bit 量化，把额外开销压回基线水平；论文报告量化版与 fp32 版性能几乎相同（OVR 差距 < 0.3 点）。这种"算法改完顺手把工程开销也补上"的配套，是方法能实际用起来的前提。
+
+### 训练策略
+
+forget/retain 的交替频率由 $F_f, F_r$ 控制，实验中取 1:1；base 刻意安排在参数更新**之后**才更新，目的是给 delta 提供一个稳定的共享参考，这种交替+延迟更新的组合比纯交替更稳。
 
 ## 实验关键数据
 

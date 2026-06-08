@@ -41,30 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-威胁模型分白盒和灰盒：白盒攻击者拥有 $\theta$、$\theta'$、编辑算法、协方差 $\mathbf{C}$，以及一个"候选主语集 $\mathcal{S}_{\rm cand}$ × 候选 prompt 集 $\mathcal{R}_{\rm cand}$"（可由公开领域知识构造）。攻击 pipeline 分两阶段：**Stage I — Subject Inference** 用 $\Delta\mathbf{W}$ 的代数结构反推主语；**Stage II — Prompt Recovery** 利用前后模型的熵差为每个恢复出的主语挑选 top-$N_r$ prompt；两者结合后再 forward 一次预编辑模型即可拿到原始答案 $o^{\rm ori}$。防御方案 **Subspace Camouflage** 则在编辑阶段就主动注入"语义诱饵"主语，把权重更新的行空间挤到一个混淆子空间里，让攻击者的 SVD 看到的是诱饵+真主语的叠加。
+论文要回答的是"拿到编辑前后两份权重，能不能把被擦除的隐私反推回来"，并把它拆成一条两阶段攻击 KSTER 加一套防御。威胁模型设白盒攻击者持有 $\theta$、$\theta'$、编辑算法和协方差 $\mathbf{C}$，外加一个由公开领域知识构造的"候选主语集 × 候选 prompt 集"。攻击先在 Stage I 从权重差 $\Delta\mathbf{W}$ 的代数结构里捞出被编辑主语，再在 Stage II 用前后模型的熵差为每个主语锁定真 prompt，最后把"主语+prompt"喂回预编辑模型一次就拿到原始答案；防御 Subspace Camouflage 则反向操作，在编辑时主动掺入"语义诱饵"主语，让攻击者 SVD 看到的子空间被诱饵污染。
 
 ### 关键设计
 
-1. **基于 SVD 的主语推断（Stage I）**：
+**1. 基于 SVD 的主语推断（Stage I）：把"反推主语"降格成一次子空间投影**
 
-    - 功能：仅给定 $\Delta\mathbf{W}$ 和 $\mathbf{C}$，从一个候选主语池里精确挑出被编辑的 $N$ 个主语。
-    - 核心思路：先由 $\mathrm{rank}(\Delta\mathbf{W})$ 估出编辑数量 $N$（在 $\mathbf{R}$、$\mathbf{K}$ 满列秩假设下严格成立）；再对 $\mathbf{M}=\Delta\mathbf{W}\mathbf{C}$ 做 SVD，取右奇异向量的前 $N$ 列 $\mathbf{V}_N$ 作为重构的 key 子空间。对每个候选主语 $s_i^c$，用通用模板从预编辑模型取出激活 $\mathbf{k}_i^c=\mathcal{F}_\theta(s_i^c,\mathcal{T}_{\rm gen})$，按投影比 $\rho_i^c = \|\mathbf{V}_N^\top \mathbf{k}_i^c\|_2 / \|\mathbf{k}_i^c\|_2$ 排序取 top-$N$。AlphaEdit 因有零空间投影 $\mathbf{P}$，scoring 需在 $\mathbf{P}$ 调整后的版本上做（Lemma G.18）。
-    - 设计动机：直接恢复 $\mathbf{K}$ 不可能（$\mathbf{R}$ 未知），但 *子空间* 才是攻击需要的——用通用模板取出的激活与真编辑模板的激活极其相似（subject invariance），所以投影比这一标量足够区分被编辑主语。乘 $\mathbf{C}$ 是为消除协方差对原始 row space 的几何畸变；附录 G.16 还证明了对 $\mathbf{C}$ 估计噪声的鲁棒性。
+攻击者真正想要的是被编辑主语的 key 向量 $\mathbf{K}$，但 $\Delta\mathbf{W}$ 里 $\mathbf{R}$ 未知、$\mathbf{K}$ 无法直接解出。作者的破局点是只需要 $\mathbf{K}$ 张成的*子空间*而非 $\mathbf{K}$ 本身：Woodbury 改写已证明 $\mathrm{RowSpace}(\Delta\mathbf{W}\mathbf{C})\subseteq\mathrm{ColSpace}(\mathbf{K})$，于是先由 $\mathrm{rank}(\Delta\mathbf{W})$ 估出编辑条数 $N$（$\mathbf{R}$、$\mathbf{K}$ 满列秩时严格成立），再对 $\mathbf{M}=\Delta\mathbf{W}\mathbf{C}$ 做 SVD，取前 $N$ 个右奇异向量 $\mathbf{V}_N$ 当作重构出的 key 子空间。判定某个候选主语 $s_i^c$ 是否被编辑，只要用一个通用模板从预编辑模型取出它的激活 $\mathbf{k}_i^c=\mathcal{F}_\theta(s_i^c,\mathcal{T}_{\rm gen})$，看它落进该子空间的比例——投影比定义为 $\rho_i^c = \|\mathbf{V}_N^\top \mathbf{k}_i^c\|_2 / \|\mathbf{k}_i^c\|_2$，按 $\rho$ 排序取 top-$N$ 即为推断主语。这一步之所以成立，靠的正是 subject invariance：通用模板下的激活和真编辑模板下的激活几乎重合，标量投影比就足以区分。式中乘 $\mathbf{C}$ 是为抵消协方差对原始行空间的几何畸变，附录 G.16 进一步证明该判别对 $\mathbf{C}$ 的估计噪声鲁棒；AlphaEdit 因带零空间投影 $\mathbf{P}$，需在 $\mathbf{P}$ 调整后的版本上打分（Lemma G.18）。
 
-2. **基于熵下降的 prompt 恢复（Stage II）**：
+**2. 基于熵下降的 prompt 恢复（Stage II）：拿"编辑过拟合"当判别信号**
 
-    - 功能：在已恢复主语 $\hat{s}_i$ 的条件下，从候选 prompt 池里挑出最像被编辑使用的模板。
-    - 核心思路：编辑的本质是把目标 prompt 下的下一 token 分布塑造到接近 one-hot，于是 *相对熵下降* 在真 prompt 上会显著大于其他 prompt。对每个 $(\hat{s}_i, r_j^c)$ 计算预/后编辑模型的香农熵 $H(\hat{s}_i,r_j^c;\theta)$ 与 $H(\hat{s}_i,r_j^c;\theta')$，定义打分 $\mathrm{Score}=\frac{H(\hat{s}_i,r_j^c;\theta)-H(\hat{s}_i,r_j^c;\theta')}{H(\hat{s}_i,r_j^c;\theta')+\epsilon}$，按分排序取 top-$N_r$。分母放大那些"被推到近似 0 熵"的过拟合 prompt，从而精确捕获被编辑的那一条。
-    - 设计动机：直接比对 logit 余弦相似度在大 batch 下会被多条编辑互相干扰；而熵差只对"信息塌缩"的方向敏感，恰好对应了编辑算法的优化目标，因此在 $N=100$ 大批量下仍稳定。
+锁定主语后还要还原编辑用的 prompt 模板。直接比对前后模型的 logit 余弦相似度在大 batch 下会被多条编辑互相串扰，作者换了个对编辑目标更敏感的量：编辑的本质就是把目标 prompt 的下一 token 分布压成近似 one-hot，所以真 prompt 上的熵会塌缩得格外厉害。对每个候选对 $(\hat{s}_i, r_j^c)$ 分别算预/后编辑模型的香农熵 $H(\hat{s}_i,r_j^c;\theta)$ 和 $H(\hat{s}_i,r_j^c;\theta')$，按相对熵下降打分 $\mathrm{Score}=\dfrac{H(\hat{s}_i,r_j^c;\theta)-H(\hat{s}_i,r_j^c;\theta')}{H(\hat{s}_i,r_j^c;\theta')+\epsilon}$，取 top-$N_r$。分母的妙处在于专门放大那些被推到近零熵的过拟合 prompt，从而把被编辑的那一条顶到前列；由于熵差只对"信息塌缩"方向敏感、恰好对齐编辑算法的优化目标，这个判别在 $N=100$ 的大批量下依旧稳定。
 
-3. **子空间伪装防御（Subspace Camouflage）**：
+**3. 子空间伪装防御（Subspace Camouflage）：用语义诱饵主动污染攻击者的 SVD**
 
-    - 功能：让编辑者在不损失编辑效果的前提下，把 $\Delta\mathbf{W}$ 的行空间从 $\mathrm{ColSpace}(\mathbf{K})$ 替换为一个混入"诱饵"的子空间 $\mathrm{ColSpace}(\tilde{\mathbf{K}})$。
-    - 核心思路：从一个不相关的真实主语池采样诱饵 key 矩阵 $\mathbf{K}_{\rm decoy}$，构造伪装 key $\tilde{\mathbf{K}} = \mathbf{K} + \alpha \cdot \frac{\|\mathbf{K}\|_2}{\|\mathbf{K}_{\rm decoy}\|_2}\mathbf{K}_{\rm decoy}$；解出唯一满足"行空间陷入 $\mathrm{ColSpace}(\tilde{\mathbf{K}})$ 且对原始 keys 表现不变（$\Delta\mathbf{W}_{\rm defense}\mathbf{K}=\Delta\mathbf{W}\mathbf{K}$）"的防御更新：$\Delta\mathbf{W}_{\rm defense} = \Delta\mathbf{W}\mathbf{K}(\tilde{\mathbf{K}}^\top \mathbf{C}^{-1}\mathbf{K})^{-1}\tilde{\mathbf{K}}^\top \mathbf{C}^{-1}$（附小岭正则 $\lambda=10^{-8}$ 保数值稳定）。
-    - 设计动机：与"加随机噪声"不同，**语义诱饵**对应真实激活，会"主动竞争"地把攻击者的 SVD 主方向拉向诱饵；附录 H.3/H.4 证明，攻击者无法判定该防御是否被启用，也无法从 $\tilde{\mathbf{K}}$ 反推出 $\mathbf{K}$（因为反推所需 $\mathbf{R}$ 本身就等价于直接拿到被保护知识，构成循环依赖）。
+防御方希望在不损编辑效用的前提下，把 $\Delta\mathbf{W}$ 的行空间从真实的 $\mathrm{ColSpace}(\mathbf{K})$ 挪到一个掺了诱饵的 $\mathrm{ColSpace}(\tilde{\mathbf{K}})$，让 Stage I 的 SVD 主方向被带偏。具体做法是从一个不相关的真实主语池采诱饵 key $\mathbf{K}_{\rm decoy}$，按 $\tilde{\mathbf{K}} = \mathbf{K} + \alpha \cdot \frac{\|\mathbf{K}\|_2}{\|\mathbf{K}_{\rm decoy}\|_2}\mathbf{K}_{\rm decoy}$ 构造伪装 key，再解出唯一满足"行空间陷入 $\mathrm{ColSpace}(\tilde{\mathbf{K}})$、且对原始 keys 表现不变（$\Delta\mathbf{W}_{\rm defense}\mathbf{K}=\Delta\mathbf{W}\mathbf{K}$）"的防御更新 $\Delta\mathbf{W}_{\rm defense} = \Delta\mathbf{W}\mathbf{K}(\tilde{\mathbf{K}}^\top \mathbf{C}^{-1}\mathbf{K})^{-1}\tilde{\mathbf{K}}^\top \mathbf{C}^{-1}$（配小岭正则 $\lambda=10^{-8}$ 稳数值）。和单纯加随机噪声不同，诱饵对应真实激活，会"主动竞争"地把攻击者的奇异向量拉向自己；附录 H.3/H.4 还证明攻击者既判定不了防御是否启用，也无法从 $\tilde{\mathbf{K}}$ 反推 $\mathbf{K}$——因为反推所需的 $\mathbf{R}$ 本身就等价于直接拿到被保护知识，形成循环依赖，从信息论上堵死了后门。
 
-### 损失函数 / 训练策略
-不涉及训练。攻击是纯几何 + 信息论操作；防御是对原编辑算法 closed-form 的一次性等价改写，加一个标量超参 $\alpha$（控制保护强度，作者实验取 $\alpha\in[1,5]$）。
+整套方法不涉及任何训练：攻击是纯几何加信息论的一次性运算，防御只是对原编辑 closed-form 解的一次等价改写，仅多一个控制保护强度的标量超参 $\alpha$（实验取 $\alpha\in[1,5]$）。
 
 ## 实验关键数据
 

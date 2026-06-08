@@ -40,40 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的分析链是「**架构事实 → 嵌入几何 → packing 上界 → 可达序列上界 → 阈值预测 → 实验验证**」一条直线走到底：
+这篇论文想用一条尽可能短的逻辑链回答"transformer 到底能输出多少条不同序列"：把 transformer 看成有限精度下的映射，它能区分的输入本来就是有限多个，于是它能输出的序列也必然有限。整套分析从"架构事实"出发，先把生成行为翻译成嵌入空间里的几何问题，再用 packing number 卡住可达序列的总数，导出可达长度阈值的闭式公式，最后回到 cramming / copying 两个真实任务上验证预测。
 
-1. 把 transformer 形式化为映射 $\tau:\bigcup_m \mathbb{R}^{d\times m}\to\Delta_{|V|}$（soft prompt 版本，包含 hard prompt 作为特例）。
-2. 假设 last-layer embedding 支撑 $E\subset B_d(0,r)$，按 unembedding 矩阵 $F$ 把 $E$ 划分为 $E_i=\{x: (Fx)_i\geq (Fx)_j\,\forall j\}$ —— Fig 1 在 Qwen-2-0.5B 上做了 2D 切片可视化。
-3. 定义 **可达序列**：序列 $t$ 在精度 $\varepsilon$、prompt 长度 $m$ 下可达 ⟺ 存在 $X\in\mathbb{R}^{d\times m}$ 使 $B(X,\varepsilon/2)\subset E_t^m$（即一整个精度球都被映射到 $t$）。
-4. 在「**finite prompt length**」与「**arbitrary prompt length（mean-field）**」两条路线上分别证 packing 型上界。
-5. 用 cramming（小 m，测线性阈值）+ copying（任意 m，测渐近阈值）两个互补任务做实验，并通过"支撑 refinement + cell 体积分布"两步把粗糙的几何假设替换成实测量，把理论/实测比从 ~20× 压到 ~5–10×。
+具体地，把 transformer 形式化为映射 $\tau:\bigcup_m \mathbb{R}^{d\times m}\to\Delta_{|V|}$（soft prompt 版本，hard prompt 是其特例），假设 last-layer embedding 支撑落在球 $E\subset B_d(0,r)$ 内，并按 unembedding 矩阵 $F$ 把 $E$ 切成 $|V|$ 个 argmax cell $E_i=\{x:(Fx)_i\geq (Fx)_j\,\forall j\}$（Fig 1 在 Qwen-2-0.5B 上做了 2D 切片）。剩下的工作就是数清楚"有多少条序列能在这套 cell 划分里被贪心解码连续命中"。
 
 ### 关键设计
 
-1. **可达序列（accessible sequence）的几何化定义**：
+**1. 可达序列的几何化定义：把"能否输出序列 t"变成"嵌入空间能否塞下一个精度球"。**
 
-    - 功能：把"transformer 能否输出序列 t"这个离散问题翻译成"嵌入空间里是否存在一个 ε/2 邻域整段落入 cell $E_t^m$"的几何问题，使整套 packing-number 工具能直接套上。
-    - 核心思路：先按下一个 token 的 argmax 把 last-layer embedding 划分为 $|V|$ 个 cell $E_i$（Definition 在 Section 3.1，Fig 1 为 2D 可视化）；对长度 n 的目标序列，把贪心解码的连续 n 步条件叠加得到 $E_t^m\subset B_{d\times m}(0,r)$。引入精度 $\varepsilon$（Assumption 4.3：transformer 在每个 ε 立方体内是常数函数）后，序列 t 可达 ⟺ $E_t^m$ 包含一个半径 $\varepsilon/2$ 的球（Definition 4.1）。
-    - 设计动机：以前的"通用近似"结果是连续意义的，没法解释离散输出的失败；本文先把"输出 = 落入 cell"几何化，再用有限精度把"区分 = 容纳一个精度球"几何化——这样可达序列数自然被嵌入空间的 packing number 卡住。Remark 3.2 顺手把结论推广到随机解码：贪心不可达 ⟹ 任何随机策略成功率 < 50%。
+以往的"通用近似"结果都是连续、无限精度意义下的，没法解释离散输出为什么会失败。本文的第一步就是换一套语言：先按下一个 token 的 argmax 把 last-layer embedding 划成 $|V|$ 个 cell（Section 3.1 定义，Fig 1 可视化），那么生成一条长度 $n$ 的目标序列 $t$，等价于贪心解码连续 $n$ 步都落进正确 cell，把这 $n$ 步条件叠起来得到 $E_t^m\subset B_{d\times m}(0,r)$。再引入有限精度：Assumption 4.3 要求 transformer 在每个边长 $\varepsilon$ 的立方体内取常数值，于是"序列 $t$ 可达" ⟺ $E_t^m$ 里能放下一个半径 $\varepsilon/2$ 的球（Definition 4.1）。这样一来，"transformer 能不能输出 $t$"这个离散问题就被翻译成"嵌入空间里有没有一段 ε/2 邻域整段落入 $E_t^m$"的纯几何问题——可达序列的总数自然被嵌入支撑的 packing number 卡住。顺带 Remark 3.2 把结论推广到随机解码：只要贪心不可达，任何随机采样策略的成功率都 $<50\%$。
 
-2. **Packing-number 双轨上界（finite-m / 任意-m）**：
+**2. Packing-number 双轨上界：分别卡住"短 prompt"和"任意长 prompt"两种场景。**
 
-    - 功能：给出可达序列数与可达长度阈值的闭式上界，且分别覆盖"短 prompt"和"任意长 prompt"两种场景。
-    - 核心思路：
-        - **Finite prompt length（Thm 4.5 + Cor 4.6）**：$\tau$ 至多区分 $P(B_{d\times m}(0,r),\|\cdot\|,\varepsilon)\leq (1+2r/\varepsilon)^{dm}$ 个输入，故可达序列数 $\leq (1+2r/\varepsilon)^{dm}$。对照 $|V|^n$ 即得：一旦 $n > C\cdot m$，其中 $C = d\ln(1+2r/\varepsilon)/\ln|V|$，就必有不可达序列，且不可达比例以 $(1+2r/\varepsilon)^{dm}/|V|^n=O(1/|V|^n)$ 指数衰减。
-        - **Arbitrary prompt length（Thm 4.9 + Cor 4.10）**：把 transformer 当成 **概率测度之间** 的映射（mean-field，Sander 2022；attention 同时具备置换等变与 $L([X,X])_{:,i}=L(X)_{:,i}$），将每段 prompt $X$ 替换为经验测度 $M(X)=\frac1m\sum_i \delta_{X_{:,i}}$。引入 Wasserstein 精度 Assumption 4.8，得到 prompt-independent 的可达序列数上界 $(e+e(2r)^q/\varepsilon^q)^{(1+2r/\varepsilon)^d}$ —— 此时不存在"硬上限长度"，但可达比例同样 $O(1/|V|^n)$ 衰减。
-    - 设计动机：第一条上界解释了"短 prompt 时阈值线性增长"，第二条解释了"再长的 prompt 也救不了 copying"——两条加在一起完整描述了 cramming 与 copying 中观察到的 **sigmoid 形状**：临界长度前几乎全部可达，临界长度后比例呈 $1/|V|^n$ 暴跌。所有结论都是 prompt-, training-, compute-agnostic 的纯架构性质。
+有了几何定义，可达序列数就等于嵌入支撑里能塞进的不相交精度球数，也就是 packing number，于是上界可以直接写成闭式。短 prompt 这条路（Thm 4.5 + Cor 4.6）最直接：$\tau$ 至多能区分 $P(B_{d\times m}(0,r),\|\cdot\|,\varepsilon)\leq (1+2r/\varepsilon)^{dm}$ 个输入，故可达序列数 $\leq (1+2r/\varepsilon)^{dm}$。把它和总序列数 $|V|^n$ 一比，立刻得到：一旦 $n>C\cdot m$，其中 $C=d\ln(1+2r/\varepsilon)/\ln|V|$，就必然存在不可达序列，且不可达比例以 $(1+2r/\varepsilon)^{dm}/|V|^n=O(1/|V|^n)$ 指数衰减——这正解释了"短 prompt 下可达长度阈值随 $m$ 线性增长"。但线性阈值会让人怀疑"prompt 拉得足够长是不是就能复制任意序列"，所以第二条路（Thm 4.9 + Cor 4.10）把 prompt 长度推到任意：利用 attention 的置换等变与 $L([X,X])_{:,i}=L(X)_{:,i}$ 性质（mean-field，Sander 2022），把每段 prompt $X$ 换成经验测度 $M(X)=\frac1m\sum_i\delta_{X_{:,i}}$，transformer 就成了概率测度之间的映射；配上 Wasserstein 版精度假设（Assumption 4.8），得到一个 prompt-independent 的上界 $(e+e(2r)^q/\varepsilon^q)^{(1+2r/\varepsilon)^d}$。此时虽然不再有"硬上限长度"，但可达比例依旧 $O(1/|V|^n)$ 衰减——所以再长的 prompt 也救不了 copying。两条上界合起来正好刻画了 cramming / copying 里观察到的 **sigmoid 形状**：临界长度前几乎全部可达，临界长度后比例暴跌，而且全部结论都是 prompt-、training-、compute-agnostic 的纯架构性质。
 
-3. **支撑域 refinement + 非均匀 cell 体积修正**：
+**3. 支撑域 refinement + 非均匀 cell 体积修正：把最坏情况上界收紧成可预测模型。**
 
-    - 功能：把上一条里两个"最坏情况"假设——(a) 嵌入支撑 = 满球 $B_d(0,r)$，(b) 每个 cell $E_t$ 体积相同——替换为实测可计算的紧近似，把理论/实测斜率比从 14–20× 拉到 5–10×。
-    - 核心思路：
-        - **支撑近似（Section 5.2）**：实测嵌入是各向异性的小子集（Rudman 2022）。用 axis-aligned ellipsoid（每维半径 $r_i$）和 cone（最小开口角）两种凸包络替换满球，重新算 packing number 并代回斜率公式（Appendix F 给推导）。10K 随机 prompt + 长度 $\ell\approx 1000$ 已能稳定估出形状参数（Fig 9）。
-        - **Cell 体积分布（Section 5.3）**：常见 token 应占大 cell，罕见 token 占小 cell。先实测下一 token 的体积分布 $D=\{|E_t|/|E|\}$；用 n 次乘积卷积 $D^{\otimes n}$ 模拟长度 n 序列的体积分布，找最小 n 使 $D^{\otimes n}$ 的中位数低于 $1/P(E,\|\cdot\|,\varepsilon)$，即"超过一半序列不可达"的阈值（Fig 3 概念图）。注意当 $D$ 退化为 Dirac at $1/|V|$ 时正好回到 Cor 4.6。
-    - 设计动机：原始 Cor 4.6 的上界依赖最坏情况几何，所以预测斜率系统偏大；这里用真实嵌入做"形状 + 密度"双修正，理论值收紧后才能直接当成预测模型——Table 1 显示 Ellipsoid + 非均匀 cell 把所有 7 个模型的比值都压到 5–11×。
+原始的 Cor 4.6 用了两个最坏情况假设——嵌入支撑是满球 $B_d(0,r)$、每个 cell $E_t$ 体积相同——所以预测斜率系统性偏大（满球版理论/实测比高达 14–20×）。本文用两步实测修正把它压到 5–10×。第一步是**支撑近似**（Section 5.2）：实测嵌入是高度各向异性的小子集（Rudman 2022），于是改用 axis-aligned ellipsoid（每维半径 $r_i$）和 cone（最小开口角）两种凸包络替换满球，重新算 packing number 再代回斜率公式（推导见 Appendix F）；只需 10K 随机 prompt、长度 $\ell\approx 1000$ 就能稳定估出形状参数（Fig 9）。第二步是**非均匀 cell 体积**（Section 5.3）：常见 token 占大 cell、罕见 token 占小 cell，所以先用 unembedding 矩阵 + Monte-Carlo 实测下一 token 的体积分布 $D=\{|E_t|/|E|\}$，再用 $n$ 次乘积卷积 $D^{\otimes n}$ 模拟长度 $n$ 序列的体积分布，找最小的 $n$ 使 $D^{\otimes n}$ 的中位数掉到 $1/P(E,\|\cdot\|,\varepsilon)$ 以下，即"超过一半序列不可达"的阈值（Fig 3）；当 $D$ 退化成 Dirac at $1/|V|$ 时这一步恰好回到 Cor 4.6。两步都用真实嵌入做"形状 + 密度"双修正，理论值收紧后才能直接当预测模型用——Table 1 显示 Ellipsoid + 非均匀 cell 把全部 7 个模型的比值都压到 5–11×。
 
 ### 损失函数 / 训练策略
-论文是纯理论 + 黑盒探测，不训练新模型。Cramming 实验仅对一段长度 m 的 soft prompt $Y\in\mathbb{R}^{d\times m}$ 用 teacher-forcing 优化 $\mathcal{L}(Y;x_{1:n})=-\sum_{i=1}^n\log p_\tau(x_i\mid[Y,x_{1:i-1}])$，模型权重全冻结；copying 实验则在长度 ≤50 的合成串 $x_{1:n}|x_{1:n}$ 上 fine-tune 至 100% 训练精度或 10K 步，然后在更长串上测 exact-match。
+论文是纯理论 + 黑盒探测，不训练新模型。Cramming 实验仅对一段长度 $m$ 的 soft prompt $Y\in\mathbb{R}^{d\times m}$ 用 teacher-forcing 优化 $\mathcal{L}(Y;x_{1:n})=-\sum_{i=1}^n\log p_\tau(x_i\mid[Y,x_{1:i-1}])$，模型权重全程冻结；copying 实验则在长度 ≤50 的合成串 $x_{1:n}|x_{1:n}$ 上 fine-tune 至 100% 训练精度或 10K 步，再到更长串上测 exact-match。
 
 ## 实验关键数据
 

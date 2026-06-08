@@ -38,32 +38,32 @@ tags:
 **核心 idea**：把 speculative decoding 中“小模型快速筛选，大模型少量确认”的结构迁移到语音端点检测，但让大小模型负责不同类别粒度，而不是预测同一分布。
 
 ## 方法详解
-SpeculativeETD 是一个两阶段实时音频分割系统。端侧模型以 100 ms chunk 为单位持续运行，服务器模型只在端侧连续检测到至少 200 ms non-SU 时被调用。输出状态包含 SU、Pause 和 Gap；Gap 代表用户 turn 结束，可以触发 LLM 回复，Pause 代表用户仍可能继续说。
 
 ### 整体框架
-系统输入为流式语音。每 100 ms，端侧 GRU 读取 log-mel chunk，判断当前是否仍在 speaking unit。如果连续两个 chunk 被判为 non-SU，达到 turn-taking 文献常用的 200 ms threshold，就把从静音开始积累的音频段发送给服务端 Wav2Vec2。服务端只做二分类：这段静音是 Gap 还是 Pause。若是 Gap，语音助手可以开始生成回复；若是 Pause，继续等待用户说话。
+
+SpeculativeETD 要解决的是语音助手最尴尬的瞬间：用户只是停顿思考，系统却以为话说完了抢着回话。它把这个 end-turn detection 任务按难度切成两层，端侧 GRU 以 100 ms chunk 为单位连续运行、只做最容易的"是否在说话"判断，只有当连续静音累积到 turn-taking 文献常用的 200 ms 阈值时，才把这段静音发给服务端 Wav2Vec2 去裁决它到底是 Gap（用户说完，可触发 LLM 回复）还是 Pause（用户还会继续）。这样既保住端侧的实时低功耗，又把最贵的大模型算力集中到真正困难的判别时刻。
 
 ### 关键设计
-1. **OpenETD 数据集构建**:
 
-    - 功能：提供公开、可训练、可评估的 end-turn detection 数据。
-    - 核心思路：合成部分基于 MultiWOZ 文本对话，用 TTS 生成三种变体：V1 无显式 pause，V2 注入 pause silence，V3 在 pause 前加入 filler words。真实部分来自 YouTube 和 Buckeye，两人对话通过 speaker diarization 切分，超过 200 ms 的静音根据前后 speaker 是否相同标为 Pause 或 Gap。
-    - 设计动机：合成数据可控，能覆盖特定 pause/gap 模式；真实数据提供噪声、口音、情绪和语速变化，避免模型只学到干净 TTS。
+**1. OpenETD：公开可训的 end-turn detection 数据。**
 
-2. **端侧 GRU 粗筛**:
+过去 ETD 研究被私有或高价语料卡住、难以复现，作者干脆自建一个合成+真实混合的公开数据集。合成部分基于 MultiWOZ 文本用 TTS 生成三种变体——V1 无显式 pause、V2 注入 pause 静音、V3 在 pause 前加 filler words，让模型见到可控的 pause/gap 模式；真实部分取自 YouTube 和 Buckeye 的双人对话，经 speaker diarization 切分，凡超过 200 ms 的静音按前后说话人是否相同标为 Pause 或 Gap。合成数据负责覆盖特定模式、真实数据补足噪声口音语速的域差距，二者互补避免模型只学到干净 TTS。
 
-    - 功能：以极低延迟持续判断 SU vs non-SU，减少大模型调用频率。
-    - 核心思路：每个 100 ms 音频 chunk 采样为 16 kHz，提取 40 维 log-mel spectrogram。两层 Conv2D frontend 得到 960 维 chunk feature，单层 hidden size 64 的 GRU 自回归处理，线性头输出 SU/non-SU logits，总参数约 202K。
-    - 设计动机：连续实时检测最消耗资源，必须放到端侧小模型。把任务简化为 SU/non-SU 后，小模型不必承担 Gap/Pause 的细粒度语义判断。
+**2. 端侧 GRU 粗筛：把连续检测压到 202K 参数。**
 
-3. **服务端 Wav2Vec2 精判与触发协议**:
+连续实时检测是整个系统里最耗资源的环节，必须放在端侧最轻的模型上，因此作者刻意把它的任务简化为只分 SU/non-SU，不让它承担 Gap/Pause 的语义判断。每个 100 ms chunk 采样到 16 kHz、提取 40 维 log-mel，经两层 Conv2D frontend 得到 960 维特征，再由单层 hidden size 64 的 GRU 自回归处理、线性头输出 SU/non-SU logits，总参数约 202K，端侧执行延迟仅 0.26 ms。
 
-    - 功能：只在静音段出现时执行困难分类，判断是否真正 turn end。
-    - 核心思路：当端侧 GRU 连续 200 ms 预测 non-SU，系统把静音开始后的音频片段发送到服务端 Wav2Vec2。Wav2Vec2 判断 Gap 或 Pause。由于触发只发生在静音段，Wav2Vec2 不需要每帧运行。
-    - 设计动机：这与 speculative decoding 的结构类似，但不是让大模型 verify 小模型同一输出，而是让大模型处理条件触发后的细粒度子任务。这能把计算集中到最需要的时刻。
+**3. 服务端 Wav2Vec2 精判与条件触发：把 speculative 思想搬进语音。**
+
+困难的 Gap/Pause 区分需要更强的语音理解，但不该每帧都跑。系统约定只有当端侧 GRU 连续 200 ms 预测 non-SU 时，才把静音起点之后的片段发往服务端 Wav2Vec2 做这一次二分类。这借用了 speculative decoding "小模型快筛、大模型少量确认"的骨架，但关键差异在于大小模型负责的是不同粒度的子任务而非同一分布——小模型决定"何时触发"，大模型只解"被触发后的难题"，从而在真实音频上把 Wav2Vec2 调用次数降到约 1/26.7、整体 FLOPs 降到约 1/38。
+
+### 一个完整示例
+
+设想用户说"帮我订一张去北京的机票……"后停顿。前几个 100 ms chunk 里端侧 GRU 持续输出 SU，系统静默等待；当用户停下、连续两个 chunk 被判为 non-SU 并累积到 200 ms，触发协议启动，系统把从静音起点开始的音频段发给服务端 Wav2Vec2。若 Wav2Vec2 判为 Pause（用户只是在想目的地），助手继续等待、不抢话；若用户其实已经说完、被判为 Gap，助手立即开始生成回复。整个过程里大模型只在这一个静音点被调用一次，其余时间都由端侧 GRU 廉价值守。
 
 ### 损失函数 / 训练策略
-论文没有提出特殊损失，训练使用 AdamW，训练 10 epochs。学习率在 $[3\times10^{-6},3\times10^{-4}]$ 随机搜索，weight decay 在 $[0.01,2.00]$ 搜索；batch size 按模型大小分别调参。训练数据使用 synthetic 和 real training splits 的混合；评估在合成和真实 held-out test split 上进行。二分类任务评估 Precision、Recall、F1、Accuracy；实时分割任务每 100 ms 评估三类 macro F1 和 IoU。
+
+论文没有提出特殊损失，训练用 AdamW 跑 10 epochs，学习率在 $[3\times10^{-6},3\times10^{-4}]$、weight decay 在 $[0.01,2.00]$ 内随机搜索，batch size 按模型大小分别调参。训练数据混合 synthetic 与 real 的 training split，评估在两者各自的 held-out test split 上进行：二分类任务报 Precision、Recall、F1、Accuracy，实时分割任务每 100 ms 评估三类 macro F1 和 IoU。
 
 ## 实验关键数据
 

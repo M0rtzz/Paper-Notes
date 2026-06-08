@@ -40,37 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的"方法"主要是三件事拼成一个完整的论证链：(i) 用 principal-agent 模型把 LLM-as-a-Service 形式化；(ii) 在 pay-per-token 下分析撒谎激励，并构造两个具体的 reporting policy（一个无 GPU 代价但容易被识破，一个用 GPU 验证但合理性更高）来证明撒谎在现实可行；(iii) 推导激励兼容定价机制的充要刻画，证明 pay-per-character 是唯一可行解，并给出 tpc 公式让服务商无痛迁移。
+全文不是提出一个新模型，而是把"按 token 收费的 LLM 服务到底安不安全"做成一条完整的论证链：先用契约理论里的委托-代理框架把服务过程形式化，再证明 pay-per-token 天然激励服务商把同一字符串重切成更长的 token 序列多收钱，最后给出唯一能消除这种激励的计费方式并附上无痛迁移公式。
 
-输入是一个用户 prompt $q$，服务商把它喂进 LLM 得到真实 token 序列 $\mathbf{t}$（字符串记为 $s = \mathrm{str}(\mathbf{t})$），然后用某个 reporting policy $\pi$ 上报 $\tilde{\mathbf{t}} \sim \pi(\mathbf{t})$，且约束 $\mathrm{str}(\tilde{\mathbf{t}}) = s$（即用户看到的文本没变）。服务商效用 $U_\pi(\tilde{\mathbf{t}}, \mathbf{t}) = r(\tilde{\mathbf{t}}) - c_\text{gen}(\mathbf{t}) - c_\pi(\mathbf{t})$，其中 $c_\text{gen}(\mathbf{t}) \approx c_o \cdot \mathrm{len}(\mathbf{t})$ 是 GPU 生成成本，$c_\pi$ 是执行 reporting policy 本身的成本（无验证的策略 $c_\pi = 0$，需要 forward pass 验证合理性的策略 $c_\pi = c_v$ 为常数）。
+形式化的基本设定是：用户提交 prompt，服务商在自家硬件上跑出真实 token 序列 $\mathbf{t}$（对应字符串 $s = \mathrm{str}(\mathbf{t})$），然后按某个上报策略 $\pi$ 给出 $\tilde{\mathbf{t}} \sim \pi(\mathbf{t})$，唯一硬约束是 $\mathrm{str}(\tilde{\mathbf{t}}) = s$——用户看到的文本一字不差，看不到的只是它被切成了几个 token。服务商效用写成 $U_\pi(\tilde{\mathbf{t}}, \mathbf{t}) = r(\tilde{\mathbf{t}}) - c_\text{gen}(\mathbf{t}) - c_\pi(\mathbf{t})$：收入 $r$ 由计费规则决定，生成成本 $c_\text{gen}(\mathbf{t}) \approx c_o \cdot \mathrm{len}(\mathbf{t})$ 与真实 token 数成正比，$c_\pi$ 是执行上报策略本身的代价（不验证的策略 $c_\pi = 0$，需要跑 forward pass 验证合理性的策略 $c_\pi = c_v$ 是常数）。后文所有结论都建立在"激励兼容"这一性质上——按 Definition 4，如实上报策略 $\pi_0$ 满足 $U_{\pi_0}(\mathbf{t}, \mathbf{t}) \geq U_\pi(\tilde{\mathbf{t}}, \mathbf{t})$ 对一切策略弱占优，即诚实永远不吃亏。
 
 ### 关键设计
 
-1. **撒谎激励的形式化与无验证启发式 (Algorithm 1)**：
+**1. 撒谎激励的形式化 + 零成本启发式（Algorithm 1）：戳破"按 token 收费没问题"的假象**
 
-    - 功能：证明 pay-per-token 下"上报越长效用越高"，并给出一个最简单的 baseline 撒谎策略 $\pi_m^R$。
-    - 核心思路：在 pay-per-token 下 $r(\tilde{\mathbf{t}}) = r_o \cdot \mathrm{len}(\tilde{\mathbf{t}})$，因此对任何成本相同的两个策略 $\pi, \pi'$，只要 $\mathrm{len}(\tilde{\mathbf{t}}) > \mathrm{len}(\tilde{\mathbf{t}}')$ 必有 $U_\pi > U_{\pi'}$——上报序列越长，利润越高。Algorithm 1 给出一个零计算的实现：维护当前序列 $\tilde{\mathbf{t}}$，每轮枚举所有"可被进一步切成两个非空词"的 token，从合法切分中随机挑一个执行，重复 $m$ 次，直到所有 token 都是单字符或达到迭代上限。整个过程不需要 GPU，因为不验证合理性。
-    - 设计动机：先用一个"傻"算法戳破"pay-per-token 没事"的假象——实验显示在竞争场景里，作弊服务商只要把序列拉长 $1/\alpha$ 倍，就能在每 token 单价比对手低 $\alpha$ 倍时拿到同样收入但抢更多用户，把"撒谎"变成抢市场的武器。
+最朴素的"按 token"收费是一种可加机制 $r(\tilde{\mathbf{t}}) = \sum_i r(\tilde{t}_i)$，简化成 $r(\tilde{\mathbf{t}}) = r_o \cdot \mathrm{len}(\tilde{\mathbf{t}})$。这一形式立刻暴露问题：对任何成本相同的两个上报策略 $\pi, \pi'$，只要 $\mathrm{len}(\tilde{\mathbf{t}}) > \mathrm{len}(\tilde{\mathbf{t}}')$ 就有 $U_\pi > U_{\pi'}$——上报序列越长利润越高，撒谎不是个例外而是结构性最优解。Algorithm 1 用一个零计算实现把它具象化：维护当前序列，每轮枚举所有"还能再切成两个非空子词"的 token，从合法切分里随机挑一个执行，切 $m$ 次直到所有 token 都成单字符或到达上限，全程不碰 GPU 因为根本不验证合理性。作者用它先说明问题在竞争市场里的杀伤力——作弊方只要把序列拉长 $1/\alpha$ 倍，就能在每 token 单价比对手低 $\alpha$ 倍的情况下拿到同样收入却抢走更多用户，撒谎从"道德瑕疵"变成"抢市场的武器"。代价是这种乱切出来的序列在真实模型下几乎都不合理，一查就露馅，于是引出第二个更狡猾的算法。
 
-2. **可信赖的启发式撒谎算法 (Algorithm 2) 与 NP-Hard 屏障**：
+**2. 可信赖的启发式撒谎（Algorithm 2）+ NP-Hard 屏障：透明也堵不住作弊**
 
-    - 功能：在服务商被要求公开 next-token 分布（top-$p$ / top-$k$ sampling）的"透明"场景下，仍然找到看起来合理（plausible）且比真实更长的 token 序列。
-    - 核心思路：先证明"找最长的合理分词"是 NP-Hard（Theorem 3，从 Hamiltonian Path 归约），所以服务商不可能在多项式时间内最优作弊。但作者观察到一个经验规律——离 BPE 最常见分词"近"的替代分词在实际模型下几乎都合理。Algorithm 2 利用 BPE 中"高 id ≈ 长 token"的性质，每轮挑当前序列里 id 最大的 token $t_i$，把它切成两个 token $(t_1', t_2')$ 使得 $\min(\mathrm{id}(t_1'), \mathrm{id}(t_2'))$ 尽可能大（max-min 启发式），切 $m$ 次后跑一次 forward pass 验证 $\hat{t}_i \in \mathcal{V}_p(\hat{\mathbf{t}}_{\leq i-1})$ 对所有 $i$ 成立——若合理则上报，否则退回真实序列。盈亏判据是 $\mathbb{E}[\mathrm{plausible}(\hat{\mathbf{t}})] \cdot m \cdot r_o > c_v$，即"合理时多收的钱 > 一次验证成本"。
-    - 设计动机：要回答"NP-Hard 是不是就保护了用户"。作者明确回答：不。验证一次 forward pass 的能耗是个与序列无关的常数 $c_v$，而每多切一个 token 多收一个 $r_o$，在主流利润率下 Algorithm 2 在 Llama-3.2-1B 上对 $p=0.99$ 能把超额收入做到 10.5%+ 且总效用始终为正。
+第二个问题是：如果强制服务商公开 next-token 分布（top-$p$ 采样下，每步合理候选集 $\mathcal{V}_p$ 是累积概率 $\geq p$ 的最小集合），让用户能反查"这个分词在模型下可信吗"，撒谎是不是就被堵死了？作者先证明"找最长的合理分词"是 NP-Hard（Theorem 3，从 Hamiltonian Path 归约），意味着最优作弊不可多项式求解——但这恰恰是个陷阱：复杂度高不等于经济上安全。Algorithm 2 利用 BPE 里"id 越高 token 越长"的经验规律，每轮挑当前序列中 id 最大的 token，把它切成两个子 token $(t_1', t_2')$ 使 $\min(\mathrm{id}(t_1'), \mathrm{id}(t_2'))$ 尽可能大（max-min 启发式，让切出来的两半都仍是模型熟悉的常见词），切 $m$ 次后跑一次 forward pass 验证每一步都满足 $\hat{t}_i \in \mathcal{V}_p(\hat{\mathbf{t}}_{\leq i-1})$；合理就上报，不合理就退回真实序列稳赚不赔。它划算的判据是 $\mathbb{E}[\mathrm{plausible}(\hat{\mathbf{t}})] \cdot m \cdot r_o > c_v$，即"合理时多收的 token 钱 > 一次验证的固定能耗"——因为验证成本 $c_v$ 与序列无关而每多切一个 token 就多赚一个 $r_o$，在主流利润率下这个不等式轻松成立，实测对 $p=0.99$ 能把超额收入做到 10% 以上且净效用始终为正。透明因此只是把作弊从"随便切"收紧到"贴着合理边界切"，并没有真正保护用户。
 
-3. **激励兼容定价机制的充要刻画 + 平滑迁移公式**：
+**3. 激励兼容定价的充要刻画 + 平滑迁移公式：按字符收费是唯一解**
 
-    - 功能：刻画所有可加且激励兼容的定价机制，并给出从 pay-per-token 切换到 pay-per-character 时维持平均利润率的具体处方。
-    - 核心思路：先证 Proposition 5——激励兼容意味着 $r(\tilde{\mathbf{t}})$ 只依赖于字符串 $\mathrm{str}(\tilde{\mathbf{t}})$ 而不依赖具体分词（否则服务商总能选最贵的那种分词撒谎）。再证 Theorem 6——可加 + 激励兼容当且仅当 $r(\mathbf{t}) = \sum_{\sigma \in \Sigma} \mathrm{count}_\sigma(\mathbf{t}) \cdot r(\sigma)$，即按字符（character）线性计费；若每字符同价 $r_c$，则 $r(\mathbf{t}) = |\mathrm{str}(\mathbf{t})| \cdot r_c$ 是唯一选择。推论 7 直接断言：pay-per-token 在 vocabulary 含多字符 token 时一定不激励兼容。迁移公式：$r_c = r_o \cdot \mathrm{tpc}$，其中 tpc 是数据集上"每输出的 token/字符 比"的样本平均，能让平均利润率不变。
-    - 设计动机：把"该用什么计费"这种工程问题压缩成一条数学定理——不是建议而是充要条件。同时承认 pay-per-character 会让单条样本的利润率波动（因为生成成本与 token 数线性、收入与字符数线性、每 token 字符数会变），但这反过来给服务商一个良性激励：发明更好的 tokenizer / 模型去多压缩字符。
+第三步回答"那到底该怎么收费"。作者先证 Proposition 5：激励兼容要求收入 $r(\tilde{\mathbf{t}})$ 只能依赖字符串 $\mathrm{str}(\tilde{\mathbf{t}})$ 而不能依赖具体怎么切——否则服务商总能挑最贵的那种分词撒谎。再证 Theorem 6：在可加前提下，激励兼容当且仅当 $r(\mathbf{t}) = \sum_{\sigma \in \Sigma} \mathrm{count}_\sigma(\mathbf{t}) \cdot r(\sigma)$，也就是按字符线性计费；若每个字符同价 $r_c$，则 $r(\mathbf{t}) = |\mathrm{str}(\mathbf{t})| \cdot r_c$ 是唯一选择（推论 7 由此直接断言：只要 vocabulary 含多字符 token，pay-per-token 一定不激励兼容）。这把"用什么计费"从工程偏好压成了一条充要定理——不是建议而是数学必然。为了让现有 API 能无痛切换，作者给出迁移公式 $r_c = r_o \cdot \mathrm{tpc}$，其中 tpc 是数据集上"每输出 token 对应的字符数"的样本均值，按此换算平均利润率不变。代价是单条样本利润率会波动（生成成本随 token 数走、收入随字符数走，二者比值会变），但这反而是良性激励：服务商想多赚就得去造更好的 tokenizer / 模型把字符压得更紧，而不是靠重切字符串占用户便宜。
 
 ### 损失函数 / 训练策略
-本文是机制设计 / 理论 + 实证论文，没有训练 loss。关键超参数：top-$p$ sampling 的 $p \in \{0.90, 0.95, 0.99\}$、温度 $T = 1.3$、Algorithm 2 的迭代数 $m$（实验显示对每个 $p$ 都存在一个单峰最优 $m$）、利润率 $\rho_o \in \{0.2, 0.4, 0.6\}$。盈亏判据 $\rho(\mathbf{t}) > 1 - \mathbb{E}[\mathrm{plausible}(\hat{\mathbf{t}})] \cdot m \cdot c_o / c_v$ 把"撒谎是否赚"明确成利润率与验证成本之比，可以直接对照真实服务的能耗账单计算。
-
-### 形式化定义速查
-- **可加性 (additive)**：$r(\tilde{\mathbf{t}}) = \sum_i r(\tilde{t}_i)$，pay-per-token 是最简单的可加机制。
-- **激励兼容 (Definition 4)**：对任意 $\mathbf{t}, \pi, \tilde{\mathbf{t}} \sim \pi(\mathbf{t})$，$U_{\pi_0}(\mathbf{t}, \mathbf{t}) \geq U_\pi(\tilde{\mathbf{t}}, \mathbf{t})$，即如实上报的策略 $\pi_0$ 是弱占优。
-- **合理性 (plausibility) under top-$p$**：每一步 $\hat{t}_i \in \mathcal{V}_p(\hat{\mathbf{t}}_{\leq i-1})$，其中 $\mathcal{V}_p$ 是累积概率 $\geq p$ 的最小候选集。
+本文是机制设计 + 理论 + 实证的工作，不涉及训练 loss。真正起作用的"超参数"是实验旋钮：top-$p$ 采样的 $p \in \{0.90, 0.95, 0.99\}$、温度 $T = 1.3$、Algorithm 2 的迭代数 $m$（实验显示对每个 $p$ 都存在单峰最优值），以及基准利润率 $\rho_o \in \{0.2, 0.4, 0.6\}$。撒谎是否划算被压成一条可直接对照真实能耗账单计算的判据 $\rho(\mathbf{t}) > 1 - \mathbb{E}[\mathrm{plausible}(\hat{\mathbf{t}})] \cdot m \cdot c_o / c_v$——即利润率与验证成本之比超过阈值就有利可图。
 
 ## 实验关键数据
 

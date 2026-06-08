@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-设数据集 $\mathcal{D}=\{(x_i,p_i)\}_{i=1}^N$，$p_i\in\Delta^{K-1}$ 是第 $i$ 个样本的经验标注者分布，$q_\theta(x)=\mathrm{softmax}(z_\theta(x))$ 是模型预测。对照组是 soft-label CE $\mathcal{L}_{\mathrm{soft}}=\sum_i H(p_i,q_\theta(x_i))$。本文设计两种 hard-label delivery（multipass、SLS）+ 两种控制（deterministic control、shuffled SLS），每个 epoch 都用普通硬标签 CE，但每例的硬标签随 epoch / 采样不同而变。所有方法都在 CIFAR-adapted ResNet-18 上跑 200 epochs，cosine annealing。
+每个样本 $x_i$ 配一个经验标注者分布 $p_i\in\Delta^{K-1}$（来自 $m_i$ 张人工投票），模型预测 $q_\theta(x)=\mathrm{softmax}(z_\theta(x))$。基线把分布留在 loss 里做软标签交叉熵 $\mathcal{L}_{\mathrm{soft}}=\sum_i H(p_i,q_\theta(x_i))$；本文要回答的是"分布换一种格式投喂会怎样"，于是固定每例目标不变，把投喂格式拆出来当独立变量：用 multipass（按真实票循环出硬标签）和 SLS（每个 epoch 按 $p_i$ 重采一个硬标签）两种硬标签 delivery 替代软标签，每个 epoch 都跑普通硬标签 CE，再配两个对照实验把"采样随机性"和"样本-分布配对"也单独剥离出来。全部方法都在 CIFAR-adapted ResNet-18 上跑 200 epochs、cosine annealing。
 
 ### 关键设计
 
-1. **Multipass（按票循环的 count-preserving 硬标签）**:
+**1. Multipass：用真实投票计数确定性地循环硬标签，省掉采样方差**
 
-    - 功能：当原始投票计数 $\{c_{ik}\}_k$ 可得时，把每例的票展开成"标签多重集"，固定种子打乱一次，然后跨 epoch 按 $\texttt{epoch}\bmod m_i$ 循环投喂（$m_i$ 是该例总票数）。每个 epoch 仍然只有 $N$ 个样本，数据集基数不变。
-    - 核心思路：和 Sheng et al. (2008) 的"重复标注展开成多样本"不同，multipass 保留数据集大小但改变 epoch 内的"标签身份"。一例若有 50 票则 50 个 epoch 走完一轮，每个观察到的票出现且只出现一次。
-    - 设计动机：用确定性的、可复现的硬标签序列承载分布信息——避免 SLS 的采样方差，又能验证"是不是只要 epoch 间标签变化就够了"。它是有原始计数时的首选默认。
+当原始投票计数 $\{c_{ik}\}_k$ 可得时，软标签的痛点是它把每例的分歧压成一个固定向量，看不出"分歧是由哪些具体票构成的"。Multipass 把每例的 $m_i$ 张票展开成一个"标签多重集"，固定种子打乱一次，然后跨 epoch 按 $\texttt{epoch}\bmod m_i$ 循环投喂——某例若有 50 票，就用 50 个 epoch 走完一轮，每张观察到的票恰好出现一次。它与 Sheng et al. (2008) 把重复标注摊成多个样本的做法不同：每个 epoch 仍然只有 $N$ 个样本，数据集基数不变，变的只是 epoch 内每例的"标签身份"。因为序列是确定且可复现的，它避免了 SLS 的采样方差，又能验证"是不是只要 epoch 间标签会变就够了"，是有原始计数时的首选默认。
 
-2. **Stochastic Label Sampling (SLS) + 期望目标等价命题**:
+**2. SLS：按分布重采硬标签，并证明它和软标签期望目标等价**
 
-    - 功能：每个 epoch 开始时为每例独立采样 $y_i^{(t)}\sim\mathrm{Categorical}(p_i)$，然后按普通硬标签 CE 训练当前 epoch。只需要 $p_i$ 不需要原始票数，是 multipass 的轻量替代。
-    - 核心思路：作者用 Proposition 1 证明 $\mathbb{E}_{y\sim p}[-\log q_y]=H(p,q)$、$\mathbb{E}_{y\sim p}[\nabla_z\ell]=q-p$、$\mathrm{Cov}_{y\sim p}[\nabla_z\ell]=\mathrm{Diag}(p)-pp^\top$，因此 SLS 和软标签 CE 期望目标完全等价，差别只是额外梯度方差 $\mathbb{E}\|q-e_y\|^2-\|q-p\|^2=1-\|p\|_2^2$，分歧越大方差越大。
-    - 设计动机：把"目标"和"优化路径"严格解耦——两种方法目标相同，端点性能差异必然来自优化路径和噪声协方差（$\mathrm{Diag}(p)-pp^\top$ 的结构），从而可以归因到 basin 几何。
+当只有 $p_i$、拿不到原始票数时，SLS 在每个 epoch 开始时为每例独立采样 $y_i^{(t)}\sim\mathrm{Categorical}(p_i)$，再按普通硬标签 CE 训练，是 multipass 的轻量替代。它之所以"看着像噪声却不会跑偏"，是因为作者用 Proposition 1 证明了它和软标签 CE 期望目标完全等价：$\mathbb{E}_{y\sim p}[-\log q_y]=H(p,q)$、梯度期望 $\mathbb{E}_{y\sim p}[\nabla_z\ell]=q-p$，与软标签梯度逐项相同；唯一的差别是采样带来的额外梯度方差 $\mathbb{E}\|q-e_y\|^2-\|q-p\|^2=1-\|p\|_2^2$，且协方差恰为 $\mathrm{Cov}_{y\sim p}[\nabla_z\ell]=\mathrm{Diag}(p)-pp^\top$——分歧越大（$p$ 越平）方差越大。这把"目标是什么"和"优化路径怎么走"严格解耦：既然两者目标相同，端点性能与 basin 几何的差异就只能归因于这套被分歧结构重塑的梯度噪声。
 
-3. **Deterministic / Shuffled 双重控制**:
+**3. Deterministic / Shuffled 双重控制：分离"配对信息"与"通用噪声"**
 
-    - 功能：Deterministic control 是 multipass 的 traversal-order 消融，换一个固定打乱种子；shuffled SLS 是把每例的 $p_i$ 在样本间整体置换一次后再做 SLS，破坏"样本-分布"配对但保留全局分歧统计。
-    - 核心思路：两个控制各回答一个 confound——前者验证"循环顺序"无关，后者验证"每例匹配自己的分布"才是关键；如果 shuffled SLS 仍能 work，那 SLS 的好处就只是"噪声正则"。
-    - 设计动机：把"分布作为标签结构信息"和"分布作为通用噪声源"两种解释分开。实验中 shuffled SLS 退化到 12% 准确率，确认配对是 first-order 因子。
+光看 SLS 比软标签好还说不清好处来自哪里，所以作者加两个对照各砍掉一个混淆因素。Deterministic control 是 multipass 的 traversal-order 消融——只换一个固定打乱种子，用来确认"循环顺序"本身无关紧要。Shuffled SLS 则把每例的 $p_i$ 在样本之间整体置换一次再做 SLS，保留全局分歧统计但打散"样本-分布"配对：如果它仍然 work，说明 SLS 的收益只是"通用噪声正则"；如果它崩掉，就说明"每例必须匹配自己的分布"才是关键。实验里 shuffled SLS 退化到 12% 准确率，干净地确认了配对是 first-order 因子，而非泛泛的噪声扰动。
 
 ### 损失函数 / 训练策略
 - Soft label：$\mathcal{L}_{\mathrm{soft}}=-\sum_i\sum_k p_{ik}\log q_{\theta,k}(x_i)$；hard 方法都用普通 hard-label CE。

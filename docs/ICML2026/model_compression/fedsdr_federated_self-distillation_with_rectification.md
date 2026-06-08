@@ -38,32 +38,26 @@ tags:
 **核心 idea**：把"对齐"留给自蒸馏数据上训练的 LoRA-S（只留本地，吸收风格与异质噪声），把"忠实"留给原始数据上训练的 LoRA-R（仅上传聚合），用结构化解耦同时拿到对齐和保真。
 
 ## 方法详解
-FedSDR 的执行哲学是 "Generate – Align – Rectify" 三段式流水线：先用本地 LLM 把异质原始数据做一次性数据炼化，再用两条 LoRA 通路交替学习"平滑"与"修正"两个互相干扰的目标，最后在服务器端做选择性聚合。整套系统不增加通信比特数（聚合的仍然只是一组 LoRA），但通过把噪声留在本地、把事实送上云端，避免了"幻觉聚合"问题。
 
 ### 整体框架
-对于参与的客户端 $k$，每轮 $t$ 从服务器接收当前全局参数 $\Theta_{global}^t$；该参数同时被用作三个角色：1) 教师 $\Theta_{teacher}$，对本地原始数据 $D_{raw}=\{(c_i,x_i,y_i)\}$ 做一次性自蒸馏生成 $D_{dist}=\{(c_i,x_i,\tilde y_i)\}$，其中 $\tilde y_i\sim f_{\Theta_{teacher}}(\cdot\mid c_i,x_i,y_i)$；2) 学生主干 $W_0$，在两套 LoRA 适配器 $\{A_s,B_s\}$、$\{A_r,B_r\}$ 共同注入下做交替优化；3) 上传锚 — 只把 LoRA-R 的增量 $\Delta\Theta_{r,k}$ 推到服务器做加权平均，LoRA-S 永远留在本地。前向传播采用并联结构 $h_{out}=W_0 h+\tfrac{\alpha}{r}B_r A_r h+\tfrac{\alpha}{r}B_s A_s h$，让 LoRA-S 在每次前向都为 LoRA-R 提供"已平滑"的隐藏表示。注意自蒸馏只在加入联邦训练之前做一次，之后所有通信轮都复用同一份 $D_{dist}$，因此推理代价并不随轮次线性增长。
+FedSDR 想解决的是：联邦微调 LLM 时客户端数据语义跨度太大（金融、医学、代码混在一起），聚合后模型在多任务平均上严重退化，而这退化的根子在数据分布错配、不在权重发散。它的对策是一条 "Generate – Align – Rectify" 流水线：每个客户端 $k$ 在加入联邦训练前，先用当前全局模型当老师把本地原始数据 $D_{raw}=\{(c_i,x_i,y_i)\}$ 重写一遍，生成 $\tilde y_i\sim f_{\Theta_{teacher}}(\cdot\mid c_i,x_i,y_i)$，得到风格统一的蒸馏集 $D_{dist}$；本地训练时主干 $W_0$ 同时挂两套 LoRA，前向并联 $h_{out}=W_0 h+\tfrac{\alpha}{r}B_rA_r h+\tfrac{\alpha}{r}B_sA_s h$，让吸噪流 LoRA-S 在每次前向都给修正流 LoRA-R 喂"已平滑"的隐表示；到了上传阶段只把 LoRA-R 的增量 $\Delta\Theta_{r,k}$ 推给服务器做加权平均，LoRA-S 永远留在本地。这样噪声留在本地、事实送上云端，既不增加通信比特数（聚合的仍只是一组 LoRA），又躲开了"幻觉聚合"。注意自蒸馏只在训练前跑一次，之后所有通信轮复用同一份 $D_{dist}$，推理代价不随轮次累乘。
 
 ### 关键设计
-1. **数据级自蒸馏 (Data Refinery, FedSD)**：
 
-    - 功能：在本地把异质原始指令-回答对重写到模型自身的回答分布上，得到一份"风格统一、语义对齐"的训练集。
-    - 核心思路：客户端 $k$ 用全局模型作为 teacher，对每条样本生成 $\tilde y_i$ 后构造 $D_{dist}$，然后把 FedAvg/Prox/Yogi 等标准聚合算法照常跑，只把监督信号从 $y$ 换成 $\tilde y$，本地目标为 $\mathcal{L}^k_{\text{FedSD}}(\Theta)=\tfrac{1}{n_k}\sum_i -\log f_\Theta(\tilde y_i\mid c_i,x_i)$。作者通过 JS 散度从 $0.4074$ 降到 $0.3611$、TF-IDF 余弦相似度从 $0.6362$ 升到 $0.7064$、以及五个任务两两间梯度余弦相似度平均提升 $+8\sim+41$ pp 来量化"流形展平"。
-    - 设计动机：把异质性"在源头"消化掉，比让权重端在聚合阶段相互拉扯更经济；并且这一改造与任何聚合算法都正交，可以作为通用增强器叠加。
+**1. 数据级自蒸馏（Data Refinery, FedSD）：在源头把异质数据投影到同一生成流形。**
 
-2. **双流 LoRA + 交替块坐标训练 (Dual-Stream Rectification)**：
+主流联邦方法都在权重端治异质性（加正则、拆双 LoRA），但症状被压住、数据分布错配的根因没动，遇到语义跨度极大的客户端组合就力不从心。FedSDR 换到数据端下手：客户端用全局模型作 teacher，把每条样本的回答都用模型自己的口吻重写一遍，相当于把所有客户端数据投影到 LLM 同一个"先天知识分布"上。具体只需把标准聚合算法（FedAvg/Prox/Yogi 等）照常跑，仅把监督信号从 $y$ 换成 $\tilde y$，本地目标变成 $\mathcal{L}^k_{\text{FedSD}}(\Theta)=\tfrac{1}{n_k}\sum_i -\log f_\Theta(\tilde y_i\mid c_i,x_i)$。这一步带来的"流形展平"是可量化的：文本侧 JS 散度从 $0.4074$ 降到 $0.3611$、TF-IDF 余弦相似度从 $0.6362$ 升到 $0.7064$；优化侧五个任务两两间的梯度余弦相似度平均提升 $+8\sim+41$ pp。因为这套改造只换监督信号、不碰聚合协议，它和任意聚合算法正交，可作通用增强器叠加。
 
-    - 功能：用一条流吸收自蒸馏带来的副作用（"重写悖论"——约 $47\%$ 蒸馏样本不能严格蕴含真值、回答更冗长、填充词频翻倍），另一条流死锁在原始事实上。
-    - 核心思路：两套 LoRA 共享同一前向 $h_{out}=W_0h+\tfrac{\alpha}{r}(B_rA_r+B_sA_s)h$，但训练分两阶段。Stage 1 冻结 $\Theta_r$、用 $D_{dist}$ 最小化 $\mathcal{L}_{smooth}(\Theta_s\mid\Theta_r)=\mathbb{E}_{D_{dist}}[-\log p_{\Theta_r,\Theta_s}(\tilde y\mid c,x)]$；Stage 2 冻结 $\Theta_s$、用 $D_{raw}$ 最小化 $\mathcal{L}_{rect}(\Theta_r\mid\Theta_s)=\mathbb{E}_{D_{raw}}[-\log p_{\Theta_r,\Theta_s}(y\mid c,x)]$。Stage 1 已经把表示空间平滑过一遍，Stage 2 优化 $\Theta_r$ 的难度因此降低，作者在文章里把它形象地叫做 "shock absorber"。
-    - 设计动机：把"分布对齐"和"事实正确"这两个互相干扰的目标解耦到两组参数，避免单一模型同时承担两个矛盾任务时各让一步、谁也不彻底。
+**2. 双流 LoRA + 交替块坐标训练（Dual-Stream Rectification）：把"对齐"和"忠实"解耦到两组参数。**
 
-3. **选择性聚合 (Selective Aggregation)**：
+自蒸馏并非无代价——存在"重写悖论"：约 $47\%$ 的蒸馏样本不能严格蕴含真值，回答更冗长、填充词频翻倍。如果让一个模型同时学"对齐"和"事实正确"这两个互相干扰的目标，结果是各让一步、谁也不彻底。FedSDR 用两套共享前向 $h_{out}=W_0h+\tfrac{\alpha}{r}(B_rA_r+B_sA_s)h$ 的 LoRA 把目标拆开，训练分两阶段交替进行：Stage 1 冻结 $\Theta_r$、在蒸馏集上让吸噪流学平滑，$\mathcal{L}_{smooth}(\Theta_s\mid\Theta_r)=\mathbb{E}_{D_{dist}}[-\log p_{\Theta_r,\Theta_s}(\tilde y\mid c,x)]$；Stage 2 冻结 $\Theta_s$、在原始数据上让修正流锚定事实，$\mathcal{L}_{rect}(\Theta_r\mid\Theta_s)=\mathbb{E}_{D_{raw}}[-\log p_{\Theta_r,\Theta_s}(y\mid c,x)]$。由于 Stage 1 已把表示空间平滑过一遍，Stage 2 优化 $\Theta_r$ 的难度随之降低（作者观察到原始数据上的优化曲线更平滑，称这种结构为 "shock absorber"），从而让风格噪声和事实修正各归其位、互不拖累。
 
-    - 功能：保证全局共识只继承"修正后的事实知识"，不继承"客户端自蒸馏出的幻觉与冗长"。
-    - 核心思路：上传阶段每个客户端把 $\Theta_s$ 留在本地（或重置），只把 $\Delta\Theta_{r,k}$ 推给服务器，服务器执行加权平均 $\Theta_{r,global}\leftarrow\Theta_{r,global}+\sum_{k=1}^{K}\tfrac{n_k}{n}\Delta\Theta_{r,k}$。由于 $\Theta_s$ 在 Stage 1 已经吃下了风格噪声，被截留下来后这些噪声就无法通过聚合形成"伪共识"。
-    - 设计动机：作者在原文里点名指出，FL 比集中式训练更怕"重写悖论"——本地的轻微幻觉一旦被服务器聚合就会广播给所有客户端，形成正反馈循环，越聚越偏，因此必须从聚合协议层面切断这条路径。
+**3. 选择性聚合（Selective Aggregation）：只让"修正后的事实"进入全局共识。**
+
+在 FL 里，重写悖论比集中式训练危险得多：本地的轻微幻觉一旦被服务器聚合就会广播给所有客户端，形成越聚越偏的正反馈循环。FedSDR 直接从聚合协议层切断这条路径——上传时每个客户端把 $\Theta_s$ 留在本地（或重置），只推 $\Delta\Theta_{r,k}$，服务器执行加权平均 $\Theta_{r,global}\leftarrow\Theta_{r,global}+\sum_{k=1}^{K}\tfrac{n_k}{n}\Delta\Theta_{r,k}$。因为 Stage 1 已让 $\Theta_s$ 吃下了客户端各自的风格噪声与冗长，把它截留在本地后，这些噪声就再没机会通过聚合凝成"伪共识"，全局模型只继承被 LoRA-R 修正过的事实知识。
 
 ### 损失函数 / 训练策略
-本地训练遵循交替块坐标更新：$\Theta_s\leftarrow\arg\min_{\Theta_s}\mathcal{L}_{smooth}(\Theta_s\mid\Theta_r)$，$\Theta_r\leftarrow\arg\min_{\Theta_r}\mathcal{L}_{rect}(\Theta_r\mid\Theta_s)$，两个阶段共享同一前向但同一时刻只有一条流可训。服务器仅聚合 $\Theta_r$，因此通信成本与单 LoRA 基线一致；自蒸馏只跑一次，不会随通信轮次累乘推理代价。
+本地训练遵循交替块坐标更新：$\Theta_s\leftarrow\arg\min_{\Theta_s}\mathcal{L}_{smooth}(\Theta_s\mid\Theta_r)$，$\Theta_r\leftarrow\arg\min_{\Theta_r}\mathcal{L}_{rect}(\Theta_r\mid\Theta_s)$，两阶段共享同一前向但同一时刻只有一条流可训。服务器仅聚合 $\Theta_r$，通信成本与单 LoRA 基线一致；自蒸馏只跑一次，不随通信轮次累乘推理代价。
 
 ## 实验关键数据
 

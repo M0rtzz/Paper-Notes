@@ -41,43 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定 reasoning 轨迹 $y = \langle\text{think}\rangle r_{1:T}\langle/\text{think}\rangle a$ 和每步置信度信号 $s_t = u(x, r_{1:t})$（可选 entropy / confidence / mutual predictability 等多种），经过平滑得 $\tilde s_t = g(s_{1:t})$。
+方法监控 reasoning 轨迹每一步的置信度信号，用上下两个阈值决定何时停止 `<think>`：上阈值在模型自信时停，下阈值在模型"想不动"时强行停；两个阈值都不靠手调，而是用 conformal UCB 算法从一个标注校准集上自动求出来，使最终错误率以高概率不超过用户指定的容忍度 $\epsilon$。整个流程完全无训练，只在 inference 端加监控。
 
-**双阈值早停策略**（Eq. 5）：
-$$\tau = \min\{t\ge 1 : \tilde s_t \ge \lambda_+ \;\lor\; \tilde s_t \le \lambda_-\}$$
-
-其中 $\lambda_+>\lambda_-$，触发上阈值表示"自信答出"，触发下阈值表示"放弃此题"。
-
-**阈值选择**：从校准集 $\mathcal{V}=\{(x_i, y_i^*)\}$，用 UCB 算法（Bates 2021）求满足 $\mathbb{P}_\mathcal{V}(\mathcal{R}(\hat\lambda_+, \hat c)\le\epsilon)\ge 1-\delta$ 的参数。具体两步：先固定 risk target $\epsilon^+$ 用 UCB 求 $\hat\lambda_+$，再在固定 $\hat\lambda_+$ 下用 UCB 求下阈值参数 $\hat c$ 满足 $\mathbb{E}[\ell^-\mid\hat\lambda_+]\le\epsilon^-$。
-
-候选阈值 $\lambda$ 若多个都满足风险约束，则选**效率损失最小**的那个（Eq. 16）。
+具体地，给定轨迹 $y = \langle\text{think}\rangle r_{1:T}\langle/\text{think}\rangle a$ 和每步信号 $s_t = u(x, r_{1:t})$（可取 entropy / confidence / mutual predictability 等多种），平滑后得 $\tilde s_t = g(s_{1:t})$，早停时刻为 $\tau = \min\{t\ge 1 : \tilde s_t \ge \lambda_+ \;\lor\; \tilde s_t \le \lambda_-\}$（Eq. 5），$\lambda_+>\lambda_-$，命中上阈值表示"自信答出"、命中下阈值表示"放弃此题"。
 
 ### 关键设计
 
-1. **参数化动态下阈值（核心创新）**:
+**1. 参数化动态下阈值：让"想不动"的题尽早 abstain**
 
-    - 功能：当模型在合理时间内信心提升不足时主动 abstain，避免无效推理消耗 token。
-    - 核心思路：静态下阈值只能在"信心倒退"时触发，几乎无用——本文把下阈值设为关于 token 用量 $\omega_t$ 的 sigmoid 函数：$\lambda_-(t;c,s,l,u) = \sigma(c(\omega_t - sB), l, u) = \frac{u-l}{1+e^{-c(\omega_t - sB)}}+l$，其中 $B$ 是 budget。$c$ 控制斜率（信心增长速率要求），$s$ 控制水平偏移（什么时候开始施压），$l,u$ 控制上下界。通过调 $(c,s)$ 可以恢复线性、指数、对数、常数等多种 schedule 形状，相当于"模型必须按某个时间表 demonstrate 信心提升，否则被踢出场"。
-    - 设计动机：现有 stop-when-confident 在 AIME 等难题上失效——大部分题目永远达不到上阈值，结果 budget 全部用完。下阈值是**对偶**机制：上阈值控错（false positive），下阈值控浪费（false negative + 过度计算）。两者结合后才能真正覆盖"上下两端的早停场景"。
+现有 stop-when-confident 方法只有上阈值，在 AIME、GPQA 这类难题上几乎所有题目都永远达不到置信度，结果跑满 budget、token 全部浪费。本文补上一个对偶机制：上阈值控错（false positive，自信却答错），下阈值控浪费（false negative，明知做不出还硬算）。但下阈值不能是静态常数——静态下阈值只在"信心倒退"时才触发，实际几乎不起作用。关键做法是把下阈值写成关于 token 用量 $\omega_t$ 的 sigmoid：$\lambda_-(t;c,s,l,u) = \dfrac{u-l}{1+e^{-c(\omega_t - sB)}}+l$，其中 $B$ 是 budget，$c$ 控制斜率（要求信心增长多快）、$s$ 控制水平偏移（多早开始施压）、$l,u$ 控制上下界。它的含义是"模型必须按一张时间表 demonstrate 信心提升，否则被踢出场"；调 $(c,s)$ 就能把这张时间表恢复成线性、指数、对数、常数等多种形状，既给了 conformal 优化器足够的参数空间，又不至于爆炸。
 
-2. **互补的四个损失函数（区分 correctness 与 efficiency）**:
+**2. 四个互补损失：把 correctness 与 efficiency 解耦**
 
-    - 功能：把"何时停"的优劣分解为可独立计算的四个分量，便于 UCB 校准。
-    - 核心思路：用 4 个 $[0,1]$ 范围损失刻画：
-        - $\ell^+(y^*, f_t, \tilde s_t;\lambda_+) = \mathbb{I}[\tilde s_t\ge\lambda_+]\cdot\mathbb{I}[f_t\ne y^*]$（上阈值的 FP loss——自信停了但答错）；
-        - $\ell^-(y^*, f_{t:T}, \tilde s_t;\lambda_-) = \frac{\mathbb{I}[\tilde s_t\le\lambda_-]}{T-t+1}\sum_{k=t}^T \mathbb{I}[f_k=y^*]$（下阈值的 FN loss——放弃了但其实之后会做对，**farsighted**：检查未来所有时间点）；
-        - $\mathcal{J}^+(t) = \frac{1}{T}\max(0, t-t')$，$t'=\min\{t:f_t=y^*\}$（上阈值效率：在答对后多浪费了多少 token）；
-        - $\mathcal{J}^-(t) = \frac{1}{T}\sum_{k\le t}\mathbb{I}[f_k\ne y^*]$（下阈值效率：在停之前有多少 token 是错的）。
-    - 设计动机：correctness loss 决定阈值是否合格（必须 $\le\epsilon$），efficiency loss 在多个合格阈值中挑最省的——把"准不准"和"省不省"解耦，让 conformal 校准只管 correctness、效率只用于 tie-breaking。下阈值的 farsighted 设计尤其精妙——它防止"现在答错就立刻被踢出"，而是检查"之后会不会答对"。
+为了让 UCB 能独立校准，本文把"停得好不好"拆成四个 $[0,1]$ 范围的损失。两个 correctness 损失决定阈值是否合格：上阈值的 FP 损失 $\ell^+ = \mathbb{I}[\tilde s_t\ge\lambda_+]\cdot\mathbb{I}[f_t\ne y^*]$（自信停了却答错），下阈值的 FN 损失 $\ell^- = \frac{\mathbb{I}[\tilde s_t\le\lambda_-]}{T-t+1}\sum_{k=t}^T \mathbb{I}[f_k=y^*]$（放弃了但之后其实会做对）。两个 efficiency 损失只用于在合格阈值里挑最省的：$\mathcal{J}^+(t) = \frac{1}{T}\max(0, t-t')$（$t'=\min\{t:f_t=y^*\}$，答对后又多烧了多少 token）和 $\mathcal{J}^-(t) = \frac{1}{T}\sum_{k\le t}\mathbb{I}[f_k\ne y^*]$（停之前有多少 token 是错的）。这样 conformal 校准只盯着 correctness 必须 $\le\epsilon$、效率仅做 tie-breaking。其中下阈值的 $\ell^-$ 是 **farsighted** 设计——它不看"当前是否答对"，而是检查 $[t,T]$ 全程是否会答对，从而避免把"中间过程出错但最终能做对"的题误判为可放弃。
 
-3. **Conformal UCB 校准 + 信号 ensemble**:
+**3. Conformal UCB 校准 + 信号 ensemble：把调参从用户身上拿掉**
 
-    - 功能：给定 finite calibration set，求出 finite-sample 意义下满足 $\mathcal{R}\le\epsilon$ with probability $1-\delta$ 的阈值。
-    - 核心思路：朴素做法是直接用经验风险 $\widehat{\text{Risk}}(\lambda;\mathcal{V}) = \frac{1}{N}\sum\ell(\cdot;\lambda)$ 选 $\lambda$，但小校准集下 empirical 过于乐观，会违反真实 $\epsilon$。UCB（Bates 2021）用 $\widetilde{\text{Risk}}(\lambda;\mathcal{V}) = \widehat{\text{Risk}} + (\text{finite-sample correction})$ 代替，correction 依赖 $|\mathcal{V}|$ 和 $\delta$，保证 $\mathbb{P}(\text{true risk}\le\epsilon)\ge 1-\delta$。Algorithm 1 在多个候选信号 $\mathcal{S}$（entropy / confidence / probe 等）和阈值网格 $\Lambda_s$ 上 grid search，把可行集合 $\mathfrak{C}$ 里 efficiency loss 最小的拿出来——**自动选信号 + 自动选阈值**。
-    - 设计动机：Naive cross-validation 在 Fig. 4 左图被证明会频繁违反目标 risk，UCB 在右图全程稳定 $\le\epsilon$。允许多个信号 ensemble 的设计则把"哪个信号最适合"也变成数据驱动——不同 $\epsilon$ 下最优信号可能不同，所以让算法在校准集上自动选，是把"调参"从用户身上拿掉的关键一步。
+阈值的求法若直接用经验风险 $\widehat{\text{Risk}}(\lambda;\mathcal{V}) = \frac{1}{N}\sum\ell(\cdot;\lambda)$ 来选，在小校准集下会过于乐观、违反真实 $\epsilon$（Fig. 4 左图证明 naive 校准频繁违规）。本文改用 UCB（Bates 2021）：以 $\widetilde{\text{Risk}}(\lambda;\mathcal{V}) = \widehat{\text{Risk}} + (\text{finite-sample correction})$ 代替，correction 随校准集大小 $|\mathcal{V}|$ 和 $\delta$ 缩放，从而保证 $\mathbb{P}(\text{true risk}\le\epsilon)\ge 1-\delta$（Fig. 4 右图全程 $\le\epsilon$）。校准分两步走：先固定 risk target $\epsilon^+$ 用 UCB 求 $\hat\lambda_+$，再在固定 $\hat\lambda_+$ 下求下阈值参数 $\hat c$ 满足 $\mathbb{E}[\ell^-\mid\hat\lambda_+]\le\epsilon^-$；若多个阈值都合格，选 efficiency loss 最小的（Eq. 16）。更进一步，Algorithm 1 在多个候选信号 $\mathcal{S}$（entropy / confidence / probe 等）和阈值网格 $\Lambda_s$ 上一起 grid search，从可行集合 $\mathfrak{C}$ 里取效率最优的组合——因为不同 $\epsilon$ 下最优信号会切换，让算法自动选信号，是真正把"调参"从用户手上拿走的一步。
 
 ### 损失函数 / 训练策略
-**完全无训练**——所有阈值与信号选择都通过 UCB 在校准集上完成。模型方面只需 inference（Qwen3-8B、Qwen3-30B-A3B、DeepSeek-R1-Distill-Qwen-32B、Qwen3-VL-8B）。算法 1 一次性完成 grid search + UCB correction，得到最终 $(s^*, \lambda^*)$ 部署。
+完全无训练——所有阈值与信号选择都通过 Algorithm 1 在校准集 $\mathcal{V}=\{(x_i, y_i^*)\}$ 上一次性 grid search + UCB correction 完成，得到 $(s^*, \lambda^*)$ 后直接部署。模型侧只需 inference，验证覆盖 Qwen3-8B、Qwen3-30B-A3B、DeepSeek-R1-Distill-Qwen-32B、Qwen3-VL-8B。
 
 ## 实验关键数据
 

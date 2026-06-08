@@ -50,23 +50,23 @@ ReMem 重构 LVLM unlearning 评测的两阶段流程：
 
 ### 关键设计
 
-1. **基于 scaling law + 单跳脚手架的 QA 集合构造**:
+**1. 用 scaling law + 单跳脚手架构造 QA 集合：先把 stage 1 真的记进去。**
 
-    - 功能：通过控制每身份 QA 数量和单跳/多跳比例，让 stage 1 真的"记住"
-    - 核心思路：toy 实验先扫 20→200 QA/ID，发现 ROUGE/EM 随 QA 数单调上升，160 左右开始过拟合；再扫单跳比例 0%→100%，发现 70% 单跳是 EM 在单跳和多跳测试上的双重峰值——单跳问题（"X 的地址是？"）作为多跳问题（"图里人的地址是？"）的脚手架，先建立 $(s,r)\to a$ 的直接映射，再让 $v\to s$ 的视觉 grounding 接上
-    - 设计动机：FIUBench/MLLMU 全用 multi-hop 问题，模型要同时学视觉识别 + 属性回忆，复合任务难度过大；类比人类先记"小明的地址在 XX 街"，再才能回答"图里这人的地址"
+现有 benchmark 失效的第一个根因是 QA 太少：FIUBench 每个身份只给 20 条、MLLMU 只给 1 条，按 Carlini 等人的结论，记忆强度正比于 sample repetition，这点重复量根本进不去参数。ReMem 先做 toy 实验扫 20→200 QA/ID，发现 ROUGE/EM 随 QA 数单调上升、到 160 左右开始过拟合，于是把每身份 QA 拉到 100 条。第二个根因是题型——现有 benchmark 几乎全是 multi-hop 问题（「图中人的地址是什么」），模型要同时学视觉识别和属性回忆，复合难度过大，撞上 multi-hop curse。ReMem 再扫单跳比例 0%→100%，发现 70% 单跳是 EM 在单跳测试和多跳测试上的双重峰值。
 
-2. **多视角图像合成 + 严格质检**:
+道理和人类记忆一致：先记住「小明的地址在 XX 街」，才能回答「图里这人的地址」。单跳问题（「$X$ 的地址是？」）先建立 $(s,r)\to a$ 的直接映射，多跳问题（「图里人的地址是？」）再让 $v\to s$ 的视觉 grounding 接上去，单跳脚手架等于先把 atomic step 喂会，复合推理才学得动。
 
-    - 功能：避免模型对单张 reference 图过拟合，建立"跨上下文一致的身份概念"
-    - 核心思路：用 Nano Banana 以 anchor 图为锚定，随机化姿态、服饰、背景生成 100 张/ID；用 ArcFace cosine similarity 过滤保证人脸一致；外加四步人工 review（去 artifact / 跨模态对齐 / 身份可辨识 / 伦理筛查防真人撞脸）；test set $D_t$ 用全新视觉模板，专门测 OOD 泛化
-    - 设计动机：CLEAR 等用 20 张图/ID 但视觉变化少，模型背图不背人；ReMem 强制要求模型在大幅视觉变化下仍能识别同一身份，才能称为「真的把这个人记住了」
+**2. 多视角图像合成 + 严格质检：让模型记住的是「人」而不是「那张图」。**
 
-3. **Exposure 内部概率度量**:
+CLEAR 等用 20 张图/ID 但视觉变化太少，模型其实在背图而不是背人，换个姿态背景就认不出，这样的「记住」经不起 unlearning 评测。ReMem 用 Nano Banana 以 anchor 图为锚，随机化姿态、服饰、背景生成 100 张/ID，再用 ArcFace 的 cosine similarity 过滤保证人脸一致，外加四步人工 review（去 artifact、跨模态对齐、身份可辨识、伦理筛查防真人撞脸）。测试集 $D_t$ 专门换用全新视觉模板，逼模型在大幅视觉变化下仍能识别同一身份，才算「真的把这个人记住了」，也顺带堵住 lexical/visual overfit。
 
-    - 功能：从模型内部 token 概率分布量化 PII 擦除深度，区分"表面拒答"和"真擦掉"
-    - 核心思路：对目标 PII 串 $a=t_1t_2...t_n$，定义 $\text{Exposure}(a)=\sum_i \log P(t_i|\text{prefix})$，越低越擦得干净；配合 Min-k% probability ($k=10$) 看最坏 token 的概率，区分真记忆 vs 部分猜测；配合 multimodal causal tracing 的 IE（indirect estimation effect）看是否还有 retrieval circuit
-    - 设计动机：传统 ROUGE/EM 只看生成层，模型可能学会一句"我不知道"的 refusal 但内部 PII 仍可被 prompt injection 抽出；Exposure 直接看分布质量，更接近隐私的真实威胁模型
+**3. Exposure 内部概率度量：从分布层面看 PII 是被擦掉还是只是被拒答。**
+
+传统 ROUGE/EM 只看生成层，模型完全可以学会一句「我不知道」的 refusal，内部却仍编码着 PII，被 prompt injection 一抽就出来——这正是隐私评测的盲区。ReMem 对目标 PII 串 $a=t_1t_2\dots t_n$ 定义
+
+$$\text{Exposure}(a)=\sum_i \log P(t_i\mid \text{prefix})$$
+
+值越低说明擦得越干净；再配合 Min-k% probability（$k=10$）盯最坏 token 的概率，区分真记忆与部分猜测，并用 multimodal causal tracing 的 IE（indirect estimation effect）检查是否还残留 retrieval circuit。这样擦除评估就从「能不能生成」推进到「概率分布里还有没有」，更贴近真实威胁模型。
 
 ### 损失函数 / 训练策略
 stage 1 用标准 LVLM SFT（LLaVA-1.5-7B 等）；stage 2 评测覆盖梯度上升、知识蒸馏（Kurmanji 等）、refusal alignment、负 likelihood 等多类 unlearning 算法，统一在 $D_f / D_r' / D_t$ 上跑同一套指标。

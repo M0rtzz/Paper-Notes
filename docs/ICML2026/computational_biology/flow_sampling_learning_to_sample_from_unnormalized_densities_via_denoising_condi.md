@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段交替循环 (类似 Adjoint Sampling)：① **Exploration**——用当前 detached 模型 $u^{\bar\theta}$ 通过 Euler-Maruyama 从 $X_0\sim\mathcal{N}(0,I)$ 模拟到 $X_1^{\bar\theta}$，评估 $\nabla r(X_1^{\bar\theta})$，把 pair $(X_1^{\bar\theta}, \nabla r)$ 推入 replay buffer。② **Optimization**——从 buffer 采 batch $(X_1, \nabla r)$、采 $X_0\sim p_0$ 和 $t\sim\text{Unif}[0,1]$，按 interpolant $X_t=(1-t)X_0+tX_1$ 算条件 drift target $u_{t|0}=X_1-X_0+\gamma t\nabla r(X_1)$，对模型 $u^\theta(X_t)$ 做 MSE 回归。两阶段迭代直到收敛。
+Flow Sampling 要解决的是没有任何真实样本、只知道未归一化密度 $q(x)=\exp(r(x))/Z$ 及其梯度 $\nabla r$ 时如何训练一个高效扩散采样器。它把整件事转成一个自举式的回归任务：先用当前模型从噪声出发跑出一批近似 $q$ 的样本并缓存它们的能量梯度，再以这些缓存样本作监督、让模型回归一个闭式的去噪 drift，两个阶段交替迭代直到模型端点分布逼近目标 $q$。
 
 ### 关键设计
 
-1. **噪声条件下的去噪 supervising drift**:
+**1. 噪声条件下的去噪 supervising drift：让 data-free 也能套用 FM 的回归框架**
 
-    - 功能：在没有数据样本的情况下，构造一个边际是目标 $q$ 的随机过程，且模型可以通过回归学到。
-    - 核心思路：定义条件概率路径 $p_{t|0}(x|x_0)=\tfrac{1}{\alpha_t^d}q(\tfrac{x-\sigma_t x_0}{\alpha_t})$ (push-forward of target)，识别两个生成它的过程：(i) 条件速度 $v_{t|0}(x|x_0)=\tfrac{\dot\alpha_t}{\alpha_t}(x-\sigma_t x_0)+\dot\sigma_t x_0$，由 interpolant $X_t=\sigma_t X_0+\alpha_t X_1$ 闭式求解；(ii) 条件 drift $u_{t|0}=v_{t|0}+\tfrac{g_t^2}{2}\nabla\log p_{t|0}$，可用于训练扩散采样器。Proposition 3.2 证明在 interpolant 上 $u_{t|0}(X_t|x_0)=\dot\alpha_t X_1+\dot\sigma_t x_0+\tfrac{g_t^2}{2\alpha_t}\nabla r(X_1)$，意味着只需对每个 $X_1$ 评估**一次** $\nabla r$，就能在整个 $t\in[0,1]$ 和任意 $X_0$ 下复用。
-    - 设计动机：能量评估是分子动力学等场景的最大成本；让 $\nabla r$ 在时间和源样本上都被复用是关键工程优化。
+标准流匹配的训练目标是"给定数据点 $X_1$ 后条件构造一条 noising 路径，让模型回归这条路径的速度场"，可一旦拿不到 $X_1\sim q$ 这条路就断了。本文把条件方向整个反转：不再以数据端 $X_1$ 为条件，而是以噪声端 $X_0\sim p_0$ 为条件，定义 push-forward of target 的条件概率路径 $p_{t|0}(x|x_0)=\tfrac{1}{\alpha_t^d}q(\tfrac{x-\sigma_t x_0}{\alpha_t})$。它和 FM 的边际相同 (都等于 $p_t$)，但只要噪声样本就能构造。沿 interpolant $X_t=\sigma_t X_0+\alpha_t X_1$，Proposition 3.2 把条件 drift $u_{t|0}=v_{t|0}+\tfrac{g_t^2}{2}\nabla\log p_{t|0}$ 化成闭式 $u_{t|0}(X_t|x_0)=\dot\alpha_t X_1+\dot\sigma_t x_0+\tfrac{g_t^2}{2\alpha_t}\nabla r(X_1)$，模型只需对它做 MSE 回归。这个形式最有效的地方在于：$\nabla r(X_1)$ 是唯一与目标分布相关的项，而它只依赖端点 $X_1$，所以对每个 $X_1$ 评估**一次** $\nabla r$，就能在整个 $t\in[0,1]$ 和任意源样本 $X_0$ 下复用——能量评估恰是分子动力学等场景里最昂贵的开销，把它在时间轴和源空间上摊掉是整套方法效率的根。
 
-2. **Detached 模型的固定点迭代训练**:
+**2. Detached 模型的固定点迭代训练：用模型自己的端点样本顶替缺失的 $X_1\sim q$**
 
-    - 功能：由于真正的 $X_1\sim q$ 拿不到，用当前模型自己生成的 $X_1^{\bar\theta}$ 代替，构造固定点。
-    - 核心思路：定义 $X_1^{\bar\theta}\sim p_1^{\bar\theta}$ 为 detached ($\theta$ 不计算梯度) 模型的端点样本，用 Euler-Maruyama $X_{t+h}^{\bar\theta}=X_t^{\bar\theta}+h u_t^{\bar\theta}(X_t^{\bar\theta})+\sqrt{2\gamma th}Z_t$ 解扩散过程。然后最小化 $\mathcal{L}_{FS}=\mathbb{E}\|u^\theta(X_t)-u_{t|0}(X_t|X_0)\|^2$，但其中 $X_1$ 来自 $X_1^{\bar\theta}$ 而非真实 $q$。
-    - 设计动机：固定点迭代是 EM 类训练的常用 trick；理论上的最优解满足 $p_1^\theta=q$，实证上配合 replay buffer 收敛稳定。
+闭式 drift 里仍然需要 $X_1\sim q$，而这正是 data-free 设定下没有的东西。本文的做法是让模型自举：把 $X_1$ 换成当前模型 (detached、不回传梯度) 自己生成的端点样本 $X_1^{\bar\theta}\sim p_1^{\bar\theta}$，用 Euler-Maruyama $X_{t+h}^{\bar\theta}=X_t^{\bar\theta}+h\,u_t^{\bar\theta}(X_t^{\bar\theta})+\sqrt{2\gamma th}\,Z_t$ 从 $X_0\sim\mathcal{N}(0,I)$ 模拟到 $X_1^{\bar\theta}$，并把 pair $(X_1^{\bar\theta},\nabla r(X_1^{\bar\theta}))$ 推入 replay buffer。优化阶段从 buffer 采样、采 $X_0$ 和 $t\sim\text{Unif}[0,1]$，按 interpolant 算出 drift target 后最小化 $\mathcal{L}_{FS}=\mathbb{E}\|u^\theta(X_t)-u_{t|0}(X_t|X_0)\|^2$。这是一个固定点迭代：理论最优解满足 $p_1^\theta=q$，即模型生成的端点分布恰好是目标分布；detach 切断梯度避免自指回路发散，replay buffer 复用历史样本和缓存梯度则让训练在样本稀缺时仍然稳定。
 
-3. **常曲率黎曼流形扩展 (Hypersphere/Hyperbolic 闭式 drift)**:
+**3. 常曲率黎曼流形扩展：把整套 drift 推到球面/双曲空间且几乎零额外成本**
 
-    - 功能：把 Flow Sampling 推广到 $\mathbb{S}^d$、双曲空间等常曲率 $\kappa$ 流形上。
-    - 核心思路：替换 affine interpolant 为 geodesic interpolant $X_t=\exp_{X_1}[(1-t)\log_{X_1}(x_0)]$；replace Euclidean Brownian motion with $P_{X_t}^\perp\circ dB_t$ 保证扩散停留在切空间。Proposition 4.1 给出 geodesic Jacobian 的 rank-1 闭式形式 $J_t=t T_{X_1\to X_t}P_{\dot X_1}+c_t T_{X_1\to X_t}P_{\dot X_1}^\perp$，其中 $c_t=\sin(t\omega_1\sqrt\kappa)/\sin(\omega_1\sqrt\kappa)$ ($\kappa>0$) 或 $\sinh$ 版本 ($\kappa<0$)；据此可闭式算条件 score 和 drift，避免数值反向求导。
-    - 设计动机：现有扩散采样器都默认欧氏空间，要在球面/双曲空间应用 (方向数据、机器人姿态、图嵌入) 需要重写整个 pipeline；本文给的闭式公式让推广几乎无成本——这也是论文最具开创性的贡献。
+现有扩散采样器几乎都默认欧氏空间，要应用到方向数据、机器人姿态、图嵌入这类天然活在球面或双曲空间的对象就得重写整个 pipeline。本文把欧氏 interpolant 换成 geodesic interpolant $X_t=\exp_{X_1}[(1-t)\log_{X_1}(x_0)]$，并把欧氏布朗运动替换成切空间投影后的 $P_{X_t}^\perp\circ dB_t$，保证扩散始终停在流形上。关键在 Proposition 4.1：它证明 geodesic Jacobian 有 rank-1 闭式 $J_t=t\,T_{X_1\to X_t}P_{\dot X_1}+c_t\,T_{X_1\to X_t}P_{\dot X_1}^\perp$，其中 $c_t=\sin(t\omega_1\sqrt\kappa)/\sin(\omega_1\sqrt\kappa)$ ($\kappa>0$) 或换成 $\sinh$ 版本 ($\kappa<0$)。有了这个闭式 Jacobian 就能直接算条件 score 和 drift，省掉数值反向求导，因此从欧氏推广到常曲率流形几乎不增加成本——这也是全文最具开创性的一笔。
 
 ### 损失函数 / 训练策略
-线性 scheduler $\alpha_t=t,\sigma_t=1-t,g_t^2=2\gamma t$；$\gamma$ 自适应 $\gamma=c/\sqrt{\mathbb{E}_{x_1\sim\mathcal{B}}[\|\nabla r(x_1)\|^2]+\varepsilon}$ 抑制能量梯度尺度。Buffer size 1-6 万，每轮 100-300 次梯度更新，新样本 128-2048/轮。
+线性 scheduler $\alpha_t=t,\sigma_t=1-t,g_t^2=2\gamma t$；$\gamma$ 自适应取 $\gamma=c/\sqrt{\mathbb{E}_{x_1\sim\mathcal{B}}[\|\nabla r(x_1)\|^2]+\varepsilon}$ 以抑制能量梯度的尺度波动。Replay buffer 容量 1–6 万，每轮 100–300 次梯度更新，新样本 128–2048/轮。
 
 ## 实验关键数据
 

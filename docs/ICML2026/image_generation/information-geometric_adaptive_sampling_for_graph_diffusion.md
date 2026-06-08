@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对反向 SDE $dx_t = f_t dt + g_t d\bar{w}_t$，在每个离散时刻 $t_k$ 对节点和边分别评估 drift 差分得到 $V_{\mathbf{X},k}$ 和 $V_{\mathbf{A},k}$，用 EMA 平滑成 $\bar{V}_{\mathbf{X}}, \bar{V}_{\mathbf{A}}$；以幂律 $\Delta t \propto (\kappa_{\text{ref}}/\bar{V})^\beta$ 算出节点步长和边步长（再 clip 到 $[\Delta t_{\min}, \Delta t_{\max}]$），取二者最小值作为本步推进；用一次 Euler 或 Heun solver step 更新 $(\mathbf{X}, \mathbf{A})$，并把 $\bar{V}$ 乘 $\gamma$ 反馈给下一步。整个过程不修改预训练 score 网络，仅在采样阶段插入。
+本文要解决的是图扩散反向 SDE "用固定步长采样"的浪费：高噪声段动力学平滑却照样一步步磨，低噪声段 drift 急剧变化（stiff）却来不及细分。作者的转法是不再用时间 $t$ 当采样进度的标尺，而是把每个时刻诱导的高斯转移核看成统计流形上的一点，用 Fisher-Rao 度量量出"分布到底变了多快"，让采样器在这条信息流形上等弧长前进。落到实现上，每个离散时刻对节点 $\mathbf{X}$ 和邻接 $\mathbf{A}$ 各算一个反映局部信息曲率的标量 DVS，EMA 平滑后按幂律换算成步长，取两支里更保守的那个推进一次 Euler/Heun solver step，再把曲率反馈给下一步。整套逻辑只在采样循环里加几行，不碰预训练 score 网络。
 
 ### 关键设计
 
-1. **Fisher-Rao 线元 + Drift Variation Score (DVS)**：
+**1. Fisher-Rao 线元 + Drift Variation Score：给"分布变化速率"一个可在线算的标量**
 
-    - 功能：把"分布在统计流形上变化多快"用一个无量纲、可在线评估的标量量化。
-    - 核心思路：把转移核写成 $p(x_{t+dt}|x_t; f_t) = \mathcal{N}(x_t + f_t dt, g_t^2 dt I)$，对 $f_t$ 求 log-likelihood 梯度，得到 Fisher 信息矩阵 $\mathcal{I}(f_t) = \frac{dt}{g_t^2}I$，于是线元 $ds^2 = \frac{dt}{g_t^2}\|df_t\|^2$；时间归一后 $V_t = ds^2/dt = \|df_t\|^2 / g_t^2$，即 DVS。在离散 solver 里 $V_k = \|f(x_k, t_k) - f(x_{k-1}, t_{k-1})\|^2 / g_{t_k}^2$。
-    - 设计动机：DVS 同时显式包含"drift 变化"和"噪声尺度"，正好捕捉"低噪段 drift 一抖就翻车"的物理直觉——$g_t$ 一小，$V_t$ 一大，自然提醒采样器减小步长。Fisher-Rao 由 Chentsov 唯一性保证它是统计流形上唯一的"sufficient-statistic 不变度量"，比启发式更原则。
+固定步长的根本病因是它假设"等时间间隔 = 等分布变化"，可反向 SDE 在不同时段动力学严重不均。作者把这件事量化：反向 SDE $dx_t = f_t dt + g_t d\bar{w}_t$ 在一个小时间片内的转移核是高斯 $p(x_{t+dt}\mid x_t; f_t) = \mathcal{N}(x_t + f_t dt,\, g_t^2 dt\, I)$，把 drift $f_t$ 当作流形坐标，对 log-likelihood 求梯度得到 Fisher 信息矩阵 $\mathcal{I}(f_t) = \frac{dt}{g_t^2}I$，于是流形上的线元 $ds^2 = \frac{dt}{g_t^2}\|df_t\|^2$。时间归一后得到无量纲的 Drift Variation Score：$V_t = ds^2/dt = \|df_t\|^2 / g_t^2$，离散 solver 里就用相邻两步差分估 $V_k = \|f(x_k, t_k) - f(x_{k-1}, t_{k-1})\|^2 / g_{t_k}^2$。这个标量同时吃进"drift 变化量"和"噪声尺度"——$g_t$ 一小 $V_t$ 就一大，正好对应"低噪段 drift 一抖就翻车"的物理直觉，提醒采样器此处该减速。之所以选 Fisher-Rao 而非随手凑的度量，是因为 Chentsov 定理保证它是统计流形上唯一的 sufficient-statistic 不变度量，比启发式 schedule 有原则。
 
-2. **等弧长自适应步长法则**：
+**2. 等弧长自适应步长法则：把质量风险和步数预算均匀摊开**
 
-    - 功能：让每步采样在统计流形上前进近似等长，把"质量风险"和"步数预算"均匀摊开。
-    - 核心思路：要 $\Delta s_k^2 = V_k\cdot\Delta t_k \approx \text{const}$，得 $\Delta t_k = \text{clip}(\Delta t_{\text{base}}(\kappa_{\text{ref}}/\bar{V})^\beta, \Delta t_{\min}, \Delta t_{\max})$，固定 $\beta=0.5$ 作平方根阻尼防剧烈抖动；$\kappa_{\text{ref}}$ 是目标曲率参考值。高 $V$（stiff 区）→ 步长收缩；低 $V$（平滑区）→ 步长扩张。
-    - 设计动机：固定 $\Delta t$ 的问题在 Fig 3 看得最清楚——前中段 $\Delta s^2$ 极小、末段指数爆炸；等 $\Delta s^2$ 策略把"信息进度"摊平，既不浪费早期计算也不在结构成键末期爆雷。
+有了 DVS 当弧长速率，调度目标就变成"每步在流形上前进近似等长"，即要 $\Delta s_k^2 = V_k\cdot\Delta t_k \approx \text{const}$。反解出步长 $\Delta t_k = \text{clip}\big(\Delta t_{\text{base}}(\kappa_{\text{ref}}/\bar{V})^\beta,\ \Delta t_{\min},\ \Delta t_{\max}\big)$，其中 $\kappa_{\text{ref}}$ 是目标曲率参考值，$\beta=0.5$ 取平方根阻尼防止步长剧烈抖动。效果是 stiff 区（高 $V$）步长自动收缩、平滑区（低 $V$）步长自动扩张。为什么值得这么做，Fig 3 看得最直观：固定 $\Delta t$ 下 $\Delta s^2$ 前中段几乎贴零、末段指数爆炸，等于早期空烧算力、末期结构成键时又爆雷；等 $\Delta s^2$ 策略把整条"信息进度"曲线压平，算力花在真正有信息变化的地方。
 
-3. **节点-边双通道 DVS + bottleneck 步长 + EMA 平滑**：
+**3. 节点-边双通道 + bottleneck 步长 + EMA 平滑：照顾图数据的异步去噪**
 
-    - 功能：解决图扩散里节点和边异步去噪问题，并防止 SDE 自身随机性把 DVS 噪声化。
-    - 核心思路：分别算 $V_{\mathbf{X},k}, V_{\mathbf{A},k}$，每个用 EMA $\bar{V}\leftarrow(1-\alpha)\bar{V} + \alpha V_k$（$\alpha=0.2$）滤掉高频抖动；分别得到候选步长 $\Delta t_{\mathbf{X},k}, \Delta t_{\mathbf{A},k}$，最终 $\Delta t_k = \min(\cdot, \cdot)$，确保更 stiff 那一支不被吃跨；每步后 $\bar{V}\leftarrow\gamma(\bar{V}_{\mathbf{X}} + \bar{V}_{\mathbf{A}})$ 注入跨模态耦合反馈。
-    - 设计动机：节点（连续特征）和边（离散邻接）denoise 速度天差地别，单通道指标必丢一边；EMA 抑制高频噪声又能跟上结构突变；bottleneck 取 min 保证最弱环节稳定。
+图扩散有个特有麻烦：节点（连续特征）和边（离散邻接）的去噪速度天差地别，stiff 时刻并不重合，单一步长指标必然丢掉一边。作者因此分别算 $V_{\mathbf{X},k}, V_{\mathbf{A},k}$ 两路 DVS，各自换算出候选步长 $\Delta t_{\mathbf{X},k}, \Delta t_{\mathbf{A},k}$，最终取 $\Delta t_k = \min(\cdot, \cdot)$，让更 stiff 的那条支路当 bottleneck、不被另一支拖跨。同时 SDE 自身的随机性会把 DVS 估计噪声化，所以每路再过一道 EMA $\bar{V}\leftarrow(1-\alpha)\bar{V} + \alpha V_k$（$\alpha=0.2$）滤高频抖动又能跟上结构突变；每步推进后还把曲率乘增益反馈给下一步 $\bar{V}\leftarrow\gamma(\bar{V}_{\mathbf{X}} + \bar{V}_{\mathbf{A}})$，注入节点-边之间的跨模态耦合。
 
 ### 损失函数 / 训练策略
 完全 training-free，没有任何可学习参数。采样阶段引入 4 个超参：$\kappa_{\text{ref}}$ 参考曲率（数据自适应）、$\gamma$ 反馈增益（QM9 实验里 0.10-0.35 扫到 0.20 最佳）、$\beta=0.5$ 阻尼指数（固定）、$\alpha=0.2$ EMA 系数（固定）。在某些数据集上仅对采样轨迹的部分区间启用 DVS（appendix B.1），其他时段保持固定步长以稳数值。

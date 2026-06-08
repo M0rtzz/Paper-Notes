@@ -41,30 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SpatialReward 把 reward 建模为条件生成任务，模型把输入 $X$ 映射成结构化输出 $Y=(B, \mathcal T, s)$：$B$ 是 bounding box 序列，$\mathcal T$ 是文本 rationale，$s$ 是标量分数。评估协议按 VIEScore 解耦为 Semantic Consistency（SC，含指令遵循 $s_{if}$ 与源一致性 $s_{con}$）与 Perceptual Quality（PQ，含自然度 $s_{nat}$ 与瑕疵 $s_{art}$）；最终 reward 用层次聚合 $R_{final}=(S_{SC})^{\alpha}(S_{PQ})^{1-\alpha}$，$\alpha=0.8$。SC 流走"先定位再对比"的 Think-with-Boxes 路径，PQ 流只看编辑后图做无参考评估，从而把两类不同性质的判断完全分离。
+SpatialReward 要解决的是"MLLM 评分时不回看源图"的感知缺口，做法是把 reward 从一次盲打分改造成一个条件生成任务：模型把输入 $X$ 映射成结构化输出 $Y=(B, \mathcal T, s)$，其中 $B$ 是被编辑区域的 bounding box 序列、$\mathcal T$ 是文本 rationale、$s$ 是标量分数。评估协议沿用 VIEScore 把判断解耦成两条性质不同的流——Semantic Consistency（SC，含指令遵循 $s_{if}$ 与源一致性 $s_{con}$）走"先定位再对比"的 Think-with-Boxes 路径并真正比对原图与编辑后图，Perceptual Quality（PQ，含自然度 $s_{nat}$ 与瑕疵 $s_{art}$）则只看编辑后图做无参考评估；两条流的结果最后以层次聚合 $R_{final}=(S_{SC})^{\alpha}(S_{PQ})^{1-\alpha}$（$\alpha=0.8$）合成最终 reward。
 
 ### 关键设计
 
-1. **Think-with-Boxes 架构（强制跨图对照的核心机制）**:
+**1. Think-with-Boxes：把"看哪里"写进推理链**
 
-    - 功能：用 interleaved box token 把"看哪里"显式写进模型的推理过程，从结构上消除 MLLM 评估时的注意力坍缩。
-    - 核心思路：SC 流分三步——(a) 先让模型预测所有被编辑对象的 bounding box $B$（Localization），输出形如 `<|bbox_0|>(x1,y1,x2,y2)`；(b) 进入 Anchored Verification，rationale $\mathcal T$ 中每出现 `<|bbox_id|>` 这种 box token 就强制模型"看回"对应的像素区域，再加一个 `<|global|>` token 触发全局上下文扫描；(c) 最后输出 SC 分数 $s_{sc}=[s_{if}, s_{con}]$。PQ 流则只接收编辑后图，$B=\emptyset$，仅输出纯文本 rationale 与 $s_{pq}=[s_{nat}, s_{art}]$。模型 backbone 为 Qwen-3-VL-8B-Instruct。
-    - 设计动机：MLLM 在 cross-image 任务里之所以坍缩到 sink token，是因为模型从未被强制 ground 到具体像素；只要把 box token 嵌入文本，模型就必须在产生每个 cite 时"回看"对应区域，从而恢复跨图注意力的健康分布。Fig.1c 给出的注意力可视化清楚展示了 SpatialReward 的 attention 重新对齐到源图相应区域。
+MLLM 之所以在 cross-image 评估时坍缩到首尾的 sink token，根因是它从未被强制 ground 到具体像素，于是源图被忽略、退化成单图盲判。SpatialReward 的对策是让 SC 流分三步走，把空间锚点做成模型能直接 cite 的 interleaved token：先做 Localization 预测所有被编辑对象的 bounding box $B$，输出形如 `<|bbox_0|>(x1,y1,x2,y2)`；再进入 Anchored Verification，rationale $\mathcal T$ 里每出现一个 `<|bbox_id|>` 就强制模型"回看"对应像素区域，并用一个额外的 `<|global|>` token 触发全局上下文扫描；最后吐出 SC 分数 $s_{sc}=[s_{if}, s_{con}]$。PQ 流不需要对照源图，因此 $B=\emptyset$，只输出纯文本 rationale 与 $s_{pq}=[s_{nat}, s_{art}]$。backbone 是 Qwen-3-VL-8B-Instruct。这样每产生一次区域级判断，模型都被 box token 逼着重新看回该看的地方，跨图注意力的健康分布随之恢复——Fig.1c 的注意力可视化清楚显示 attention 重新对齐到了源图的相应区域。
 
-2. **Spatial-Prior-Guided Data Pipeline（260K 高质量数据集 SpatialReward-260k）**:
+**2. Spatial-Prior-Guided 数据流水线：260K 三者对齐的训练集**
 
-    - 功能：构造一个把 box、rationale、score 三者一致对齐的大规模数据集，使 SFT 阶段能学到"先 ground 再推理"的范式。
-    - 核心思路：三步流水线——Step I 用 Qwen-3-VL-235B-A22B-Instruct 给所有样本预生成 bounding box $B$ 当作空间先验；Step II 按类别路由专家——人物编辑用 Gemini-2.5-Pro 配 crop 提示生成 rationale，物体编辑用 GPT-5 并在图上叠加可视化 bounding box 强制空间聚焦，PQ 用 GPT-5 独立评估；Step III 把生成的 $\mathcal T_{raw}$ 与 $B$ 反喂 Qwen-3-VL-235B 做 alignment（写成 interleaved 格式）与 hallucination check（若 $\mathcal T$ 与 $B$ 视觉证据不一致则丢弃）。最终 260K 由三部分组成：100K 重新清洗的 EditScore 数据（注入 $B$）、100K 重新生成 rationale 的 EditReward 数据（丢弃原粗粒度分数）、60K 自建多区域编辑数据。
-    - 设计动机：仅靠人类标注无法规模化获得"box+推理+分数"三者对齐的数据；用专家路由 + 视觉 box overlay 可以把每个教师模型用在它最擅长的领域（人脸交给 Gemini、物体交给 GPT-5），又通过最后的 hallucination check 把不一致样本剔除，保证训练分布干净。
+要让 SFT 学到"先 ground 再推理"的范式，就需要 box、rationale、score 三者一致对齐的大规模数据，而这单靠人类标注无法规模化获得。作者用三步流水线从开源模型 + 闭源教师里蒸馏出 SpatialReward-260k：Step I 用 Qwen-3-VL-235B-A22B-Instruct 给所有样本预生成 bounding box $B$ 作空间先验；Step II 按类别路由专家，让每个教师只干自己最擅长的活——人物编辑交给 Gemini-2.5-Pro 配 crop 提示生成 rationale，物体编辑交给 GPT-5 并在图上叠加可视化 box 强制空间聚焦，PQ 由 GPT-5 独立评估；Step III 把生成的 $\mathcal T_{raw}$ 与 $B$ 反喂 Qwen-3-VL-235B 做 alignment（写成 interleaved 格式）并做 hallucination check，凡 $\mathcal T$ 与 $B$ 的视觉证据不一致就丢弃，保证训练分布干净。最终 260K 由三部分构成：100K 重新清洗并注入 $B$ 的 EditScore 数据、100K 丢弃原粗粒度分数后重新生成 rationale 的 EditReward 数据、60K 自建多区域编辑数据。
 
-3. **两阶段训练：SFT + GRPO 在线一致性 RL**:
+**3. SFT + GRPO 两阶段训练：用在线 RL 补 SFT 的长尾偏差**
 
-    - 功能：先让模型学到"结构化生成 $(B,\mathcal T,s)$"的能力，再用在线 RL 在难样本上对齐人类一致性，消除幻觉打分。
-    - 核心思路：Stage 1 在 Qwen-3-VL-8B-Instruct 上用 260K 数据做 SFT，目标为 $\mathcal L_{SFT}=-\sum_t \log P_\theta(y_t|y_{<t}, X)$，$Y$ 对 SC 任务展开为 $(B,\mathcal T,s)$、PQ 任务为 $(\mathcal T,s)$。Stage 2 在训练集中挖出 7K 低分难样本，用 Gemini-3.0-Flash 作 Online Supervisor 给模型 rollouts 打 0–1 一致性分作 reward，目标为 GRPO $\mathcal J_{GRPO}=\mathbb E[\frac{1}{G}\sum_i \frac{\pi_\theta(o_i|q)}{\pi_{\theta_{old}}(o_i|q)}\hat A_i] - \beta D_{KL}(\pi_\theta\|\pi_{ref})$，$\hat A_i=(r_i-\mathrm{mean}\{r_j\})/\mathrm{std}\{r_j\}$。最终 reward 用 weighted geometric mean $R=(S_{SC})^\alpha (S_{PQ})^{1-\alpha}$ 而非 min 或 arithmetic mean。
-    - 设计动机：SFT 只能拟合到教师分布的"平均水平"，对长尾难样本仍会幻觉打分；GRPO 在难样本上以一致性为目标做组相对优化，恰好弥补 SFT 的偏差。weighted geometric mean 相比 min（bucket principle）能给出更稠密的梯度信号、相比 arithmetic mean 能更好惩罚"短板"，是 RL 训练 dynamics 的关键。
-
-### 损失函数 / 训练策略
-SFT 阶段标准交叉熵；GRPO 阶段 group size $G$、KL 系数 $\beta$ 等按 DeepSeek-R1 系列默认。最终 reward 聚合参数 $\alpha=0.80$、$w_{SC}=\{0.6, 0.4\}$（指令遵循:源一致性）、$w_{PQ}=\{0.5, 0.5\}$，全部由 grid search 在 2K 验证样本上确定。
+SFT 只能拟合教师分布的"平均水平"，对长尾难样本仍会幻觉打分，所以训练分两步走。Stage 1 在 Qwen-3-VL-8B-Instruct 上用 260K 数据做 SFT，目标为标准交叉熵 $\mathcal L_{SFT}=-\sum_t \log P_\theta(y_t|y_{<t}, X)$，输出 $Y$ 对 SC 任务展开为 $(B,\mathcal T,s)$、对 PQ 任务为 $(\mathcal T,s)$。Stage 2 从训练集挖出 7K 低分难样本，用 Gemini-3.0-Flash 当 Online Supervisor 给模型 rollouts 打 0–1 一致性分作 reward，按 GRPO 做组相对优化 $\mathcal J_{GRPO}=\mathbb E[\frac{1}{G}\sum_i \frac{\pi_\theta(o_i|q)}{\pi_{\theta_{old}}(o_i|q)}\hat A_i] - \beta D_{KL}(\pi_\theta\|\pi_{ref})$，优势 $\hat A_i=(r_i-\mathrm{mean}\{r_j\})/\mathrm{std}\{r_j\}$，恰好在 SFT 最容易出错的难样本上以一致性为目标把偏差拉回来。一个被低估但对 RL dynamics 很关键的细节是 reward 聚合：最终 reward 用 weighted geometric mean $R=(S_{SC})^\alpha (S_{PQ})^{1-\alpha}$，而非 min（bucket principle，梯度太稀疏、RL 收敛慢）或 arithmetic mean（无法惩罚短板），既给稠密梯度又能压住短板。聚合与权重参数 $\alpha=0.80$、$w_{SC}=\{0.6,0.4\}$（指令遵循:源一致性）、$w_{PQ}=\{0.5,0.5\}$ 均由 2K 验证样本上的 grid search 确定，GRPO 的 group size $G$、KL 系数 $\beta$ 等按 DeepSeek-R1 系列默认。
 
 ## 实验关键数据
 

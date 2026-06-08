@@ -46,23 +46,18 @@ Boulder 包含八类旅行任务，覆盖火车、酒店、餐馆、景点等四
 评估流程分三步：首先生成同一问题的 Baseline、Dialogue、Dialogue-concise 三种输入；然后让八个开源或闭源 LLM 在 greedy decoding 下回答；最后用专门的 LLM parser 从自然语言输出中抽取答案，并用人工验证与 prediction-powered inference 校正 parser 噪声。
 
 ### 关键设计
-1. **同实例双形态 benchmark**:
 
-	- 功能：隔离“问题本身难度”和“对话呈现方式”的影响。
-	- 核心思路：每个样例都有同一底层数据库、同一目标答案和近似同义的用户问题。Baseline 直接展示问题与数据，Dialogue 则把数据作为工具结果和历史对话的一部分呈现。
-	- 设计动机：如果不同设置使用不同问题，就无法判断性能下降来自推理难度还是对话形式。双形态设计让比较更干净。
+**1. 同实例双形态 benchmark：把“问题本身有多难”和“对话怎么呈现”这两件事彻底分开。**
 
-2. **动态生成与自动可验证答案**:
+如果孤立设置和对话设置用的是不同问题，性能下降到底来自推理难度还是对话形式就永远说不清。Boulder 让每个样例共用同一个底层数据库、同一个目标答案和一组近似同义的用户问题，只在呈现方式上分叉：Baseline 直接把问题和 JSON 数据摆出来，Dialogue 则把同样的信息打散到多轮历史、用户请求、工具调用和工具结果里。两端唯一的变量就是“信息怎么包装”，于是 Baseline 与 Dialogue 的分差可以干净地归到 dialogue framing 头上，而不会和题目难度混在一起。
 
-	- 功能：降低数据污染风险，并支持大规模评估。
-	- 核心思路：基于 MultiWOZ 数据库和作者编写模板生成旅行任务；部分数据做合成扩展以增加多样性。目标答案以金额、时间、距离、布尔关系或路径序列形式自动计算。
-	- 设计动机：LLM 很可能见过静态 benchmark。动态生成可以让研究者重新采样样例，同时保持答案可验证。
+**2. 动态生成与自动可验证答案：既防数据污染，又撑得起大规模评估。**
 
-3. **对话因素消融**:
+LLM 很可能早就见过静态公开 benchmark，刷高分未必代表真会推理。Boulder 基于 MultiWOZ 数据库加作者编写的模板动态生成旅行任务，并对部分数据做合成扩展增加多样性；目标答案统一以金额、时间、距离、布尔关系或路径序列的形式自动计算出来，因此随时可以重新采样一批新样例而答案依然可验证。这让 benchmark 在污染风险越来越高的环境里更耐用，也支撑了八类任务、每类 100 例、共 800 个样例的规模化评估。
 
-	- 功能：拆解性能下降来自哪里。
-	- 核心思路：作者设计 reduced domains、without tools、single-turn dialogue、multi-turn baseline、baseline with dialogue role、dialogue with reasoning instruction 等变体，逐步移除或加入领域复杂度、工具 schema、多轮历史和角色设定。
-	- 设计动机：仅观察 Baseline vs Dialogue 无法解释原因；消融能说明多轮交互、工具负担和角色偏置各自的贡献。
+**3. 对话因素消融：拆开看性能到底掉在哪个环节。**
+
+只对比 Baseline 与 Dialogue 只能得出“对话变难了”，却说不清是多轮、工具还是角色在拖后腿。作者围绕 Dialogue 设计了一组变体——reduced domains、without tools、single-turn dialogue、multi-turn baseline、baseline with dialogue role、dialogue with reasoning instruction——逐个加入或移除领域复杂度、工具 schema、多轮历史和助手角色。通过观察每个变体相对参照设置的升降，就能把整体退化分解成各因素的贡献，结果指向多轮历史和工具负担是主要来源，而单加一句“请多推理”几乎无济于事。
 
 ### 损失函数 / 训练策略
 本文是评测论文，没有训练新模型。所有模型使用统一 prompt 和 greedy decoding。对于开放权重模型，作者通过 Ollama 或 OpenRouter 推理；对于闭源模型，通过 OpenRouter API 调用。聚合指标把准确率、precision 和归一化后的 MAE 映射到 0 到 1 的区间，以便跨任务平均。

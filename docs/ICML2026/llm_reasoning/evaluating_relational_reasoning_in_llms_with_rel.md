@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-REL 是一个**生成式 benchmark 框架**，由三块子集组成：**REL-A（代数）** 基于 Raven's Progressive Matrices 及其作者新引入的张量化扩展 RPT；**REL-B（生物）** 让模型在多序列比对（MSA）+ 系统发育树上识别 homoplasy（趋同演化）；**REL-C（化学）** 围绕 constitutional isomers / 最大公共子结构 / 缺失异构体补全设计三个 RC 不同的任务。三者共享一套形式化定义（RC 与 OC），并且每个任务都暴露生成器参数，可以系统扫描 RC 而冻结 entity 数、序列长、prompt 长度等混淆变量。pipeline 是"参数 → 合成题目 → LLM 答题 → 按 RC 分组对比准确率"。
+REL 不是一份固定题集，而是一个**生成式 benchmark 框架**：先把"关系推理难度"形式化为一个可参数化的数字 RC，再让每个学科的题目生成器只动 RC、冻结 entity 数 / 序列长 / prompt 长度等混淆变量，最后按 RC 分组对比 LLM 的准确率。框架横跨三个学科——**REL-A（代数）** 基于 Raven's Progressive Matrices 及作者新引入的张量化扩展 RPT，**REL-B（生物）** 让模型在多序列比对（MSA）+ 系统发育树上识别 homoplasy（趋同演化），**REL-C（化学）** 围绕同分异构体 / 最大公共子结构 / 缺失异构体补全设计三个 RC 配比不同的任务。三者共享同一套 RC / OC 定义，于是来自不同领域的失败可以放在同一根难度坐标轴上比较。
 
 ### 关键设计
 
-1. **RC / OC 双轴形式化与 Raven 张量化扩展**：
+**1. RC / OC 双轴形式化 + Raven 张量化扩展：把"难度"拆成可单独扫描的数字。**
 
-    - 功能：把"关系推理难度"分解为两个正交维度 —— RC 定义为"为完成一次推理步骤必须同时绑定的独立变量 / operand 数 = 关系 arity"，OC 定义为"识别 / 表征单个 slot 所需的难度"；在 Raven's Progressive Matrices 上演示如何机械计算 RC，并将 RPM 推广到 n 维 Raven's Progressive Tensors (RPT)。
-    - 核心思路：对一个 $n \times n$ 的 RPM，作者设计 7 条规则覆盖 $\text{RC} \in \{1, 2, n, 4, 5, 6\}$，例如 A1 (Constant) 全等 $\text{RC}=1$、A2 (Progression) 相邻递推 $\text{RC}=2$、A3 (Permutation) 每行同 $n$ 个值随机排列 $\text{RC}=n$、A4 (Row-Sum) 末位等于其余 $n-1$ 项带符号和 $\text{RC}=n$；张量化后理论上界为 $\text{RC}_{n\text{-dim}} \le 3^{n}-1$，于是仅靠加一维就能在小输入上把 RC 推到 4-6 而保持 entity 数几乎不变。
-    - 设计动机：传统 RPM 的 RC 上限只有 4，无法测试当代 LLM；同时把 RC 写成与表征解耦的数字，意味着可以在"输入 token 数固定"的条件下单独扫描 RC，从而把 RC 的效应从 prompt 长度、entity 多寡里剥离出来 —— 这是后面回归分析能成立的形式化基础。
+整个 benchmark 的根基，是要回答"难度到底来自哪里"这个被 entity count、prompt length 长期混淆的问题。作者把它拆成两个正交维度：RC（Relational Complexity）定义为"完成一次推理步骤必须同时绑定的独立变量 / operand 数"，也就是关系的 arity；OC（Operand Complexity）定义为"识别、表征单个 slot 本身的难度"。在 Raven's Progressive Matrices 上 RC 可以被机械地数出来——作者给出 7 条规则覆盖不同 arity，如 A1 (Constant) 全行相等 $\text{RC}=1$、A2 (Progression) 相邻递推 $\text{RC}=2$、A3 (Permutation) 每行同 $n$ 个值随机排列 $\text{RC}=n$、A4 (Row-Sum) 末位等于其余 $n-1$ 项带符号和 $\text{RC}=n$。难点在于传统 RPM 的 RC 上限只有 4，对当代 LLM 太浅，所以作者把二维 RPM 推广到 n 维 Raven's Progressive Tensors (RPT)，理论上界一举提到 $\text{RC}_{n\text{-dim}} \le 3^{n}-1$——只要再加一维，就能在 entity 数几乎不变的小输入上把 RC 推到 4-6 甚至更高。这一步之所以关键，是因为 RC 被写成了与具体表征解耦的纯数字，意味着可以"固定 token 数、只动 RC"，从而把 RC 的效应从 prompt 长度、entity 多寡里干净剥离出来，为后面的回归归因打下形式化基础。
 
-2. **REL-B1：同形演化检测（生物侧 RC 注入）**：
+**2. REL-B1 同形演化检测：把抽象 arity 投到真实的生物推理上。**
 
-    - 功能：给定一棵系统发育树和对应 MSA，模型须 (a) 判断是否存在 homoplasy（不同 lineage 独立演化出相同 motif）；(b) 准确列出所有参与 homoplasy 的 taxa；只有两步都对才算通过。
-    - 核心思路：构造合成数据生成器，由四个参数控制 —— homoplastic taxa 数 $N_{ht}$、叶子数 $N_{\text{leaves}}$、序列长 $L_{\text{seq}}$、保守 motif 长 $L_{\text{motif}}$；其中 $\text{RC} = N_{ht}$，因为模型必须把所有 homoplastic taxa 在树上的位置同时持在记忆里逐一核对；其他三个参数则作为"非 RC 混淆因子"用于消融。共生成 2,600 题。
-    - 设计动机：(1) 把抽象的"关系 arity"投射到一个真实的生物推理任务上，证明 RC 框架不止适配 Raven 这类合成谜题；(2) 通过单独扫 $N_{ht}$ 且冻结其他参数，能用多元回归 / GVIF 共线性分析量化 RC 相对于其他难度代理的独立贡献，给"RC 是性能主因"提供因果性更强的证据；(3) 同形演化本身就是科学推理中典型的"跨多 lineage 联合绑定"问题，外部 validity 强。
+光在 Raven 谜题上成立还不够，作者要证明 RC 框架能落到真实科学场景。REL-B1 给定一棵系统发育树和对应 MSA，要求模型两步都答对才算通过：先判断是否存在 homoplasy（不同 lineage 独立演化出相同 motif），再准确列出所有参与的 taxa。合成生成器由四个参数控制——homoplastic taxa 数 $N_{ht}$、叶子数 $N_{\text{leaves}}$、序列长 $L_{\text{seq}}$、保守 motif 长 $L_{\text{motif}}$，其中关键令 $\text{RC} = N_{ht}$，因为模型必须把所有 homoplastic taxa 在树上的位置同时持在工作记忆里逐一核对，绑定的 slot 数正好等于 $N_{ht}$；其余三个参数则被当作"非 RC 混淆因子"专供消融，共生成 2,600 题。这样设计有两重收益：单独扫 $N_{ht}$ 而冻结其他参数，就能用多元回归 + GVIF 共线性分析量化 RC 相对其他难度代理的独立贡献，把"RC 是性能主因"从相关证据推向更强的因果证据；而同形演化本身就是"跨多 lineage 联合绑定"的典型科学问题，外部有效性强，堵住了"benchmark 太合成"的质疑。
 
-3. **REL-C 三联任务：RC 与 OC 解耦的化学评测**：
+**3. REL-C 三联任务：用同一学科内的对照实验把 RC 和 OC 分开。**
 
-    - 功能：在分子集合（SMILES 表示）上设计三个 RC / OC 配比不同的任务 —— C1 同分异构体集合分类（RC=2, OC 易）、C2 最大公共子结构 MCS（RC=2, OC 中）、C3 缺失异构体补全（RC 高, OC 难）；用于检验"RC 升高 → 准确率下降"是否在固定其他变量时仍然成立。
-    - 核心思路：C1 只需逐一比对当前分子的化学式与共享化学式（顺序二元绑定）；C2 同样是二元绑定，但每步要在两个分子之间求 MCS，OC 显著高；C3 必须同时持有"完整同分异构体空间"和"已观察子集"两个独立来源，且空间大小 $N_{\text{isomers}}$ 平均达 29，从结构上排除了"逐对二元更新"的简化解法；C2 的评估指标用双向子结构匹配 $\text{IsSubstructure} = \tfrac{1}{2}(S_{\text{pred}\subseteq\text{true}} + S_{\text{true}\subseteq\text{pred}})$ 同时刻画 precision 与 completeness。
-    - 设计动机：C1 vs C2 是"RC 相等 / OC 不等"的对照，验证 OC 单独也会拉低性能；C1/C2 vs C3 是"OC 也变难但 RC 显著升高"的对照，证明 RC 升高带来的下降幅度远大于 OC，从而把 RC 确立为主要驱动因子；同时 SMILES 是真实化学家常用表征，避免"benchmark 太合成"的批评。
+要确证"是 RC 而非 OC 在主导下降"，最干净的办法是在同一学科里做受控对照。REL-C 在分子集合（SMILES 表示）上设计三个任务，刻意调配 RC 与 OC 的比例：C1 同分异构体集合分类（$\text{RC}=2$、OC 易），只需逐一比对当前分子化学式与共享化学式，是顺序二元绑定；C2 最大公共子结构 MCS（$\text{RC}=2$、OC 中），同样二元绑定但每步要在两个分子间求 MCS，OC 显著抬高；C3 缺失异构体补全（RC 高、OC 难），必须同时持有"完整同分异构体空间"和"已观察子集"两个独立来源，而空间大小 $N_{\text{isomers}}$ 平均达 29，从结构上堵死了"逐对二元更新"的偷懒解法。其中 C2 用双向子结构匹配作评估指标，$\text{IsSubstructure} = \tfrac{1}{2}(S_{\text{pred}\subseteq\text{true}} + S_{\text{true}\subseteq\text{pred}})$，同时刻画 precision 与 completeness。三者构成两组对照：C1 vs C2 在 RC 都等于 2 时只动 OC，验证 OC 单独也会拉低性能；C1/C2 vs C3 让 OC 和 RC 一起升，证明 RC 升高带来的跌幅远大于 OC，从而把 RC 钉死为主要驱动因子——而 SMILES 又是化学家日常表征，保住了任务的真实性。
 
-### 损失函数 / 训练策略
-本文不训练模型，只评测 Claude Opus 4.5 / Gemini 3 Pro Preview / GPT-5.2 三个前沿 LLM。评测协议：REL-A 给 8 个候选答案（trivial accuracy 12.5%）；REL-B1 须同时答对存在性和 taxa 集合；REL-C 用 SMILES canonical 化后做严格匹配（C2 用 IsSubstructure，C3 用 recall / precision / F1）。inference-time 干预包括 test-time compute（max-token 4096 / 8192 / 16384）、one-shot in-context learning（REL-C 上 10% 样本）、tool use（REL-C3 提供 RDKit）。
+### 评测协议
+本文不训练模型，只评测 Claude Opus 4.5 / Gemini 3 Pro Preview / GPT-5.2 三个前沿 LLM。REL-A 给 8 个候选答案（trivial accuracy 12.5%）；REL-B1 须同时答对存在性和 taxa 集合才算通过；REL-C 把 SMILES canonical 化后做严格匹配（C2 用上面的 IsSubstructure，C3 用 recall / precision / F1）。为排除"模型只是没想够久 / 没见过例子 / 缺工具"的解释，作者还加了三类 inference-time 干预：test-time compute（max-token 4096 / 8192 / 16384）、one-shot in-context learning（REL-C 上 10% 样本）、tool use（REL-C3 提供 RDKit）。
 
 ## 实验关键数据
 

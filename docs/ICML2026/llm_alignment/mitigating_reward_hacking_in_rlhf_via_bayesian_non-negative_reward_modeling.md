@@ -41,37 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BNRM 把标准 BT 奖励模型重写为一个分层贝叶斯生成过程，并用摊销变分推断 + Weibull 重参数化做端到端训练。整体 pipeline 可以分四步看：
-
-1. **输入**：偏好三元组 $(\bm{x},\bm{y}_1,\bm{y}_2)$，其中 $\bm{y}_1$ 是 chosen、$\bm{y}_2$ 是 rejected。
-2. **特征编码**：LLM backbone $f$（如 Gemma-2B-it / Skywork-Reward-Llama-3.1-8B）把 $(\bm{x},\bm{y})$ 编码为 $\bm{z}=f(\bm{x},\bm{y})\in\mathbb{R}^{d_{\text{model}}}$。
-3. **变分推断**：用一个线性头 $W_{\text{vi}}\in\mathbb{R}^{d_{\text{model}}\times 2K}$ 把 $\bm{z}$ 映成 Weibull 分布的 shape 与 scale 参数 $(\bm{k},\bm{\lambda})$，采样得到非负稀疏的局部因子 $\bm{\theta}\in\mathbb{R}^{K}_+$；全局奖励字典 $\Phi\in\mathbb{R}^{K}_+$ 同样用 Weibull 后验 $q(\Phi)$ 建模。
-4. **奖励生成 + BT 似然**：标量奖励由 $r=\bm{\theta}^{\top}\Phi$ 生成（非负、稀疏、可分解为 $K$ 个语义因子的贡献），随后塞入 BT：$p(\bm{y}_1\succ\bm{y}_2)=\sigma(r_1-r_2)$。
-
-训练时最大化 ELBO：重构项保证因子能解释观测偏好，两个 KL 项把 $q(\bm{\theta})$ 与 $q(\Phi)$ 拉向 Gamma 先验，从而强制稀疏并控制模型复杂度。整个流程不需要训多个模型，单次前向就同时给出"奖励均值 + 不确定性 + 因子分解"。
+BNRM（Bayesian Non-negative Reward Model）把标准 BT 奖励模型重写成一个分层贝叶斯生成过程：给定偏好三元组 $(\bm{x},\bm{y}_1,\bm{y}_2)$，LLM backbone $f$（如 Gemma-2B-it / Skywork-Reward-Llama-3.1-8B）先把每个 $(\bm{x},\bm{y})$ 编码成稠密表征 $\bm{z}=f(\bm{x},\bm{y})\in\mathbb{R}^{d_{\text{model}}}$，再由它推断出非负稀疏的实例局部因子 $\bm{\theta}\in\mathbb{R}^{K}_+$，与同样非负稀疏的全局奖励字典 $\Phi\in\mathbb{R}^{K}_+$ 内积得到奖励 $r=\bm{\theta}^{\top}\Phi$，最后塞回 BT 似然 $p(\bm{y}_1\succ\bm{y}_2)=\sigma(r_1-r_2)$。关键是 $\bm{\theta}$ 与 $\Phi$ 都用 Weibull 变分后验建模、Gamma 先验约束，整套框架借摊销变分推断 + Weibull 重参数化做端到端训练——单次前向就同时给出"奖励均值 + 不确定性 + $K$ 个语义因子的分解"，全程不需要训多个模型。
 
 ### 关键设计
 
-1. **NFA 重塑奖励生成过程（disentanglement-then-debiasing）**：
+**1. NFA 重塑奖励生成过程：从稠密黑盒到非负稀疏因子，先解耦再去偏。**
 
-    - 功能：用非负稀疏的局部隐变量 $\bm{\theta}$ 与全局字典 $\Phi$ 替代稠密线性头 $W_{\text{bt}}$，把奖励重写为 $r(\bm{x},\bm{y})=\bm{\theta}^{\top}\Phi$。
-    - 核心思路：对 $\bm{\theta}$ 加 $\mathrm{Gamma}(\alpha_0,\beta_0)$ 先验，对 $\Phi$ 加 $\mathrm{Gamma}(\gamma_0,\delta_0)$ 先验，二者都被强制非负且高度稀疏；局部稀疏意味着每个 prompt–response 只激活少量语义因子，达成实例级解耦；全局稀疏意味着字典中只保留少数稳定不变的奖励维度，把跨样本反复出现的系统性偏置（如长度、模板）当成"非不变特征"压掉。
-    - 设计动机：稠密黑盒奖励是 reward hacking 的温床——它把所有相关与无关特征都揉在一起；非负稀疏因子相当于给 RM 装了一个结构先验，让"语义意图"和"风格噪声"被强行拆到不同因子里，再用全局稀疏把噪声因子的权重压成 0。
+稠密标量奖励 $r=\bm{z}^{\top}W_{\text{bt}}$ 是 reward hacking 的温床——它把语义意图和长度、模板等无关特征全揉成一团，结构上根本没给"哪些维度该信、哪些该忽略"留位置。BNRM 直接换掉奖励的数学形式，把它生成为 $r(\bm{x},\bm{y})=\bm{\theta}^{\top}\Phi$：局部隐变量 $\bm{\theta}$ 加 $\mathrm{Gamma}(\alpha_0,\beta_0)$ 先验、全局字典 $\Phi$ 加 $\mathrm{Gamma}(\gamma_0,\delta_0)$ 先验，二者都被强制非负且高度稀疏。局部稀疏让每个 prompt–response 只激活少数几个语义因子，达成实例级 disentanglement；全局稀疏让字典里只保留少量稳定不变的奖励维度，把跨样本反复出现的系统性偏置（长度、风格、模板）当成"非不变特征"在源头压成接近 0。这样"语义意图"和"风格噪声"被结构性地拆到不同因子里，再用全局稀疏抹掉噪声因子的权重，从表示形式上让 RM 对捷径不敏感，而不是事后打补丁去删某个已知偏置。
 
-2. **双层不确定性 + Weibull 变分后验**：
+**2. 双层不确定性 + Weibull 变分后验：让古典稀疏模型第一次接得上 LLM 反传。**
 
-    - 功能：同时建模 aleatoric（标注噪声）和 epistemic（模型参数）两类不确定性，对两者都做可微采样。
-    - 核心思路：把 BT 模型推广为对 $\bm{\theta}_1,\bm{\theta}_2,\Phi$ 三个隐变量都积分的形式 $p(\bm{y}_1\succ\bm{y}_2|\bm{x},\bm{y}_1,\bm{y}_2)=\int p(\bm{y}_1\succ\bm{y}_2|\bm{\theta}_1,\bm{\theta}_2,\Phi) q(\bm{\theta}_1)q(\bm{\theta}_2)q(\Phi)\,d\bm{\theta}_1 d\bm{\theta}_2 d\Phi$；变分后验都取 Weibull 分布 $q(\bm{\theta}|\bm{x},\bm{y})=\mathrm{Weibull}(\bm{k},\bm{\lambda})$，shape $\bm{k}$ 用 Softplus 保证可微稳定，scale $\bm{\lambda}$ 用 ReLU 经验性地鼓励样本稀疏；Weibull 自带重参数化可走标准反传。
-    - 设计动机：Gamma 后验难以重参数化、采样代价高；Weibull 与 Gamma 在尾部行为相近但有解析的重参数化，可让 NFA 这种古典稀疏模型第一次方便地嵌进现代 LLM 训练流。同时双层不确定性给后续 BoN/PPO 提供了"置信度感知"的奖励信号，可以惩罚 RM 不确定区域，缓解过度优化。
+要给奖励引入不确定性，就得把 BT 推广为对所有隐变量积分的形式 $p(\bm{y}_1\succ\bm{y}_2|\bm{x},\bm{y}_1,\bm{y}_2)=\int p(\bm{y}_1\succ\bm{y}_2|\bm{\theta}_1,\bm{\theta}_2,\Phi)\,q(\bm{\theta}_1)q(\bm{\theta}_2)q(\Phi)\,d\bm{\theta}_1 d\bm{\theta}_2 d\Phi$，从而同时刻画 aleatoric（标注噪声）和 epistemic（全局参数）两类不确定性。三个后验都取 Weibull 分布 $q(\bm{\theta}|\bm{x},\bm{y})=\mathrm{Weibull}(\bm{k},\bm{\lambda})$，其中 shape $\bm{k}$ 用 Softplus 保证可微稳定、scale $\bm{\lambda}$ 用 ReLU 经验性地鼓励样本稀疏。之所以不直接用与 Gamma 先验共轭的 Gamma 后验，是因为 Gamma 难以重参数化、采样代价高；Weibull 在尾部行为上与 Gamma 相近却带解析的重参数化，能走标准反传——这让 NFA 这类需要 Gibbs/SVI 的古典稀疏模型第一次能方便地嵌进现代 LLM 训练流。附带的好处是，这套双层不确定性给下游 BoN/PPO 提供了"置信度感知"的奖励信号，可以惩罚 RM 不确定的区域，缓解 over-optimization。
 
-3. **摊销变分推断 + ELBO 端到端训练**：
+**3. 摊销变分推断 + ELBO 端到端训练：用 LLM 表征当推断网络，单 forward 出后验。**
 
-    - 功能：把 LLM backbone $f$ 复用为变分推断网络（encoder），让 $W_{\text{llm}},W_{\text{vi}},\Phi$ 一起在偏好数据上端到端优化。
-    - 核心思路：训练目标为 $\mathcal{L}(\mathcal{D})=\mathbb{E}_{q(\bm{\theta})q(\Phi)}[\log p(\mathcal{D}|\bm{\theta},\Phi)] - \eta\,\mathrm{KL}(q(\bm{\theta})\|p(\bm{\theta})) - \eta\,\mathrm{KL}(q(\Phi)\|p(\Phi))$，第一项保证因子能解释偏好，两项 KL 把后验拉向稀疏先验；超参 $\eta$ 平衡 likelihood 和 KL，等价于控制"稀疏正则强度"。
-    - 设计动机：传统 NFA 需要逐文档 Gibbs 采样或 SVI，根本接不上 LLM 大批量训练；用 LLM 自身的稠密表征 $\bm{z}$ 来摊销 $\bm{\theta}$ 的后验推断，单 forward 就能出 $(\bm{k},\bm{\lambda})$，使整个贝叶斯框架能在 LoRA + 2 epoch / 8B 全参数微调的预算下跑完。
+传统 NFA 要逐文档跑 Gibbs 采样或 SVI，根本接不上 LLM 的大批量训练。BNRM 把 LLM backbone $f$ 直接复用成变分推断网络（encoder）：一个线性头 $W_{\text{vi}}\in\mathbb{R}^{d_{\text{model}}\times 2K}$ 把表征 $\bm{z}$ 映成 Weibull 的 $(\bm{k},\bm{\lambda})$，单次前向就摊销出 $\bm{\theta}$ 的后验，省掉逐样本的迭代推断。训练目标是 ELBO
+
+$$\mathcal{L}(\mathcal{D})=\mathbb{E}_{q(\bm{\theta})q(\Phi)}\big[\log p(\mathcal{D}|\bm{\theta},\Phi)\big]-\eta\,\mathrm{KL}\big(q(\bm{\theta})\|p(\bm{\theta})\big)-\eta\,\mathrm{KL}\big(q(\Phi)\|p(\Phi)\big),$$
+
+第一项（重构项）保证因子能解释观测到的偏好，两项 KL 把后验拉向稀疏 Gamma 先验、控制模型复杂度；超参 $\eta$ 平衡 likelihood 与 KL，本质就是"稀疏正则强度"的旋钮。$W_{\text{llm}},W_{\text{vi}},\Phi$ 在偏好数据上一起端到端优化，使整套贝叶斯框架能在 LoRA + 2 epoch / 8B 全参数微调这种现实预算下跑完。
 
 ### 损失函数 / 训练策略
-ELBO 形式如上，$\eta$ 是稀疏强度的关键超参（论文在 appendix 给出敏感性分析）。训练设置上：Gemma-2B-it / Gemma2-2B-it 用 LoRA 训练 2 epoch；Skywork-Reward-Llama-3.1-8B 在 Skywork-Preference-v0.2 上全参数微调 1 epoch；RL 阶段把 BNRM 作为代理奖励，对 Llama3.1-8B-Instruct 和 OpenRLHF-Llama3-8B-SFT 用 PPO + LoRA 训 1 epoch；Best-of-N 测试仅使用两个 Gemma 模型。
+训练目标即上面的 ELBO，$\eta$ 是控制稀疏强度的关键超参（论文在 appendix 给出敏感性分析）。具体设置：Gemma-2B-it / Gemma2-2B-it 用 LoRA 训练 2 epoch；Skywork-Reward-Llama-3.1-8B 在 Skywork-Preference-v0.2 上全参数微调 1 epoch；RL 阶段把 BNRM 作为代理奖励，对 Llama3.1-8B-Instruct 和 OpenRLHF-Llama3-8B-SFT 用 PPO + LoRA 训 1 epoch；Best-of-N 测试仅使用两个 Gemma 模型。
 
 ## 实验关键数据
 

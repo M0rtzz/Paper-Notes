@@ -40,32 +40,21 @@ DiscoForcing 把"音乐 → 全身舞蹈"的离线生成问题改写成严格因
 ## 方法详解
 
 ### 整体框架
-DiscoForcing 在每个流式时刻 $t$ 跑一条三段式流水线：
-**输入**：30 Hz 的实时音频流 + 长度 $h$ 的运动历史缓冲。
-**Stage 1 — Causal Music Processing**：从固定长度滑动音频窗里抽取因果特征 $\mathbf{c}_t=[\mathbf{f}_t^{vq};\mathbf{f}_t^{pae}]$（VQ-PAE，节拍 token + FFT 相位）。
-**Stage 2 — Streaming Audio-driven Motion Diffusion**：先用 motion VAE 把 272 维 SMPL 帧压成潜序列 $\mathbf{z}_\mathcal{T}$，再用 Diffusion Forcing transformer 在一个长度 $l$ 的尾部 FIFO 去噪窗里做联合去噪，每步吐一个干净 latent token 作为输出，并补一个新的纯噪声 token。
-**Stage 3 — Real-Time Interactive System**：VAE 解码出的 SMPL 动作通过 ROS2 同时分发给 Unity avatar 平台（在线可视化、人机交互）和宇树 G1 物理人形（GMR 重定向 + 50 Hz WBC 跟踪）。
-**输出**：30 FPS 因果流式全身动作 + 物理可执行关节指令。
+DiscoForcing 要解决的是"音乐边播边来、动作必须立刻跟上"的流式控制问题，核心做法是把离线的 music-to-motion 改写成一条严格因果、每帧算力封顶的流水线。每个流式时刻 $t$，系统先从固定长度的滑动音频窗里抽出严格因果的条件特征，再在一个潜空间的尾部去噪窗里用 Diffusion Forcing 吐出当前帧的干净 latent，最后解码成 SMPL 动作经 ROS2 同时驱动 Unity 虚拟人和宇树 G1 物理人形，整体维持 30 FPS 的因果流式输出。
 
 ### 关键设计
 
-1. **VQ-PAE 解耦因果音乐编码**:
+**1. VQ-PAE 解耦因果音乐编码：让条件既因果又同时抓住"事件"和"相位"**
 
-    - 功能：把每个滑动音频窗 $\mathbf{w}_t$ 编成一个紧凑、严格因果、同时保留高层节拍语义和低层相位连续性的条件向量 $\mathbf{c}_t$。
-    - 核心思路：用 dilated 1D 因果卷积得到共享潜表 $\mathbf{f}^{causal}=\mathrm{Conv1D}(\mathbf{w}_t)$，再分两路——节拍分支走残差向量量化 $\mathbf{f}^{vq}=\mathrm{RVQ}(\mathrm{FFN}_{vq}(\mathbf{f}^{causal}))$ 提供离散风格/触发码；周期分支在频域估出幅度 $\mathbf{A}$、偏置 $\mathbf{B}$、频率 $\mathbf{F}$ 和相位 $\boldsymbol{\phi}=\tan^{-1}(\mathrm{FC}_{phase}(\mathbf{f}^{causal}))$，再重构 $\mathbf{f}^{pae}(t)=\mathbf{A}\sin(2\pi(\mathbf{F}\cdot t-\boldsymbol{\phi}))+\mathbf{B}$，提供平滑的相位对齐信号。
-    - 设计动机：实时部署不能看未来，所以编码必须严格因果；同时音乐既有"突变事件"（鼓点、副歌）又有"连续相位"（拍子周期），单一表示要么颗粒太粗要么平滑掉节奏，所以显式拆成离散 + 连续两路。消融上 VQ-PAE 相比 Librosa 把 FIDk 从 25.49 降到 23.23、FIDg 从 13.30 降到 12.28，证明学到的语义条件对动作真实度比手写节拍特征更关键。
+实时部署不能偷看未来，所以音乐编码必须严格因果；但音乐里同时存在两种性质完全不同的信息——鼓点切入、副歌进入这种离散"突变事件"，和拍子周期这种连续"相位流动"，用单一表示要么颗粒太粗丢掉节奏、要么被平滑掉触发感。VQ-PAE 因此把每个滑动窗 $\mathbf{w}_t$ 先过 dilated 1D 因果卷积得到共享潜表 $\mathbf{f}^{causal}=\mathrm{Conv1D}(\mathbf{w}_t)$，再显式拆成两路：节拍分支走残差向量量化 $\mathbf{f}^{vq}=\mathrm{RVQ}(\mathrm{FFN}_{vq}(\mathbf{f}^{causal}))$ 给出离散的风格/触发码；周期分支在频域估出幅度 $\mathbf{A}$、偏置 $\mathbf{B}$、频率 $\mathbf{F}$ 和相位 $\boldsymbol{\phi}=\tan^{-1}(\mathrm{FC}_{phase}(\mathbf{f}^{causal}))$，重构出平滑的相位对齐信号 $\mathbf{f}^{pae}(t)=\mathbf{A}\sin(2\pi(\mathbf{F}\cdot t-\boldsymbol{\phi}))+\mathbf{B}$，二者拼成最终条件 $\mathbf{c}_t=[\mathbf{f}_t^{vq};\mathbf{f}_t^{pae}]$。这种"离散事件 + 连续相位"的解耦在消融里把 FIDk 从 Librosa 手写特征的 25.49 降到 23.23、FIDg 从 13.30 降到 12.28，说明学到的语义条件比手工节拍特征更能撑起动作真实度。
 
-2. **潜空间 Diffusion Forcing + 三模混合噪声调度**:
+**2. 潜空间 Diffusion Forcing + 三模混合噪声调度：让训练分布预演 streaming 时的噪声形态**
 
-    - 功能：训一个能在每个时间 token 上接受独立噪声水平的 transformer $\mathbf{v}_\theta$，使它既能在训练里见过任意"过去干净/未来加噪"的组合，也能直接在 streaming 推理下稳定工作。
-    - 核心思路：动作先经 VAE 进入潜空间，定义每个 token 的概率路径 $p(\mathbf{x}_t^{k_t}|\mathbf{x}_t^0)=\mathcal{N}(\alpha_{k_t}\mathbf{x}_t^0,\sigma_{k_t}^2\mathbf{I})$，$k_t\in[0,1]$ 是 token-wise 扩散时间；用 flow matching 学速度场 $\mathbf{v}_t=\dot\alpha_{k_t}\mathbf{x}_t^0+\dot\sigma_{k_t}\boldsymbol{\epsilon}_t$，损失只在 $k_t>0$ 的 token 上聚合。训练时按类别分布从三种调度里抽：Random ($k_t\sim\mathcal{U}(0,1)$)、Monotonic（在窗口 $[\tau-l,\tau]$ 内线性从 0 升到 1）、Trapezoid（在 Monotonic 基础上让远过去也带噪声，$k_t^{trap}=\max(k_t^{hist},k_t^{mono})$）。
-    - 设计动机：vanilla Diffusion Forcing 只用 Random schedule，训出来的模型见过的噪声 pattern 和 streaming 推理时的"过去基本干净、当前在去噪窗、远过去要被引导稀释"完全错位。三模混合显式把推理时会遇到的两种关键 pattern（Monotonic 对应正常滑窗、Trapezoid 对应启用 temporal guidance 时的历史加噪）写进训练分布，弥合 train-test gap。潜空间则同时压低计算量并隐式低通滤掉传感器抖动。
+自回归 rollout 的麻烦在于推理时喂给模型的历史并不干净，而 vanilla Diffusion Forcing 只用 Random 调度训练，它见过的噪声 pattern 和 streaming 实际遇到的"过去基本干净、当前帧在去噪窗、远过去要被主动稀释"完全错位，于是流式跑起来就抖、就漂。DiscoForcing 先用 motion VAE 把 272 维 SMPL 帧压进潜空间（顺带隐式低通滤掉抖动、压低算力），为每个 token 定义独立噪声水平的概率路径 $p(\mathbf{x}_t^{k_t}|\mathbf{x}_t^0)=\mathcal{N}(\alpha_{k_t}\mathbf{x}_t^0,\sigma_{k_t}^2\mathbf{I})$，$k_t\in[0,1]$ 是 token-wise 扩散时间，再用 flow matching 学速度场 $\mathbf{v}_t=\dot\alpha_{k_t}\mathbf{x}_t^0+\dot\sigma_{k_t}\boldsymbol{\epsilon}_t$，损失只在 $k_t>0$ 的 token 上聚合。关键是训练时按类别分布从三种调度里抽：Random（$k_t\sim\mathcal{U}(0,1)$ 保留通用鲁棒性）、Monotonic（窗口 $[\tau-l,\tau]$ 内线性从 0 升到 1，对应正常滑窗去噪）、Trapezoid（在 Monotonic 基础上让远过去也带噪声，$k_t^{trap}=\max(k_t^{hist},k_t^{mono})$，对应启用引导时的历史加噪）。把这两种推理时真正出现的 pattern 写进训练分布，等于提前消除了 train-test gap。
 
-3. **Streaming 采样器与 Temporal Guidance (TG)**:
+**3. Streaming 采样器与 Temporal Guidance (TG)：把 stability-responsiveness 权衡变成一个旋钮**
 
-    - 功能：在严格 bounded-latency 下做联合去噪，并通过对远处历史施加 trapezoid 噪声实现"audio 条件主动反制陈旧历史"，把 stability-responsiveness 权衡显式参数化。
-    - 核心思路：维护尾部长度 $l$ 的 FIFO 去噪窗，每个 streaming step $\tau$ 在窗内对所有 token 跑一次 solver（$\delta=1/l$ 保证每出一帧只做一次大步），左端到 $k_t=0$ 就吐出，右端补新噪声 token。引导部分把 CFG 的"有 cond vs 无 cond"换成"有音乐 cond + trapezoid 历史 vs 无 cond + monotonic 历史"：$\mathbf{v}^{guided}=\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{mono}},k^{mono},\varnothing)+\omega[\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{trap}},k^{trap},\mathbf{c})-\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{mono}},k^{mono},\varnothing)]$，引导尺度 $\omega$ 直接控制反应强度。
-    - 设计动机：CFG 默认假设条件是静态全局的，对非平稳音乐流不适配；而 streaming 真正要做的是"在动态历史上叠加动态条件"。通过把远处历史按 trapezoid 加噪，相当于在引导项里隐式过滤掉与当前音乐冲突的高频运动先验，既能即时跟上鼓点切入又不会丢掉中近期上下文。消融上 TG 把 FIDk 从 23.23 进一步降到 18.87，FSR 从 0.097 降到 0.059，BAS 从 0.238 升到 0.244，全面优于 CFG。
+流式真正要做的不是 CFG 假设的"在静态全局条件上去噪"，而是"在不断变化的历史上叠加不断变化的音乐条件"，所以采样既要卡死延迟，又要让新音乐有办法压过陈旧历史。采样器维护一个尾部长度 $l$ 的 FIFO 去噪窗，每个 streaming step $\tau$ 对窗内所有 token 跑一次 solver（步长 $\delta=1/l$ 保证每出一帧只做一次大步），左端去噪到 $k_t=0$ 就吐出成帧、右端补一个新的纯噪声 token。引导部分把 CFG 的"有 cond vs 无 cond"替换成"有音乐 cond + trapezoid 历史 vs 无 cond + monotonic 历史"：$\mathbf{v}^{guided}=\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{mono}},k^{mono},\varnothing)+\omega[\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{trap}},k^{trap},\mathbf{c})-\mathbf{v}_\theta(\hat{\mathbf{x}}^{k^{mono}},k^{mono},\varnothing)]$。对远过去施加 trapezoid 噪声，相当于在引导项里把与当前音乐冲突的高频运动先验过滤掉，于是引导尺度 $\omega$ 直接成了控制反应强度的旋钮——调大就即时跟上鼓点切入，调小就保住中近期上下文不跳变。消融上 TG 把 FIDk 从 23.23 进一步压到 18.87、FSR 从 0.097 降到 0.059、BAS 从 0.238 升到 0.244，全面碾过 CFG。
 
 ### 损失函数 / 训练策略
 两阶段：先训 motion VAE，目标 $\mathcal{L}_{VAE}=\|\mathbf{m}_\mathcal{T}-\hat{\mathbf{m}}_\mathcal{T}\|_2^2+\lambda D_{KL}(q(\mathbf{z}|\mathbf{m})\|\mathcal{N}(0,I))$；再冻住 VAE 训 Diffusion Forcing transformer，目标 $\mathcal{L}_{DF}=\mathbb{E}_{k_\mathcal{T},\mathbf{z}_\mathcal{T},\boldsymbol{\epsilon}_\mathcal{T}}[\|\mathbf{v}_\theta(\mathbf{x}^{k_\mathcal{T}}_\mathcal{T},k_\mathcal{T},\mathbf{c})-\mathbf{v}_\mathcal{T}\|_\mathcal{K}^2]$，masked 范数只算 $k_t>0$ 的 token。推理用 10 步去噪保证 30 FPS。

@@ -41,33 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三步，全部 training-free：
-1. **离线 prototype 构造**：用对比数据集 $\mathcal{D}=\{(x_i, y_i^+, y_i^-)\}$ 跑一遍模型，从第 $l$ 层抽 last-token 激活，做均值差再单位化，得到该层的"真实性轴" $\mu_T^{(l)}$。
-2. **推理时旋转**：对每个待干预层 $l$、每个解码 token $j$，把当前激活 $h_j^{(l)}$ 归一化到球面，用 Slerp 沿测地线朝 $\mu_T^{(l)}$ 旋转一个由门控决定的步长 $t_j^{(l)} \in [0,1]$，再恢复原始模长。
-3. **vMF 置信门控**：用 von Mises–Fisher 分布的指数形式对当前方向与 $(\mu_T, \mu_H = -\mu_T)$ 的相似度做 two-class softmax，得到"偏向幻觉"的置信度 $\delta$，再经阈值 $\beta$ 与缩放 $\alpha$ 映射为干预强度 $t$——只在模型"看起来要 hallucinate"时才大力旋转。
+这篇要解决的是：传统加法式 activation steering 在增强真实性的同时会失控地扭曲隐藏状态的范数，进而损伤生成质量。Spherical Steering 的整条 pipeline 全程 training-free，分两段：离线阶段用一批 (正例, 负例) 对比样本跑一遍模型，在每个待干预层估出一条单位长度的"真实性轴" $\mu_T^{(l)}$；推理阶段对每个解码 token，把它在该层的激活归一化到单位超球面，沿测地线朝 $\mu_T^{(l)}$ 旋转一个由置信门控决定的步长，再乘回原始模长。核心的一句话替换是：把"在 $\mathbb{R}^d$ 里做加法 $h+\lambda\mu$"换成"在 $\mathbb{S}^{d-1}$ 上做旋转"，从而严格保住 $\|h\|$。
 
 ### 关键设计
 
-1. **超球面 prototype 与对比均值方向**：
+**1. 超球面 prototype：从对比样本里一次性蒸出"真实性方向"。**
 
-    - 功能：从对比样本一次性提取出该层的"真实性方向单位向量" $\mu^{(l)}$。
-    - 核心思路：对每个 $(x_i, y_i^+, y_i^-)$ 把拼接序列 $x_i \| y_i^\pm$ 喂模型，取第 $l$ 层 last-token 表示 $z_i^{(l)\pm}$；再算正负均值差 $\Delta^{(l)} = m_+^{(l)} - m_-^{(l)}$，单位化得 $\mu^{(l)} = \Delta^{(l)}/\|\Delta^{(l)}\|$。注意这一步是离线的、模型权重保持不变，且只算一次。
-    - 设计动机：均值差自动抑制掉正负样本共享的上下文，凸显"真假对立"的判别成分；之所以要单位化，是因为后续操作都在 $\mathbb{S}^{d-1}$ 上做，需要纯粹的"方向"而非"带尺度的偏移"。这比 ITI 那种 per-head 探针更轻，比 CAA 直接当向量加法更几何自洽。
+加法 steering 的转向向量本身往往带着尺度和上下文噪声，直接拿来加会污染激活。这里改成只取"方向"：对每个 $(x_i, y_i^+, y_i^-)$，把拼接序列 $x_i \| y_i^\pm$ 喂模型，取第 $l$ 层 last-token 表示 $z_i^{(l)\pm}$，算正负均值差 $\Delta^{(l)} = m_+^{(l)} - m_-^{(l)}$，再单位化得 $\mu^{(l)} = \Delta^{(l)}/\|\Delta^{(l)}\|$。均值差这一步自动抵消掉正负样本共享的上下文，只留下"真假对立"的判别成分；单位化则是因为后续所有操作都在 $\mathbb{S}^{d-1}$ 上做，需要的是纯方向而非带尺度的偏移。整个过程离线、权重不变、每层只算一次——比 ITI 的 per-head 探针更轻，比 CAA 把向量直接当加项更几何自洽。
 
-2. **测地线旋转 = Slerp + 模长复原**：
+**2. 测地线旋转：用 Slerp 把激活转到目标方向，再复原模长。**
 
-    - 功能：把 $h^{(l)}$ 沿球面最短路径朝 $\mu_T$ 旋转 $t$ 比例，然后乘回原模长。
-    - 核心思路：先算夹角 $\theta = \arccos(\mu_T^\top \hat h^{(l)})$，然后用 Shoemake 1985 的球面线性插值 $\hat h^{(l)\prime} = \frac{\sin((1-t)\theta)}{\sin\theta}\hat h^{(l)} + \frac{\sin(t\theta)}{\sin\theta}\mu_T$，最后 $h^{(l)\prime} = \|h^{(l)}\|\hat h^{(l)\prime}$。$t=0$ 不动，$t=1$ 完全转到 $\mu_T$。$\theta=0/\pi$ 是退化情况单独处理。
-    - 设计动机：Slerp 给的是给定步长 $t$ 下角度变化最小的轨迹，意味着"用最少的方向扰动换取最大的语义对齐"；同时 $\|h^{(l)\prime}\| \equiv \|h^{(l)}\|$ 严格成立——彻底绕开了加法 steering 里 $\|h\|$ 随 $\lambda$ 失控的问题，也符合 RMSNorm 后"模长被标准化、方向才是信息载体"的架构先验。这与 Angular Steering 在固定 2D 平面里旋转不同，本文是在原始 $d$ 维空间里直接做超球面旋转，不依赖 PCA 投影。
+加法之所以会扭曲范数，是因为 $\|h+\lambda\mu\|^2 = \|h\|^2 + 2\lambda\mu^\top h + \lambda^2$ 完全不受控。旋转则天然回避了这一点。具体地，先把激活归一化为 $\hat h^{(l)}$，算它与目标的夹角 $\theta = \arccos(\mu_T^\top \hat h^{(l)})$，再用 Shoemake 1985 的球面线性插值沿大圆插过去：
 
-3. **vMF 置信门控的输入自适应步长**：
+$$\hat h^{(l)\prime} = \frac{\sin((1-t)\theta)}{\sin\theta}\hat h^{(l)} + \frac{\sin(t\theta)}{\sin\theta}\mu_T,\qquad h^{(l)\prime} = \|h^{(l)}\|\,\hat h^{(l)\prime}$$
 
-    - 功能：让 $t$ 随 token 变化——模型已经在"真实"半球时不干预，越偏向"幻觉"半球干预越强。
-    - 核心思路：用 vMF 密度 $f(u;m,\kappa)\propto\exp(\kappa m^\top u)$ 的指数项当作 prototype score，对 $(\mu_T, \mu_H)$ 做 two-class softmax 得 $p_T, p_H$，定义 $\delta = p_H - p_T \in [-1,1]$；再用阈值 $\beta$ 截断、缩放 $\alpha$ 限幅：$t = \mathrm{clip}(\alpha \cdot \frac{\delta-\beta}{1-\beta}, 0, 1)$，$\delta \le \beta$ 时 $t=0$。
-    - 设计动机：与统一对所有 token 用同一 $t$ 相比，门控带来两个好处（消融图 5）——MC 准确率峰值更高且区间更宽；高强度下 TRUE×INFO 也不塌（$\alpha=1.0$ 仍稳定），而 ungated 在 $\alpha > 0.6$ 就开始崩。$\kappa$ 控制置信曲线的陡峭程度，对应 vMF 的浓度参数；这套设计的本质是"只在需要救火的地方泼水，省得把好答案也冲掉"。
+其中 $t=0$ 表示不动、$t=1$ 表示完全转到 $\mu_T$，$\theta=0$ 或 $\pi$ 的退化情形单独处理。Slerp 给的是固定步长 $t$ 下角度变化最小的路径，等于"用最少的方向扰动换最大的语义对齐"；而最后乘回 $\|h^{(l)}\|$ 让 $\|h^{(l)\prime}\| \equiv \|h^{(l)}\|$ 严格成立，正好契合 RMSNorm 之后"模长被标准化、方向才承载信息"的架构先验。它与 Angular Steering 先投影到固定 2D 平面再转不同——本文直接在原始 $d$ 维球面上做测地线，不依赖 PCA 近似。
 
-### 推理流程
-每个 decoding step 对选定的 $K$ 个层 $\mathcal{L}=\{l_1,\dots,l_K\}$ 依次执行：抽 $h_j^{(l)}$ → 归一化 → 算 $s_T, s_H$ → vMF gate 给 $t_j^{(l)}$ → 若 $t>0$ 则 Slerp 旋转并恢复模长，否则透传。复杂度仅是若干个 dot product 与一次 sin/cos，相对原 forward 几乎可忽略。
+**3. vMF 置信门控：只在模型快要幻觉时才大力旋转。**
+
+如果对所有 token 用同一个步长 $t$，要么力度不够、要么把本来正确的答案也转坏了。门控让 $t$ 随 token 自适应。它借 von Mises–Fisher 密度 $f(u;m,\kappa)\propto\exp(\kappa m^\top u)$ 的指数项当作 prototype score，对 $(\mu_T, \mu_H=-\mu_T)$ 做 two-class softmax 得 $p_T, p_H$，定义"偏向幻觉"的置信度 $\delta = p_H - p_T \in [-1,1]$，再经阈值 $\beta$ 截断、缩放 $\alpha$ 限幅得到步长：
+
+$$t = \mathrm{clip}\!\left(\alpha \cdot \frac{\delta-\beta}{1-\beta},\,0,\,1\right),\qquad \delta \le \beta \Rightarrow t=0$$
+
+这里 $\kappa$ 是 vMF 的浓度参数，控制置信曲线的陡峭程度。带门控相比 ungated 有两个实测好处（消融图 5）：MC 准确率峰值更高、可用区间更宽；而且高强度下 TRUE×INFO 也不塌——$\alpha=1.0$ 仍稳定，ungated 在 $\alpha>0.6$ 就开始崩。本质上就是"只在需要救火的地方泼水，省得把好答案一起冲掉"。
+
+### 一个完整示例
+跟一个解码 token $j$ 走一遍：模型 forward 到选定的 $K$ 个层 $\mathcal{L}=\{l_1,\dots,l_K\}$，在每一层取出该 token 的激活 $h_j^{(l)}$ 并归一化；用归一化方向分别对 $\mu_T$、$\mu_H$ 算 vMF score $s_T, s_H$，softmax 后得到 $\delta$；门控判断——若此刻 $\delta \le \beta$（方向已经偏"真实"半球），则 $t=0$，激活原样透传；若 $\delta$ 越过阈值（看起来要幻觉），就按上式给出 $t>0$，用 Slerp 把 $h_j^{(l)}$ 沿测地线朝 $\mu_T$ 旋转该步长，再乘回原模长写回。如此逐层处理后继续 decode 下一个 token。每步的额外开销只是几个点积加一次 sin/cos，相对原 forward 几乎可忽略。
 
 ## 实验关键数据
 

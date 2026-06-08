@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LFQ 是一个即插即用的增强模块，适用于任意 block-wise PTQ 方法。整体 pipeline 不变：从第 1 个到倒数第 2 个 Transformer block 依然逐块最小化 MSE；唯一的改变发生在最后一个 block——将 LM head 纳入前向路径，用交叉熵损失替代 MSE 来优化量化参数。量化后的模型使用与原始方法完全相同的 packing/unpacking 内核，无需任何额外工程适配。
+LFQ 想解决的是 block-wise PTQ 在生成任务上掉点的问题，办法却只动一处：从第 1 个到倒数第 2 个 Transformer block 照旧逐块最小化 MSE，唯独最后一个 block 把 LM head 接进前向路径、把损失从 MSE 换成 logit 级交叉熵，让量化模型的 next-token 分布对齐全精度模型。它是一个即插即用增强件，量化方案、packing/unpacking 内核、单 GPU 可运行特性全部不变，所以能挂在任意 block-wise PTQ 方法之上。
 
 ### 关键设计
 
-1. **Logit 级交叉熵目标**:
+**1. 把最后一个 block 的目标从激活 MSE 换成 logit 交叉熵：直接对齐 token 概率。**
 
-    - 功能：将最后一个 Transformer block 的量化优化目标从激活空间的 MSE 转移到 logit 空间的交叉熵
-    - 核心思路：对最终 block，计算全精度 logit $\sigma(X W_{\text{FP}} W_{\text{Head}})$ 与量化 logit $\sigma(X W_q W_{\text{Head}})$ 之间的交叉熵 $\mathcal{L}_{\text{CE}} = -\frac{1}{L}\sum_{i,j} \sigma(X W_{\text{FP}} W_{\text{Head}})_{i,j} \log \sigma(X W_q W_{\text{Head}})_{i,j}$，直接优化 token 概率分布的一致性
-    - 设计动机：MSE 在激活空间的小误差经 LM head 投影后可能翻转 top-1 token 排序；交叉熵对概率排序敏感，天然保护 top-k 顺序
+痛点在于，传统 block-wise PTQ 在激活空间最小化 MSE，但激活上的小误差经 LM head 投影后可能翻转 top-1 token 的排序——作者用一个 2-token 反例证明，MSE 更小的量化方案反而预测错了 top-1，MSE 更大的反而预测对了。LFQ 对最终 block 改为计算全精度 logit $\sigma(X W_{\text{FP}} W_{\text{Head}})$ 与量化 logit $\sigma(X W_q W_{\text{Head}})$ 之间的交叉熵：
 
-2. **LM Head 纳入最终 block 前向路径**:
+$$\mathcal{L}_{\text{CE}} = -\frac{1}{L}\sum_{i,j} \sigma(X W_{\text{FP}} W_{\text{Head}})_{i,j} \log \sigma(X W_q W_{\text{Head}})_{i,j}$$
 
-    - 功能：让量化优化器"看到" unembedding 层对输出分布的影响
-    - 核心思路：标准 block-wise PTQ 只最小化 block 输出激活的 MSE，完全忽略后续的 LM head 投影。LFQ 将 LM head 权重 $W_{\text{Head}}$ 固定参与前向传播（不量化），使梯度能感知最终 token 分布的变化
-    - 设计动机：作者通过构造反例证明，即使 block 输出的 MSE 被最小化，经 LM head 投影后可能产生完全相反的 token 预测
+这之所以有效，是因为最小化交叉熵等价于最小化两个分布的 KL 散度，而 KL 为零当且仅当分布完全一致；相比对绝对数值敏感的 MSE，交叉熵对概率排序敏感，天然保护 top-k 顺序，正好对上"生成任务靠 token 排序而非激活数值"的需求。
 
-3. **方法无关的即插即用设计**:
+**2. 把 LM head 接进最终 block 的前向路径：让优化器看见 unembedding 的影响。**
 
-    - 功能：兼容 FlexRound、OmniQuant、Block-AP 等任意 block-wise PTQ 方法
-    - 核心思路：LFQ 只替换最后一个 block 的损失函数，不改变量化参数化方式。对 FlexRound 优化 $(s_1, S_2, s_3)$、对 OmniQuant 优化 $(\gamma, \beta)$、对 Block-AP 优化 $(s, W_{\text{FP}})$，均只需将 MSE 替换为 $\mathcal{L}_{\text{CE}}$
-    - 设计动机：保持了与现有量化生态的完全兼容——相同的内存开销、相同的推理内核、相同的单 GPU 可运行特性
+要算上面那个 logit 交叉熵，前提是优化时能"看到" LM head。而标准 block-wise PTQ 只盯着 block 输出激活的 MSE，完全忽略了后续的 LM head 投影，于是优化器对"激活误差会被 head 放大成怎样的 token 分布变化"一无所知。LFQ 让 LM head 权重 $W_{\text{Head}}$ 固定参与前向传播（本身不量化），使梯度能一路传到最终 token 分布。这一步既是交叉熵目标的载体，也单独贡献增益——消融里只加 LM head、损失仍用 MSE 时 IFEval 已经回升，说明"让优化器看见 head"本身就有价值。
+
+**3. 方法无关、只换损失不换参数化：与现有量化生态完全兼容。**
+
+正因为 LFQ 只替换最后一个 block 的损失函数、不碰量化参数化方式，它可以无缝套在不同方法上：对 FlexRound 优化 $(s_1, S_2, s_3)$、对 OmniQuant 优化 $(\gamma, \beta)$、对 Block-AP 优化 $(s, W_{\text{FP}})$，都只需把那一处的 MSE 换成 $\mathcal{L}_{\text{CE}}$ 即可。这样换来的是零代价的兼容性——内存开销、推理内核、单 GPU 可运行特性全部和原方法一致，部署侧不需要任何额外适配。
 
 ## 实验关键数据
 

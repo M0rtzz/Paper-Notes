@@ -38,36 +38,26 @@ tags:
 **核心 idea**：用 $SOCM=(1-d_\mu)d_\Sigma$ 把 mean pooling 的二阶坍缩变成可测量指标，并证明现代对比微调编码器通过让同一文本内 token embeddings 更集中，从而降低二阶坍缩风险。
 
 ## 方法详解
-本文的核心不是提出新编码器，而是提出一个分析框架：先形式化 mean pooling 丢掉了什么，再设计 SOCM 指标，之后在多个文本编码器上测量 SOCM，并从 Transformer 层机制解释为什么 fine-tuned encoder 的 SOCM 更低。
 
 ### 整体框架
-给定两个文本 $t_1,t_2$，模型输出两组 token embeddings $X_1,X_2$。mean pooling 只使用 $\mu(X_i)$ 作为文本向量，而协方差 $\Sigma(X_i)$ 代表 token embeddings 的空间结构。作者计算两类距离：一阶距离 $d_\mu$ 衡量均值差异，二阶距离 $d_\Sigma$ 衡量协方差差异。若 $d_\mu$ 小但 $d_\Sigma$ 大，则两个文本在 mean pooling 后会被拉近，但原始 token 分布并不相似，这就是 second-order collapse。
-
-实验上，作者从 Wikipedia 随机抽取 1,000 个文本，两两组成 499,500 个文本对，比较 BERT/MiniLM/MPNet/nomic-bert 等基座模型与其对比微调版本。附录中还用 MS MARCO passages 和 MS MARCO hard negatives 验证结论。最后，作者把 SOCM 与 MTEB 英文 v2 分数做相关分析。
+本文不提出新编码器，而是构建一个分析框架来回答「mean pooling 丢了什么、为什么仍然有效」。给定两个文本 $t_1,t_2$，编码器输出两组 token embeddings $X_1,X_2$，mean pooling 只取均值 $\mu(X_i)$ 当作文本向量，而协方差 $\Sigma(X_i)$ 描述 token 的空间结构。框架先用一阶距离 $d_\mu$ 衡量均值差异、二阶距离 $d_\Sigma$ 衡量协方差差异，再把两者合成 SOCM 指标量化「均值相近但二阶不同」的坍缩风险；随后在大量真实文本对上测量 SOCM，并从 Transformer 层的注意力机制解释对比微调模型为何坍缩更轻。实验从 Wikipedia 随机抽 1,000 个文本两两组成 499,500 个文本对，比较 BERT/MiniLM/MPNet/nomic-bert 等基座与其对比微调版本，并在附录用 MS MARCO passages 与 hard negatives 验证、把 SOCM 与 MTEB 英文 v2 分数做相关分析。
 
 ### 关键设计
-1. **SOCM 二阶坍缩指标**:
 
-    - 功能：量化 mean pooling 把二阶统计不同的 token 分布映射成相近文本向量的风险。
-    - 核心思路：定义 $d_\mu=||\mu(X_1)-\mu(X_2)||_2^2/4$，在均值归一化后落在 0 到 1；定义 $d_\Sigma$ 为缩放后的 Bures-Wasserstein 协方差距离，也落在 0 到 1。最终 $SOCM(d_\mu,d_\Sigma)=(1-d_\mu)d_\Sigma$，当均值相同且协方差差异最大时为 1，当均值足够远或协方差相同时为 0。
-    - 设计动机：单看均值距离不能知道 mean pooling 是否丢失了重要结构，单看协方差距离也不知道这种结构是否被均值遮蔽。SOCM 同时要求“mean pooling 后接近”和“原 token 分布二阶不同”，更贴近坍缩定义。
+**1. SOCM 二阶坍缩指标：用「一阶接近且二阶相异」的交互项度量坍缩风险。**
 
-2. **基座模型 vs 对比微调模型的配对测量**:
+mean pooling 只保留一阶均值，于是两个 token 分布形状迥异的文本，只要均值接近，pooling 后就会被拉到一起——这正是 second-order collapse。难点在于单看均值距离无法判断是否丢了重要结构，单看协方差距离也不知道这种结构是否被均值遮蔽，因此指标必须同时约束两端。本文定义归一化后的一阶距离 $d_\mu=\lVert\mu(X_1)-\mu(X_2)\rVert_2^2/4$ 与缩放后的 Bures-Wasserstein 协方差距离 $d_\Sigma$，两者都落在 $[0,1]$，再合成 $SOCM(d_\mu,d_\Sigma)=(1-d_\mu)d_\Sigma$：唯有当均值几乎相同（$d_\mu\to0$）且协方差差异最大（$d_\Sigma\to1$）时才取到 1，均值足够远或协方差相同则归 0，恰好对应坍缩的直觉定义。
 
-    - 功能：验证 mean pooling 坍缩在真实文本编码器中是否常见，并比较 fine-tuning 前后变化。
-    - 核心思路：对每个 backbone 和其 text embedding 版本计算所有文本对的平均 SOCM。模型包括 BERT 与 Unsup-SimCSE/E5/GTE，MiniLM 与 all-MiniLM/E5small/GTEsmall，MPNet 与 all-mpnet-base-v2，以及 nomic-bert 与 nomic-embed-text-v1.5。
-    - 设计动机：如果 mean pooling 本身很粗糙但 fine-tuned encoder 表现好，那么差异可能不在 pooling 算子，而在 encoder 学到的 token geometry。配对比较能把这种变化显性化。
+**2. 基座 vs 对比微调的配对测量：把 fine-tuning 前后的 token 几何变化显性化。**
 
-3. **Token embedding concentration 机制解释**:
+如果 mean pooling 本身很粗糙、而 GTE/E5 这类微调编码器却表现很强，那么差异多半不在 pooling 算子，而在编码器学到的 token 几何。为验证这一点，本文对每个 backbone 与其文本嵌入版本计算全部文本对的平均 SOCM 并配对比较：BERT 对 Unsup-SimCSE/E5/GTE，MiniLM 对 all-MiniLM/E5small/GTEsmall，MPNet 对 all-mpnet-base-v2，nomic-bert 对 nomic-embed-text-v1.5。配对设计让「微调是否、以及多大程度降低坍缩」直接读得出来，也能暴露出 all-MiniLM 这类反例。
 
-    - 功能：解释为什么对比微调后的模型更不容易发生二阶坍缩。
-    - 核心思路：作者用简化单头 self-attention 层分析 token embeddings 如何在同一文本内部变集中。若注意力投影分支满足收缩条件 $\lambda<1$，残差输出中输入 spread 的相对影响 $r$ 较小，后续逐 token 变换不显著放大 spread，则最终 $S(X)/||\mu(X)||_2^2$ 会变小；进一步证明如果这个归一化 spread 小于 $\epsilon$，则 SOCM 为 $O(\epsilon)$。
-    - 设计动机：当同一文本内 token embeddings 都围绕均值聚集时，协方差本身很小，mean pooling 丢失的二阶信息自然有限。这样就解释了为什么看似粗糙的平均操作在现代 text encoder 中仍有效。
+**3. token concentration 机制解释：从单层注意力推出坍缩为何随微调减轻。**
+
+为解释微调模型 SOCM 更低，本文用简化单头 self-attention 层分析 token embeddings 如何在同一文本内部向均值聚拢。若注意力投影分支满足收缩条件 $\lambda<1$、残差输出中输入 spread 的相对影响 $r$ 较小、且逐 token 变换不显著放大 spread，则归一化 spread $S(X)/\lVert\mu(X)\rVert_2^2$ 会变小；进一步可证当该归一化 spread 小于 $\epsilon$ 时 $SOCM=O(\epsilon)$。直觉上，同一文本的 token 越围着均值聚集，协方差本身就越小，mean pooling 丢失的二阶信息自然有限——这就解释了看似粗糙的平均操作在现代编码器中为何依旧够用。
 
 ### 损失函数 / 训练策略
-本文没有训练新模型，但实验对已有模型的处理很关键。作者不使用 query/passsage 等任务特定 prefix，以保证不同模型和数据集可比。对每个文本的 token embedding list 做归一化，使 mean pooling 后的均值为单位范数，满足 SOCM 定义中的 $||\mu(X)||_2=1$ 假设。
-
-理论分析中，作者把 Transformer 层抽象为 self-attention + residual + per-token transformation 三部分。实验分析中，作者在真实 BERT 与 GTEbase 上逐层计算 $\lambda$、$r$、$C$ 和 $S(X)/||\mu(X)||_2^2$，验证 fine-tuned encoder 在后层更容易形成 token concentration。
+本文不训练新模型，但对已有模型的处理是结论可比的前提。所有模型都不加 query/passage 等任务前缀，以保证跨模型、跨数据集可比；每个文本的 token embeddings 先做归一化，使 pooling 后的均值满足 SOCM 定义所需的单位范数假设 $\lVert\mu(X)\rVert_2=1$。理论侧把 Transformer 层抽象为 self-attention + residual + per-token transformation 三部分；实验侧则在真实 BERT 与 GTEbase 上逐层计算 $\lambda$、$r$、$C$ 与 $S(X)/\lVert\mu(X)\rVert_2^2$，验证微调编码器在靠后的层更易形成 token concentration。
 
 ## 实验关键数据
 

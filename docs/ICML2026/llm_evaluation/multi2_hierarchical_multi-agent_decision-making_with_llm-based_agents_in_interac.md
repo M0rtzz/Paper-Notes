@@ -41,32 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Multi$^2$ 把决策过程建模为部分可观 MDP $\langle\mathcal{S},\mathcal{A},\mathcal{O},\mathcal{T},\Omega,\mathcal{R},\gamma\rangle$。给定任务描述 $K_n$ 与观察 $\mathbf{o}_t$，**System 1**（参数 $\phi$）输出子目标 $g_h \sim \pi_\phi(\cdot \mid \mathbf{o}_t; K_n)$；条件于 $\mathbf{o}_t$ 与 $g_h$，**System 2**（参数 $\theta$）选择原子动作 $\mathbf{a}_t \sim \pi_\theta(\cdot \mid \mathbf{o}_t; g_h)$。一旦 $g_h$ 完成（或终止），System 2 再次回调 System 1 生成 $g_{h+1}$，形成 hierarchical closed-loop。两个 system 共享同一个预训练 backbone（Qwen-2.5 3B / Mistral 7B / Llama-3.1 8B），但用**独立的 LoRA 适配器**——只有当前角色对应的 adapter 被激活，参数级别解耦角色专长。
+Multi$^2$ 要解决的是 LLM agent 在长时序交互里"越走越偏、token 越烧越多"的毛病，做法是把决策显式拆成"先规划、后执行"两个角色，并让它们用各自适配的训练范式分别训练。整个过程建模为部分可观 MDP $\langle\mathcal{S},\mathcal{A},\mathcal{O},\mathcal{T},\Omega,\mathcal{R},\gamma\rangle$：给定任务描述 $K_n$ 与当前观察 $\mathbf{o}_t$，**System 1**（参数 $\phi$）先产出一个子目标 $g_h \sim \pi_\phi(\cdot \mid \mathbf{o}_t; K_n)$；**System 2**（参数 $\theta$）再条件于 $\mathbf{o}_t$ 和 $g_h$ 选原子动作 $\mathbf{a}_t \sim \pi_\theta(\cdot \mid \mathbf{o}_t; g_h)$。一旦当前子目标完成或终止，System 2 回调 System 1 要下一个子目标 $g_{h+1}$，构成一个分层闭环。两个 system 共用同一个预训练 backbone（Qwen-2.5 3B / Mistral 7B / Llama-3.1 8B），但各挂一个独立的 LoRA 适配器，推理时只激活当前角色对应的那个。
 
-训练数据被切成两份：$\mathcal{D}_{sys1} = \{(K_n, \{(\mathbf{o}_h, g_h)\}_{h=1}^H)\}$ 是任务-观察-子目标三元组序列，$\mathcal{D}_{sys2} = \{(g^{(i)}, (\xi_t^{(i)})_{t=1}^{M^{(i)}})\}$ 其中 $\xi_t = (\mathbf{o}_t, \mathbf{a}_t, r_t, \mathbf{o}_{t+1})$ 是子目标条件下的低层 transition 序列。数据集构造管道基于 Glider 改进，加入了基于代码规则的 sub-goal 抽取与 prompt 模板化，提高可复现性。
+训练数据相应切成两份喂给两个角色：$\mathcal{D}_{sys1} = \{(K_n, \{(\mathbf{o}_h, g_h)\}_{h=1}^H)\}$ 是"任务-观察-子目标"序列，给 System 1 做监督；$\mathcal{D}_{sys2} = \{(g^{(i)}, (\xi_t^{(i)})_{t=1}^{M^{(i)}})\}$ 是子目标条件下的低层 transition 序列（$\xi_t = (\mathbf{o}_t, \mathbf{a}_t, r_t, \mathbf{o}_{t+1})$），给 System 2 做 RL。数据集构造管道在 Glider 基础上改进，加了基于代码规则的子目标抽取和 prompt 模板化以提高可复现性。
 
 ### 关键设计
 
-1. **角色专属的分层 + LoRA 解耦（System 1 / System 2）**:
+**1. 角色专属分层 + LoRA 参数级解耦：让"规划"和"执行"互不污染。**
 
-    - 功能：把 LLM agent 的"语义规划"与"原子执行"分配给两个独立 LoRA 适配器，避免共享参数时角色边界被 prompt 上下文稀释。
-    - 核心思路：同一个 backbone 上挂两个 LoRA。System 1 仅负责输入"任务+观察"输出"子目标"；System 2 仅负责输入"观察+子目标"输出"动作"。推理时根据当前阶段切换激活的 adapter，System 1 是"on-demand"调用（只在子目标达成时被唤起），这天然带来 token 效率优势。
-    - 设计动机：作者用消融（Figure 6c）证明 shared adapter 的中位数和 IQR 都明显低于 role-specific adapter——参数级解耦比 prompt 级解耦能更稳地维持角色专长，是解决 objective drift 的结构基础。
+长时序失败的结构性根源之一，是分层方法虽然分了角色却共享同一套参数、只靠 prompt 区分——上下文一长，"我现在是 planner 还是 executor"的边界就被稀释。Multi$^2$ 干脆在同一个 backbone 上挂两个独立 LoRA：System 1 只吃"任务+观察"吐"子目标"，System 2 只吃"观察+子目标"吐"动作"，推理时按阶段切换激活哪个 adapter。这样角色专长被钉在参数层面而非提示层面，不会随历史累积漂移；而且 System 1 是"按需"调用的——只在子目标达成时才被唤起，不必每步都跑一遍规划，天然省 token。消融（Figure 6c）显示 shared adapter 的中位数和 IQR 都明显低于 role-specific，参数级解耦比 prompt 级解耦更能稳住角色专长，这正是缓解 objective drift 的结构基础。
 
-2. **带策略锚定项的 offline RL 目标（System 2 第一阶段）**:
+**2. 带策略锚定项的 offline RL 目标：稳定初始化 System 2 又不被模板带跑偏。**
 
-    - 功能：用 IQL 风格的离线 RL 稳定地从静态数据集初始化 System 2，同时缓解"过度模仿模板化轨迹"问题。
-    - 核心思路：Critic 部分，Q 函数用 TD-error 最小化 $\mathcal{L}_\omega = \mathbb{E}[(r_t + \gamma V_\psi(\mathbf{o}_{t+1}; g_h) - Q_\omega(\mathbf{o}_t, \mathbf{a}_t; g_h))^2]$，V 函数用 expectile regression $\mathcal{L}_\psi = \mathbb{E}[L^\tau(A(\mathbf{o}_t, \mathbf{a}_t))]$ 其中 $L^\tau(u) = |\tau - \mathbb{1}\{u<0\}|\,u^2$。Actor 损失在标准 advantage-weighted 模仿项 $\exp(\beta A(\mathbf{o}_t, \mathbf{a}_t; g_h)) \log \pi_\theta^{off}(\mathbf{a}_t \mid \mathbf{o}_t; g_h)$ 之外，加入了 **policy-anchored 项** $\lambda A(\mathbf{o}_t, \pi_\theta^{off}(\mathbf{a}_t \mid \mathbf{o}_t; g_h); g_h)$——让 critic 直接对"当前策略采样出的动作"打分作为额外信号。
-    - 设计动机：纯 IQL 只对数据集动作做加权模仿，容易把策略困在 offline 分布里产生过度模板化的行为；锚定项让 critic 偏好的高优势动作也参与策略更新，提升对 offline 轨迹之外的泛化能力。Figure 7a 验证：去掉这一项后中位数下降、低分尾部变长。
+System 2 要先从静态数据集学起，但纯 IQL 这类离线 RL 只对数据集里出现过的动作做加权模仿，很容易把策略困死在 offline 分布里、产出过度模板化的行为。Multi$^2$ 用 IQL 风格的 critic 打底：Q 函数最小化 TD-error $\mathcal{L}_\omega = \mathbb{E}[(r_t + \gamma V_\psi(\mathbf{o}_{t+1}; g_h) - Q_\omega(\mathbf{o}_t, \mathbf{a}_t; g_h))^2]$，V 函数用 expectile regression $\mathcal{L}_\psi = \mathbb{E}[L^\tau(A(\mathbf{o}_t, \mathbf{a}_t))]$（其中 $L^\tau(u) = |\tau - \mathbb{1}\{u<0\}|\,u^2$）。关键改动在 actor 损失：除了标准的 advantage-weighted 模仿项 $\exp(\beta A(\mathbf{o}_t, \mathbf{a}_t; g_h)) \log \pi_\theta^{off}(\mathbf{a}_t \mid \mathbf{o}_t; g_h)$，额外加了一个 **policy-anchored 项** $\lambda A(\mathbf{o}_t, \pi_\theta^{off}(\mathbf{a}_t \mid \mathbf{o}_t; g_h); g_h)$，让 critic 直接对"当前策略自己采样出的动作"打分作为信号。这样 critic 偏好的高优势动作也能参与更新，而不仅仅是数据集里那些，从而提升对 offline 轨迹之外的泛化。Figure 7a 验证：去掉锚定项后中位数下降、低分尾部明显变长。
 
-3. **带 KL 正则的 online refinement（System 2 第二阶段）**:
+**3. 带 KL 正则的 online refinement：在线持续改进但不塌缩成单一套路。**
 
-    - 功能：从离线策略接力做在线交互，持续自我改进同时防止模式塌缩。
-    - 核心思路：用混合 replay buffer $\mathcal{B}_{sys2}$（offline data + 在线新采样的 transition），损失为 $\mathcal{L}_\theta^{online} = -\mathbb{E}[w_t \log \pi_\theta^{on}(\mathbf{a}_t \mid \mathbf{o}_t; g_h)] + \eta\, \mathbb{E}[D_{KL}(\pi_\theta^{on} \,\|\, \pi_\theta^{off})(\mathbf{o}_t; g_h)]$，其中 $w_t = \exp(\frac{1}{\alpha} A(\mathbf{o}_t, \mathbf{a}_t; g_h))$ 用 advantage 重加权使高回报动作被强化；KL 项把 online policy 拉向 offline 策略以稳住分布。
-    - 设计动机：纯 online AWAC 在 LLM agent 上方差大、容易塌缩到单一行为模式；KL 锚定 offline 策略相当于一个"信赖域"，把"探索-改进"控制在安全范围内。Figure 7b 显示 Vanilla-AWAC 偶尔高分但低端失败明显，加 KL 正则后分布更紧、更可靠。
+离线初始化完成后，System 2 接力去环境里在线交互、自我纠错。这一步用混合 replay buffer $\mathcal{B}_{sys2}$（offline 数据 + 在线新采样的 transition），损失为 $\mathcal{L}_\theta^{online} = -\mathbb{E}[w_t \log \pi_\theta^{on}(\mathbf{a}_t \mid \mathbf{o}_t; g_h)] + \eta\, \mathbb{E}[D_{KL}(\pi_\theta^{on} \,\|\, \pi_\theta^{off})(\mathbf{o}_t; g_h)]$，其中 $w_t = \exp(\frac{1}{\alpha} A(\mathbf{o}_t, \mathbf{a}_t; g_h))$ 用 advantage 把高回报动作加权强化。痛点在于纯 online AWAC 用在 LLM agent 上方差大、容易塌缩到单一行为模式，所以加的 KL 项把 online policy 往 offline 策略上拉，相当于一个"信赖域"，把"探索-改进"框在安全范围内。Figure 7b 显示 Vanilla-AWAC 偶尔能拿高分但低端失败明显，加 KL 正则后分布更紧、更可靠。
 
 ### 损失函数 / 训练策略
-整体训练分三阶段（Algorithm 1）：(1) System 1 用 SFT 损失 $\mathcal{L}_\phi = -\mathbb{E}[\log \pi_\phi(g_h \mid \mathbf{o}_t; K_n)]$ 训 $EP_1$ 轮；(2) System 2 用上面的 $\mathcal{L}_\omega, \mathcal{L}_\psi, \mathcal{L}_\theta^{offline}$ 联合训 $EP_2$ 轮得到 $\pi_\theta^{off}$；(3) 把 $\pi_\theta^{on} \leftarrow \pi_\theta^{off}$，在环境中 rollout 收集新 transition 加入 buffer，用 $\mathcal{L}_\theta^{online}$ 训 $EP_3$ 轮。System 1 在阶段 3 不再更新，只负责采样子目标。所有训练用 LoRA。
+整体训练分三阶段（Algorithm 1），全程用 LoRA：(1) System 1 用 SFT 损失 $\mathcal{L}_\phi = -\mathbb{E}[\log \pi_\phi(g_h \mid \mathbf{o}_t; K_n)]$ 训 $EP_1$ 轮；(2) System 2 用上面的 $\mathcal{L}_\omega, \mathcal{L}_\psi$ 加 offline actor 损失联合训 $EP_2$ 轮得到 $\pi_\theta^{off}$；(3) 令 $\pi_\theta^{on} \leftarrow \pi_\theta^{off}$，在环境中 rollout 收集新 transition 入 buffer，用 $\mathcal{L}_\theta^{online}$ 训 $EP_3$ 轮。System 1 在阶段 3 冻结，只负责采样子目标。
 
 ## 实验关键数据
 

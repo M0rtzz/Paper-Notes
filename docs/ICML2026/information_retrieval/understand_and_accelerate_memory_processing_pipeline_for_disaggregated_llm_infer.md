@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者首先定义 LLM 生成模型 $L(g, f, \{x_i\}_{i<t}, x_t)=y_t$，其中 $M_{<t}=g(\{x_i\}_{i<t})$ 是生成的 memory，$O_{<t}=f(M_{<t}, x_t)$ 是经 memory processor 得到的中间输出。所有 long-context 优化都被 reframe 成对 $f$ 的实现。$f$ 被统一分解为四步：(1) $\text{prep}(M_{<t})=I_{<t}$——把原始 memory 压成可检索的索引；(2) $\text{comp}(I_{<t}, x_t)=S$——计算每条 memory 与当前 query 的相关度分数；(3) $\text{ret}(M_{<t}, S)=M'_{<t}$——根据分数选 top-$k$ 或阈值；(4) $\text{apply}(M'_{<t}, x_t)=O_{<t}$——把选中的 memory 注入后续推理。系统层面，作者搭了一套 AMD MI210 GPU + Alveo U55C FPGA + PCIe 的异构平台，按"算密集 + 规则访问 → GPU"、"访存密集 + 不规则 + 数据依赖 → FPGA"原则映射四阶段，并设计了 streaming dataflow FPGA kernel 库。
+作者要解决的问题是：现代 LLM 长上下文推理里那些五花八门的"内存优化"（稀疏注意力、RAG、压缩上下文记忆等）各自为政、缺乏统一框架，且都默认丢到 GPU 上跑，导致算法计算特性和硬件结构严重失配。本文的转法分两步：先把 LLM 生成模型形式化为 $L(g, f, \{x_i\}_{i<t}, x_t)=y_t$，其中 $M_{<t}=g(\{x_i\}_{i<t})$ 是生成的 memory、$O_{<t}=f(M_{<t}, x_t)$ 是 memory processor 的中间输出，再把所有 long-context 优化统一 reframe 成对 $f$ 的实现，并强制 $f$ 走同一条四阶段流水线——$\text{prep}(M_{<t})=I_{<t}$（把原始 memory 压成可检索索引）、$\text{comp}(I_{<t}, x_t)=S$（算每条 memory 与 query 的相关度分数）、$\text{ret}(M_{<t}, S)=M'_{<t}$（按分数选 top-$k$ 或阈值）、$\text{apply}(M'_{<t}, x_t)=O_{<t}$（把选中 memory 注入推理）。在此抽象之上，作者搭了 AMD MI210 GPU + Alveo U55C FPGA + PCIe 的异构平台，按算密度把四阶段分别映射到 GPU 与 FPGA。
 
 ### 关键设计
 
-1. **四阶段内存处理流水线统一抽象**:
+**1. 四阶段内存处理流水线统一抽象：把算法多样性压成四阶段配置组合**
 
-    - 功能：把稀疏注意力、RAG、Titans/HMT、MemAgent、TTT 等差异巨大的算法统一描述
-    - 核心思路：根据 Table 1 的逐方法分解——DeepSeek Attention 的 prep 是 linear projection + RoPE，comp 是 multi-head 内积，ret 是 top-$k$，apply 是 fine-grain 稀疏注意力；MemAgent 跳过 comp，prep 是模型 decoding 生成文本摘要，apply 是模型 prefill；TTT 没有 ret，prep 是反传，comp 是 loss 计算。这种统一让 kernel 可复用（top-$k$、BM25 在多个方法中共享）、系统可调度（哪步不需要直接 bypass 不产生开销）
-    - 设计动机：之前文献没有这层抽象导致每个新方法都要从零写硬件加速；统一 pipeline 让硬件层只需要实现"一个 stage 库 + 跨 stage 调度"就能覆盖所有现有及未来方法
+之前的文献把稀疏注意力、RAG、Titans/HMT、MemAgent、TTT 当作彼此孤立的技术，每个新方法都要从零写硬件加速。本文用上述四阶段 schema 把它们逐一拆解（Table 1）：DeepSeek Attention 的 prep 是 linear projection + RoPE、comp 是 multi-head 内积、ret 是 top-$k$、apply 是 fine-grain 稀疏注意力；MemAgent 跳过 comp，prep 是模型 decoding 生成文本摘要、apply 是模型 prefill；TTT 干脆没有 ret，prep 是反传、comp 是 loss 计算。同一套输入输出 schema 让 top-$k$、BM25 这类 kernel 在多个方法间复用，也让系统可以对不需要的阶段直接 bypass 而不产生开销——硬件层因此只需实现"一个 stage 库 + 跨 stage 调度"就能覆盖现有乃至未来的方法。
 
-2. **计算异构性分析（算密度 + 访存模式 + 数据依赖）**:
+**2. 计算异构性分析：用算密度把每个阶段贴上"该去哪块硬件"的标签**
 
-    - 功能：定量证明四阶段在算密度（FLOPs/byte，决定 compute-bound vs memory-bound）和访存模式（规则 vs 不规则）上差异巨大，从而硬件映射必须分而治之
-    - 核心思路：见 Table 2——稀疏注意力中 prep（linear proj，10-100 FLOPs/byte，规则访存）和 apply（fine-grain sparse attention，10-100 FLOPs/byte，规则）是算密集；comp（skinny matrix-vector，1-10 FLOPs/byte）和 ret（top-$k$，约 1 FLOPs/byte，不规则 + 跨 memory 数据依赖）是访存密集。RAG 的 comp（BM25）尤其不规则——BM25 按非确定性顺序查 token frequency；top-$k$ 维护运行中最大值伴随数据依赖的不规则 eviction
-    - 设计动机：GPU 在规则稠密计算上吊打 FPGA，但在不规则 + 数据依赖的访存密集操作上严重欠利用（peak HBM bandwidth 利用率往往 < 30%）；FPGA 因为可定制 microarchitecture，对这类操作天然有 5× SRAM 带宽优势
+四阶段虽共享 schema，但计算特性天差地别，硬要全塞 GPU 必然欠利用。作者沿算密度（FLOPs/byte，决定 compute-bound 还是 memory-bound）和访存模式（规则 vs 不规则）两维做定量刻画（Table 2）：稀疏注意力里 prep（linear proj，10-100 FLOPs/byte，规则访存）和 apply（fine-grain sparse attention，10-100 FLOPs/byte，规则）是算密集；而 comp（skinny matrix-vector，1-10 FLOPs/byte）和 ret（top-$k$，约 1 FLOPs/byte，不规则且跨 memory 数据依赖）是访存密集。RAG 的 comp（BM25）尤其不规则——BM25 按非确定性顺序查 token frequency，top-$k$ 又要维护运行中最大值并伴随数据依赖的不规则 eviction。结论很 actionable：GPU 在规则稠密计算上吊打 FPGA，却在这类不规则 + 数据依赖的访存密集操作上把 peak HBM 带宽利用率压到 < 30%，而 FPGA 因可定制 microarchitecture 对它们天然有约 5× 的 SRAM 带宽优势，所以阶段必须分而治之。
 
-3. **GPU-FPGA 异构系统 + streaming dataflow kernel**:
+**3. GPU-FPGA 异构系统 + streaming dataflow kernel：按算密度切 stage，让 PCIe 通信几乎隐形**
 
-    - 功能：按算密度切分 stage，最大化 PCIe 通信与计算重叠
-    - 核心思路：(a) General Setup（稀疏注意力 + RAG）：prep + apply 在 GPU，融合后的 comp + ret kernel 在 FPGA，只通过 PCIe 传 top-$k$ 索引（最小化通信）；(b) Synthesized Memory（MemAgent）：prefill-decode disaggregation，decoding（访存密集）跑 FPGA，prefilling（算密集）跑 GPU；(c) Memory as Context（Titans/HMT）：memory embedding 全存 FPGA，retrieved memory 用类似 General Setup 的小通信量传回 GPU。FPGA kernel 用三级 SRAM 层级（BRAM 21.8 TB/s + URAM 10.4 TB/s + HBM 460 GB/s）按 token ID 优先存到快内存，内积引擎流水接 top-$k$ retriever 形成 streaming dataflow，避免不必要的 off-chip 访问
-    - 设计动机：U55C 的片上 BRAM+URAM 40MB 提供约 5× 于 GPU SRAM 的有效带宽；streaming dataflow 把多 stage 融合成单一 kernel，避开 GPU 启动多 kernel 的同步开销；选择 PCIe 而非更紧耦合的互连是为了用现成硬件证明 idea 的可推广性
+落到硬件，作者按三类部署形态把阶段分派下去：General Setup（稀疏注意力 + RAG）让 prep + apply 留在 GPU、把融合后的 comp + ret kernel offload 到 FPGA，只经 PCIe 传 top-$k$ 索引以最小化通信；Synthesized Memory（MemAgent）走 prefill-decode disaggregation，访存密集的 decoding 跑 FPGA、算密集的 prefilling 跑 GPU；Memory as Context（Titans/HMT）则把 memory embedding 全存 FPGA，retrieved memory 用类似 General Setup 的小通信量传回 GPU。FPGA 端的 kernel 用三级 SRAM 层级（BRAM 21.8 TB/s + URAM 10.4 TB/s + HBM 460 GB/s），按 token ID 把 key vector 优先写到更快的 BRAM、溢出到 URAM、再溢出到 HBM，并让内积引擎流水接 top-$k$ retriever 形成 streaming dataflow，从而把多 stage 融成单一 kernel、避开 GPU 多 kernel 的启动同步开销和不必要的 off-chip 访问。之所以用 PCIe 而非 NVLink/CXL 这种紧耦合互连，是为了用现成硬件证明 idea 的可推广性，而 U55C 片上 40MB BRAM+URAM 提供约 5× 于 GPU SRAM 的有效带宽，已足够把这条流水线喂饱。
 
-### 损失函数 / 训练策略
-本文是纯推理系统工作，无训练损失。基准评估方法包含：DeepSeek Attention（vLLM + DeepSeek V3.2 Exp）、SeerAttention-R（Qwen3-8B + TileLang）、LServe（Llama 3.1-8B，HIPIFY 移植到 AMD）、RAG（Llama-2-7B 或 Llama 3.1-8B + Wikipedia dump）、Titans/HMT（HMT 开源实现替换为 linear projection）、MemAgent（Qwen2.5-7B）、LaCT/TTT。FPGA 用 Vitis HLS 2024.2 + Vivado 2024.2 实现，P2P DMA 模式。
+### 实现细节
+本文是纯推理系统工作，无训练损失。基准评估覆盖：DeepSeek Attention（vLLM + DeepSeek V3.2 Exp）、SeerAttention-R（Qwen3-8B + TileLang）、LServe（Llama 3.1-8B，HIPIFY 移植到 AMD）、RAG（Llama-2-7B 或 Llama 3.1-8B + Wikipedia dump）、Titans/HMT（HMT 开源实现替换为 linear projection）、MemAgent（Qwen2.5-7B）、LaCT/TTT。FPGA 用 Vitis HLS 2024.2 + Vivado 2024.2 实现，P2P DMA 模式。
 
 ## 实验关键数据
 

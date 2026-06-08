@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EqR 的骨架直接沿用 TRM 风格的 hierarchical 迭代：维护一对 latent state $(\mathbf{z}_H, \mathbf{z}_L)$（高/低层各一），内层把 $\mathbf{z}_L$ 在 $\mathbf{z}_H$ 条件下更新 $n$ 步，再用更新后的 $\mathbf{z}_L$ 更新一次 $\mathbf{z}_H$，外层重复 $T$ 步；其中 $T-1$ 步走 `no_grad` + detach（truncated gradient，只在最后一步算梯度，对应 segmented online training，SOT）；附带一个 ACT 头 $\hat q = f_\phi(\mathbf{z}_H)$ 做 difficulty-aware 早停。
-
-相对 HRM/TRM，EqR 真正的新东西在每一步 update 里塞了三件事：(1) 把固定的 $\mathbf{z}_0$ 改成 $\mathcal{N}(0,\sigma_0 I)$ 采样；(2) 把更新写成带阻尼 + 加性噪声的形式 $\mathbf{z}_{k+1}=\mathbf{z}_k+(1-\lambda)\,r_\theta(\mathbf{z}_k;\mathbf{x})+\beta\,\varepsilon_k$；(3) 推理时在 $D$（每条轨迹迭代步数）和 $B$（独立重启次数）两轴上扩展，用 $\mathrm{NFE}=D\cdot B$ 统一记账，并用"最后几步平均残差最小"的那条轨迹做 Top-1 收敛选择。这三件事对应吸引子视角下的三个发力点：广覆盖、轻扰动、对齐选择信号。
+EqR 要解决的是"迭代潜变量推理为什么 work、什么时候多算才有效"这个机制问题，做法是把迭代算子 $\mathbf{z}_{k+1}=f_\theta(\mathbf{z}_k;\mathbf{x})$ 当成一个 task-conditioned 的动力系统，目标从 DEQ 的"求唯一不动点"放宽为"塑造一片对齐良好的吸引子地形"，再把训练和测试时扩展都翻译成在这片地形上的操作。骨架直接沿用 TRM 风格的 hierarchical 迭代：维护一对 latent state $(\mathbf{z}_H, \mathbf{z}_L)$，内层把 $\mathbf{z}_L$ 在 $\mathbf{z}_H$ 条件下更新 $n$ 步、再用它更新一次 $\mathbf{z}_H$，外层重复 $T$ 步，其中前 $T-1$ 步走 `no_grad`+detach（truncated gradient，只在最后一步算梯度），并挂一个 ACT 头 $\hat q = f_\phi(\mathbf{z}_H)$ 做 difficulty-aware 早停。相对 HRM/TRM，EqR 的新东西集中在三处发力点——给每条轨迹换随机起点（广覆盖）、给每步更新注阻尼噪声（轻扰动）、推理时沿深度/广度两轴扩展并用残差挑轨迹（对齐选择信号）。
 
 ### 关键设计
 
-1. **吸引子地形视角 + 四模式诊断**:
+**1. 吸引子地形视角 + 四模式诊断：把"残差"升格为任务无关的诊断量**
 
-    - 功能：用一个统一框架解释"什么时候深度/广度扩展才有用"。把模型在某个输入 $\mathbf{x}$ 下能收敛到的所有稳定长期状态记作 $\mathcal{Z}^*_\theta(\mathbf{x})$（吸引子集合），关心两件事：task alignment（这些吸引子 decode 出来是不是正解）和 reachability（这些吸引子的 basin 是否好进）。
-    - 核心思路：将地形分成四类——(a) 没有正解吸引子（误判型，扩展无效）；(b) 正解和错解吸引子并存（basin 选择失败，需广度 $B$ 而非深度 $D$）；(c) 正解吸引子存在但 basin 又窄又弱（reachability 失败，$B$ 帮选 basin、$D$ 帮稳住）；(d) 正解 basin 又宽又稳（理想态，$D$ 主导，$B$ 收益边际）。把每种模式与"残差 vs 任务错误的相关性"对应起来，于是 $\|f_\theta(\mathbf{z};\mathbf{x})-\mathbf{z}\|$ 就成为一个任务无关的诊断量：在模式 (d) 下残差和准确率强相关，在 (a) 下两者解耦。
-    - 设计动机：DEQ 那种"是否收敛到唯一不动点"是 0/1 问题，无法解释"残差降但不归零、准确率却持续涨"的现象；吸引子视角既保留了"trajectory 朝低残差走"的核心 claim，又允许残差非零、允许多个吸引子并存，刚好覆盖 Sudoku 这种多解候选 + 长程约束的真实情况。
+DEQ 那种"是否收敛到唯一不动点"是个 0/1 判断，解释不了 HRM/TRM 实测里"残差一路降但不归零、准确率却持续涨"的现象。EqR 改用更宽松的吸引子视角：把模型在输入 $\mathbf{x}$ 下能收敛到的所有稳定长期状态记作吸引子集合 $\mathcal{Z}^*_\theta(\mathbf{x})$，只关心两件事——task alignment（这些吸引子 decode 出来是不是正解）和 reachability（它们的 basin 好不好进）。据此把地形分成四类：(a) 根本没有正解吸引子（误判型，再扩展也无效）；(b) 正解与错解吸引子并存（basin 选择失败，得靠广度 $B$ 换 basin 而非深度 $D$）；(c) 正解吸引子在但 basin 又窄又弱（reachability 失败，$B$ 帮选 basin、$D$ 帮稳住）；(d) 正解 basin 又宽又稳（理想态，$D$ 主导、$B$ 边际）。把这四类与"残差 vs 任务错误的相关性"对齐后，$\|f_\theta(\mathbf{z};\mathbf{x})-\mathbf{z}\|$ 就成了任务无关的内部诊断量——模式 (d) 下残差和准确率强相关，模式 (a) 下两者解耦。这个视角既保留了"轨迹朝低残差走"的核心 claim，又允许残差非零、允许多吸引子并存，刚好覆盖 Sudoku 这类多解候选 + 长程约束的真实情况。
 
-2. **训练侧地形塑造：随机初始化（RI）+ 路径噪声（NI）**:
+**2. 训练侧地形塑造：随机初始化（RI）+ 路径噪声（NI）**
 
-    - 功能：把训练得到的吸引子从"窄且少"塑造成"宽且对齐"，同时缩小训练 / 测试分布差。RI 让 $\mathbf{z}_0\sim\mathcal{N}(0,\sigma_0 I)$ 而非固定零；NI 在每步迭代里注入 $\beta\,\varepsilon_k$ 并配合阻尼 $\lambda$，更新写作 $\mathbf{z}_{k+1}=\mathbf{z}_k+(1-\lambda)\,r_\theta(\mathbf{z}_k;\mathbf{x})+\beta\,\varepsilon_k$，$\varepsilon_k\sim\mathcal{N}(0,I)$，默认 $\lambda=0.05$、$\beta=0.01$。
-    - 核心思路：RI 一举两得——既让训练时"看到"更多 basin（扩大被塑造的状态空间区域），也让训练里"同一 $(\mathbf{x},\mathbf{y})$ 配多种 $\mathbf{z}_0$"，loss 自然把不同轨迹的 prediction 拉到一致，等于在隐式鼓励 path independence（Anil et al., 2022）；NI 则相当于在轨迹层面做随机扰动正则，让模型在 (b)(c) 两种"易被劫持"的地形里有机会跳出 spurious attractor 走向正确 basin。推理时还可以把 $\beta$ 加大以加强探索（类似 temperature scaling），与广度扩展配合。
-    - 设计动机：HRM/TRM 用单一 $\mathbf{z}_0$ 训练，等价于只把 basin 局部塑造好，一旦推理时换随机起点（为了做多次重启 + 投票）就会暴露 train-test mismatch；NI 则对症 (b)(c) 模式的"过早陷入错解"问题。两者作用部位互补：RI 改"哪里起跑"，NI 改"沿途遭遇什么"。
+HRM/TRM 用单一固定的 $\mathbf{z}_0$ 训练，等价于只把一个 basin 局部塑造好，一旦推理时为了多次重启投票而换随机起点就暴露 train-test mismatch；同时它们对模式 (b)(c) 那种"过早陷进错解"也无能为力。EqR 用两条几行代码、零额外参数的干预对症。RI 让起点 $\mathbf{z}_0\sim\mathcal{N}(0,\sigma_0 I)$ 而非固定零，一举两得：训练时"看到"更多 basin、扩大了被塑造的状态空间区域，又因为同一 $(\mathbf{x},\mathbf{y})$ 被配上多种 $\mathbf{z}_0$ 一起算 loss，自然把不同轨迹的 prediction 拉到一致，等于隐式鼓励 path independence（Anil et al., 2022）。NI 则把每步更新写成带阻尼加噪的形式 $\mathbf{z}_{k+1}=\mathbf{z}_k+(1-\lambda)\,r_\theta(\mathbf{z}_k;\mathbf{x})+\beta\,\varepsilon_k$（$\varepsilon_k\sim\mathcal{N}(0,I)$，默认 $\lambda=0.05$、$\beta=0.01$），相当于在轨迹层面做随机扰动正则，让模型在易被劫持的 (b)(c) 地形里有机会跳出 spurious attractor 走向正确 basin；推理时还可把 $\beta$ 调大以加强探索（类似 temperature scaling），与广度扩展配合。两者作用部位互补：RI 改"从哪里起跑"，NI 改"沿途遭遇什么"。
 
-3. **两轴测试时扩展 + 残差选轨**:
+**3. 两轴测试时扩展 + 残差选轨：用模型自身几何量替代外部 verifier**
 
-    - 功能：把"用更多算力"分解成两个可独立调的旋钮——深度 $D$（同一条轨迹展开多少步）和广度 $B$（独立重启多少次），并在结果里用"最后几步平均残差最小"那条做 Top-1 收敛选择。记账用 $\mathrm{NFE}=D\cdot B$。
-    - 核心思路：先 ablation 证明权重共享是迭代推理 generalize 的必要条件（前馈再深都不行），再展示训练只用 $\le 16$ 步、推理可以外推到 $> 1024$ 步（等效 40,000 层）而残差和准确率仍同向下降；广度方面 Pareto 实验给出关键经验律——"$B$ 只在 $D\gtrsim 4$ 之后才有效"，因为 trajectory 得先有足够步数才能 meaningfully 探索到 basin，太短的轨迹多跑几次也只是在起点附近抖动。选轨用"残差代理"而非 majority vote，是因为在地形塑造之后残差与任务正确率高度相关，于是"信收敛"比"信投票"更省算力。
-    - 设计动机：把扩展拆成 $D$ 和 $B$ 两轴，让"深度细化 basin 内部 / 广度切换 basin"两件事在工程上可以独立诊断和调参；用残差做选择则把外部 verifier 和任务专用 prior 整个省掉，只用模型内部的几何量。
+EqR 把"用更多算力"拆成两个可独立诊断、独立调参的旋钮——深度 $D$（同一条轨迹展开多少步，对应细化 basin 内部）和广度 $B$（独立重启多少次，对应切换 basin），统一用 $\mathrm{NFE}=D\cdot B$ 记账。先用 ablation 证明权重共享是迭代推理 generalize 的必要前提（前馈再深都 OOD 失败），再展示训练只用 $\le 16$ 步、推理却能外推到 $>1024$ 步（等效 40,000 层）而残差和准确率仍同向下降；广度上 Pareto 实验给出一条经验律——$B$ 只在 $D\gtrsim 4$ 之后才有效，因为轨迹得先跑够步数才能 meaningfully 探到 basin，太短的轨迹多跑几次只是在起点附近抖动。最后的选轨不用 majority vote，而是挑"最后几步平均残差最小"那条做 Top-1 收敛选择——正因为地形塑造之后残差与任务正确率高度相关，"信收敛"既省掉外部 verifier 和任务专用 prior，又比"信投票"更省算力。
 
 ### 损失函数 / 训练策略
-主损失沿用 TRM 风格：每个"被监督的外层步"上用 CE 训练 LM head $\hat{\mathbf{y}}$，BCE 训练 halting head $\hat q$ 使其去拟合 $\mathbf{1}[\hat{\mathbf{y}}=\text{gt}]$；Segmented Online Training 把整条轨迹切段，每段末尾监督 + 立即 optimizer step，下一段以"detached carry + 新参数"开局，相当于对吸引子学习目标做交替近似——latent 更新去找当前算子下可达的低残差状态，参数更新去把那些可达状态对齐到正解。Gradient 用 truncated（detached carry）省内存。ACT 在训练时就生效：模型 confident 后 $\hat q$ 走高，该样本被提前移出 batch，省下的算力分给难样本。
+主损失沿用 TRM 风格：每个"被监督的外层步"上用 CE 训练 LM head $\hat{\mathbf{y}}$，BCE 训练 halting head $\hat q$ 使其去拟合 $\mathbf{1}[\hat{\mathbf{y}}=\text{gt}]$；Segmented Online Training（SOT）把整条轨迹切段，每段末尾监督 + 立即 optimizer step，下一段以"detached carry + 新参数"开局，相当于对吸引子学习目标做交替近似——latent 更新去找当前算子下可达的低残差状态，参数更新去把那些可达状态对齐到正解。Gradient 用 truncated（detached carry）省内存。ACT 在训练时就生效：模型 confident 后 $\hat q$ 走高，该样本被提前移出 batch，省下的算力分给难样本。
 
 ## 实验关键数据
 

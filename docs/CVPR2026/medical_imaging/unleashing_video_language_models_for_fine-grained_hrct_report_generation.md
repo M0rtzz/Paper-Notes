@@ -37,27 +37,29 @@ tags:
 
 ### 整体框架
 
-AbSteering 以预训练 VideoLM 为骨干，分两个阶段进行域适配：Stage 1 通过异常中心的 Chain-of-Thought 训练建立结构化推理路径；Stage 2 通过 Direct Preference Optimization 进行细粒度异常辨别。整个框架不修改视觉编码器架构，仅通过语言层面的引导实现域适配。
+AbSteering 的出发点很反直觉：不再为 CT 从头训一个模态专用基础模型，而是把一个**通用视频语言模型直接拿来当骨干**——因为 HRCT 本质就是一叠按层排列的切片序列，和视频的"时空 token + 3D 注意力 + token 合并 + LLM 解码"几乎同构，差的只是训练域和监督信号。于是整个方法把功夫全花在语言侧的"引导"上：**视觉编码器原封不动冻住**，只用两个训练阶段把通用模型"扳"到 HRCT 报告这个域里。Stage 1 用异常中心的 Chain-of-Thought 训练，逼模型先把异常找全再写报告；Stage 2 用 DPO 拿临床易混淆的硬负样本做对比，逼模型把细微的异常分清楚。一个补 recall，一个补 precision，输入是 240 帧的 CT 切片视频，输出是结构化的诊断报告。
 
 ### 关键设计
 
-1. **异常中心的 Chain-of-Thought 训练（Stage 1）**：
+**1. 异常中心的 Chain-of-Thought 训练（Stage 1）：把"看图写报告"拆成"先找异常、再写报告"。**
 
-    - 功能：将 vision-to-text 任务解耦为"先检测异常，再生成报告"的两步推理过程
-    - 核心思路：首先将原始 CT-RATE 报告标准化为统一的 (region: abnormality) 模板，覆盖 10 个解剖区域（Lung、Trachea and Bronchi、Mediastinum、Heart、Esophagus、Pleura、Bone、Thyroid、Breast、Abdomen），使用 GPT-4o 将报告句子分配到对应区域并人工校验，生成 CT-RATE-AB 数据集。然后采用序列生成目标，目标序列 $Y = [R_{AB}; R_{Full}]$，即先生成异常检测列表 $R_{AB}$，再生成完整报告 $R_{Full}$，通过自回归损失 $\mathcal{L}_{gen} = -\sum_{t=1}^{T} \log P(y_t | x, y_{<t})$ 训练
-    - 设计动机：强制模型在生成最终报告前显式进行临床推理，学习疾病类别多样性，抑制被正常组织主导的描述和幻觉；在推理层面，从离散发现到叙述的过渡让模型捕获解剖约束和病理间依赖关系（如相关疾病共现或矛盾发现的互斥性）
+HRCT 最难的地方在于关键异常往往细小、局部、稀疏地散在体积里，很容易被占主导的正常解剖结构淹没——直接做端到端的 vision-to-text，模型会顺着"大多数都正常"的先验写出一堆正常描述甚至幻觉。CoT 的做法是先把这条推理链显式拆出来：先把原始 CT-RATE 报告标准化成统一的 `(region: abnormality)` 模板，覆盖 10 个解剖区域（Lung、Trachea and Bronchi、Mediastinum、Heart、Esophagus、Pleura、Bone、Thyroid、Breast、Abdomen），用 GPT-4o 把报告句子归到对应区域、再人工校验，得到 CT-RATE-AB 数据集。训练时目标序列拼成 $Y = [R_{AB}; R_{Full}]$——先吐出异常检测列表 $R_{AB}$，再续写完整报告 $R_{Full}$，用标准自回归损失优化：
 
-2. **基于 DPO 的细粒度异常辨别（Stage 2）**：
+$$\mathcal{L}_{gen} = -\sum_{t=1}^{T} \log P(y_t \mid x, y_{<t})$$
 
-    - 功能：增强模型对细微病理差异的区分能力，抑制幻觉
-    - 核心思路：用 GPT-4o 从真实异常报告 $R_{AB}$ 自动构造硬负样本 $R_{AB\_Fake}$——将目标异常替换为同一解剖区域内临床易混淆的异常，保持区域标签、句子模板和位置信息不变。然后以 Stage 1 模型为参考模型 $\pi_{ref}$，通过 DPO 目标优化目标模型 $\pi_\theta$：$\mathcal{L}_{DPO} = \log \sigma(\beta \log \frac{\pi_\theta(y_w|x,v)}{\pi_{ref}(y_w|x,v)} - \beta \log \frac{\pi_\theta(y_l|x,v)}{\pi_{ref}(y_l|x,v)})$，其中 $y_w = R_{AB}$（正确报告），$y_l = R_{AB\_Fake}$（篡改报告）
-    - 设计动机：CT 异常常呈现细微且视觉易混淆的模式，细粒度辨别高度依赖领域特定临床知识。通过对比学习正确报告与临床混淆报告，迫使模型关注决定报告质量的细微视觉线索
+之所以有效，是因为"先列异常"这一步把诊断推理摆到了生成报告之前：模型被强制先穷举各解剖区域的疾病类别，再在叙述里展开，自然就抑制了被正常组织主导的废话和幻觉；而且从离散发现过渡到连贯叙述时，模型还能顺带学到解剖约束和病理间的依赖（哪些疾病常共现、哪些发现互斥）。
 
-3. **VideoLM 骨干架构**：
+**2. 基于 DPO 的细粒度异常辨别（Stage 2）：用"临床上最像的错答案"逼模型抠细节。**
 
-    - 功能：提供时空推理基础
-    - 核心思路：输入视频 $X \in \mathbb{R}^{T \times H \times W \times C}$ 经时空 cube tokenization 得到视觉 token，通过带有分解式 3D 位置嵌入的 Transformer 处理，再由 merger 压缩为语言对齐 token 送入 LLM 解码。本文评估了 Qwen2.5-VL-7B 和 InternVL3-8B 两个骨干
-    - 设计动机：VideoLM 与 CT 基础模型架构高度相似，差异仅在训练域，因此可直接复用其时空推理能力
+CoT 把异常找全了，但找全不等于分对——CT 异常常常在视觉上彼此非常接近，区分它们高度依赖领域特定的临床知识，普通的监督训练给不了这种"差之毫厘"的信号。Stage 2 用 DPO 来补这一刀：拿真实异常报告 $R_{AB}$ 作正样本，再用 GPT-4o 自动构造硬负样本 $R_{AB\_Fake}$——把目标异常替换成**同一解剖区域内临床易混淆**的另一种异常，区域标签、句子模板、位置信息全部保持不变，只动那个最关键的诊断词。然后以 Stage 1 的模型为参考模型 $\pi_{ref}$、固定不动，优化目标模型 $\pi_\theta$：
+
+$$\mathcal{L}_{DPO} = \log \sigma\!\left(\beta \log \frac{\pi_\theta(y_w \mid x,v)}{\pi_{ref}(y_w \mid x,v)} - \beta \log \frac{\pi_\theta(y_l \mid x,v)}{\pi_{ref}(y_l \mid x,v)}\right)$$
+
+其中 $y_w = R_{AB}$ 是正确报告，$y_l = R_{AB\_Fake}$ 是篡改报告，$\beta$ 控制偏离参考模型的幅度。关键在硬负样本的"硬"：因为正负样本只差一个临床上极易混淆的诊断词，模型要把它们区分开就不得不去盯住那个决定对错的细微视觉线索，而不是靠语言先验蒙混过关——这正是细粒度异常辨别最缺的监督信号。
+
+**3. VideoLM 骨干：直接复用视频预训练的时空推理能力，不改架构。**
+
+这是整套方法成立的前提。输入视频 $X \in \mathbb{R}^{T \times H \times W \times C}$ 先经时空 cube tokenization 切成视觉 token，过一层带分解式 3D 位置嵌入的 Transformer，再由 merger 把 token 压缩成与语言对齐的表示送进 LLM 解码。之所以敢直接拿通用 VideoLM 来用，是因为它和 CT 基础模型的架构几乎一一对应，差异只在训练域；既然时空推理能力已经在大规模视频上预训练好了，就没必要为 CT 重新训一遍编码器。本文在 Qwen2.5-VL-7B 和 InternVL3-8B 两个骨干上验证了这一点。
 
 ### 损失函数 / 训练策略
 

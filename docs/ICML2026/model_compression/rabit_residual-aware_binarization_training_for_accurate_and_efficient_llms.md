@@ -41,29 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RaBiT 用两类设计组合解决 2-bit 残差二值化的训练病：(a) 训练时不再为每条路径单独维护潜变量权重，而是只保留一个共享 $\mathbf{W}_{\mathrm{FP}}$，每个前向 step 现场派生 $\mathbf{B}_1=\text{sign}(\mathbf{W}_{\mathrm{FP}})$、$\mathbf{R}_1=\mathbf{W}_{\mathrm{FP}}-\hat{\mathbf{W}}_1$、$\mathbf{B}_2=\text{sign}(\mathbf{R}_1)$；(b) 每条路径仍保留独立的可学习逐通道缩放 $\{\mathbf{g}_i,\mathbf{h}_i\}$ 以保留容量；(c) 用 Iterative Residual SVID + 输入/输出通道重要性预条件化做函数感知初始化；(d) 推理时把训练好的 $\mathbf{B}_i$ 冻结、丢弃 $\mathbf{W}_{\mathrm{FP}}$，回到原来的并行 matmul-free 架构。
+RaBiT 想根治 2-bit 残差二值化的训练病：标准 QAT 给每条二值路径各配一套独立潜权重、再用同一个全局梯度去推它们，结果两条路径学成一对冗余的双胞胎，"后路补前路误差"的承诺落空。RaBiT 的破法是只留一个共享全精度权重 $\mathbf{W}_{\mathrm{FP}}$ 当锚点，每个前向 step 现场从它串联派生出第一条路径、再从残差派生第二条路径，让"第二条补第一条"变成计算图上的硬约束；同时配一套函数感知初始化把 QAT 的起点扶稳。推理时把训练好的二值矩阵 $\mathbf{B}_i$ 冻结、丢掉 $\mathbf{W}_{\mathrm{FP}}$，就回到原来并行、只用加减的 matmul-free 架构，不增加任何部署开销。
 
-二值基本块写作 $\hat{\mathbf{W}}=\mathbf{g}\odot\mathbf{B}\odot\mathbf{h}$，其中 $\mathbf{B}\in\{-1,+1\}^{d_{\text{out}}\times d_{\text{in}}}$、$\mathbf{g}\in\mathbb{R}^{d_{\text{out}}}$、$\mathbf{h}\in\mathbb{R}^{d_{\text{in}}}$，矩阵-向量乘 $\mathbf{y}=\mathbf{g}\odot(\mathbf{B}(\mathbf{h}\odot\mathbf{x}))$ 只用加减实现。2-bit 时堆叠 $k=2$ 条这样的二值块求和。
+二值基本块写作 $\hat{\mathbf{W}}=\mathbf{g}\odot\mathbf{B}\odot\mathbf{h}$，其中 $\mathbf{B}\in\{-1,+1\}^{d_{\text{out}}\times d_{\text{in}}}$、$\mathbf{g}\in\mathbb{R}^{d_{\text{out}}}$、$\mathbf{h}\in\mathbb{R}^{d_{\text{in}}}$，矩阵-向量乘 $\mathbf{y}=\mathbf{g}\odot(\mathbf{B}(\mathbf{h}\odot\mathbf{x}))$ 只用加减实现；2-bit 时堆叠 $k=2$ 条这样的二值块求和。
 
 ### 关键设计
 
-1. **共享 FP 权重 + 在线派生的耦合前向 (Coupled Forward Pass)**:
+**1. 耦合前向：用共享 FP 权重在线派生，把残差补偿写死进计算图。**
 
-    - 功能：把"残差补偿"从损失上的偏好变成图结构上的硬约束，从根本上消除 inter-path adaptation。
-    - 核心思路：训练阶段只存 $\mathbf{W}_{\mathrm{FP}}$，每个 step 三步走——(1) $\mathbf{B}_1=\text{sign}(\mathbf{W}_{\mathrm{FP}})$，组合得到 $\hat{\mathbf{W}}_1=\mathbf{g}_1\odot\mathbf{B}_1\odot\mathbf{h}_1$；(2) 残差 $\mathbf{R}_1=\mathbf{W}_{\mathrm{FP}}-\hat{\mathbf{W}}_1$；(3) $\mathbf{B}_2=\text{sign}(\mathbf{R}_1)$。最终有效权重 $\hat{\mathbf{W}}^{(2)}=\hat{\mathbf{W}}_1+\hat{\mathbf{W}}_2$。反向用一个 STE 把 $\nabla_{\hat{\mathbf{W}}^{(2)}}\mathcal{L}=(\partial\mathcal{L}/\partial\mathbf{Y})\mathbf{X}^{\top}$ 直接灌给 $\mathbf{W}_{\mathrm{FP}}$，缩放向量 $\{\mathbf{g}_i,\mathbf{h}_i\}$ 按常规链式求导更新且把动态派生的 $\mathbf{B}_i$ 视为常数。
-    - 设计动机：以往做法用两套独立潜权重让两条路径独立优化，结构上根本不区分"主路径"与"补偿路径"，所以梯度一锤同抡时它们必然学到冗余特征；本文把第二条路径写成第一条路径残差的函数，即使梯度同抡，结构本身也强制 $\mathbf{B}_2$ 永远在追 $\mathbf{R}_1$。一个意外的副产物：只存一套全精度权重直接把优化器状态（如 Adam 的动量/方差）减半，节省了 LLM 微调中最稀缺的显存。
+inter-path adaptation 的病根在于以往做法给两条路径各存一套独立潜权重、结构上根本不区分"主路径"和"补偿路径"，于是梯度一锤同抡，两条路径必然学到几乎一样的特征。RaBiT 训练时只存一个 $\mathbf{W}_{\mathrm{FP}}$，每个 step 现场三步派生：先取 $\mathbf{B}_1=\text{sign}(\mathbf{W}_{\mathrm{FP}})$ 组合出 $\hat{\mathbf{W}}_1=\mathbf{g}_1\odot\mathbf{B}_1\odot\mathbf{h}_1$，再算残差 $\mathbf{R}_1=\mathbf{W}_{\mathrm{FP}}-\hat{\mathbf{W}}_1$，最后令 $\mathbf{B}_2=\text{sign}(\mathbf{R}_1)$，有效权重 $\hat{\mathbf{W}}^{(2)}=\hat{\mathbf{W}}_1+\hat{\mathbf{W}}_2$。因为第二条路径被写成第一条残差的函数，即便梯度照样同抡，结构本身也强制 $\mathbf{B}_2$ 永远在追 $\mathbf{R}_1$，补偿层级不再靠 loss 软鼓励而是图结构硬保证。反向用一个 STE 把 $\nabla_{\hat{\mathbf{W}}^{(2)}}\mathcal{L}=(\partial\mathcal{L}/\partial\mathbf{Y})\mathbf{X}^{\top}$ 直接灌给 $\mathbf{W}_{\mathrm{FP}}$，缩放向量 $\{\mathbf{g}_i,\mathbf{h}_i\}$ 仍保留为各路独立可学习参数、按常规链式法则更新（把动态派生的 $\mathbf{B}_i$ 视为常数）。一个意外的副产物：只维护一套全精度权重直接把优化器状态（Adam 的动量/方差）减半，省下 LLM 微调中最稀缺的显存。
 
-2. **函数感知初始化 (Iterative Residual SVID + I/O Importance Preconditioning)**:
+**2. 函数感知初始化：迭代残差 SVID + I/O 通道重要性预条件化，让起点保功能而非保权重。**
 
-    - 功能：解决 2-bit QAT 起点对最终精度的强敏感性，把"先准确重建权重"换成"先准确重建功能输出"。
-    - 核心思路：先用基于校准集的输入激活幅度 $\mathbf{s}_{\text{in}}$ 和输出梯度幅度 $\mathbf{s}_{\text{out}}$ 对原始权重做预条件化 $\mathbf{W}'=\mathbf{s}_{\text{out}}^{\alpha_{\text{out}}}\odot\mathbf{W}_{\mathrm{FP}}\odot\mathbf{s}_{\text{in}}^{\alpha_{\text{in}}}$，把分解资源集中到功能上敏感的通道（Fisher / K-FAC 的局部敏感性直觉）。随后用 Iterative Residual SVID 以 Gauss-Seidel 风格在 $T$ 轮里迭代刷新每条路径的 $(\mathbf{B}_i,\mathbf{g}_i,\mathbf{h}_i)$：每轮把"其他路径已经吃掉的部分"从 $\mathbf{W}'$ 里减去，再用 SVID（基于秩-1 SVD 的幅度分解）拟合剩余残差；最后把缩放映射回原始域。
-    - 设计动机：标准 SVID 是贪心的——第一条路径独占最优拟合，会把残差结构推到很差的局部极小，后续路径再怎么救都救不回来。SVID 的"残差迭代 + 通道重要性预条件化"两步分别解决了路径间贪心耦合和"等权拟合所有通道但实际只有少数通道功能上重要"两个互相加剧的初始化病。Table 7 / Figure 5 显示两者各自贡献明显，组合后起点 loss 最低、QAT 启动期最稳。
+2-bit QAT 对起点极其敏感，而标准 SVID 初始化是贪心的——第一条路径独占最优拟合，会把残差结构推进很差的局部极小，后续路径再怎么救也回不来。RaBiT 分两步治这个病。先做预条件化：用校准集上的输入激活幅度 $\mathbf{s}_{\text{in}}$ 和输出梯度幅度 $\mathbf{s}_{\text{out}}$ 把权重缩到 $\mathbf{W}'=\mathbf{s}_{\text{out}}^{\alpha_{\text{out}}}\odot\mathbf{W}_{\mathrm{FP}}\odot\mathbf{s}_{\text{in}}^{\alpha_{\text{in}}}$，把分解资源集中到功能上真正敏感的通道（Fisher / K-FAC 的局部敏感性直觉），避免等权拟合所有通道。再做迭代残差 SVID：以 Gauss-Seidel 风格在 $T$ 轮里逐路刷新 $(\mathbf{B}_i,\mathbf{g}_i,\mathbf{h}_i)$，每轮先把"其他路径已经吃掉的部分"从 $\mathbf{W}'$ 减去，再用 SVID（基于秩-1 SVD 的幅度分解）拟合剩余残差，最后把缩放映射回原始域。两步分别解掉"路径间贪心耦合"和"少数通道才重要"这两个互相加剧的初始化病，Table 7 / Figure 5 显示二者各自贡献明显，组合后起点 loss 最低、QAT 启动期最稳。
 
-3. **MSE 分解给出的可诊断指标 (Inter-Path Adaptation Diagnostic)**:
+**3. inter-path adaptation 诊断指标：用 MSE 分解出的双相关性，看清补偿到底成没成。**
 
-    - 功能：给"路径协同适应"提供量化的诊断量，并指明 RaBiT 修复了哪一项。
-    - 核心思路：对 2-bit 残差网络 $y_s=y_1+y_2$，将 MSE 展开为 $\text{MSE}(y_t,y_s)=C'+2\sigma_1\sigma_2\cdot\text{Corr}(y_1,y_2)$，并补一个等价视角 $\text{MSE}\approx\sigma_{R_1}^2+\sigma_{y_2}^2-2\sigma_{R_1}\sigma_{y_2}\cdot\text{Corr}(R_1,y_2)$，其中 $R_1=y_t-y_1$ 是第一条路径的功能残差。两个相关性给出"路径对路径相关 Corr$(y_1,y_2)$ 应该足够负"和"残差对齐 Corr$(R_1,y_2)$ 应该足够正"两条独立判据。
-    - 设计动机：以往工作只看最终 PPL，看不出"为什么没起到补偿效果"。这套指标直接揭示了：标准 QAT 路径相关接近 0（根本没产生补偿）；DB-LLM 机械负相关 -0.49 但残差对齐仅 0.26（互相抵消而非追误差）；MBOK 略有改善仍偏弱；只有 RaBiT 同时取得高负相关（≈-0.35 到 -0.50）和高残差对齐（0.58–0.65），从机理上证明耦合训练真的让第二条路径在追功能残差。
+以往工作只盯最终 PPL，根本看不出"多路径为什么没起到补偿作用"。RaBiT 把 2-bit 残差网络 $y_s=y_1+y_2$ 的 MSE 展开成可读的量：$\text{MSE}(y_t,y_s)=C'+2\sigma_1\sigma_2\cdot\text{Corr}(y_1,y_2)$，并补一个等价视角 $\text{MSE}\approx\sigma_{R_1}^2+\sigma_{y_2}^2-2\sigma_{R_1}\sigma_{y_2}\cdot\text{Corr}(R_1,y_2)$，其中 $R_1=y_t-y_1$ 是第一条路径的功能残差。这给出两条独立判据——**路径相关** $\text{Corr}(y_1,y_2)$ 要足够负、**残差对齐** $\text{Corr}(R_1,y_2)$ 要足够正——前者保证两路不冗余，后者才真正衡量"第二路在追第一路的残差"。两指标一上手就把各方法看穿了：标准 QAT 路径相关≈0（压根没补偿）；DB-LLM 靠启发式把路径相关压到 -0.49，但残差对齐只有 0.26（是机械抵消而非追误差）；MBOK 略好仍偏弱；唯有 RaBiT 同时拿到高负相关（≈-0.35 到 -0.50）与高残差对齐（0.58–0.65），从机理上证明耦合训练真的让第二条路径在追功能残差，这也正是它在 PPL 上反超的原因。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{kl}}+\gamma\sum_i\mathcal{L}_{\text{inter},i}$，KL 散度蒸馏 + 中间层 MSE 蒸馏（Llama 取 $\gamma=100$；Gemma3 因激活幅度大取 $\gamma=0$）。在 WikiText-2 + C4 的 2 亿 token 校准集上用 Muon 优化器训 6 个 epoch，上下文 4096。论文附录 B 把 MSE 分析中的最优性扩展到 KL 目标。

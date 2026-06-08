@@ -41,31 +41,21 @@ CoG 是一个 training-free 的 KGQA 框架，把 Kahneman 的 Dual-Process Theo
 ## 方法详解
 
 ### 整体框架
-三阶段流水线（图 2）：
-
-1. **Offline blueprint construction**：解析训练集 SPARQL，剥掉实体只留关系序列 $\mathcal{S}(q)=\langle r_1,\ldots,r_L\rangle$，按字符串去重；每个唯一模板挑最长 question 当 semantic anchor $q^*$，用 SentenceTransformer 编码建向量索引。
-2. **System 1 - Online blueprint-guided KG exploration**：mask topic entity → 检索 top-$K$ 邻居蓝图 → copy（相似度 ≥ $\tau_{\text{copy}}$）或 LLM adapt → 得到查询专属 $S_{\text{BP}}=\langle r_1^{\text{BP}},\ldots,r_L^{\text{BP}}\rangle$。每步 $t$ 从 frontier $E_{t-1}$ 收集 candidate relation $\mathcal{R}_{\text{cand}}$，用三类分数融合 rerank：local relevance $\phi_{\text{loc}}$、step-wise alignment $\phi_{\text{step}}$、global compatibility $\phi_{\text{glob}}$。LLM 在 shortlist 上 prune，并强制并入 step-wise top1（Structure-Consistency Safeguard）。
-3. **System 2 - Failure-Aware Refinement**：检测 stagnation / insufficient evidence → 调 LLM 对 $\mathcal{T}=[e_0,r_1,\ldots]$ 做 evidence-conditioned reflection 定位错误决策点 $t_{\text{err}}$ → 回退 frontier、召回被 prematurely pruned 的结构相关 candidate、resume 扩展。若证据彻底缺失则 fallback 到 grounded inference（仅用 verified path 段 + 未满足约束让 LLM 综合答案）。
+CoG 针对的是多跳 KGQA 里 LLM agent 的"认知僵化"：早期一次错误的关系选择会把搜索拽进巨大噪声候选集、错误像滚雪球，而只看局部语义又容易陷在局部最优、走到死胡同。它把 Kahneman 的双过程理论搬到 KG 推理上，整套 training-free：离线先把训练集 SPARQL 蒸馏成只含关系链的"蓝图"模板库；在线时 System 1（快、直觉）用蓝图给每一步候选关系做软约束式的 rerank 与剪枝，System 2（慢、分析）在搜索停滞或证据不足时触发反思，定位走错的那一步并定向回溯，最终在 verified 证据上综合答案，把幻觉风险压到最低。
 
 ### 关键设计
 
-1. **离线 relational blueprint 库 + Hybrid Copy-Adapt 机制**:
+**1. 离线 relational blueprint 库 + Hybrid Copy-Adapt：从训练数据里蒸出一个全局可复用的"结构罗盘"。**
 
-    - 功能：从训练数据中 distill 出全局可复用的"结构 compass"，且在新查询时根据相似度决定 copy 还是用 LLM adapt，避免 overfit 训练分布。
-    - 核心思路：用确定性 rule（regex）剥掉 SPARQL 中所有 Freebase ID 与 non-structural 元素，只留关系序列；用最长 question 做 anchor 编码索引；查询时 mask topic entity 后检索 top-$K$ 邻居，相似度 ≥ $\tau_{\text{copy}}=0.92$ 直接 copy top-1，否则将 top-2 邻居 + 原 question 输入 LLM 让其 generate or lightly rewrite。
-    - 设计动机：WebQSP 训练集 3098 query 压成 569 模板（18.4%），GrailQA 44k 压成 3.7k（8.3%），证明 KG 推理逻辑结构远比自然语言句式 finite。Copy-adapt 在 $\tau_{\text{copy}}=0.92$ 时只 8.7% 走 copy，91.3% 走 adapt，确保泛化能力；GrailQA Zero-shot split 上 GPT-3.5 backbone 拿到 83.6%（vs ToG 72.7%、PoG 81.7%），实证 blueprint 不是死记硬背而是抽象结构先验。
+agent 缺的是廉价、可解释的结构先验。CoG 用确定性规则（regex）把训练集 SPARQL 里所有 Freebase ID 和非结构元素剥掉，只留下关系序列 $\mathcal{S}(q)=\langle r_1,\ldots,r_L\rangle$，按字符串去重，每个唯一模板挑最长 question 当 semantic anchor 用 SentenceTransformer 编码建索引。这一步几乎零成本——WebQSP 3098 条 query 压成 569 个模板（18.4%）、GrailQA 44k 压成 3.7k（8.3%），说明 KG 推理的逻辑结构远比自然语言句式有限。在线查询时先 mask 掉 topic entity 再检索 top-$K$ 邻居蓝图，相似度 ≥ $\tau_{\text{copy}}=0.92$ 就直接 copy top-1，否则把 top-2 邻居 + 原 question 交给 LLM adapt，得到查询专属的 $S_{\text{BP}}=\langle r_1^{\text{BP}},\ldots,r_L^{\text{BP}}\rangle$。$\tau_{\text{copy}}=0.92$ 下只有 8.7% 走 copy、91.3% 走 adapt，既复用经验又不死记训练分布；GrailQA 零样本 split 上 GPT-3.5 仍拿到 83.6%（ToG 72.7、PoG 81.7），佐证蓝图学的是抽象结构而非死记硬背。
 
-2. **三信号融合的 blueprint-guided rerank + Structure-Consistency Safeguard**:
+**2. 三信号融合 rerank + Structure-Consistency Safeguard：让每步候选同时被局部语义、蓝图对齐和全局兼容性打分，还兜住结构正确的边。**
 
-    - 功能：在每一步候选关系上同时考虑"对子目标的局部语义"、"对当前蓝图 slot 的对齐"和"对全局蓝图的兼容性"，并保证 LLM 选择不会漏掉结构正确的关系。
-    - 核心思路：先用单调 slot-alignment 索引 $\pi(t)=\arg\max_j \text{sim}(h(o_t), h(r_j^{\text{BP}}))$ 找当前 subgoal 对应蓝图位置，强制非递减；再三信号融合 $\text{Score}(r)=\lambda_{\text{loc}}\phi_{\text{loc}}+\lambda_{\text{step}}\phi_{\text{step}}+\lambda_{\text{glob}}\phi_{\text{glob}}$，其中 $\lambda_{\text{loc}}{=}0.6, \lambda_{\text{step}}{=}0.25, \lambda_{\text{glob}}{=}0.15$（敏感性分析显示这一权重组合 robust）。LLM prune 后的最终集合 = LLM 选中 ∪ step-wise top1，避免 LLM 漏掉结构正确但语义不显眼的关系。
-    - 设计动机：单纯 local relevance 易陷局部最优（PoG 的失败模式），单纯结构 global 又会过滤掉 KG 稀疏区的正确边；三信号融合等于"局部语义打底 + 步级对齐校准 + 全局蓝图兜底"。Safeguard 是个聪明的 dual-source selection，把 LLM 当 semantic expert、把 $\phi_{\text{step}}$ 当 structure expert，二者并联减少单 view bias。
+只靠局部语义相关会陷局部最优（PoG 的失败模式），只靠全局结构又会把 KG 稀疏区的正确边过滤掉。CoG 先用单调的 slot-alignment 索引 $\pi(t)=\arg\max_j \text{sim}(h(o_t), h(r_j^{\text{BP}}))$ 找当前子目标对应蓝图的哪个位置（强制非递减，保证逐 hop 推进），再把三类分数融合成 $\text{Score}(r)=\lambda_{\text{loc}}\phi_{\text{loc}}+\lambda_{\text{step}}\phi_{\text{step}}+\lambda_{\text{glob}}\phi_{\text{glob}}$，权重取 $\lambda_{\text{loc}}{=}0.6,\lambda_{\text{step}}{=}0.25,\lambda_{\text{glob}}{=}0.15$（敏感性分析显示这组权重稳健）。LLM 在 shortlist 上 prune 后，最终集合强制并入 step-wise top1——这个 Safeguard 是个 dual-source 选择：把 LLM 当 semantic expert、把 $\phi_{\text{step}}$ 当 structure expert 并联，避免 LLM 漏掉那些结构正确但语义不显眼的关系。
 
-3. **Failure-Aware Refinement (System 2) - 诊断 + 定向回溯 + grounded inference 兜底**:
+**3. Failure-Aware Refinement（System 2）：用"诊断 + 定向回溯 + grounded 兜底"替代盲目重试。**
 
-    - 功能：在 forward exploration 卡住时切换到 correction mode，定位高风险决策、定向 re-route，避免 PoG 那种"同一节点 26 次重试"的 stochastic stagnation。
-    - 核心思路：LLM 在 working memory $\mathcal{M}$ 条件下回顾轨迹 $\mathcal{T}$ 与 pruned branches summary，pinpoint 错误决策点 $t_{\text{err}}$；agent 把 frontier 回退到 $t_{\text{err}}$ 前的状态，召回曾被 pruned 但结构 relevant 的候选；若 KG 缺边导致无法 verifiable，fallback 到 grounded inference，仅基于 verified path + 未满足约束让 LLM 综合答案。
-    - 设计动机：ToG / PoG 没有显式的失败诊断，要么死循环要么提前终止 hallucinate。CoG 把"反思"显式建模为一个独立步骤，并用 verified evidence 而非 free-form 让 LLM 生成最终答案，把 parametric hallucination 风险压到最低。Ablation 显示 System 2 是单一最重要组件：CWQ 上去掉它准确率从 66.9 跌到 58.5（−8.4%），是去掉 blueprint guidance（System 1）跌幅（−5.4%）的近 1.6 倍。
+ToG/PoG 没有显式的失败诊断，卡住了要么死循环、要么提前终止然后 hallucinate（附录 Case 2 里 PoG 在同一节点重试 26 次、烧掉 14k token）。CoG 在检测到 stagnation 或证据不足时切到 correction 模式：让 LLM 在工作记忆 $\mathcal{M}$ 条件下回顾轨迹 $\mathcal{T}=[e_0,r_1,\ldots]$ 和被剪掉的分支摘要，pinpoint 出错误决策点 $t_{\text{err}}$；agent 随即把 frontier 回退到 $t_{\text{err}}$ 之前，召回那些曾被过早 prune、但结构相关的候选，重新扩展。若 KG 真的缺边、无论如何 verify 不出来，就 fallback 到 grounded inference，只拿 verified 的路径段 + 未满足的约束让 LLM 综合答案，把参数化幻觉的风险压到最低。消融显示 System 2 是单一最重要组件：CWQ 上去掉它准确率从 66.9 跌到 58.5（−8.4），跌幅是去掉 System 1 蓝图引导（−5.4）的近 1.6 倍。
 
 ### 损失函数 / 训练策略
 完全 training-free，无 gradient update：(1) blueprint encoder 用预训练 SentenceTransformer，无 fine-tune；(2) all agents 用 fixed LLM API（GPT-3.5 Turbo / GPT-4 / Qwen2.5-7B），temperature 0.3，max token 1024；(3) exploration depth 上限 4。Hyperparameter 包括 $\tau_{\text{copy}}=0.92$、reranking 权重 $(0.6, 0.25, 0.15)$、retrieval $K$；附录给出敏感性分析。

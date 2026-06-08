@@ -41,30 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PA-GRPO 流程：(1) 对每条 base instance $x=(q, \mathcal{C})$，用一组 permutation 映射 $\Pi$ 生成 $P$ 个 prompt 变体 $\mathcal{G}(x) = \{p^{(t)} = \tau_t(x)\}_{t=1}^P$；MCQ 用 5 种（4 个 cyclic shift + 1 个 reverse），Judge 用全部 2 种 (AB, BA)。(2) 每个 prompt 各采 $N$ 个 response，得到 $P \times N$ 个样本组成一个 permutation group。(3) 用 label-to-semantic 映射 $m_{\tau_t}(\ell)$ 把 "A/B/C/D" 还原成原始候选 index $z^{(t,i)}$，再计算组合 reward $r^{(t,i)} = r_\text{pre}^{(t,i)} + \lambda r_\text{con}^{(t,i)}$，最后用 cross-permutation advantage 替换标准 GRPO baseline 跑 PPO-clip 优化。所有训练用 verl 框架 + LoRA。
+PA-GRPO 想解决的是标准 GRPO 的 permutation-blindness：它把同一题目的不同选项顺序当成毫不相干的 prompt，模型在"好顺序"上拿高分、"坏顺序"上失败也无人惩罚。PA-GRPO 的做法是把 RL 的"组"边界从"同一 prompt 的多个采样"扩展到"同一语义实例的多个排列 × 多个采样"：对每条 base instance $x=(q,\mathcal{C})$ 先用一组排列映射生成 $P$ 个 prompt 变体（MCQ 取 5 种，Judge 取 2 种），每个变体各采 $N$ 个 response 凑成一个 permutation group，再把 label 还原成原始候选 index、算上一致性奖励，最后用跨排列的 advantage baseline 替掉原版的组内 baseline 跑 PPO-clip。输入是一道带选项的题目，中间是一整组打散顺序后的采样，输出则是一个"换顺序也不换选择"的 policy。整套训练基于 verl 框架 + LoRA。
 
 ### 关键设计
 
-1. **Permutation Group 构造（Permutation Group Construction）**:
+**1. Permutation Group 构造：用 5 个代表排列近似 24 个全排列。**
 
-    - 功能：定义"什么算同一语义实例的不同表面排列"，并控制计算成本。
-    - 核心思路：对于 MCQ，全排列 $4!=24$ 太贵；作者用 5 个代表排列 $\Pi_\text{MCQ} = \{\text{ABCD}, \text{BCDA}, \text{CDAB}, \text{DABC}, \text{DCBA}\}$——4 个 cyclic shift 保证每个候选都在每个位置上各出现 1 次（消除 position-label binding），再加 1 个 reverse 顺序专门破坏 cyclic 模式下"A 永远在 B 之前"的 adjacency。对于 Judge ($P=2$) 直接用全集 $\{\text{AB}, \text{BA}\}$。
-    - 设计动机：5 vs 24 节省 ~5 倍算力，实验显示 $P=5$ 和 $P=24$ 在 TinyMMLU CA 上只差 2 个点（75.0 vs 77.0），性价比明显。
+这一步要回答"什么样的样本才算同一语义实例的不同表面"，同时不能让算力爆炸。MCQ 的全排列是 $4!=24$，逐个跑太贵；作者挑出 5 个代表排列 $\Pi_\text{MCQ}=\{\text{ABCD},\text{BCDA},\text{CDAB},\text{DABC},\text{DCBA}\}$——前 4 个是 cyclic shift，保证每个候选在每个位置上恰好出现一次，从而消除 position 和 label 的绑定；最后加一个 reverse 顺序，专门打破 cyclic 模式下"A 永远排在 B 之前"的固定 adjacency。Judge 任务只有两个候选，直接用全集 $\{\text{AB},\text{BA}\}$（$P=2$）。
 
-2. **Cross-Permutation Advantage（跨排列优势估计）**:
+这个选择本质上是在对称群里挑代表元做近似：$P=5$ 相比 $P=24$ 省下约 5 倍算力，而实验显示二者在 TinyMMLU CA 上只差 2 个点（75.0 vs 77.0），是明显的性价比甜点。
 
-    - 功能：把标准 GRPO 的 per-prompt baseline 升级成 per-permutation-group baseline。
-    - 核心思路：把整组 $P \times N$ 个样本当成单一 comparison set，用 $\mu_{\mathcal{G}} = \frac{1}{PN}\sum_{t,i} r^{(t,i)}$ 和 $\sigma_{\mathcal{G}}$ 计算 $A_\text{PA}^{(t,i)} = (r^{(t,i)} - \mu_{\mathcal{G}}) / (\sigma_{\mathcal{G}} + \epsilon)$；当 $\sigma_{\mathcal{G}} < \delta$（同组奖励差异很小）时令 advantage = 0，避免放大噪声。这样只有"全局比所有排列下都好"的样本才能拿正 advantage。
-    - 设计动机：标准 GRPO 在单个 prompt 内归一化，所以模型只要在"好顺序"上做好就能拿高分；跨排列归一化迫使策略不能再靠"对 ABCD 顺序敏感的捷径"获利，必须在所有排列上一起好才能脱颖而出。
+**2. Cross-Permutation Advantage：把 baseline 从单 prompt 升级到整组排列。**
 
-3. **Consistency-Aware Reward（一致性奖励 $r_\text{con}$）**:
+标准 GRPO 在单个 prompt 内部做归一化，于是模型只要在"顺手的那个顺序"上做好就能拿高 advantage，正好放过了 permutation-blindness。PA-GRPO 把整组 $P\times N$ 个样本当成同一个 comparison set，用组内均值 $\mu_{\mathcal{G}}=\frac{1}{PN}\sum_{t,i} r^{(t,i)}$ 和标准差 $\sigma_{\mathcal{G}}$ 计算 $A_\text{PA}^{(t,i)}=(r^{(t,i)}-\mu_{\mathcal{G}})/(\sigma_{\mathcal{G}}+\epsilon)$。
 
-    - 功能：除了 ground-truth 准确度 reward $r_\text{pre}$（含 $r_\text{acc} \in \{+1, -1\}$ + 长度 $\pm 0.1$ + 格式 $\pm 0.3$），再加一个跨排列的 consistency reward 直接奖励"换顺序不换选择"。
-    - 核心思路：Judge 任务做 index-aligned pairwise：把同一索引 $i$ 在 $(1, 2)$ 两个排列下的 response 配对，若 $z^{(1,i)} = z^{(2,i)}$ 则 $r_\text{con} = +1$，否则 $-1$。MCQ 任务做 unique-mode agreement：统计整组 $P \times N$ 个样本里每个语义候选的票数 $n_k$，若 mode 唯一 $|\mathcal{M}| = 1$ 且 $z^{(t,i)} = z^\star$ 则 $r_\text{con} = +1$，平票或不匹配都 $-1$。
-    - 设计动机：advantage 是相对信号、可能模糊；显式 $r_\text{con}$ 是绝对信号、直接告诉模型"内部分歧 = 坏"。$\lambda = 1.0$ 是消融最优。
+这样一来，只有"在所有排列下都好"的样本才能拿到正 advantage，模型再也无法靠"对 ABCD 顺序敏感的捷径"获利。为了避免在同组奖励几乎一致时放大噪声，作者额外加了一道闸门：当 $\sigma_{\mathcal{G}}<\delta$ 时直接令 advantage 为 0。
+
+**3. Consistency-Aware Reward：用绝对信号直接奖励"换顺序不换选择"。**
+
+advantage 是相对信号，方向可能模糊；作者再加一个跨排列的一致性奖励 $r_\text{con}$ 给出绝对信号，告诉模型"内部分歧 = 坏"。组合 reward 写成 $r^{(t,i)}=r_\text{pre}^{(t,i)}+\lambda r_\text{con}^{(t,i)}$，其中 $r_\text{pre}$ 是准确度部分（$r_\text{acc}\in\{+1,-1\}$ 加长度 $\pm0.1$、格式 $\pm0.3$），$\lambda=1.0$ 为消融最优。
+
+$r_\text{con}$ 的算法随任务而变。Judge 做 index-aligned pairwise：把同一索引 $i$ 在两个排列下的 response 配对，$z^{(1,i)}=z^{(2,i)}$ 则 $+1$，否则 $-1$。MCQ 做 unique-mode agreement：统计整组里每个语义候选的票数 $n_k$，只有当 mode 唯一（$|\mathcal{M}|=1$）且 $z^{(t,i)}=z^\star$ 时才给 $+1$，平票或不匹配一律 $-1$——刻意"惩罚 ties"是为了防止模型把分歧均摊到几个选项上来骗一致性。
 
 ### 损失函数 / 训练策略
-最终 PPO-clip 目标：$\mathcal{L}_\text{clip}(\theta) = \mathbb{E}[\min(\rho^{(t,i)} A_\text{PA}^{(t,i)}, \text{clip}(\rho^{(t,i)}, 1-\eta, 1+\eta) A_\text{PA}^{(t,i)})]$，加 KL 正则到 reference policy。三个 policy model：Llama-3.1-8B-Instruct、Qwen3-8B、Qwen3-32B；训练数据用 Chatbot Arena（pairwise）+ MMLU train set（MCQ）；用 LoRA fine-tune。
+最终 PPO-clip 目标为 $\mathcal{L}_\text{clip}(\theta)=\mathbb{E}[\min(\rho^{(t,i)} A_\text{PA}^{(t,i)},\,\text{clip}(\rho^{(t,i)},1-\eta,1+\eta)A_\text{PA}^{(t,i)})]$，并对 reference policy 加 KL 正则。三个 policy model：Llama-3.1-8B-Instruct、Qwen3-8B、Qwen3-32B；训练数据用 Chatbot Arena（pairwise）+ MMLU train set（MCQ），统一用 LoRA fine-tune。
 
 ## 实验关键数据
 

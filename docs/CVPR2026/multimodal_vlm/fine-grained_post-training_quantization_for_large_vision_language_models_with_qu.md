@@ -40,27 +40,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入多模态序列（视觉+文本+特殊token）→ 在校准阶段计算每个 token 的 QIG 分数 → IQR 裁剪和归一化 → 将 token 重要度系数 $\lambda_i$ 融入 channel-wise equalization 的优化目标 → 搜索最优量化缩放因子。
+QIG 想解决的问题很具体：现有 LVLM 量化方法只能区分"视觉 token 还是文本 token"，却看不出同一模态里哪些 token 对量化更敏感，于是校准时一视同仁地分配缩放因子。QIG 的做法是在不改动量化主流程的前提下，给每个 token 算一个量化敏感度分数，再把这个分数当权重塞进原有的校准目标里。
+
+整条流水线挂在标准 PTQ 的校准阶段上：喂进一批多模态校准序列（视觉 + 文本 + 特殊 token），先对每个 token 计算 QIG 分数衡量它对量化误差的贡献，然后用 IQR 裁掉极端值并归一化成重要度系数 $\lambda_i$，最后把 $\lambda_i$ 作为权重加进 channel-wise equalization 的优化目标，搜索出对敏感 token 更友好的量化缩放因子。量化完成后推理路径与基线完全一致，所有额外计算都发生在校准这一次性环节。
 
 ### 关键设计
 
-1. **Quantization-aware Integrated Gradients (QIG)**:
+**1. 量化感知积分梯度（QIG）：让敏感度直接对齐量化误差本身。**
 
-    - 功能：在 token 级别量化每个 token 对量化误差的贡献
-    - 核心思路：不同于经典 IG 归因全精度预测，QIG 归因的是全精度模型和量化模型之间的输出差异。沿 $x^q$（量化输入）到 $x$（实际输入）的路径积分梯度：$QIG(x) = (x - x^q) \int_0^1 \frac{\partial(f(x_\alpha, w) - f(x_\alpha, w^q))}{\partial x_\alpha} d\alpha$
-    - 设计动机：梯度和注意力等常用代理与量化误差的相关性弱，perturbation-based 方法虽准确但计算代价高。QIG 直接与 PTQ 误差关联，且满足完备性公理
+痛点在于过去衡量 token 重要性靠的是梯度或注意力这类代理，它们反映的是 token 对最终预测的影响，跟"量化这个 token 会带来多大误差"并不是一回事，相关性很弱；而逐个扰动 token 去实测误差虽然准，代价却高得离谱。QIG 的关键改动是把归因的对象换掉——经典积分梯度归因的是全精度模型的预测，QIG 归因的则是全精度模型和量化模型之间的**输出差异**，也就是量化本身引入的那部分误差。具体地，它沿着从量化输入 $x^q$ 到实际输入 $x$ 的直线路径对这个差异积分梯度：
 
-2. **IQR 裁剪稳定化**:
+$$QIG(x) = (x - x^q) \int_0^1 \frac{\partial\big(f(x_\alpha, w) - f(x_\alpha, w^q)\big)}{\partial x_\alpha}\, d\alpha$$
 
-    - 功能：抑制 QIG 分数中的极端值
-    - 核心思路：用四分位距裁剪 $C(QIG_i) = \text{clip}(QIG_i, Q_1 - 1.5 \cdot IQR, Q_3 + 1.5 \cdot IQR)$，然后归一化得到 $\lambda_i$
-    - 设计动机：原始 QIG 分布重尾，少数极端 token 会主导优化
+因为积分对象直接就是 $f(\cdot, w) - f(\cdot, w^q)$ 这个量化误差，算出来的分数天然与 PTQ 误差挂钩；同时积分梯度满足完备性公理（各 token 的归因之和等于总输出差异），保证了这套敏感度估计是有理论依据地把误差"摊"到每个 token 头上，而不是又一个拍脑袋的代理。
 
-3. **Token 级加权 Channel-Wise Equalization**:
+**2. IQR 裁剪：别让几个离群 token 绑架整个校准。**
 
-    - 功能：将 token 重要度系数 $\lambda_i$ 融入 CWE 优化目标
-    - 核心思路：$\mathbf{E}^* = \arg\min_{\mathbf{E}} \sum_{i=1}^T \lambda_i \|Q_W(\mathbf{W}*\mathbf{E}) Q_X(\mathbf{E}^{-1}*\mathbf{X}_i) - \mathbf{W}\mathbf{X}_i\|_2^2$
-    - 设计动机：让缩放因子搜索偏向更敏感的 token，整体框架不变但精度更高
+直接拿原始 QIG 分数当权重会出事，因为它的分布是重尾的——少数极端 token 的分数高到能盖过其余所有 token，校准目标会被它们带偏。这里借统计学里常规的四分位距规则做截断，把超出 $[Q_1 - 1.5\,IQR,\ Q_3 + 1.5\,IQR]$ 的分数压回边界：
+
+$$C(QIG_i) = \mathrm{clip}\big(QIG_i,\ Q_1 - 1.5\cdot IQR,\ Q_3 + 1.5\cdot IQR\big)$$
+
+裁剪后再做归一化，得到落在合理区间的 token 重要度系数 $\lambda_i$。这样既保留了敏感 token 相对更高的权重，又不至于让个别离群值一家独大。
+
+> ⚠️ 1.5 倍 IQR 是经典统计默认值，是否为量化场景下的最优倍数原文未深入讨论，⚠️ 以原文为准。
+
+**3. Token 级加权 channel-wise equalization：把权重落到优化目标里。**
+
+有了 $\lambda_i$，剩下的就是让它真正影响缩放因子的搜索。CWE 的本质是找一组通道均衡矩阵 $\mathbf{E}$，把激活里难量化的尺度搬一部分到权重上，使量化前后的输出尽量接近。QIG 只在这个目标的求和里给每个 token 的重构误差乘上自己的权重 $\lambda_i$：
+
+$$\mathbf{E}^* = \arg\min_{\mathbf{E}} \sum_{i=1}^T \lambda_i \big\| Q_W(\mathbf{W}*\mathbf{E})\, Q_X(\mathbf{E}^{-1}*\mathbf{X}_i) - \mathbf{W}\mathbf{X}_i \big\|_2^2$$
+
+于是搜索过程会自动偏向把误差预算留给更敏感的 token，对不敏感的 token 则容忍更大的量化偏差。整个均衡框架和原来一模一样，唯一的改动就是这个逐 token 的权重——这也是为什么 QIG 几乎不引入额外推理开销却能换来精度提升。
 
 ### 训练策略
 - 完全无训练（PTQ），仅在校准阶段使用 128 对 ShareGPT4V 图文对

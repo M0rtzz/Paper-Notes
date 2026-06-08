@@ -40,26 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TabTrim 的输入是问题 $Q$、原始表格 $T_0$ 和当前子表 $T_{t-1}$，输出是一个更紧凑的子表。训练阶段先从 Text-to-SQL 数据构造 gold sub-table trajectory：把 gold SQL 拆成按执行顺序排列的 clause-level 操作，例如行过滤和列投影，逐步执行得到 $T_0, T_1^+, ..., T_n^+$。然后训练两个组件：pruner 学习从当前子表生成下一步 gold 子表，verifier 学习给任意子表预测一个与 gold final sub-table 对齐的质量分数。推理阶段从原表开始，每一步让 pruner 生成多个候选，再由 verifier 打分保留 top-$k$，最终选择所有 beam 中分数最高的子表给下游 LLM 答题。
+TabTrim 想解决的是表格剪枝最致命的失败模式：沿单一轨迹顺序修订时，早期一旦把答案关键单元格删掉就再也回不来。它的做法是给剪枝过程补上「过程监督 + 并行搜索」。输入是问题 $Q$、原始表格 $T_0$ 和当前子表 $T_{t-1}$，输出是更紧凑的子表。训练时先把 Text-to-SQL 数据里的 gold SQL 按 clause-level 执行顺序拆开（行过滤、列投影等），逐步执行得到一串 gold 子表 $T_0, T_1^+, \dots, T_n^+$，并以此训练两个组件——pruner 学会从当前子表迈向下一步 gold 子表，verifier 学会给任意子表打一个对齐最终 gold 子表的质量分。推理时从原表出发，每一步让 pruner 生成多个候选、verifier 打分保留 top-$k$，最后从所有 beam 里挑分数最高的子表交给下游 LLM 答题。
 
 ### 关键设计
-1. **Gold trajectory 构造**:
 
-    - 功能：用现成 Text-to-SQL 标注自动生成逐步剪枝监督，避免额外人工标注中间子表。
-    - 核心思路：对每个样本 $(Q, SQL_{gold}, T_{raw})$，按 SQL 逻辑执行顺序拆成 clause-level 操作；每执行一步，就得到一个 gold sub-table $T_t^+$。作者还通过修改 gold 操作构造 off-trajectory negative sub-tables $T_t^-$，形成 progression dataset 和 correction dataset。
-    - 设计动机：最终答案只能监督“答对没答对”，很难告诉剪枝器哪一步删错了；SQL 中间执行状态提供了可对齐的过程监督，negative 轨迹则训练模型从错误状态恢复。
+**1. Gold trajectory 构造：把 SQL 的执行中间态变成免标注的逐步剪枝监督。**
 
-2. **Trajectory-supervised Pruner 与 DPO**:
+痛点在于最终答案只能告诉模型「答对没答对」，却说不清剪枝在哪一步删错了关键行列。作者注意到 Text-to-SQL 数据里的 gold SQL 天然带有 clause-level 执行顺序，于是对每个样本 $(Q, SQL_{gold}, T_{raw})$ 把 SQL 按逻辑执行顺序拆成一连串操作，每执行一步就落下一个 gold sub-table $T_t^+$，由最终正确答案约束、不需要任何额外人工标注。
 
-    - 功能：生成下一步更接近 gold 轨迹的子表，并学习在错误中间状态下纠偏。
-    - 核心思路：第一阶段用 SFT 同时优化 progression 和 correction 两类样本，损失可概括为 $L_{SFT}=-\log P_\theta(T_t^+|Q,T_0,T_{t-1}^+)-\lambda\log P_\theta(T_t^+|Q,T_0,T_{t-1}^-)$。第二阶段用 DPO 偏好 gold next sub-table $T_t^+$ 而不是错误子表 $T_t^-$，降低细粒度语义剪错。
-    - 设计动机：只学 gold 路径会让模型在推理时遇到偏离轨迹的子表后无法恢复；correction samples 和 DPO 让剪枝器既会前进，也会从错误候选拉回正确方向。
+光有正路还不够：剪枝器在推理时迟早会走到偏离 gold 轨迹的状态。为此作者再通过篡改 gold 操作构造 off-trajectory 的 negative sub-tables $T_t^-$，把数据组织成 progression dataset（沿正路前进）和 correction dataset（从错误状态拉回）。这样 SQL 的执行中间态既提供了可对齐的过程监督，negative 轨迹又教会模型怎么从错误里恢复。
 
-3. **Loss-aware Verifier 与并行轨迹搜索**:
+**2. Trajectory-supervised Pruner 与 DPO：既要会前进，也要会从偏离的子表纠偏。**
 
-    - 功能：给候选子表打分，并在推理时选择更可能保留答案关键单元格的路径。
-    - 核心思路：把子表表示成 canonical cell set，计算候选子表与最终 gold 子表 $T_n^+$ 的 precision 和 recall，再用带召回偏置的 $F$-score 作为质量分数 $S(T_t)$。默认 $\alpha=1.5$，强调保留 answer-critical cells。推理时用 beam search：宽度 $k$、分支数 $b$、最大深度 $D_{max}$，每步 generate-score-select，最后从所有 beam 中选 verifier 分最高的子表。
-    - 设计动机：likelihood 不一定等于子表质量，尤其不一定惩罚漏掉关键单元格；loss-aware score 显式偏向 recall，而并行搜索让系统能抛弃早期错误分支。
+如果只在 gold 路径上做模仿学习，剪枝器一旦在推理时遇到自己生成的、略微跑偏的子表就会束手无策。作者用两阶段训练把「前进」和「纠偏」一起灌进去：第一阶段 SFT 同时吃 progression 和 correction 两类样本，损失为
+
+$$L_{SFT}=-\log P_\theta(T_t^+\mid Q,T_0,T_{t-1}^+)-\lambda\log P_\theta(T_t^+\mid Q,T_0,T_{t-1}^-)$$
+
+第一项让模型从正确前序子表迈向 gold 下一步，第二项则要求即便前序是错误子表 $T_{t-1}^-$，也得指向正确的 $T_t^+$。第二阶段再用 DPO 把 gold next sub-table $T_t^+$ 偏好排在错误子表 $T_t^-$ 之上，进一步压低细粒度的语义剪错。两阶段叠加后，pruner 既能沿轨迹前进，又能在候选跑偏时把方向拉回来。
+
+**3. Loss-aware Verifier 与并行轨迹搜索：用召回偏置的打分挑路径，并行抛弃早期错误分支。**
+
+生成概率高不代表子表质量好——尤其漏掉答案关键单元格这种致命错误，likelihood 几乎不会惩罚。作者把每个候选子表表示成 canonical cell set，计算它与最终 gold 子表 $T_n^+$ 的 precision 和 recall，再用一个带召回偏置的 $F$-score 作为质量分 $S(T_t)$，默认 $\alpha=1.5$ 让分数明显偏向「宁可多留也别删掉 answer-critical cells」。有了这个比生成概率更贴合剪枝风险的打分，推理时就能做 beam search：宽度 $k$、分支数 $b$、最大深度 $D_{max}$，每一步 generate-score-select，最后从所有 beam 中选 verifier 分最高的子表。这把剪枝从「修一条路、错了就锁死」变成「同时探多条路、随时丢掉早期烂分支」。
+
+### 一个完整示例：beam search 怎么救回被误删的一行
+设 $k=b=2$、$D_{max}=4$。原表 $T_0$ 有几十行，问题问某个条件下的聚合值。第 1 步 pruner 从 $T_0$ 生成 2 个分支候选，verifier 打分后保留 top-2 子表进 beam；其中一个分支因为列投影偏激，把答案需要的那一列削掉了，但它在 precision 上看起来还不错。第 2 步两个 beam 各再生成 2 个候选共 4 个，verifier 用 $\alpha=1.5$ 的召回偏置算分，那个误删关键列的分支因为 recall 骤降被压到低分、不再进入 top-2，而保留了关键列的分支继续收缩冗余行。如此走 3-4 步后，每个样本的 pruner/verifier 调用上界为 $O(k\cdot b\cdot D_{max})$，最终系统不是从「唯一一条已经删错的路」里硬挑，而是从一组并行候选里选出 recall 最高、最干净的子表交给下游答题——这正是顺序修订做不到的回溯能力。
 
 ### 损失函数 / 训练策略
 TabTrim 用 WikiSQL 和 SQUALL 构造超过 80K 训练样本。pruner 使用 Qwen3-4B 和 Qwen3-8B 训练，verifier 使用 Qwen3-0.6B，默认 $\alpha=1.5$。推理时默认 $k=b=2$、$D_{max}=4$，每个样本的 pruner/verifier 调用上界为 $O(k\cdot b\cdot D_{max})$。最终答案生成使用 GPT-4o-mini，以保证和闭源/开源基线的下游 reasoner 设置尽量一致。

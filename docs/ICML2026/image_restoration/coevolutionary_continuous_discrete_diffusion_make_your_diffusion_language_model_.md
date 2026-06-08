@@ -40,35 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CCDD 由三层组成：
-1. **前向过程**：对清洁数据 $(x_0, z_0)$ 同时施加两路独立噪声——$x_t \sim \text{Cat}(\eta_t x_0 + (1-\eta_t)\pi_t)$（masked 或 uniform CTMC）和 $z_t \sim \mathcal{N}(\alpha_t z_0, \sigma_t^2 I)$（VP-SDE）；
-2. **反向过程**：单个网络 $f_\theta(x_t, z_t, t)$ 同时输入两路噪声态，分别输出 token logits 和 embedding 预测 $\hat{x}_{0,\theta}, \hat{z}_{0,\theta}$，但根据各自模态规则独立更新：DDPM/DDIM 给 $z$，Bayes 后验 (8) 给 $x$；
-3. **嵌入空间选择**：$z$ 不是新学的 embedding，而是用 **Qwen3-Embedding-0.6B 倒数几层的上下文嵌入**（hidden dim=32 归一化后），相当于把预训练 LLM 的语义注入扩散过程，并作为 representation guidance 加速训练收敛。
-
-最终训练损失是连续与离散 ELBO 的加权和：$\mathcal{L}_{\text{CCDD}} = \gamma_{\text{cont}} \mathcal{L}_{\text{cont}} + \gamma_{\text{disc}} \mathcal{L}_{\text{disc}}$。
+CCDD 要解决的是"连续扩散表达力最强却最难训"这个老矛盾，做法是把语言扩散搬到 $\mathcal{X}\times\mathcal{Z}$ 的联合多模态空间上：离散 token $x$ 提供易解码、强监督的"骨架"，连续上下文嵌入 $z$ 提供平滑、信息丰富、能跨步保留概率历史的"血肉"。前向时对清洁数据 $(x_0,z_0)$ 同时注入两路独立噪声——$x_t \sim \text{Cat}(\eta_t x_0 + (1-\eta_t)\pi_t)$ 走 masked/uniform CTMC，$z_t \sim \mathcal{N}(\alpha_t z_0, \sigma_t^2 I)$ 走 VP-SDE；反向时由单个网络 $f_\theta(x_t,z_t,t)$ 同时吃进两路噪声态，输出 token logits 与 embedding 预测 $\hat{x}_{0,\theta},\hat{z}_{0,\theta}$，再分别按各自模态规则更新（DDPM/DDIM 更新 $z$、Bayes 后验式 (8) 更新 $x$）。训练目标是两路 ELBO 的加权和 $\mathcal{L}_{\text{CCDD}} = \gamma_{\text{cont}} \mathcal{L}_{\text{cont}} + \gamma_{\text{disc}} \mathcal{L}_{\text{disc}}$。
 
 ### 关键设计
 
-1. **联合连续-离散扩散过程（Joint CTMC × SDE）**:
+**1. 联合连续-离散扩散过程：让一个网络同时跑 CTMC 和 SDE**
 
-    - 功能：让模型在每一步既看到"离散 token 当前状态"也看到"连续语义当前状态"，保留全程的概率历史，同时享受离散标签的强监督。
-    - 核心思路：前向核 $q_t(x_t,z_t|x_0,z_0) = q_t^{\text{disc}}(x_t|x_0) q_t^{\text{cont}}(z_t|z_0)$ 完全可分；反向核 $p_\theta(x_s, z_s | x_t, z_t) = p_\theta^{\text{disc}}(x_s|x_t,z_t) p_\theta^{\text{cont}}(z_s|x_t,z_t)$ 在因式分解形式下**仍允许每个 factor 同时依赖两个输入**（Remark 4.1）。作者证明这种"前向独立 + 反向条件耦合"的方案与完全耦合反向核在步长 $\to 0$ 时表达力渐近等价（Theorem B.19），却大大简化了参数化。
-    - 设计动机：让连续路径承担"跨步记忆/计划"——保留 logit 几何而不是每步量化（Lemma B.9 证明 DDM 的"logits→sample→embed"是硬信息瓶颈）；让离散路径承担"高置信解码"——避免 CDM 从连续空间反解 token 的组合爆炸；前向因式分解保证 noising 简单，反向条件耦合保证表达力。
+针对 DDM"每步把 logits 量化成 token、丢失跨步不确定性记忆"和 CDM"从连续空间反解 token 组合爆炸"这两个对立痛点，CCDD 把前向设计成完全可分的乘积 $q_t(x_t,z_t|x_0,z_0) = q_t^{\text{disc}}(x_t|x_0)\, q_t^{\text{cont}}(z_t|z_0)$ 以保证加噪简单，反向却写成 $p_\theta(x_s,z_s|x_t,z_t) = p_\theta^{\text{disc}}(x_s|x_t,z_t)\, p_\theta^{\text{cont}}(z_s|x_t,z_t)$——虽然因式分解，但每个 factor 都同时依赖两路输入（Remark 4.1），这种"前向独立 + 反向条件耦合"的写法被证明与完全耦合反向核在步长 $\to 0$ 时表达力渐近等价（Theorem B.19），却大大简化了参数化。这样连续路径就能承担"跨步记忆与计划"——保留 logit 几何而非每步量化（Lemma B.9 证明 DDM 的"logits→sample→embed"是硬信息瓶颈），离散路径则承担"高置信解码"，两者各取所长。
 
-2. **预训练 LLM 上下文嵌入作为连续空间（Contextualized Embedding Space）**:
+**2. 用预训练 LLM 上下文嵌入当连续空间：解决 CDM 的"嵌入差"病根**
 
-    - 功能：用一个"易生成、可解码、有语义"的连续目标空间，规避 CDM 三大训练性问题。
-    - 核心思路：把 Qwen3-Embedding 的上下文嵌入冻结作为 $z_0$ 的来源。论文在 Figure 2 的关键消融里对比了 0-th 层（接近 token-wise，纯查表嵌入）vs 第 28 层（充分上下文化）作为生成目标——前者重建 cross-entropy 最低（容易解码）但 MSE 最高（难生成），后者反之；中间层（如 12-th, 20-th）在两者间取得平衡。最终选取 contextualized 层作为 $z$ 的目标空间。Table 1 还系统比较了 simplex / token-wise $\mathbb{R}^d$ / contextualized $\mathbb{R}^d$ 三种生成空间，结论是 contextualized 在维度、平滑度、解码歧义上综合最优（虽然解码歧义更高，但可以靠离散分支兜底）。
-    - 设计动机：作者通过 Proposition E.1 证明 token-wise embedding 维度 $d \le V$ 表达力不超过 simplex，且生成目标是离散的码本集合，对 CDM 极不友好；simplex 又面临高维硬约束。Contextualized embedding 既提供了平滑的生成目标，又携带了预训练 LLM 的语义先验，作为"代理 representation guidance"（与 REPA、Yu 2024 等同源思路）加速收敛——实验显示 CCDD 仅需 40k 步就达到 MDLM 1000k 步的 PPL，训练加速 25×。
+作者把 CDM 失败归因为"决策空间过大、嵌入空间不佳、解码组合复杂"，其中"嵌入差"是关键，所以 $z_0$ 不另学新 embedding，而是冻结取自 **Qwen3-Embedding-0.6B 倒数几层的上下文嵌入**（hidden dim 取 32、归一化后）。Figure 2 的核心消融对比了 0-th 层（接近 token-wise 查表）和第 28 层（充分上下文化）作为生成目标：前者重建 cross-entropy 最低（易解码）但 MSE 最高（难生成），后者反之，中间层（12-th、20-th）在两者间取得平衡，最终选 contextualized 层；Table 1 进一步横比 simplex / token-wise $\mathbb{R}^d$ / contextualized $\mathbb{R}^d$，结论是 contextualized 在维度、平滑度、解码歧义上综合最优（解码歧义虽高但可靠离散分支兜底）。理论上 Proposition E.1 证明 token-wise embedding 维度 $d\le V$ 表达力不超过 simplex 且生成目标是离散码本集合、对 CDM 极不友好，simplex 又有高维硬约束，唯有上下文嵌入既给出平滑生成目标又携带预训练语义先验，相当于自带"代理 representation guidance"（与 REPA、Yu 2024 同源）——这正是 CCDD 仅 40k 步就追平 MDLM 1000k 步 PPL、训练加速 25× 的来源。
 
-3. **表征引导的 Classifier-Free Guidance（Representation-CFG）+ 多架构选择**:
+**3. 表征引导的 Classifier-Free Guidance 与三种多模态架构**
 
-    - 功能：把连续 $z$ 视作"自生成的表征条件"，在推理时通过 CFG 调节其对 token 生成的影响强度，实现质量-效率灵活权衡。
-    - 核心思路：训练时以概率 $p_{\text{drop}}$ 把 $z_t$ 整体置零，让模型同时学到 conditional ($z$ in) 和 unconditional ($z$ 全零) 两种 forward；采样时 $\text{logits} = w \cdot \text{logits}_c + (1-w) \cdot \text{logits}_\phi$，其中 $w$ 是 guidance 强度。架构端给出三个选择：(a) **MDiT** 无额外参数，把 $x_t, z_t$ embedding 直接相加进 DiT；(b) **MMDiT** 借鉴 MM-DiT 双流交叉注意，参数翻倍但效果最好；(c) **MoEDiT** 用 MoE 路由不同模态到专家，参数膨胀小但 FLOPs 利用率高。
-    - 设计动机：CFG 把"连续推理"显式地变成可控强度的引导信号；多架构选择让不同 compute 预算的用户都有合适方案——MDiT 实现"零额外参数也能受益于联合扩散"，MMDiT 实现"参数换性能"，MoEDiT 实现"性价比最优"。
+为了让连续 $z$ 的影响强度在推理时可调，CCDD 把它当作"自生成的表征条件"做 CFG：训练时以概率 $p_{\text{drop}}$ 把 $z_t$ 整体置零，使模型同时学会 conditional（$z$ 在）和 unconditional（$z$ 全零）两条 forward；采样时按 $\text{logits} = w\cdot\text{logits}_c + (1-w)\cdot\text{logits}_\phi$ 混合，guidance 强度 $w$ 越大、连续推理被强化越多（消融里 $w=1.5$ 比 $w=0$ 把 Gen NLL 从 9.06 压到 8.25）。架构端给三种依算力预算可选的方案：**MDiT** 把 $x_t,z_t$ 的 embedding 直接相加进 DiT，零额外参数也能拿到 25% PPL 下降；**MMDiT** 借鉴 MM-DiT 双流交叉注意，参数翻倍换最好效果；**MoEDiT** 用 MoE 把不同模态路由到不同专家，参数膨胀小而 FLOPs 利用率高，做到性价比最优。
 
 ### 损失函数 / 训练策略
-损失为两模态加权和；架构基于 SEDD 的 DiT 改造加 rotary embedding；LM1B 序列长 128，OWT 序列长 512，1M 步 batch 512（33B / 131B tokens）。Qwen-2 tokenizer 与 GPT-2 tokenizer 不能直接比较 PPL，所以基线统一用 Qwen-2 重训。Hidden dim 取 32（与 Qwen3-Embedding 一致），$x_0$-prediction 参数化。
+损失为两模态 ELBO 加权和，采用 $x_0$-prediction 参数化；网络在 SEDD 的 DiT 上改造并加 rotary embedding，hidden dim 取 32 与 Qwen3-Embedding 对齐。LM1B 序列长 128、OWT 序列长 512，均训 1M 步、batch 512（分别 33B / 131B tokens）。由于 Qwen-2 与 GPT-2 tokenizer 的 PPL 不可直接比较，所有基线统一用 Qwen-2 重训对齐。
 
 ## 实验关键数据
 

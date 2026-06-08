@@ -43,30 +43,31 @@ BPD 把 LLM 多智能体系统的多轮交互重构成 "带符号有向无环图
 ## 方法详解
 
 ### 整体框架
-给定一次 $T$ 轮、$n$ 个 agent 的 MAS 对话，BPD 分四步处理：(1) 把会话重构成签名 DAG $G = (V, E)$；(2) 让一个独立 LLM 评分器给每条消息打 $g_{ij} \in \{-1, 0, +1\}$（反对 / 漠视 / 赞同）；(3) 用反向递归从终端答案逐层往前算节点贡献分 $S(C_i)$；(4) 把离群分数对应的 agent 集合 $\mathcal{M}$ 标记为恶意，切掉它们所有出边得到修复后的 $G'$。这一切发生在每次查询的回答阶段，免训练、单次反向拓扑 pass、可解释。
+BPD 要解决的是：一个被劫持的 agent 会沿对话拓扑把有害内容级联污染给所有下游 agent，而现有防御要么只看局部信号、要么拓扑一变就失效。它的做法是把整场 MAS 对话当成一张"带符号的计算图"来做影响溯源——先把 $T$ 轮、$n$ 个 agent 的会话重构成签名 DAG，让一个独立 LLM 给每条消息打 $\{-1, 0, +1\}$ 的反对 / 漠视 / 赞同分，再从最终答案反向一次拓扑传播算出每个 agent 对决策的累计贡献，分数离群者判为恶意并切掉其出边。整套流程发生在每次查询的回答阶段，免训练、单次反向 pass、可解释。
 
 ### 关键设计
 
-1. **MAS → 签名时序 DAG (signed temporal DAG)**:
+**1. MAS → 签名时序 DAG：把任意拓扑的多轮对话拍成一张无环图。**
 
-    - 功能：把任意复杂的多轮 MAS 通信统一抽象成无环图，使得反向传播有闭式解。
-    - 核心思路：把 agent $A(i)$ 在第 $t$ 轮的实例展开成时序节点 $A_t(i)$，节点集合 $V = \{A_t(i) | t=1..T, i=1..n\}$，规模 $N = nT$。第 $t$ 轮 $A(i) \to A(j)$ 的消息记作有向边 $e_t(i,j): A_t(i) \to A_{t+1}(j)$。由于所有边都跨相邻时刻，图天然无环。再让一个不属于 MAS 的独立 LLM 评判每条边 $e_{ij}$：接收者 $C_j$ 拿到 $C_i$ 的消息 $s_i$ 输出 $s_j$，评分器算 $g_{ij} = f(s_i, s_j) \in \{-1, 0, +1\}$，正号表示同意 / 采纳，零表示低贡献，负号表示反对 / 反驳。
-    - 设计动机：DAG 结构让 "影响沿边传播" 有唯一拓扑顺序，可避免迭代收敛；签名机制让 "成功的攻击" 与 "被识破的攻击" 都能在图上留下可计算痕迹（前者放大正号分，后者放大负号分），双向都能触发离群信号。
+MAS 拓扑五花八门（Flat 平等讨论、Hierarchy 回答+评审），轮数和 agent 数都不固定，没法直接套一个传播公式。BPD 的处理是把 agent $A(i)$ 在第 $t$ 轮的实例展开成一个时序节点 $A_t(i)$，节点集 $V = \{A_t(i) \mid t=1..T,\, i=1..n\}$ 规模 $N = nT$，第 $t$ 轮 $A(i) \to A(j)$ 的消息记作有向边 $e_t(i,j): A_t(i) \to A_{t+1}(j)$。关键在于所有边都只跨相邻时刻、永远从 $t$ 指向 $t{+}1$，所以图天然无环——这正是后面能用闭式解一次算完、不必迭代到收敛的前提。光有结构还不够，还要给边赋"立场"：让一个不属于 MAS 的独立 LLM 评判每条边，接收者 $C_j$ 拿到 $C_i$ 的消息 $s_i$ 后输出 $s_j$，评分器算 $g_{ij} = f(s_i, s_j) \in \{-1, 0, +1\}$，正号是同意 / 采纳、零是低贡献、负号是反对 / 反驳。签名机制是为了让"成功的攻击"（正号分被放大）和"被识破的攻击"（负号分被放大）都在图上留下可计算痕迹，双向都能触发后续的离群信号。
 
-2. **反向贡献传播算子 (backward score propagation)**:
+**2. 反向贡献传播算子：从最终答案倒推每个节点的影响力。**
 
-    - 功能：单次拓扑反向 pass 算出每个 agent 节点对最终决策的累计签名贡献。
-    - 核心思路：定义签名邻接矩阵 $\mathbf{G} \in \mathbb{R}^{N \times N}$ 与出度矩阵 $\mathbf{D} = \text{diag}(k_1, \ldots, k_N)$，得到行归一化签名传播算子 $\mathbf{B} = \mathbf{D}^{-1} \mathbf{G}$。终端层用最终答案做边界初始化：$S(A_T(i)) = +1$ 若 $A(i)$ 的答案与 MAS 最终答 $y_{\text{final}}$ 一致，否则 $-1$。反向递归为 $S(C_i) = \frac{1}{k_i} \sum_{C_j \in \mathcal{N}^+(C_i)} g_{ij} S(C_j) = \sum_j B_{ij} S(C_j)$，写成向量形式即 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{S}^{(t+1)}$，其中 $\mathbf{P}^{(t)}_{ij} = g_{t,i \to j} / k_{t,i}$。由于 $G$ 是 DAG，单次反向乘法即可得唯一闭式解 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{P}^{(t+1)} \cdots \mathbf{P}^{(T-1)} \mathbf{S}^{(T)}$，无需迭代收敛。这恰是经典 PageRank $\mathbf{r}^{(\ell+1)} = (1-d)\mathbf{1}/N + d\, \mathbf{W}^\top \mathbf{r}^{(\ell)}$ 的 signed / layer-wise / DAG 推广：$\mathbf{P}^{(t)}$ 替代 $\mathbf{W}^\top$ 并引入 $\{-1, 0, +1\}$ 符号，边界初始化替代 damping/teleport，一次拓扑 pass 替代 power iteration。
-    - 设计动机：PageRank 思想直接量化 "节点对最终结果的影响力"，但传统 PageRank 假设强连通且只能算稳态；MAS 是有限轮 DAG，反而比一般图更友好——可以用闭式解一次算完，复杂度只与边数线性相关，效率开销 <10%。
+知道了图和每条边的立场，还要把"某个 agent 对最终答案到底贡献了多少"变成一个可比较的数。BPD 借 PageRank 的思路——影响力靠下游聚合——但反过来用：定义签名邻接矩阵 $\mathbf{G} \in \mathbb{R}^{N \times N}$ 与出度矩阵 $\mathbf{D} = \text{diag}(k_1, \ldots, k_N)$，得到行归一化的签名传播算子 $\mathbf{B} = \mathbf{D}^{-1}\mathbf{G}$。终端层用最终答案做边界初始化：若 $A(i)$ 的答案与 MAS 最终答 $y_{\text{final}}$ 一致则 $S(A_T(i)) = +1$，否则 $-1$。反向递归为
 
-3. **离群检测 + 通信剪枝 (outlier detection & communication pruning)**:
+$$S(C_i) = \frac{1}{k_i} \sum_{C_j \in \mathcal{N}^+(C_i)} g_{ij}\, S(C_j) = \sum_j B_{ij}\, S(C_j),$$
 
-    - 功能：把节点贡献分汇总到 agent 级，挑出分数偏离群体太多的就是恶意 agent，并删除其所有出边修复 MAS。
-    - 核心思路：先按 agent 平均 $\hat{S}(A(i)) = \frac{1}{|\mathcal{T}(i)|} \sum_{t \in \mathcal{T}(i)} S(A_t(i))$，再算两两差的平均 $\Delta(i) = \frac{1}{n-1} \sum_{j \ne i} |\hat{S}(A(i)) - \hat{S}(A(j))|$；恶意集合 $\mathcal{M} = \{A(i) | \Delta(i) \ge \epsilon\}$，论文经验取 $\epsilon = 1.5$。剪枝阶段定义 $E_\mathcal{M} = \{e_{t, i \to j} | A(i) \in \mathcal{M}\}$，修复后图 $G' = (V, E \setminus E_\mathcal{M})$，等价于把恶意 agent 从决策路径上 "静音"，但保留其角色防止结构崩溃。
-    - 设计动机：无论攻击成功与否，恶意 agent 都会在签名 PageRank 上呈现偏差——攻击成功时正向贡献被传染性放大，攻击失败时其消息被周围 agent 反驳形成显著负向，两种情形都能触发 $\Delta(i)$ 异常。这种 "正负双向都偏离" 的特性使检测对攻击形态不敏感。
+向量形式即 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{S}^{(t+1)}$，其中 $\mathbf{P}^{(t)}_{ij} = g_{t,i \to j} / k_{t,i}$。因为 $G$ 是 DAG，单次反向乘法就给出唯一闭式解 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{P}^{(t+1)} \cdots \mathbf{P}^{(T-1)} \mathbf{S}^{(T)}$，不用像普通 PageRank 那样 power iteration 迭代到稳态。这其实就是经典 PageRank $\mathbf{r}^{(\ell+1)} = (1-d)\mathbf{1}/N + d\,\mathbf{W}^\top \mathbf{r}^{(\ell)}$ 的 signed / layer-wise / DAG 推广：$\mathbf{P}^{(t)}$ 替代 $\mathbf{W}^\top$ 并引入 $\{-1, 0, +1\}$ 符号，边界初始化替代 damping/teleport，一次拓扑 pass 替代 power iteration。MAS 是有限轮 DAG 反而比一般强连通图更友好，复杂度只与边数线性相关，整体效率开销不到 10%。
+
+**3. 离群检测 + 通信剪枝：揪出偏离群体的 agent 并把它静音。**
+
+有了每个时序节点的贡献分，还要汇总到 agent 级别并判定谁是恶意的。BPD 先按 agent 取均值 $\hat{S}(A(i)) = \frac{1}{|\mathcal{T}(i)|} \sum_{t \in \mathcal{T}(i)} S(A_t(i))$，再算它与其余所有 agent 的平均绝对差 $\Delta(i) = \frac{1}{n-1} \sum_{j \ne i} |\hat{S}(A(i)) - \hat{S}(A(j))|$，把 $\Delta(i) \ge \epsilon$ 的归入恶意集合 $\mathcal{M}$（论文经验取 $\epsilon = 1.5$）。之所以用"两两差的平均"而不是 z-score 或固定阈值，是因为 MAS 群体小（$n \le 5$）、正态假设不成立，pairwise 偏差对小样本更鲁棒。剪枝阶段删掉恶意 agent 的所有出边 $E_\mathcal{M} = \{e_{t,i\to j} \mid A(i) \in \mathcal{M}\}$，得到修复图 $G' = (V, E \setminus E_\mathcal{M})$——相当于把它从决策路径上"静音"，但保留节点角色防止拓扑结构崩溃。这一招对攻击形态不敏感的原因在于：攻击成功时恶意 agent 的正向贡献被传染性放大，攻击失败时它的消息被周围 agent 反驳而形成显著负向，两种情形都会让 $\Delta(i)$ 异常。
+
+### 一个完整示例
+拿 5 个 agent 的 Flat 讨论、agent #3 被劫持为例。第一步展开成签名 DAG 后，独立评分器逐条打分：#3 在攻击成功的情形下说服了 #1、#4，对应边拿到 $g = +1$；但 #2、#5 识破并反驳了它，对应边是 $g = -1$。第二步反向传播：终端层先标 $S(A_T(i)) = \pm1$（与最终答一致为 $+1$），再沿 DAG 一层层往前乘 $\mathbf{P}^{(t)}$，把这些正负号累计回每个节点。第三步汇总到 agent 级算 $\hat{S}$ 与 $\Delta(i)$：正常 agent 彼此分数接近、$\Delta$ 小，而 #3 无论被采纳（正向被放大）还是被反驳（负向被放大）都和群体显著拉开，$\Delta(3) \ge 1.5$ 触发离群。第四步把 #3 的所有出边删掉，MAS 在 $G'$ 上重新汇聚出干净答案。整条链没有任何训练，只是一次评分 + 一次矩阵反乘 + 一次阈值判定。
 
 ### 损失函数 / 训练策略
-BPD 是 **训练自由** 的：评分器 $f$ 可以是任意第三方 LLM (prompt 见 Appendix A.3)，反向传播只是矩阵乘法。唯一超参是离群阈值 $\epsilon$，作者基于消融取 $\epsilon = 1.5$。复杂度方面，一次反向 pass 是 $O(|E|)$，签名打分是 $O(|E|)$ LLM 调用；整体时间开销 <10%。
+BPD 是 **训练自由** 的：评分器 $f$ 可以是任意第三方 LLM（prompt 见 Appendix A.3），反向传播只是矩阵乘法，没有任何参数要学。唯一超参是离群阈值 $\epsilon$，作者基于消融取 $\epsilon = 1.5$（太小如 $1.0$ 误杀正常 agent，太大如 $2.0$ 漏放潜伏攻击）。复杂度上，一次反向 pass 是 $O(|E|)$，签名打分是 $O(|E|)$ 次 LLM 调用，整体时间开销不到 10%。
 
 ## 实验关键数据
 

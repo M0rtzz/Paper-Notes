@@ -45,23 +45,18 @@ Mango 的输入是用户查询 $q$ 和 root URL $u_r$。系统先做 **Global St
 实验中 Mango 对 WebVoyager 使用与 AgentOccam 对齐的 Playwright-based 环境，对 WebWalkerQA 使用与 WebWalker 对齐的 Crawl4AI 环境，保证浏览器执行设置公平。每个 URL 的导航预算 $b$ 和 Thompson Sampling 迭代次数都设为 10。
 
 ### 关键设计
-1. **全局结构分析生成候选入口**:
 
-	- 功能：在真正导航前，把“可能有答案的页面入口”从海量网站结构中筛出来。
-	- 核心思路：Mango 先从 root URL 做 BFS 轻量爬取，只保留同域 HTML 页面，并设置最大爬取页数 $\tau$。对爬到的页面内容用 BM25 与用户查询打分，取 Top-10 加入候选集。若网站规模太大或 crawl 难覆盖，例如 arXiv 这种数百万页面站点，则让 LLM 基于查询推荐关键词，再用 Google `site:` 搜索补充 Top-10 结果。
-	- 设计动机：首页并不总是好入口。先获得全局近似结构可以把导航从“从根节点盲搜”变成“从几个相关子树入口试探”。BM25 和 Google search 的组合也兼顾了站内可达结构和搜索引擎已索引页面。
+**1. 全局结构分析生成候选入口：在导航前把可能藏着答案的页面入口从整站结构里筛出来。**
 
-2. **基于 Thompson Sampling 的 URL 选择**:
+首页常常不是好入口，但爬完整站又不现实，所以 Mango 先建一张轻量的全局近似图。它从 root URL 做 BFS 爬取，只保留同域 HTML 页面并设最大爬取页数 $\tau$，对爬到的页面用 BM25 与用户查询打分取 Top-10 进候选集；遇到 arXiv 这种数百万页面、crawl 难覆盖的大站，再让 LLM 根据查询生成关键词，用 Google `site:` 检索补 Top-10。这样导航就从「从根节点盲搜」变成「从几个相关子树入口试探」，BM25 兼顾站内可达结构、Google 兼顾搜索引擎已索引页面，两路候选互补。
 
-	- 功能：在有限导航预算下，动态决定下一个最值得访问的候选 URL。
-	- 核心思路：每个 URL 是一个 arm，有 Active/Exhausted 状态，并维护 Beta 分布参数 $(\alpha_u,\beta_u)$。初始参数由 BM25 分数归一化得到：$\rho_u=(\lambda_u-\min \lambda)/(\max \lambda-\min \lambda+\epsilon)$，再设 $\alpha_u^{(0)}=1+\kappa\rho_u$、$\beta_u^{(0)}=1+\kappa(1-\rho_u)$。每步从 active arms 的 Beta 后验采样 $\theta_u$，选择最大者导航。若反思结果给出正 reward，就增加 $\alpha$；否则增加 $\beta$，若路径被判为 dead end 则标为 Exhausted。
-	- 设计动机：BM25 先验能利用全局相关性，但不能完全信任；导航反馈能修正先验，但反馈次数有限。Thompson Sampling 刚好在二者之间平衡，比固定排序或 MCTS 模拟更轻量。
+**2. 基于 Thompson Sampling 的 URL 选择：在有限预算下动态决定下一个最值得访问的入口。**
 
-3. **反思代理与情节记忆**:
+候选入口该按什么顺序试？BM25 给的全局相关性不能全信，导航反馈又次数有限，Mango 于是把候选 URL 集 $\mathcal{U}$ 建成一个有限生命期的多臂老虎机来折中二者。每个 URL 是一个 arm，有 Active/Exhausted 状态，维护 Beta 分布参数 $(\alpha_u,\beta_u)$，初值由 BM25 分数归一化得到 $\rho_u=(\lambda_u-\min \lambda)/(\max \lambda-\min \lambda+\epsilon)$，再设 $\alpha_u^{(0)}=1+\kappa\rho_u$、$\beta_u^{(0)}=1+\kappa(1-\rho_u)$。每步从 active arms 的 Beta 后验采样 $\theta_u$，选最大者导航；反思给正 reward 就增 $\alpha$，否则增 $\beta$，被判 dead end 的路径标为 Exhausted。相比固定排序或 MCTS 模拟整棵交互树，Thompson Sampling 只在候选入口间快速平衡 exploration/exploitation，更扛得住严格预算。
 
-	- 功能：判断一次导航是否完成任务、是否值得继续，并避免重复犯同样错误。
-	- 核心思路：如果导航 agent 声称完成任务，reflection agent 检查最终答案和动作轨迹是否满足查询；若答案不足但路径仍有希望，则给正 reward，让该 URL 未来更可能被继续探索。若预算耗尽，reflection agent 判断当前页面是否仍相关；不相关则给负 reward。每次尝试的轨迹、最终输出和反思都会存入 episodic memory，同一 URL 再次被访问时会作为上下文提供给导航 agent。
-	- 设计动机：网页导航经常需要多次试探。仅用成功/失败二值结论会把“差一点完成”和“完全走错”混在一起；反思代理把导航状态细分为可继续、该放弃、已完成，并用记忆减少重复探索。
+**3. 反思代理与情节记忆：判断一次导航是否完成、是否值得继续，并避免重复踩坑。**
+
+网页导航常要多次试探，只用成功/失败二值会把「差一点完成」和「完全走错」混为一谈。导航 agent 若声称完成，reflection agent 就核对最终答案和动作轨迹是否真满足查询；若答案不足但路径仍有希望，给正 reward 让该 URL 未来更可能被继续探索；若预算耗尽，则判断当前页面是否仍相关，不相关给负 reward。每次尝试的轨迹、输出和反思都写入 episodic memory，同一 URL 再被访问时作为上下文喂给导航 agent。这样反思就把导航状态细分为「可继续 / 该放弃 / 已完成」三态，并用记忆减少重复探索——reflection 不再只是日志，而是直接驱动下一次 URL 选择的后验。
 
 ### 损失函数 / 训练策略
 Mango 不训练新模型，主要是 inference-time agent pipeline。实验使用五个 backbone：GPT-5-mini 和 Qwen3-4B/8B/14B/32B。Qwen3 模型关闭 thinking mode，temperature=0.7、top_p=0.8。主要超参包括导航预算 $b=10$、Thompson Sampling 迭代次数 10、候选来源各取 Top-10；敏感性分析显示 $\kappa=3$、$\tau=1000$、候选 Top-10 是较优设置。

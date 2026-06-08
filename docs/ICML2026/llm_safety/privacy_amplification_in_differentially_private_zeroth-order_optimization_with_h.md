@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者考虑 ERM 问题 $L(w;\mathcal D)=\frac1n\sum_i \ell_i(w)$，在凸有界域 $\mathcal B_R$ 上跑投影零阶 GD。每步 update 由三件事拼起来：(1) 用 $K$ 个 *正交* 方向 $\{u_{t,k}\}_{k=1}^K$（从 Stiefel 流形 $V_K(\mathbb R^d)$ 均匀抽样）算 two-point 零阶梯度 $\hat g_t(w_t;u_{t,k})=\frac1n\sum_i \mathsf{clip}(\frac{\ell_i(w_t+\xi u_{t,k})-\ell_i(w_t-\xi u_{t,k})}{2\xi};\Delta)\,u_{t,k}$；(2) 沿这些方向各加一份标量 Gaussian $G_{t,k}^{(1)}\sim\mathcal N(0,\beta_t\sigma^2)$；(3) 全空间再加一份小的各向同性 Gaussian $G_t^{(2)}\sim\mathcal N(0,(1-\beta_t)\sigma^2 I_d)$。混合系数 $\beta_t\in[0,1]$ 把"定向 vs 各向同性"参数化为一个连续旋钮，$\beta_t=1$ 退化为只沿方向加噪（即 Zhang 等 2024a 的 mechanism (a)），$\beta_t=0$ 退化为全各向同性（mechanism (b)）。分析层面则配一个介于 $W_t,W_t'$ 之间的辅助 $\widetilde W_t$，让 TV bound 走 $W_t\leftrightarrow \widetilde W_t$ 这边、Rényi bound 走 $\widetilde W_t\leftrightarrow W_t'$ 那边。
+作者在凸有界域 $\mathcal B_R$ 上对 ERM 问题 $L(w;\mathcal D)=\frac1n\sum_i \ell_i(w)$ 跑投影零阶 GD，目标是给这个只用 forward pass 的优化器证一条不随训练步数 $T$ 爆炸的隐私上界。每步更新由三件事拼起来：先用 $K$ 个正交方向 $\{u_{t,k}\}_{k=1}^K$（从 Stiefel 流形 $V_K(\mathbb R^d)$ 均匀抽样）算 two-point 零阶梯度，再沿这些方向各加一份标量高斯噪声，最后给全空间补一份小的各向同性高斯噪声。两份噪声的配比由一个连续旋钮 $\beta_t\in[0,1]$ 控制（定向 vs 各向同性）。分析端则在两条相邻轨迹 $W_t,W_t'$ 之间显式插入第三条辅助轨迹 $\widetilde W_t$，把隐私分析拆成 $W_t\leftrightarrow\widetilde W_t$ 的 TV 一段、$\widetilde W_t\leftrightarrow W_t'$ 的 Rényi 一段，从而绕开零阶更新缺乏全局 Lipschitz 这个障碍。
 
 ### 关键设计
 
-1. **混合定向 + 各向同性的 Noisy-ZOGD 机制**:
+**1. 混合定向 + 各向同性的 Noisy-ZOGD 机制：用一个连续旋钮统一两套旧噪声方案。**
 
-    - 功能：把 ZO 的两个常用噪声机制 (a)/(b) 统一成一个连续族，允许 hidden-state 分析在两端之间找到比纯 (a) 更紧的 bound。
-    - 核心思路：$w_{t+1}=\Pi_{\mathcal B_R}[w_t-\frac{\eta}{K}\sum_k \hat g_t(w_t;u_{t,k})+\frac{\eta}{\sqrt K}\sum_k G_{t,k}^{(1)} u_{t,k}+\frac{\eta}{\sqrt d}G_t^{(2)}]$，其中 $\{u_{t,k}\}$ 是正交（不是 i.i.d. uniform on $\mathbb S^{d-1}$）、$G_{t,k}^{(1)}\sim\mathcal N(0,\beta_t\sigma^2)$、$G_t^{(2)}\sim\mathcal N(0,(1-\beta_t)\sigma^2 I_d)$。这个参数化在所有 $\beta_t,K$ 下都保持等价的总噪声方差，从而 utility 上限不变。
-    - 设计动机：定向部分 $G_{t,k}^{(1)} u_{t,k}$ 对 utility 友好（噪声只落在真正承载隐私敏感量的方向上），各向同性部分 $G_t^{(2)}$ 则给后面的 shifted Gaussian mechanism 留出"操作空间"——耦合分析中的 vector shift $v_t$ 需要靠这一份各向同性噪声来吸收。
+零阶 DP 文献此前只有两种割裂的噪声机制：沿更新方向加标量噪的 mechanism (a)（utility 好但难分析），和全空间各向同性加噪的 mechanism (b)（好分析但 utility 差）。作者把它们参数化成同一个连续族，更新写成 $w_{t+1}=\Pi_{\mathcal B_R}[w_t-\frac{\eta}{K}\sum_k \hat g_t(w_t;u_{t,k})+\frac{\eta}{\sqrt K}\sum_k G_{t,k}^{(1)} u_{t,k}+\frac{\eta}{\sqrt d}G_t^{(2)}]$，其中两点零阶梯度 $\hat g_t(w_t;u_{t,k})=\frac1n\sum_i \mathsf{clip}(\frac{\ell_i(w_t+\xi u_{t,k})-\ell_i(w_t-\xi u_{t,k})}{2\xi};\Delta)\,u_{t,k}$，定向噪声 $G_{t,k}^{(1)}\sim\mathcal N(0,\beta_t\sigma^2)$、各向同性噪声 $G_t^{(2)}\sim\mathcal N(0,(1-\beta_t)\sigma^2 I_d)$，方向 $\{u_{t,k}\}$ 取正交而非 $\mathbb S^{d-1}$ 上的 i.i.d. uniform。$\beta_t=1$ 退化为 mechanism (a)、$\beta_t=0$ 退化为 mechanism (b)，中间值则是两者的混合。这个参数化在所有 $\beta_t,K$ 下都保持等价的总噪声方差，所以 utility 上界不变，调 $\beta_t$ 只换隐私一侧的自由度。之所以两份都要保留：定向部分把噪声压在真正承载隐私敏感量的方向上、对 utility 友好，各向同性部分则给后面耦合分析里的 vector shift $v_t$ 留出"被吸收"的空间——没有这份各向同性噪声，shifted Gaussian mechanism 那段就无从落脚。
 
-2. **耦合辅助过程 $\widetilde W$ 绕开全局 Lipschitz**:
+**2. 耦合辅助过程 $\widetilde W$：用 pointwise Lipschitz 绕开全局 Lipschitz。**
 
-    - 功能：把 hidden-state DP 分析从"shifted-divergence 沿原轨迹"重构成"TV(coupling failure) + Rényi(shifted Gaussian)"两段，使得只需要 pointwise Lipschitz 即可。
-    - 核心思路：对两条相邻轨迹 $W_t,W_t'$（分别对应数据集 $\mathcal D,\mathcal D'$）构造第三条 $\widetilde W$，从某个时刻 $\tau$ 开始，$\widetilde W_{t+1}\stackrel{d}{=}\Pi_{\mathcal B_R}[\hat\psi_t(\widetilde W_t)+Y_t+Z_t+v_t]$，其中 shift $v_t:=\min(a_t,(\|d_t\|-z_{t+1})_+)\frac{d_t}{\|d_t\|}$、$d_t:=\hat\psi_t(W_t)-\hat\psi_t(\widetilde W_t)$。这把分析切两段：(i) $W$ 与 $\widetilde W$ 的 TV 距离用 Lemma 3.6 的高概率 pointwise Lipschitz 控制（坏事件概率 $\delta_f$）；(ii) $\widetilde W$ 与 $W'$ 之间是经典 shifted Gaussian mechanism，Rényi divergence 可标准 PABI 累积。最终结合 Lemma 3.7 的 forward $W_\infty$ 跟踪 $W_\infty(w_t,w_t')\le \min(2R,2\eta\Delta t/\sqrt K)$ 收口。
-    - 设计动机：零阶 update 的 Lipschitz 常数 $c_1=\sqrt{1-\sum_k\upsilon_k+c^2\sum_k\gamma_k}$ 里 $\upsilon_k,\gamma_k\sim\mathsf{Beta}(K/2,(d-K)/2)$ 是随机的，没法保证 a.s. 全局 $\le c$。但用 Beta 分布尾界可证 $c_1\le \bar c_1=\sqrt{1-(1-c^2)K/d+\vartheta(1+c^2)K/d}$ 以高概率成立。坏事件丢进 TV term、好事件走 Rényi term，分而治之。
+零阶更新映射的 Lipschitz 常数 $c_1=\sqrt{1-\sum_k\upsilon_k+c^2\sum_k\gamma_k}$ 里 $\upsilon_k,\gamma_k\sim\mathsf{Beta}(K/2,(d-K)/2)$ 是随机的，几乎必然没法全局 $\le c$，于是一阶 PABI 赖以工作的"shifted Rényi divergence 沿原轨迹可控"这条路被堵死。作者的办法是对相邻轨迹 $W_t,W_t'$（对应数据集 $\mathcal D,\mathcal D'$）插一条辅助轨迹 $\widetilde W$，从某时刻 $\tau$ 起按 $\widetilde W_{t+1}\stackrel{d}{=}\Pi_{\mathcal B_R}[\hat\psi_t(\widetilde W_t)+Y_t+Z_t+v_t]$ 演化，其中 shift $v_t:=\min(a_t,(\|d_t\|-z_{t+1})_+)\frac{d_t}{\|d_t\|}$、$d_t:=\hat\psi_t(W_t)-\hat\psi_t(\widetilde W_t)$。这一插把分析切成可分别处理的两段：$W$ 与 $\widetilde W$ 的 TV 距离只需要 Lemma 3.6 的高概率 pointwise Lipschitz（坏事件概率 $\delta_f$），而 $\widetilde W$ 与 $W'$ 之间就是经典 shifted Gaussian mechanism、Rényi divergence 能照标准 PABI 累积，最后用 Lemma 3.7 的 forward 跟踪 $W_\infty(w_t,w_t')\le \min(2R,2\eta\Delta t/\sqrt K)$ 收口。本质是"分而治之"：把全局 Lipschitz 失效的坏事件丢进 TV 项，好事件走 Rényi 项——只要用 Beta 尾界证出 $c_1\le \bar c_1=\sqrt{1-(1-c^2)K/d+\vartheta(1+c^2)K/d}$ 以高概率成立，pointwise 就够用了。
 
-3. **正交更新方向 + 多维 $K$ 的隐私收益**:
+**3. 正交方向 + 多维 $K$ 的隐私收益：方向越多隐私反而越好。**
 
-    - 功能：给出之前文献没有的算法设计准则——选 $K>1$ 且方向正交可以同时降低隐私损失和 utility 误差。
-    - 核心思路：定理 3.2 / 推论 3.3 给出闭式 DP 上界 $\varepsilon=O(\sqrt{\Delta^2\log(1/\delta)/(n^2\sigma^2)\cdot \min(T,MRn\sqrt d/(K\Delta))})$。关键是 $\min$ 里出现的 $1/K$：当 $T\to\infty$、bound 饱和，$\varepsilon$ 反比于 $K$。同时 Beta 分布尾界 Lemma 3.6 在正交 $\{u_{t,k}\}$（即从 Stiefel 流形抽）下比独立 i.i.d. 球面抽样更紧。
-    - 设计动机：标准 composition 下，加大 $K$ 会让隐私按 $\tilde O(\sqrt K)$ 变差（因为暴露更多敏感方向），所以前作都避免大 $K$。hidden-state 分析改变了游戏规则——在固定 utility 约束下，多用几个方向反而稀释了每个方向上的敏感度。正交方向进一步去掉了重叠的隐私贡献。这是 ZO 独有的、一阶方法没有的现象。
+合上前两件套，作者得到定理 3.2 / 推论 3.3 的闭式 DP 上界 $\varepsilon=O(\sqrt{\Delta^2\log(1/\delta)/(n^2\sigma^2)\cdot \min(T,MRn\sqrt d/(K\Delta))})$，并据此读出一条此前文献没有的设计准则：$\min$ 里那一项 $MRn\sqrt d/(K\Delta)$ 反比于方向数 $K$，于是当 $T\to\infty$、bound 饱和时，$\varepsilon$ 随 $K$ 增大而下降。这和标准 composition 的直觉正好相反——后者认为每多采一个方向就多暴露一份敏感量、隐私按 $\tilde O(\sqrt K)$ 变差，所以前作都回避大 $K$。hidden-state 分析改了游戏规则：在固定 utility 约束下多用几个方向，反而把每个方向上的敏感度稀释了。把方向取成正交（从 Stiefel 流形抽、只需对 i.i.d. 高斯方向做一次 QR）还能进一步收紧——Lemma 3.6 的 Beta 尾界在正交方向下比 i.i.d. 球面抽样更紧，因为正交方向之间没有重叠的隐私泄露。这是零阶方法独有、一阶方法看不到的现象。
 
 ### 损失函数 / 训练策略
 不涉及训练目标修改——本文是给现有 ZO DP 优化器套一个更紧的隐私 accountant。具体地：(i) 选 $\eta\le K/M$（强凸）或 $\le 2K/M$（凸）；(ii) 选 $\xi\le 2\Delta/(n\eta M\sqrt{2d})$；(iii) $K$ 满足 $\max(20(1+c^2)^2/(3(1-c^2)^2)\log(4/\delta\lceil MRn\sqrt{2d}/\Delta\rceil),1)\le K\le d/2$。对 non-convex 情形给数值 accountant 而非闭式。

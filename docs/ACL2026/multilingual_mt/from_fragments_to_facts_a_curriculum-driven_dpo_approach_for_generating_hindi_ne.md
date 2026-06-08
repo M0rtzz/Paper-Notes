@@ -46,23 +46,18 @@ DeFactoX 包含两条主线：先构建 Hindi 新闻偏好数据，再用 curric
 第二阶段是 curriculum-driven preference optimization。对 rejected responses，用 $f_s$ 评分函数衡量它们与 ground-truth rationale 的相似度，并按 rank-0、rank-1、rank-2 划分难度。模型先学习最容易区分的低质量 rejected，再逐步面对更接近 preferred 的 rejected。最后，用 Hin-DPO 损失把 preferred / rejected 的 log probability ratio、Actuality 和 Finesse 结合起来。
 
 ### 关键设计
-1. **Synthetic Hindi Preference Dataset**:
 
-	- 功能：把事实核查解释转成可用于 DPO 的 preferred / rejected 数据。
-	- 核心思路：preferred 来自 fact-checking 网站的人工解释，true news explanation 经过标准化以显式说明真实性；rejected 由三个 LLM 在简单 prompt 下生成，故意保留其浅层、片面或事实不稳的问题。
-	- 设计动机：Hindi 缺少大规模高质量解释偏好数据，直接用人工全量标注成本高；利用已有 fact-checking rationales 和 LLM 弱解释可以快速构造可训练偏好对。
+**1. 合成 Hindi 偏好数据集：用已有的人工核查解释当 preferred、用 LLM 弱解释当 rejected，绕开全量人工标注。**
 
-2. **Curriculum Ranking**:
+Hindi 缺少大规模高质量的解释偏好数据，从头让人工标注 preferred / rejected 对成本太高。作者的做法是把现成资源拼成偏好对：preferred 直接取自 fact-checking 网站的人工解释，但 true news 的解释往往只是信息性摘要、不显式表态，于是用 GPT-4o-mini 在保持事实内容不变的前提下标准化它，让它也明确说明真实性。rejected 则故意用 gpt-4o-mini、Mistral-7B-v0.1、gemini-1.5-flash 三个模型在简单 prompt 下生成，保留它们浅层、片面、事实不稳的毛病，每条新闻最终形成 1 个 preferred 配 3 个 rejected。这样既复用了专业 fact-checker 的判断作为正样本，又让负样本天然覆盖了真实 LLM 会犯的各类错误。
 
-	- 功能：让 DPO 从容易负例逐步过渡到困难负例。
-	- 核心思路：评分函数 $f_s=(BERTScore+3\times(ROUGE\text{-}L+METEOR))/4$。300 条样本的人类排序验证显示，BERTScore 与 ROUGE-L/METEOR 的 1:3 权重 Spearman $\rho=0.81$，优于 1:1 的 0.63 和 1:2 的 0.74。rejected responses 根据 $f_s$ 排成 rank-0、rank-1、rank-2。
-	- 设计动机：一开始就用最接近 preferred 的 rejected 做对比会增加优化难度；课程学习模仿人类学习过程，先掌握明显错误，再学习细粒度差异。
+**2. 课程式排序：用一个加权相似度函数把三个负例排成难度梯度，让 DPO 先学易区分、再学难区分。**
 
-3. **Hin-DPO with Actuality and Finesse**:
+如果一上来就拿最接近 preferred 的 rejected 去做对比，模型很难分辨细微差异、优化不稳。作者给每个 rejected 算一个与 ground-truth rationale 的相似度 $f_s=(\mathrm{BERTScore}+3\times(\mathrm{ROUGE\text{-}L}+\mathrm{METEOR}))/4$，按它把三个负例排成 rank-0、rank-1、rank-2，训练时从最容易的 rank-0 逐步推进到最难的 rank-2。这个 1:3 的权重不是拍脑袋定的：在 300 条样本的人类排序上，1:3 权重与人评的 Spearman $\rho=0.81$，明显高于 1:1 的 0.63 和 1:2 的 0.74，说明它最贴近人类对"解释好坏"的判断。课程顺序模仿人先掌握明显错误、再学细粒度差异的过程，让偏好对齐更稳。
 
-	- 功能：让偏好优化显式奖励事实正确、生成稳定的解释。
-	- 核心思路：Actuality 用 GPT-4o-mini 加 web search 对解释中的事实陈述逐句判断并取平均；Finesse 用同一输入下 5 次高温生成的 token distribution 方差衡量输出不稳定性。Hin-DPO 中，preferred 的 log ratio 被 $(1+s_w)$ 放大，rejected 的 log ratio 按 $\max(0.01,s_l)$ 调节，整体再由 $1/(v+\epsilon)$ 根据 Finesse 缩放。
-	- 设计动机：标准 DPO 只知道哪个回答被偏好，不知道偏好的原因。Actuality 对齐事实性，Finesse 抑制不稳定和幻觉，让解释生成更适合 fact-checking。
+**3. Hin-DPO 的 Actuality 与 Finesse：把"事实对不对"和"生成稳不稳"显式塞进 DPO 目标。**
+
+标准 DPO 只知道哪个回答被偏好，却不知道偏好的原因，因此既不奖励事实正确、也不抑制幻觉。作者补了两个任务特定信号：Actuality 用 GPT-4o-mini 加 web search 对解释里的每句事实陈述逐句判真伪再取平均，对应"事实对不对"；Finesse 用同一输入下 5 次高温生成的 token distribution 方差衡量输出抖动，对应"每次说法稳不稳"。在 Hin-DPO 里，preferred 的 log ratio 被 $(1+s_w)$ 放大（越事实正确越该被强化），rejected 的 log ratio 按 $\max(0.01,s_l)$ 调节，整体再由 $1/(v+\epsilon)$ 按 Finesse 缩放（越不稳越压低梯度）。这样偏好优化不再只偏向"更像参考答案"，而是同时偏向事实正确且生成稳定，正好切中事实核查解释的两大风险：流畅但错误、以及每次说法不一致。
 
 ### 损失函数 / 训练策略
 设 $r_w=\pi_\theta(y_w|x)/\pi_{ref}(y_w|x)$，$r_l=\pi_\theta(y_l|x)/\pi_{ref}(y_l|x)$。Hin-DPO 定义中间分数 $S(x,y_w,y_l)=\frac{1}{v+\epsilon}[(1+s_w)\log r_w-\max(0.01,s_l)\log r_l]$，最终损失为 $\mathcal{L}_{Hin\text{-}DPO}=-\mathbb{E}[\log\sigma(\beta\cdot S)]$。其中 $s_w,s_l$ 是 preferred / rejected 的 Actuality，$v$ 是 Finesse，$\epsilon$ 可学习。

@@ -41,30 +41,36 @@ SVL 用「3D-图像-文本」三模态对比预训练给脉冲神经网络（SNN
 ## 方法详解
 
 ### 整体框架
-输入端把点云和事件流统一为点集 $D^t=\{\mathcal{P}, \mathcal{F}\}$——事件流通过滑窗把时间戳归一化为 z 坐标 $z_i = (t_i - t_{\min})/(t_{\max}-t_{\min})$，变成"时空点云"。预训练时构造三元组 $(D_i^t, I_i^t, T_i^t)$，三条路径并行：CLIP 文本编码器 $\mathcal{E}_\theta^T$ 出 $\mathcal{F}^T \in \mathbb{R}^C$、CLIP 图像编码器 $\mathcal{E}_\theta^I$ 出 $\mathcal{F}^I \in \mathbb{R}^C$（两者全程冻结）、脉冲 3D 编码器 $\mathcal{E}_\theta^S$ 出 $\mathcal{F}^S \in \mathbb{R}^{T \times C}$。把脉冲发放率 $\mathcal{F}^S/T$ 同时对齐到文本和图像两个空间——这就是 MTA。下游推理时，把候选类别提示词离线送进 $\mathcal{E}_\theta^T$ 得到一组分类权重 $W^L \in \mathbb{R}^{K \times C}$（Rep-VLI），整条推理链路只剩脉冲编码器 + 一层加法分类头。骨干上作者除了复用 Spike PointNet 和 E-3DSNN，还提出首个"全脉冲驱动"的点 Transformer（Spike-driven PointFormer），其 3D-SDSA 把所有 QKV 都脉冲化，注意力运算退化成稀疏加法。
+SVL 要解决的是一个看似矛盾的需求：既要让脉冲网络（SNN）具备 CLIP 那样的开放世界识别能力，又不能在推理时背上沉重的文本塔、破坏 SNN 的稀疏加法特性。它的破局思路是把"获取语义"和"做推理"两件事拆到训练期和部署期。训练期走三塔：先把点云和事件流统一成点集 $D^t=\{\mathcal{P}, \mathcal{F}\}$（事件流用滑窗把时间戳归一化成 z 坐标 $z_i = (t_i - t_{\min})/(t_{\max}-t_{\min})$，变成"时空点云"），然后对每个样本构造三元组 $(D_i^t, I_i^t, T_i^t)$，分别送进脉冲 3D 编码器 $\mathcal{E}_\theta^S$（输出 $\mathcal{F}^S \in \mathbb{R}^{T \times C}$）和全程冻结的 CLIP 图像编码器 $\mathcal{E}_\theta^I$、文本编码器 $\mathcal{E}_\theta^T$（各出 $\mathbb{R}^C$ 特征），靠多模态对齐损失 MTA 把脉冲发放率同时拉进 CLIP 的图像空间和文本空间。部署期则塌缩成单塔：把候选类别提示词离线过一遍文本编码器，固化成一层分类权重 $W^L \in \mathbb{R}^{K \times C}$（Rep-VLI），推理链路只剩"脉冲编码器 + 一层加法分类头"。骨干层面，作者除复用 Spike PointNet、E-3DSNN，还补了一个全脉冲驱动的点 Transformer（Spike-driven PointFormer），把注意力也压成稀疏加法，让整条路径无一处稠密矩阵乘。
 
 ### 关键设计
 
-1. **MTA — 多尺度三模态对齐**:
+**1. MTA — 多尺度三模态对齐：无标签地把脉冲 3D 特征同时拉进 CLIP 图像空间和文本空间**
 
-    - 功能：在无类别标签的前提下，把脉冲 3D 特征同时拉到 CLIP 的图像空间和文本空间，让 SNN 一步获得开放世界识别能力。
-    - 核心思路：用脉冲发放率 $\mathbf{x}_i = \mathcal{F}^S/T / \|\mathcal{F}^S/T\|_2$ 与归一化文本特征 $\mathbf{y}_i$ 做对称 InfoNCE 得到"语义级"对齐 $\mathcal{L}^{\text{NCE}}_{(S,T)}$（公式 6）；与归一化图像特征 $\mathbf{b}_i$ 做 InfoNCE 得到"细粒度"对齐 $\mathcal{L}^{\text{NCE}}_{(S,I)}$（公式 7）；并在脉冲-图像之间额外加一个 MSE 损失 $\mathcal{L}^{\text{MSE}}_{(S,I)} = \sum_i \|\mathcal{F}_i^S - \mathcal{F}_i^I\|^2$ 把粒度进一步压实。总损失 $\mathcal{L}_{\text{total}} = \lambda_1 \mathcal{L}^{\text{NCE}}_{(S,T)} + \lambda_2 \mathcal{L}^{\text{NCE}}_{(S,I)} + \lambda_3 \mathcal{L}^{\text{MSE}}_{(S,I)}$，主实验三个 $\lambda$ 都取 1。
-    - 设计动机：消融表明只用 spike-text 对齐零样本精度仅 21.9%（Objaverse-LVIS）、只用 spike-image 对齐为 24.8%，二者结合 + MSE 才能到 33.6%——说明文本提供"是什么类别"的语义锚点，图像提供"长什么样"的细粒度形状信息，缺一不可，且 MSE 是为了弥补 InfoNCE 在三元小批量里"对齐粒度太粗"的问题。
+痛点在于 SNN 从头训一个 3D 编码器既缺标签又缺语义，而 CLIP 已经把图像-文本对齐好了，那就直接借力——只训脉冲编码器，让它分别向冻结的图像/文本特征对齐。MTA 用了两种粒度互补的损失：把脉冲发放率归一化成 $\mathbf{x}_i = (\mathcal{F}^S/T) / \|\mathcal{F}^S/T\|_2$ 后，与归一化文本特征 $\mathbf{y}_i$ 做对称 InfoNCE 得到"语义级"对齐 $\mathcal{L}^{\text{NCE}}_{(S,T)}$，与归一化图像特征 $\mathbf{b}_i$ 做 InfoNCE 得到"细粒度"对齐 $\mathcal{L}^{\text{NCE}}_{(S,I)}$，再额外加一个脉冲-图像之间的 MSE 损失 $\mathcal{L}^{\text{MSE}}_{(S,I)} = \sum_i \|\mathcal{F}_i^S - \mathcal{F}_i^I\|^2$ 把粒度进一步压实。三项加权求和：
 
-2. **Rep-VLI — 把文本编码器折叠为分类权重**:
+$$\mathcal{L}_{\text{total}} = \lambda_1 \mathcal{L}^{\text{NCE}}_{(S,T)} + \lambda_2 \mathcal{L}^{\text{NCE}}_{(S,I)} + \lambda_3 \mathcal{L}^{\text{MSE}}_{(S,I)}, \quad \lambda_1=\lambda_2=\lambda_3=1$$
 
-    - 功能：在保持零样本能力的同时，让推理阶段彻底丢弃文本塔，使整条推理路径保持稀疏加法/脉冲驱动，便于神经形态硬件部署。
-    - 核心思路：把 $K$ 个候选类别提示词 $\{T_1,\dots,T_K\}$ 离线过一次文本编码器得到 $W^L_j = \tau \mathcal{E}_\theta^T(T_j)$（公式 10），合成一层 $K\times C$ 权重。推理时用"脉冲计数决策"代替 softmax：对输入 $D_i$，$\text{logits}_{i,j} = \frac{1}{T}\sum_{t=1}^T W^L_j \cdot \mathcal{E}_\theta^S(D_i^t)$（公式 11），取 argmax 即为预测类别。
-    - 设计动机：传统三编码器 VLM 部署时文本塔常占总参数的 70%+（如 ULIP-2 文本塔 202.5M vs 点编码器 21.9M），不仅吃显存还破坏脉冲计算的稀疏加法性质。Rep-VLI 把"文本计算"压缩成一次离线投影 + 一组固定权重，零样本能力源自 CLIP 文本空间，效率源自 SNN，正好两全。
+之所以三项缺一不可，是因为文本提供"是什么类别"的语义锚点、图像提供"长什么样"的细粒度形状先验，而 InfoNCE 在三元小批量里对齐粒度仍偏粗、靠 MSE 强制脉冲均值逐点贴近图像 embedding 才能补足——消融里只用文本对齐零样本仅 21.9%、只用图像对齐 24.8%、双对齐 + MSE 才到 33.6%（Objaverse-LVIS）。
 
-3. **Spike-driven PointFormer + 3D-SDSA**:
+**2. Rep-VLI — 把文本编码器离线折叠成一层分类权重**
 
-    - 功能：补齐"全脉冲化点云 Transformer"的空白——既能承载大规模预训练，又能保持端到端脉冲驱动。
-    - 核心思路：先用 FPS+kNN 取局部邻域 $X = \text{KNN}(\text{FPS}(P))$，加法型 pointwise embedding + I-LIF 神经元 $\mathcal{SN}(\cdot)$ 出脉冲特征 $S = \mathcal{SN}(\text{MLP}(X))$；堆 $L$ 层 SDF 残差块 $f_\ell = \text{SDF}(f_{\ell-1}) + f_{\ell-1}$。注意力部分把 $Q,K,V$ 各自经 $\mathcal{SN}$ 脉冲化为二值矩阵后，3D-SDSA 计算 $\mathcal{SN}(Q_S(K_S^\top V_S)) = \mathcal{SN}((Q_S K_S^\top) V_S)$（公式 16），由于乘子都是 0/1 脉冲张量，所有矩阵乘退化为 address-event 累加，即稀疏加法。
-    - 设计动机：先前 Spike Point Transformer 仍混用非脉冲算子且要按时间步展开点云，浪费能效；Spike PointNet / E-3DSNN 又被点级或稀疏卷积的归纳偏置限制了表达力。3D-SDSA 用 I-LIF 的整数发放 + 推理期二值展开，把 Transformer 的全局建模能力第一次完整迁到脉冲域。
+这是全文真正的工程巧思，针对的痛点是：传统三编码器 VLM 部署时文本塔常占总参数 70%+（如 ULIP-2 文本塔 202.5M vs 点编码器 21.9M），既吃显存又是稠密矩阵乘，彻底抵消 SNN 在边缘的功耗优势。关键观察是——零样本任务里文本编码器本质上只对一组固定类别提示语反复求嵌入，那就可以离线算一次、固化成权重。具体把 $K$ 个候选提示词 $\{T_1,\dots,T_K\}$ 过一遍文本编码器得到 $W^L_j = \tau \mathcal{E}_\theta^T(T_j)$，合成一层 $K\times C$ 权重；推理时用"脉冲计数决策"代替 softmax：
+
+$$\text{logits}_{i,j} = \frac{1}{T}\sum_{t=1}^T W^L_j \cdot \mathcal{E}_\theta^S(D_i^t)$$
+
+取 argmax 即预测类别。于是开放世界的语义能力被 CLIP 文本空间"预存"进固定权重里，而效率仍由 SNN 提供，推理时文本塔整个消失，稀疏加法性质得以保全。
+
+**3. Spike-driven PointFormer + 3D-SDSA — 补齐全脉冲化点云 Transformer 的空白**
+
+先前的脉冲点云骨干要么（Spike Point Transformer）混用非脉冲算子、还要按时间步展开点云，浪费能效；要么（Spike PointNet / E-3DSNN）被点级或稀疏卷积的归纳偏置限制了表达力。SVL 想要一个既能承载大规模预训练、又端到端脉冲驱动的 Transformer。流程上先用 FPS+kNN 取局部邻域 $X = \text{KNN}(\text{FPS}(P))$，经加法型 pointwise embedding 加 I-LIF 神经元 $\mathcal{SN}(\cdot)$ 出脉冲特征 $S = \mathcal{SN}(\text{MLP}(X))$，再堆 $L$ 层 SDF 残差块 $f_\ell = \text{SDF}(f_{\ell-1}) + f_{\ell-1}$。核心是 3D-SDSA：把 $Q,K,V$ 各自经 $\mathcal{SN}$ 脉冲化为 0/1 二值矩阵后，注意力按结合律重排成
+
+$$\mathcal{SN}(Q_S(K_S^\top V_S)) = \mathcal{SN}((Q_S K_S^\top) V_S)$$
+
+由于乘子全是二值脉冲张量，所有矩阵乘退化为 address-event 累加，也就是稀疏加法。配合 I-LIF 的整数发放（训练时发整数、推理期展开为二值脉冲），Transformer 的全局建模能力第一次被完整迁进脉冲域。
 
 ### 损失函数 / 训练策略
-预训练损失为公式 9 的三项加权和，$\lambda_1=\lambda_2=\lambda_3=1$；I-LIF 神经元在训练时发整数（公式 4，$D^t$ 控制最大发放幅度），推理时展开为二值脉冲；CLIP 图像/文本编码器全程冻结；时间步默认取 $T\times D = 1\times 4$（消融见下文），下游 DVS 类任务微调时把 $T$ 放大到 6 来捕捉时序。
+预训练损失即上面 MTA 的三项加权和，$\lambda_1=\lambda_2=\lambda_3=1$；I-LIF 神经元训练时发整数（最大发放幅度由 $D^t$ 控制），推理时展开为二值脉冲；CLIP 图像/文本编码器全程冻结，只训脉冲 3D 编码器；时间步默认取 $T\times D = 1\times 4$（消融见下文），下游 DVS 类任务微调时把 $T$ 放大到 6 以捕捉时序。
 
 ## 实验关键数据
 

@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-所有方法都跑同一个生成器–验证器博弈 $\mathsf{GV}(\mathcal{M},\mathcal{D},T)\rightarrow\mathcal{P}$：同一个基座 $\mathcal{M}$ 用不同 system prompt 实例化为生成器 $\mathcal{G}$ 和验证器 $\mathcal{V}$。对每个 prompt $q$，$\mathcal{G}$ 采样 $k$ 个候选 $\{\hat{y}_1,\dots,\hat{y}_k\}$，$\mathcal{V}$ 给出二元判断；只有当 $\mathcal{V}(q,y_w)=\texttt{Correct}$ 且 $\mathcal{V}(q,y_l)=\texttt{Incorrect}$ 时才组成偏好对 $(y_w,y_l)\in\mathcal{P}$，再用 DPO 在 $\mathcal{P}$ 上微调。
-
-输入：未标注 prompt 集 + 指令微调过的基座（gemma-3-it 1B/4B/12B、Qwen-2.5-Instruct 7B/14B）。输出：DPO 微调后的策略 $\pi_\theta$。中间区别全在"$\mathcal{P}$ 怎么造"。
+论文要回答的是"在最干净的闭环约束下，自我进化能逼近 oracle 监督多少"，所以先把四种 SE 方法统一塞进同一个生成器–验证器博弈 $\mathsf{GV}(\mathcal{M},\mathcal{D},T)\rightarrow\mathcal{P}$：同一个基座 $\mathcal{M}$ 用不同 system prompt 实例化成生成器 $\mathcal{G}$ 和验证器 $\mathcal{V}$，对每个 prompt $q$ 让 $\mathcal{G}$ 采样 $k$ 个候选 $\{\hat{y}_1,\dots,\hat{y}_k\}$、$\mathcal{V}$ 逐个给二元判断，只有当 $\mathcal{V}(q,y_w)=\texttt{Correct}$ 且 $\mathcal{V}(q,y_l)=\texttt{Incorrect}$ 时才把 $(y_w,y_l)$ 收进偏好集 $\mathcal{P}$，最后用 DPO 在 $\mathcal{P}$ 上微调。输入是未标注 prompt 集加指令微调过的基座（gemma-3-it 1B/4B/12B、Qwen-2.5-Instruct 7B/14B），输出是 DPO 后的策略 $\pi_\theta$；四种方法的全部区别都落在"$\mathcal{P}$ 到底怎么造"这一点上。
 
 ### 关键设计
 
-1. **SimpleSE + 阈值多数投票去噪**：
+**1. SimpleSE + 阈值多数投票去噪：把单轮自我验证升级成高置信偏好对挖掘。**
 
-    - 功能：把单轮自我验证升级成"高置信偏好对挖掘"，对抗 verifier 噪声。
-    - 核心思路：对每个候选 $\hat{y}$ 让验证器跑 $n$ 次得到经验正确率 $\hat{p}(q,\hat{y})=\frac{1}{n}\sum_j \mathbf{1}\{\mathcal{V}^{(j)}=\texttt{Correct}\}$；若 $\hat{p}\geq\tau$ 标为 Positive，若 $1-\hat{p}\geq\tau$ 标为 Negative，否则丢弃。再用 DPO 损失 $\mathcal{L}_{\text{DPO}}=-\mathbb{E}[\log\sigma(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)}-\beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)})]$ 训练。$\tau=0.5$ 退化为普通多数投票，$\tau=0.7$ 在 4B 上 precision/recall 平衡最好。
-    - 设计动机：单次验证噪声大，直接拿来当标签会污染偏好集。阈值投票把"模棱两可"的样本丢掉，等价于把 verifier 的有效准确率拉到训练能消化的水位（如 Fig 2a 所示），这是 4B 起步就能正向自进化的关键，也是后续所有变体的基础组件。
+最朴素的做法是让验证器对每个候选判一次对错直接当标签，但单次验证噪声大，错判会直接污染偏好集、把 DPO 带偏。这里的做法是对每个候选 $\hat{y}$ 让验证器独立跑 $n$ 次，算出经验正确率 $\hat{p}(q,\hat{y})=\frac{1}{n}\sum_j \mathbf{1}\{\mathcal{V}^{(j)}=\texttt{Correct}\}$，只有 $\hat{p}\geq\tau$ 才标 Positive、$1-\hat{p}\geq\tau$ 才标 Negative，落在中间"模棱两可"的样本一律丢掉，再用标准 DPO 损失 $\mathcal{L}_{\text{DPO}}=-\mathbb{E}[\log\sigma(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)}-\beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)})]$ 训练。阈值 $\tau$ 就是去噪旋钮：$\tau=0.5$ 退化成普通多数投票，$\tau=0.7$ 在 4B 上 precision/recall 平衡最好。它之所以有效，是因为丢掉低置信样本等价于把验证器的有效准确率拉到训练能消化的水位（Fig 2a），这正是 4B 起步就能正向自进化的前提，也是后面所有变体共用的基础去噪组件。
 
-2. **RevisionSE（多轮反馈修订）**：
+**2. RevisionSE（多轮反馈修订）：让验证器从"打标签"升级成"写批改意见"，把反馈本身变成监督信号。**
 
-    - 功能：让验证器不只是"打标签"，而是给出文字反馈，让生成器据此修订，把反馈本身变成监督信号。
-    - 核心思路：在 $T>1$ 轮中，下一轮候选满足 $\hat{y}^{(t+1)}\sim\mathcal{G}(\cdot\mid q, f(\mathcal{V}(q,\hat{y}^{(t)})))$，其中 $f$ 把验证判断映射成文字反馈。当且仅当 $\mathcal{V}(q,\hat{y}^{(t)})=\texttt{Incorrect}$ 且 $\mathcal{V}(q,\hat{y}^{(t+1)})=\texttt{Correct}$（修订把错变对）时，把这一对组成 $(y_l,y_w)$ 进 $\mathcal{P}$。最好的实现是只取一条修订链的最后两个样本。
-    - 设计动机：单轮验证只能利用"对/错"信号，浪费了大模型擅长"指出错在哪里"的能力。RevisionSE 让验证器吐出可解释的中间反馈，等价于把 verifier 的隐式判别力放大成结构化训练数据。这也是论文里唯一逼近 oracle 的设定（12B 上 52.8% vs 53.6%），但代价是只对足够大的模型有效——1B 上反而比 SimpleSE 还低 1.4 个点（22.4% vs 23.8%），因为小模型修订过程会把对的改错。
+单轮验证只用到"对/错"这一 bit，白白浪费了大模型其实擅长"指出错在哪里"的能力。RevisionSE 把博弈展开成 $T>1$ 轮，下一轮候选按 $\hat{y}^{(t+1)}\sim\mathcal{G}(\cdot\mid q, f(\mathcal{V}(q,\hat{y}^{(t)})))$ 生成，其中 $f$ 把验证判断映射成一段文字反馈喂回生成器；当且仅当 $\mathcal{V}(q,\hat{y}^{(t)})=\texttt{Incorrect}$ 而 $\mathcal{V}(q,\hat{y}^{(t+1)})=\texttt{Correct}$（修订把错改对）时，才把 $(y_l,y_w)$ 收进 $\mathcal{P}$，最稳的实现是只取一条修订链最后两个样本。这等价于把验证器的隐式判别力放大成可解释的结构化训练数据，也是全文唯一能逼近 oracle 的设定（12B 上 52.8% vs 53.6%）。但它有明显的规模门槛：1B 上反而比 SimpleSE 低 1.4 个点（22.4% vs 23.8%），因为小模型的修订过程常把本来对的答案改错。
 
-3. **IterativeSE / CurriculumSE（数据顺序与轮次）**：
+**3. IterativeSE / CurriculumSE（数据顺序与轮次）：把单轮 SE 摊成多轮，并用难度调度替代随机混合。**
 
-    - 功能：把单轮 SE 扩展到多轮，并用难度调度替代随机混合。
-    - 核心思路：迭代版从 $\mathcal{M}_0=\mathcal{M}$ 开始，每轮 $\mathcal{P}_t=\mathsf{GV}(\mathcal{M}_{t-1},\mathcal{D}_t,T)$，$\mathcal{M}_t=\texttt{Finetune}(\mathcal{M}_{t-1},\mathcal{P}_t)$，全程 offline。课程版把 $\mathcal{D}$ 按难度（KK 人数）切分 $\mathcal{D}_{\text{easy}}\cup\mathcal{D}_{\text{hard}}$，先在 KK23 上跑 SimpleSE，再迁到 KK45 上跑 SimpleSE。最后可选加一轮 oracle round 把上限再往上推。
-    - 设计动机：单轮 SE 的偏好对数量和质量都有限。迭代提供"模型变好→验证更准→数据更干净"的正反馈；课程则用"先简单再难"减少早期 verifier 噪声，并显式测试 easy-to-hard 泛化能力。结果显示两种调度都能稳定打过随机混合，但相对 oracle 仍留 ~5% 的 gap——说明"会安排数据"不能弥补"验证器本身有限"。
+单轮 SE 能挖到的偏好对在数量和质量上都有上限，于是这里从两个维度继续榨：迭代版从 $\mathcal{M}_0=\mathcal{M}$ 出发，每轮做 $\mathcal{P}_t=\mathsf{GV}(\mathcal{M}_{t-1},\mathcal{D}_t,T)$、$\mathcal{M}_t=\texttt{Finetune}(\mathcal{M}_{t-1},\mathcal{P}_t)$ 且全程 offline，靠"模型变好→验证更准→数据更干净"的正反馈滚动改进；课程版则把 $\mathcal{D}$ 按 KK 人数切成 $\mathcal{D}_{\text{easy}}\cup\mathcal{D}_{\text{hard}}$，先在 KK23 上跑 SimpleSE 再迁到 KK45，用"先简单后难"压低早期 verifier 噪声、同时显式测 easy-to-hard 泛化，末尾可选再补一轮 oracle round 把上限往上顶。两种调度都能稳定打过随机混合，但相对 oracle 仍留 ~5% 的 gap，说明"会安排数据"补不了"验证器本身能力有限"这个根。
 
 ### 损失函数 / 训练策略
-全程用 DPO（参考策略固定为基座），$\beta>0$ 控制偏好对齐锐度。评测用 exact-match accuracy，temperature 0.7 采样 1 次，4 个随机种子取平均。算力分析里 $n_1$ 是每个 query 的生成次数、$n_2$ 是每个候选的验证次数，结论是"加 verifier 算力比加 generator 算力更划算"。
+全程用 DPO，参考策略固定为基座，$\beta>0$ 控制偏好对齐的锐度；评测用 exact-match accuracy，temperature 0.7 采样 1 次、4 个随机种子取平均。算力分析里 $n_1$ 是每个 query 的生成次数、$n_2$ 是每个候选的验证次数，网格搜索的结论是"加 verifier 算力比加 generator 算力更划算"。
 
 ## 实验关键数据
 

@@ -39,29 +39,30 @@ tags:
 
 ## 方法详解
 ### 整体框架
-输入是 $(x, y^*)$ 评测样本对：$x$ 是待评测的"prompt + response"组合，$y^* \in \mathcal{K} = \{0, 1, \dots, 9\}$ 是单字符数值标签。策略 $\pi_\theta$ 自回归产出 CoT $c$ 后再给数字 $y$。REAL 不直接采样 $y$，而是用 **RAIL 期望值预测器** $\hat y_\theta(x, c) = \sum_{k \in \mathcal{K}} k \cdot \pi_\theta(k | x, c)$ 把整个数字分布"塌"成一个连续期望，对它做平方误差。训练时对每条 $x$ 采 $K$ 条 CoT $\{c_i\}$，用 RLOO 估计 advantage，按下述拆解的两项梯度同时更新策略。
+REAL 要解决的是一件具体的事：让 LLM-as-a-Judge 在 RL 后训练里也能"差一分也算差"。输入是评测样本对 $(x, y^*)$，$x$ 是待评测的"prompt + response"组合，$y^* \in \mathcal{K} = \{0, 1, \dots, 9\}$ 是单字符数值标签；策略 $\pi_\theta$ 先自回归产出一段 CoT $c$，再给出数字。关键转折在于它不直接采样这个数字，而是用 RAIL 期望值预测器 $\hat y_\theta(x, c) = \sum_{k \in \mathcal{K}} k \cdot \pi_\theta(k | x, c)$ 把整个 0–9 分布"塌"成一个连续期望，对它做平方误差。训练时对每条 $x$ 采 $K$ 条 CoT，用 RLOO 估计 advantage，再按一个分解成两项的梯度同时更新策略——一项管 CoT 探索，一项管数值预测精修。
 
 ### 关键设计
-1. **REAL 目标与隐式策略相关奖励（整篇论文的形式化基石）**：
 
-    - 功能：把 RAFT 的回归 loss 从 SFT 搬到 RL —— CoT 从 ground-truth 变成策略自采样。
-    - 核心思路：目标函数定义为 $\mathcal{L}_{\text{REAL}}(\theta) = \mathbb{E}_{(x, y^*) \sim \mathcal{D}, c \sim \pi_\theta(\cdot | x)}[(\hat y_\theta(x, c) - y^*)^2 - \lambda \log \pi_\theta(y^* | x, c)]$。前一项是平方误差，迫使期望预测器贴近真值；后一项是对 final-answer token 的 NTP 辅助 loss（$\lambda = 0$ 时退化为纯回归）。隐式奖励 $r_{\text{REAL}}(\theta, x, c) = -(\hat y_\theta(x, c) - y^*)^2 + \lambda \log \pi_\theta(y^* | c, x)$，**显式依赖 $\theta$**。
-    - 设计动机：与 TRACT 对比一下就懂——TRACT 用固定 $\pi_{\text{temp}}$ 采 CoT，本质仍是 SFT；REAL 把采样源换成当前在训策略 $\pi_\theta$，CoT 与奖励同步演化，第一次让"回归感知"和"主动探索"结合。RAIL 期望预测器是另一关键，因为它把整个 0–9 分布的形状都带进梯度，比单 token 概率信息密度高一个量级（实验显示 RAIL 推理就有"免费午餐"提升）。
+**1. REAL 目标与隐式的策略相关奖励：让回归 loss 合法进入 RL。**
 
-2. **广义策略梯度的自然分解**：
+RAFT/TRACT 已经证明"期望值预测 + 平方误差"能恢复分数的序数结构，但它们的 CoT 是固定采样源给的，本质仍是 SFT。REAL 做的第一步就是把这套回归目标整体搬到 RL：目标函数定义为 $\mathcal{L}_{\text{REAL}}(\theta) = \mathbb{E}_{(x, y^*) \sim \mathcal{D},\, c \sim \pi_\theta(\cdot | x)}[(\hat y_\theta(x, c) - y^*)^2 - \lambda \log \pi_\theta(y^* | x, c)]$，前一项是平方误差迫使期望预测器贴近真值，后一项是对 final-answer token 的 NTP 辅助 loss（$\lambda = 0$ 时退化为纯回归）。对应的隐式奖励 $r_{\text{REAL}}(\theta, x, c) = -(\hat y_\theta(x, c) - y^*)^2 + \lambda \log \pi_\theta(y^* | c, x)$ **显式依赖 $\theta$**，这正是它和标准 RL 的分水岭。
 
-    - 功能：给出"奖励依赖策略参数"情况下数学正确的梯度估计器，并揭示它天然分成 CoT 探索 + 数值预测精修两部分。
-    - 核心思路：用 Schulman 2015 的广义策略梯度引理，对 $\mathcal{L}(\theta) = \mathbb{E}_{x, c \sim \pi_\theta}[r(\theta, x, c)]$ 直接展开链式法则，得到 $\nabla_\theta \mathcal{L} = \mathbb{E}[\underbrace{r(\theta, x, c) \nabla_\theta \log \pi_\theta(c | x)}_{\text{Term 1: CoT 更新}} + \underbrace{\nabla_\theta r(\theta, x, c)}_{\text{Term 2: 预测精修}}]$。把 REAL 奖励代入，Term 2 展开成 $-2(\hat y_\theta - y^*) \nabla_\theta \hat y_\theta + \lambda \nabla_\theta \log \pi_\theta(y^* | x, c)$，其中 $\nabla_\theta \hat y_\theta = \sum_k k \cdot \nabla_\theta \pi_\theta(k | x, c)$。
-    - 设计动机：这个分解非常优美——Term 1 把 CoT $c$ 当作"动作"用 REINFORCE 探索（policy gradient style），Term 2 把数字 $y$ 当作"已知 ground truth"用反传修正（backprop style）。GRPO 把 $c$ 和 $y$ 当同质 token 用同一更新规则，这里则**显式承认它们结构性不同**：CoT 是高维 sequence 必须探索，final answer 是低基数离散变量可以直接回归。这是 REAL 与 JEPO（Tang et al., 2025）等其他扩展 RL 工作的本质分水岭——JEPO 解决 "$y^*$ 不可 verify" 问题，REAL 解决 "$y^*$ 是有序数值" 问题。
+它之所以有效，关键在两处替换。一是把 TRACT 固定的 $\pi_{\text{temp}}$ 采样源换成当前在训策略 $\pi_\theta$，CoT 与奖励同步演化，第一次让"回归感知"和"主动探索"在同一目标里结合。二是 RAIL 期望预测器把整个 0–9 分布的形状都带进梯度，而非只看单个 token 概率，信息密度高一个量级——实验里单是把推理换成 RAIL 就有"免费午餐"式提升。
 
-3. **RLOO 稳定化 + $\beta$ 调权（落地实现）**：
+**2. 广义策略梯度的自然分解：把奖励依赖参数这件麻烦事变成优雅结构。**
 
-    - 功能：把上述理论梯度变成稳定可训的工程目标。
-    - 核心思路：对每个 $x$ 采 $K$ 条 CoT，用 leave-one-out baseline 算 advantage $A^{(i)} = r^{(i)} - \frac{1}{K-1}\sum_{j \ne i} r^{(j)}$，再用组内 std 归一化并 clip 到 $[-1, 1]$ 得 $\tilde A^{(i)}$。稳定化梯度为 $\nabla \mathcal{L} \approx \frac{1}{K} \sum_i [\tilde A^{(i)} \nabla_\theta \log \pi_\theta(c_i | x) + \beta \nabla_\theta r_{\text{REAL}}(\theta, x, c_i)]$，其中 $\beta$ 控制预测精修项相对 CoT 探索项的强度。
-    - 设计动机：$\beta$ 是论文唯一引入但非必需的超参——理论上 $\beta = 1.0$ 就是数学准确值，论文实验显示 $\beta = 1.0$ 已经够好；引入 $\beta$ 只为给将来需要"偏探索"或"偏精修"的工程留接口。RLOO 选型比 GRPO/PPO 简单且与"双项分解"哲学一致——既然预测精修项已经给了"低方差精修"，CoT 探索项就不需要再上 PPO 那种保险栓。
+奖励里出现 $\hat y_\theta$ 意味着 $\nabla_\theta r \ne 0$，标准 REINFORCE 推导的前提（奖励对 $\theta$ 求导为零）失效，照搬标准策略梯度是错的。REAL 用 Schulman 2015 的广义策略梯度引理对 $\mathcal{L}(\theta) = \mathbb{E}_{x,\, c \sim \pi_\theta}[r(\theta, x, c)]$ 直接展开链式法则：
+
+$$\nabla_\theta \mathcal{L} = \mathbb{E}\Big[\underbrace{r(\theta, x, c)\, \nabla_\theta \log \pi_\theta(c | x)}_{\text{Term 1: CoT 探索}} + \underbrace{\nabla_\theta r(\theta, x, c)}_{\text{Term 2: 预测精修}}\Big]$$
+
+把 REAL 奖励代入，Term 2 展开为 $-2(\hat y_\theta - y^*)\nabla_\theta \hat y_\theta + \lambda \nabla_\theta \log \pi_\theta(y^* | x, c)$，其中 $\nabla_\theta \hat y_\theta = \sum_k k \cdot \nabla_\theta \pi_\theta(k | x, c)$。这个分解的美感在于它对应了两种本质不同的学习方式：Term 1 把 CoT $c$ 当作"动作"用 REINFORCE 去探索（policy-gradient style），Term 2 把数字 $y$ 当作"已知 ground truth"用反传去精修（backprop style）。GRPO 把 $c$ 和 $y$ 当同质 token 用同一规则更新，REAL 则显式承认它们结构性不同——CoT 是高维 sequence 必须探索，final answer 是低基数离散变量可以直接回归。这也是它和 JEPO（Tang et al., 2025）的本质区别：JEPO 解决"$y^*$ 不可 verify"，REAL 解决"$y^*$ 是有序数值"。
+
+**3. RLOO 稳定化与 $\beta$ 调权：把理论梯度落成可训的工程目标。**
+
+理论梯度直接用方差太大，REAL 对每个 $x$ 采 $K$ 条 CoT，用 leave-one-out baseline 算 advantage $A^{(i)} = r^{(i)} - \frac{1}{K-1}\sum_{j \ne i} r^{(j)}$，再用组内 std 归一化并 clip 到 $[-1, 1]$ 得 $\tilde A^{(i)}$，最终稳定化梯度为 $\nabla \mathcal{L} \approx \frac{1}{K} \sum_i [\tilde A^{(i)} \nabla_\theta \log \pi_\theta(c_i | x) + \beta \nabla_\theta r_{\text{REAL}}(\theta, x, c_i)]$。这里 $\beta$ 控制预测精修项相对 CoT 探索项的强度，是论文唯一引入但非必需的超参——理论上 $\beta = 1.0$ 就是数学准确值，实验也显示它已经够好，引入它只为给将来"偏探索"或"偏精修"的工程留接口。选 RLOO 而非 GRPO/PPO 也和"双项分解"哲学自洽：既然预测精修项已经提供了低方差的精修信号，CoT 探索项就不必再上 PPO 那种额外的保险栓。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_{\text{REAL}}(\theta) = \mathbb{E}_{(x, y^*), c \sim \pi_\theta}[(\hat y_\theta(x, c) - y^*)^2 - \lambda \log \pi_\theta(y^* | x, c)]$，配合 RLOO 估计器和 $\beta = 1.0$。$\lambda$ 用 RAFT/TRACT 的默认设置；CoT 组规模 $K$ 跟 GRPO 风格保持中等（具体值见附录）。
+完整目标为 $\mathcal{L}_{\text{REAL}}(\theta) = \mathbb{E}_{(x, y^*),\, c \sim \pi_\theta}[(\hat y_\theta(x, c) - y^*)^2 - \lambda \log \pi_\theta(y^* | x, c)]$，配合 RLOO 估计器和 $\beta = 1.0$。$\lambda$ 沿用 RAFT/TRACT 的默认设置，CoT 组规模 $K$ 跟 GRPO 风格保持中等（具体值见附录）。
 
 ## 实验关键数据
 

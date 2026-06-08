@@ -43,27 +43,27 @@ tags:
 
 ### 整体框架
 
-Flickerformer采用非对称U-shaped编码器-解码器架构。输入为3帧burst短曝光闪烁图像（基准帧$\mathbf{I}_1$和两个参考帧$\mathbf{I}_0, \mathbf{I}_2$），首先通过分组卷积独立提取低级特征$\mathbf{X}_t \in \mathbb{R}^{H \times W \times C}$，然后送入PFM进行帧间特征融合得到$\mathbf{F}_0$。编码器包含3个层级，每层级2个Transformer块，通道数为[32, 64, 96]，注意力头数为[1, 2, 4]。编码器使用AFFN增强周期性表征，解码器使用WDAM进行方向性注意力。最终预测残差图$\mathbf{R}$，输出$\hat{\mathbf{I}}_1 = \mathbf{I}_1 + \mathbf{R}$。
+Flickerformer要解决的是：从一组短曝光burst帧里把交流电+rolling shutter造成的条纹闪烁去掉，同时不引入多帧融合常见的ghosting。它把前面提炼的两个物理特性——周期性和方向性——拆给三个模块分头建模，串成一条非对称U-shaped编码器-解码器。
+
+具体流转上，网络吃3帧burst（基准帧$\mathbf{I}_1$与两个参考帧$\mathbf{I}_0, \mathbf{I}_2$），先用分组卷积对每帧独立提取低级特征$\mathbf{X}_t \in \mathbb{R}^{H \times W \times C}$，再由PFM在频域做帧间融合得到统一特征$\mathbf{F}_0$。融合后的特征进入3层级编码器（每层级2个Transformer块，通道数[32, 64, 96]，注意力头数[1, 2, 4]），其中前馈分支换成AFFN来强化帧内周期性；解码器则用WDAM做方向性注意力。网络最终只预测残差图$\mathbf{R}$，输出$\hat{\mathbf{I}}_1 = \mathbf{I}_1 + \mathbf{R}$，让模型专注于"挑出闪烁"而非重建整图。
 
 ### 关键设计
 
-1. **PFM（Phase-based Fusion Module，基于相位的融合模块）**：
+**1. PFM：用相位相关挑出干净帧，融合时不留ghosting。**
 
-    - 功能：利用帧间相位相关性自适应聚合burst多帧特征，消除闪烁的同时避免ghosting
-    - 核心思路：对各帧特征做FFT得到频域表示$\tilde{\mathbf{X}}_t = A_t(\mathbf{k})e^{i\Phi_t(\mathbf{k})}$，计算参考帧与基准帧的相位相关分数$\mathbf{S}_t(\mathbf{k}) = |e^{i\Phi_t(\mathbf{k})} \odot e^{-i\Phi_1(\mathbf{k})}|$作为频率域可靠性指标，经卷积+sigmoid生成权重图$\mathbf{W}_t$，对参考帧频谱加权滤波后IFFT回空间域，最后拼接三帧增强特征做卷积融合
-    - 设计动机：闪烁的空间分布编码在相位中（交换两帧相位即交换闪烁模式），相位相关可精确度量帧间闪烁的周期性差异，选择性保留参考帧中的有用信息而抑制闪烁干扰。频域相乘等价于空域卷积，本质上PFM是一个自适应的频域滤波器
+burst多帧融合的老问题是——参考帧里既有能补基准帧的干净信息，也有它自己的闪烁和运动差异，直接像素对齐或注意力融合往往把闪烁和运动一起搬进来，留下ghosting。PFM的切入点来自一个实验观察：交换两帧的相位分量会交换闪烁的空间分布，说明**闪烁的位置信息是编码在相位里的**。于是PFM对各帧特征做FFT得到频域表示$\tilde{\mathbf{X}}_t = A_t(\mathbf{k})e^{i\Phi_t(\mathbf{k})}$，再算参考帧与基准帧的相位相关分数$\mathbf{S}_t(\mathbf{k}) = |e^{i\Phi_t(\mathbf{k})} \odot e^{-i\Phi_1(\mathbf{k})}|$当作每个频率上的可靠性度量，经卷积+sigmoid变成权重图$\mathbf{W}_t$去加权滤波参考帧频谱，IFFT回空间域后拼接三帧增强特征做卷积融合。因为频域相乘等价于空域卷积，PFM本质上是一个**按相位差自适应的频域滤波器**：相位越对得上（闪烁差异越小）的频率分量保留越多，从而只把参考帧里真正有用的信息搬过来。
 
-2. **AFFN（Autocorrelation Feed-Forward Network，自相关前馈网络）**：
+**2. AFFN：把前馈网络换成自相关算子，补上帧内的空间周期性。**
 
-    - 功能：在帧内利用自相关捕捉闪烁条纹的空间周期性结构
-    - 核心思路：基于Wiener-Khinchin定理，通过$\mathbf{R}_l = \mathcal{F}^{-1}(|\mathcal{F}(\mathbf{F}_l)|^2)$高效计算空间自相关——放大重复结构、抑制非相关噪声。接着设计双域增强：频域叠加功率谱$\hat{\mathbf{F}}_k = \mathcal{F}(\mathbf{F}_l) + \alpha|\mathcal{F}(\mathbf{F}_l)|^2$，空域叠加自相关$\hat{\mathbf{F}}_l = \mathcal{F}^{-1}(\hat{\mathbf{F}}_k) + \beta\mathbf{R}_l$，其中$\alpha, \beta$为可学习参数，最后经depthwise gated FFN输出
-    - 设计动机：PFM捕捉帧间周期性，AFFN补充帧内空间周期性——闪烁条纹在单帧内呈规律性条纹排列，自相关天然适合检测这种信号内的重复模式。两者互补形成完整的周期性建模
+PFM管的是帧之间的周期性，但单帧内部那一道道规律排列的闪烁条纹本身也是周期信号，标准FFN看不出这种重复结构。AFFN借Wiener-Khinchin定理用一次FFT高效算出空间自相关$\mathbf{R}_l = \mathcal{F}^{-1}(|\mathcal{F}(\mathbf{F}_l)|^2)$——自相关天然会放大信号里重复出现的结构、压住不相关的噪声，正好对上条纹的周期性。在此基础上做双域增强：频域把功率谱叠回去$\hat{\mathbf{F}}_k = \mathcal{F}(\mathbf{F}_l) + \alpha|\mathcal{F}(\mathbf{F}_l)|^2$，空域把自相关叠回去$\hat{\mathbf{F}}_l = \mathcal{F}^{-1}(\hat{\mathbf{F}}_k) + \beta\mathbf{R}_l$（$\alpha, \beta$可学习），最后过一个depthwise gated FFN输出。这样PFM（帧间）和AFFN（帧内）一头一尾，把周期性建模补完整；可视化也显示自相关能区分"闪烁变化"和"运动变化"，这正是FRFN等普通FFN做不到、会引入ghosting的地方。
 
-3. **WDAM（Wavelet-based Directional Attention Module，小波方向注意力模块）**：
+**3. WDAM：用稳定的高频方向信息当罗盘，引导受损低频的修复。**
 
-    - 功能：利用小波域方向性高频信息引导低频闪烁暗区的精确定位和修复
-    - 核心思路：对输入特征做Haar小波分解得到低频分量$\mathbf{F}_{LL}$和三个高频分量（水平$\mathbf{F}_{LH}$、垂直$\mathbf{F}_{HL}$、对角$\mathbf{F}_{HH}$）。低频分量送入window-based multi-head attention进行修复；水平+垂直高频分量经卷积+sigmoid生成方向权重图$\mathbf{M}$，逐元素调制注意力的Value分支：$\text{Att} = \text{Softmax}(\frac{\mathbf{QK}^\top}{\sqrt{d}} + \mathbf{B})(\mathbf{M} \odot \mathbf{V})$。修复后的各分量经IDWT重建
-    - 设计动机：闪烁暗区对应低频信息受损，但高频方向信息（LH/HL子带中的边缘变化）相对稳定，能精确标记闪烁区域的位置和方向。用高频做"定位罗盘"引导低频修复，比各向同性的标准注意力更精准。且注意力仅在低频子带上计算（空间尺寸减半），计算复杂度降至标准window attention的约25%
+闪烁的方向性来自rolling shutter逐行扫描——条纹沿扫描方向排列，亮带是高频振荡、暗带是低频压暗，受损最重的恰恰是低频暗区，而高频里的方向信息反而相对稳定。WDAM顺着这点反过来用：对特征做Haar小波分解，拿到低频$\mathbf{F}_{LL}$和水平/垂直/对角三个高频$\mathbf{F}_{LH}, \mathbf{F}_{HL}, \mathbf{F}_{HH}$；低频送进window-based多头注意力做修复，水平+垂直高频则经卷积+sigmoid生成方向权重图$\mathbf{M}$去调制注意力的Value分支
+
+$$\text{Att} = \text{Softmax}\Big(\frac{\mathbf{QK}^\top}{\sqrt{d}} + \mathbf{B}\Big)(\mathbf{M} \odot \mathbf{V})$$
+
+修复后各分量经IDWT重建。用高频边缘变化标记出闪烁的位置和方向，再去校正低频暗区，比各向同性的标准注意力定位更准（人脸等细微闪烁区域修复更彻底）；而且注意力只在尺寸减半的低频子带上算，复杂度降到标准window attention的约25%，Flops随之从139.42G降到128.76G。
 
 ### 损失函数 / 训练策略
 

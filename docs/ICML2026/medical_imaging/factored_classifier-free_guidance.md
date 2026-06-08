@@ -40,30 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FCFG 由三部分组成：(i) 把语义属性 $\mathbf{pa}=(pa_1,\dots,pa_K)$ 各自经独立 MLP 嵌入后 concat，形成 $\mathbf{c}=\text{concat}(\mathcal{E}_1(pa_1),\dots,\mathcal{E}_K(pa_K))$ 这种「attribute-split」结构，使每个属性占嵌入向量的独立 block；(ii) 推理时把属性划成 $M$ 组（如反事实场景里分为「affected」+「invariant」两组），为每组构造只保留该组属性、其余 block 替为零的 masked embedding $\underaccent{\rule{4.09723pt}{0.4pt}}{\mathbf{c}}^{(m)}$；(iii) 把 CFG 的两项 score 差扩展为 $M$ 项加权和，每组一个 $\omega_m$。完整流程嵌入 DDIM 反事实推理的 abduction-action-prediction 三步——前两步与原 CFG 一致，只在 prediction 一步把 $\epsilon_\text{CFG}$ 替换为 $\epsilon_\text{FCFG}$。
+FCFG 想解决的是「单一全局 $\omega$ 会把不该改的属性也一起放大」，做法是把 CFG 里那个标量旋钮拆成一组按因果图分配的向量旋钮，且全程只动 inference、不碰训练与架构。整条链路嵌在 DDIM 反事实推理的 abduction→action→prediction 三步里：abduction 与 action 两步和原 CFG 完全一致，只在 prediction 这一步把去噪用的 $\epsilon_\text{CFG}$ 换成 $\epsilon_\text{FCFG}$。换言之，训练时学到的是一个把各属性嵌入分块拼接的条件扩散模型，推理时再按用户给的属性分组、给每组一个独立的 guidance 强度去重新组合 score。
 
 ### 关键设计
 
-1. **属性切分嵌入 (Attribute-Split Embedding)**:
+**1. 属性切分嵌入：让每个属性在条件向量里独占一段维度。**
 
-    - 功能：让每个属性在 $\mathbf{c}$ 中独占一段维度，便于推理时按需 null-token 化某一组属性。
-    - 核心思路：每个 $pa_i$ 通过独立 MLP $\mathcal{E}_i:\mathbb{R}^{d_i}\to\mathbb{R}^d$ 嵌入，最终 $\mathbf{c}\in\mathbb{R}^{Kd}$ 由所有 block 拼接而成；要 mask 第 $i$ 个属性，只需把对应 block 乘以指示 $\delta_i^{(m)}\in\{0,1\}$。所有 $\mathcal{E}_i$ 与去噪网络端到端联合训练，不是独立预训练的特征提取器。
-    - 设计动机：常规设计常把多个属性混进一个稠密向量，导致语义在嵌入空间纠缠；属性切分天然解耦，是后续分组 guidance 的基础架构。
+常规条件扩散往往把多个属性塞进同一个稠密向量，语义在嵌入空间互相纠缠，推理时根本没法「只松开某一个属性」。FCFG 改成给每个属性 $pa_i$ 配一个独立 MLP $\mathcal{E}_i:\mathbb{R}^{d_i}\to\mathbb{R}^d$，把它们的输出拼起来得到 $\mathbf{c}=\text{concat}(\mathcal{E}_1(pa_1),\dots,\mathcal{E}_K(pa_K))\in\mathbb{R}^{Kd}$，于是每个属性恰好占据 $\mathbf{c}$ 里一段互不重叠的 block。要在推理时屏蔽第 $i$ 个属性，只需把它那段 block 乘上指示位 $\delta_i^{(m)}\in\{0,1\}$ 置零即可。这些 $\mathcal{E}_i$ 不是独立预训练的特征提取器，而是和去噪网络端到端联合训练——所以它本质上是一个轻量的训练时设计，目的就是为后续任意分组 guidance 预留一个干净的 mask 接口。
 
-2. **分组因子化 Guidance (Group-wise Factored Score)**:
+**2. 分组因子化 guidance：把全局 $\omega$ 升级成每组一个 $\omega_m$。**
 
-    - 功能：让不同属性组拥有独立的 guidance 强度，打破 CFG 的全局耦合。
-    - 核心思路：假设各组条件独立 $p(\mathbf{pa}\mid\mathbf{x}_t)=\prod_m p(\mathbf{pa}^{(m)}\mid\mathbf{x}_t)$，则推得 proxy posterior $p^\omega(\mathbf{x}_t\mid\mathbf{pa})\propto p(\mathbf{x}_t)\prod_m p(\mathbf{pa}^{(m)}\mid\mathbf{x}_t)^{\omega_m}$。对应 score 为 $\epsilon_\text{FCFG}=\epsilon_\theta(\varnothing)+\sum_m \omega_m(\epsilon_\theta(\underaccent{\rule{4.09723pt}{0.4pt}}{\mathbf{c}}^{(m)})-\epsilon_\theta(\varnothing))$。$M=1$ 退化为标准 CFG，$M=K$ 给每个属性独立权重。
-    - 设计动机：核心数学观察是「全局 $\omega$ 等价于强行假设所有属性条件独立且权重相同」；放松「权重相同」即得分组 FCFG，理论上最贴近因果图，又只需 inference 改动。
+CFG 的根本问题在于它隐含假设「所有属性条件独立且权重相同」。FCFG 只放松后半句：假设各属性组在给定 $\mathbf{x}_t$ 下条件独立 $p(\mathbf{pa}\mid\mathbf{x}_t)=\prod_m p(\mathbf{pa}^{(m)}\mid\mathbf{x}_t)$，于是 proxy posterior 自然分解为
 
-3. **因果导向的 affected/invariant 双分组**:
+$$p^\omega(\mathbf{x}_t\mid\mathbf{pa})\propto p(\mathbf{x}_t)\prod_m p(\mathbf{pa}^{(m)}\mid\mathbf{x}_t)^{\omega_m}$$
 
-    - 功能：把抽象的属性组具体化——根据用户假设的因果图，把被干预属性及其后代归为「affected」组、其余归为「invariant」组，分别用 $\omega_\text{aff}$ 和 $\omega_\text{inv}$ 控制。
-    - 核心思路：典型反事实 do$(A)$ 中，设 $\omega_\text{aff}$ 较大（如 2.5）强化目标属性变化，$\omega_\text{inv}$ 接近 1（无放大）保持非目标属性稳定；这种两组划分既保留了 CFG 推动 effectiveness 的能力，又消解了对 invariant 属性的拉扯。
-    - 设计动机：直接对应反事实公理「干预外的属性应保持稳定」，让公理性指标 (Δ on invariant) 几乎为 0，又不牺牲 Δ on target；同时框架天然支持更细粒度（如 $M=K$ 时支持多属性独立调控）。
+每组带自己的指数 $\omega_m$。对它取对数梯度，CFG 那个两项 score 差就被扩展成 $M$ 项加权和：
+
+$$\epsilon_\text{FCFG}=\epsilon_\theta(\varnothing)+\sum_m \omega_m\big(\epsilon_\theta(\underaccent{\rule{4.09723pt}{0.4pt}}{\mathbf{c}}^{(m)})-\epsilon_\theta(\varnothing)\big)$$
+
+其中 $\underaccent{\rule{4.09723pt}{0.4pt}}{\mathbf{c}}^{(m)}$ 是只保留第 $m$ 组属性、其余 block 置零的 masked embedding。这个公式是 CFG 的严格泛化：$M=1$ 时退回标准 CFG，$M=K$ 时给每个属性各一个独立权重。有效之处在于，理论上它最贴合因果图（每组放大强度可以不同），而代价仅仅是推理时多跑几次条件分支、改一下 score 的线性组合。
+
+**3. affected/invariant 双分组：把抽象的「组」落到反事实公理上。**
+
+光有「可以分组」还不够，得说清楚怎么分。FCFG 给出最自然的一种：按用户假设的因果图，把被干预属性及其因果后代归为 affected 组、其余归为 invariant 组，分别用 $\omega_\text{aff}$ 和 $\omega_\text{inv}$ 控制。典型反事实 do$(A)$ 里设 $\omega_\text{aff}$ 偏大（如 $2.5$）去强推目标属性的变化，同时让 $\omega_\text{inv}\approx 1$（即不放大）把非目标属性按住不动。这正好对应反事实公理「干预之外的属性应保持稳定」——它把 invariant 属性上的漂移 $\Delta$ 几乎压到 $0$，又不牺牲 target 上的 $\Delta$，从根上消解了 effectiveness 与稳定性那对张力。当所有属性都被同步干预、没有 invariant 组可分时，$M=2$ 会退化回全局 CFG，此时框架天然支持切到 $M=K$ 的 per-attribute 模式，给每个属性单独一个 $\omega$。
 
 ### 损失函数 / 训练策略
-训练目标完全沿用标准条件扩散 loss $\mathbb{E}\|\epsilon-\epsilon_\theta(\mathbf{x}_t,t,\mathbf{c})\|^2$，并继续做经典的 classifier-free dropout（整段 $\mathbf{c}$ 随机替换为 $\varnothing$），不引入新损失；FCFG 仅在推理时修改 score 计算方式。作者承认这会带来轻微 train-test mismatch（训练时见到的是全 null，推理时见到的是部分 null），但实验未观察到稳定性问题。FCFG 还可与 CFG++、APG 等改进版 guidance 组合，把分组思想嵌进它们的 score 公式即可。
+训练目标完全沿用标准条件扩散 loss $\mathbb{E}\|\epsilon-\epsilon_\theta(\mathbf{x}_t,t,\mathbf{c})\|^2$，并继续做经典的 classifier-free dropout（整段 $\mathbf{c}$ 随机替换为 $\varnothing$），不引入任何新损失；FCFG 只在推理时改 score 的算法。作者坦言这带来轻微的 train-test mismatch——训练时模型见到的要么是完整 $\mathbf{c}$ 要么是全 null，推理时却会遇到「部分 block 为 null」的 masked embedding——但实验里并未观察到由此引发的稳定性问题。由于分组思想只是改写 score 的线性组合，它和 CFG++、APG 这类改进版 guidance 正交，把同样的因子化嵌进它们的 score 公式即可叠加使用。
 
 ## 实验关键数据
 

@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **JSON-based 结构化表征 + RPLAN → polygon 转换管道**:
+**1. JSON 结构化表征 + RPLAN→polygon 转换管道：把户型生成从"画图"重新框定成"写结构化文本"。**
 
-    - 功能：把户型生成从"图像生成"重 frame 成"结构化文本生成"，让 LLM 的固有能力直接派上用场。
-    - 核心思路：每个 space（房间或门）是一个 JSON 对象，包含 id（如 `bedroom|0`）、room_type、area（m²）、floor_polygon（绝对坐标顶点列表）；输入还含 room_count、total_area、input_graph 邻接表。RPLAN 原始是 $256\times256\times4$ 图像，作者写了 custom converter 把它转成 polygon JSON：用 House-GAN++ data reader 读边界与房间标签，重构多边形，从像素缩放到米，从内门连通性导出 bubble diagram。
-    - 设计动机：JSON (1) 无歧义解析数值约束；(2) 强制 schema 一致；(3) 天然嵌套表示户型层级；(4) 可直接喂 CAD 软件。比起 raster 图像或自然语言，结构化文本天然适合"约束遵循"任务，也让 verifier 可以直接解析输出。
+主流路线都把户型当图像生成，可图像既塞不进"卧室必须 12 m²"这种数值约束，输出的 raster 或 scale-invariant 形状也喂不进 CAD。作者干脆换一套表征：每个 space（房间或门）是一个 JSON 对象，含 id（如 `bedroom|0`）、room_type、area（m²）和 floor_polygon（绝对坐标顶点列表），输入侧再带上 room_count、total_area 和 input_graph 邻接表。RPLAN 原始是 $256\times256\times4$ 的图像，作者写了 custom converter 把它翻成 polygon JSON——借 House-GAN++ 的 data reader 读边界与房间标签、重构多边形、从像素缩放到米、再从内门连通性导出 bubble diagram。选 JSON 是因为它一次满足四件事：数值约束无歧义解析、schema 强制一致、嵌套天然表达户型层级、输出可直接进 CAD；更关键的是，结构化文本本就是 LLM 的主场，verifier 也能直接解析它来判分，这把"约束遵循"从图像后处理变成了模型能学、程序能验的文本任务。
 
-2. **GRPO + 双 verifiable reward + 硬可行性**:
+**2. GRPO + 双 verifiable reward + 硬可行性：用程序能验证的奖励对齐约束，再用一道硬闸门掐死几何违法。**
 
-    - 功能：让模型在 SFT 后进一步对齐 connectivity + total-area 两个可程序验证的约束，并消除几何不合法输出。
-    - 核心思路：对 prompt $x$ 采 $G=4$ 个候选，计算 group-relative advantage $\hat{A}_i = (R(x, y_i) - \mu_x) / (\sigma_x + \epsilon)$，PPO-style surrogate 目标 $L^{\text{GRPO}}(\theta)=\mathbb{E}_x[\frac{1}{G}\sum_i \frac{\pi_\theta(y_i|x)}{\pi_{\theta_{\text{old}}}(y_i|x)}\hat{A}_i]$ —— 不需要 critic 网络。奖励两项：(a) **Connectivity reward** $r_{\text{conn}}\in[0,1]$：从生成 JSON 重建邻接图与 input bubble diagram 比对，越像越高；(b) **Total area reward** $r_{\text{TA}}=\max(0, 1-\text{TAE})$，其中 $\text{TAE}=|A(y)-A^\star|/A^\star$。等权重平均。最关键 —— **JSON parse 失败或任何房间多边形重叠 → reward = 0**（硬可行性条件，而非软惩罚）。
-    - 设计动机：建筑约束（connectivity / area）都是可程序自动验证的，正是 RLVR 适用的场景；硬可行性把"几何不合法"从 reward shaping 调出来变成 binary kill switch，作者强调初版只用 connectivity reward 时模型把房间缩成针尖来 game 邻接图 —— 引入 area + overlap=0 后 reward hacking 被堵住。
+SFT 只学会了"长得像 RPLAN"，但拓扑和面积是否真的对得上，需要进一步对齐。作者用 GRPO：对每个 prompt $x$ 采 $G=4$ 个候选，算 group-relative advantage
 
-3. **Best-of-10 选择 + token-level prompt 限定**:
+$$\hat{A}_i=\frac{R(x,y_i)-\mu_x}{\sigma_x+\epsilon},$$
 
-    - 功能：在推理时进一步榨出几何合法、约束匹配的输出。
-    - 核心思路：采样 10 个候选（temperature 0.7、top-p 0.9），按"重叠面积最小"为第一序、Compatibility 为 tie-break 第二序选最终输出；prompt 里在 system message 中明确写"Your top priority is that no two room polygons ever overlap"、"every adjacency in the bubble diagram must be bridged by exactly one door"等硬指令。
-    - 设计动机：单次采样仍偶有 overlap（特别是 8 房间任务 Overlap 0.13），best-of-10 把 overlap 从 0.26（n=1）降到 0.13（n=10）、再 n=100 降到 0.10，Compatibility 从 1.89 → 0.15 → 0.02 单调下降；这是一种用推理计算换约束遵循度的明确 trade-off，且 reward 是验证型，selection 也是验证型，两端对称。
+再优化 PPO-style 目标 $L^{\text{GRPO}}(\theta)=\mathbb{E}_x\big[\tfrac{1}{G}\sum_i \tfrac{\pi_\theta(y_i|x)}{\pi_{\theta_{\text{old}}}(y_i|x)}\hat{A}_i\big]$，省掉 critic 网络。奖励由两项等权平均：Connectivity reward $r_{\text{conn}}\in[0,1]$ 从生成 JSON 重建邻接图、与 input bubble diagram 比对，越像越高；Total-area reward $r_{\text{TA}}=\max(0,\,1-\text{TAE})$，其中 $\text{TAE}=|A(y)-A^\star|/A^\star$ 是总面积相对误差。最关键的一笔是**硬可行性**：JSON 解析失败或任何两个房间多边形重叠，reward 直接归零，而不是软扣分。这么设计是因为 connectivity 与 area 本就可被程序自动验证，正落在 RLVR 的适用区；而几何合法性更适合做成 binary kill switch——作者发现初版只给 connectivity reward 时，模型会把房间缩成针尖去 game 邻接图，直到补上 area 奖励和 overlap=0 这道硬闸门，reward hacking 才被彻底堵死。
+
+**3. Best-of-10 选择 + token 级 prompt 限定：推理端再用同一套"可验证"标准榨出合法输出。**
+
+即便训练好了，单次采样仍偶有重叠（8 房间任务 best-of-1 的 Overlap 达 0.26）。作者在推理时采 10 个候选（temperature 0.7、top-p 0.9），按"重叠面积最小"为第一序、Compatibility 为 tie-break 第二序挑最终输出；同时在 system message 里下硬指令，如"Your top priority is that no two room polygons ever overlap""every adjacency in the bubble diagram must be bridged by exactly one door"。效果是单调的：Overlap 从 0.26（n=1）压到 0.13（n=10）再到 0.10（n=100），Compatibility 同步从 1.89→0.15→0.02。这本质是拿推理算力换约束遵循度的明确 trade-off，而且训练端的 reward 是验证型、推理端的 selection 也是验证型，两头用的是同一把尺子，逻辑上对称自洽。
 
 ### 损失函数 / 训练策略
 SFT 用标准 NLL：$L^{\text{SFT}}(\theta)=\mathbb{E}_{(x,y)\sim\mathcal{D}}[-\sum_t \log \pi_\theta(y_t|y_{<t},x)]$，LoRA rank 64，lr 1e-4，2 epoch。GRPO 用 AdamW，lr 1e-6、clip 0.2、KL 系数 0.04、temperature 0.9、top-p 1.0、prompt+completion 4096 tokens，每 prompt 采 4 generations，每 100 步在 200 个 val 样本上 validate；作者注意到最优 checkpoint 通常就在 step 100（~2h wall-clock），GRPO 阶段比 SFT 还短。RPLAN 80,788 户型按房间数（5/6/7/8）切四组，hold out 一组做评测、用其他三组训练（zero-shot 跨房间数泛化）。

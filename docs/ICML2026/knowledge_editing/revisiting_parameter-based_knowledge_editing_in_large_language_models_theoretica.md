@@ -47,23 +47,17 @@ tags:
 
 ### 关键设计
 
-1. **维度坍塌 + 相对变化率 $R_k$ 作为脆弱性度量**:
+**1. 维度坍塌 + 相对变化率 $R_k$：把"编辑会不会伤表示"变成可测量的几何量。**
 
-    - 功能：把"编辑会不会破坏表示"从模糊直觉变成可测量、可比较的几何量。
-    - 核心思路：在 FFN 上以一阶近似得到 $\Delta h \approx J_\phi(a)\cdot \Delta W\cdot x$，将其投影到原始隐表示 SVD 基 $\{u_k\}$，定义方向相对扰动 $R_k=\sqrt{n}|c_k|/\sigma_k$。原生信号尺度由 $\mathrm{RMS}(h_k)=\sigma_k/\sqrt{n}$ 给出，因此 $R_k\gg 1$ 即意味着该方向已被编辑"压翻"。在 Llama-3.1-8B-Instruct 上实测各层 $\sigma_{\min}\sim 10^{-5}$、条件数 $>10^6$，从而即便 $|c_k|$ 很小，$R_k$ 也会显著放大。
-    - 设计动机：以往工作要么报告"参数动得很少"，要么报告"性能塌了"，缺一个连接二者的几何桥梁；$R_k$ 提供了一个与方向耦合、可在层内层间统计的细粒度指标。
+以往工作要么只报告"参数动得很少"，要么只报告"性能塌了"，中间缺一座桥。本文在 FFN 上做一阶 Taylor 近似得到单次编辑引起的隐表示扰动 $\Delta h \approx J_\phi(a)\cdot \Delta W\cdot x$，再把它投影到原始隐表示的 SVD 主方向 $\{u_k\}$ 上，定义方向相对扰动 $R_k=\sqrt{n}|c_k|/\sigma_k$。这里的关键是用原生信号尺度 $\mathrm{RMS}(h_k)=\sigma_k/\sqrt{n}$ 做分母——一个方向上原本信号有多强、扰动就该按这个尺度去比较，于是 $R_k\gg 1$ 直接意味着该方向已被编辑"压翻"。维度坍塌正是放大器：在 Llama-3.1-8B-Instruct 上实测各层 $\sigma_{\min}\sim 10^{-5}$、条件数 $>10^6$，落到这些低奇异值方向上的扰动即便绝对值 $|c_k|$ 很小，除以极小的 $\sigma_k$ 后 $R_k$ 也会被显著放大。$R_k$ 因此成为一个与方向耦合、可在层内层间逐方向统计的细粒度脆弱性指标。
 
-2. **序列编辑下的线性累积定律 $R_{\min}^{(T)}\approx T\cdot R_{\min}^{(1)}$**:
+**2. 序列编辑的线性累积定律 $R_{\min}^{(T)}\approx T\cdot R_{\min}^{(1)}$：解释多条"看似无害"的编辑为何迅速雪崩。**
 
-    - 功能：解释为什么"看似无害"的多条编辑会迅速雪崩。
-    - 核心思路：利用望远镜恒等式 $\Delta h^{(T)}=\sum_{t=1}^{T}\Delta h_\text{instant}^{(t)}$，在局部稳定假设下沿固定主方向 $u_{\min}$ 投影得到 $c_{\min}^{(T)}=\sum_t c_{\min}^{(t)}$。最坏情形（相干累积）下 $|c_{\min}^{(T)}|\approx T\bar\varepsilon$，于是 $R_{\min}^{(T)}\approx T\cdot R_{\min}^{(1)}$。作者还指出，实际中低方差方向的主方向本身会随编辑漂移（Appendix B.3），这意味着真实退化通常比该线性下界更严重。
-    - 设计动机：理论给出一个最乐观的可推导结果（"即使在最稳定的局部正交基里都会线性变差"），从而把"序列编辑必坏"从经验观察提升为可证明性质。
+单条编辑的 $R_k$ 已经偏大，多条叠加会怎样？本文用望远镜恒等式 $\Delta h^{(T)}=\sum_{t=1}^{T}\Delta h_\text{instant}^{(t)}$ 把 $T$ 步累积扰动拆开，在局部稳定假设下沿固定主方向 $u_{\min}$ 投影得到 $c_{\min}^{(T)}=\sum_t c_{\min}^{(t)}$；最坏情形（各步相干累积）下 $|c_{\min}^{(T)}|\approx T\bar\varepsilon$，于是相对扰动随编辑数线性增长 $R_{\min}^{(T)}\approx T\cdot R_{\min}^{(1)}$。值得注意的是，这其实是一个最乐观的下界：作者指出实际中低方差方向的主方向本身会随编辑漂移（Appendix B.3），意味着真实退化通常比线性下界更严重。这条定律把"序列编辑必坏"从零散经验观察提升为——即使在最稳定的局部正交基里、最有利于编辑的假设下，表示也会线性变差的可证明性质。
 
-3. **能力保持中心化的多维评测协议 + 检索基线 SCR 对照**:
+**3. 能力保持中心化的多维评测协议 + 检索基线 SCR 对照：让评测从"编辑成功率"切到"能力是否还在、是否打得过非侵入基线"。**
 
-    - 功能：把评测从"单条编辑成功率"切换到"能力是否被保留 + 是否优于非侵入基线"。
-    - 核心思路：在 4 个模型（含 DeepSeek-R1-Distill-LLaMA-8B 这种推理 LLM）、3 个编辑数据集（ZsRE / WikiData$_\text{counterfact}$ / 事件级 ELKEN）和数学推理 / GPQA / ARC$_\text{c}$ / MMLU-Pro 上，按 1 / 10 / 100 / All 四个编辑规模系统扫描；评测同时给出 Rel / Gen / Loc / Port 四维并采用自回归解码 + Qwen2.5-72B-Instruct 做语义一致性裁判，避免 teacher-forcing 高估；并加入一个简单的检索基线 SCR 作为"外部知识"对照锚。
-    - 设计动机：现有 benchmark 往往只评 Rel/Gen 且用 teacher forcing，导致参数编辑"虚高"；引入 Loc/Port、推理基准和 SCR 锚，才能暴露真正的能力损耗与权衡。
+现有 benchmark 往往只评 Reliability/Generalization 且用 teacher forcing，让参数编辑显得"虚高"，掩盖了对推理、不相关知识、portability 的破坏。本文把评测维度撑开：在 4 个模型（含 DeepSeek-R1-Distill-LLaMA-8B 这种推理型 LLM）、3 个编辑数据集（ZsRE / WikiData$_\text{counterfact}$ / 事件级 ELKEN）以及数学推理 / GPQA / ARC$_\text{c}$ / MMLU-Pro 通用基准上，按 1 / 10 / 100 / All 四个编辑规模系统扫描，同时给出 Reliability / Generalization / Locality / Portability 四维，并改用自回归解码 + Qwen2.5-72B-Instruct 做语义一致性裁判以避免 teacher-forcing 高估。最关键的一步是引入一个简单的检索式基线 SCR 当作"外部知识"对照锚——只有当参数编辑被要求在"比 RAG 更好"的标准下证明自己时，真正的能力损耗与稳定性—效率权衡才会暴露出来。
 
 ### 损失函数 / 训练策略
 本文不训练新模型；分析层面使用一阶 Taylor 展开 + SVD；评测层面采用自回归贪心解码、Qwen2.5-72B-Instruct 做语义一致性裁判，并以 token 级 locality check 复核（Appendix C.5）。所有编辑方法均沿用各自原论文的超参与编辑层选择。

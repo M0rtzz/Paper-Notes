@@ -40,27 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-UserMirrorer 是端到端的"数据构造 + 模型训练"框架：(1) 把 8 个领域的 RS 日志（MIND/Amazon/MovieLens/Steam/Goodreads/MobileRec/LastFM/KuaiRec2）转成统一仿真场景 $\bm{X}=\text{Prompt}(\bm{M},\bm{L})$，$\bm{M}$ 是用户记忆（profile + 历史），$\bm{L}$ 是 $N+1$ 长曝光列表，每个 item 打 [A]/[B]/[C] 标签；(2) 用 Qwen2.5-32B（强）和 Llama-3.2-3B（弱）各采样 10 个 EKB 决策过程，用拒绝采样配对作为 chosen/rejected；(3) 对 Llama-3.2-3B 先 SFT 再 DPO，得到部署级的 3B 用户模拟器。
+UserMirrorer 是一条端到端的"数据构造 + 模型训练"流水线，目标是把噪声大、缺上下文的 RS 日志炼成能教会小模型对齐真用户的训练数据。第一步把 8 个领域的 RS 日志（MIND/Amazon/MovieLens/Steam/Goodreads/MobileRec/LastFM/KuaiRec2）统一改写成仿真场景 $\bm{X}=\text{Prompt}(\bm{M},\bm{L})$，其中 $\bm{M}$ 是用户记忆（profile + 历史）、$\bm{L}$ 是一个 $N+1$ 长的曝光列表，每个 item 打 [A]/[B]/[C] 标签。第二步用 Qwen2.5-32B（强）和 Llama-3.2-3B（弱）各采样 10 个 EKB 决策过程，挑出"强模型能讲明白、弱模型却抓瞎"的难样本，再用拒绝采样去噪并配成 chosen/rejected 偏好对。最后对 Llama-3.2-3B 先 SFT 再 DPO，得到一个 3B 的部署级用户模拟器。
 
 ### 关键设计
 
-1. **EKB 决策过程生成（Decision-process Generation as Clarification）**:
+**1. EKB 决策过程生成：给每条点击补一段"为什么点"的显式推理。**
 
-    - 功能：给每条 $(\bm{M}, \bm{L}, a)$ 样本补一段显式的"为什么这个用户会点 [C]"的决策推理。
-    - 核心思路：把 EKB 模型改造成三阶段——**Stimulus**（识别触发用户行为的外部时空/社交因素和内在需求/情绪）、**Knowledge**（从曝光列表抽取相关属性）、**Evaluation**（用直觉式或逻辑式风格评估候选行为，对应 Kahneman 的"系统 1/系统 2"）。然后让强 LLM 按这三步先生成决策过程 $\bm{D}$，再预测动作 $\bm{Y}$。
-    - 设计动机：在 Hou et al. 2024 的框架里，clarification 能把总不确定性分解为 aleatoric（数据本身模糊）和 epistemic（模型能力不足）；EKB 决策过程刚好是"用户为何这么选"的合理 clarification，既补充了上下文，又让模型可以反过来量化 epistemic uncertainty。
+原始日志只有"用户点了 [C]"这个结果，没有任何决策上下文，模型光看结果学不到偏好。本文借消费者行为学的 EKB 模型给每条 $(\bm{M}, \bm{L}, a)$ 样本补一段 chain-of-thought：先 **Stimulus**（识别触发行为的外部时空/社交因素与内在需求/情绪），再 **Knowledge**（从曝光列表抽取相关属性），最后 **Evaluation**（用直觉式或逻辑式风格评估候选，对应 Kahneman 的系统 1 / 系统 2）。强 LLM 按这三步先生成决策过程 $\bm{D}$、再预测动作 $\bm{Y}$。
 
-2. **基于不确定性的难样本筛选（Uncertainty-based Distillation）**:
+这段决策过程的价值不止于补上下文：在 Hou et al. 2024 的框架里，clarification 能把总不确定性拆成 aleatoric（数据本身模糊）和 epistemic（模型能力不足），而 EKB 决策过程恰好是"用户为何这么选"的天然 clarification，让后面可以反过来量化 epistemic uncertainty。这等于给 LLM 决策注入了人类心理学的归纳偏置，比让它自由发挥稳定得多。
 
-    - 功能：从 16K 候选场景里挑出"强模型胸有成竹但弱模型抓瞎"的 case 留给训练，跳过太简单或太离谱的。
-    - 核心思路：分别用强/弱 LLM 生成 $N=10$ 个决策过程，让弱 LLM 在两种 $\bm{D}$ 条件下分别预测行为，计算 $\Delta_{EU}(\bm{X}, (A,B)) = \mathbb{E}_{P(\bm{D}_A|\bm{X})}\mathcal{H}(P(\bm{Y}|\bm{X}\oplus \bm{D}_A)) - \mathbb{E}_{P(\bm{D}_B|\bm{X})}\mathcal{H}(P(\bm{Y}|\bm{X}\oplus \bm{D}_B))$。$\Delta_{EU}$ 大意味着强模型 $A$ 一旦给了 clarification，弱模型 $B$ 的熵会被大幅压低——这种"信息增益"最大的样本就是最有训练价值的难样本。
-    - 设计动机：不确定性差比 accuracy 差更鲁棒——直接比 accuracy 容易被随机性扰动，而熵差能精确度量"决策过程提供了多少 epistemic 信号"，从而锁定那些真正需要"借助强模型推理才能 align 真用户"的场景。
+**2. 基于不确定性的难样本筛选：用熵差锁定最有训练价值的样本。**
 
-3. **拒绝采样去噪 + DPO 偏好对构造（Sampling Denoised Behaviors）**:
+16K 候选场景里大量样本要么太简单、要么太离谱，全拿来训反而拖累对齐。作者分别用强/弱 LLM 各生成 $N=10$ 个决策过程，让弱 LLM 在两种 $\bm{D}$ 条件下分别预测行为，计算
 
-    - 功能：进一步把数据集级的噪声（误点、刷量）剔除，并构造高置信度的偏好对供 DPO 使用。
-    - 核心思路：对每条难样本场景，把 10 个决策过程的预测 vs. 真实用户行为做匹配，若 10 个里没有一个和真实匹配，则整条样本视为噪声直接丢弃；剩余样本里，把"决策预测正确"的过程标 accepted、把"预测错误"的过程标 rejected，并取置信度最高的一对作为 DPO 偏好对。
-    - 设计动机：直接训练所有数据会把噪声当真信号；先用"是否能解释真实行为"做数据级 sanity check，再用 chosen/rejected 显式提供"该这么推理 vs. 不该那么推理"的对比信号，相当于在 DPO 里把"内容质量"和"用户行为契合度"两个目标同时优化。
+$$\Delta_{EU}(\bm{X}, (A,B)) = \mathbb{E}_{P(\bm{D}_A|\bm{X})}\mathcal{H}(P(\bm{Y}|\bm{X}\oplus \bm{D}_A)) - \mathbb{E}_{P(\bm{D}_B|\bm{X})}\mathcal{H}(P(\bm{Y}|\bm{X}\oplus \bm{D}_B))$$
+
+$\Delta_{EU}$ 大，意味着强模型 $A$ 一旦给出 clarification，弱模型 $B$ 的预测熵就被大幅压低——这种"信息增益"最大的样本，正是弱模型必须借助强模型推理才能 align 真用户的难样本。之所以用熵差而非 accuracy 差，是因为直接比正确率容易被随机性扰动，而熵差能精确度量"决策过程提供了多少 epistemic 信号"，对这种答案带随机性的对齐任务更鲁棒。
+
+**3. 拒绝采样去噪 + DPO 偏好对构造：先做数据级 sanity check，再给出对比信号。**
+
+日志里还混着误点、刷量这类数据级噪声，直接训会把噪声当真信号。对每条难样本，作者把 10 个决策过程的预测和真实用户行为逐一匹配：若 10 个里没有一个对得上，整条样本视为噪声直接丢弃；剩下的样本，把"预测正确"的过程标 accepted、"预测错误"的标 rejected，取置信度最高的一对作为 DPO 偏好对。这套流程相当于先用"能否解释真实行为"做 sanity check 去噪，再用 chosen/rejected 显式提供"该这么推理 vs. 不该那么推理"的对比信号，在 DPO 里同时优化"内容质量"和"用户行为契合度"两个目标。
+
+### 一个完整示例：从一条日志到一份训练样本
+取 MIND 上的一条新闻点击日志：用户 $u$ 在曝光列表 [A][B][C] 里点了 [C]。**改写**：把 $u$ 的 profile + 历史塞进 $\bm{M}$、三条候选排进 $\bm{L}$，组成场景 $\bm{X}$。**生成**：Qwen2.5-32B 和 Llama-3.2-3B 各采 10 个 EKB 决策过程（Stimulus→Knowledge→Evaluation），并各自预测会点哪条。**筛选**：算出这条样本的 $\Delta_{EU}$ 较大——强模型给的推理能把弱模型的熵压得很低，于是它被留进难样本池（全集 16K 最终收敛到约 10K）。**去噪配对**：10 个强模型决策里有几个预测中了真实的 [C]，标 accepted；预测成 [A]/[B] 的标 rejected，取置信度最高的一对构成 DPO 偏好对。**训练**：accepted 过程进 SFT，偏好对进 DPO。再加样本到 40K 几乎不再涨，所以停在 10K。
 
 ### 损失函数 / 训练策略
 两阶段训练：(1) **SFT 阶段**仅用 accepted 决策过程做 next-token prediction；(2) **DPO 阶段**用配好的偏好对，沿用 Rafailov et al. 2023 标准公式。作为对比也试了 GRPO（Shao et al. 2024），用是否匹配真实行为做规则化 reward。最终训练用 10K 数据效果最好（再加到 40K 几乎无提升）。推理时 temperature=1.0、top-p=0.9，每条场景采 5 次取均值。

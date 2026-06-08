@@ -42,31 +42,31 @@ tags:
 
 ### 整体框架
 
-整个工作分两部分：(1) 数据构建——300 个基于专利的 LLM 生成产品 idea，覆盖 NLP/CS/MatChem 三个领域，每个 idea 由 4-12 名领域专家在 6 个维度上打分，采用阶梯式筛选协议（specificity 不达标就不评下游维度），最终得到约 3,109 条评分；(2) judge 评估——同一组数据上跑三种 judge 配置，用 Krippendorff's α 比对 judge 预测和对应专家标注的对齐度。
+整篇工作要回答的问题是：在专家系统性分歧的商业 idea 评估里，judge 该向「共识」收敛还是向「个体」对齐。为此它分两步走。第一步是数据构建——围绕 300 个基于专利、由 LLM 生成的产品 idea（覆盖 NLP/CS/MatChem 三领域），让每个 idea 由 4-12 名领域专家在 6 个维度上按阶梯式协议打分，最终得到约 3,109 条评分，并用双层指标刻画分歧到底是噪声还是结构。第二步是 judge 评估——在同一份数据和 leave-one-out 协议下，把 zero-shot、aggregate、personalized 三种 judge 配置摆在一起，唯一的变量是 few-shot 例子的评审员归属，再用 Krippendorff's α 比对 judge 预测与对应专家标注的对齐度。
 
 ### 关键设计
 
-1. **PBIG-DATA 多维 + 阶梯式评分协议**:
+**1. PBIG-DATA 多维 + 阶梯式评分协议：把「该评哪些维度、用什么尺度、何时跳过」写进数据本身。**
 
-    - 功能：捕获商业 idea 评估中"哪些维度该评、用什么尺度评、何时跳过"的真实工作流。
-    - 核心思路：6 个维度采用不同尺度匹配各自自然粒度——specificity / technical validity / competitive advantage 用 1-4，innovativeness 用 1-5（多一档区分"惊艳但不颠覆"），need validity / market size 用 0-3（0 表示"不是 B2B 产品"的类别排除）。阶梯筛选规则：先打 specificity，过阈值再评 technical validity，再过阈值才评 innovativeness 和 competitive advantage；need validity / market size 仅在 specificity 过阈值时评。把"缺失"当作评估流程本身的一部分而非噪声。
-    - 设计动机：商业评审中"这个 idea 太模糊以至于谈不上可行性"是常态，强迫评审员对劣质 idea 也打满 6 个维度只会引入噪声。
+商业评审里「这个 idea 太模糊以至于谈不上可行性」是常态，强迫专家给劣质 idea 也打满 6 个维度只会引入噪声，所以协议把「缺失」当成评估流程的一部分而非缺陷。6 个维度各用匹配自身自然粒度的尺度：specificity / technical validity / competitive advantage 用 1-4，innovativeness 用 1-5（多一档区分「惊艳但不颠覆」），need validity / market size 用 0-3（0 表示「不是 B2B 产品」的类别排除）。
 
-2. **三类 judge 配置对比设计**:
+阶梯筛选规则是逐层放行：先打 specificity，过阈值才评 technical validity，再过阈值才评 innovativeness 和 competitive advantage；need validity / market size 也仅在 specificity 过阈值时才评。这样一来低质 idea 不会被硬塞进下游维度，留下的评分都是「值得评」的，缺失本身也成了一个信号。
 
-    - 功能：在统一数据集和 leave-one-out 协议下隔离"target signal 假设"对 judge 性能的影响。
-    - 核心思路：(a) Zero-shot judge——只给 rubric 和指令，不看任何专家历史；(b) Aggregate judge——few-shot 例子来自"非目标评审员"的混合历史（同领域同维度、不同专利），代表 pooled-label 假设；(c) Personalized judge——few-shot 例子专门来自"目标评审员自己"的历史，代表多元化假设。两者唯一差别是 few-shot 例子的评审员归属，保证对比公平。Judge 同时输出 0-100 的自信度，沿用 Dong et al. 2024 的做法把 <80 的预测丢掉，三个随机种子多数投票。
-    - 设计动机：要严格回答"汇总 vs 个性化哪个对"，必须把例子数量、领域、采样逻辑都对齐，只动评审员条件这一个变量。
+**2. 三类 judge 配置对比设计：只动评审员条件这一个变量，隔离「target signal 假设」。**
 
-3. **分歧量化的双层指标（Fine vs Coarse）**:
+要严格回答「汇总 vs 个性化哪个对」，必须让例子数量、领域、采样逻辑全部对齐，只改 few-shot 例子的评审员归属。于是三种配置被设计成：(a) Zero-shot judge 只给 rubric 和指令、不看任何专家历史；(b) Aggregate judge 的 few-shot 例子取自「非目标评审员」的混合历史（同领域、同维度、不同专利），代表 pooled-label 假设；(c) Personalized judge 的 few-shot 例子专门取自「目标评审员自己」的历史，代表多元化假设。后两者的唯一差别就是例子归属，保证对比公平。
 
-    - 功能：把"评审员到底有没有共识"分成两层来看——细粒度序数分数 vs 粗粒度强 idea 选择。
-    - 核心思路：Fine-grained agreement 用 Krippendorff's α 衡量序数评分一致性；Coarse agreement 用"评审员各自的中位数以上 idea 集合"之间的 Jaccard 相似度（仅在两两评审员有 ≥10 条共评 idea 时计算）。
-    - 设计动机：分别测两种粒度才能揭示"分歧是系统性结构而非纯噪声"——细粒度上分歧大但粗粒度上仍有共识，意味着每个评审员有自己稳定但相互不同的标准。
+为降低预测噪声，judge 同时输出 0-100 的自信度，沿用 Dong et al. 2024 的做法把自信度 <80 的预测丢掉，并用三个随机种子做多数投票。这套控制变量的安排是结论可信的关键——任何 personalized 优于 aggregate 的差距都只能归因到「向单一评审员对齐」这一件事上。
+
+**3. 分歧量化的双层指标（Fine vs Coarse）：分开看序数分数和强 idea 选择。**
+
+如果只用一个指标，「分歧大」既可能是纯噪声、也可能是结构性异质，无法区分。论文因此把 agreement 拆成两层：Fine-grained agreement 用 Krippendorff's α 衡量序数评分的一致性；Coarse agreement 则看「各评审员各自中位数以上的 idea 集合」之间的 Jaccard 相似度（仅在两两评审员有 ≥10 条共评 idea 时才计算）。
+
+两层一起看才能揭示真相：细粒度上分歧很大、粗粒度上却仍有共识，说明每个评审员有自己稳定但彼此不同的标准，而非随机乱打。这个「细粒度低、粗粒度高」的组合正是后续支持 personalized judge 的实证基础——既然分歧是结构性的，那为每个评审员配一个 judge 就比强行收敛到平均更合理。
 
 ### 损失函数 / 训练策略
 
-无训练。所有 judge 都是 Qwen3-Instruct 系列（4B / 30B-A3B / 30B-A3B-Thinking / 235B-A22B）以及 GPT-5 mini 直接用 few-shot prompting，主要变量是 few-shot 例子的数量（0 / 1 / 2 / 5 / 10）和归属（target evaluator vs 非 target）。
+无训练。所有 judge 都用 Qwen3-Instruct 系列（4B / 30B-A3B / 30B-A3B-Thinking / 235B-A22B）以及 GPT-5 mini 直接做 few-shot prompting，主要变量是 few-shot 例子的数量（0 / 1 / 2 / 5 / 10）和归属（target evaluator vs 非 target）。
 
 ## 实验关键数据
 

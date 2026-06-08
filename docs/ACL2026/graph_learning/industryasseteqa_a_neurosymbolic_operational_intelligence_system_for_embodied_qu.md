@@ -42,38 +42,25 @@ tags:
 
 ### 整体框架
 
-输入是操作员在 CMMS 前端输入的自然语言查询；系统先按 5 类 QA 任务（描述 / 时序 / 诊断 / 反事实 / 动作建议）做问题分类，再走 6 个模块组成的流水线：
-
-1. **Fact Extractor**：把遥测时间序列切成以失败时刻 $t_f$ 为锚的固定窗口 $[t_f-\Delta, t_f]$，对每个数值传感器 $s$ 抽取摘要描述符 $\mathcal{F}_s = \{\mu_s, \sigma_s, \min_s, \max_s, \text{trend}_s\}$，并拼接错误事件计数、距上次维护小时数等上下文特征，加上 FMEA-KG 的资产 / 故障 / 传感器语义，输出带全 provenance 的 episode JSONL。
-2. **Episodic Store**：SQLite 双表（facts + features）存储 episode 级事实，按 `fact_id` 索引，支持按资产、标签、阈值条件 $\{f_i \mid x_{i,j} \bowtie \tau\}$ 高效检索。
-3. **FMEA-KG**：基于 ISO 文档由 EMPWR 平台构建的领域知识图谱，含 63 种故障模式 × 9 类资产，节点是资产类 / 子部件 / 故障模式 / 传感器抽象 / 维护动作，边是 `affects / component_of / indicated_by / mitigated_by`，用 rdflib 在流水线节点注入符号约束。
-4. **Causal Simulator**：在 episode 特征上训练多项式 logistic 回归近似 $P(y \mid \bm{x})$，把维护干预建模为对特征向量的显式 do-替换 $\bm{x} \mapsto \bm{x}^{\text{do}}$，输出干预前后风险 $r_{\text{before}} = 1 - P(y=\text{healthy} \mid \bm{x})$ 与 $r_{\text{after}} = 1 - P(y=\text{healthy} \mid \bm{x}^{\text{do}})$ 以及方向 $\Delta r$。
-5. **EQA Builder + Prompt Builder**：按 QA 类型确定性地构造问题、抽取答案模板、查询 FMEA-KG 补全失败模式元数据，再把证据块（fact_id、资产、源、行号、窗口、关键特征、FMEA 上下文）渲染成严格 JSON 输出契约的 prompt（要求字段 `direct_answer / reasoning_answer / provenance / confidence`，反事实任务还强制含 `risk_before / risk_after / direction`）。
-6. **Verifier + Safety Gate**：把 LLM 输出对回 Episodic Store 做结构 + provenance + 反事实方向一致性校验，未通过则打标记并路由人审。
+系统接收操作员在 CMMS 前端输入的自然语言查询，把工业维护问答当成"感知遥测→诊断→规划干预→执行"的具身决策环路来跑，全程让 LLM 的自由文本被符号知识和 episode 事实双重锚定。查询先被分到 5 类 QA 任务（描述 / 时序 / 诊断 / 反事实 / 动作建议），随后流经一条 6 模块流水线：Fact Extractor 把遥测时序切成以失败时刻 $t_f$ 为锚的固定窗口 $[t_f-\Delta, t_f]$、对每个传感器 $s$ 抽出摘要描述符 $\mathcal{F}_s = \{\mu_s, \sigma_s, \min_s, \max_s, \text{trend}_s\}$ 并拼上错误计数、距上次维护小时数等上下文，输出带全 provenance 的 episode JSONL；这些 episode 进 Episodic Store（SQLite facts+features 双表，按 `fact_id` 索引）供阈值检索 $\{f_i \mid x_{i,j} \bowtie \tau\}$；FMEA-KG（63 种故障模式 × 9 类资产，边为 `affects / component_of / indicated_by / mitigated_by`）注入符号约束；Causal Simulator 用多项式 logistic 估 $P(y\mid\bm{x})$ 并把干预建成 do-替换算出干预前后风险 $r_{\text{before}} = 1 - P(y=\text{healthy}\mid\bm{x})$、$r_{\text{after}} = 1 - P(y=\text{healthy}\mid\bm{x}^{\text{do}})$ 与方向 $\Delta r$；EQA/Prompt Builder 把证据块渲染成严格 JSON 契约喂给 LLM；最后 Verifier + Safety Gate 把输出对回 Episodic Store 做结构、provenance、反事实方向一致性校验，未通过则路由人审。
 
 ### 关键设计
 
-1. **FMEA 知识图谱作为神经符号融合层**：
+**1. FMEA 知识图谱作为神经符号融合层：给自由文本套一个可审计的符号锚。**
 
-    - 功能：把领域专家经 ISO 文档审定的失败模式、传感器签名、可允许干预编码为可机器解释的图，作为 LLM 之外的硬约束。
-    - 核心思路：节点和关系覆盖资产→子部件→故障模式→传感器/动作的完整闭环，LLM 输出的"失败模式"必须能在 KG 中找到对应节点，否则被 Verifier 判失败；从 1004 条候选三元组中 96% 被 ISO 风格规约的文本蕴含模型判为有效，证明 KG 本身高质量。
-    - 设计动机：纯 LLM 解释经常引用错误的故障模式或编造传感器，需要一个可审计的符号锚来约束语义。
+纯 LLM 解释常常引用错误的故障模式甚至凭空编造传感器，缺一个可审计的语义约束。本文把领域专家依 ISO 文档审定的失败模式、传感器签名、可允许干预编码成一张机器可解释的图：节点覆盖资产类→子部件→故障模式→传感器抽象→维护动作的完整闭环，边表达 `affects / component_of / indicated_by / mitigated_by` 关系，用 rdflib 在流水线节点注入符号约束。LLM 输出的"失败模式"必须能在 KG 中找到对应节点，否则被 Verifier 判失败；从 1004 条候选三元组中有 96% 被 ISO 风格规约的文本蕴含模型判为有效，说明这个符号锚本身质量足够高，能稳定地把 LLM 的语义约束在领域共识之内。
 
-2. **Episode-centric + Provenance 强制**：
+**2. Episode-centric + Provenance 强制：让每个回答都能回查到具体时间窗。**
 
-    - 功能：把所有问答都锚定在"某资产 + 某时间窗"的离散 episode 上，并强制 LLM 在 JSON 中给出可回查的 `fact_id / 窗口 / 引用传感器`。
-    - 核心思路：Fact Extractor 给每个 episode 产 JSONL，含源文件、时间范围、计数等 provenance；Prompt Builder 给 LLM 的指令是"只能用提供的证据"，Verifier 把回答里引用的 `fact_id` 和特征值对回 Episodic Store 做核对，对不上号就拒绝。
-    - 设计动机：消融实验显示去掉 provenance 强制会让 Full Pass 从 0.89 崩到 0.19——即把数值预测从可部署直接打回不可用，这是论文中收益最大的单一组件。
+部署中 LLM 最大的可靠性缺口是答案没有可验证的出处——不引用对应时间窗、传感器和工单，无法审计。本文把所有问答都锚定在"某资产 + 某时间窗"的离散 episode 上：Fact Extractor 给每个 episode 产含源文件、时间范围、计数等 provenance 的 JSONL，Prompt Builder 的指令明确要求"只能用提供的证据"且 JSON 里必须给出可回查的 `fact_id / 窗口 / 引用传感器`，Verifier 再把回答里引用的 `fact_id` 和特征值对回 Episodic Store 核对、对不上号就拒绝。这一强制是论文里收益最大的单一组件：消融中去掉 provenance 强制会让 Full Pass 从 0.89 直接崩到 0.19，等于把可部署的数值预测打回成不可用的"幻觉数字"。
 
-3. **参数化反事实风险模拟器**：
+**3. 参数化反事实风险模拟器：把 what-if 从语言猜测变成可检验的风险计算。**
 
-    - 功能：把"如果换轴承会怎样"这种 what-if 问题转化为对特征向量分量的显式替换，再用多项式 logistic 输出干预前后健康概率与风险变化方向。
-    - 核心思路：用统一的 $P(y \mid \bm{x})$ 同时支持诊断和反事实，反事实时只把对应特征改成新值就能算 $\Delta r$，配合一个基于概率极端度的轻量信心启发式；该估计器输出也喂给 Safety Gate 用阈值过滤低信心建议。
-    - 设计动机：无模拟器基线在反事实方向准确率上只有 0.45（接近随机抛硬币），表明 LLM 单靠语言先验无法预测干预效果；加上简单的代理模型就把准确率拉到 0.88-0.91。
+"如果换轴承会怎样"这类反事实问题，LLM 单靠语言先验只能给定性结论、方向准确率仅 0.45（近乎抛硬币）。模拟器用一个统一的多项式 logistic 估计器 $P(y\mid\bm{x})$ 同时支撑诊断与反事实：反事实时只把对应特征分量做显式 do-替换 $\bm{x}\mapsto\bm{x}^{\text{do}}$，即可算出干预前后健康概率与风险变化方向 $\Delta r$，再配一个基于概率极端度的轻量信心启发式；该估计器的输出还喂给 Safety Gate，用阈值过滤低信心建议。作者明确这不是可识别的结构因果模型而是务实的代理估计器，但就这么一个简单代理就把反事实方向准确率从 0.45 拉到 0.88-0.91，性价比极高。
 
 ### 损失函数 / 训练策略
 
-只有 Causal Simulator 需要训练：在 episode 特征向量 $\bm{x}$ 上拟合多项式 logistic 回归学 $P(y \mid \bm{x})$，标签 $y$ 取 "healthy" 或各失败模式名，目标是标准多类交叉熵。健康 episode 通过选中心时刻 $t$ 满足后续 $[t, t+H]$ 无失败、然后回看 $[t-\Delta, t]$ 采样。LLM 部分全部黑盒 API 调用（GPT-4o-mini 和 Claude Sonnet 4），不做任何微调。
+只有 Causal Simulator 需要训练：在 episode 特征向量 $\bm{x}$ 上拟合多项式 logistic 回归学 $P(y \mid \bm{x})$，标签 $y$ 取 "healthy" 或各失败模式名，目标是标准多类交叉熵。健康 episode 通过选中心时刻 $t$ 满足后续 $[t, t+H]$ 无失败、再回看 $[t-\Delta, t]$ 采样得到。LLM 部分全部黑盒 API 调用（GPT-4o-mini 与 Claude Sonnet 4），不做任何微调。
 
 ## 实验关键数据
 

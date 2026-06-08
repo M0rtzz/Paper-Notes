@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两件事并行：(1) **ToW 框架**：评估树根 $R$ 连接三主节点 $V_C$ (Content) / $V_F$ (Format) / $V_I$ (Impression)，$V_C$ 和 $V_F$ 各有叶节点 $L_i$ (opening-ending, language-rhetoric, plots-structure, paragraphing, formatting...)；每个叶节点用 rubric + reference 由 LLM 1-10 打分（format 部分用 regex + LLM 混合），叶节点权重由 $J_W$ 看每条 instruction 后给出 $\sum w = 1, w \in (-1, 1)$，三主节点权重用均值。(2) **HoWToBench 数据集**：从 5 个高质专业写作网站爬 1302 条人类原文，反向构造 instruction + grounding info，覆盖 12 体裁 × 3 任务形态 (Completion / Guide / Open)。
+HoWToBench 这篇工作其实是两件事并行：一套评测框架 ToW 和一个配套基准。ToW 的核心思路是把人类专家评写作的隐式流程显式化——人类是先按子准则逐项打分、再按文体加权聚合，而 LLM-as-a-judge 把这两步压进一次 generation，导致权重决策和子分决策互相干扰、不可复现。ToW 因此搭了一棵评估树：根节点 $R$ 连接 Content / Format / Impression 三个主节点，前两者各挂若干叶节点；每个叶节点用 rubric + reference 由 LLM 单独打 1-10 分（format 部分混合 regex 与 LLM），而"哪个维度更重要"则交给一个独立的 negotiator $J_W$ 看完 instruction 后单独给权重，最后用 DFS 加权聚合成总分。基准这一侧则反向构造：从 5 个高质专业写作网站爬来 1302 条人类原文，倒推出 instruction + grounding 信息，覆盖 12 体裁 × 3 任务形态（Completion / Guide / Open）。整体上，输入是一篇待评文章与其 instruction，中间走"逐叶打分 → 单独议权重 → 树上聚合"，输出是一个可解释、可复现、对扰动鲁棒的总分。
 
 ### 关键设计
 
-1. **Tree-of-Writing 三主节点 + 叶节点架构**:
+**1. Tree-of-Writing 三主节点 + 叶节点架构：把 holistic 评分拆成可遍历的图。**
 
-    - 功能：把 holistic 写作评分拆成结构化、可遍历、可审计的图
-    - 核心思路：$\text{Score}(R) = \sum_{j \in \{C,F,I\}} w_{E_j} \text{Score}(V_j)$，其中 $\text{Score}(V_C) = \sum_{L_i \in \text{Child}(V_C)} w_{E_{V_C L_i}} \text{Score}(L_i)$；$V_C$ 的叶节点（opening-ending / language-rhetoric / argumentative-logics / emotion）用 rubric + reference 由 LLM 评分；$V_F$ 的叶节点（plots-structure / paragraphing / formatting）混合 regex (检查 markdown 标题 / 列表层级) 与 LLM
-    - 设计动机：rubric + reference 给 LLM 锚定，避免"模型自己想标准"；format 用 regex 抓硬规则、用 LLM 看软规则；树结构强制每个维度独立打分，最后才聚合，把"评分"与"聚合"两件事解耦
+把"打一个总分"换成"在一棵树上逐节点打分再聚合"，是为了把"评分"和"聚合"两件本该独立的事彻底解耦。评估树的聚合规则是层层加权：$\text{Score}(R) = \sum_{j \in \{C,F,I\}} w_{E_j} \text{Score}(V_j)$，而每个主节点又是其叶节点的加权和，例如 $\text{Score}(V_C) = \sum_{L_i \in \text{Child}(V_C)} w_{E_{V_C L_i}} \text{Score}(L_i)$。Content 主节点的叶子（opening-ending、language-rhetoric、argumentative-logics、emotion）用 rubric + reference 让 LLM 评分，rubric 给标准、reference 给锚点，避免模型自己临场想标准；Format 主节点的叶子（plots-structure、paragraphing、formatting）则混合 regex（检查 markdown 标题、列表层级这类硬规则）与 LLM（看软规则）。树结构强制每个维度先独立打分、最后才聚合，这正是后面能单独审计权重的前提。
 
-2. **LLM-Negotiator $J_W$ 显式权重分配**:
+**2. LLM-Negotiator $J_W$ 显式权重分配：把"权重"从隐式聚合里抽出来。**
 
-    - 功能：把"哪个维度对这条 instruction 更重要"做成单独可复现的 LLM 调用
-    - 核心思路：对每个 instruction $\mathcal{I}^i$，$J_W$ 输出叶节点权重 $(w_{E_{V_X L_1}}, \cdots, w_{E_{V_X L_n}})^i$，约束 $\sum w = 1, w \in (-1, 1)$；不同体裁（fiction / argumentative / letter）权重分布明显不同 —— "logics"在议论文中权重高且变化大，"opening-ending"则跨体裁稳定在 ~10%
-    - 设计动机：把权重做成显式输入而不是隐式聚合，可以做 self-consistency 比较 —— 实测 ToW 的权重方差 $\delta = 0.080, \sigma = 0.017$ 远小于 Auto-Plan 的 0.273 / 0.059；同时权重可视化让评测结果可解释
+写作评测最隐蔽的不稳定来源，是 LLM 把"各维度该占多大比重"也一并塞进了打分这一次 generation 里，导致同一篇文章每次跑权重都漂。ToW 把这步单独拎出来：对每条 instruction $\mathcal{I}^i$，negotiator $J_W$ 单独输出一组叶节点权重 $(w_{E_{V_X L_1}}, \cdots, w_{E_{V_X L_n}})^i$，受约束 $\sum w = 1, w \in (-1, 1)$。不同体裁的权重分布明显不同——"logics"在议论文里权重高且波动大，"opening-ending"则跨体裁稳定在 ~10%。把权重做成显式输入的直接好处是可做 self-consistency 比较：实测 ToW 的权重轨迹方差 $\delta = 0.080, \sigma = 0.017$，远小于 Auto-Plan 临场聚合的 $0.273 / 0.059$，量化地证明显式议权重比隐式聚合稳得多，同时权重本身可视化、让评测结果可解释。
 
-3. **HoWToBench 数据构造（Reverse Construction）**:
+**3. HoWToBench 反向构造（Reverse Construction）：让参考永远是真人写的上限。**
 
-    - 功能：低成本生成与高质量人类参考严格对齐的 instruction + grounding 三件套
-    - 核心思路：先从专业网站爬原文 $\mathcal{R}$ → GPT-4o 分体裁分类（准确率 98.6%）→ Claude-3.5 用 rubric 打 1-5 分过滤（保留 ≥4 分的）→ 对 Completion 任务人工抠掉若干段落作 $\mathcal{G}$ 用模板拼成 $\mathcal{I}$；对 Guide / Open 用 Gemini-2.0-Flash 做 back-construction 生成 $(S, T, \mathcal{G})$ 三元组
-    - 设计动机：(a) 反向构造而非正向标注 → 保证 reference 是真人写的；(b) Completion / Guide / Open 渐进难度让评测能区分模型在不同信息量下的能力；(c) 137 / 1302 案例由专家从 4 个候选（人类 + 3 个 LLM）里选最佳 → 进一步保证 reference 是上限
+要评"人类水平写作"，参考必须本身就是高质量人类文本，正向标注很难保证这一点，于是基准走反向构造。流程是：先从专业网站爬原文 $\mathcal{R}$，用 GPT-4o 分体裁分类（准确率 98.6%），再用 Claude-3.5 按 rubric 打 1-5 分过滤（只留 ≥4 分的）；对 Completion 任务人工抠掉若干段落作为 grounding $\mathcal{G}$、用模板拼成 instruction $\mathcal{I}$，对 Guide / Open 任务则用 Gemini-2.0-Flash 做 back-construction 生成 $(S, T, \mathcal{G})$ 三元组。这样设计有三层考量：反向构造而非正向标注保证了 reference 是真人写的；Completion / Guide / Open 三种递进信息量让评测能区分模型在不同 grounding 下的能力；而其中 137/1302 个案例由专家从"人类 + 3 个 LLM"四个候选里挑最佳，进一步把参考钉在质量上限。
 
 ### 损失函数 / 训练策略
 ToW 框架本身无训练，所有 LLM 调用通过 prompt 工程实现，作者用 GPT-4o 作为主要 judge model；HoWToBench 用三位人文专家做最终质量审核（96.85% 通过率）。MetaEditor 元评估集 221 instruction × 9 LLM 由 36 位写作背景标注者各打分两次（Cohen's κ=0.71, Pearson=0.87）。

@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-COBRA 是个两步流程：(1) 在每个类 $y$ 内，先对真实数据按子组 $a\in\mathcal{A}$ 计算类条件子组统计 $\Phi_{T_{a\mid y}}=\frac{1}{|T_{a\mid y}|}\sum_{x\in T_{a\mid y}}\phi(x;\theta_T)$，再求子组之间的 barycenter $m_y^*$（在合适距离 $d$ 下、用 uniform 权 $w_a=1/|\mathcal{A}|$）；(2) 把合成集的类条件统计 $\Phi_{S_y}$ 对齐到 $m_y^*$ 而不是原始 $\Phi_{T_y}$，损失变成 $\mathcal{L}_\text{COBRA}(T,S)=\sum_y D(m_y^*, \Phi_{S_y})$。整套框架对 $\phi$ 的具体形式不挑（梯度/嵌入/特征/轨迹），所以可以原样嵌入 DC、DM、CAFE、IDC 等 DD 方法。
+COBRA 想解决的是「数据蒸馏把原始偏差放大」这件事，做法是只动一处——把每个类别的蒸馏对齐目标从「子组加权均值」换成「子组重心」。具体走两步：先在每个类 $y$ 内按子组 $a\in\mathcal{A}$ 算出类条件子组统计 $\Phi_{T_{a\mid y}}=\frac{1}{|T_{a\mid y}|}\sum_{x\in T_{a\mid y}}\phi(x;\theta_T)$，再求这些子组统计之间的 barycenter $m_y^*$ 当作蒸馏目标；然后把合成集的类条件统计 $\Phi_{S_y}$ 对齐到 $m_y^*$ 而非原始的全样本均值 $\Phi_{T_y}$。因为 $\phi$ 可以是梯度、嵌入、特征或轨迹中任意一种表征，这套替换对 backbone 不挑，能原样嵌进 DC、DM、CAFE、IDC 等主流 DD 方法。
 
 ### 关键设计
 
-1. **偏差机制的形式化拆解**:
+**1. 偏差机制的形式化拆解：先证明偏差来自哪两个因子**
 
-    - 功能：把 DD 中的 EOD 退化追溯到一个可证的 upper bound，并明确指出 group imbalance 与 representational separation 必须联合考虑。
-    - 核心思路：在 MSE 距离下推 SGD 更新得到不动点 $\Phi_{S_y}^* = \sum_a \pi_{a\mid y}\Phi_{T_{a\mid y}}$，残差 $\Delta_{a\mid y}^* = \sum_{a'\neq a}\pi_{a'\mid y}(\Phi_{T_{a\mid y}}-\Phi_{T_{a'\mid y}})$，故 $\|\Delta_{a\mid y}^*\|_2 \leq \sum_{a'\neq a}\pi_{a'\mid y}\|\Phi_{T_{a\mid y}}-\Phi_{T_{a'\mid y}}\|_2$，乘积里两因子缺一不可。
-    - 设计动机：先前的工作（FairDD）把问题归结为 group imbalance 单一原因，本文用 Figure 2 的双轴控制实验证明：固定不平衡只变 separation、或固定 separation 只变不平衡，都会单独把 EOD 拉高，所以单一修正注定不够，需要同时控制两者的乘积。
+要修偏差得先知道偏差从哪来。作者在 MSE 距离下推导标准 DD 的 SGD 更新，得到合成集统计的不动点 $\Phi_{S_y}^* = \sum_a \pi_{a\mid y}\Phi_{T_{a\mid y}}$——这是个按子组大小 $\pi_{a\mid y}$ 加权的均值，天然偏向多数子组。每个子组到这个目标的残差是 $\Delta_{a\mid y}^* = \sum_{a'\neq a}\pi_{a'\mid y}(\Phi_{T_{a\mid y}}-\Phi_{T_{a'\mid y}})$，可放缩为 $\|\Delta_{a\mid y}^*\|_2 \leq \sum_{a'\neq a}\pi_{a'\mid y}\|\Phi_{T_{a\mid y}}-\Phi_{T_{a'\mid y}}\|_2$。这个上界里同时含两个因子：子组大小不平衡 $\pi_{a'\mid y}$ 与子组在表征空间的分离度 $\|\Phi_{T_{a\mid y}}-\Phi_{T_{a'\mid y}}\|$，二者是相乘关系、缺一不可。这正是对前作 FairDD 的关键纠偏——FairDD 把问题全归到「子组不平衡」一个因子上，而本文用 Figure 2 的双轴控制实验证明：固定不平衡只调分离度、或固定分离度只调不平衡，两条曲线都能单独把 EOD 拉高，所以只修不平衡注定不够。
 
-2. **跨组 Barycenter $m_y^*$ 作为新目标**:
+**2. 跨组 Barycenter $m_y^*$：与组大小解耦的新对齐目标**
 
-    - 功能：让蒸馏目标到每个子组的距离尽量相等，最小化最大 residual，从几何上瓦解上界中的相互作用项。
-    - 核心思路：取 $d(u,v)=\|u-v\|_Q^2$（正定 $Q$），inner 优化 $m_y^* = \arg\min_m \sum_a \|\Phi_{T_{a\mid y}}-m\|_Q^2$ 闭式解为 $m_y^* = \frac{1}{|\mathcal{A}|}\sum_a \Phi_{T_{a\mid y}}$ —— 即子组级 uniform 平均，与 $\pi_{a\mid y}$ 完全无关；这与 vanilla DD 的 $\pi$ 加权平均形成对照。
-    - 设计动机：选 uniform 权 $w_a$ 是为了切断对子组大小的依赖；barycenter 又使得目标到所有子组的总距离最小，是一种「最公平的中心」。
+既然 $\pi$ 加权均值是偏差的源头，就把 $\pi$ 从目标里直接抹掉。作者取 $d(u,v)=\|u-v\|_Q^2$（$Q$ 正定），求内层优化 $m_y^* = \arg\min_m \sum_a \|\Phi_{T_{a\mid y}}-m\|_Q^2$，其闭式解恰好是 $m_y^* = \frac{1}{|\mathcal{A}|}\sum_a \Phi_{T_{a\mid y}}$——一个子组级的 uniform 平均，完全不含 $\pi_{a\mid y}$，与 vanilla DD 的 $\pi$ 加权平均形成直接对照。选 uniform 权 $w_a=1/|\mathcal{A}|$ 是为切断对子组大小的依赖，而 barycenter 的几何意义又使这个目标到所有子组的总距离最小，相当于一个「对各子组最公允的中心」，让合成表征到每个子组的距离尽量拉平、压住最大那个残差。
 
-3. **理论保证：worst-case residual 不增**:
+**3. 理论保证：最差子组的残差不会比 vanilla 更糟**
 
-    - 功能：用 Theorem 4.1 严谨说明 COBRA 不会让最差子组比 vanilla 更糟。
-    - 核心思路：定义 $s_y = m_y^\text{van}-m_y^*$ 为 imbalance 偏移，假设最差子组 $a^\dagger$ 满足 $\langle \Delta_{a^\dagger\mid y}^C, s_y\rangle_Q \leq 0$（即最差子组与 imbalance 偏移方向反向，几何上很温和的条件），则 $\max_a \|\Delta_{a\mid y}^C\|_Q \leq \max_a \|\Delta_{a\mid y}^V\|_Q$。
-    - 设计动机：实证上 FairDD 平均化 per-group loss 但参数更新仍能跑偏；COBRA 直接收紧 worst-case residual 这一与 EOD 直接相关的几何量，把「公平」的保证从 loss 平均拔高到表征对齐层面。
+换目标得保证不会顾此失彼。Theorem 4.1 定义 $s_y = m_y^\text{van}-m_y^*$ 为 imbalance 造成的偏移向量，只要最差子组 $a^\dagger$ 满足 $\langle \Delta_{a^\dagger\mid y}^C, s_y\rangle_Q \leq 0$（即它与 imbalance 偏移方向反向），就有 $\max_a \|\Delta_{a\mid y}^C\|_Q \leq \max_a \|\Delta_{a\mid y}^V\|_Q$——COBRA 的最差子组残差不超过 vanilla 的。这个条件几何上很温和：受亏待最严重的子组本就该落在加权目标的反方向上，符合直觉。意义在于，FairDD 把 per-group loss 平均化但参数更新仍可能跑偏，而 COBRA 直接收紧 worst-case residual 这一与 EOD 子组级误差差异直接挂钩的几何量，把公平性保证从「loss 平均」抬到了「表征对齐」层面。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_\text{COBRA}(T,S)=\sum_y D(m_y^*,\Phi_{S_y})$，与 vanilla DD 相比只换了对齐目标。barycenter 在 $\|u-v\|_Q^2$ 下有闭式解，整个内层不再需要 inner-loop 求解，效率与 vanilla 接近；其他超参（IPC、网络架构、初始化、距离 $D$）完全沿用 backbone DD（DC/DM/CAFE/IDC）的默认设置。可换其它距离（cosine 等）做 ablation。
+最终损失 $\mathcal{L}_\text{COBRA}(T,S)=\sum_y D(m_y^*,\Phi_{S_y})$，相比 vanilla DD 仅替换了对齐目标。由于 barycenter 在 $\|u-v\|_Q^2$ 下有闭式解，内层无需额外迭代求解，效率与 vanilla 接近；IPC、网络架构、初始化、外层距离 $D$ 等超参全部沿用 backbone DD（DC/DM/CAFE/IDC）的默认设置，内层距离 $d$ 也可换成 cosine/MMD 做 ablation。
 
 ## 实验关键数据
 

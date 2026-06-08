@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-管道处于 RAG 生成阶段（Step II）：
-
-输入：query $q$、检索得到的 top-$k$ 段落 $z^{(k)}$、LLM $\text{LLM}_\theta$、腐化预算 $\epsilon$、方差阈值 $\delta$。
-
-流程：(1) 让 LLM 正常做一次前向，**复用注意力矩阵**（无额外算力）；(2) 把多层多头注意力平均成单矩阵 $A \in \mathbb{R}^{l \times T}$，其中 $l$ 是响应 token 数、$T$ 是输入 token 数；(3) 对每段 $z_t$ 取其 top-$\alpha$ 个被关注 token 的注意力之和并跨段归一化得 NPAS；(4) 若 NPAS 方差 $> \delta$，删掉 NPAS 最高的段落后**回到步骤 (1) 重跑**，直到方差落到阈值下或已剥离 $\lfloor \epsilon k \rfloor$ 段。
-
-输出：净化后的段落集 $\tilde z$，再喂回 LLM 做最终生成。同一套 NPAS 还能用作 SADG 游戏中的"分辨器" $\mathcal{D}_{\text{AV}}$。
+本文要在 RAG 生成阶段（Step II）解决一个隐蔽性博弈问题：低预算投毒攻击要让少数恶意段压住多数良性段，就必然在 LLM 内部留下"少数段抢走过多注意力"的痕迹，于是把这个痕迹做成可量化的检测信号。具体地，给定 query $q$、检索得到的 top-$k$ 段落 $z^{(k)}$、LLM $\text{LLM}_\theta$、腐化预算 $\epsilon$ 与方差阈值 $\delta$，先让 LLM 正常前向一次并复用它产出的注意力矩阵（无需额外算力），把多层多头注意力平均成单矩阵 $A \in \mathbb{R}^{l \times T}$（$l$ 为响应 token 数、$T$ 为输入 token 数），再聚合成段落级的 NPAS；只要 NPAS 方差超过阈值就剥离分数最高的段落并重跑，直到方差落回阈值下或已删够 $\lfloor \epsilon k \rfloor$ 段，最后把净化后的段落集 $\tilde z$ 喂回 LLM 做最终生成。同一套 NPAS 还充当 SADG 博弈里的"分辨器" $\mathcal{D}_{\text{AV}}$，把检测与隐蔽性度量统一在一个信号上。
 
 ### 关键设计
 
-1. **SADG（Stealth Attack Distinguishability Game）—— 把"隐蔽性"做成密码学风格的可证伪定义**:
+**1. SADG：把"隐蔽性"做成密码学风格的可证伪定义**
 
-    - 功能：给"RAG 投毒是否隐蔽"提供一个数学化的对抗博弈定义，可量化任意 (攻击, 防御) 组合的优势。
-    - 核心思路：仲裁者采样 $q$ 后构造良性集 $z^{(k)}_{\text{benign}}$ 和被攻击者投毒后的 $z^{(k)}_{\text{corrupt}}$，**随机打乱顺序**发给防御者，让它猜哪个是被投毒的；防御者优势定义为 $\mathsf{Adv} = |\Pr[\text{win}] - 1/2|$。攻击若对所有 PPT 防御者都满足 $\mathsf{Adv} \le \tau$ 则称为 $\tau$-stealthy，理想隐蔽对应 $\tau = 0$。
-    - 设计动机：以往论文都用"人能否一眼看出恶意段落"这种主观标准谈隐蔽，本文把它升级成可被任意检测器证伪的游戏，从而能直接拿任何防御去刷攻击的隐蔽上界——这是后面所有结论（"现有攻击根本不隐蔽"）的逻辑底座。
+以往论文谈隐蔽都用"人能否一眼看出恶意段落"这种主观标准，无法证伪也无法量化。SADG（Stealth Attack Distinguishability Game）把它升级成对抗博弈：仲裁者采样 $q$ 后分别构造良性集 $z^{(k)}_{\text{benign}}$ 和被攻击者投毒后的 $z^{(k)}_{\text{corrupt}}$，**随机打乱顺序**发给防御者让它猜哪个被投毒，防御者优势定义为 $\mathsf{Adv} = |\Pr[\text{win}] - 1/2|$。一个攻击只有对所有 PPT 防御者都满足 $\mathsf{Adv} \le \tau$ 才称 $\tau$-stealthy，理想隐蔽对应 $\tau = 0$。这套定义之所以关键，是因为它能直接拿任意检测器去刷攻击的隐蔽上界——本文后面"现有攻击根本不隐蔽"的所有结论都建立在这个可证伪游戏之上。
 
-2. **NPAS（Normalized Passage Attention Score）—— 段落级的影响力代理**:
+**2. NPAS：段落级的影响力代理**
 
-    - 功能：把 token 级注意力聚合到段落级，得到一个对段落长度不变、可跨 query/模型比较的"段落 $\to$ 响应"影响力分数。
-    - 核心思路：先把所有解码层和注意力头做平均得 $A$；再对段 $z_t$ 取其 top-$\alpha$ 个 token（$\alpha \in \{5, 10, \infty\}$）的列在 $A$ 中的总注意力作为原始分 $\mathsf{Score}_\alpha(z_t, A) = \sum_i \sum_{x_j \in \text{Top}_\alpha(z_t)} A[i,j]$；然后做跨段归一化 $\mathsf{NormScore}_\alpha(z_t) = \mathsf{Score}_\alpha(z_t) / \sum_{i=1}^k \mathsf{Score}_\alpha(z_i)$。取 top-$\alpha$ 是为了抓"Heavy Hitter"（往往就是含目标答案的关键词）并屏蔽段落长度差异；跨段归一化让阈值可迁移。
-    - 设计动机：直接看每个 token 的原始注意力太噪、不可比；用 top-$\alpha$ 抓信号、用归一化做尺度无关，再以**方差**作为简单稳健的全局统计量——良性段落注意力近乎均匀（仅有轻微 recency bias），被投毒段会把注意力抢走形成右偏分布，方差就是天然的判别量。
+直接看 token 级原始注意力太噪、也无法跨段比较，所以需要一个对段落长度不变、可跨 query/模型迁移的"段落 $\to$ 响应"影响力分数。NPAS（Normalized Passage Attention Score）先把所有解码层和注意力头平均得 $A$，再对段 $z_t$ 取其 top-$\alpha$ 个被关注 token（$\alpha \in \{5, 10, \infty\}$）的列在 $A$ 中的注意力之和作原始分 $\mathsf{Score}_\alpha(z_t, A) = \sum_i \sum_{x_j \in \text{Top}_\alpha(z_t)} A[i,j]$，最后跨段归一化为 $\mathsf{NormScore}_\alpha(z_t) = \mathsf{Score}_\alpha(z_t) / \sum_{i=1}^k \mathsf{Score}_\alpha(z_i)$。取 top-$\alpha$ 是为了抓住"Heavy Hitter"（往往就是含目标答案的关键词）并屏蔽段落长度差异，跨段归一化则让阈值在不同设定间可迁移。良性段的注意力近乎均匀（仅有轻微 recency bias），被投毒段会把注意力抢走形成右偏分布，所以**用 NPAS 在 $k$ 段间的方差**就是天然又稳健的判别量。
 
-3. **AV Filter（Attention-Variance Filter）—— 迭代剥离 + 重排避位置偏置**:
+**3. AV Filter：迭代剥离 + 重排避位置偏置**
 
-    - 功能：在不知道哪一段是恶意的前提下，以最多 $\lfloor \epsilon k \rfloor$ 次删除为预算把可疑段落筛掉，并把净化集回喂 LLM。
-    - 核心思路：先按 NPAS 重排段落以**消除 recency bias**（靠近生成位置的段会天然多吸一点注意力，重排让真正的异常段更显著），然后 while 循环：算 NPAS 方差 $\sigma^2$，若 $\sigma^2 \le \delta$ 提前终止，否则删 $\arg\max \mathsf{NormScore}$，重新前向算新的 $A$ 和 NPAS，直到达到预算上限。阈值 $\delta = 26.2$ 在 RQA + Llama-2 的清洁集上用 mean+1·std 估出来，**优先压低假阴**（删几段良性不太伤最终答案）。
-    - 设计动机：单次评分容易被"次大段"掩盖（恶意段抢走 30% 注意力，下一段还有 15%，方差也偏高），所以要迭代；重排是为了对抗 Liu et al. 2023 / Guo & Vosoughi 2024 观察到的注意力位置偏置。整套流程没有额外训练，只复用 LLM 自身前向的注意力矩阵，因此推理代价几乎为零。
+在不知道哪一段恶意的前提下，AV Filter（Attention-Variance Filter）以最多 $\lfloor \epsilon k \rfloor$ 次删除为预算把可疑段落筛掉。它先按 NPAS 重排段落以消除 recency bias（靠近生成位置的段会天然多吸一点注意力，重排让真正异常的段更显著，针对 Liu et al. 2023 / Guo & Vosoughi 2024 观察到的位置偏置），然后进入 while 循环：算 NPAS 方差 $\sigma^2$，若 $\sigma^2 \le \delta$ 提前终止，否则删掉 $\arg\max \mathsf{NormScore}$ 的段落、重新前向算新的 $A$ 与 NPAS，直到触达预算上限。之所以要迭代而非单次评分，是因为恶意段抢走 30% 注意力时下一段可能还有 15%，单次会被"次大段"掩盖、方差也偏高，逐次剥离才能稳住多投毒段的情形。阈值 $\delta = 26.2$ 在 RQA + Llama-2 的清洁集上用 mean+1·std 估出，**优先压低假阴**（误删几段良性对最终答案伤害很小）。整套流程零训练，只复用 LLM 自身前向的注意力，因此推理代价几乎为零。
 
 ### 损失函数 / 训练策略
-本文是**纯推理期防御**，无需训练 LLM。阈值 $\delta$ 是单数据集（RQA + Llama-2）一次性估出来后直接迁移到 4 数据集 × 5 模型；$\alpha \in \{5,10,\infty\}$ 是超参；当 GPT-4o 等闭源模型不暴露注意力时，作者用开源 Mistral-7B 做**辅助模型**计算 NPAS（black-box 设定下 SADG 优势仍显著）。自适应攻击端则借鉴 jailbreak 的 GCG 风格优化，最小化"恶意段落的 NPAS 与良性段落差距"。
+本文是**纯推理期防御**，无需训练 LLM。阈值 $\delta$ 在单数据集（RQA + Llama-2）一次性估出后直接迁移到 4 数据集 × 5 模型，$\alpha \in \{5,10,\infty\}$ 是超参；当 GPT-4o 等闭源模型不暴露注意力时，作者用开源 Mistral-7B 做**辅助模型**计算 NPAS，black-box 设定下 SADG 优势仍显著。自适应攻击端则借鉴 jailbreak 的 GCG 风格优化，最小化"恶意段落的 NPAS 与良性段落差距"。
 
 ## 实验关键数据
 

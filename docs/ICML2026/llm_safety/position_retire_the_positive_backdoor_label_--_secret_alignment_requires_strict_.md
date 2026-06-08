@@ -40,33 +40,22 @@ tags:
 
 ## 方法详解
 
-本文没有提出新算法，而是搭建一套用于"审判" Secret Alignment 类方法的概念框架与实证协议，三个组件相互配合。
-
 ### 整体框架
-作者先把三个貌似不同的工作（SudoLM、IF、SafeTrigger）抽象成同一种机制：给定查询 $q$ 模型默认输出 $r_1$，当且仅当在前面拼接一个秘密前缀 $s$ 时输出切换为 $r_2$，其中 $s$ 仅模型所有者/服务商知晓。这一统一抽象被命名为 Secret Alignment：触发器条件化、对模型输出分布某一子空间的对齐。基于这个抽象，作者把所有要做的事情捋成三步——(1) 用六个核心属性把模糊的"safety claim"拆成可测量项目；(2) 在三种代表性使用场景（访问控制 / 所有权追溯 / 微调防御）上重复执行同一套测试；(3) 把每个属性失败模式映射回 CIA 三性，并用"行为密度 + 决策复杂度"两轴解释为什么失败。
+本文不提新算法，而是为"positive backdoor"这类机制立起一套审判用的概念框架与实证协议：作者主张这类机制本质只是一个隐藏的触发-行为映射，应去价值化地重命名为 Secret Alignment，并默认视为"不安全"，除非有严格、标准化的证据。论证分三步走——先把三个貌似不同的工作抽象成同一种机制并用六个属性把模糊的"safety claim"拆成可测量项，再在访问控制 / 所有权追溯 / 微调防御三种场景上跑同一套测试，最后把每个属性的失败映射回 CIA（机密性/完整性/可用性），并用"行为密度 × 决策复杂度"两轴解释失败为何可被预测。
 
 ### 关键设计
 
-1. **Secret Alignment 抽象 + 六属性评测协议**：
+**1. Secret Alignment 抽象 + 六属性评测协议：把"positive 即安全"的语义滑坡换成可证伪的指标。**
 
-    - 功能：把"positive backdoor"统一改写为可分析的中性机制，并强制每项保护性声称要在六个属性上给出证据。
-    - 核心思路：定义触发-行为映射 $s+q \mapsto r_2$、$q \mapsto r_1$ 为 Secret Alignment，并设计六项标准化检验：Effectiveness（带 trigger 是否触发预期行为）、Harmlessness（无 trigger 时通用能力是否保持）、Persistence（继续微调后映射是否仍在）、Efficiency（数据/算力成本）、Robustness（是否被改写、绕过、误触发）、Reliability（部署交互层面的隐性风险）。六项分别对应 CIA：泄漏 → C，绕过/覆写 → I，误拒/退化 → A。每个属性都给出明确测试集与指标（如 IF 用 FSR、SafeTrigger 用 ASR/HS、SudoLM 用 Acc/Prec/Rec）。
-    - 设计动机：原论文常常只汇报"trigger 命中"一项，把保护性主张包装得无懈可击；六属性协议强制把承诺翻译成可证伪的指标，并使三个性质迥异的方案能在同一坐标系内对比。
+原论文常常只汇报"trigger 命中"一项，就把保护性主张包装得无懈可击，"positive backdoor"的措辞更自带价值判断、掩盖了它只是个中性触发-行为映射的事实。作者先把 SudoLM、IF、SafeTrigger 统一抽象成同一机制：给定查询 $q$ 模型默认输出 $r_1$，当且仅当在前面拼上一个仅所有者/服务商知晓的秘密前缀 $s$ 时输出切换为 $r_2$，即 $s+q \mapsto r_2$ 而 $q \mapsto r_1$——这就是触发器条件化、对输出分布某一子空间的对齐。在此抽象上设计六项标准化检验：Effectiveness（带 trigger 是否触发预期行为）、Harmlessness（无 trigger 时通用能力是否保持）、Persistence（继续微调后映射是否仍在）、Efficiency（数据/算力成本）、Robustness（是否被改写、绕过、误触发）、Reliability（部署交互层面的隐性风险）。六项各自对应 CIA——泄漏 → C，绕过/覆写 → I，误拒/退化 → A——并都配有明确测试集与指标（IF 用 FSR、SafeTrigger 用 ASR/HS、SudoLM 用 Acc/Prec/Rec），强制把承诺翻译成可证伪项，也让三个性质迥异的方案落进同一坐标系。
 
-2. **三案例平行复现 + 跨方案对照**：
+**2. 三案例平行复现 + 跨方案对照：用统一 base model 和一致扰动把孤立的 claim 拉到同一张图上比较。**
 
-    - 功能：把六属性协议同时套到 SudoLM（多层级访问控制）、Instructional Fingerprinting（所有权追溯）、SafeTrigger（微调防御）三个代表性工作上，用统一 base model（Llama2-7B/Chat）和数据流水线复现并扩展原论文实验。
-    - 核心思路：对每个属性，要么按原论文协议复现，要么补做原文缺失的检验，例如 Persistence 补做 Alpaca/Dolly/GSM8K 连续微调，Robustness 补做 IF 的六级输入相似度梯度（从无条件生成 BOS-only 到语义近似 trigger + 完整模板）、SafeTrigger 的"对抗 BadTrigger"覆写攻击、SudoLM 的 prefill jailbreak。所有实验在同一硬件/解码配置下完成以排除混淆。
-    - 设计动机：现有工作各自孤立，方法论差异让 claim 难以横向比较；统一 base model 与一致的扰动家族让"哪一类方法在哪个属性上最脆弱"成为可以直接读图的结论。
+现有工作各自孤立、方法论差异让 claim 难以横向比较，于是作者把六属性协议同时套到 SudoLM（多层级访问控制）、Instructional Fingerprinting（所有权追溯）、SafeTrigger（微调防御）上，统一用 Llama2-7B/Chat 做 base、共用一条数据流水线复现并扩展原实验。训练全部沿用各自原方案、不引入新损失：IF 用 <10 指纹样本 + <150 正则样本做 SFT，SudoLM 用对比式（带/不带 SudoKey）样本 + 大量公共样本做 SFT，SafeTrigger 在原微调集里按 <1% 比例混入触发-安全示例。对每个属性，能复现就按原协议复现，原文缺的就补做：Persistence 让 SudoLM/SafeTrigger 接续 Alpaca/Dolly/GSM8K 连续微调、让 IF 在剪枝 20% 参数后再微调验证抗擦除；Robustness 补做 IF 的六级输入相似度梯度（从无条件 BOS-only 生成到语义近似 trigger + 完整模板）、SafeTrigger 的"对抗 BadTrigger"覆写攻击、SudoLM 的 prefill jailbreak。所有实验同一硬件/解码配置以排除混淆，使"哪类方法在哪个属性上最脆弱"成为可直接读图的结论。
 
-3. **行为密度 × 决策复杂度的失败可预测性框架**：
+**3. 行为密度 × 决策复杂度的失败可预测性框架：与其逐案打补丁，不如给后续工作一份高危项先验。**
 
-    - 功能：解释为什么 IF 在持久性上强但在鲁棒性上易被误触发、为什么 SudoLM 同时损失无害性与鲁棒性、为什么 SafeTrigger 持久但易被覆写。
-    - 核心思路：沿两个正交轴给方法分类。轴一是行为密度（behavior density）：sparse 表示触发器只对应输出空间的离散点（如 IF 的指纹短语），clustered 表示触发器激活整片输出区域（如 SudoLM 的特权知识区、SafeTrigger 的拒答空间）。轴二是决策复杂度（decision complexity）：simple association 是显式记忆（IF），single-level classification 需先做一次输入判别（SafeTrigger 判"有无 trigger"），multi-level classification 还要做更深层语义判断（SudoLM 要先判"是否问到特权知识"再判"有无 SudoKey"）。两轴决定失败模式：sparse + simple → 易过拟合到指纹，鲁棒性差但持久；clustered + multi-level → 与正常输出重叠多，无害性差且易在持续训练中漂移。
-    - 设计动机：与其逐案打补丁，不如给社区一个先验：在做新的 Secret Alignment 方案前，先在两个轴上定位，就能预判哪几个 CIA 属性是高危项、需要重点验证。
-
-### 损失函数 / 训练策略
-本文不引入新损失。所有训练沿用原方案：IF 用少量指纹样本+正则样本做 SFT；SudoLM 用对比式（带/不带 SudoKey）样本+大量公共样本做 SFT；SafeTrigger 在原微调集中按 <1% 比例混入触发-安全示例。评测时 SudoLM 与 SafeTrigger 都额外接续 Alpaca / Dolly / GSM8K 微调以测 Persistence，IF 则在剪枝 20% 参数后再微调以验证抗擦除。
+为解释为什么 IF 持久却易误触发、为什么 SudoLM 同时损失无害性与鲁棒性、为什么 SafeTrigger 持久却易被覆写，作者沿两个正交轴给方法分类。轴一行为密度（behavior density）：sparse 表示触发器只对应输出空间的离散点（如 IF 的指纹短语），clustered 表示触发器激活整片输出区域（如 SudoLM 的特权知识区、SafeTrigger 的拒答空间）。轴二决策复杂度（decision complexity）：simple association 是显式记忆（IF），single-level classification 需先做一次输入判别（SafeTrigger 判"有无 trigger"），multi-level classification 还要做更深的语义判断（SudoLM 先判"是否问到特权知识"再判"有无 SudoKey"）。两轴一旦定位即可预判失败模式：sparse + simple → 易过拟合到指纹，鲁棒性差但持久；clustered + multi-level → 与正常输出重叠多，无害性差且易在持续训练中漂移。这样在动手做新的 Secret Alignment 方案前先在两轴上落点，就知道哪几个 CIA 属性是高危项、该重点验证哪里。
 
 ## 实验关键数据
 

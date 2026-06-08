@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是带强制二选一标签的联合实验数据 $(C_i, \mathbf{T}_i^a, \mathbf{T}_i^b)_{i=1}^n$（$\mathbf{T}^c \in \mathcal{T}=\{1,\dots,L\}^D$ 是 $D$ 维档案，$C_i\in\{0,1\}$ 是受访者是否选 $a$）。流水线是：(1) 拟合一个带交互项的结果模型 $\sigma(\eta_i)$，把 logit 写成主效应 $\beta_{dl}$ + 二阶交互 $\gamma_{dl,d'l'}$ 的差分形式 $\eta_i=\sum \beta_{dl}(I_i^a-I_i^b)+\sum \gamma(\cdot)$；(2) 在乘积型 Categorical 策略类 $\Pr_{\bm{\pi}^c}(\mathbf{T}^c=\mathbf{t})=\prod_d \pi^c_{d,t_d}$ 上，求受 $L_2$ 信赖域 $\|\bm{\pi}^c-\mathbf{p}\|_2^2 \le \epsilon_n$ 约束的最优策略；(3) 平均情形用闭式解，对抗情形用 logit 重参数化 + 同步 ascent–descent；(4) 用 Delta 方法把结果模型的方差–协方差矩阵 $\hat{\Sigma}$ 通过 Jacobian $\mathbf{J}=\nabla_{\hat\beta,\hat\gamma}\{\hat Q,\hat{\bm\pi}^*\}$ 传播到策略和价值的标准误。
+本文要解决的是"派什么样的候选人"这个离线决策问题：输入是带强制二选一标签的联合实验数据 $(C_i, \mathbf{T}_i^a, \mathbf{T}_i^b)_{i=1}^n$（$\mathbf{T}^c \in \mathcal{T}=\{1,\dots,L\}^D$ 是 $D$ 维档案，$C_i\in\{0,1\}$ 是受访者是否选 $a$），输出是一个可逐属性读懂的随机干预策略及其置信区间。整个方法把它拆成前后衔接的两步：先拟合一个带二阶交互的结果模型，把 logit 写成主效应 $\beta_{dl}$ 与交互 $\gamma_{dl,d'l'}$ 的差分形式 $\eta_i=\sum \beta_{dl}(I_i^a-I_i^b)+\sum \gamma(\cdot)$；再在乘积型 Categorical 策略类 $\Pr_{\bm{\pi}^c}(\mathbf{T}^c=\mathbf{t})=\prod_d \pi^c_{d,t_d}$ 上、受 $L_2$ 信赖域 $\|\bm{\pi}^c-\mathbf{p}\|_2^2 \le \epsilon_n$ 约束地求最优策略——平均情形有闭式解，对抗情形用 logit 重参数化跑同步 ascent–descent。最后用 Delta 方法把结果模型的方差–协方差矩阵 $\hat{\Sigma}$ 通过 Jacobian $\mathbf{J}=\nabla_{\hat\beta,\hat\gamma}\{\hat Q,\hat{\bm\pi}^*\}$ 传播到策略概率和价值的标准误上。
 
 ### 关键设计
 
-1. **乘积型 Categorical 受限策略类 + L2 信赖域**:
+**1. 乘积型 Categorical 受限策略类 + L2 信赖域：用可读的随机分布替代脆弱的"最优单档案"**
 
-    - 功能：在指数级动作空间上定义一族"既可解释又可估"的随机干预，把"最优单档案"的脆弱目标松弛成"最优档案分布"。
-    - 核心思路：限定策略为 $\Pr_{\bm\pi}(\mathbf{t})=\prod_d \pi_{d,t_d}$（属性间独立的 Categoricals），目标 $\max_{\bm\pi} Q(\bm\pi)-\lambda_n\|\bm\pi-\mathbf{p}\|_2^2$，其中 $Q(\bm\pi)=\sum_{\mathbf{t}}\mathbb{E}[Y_i(\mathbf{t})]\Pr_{\bm\pi}(\mathbf{t})$，$\mathbf{p}$ 是实验随机化分布（logging policy）。作者证明：当正则项取 KL 时，全单纯形上的最优解是 Gibbs 形式 $\sigma^\star(\mathbf{t})\propto p(\mathbf{t})\exp\{u(\mathbf{t})/\lambda\}$，而限定到乘积族正好等价于对 Gibbs 分布做经典 mean-field 变分近似 (Wainwright & Jordan, 2008)。
-    - 设计动机：(i) 乘积形式让策略"逐属性可读"——可以直接说"模型给 outsider 0.7、给 hardline 0.4"，满足政治学发表对可解释性的硬要求；(ii) $L_2/KL$ 信赖域同时控制了 off-policy 估计方差并稳定优化；(iii) "最优单档案"是 $\bm\pi^*(\mathbf{t})=\mathbb{I}(\mathbf{t}=\mathbf{t}^*)$ 的退化特例，但在高维下样本量根本不够选出唯一最优，随机策略反而能"汇总一族表现都不错的档案"。
+动作空间 $|\mathcal{T}|=\prod_d L_d$ 随属性数指数爆炸，逐档案学策略既不可估也读不懂，而"最优单档案" $\bm\pi^*(\mathbf{t})=\mathbb{I}(\mathbf{t}=\mathbf{t}^*)$ 在高维下样本量根本不够选出唯一赢家。本文因此把策略限定为属性间独立的乘积分布 $\Pr_{\bm\pi}(\mathbf{t})=\prod_d \pi_{d,t_d}$，优化 $\max_{\bm\pi} Q(\bm\pi)-\lambda_n\|\bm\pi-\mathbf{p}\|_2^2$，其中价值 $Q(\bm\pi)=\sum_{\mathbf{t}}\mathbb{E}[Y_i(\mathbf{t})]\Pr_{\bm\pi}(\mathbf{t})$，$\mathbf{p}$ 是实验随机化分布（即天然的 logging policy）。这个看似工程化的限制其实有变分理论撑腰：作者证明当正则取 KL 时，全单纯形上的最优解是 Gibbs 形式 $\sigma^\star(\mathbf{t})\propto p(\mathbf{t})\exp\{u(\mathbf{t})/\lambda\}$，而限定到乘积族恰好等价于对该 Gibbs 分布做经典 mean-field 变分近似 (Wainwright & Jordan, 2008)。这样选有三重好处：乘积形式让策略逐属性可读，能直接说"模型给 outsider 0.7、给 hardline 0.4"，满足政治学发表对可解释性的硬要求；$L_2/KL$ 信赖域同时压低了 off-policy 估计方差并稳定优化；随机策略还能把概率质量摊到"一族表现都不错的档案"上，比强行钦定单一最优档案稳健得多。
 
-2. **闭式平均情形最优解 + Delta 方法 UQ**:
+**2. 闭式平均情形最优解 + Delta 方法 UQ：让最优策略写成可微分的线性系统，把回归不确定性一路传到标准误**
 
-    - 功能：在二阶交互的线性概率近似下，给出最优 $\bm{\pi}^{a*}$ 的解析表达，并把回归参数不确定性自动传到策略与价值的标准误。
-    - 核心思路：把目标函数对每个 $\pi_{dl}$ 求偏导并令其为零，整理成线性系统 $\mathbf{C}\bm{\pi}^{a*}=\mathbf{B}$，其中 $B_{r(dl),1}=-\bar\beta_{dl}-4\lambda_n p_{dl}-2\lambda_n\sum_{l'\ne l}p_{dl'}$，$C_{r(dl),r(dl)}=-4\lambda_n$，$C_{r(dl),r(d'l')}=\bar\gamma_{dl,d'l'}$（命题 3.1）。当 $\lambda_n$ 大到 Hessian 负定且解落在单纯形内部时，这就是唯一全局最优。由于 $\bm{\pi}^{a*}=\mathbf{C}^{-1}\mathbf{B}$ 是 $(\hat\beta,\hat\gamma)$ 的可微函数，Var-Cov$(\hat Q, \hat{\bm\pi}^{a*})=\mathbf{J}\hat\Sigma\mathbf{J}'$，并满足 $\sqrt{n}(\hat{\bm\pi}^{a*}-\bm\pi^{a*}) \to \mathcal{N}(0,\mathbf{J}\Sigma\mathbf{J}')$；当用迭代法求解时，作者既支持 unroll 全部 $S$ 步自动求导，也支持在收敛点用隐式微分 $\partial\bm\alpha^*/\partial\theta=-H^{-1}\nabla_\theta F$，避免长程反传。
-    - 设计动机：政治学/经济学发文必须报告置信区间，而 Athey & Wager 等政策学习工作几乎不给随机策略的标准误。闭式解是"分析友好"的核心卖点，让审稿人能验证一阶最优条件；Delta 方法+隐式微分则把同一推理框架无缝推广到 GLM/BNN/对抗 minimax，做到"一套 UQ 通吃"。
+政治学/经济学发文必须报告置信区间，但 Athey & Wager 一系的政策学习几乎不给随机策略的标准误，本文的卖点正在于"分析友好"。在二阶交互的线性概率近似下，把目标对每个 $\pi_{dl}$ 求偏导并令其为零，可整理成线性系统 $\mathbf{C}\bm{\pi}^{a*}=\mathbf{B}$，其中 $B_{r(dl),1}=-\bar\beta_{dl}-4\lambda_n p_{dl}-2\lambda_n\sum_{l'\ne l}p_{dl'}$、$C_{r(dl),r(dl)}=-4\lambda_n$、$C_{r(dl),r(d'l')}=\bar\gamma_{dl,d'l'}$（命题 3.1）；当 $\lambda_n$ 大到 Hessian 负定且解落在单纯形内部时它就是唯一全局最优。由于 $\bm{\pi}^{a*}=\mathbf{C}^{-1}\mathbf{B}$ 是 $(\hat\beta,\hat\gamma)$ 的可微函数，UQ 就顺势变成一次线性系统：Var-Cov$(\hat Q, \hat{\bm\pi}^{a*})=\mathbf{J}\hat\Sigma\mathbf{J}'$，且 $\sqrt{n}(\hat{\bm\pi}^{a*}-\bm\pi^{a*}) \to \mathcal{N}(0,\mathbf{J}\Sigma\mathbf{J}')$。当推广到一般 GLM/BNN 需要迭代求解时，作者既支持 unroll 全部 $S$ 步自动求导，也支持在收敛点用隐式微分 $\partial\bm\alpha^*/\partial\theta=-H^{-1}\nabla_\theta F$，只解一次 $H^{-1}$ 即可规避长程反传——这套"两步法 UQ"因此能无缝覆盖闭式解、GLM、BNN 直到对抗 minimax。
 
-3. **含初选制度的对抗 minimax 扩展**:
+**3. 含初选制度的对抗 minimax 扩展：把对手从静态分布升级成博弈主体，并把选举制度直接编进支付**
 
-    - 功能：把"另一位候选人"从静态分布升级成同时博弈的对手，并把"封闭/开放初选 + 大选"两阶段制度结构编码进目标函数，得到 restricted minimax 稳态点。
-    - 核心思路：定义零和支付 $Q(\bm\pi^A,\bm\pi^B)=\mathbb{E}[\Pr\{C_i(\mathbf{T}^A,\mathbf{T}^B)=1\}]$，目标 $\max_{\bm\pi^A}\min_{\bm\pi^B}Q$；进一步把制度参数 $\beth$（初选参与集 $\mathcal{I}^A,\mathcal{I}^B$ 和大选选民集 $\mathcal{E}$）通过"提名分布的 pushforward"$\bar{\bm\pi}^A(\bm\pi^A,\bm\pi^{A'},\beth)$ 注入支付，得 $Q_{\text{inst}}(\bm\pi^A,\bm\pi^B;\bm\pi^{A'},\bm\pi^{B'},\beth)$。算法 1 在 logit 参数 $\bm\alpha^A,\bm\alpha^B$ 上跑同步 ascent–descent：$\bm\alpha^{A,(s)}\leftarrow\bm\alpha^{A,(s-1)}+\gamma\nabla_{\bm\alpha^A}\Phi$、$\bm\alpha^{B,(s)}\leftarrow\bm\alpha^{B,(s-1)}-\gamma\nabla_{\bm\alpha^B}\Phi$，其中 $\Phi=Q_{\text{inst}}-\lambda R(\pi^A\|p)+\lambda R(\pi^B\|p)$，最后 softmax 还原策略；制度若使 pushforward 对每方仿射，$Q_{\text{inst}}$ 双线性，von Neumann 极小极大定理保证全单纯形鞍点存在，受限因子化族下作者退而求 exploitability 诊断的稳态点。还配套定义了**策略分歧因子** $\mathcal{D}_\varepsilon(\mathbf{t})=|\log\frac{\Pr_{\bm\pi^A}(\mathbf{t})+\varepsilon}{\Pr_{\bm\pi^B}(\mathbf{t})+\varepsilon}|$ 用来度量两党战略空间的距离。
-    - 设计动机：AMCE 框架完全无法回答"如果对方也在策略性地选候选人会怎样"，这正是真实选举的样子；用 minimax 编码"对手在最坏情形下打败你"是博弈论的标准答案，而把初选/大选制度作为 pushforward 直接注入而非事后修正，避免了"最优档案是 outsider+hardline 但在初选根本出不了线"这种制度违和。
+AMCE 默认"对方候选人按某个固定分布抽取"，可真实选举里两党画像是彼此博弈出来的。本文因此定义零和支付 $Q(\bm\pi^A,\bm\pi^B)=\mathbb{E}[\Pr\{C_i(\mathbf{T}^A,\mathbf{T}^B)=1\}]$、目标 $\max_{\bm\pi^A}\min_{\bm\pi^B}Q$，并把制度参数 $\beth$（初选参与集 $\mathcal{I}^A,\mathcal{I}^B$、大选选民集 $\mathcal{E}$）通过"提名分布的 pushforward" $\bar{\bm\pi}^A(\bm\pi^A,\bm\pi^{A'},\beth)$ 注入支付，得到 $Q_{\text{inst}}(\bm\pi^A,\bm\pi^B;\bm\pi^{A'},\bm\pi^{B'},\beth)$——这样把初选/大选制度当算子直接嵌进优化目标，而非事后修正，避免了"最优档案是 outsider+hardline 但在初选根本出不了线"的制度违和。算法 1 在 logit 参数 $\bm\alpha^A,\bm\alpha^B$ 上跑同步 ascent–descent：$\bm\alpha^{A,(s)}\leftarrow\bm\alpha^{A,(s-1)}+\gamma\nabla_{\bm\alpha^A}\Phi$、$\bm\alpha^{B,(s)}\leftarrow\bm\alpha^{B,(s-1)}-\gamma\nabla_{\bm\alpha^B}\Phi$，其中 $\Phi=Q_{\text{inst}}-\lambda R(\pi^A\|p)+\lambda R(\pi^B\|p)$，末了用 softmax 还原策略。当制度让 pushforward 对每方仿射时 $Q_{\text{inst}}$ 是双线性的，von Neumann 极小极大定理保证全单纯形鞍点存在；受限因子化族在单纯形里非凸，作者退而求 exploitability 诊断意义下的稳态点。配套还定义了**策略分歧因子** $\mathcal{D}_\varepsilon(\mathbf{t})=|\log\frac{\Pr_{\bm\pi^A}(\mathbf{t})+\varepsilon}{\Pr_{\bm\pi^B}(\mathbf{t})+\varepsilon}|$（带 $\varepsilon$ 平滑的单点对数概率比），用来量化"某真实候选人偏离本党最优策略多远"以及两党战略空间的距离。
 
 ### 损失函数 / 训练策略
-平均情形：$O(\bm\pi)=Q(\bm\pi)-\lambda\|\mathbf{p}-\bm\pi\|^2$，闭式解或投影梯度。对抗情形：$\Phi(\pi^A,\pi^B)=Q_{\text{inst}}-\lambda R(\pi^A\|\mathbf{p})+\lambda R(\pi^B\|\mathbf{p})$，logit 重参数化 + 同步 ascent–descent 共 $S$ 步，Monte Carlo 估提名分布；推断阶段 Jacobian 通过 unroll 或隐式微分两条路径计算，标准误在受访者层聚类。
+平均情形优化 $O(\bm\pi)=Q(\bm\pi)-\lambda\|\mathbf{p}-\bm\pi\|^2$，走闭式解或投影梯度；对抗情形优化 $\Phi(\pi^A,\pi^B)=Q_{\text{inst}}-\lambda R(\pi^A\|\mathbf{p})+\lambda R(\pi^B\|\mathbf{p})$，在 logit 重参数化下跑共 $S$ 步同步 ascent–descent、并用 Monte Carlo 估提名分布。推断阶段 Jacobian 经 unroll 或隐式微分两条路径计算，标准误在受访者层聚类。
 
 ## 实验关键数据
 

@@ -46,23 +46,18 @@ tags:
 实验分为三条主线。第一条主线测合成数据对输出分布的影响，使用 perplexity、Self-BLEU 反向指标、语义距离和 Heaps' Law 词汇增长。第二条主线测安全，使用 RefusalBench 和 RefusalBench+Jailbreak，分别评估 harmfulness 与 response quality。第三条主线测判断偏差，让微调后的 Llama 作为 judge 对 CNN/DailyMail 摘要做 pairwise ranking，计算 self-preference bias 和 pro-synthetic bias。
 
 ### 关键设计
-1. **单源、多源和人类数据的并行对照**:
 
-	- 功能：隔离合成数据来源多样性对微调后模型行为的影响。
-	- 核心思路：single-source 条件使用一个 Llama 源模型生成整个 Dolly 数据集的回答；multi-source 条件把数据分成多个子集，由同一规模档中的多个非目标模型生成，同时保留一个由目标模型生成的子集；human-source 条件使用原始 Dolly 人类回答作为控制组。所有生成统一使用 temperature=0.7、top_p=0.9、max_output_tokens=1024。
-	- 设计动机：如果只比较“合成 vs 人类”，无法知道问题来自合成数据本身还是来自单一源模型的风格窄化。把 single-source 和 multi-source 拆开后，可以直接观察多模型混合是否缓解分布坍缩。
+**1. 单源、多源和人类数据的并行对照：把「数据来源多样性」做成可控变量。**
 
-2. **分布坍缩与多样性指标组合**:
+如果只比「合成 vs 人类」，根本分不清问题到底来自合成数据本身，还是来自单一源模型的风格窄化。论文于是设了三组并行条件：single-source 用一个 Llama 源模型生成整份 Dolly 数据集的回答；multi-source 把数据切成多个子集，由同一规模档里的多个非目标模型分别生成，同时保留一个由目标模型生成的子集；human-source 直接用原始 Dolly 的人类回答当控制组。所有生成统一用 temperature=0.7、top_p=0.9、max_output_tokens=1024。把 single-source 和 multi-source 拆开之后，就能直接看出「多模型混合」是否真的缓解了分布坍缩。
 
-	- 功能：从多个角度刻画模型输出是否变窄，而不是只用任务分数。
-	- 核心思路：论文用目标模型对不同来源文本计算 perplexity；用 $100 \cdot (1-\text{Self-BLEU})$ 衡量词汇多样性；用 SentenceBERT 句向量平均 pairwise cosine distance 衡量语义多样性；再用 Heaps' Law 的 $V(n)=K\cdot n^\beta$ 拟合词汇随语料增长的速度。人类文本的平均 lexical diversity 为 89.15，高于合成文本的 79.60；人类文本的词汇增长也明显更快。
-	- 设计动机：model collapse 不一定表现为语义完全重复，可能先体现在词汇增长变慢、模型对人类文本困惑度变高、输出分布窄化。多指标能避免单一 perplexity 解释过度。
+**2. 分布坍缩与多样性指标组合：从多个角度量输出有没有变窄，而不只看任务分数。**
 
-3. **安全与评审偏差的下游行为测量**:
+model collapse 不一定表现为语义完全重复，可能先体现在词汇增长变慢、模型对人类文本的困惑度变高。只用一个 perplexity 容易解释过度，所以论文叠了四个指标：用目标模型对不同来源文本算 perplexity；用 $100 \cdot (1-\text{Self-BLEU})$ 衡量词汇多样性；用 SentenceBERT 句向量的平均 pairwise cosine distance 衡量语义多样性；再用 Heaps' Law 的 $V(n)=K\cdot n^\beta$ 拟合词汇量随语料增长的速度。结果上，人类文本的平均 lexical diversity 为 89.15，高于合成文本的 79.60，词汇增长也明显更快——这说明窄化主要发生在词汇和表述层面，靠多指标组合才能把它从「语义看着没怎么变」的假象里揪出来。
 
-	- 功能：检验分布变化是否会转化成实际风险。
-	- 核心思路：安全实验把 RefusalBench 与 jailbreak prompt 组合成 RB+J，用 Llama-3.1-70B-Instruct 作为 judge 分别打 harmfulness 和 quality。作者定义“danger zone”为 harmfulness 和 quality 都大于等于 4 的输出。评审偏差实验让微调模型比较不同模型和人类摘要，计算 $\text{SPB}=S_{target}-\overline{S}_{other}$ 与 $\text{PSB}=\overline{S}_{synthetic}-S_{human}$。
-	- 设计动机：一个模型输出有害但胡言乱语，和输出有害且高质量、可操作，是不同风险级别。把质量和有害性组合起来，比单看拒答率更贴近安全部署。
+**3. 安全与评审偏差的下游行为测量：检验分布变化会不会转成真实风险。**
+
+分布变窄本身是中性的，关键是它会不会变成安全隐患或评审偏见。安全实验把 RefusalBench 与 jailbreak prompt 组合成 RB+J，用 Llama-3.1-70B-Instruct 当 judge 分别给 harmfulness 和 quality 打分，并把 harmfulness 和 quality 都大于等于 4 的输出定义为「danger zone」。评审偏差实验则让微调后的模型去比较不同模型和人类的摘要，算两个偏置：自偏好 $\text{SPB}=S_{target}-\overline{S}_{other}$ 和偏向合成 $\text{PSB}=\overline{S}_{synthetic}-S_{human}$。之所以要把质量和有害性组合着看，是因为「输出有害但胡言乱语」和「输出有害且高质量、可操作」是完全不同的风险级别，单看拒答率会把后者这种更危险的情况漏掉。
 
 ### 损失函数 / 训练策略
 本文使用 LoRA 监督微调，不提出新损失。Llama-3.1 8B 与 70B 目标模型在 H100 上以 16-bit 精度训练，LoRA rank 为 16，$\alpha=32$，每条样本最大 1024 token，训练 3 个 epoch，学习率 5e-5，AdamW 优化器，3% warmup，cosine decay，weight decay 为 0.01。实验重点不是训练技巧，而是保持训练设置相对固定，让数据来源成为主要变量。

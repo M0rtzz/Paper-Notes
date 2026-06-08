@@ -41,35 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GAT 的整体设计可以一句话概括：**在 SD-VAE 的 $32\times 32$ 隐空间上，搭一个生成器和判别器都是纯 ViT 的 GAN**。
-
-- 输入：随机隐码 $z \sim p_z$（$d_z=64$）+ 类别标签 $c$。
-- 生成器 $G(z,c)$：把 $(z,c)$ 经一个轻量 MLP 映射成 style 向量 $w$，由 $w$ 产出 per-channel 的 modulation 参数 $(\gamma, \alpha)$，在每个 ViT block 里通过 adaptive RMSNorm + LayerScale 注入。最后用一个 unpatchify 线性头把 token 序列还原成 VAE 隐图。
-- 判别器 $D(I,c)$：另一个 ViT，每个 block 输出加 LayerScale，加一个 `[cls]` token 走线性头出 logit，配 projection discriminator 引入类别条件。
-- 训练目标：approximated relativistic pairing loss + 双边 R1/R2 梯度惩罚（沿用 R3GAN 的 aR1/aR2）+ REPA 表征对齐（仅判别器对齐 DINOv2 特征）。
-- 输出：单次前向就出一张 $256\times 256$ 的图像（VAE decode 后）。
-
-GAT-S/B/L/XL 四个尺寸沿用 DiT 的配置，patch size 默认 $p=2$。训练 50K iter、batch 512（约 20 epoch）就能跑出有意义的对比；最大配置 GAT-XL/2 训到 60 epoch 给出 SOTA。
+GAT 想回答的问题很直接：把 diffusion 社区验证过的可扩展配方——VAE 隐空间加纯 ViT——原样搬到 GAN 上，GAN 能不能跟着一起 scale。它的答案是一个生成器和判别器都是标准 ViT 的隐空间 GAN：随机隐码 $z\sim p_z$（$d_z=64$）和类别 $c$ 经轻量 MLP 映成 style 向量 $w$，由 $w$ 在每个 ViT block 里通过 adaptive RMSNorm + LayerScale 注入 modulation，最后一个 unpatchify 线性头把 token 序列还原成 SD-VAE 的 $32\times 32$ 隐图、再 decode 成 $256\times 256$ 图像，整条链路单次前向就出图。判别器是另一个 ViT，用 `[cls]` token 走线性头出真假 logit、配 projection discriminator 引类别条件。作者把"GAN 能否 scale"拆成正交的两端分别治：架构端只保证骨干贴近原始 ViT，闲置的早期层交给 MNG 叫醒；优化端用一条宽度感知 lr 公式把不同尺寸模型的更新幅度对齐。
 
 ### 关键设计
 
-1. **VAE 隐空间上的纯 Transformer GAN 架构**:
+**1. VAE 隐空间上的纯 Transformer GAN 骨干：把架构改动压到最低，好继承 ViT 的 scalability**
 
-    - 功能：提供一个"最小架构偏移"的可扩展 GAN 骨干——生成器和判别器都是标准 ViT，不引入任何卷积或多尺度结构。
-    - 核心思路：生成器把 patchify 换成 unpatchify 作为线性 RGB 解码头，输出维度随 $p^2$ 增长；ViT block 内部仅插入一个由 style 向量 $w$ 驱动的 adaptive RMSNorm + LayerScale，其中 $\gamma, \alpha$ 初始化接近零、训练中学习，保证早期训练稳定。判别器把 `[cls]` token 拼到 patch token 序列前一起走 ViT，末层 `[cls]` 投影出真假 logit。所有 modulation 都被刻意做成"轻量级 feature modulation"，让骨干尽量贴近原始 ViT，从而继承 ViT 已被证明的 width/depth/data/compute 四维 scalability。
-    - 设计动机：以往 Transformer-GAN 工作（TransGAN、HiT 等）为了能训出来都做了大量非 ViT 改造，反而把 Transformer 的 scaling 优势破坏掉了。作者要的是"先证明纯 Transformer GAN 在 VAE 隐空间上能 scale"，所以刻意把架构改动压到最低，把后续问题留给 MNG 和 lr 缩放两个 orthogonal 模块去解。
+痛点在于，以往的 Transformer-GAN（TransGAN、HiT 等）为了能训出来塞进了大量非 ViT 的改造，结果反而把 Transformer 本身的 scaling 优势破坏掉了。GAT 的做法是反着来——尽量不动骨干：生成器把常规的 patchify 换成 unpatchify 当作线性 RGB 解码头，输出维度随 $p^2$ 增长；ViT block 内部只额外插入一个由 style 向量 $w$ 驱动的 adaptive RMSNorm + LayerScale，其中调制参数 $\gamma, \alpha$ 初始化接近零、训练中再慢慢学起来，保证早期训练不被 modulation 冲乱。判别器同样只把 `[cls]` token 拼到 patch token 序列前一起过 ViT，末层 `[cls]` 投影出 logit。所有 modulation 都被刻意做成"轻量级 feature modulation"，目的就是让骨干尽量像原始 ViT，从而把 ViT 已被反复验证的 width/depth/data/compute 四维 scalability 整建制继承过来，把 GAN 特有的麻烦留给后面两个独立模块去解。
 
-2. **Multi-level Noise-perturbed image Guidance（MNG）**:
+**2. 多层级噪声扰动监督 MNG：叫醒闲置的早期层，又不给判别器留 shortcut**
 
-    - 功能：解决早期生成器层闲置问题——通过在生成器中间深度处插入辅助输出，并让判别器在多个噪声水平上同时审查这些中间图像，强制每层都做实质性的贡献。
-    - 核心思路：把生成器分成 $K$ 个 stage，每个 stage 都通过 residual 连接累积出一张中间图像 $\hat{x}_k$，整体输出写成 $G(z,c) = [\hat{x}_1, \hat{x}_2, \dots, \hat{x}_K]$。然后给每个 $\hat{x}_k$ 加上预设强度的高斯噪声 $\mathcal{E}(\hat{x}_k) = \alpha_k \hat{x}_k + \sqrt{1-\alpha_k^2}\,\epsilon$，其中 $\alpha_1 < \alpha_2 < \dots < \alpha_K = 1$ 按指数 schedule 单调递增——也就是越浅的中间输出被加越强的噪声、越深的输出越接近干净。判别器拿到的是所有 $\mathcal{E}(\hat{x}_k)$ 拼成的序列，对应的真图同样在每个噪声水平上扰动一遍。这样早期层只被要求"在强噪声下匹配粗结构"，深层才负责精细细节，自然形成 coarse-to-fine 的分工；同时因为是噪声扰动（不是 MSG-GAN 那样的 resize 多尺度），判别器没有"跨尺度一致性"这种捷径可走。
-    - 设计动机：作者实证发现 vanilla GAT 的早期 block PCA 特征几乎不变、LPIPS 消融早期 block 影响极小，说明扩容的算力被浪费。直接把 MSG-GAN 的多尺度真图监督搬过来反而最差——多尺度判别会让 D 钻"跨尺度对齐"的空子从而压制 G 的生成质量。改用单图 + 多噪声水平，既给出了 per-layer 的直接梯度，又不引入跨尺度 shortcut，且只在中间多几个轻量 head，计算开销可忽略。
+作者实证发现 vanilla GAT 的早期 block PCA 特征几乎不变、消融早期 block 对最终图像的 LPIPS 影响也微乎其微——扩容堆上去的算力大部分被浪费在不工作的浅层上。MNG 的修法是把生成器分成 $K$ 个 stage，每个 stage 经 residual 累积出一张中间图像 $\hat{x}_k$，整体输出写成 $G(z,c)=[\hat{x}_1,\hat{x}_2,\dots,\hat{x}_K]$，让判别器直接审查每一层的中间产物，从而给每层都灌进 per-layer 梯度。关键在审查方式：每个 $\hat{x}_k$ 被加上预设强度的高斯噪声 $\mathcal{E}(\hat{x}_k)=\alpha_k\hat{x}_k+\sqrt{1-\alpha_k^2}\,\epsilon$，其中 $\alpha_1<\alpha_2<\dots<\alpha_K=1$ 按指数 schedule 单调递增——越浅的中间输出被加越强的噪声、越深的越接近干净。这样浅层只被要求"在强噪声下对上粗结构"、深层才负责精细细节，自然形成 coarse-to-fine 的分工。之所以用"单图加多噪声水平"而不是 MSG-GAN 那种 resize 多尺度真图，是因为多尺度监督会让判别器钻"跨尺度一致性"的空子，靠这种 shortcut 偷懒反过来压制 G 的生成质量；换成噪声扰动后判别器无 shortcut 可走，且只是中间多接几个轻量 head，计算开销可忽略。
 
-3. **宽度感知学习率缩放（width-aware lr rule）**:
+**3. 宽度感知学习率缩放：一套基础超参稳训 S 到 XL，免去逐尺度手调**
 
-    - 功能：让一套基础超参（仅学习率随通道数变化）就能稳定训练从 S 到 XL 的所有模型，避免逐尺度手调。
-    - 核心思路：观察到 ViT 每层输入被 normalization 归一化到单位方差后，输入的期望平方范数与通道数 $C$ 成正比，因此每步参数更新引起的输出变化幅度也与 $C$ 成正比。GAN 训练对 lr 极度敏感，要保持"每步输出更新幅度"在不同宽度下大致一致，就必须让 lr 反比于通道数。公式为 $\eta_{\text{adapt}} = \eta_{\text{base}} \cdot C_{\text{base}} / C_{\text{model}}$，其中 $\eta_{\text{base}}$ 是在 base 模型（通道 $C_{\text{base}}$）上调好的学习率，$C_{\text{model}}$ 是当前模型的通道数。除了 lr 之外其它超参（batch size、优化器、loss 权重等）全部保持不变。
-    - 设计动机：DiT 这类 diffusion 模型可以全尺度共用一套超参，但 GAN 不行——naive scaling 经常发散。如果每个尺度都要手调 lr，那"scalable GAN"就名不副实。这条规则在 ablation 中得到严格验证：把 GAT-S 用 GAT-B 的 $\eta_{\text{adapt}}$ 训会发散，把 GAT-B 用 GAT-S 的 $\eta_{\text{adapt}}$ 训会收敛过慢；只有用自己的 $\eta_{\text{adapt}}$ 才稳定收敛。这条规则还能与大 batch 的 $\sqrt{}$-scaling 规则正交组合——作者用 $4\times$ batch + $\sqrt{4}$ lr 缩放 + 宽度感知 lr，能用 1/4 的迭代步数达到与默认设置相当的 FID。
+GAN 对学习率极度敏感，naive scaling 时同一套 lr 从 S 推到 XL 经常直接发散——如果每个尺度都要手调 lr，"scalable GAN"就名不副实。作者从一个朴素观察切入：ViT 每层输入被 normalization 归一化到单位方差后，其期望平方范数与通道数 $C$ 成正比，于是每步参数更新引起的输出变化幅度也与 $C$ 成正比。要让"每步输出更新幅度"在不同宽度下大致一致，lr 就该反比于通道数，公式为 $\eta_{\text{adapt}}=\eta_{\text{base}}\cdot C_{\text{base}}/C_{\text{model}}$，其中 $\eta_{\text{base}}$ 是在通道数 $C_{\text{base}}$ 的 base 模型上调好的学习率、$C_{\text{model}}$ 是当前模型通道数，除 lr 外的 batch size / 优化器 / loss 权重等全部不变。ablation 把它验得很死：GAT-S 套 GAT-B 的 $\eta_{\text{adapt}}$ 会发散、GAT-B 套 GAT-S 的会收敛过慢，只有各自用对的 $\eta_{\text{adapt}}$ 才稳。这条规则还能与大 batch 的 $\sqrt{}$-scaling 正交组合——$4\times$ batch 配 $\sqrt{4}$ lr 缩放再叠宽度感知 lr，能用 1/4 迭代步数逼平默认设置的 FID。
 
 ### 损失函数 / 训练策略
 判别器损失为 approximated relativistic pairing loss 加上双边梯度惩罚和 REPA 对齐：$\mathcal{L}_D = \mathcal{L}_D^{\text{adv}} + \lambda_{\text{aGP}}(\mathcal{L}_{\text{aR1}} + \mathcal{L}_{\text{aR2}}) + \lambda_{\text{REPA}} \mathcal{L}_{\text{REPA}}$，其中 $\mathcal{L}_{\text{aR}}$ 用 $\frac{1}{\sigma^2}\|D(\mathcal{E}(x),c) - D(\mathcal{E}(x+\epsilon'),c)\|^2$ 近似真实梯度惩罚（更便宜），$\mathcal{L}_{\text{REPA}} = \frac{1}{N+1}\sum_i \text{sim}(P(h_i), \hat{h}_i)$ 把判别器末层 `[cls]` 和 patch token 与冻结 DINOv2 教师 token 对齐。生成器只优化 $\mathcal{L}_G^{\text{adv}}$。所有 $x$ 和 $G(z,c)$ 实际都是 MNG 处理过的多层级噪声扰动版本。

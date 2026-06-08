@@ -41,30 +41,30 @@ AgentEval 把 agent 执行轨迹建模成「评估 DAG」，对每个节点用 G
 ## 方法详解
 
 ### 整体框架
-AgentEval 是一套与 OpenTelemetry 兼容的 sidecar 评估服务，整体由 4 块组成：（1）**评估 DAG 形式化**：trace 通过解析得到 $\mathcal{G}=(V,E,\tau,\mathcal{M})$，节点类型 $\tau$ 取自 5 元集 $\{\text{Plan, ToolSel, ParamGen, Exec, Synth}\}$，每类节点配套指标；（2）**步级 LLM-as-judge 打分**：GPT-4o 判官按 1-5 rubric + CoT 推理 + 5 个 few-shot anchor 打分；（3）**层级失败类目**：3 层 21 子类，下游分析时既能聚类又能定位；（4）**CI/CD 回归套件**：用 bootstrap 配对显著性检验 + 双阈值告警，集成进 GitHub Actions 阻塞部署。
+AgentEval 是一套与 OpenTelemetry 兼容的 sidecar 评估服务，输入是一条 agent 执行 trace、输出是带根因归因的步级质量报告。一条 trace 进来后先被解析成「评估 DAG」$\mathcal{G}=(V,E,\tau,\mathcal{M})$，其中节点类型 $\tau$ 取自 5 元集 $\{\text{Plan, ToolSel, ParamGen, Exec, Synth}\}$，每类节点各配一组指标；接着 GPT-4o 判官按拓扑序逐节点用 1-5 rubric 打分，失败节点沿依赖链追溯到根因；再把失败映射到 3 层 21 类的失败类目供事后聚类；最后这套能力封进 CI/CD 回归套件，用配对显著性检验阻塞有回归的部署。整条链路把软件工程里的 spectrum-based fault localization 思想搬到 agent trace，用 LLM-as-judge 替换硬规则做语义评分。
 
 ### 关键设计
 
-1. **评估 DAG 与三类边界处理**:
+**1. 评估 DAG 与三类边界处理：让每个失败带上可追溯的依赖上下文。**
 
-    - 功能：让每一步失败有可追溯的依赖上下文，区分「局部失败」与「传播失败」。
-    - 核心思路：trace 拓扑排序后逐节点评估，节点 $v_i$ 的上下文 $c_i$ 仅聚合父节点 $\mathrm{pa}(v_i)$ 的输出（不含父节点的判官分数，避免判官「附议」上游）。如果 $q(v_i)<\theta_{\tau(v_i)}$ 失败：当多个父节点也低于阈值时，按**贪心策略**选最低分父节点 $v_j^*=\arg\min_{v_j\in\mathrm{pa}(v_i)}q(v_j)$ 作为传播源；否则标为 root cause。同时 AgentEval 同时支持 schema-defined DAG（预期结构）与 trace-inferred DAG（实际结构），偏差作为质量信号（试点中偏差 trace 的失败率是符合的 2.1×）。非 DAG trace（~12%）通过 retry loop unroll + 时间戳分支重建处理；0.8% 实在不行回退到扁平评估。
-    - 设计动机：扁平步评看不到「context truncation 在 step3 把后面全带歪」这种 cascade；完整 causal inference 又太重。贪心父节点是工程友好的折中——在 pilot 中 72% 的错归因离真实根因 ≤1 跳，91% ≤2 跳，远低于随机分配的 2.8 跳期望。同时论文比较了 full-path-min 策略（RCA 高 3 pp 但误归因翻倍），证明「往最近邻找」对工程师更有用。
+扁平步评的盲区在于看不到「step3 的 context truncation 把后面全带歪」这种 cascade，而完整的 causal inference 又太重。AgentEval 取一个工程友好的折中：trace 拓扑排序后逐节点评估，节点 $v_i$ 的上下文 $c_i$ 只聚合父节点 $\mathrm{pa}(v_i)$ 的输出而不含父节点的判官分数（避免判官对上游「附议」）。一旦 $q(v_i)<\theta_{\tau(v_i)}$ 判失败，若多个父节点也低于阈值，就按贪心策略选最低分父节点 $v_j^*=\arg\min_{v_j\in\mathrm{pa}(v_i)}q(v_j)$ 作为传播源，否则标为 root cause。
 
-2. **类型自适应的 LLM-as-judge 与不对称 prompt 框架**:
+这个贪心「往最近邻找」的选择经过了实测检验：pilot 中 72% 的归因离真实根因 ≤1 跳、91% ≤2 跳，远低于随机分配 2.8 跳的期望；论文还对比了 full-path-min 策略（RCA 高 3 pp 但误归因翻倍），说明对工程师而言「最近邻」比「全局最优」更有用。工程上还有三类边界处理：同时维护 schema-defined DAG（预期结构）与 trace-inferred DAG（实际结构），把两者偏差当质量信号（偏差 trace 失败率是符合的 2.1×）；约 12% 的非 DAG trace 用 retry loop unroll + 时间戳分支重建；剩下 0.8% 实在重建不了才回退到扁平评估。
 
-    - 功能：让一个判官同时评估异构的 5 种步类型，并避免被上游错误「带跑」。
-    - 核心思路：5 种步类型各有自己的指标集——Plan 看完整性+可行性；ToolSel 看选择准确性+相关性；ParamGen 看类型/取值/完备性；Exec 看成功率+结果有效性；Synth 看忠实度+完整度+连贯性。判官（GPT-4o, T=0）与 agent（Claude 3.5 Sonnet / Llama 3 70B）必须跨模型家族避免循环偏置。Prompt 框架使用**不对称设计**：Plan 节点对照原始 user query 评分（因为它是把 query 翻译成结构的源头），其余节点对照上游传过来的本地上下文评分（不再重判原 query），这意味着「优雅处理了上游 bug 的下游步」不会被罚，「放大上游 bug 的下游步」才会。Calibration 用 5 个跨分数 anchor 做 stratified few-shot 锚定，不是迭代 prompt 优化。
-    - 设计动机：「判官比 agent 弱」其实是可行的，因为「验证一个 tool 选择是否合理」比「自己选 tool」要简单——这让评估成本可控（GPT-4o-mini 跑下来 ~$0.02/trace）。不对称 prompt 是为了避免一个上游 bug 在下游全部被复算成 N 个 root cause，把根因数稳定在「真正起源」的那一步。
+**2. 类型自适应的 LLM-as-judge 与不对称 prompt：一个判官评异构 5 类步、还不被上游带跑。**
 
-3. **三层失败类目 + 反事实根因验证**:
+5 种步类型异构度很高——Plan 看完整性+可行性，ToolSel 看选择准确性+相关性，ParamGen 看类型/取值/完备性，Exec 看成功率+结果有效性，Synth 看忠实度+完整度+连贯性——所以判官（GPT-4o, $T{=}0$）对每类步切换不同指标集，且必须与 agent（Claude 3.5 Sonnet / Llama 3 70B）跨模型家族以避免循环偏置。Prompt 用不对称设计：Plan 节点对照原始 user query 打分（因为它是把 query 翻译成结构的源头），其余节点只对照上游传来的本地上下文打分、不再重判原 query。
 
-    - 功能：把失败语义化分类支持事后分析；并用反事实证据验证根因归因质量。
-    - 核心思路：3 层、9 个 L2 类目、21 个 L3 子类（如 Planning/Execution/Integration → Context loss/Output hallucination/Premature termination → Truncation/Fabrication 等）。类目从 523 条独立开发 trace（与 450 评测 trace 完全 disjoint）通过 3 人独立 affinity diagramming 共识构建，锁定后再用评测集只验证覆盖度。**反事实验证**：对 30 条失败 trace 把 AgentEval 标为 root cause 的步替换为 gold reference 输出后再跑下游，87%（26/30）情况下下游分数确实回升（平均 +2.3 分），证明归因是「真因」而非相关性。
-    - 设计动机：单纯的 detection recall 高不代表归因正确——反事实是检验「修了它真的能修好下游吗」的最直接证据。Context loss 的 downstream amplification factor 3.2× 也证明了「为什么 DAG 比 flat 强」——传播放大效应才是关键。
+不对称的意义在于责任归属——「优雅处理了上游 bug 的下游步」不会被罚，「放大上游 bug 的下游步」才会被罚，从而避免一个上游 bug 在下游被复算成 N 个 root cause，把根因数稳定在真正起源那一步。校准用 5 个跨分数段的 anchor 做 stratified few-shot 锚定而非迭代调 prompt。这套设计还顺带让成本可控：因为「验证一个 tool 选择是否合理」比「自己选 tool」简单，所以判官可以比 agent 弱，GPT-4o-mini 跑下来约 \$0.02/trace。
+
+**3. 三层失败类目 + 反事实根因验证：既能语义化分类，又能证明归因是真因。**
+
+失败被映射到 3 层、9 个 L2、21 个 L3 子类（如 Planning/Execution/Integration → Context loss/Output hallucination/Premature termination → Truncation/Fabrication 等）。这套类目从 523 条独立开发 trace（与 450 条评测 trace 完全 disjoint）经 3 人独立 affinity diagramming 共识构建，锁定后只用评测集验证覆盖度，避免数据泄漏。
+
+光有高 detection recall 不能证明归因正确，所以论文加了反事实验证：对 30 条失败 trace，把被标为 root cause 的步替换成 gold reference 输出后重跑下游，87%（26/30）的情况下游分数确实回升（平均 +2.3 分），直接回答了「修了它真能修好下游吗」。这也解释了 DAG 为何强于 flat——Context loss 的下游放大因子高达 3.2×，传播放大效应正是依赖建模能捕捉、扁平评估会漏掉的部分。
 
 ### 损失函数 / 训练策略
-AgentEval 无训练损失（推理时框架）；阈值 $\theta_\tau$ 各类型分别校准，回归检测用 paired bootstrap（$p<0.05$, 10000 resample）+ 历史 2σ 双阈值；progressive evaluation 用 10 条 smoke test (<5 min) 门控完整套件 (100+ 条, <1h)，节省 80% 成本。
+AgentEval 是推理时框架、无训练损失。各类型阈值 $\theta_\tau$ 分别校准；回归检测用 paired bootstrap（$p<0.05$、10000 resample）叠加历史 2σ 的双阈值告警；progressive evaluation 先用 10 条 smoke test（<5 min）门控，通过后再跑完整套件（100+ 条、<1h），整体节省约 80% 评测成本。
 
 ## 实验关键数据
 

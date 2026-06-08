@@ -44,23 +44,24 @@ Ryze 是一个端到端 workflow，而不是单一模型结构。它从原始 PD
 输入包括一批生物医学论文 PDF、base VLM（论文中使用 Qwen3-VL-8B）和一个目标评测 benchmark（LAB-Bench）。Ryze 先将 PDF 切成文本块、figure、table 和 caption，并恢复正文里的 figure/table cross-reference；然后为每个问题检索关联证据，生成带完整 evidence 的 QA；接着按约 1M token 的增量反复合成、SFT、评测，当 SFT 提升停滞后切换到 GRPO；最后通过 benchmark category 的弱项诊断触发新一轮 paper 搜索和数据增强。
 
 ### 关键设计
-1. **图表感知抽取与三段式清洗**:
 
-	- 功能：把科学 PDF 转成可靠的结构化 evidence store，避免 OCR 误读和跨元素关系断裂。
-	- 核心思路：Ryze 先用 Surya 做 layout detection，将页面分成文本、图、表、caption 等区域；文本区域转成保留章节结构的 Markdown；随后修复正文中的 “Table 1 / Figure 3” 等引用，把视觉元素和 caption、相关段落绑定起来；图和表由 GLM-OCR 做 chart/table-aware extraction，表格转成保留合并单元格和多行表头的 HTML；最后用 Qwen3 做 hallucination detection、领域术语修复和跨元素一致性检查。
-	- 设计动机：生物医学论文里一个错误的基因名或图表坐标会污染后续所有 QA。先保证抽取结果的结构和术语可信，数据合成才不会把 OCR 错误放大成模型知识。
+**1. 图表感知抽取与三段式清洗：先把 PDF 变成可信的结构化证据库，再谈合成。**
 
-2. **证据增强 QA 合成**:
+生物医学论文里一个被认错的基因名、一个读偏的坐标轴数值，都会顺着 pipeline 污染后面所有 QA，因此 Ryze 在抽取阶段就把"可信度"当成第一目标。它先用 Surya 做 layout detection，把页面切成文本、图、表、caption 等区域，文本区域转成保留章节结构的 Markdown，并修复正文里"Table 1 / Figure 3"这类 cross-reference，让每个视觉元素都和它的 caption、引用它的段落绑在一起；图和表交给 GLM-OCR 做 chart/table-aware extraction，表格转成保留合并单元格和多行表头的 HTML，而不是拍平成纯文本。
 
-	- 功能：生成不依赖人工标注、但仍可追溯到原始论文证据的训练样本。
-	- 核心思路：问题种子来自两类来源：原始论文中的一般领域问题，以及从目标 benchmark 中抽象出的技能类别，例如 chart interpretation、protocol tracing、literature synthesis。Ryze 不复制 benchmark 问题和答案，而是用 Qwen3-VL-235B 对这些粗粒度技能进行重写和多样化，并把答案严格 grounding 到源 PDF corpus 中检索出的视觉元素、caption、OCR annotation、HTML 表格和 referring paragraphs。
-	- 设计动机：这种做法像 curriculum-aware active learning：benchmark 只告诉系统应覆盖什么能力，不给出具体题目或答案，从而在定向提升 LAB-Bench 相关能力的同时降低直接数据泄漏风险。
+最后一道是用 Qwen3 做三段式清洗——hallucination detection、领域术语修复、跨元素一致性检查。先把结构和术语校准好，数据合成才不会把 OCR 错误放大成模型"学到的知识"；这也是后面消融里换成通用 OCR（Marker / DeepSeek OCR）会在 ChartQA 上掉最多 -7.8pp 的根本原因。
 
-3. **进度门控 SFT-to-GRPO 训练闭环**:
+**2. 证据增强 QA 合成：让每道题都能回溯到原始论文的视觉与文本证据。**
 
-	- 功能：在数据合成成本和推理能力之间做自动切换，不盲目堆 SFT token。
-	- 核心思路：Ryze 每增加约 1M token 合成数据就训练一个 SFT checkpoint 并评测；当准确率连续停滞时，认为 SFT 已经饱和，冻结数据并转换成 RL 格式，用 GRPO 训练模型生成更连贯的 reasoning chain。SFT 阶段主要学习术语、常识和基础生物概念，GRPO 阶段强化复杂图表、文献和 protocol 推理。
-	- 设计动机：论文实验证明 SFT-only 已接近 GPT-5.2，但真正超过 GPT-5.2 的 +4.3pp 主要来自 GRPO，说明“先知道事实，再学会依据证据推理”比单纯增加合成样本更有效。
+普通合成 pipeline 常常只留局部文本或 figure-caption pair，训练样本看似有答案，模型却只记住浅层模式。Ryze 的问题种子有两个来源：原始论文里的一般领域问题，以及从目标 benchmark 抽象出的技能类别（chart interpretation、protocol tracing、literature synthesis 等）。它不抄 benchmark 的题目和答案，而是用 Qwen3-VL-235B 对这些粗粒度技能做重写和多样化，再把每个答案严格 grounding 到源 PDF corpus 检索出的视觉元素、caption、OCR annotation、HTML 表格和 referring paragraphs 上。
+
+这套做法更像 curriculum-aware active learning：benchmark 只负责告诉系统"该覆盖哪些能力"，不交出具体题目或答案。既能定向补强 LAB-Bench 相关能力，又把直接数据泄漏的风险压低——代价是泛化性最终仍要靠完全没参与 curriculum 设计的 held-out benchmark 来背书。
+
+**3. 进度门控的 SFT→GRPO 训练闭环：用评测停滞当信号，自动从堆数据切到强化推理。**
+
+如果一味堆 SFT token，饱和之后再加的样本基本是重复劳动，预算就浪费了。Ryze 每合成约 1M token 数据就训一个 SFT checkpoint 并评测，一旦准确率连续停滞，就判定 SFT 已饱和，冻结数据、转成 RL 格式，改用 GRPO 训练模型生成更连贯的 reasoning chain。分工很清楚：SFT 阶段吸收术语、常识和基础生物概念，GRPO 阶段强化需要跨图表、表格、caption 和正文推断的复杂任务。
+
+实验也印证了这个切换的价值——SFT-only 就已经追平 GPT-5.2（43.7 vs 44.2），但真正反超的那部分增益主要来自 GRPO，说明"先把事实记住、再学会依据证据推理"比单纯加合成样本更划算。
 
 ### 损失函数 / 训练策略
 训练分为 LoRA SFT 和 GRPO 两段。SFT 在文本 QA 与视觉 QA batch 间交替，使模型同时吸收正文术语和图表证据。GRPO 不依赖单独 reward model，而是把已经累积的 evidence-enriched SFT 数据转换成可强化推理链的数据格式，重点提升需要跨图表、表格、caption 和正文推断的任务。所有训练配置使用相同 token budget：SFT 为 8,051,591 tokens，GRPO 为 1,584,412 tokens；实验硬件为 AMD EPYC 7313P CPU 和 4 张 NVIDIA RTX A6000 48GB。

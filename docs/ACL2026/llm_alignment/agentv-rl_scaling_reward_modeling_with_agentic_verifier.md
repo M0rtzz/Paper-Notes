@@ -42,31 +42,25 @@ tags:
 
 ### 整体框架
 
-推理时：给定问题 $x$ 和候选解 $y$，verifier $\pi_\psi$ 启动两个 agent。Forward agent 按 "Plan → Validate → Verdict" 把解拆成原子子步骤、逐步用代码核查、给出二元判定；Backward agent 用同样三段式但从最终答案出发反向检查问题约束是否都被满足。两路 verdict 聚合得到最终置信分；BoN 时按置信分挑最高那条解。训练时：先用合成数据做拒绝采样 SFT 让模型学会 ReAct + 工具，再用 GRPO 进一步释放推理潜力。
+AgentV-RL 把"奖励模型"从一次性读完候选解打个分，改造成像人做证明那样多轮、双向、带工具的审议过程。推理时，给定问题 $x$ 和某条候选解 $y$，verifier $\pi_\psi$ 同时启动一前一后两个 agent：forward agent 从题目前提一路推到结论、查每一步是否充分，backward agent 从最终答案倒推回题面、查所有约束是否真被满足，两者都能在中途调用 Python 解释器核算数值。两路各自走完 "Plan → Validate → Verdict" 后输出二元判定，聚合 verdict 的 token logits 得到这条解的综合置信分；BoN 场景下就按置信分从一批候选里挑最高的那条。训练上则分两步把这套多 agent 流程压进单个 4B 模型——先用合成轨迹做拒绝采样 SFT 灌入 ReAct + 工具行为，再用 GRPO 释放更深的推理。
 
 ### 关键设计
 
-1. **双向 agent 验证（Forward + Backward Verifier）**:
+**1. 双向 agent 验证：充分性与必要性互补检查。**
 
-    - 功能：对同一解进行充分性 + 必要性互补检查，覆盖单向 verifier 容易漏掉的失败模式。
-    - 核心思路：Forward agent 从前提到结论遍历原子步 $\Pi = \{v_1, \ldots, v_n\}$，检查相邻步之间的逻辑充分性；Backward agent 从答案倒推回问题陈述，验证所有题目约束是否真的被用到、有无隐性遗漏。两者共享 "Plan / Validate / Verdict" 三段提示模板。最终聚合两个 verdict 的 token logits 作为综合置信度。
-    - 设计动机：纯前向审查容易被"看似自洽但绕开了约束"的伪证骗过；反向检查正好揭穿这类情况，两路互补避免单一视角的盲区。
+纯前向审查有个老毛病：遇到"看似步步自洽、实则绕开了某条约束"的伪证时容易被表面逻辑带跑，给出错误的正判。本文借数学证明里"充分性 + 必要性"的方法论破解这点——forward agent 把解拆成原子步 $\Pi = \{v_1, \ldots, v_n\}$，沿前提到结论逐步检查相邻步之间的逻辑是否充分；backward agent 反过来从答案倒推回问题陈述，验证题目每条约束是否真的被用到、有没有隐性遗漏。两者共享同一套 "Plan / Validate / Verdict" 三段提示模板，但审查方向相反，因此暴露的错误类型天然互补：前向漏掉的"偷换约束"往往正是反向能抓到的，反之亦然。最终把两个 verdict 聚合成综合置信度，避免单一视角的系统盲区。
 
-2. **多轮 ReAct + 工具增强验证（Tool-augmented Multi-turn Validation）**:
+**2. 多轮 ReAct + 工具增强验证：让 verifier 在关键节点调用代码核算。**
 
-    - 功能：让 verifier 在审查每一步时可以调用 Python 解释器算数值/枚举/检验等式，弥补 LLM 自身的算术短板。
-    - 核心思路：Validate 阶段执行轨迹 $\mathcal{H} = (s_0, a_0, o_0, \ldots, s_t, a_t, o_t)$，其中 $s$ 是思考、$a$ 是代码动作、$o$ 是解释器返回。动作段由特殊 token 包裹，便于训练时排除观测部分梯度。一个题往往要执行 5-6 轮思考+1 次工具调用左右（见表 5）。
-    - 设计动机：审查 AIME 这类竞赛题时，关键卡点常是"这个等式到底成不成立"，依赖工具一锤定音比让 LLM 自己脑补可靠得多。
+审查 AIME 这类竞赛题时，卡点常常是"这个等式到底成不成立"，而 LLM 自己做长链算术、枚举、检验恰恰最不可靠，纯文本 verifier 很容易自己也算错。为此 Validate 阶段被组织成一条 ReAct 轨迹 $\mathcal{H} = (s_0, a_0, o_0, \ldots, s_t, a_t, o_t)$，其中 $s$ 是思考、$a$ 是代码动作、$o$ 是 Python 解释器返回的观测；动作段用特殊 token 包裹，方便训练时把观测部分的梯度排除掉。实际上一题往往要走 5–6 轮思考、穿插 1 次左右工具调用（见表 5）——调用频率不高，但在判定成败的那个等式上交给解释器一锤定音，远比让模型脑补可靠。
 
-3. **AgentV-RL 训练配方（合成轨迹 SFT + GRPO）**:
+**3. AgentV-RL 训练配方：合成轨迹 SFT 蒸馏 + GRPO 释放推理。**
 
-    - 功能：把多 agent 范式蒸馏进单个 4B 模型，并通过 RL 释放更深的推理。
-    - 核心思路：先从 Polaris / DeepScaleR / AReaL-boba 等数据采 $k=8$ 候选解（过滤全对/全错的过简单题），让 LLM 角色扮演 forward 或 backward agent 生成验证轨迹，只保留 verdict 与 ground truth 一致的轨迹得到 $\mathcal{D}_{\text{sft}}$ 共 15K 条。SFT 损失对所有非 observation token 做 NLL：$\mathcal{L} = -\mathbb{E}_\tau[\sum_i \mathbb{I}[\tau_i \neq o_i] \log \pi_\theta(\tau_i \mid \mathcal{H}_{<i})]$。随后在 50K 样本上跑 GRPO，奖励 $r(\mathcal{H}) = 1$ 若 verdict 正确否则 $-1$，并用 DAPO 风格动态过滤掉全 +1 / 全 -1 的零方差组。
-    - 设计动机：直接多 agent 部署成本高，蒸馏到单模型才能落地；SFT 灌输 ReAct 行为模式，GRPO 让模型自主探索更优的工具使用与推理路径。
+直接部署多 agent 推理成本太高，要落地就得把这套能力蒸馏进单个模型。具体先从 Polaris / DeepScaleR / AReaL-boba 等数据各采 $k=8$ 条候选解，滤掉全对/全错的过简单题，让 LLM 分别扮演 forward 或 backward agent 生成验证轨迹，只保留 verdict 与 ground truth 一致的轨迹，凑出 $\mathcal{D}_{\text{sft}}$ 共 15K 条；SFT 阶段对所有非 observation token 做 NLL，即 $\mathcal{L} = -\mathbb{E}_\tau\big[\sum_i \mathbb{I}[\tau_i \neq o_i] \log \pi_\theta(\tau_i \mid \mathcal{H}_{<i})\big]$，把 ReAct + 工具的行为模式先灌进去。随后在 50K 样本上跑 GRPO，奖励设为 $r(\mathcal{H}) = 1$（verdict 正确）或 $-1$（错误），并借 DAPO 风格动态过滤掉全 +1 / 全 -1 的零方差组，让模型自主探索更优的工具使用与推理路径——SFT 负责"会做"，GRPO 负责"做得更好"。
 
 ### 损失函数 / 训练策略
 
-GRPO 目标为 $\mathcal{J}_{\mathrm{GRPO}}(\psi) = \mathbb{E}\big[\frac{1}{G}\sum_i \frac{1}{|\mathcal{H}_i|} \sum_t \min(r_{i,t}\hat{A}_{i,t}, \mathrm{clip}(r_{i,t}, 1-\epsilon_{\text{low}}, 1+\epsilon_{\text{high}})\hat{A}_{i,t}) - \beta D_{\mathrm{KL}}(\pi_\psi \| \pi_{\mathrm{ref}})\big]$，混合采样让同一模型既扮演 forward 也扮演 backward agent。为避免记忆环境观测，loss 计算时显式 mask 掉解释器执行结果。
+GRPO 目标为 $\mathcal{J}_{\mathrm{GRPO}}(\psi) = \mathbb{E}\big[\frac{1}{G}\sum_i \frac{1}{|\mathcal{H}_i|} \sum_t \min(r_{i,t}\hat{A}_{i,t}, \mathrm{clip}(r_{i,t}, 1-\epsilon_{\text{low}}, 1+\epsilon_{\text{high}})\hat{A}_{i,t}) - \beta D_{\mathrm{KL}}(\pi_\psi \| \pi_{\mathrm{ref}})\big]$，混合采样让同一模型既扮演 forward 也扮演 backward agent。为避免模型去记忆环境观测字符串而非学习推理，loss 计算时显式 mask 掉解释器的执行结果。
 
 ## 实验关键数据
 

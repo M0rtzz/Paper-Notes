@@ -38,34 +38,34 @@ RouteNLP 是一个闭环 LLM 路由与级联框架，用任务感知路由器、
 **核心 idea**：把 LLM serving 看作“路由 + 校准级联 + 组合改造”的闭环系统，而不是一次性训练一个 router；便宜模型通过 targeted distillation 逐步吸收高频失败簇，从而让更多请求留在低成本层级。
 
 ## 方法详解
-RouteNLP 假设有按成本递增的模型组合 `M={m1,...,mK}`，每个任务有质量阈值 `tau_t`。系统要最小化处理请求所需的累计成本，同时保证最终模型输出质量达到任务要求。它通过三部分实现：先预测最便宜可用 tier，再用不确定性判断是否升级，最后把升级日志聚类成蒸馏数据来改进低 tier 模型。
+RouteNLP 假设有按成本递增的模型组合 $M=\{m_1,\dots,m_K\}$，每个任务有质量阈值 $\tau_t$。系统要最小化处理请求所需的累计成本，同时保证最终输出质量达到任务要求。它通过三部分实现：先预测最便宜可用 tier，再用不确定性判断是否升级，最后把升级日志聚类成蒸馏数据来改进低 tier 模型。
 
 ### 整体框架
-模型组合包含四层：T1 是 DistilBERT，每 1K token 成本约 0.01 美元；T2 是 Mistral-7B-Instruct，每 1K token 0.10 美元；T3 是 Mixtral-8x7B 量化版本，每 1K token 0.80 美元；T4 是 GPT-4-Turbo API，每 1K token 8.00 美元。路由器先给查询分配 tier，若该 tier 生成后的 token-level uncertainty 超过 conformal 阈值，就级联到下一层。
-
-训练标签通过所有模型对所有查询的离线评估得到，质量指标随任务变化：结构化任务用 F1 或 accuracy，生成任务用 ROUGE-L 或 BERTScore。系统在六任务企业基准上评估，覆盖金融 NER/摘要、客服意图/回复、法律条款抽取/风险评估，总计 40,200 训练样本和 8,800 测试样本。
+真正的关键是论文把「模型组合」本身也当成可优化对象，而不是只训一个 router 去分配请求。模型组合包含四层：T1 是 DistilBERT，每 1K token 成本约 0.01 美元；T2 是 Mistral-7B-Instruct，0.10 美元；T3 是 Mixtral-8x7B 量化版本，0.80 美元；T4 是 GPT-4-Turbo API，8.00 美元。一条请求先由路由器分配 tier，若该 tier 生成后的 token-level uncertainty 超过 conformal 阈值就级联到下一层；而所有升级日志又会被聚类成蒸馏数据，反过来改造便宜模型、再重训路由器——形成「路由 → 校准级联 → 组合改造」的闭环。训练标签由所有模型对所有查询的离线评估得到，质量指标随任务变化：结构化任务用 F1 或 accuracy，生成任务用 ROUGE-L 或 BERTScore。系统在六任务企业基准上评估，覆盖金融 NER/摘要、客服意图/回复、法律条款抽取/风险评估，总计 40,200 训练样本和 8,800 测试样本。
 
 ### 关键设计
-1. **任务感知难度路由器**:
 
-	- 功能：预测某个任务查询所需的最低可接受模型 tier。
-	- 核心思路：使用 DistilBERT-base 作为轻量 router，拼接 `[CLS]` 表示和 64 维任务 embedding，再用任务投影头输出 4 个 tier logits；训练损失由 tier 分类、成本项和质量约束 hinge penalty 组成，`lambda_c=0.3`、`lambda_q=0.5`。
-	- 设计动机：金融实体抽取、客服回复和法律风险判断的难度模式不同。共享 encoder 能复用语言表示，任务 embedding 则让路由器学习任务条件化的难度边界。
+**1. 任务感知难度路由器：预测一条查询所需的最低可接受 tier，而不是一刀切打给最强模型。**
 
-2. **Conformal confidence-calibrated cascading**:
+金融实体抽取、客服回复和法律风险判断的难度模式各不相同，用统一规则分配必然要么浪费算力、要么质量不达标。RouteNLP 用 DistilBERT-base 作为轻量 router，把 `[CLS]` 表示和一个 64 维任务 embedding 拼起来，再经任务投影头输出 4 个 tier logits。共享 encoder 复用语言表示，任务 embedding 则让路由器学到任务条件化的难度边界。训练损失由 tier 分类、成本项和质量约束 hinge penalty 三块组成，权重 $\lambda_c=0.3$、$\lambda_q=0.5$，从而在「尽量选便宜 tier」和「别选到质量不够的 tier」之间取得平衡。
 
-	- 功能：在 router 低估难度时提供安全网，避免质量不达标的低 tier 输出直接返回。
-	- 核心思路：每个任务和 tier 使用 500 个 calibration 样本估计不确定性阈值。生成后计算 token-level uncertainty `u=1/L sum_i (1-p(y_i|y_<i,x))`，若 `u>delta_{k,t}` 则升级。阈值按 conformal risk control 设置，目标边际违规率 `alpha=0.05`。
-	- 设计动机：路由器给的是先验判断，生成后的置信度能捕捉实际输出风险。Conformal 阈值提供分布无关的初始化，但作者也明确指出它只保证边际覆盖，分布漂移会破坏假设。
+**2. Conformal confidence-calibrated cascading：在路由器低估难度时兜底，避免不达标的低 tier 输出直接返回。**
 
-3. **失败簇驱动的蒸馏-路由协同优化**:
+路由器给的是生成之前的先验判断，难免低估某些查询的难度，这时需要一个看「实际输出」的安全网。每个任务和 tier 用 500 个 calibration 样本估计不确定性阈值；某 tier 生成后计算 token-level uncertainty
 
-	- 功能：让便宜模型逐步学会处理高频升级失败，而不是永远依赖昂贵模型。
-	- 核心思路：收集 escalation logs，提取 router hidden representations，PCA 到 128 维后按任务做 k-means；按簇大小乘平均质量差排序，选 top-5 簇，用 frontier model 生成 teacher output，对 T1 到 T3 做 SeqKD，再重新训练 router 并校准阈值。
-	- 设计动机：随机蒸馏会浪费数据在已能处理的样本上；失败簇聚类能找到系统性短板，以同等数据量带来更大成本下降。
+$$u=\frac{1}{L}\sum_{i=1}^{L}\big(1-p(y_i\mid y_{<i},x)\big)$$
+
+若 $u>\delta_{k,t}$ 就升级到下一层。阈值按 conformal risk control 设置，目标边际违规率 $\alpha=0.05$。作者也诚实地指出：conformal 只提供分布无关的、边际意义上的覆盖保证，一旦分布漂移这个假设就会被破坏（实测违规率会从 5% 恶化到 8.1%）。
+
+**3. 失败簇驱动的蒸馏-路由协同优化：让便宜模型逐步吸收高频升级失败，而不是永远靠昂贵模型托底。**
+
+单纯路由只能在现有能力边界内省钱——如果便宜模型在某些高频失败簇上系统性不足，就会一直往上升级。RouteNLP 的闭环在这里：收集 escalation logs，提取 router 的 hidden representations，PCA 降到 128 维后按任务做 k-means 聚类；再按「簇大小 × 平均质量差」排序、选 top-5 簇，用 frontier model 为这些簇生成 teacher output，对 T1 到 T3 做 SeqKD，最后重训 router 并重新校准阈值。相比把数据平摊到已经能处理的样本上的随机蒸馏，定向锁定系统性短板能用同等数据量换来更大的成本下降。
+
+### 一个完整示例：一条查询如何从 T1 走到闭环改造
+一条客服意图分类请求进来，router 判断它是 routine task、打到最便宜的 T1（DistilBERT）。T1 生成后算 token-level uncertainty，发现 $u$ 超过该任务该 tier 的 conformal 阈值 $\delta_{k,t}$，于是级联升级到 T2（Mistral-7B）拿到达标输出返回。这次升级被写进 escalation log。一段时间后，大量类似的「带多轮引用的意图判断」失败被 k-means 聚成一个大簇且质量差明显，进入 top-5；系统用 T4 给这个簇生成 teacher output，把 T1 蒸馏得更强，再重训 router、重校阈值。下一轮，同类请求大多能直接被 T1 接住、不再升级——这就是为什么三轮 co-optimization 后 T1+T2 的承载比例从 68% 升到 81%、T4 占比从 11% 降到 5%、cost ratio 从 0.203 降到 0.159。
 
 ### 损失函数 / 训练策略
-Router 损失为 `L=L_route+lambda_c L_cost+lambda_q L_quality`。`L_route` 是 tier 分类交叉熵，标签来自全模型评估；`L_cost` 鼓励选择低成本 tier；`L_quality` 对预测 tier 低于任务质量阈值的情况施加 hinge penalty。蒸馏循环设收敛阈值 `epsilon=0.005`，实践中 2-3 轮收敛。Router 约 67M 参数，A100 上训练约 45 分钟。
+Router 损失为 $L=L_{route}+\lambda_c L_{cost}+\lambda_q L_{quality}$。$L_{route}$ 是 tier 分类交叉熵，标签来自全模型评估；$L_{cost}$ 鼓励选择低成本 tier；$L_{quality}$ 对预测 tier 低于任务质量阈值的情况施加 hinge penalty。蒸馏循环设收敛阈值 $\epsilon=0.005$，实践中 2-3 轮收敛。Router 约 67M 参数，A100 上训练约 45 分钟。
 
 ## 实验关键数据
 

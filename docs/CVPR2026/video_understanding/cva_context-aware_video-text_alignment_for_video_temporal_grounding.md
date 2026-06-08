@@ -41,31 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CVA 在 DETR-based VTG 框架上增加三个组件：(1) QCD 在训练时生成语义一致的增强样本；(2) CTE 替换标准 Transformer 编码器，捕获多尺度时序上下文；(3) CBD 在两个增强视图之间施加边界对比约束。
+CVA 想解决的核心问题是：视频时序定位模型容易把文本查询和静态背景绑死，而既有的"内容混合"增强又会误伤与查询相关的片段、制造假阴性。它在标准的 DETR-based 框架上挂了三个相互配合的组件——训练时先由 QCD 生成"换了背景但语义没变"的增强视频对，再让 CTE 取代普通 Transformer 编码器去捕获多尺度时序上下文，最后由 CBD 在两个增强视图之间、专门盯着时段边界拉一个对比约束。三者一前一后：QCD 管"喂什么数据"，CTE 管"怎么编码"，CBD 管"边界处学到什么表征"。
 
 ### 关键设计
 
-1. **Query-aware Context Diversification (QCD)**：
+**1. Query-aware Context Diversification（QCD）：让上下文替换"挑对片段"，从源头掐断假阴性。**
 
-    - **功能**：用 CLIP 预计算所有视频片段与所有查询之间的余弦相似度矩阵。根据 GT 对和非 GT 对的分布统计，确定有效采样区间 $[\theta_{\min}, \theta_{\max}]$：
-    $\theta_{\min} = \text{Percentile}_\alpha(\mathcal{S}_{\text{non}}), \quad \theta_{\max} = \text{Percentile}_\beta(\mathcal{S}_{\text{gt}})$
-    - 只从另一视频中相似度在此区间内的片段中采样替换
-    - 同时保留 GT 时段及其前后 $p$ 个相邻片段（上下文保持策略）
-    - **设计动机**：下界 $\theta_{\min}$ 过滤太不相关的 trivial 负样本（提供不了有意义的学习信号），上界 $\theta_{\max}$ 过滤可能是假阴性的高相似片段。百分位阈值比固定阈值更鲁棒。
+痛点很直接：TD-DETR 用内容混合打断"查询↔背景"的虚假关联，但它替换片段时根本不看查询，很可能把一段其实和查询语义相关的片段换进来、却照样标成负样本，反而教坏了模型。QCD 的做法是把替换这件事变成"有依据地挑"：先用 CLIP 预计算所有视频片段与所有查询之间的余弦相似度矩阵，再根据 GT 对（$\mathcal{S}_{\text{gt}}$）和非 GT 对（$\mathcal{S}_{\text{non}}$）两组相似度的分布，用百分位卡出一个有效采样区间
 
-2. **Context-enhanced Transformer Encoder (CTE)**：
+$$\theta_{\min} = \text{Percentile}_\alpha(\mathcal{S}_{\text{non}}), \quad \theta_{\max} = \text{Percentile}_\beta(\mathcal{S}_{\text{gt}})$$
 
-    - **功能**：$N_b$ 个堆叠块，每块包含：(a) 窗口自注意力处理视频特征（建模局部时序模式）；(b) 全局自注意力处理可学习 query；(c) 双向 cross-attention 在视频和 query 之间交换信息。
-    - **核心公式**：最终输出通过分层聚合 + 可学习权重融合：
-    $\mathbf{F}_{\text{CTE}} = \omega \cdot \mathbf{F}_v + (1-\omega) \cdot \text{Norm}(\text{MLP}(\text{Concat}_{l=1}^{N_b}(\mathbf{F}^{(l)})))$
-    - **设计动机**：标准 Transformer 直接做全局注意力，缺乏对局部时序模式的显式建模。窗口注意力捕获局部依赖，可学习 query 提供全局语义锚点，双向 cross-attention 实现局部-全局信息交换。
+替换片段只从另一段视频里相似度落在 $[\theta_{\min}, \theta_{\max}]$ 内的片段中采样，同时把 GT 时段及其前后各 $p$ 个相邻片段原样保留下来（上下文保持）。这两道闸刀分工明确：下界 $\theta_{\min}$ 滤掉那些和查询八竿子打不着的 trivial 片段（它们提供不了有意义的负样本信号），上界 $\theta_{\max}$ 滤掉相似度过高、很可能本就是假阴性的片段。举例来说，某段视频有 30 个候选片段，低于 $\theta_{\min}$ 的太无关、高于 $\theta_{\max}$ 的疑似假阴性都被剔除，剩下"够相关又不至于撞上正样本"的那一档才进采样池。用百分位而不是固定阈值，是因为不同数据集的相似度尺度天差地别，分位数能自适应地划线，比拍脑袋的固定值稳得多。
 
-3. **Context-invariant Boundary Discrimination (CBD)**：
+**2. Context-enhanced Transformer Encoder（CTE）：用窗口注意力补上局部时序，再分层融合多尺度上下文。**
 
-    - **功能**：给定 QCD 生成的两个增强视图 $\mathbf{V}'_{\text{mix}}$ 和 $\mathbf{V}''_{\text{mix}}$，提取它们在 GT 时段边界处（起/止帧）的特征作为 anchor 和 positive。负样本来自两个来源：(a) 空间临近的背景帧（hard boundary negatives）；(b) 语义最相似的远处背景帧（hard semantic negatives）。
-    - **核心公式**：
-    $\mathcal{L}_{CBD} = -\frac{1}{|\mathcal{B}|} \sum_{b \in \mathcal{B}} \log \frac{\exp(s_{p,b})}{\exp(s_{p,b}) + \sum_{\mathbf{z}_n \in \mathcal{Z}^-} \exp(s_{n,b})}$
-    - **设计动机**：边界是定位最关键也最容易出错的区域。在不同上下文增强下强制边界表征一致，使模型学到上下文不变的判别性表征。同时使用邻近和远处硬负样本确保时序和语义两个维度的判别性。
+标准 Transformer 编码器一上来就做全局自注意力，缺的是对"局部时序模式"的显式建模——而时序定位恰恰要靠局部的动作起伏来找边界。CTE 把编码器换成 $N_b$ 个堆叠块，每块里干三件事：用窗口自注意力处理视频特征、专盯局部时序依赖；用全局自注意力处理一组可学习 query、给整段视频提供全局语义锚点；再用双向 cross-attention 让视频和 query 互相交换信息。最后不只取最后一层，而是把各层输出拼起来、经 MLP 压缩后和原视频特征做可学习权重的加权融合：
+
+$$\mathbf{F}_{\text{CTE}} = \omega \cdot \mathbf{F}_v + (1-\omega) \cdot \text{Norm}(\text{MLP}(\text{Concat}_{l=1}^{N_b}(\mathbf{F}^{(l)})))$$
+
+这样局部依赖（窗口）、全局语义（可学习 query）和跨层多尺度信息（分层聚合）被一并喂给下游头，比单纯堆全局注意力更贴合"既要看清局部动作、又要把握整体语境"的定位需求。
+
+**3. Context-invariant Boundary Discrimination（CBD）：把对比学习钉在边界上，逼出对上下文变化鲁棒的判别表征。**
+
+边界是定位里最关键、也最容易翻车的地方——差几帧就掉一个 IoU 档位。CBD 的思路是：既然 QCD 能对同一段视频生成两个"换了背景但目标时段不变"的增强视图 $\mathbf{V}'_{\text{mix}}$ 和 $\mathbf{V}''_{\text{mix}}$，那就在这两个视图的 GT 时段边界处（起/止帧）取特征，互为 anchor 和 positive，强迫它们对齐。负样本特意从两个维度找硬的：一是空间上紧挨边界的背景帧（hard boundary negatives，逼模型分清"刚好在边界内 vs 刚好在边界外"），二是远处但语义最相似的背景帧（hard semantic negatives，逼模型别被长得像的背景骗走）。对比损失写成
+
+$$\mathcal{L}_{CBD} = -\frac{1}{|\mathcal{B}|} \sum_{b \in \mathcal{B}} \log \frac{\exp(s_{p,b})}{\exp(s_{p,b}) + \sum_{\mathbf{z}_n \in \mathcal{Z}^-} \exp(s_{n,b})}$$
+
+之所以有效，是因为它在"背景被换掉"的扰动下仍要求边界表征保持一致，等于直接训练出一种和上下文无关的边界判别力；而时序邻近 + 语义相似这对双源硬负样本，又保证了这种判别力在时间和语义两个方向上都立得住。
 
 ### 损失函数 / 训练策略
 - $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{MR}} + \mathcal{L}_{\text{HD}} + \lambda_{\text{CBD}} \mathcal{L}_{\text{CBD}}$

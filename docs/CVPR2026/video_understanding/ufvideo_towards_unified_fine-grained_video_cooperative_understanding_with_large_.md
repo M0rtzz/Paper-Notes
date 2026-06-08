@@ -41,27 +41,25 @@ UFVideo 是首个统一全局、像素级和时序级三种粒度视频理解能
 ## 方法详解
 
 ### 整体框架
-UFVideo 以 LLM 为骨架，视觉编码器将视频编码为离散 token 与文本 token 对齐。输入包括视频 $V$、文本问题 $Q$ 和可选的目标视觉提示 $M$（mask）；输出包括文本回答 $A$、时序定位 $T$ 和分割 mask $S$。通过统一的视觉-语言引导对齐训练，模型可以根据不同任务灵活地生成对应类型的输出。
+UFVideo 想解决的是：让一个 Video LLM 同时具备全局问答、像素级分割、时序定位三种粒度的能力，并让它们在同一次生成里互相借力。整条链路以 LLM 为骨架——视觉编码器先把视频压成离散 token，与文本 token 拼到同一序列里送进 LLM。模型一次性接收视频 $V$、文本问题 $Q$ 和可选的目标视觉提示 $M$（mask），再根据问题类型从 hidden state 里岔出三种出口：文本回答 $A$ 走普通 next-token 生成、时序定位 $T$ 编码成可生成的时间 token、分割 mask $S$ 则把特定 token 的 embedding 转交给 SAM2 的 mask decoder。所有任务共享同一套 LLM 参数，靠几个特殊 token 来切换粒度，而不是各搭一套独立模型。
 
 ### 关键设计
 
-1. **多粒度任务对齐（Multi-Grained Video Tasks Alignment）**:
+**1. 多粒度任务对齐：用三类特殊 token 把不同粒度的任务统一进同一序列。**
 
-    - 功能：通过特殊 token 区分和统一不同粒度的视频理解任务
-    - 核心思路：设计三类特殊 token——`<Temp-τ>` 表示相对时间戳（将视频时间归一化到固定长度 $N_t$ 后编码为 $\tau = \frac{t}{T_n} \times N_t$），`<Ref>` 作为视觉提示注入的占位符用于目标引用任务，`<Seg>` 用于从 LLM 输出中提取分割相关的 language embedding。文本指令被 tokenize 为 $\mathcal{T}_i$，时序 token 为 $\mathcal{T}_t$，形成统一的输入表示。
-    - 设计动机：通过特殊 token 而非独立模块来区分任务，可以共用同一个 LLM backbone，避免为每个任务设计专门架构，同时让不同任务的知识在共享参数中互相增强。
+痛点是现有模型各做各的粒度——引用模型不会做时序、时序模型不会做分割，知识彼此隔离。UFVideo 的做法是不为每个任务单开模块，而是在词表里加三类特殊 token 来承担「任务路由」：`<Temp-τ>` 表示相对时间戳，把视频时长归一化到固定长度 $N_t$ 后编码为 $\tau = \frac{t}{T_n} \times N_t$，这样不同长度视频的时间都落到同一刻度、可以像普通文本一样被生成；`<Ref>` 是目标视觉提示的注入占位符，用于目标引用任务；`<Seg>` 则标记「这里要输出分割」，供后续从 LLM 输出里抽取分割相关的 language embedding。文本指令 tokenize 为 $\mathcal{T}_i$、时序 token 为 $\mathcal{T}_t$，和视觉 token 一起拼成统一输入。因为任务区分只靠 token 而不靠结构分叉，三种粒度的知识全部沉淀在共享参数里，训练时天然互相增强——这正是「协同理解」的来源。
 
-2. **多模态编码（Encode for Multi-Modal Input）**:
+**2. 多模态编码：把视频内容和目标级提示统一塞进 token 空间。**
 
-    - 功能：将视频和目标视觉提示统一编码为 token
-    - 核心思路：使用预训练视觉编码器 $\Phi_v$（SigLIP-so400m）分别对视频 $V$ 和目标视觉提示 $M$ 进行编码，获取视频特征 $F_V$ 和目标视觉特征 $F_M$。然后用 VideoRefer 的方法从 $F_M$ 中提取目标空间特征 $S_M$，投影为目标视觉 token $\mathcal{T}_r$ 注入到 `<Ref>` 位置。对于分割任务，随机选取 $K$ 帧用 SAM2 的 Hiera-L 编码器编码，作为 mask decoder 的视觉输入。
-    - 设计动机：将不同模态信息统一到 token 空间，使 LLM 能同时处理视频内容和目标级别信息。
+LLM 只懂 token，所以视频和「指哪个目标」的视觉提示都得先变成 token。视频 $V$ 和目标视觉提示 $M$ 各自过预训练视觉编码器 $\Phi_v$（SigLIP-so400m）得到 $F_V$ 和 $F_M$；再借 VideoRefer 的做法从 $F_M$ 里抽出目标空间特征 $S_M$，投影成目标视觉 token $\mathcal{T}_r$ 填到序列里的 `<Ref>` 位置。这样 LLM 既看到整段视频，又知道用户具体在问哪个物体。分割任务另需像素级细节，于是再随机选 $K$ 帧用 SAM2 的 Hiera-L 编码器单独编码，作为后面 mask decoder 的视觉输入——视觉编码器负责语义、SAM2 编码器负责像素，两路特征各司其职。
 
-3. **多任务解码（Decode for LLM Generative）**:
+**3. 多任务解码：从同一份 hidden state 里岔出文本、时间、分割三种结果。**
 
-    - 功能：从 LLM 的统一输出中解码出文本、时间和分割三种结果
-    - 核心思路：LLM 输出 hidden state $H$ 后，文本回答和时序定位都通过 text-form token 生成（时序通过 $\mathcal{Y}_m = p_\theta(H) \times \frac{T_n}{N_t}$ 转换回实际时间）。像素级分割则利用 `<Seg>` token 的位置 mask $\rho_s$ 提取分割相关 embedding，通过投影层 $\theta$ 与位置 mask 做逐元素乘法后送入 SAM2 的 mask decoder 生成分割结果。由于不同样本的分割目标数量不同，需要动态 embedding 训练。
-    - 设计动机：文本和时间可以直接用 LLM 的 next-token prediction 生成，而像素级分割难以直接用 token 表示，因此借用 SAM2 的 mask decoder 桥接 language embedding 到 pixel-level mask。
+难点在于：文本和时间能用 token 直接生成，但像素级 mask 没法塞进词表。UFVideo 对三种输出分两条路处理。文本回答和时序定位都走 text-form token——时序生成出来后再用 $\mathcal{Y}_m = p_\theta(H) \times \frac{T_n}{N_t}$ 把归一化刻度还原成真实时间。像素级分割则单独桥接：用 `<Seg>` token 的位置 mask $\rho_s$ 把对应位置的 hidden state $H$ 挑出来，过投影层 $\theta$ 并与位置 mask 逐元素相乘，得到一段携带分割意图的 language embedding，再喂给 SAM2 的 mask decoder 生成最终 mask。由于一条样本里要分割的目标数不固定，`<Seg>` 的数量和对应 embedding 也是动态的，需要按目标数动态训练。这样既保留了 LLM 生成文本/时间的便利，又借 SAM2 补上了 LLM 天生做不了的像素输出。
+
+### 一个完整示例
+
+以一条协同任务为例：输入一段街景视频，目标视觉提示 $M$ 圈出画面里的一辆红色汽车，问题是「这辆车什么时候开始转弯，并把它分割出来」。编码阶段，视频过 SigLIP 得到 $F_V$，圈出的红车区域过 $F_M$ 抽出目标特征并投影成 $\mathcal{T}_r$ 填进 `<Ref>`，同时随机抽 $K$ 帧送 SAM2 编码器备用。LLM 拿到这条混合序列后开始生成：先吐出文本描述这辆车的动作，接着吐出一串 `<Temp-τ>` token，解码端用 $\frac{T_n}{N_t}$ 把 $\tau$ 还原成「第 4.2 秒起转弯」这样的真实时间；当生成到该输出 mask 的位置时吐出 `<Seg>`，系统据 $\rho_s$ 取出该位置 embedding、过投影层送进 SAM2 decoder，逐帧画出红车的像素 mask。一次前向里，文本、时间、分割三种粒度的结果在同一序列上依次产出，且共享对「红色汽车」这个目标的理解——这就是单模型协同的具体形态。
 
 ### 损失函数 / 训练策略
 

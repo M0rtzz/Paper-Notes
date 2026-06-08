@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一对 ⟨任务请求 $Q$，模型生成的响应或推理轨迹 $S$⟩，监控器 LLM 被 prompt 成「judge」，输出一个二分类标签 misbehavior / benign（可选附带证据片段）。评测协议在 3,010 个配对样本上分别计算 MR 与 FAR，再画 MR-FAR 散点 + Pareto front。整套 pipeline 由三块组成：(1) **三类分层数据构造**（QA / Code / Reasoning 任务，配对生成）；(2) **双指标评测**（MR 抓漏检、FAR 抓过敏）；(3) **SFT 泛化探针**（153,581 训练样本微调 Qwen3-4B-Instruct-2507，做 cross-category 留出测试）。
+本文不是一个新模型，而是一套评测协议。输入是一对 ⟨任务请求 $Q$，模型生成的响应或推理轨迹 $S$⟩，监控器 LLM 被 prompt 成「judge」，要在无人介入的情况下输出 misbehavior / benign 的二分类标签（可附证据片段）。围绕这个判断，AutoMonitor-Bench 把整条流水线拆成三步：先按「显式→隐式」的难度谱构造 3,010 个配对样本，让同一请求下的危险版与正常版一一对应；再用漏检率 MR 与误报率 FAR 两个互补指标在 22 个开闭源监控器上做受控对比，并把它们投到 MR-FAR 平面上看 Pareto 前沿；最后用 153,581 样本的 SFT 探针，检验「在容易构造的不当行为上微调」能否迁移到未见过的隐式策略博弈。
 
 ### 关键设计
 
-1. **三层分类的配对数据构造**:
+**1. 三层分类的配对数据构造：把不当行为按可观察程度铺成难度谱。**
 
-    - 功能：把不当行为按「可观察程度」分成 Safety & Permission Violations（1,172）/ Sycophancy & Bias（962）/ Specification Gaming（876）三档，并强制每个 misbehavior 配一个**相同请求下**的 benign 响应，便于同时测 MR 和 FAR。
-    - 核心思路：Safety 类直接用 HH-RLHF 的 preference pair + 已有 secure/insecure code pair；Sycophancy 类用「反事实过滤器」——只保留模型**没线索时答对、加上误导线索后答错**的样本（线索 $C$ 拼在原问题上得到 $Q' = Q \oplus C$），这样确保偏离是被线索诱发的，而非模型本身无能；Specification Gaming 类则从 TruthfulQA / HumanEval / MBPP / DFIR 等任务里注入「奖励代理诱因」（如「老板说今天完成有奖金」「评审 bot 只读 Author Notes」），由两位 PhD 标注员双盲确认。
-    - 设计动机：配对设计让同一个请求的 MR 和 FAR 可比；分层设计让评测能看到「显式行为好检、隐式策略博弈难检」的差异谱，而不是给一个混在一起的整体分。
+监控评测最大的坑是「显式违规」和「隐式博弈」混在一起算总分，掩盖了监控器到底漏在哪。本文把样本切成 Safety & Permission Violations（1,172）、Sycophancy & Bias（962）、Specification Gaming（876）三档，从「一眼能看出」到「要语义推理才识破」逐级加深，并强制每条 misbehavior 都配一个**相同请求 $Q$ 下**的 benign 响应，这样 MR 和 FAR 才能在同一锚点上对比。三档的构造手法各不相同：Safety 类直接复用 HH-RLHF 偏好对与现成的 secure/insecure code 对；Sycophancy 类用「反事实过滤器」，把误导线索 $C$ 拼到原问题得到 $Q' = Q \oplus C$，只保留模型**无线索时答对、加线索后答错**的样本，从而确保偏离是被线索诱发而非模型本身无能；Specification Gaming 类则往 TruthfulQA / HumanEval / MBPP / DFIR 等任务里注入奖励代理诱因（如「老板说今天完成有奖金」「评审 bot 只读 Author Notes」），并由两位 PhD 标注员双盲确认。
 
-2. **MR / FAR 双指标 + Pareto 视角**:
+**2. MR / FAR 双指标 + Pareto 视角：拆开两个轴才看得见 trade-off。**
 
-    - 功能：用 $\text{MR} = \text{FN} / (\text{TP}+\text{FN})$ 和 $\text{FAR} = \text{FP} / (\text{TN}+\text{FP})$ 两个互补指标分别衡量「漏掉的危险」和「错报的代价」，并在 MR-FAR 平面上排监控模型。
-    - 核心思路：单一 F1 / accuracy 会掩盖 trade-off，因为一个保守模型可以靠「啥都不报」拿到低 FAR，一个过敏模型也能靠「啥都报」拿到低 MR。本文显式拆开两个轴并画 Pareto front，作者实测 Pearson $r=-0.54$ 的负相关，证明这个 trade-off 是结构性的。
-    - 设计动机：让评测结果与「部署场景的代价偏好」可挂钩——比如安全关键场景应该选 MR 低的模型，运营成本敏感场景应选 FAR 低的；同时暴露 Pareto 前沿之外、被双面碾压的「真烂」监控器。
+单一 F1 或 accuracy 会被「保守模型啥都不报刷低 FAR、过敏模型啥都报刷低 MR」两头钻空子，掩盖监控器的真实代价。本文显式把两类错误拆成漏检率 $\text{MR} = \text{FN} / (\text{TP}+\text{FN})$ 与误报率 $\text{FAR} = \text{FP} / (\text{TN}+\text{FP})$，分别量化「放过的危险」和「错报的成本」，再把 22 个监控器投到 MR-FAR 平面上排 Pareto 前沿。实测两轴呈 Pearson $r=-0.54$ 的负相关，说明这个 trade-off 是结构性的而非偶然。如此评测结果便能直接挂到部署偏好上——安全关键场景挑 MR 低的、运营成本敏感场景挑 FAR 低的，同时把被两面碾压、落在 Pareto 前沿之外的「真烂」监控器暴露出来。
 
-3. **SFT 泛化探针**:
+**3. SFT 泛化探针：用 cross-category 留出实验证伪「堆数据就能通用」。**
 
-    - 功能：构建 153,581 样本训练集，用 LoRA 微调 Qwen3-4B-Instruct-2507（≤32k token），分别按「全集 / 单一子类」训练，然后做 cross-category held-out 测试，看在「容易构造的不当行为」上学到的能力能否迁到「未见过的隐式行为」。
-    - 核心思路：训练集不要求 benign-misbehavior 严格配对（这样能 scale up），但所有轨迹与测试集严格不相交防泄漏。关键实验是「在 Code 任务的 Safety & Permission Violations 上训练 → 在 Code 的 Specification Gaming 上测试」，看 MR 是降还是升。
-    - 设计动机：业界一种乐观假设是「随便堆点 misbehavior 数据 SFT 一下就能当通用监控器」，本文用受控的 cross-category 留出实验直接证伪这种乐观——SFT 的收益高度局部化，甚至有负迁移。
+业界一种乐观假设是「随便收集点 misbehavior 数据 SFT 一下就能当通用监控器」，本文用受控实验直接戳破它。训练集放宽到 153,581 条、不要求 benign-misbehavior 严格配对（以便 scale up），但所有轨迹与测试集严格不相交以防泄漏；用 LoRA 微调 Qwen3-4B-Instruct-2507（≤32k token），分别按「全集 / 单一子类」训练后做跨类别留出测试。最关键的一组是「在 Code 任务的 Safety & Permission Violations 上训练 → 在 Code 的 Specification Gaming 上测试」，结果 SG 上的 MR 不降反升（0.49→0.86），这种强负迁移干净地说明：监控不是一个统一能力，而是按 mode 分块的。
 
 ### 损失函数 / 训练策略
-SFT 用标准 next-token loss 监督二分类标签输出，单 H100 / Unsloth + LoRA 训练。评测端还设计了 direct（只输出 yes/no）与 evidence-based（附带类别 + 严重度 + 引用片段）两套 prompt 模板做对比，并补一个 few-shot ablation 看 prompt 工程能否突破 MR-FAR 瓶颈。
+SFT 用标准 next-token loss 监督二分类标签的输出，在单卡 H100 上以 Unsloth + LoRA 训练。评测端还配了两套 prompt 模板做对照——direct（只吐 yes/no）与 evidence-based（附类别 + 严重度 + 引用片段），并补一个 few-shot ablation，看纯 prompt 工程能否突破 MR-FAR 瓶颈（结论是只能在 Pareto 线上挪 operating point，挪不出去）。
 
 ## 实验关键数据
 

@@ -41,30 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分两部分：(A) **Data-centric Solution Preference 任务 + 18,438 对评测语料**——从 AIDE/AutoMind 在 MLE-Bench 上的真实 trajectory 中提取 1,329 个有效解，经过去重 + 分类 + 专家采样精选到 895 instances，再两两组合生成 18,438 pairs，并平衡 ground-truth winner 的位置消除偏差。(B) **ForeAgent**——以 AIDE 的 tree search 为 backbone，把 Improvement 阶段改成三步：(1) 一次性生成 m=10 个候选；(2) Confidence-Gated Pairwise Selection 用置信度 0.7 阈值筛选；(3) 只跑 top-k=1 候选做 Verification Execution。
+本文先把"不执行就预判 ML 解优劣"形式化成 Data-centric Solution Preference 任务并配上评测语料，再把这种预判能力嵌进 agent。语料这一侧，从 AIDE/AutoMind 在 MLE-Bench 上的真实 trajectory 中抽出 1,329 个有效解，经去重、分类、专家采样精选到 895 个实例，两两组合成 18,438 对，并平衡 ground-truth winner 的位置以消除位置偏差。agent 这一侧的 ForeAgent 以 AIDE 的 tree search 为骨架，把 Improvement 阶段从"逐个执行"改成三步：一次性生成 m=10 个候选 → 用置信度 0.7 阈值做 pairwise 筛选 → 只对 top-1 候选做真实执行验证。preference 任务用 Micro-Averaged Accuracy 衡量（Random 基线 50.0%、复杂度启发式 50.8%），agent 则用 Beat Ratio（在 MLE-Bench 上击败多少比例的人类参赛者）衡量。
 
 ### 关键设计
 
-1. **Verified Data Analysis Report（关键输入增强）**:
+**1. Verified Data Analysis Report：把原始数据炼成 LLM 能推理的语义洞察。**
 
-    - 功能：解决 LLM 数字处理弱 + 上下文塞不下原始数据两个问题，把 raw 数据转成 LLM 友好的语义洞察。
-    - 核心思路：三步 Profile-Verify-Verbalize 管道。(a) Code Generation：GPT-5.1 写 Python profile 脚本，如 `df['target'].value_counts()`；(b) Execution and Verification：sandbox 跑脚本，人工严格检查输出无运行时错误，得到 raw fact 如 "Target: 0: 0.915, 1: 0.085"；(c) Verbalization：GPT-5.1 把 raw log 翻成 actionable insight "Data Imbalance Warning: Severe class imbalance (Pos: 8.5%). Implication: Accuracy is not a suitable metric; consider using F1-score."
-    - 设计动机：消融实验（Figure 3a）显示 Code Only 56.7% → Numerical Stats 59.0% → Verbal Report 61.3%；Context Mismatch（配错上下文）只到 56.8%。说明 LLM 不是靠"代码复杂度"猜，而是靠"数据语义 + 算法适配"做真实推理。verbal narratives 比 raw stats 还强，说明 LLM 是"rhetorical reasoner"，触发推理跳跃。
+LLM 既不擅长直接处理数字，上下文又塞不下原始数据表，于是本文用 Profile-Verify-Verbalize 三步管道把 raw 数据翻译成 LLM 友好的洞察。先让 GPT-5.1 写 Python profile 脚本（如 `df['target'].value_counts()`），再在 sandbox 里执行并人工严格核对输出无运行时错误，得到 raw fact（如 "Target: 0: 0.915, 1: 0.085"），最后由 GPT-5.1 把日志翻成 actionable insight（"Severe class imbalance (Pos: 8.5%). Implication: Accuracy is not a suitable metric; consider using F1-score."）。
 
-2. **Confidence-Gated Pairwise Preference + 置信度校准**:
+消融实验印证了这条链路的价值：Code Only 56.7% → Numerical Stats 59.0% → Verbal Report 61.3%，而故意配错上下文的 Context Mismatch 只有 56.8%。这说明 LLM 不是靠"代码看起来复杂"去猜，而是真的在做"数据语义 × 算法适配"的推理；verbal narrative 比 raw stat 还强，说明模型更像一个被"含义"触发推理跳跃的 rhetorical reasoner。
 
-    - 功能：让 agent 只在"模型自信"时跳过执行，保证 Predict-then-Verify 的安全性。
-    - 核心思路：输入 $\mathcal{X}=(I, D_{rep}, \{C_0, C_1\}, \mathcal{P})$，输出 $\mathcal{Y}=(cot, \hat{y}, c)$，$\hat{y}\in\{0,1\}$ 是预测赢家，$c\in[0,1]$ 是置信度。ForeAgent 用 $c=0.7$ 作为 gating 阈值，置信度低时退化到执行。校准实验（Figure 3e）显示置信度与准确率严格正相关。
-    - 设计动机：实验证明 LLM 不会乱给高置信度——这是 implicit world model 能安全部署的前提。若置信度噪声大，gating 就退化成随机；正是因为 calibration 好，filter 能高效剪枝而不误剪好解。
+**2. Confidence-Gated Pairwise Preference：让模型只在自信时跳过执行。**
 
-3. **Predict-then-Verify Loop（agent 集成）**:
+预测的输入是 $\mathcal{X}=(I, D_{rep}, \{C_0, C_1\}, \mathcal{P})$，输出是 $\mathcal{Y}=(cot, \hat{y}, c)$，其中 $\hat{y}\in\{0,1\}$ 是预测的赢家、$c\in[0,1]$ 是置信度。ForeAgent 拿 $c=0.7$ 当 gating 阈值：置信度够高才信预测、跳过执行，置信度不足就退化到真实执行兜底。
 
-    - 功能：把 AIDE 的 Execute 主循环改成 Predict 主循环 + Execute 辅循环，物理执行只用于最终验证。
-    - 核心思路：三步——(1) High-Volume Generation：并行生成 m=10 候选（无执行成本，可大幅扩 search width）；(2) Confidence-Gated Pairwise Selection：用 implicit world model 两两比较，置信度 ≥0.7 才参与排序；(3) Verification Execution：只跑 top-k=1 候选锚定执行反馈。这样每个 Improvement 步只跑 1 次而不是 m=10 次，立即获得 m× 加速。
-    - 设计动机：作者特意把架构设计得保守（只 verify top-1）以确保不会被 LLM 偶发错误带偏轨迹；这也意味着 reported 6× speedup + +6% Beat Ratio 是 lower bound，更激进的 top-k 策略可能更强。
+这套机制能成立的前提是模型不会乱给高置信度。校准实验显示置信度与准确率严格正相关——正因为 calibration 好，filter 才能高效剪枝而不误伤好解；若置信度噪声大，gating 就退化成随机筛选。可靠的自报置信度，正是这个 implicit world model 能被安全部署的关键。
 
-### 评测指标
-preference 任务用 Micro-Averaged Accuracy（baseline: Random 50.0% / Complexity Heuristic 50.8%）；ForeAgent 用 Beat Ratio（在 MLE-Bench 上 outperform 多少 % 的人类参赛者，越高越好）。
+**3. Predict-then-Verify Loop：把执行从主循环降级为最后的验证环节。**
+
+ForeAgent 把 AIDE "执行驱动"的主循环翻转成"预测驱动"，物理执行只用于终点验证，每个 Improvement 步因此从跑 m=10 次降到跑 1 次，立即拿到 m× 量级的加速。具体分三步：High-Volume Generation 并行生成 m=10 个候选（无执行成本，可大幅拓宽搜索宽度）；Confidence-Gated Pairwise Selection 用上面的 implicit world model 两两比较、置信度 ≥0.7 者才进入排序；Verification Execution 只对 top-k=1 的候选做真实执行以锚定反馈。
+
+作者特意把架构设计得保守——只验证 top-1——以防 LLM 偶发误判把整条搜索轨迹带偏；这也意味着报告的 6× 加速、3.2× 搜索宽度与 +6% Beat Ratio 都是下界，更激进的 top-k 策略理论上还能更强。
 
 ## 实验关键数据
 

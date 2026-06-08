@@ -39,31 +39,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入 $\mathbf{x}_i$ 先经过特征提取器 $f_{\bm{\psi}}$ 得到表征 $\mathbf{z}_i$，再由三个轻量预测头并行输出法庭参数：共享证据 $\bm{\alpha}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$、可信度权重 $\bm{\omega}(\mathbf{x}_i)\in\Delta^{K-1}$、类专属辩护强度 $\bm{\tau}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$。这三组参数共同定义了一个 EFD 分布 $p(\bm{\pi}_i\mid\mathbf{x}_i)=\sum_k \omega_k(\mathbf{x}_i)\,\mathrm{Dir}(\bm{\pi}_i\mid\bm{\alpha}(\mathbf{x}_i)+\tau_k(\mathbf{x}_i)\mathbf{e}_k)$。预测阶段：从 EFD 闭式取一阶矩得到 $\hat{p}(y^\star=k\mid\mathbf{x}^\star)$，argmax 给出标签；同时分别用一阶熵和二阶 trace-covariance 输出 aleatoric / epistemic 不确定性。整个流程严格单次前向，无需采样或多模型。
+MoDEX 要解决的是"单次前向就能给出结构可解释的二阶不确定性"。它把分类想象成一场法庭辩论：$K$ 个类各派一名辩护人，所有人看同一份案件证据，但可以基于不同侧重得出不同的概率信念，最终判决是这些信念按可信度加权聚合的结果。落到网络上，输入 $\mathbf{x}_i$ 先经特征提取器 $f_{\bm{\psi}}$ 得到表征 $\mathbf{z}_i$，再由三个轻量头并行输出三组法庭参数——共享证据 $\bm{\alpha}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$、可信度权重 $\bm{\omega}(\mathbf{x}_i)\in\Delta^{K-1}$、类专属辩护强度 $\bm{\tau}(\mathbf{x}_i)\in\mathbb{R}_{>0}^K$——它们共同定义一个 EFD 分布 $p(\bm{\pi}_i\mid\mathbf{x}_i)=\sum_k \omega_k(\mathbf{x}_i)\,\mathrm{Dir}(\bm{\pi}_i\mid\bm{\alpha}(\mathbf{x}_i)+\tau_k(\mathbf{x}_i)\mathbf{e}_k)$。预测时从 EFD 闭式取一阶矩得到 $\hat{p}(y^\star=k\mid\mathbf{x}^\star)$ 再 argmax，并分别用一阶熵与二阶协方差迹输出 aleatoric / epistemic 不确定性，全程严格单次前向、无需采样或多模型。
 
 ### 关键设计
 
-1. **法庭生成模型 (Courtroom generative process)**：
+**1. 法庭生成模型：给不确定性的"形成机制"建模**
 
-    - 功能：把"分类不确定性"显式建模成 $K$ 个 Dirichlet 辩护人意见的输入相关混合 $p(\bm{\pi}\mid\mathbf{x})=\sum_k \omega_k(\mathbf{x})\mathrm{Dir}(\bm{\pi}\mid\bm{\alpha}_k(\mathbf{x}))$，每个分量对应一个类别辩护人对真概率向量的信念。
-    - 核心思路：引入潜变量 $L\sim\mathrm{Cat}(\bm{\omega}(\mathbf{x}))$ 选择辩护人，给定 $L=k$ 时 $\bm{\pi}\sim\mathrm{Dir}(\bm{\alpha}_k(\mathbf{x}))$，再由 $y\sim\mathrm{Cat}(\bm{\pi})$ 生成标签；边缘掉 $L$ 即得到上述结构化二阶分布。
-    - 设计动机：把"证据不足"、"辩护人意见分歧"、"哪个辩护人更可信"三种异质来源分别绑定到 Dirichlet 内部方差、不同分量之间的差异、混合权重 $\bm{\omega}$ 三个独立机制上，让 $\mathcal{Q}$ 从一个"装不确定性的桶"变成"能告诉你不确定性怎么来的"结构化分布。
+EDL 一脉的痛点是 $\mathcal{Q}$ 越做越能拟合复杂不确定性形态，却完全说不清"犹豫从哪来"。MoDEX 的破题点是把分类不确定性显式建成 $K$ 个 Dirichlet 辩护人意见的输入相关混合 $p(\bm{\pi}\mid\mathbf{x})=\sum_k \omega_k(\mathbf{x})\mathrm{Dir}(\bm{\pi}\mid\bm{\alpha}_k(\mathbf{x}))$，每个分量是一位类别辩护人对真概率向量的信念。生成过程是一条清晰的链：先引入潜变量 $L\sim\mathrm{Cat}(\bm{\omega}(\mathbf{x}))$ 选出当庭辩护人，给定 $L=k$ 时 $\bm{\pi}\sim\mathrm{Dir}(\bm{\alpha}_k(\mathbf{x}))$，再由 $y\sim\mathrm{Cat}(\bm{\pi})$ 生成标签，边缘掉 $L$ 就得到上面那个结构化二阶分布。这样做之所以有效，是因为它把三种异质来源——证据不足、辩护人意见分歧、哪个辩护人更可信——分别绑定到 Dirichlet 内部方差、分量之间的差异、混合权重 $\bm{\omega}$ 三个互相独立的机制上，让 $\mathcal{Q}$ 从"装不确定性的桶"升级成"能告诉你不确定性怎么来的"结构化分布。
 
-2. **结构化分解 $\bm{\alpha}_k(\mathbf{x})=\bm{\alpha}(\mathbf{x})+\tau_k(\mathbf{x})\mathbf{e}_k$**：
+**2. 结构化分解：$\mathcal{O}(K)$ 参数换来 EFD 等价与语义解耦**
 
-    - 功能：把每位辩护人的 concentration 拆成"共享 base 证据 $\bm{\alpha}(\mathbf{x})$ + 只加在自家类别上的辩护强度 $\tau_k(\mathbf{x})\mathbf{e}_k$"，让 $K$ 个 Dirichlet 分量共享主干、仅在自己负责的那一维上凸起。
-    - 核心思路：朴素地为每个分量独立给一个 $K$ 维 concentration 需要 $\mathcal{O}(K^2)$ 参数；该分解把整体参数量压到 $\mathcal{O}(K)$，并使得分布等价于 EFD 族（Ongaro et al., 2020），从而能直接借用 EFD 的闭式矩公式做单次前向预测和不确定性计算。
-    - 设计动机：通过 inductive bias 强制把"案情客观事实"和"辩护人主观加码"解耦——$\bm{\alpha}$ 承载所有人都看到的证据，$\tau_k$ 只承载辩护人 $k$ 为自家类的额外推动力，使每个学到的参数都有明确法庭语义；这种解耦也是后面理论上能把 EU 干净拆成 inter/intra-expert 两部分的基础。
+如果朴素地给每个分量配一个独立的 $K$ 维 concentration，参数量是 $\mathcal{O}(K^2)$，且学出来的 $\bm{\alpha}_k$ 各说各话、毫无语义。MoDEX 把每位辩护人的 concentration 写成 $\bm{\alpha}_k(\mathbf{x})=\bm{\alpha}(\mathbf{x})+\tau_k(\mathbf{x})\mathbf{e}_k$——共享 base 证据 $\bm{\alpha}(\mathbf{x})$ 加上只压在自家类别第 $k$ 维的辩护增量 $\tau_k(\mathbf{x})\mathbf{e}_k$，于是 $K$ 个 Dirichlet 分量共享主干、各自只在负责的那一维凸起。这一分解一举两得：参数量压到 $\mathcal{O}(K)$，且分布恰好等价于 Extended Flexible Dirichlet（EFD，Ongaro et al. 2020），可以直接借用 EFD 的闭式矩做单次前向预测与不确定性计算。更关键的是它用 inductive bias 强制解耦了"案情客观事实"与"辩护人主观加码"——$\bm{\alpha}$ 承载所有人都看到的证据，$\tau_k$ 只承载辩护人 $k$ 为自家类的额外推动力，每个学到的参数都有明确法庭语义，这也是后文能把 epistemic 不确定性干净拆成 inter/intra-expert 两部分的理论基础。
 
-3. **三头网络 + 复合损失 + 双不确定性度量**：
+**3. 三头网络与双不确定性度量：把语义落到可读的数字上**
 
-    - 功能：用三个 logit head（concentration / gating / advocacy）+ exp/softmax 激活直接预测 $(\bm{\alpha},\bm{\omega},\bm{\tau})$；训练损失为预测均值的 MSE + $\bm{\omega}$ 的 Brier 正则 + 用 label-smoothed one-hot 监督 $\sigma^{\text{SM}}(\bm{\tau})$ 的 KL 正则三项之和；测试时分别用一阶预测熵 $\mathrm{AU}=-\sum_k\mu_k\log\mu_k$ 和二阶协方差迹 $\mathrm{EU}=\mathrm{tr}(\mathrm{Cov}[\bm{\pi}^\star])$ 量化 aleatoric / epistemic 不确定性。
-    - 核心思路：对 $f_{\bm{\psi}}$ 和 concentration head 加 spectral normalization 稳定 UQ；KL 正则给 $\bm{\tau}$ 提供"对的类应该辩得更卖力"的软监督，Brier 正则避免 gating 退化成 one-hot；EU 可证明地分解为 $\mathrm{EU}_{\text{inter}}=\sum_k\omega_k\|\bm{\mu}^{(k)}-\bar{\bm{\mu}}\|_2^2$（专家间分歧）和 $\mathrm{EU}_{\text{intra}}=\sum_k\omega_k\sum_j\mathrm{Var}_{\bm{\pi}\sim\mathrm{Dir}(\bm{\alpha}_k)}[\pi_j]$（专家内证据不足）两部分。
-    - 设计动机：MSE+正则组合既继承 EDL 系列的成熟训练惯例，又避免直接最大化 EFD 似然带来的不稳定；EU 的可分解性把"语义"落到具体可读的数字上——同一个总 EU 值，分歧主导还是证据不足主导一目了然，这正是单纯 Dirichlet/F-EDL 给不出来的可解释性。
+整套法庭参数由三个 logit head（concentration / gating / advocacy）加 exp 或 softmax 激活直接预测出 $(\bm{\alpha},\bm{\omega},\bm{\tau})$，并对 $f_{\bm{\psi}}$ 与 concentration head 施加 spectral normalization 来稳定 UQ。推理端区分两种不确定性：aleatoric 用一阶预测熵 $\mathrm{AU}=-\sum_k\mu_k\log\mu_k$，epistemic 用二阶协方差迹 $\mathrm{EU}=\mathrm{tr}(\mathrm{Cov}[\bm{\pi}^\star])$。这里最具价值的是 EU 可被证明地分解为 $\mathrm{EU}_{\text{inter}}=\sum_k\omega_k\|\bm{\mu}^{(k)}-\bar{\bm{\mu}}\|_2^2$（辩护人之间的分歧）与 $\mathrm{EU}_{\text{intra}}=\sum_k\omega_k\sum_j\mathrm{Var}_{\bm{\pi}\sim\mathrm{Dir}(\bm{\alpha}_k)}[\pi_j]$（单个辩护人证据不足）两部分。同一个总 EU 值，到底是分歧主导还是证据不足主导一目了然——这正是纯 Dirichlet / $\mathcal{F}$-EDL 给不出来的可解释性，也把"法庭"语义真正落到了具体可读的数字上。
 
 ### 损失函数 / 训练策略
+训练损失由三项组成：
 $$\mathcal{L}=\|\mathbf{y}-\mathbb{E}_{\bm{\pi}\sim\mathrm{EFD}}[\bm{\pi}]\|_2^2+\|\mathbf{y}-\bm{\omega}\|_2^2+D_{\mathrm{KL}}(\sigma^{\text{SM}}(\bm{\tau})\,\|\,\tilde{\mathbf{y}})$$
-（用行内即：第一项 MSE 对齐预测均值，第二项 Brier 校准 $\bm{\omega}$，第三项 label-smoothed KL 软监督 $\bm{\tau}$）。label smoothing $\epsilon\in[0,1]$ 控制 $\tilde{\mathbf{y}}$ 的硬度。配合 spectral norm 提升 UQ 鲁棒性，端到端训练。
+第一项 MSE 让 EFD 预测均值对齐 one-hot 标签，第二项 Brier 正则校准 gating $\bm{\omega}$、避免它退化成 one-hot，第三项用 label-smoothed 软标签 $\tilde{\mathbf{y}}$ 对 $\sigma^{\text{SM}}(\bm{\tau})$ 做 KL 软监督，给辩护强度注入"对的类应该辩得更卖力"的先验，其中 label smoothing $\epsilon\in[0,1]$ 控制 $\tilde{\mathbf{y}}$ 的硬度。这套 MSE+正则组合既继承了 EDL 系列的成熟训练惯例，又规避了直接最大化 EFD 似然的不稳定，配合 spectral norm 端到端训练即可。
 
 ## 实验关键数据
 

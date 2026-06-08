@@ -51,23 +51,17 @@ tags:
 
 ### 关键设计
 
-1. **三种微调任务做对照实验**:
+**1. 三种微调任务做对照：用不同训练目标分别"压"出 backchannel/filler 的语用差异。**
 
-    - 功能：分别用不同目标驱动 LM 学习 backchannel/filler 的上下文语义，形成"通用语言建模 vs. 话轮相关性"的对照。
-    - 核心思路：MASK 把 backchannel/filler 整段以 0.8/0.1/0.1 概率替换为 [MASK] / 随机 token / 原 token（沿用 BERT 默认），让双向上下文重构这些 token；NTP 把两个说话人的句子合并并加 `<s1>`/`<s2>` 说话人 ID，做标准下一 token 预测；TTP 让 TurnGPT 预测 $y^* = \arg\max_y P(y|X)$ 即"哪个 token 后会发生 turn-shift"，直接利用 backchannel 与 turn-holding 的强关系。
-    - 设计动机：作者预先假设 TTP 因为与 backchannel 行为最相关应当效果最好，但结果上 NTP > TTP（silhouette 略高），反过来证明"无任务偏置的语言建模"已足够把 backchannel/filler 的语用差异挤进表征空间。
+要回答"微调能否改善表征"，得先排除"是不是只有某种特定任务才管用"。作者于是设计了三条目标各异的微调路线形成对照。MASK 沿用 BERT 默认策略，把 backchannel/filler 整段以 0.8/0.1/0.1 的概率替换为 [MASK] / 随机 token / 原 token，逼双向上下文重构这些 token；NTP 把两个说话人的句子合并并加 `<s1>`/`<s2>` 说话人 ID，做标准下一 token 预测；TTP 让 TurnGPT 预测 $y^{*}=\arg\max_y P(y|X)$，即"哪个 token 之后会发生 turn-shift"，直接利用 backchannel 与 turn-holding 的强关联。作者原本假设最"对症"的 TTP 应当最好，结果却是 NTP 的 silhouette 略高于 TTP——这反过来说明无任务偏置的通用语言建模本身已经把 backchannel/filler 的语用差异挤进了表征空间，不必专门设计 turn-taking 监督。
 
-2. **三档上下文 + 多模型规模的因子设计**:
+**2. 三档上下文 × 多模型规模的因子设计：把"加多少上下文"和"模型多大"两个变量拆开。**
 
-    - 功能：把"上下文窗口"和"模型容量"两个变量分别拆出来，定位"加更多上下文是有用还是会稀释"以及"是不是模型越大越好"。
-    - 核心思路：no-context 只把含 backchannel 的句子喂进去，one-context 加前后一句，full-context 把所有历史 concat（最长可达数千 token，只 LLaMA-3 / Qwen-3 能撑住）；同时横向对比 BERT (110M)、GPT-2 (124M)、LLaMA-3 / Qwen-3 (8B)。
-    - 设计动机：作者发现"上下文越多 silhouette 越低"这个反直觉规律——多上下文把功能词的表征"拉平"成附近实词的平均，因此 backchannel/filler 在 no-context 下反而最容易被聚类区分。
+"上下文窗口"和"模型容量"常被混在一起谈，作者把它们正交拆开单独考察。上下文设三档：no-context 只喂含 backchannel 的当前句，one-context 加前后各一句，full-context 把全部历史 concat（最长数千 token，只有 LLaMA-3 / Qwen-3 撑得住）；模型则横跨 BERT (110M)、GPT-2 (124M) 到 LLaMA-3 / Qwen-3 (8B)。结果跑出一条反直觉规律：上下文越多 silhouette 反而越低——更多上下文会把功能词的表征"拉平"成附近实词的平均，所以 backchannel/filler 在 no-context 下最容易被聚类区分；而模型并非越大越好，小模型在专门微调下能逼近 8B LLM。
 
-3. **silhouette 聚类 + 距离矩阵 + NLG 行为评估的三重验证**:
+**3. silhouette + 距离矩阵 + NLG 行为的三重验证：防止任何单一指标被刷高。**
 
-    - 功能：从内部表征质量（silhouette）、配对可分性（距离矩阵）、外部生成行为（频次/多样性/PPL/BERTScore/BLEU）三个维度验证微调效果。
-    - 核心思路：silhouette $s(i)=\frac{b(i)-a(i)}{\max(a(i),b(i))}$ 同时奖励"簇内紧凑、簇间分散"；距离矩阵直接画 top-15 backchannel 间欧氏距离的 heatmap 看亮/暗格变化；NLG 评测让 LM 续写两轮对话，比较生成中 backchannel 频次、类型多样性、frequency-weighted perplexity、BERTScore、BLEU。
-    - 设计动机：单一指标都可能被 hack——silhouette 高不代表生成会自然用 backchannel，生成多也不代表表征空间真有结构；三层联立才能立得住"微调真的让 LM 学会了这些功能词"的结论。
+任何单一指标都可能被 hack——silhouette 高不代表生成时会自然用 backchannel，生成得多也不代表表征空间真有结构。作者因此从内部表征、配对可分性、外部生成行为三个维度联立验证。silhouette $s(i)=\frac{b(i)-a(i)}{\max(a(i),b(i))}$ 同时奖励"簇内紧凑、簇间分散"，量化同一 backchannel 是否被拆成多个语用功能、不同 backchannel 是否互相可分；距离矩阵直接画 top-15 backchannel 间欧氏距离的 heatmap 看亮暗格变化；NLG 评测让 LM 续写两轮对话，比较生成中 backchannel 的频次、类型多样性、frequency-weighted perplexity、BERTScore 和 BLEU。只有三层都指向同一结论，"微调真的让 LM 学会了这些功能词"才立得住。
 
 ### 损失函数 / 训练策略
 MASK 用 token-level 交叉熵（仅 mask 位置）；NTP 用标准下一 token cross-entropy；TTP 优化二分类 turn-taking 概率（GPT-2 + TurnGPT 框架，batch 4, lr 5e-4, dropout 0.3, 15 epochs，取 val loss 最低的 ckpt）。LLaMA-3 / Qwen-3 用 LoRA（rank 16, dropout 0.1，仅 q/v_proj），训练时间 7–15 小时不等（8×L40 48G）。

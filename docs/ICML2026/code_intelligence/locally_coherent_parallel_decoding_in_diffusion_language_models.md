@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是带 [MASK] 的序列 $x_t$。DLM 主干（双向 Transformer，参数 $\psi$，例如 Dream-Coder-Instruct-7B）一次前向算出每个位置的边缘分布 $\pi^j_\psi(x_t) \in \Delta^{|V|-1}$；将序列切成长度 $B$ 的连续块 $b^i_t$，对要解码的块，用其 $B$ 个边缘分布去查 AR 小模型（参数 $\phi$，例如 Qwen3-0.6B）的 embedding 表，得到 $B$ 个**软嵌入**；这串软嵌入夹在 `<think>` / `<\think>` 边界 token 之间，喂给 AR 模型自回归地解出该块的真实 token。最终联合概率为 $p_\theta(b^i_0 \mid x_t) = p^{\text{AR}}_\phi(b^i_0 \mid \pi_\psi(x_t))$，整体参数 $\theta = [\psi, \phi]$，DLM 冻结、只训 AR。推理时按"块熵最低"的置信度调度选要解的块。
+CoDiLA 要解决的是 DLM 并行采样时"相邻 token 各自都对、连起来语法不通"的局部不连贯问题。它的做法是让冻结的 DLM 主干继续做全局草稿、再外挂一个轻量 AR 小模型在每个小块内做局部清洁。具体来说，DLM（双向 Transformer，参数 $\psi$，如 Dream-Coder-Instruct-7B）对带 [MASK] 的序列 $x_t$ 一次前向，给出每个位置的边缘分布 $\pi^j_\psi(x_t)\in\Delta^{|V|-1}$；序列被切成长度 $B$ 的连续块，要解码的块把它 $B$ 个边缘分布转成"软嵌入"喂给 AR 小模型（参数 $\phi$，如 Qwen3-0.6B），AR 在块内自回归地解出真实 token。最终联合概率 $p_\theta(b^i_0\mid x_t)=p^{\text{AR}}_\phi(b^i_0\mid\pi_\psi(x_t))$，整体参数 $\theta=[\psi,\phi]$ 中只训练 AR。
 
 ### 关键设计
 
-1. **块级扩散与 NELBO 严格下降（理论基底）**:
+**1. 块级扩散与 NELBO 严格下降：把"为什么做块"立成硬下界**
 
-    - 功能：把 token 级独立性假设松弛为"块独立、块内联合"，给软条件 AR 提供合法的训练目标。
-    - 核心思路：将 $x_0$ 切成 $L/B$ 个块 $b^i_0 \in W = V^B$，沿块因子化反向过程 $p_\theta(x_0\mid x_t) = \prod_i p_\theta(b^i_0\mid x_t)$；NELBO 中每步损失保留 token 级独立模型的 cross-entropy 形式 $L_t = \mathbb{E}_{q(x_t\mid x_0)}\left[\sum_i -\delta_{x^i_t,[\text{MASK}]} \frac{\alpha_{t-1}-\alpha_t}{1-\alpha_t} \log p_\theta(x^i_0\mid x_t)\right]$。Theorem 3.2 证明 $B_1 - B_B = \sum_{t,i}\big(\sum_j H[x^{(i-1)B+j}_{t-1}\mid x_t] - H[b^i_{t-1}\mid x_t]\big) \geq 0$，即块内"总相关性"就是 token 级模型多付的不可约误差。
-    - 设计动机：以前的工作（Huang 2022、Liu 2025a 等）只讨论 $B=1$ 的特例，这里首次量化 $B>1$ 的改善，给"为什么要做块"提供硬理论支撑；Figure 3 也实证：$B$ 越大训练 PPL 越低，且尚无饱和迹象。
+痛点是 token 级独立性假设让相邻 token 的联合分布被强行拆开，而这正是语法正确的关键。CoDiLA 把假设松弛为"块独立、块内联合"：将 $x_0$ 切成 $L/B$ 个块 $b^i_0\in W=V^B$，沿块因子化反向过程 $p_\theta(x_0\mid x_t)=\prod_i p_\theta(b^i_0\mid x_t)$，而 NELBO 每步损失仍保留 token 级独立模型的 cross-entropy 形式 $L_t=\mathbb{E}_{q(x_t\mid x_0)}\big[\sum_i -\delta_{x^i_t,[\text{MASK}]}\frac{\alpha_{t-1}-\alpha_t}{1-\alpha_t}\log p_\theta(x^i_0\mid x_t)\big]$。
 
-2. **软条件接口（Soft-Conditioning，CoDiLA 的"接线柱"）**:
+之所以这一步是整套方法的理论基底，是因为 Theorem 3.2 证明了 $B_1-B_B=\sum_{t,i}\big(\sum_j H[x^{(i-1)B+j}_{t-1}\mid x_t]-H[b^i_{t-1}\mid x_t]\big)\geq 0$——块内的"总相关性"恰好等于 token 级模型多付的那部分不可约误差，块越大下界越紧。以往工作（Huang 2022、Liu 2025a 等）只讨论 $B=1$ 的退化情形，这里首次量化了 $B>1$ 的改善方向，Figure 3 也实证 $B$ 越大训练 PPL 越低且尚无饱和。
 
-    - 功能：在 DLM 的边缘分布和 AR 的输入空间之间建一条高带宽通道，让 AR 既"听得见" DLM 的完整边缘信号，又能复用预训练 AR 的语义嵌入。
-    - 核心思路：把 $\pi^j_t$ 当成对 AR 嵌入表 $E_\phi$ 的期望权重，算软嵌入 $e^j_t = \sum_{v \in V} [\pi^j_t]_v \cdot E_\phi(v)$；序列拼成 $[E_\phi(\langle\text{think}\rangle), e^1_t, \ldots, e^B_t, E_\phi(\langle\backslash\text{think}\rangle)]$ 喂给 AR。Theorem 3.3 证明：(i) 条件在**完整**边缘上时存在 $\phi$ 让 $p^{\text{AR}}_\phi(\cdot\mid\pi) = q(\cdot)$；(ii) 若只用 top-$k$ 截断，可恢复分布严格受限于截断 Fréchet 类；(iii) 存在 $q$ 使其全局众数 $b^* = \arg\max_b q(b)$ 被 top-$k$ 永久排除，引入不可约偏差。
-    - 设计动机：APD / FlashDLLM 等用 top-1/top-$k$ 截断作 AR 输入，看似省事，但理论上会把"最该被选出来的相干序列"排除在解空间之外；软嵌入既守住了表达充分性，又把高维概率向量压缩进 AR 已有的嵌入空间，免去从零预训练。`<think>` 边界 token 的小细节也很关键——去掉它 NELBO 从 13.6 飙到 15.5（$B=4$）。
+**2. 软条件接口：让 AR 用"自己听得懂的话"接收 DLM 的完整边缘信号**
 
-3. **三档生成调度（静态 / 动态 / 验证）**:
+块内联合分布是 $|V|^B$ 维的，直接建模组合爆炸，于是把它外包给 AR；但 AR 怎么接收 DLM 的输出是关键。朴素做法（APD / FlashDLLM）是把边缘分布 top-1/top-$k$ 截断成离散 token 再喂 AR，看似省事却会把"最该被选出来的相干序列"挡在解空间外。CoDiLA 改用软嵌入：把 $\pi^j_t$ 当成对 AR 嵌入表 $E_\phi$ 的期望权重，算 $e^j_t=\sum_{v\in V}[\pi^j_t]_v\cdot E_\phi(v)$，再拼成 $[E_\phi(\langle\text{think}\rangle), e^1_t,\ldots,e^B_t, E_\phi(\langle\backslash\text{think}\rangle)]$ 喂给 AR。这样既把高维概率向量无损压进 AR 已有的语义嵌入空间、免去从零预训练，又用 `<think>` 边界 token 把这段输入"伪装成在思考"以激活 AR 的内省式解码路径。
 
-    - 功能：把训练好的 CoDiLA 转成多种推理策略，在精度-吞吐的 Pareto 曲线上选位点；同时保住 DLM 的双向、infilling 能力。
-    - 核心思路：定义块熵 $h^i_t(k) = \frac{1}{k}\sum_j H[p_\theta(x^{(i-1)B+j}_0\mid x_t)]$。（a）**静态并行**：每步解 1 个完整块——选 $h^i_t(B)$ 最低者，局部窗口（前后 10 块）防止过早 EOS；（b）**动态并行**：解满足 $h^i_t(k) \leq \tau$ 的最长 partial 块（$k \leq B$），当 $k=1$ 退化用 DLM 的置信度+采样，因为单 token 不存在相干性问题；（c）**AR 验证模式**：AR 只比对自己 top-1 与 DLM top-1，分歧就给该位置加置信度惩罚——零侵入地嵌进任何置信度调度，并保留任意序解码。
-    - 设计动机：单一调度难以覆盖所有场景：静态并行简单但精度随 $B$ 下降；动态并行能"难处少并行、易处多并行"地恢复精度；验证模式则适合 ParallelBench / Graph Traversal 这种全局规划任务——AR 不当生成器只当判官，DLM 的非因果性完全保留。
+理论上这种设计的充分性由 Theorem 3.3 兜底：条件在**完整**边缘上时存在 $\phi$ 使 $p^{\text{AR}}_\phi(\cdot\mid\pi)=q(\cdot)$ 精确恢复目标分布；而 top-$k$ 截断只能恢复受限于截断 Fréchet 类的分布，且存在 $q$ 让其全局众数 $b^*=\arg\max_b q(b)$ 被永久排除、引入不可约偏差。工程上这两个细节都不是可有可无的——消融显示去掉 `<think>` 边界 token，NELBO 就从 13.6 飙到 15.5（$B=4$）。
+
+**3. 三档生成调度：在精度-吞吐 Pareto 上选位点且不丢双向能力**
+
+训练好的 CoDiLA 需要可调的推理策略来覆盖不同场景，单一调度难以同时兼顾精度、吞吐与双向能力。围绕块熵 $h^i_t(k)=\frac{1}{k}\sum_j H[p_\theta(x^{(i-1)B+j}_0\mid x_t)]$ 定义三档：**静态并行**每步解 1 个完整块，选 $h^i_t(B)$ 最低者并用前后 10 块的局部窗口防止过早 EOS，简单但精度随 $B$ 下降；**动态并行**解满足 $h^i_t(k)\leq\tau$ 的最长 partial 块（$k\leq B$），$k=1$ 时退化用 DLM 自身的置信度+采样（单 token 不存在相干性问题），从而"难处少并行、易处多并行"地恢复精度；**AR 验证模式**让 AR 只比对自己的 top-1 与 DLM top-1，分歧处给该位置加置信度惩罚，零侵入地嵌进任何置信度调度并保留任意序解码，适合 ParallelBench / Graph Traversal 这类全局规划任务——AR 不当生成器只当判官，DLM 的非因果性完全保留。
 
 ### 损失函数 / 训练策略
-端到端用方程 (2) 的 cross-entropy NELBO 训练，DLM 主干冻结，只微调 AR；前向加噪从 token 级改成**整块加噪**（一次 mask 连续 $B$ 个），让 AR 真正学到"基于 DLM 软嵌入预测整块"的能力。在 Ling-Coder-SFT 上每个 $B$ 训练 32k 步，单卡 A100 80GB / PyTorch 2.7 / bf16。
+端到端用方程 (2) 的 cross-entropy NELBO 训练，DLM 主干冻结、只微调 AR；前向加噪从 token 级改成**整块加噪**（一次 mask 连续 $B$ 个），让 AR 真正学到"基于 DLM 软嵌入预测整块"的能力。在 Ling-Coder-SFT 上每个 $B$ 训练 32k 步，单卡 A100 80GB / PyTorch 2.7 / bf16。
 
 ## 实验关键数据
 

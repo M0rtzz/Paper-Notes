@@ -41,77 +41,47 @@ tags:
 
 ### 整体框架
 
-PhysSkin 的核心思想是：在线性混合蒙皮（LBS）的精神下，学习连续蒙皮权重场作为子空间映射的基函数，将 handle 变换（子空间坐标）提升为全空间变形。
+PhysSkin 要破的局很具体：物理动画要么慢（全空间 FEM/MPM 实时求解太重），要么不泛化（神经子空间方法每个物体都得单独训练），要么依赖昂贵标注（监督蒙皮方法）。它的思路是回到线性混合蒙皮（LBS）的老办法——把全空间的复杂变形表示成少数几个 handle 变换的加权叠加，但用神经网络去学习那个"加权"（连续蒙皮权重场），并且让整个学习过程不碰任何标注。
 
-流程：
-1. 3D 形状 → 采样表面点+体积 cubature 点  
-2. 表面点 → Transformer 编码器 → 形状隐表示  
-3. 隐表示 → 交叉注意力解码器 → 连续蒙皮权重场  
-4. 物理信息自监督损失优化网络参数  
-5. 推理时：给定新形状 → 前馈推断蒙皮场 → 子空间动力学求解 → 实时动画
+整条管线这样转：先从一个静态 3D 形状上采样表面点和体积 cubature 点；表面点喂进 Transformer 编码器得到形状的隐表示；隐表示再经交叉注意力解码器，对空间里任意一点输出它的连续蒙皮权重场；训练时不用任何 ground-truth，全靠物理信息自监督损失（能量最小化 + 平滑 + 正交）来约束这个场。推理时给一个全新形状，前馈一次就拿到它的蒙皮场，再在低维子空间里求解动力学方程，动画就实时跑起来。关键在于子空间维度 $12m$（$m$ 个 handle、每个 12 个仿射参数）远小于全空间 $3n$，Newton 法在这么小的空间里几步就收敛。
 
 ### 关键设计
 
-1. **蒙皮场子空间表示（理论基础）**
+**1. 蒙皮场子空间表示：用 LBS 把全空间变形压成少量 handle 坐标。**
 
-    - 基于 LBS，全空间位移表示为 $m$ 个仿射变换的加权叠加：
-     $$\phi(\mathbf{X}, \mathbf{z}) = \mathbf{X} + \sum_{i=1}^m W_i(\mathbf{X}) \mathbf{Z}_i \begin{bmatrix}\mathbf{X}\\1\end{bmatrix}$$
-    - $W_i(\mathbf{X})$：第 $i$ 个 handle 在空间点 $\mathbf{X}$ 处的蒙皮权重
-    - $\mathbf{Z}_i \in \mathbb{R}^{3\times 4}$：第 $i$ 个 handle 变换
-    - 子空间坐标 $\mathbf{z} \in \mathbb{R}^{12m}$（$m \ll n$），全空间 $s \in \mathbb{R}^{3n}$
-    - 使用隐式时间积分在子空间中求解动力学：
-     $$\mathbf{z}_{t+1} = \arg\min_{\mathbf{z}} \frac{1}{2h^2}\|\mathbf{z} - 2\mathbf{z}_t + \mathbf{z}_{t-1}\|_\mathbf{M}^2 + E_{pot}(\phi(\mathbf{X}, \mathbf{z}))$$
-    - 子空间维度远小于全空间 → Newton 法快速收敛 → 实时动画
+直接在全空间 $\mathbb{R}^{3n}$ 上解非线性动力学注定实时不了，PhysSkin 沿用 LBS 的思想把全空间位移写成 $m$ 个仿射变换的加权叠加：
 
-2. **神经蒙皮场自编码器（架构核心）**
+$$\phi(\mathbf{X}, \mathbf{z}) = \mathbf{X} + \sum_{i=1}^m W_i(\mathbf{X}) \mathbf{Z}_i \begin{bmatrix}\mathbf{X}\\1\end{bmatrix}$$
 
-    - **编码器**：基于 Michelangelo 的 Transformer 点云编码器
-     - 采样 4096 个表面点提取形状隐表示 $\mathbf{F}_s \in \mathbb{R}^{256 \times 768}$
-     - 使用交叉注意力 + 8 层自注意力迭代优化
-     - 在 ShapeNet 上通过 SDF 重建任务预训练，训练时冻结
-    - **解码器**（三步交叉注意力设计）：
-     - 步骤 1：$m$ 个可学习 handle token $\mathbf{Q}_h$ 通过交叉注意力从 $\mathbf{F}_s$ 中提取 handle 隐表示 $\mathbf{F}_h$
-     - 步骤 2：任意空间查询点 $\mathbf{X}$ 通过交叉注意力从 $\mathbf{F}_h$ 中提取逐点蒙皮特征 $\mathbf{F}_p$
-     - 步骤 3：ResNet-style MLP 将特征解码为蒙皮权重 $W(\mathbf{X}) \in \mathbb{R}^m$
-    - 设计动机：三步交叉注意力实现了"shape → handles → points"的自然层级，且网格无关
+这里 $W_i(\mathbf{X})$ 是第 $i$ 个 handle 在空间点 $\mathbf{X}$ 处的蒙皮权重，$\mathbf{Z}_i \in \mathbb{R}^{3\times 4}$ 是它的仿射变换。所有 handle 变换拼成子空间坐标 $\mathbf{z} \in \mathbb{R}^{12m}$，而 $m \ll n$。动力学就在这个子空间里用隐式时间积分求解：
 
-3. **Cubature 点采样（离散化无关设计）**
+$$\mathbf{z}_{t+1} = \arg\min_{\mathbf{z}} \frac{1}{2h^2}\|\mathbf{z} - 2\mathbf{z}_t + \mathbf{z}_{t-1}\|_\mathbf{M}^2 + E_{pot}(\phi(\mathbf{X}, \mathbf{z}))$$
 
-    - 不使用固定网格拓扑，而是采样表面+体积点
-    - 表面点：Sharp Edge Sampling (SES) 捕捉几何细节
-    - 体积点：先转为水密网格 → 体素网格 → 射线追踪分类内外点
-    - 每个训练 batch 从候选点集中随机采样 1000 点
-    - 设计动机：体积点能捕捉仅靠表面点无法刻画的内部变形行为
+正因为优化变量从 $3n$ 降到 $12m$，每帧的 Newton 求解才能快到实时——蒙皮权重场 $W_i$ 在这里扮演的就是子空间映射的"基函数"角色。
 
-4. **ONI 正交化层**
+**2. 神经蒙皮场自编码器：三步交叉注意力实现 shape→handles→points 的网格无关解码。**
 
-    - 在 MLP 最后一层使用 Orthogonalization by Newton's Iteration (ONI) 模块
-    - 使用 ELU 激活允许有符号蒙皮权重（不强制非负），增强表达力
-    - 设计动机：在网络前向传播中直接促进正交性，减轻损失优化压力
+蒙皮权重场 $W_i(\mathbf{X})$ 不能写死成某个网格的拓扑，否则换个网格就失效，所以 PhysSkin 用一个编码器-解码器把它做成对任意空间点都能查询的连续场。编码器借用 Michelangelo 的 Transformer 点云编码器：从形状表面采 4096 个点，经交叉注意力加 8 层自注意力，得到形状隐表示 $\mathbf{F}_s \in \mathbb{R}^{256 \times 768}$；这个编码器事先在 ShapeNet 上用 SDF 重建任务预训练，训练 PhysSkin 时冻结。
+
+解码器是三步交叉注意力，对应一个自然的层级：第一步，$m$ 个可学习的 handle token $\mathbf{Q}_h$ 从 $\mathbf{F}_s$ 里交叉注意力提取出 handle 隐表示 $\mathbf{F}_h$；第二步，任意空间查询点 $\mathbf{X}$ 再从 $\mathbf{F}_h$ 里交叉注意力提取逐点蒙皮特征 $\mathbf{F}_p$；第三步，一个 ResNet 式 MLP 把特征解码成该点的蒙皮权重 $W(\mathbf{X}) \in \mathbb{R}^m$。"形状 → handles → 点"这条链路天然与网格无关，所以同一个模型能直接处理不同拓扑、不同分辨率的物体。
+
+**3. Cubature 点采样：用表面+体积采样替代固定网格拓扑。**
+
+要做到离散化无关，就不能依赖任何固定网格。PhysSkin 改成在形状上采两类点：表面点用 Sharp Edge Sampling (SES) 抓住几何细节；体积点则先把形状转成水密网格、体素化，再用射线追踪判断内外、保留内部点。每个训练 batch 从候选点集里随机采 1000 个点。体积点之所以不能省，是因为物体的内部变形（比如挤压时内部如何被填充）光靠表面点根本刻画不出来，必须有体内的样本去约束。
+
+**4. ONI 正交化层：在前向传播里直接促正交，给损失减压。**
+
+蒙皮模式之间需要尽量正交，不然子空间基底冗余、条件数变差，但只靠损失去拉正交会很吃力。PhysSkin 在 MLP 最后一层插了一个 Orthogonalization by Newton's Iteration (ONI) 模块，让网络在前向时就把输出往正交方向推一把；同时它用 ELU 激活、允许蒙皮权重带符号（不强制非负），换来更强的表达力。这样正交性一部分由结构保证，损失端的优化压力随之减轻。
+
+### 一个完整示例：一架飞机走一遍管线
+
+拿一个 10K 顶点的飞机模型为例。先在它表面采 4096 个点送进冻结的 Michelangelo 编码器，得到 $256\times768$ 的形状隐表示；$m$ 个 handle token 从中各自"认领"一块区域，提炼出 $m$ 个 handle 隐表示。接着对飞机内外采样的 cubature 点（每 batch 1000 个，含 SES 表面点和射线追踪选出的体积点）逐点查询，每个点从 handle 隐表示里提特征、过 ONI 正交化的 MLP，得到它的 $m$ 维蒙皮权重。这样整架飞机就被压进了一个 $12m$ 维的子空间——比原来的 $3\times 10\text{K}=30\text{K}$ 维小了几个数量级。跑动画时每帧只在这 $12m$ 维里解一次隐式积分，约 12 ms 出一帧；换成 121K 顶点的包，子空间维度不变，每帧也才 13 ms 左右——这正是 PhysSkin 实时性几乎与顶点数解耦的来源。
 
 ### 损失函数 / 训练策略
 
-**物理信息自监督学习（PISSL）——三个约束的协同优化**
+整个网络靠物理信息自监督学习（PISSL）训练，没有任何标注，核心是三个约束的协同。**势能最小化** $\mathcal{L}_{pot}$ 从高斯分布随机采子空间坐标 $\mathbf{z}$、最小化期望势能，让蒙皮场倾向于编码低能量的合理变形模式；为稳定，材料模型用线性弹性到 Neo-Hookean 的线性插值。**空间平滑** $\mathcal{L}_{smooth} = \mathbb{E}_{\mathbf{X}}\sum_{i=1}^m \|\nabla\Phi_\theta^i(\mathbf{X})\|^2$ 惩罚蒙皮权重的空间梯度，避免变形出现伪影。**正交约束** $\mathcal{L}_{orth}$ 对所有蒙皮模式的列间点积取平方和、强制基底正交，并配一个 on-the-fly 的 $\ell_2$ 归一化：每步训练都把蒙皮模式矩阵逐列归一化，防数值漂移、让正交约束更易收敛。
 
-1. **势能最小化损失** $\mathcal{L}_{pot}$：
-    - 从高斯分布采样随机子空间坐标 $\mathbf{z}$，最小化期望势能
-    - 使用线性弹性 → Neo-Hookean 材料模型的线性插值增强稳定性
-    - 确保蒙皮场编码低能量变形模式
-
-2. **空间平滑损失** $\mathcal{L}_{smooth}$：
-    - $\mathcal{L}_{smooth} = \mathbb{E}_{\mathbf{X}}\sum_{i=1}^m \|\nabla\Phi_\theta^i(\mathbf{X})\|^2$
-    - 惩罚蒙皮权重的空间梯度大小，确保变形无伪影
-
-3. **正交约束损失** $\mathcal{L}_{orth}$：
-    - 对所有蒙皮模式的列间点积取平方和，强制正交性
-    - **On-the-fly $\ell_2$ 归一化**：每步训练中归一化蒙皮模式矩阵的每列 → 防止数值漂移 → 使正交约束更容易收敛
-
-4. **ConFIG 冲突感知梯度校正**：
-    - 三个损失在优化方向上经常冲突（能量 vs 平滑 vs 正交）
-    - 使用 ConFIG 校正破坏性梯度干扰，实现平衡优化
-    - 设计动机：朴素联合优化会因梯度冲突导致不稳定和不收敛
-
-总损失：$\mathcal{L} = \mathcal{L}_{smooth} + \lambda_{pot}\mathcal{L}_{pot} + \lambda_{orth}\mathcal{L}_{orth}$
+这三个损失在优化方向上经常互相打架（能量、平滑、正交各拉各的），朴素地加权相加会因梯度冲突而不稳定甚至不收敛。PhysSkin 引入 ConFIG 来校正这种破坏性的梯度干扰，把三者拉到一个平衡的下降方向上——后面的消融会看到，少了它正交性会恶化近三个数量级。总损失为 $\mathcal{L} = \mathcal{L}_{smooth} + \lambda_{pot}\mathcal{L}_{pot} + \lambda_{orth}\mathcal{L}_{orth}$。
 
 ## 实验关键数据
 

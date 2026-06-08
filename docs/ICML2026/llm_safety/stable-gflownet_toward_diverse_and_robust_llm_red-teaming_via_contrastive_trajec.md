@@ -44,31 +44,31 @@ tags:
 
 ### 整体框架
 
-输入：attacker LLM $\pi_\theta$（Qwen2.5-1.5B SFT 过 Safety-Dataset + AdvBench）、victim LLM $\pi_\phi$、toxicity classifier $\pi_\psi$、fixed meta-prompt。每个训练 step：(1) attacker 用当前 policy 采 $N$ 条候选 attack prompts $\{y_n\}$；(2) victim 对每条给 response $z_n$，classifier 算 toxicity $R(y_n) = \mathbb{E}_{z \sim \pi_\phi(\cdot|y)}[T(y, z)]$；(3) MKS 用 reference model 算每条 prompt 的 Min-K 流畅度，低于阈值的直接 mask；(4) NGP 在 batch 内枚举 $N^2$ 个 pair，过滤 $|\log R(y_1) - \log R(y_2)| \le \sigma$ 的低 saliency pair；(5) 剩下 pair 算 CTB loss 更新 $\theta$。整个 pipeline 不再有外部参数 $Z_\theta$、不维护 archive、不需要 reference policy 强约束。
+Stable-GFN 把红队攻击当成"采样概率正比于毒性 reward"的分布匹配问题，但把 GFN 里两个不稳定零件（要学的 partition function $Z_\theta$、被 classifier 污染的噪声 reward）换成三件不增加 forward 次数的 hard filter。一个训练 step 这样转：attacker LLM $\pi_\theta$ 用当前 policy 采 $N$ 条候选 attack prompts $\{y_n\}$；victim $\pi_\phi$ 对每条给 response $z_n$，toxicity classifier 算 $R(y_n) = \mathbb{E}_{z \sim \pi_\phi(\cdot|y)}[T(y, z)]$；MKS 先用 reference model 算每条 prompt 的 Min-K 流畅度、把 gibberish 的 reward 清零；NGP 在 batch 内枚举 $N^2$ 个 pair、丢掉 reward 对比度太低的对；剩下的 pair 用 CTB loss 更新 $\theta$。整条 pipeline 不再有外部标量 $Z_\theta$、不维护 QD archive、也不靠 reference policy 做强约束。
 
 ### 关键设计
 
-1. **Contrastive Trajectory Balance (CTB)**：
+**1. Contrastive Trajectory Balance (CTB)：用一对样本互相对比，把 $Z_\theta$ 从公式里约掉。**
 
-    - 功能：用 pair-wise 比较替代 absolute matching，从公式上消掉 $Z_\theta$，得到与 TB 同等最优策略但低方差的目标。
-    - 核心思路：对一对独立采样 $y_1, y_2 \sim \pi_\theta$，定义 $\mathcal{L}_{CTB}(y_1, y_2; \theta) = (\log \tfrac{\pi_\theta(y_1)}{\pi_\theta(y_2)} - \log \tfrac{R(y_1)}{R(y_2)})^2$。令 $f(y) = \log \pi_\theta(y) - \log R(y)$，当 $y_1, y_2$ 是 i.i.d. 取样时，目标等价于 $2 \cdot \mathrm{Var}_{\pi_\theta}(f(y))$，最小化到 0 等价于 $f$ 在 support 上恒为常数 $C$，进而（结合归一化条件）$\pi_\theta(y) = R(y)/Z$——即回到 TB 的最优解（Theorem 4.1）。梯度 $\nabla_\theta \mathcal{L}_{CTB} = 2(f(y_1) - f(y_2))(\nabla_\theta f(y_1) - \nabla_\theta f(y_2))$ 中，每个样本被另一个样本的 log-flow error 当作 stochastic baseline，与 RLOO/Williams 的 variance reduction 同构。
-    - 设计动机：从根上抹掉 $Z_\theta$ 这个高方差源；同时 batch 内 $N$ 条样本可以枚举 $N^2$ 个标量 pair-wise loss（无需额外 forward），训练复杂度仍是 $O(N)$ 前后向。
+原始 TB loss $(\log Z_\theta + \log \pi_\theta(y) - \log R(y))^2$ 必须学一个标量 $Z_\theta$ 去估计 $Z \simeq \sum_y R(y)$，而 LLM 的 token 序列空间组合爆炸，这个估计方差极大，是 mode collapse 的主因之一。CTB 的破法是对一对独立采样 $y_1, y_2 \sim \pi_\theta$ 做 ratio 对比：$\mathcal{L}_{CTB}(y_1, y_2; \theta) = (\log \tfrac{\pi_\theta(y_1)}{\pi_\theta(y_2)} - \log \tfrac{R(y_1)}{R(y_2)})^2$——两条轨迹相除时 $Z_\theta$ 自然抵消，根本不用再去估它，思路与 contrastive learning 消掉 normalizing constant 同源。
 
-2. **Noisy Gradient Pruning (NGP)**：
+关键是消掉 $Z$ 不能牺牲分布匹配的理论性质。令 $f(y) = \log \pi_\theta(y) - \log R(y)$，当 $y_1, y_2$ i.i.d. 取样时这个目标在期望意义上等价于 $2 \cdot \mathrm{Var}_{\pi_\theta}(f(y))$，最小化到 0 就等价于 $f$ 在 support 上恒为常数 $C$，再结合归一化条件即得 $\pi_\theta(y) = R(y)/Z$——正好回到 TB 的最优解（Theorem 4.1），所以 CTB 和 TB 同解但更稳。其梯度 $\nabla_\theta \mathcal{L}_{CTB} = 2(f(y_1) - f(y_2))(\nabla_\theta f(y_1) - \nabla_\theta f(y_2))$ 里，每个样本被另一个样本的 log-flow error 当作 stochastic baseline，与 RLOO/Williams 的 variance reduction 同构，这也是它低方差的来源。实现上 batch 内 $N$ 条样本可枚举 $N^2$ 个标量 pair-wise loss 而无需额外 forward，训练仍是 $O(N)$ 次前后向。
 
-    - 功能：CTB 把两个样本的 reward noise 加在一起，低对比度 pair 反而放大噪声；NGP 用 hard mask 把低 saliency pair 的梯度清零。
-    - 核心思路：$\mathcal{L}_{NGP}(y_1, y_2; \theta) = \mathbb{1}[|\log R(y_1) - \log R(y_2)| > \sigma] \cdot \mathcal{L}_{CTB}(y_1, y_2; \theta)$。$\sigma$ 是 saliency threshold 超参。理论上构造 saliency graph $G_\sigma = (\mathcal{Y}, E_\sigma)$（边定义为对比度 > $\sigma$ 的样本对），若 $G_\sigma$ 连通，则 $\mathcal{L}_{NGP}(\theta) = 0$ 仍等价于 $\pi_\theta(y) \propto R(y)$（Proposition 4.2）。实践中作者用 high-reward replay buffer 做"global anchors"，提供跨高/低 reward 区的对比 pair 保持连通。
-    - 设计动机：toxicity classifier 对相近 reward 的样本之间是随机噪声主导，过 filter 掉这些"信息量为零但 noise 不为零"的 pair，让梯度只从有真实 reward 差异的对里来；既保 GFN 的目标性质（在连通假设下），又显著降梯度方差。
+**2. Noisy Gradient Pruning (NGP)：只让 reward 差异明显的样本对回传梯度。**
 
-3. **Min-K Fluency Stabilizer (MKS)**：
+CTB 是把两个样本放一起比，副作用是它们各自的 reward noise 也叠加进来——当两条 prompt 的 toxicity 本就接近时，classifier 给的差异基本是随机噪声主导，这种"信息量为零但 noise 不为零"的低对比度 pair 反而放大梯度方差。NGP 直接拿一个 hard mask 把它们清零：$\mathcal{L}_{NGP}(y_1, y_2; \theta) = \mathbb{1}[|\log R(y_1) - \log R(y_2)| > \sigma] \cdot \mathcal{L}_{CTB}(y_1, y_2; \theta)$，其中 saliency threshold $\sigma$ 是超参，只有 reward 对比度超过 $\sigma$ 的 pair 才贡献梯度。
 
-    - 功能：阻止 attacker hack 到 gibberish 区域，但不扭曲目标分布。
-    - 核心思路：用 reference model $\pi_{ref}$ 对生成 prompt $y$ 算每个 token 的 log-prob，取最低 $k$ 个 token 的平均：$M_k(y) = \tfrac{1}{|K|}\sum_{w \in K} \log \pi_{ref}(y_w | y_{<w})$。然后 reward 改为 $R_{MKS}(y) = \mathbb{1}[M_k(y) \ge T_{MKS}] \cdot R(y)$——低于流畅度阈值 $T_{MKS}$ 的直接 reward 清零。$\pi_{ref}$ 的梯度不参与 reward 计算。
-    - 设计动机：与 KL 全局正则不同，MKS 只惩罚"最不流畅段"的样本（最容易暴露 OOD gibberish），保留正常 prompts 探索的自由度；不修改 target distribution 的形状（reward 内 hard cutoff 而非 reshape），与 GFN 的 distribution matching 假设兼容。
+过滤掉大量样本对会不会破坏 GFN 的收敛性？作者把它形式化成图连通性：构造 saliency graph $G_\sigma = (\mathcal{Y}, E_\sigma)$，边定义为对比度 $> \sigma$ 的样本对，只要 $G_\sigma$ 连通，$\mathcal{L}_{NGP}(\theta) = 0$ 仍等价于 $\pi_\theta(y) \propto R(y)$（Proposition 4.2）——也就是"少而精"的 pair 足以约束到正确分布。实践中保持连通靠一个 high-reward replay buffer 当"global anchors"，它持续提供跨高/低 reward 区的对比 pair，把图连起来。最终效果是梯度只从有真实 reward 差异的对里来，既保住目标性质又显著降噪。
+
+**3. Min-K Fluency Stabilizer (MKS)：只卡掉最不流畅的那段 token，挡住 gibberish 而不改目标分布。**
+
+toxicity classifier 对 gibberish-like OOD 文本会随机给 0.2~0.3 的伪 reward，attacker 一旦发现这条 reward hacking 路径就会 collapse 到狂吐乱码。标准解法是 KL 正则 $R_{ref}(y) = \pi_{KL}(y)^\alpha R(y)^\beta$，但它把整个 reward 朝 reference 分布 reshape，扭曲了 GFN 要匹配的 target——这与 GFN 的假设冲突。MKS 换一个更外科手术式的做法：借用 membership inference 文献的 Min-K probability，用 reference model $\pi_{ref}$ 算 prompt $y$ 各 token 的 log-prob，取**最低** $k$ 个 token 的平均 $M_k(y) = \tfrac{1}{|K|}\sum_{w \in K} \log \pi_{ref}(y_w | y_{<w})$ 当流畅度 proxy，然后 $R_{MKS}(y) = \mathbb{1}[M_k(y) \ge T_{MKS}] \cdot R(y)$——低于阈值 $T_{MKS}$ 的直接把 reward 清零（$\pi_{ref}$ 不回传梯度）。
+
+之所以盯"最弱环节"而非整句平均 perplexity，是因为 partial gibberish 往往只在少数 token 上暴露，Min-K 对这种局部乱码更敏感。更重要的是它只在 reward 内部做 hard cutoff、不 reshape 分布形状，对正常 prompts 的探索自由度毫无干扰，因而与 GFN 的 distribution matching 假设兼容——消融里没有 MKS 时 reward 直接归零（全 hack 成 gibberish），加上后 UA 立刻从 0 跳到 67，是整套训练能跑起来的前提。
 
 ### 损失函数 / 训练策略
 
-总目标 $J_{CTB}(\theta) = \mathbb{E}_{y_1, y_2 \sim \pi_\theta}[\mathcal{L}_{NGP}(y_1, y_2; \theta)]$，外面套 MKS 修改的 reward。Batch 内 $N = 1024$ 条样本枚举 pair。Attacker：Qwen2.5-1.5B SFT；Victim：Qwen2.5-1.5B-Instruct；Toxic classifier：Meta-Llama-Guard-3-8B；Diversity：all-MiniLM-L6-v2 + greedy clustering threshold 0.7；reward >0.5 算 ASR。
+总目标是 $J_{CTB}(\theta) = \mathbb{E}_{y_1, y_2 \sim \pi_\theta}[\mathcal{L}_{NGP}(y_1, y_2; \theta)]$，外层 reward 已被 MKS 改写。Batch 内 $N = 1024$ 条样本枚举 pair；attacker 用 Qwen2.5-1.5B SFT（Safety-Dataset + AdvBench），victim 用 Qwen2.5-1.5B-Instruct，toxicity classifier 用 Meta-Llama-Guard-3-8B；多样性度量用 all-MiniLM-L6-v2 + greedy clustering（阈值 0.7），reward $>0.5$ 计入 ASR。
 
 ## 实验关键数据
 

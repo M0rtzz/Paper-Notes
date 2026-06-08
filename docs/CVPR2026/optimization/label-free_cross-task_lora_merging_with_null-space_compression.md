@@ -41,34 +41,40 @@ tags:
 
 ### 整体框架
 
-1. 为每个任务独立LoRA微调基础模型
-2. 预计算每个adapter的Gram逆矩阵 $(A_kA_k^\top)^{-1}$
-3. 使用NSC目标函数优化层级合并系数 $\{\lambda_k^\ell\}$
-4. 输出合并后的多任务模型
+NSC Merging 要解决的问题是：把 $K$ 个独立 LoRA 微调出的 adapter 合并成一个多任务模型，且合并系数的搜索不能依赖任务标签或输出 logits（否则回归任务和长序列 LLM 都用不了）。整条流水线从已训好的 adapter 出发：先为每个任务独立 LoRA 微调得到 $\{B_k, A_k\}$，再对每个 adapter 预计算一个只跟 LoRA rank 相关的小矩阵 $(A_kA_k^\top)^{-1}$；随后把一批无标签输入喂进模型，以「零空间比率」为目标函数去优化每层每任务的合并系数 $\{\lambda_k^\ell\}$，迭代收敛后输出合并模型 $W_0^\ell + \sum_k \lambda_k^\ell B_k^\ell A_k^\ell$。整个过程只看输入激活的几何关系，不看模型预测对不对，这是它能同时覆盖分类、回归和生成任务的根本原因。
 
 ### 关键设计
 
-1. **零空间比率定义与压缩动力学**:
-    - 功能：提供任务无关的性能代理信号
-    - 核心思路：对LoRA更新 $\Delta W = BA$，定义零空间比率 $\omega_k^\ell(\mathbf{z}) = \frac{\|\text{Proj}_{\mathcal{N}(A_k^\ell)}(\mathbf{z})\|_2}{\|\mathbf{z}\|_2}$，度量被adapter丢弃的输入激活比例。训练过程中该比率持续下降（零空间被压缩），且与任务性能呈强负相关——分类和回归任务均如此
-    - 设计动机：LoRA的rank很小（如16 vs 768维），adapter子空间仅覆盖~2.1%的特征空间。零空间压缩意味着adapter学会了更好地捕获与任务相关的激活，因此可推断性能。关键优势：这是输入导向的信号，不依赖输出logits
+**1. 零空间比率：把 LoRA 的训练动力学变成性能代理信号。**
 
-2. **NSC合并目标函数**:
-    - 功能：无标签地学习层级合并系数
-    - 核心思路：最小化所有任务的平均零空间比率：$\min_{\{\lambda_k^\ell\}} \frac{1}{K}\sum_{k=1}^K \mathbb{E}_{\mathbf{x} \sim \mathcal{D}_k}[\Omega_k(\mathbf{x}; \Theta_{merge})]$，其中 $\Omega_k$ 是跨目标层的平均零空间比率。合并模型参数为 $W_0^\ell + \sum_k \lambda_k^\ell B_k^\ell A_k^\ell$
-    - 设计动机：零空间比率纯粹从adapter几何结构计算，适用于任何任务类型。对LLM/VLM，仅需输入token的激活即可计算，成本与序列长度无关
+梯度引导合并的老办法（AdaMerging）靠输出熵判断合并好不好，但熵只对分类有意义、还得逐 token 算。本文换了一个完全输入侧的信号：对 LoRA 更新 $\Delta W = BA$，下投影矩阵 $A_k^\ell$ 的零空间 $\mathcal{N}(A_k^\ell)$ 是那些被 adapter 直接丢弃的输入方向，于是定义零空间比率
 
-3. **快速NSC：Gram逆缓存**:
-    - 功能：大幅降低计算开销
-    - 核心思路：零空间比率可等价表示为 $\omega_k(\mathbf{z}) = \sqrt{1 - \frac{\mathbf{z}^\top A_k^\top(A_kA_k^\top)^{-1}A_k\mathbf{z}}{\|\mathbf{z}\|_2^2}}$。由于 $\mathbf{z}$ 和 $A_k\mathbf{z}$ 在推理中已计算，只需预缓存小矩阵 $(A_kA_k^\top)^{-1}$（维度=LoRA rank），避免构建全零空间投影矩阵
-    - 目标层选择：仅在最后1/4的transformer块上计算NSC目标，以平衡效率和性能
+$$\omega_k^\ell(\mathbf{z}) = \frac{\|\text{Proj}_{\mathcal{N}(A_k^\ell)}(\mathbf{z})\|_2}{\|\mathbf{z}\|_2}$$
+
+它度量一个输入激活 $\mathbf{z}$ 中有多大比例落在 adapter 看不见的方向上。作者观察到训练过程中这个比率会被系统性压低——adapter 逐渐把更多任务相关的激活拉进自己的投影子空间，而且 $\omega$ 与任务性能呈强负相关，分类和回归都成立。之所以这个信号靠谱：LoRA 的 rank 很小（如 16 维对 768 维），adapter 子空间仅覆盖约 2.1% 的特征空间，零空间被压缩意味着这点有限容量被花在了刀刃上，因此能反过来推断性能好坏，且全程不碰输出 logits。
+
+**2. NSC 合并目标：用平均零空间比率无标签地学层级系数。**
+
+有了代理信号，合并系数的搜索就变成最小化所有任务在合并模型下的平均零空间比率：
+
+$$\min_{\{\lambda_k^\ell\}} \frac{1}{K}\sum_{k=1}^K \mathbb{E}_{\mathbf{x} \sim \mathcal{D}_k}\big[\Omega_k(\mathbf{x}; \Theta_{merge})\big]$$
+
+其中 $\Omega_k$ 是任务 $k$ 在所有目标层上的平均零空间比率，合并参数即 $W_0^\ell + \sum_k \lambda_k^\ell B_k^\ell A_k^\ell$。系数按「层 × 任务」细粒度展开（而非 Task Arithmetic 的一个全局缩放），所以能在异构任务间做更精细的权衡。由于目标只依赖 adapter 的几何结构，它对任务类型完全无所谓；对 LLM/VLM 只需输入 token 的激活即可计算，成本与序列长度脱钩，直接绕开了熵方法逐 token 累加的扩展性瓶颈。
+
+**3. Fast NSC：用 Gram 逆缓存把每步开销从 $O(d^2)$ 压到 $O(r^2)$。**
+
+直接算零空间投影要构建整个 $\mathcal{N}(A_k^\ell)$ 的投影矩阵，维度是特征维 $d$，每步迭代都重算成本很高。本文把比率等价改写成只含小矩阵的形式：
+
+$$\omega_k(\mathbf{z}) = \sqrt{1 - \frac{\mathbf{z}^\top A_k^\top(A_kA_k^\top)^{-1}A_k\mathbf{z}}{\|\mathbf{z}\|_2^2}}$$
+
+这里 $\mathbf{z}$ 和 $A_k\mathbf{z}$ 在前向推理时本就算过，唯一需要额外存的就是 $(A_kA_k^\top)^{-1}$——它的维度等于 LoRA rank $r$，远小于 $d$，且可以一次预缓存反复复用。瓶颈因此从全空间投影的 $O(d^2)$ 降到 $O(r^2)$（$r\ll d$）。进一步地，NSC 目标只在最后 1/4 的 transformer 块上计算：消融显示这一档几乎追平全层、却省下大量开销，而只取最后 1 层则性能明显掉，说明深层 adapter 的零空间信号最有判别力。
 
 ### 损失函数 / 训练策略
 
 - 优化器：AdamW，lr=0.001（视觉）/ 0.0003（LLM/VLM）
-- 初始化：$\lambda$ 初始化为0.4
-- 迭代：100步（视觉）/ 500步（LLM/VLM）
-- 仅使用无标签验证集
+- 初始化：$\lambda$ 初始化为 0.4
+- 迭代：100 步（视觉）/ 500 步（LLM/VLM）
+- 仅使用无标签验证集，LLM 上甚至只用 input IDs 即可
 
 ## 实验关键数据
 

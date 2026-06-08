@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-威胁模型：攻击者无法访问模型参数 / 用户 query / 检索上下文，只能向知识库注入有限预算（<1% 投毒率）的恶意条目。Pipeline 三步：（1）**Cluster Profiling**——攻击者通过黑盒交互拿到知识库分布子集（参考池），算图像 embedding 后做 K-Means（K=40）得到 K 个簇心 $\bm{\mu}_c$；（2）**Distribution-guided Retrieval Hijacking**——为每个簇心选候选图像，用 PGD 在 $\ell_\infty \leq 16/255$ 约束下最大化余弦相似度到 $\bm{\mu}_c$，生成"高检索概率但视觉无察觉"的投毒图；（3）**Clinical Ambiguity-guided Text Poisoning**——用 GPT-5 作为受控编辑器，按三层渐进策略改写配对医学报告，注入合理但错误的临床结论。最终把（投毒图，投毒文本）对插入知识库，等待用户 query 自然触发。
+M3Att 想在最贴近真实部署的威胁模型下毒害医学多模态 RAG：攻击者拿不到模型参数、用户 query、检索上下文，只能往知识库里塞不到 1% 的恶意条目。难点是双重的——检索阶段要让投毒条目在高度聚集的医学影像嵌入里仍被任意未来 query 捞到，生成阶段又要让投毒文本骗过经过 safety alignment 的医学 LVLM、不被当成"明显错误"纠回去。整套 pipeline 三步走：先做 Cluster Profiling 拿到知识库分布的簇心当作"代表性 query proxy"，再用分布引导的视觉 PGD 把投毒图优化到簇心附近做检索劫持，最后用临床歧义引导的文本改写注入"合理但错误"的医学结论；把（投毒图，投毒文本）对插进知识库，坐等真实 query 自然触发。
 
 ### 关键设计
 
-1. **Distribution-Guided Retrieval Hijacking（基于簇心的 query-agnostic PGD 劫持）**:
+**1. 分布引导的检索劫持：用簇心当 proxy，把"不知道 query"变成"覆盖所有 query"。**
 
-    - 功能：在不知道 query 的情况下，让投毒图被任意未来 query 高概率检索到。
-    - 核心思路：（a）**Cluster Profiling**：在参考池上做 K=40 K-Means，每个簇取 top-50 最近样本做平均得到簇心 $\bm{\mu}_c$，作为该簇语义的 proxy；（b）**Candidate Sampling**：在不重叠的候选池里对每个簇 rank embedding 相似度，先用 10 步 PGD warm-up 评估各候选优化潜力，挑最优 seed；（c）**Constrained PGD Refinement**：对种子图按 $\bm{x}_c^{(i+1)} = \Pi_{\mathcal{B}_\epsilon}(\bm{x}_c^{(i)} + \alpha \cdot \mathrm{sign}(\nabla_x \mathcal{L}(f(\bm{x}_c^{(i)}), \bm{\mu}_c)))$ 迭代 N=500 步，$\epsilon=16/255$、$\alpha=1/255$，目标是 cosine similarity 最大化。白盒下直接算梯度，黑盒下用对称有限差分 $\nabla_x \mathcal{L} \approx \frac{1}{K}\sum_k \frac{\mathcal{L}(\bm{x}+\sigma u_k) - \mathcal{L}(\bm{x}-\sigma u_k)}{2\sigma} \cdot u_k$ 做 zeroth-order 估计。
-    - 设计动机：簇心捕获的是"数据自身语义结构"而非"某个模型特性"，所以这种攻击 transferable 跨检索器（CLIP/BGE-VL/SigLIP）；warm-up 选种子避免 PGD 资源浪费在难优化样本上；$\ell_\infty$ 约束保证肉眼几乎不可见，骗过临床 review。这套设计巧妙利用了医学图像本身的**高同质性**——这本来是攻击的障碍，反而被转化成了"少量簇心覆盖海量 query"的优势。
+query-agnostic 攻击最大的障碍是不知道用户会问什么、没法针对性优化投毒条目；而医学影像嵌入高度聚集，单靠堆数量才能被检索到、又会暴露攻击者。作者反过来利用这种高同质性——既然嵌入扎堆，簇中心就能当作整簇语义的代表，只要在簇心做扰动就覆盖了该簇下所有未知 query。具体三步：Cluster Profiling 在参考池上做 K=40 的 K-Means、每簇取 top-50 最近样本平均得簇心 $\bm{\mu}_c$；Candidate Sampling 在不重叠的候选池里按相似度排序，先用 10 步 PGD warm-up 评估各候选的优化潜力、挑最优 seed（避免把算力浪费在难优化的样本上）；Constrained PGD Refinement 对种子图迭代 N=500 步
 
-2. **Clinical Ambiguity-Guided Poisoning（三层渐进文本改写）**:
+$$\bm{x}_c^{(i+1)} = \Pi_{\mathcal{B}_\epsilon}\!\left(\bm{x}_c^{(i)} + \alpha \cdot \mathrm{sign}\big(\nabla_x \mathcal{L}(f(\bm{x}_c^{(i)}), \bm{\mu}_c)\big)\right)$$
 
-    - 功能：让投毒文本被 LVLM 接受为"合理替代解释"而非"明显错误"，从而绕过医学 safety alignment 的自纠错。
-    - 核心思路：用 GPT-5 作为受控 LLM editor，按 system prompt 严格执行三种策略：（a）**Fine-grained Severity Migration**：双向修改严重度词，down-scale 把 "massive" → "moderate"、"acute" → "chronic" 诱导漏诊；up-scale 把 "unremarkable" → "suspicious density" 触发过度干预；（b）**Prior-Constrained Diagnosis Distortion**：不随便换疾病（避免被先验拒绝），而是先找视觉特征重叠的候选疾病集合，从中挑先验概率与真值相近的目标（如 "Viral Pneumonia" → "Pulmonary Edema"），让 LVLM 把投毒上下文当成合法的"鉴别诊断"接受；（c）**Risk Association Corruption**：双向操纵报告结论的行动建议——urgency suppression（"immediate CT" → "follow-up in 6 months"）掩盖阳性发现；defensive overreach（"cannot rule out malignancy"）制造假阳。三层分别对应感知证据 → 诊断假设 → 决策风险三个临床推理阶段。
-    - 设计动机：直接换疾病会被 LVLM 内部先验拒绝；但在"严重度 / 鉴别 / 风险评估"这三个本质模糊的环节做修改，恰好踩在 LLM 低置信度区域，正中医学决策"灰色地带"。这是把"语义模糊"作为攻击 surface 的核心 insight，是论文最具迁移价值的设计。
+在 $\ell_\infty \leq \epsilon=16/255$、$\alpha=1/255$ 约束下最大化与簇心的余弦相似度。白盒直接反传梯度，黑盒则用对称有限差分 $\nabla_x \mathcal{L} \approx \frac{1}{K}\sum_k \frac{\mathcal{L}(\bm{x}+\sigma u_k) - \mathcal{L}(\bm{x}-\sigma u_k)}{2\sigma} \cdot u_k$ 做 zeroth-order 估计。因为簇心抓的是数据自身的语义结构、而非某个模型的特性，这种攻击能跨检索器迁移（CLIP/BGE-VL/SigLIP）；$\ell_\infty$ 约束又保证扰动肉眼几乎不可见，骗得过临床 review。这一步巧妙地把医学影像的高同质性这个"障碍"翻转成了"少量簇心覆盖海量 query"的优势。
 
-3. **黑盒 + 白盒两套梯度路径 + 双阶段 coupling**:
+**2. 临床歧义引导的三层渐进文本改写：专挑模型先验的低置信度区域下手。**
 
-    - 功能：在真实部署的黑盒检索器场景仍能保持攻击效果。
-    - 核心思路：白盒下直接反传得 $\nabla_x \mathcal{L}$；黑盒下用 zeroth-order 对称有限差分估计。整套 M3Att 是 retrieval hijacking + text injection 的紧耦合——消融显示去掉任一组件都会显著恢复下游效用（w/o Hijack 让投毒条目无法被检索；w/o Injection 让检索到的样本文本无害，无法影响生成）。
-    - 设计动机：实际部署的医学 RAG 检索器通常是闭源的，攻击必须在黑盒下成立才有现实意义。实验显示 black-box ASR 接近 white-box，证明 M3Att 不依赖 gradient access。
+医学 LVLM 经过医学语料预训练 + safety alignment，naive 注入"明显事实错误"会触发拒答或自动纠正，扰动太弱又影响不了生成——很难找到那个既能改写输出、又能绕过自纠的"剂量"。作者的 insight 是：医学诊断本身就有"重度 vs 轻度""鉴别诊断之间""defensive medicine"这类内禀歧义，恰好踩在 LLM 先验的灰色地带。于是用 GPT-5 当受控 editor，按 system prompt 严格执行三层策略：**Fine-grained Severity Migration** 双向改严重度词（down-scale 把 "massive"→"moderate"、"acute"→"chronic" 诱导漏诊；up-scale 把 "unremarkable"→"suspicious density" 触发过度干预）；**Prior-Constrained Diagnosis Distortion** 不硬换疾病（那会被先验拒绝），而是先找视觉特征重叠的候选疾病、再挑先验概率与真值相近的目标（如 "Viral Pneumonia"→"Pulmonary Edema"），让模型把投毒上下文当成合法的"鉴别诊断"接受；**Risk Association Corruption** 双向操纵行动建议（urgency suppression 把 "immediate CT"→"follow-up in 6 months" 掩盖阳性发现；defensive overreach 用 "cannot rule out malignancy" 制造假阳）。三层正好对应"感知证据 → 诊断假设 → 决策风险"三个临床推理阶段——把语义模糊当作攻击 surface，是全文最具迁移价值的设计。
+
+**3. 黑盒/白盒双梯度路径 + 双阶段紧耦合：让攻击在真实闭源检索器上也成立。**
+
+真实部署的医学 RAG 检索器往往是闭源的，攻击必须在黑盒下成立才有现实意义。所以视觉劫持准备了两套梯度：白盒直接反传得 $\nabla_x \mathcal{L}$，黑盒用前面那套 zeroth-order 对称有限差分估计，实验里黑盒 ASR 接近白盒，证明攻击不依赖 gradient access。同时整个 M3Att 是 retrieval hijacking 与 text injection 的紧耦合——消融显示去掉任一半都会让下游效用大幅回升：w/o Hijack 时投毒条目根本进不了 top-k，w/o Injection 时即使被检索到、无害的原文本也影响不了生成。换句话说，医学 RAG 攻击必须检索与生成两阶段协同才能奏效。
 
 ### 损失函数 / 训练策略
-关键 loss：余弦相似度损失 $\mathcal{L}(f(\bm{x}), \bm{\mu}_c) = \cos(f(\bm{x}), \bm{\mu}_c)$，约束 $\bm{x} \in \mathcal{B}_\epsilon(\bm{x}^{(0)}) = \{\bm{x}: \|\bm{x} - \bm{x}^{(0)}\|_\infty \leq \epsilon\}$。关键超参：K=40 个簇，每簇注入 1 个优化候选（poison rate <0.01），$\epsilon=16/255$、$\alpha=1/255$、PGD 500 步、warm-up 10 步。文本编辑由 GPT-5 按 Appendix Fig.9 的 system prompt 执行，严格指定 stealthiness + 渐进策略。
+核心 loss 是余弦相似度 $\mathcal{L}(f(\bm{x}), \bm{\mu}_c) = \cos(f(\bm{x}), \bm{\mu}_c)$，约束在 $\bm{x} \in \mathcal{B}_\epsilon(\bm{x}^{(0)}) = \{\bm{x}: \|\bm{x} - \bm{x}^{(0)}\|_\infty \leq \epsilon\}$ 内。关键超参：K=40 个簇、每簇注入 1 个优化候选（poison rate <0.01）、$\epsilon=16/255$、$\alpha=1/255$、PGD 500 步、warm-up 10 步；文本编辑由 GPT-5 按 Appendix Fig.9 的 system prompt 执行，严格指定 stealthiness 与渐进策略。
 
 ## 实验关键数据
 

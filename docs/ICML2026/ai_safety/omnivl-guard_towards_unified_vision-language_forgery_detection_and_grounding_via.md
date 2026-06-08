@@ -41,32 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是任意一段图/文/视频或它们的组合，模型要同时输出 (1) 真假二分类 和 (2) 对应模态上的篡改区域——图像空间 mask（IoU）、文本 token 跨度（F1）、视频时间区间（tIoU）。整个 pipeline 走"FSFR 数据集 → Qwen3VL-8B 上 SFT 冷启动 → ARSPO 多任务 RL → 在 In-Domain 与 OOD 测试"四步。其中 FSFR 由 Self-Evolving CoT Generation 离线构造，含 73k SFT 高质量 CoT 样本和 110k RL 训练样本；ARSPO 在 RL 阶段持续工作，按训练步动态调整四个任务（二分类 / 图像定位 / 文本定位 / 视频定位）的奖励曲线和任务权重。
+模型吃进任意一段图/文/视频或它们的混合，要一次性吐出"真假二分类"和"对应模态上的篡改位置"——图像空间 mask（IoU 衡量）、文本 token 跨度（F1）、视频时间区间（tIoU）。作者把所有定位任务都统一成 MLLM 的文本输出（坐标 / token 跨度 / 时间区间），从而能用一个 Qwen3VL-8B 同时覆盖四个任务。落地分两块：离线先用 Self-Evolving CoT Generation 造出 FSFR 数据集（73k SFT 冷启动样本 + 110k RL 样本），再在 Qwen3VL-8B 上做 SFT 冷启动、然后跑 ARSPO 这套针对"难度偏置"的多任务 RL，最后在 In-Domain 与 OOD 上测。难点都集中在后两块——怎么造不带答案泄漏的 CoT，以及怎么让简单的二分类别把定位任务的梯度抢光。
 
 ### 关键设计
 
-1. **Self-Evolving CoT Generation（FSFR 数据集构造）**：
+**1. Self-Evolving CoT Generation：用模型自己跑得通来代理 CoT 质量，绕开 hindsight bias**
 
-    - 功能：为细粒度伪造检测+定位任务造一份"既能解题又不带答案泄漏"的高质量 CoT 冷启动数据集 $\text{FSFR}_{\text{sft}}$，配套留出 $\text{FSFR}_{\text{rl}}$ 给 RL 用。
-    - 核心思路：作者把"造 CoT"形式化成一个 *Efficiency-Bias Dilemma*——闭源 MLLM 直接生成 CoT 质量太低，而注入 GT 又导致 hindsight bias、模型从答案反推过程，破坏 RL 探索。解法是四阶段自演化：(a) 从公开数据池（FakeNewsCorpus、ForgeryNet、GenVideo、DGM4 等）汇总并按比例划分 $D_s/D_r/D_t$；(b) 用 SOTA MLLM 集合 $\mathcal{M}=\{\text{Seed1.6-VL, Gemini3, ChatGPT5}\}$ 推理 $D_s$ 的小子集，经"GT 过滤 + 另一个 MLLM 一致性核验"得到 6.7k 的种子集 $D_s^0$，SFT+RL 得到 warm-up 策略 $\pi_0$；(c) 第 $k$ 轮用 $\pi_{k-1}$ 给剩余样本生成 CoT，再经 GT 过滤 + SOTA MLLM 校验，合并入 $D_s^k$，**每轮都从 base Qwen3VL-8B 重训**以避免分布漂移；(d) 对始终错的 hard 样本走 Multi-Agent Collaborative Hard-CoT Synthesis——一个 MLLM 借 GT 生成 CoT，第二个 MLLM 当 "Refiner" 把痕迹改造成"假装不知道答案的自然推理"，第三个 MLLM 评分过滤。三轮自演化后即达到饱和（Table 5: $D_s^4$ 比 $D_s^3$ 几乎无增益）。
-    - 设计动机：直接蒸馏不够（通用 MLLM 不懂法证细节），直接给答案让模型反推又毁了 RL；自演化用"模型自己跑得通"作为质量代理，再用第三方 MLLM 当裁判，把"是否走对推理"和"是否得到正确答案"两个信号解耦，规避 hindsight bias。
+冷启动数据是整套方法的地基，但造它有个两难（作者称为 *Efficiency-Bias Dilemma*）：闭源 MLLM 直接生成 CoT 质量太差，因为它们根本不懂法证级的细节；而把 GT 喂进去让模型补推理，又会让模型学会"从答案反推过程"，这种 hindsight bias 会污染后续 RL 的探索。作者的解法是四阶段自演化。先从公开数据池（FakeNewsCorpus、ForgeryNet、GenVideo、DGM4 等）汇总并划分出 $D_s/D_r/D_t$；再用 SOTA MLLM 集合 $\mathcal{M}=\{\text{Seed1.6-VL, Gemini3, ChatGPT5}\}$ 推理 $D_s$ 的一小撮，经"GT 过滤 + 另一个 MLLM 一致性核验"挑出 6.7k 种子集 $D_s^0$，SFT+RL 拿到 warm-up 策略 $\pi_0$。
 
-2. **ARSPO – Task-Based Reward Mapping Function（TBRMF）**：
+之后进入迭代：第 $k$ 轮用 $\pi_{k-1}$ 给剩余样本生成 CoT，同样经 GT 过滤 + SOTA MLLM 校验后并入 $D_s^k$，关键是**每轮都从 base Qwen3VL-8B 重训**而不是接着上一轮练，以免分布漂移把数据带偏。对那些怎么都答错的 hard 样本，单独走 Multi-Agent Collaborative Hard-CoT Synthesis——第一个 MLLM 借 GT 生成 CoT，第二个 MLLM 当 "Refiner" 把答案痕迹改写成"假装不知道答案的自然推理"，第三个 MLLM 评分过滤。这一套的精髓是把"是否走对推理"和"是否得到正确答案"两个信号解耦：用"模型自己能跑通"代理推理质量，用第三方 MLLM 当裁判堵住答案泄漏。Table 5 显示三轮就饱和（$D_s^4$ 比 $D_s^3$ 几乎零增益），既论证了停在 $k=3$ 的合理性，也省下大量 MLLM 推理算力。
 
-    - 功能：用"按任务定制的非线性奖励映射"显式调整每个任务的梯度贡献，让简单任务别抢资源、难任务能持续学。
-    - 核心思路：基于 4.1 节对梯度的二阶展开（核心公式 $\frac{d}{d\theta}(W_{i,t}(\theta)\hat{A}_{i,k}) = W'_{i,t}(\theta)\hat{A}_{i,k} + W_{i,t}(\theta)\cdot \frac{g_k'(H_k)}{G\sigma}[(G-1)-\hat{A}_{i,k}^2]\,H_k'(\theta,q,\tau)$)，作者发现可以通过把奖励函数 $A_{i,k}=g_k(x_{i,k})$ 由原始性能指标 $x_{i,k}$ 经 $g_k$ 映射得到。对二分类（容易）选恒等映射 $g_k(x)=x$，避免无谓放大；对三个细粒度定位任务，选凸函数 $g_k(x)=e^{a_k x}$（取 $a=3$，Figure 4 网格扫出来最佳），这样在高性能区域斜率更陡，组内得分高的 response 梯度被显著放大——把"接近正确答案但还差一点"的样本变成最强的学习信号。
-    - 设计动机：纯靠归一化（GRPO/SAPO）只能让奖励尺度可比，不能改变"任务难度敏感度 $H_k'$"。凸映射相当于在奖励侧把高分样本的边际收益拉高，等价于补偿 $H_k'$ 的衰减；这也解释了 5.3 节实验为什么单任务训练下指数映射依然显著优于线性映射：ARSPO 的本质不是"平衡"，而是"重塑梯度信号"。
+**2. Task-Based Reward Mapping Function（TBRMF）：用凸的奖励映射重塑梯度，对冲难任务**
 
-3. **ARSPO – Dynamic Coefficient Adjustment（DCA，Algorithm 1）**：
+这是 ARSPO 的理论核心，针对的痛点是 GRPO 把所有任务平均优化时简单的二分类一路爬升、定位任务原地踏步。作者没有停在现象层，而是把 GRPO 目标对参数 $\theta$ 做二阶展开，得到梯度加速度
 
-    - 功能：在训练过程中周期性监测每个任务的相对学习状态，自适应调节四个任务的全局权重 $l_{k,s}$，避免"水桶效应"。
-    - 核心思路：先有一个 warm-up 阶段（$s<T_{warm}$）记录每个任务的均值作为冻结 baseline $B_k$；之后每 $T$ 步评估两个量——总体相对增益 $\Delta_{\text{total},k}=(\mu_k-B_k)/B_k$（衡量"长期是否跟得上"）和近期变化 $\delta_{\text{recent}}=\mu_k-\mu_{\text{past}}$（衡量"短期趋势"）；按"momentum 保护（在上升期则不动） → regression rescue（明显回退则乘 $\alpha_{\text{boost}}$ 抢救） → high-performance decay（任务已达标则乘 $\alpha_{\text{decay}}$ 缓慢退场，但下限为 1） → laggard support（找出 $k_{\text{lag}}=\arg\min_k\Delta_{\text{total},k}$ 并放大权重，上限 4）"四档优先级调整 $l_{k,s}$，最后整体除以最小系数做 rescaling，再代入 $\nabla_\theta \mathcal{J}_{\text{arspo}}$ 更新参数。
-    - 设计动机：TBRMF 是"静态的奖励曲线整形"，但训练动态会随时间变化——某个任务可能本来落后但后来追上、或追上后又退化；DCA 给系统补一个闭环控制器，按"最弱者优先"原则把权重资源持续倾斜到当前最卡壳的任务上，与 TBRMF 形成"静态形状 + 动态权重"双重保险。
+$$\frac{d}{d\theta}\big(W_{i,t}(\theta)\hat{A}_{i,k}\big) = W'_{i,t}(\theta)\hat{A}_{i,k} + W_{i,t}(\theta)\cdot \frac{g_k'(H_k)}{G\sigma}\big[(G-1)-\hat{A}_{i,k}^2\big]\,H_k'(\theta,q,\tau)$$
+
+这把每个任务的梯度变化率拆成两个因子相乘:奖励映射敏感度 $g_k'(\cdot)$ 和任务难度敏感度 $H_k'(\theta,q,\tau)$。难任务停在性能平台期、$H_k'$ 天然很小，所以哪怕把奖励归一化到同尺度，简单任务仍主导更新方向——这就是"难度偏置"的解析根因。补救方向也随之清晰：既然 $H_k'$ 改不了，那就在另一个因子 $g_k'$ 上动手。作者把奖励写成 $A_{i,k}=g_k(x_{i,k})$，由原始性能指标 $x_{i,k}$ 经映射 $g_k$ 得到，对容易的二分类取恒等映射 $g_k(x)=x$ 避免无谓放大，对三个细粒度定位任务取凸函数 $g_k(x)=e^{a_k x}$（$a=3$，Figure 4 网格扫出来的甜点）。凸映射在高性能区斜率更陡，把组内得分高、"接近正确但还差一点"的 response 的梯度显著拉大，等价于在奖励侧补偿 $H_k'$ 的衰减。这也解释了为什么 5.3 节单任务（无任务竞争）下指数映射依然碾压线性映射：ARSPO 的本质不是"平衡多任务"，而是"重塑梯度信号"。
+
+**3. Dynamic Coefficient Adjustment（DCA）：闭环控制器按最弱者优先动态分配任务权重**
+
+TBRMF 给的是静态的奖励曲线形状，但训练动态是会变的——某个任务可能先落后后追上、或追上后又退化，光靠静态形状管不住"水桶效应"。DCA 给系统补一个闭环控制器。先有 warm-up 阶段（$s<T_{warm}$）记录每个任务均值作为冻结 baseline $B_k$；之后每 $T$ 步评估两个量:总体相对增益 $\Delta_{\text{total},k}=(\mu_k-B_k)/B_k$ 看长期跟没跟上、近期变化 $\delta_{\text{recent}}=\mu_k-\mu_{\text{past}}$ 看短期趋势。然后按四档优先级调整全局权重 $l_{k,s}$：momentum 保护（还在上升期就不动）→ regression rescue（明显回退就乘 $\alpha_{\text{boost}}$ 抢救）→ high-performance decay（已达标就乘 $\alpha_{\text{decay}}$ 缓慢退场，下限为 1）→ laggard support（找出最落后的 $k_{\text{lag}}=\arg\min_k\Delta_{\text{total},k}$ 放大权重，上限 4），最后整体除以最小系数做 rescaling 再代入更新。整套逻辑只是四档启发式 + 一组阈值，没有任何梯度回传开销，却把权重资源持续倾斜到当前最卡壳的任务，与 TBRMF 形成"静态形状 + 动态权重"的双保险。
 
 ### 损失函数 / 训练策略
-RL 目标在 GRPO 框架上加入动态系数 $l_{k,s}$：
-$\mathcal{J}_{\text{arspo}}(\theta)=\sum_{k=1}^{K}\frac{|\mathcal{D}_k|}{|\mathcal{D}|}\mathbb{E}_{q\sim\mathcal{D}_k,\{y_i\}\sim\pi_{\theta_{\text{old}}}}\left[\frac{l_{k,s}}{G}\sum_{i=1}^{G}\frac{1}{|y_i|}\sum_{t=1}^{|y_i|}f_{i,t}(r_{i,t}(\theta))\hat{A}_{i,k}\right]$
-其中优势 $\hat{A}_{i,k}=(A_{i,k}-\mu)/\sigma$ 仍按组内归一，但 $A_{i,k}=g_k(x_{i,k})$ 经过任务定制的非线性映射。基座为 Qwen3VL-8B，先用 $\text{FSFR}_{\text{sft}}$ SFT 冷启动，再用 $\text{FSFR}_{\text{rl}}$ 跑 ARSPO；warm-up 期间所有 $l_{k,s}=1$ 用来采 baseline。
+RL 目标在 GRPO 框架上嵌入 DCA 的动态系数 $l_{k,s}$：
+
+$$\mathcal{J}_{\text{arspo}}(\theta)=\sum_{k=1}^{K}\frac{|\mathcal{D}_k|}{|\mathcal{D}|}\mathbb{E}_{q\sim\mathcal{D}_k,\{y_i\}\sim\pi_{\theta_{\text{old}}}}\left[\frac{l_{k,s}}{G}\sum_{i=1}^{G}\frac{1}{|y_i|}\sum_{t=1}^{|y_i|}f_{i,t}(r_{i,t}(\theta))\hat{A}_{i,k}\right]$$
+
+优势 $\hat{A}_{i,k}=(A_{i,k}-\mu)/\sigma$ 仍按组内归一，但奖励 $A_{i,k}=g_k(x_{i,k})$ 已经过 TBRMF 的任务定制非线性映射。基座 Qwen3VL-8B 先用 $\text{FSFR}_{\text{sft}}$ SFT 冷启动，再用 $\text{FSFR}_{\text{rl}}$ 跑 ARSPO；warm-up 期间所有 $l_{k,s}=1$ 用来采集 baseline。
 
 ## 实验关键数据
 

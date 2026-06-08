@@ -43,32 +43,25 @@ tags:
 
 ### 整体框架
 
-LearnAlign 是个 4 步轻量数据选择流程，**不需要在全量数据上完整训练**：
-
-1. **Warmup 训练**：在随机小子集 $\mathcal{D}_{\text{warmup}}$ 上跑一小段 RLVR，得到一个稍微"上路"的策略 $\bm{\theta}_s$，避免冷启动梯度噪音过大（GSM8K 用 300 条、DAPO-MATH-17K 用 1000 条）。
-2. **Learnability 估计**：对每条数据 $\xi_i$ 在 $\pi_{\bm{\theta}_s}$ 下采 $G=8$ 个 rollout，按 ground-truth 计算 success rate $p_i = \frac{1}{G}\sum_g \mathbb{I}(\mathbf{y}_g = \mathbf{y}^*)$，得 $V(\xi_i) = p_i(1-p_i)$。
-3. **梯度信息估计 + 随机投影**：在 $\bm{\theta}_s$ 上计算每条数据的 GRPO 梯度 $\nabla \mathcal{J}_{\text{GRPO}}$，按 LESS 思路用 Johnson-Lindenstrauss 随机投影 $\Gamma$ 压成 $\phi(\bm{\theta}; \xi) = \Gamma^\top \nabla \mathcal{J}$ 的低维向量，避免存储 / 计算原始高维梯度。
-4. **LearnAlign Score 计算 + Top-N 选**：算 pairwise $S_{ij} = V(\xi_i)V(\xi_j) \cdot \cos(\phi(\xi_i), \phi(\xi_j))$，按行平均 $\text{Avg}_i = \frac{1}{n}\sum_j S_{ij}$ 排序，取最高 $N$ 条做 RLVR 训练。
+LearnAlign 想解决的是 RLVR 后训练"选哪些数据来训"的问题，而它的核心是把每条数据既评"代表性"（梯度方向和整个训练集对不对齐）又评"可学习性"（当前策略对它有没有学习空间），合成一个分数再排序选 top-N。整条流水线是轻量的 4 步：先在随机小子集上跑一小段 RLVR 得到一个稍微上路的策略 $\bm{\theta}_s$ 作为参考点；再在 $\bm{\theta}_s$ 上对每条数据采样估计 success rate、计算 GRPO 梯度；然后把 success rate 当权重乘到归一化梯度上算 pairwise 分数；最后按每条数据的平均得分排序取最高的 $N$ 条做正式训练。关键是全程**不需要在全量数据上完整训练几个 epoch**，只花一次 warmup + 一次梯度估计的代价。
 
 ### 关键设计
 
-1. **学习度量 $V(\xi) = p(1-p)$（近端发展区原则）**:
+**1. 学习度量 $V(\xi)=p(1-p)$：用近端发展区原则量化"这条数据现在值不值得学"。**
 
-    - 功能：把"这条数据对当前策略有多大学习价值"形式化成一个 $[0, 0.25]$ 之间的纯量，$p=0.5$ 时取最大值——恰好处于能力边界。
-    - 核心思路：对每条数据采 $G$ 个 rollout 算 $p$。$p$ 既是已掌握的概率，$1-p$ 是改进空间，乘积 $p(1-p)$ 衡量"期望可学习量"。作者在附录 B/C 给出理论 justification（信息增益 + 策略梯度的方差最小化）。
-    - 设计动机：(a) 替代有 length-bias 的梯度模长——success rate 与响应长度解耦；(b) 与教育心理学 ZPD 对应：太简单 ($p\to 1$) 已会、太难 ($p\to 0$) 学不到，都给 0 权重；(c) 给 RLVR 提供 SFT 没有的"难度-能力匹配"机制。
+RLVR 和 SFT 的根本区别在于，SFT 越难越好、RLVR 却只有难度与当前策略能力匹配的样本才产生学习信号——太简单 $p\to 1$ 已经会了、太难 $p\to 0$ 又学不到，两端都白费。LearnAlign 对每条数据在 $\pi_{\bm{\theta}_s}$ 下采 $G=8$ 个 rollout，按 ground-truth 算 success rate $p_i=\frac{1}{G}\sum_g \mathbb{I}(\mathbf{y}_g=\mathbf{y}^*)$，再取 $V(\xi_i)=p_i(1-p_i)$ 作为学习度量。这个量落在 $[0,0.25]$，恰在 $p=0.5$（能力边界）取最大、在两端归零，正好对应教育心理学里 Vygotsky 的"近端发展区"，作者在附录 B/C 还从信息增益与策略梯度方差最小化两个角度给了理论支撑。它的额外好处是 success rate 与响应长度天然解耦，因此能直接替代有 length-bias 的梯度模长，给 RLVR 补上 SFT 没有的"难度-能力匹配"机制。
 
-2. **学习度加权梯度向量 $\mathbf{V}(\xi_i) = \hat{\nabla}\mathcal{J} \cdot V(\xi_i)$**:
+**2. 学习度加权梯度向量 $\mathbf{V}(\xi_i)=\hat{\nabla}\mathcal{J}\cdot V(\xi_i)$：把代表性和可学习性正交地拼进一个向量。**
 
-    - 功能：把"代表性"（梯度方向对齐）和"可学习性"（success-rate）正交结合到一个向量空间中，再用内积一次性算配对得分。
-    - 核心思路：先把每条数据的 GRPO 梯度归一化 $\hat{\nabla}\mathcal{J}_i = \nabla \mathcal{J}_i / \|\nabla \mathcal{J}_i\|$（消除模长偏置），再用 $V(\xi_i)$ 重新加权幅度。最终 LearnAlign Score 拆解为 $S_{ij} = V(\xi_i)V(\xi_j) \cdot \cos(\hat{\nabla}_i, \hat{\nabla}_j)$——两端可学习的样本若梯度方向高度对齐，得分最高。
-    - 设计动机：(a) 纯余弦丢了幅度信息（哪个样本"更值得学"无法体现）；(b) 纯梯度内积有长度偏置（长响应天然梯度小，被低估）。$V$ 加权把两者各自的优点保留——方向用 cos，幅度用 learnability，物理意义清晰。
+单看梯度有两个老毛病：纯余弦相似度丢掉了幅度信息（看不出哪个样本"更值得学"），纯梯度内积又有长度偏置（长响应天然梯度小、被系统性低估）。LearnAlign 的做法是先把每条数据的 GRPO 梯度归一化 $\hat{\nabla}\mathcal{J}_i=\nabla\mathcal{J}_i/\|\nabla\mathcal{J}_i\|$ 消除模长偏置，再用上一节的 $V(\xi_i)$ 重新加权幅度。这样最终的 LearnAlign Score 干净地拆成
 
-3. **GRPO 梯度的随机投影 + warmup 检查点**:
+$$S_{ij}=V(\xi_i)V(\xi_j)\cdot\cos(\hat{\nabla}_i,\hat{\nabla}_j)$$
 
-    - 功能：把 RLVR 数据选择的计算成本砍下来——既不用训全集（避开 LIMR / 1-shot RLVR 的瓶颈），也不用存全维梯度（避免内存爆炸）。
-    - 核心思路：(a) Warmup 阶段（GSM8K 300 条、DAPO 1000 条）让模型有一个稳定的梯度估计参考点 $\bm{\theta}_s$；(b) 在 $\bm{\theta}_s$ 上做单次前向 + 反向算每条数据的 GRPO 梯度；(c) 用 JL 随机投影 $\Gamma$ 把梯度压到几千维做内积。GRPO 梯度公式 $G(q,o,t,\pi_{\bm{\theta}}) = \hat{A}_{i,t} + \beta(\pi_{\text{ref}}/\pi_{\bm{\theta}} - 1)$ 直接用论文中已有形式。
-    - 设计动机：LESS 已经在 SFT 上验证 JL 投影有效，本文把这个技巧成功迁移到 RLVR 场景，配合 warmup 一次性出结果——根据表 4 选择时间被压到接近 SFT 数据选择的水平。
+方向部分交给余弦、幅度部分交给 learnability，物理意义清晰：两端都可学、且梯度方向高度对齐的样本得分最高。选数据时对每条按行平均 $\text{Avg}_i=\frac{1}{n}\sum_j S_{ij}$ 排序，取最高的 $N$ 条。
+
+**3. warmup 检查点 + GRPO 梯度随机投影：把选择成本压到接近 SFT 数据选择的水平。**
+
+LearnAlign 要回避两个成本陷阱：LIMR / 1-shot RLVR 那种"选之前先把全集训几个 epoch"的瓶颈，以及存储高维梯度的内存爆炸。它的对策是借 LESS 在 SFT 上验证过的基础设施搬到 RLVR：先用 warmup 阶段（GSM8K 300 条、DAPO 1000 条）得到一个稳定的梯度估计参考点 $\bm{\theta}_s$，避免冷启动时梯度噪音过大；在 $\bm{\theta}_s$ 上对每条数据做一次前向+反向算 GRPO 梯度（梯度形式直接用论文已有的 $G(q,o,t,\pi_{\bm{\theta}})=\hat{A}_{i,t}+\beta(\pi_{\text{ref}}/\pi_{\bm{\theta}}-1)$）；再用 Johnson-Lindenstrauss 随机投影 $\Gamma$ 把梯度压成低维 $\phi(\bm{\theta};\xi)=\Gamma^\top\nabla\mathcal{J}$ 后做内积。warmup 与投影配合，使整个选择一次性出结果，表 4 显示总耗时被压到接近 SFT 数据选择的水平。
 
 ### 损失函数 / 训练策略
 

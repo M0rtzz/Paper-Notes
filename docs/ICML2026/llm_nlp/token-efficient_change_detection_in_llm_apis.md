@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-B3IT 分两阶段：(1) **Initialization**：用低温 $T=0$ 对 $n$ 个候选输入各采样 $m=3$ 次，那些产生 ≥2 个不同输出 token 的就是 BI；选 5 个 BI 各采样 $n_1=50$ 次作为参考分布。(2) **Detection**：定期（如每天）对每个 BI 采样 $n_2=3$ 次，得到当前支持集 $\hat S_2$，与参考支持集 $\hat S_1$ 比较；若 $\hat S_1 \triangle \hat S_2 \ne \emptyset$（即一边出现了另一边没见过的 token）则判为模型变更。每个 BI 每次检测仅花 3 个 token 的输出请求，故"token-efficient"。
+B3IT 想在严格黑盒（只看输出 token）下廉价地监控某个 API 端点是否被偷偷换了模型。它分两阶段跑：先做一次 **Initialization**，在低温 $T=0$ 下对 $n$ 个候选输入各采样 $m=3$ 次，挑出那些会冒出 ≥2 个不同输出 token 的"边界输入"（Border Input, BI），再选 5 个 BI 各采 $n_1=50$ 次存成参考分布；之后进入周期性 **Detection**，每天对每个 BI 只采 $n_2=3$ 次得到当前支持集 $\hat S_2$，与参考支持集 $\hat S_1$ 一比，只要一边冒出另一边从没见过的 token（$\hat S_1 \triangle \hat S_2 \ne \emptyset$）就判模型变了。每个 BI 单次检测只花 3 个输出 token，这就是"token-efficient"的由来。
 
 ### 关键设计
 
-1. **Border Input 与低温相变的理论基础**:
+**1. Border Input 与低温相变：把 BI 从经验 trick 抬成数学最优解。**
 
-    - 功能：用理论证明"为何 BI 能做高敏感检测器"，把 BI 概念从启发式 trick 升级为数学最优策略。
-    - 核心思路：在 LAN 框架下，对参数微扰 $\theta \mapsto \theta + \epsilon h$，最优检测的 Type-II 误差被 $\text{SNR}^2(h) = h^T J^T F(\mathbf p_0)^{-1} J h$ 单一标量主导，其中 $J$ 是输出分布对参数的 Jacobian，$F$ 是 Fisher 信息。利用 Transformer 末层结构展开后得到 $\text{SNR}^2(h) = \frac{1}{\tau^2} h^T J_z^T \Sigma(\mathbf p^{(\tau)}) J_z h$，温度 $\tau$ 平方反比放大信号。低温 $\tau \to 0$ 下：若 logits 唯一最大值（$k=1$），输出退化为 Dirac，SNR→0；若 $k \ge 2$ 个 logits 并列最大（BI），SNR→+∞——这是一个尖锐的相变（Theorem 3.3）。
-    - 设计动机：让方法选择有原则可循。直觉上"输出 token 是 lossy 压缩"似乎对小扰动迟钝；但 BI 是 logits 空间的"奇异点"，温度 →0 等价于把 softmax 当作 argmax，任何让 logit 顺序改变的微扰都会导致输出 token 跳变。这给"为什么黑盒能做"提供了硬核数学解释。
+直觉上输出 token 是 logit 经过 argmax/softmax 的 lossy 压缩，对参数小扰动应该很迟钝，黑盒检测看似没戏。作者用 Local Asymptotic Normality 框架正面回应这个疑虑：对参数微扰 $\theta \mapsto \theta + \epsilon h$，Neyman-Pearson 最优检测的 Type-II 误差完全被一个标量 $\text{SNR}^2(h) = h^T J^T F(\mathbf p_0)^{-1} h$ 主导（$J$ 是输出分布对参数的 Jacobian，$F$ 是 Fisher 信息）。沿 Transformer 末层结构展开后变成 $\text{SNR}^2(h) = \frac{1}{\tau^2} h^T J_z^T \Sigma(\mathbf p^{(\tau)}) J_z h$，温度 $\tau$ 以平方反比放大信号。关键的二分出现在 $\tau \to 0$：若 logits 有唯一最大值（$k=1$），输出退化成 Dirac，SNR$\to 0$ 检测不到；若有 $k \ge 2$ 个 logit 并列最大（这正是 BI），SNR$\to +\infty$，检测几乎免费——这是一个尖锐的相变（Theorem 3.3）。换句话说 BI 是 logit 空间的"奇异点"：温度趋零时 softmax 等价于 argmax，任何让并列 logit 排序改变的微扰都会让输出 token 直接跳变。这就把"黑盒为什么能高敏感检测"从直觉升级成了硬核证明，也指明了该专门去找哪种输入。
 
-2. **Black-Box BI 发现 + 支持集差检测**:
+**2. 黑盒 BI 发现 + 支持集差检测：不碰权重，把检测降成集合比较。**
 
-    - 功能：在不接触模型权重的前提下，廉价识别 BI 并将检测变成简单的集合差判定。
-    - 核心思路：BI 发现——对 $n$ 个随机输入，每个在 $T=0$ 下采样 $m=3$ 次（受非确定性 + 浮点舍入影响，BI 的 3 次采样大概率得到 ≥2 个 token；非 BI 总是同一 token）；保留产生 ≥2 个 token 的输入。Detection——$T=0$ 下 BI 的输出分布是均匀分布 $\text{Unif}(S_1)$，检测变为支持集差检验：$H_0: S_1 = S_2$ vs $H_1: S_1 \ne S_2$，拒绝条件 $\mathcal R = (\hat S_1 \setminus \hat S_2) \cup (\hat S_2 \setminus \hat S_1) \ne \emptyset$。论文还证明在 $k=2, n_1=n_2=n$ 的典型情形下，这个简单测试**到常数因子是 Neyman-Pearson 最优**（Theorem 4.3）。
-    - 设计动机：把变更检测从"分布距离估计"降级为"看新样本里有没有从未见过的 token"，极大降低对采样次数的要求。理论上 Type-I 误差 $\le k e^{-n_1/k} + k e^{-n_2/k}$、Type-II 误差 $\le p_1^{n_1} p_2^{n_2}$，给出非渐近保证。
+理论指向 BI，但要在不接触权重的前提下找到它们。作者的办法是对 $n$ 个随机输入各在 $T=0$ 下采 $m=3$ 次：BI 因为受推理非确定性 + 浮点舍入影响，3 次采样大概率落出 ≥2 个不同 token，而非 BI 永远吐同一个 token，于是"出现 ≥2 token"就是 BI 的判据。$T=0$ 下 BI 的输出恰好是支持集上的均匀分布 $\text{Unif}(S_1)$，这让检测从"估计分布距离"塌缩成最朴素的支持集差检验：$H_0: S_1=S_2$ vs $H_1: S_1\ne S_2$，拒绝域就是 $\mathcal R = (\hat S_1 \setminus \hat S_2) \cup (\hat S_2 \setminus \hat S_1) \ne \emptyset$——只要冒出从没见过的 token 就报警。漂亮之处在于：作者证明在 $k=2,\ n_1=n_2=n$ 的典型情形下，这个五行代码级别的测试到常数因子就是 Neyman-Pearson 最优（Theorem 4.3），还给出非渐近保证 Type-I $\le k e^{-n_1/k} + k e^{-n_2/k}$、Type-II $\le p_1^{n_1} p_2^{n_2}$。这等于把采样次数的需求压到极低，是 B3IT 省钱的核心。
 
-3. **$m=3$ 与多 prompt 聚合的工程设计**:
+**3. $m=3$ 与多 prompt 聚合：把成本压到最低、把准确率拉到最高。**
 
-    - 功能：把 BI 搜索成本降到最低，并通过多 prompt 平均提升信号噪声比。
-    - 核心思路：BI 搜索时每候选采样 $m$ 次的目标是判定"是否产生 ≥2 token"；信封背估算（附录 C）给出 $m=3$ 在 BI 比例 < 75% 时是最优 BI/请求比。Detection 时把单 prompt 的 TV 距离做 ROC 曲线，再对 5 个 prompt 的 per-prompt TV 取平均作为检测统计量——多 prompt 聚合显著提升 ROC AUC（5 prompts × 10 samples 比 1 prompt × 50 samples 更准）。
-    - 设计动机：成本是黑盒方法的关键瓶颈；$m=3$ 是数学上最优、工程上最便宜的选择；多 prompt 聚合用同样 token 预算换更高检测准确率，体现"宽而浅"优于"窄而深"的统计直觉。
+成本是黑盒方法的命门，这点专攻两个工程旋钮。一是 BI 搜索时每候选采几次：目标只是判"会不会出 ≥2 token"，附录 C 的信封背估算给出当 BI 比例 < 75% 时 $m=3$ 是最优的 BI/请求比，既数学最省又工程最便宜。二是检测时怎么用 token 预算：与其在单个 prompt 上深采，不如把 5 个 prompt 各自的 TV 距离取平均当检测统计量——同样的 token 预算下，5 prompts × 10 samples 的 ROC AUC 明显高于 1 prompt × 50 samples。这印证了一个统计直觉："宽而浅"地铺开多个独立 BI 比"窄而深"地死磕一个更划算。
 
-### 损失函数 / 训练策略
-完全 training-free。检测协议：BI 数 = 5、参考采样 = 50、检测采样 = 3、间隔 = 24 小时、判定阈值 = mean TV $< 0.5 \to > 0.5$ 持续 ≥4 天才算 persistent change（避免短暂抖动）。
+### 训练策略
+方法完全 training-free，无需任何梯度或权重访问。落地检测协议固定为：BI 数 = 5、参考采样 $n_1=50$、检测采样 $n_2=3$、检测间隔 = 24 小时；判定上要求 mean TV 从 $<0.5$ 跨到 $>0.5$ 且持续 ≥4 天才算 persistent change，以滤掉短暂抖动造成的误报。
 
 ## 实验关键数据
 

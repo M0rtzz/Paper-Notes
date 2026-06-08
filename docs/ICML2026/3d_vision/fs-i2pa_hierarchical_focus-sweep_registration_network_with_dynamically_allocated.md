@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是同场景的 RGB 图像 $I\in\mathbb{R}^{H\times W\times 3}$ 和点云 $P\in\mathbb{R}^{N\times 3}$，目标输出刚体变换 $[R,\mathbf{t}]$。整体 pipeline 是 coarse-to-fine：用 ResNet+FPN 抽 2D 多尺度特征 $F_{Ia},F_{Ib},F_{Ic}$，用 KPFCNN 抽点云特征 $F_P$；先经过一层 self/cross-attention 做初步桥接；然后进入核心的 Hierarchical Focus-Sweep Interaction Module，对三个尺度上的图像特征轮流做 Focus（全局尺度对齐）和 Sweep（分块精细交互），每个尺度上的 FS-Layer 迭代次数由 Dynamic Layer Allocation Strategy 的 RL 策略网络决定；最后把多尺度图像特征拼起来，与三个尺度的点云特征分别算余弦相似度后取逐元素 max 得到 score map，做 top-k patch 匹配并细化到像素级，最后用 PnP+RANSAC 求位姿。
+FS-I2P 要解决的是图像到点云的 detection-free 配准：输入同场景的 RGB 图像 $I\in\mathbb{R}^{H\times W\times 3}$ 和点云 $P\in\mathbb{R}^{N\times 3}$，输出刚体变换 $[R,\mathbf{t}]$。它的整体思路是把人“先扫一眼估个大概、再分块逐处细看”的两阶段观察过程做成网络结构，用 Mamba 扫描替换 Transformer 交叉注意力，并让每个尺度看几遍由数据自己决定。
+
+具体走 coarse-to-fine：先用 ResNet+FPN 抽出三个尺度的图像特征 $F_{Ia},F_{Ib},F_{Ic}$、用 KPFCNN 抽点云特征 $F_P$，过一层 self/cross-attention 做初步桥接；随后进入核心的层级 Focus-Sweep 交互模块，对每个尺度的图像特征先做 Focus 全局粗对齐、再做 Sweep 分块精细交互，而每个尺度上这对 FS-Layer 重复几次则交给一个 RL 策略网络动态分配；交互完成后把多尺度图像特征拼接，与三尺度点云特征分别算余弦相似度并逐元素取 max 得到 score map，据此做 top-k patch 匹配、细化到像素级，最后用 PnP+RANSAC 解算位姿。
 
 ### 关键设计
 
-1. **Focus（基于范数适配的全局粗对齐）**:
+**1. Focus：用点云的整体尺度一次性把图像特征「对准」，避免逐层注意力漂移**
 
-    - 功能：用整朵点云的“总体尺度”一次性调制图像特征，建立粗对应，相当于人的“先扫一眼”。
-    - 核心思路：把点云特征 $F_P$ 全局 average pool 后通过 linear 投影出三组通道级因子 $[\alpha,\beta,\gamma]=\text{Linear}(\text{AvgPool}(F_P))$，再用 $F'_i=\gamma\cdot\text{VSSM}(\alpha\cdot F_i+\beta)+F_i$ 修改图像特征的统计量；VSSM 是 VMamba 里的视觉 SSM 前馈层。这个操作没有显式的 cross-attention 矩阵，开销极小但能把图像通道的均值/方差“按点云口味”重排，把多尺度图像特征与点云尺度对齐。
-    - 设计动机：作者发现 Transformer 在尺度不一致时容易让早期注意力偏差被反复放大，而把粗对齐做成一次性的 norm 调制，可以避免后续 SSM 被错误尺度反复带偏。
+Focus 对应人观察时的「先扫一眼」，针对的痛点是 Transformer 在图像-点云尺度不一致时，早期注意力的小偏差会被后续层反复放大（Matthew 效应）。它不建任何显式 cross-attention 矩阵，而是把整朵点云的「总体口味」压成几个通道级调制因子来重排图像统计量：先对 $F_P$ 做全局 average pool 再线性投影出三组因子 $[\alpha,\beta,\gamma]=\text{Linear}(\text{AvgPool}(F_P))$，然后以 $F'_i=\gamma\cdot\text{VSSM}(\alpha\cdot F_i+\beta)+F_i$ 调整图像特征的均值/方差（VSSM 是 VMamba 的视觉 SSM 前馈层）。因为粗对齐被压缩成一次性的 norm 调制，开销极小，又能把多尺度图像特征整体拉到点云的尺度上，从源头避免后续 Sweep 的 SSM 被错误尺度反复带偏。
 
-2. **Sweep（Partition-Scan-Recover 局部分块交互）**:
+**2. Sweep：把点云序列反复插进图像 patch 之间，借 SSM 的近因偏好做精细分块对齐**
 
-    - 功能：在 Focus 之后逐区域精细比对，相当于“分块来回看”，是 FS-I2P 准确匹配的主力模块。
-    - 核心思路：先 Partition——把图像 $F_i\in\mathbb{R}^{h\times w\times C}$ 按窗口大小 $o$ 分成 $P=hw/o^2$ 个不重叠 patch $[F_i^1,\dots,F_i^t]$；然后 Scan——构造混合序列 $F_H=[F_i^1 F_P, F_i^2 F_P,\dots, F_i^t F_P]$，把点云序列在每个图像 patch 后面重复插入，再过一层 VSSM；最后 Recover——把扫描后的序列拆回图像特征（直接重排），点云特征用可学习权重 $\lambda=[\lambda_1,\dots,\lambda_t]$ 做加权平均 $F_P^{re}=\sum_u \lambda_u F_P^t/t$。利用 SSM “越靠近当前时刻的 token 越被关注”的特性，每次进入新 patch 时点云序列被“重新提醒一次”，迫使模型反复对齐当前区域与全局点云。
-    - 设计动机：传统 cross-attention 在不同 patch 之间没有顺序约束，注意力很容易飘；而把点云重复插入图像 patch 之间，用 SSM 的方向性扫描就能既保住局部精细对齐，又保留全局接收域，同时 Mamba 的线性复杂度让密集交互可行。
+Sweep 对应「分块来回看」，是准确匹配的主力，要解决的是 cross-attention 在不同 patch 间缺乏顺序约束、注意力容易飘的问题。它分 Partition-Scan-Recover 三步：Partition 把图像 $F_i\in\mathbb{R}^{h\times w\times C}$ 按窗口 $o$ 切成 $P=hw/o^2$ 个不重叠 patch $[F_i^1,\dots,F_i^t]$；Scan 构造混合序列 $F_H=[F_i^1 F_P, F_i^2 F_P,\dots, F_i^t F_P]$，即在每个图像 patch 后面重复插入一遍点云序列再过一层 VSSM；Recover 把扫描结果拆回图像特征（直接重排），点云特征则用可学习权重 $\lambda=[\lambda_1,\dots,\lambda_t]$ 加权平均 $F_P^{re}=\sum_u \lambda_u F_P^t/t$。关键在于 SSM 对「越靠近当前时刻的 token 越敏感」，每进入一个新 patch，紧跟其后的点云序列就把模型「重新提醒一次」，迫使它反复对齐当前局部区域与全局点云；这样既保住局部精细比对、又留住全局接收域，而 Mamba 的线性复杂度让这种密集重复插入在算力上可行。
 
-3. **Dynamic Layer Allocation（RL 驱动的层数自适应）**:
+**3. Dynamic Layer Allocation：用 RL 给每个尺度选「看几遍」，把离散深度决策变成可学策略**
 
-    - 功能：为三个尺度 $\{n_1,n_2,n_3\}$ 各自动态选取 FS-Layer 的迭代次数（允许某层为 0 即跳过该尺度交互），不再用固定深度。
-    - 核心思路：从图像 token 和点云 token 的 mean+max pooling 拼成状态 $s$，用轻量策略网络 $g_\theta$ 输出动作 logits $\mathbf{z}=g_\theta(s)$，得到候选深度上的类别分布 $\pi_\theta(n\mid s)=\text{Softmax}(\mathbf{z})$；训练时采样 $a\sim\pi_\theta(\cdot\mid s)$ 并记录 $\log p=\log\pi_\theta(a\mid s)$，推理时贪婪取 $a=\arg\max \mathbf{z}$；奖励来自全局配准约束（Inlier Ratio / FMR / RR 等），用 policy gradient 更新策略。
-    - 设计动机：层数选择是离散不可微的，无法靠普通梯度学习；而 RL 自然契合“看到目标才停”的人类行为——少了不够准、多了引入噪声，用全局约束作为奖励比 ad-hoc 启发式更直接。
+这一设计让三个尺度的 FS-Layer 迭代次数 $\{n_1,n_2,n_3\}$ 各自由数据决定（允许某尺度取 0、直接跳过该尺度交互），不再固定深度。痛点在于层数是离散、不可微的，普通梯度下降学不了，而堆太少不够准、堆太多又会漂移。做法是把图像 token 与点云 token 的 mean+max pooling 拼成状态 $s$，用轻量策略网络 $g_\theta$ 输出动作 logits $\mathbf{z}=g_\theta(s)$，得到候选深度上的类别分布 $\pi_\theta(n\mid s)=\text{Softmax}(\mathbf{z})$；训练时采样动作 $a\sim\pi_\theta(\cdot\mid s)$ 并记录 $\log p=\log\pi_\theta(a\mid s)$，推理时贪婪取 $a=\arg\max\mathbf{z}$。奖励直接来自全局配准约束（Inlier Ratio / FMR / RR 等），用 policy gradient 更新。相比拍脑袋设固定深度或手工启发式，用全局配准质量当奖励，自然对应人「看到目标就停」的行为，也让深度选择对不同场景自适应。
 
 ### 损失函数 / 训练策略
-训练目标 = 标准 I2P 配准损失（patch-level 对应监督 + 细化级监督）+ 策略梯度 $\mathcal{L}_{RL}=-\mathbb{E}[R\cdot\log p]$，其中 $R$ 由配准 inlier 数 / 距离误差构造。最大允许深度 $l_{\max}$ 是超参，三个尺度可独立选 0..$l_{\max}$。
+训练目标 = 标准 I2P 配准损失（patch-level 对应监督 + 细化级监督）+ 策略梯度 $\mathcal{L}_{RL}=-\mathbb{E}[R\cdot\log p]$，其中奖励 $R$ 由配准 inlier 数 / 距离误差构造。最大允许深度 $l_{\max}$ 是超参，三个尺度可独立在 $0..l_{\max}$ 间选取。
 
 ## 实验关键数据
 

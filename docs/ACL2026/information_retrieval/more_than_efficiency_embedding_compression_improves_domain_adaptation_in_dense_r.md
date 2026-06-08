@@ -44,26 +44,21 @@ tags:
 给定 query 集合 $Q=\{q_i\}_{i=1}^{n}$ 和 document 集合 $D=\{d_j\}_{j=1}^{m}$，encoder 先得到 $d$ 维表示。PCA 在目标域 embedding 矩阵上学习投影 $W \in \mathbb{R}^{d \times d'}$，其中 $d' < d$。检索时使用 $q'_i=(q_i-\mu)W$ 和 $d'_j=(d_j-\mu)W$，再计算 $q'_i$ 与 $d'_j$ 的 cosine similarity 排序。默认实验使用保留比例 $r=0.9$，并在分析中扫描 0.1 到 1.0 的 retention ratios。
 
 ### 关键设计
-1. **Query Compression**:
 
-	- 功能：只用目标域 query embeddings 拟合 PCA，再把同一个投影用于 query 和 document。
-	- 核心思路：query 分布更直接表达用户的信息需求，主成分更可能对应“该域内区分 query intent 的轴”。投影后，检索更关注这些任务相关方向。
-	- 设计动机：document corpus 的高方差可能来自主题、文体或长度差异，不一定等价于 relevance 区分；query-only PCA 更贴近 retrieval objective。
+**1. Query Compression：只用目标域 query 拟合 PCA，再把同一个投影套到 document 上。**
 
-2. **Query+Document Compression 对照**:
+跨域检索的传统做法要么标注 relevance 要么微调 encoder，都贵；而 document corpus 的高方差往往来自主题、文体、长度的差异，不一定等于「能区分 relevance」的轴。这篇论文反过来只用目标域 query embedding 拟合 PCA——query 分布更直接表达用户的信息需求，它的主成分更可能对应「该域内区分 query intent」的方向。把 query 和 document 都投影进这个 query 驱动的子空间后，检索的相似度计算就更聚焦在任务相关方向上，等于在不动模型、不要标签的前提下做了一次域适配。实验里这个设置在 95/126（75.4%）的模型-数据集组合上提升 NDCG@10，是三种设置里最稳的。
 
-	- 功能：用 query 和 document 的并集拟合 PCA，检验“更完整的目标域方差”是否更有用。
-	- 核心思路：如果 document 主方差确实代表域语义结构，query+document 应该更强；反之，如果它引入宽泛主题噪声，就会稀释 query intent。
-	- 设计动机：这个对照帮助证明提升不是简单来自降维或效率，而是来自拟合样本选择。
+**2. Query+Document Compression 对照：检验「更完整的目标域方差」是不是真的更好。**
 
-3. **Retention Ratio 扫描与域熟悉度分析**:
+光有 Query Compression 的好结果还不够，得排除「提升只是来自降维或压缩本身」这种平凡解释。于是论文设了对照组：用 query 和 document 的并集拟合 PCA。逻辑很直接——如果 document 的主方差真代表域的语义结构，query+document 应该更强；如果它只是引入了宽泛主题噪声，就会稀释 query intent。结果是它只在 56.3% 组合上提升，且出现 Apps 上 Dis-RoBERTa 暴跌 -52.8% 这种反例，正好反证了收益来自「拟合样本的选择」而非降维这一动作本身。
 
-	- 功能：分析压缩比例和模型原有域熟悉度如何影响收益。
-	- 核心思路：对多个 retention ratios 重新评估 NDCG@10，并用 paraphrase robustness 定义 domain familiarity，即模型对同一文本及其 paraphrases 的 embedding 稳定性。
-	- 设计动机：PCA 是否有效可能与数据结构、模型本身和压缩强度共同相关，不能只报告一个默认比例。
+**3. Retention Ratio 扫描与域熟悉度分析：把「压多少、对谁有效」摊开来量化。**
+
+PCA 有效与否不能只报一个默认比例，它可能和数据结构、模型本身、压缩强度三者纠缠。论文因此在 0.1 到 1.0 的 retention ratio 上重扫 NDCG@10（默认 $r=0.9$），并用 paraphrase robustness 定义 domain familiarity——即模型对同一文本及其 paraphrase 的 embedding 稳定性。扫描结果显示适度压缩能同时保留信息和去噪（如 CodeSearch 上 Sent-T5 从 63.0 升到 87.3），而结构化 query 域（医学问答、空间推理）即便压到 10%-40% retention 仍然抗打，说明 PCA 的收益是多因子的，必须按模型和数据验证而非一刀切。
 
 ### 损失函数 / 训练策略
-本文没有训练损失函数，也不更新 encoder。唯一的“学习”是标准 PCA：对样本矩阵 $X$ 做均值中心化，寻找正交投影 $W$ 使投影后方差最大，即保留协方差矩阵的 top-$d'$ eigenvectors。检索评分仍是投影空间中的 cosine similarity。
+本文没有训练损失函数，也不更新 encoder。唯一的「学习」是标准 PCA：对样本矩阵 $X$ 做均值中心化，求正交投影 $W$ 使投影后方差最大，即保留协方差矩阵的 top-$d'$ eigenvectors。检索评分仍是投影空间里的 cosine similarity。
 
 ## 实验关键数据
 

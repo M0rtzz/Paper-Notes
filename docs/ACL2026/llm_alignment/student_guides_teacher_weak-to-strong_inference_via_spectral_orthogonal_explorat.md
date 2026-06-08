@@ -40,26 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SOE 是一个 inference-time framework。给定一道难题，教师模型先 greedy decoding 生成完整推理链；如果结果错误，就把这条失败轨迹视作候选 collapse 样本，并在关键推理节点处截断成多个 prefix。对每个 prefix，教师生成若干 Monte Carlo look-ahead 轨迹，用这些轨迹的隐藏状态估计局部 bias manifold。随后学生模型在同一 prefix 下生成固定长度为 8 tokens 的候选 probe，系统把每个 probe 映射到教师隐藏空间，选择相对于教师 dominant subspace 最正交的一个，再把它 stitch 到 prefix 后，让教师继续采样完成推理。
+SOE 要解决的是：教师模型在难题上反复沿同一错误逻辑采样，提高 temperature 只能换换词面、换不掉推理方向。它是一个纯推理时框架：输入一道教师 greedy decoding 已经做错的难题，把这条失败轨迹在关键推理节点截断成多个 prefix；对每个 prefix，教师生成若干条 Monte Carlo look-ahead 轨迹来估计当前的局部 bias manifold，同时让弱学生模型在同一 prefix 下生成固定 8 tokens 的短 candidate probe；系统把每个 probe 映射回教师隐藏空间，选出相对教师 dominant subspace 最正交的一个拼接到 prefix 后，输出是教师从一个全新几何方向续写出来的推理链。整个过程不训练、不改参数。
 
 ### 关键设计
-1. **低秩推理塌缩诊断**:
+**1. 低秩推理塌缩诊断：把"模型一直绕错路"变成可测量的谱退化。**
 
-    - 功能：把“模型一直绕错路”转化成可测的隐藏空间谱退化现象。
-    - 核心思路：把推理链隐藏状态写成 $H_t=[h_1,h_2,\ldots,h_t]$，在滑动窗口内计算局部协方差 $\Sigma_t$，再用 effective rank $\mathrm{EffRank}(\Sigma_t)=\exp(-\sum_j \tilde{\sigma}_j\log \tilde{\sigma}_j)$ 衡量轨迹维度。错误且冗长的推理链会随着生成推进出现明显 rank decay，说明状态越来越集中到低维 bias manifold。
-    - 设计动机：Reasoning collapse 不只是文本重复或长度过长，而是可能对应更底层的表示空间收缩；有了谱指标，后续干预才有几何目标。
+Reasoning collapse 以往只能靠输出重复或过长来主观判断，SOE 把它落到隐藏空间的谱指标上。把推理链隐藏状态写成 $H_t=[h_1,h_2,\ldots,h_t]$，在滑动窗口内计算局部协方差 $\Sigma_t$，再用 effective rank $\mathrm{EffRank}(\Sigma_t)=\exp(-\sum_j \tilde{\sigma}_j\log \tilde{\sigma}_j)$ 衡量轨迹的有效维度。错误且冗长的推理链随生成推进会出现明显的 rank decay，说明状态越来越集中到低维 bias manifold。
 
-2. **Micro-SVD 局部流形估计**:
+这个诊断是后续干预的几何靶：reasoning collapse 不只是文本重复或长度超标，而是对应更底层的表示空间收缩。有了谱指标，"让教师跳出原轨迹"才有一个明确的几何目标。
 
-    - 功能：低成本估计教师当前上下文中的 dominant subspace。
-    - 核心思路：在截断点 $t$，教师采样 $N$ 条 look-ahead 轨迹，聚合每条轨迹的隐藏状态 $h_i$，中心化组成矩阵 $H$。直接分解 $d\times d$ 协方差太贵，因此先构造 $N\times N$ Gram matrix $G=H^T H$，求解其特征向量，再恢复 top-$k$ principal components $U_{\parallel}$。
-    - 设计动机：推理时方法必须足够轻量。Micro-SVD 利用样本数远小于隐藏维度的事实，把大矩阵谱分解变成小矩阵问题。
+**2. Micro-SVD 局部流形估计：用小矩阵谱分解换出 dominant subspace。**
 
-3. **Orthogonal Latent Stitching**:
+推理时方法必须足够轻量。在截断点 $t$，教师采样 $N$ 条 look-ahead 轨迹，聚合每条轨迹的隐藏状态 $h_i$ 并中心化组成矩阵 $H$。直接分解 $d\times d$ 协方差太贵，因此先构造 $N\times N$ Gram matrix $G=H^T H$，求其特征向量，再恢复出 top-$k$ principal components $U_{\parallel}$。
 
-    - 功能：从弱学生候选中选择最能把教师推出当前 bias manifold 的短文本片段。
-    - 核心思路：学生生成候选集合 $\mathcal{C}_{Student}=\{s_1,\ldots,s_M\}$，每个候选经过教师前向传播得到 latent vector $z_j$。用投影矩阵 $P_{\parallel}=U_{\parallel}U_{\parallel}^T$ 计算正交残差 $r_j=(I-P_{\parallel})(z_j-\hat{\mu})$，选择归一化残差能量 $\|r_j\|_2/(\|z_j-\hat{\mu}\|_2+\epsilon)$ 最大的候选。
-    - 设计动机：弱学生的短 probe 不被当作最终答案，而是作为几何扰动。这样既能利用异质性，又降低弱学生知识错误污染最终答案的风险。
+这里利用的是 look-ahead 样本数 $N$ 远小于隐藏维度 $d$ 这一事实，把原本庞大的高维谱分解转化成一个小矩阵问题，让推理时的几何诊断变得可操作。
+
+**3. Orthogonal Latent Stitching：从弱学生候选中挑出最能推动教师的短探针。**
+
+弱学生生成候选集合 $\mathcal{C}_{Student}=\{s_1,\ldots,s_M\}$，每个候选经教师前向传播得到 latent vector $z_j$。用投影矩阵 $P_{\parallel}=U_{\parallel}U_{\parallel}^T$ 计算正交残差 $r_j=(I-P_{\parallel})(z_j-\hat{\mu})$，选择归一化残差能量 $\|r_j\|_2/(\|z_j-\hat{\mu}\|_2+\epsilon)$ 最大的候选拼到 prefix 后。
+
+这里的克制之处在于：弱学生的短 probe 从不被当成最终答案，只作为几何扰动，负责把教师推出当前 bias manifold。这样既能利用弱学生结构上的异质性，又避免了弱学生本身的知识错误污染最终答案——它的价值来自和教师错误轨迹"不共线"，而不是绝对能力更强。
 
 ### 损失函数 / 训练策略
 SOE 不训练教师或学生，也没有新的损失函数。实验中教师默认为 Qwen3-4B-Instruct-2507，学生默认为 Gemma-3-4B-IT；baseline 是教师在同一 prompt 下以 $T=0.7$ 做 self-consistency 采样。SOE 让学生以 $T=1.0$ 生成 8 个短 probe，教师后续采样仍使用 $T=0.7$，最大上下文长度为 8192 tokens。答案通过正则归一化和 MathEvaluator 抽取核验。

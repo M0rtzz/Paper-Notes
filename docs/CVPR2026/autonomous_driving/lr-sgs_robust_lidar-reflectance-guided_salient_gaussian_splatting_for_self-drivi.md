@@ -43,39 +43,33 @@ LR-SGS 提出利用 LiDAR 反射率引导的结构感知 Salient Gaussian 表示
 
 ### 整体框架
 
-输入为 RGB 图像序列和 LiDAR 点云序列。方法构建一个 3DGS 场景图（背景、动态物体、天空节点），其中初始场景 Gaussian 由两部分组成：从 LiDAR 特征点初始化的 Salient Gaussian 和从 SfM 点初始化的 Non-Salient Gaussian。通过渲染得到彩色图、深度图和反射率图，使用 Color Loss + LiDAR Loss + Joint Loss 联合优化所有 Gaussian 的位置、不透明度、尺度、旋转、外观和反射率属性。
+LR-SGS 想解决的是纯相机 3DGS 在夜间、逆光等复杂光照下重建不稳定的问题，办法是把 LiDAR 里一直被忽视的反射率和结构信息接进 Gaussian 表示。整条流水线这样转：先把每帧 LiDAR 的原始强度校正成光照不变的反射率，并从点云里挑出边缘、平面、材质突变这三类"结构关键点"；用这些特征点初始化一批参数更省、专门贴合边缘和平面的 Salient Gaussian，再用常规 SfM 点补上其余的 Non-Salient Gaussian。两类 Gaussian 一起放进背景/动态物体/天空的场景图，渲染出彩色图、深度图和反射率图后，用 Color Loss、LiDAR Loss 和跨模态 Joint Loss 联合优化每个 Gaussian 的位置、不透明度、尺度、旋转、外观和反射率属性。训练过程中还会根据每个 Gaussian 实际呈现的形状，在 Salient 与 Non-Salient 之间双向切换。
 
 ### 关键设计
 
-#### 1. LiDAR 强度校准 (LiDAR Intensity Calibration)
+**1. LiDAR 强度校准：把强度还原成光照不变的材质反射率。**
 
-- **功能**：将 LiDAR 原始 intensity 校正为光照不变的反射率 $\rho$
-- **核心思路**：根据雷达方程 $I = \eta_{all} \frac{\rho \cos\alpha}{R^2}$，用距离 $R$ 和入射角 $\alpha$ 对 intensity 进行归一化校正。入射角通过点 $\mathbf{p}$ 与其邻域点 $\mathbf{p}_1, \mathbf{p}_2$ 构建局部法向量 $\mathbf{n}$ 来计算：$\cos\alpha = \frac{\mathbf{p}^T \cdot \mathbf{n}}{\|\mathbf{p}\|}$。校正后的反射率归一化到 $[0,1]$ 并投影到相机平面得到稀疏反射率图 $F_{gt}$
-- **设计动机**：原始 intensity 受距离和角度影响，不能直接作为材质属性。校正后的 reflectance 近似反映物体表面材质特性，不随光照变化，可作为稳定的跨帧约束信号
+LiDAR 原始 intensity 同时受距离和入射角影响——同一块材质，离得远、打得斜，回波就弱，所以它不能直接当材质属性用。本文按雷达方程 $I = \eta_{all}\frac{\rho\cos\alpha}{R^2}$ 反解出反射率 $\rho$：用每个点的距离 $R$ 和入射角 $\alpha$ 把这两个干扰因子除掉。入射角不是现成的，要先在点 $\mathbf{p}$ 的邻域里取 $\mathbf{p}_1,\mathbf{p}_2$ 构出局部法向量 $\mathbf{n}$，再算 $\cos\alpha = \frac{\mathbf{p}^T\mathbf{n}}{\|\mathbf{p}\|}$。校正后的反射率归一化到 $[0,1]$，投影到相机平面就得到一张稀疏反射率图 $F_{gt}$。这样得到的 $\rho$ 近似只跟表面材质有关、不随光照变化，于是它能在 RGB 信号最不可靠的弱纹理区和夜间场景里，提供一个稳定的跨帧约束信号。
 
-#### 2. Salient Gaussian 结构感知表示
+**2. Salient Gaussian 结构感知表示：用一个主方向 + 一个共享尺度替代三个独立尺度。**
 
-- **功能**：设计一种参数高效的结构化 Gaussian，分为 Edge 型（沿边缘拉长）和 Planar 型（沿平面压扁）
-- **核心思路**：每个 Salient Gaussian 具有一个主导方向 $d_{spec}$ 和对应的主导尺度 $\sigma_\|$，其余两轴共享一个尺度 $\sigma_\perp$。协方差矩阵简化为：Edge 型 $\Sigma_{edge} = \mathbf{R} \operatorname{diag}(\sigma_\|^2, \sigma_\perp^2, \sigma_\perp^2) \mathbf{R}^T$，Planar 型 $\Sigma_{plane} = \mathbf{R} \operatorname{diag}(\sigma_\perp^2, \sigma_\perp^2, \sigma_\|^2) \mathbf{R}^T$
-- **设计动机**：普通 3DGS 每个 Gaussian 有 3 个独立尺度参数，而环境中大量边缘和平面结构只需沿特定方向拉伸/压扁即可表征。减少参数的同时更准确地匹配环境特征
+标准 3DGS 每个 Gaussian 有三个独立尺度参数，但真实场景里大量结构其实是道路边线、车身轮廓这类边缘，或者地面、墙面这类平面——这些东西只需要"沿某个方向拉长"或"沿某个方向压扁"就能表征，三个自由度是浪费。Salient Gaussian 因此只保留一个主导方向 $d_{spec}$ 和对应的主导尺度 $\sigma_\|$，剩下两轴共用一个 $\sigma_\perp$。协方差矩阵相应退化成两类：
 
-#### 3. LiDAR 特征点初始化
+$$\Sigma_{edge} = \mathbf{R}\operatorname{diag}(\sigma_\|^2, \sigma_\perp^2, \sigma_\perp^2)\mathbf{R}^T, \qquad \Sigma_{plane} = \mathbf{R}\operatorname{diag}(\sigma_\perp^2, \sigma_\perp^2, \sigma_\|^2)\mathbf{R}^T$$
 
-- **功能**：从 LiDAR 点云中提取三类特征点来初始化 Salient Gaussian
-- **核心思路**：(a) 计算每个点的平滑度 $c_j = \frac{1}{|K| \cdot \|\mathbf{p}_j\|} \|\sum_{\mathbf{p}_i \in \mathcal{P}_j}(\mathbf{p}_i - \mathbf{p}_j)\|$，按阈值划分为 geometric edge points 和 geometric planar points；(b) 计算反射率梯度 $G_j$（沿同一环的左右邻域均值差），提取 reflectance edge points。三类特征点分别初始化 Edge/Planar Salient Gaussian
-- **设计动机**：与直接用全部 LiDAR 点初始化不同，特征点集中在结构关键位置（物体轮廓、道路边界、材质变化处），为训练提供稳定的结构脚手架，加速收敛
+Edge 型沿主方向拉成细长条贴合边缘，Planar 型沿主方向压扁贴合平面。少了一个尺度参数，却因为形状先验和真实结构对得更准，反而建模得更干净——这是后面效率优势（更少 Gaussian、更快收敛）的根源。
 
-#### 4. 改进密度控制与 Salient Transform
+**3. LiDAR 特征点初始化：只在结构关键处搭脚手架，而不是撒满全部点。**
 
-- **功能**：适配 Salient Gaussian 的分裂策略，并实现 Salient/Non-Salient 状态自适应切换
-- **核心思路**：分裂时，Edge Salient Gaussian 沿主导方向分裂，Planar 型在正交平面内分裂。定义 linearity $L(g) = (s_1 - s_2)/s_1$ 和 planarity $P(g) = (s_2 - s_3)/s_1$。Non-Salient Gaussian 若连续两次 $\max\{L, P\} > \tau_{max}=0.5$ 则升级为 Salient；Salient Gaussian 若连续两次 $\max\{L, P\} < \tau_{min}=0.1$ 则降级为 Non-Salient
-- **设计动机**：训练过程中场景结构会动态变化，Salient Gaussian 需要能在 LiDAR 未覆盖区域自然生长，也需要排除不再具有明确方向性的冗余 Salient Gaussian
+有了两种 Salient Gaussian，还得知道往哪儿放。本文不像 PVG/OmniRe 那样拿全部 LiDAR 点做初始化，而是先从点云里筛出三类特征点。几何上算每个点的平滑度 $c_j = \frac{1}{|K|\cdot\|\mathbf{p}_j\|}\|\sum_{\mathbf{p}_i\in\mathcal{P}_j}(\mathbf{p}_i - \mathbf{p}_j)\|$，按阈值把曲率大的判为 geometric edge points、曲率小的判为 geometric planar points；材质上算反射率梯度 $G_j$（沿同一扫描环取左右邻域均值之差），梯度大的判为 reflectance edge points。三类点分别初始化成 Edge 或 Planar Salient Gaussian。因为这些点正好落在物体轮廓、道路边界、材质变化这些"信息密集"的位置，等于给训练先搭好了一副结构脚手架，让优化从一开始就贴着真实结构走、收敛更快。
 
-#### 5. RGB-反射率跨模态一致性 (Joint Loss)
+**4. 改进密度控制与 Salient Transform：让分裂顺着形状走，并允许两类 Gaussian 互相转化。**
 
-- **功能**：对齐渲染反射率与灰度 RGB 图像的梯度方向和幅度
-- **核心思路**：先将渲染 RGB 转为灰度 $C^g$，与渲染反射率 $F$ 分别做高斯平滑和 Scharr 梯度。Joint Loss 由两部分组成：方向一致性 $\mathcal{L}_{dir} = 1 - \hat{\nabla}F \cdot \hat{\nabla}C^g$（归一化梯度向量点积）；幅度一致性 $\mathcal{L}_{val} = \|g_F / F - g_{C^g} / C^g\|_1$（归一化幅度 L1 差异，消除跨模态尺度差异）
-- **设计动机**：材质边界在 RGB 和反射率中都应表现为显著梯度，但两者的绝对尺度不同。通过对齐归一化梯度方向和幅度，可以在不引入尺度偏差的情况下锐化材质边界，减少模糊伪影
+结构会在训练中变化，初始化时的判断未必一直成立，所以密度控制也得跟着改。分裂时不再各向同性地复制：Edge Salient Gaussian 沿主导方向分裂、Planar 型在正交平面内分裂，保证子 Gaussian 继承父代的结构取向。更关键的是 Salient Transform——用每个 Gaussian 的奇异值定义 linearity $L(g) = (s_1 - s_2)/s_1$ 和 planarity $P(g) = (s_2 - s_3)/s_1$ 来衡量它现在到底有多"像边/像面"。一个 Non-Salient Gaussian 若连续两次满足 $\max\{L, P\} > \tau_{max}=0.5$，就升级成 Salient；反过来 Salient Gaussian 若连续两次 $\max\{L, P\} < \tau_{min}=0.1$，就降级回 Non-Salient。这套双向"晋升/降级"机制有两个用处：在 LiDAR 没扫到的区域，Non-Salient Gaussian 也能在优化中长出明确方向性后自动升级，把结构建模扩展到全场景；同时把那些已经失去方向性的冗余 Salient Gaussian 及时摘掉，避免硬分类带来的误判固化。
+
+**5. RGB-反射率跨模态一致性 (Joint Loss)：对齐梯度而不是对齐像素值。**
+
+反射率图和 RGB 图都能看出材质边界，理论上应该互相印证，但直接逐像素对齐它们没有物理意义——一个是反射率、一个是亮度，量纲都不一样。Joint Loss 改成对齐梯度：先把渲染 RGB 转灰度 $C^g$，和渲染反射率 $F$ 各自做高斯平滑、算 Scharr 梯度，再从方向和幅度两头约束。方向一致性 $\mathcal{L}_{dir} = 1 - \hat{\nabla}F\cdot\hat{\nabla}C^g$ 让两张图的梯度指向同一边界；幅度一致性 $\mathcal{L}_{val} = \|g_F/F - g_{C^g}/C^g\|_1$ 比较的是各自归一化后的梯度强度，用除以自身值的方式抹掉跨模态的绝对尺度差。这样既能借反射率把模糊的材质边界锐化清楚，又不会因为两种信号尺度不同而引入偏差，最终在车牌、灯组这类高频区域明显减少模糊伪影。
 
 ### 损失函数 / 训练策略
 

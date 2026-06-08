@@ -51,23 +51,17 @@ TriPS 的骨架是一个标准的 Flow Matching 后验采样器（基于 SD3.5-M
 
 ### 关键设计
 
-1. **三体耦合诊断 + 命题 1（残差范数对 CFG 的一阶导）**：
+**1. 三体耦合诊断 + 命题 1：把"CFG 拖累 DC"变成可监测的标量信号**
 
-    - 功能：把"CFG 是否拖累 DC"这件直觉，变成一个可监测的标量信号。
-    - 核心思路：将下一步期望残差范数对 CFG 标度求一阶导，得到 $\partial_{\lambda(t)}\mathbb{E}[\mathcal{R}(\hat{x}_{0|t+\Delta t})|x_t]=-\Delta t\langle\tilde{b}_\text{dc},\tilde{b}_\text{cfg}\rangle+o(\Delta t)$。当内积为负（早期普遍如此），增大 $\lambda$ 反而拖慢残差下降，提供"早期 $\lambda$ 必须低"的硬性数学证据。配合 $\text{COS-SIM}_2$ 实证显示随机性是把 $b_\text{det}$ 拉回 score 方向的唯一变量，从而推出"早期 $\eta$ 必须高、$\beta$ 必须高"的协同结论。
-    - 设计动机：以往工作只给经验调度，缺少为什么 CFG 不能从头开足、为什么需要噪声"喂回"流形的理论解释；这套诊断让三体趋势 $\beta\downarrow,\lambda\uparrow,\eta\downarrow$ 不再是炼丹直觉，而是数学 + 几何双向验证。
+以往工作只给经验调度，没人解释为什么 CFG 不能从头开足、为什么需要噪声把轨迹"喂回"流形。本文把下一步期望残差范数对 CFG 标度求一阶导，得到 $\partial_{\lambda(t)}\mathbb{E}[\mathcal{R}(\hat{x}_{0|t+\Delta t})|x_t]=-\Delta t\langle\tilde{b}_\text{dc},\tilde{b}_\text{cfg}\rangle+o(\Delta t)$：当 DC 漂移与 CFG 漂移的内积为负（早期普遍如此），增大 $\lambda$ 反而拖慢残差下降，这就给出"早期 $\lambda$ 必须低"的硬性数学证据。配合 $\text{COS-SIM}_2$ 的实证——增大 $\beta$ 或 $\lambda$ 都让总漂移偏离 score 方向，唯独增大 $\eta$ 能把 $b_\text{det}$ 拉回 score 方向——进一步推出"早期 $\eta$ 必须高、$\beta$ 必须高"。三个结论拼在一起，让三体趋势 $\beta\downarrow,\lambda\uparrow,\eta\downarrow$ 不再是炼丹直觉，而是数学（命题 1）+ 几何（余弦相似度）的双向验证。
 
-2. **$\text{TriPS}_\text{T}$：基于函数模板的离散调度搜索**：
+**2. $\text{TriPS}_\text{T}$：函数模板搜索，用最少自由度产出可解释 baseline**
 
-    - 功能：用最少自由度产出一个稳健、可解释的 baseline 调度。
-    - 核心思路：每条曲线只从三个函数族 $\mathcal{T}=\{\text{linear, exp, log}\}$ 里选一个，并且约束方向必须满足三体单调趋势；幅值用 $\lambda\in[1,6]$、$\eta\in[0,1]$、$\beta\in[\beta_\min^T,\beta_\max^T]$ 截断。于是每个任务的搜索空间只有 $|\mathcal{T}|^3=27$ 个组合（外加幅值的小网格），在小校准集 $\mathcal{D}_\text{cal}$ 上以多目标效用 $\mathcal{U}$（PSNR 与 LPIPS 的复合）做 grid search 选 $\tau^\star=\arg\max_\tau\mathcal{U}(\tau;\mathcal{D}_\text{cal})$。
-    - 设计动机：把"逐时间步独立标量"的高维优化坍缩成低维模板选择，避免在没有梯度的采样器上跑大规模数值优化；得到的曲线天然落在物理可行域里，可直接当作 GRPO 的 warm-start，省去探索冷启动期的崩溃风险。
+逐时间步独立调三个标量是高维优化，而采样器又没有梯度，直接跑大规模数值优化既贵又不稳。$\text{TriPS}_\text{T}$ 把这个高维问题坍缩成低维模板选择：每条曲线只从三个解析函数族 $\mathcal{T}=\{\text{linear, exp, log}\}$ 里挑一个，方向强制满足三体单调趋势，幅值则用 $\lambda\in[1,6]$、$\eta\in[0,1]$、$\beta\in[\beta_\min^T,\beta_\max^T]$ 截断。于是每个任务的搜索空间只剩 $|\mathcal{T}|^3=27$ 个组合（外加幅值的小网格），在小校准集 $\mathcal{D}_\text{cal}$ 上以 PSNR 与 LPIPS 复合的多目标效用 $\mathcal{U}$ 做 grid search，取 $\tau^\star=\arg\max_\tau\mathcal{U}(\tau;\mathcal{D}_\text{cal})$ 即可。得到的曲线天然落在物理可行域里，既能当稳健的可解释 baseline，又能直接作为 GRPO 的 warm-start，省去强化学习冷启动期的崩溃风险。
 
-3. **$\text{TriPS}_\text{G}$：Bernstein-Beta 参数化 + GRPO 调度强化学习**：
+**3. $\text{TriPS}_\text{G}$：Bernstein-Beta 参数化 + GRPO，把折中推到极限**
 
-    - 功能：超越固定函数族，捕捉模板装不下的复杂时变曲线，把感知-失真折中推到极限。
-    - 核心思路：每条曲线写成 $d$ 阶 Bernstein 多项式 $\tilde{s}(t)=\sum_{k=0}^d w_k^{(s)}B_{k,d}(t)$（$s\in\{\lambda,\beta,\eta\}$），系数 $w_k^{(s)}\sim\text{Beta}(a_k^{(s)},b_k^{(s)})$。Beta 样本天然属于 $(0,1)$，加上 Bernstein 基"和为 1"的单位分拆性质，使 $\tilde{s}(t)$ 必然落在 $(0,1)$，再仿射映回物理区间 $[s_\min,s_\max]$——这就把"必须在合法范围内探索"变成由参数化结构强制保证，避免 RL 策略发散。策略 $\pi_\theta$ 的参数 $\theta=\{a_k^{(s)},b_k^{(s)}\}$ 用 GRPO 训练：每轮采 $G$ 组系数 $\{\mathbf{w}_i\}$，跑完整 sampler 得到重建图，按混合奖励 $R=w_\text{dist}R_\text{dist}+w_\text{perc}R_\text{perc}$（PSNR + LPIPS + CLIP-IQA+ + Q-Align，全部归一为单调递增）算组内标准化优势 $\hat{A}_i$，用 PPO 风格的截断目标 $\max_\theta\mathbb{E}_i[\min(r_i\hat{A}_i,\text{clip}(r_i,1\pm\epsilon)\hat{A}_i)]-\beta_\text{KL}D_\text{KL}(\pi_\theta\|\pi_\text{ref})$ 更新，参考策略 $\pi_\text{ref}$ 初始化为 $\text{TriPS}_\text{T}$ 找出的 $\mathbf{S}_\text{T}$。
-    - 设计动机：GRPO 不需要 value network 也不需要可微 sampler（采样器对 $\theta$ 不可微，传统 actor-critic 跑不动），用组内标准化估计基线极适合"重新跑 sampler 才能拿到奖励"的设定；Bernstein-Beta 这套参数化是为了在 RL 探索时**结构性地不越界**，比单纯加惩罚项稳定得多。
+模板族装不下更复杂的时变曲线，所以 $\text{TriPS}_\text{G}$ 改用 $d$ 阶 Bernstein 多项式 $\tilde{s}(t)=\sum_{k=0}^d w_k^{(s)}B_{k,d}(t)$（$s\in\{\lambda,\beta,\eta\}$）表示每条曲线，系数 $w_k^{(s)}\sim\text{Beta}(a_k^{(s)},b_k^{(s)})$。这套参数化的精妙之处在于把"探索必须合法"塞进结构本身：Beta 样本天然落在 $(0,1)$，Bernstein 基又满足"和为 1"的单位分拆，二者叠加保证 $\tilde{s}(t)$ 必然在 $(0,1)$，再仿射映回物理区间 $[s_\min,s_\max]$，于是 RL 策略结构性地不会越界，比单纯加惩罚项稳定得多。策略 $\pi_\theta$ 的参数 $\theta=\{a_k^{(s)},b_k^{(s)}\}$ 用 GRPO 训练：每轮采 $G$ 组系数 $\{\mathbf{w}_i\}$，各自跑完整 sampler 得到重建图，按混合奖励 $R=w_\text{dist}R_\text{dist}+w_\text{perc}R_\text{perc}$（PSNR + LPIPS + CLIP-IQA+ + Q-Align，全部归一为单调递增）算组内标准化优势 $\hat{A}_i$，再用 PPO 风格的截断目标 $\max_\theta\mathbb{E}_i[\min(r_i\hat{A}_i,\text{clip}(r_i,1\pm\epsilon)\hat{A}_i)]-\beta_\text{KL}D_\text{KL}(\pi_\theta\|\pi_\text{ref})$ 更新。选 GRPO 是因为采样器对 $\theta$ 不可微、传统 actor-critic 跑不动，而 GRPO 既不需要 value network 也不需要可微 sampler，用组内标准化估基线恰好适配"重跑 sampler 才能拿到奖励"的设定；参考策略 $\pi_\text{ref}$ 直接初始化为 $\text{TriPS}_\text{T}$ 找出的 $\mathbf{S}_\text{T}$，既给 warm-start 又限制策略漂移。
 
 ### 损失函数 / 训练策略
 $\text{TriPS}_\text{T}$ 阶段无梯度训练，只在小校准集上跑 grid search。$\text{TriPS}_\text{G}$ 阶段以 PSNR、LPIPS、CLIP-IQA+、Q-Align 的加权和为奖励，组大小 $G$、KL 系数 $\beta_\text{KL}$、PPO 截断 $\epsilon$ 等超参在附录 E.2 中给出；参考策略固定为 $\text{TriPS}_\text{T}$ 的最优曲线，既提供 warm-start 又限制策略漂移。

@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **动态难度分级（Dynamic Difficulty Grading）**:
+**1. 动态难度分级（Dynamic Difficulty Grading）：用 rollout 正确率把样本路由到最合适的优化路径。**
 
-    - 功能：基于rollout结果将样本路由到最合适的优化路径
-    - 核心思路：对每个query采样k条轨迹并用二值奖励 $R(\tau_i) \in \{0,1\}$ 评估。全对→Easy（跳过），全错→Hard（SFT蒸馏），混合→Mid（RL优化）。这样Easy样本不贡献梯度（避免饱和），Hard样本避免无效RL探索，Mid样本获得最大信息量的RL信号
-    - 设计动机：统一优化策略无法应对样本难度的多样性。简单样本的梯度趋近于零（浪费计算），困难样本的奖励信号太稀疏导致RL梯度方差爆炸
+统一的优化策略无法应对样本难度的悬殊：简单样本的梯度趋近于零、白白浪费算力，困难样本的奖励信号又太稀疏、让 RL 梯度方差爆炸。DYPO 不另设分类器或奖励模型，而是直接复用 group rollout——对每个 query 采样 $k$ 条轨迹，用二值奖励 $R(\tau_i) \in \{0,1\}$ 评估每条对错。
 
-2. **多教师蒸馏（Multi-Teacher Distillation）**:
+按结果把 query 分三档并各走一条路：全对为 Easy，直接跳过、不贡献梯度，避开饱和样本的无效更新；全错为 Hard，交给多教师蒸馏做 SFT，避免在毫无正例的情况下空跑 RL 探索；部分对为 Mid，正负轨迹并存、信息量最大，交给 RL 优化拿到最有效的梯度信号。一道正确率就完成了路由，实现成本极低。
 
-    - 功能：为Hard样本提供低偏差的监督信号，替代单一教师的有偏指导
-    - 核心思路：维护 $m$ 个教师模型的推理轨迹集合，对Hard query随机采样一个教师的轨迹作为SFT目标。理论上单个教师引入 $\|\mathbf{b}_{sys} + \mathbf{b}_i\|$ 的偏差，$m$ 个教师的集成将特异性偏差缩减为 $\sigma_{bias}^2/m$（假设教师偏差方向不相关）
-    - 设计动机：单教师SFT的拟合偏差是导致RL探索受限的根源之一。使用DeepSeek-R1和Qwen3-235B两个教师可显著降低特异性偏差
+**2. 多教师蒸馏（Multi-Teacher Distillation）：用多个教师的集成消掉单教师的特异性偏差。**
 
-3. **Group Alignment Loss (GAL, 组对齐损失)**:
+单教师 SFT 的拟合偏差正是后续 RL 探索受限的根源之一——学生被一个有偏的老师带偏了方向。DYPO 为 Hard 样本维护 $m$ 个教师模型的推理轨迹集合，每遇到一个 Hard query 就随机抽一个教师的轨迹作为 SFT 目标。
 
-    - 功能：作为GRPO的方差控制补充项，通过对比学习稳定RL梯度
-    - 核心思路：将Mid样本的成功/失败轨迹构建正负对，用DPO风格的对比损失 $\mathcal{L}_{GAL} = -\log\sigma(\beta_{GAL} \cdot d(\tau_s, \tau_f))$ 拉近成功路径、推远失败路径。关键区别于标准DPO：GAL使用on-policy rollout而非静态偏好数据。梯度权重 $w_d = 1 - \sigma(\beta_{GAL} d)$ 严格有界于 $(0,1)$，而GRPO的 $\hat{A}_i$ 无界
-    - 设计动机：GRPO梯度方差 $\approx \Sigma_s/k$ 受限于组大小 $k$；GAL的方差随模型学会区分正负样本（$\sigma \to 1$）而自然衰减至0。混合后 $Var(g_{mix}) < Var(g_{GRPO})$
+理论上单个教师会引入 $\|\mathbf{b}_{sys} + \mathbf{b}_i\|$ 的偏差，而在教师偏差方向不相关的假设下，$m$ 个教师的集成把其中的特异性偏差缩减为 $\sigma_{bias}^2/m$。实践中用 DeepSeek-R1 和 Qwen3-235B 两个教师，就能明显压低这部分偏差，给 Hard 样本提供更可靠的低偏差监督。
+
+**3. Group Alignment Loss（GAL，组对齐损失）：给 GRPO 配一个方差会自动衰减的对比项。**
+
+GRPO 的梯度方差 $\approx \Sigma_s/k$ 受限于组大小 $k$，组太小时方差降不下来。DYPO 在 Mid 样本上额外加一个对比损失：把同组的成功/失败轨迹配成正负对，用 DPO 风格的目标 $\mathcal{L}_{GAL} = -\log\sigma(\beta_{GAL} \cdot d(\tau_s, \tau_f))$ 拉近成功路径、推远失败路径。与标准 DPO 的关键区别是 GAL 用的是 on-policy rollout 而非静态偏好数据。
+
+它之所以能压方差，在于梯度权重 $w_d = 1 - \sigma(\beta_{GAL} d)$ 严格有界于 $(0,1)$，而 GRPO 的优势 $\hat{A}_i$ 无界；更妙的是随着模型学会区分正负样本（$\sigma \to 1$），GAL 的方差会自然衰减至 0，相当于一个自适应正则器。两者混合后 $Var(g_{mix}) < Var(g_{GRPO})$，在不牺牲低偏差的前提下稳住了 RL 梯度。
 
 ### 损失函数 / 训练策略
 总损失为分级路由的加权组合。Hard样本：多教师蒸馏的标准NLL损失（权重 $\gamma$）。Mid样本：$\alpha \cdot \mathcal{L}_{GRPO} + (1-\alpha) \cdot \mathcal{L}_{GAL}$。每个prompt采样8条轨迹，最大响应长度8192，学习率 $1 \times 10^{-6}$，基于verl框架在2×8 A800上训练。

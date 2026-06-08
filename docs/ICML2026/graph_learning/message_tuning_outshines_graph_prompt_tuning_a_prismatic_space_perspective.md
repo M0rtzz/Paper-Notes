@@ -40,38 +40,40 @@ tags:
 
 ## 方法详解
 
-PS-Theory 给出理论，MTG 给出方法。下面分别讲清楚。
-
 ### 整体框架
 
-输入侧：图 $\mathcal{G}=(\mathcal{V},\mathcal{E})$、节点特征矩阵 $\bm{X}\in\mathbb{R}^{N\times d_0}$、邻接矩阵 $\bm{A}$。
-
-模型侧：一个冻结的 $L$ 层 GFM $\Phi=F^{(L)}\circ\cdots\circ F^{(1)}$，每层抽象成"注意力算子 $\mathfrak{A}$ + 消息融合算子 $\mathfrak{M}$ + 更新算子 $\mathfrak{U}$"三元组。GCN、GAT、GIN、Graph Transformer 均可纳入这套统一形式。
-
-适配侧：在每层注入可学习消息原型 $\bm{M}^{(\ell)}\in\mathbb{R}^{m\times d_{\ell-1}}$ 与融合投影矩阵 $\bm{W}_p^{(\ell)}$，并把原层的输入 $\bm{H}^{(\ell-1)}$ 替换为 $\bm{H}_{\bm{M}}^{(\ell-1)}=\mathfrak{F}^{(\ell)}(\bm{H}^{(\ell-1)}, \bm{M}^{(\ell)})$，得到适配后的网络 $\Phi_{\text{MTG}}$。Backbone 参数始终冻结。
+本文要解决的核心问题是：图提示微调（graph prompt tuning）的适配能力到底有没有天花板，以及怎样设计一个能突破它的轻量方法。作者先用几何测度论建立 PS-Theory，把冻结的 $L$ 层 GFM $\Phi=F^{(L)}\circ\cdots\circ F^{(1)}$ 看作对输入流形逐层折射、压缩的棱镜，从而严格导出 graph prompt tuning 的能力上界；再据此提出 MTG，把可学习参数从输入层挪进每一层的消息传递过程，理论上突破该上界。整套方法只在每层注入少量原型参数，backbone 始终冻结，且对 GCN、GAT、GIN、Graph Transformer 等不同骨架都适用。
 
 ### 关键设计
 
-1. **PS-Theory：把 GFM 看作棱镜，把 graph prompt tuning 的能力关在玻璃罩里**:
+**1. PS-Theory：把 GFM 看作棱镜，刻画 graph prompt tuning 的能力上界**
 
-    - 功能：用几何测度论严格刻画 graph prompt tuning 的适配能力上界。
-    - 核心思路：先把每层 $F^{(\ell)}$ 抽象成连续分段线性映射（命题 3.3、3.4），输入流形 $\mathcal{M}_0$ 被层层 Jacobian 折射到逐层下降的"棱镜空间" $\mathcal{M}^{(\ell)}=F^{(\ell)}\circ\cdots\circ F^{(1)}(\mathcal{M}_0)$（定义 3.6）；再用 SVD 提取每层 Jacobian 的奇异值 $\sigma_i^{(\ell)}$，由定理 3.9 得到局部 Hausdorff 测度的收缩因子 $\mathcal{H}^s(F^{(\ell)}(\mathbb{S}))=(\prod_{i=1}^s \sigma_i^{(\ell)})\mathcal{H}^s(\mathbb{S})$；最终在定理 3.15 中证明对**任意 prompt $\bm{P}$**，被适配输出流形的测度与直径都被冻结骨架决定的奇异值乘积上界卡住：$\mathcal{H}^{d_{\text{int}}}(\mathcal{M}^{(L)}(\bm{P})) \le (\sup_k \prod_{\ell=1}^L \prod_{i=1}^{d_{\text{int}}}\sigma_{i,k}^{(\ell)})\cdot \mathcal{H}^{d_{\text{int}}}(\mathcal{M}_0(\bm{P}))$。
-    - 设计动机：要回答"能不能突破上界"，必先把"上界是什么"用数学说清楚。PS-Theory 把输入空间扰动的所有形式统一为"对输入流形的几何加性变形"，从而把图提示微调的能力问题转化为"几何收缩问题"，使后续 MTG 的优越性可形式化证明。
+要回答"prompt 能不能突破上界"，必须先把"上界是什么"用数学说清楚。PS-Theory 的做法是把每层 $F^{(\ell)}$ 抽象成连续分段线性映射（命题 3.3、3.4），于是输入流形 $\mathcal{M}_0$ 被层层 Jacobian 折射到逐层下降的"棱镜空间" $\mathcal{M}^{(\ell)}=F^{(\ell)}\circ\cdots\circ F^{(1)}(\mathcal{M}_0)$（定义 3.6）。对每层 Jacobian 做 SVD 提取奇异值 $\sigma_i^{(\ell)}$，定理 3.9 给出局部 Hausdorff 测度的收缩因子 $\mathcal{H}^s(F^{(\ell)}(\mathbb{S}))=(\prod_{i=1}^s \sigma_i^{(\ell)})\mathcal{H}^s(\mathbb{S})$，也就是说每过一层，流形测度就被该层奇异值乘积压缩一次。
 
-2. **可学习消息原型 + 动态消息融合（MTG 核心机制）**:
+这一刻画把"输入空间扰动的所有形式"统一成"对输入流形的几何加性变形"，于是 prompt 的能力问题就转化成几何收缩问题。最终定理 3.15 证明：对**任意 prompt $\bm{P}$**，被适配输出流形的测度都被冻结骨架决定的奇异值乘积牢牢卡住，
 
-    - 功能：把可学习参数从输入层挪进每个 GFM 层的消息传递过程中，让适配能影响 backbone 的内部几何而非只是输入流形。
-    - 核心思路：对每层 $\ell$ 注入 $m$ 个原型 $\bm{M}^{(\ell)}\in\mathbb{R}^{m\times d_{\ell-1}}$；用一次线性投影 + 行向 Softmax 计算每个节点对各原型的注意力，再加性融合回原表示：$\mathfrak{F}^{(\ell)}(\bm{H}^{(\ell-1)},\bm{M}^{(\ell)}) = \bm{H}^{(\ell-1)} + \text{Softmax}(\bm{H}^{(\ell-1)}\bm{W}_p^{(\ell)})\cdot \bm{M}^{(\ell)}$；融合后的 $\bm{H}_{\bm{M}}^{(\ell-1)}$ 再喂回原层的 $\mathfrak{A}/\mathfrak{M}/\mathfrak{U}$ 三元组（公式 (15)），等价于把原 GFM 层的输入"动态地"按当前样本重塑了一遍。可学习参数只有 $\{\bm{M}^{(\ell)}, \bm{W}_p^{(\ell)}\}$，规模远小于 backbone。
-    - 设计动机：PS-Theory 揭示"在每层加扰动"是突破 prompt 上界的必要条件；同时 prefix-tuning 思想又只适配 Transformer 的序列输入，迁不过来。MTG 用"原型 + 节点级动态注意力"的方式把 prefix 思想搬到任意 GNN，融合是**逐节点、逐样本动态**的（非 prefix 那种静态预置），且只用线性投影以保证效率。作者强调这并非简单"NLP→GNN"搬运。
+$$\mathcal{H}^{d_{\text{int}}}(\mathcal{M}^{(L)}(\bm{P})) \le \Big(\sup_k \prod_{\ell=1}^L \prod_{i=1}^{d_{\text{int}}}\sigma_{i,k}^{(\ell)}\Big)\cdot \mathcal{H}^{d_{\text{int}}}(\mathcal{M}_0(\bm{P}))$$
 
-3. **理论证明 MTG 严格超越 graph prompt 上界**:
+无论怎么调 prompt，都撑不破这个由 backbone 几何"刚性"决定的天花板——这正是 graph prompt tuning 只在输入层做加性扰动的代价。
 
-    - 功能：证明 MTG 的最终表示空间在内蕴维度、Hausdorff 测度、直径三个几何量上同时不小于 graph prompt tuning 在任意 $\bm{P}$ 下能达到的水平，且存在配置使其严格更大（定理 4.1）。
-    - 核心思路：MTG 在每层都引入了新的可学习自由度，等价于在 PS-Theory 的 Jacobian 中多出一个"非压缩"的方向，从而把每层奇异值乘积的上确界 $\sup_k \prod_\ell \prod_i \sigma_{i,k}^{(\ell)}$ 撑大；同时网络的线性区域划分（定义 3.11）也因此更细，最终输出流形的内蕴维度 $d_{\text{int}}(\mathcal{M}^{(L)}_{\text{MTG}})\ge d_{\text{int}}(\mathcal{M}^{(L)}_{\text{PT}}(\bm{P}))$。
-    - 设计动机：让 PS-Theory 不只是"分析工具"，也成为"设计指南"——给定一个想突破 prompt 上界的新方法，可以用 PS-Theory 直接审查它是否真的多出了几何自由度。
+**2. 可学习消息原型 + 动态消息融合：MTG 的核心机制**
+
+既然 PS-Theory 揭示"只在输入层撬动"必被上界卡死，突破口就是直接到每层 backbone 内部去注入可学习参数。MTG 对每层 $\ell$ 注入 $m$ 个消息原型 $\bm{M}^{(\ell)}\in\mathbb{R}^{m\times d_{\ell-1}}$，用一次线性投影加行向 Softmax 算出每个节点对各原型的注意力，再加性融合回原表示：
+
+$$\mathfrak{F}^{(\ell)}(\bm{H}^{(\ell-1)},\bm{M}^{(\ell)}) = \bm{H}^{(\ell-1)} + \text{Softmax}(\bm{H}^{(\ell-1)}\bm{W}_p^{(\ell)})\cdot \bm{M}^{(\ell)}$$
+
+融合后的 $\bm{H}_{\bm{M}}^{(\ell-1)}$ 再喂回原层的"注意力算子 $\mathfrak{A}$ + 消息融合算子 $\mathfrak{M}$ + 更新算子 $\mathfrak{U}$"三元组（公式 (15)），等价于按当前样本把该层的输入动态重塑了一遍。可学习参数只有 $\{\bm{M}^{(\ell)}, \bm{W}_p^{(\ell)}\}$，规模远小于 backbone。
+
+这套机制借了 prefix-tuning"逐层加可学习参数"的思路，但作者强调它不是把 NLP 方案直接搬到 GNN：prefix 是为 Transformer 序列预置的静态外部 token，而 MTG 的融合是**逐节点、逐样本动态**的，且只用线性投影以保证效率，因此能适配任意 GNN 骨架而非依赖序列结构。
+
+**3. 理论证明 MTG 严格超越 graph prompt 上界**
+
+PS-Theory 不止是分析工具，也是检验新方法是否真有效的设计指南：一个想突破 prompt 上界的方法，必须在 Jacobian 里真正多出"非压缩"的几何自由度。MTG 恰好满足——它在每层引入新的可学习方向，把每层奇异值乘积的上确界 $\sup_k \prod_\ell \prod_i \sigma_{i,k}^{(\ell)}$ 撑大，同时让网络的线性区域划分（定义 3.11）更细。
+
+由此定理 4.1 证明：MTG 最终表示空间在内蕴维度、Hausdorff 测度、直径三个几何量上同时不小于 graph prompt tuning 在任意 $\bm{P}$ 下能达到的水平，且存在配置使其严格更大，例如内蕴维度满足 $d_{\text{int}}(\mathcal{M}^{(L)}_{\text{MTG}})\ge d_{\text{int}}(\mathcal{M}^{(L)}_{\text{PT}}(\bm{P}))$。这把 MTG 的优越性从经验观察提升为可证明的结论。
 
 ### 损失函数 / 训练策略
-Backbone 完全冻结；仅训练 $\{\bm{M}^{(\ell)}, \bm{W}_p^{(\ell)}\}_{\ell=1}^L$。下游任务沿用 ProG 基准（Zi et al., 2024）的 few-shot 节点 / 图分类损失，采样重复 5 次取均值与标准差，超参随机搜索。
+Backbone 完全冻结，仅训练 $\{\bm{M}^{(\ell)}, \bm{W}_p^{(\ell)}\}_{\ell=1}^L$。下游任务沿用 ProG 基准（Zi et al., 2024）的 few-shot 节点 / 图分类损失，采样重复 5 次取均值与标准差，超参随机搜索。
 
 ## 实验关键数据
 

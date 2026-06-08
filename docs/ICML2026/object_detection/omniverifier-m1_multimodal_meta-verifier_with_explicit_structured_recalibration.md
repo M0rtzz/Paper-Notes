@@ -47,23 +47,17 @@ OmniVerifier-M1 沿 RLVR 框架训练一个 pointwise 多模态 verifier $\pi_\t
 
 ### 关键设计
 
-1. **Symbolic Rationale —— 用 bbox 替代文本解释作为 meta 反馈**:
+**1. Symbolic Rationale：用 bbox 代替文本解释当 meta 反馈。**
 
-    - 功能：把 verifier 的 rationale 形态从"自由文本"换成"结构化几何对象"（bbox / point / line），让 IoU 这种 hard rule 直接当 reward 用。
-    - 核心思路：对每条训练样本，除 binary label 外同时提供 ground-truth bbox 与 ground-truth 文本解释；symbolic 路线用 $\mathcal{R}_{meta} = \text{IoU}(\hat{b}, b^*)$ 评估 verifier 产出的 bbox $\hat b$，textual 路线用 Qwen3-4B 当 judge 比较语义等价性；模型仍输出 `<think>` 之后的最终 verdict 与 bbox 列表。
-    - 设计动机：图像错误本质上是"哪里错了"的空间问题，符号 bbox 比文本更贴近这一本质；规则化 reward 完全杜绝 reward hacking（模型不能"说服"IoU），同时省掉一个额外 judge 模型——实测每样本 reward 计算 0.021 ms vs 文本 20.2 ms（≈1000× 快），训练时 per-step 8.13 min vs 10.27 min（约 20% 加速），GPU 显存从 56.9 GB 降到 48.6 GB；ViVerBench 总分两条路线几乎相等（0.661 vs 0.662），意味着 symbolic 是真正"等效但便宜"的替代。
+要给 verifier 细粒度监督就得有 rationale，但文本 rationale 必须再请一个 LLM judge 打分，既慢又会被 reward hacking。作者的观察是：图像错误本质是"哪里错了"的空间问题，天然可以用 bbox / point / line 这种结构化几何对象定位，于是直接把 IoU 这种 hard rule 当 reward。每条训练样本除 binary label 外同时给 ground-truth bbox 和 ground-truth 文本解释；symbolic 路线用 $\mathcal{R}_{meta} = \text{IoU}(\hat b, b^*)$ 评 verifier 产出的 bbox，textual 路线则用 Qwen3-4B 当 judge 比较语义等价性；模型仍在 `<think>` 之后给出最终 verdict 和 bbox 列表。规则化 reward 让模型没法"说服"IoU，从源头杜绝 reward hacking，还省掉一个 judge 模型——实测每样本 reward 计算 0.021 ms vs 文本 20.2 ms（≈1000× 快），per-step 训练 8.13 min vs 10.27 min（约 20% 加速），显存从 56.9 GB 降到 48.6 GB，而 ViVerBench 总分两条路线几乎相等（0.661 vs 0.662）——symbolic 是真正"等效但便宜"的替代。
 
-2. **Decoupled RL Reward —— 拆分 binary judgement 与 meta-verification 的数据 / reward 流**:
+**2. Decoupled RL Reward：把"判对没"和"指对错在哪"拆成两条独立 reward 流。**
 
-    - 功能：把"判对没"与"指对错在哪"这两个本质不同的任务拆成两套独立数据 + 独立 reward 的混合训练，而不是合并成 joint reward 的乘性结构。
-    - 核心思路：原 joint 目标 $\mathcal{R}_f + \mathcal{R}_{acc} \cdot (\mathbb{I}[y=\text{True}] + \mathbb{I}[y=\text{False}] \cdot \mathcal{R}_{meta})$ 中 meta gradient 仅在 $y=\hat y=\text{False}$ 时激活。Decoupled 方案：原始 1:1 平衡的数据集只监督 $\mathcal{R}_{acc}$；把所有 $y=\text{False}$ 的样本复制一份组成"grounding-only"子集仅监督 $\mathcal{R}_{meta}$；两条流在 RL rollouts 中混合。
-    - 设计动机：作者证明 (Lemma 5.1 / Theorem 5.2)：joint 训练里 meta gradient 范数被 $p_{acc}(\theta)$ 乘性门控——RL 早期 $p_{acc} \ll 1$ 时 meta 几乎学不到；进一步 Theorem 5.3 显示 $\text{Var}(\mathcal{G}_{joint}) = p_{acc} \text{Var}(\mathcal{G}_{dec}) + p_{acc}(1-p_{acc})\|\mathbb{E}[\mathcal{G}_{dec}]\|^2$，Corollary 5.4 给出 SNR 上界 $\text{SNR}(\mathcal{G}_{joint}) \le p_{acc}(\theta) \cdot \text{SNR}(\mathcal{G}_{dec})$，意味着 joint 训练严格次优。直接解耦把 Bernoulli 门去掉，恢复纯 grounding 梯度。
+binary judgement 是离散低熵、meta-verification 是连续高维细粒度，硬塞进一个 joint reward 会优化冲突。原 joint 目标 $\mathcal{R}_f + \mathcal{R}_{acc} \cdot (\mathbb{I}[y=\text{True}] + \mathbb{I}[y=\text{False}] \cdot \mathcal{R}_{meta})$ 里，meta gradient 只在 $y=\hat y=\text{False}$ 时才激活。Decoupled 方案改成混合两条数据流：原始 1:1 平衡数据集只监督 $\mathcal{R}_{acc}$；把所有 $y=\text{False}$ 的样本复制一份组成 grounding-only 子集，只监督 $\mathcal{R}_{meta}$；两条流在 RL rollouts 中混合。这背后有硬核理论支撑：Lemma 5.1 / Theorem 5.2 证明 joint 训练里 meta gradient 范数被 $p_{acc}(\theta)$ 乘性门控，RL 早期 $p_{acc} \ll 1$ 时 meta 几乎学不到；Theorem 5.3 进一步给出 $\text{Var}(\mathcal{G}_{joint}) = p_{acc}\,\text{Var}(\mathcal{G}_{dec}) + p_{acc}(1-p_{acc})\|\mathbb{E}[\mathcal{G}_{dec}]\|^2$，Corollary 5.4 推出 SNR 上界 $\text{SNR}(\mathcal{G}_{joint}) \le p_{acc}(\theta) \cdot \text{SNR}(\mathcal{G}_{dec})$，说明 joint 严格次优。解耦把这个 Bernoulli 门去掉，恢复纯 grounding 梯度。
 
-3. **M1-TTS —— verifier 驱动的 region-level agentic 自校正系统**:
+**3. M1-TTS：让 verifier 从"打分者"升级为驱动 region-level 自校正的 agent。**
 
-    - 功能：把 OmniVerifier-M1 当作可调度 agent 的"细粒度优化器"，把它的判断与定位结果转成异构 tool-level actions（symbolic region localization + 结构化文本 edit），驱动统一多模态基础模型做 region-level 多轮 self-correction。
-    - 核心思路：每轮先让基础模型生成图像 → verifier 判 True/False → 若 False，verifier 同时给出错误 bbox → planner 把 bbox 翻成"region-aware editing prompt"喂回生成模型 → 在该区域做局部 inpainting / 编辑 → 进入下一轮。Replanning 由 verifier 持续监控，直到所有 region 通过。
-    - 设计动机：传统多轮编辑都是 global level，对"图中某小块语义错"束手无策；有了 bbox 这种可调度的 symbolic 反馈，agent 能精确把生成模型的"火力"集中到错误 region。这正好把 meta-verification 的细粒度优势从训练阶段延伸到推理阶段，闭环到生成端。
+传统多轮编辑都在 global level 做，对"图里某一小块语义错"束手无策。有了 bbox 这种可调度的 symbolic 反馈后，OmniVerifier-M1 可以当 agent 的细粒度优化器：每轮先让基础模型生成图像 → verifier 判 True/False → 若 False 同时给出错误 bbox → planner 把 bbox 翻成 region-aware editing prompt 喂回生成模型 → 在该区域做局部 inpainting/编辑 → 进入下一轮，由 verifier 持续 replanning 监控，直到所有 region 通过。这恰好把 meta-verification 的细粒度优势从训练阶段延伸到推理阶段，把火力精确集中到错误 region，闭环回生成端。
 
 ### 损失函数 / 训练策略
 RL 算法用 DAPO（变种 GRPO），reward = 格式奖励（indicator）+ 准确率奖励（0/1）+ meta 奖励（IoU 或 model-based judge 分）。decoupled 训练时混合两个数据流：原始 balanced 数据只算 $\mathcal{R}_f + \mathcal{R}_{acc}$，复制后的 False-only 数据只算 $\mathcal{R}_f + \mathcal{R}_{meta}$。每个数据集合内部按 rollout group 估计 advantage，标准 PPO clipping 加 KL 正则。

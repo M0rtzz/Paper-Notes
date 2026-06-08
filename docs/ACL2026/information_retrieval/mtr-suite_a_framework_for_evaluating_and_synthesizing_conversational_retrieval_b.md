@@ -46,26 +46,24 @@ MTR-Eval 输入一个 conversational retrieval benchmark，其中每个 turn 是
 MTR-Pipeline 从原始 corpus 开始，先做非文本清理、recursive chunking、MinHash-LSH 去重，再用 NVIDIA quality classifier 和 FineWeb-EDU scorer 过滤高信息密度片段。随后，greedy traversal clustering 在 embedding space 中构造连续语义路径，并按固定 cluster size 切段。最后三 agent 生成对话：Questioner 模拟用户提问和 topic switch，Responder 生成严格 grounded answer，Polisher 增加指代、省略和自然表达。
 
 ### 关键设计
-1. **MTR-Eval 四维审计**:
 
-	- 功能：量化 retrieval benchmark 的标注质量，而不是只评估模型分数。
-	- 核心思路：Query-Evidence Alignment 检查 gold document 是否回答 query；Evidence Completeness 通过 hard negative pool 做 discriminability testing；Answer-Evidence Faithfulness 检查答案是否被证据支撑；Answer Quality 单独评价语言质量。
-	- 设计动机：在标注稀疏或噪声大的 benchmark 上取得高 recall 没有太大意义，先审计 benchmark 本身才能解释模型分数。
+**1. MTR-Eval 四维审计：先量化 benchmark 标注质量，再谈模型分数。**
 
-2. **Greedy Traversal Clustering**:
+在标注稀疏、噪声大的 benchmark 上拿到高 recall 没有意义——可能是数据太简单或 gold 标注本身有漏。MTR-Eval 因此用 LLM-as-a-Judge 从四个维度审计已有数据：Query-Evidence Alignment 检查 gold document 到底回不回答 query；Evidence Completeness 通过 hard negative pool 做 discriminability testing，看是否漏掉了更合适的证据；Answer-Evidence Faithfulness 检查答案是否真被证据支撑；Answer Quality 单独评语言质量。先把 benchmark 本身审一遍，模型分数才解释得清。
 
-	- 功能：为多轮对话构造语义相关但不重复的 document sequence。
-	- 核心思路：从随机起点开始，每步选择最近的未访问邻居，形成一条连续 semantic path，再每 $k$ 个节点切成一个 cluster。每个 document 只访问一次，cluster size 可控。
-	- 设计动机：K-means / DBSCAN 容易产生不可控 cluster size，阈值邻居法容易让不同 cluster 重复；greedy path 更适合模拟用户沿链接或主题渐进浏览。
+**2. Greedy Traversal Clustering：为多轮对话铺一条语义连续但不重复的文档路径。**
 
-3. **三 Agent 对话合成**:
+要让合成对话像真实用户那样沿主题渐进浏览，就得先组织出一串语义相关、彼此不重复的文档。K-means / DBSCAN 的 cluster size 不可控，阈值邻居法又容易让不同 cluster 互相重叠。论文用贪心遍历：从随机起点出发，每步选最近的未访问邻居，连成一条 semantic path，再每 $k$ 个节点切成一个 cluster。每个 document 只访问一次，cluster size 完全可控，正好模拟用户顺着链接或主题一步步走下去的浏览轨迹。
 
-	- 功能：生成既有 gold grounding 又像真实用户交互的多轮检索数据。
-	- 核心思路：Questioner 负责根据文档 cluster 和历史生成 query；Responder 只基于指定 gold document 回答；Polisher 重写对话，使其包含指代、省略、自然 topic switching 和生产式冗长回答。
-	- 设计动机：单 agent 生成容易僵硬或不守 grounding，多 agent 分工能同时兼顾自然性、证据对齐和可控性。
+**3. 三 Agent 对话合成：让合成数据既守 gold grounding 又像真人交互。**
+
+单 agent 一把生成对话，要么僵硬要么守不住 grounding。MTR-Pipeline 把任务拆给三个分工的 agent：Questioner 根据文档 cluster 和历史生成 query 并模拟 topic switch，Responder 只基于指定的 gold document 作答（保证严格 grounding），Polisher 再重写整段对话、加入指代、省略、自然的话题切换和生产式冗长回答。三者各管一头，自然性、证据对齐和可控性才能同时兼顾。Polisher 的作用尤其实在：去掉它之后，人类识别「这是机器生成问题」的准确率从 62% 升到 79%。
+
+### 一个完整示例：一条对话怎么被合成出来
+设 corpus 已经过非文本清理、recursive chunking、MinHash-LSH 去重，再用 NVIDIA quality classifier 和 FineWeb-EDU scorer 滤出高信息密度片段。Greedy Traversal Clustering 从某个起点出发，连出一条经过 8 个语义相邻文档的路径，按 cluster size 切成几段。轮到生成时，Questioner 盯着当前 cluster 抛出第一个问题、几轮后切到相邻话题（一段对话平均 8 轮、跨约 5.6 个 topic）；Responder 严格只用被指定的 gold document 回答，保证每个 turn 的答案都有据可查；最后 Polisher 把这串问答重写得有指代和省略、读起来像真人，并把答案拉成生产式长度。整段对话连同每个 turn 的 gold document set 一并落盘——单条 dialogue 成本约 \$0.005，相比 Doc2Dial 等众包基准的 \$1.50–\$2.00，约为 1/400。
 
 ### 损失函数 / 训练策略
-本文主要是 benchmark synthesis 和 evaluation，没有训练检索模型。MTR-Eval 使用多 LLM ensemble 和 pointwise scoring 降低 self-preference bias 与 position bias；Discriminability Testing 中还会随机打乱文档顺序。MTR-Pipeline 的生成成本估计约为每个 dialogue $0.005，相比 Doc2Dial 等 crowdsourced benchmark 的 $1.50-$2.00，约为 1/400。
+本文主要做 benchmark synthesis 和 evaluation，不训练检索模型。MTR-Eval 用多 LLM ensemble 加 pointwise scoring 压低 self-preference bias 与 position bias，Discriminability Testing 里还会随机打乱文档顺序以防位置作弊。MTR-Pipeline 的生成成本估计约每条 dialogue \$0.005，相比 Doc2Dial 等众包 benchmark 的 \$1.50–\$2.00，约为 1/400。
 
 ## 实验关键数据
 

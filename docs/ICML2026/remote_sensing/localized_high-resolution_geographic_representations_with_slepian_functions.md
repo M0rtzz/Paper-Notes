@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **Slepian 浓度问题与基的构造**:
+**1. Slepian 浓度问题与基的构造：在带限子空间里挑出能量几乎全落在 ROI 内的正交基。**
 
-    - 功能：在带限子空间里挑出"几乎全部能量都落在 ROI 内"的正交基函数，把表征容量直接压到用户关心的区域。
-    - 核心思路：定义浓度比 $\mu = \int_R |h(x)|^2 ds / \int_{S^2} |h(x)|^2 ds \in [0,1)$，最大化它等价于求一个 $D_{L_r} \times D_{L_r}$ 对称浓度矩阵 $K$ 的特征问题 $K h = \mu h$，其中 $K_{\ell m, \ell' m'} = \int_R Y_\ell^m Y_{\ell'}^{m'} ds$。特征值按降序排列后会呈现"$\mu_n \approx 1$ 后突然掉到 $\mu_n \approx 0$"的硬切转折，转折点正是 Shannon 数 $N(R,L_r) = \mathrm{tr}(K) \approx \frac{\text{area}(R)}{4\pi}(L_r+1)^2$。取前 $K = \lceil N(R,L_r)\rceil$ 个特征函数 $\{g_n\}$ 得到位置编码 $\Phi_{\text{Slep}}(x) = [g_1(x), \dots, g_K(x)]^\top$。
-    - 设计动机：Shannon 数恰好把"区域 + 带宽"翻译成"该区域能容纳的独立模式数"，是天然的内禀维度上界。对斯里兰卡这种 $f_R \approx 1.29 \times 10^{-4}$ 的小区，$L_r = 256$ 下只需要 $K \approx 9$ 个 Slepian 模即可，而对应的全球 SH 需要 $D_{L_r} \approx 6.6\times 10^4$ 维——稀疏化是内禀的，不是人为剪枝的。
+球面编码把"分辨率预算"均匀摊到整个地球，要看清一个城市就得全球一起提分辨率、维度按 $(L+1)^2$ 膨胀。Slepian 的思路是反过来：在带限子空间里挑出"能量最大限度集中在 ROI"的基函数。定义浓度比 $\mu = \int_R |h(x)|^2 ds / \int_{S^2} |h(x)|^2 ds \in [0,1)$，最大化它等价于求一个 $D_{L_r} \times D_{L_r}$ 对称浓度矩阵 $K$ 的特征问题 $K h = \mu h$，其中 $K_{\ell m, \ell' m'} = \int_R Y_\ell^m Y_{\ell'}^{m'} ds$。特征值降序排列会出现"$\mu_n \approx 1$ 后突然掉到 $\mu_n \approx 0$"的硬切转折，转折点正是 Shannon 数 $N(R,L_r) = \mathrm{tr}(K) \approx \frac{\text{area}(R)}{4\pi}(L_r+1)^2$；取前 $K = \lceil N(R,L_r)\rceil$ 个特征函数 $\{g_n\}$ 就得到位置编码 $\Phi_{\text{Slep}}(x) = [g_1(x), \dots, g_K(x)]^\top$。
 
-2. **球冠 Slepian 与高带限可计算性**:
+妙处在于 Shannon 数恰好把"区域 + 带宽"翻译成"该区域能容纳的独立模式数"，是天然的内禀维度上界——稀疏化是内禀的而非人为剪枝的。对斯里兰卡这种 $f_R \approx 1.29 \times 10^{-4}$ 的小区，$L_r = 256$ 下只需 $K \approx 9$ 个 Slepian 模，而对应的全球 SH 需要 $D_{L_r} \approx 6.6\times 10^4$ 维。
 
-    - 功能：把任意 ROI 的 $D_{L_r} \times D_{L_r}$ 大特征问题降阶为按阶数 $m$ 块对角化的小问题，使得 $L_r$ 推到 $256$ 也能离线算完。
-    - 核心思路：把 ROI 限制为以某点为中心、角半径 $\Theta$ 的球冠。在这种轴对称设置下浓度矩阵按阶 $m$ 块对角化，每块尺寸不超过 $L_r$；良好浓度模数有显式公式 $N_\Theta(L_r) = \frac{1-\cos\Theta}{2}(L_r+1)^2$，因此 $\Theta$ 直接控制"局部信息预算"。实现上：一次性在标准球心位置算出球冠 Slepian，然后通过球面旋转把它平移到任意目标中心，保留前 $N_\Theta(L_r)$ 个模。
-    - 设计动机：直接在任意 $R$ 上算 $L_r = 256$ 的稠密 $K$ 矩阵 ($\sim 6.6\times 10^4$ 维) 在内存和数值精度上都不可行；块对角化是把 $O(D_{L_r}^3)$ 的代价拆成 $L_r$ 个 $O(L_r^3)$ 的小问题，工程上才让"高分辨率局部编码"从理论变成可用工具。
+**2. 球冠 Slepian 与高带限可计算性：用球冠 + 旋转把大特征问题降阶到能离线算完。**
 
-3. **混合 Slepian-SH 编码与极地安全**:
+直接在任意 ROI 上算 $L_r = 256$ 的稠密 $K$ 矩阵（$\sim 6.6\times 10^4$ 维）在内存和数值精度上都不可行。作者把 ROI 限成以某点为中心、角半径 $\Theta$ 的球冠：这种轴对称设置下浓度矩阵按阶 $m$ 块对角化，每块尺寸不超过 $L_r$，良好浓度模数有显式公式 $N_\Theta(L_r) = \frac{1-\cos\Theta}{2}(L_r+1)^2$，因此 $\Theta$ 直接控制"局部信息预算"。实现上一次性在标准球心位置算出球冠 Slepian，再通过球面旋转平移到任意目标中心，保留前 $N_\Theta(L_r)$ 个模。
 
-    - 功能：在 ROI 外提供全球粗粒度上下文，同时继承 SH 的极地解析性，让单个编码器既能做"加州房价"又能做"全球物种分布"。
-    - 核心思路：定义 $\Phi_{\text{Hybrid}}(x) = \mathrm{Concat}(\Phi_{\text{Slep}}(x), \Phi_{\text{SH}}(x))$，其中 $\Phi_{\text{SH}}$ 用低带宽 $L_g \ll L_r$ 算，只承担"全球哪里"的粗信息；多 ROI 时把 $\{\Phi_{\text{Slep}}^{(c)}\}$ 并排拼接，因为各 Slepian 互相能量不重叠所以跨区干扰可忽略。极地安全来自一个简单事实：每个 $g_n = \sum_{\ell,m} h_{\ell m}^{(n)} Y_\ell^m$ 是 $Y_\ell^m$ 的有限线性组合，而球面调和在两极是解析的，所以 $g_n$ 在两极也解析。退化到 $R = S^2$ 时浓度矩阵就是单位阵，Slepian 还原成 SH。
-    - 设计动机：纯 Slepian 在 ROI 外几乎是零，跨域物种分布、全球预训练这类任务需要全球信号；纯 SH 在数值与分辨率上又被卡死。混合方案让两个尺度各司其职，是把"局部 vs 全球"trade-off 拆成"两个并联组件"。作者还把同一思路扩展到时间维：用 DPSS 离散 Slepian 序列做时间编码，时空 Shannon 数 $k_t \approx 2 N_t W$ 控制时间频带预算，得到 $\Phi_{\text{ST}}(x,t) = \mathrm{Concat}(\Phi_{\text{SH}}(x), \Phi_{\text{Time}}(t))$。
+块对角化把 $O(D_{L_r}^3)$ 的代价拆成 $L_r$ 个 $O(L_r^3)$ 的小问题，这正是论文从"理论上 elegant"到"工程上可用"的桥梁——没有它，$L_r$ 根本推不到 256，多 ROI 拼接也得益于此。
+
+**3. 混合 Slepian-SH 编码与极地安全：局部用高分辨率 Slepian、全球用低分辨率 SH，两个尺度并联。**
+
+纯 Slepian 在 ROI 外几乎为零，跨域物种分布、全球预训练这类任务需要全球信号；纯 SH 又在数值与分辨率上被卡死。作者把两者并联：$\Phi_{\text{Hybrid}}(x) = \mathrm{Concat}(\Phi_{\text{Slep}}(x), \Phi_{\text{SH}}(x))$，其中 $\Phi_{\text{SH}}$ 用低带宽 $L_g \ll L_r$ 只承担"全球哪里"的粗信息；多 ROI 时把各 $\Phi_{\text{Slep}}^{(c)}$ 并排拼接，因各 Slepian 能量不重叠所以跨区干扰可忽略。极地安全来自一个简单事实：每个 $g_n = \sum_{\ell,m} h_{\ell m}^{(n)} Y_\ell^m$ 是球面调和的有限线性组合，而 $Y_\ell^m$ 在两极解析，故 $g_n$ 在两极也解析；退化到 $R = S^2$ 时浓度矩阵变成单位阵，Slepian 还原成 SH。
+
+这等于把"局部 vs 全球"的结构性 trade-off 拆成两个并联组件各司其职。作者还把同一思路推到时间维：用 DPSS 离散 Slepian 序列做时间编码，时空 Shannon 数 $k_t \approx 2 N_t W$ 控制时间频带预算，得到 $\Phi_{\text{ST}}(x,t) = \mathrm{Concat}(\Phi_{\text{SH}}(x), \Phi_{\text{Time}}(t))$。
 
 ### 训练策略
 位置编码本身完全非参 (Slepian 基离线预计算)；训练只在下游 NN 内进行。分类/回归用 3 层 MLP + ReLU + dropout 0.1；建筑密度回归用 2 层 bottleneck，将位置编码与冻结的 AlphaEarth/Galileo 图像特征做拼接；物种分布按 SINR 框架做 presence-only 训练，全局采伪负样本，推理时把位置预测当作空间先验对 Xception 输出做逐元素加权。所有任务都用统一的位置编码替换协议比较。

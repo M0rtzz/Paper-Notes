@@ -48,62 +48,25 @@ tags:
 
 ## 方法详解
 
-立场论文没有方法实验，但有一套清晰的"论证结构"。这里把它拆成框架、关键设计（即论文的核心主张）与论证策略来讲。
+立场论文没有方法实验，但有一套清晰的论证结构。它沿着 ICML position paper 典型的八节铺开——先用 Introduction 摆出开源 AI 的张力（理想 vs 商业 vs 大模型新约束），再用 Background 回顾 ML 开源软件与开源 AI 项目的成功史，第 3 节归纳三类挑战（资源、许可证、治理），第 4 节抛出核心主张并定义四原则，第 5 节用 BLOOM/Jean Zay、LAION/JUWELS、EuroLLM/OpenEuroLLM、Public AI Inference Utility、NDIF、AVERI、SEA-HELM 等落地项目作为"Public AI 不是空想"的存在性证明，第 6 节逐条回应反方，第 7 节按受众讲落地含义，第 8 节收束在那句标题。整篇的输入是"开源 AI 当前状况 + 大模型经济结构性变化"，输出是"四原则 Public AI 制度框架 + 落地路径示例 + 对反方意见的辩护"。
 
 ### 整体框架
 
-论文遵循 ICML position paper 的典型 8 节结构：
-
-1. Introduction（描绘开源 AI 的张力：理想 vs 商业 vs 大模型新约束）
-2. Background（梳理 ML 开源软件 + 开源 AI 项目的成功史）
-3. Challenges for open source AI（三类挑战：资源、许可证、治理）
-4. **Position Statement**（核心主张：开源必须嵌入 Public AI，提出四原则）
-5. Examples of public AI（已发生的实践：BLOOM/Jean Zay、LAION/JUWELS、欧洲 EuroLLM/OpenEuroLLM、Public AI Inference Utility、NDIF、AVERI、SEA-HELM 等）
-6. Alternative Views（五种反方观点 + 逐条 response）
-7. Technical and Societal Implications（对 ML 研究者、非 CS 学科、开源生态、政府/资助方、公众的具体含义）
-8. Conclusion（"if open source is to win, it must go public"）
-
-输入是"开源 AI 当前状况 + 大模型经济结构性变化"，输出是"四原则 Public AI 制度框架 + 落地路径示例 + 对反方意见的辩护"。
+把全文当成一条论证链来看：它先诊断单纯开源在大模型时代为什么失效，再用 Public AI 四原则给出制度补全，最后承担起对五种最强反驳的辩论责任。贯穿三段的方法学武器是公共产品经济学——"impure public good"、"club good"、灯塔财政这些 ML 社区不太熟的概念被引进来，配上时新的实证锚点（LLaMA 4 可能是最后一代、Qwen Code 免费版关停、coding agent 捕获用户工作流），让"潜在风险"变成"已发生事件"。
 
 ### 关键设计
 
-1. **三维度诊断："开源 AI 在大模型时代为什么不够"**：
+**1. 三维度诊断：开源 AI 在大模型时代为什么不够**
 
-    - 功能：把单纯开源在 AI 时代的失效，结构化拆成资源 / 许可证 / 治理三个层面，让"该不该补 Public AI"不再是直觉口号而是可论证的命题。
-    - 核心思路：用经济学的"impure public goods / club goods"概念解释为什么 weight 开源不等于公共产品——weight 需要私有补全品（算力、数据、后训练、推理）才能 activate；用 LLaMA 许可证可撤销、OpenAI 输出限制等具体案例佐证"open weight ≠ open source"；用 coding agent 案例展示"用户贡献 → 私有 harness 捕获 → 被转化为隐性数据劳动"这一新型 co-optation 模式。
-    - 设计动机：作者要回应一种常见反驳——"开源已经赢了，市场在 work，何必再加官僚机构？"——所以必须把"开源 AI 现在的结构性弱点"讲到让 ML 研究者能感同身受（被撤许可证、被 silo RLHF、被夹在订阅 agent 里出让数据），才能引出 Public AI。
+作者把单纯开源在 AI 时代的失效结构化地拆成资源、许可证、治理三个层面，让"该不该补 Public AI"从直觉口号变成可论证的命题。落到经济学上，他用"impure public goods / club goods"解释为什么 weight 开源不等于公共产品——weight 需要算力、数据、后训练、推理这些私有补全品才能 activate；再用 LLaMA 许可证可撤销、OpenAI 禁止用其输出训练竞品等具体案例坐实"open weight ≠ open source"；最后用 coding agent 这个最新案例展示"用户贡献 → 私有 harness 捕获 → 转化为隐性数据劳动"的新型 co-optation。这一整套诊断是为了回应一种常见反驳——"开源已经赢了，市场在 work，何必再加官僚机构？"——只有把结构性弱点讲到让 ML 研究者感同身受（被撤许可证、被 silo RLHF、被夹在订阅 agent 里出让数据），才接得住后面的 Public AI。
 
-2. **Public AI 四原则定义**：
+**2. Public AI 四原则定义**
 
-    - 功能：把"Public AI"从模糊口号收敛为可操作的制度规范，让后续 5 节的实例与 6 节的反驳都能 ground 在这四条上。
-    - 核心思路：
+第二步是把"Public AI"从模糊口号收敛成可操作的制度规范，好让第 5 节的实例和第 6 节的反驳都 ground 在四条原则上。Public Support 要求公共资金与基础设施不止覆盖预训练，还要覆盖推理、部署、后训练、数据；Public Access 要求南方国家研究者、公民技术人、Big Tech 之外的本地社区都能 build/adapt/use 有竞争力的模型；Public Accountability 要求模型与基础设施由对公众负责的机构（政府、国家实验室、公共事业、大学、非营利）来 provision/host/maintain；Private Commitments 则鼓励或要求私人主体就开放、安全、社区控制做出承诺。这四条对应"资金—访问—问责—私有约束"四个治理维度，刻意避开被简化为"政府造模型"或"再发一笔补贴"——它既能容纳 BLOOM 那种"公共算力 + 非营利"模式，也能容纳 Public AI Inference Utility 那种"协调多国捐赠算力做免费推理"模式。底层类比是 DPI（数字公共基础设施）：身份、支付、数据交换的公共栈已有先例，AI 应纳入同一范式。
 
-        - *Public Support*：公共资金与基础设施不仅覆盖预训练，还必须覆盖推理、部署、后训练、数据。
-        - *Public Access*：南方国家研究者、公民技术人、Big Tech 之外的本地社区，都要能 build/adapt/use 有竞争力的模型。
-        - *Public Accountability*：模型与基础设施必须由对公众负责的机构（政府、国家实验室、公共事业、大学、非营利）来 provision / host / maintain。
-        - *Private Commitments*：私人主体被鼓励或要求做出关于开放、安全、社区控制的承诺。
+**3. 五种反方观点逐条回应**
 
-        类比 DPI（数字公共基础设施）：身份、支付、数据交换的公共栈已有先例，AI 应纳入同一范式。
-    - 设计动机：用四条原则覆盖"资金—访问—问责—私有约束"四个治理维度，避免被简化为"政府造模型"或"再发一笔补贴"。这样既能容纳 BLOOM 这种"公共算力 + 非营利"模式，也能容纳 Public AI Inference Utility 这种"协调多国捐赠算力做免费推理"模式。
-
-3. **五种反方观点逐条回应**：
-
-    - 功能：position paper 的标准防御机制——把可能的最强反驳显式列出来并逐条回应，避免被审稿人/读者一句话顶死。
-    - 核心思路（5 个反方 + 回应要点）：
-
-        - *View 1 "市场在 work, 让 OpenAI/Meta 领跑"* → 回应：access ≠ governance ≠ sovereignty；LLaMA 4 可能是 LLaMA 家族最后一代（Meta 转向闭源），Qwen Code 免费版 2026 年 4 月被关，证明私有访问可被单方面撤销。
-        - *View 2 "开源最终会赢, 耐心点"* → 回应：当前最强开源模型（LLaMA 3.1-8B 6M 月下载）大多仍由资本充裕的私企预训练；EleutherAI Pythia（900k）、OLMo 3-7B（170k）等纯非营利项目下载量远低；唯一例外是 LAION 系（CLAP 14M/月、openCLIP 单模型 1-2M/月），而 LAION 恰恰是靠公共超算 + 公共存储支撑的——这反而证明 Public AI 的必要性。
-        - *View 3 "OSS + 商业 hosting 已经够用"* → 回应：HF/Replicate/OpenRouter 都是可撤销的商业托管，LLaMA 许可证就是脆弱性证据；BLOOM on Jean Zay、openCLIP on JUWELS 都已经在做 underwrite。
-        - *View 4 "监管比公共投资更好"* → 回应：监管能 curb 危害但不能保证 access、可用性、平等参与；Public AI 是 proactive 地构建能力与机构（如 Canada SCALE AI 同时资助监管与能力建设）。
-        - *View 5 "公共 AI 会低效且易被俘获"* → 回应：GPS、互联网、Hubble、ERC、CERN、W3C 都是成功的公共技术基础设施；Public AI 不等于政府独占模型，可以是 Airbus for AI 这种多边混合结构；而且重点不是新加预算，而是把已经在花的 AI 采购公款结构化得更服务公共利益。
-    - 设计动机：这是 position paper 区别于 survey 的核心——必须显式承担"对立面"的辩论责任，否则就只是宣言。作者把这五种反驳排成从"市场派 → 进化乐观派 → 现状满足派 → 监管派 → 公共失败派"的光谱，几乎覆盖了所有可能的政治经济立场。
-
-### 论证策略
-
-- *经济学框架*：用 "impure public good" / "club good" / "lighthouse 财政" 等概念，把 ML 社区不太熟悉的公共产品理论引入讨论。
-- *实证锚点*：每一类挑战都配一个具体且时新的例子（LLaMA 4 可能是最后一代、Qwen Code 免费版关停、coding agent 捕获用户工作流），让"潜在风险"变"已发生事件"。
-- *正面样板*：第 5 节用 BLOOM、LAION、Pythia、EuroLLM/OpenEuroLLM、Public AI Inference Utility、NDIF、AVERI、SEA-HELM 等已经落地的项目作为"Public AI 不是空想"的存在性证明。
-- *呼吁结构*：第 7 节按"ML 研究者 / 非 CS 学科 / 开源生态 / 政府 / 公众"五类受众分别讲"对你具体意味着什么"，提高 actionability。
+position paper 区别于 survey 的核心，是必须把可能的最强反驳显式列出来逐条回应，否则就只是宣言。View 1"市场在 work，让 OpenAI/Meta 领跑"——回应是 access ≠ governance ≠ sovereignty，LLaMA 4 可能是家族最后一代、Qwen Code 免费版 2026 年 4 月被关，证明私有访问可被单方面撤销。View 2"开源最终会赢，耐心点"——回应是当前最强开源模型（LLaMA 3.1-8B 月下载 6M）大多仍由资本充裕的私企预训练，纯非营利的 Pythia（900k）、OLMo 3-7B（170k）下载量远低，唯一例外 LAION 系（CLAP 14M/月、openCLIP 单模型 1–2M/月）恰恰靠公共超算 + 公共存储支撑，反而证明 Public AI 的必要性。View 3"OSS + 商业 hosting 已经够用"——回应是 HF/Replicate/OpenRouter 都是可撤销的商业托管、LLaMA 许可证就是脆弱性证据，而 BLOOM on Jean Zay、openCLIP on JUWELS 已经在做 underwrite。View 4"监管比公共投资更好"——回应是监管能 curb 危害但保证不了 access、可用性、平等参与，Public AI 是 proactive 地建能力与机构（如 Canada SCALE AI 同时资助监管与能力建设）。View 5"公共 AI 会低效且易被俘获"——回应是 GPS、互联网、Hubble、ERC、CERN、W3C 都是成功的公共技术基础设施，Public AI 不等于政府独占模型，可以是 Airbus for AI 这种多边混合结构，且重点不是新加预算，而是把已经在花的 AI 采购公款结构化得更服务公共利益。作者把这五条反驳排成"市场派 → 进化乐观派 → 现状满足派 → 监管派 → 公共失败派"的光谱，几乎覆盖了所有可能的政治经济立场。
 
 ## 实验关键数据
 

@@ -44,23 +44,23 @@ SRMC 是一层薄包装。给定目标 $\pi(x)\propto e^{-U(x)}$、score $s(x) =
 
 ### 关键设计
 
-1. **常数内存的 score-running 历史 $\theta_n$**：
+**1. 常数内存的 score-running 历史 $\theta_n$：用 $d$ 维向量替掉 $|\mathcal{X}|$ 维经验测度。**
 
-    - 功能：用 $d$ 维向量替代 $|\mathcal{X}|$ 维经验测度承担"历史摘要"角色。
-    - 核心思路：$\theta_n \in \mathbb{R}^d$ 是过去 score $\{s(X_i)\}_{i\leq n}$ 的加权移动平均，$\rho=1$ 时退化为简单时间平均，$\rho<1$ 时偏向近期样本，对短暂困住更敏感。其物理意义可以写成 $\theta_n - \mathbb{E}_\pi[s(X)] = \int_\mathcal{X}[\frac{1}{n+1}\sum_i\delta_{X_i}(x) - \pi(x)]s(x)dx$——它正是"链的经验分布与 $\pi$ 在 score 投影下的偏差"，本质是一个低维的不平衡探测器。
-    - 设计动机：SRRW/HDT 之所以局限在有限状态空间，根因就是要存 $\hat\delta_n$。一旦把"分布的差异"通过 score 投影投到 $d$ 维，存储和计算复杂度立刻坍缩成常数，且 Stein 恒等式 $\mathbb{E}_\pi[s] = 0$ 自动保证 $\theta^\star = 0$ 是平衡点，等于天然校准了估计。
+SRRW/HDT 之所以被困在有限状态空间，根因就是要存 $|\mathcal{X}|$ 维经验测度 $\hat\delta_n$——在 $\{0,1\}^d$ 上指数大、连续域上是无限维。SRMC 的破局点来自 Stein 恒等式 $\mathbb{E}_\pi[s]=0$：探索良好的链，score 的时间平均应当趋于 0，所以 score 的 running 平均 $\theta_n\in\mathbb{R}^d$ 天然是"链对真分布偏离的探测器"。$\theta_n$ 是过去 score $\{s(X_i)\}_{i\leq n}$ 的加权移动平均，$\rho=1$ 退化为简单时间平均、$\rho<1$ 偏向近期样本对短暂困住更敏感；它满足 $\theta_n - \mathbb{E}_\pi[s(X)] = \int_\mathcal{X}[\frac{1}{n+1}\sum_i\delta_{X_i}(x) - \pi(x)]s(x)dx$，本质就是"链的经验分布与 $\pi$ 在 score 投影下的偏差"。
 
-2. **指数 score-tilt surrogate target $\pi_\theta$**：
+一旦把"分布差异"投到 $d$ 维 score 空间，存储与计算复杂度立刻从指数/无限坌缩成常数，而 Stein 恒等式又保证 $\theta^\star=0$ 是平衡点，等于天然校准了估计。
 
-    - 功能：把"历史偏差"转换成一个"惩罚已偏向方向"的修改目标，喂给 base kernel。
-    - 核心思路：$\pi_\theta(x)\propto \pi(x)\exp\{-\alpha \theta^\top s(x)\}$。当链在某 metastable basin 反复打转时，$\theta$ 会指向该 basin score 集中的"锥方向"，于是 $\theta^\top s(x) > 0$ 的 $x$（仍在该 basin 内）被 $\exp\{-\alpha\theta^\top s(x)\} < 1$ 下权，反之被相对抬升。对 MH，仅需在原接受率上乘一个 $e^{-\alpha\theta^\top[s(y)-s(x)]}$ 因子，归一化常数 $Z_\theta$ 在比值中自动抵消；对 Langevin/HMC 则把 score 替换为 surrogate score $s_\theta(x) = s(x) - \alpha\nabla_x s(x)\theta = -\nabla U(x) + \alpha \nabla^2 U(x)\theta$，Hessian-向量乘积可用 autodiff 或有限差分 $(\nabla U(x+\epsilon\theta) - \nabla U(x))/\epsilon$ 廉价近似。
-    - 设计动机：(i) 指数 tilt 是"score 的线性扰动指数族"——形式上最自然、保非负；(ii) 它把整套机制变成 normalization-free（$Z_\theta$ 始终抵消或不需），保留了 classical MCMC 的可用性；(iii) plug-and-play：不修改 base kernel 内部逻辑，任何对 $\pi$ 有效的 kernel 都能替成 $\pi_{\theta_n}$。Figure 1 的"arrow flipping"可视化说明它如何动态压低 metastable basin 周围的"有效能垒"。
+**2. 指数 score-tilt surrogate target $\pi_\theta$：把历史偏差折成"排斥已访问区域"的代理目标。**
 
-3. **耦合 SA + CLT 与 $O(1/\alpha)$ 方差递减**：
+有了偏差探测器 $\theta$，还得把它变成能驱动采样器避开旧区域的力。作者用指数 tilt $\pi_\theta(x)\propto\pi(x)\exp\{-\alpha\theta^\top s(x)\}$：当链在某 metastable basin 反复打转时 $\theta$ 指向该 basin 的 score 集中方向，于是仍在 basin 内（$\theta^\top s(x)>0$）的 $x$ 被 $\exp\{-\alpha\theta^\top s(x)\}<1$ 下权、外面的被相对抬升。对 MH 只需在接受率上乘一个 $e^{-\alpha\theta^\top[s(y)-s(x)]}$ 因子，归一化常数 $Z_\theta$ 在比值里自动抵消；对 Langevin/HMC 则把 score 换成 surrogate score $s_\theta(x)=s(x)-\alpha\nabla_x s(x)\theta=-\nabla U(x)+\alpha\nabla^2 U(x)\theta$，其中 Hessian-向量乘积可用 autodiff 或有限差分 $(\nabla U(x+\epsilon\theta)-\nabla U(x))/\epsilon$ 廉价近似。
 
-    - 功能：在 $\mathcal{X} = \mathbb{R}^d$ 一般状态空间下证明 almost sure 收敛 + 联合 CLT，并定量给出 $\alpha$ 增大时的 variance scaling。
-    - 核心思路：把 $\vartheta_n = (\theta_n, \mu_n)$（其中 $\mu_n$ 是 $\mathbb{E}_\pi[f(X)]$ 的 running 估计）写成 SA 形式 $\vartheta_{n+1} = \vartheta_n + \gamma_{n+1} H(\vartheta_n, X_{n+1})$，其中 $H$ 是 controlled Markovian noise。在 Assumption 1（score $L$-Lipschitz + $U$ 超线性尾增长 + Hessian 渐近正规）和 Assumption 2（kernel 一致 drift + 对 $\theta$ Lipschitz）下，Theorem 3.3 给出 $\vartheta_n \to (0, \mu)$ a.s. 且 $\gamma_n^{-1/2}(\vartheta_n - \vartheta^\star) \xrightarrow{d} \mathcal{N}(0, \Sigma_\vartheta)$，其中 $\Sigma_\vartheta$ 满足 Lyapunov 方程 $(\frac{1_{\rho=1}}{2}I + A^\star)\Sigma_\vartheta + \Sigma_\vartheta(\cdot)^\top + \Sigma_\Delta = 0$。关键的 Jacobian 矩阵 $A^\star = \begin{bmatrix}-I_d - \alpha\mathrm{Cov}_\pi(s,s) & 0 \\ -\alpha\mathrm{Cov}_\pi(f,s) & -I_m\end{bmatrix}$ 中 $\alpha$ 只出现在协方差块里。Proposition 3.4 证明 $\theta$-块 $\Sigma_{\theta\theta}(\alpha) = O(1/\alpha)$ 且对 $\alpha$ 单调不增；Gaussian 目标 + 均值估计时这个 scaling 直接传到 $\Sigma_X(\alpha) = V\Sigma_{\theta\theta}(\alpha)V^\top$，得到 sample mean 的 near-zero variance。
-    - 设计动机：把 finite-state 的近零方差现象拓到一般状态空间，需要在 MCMC 语境下把 Borkar 等人的 generic SA 条件翻译成可验证的 drift + kernel-Lipschitz 条件。作者作为技术贡献给出 MH/MALA 的可验证充分条件，并把"稳定性"从假设升级为可证结论（早期 SRRW/HDT 分析需要先假设 iterate 有界）。
+选指数 tilt 有三个理由：它是 score 的线性扰动指数族，形式最自然又保非负；它让整套机制 normalization-free（$Z_\theta$ 始终抵消或不需），保住 classical MCMC 的可用性；它 plug-and-play，不动 base kernel 内部逻辑，任何对 $\pi$ 有效的 kernel 直接替成 $\pi_{\theta_n}$ 即可。Figure 1 的"arrow flipping"可视化正展示它如何动态压低 metastable basin 周围的有效能垒。
+
+**3. 耦合 SA 分析 + CLT 与 $O(1/\alpha)$ 方差递减：把有限态的近零方差推到一般状态空间。**
+
+要让这套包装有理论底气，得在 $\mathcal{X}=\mathbb{R}^d$ 上证收敛 + 联合 CLT，并定量给出 $\alpha$ 增大时的方差 scaling。作者把 $\vartheta_n=(\theta_n,\mu_n)$（$\mu_n$ 是 $\mathbb{E}_\pi[f(X)]$ 的 running 估计）写成随机近似形式 $\vartheta_{n+1}=\vartheta_n+\gamma_{n+1}H(\vartheta_n,X_{n+1})$，$H$ 是 controlled Markovian noise。在 Assumption 1（score $L$-Lipschitz + $U$ 超线性尾增长 + Hessian 渐近正规）和 Assumption 2（kernel 一致 drift + 对 $\theta$ Lipschitz）下，Theorem 3.3 给出 $\vartheta_n\to(0,\mu)$ a.s. 且 $\gamma_n^{-1/2}(\vartheta_n-\vartheta^\star)\xrightarrow{d}\mathcal{N}(0,\Sigma_\vartheta)$，$\Sigma_\vartheta$ 解一个 Lyapunov 方程 $(\frac{1_{\rho=1}}{2}I + A^\star)\Sigma_\vartheta + \Sigma_\vartheta(\cdot)^\top + \Sigma_\Delta = 0$。关键 Jacobian $A^\star = \begin{bmatrix}-I_d - \alpha\mathrm{Cov}_\pi(s,s) & 0 \\ -\alpha\mathrm{Cov}_\pi(f,s) & -I_m\end{bmatrix}$ 里 $\alpha$ 只出现在协方差块上，于是 Proposition 3.4 证出 $\theta$-块 $\Sigma_{\theta\theta}(\alpha)=O(1/\alpha)$ 且对 $\alpha$ 单调不增；Gaussian 目标 + 均值估计时这个 scaling 直接传给 $\Sigma_X(\alpha)=V\Sigma_{\theta\theta}(\alpha)V^\top$，得到 sample mean 的近零方差。
+
+技术上的实质升级是：把 Borkar 等人的通用 SA 条件翻译成 MCMC 语境下可验证的 drift + kernel-Lipschitz 条件，并给出 MH/MALA 的具体充分条件，把"稳定性"从假设升级成可证结论——早期 SRRW/HDT 分析还得先假设 iterate 有界。
 
 ### 损失函数 / 训练策略
 没有训练损失——SRMC 是采样算法。实务超参三件套：$\rho \in \{0.6, 0.8\}$（避免 $\rho=1$ 步长降太快）、$\epsilon \approx \alpha$ 量级（有限差分尺度，过小会数值不稳）、$\alpha$ 选到使 $\alpha|\theta_n^\top s(X_n)|$ 适中以免过度 tilt。复杂目标可用 adaptive-$\alpha$ heuristic：早期小、后期大。离散域用 discrete Stein operator $s_i(x) = \pi(x^{(i,K-x_i)})/\pi(x) - 1$ 保持 $\mathbb{E}_\pi[s] = 0$；高维 EBM（如 Static MNIST）允许用 relaxed gradient 作 score proxy，理论严格性退化但实践仍有效。

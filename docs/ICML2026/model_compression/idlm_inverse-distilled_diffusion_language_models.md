@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IDLM 维护三个网络：冻结的**教师** $f^*$（已经在 $p^*$ 上预训练好的多步 DLM），可学习的**伪教师** $f$（在学生当前分布 $p_\theta$ 上重新拟合的去噪器），以及**学生生成器** $G_\theta$。学生输入 $\epsilon = (x_t, t)$，输出 simplex 向量 $G_\theta(\epsilon) \in \Delta$ 作为对清洁 token 的预测；通过同一个 $\epsilon$ 共享所有位置，得到一个 sequence-level 的 mixture 分布 $p_\theta(x_0^{1:L}) = \mathbb{E}_{\epsilon}[\prod_l \text{Cat}(x_0^l; G_\theta^l(\epsilon))]$。训练交替进行：**(a) 固定 $\theta$，用 $\mathcal{L}(f, p_\theta)$ 更新 $f$ 拟合学生分布**；**(b) 固定 $f$，用 IDLM gap $\mathcal{L}(f^*,p_\theta)-\mathcal{L}(f,p_\theta)$ 更新 $\theta$**。推理沿用教师同款的反向采样器，但 grid 只有 4–32 步。
+IDLM 想把上千步的教师扩散语言模型压成几步，靠的是一个"反向"视角：不让学生去模仿教师的采样轨迹，而是去找一个学生分布 $p_\theta$，让已经训练好的教师 $f^*$ 对它"仍然是最优去噪器"。围绕这个目标它维护三个网络——冻结的**教师** $f^*$（在真实数据 $p^*$ 上预训练好的多步 DLM）、可学习的**伪教师** $f$（在学生当前分布 $p_\theta$ 上重新拟合的去噪器）、以及**学生生成器** $G_\theta$。学生吃进 $\epsilon=(x_t,t)$、吐出一个 simplex 向量 $G_\theta(\epsilon)\in\Delta$ 作为对清洁 token 的预测，并让同一个 $\epsilon$ 跨所有位置共享，从而得到序列级的 mixture 分布 $p_\theta(x_0^{1:L})=\mathbb{E}_{\epsilon}[\prod_l \text{Cat}(x_0^l;G_\theta^l(\epsilon))]$。训练在两步间交替：固定 $\theta$ 用 $\mathcal{L}(f,p_\theta)$ 把伪教师 $f$ 拟合到学生分布上，再固定 $f$ 用 IDLM gap $\mathcal{L}(f^*,p_\theta)-\mathcal{L}(f,p_\theta)$ 去推学生；推理则复用教师同款的反向采样器，但 grid 只剩 4–32 步。
 
 ### 关键设计
 
-1. **IDLM 反向蒸馏目标 + 唯一性定理**:
+**1. IDLM 反向蒸馏目标 + 唯一性定理：把"教师仍最优"写成可优化的 gap。**
 
-    - 功能：把"哪个分布让固定的教师 $f^*$ 仍是最优"这个反命题变成可优化的损失。
-    - 核心思路：定义 $\mathcal{L}_{\text{IDLM}}(\theta) = \mathcal{L}(f^*, p_\theta) - \min_f \mathcal{L}(f, p_\theta)$，第一项是教师在学生样本上的去噪损失，第二项是"在学生样本上重新训出来的最优去噪器"能达到的下界，两者相减衡量"教师是不是仍然最优"。定理 3.1 证明：对 SEDD / MDLM / Duo（在 $\tau\to 0^+$ 极限），$\mathcal{L}_{\text{IDLM}}(\theta) \geq \mathcal{D}_{\text{KL}}(p_\theta \| p^*) \geq 0$ 且等号当且仅当 $p_\theta = p^*$。证明路径是把这个 gap 写成轨迹分布 KL：$\mathcal{L}_{\text{IDLM}}(\theta)=\mathcal{D}_{\text{KL}}(\mathbb{P}^\theta \| \mathbb{P}^*)$，沿数据处理不等式控制末端边际。
-    - 设计动机：直接 KL 匹配边际 $\mathcal{L}_{\text{DMD}}=\int w(t) D_{\text{KL}}(p_t^\theta \| p_t^*) dt$ 只看每个时刻的"切片"，在 uniform 扩散这种允许 token 反复修改的过程里会丢轨迹耦合信号；IDLM 直接匹配整条路径分布，少步学生才能学到 token 间联合结构而不是简单的位置独立条件。
+少步蒸馏最怕的是没有理论保证——学生压到 4 步后到底还能不能恢复真实分布 $p^*$，consistency 类方法答不上来。IDLM 把问题反过来问：与其让学生追教师轨迹，不如找一个 $p_\theta$ 使得"在它的样本上重新训练去噪器"得到的最优解恰好还是 $f^*$。这就有了损失 $\mathcal{L}_{\text{IDLM}}(\theta)=\mathcal{L}(f^*,p_\theta)-\min_f \mathcal{L}(f,p_\theta)$：第一项是教师 $f^*$ 在学生样本上的去噪损失，第二项是在同一批学生样本上能训出的最优去噪器所达到的下界，两者之差正好衡量"教师是不是仍然最优"。关键是这个 gap 不只是个启发式——定理 3.1 证明，对 SEDD / MDLM / Duo（Duo 取 $\tau\to 0^+$ 极限）有 $\mathcal{L}_{\text{IDLM}}(\theta)\geq \mathcal{D}_{\text{KL}}(p_\theta\|p^*)\geq 0$，且等号当且仅当 $p_\theta=p^*$。证明把这个 gap 改写成整条扩散轨迹上的 KL $\mathcal{L}_{\text{IDLM}}(\theta)=\mathcal{D}_{\text{KL}}(\mathbb{P}^\theta\|\mathbb{P}^*)$，再用数据处理不等式控住末端边际。它之所以比直接做边际匹配 $\mathcal{L}_{\text{DMD}}=\int w(t)\,D_{\text{KL}}(p_t^\theta\|p_t^*)\,dt$ 更好，是因为后者只看每个时刻的"切片"，在 uniform 扩散这种允许 token 被反复修改的过程里会丢掉轨迹耦合信号；IDLM 匹配的是整条路径分布，少步学生因此能学到 token 间的联合结构，而不是退化成位置独立的条件分布。
 
-2. **Simplex 松弛 + 模态相关的可微化技巧**:
+**2. Simplex 松弛 + 模态相关的可微化：让梯度穿过离散采样。**
 
-    - 功能：解决离散域里反传穿不过 categorical 采样的硬骨头。
-    - 核心思路：把生成器值域从 one-hot 集合 $\mathcal{V}$ 松弛到概率单纯形 $\Delta$，使 cross-entropy 项变成 soft-label 损失而前向腐蚀 $q_t(\cdot \mid G_\theta(\epsilon))$ 仍是合法 categorical。对 MDLM 还利用 subs 参数化特性：未被 mask 的位置 $f^*(x_t,t)=f(x_t,t)=x_t$ 直接抵消，IDLM gap 只在 $x_t=m$ 时非零，从而生成器更新简化为 $-\mathbb{E}_{\epsilon,t}[(1-\alpha_t)\lambda_t \langle G_\theta(\epsilon), \log f(m,t)\rangle]$，采样 token $x_t$ 完全从 $\theta$ 的梯度路径里消失（隐式 stop-gradient）。对 Duo 则用 Gaussian 重参数化 $x_t = \text{softmax}((\tilde{\alpha}_t G_\theta(\epsilon)+\sqrt{1-\tilde{\alpha}_t^2}\xi)/\tau)$，让 $G_\theta(\epsilon) \mapsto x_t$ 可微。
-    - 设计动机：hard Gumbel-Softmax 在多步训练里反传梯度方差大、容易跑飞；MDLM 的 mask-only 简化把"梯度只走 simplex 输出"这件事变成了天然的稳定路径，而 Duo 借助本来就在 simplex 上训练的去噪器，配合 Gaussian relax 把不可微采样换成连续可微近似，两条路径分别贴合两类 DLM 的最佳承载形式。
+离散域蒸馏的硬骨头是反传穿不过 categorical 采样——hard Gumbel-Softmax 在多步训练里梯度方差大、很容易跑飞。IDLM 先做一步通用松弛：把生成器值域从 one-hot 集合 $\mathcal{V}$ 放宽到概率单纯形 $\Delta$，于是 cross-entropy 项变成 soft-label 损失，而前向腐蚀 $q_t(\cdot\mid G_\theta(\epsilon))$ 仍是合法的 categorical。在此之上它针对两类 DLM 各走一条最贴合的稳定路径。对 MDLM，利用 subs 参数化的特性：所有未被 mask 的位置上 $f^*(x_t,t)=f(x_t,t)=x_t$ 自动抵消，IDLM gap 只在 $x_t=m$（被 mask）时非零，于是生成器更新简化成 $-\mathbb{E}_{\epsilon,t}[(1-\alpha_t)\lambda_t\langle G_\theta(\epsilon),\log f(m,t)\rangle]$，采样 token $x_t$ 直接从 $\theta$ 的梯度路径里消失——等于天然的隐式 stop-gradient，梯度只走 simplex 输出，稳定且实现极简。对 Duo，借它本来就在 simplex 上训练的去噪器，用 Gaussian 重参数化 $x_t=\text{softmax}((\tilde{\alpha}_t G_\theta(\epsilon)+\sqrt{1-\tilde{\alpha}_t^2}\,\xi)/\tau)$ 把不可微的离散采样换成连续可微近似，让 $G_\theta(\epsilon)\mapsto x_t$ 可微。两条路径分别契合两类 DLM 的承载形式，避免了对所有模型一刀切硬采样。
 
-3. **Sequence-level mixture + 交替优化**:
+**3. Sequence-level mixture + 交替优化：把序列联合分布塞进单步生成器。**
 
-    - 功能：用一个低维 latent 把"序列级联合分布"塞进单步 generator，并稳定逼近内层 $\min_f$。
-    - 核心思路：直接把 $p_\theta$ 参数化为 $\mathcal{V}^L$ 上的分布需要 $N^L$ 概率，作者改写为 mixture：先采 $\epsilon\sim p_\mathcal{E}$，给定 $\epsilon$ 各位置在 $\Delta$ 上独立，但 $\epsilon$ 跨位置共享 → 每个 mixture 分量等价于一条 sentence-level 选择。训练 follow DMD 一脉用交替更新近似内层 $\arg\min_f$：算法每步要么用 $\mathcal{L}_f=\mathcal{L}(f,p_\theta)$ 拟合伪教师，要么用 $\mathcal{L}_{\text{IDLM}}=\mathcal{L}(f^*,p_\theta)-\mathcal{L}(f,p_\theta)$ 更新学生；推理则把 $\epsilon=(x_t,t)$ 取自部分加噪的真实数据，复用教师同款反向采样器走 4–32 步。
-    - 设计动机：一步到位地从纯噪声到清洁句子非常困难，多步参数化让学生承接中间状态、显著降低 one-step 优化难度；mixture 结构兼顾"位置可微"与"序列联合"，让生成器不必显式枚举完整序列空间也能学到 token 间语义相关性。
+直接把 $p_\theta$ 参数化成 $\mathcal{V}^L$ 上的分布需要 $N^L$ 个概率，根本写不下；而完全位置独立分解又丢了 token 间的联合结构。IDLM 用一个共享 latent 把两者折中成 mixture：先采 $\epsilon\sim p_\mathcal{E}$，给定 $\epsilon$ 后各位置在 $\Delta$ 上独立，但 $\epsilon$ 跨位置共享，于是每个 mixture 分量等价于一次 sentence-level 的整体选择，生成器既保持位置可微、又不必显式枚举整个序列空间就能捕捉 token 间语义相关性。内层那个 $\min_f$ 没法精确求解，作者沿用 DMD 一脉的交替更新来逼近：每步要么用 $\mathcal{L}_f=\mathcal{L}(f,p_\theta)$ 拟合伪教师、要么用 $\mathcal{L}_{\text{IDLM}}=\mathcal{L}(f^*,p_\theta)-\mathcal{L}(f,p_\theta)$ 更新学生。还有一点很实用：实验发现纯粹从噪声一步到清洁句子会失败，所以推理时把 $\epsilon=(x_t,t)$ 取自部分加噪的真实数据、复用教师反向采样器走 4–32 步，让学生承接中间状态、把 one-step 的优化难度显著摊薄。
 
 ### 损失函数 / 训练策略
-通用 token-level 目标写成 $\mathcal{L}(f,p)=\mathbb{E}_{p(x_0),t,q_t}[g(x_t,x_0,f(x_t,t))]$，sequence-level 在所有位置上求和。最终 IDLM gradient signal 可解释为 token 优势向量 $a_t = \log f^*(m,t)-\log f(m,t)$：学生不是去追教师最高概率 token，而是去推那些"教师比伪教师更偏好"的 token，当 $f$ 追上 $f^*$ 时优势消失，自然收敛。学生和伪教师都从教师权重初始化，复用教师学到的语义结构。
+通用的 token-level 目标写成 $\mathcal{L}(f,p)=\mathbb{E}_{p(x_0),t,q_t}[g(x_t,x_0,f(x_t,t))]$，序列级在所有位置上求和。最终的 IDLM 梯度信号可以解释为一个 token 优势向量 $a_t=\log f^*(m,t)-\log f(m,t)$：学生不是去追教师概率最高的 token，而是去推那些"教师比伪教师更偏好"的 token，当伪教师 $f$ 追上教师 $f^*$ 时优势归零、训练自然收敛。学生与伪教师都从教师权重初始化，复用教师已经学到的语义结构。
 
 ## 实验关键数据
 

@@ -41,32 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一个数据集 $\mathcal{D}=\{(\tau_i, o_i^\ast)\}$，每条来自黑盒系统 $\mathcal{M}_{\text{black}}$。统一原语空间 $\Omega$：每个原语 $p=\langle \rho, \mu, \pi, T_{\text{local}}\rangle$（角色、底层模型、思维模式、工具集），既包括纯推理 agent 也包括工具增强 agent。Workflow 表示为线性序列 $\mathbf{s}=[s_1,\dots,s_L]$，$L \le L_{\max}$。目标
-$\mathbf{s}^\ast = \arg\max_{\mathbf{s}} \mathbb{E}_{(\tau,o^\ast)}[\mathrm{Sim}(\Phi(\mathbf{s},\tau), o^\ast)]$，
-其中 $\mathrm{Sim}$ 是任务特定的代理度量（代码用 AST，文本用余弦）。AgentXRay 用 MCTS：每个节点是一条 workflow 前缀，每条边代表追加一个原语；通过 Red-Black 着色决定该节点偏好"深探（refine）"还是"广扩（branch）"。
+AgentXRay 要解决的是：给一个只能看到输入输出的黑盒 agent 系统 $\mathcal{M}_{\text{black}}$，反推出一个能复现它行为的白盒 workflow。输入是数据集 $\mathcal{D}=\{(\tau_i, o_i^\ast)\}$（任务 + 黑盒输出对），方法先把所有可能的 agent 构件统一编码成原语 $p=\langle \rho, \mu, \pi, T_{\text{local}}\rangle$（角色、底层模型、思维模式、工具集），把候选 workflow 表示成长度 $L \le L_{\max}$ 的线性原语序列 $\mathbf{s}=[s_1,\dots,s_L]$；然后在这个离散序列空间上用 MCTS 搜索，目标是最大化代理相似度 $\mathbf{s}^\ast = \arg\max_{\mathbf{s}} \mathbb{E}_{(\tau,o^\ast)}[\mathrm{Sim}(\Phi(\mathbf{s},\tau), o^\ast)]$（$\mathrm{Sim}$ 是任务特定度量，代码用 AST、文本用余弦）；搜索过程中用 Red-Black 着色逐节点决定该"深探"还是"广扩"，最后输出搜出来的那条最优序列作为白盒重建。
 
 ### 关键设计
 
-1. **统一原语空间 + Linearity Hypothesis**:
+**1. 统一原语空间 + Linearity Hypothesis：把图拓扑搜索压成线性序列搜索。**
 
-    - 功能：把异构的 agent / 工具 / 单 agent 多 agent 系统统一在同一搜索单元下，并把搜索复杂度从图拓扑 $O(2^{|\Omega|^2})$ 降到序列 $O(|\Omega|^{L_{\max}})$。
-    - 核心思路：每个原语统一是 $\langle$role, model, thought pattern, local tools$\rangle$；纯推理 agent 即 $T_{\text{local}}=\emptyset$，工具增强 agent 即 $T_{\text{local}}\ne\emptyset$。再借 MacNet (Qian 2025) 指出多 agent DAG 执行时也会拓扑排序、ReAct/WebArena 等交互天然就是 ordered trace 等观察，限制搜索空间到线性序列。
-    - 设计动机：纯图拓扑搜索在中等规模 $\Omega$ 上就不可行；而 "behavioral fidelity"（输入输出匹配）本身只需要复现可观测序列，而非内部拓扑，因此线性化是一个 task-aligned 的剪枝。
+纯图拓扑搜索在中等规模的原语集上就直接爆炸——枚举所有 agent 拓扑是 $O(2^{|\Omega|^2})$，根本走不动。作者的破局点是两层抽象。第一层是把异构构件统一成同一个搜索单元：每个原语都是 $\langle$role, model, thought pattern, local tools$\rangle$，纯推理 agent 就是 $T_{\text{local}}=\emptyset$、工具增强 agent 就是 $T_{\text{local}}\ne\emptyset$，于是单 agent、多 agent、tool-use 系统都落在同一个空间 $\Omega$ 里。第二层是 Linearity Hypothesis：借 MacNet (Qian 2025) 指出多 agent DAG 执行时也会被拓扑排序、ReAct/WebArena 等交互天然就是一条 ordered trace 的观察，把搜索空间限制到长度 $\le L_{\max}$ 的线性序列，复杂度从 $O(2^{|\Omega|^2})$ 降到 $O(|\Omega|^{L_{\max}})$。它有效的关键在于，重建追求的是"行为保真"（输入输出匹配）而非还原内部拓扑——复现可观测的执行序列就够了，所以线性化是一个与任务对齐的剪枝，而不是会丢真值的近似。
 
-2. **MCTS 搜索循环（带 UCB + 早停 rollout）**:
+**2. MCTS 搜索循环：用统计采样摊薄稀疏奖励的搜索代价。**
 
-    - 功能：处理 $\mathrm{Sim}$ 这个只有走到接近完整 workflow 才能观测的稀疏 / 延迟奖励信号。
-    - 核心思路：每次迭代抽一条 $(\tau, o^\ast)$；从根选路径，到达待扩节点时执行 sample-rollout：把序列采样填到 $L_{\max}$ 并真正执行 workflow 得到输出 $o$；若执行失败 $r=0$，否则 $r=\mathrm{Sim}(o, o^\ast)$；沿路径回溯更新 $N(v), Q(v)$。每个节点的子选择用 UCB 平衡 exploration / exploitation。
-    - 设计动机：与"穷举 $|\Omega|^{L_{\max}}$"不同，MCTS 用统计采样把搜索代价 amortize；UCB 在异构 action 空间（不同 role、不同模型、不同工具）中表现稳健；早停让无效原语不浪费完整 rollout 的 token。
+即便压成线性序列，$|\Omega|^{L_{\max}}$ 仍然不可穷举，而且 $\mathrm{Sim}$ 是个延迟奖励——只有把 workflow 走到接近完整、真正执行一遍才能观测。AgentXRay 用 MCTS 处理这个稀疏信号：每次迭代抽一条 $(\tau, o^\ast)$，从根节点（一条 workflow 前缀，每条边追加一个原语）按 UCB 选路径下探，到达待扩节点时做 sample-rollout——把序列采样补齐到 $L_{\max}$ 并真正执行得到输出 $o$，执行失败记 $r=0$、否则 $r=\mathrm{Sim}(o, o^\ast)$，再沿路径回溯更新访问次数 $N(v)$ 和价值 $Q(v)$。比起穷举，MCTS 用采样把搜索代价 amortize；UCB 在角色/模型/工具各不相同的异构 action 空间里仍能稳健平衡探索与利用；rollout 一旦撞上无效原语就早停，不再为它烧完整条链的 token。
 
-3. **Red-Black Pruning（评分驱动的动态着色）**:
+**3. Red-Black Pruning：用评分动态着色，让搜索预算花在"既有潜力又有深度可挖"的子树上。**
 
-    - 功能：在固定 iteration / token 预算下，自动决定哪些节点应继续加深探索（depth refine）、哪些节点该开新分支（width expand），缓解组合爆炸。
-    - 核心思路：在每次迭代前用 ColorTree 对当前树重新着色：Red 节点表示当前选择已"稳定"（评分高 + 访问次数足够），选子节点走 UCB 走深；Black 节点表示当前选择尚未充分探索，优先创建新子节点扩宽。整个 search loop（Algorithm 1）由 color-guided descent (Line 9) + 早停 rollout (Lines 11–13) + reward backprop (Line 22) 组成。
-    - 设计动机：标准 MCTS 在大 $\Omega$ 上常陷入"宽得没法走深"或"深陷一个坏分支"的两端；Red-Black 把"是否有信心继续 refine 当前路径"用评分动态量化，让搜索资源被引导到"既有潜力又有深度可挖"的子树上，从而在同等 iteration 下走更深、查更优。
+标准 MCTS 在大 $\Omega$ 上容易卡在两端——要么宽得铺不下去走不深，要么一头扎进坏分支出不来。Red-Black 剪枝把"要不要继续 refine 当前路径"做成节点级的动态决策：每次迭代前用 ColorTree 给整棵树重新着色，评分高且访问次数足够的节点判为 Red（当前选择已稳定），就沿 UCB 继续往深走；尚未充分探索的节点判为 Black，优先创建新子节点把宽度撑开。整个 search loop（Algorithm 1）就由 color-guided descent (Line 9) + 早停 rollout (Lines 11–13) + reward backprop (Line 22) 三件事组成。和静态阈值剪枝不同，这里用"是否有信心继续深挖"的评分来量化决策，把资源引到值得深挖的子树上，因此在同等 iteration 预算下能走到更深的 workflow 层级、拿到更高的保真度。
 
 ### 损失函数 / 训练策略
-非梯度方法，无训练阶段。"损失"是负代理相似度 $-\mathrm{Sim}(\Phi(\mathbf{s},\tau), o^\ast)$，"优化器"就是 MCTS + Red-Black Pruning。每次执行 workflow 时调用真实 LLM API（用 GPT / Gemini 等），所以预算用 iteration 数 $N$ 和总 token 来度量。
+非梯度方法，无训练阶段。"损失"就是负代理相似度 $-\mathrm{Sim}(\Phi(\mathbf{s},\tau), o^\ast)$，"优化器"是 MCTS + Red-Black Pruning。每次执行 workflow 都要真实调用 LLM API（GPT / Gemini 等），所以预算不按梯度步而按 iteration 数 $N$ 和总 token 来度量。
 
 ## 实验关键数据
 

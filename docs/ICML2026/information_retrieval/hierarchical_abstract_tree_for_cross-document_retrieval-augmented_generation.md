@@ -41,30 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Ψ-RAG 沿用 indexing + retrieval 两阶段。索引阶段把语料里所有 chunk 编码成 dense 向量，按两两余弦相似度从高到低排序，然后按这个顺序迭代地"合并 / 坍缩"出一棵抽象树；树的叶子是原始 chunk，每个内部节点由 abstraction agent 写一段 summative 摘要或一组 keyword 摘要并重新编码。检索阶段，用户 query 进入 R&A Agent，Agent 先调一次混合检索（dense top-down + BM25），结果回填到上下文里再让 Agent 决定 `<answer>` 还是 `<retrieve>`；选 `<retrieve>` 时 Agent 会改写出新的子 query（如把"David Gest 的妻子"补成"美国电影制片人 David Gest 的妻子"），驱动下一轮检索，直到回答或耗尽预算。
+Ψ-RAG 要解决的是"把擅长摘要的 Tree-RAG 搬到语料级、跨文档多跳"这件事，办法是把建树、检索、细粒度补位三处分别替换掉。索引阶段不再做 k-means，而是把所有 chunk 编码成 dense 向量后按两两相似度从高到低逐对处理，迭代式地"合并 / 坍缩"出一棵多叉抽象树——叶子是原始 chunk，每个内部节点由 abstraction agent 写一段 summative 摘要（或一组 keyword 摘要）再重新编码。检索阶段把 query 交给一个 R&A Agent：它先做一次 dense top-down + BM25 的混合检索，把证据回填进上下文后自己判断该 `<answer>` 还是 `<retrieve>`，若选后者就改写出更具体的子 query 进入下一轮，直到回答或耗尽预算。
 
 ### 关键设计
 
-1. **基于"合并—坍缩"的层次抽象树**:
+**1. 基于"合并—坍缩"的层次抽象树：用贪心合并绕开 k-means 的分布假设**
 
-    - 功能：把 $n$ 个 chunk 自底向上组织成多叉抽象树，且不依赖任何分布假设。
-    - 核心思路：先算对称相似度矩阵 $S = e(D) e(D)^\top$，按相似度降序枚举 chunk 对 $(u,v)$。若两者都没父节点，就新建一个抽象节点 $a$ 让 $c(a)=\{u,v\}$（merging）；若 $u$ 已挂在某 $p(u)$ 下而 $v$ 独立，就把 $v$ 也接到 $p(u)$（leaf node collapse）；若两边各自已有根且根不同，则按深度对齐——深度相同时再造一个新祖先，深度不同时把浅的那棵嫁接到深的那棵的对应层（abstract node collapse）。整个过程恰好运行 $n-1$ 步即可把 $n$ 个 chunk 连成一棵树；过宽的节点最后再均匀劈成两半，避免抽象 agent 上下文超长。
-    - 设计动机：作者用 Dasgupta 代价证明了两件事——(i) 完美均匀分布的树上做一次"移动叶子"操作会降低代价，意味着 Ψ-RAG 天然不偏好均匀；(ii) 对偏态分布的树，把多数类节点搬到少数类反而抬高代价，说明算法会自动保持偏态。也就是说，作者用"几何—代价"的一阶分析直接绕开了 k-means 的均匀效应，而不是再引入一个新损失去训练。
+RAPTOR 的 k-means/GMM 聚类隐含球形分布假设，遇到偏态语料会把多数类的 chunk 错配进少数簇，触发"均匀效应"噪声。Ψ-RAG 改用一套类似凝聚层次聚类的合并—坍缩流程：先算对称相似度矩阵 $S = e(D)e(D)^\top$，按相似度降序枚举 chunk 对 $(u,v)$，分三种情况处理——两者都没父节点时新建抽象节点 $a$ 令 $c(a)=\{u,v\}$（merging）；$u$ 已挂在某 $p(u)$ 下而 $v$ 独立时把 $v$ 也接到 $p(u)$（leaf node collapse）；两边各自已有根且根不同时按深度对齐，深度相同再造一个共同祖先、深度不同就把浅树嫁接到深树的对应层（abstract node collapse）。整个过程恰好 $n-1$ 步就能把 $n$ 个 chunk 连成一棵树，最后再把过宽的节点均匀劈成两半，防止抽象 agent 上下文超长。它之所以有效，是因为作者用 Dasgupta 代价做了一阶分析：在完美均匀的树上做一次"移动叶子"会降低代价，说明算法天然不偏好均匀；而在偏态树上把多数类节点搬向少数类反而抬高代价，说明它会自动保持偏态——于是不必再训练一个新目标，单凭几何—代价的性质就规避了 k-means 的均匀效应。
 
-2. **R&A Agent 驱动的多轮检索**:
+**2. R&A Agent 驱动的多轮检索：让 LLM 临时补出树里缺失的跨文档连边**
 
-    - 功能：让检索器具备"先看现有证据是否够、不够再改写 query 重检索"的因果推理能力。
-    - 核心思路：Agent 的每一步输出是一个三元组 $a = (R, \langle\text{action}\rangle, \cdot)$，其中 action 在 `<answer>` / `<retrieve>` 中二选一；选 retrieve 时 Agent 产出新 query $q'_i$。第 $i$ 步检索结果 $D^*_i = r(q'_i, \mathcal{T})$ 与历史 $\{(I(D^*_j) \cup a_j)\}$ 一起回灌到 Agent，直到给出答案或达到上限 $i_{\max}$。底层每次检索仍走 RAPTOR 的 top-down beam：从根出发，对每层按 $s(q,u)$ 取 top-$k$，再把它们的孩子放进下一层候选集，递推到叶子。
-    - 设计动机：跨文档多跳 query（"影响 Beyoncé 的那位歌手的纪录片的制片人的妻子是谁"）在初次 dense 匹配里很容易被"Beyoncé"和"纪录片"主导，真正的中介实体（David Gest）反而被漏掉；让 Agent 拿到第一轮证据后再决定下一步要查什么，是用语言模型把树缺失的"跨文档连边"动态补回来。
+抽象树的叶子之间没有显式连边，像"影响 Beyoncé 的那位歌手的纪录片的制片人的妻子是谁"这种多跳 query，初次 dense 匹配很容易被"Beyoncé""纪录片"主导，真正的中介实体（David Gest）被漏掉。Ψ-RAG 让检索器具备"看证据够不够、不够就改写 query 再查"的能力：Agent 每步输出三元组 $a=(R,\langle\text{action}\rangle,\cdot)$，action 在 `<answer>` / `<retrieve>` 二选一，选 retrieve 时产出新 query $q'_i$，第 $i$ 步检索结果 $D^*_i = r(q'_i,\mathcal{T})$ 连同历史 $\{(I(D^*_j)\cup a_j)\}$ 一起回灌，直到给答案或达上限 $i_{\max}$。底层每次检索仍走 RAPTOR 的 top-down beam——从根出发逐层按 $s(q,u)$ 取 top-$k$、再把孩子放进下层候选递推到叶子。这一步的本质是用语言模型在检索时动态把树缺失的"跨文档连边"补回来：拿到第一轮证据后再决定下一跳查什么，相当于把 Graph-RAG 的显式多跳推理换成 Agent 的串行重检索。
 
-3. **关键词混合索引 + Query 改写**:
+**3. 关键词混合索引 + Query 改写：给粗抽象补上细粒度词面通道**
 
-    - 功能：补救顶层 dense 抽象太粗、无法精确锁定细粒度事实的问题。
-    - 核心思路：索引阶段额外建一份 BM25 稀疏索引；检索阶段 Agent 可用两种方式融合：参数化的 reranker 重新打分整合 dense+sparse top-$k$，或非参数化的 RRF（reciprocal rank fusion）。更巧的是 Agent 在 `<retrieve>` 时不仅可以改 query，还可以"加描述性同位语"，让 BM25 多抓几个主题关键词，dense 检索也能借这些高层语境定位上层抽象节点。
-    - 设计动机：抽象树天生擅长粗粒度概括，但对"具体实体能否对到顶层摘要"无能为力；BM25 在词面匹配上恰好补位，而 Agent 改写 query 把"短问句"变成"带定语的长问句"，让两条通路同时受益。
+顶层抽象节点概括得太粗，dense 向量很难把 query 里的具体实体对到上层摘要。为此索引阶段额外建一份 BM25 稀疏索引，检索阶段 Agent 用两种方式融合 dense+sparse 的 top-$k$：参数化的 reranker 重新打分，或非参数化的 RRF（reciprocal rank fusion，按各路排名倒数加权）。更巧的是 Agent 在 `<retrieve>` 时不只改 query，还会"加描述性同位语"（如把"David Gest 的妻子"补成"美国电影制片人 David Gest 的妻子"），让 BM25 多抓几个主题关键词的同时，也给 dense 检索提供高层语境去定位上层抽象节点。两条通路因此同时受益：BM25 在词面匹配上补位抽象树的粗粒度短板，query 改写把"短问句"变成"带定语的长问句"，让稀疏与稠密检索都更容易命中正确节点。
 
-### 损失函数 / 训练策略
-全流程 training-free：编码器、reranker、Agent 用的 LLM（Llama-3.3-70B、Qwen3-Embedding-8B）均直接复用开源模型权重，索引过程靠相似度排序 + LLM 写摘要，检索过程靠 prompt 控制的 Agent；唯一需要调参的是 top-$k$、$i_{\max}$、混合融合方式三个超参。
+全流程 training-free：编码器、reranker、Agent 用的 LLM（Llama-3.3-70B、Qwen3-Embedding-8B）都直接复用开源权重，索引靠相似度排序 + LLM 写摘要，检索靠 prompt 控制的 Agent，唯一要调的只有 top-$k$、$i_{\max}$、混合融合方式三个超参。
 
 ## 实验关键数据
 

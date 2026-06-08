@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这是一篇"系统性实证+机理分析+派生设计" 三段式工作：(1) **实证 RQ1**——构造 2 (TM-Scratch/Post) × 8 (干预) × 47 (后门任务) × 4 (攻击算法) × 3 (seed) = 9,024 cases，再加 5,640 cases 评估干预组合，总计 14,664 cases，绘出 ASR/BTP 变化谱；(2) **机理 RQ2**——对每个干预下 backdoored agent 测三种病理指标 (weight magnitude / effective rank / loss landscape sharpness)，建立 8×3 的病理向量 $\mathbf{v}(p_i)$ 并排名；(3) **设计 RQ3**——基于机理设计 SCC 注入框架与 sharpness-based 检测；并用 Pathological Distance 量化干预组合的协同程度。
+本文要回答的核心问题是"DRL pipeline 里标配的可塑性干预，到底会让后门更容易还是更难"。它先用一组庞大的受控实验把每种干预对攻击成功率 (ASR) 和良性表现 (BTP) 的影响测出来，再把这些杂乱的数字"翻译"成网络内部的病理变化，最后把诊断出的机理反过来用作攻击设计和检测信号。换句话说，整篇工作是"先大规模量出现象、再诊断出机理、最后把机理派生成攻防工具"这条主线，三块环环相扣。
 
 ### 关键设计
 
-1. **三类病理机理的实证拆解 (M1 / M2 / M3)**:
+**1. 大规模受控实验：把"干预对后门的影响"测成一张谱**
 
-    - 功能：把杂乱的"某干预 ASR ±x%" 现象归约为可解释的三种内在机制。
-    - 核心思路：(M1) **激活通路扰动**——Shrink&Perturb / Weight Clipping / ReDo 通过裁剪或重置权重让"后门 pathway" 和"良性 pathway" 互相竞争资源；Fig.6 显示后门攻击会让 actor 网第二层少量权重幅值剧增 (后门通路稀疏)，Weight Clip 一刀切让它们被压回，导致重建竞争。(M2) **表征空间压缩**——Spectral Norm / Weight Decay / Layer Norm 通过限制 Lipschitz 常数或平滑激活，把原本与良性梯度近乎正交的后门梯度 (dot product≈0) 拉到几乎完全对齐 (≈1.0)，把后门从稀疏单通路变成与良性共享的多通路，反而在非平稳训练下更不稳定。(M3) **后门梯度放大**——SAM 通过对抗扰动捕捉损失尖锐方向，正好对应后门方向 (后门样本导致 loss landscape sharpness 范围扩 6 倍多)；SAM 把这些梯度放大并把后门通路引向 flat-minimum，让它对参数扰动鲁棒。
-    - 设计动机：单看 ASR/BTP 数字无法解释"为什么 SAM 反向" 这种反直觉结果；引入病理诊断把统计结果与具体网络变化关联，使结论可推广 (而非只是某个超参下的偶然)。
+要回答的痛点是：后门研究和可塑性研究长期各做各的，没人系统量过两者交互。作者用笛卡尔积把变量铺满——2 种威胁模型 (TM-Scratch 从头训练时注入 / TM-Post 拿到模型后注入) × 8 种干预 × 47 个后门任务 × 4 种攻击算法 (TrojDRL/BadRL/SleeperNets/UNIDOOR) × 3 个 seed = 9,024 cases，再加 5,640 cases 评估干预组合，总计 14,664 cases。攻击端统一用 transition tampering 把 trigger 注入 $(\text{state},\text{action},\text{reward})$ 三元组、用 backdoor reward 强化"触发器→目标动作"的绑定；任务覆盖 Gym 4 经典控制 + 2 物理控制 + PyBullet 3 机器人，兼顾离散/连续动作、稀疏/稠密奖励、冷启动/非冷启动条件，每种干预的超参都遵循其原论文。这样得到的 ASR/BTP 变化谱才足够稳，不会被某个超参或某个任务的偶然性带偏。
 
-2. **SCC 鲁棒后门注入框架 (Sweeper-Converter-Connector)**:
+**2. 三类病理机理 (M1/M2/M3)：把现象归约成可解释的内部机制**
 
-    - 功能：把"哪些干预对攻击有利"的发现反向用作攻击设计 cookbook，构造 TM-Post 下的强鲁棒后门。
-    - 核心思路：观察到组合干预 (Plastic/SLac/SSW) 比单 SAM 更猛 (ASR 0.178→0.418, BTP 0.745→0.915)，提炼出三步注入流程——(a) **Sweeper**：用 Shrink&Perturb / Weight Clip / ReDo 类干预清空一部分良性 pathway，为后门腾位置 (利用 M1)；(b) **Converter**：用 Spectral Norm / Weight Decay / LN 把后门梯度从正交拉向对齐良性梯度，让后门变成多 pathway 结构 (利用 M2)；(c) **Connector**：用 SAM 把多 pathway 联合优化到 flat minima，使表征稳定共存 (利用 M3)。再定义 Pathological Distance $PD(A)=\sum_{i<j}\|\mathbf{v}(p_i)-\mathbf{v}(p_j)\|_2$ 衡量组合中干预间的病理差异；实验证实 $PD$ 越大 (e.g. SSW=18.64)，后门威胁越强。
-    - 设计动机：现实部署常用多干预组合 (Plastic/Swiss Cheese 等)，attacker 只要按 SCC 模板挑互补干预即可获得免费攻击放大；这是给"plasticity-aware 安全评估" 提供的具体威胁模型。
+光看"某干预 ASR ±x%"无法解释为什么 SAM 会反向加剧后门。作者借用可塑性领域成熟的三个 pathological 指标——权重幅值、有效秩、loss landscape 锐度——对每个干预下的 backdoored agent 体检，把现象拆成三种机制。**M1 激活通路扰动**：Shrink&Perturb / Weight Clipping / ReDo 靠裁剪或重置权重，让"后门通路"和"良性通路"抢资源——Fig.6 显示后门攻击会让 actor 网第二层少量权重幅值剧增 (后门通路稀疏)，而 Weight Clip 一刀切把它们压回，逼出重建竞争。**M2 表征空间压缩**：Spectral Norm / Weight Decay / Layer Norm 通过限制 Lipschitz 常数或平滑激活，把原本与良性梯度近乎正交的后门梯度 (点积 $\approx 0$) 拉到几乎完全对齐 ($\approx 1.0$)，后门于是从稀疏单通路变成与良性共享的多通路，在非平稳训练下反而更不稳定。**M3 后门梯度放大**：SAM 用对抗扰动专门捕捉损失的尖锐方向，而后门样本恰好把 loss landscape sharpness 范围撑大 6 倍多 (+635.22%)，正好撞在 SAM 的"放大镜"下——SAM 把这些梯度放大、再把后门通路引向 flat minimum，使它对参数扰动格外鲁棒。这套 8×3 的病理向量 $\mathbf{v}(p_i)$ 让"SAM 反向"这类反直觉结论有了机理依据，而不只是统计巧合。
 
-3. **基于 loss landscape sharpness 的后门检测信号**:
+**3. SCC 鲁棒后门注入框架 (Sweeper-Converter-Connector)：把机理反向用作攻击 cookbook**
 
-    - 功能：把后门最显著的外在表象 (loss 锐度异常) 转化为防御端可监控的指标。
-    - 核心思路：观察后门攻击让 loss landscape sharpness 的波动范围扩大 635.22%，是三大病理中差异最显著的；除 SAM 之外的所有干预都会进一步加剧这一异常 ($v_{i3}>v_{13}$)。Defender 可在 agent 训练全过程实时监测 sharpness 时间序列；显著异常尖峰 / 急降都可视为可疑。配合任务自适应阈值与多源噪声去耦，可作为通用 DRL 后门预警。
-    - 设计动机：现有 DRL 后门检测大多依赖触发器或专门 probe，本文提出的 sharpness 信号无须知道触发器，且可与任何 DRL 训练流程兼容；缺点是任务间 sharpness 基线差异大、误报源待研究——作者明确把这两点列为开放问题。
+实验里发现组合干预 (Plastic/SLac/SSW) 比单用 SAM 更猛 (ASR $0.178\to0.418$, BTP $0.745\to0.915$)，作者顺势把三种机理拼成一条三步注入流程：**Sweeper** 用 Shrink&Perturb / Weight Clip / ReDo 类干预清掉一部分良性通路给后门腾位 (利用 M1)；**Converter** 用 Spectral Norm / Weight Decay / LN 把后门梯度从正交拉向对齐良性，让后门长成多通路结构 (利用 M2)；**Connector** 用 SAM 把这些多通路联合优化进 flat minima，使后门表征稳定共存 (利用 M3)。为量化"哪种组合更危险"，作者定义病理距离 $PD(A)=\sum_{i<j}\lVert\mathbf{v}(p_i)-\mathbf{v}(p_j)\rVert_2$，衡量组合内各干预的病理差异——实验证实 $PD$ 越大威胁越强 (如 SSW 的 $PD=18.64$ 对应最高 ASR)。其含义是：现实部署里本就常叠多种干预 (Plastic/Swiss Cheese 等)，攻击者只要按 SCC 模板挑机理互补的干预，就能白嫖一波攻击放大。
+
+**4. 基于 loss landscape sharpness 的后门检测信号：把最强病理表象翻成防御指标**
+
+三大病理里 sharpness 的差异最大 (后门让其波动范围扩 635.22%)，而且除 SAM 外的所有干预都会进一步加剧这一异常 ($v_{i3}>v_{13}$)，这让它天然适合当预警量。防御方可在 agent 整个训练过程实时盯 sharpness 时间序列，把显著的异常尖峰或急降视作可疑，配合任务自适应阈值与多源噪声去耦即可作为通用 DRL 后门预警。相比依赖触发器或专门 probe 的现有检测，sharpness 信号无须知道触发器、能挂在任何 DRL 训练流程上、且本就是优化器常规监控量，部署成本极低；代价是任务间 sharpness 基线方差大、其他训练异常也可能引发误报——作者明确把这两点留作开放问题。
 
 ### 损失函数 / 训练策略
-本文没有提出新损失，主体是评测协议设计——攻击端用 transition tampering 把 trigger 注入 (state,action,reward) 三元组、用 backdoor reward 强化绑定；防御端不施加任何 (本文只研究干预副作用)。任务覆盖 OpenAI Gym 4 经典控制 + 2 物理控制 + PyBullet 3 机器人，含离散/连续动作、稀疏/稠密奖励、冷启动/非冷启动条件；4 种攻击 (TrojDRL/BadRL/SleeperNets/UNIDOOR)，47 backdoor tasks，包含单后门/多后门。每个干预的超参遵循对应原论文。
+本文不提出新损失，主体是评测协议本身：攻击端靠 transition tampering 注入 trigger、靠 backdoor reward 强化绑定；防御端不施加任何手段 (只研究干预的副作用)。47 个 backdoor tasks 覆盖单后门与多后门，每种干预超参均按其原论文设置，以保证跨干预对比公平。
 
 ## 实验关键数据
 

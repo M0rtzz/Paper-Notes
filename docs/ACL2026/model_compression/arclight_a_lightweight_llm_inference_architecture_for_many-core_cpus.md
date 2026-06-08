@@ -45,23 +45,23 @@ ArcLight 是一个从零写的轻量级 LLM 推理框架（约 10 个 C++ 文件
 
 ### 关键设计
 
-1. **NUMA 局部内存池 + 双缓冲 activation**:
+**1. NUMA 局部内存池 + 双缓冲 activation：让每张量的物理页钉死在某个 NUMA 节点的本地内存，顺带把 activation 峰值砍半。**
 
-    - 功能：把每张量的物理内存严格绑定到某个 NUMA 节点的本地内存上，并通过双缓冲降低 layer-wise activation 的峰值占用。
-    - 核心思路：与 llama.cpp 的单块 UMA buffer 不同，启用 NUMA 时每个节点开一个独立的 memory pool，张量根据 TP 切分结果显式绑定到对应节点的本地池中。activation 缓冲采用奇偶层交替的 double-buffering，相邻两层共用两块缓冲区轮换。
-    - 设计动机：first-touch 策略下，OS 把页分配到第一次访问的核所在的节点；llama.cpp 在分布式线程下让 OS 自己决定页位置，结果绝大多数 GEMM 都跨节点读权重。显式节点绑定 + 池化把"哪个权重在哪个节点"变成框架显式决策，避免 OS 误判；activation 双缓冲让常驻显存量减半，适配边缘设备。
+llama.cpp 用一整块 UMA buffer，分布式线程下让 OS 按 first-touch 自己决定页放哪个节点，结果绝大多数 GEMM 都在跨节点读权重——而跨节点带宽只有本地的约四分之一。ArcLight 反过来，启用 NUMA 时给每个节点开一个独立的 memory pool，张量按 TP 切分结果显式绑定到对应节点的本地池里，"哪个权重在哪个节点"从此是框架的显式决策而不是 OS 的猜测。
 
-2. **多视图线程池 + 全局/局部 barrier**:
+在此之上，activation 缓冲采用奇偶层交替的 double-buffering：相邻两层共用两块缓冲区轮换，常驻占用直接减半，正好适配显存吃紧的边缘设备。一个钉内存避免误判、一个轮缓冲压峰值，两件事都是为了在 many-core CPU 上把访存压力关进本地。
 
-    - 功能：让同一组 worker 线程在"单图模式"（所有线程协作跑一个 GEMM）和"多子图模式"（线程被分成 $n$ 组、每组独立跑一个 TP 子图）之间动态切换。
-    - 核心思路：在线程池里引入"thread group"逻辑抽象——池初始化时和图执行时都可以通过显式 API 重新组织线程。引入两套同步：legacy intra-group barrier（每组内同步）和新的 global barrier（跨所有逻辑组的同步）。Scatter 算子把池切成 $n$ 组并为每个子图创建 view tensor；Gather 算子收集子图输出并 sum，然后把池还原成单组。
-    - 设计动机：单线程池只能跑同一个算子，无法表达 TP 后并行的多个子图；引入 group 抽象后，同一物理池可以根据当前算子是否处于 TP 区动态切换"协作 / 独立"两种执行模式，避免维护多个线程池的开销。
+**2. 多视图线程池 + 全局/局部 barrier：同一组 worker 既能合伙跑一个 GEMM，又能拆成 $n$ 组各跑各的子图。**
 
-3. **跨 NUMA 张量并行 + 异步子图同步**:
+单线程池只能让所有线程协作执行同一个算子，根本表达不了"TP 切完之后多个子图并行"这种模式。ArcLight 在线程池里引入 "thread group" 的逻辑抽象——池初始化和图执行时都能通过显式 API 重新组织线程分组，并配两套同步：组内的 legacy intra-group barrier 和跨所有逻辑组的 global barrier。进入 TP 区时 Scatter 算子把池切成 $n$ 组并为每个子图建好 view tensor，出口处 Gather 算子收集各子图输出求和、再把池还原成单组。
 
-    - 功能：把每个 transformer block 内的 GEMM 序列切成 NUMA 节点数等于的 TP 分片，分片间在 attention 出口和 MLP 出口才需要 Gather，其余全程节点内本地访存。
-    - 核心思路：MLP 中 $Y=\sigma(AX), Z=BY$ 被切成 $[Y_1,Y_2]=[\sigma(A_1 X),\sigma(A_2 X)]$、$[Z_1,Z_2]=[B_1 Y_1, B_2 Y_2]$、$Z=Z_1+Z_2$（仅在 Gather 时 reduce）。所有 TP 张量（$A_i, B_i, W_q^i, W_k^i, W_v^i$ 等）按 NUMA 节点切分驻留各自的本地内存池。同步用 Sync B：子图间默认异步，只在 Scatter 入口和 Gather 出口加全局 barrier，不在每个 GEMM 后做全局同步。
-    - 设计动机：标准 TP 套用 Sync A（每个 GEMM 后跨组 barrier），子图执行进度被最慢一组拖住，线程闲置严重；Sync B 让每个 NUMA 组按自己的节奏跑，只在结果汇合点才同步，实测额外多出 ~5 token/s。这是把 GPU 时代 TP 经验"翻译"到 CPU 多 NUMA 时的关键改动。
+关键巧思是它始终只有一个物理线程池：靠 group 抽象在"协作 / 独立"两种执行模式间动态切换，而不是维护多个线程池来回切，省掉了池切换的开销，也让"动态算子并行度"有了统一底座。
+
+**3. 跨 NUMA 张量并行 + 异步子图同步：把每个 transformer block 的 GEMM 序列切成与节点数等量的 TP 分片，只在汇合点才跨节点通信。**
+
+观察到 $W_q,W_k,W_v,W_{gate},W_{up}$ 按行可切、$W_o,W_{down}$ 按列可切，正好是 Megatron 风格的 TP。以 MLP 为例，$Y=\sigma(AX),\,Z=BY$ 被切成 $[Y_1,Y_2]=[\sigma(A_1 X),\sigma(A_2 X)]$、$[Z_1,Z_2]=[B_1 Y_1,B_2 Y_2]$，最后 $Z=Z_1+Z_2$ 只在 Gather 时 reduce；所有 TP 张量（$A_i,B_i,W_q^i,W_k^i,W_v^i$ 等）按 NUMA 节点切分、驻留各自的本地内存池，于是从 attention 入口到出口、从 MLP 入口到出口的整段 GEMM 全程只摸本节点内存，跨节点通信被压缩到 attention 出口和 MLP 出口的 Gather 那一两步。
+
+同步上论文用的是 Sync B 而非教科书的 Sync A。Sync A 在每个 GEMM 后都加一次跨组 barrier，子图进度被最慢一组拖住、线程大量闲置；Sync B 让每个 NUMA 组按自己的节奏跑，只在 Scatter 入口和 Gather 出口加全局 barrier，实测多出约 5 token/s。这一步把 GPU 时代每算子同步的 TP 习惯，改写成了 CPU 多 NUMA 下"只在结果汇合时才等齐"的版本。
 
 ### 损失函数 / 训练策略
 纯推理框架，无训练。算子层依赖 ARM NEON (SIMD) 和 i8mm (int8 矩乘)，但 ArcLight 本身硬件无关，只要重写 ops 即可移植到 x86。

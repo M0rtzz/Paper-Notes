@@ -45,23 +45,17 @@ UGround 把 LMM-based 视觉定位从"用最后一层 $\langle\text{SEG}\rangle$
 
 ### 关键设计
 
-1. **Stochastic Skip Connection (SSC)**:
+**1. 随机跳层连接 (SSC)：让每个 $\langle\text{SEG}\rangle$ 自己选「在哪一层跳出去接 SAM」。**
 
-    - 功能：让每个 $\langle\text{SEG}\rangle$ token 跨 transformer 层自适应选择"在哪一层跳出去接 SAM"
-    - 核心思路：定义策略分布 $\pi_\theta(\ell|\mathcal{H}_{t^*})=\frac{\exp(s_\ell)}{\sum_j\exp(s_j)}$，其中 $s_\ell=\bm{h}_{t^*}^{(\ell)}\cdot\mathbf{w}_\ell$，每个层有自己的学习权重 $\mathbf{w}_\ell$。训练时按 $\ell^*\sim\pi_\theta$ 采样允许探索；reward 定义为 $r=-(\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\mathcal{L}_{dice}(\mathcal{M}, M_\sigma))$，其中 $M_\sigma$ 是 ground-truth mask 经高斯平滑后的软标签。用 EMA baseline $b_t=\alpha b_{t-1}+(1-\alpha)r$ 减方差，REINFORCE 损失 $\mathcal{L}_{policy}=-(r-b_t)\log\pi_\theta(\ell^*|\mathcal{H}_{t^*})$
-    - 设计动机：单次 forward 看像 skip connection（跳过 $L-\ell^*$ 层直连 SAM），多次 forward 看像 dropout（每次激活一条不同路径），等价于一种 Monte Carlo uncertainty estimation；这种结构既缓解了"传话游戏"误差累积，又通过 ensemble 提高鲁棒性
+传统范式固定用最后一层的 $\langle\text{SEG}\rangle$ embedding 喂 SAM，像传话游戏一样把 32-40 层的累积误差全堆到最后；可实验证明 10-40 层的 cIoU 几乎都比最后层高。SSC 干脆把「在哪层连出去」建成一个可学的策略分布 $\pi_\theta(\ell|\mathcal{H}_{t^*})=\frac{\exp(s_\ell)}{\sum_j\exp(s_j)}$，打分 $s_\ell=\bm{h}_{t^*}^{(\ell)}\cdot\mathbf{w}_\ell$ 每层有自己的权重 $\mathbf{w}_\ell$；训练时按 $\ell^*\sim\pi_\theta$ 采样以允许探索，reward 取 $r=-(\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\mathcal{L}_{dice}(\mathcal{M}, M_\sigma))$（$M_\sigma$ 是 GT mask 经高斯平滑的软标签），配 EMA baseline $b_t=\alpha b_{t-1}+(1-\alpha)r$ 减方差，REINFORCE 损失 $\mathcal{L}_{policy}=-(r-b_t)\log\pi_\theta(\ell^*|\mathcal{H}_{t^*})$。这个结构有两副面孔：单次 forward 看像跳过 $L-\ell^*$ 层直连 SAM 的 skip connection，多次 forward 看像每次激活不同路径的 dropout，等价于一种 Monte Carlo 不确定性估计——既缓解误差累积、又靠 ensemble 提鲁棒性。
 
-2. **Mask as Prompt (MasP)**:
+**2. 相似度图当提示 (MasP)：把 $\langle\text{SEG}\rangle$ 与图像 token 的相似度图直接喂给 SAM 当软 logit mask。**
 
-    - 功能：把 $\langle\text{SEG}\rangle$ 与 image token 之间的相似度图直接作为 SAM 的 soft logit mask prompt
-    - 核心思路：在选中的层 $\ell^*$，对每个 image token $z_i$ 计算 $\mathcal{S}_i^{(\ell^*)}=(\bm{h}_{z_i}^{(\ell^*)})^\top\bm{h}_{t^*}^{(\ell^*)}$，把 $k$ 个分数按 2D 网格排布、插值到 $H\times W$ 得到 $\mathcal{M}$，然后调用改写后的 SAM：$\hat{\mathbf{M}}=\mathcal{G}_\mathcal{V}^{dec}(\mathbf{f}, \bm{h}_{seg}, \mathcal{M})$。$\mathcal{M}$ 是连续可微的，梯度既能通过 SAM 反传，也通过显式监督 $\mathcal{L}_\mathcal{M}=\lambda_{bce}\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\lambda_{dice}\mathcal{L}_{dice}(\mathcal{M}, M_\sigma)$ 进一步约束
-    - 设计动机：作者在 Table 2 实证发现，即便不训练，把相似度图直接当 prompt 喂原始 SAM 都能拿到 17% cIoU，说明 LMM 内部已经隐式学到了空间分布；显式当 prompt + 显式监督是把这种隐式能力放大
+$\langle\text{SEG}\rangle$ 本质是文本占位符，靠一个 MLP 隐式映射到视觉空间，没坐标没形状，全靠 SAM 猜；但 $\langle\text{SEG}\rangle$ 与 image token 之间的相似度图本身就是一张 $H\times W$ 的软 mask，空间信息显式得多。MasP 在选中的层 $\ell^*$ 对每个 image token 算 $\mathcal{S}_i^{(\ell^*)}=(\bm{h}_{z_i}^{(\ell^*)})^\top\bm{h}_{t^*}^{(\ell^*)}$，按 2D 网格排布插值到 $H\times W$ 得 $\mathcal{M}$，再调用改写后的 SAM $\hat{\mathbf{M}}=\mathcal{G}_\mathcal{V}^{dec}(\mathbf{f}, \bm{h}_{seg}, \mathcal{M})$。$\mathcal{M}$ 连续可微，梯度既能通过 SAM 反传、又被显式监督 $\mathcal{L}_\mathcal{M}=\lambda_{bce}\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\lambda_{dice}\mathcal{L}_{dice}(\mathcal{M}, M_\sigma)$ 进一步约束。一个有力的实证：即便完全不训练，把相似度图直接当 prompt 喂原始 SAM 都能拿到 17% cIoU，说明 LMM 内部早已隐式编码了空间分布，显式当 prompt + 显式监督只是把这种隐式能力放大。
 
-3. **属性统一架构（5-attribute coverage）**:
+**3. 属性统一架构：一个模型同时支持 RES / RS / FP-RES / gRES / Multi-RS 五种任务。**
 
-    - 功能：在一个模型里同时支持 RES、RS、FP-RES、gRES、Multi-RS 五种 visual grounding 任务
-    - 核心思路：靠 PPM 自身具备的灵活性——多目标场景下每个目标对应一个 $\langle\text{SEG}\rangle$ token，各自独立采样层 $\ell^*$；false premise 场景下若所有层的相似度图都低响应则模型可以拒绝；reasoning 场景下中间层的语义比最后层更强，正好适合处理隐式描述
-    - 设计动机：之前的方法如 LISA 只覆盖 RES+RS，GSVA 覆盖 RES+RS+FP-RES+gRES 但不支持 Multi-RS，PixelLM 支持 Multi-RS 但不能处理空目标；UGround 是首个 5/5 全覆盖
+之前没有方法能一次满足全部五个属性——LISA 只覆盖 RES+RS，GSVA 到 gRES 但不支持 Multi-RS，PixelLM 支持 Multi-RS 却不能拒绝空目标。UGround 靠 PPM 本身的灵活性把五种一锅端：多目标场景下每个目标配一个 $\langle\text{SEG}\rangle$、各自独立采样层 $\ell^*$；false premise 场景下若所有层的相似度图都低响应、模型就可以拒绝；reasoning 场景下中间层的语义本就比最后层强，正好适合处理隐式描述。于是它成了首个 5/5 全覆盖的统一框架。
 
 ### 损失函数 / 训练策略
 总损失四项加权：$\mathcal{L}=\lambda_{txt}\mathcal{L}_{txt}+\lambda_{mask}\mathcal{L}_{mask}+\lambda_\mathcal{M}\mathcal{L}_\mathcal{M}+\lambda_{policy}\mathcal{L}_{policy}$。其中 $\mathcal{L}_{txt}$ 是 LMM 标准文本生成损失，$\mathcal{L}_{mask}$ 是 SAM 输出的 mask 监督（BCE+Dice），$\mathcal{L}_\mathcal{M}$ 是相似度图对软 GT 的 BCE+Dice，$\mathcal{L}_{policy}$ 是 REINFORCE 策略梯度。base model 是 LLaVA1.5-7B/13B，分割解码用 SAM，在 ReasonSeg train 上微调 239 sample。

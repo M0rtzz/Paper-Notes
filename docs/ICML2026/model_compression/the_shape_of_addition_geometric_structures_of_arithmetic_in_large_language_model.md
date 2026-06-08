@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者并没有训练新模型，而是搭建一个"观察 → 几何建模 → 因果验证 → 推理期介入"的四段式分析管线：(1) 在固定 LLM（Qwen3-4B，36 层）上跑 10000 道三整数 10 位加法，记录每个生成位置的最后一层激活；(2) 用 UMAP 可视化得到 IRST 几何结构，定义"几何滑移"刻画错误；(3) 提出 Noisy Quantization Model，把进位建模成连续势 $\Phi$ 加高斯噪声后取下整，推导出一个"浴缸形"错误率公式；(4) 用线性 / 回归探针读出局部 raw sum 和全局 carry potential，做双流一致性检查，在不重训模型的前提下纠正 off-by-one。整个流程的"模型"其实是一组数学假设 + 探针 + logit 干预，输入是激活向量，输出是被修正后的下一个 token logits。
+全篇不训练任何新模型，而是在一个固定的 Qwen3-4B（36 层）上做"观察现象 → 提出几何假设 → 解析建模 → 因果验证"的闭环分析。作者跑 10000 道三项 10 位整数加法，记录每个生成位置的最后一层激活向量 $\boldsymbol h_p^{(L)}$，先用 UMAP 把它压成 2D 看出几何骨架，再提出一套数学假设解释这套几何为什么会诱导 off-by-one 错误，最后用探针 + logit 干预去因果验证——如果假设成立，靠两个轻量探针就该能把"内部知道、输出选错"的错误纠回来。所以这里的"方法"是一组几何假设加上读取它的探针，输入是激活向量，输出是被修正后的下一个 token logits。
 
 ### 关键设计
 
-1. **等原始和轨迹 IRST**:
+**1. 等原始和轨迹 IRST：用两级几何结构让一个向量同时容纳"对"与"错"。**
 
-    - 功能：把残差流的几何骨架显式地写成"以数字 0–9 为锚点的盆地 × 以进位 $c_p$ 区分的并行纤维"两级结构。
-    - 核心思路：定义 $\mathcal{T}_r$ 为所有满足 $r_p = r$（列内原始和相同）的激活组成的连续流形；由恒等式 $\hat{s}_p \equiv (r_p + \hat{c}_p) \bmod 10$ 可知一条 IRST 不会困在一个数字盆里，而是会随 $\hat{c}_p$ 增大穿过相邻盆，形成如 $(1,1,0,0)\!\leftrightarrow\!(2,2,1,1)\!\leftrightarrow\!(3,3,2,2)$ 这种"沿纤维滑一格 = carry +1"的拓扑。错误样本（红点）几乎都落在两个稳定节点之间的稀疏过渡段，作者称之为「几何滑移」。
-    - 设计动机：把"输出对错"这种离散语义和"激活落在哪段纤维上"这种连续几何对齐起来，让 probe versatility 自然成立——同一个向量里 ground truth 由"盆地归属"读出，hallucination 由"沿纤维偏移量"读出，二者本来就在正交方向上。
+探针多功能性最反直觉的地方，是同一条出错样本的激活里能同时读出正确答案、错误输出和 carry 等互相矛盾的信号。作者的解释是：残差流并非一团混沌，而是被组织成"以数字 0–9 为锚点的数字盆地 × 以进位 $c_p$ 区分的并行纤维"两级结构。形式上把所有满足 $r_p = r$（列内原始和相同）的激活定义成一条连续流形 $\mathcal T_r$，称为等原始和轨迹。由恒等式 $\hat s_p \equiv (r_p + \hat c_p)\bmod 10$ 可知一条 IRST 不会困死在某个数字盆里，而是随 $\hat c_p$ 递增穿过相邻盆，形成 $(1,1,0,0)\leftrightarrow(2,2,1,1)\leftrightarrow(3,3,2,2)$ 这种"沿纤维滑一格 = carry +1"的拓扑。错误样本（UMAP 里的红点）几乎都落在两个稳定节点之间稀疏的过渡段上，作者称之为「几何滑移」。这样一来 probe versatility 就不再玄学：ground truth 由"激活落在哪个盆地"读出，hallucination 由"沿纤维滑了多远"读出，两者本就活在正交方向上，自然能并存而不矛盾。
 
-2. **噪声量化模型 + 浴缸错误率**:
+**2. 噪声量化模型：把"为什么误差总挤在整数附近"写成一条浴缸曲线。**
 
-    - 功能：给"为什么误差总集中在整数附近"这一现象一个解析式。
-    - 核心思路：定义进位势 $\Phi_p = \sum_{j\ge 1} r_{p+j}/10^j$ 作为右侧上下文流入当前位的连续推力，真实 carry $c_p = \lfloor \Phi_p \rfloor$。模型内部估计的是带噪版本 $\hat\Phi_p = \Phi_p + \epsilon,\ \epsilon\sim\mathcal{N}(0,\sigma^2)$，输出 $\hat c_p = \lfloor \hat\Phi_p \rfloor$。设 $\delta(\Phi)=\Phi\bmod 1$，单步 off-by-one 错误率为 $P(\text{err}\mid\Phi) = Q(\delta/\sigma) + Q((1-\delta)/\sigma)$，预测出一条"在整数 $\Phi$ 处尖峰、在 $\Phi\approx i+0.5$ 处平坦"的周期性浴缸曲线。实测拟合 $R^2=0.80$，反推出 Qwen3-4B 的有效内部噪声 $\sigma\approx 0.05$。
-    - 设计动机：替换"算术错误是随机噪声"这种空话，把每次失败都归结成一次具体的、可量化的阈值穿越事件；同时为后续推理期纠错提供一个明确的"危险区"先验（接近整数即危险）。
+既然错误是沿纤维滑过相邻盆造成的，那滑移什么时候发生就需要一个可量化的机制，而不能用"算术误差是随机噪声"搪塞。作者定义进位势 $\Phi_p = \sum_{j\ge 1} r_{p+j}/10^j$，把右侧所有低位的原始和当成流入当前位的连续推力，真实进位就是它的下整 $c_p = \lfloor \Phi_p \rfloor$。模型内部估计的是带噪版本 $\hat\Phi_p = \Phi_p + \epsilon,\ \epsilon\sim\mathcal N(0,\sigma^2)$，输出 $\hat c_p = \lfloor\hat\Phi_p\rfloor$。记小数部分 $\delta(\Phi)=\Phi\bmod 1$，则单步 off-by-one 错误率为
 
-3. **双流一致性推理期自校正**:
+$$P(\text{err}\mid\Phi) = Q\!\left(\frac{\delta}{\sigma}\right) + Q\!\left(\frac{1-\delta}{\sigma}\right),$$
 
-    - 功能：不重训、不改解码器，仅靠两个轻量探针就把 off-by-one 错误识别并纠回。
-    - 核心思路：在最后一层用分类探针 $f_{\theta_r}$ 读局部 raw sum $\hat r_p$，用回归探针 $f_{\theta_\phi}$ 读全局进位势 $\hat\Phi_p$。定义合理 carry 集合 $\mathcal{K}_p(\delta) = \{\lfloor\phi\rfloor : \phi\in[\hat\Phi_p-\delta,\hat\Phi_p+\delta]\}$，若模型输出 $\hat s_p$ 不能由任何 $(\hat r_p, c\in\mathcal K_p(\delta))$ 通过 $\hat s_p\equiv(\hat r_p + c)\bmod 10$ 解释，就视为"代表向量飘出了正确 IRST"，用 $\hat s_{\text{new}} = (\hat r_p + \lfloor\hat\Phi_p\rfloor) \bmod 10$ 覆盖 logits。$\delta$ 充当"容差"，对应浴缸理论中"靠近阈值时承认歧义、不强行覆盖"的稳定区。
-    - 设计动机：把对几何结构的理解直接转化成一个因果干预——如果 IRST 假设真成立，那么"局部 raw sum 探针 + 全局 carry potential 探针"必然包含足够信息去恢复正确数字；纠错率的提升就成了 IRST 假设的因果证据，而不仅是相关性。
+它在整数 $\Phi$ 处尖峰、在 $\Phi\approx i+0.5$ 处平坦，画出来是一条周期性的"浴缸"曲线。实测拟合 $R^2 = 0.80$，反推出 Qwen3-4B 的有效内部噪声 $\sigma\approx 0.05$。这个式子把每次失败都还原成一次具体的阈值穿越事件——只有当 $\Phi$ 离整数足够近、噪声才有可能把它推过界，于是也顺带给出了纠错时的"危险区"先验：越靠近整数越危险。
+
+**3. 双流一致性自校正：把几何假设直接变成推理期的因果干预。**
+
+如果 IRST 假设为真，那"局部 raw sum + 全局进位势"两路信息合起来就足以恢复正确数字，于是纠错不需要重训也不需要改解码器。作者在最后一层挂两个探针：分类探针 $f_{\theta_r}$ 读局部原始和 $\hat r_p$，回归探针 $f_{\theta_\phi}$ 读全局进位势 $\hat\Phi_p$。再定义一个合理进位集合 $\mathcal K_p(\delta) = \{\lfloor\phi\rfloor : \phi\in[\hat\Phi_p-\delta,\ \hat\Phi_p+\delta]\}$，其中 $\delta$ 是容差，对应浴缸理论里"靠近阈值时承认歧义、不强行覆盖"的稳定区。若模型输出 $\hat s_p$ 无法由任何 $(\hat r_p,\ c\in\mathcal K_p(\delta))$ 通过 $\hat s_p\equiv(\hat r_p + c)\bmod 10$ 解释，就判定代表向量飘出了正确 IRST，用 $\hat s_{\text{new}} = (\hat r_p + \lfloor\hat\Phi_p\rfloor)\bmod 10$ 覆盖 logits。因为这套干预完全建立在 IRST 假设之上，纠错率的提升本身就成了该假设的因果证据，而不只是相关性。
 
 ### 损失函数 / 训练策略
-本文不训练 LLM 本体；探针均为 balanced 数据集上的 logistic regression / MLP / 线性回归，使用标准交叉熵或 MSE，超参不敏感。所有干预只发生在前向推理时对最后一层激活和输出 logits 上。
+本文不训练 LLM 本体；探针都是在 balanced 数据集上训的 logistic regression / MLP / 线性回归，用标准交叉熵或 MSE，超参不敏感。所有干预只发生在前向推理时，作用于最后一层激活和输出 logits。
 
 ## 实验关键数据
 

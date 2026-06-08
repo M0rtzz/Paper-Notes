@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CoCD 维护一个长度 $n$ 的 dense 梯度 buffer $\hat{\mathbf{g}} \in \mathbb{R}^n$（即一份与参数等大的内存），全局参数 $\mathbf{x}_t$ 按 cyclic 顺序选下一组坐标 $i$。每步分两个 phase：先对整个 buffer 做衰减 $\hat{\mathbf{g}}_{t-1}^{\text{decay}} = \gamma \cdot \hat{\mathbf{g}}_{t-1}$；再对当前 batch 内被选中的 $B$ 个坐标，用中心 FD 算新值 $\tilde{\nabla}_i f(\mathbf{x}_t) = \frac{f(\mathbf{x}_t+\epsilon\mathbf{e}_i)-f(\mathbf{x}_t-\epsilon\mathbf{e}_i)}{\epsilon}$ 覆盖 buffer 对应位置；最后用整个 buffer 做参数更新 $\mathbf{x}_{t+1} = \mathbf{x}_t - \alpha \hat{\mathbf{g}}_t$。整套机制把每步 query 复杂度降到 $O(B)$（典型 $B \ll n$），同时保持全维度的下降方向。
+CoCD（Coherent Coordinate Descent）想要一个确定性、每步只花 $O(1)$ 函数评估、又低方差的零阶优化器，做法是把"上一步算出来的偏导"当成资产留着复用而不是丢掉。它维护一份与参数等大的 dense 梯度 buffer $\hat{\mathbf{g}} \in \mathbb{R}^n$，全局参数 $\mathbf{x}_t$ 按 cyclic 顺序轮流选下一组坐标。每一步先把整个 buffer 衰减一下 $\hat{\mathbf{g}}_{t-1}^{\text{decay}} = \gamma \cdot \hat{\mathbf{g}}_{t-1}$，再只对当前被选中的 $B$ 个坐标用中心有限差分算新值 $\tilde{\nabla}_i f(\mathbf{x}_t) = \frac{f(\mathbf{x}_t+\epsilon\mathbf{e}_i)-f(\mathbf{x}_t-\epsilon\mathbf{e}_i)}{\epsilon}$ 覆盖进 buffer 对应位置，最后拿整份 buffer 做一次全维度更新 $\mathbf{x}_{t+1} = \mathbf{x}_t - \alpha \hat{\mathbf{g}}_t$。于是每步真正算 FD 的只有 $B$ 个坐标（典型 $B \ll n$），但下降方向始终是满维的，绝大多数分量来自衰减后的 stale 值。
 
 ### 关键设计
 
-1. **Coherent buffer + momentum 衰减 $\gamma$ 统一 BCCD 与 CoCD**:
+**1. 用一个衰减因子 $\gamma$ 把"丢弃 stale"和"完美记忆"连成一族算法。**
 
-    - 功能：用一个标量 $\gamma \in [0,1]$ 把 BCCD（不复用 stale）和 full-history CoCD（完美记忆）连成一族算法。
-    - 核心思路：$\gamma=0$ 时 buffer 每步清零，等价于 classical BCCD（只对当前 $B$ 个坐标有效）；$\gamma=1$ 时 stale 梯度永久保留直到被循环刷新，等价于带 time-lagged gradient 的 full-gradient descent；$0<\gamma<1$ 时形成"fading memory"，旧梯度被指数级压低，给高度非凸 landscape 提供 robustness。在 SARCOS B=1 极端 stress test 中，$\gamma=0.95$ 的 CoCD 收敛到 loss 68.6，BCCD（$\gamma=0$）即使把 $B$ 提到 64 都卡在 188。
-    - 设计动机：传统观点把 stale gradient 当 distributed SGD 中的负担；本文反向利用——既然连续 step 间梯度变化被 Lipschitz 约束，那 stale 值就是一个免费的"warm start"，比每步从零开始做随机估计稳定得多。
+零阶优化的两难是：单次估计方差大，多次估计又烧不起预算，而分布式 SGD 的经验又告诉大家陈旧梯度是延迟噪声、该丢。CoCD 反着用——既然连续 step 间梯度变化被 Lipschitz 平滑约束着只能小幅变动，那上一步的偏导就是一个几乎免费的"warm start"，比每步从零做随机估计稳得多。一个标量 $\gamma \in [0,1]$ 就把整个谱系串起来：$\gamma=0$ 时 buffer 每步清零，退化成经典的 Block Cyclic Coordinate Descent（只有当前 $B$ 个坐标有效）；$\gamma=1$ 时 stale 梯度一直保留到被循环刷新，等价于带 time-lagged gradient 的 full-gradient descent；$0<\gamma<1$ 则形成"fading memory"，旧梯度被指数级压低，给高度非凸的 landscape 留出 robustness。效果在 SARCOS 的 $B=1$ 极端压力测试里很直观：$\gamma=0.95$ 的 CoCD 收敛到 loss 68.6，而 BCCD（$\gamma=0$）即使把 $B$ 提到 64 仍卡在 188。
 
-2. **隐式平滑：大 $\epsilon$ 反而更稳**:
+**2. 把有限差分步长 $\epsilon$ 从误差源变成 landscape 平滑器。**
 
-    - 功能：把 finite difference 的"步长"从一个误差源转化为一个 landscape 平滑器，从而允许更大学习率和更长 history。
-    - 核心思路：中心差分等价于 $\tilde{\nabla}_i^\epsilon f(\mathbf{x}) = \frac{1}{2\epsilon}\int_{-\epsilon}^{\epsilon}\nabla_i f(\mathbf{x}+u\mathbf{e}_i)du$，即在 $\epsilon$ 邻域内对真梯度做平均。定义有效 Lipschitz 常数 $L_\epsilon$，可证明 $L_\epsilon \le L$ 且单调随 $\epsilon$ 增大变小。CoCD 的近似误差界为 $\|\hat{\mathbf{g}}_t - \tilde{\nabla}^\epsilon f(\mathbf{x}_t)\| \le \frac{L_\epsilon \delta}{2}(BK(K-1)+2rK)$，其中 $K=\lfloor n/B\rfloor$。$L_\epsilon$ 越小，同样的 stale 程度容忍的 step size $\delta$ 越大。
-    - 设计动机：传统 FD 文献以"$\epsilon \to 0$"为黄金法则，但这条路线在非凸 landscape 上反而把高频噪声放进梯度估计。作者通过把 $\epsilon$ 当 smoothing radius 看待，给出"大 $\epsilon$ 有益"的理论解释——SARCOS 上 $\epsilon=1$ 让 BCCD 退化但让 CoCD 收敛到最好结果，正面验证了这个反直觉论断。
+传统 FD 文献把 $\epsilon \to 0$ 当黄金法则，可在非凸 landscape 上这反而把高频噪声塞进梯度估计。作者换个视角：中心差分其实等价于在邻域内对真梯度做平均 $\tilde{\nabla}_i^\epsilon f(\mathbf{x}) = \frac{1}{2\epsilon}\int_{-\epsilon}^{\epsilon}\nabla_i f(\mathbf{x}+u\mathbf{e}_i)\,du$，所以 $\epsilon$ 就是一个隐式的 Gaussian smoothing 半径。定义随之平滑后的有效 Lipschitz 常数 $L_\epsilon$，可证 $L_\epsilon \le L$ 且单调随 $\epsilon$ 增大而变小。这一点直接进了 CoCD 的近似误差界
 
-3. **Flattened FIFO buffer + 虚拟化 indexing**:
+$$\|\hat{\mathbf{g}}_t - \tilde{\nabla}^\epsilon f(\mathbf{x}_t)\| \le \frac{L_\epsilon \delta}{2}\big(BK(K-1)+2rK\big),\quad K=\lfloor n/B\rfloor.$$
 
-    - 功能：让 CoCD 的 cyclic 坐标逻辑既能跑神经网络（参数是各种形状 tensor），又保持 $O(1)$ overhead 和"只占一份参数内存"的硬约束。
-    - 核心思路：分配一段连续 1D 内存（FIFO buffer，长度 $m$，典型 $m=n$ 但可更小做 memory-constrained 部署），用整数指针 `cur_param_idx` / `cur_weight_idx` / `cur_grad_idx` 维护 flat index 到 tensor view 的映射；descent 阶段用 tensor 的临时 view（不复制）做 in-place 减法 $\mathbf{x} \leftarrow \mathbf{x} - \alpha \hat{\mathbf{g}}$。
-    - 设计动机：朴素实现会在每步把参数 tensor reshape/concat 成 flat，再把更新 reshape 回去，内存复制成本高得离谱。这个 trick 让 CoCD 的内存占用严格等于一份参数副本——比 Adam（要 2 份 moment）甚至比 SPSA（要存投影矩阵）都省，正是 on-device 训练场景需要的特性。
+$L_\epsilon$ 越小，同样的 stale 程度就能容忍越大的 step size $\delta$——也就是说放大 $\epsilon$ 反过来让"复用 stale 梯度"更安全。SARCOS 上 $\epsilon=1$ 让 BCCD 直接退化、却让 CoCD 拿到全场最好结果，正是这个反直觉论断的正面验证。
+
+**3. 用扁平 FIFO buffer + 虚拟化索引把内存压到"只占一份参数"。**
+
+要在边缘设备上跑，内存是硬约束，而神经网络参数是一堆形状各异的 tensor，朴素实现每步都要 reshape/concat 成 flat 再 reshape 回去，复制成本高到离谱。CoCD 的工程 trick 是预分配一段连续 1D 内存当 FIFO buffer（长度 $m$，典型 $m=n$，也可调小做 memory-constrained 部署），用三个整数指针 `cur_param_idx` / `cur_weight_idx` / `cur_grad_idx` 维护 flat index 到各 tensor view 的映射；下降阶段直接在 tensor 的临时 view 上（不复制）做 in-place 减法 $\mathbf{x} \leftarrow \mathbf{x} - \alpha \hat{\mathbf{g}}$。这样整个优化器的内存严格等于一份参数副本，比 Adam（要存 2 份 moment）甚至比 SPSA（要存投影矩阵）都省，正好契合 on-device 训练的诉求。
 
 ### 损失函数 / 训练策略
-不引入新损失，只是替换优化器。理论侧在 L-smooth + PŁ 条件下证明 CoCD 线性收敛：$f(\mathbf{x}_t)-f(\mathbf{x}^*) \le (1-\frac{2\mu C_1}{C_2})^t (f(\mathbf{x}_0)-f(\mathbf{x}^*))$，其中 staleness factor $\tau = n/B - 1$，要求学习率 $\alpha < \frac{2}{L(1+n\tau)}$。$B$ 越大 $\tau$ 越小，可用学习率越大；$\gamma$ 与 $m$ 通过定义 effective LR 进一步影响稳定阈值。
+不引入新损失，只是替换优化器。理论侧在 L-smooth + PŁ 条件下证明 CoCD 线性收敛：$f(\mathbf{x}_t)-f(\mathbf{x}^*) \le (1-\frac{2\mu C_1}{C_2})^t (f(\mathbf{x}_0)-f(\mathbf{x}^*))$，其中 staleness factor $\tau = n/B - 1$，要求学习率 $\alpha < \frac{2}{L(1+n\tau)}$。$B$ 越大 $\tau$ 越小、可用学习率越大；$\gamma$ 与 $m$ 则通过定义 effective LR 进一步影响稳定阈值。
 
 ## 实验关键数据
 

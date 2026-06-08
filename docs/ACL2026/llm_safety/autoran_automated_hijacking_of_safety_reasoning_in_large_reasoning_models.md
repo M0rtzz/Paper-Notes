@@ -44,26 +44,23 @@ tags:
 
 ### 关键设计
 
-1. **执行模拟（SimulateReasoning + 叙事模板填充）**:
+**1. 执行模拟：用弱模型先伪造一段「我已经在执行」的高层推理当锚。**
 
-    - 功能：让弱小且去对齐的 $g$ 直接对有害请求 $q$ 生成一段「假装我已经在执行」的 high-level reasoning $\tilde p$（拆步、要点、例子），然后把它当填料灌进一个预先写好的「教育解释 / 角色扮演 / 风险告知」叙事模板里，得到 prompt $x_0$。
-    - 核心思路：直接问目标模型「教我做炸弹」会触发 deliberation 阶段的安全检查；但如果 prompt 已经长得像「教育者在拆解某个 adversarial topic、列出策略 A/B/C、解释 rationale」，目标模型的 CoT 会被「锚定」到「我现在的任务是 elaborate on existing structure」而非「我要不要回答这个请求」，从而直接跳过 deliberation 进入执行模式。Weak-to-Strong 可行的原因是不同 LRM 在高层执行推理上结构高度相似——弱模型的脚手架就足够触发强模型的执行模式。
-    - 设计动机：传统 persuasion 攻击试图说服目标「这个请求合理」，但 LRM 的 deliberation 越来越强，很难被说服；本文换思路——不说服它，直接给它一个看起来已经在执行中的上下文，让 deliberation 失去对象。
+直接问目标「教我做炸弹」必然触发 deliberation 阶段的安全审查，攻击的第一步就是让这个审查没有审查对象。AutoRAN 让弱小、去对齐的 $g$ 对有害请求 $q$ 生成一段假装已经在执行的 high-level reasoning $\tilde p$——拆成几个 step、给要点、举例子，再把 $\tilde p$ 的元素灌进一个预写的叙事模板（教育解释 / 角色扮演 / 风险告知），得到初始 prompt $x_0$。当 prompt 已经长得像「一个教育者在拆解某个 adversarial topic、列出策略 A/B/C 并解释 rationale」时，目标 LRM 的 CoT 会被锚定到「我的任务是把现有结构补全（elaborate on existing structure）」，而不是「我要不要回答这个请求」，于是 deliberation 被跳过，模型直接进入执行模式。
 
-2. **反馈驱动的三分支精炼策略**:
+这一步之所以能用 8B 小模型撬动 GPT-o3，是因为不同 LRM 在高层执行推理上的结构高度相似——弱模型搭出来的脚手架就足以触发强模型的执行框架。它和传统 persuasion 攻击的根本区别在于：persuasion 试图说服目标「这个请求是合理的」，但 LRM 的 deliberation 越来越难被说服；AutoRAN 不去说服，而是直接递给它一个看起来正在执行中的上下文，让 deliberation 失去发力点。
 
-    - 功能：根据 $f$ 第 $i$ 轮响应的形态选择不同改写：
-        - Case 1 立即拒绝（无 CoT 泄露）：换一个叙事模板、$g$ 从零生成新 $x_0$；
-        - Case 2 拒绝但泄露 CoT $p_i$：调用 `AddressCoTConcern`——让 $g$ 解析 $p_i$ 里目标提到的具体担忧（如「需要符合 ethical guidelines」），在 $x_i$ 上追加针对性的 justification 段落消解这些 concern；
-        - Case 3 substantive 但 helpfulness 不够（$h(y_i, q) < h^*$）：调用 `EnhanceObjectiveClarity`——让 $g$ 把模板里的 topic / high-level goal / target audience / illustrative examples 改写得更贴近原始有害目标 $q$。
-    - 核心思路：把目标模型的 thinking trace 当成自己的「梯度」——它每次拒绝都会告诉你它在意什么，下一轮就专门针对那个 concern 写新理由。这相当于黑盒条件下的 reward shaping，反馈源是 LRM 自己的透明 CoT。
-    - 设计动机：之前的 jailbreak 要么靠 random mutation 暴力试，要么靠 hand-crafted 模板复用；本文用「目标说什么我就改什么」的精确反馈，所以收敛极快（多数 query 1 轮就成）。
+**2. 反馈驱动的三分支精炼：把目标拒绝时泄露的 CoT 当成攻击梯度。**
 
-3. **Weak-to-Strong + 自评 Judge 闭环**:
+执行锚不一定一次成功，关键在于失败后怎么改。AutoRAN 把目标的 thinking trace 当成黑盒下的「梯度」——它每次拒绝都会说出自己在意什么，下一轮就专门针对那个 concern 改写。具体按 $f$ 第 $i$ 轮响应的形态分三支处理：Case 1 立即拒绝且无 CoT 泄露时，换一个叙事模板、让 $g$ 从零重生成新的 $x_0$；Case 2 拒绝但泄露了 CoT $p_i$ 时，调用 `AddressCoTConcern`，让 $g$ 解析 $p_i$ 里目标提到的具体担忧（如「需要符合 ethical guidelines」），在 $x_i$ 上追加针对性的 justification 段落把这些 concern 一一消解；Case 3 已给出实质内容但 helpfulness 不够（$h(y_i, q) < h^*$）时，调用 `EnhanceObjectiveClarity`，让 $g$ 把模板里的 topic / high-level goal / target audience / illustrative examples 改写得更贴近原始有害目标 $q$。
 
-    - 功能：$g$ 同时承担三件事——(a) 模拟执行推理、(b) 生成/改写 prompt、(c) 当 judge 给 helpfulness $h(y, q) \in [1, 10]$ 评分，$\geq 7$ 算成功。目标 $f$ 只有 black-box API 访问，攻击者完全靠 $g$（一个 8B 去对齐小模型）跑完整 pipeline。
-    - 核心思路：去对齐的 Qwen3-8B-abliterated 在 StrongReject / HarmBench 上对有害 query 拒绝率 <2%，而商用 LRM >98%——这种 alignment gap 让小模型恰好胜任「不被自己安全机制掣肘的工具人」。为了校验 self-judge 的偏置，作者再用 gpt-4o / Gemini-2.5-Flash 做外部 judge 复核。
-    - 设计动机：weak-to-strong 不只是工程选择——它揭示了一个更深的风险：当强 LRM 与弱去对齐模型并存于生态时，弱模型可以系统化地攻击强模型，因为两者推理结构相似但安全 budget 不同。
+相比之前要么靠 random mutation 暴力试、要么靠 hand-crafted 模板复用的 jailbreak，这种「目标说什么我就改什么」的精确反馈让收敛极快——多数 query 一轮即破。本质上它是一种黑盒条件下的 reward shaping，而反馈源恰恰是 LRM 引以为豪的透明 CoT。
+
+**3. Weak-to-Strong 闭环：一个 8B 去对齐模型独自跑完攻击 + 自评。**
+
+整个 pipeline 攻击者侧只需要 $g$ 一个模型，它同时承担三件事：模拟执行推理、生成/改写 prompt、以及充当 judge 给 helpfulness $h(y, q) \in [1, 10]$ 打分（$\geq 7$ 记成功），目标 $f$ 只暴露 black-box API。能这样做是因为存在巨大的 alignment gap——去对齐的 Qwen3-8B-abliterated 在 StrongReject / HarmBench 上对有害 query 的拒绝率 <2%，而商用 LRM >98%，小模型恰好胜任「不被自身安全机制掣肘的工具人」。为防止 self-judge 高估，作者另用 gpt-4o / Gemini-2.5-Flash 做外部 judge 复核。
+
+这条闭环揭示的风险比单次攻击更深：当强对齐 LRM 与弱去对齐模型并存于同一生态时，两者推理结构相似但安全 budget 悬殊，弱模型可以被系统化地养成攻击强模型的工具，门槛极低。
 
 ### 损失函数 / 训练策略
 无训练，纯推理时攻击。超参：$n_{\text{turn}} = 10$、$h^* = 7$、模板库可热插拔、改写策略可扩展。论文还给了「用 AutoRAN 生成的对抗数据反过来做安全 SFT」的红队实验，可让对齐模型的 ASR 下降 92%。

@@ -51,23 +51,17 @@ BLaIR benchmark 由三层组成：
 
 ### 关键设计
 
-1. **Amazon Reviews 2023 数据集 + cleaned metadata + 毫秒级时间戳**:
+**1. Amazon Reviews 2023 数据集：更大、更新、metadata 更干净、时间戳到毫秒。**
 
-    - 功能：替代 2018 年老版本，成为更大、更新、metadata 更干净的推荐研究基础设施。
-    - 核心思路：自建 user-centric 爬虫从公开 Amazon 页面采 user→reviews，重新解析原始 HTML metadata 为结构化 JSON（含 description / features / 多分辨率图片 / 视频），时间戳精确到 ms。最终规模：33 个 category / 570M reviews / 48M items / 54M users，相比 2018 版分别 ×3.18 items 和 ×2.58 tokens。
-    - 设计动机：旧版本的 day-level 时间戳对序列推荐的 time split 不友好；旧 metadata 噪声大、缺字段。毫秒级时间戳让作者能定义全局共享 cutoff (1628643414042 / 1658002729837) 实现 8:1:1 的 by-timestamp split。
+旧版 2018 Amazon 数据的 day-level 时间戳对序列推荐的 time split 不友好，metadata 也噪声大、缺字段，已经撑不起新一代研究。作者自建 user-centric 爬虫从公开 Amazon 页面采集 user→reviews，并把原始 HTML metadata 重新解析成结构化 JSON（含 description / features / 多分辨率图片 / 视频），时间戳精确到毫秒。最终覆盖 33 个 category、570M reviews、48M items、54M users，相比 2018 版 items ×3.18、tokens ×2.58。毫秒级时间戳带来的直接好处是能定义全局共享 cutoff（1628643414042 / 1658002729837），从而做出干净的 8:1:1 by-timestamp split，而不是按用户随机切。
 
-2. **复杂 query 商品搜索新子任务 (Amazon-C4 + Reddit-Movie)**:
+**2. 复杂 query 商品搜索：补上「自然长句描述需求」这个被忽略的子任务。**
 
-    - 功能：填补现有搜索 benchmark 全是短关键词 query 的空白，反映 ChatGPT-buy / Amazon Rufus 时代用户用自然长句描述需求的趋势。
-    - 核心思路：(1) Amazon-C4——从 Amazon Reviews 2023 采 5 星 + ≥100 字符的 review，让 ChatGPT 把 review 重写成第一人称 query（同时去除可能泄漏目标商品的信息），最终 ~20k pairs；(2) Reddit-Movie——从 reddit_movie_large_v1 取 is_seeker=True + 答复 upvote>20 的真实 forum post 作为 query，对应推荐的电影作为 ground-truth。
-    - 设计动机：真实用户的复杂 chat history 私密无法公开；用 review 反向合成是「semi-synthetic 但 grounded in real user intent」的折中。Reddit 真实数据验证 Amazon-C4 的代表性——两者 NDCG@100 的 Pearson 相关达 0.94（p<0.01），证明 semi-synthetic 是可靠 proxy。
+现有搜索 benchmark 的 query 几乎全是短关键词，无法反映 ChatGPT-buy / Amazon Rufus 时代用户用一整段话描述需求的真实行为，而真实用户的复杂 chat history 又因隐私无法公开。作者用两条路绕过这个困境：一是 Amazon-C4——从 Amazon Reviews 2023 取 5 星且 ≥100 字符的 review，让 ChatGPT 把它改写成第一人称 query（同时抹掉可能泄漏目标商品的信息），得到约 20k 对；二是 Reddit-Movie——直接取 reddit_movie_large_v1 中 $\text{is\_seeker}=\text{True}$ 且答复 upvote>20 的真实 forum post 作为 query，被推荐的电影作为 ground-truth。前者是「semi-synthetic 但 grounded in real user intent」的低成本造数，后者是真实数据；两者在 NDCG@100 上的 Pearson 相关高达 0.94（p<0.01），互相验证了 semi-synthetic 是可靠的 proxy。
 
-3. **统一 adaptor + Borda Count 综合排名**:
+**3. 统一 adaptor + Borda Count 综合排名：把对比锁死在 encoder 维度。**
 
-    - 功能：解决「不同 LLM embedding 维度不同」「不同 dataset 指标尺度不同」两个公平性挑战。
-    - 核心思路：(a) 用 PCA whitening 把所有 LLM embedding 投影到固定 $d'$ 维（默认），可选 MRL 对比；(b) 用 Borda Count（MMTEB 同款）做跨 dataset 综合排名，避免被某个 high-variance dataset 主导，同时给出 Avg.(Overall) 和 Avg.(Task) 两个补充指标。
-    - 设计动机：直接对比裸 embedding 维度不同的模型，下游模型参数会变化，无法分离"encoder 能力"与"decoder capacity"。Adaptor 把对比锁定在 encoder 维度。Borda Count 则缓解 metric scale bias。
+不同 LLM 的 embedding 维度不同、不同 dataset 的指标尺度不同，直接比裸 embedding 会让下游模型参数量随之变化，分不清到底是 encoder 强还是 decoder capacity 大。为此作者在序列推荐和协同过滤里加 adaptor 层，用 PCA whitening（默认，可选 MRL 对比）把所有 embedding 投影到固定的 $d'$ 维，确保下游模型参数量一致，对比只反映 encoder 能力。跨 dataset 的综合排名则用 Borda Count（与 MMTEB 同款），避免被某个 high-variance dataset 主导，并额外给出 Avg.(Overall) 和 Avg.(Task) 两个补充指标缓解 metric scale bias。
 
 ### 损失函数 / 训练策略
 序列推荐用 cross-entropy 训 Transformer；协同过滤用 InfoNCE + in-batch negatives 训 AlphaRec linear layer；搜索任务 zero-shot 不训。超参 grid: lr ∈ {1e-3, 3e-4, 1e-4}，选 val NDCG 最佳。

@@ -38,36 +38,26 @@ tags:
 **核心 idea**：用“固定算术语义后的转移幺半群”替代含糊的实数网络公式，从而把 RNN/SSM 表达能力归约为有限代数中的可除性问题。
 
 ## 方法详解
-论文不是提出新的训练算法，而是提出一套分析循环语言模型表达能力的代数框架。整体逻辑是：先把一层 recurrent module 抽象成 algebraic core，再把多层网络抽象成 core 的 cascade；接着用 wreath product 给出所有可能的层级转移上界，再用 realized input set 收紧到真实 wiring 能触达的转移；最后把语言识别问题接到 syntactic monoid 上，得到“目标语言能否被识别”的代数判据。
 
 ### 整体框架
-输入是一类循环式语言模型、一个有限输入字母表、一个固定的编码器和数值语义；输出不是模型预测，而是一个关于可识别语言族的结构化刻画。框架先为每层定义状态集合 $Q$、输入集合 $X$、输出集合 $Y$、状态转移 $f:Q\times X\to Q$ 和读出 $g:Q\times X\to Y$。对每个输入 $x$，状态转移 $f_x:Q\to Q$ 生成该层的 transition monoid。多层网络通过 wiring map 把上一层的输入/输出变成下一层输入，因此全局状态空间是各层状态的笛卡尔积。
-
-随后，论文用 wreath product 描述层级依赖：下层状态会影响上层在当前时间步看到的输入，因此深层 RNN 不是简单的并行直积，而是一个级联转移系统。为了避免把不可达输入也算进表达能力，作者进一步定义相对于输入集合 $T$ 的 reachable input set 和 realized transition monoid，只保留实际会被 encoder 与 wiring 激活的层内转移。
-
-最后，作者把模型变成语言 acceptor：追加一个 accepting core，使接受条件成为最后一层状态上的集合，而不是临时读出值上的后处理。这样就能使用 Eilenberg 风格的代数语言理论：若模型识别语言 $\mathcal{L}$，则 $\mathcal{L}$ 的 syntactic monoid 必须 divide 该模型的 realized wreath product。
+这篇论文不提出新训练算法，而是给循环语言模型的表达能力搭一套代数显微镜：把一层 recurrent module 抽象成 algebraic core，把多层网络抽象成 core 的 cascade，再用 wreath product 套出所有可能的层级转移、用 realized input set 收紧到真实 wiring 能触达的部分，最后把"识别某个形式语言"归约成"目标语言的 syntactic monoid 能否 divide 模型的转移结构"这一可检查的代数判据。输入是一类循环式模型、有限字母表、固定的编码器和数值语义；输出不是模型预测，而是一个关于可识别语言族的结构化刻画。
 
 ### 关键设计
-1. **Algebraic core 与 transition monoid**:
 
-    - 功能：把每个 recurrent layer 抽象成一个有限或离散状态转移器，保留“输入驱动状态变化”这一最核心的结构。
-    - 核心思路：对 core $\mathfrak{c}=(Q,X,Y,f,g)$，每个输入 $x\in X$ 诱导一个自映射 $f_x:Q\to Q$，所有这些映射在函数复合下生成 $M_{\mathfrak{c}}=\langle f_x\mid x\in X\rangle$。读出 $g$ 不直接进入转移幺半群，因为它只决定状态如何被观察，而不决定状态动力学。
-    - 设计动机：这样可以把“模型内部能保存什么动态信息”和“最终如何读出答案”分离开，避免把 decoder 的表达能力误算进 recurrent dynamics。
+**1. Algebraic core 与 transition monoid：把一层 RNN 抽象成纯粹的状态转移器。**
 
-2. **Realized wreath product**:
+文献结论打架，部分原因是大家把 decoder 的表达能力混进了 recurrent dynamics。为此论文先把每个 recurrent layer 抽成一个 core $\mathfrak{c}=(Q,X,Y,f,g)$——状态集 $Q$、输入集 $X$、输出集 $Y$、转移 $f:Q\times X\to Q$、读出 $g:Q\times X\to Y$——只保留"输入驱动状态变化"这一最核心结构。关键一步是：每个输入 $x\in X$ 诱导一个自映射 $f_x:Q\to Q$，所有这些映射在函数复合下生成该层的 transition monoid $M_{\mathfrak{c}}=\langle f_x\mid x\in X\rangle$。读出 $g$ 刻意不进入这个幺半群，因为它只决定状态如何被观察、不决定状态如何演化。这样"模型内部能保存什么动态信息"就和"最终如何读出答案"彻底分离，避免把 decoder 算力误记到 recurrence 头上。
 
-    - 功能：刻画多层 RNN 在给定 wiring 与输入字母表下真正可实现的全局转移结构。
-    - 核心思路：深层 cascade 的 ambient 上界是各层 transition monoid 的迭代 wreath product，但该上界允许上层接收任意 $X_n$ 中的输入。作者定义 layer-input dependency map $\varphi_n^T$，只收集从第一层输入集合 $T$ 出发能传到第 $n$ 层的输入，再由这些可达输入生成 $M_n^T$。最终得到 $\mathbb{W}_{\mathcal{R}}^T=(M_1^T,Q_1)\wr\cdots\wr(M_N^T,Q_N)$。
-    - 设计动机：这个收紧避免了“架构形式上允许，但 wiring 永远不会触发”的虚假表达能力，同时也让改变 encoder 或输入分布时可以局部更新分析。
+**2. Realized wreath product：只统计 wiring 真能触发的层级转移。**
 
-3. **把算术语义纳入模型定义**:
+深层 RNN 不是各层并行的直积，而是一个下层状态会改变上层当前时间步输入的级联系统，所以它的 ambient 上界是各层 transition monoid 的迭代 wreath product。但这个上界太松：它允许上层接收任意 $X_n$ 中的输入，包括 encoder 和 wiring 永远不会送进去的那些。论文因此定义 layer-input dependency map $\varphi_n^T$，只收集从第一层输入集合 $T$ 出发能传到第 $n$ 层的可达输入，再由这些输入生成收紧后的 $M_n^T$，最终得到 realized wreath product $\mathbb{W}_{\mathcal{R}}^T=(M_1^T,Q_1)\wr\cdots\wr(M_N^T,Q_N)$。这一收紧把"架构形式上允许、但 wiring 永远不会触发"的虚假表达能力剔除掉，从而支撑精确的不可表达性证明，同时让 encoder 或输入分布变化时只需局部更新分析。
 
-    - 功能：解释同一 RNN/SSM 架构为何在不同论文中得到矛盾的表达能力结论。
-    - 核心思路：作者把 arithmetic model 写成 $\mathfrak{M}=(\mathcal{D},\mathcal{O},\square)$，其中 $\mathcal{D}$ 是可表示值域，$\mathcal{O}$ 是运算集合，$\square$ 是舍入/截断映射。表达式必须配有固定 evaluation tree，并且 recurrent update 必须满足先完成时间 $t$ 再进入 $t+1$ 的 recurrence-consistent evaluation。
-    - 设计动机：浮点加法和乘法不满足结合律，编译器或硬件重排会改变结果；如果不把这些语义固定下来，所谓“能否识别某个语言”的问题本身就不是良定义的。
+**3. 把算术语义写进模型定义：解释同一架构为何得出矛盾结论。**
+
+同一个 RNN/SSM 在不同论文里时而图灵完备、时而只等价于有限自动机，根子在大家默认的算术模型不同。论文索性把 arithmetic model 显式写成 $\mathfrak{M}=(\mathcal{D},\mathcal{O},\square)$：$\mathcal{D}$ 是可表示值域、$\mathcal{O}$ 是运算集合、$\square$ 是舍入/截断映射；并强制每个表达式配一棵固定的 evaluation tree，recurrent update 必须满足"先算完时间 $t$ 再进 $t+1$"的 recurrence-consistent evaluation。之所以要管到求值顺序这么细，是因为浮点加法和乘法不满足结合律，编译器或硬件一旦重排就会改变单步 recurrence 本身——若不把这些语义钉死，"能否识别某语言"这个问题根本不是良定义的。
 
 ### 损失函数 / 训练策略
-本文不涉及训练损失或优化策略。它研究的是 expressivity 而非 learnability：给定一个架构族和数值语义，是否存在某个参数化实例可以识别目标形式语言。作者也明确说明，框架不保证这些参数能通过梯度下降自动找到。
+本文研究的是 expressivity 而非 learnability，不涉及任何训练损失或优化策略：给定一个架构族和数值语义，问的是是否**存在**某个参数化实例能识别目标形式语言。作者明确说明，框架并不保证这些参数能被梯度下降自动找到。
 
 ## 实验关键数据
 

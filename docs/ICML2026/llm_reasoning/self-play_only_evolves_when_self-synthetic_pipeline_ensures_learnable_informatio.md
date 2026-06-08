@@ -40,37 +40,31 @@ tags:
 
 ## 方法详解
 
-本文是 position paper，不提具体训练算法，而是从**信息论度量 + 三个设计原则 + 诊断实验**三层把"genuine self-evolution"的必要条件讲清楚。
+本文是 position paper，不给具体训练算法，而是回答一个判据性问题：一个 self-play 循环到底"在不在真演化"。作者的答案分三层——先用有界信息论度量把"可学习信息"量化，再给出保证它跨迭代单调上升的三个系统级设计原则，最后用诊断实验验证现有 loop 达不到这个条件。
 
 ### 整体框架
 
-把自演化循环抽象成"单一信息源 + 多向合成"的流水线 (Figure 1)：同一 LLM 的预训练权重作为唯一信息源，沿三个合成方向 (synthesis question / solution / feedback) 产出数据流 $X_d$，再回灌训练自身。是否"真在演化"由迭代序列 $\{S_{C^{(t)},T^{(t)}}(D^{(t)})\}_t$ 是否单调上升判定。
+整个循环被抽象成"单一信息源 + 多向合成"的流水线 (Figure 1)：同一 LLM 的预训练权重是唯一的信息源，它沿三个合成方向 (出题 / 解题 / 反馈) 产出数据流 $X_d$，再回灌训练自身。判断它是否真在演化，看的不是 reward 是否上涨，而是迭代序列 $\{S_{C^{(t)},T^{(t)}}(D^{(t)})\}_t$ 是否单调上升。
 
-度量工具是有界 MDL 优化器：在观察者族 $\mathcal{P}_{C,T}$ 中求 $P^{\star}=\arg\min_{P}\{|P|+\mathbb{E}[\log 1/P(X)]\}$，并定义 $S_{C,T}(X):=|P^{\star}|$ (epiplexity，可学习结构) 与 $H_{C,T}(X):=\mathbb{E}[\log 1/P^{\star}(X)]$ (有界熵，残余噪声)。该度量天然把"Goldilocks 区"画出来——数据既不能太简单 (低 $S$ 低 $H$) 也不能太难 (低 $S$ 高 $H$)，必须落在"复杂到非平凡又结构化到可学"的中间区。
+这里的 $S$ 来自一个有界 MDL 优化器：在固定参数预算 $C$、推理预算 $T$ 框定的观察者族 $\mathcal{P}_{C,T}$ 内求最优编码 $P^{\star}=\arg\min_{P}\{|P|+\mathbb{E}[\log 1/P(X)]\}$，再把它拆成两块——$S_{C,T}(X):=|P^{\star}|$ 是 **epiplexity (可学习结构)**，$H_{C,T}(X):=\mathbb{E}[\log 1/P^{\star}(X)]$ 是**有界熵 (学不动的残余噪声)**。关键在于这是个相对量：同一份数据对弱观察者可能纯是噪声、对强观察者却是可学结构，所以"复杂度"必须随观察者预算一起谈。这个拆分天然画出一个 "Goldilocks 区"——数据既不能太简单 (低 $S$ 低 $H$)、也不能太难 (低 $S$ 高 $H$)，得落在"复杂到非平凡、又结构化到可学"的中间地带，循环才有东西可学。
 
 ### 关键设计
 
-1. **非对称协同演化 (Asymmetric Co-evolution)**:
+**1. 非对称协同演化 (Asymmetric Co-evolution)：把"验题比解题易"做成可持续的能力阶梯。**
 
-    - 功能：利用 "验题/出题 比 解题 容易" 的计算不对称性，先用弱 Proposer/Verifier 通过 RL 训练出更强的 Solver (weak-to-strong)，再把更强 Solver 同步回内部环境去刷新 Proposer/Verifier (strong-to-weak)，形成可持续阶梯。
-    - 核心思路：三个角色虽共享同一权重源，但沿不同合成方向 $d(P,S,V)$ 产生的 $X_d$ 在有界观察者下 $S_{C,T}(X_d)$ 不同；以单向置换为极限例子，可证 $H_{\text{poly}}(X|Y)-H_{\text{poly}}(Y|X)\ge c\log n$，正向 (出题) 与反向 (解题) 间存在 $\Omega(\log n)$ bit 的难度间隔；训练把这种残余不确定性转化为可复用结构。实操上要求 (i) 按非对称 gap 组织合成方向 (从小 gap 到大 gap 再到 inverse gap：如语法纠错→数学证明→医疗诊断)；(ii) 对 Proposer 用反向翻译 (Magicoder、MathGenie、InverseCoder) 从更强 Solver 数据中重提取题目；(iii) 对 Verifier 尝试 verifier-free RL，让 Verifier 与 Solver 共享同一信念。
-    - 设计动机：现有 RL 只能完成 weak-to-strong 一半，Solver 变强后 Proposer/Verifier 不跟进，会让任务流相对当前观察者变成"低结构"，循环塌向平凡题。
+现有 RL 只完成了 weak-to-strong 的上半场——用弱 Proposer/Verifier 把 Solver 练强，但 Solver 一旦变强，Proposer/Verifier 不跟进，任务流相对当前观察者就退化成"低结构"，循环塌向平凡题。本设计补上反向闭环：先 weak-to-strong (弱出题方训出强 Solver)，再 strong-to-weak (把更强的 Solver 同步回内部环境去刷新 Proposer/Verifier)，让两端轮流抬升。它之所以有空间这么做，是因为三个角色虽共享同一权重源，但沿不同合成方向 $d(P,S,V)$ 产生的 $X_d$ 在有界观察者下 $S_{C,T}(X_d)$ 并不相同；以单向置换 (one-way permutation) 为极限例子可证 $H_{\text{poly}}(X|Y)-H_{\text{poly}}(Y|X)\ge c\log n$，即正向出题与反向解题之间存在 $\Omega(\log n)$ bit 的难度间隔，训练做的事正是把这段残余不确定性转化成可复用结构。落到实操有三招：(i) 按非对称 gap 从小到大组织合成方向 (语法纠错 → 数学证明 → 医疗诊断这种 inverse gap)；(ii) 对 Proposer 用反向翻译 (Magicoder、MathGenie、InverseCoder) 从更强 Solver 的数据里重新提取题目；(iii) 对 Verifier 尝试 verifier-free RL，让它和 Solver 共享同一套信念。
 
-2. **容量预算增长 (Capacity Growth)**:
+**2. 容量预算增长 (Capacity Growth)：让观察者预算随迭代膨胀，永远跟得上新暴露的结构。**
 
-    - 功能：让参数预算 $C^{(t)}$ 与推理时预算 $T^{(t)}$ 随迭代扩张，使观察者族 $\mathcal{P}_{C,T}$ 永远能跟上自合成数据中新暴露的可学习结构。
-    - 核心思路：固定 $(C,T)$ 时 $S_{C,T}(X)$ 有上界；只要 $\mathcal{P}_{C_1,T_1}\subseteq\mathcal{P}_{C_2,T_2}$，就有 $\mathrm{MDL}_{C_2,T_2}(X)\le\mathrm{MDL}_{C_1,T_1}(X)$，扩容直接移动"可学/不可学"的边界。沿参数轴可走角色非对称缩放 (小 Proposer/Verifier 训大 Solver) 或跨迭代加层加专家 (Net2Net、Stacking、MoE 激活子集增长)；沿推理轴可走 adaptive reasoning token 或 Mixture-of-Recursions 等动态深度。
-    - 设计动机：实证显示固定 $C^{(t)}$ 会让训练 loss 早早饱和，Proposer 因此被迫退化到当前模型类能轻松解决的方向；固定 $T^{(t)}$ 则把"推理被截断"误判为"知识不足"，两种 mismatch 都直接降低后续可学习信息。
+前一个设计能不断造出更有结构的数据，但接收端如果不长，照样白搭——固定 $(C,T)$ 时 $S_{C,T}(X)$ 是有上界的，观察者一旦顶满，再多结构也"看不见"。实证里这表现为两种 mismatch：固定参数预算 $C^{(t)}$ 会让训练 loss 早早饱和，逼着 Proposer 退化到当前模型类轻松能解的方向；固定推理预算 $T^{(t)}$ 则把"推理被截断"误判成"知识不足"。所以要让 $C^{(t)}$ 和 $T^{(t)}$ 随迭代一起扩张。理论支撑很直接：只要观察者族单调嵌套 $\mathcal{P}_{C_1,T_1}\subseteq\mathcal{P}_{C_2,T_2}$，就有 $\mathrm{MDL}_{C_2,T_2}(X)\le\mathrm{MDL}_{C_1,T_1}(X)$，扩容等于直接把"可学/不可学"的边界往外推。沿参数轴可走角色非对称缩放 (小 Proposer/Verifier 喂大 Solver) 或跨迭代加层加专家 (Net2Net、Stacking、MoE 激活子集增长)；沿推理轴可走 adaptive reasoning token 或 Mixture-of-Recursions 这类动态深度。
 
-3. **主动信息寻取 (Proactive Information Seeking)**:
+**3. 主动信息寻取 (Proactive Information Seeking)：给闭环开一个外部进料口，突破预训练权重的天花板。**
 
-    - 功能：让 Proposer+Verifier 在每轮主动挑选外部上下文 $d^{(t)}$ 并围绕它学新的合成方向，把外部信息当 conditioning context (而非训练标签) 注入条件流 $(Y^{(t)}\mid d^{(t)})$。
-    - 核心思路：定义条件有界 MDL $\mathrm{MDL}(Y\mid d):=\min_{P}\{|P|+\mathbb{E}[\log 1/P(Y\mid d)]\}$，把 $S_{C,T}(Y\mid d)$ 视为条件可学习信息。具体三招：(i) Proposer 从 Solver 失败/Verifier 分歧中生成 query，检索 $d$ 后合成"必须显式使用 $d$"的任务 (引用支撑、多文档综合、矛盾检测)；(ii) 把同一 $d$ 转成多种难度的合成方向并按 curriculum 调度 (早期 grounding，后期 inverse/组合)；(iii) 检索器/重排器/记忆也用自合成信号 (Verifier relevance) 一起演化。
-    - 设计动机：zero-data 系统被预训练权重所封顶；固定外部语料退化为对该语料的微调；固定挂载机制 (RAG 不变) 初期超出 Solver 预算、后期又过于例行化——三种 regime 都"反应式"消费信息，无法持续扩张可学习信息源。
+前两个齿轮都在系统内部转，但纯 zero-data 系统的可学习信息终究被预训练权重封顶；而被动地挂个固定外部语料只会退化成对该语料的微调，挂个固定 RAG 又会初期超出 Solver 预算、后期沦为例行公事——这三种 regime 都是"反应式"地消费信息，源头不扩张。本设计让 Proposer+Verifier 每轮主动挑一份外部上下文 $d^{(t)}$，并把它当 conditioning context (而不是训练标签) 注入条件流 $(Y^{(t)}\mid d^{(t)})$。对应的度量是条件有界 MDL $\mathrm{MDL}(Y\mid d):=\min_{P}\{|P|+\mathbb{E}[\log 1/P(Y\mid d)]\}$，其中 $S_{C,T}(Y\mid d)$ 就是"条件可学习信息"。具体也是三招：(i) Proposer 从 Solver 失败、Verifier 分歧里生成 query，检索到 $d$ 后合成"必须显式用到 $d$"的任务 (引用支撑、多文档综合、矛盾检测)；(ii) 把同一份 $d$ 转成多种难度的合成方向并按 curriculum 调度 (早期 grounding、后期 inverse/组合)；(iii) 让检索器/重排器/记忆也用自合成信号 (Verifier relevance) 一起演化。
 
 ### 损失函数 / 训练策略
 
-度量端用**前向编码 (Prequential Coding)** 估计 epiplexity (Algorithm 1)：把数据集分成训练/验证，第一遍流式过 $\mathcal{D}_{\text{train}}$ 时累计在线损失 $\mathcal{L}_{\text{online}}=\sum_i -\log P_{\theta_i}(Z_i)$，每个 epoch 末算 $S=(\mathcal{L}_{\text{online}}-\mathcal{L}_{\text{train}})/\ln 2$ 作为模型 cost、$(\mathcal{L}_{\text{val}}/\ln 2)/N_{\text{val}}$ 作为数据 cost，取 MDL 最小那个 epoch 对应的 $S^{\star}$ 作为可学习信息估计。该量等价于"模型为学会这批数据付出的累计 online regret"。三个设计原则本身不绑定具体损失，作者把对应的实操手段 (反向翻译、verifier-free RL、参数堆叠、自适应推理深度、retrieval co-evolution) 全列在 Practice 段供后续工作 plug-in。
+度量端用**前向编码 (Prequential Coding)** 来实际估计 epiplexity (Algorithm 1)：把数据集切成训练/验证，第一遍流式过 $\mathcal{D}_{\text{train}}$ 时累计在线损失 $\mathcal{L}_{\text{online}}=\sum_i -\log P_{\theta_i}(Z_i)$，每个 epoch 末算两项——模型 cost $S=(\mathcal{L}_{\text{online}}-\mathcal{L}_{\text{train}})/\ln 2$、数据 cost $(\mathcal{L}_{\text{val}}/\ln 2)/N_{\text{val}}$，取 MDL 最小那个 epoch 对应的 $S^{\star}$ 当作可学习信息的估计。直觉上这个量等于"模型为学会这批数据付出的累计 online regret"。三个设计原则本身不绑定任何具体损失函数；作者把对应的工程手段 (反向翻译、verifier-free RL、参数堆叠、自适应推理深度、retrieval co-evolution) 统一列在各节的 Practice 段，留给后续工作 plug-in。
 
 ## 实验关键数据
 

@@ -38,44 +38,32 @@ tags:
 **核心 idea**：用“拒绝准则”统一 proxy-based test-time alignment，并把准则从只看大模型自身置信度，改成比较大模型 draft token 的概率 $p_v$ 与小对齐模型最强候选的概率 $\max_w q^\ast_w$。
 
 ## 方法详解
-论文的方法不是提出一个新训练流程，而是重写测试时解码的概率结构。作者把大基础模型 $p$、小基础模型 $q$ 和小对齐模型 $q^\ast$ 放到同一个框架里，目标是在没有大对齐模型 $p^\ast$ 的情况下，用 $q^\ast$ 的信息改善 $p$ 的生成。
 
 ### 整体框架
-整体 pipeline 可以理解为三步。
-
-第一步，先从大基础模型 $p$ 中采样一个 draft token $w$。这个 token 不是最终答案，而是候选。
-
-第二步，根据拒绝分布判断这个 draft 是否保留。论文引入二元变量 $r$：当 $r=0$ 时，接受 $w$；当 $r=1$ 时，拒绝 $w$ 并触发小对齐模型。
-
-第三步，生成最终 token。如果 draft 被接受，最终 token 就是 $w$；如果 draft 被拒绝，就从小对齐模型 $q^\ast$ 重新采样。于是整个输出分布可以写成“保留大模型样本”的部分，加上“拒绝后由小模型接管”的部分。
-
-在这个框架中，大部分结构是固定的：latent draft 分布设为 $\pi(\bar{x}=w)=p_w$，拒绝后 fallback 分布设为 $q^\ast$。真正可设计的只剩下每个 token 的拒绝概率 $\mu_v=\pi(r=1\mid \bar{x}=v)$。这就是论文标题里的 rejection criterion。
-
-这个改写的价值在于，它把很多看似不同的测试时对齐方法压缩成同一个问题：给定 $p$ 和 $q^\ast$ 的下一 token 分布，应该怎样设置 $\mu_v$，才能既不轻易放弃大模型能力，又能在小对齐模型更可靠时切过去。
+这篇论文不提新训练流程，而是重写测试时解码的概率结构：在没有大对齐模型 $p^\ast$ 的情况下，用小对齐模型 $q^\ast$ 的信息去改善大基础模型 $p$ 的生成。每生成一个 token，先从 $p$ 采一个 draft token $w$ 作为候选；再用拒绝变量 $r$ 决定它的去留——$r=0$ 就接受 $w$，$r=1$ 就拒绝 $w$ 并从 $q^\ast$ 重新采样；最终输出分布因此拆成"保留大模型样本"和"拒绝后由小模型接管"两部分。框架里大部分结构是固定的（latent draft 分布设为 $\pi(\bar{x}=w)=p_w$、fallback 分布设为 $q^\ast$），真正可设计的只剩每个 token 的拒绝概率 $\mu_v=\pi(r=1\mid\bar{x}=v)$，也就是标题里的 rejection criterion。这样改写之后，输入是 $p$ 与 $q^\ast$ 的下一 token 分布，中间是一个带 latent rejection variable 的概率图模型，输出是组合后的 token 分布；许多看似不同的测试时对齐方法都被压成同一个问题——该怎样设 $\mu_v$，才能既不轻易放弃大模型能力，又能在小对齐模型更可靠时切过去。
 
 ### 关键设计
-1. **拒绝式概率图模型**:
 
-    - 功能：把 proxy-based test-time alignment 表达成一个带 latent draft token 和 rejection variable 的生成模型。
-    - 核心思路：模型先从 $p$ 采样 $\bar{x}=w$，再采样拒绝变量 $r$。若 $r=0$，最终 token 直接复制 $w$；若 $r=1$，最终 token 从 $q^\ast$ 采样。最终分布可概括为 $\pi(x=v)=p_v(1-\mu_v)+q^\ast_v\sum_w p_w\mu_w$。
-    - 设计动机：已有方法容易被实现细节遮住本质。这个 PGM 把“用小对齐模型引导大基础模型”拆成可解释的两件事：先让大模型提出候选，再定义什么时候拒绝候选。统一之后，Nudging、KAD 和隐式奖励方法都能被放进同一张图里比较。
+**1. 拒绝式概率图模型：把 proxy 对齐拆成"先提候选、再决定拒绝"两件事。**
 
-2. **把已有 proxy 方法还原成不同的拒绝准则**:
+已有方法常被实现细节遮住本质，作者用一个带 latent draft token 和 rejection variable 的生成模型把它们统一起来：先从 $p$ 采 $\bar{x}=w$，再采拒绝变量 $r$；$r=0$ 时最终 token 直接复制 $w$，$r=1$ 时从 $q^\ast$ 采样。整条输出分布可概括为 $\pi(x=v)=p_v(1-\mu_v)+q^\ast_v\sum_w p_w\mu_w$。
 
-    - 功能：解释 Nudging、dual KAD 和 implicit reward 与 PGM 的对应关系。
-    - 核心思路：Nudging 的拒绝准则是分布级的：当 $\max_w p_w<\lambda$ 时整步交给 $q^\ast$，因此它拒绝的是 $p$ 这一整个分布，而不是某个具体 token。dual KAD 的准则是 token 级的：当采样到的 token 概率 $p_v<\lambda$ 时拒绝该 token。隐式奖励方法先构造 $s_v=p_v(q^\ast_v/q_v)/Z$，论文通过 Proposition 1 说明，在满足 enclosing 条件时，这个分布也可以由某个 rejection distribution 产生。
-    - 设计动机：这个还原让论文不只是提出新规则，也解释了为什么旧方法会有共同弱点。Nudging 和 KAD 都主要依赖 $p$ 的绝对置信度，而没有真正询问 fallback 模型 $q^\ast$ 能否做得更好；隐式奖励虽利用了 $q^\ast/q$，但需要同时访问小模型的 base 与 aligned 两个版本，部署条件更重。
+这张图的价值在于把"用小对齐模型引导大基础模型"明确拆成两个可解释步骤——大模型先提出候选，再定义什么时候拒绝候选——于是 Nudging、KAD、隐式奖励都能被放进同一张图里直接比较。
 
-3. **Conservative confidence bet 拒绝准则**:
+**2. 把已有 proxy 方法还原成不同的拒绝准则。**
 
-    - 功能：在 token 级别决定是否把生成权从大模型 $p$ 交给小对齐模型 $q^\ast$。
-    - 核心思路：对从 $p$ 采样到的 token $v$，比较 $p_v$ 与小对齐模型当前最有把握的 token 概率 $\max_w q^\ast_w$。如果 $p_v<\max_w q^\ast_w-\lambda$，说明小对齐模型至少有一个候选比大模型当前 draft 更自信，于是拒绝 draft；否则保留 draft。这里 $\lambda$ 是 margin，越大越保守，越不容易触发 deferral。
-    - 设计动机：作者认为“低置信度”并不等价于“错”。例如 “frameworks like Pytorch” 和 “frameworks such as Pytorch” 都合理时，概率质量会被 like 和 such 分掉，导致单个 token 的概率看起来不高。新准则引入 $q^\ast$ 的最佳候选作为基线，只有当 fallback 真的有更强选择时才拒绝，从而减少由自然语言歧义导致的过度切换。
+统一框架后，旧方法只是 $\mu_v$ 的不同取法。Nudging 是分布级准则：$\max_w p_w<\lambda$ 时整步交给 $q^\ast$，拒绝的是 $p$ 整个分布而非某个 token。dual KAD 是 token 级准则：采到的 token 概率 $p_v<\lambda$ 时拒绝该 token。隐式奖励方法先构造 $s_v=p_v(q^\ast_v/q_v)/Z$，论文用 Proposition 1 证明在满足 enclosing 条件时，它同样能由某个 rejection distribution 产生。
+
+这层还原不只是归类，更暴露了旧方法的共同弱点：Nudging 和 KAD 都只依赖 $p$ 的绝对置信度，从不询问 fallback 的 $q^\ast$ 能否做得更好；隐式奖励虽用了 $q^\ast/q$，却要同时访问小模型的 base 与 aligned 两个版本，部署条件更重。
+
+**3. Conservative confidence bet：拒绝与否取决于 fallback 有没有更强候选。**
+
+新准则把决策从"看大模型自身是否自信"改成"看小对齐模型有没有更有把握的替代选择"。对从 $p$ 采到的 token $v$，比较 $p_v$ 与小对齐模型当前最自信的 token 概率 $\max_w q^\ast_w$：若 $p_v<\max_w q^\ast_w-\lambda$，说明 $q^\ast$ 至少有一个候选比当前 draft 更可靠，于是拒绝 draft；否则保留。margin $\lambda$ 越大越保守，越不容易触发 deferral。
+
+这么设计是因为"低置信度"并不等于"错"。比如 "frameworks like Pytorch" 和 "frameworks such as Pytorch" 都合理时，概率质量被 like 和 such 分掉，单 token 概率看起来就不高。引入 $q^\ast$ 最佳候选作基线后，只有 fallback 真有更强选择时才拒绝，从而避开自然语言歧义带来的过度切换。
 
 ### 损失函数 / 训练策略
-这篇论文没有训练新的模型，也没有引入额外 loss。它关注的是 decoding-time 的分布组合策略。
-
-实现上需要在每个生成 step 同时获得 $p$ 与 $q^\ast$ 的下一 token 分布，然后按拒绝准则决定最终 token 来源。实验使用温度 0.7，以便隔离解码规则本身的收益。新规则的 margin $\lambda$ 在一个小开发子集上选择，最终测试了 $\{0,0.1,0.2\}$；作者也强调即使 $\lambda=0$，性能也已经相当有竞争力。
+这篇论文不训练新模型、不引入额外 loss，只关心 decoding-time 的分布组合策略：每个生成 step 同时取 $p$ 与 $q^\ast$ 的下一 token 分布，再按拒绝准则决定最终 token 来源。实验用温度 0.7 以隔离解码规则本身的收益；margin $\lambda$ 在小开发子集上从 $\{0,0.1,0.2\}$ 里选，作者强调即使 $\lambda=0$ 性能也已相当有竞争力。
 
 ## 实验关键数据
 

@@ -42,37 +42,25 @@ KnapSpec 把自推测解码（SSD）的草稿层选择重新建模为 0/1 背包
 
 ### 整体框架
 
-设目标模型有 $L$ 层，每层含一个 Attention 子层和一个 MLP 子层。作者把它们展平成 $2L$ 个独立"物品"：$f^{(2i-1)}:=f^{(i)}_{\mathtt{Attn}}$，$f^{(2i)}:=f^{(i)}_{\mathtt{MLP}}$。草稿模型 $f^{(S)}$ 就是子集 $S\subseteq [2L]$ 按原序复合的子网络。整体 pipeline 分三步：
-
-1. **预处理（一次性）**：在目标硬件上跑微基准，把 Attention 延迟拟合成上下文长度 $n$ 的函数 $t_{\mathtt{Attn}}(n)$，把 MLP 延迟测出常数 $t_{\mathtt{MLP}}$。
-2. **每个 speculation 步动态决策**：取最近 $m=5$ 步生成的 $r$ 个 token 的 hidden state $X\in\mathbb{R}^{r\times d}$ 作为参考；按当前上下文长度算出整数权重 $(w_{\mathtt{Attn}}, w_{\mathtt{MLP}})$；跑并行 DP 得到一组候选层集合 $\mathcal{A}=\{S_k\}_{k\in[K]}$（每个预算 $k$ 对应一个最优 $S_k$）；在 $\mathcal{A}\times[D]$ 上做网格搜索最大化 TPT，得到 $(S^*, \gamma^*)$。
-3. **推测与验证**：用 $f^{(S^*)}$ 串行起草 $\gamma^*$ 个 token，目标模型一次并行验证，配合 top-1 置信度 $\tau_{\text{conf}}=0.7$ 的动态提前终止。
-
-整个过程**无需任何额外训练或参数**，输出分布严格等价于原目标模型（继承 SD 的接受/拒绝采样保证）。
+KnapSpec 把目标模型每层拆成 Attention、MLP 两个独立"物品"，展平成 $2L$ 个候选层（$f^{(2i-1)}:=f^{(i)}_{\mathtt{Attn}}$、$f^{(2i)}:=f^{(i)}_{\mathtt{MLP}}$），草稿网络就是子集 $S\subseteq[2L]$ 按原序复合而成。它先一次性 profiling 硬件，把 Attention 延迟拟合成上下文长度的函数 $t_{\mathtt{Attn}}(n)$、MLP 延迟测成常数 $t_{\mathtt{MLP}}$；推理时每个 speculation 步都用并行 DP 即时解一个"以延迟为重量、以余弦相似度为价值"的背包问题，在所有延迟预算下的候选层集合里网格搜索出吞吐最大的 $(S^*,\gamma^*)$，用 $f^{(S^*)}$ 串行起草 $\gamma^*$ 个 token 再由目标模型并行验证。整个过程无需任何额外训练或参数，输出分布严格等价于原目标模型。
 
 ### 关键设计
 
-1. **TPT（Tokens-per-Time）—— 直接对齐墙钟吞吐的目标函数**:
+**1. TPT（Tokens-per-Time）：把目标函数对齐到墙钟吞吐**
 
-    - 功能：把 DEL 的 Tokens-per-Layer (TPL) 升级为按实际延迟计费的吞吐指标，作为整个搜索的最终优化目标。
-    - 核心思路：单次 speculation 步期望吐 token 数为 $\frac{1-\alpha_S^{\gamma+1}}{1-\alpha_S}$（截断几何分布的均值，$\alpha_S$ 是 $S$ 子网的接受率），分母是这一步的总延迟，即 $\gamma\, t_{\mathtt{Draft}}(S) + t_{\mathtt{Target}}$，其中 $t_{\mathtt{Draft}}(S)=n_{\mathtt{Attn}}(S)\cdot t_{\mathtt{Attn}} + n_{\mathtt{MLP}}(S)\cdot t_{\mathtt{MLP}}$，$t_{\mathtt{Target}}=L(t_{\mathtt{Attn}}+t_{\mathtt{MLP}})$。于是 $\text{TPT}(S,\gamma)=\frac{1-\alpha_S^{\gamma+1}}{1-\alpha_S}\cdot\frac{1}{\gamma\, t_{\mathtt{Draft}}(S)+t_{\mathtt{Target}}}$。
-    - 设计动机：当 $t_{\mathtt{Attn}}=t_{\mathtt{MLP}}$ 时 TPT 退化为 TPL，但真实硬件上两者随上下文长度差距越拉越大；论文图 2 显示 best-TPT 与真实 throughput 的 Pearson 相关系数和 $R^2$ 都显著高于 acceptance rate，验证了"以时间为单位"的指标比"以接受率为单位"更能预测真实加速比。
+以往 SSD 用 DEL 的 Tokens-per-Layer（TPL）或接受率当目标，隐含假设"每层延迟相等"，但长上下文下 Attention 延迟随序列线性涨、MLP 恒定，两者差距越拉越大，按层计费的指标就和真实墙钟脱钩了。KnapSpec 改用按实际延迟计费的吞吐：单步期望吐出的 token 数是截断几何分布均值 $\frac{1-\alpha_S^{\gamma+1}}{1-\alpha_S}$（$\alpha_S$ 是子网 $S$ 的接受率），分母是单步总延迟 $\gamma\,t_{\mathtt{Draft}}(S)+t_{\mathtt{Target}}$，其中草稿延迟 $t_{\mathtt{Draft}}(S)=n_{\mathtt{Attn}}(S)\cdot t_{\mathtt{Attn}}+n_{\mathtt{MLP}}(S)\cdot t_{\mathtt{MLP}}$、验证延迟 $t_{\mathtt{Target}}=L(t_{\mathtt{Attn}}+t_{\mathtt{MLP}})$，于是 $\text{TPT}(S,\gamma)=\frac{1-\alpha_S^{\gamma+1}}{1-\alpha_S}\cdot\frac{1}{\gamma\,t_{\mathtt{Draft}}(S)+t_{\mathtt{Target}}}$。当 $t_{\mathtt{Attn}}=t_{\mathtt{MLP}}$ 时它退化回 TPL，可见 TPT 是 TPL 的硬件感知泛化；论文图 2 进一步显示 best-TPT 与真实 throughput 的 Pearson 相关系数和 $R^2$ 都显著高于接受率，证明"以时间计费"比"以层/接受率计费"更能预测真实加速比。
 
-2. **Knapsack 形式化 + 并行 DP —— 把 NP-hard 搜索压到 $O(nL)$**:
+**2. Knapsack 形式化 + 并行 DP：把指数搜索压到 $O(nL)$**
 
-    - 功能：在每个 decoding step 用 $O(nL)$ 时间、$O(L)$ 显存搜出所有延迟预算下的近似最优层子集 $\{S_k\}$。
-    - 核心思路：先做**整数权重归一化**——设 $\Delta=\min(t_{\mathtt{Attn}}(n), t_{\mathtt{MLP}})$，$w_{\mathtt{Attn}}=\lfloor t_{\mathtt{Attn}}(n)/\Delta\rceil$，$w_{\mathtt{MLP}}=\lfloor t_{\mathtt{MLP}}/\Delta\rceil$，于是延迟可写成离散权重和。再用代理 $\cos(f(X), f^{(S)}(X))$ 替代不可微的 $\alpha_S$，得到背包问题 $\max_{S\subseteq[2L]} \cos(f(X), f^{(S)}(X))$ s.t. $n_{\mathtt{Attn}}(S)w_{\mathtt{Attn}}+n_{\mathtt{MLP}}(S)w_{\mathtt{MLP}}=k$。DP 表 $g[i,j]\in\mathbb{R}^{r\times d}$ 存"前 $i$ 层、跳掉权重 $j$ 时"的最优 hidden state；转移时比较"执行第 $i$ 层"（$h_{\mathtt{e}}=f^{(i)}(g[i-1,j])$）与"跳过第 $i$ 层"（$h_{\mathtt{s}}=g[i-1,j-w_i]$）的余弦得分，取大者。所有 $j$ 维度在 GPU 上**批并行**计算 $f^{(i)}$ 与 cosine。最后回溯 $g[2L, \cdot]$ 得到候选集 $\mathcal{A}$。
-    - 设计动机：原始搜索空间 $2^{2L}D$ 指数级不可行；解耦 Attention/MLP 后物品数翻倍到 $2L$，反而打开了"只保留某层 Attention 不保留其 MLP"这类新自由度。DP 的"单次执行覆盖所有预算"特性让候选生成几乎免费；阈值 $\tau=0.5$ 和 $K/2$ 上界两条剪枝把无望路径砍掉，进一步降常数因子，使整体搜索开销与一次标准 AR decode 同量级。
+原始层选择空间是 $2^{2L}D$，指数级不可行。KnapSpec 注意到"在总延迟预算下选一组层使价值最大"正是 0/1 背包：先做整数权重归一化，取 $\Delta=\min(t_{\mathtt{Attn}}(n),t_{\mathtt{MLP}})$、$w_{\mathtt{Attn}}=\lfloor t_{\mathtt{Attn}}(n)/\Delta\rceil$、$w_{\mathtt{MLP}}=\lfloor t_{\mathtt{MLP}}/\Delta\rceil$，把延迟写成离散权重和；再用可计算的 $\cos(f(X),f^{(S)}(X))$ 替代不可微的 $\alpha_S$ 当价值，得到 $\max_{S\subseteq[2L]}\cos(f(X),f^{(S)}(X))$ s.t. $n_{\mathtt{Attn}}(S)w_{\mathtt{Attn}}+n_{\mathtt{MLP}}(S)w_{\mathtt{MLP}}=k$。DP 表 $g[i,j]\in\mathbb{R}^{r\times d}$ 记"前 $i$ 层、跳掉权重 $j$"时的最优 hidden state，转移时比较"执行第 $i$ 层"$h_{\mathtt{e}}=f^{(i)}(g[i-1,j])$ 与"跳过第 $i$ 层"$h_{\mathtt{s}}=g[i-1,j-w_i]$ 的余弦得分取大者，并把所有预算维度 $j$ 放到 GPU 上批并行算 $f^{(i)}$ 和 cosine，最后回溯 $g[2L,\cdot]$ 一次拿到所有预算下的候选集 $\mathcal{A}=\{S_k\}$。把 Attention/MLP 解耦不仅让物品数翻倍到 $2L$，更打开了"只留某层 Attention、丢掉其 MLP"这类新自由度；DP"一次执行覆盖全预算"让候选生成几乎免费，再叠加 $\tau=0.5$ 余弦下界和 $K/2$ 上界两条剪枝砍掉无望路径，整体搜索开销被压到与一次标准 AR decode 同量级。
 
-3. **余弦相似度作为接受率的严格代理 —— Lemma 4.1**:
+**3. 余弦相似度作为接受率的严格代理（Lemma 4.1）**
 
-    - 功能：给"用 cosine 当价值"提供理论合法性，回答 CLaSp 等方法长期欠缺的数学问题。
-    - 核心思路：记 LM head 词向量 $w_1,\dots,w_V$，目标 hidden $x$ 的预测为 $i^*=\arg\max_i\langle w_i, x\rangle$，定义 margin $\xi(x)=\langle w_{i^*},x\rangle - \max_{j\neq i^*}\langle w_j, x\rangle$。论文证明：若 $\|x'\|_2=\|x\|_2$ 且 $\cos(x,x')\geq 1-\frac{\xi(x)^2}{2\|x\|_2^2 \max_{j\neq i^*}\|w_{i^*}-w_j\|_2^2}$，则 $\arg\max_i\langle w_i, x\rangle = \arg\max_i\langle w_i, x'\rangle$，即贪心 token 严格一致。
-    - 设计动机：等范数假设由现代 LLM 的 RMSNorm 天然近似满足；该 lemma 说明 cosine 足够高就**充分**保证草稿与目标在 greedy 下选同一个 token，从而 $\arg\max_S \alpha_S \approx \arg\max_S \cos(f(X), f^{(S)}(X))$ 不再是经验拍脑袋。这一步把 KnapSpec 从"工程 trick"升级为"有可证保证的方法"，也回头解释了 CLaSp 为何 work。
+CLaSp 等用 cosine 当价值一直只有经验、没有理论。KnapSpec 补上证明：记 LM head 词向量 $w_1,\dots,w_V$，目标 hidden $x$ 的贪心预测为 $i^*=\arg\max_i\langle w_i,x\rangle$，定义 margin $\xi(x)=\langle w_{i^*},x\rangle-\max_{j\neq i^*}\langle w_j,x\rangle$。Lemma 4.1 表明，只要 $\|x'\|_2=\|x\|_2$ 且 $\cos(x,x')\geq 1-\frac{\xi(x)^2}{2\|x\|_2^2\max_{j\neq i^*}\|w_{i^*}-w_j\|_2^2}$，就有 $\arg\max_i\langle w_i,x\rangle=\arg\max_i\langle w_i,x'\rangle$，即草稿与目标的贪心 token 严格一致。等范数假设由现代 LLM 的 RMSNorm 天然近似满足，于是 cosine 足够高就**充分**保证两者选同一个 token，$\arg\max_S\alpha_S\approx\arg\max_S\cos(f(X),f^{(S)}(X))$ 不再是拍脑袋。这一步既把 KnapSpec 从工程 trick 升级为有可证保证的方法，也回头解释了 CLaSp 为何 work。
 
 ### 损失函数 / 训练策略
 
-完全 training-free，不引入任何额外参数。运行时的两个超参：剪枝阈值 $\tau=0.5$（cosine 下界）、动态提前退出阈值 $\tau_{\text{conf}}=0.7$（草稿 top-1 概率下界），最大草稿长度 $D=10$，参考历史窗口 $m=5$ speculation 步。预处理阶段一次性测量硬件延迟系数 $(t_{\mathtt{Attn}}(n), t_{\mathtt{MLP}})$。
+完全 training-free，不引入任何额外参数。运行时只有几个超参：剪枝阈值 $\tau=0.5$（cosine 下界）、动态提前退出阈值 $\tau_{\text{conf}}=0.7$（草稿 top-1 概率下界）、最大草稿长度 $D=10$、参考历史窗口 $m=5$ speculation 步；预处理阶段一次性测出硬件延迟系数 $(t_{\mathtt{Attn}}(n),t_{\mathtt{MLP}})$。
 
 ## 实验关键数据
 

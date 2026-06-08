@@ -48,23 +48,17 @@ EARL 用"粗解析-细响应"两阶段 MLLM 框架把第一视角交互理解任
 
 ### 关键设计
 
-1. **Coarse-to-fine 两阶段 + 语义先验显式传递**：
+**1. Coarse-to-fine 两阶段 + 语义先验显式传递：让第二阶段"开局就已经看懂这张图"。**
 
-    - 功能：用第一阶段的整图分析为第二阶段的 query 响应提供 "脑子里已经看懂这张图" 的先验。
-    - 核心思路：第一阶段不只输出文本 $T_{ana}$，还**提取 $\mathcal{D}_{vlm}$ 最后一层 hidden** 作为 $\mathbf{F}_{ana}\in\mathbb{R}^{bs\times dim_i}$；第二阶段把 $\mathbf{F}_{ana}$ 和 query 编码 $\mathcal{E}_t^{\prime}(T_q)$、视觉编码 $\mathcal{E}_v(\mathcal{I})$ 一起送入 AFS 得到统一表示 $\mathbf{F}_R=\mathcal{F}_s(\mathcal{E}_v(\mathcal{I}),\mathcal{E}_t^{\prime}(T_q),\mathbf{F}_{ana})$。$\mathbf{F}_R$ 同时驱动文本答案、box、mask 三个输出。
-    - 设计动机：用 hidden state 而不是用 $T_{ana}$ 文本作为先验有两个好处——(i) 信息密度高，避免文本压缩造成的损失；(ii) 与第二阶段的特征空间天然对齐，融合更顺。这比"用文本拼 prompt"的朴素 cascade 强很多。
+朴素的两阶段 cascade 只把第一阶段的文本 $T_{ana}$ 拼进第二阶段的 prompt，信息在"理解→响应"之间被文本压缩掉一大半，第二阶段等于从零重新读图。EARL 的做法是第一阶段不只输出描述文本，还把 $\mathcal{D}_{vlm}$ 最后一层 hidden 抽出来当作 global interaction descriptor $\mathbf{F}_{ana}\in\mathbb{R}^{bs\times dim_i}$；第二阶段把它和 query 编码 $\mathcal{E}_t^{\prime}(T_q)$、视觉编码 $\mathcal{E}_v(\mathcal{I})$ 一起送进 AFS，得到统一表示 $\mathbf{F}_R=\mathcal{F}_s(\mathcal{E}_v(\mathcal{I}),\mathcal{E}_t^{\prime}(T_q),\mathbf{F}_{ana})$，再由 $\mathbf{F}_R$ 同时驱动文本答案、box、mask 三个输出。用 hidden state 而不是文本当先验有两个好处：信息密度高、不经文本瓶颈丢信息；并且天然和第二阶段的特征空间对齐，融合更顺——这正是它比"文本拼 prompt"的 cascade 强很多的原因。
 
-2. **Analysis-guided Feature Synthesizer (AFS)**：
+**2. Analysis-guided Feature Synthesizer (AFS)：先 select 再 fuse，挡住"噪声先验"。**
 
-    - 功能：把 $\mathbf{F}_{ana}$ 选择性地融合进多模态主特征 $\mathbf{F}_{emb}$（由 Qwen2.5-VL 先做视觉+文本对齐的输出），避免"噪声先验"破坏 grounding。
-    - 核心思路：(i) 用 MLP $\phi_m$ 把 $\mathbf{F}_{ana}$ 降维到 $dim$，过 LayerNorm；(ii) reshape 成 $bs\times h\times w$（$h=w=\sqrt{dim}$）后过卷积生成 $\mathcal{Q},\mathcal{K},\mathcal{V}$；(iii) 自注意力 $\mathbf{F}=\text{softmax}(\mathcal{Q}\mathcal{K}^\top/\sqrt{dim})\mathcal{V}$ 对先验自身做精炼；(iv) 再过一个 MLP $\phi_m^{\prime}$ 投到 $\mathbf{F}_{emb}$ 同维度，最终 $\mathbf{F}_{out}=\mathbf{F}_{emb}+\phi_m^{\prime}(\mathbf{F})$。
-    - 设计动机：直接 concat / cross-attn $\mathbf{F}_{ana}$ 和主特征会把噪声维度也带进来；用一个 self-attention 先**对先验自己做一遍 token 重权**，相当于"先 select 再 fuse"，让重要的语义维度通过、噪声维度被压低。这个模块结构虽简单，但解决了"用 hidden 做先验"的关键工程问题。
+直接把 $\mathbf{F}_{ana}$ concat 或 cross-attn 到主特征 $\mathbf{F}_{emb}$（Qwen2.5-VL 先做视觉+文本对齐的输出）上，会把分析阶段产生的无用维度也一并带进来，反而拖累 grounding。AFS 的关键是先让先验对自己做一遍重权再融合：用 MLP $\phi_m$ 把 $\mathbf{F}_{ana}$ 降到 $dim$ 维并过 LayerNorm，reshape 成 $bs\times h\times w$（$h=w=\sqrt{dim}$）后用卷积生成 $\mathcal{Q},\mathcal{K},\mathcal{V}$，做一次自注意力 $\mathbf{F}=\text{softmax}(\mathcal{Q}\mathcal{K}^\top/\sqrt{dim})\mathcal{V}$ 对先验自身 token 重权，再过 MLP $\phi_m^{\prime}$ 投回主特征维度，以残差形式相加 $\mathbf{F}_{out}=\mathbf{F}_{emb}+\phi_m^{\prime}(\mathbf{F})$。这一步自注意力相当于先把重要语义维度放行、把噪声维度压低，再用残差轻量注入——模块结构很简单，却恰好解决了"用 hidden 做先验"绕不开的工程难题。
 
-3. **GRPO + 三路奖励异质输出联合优化**：
+**3. GRPO + 三路奖励：在一次输出里同时优化文字、box、mask 三种异质结构。**
 
-    - 功能：用 Group Relative Policy Optimization 在没有 critic 的前提下同时优化"格式对错"、"答案语义相关性"、"grounding 准确率"三个异质目标。
-    - 核心思路：(i) 格式奖励 $\mathcal{R}_f$：检查输出是否符合预定模板（带 `<answer>` / `<box>` 标签等）；(ii) 答案奖励 $\mathcal{R}_a$：测 $T_{ans}$ 与 GT 答案的语义相关度；(iii) grounding 奖励 $\mathcal{R}_g$：用预测 box 经 SAM2 得到的 mask 与 GT mask 算 IoU。GRPO 把 group 内 K 个 rollout 的 reward 平均当 baseline，避免训 critic。训练时视觉编码器、文本编码器、SAM2 全冻结，只更新 VLM decoder $\mathcal{D}_{vlm}^{\prime}$ 和 AFS。
-    - 设计动机：传统 SFT 难以联合优化"文字对不对 + 框准不准"这种语义+几何混合的目标；DPO 需要成对样本；GRPO 用 group baseline + 多个 reward 加权和的方式，天然适合这种"一次输出多种异质结构"的场景。把 SAM2 作为冻结的 reward provider 也避免了让 reward 信号被噪声 mask 污染。
+"文字答得对不对"是语义目标、"框准不准"是几何目标，SFT 很难联合优化这种混合目标，DPO 又要成对样本。EARL 用 GRPO（Group Relative Policy Optimization）把三类信号拆成三路 reward 加权：格式奖励 $\mathcal{R}_f$ 检查输出是否符合 `<answer>`/`<box>` 等模板；答案奖励 $\mathcal{R}_a$ 测 $T_{ans}$ 与 GT 答案的语义相关度；grounding 奖励 $\mathcal{R}_g$ 把预测 box 喂给冻结的 SAM2 得到 mask，再与 GT mask 算 IoU。GRPO 用 group 内 K 个 rollout 的平均 reward 当 baseline，省掉训 critic 的麻烦，天生适合"一次输出多种异质结构"的场景；训练时视觉编码器、文本编码器、SAM2 全冻结，只更新 $\mathcal{D}_{vlm}^{\prime}$ 和 AFS。把 SAM2 当冻结的 reward provider 也避免了 reward 信号被噪声 mask 污染。
 
 ### 损失函数 / 训练策略
 - Stage 1：cross-entropy loss $\mathcal{L}_{des}$ 监督 $T_{ana}$。

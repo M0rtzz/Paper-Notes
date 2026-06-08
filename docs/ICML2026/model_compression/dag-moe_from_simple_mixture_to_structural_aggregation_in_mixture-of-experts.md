@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DAG-MoE 把标准 MoE 块拆成两段：(1) 原来的 sparse router 照常选出 top-$K$ 专家、产出 $K$ 个初始节点表征；(2) 一个新增的 **DAG learning module** 接管聚合，迭代 $L$ 次，每次同时学"当前深度节点之间的连边"以及"按这些连边更新表征"，最后在第 $L$ 层把所有节点求和作为该 token 在该层的输出。整段不改 router、不改专家 FFN，因此天然兼容现有训练栈。
+DAG-MoE 只改 MoE 块里最后那一步聚合，前面的 sparse router 和专家 FFN 原封不动。一个 token 进来后，router 照常选出 top-$K$ 专家、给出 $K$ 个初始节点表征；接着一个新增的 **DAG learning module** 接管：它把这 $K$ 个节点看作 DAG 的第 0 层，迭代 $L$ 次，每一轮都为当前深度的节点动态学一组"连边"、再沿这些边把表征更新一遍，最后在第 $L$ 层把所有节点求和，作为该 token 在这一层的输出。因为 router 和专家都没动，它天然兼容现有 MoE 训练栈。
 
 ### 关键设计
 
-1. **DAG 风格聚合的一般形式化**:
+**1. DAG 风格聚合的一般形式化：先从理论上证明"结构化聚合"严格强于"加权求和"。**
 
-    - 功能：把"top-$K$ 列表 $\bm{k}$"组织成深度 $L$、每层 $n(l)$ 节点的 DAG $G=(\mathcal{V},\mathcal{A})$，节点 $(l,i)$ 的入边集合 $A_i^l$ 指定它从前面哪些节点取值，最后单一根节点 $(L,1)$ 给出该层输出。
-    - 核心思路：初始层 $x_i^0 = g_{\bm{k}[i]}(x) E_{\bm{k}[i]}(x)$；中间层 $x_i^l = \mathrm{AGG}(\{x_j^k \mid (k,j)\in A_i^l\})$；输出 $y=\mathrm{AGG}(\{x_j^k \mid (k,j)\in A_1^L\})$。配上单射 $\mathrm{AGG}$（理论上用 MLP+sum/min/max 实现）即可证 Prop 3.1（任意 DAG 可被单射编码）→ Theorem 3.2（DAG-MoE 严格强于标准 MoE）→ Theorem 3.3（单层 DAG-MoE + 一层多头注意力可在 $O(K\log n)$ 输入长度下模拟一次完整动态规划，标准 MoE 做不到，因为它只能做一步聚合）。
-    - 设计动机：先把"为什么结构化聚合本质上比加权和强"用 GNN/D-VAE 的工具说透——置换不变性是表达力天花板，DAG 给出了顺序与多步组合，从理论上交代了空间是值得开发的。
+标准 MoE 的输出 $y=\sum_i g_i E_i$ 是置换不变的——top-$K$ 集合一定下来，输出就被这堆专家的多重集唯一确定，专家之间既没顺序也没交互，表达力上界被锁死在 weighted sum 这个函数族里。DAG-MoE 的破局点是把 top-$K$ 列表 $\bm{k}$ 组织成一张深度 $L$、每层 $n(l)$ 个节点的 DAG $G=(\mathcal{V},\mathcal{A})$：节点 $(l,i)$ 用入边集合 $A_i^l$ 指定自己从前面哪些节点取值，最后由单一根节点 $(L,1)$ 给出输出。形式上初始层 $x_i^0 = g_{\bm{k}[i]}(x) E_{\bm{k}[i]}(x)$，中间层 $x_i^l = \mathrm{AGG}(\{x_j^k \mid (k,j)\in A_i^l\})$，输出 $y=\mathrm{AGG}(\{x_j^k \mid (k,j)\in A_1^L\})$。借用 GNN / D-VAE 那一套工具，只要 $\mathrm{AGG}$ 是单射（理论构造用 MLP+sum/min/max），就能层层推出三个递进结论：Prop 3.1 任意 DAG 都可被单射编码 → Theorem 3.2 DAG-MoE 严格强于标准 MoE → Theorem 3.3 单层 DAG-MoE 配一层多头注意力，能在 $O(K\log n)$ 输入长度下模拟一次完整动态规划，而标准 MoE 因为只能做一步聚合根本做不到。这一串证明的意义在于：它把"为什么值得在聚合这一步上花功夫"从直觉变成了可证的表达力 gap，DAG 提供的顺序与多步组合正是 weighted sum 缺的那块。
 
-2. **轻量 DAG learning module（核心实现）**:
+**2. 轻量 DAG learning module：在没有 ground-truth 结构的前提下逐 token 把 DAG 学出来。**
 
-    - 功能：在不知道 ground-truth DAG 的前提下，逐 token 自动学结构并执行聚合。
-    - 核心思路：把搜索空间降维——固定 $n(l)=K$ 并只允许 $(l,i)$ 从前一层 $l-1$ 取边，更早的信息由残差携带。每次迭代先归一化降维 $x_{i,\mathrm{input}}^l=\mathrm{LN}(x_i^{l-1})$、$x_{i,\mathrm{down}}^l=W_{\mathrm{down}}^l x_{i,\mathrm{input}}^l$；对每对 $(i,j)$ 拼出候选边特征 $x^l_{(i,j)}=\mathrm{Concat}(x_{i,\mathrm{down}}^l, x_{j,\mathrm{down}}^l)$；学一个软门控 $e^l_{(i,j)} = \sigma(W_{\mathrm{edge}}^l x^l_{(i,j)})$ 控制连边是否生效，节点信息 $\hat{x}^l_{(i,j)} = e^l_{(i,j)} \odot W_{\mathrm{node}}^l x^l_{(i,j)}$；最后 $x_i^l = W_{\mathrm{up}}^l\sum_j \hat{x}_{(i,j)}^l + x_i^{l-1}$，$W_{\mathrm{up}}$ 用零权重初始化稳定早期训练；输出 $y=\sum_{i=1}^K x_i^L$。
-    - 设计动机：(i) 把整张邻接矩阵当 sigmoid 软门控学，避开离散结构搜索；(ii) 在低维 $d_g \ll d$ 里学结构、再投回去，把额外参数压到与一个 shared expert 相当；(iii) 残差 + 1/K 归一化解决多节点求和导致的量级漂移与梯度不稳定。
+理论上的一般 DAG 搜索空间太大，没法端到端学，所以这里先把空间砍小——固定每层 $n(l)=K$，并只允许节点 $(l,i)$ 从相邻的前一层 $l-1$ 连边，更早的信息靠残差携带。每轮迭代先归一化降维：$x_{i,\mathrm{input}}^l=\mathrm{LN}(x_i^{l-1})$、$x_{i,\mathrm{down}}^l=W_{\mathrm{down}}^l x_{i,\mathrm{input}}^l$，把表征压到低维 $d_g \ll d$ 再做结构学习；对每对节点 $(i,j)$ 拼出候选边特征 $x^l_{(i,j)}=\mathrm{Concat}(x_{i,\mathrm{down}}^l, x_{j,\mathrm{down}}^l)$，学一个软门控
 
-3. **初始节点的 token 残差注入**:
+$$e^l_{(i,j)} = \sigma(W_{\mathrm{edge}}^l x^l_{(i,j)})$$
 
-    - 功能：让原始 token 表征 $x$ 始终能在聚合过程中被访问到，避免完全依赖专家输出。
-    - 核心思路：$x_i^0 = g_{\bm{k}[i]}(x) E_{\bm{k}[i]}(x) + \tfrac{1}{K} x$，其中 $1/K$ 是为了让所有节点在 $\sum_i x_i^L$ 后总残差贡献仍为 1，匹配 transformer 块外层的 residual stream 量级。
-    - 设计动机：消融显示如果不加这个残差或不做 $1/K$ 缩放，训练很容易发散或长期不收敛——作者把它写成"对训练稳定性至关重要"。
+来连续地控制这条边是否生效，节点信息按门控加权 $\hat{x}^l_{(i,j)} = e^l_{(i,j)} \odot W_{\mathrm{node}}^l x^l_{(i,j)}$，最后投回原维并接残差 $x_i^l = W_{\mathrm{up}}^l\sum_j \hat{x}_{(i,j)}^l + x_i^{l-1}$，迭代 $L$ 轮后输出 $y=\sum_{i=1}^K x_i^L$。这套设计同时解掉三个工程难题：把整张 $K\times K$ 邻接矩阵当 sigmoid 软门控来学，避开了离散结构搜索（和 DARTS 的连续松弛同味，但只在极小图上做）；在低维空间学结构再投回去，把额外参数压到只和一个 shared expert 相当；$W_{\mathrm{up}}$ 零初始化加残差，让模块在训练初期近似恒等映射，避免多节点求和带来的量级漂移和梯度不稳。
+
+**3. 初始节点的 token 残差注入：让原始 token 表征在整个聚合过程中始终可达。**
+
+如果初始节点只装专家输出，token 自身的信息一旦进了 DAG 就可能被聚合稀释掉，所以每个初始节点额外注入一份缩放后的原始表征：$x_i^0 = g_{\bm{k}[i]}(x) E_{\bm{k}[i]}(x) + \tfrac{1}{K} x$。这里 $1/K$ 不是随手取的——它保证 $K$ 个节点在最后 $\sum_i x_i^L$ 求和后，原始 token 的总残差贡献恰好是 1，正好匹配 transformer 块外层 residual stream 的量级。消融里去掉这个残差或拿掉 $1/K$ 缩放，训练就很容易发散或长期不收敛，作者直接把它定性为"对训练稳定性至关重要"。
 
 ### 损失函数 / 训练策略
 沿用 Switch Transformer 的 token-choice router + load-balance loss，再叠 router Z-loss 抑制 logits 漂移。基础架构改自 Llama3.1-8B（保留 tokenizer/attention/FFN 形状），训练目标是标准 causal LM。

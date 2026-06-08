@@ -46,23 +46,24 @@ SBTA 可以理解为“topic modeling 的粒度重构”。它并不要求重新
 数据层面，作者构建 SemEval-STM。它基于 SemEval-2016 ABSA 的 laptop 和 restaurant 两个领域，用 aspect label 作为主题代理。LLM 先为每个主题抽取相关 segment，然后作者进行后处理、人工合并和重分配，形成同时支持 DBTA 与 SBTA 对比的 benchmark。
 
 ### 关键设计
-1. **Segment-based Topic Allocation 任务定义**:
 
-	- 功能：把主题分配单位从文档级改为片段级。
-	- 核心思路：segment 被定义为 $([i:j],\mathcal{T})$，其中 $[i:j]$ 是连续文本 span，$\mathcal{T}$ 是该 span 涉及的主题集合。一个 segment 通常只包含一到少数几个主题，因此比整篇文档更纯。
-	- 设计动机：用户在实际分析中通常想知道“哪些句子在谈价格 / 服务 / 质量”，而不是拿到整篇包含多个主题的评论。
+**1. Segment-based Topic Allocation 任务定义：把主题分配的原子单位从文档降到语义片段。**
 
-2. **SemEval-STM 构建流程**:
+用户做文本分析时真正想知道的是“哪些句子在谈价格 / 服务 / 质量”，而不是拿回一整篇同时谈价格、质量、服务、外观的评论。文档级分配（DBTA）把这些异质内容混进同一个主题簇，造成 topic contamination。SBTA 把分配对象改成 segment：每个 segment 定义为 $([i:j],\mathcal{T})$，其中 $[i:j]$ 是一段连续 token span，$\mathcal{T}$ 是这段 span 涉及的主题集合。
 
-	- 功能：为 SBTA 提供可评估的数据集。
-	- 核心思路：用 o3-mini 根据主题和文档抽取 maximal contiguous spans；丢弃少于 10 个 segment 的主题；laptop 领域先从 76 个主题降到 33 个，再经人工合并成 23 个主题；restaurant 保留后整理为 11 个主题。DBTA 和 SBTA 使用相同主题集合，保证公平对比。
-	- 设计动机：直接用文档级数据会让 SBTA 获得过于简单的优势；SemEval-STM 选择多主题但离题内容不占主导的短文本，使比较更保守。
+由于一个 segment 通常只覆盖一到少数几个主题，它天然比整篇文档更纯。检索主题 $k$ 时，系统返回的是 $\mathcal{Q}_{d,k}=\{Q\in\mathcal{Q}_d\mid k\in\mathcal{T}(Q)\}$，即文档里真正谈到该主题的片段集合，而不是整篇离题内容一起带回。
 
-3. **Segment Intrusion Evaluation**:
+**2. SemEval-STM 构建流程：用 ABSA 的 aspect 当 proxy topic，造一个 DBTA/SBTA 公平对照的 benchmark。**
 
-	- 功能：从人类可解释性角度评估 segment 主题簇是否语义一致。
-	- 核心思路：构造单入侵 / 双入侵、跨领域 easy / 同领域 hard 四类任务，让人类或 LLM 在一组 segment 中找出语义不属于该主题的 intruder。成功率越高，说明原主题簇越一致。
-	- 设计动机：传统 word intrusion 只检查 topic words，无法衡量 segment 是否在上下文上连贯；segment intrusion 更贴近 SBTA 的对象粒度。
+要验证“换单位有效”，得有一份能同时支持文档级与片段级对比的数据；从零人工标注 topic 成本太高，作者于是借 SemEval-2016 ABSA 的 laptop / restaurant 两域——它们自带 aspect label，正好当主题代理。构建时先用 o3-mini 按主题和文档抽取 maximal contiguous spans，丢弃 segment 少于 10 个的主题，再人工合并重分配：laptop 从 76 个主题降到 33 个、再并成 23 个，restaurant 整理为 11 个。
+
+一个刻意的保守设计是：DBTA 和 SBTA 共用同一套主题集合，且选取的是“多主题但离题内容不占主导”的短文本——如果直接用极度异质的文档，SBTA 会赢得过于轻松，这样反而让对比更可信。
+
+**3. Segment Intrusion Evaluation：把可解释性评测从“主题词像不像”换成“这些片段是不是同一类”。**
+
+传统 word intrusion 只在 topic words 里挑混入词，根本衡量不了 segment 在上下文上是否连贯，与 SBTA 的片段粒度不匹配。作者改造出 segment intrusion：在一组属于同一主题的 segment 里塞入一个语义不属于该主题的 intruder，让人类或 LLM 把它找出来，成功率越高说明原主题簇越一致。
+
+任务按难度分四档——单入侵 / 双入侵，乘以 intruder 取自跨领域的 easy 和取自同领域的 hard。同领域双入侵最难（人类一致性 $\kappa$ 也降到 0.86–0.88），但整体仍保持较高的 inter-annotator 一致性，说明这套评测本身稳定，更贴近分析人员真正关心的“片段能否被看成同一类”。
 
 ### 损失函数 / 训练策略
 本文不是提出一个端到端神经训练损失，而是提出任务重构、数据构建和评估协议。实验中使用 LDA、BERTopic 和多种 LLM-based topic assignment 方法作为基线或模型族。对于 LLM 方法，输入 segment 和预定义候选 topic list，让模型选择最相关主题，流程类似 TopicGPT 的 assignment 阶段，但把 assignment 单位换成 segment。

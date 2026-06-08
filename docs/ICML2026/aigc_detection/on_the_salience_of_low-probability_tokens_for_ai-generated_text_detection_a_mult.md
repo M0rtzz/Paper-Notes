@@ -44,28 +44,21 @@ tags:
 
 ### 整体框架
 
-输入是任意文本 $\mathbf{x} = \{x_i\}_{i=0}^{n-1}$，配一个 proxy / source LM $p_\theta$。
-Pipeline 是：(1) 对每个位置 $i$ 拿到条件分布 $p_\theta(\cdot \mid x_{<i})$，从中读出"实际 token 的对数概率" $\log p_\theta(x_i \mid x_{<i})$ 和"整个分布的 Rényi 熵" $H_\alpha(p_\theta(\cdot \mid x_{<i}))$。(2) 按 token 的实际概率值在序列内做排序，挑出底部 $\rho$ 分位的索引集合 $\mathcal{S}_\rho$。(3) 在 $\mathcal{S}_\rho$ 上分别算局部信号 $z_\text{local}$（对数概率均值）和全局信号 $z_\text{global}$（Rényi 熵均值）。(4) 加权融合得检测分 $z = \beta z_\text{local} + (1-\beta) z_\text{global}$；Uncertainty++ 进一步把 $z_\text{local}$ 替换为基于条件独立采样的归一化值 $D_\rho^*$。输出是一个标量，越大越像 AI 生成。
+方法要解决的是"全序列平均把判别信号稀释、单点 log-prob 又太脆弱"这一对老问题。做法是给任意文本 $\mathbf{x}=\{x_i\}_{i=0}^{n-1}$ 配一个 proxy / source LM $p_\theta$，先在每个位置上同时读出"实际 token 的对数概率"和"整个条件分布的 Rényi 熵"，再只挑序列内概率最低的那一小撮位置，在这撮位置上把局部 log-prob 信号和全局熵信号加权融成一个标量分，分越大越像 AI；Uncertainty++ 则把局部信号换成条件独立采样归一化后的版本以求更稳。
 
 ### 关键设计
 
-1. **百分位局部不确定度（Percentile-Based Local Uncertainty）**:
+**1. 百分位局部不确定度：把平均池缩到低概率位以抑制 boilerplate 稀释**
 
-    - 功能：用低概率位置上的 log-prob 均值代替全序列均值，抑制 boilerplate 对判别信号的稀释。
-    - 核心思路：定义百分位聚合算子 $\mathcal{Q}_\rho(\{y_i\}) = \frac{1}{|\mathcal{S}_\rho|}\sum_{i \in \mathcal{S}_\rho} y_i$，作用在 token-level log-prob 上得 $z_\text{local} = \mathcal{Q}_\rho(\{\log p_\theta(x_i \mid x_{<i})\}_{i=1}^{n-1})$。理论支撑来自 Proposition 3.2：$\mathcal{Q}_\rho$ 是凹算子，故 Jensen 不等式给出 $\mathbb{E}\,\mathcal{Q}_\rho \le \mathcal{Q}_\rho(\mathbb{E})$；进一步 Proposition 3.3 实证发现 AI 文本上规范化的"Percentile Discrepancy" $D_\rho^* = 2.18$ 显著大于 Jensen 下界 $\tilde{D}_\rho^* = 1.34$ 和全序列基线 $D_1^* = 1.43$，而人写文本上三者都 $\approx 0$，这种"Jensen 放大不对称性"正是低概率聚合能比 Fast-DetectGPT 多挖出信号的关键。
-    - 设计动机：boilerplate 集中在分布头部，扔进平均池里就是噪声；判别力靠的是"AI 在该选低概率词时并不真的选得很低"这一不对称——把池子缩小到分位 $\rho$ 内反而把这种不对称放大了。$\rho$ 越小信号越纯但方差越大，论文里 0.15 是默认平衡点。
+痛点在于把所有 token 的 $\log p_\theta(x_i\mid x_{<i})$ 不分青红皂白地平均，会被人和 LLM 共享的高概率套话拉走。作者因此定义百分位聚合算子 $\mathcal{Q}_\rho(\{y_i\}) = \frac{1}{|\mathcal{S}_\rho|}\sum_{i \in \mathcal{S}_\rho} y_i$，其中 $\mathcal{S}_\rho$ 是按实际概率值排序后底部 $\rho$ 分位的位置集合，把它作用到 token 级 log-prob 上得到局部信号 $z_\text{local} = \mathcal{Q}_\rho(\{\log p_\theta(x_i \mid x_{<i})\}_{i=1}^{n-1})$。这么做有效，是因为判别力恰恰藏在"AI 在该选低概率词时并不真选得那么低"这一不对称里：Proposition 3.2 指出 $\mathcal{Q}_\rho$ 是凹算子，Jensen 不等式给出 $\mathbb{E}\,\mathcal{Q}_\rho \le \mathcal{Q}_\rho(\mathbb{E})$；Proposition 3.3 进一步实证发现 AI 文本上归一化后的 Percentile Discrepancy $D_\rho^* = 2.18$ 远大于 Jensen 下界 $\tilde{D}_\rho^* = 1.34$ 和全序列基线 $D_1^* = 1.43$，而人写文本上三者都 $\approx 0$。正是这种只在 AI 文本上出现的"Jensen 放大不对称"，让低概率聚合比 Fast-DetectGPT 多挖出一截信号。$\rho$ 越小信号越纯但方差越大，默认取 0.15 作平衡点。
 
-2. **基于 Rényi 熵的全局不确定度（Entropy-Based Global Uncertainty）**:
+**2. 基于 Rényi 熵的全局不确定度：用分布形状代替单点采样以扛改写**
 
-    - 功能：从分布形状而非单点采样去刻画不确定度，对改写和换 decoding 这类乘性扰动天然鲁棒。
-    - 核心思路：用 $\alpha$ 阶 Rényi 熵 $H_\alpha(p) = \frac{1}{1-\alpha}\log\sum_{v \in \mathcal{V}} p(v)^\alpha$，并在低概率位置集合 $\mathcal{S}_\rho$ 上平均：$z_\text{global} = \frac{1}{|\mathcal{S}_\rho|}\sum_{i \in \mathcal{S}_\rho} H_\alpha(p_\theta(\cdot \mid x_{<i}))$。Proposition 3.4 证明：在多项式扰动 $p \to p/\gamma$ 下，log-prob 会精确变 $\log \gamma$（且随 $\gamma \to \infty$ 无界增长），而 Rényi 熵的变化在低概率位置（$p_\theta(x_i) \le \tau$ 且 $\tau$ 满足 $\tau \le (S_\alpha/2)^{1/\alpha}$）上有界 $O(\tau^{\min(\alpha,1)})$，并随 $\gamma$ 上升仍然有界。
-    - 设计动机：$\alpha < 1$ 会更重视分布尾部、$\alpha > 1$ 更重视头部，给了一个"在 vocabulary 维度上选择性偏置"的旋钮，与 token 维度上的低概率筛选形成正交补充。把 $\mathcal{Q}_\rho$ 同样套到 entropy 上还顺带让局部和全局两路共享一个 $\rho$ 超参，简化系统。
+第二个痛点是把整个条件分布坍缩成"实际 token 那一个概率"会丢掉分布形状，一旦改写或换 decoding 就被推翻。对策是改用 $\alpha$ 阶 Rényi 熵 $H_\alpha(p) = \frac{1}{1-\alpha}\log\sum_{v \in \mathcal{V}} p(v)^\alpha$ 来刻画该位置整个分布的不确定度，并同样只在低概率集合 $\mathcal{S}_\rho$ 上平均：$z_\text{global} = \frac{1}{|\mathcal{S}_\rho|}\sum_{i \in \mathcal{S}_\rho} H_\alpha(p_\theta(\cdot \mid x_{<i}))$。它扛扰动是有解析依据的：Proposition 3.4 证明在多项式扰动 $p \to p/\gamma$ 下，log-prob 会精确变 $\log\gamma$ 并随 $\gamma\to\infty$ 无界增长，而 Rényi 熵的变化在低概率位置（$p_\theta(x_i)\le\tau$ 且 $\tau\le(S_\alpha/2)^{1/\alpha}$）上有界为 $O(\tau^{\min(\alpha,1)})$，即便 $\gamma$ 不断升高仍有界。阶数 $\alpha$ 在这里是一个旋钮——$\alpha<1$ 更重视分布尾部、$\alpha>1$ 更重视头部，构成 vocabulary 维度上的选择性偏置，与 token 维度上的低概率筛选正交互补；把 $\mathcal{Q}_\rho$ 同样套到熵上还顺带让局部和全局两路共享同一个 $\rho$，简化系统。
 
-3. **条件独立采样归一化（Conditional Independent Sampling → Uncertainty++）**:
+**3. 条件独立采样归一化：把局部信号对齐到模型自身期望得到 Uncertainty++**
 
-    - 功能：让局部信号摆脱文本长度和领域的影响，得到更稳定可比的检测分。
-    - 核心思路：把 $z_\text{local}$ 与其"模型自己的分布期望"对齐——在每个位置 $i$ 用原始 prefix $x_{<i}$（而非已采样 token）独立采 $\tilde{x}_i \sim p_\theta(\cdot \mid x_{<i})$，定义 Percentile Discrepancy $D_\rho = z_\text{local} - \mathbb{E}\,\mathcal{Q}_\rho(\{\log p_\theta(\tilde{x}_i \mid x_{<i})\})$ 以及归一化版 $D_\rho^* = D_\rho / \sqrt{\mathrm{Var}\,\mathcal{Q}_\rho(\{\log p_\theta(\tilde{x}_i \mid x_{<i})\})}$；实际用 Monte Carlo 以 $m$ 个独立样本估计均值方差。最终 Uncertainty++ 分数为 $z_{++} = \beta D_\rho^* + (1-\beta) z_\text{global}$。
-    - 设计动机：AI 文本的实际 log-prob 显著高于其分布期望（$D_\rho^* \gg 0$），人写文本则贴着期望走（$D_\rho^* \approx 0$）；这种"实际 vs 期望"的对比是 Fast-DetectGPT 的核心思想，作者把它从全序列推广到低概率分位，吃到分位筛选带来的判别增益的同时保留 normalization 带来的稳定性。
+局部 log-prob 的绝对值会随文本长度和领域漂移，不便跨样本比较。作者借鉴 Fast-DetectGPT 的"实际 vs 期望"思路，把 $z_\text{local}$ 减掉它在模型自己分布下的期望：在每个位置用原始 prefix $x_{<i}$（而非已采样 token）独立采 $\tilde{x}_i \sim p_\theta(\cdot \mid x_{<i})$，定义 Percentile Discrepancy $D_\rho = z_\text{local} - \mathbb{E}\,\mathcal{Q}_\rho(\{\log p_\theta(\tilde{x}_i \mid x_{<i})\})$ 及其归一化版 $D_\rho^* = D_\rho / \sqrt{\mathrm{Var}\,\mathcal{Q}_\rho(\{\log p_\theta(\tilde{x}_i \mid x_{<i})\})}$，实际用 $m$ 个独立 Monte Carlo 样本估计均值与方差。AI 文本的实际 log-prob 显著高于其分布期望（$D_\rho^*\gg 0$），人写文本则贴着期望走（$D_\rho^*\approx 0$），这种归一化既吃到分位筛选的判别增益又保留稳定性。最终 Uncertainty++ 分数把归一化后的局部信号与全局熵信号融合：$z_{++} = \beta D_\rho^* + (1-\beta) z_\text{global}$（基础版 Uncertainty 则直接用 $z_\text{local}$ 替换 $D_\rho^*$）。
 
 ### 损失函数 / 训练策略
 

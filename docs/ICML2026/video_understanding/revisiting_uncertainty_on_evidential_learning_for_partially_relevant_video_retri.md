@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **基于三重原则的不确定性引导查询识别 (UGI)**：
+**1. 基于三重原则的不确定性引导查询识别（UGI）：用三个正交量把查询自动分成精确/多义/欠定三类，避免一刀切硬训。**
 
-    - 功能：把一条查询自动划分为 precise / polysemous / under-determined 三类，避免用统一损失硬训。
-    - 核心思路：先由相似度构造 evidence $e_{ij}=\exp(\tanh(s_{ij}/\tau))$ 并得到 Dirichlet 参数 $\alpha_{ij}=e_{ij}+1$，由此定义三个量——认知不确定度 $u_i=K/S_i$（$S_i=\sum_j\alpha_{ij}$，反映总证据量的缺失程度）、标签一致性 $c_i=\max(0, \bm{s}_i\cdot\bm{y}_i)$（GT 视频的响应强度）、偶然不确定度 $\xi_i$（Dirichlet 期望熵）。识别规则是：$u_i$ 大 → under-determined（证据稀薄）；$u_i$ 小且 $c_i$ 大 → 初步 precise；$u_i$ 小且 $c_i$ 小 → 初步 polysemous；再用 $\xi_i$ 中位数把"伪 precise"中熵高的样本拨回 polysemous。阈值 $\beta_u,\beta_p$ 由"目前已经匹配正确的样本"动态决定，避免人工调参。两个尺度独立给出划分后用"不确定度优先"规则融合：保守地让更不确定的一方占主导（$\mathcal{S}_p\prec\mathcal{S}_n\prec\mathcal{S}_u$）。
-    - 设计动机：以往把所有"GT 未排到第一"的样本一概当成 noisy correspondence 丢弃或降权，丢掉了真正反映歧义的信号；而 EDL 中单凭 $u$ 又无法区分 precise 与 polysemous（Theorem 3.2），必须再加 $c$ 和 $\xi$ 才能在三维空间里完成无歧义分类。
+痛点在于以往把所有"GT 没排到第一"的样本一概当成 noisy correspondence 丢弃或降权，连真正反映歧义的信号也一起扔掉了。UGI 先把相似度转成证据 $e_{ij}=\exp(\tanh(s_{ij}/\tau))$，得到 Dirichlet 参数 $\alpha_{ij}=e_{ij}+1$，再从中读出三个量：认知不确定度 $u_i=K/S_i$（$S_i=\sum_j\alpha_{ij}$，总证据量越少 $u$ 越大）、标签一致性 $c_i=\max(0, \bm{s}_i\cdot\bm{y}_i)$（GT 视频的响应强度）、偶然不确定度 $\xi_i$（Dirichlet 期望熵）。识别规则是：$u_i$ 大就判 under-determined（证据稀薄）；$u_i$ 小且 $c_i$ 大初判 precise；$u_i$ 小但 $c_i$ 小初判 polysemous；最后用 $\xi_i$ 的中位数把"伪 precise"里熵偏高的样本拨回 polysemous。阈值 $\beta_u,\beta_p$ 由当前 batch 内"已经匹配正确"的样本动态决定，不用人工调参。之所以非要凑齐三个量，是因为论文 Theorem 3.2 证明单凭 $u$ 区分不了 precise 和 polysemous——两者证据都充足，区别在于前者指向唯一答案、后者分散到多个候选，必须再借 $c$ 和 $\xi$ 才能在三维空间里把两类干净分开。两个尺度各自给出划分后按"不确定度优先"融合（$\mathcal{S}_p\prec\mathcal{S}_n\prec\mathcal{S}_u$），让更不确定的一方占主导，保守而稳妥。
 
-2. **查询自适应标签校准 + 动态共证据聚合 (DCEA)**：
+**2. 查询自适应标签校准 + 动态共证据聚合（DCEA）：对不同类型查询施加松紧不同的监督，再把两尺度意见无参融合。**
 
-    - 功能：对不同类型查询施加不同程度的监督松紧，并把两个尺度的 evidential opinion 融合为统一意见。
-    - 核心思路：precise 与 under-determined 查询保留 one-hot 标签（前者已可信、后者要继续催学习信号），polysemous 查询则把标签软化为 $\hat{\bm{y}}_i=(1-\gamma)\bm{y}_i+\frac{\gamma}{2}(\sigma(s_i^f)+\sigma(s_i^c))$（$\gamma=0.2$），让模型可以同时把信念分给多个语义相关候选，避免 over-penalize。两个尺度的 evidential opinion $\mathbb{M}^f,\mathbb{M}^c$ 用 Dempster–Shafer 组合规则免参数融合：$b_k^o=\frac{1}{1-\delta}(b_k^f b_k^c+b_k^f u^c+b_k^c u^f)$，其中 $\delta=\sum_{i\neq j}b_i^f b_j^c$ 衡量两支冲突度。
-    - 设计动机：硬标签会把多义查询的语义相关候选当负样本，造成监督噪声；而完全软化又会让 precise 查询的信号被稀释。这种 "分类后差异化处理" 在 polysemous 上对齐相关候选、在 precise 上保持判别力。融合用 DST 规则而不是简单加权，可以在两个分支意见冲突时自动反映为更高的总不确定度。
+硬 one-hot 标签会把多义查询的语义相关候选当成负样本、制造监督噪声；但完全软化又会稀释 precise 查询的判别信号。DCEA 于是做差异化处理：precise 与 under-determined 查询保留 one-hot（前者已可信、后者要继续催学习信号），只对 polysemous 查询软化标签 $\hat{\bm{y}}_i=(1-\gamma)\bm{y}_i+\frac{\gamma}{2}(\sigma(s_i^f)+\sigma(s_i^c))$（$\gamma=0.2$），让信念可以分给多个相关候选而不被过度惩罚。两个尺度的 evidential opinion $\mathbb{M}^f,\mathbb{M}^c$ 再用 Dempster–Shafer 组合规则免参数融合：
 
-3. **带 dustbin 的柔性最优传输 (FOT) 累积 intra-video 证据**：
+$$b_k^o=\frac{1}{1-\delta}\left(b_k^f b_k^c+b_k^f u^c+b_k^c u^f\right),\quad \delta=\sum_{i\neq j}b_i^f b_j^c$$
 
-    - 功能：替换 MIL 的"只监督最佳 clip"，在 query–clip 之间建立稠密软对齐并自动抑制噪声 clip。
-    - 核心思路：把一条查询和 $M_c$ 个 clip 看作 OT 的源/汇，但在汇端额外加一个 dustbin 桶用于吸收无关 clip，得到柔性传输方案 $\bm{\pi}\in\mathbb{R}^{1\times(M_c+1)}$。$\bm{\pi}$ 中前 $M_c$ 项作为 intra-video 的 soft assignment 监督，dustbin 项的质量越大表示该查询与视频整体相关度越低。
-    - 设计动机：MIL 监督稀疏 + 易被局部噪声欺骗（Figure 1e）；标准 OT 又强制把所有质量分到 clip 上、对噪声没有逃逸出口。dustbin 设计让模型显式学到"哪些 clip 该被忽略"，从而把稠密监督与抗噪声两个目标同时满足。
+其中 $\delta$ 衡量两支的冲突度。用 DST 而不是简单加权的好处是：当 frame 分支和 clip 分支意见打架时，融合结果会自动表现为更高的总不确定度，而不是把矛盾平均掉。
+
+**3. 带 dustbin 的柔性最优传输（FOT）：给 intra-video 监督一个既稠密又能甩掉噪声 clip 的对齐。**
+
+MIL 只监督"最相似的那一个 clip"，监督稀疏、正负 clip 极不平衡，模型很容易被一段无关视频里"恰好相似"的局部噪声骗到（即 Figure 1e 的 spurious spiky activation）。FOT 把一条查询和 $M_c$ 个 clip 当成最优传输的源与汇，但在汇端额外挂一个 dustbin 桶专门吸收无关 clip，解出柔性传输方案 $\bm{\pi}\in\mathbb{R}^{1\times(M_c+1)}$。前 $M_c$ 项作为 query→clip 的软对齐监督，dustbin 项的质量越大说明该查询与视频整体越不相关。标准 OT 会强迫把所有质量摊到 clip 上、噪声没有逃逸出口，而 dustbin 等于给了模型一个显式的"忽略键"，于是稠密监督和抗噪声两个目标被同时满足。
 
 ### 损失函数 / 训练策略
 推导自 EDL 的最小二乘 Dirichlet 损失：$L_U(\bm{\alpha}_i,\hat{\bm{y}}_i)=\sum_j(\hat y_{ij}-\alpha_{ij}/S_i)^2+\alpha_{ij}(S_i-\alpha_{ij})/(S_i^2(S_i+1))$。总损失把 frame、clip、aggregated 三个 evidential opinion 同时监督：$L_{\text{inter}}=L_U^f+L_U^c+L_U^o$。intra-video 端使用 OT 得到的软标签同样喂入 $L_U$ 形式的目标。$\tau=0.1$，$\gamma=0.2$，$\beta=0.3$；阈值随训练动态变化，无需手工调参。

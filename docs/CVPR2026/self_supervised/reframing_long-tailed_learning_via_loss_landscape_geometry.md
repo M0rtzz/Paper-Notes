@@ -36,27 +36,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架由两个分支组成：(1) GKP分支负责知识保存——用EWC风格的参数正则化防止训练某组类别时遗忘其他组；(2) GSA分支负责知识获取——用分组SAM在去除头类主导方向后寻找各组的平坦极小值。两个分支的损失通过自适应权重$\alpha$聚合。训练前通过memory-based grouping strategy将所有类划分为G组。
+全文的出发点是把长尾学习改写成一个持续学习问题：头类梯度长期主导训练，尾类学到的东西会像旧任务一样被慢慢"遗忘"，同时优化又收敛到尖锐、远离尾类最优点的区域。围绕"防遗忘"和"找平坦解"两个目标，方法在训练前先用一套基于内存库的分组策略把全部 C 个类划成 G 组，训练时再走两条互补分支：GKP 分支借 EWC 思路约束当前组的优化不去抹掉其他组已学到的知识，GSA 分支用分组 SAM、在剔除头类主导方向后为各组找平坦极小值。两条分支的损失由一个随 epoch 调度的自适应权重 $\alpha$ 聚合。
 
 ### 关键设计
 
-1. **Memory-based Grouping Strategy**:
+**1. 基于内存库的分组策略：给"持续学习"凑出任务边界**
+长尾本身没有 CL 那种显式的任务划分，要把它当持续学习来做，第一步得回答"哪些类该被当成同一个任务一起优化"。本文既不逐类保存（计算量爆炸、又会过度约束优化），也不简单按头尾二分（太粗、忽略组内差异），而是看每个类"收敛到了哪"。训练过程中维护一个内存库 $\mathcal{M}$，动态记录每个类 $c$ 达到最高特征质量 $Q$（基于类间分离度与类内方差定义）那一刻的编码器参数 $\theta_{enc}^c$；随后用谱聚类（NCut）把这 C 份参数按相似度聚成 G 组，取组内均值
 
-    - 功能：将类别按收敛特性聚类，为GKP和GSA提供分组基础
-    - 核心思路：(1) 构建内存库$\mathcal{M}$：训练过程中动态记录每个类别c达到最高特征质量Q时的编码器参数$\theta_{enc}^c$。Q基于类间分离度和类内方差定义。(2) 聚类分组：用谱聚类（NCut算法）将C个类的参数$\{\theta_{enc}^c\}$按相似性分为G组。参数相似的类共享收敛需求，适合作为一个"任务"。(3) 计算各组共享参数$\theta_g^* = \frac{1}{|\mathcal{G}^g|}\sum_{c \in \mathcal{G}^g} \theta_{enc}^c$。
-    - 设计动机：避免逐类保存（计算量禁止且过度约束优化）和简单头尾划分（过粗糙，忽略组内差异）。基于收敛参数相似性的分组能捕捉"哪些类适合一起优化"的内在结构。
+$$\theta_g^* = \frac{1}{|\mathcal{G}^g|}\sum_{c \in \mathcal{G}^g} \theta_{enc}^c$$
 
-2. **Grouped Knowledge Preservation (GKP)**:
+作为该组的共享最优参数。收敛参数相近的类天然有相似的优化需求，这样分出来的组比头尾二分更贴合"该一起优化"的内在结构，也直接给后面的 GKP / GSA 提供了"组"这个操作单位。
 
-    - 功能：防止训练某组类别时遗忘其他组的最优参数
-    - 核心思路：基于EWC范式，当模型在当前组g上训练时，对所有其他组$j \neq g$施加参数偏离惩罚：$\mathcal{L}_{gkp}^g = \frac{\lambda}{2}\sum_i \sum_{j \neq g} \frac{1}{|\mathcal{G}^j|} F_{j,i}(\theta_i - \theta_{j,i}^*)^2$，其中$F_{j,i}$是组j的Fisher信息矩阵对角元素，$\theta_{j,i}^*$是组j的共享参数。按组大小归一化$1/|\mathcal{G}^j|$平衡各组重要性。
-    - 设计动机：长尾训练中尾类的最优参数会被头类梯度主导的优化冲掉，就像CL中新任务覆盖旧任务知识。GKP通过保存各组历史最优参数并约束当前优化不偏离太远来缓解这个问题。
+**2. 分组知识保存（GKP）：别让头类梯度把尾类的最优解冲掉**
+长尾训练里尾类的最优参数会被头类主导的梯度一点点冲走，这恰好对应 CL 中新任务覆盖旧任务的灾难性遗忘。GKP 沿用 EWC 范式：当模型在第 $g$ 组上训练时，对所有其他组 $j \neq g$ 施加一个把参数往它们历史最优 $\theta_{j,i}^*$ 拉回的惩罚
 
-3. **Grouped Sharpness Aware (GSA)**:
+$$\mathcal{L}_{gkp}^g = \frac{\lambda}{2}\sum_i \sum_{j \neq g} \frac{1}{|\mathcal{G}^j|} F_{j,i}(\theta_i - \theta_{j,i}^*)^2$$
 
-    - 功能：为每组寻找平坦极小值，消除头类主导的扰动方向
-    - 核心思路：(1) 计算各组梯度$\nabla_\theta \mathcal{L}_{D_g}(\theta)$；(2) 通过梯度分解去除全局梯度方向的投影：$\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta) = \nabla_\theta \mathcal{L}_{D_g}(\theta) - \text{Proj}_{\nabla_\theta \mathcal{L}_D(\theta)} \nabla_\theta \mathcal{L}_{D_g}(\theta)$，得到组特有的梯度方向；(3) 基于组大小调整扰动半径$\rho_g^*$；(4) 用组特有梯度和半径计算SAM扰动：$\hat{\epsilon}_g^*(\theta) = \sqrt{d}\rho_g^* \frac{\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta)}{\|\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta)\|_2}$。
-    - 设计动机：标准SAM的全局扰动方向被头类梯度主导，对尾类的高锐度区域不敏感。通过去除头类主导的全局方向，GSA让扰动方向专注于各组自身的优化需求，使尾类也能找到平坦极小值。
+其中 $F_{j,i}$ 是组 $j$ 的 Fisher 信息矩阵对角元，衡量哪些参数对该组真正重要；$1/|\mathcal{G}^j|$ 按组大小归一化，避免大组主导。这样优化当前组时不会顺手把别的组（尤其尾类组）已经学到的知识抹掉，遗忘被显式压住。
+
+**3. 分组锐度感知（GSA）：把"找平坦解"的扰动方向从头类手里夺回来**
+另一个病根是收敛到尖锐区域、泛化差，自然想用 SAM 去找平坦极小值；但 SAM 的全局扰动方向同样被头类梯度主导，对尾类那些高锐度区域根本不敏感。GSA 的关键一招是梯度分解：先算各组梯度 $\nabla_\theta \mathcal{L}_{D_g}(\theta)$，再把它在全局梯度方向上的投影减掉
+
+$$\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta) = \nabla_\theta \mathcal{L}_{D_g}(\theta) - \text{Proj}_{\nabla_\theta \mathcal{L}_D(\theta)} \nabla_\theta \mathcal{L}_{D_g}(\theta)$$
+
+得到去掉头类主导成分、属于该组自己的方向；再按组大小调出扰动半径 $\rho_g^*$，算出组特定的 SAM 扰动 $\hat{\epsilon}_g^*(\theta) = \sqrt{d}\rho_g^* \frac{\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta)}{\|\hat{\nabla}_\theta \mathcal{L}_{D_g}(\theta)\|_2}$。于是每组都沿自己的需求去找平坦解，尾类不再被头类方向裹挟。这一步的必要性在消融里很直白：直接拿投影分量（即头类主导方向）做 SAM，精度反而从 53.2 暴跌到 46.4。
 
 ### 损失函数 / 训练策略
 - 总损失 $\mathcal{L} = \sum_{g=1}^G [\alpha \mathcal{L}_{gsa}^g + (1-\alpha)\mathcal{L}_{gkp}^g]$

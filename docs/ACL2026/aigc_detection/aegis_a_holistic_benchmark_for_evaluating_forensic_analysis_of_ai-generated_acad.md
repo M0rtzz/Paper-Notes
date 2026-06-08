@@ -45,23 +45,17 @@ AEGIS 的构建分 3 阶段、评估分 4 维度：（1）**论文解析**：用
 
 ### 关键设计
 
-1. **学术专属的伪造策略分层模拟**:
+**1. 学术专属的伪造策略分层模拟：真实 retraction 案例只有 2-3 例可用、缺乏结构化标注与编辑溯源，根本撑不起系统评估。**
 
-    - 功能：在受控环境下复现真实学术造假场景（Retraction Watch 中观察到的典型 pattern），生成可标注、可量化的伪造数据。
-    - 核心思路：4 种策略按「全局→局部」「文本驱动→参考图驱动」覆盖：TCF 让 GPT-4o mini 将真实 caption 重写为语义等价 prompt，再喂给文生图模型从零捏图（3121 张整图伪造）；IIF 用真图当 reference 让生成模型重画一张视觉一致的（2274 张）；TRR 用 SAM 自动产生 mask，让 inpainting 模型重画局部（1650 张）；TRE 通过 mask 或文本指令对原图做插入/删除/改写（1165 张）。SAM 自动 mask 保证了像素级 ground truth 的精度。
-    - 设计动机：真实 retraction 案例稀缺（只能找到 2-3 例），且缺乏结构化标注与编辑溯源，无法支持系统评估。用合成代替真实，关键在于让伪造类型贴近真实造假行为，并且能控制粒度——这正是 4 种策略与 25 个模型联合覆盖的目的。
+AEGIS 用合成替代真实，但关键是让伪造类型贴近真实造假行为、并能精确控制粒度，于是设计了 4 种沿「全局→局部」「文本驱动→参考图驱动」铺开的策略：TCF 让 GPT-4o mini 把真实 caption 重写为语义等价 prompt 再喂文生图模型从零捏图（3121 张整图伪造），IIF 用真图当 reference 让生成模型重画一张视觉一致的（2274 张），TRR 用 SAM 自动产生 mask 后让 inpainting 模型重画局部（1650 张），TRE 则通过 mask 或文本指令对原图做插入/删除/改写（1165 张）。这套组合的好处在于 SAM 自动 mask 直接给出像素级 ground truth，再叠上 25 个生成模型联合覆盖，既保住了真实造假的多样性，又拿到了真实撤稿案例做不到的样本规模与可控标注。
 
-2. **四级递进取证任务与 NFI 综合指标**:
+**2. 四级递进取证任务与 NFI 综合指标：单一精度无法暴露模型的结构性偏差——某模型可能 TAR 极强却 TP 极弱。**
 
-    - 功能：从粗到细把取证能力拆成 4 个互相补充的任务，并用归一化指标度量「平衡能力」而非单点峰值。
-    - 核心思路：(a) FSD 用三分类 + Not Sure 抗强行猜测；(b) TAR 专注文本区域的语义/字形一致性；(c) MC 给模型一个红框，要求结合 caption 推断「插入/删除/修改」，强迫结构与上下文联合推理；(d) TP 用「MLLM 用 bbox + CLA/OLR；专家用 mask + IoU/F1」的自适应粒度协议。综合指标 $\mathrm{NFI}_i=100\cdot \mathrm{HM}_i\cdot(1-\mathrm{OLR}_i)^\gamma$，其中 $\mathrm{HM}$ 为四任务分数的调和平均、$\gamma=0.5$ 用来惩罚过度定位（即贪 bbox 总数刷高 recall）。
-    - 设计动机：单一精度无法暴露模型的结构性偏差——某模型可能 TAR 极强但 TP 极弱。HM 的设计让模型必须四项都高才能拿高 NFI；OLR 惩罚则防止 MLLM 用「框 100 个」的 trick 刷 CLA。
+论文把取证能力从粗到细拆成 4 个互补任务：FSD 用 Real/Entire/Partial 三分类外加 Not Sure 选项抗强行猜测，TAR 专攻文本区域的语义/字形一致性，MC 给模型一个红框、逼它结合 caption 推断该区域是「插入/删除/修改」从而联合结构与上下文推理，TP 则用自适应粒度协议（MLLM 给 bbox 配 CLA/OLR、专家给 mask 配 IoU/F1）。为了度量"平衡能力"而非单点峰值，综合指标定义为 $\mathrm{NFI}_i=100\cdot \mathrm{HM}_i\cdot(1-\mathrm{OLR}_i)^\gamma$，其中 $\mathrm{HM}$ 是四任务分数的调和平均、$\gamma=0.5$ 惩罚过度定位。调和平均迫使模型四项都高才能拿到高 NFI，$(1-\mathrm{OLR})^\gamma$ 这一项则断了 MLLM「框 100 个」刷高 CLA recall 的捷径。
 
-3. **跨家族大规模基线 + 鲁棒性扰动**:
+**3. 跨家族大规模基线 + 鲁棒性扰动：要同时暴露生成-取证差距、并测量主流取证范式在常见后处理下到底有多脆。**
 
-    - 功能：暴露生成-取证差距，并测量主流取证范式在常见后处理下的脆弱性。
-    - 核心思路：评测 14 个闭源 MLLM（GPT-4.1/5.1/o4-mini、Gemini 2.5/3、Claude Sonnet 4.5、Doubao、Qwen-VL）+ 11 个开源 MLLM（LLaVA-NeXT、Gemma 3 27B、Qwen2.5-VL-72B、Llama 4 Maverick）+ 1 个统一多模态模型（Janus-Pro-7B）+ 9 个专家模型；再叠加高斯模糊（r=5）、JPEG 压缩（q=50）、双线性 0.5× 缩放三类后处理扰动。
-    - 设计动机：通过跨家族、跨规模的对比，揭示「专家模型像素敏锐但鲁棒性差，MLLM 推理强但低层敏感度弱」这一互补结构，并提示「未来 Expert AGI 必须把专家做 sensor、MLLM 做 cognitive agent 协同」。
+评测覆盖 14 个闭源 MLLM（GPT-4.1/5.1/o4-mini、Gemini 2.5/3、Claude Sonnet 4.5、Doubao、Qwen-VL）、11 个开源 MLLM（LLaVA-NeXT、Gemma 3 27B、Qwen2.5-VL-72B、Llama 4 Maverick）、1 个统一多模态模型（Janus-Pro-7B）和 9 个专家模型，再对输入叠加高斯模糊（r=5）、JPEG 压缩（q=50）、双线性 0.5× 缩放三类后处理扰动。正是这种跨家族、跨规模的对照外加扰动测试，才把「专家模型像素敏锐但鲁棒性差、MLLM 推理强但低层敏感度弱」的互补结构清晰地暴露出来，进而支撑了"未来 Expert AGI 应让专家做 sensor、MLLM 做 cognitive agent"的论断。
 
 ### 损失函数 / 训练策略
 AEGIS 是评测基准而非训练框架，无损失函数；评测全部 PNG 高分辨率以避免 JPEG 压缩干扰，prompt 仅含任务定义。OpenRouter API 调闭源模型，LLaVA/Doubao 本地或火山引擎调用，单 8×A40 (48GB) 节点。

@@ -43,23 +43,22 @@ tags:
 KITE 包含五个阶段：文档摄取与清洗、embedding 生成、多阶段检索、意图感知生成、session management。系统先把课程 PDF 按页抽取并去除页眉页脚等噪声，再按 section-aware chunking 切成约 500 字符、100 字符 overlap 的 chunks。每个 chunk 用 text-embedding-3-large 编码成 3072 维向量并存入 FAISS。学生提问时，系统先用 dense retrieval 找 top-50，再结合 BM25、MMR、cross-encoder reranking 和课程来源 boost，最终把 top-8 chunks 注入 GPT-5 prompt。生成侧先识别学生意图，再选择对应的辅导策略。
 
 ### 关键设计
-1. **多阶段课程材料检索管线**:
 
-	- 功能：在课程材料中找到既语义相关又术语精确、冗余较低的证据。
-	- 核心思路：第一步 dense bi-encoder 检索 top-50；第二步 hybrid retrieval 将 dense similarity 设为 70%、BM25 设为 30%，兼顾语义和算法术语；第三步用 MMR 做去重，$\lambda=0.7$；第四步用 cross-encoder/ms-marco-MiniLM-L-6-v2 重新排序；最后对 official course materials 做 source-based boosting，reranking score 大于 0.6 的 chunk 额外加 0.3 分。
-	- 设计动机：算法学习问题常包含术语、变量名、伪代码和步骤名，纯 dense retrieval 可能漏掉词面匹配，纯 BM25 又容易错过语义等价表达。多阶段管线提升 groundedness，也减少无关上下文污染。
+**1. 多阶段课程材料检索管线：在课程材料里找到既语义相关又术语精确、还不冗余的证据。**
 
-2. **意图分类与教学策略路由**:
+算法题里塞满了术语、变量名、伪代码和步骤名，纯 dense retrieval 容易漏掉词面匹配，纯 BM25 又容易错过语义等价的表达，单一检索器很难同时兼顾。KITE 把检索拆成五步逐层收紧：先用 dense bi-encoder 召回 top-50；再做 hybrid 融合，把 dense 相似度权重设为 70%、BM25 设为 30%，让语义和算法术语都算数；接着用 MMR（$\lambda=0.7$）去掉冗余 chunk；然后用 cross-encoder/ms-marco-MiniLM-L-6-v2 重排；最后对官方课程材料做 source-based boosting——reranking score 大于 0.6 的 chunk 额外加 0.3 分，把权威来源往前提。层层过滤后取 top-8 注入 prompt，既提升 groundedness，又压住无关上下文的污染。
 
-	- 功能：让系统根据学生的帮助需求选择不同回答方式。
-	- 核心思路：KITE 用关键词和 pattern-matching 将 query 分为 Direct Question、Conceptual Question、Algorithm Validation、Debugging、Algorithm Tracing 五类，并额外支持 answer evaluation mode。直接和概念问题以课程材料为依据解释；概念问题加入反思问题；算法验证给出简短评价、正确部分确认和引导性问题；debugging 用逐步提示帮助学生自查；tracing 则按课程规则维护 OPEN/CLOSED、当前节点、路径和代价等状态。
-	- 设计动机：教育场景的风险不是只答错，而是“答得太直接”。intent-aware routing 让系统在不同任务中控制提示力度，避免在需要练习的问题上直接泄露完整解法。
+**2. 意图分类与教学策略路由：先判断学生想要什么帮助，再决定提示力度。**
 
-3. **模拟学生 + 专家评审的反馈评估**:
+教育场景真正的风险不是答错，而是"答得太直接"——即使检索到了正确内容，一股脑给出完整解法也会让学生跳过本该练习的推理。KITE 因此先用关键词和 pattern-matching 把 query 分成 Direct Question、Conceptual Question、Algorithm Validation、Debugging、Algorithm Tracing 五类，外加一个 answer evaluation 模式，再按类别切换回答策略：直接/概念问题以课程材料为据解释，概念问题额外抛出反思追问；算法验证给简短评价、确认正确部分再补引导性问题；debugging 用逐步提示让学生自查；tracing 则按课程规则维护 OPEN/CLOSED、当前节点、路径和代价等状态。同一份检索证据，经过 intent routing 后会被包装成不同力度的支架，而不是千篇一律地泄露答案。
 
-	- 功能：评估 KITE 的反馈是否能让学生答案变好，而不是只评估单轮回答相似度。
-	- 核心思路：对于 procedural 和 tracing 问题，作者用 Meta-Llama-3.1-70B-Instruct 作为 proxy student：第一轮学生模型独立作答，KITE 给反馈，第二轮学生模型基于反馈修订答案。专家查看 Round 1、KITE feedback、Round 2，判断修订是否改进，并按 mistake remediation、scaffolding、guidance、coherence、tone 等维度打分。
-	- 设计动机：过程性任务的好 tutor 不一定输出与参考答案最相似的文本，而应促进学习者修正推理。模拟学生管线是一种早期部署前的低成本评估方法。
+**3. 模拟学生 + 专家评审的反馈评估：衡量反馈"是否让学生答案变好"，而不是和参考答案有多像。**
+
+过程性任务的好 tutor 不该用"输出与参考答案最相似"来衡量，因为促进学习者修正推理才是目标。KITE 为此搭了一条 proxy student 管线：对 procedural 和 tracing 问题，先让 Meta-Llama-3.1-70B-Instruct 扮演学生独立作答，KITE 给反馈，学生模型再基于反馈修订第二轮答案；专家随后对照 Round 1、KITE feedback、Round 2，判断修订是否真的改进，并按 mistake remediation、scaffolding、guidance、coherence、tone 等维度打分。这种两轮对照让评估抓住"反馈推动了二次作答"这一行为信号，是课堂部署前一种低成本的安全筛查。
+
+### 一个完整示例：一道算法 tracing 题怎么走完 KITE
+
+假设学生上传一段 A* 搜索的手写 trace 并问"我这步对不对"。系统先在 FAISS 里对这道题做 dense 召回，从全部课程 chunk 中取出 top-50 候选；hybrid 阶段因为 query 里带着 "OPEN list"、"f = g + h" 这类术语，BM25 的 30% 权重把对应的算法定义页提了上来；MMR 去掉几段几乎重复的伪代码，cross-encoder 重排后，讲 A* 节点扩展规则的官方 slides 因为 score 大于 0.6 又被 boost 加了 0.3 分，最终 top-8 里以官方材料为主。意图分类把这条 query 判成 Algorithm Tracing，于是生成侧不直接给出完整 trace，而是按课程规则维护 OPEN/CLOSED 表和当前节点的 $f=g+h$ 代价，指出学生在某一步漏更新了某节点的 $g$ 值，并用引导性问题让学生自己补。评估时，proxy student 第一轮的 trace 是 partially correct，收到这条反馈后第二轮把漏掉的代价补齐、转为 correct——正好落进实验里最常见的 Partially Correct → Correct 改进类型。
 
 ### 损失函数 / 训练策略
 KITE 本身不是训练新模型，而是系统集成。检索侧使用 text-embedding-3-large、FAISS、BM25、MMR 和 MiniLM cross-encoder；生成侧使用 GPT-5，并在 prompt 中注入 top-8 retrieved chunks。自动评估用 gpt-4o-mini 作为 RAGAs judge，embedding similarity 使用 text-embedding-3-small。

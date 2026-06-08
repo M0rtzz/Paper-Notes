@@ -38,34 +38,26 @@ tags:
 **核心 idea**：用最小对 NLI 数据集把“过程被描述”与“结果已实现”拆开，证明当前 LLM 更像预测叙事结局的模型，而不是严格遵守事件语义边界的逻辑推理器。
 
 ## 方法详解
-论文的核心产物是 ImperfectiveNLI 数据集和一套围绕它的诊断指标。作者从 Vendler 的体貌分类出发，选择 100 个 telic accomplishment 动词和 100 个 atelic activity 动词，再为每个动词构造 premise-hypothesis 对。模型需要输出 True、False 或 Unknown，对应 NLI 中的 Entailment、Contradiction 和 Neutral。
 
 ### 整体框架
-ImperfectiveNLI 是一个 2×2 设计。第一个维度是动词是否 telic：accomplishment 有内在终点，例如 build、write、fix；activity 没有内在终点，例如 run、swim、wander。第二个维度是上下文是否明确中断：interrupted 条件给出取消或停止信息，ambiguous 条件只说动作正在进行。四组分别是 A: interrupted accomplishment，金标 False；B: interrupted activity，金标 True；C: ambiguous accomplishment，金标 Unknown；D: ambiguous activity，金标 True。
-
-评测模型包括 Llama-3.1-8B-Instruct、Mistral-7B-Instruct-v0.3、Qwen2.5-7B-Instruct、DeepSeek-LLM-7B-Chat、Gemma-2-9B-it、GLM-4-9B-Chat、Yi-1.5-9B-Chat。作者还单独评测 Qwen2.5 的 1.5B、7B、14B、32B、72B 尺度变化。所有生成使用 greedy decoding，最大 512 tokens。
+论文的核心产物是 ImperfectiveNLI 诊断集和围绕它的两个指标。作者从 Vendler 体貌分类出发，选 100 个 telic accomplishment 动词（build、write、fix）和 100 个 atelic activity 动词（run、swim、wander），为每个动词造 premise-hypothesis 对，让模型输出 True / False / Unknown（对应 NLI 的 Entailment / Contradiction / Neutral）。整个设计是一个 2×2：动词是否 telic × 上下文是否明确中断，组成 A（interrupted accomplishment，金标 False）、B（interrupted activity，金标 True）、C（ambiguous accomplishment，金标 Unknown）、D（ambiguous activity，金标 True）四组。在此之上定义目的论偏置率和体貌意识差两个指标，并用提示干预 + 表示分析定位错误到底来自编码还是解码。
 
 ### 关键设计
-1. **四组最小对诊断数据**:
 
-	- 功能：把 event telicity 和上下文中断信息解耦，定位模型到底错在哪里。
-	- 核心思路：Group C 是关键 probe。“The carpenter was building a gazebo” 到 “The carpenter built a gazebo” 的正确标签是 Unknown，因为进行体只说明过程发生，不说明结果完成。Group D 则防止模型把所有 progressive 都判成 Unknown，因为 atelic 活动的任一子区间本身就构成事件，因而 “was running” 蕴含 “ran”。
-	- 设计动机：如果只测 ambiguous accomplishment，模型可以通过一律保守回答 Unknown 得高分。四组组合迫使模型同时处理取消、过程、结果和动词体貌。
+**1. 四组最小对诊断数据：把动词体貌和上下文中断信息解耦。**
 
-2. **目的论偏置与体貌意识指标**:
+如果只测 ambiguous accomplishment 一种题，模型可以一律保守回答 Unknown 就拿高分，根本测不出它懂不懂体貌。四组组合迫使模型同时处理取消、过程、结果四种情形。Group C 是关键 probe：“The carpenter was building a gazebo” → “The carpenter built a gazebo” 的正确标签是 Unknown，因为进行体只说过程在发生、不保证结果完成；Group D 则是防作弊的对照——atelic 活动的任一子区间本身就构成一个事件，所以 “was running” 真的蕴含 “ran”，模型不能把所有 progressive 都判成 Unknown。两组一起逼模型在“悬置 telic 完成”和“接受 atelic 蕴含”之间做出正确区分。
 
-	- 功能：把“完成幻觉”和“真正区分 telic/atelic”的能力分开度量。
-	- 核心思路：Teleological Bias Rate 只看 Group C 中模型预测 True 的比例，即 $TBR_C=\sum_{i\in C}\mathbb{I}(\hat{y}_i=True)/|C|$。Aspectual Awareness Gap 则定义为 $\Delta_{AA}=ACC_D-TBR_C$，希望模型在 Group D 高准确、Group C 低完成幻觉。高 $\Delta_{AA}$ 表示模型既能接受 atelic 的合法蕴含，又能对 telic 的完成保持悬置。
-	- 设计动机：单看 Group C accuracy 不够，因为过度保守模型也可能把 Group D 全部判成 Unknown。$\Delta_{AA}$ 把“抑制完成幻觉”和“保留正确蕴含”绑在一起，是更严格的体貌推理指标。
+**2. 目的论偏置率与体貌意识差：把完成幻觉和真区分能力分开度量。**
 
-3. **提示干预与表示/行为分离分析**:
+只看 Group C accuracy 不够，因为一个过度保守、把 Group D 也全判 Unknown 的模型同样能拿到不错的 C 组分数。作者用两个指标拆开度量：Teleological Bias Rate 只看 Group C 里模型预测 True 的比例，$TBR_C=\sum_{i\in C}\mathbb{I}(\hat{y}_i=True)/|C|$，专抓完成幻觉；Aspectual Awareness Gap 定义为 $\Delta_{AA}=ACC_D-TBR_C$，把“抑制 telic 完成幻觉”和“保留 atelic 合法蕴含”绑成一个数——只有 Group D 高准确、同时 Group C 低 TBR 的模型，$\Delta_{AA}$ 才高。这就堵死了用过度怀疑伪装成理性推理的捷径。
 
-	- 功能：判断错误是否能靠 prompt 修正，以及偏置到底发生在表示层还是推理决策层。
-	- 核心思路：作者比较 zero-shot strict logician、Definition-Aware Prompt、CoT、Counterfactual 四种提示。Counterfactual 要求模型先想出三个未完成场景再判断。表示分析则用 contextual embedding 比较 progressive 和 perfective 短语的余弦相似度，并与不同 verb class 的 TBR 相关联。
-	- 设计动机：如果显式规则就能解决，问题只是知识缺失；如果表示区分不了过程和结果，问题在编码；但论文发现模型能编码差异却仍做错判断，说明解码/决策被目标完成先验覆盖。
+**3. 提示干预与表示/行为分离分析：定位错误发生在哪一层。**
+
+光知道模型做错不够，还要回答错误是知识缺失、表示混淆，还是推理决策出问题。作者在行为侧比较四种提示：zero-shot strict logician、Definition-Aware Prompt（显式给规则）、CoT、Counterfactual（要求模型先想出三个未完成场景再判断）——若显式规则就能修好，问题只是知识缺失。在表示侧，用 contextual embedding 算 progressive 和 perfective 短语的余弦相似度，再和各 verb class 的 TBR 做相关。结果发现模型其实能在表示层编码出过程/结果的差异，却仍做错判断，说明 bug 不在编码，而在解码阶段被“目标行动通常会成功”的叙事先验覆盖了。
 
 ### 损失函数 / 训练策略
-本文不训练模型，而是纯评测和提示干预。数据构造使用 Gemini 辅助改写，再由人工严格审核；三名英语母语者从 Grammar、Fluency、Adequacy 三个维度评价数据质量。最终数据平均质量分 4.80，邻近一致率 96.3%。模型评测使用确定性 greedy decoding，避免采样噪声影响 NLI 标签。
+本文不训练模型，只做评测和提示干预。数据用 Gemini 辅助改写、再经人工严格审核：三名英语母语者从 Grammar、Fluency、Adequacy 三维打分，最终平均质量分 $4.80$、邻近一致率 $96.3\%$。所有模型评测都用确定性 greedy decoding（最大 512 tokens），避免采样噪声干扰 NLI 标签。评测模型含 Llama-3.1-8B、Mistral-7B-v0.3、Qwen2.5-7B、DeepSeek-7B-Chat、Gemma-2-9B、GLM-4-9B、Yi-1.5-9B，并单独跑 Qwen2.5 的 1.5B/7B/14B/32B/72B 做尺度分析。
 
 ## 实验关键数据
 

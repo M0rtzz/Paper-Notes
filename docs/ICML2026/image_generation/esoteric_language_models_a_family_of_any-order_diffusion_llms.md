@@ -40,30 +40,24 @@ Eso-LMs 把 AR 与 Masked Diffusion 在 loss、注意力、采样三个层面深
 ## 方法详解
 
 ### 整体框架
-Eso-LMs 把生成过程分解为 $p_\theta(x) = \sum_{z_0} p^\text{AR}_\theta(x \mid z_0)\, p^\text{MDM}_\theta(z_0)$ 两段：MDM 组件先并行去噪出一个**部分 masked 的中间序列** $z_0$（平均 $\alpha_0$ 比例的位置是 clean）；AR 组件再把 $z_0$ 中残留的 mask 从左到右补齐。$\alpha_0$ 是一个连续超参——$\alpha_0=1$ 退化成纯 MDM，$\alpha_0=0$ 退化成纯 AR，中间值给出 perplexity 上 AR 和 MDM 的平滑插值。整个流程只用**一个共享去噪 Transformer** $x_\theta$，靠不同的注意力掩码区分阶段。Variational bound 写出来正好是一项 AR 交叉熵 + 一项 MDM NELBO，训练时按比例 $\kappa$（默认 0.5）把 batch 一半喂 AR loss、一半喂 MDM loss。
+Eso-LMs 把生成过程拆成"先并行铺一层、再 AR 填空"两段，写成 $p_\theta(x) = \sum_{z_0} p^\text{AR}_\theta(x \mid z_0)\, p^\text{MDM}_\theta(z_0)$：MDM 组件先并行去噪出一个**部分 masked 的中间序列** $z_0$（平均 $\alpha_0$ 比例的位置已是 clean），AR 组件再把 $z_0$ 里残留的 mask 从左到右补齐。其中 $\alpha_0$ 是一个连续超参，$\alpha_0=1$ 退化成纯 MDM、$\alpha_0=0$ 退化成纯 AR、中间值在 perplexity 上给出两者的平滑插值。整条流程只靠**一个共享去噪 Transformer** $x_\theta$ 承载，用不同的注意力掩码区分阶段；其变分上界恰好分解成一项 AR 交叉熵加一项 MDM NELBO，训练时按比例 $\kappa$（默认 0.5）把 batch 一半喂 AR loss、一半喂 MDM loss。
 
 ### 关键设计
 
-1. **扩散阶段的 "clean-tokens-first + 因果注意力" 去噪 Transformer**：
+**1. 扩散阶段的 clean-tokens-first 因果去噪：把 MDM 改造成可 KV cache 的 AR**
 
-    - 功能：把传统 MDM 的双向去噪 Transformer 改造成因果版本，但保持"任意位置随机顺序去噪"的能力，从而解锁扩散阶段的**精确 KV cache**。
-    - 核心思路：给 $z_t \sim q_t(\cdot \mid x)$，作者**把 clean token 连同其原始 positional embedding 一起洗牌到序列前面、mask token 排在后面**，然后用标准左到右因果注意力训练去噪。这样一来：(i) 因为 clean token 之间是因果可见的，与采样时"前面步骤已经解出的 clean token"恰好对应——KV cache 可以一直被复用；(ii) 因为 mask token 只看到左侧的 clean token，不会看到未来还要去噪的 mask，符合采样时的因果性约束。每一步采样时 forward pass 只过"已 clean 的 token + 当前要去噪的 mask"，而不是 full sequence——长序列下省的不是常数因子。
-    - 设计动机：MDM 不能 KV cache 的根本原因是双向注意力让"已经预测出的 token"依赖"未来要解码的 token"，把这条边切掉就行。作者发现 Any-Order AR 视角下随机顺序的 MDM 其实**只是 AR 的一种排列**，因此只需把序列"按生成顺序"重排成因果序列即可，无需放弃并行——一次 forward 仍然能同时去噪一批 mask。这是把 MDM 的推理瓶颈从 $O(L \cdot L)$ 降到 $O(L)$ 的关键。
+MDM 推理慢的根因是双向注意力让"已经预测出的 token"依赖"未来还要解码的 token"，每步都得 over full sequence 重算 Q/K/V，无法 cache。Eso-LMs 切掉这条边：给 $z_t \sim q_t(\cdot \mid x)$，**把 clean token 连同其原始 positional embedding 一起洗牌到序列前面、mask token 排到后面**，再用标准左到右因果注意力训练去噪。这一步重排正是 Any-Order AR 视角的落地——随机顺序的 MDM 本质"只是 AR 的一种排列"，按生成顺序重排成因果序列就既是 MDM 又是 AR，无需放弃并行（一次 forward 仍能同时去噪一批 mask）。重排后 clean token 之间因果可见，恰好对应采样时"前面步骤已解出的 clean token"，KV cache 得以一路复用；mask token 只看左侧 clean、看不到未来要去噪的 mask，符合采样的因果约束。于是每步采样的 forward pass 只过"已 clean 的 token + 当前要去噪的 mask"而非整条序列，把 MDM 的推理瓶颈从 $O(L^2)$ 降到 $O(L)$，长序列下省的不是常数因子。
 
-2. **顺序阶段的 $z_0 \oplus x$ 拼接 + 稀疏注意力掩码**：
+**2. 顺序阶段的 $z_0 \oplus x$ 拼接 + 稀疏注意力掩码：让 AR 复用扩散阶段的随机顺序 KV**
 
-    - 功能：让 AR 阶段（填补 $z_0$ 残留的 mask）能够**复用扩散阶段建好的、按随机顺序排列的 KV cache**，而不是从头跑一遍。
-    - 核心思路：训练时把 clean+mask 的 $z_0$ 与完整 $x$ 拼成 $z_0 \oplus x$ 长度 $2L$ 的序列喂进同一个 Transformer，并设计一个 $2L \times 2L$ 的结构化稀疏注意力 bias $A$（依赖一个排列 $\sigma$）：(i) clean token 在 $\sigma$ 下排在 mask 之前；(ii) mask token 保持自然顺序；(iii) 每个待 AR 预测的 mask 位置 $i$ 只能 attend 到其左侧的真实 token $x_{<i}$。Transformer 在 $x$ 侧的输出被丢掉，只用 $z_0$ 侧 mask 位置的 logits 算 AR 交叉熵。由于 clean token 在扩散阶段是按 $\sigma$ 顺序生成并 cache 的，AR 采样时直接复用这份 KV、再因果地一个个解 mask 即可。完整实现用 FlexAttention 写出来不到一屏代码（Fig. 9）。
-    - 设计动机：纯 AR 训练要求每个被预测的 token 都有"完整 clean 左 context"，但 $z_0$ 里夹杂的 mask 没有这种 context；常规做法只能放弃 cache 重新 forward。作者用拼接 + 稀疏 bias 这种"伪左 context"骗过去，等价地让 AR 学会"基于一个非自然顺序的 KV 序列"做条件预测——这是把 cache 在两阶段间无缝衔接的工程关键。代价是序列长度翻倍，但只有一半 batch 走 AR 训练，整体训练只比 MDLM 慢约 1.37×。
+纯 AR 训练要求每个被预测 token 都有完整 clean 左 context，但 $z_0$ 里夹杂的 mask 没有这种 context，常规做法只能放弃 cache 重新 forward。Eso-LMs 用一个"伪左 context"骗过去：训练时把 clean+mask 的 $z_0$ 与完整 $x$ 拼成长度 $2L$ 的 $z_0 \oplus x$ 喂进同一个 Transformer，配一个依赖排列 $\sigma$ 的 $2L \times 2L$ 结构化稀疏注意力 bias $A$——clean token 在 $\sigma$ 下排在 mask 之前、mask token 保持自然顺序、每个待预测的 mask 位置 $i$ 只能 attend 到其左侧真实 token $x_{<i}$；$x$ 侧输出丢弃，只用 $z_0$ 侧 mask 位置的 logits 算 AR 交叉熵。由于 clean token 在扩散阶段本就按 $\sigma$ 顺序生成并 cache，AR 采样时直接复用这份 KV、再因果地逐个解 mask 即可，等价于让 AR 学会"基于一个非自然顺序的 KV 序列"做条件预测，从而把 cache 在两阶段间无缝衔接（完整实现用 FlexAttention 写出来不到一屏代码，Fig. 9）。代价是序列长度翻倍，但只有一半 batch 走 AR 训练，整体训练只比 MDLM 慢约 1.37×。
 
-3. **MDM 的首个精确 likelihood 估计 + 单次前向 NELBO**：
+**3. MDM 的首个精确 likelihood 估计 + 单次前向 NELBO：解锁 GRPO 类 RL 微调**
 
-    - 功能：给出 MDM (以 Eso-LMs $\alpha_0=1$ 为代理) 的**首个 (渐近) 精确 likelihood 公式**，并把 NELBO 的 Monte Carlo 估计从 $L$ 次 forward 降到 1 次，让 GRPO 等 RL 算法终于可以在 MDM 上跑起来。
-    - 核心思路：基于 $L_\text{AO}$ 等价性，作者证明了一个 importance-weighted 上界（Theorem 3.1）：$L^K_\text{AO} = -\mathbb{E}_{\sigma_{1:K}}\left[\log \tfrac{1}{K} + \log\sum_{k=1}^K \exp\sum_\ell \log p_\theta(x^{\sigma_k(\ell)} \mid x^{\sigma_k(<\ell)})\right]$，并证明 $-\log p_\theta(x) \le L^K_\text{AO} \le L_\text{MDM}$、$L^K_\text{AO}$ 关于 $K$ 单调递减、$K\to\infty$ 时收敛到真 likelihood。更妙的是：一次排列 $\sigma$ 就刻画了完整的扩散轨迹上 $L$ 个 latent，所以 $L_\text{AO}$ 在 Eso-LMs 上**只需要一次 forward**就能算完（MDLM 因为双向注意力做不到）。表 2 实测：MDLM 用 10 个 MC 样本算 $L_\text{MDM}$ 标准差 0.56，Eso-LMs 用 1 个 $\sigma$ 算 $L_\text{AO}$ 标准差只有 0.03。
-    - 设计动机：MDM 想做 RL 微调（如 GRPO）必须能算 policy 的 $\log p$。MDM 原本的 NELBO 估计每个数据点要 $L$ 次 forward，长序列下根本不现实；exact likelihood 更是缺失。Eso-LMs 的因果架构刚好让两件事同时成立。后续工作 Wang et al. (2025b) 已把这个估计器用作 GRPO 的 likelihood，并在 0.1B 和 8B 规模上都打过 Black et al. (2024) 与 Zhao et al. (2025)。
+MDM 想做 RL 微调必须能算 policy 的 $\log p$，但原本的 NELBO 只是上界、每个数据点还要 $L$ 次 forward，exact likelihood 更是缺失。基于 $L_\text{AO}$ 等价性，作者证明了一个 importance-weighted 上界（Theorem 3.1）：$L^K_\text{AO} = -\mathbb{E}_{\sigma_{1:K}}\left[\log \tfrac{1}{K} + \log\sum_{k=1}^K \exp\sum_\ell \log p_\theta(x^{\sigma_k(\ell)} \mid x^{\sigma_k(<\ell)})\right]$，并给出 $-\log p_\theta(x) \le L^K_\text{AO} \le L_\text{MDM}$、$L^K_\text{AO}$ 关于 $K$ 单调递减、$K\to\infty$ 时收敛到真 likelihood，是 MDM（以 Eso-LMs $\alpha_0=1$ 为代理）的首个（渐近）精确 likelihood 公式。更妙的是一次排列 $\sigma$ 就刻画了整条扩散轨迹上的 $L$ 个 latent，所以 $L_\text{AO}$ 在 Eso-LMs 上只需一次 forward 就能算完（MDLM 因双向注意力做不到）：表 2 实测 MDLM 用 10 个 MC 样本算 $L_\text{MDM}$ 标准差 0.56，Eso-LMs 用 1 个 $\sigma$ 算 $L_\text{AO}$ 标准差仅 0.03，更准也更省。这套估计器已被后续工作 Wang et al. (2025b) 用作 GRPO 的 likelihood，在 0.1B 和 8B 规模上都打过 Black et al. (2024) 与 Zhao et al. (2025)。
 
 ### 损失函数 / 训练策略
-总目标是 (7) 式的变分上界：$-\log p_\theta(x) \le \mathbb{E}_{z_0}[\text{AR loss}] + \mathbb{E}_{q_t,t}[\text{MDM loss}]$。给定 batch，按 $\kappa$ 拆分：$\kappa=0.5$ 走扩散 loss、$1-\kappa$ 走 AR loss（$\alpha_0=1$ 时 $\kappa=1$）。AR loss 里用替换算子 $\odot$ 把 $z_0$ 的前 $\ell-1$ 位换成真实 $x_{<\ell}$，保证被预测的 mask 有干净左 context。噪声调度采用线性 $\alpha_t = \alpha_0(1-t)$。$\alpha_0=1$ 时把 MDM loss 的系数 $\alpha'_t/(1-\alpha_t)$ 替换为 $-1$，经验上降低训练方差、加快收敛。
+总目标是 (7) 式的变分上界 $-\log p_\theta(x) \le \mathbb{E}_{z_0}[\text{AR loss}] + \mathbb{E}_{q_t,t}[\text{MDM loss}]$。给定 batch 按 $\kappa$ 拆分：$\kappa=0.5$ 走扩散 loss、$1-\kappa$ 走 AR loss（$\alpha_0=1$ 时 $\kappa=1$）。AR loss 里用替换算子 $\odot$ 把 $z_0$ 的前 $\ell-1$ 位换成真实 $x_{<\ell}$，保证被预测的 mask 有干净左 context；噪声调度采用线性 $\alpha_t = \alpha_0(1-t)$。$\alpha_0=1$ 时把 MDM loss 的系数 $\alpha'_t/(1-\alpha_t)$ 替换为 $-1$，经验上降低训练方差、加快收敛。
 
 ## 实验关键数据
 

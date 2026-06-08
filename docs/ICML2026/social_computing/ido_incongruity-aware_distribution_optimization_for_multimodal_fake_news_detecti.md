@@ -40,27 +40,21 @@ IDO 通过**显式建模模态间不一致性**作为可学习的分布优化目
 ## 方法详解
 
 ### 整体框架
-（1）**双流编码**：文本 + 图像分别经预训练编码器；（2）**不一致度量化**：定义跨模态不一致度 $d_{\text{incon}}(\mathbf{t}, \mathbf{v}) = 1 - \cos(\text{proj}_t(\mathbf{t}), \text{proj}_v(\mathbf{v}))$；（3）**分布优化**：真新闻 $d \to 0$，假新闻 $d \to 1$；（4）**联合训练**：分类损失 + 分布优化损失。
+IDO 想抓住假新闻的一个本质特征——图文之间的语义不一致——并把它做成可优化的目标，而不是埋在二分类的黑盒里。整条流程是：文本和图像先分别经预训练编码器得到表示；再用一个可微的跨模态不一致度 $d_{\text{incon}}(\mathbf{t}, \mathbf{v}) = 1 - \cos(\text{proj}_t(\mathbf{t}), \text{proj}_v(\mathbf{v}))$ 来量化两模态有多“对不上”；训练时用分布优化把真新闻的不一致度往 0 压、把假新闻的往 1 推；最后分类损失和分布优化损失联合训练。核心思路就一句话：真新闻图文高度一致，假新闻往往不一致，把这个差异显式拉大就得到一个比“记数据集模式”更通用的判别信号。
 
 ### 关键设计
 
-1. **不一致度的可学习量化**:
+**1. 不一致度的可学习量化：把“图文对不上”做成一个可微、能抓局部矛盾的数。**
 
-    - 功能：定义可微的跨模态不一致度衡量。
-    - 核心思路：通过共享语义空间投影 $\text{proj}_t, \text{proj}_v$ 将异质模态映射到对齐空间；不一致度 $d_{\text{incon}}(\mathbf{t}, \mathbf{v}) = 1 - \cos(\text{proj}_t(\mathbf{t}), \text{proj}_v(\mathbf{v}))$；为捕捉局部不一致，使用细粒度分块对齐 $d_{\text{local}} = \frac{1}{N} \sum_{i=1}^N \min_j d(\mathbf{t}_i, \mathbf{v}_j)$，最终 $d = \alpha d_{\text{global}} + (1-\alpha) d_{\text{local}}$。
-    - 设计动机：单一全局相似度遗漏局部不一致（图像角落与文本部分矛盾）；细粒度分块加权可全面捕捉不一致。
+现有方法按真假二元类别硬分，却没刻画“假在哪”，于是学到的常是数据集特定模式。IDO 先用共享语义空间的投影 $\text{proj}_t, \text{proj}_v$ 把异质的文本、图像映到同一对齐空间，全局不一致度取 $d_{\text{incon}}(\mathbf{t}, \mathbf{v}) = 1 - \cos(\text{proj}_t(\mathbf{t}), \text{proj}_v(\mathbf{v}))$。但单看全局相似度会漏掉局部矛盾——比如图像某个角落和文本某句话对不上，整体相似度却仍高。所以再加一项细粒度分块对齐 $d_{\text{local}} = \frac{1}{N} \sum_{i=1}^N \min_j d(\mathbf{t}_i, \mathbf{v}_j)$，最终 $d = \alpha d_{\text{global}} + (1-\alpha) d_{\text{local}}$ 把全局和局部一起算进来，才能全面捕捉不一致。
 
-2. **双向分布优化损失**:
+**2. 双向分布优化损失：真假两端同时拉开，别让边界偏斜。**
 
-    - 功能：同时优化真新闻一致性和假新闻不一致性的分布。
-    - 核心思路：真新闻样本 $(\mathbf{t}_r, \mathbf{v}_r)$ 损失 $\mathcal{L}_{\text{real}} = \mathbb{E}_{\text{real}}[d_{\text{incon}}(\mathbf{t}_r, \mathbf{v}_r)]$；假新闻样本 $(\mathbf{t}_f, \mathbf{v}_f)$ 损失 $\mathcal{L}_{\text{fake}} = \max(0, m - \mathbb{E}_{\text{fake}}[d_{\text{incon}}(\mathbf{t}_f, \mathbf{v}_f)])$，margin $m = 0.7$；总损失 $\mathcal{L}_{\text{IDO}} = \mathcal{L}_{\text{real}} + \lambda \mathcal{L}_{\text{fake}}$。
-    - 设计动机：单向损失（只优化一类）易导致分类边界偏斜；双向分布优化保持平衡。
+如果只优化一类（比如只把真新闻拉一致），分类边界容易偏，模型对另一类的刻画就松。IDO 对两类各加一项：真新闻样本 $(\mathbf{t}_r, \mathbf{v}_r)$ 直接最小化不一致 $\mathcal{L}_{\text{real}} = \mathbb{E}_{\text{real}}[d_{\text{incon}}(\mathbf{t}_r, \mathbf{v}_r)]$；假新闻样本 $(\mathbf{t}_f, \mathbf{v}_f)$ 则用带 margin 的铰链项 $\mathcal{L}_{\text{fake}} = \max(0, m - \mathbb{E}_{\text{fake}}[d_{\text{incon}}(\mathbf{t}_f, \mathbf{v}_f)])$ 把不一致往上推（margin $m = 0.7$），总损失 $\mathcal{L}_{\text{IDO}} = \mathcal{L}_{\text{real}} + \lambda \mathcal{L}_{\text{fake}}$。两端同时优化，真假分布被对称地推开，边界更稳。
 
-3. **不一致感知的分类头**:
+**3. 不一致感知的分类头：把不一致度直接喂进分类器当显式证据。**
 
-    - 功能：将不一致度作为显式特征输入分类器，增强判别信号。
-    - 核心思路：分类器输入为 $[\mathbf{t}; \mathbf{v}; d_{\text{global}}; d_{\text{local}}; d_{\text{global}} - d_{\text{local}}]$；MLP 输出二分类概率；联合训练交叉熵损失。
-    - 设计动机：分类头直接利用不一致信号；端到端联合优化保证分布优化目标与分类目标对齐。
+既然不一致度是判别假新闻的关键信号，就不该只用它来约束表示、却让分类器自己去猜。IDO 把不一致度拼进分类器输入 $[\mathbf{t}; \mathbf{v}; d_{\text{global}}; d_{\text{local}}; d_{\text{global}} - d_{\text{local}}]$，由 MLP 输出二分类概率，并和前面的分布优化端到端联合训练。这样分类目标和分布优化目标对齐——分布优化负责把不一致度做得有判别力，分类头负责把它用足。
 
 ## 实验关键数据
 

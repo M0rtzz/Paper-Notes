@@ -38,32 +38,26 @@ tags:
 **核心 idea**：顺序编辑崩溃来自 dominant singular subspace 被逐渐旋转和腐蚀；REVIVE 通过在原始 SVD 基中投影更新，并删除触及 dominant input/output directions 的分量，保护模型一般能力。
 
 ## 方法详解
-论文分成“机制分析”和“干预方法”两部分。机制分析用 LLaMA3-8B 的 FFN 权重矩阵研究一般能力与谱结构的关系；方法部分提出 REVIVE，把任意参数更新矩阵表示在原始权重 SVD 的外积基上，再构造 safe update。
 
 ### 整体框架
-给定编辑器产生的权重更新 $\Delta W$，REVIVE 不改变编辑器如何计算更新，而是在更新应用前做一个谱过滤。它先对原始权重 $W$ 做 SVD，得到左/右奇异向量 $u_i,v_j$ 和奇异值 $\sigma_i$。然后用能量阈值 $\tau$ 选出 dominant subspace。最后把 $\Delta W$ 展开为 $\sum_{i,j}\alpha_{ij}u_iv_j^\top$，若某项涉及 dominant input 或 output direction，就把对应系数置零，只保留低能谱区域的更新。
+论文分"机制分析"和"干预方法"两部分：前者用 LLaMA3-8B 的 FFN 权重把一般能力和谱结构对应起来，后者据此提出与编辑器解耦的 plug-and-play wrapper——REVIVE。REVIVE 不改编辑器如何算更新，而是在更新落地前插一道谱过滤：给定任意编辑器产生的权重更新 $\Delta W$，先对原始权重 $W$ 做 SVD 得到左右奇异向量 $u_i,v_j$ 和奇异值 $\sigma_i$，用能量阈值 $\tau$ 圈出 dominant subspace，再把 $\Delta W$ 展开到这组外积基 $\sum_{i,j}\alpha_{ij}u_iv_j^\top$ 上，凡是触及 dominant input/output 方向的分量一律置零，只把更新留在低能谱区域，输出一个 safe update。
 
 ### 关键设计
-1. **谱视角解释权重功能**:
 
-    - 功能：把 FFN 权重拆成一组独立 input-output mappings，用于分析一般能力集中在哪里。
-    - 核心思路：对 $W$ 做 SVD，得到 $W=\sum_i \sigma_i u_iv_i^\top$。每个 rank-one component 将输入沿 $v_i$ 投影、按 $\sigma_i$ 缩放、再沿 $u_i$ 输出。作者用保留 top energy components 的重构矩阵评估 GLUE，发现 top 5% singular components 就能恢复约 62.6% 原始性能。
-    - 设计动机：如果一般能力集中在少量 dominant directions，那么顺序编辑的关键风险就不是更新范数本身，而是更新是否碰到了这些高能功能方向。
+**1. 谱视角解读权重作用：一般能力到底藏在哪。**
 
-2. **顺序编辑崩溃的谱诊断**:
+REVIVE 的出发点是把 FFN 权重看成一组独立的 input-output mapping：对 $W$ 做 SVD 后 $W=\sum_i \sigma_i u_iv_i^\top$，每个 rank-one 分量把输入沿 $v_i$ 投影、按 $\sigma_i$ 缩放、再沿 $u_i$ 输出。作者只保留 top energy 分量重构权重去跑 GLUE，发现 top 5% 的奇异分量就能恢复约 62.6% 的原始性能。这把一个关键判断坐实了：一般能力高度集中在少量 dominant directions 上，因此顺序编辑真正的风险并不是更新范数大小，而是更新有没有撞到这些高能功能方向。
 
-    - 功能：证明 repeated edits 会逐步破坏 dominant singular subspace，并与行为崩溃同步。
-    - 核心思路：作者把 spectrum 分成 0-10%、10-20% 等能量组，对不同组注入相同 Frobenius norm 的结构扰动。高能组扰动导致 GLUE F1 明显下降，低能组扰动影响很小。随后在 LLaMA3 上用 MEMIT 做 2,000 次 COUNTERFACT 编辑，每 100 次一轮，跟踪 efficacy、paraphrase、GLUE、Low-rank Subspace Similarity 和 Singular Vector Similarity。
-    - 设计动机：这组实验把“编辑多了会坏”具体化为“dominant directions 逐渐旋转，最后近乎正交”。它给 REVIVE 的保护对象提供了直接证据。
+**2. 顺序编辑崩溃的谱诊断：把"编多了会坏"落到"dominant 方向被转走"。**
 
-3. **Dominant Subspace Protection**:
+为了验证崩溃机制，作者把谱按能量切成 0-10%、10-20% 等组，对不同组注入相同 Frobenius norm 的结构扰动：扰动高能组会让 GLUE F1 明显下降，扰动低能组几乎无影响。随后在 LLaMA3 上用 MEMIT 跑 2,000 次 COUNTERFACT 编辑、每 100 次一轮，同时跟踪 efficacy、paraphrase、GLUE、Low-rank Subspace Similarity 和 Singular Vector Similarity。结果显示 dominant directions 随编辑逐步旋转、最终近乎正交，且这一漂移与行为崩溃同步发生——为 REVIVE 该保护谁提供了直接证据。
 
-    - 功能：把有害更新从参数更新中滤掉，作为 plug-and-play wrapper 接到 MEMIT、RECT、PRUNE、AlphaEdit、NSE 等方法上。
-    - 核心思路：给定能量阈值 $\tau$，选择最小 $k$ 使 top-$k$ singular values 的累计能量超过 $\tau$。若更新展开项 $\alpha_{ij}u_iv_j^\top$ 的 $i\leq k$ 或 $j\leq k$，说明它会影响 dominant output 或 input subspace，就置零；safe update 为 $\Delta W_{safe}=\sum_{i>k}\sum_{j>k}\alpha_{ij}u_iv_j^\top$。
-    - 设计动机：局部事实可以写入低能谱方向，而 dominant directions 应优先保留。这个过滤不依赖外部数据，也不需要历史编辑统计，因此比经验保护子空间更贴近模型内在结构。
+**3. Dominant Subspace Protection：把有害更新从 $\Delta W$ 里滤掉。**
+
+给定能量阈值 $\tau$，先选最小的 $k$ 使 top-$k$ 奇异值累计能量超过 $\tau$。把更新展开为 $\alpha_{ij}u_iv_j^\top$ 后，只要某项的 $i\leq k$ 或 $j\leq k$，就说明它会动到 dominant 的 output 或 input 子空间，直接置零；最终 safe update 为 $\Delta W_{safe}=\sum_{i>k}\sum_{j>k}\alpha_{ij}u_iv_j^\top$。这套过滤的好处是局部事实照样可以写进低能谱方向，而高能功能方向被优先保住；它完全不依赖外部数据或历史编辑统计，直接从模型自身的谱结构定义保护对象，因此比经验性的保护子空间更贴近模型内在结构。
 
 ### 损失函数 / 训练策略
-REVIVE 本身不是新的训练损失，而是编辑更新的后处理约束。它适用于参数修改型编辑器产生的 $\Delta W$。实验覆盖 GPT2-XL、GPT-J、LLaMA3，主文重点报告 GPT-J 和 LLaMA3；数据集包括 COUNTERFACT 和 ZSRE。顺序编辑以每轮 100 edits 累积到 10,000 edits，并进一步测试 20,000 edits 和 ZSRE 全量 19,086 edits。唯一内在超参数是 singular value energy threshold $\tau$，论文显示其对范围内选择不太敏感。
+REVIVE 不是新的训练损失，而是对参数修改型编辑器输出的 $\Delta W$ 做后处理约束，唯一的内在超参是奇异值能量阈值 $\tau$，论文显示它在合理范围内并不敏感。实验覆盖 GPT2-XL、GPT-J、LLaMA3，主文重点报告 GPT-J 与 LLaMA3，数据集为 COUNTERFACT 和 ZSRE；顺序编辑以每轮 100 edits 累积到 10,000 edits，并进一步压到 20,000 edits 和 ZSRE 全量 19,086 edits。
 
 ## 实验关键数据
 

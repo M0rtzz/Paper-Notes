@@ -40,37 +40,25 @@ tags:
 
 ## 方法详解
 
-这是一篇 position paper，"方法"指的是作者提出的研究框架（Ideas First）及其配套的写作 / 评审 / 案例分析准则。下面把它作为一个完整 pipeline 来梳理。
-
 ### 整体框架
 
-作者把一项以 idea 为中心的工作刻画成一条三段链：$\text{idea} \rightarrow \text{signature} \rightarrow \text{tailored experiment}$。也就是从"假设"出发，先翻译成"在复杂模型中应该看到什么样的可测量痕迹"，再去设计专门用来寻找/证伪这个痕迹的实验。在这个视角下，benchmark 不再是"颁奖台"，而是"显微镜"；定理不再是"判决书"，而是"望远镜"，它们的合法性来自于是否帮助某个 idea 暴露或被推翻。
-
-输入是一个尚未被严格评价的研究构想；中间产物是 (i) 明确写出的可观察信号集合、(ii) 设计专门指向该信号的实验/控制；输出是"信号是否出现"的清晰判断（出现、缺席、或部分出现并提示新的边界）—— 而不是"我比 SOTA 高了 X%"。
+这是一篇 position paper，作者的"方法"是提出一个以想法为中心的研究框架（Ideas First），并把它落到一条可操作的三段链上：$\text{idea} \rightarrow \text{signature} \rightarrow \text{tailored experiment}$ —— 从"假设"出发，先翻译成"在复杂模型中应该看到的可测量痕迹"，再设计专门用来寻找或证伪这个痕迹的实验。在这个视角下 benchmark 不再是"颁奖台"而是"显微镜"、定理不再是"判决书"而是"望远镜"，它们的合法性都来自能否帮某个 idea 暴露或被推翻。整条链的输入是一个尚未被严格评价的研究构想，中间产物是明确写出的可观察信号集合以及专门指向该信号的实验与控制，输出则是"信号是否出现"的清晰判断（出现、缺席、或部分出现并提示新的边界），而不是"我比 SOTA 高了 X%"。
 
 ### 关键设计
 
-1. **Idea：带作用域的机制声明 (scope-bearing claim)**：
+**1. Idea：带作用域的机制声明 (scope-bearing claim)**
 
-    - 功能：把"模糊的直觉"凝练成一段可被未来证伪的科学陈述，明确"在什么设定下我相信这件事，在什么设定下我承认它可能失效"。
-    - 核心思路：一个合格的 idea 必须满足三条 —— (a) 用一两句话讲清楚机制 (mechanism)，(b) 给出 scope（架构、数据规模、训练阶段或理论假设的范围），(c) 至少列一个 plausible failure mode。它通常先在简化设定（单层注意力 / 无限宽 / 合成数据）里成形，因为那里才能做受控分析。idea 的价值在概念性和预测性，而不是它能直接打多少分。论文里用 NTK / Implicit max-margin bias / Mixup 三个真实例子示范这种"声明 + 作用域"的写法。
-    - 设计动机：当前评审常常默认"没定理 = 没想法"或"没大模型 = 没想法"，作者认为这把"载体"误当成了"内容"。要求 idea 自带 scope 和 failure mode，可以同时挡掉"slogan 式"的空想（Avoid: "letting the idea be defined only via a specific experiment, benchmark gain, or theorem statement"）和"高维定理但不知道在真实模型里意味着什么"两类问题。
+这一步要把"模糊的直觉"凝练成一段可被未来证伪的科学陈述，明确"在什么设定下我相信这件事、在什么设定下我承认它可能失效"。作者要求一个合格的 idea 必须满足三条：用一两句话讲清楚机制 (mechanism)、给出 scope（架构、数据规模、训练阶段或理论假设的范围）、至少列一个 plausible failure mode；它通常先在简化设定（单层注意力 / 无限宽 / 合成数据）里成形，因为那里才能做受控分析，其价值在于概念性和预测性而非能直接打多少分，论文用 NTK、隐式 max-margin 偏置、Mixup 三个真实例子示范这种"声明 + 作用域"的写法。之所以强调 scope 和 failure mode，是因为当前评审常默认"没定理 = 没想法"或"没大模型 = 没想法"，作者认为这是把"载体"误当成了"内容"；自带作用域的写法能同时挡掉"slogan 式"的空想（论文 Avoid: *letting the idea be defined only via a specific experiment, benchmark gain, or theorem statement*）和"有高维定理却不知道它在真实模型里意味着什么"这两类问题。
 
-2. **Signature：把抽象机制翻译成可测量痕迹**：
+**2. Signature：把抽象机制翻译成可测量痕迹**
 
-    - 功能：在简化设定里成立的 idea，如果迁到现代复杂模型上还要"算数"，必须先约定"它会以什么形态出现"—— 比如几何特征、训练动力学的趋势、因果响应、不变性、阈值、特征错误模式。signature 是 idea 和实验之间的接口语言。
-    - 核心思路：一个好的 signature 要回答三件事 —— (a) 测什么量（margin 分布？某层余弦相似度？沿插值路径的 logit 曲线？），(b) 在哪里测（哪一层 / 哪个训练阶段 / 哪段 scale），(c) 期望看到什么趋势或阈值（通常单调？在某个宽度后趋势变弱？）。论文强调真实系统是"嘈杂、异质"的，因此 signature 必须以"in expectation / 粗粒度趋势"的方式被评估，允许 bounded exception；判定标准是"预测的形状在合理聚合后可见"，而不是"每个点都符合"。Section 4 给出三例：NTK 的 signature 是"早期训练的预测/损失轨迹在大宽度下贴合线性化模型"；max-margin 的 signature 是"训练误差归零后，penultimate-layer 归一化 margin 仍单调增长且方向对齐 SVM 解"；Mixup 的 signature 是"logit 沿插值系数 $\lambda$ 近似线性、label noise 下记忆下降"。
-    - 设计动机：直接拿"better generalization"这种笼统口号去衡量 idea 是没法证伪的；要求作者在写作阶段就把 idea 钉死成一个"我们要去看的形状"，让后续实验有靶子，也让别人能复现/挑战这个信号 —— 这正是把"探索性消融"转化为"hypothesis-driven test"、解决 non-cumulative findings 的关键。
+在简化设定里成立的 idea 若要迁到现代复杂模型上还"算数"，必须先约定它会以什么形态出现 —— 几何特征、训练动力学趋势、因果响应、不变性、阈值或特征错误模式，signature 就是 idea 与实验之间的接口语言。一个好的 signature 要回答三件事：测什么量（margin 分布？某层余弦相似度？沿插值路径的 logit 曲线？）、在哪里测（哪一层 / 哪个训练阶段 / 哪段 scale）、期望看到什么趋势或阈值（通常单调？在某个宽度后趋势变弱？）。作者强调真实系统"嘈杂、异质"，因此 signature 须以"in expectation / 粗粒度趋势"评估、允许 bounded exception，判定标准是"预测的形状在合理聚合后可见"而非"每个点都符合"；Section 4 给出三例：NTK 的 signature 是早期训练的预测/损失轨迹在大宽度下贴合线性化模型，max-margin 的 signature 是训练误差归零后 penultimate-layer 归一化 margin 仍单调增长且方向对齐 SVM 解，Mixup 的 signature 是 logit 沿插值系数 $\lambda$ 近似线性、label noise 下记忆下降。设这道接口的意义在于：直接拿"better generalization"这种笼统口号衡量 idea 是没法证伪的，强制作者在写作阶段就把 idea 钉死成一个"要去看的形状"，既给后续实验靶子，也让别人能复现/挑战这个信号 —— 这正是把"探索性消融"转化为 hypothesis-driven test、解决 non-cumulative findings 的关键。
 
-3. **Tailored experiment：以"看见信号"为目的的实验设计**：
+**3. Tailored experiment：以"看见信号"为目的的实验设计**
 
-    - 功能：实验的成功标准被显式地从"刷点"换成"清晰看到（或在合适控制下确认缺席）那个预测好的 pattern"。
-    - 核心思路：作者给出一个五步操作流程 —— (i) 把 signature 定义成一个可分辨的统计量或可视化；(ii) 选能暴露它的"仪器"（测量、修补 ablation、反事实）；(iii) 把测量放在 idea 预测信号最强的位置（特定层 / 训练窗口 / scale 区段）；(iv) sweep idea 声称会调制信号的那个 knob，并加入 idea 声称"不会有效果"的 negative control；(v) 报告定性趋势、阈值、以及精炼作用域的失败案例。论文第 6 节用"Topic Inertia in LLMs"做了一个 hypothetical case study —— 从单层 unified-KQ attention 的简化分析推出"prompt 越长，生成与 prompt 的语义相似度趋势上升"，然后在 LLaMA-2 / GPT-NeoX-20B / MPT-7B 上沿 10-200 tokens 扫长度，并用 RNN 作 negative control（无 attention → 不应出现 signature），结果信号在所有 attention 模型上可见、在 RNN 上缺席。第 6.1 节还预演了两类 reviewer 反驳并给出"防御性回应"：(a) 对"为什么不上 GPT-5.1 / LongBench？" → 当信号在 200 tokens 已清晰可分辨时，把实验放大只增加算力门槛而不增加机制洞察；(b) 对"为什么趋势会抖动而非严格单调？" → 把 signature 当成数学律是误解，真实数据有噪声，关键是 negative control 排除了通用 artifact。
-    - 设计动机：这一步是整个框架对"complexity premium"和"resource asymmetry"最直接的回击 —— 当评价标准被换成"机制是否可见"，"简单但锋利的实验"就自动获得了合法性，使用小模型 / 小数据 / 小算力的工作不再因为"规模不够"被退稿，同时也鼓励作者主动报告失败和边界（refine scope），这正是 cumulative science 的基础。
+实验的成功标准被显式地从"刷点"换成"清晰看到（或在合适控制下确认缺席）那个预测好的 pattern"。作者给出一个五步流程：把 signature 定义成可分辨的统计量或可视化；选能暴露它的"仪器"（测量、修补 ablation、反事实）；把测量放在 idea 预测信号最强的位置（特定层 / 训练窗口 / scale 区段）；sweep idea 声称会调制信号的那个 knob，并加入 idea 声称"不会有效果"的 negative control；最后报告定性趋势、阈值以及用于精炼作用域的失败案例。论文第 6 节用"Topic Inertia in LLMs"做了一个 hypothetical case study —— 从单层 unified-KQ attention 的简化分析推出"prompt 越长，生成与 prompt 的语义相似度趋势上升"，再在 LLaMA-2 / GPT-NeoX-20B / MPT-7B 上沿 10–200 tokens 扫长度，并用 RNN 作 negative control（无 attention → 不应出现 signature），结果信号在所有 attention 模型上可见、在 RNN 上缺席；第 6.1 节还预演两类 reviewer 反驳并给出防御性回应：对"为什么不上 GPT-5.1 / LongBench？"答以"当信号在 200 tokens 已清晰可分辨时，放大实验只增加算力门槛而不增加机制洞察"，对"为什么趋势会抖动而非严格单调？"答以"把 signature 当成数学律是误解，真实数据有噪声，关键是 negative control 排除了通用 artifact"。这一步是整个框架对 complexity premium 和 resource asymmetry 最直接的回击：当评价标准换成"机制是否可见"，简单但锋利的实验就自动获得合法性，小模型 / 小数据 / 小算力的工作不再因"规模不够"被退稿，同时也鼓励作者主动报告失败与边界（refine scope），这正是 cumulative science 的基础。
 
-### 损失函数 / 训练策略
-
-本文不涉及训练；作为配套，第 5 节"Field Guide"给出了作者侧（Specifying the idea / Defining signatures / Designing tailored experiments）和审稿侧（Evaluating the idea / signatures / experiments）的"Aim / Avoid"对照清单，可视作把上述框架转译成评审"训练目标"的实操指南：审稿人应判断 idea 的清晰度与作用域、signature 是否可测、实验是否对准 signature，而不是默认要求更大模型、更多 benchmark 或更全的定理。
+作为配套，第 5 节"Field Guide"给出作者侧（Specifying the idea / Defining signatures / Designing tailored experiments）和审稿侧（Evaluating the idea / signatures / experiments）的"Aim / Avoid"对照清单：审稿人应判断 idea 的清晰度与作用域、signature 是否可测、实验是否对准 signature，而不是默认要求更大模型、更多 benchmark 或更全的定理。
 
 ## 实验关键数据
 

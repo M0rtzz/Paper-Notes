@@ -45,23 +45,21 @@ Aegle基于DeepSeek-V3.2构建，采用两阶段有限状态机执行问诊：St
 
 ### 关键设计
 
-1. **结构化临床状态（Structured Clinical State）**:
+**1. 结构化临床状态：用一块 SOAP 黑板把"收证据"和"下诊断"硬性隔开。**
 
-    - 功能：作为所有Agent共享的"黑板"，分离证据收集与诊断推理
-    - 核心思路：将SOAP模式形式化为 $\mathcal{S}_t = [\mathcal{F}_t, \mathcal{P}_t]$，其中 $\mathcal{F}$（Case Features）累积基本信息、现病史、既往史、体检结果等可验证事实；$\mathcal{P}$（Diagnosis & Plan）仅在 $\mathcal{F}$ 稳定后生成。强制单向依赖：$\mathcal{F} \to \mathcal{P}$
-    - 设计动机：防止过早提交不成熟的诊断假设（premature commitment），确保临床结论可追溯到具体证据
+LLM 问诊最容易犯的错是证据还没收齐就急着抛诊断（premature commitment），结论一旦说出口很难回头。Aegle 把 SOAP 病历形式化成一块所有 Agent 共享的黑板 $\mathcal{S}_t = [\mathcal{F}_t, \mathcal{P}_t]$：其中 $\mathcal{F}$（Case Features）对应 SOAP 的 S+O，持续累积基本信息、现病史、既往史、体检结果等可验证事实；$\mathcal{P}$（Diagnosis & Plan）对应 A+P，只有等 $\mathcal{F}$ 稳定后才允许生成。框架强制 $\mathcal{F} \to \mathcal{P}$ 的单向依赖，于是任何一条诊断结论都能反查回它依据的具体证据，既防住了过早承诺，也让推理链可追溯。
 
-2. **动态多智能体图拓扑（Multi-Agent Graph Topology）**:
+**2. 动态多智能体图拓扑：按病情现场召集专科，而不是让所有专家一拥而上。**
 
-    - 功能：按需激活专科Agent，避免不必要的专家介入
-    - 核心思路：三类节点协作——Orchestrator作为路由策略 $\pi_{orch}$ 根据对话历史和当前证据选择激活的专科子集 $A_{sub}$；Specialist Agents各自独立并行分析病例（解耦推理）；Aggregator按"先写后说"协议整合专科建议更新状态 $\mathcal{S}_{t+1}$ 再生成患者面向的对话
-    - 设计动机：解耦并行推理保持假设多样性（避免group think），动态激活类似真实MDT中按需召集专家
+把所有科室都塞进上下文既贵又会互相干扰，真实 MDT 也是按需召集相关专家。Aegle 用三类节点协作来还原这一点：Orchestrator 充当路由策略 $\pi_{orch}$，根据对话历史和当前证据动态挑出要激活的专科子集 $A_{sub}$；被选中的 Specialist Agents 各自独立、并行地分析病例，彼此看不到对方的中间推理（解耦推理）；Aggregator 再按"先写后说"协议把各专科建议整合进状态 $\mathcal{S}_{t+1}$，然后才生成面向患者的那句话。解耦并行是这里的关键——各 Agent 保持假设多样性，避免了多智能体常见的 group think 与"缺陷共识"（少数正确意见被多数压制）。
 
-3. **两阶段顺序执行（Sequential Clinical Execution）**:
+**3. 两阶段顺序执行：把"先充分讨论再形成共识"做成显式的偏差控制闸门。**
 
-    - 功能：严格分离证据获取与诊断推理，作为显式的偏差控制机制
-    - 核心思路：Stage I中Orchestrator反复激活专科Agent提出追问建议，Aggregator整合后生成下一轮问诊；证据充分后转入Stage II，冻结 $\mathcal{F}$ 并基于完整证据集生成 $\mathcal{P}$（诊断+治疗计划）
-    - 设计动机：避免在证据不完整时过早锁定诊断方向，模拟真实MDT中先充分讨论病情再形成共识的流程
+锚定偏差往往来自在证据不全时就锁死了诊断方向。Aegle 用一个两阶段有限状态机把这道闸门写死：Stage I 是迭代式病史采集，Orchestrator 反复激活专科 Agent 提追问建议、Aggregator 整合后生成下一轮问诊，循环推进直到证据充分；证据足够后才转入 Stage II，此时冻结 $\mathcal{F}$，基于完整证据集一次性生成 $\mathcal{P}$（诊断 + 治疗计划）。两阶段的物理隔离，等于把真实 MDT"先讨论清楚病情再下结论"的纪律变成了系统层面不可逾越的约束。
+
+### 一个完整示例：一次门诊问诊怎么走
+
+以一位主诉"突发剧烈头痛"的患者为例。Stage I 开始，黑板上的 $\mathcal{F}$ 还只有这条主诉，$\mathcal{P}$ 为空。Orchestrator 根据这条线索激活神经内科与急诊两个专科 Agent：神经内科 Agent 独立怀疑蛛网膜下腔出血、建议追问"是否伴随颈强直、意识改变"；急诊 Agent 则关注是否有高血压史与起病速度——两者并行给出建议，互不知晓对方思路。Aggregator 先把这些追问写进内部状态，再合成一句自然的问诊话发给患者。患者回答后，新证据补进 $\mathcal{F}$，进入下一轮：Orchestrator 可能据此追加眼科 Agent 排查视乳头水肿。如此往复，直到 $\mathcal{F}$ 里的事实足以支撑判断，状态机才切到 Stage II——冻结全部证据，让 Aggregator 综合各专科意见，一次性写出 $\mathcal{P}$（如"高度怀疑 SAH，建议急查头颅 CT"）。整条流程里，诊断始终落后于证据，多专科视角始终并行而不互相污染。
 
 ### 损失函数 / 训练策略
 Aegle为推理框架（非训练方法），基于DeepSeek-V3.2的zero-shot能力，通过结构化prompt和角色分配实现协作。无需额外训练。

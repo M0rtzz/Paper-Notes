@@ -46,23 +46,17 @@ tags:
 评估时，RELU 把 TOFU QA 转成四选一 MCQA。模型对每个选项计算 likelihood，归一化成概率分布。作者用这些概率计算 accuracy、F1、Brier、ECE 和 MCE；再用 Integrated Gradients 找到影响预测选项 logit 的 top-10 token；最后用 Local Mutual Information 找出与标签高度相关的 top 5% token。如果一个预测的高 attribution token 与对应标签的高 LMI token 有交集，就把它记为 shortcut-cued prediction。
 
 ### 关键设计
-1. **概率可靠性与决策可靠性分离**:
+**1. 概率可靠性与决策可靠性分离：把"置信度准不准"和"决策靠不靠谱"拆成两件事分开报告。**
 
-	- 功能：避免把低校准误差误读为“模型决策可靠”。
-	- 核心思路：概率可靠性由 ECE、MCE、Brier 衡量；决策可靠性由 shortcut proportion $P_{SC}$ 和 trade-off score $T_{SC}$ 衡量。两者分开报告后，可以观察是否出现低 ECE 但高 $P_{SC}$ 的情况。
-	- 设计动机：unlearning 的目标不只是让模型在 retain split 上答对并给出合理置信度，还要确保它没有用不可泛化的伪相关来维持表现。
+一个模型可能 ECE 很低、概率给得很准，却是靠数据集捷径而非题目语义在做选择——只看校准会把这种模型误判成"可靠"。论文因此把可靠性拆成两层分别度量：概率可靠性由 ECE、MCE、Brier 衡量，回答"模型给的概率和经验正确率是否匹配"；决策可靠性由 shortcut proportion $P_{SC}$ 和 trade-off score $T_{SC}$ 衡量，回答"模型是不是用了不可泛化的伪相关在撑表现"。两套指标分开摆出来，才能看见"低 ECE 但高 $P_{SC}$"这种悖论——也正是 unlearning 真正要警惕的失败模式：模型在 retain split 上答对、置信度也准，但已经换上了一套更浅层的决策规则。
 
-2. **Integrated Gradients + LMI shortcut 检测**:
+**2. Integrated Gradients + LMI 的 shortcut 检测：模型侧归因和语料侧相关取交集，才能确认"既相关又被用到"。**
 
-	- 功能：识别模型是否依赖数据集层面与答案标签相关、但不一定有语义意义的 token。
-	- 核心思路：IG 从模型侧度量每个输入 token 对预测 logit 的影响；LMI 从语料侧度量 token 与标签的统计关联。若某 token 同时高 IG 和高 LMI，说明模型实际用到了一个 label-predictive 的相关 cue。作者将 $P_{SC}=\frac{\text{shortcut-cued predictions}}{\text{total predictions}}$ 作为 shortcut reliance 指标。
-	- 设计动机：单独看 attribution 不知道 token 是否是语义证据，单独看 LMI 不知道模型是否真的用了它；二者交集更适合分析“模型实际依赖了数据集捷径”。
+单看 attribution，你不知道一个高贡献 token 是语义证据还是格式噪声；单看词-标签相关，你又不知道模型究竟有没有用它。论文把两者交叉起来：Integrated Gradients 从模型侧度量每个输入 token 对预测选项 logit 的影响，Local Mutual Information 从语料侧度量 token 与标签的统计关联；当某个 token 同时落在高 IG 和高 LMI 区间，就说明模型确实调用了一个"和答案相关、却未必有语义意义"的捷径线索，记为 shortcut-cued prediction，shortcut reliance 指标即 $P_{SC}=\frac{\text{shortcut-cued predictions}}{\text{total predictions}}$。之所以取交集而非任一单独信号，是因为只有"既是数据集层面的相关 cue、又被模型实际归因到"两个条件同时成立，才下得了"模型走了捷径"这个结论。
 
-3. **多遗忘比例和多算法对照**:
+**3. 多遗忘比例 × 多算法对照：用系统性的横扫区分结构性现象和偶然波动。**
 
-	- 功能：观察 reliability paradox 是否只存在于某个算法或某个 forget ratio。
-	- 核心思路：实验覆盖 forget 1%、5%、10%，并比较 retained、GradAscent、GradDiff、NPO、DPO 等状态。所有 retained/unlearned 结果都重点看 retain split，因为遗忘后应保留这部分可靠性。
-	- 设计动机：如果只看一个遗忘设置，很难区分偶然波动和结构性现象。多设置对照能显示校准和 shortcut reliance 是否随遗忘强度系统变化。
+只测一个遗忘设置，校准和 shortcut 之间的关系到底是结构性的还是噪声，很难说清。论文因此在 forget 1%、5%、10% 三档比例下横向比较 retained、Gradient Ascent、Gradient Difference、NPO、DPO 等多种状态，且所有 retained/unlearned 结果都聚焦 retain split——因为遗忘后理应保住的正是这部分可靠性。这样铺开后，就能看清 ECE 和 $P_{SC}$ 是否随遗忘强度系统性地一升一降，而不是被某个单点结果带偏。
 
 ### 损失函数 / 训练策略
 Full fine-tuning 使用 AdamW，学习率 $1\times10^{-5}$，线性 scheduler，训练 5 个 epoch。Retained model 在 99%、95%、90% retain split 上分别以相同设置训练。Approximate unlearning 从 full-finetuned model 出发，使用 TOFU 推荐的 Gradient Ascent、Gradient Difference、NPO 和 DPO 超参数；为降低成本，作者用 4-bit quantized LoRA 更新。

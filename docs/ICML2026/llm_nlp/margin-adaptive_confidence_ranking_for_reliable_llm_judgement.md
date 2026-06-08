@@ -41,37 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定 judge 模型 $f_{LM}$ 和小规模有人类偏好标注的校准集 $S_{\mathrm{cal}}$：
-
-1. 对每条样本 $x$，用 $N=5$ 个 simulated annotator、各 $K=5$ 个示例，枚举所有 $1\sim K$-shot 子集 $\mathcal{T}$，得到 LLM 在每个子集下对候选 $r_1$ 的预测概率，拼成特征向量 $s \in \mathbb{R}^{|\mathcal{T}|}$。
-2. 从 $S_{\mathrm{cal}}$ 中按 $f_{LM}(x)$ 是否等于人类标签 $y$ 划分出 agreement / disagreement 集合，随机构造 5000 对 $(x_i, x_j)$ 满足 $a(x_i) > a(x_j)$，得到 ranking 训练对 $S_{\mathrm{pair}}$。
-3. 用一个 3 层 MLP（64→32→16，ReLU，最后接 sigmoid）$C_\theta: \mathbb{R}^{|\mathcal{T}|} \to [0,1]$ 拟合"agreement 样本应排在 disagreement 样本之上"的序关系。
-4. 训练完后，把 $C_\theta$ 嵌入到 Jung et al. (2025) 的 fixed-sequence testing 框架，按 $\widehat{\lambda} = \inf\{\lambda: \widehat{R}^+(\lambda') \le \alpha,\ \forall \lambda' \ge \lambda\}$ 选阈值，实现带高概率一致性保证的选择性评估。
+方法要解决的是"如何让置信度真正与人机一致率单调对齐"。给定 judge 模型 $f_{LM}$ 和一个有人类偏好标注的小校准集 $S_{\mathrm{cal}}$，整条 pipeline 是：先把每条样本在多组 in-context 示例下的预测概率拼成一个高维特征向量，再用一个小 MLP $C_\theta$ 把这个向量映射成 $[0,1]$ 的置信度，训练目标是用 margin ranking loss 强制"人机一致的样本排在不一致样本之上"；最后把训练好的 $C_\theta$ 直接嵌进 Jung et al. (2025) 的 fixed-sequence testing，照旧选阈值做带高概率保证的选择性评估。具体而言，对每条样本 $x$ 用 $N=5$ 个 simulated annotator、各 $K=5$ 个示例枚举所有 $1\sim K$-shot 子集 $\mathcal{T}$，得到特征 $s\in\mathbb{R}^{|\mathcal{T}|}$；从 $S_{\mathrm{cal}}$ 中按 $f_{LM}(x)$ 是否等于人类标签 $y$ 切出 agreement / disagreement 两组，随机抽 5000 对构造 ranking 训练对；MLP 训练完后按 $\widehat{\lambda} = \inf\{\lambda: \widehat{R}^+(\lambda') \le \alpha,\ \forall \lambda' \ge \lambda\}$ 选阈值。
 
 ### 关键设计
 
-1. **多视角 in-context 特征 + 排序型置信度**：
+**1. 多视角 in-context 特征 + 排序型置信度：把"分类正确"和"排序一致"分开。**
 
-    - 功能：把 simulated annotators 的人为聚合（取 max 平均）改为保留所有 $|\mathcal{T}|$ 维原始概率，由 MLP 自主学习如何聚合。
-    - 核心思路：对样本 $(x,y)$ 定义 agreement 指示 $a(x) = \mathbb{1}\{f_{LM}(x) = y\}$，并在所有满足 $a(x_i) > a(x_j)$ 的有序对上定义 margin ranking loss $\ell_\gamma(\theta; x_i, x_j) = \mathbb{1}(C_\theta(s_i) < C_\theta(s_j) + \gamma)$。训练时用 softmax 替代 $\log(1+e^{-(C_\theta(s_i)-C_\theta(s_j)-\gamma)/0.1})$ 作为可导代理。
-    - 设计动机：单调性是一个**关于序关系**的性质，因此训练目标必须直接惩罚"agreement 样本排得比 disagreement 样本低"的错误，而不是间接通过分类正确率。
+痛点在于以前的置信度要么直接取 softmax 概率，要么把 simulated annotators 人为聚合成一个 max-mean 标量，再当成可信信号——这等于把"阈值附近判别正确"和"全局序关系与人机一致率单调对齐"两个不同的目标混为一谈。本文不再聚合：保留所有 $|\mathcal{T}|$ 维原始概率，交给 MLP 自主学怎么聚合。对样本 $(x,y)$ 定义 agreement 指示 $a(x) = \mathbb{1}\{f_{LM}(x) = y\}$，然后只在满足 $a(x_i) > a(x_j)$ 的有序对上定义 margin ranking loss $\ell_\gamma(\theta; x_i, x_j) = \mathbb{1}(C_\theta(s_i) < C_\theta(s_j) + \gamma)$，训练时用 softplus 代理 $\log(1+e^{-(C_\theta(s_i)-C_\theta(s_j)-\gamma)/0.1})$ 让它可导。因为单调性本质是个**序关系**性质，所以损失必须直接惩罚"agreement 样本排得比 disagreement 样本低"，而不是绕道分类正确率——这正是它比启发式置信度更可靠的根源。
 
-2. **PAC-Bayes margin-based 泛化界**：
+**2. PAC-Bayes margin-based 泛化界：把"凭什么可信"变成可定量的保证。**
 
-    - 功能：把置信度的"误排序概率"显式刻画为经验 margin 损失加上 margin 依赖的复杂度项。
-    - 核心思路：先用 PAC-Bayes 框架（McAllester, 1999; Neyshabur et al., 2017）得到随机化估计器 $C_{\theta+\mathbf{u}}$ 的期望 ranking risk 上界，再通过 sharpness 约束 $\mathbb{P}_{\mathbf{u}}(\max_s |C_{\theta+\mathbf{u}}(s) - C_\theta(s)| < \gamma/4) \ge 1/2$ 把界转换到确定性估计器，最终得到 $\mathcal{RK}(\theta) \le \widehat{\mathcal{RK}}_\gamma(\theta) + \mathcal{O}(\sqrt{(\Phi(C_\theta) + \ln(3m_p/\delta'))/(\gamma^2 (m_p - 1))})$，其中 $\Phi(C_\theta) = n^2 h \ln(nh) \prod_l \|W_l\|_2^2 \sum_l \|W_l\|_F^2/\|W_l\|_2^2$。
-    - 设计动机：把"为什么这个置信度可信"从启发式说明升级为可定量的泛化保证；同时复杂度项里 $1/\gamma^2$ 的依赖直接指出 margin $\gamma$ 是控制 generalization 的关键钮。
+已有理论只对校准集条件下的风险给保证，对置信度估计器本身的 out-of-sample 泛化只字未提。本文用 PAC-Bayes 框架（McAllester, 1999；Neyshabur et al., 2017）补上这一块：先得到随机化估计器 $C_{\theta+\mathbf{u}}$ 的期望 ranking risk 上界，再通过 sharpness 约束 $\mathbb{P}_{\mathbf{u}}(\max_s |C_{\theta+\mathbf{u}}(s) - C_\theta(s)| < \gamma/4) \ge 1/2$ 把界转回确定性估计器，最终得到
 
-3. **Margin-adaptive 联合优化**：
+$$\mathcal{RK}(\theta) \le \widehat{\mathcal{RK}}_\gamma(\theta) + \mathcal{O}\!\left(\sqrt{\frac{\Phi(C_\theta) + \ln(3m_p/\delta')}{\gamma^2 (m_p - 1)}}\right),\quad \Phi(C_\theta) = n^2 h \ln(nh) \prod_l \|W_l\|_2^2 \sum_l \frac{\|W_l\|_F^2}{\|W_l\|_2^2}.$$
 
-    - 功能：把固定 margin 改为按数据噪声水平自动校准，缓解"clean 数据要大 margin、noisy 数据要小 margin"之间的冲突。
-    - 核心思路：把界中的复杂度项简化为 $\mathcal{C}_\gamma(\theta) = \sqrt{\sum_l \|W_l\|_F^2}/\gamma$（用 Frobenius 替代谱范数得到可导代理），优化 $\min_{\theta,\gamma}\widehat{\mathcal{RK}^s_\gamma}(\theta) + \beta\,\mathcal{C}_\gamma(\theta)$。由于 $\gamma$ 联合优化会因 ranking loss 对 $\gamma$ 非光滑而不稳，作者采用解耦的交替更新：固定 $\gamma$ 用 SGD 更新 $\theta$，固定 $\theta$ 取使目标最小的 $\gamma$。
-    - 设计动机：理论分析表明不存在通用最优 margin——干净数据可以追求更大分离度，嘈杂数据则需妥协；让 $\gamma$ 自适应数据特性，是把 PAC-Bayes 界从"分析工具"变成"训练目标"的关键。
+它把"误排序概率"显式拆成经验 margin 损失加一个 margin 依赖的复杂度项。关键是复杂度项里 $1/\gamma^2$ 的依赖——它直接点明 margin $\gamma$ 才是控制泛化的那个旋钮，从而为下一个设计提供了理论入口：不再把"为什么可信"留作启发式说辞，而是落成一条可优化的不等式。
+
+**3. Margin-adaptive 联合优化：让 $\gamma$ 跟着数据噪声自动校准。**
+
+上面的界还隐含一个张力：$\gamma$ 越大复杂度越小，但经验 margin 损失越难压低；干净数据可以追求更大分离度，嘈杂数据则必须妥协，**不存在通用最优 margin**。固定 margin 因此两头不讨好。本文把界中的复杂度项简化成可导代理 $\mathcal{C}_\gamma(\theta) = \sqrt{\sum_l \|W_l\|_F^2}/\gamma$（用 Frobenius 范数替谱范数），把 $\gamma$ 提升为可学习量，联合优化 $\min_{\theta,\gamma}\widehat{\mathcal{RK}^s_\gamma}(\theta) + \beta\,\mathcal{C}_\gamma(\theta)$。由于 ranking loss 对 $\gamma$ 非光滑、直接联合更新不稳，作者用解耦的交替更新：固定 $\gamma$ 用 SGD 更新 $\theta$，固定 $\theta$ 取使目标最小的 $\gamma$。这一步是整篇的点睛——它把 PAC-Bayes 界从一个"事后分析工具"真正变成了"训练目标"，让 margin 不再是经验玄学超参。
 
 ### 损失函数 / 训练策略
-- 经验目标：$\min_{\theta} \min_{\gamma}\, \widehat{\mathcal{RK}^s_\gamma}(\theta) + \beta\,\mathcal{C}_\gamma(\theta)$，$\beta = 10^{-4}$。
-- 超参：3 层 MLP（64-32-16），30 epoch，学习率 $10^{-3}$，weight decay $10^{-4}$；每个数据集生成约 3000 训练样本、随机抽 5000 对。
-- 推理：得到 $C_\theta$ 后，把它代替 $C_{LM}$ 喂入 Jung 等人的 fixed-sequence testing，按二项分布精确 $(1-\delta)$ 上界 $\widehat{R}^+(\lambda)$ 找最小可接受阈值。
+经验目标为 $\min_{\theta} \min_{\gamma}\, \widehat{\mathcal{RK}^s_\gamma}(\theta) + \beta\,\mathcal{C}_\gamma(\theta)$，权衡系数 $\beta = 10^{-4}$。网络是 3 层 MLP（64→32→16，ReLU，末层 sigmoid），训 30 epoch，学习率 $10^{-3}$、weight decay $10^{-4}$；每个数据集生成约 3000 个训练样本、随机抽 5000 对构造 ranking 训练对。推理时把训练好的 $C_\theta$ 代替原始 $C_{LM}$ 喂入 Jung 等人的 fixed-sequence testing，按二项分布精确 $(1-\delta)$ 上界 $\widehat{R}^+(\lambda)$ 找最小可接受阈值。
 
 ## 实验关键数据
 

@@ -40,31 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定自然语言查询 $q$ 和候选表集合 $C$，ATR 使用 ModernBERT-large 作为 encoder，把查询、阈值 token 和多张表的 schema 表示拼接成一个输入序列。每张表前有一个 table token $T_i$，阈值边界由 threshold token $T_{th}$ 表示。模型输出每个 table token 和 threshold token 的 logit；推理时只保留 logit 高于 threshold logit 的表，因此返回表数 $k_q$ 会随查询变化。
-
-实际部署时，ATR 先用 bi-encoder（Contriever 或 UAE）取 top 50 候选表，再对这些候选做 reranking。由于 encoder 长度和 self-attention 成本限制，论文设计 sliding-window reranking：从初始排名较低的一端开始，每次处理一个窗口，保留窗口内分数最高的若干表并与下一批候选合并，直到完成整组候选重排。
+ATR 要解决的核心问题是"一个查询到底该取几张表"——固定 top-k 在简单查询上过检索、在复杂查询上欠检索。它把这个数量决策交给模型本身：给定自然语言查询 $q$ 和候选表集合 $C$，用 ModernBERT-large 作 encoder，把查询、一个阈值 token 和多张表的 schema 表示拼成输入序列 $[T_{th}; q; T_1; t_1; ...; T_n; t_n]$，其中每张表前有 table token $T_i$，阈值边界由 threshold token $T_{th}$ 承载。模型为每个 table token 和 threshold token 输出 logit，推理时只保留 logit 高于阈值 logit 的表，于是返回表数 $k_q$ 随查询自动变化。为支撑大表库，实际部署先用 bi-encoder（Contriever 或 UAE）取 top-50 候选，再对其做 reranking；为绕开 encoder 长度和 self-attention 的二次成本，reranking 用滑动窗口的方式分段完成，最终所有排在阈值之上的表构成检索结果。
 
 ### 关键设计
-1. **Adaptive Thresholding**:
+**1. Adaptive Thresholding：把"取几张表"从手调超参变成模型学到的决策边界。**
 
-    - 功能：让检索器为每个查询学习一个动态决策边界，而不是固定返回 top-k 张表。
-    - 核心思路：输入形如 $[T_{th}; q; T_1; t_1; ...; T_n; t_n]$。训练时，相关表 token 的 logit 要高于 $T_{th}$，无关表 token 的 logit 要低于 $T_{th}$。损失由两部分组成：$L_1$ 推高相关表相对阈值的概率，$L_2$ 把无关表压到阈值以下，整体 $L_{AT}=\alpha L_1+\beta L_2$。
-    - 设计动机：固定 k 只能在 recall 和 noise 之间全局折中；threshold token 让模型根据 query 难度和 schema 相关性自动决定边界。
+固定 k 只能在 recall 和 noise 之间做一次全局折中，无法照顾不同查询的差异。ATR 在输入里插入一个阈值 token $T_{th}$ 作为可学习的分界线：训练时让相关表 token 的 logit 高于 $T_{th}$、无关表 token 的 logit 低于 $T_{th}$。损失由两项构成，$L_1$ 推高相关表相对阈值的概率、$L_2$ 把无关表压到阈值以下，合为 $L_{AT}=\alpha L_1+\beta L_2$。这样模型就能依据查询难度和 schema 相关性自动决定边界，在 Spider 2.0 这类 ground-truth 表数从 1 到 366 不等的场景下，既不漏表也不灌入噪声。
 
-2. **Relevance Calibration 与 Semantic Grouping**:
+**2. Relevance Calibration 与 Semantic Grouping：同时学相关性和表间结构，取回连贯的表集合。**
 
-    - 功能：同时学习 query-table 相关性和 table-table 关系，避免只按单表相似度排序。
-    - 核心思路：Relevance calibration 使用 BCE 拉开相关表和无关表的 logit gap；semantic grouping 使用 contrastive loss，把可 join 的表嵌入拉近，把不可 join 的表推远。最终训练目标为 $L_{ATR}=L_{AT}+\lambda L_{RC}+\gamma L_{SG}$。
-    - 设计动机：Text-to-SQL 经常需要一组可连接的表，而不是独立相关的单表。joinability 信号能帮助模型取回结构上连贯的表集合。
+Text-to-SQL 往往需要一组可以互相 join 的表，而不是若干彼此独立、各自相关的单表，单看 query-table 相似度会取回结构上不连贯的结果。ATR 加了两个辅助目标：relevance calibration 用 BCE 拉开相关表与无关表的 logit gap，让阈值判别更干净；semantic grouping 用 contrastive loss 把可 join 的表嵌入拉近、不可 join 的推远，把 joinability 信号注入表征。三者合成总目标 $L_{ATR}=L_{AT}+\lambda L_{RC}+\gamma L_{SG}$。消融显示同时去掉这两项时 recall 掉得最多，印证了它们对结构连贯检索的贡献。
 
-3. **Sliding-window reranking**:
+**3. Sliding-window Reranking：分段重排，让大表库检索不爆显存。**
 
-    - 功能：在不一次性编码所有候选表的情况下完成大表库重排，降低长度、延迟和显存压力。
-    - 核心思路：给定窗口大小 $W$ 和保留数 $R$，ATR 每次只编码窗口内表与阈值，保留 top-$R$ 表并与下一段候选合并。如果 threshold 的排名落到保留边界以下，则它之前的表被最终确定。最后，所有 outrank threshold 的表进入检索结果。
-    - 设计动机：企业级数据库 schema 很长，直接全量 rerank 会触发 encoder 长度和二次复杂度瓶颈；滑动窗口把一次大 rerank 拆成多次可控的小 rerank。
+企业级 schema 动辄上百张表，一次性编码全部候选会同时触发 encoder 长度上限和 self-attention 的二次复杂度。ATR 给定窗口大小 $W$ 和保留数 $R$，每次只编码窗口内的表与阈值 token，保留 top-$R$ 后与下一段候选合并继续；一旦 threshold 的排名落到保留边界以下，排在它之前的表即被最终确定。如此把一次大 rerank 拆成多次可控的小 rerank，在 Spider 2.0 上把平均峰值显存从 340.57 MB 降到 66.52 MB（−80.5%），同时不牺牲检索质量。
 
 ### 损失函数 / 训练策略
-ATR 使用 Spider、BIRD 的训练集训练，不使用 Spider 2.0 训练数据，因此 Spider 2.0 是重要的 out-of-domain 测试。检索任务报告 precision、recall、complete recall 和 F1；下游 text-to-SQL 把检索到的表交给 Llama-3.1-8B/70B-Instruct、Qwen2.5-Coder-7B/32B-Instruct、Gemma-3-4B/27B-IT 等生成 SQL，并用 execution accuracy 评价。ATR 与 Contriever、UAE、JAR、RankZephyr、Murre 等 fixed top-k 或 LLM reranker 比较。
+ATR 只用 Spider、BIRD 的训练集训练，不碰 Spider 2.0 训练数据，因此 Spider 2.0 是重要的 out-of-domain 测试。检索侧报告 precision、recall、complete recall 和 F1；下游 text-to-SQL 把检索到的表交给 Llama-3.1-8B/70B-Instruct、Qwen2.5-Coder-7B/32B-Instruct、Gemma-3-4B/27B-IT 等生成 SQL，用 execution accuracy 评价。对照基线包括 Contriever、UAE、JAR、RankZephyr、Murre 等 fixed top-k 或 LLM reranker。
 
 ## 实验关键数据
 

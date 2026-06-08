@@ -38,36 +38,26 @@ tags:
 **核心 idea**：与其笼统比较“法律模型 vs 通用模型”，不如在合同任务上把模型类型、语料领域匹配和长尾标签表现拆开评测。
 
 ## 方法详解
-本文是 benchmark/evaluation paper，不提出新模型。方法贡献在于任务选择、模型覆盖、统一 fine-tuning 和误差分析。
 
 ### 整体框架
-输入是三类合同分类任务：UNFAIR-ToS 用于识别服务条款中的不公平条款，是 9 类多标签任务；LEDGAR 用于 SEC Exhibit 10 合同条款主题分类，是 100 类多类任务；LEXDEMOD 用于租赁合同中的主体特定 deontic modality 检测，是 7 类多标签任务。
-
-模型分为两组。通用模型包括 BERT、RoBERTa、DeBERTa、Longformer、BigBird、DistilBERT、RoBERTa-large，以及 Llama-3.2、Mistral 等 decoder 模型。法律专用模型包括 Legal-BERT、Contracts-BERT、Legal-RoBERTa、CaseLawBERT、PoL-BERT、InLegalBERT、InCaseLawBERT、CustomInLawBERT、LexLM、Legal-XLM-R、LexT5、AdaptLLM 和 SaulLM。
-
-评估流程是在每个任务上进行 task-specific fine-tuning，使用 micro-F1 和 macro-F1 衡量性能。micro-F1 反映整体分类准确性，macro-F1 对 rare class 更敏感，因此更能体现法律合同长尾类别上的鲁棒性。
+本文是一篇 benchmark / evaluation 论文，不提出新模型，贡献在于一套受控的对照评测协议。输入是三类公开英文合同分类任务：UNFAIR-ToS 识别服务条款中的不公平条款（9 类多标签）、LEDGAR 做 SEC Exhibit 10 合同条款主题分类（100 类多类）、LEXDEMOD 检测租赁合同里主体特定的义务/权利/禁止（7 类多标签）。把 13 个法律专用 Transformer（Legal-BERT、Contracts-BERT、InLegalBERT、LexLM、SaulLM 等）与 9 个通用模型（BERT/RoBERTa/DeBERTa/Longformer/BigBird，以及 Llama-3.2、Mistral 等 decoder）放进同一管线，在每个任务上做 task-specific fine-tuning，统一用 micro-F1 和 macro-F1 输出结论，最终回答「领域预训练在合同分类上是否真的值得」。
 
 ### 关键设计
-1. **多任务合同基准覆盖**:
 
-    - 功能：避免只在单一合同任务上得出过窄结论。
-    - 核心思路：UNFAIR-ToS、LEDGAR 和 LEXDEMOD 分别覆盖服务条款、SEC 合同条款和租赁合同义务/权利检测，任务大小从 1.6k 测试样本到 10k 测试样本，标签数从 7 到 100。
-    - 设计动机：法律模型是否有效取决于任务语义和数据分布。多任务设置能观察模型在 rare class、多标签和长文本条款中的稳定性。
+**1. 多任务合同基准覆盖：用任务分布的多样性堵住「单任务过拟合结论」。**
 
-2. **legal-specific 与 generalist 的同场比较**:
+只在一个合同任务上比模型很容易得出偏狭的结论，因此作者刻意选了三个语义粒度与规模都不同的任务：UNFAIR-ToS、LEDGAR、LEXDEMOD 分别覆盖服务条款、SEC 合同条款主题、租赁合同的 deontic modality，测试集规模从约 1.6k 跨到 10k，标签数从 7 跨到 100，且同时含多标签与多类两种形态。法律模型是否有效本就取决于任务语义和数据分布是否与其预训练语料对齐，这种跨规模、跨标签数、跨长度的设置才能暴露模型在 rare class、多标签耦合和长条款文本上的稳定性差异。
 
-    - 功能：直接回答领域模型是否值得使用。
-    - 核心思路：把 13 个法律模型和 9 个通用模型放到同一任务和同一指标下比较，并加入 encoder、decoder、encoder-decoder 不同架构。
-    - 设计动机：以往工作常只评通用模型或只评少数法律模型，无法判断 domain pretraining、模型大小和架构类别的相对贡献。
+**2. legal-specific 与 generalist 同场对照：把领域、规模、架构三个变量拆开看。**
 
-3. **长尾错误分析**:
+以往工作常只评通用模型、或只挑少数法律模型，无法分辨究竟是 domain pretraining、模型容量还是架构类别在起作用。本文把 13 个法律模型和 9 个通用模型放到完全相同的任务、相同的 fine-tuning 协议和相同的 F1 指标下并排比较，并刻意混入 encoder、decoder、encoder-decoder 三类架构。这样一来，同一张表里既能看出「110M 的 Contracts-BERT vs 355M 的 RoBERTa-large」这种领域与规模的权衡，也能看出 decoder 式生成模型在判别式分类上是否吃亏，使得相对贡献可被逐一归因。
 
-    - 功能：解释法律模型优势来自哪里，而不是只报告平均分。
-    - 核心思路：作者分析 RoBERTa-large 的误分类，并观察 Contracts-BERT 等法律模型是否能纠正 UNFAIR-ToS 的 Limitation of Liability、Unilateral Termination 等 rare categories。
-    - 设计动机：合同任务的难点常在罕见但法律后果很重要的条款类型。macro-F1 和例级错误分析比 micro-F1 更能揭示部署风险。
+**3. 长尾错误分析：解释优势来自哪里而不止报告平均分。**
+
+合同任务真正的难点往往落在罕见却法律后果严重的条款类型，单看 micro-F1 会被高频类别掩盖。为此作者不停在平均分，而是进一步剖析 RoBERTa-large 的误分类样本，逐例观察 Contracts-BERT 等法律模型能否纠正 UNFAIR-ToS 中 Limitation of Liability、Unilateral Termination 这类 rare category 的错误。配合对 rare class 更敏感的 macro-F1，这种例级分析能揭示纯分数比较看不到的部署风险——即模型在高风险但低频条款上的真实可靠性。
 
 ### 损失函数 / 训练策略
-缓存中没有给出特殊新损失函数，实验采用任务特定 fine-tuning 和标准分类评估。对于多标签任务，重点报告 micro-F1 与 macro-F1；对于多类 LEDGAR，也以相同 F1 指标比较。方法选择上，作者强调合同文本可能超过 512 subword token，长文本截断或长上下文处理会影响结果，但本文主要关注模型家族和领域预训练的对比。
+全程不引入新损失，采用标准的 task-specific fine-tuning 与分类评估：多标签任务（UNFAIR-ToS、LEXDEMOD）与多类任务（LEDGAR）都统一报告 micro-F1 与 macro-F1，前者衡量整体准确率、后者对 rare class 更敏感因而更能反映长尾鲁棒性。需要注意的工程细节是，合同文本常超过 512 subword token，截断或长上下文处理会影响不同模型表现，但本文的评测焦点是模型家族与领域预训练的对比，而非长文本建模本身。
 
 ## 实验关键数据
 

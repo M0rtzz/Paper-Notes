@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个独立但配套的贡献。**数据侧**：4 大隐私域（Human Presence / On-Screen PII / Physical Identifiers / Location Indicators），33 个细粒度类别，10 万张图像、19 万+ 框，半自动标注 pipeline（先用 OCR + 通用检测器预标，再人工精修）。**模型侧**：在 YOLOv10 的 Neck 模块中部嵌入"空-频双流"分支，由 FDAF（Frequency-Domain Attention Fusion）+ Adaptive Spectral Gating（LSG）+ Frequency-Consistency Loss 三件套组成，整体仍是端到端 YOLO 训练，只是额外加一个频域分支与一项辅助 loss。
+论文有两个独立但配套的贡献，合起来回答"隐私检测缺数据、缺对小屏字/模糊脸的细粒度感知"这个问题。数据侧用一套 4 域 taxonomy 把多源样本聚成 10 万张图、33 类、19 万+ 框的 VPD-100K，其中最关键的屏上 PII 用"伦理重建"采集。模型侧不动 YOLOv10 主干，只在 Neck 中部插一条频域分支（FDAF + 自适应频谱门控 + 频域一致性损失），让网络在空域之外多一条"看高频细节"的通路，整体仍是端到端 YOLO 训练。
 
 ### 关键设计
 
-1. **数据集构造：伦理重建 + 4 域 taxonomy**:
+**1. 数据集构造：用伦理重建 + 4 域 taxonomy 补齐"规模小 / 类目粗 / 缺屏上 PII"三大空白**
 
-    - 功能：填补现有隐私数据集"规模小+类目粗+忽略屏上 PII"三大空白，且严格合规可公开。
-    - 核心思路：4 域分别用不同策略：人脸用 WIDER FACE 子集 + 视频快照 + 细粒度属性标注（如"室内儿童脸"）；屏上 PII 由研究团队**用内部账号模拟**真实数字交互（登银行、接验证码、聊天）后截屏，避免侵犯任何真人；物理标识符用 MIDV-500（证件）+ 定向爬取（火车票、快递单）；位置指示符则抓室外街景拍摄并标注门店招牌等。最终 100K 张图，1080p 以上占一半，190K+ 框，伦理审查通过。Table 1/2 显示规模是次大数据集 PrivacyAlert 的 ~15×，类别数是 DIPA2 的 ~1.5×，CV（类别分布变异系数）1.47 比 DIPA2 的 2.50 更平衡。
-    - 设计动机：直接抓真用户数据违法、用合成数据又不真实；"内部账号模拟"是个聪明的折中——既得到真实软件界面的像素级表现，又不沾真人 PII。同时通过显式划分 4 大域，强制 taxonomy 覆盖到屏上 PII 这种被忽略但杀伤力最大的类别。
+现有隐私数据集要么几千张样本、要么只标"person"这种粗 tag、要么干脆忽略邮箱密码验证码这类屏上 PII，而屏上 PII 恰恰是最难合法采集的——你不可能去抓真用户的银行卡和验证码。本文对四个域各用一套合规策略凑齐分布：人脸取 WIDER FACE 子集 + 视频快照，并补"室内儿童脸"这类细粒度属性；屏上 PII 由研究团队**用内部账号模拟**真实数字交互（登模拟银行、接验证码、聊天）再截屏，既拿到真实软件界面的像素级表现，又完全不沾真人 PII；物理标识符用 MIDV-500 证件库 + 定向爬取火车票快递单；位置指示符抓室外街景标注门店招牌。最终 100K 张图、一半在 1080p 以上、190K+ 框且通过伦理审查。Table 1/2 量化了优势：规模约为次大数据集 PrivacyAlert 的 15×、类别数约为 DIPA2 的 1.5×，类别分布变异系数（CV，标准差/均值，越小越均衡）1.47 远好于 DIPA2 的 2.50。"内部账号模拟"是这套数据真正破壁的地方——它在"合法"和"真实"这对天然冲突里找到折中，并借显式四分法强制覆盖到杀伤力最大却被普遍忽略的屏上 PII。
 
-2. **Frequency-Domain Attention Fusion (FDAF)**:
+**2. FDAF：在 Neck 上加一条频域分支，把空域里被平均化的高频细节捞回来**
 
-    - 功能：在 YOLOv10 Neck 的高语义特征图上引入频域分支，捕捉空间难以表达的纹理信号（文字笔画、人脸边缘等）。
-    - 核心思路：对输入特征 $X \in \mathbb{R}^{C \times H \times W}$ 每通道独立做 2D DFT 得 $F_c(u,v) = \sum_{h,w} X_c(h,w) e^{-j2\pi(uh/H + vw/W)}$，得到幅度+相位双谱。经过 Adaptive Spectral Gating 调制后 IDFT 回到空域 $Y_{spa} = \mathcal{R}(\text{IDFT}(\tilde{F}))$。最后通过残差连接 + $1\times 1$ conv 与原始空域特征拼接融合：$I_{out} = \text{Conv}_{1\times 1}(\text{Concat}(I, Y_{spa})) + I$。
-    - 设计动机：屏上小字（验证码占图 <10%）、远景证件这种"camouflaged"目标在空域被纹理平均化，但在频谱上文字的横竖笔画对应明显的水平/垂直高频分量。FDAF 让网络多一个能直接"看到"高频细节的特征通路。Table 5 ablation 显示，仅加 FDAF 就 AP +2.2（46.3 → 48.5）。
+验证码占图不到 10%、远景证件这类目标空间特征很弱，在空域卷积里会被周围纹理平均掉，但文字的横竖笔画在频谱上对应明显的水平/垂直高频分量。FDAF（Frequency-Domain Attention Fusion）就让网络多一条能直接"看到"这些高频信号的通路：对 Neck 输出特征 $X \in \mathbb{R}^{C \times H \times W}$ 每通道独立做 2D DFT $F_c(u,v) = \sum_{h,w} X_c(h,w) e^{-j2\pi(uh/H + vw/W)}$ 得到幅度+相位双谱，经下面的频谱门控调制后再 IDFT 回空域 $Y_{spa} = \mathcal{R}(\text{IDFT}(\tilde{F}))$，最后残差拼接回原特征 $I_{out} = \text{Conv}_{1\times 1}(\text{Concat}(I, Y_{spa})) + I$。残差设计保证频域分支只做增量补充而不破坏原有空域表征。Table 5 显示单加 FDAF 就把 AP 从 46.3 抬到 48.5（+2.2）。
 
-3. **自适应频谱门控 (LSG) + 频域一致性损失**:
+**3. 自适应频谱门控（LSG）+ 频域一致性损失：让网络学会选频带、并按频域对齐边界**
 
-    - 功能：LSG 让网络自动决定保留/抑制哪些频带，避免一刀切的"放大所有高频"；频域 loss 让预测框内部的频域特征贴近 GT 框内部的频域特征，强化细粒度边界。
-    - 核心思路：LSG 定义可学权重张量 $W_{gate} \in \mathbb{R}^{C \times H \times W}$，经 Sigmoid 后与频谱做 Hadamard 积 $\tilde{F}_c(u,v) = F_c(u,v) \odot \sigma(W_{gate}(u,v))$，相当于通道-频带 joint 软掩码。频域一致性损失 $\mathcal{L}_{freq} = \frac{1}{N}\sum_i \|W \odot (\mathcal{F}(P_i) - \mathcal{F}(T_i))\|_2^2$，其中 $W(r) = 1 + \lambda r$ 是与频率半径 $r$ 正相关的权重，**越高频越重要**，迫使模型优先匹配边界细节。总 loss $\mathcal{L}_{total} = \mathcal{L}_{yolo} + 0.05 \cdot \mathcal{L}_{freq}$。
-    - 设计动机：盲目放大所有高频会引入噪声；LSG 让网络学到"对文字目标多激活水平/垂直频带、对人脸多激活径向频带"。频域 loss 是 boundary-aware regularizer，AP75（高 IoU 指标）从 53.9 涨到 54.6 就是这一项的功劳。$\beta=0.05$ 小到不会盖过主 loss，但足以收紧边界。
+直接放大所有高频会把噪声一起放大，所以需要一个可学的"软带通滤波器"决定保留/抑制哪些频带。LSG（Adaptive Spectral Gating）定义可学权重张量 $W_{gate} \in \mathbb{R}^{C \times H \times W}$，经 Sigmoid 后与频谱逐元素相乘 $\tilde{F}_c(u,v) = F_c(u,v) \odot \sigma(W_{gate}(u,v))$，相当于通道-频带联合软掩码，让网络自动学到"文字目标多激活水平/垂直频带、人脸多激活径向频带"。配套的频域一致性损失把这种频域感知接到监督信号上：$\mathcal{L}_{freq} = \frac{1}{N}\sum_i \|W \odot (\mathcal{F}(P_i) - \mathcal{F}(T_i))\|_2^2$，让预测框 $P_i$ 内部的频谱贴近 GT 框 $T_i$ 内部的频谱，其中权重 $W(r) = 1 + \lambda r$ 随频率半径 $r$ 增大，**越高频惩罚越重**，逼模型优先匹配边界细节。它作为 boundary-aware 正则项汇入总 loss $\mathcal{L}_{total} = \mathcal{L}_{yolo} + 0.05 \cdot \mathcal{L}_{freq}$，权重 0.05 小到不会盖过主 loss 却足以收紧边界——消融里 AP75（高 IoU 指标，最吃边界精度）从 53.9 涨到 54.6 正是这一项的功劳。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_{total} = \mathcal{L}_{box} + \mathcal{L}_{cls} + \mathcal{L}_{dfl} + 0.05 \cdot \mathcal{L}_{freq}$。基座为 YOLOv10-S/L，在 VPD-100K 训练集上全量微调，14 个 baseline 都用同一套数据微调以保公平。频域权重 $w(r) = 1 + \lambda \cdot r$ 中 $\lambda$ 默认设到使高频权重显著大于低频。
+总损失为 $\mathcal{L}_{total} = \mathcal{L}_{box} + \mathcal{L}_{cls} + \mathcal{L}_{dfl} + 0.05 \cdot \mathcal{L}_{freq}$，前三项是 YOLOv10 原生回归/分类/DFL 损失，第四项是频域一致性正则；频率权重 $w(r) = 1 + \lambda r$ 的 $\lambda$ 默认设到让高频权重显著大于低频。基座取 YOLOv10-S/L，在 VPD-100K 训练集上全量微调，14 个 baseline 都用同一套数据微调以保公平。
 
 ## 实验关键数据
 

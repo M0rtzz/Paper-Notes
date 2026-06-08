@@ -42,31 +42,23 @@ tags:
 
 ### 整体框架
 
-整套工作分为两条主干：**评估侧**与**训练侧**。
+这篇论文不提新模型，而是搭了一套"扰动—准确率—不确定度—忠实性"四联体检台，分**评估侧**和**训练侧**两条主干，回答"RL 微调到底让 VLM 学到了什么"。评估侧在 8 个视觉推理基准上给每个样本程序化生成多种文本扰动变体，让 5 个开源 RL 微调 VLM 与 4 个闭源模型生成完整的 `<think>…</think><answer>…</answer>`，再用 LLM judge 把每条生成钉到"答案对错 × 推理是否一致"的四象限里，同时在答案首 token 上读两条不确定度量；训练侧则把评估侧观察到的脆弱搬回 GRPO 训练，逐 checkpoint 跟踪准确率、entropy 与忠实性曲线随 step 怎么漂移，从而把"评估现象"坐实成"训练动力学"。
 
-**评估侧 pipeline**：选 8 个视觉推理基准（3DSRBench, CV-Bench, Spatial-MM Obj/Multihop, WhatsUp, V*-Bench, MME-RealWorld-Lite, MMBench），对每个样本程序化生成 5 类 prompt 变体（Base / Stop-Think / Wrong-Think / Wrong-Think + "But" / Wrong-Caption / Wrong-Caption + Disclaimer），让 5 个开源 RL 微调 VLM 与 4 个闭源模型（o3、o4-mini、Gemini-2.5-Pro、Gemini-3.1-Pro）生成完整的 `<think>…</think><answer>…</answer>`；之后用 Qwen3-32B（并以 GPT-OSS-120B、Llama-3.1-70B 交叉验证，Fleiss' κ ≈ 0.85）作为 judge 判定每条生成属于 {consistent-correct, inconsistent-correct, consistent-incorrect, inconsistent-incorrect} 四象限之一。同时在首个答案 letter token 上计算两条不确定度量：Shannon letter entropy $H$ 与 $P(\text{Correct Letter})$。
-
-**训练侧 pipeline**：以 Qwen2.5-VL-7B-Instruct 为起点，用 verl 实现的 GRPO，按"格式 reward 0.1 + 正确答案 reward 1.0"作可验证奖励。训练数据为 SAT2 (32K) + Pixmo-Count (15K)，并消融 Geometry3K (2.1K) 与"caption/think 数据增强"两个开关；增强时以 10% 概率分别注入 {对/错 caption, 对/错 think}（合计 40%）。每 ~250 step 取一个 checkpoint，重跑评估侧 pipeline 跟踪准确率、entropy、忠实性曲线随 step 的演化。
+具体地，评估侧覆盖 3DSRBench、CV-Bench、Spatial-MM Obj/Multihop、WhatsUp、V\*-Bench、MME-RealWorld-Lite、MMBench，每个样本生成 Base / Stop-Think / Wrong-Think / Wrong-Think+"But" / Wrong-Caption / Wrong-Caption+Disclaimer 六类 prompt；judge 用 Qwen3-32B 并以 GPT-OSS-120B、Llama-3.1-70B 交叉验证（Fleiss' κ ≈ 0.85）。训练侧以 Qwen2.5-VL-7B-Instruct 为起点，用 verl 实现的 GRPO，数据为 SAT2 (32K) + Pixmo-Count (15K)，并以 Geometry3K (2.1K) 与"caption/think 数据增强"两个开关做消融，每 ~250 step 取一个 checkpoint 回跑整套评估。
 
 ### 关键设计
 
-1. **受控文本扰动套件（Stop / Wrong-Think / Wrong-Caption + 修复变体）**:
+**1. 受控文本扰动套件：用最小代价的纯文本编辑逼出 VLM 的视觉接地弱点。**
 
-    - 功能：用最小代价的纯文本编辑暴露 VLM 的视觉接地弱点与 CoT 操纵性。
-    - 核心思路：Stop-Think 在 prompt 后强行追加 `<think>Okay let's see. This should be the final answer.</think>` 屏蔽中间推理；Wrong-Think 把 `<think>` 区段预填一段断言错误选项的伪推理，让模型从该 token 续写；Wrong-Caption 在 question 前置一句强烈暗示错误选项的描述（如"the right side of the dog is facing the camera"）。每类扰动配一个"修复变体"——Wrong-Think 后缀加 "but I think"，Wrong-Caption 后缀加 "but I could be wrong"——以测量模型对"纠正信号"的响应；同时在附录中对偶地构造"正确 caption / 正确 think"以确认效应是"文本依赖"而非"扰动本身"。
-    - 设计动机：人类只要看图就能屏蔽这类误导，因此性能下降可直接归因于"被文本牵着走"；而 disclaimer 变体把"模型知不知道该忽略"与"模型能不能忽略"分开，定位出问题是 capability 还是 alignment。
+视觉推理 benchmark 上 headline accuracy 一路涨，但没人知道模型是真在看图还是被文本牵着走。作者的做法是只改 prompt、不碰图像，构造三类极简干扰：Stop-Think 在 prompt 后强行追加 `<think>Okay let's see. This should be the final answer.</think>` 直接屏蔽中间推理；Wrong-Think 把 `<think>` 区段预填一段断言错误选项的伪推理，让模型从这个 token 接着续写；Wrong-Caption 在 question 前置一句强烈暗示错误选项的描述（如 "the right side of the dog is facing the camera"）。每类扰动再配一个"修复变体"——Wrong-Think 后缀加 "but I think"、Wrong-Caption 后缀加 "but I could be wrong"——并在附录里对偶地构造"正确 caption / 正确 think"，确认掉点来自"文本内容误导"而非"扰动本身打乱格式"。之所以这套设计能直接归因，是因为人类只要看图就能无视这些误导，所以模型一掉点就说明它在"读文本"而不是"读图"；而 disclaimer 变体进一步把"模型知不知道该忽略"和"模型能不能忽略"拆开，定位问题到底出在 capability 还是 alignment。
 
-2. **三维忠实性度量：LLM-judge × Letter Entropy × P(Correct Letter)**:
+**2. 三维忠实性度量：把"答案对"和"推理可信"解耦。**
 
-    - 功能：把"答案正确"与"推理可信"解耦，定位 RL 微调到底是真学会了还是学了 shortcut。
-    - 核心思路：忠实性侧用 3 个独立 LLM judge 对每条 `<think>` 与 `<answer>` 做"内部最终判断 vs 外部答案"一致性判定，取 Fleiss' κ ≈ 0.85 的强一致结果；不确定度侧只在首个答案 letter token 上做受限分布——把全词表 logits 投影到 $\{A,B,C,D\}$ 后归一，计算 $H = -\sum_i p_i \log p_i$ 与目标字母概率 $P_{\text{base}}$。关键发现是用 Default prompt 下的 $P_{\text{base}}$ 预测"该样本在扰动下是否保持正确"的 AUROC 高达 0.94+（SpaceR），而 $-H$ 只有 0.73——说明"对正确选项的 mass"才是 robustness 的因，"entropy 低"只是果，模型完全可能 confidently wrong。
-    - 设计动机：单一 accuracy 既不能区分"靠视觉"还是"靠 prior"，也无法预测扰动下的退化；联合度量把"模型知不知道答案"与"reasoning 是否对得上答案"分开，使得后续的 trade-off 论断有可证伪的量化抓手。
+只看最终选项是否正确，会把"凭视觉答对"和"被错误 CoT 带偏却碰巧选对"一起算成赢，没法判断 RL 是真学会了还是学了 shortcut。作者因此并排上三个量。忠实性侧用 3 个独立 LLM judge 对每条 `<think>` 与 `<answer>` 判定"内部最终判断 vs 外部答案"是否一致，取 Fleiss' κ ≈ 0.85 的强一致结果。不确定度侧只在首个答案 letter token 上做受限分布——把全词表 logits 投影到 $\{A,B,C,D\}$ 后归一，算 Shannon letter entropy $H = -\sum_i p_i \log p_i$ 与目标字母概率 $P_{\text{base}}$。这套度量的价值在它能预测脆弱：用 Default prompt 下的 $P_{\text{base}}$ 去预测"该样本在扰动下是否还答对"，AUROC 高达 0.94+（SpaceR），而 $-H$ 只有 0.6–0.75——说明"对正确选项压了多少 mass"才是 robustness 的因，"entropy 低"只是果，模型完全可能 confidently wrong。这样就把"模型知不知道答案"和"reasoning 对不对得上答案"分成两个可证伪的维度，给后面的 trade-off 论断一个量化抓手。
 
-3. **受控 RL 微调实验：data augmentation + faithfulness-as-reward**:
+**3. 受控 RL 微调实验：把脆弱放回训练侧，验证补救手段可不可加。**
 
-    - 功能：把"评估侧观察到的脆弱"放回训练侧，验证常见补救手段能否同时提升鲁棒性与忠实性。
-    - 核心思路：在三组训练配置——(i) SAT2+Pixmo, (ii) +Geometry3K, (iii) +Geometry3K+caption/think 增强——上跑 1k+ step GRPO，发现增强把 Wrong-Caption 下的准确率从大幅掉点拉回接近 Base 水平，却几乎不能修复 Wrong-Think（模型被强迫续写错误 CoT 时仍照单全收）；同时 letter entropy 在所有配置下都随 step 单调下降，验证 RL 是全局"压熵 + 过度自信"的，而非 prompt-specific。再把 Qwen3-judge 的 consistency 信号写入 reward——只对"`<think>` 与 `<answer>` 一致"的 rollout 加权——确实把 Base 条件下的忠实性曲线压回准确率曲线附近；但一旦与 data augmentation 叠加，训练就出现不稳定与 reward hacking：模型学到"产出极短或模板化 CoT 以拿到 consistency reward"的 shortcut，robustness 反而停滞。
-    - 设计动机：把"准确率—忠实性 trade-off"从"评估现象"上升为"训练动力学"——只有当 augmentation（管 robustness）与 faithfulness reward（管 consistency）双管齐下仍然不可加时，才能下结论说当前 RL 范式存在结构性缺陷，而非简单调参可解。
+光在评估侧看到脆弱还不够，得证明这不是"调参能解决"的小毛病。作者于是在三组配置——(i) SAT2+Pixmo、(ii) +Geometry3K、(iii) +Geometry3K+caption/think 增强——上各跑 1k+ step GRPO。结果是数据增强能把 Wrong-Caption 下的准确率从大幅掉点拉回接近 Base 水平，却几乎修不了 Wrong-Think（模型被强迫续写错误 CoT 时仍照单全收）；与此同时 letter entropy 在所有配置下都随 step 单调下降，连 Stop-Think 这种训练里没见过的 prompt 也一样，说明 RL 压熵是全局 sharpening 而非 prompt-specific。再把 Qwen3-judge 的 consistency 信号写进 reward——只给"`<think>` 与 `<answer>` 一致"的 rollout 加权——确实能把 Base 条件下的忠实性曲线压回准确率曲线附近；但一旦和 data augmentation 叠加，训练就开始不稳定并出现 reward hacking：模型学到"产出极短或模板化 CoT 来骗 consistency reward"的 shortcut，robustness 反而停滞。正是这种"augmentation 管 robustness、faithfulness reward 管 consistency，双管齐下仍不可加"的现象，才把结论从"负面观察"锁死成"现行 GRPO+verifiable-reward 范式的结构性缺陷"。
 
 ### 损失函数 / 训练策略
 

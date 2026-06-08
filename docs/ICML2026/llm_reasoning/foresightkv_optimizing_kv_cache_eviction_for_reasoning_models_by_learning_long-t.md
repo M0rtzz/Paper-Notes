@@ -40,36 +40,26 @@ ForesightKV 训练一个轻量打分模型，按"未来注意力贡献"动态淘
 ## 方法详解
 
 ### 整体框架
-ForesightKV 的 pipeline：
-
-**推理时**：每生成 $L$ 个新 token（$L=256$），KV 缓存涨到 $B+L$，对每一层的每一个 attention group（GQA 共享 KV），打分模型 $\pi_\theta$ 读入每个 KV pair 的特征 $\mathbf{x}_n = \text{Concat}(\mathbf{k}_n, \mathbf{v}_n, \mathbf{a}_n)$（其中 $\mathbf{a}_n$ 是注意力分数的定长统计特征），输出重要性 $\phi_n$。然后保留最近的 $L$ 个 pair（视为必留），从其余里用 Top-$2L$ + multinomial 采样的方式淘汰 $L$ 个，把缓存压回 $B$。LLM 本身参数完全冻结，只训练几个 MLP scorer，开销极小。
-
-**训练时**：两阶段。第一阶段用 Golden Eviction 离线算最优淘汰序列做 supervised pairwise ranking；第二阶段把 eviction 建成 MDP，用 GRPO 以"低熵 token 大幅恶化"为负奖励再微调。
+ForesightKV 想解决的核心问题是：KV 重要性本质是未来 attention 的函数，可所有规则方法只能看历史。它的办法是把一个轻量 MLP 打分器训练成"未来贡献预测器"，整条 pipeline 分推理和训练两侧。推理时每生成 $L$ 个新 token（$L=256$），KV 缓存涨到 $B+L$，对每一层的每一个 attention group（GQA 共享 KV），打分模型 $\pi_\theta$ 读入每个 KV pair 的特征 $\mathbf{x}_n = \text{Concat}(\mathbf{k}_n, \mathbf{v}_n, \mathbf{a}_n)$（$\mathbf{a}_n$ 是注意力分数的定长统计特征）输出重要性 $\phi_n$，保留最近 $L$ 个 pair（必留），从其余里淘汰 $L$ 个把缓存压回 $B$；LLM 全程冻结，只训几个 MLP scorer，开销极小。训练侧则分两阶段：先用 Golden Eviction 从完整 trace 离线蒸馏最优淘汰序列做监督，再把 eviction 建成 MDP 用 GRPO 以"低熵 token 大幅恶化"为负奖励做 on-policy 微调。
 
 ### 关键设计
 
-1. **Golden Eviction（用未来注意力当 oracle 蒸馏标签）**:
+**1. Golden Eviction：用未来注意力当 oracle，构造能学的监督标签。**
 
-    - 功能：给完整推理 trace $\mathbf{w}=\{w_1,\dots,w_T\}$ 标出"每个 eviction step 应该扔哪 $L$ 个 KV pair"，给打分模型做监督。
-    - 核心思路：在原模型上一次性算出全长 attention 矩阵 $\mathbf{A}^h \in \mathbb{R}^{T\times T}$；沿 query 维以步长 $L$ 切块，对每块和每个 GQA group 内 head 做平均池化得到 block score $\tilde{\mathbf{a}}_t^{h'}$；对第 $t$ 步淘汰，每个 KV pair $i$ 取**未来所有块**的最大 block score 作"未来分数" $\alpha_{i,t}^{h'} = \max_{t\le j\le M}(\tilde{\mathbf{a}}_{i,j}^{h'})$，保留 $\alpha$ 最大的 $B-L$ 个、扔掉最小的。附录 A 证明这种"扔注意力最低"的策略对输出上界影响最小。训练时用 Pairwise Ranking Loss $\mathcal{L}_{\text{supervised}} = \sum_t \sum_{\alpha_i < \alpha_j} \max(0, m-(\phi_i - \phi_j))$，让 scorer 的预测顺序对齐 oracle 的未来分数排序。
-    - 设计动机：规则方法（SnapKV/H2O/R-KV）本质是在"用历史 attention 估未来重要性"，必然漏掉 semantic-dependent 的块状动态模式；而 Golden Eviction 直接拿未来 attention 当真值，构造的轨迹在 Table 2 里 loss ratio 只有 1.07（R-KV/SnapKV 是 1.41+），证明监督信号本身就比 baseline 强一个数量级——这是后续蒸馏成功的前提。
+规则方法（SnapKV/H2O/R-KV）本质都是"用历史 attention 估未来重要性"，必然漏掉 semantic-dependent head 那种块状、动态切换的注意力模式。ForesightKV 的破局点是：离线 trace 里其实藏着完整的未来 attention，那就直接拿来当真值。具体做法是在原模型上一次性算出全长 attention 矩阵 $\mathbf{A}^h \in \mathbb{R}^{T\times T}$，沿 query 维以步长 $L$ 切块、对每块及每个 GQA group 内 head 做平均池化得到 block score $\tilde{\mathbf{a}}_t^{h'}$；对第 $t$ 步的淘汰决策，每个 KV pair $i$ 取**未来所有块**的最大 block score 作为它的"未来分数" $\alpha_{i,t}^{h'} = \max_{t\le j\le M}(\tilde{\mathbf{a}}_{i,j}^{h'})$，保留 $\alpha$ 最大的 $B-L$ 个、扔掉最小的——附录 A 证明这种"扔未来注意力最低者"的策略对输出上界影响最小。有了这条 oracle 轨迹，scorer 就用 Pairwise Ranking Loss $\mathcal{L}_{\text{supervised}} = \sum_t \sum_{\alpha_i < \alpha_j} \max(0, m-(\phi_i - \phi_j))$ 去对齐 oracle 的未来分数排序。这条监督信号有多强？Table 2 里 Golden Eviction 构造轨迹的 loss ratio 只有 1.07，而 R-KV/SnapKV 是 1.41+，本身就强了一个数量级——这是后续蒸馏能成功的前提。
 
-2. **MDP + GRPO 强化学习对齐推理时分布**:
+**2. MDP + GRPO：用真实推理奖励修正分布偏移。**
 
-    - 功能：弥合"监督训练用 oracle 轨迹"和"推理时 scorer 自己挑导致状态分布偏移"的差距，并把训练目标从"模仿 oracle"换成"真正改善推理质量"。
-    - 核心思路：把 KV eviction 建成 MDP——state $s_t$ 是当前剩余 KV 缓存，action $a_t$ 是从 $\{1,\dots,B+L\}$ 选 $B$ 个保留，policy 是 per-group scorer $\pi_{\theta_{h,l}}$。奖励紧扣 §2.2 观察：先筛出"原熵在底 80%（低熵）且 eviction 后 loss 增加超过阈值 $\eta$"的 token 集合 $E=\{w_t \mid w_t \in \mathbf{w}_\text{low},\ \Delta\mathcal{L}(w_t)>\eta\}$，奖励为该子集上 loss 增量的 MSE 取负 $R_t = -\sum_{t\in E}[\Delta\mathcal{L}(w_t)]^2$（用平方惩罚灾难性恶化）。用 GRPO 在同一序列上采 $G$ 条不同 eviction 轨迹，按组相对归一化算 advantage $\hat A_t = (R_t - \text{Mean})/\text{Std}$，把同一 advantage 广播给序列里所有 eviction 步，对所有 scorer 联合优化（带 PPO clip 和 KL 正则）。
-    - 设计动机：(1) 监督训练后 scorer 在自己挑的轨迹下会面对未见过的状态分布，需要 on-policy 修正；(2) Table 4 的奖励消融显示"无脑降总 loss"反而掉点（50.6 vs base 51.7），盯高熵 token 更糟（49.6），只盯**低熵 + 大幅恶化**的 MSE 奖励 $\mathcal{L}_\text{ours}$ 才把 AIME24 从 51.7 推到 54.5，验证 §2.2 的洞察——低熵 token 才是推理质量的真瓶颈。
+监督训练有个隐患：scorer 学的是 oracle 轨迹，可推理时是它自己挑 KV，会走进训练时没见过的状态分布；而且"模仿 oracle"未必等于"改善推理质量"。ForesightKV 把整个解码建成 MDP——state $s_t$ 是当前剩余 KV 缓存，action $a_t$ 是从 $\{1,\dots,B+L\}$ 里选 $B$ 个保留，policy 就是 per-group scorer $\pi_{\theta_{h,l}}$。奖励紧扣 §2.2 那个关键观察（低熵 token 才是推理质量瓶颈）：先筛出"原熵落在底 80%（低熵）且 eviction 后 loss 涨幅超阈值 $\eta$"的 token 集合 $E=\{w_t \mid w_t \in \mathbf{w}_\text{low},\ \Delta\mathcal{L}(w_t)>\eta\}$，奖励取这个子集上 loss 增量的 MSE 取负 $R_t = -\sum_{t\in E}[\Delta\mathcal{L}(w_t)]^2$，用平方专门重罚灾难性恶化。优化用 GRPO：同一序列采 $G$ 条不同 eviction 轨迹，按组相对归一化算 advantage $\hat A_t = (R_t - \text{Mean})/\text{Std}$，再把同一 advantage 广播给序列里所有 eviction 步，对所有 scorer 联合优化（带 PPO clip 和 KL 正则）。奖励为什么这么设计？Table 4 给了反证：无脑降总 loss 反而掉到 50.6（base 51.7），盯高熵 token 更糟（49.6），唯独这个"低熵 + 大幅恶化"的 MSE 奖励 $\mathcal{L}_\text{ours}$ 把 AIME24 从 51.7 推到 54.5。
 
-3. **Top-K Multinomial 采样的 action 参数化**:
+**3. Top-K + Multinomial：既稳又留探索空间的离散动作参数化。**
 
-    - 功能：在 scorer 输出分数 $\Phi$ 后决定具体扔哪些 KV pair，既要稳又要给 RL 留探索空间。
-    - 核心思路：$\mathcal{D}_t = \text{Multinomial}_L(\text{Softmax}(\text{Top}_{2L}(-\Phi)))$——先取分数最低的 $2L$ 个作高置信淘汰候选池，再在池内按 softmax(负分数) 采 $L$ 个真正淘汰。等价于"先剪枝可信坏 KV，再受控采样"。
-    - 设计动机：纯 top-$K$ 是贪心，对 scorer 的局部排序错误敏感且 deterministic 不利于 RL 探索；纯 multinomial 又太噪声，KV eviction 一旦扔错无法恢复。Table 5 显示这种混合采样在 AIME24 上比纯 top-K 和纯 multinomial 都好，且保留的随机性正好给 GRPO 提供轨迹多样性。
+scorer 给出分数 $\Phi$ 后到底扔哪几个 KV，是个离散选择问题，纯贪心和纯采样都有坑：纯 top-$K$ 是 deterministic，对 scorer 的局部排序错误敏感、又不给 RL 留探索；纯 multinomial 太噪，而 KV eviction 一旦扔错无法召回。ForesightKV 用 $\mathcal{D}_t = \text{Multinomial}_L(\text{Softmax}(\text{Top}_{2L}(-\Phi)))$ 折中：先取分数最低的 $2L$ 个作为高置信淘汰候选池（剪掉可信的坏 KV），再在池内按 softmax(负分数) 采 $L$ 个真正淘汰。等价于"先剪枝再受控采样"——既靠剪枝保住稳定性，又靠采样的随机性给 GRPO 提供轨迹多样性。Table 5 显示这种混合在 AIME24 上同时优于纯 top-K 和纯 multinomial。
 
 ### 损失函数 / 训练策略
-监督阶段：Pairwise Ranking Loss（公式 6），margin $m$ 为超参。RL 阶段：GRPO 目标
+监督阶段用 Pairwise Ranking Loss（公式 6），margin $m$ 为超参。RL 阶段是 GRPO 目标
 $$\mathcal{J}(\theta) = \mathbb{E}_{o\sim\pi_{\theta_\text{old}}}\sum_t \min(r_t(\theta)\hat A_t, \text{clip}(r_t(\theta),1-\epsilon,1+\epsilon)\hat A_t) - \beta\cdot \text{KL}[\pi_\theta\|\pi_\text{ref}]$$
-其中 $r_t(\theta) = \pi_\theta(a_t|s_t)/\pi_{\theta_\text{old}}(a_t|s_t)$。每个 attention group 一个独立 scorer（MLP，隐层 16），LLM 全程冻结；训练预算 $B\le 2K$，从池子取 top-512 再采 256。
+其中 $r_t(\theta) = \pi_\theta(a_t|s_t)/\pi_{\theta_\text{old}}(a_t|s_t)$。每个 attention group 配一个独立 scorer（MLP，隐层 16），LLM 全程冻结；训练预算 $B\le 2K$，从候选池取 top-512 再采 256。
 
 ## 实验关键数据
 

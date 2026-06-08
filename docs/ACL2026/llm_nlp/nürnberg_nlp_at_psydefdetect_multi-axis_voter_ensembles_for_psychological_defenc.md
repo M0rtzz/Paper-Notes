@@ -38,70 +38,33 @@ tags:
 **核心 idea**：用跨类别粒度、跨训练目标、跨基座模型的 voter ensemble 代替单模型分类器，把模糊心理防御边界上的独立错误转化为投票收益。
 
 ## 方法详解
-这篇论文的方法更像一个面向共享任务的系统工程方案：先用合成数据缓解少数类问题，再训练多组互补模型，最后用一个带 C0 override 的投票规则融合它们。它的重点不是提出新的神经网络结构，而是围绕“哪些模型组合会产生有用分歧”做设计。
+这篇论文的方法更像一套面向共享任务的系统工程方案，而不是新网络结构：先用合成数据缓解少数类稀缺，再训练几组"会在不同样本上犯不同错误"的互补模型，最后用一条带 C0 override 的投票规则把它们融合起来。它真正的设计重点，是围绕"哪些模型组合能产生有用的分歧"来选轴。
 
 ### 整体框架
-输入是一段情绪支持对话和其中一个求助者目标话语。
 
-输出是一个 DMRS 防御机制标签：C0 表示 No Defence，C1 到 C8 表示 8 个防御层级。
+系统的输入是一段情绪支持对话和其中一个求助者目标话语，输出是一个 DMRS 防御机制标签——C0 表示 No Defence，C1 到 C8 是 8 个防御层级。核心是 9 个 voter 组成的三轴集成：第一轴是 3 个 Min-SFT 9c gatekeeper，由 Ministral-8B 生成式 SFT 微调、保留全部 9 类；第二轴是 3 个 Min-LR 8c specialist，在 Ministral-8B 的适配表示上训练只管 C1–C8 的 8 类逻辑回归；第三轴是 3 个 Phi4-LR 8c specialist，换 Phi-4-14B 的表示训练同样的 8 类 LR，专门提供跨基座的错误差异。每个分支都先做 5 折交叉验证，再按内部 CV 表现选 top-3 fold 进最终系统。
 
-系统共有 9 个 voter。
-
-第一组是 3 个 Min-SFT 9c gatekeeper voter，由 Ministral-8B 通过生成式 SFT 微调得到，保留全部 9 类。
-
-第二组是 3 个 Min-LR 8c specialist voter，用 Ministral-8B 的适配表示训练 8 类逻辑回归分类器，只处理 C1 到 C8。
-
-第三组是 3 个 Phi4-LR 8c specialist voter，用 Phi-4-14B 的表示训练 8 类逻辑回归分类器，提供跨模型错误差异。
-
-每个分支都先做 5 折交叉验证训练，再按内部 CV 表现选 top-3 fold 进入最终系统。
-
-推理时，gatekeeper 先判断样本是否属于 C0。
-
-如果 gatekeeper 中有多数预测 C0，系统直接输出 C0。
-
-否则，9 个 voter 一起对 C1 到 C8 做多数投票。
-
-平票时，系统偏向训练集中最大类 C7 High-Adaptive。
-
-这个流程把 No Defence 的可分性、8 类防御的细粒度混淆、不同模型的互补性放在同一个投票框架里处理。
+推理时走的是一条"先把关、再细分"的两段式规则：gatekeeper 先集体表态这条样本是不是 C0，只要它们里多数判 C0，系统就直接输出 C0；否则 9 个 voter 一起对 C1–C8 做多数投票，平票时偏向训练集最大类 C7（High-Adaptive）。这样一来，No Defence 的高可分性、8 类防御内部的细粒度混淆、以及不同模型的互补性，就被统一放进同一个投票框架里处理。
 
 ### 关键设计
-1. **C0 gatekeeper 与 8 类 specialist 的粒度拆分**:
+**1. C0 gatekeeper 与 8 类 specialist 的粒度拆分：把"有没有防御"和"是哪种防御"拆成两个难度不同的子问题。**
 
-    - 功能：把“有没有防御机制”和“是哪一种防御机制”拆成两个更适合建模的子问题。
-    - 核心思路：作者对 9 类 SFT 模型的隐藏状态做 t-SNE，发现 C0 No Defence 是唯一相对清晰的簇，而 C1 到 C8 大量重叠。因此保留 9 类模型作为 gatekeeper，用它来触发 C0 override；同时训练只看 C1 到 C8 的 specialist，让它们把容量集中在防御类别内部的细微差异上。
-    - 设计动机：如果所有模型都一起处理 9 类，C0 的清晰边界和防御类内部的模糊边界会被混在同一个决策空间里。拆分后，系统能利用 C0 的高可分性，同时避免 specialist 在 No Defence 上浪费决策能力。
+作者对 9 类 SFT 模型的隐藏状态做 t-SNE，发现 C0 No Defence 是唯一相对清晰的簇，而 C1–C8 在表示空间里大量重叠。如果让所有模型一起做平坦的 9 分类，C0 那条清晰边界就会和防御类内部那些模糊边界被塞进同一个决策空间里互相干扰。于是本文保留 9 类模型只当 gatekeeper、专门触发 C0 override，再单独训练只看 C1–C8 的 specialist，让它们把全部容量集中在防御类别之间的细微差异上——既吃到了 C0 的高可分性，又不让 specialist 在 No Defence 上浪费决策力。
 
-2. **生成式 SFT 与判别式 LR 的训练方式互补**:
+**2. 生成式 SFT 与判别式 LR 的训练方式互补：用训练目标的差异，人为制造有用的"错误独立性"。**
 
-    - 功能：通过训练目标差异制造有用的错误独立性。
-    - 核心思路：SFT 分支让 LLM 按提示生成标签数字，使用 QLoRA 做生成式监督微调；LR 分支先复用 ClsHead 适配后的 LLM 表示，再丢弃原分类头，在冻结的最后 token hidden state 上训练 L2 正则多项逻辑回归。LR 几乎不增加计算开销，却能快速筛选模型和类别粒度组合。
-    - 设计动机：论文没有简单选择 CV 分数最高的 9 类 LR 作为 gatekeeper，而是保留生成式 SFT，因为与 8 类 LR specialist 搭配时，两种训练范式会在不同样本上失误。实验也支持这一点：SFT gatekeeper 搭配 SFT specialist 没有提升，而搭配 LR specialist 后隐藏测试 F1 从 .373 提升到 .391。
+集成要有收益，前提是成员在不同样本上犯不同的错。本文让两条分支走完全不同的训练范式：SFT 分支用 QLoRA 做生成式监督微调，让 LLM 直接按提示生成标签数字；LR 分支则复用 ClsHead 适配后的表示、丢掉原分类头，在冻结的最后 token hidden state 上训练带 L2 正则的多项逻辑回归，几乎不增加算力却能快速扫一遍"模型×类别粒度"的组合。关键的是，作者没有简单挑 CV 分数最高的 9 类 LR 当 gatekeeper，而是特意保留生成式 SFT——因为它和 8 类 LR specialist 搭配时两种范式会在不同样本上失误；实验也印证了这点：SFT gatekeeper 配 SFT specialist 毫无提升，换成配 LR specialist 后隐藏测试 F1 从 .373 升到 .391。
 
-3. **跨基座模型的第三轴投票**:
+**3. 跨基座模型的第三轴投票：再加一个不同血统的模型，专治 Ministral 内部意见分裂的样本。**
 
-    - 功能：在已有 Ministral 分支之外加入另一个基座模型，专门处理 Ministral 内部意见分裂的样本。
-    - 核心思路：作者测试 Phi-4-14B、Llama-3.1-8B、PsychoCounsel-Llama3-8B 等 8 类 LR specialist，并用它们与 Min-LR 8c 在 5 折上的 F1 profile 相关性来衡量互补性。Phi4-LR 8c 的 profile 最反向，因此被选为最终第三分支。
-    - 设计动机：第三分支并不能推翻 6 个 Ministral voter 的强多数，它只会在 Ministral 自身分裂的样本上产生影响。这使它更像一个仲裁者，而不是简单叠加模型数。论文的 flip 分析显示，Phi4-LR 的翻转主要集中在 C6/C7 这条最大混淆边界上，说明它确实在关键错误区域发挥作用。
+前两轴都长在 Ministral 上，错误模式难免相关。作者于是测了 Phi-4-14B、Llama-3.1-8B、PsychoCounsel-Llama3-8B 等多个 8 类 LR specialist，用它们和 Min-LR 8c 在 5 折上的 F1 profile 相关性来量互补性，挑出 profile 最反向的 Phi4-LR 8c 当第三分支。它的角色不是靠人多压过 6 个 Ministral voter 的强多数，而是只在 Ministral 自己分裂、投不出多数时才起作用，更像一个仲裁者而非简单叠模型——flip 分析显示它的翻转几乎都集中在 C6/C7 这条最大混淆边界上，正好踩在关键错误区。
 
 ### 损失函数 / 训练策略
-所有微调使用 4-bit NF4 QLoRA，作用于全部线性投影层，dropout 为 0.05，cosine schedule，10% warm-up，训练 10 epochs，有效 batch size 为 8，最大序列长度 4096。
+所有微调都用 4-bit NF4 QLoRA、作用于全部线性投影层，dropout 0.05、cosine schedule、10% warm-up、训练 10 epoch、有效 batch size 8、最大序列长度 4096。其中 SFT 用 LoRA rank 32、$\alpha=64$，以标签数字的生成式交叉熵为目标；ClsHead 用 LoRA rank 16、$\alpha=32$、focal loss，类别权重取 $w_c=N/(K n_c)$；LR 则在冻结 hidden state 上训练多项逻辑回归，用 L2 正则和 balanced class weight，并在每折内扫正则强度 $C$。
 
-SFT 使用 LoRA rank 32、$\alpha=64$，以标签数字的生成式交叉熵作为目标。
+数据增强方面，作者在一个 dialog-stratified 80/20 split 上用 GPT-5.2 为少数类生成合成对话，预算是每类最多补到 200 条、且合成数不超过原类样本数的 75%；C0 和 C7 因样本本就充足不做增强，最终共生成 738 条合成对话，且只放进训练折，验证集和隐藏测试集全程保持原始人工标注。最终投票规则可写成：若 gatekeeper 中预测 C0 的数量达到多数则 $\hat{y}=0$，否则在全部 voter 上取 $\arg\max_c \sum_j \mathbf{1}[v_j=c]$。
 
-ClsHead 使用 LoRA rank 16、$\alpha=32$，用 focal loss 训练，类别权重为 $w_c=N/(K n_c)$。
-
-LR 在冻结 hidden state 上训练多项逻辑回归，使用 L2 正则和 balanced class weight，并在每折内扫正则强度 $C$。
-
-数据增强方面，作者在一个 dialog-stratified 80/20 split 上用 GPT-5.2 生成少数类合成对话。
-
-增强预算为每类最多补到 200 条，同时合成样本数不超过原类样本数的 75%。
-
-C0 和 C7 因为样本已经较多，不做增强。
-
-最终一共生成 738 条合成对话，并且只放入训练折；验证和隐藏测试都保持原始人工标注数据。
-
-最终投票规则可写成：若 gatekeeper 中预测 C0 的数量达到多数，则 $\hat{y}=0$；否则在全部 voter 中取 $\arg\max_c \sum_j 1[v_j=c]$。
+> ⚠️ 原文出现的 GPT-5.2 等模型名以原文为准。
 
 ## 实验关键数据
 

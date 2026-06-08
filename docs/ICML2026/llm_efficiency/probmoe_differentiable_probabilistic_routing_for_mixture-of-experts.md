@@ -40,37 +40,28 @@ ProbMoE 把 MoE 的 top-$k$ 路由重新表述为"基数受限子集分布上的
 ## 方法详解
 
 ### 整体框架
-设 MoE 层有 $N$ 个专家，token hidden state 为 $x\in\mathbb{R}^d$。Router 输出 logits $r=\mathrm{Router}_\theta(x)\in\mathbb{R}^N$，softmax 权重 $\pi_i=\exp(r_i)/\sum_j\exp(r_j)$。给定子集 $S$，MoE 输出 $y_S(x;r)=\sum_{j\in S}\pi_j f_j(x)$。
-
-ProbMoE 把路由建模成两步层叠分布：每个专家独立 Bernoulli $p_i=\sigma(r_i)$ → 条件化于基数约束（exact-$k$ 或 range $[k_{\min},k_{\max}]$）得到子集分布 $\mathbb{P}_r(S\mid \cdot)$。Pipeline 为：
-
-1. **前向**：根据 logits 算 $p_i$ → SIMPLE 算法在 $\mathcal{O}(Nk)$ 内精确归一化 $Z_k$ → 采样一个 $k$-hot 掩码 $z\in\{0,1\}^N$ → 仅执行被选中的 $k$ 个专家 $f_j(x)$。
-2. **边缘计算**：用动态规划求每个专家的条件边缘 $m_j=\mathbb{P}_r(j\in S\mid |S|=k)=\partial \log Z_k/\partial \log p_j$，这是一个解析、可微的量。
-3. **路由权重组合**：用 STE 把采样掩码、边缘、softmax 三者拼起来：$w=(\operatorname{stopgrad}(z-m)+m)\odot\pi$。前向 $w=z\odot\pi$（仍是稀疏），反向梯度同时流过 $m$ 和 $\pi$。
-4. **推理**：选 MAP 子集（exact-$k$ 时即取 $m$ 的 top-$k$；dynamic-$k$ 时在 $[k_{\min},k_{\max}]$ 内联合选 $k$ 与 $S$），推理成本与标准 MoE 持平。
+设 MoE 层有 $N$ 个专家，token hidden state 为 $x\in\mathbb{R}^d$，router 输出 logits $r=\mathrm{Router}_\theta(x)\in\mathbb{R}^N$、softmax 权重 $\pi_i=\exp(r_i)/\sum_j\exp(r_j)$，给定子集 $S$ 则 MoE 输出 $y_S(x;r)=\sum_{j\in S}\pi_j f_j(x)$。ProbMoE 的核心改动是把"确定性 top-$k$ 选择"替换成"$k$-基数子集分布上的概率推断"：先把每个专家的选中与否看作独立 Bernoulli $p_i=\sigma(r_i)$，再条件化于基数约束（exact-$k$ 或 range $[k_{\min},k_{\max}]$）得到子集分布 $\mathbb{P}_r(S\mid\cdot)$。前向时它从这个分布里采样一个 $k$-hot 掩码、只执行被选中的 $k$ 个专家（计算量与标准 MoE 一致）；反向时它把整个子集分布对每个 logit 的依赖（用解析的条件边缘概率 $m_j$ 表达）回传给 router，从而第一次让"未被选中的备选子集"也参与学习。
 
 ### 关键设计
 
-1. **基数受限子集分布 + SIMPLE 精确归一化**:
+**1. 基数受限子集分布 + SIMPLE 精确归一化：把路由输出层换成可精确归一化的概率层。**
 
-    - 功能：把 router 的输出层从"确定性 top-$k$ 算子"换成"$k$-基数 Bernoulli 子集分布"，并给出可在 $\mathcal{O}(Nk)$（向量化下 $\mathcal{O}(\log N\log k)$）时间精确计算的归一化常数 $Z_k=\sum_{|S|=k}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$。
-    - 核心思路：每个专家独立 Bernoulli $p_i=\sigma(r_i)$ 构造了无约束乘积测度；条件化 $|S|=k$ 得到 $\mathbb{P}_r(S\mid|S|=k)=Z_k^{-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$。SIMPLE 用 1D 卷积式 DP 把 $Z_k$ 拆成"加入第 $i$ 个专家"的递推，避免显式枚举 $\binom{N}{k}$ 个子集；推广到 range constraint 只需把单个 $Z_k$ 换成 $Z^*=\sum_{k=k_{\min}}^{k_{\max}} Z_k$（Theorem 5.1，复杂度仍是 $\mathcal{O}(Nk_{\max})$）。
-    - 设计动机：之前 Gumbel-Softmax/Concrete 等连续松弛要么有偏要么方差大，且无法显式表达"恰好 $k$ 个"这种硬约束；而枚举子集是组合爆炸。SIMPLE 的 DP 归一化让"组合空间上的精确概率推断"在 MoE router 中第一次变得可行，这是后面所有性质（精确边缘、采样、动态 $k$）的基石。
+旧的 top-$k$ 算子是分段常数的，对 router logits 几乎处处零梯度；要让路由变成"可学习的离散对象"，第一步是给"恰好选 $k$ 个专家"这件事一个能精确写出来的概率。ProbMoE 把每个专家独立 Bernoulli $p_i=\sigma(r_i)$ 构造的无约束乘积测度，条件化于 $|S|=k$，得到子集分布 $\mathbb{P}_r(S\mid|S|=k)=Z_k^{-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$，其中归一化常数 $Z_k=\sum_{|S|=k}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$ 是对全部 $\binom{N}{k}$ 个子集求和。直接枚举会组合爆炸，关键在于借用 Ahmed et al. 2023 的 SIMPLE 估计器：它用 1D 卷积式动态规划，把 $Z_k$ 拆成"逐个加入第 $i$ 个专家"的递推，在 $\mathcal{O}(Nk)$（向量化后 $\mathcal{O}(\log N\log k)$）时间内精确算出，无需显式枚举。这一步之所以是后面一切的基石，是因为 Gumbel-Softmax/Concrete 这类连续松弛要么有偏要么方差大、且根本无法表达"恰好 $k$ 个"这种硬约束；SIMPLE 的 DP 归一化让"组合空间上的精确概率推断"在 MoE router 中第一次变得可行，精确边缘、采样、动态 $k$ 都从这里派生。推广到 range constraint 也只需把单个 $Z_k$ 换成 $Z^*=\sum_{k=k_{\min}}^{k_{\max}} Z_k$（Theorem 5.1，复杂度仍是 $\mathcal{O}(Nk_{\max})$）。
 
-2. **边缘-嵌入路由权重 + Straight-Through 反向**:
+**2. 边缘-嵌入路由权重 + Straight-Through 反向：前向稀疏、反向带整个分布的梯度。**
 
-    - 功能：在保持前向仍只评估 $k$ 个专家的同时，让 router 的反向梯度反映 *整个* 子集分布对每个 logit 的依赖，而不只是被选中专家的 softmax 权重。
-    - 核心思路：用条件边缘 $m_j=\partial \log Z_k/\partial \log p_j$ 作为离散选择的可微"摘要"，再通过 STE 构造路由权重 $w=(\operatorname{stopgrad}(z-m)+m)\odot\pi$。前向 $w_i=z_i\pi_i$（稀疏不变），反向梯度分解为 $\partial \mathcal{L}/\partial r_i=\sum_j \langle \partial \mathcal{L}/\partial y, f_j(x)\rangle (m_j \partial \pi_j/\partial r_i + \pi_j \partial m_j/\partial r_i)$——第一项是常规 softmax-权重路径，第二项是新增的"边缘路径"，正是它把"如果换一个备选子集会怎样"这一信息回传给 router。Appendix F 的合成实验说明该估计器方差低于 DenseMixer 的 dense STE。
-    - 设计动机：作者通过消融（Fig. 2）证明，仅有 "Sample（前向随机）+ Marginal（反向解析）" 才能拿到 50.24% EM（OLMoE/GSM），而 "Sample + Dense STE" 掉到 46.6% 且方差暴增，"Top-$k$ + Marginal" 也次于 ProbMoE。说明 *前向概率采样必须与基于同一分布的边缘梯度配对*，否则前后向不自洽，性能反而劣化。
+有了精确归一化还不够——前向只能激活 $k$ 个专家以保证稀疏算力，但又希望梯度反映"如果换一个备选子集会怎样"。ProbMoE 的做法是用条件边缘 $m_j=\mathbb{P}_r(j\in S\mid|S|=k)=\partial\log Z_k/\partial\log p_j$ 作为离散选择的可微"摘要"，再通过 STE 把采样掩码 $z$、边缘 $m$、softmax $\pi$ 拼成一个路由权重
 
-3. **Range-constrained Dynamic-$k$ 路由**:
+$$w=(\operatorname{stopgrad}(z-m)+m)\odot\pi.$$
 
-    - 功能：把 exact-$k$ 自然推广到允许 $|S|$ 在 $[k_{\min},k_{\max}]$ 范围内自由选择，让 router 按 token 难度自适应分配专家数；训练与推理共用同一基数约束。
-    - 核心思路：条件分布 $\mathbb{P}_r(S\mid k_{\min}\le|S|\le k_{\max})=Z^{*-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$；由于 $Z^*=\sum_{k=k_{\min}}^{k_{\max}} Z_k$，可先从基数边缘 $\mathbb{P}_r(|S|=k\mid\cdot)=Z_k/Z^*$ 采 $k$、再调用 exact-$k$ 采子集，做到 *联合推断 $k$ 与 $S$*。反向用 range-constrained 边缘 $m_j^*=\partial \log Z^*/\partial \log p_j$ 替换 exact-$k$ 中的 $m_j$，仍走同一 STE 路由权重。推理时取 MAP 子集（$k$ 和身份一起选）。
-    - 设计动机：之前 DA-MoE/DynMoE/AdaMOE 等动态分配方法靠阈值、null expert 等启发式 gating，没有"全局归一化"也就没法做严格可微训练。Range 约束保持了概率框架的封闭性，让 dynamic-$k$ 在算法上几乎是 exact-$k$ 的免费推广——表 2 显示 OLMoE/Qwen 上 Dynamic-$k$ 只激活 75–84% 专家就能取得与 Exact-$k$ 相当甚至更高的 EM；Fig. 5/6 进一步显示 router 会对稀有/含义模糊的 token（如标点、词缀 `ons`、`:`、`?`）分配更多专家，对常见数字/具体名词分配更少，体现了"按难度计算"的真实自适应。
+前向时 $w_i=z_i\pi_i$ 仍然只在被采中的专家上非零（稀疏不变），反向时梯度分解为 $\partial\mathcal{L}/\partial r_i=\sum_j\langle\partial\mathcal{L}/\partial y,f_j(x)\rangle(m_j\,\partial\pi_j/\partial r_i+\pi_j\,\partial m_j/\partial r_i)$——第一项是常规 softmax-权重路径，第二项是新增的"边缘路径"，正是它把整个子集分布对 logit 的依赖回传给 router。之所以前向采样必须和这个解析边缘配对，是因为消融（Fig. 2）显示只有 "Sample（前向随机）+ Marginal（反向解析）" 能拿到 50.24% EM（OLMoE/GSM），换成 "Sample + Dense STE" 会掉到 46.6% 且方差暴增、"Top-$k$ + Marginal" 也次于 ProbMoE——前后向若不同源于同一分布就会自相矛盾，反而劣化（Appendix F 的合成实验也表明该估计器方差低于 DenseMixer 的 dense STE）。
+
+**3. Range-constrained Dynamic-$k$ 路由：同一框架免费换来按 token 难度自适应专家数。**
+
+固定 $k$ 对所有 token 一视同仁，但简单 token 其实用不到那么多专家、难 token 又可能不够。ProbMoE 把 exact-$k$ 推广为允许 $|S|\in[k_{\min},k_{\max}]$ 自由取值的条件分布 $\mathbb{P}_r(S\mid k_{\min}\le|S|\le k_{\max})=Z^{*-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$。由于 $Z^*=\sum_{k=k_{\min}}^{k_{\max}}Z_k$，采样可以先从基数边缘 $\mathbb{P}_r(|S|=k\mid\cdot)=Z_k/Z^*$ 采出一个 $k$、再调用 exact-$k$ 采子集，做到联合推断 $k$ 与 $S$；反向只需把 $m_j$ 换成 range-constrained 边缘 $m_j^*=\partial\log Z^*/\partial\log p_j$，仍走同一套 STE 路由权重；推理时取 MAP 子集（$k$ 和身份一起选）。它的优势在于保持了概率框架的封闭性——之前 DA-MoE/DynMoE/AdaMOE 等动态分配靠阈值、null expert 等启发式 gating，没有全局归一化也就无法做严格可微训练；而这里 dynamic-$k$ 几乎是 exact-$k$ 的"免费"升级。表 2 显示 OLMoE/Qwen 上 Dynamic-$k$ 只激活 75–84% 专家即可取得与 Exact-$k$ 相当甚至更高的 EM，Fig. 5/6 进一步显示 router 会给稀有/含义模糊的 token（标点、词缀 `ons`、`:`、`?`）分配更多专家、给常见数字/具体名词分配更少，体现出真实的"按难度计算"。
 
 ### 损失函数 / 训练策略
-训练目标是 $\mathcal{J}(\theta)=\mathbb{E}_{S\sim\mathbb{P}_r(\cdot\mid|S|=k)}[\mathcal{L}(y_S(x;r))]$（dynamic-$k$ 同理换条件），ProbMoE 用 $\nabla_\theta \mathcal{L}(y(x;r))$（基于式 (7) 的路由权重）作为期望梯度的近似。$p_i=\sigma(r_i)$ 与 softmax $\pi$ 由同一组 router logits 派生，但分别用于子集采样与权重加权，互不冲突。所有实验沿用 DenseMixer (Yao et al. 2026) 的同一数据/拆分/评估协议，只替换路由模块，确保公平比较。Qwen 上 ProbMoE 只作用于 routed experts，共享专家保持不变。
+训练目标是子集分布下的期望损失 $\mathcal{J}(\theta)=\mathbb{E}_{S\sim\mathbb{P}_r(\cdot\mid|S|=k)}[\mathcal{L}(y_S(x;r))]$（dynamic-$k$ 同理换条件），ProbMoE 用基于式 (7) 路由权重的 $\nabla_\theta\mathcal{L}(y(x;r))$ 作为期望梯度的近似。这里 $p_i=\sigma(r_i)$ 与 softmax $\pi$ 派生自同一组 router logits，却分别用于子集采样与权重加权，互不冲突。所有实验沿用 DenseMixer (Yao et al. 2026) 的同一数据/拆分/评估协议、只替换路由模块以保证公平比较；Qwen 上 ProbMoE 只作用于 routed experts，共享专家保持不变。
 
 ## 实验关键数据
 

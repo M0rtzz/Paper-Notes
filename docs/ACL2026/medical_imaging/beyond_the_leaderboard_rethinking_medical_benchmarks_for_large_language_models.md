@@ -41,31 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-3 步方法论：
-
-1. **Framework Development**：在 BetterBench (46 通用准则) 和 How2Bench (55 代码准则) 基础上，结合医学伦理与临床实践，蒸馏出 46 条医学专属准则，分布在 5 个 lifecycle 阶段。
-2. **Systematic Curation & Scoring**：选 56 个公开医学 LLM benchmark；先用 LLM-as-judge 对论文+repo+官网做初评打分，再请 3 名有临床信息学经验的 NLP 研究员用 3 分 Likert (0=未达 / 1=部分达成 / 2=完全达成) 校准，分歧 consensus 解决。
-3. **Quantitative Synthesis**：聚合分数到 per-criterion → per-phase → overall，识别 widespread weakness。
+这篇论文不训练模型，做的是"造一把尺子再用它量整个行业"。它要回答的问题是：现在的医学 LLM benchmark 到底差在哪。整套方法论分三步走，像一次工程化的 systematic review：先**搭框架**——在通用 benchmark 治理框架 BetterBench（46 条通用准则）和代码 benchmark 框架 How2Bench（55 条代码准则）的底子上，结合医学伦理与临床实践，蒸馏出 46 条医学专属准则，分布在 5 个生命周期阶段；再**系统打分**——选 56 个公开医学 LLM benchmark，先用 LLM-as-judge 对论文 + repo + 官网做初评，再请 3 名有临床信息学背景的 NLP 研究员用 0/1/2 三档 Likert 校准、分歧用 consensus 解决；最后**聚合分析**——把分数从 per-criterion 汇总到 per-phase 再到 overall，识别全行业普遍存在的薄弱环节。
 
 ### 关键设计
 
-1. **5 阶段医学 benchmark 生命周期模型**:
+**1. 5 阶段医学 benchmark 生命周期模型：把"benchmark 质量"这个虚概念拆成可独立审计的工序。**
 
-    - 功能：把"benchmark 质量"这个虚的东西拆成可独立审计的 5 个可执行阶段。
-    - 核心思路：(I) **Design & Conceptualization**——定义评的是什么医学能力（QA / 诊断推理）、临床效度、医学专家参与；(II) **Dataset Construction & Management**——信源可追溯、隐私合规（HIPAA/GDPR）、专家审核、污染检测；(III) **Technical Implementation & Evaluation Methodology**——可复现、超越 accuracy、推理过程评估、robustness、generalization、uncertainty；(IV) **Benchmark Validity & Performance Verification**——content/construct validity、判别力、与真实临床表现的相关性；(V) **Documentation, Openness, Governance**——文档、开源、licensing、维护计划、反馈渠道。
-    - 设计动机：现有评估都是"挑数据看一眼"，没有生命周期意识。把流程画出来后能立刻发现：阶段 III 平均分 52.4% 全场最低，证明"评什么"比"怎么收集"更被忽视。
+现有评估往往是"挑个数据集看一眼"，没有生命周期意识，所以总有维度被漏掉。借鉴软件工程把产品看作全周期工程品的思路，作者把 benchmark 构建拆成五个连续阶段：(I) **Design & Conceptualization**——评的是什么医学能力（QA / 诊断推理）、有无临床效度、医学专家是否参与；(II) **Dataset Construction & Management**——信源可追溯、隐私合规（HIPAA/GDPR）、专家审核、污染检测；(III) **Technical Implementation & Evaluation Methodology**——可复现、超越单一 accuracy、评推理过程、测 robustness / generalization / uncertainty；(IV) **Benchmark Validity & Performance Verification**——content/construct validity、判别力、与真实临床表现的相关性；(V) **Documentation, Openness, Governance**——文档、开源、licensing、维护计划、反馈渠道。把流程摊开后，问题立刻浮出水面：阶段 III 平均分仅 52.4%、全场最低，说明"评什么"比"怎么收集数据"更被忽视。
 
-2. **46 条医学专属评估准则**:
+**2. 46 条医学专属评估准则：把每个阶段的抽象目标落成可重复的 yes/no 审计项。**
 
-    - 功能：把每个阶段的抽象目标落到具体 yes/no 问题，让审计可重复。
-    - 核心思路：每条准则都是问题型描述，如准则 #9 "Does it align with international medical standards (e.g., ICD, SNOMED CT, LOINC)?"、#23 "Are contamination risks detected and handled?"、#28 "Are there evaluations testing the model's robustness?"、#30 "Are there evaluations testing the model's ability to express uncertainty?"。每条都有标准化的 0/1/2 三档评分 rubric。
-    - 设计动机：和 BetterBench 的差别在于这 46 条**全是医学场景特化**——HIPAA、ICD、临床指南、患者安全、医生 in-the-loop 等术语贯穿其中。让评估结果对医疗从业者可读。
+光有五个阶段还太粗，得让每条标准都能被独立、可重复地判定。于是每条准则都写成问题型描述，配标准化的 0/1/2 三档 rubric，例如准则 #9"是否对齐 ICD、SNOMED CT、LOINC 等国际医学标准？"、#23"是否检测并处理了数据污染风险？"、#28"是否有评测模型 robustness 的实验？"、#30"是否测了模型表达不确定性的能力？"。与 BetterBench 的关键差别在于这 46 条**全部针对医学场景特化**——HIPAA、ICD、临床指南、患者安全、医生 in-the-loop 等术语贯穿其中，让审计结果对医疗从业者直接可读，而不是一堆通用 AI 黑话。
 
-3. **LLM + 专家混合打分协议**:
+**3. LLM + 专家混合打分协议：在 2576 个单元格的工作量下同时撑住规模与可信度。**
 
-    - 功能：在 56 个 benchmark × 46 条标准（共 2,576 单元格）的工作量下，既保证规模又保证可信度。
-    - 核心思路：先 LLM 对论文+code+website 做初评，再 3 名 NLP 研究员独立审核调整，分歧用 consensus discussion 解决。仅基于公开 artifacts，避免主观臆测。
-    - 设计动机：纯 LLM 评估会受幻觉、prompt sensitivity 干扰；纯专家评估扛不住 2.5K cell 的工作量。两者结合 + Likert 3 档 + consensus 是工程上务实选择。
+56 个 benchmark × 46 条标准等于 2576 个待评单元格，纯人工扛不住、纯 LLM 又会被幻觉和 prompt 敏感性带偏。协议的做法是分工：先让 LLM 基于论文 + code + website 做初评，再由 3 名 NLP 研究员独立审核调整，分歧通过 consensus discussion 解决，且全程只依据公开 artifacts、不做主观臆测。LLM 负责跑量、专家负责把关、Likert 三档加 consensus 兜底可信度，这是在大规模审计工程里务实又可复用的折中。
 
 ### 损失函数 / 训练策略
 本文不训练模型，只做评估方法论。整体研究是"工具开发 + 实证审计"双任务，类似 systematic review。

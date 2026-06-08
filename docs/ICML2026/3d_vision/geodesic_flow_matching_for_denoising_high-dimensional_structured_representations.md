@@ -41,40 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GFM 把 cleanup 看成一个**从噪声分布 $p_0$ 到合法 SSP 分布 $p_1$ 的生成式 transport 问题**。
+GFM 要解决的事，是给被污染的 SSP 向量做 cleanup，但它换了个看问题的角度：不再在嵌入域里离散搜索最近原型，而是把 cleanup 当成一个**从噪声分布 $p_0$ 到合法 SSP 分布 $p_1$ 的生成式 transport 问题**，并强制整条搬运轨迹始终贴在单位超球面 $\mathbb{S}^{d-1}$ 上。
 
-- 输入：被 cross-talk / phase drift / 脉冲噪声污染的向量 $\tilde\phi \in \mathbb{R}^d$ (近似分布 $p_0$：超球面上各向同性高斯，$\phi_0 = z/\|z\|$, $z\sim\mathcal{N}(0,I_d)$)。
-- 训练：在每个时间步 $t\sim\mathcal{U}[0,1]$，沿球面测地线插值生成 $\phi_t$，用残差 MLP $v_\theta(\phi_t, t)$ 回归切空间速度。
-- 推理：从 $p_0$ 采一个 $\phi_0$，跑 $K$ 步 Exp-map 上的 ODE 积分 $\phi_{k+1} = \mathrm{Exp}_{\phi_k}(\Delta t\, v_k)$，每步重新归一保数值稳定，最后输出 $\phi_K$ 作为清理后的 SSP。
-- 输出：合法的 $\mathbb{S}^{d-1}$ 上点，可被 unbinding/decoder 正确解码出空间坐标。
+整个 pipeline 顺下来是这样：输入端拿到一个被 cross-talk、相位漂移、脉冲噪声污染的向量 $\tilde\phi\in\mathbb{R}^d$，它近似服从 $p_0$ —— 超球面上的各向同性高斯，即采 $z\sim\mathcal{N}(0,I_d)$ 再归一成 $\phi_0=z/\|z\|$。训练阶段，对每个时间步 $t\sim\mathcal{U}[0,1]$，不走欧氏直线而是沿球面测地线把 $\phi_0$ 插值到合法 SSP $\phi_1$ 得到中间态 $\phi_t$，再用一个残差 MLP $v_\theta(\phi_t,t)$ 去回归这一点上的切空间速度。推理阶段，从 $p_0$ 采一个噪声起点 $\phi_0$，跑 $K$ 步建在 Exp-map 上的 ODE 积分 $\phi_{k+1}=\mathrm{Exp}_{\phi_k}(\Delta t\,v_k)$，每步再显式归一兜底数值漂移，最终输出的 $\phi_K$ 就是落在 $\mathbb{S}^{d-1}$ 上、能被 unbinding/decoder 正确解码出空间坐标的清洁 SSP。
 
-下游应用：把 GFM 当成**在线 stabilizer** 插在脉冲路径积分器 (path integrator, PI) 和 VSA 地图之间，每隔一段时间把漂移的 PI 状态"拉回"流形，再去做 landmark binding，从而保住 SLAM 闭环。
+更下游，这个 cleanup 被当成**在线 stabilizer** 插在脉冲路径积分器 (path integrator, PI) 和 VSA 地图之间：每隔一段时间把漂移的 PI 状态拉回流形，再去做 landmark binding，从而把 SLAM 闭环稳住。
 
 ### 关键设计
 
-1. **几何失败诊断 (Geometric Gap)**:
+**1. 几何失败诊断：先证明欧氏 CFM 在 SSP 域必然崩**
 
-    - 功能：从理论上指出标准 CFM 在 SSP 域必败，并形式化三种噪声源 — bundling 引入的 cross-talk $\epsilon\sim\mathcal{N}(0, \tfrac{n-1}{d}I_d)$、recurrence 引入的累积相位漂移 (在圆上是 $\mathrm{WrappedNormal}(0, t\sigma^2)$)、脉冲群体的解码噪声 $\sigma^2 d/N_{tot}$。
-    - 核心思路：CFM 的目标速度场是 $u_t = \phi_1 - \phi_0$，对应弦插值；这条弦在 $t\in(0,1)$ 时 $\|\phi_t\|<1$，正是傅里叶相位 $e^{i\langle\theta_j, x\rangle}$ 赖以生存的"单位模长"被破坏的瞬间。论文用 SSP 的相似度核可视化 (Figure 4b)：欧氏流的输出在空间域上**位置偏了**但形状仍像 SSP，正是"幅值塌缩 → 相位漂移 → 解码到错坐标"的因果链。
-    - 设计动机：把"为什么必须换几何"摆在 Method 之前，反衬出 GFM 的必要性 — 不是锦上添花的 inductive bias，而是 SSP 域里 CFM 的硬伤。
+论文把方法的起点放在一个诊断上 —— 标准 Conditional Flow Matching 不是对 SSP "不够好"，而是会从根上失败。它先把 SSP 的噪声来源形式化成三种各不相同的分布：bundling 叠加引入的 cross-talk 是 $\epsilon\sim\mathcal{N}(0,\tfrac{n-1}{d}I_d)$，recurrence 累积出的相位漂移在圆上服从 $\mathrm{WrappedNormal}(0,t\sigma^2)$，脉冲群体的解码噪声尺度则是 $\sigma^2 d/N_{tot}$。在此之上，问题出在 CFM 的目标速度场 $u_t=\phi_1-\phi_0$ 对应的是两点间的**弦**而非测地线：弦插值在 $t\in(0,1)$ 时必有 $\|\phi_t\|<1$，而这恰好破坏了傅里叶相位 $e^{i\langle\theta_j,x\rangle}$ 赖以存在的"单位模长"。
 
-2. **测地线插值 + 切空间速度回归 (Geodesic Probability Path)**:
+为什么这是硬伤而非小瑕疵？因为 SSP 的空间信息全编在相位里，模长一塌、相位就毁。论文用 SSP 的相似度核可视化 (Figure 4b) 把这条因果链摆出来：欧氏流产出的向量在空间域上**位置已经偏了**，但形状还像个合法 SSP —— 这正是"幅值塌缩 → 相位漂移 → 解码到错坐标"的连锁反应。把这个诊断放在 method 之前，GFM 的几何约束就不是锦上添花的 inductive bias，而是对症下药。
 
-    - 功能：用 Log/Exp 映射定义球面上的"训练插值轨迹"和"训练目标速度"，让 $v_\theta$ 永远学的是合法的切向量。
-    - 核心思路：训练路径 $\phi_t = \mathrm{Exp}_{\phi_0}(t \cdot \mathrm{Log}_{\phi_0}(\phi_1))$，对应连接 $\phi_0, \phi_1$ 的球面大圆弧。目标速度 $u_t = \frac{d}{dt}\mathrm{Exp}_{\phi_0}(tv)|_{v=\mathrm{Log}_{\phi_0}(\phi_1)}$ 就是这条弧上的瞬时切向，沿弧保持常速 $\|v\|$、永远正交于当前位置向量。Loss 用 cosine flow loss $\mathcal{L}_{\cos}=1-\frac{v_\theta^\top \dot\phi_t}{\|v_\theta\|\|\dot\phi_t\|}$ 而不是 MSE，专注于方向对齐 (SSP 语义由方向编码，不由模长编码)。工程上 Log 映射对 $\langle p, q\rangle$ 做 $[-1,1]$ 截断和 $\epsilon=10^{-8}$ 的正交分量 floor，避开对极点和重合点的数值崩溃。
-    - 设计动机：这一步等于把 Chen & Lipman 2024 的 Riemannian flow matching 框架拿来直接用，但选了**最贴合 SSP 结构**的环境流形 $\mathbb{S}^{d-1}$（虽然 SSP 严格意义上活在更紧的 Clifford 超环面上，论文用超球面作为"外接流形"足够把相位约束兜住）。Cosine loss 的选择也回应了 SSP 的语义在角度上，而 L2 会被无关的模长偏差污染。
+**2. 测地线插值 + 切空间速度回归：让训练目标永远是合法切向量**
 
-3. **几何一致的推理 ODE (Geodesic Sampling)**:
+针对上面那条"模长一塌相位就毁"的痛点，GFM 用 Log/Exp 映射把整个概率路径搬到球面上。训练插值改成 $\phi_t=\mathrm{Exp}_{\phi_0}(t\cdot\mathrm{Log}_{\phi_0}(\phi_1))$，也就是连接 $\phi_0,\phi_1$ 的球面大圆弧，全程 $\|\phi_t\|=1$；目标速度 $u_t=\frac{d}{dt}\mathrm{Exp}_{\phi_0}(tv)\big|_{v=\mathrm{Log}_{\phi_0}(\phi_1)}$ 就是这条弧上的瞬时切向，沿弧保持常速 $\|v\|$ 且永远正交于当前位置向量 —— 于是 $v_\theta$ 学到的永远是一个合法的切空间速度，不会把状态拽离流形。损失也换掉 MSE，改用 cosine flow loss
 
-    - 功能：把训练时的几何保到推理时 — 每一步采样都走 Exp-map 而不是欧氏直线。
-    - 核心思路：从 $\phi_0\sim p_0$ 开始，每步 $\phi_{k+1} = \mathrm{Exp}_{\phi_k}(\Delta t\, v_\theta(\phi_k, t_k))$，再 $\phi_{k+1} \leftarrow \phi_{k+1}/\|\phi_{k+1}\|$ 做一次显式归一兜底数值漂移。$K$ 步 (论文典型几十步) 就能从噪声端走到清洁端，远比扩散便宜。
-    - 设计动机：保证训练-推理几何一致 — 如果训练在球面、推理却又走欧氏一步，前面所有 inductive bias 就漏光。同时 Exp-map 更新自带 "切向不会把状态推出流形" 的性质，使 GFM 在 SLAM 闭环里能当成**连续 attractor field** 而不是离散投影。这个性质后面 5.4 节会展示是 cleanup 模块能不能被插进递归回路而不破坏积分动力学的关键。
+$$\mathcal{L}_{\cos}=1-\frac{v_\theta^\top \dot\phi_t}{\|v_\theta\|\,\|\dot\phi_t\|},$$
+
+只惩罚方向偏差，因为 SSP 的语义编在角度上而非模长上，L2 会被无关的模长误差污染。工程上 Log 映射对内积 $\langle p,q\rangle$ 做 $[-1,1]$ 截断、对正交分量加 $\epsilon=10^{-8}$ 的 floor，避开对极点和重合点处的数值崩溃。这一步本质是把 Chen & Lipman 2024 的 Riemannian flow matching 直接拿来用，但挑了最贴合 SSP 结构的环境流形 $\mathbb{S}^{d-1}$ —— 虽然 SSP 严格意义上活在更紧的 Clifford 超环面上，外接超球面已足够把相位约束兜住。
+
+**3. 几何一致的推理 ODE：把训练时的几何一路保到采样**
+
+如果训练在球面、推理却退回欧氏直线走一步，前两步攒下的几何先验就全漏掉了，所以推理也必须沿测地线走。GFM 从 $\phi_0\sim p_0$ 出发，每步用 $\phi_{k+1}=\mathrm{Exp}_{\phi_k}(\Delta t\,v_\theta(\phi_k,t_k))$ 更新，再补一次显式归一 $\phi_{k+1}\leftarrow\phi_{k+1}/\|\phi_{k+1}\|$ 兜底数值漂移，典型几十步 $K$ 就能从噪声端走到清洁端，比扩散动辄上百步便宜得多。更重要的是 Exp-map 更新自带"切向不会把状态推出流形"的性质，使 GFM 在 SLAM 闭环里可以当成**连续 attractor field** 而不是离散投影 —— 这正是 cleanup 模块能被插进递归回路、却不破坏积分动力学的关键 (5.4 节验证)。
 
 ### 损失函数 / 训练策略
-- Loss: cosine flow loss (Eq. 10)。
-- $v_\theta$ 是 3 个 ResBlock 的残差 MLP：每个 block 两层 Linear + GELU + Dropout(0.1) + LayerNorm，宽度按 bottleneck schedule $2d\to d, 4d\to d, 2d\to d$；时间用 32 维 sinusoidal 嵌入拼到输入。
-- 训练样本：clean SSP 用 Sobol 准随机采样保证空间域均匀覆盖；noise 用 $\mathcal{N}(0, I_d)$ 投影到球面。
-- 不同方法用各自几何生成中间 $\phi_t$：欧氏 CFM 故意**不**做球面投影 (因为这种内部穿越正是要研究的失败模式)，GFM 用 Eq. 9 的测地线。
+- Loss：cosine flow loss (Eq. 10)，只对齐方向。
+- $v_\theta$ 是 3 个 ResBlock 的残差 MLP：每个 block 两层 Linear + GELU + Dropout(0.1) + LayerNorm，宽度按 bottleneck schedule $2d\to d,\ 4d\to d,\ 2d\to d$；时间用 32 维 sinusoidal 嵌入拼到输入。
+- 训练样本：clean SSP 用 Sobol 准随机采样保证空间域均匀覆盖；noise 用 $\mathcal{N}(0,I_d)$ 投影到球面。
+- 不同方法用各自几何生成中间 $\phi_t$：欧氏 CFM 故意**不**做球面投影 (这种内部穿越正是要研究的失败模式)，GFM 用 Eq. 9 的测地线。
 
 ## 实验关键数据
 

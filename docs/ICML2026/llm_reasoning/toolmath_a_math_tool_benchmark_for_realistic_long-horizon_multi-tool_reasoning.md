@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ToolMATH 构造分两阶段：(1) **Tool extraction & validation**：把 MATH 的标注解题步骤喂给 LLM，让它返回若干小的 Python 函数（带 name、description、typed input schema、code），然后做工具级一致性验证（每工具 5 个测试用例由 LLM judge 检验描述与执行行为是否一致）+ 题目级 trace 验证（用 7 个验证模型跑 Plan+ReAct，如果至少一个模型用了该工具且最终答对，则该工具通过）；(2) **Tool-grounded evaluation**：每题 $p$ 的环境 = 金标工具集 $\mathcal G(p)$ + 从全局池采样的干扰工具 $\mathcal D_{\ell,k}(p)$（相似度 5 级，密度 $k \in \{5,10,20,50\}$），或在 Distractors-only 模式下移除 $\mathcal G(p)$ 只留干扰工具，让模型必须 fallback。每题被标注 hop count（动态规划计算的并行后逻辑步数）作为长程难度独立轴。
+ToolMATH 把"数学逐步解题"当成天然的工具组合脚手架来用，全流程分两阶段。第一阶段是**工具抽取与验证**：把 MATH 标注的每一步解题动作喂给 LLM，让它吐出一批小的 Python 函数（含 name、description、typed input schema、code），再经过工具级和题目级两轮自动验证 + 人工修复，沉淀出可信的工具池。第二阶段是**工具化评测**：给每道题 $p$ 配一个环境，里面既有金标工具集 $\mathcal G(p)$，又掺入从全局池采样的干扰工具 $\mathcal D_{\ell,k}(p)$（相似度 5 级、密度 $k\in\{5,10,20,50\}$）；另设 Distractors-only 模式直接抽走 $\mathcal G(p)$，逼模型在没有趁手工具时回退。每题还独立标注一个 hop count，把"长程难度"从"干扰难度"里解耦出来。模型只看得到工具描述与 schema、看不到实现代码，所以错一步往往全错，长程推理与工具选择的失败都会被放大暴露。
 
 ### 关键设计
 
-1. **MATH 步骤 → 可复用工具的两轮验证流水线**:
+**1. MATH 步骤 → 可复用工具的两轮验证流水线：把人工解题步骤变成可信工具池，而不是 benchmark 噪声。**
 
-    - 功能：把人工标注解题步骤转成"看不到代码、只看描述与 schema"的工具集，并保证工具质量（不是 benchmark 噪声）。
-    - 核心思路：Tool-wise 验证——对每个抽出的工具准备 5 个 schema-valid 输入，执行得到实际输出，用 GPT-4o 当 judge 看描述与输出是否一致（允许浮点 tolerance）；5 条全过才通过。Question-wise 验证——给 7 个验证模型（{GPT-4o-mini, Llama 3-8B, Mistral-7B, Qwen2-7B, Qwen2.5-7B, Phi-3 Medium, Yi 1.5-9B}）只看题目 + 金标工具集（无代码），跑 Plan+ReAct；若至少一个模型答对且 trace 里成功调用了某工具 $t$，则 $t$ 通过；否则进入人工修复循环（修描述/实现后重跑验证）。最终主集 12,369 工具 + 7,699 题，外加 ToolMATH-Hard 329 道无法被自动验证的硬题。
-    - 设计动机：单层验证不够——只看工具一致性可能选到"描述对但没人会用"的工具；只看 trace 又会把工具本身错误归到模型上。两轮+人工修复是 benchmark 工程上的标准 best practice，作者把它系统化以保证大规模可信。
+如果只是让 LLM 把解题步骤随手翻译成函数，很容易混进"描述对但行为错"或"根本没人会调用"的脏工具，污染整个评测。作者用两道关卡过滤：**工具级一致性验证**给每个抽出的工具准备 5 个 schema-valid 输入，实际执行拿到输出，再让 GPT-4o 当 judge 判断描述与执行行为是否一致（允许浮点 tolerance），5 条全过才放行；**题目级 trace 验证**则把题目 + 金标工具集（无代码）交给 7 个验证模型 {GPT-4o-mini, Llama 3-8B, Mistral-7B, Qwen2-7B, Qwen2.5-7B, Phi-3 Medium, Yi 1.5-9B} 跑 Plan+ReAct，只要至少一个模型答对且 trace 里成功调用了工具 $t$，就认定 $t$ 是真正可用的；过不了的进入人工修复循环（改描述/实现后重跑验证）。两关分工互补——前者保证工具自身言行一致，后者保证工具在真实解题里确实有人用，避免把工具自身的错误误算到模型头上。最终落地为主集 12,369 个工具 + 7,699 道题，外加 329 道无法自动验证的 ToolMATH-Hard 硬题。
 
-2. **5 级相似度 × 4 级密度的干扰工具结构**:
+**2. 5 级相似度 × 4 级密度的干扰工具结构：把"工具目录有多大"和"工具有多容易混淆"拆成两个可调旋钮。**
 
-    - 功能：用可控方式调节"金标工具与非金标工具的语义重叠程度"，分离 catalog 大小与混淆难度。
-    - 核心思路：Level 1 (different-category random) → Level 2 (pure random) → Level 3 (same-category random) → Level 4 (embedding similarity retrieval) → Level 5 (keyword overlap + embedding tiebreak)，相似度递增。密度 $k \in \{5,10,20,50\}$，且用**嵌套保证** $\mathcal D_{\ell,k_1}(p) \subseteq \mathcal D_{\ell,k_2}(p)$，让随密度变化的对比只反映干扰增加而非样本变化。每个采样确定性可复现（固定种子 + 固定工具池序列化顺序）。
-    - 设计动机：以往 benchmark 要么干扰太弱（low overlap）要么干扰固定（无 ladder），无法定量分析"工具相似度对失败模式的影响"。Level 1→5 让作者能画出"准确率 vs 干扰相似度"的曲线，干净地证明"高相似度干扰会放大长程失败"（Figure 2）。
+以往 benchmark 的干扰要么太弱（语义重叠低、模型一眼能挑对）、要么固定死（没有梯度），没法定量回答"工具越像、模型越容易选错吗"。作者给干扰工具排了一条相似度阶梯：Level 1（different-category random）→ Level 2（pure random）→ Level 3（same-category random）→ Level 4（embedding 相似度检索）→ Level 5（关键词重叠 + embedding 决胜），语义重叠逐级升高。密度维度取 $k\in\{5,10,20,50\}$，并施加**嵌套保证** $\mathcal D_{\ell,k_1}(p)\subseteq\mathcal D_{\ell,k_2}(p)$，让随密度变化的对比只反映"干扰变多"而非"换了一批样本"；整个采样用固定种子 + 固定工具池序列化顺序，确定性可复现。这样作者就能画出干净的"准确率 vs 干扰相似度"曲线（Figure 2），明确证明高相似度干扰会放大长程失败。
 
-3. **Distractors-only + logical-hop annotation 的难度解耦**:
+**3. Distractors-only + logical-hop 标注：把"工具是否可用"和"推理有多长"两个失败轴彻底分开。**
 
-    - 功能：把"工具是否可用"和"长程推理难度"两个轴拆开，单独诊断模型在每个轴上的失败模式。
-    - 核心思路：Distractors-only 模式移除全部金标工具只留干扰，强制模型要么 fallback 到无工具推理、要么放弃；Logical-hop annotation 用"步骤抽取 + 并行性检查" 两步 LLM prompt 算出每题的 hop count（不是简单数工具数，而是去掉可并行的步骤）。评估时按 hop 分桶画 accuracy 曲线，发现：(i) accuracy 随 hop 单调下降（即使 No-tools baseline 也是，证明 hop 捕捉到固有难度）；(ii) 高相似度干扰主要在高 hop 上放大下降幅度。
-    - 设计动机：以往 benchmark 把"题目难"和"工具乱"混在一起，模型表现差时不知道是哪一边的问题。两个独立轴让 ablation 干净。Distractors-only 还揭示了一个有趣现象：Qwen2.5-7B 能用通用干扰工具组合出替代解法，说明数学问题有多条解题路径。
+模型表现差时，过去很难判断到底是题目本身难、还是工具环境乱。作者用两个独立机制拆开这两件事。**Distractors-only** 移除全部金标工具只留干扰，逼模型要么 fallback 到无工具推理、要么放弃，单独考察"缺关键能力时的回退"。**logical-hop 标注**用"步骤抽取 + 并行性检查"两步 LLM prompt 算出每题的 hop count——不是简单数工具数量，而是去掉可并行步骤后剩下的逻辑链长度，作为长程难度的纯净刻度。评测时按 hop 分桶画 accuracy 曲线，得到两个清楚结论：accuracy 随 hop 单调下降（连 No-tools baseline 也如此，说明 hop 真的抓到了固有难度），而高相似度干扰主要在高 hop 桶上把下降幅度进一步放大。Distractors-only 还顺带揭示一个有趣现象：Qwen2.5-7B 能用通用干扰工具拼出替代解法，印证数学题往往有多条解题路径。
 
 ### 损失函数 / 训练策略
-纯 benchmark / 评估论文，不训练任何模型。主评估协议：Plan+ReAct（先写 plan，再交替 reasoning 与结构化工具调用），评估模型 = {GPT-4o-mini, Llama 3-8B, Qwen 2.5-7B}。指标 = exact-match accuracy（标准归一化后）。ToolMATH-Hard 上还对比 ReAct、DFSDT、Plan+ReAct 三种 framework。
+纯 benchmark / 评估论文，不训练任何模型。主评估协议为 Plan+ReAct（先写 plan，再交替 reasoning 与结构化工具调用），评估模型取 {GPT-4o-mini, Llama 3-8B, Qwen 2.5-7B}，指标用标准归一化后的 exact-match accuracy。ToolMATH-Hard 上额外对比 ReAct、DFSDT、Plan+ReAct 三种 framework。
 
 ## 实验关键数据
 

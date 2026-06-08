@@ -36,30 +36,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SpatialStack是一个通用的层级融合框架，核心思路：将几何编码器（VGGT）多个层的输出，经过独立的投影器对齐后，以加性残差的方式分别注入到LLM解码器的不同层中。整体pipeline为：
-1. **视觉编码器**：处理K帧输入图像，经spatial merger得到视觉token $\tilde{\mathbf{V}}$
-2. **几何编码器**（VGGT，冻结）：同一组图像通过多视图几何Transformer提取多层级几何特征
-3. **层级融合**：从VGGT第11/17/23层提取patch token，经独立投影器对齐后注入LLM第0/1/2层
-4. **LLM解码器**：处理融合后的多模态序列，输出答案
+
+SpatialStack 想解决的是：VLM 看不懂 3D 几何，而现有做法只把几何编码器的最后一层特征塞进视觉通路，白白丢掉了中间层的层级几何线索。它的整体思路是把几何编码器（VGGT，全程冻结）多个不同深度的输出各自对齐后，以加性残差的方式分别注入 LLM 解码器的不同深度——浅层几何配 LLM 浅层、深层几何配 LLM 深层。
+
+一次前向是这样转的：K 帧输入图像先过视觉编码器，经 spatial merger 压成视觉 token $\tilde{\mathbf{V}}$；同一组图像再过 VGGT 几何 Transformer，从第 11/17/23 层各取一份 patch token；这三份几何特征经各自独立的投影器对齐到语言空间后，被加到 LLM 解码器第 0/1/2 层的 hidden state 上；最后 LLM 处理这条融合后的多模态序列，吐出答案。整个改动只发生在"几何特征往哪注、怎么注"这一处，主干模型不动。
 
 ### 关键设计
 
-1. **层级几何-语言融合（Layered Geometry-Language Fusion）**：从VGGT的第$l_i$层（$l_i \in \{11, 17, 23\}$）提取patch token $\mathbf{Z}_{l_i} \in \mathbb{R}^{(KN) \times D_{\text{geo}}}$，通过层特定的geometry token merger投影对齐：
-    $\mathbf{G}_{l_i} = \mathcal{M}_{\text{geo}}^{(l_i)}(\mathbf{Z}_{l_i}), \quad \mathbf{G}_{l_i} \in \mathbb{R}^{N' \times D_{\text{lang}}}$
-   然后以加性残差注入LLM对应层：
-    $\mathbf{H}^{(j)'} = \mathbf{H}^{(j)} + \mathbf{G}_{l_j}, \quad j \in \{0, 1, 2\}$
-   
-   设计动机：浅层几何特征保留局部精细结构→注入LLM浅层增强底层感知；深层几何特征编码全局语义→注入LLM深层支撑高级推理。这种对齐比将所有层特征混合注入视觉通路更有效。
+**1. 层级几何-语言融合：让浅层几何对浅层 LLM、深层几何对深层 LLM。**
 
-2. **Geometry Token Merger**：每个注入层有独立的投影器 $\mathcal{M}_{\text{geo}}^{(l_i)}$，负责将几何特征的空间分辨率和嵌入维度与LLM hidden state对齐。类似视觉编码器的spatial merger，对每2×2邻近patch分组后投影。层独立设计避免了不同抽象层级特征间的干扰。
+痛点很直接——VGGT 用 DPT 架构，本就靠不同 Transformer 层显式恢复不同粒度的几何：浅层留住尖锐的局部结构和边界，深层给出趋于同质的全局语义。只取最后一层，等于把浅层那份精细几何整个扔掉。SpatialStack 的做法是从第 $l_i \in \{11, 17, 23\}$ 层各抽一份 patch token $\mathbf{Z}_{l_i} \in \mathbb{R}^{(KN) \times D_{\text{geo}}}$，经层特定的 merger 投影到语言维度，再加性注入对应的 LLM 层：
 
-3. **训练策略**：冻结视觉编码器和VGGT几何编码器，仅训练geometry token merger和LLM解码器。使用标准next-token交叉熵损失，无额外辅助目标。空间先验纯粹通过统一的指令微调自然涌现。
+$$\mathbf{G}_{l_i} = \mathcal{M}_{\text{geo}}^{(l_i)}(\mathbf{Z}_{l_i}), \qquad \mathbf{H}^{(j)'} = \mathbf{H}^{(j)} + \mathbf{G}_{l_j}, \quad j \in \{0, 1, 2\}$$
+
+之所以要"浅对浅、深对深"，是因为 LLM 解码器自己也是浅层管底层感知、深层管高层推理——把精细几何喂给 LLM 浅层去做深度估计、距离比较，把全局几何喂给深层去做跨视图关系推理，两边的层级功能正好咬合。这也是论文最核心的 insight：决定性能的是"从哪里融合"，而不是"融了几层特征"。消融里把多层几何一股脑拼进视觉通路（naive multi-layer）反而互相干扰，还不如只融单层。
+
+**2. Geometry Token Merger：每个注入层配一个独立投影器，避免跨层级特征打架。**
+
+几何特征和 LLM hidden state 在空间分辨率、嵌入维度上都对不上，不能直接相加。每个注入层因此各带一个独立投影器 $\mathcal{M}_{\text{geo}}^{(l_i)}$，仿照视觉编码器的 spatial merger，把相邻 2×2 patch 分组后投影压缩，输出 $\mathbf{G}_{l_i} \in \mathbb{R}^{N' \times D_{\text{lang}}}$。关键在"层独立"——第 11 层那份精细几何和第 23 层那份语义几何抽象程度差很远，若共用一个投影器会被强行揉成同一种表示，这正是 naive 融合产生特征干扰的根源；各管各的投影才能让每一层几何保留自己的性格再进 LLM。
+
+**3. 冻结编码器、只调 merger 与 LLM：让空间先验靠统一指令微调自然涌现。**
+
+训练时把视觉编码器和 VGGT 几何编码器全部冻结，只训 geometry token merger 和 LLM 解码器，优化目标就是一个标准 next-token 交叉熵，不加任何辅助损失。这样做一是省算力、不动两个已经训好的大编码器；二是验证了一个更强的主张——不需要专门的空间自监督目标（对比 Cambrian-S 额外引入的自监督空间学习），只要把层级几何接好、跑普通指令微调，空间推理能力就能长出来。
 
 ### 损失函数 / 训练策略
 - 损失：标准交叉熵 $\mathcal{L}_{\text{ce}} = -\sum_{i=1}^{|o|} \log P_\theta(o^{(i)} | o^{(<i)}, q, \mathcal{C})$
-- 基座模型：Qwen2.5-VL / Qwen3.5，几何编码器VGGT
+- 基座模型：Qwen2.5-VL / Qwen3.5（⚠️ 模型名以原文为准），几何编码器 VGGT
 - Batch size 64，学习率 $1 \times 10^{-5}$，AdamW，warmup ratio 0.03，cosine schedule
-- 训练数据：SPAR、LLaVA-Hound、ScanNet、VSI-590K子集
+- 训练数据：SPAR、LLaVA-Hound、ScanNet、VSI-590K 子集
 
 ## 实验关键数据
 

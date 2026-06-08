@@ -40,30 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：原始核矩阵 $\mathbf{K}\in\mathbb{R}^{n\times n}$（由任意核诱导，本文用 RBF），连续受保护属性向量 $\mathbf{p}\in\mathbb{R}^n$，迭代次数 $m$，岭回归正则 $\tilde{\alpha}$。
-输出：被剥离 $\mathbf{p}$ 相关信息后的「公平核矩阵」$\mathbf{K}_{(m)}$ 与对应的累积变换矩阵 $\mathbf{T}_{(m)}$，使得 $\mathbf{K}_{(m)} = \mathbf{K}_{(0)}\mathbf{T}_{(m)}$。下游任意核方法（本文实验里是 KRR 和 SVR）拿到 $\mathbf{K}_{(m)}$ 后照常训练；对新测试点用 $\mathbf{T}_{(m)}$ 把测试核 $\mathbf{K}_{\text{test}}\in\mathbb{R}^{k\times n}$ 同款变换一次即可外推。
-
-整体 pipeline 是一个外层迭代 + 内层闭式更新：每轮 (i) 在当前 $\mathbf{K}_{(i-1)}$ 上拟合一个能预测 $\mathbf{p}$ 的岭回归方向 $\mathbf{w}$；(ii) 构造它的零空间投影；(iii) 用 Theorem 3.2 把这个投影压缩成对 $\mathbf{K}_{(i-1)}$ 的一次右乘 $\mathbf{T}^{\mathbf{K}_{(i)}}$ 得到 $\mathbf{K}_{(i)}$；(iv) 累乘进总变换 $\mathbf{T}_{(i)}$。迭代多次是因为单次投影只能消除「最显著的预测方向」，残余的非线性依赖要靠多轮才能逐步剥干净。
+本文要解决的是「INLP 这种迭代零空间投影只能在有限维特征上做，但核方法（尤其 RBF）的特征空间往往无穷维，没法显式存下来投影」的矛盾。FKD 的核心转换是：不去碰那个无穷维特征空间，而是借经验特征空间把核矩阵分解成 $\mathbf{K}=\mathbf{G}\mathbf{G}^\top$，在有限维的 $\mathbf{G}$ 上完成 INLP，再把所有投影代数等价地折回成对核矩阵 $\mathbf{K}$ 的一次右乘变换 $\mathbf{T}^{\mathbf{K}}=\mathrm{Id}-\mathbf{M}\mathbf{K}$。整套流程是「外层迭代、内层闭式更新」：每轮先拟合一个能预测受保护属性 $\mathbf{p}$ 的岭回归方向，构造其零空间投影，压缩成核变换并累乘进总变换 $\mathbf{T}_{(m)}$，输出一个被剥离了 $\mathbf{p}$ 信息、但仍是合法 PSD 核的 $\mathbf{K}_{(m)}$；下游任意核方法（KRR、SVR）拿它照常训练，新测试点用同一个 $\mathbf{T}_{(m)}$ 变换测试核即可外推。
 
 ### 关键设计
 
-1. **经验特征空间里的零空间投影 (核心理论桥梁)**:
+**1. 经验特征空间里的零空间投影：把无穷维上做不了的 INLP 换到有限维上做**
 
-    - 功能：把无穷维核特征空间上的「想做但做不了」的 INLP，换到等价的有限维 $\mathbf{G}$ 上「能做且代价低」。
-    - 核心思路：把 PSD 核矩阵分解为 $\mathbf{K}=\mathbf{G}\mathbf{G}^\top$ 其中 $\mathbf{G}=\mathbf{Q}\boldsymbol{\Lambda}^{1/2}$。$\mathbf{G}$ 的每行 $\mathbf{g}_i$ 可看作样本 $\mathbf{x}_i$ 在「与训练集子空间等距同构的 $n$ 维表示」里的坐标，并且 $k(\mathbf{x}_i,\mathbf{x}_j)=\langle \mathbf{g}_i,\mathbf{g}_j\rangle$。在 $\mathbf{G}$ 上跑 INLP：先用岭回归找 $\mathbf{w} = \mathbf{G}^\top(\mathbf{G}\mathbf{G}^\top+\tilde{\alpha}\mathrm{Id})^{-1}\mathbf{p}$（这种写法是关键——它把 $\mathbf{w}$ 表达成只涉及 $\mathbf{K}$ 的形式），再做投影 $\mathbf{P}^{\mathbf{G}}=\mathrm{Id}-\mathbf{w}(\mathbf{w}^\top\mathbf{w})^{-1}\mathbf{w}^\top$，迭代记为 $\mathbf{G}_{(m)}=\mathbf{G}_{(0)}\prod_{i=0}^{m-1}\mathbf{P}^{\mathbf{G}_{(i)}}$；Lemma 3.1 证了一连串投影的乘积仍是投影。
-    - 设计动机：直接在特征空间里投影对 RBF 这种无穷维核不可行；INLP 中 $\mathbf{w}$ 通常以「权重 = 样本线性组合」形式存在，恰好让整个流程在 $\mathbf{K}$ 上闭合，避开了显式构造 $\mathbf{G}$ 仍然 $\mathcal{O}(n^2)$ 内存但可行。
+INLP 的标准套路是「迭代找出能预测受保护属性的方向、再把数据投到它的零空间」，但这一步对 RBF 这种无穷维核根本无从下手，因为你存不下特征向量。作者的破局点是经验特征空间：把 PSD 核矩阵特征分解为 $\mathbf{K}=\mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^\top=\mathbf{G}\mathbf{G}^\top$，其中 $\mathbf{G}\coloneq\mathbf{Q}\boldsymbol{\Lambda}^{1/2}$ 是一个 $n$ 维显式表示，几何上与训练集所张子空间等距同构，且满足 $k(\mathbf{x}_i,\mathbf{x}_j)=\langle\mathbf{g}_i,\mathbf{g}_j\rangle$。于是 INLP 可以搬到这个有限维的 $\mathbf{G}$ 上跑：先用岭回归求方向 $\mathbf{w}=\mathbf{G}^\top(\mathbf{G}\mathbf{G}^\top+\tilde{\alpha}\mathrm{Id})^{-1}\mathbf{p}$——这种写法是关键，它把 $\mathbf{w}$ 表达成「样本的线性组合」，让后续运算可以只用 $\mathbf{K}$ 闭合；再做零空间投影 $\mathbf{P}^{\mathbf{G}}=\mathrm{Id}-\mathbf{w}(\mathbf{w}^\top\mathbf{w})^{-1}\mathbf{w}^\top$，多轮迭代即 $\mathbf{G}_{(m)}=\mathbf{G}_{(0)}\prod_{i=0}^{m-1}\mathbf{P}^{\mathbf{G}_{(i)}}$，Lemma 3.1 保证一连串投影的乘积仍是投影。之所以要迭代多轮，是因为单次投影只能消掉最显著的那个预测方向，残余的非线性依赖得靠多轮逐步剥净。
 
-2. **核矩阵闭式变换 $\mathbf{T}^{\mathbf{K}}=\mathrm{Id}-\mathbf{M}\mathbf{K}$ (Theorem 3.2 + Cor. 3.3)**:
+**2. 核矩阵闭式变换 $\mathbf{T}^{\mathbf{K}}=\mathrm{Id}-\mathbf{M}\mathbf{K}$：把投影折回核矩阵且保持半正定**
 
-    - 功能：把上一步「在 $\mathbf{G}$ 上投影 + 再求 $\mathbf{G}'{\mathbf{G}'}^\top$」一步到位地写成对 $\mathbf{K}_{(m-1)}$ 的一次右乘，且证明结果仍 PSD，因此下游 SVR 的二次规划仍是凸的。
-    - 核心思路：定义 $\tau_{\text{norm}}\coloneq(\mathbf{w}^\top\mathbf{w})^{-1}$，$\mathbf{M}\coloneq(\mathbf{K}_{(m)}+\tilde{\alpha}\mathrm{Id})^{-1}\mathbf{p}\,\tau_{\text{norm}}\,\mathbf{p}^\top(\mathbf{K}_{(m)}+\tilde{\alpha}\mathrm{Id})^{-1}$，则 $\mathbf{K}_{(m)}=\mathbf{K}_{(m-1)}(\mathrm{Id}-\mathbf{M}\mathbf{K}_{(m-1)})$。累积形式 $\mathbf{T}_m=\prod_{i=0}^{m-1}\mathbf{T}^{\mathbf{K}_{(i)}}$ 使得 $\mathbf{K}_{(m)}=\mathbf{K}_{(0)}\mathbf{T}_m$，对测试核同样适用，自然完成 out-of-sample extension；推论 3.3 通过保 PSD 保证「变换后还是合法核」，作者还说明扩展到多个受保护属性只需把 $\mathbf{p}\in\mathbb{R}^{n}$ 换成矩阵 $\mathbf{p}\in\mathbb{R}^{n\times l}$。
-    - 设计动机：和 Pérez-Suay 等的 HSIC 路线 (KRR-FKL) 不同，FKD 不修改下游优化目标也不依赖某一个特定 fairness score，所有「公平化」逻辑都封装在核矩阵预处理里，做到了「模型无关 + 度量无关」；右乘成 $\mathrm{Id}-\mathbf{M}\mathbf{K}$ 而非更一般的相似变换是为了保留 PSD 性质。
+光在 $\mathbf{G}$ 上投影还不够，下游核方法吃的是核矩阵，必须把「投影后再求 $\mathbf{G}'{\mathbf{G}'}^\top$」这一整套折回到对核矩阵的操作，而且不能破坏半正定性（否则 SVR 的二次规划不再是凸的）。Theorem 3.2 给出的恰是这样一个一步到位的右乘：定义 $\tau_{\text{norm}}\coloneq(\mathbf{w}^\top\mathbf{w})^{-1}$、$\mathbf{M}\coloneq(\mathbf{K}_{(m)}+\tilde{\alpha}\mathrm{Id})^{-1}\mathbf{p}\,\tau_{\text{norm}}\,\mathbf{p}^\top(\mathbf{K}_{(m)}+\tilde{\alpha}\mathrm{Id})^{-1}$，则单轮更新为 $\mathbf{K}_{(m)}=\mathbf{K}_{(m-1)}(\mathrm{Id}-\mathbf{M}\mathbf{K}_{(m-1)})$，累积形式 $\mathbf{T}_m=\prod_{i=0}^{m-1}\mathbf{T}^{\mathbf{K}_{(i)}}$ 使得 $\mathbf{K}_{(m)}=\mathbf{K}_{(0)}\mathbf{T}_m$，同一个 $\mathbf{T}_m$ 直接作用在测试核上就自然完成了 out-of-sample extension。Corollary 3.3 证明这个变换保 PSD，所以输出「还是一个合法核」；而把形式定成右乘 $\mathrm{Id}-\mathbf{M}\mathbf{K}$ 而非更一般的相似变换，正是为了守住这条 PSD 性质。这套设计的妙处在于：所有「公平化」逻辑都封进了核矩阵预处理，下游既不改优化目标也不绑定某个 fairness score，因而是「模型无关 + 度量无关」的——这和 Pérez-Suay 等把 HSIC 塞进 KRR 目标的 KRR-FKL 路线截然不同；要扩展到多个受保护属性，也只需把 $\mathbf{p}\in\mathbb{R}^n$ 换成矩阵 $\mathbf{p}\in\mathbb{R}^{n\times l}$，理论无需重写。
 
-3. **Nystroem 近似 + 算法工程实现 (Algorithm 1)**:
+**3. Nystroem 近似 + 工程实现：把每轮 $\mathcal{O}(n^3)$ 求逆压到可跑**
 
-    - 功能：把每轮迭代的瓶颈 $\mathcal{O}(n^3)$ 矩阵求逆降到可接受的复杂度，让 FKD 在中等规模数据上实际可跑。
-    - 核心思路：Algorithm 1 每轮维护 $\mathbf{B}=(\mathbf{K}_{(i-1)}+\tilde{\alpha}\mathrm{Id})^{-1}$、$\tau_{\text{norm}}=(\mathbf{p}^\top \mathbf{B}\mathbf{K}_{(i-1)}\mathbf{B}\mathbf{p})^{-1}$、$\mathbf{M}=\mathbf{B}\mathbf{p}\tau_{\text{norm}}\mathbf{p}^\top \mathbf{B}$、$\mathbf{T}^{\mathbf{K}_i}=\mathrm{Id}-\mathbf{M}\mathbf{K}_{(i-1)}$；耗时主要在 $\mathbf{B}$ 的求逆，用 Drineas & Mahoney 的 Nystroem 近似替换。文中还提到可以不显式存储 $\mathbf{T}_{(i)}$、合理安排矩阵乘法顺序进一步省内存（细节在 Appendix C）。
-    - 设计动机：纯精确版总复杂度 $\mathcal{O}(m\cdot n^3)$ 在万级样本量时已经不友好；Nystroem 让 inverse 项可承受，从实验 §4.5 看近似版的 fairness-accuracy 帕累托与精确版几乎重合，证明工程近似不损失关键性质。但作者也坦诚 $\mathcal{O}(n^2)$ 的核矩阵存储本身仍然限制了大规模扩展。
+精确版每轮都要对 $n\times n$ 矩阵求逆，总复杂度 $\mathcal{O}(m\cdot n^3)$，在万级样本上就已经不友好。Algorithm 1 把每轮拆成维护 $\mathbf{B}=(\mathbf{K}_{(i-1)}+\tilde{\alpha}\mathrm{Id})^{-1}$、$\tau_{\text{norm}}=(\mathbf{p}^\top\mathbf{B}\mathbf{K}_{(i-1)}\mathbf{B}\mathbf{p})^{-1}$、$\mathbf{M}=\mathbf{B}\mathbf{p}\tau_{\text{norm}}\mathbf{p}^\top\mathbf{B}$、$\mathbf{T}^{\mathbf{K}_i}=\mathrm{Id}-\mathbf{M}\mathbf{K}_{(i-1)}$，瓶颈集中在 $\mathbf{B}$ 的求逆，于是用 Drineas & Mahoney 的 Nystroem 近似替换；此外不显式存储 $\mathbf{T}_{(i)}$、合理安排矩阵乘法顺序还能进一步省内存（细节在 Appendix C）。实验 §4.5 显示近似版的 fairness–accuracy 帕累托与精确版几乎重合，说明这层工程近似没有损失关键性质——但作者也坦诚 $\mathcal{O}(n^2)$ 的核矩阵存储本身仍然是大规模扩展的天花板，Nystroem 只解决了求逆时间而非存储。
 
 ### 损失函数 / 训练策略
 方法本身不引入新损失；内层岭回归用现成闭式解。下游模型按各自标准目标训练（KRR：闭式；SVR：标准对偶 QP），公平化通过对核矩阵的预处理实现。超参主要是迭代数 $m$（控制剥离强度）和岭正则 $\tilde{\alpha}$（控制每轮去除信息的「粒度」）；RBF 带宽与 KRR/SVR 自身超参先在非公平基线上 grid-search 锁定。

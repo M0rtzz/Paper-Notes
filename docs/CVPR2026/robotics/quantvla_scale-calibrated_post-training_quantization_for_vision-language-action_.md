@@ -29,63 +29,45 @@ tags:
 
 ## 方法详解
 
-### 预备知识：基于扩散的 VLA 模型
+### 整体框架
 
-VLA 系统由三部分组成：（1）视觉编码器（如 SigLIP2、DINOv2）将 RGB 帧编码为图像 token；（2）语言骨干网络将文本指令编码为文本 token；（3）DiT 动作头以融合的视觉-语言特征 $F_{\text{VL}}$、机器人本体感知和扩散时间步 $t$ 为条件，迭代更新动作 latent：
+QuantVLA 要解决的事情很直接：把 VLA 模型压到低比特，又不让任务成功率掉下来。一个基于扩散的 VLA 由三段串起来——视觉编码器（如 SigLIP2、DINOv2）把 RGB 帧变成图像 token，语言骨干把指令变成文本 token，DiT 动作头则以融合的视觉-语言特征 $F_{\text{VL}}$、机器人本体感知和扩散时间步 $t$ 为条件，一步步去噪动作 latent：
 
 $$x_{t-1} = f_\theta(x_t, F_{\text{VL}}, t)$$
 
-经过 $T$ 步去噪后，最终 $x_0$ 被解码为可执行动作。
+经过 $T$ 步后，最终的 $x_0$ 被解码成可执行动作。量化的底座沿用 DuQuant 的可逆重参数化（对每个线性层施加通道级平滑 $\Lambda$、块正交旋转 $\hat{R}_{(1)}, \hat{R}_{(2)}$ 和锯齿通道置换，把激活里的异常值重新摊平），但论文发现直接套用会塌。
 
-### 量化敏感性分析
-
-#### DuQuant 重参数化
-
-QuantVLA 采用 DuQuant 的可逆重参数化作为基础：对每个线性层施加通道级平滑（对角矩阵 $\Lambda$）、块正交旋转 $\hat{R}_{(1)}, \hat{R}_{(2)}$ 和锯齿通道置换，重新分布激活中的异常值。
-
-#### 两大失效模式
-
-通过一阶误差传播分析，论文揭示了量化引入的两个系统性漂移：
-
-**温度漂移**：量化误差 $\varepsilon_{\text{up}}$ 传播到 Q、K，改变注意力 logits 的方差，等效地移动了 softmax 的温度，使注意力分布偏离教师模型：
+塌的根源是一组一阶误差传播分析：量化误差在 DiT 里不会就地消失，而是沿残差连接和 LayerNorm 一层层累积成两类系统性漂移。一类是**温度漂移**——量化误差 $\varepsilon_{\text{up}}$ 传到 Q、K，改变注意力 logits 的方差，等效地移动了 softmax 的温度，让注意力分布偏离全精度教师：
 
 $$\Delta L \approx \frac{1}{\sqrt{d}} \left( (\varepsilon_{\text{up}} W_q) K_T^\top + Q_T (\varepsilon_{\text{up}} W_k)^\top \right) + \Delta L_{\text{local}}$$
 
-**能量漂移**：经过多头拼接和输出投影后，注意力输出的幅值发生系统性变化，改变了残差注入增益和 LayerNorm 的工作点：
+另一类是**能量漂移**——经过多头拼接和输出投影后，注意力输出的幅值发生系统性变化，改变了残差注入增益和 LayerNorm 的工作点：
 
 $$\Delta O \approx J_{\text{softmax}}(L_T) \Delta L \, V_T W_{o,T} + A_T \varepsilon_{\text{up}} W_v W_{o,T} + A_T V_T \delta W_o + \Delta O_{\text{local}}$$
 
-### QuantVLA 框架
+整个框架就是对症下药：先用选择性布局把最脆弱的层留作浮点，再用两个轻量标量分别把温度和能量拉回教师的工作点。
 
-QuantVLA 包含三个核心组件：
+### 关键设计
 
-#### 组件一：选择性量化布局
+**1. 选择性量化布局：不是所有层都该量化，注意力投影最脆弱就留浮点。**
 
-- **LLM**：所有线性层量化为 W4A8（4-bit 权重、8-bit 激活）
-- **DiT 动作头**：仅量化 MLP 层，注意力投影 $W_q, W_k, W_v, W_o$ **保持浮点**
-- **设计理由**：注意力投影对上游分布偏移最敏感，直接决定 softmax 分布稳定性和残差注入增益；实验表明量化全部 DiT 层导致成功率骤降（π0.5 从 97.1% 降至 71.6%），而仅量化 MLP 则保持 95.4%
+LLM 部分所有线性层都压到 W4A8（4-bit 权重、8-bit 激活），但 DiT 动作头只量化 MLP，注意力投影 $W_q, W_k, W_v, W_o$ 保持浮点。这个取舍直接对应上面的漂移分析：注意力投影正是温度漂移和能量漂移的源头，它决定 softmax 分布的稳定性和残差注入增益，一旦量化就把误差放大并往深层传。消融数字很能说明问题——把整个 DiT（含注意力投影）一起量化，π0.5 的平均成功率从 97.1% 塌到 71.6%，长时序的 Long 任务更是从 93.5% 掉到 39.0%；只量化 MLP 则稳在 95.4%。代价只是 DiT 注意力保浮点让内存少压了一点（1.28GB vs 全量化 1.17GB），但换来的稳定性远值这个钱。
 
-#### 组件二：注意力温度匹配（ATM）
+**2. 注意力温度匹配（ATM）：用一个逐头标量把量化后的注意力温度拧回去。**
 
-通过逐头标量 $\alpha$ 对齐教师与量化模型的 logits 分布：
+针对温度漂移，ATM 对每个注意力头算一个标量 $\alpha$，让量化模型的 logits 方差对齐教师：
 
-$$\alpha_{\text{raw}} = \frac{\text{Std}(L_T)}{\text{Std}(L_Q) + 10^{-6}}$$
+$$\alpha_{\text{raw}} = \frac{\text{Std}(L_T)}{\text{Std}(L_Q) + 10^{-6}}, \qquad \alpha = \text{clip}(\alpha_{\text{raw}}, \alpha_{\min}, \alpha_{\max})$$
 
-$$\alpha = \text{clip}(\alpha_{\text{raw}}, \alpha_{\min}, \alpha_{\max})$$
+校正后的量化 logits 为 $L_Q = L_T / \alpha$，softmax 的有效温度就回到了教师的工作点。关键在于 $\alpha$ 标定完会直接折叠进反量化缩放因子，推理时不增加任何算子——相当于免费把偏掉的注意力分布矫正回来。
 
-校正后的量化 logits 为 $L_Q = L_T / \alpha$。$\alpha$ 在标定后折叠进反量化缩放因子，推理时无额外计算开销。
+**3. 输出头平衡（OHB）：用逐层标量把残差流的能量拉回基线。**
 
-#### 组件三：输出头平衡（OHB）
+针对能量漂移，OHB 对每一层算一个标量 $\beta$，用 RMS 匹配输出投影后的能量：
 
-通过逐层标量 $\beta$ 匹配输出投影后的能量：
+$$\beta_{\text{raw}}(l) = \frac{\text{RMS}(Z_{T,l})}{\text{RMS}(Z_{Q,l}) + 10^{-6}}, \qquad \beta(l) = \text{clip}(\beta_{\text{raw}}(l), \beta_{\min}, \beta_{\max})$$
 
-$$\beta_{\text{raw}}(l) = \frac{\text{RMS}(Z_{T,l})}{\text{RMS}(Z_{Q,l}) + 10^{-6}}$$
-
-$$\beta(l) = \text{clip}(\beta_{\text{raw}}(l), \beta_{\min}, \beta_{\max})$$
-
-校正后 $Z_Q = Z_l / \beta(l)$，恢复残差流的注入增益和 LayerNorm 工作点。
-
-两个标定量均使用中性带 $\varepsilon = 0.03$ 过滤微小差异（$|\log \alpha| < \varepsilon$ 则置 1），剪裁范围 $\pm 0.4$。整个过程仅需少量无标注标定数据，无需重新训练。
+校正后 $Z_Q = Z_l / \beta(l)$，残差注入增益和 LayerNorm 工作点随之恢复，避免漂移在深层 DiT 里逐层滚雪球。ATM 和 OHB 共用一套保守策略：用中性带 $\varepsilon = 0.03$ 过滤微小差异（$|\log \alpha| < \varepsilon$ 时直接置 1，不做无谓校正），剪裁范围 $\pm 0.4$ 防止个别异常头/层把标量推到极端值。两者都只需少量无标注标定数据，全程不重训。
 
 ## 实验结果
 

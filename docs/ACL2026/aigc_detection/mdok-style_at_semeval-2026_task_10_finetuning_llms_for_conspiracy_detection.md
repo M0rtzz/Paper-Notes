@@ -42,27 +42,21 @@ tags:
 
 ### 整体框架
 
-整个 pipeline 分三步：(1) **数据增强**：对原始训练集复制四份，分别施加 anonymization / lower-casing / upper-casing / homoglyphication，每种只取 10% 加入训练池再去重，避免 augmented 数据淹没原始；得到 2126 负 + 1517 正。(2) **第一轮训练**：用 QLoRA 4-bit 把 Qwen3-32B 微调成二分类 head；优化器 paged AdamW，cosine LR=2e-5，warmup 0.03，batch size 1，单 epoch，每 100 step 在 100×2 holdout val 上验证，按 Macro F1 选 checkpoint。(3) **自训练**：用第一轮模型对未标的 dev + test 推理并 dump 正类概率，只保留 $p\ge 0.99$（正）或 $p\le 0.01$（负）的样本作 silver labels，并入训练集后从头再微调一次，最终训练池 2575 负 + 1881 正。推理时进一步把判正阈值从 0.5 上调到 0.7（_th0.7）以提升 precision。
+这篇 SemEval 系统论文的核心思路是：不发明新方法，而是把作者团队在 PAN@CLEF2025 拿冠军的 MGT 检测器 mdok 的整套微调配方，几乎原样搬到阴谋论检测上，验证它的跨任务可迁移性。整条流水线分三步串起来：先对仅 ~4000 条的原始训练集做四种数据增强扩样、去掉表面噪声的干扰，再用 QLoRA 4-bit 把 Qwen3-32B 微调成一个二分类器，最后用这个第一轮模型给主办方未公布答案的 dev/test 打高置信伪标签、并入训练集重训一遍，推理时再把判正阈值从 0.5 上调到 0.7 收一波 precision。最终 Macro F1 = 0.78，排名 8/52。
 
 ### 关键设计
 
-1. **mdok 风格的四种数据增强**:
+**1. mdok 风格的四种数据增强：在 ~4000 条的小数据上注入多样性，逼模型学语义而非表面捷径。**
 
-    - 功能：在仅 ~4000 样本的小数据上人为引入多样性，让模型对表面变形不敏感。
-    - 核心思路：(i) **Anonymization**：用 regex 把 email、@用户、电话号码替换为 `[EMAIL]`、`[USER]`、`[PHONE]`（URL 已被组织方替成 `[URL]`），相当于把原文里有标识性的 token 抹平；(ii) **Lower-casing & Upper-casing**：复制两份分别全小写、全大写，把"阴谋论判断与 case 无关"这条 inductive bias 显式注入；(iii) **Homoglyphication**：用同形不同源字符替换，比如把拉丁 `a` 换成西里尔 `а`，模拟攻击者常用的混淆手段，让分类器对 tokenizer-level 扰动更鲁棒；(iv) 每种增强只取 10% 然后 de-duplicate，再合并。
-    - 设计动机：阴谋论 detection 与 MGT detection 一样，文本中存在大量 spurious surface cue（URL 重度使用、CAPS 喊叫、被故意做奇怪字符），这些表面信号若被模型当成 shortcut 学到，real-world generalization 就崩。数据增强把这些表面变化转化为训练时见过的 noise，从而推动模型学语义。
+阴谋论文本和 MGT 一样，社媒里塞满了 URL、@用户、CAPS 喊叫、故意替换的奇怪字符这类 spurious surface cue，模型一旦把它们当 shortcut 学进去，换个分布就崩。作者用四种增强把这些表面变化提前变成训练时见过的 noise：(i) **Anonymization** 用 regex 把 email、@用户、电话号码统一替换成 `[EMAIL]`、`[USER]`、`[PHONE]`（URL 已被组织方替成 `[URL]`），抹掉有标识性的 token；(ii) **Lower-casing / Upper-casing** 各复制一份全小写、全大写，把"阴谋论判断与大小写无关"这条先验显式注入，对治社媒大小写乱用；(iii) **Homoglyphication** 用同形不同源字符替换（如拉丁 `a` 换成西里尔 `а`），复刻攻击者常用的混淆手法，让分类器对 tokenizer 级扰动更鲁棒。每种增强只取 10% 再去重并入训练池，刻意控制比例避免增强样本淹没原始数据，最终得到 2126 负 + 1517 正。
 
-2. **保守阈值自训练**:
+**2. 保守阈值自训练：榨干未标的 dev/test，又把伪标签错误率压到最低。**
 
-    - 功能：利用主办方未公布 label 的 dev/test set 扩训练样本同时避免 error propagation。
-    - 核心思路：自训练（Amini 2025 survey 范式）先用 golden label 训出 teacher，teacher 在 unlabeled 集上推理打 silver label，再合并训 student。本文最大的不同是阈值非常严苛——$p\ge 0.99$ 才打正，$p\le 0.01$ 才打负，其余全部抛弃，等于只把模型已经"非常确定"的预测扩进训练池。这样 silver label 的错误率被压到极低。后续把训练集从 3643 扩到 4456 样本（约 +22%）。
-    - 设计动机：经典自训练的最大风险是 silver label 错误在迭代中复利累计；本文用极严阈值把这个风险卡在第一轮就最小化，宁可少加样本也不加噪声。这种"高 precision 低 recall"的自训练策略在比赛场景里特别有效——不能调 hyperparameter 就一定要让单轮收益是干净的。
+主办方的 dev/test 没放 ground truth，但这些未标样本不用白不用。自训练的标准范式是先用 golden label 训出 teacher，teacher 在 unlabeled 集上打 silver label 再合并训 student——风险是 silver label 的错误会在迭代中复利累计。本文的关键改动是把阈值卡得极严：只有正类概率 $p\ge 0.99$ 才打正、$p\le 0.01$ 才打负，其余一律丢弃，等于只把模型"已经非常确定"的预测扩进训练池，silver label 错误率因此被压到极低。这一轮把训练集从 3643 扩到 4456（约 +22%，2575 负 + 1881 正）。这种"高 precision 低 recall"的自训练在不能调超参的比赛场景里尤其合适：既然只有一发子弹，就必须保证单轮收益是干净的，宁可少加样本也不引噪声。
 
-3. **QLoRA 大模型高效微调 + 阈值后处理**:
+**3. QLoRA 高效微调 + 阈值后处理：单卡驯服 32B，再白捡一个 F1 点。**
 
-    - 功能：以 ~100 GPU·h 单卡 A100 把 32B 模型微成可用分类器，并通过分类阈值移动权衡 precision/recall。
-    - 核心思路：用 QLoRA（4-bit quantization + Low-Rank Adapters）只更新一小部分参数，使 32B 模型在一张 A100 64GB 上能跑；transformers 库 sequence classification head；推理时正类概率默认阈值是 0.5，但作者发现把阈值调到 0.7 能再涨 1 个 F1 点（0.77 → 0.78），因为任务对 precision 更敏感（误把无害评论判成阴谋论代价更高）。
-    - 设计动机：32B 全量微调对学术 lab 不现实；QLoRA 把硬件门槛降到单卡可承担同时保持性能；阈值后处理是不动模型参数即可拿到的额外增益，在比赛中等于"白捡"。
+32B 全量微调对学术 lab 不现实，作者用 QLoRA（4-bit 量化 + 低秩适配器）只更新一小部分参数，让 Qwen3-32B 能在单张 A100 64GB 上跑完（约 100 GPU·h），分类头用 transformers 的 sequence classification。推理阶段的阈值后处理则是不动模型参数就能拿到的额外增益：正类概率默认按 0.5 判正，但作者发现调到 0.7 能再涨 1 个 F1 点（0.77 → 0.78），因为这个任务对 precision 更敏感——把无害评论误判成阴谋论的代价远高于漏判。在比赛里这等于"白捡"的一分。
 
 ### 损失函数 / 训练策略
 - 二分类 cross-entropy（transformers seq-cls 默认），无 class weighting；

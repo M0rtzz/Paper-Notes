@@ -50,23 +50,25 @@ StructLoRA 保留标准 LoRA 的基本接口。对预训练权重 $W_0 \in \math
 
 ### 关键设计
 
-1. **信息瓶颈驱动的低秩方向过滤**:
+**1. 信息瓶颈驱动的低秩方向过滤：在 rank 维度上只留下服务任务的方向。**
 
-    - 功能：在每层 LoRA 的 rank 维度上选择任务相关方向，压掉冗余或噪声方向，缓解 semantic drift。
-    - 核心思路：标准 LoRA 把 $AB$ 中的 $r$ 个 rank-one 方向同等对待；StructLoRA 为每个方向加门控 $m_j$，得到 $A\operatorname{diag}(m)B$。门控通过信息瓶颈目标学习：$\mathcal{L}_{\text{IB}}=\mathcal{L}_{\text{task}}+\beta I(\Delta\tilde{W};X)-\gamma I(\Delta\tilde{W};Y)$。直观上，它惩罚更新对输入中无关变化的依赖，同时奖励更新保留与标签有关的信息。实现上可用 variational IB 的 KL 上界作为可训练正则；需要硬选择时，用 Gumbel-Softmax 做可微近似。
-    - 设计动机：LoRA 的 rank 本来就很小，尤其在 $r\leq 8$ 时，每一个方向都很宝贵。用范数大小或随机 dropout 判断方向重要性过于粗糙，因为“更新幅度大”不等于“对任务有语义贡献”。IB 过滤器把方向选择从启发式稀疏化变成和任务目标绑定的选择。
+标准 LoRA 把 $AB$ 里的 $r$ 个 rank-one 方向一视同仁，但在 $r\leq 8$ 这种紧预算下，混进来的噪声方向会直接挤占本就稀缺的容量，也就是作者说的 semantic drift。StructLoRA 给每个方向挂一个门控 $m_j\in[0,1]$，把更新改写成 $A\operatorname{diag}(m)B$，让“这个方向值不值得训练”变成可学习的量。门控不是靠范数大小或随机 dropout 决定的——“更新幅度大”并不等于“对任务有语义贡献”——而是用信息瓶颈目标 $\mathcal{L}_{\text{IB}}=\mathcal{L}_{\text{task}}+\beta I(\Delta\tilde{W};X)-\gamma I(\Delta\tilde{W};Y)$ 来学：$\beta$ 那一项惩罚更新对输入中无关变化的依赖，$\gamma$ 那一项奖励更新保留与标签有关的信息。
 
-2. **图神经网络式的层间更新协调**:
+实现上，连续情形用 variational IB 的 KL 上界当可训练正则；需要硬选择时用 Gumbel-Softmax 做可微近似。这样方向选择就从启发式稀疏化升级成了和任务目标直接绑定的选择，少数据时尤其能挡住对噪声方向的过拟合。
 
-    - 功能：让不同层的 LoRA 更新在模型深度上互相对齐，缓解 structural incoherence。
-    - 核心思路：作者把每层看成图节点，节点特征是 $h_\ell^{(0)}=\operatorname{vec}(\Delta\tilde{W}_\ell)$。边包括相邻层边，也可以加入基于 batch 平均梯度余弦相似度的语义边。浅层 GCN / GAT 通过残差消息传递更新节点：$h_\ell^{(t+1)}=h_\ell^{(t)}+\sigma(\sum_{j\in\mathcal{N}(\ell)\cup\{\ell\}}\frac{1}{\sqrt{d_\ell d_j}}h_j^{(t)}\Theta^{(t)})$，再映射回参数空间。
-    - 设计动机：Transformer 的表示通常沿深度逐步演化，若相邻层 LoRA 梯度方向相似度只有 0.27-0.41，说明更新轨迹是碎片化的。GNN 不只是加一个固定正则，而是根据层间结构和训练数据动态学习“哪些层应该互相借力”。附录也把它解释成一种 Laplacian smoothing：降低 $\sum_\ell\|u_{\ell+1}-u_\ell\|_2^2$ 的层间漂移能量。
+**2. 图神经网络式的层间更新协调：让相邻层的更新沿一致的语义轨迹移动。**
 
-3. **训练期增强、推理期合并的插拔式接口**:
+逐层独立适配的第二个隐患是 structural incoherence——实测下相邻层 LoRA 梯度的余弦相似度只有 0.27-0.41，说明各层的更新轨迹是碎片化的，彼此不借力。StructLoRA 把每一层当成图的一个节点，节点特征取过滤后更新的展平向量 $h_\ell^{(0)}=\operatorname{vec}(\Delta\tilde{W}_\ell)$；边既包含相邻层的结构边，也可加入由 batch 平均梯度余弦相似度构造的语义边。随后一个浅层 GCN / GAT 用残差消息传递更新节点：
 
-    - 功能：在训练时利用 IB 和 GNN 提升更新质量，在部署时完全回到 LoRA 的零延迟形态。
-    - 核心思路：最终进入模型的是 $W_0+\Delta\tilde{W}^{\text{final}}$；IB 门控和 GNN 均不作为 inference-time 模块存在。论文默认在 Transformer attention 的 $W_q$ 和 $W_v$ 上插入 PEFT 模块，rank 与缩放系数沿用 LoRA 设置，例如 $r=8, \alpha=16$。附录还展示 StructLoRA 可叠加在 QLoRA、LoRA-FA、VeRA、AdapterFusion 等方法上，作为“增强层”而不是互斥替代品。
-    - 设计动机：很多 PEFT 改进一旦引入动态路由、额外 adapter 或多分支推理，就会损失 LoRA 最大的工程优势。StructLoRA 把复杂性限制在训练阶段，适合需要频繁部署多个任务适配器的场景。
+$$h_\ell^{(t+1)}=h_\ell^{(t)}+\sigma\Big(\sum_{j\in\mathcal{N}(\ell)\cup\{\ell\}}\tfrac{1}{\sqrt{d_\ell d_j}}h_j^{(t)}\Theta^{(t)}\Big)$$
+
+传递完再映射回参数空间，得到 $\Delta\tilde{W}^{\text{final}}_\ell$。和固定的 cosine / Laplacian 正则不同，GNN 是根据层间结构和训练数据动态学习“哪些层该互相借力”，耦合强度不再写死。附录给了一个等价视角：这相当于做 Laplacian smoothing，压低层间漂移能量 $\sum_\ell\|u_{\ell+1}-u_\ell\|_2^2$，把相邻层余弦从约 0.34 提到约 0.62。
+
+**3. 训练期增强、推理期合并的插拔式接口：复杂度只留在训练，部署仍是零延迟 LoRA。**
+
+很多 PEFT 改进一旦引入动态路由、额外 adapter 或多分支推理，就会损失 LoRA 最大的工程优势——可合并、零额外延迟。StructLoRA 刻意把 IB 门控和 GNN 协调器都限制在训练阶段：最终落到模型里的只是 $W_0+\Delta\tilde{W}^{\text{final}}$，两个辅助模块在推理时整个丢弃，所以推理路径和原版 LoRA 完全一样，不需要额外前向、分类头或路由器。
+
+落地时论文默认在 attention 的 $W_q$、$W_v$ 上插 PEFT 模块，rank 和缩放沿用 LoRA 设置（如 $r=8,\alpha=16$）。因为复杂度只在训练期，StructLoRA 还能叠在 QLoRA、LoRA-FA、VeRA、AdapterFusion 之上当“增强层”，而不是互斥替代品，特别契合“离线微调一次、之后大规模部署多个任务适配器”的场景。
 
 ### 损失函数 / 训练策略
 

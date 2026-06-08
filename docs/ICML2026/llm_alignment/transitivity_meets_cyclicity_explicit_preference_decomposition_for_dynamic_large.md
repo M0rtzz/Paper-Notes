@@ -43,33 +43,31 @@ HRC 把人类偏好显式拆成正交的「传递标量分量」（BT 模型）+
 
 ### 整体框架
 
-训练分两阶段：(1) 在 Skywork-Reward-Preference-80K-v0.2 上训 HRC 偏好模型，三个 projection head 共享 LLM backbone（Gemma-2B-it 或 Llama-3.1-8B-Instruct）；(2) 在 UltraFeedback prompt 上跑 DSPPO 时变自博弈对齐，每一步用当前 HRC 模型出 preference signal 做 SPPO 风格 multiplicative weight update，但 HRC 内部 $s_T$ 和 $s_C$ 的权重按 $1 \pm \lambda/\sqrt{t}$ 调度。
+整套方法要做的事是：把人类偏好里「谁更好」的全局排序和「三者互克」的局部循环分开来学，再用一个时变的自博弈对齐流程把策略推到均衡。它分两阶段——先在 Skywork-Reward-Preference-80K-v0.2 上训一个 HRC 偏好模型，三个 projection head 共享同一个 LLM backbone（Gemma-2B-it 或 Llama-3.1-8B-Instruct）；再在 UltraFeedback 的 prompt 上跑 DSPPO 时变自博弈对齐，每一步都用当前的 HRC 模型出 preference signal 做 SPPO 风格的 multiplicative weight update，区别在于 HRC 内部传递得分 $s_T$ 和循环得分 $s_C$ 的权重会随训练步数按 $1 \pm \lambda/\sqrt{t}$ 动态调度。
 
-HRC 模型结构：共享 LLM hidden state $\mathbf{h}_{\mathbf{y}|\mathbf{x}}$，过三个 head——transitive head $r_\phi(\mathbf{y}|\mathbf{x}) = \mathrm{clip}(\mathbf{w}_r^\top \mathbf{h}, -\delta, \delta)$，cyclic head $\mathbf{v}(\mathbf{y}|\mathbf{x}) = \mathbf{W}_c \mathbf{h} / \|\mathbf{W}_c \mathbf{h}\|_2$（强制单位范数保证零均值条件），context gating $\mathbf{D}(\mathbf{x}) = \mathrm{diag}(\lambda(\mathbf{x})) \otimes \mathbf{I}_2$。最终得分 $s_{\mathrm{HRC}} = C_1(r(\mathbf{y}_w) - r(\mathbf{y}_l)) + C_2(\mathbf{v}_w^\top \mathbf{D}(\mathbf{x}) \mathbf{R}^{\succ} \mathbf{D}(\mathbf{x}) \mathbf{v}_l)$，BCE loss 端到端训练。
+HRC 模型本身的结构是：共享的 LLM hidden state $\mathbf{h}_{\mathbf{y}|\mathbf{x}}$ 经过三个 head——transitive head 给出标量 reward $r_\phi(\mathbf{y}|\mathbf{x}) = \mathrm{clip}(\mathbf{w}_r^\top \mathbf{h}, -\delta, \delta)$，cyclic head 给出单位向量 $\mathbf{v}(\mathbf{y}|\mathbf{x}) = \mathbf{W}_c \mathbf{h} / \|\mathbf{W}_c \mathbf{h}\|_2$，context gating 给出 $\mathbf{D}(\mathbf{x}) = \mathrm{diag}(\lambda(\mathbf{x})) \otimes \mathbf{I}_2$。最终偏好得分 $s_{\mathrm{HRC}} = C_1(r(\mathbf{y}_w) - r(\mathbf{y}_l)) + C_2(\mathbf{v}_w^\top \mathbf{D}(\mathbf{x}) \mathbf{R}^{\succ} \mathbf{D}(\mathbf{x}) \mathbf{v}_l)$ 用 BCE loss 端到端训练。
 
 ### 关键设计
 
-1. **HRC 偏好分解：BT + GPM 显式相加**:
+**1. HRC 偏好分解：把传递和循环显式拆成两路相加。**
 
-    - 功能：把人类偏好分成「全局层级」+「局部循环」两路并行学习，避免 GPM 一路通吃带来的容量挤压。
-    - 核心思路：用 Balduzzi et al. 2019 定理证明任何 zero-sum FFG 可唯一分解为传递分量 $\phi_T(\mathbf{v}, \mathbf{w}) = f(\mathbf{v}) - f(\mathbf{w})$ 和循环分量 $\phi_C(\mathbf{v}, \mathbf{w})$，且 $\phi_C$ 满足零积分条件 $\int \phi_C(\mathbf{v}, \mathbf{w}) d\mathbf{w} = 0$。Theorem 4.6 证明 BT 对应 $\phi_T$、GPM 对应 $\phi_C$（在零均值 embedding 条件下）。因此 $s_{\mathrm{HRC}} = (r(\mathbf{y}_i) - r(\mathbf{y}_j)) + \mathbf{v}_i^\top \mathbf{W} \mathbf{v}_j$ 是该分解的「标准实例化」。Theorem 4.7 进一步证明 GPM 单独无法保证 dominant 候选的表达——HRC 通过把 dominant 信号路由到独立的 BT 标量 head，结构上彻底回避这个问题。
-    - 设计动机：理论上 HRC 是 dim=$2d+1$ 的 constrained GPM（在 GPM embedding 上加一维 reward 作为短路），但因为它把 dominant 信号路由到独立的 head，结构上彻底回避 Theorem 4.7 的限制；推理复杂度 $O((2d+1)K)$ 跟 GPM 同阶。
+GPM 的结构缺陷在于它用一个 skew-symmetric 形式既建层级又建旋转，几何上不兼容——论文的 Theorem 4.7 证明 GPM 单独无法保证「dominant 候选可表示且不被局部循环挤掉」。HRC 的做法是把这两件事拆开并行学：偏好得分写成传递项加循环项 $s_{\mathrm{HRC}} = (r(\mathbf{y}_i) - r(\mathbf{y}_j)) + \mathbf{v}_i^\top \mathbf{W} \mathbf{v}_j$，前一项是标准 BT 的标量 reward 差、负责全局排序，后一项是 GPM 的 skew-symmetric 双线性形式、负责局部循环。这个 hybrid 形式不是拍脑袋拼出来的：借 Balduzzi et al. 2019 关于 Symmetric Zero-Sum FFG 的分解定理，任何 zero-sum 游戏都能唯一分解成传递分量 $\phi_T(\mathbf{v}, \mathbf{w}) = f(\mathbf{v}) - f(\mathbf{w})$ 加循环分量 $\phi_C(\mathbf{v}, \mathbf{w})$，且循环分量满足零积分条件 $\int \phi_C(\mathbf{v}, \mathbf{w}) d\mathbf{w} = 0$；Theorem 4.6 进一步证明在零均值 embedding 条件下 BT 恰好对应 $\phi_T$、GPM 恰好对应 $\phi_C$，于是 HRC 正是这个分解定理的标准实例化。
 
-2. **Context-aware gating + reward clipping + unit-norm 三件套**:
+之所以这样能绕开 Theorem 4.7 的限制，关键在于 HRC 把 dominant 信号路由到了一条独立的 BT 标量 head 上，不再和循环建模争抢同一块 embedding 球面的几何容量。形式上 HRC 可以看成一个 dim=$2d+1$ 的 constrained GPM（在 $2d$ 维 GPM embedding 上额外加一维 reward 作为「短路」直达全局排序），所以推理复杂度 $O((2d+1)K)$ 和 GPM 同阶，没有牺牲 scalability。
 
-    - 功能：保证 cyclic 分量的几何条件、控制 reward 分量的数值范围、根据 context 动态调节循环强度。
-    - 核心思路：clipping 把 $r_\phi$ 限制在 $[-\delta, \delta]$ 防止 reward 爆掉破坏 sigmoid 数值稳定；unit norm 让 GPM head 的 embedding 满足零均值条件（球面上各向同性 → $\mathbb{E}[\mathbf{v}] = \mathbf{0}$）满足 Theorem 4.6 的前提；context gating $\lambda(\mathbf{x}) \ge 0$ 让模型对不同 prompt 动态调整 cyclic 强度（如「问哪个 RPS 招法最好」开启循环，「问哪个回答更安全」基本关闭循环）。Table 2 消融显示 context gating 单独贡献 ~1% 平均 accuracy，是三件套里最重要的。
-    - 设计动机：原 GPM 没有 context 维度，所有 prompt 共享一个 skew-symmetric 矩阵，被「问什么都有循环」噪声拖累；HRC 通过 gating 让模型学会「这个 prompt 没循环就别给循环信号」，是 prompt 异质性的工程化解决。
+**2. Context gating + reward clipping + unit norm：三个让分解站得住的几何约束。**
 
-3. **DSPPO 时变博弈：先传递后循环的 curriculum 对齐**:
+光把两项加起来还不够，得让每一路各自的数值和几何条件成立。reward clipping 把 $r_\phi$ 限制在 $[-\delta, \delta]$，防止 reward 数值爆掉破坏 sigmoid 的数值稳定；unit norm 强制 cyclic head 输出单位向量，让 embedding 在球面上各向同性从而 $\mathbb{E}[\mathbf{v}] = \mathbf{0}$，这正是 Theorem 4.6「GPM 对应 $\phi_C$」所要求的零均值前提；context gating $\lambda(\mathbf{x}) \ge 0$ 则让模型按 prompt 动态调节循环强度——问「哪个 RPS 招法最好」时把循环打开，问「哪个回答更安全」时基本把循环关掉。
 
-    - 功能：把对齐过程从「锚定固定 oracle」改成「时变 oracle」，让策略先在传递骨架上稳住、再学循环细节，对应 curriculum learning。
-    - 核心思路：在 SPPO 的 multiplicative weight update 框架上把固定 $\mathbb{P}$ 换成时变 $\mathbb{P}_t = \sigma(s_t)$，定义 $s_t = (1 + \lambda/\sqrt{t}) s_T + (1 - \lambda/\sqrt{t}) s_C$。早期 $1+\lambda/\sqrt{t}$ 大、$1-\lambda/\sqrt{t}$ 小，传递分量主导；后期两者趋同，恢复 HRC 完整信号。Theorem 5.3 证明在 $\eta = \Theta(1/\sqrt{T})$ 下 mixture policy $\bar{\pi}_T$ 与 Nash 均衡的 duality gap 是 $O(1/\sqrt{T})$。
-    - 设计动机：直接用 HRC 完整信号对齐，早期 reward 信号和 cyclic 信号同时震荡，策略不知道往哪走；先用传递信号建立「这个 prompt 应该往这个大方向走」的全局共识，再学局部循环细节，相当于课程学习。$\lambda$ 也可以取负值得到「先循环后传递」做诊断，作者在附录里讨论。
+这套约束里 context gating 是最关键的。原 GPM 没有 context 维度，所有 prompt 共享同一个 skew-symmetric 矩阵，结果被「问什么都套一个循环」的噪声拖累；HRC 用 gating 让模型学会「这个 prompt 本就没循环就别硬给循环信号」，本质是把 prompt 异质性工程化。消融（Table 2）里它单独就贡献约 1% 的平均 accuracy，是三件套里最重要的一个。
+
+**3. DSPPO 时变博弈：先稳传递骨架再补循环细节的 curriculum 对齐。**
+
+如果直接拿 HRC 的完整信号去对齐，早期 reward 信号和 cyclic 信号同时震荡，策略根本不知道该往哪走。DSPPO 的做法是把 SPPO 里那个固定的 oracle $\mathbb{P}$ 换成时变 oracle $\mathbb{P}_t = \sigma(s_t)$，其中 $s_t = (1 + \lambda/\sqrt{t}) s_T + (1 - \lambda/\sqrt{t}) s_C$。训练早期 $1+\lambda/\sqrt{t}$ 大、$1-\lambda/\sqrt{t}$ 小，传递分量主导，策略先在「这个 prompt 大方向往哪走」的全局共识上稳住；随着 $t$ 增大两个系数趋同，逐步恢复 HRC 的完整信号去学局部循环细节——这正是一种课程学习。理论上 Theorem 5.3 保证在学习率 $\eta = \Theta(1/\sqrt{T})$ 下，mixture policy $\bar{\pi}_T$ 与 Nash 均衡的 duality gap 收敛到 $O(1/\sqrt{T})$。$\lambda$ 还可以取负值得到「先循环后传递」的反向调度用作诊断，作者在附录里有讨论。
 
 ### 损失函数 / 训练策略
 
-HRC 模型用 BCE 损失 $\mathcal{L}(\theta) = -\mathbb{E}[\log \sigma(C_1(r(\mathbf{y}_w) - r(\mathbf{y}_l)) + C_2 \mathbf{v}_w^\top \mathbf{D}(\mathbf{x}) \mathbf{R}^{\succ} \mathbf{D}(\mathbf{x}) \mathbf{v}_l)]$ 端到端训练，$C_1, C_2$ 是 hyperparameter。DSPPO 用 SPPO 的 MSE loss 形式但 $\mathbb{P}_t$ 按 $s_t$ 算，$\eta = \Theta(1/\sqrt{T})$，KL 正则在 ratio 部分自动消失（行为策略均匀假设）。
+HRC 模型用 BCE 损失 $\mathcal{L}(\theta) = -\mathbb{E}[\log \sigma(C_1(r(\mathbf{y}_w) - r(\mathbf{y}_l)) + C_2 \mathbf{v}_w^\top \mathbf{D}(\mathbf{x}) \mathbf{R}^{\succ} \mathbf{D}(\mathbf{x}) \mathbf{v}_l)]$ 端到端训练，$C_1, C_2$ 是 hyperparameter。DSPPO 沿用 SPPO 的 MSE loss 形式但 $\mathbb{P}_t$ 按 $s_t$ 计算，$\eta = \Theta(1/\sqrt{T})$，KL 正则项在 ratio 部分自动消失（行为策略均匀假设下）。
 
 ## 实验关键数据
 

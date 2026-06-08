@@ -43,33 +43,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ATC 扩展经典 CUSUM 到多变点追踪。每个时刻 $t$ 维护：
-- 最后一次重启时刻 $r$（初始 $r = 1$）；
-- 累积和 $G_t = \sum_{i=1}^t X_i$，便于快速算段均值。
-
-两阶段：
-- **检测**：算 CUSUM 统计量 $C_t^r = \max_{r < k < t} \hat{D}_{k,t}^r$，对比时变阈值 $\gamma_t^r$。超阈值则重启 $r \leftarrow t$。
-- **预测**：输出最后完整段的均值 $\hat{\mu}_t = \frac{1}{t-r} \sum_{i=r}^{t-1} X_i$。
+ATC 把经典 CUSUM 从"单变点检测"扩到"多变点在线追踪"，全程不需要预知地平线 $T$ 和变点数 $S$。每个时刻 $t$ 它只维护两样东西：最后一次重启时刻 $r$（初始 $r=1$）和累积和 $G_t = \sum_{i=1}^t X_i$（用来 $O(1)$ 算段均值）。每步走检测和预测两件事——检测时算 CUSUM 统计量 $C_t^r = \max_{r<k<t}\hat{D}_{k,t}^r$ 对比时变阈值 $\gamma_t^r$，超阈值就把 $r$ 重启到 $t$；预测时直接输出最后完整段的均值 $\hat{\mu}_t = \frac{1}{t-r}\sum_{i=r}^{t-1}X_i$。
 
 ### 关键设计
 
-1. **CUSUM 检测统计量**:
+**1. CUSUM 检测统计量：在当前段内扫遍所有可能的分割点，找最强的变点证据。**
 
-    - 功能：在当前重启区间 $[r, t)$ 内扫所有分割点 $k$，找最强变点证据。
-    - 核心思路：$\hat{D}_{k,t}^r = \frac{1}{\sigma} \sqrt{\frac{(k-r)(t-k)}{t-r}} \left| \bar{X}_{r:k-1} - \bar{X}_{k:t-1} \right|$。两段均值差异的标准化统计量，类似 GLR 但适应未知前后分布。在真实变点 $\tau_j$ 处 SNR 为 $\text{SNR}_j^*(t) = \frac{(\tau_j - \tau_{j-1})(t - \tau_j)}{t - \tau_{j-1}} \frac{\Delta_j^2}{\sigma^2}$，$\Delta_j$ 是跳幅。
-    - 设计动机：SNR 随 $t$ 单调递增，足够大的变化在对数延迟内被检出；扫描所有 $k$ 保证不漏掉位置未知的变点。
+变点的位置事先未知，所以不能只盯某一个候选点，否则错过位置就漏检。ATC 在当前重启区间 $[r,t)$ 里扫所有分割点 $k$，算两段均值差的标准化统计量 $\hat{D}_{k,t}^r = \frac{1}{\sigma}\sqrt{\frac{(k-r)(t-k)}{t-r}}\left|\bar{X}_{r:k-1} - \bar{X}_{k:t-1}\right|$，类似 GLR 但不假设前后分布已知。在真实变点 $\tau_j$ 处它的信噪比是 $\text{SNR}_j^*(t) = \frac{(\tau_j - \tau_{j-1})(t-\tau_j)}{t-\tau_{j-1}}\frac{\Delta_j^2}{\sigma^2}$（$\Delta_j$ 是跳幅）。这个 SNR 随 $t$ 单调递增，意味着只要变化足够大，它就会在对数级延迟内被检出，而扫遍所有 $k$ 保证了位置未知也不会漏。
 
-2. **时变自适应阈值（核心创新）**:
+**2. 时变自适应阈值：用一条随段长增长的阈值线，自动平衡"稳"和"灵"。**
 
-    - 功能：动态调整阈值平衡稳定性（虚警低）和适应性（真变点快速检出），不需要预知 $T$ 和 $S$。
-    - 核心思路：$\gamma_t^r = \sqrt{6 \log(t - r) + 2 \log(1/\alpha_r) + 2 \log(\pi^2/3)}$，其中 $\alpha_r = \frac{6 \alpha}{\pi^2 r^2}$ 是按重启时刻递减分配的累积虚警预算，满足 $\sum_r \alpha_r \leq \alpha$。检测条件 $C_t^r \geq \gamma_t^r$。
-    - 设计动机：$\log(t - r)$ 这个增长速度恰好保证扫描统计量在当前段所有 $k$、所有 $t$ 上的均匀集中（concentration）；$\alpha_r$ 的级数收敛保证 anytime 虚警总和有界；天然支持真正的在线 / anytime 操作。
+固定阈值是个两难：调高了真变点反应慢，调低了虚警满天飞，而且还得预知 $T$。ATC 让阈值随时间走——$\gamma_t^r = \sqrt{6\log(t-r) + 2\log(1/\alpha_r) + 2\log(\pi^2/3)}$，其中 $\alpha_r = \frac{6\alpha}{\pi^2 r^2}$ 是按重启时刻递减分配的虚警预算，满足 $\sum_r \alpha_r \leq \alpha$，检测条件就是 $C_t^r \geq \gamma_t^r$。这里 $\log(t-r)$ 的增速不是随便选的：它恰好保证扫描统计量在当前段所有 $k$、所有 $t$ 上均匀集中（concentration），不会因为扫得多就虚警爆炸；而 $\alpha_r$ 的级数收敛保证 anytime 虚警总和有界，于是算法天然支持真正的在线操作，不依赖任何"可检测性"假设。
 
-3. **内生混淆量化（SNR 退化界）**:
+**3. 内生混淆量化（SNR 退化界）：证明"漏检会拖累后续检测，但拖不垮"。**
 
-    - 功能：定量约束"某个变点漏检时对后续变点检测功率的负面影响"，确保不级联崩溃。
-    - 核心思路：若第 $j$ 个变点漏检，参考均值变成混合 $\mu_{\text{pre}}^{\text{eff}}(r, j) = \frac{\sum_{\ell = i}^{j-1} n_\ell \mu_\ell}{\sum n_\ell}$，有效跳幅 $\Delta_j^{\text{eff}} = |\mu_{\text{pre}}^{\text{eff}} - \mu_j|$ 可能远小于真实 $\Delta_j$，对应有效 SNR 也下降。Proposition 3.1 给出 $(\text{SNR}_j^*(t) - \text{SNR}_j^{\text{eff}}(t; r))_+ \leq C \log\frac{\tau_j - r + 1}{\alpha_r}$ 的**对数级**退化上界。
-    - 设计动机：这是全文理论核心——说明漏检会延迟后续检出但不会让算法崩盘，从而允许"选择性检测"成立。
+多变点场景最阴险的陷阱是：某个变点漏检后，旧数据残留在参考统计量里污染后续检测基准，学习器自己的失败会恶化未来任务，理论上可能级联崩盘。ATC 把这件事量化死了：若第 $j$ 个变点漏检，参考均值变成混合 $\mu_{\text{pre}}^{\text{eff}}(r,j) = \frac{\sum_{\ell=i}^{j-1}n_\ell\mu_\ell}{\sum n_\ell}$，有效跳幅 $\Delta_j^{\text{eff}} = |\mu_{\text{pre}}^{\text{eff}} - \mu_j|$ 可能远小于真实 $\Delta_j$，对应 SNR 也下降。但 Proposition 3.1 给出退化只有**对数级**：$(\text{SNR}_j^*(t) - \text{SNR}_j^{\text{eff}}(t;r))_+ \leq C\log\frac{\tau_j - r + 1}{\alpha_r}$。这是全文理论的支点——它说明漏检只会延迟后续检出、不会让算法崩，于是"选择性检测"（不必抓住每个变点）才站得住脚。
 
 ### 训练策略 / 目标
 最小化动态遗憾 $\mathcal{R}_T(\pi) = \mathbb{E}[\sum_{t=2}^T (\hat{\mu}_t - \mu_t)^2]$。无优化、无训练，纯在线追踪。

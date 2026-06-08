@@ -45,29 +45,33 @@ tags:
 
 ### 关键设计
 
-1. **Part-of-Speech-based Cross-Attention Map Selection**：
+**1. 名词 token 筛选：只校准真正承载空间语义的那部分 attention。**
 
-    - **功能**：只提取名词 token 的 attention maps 用于 CTCal 损失，忽略冠词（"the"）、连词（"and"）等无空间语义的 token。
-    - **核心思路**：用 Stanza 做词性分析，$\mathcal{Y}_{\text{noun}}$ 为名词集合，$\mathcal{L}_{\text{CTCal}} = \frac{1}{N_{\text{noun}}} \sum_{\mathbf{y}_i \in \mathcal{Y}_{\text{noun}}} \mathcal{D}(\mathbf{A}_{\text{stu},\mathbf{y}_i}, \mathbf{A}_{\text{tea},\mathbf{y}_i})$
-    - **设计动机**：消融实验表明，对所有 token 施加约束反而降低性能——因为非名词 token 的 attention maps 不包含有意义的空间语义信息，引入噪声干扰。
+直接拿大时间步的 cross-attention maps 去对齐小时间步的版本会踩一个坑：prompt 里像 "the"、"and"、"of" 这些冠词、连词、介词本身不指向画面里的任何物体，它们的 attention 分布是发散且无意义的，逼着 student 去拟合这些噪声反而把有用的物体定位也带偏了。CTCal 因此先用 Stanza 对 prompt 做词性标注，挑出名词集合 $\mathcal{Y}_{\text{noun}}$，校准损失只在这些 token 上累加：
 
-2. **Pixel-Semantic Space Joint Optimization**：
+$$\mathcal{L}_{\text{CTCal}} = \frac{1}{N_{\text{noun}}} \sum_{\mathbf{y}_i \in \mathcal{Y}_{\text{noun}}} \mathcal{D}(\mathbf{A}_{\text{stu},\mathbf{y}_i}, \mathbf{A}_{\text{tea},\mathbf{y}_i})$$
 
-    - **功能**：同时在像素空间和语义空间对齐 attention maps。引入轻量自编码器 $(f_{\text{attn}}^{\text{enc}}, f_{\text{attn}}^{\text{dec}})$，加入重建代理任务防止模式崩塌。
-    - **核心公式**：
-    $\mathcal{L}_{\text{CTCal}} = \lambda_1 \underbrace{\mathcal{D}(\mathbf{A}_{\text{stu}}, \mathbf{A}_{\text{tea}})}_{\text{Pixel}} + \lambda_2 \underbrace{\mathcal{D}(f^{\text{enc}}(\mathbf{A}_{\text{stu}}), f^{\text{enc}}(\mathbf{A}_{\text{tea}}))}_{\text{Semantic}} + \lambda_3 \underbrace{\mathcal{D}(f^{\text{dec}}(\mathbf{A}_{\text{tea}}), \mathbf{A}_{\text{tea}})}_{\text{Reconstruction}}$
-    - **设计动机**：像素级对齐捕获空间位置信息，语义级对齐捕获高层语义一致性，重建任务防止编码器退化。
+其中 $\mathcal{D}$ 度量 student 与 teacher 两张 attention map 的差异。这一步看似简单却是全篇最关键的取舍——消融里把约束施加到全部 token（naive 版）反而让 Color 从 0.643 掉到 0.629、2D-Spatial 从 0.178 掉到 0.169，只有筛掉非名词后各项才转正。
 
-3. **Subject Response Alignment Regularization**：
+**2. 像素—语义双空间联合对齐：既对齐位置，也对齐含义，还防编码器塌掉。**
 
-    - **功能**：将所有主体（名词）的 attention 响应对齐到响应最高的主体：
-    $\mathcal{R}_{\text{subject}} = \frac{1}{N_{\text{noun}}} \sum \text{ReLU}(\mathcal{S}_{\text{attn}} - \max(\mathbf{A}_{\text{stu},\mathbf{y}_i}) - \tau)$
-    - **设计动机**：防止高响应主体压制低响应主体，导致后者无法在生成图像中正确渲染（如 "cat and dog" 只生成 cat）。
+只在像素层面让两张 map 逐点接近，捕获的是"物体落在哪"的空间信息，但抓不住"这块响应代表的是什么语义"这种高层一致性；而如果直接引入一个编码器把 map 投到语义空间再对齐，编码器又容易学成把所有输入都映射到同一点的退化解（模式崩塌）。CTCal 用一个轻量自编码器 $(f^{\text{enc}}, f^{\text{dec}})$ 同时管这两件事，并补一个重建代理任务给编码器"上锁"：
 
-4. **Timestep-aware Adaptive Weighting**：
+$$\mathcal{L}_{\text{CTCal}} = \lambda_1 \underbrace{\mathcal{D}(\mathbf{A}_{\text{stu}}, \mathbf{A}_{\text{tea}})}_{\text{Pixel}} + \lambda_2 \underbrace{\mathcal{D}(f^{\text{enc}}(\mathbf{A}_{\text{stu}}), f^{\text{enc}}(\mathbf{A}_{\text{tea}}))}_{\text{Semantic}} + \lambda_3 \underbrace{\mathcal{D}(f^{\text{dec}}(\mathbf{A}_{\text{tea}}), \mathbf{A}_{\text{tea}})}_{\text{Reconstruction}}$$
 
-    - **功能**：$\lambda_t = t_{\text{stu}} / T_{\text{train}}$，大时间步下 CTCal 权重更大，小时间步下扩散损失主导。
-    - **设计动机**：小时间步下扩散损失本身已足以建立对齐，大时间步下才需要 CTCal 的显式校准。
+像素项保证空间位置对得上，语义项让两张 map 在编码后的高层表征上也一致，重建项强迫编码器保留足够信息能还原回 teacher map、从而堵死"把一切压成常数"的捷径。
+
+**3. 主体响应对齐正则：别让强势主体把弱势主体挤没。**
+
+组合生成里有个典型失败模式：prompt 写 "cat and dog"，但模型只画出 cat——因为 cat 这个 token 的 attention 响应远高于 dog，强响应主体在去噪早期就抢占了画面，弱响应主体始终没能被渲染出来。为此 CTCal 加一项正则，把每个名词主体的响应往当前最高响应主体看齐：
+
+$$\mathcal{R}_{\text{subject}} = \frac{1}{N_{\text{noun}}} \sum \text{ReLU}\big(\mathcal{S}_{\text{attn}} - \max(\mathbf{A}_{\text{stu},\mathbf{y}_i}) - \tau\big)$$
+
+ReLU 配合阈值 $\tau$ 只在主体间响应差距超过一定容忍度时才施加惩罚，把落后主体的响应"抬"上来，让多个物体能更均衡地占据画面，而不是被单一主体压制。
+
+**4. 时间步自适应加权：把校准力度放在真正需要的大时间步上。**
+
+CTCal 的初衷就是补救大时间步（高噪声）下退化的对齐，而小时间步本身对齐就已经很好、扩散损失足以维持，这时再强行校准是多此一举。于是它给校准项配一个随时间步线性增长的权重 $\lambda_t = t_{\text{stu}} / T_{\text{train}}$：时间步越大权重越高、CTCal 越主导，时间步越小则让原本的扩散损失唱主角。这样监督信号被精准投放到瓶颈所在的高噪声区间，而不是均匀摊到全程。
 
 ### 损失函数 / 训练策略
 - $\mathcal{L} = \mathcal{L}_{\text{diffusion}} + \lambda_t \mathcal{L}_{\text{CTCal}}$

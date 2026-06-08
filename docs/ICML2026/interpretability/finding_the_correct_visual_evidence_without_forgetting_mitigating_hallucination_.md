@@ -39,27 +39,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ILVAD 分两阶段、纯在 attention 权重上做手脚，不改架构、不改解码。给定图像 $I$ 和 query $q$，先用模型跑一遍前 $T$ 个生成 token，得到各层各头的 attention 权重 $\mathbf{A}^{l,h}$。**Stage 1（证据定位）**：在视觉敏感头上对前 $T$ 步生成 token 到视觉 token 的注意力做平均，按层做阈值二值化得到每层"显著视觉 token"集合，再做层间差分并累积得到证据显著性图 $\hat{\mathbf{S}} \in [0,1]^{|\mathbf{X}_v|}$。**Stage 2（证据守护）**：在后续每个生成步上，用 $\hat{\mathbf{S}}$ 同时对视觉证据 attention 和"对证据敏感的文本 token" attention 做乘性加权增强，再重新归一化得到 $\hat{\mathbf{A}}$。整套 pipeline 与具体 LVLM 解耦，对 LLaVA-1.5/NeXT、Qwen2/3-VL、InternVL3 都通用。
+ILVAD 要解决的是"模型既没看对视觉证据、看对了又在长文生成中逐渐遗忘"这两个问题，而它选择完全不动架构、不动解码，只在 attention 权重上做文章。给定图像 $I$ 和 query $q$，方法先用模型跑一遍前 $T$ 个生成 token，拿到各层各头的注意力权重 $\mathbf{A}^{l,h}$，然后分两步：第一步**证据定位**——把"哪些视觉 token 才是真证据"提炼成一张显著性图 $\hat{\mathbf{S}} \in [0,1]^{|\mathbf{X}_v|}$；第二步**证据守护**——在之后每个生成步上用这张图同时加权视觉证据 token 和"扎根于证据"的文本 token，再重新归一化得到 $\hat{\mathbf{A}}$。整套流程与具体 LVLM 解耦，对 LLaVA-1.5/NeXT、Qwen2/3-VL、InternVL3 都通用。
 
 ### 关键设计
 
-1. **层间差分构造证据显著性图（ILVAD saliency map）**:
+**1. 层间差分构造证据显著性图：用同一个算子同时滤掉 sink、定位证据。**
 
-    - 功能：从混在一起的"视觉证据 + visual sink + 噪声"中只挑出真正的证据 token，作为后续增强的目标。
-    - 核心思路：对每层 $l$ 先按各头对视觉的总注意力排序，保留 top 50% 视觉敏感头 $\mathbf{H}_v^l$；在这些头上对前 $T$ 个生成 token 到每个视觉 token $j$ 的注意力求平均得到 $\bar{\mathbf{A}}_j^l$；用阈值规则 $\tilde{\mathbf{A}}_j^l = \mathbb{1}[\bar{\mathbf{A}}_j^l > \tau \cdot \mathrm{mean}(\bar{\mathbf{A}}^l)]$ 在每层选出显著 token；关键一步是层间差分 $\mathbf{S} = \sum_{l=1}^{L-1} \max(\tilde{\mathbf{A}}^{l+1} - \tilde{\mathbf{A}}^l, 0)$，只累积"在 $l{+}1$ 新被激活但前一层没激活"的 token，最后归一化为 $\hat{\mathbf{S}}$。
-    - 设计动机：visual sink 是"层间持续亮"的，差分项 $\max(\tilde A^{l+1}-\tilde A^l,0)$ 对它几乎为 0；真正的视觉证据是"只在特定层突然亮起来"的，差分会捕捉到这种"出现事件"——这就把"过滤 sink"和"定位证据"用同一个差分算子一并解决，不需要任何监督。
+视觉 token 里混着真正的证据、visual sink 和噪声，下游增强要想有的放矢就得先把证据单独挑出来。做法是先在每层 $l$ 按各头对视觉的总注意力排序、保留 top 50% 视觉敏感头 $\mathbf{H}_v^l$，在这些头上对前 $T$ 个生成 token 到每个视觉 token $j$ 的注意力求平均得到 $\bar{\mathbf{A}}_j^l$，再用阈值规则 $\tilde{\mathbf{A}}_j^l = \mathbb{1}[\bar{\mathbf{A}}_j^l > \tau \cdot \mathrm{mean}(\bar{\mathbf{A}}^l)]$ 在每层二值化出"显著 token"。真正的关键一步是层间差分 $\mathbf{S} = \sum_{l=1}^{L-1} \max(\tilde{\mathbf{A}}^{l+1} - \tilde{\mathbf{A}}^l, 0)$：它只累积"在第 $l{+}1$ 层新被点亮、但前一层还没亮"的 token，最后归一化为 $\hat{\mathbf{S}}$。这一行算子之所以奏效，正是因为 visual sink 在几乎每一层都持续亮着，差分项 $\max(\tilde A^{l+1}-\tilde A^l,0)$ 对它趋近于 0；而真正的视觉证据是"只在某些特定层突然亮起来"的，差分恰好捕捉这种"出现事件"——于是过滤 sink 和定位证据被同一个无监督的差分算子一并解决。
 
-2. **证据加权的视觉注意力增强（Evidence-guided Visual Enhancement）**:
+**2. 证据加权的视觉注意力增强：放大幅度严格随"是不是证据"调节。**
 
-    - 功能：在生成过程中持续抬高对视觉证据 token 的注意力，对抗"生成越长越遗忘视觉"这一现象。
-    - 核心思路：对每个文本 token $i$ 和每个头 $(l,h)$ 计算"证据率" $\mathbf{e}_i^{l,h} = \sum_{j \in \mathbf{X}_v} \hat{\mathbf{S}}_j \mathbf{A}_{i,j}^{l,h} / \sum_{j \in \mathbf{X}_v} \mathbf{A}_{i,j}^{l,h}$，挑出每层 top 50% 证据敏感头集合 $\mathbf{H}_e^l$；只对这些头用指数放大 $\hat{\mathbf{A}}_{i,j}^{l,h} = \mathbf{A}_{i,j}^{l,h} \cdot \exp(\alpha \hat{\mathbf{S}}_j)$，强度 $\alpha$ 越大、证据 token 被放得越突出。
-    - 设计动机：之前 VAF 这类方法对所有视觉 token 一视同仁地放大，等于把 sink 也放大了；这里用 $\hat{\mathbf{S}}_j$ 作为乘子让放大幅度严格随"是不是证据"调节，且只在证据敏感头上操作，避免污染那些本身就负责语义/语言建模的头。
+光有显著性图还不够，生成越长模型对视觉的注意力衰减得越厉害，必须在每步把证据 token 的注意力主动抬起来。这里先给每个文本 token $i$ 和每个头 $(l,h)$ 算一个"证据率" $\mathbf{e}_i^{l,h} = \sum_{j \in \mathbf{X}_v} \hat{\mathbf{S}}_j \mathbf{A}_{i,j}^{l,h} / \sum_{j \in \mathbf{X}_v} \mathbf{A}_{i,j}^{l,h}$，据此挑出每层 top 50% 的证据敏感头 $\mathbf{H}_e^l$，只在这些头上做指数放大 $\hat{\mathbf{A}}_{i,j}^{l,h} = \mathbf{A}_{i,j}^{l,h} \cdot \exp(\alpha \hat{\mathbf{S}}_j)$，强度 $\alpha$ 越大证据 token 被推得越突出。和 VAF 那类"对所有视觉 token 一视同仁放大"（等于把 sink 也放大了）相比，这里用 $\hat{\mathbf{S}}_j$ 当乘子让放大幅度严格跟着"是不是证据"走，而且只在证据敏感头上动手，不去污染那些本就负责语义/语言建模的头。
 
-3. **证据扎根的文本 token 增强（Evidence-guided Text Enhancement）**:
+**3. 证据扎根的文本 token 增强：让"当时真看了图"的前文 token 更有话语权。**
 
-    - 功能：在文本 token 之间做选择性强调——让那些"产生时确实看图了"的文本 token 在后续上下文中权重更高，从而抑制纯语言先验主导的 token 继续滚雪球。
-    - 核心思路：对每个已生成的文本 token $i$ 计算其"证据权重" $\mathbf{w}_i = \frac{1}{L \cdot |\mathbf{H}_t^l|} \sum_{h,l,j} \hat{\mathbf{S}}_j \mathbf{A}_{i,j}^{l,h}$（即它在所有层、文本敏感头上对证据 token 的累计注意力），归一化为 $\hat{\mathbf{w}} \in [0,1]^{|\mathbf{X}_t|}$；再用 $\hat{\mathbf{A}}_{i,j}^{l,h} = \mathbf{A}_{i,j}^{l,h} \cdot (\hat{\mathbf{w}}_i + \beta)$ 在文本敏感头上调整文本 token 之间的注意力，$\beta$ 控制基线（$\beta=0$ 时会把所有文本压死，所以必须留一个保护项）。
-    - 设计动机：仅放大视觉端只解决"看图"，但生成时模型还会大量从前文 token 抄答案——如果前文 token 是幻觉，错误会传递下去；用"它当时看了多少证据"来给前文 token 打分并加权，可以让后续 step 更倾向于参考"扎根"的 token、压制"凭语感"的 token。
+仅放大视觉端只解决"看哪里"，但生成时模型还会大量从前文 token 抄答案，一旦前文是幻觉，错误就会滚雪球传递下去。为此对每个已生成的文本 token $i$ 算一个"证据权重" $\mathbf{w}_i = \frac{1}{L \cdot |\mathbf{H}_t^l|} \sum_{h,l,j} \hat{\mathbf{S}}_j \mathbf{A}_{i,j}^{l,h}$（即它在所有层、所有文本敏感头上对证据 token 的累计注意力），归一化为 $\hat{\mathbf{w}} \in [0,1]^{|\mathbf{X}_t|}$，再在文本敏感头上用 $\hat{\mathbf{A}}_{i,j}^{l,h} = \mathbf{A}_{i,j}^{l,h} \cdot (\hat{\mathbf{w}}_i + \beta)$ 调整文本 token 之间的注意力，其中 $\beta$ 是基线保护项（$\beta=0$ 会把所有文本一刀切压死，所以必须留一项）。本质上是用"它当时看了多少证据"给前文 token 打分，让后续 step 更倾向参考"扎根"的 token、压制"凭语感"的 token——和视觉端共用同一张 $\hat{\mathbf{S}}$，工程代价极低。
 
 ### 损失函数 / 训练策略
 **完全 train-free**。所有操作都在 inference 时直接修改 attention 权重，再做标准的 softmax 归一化即可。关键超参：$\tau$（每层显著阈值，默认 $5$）、$\alpha$（视觉增强强度，LLaVA-NeXT 用 $3$、其他模型用 $5$）、$\beta$（文本增强基线，判别式 benchmark 用 $1$、生成式 benchmark 用 $0.2{-}0.5$）、$T$（用于提取显著性图的前 $T$ 步，默认 $10$）、视觉/证据/文本敏感头比例 $\rho=0.5$。

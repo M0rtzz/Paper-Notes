@@ -41,30 +41,21 @@ SDB 把模态翻译重写为"在所有满足边缘约束的耦合集合 $\mathca
 ## 方法详解
 
 ### 整体框架
-沿用 LDDBM 的双向扩散桥架构：模态特定编码器 $E_\mathcal{X}, E_\mathcal{Y}$ 把 $x\in\mathcal{X}, y\in\mathcal{Y}$ 映到共享 latent，桥在 latent 学，前向 $\mathcal{X}\to\mathcal{Y}$ 的 score 为 $s_{\mathcal{X}\to\mathcal{Y}}(z,t)$、反向为 $s_{\mathcal{Y}\to\mathcal{X}}(z,t)$。每个训练 step 同时优化四个目标的加权和（公式 10）：$\mathcal{L}_{total}=\mathcal{L}_{DSM}+\lambda_{end}\mathcal{L}_{cycle}^{end}+\lambda_{traj}\mathcal{L}_{cycle}^{traj}+\lambda_{pair}\mathbf{1}_{(x,y)\in\mathcal{D}_{pair}}\mathcal{L}_{pair}$，全部 $\lambda=1$。当 $\rho>0$ 时第四项在该子集生效，$\rho=0$ 时纯启发式跑得起来。
+SDB 要解决的是"只给定两侧边缘 $p_\mathcal{X}, p_\mathcal{Y}$、成对标签可有可无时，如何在无穷多个可行耦合集合 $\mathcal{P}$ 里挑出一个语义对、分布有效、几何可逆的 coupling"。它沿用 LDDBM 的双向扩散桥骨架：模态特定编码器 $E_\mathcal{X}, E_\mathcal{Y}$ 把 $x, y$ 投到共享 latent，桥在 latent 上学前向 score $s_{\mathcal{X}\to\mathcal{Y}}(z,t)$ 与反向 score $s_{\mathcal{Y}\to\mathcal{X}}(z,t)$；关键改动是每个训练 step 同时优化四个可独立增删的几何约束的加性组合，把原本压在成对数据身上的三件事（对应 / 有效 / 可逆）拆给不同启发式承担，因而 $\rho=0$ 纯启发式也能跑、$\rho>0$ 时 paired 项只在成对子集上追加。
 
 ### 关键设计
 
-1. **端点边缘匹配 + WTA 分配 (Marginal Matching with Winner-Takes-All)**:
+**1. 端点边缘匹配 + WTA 分配：在无成对监督下挑出"最相容"的耦合**
 
-    - 功能：在无 / 半成对设置下保证 bridge 终态落在目标边缘 $p_\mathcal{X}$ 上，同时缓解"任意配对都能优化 DSM"的退化耦合问题。
-    - 核心思路：从两边独立采样 $x\sim p_\mathcal{X}, y\sim p_\mathcal{Y}$，对每个 target $z_0=E_\mathcal{X}(x)$ 抽 $K$ 个条件候选 $\{y^{(k)}\}_{k=1}^K\sim p_\mathcal{Y}$，算 DSM 损失 $\mathcal{L}_{DSM}=\mathbb{E}\|s_\theta(z_t,t|y)-\nabla_{z_t}\log q(z_t|z_0)\|_2^2$，只对 $k^\star=\arg\min_k \mathcal{L}_{DSM}(z_0,y^{(k)})$ 反传——选当前 bridge 最能解释 target 的条件。为防止"少数低信息量 $y$ 被反复挑中"造成 condition dominance，加入容量约束 $C_y=2$：每个候选 $y^{(i)}$ 一个 epoch 内最多被选 2 次。
-    - 设计动机：纯随机配对的 DSM 在 $\rho=0$ 下能学到任意混合的耦合（mode mixing），WTA 是经典优化启发式把"局部最相容"的候选挑出来缩小耦合不确定性；容量约束又防止 WTA 退化成"少数 $y$ 解释所有 $x$"。注意作者明确说 WTA 不是 identifiability 保证，只是减小耦合歧义的优化技巧。
+无 / 半成对设置最大的退化风险是——随机把任意 $x$ 配任意 $y$ 都能把 DSM 损失压低，于是模型学到的是混在一起的 mode mixing 耦合而非真实对应。SDB 的做法是从两侧独立采样 $x\sim p_\mathcal{X}, y\sim p_\mathcal{Y}$，对每个 target $z_0=E_\mathcal{X}(x)$ 抽 $K$ 个条件候选 $\{y^{(k)}\}_{k=1}^K\sim p_\mathcal{Y}$，逐个算去噪 score matching 损失 $\mathcal{L}_{DSM}=\mathbb{E}\|s_\theta(z_t,t|y)-\nabla_{z_t}\log q(z_t|z_0)\|_2^2$，再只对 $k^\star=\arg\min_k \mathcal{L}_{DSM}(z_0,y^{(k)})$ 这个"当前 bridge 最能解释 target 的候选"反传。这本质是一个经典 winner-takes-all 优化启发式：它不保证 identifiability，只是把局部最相容的配对挑出来、缩小耦合的不确定性，从而把终态拉回目标边缘 $p_\mathcal{X}$。为了避免 WTA 退化成"少数低信息量的 $y$ 被反复选中去解释所有 $x$"（condition dominance），再加一条容量约束 $C_y=2$：每个候选 $y^{(i)}$ 在一个 epoch 内最多被选 2 次，强制选择面铺开。
 
-2. **双层 Cycle Consistency (端点级 + 轨迹级)**:
+**2. 双层 Cycle Consistency：端点级 + 轨迹级一起逼近可逆**
 
-    - 功能：约束 bridge 在端点和整条轨迹上都近似可逆，惩罚不可逆的信息丢失模式（mode dropping、source/target 任意混合）。
-    - 核心思路：设前向 stochastic flow $\Phi_{\mathcal{X}\to\mathcal{Y}}$，反向 $\Phi_{\mathcal{Y}\to\mathcal{X}}$。端点级 $\mathcal{L}_{cycle}^{end}=\mathbb{E}\|\hat z_0-z_0\|_2^2$ 其中 $\hat z_0=\Phi_{\mathcal{Y}\to\mathcal{X}}\circ\Phi_{\mathcal{X}\to\mathcal{Y}}(z_0)$；轨迹级在前向轨迹 $\{z_t^{X\to Y}\}$ 与反向轨迹 $\{z_{T-t}^{Y\to X}\}$ 配对时刻上求 $\mathcal{L}_{cycle}^{traj}=\mathbb{E}[w(t)\|z_t^{X\to Y}-z_{T-t}^{Y\to X}\|_2^2]$，权重 $w(t)=1/(\sigma_t^2+\epsilon)$ 对尺度变化做归一化。
-    - 设计动机：CycleGAN 的端点 cycle 是确定性映射，扩散桥本身随机所以端点 cycle 不足；轨迹级把约束扩展到整条 stochastic path，强制"前后向走的是同一条隧道"，等价于一种 trajectory-level identifiability 正则。两层组合使可逆性既约束粗粒度（终点）又约束细粒度（路径），实证显示 trajectory 项把 unpaired 内容准确率从 16% 拉到 87%。
+边缘对齐只管"落在目标分布上"，管不了信息是否可逆，模型仍可能 mode dropping。SDB 用 cycle 一致性补这一刀，且做了两层。端点级沿用 CycleGAN 思路，设前向 stochastic flow $\Phi_{\mathcal{X}\to\mathcal{Y}}$、反向 $\Phi_{\mathcal{Y}\to\mathcal{X}}$，约束往返回到原点 $\mathcal{L}_{cycle}^{end}=\mathbb{E}\|\hat z_0-z_0\|_2^2$，其中 $\hat z_0=\Phi_{\mathcal{Y}\to\mathcal{X}}\circ\Phi_{\mathcal{X}\to\mathcal{Y}}(z_0)$。但扩散桥本身是随机过程，光约束端点不够，所以又加轨迹级：把前向轨迹 $\{z_t^{X\to Y}\}$ 与反向轨迹 $\{z_{T-t}^{Y\to X}\}$ 在对应时刻配对，求 $\mathcal{L}_{cycle}^{traj}=\mathbb{E}[w(t)\|z_t^{X\to Y}-z_{T-t}^{Y\to X}\|_2^2]$，权重 $w(t)=1/(\sigma_t^2+\epsilon)$ 对不同时刻的尺度差异做归一化。它强制"前后向走的是同一条隧道"，等价于约束整条 SDE 路径的对称性，是一种 trajectory-level identifiability 正则。两层组合让可逆性既受粗粒度（终点）也受细粒度（路径）约束，实证里轨迹项把 unpaired 内容准确率从 16% 拉到 87%。
 
-3. **统一目标 = 启发式可组合性 + Paired 退化为可选项**:
+**3. 统一加性目标：把 paired 监督降级为四个并列启发式之一**
 
-    - 功能：把成对监督从"必需品"降级为四个并列启发式之一，使同一份代码可在 $\rho\in[0,1]$ 任意位置训练且优雅退化。
-    - 核心思路：$\mathcal{L}_{total}=\mathcal{L}_{DSM}+\lambda_{end}\mathcal{L}_{cycle}^{end}+\lambda_{traj}\mathcal{L}_{cycle}^{traj}+\lambda_{pair}\mathbf{1}_{(x,y)\in\mathcal{D}_{pair}}\mathcal{L}_{pair}$，paired loss 用 indicator 仅对成对子集激活；所有 $\lambda=1$，未做精细调权（作者实验未观察到调权显著收益）。这种"加性组合 + indicator gating"等价于在 $\mathcal{P}$ 中加多个软约束面，逐步把可行集压缩到偏好 reversible、condition-preserving 的耦合。
-    - 设计动机：把训练目标几何化为"启发式的并集"让消融变得清晰——可单独打开每一项看其作用（论文 Table 1 给了完整 ablation 矩阵）；同时 paired 项的 indicator 让 dataloader 不必严格区分成对/不成对样本，工程上极简单。
-
-### 损失函数 / 训练策略
-详见上方第三个关键设计；具体配置 $K$ 个 WTA 候选、容量 $C_y=2$，所有 $\lambda=1$；双向桥同时训练（cycle 项必需）；半成对时 paired 子集大小由 $\rho$ 决定，总端点样本量固定不变（仅改变标签可用比例）。
+最后把上述约束加上可选的成对监督，统一成一个加性目标 $\mathcal{L}_{total}=\mathcal{L}_{DSM}+\lambda_{end}\mathcal{L}_{cycle}^{end}+\lambda_{traj}\mathcal{L}_{cycle}^{traj}+\lambda_{pair}\mathbf{1}_{(x,y)\in\mathcal{D}_{pair}}\mathcal{L}_{pair}$（公式 10），paired 项靠 indicator $\mathbf{1}_{(x,y)\in\mathcal{D}_{pair}}$ 只在成对子集上激活，所有 $\lambda=1$、未做精细调权（作者没观察到调权有显著收益）。几何上看，这种"加性组合 + indicator gating"相当于在可行耦合集 $\mathcal{P}$ 里叠加多个软约束面，把可行集逐步压缩到偏好 reversible、condition-preserving 的那块；工程上看，indicator 让 dataloader 不必区分成对/不成对样本，同一份代码就能在 $\rho\in[0,1]$ 任意预算下训练并优雅退化。$K$ 个 WTA 候选、容量 $C_y=2$ 都按上文配置，双向桥需同步训练（cycle 项依赖反向桥），半成对时 paired 子集大小由 $\rho$ 决定而总端点样本量固定，只改变标签的可用比例。
 
 ## 实验关键数据
 

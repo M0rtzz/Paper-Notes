@@ -47,23 +47,21 @@ tags:
 
 ### 关键设计
 
-1. **双模态训练器 $g$ + 结构-only 正则**:
+**1. 双模态训练器 $g$ + 结构-only 正则：逼结构编码器在有轨迹时也学到真东西。**
 
-    - 功能：让结构编码器在有轨迹的训练里也被迫学到有用的动力学相关表示，避免被强信号的轨迹编码器「抢戏」。
-    - 核心思路：$g$ 包含两个线性层 $\mathbf{W}_\mathbf{p}$（轨迹）和 $\mathbf{W}_{\mathbf{x},T}$（结构+温度），相加得 $\mathbf{H}$ 后过 MLP 解码。损失加一项「只用结构嵌入也要预测准」的辅助项：$\mathcal{L}(\hat y^i,y_s^i)+\lambda_b\mathcal{L}(\hat y^i_{\mathbf{x},T},y_s^i)$。结构嵌入用 SevenNet 节点+边特征聚合后做三阶多项式展开 $\mathbf{E}_\mathbf{x}=[\mathbf{E}_{a,s};\mathbf{E}_{a,s}\odot\mathbf{E}_{a,s};\mathbf{E}_{a,s}^{\odot 3}]$ 补线性层表达力。
-    - 设计动机：轨迹信号太强，不加正则的话结构编码器会偷懒成「占位符」，后面闭式蒸馏到结构-only 模型就什么都没得继承。
+如果直接拿轨迹和结构一起训，轨迹信号太强、结构编码器会偷懒成"占位符"，后面想把知识蒸到结构-only 模型时就什么都没得继承。$g$ 含两个线性层 $\mathbf{W}_\mathbf{p}$（轨迹）、$\mathbf{W}_{\mathbf{x},T}$（结构+温度），相加得 $\mathbf{H}$ 后过 MLP 解码；关键在损失里加一项"只用结构嵌入也要预测准"的辅助约束 $\mathcal{L}(\hat y^i,y_s^i)+\lambda_b\mathcal{L}(\hat y^i_{\mathbf{x},T},y_s^i)$，强行让结构通路单独扛起预测任务。结构嵌入还用 SevenNet 节点+边特征聚合后做三阶多项式展开 $\mathbf{E}_\mathbf{x}=[\mathbf{E}_{a,s};\mathbf{E}_{a,s}\odot\mathbf{E}_{a,s};\mathbf{E}_{a,s}^{\odot 3}]$ 补线性层表达力。有了这层正则，结构编码器才被推着学到与动力学相关的有用表示，为下一步闭式蒸馏留下可继承的内容。
 
-2. **闭式岭回归蒸馏初始化**:
+**2. 闭式岭回归蒸馏初始化：用一锤定音的解析解替代方差大的迭代 KD。**
 
-    - 功能：把 $g$ 的隐藏表示 $\mathbf{H}^i$ 直接迁移到只看结构的预测器 $f_1$ 的编码器 $\mathbf{W}^{trj}$。
-    - 核心思路：解 $\min_{\mathbf{W}^{trj}}\sum_i\|\mathbf{X}^i\mathbf{W}^{trj}-\mathbf{H}^i\|_F^2+\lambda_r\|\mathbf{W}^{trj}\|_F^2$，闭式解 $\mathbf{W}^{trj}=(\sum_i(\mathbf{X}^i)^\top\mathbf{X}^i+\lambda_r\mathbf{I})^{-1}(\sum_i(\mathbf{X}^i)^\top\mathbf{H}^i)$，用 Cholesky 等直接解算到浮点精度。解码器直接复用 $g_{\text{dec}}$。之后在 $\mathcal{D}^{trj}$ 上微调时不再喂轨迹，仅用结构-温度嵌入。
-    - 设计动机：传统 KD 用迭代梯度优化，在离子输运这种几十到几百个样本的小数据场景下方差极大；闭式解一锤定音、无需调学习率/早停，是 data-scarce 场景的天然选择。
+把 $g$ 的隐藏表示 $\mathbf{H}^i$ 迁到只看结构的预测器 $f_1$ 的编码器，传统 KD 走迭代梯度优化，但离子输运只有几十到几百个样本，SGD 在 data-scarce 下方差极大、调学习率/早停都不稳。作者改成解一个岭回归
 
-3. **跨数据集初始化（data-level AML）**:
+$$\mathbf{W}^{trj}=\Big(\sum_i(\mathbf{X}^i)^\top\mathbf{X}^i+\lambda_r\mathbf{I}\Big)^{-1}\Big(\sum_i(\mathbf{X}^i)^\top\mathbf{H}^i\Big),$$
 
-    - 功能：把轨迹数据集学到的动力学先验迁到完全没有轨迹的结构-only 数据集 $\mathcal{D}^{str}$ 上。
-    - 核心思路：$f_2$ 的编码器 $\mathbf{W}^{str}$ 从 $g$ 的结构编码器 $\mathbf{W}_{\mathbf{x},T}$ 初始化（因为它在结构-only 正则约束下学到的表示更通用），但解码器从 $f_1$ 的 $f_{\text{dec}}^{trj}$ 初始化（它捕捉了从隐表示到输运性质的稳健映射）。这种「编码器走结构通路、解码器走轨迹通路」的交叉初始化巧妙避开了 $\mathbf{W}^{trj}$ 已被绑死在轨迹分布上的问题。
-    - 设计动机：$\mathbf{W}^{trj}$ 因为闭式拟合 $\mathbf{H}$ 已经偏向轨迹分布，直接复用到结构-only 数据上会泛化差；而 $\mathbf{W}_{\mathbf{x},T}$ 已经被正则项推过去学结构表示，更适合作为新数据集的起点。
+用 Cholesky 直接算到浮点精度，解码器直接复用 $g_{\text{dec}}$；之后在轨迹数据集上微调时不再喂轨迹，只用结构-温度嵌入。闭式解无需调优、一步到位，是小样本场景下比迭代蒸馏更稳的天然选择。
+
+**3. 跨数据集初始化（data-level AML）：编码器走结构通路、解码器走轨迹通路的交叉初始化。**
+
+要把轨迹学到的动力学先验迁到完全没有轨迹的结构-only 数据集 $\mathcal{D}^{str}$，直接复用 $\mathbf{W}^{trj}$ 行不通——它因为闭式拟合 $\mathbf{H}$ 已经被绑死在轨迹分布上，泛化差。作者的处理是交叉初始化：$f_2$ 的编码器 $\mathbf{W}^{str}$ 从 $g$ 的结构编码器 $\mathbf{W}_{\mathbf{x},T}$ 起步（它在结构-only 正则下学到的表示更通用），解码器则从 $f_1$ 的 $f_{\text{dec}}^{trj}$ 起步（它捕捉了从隐表示到输运性质的稳健映射）。这样"编码器取通用结构通路、解码器取稳健轨迹通路"，恰好避开了 $\mathbf{W}^{trj}$ 偏向轨迹分布的问题，让动力学知识能跨数据集甚至跨离子物种迁移。
 
 ### 损失函数 / 训练策略
 全程用 $L_1$ 损失预测 $\log_{10}$ 尺度的输运量；双模态训练器额外加 $\lambda_b$ 加权的结构-only 辅助项；闭式初始化用 $\lambda_r$ 控制拟合 vs 过拟合。三个数据集分别是 Dataset 1（MD 算的 Li-MSD，trajectory-based）、Dataset 2（MD 算的多元素扩散率，结构-only，Na 留作未见物种测试）、Dataset 3（真实实验的 Li 电导率，结构-only）。

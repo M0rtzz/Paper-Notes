@@ -41,32 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本质上是一个统计建模 + 应用层套件：
 
-1. 把 LLM benchmarking 写成两层分层模型；
-2. 推导 moment estimator $\hat\mu$ 的方差分解；
-3. 用 $\hat p_i = \frac{1}{k}\sum_j y_{i,j}$ 作为 prompt-level 难度分数 $\mathbb{P}(\text{correct})$；
-4. 把 $\mathbb{P}(\text{correct})$ 和语义一致性 $\mathbb{S}(\text{consistency})$ 画到 2D 平面上得到 data map，用左下/右下角检 mislabel。
+本文把 LLM benchmarking 重新看作一个统计估计问题：输入是 $n$ 条 prompt、每条采样 $k$ 次的 0/1 正误记录，目标是估准 benchmark 真实分数 $\mu=\mathbb{E}[p_i]$。方法先把评测写成两层分层模型（prompt 难度 $p_i$ 服从总体分布，每次生成服从 Bernoulli$(p_i)$），推导出 moment estimator $\hat\mu$ 的方差分解以说明"为何多采样能降方差"；再把 $k$ 次生成的副产品——每条 prompt 的经验正确率 $\hat p_i$ 与语义一致性 $\mathbb{S}$——画到二维平面上，输出 prompt 级的难度分与能检标注错误的 data map。整套方法不训练任何模型，只在 inference 阶段多采样几次。
 
 ### 关键设计
 
-1. **分层模型 + 方差分解**:
+**1. 分层模型 + 方差分解：给"为什么要多采样"一个严格依据。**
 
-    - 功能：给"为什么要多次采样"一个严格的理论依据。
-    - 核心思路：模型设 $p_i \sim \mathbb{P}(\mu,\sigma;\theta)$ for $i=1,\dots,n$，$y_{i,j} \sim \text{Bernoulli}(p_i)$ for $j=1,\dots,k$。Moment estimator $\hat\mu = \frac{1}{nk}\sum_{i,j}y_{i,j}$ 是 $\mu$ 的无偏估计，方差可分解为 $\text{Var}(\hat\mu) = \underbrace{\frac{1}{nk}(\mu-\mu^2-\sigma^2)}_{\text{within-prompt}} + \underbrace{\frac{1}{n}\sigma^2}_{\text{between-prompt}}$。前一项随 $k$ 增大归零，后一项是 $n$ 决定的内在噪声。基于 CLT 给出 95% CI $\hat\mu \pm 1.96\sqrt{\widehat{\text{Var}(\hat\mu)}}$。
-    - 设计动机：现行 benchmark 报分都是单点估计，没有 error bar；本方差分解直接告诉用户"我现在用了多大 $k$、报的数有多稳"。还揭示了 IRT (1PL 模型) 其实是本框架中 $\mathbb{P}(\mu,\sigma)$ 的一种参数化特例。
+现行 benchmark 报分都是单点估计、没有 error bar，根本无法回答"这个排名能不能信"。本文设 $p_i \sim \mathbb{P}(\mu,\sigma;\theta)$（$i=1,\dots,n$）、$y_{i,j} \sim \text{Bernoulli}(p_i)$（$j=1,\dots,k$），moment estimator $\hat\mu = \frac{1}{nk}\sum_{i,j}y_{i,j}$ 是 $\mu$ 的无偏估计，其方差可分解为
 
-2. **Prompt-level 难度分数 $\mathbb{P}(\text{correct})$**:
+$$\text{Var}(\hat\mu) = \underbrace{\tfrac{1}{nk}(\mu-\mu^2-\sigma^2)}_{\text{within-prompt}} + \underbrace{\tfrac{1}{n}\sigma^2}_{\text{between-prompt}}.$$
 
-    - 功能：给每条 prompt 一个连续的 [0,1] 难度分，能跨 prompt 比较"哪条更难"。
-    - 核心思路：直接取 $\hat p_i = \frac{1}{k}\sum_{j=1}^{k} y_{i,j}$ 作为 LLM 在第 $i$ 条 prompt 上的正确概率估计；$\hat p_i \to p_i$ 当 $k \to \infty$。可视化分布 (Fig 1) 后能立刻看出 benchmark 性质：MMLU-Pro、IFEval、MuSR 这种推理重的 benchmark 在 $[0,1]$ 上是**diffuse density**（LLM 在很多题上像随机采样），而 GSM8K 这种简单题在 0 和 1 附近有明显尖峰（稳定行为）。
-    - 设计动机：以前给 prompt 标难度要么人工（MATH 5 档），要么靠多 LLM IRT 拟合（Polo et al.）；本方法只用单个 target LLM 多次采样就能得到针对该 LLM 的主观难度，比"跨模型客观难度"更适合诊断这个特定 LLM 的弱点。
+前一项随 $k$ 增大归零，后一项是 $n$ 决定的内在噪声；再由 CLT 给出 95% CI $\hat\mu \pm 1.96\sqrt{\widehat{\text{Var}(\hat\mu)}}$。这个分解直接告诉用户"现在用了多大 $k$、报的数有多稳"，同时揭示了 IRT（1PL 模型）其实是本框架中 $\mathbb{P}(\mu,\sigma)$ 的一种参数化特例。
 
-3. **Data map 检 mislabel（$\mathbb{P}(\text{correct})$ × $\mathbb{S}(\text{consistency})$）**:
+**2. Prompt 级难度分 $\mathbb{P}(\text{correct})$：给每条 prompt 一个可跨条比较的难度。**
 
-    - 功能：用副产品检出 benchmark 自身的标注错误或语义歧义。
-    - 核心思路：除了 correctness，再算语义一致性熵 $\mathbb{S}(\text{consistency})=\sum_{c=1}^{C}\text{Prop}_c \log \text{Prop}_c$（负熵，越大越一致）——把 $k$ 次生成按语义聚成 $C$ 个簇，$\text{Prop}_c$ 是每簇占比。Hypothesis：**$\mathbb{P}(\text{correct})$ 低 + $\mathbb{S}(\text{consistency})$ 高** 的 prompt 很可能是 mislabel/ambiguous——LLM 很自信地一致回答了某答案但和 ground truth 不符。
-    - 设计动机：基于 self-consistency（Wang et al. 2022）"真难题应有多条 reasoning path"的直觉反过来用——稳定却"错"的多半是答案标错了。实证在 GSM8K 上用 $\hat p_i \le 0.1$ 且 $\mathbb{S} \ge -0.8$ 筛出 18 条 prompt，人工 review 后 44.4% 确为 mislabel/ambiguous。
+以前给 prompt 标难度要么靠人工（MATH 5 档），要么靠多 LLM IRT 拟合（Polo et al.）。本文直接取 $\hat p_i = \frac{1}{k}\sum_{j=1}^{k} y_{i,j}$ 作为目标 LLM 在第 $i$ 条 prompt 上的正确概率估计，当 $k \to \infty$ 时 $\hat p_i \to p_i$。把这个 [0,1] 连续难度分的分布画出来（Fig 1），能立刻看出 benchmark 的性质：MMLU-Pro、IFEval、MuSR 这种推理重的 benchmark 在 $[0,1]$ 上是弥散密度（LLM 在很多题上像随机采样），而 GSM8K 这种简单题在 0 和 1 附近有明显尖峰（稳定行为）。这种只靠单个 target LLM 多采样得到的主观难度，比"跨模型客观难度"更适合诊断这个特定 LLM 的弱点。
+
+**3. Data map 检 mislabel（$\mathbb{P}(\text{correct}) \times \mathbb{S}(\text{consistency})$）：用副产品反抓 benchmark 自身的标注错误。**
+
+除了 correctness，本文再算一个语义一致性负熵 $\mathbb{S}(\text{consistency})=\sum_{c=1}^{C}\text{Prop}_c \log \text{Prop}_c$——把 $k$ 次生成按语义聚成 $C$ 个簇，$\text{Prop}_c$ 是每簇占比，值越大说明回答越一致。核心假设是：**$\mathbb{P}(\text{correct})$ 低 + $\mathbb{S}(\text{consistency})$ 高** 的 prompt 很可能是 mislabel 或歧义题——LLM 很自信地一致回答了某个答案，却和 ground truth 不符。这是对 self-consistency（Wang et al. 2022）"真难题应有多条 reasoning path"直觉的反向运用——稳定却"错"的多半是答案标错了。实证中在 GSM8K 上用 $\hat p_i \le 0.1$ 且 $\mathbb{S} \ge -0.8$ 筛出 18 条 prompt，人工 review 后 44.4% 确为 mislabel 或歧义。
 
 ### 损失函数 / 训练策略
 不训练任何模型。所有实验都是 inference 时 $k=50$ 次采样（temperature=0.7, top-p=1.0, 0-shot CoT）。Moment estimator 是闭式的，无需迭代。

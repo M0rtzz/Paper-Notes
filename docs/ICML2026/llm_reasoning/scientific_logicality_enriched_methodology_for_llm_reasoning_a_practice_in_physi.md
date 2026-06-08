@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法整体分两条主线。第一条是"评估"：给定一道带 ground-truth 逻辑节点 $(\mathcal{N},\mathcal{W})$ 的科学题和模型推理 $\mathcal{R}$，先用 all-MiniLM-L6-v2 把两边编成 $V_\mathcal{N},V_\mathcal{R}$，算出余弦相似度矩阵 $M$，再据此输出三个分数 $\mathcal{F},\mathcal{O},\mathcal{P}$。第二条是"数据"：从 arXiv + 期刊抓 38 万篇物理论文 → R1 过滤掉综述/工具类得到 11.8 万篇 → R1 多轮对话从每篇论文的推导链里生成 $(Q,R,A,\mathcal{N},\mathcal{W})$ 五元组（rejection sampling 保证 $A'=A$，最多 5 次重试）→ 留 864 道做 PhysLogic benchmark，其余 8 万 + 4 万走两种采样策略喂给 SFT。最后用 LlamaFactory 在 8×H100 上对 Llama-3.1-8B、Qwen2.5-7B-Instruct、DeepSeek-R1-Distill-Qwen-7B 三种 backbone 做全参 SFT（lr $5\times10^{-6}$、cosine、2 epoch、cutoff 32768），再回到 PhysLogic 和 3 个公开 benchmark 上做闭环评测。
+这篇论文要解决的是"怎么把 CoT 有没有逻辑变成一个能算的数，再用它去挑训练数据"。整套方法分两条主线。评估线：给定一道带 ground-truth 逻辑节点 $(\mathcal{N},\mathcal{W})$ 的科学题和模型推理 $\mathcal{R}$，先用 all-MiniLM-L6-v2 把节点和句子两边都编成向量 $V_\mathcal{N},V_\mathcal{R}$，算出相似度矩阵 $M$，再从 $M$ 上读出三个分数 $\mathcal{F},\mathcal{O},\mathcal{P}$。数据线：从 arXiv + 期刊抓 38 万篇物理论文，R1 过滤掉综述/工具类剩 11.8 万篇，再让 R1 多轮对话从每篇论文的推导链里生成 $(Q,R,A,\mathcal{N},\mathcal{W})$ 五元组（rejection sampling 保证 $A'=A$，最多重试 5 次），留 864 道做 PhysLogic benchmark，其余 8 万和 4 万分别走 RST 与 Logic-Distill 两种采样策略喂给 SFT。最后用 LlamaFactory 在 8×H100 上对 Llama-3.1-8B、Qwen2.5-7B-Instruct、DeepSeek-R1-Distill-Qwen-7B 三种 backbone 做全参 SFT（lr $5\times10^{-6}$、cosine、2 epoch、cutoff 32768），再回到 PhysLogic 和 3 个公开 benchmark 上闭环评测。
 
 ### 关键设计
 
-1. **三维科学逻辑性度量 $\mathcal{F},\mathcal{O},\mathcal{P}$**：
+**1. 三维科学逻辑性度量 $\mathcal{F},\mathcal{O},\mathcal{P}$：把"有没有逻辑"拆成内容、次序、进展三件能独立算的事。**
 
-    - 功能：把"CoT 是否有逻辑"分解成内容、次序、进展三件可独立计算的事。
-    - 核心思路：在 $M$ 上跑贪心一对一匹配得到匹配对集合 $\mathcal{C}$（阈值 $\tau$）；**Logical Fidelity** 用加权 recall $\rho=\sum_{(i,j)\in\mathcal{C}} w_i M_{ij}/\sum_k w_k$ 与 precision $\pi=|\mathcal{C}|/m$ 的调和平均 $\mathcal{F}=2\pi\rho/(\pi+\rho)$；**Causal Connection** 给每个 $\nu_i$ 算"语义重心" $P_i=\sum_j j\cdot M_{ij}/\sum_j M_{ij}$，再统计满足 ground-truth 顺序的 nexus 对加权占比 $\mathcal{O}$；**Inferential Progress** 把每步 $r_j$ 表示成对所有 nexus 的相似度向量 $\vec{S_j}$，定义其新颖度为 $1-\max_{k<j}\cos(\vec{S_j},\vec{S_k})$，$\mathcal{P}$ 取整条路径上的平均新颖度。
-    - 设计动机：传统准确率只判最终答案，过程类指标（如 ProcessBench）只看局部对错，都无法区分"答对但乱推"和"答对且严谨"。三维分解让"漏关键步骤""次序颠倒""自我循环不前进"三种失败模式各有归属，也为后续按分数筛数据提供了可解释的多目标信号。
+传统准确率只判最终答案，过程类指标（如 ProcessBench）只看局部步骤对错，两者都分不清"答对但乱推"和"答对且严谨"。本文的做法是先在相似度矩阵 $M$ 上跑一遍贪心一对一匹配（阈值 $\tau$）得到匹配对集合 $\mathcal{C}$，然后在它之上算三个分量。**Logical Fidelity**（内容覆盖）用加权 recall $\rho=\sum_{(i,j)\in\mathcal{C}} w_i M_{ij}/\sum_k w_k$ 和 precision $\pi=|\mathcal{C}|/m$ 的调和平均得到 $\mathcal{F}=2\pi\rho/(\pi+\rho)$，衡量 CoT 把关键逻辑节点覆盖得全不全（权重 $w_i$ 让重要节点漏了扣分更狠）。**Causal Connection**（因果次序）先给每个节点 $\nu_i$ 算它在推理里的"语义重心" $P_i=\sum_j j\cdot M_{ij}/\sum_j M_{ij}$，即这个节点大致落在第几句，再统计实际重心顺序与 ground-truth 顺序一致的 nexus 对的加权占比得到 $\mathcal{O}$。**Inferential Progress**（向前推进）把每步 $r_j$ 表示成它对所有 nexus 的相似度向量 $\vec{S_j}$，定义这步的新颖度为 $1-\max_{k<j}\cos(\vec{S_j},\vec{S_k})$，$\mathcal{P}$ 取整条路径上的平均新颖度——一直在复述自己、原地打转的 CoT 这一项就低。三维一拆，"漏关键步骤""次序颠倒""自我循环不前进"三种失败模式各有归属，也顺势给后面按分数筛数据提供了可解释的多目标信号。
 
-2. **Reasoning Style Transfer (RST) 数据采样**：
+**2. Reasoning Style Transfer（RST）：把离散的逻辑骨架翻译成科学家式的自然 CoT。**
 
-    - 功能：把"离散的逻辑节点 + 权重"翻译成一段连贯、第一人称、带 `<think>` 标签的科学家式思维链，再配上原题与原答案作为 SFT 样本。
-    - 核心思路：用一个 powerful reasoning LLM $\mathcal{L}$ 做风格迁移：$R'=\mathcal{L}(Q,\mathcal{N},\mathcal{W})$，最终样本是 $\{Q,R',A\}$。注意答案 $A$ 来自论文，不是模型自己生成。
-    - 设计动机：直接拿 R1 native CoT 蒸馏（Direct-Distill）会把"复述+自我怀疑"这种坏习惯也学过去；而单纯把 nexus 列成 bullet 又不像自然 CoT，模型学不到流畅推理。RST 拿到的是"骨架来自论文逻辑、皮肤来自强模型语言"的样本，保证逻辑严密的同时维持自然 think 风格。表 5 显示，这是三种 backbone 上 in-domain 逻辑性与准确率同时最高的方案。
+直接拿 R1 的 native CoT 来蒸馏（Direct-Distill）会把"复述 + 自我怀疑"这些坏习惯一并学过去，可单纯把 nexus 列成 bullet 又不像自然思维链，模型学不到流畅推理。RST 走中间路线：用一个强 reasoning LLM $\mathcal{L}$ 做风格迁移 $R'=\mathcal{L}(Q,\mathcal{N},\mathcal{W})$，让它依照论文给定的逻辑节点和权重写出一段连贯、第一人称、带 `<think>` 标签的推理，最终 SFT 样本是 $\{Q,R',A\}$，其中答案 $A$ 直接取自论文而非模型自己生成。这样拿到的样本"骨架来自论文逻辑、皮肤来自强模型语言"，逻辑严密和自然 think 风格两头都占。表 5 显示这是三种 backbone 上 in-domain 逻辑性与准确率同时最高的方案。
 
-3. **Logic-Distill：用三维分数过滤强模型 native CoT**：
+**3. Logic-Distill：用三维分数当弱监督，直接从强模型海量 CoT 里挑严密的那批。**
 
-    - 功能：在不依赖 ground-truth nexus 改写的前提下，按"科学逻辑性总分" $\mathcal{S}$ 把 R1 自己生成的 CoT 排序，留 top-$\kappa$ 百分位做 SFT。
-    - 核心思路：让 $\mathcal{L}$ 直接对 $Q$ 推理得到 $(R',A')$，对 $R'$ 算 $\pi,\rho,\mathcal{O},\mathcal{P}$；为消除量纲差异先 z-score 归一再过 sigmoid 得 $\tilde X=\sigma((X-\mu_X)/\sigma_X)$，最后融合成 $\mathcal{S}=\delta_\mathcal{F}\cdot 2\tilde\pi\tilde\rho/(\tilde\pi+\tilde\rho)+\delta_\mathcal{O}\tilde{\mathcal{O}}+\delta_\mathcal{P}\tilde{\mathcal{P}}$，取 $D=\mathrm{Top}_\kappa(D_{\text{full}}, \mathrm{key}=\mathcal{S})$。
-    - 设计动机：RST 需要 ground-truth nexus 才能生成，工程成本高；Logic-Distill 把三维指标当成"无需重新生成、只做样本筛选"的弱监督信号。这等价于把强模型海量 CoT 里 *碰巧逻辑严密* 的那 40k 挑出来，用一半数据量逼近全量蒸馏的效果，特别适合扩展到其他学科。
+RST 必须先有 ground-truth nexus 才能改写，工程成本高、难扩展。Logic-Distill 反过来把同一套三维指标只当成"无需重新生成、纯做样本排序"的弱监督信号：让 $\mathcal{L}$ 直接对 $Q$ 推理得到 $(R',A')$，对每条 $R'$ 算出 $\pi,\rho,\mathcal{O},\mathcal{P}$；为消除四个分量的量纲差异，先对每个分量做 z-score 归一再过 sigmoid 得 $\tilde X=\sigma((X-\mu_X)/\sigma_X)$，然后融合成总分
+
+$$\mathcal{S}=\delta_\mathcal{F}\cdot\frac{2\tilde\pi\tilde\rho}{\tilde\pi+\tilde\rho}+\delta_\mathcal{O}\tilde{\mathcal{O}}+\delta_\mathcal{P}\tilde{\mathcal{P}},$$
+
+最后按 $\mathcal{S}$ 取全集的 top-$\kappa$ 百分位 $D=\mathrm{Top}_\kappa(D_{\text{full}},\mathrm{key}=\mathcal{S})$ 做 SFT。本质上就是把强模型那一堆 CoT 里 *碰巧逻辑严密* 的 40k 挑出来，用一半数据量逼近全量蒸馏的效果——评估器在这里被复用成了采样器，特别适合迁移到数学、化学等其他学科。
 
 ### 损失函数 / 训练策略
-标准 SFT 交叉熵，无额外辅助 loss；逻辑性完全通过"喂什么数据"来注入。训练用 LlamaFactory 全参微调，BF16 + DeepSpeed ZeRO-3 + FlashAttention-2 + gradient checkpointing，per-device batch=1、grad accum=2、cutoff 32768、2 epoch、seed 42、warmup 0.03，8×H100。
+标准 SFT 交叉熵，无额外辅助 loss；逻辑性完全通过"喂什么数据"注入，而不改训练目标。具体用 LlamaFactory 做全参微调，BF16 + DeepSpeed ZeRO-3 + FlashAttention-2 + gradient checkpointing，per-device batch=1、grad accum=2、cutoff 32768、2 epoch、seed 42、warmup 0.03，跑在 8×H100 上。
 
 ## 实验关键数据
 

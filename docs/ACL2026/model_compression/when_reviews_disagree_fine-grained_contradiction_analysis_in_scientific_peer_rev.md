@@ -47,23 +47,25 @@ tags:
 第二层是 TIDE。IMPACT 质量高但慢，因此作者用 IMPACT-P 在额外约 2,000 对 ICLR 2021-2023 review 上生成 synthetic contradiction annotations，把完整 review pair 映射到结构化输出，再用 LoRA 微调 Meta-Llama-3-8B-Instruct。TIDE 在测试时只需一次前向，就能输出证据、强度和解释。
 
 ### 关键设计
-1. **Aspect-Conditioned Evidence Agent（ACEA）**:
+**1. Aspect-Conditioned Evidence Agent（ACEA）：把「找矛盾」拆成「按评价维度逐个找」，提高长 review 里隐含冲突的召回。**
 
-    - 功能：在完整 review 上高召回地找出可能存在矛盾的证据对，并把它们按评价维度组织起来。
-    - 核心思路：给定 aspect 集合，例如 Motivation、Clarity、Soundness、Substance、Originality、Meaningful Comparison，ACEA 对每个 aspect 分别抽取来自两篇 review 的候选 span pair。形式上可看成 $\mathcal{E}_{a_m}^{(i,j)}=f_{ACEA}(r_i,r_j,a_m)$，再把所有 review pair 的候选聚合成 aspect-specific evidence pool。
-    - 设计动机：不加 aspect 时，模型容易在长 review 中漏掉隐含或分散的冲突；但只做宽泛抽取又会带来假阳性。按 aspect 提醒模型“现在找 novelty 冲突”或“现在找 clarity 冲突”，能提高召回，并把后续强度评分限定在更清晰的语义框架内。
+审稿矛盾常常不是显式句对冲突，而是散落在整篇 review 多个段落里的不同判断。如果让模型在长文本里宽泛地找冲突，要么漏掉隐含、分散的分歧，要么为了不漏而疯狂产假阳性。ACEA 的破法是给它一组评价维度——Motivation、Clarity、Soundness、Substance、Originality、Meaningful Comparison——逼它一次只盯一个维度，分别从两篇 review 抽候选证据 span 对：
 
-2. **Deliberative Intensity Agents + Disagreement Orchestrator**:
+$$\mathcal{E}_{a_m}^{(i,j)}=f_{ACEA}(r_i,r_j,a_m),$$
 
-    - 功能：让两个强度判断 agent 对同一个证据对独立打分、解释，并在分歧时展开结构化审议。
-    - 核心思路：每个 DIA 给证据对预测 $\alpha\in\{0,1,2,3\}$ 和解释，其中 0 表示无效矛盾，1-3 表示由轻到重的矛盾强度。如果两个 DIA 一致，直接接受；如果不一致，DO 要求它们保持原始分数不变，只能补充证据、澄清 rubric、回应对方理由，避免在讨论中懒惰地趋同。
-    - 设计动机：普通多智能体 debate 容易出现从众或无原则共识。score-locking 让 agent 不能简单改票，而是把不同判断背后的证据展开给裁决器，这比“再讨论一下直到一致”更适合强度判断任务。
+再把所有 review pair 的候选汇成 aspect-specific 的证据池。提醒模型「现在专门找 novelty 冲突」「现在专门找 clarity 冲突」，既显著拉高召回，又把后续的强度评分限定在更清晰的语义框架里。代价是召回上去了、假阳性也会变多，这个洞要靠后面的 validity gate 来补。
 
-3. **IMPACT 到 TIDE 的教师-学生蒸馏**:
+**2. Deliberative Intensity Agents + Disagreement Orchestrator：用「锁分审议」逼 agent 暴露分歧理由，而不是为了和气而趋同。**
 
-    - 功能：把高延迟多智能体审议压缩成单模型、单次前向的部署形式。
-    - 核心思路：IMPACT 作为 teacher，对额外 review pairs 生成结构化实例 $c_j=(e_j,\alpha_j^*,\rho_j)$，包含证据对、裁决强度和解释。TIDE 用 SFT 学习 $p_\theta(\{c_j\}|r_i,r_j)$，并通过 LoRA 只更新 adapter 参数。
-    - 设计动机：AC 工具需要可扩展。直接跑 IMPACT 适合高价值审查或离线标注，但日常批量预筛更适合 TIDE。这个设计把“慢而准”的多智能体推理变成“快而够用”的小模型能力。
+强度判断不是有无矛盾的二分类，而要给出由轻到重的等级。两个 DIA 各自独立给同一个证据对预测强度 $\alpha\in\{0,1,2,3\}$（0 = 无效矛盾，1–3 = 轻/中/重）并附解释；若两者一致就直接采纳。问题出在不一致时——普通的多智能体 debate 容易出现从众、为了达成共识而懒惰改票。Disagreement Orchestrator 的关键设计是 score-locking：讨论期间要求两个 agent 保持原始分数不变，只能补充证据、澄清评分细则、回应对方理由，但不许改票。这样审议的目标就从「协商出一个一致分」变成「把两种判断背后的证据都摊给裁决器看」，更契合强度评分这种本就允许合理分歧的任务。
+
+**3. IMPACT 到 TIDE 的教师-学生蒸馏：把慢而准的多智能体审议压成单模型、单次前向的部署形态。**
+
+IMPACT 质量高但要跑多个 agent、多轮讨论，延迟和成本都扛不住日常批量预筛。于是用 IMPACT 当 teacher，在额外约 2,000 对 ICLR 2021–2023 的 review 上生成结构化标注 $c_j=(e_j,\alpha_j^*,\rho_j)$——每条含证据对、裁决后的强度和解释。学生模型 TIDE 用 SFT 学习从完整 review pair 到这组结构化输出的映射 $p_\theta(\{c_j\}|r_i,r_j)$，并通过 LoRA 只更新 adapter、冻结 base。结果是 TIDE 测试时只需一次前向就能吐出证据、强度和解释：高价值审查或离线标注交给「慢而准」的 IMPACT，大规模预筛交给「快而够用」的 TIDE，两条路各管各的场景。
+
+### 一个完整示例：IMPACT 怎么处理一对意见冲突的 review
+
+给定同一篇论文的两篇完整 review $r_i, r_j$。先由 ACEA 按维度扫一遍：在 Originality 维度上，它从 $r_i$ 抽出「本文方法是已有工作的直接组合，新意有限」，从 $r_j$ 抽出「据我所知这是首个把 X 与 Y 联合建模的工作」，配成一个候选证据对放进 Originality 证据池。接着两个 DIA 各自对这一对独立打分：DIA-1 判 $\alpha=3$（严重矛盾，一个说没新意、一个说全新），DIA-2 判 $\alpha=2$（认为只是侧重点不同）。两者不一致，Disagreement Orchestrator 启动结构化讨论——但 score-locking 生效：DIA-1 必须守住 3 分、只能补证据说明两人对「新颖性」的指代其实是同一处贡献，DIA-2 守住 2 分、解释为何认为存在 hedging。Adjudication Agent 读完讨论轨迹裁决出最终强度，最后 Contradiction Validity Gate 检查这条是否构成有效矛盾（而非各说各话的无交集评论），通过则输出 $(证据对,\ \alpha^*,\ 解释)$。整对 review 跑完，AC 拿到的不是一句「有矛盾」，而是按 aspect 归档的、带强度和理由的冲突清单。
 
 ### 损失函数 / 训练策略
 IMPACT 不训练模型，而是在推理时固定 temperature 为 0，关闭 nucleus 和 top-k sampling，并用固定随机种子保证可复现；重复矛盾用 ROUGE-L 阈值 0.9 去重。TIDE 使用 Meta-Llama-3-8B-Instruct，LoRA 注入 attention projection 和 FFN projection 层，训练 5 epoch，AdamW，学习率 $5\times10^{-5}$，cosine schedule，warmup ratio 0.03，只更新 LoRA adapter，base model 冻结。

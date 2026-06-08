@@ -42,31 +42,21 @@ tags:
 
 ### 整体框架
 
-整个 pipeline 由三段组成：
-
-1. **预备阶段（嵌入与分词选择）**：在拉丁-奥克语对上用 FastText / mBERT / ByT5 跑三个 probe（冻结性别预测、Latin→Occitan 变体检索、聚类），mBERT 全胜，被选为骨干；再比较 mBERT WordPiece、纯 BPE 与 Hybrid（语料 BPE + word-level 回退），Hybrid 是唯一同时实现 0% OOV 且 masked recovery 达 25.23% 的方案；用 Hybrid 词表对 mBERT 做 10 epoch 域适应 MLM，验证 PPL 从 942.85 降到 9.52。
-2. **词级性别预测（RQ1）**：从拉丁 / 奥克语词对里抽取初始子串、后缀 1-4gram、音节数 $S(w)$、CV 模板 $P(w)$、长度比、重音位置代理等形态-音系特征，再可选地拼接 FastText / mBERT / ByT5 的 mean-pool 表示，喂给一组 13 种分类器（LR / RF / XGB / FFN / BiLSTM / BiLSTM+Attn / 2×BiLSTM+MHSA）做 10 折 lemma-grouped CV。
-3. **上下文性别预测（RQ2）**：从约 130k token 的未标注奥克语语料里把名词 token 对齐到拉丁-奥克语 lemma 词典（精确匹配优先，否则用 $\textsc{Sim}=0.3\,\textsc{CosSim}+0.7\,\textsc{LevSim}\ge 0.85$ 的模糊匹配），得到 (sentence, noun position, Latin lemma, Latin gender, gold Occitan gender) 五元组；然后用同一个 mBERT + MLP head，分别在 word-only / context（noun-conditioned attention）/ masked-context（把目标词替换为 `[MASK]`）三种表示上训练评测。
+整套框架的目标是把"拉丁中性名词在奥克语里归男还是归女"这个判断，拆成词内形态与句法上下文两路证据分别量化。流程上先做骨干与分词的预备选型——在拉丁-奥克语对上用 FastText / mBERT / ByT5 跑三个 probe（冻结性别预测、Latin→Occitan 变体检索、聚类）选出 mBERT 作骨干，再比较 WordPiece、纯 BPE 与 Hybrid 分词后用 Hybrid 词表对 mBERT 做 10 epoch 域适应 MLM（验证 PPL 从 942.85 降到 9.52）。在这个骨干之上分两条预测线：RQ1 用孤立 lemma 的形态-音系特征（后缀 n-gram、音节数、CV 模板、重音代理等）拼接预训练表示，喂给一组分类头做 10 折 lemma-grouped CV，量化"只看词形能预测多少性别"；RQ2 把约 130k token 语料里的名词对齐到拉丁-奥克语 lemma 词典后，构造 word-only / context / masked-context 三种输入，用同一 mBERT + MLP head 对比，量化上下文一致性带来的增量。
 
 ### 关键设计
 
-1. **Hybrid 分词器（BPE + word-level 回退）**:
+**1. Hybrid 分词器（BPE + word-level 回退）：在高拼写噪声语料里同时拿到零 OOV 和有意义的子词。**
 
-    - 功能：在中世纪奥克语这种高拼写噪声语料里同时保证零 OOV 与有意义的子词切分。
-    - 核心思路：先在奥克语语料上训练一个小词表 BPE（按 $V_{t+1}=V_t\cup\{ab\},\ (a,b)=\arg\max_{(x,y)} f(x,y)$ 迭代合并最高频对），再加一条 word-level 回退规则——任何 BPE 切不开的整词原样保留。BPE 子词能捕捉到 `primpcipat` 里 `mp` 这种辅音簇变体、`secretament` 里词尾 `t`（对应 Old Occitan 副词 `-t` 的脱落）等历史变异规律。
-    - 设计动机：标准 mBERT WordPiece 虽 0% OOV 但 masked recovery 只有 15.78%；纯 BPE（vocab=600/800）反而引入 2.63–2.86% OOV、recovery 仅 3–5%；Hybrid 兼得两者优点，是后续 mBERT 表现最好的关键基础。
+中世纪奥克语正字法极不稳定，标准 mBERT WordPiece 虽能做到 0% OOV 但 masked recovery 只有 15.78%，纯 BPE（vocab=600/800）又反而引入 2.63–2.86% 的 OOV、recovery 仅 3–5%，两条路都偏废。Hybrid 的做法是先在奥克语语料上训一个小词表 BPE，按 $V_{t+1}=V_t\cup\{ab\},\ (a,b)=\arg\max_{(x,y)} f(x,y)$ 迭代合并最高频对，再加一条 word-level 回退规则：任何 BPE 切不开的整词原样保留。这样 BPE 子词能捕到 `primpcipat` 里 `mp` 这种辅音簇变体、`secretament` 词尾 `t`（对应 Old Occitan 副词 `-t` 脱落）等历史变异规律，而回退规则兜住了零 OOV，最终 Hybrid 是唯一同时实现 0% OOV 且 masked recovery 达 25.23% 的方案，成为后续 mBERT 表现最好的基础。
 
-2. **2×BiLSTM + MHSA 形态分类头**:
+**2. 2×BiLSTM + MHSA 形态分类头：既建模子词序列又定位最敏感的位置。**
 
-    - 功能：以孤立 lemma 的多源特征（拉丁/奥克语 n-gram + 句法-音系特征 + mBERT embedding）作输入，输出二分类性别概率。
-    - 核心思路：双层 BiLSTM 捕捉子词序列的顺序依赖，再叠 8-head 自注意力让模型在序列中找到对性别最敏感的子词位置；训练目标是 label smoothing CE 或 focal loss + class weight 以抗 2:1 不平衡。在 mBERT embedding 上取得最佳 lemma 级 Macro-F1 = 0.8224。
-    - 设计动机：树模型与浅 LSTM 都只能拿到 ~0.71–0.78 F1；性别信号既在后缀又可能在词中某些音位组合上，需要既能建模序列又能定位关键位置的结构。
+性别信号既藏在后缀、也可能藏在词中某些音位组合上，树模型和浅 LSTM 只能拿到约 0.71–0.78 的 F1，吃不下这种"序列 + 关键位置"的双重结构。这个头以孤立 lemma 的多源特征（拉丁/奥克语 n-gram + 句法-音系特征 + mBERT embedding）为输入：双层 BiLSTM 先捕捉子词序列的顺序依赖，再叠一层 8-head 自注意力让模型在序列里找到对性别最敏感的子词位置，训练用 label smoothing CE 或 focal loss + class weight 来抗 2:1 类别不平衡。在 mBERT embedding 上它取得最佳 lemma 级 Macro-F1 = 0.8224。
 
-3. **noun-conditioned attention 上下文头**:
+**3. noun-conditioned attention 上下文头：把消歧权重交给可解释的注意力分布。**
 
-    - 功能：在不破坏目标名词表示的前提下，让模型把整句一致性信息读进来。
-    - 核心思路：用 mBERT 编码整句得到 $H=(h_1,\dots,h_T)$，把目标名词位置 $i$ 的隐状态 $h_i$ 作 query，全句作 key/value 做多头注意力 $\mathrm{Attn}(h_i, H, H)$，再与拉丁 lemma embedding $e(L)$、拉丁性别 one-hot $\mathrm{onehot}(G_L)$ 拼接送入共享 MLP $p(y\mid r)=\mathrm{softmax}(f_\phi(r))$。同时设计 masked-context 变体——把名词位替成 `[MASK]` 再读 $h_i^{\text{mask}}$，专门测"剥掉名词后单凭上下文能恢复多少性别"。
-    - 设计动机：在奥克语里 `la torista` 的冠词 `la` 才是消歧关键；naive 用整句 `[CLS]` 池化会稀释信号，noun-conditioned attention 让模型显式定位"我现在要决定这个名词的性别"，并把消歧权重交给可解释的注意力分布。
+在奥克语里真正消歧 `la torista` 性别的是冠词 `la`，若 naive 地用整句 `[CLS]` 池化会把这种局部一致性信号稀释掉。这个头先用 mBERT 编码整句得到 $H=(h_1,\dots,h_T)$，再把目标名词位置 $i$ 的隐状态 $h_i$ 当 query、全句当 key/value 做多头注意力 $\mathrm{Attn}(h_i, H, H)$，让模型显式聚焦"我现在要定这个名词的性别"，随后与拉丁 lemma embedding $e(L)$、拉丁性别 one-hot $\mathrm{onehot}(G_L)$ 拼接送入共享 MLP $p(y\mid r)=\mathrm{softmax}(f_\phi(r))$。配套的 masked-context 变体把名词位替成 `[MASK]` 再读 $h_i^{\text{mask}}$，专门测"剥掉名词本身后单凭上下文能恢复多少性别"，从而把形态与上下文两路证据干净地分离开来。
 
 ### 损失函数 / 训练策略
 - 词级实验用 lemma-grouped 10-fold CV 防变体泄漏，Optuna 贝叶斯优化超参，最佳头是 2×BiLSTM+MHSA，CE + label smoothing 0.1，训练 100 epoch；不平衡用 focal loss + class weights 处理。

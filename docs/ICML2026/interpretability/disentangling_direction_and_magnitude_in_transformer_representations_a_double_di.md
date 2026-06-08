@@ -40,35 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对 Pythia-410M 的中层（layer 8-15），在每个 token 位置的隐状态 $\mathbf{h}$ 上应用两种扰动之一：
-
-1. **磁度扰动**：$\mathbf{h}'_{\text{mag}} = \alpha \mathbf{h}$，方向不变、长度变。
-2. **角度扰动**：$\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\| \cdot \hat{\mathbf{h}}'$，长度不变、方向旋转 $\theta$。
-
-通过解析公式让两种扰动满足 $\|\mathbf{h} - \mathbf{h}'_{\text{mag}}\| = \|\mathbf{h} - \mathbf{h}'_{\text{ang}}\| = \delta$，然后测下游 (a) WikiText cross-entropy loss；(b) BLiMP 主谓一致准确率；(c) attention / LayerNorm pathway 修复后的恢复率。
+本文要回答 "方向和幅值谁对 transformer 更重要"，难点是这两个量天然不可比——扰一个小角度和缩一个小因子在表征空间里位移大小完全不同。整体思路是把两种扰动都参数化到同一个位移强度 $\delta$ 上：对 Pythia-410M 中层（layer 8-15）每个 token 的隐状态 $\mathbf{h}$，要么只缩长度（磁度扰动 $\mathbf{h}'_{\text{mag}} = \alpha \mathbf{h}$）、要么只转方向（角度扰动 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\| \cdot \hat{\mathbf{h}}'$），并强制两者到 $\mathbf{h}$ 的欧氏距离都等于 $\delta$。匹配好大小后，再去测下游的语言建模 loss、句法准确率，以及把某条计算路径修回干净版后效应恢复了多少，从而既量出方向 / 幅值的因果差异、又定位它走哪条路径。
 
 ### 关键设计
 
-1. **L2 匹配扰动公式**:
+**1. L2 匹配扰动协议：把两条不可比的轴投影到同一个 $\delta$**
 
-    - 功能：消除扰动大小对方向 / 幅值比较的混淆。
-    - 核心思路：磁度侧从 $|1-\alpha| \cdot \|\mathbf{h}\| = \delta$ 反解出 $\alpha = 1 \pm \delta / \|\mathbf{h}\|$，符号随机抽（缩大或缩小各占一半），需要 $\delta < \|\mathbf{h}\|$。角度侧采样一个正交单位向量 $\mathbf{v} \perp \mathbf{h}$，写 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\|(\cos\theta \cdot \hat{\mathbf{h}} + \sin\theta \cdot \hat{\mathbf{v}})$，由 $\|\mathbf{h} - \mathbf{h}'_{\text{ang}}\| = \delta$ 推出 $\theta = \arccos(1 - \delta^2 / 2\|\mathbf{h}\|^2)$。每次实验经验性验证扰动后位移误差 < 0.01。
-    - 设计动机：把 "方向 vs 幅值" 从两个不可比的轴投影到统一的 $\delta$ 维度，让因果效应差异完全归因于扰动 "类型"，这是整篇文章成立的方法论前提。
+朴素比较的致命问题是：如果角度扰动破坏更大，无法判断到底是方向更重要还是这种扰动 "更暴力"。本文用一组解析公式强制两种扰动产生完全相同的位移 $\|\mathbf{h} - \mathbf{h}'_{\text{mag}}\| = \|\mathbf{h} - \mathbf{h}'_{\text{ang}}\| = \delta$。磁度侧从 $|1-\alpha| \cdot \|\mathbf{h}\| = \delta$ 反解出 $\alpha = 1 \pm \delta / \|\mathbf{h}\|$，符号随机抽（放大、缩小各半，需 $\delta < \|\mathbf{h}\|$）；角度侧先采一个正交单位向量 $\mathbf{v} \perp \mathbf{h}$，写成 $\mathbf{h}'_{\text{ang}} = \|\mathbf{h}\|(\cos\theta \cdot \hat{\mathbf{h}} + \sin\theta \cdot \hat{\mathbf{v}})$，由距离约束推出旋转角 $\theta = \arccos(1 - \delta^2 / 2\|\mathbf{h}\|^2)$，每次实验都经验性验证位移误差 < 0.01。这样一来因果效应的任何差异都只能归因于扰动 "类型" 而非大小，这是整篇文章成立的方法论前提。
 
-2. **Cross-over dissociation 测量**:
+**2. Cross-over dissociation：用互补的两个任务捕捉双重分离**
 
-    - 功能：分别在 "宏观损失" 和 "细粒度句法" 两个维度测两种扰动的影响。
-    - 核心思路：宏观侧用 WikiText-103 上 281 句话的 next-token cross-entropy，覆盖 10-64 token 长度；细粒度侧用 BLiMP 的 irregular / regular plural subject-verb agreement 200 对最小对（如 "The dogs run" vs "The dogs runs"），看模型是否仍给合法句更高概率。同样的 $\delta \in \{1, 2, 5, 10, 15, 20\}$ 6 档强度。5 个随机 seed，pair t-test + Bonferroni 校正。
-    - 设计动机：选这两个任务是因为它们在 "信息密度" 和 "敏感的几何属性" 上互补——next-token 是高熵全局预测，对方向极敏感；主谓一致是低维离散决策，对 norm 这种数值幅度更敏感。
+要证明方向和幅值由可分离的子系统支持，单看一个任务不够，必须找一对在 "几何敏感性" 上互补的任务做交叉测量。宏观侧用 WikiText-103 上 281 句话（10-64 token）的 next-token cross-entropy——它是高熵全局预测，理论上对方向极敏感；细粒度侧用 BLiMP 的 200 对主谓一致最小对（如 "The dogs run" vs "The dogs runs"），看模型是否仍给合法句更高概率——这是低维离散决策，更依赖 norm 调控的数值幅度。两个任务都扫 $\delta \in \{1, 2, 5, 10, 15, 20\}$ 共 6 档强度、5 个随机 seed，并用 pair t-test + Bonferroni 校正。当一种扰动主损害任务 X 而几乎不动任务 Y、另一种扰动反过来时，就构成了认知神经科学意义上的双重分离。
 
-3. **Attention / LayerNorm pathway 修复**:
+**3. Pathway 修复：靠因果干预定位影响走哪条路径**
 
-    - 功能：定位扰动影响通过哪条计算路径传播。
-    - 核心思路：对扰动后的状态 $\mathbf{h}'$，单独把某条路径上的中间产物（attention pattern 或 LayerNorm 输出）替换为干净版本，看下游 loss 恢复多少。如果某条路径修复后恢复率高 → 该路径承载了主要扰动效应。具体 attention 修复 = 用未扰动前向的 attention weights 重放；LayerNorm 修复 = 用未扰动的 LN 输出替换扰动后版本。
-    - 设计动机：相关性观察只能告诉你 "方向重要"，但要建立 "方向通过 attention 影响 loss" 这种机制陈述，必须做因果干预实验，靠修复某路径后效应是否消失来推断因果路径。
+相关性只能说 "方向重要"，但要建立 "方向通过 attention 影响 loss" 这样的机制陈述，必须做干预。具体做法是对扰动后的状态 $\mathbf{h}'$，单独把某条路径上的中间产物替换回干净版本——attention 修复 = 用未扰动前向算出的 attention weights 重放，LayerNorm 修复 = 用未扰动的 LN 输出替换扰动后版本——再看下游 loss 恢复了多少。某路径修复后恢复率高，就说明它承载了这种扰动的主要效应，从而把现象级的 "方向 vs 幅值" 落到具体的计算通道上。
 
-### 损失函数 / 训练策略
-本文无训练，是纯推理时干预实验。Pythia-410M / 1.4B float32 精度跑前向，每个 $\delta$ 跨 5 个 seed 独立采样正交方向，统计置信度。
+### 训练策略
+本文无训练，是纯推理时干预实验。Pythia-410M / 1.4B 以 float32 精度跑前向，每个 $\delta$ 跨 5 个 seed 独立采样正交方向以统计置信度。
 
 ## 实验关键数据
 

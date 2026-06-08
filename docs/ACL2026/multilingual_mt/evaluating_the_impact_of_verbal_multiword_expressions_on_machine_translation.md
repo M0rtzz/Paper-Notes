@@ -46,23 +46,25 @@ tags:
 
 ### 关键设计
 
-1. **三类 VMWE 的语言学分类 + 非组合性梯度假设**：
+**1. 三类 VMWE 的语言学分类 + 非组合性梯度假设：把"翻译变差"做成一个可证伪的命题。**
 
-    - 功能：把 VMWE 这一笼统概念拆成可定量比较的三档难度。
-    - 核心思路：VID（verbal idiom）如 "spill the beans"——纯不可推导；VPC（verb-particle）如 "give up = quit"——半可推导，particle 改变 verb 含义；LVC（light verb）如 "take a walk"——主要语义在名词，动词只起语法作用。每类配套 1-2 个公认的高质量数据集（EPIE/MAGPIE/Tu2012/Tu-Roth），并用 spaCy 依存解析 + idiom 词典做 non-VMWE 句子的反向过滤构造对照组。
-    - 设计动机：如果 MT 退化真的源自"非组合性"，就应该看到 VID > VPC > LVC 的退化梯度——这是可证伪的科学假设。实验结果（Table 2 error overlap %）完美对上：Opus 在 VID 上 78.64% error overlap，VPC 65.51%，LVC 62.21%；GemmaX2 / Google API 等强系统在 VID 上仍显著更差。
+业界常说 idiom "翻不好"，但 VMWE 是个笼统概念，没法定量比较。本文把它拆成三档非组合性递减的类型：VID（动词成语）如 "spill the beans"，语义和字面完全脱钩、纯不可推导；VPC（动词-小品词）如 "give up = quit"，半可推导，particle 改写了 verb 的含义；LVC（轻动词构式）如 "take a walk"，语义主要由名词承载，动词只起语法作用。每一类都配 1-2 个公认的高质量数据集（VID 用 EPIE/MAGPIE、VPC 用 Tu 2012、LVC 用 Tu-Roth 2011），再用 spaCy 依存解析加 idiom 词典反向过滤 BNC 句子，构造结构相近但不含 VMWE 的对照组。
 
-2. **WMT 数据上的两步 VMWE 抽取（启发式 + GPT-4o disambiguation）**：
+这样设计的好处是把"非组合性导致退化"变成一个可证伪假设：如果退化真源自非组合性，就应当观察到 VID > VPC > LVC 的退化梯度。实验完全对上——Opus 在 VID 上 error overlap 高达 78.64%，VPC 降到 65.51%，LVC 进一步降到 62.21%；即便 GemmaX2、Google API 这类强系统，VID 一档也始终最差。梯度的存在让结论从"感觉"升级成可重复验证的规律。
 
-    - 功能：在没有金标 VMWE 标注的 WMT 真实评测数据里高精度找出 VMWE 句子。
-    - 核心思路：第一步用启发式召回——idiom 用 EPIE/MAGPIE 词表 + BLEU-4 ≥ 0.6 模糊匹配，verb-particle / light verb 用 spaCy prt 依存关系；第二步用 GPT-4o 加 chain-of-thought prompt 按 PARSEME 指南做消歧。F1 在 VID/VPC/LVC 上分别达到 81.8 / 80.0 / 81.6（Table 1），比其他 LLM (Phi-4 / LLaMA-3.3-70B / DeepSeek-R1-70B) 都高。
-    - 设计动机：WMT 数据带有金标人工 DA 分数，是最有 ecological validity 的评测来源；但 WMT 句子里 VMWE 没有标注。这套两步 pipeline 让大规模真实数据评测变得可行，且开源出来供其他人复用。
+**2. WMT 数据上的两步 VMWE 抽取：在没有金标标注的真实评测数据里高精度捞出 VMWE 句子。**
 
-3. **error span 定位 + 回归控制混淆**：
+仅靠专用数据集还不够，因为它们缺乏真实人工评分。最有生态效度的评测来源是 WMT2017-2024——自带金标人工 DA 分数，但句子里的 VMWE 没有任何标注。本文设计了召回-消歧两步 pipeline：第一步用启发式高召回，idiom 用 EPIE/MAGPIE 词表加 BLEU-4 $\ge 0.6$ 的模糊匹配捞候选，verb-particle 和 light verb 则靠 spaCy 的 `prt` 依存关系定位；第二步用 GPT-4o 配 chain-of-thought prompt，按 PARSEME 标注指南对候选逐一消歧，剔除字面用法。
 
-    - 功能：把"VMWE 句子翻译差"严格归因到 VMWE token 上而不是句长 / 多义性。
-    - 核心思路：用 xCOMET 输出的 token-level error span，配合 simalign 做双语对齐，统计有多少错误 span 实际落在源端 VMWE 短语对应的目标端 token 上（Table 2）。再用线性回归 $\text{score}_i = \beta_0 + \beta_1 I_{vmwe} + \beta_2 S_{len} + \beta_3 P_{deg} + \beta_4 T_{cmp} + \varepsilon_i$ 在 30 万条 segment 上同时控制 VMWE 标志、句长、词义多义性（WordNet sense 平均数）、结构复杂度（spaCy 依存弧长之和），看 VMWE 系数是否仍显著。
-    - 设计动机：这是反驳 "VMWE 句子只是更难" 这一最致命 confound 的关键设计。回归结果显示 $\beta_{vmwe}$ 在 xCOMET 上为 -0.0813、MetricX 上 +0.9954，均 $p<0.001$，即控制其他难度因素后 VMWE 自身仍贡献约 0.08 (xCOMET 0-1 尺度) / 1 分 (MetricX 0-25 尺度) 的额外退化。
+这套 pipeline 在 VID/VPC/LVC 上的抽取 F1 分别达到 81.8 / 80.0 / 81.6（Table 1），明显高于 Phi-4、LLaMA-3.3-70B、DeepSeek-R1-70B 等其他 LLM。它让大规模真实数据上的 VMWE 评测第一次变得可行，且作为开源工具供后续工作复用。
+
+**3. error span 定位 + 回归控制混淆：把退化严格归因到 VMWE token，而不是"句子凑巧更难"。**
+
+最致命的反驳是"VMWE 句子本来就更长更复杂，退化未必怪 VMWE"。本文用两件事把这个 confound 切掉。其一是错误定位：用 xCOMET 输出的 token 级 error span，配合 simalign 做双语对齐，统计有多少错误 span 实际落在源端 VMWE 短语对应的目标端 token 上（Table 2）——把"句子分低"细化到"错误就发生在 VMWE 处"。其二是回归控制，在 30 万条 segment 上拟合
+
+$$\text{score}_i = \beta_0 + \beta_1 I_{vmwe} + \beta_2 S_{len} + \beta_3 P_{deg} + \beta_4 T_{cmp} + \varepsilon_i$$
+
+其中 $I_{vmwe}$ 是 VMWE 标志，$S_{len}$ 是句长，$P_{deg}$ 是词义多义性（WordNet 平均 sense 数），$T_{cmp}$ 是结构复杂度（spaCy 依存弧长之和）。只要在控制掉后三项难度因素后 $\beta_1$ 仍显著，就证明 VMWE 自身在拖累翻译。结果正是如此：$\beta_{vmwe}$ 在 xCOMET 上为 $-0.0813$、MetricX 上 $+0.9954$，均 $p<0.001$，即额外贡献约 0.08（xCOMET 的 0-1 尺度）/ 1 分（MetricX 的 0-25 尺度）的退化，且数值远大于句长等其他因素。
 
 ### 损失函数 / 训练策略
 本文是纯评测论文，不训练模型。QE 评测用 MetricX-24-QE（基于 mT5、低分好、0-25）和 xCOMET-QE（基于 XLM-RoBERTa-XL、高分好、0-1）；MT 系统覆盖 SeamlessM4T、Madlad400、M2M100、Opus-MT、LLaMAX3 Alpaca、Phi-4-multimodal、GemmaX2、Google Translate API 共 8 个；目标语言为 de/cs/ru/zh/es/ja/tr 共 7 种。WMT 路径补充评测 GPT-4.1、GPT-5.1、Google API 在 100 句 × 4 类别 × 4 语言对的可控子集。

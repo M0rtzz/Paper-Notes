@@ -41,56 +41,29 @@ SERA 的核心动机是：不同的参考表达式需要不同类型的推理专
 
 ### 整体框架
 
-SERA 建立在 DINOv2 视觉编码器 + CLIP 文本编码器的预训练视觉-语言框架之上。给定输入图像 $I$ 和参考表达式 $Q$，视觉编码器提取图像 token 序列，文本编码器提取全局表达式嵌入。SERA 在两个互补阶段引入修改：
-
-- **SERA-Adapter**：插入到骨干 Transformer 选定层中，在骨干内部精炼中间视觉 token
-- **SERA-Fusion**：在视觉-语言融合阶段，将空间 token 重塑为 2D 特征图后通过 MoE 精炼
+SERA 要解决的是参考图像分割里的一个现实矛盾：既想省钱冻结预训练骨干，又想让视觉表示能随表达式灵活调整。它的做法不是动骨干本身，而是在骨干内部和视觉-语言融合处各塞一组轻量级的 MoE 专家去"补课"。整体流程是：DINOv2 提取图像 token 序列、CLIP 提取表达式的全局嵌入，token 先在骨干内被 **SERA-Adapter** 精炼一遍，再在融合阶段被 **SERA-Fusion** 重塑成 2D 特征图后精炼第二遍，最后送入分割头出掩码。两个阶段的专家都不是统一处理所有表达式，而是根据当前表达式动态决定让哪类专家出力，从而让"空间型""外观型""上下文型"表达各自走到合适的精炼路径。
 
 ### 关键设计
 
-#### SERA-Adapter：骨干级专家精炼
+**1. SERA-Adapter：在冻结骨干内部做稳定的专家精炼。**
 
-**功能**：在 DINOv2 的选定 Transformer 块中插入表达式条件化的适配器，通过专家引导的精炼和跨模态注意力提升空间一致性和边界精度。
+冻结编码器最大的代价是视觉表示无法随任务调整，容易出现掩码碎片、边界泄漏。SERA-Adapter 直接插进 DINOv2 选定的几个 Transformer 块里补这个缺口：它先把视觉 token 投影回 2D 空间网格，用 1×1/3×3/5×5 多尺度卷积分支富化局部上下文得到 $\mathbf{G}_{\text{rich}}$，再交给两个互补专家——边界专家用可学习深度卷积放大轮廓响应 $\mathbf{B} = \text{ReLU}(\text{BN}(\mathbf{G} + \beta \cdot \text{DWConv}_{3\times3}(\mathbf{G})))$（$\beta=0.1$），空间专家用深度卷积加带尺度残差强化局部一致性 $\mathbf{S} = \phi(\text{DWConv}_{3\times3}(\mathbf{G})) + \alpha \mathbf{G}$（$\alpha=0.3$）。
 
-**核心思路**：将视觉 token 投影到 2D 空间网格，经多尺度卷积分支（1x1, 3x3, 5x5）丰富局部上下文后，由两个互补专家精炼：
-
-- **边界专家**：使用可学习深度 $3 \times 3$ 卷积增强轮廓敏感响应，$\mathbf{B} = \text{ReLU}(\text{BN}(\mathbf{G} + \beta \cdot \text{DWConv}_{3\times3}(\mathbf{G})))$，其中 $\beta = 0.1$
-- **空间专家**：使用深度 $3 \times 3$ 卷积加带尺度残差增强局部特征一致性，$\mathbf{S} = \phi(\text{DWConv}_{3\times3}(\mathbf{G})) + \alpha \mathbf{G}$，其中 $\alpha = 0.3$
-
-**自适应软路由**：对空间 token 做全局平均池化得到摘要 $\mathbf{z}$，经线性投影 + softmax 得到路由权重 $[w_s, w_b] = \boldsymbol{\sigma}(\mathcal{R}(\mathbf{z}))$，专家输出加权融合：
+关键是它用的是**软路由**而非硬选择：对空间 token 做全局平均池化得到摘要 $\mathbf{z}$，线性投影加 softmax 得到两个专家的连续权重 $[w_s, w_b] = \boldsymbol{\sigma}(\mathcal{R}(\mathbf{z}))$，然后以残差形式叠回原特征
 
 $$\mathbf{G}_{\text{corr}} = \mathbf{G}_{\text{rich}} + \alpha w_s \mathbf{E}_s + \beta w_b \mathbf{E}_b$$
 
-其中 $\alpha = 0.25, \beta = 0.15$ 是固定缩放系数。最后展平回 token 序列并与文本嵌入做跨模态注意力。
+（这里 $\alpha=0.25, \beta=0.15$ 是固定缩放系数），最后展平回 token 序列并与文本嵌入做跨模态注意力。之所以在骨干内坚持软路由而不是稀疏 Top-K，是因为稀疏门控在冻结编码器上容易训练不稳、扰动预训练表示；连续加权的残差精炼则能温和地注入表达式信息而不破坏原有特征。
 
-**设计动机**：软路由确保骨干内部的稳定残差精炼，避免稀疏路由在冻结编码器中导致的不稳定。
+**2. SERA-Fusion：在融合阶段用稀疏路由逼专家分工。**
 
-#### SERA-Fusion：融合级专家引导聚合
+骨干精炼过的特征到了视觉-语言融合阶段还要再提质，但这一阶段的诉求和骨干内相反——这里希望不同专家真正各管一摊、形成特化，而不是人人都掺一脚。SERA-Fusion 因此设计了四个物理语义明确的专家：空间专家注入显式坐标信息 $E_{\text{spa}}(\mathbf{X}) = \mathbf{X} + \alpha \cdot \text{Conv}_{1\times1}(\mathbf{G})$（$\mathbf{G}$ 是归一化坐标网格）；上下文专家把空间维展平后做多头自注意力加 FFN 残差，捕获长程依赖；边界专家用固定 Sobel 算子取水平/垂直梯度及幅值 $E_{\text{bnd}}(\mathbf{X}) = \mathbf{X} + \phi(\text{Conv}_{1\times1}([\mathbf{X}, \mathbf{G}_{\text{mag}}, \mathbf{G}_x + \mathbf{G}_y]))$；形状专家结合深度模糊的低频平滑与拉普拉斯算子的高频结构线索，促进全局结构一致。
 
-**功能**：在视觉-语言融合阶段，对中间空间特征图应用互补的专家精炼，增强掩码预测前的表示质量。
+路由上它换成 **Top-K 稀疏门控**：先 $\mathbf{z} = \text{GAP}(\mathbf{X})$ 取摘要、$\mathbf{r} = \mathbf{W}_2 \sigma(\mathbf{W}_1 \mathbf{z})$ 算路由 logit，训练时加高斯噪声鼓励路由多样性，再 Top-K 选择 + softmax 归一化只激活少数专家。两阶段刻意用不同路由策略——骨干内求稳所以软路由，融合级求特化所以稀疏路由——正是 SERA 的核心取舍，让同一套 MoE 思想在两个对计算预算和稳定性要求不同的位置都站得住。
 
-**核心思路**：设计四个互补专家捕获不同视觉线索：
+**3. 防止专家坍塌的正则化：让稀疏路由别退化成只用一个专家。**
 
-1. **空间专家**：注入显式位置信息，$E_{\text{spa}}(\mathbf{X}) = \mathbf{X} + \alpha \cdot \text{Conv}_{1\times1}(\mathbf{G})$，其中 $\mathbf{G}$ 是归一化坐标网格
-2. **上下文专家**：通过多头自注意力捕获长程依赖，将空间维度展平后做 self-attention + FFN + 残差连接
-3. **边界专家**：使用固定 Sobel 算子提取水平/垂直梯度及幅值，$E_{\text{bnd}}(\mathbf{X}) = \mathbf{X} + \phi(\text{Conv}_{1\times1}([\mathbf{X}, \mathbf{G}_{\text{mag}}, \mathbf{G}_x + \mathbf{G}_y]))$
-4. **形状专家**：结合深度模糊（低频平滑）和拉普拉斯算子（高频结构线索），促进全局结构一致性
-
-**条件路由（Top-K 稀疏门控）**：
-
-$$\mathbf{z} = \text{GAP}(\mathbf{X}), \quad \mathbf{r} = \mathbf{W}_2 \sigma(\mathbf{W}_1 \mathbf{z})$$
-
-训练时加高斯噪声鼓励路由多样性，Top-K 选择后 softmax 归一化得到稀疏权重。
-
-**设计动机**：稀疏 Top-K 路由在融合阶段鼓励专家特化，不同于骨干级的软路由策略。两阶段使用不同路由策略是有意为之——骨干内需稳定，融合级需特化。
-
-#### 防止专家坍塌的正则化
-
-引入三个辅助损失（仅训练时使用）：
-
-- **Z-loss**：惩罚路由 logit 的均方幅度，$\mathcal{L}_z = \lambda_z \frac{1}{BE} \|\mathbf{r}\|_2^2$
-- **负载均衡损失**：惩罚专家使用量的变异系数，$\mathcal{L}_{\text{balance}} = \lambda_{\text{bal}} \text{CV}(\mathbf{u})^2$
-- **Token 分配正则化**：稳定训练中的 token 到专家的分配
+稀疏 Top-K 路由有个老毛病：门控容易偷懒，把绝大多数 token 全塞给同一个专家，其余专家饿死、特化无从谈起。SERA 用三个仅训练时生效的辅助损失把这件事按住：Z-loss 惩罚路由 logit 的均方幅度 $\mathcal{L}_z = \lambda_z \frac{1}{BE} \|\mathbf{r}\|_2^2$，防止 logit 爆炸；负载均衡损失惩罚各专家使用量的变异系数 $\mathcal{L}_{\text{balance}} = \lambda_{\text{bal}} \text{CV}(\mathbf{u})^2$，逼门控把 token 摊匀；token 分配正则化进一步稳住训练中 token 到专家的指派。三者合力，才让上面四个专家真的各自学到边界、空间、上下文、形状这些不同线索，而不是名义上四个、实际上一个。
 
 ### 损失函数 / 训练策略
 

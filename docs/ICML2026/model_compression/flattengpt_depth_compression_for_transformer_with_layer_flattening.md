@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段流水线：① **迭代层扁平化**——在校准集上计算所有相邻层的 cross-layer cosine similarity 矩阵 $\mathbf{S}\in\mathbb{R}^{L\times L}$，贪心选择相似度最高的相邻对 $(B_{\ell-1}, B_\ell)$ 合并为 $B_{\ell-1,\ell}$，迭代到达到目标压缩率；② **通道剪枝**——对每个 2× 宽度的合并层，MHA 部分按头重要性删一半 head，MLP 部分用 Nyström approximation 选 top-k channel 并补偿剩余信息。
+FlattenGPT 想在"直接删整层"和"只删宽度"之间找一条中间路：先把相邻的冗余层**合并**成一个 2× 宽的层 (深度→宽度)，再把这个胖层的宽度**剪**回原始规模 (宽度→深度)，最终得到一个更浅但每层都是标准尺寸的网络。整条流水线分两阶段，全程 training-free：先在校准集上算出相邻层的余弦相似度矩阵 $\mathbf{S}\in\mathbb{R}^{L\times L}$，贪心地把最相似的相邻对反复合并直到压缩率达标；再对每个合并出来的胖层做通道剪枝，MHA 按头重要性删一半 head，MLP 用 Nyström 近似选 top-k 通道并把被删信息补偿回来。
 
 ### 关键设计
 
-1. **层扁平化 (Layer Flattening as Parallel-then-Sum)**:
+**1. 层扁平化：把"串行两层"改写成"并行相加的一层"。**
 
-    - 功能：把相邻两层 $B_{\ell-1}, B_\ell$ 合并成单层 $B_{\ell-1,\ell}$，保留两层全部参数知识。
-    - 核心思路：先把 LayerNorm 的 affine 参数 $\boldsymbol{\alpha}^{\ell-1}, \boldsymbol{\alpha}^\ell$ 融合进 $\mathbf{W}_Q/W_K/W_V$ 等线性投影 (这步不改变输出)；然后把两层的 $\mathbf{W}_Q^{\ell-1}, \mathbf{W}_Q^\ell$ 横向拼接得 $\mathbf{W}_Q^{\ell-1,\ell}\in\mathbb{R}^{d\times 2dh}$，类似处理 $W_K,W_V$；$\mathbf{W}_O$ 纵向拼接。对 MLP 同样拼接 $\mathbf{W}_u,\mathbf{W}_g$ (横向) 和 $\mathbf{W}_D$ (纵向)。这样合并层的 MHA 是 $2H$ 头并行注意力之和，MLP 是 $2d_{int}$ 中间维度的双倍宽 MLP。
-    - 设计动机：由于两层输入相似 (cos>0.9)，把"串行: $\mathbf{H}_\ell=\mathbf{H}_{\ell-1}+B_\ell(\mathbf{H}_{\ell-1}+B_{\ell-1}(\mathbf{H}_{\ell-1}))$" 近似为"并行: $\mathbf{H}_\ell\approx \mathbf{H}_{\ell-1}+B_{\ell-1}(\mathbf{H}_{\ell-1})+B_\ell(\mathbf{H}_{\ell-1})$" 误差很小；这种"加法等价"是层扁平化能成立的几何前提。
+深度剪枝最大的痛点是"删整块"太粗——一个 block 里总有些 head/channel 学到了关键知识，但只要整块被判冗余就一起丢。扁平化的思路是把相邻两层 $B_{\ell-1}, B_\ell$ 合并成单层 $B_{\ell-1,\ell}$ 而不丢任何参数。具体做法是先把两层 LayerNorm 的 affine 参数 $\boldsymbol{\alpha}^{\ell-1}, \boldsymbol{\alpha}^\ell$ 吸收进 $\mathbf{W}_Q/\mathbf{W}_K/\mathbf{W}_V$ 等线性投影 (纯代数变换，不改输出)，再把两层权重拼起来：$\mathbf{W}_Q^{\ell-1}, \mathbf{W}_Q^\ell$ 横向拼成 $\mathbf{W}_Q^{\ell-1,\ell}\in\mathbb{R}^{d\times 2dh}$ ($\mathbf{W}_K,\mathbf{W}_V$ 同理)，$\mathbf{W}_O$ 纵向拼接；MLP 这边把 $\mathbf{W}_u,\mathbf{W}_g$ 横向拼、$\mathbf{W}_D$ 纵向拼。拼完后的合并层 MHA 就是 $2H$ 个头并行注意力求和，MLP 就是中间维度翻倍到 $2d_{int}$ 的双倍宽 MLP。
 
-2. **基于相似度矩阵的贪心层选择**:
+这步之所以成立，靠的是一个几何前提：相邻层输入的余弦相似度普遍 >0.9，所以原本"串行" $\mathbf{H}_\ell=\mathbf{H}_{\ell-1}+B_\ell(\mathbf{H}_{\ell-1}+B_{\ell-1}(\mathbf{H}_{\ell-1}))$ 可以近似为"并行相加" $\mathbf{H}_\ell\approx \mathbf{H}_{\ell-1}+B_{\ell-1}(\mathbf{H}_{\ell-1})+B_\ell(\mathbf{H}_{\ell-1})$，误差很小。正是这个"加法等价"让深度上的两层折叠成了宽度上的双倍——深度问题被转译成了有成熟工具的宽度问题。
 
-    - 功能：决定哪些相邻层去合并、合并多少轮才停。
-    - 核心思路：维护上三角相似度矩阵 $\mathbf{S}$，每轮找最大值 $\mathbf{S}_{\ell-1,\ell}$ 对应的相邻对合并。关键技巧：合并后删 $\mathbf{S}$ 的第 $\ell-1$ 列和第 $\ell$ 行，这样新合并层 $B^{\ell-1,\ell}$ 与其他层的相似度通过原始矩阵的 $\mathbf{S}_{\ell-1,i}$ 和 $\mathbf{S}_{j,\ell}$ 间接表达。这种"删行删列"机制保证了即使在迭代中合并 3 层以上时，仍能用"首层与末层的距离"约束合并跨度。
-    - 设计动机：贪心是为了避开 NP-hard 的最优分组问题；删行删列是为了防止"扁平化过远的层"——如果连续合并多层，首末层语义已经发散，强行合并会破坏信息流。
+**2. 相似度矩阵贪心选择：决定合并谁、合并几轮，且不让合并跨得太远。**
 
-3. **MLP Nyström 通道剪枝 + 误差补偿**:
+哪些层该合、合到什么时候停，是个组合优化问题，最优分组是 NP-hard，所以用贪心。维护上三角相似度矩阵 $\mathbf{S}$，每轮挑当前最大值 $\mathbf{S}_{\ell-1,\ell}$ 对应的相邻对合并。关键技巧在合并之后：删掉 $\mathbf{S}$ 的第 $\ell-1$ 列和第 $\ell$ 行，于是新合并层 $B^{\ell-1,\ell}$ 与其他层的相似度只能通过原始矩阵里的 $\mathbf{S}_{\ell-1,i}$ 和 $\mathbf{S}_{j,\ell}$ 间接表达。
 
-    - 功能：把 $2d_{int}$ 宽度的合并 MLP 压回原始 $d_{int}$，同时把丢弃通道的信息"投影"到保留通道上。
-    - 核心思路：先用 ridge leverage score $s_i=[\mathbf{C}_\psi(\mathbf{C}_\psi+\lambda\mathbf{I})]_{ii}^{-1}$ 衡量通道 $i$ 的重要性，选 top-k；然后用 Nyström 公式调整 down matrix $\mathbf{W}_D \leftarrow \mathbf{W}_D + (\mathbf{S}_k^\top\mathbf{C}_\psi\mathbf{S}_k+\lambda\mathbf{I})^{-1}\mathbf{S}_k^\top\mathbf{C}_\psi(\mathbf{I}-\mathbf{S}_k\mathbf{S}_k^\top)\mathbf{W}_D$。Lemma 3.1 证明这是 L2 正则下最小二乘的最优补偿。MHA 通道剪枝则简单按头重要性 $f_i=\mathbb{E}[\text{Softmax}(...)\mathbf{X}\mathbf{W}_{V,i}\text{diag}(\mathbf{W}_{O,i}\mathbf{W}_{O,i}^\top)^{1/2}]$ 删 head。
-    - 设计动机：纯通道选择会丢弃 50% 信息；Nyström 补偿把被删通道的协方差"折叠"到保留通道的下投影上，理论上保证 MLP 输出在最小化 L2 误差意义下最优。
+这套"删行删列"不是随手的实现细节——它在迭代里把"首层与末层的距离"作为约束传递下去，防止连续合并跨度过大的层。因为一旦把相隔很远的层硬凑到一起，首末层的语义早已发散，前面那个"输入相似 → 加法等价"的前提就不再成立，强行合并只会破坏信息流。删行删列保证了即便合并到 3 层以上，合并跨度也被压在语义仍然接近的范围内。
+
+**3. MLP Nyström 通道剪枝 + 误差补偿：把胖层压回标准宽度而不直接丢掉一半信息。**
+
+合并完每层宽度翻倍，必须压回去才能恢复架构同质性，但简单选 top-k 通道意味着直接丢弃 50% 的信息。FlattenGPT 对 MLP 用两步:先用 ridge leverage score $s_i=[\mathbf{C}_\psi(\mathbf{C}_\psi+\lambda\mathbf{I})]_{ii}^{-1}$ 衡量每个通道 $i$ 的重要性 (这里 $\mathbf{C}_\psi$ 是校准集上估计的通道协方差，$\lambda$ 是 ridge 强度)，据此选出 top-k 通道；再用 Nyström 近似把被删通道的协方差"折叠"回保留通道的下投影矩阵，调整公式为
+
+$$\mathbf{W}_D \leftarrow \mathbf{W}_D + (\mathbf{S}_k^\top\mathbf{C}_\psi\mathbf{S}_k+\lambda\mathbf{I})^{-1}\mathbf{S}_k^\top\mathbf{C}_\psi(\mathbf{I}-\mathbf{S}_k\mathbf{S}_k^\top)\mathbf{W}_D$$
+
+Lemma 3.1 证明这正是 L2 正则下最小二乘的最优补偿——也就是说在最小化 MLP 输出 L2 误差的意义下，这是把丢弃信息折回保留通道的最优解，所以剪掉一半通道后输出几乎不退化。MHA 那边则简单得多，直接按头重要性 $f_i=\mathbb{E}[\text{Softmax}(\cdots)\mathbf{X}\mathbf{W}_{V,i}\,\text{diag}(\mathbf{W}_{O,i}\mathbf{W}_{O,i}^\top)^{1/2}]$ 删掉一半 head。
 
 ### 损失函数 / 训练策略
-完全 training-free，只用 128 条 WikiText-2 序列做校准 (估计 $\mathbf{C}_\psi$)。可选 RFT：50K refined Alpaca + LoRA 2 epoch + lr=1e-4 + lora_r=8 做恢复微调。
+完全 training-free，只用 128 条 WikiText-2 序列做校准 (估计 $\mathbf{C}_\psi$)。可选 RFT 恢复微调：50K refined Alpaca + LoRA，2 epoch、lr=1e-4、lora_r=8。
 
 ## 实验关键数据
 

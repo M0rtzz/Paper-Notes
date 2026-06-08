@@ -45,35 +45,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MultiPun 是 benchmark + 评测协议 + 增强方法的三件套：
+MultiPun 把"多模态双关"做成一套 benchmark + 评测协议 + 增强方法的闭环：先用一条 4 步流水线造出带对抗负样本的数据，再用一套双向 prompt 协议把"真懂"和"顺着提示瞎答"拆开，最后给出推理时（Pun-CoT）和训练时（Pun-Tuning）两条提升路线。
 
-1. **数据构建 pipeline**（4 步）：
-    - Step 1 **Pun Tuples Generation**：同音双关用 CMU 词典找同音异写词对，再过 Zipf 频率 / WordNet 主义项 / 视觉可绘 / 词形变化等 5 道过滤；同形双关用 WordNet 找一词多义，要求两义在不同 lexical file 且 path similarity < 0.1 避免 metonymy。
-    - Step 2 **Positive Sample Generation**：GPT-4o 根据 pun tuple 生成 (caption, 图像描述, pun 解释)，GPT-image-1 出图，人工 + embedding 去重过滤。
-    - Step 3 **Negative Sample Generation**：每个 pun 配 2 个对抗 non-pun——ES（Explicative Substitution，把 $w_p$ 换成 $S_a$ 的直接描述）+ RS（Random Substitution，把 $w_p$ 换成无关实体并重新生成图）。
-    - Step 4 **Evaluation tasks**：Detection（二分类） / Localization（同时给出 $w_p, w_a$） / Explanation（给出完整四元组 + 解释）。
-2. **评测协议**：每题都问两次——biased-to-pun（"这是 pun 吗"）和 biased-to-non-pun（"这不是 pun 吧"），用 $\Delta$TPR/$\Delta$TNR 测 prompt-induced bias，用 Cohen's Kappa $\kappa$ 测两次回答的一致性。这一招是关键，能把"真理解" vs "顺着 prompt 走"分开。
-3. **增强方法**：Pun-CoT（推理时三步约束）+ Pun-Tuning（用 MultiPun 数据微调）。
+数据流水线先生成 pun 四元组 $\mathcal{P}=\langle w_p, w_a, S_p, S_a\rangle$：同音双关用 CMU 词典找同音异写词对，再过 Zipf 频率 / WordNet 主义项 / 视觉可绘 / 词形变化等 5 道过滤；同形双关用 WordNet 找一词多义，要求两义落在不同 lexical file 且 path similarity < 0.1，避免把 metonymy 误当双关。拿到四元组后，GPT-4o 据此写出 (caption, 图像描述, pun 解释)，GPT-image-1 出图，再经人工 + embedding 去重。每个正样本配两个对抗 non-pun，最后落到三类任务上评测：Detection（二分类）、Localization（同时给出 $w_p, w_a$）、Explanation（给出完整四元组 + 解释）。
 
 ### 关键设计
 
-1. **对抗 non-pun 构建（ES + RS 双策略）**:
+**1. 对抗 non-pun 构建（ES + RS 双策略）：造出表面像双关、但桥梁已被剪断的陷阱样本。**
 
-    - 功能：制造表面相似但缺失 pun 机制的负样本，直接撞 VLM 的"看到拟人化水果就喊 pun"的 superficial 模式。
-    - 核心思路：ES 把 caption 里的 $w_p$ 换成 $S_a$ 的直接描述（如 "We make a great pear" → "We make a great couple"），图保持不变，破坏 phonetic 桥梁；RS 把 $w_p$ 换成完全无关实体并重画图（如把 pears 换成 apples、把对话改为 chair），破坏整个 pun 四元组。两种策略都保留场景 coherence，但 pun mechanism 已被剪断。
-    - 设计动机：直接用随机图文对当负样本太容易区分，模型会 overfit 到"图文无关 = non-pun"。对抗负样本逼模型真正去判断"phonetic 或 semantic 桥梁是否成立"。同时 ES vs RS 的对比让分析能定位到底是"语言级别还是图像级别"的失败。
+现有少数多模态 pun 数据集只有正样本，模型只要看到"拟人化水果 + 搞笑场景"就喊 pun，根本无从验证它是不是真的在判断双关机制。MultiPun 给每个 pun 配两种对抗负样本来戳破这层表面模式。ES（Explicative Substitution）把 caption 里的 $w_p$ 换成 $S_a$ 的直接描述（如 "We make a great pear" → "We make a great couple"），图保持不变，只把 phonetic 桥梁拆掉；RS（Random Substitution）把 $w_p$ 换成完全无关实体并重画图（把 pears 换成 apples、把对话改成 chair），整个四元组都不成立。
 
-2. **双向偏置 prompt + $\Delta$ / $\kappa$ 评测**:
+两种策略都刻意保留场景 coherence，所以"图文无关 = non-pun"这种偷懒捷径行不通，模型必须真去判断"phonetic 或 semantic 桥梁到底成不成立"。更妙的是 ES 只动语言、RS 连图一起换，二者一对比就能把模型的失败定位到"语言级"还是"图像级"。
 
-    - 功能：分离"真推理"与"对 prompt 措辞的顺从"，揭示 alignment-induced sycophancy。
-    - 核心思路：同一样本问两次，一次诱导 pun（"Is this a pun?"），一次诱导 non-pun（"Is this not a pun?"），计算两次 TPR/TNR 的差值 $\Delta$。若 $|\Delta|$ 大，说明模型决策严重依赖提示措辞而非内容。$\kappa$ 测两次回答的一致性。
-    - 设计动机：LLaVA-V1.6-Vicuna-13B 的 $\Delta$TPR = $-0.923$ 直接暴露了——它把 "is not a pun" 当作 "should answer no"，几乎没在看内容。这个评测协议是本论文最重要的设计之一，能筛掉表面看似 SOTA 但其实在做 sycophancy 的模型。
+**2. 双向偏置 prompt + $\Delta$ / $\kappa$ 评测：把"真推理"和"对提示措辞的顺从"分开。**
 
-3. **Pun-CoT：视觉定位 + 词汇锚定 + 跨模态验证**:
+只问 "Is this a pun?" 没法区分模型是真懂还是有肯定偏好（affirmative bias），一个总说 yes 的模型也能在正样本上刷出高分。MultiPun 对同一样本问两次：一次诱导 pun（"Is this a pun?"），一次诱导 non-pun（"Is this not a pun?"），计算两次 TPR/TNR 的差值 $\Delta$，再用 Cohen's Kappa $\kappa$ 测两次回答的一致性。$|\Delta|$ 越大，说明决策越依赖提示措辞而非图文内容。
 
-    - 功能：在推理时强制 VLM 走"先看图，再抠词，最后验证跨模态桥梁"的三步检查，对症治四种幻觉。
-    - 核心思路：Step 1 Visual Grounding 让模型先描述图里有什么具体对象，避免视觉对象幻觉（看到 apple 说成 date）；Step 2 Lexical Anchoring 强制从 caption 抠出字面 $w_p$，避免脑补"应该是 fan"等 pun word 幻觉；Step 3 Cross-Modal Verification 检查是否存在合法的 phonetic（同音）或 semantic（多义）桥梁，明确拒绝 forced association。完整 prompt 在论文附录 F。
-    - 设计动机：错误分析（§4.1）发现 VLM 主要犯 4 类幻觉（Pun word / Phonetic / Semantic / Visual object hallucination），Pun-CoT 三步刚好对症——Step 1 治视觉幻觉，Step 2 治 pun word 幻觉，Step 3 治 phonetic 和 semantic 幻觉。
+这个协议直接把伪装成 SOTA 的 sycophancy 揪了出来——LLaVA-V1.6-Vicuna-13B 的 $\Delta$TPR $=-0.923$，等于把 "is not a pun" 直接读成 "应该回答 no"，几乎没在看内容。因为它对任意二分类评测都通用，本身也是一个可迁移的范式级评测改良。
+
+**3. Pun-CoT：视觉定位 → 词汇锚定 → 跨模态验证的三步对症 CoT。**
+
+错误分析（§4.1）把 VLM 的失败归成 4 类幻觉：Pun word / Phonetic / Semantic / Visual object hallucination。Pun-CoT 不是泛泛地"让模型多想想"，而是针对这 4 类各设一步检查：Step 1 Visual Grounding 先让模型描述图里到底有什么具体对象，治视觉对象幻觉（看到 apple 却说成 date）；Step 2 Lexical Anchoring 强制从 caption 抠出字面 $w_p$，治 pun word 幻觉（脑补出一个根本没出现的 "fan"）；Step 3 Cross-Modal Verification 检查是否真存在合法的 phonetic（同音）或 semantic（多义）桥梁，并明确拒绝 forced association，治 phonetic 与 semantic 两类幻觉（完整 prompt 见附录 F）。
+
+这套"先做错误分析归类、再针对每类错误定制一步 CoT"的打法，比通用 CoT 更有的放矢，也能迁移到任何有明显错误模式的任务上。
 
 ### 损失函数 / 训练策略
 - **Benchmark 构建**：无监督 + 人工 in-the-loop 质控，详见附录 D。

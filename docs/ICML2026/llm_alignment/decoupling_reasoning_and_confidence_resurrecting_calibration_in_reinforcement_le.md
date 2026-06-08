@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DCPO（Decoupled Calibration Policy Optimization）建在 GRPO 的 group sampling 之上，pipeline 如下：给定 prompt $q$，policy 采样 $G$ 条结构化响应 $o = [o_r\ \texttt{<conf>}\ o_c]$，其中 $o_r$ 是 reasoning + 最终答案、$o_c$ 是显式置信度数字；对每条响应分别算两个 reward —— 推理 reward $R(o_r)=\mathbb{I}(y_\text{pred}=y_\text{label})$ 和置信度 reward $R_c(o_c)=-|\text{conf}(o_c)-R_{IG}|$（其中 $R_{IG}$ 是 group + instance 混合监督信号）；做 group-relative 归一化得到 $A_r, A_c$；最后用 token-level mask 把 $A_r$ 只施加到 $o_r$ 段、$A_c$ 只施加到 $o_c$ 段。这样推理参数更新和置信度参数更新走不同的梯度通道。
+DCPO（Decoupled Calibration Policy Optimization）要解决的是"既不掉准确率、又压住过度自信"这对在常规 RLVR 里互斥的目标，它建在 GRPO 的 group sampling 之上。给定 prompt $q$，policy 采样 $G$ 条结构化响应 $o = [o_r\ \texttt{<conf>}\ o_c]$：$o_r$ 是 reasoning 加最终答案，`<conf>` 之后的 $o_c$ 是模型显式吐出的置信度数字。每条响应算两套 reward——推理 reward $R(o_r)=\mathbb{I}(y_\text{pred}=y_\text{label})$ 只看答案对不对，置信度 reward $R_c(o_c)=-|\text{conf}(o_c)-R_{IG}|$ 只看吐出的数字离真实正确率有多远；两套 reward 各自在 group 内归一化成 advantage $A_r, A_c$，再用 token-level mask 让 $A_r$ 只回传到 $o_r$ 段、$A_c$ 只回传到 $o_c$ 段。推理和置信度因此走两条互不干扰的梯度通道，这正是把"梯度冲突定理"翻译成可执行架构的落点。
 
 ### 关键设计
 
-1. **Block-wise Verbalized Confidence Rollout（生成结构解耦）**:
+**1. 结构化置信度 rollout：把推理和置信度切成物理上分开的两段 token。**
 
-    - 功能：把模型输出强制切成"推理段 + 置信度段"两个明确块，用特殊 token `<conf>` 分隔。
-    - 核心思路：prompt 要求模型先按常规思维链推理并给答案，再在 `<conf>` 后吐一个标量置信度数字（如 0.85）。这样后续 reward 和 mask 都能精确定位到 token 子集；不合规输出加格式 penalty。
-    - 设计动机：如果用 logit-based confidence（如 $\text{Conf}(y)=\prod \pi_\theta(y_i|y_{<i})$），推理 token 概率本身既贡献"算对"又贡献"置信度"，无法解耦；verbalized confidence 占据独立的 token 位置，是后续梯度掩码能成立的物理前提。
+前面诊断出过度自信的根子在于推理 token 的概率同时承担"算对"和"表达把握"两件事，根本没法分开优化。如果继续用 logit-based confidence（如 $\text{Conf}(y)=\prod \pi_\theta(y_i|y_{<i})$），置信度就是推理概率的副产品，调一个必然牵动另一个。DCPO 的做法是从生成结构上就把两者拆开：prompt 要求模型先按常规思维链推理给出答案，再在特殊 token `<conf>` 之后单独吐一个标量置信度（如 0.85），不合规的输出追加格式 penalty。这样置信度占据了独立的 token 位置，后续 reward 和 mask 才能精确锚定到各自的 token 子集——这是整套解耦方案能成立的物理前提。
 
-2. **Decoupled Advantage Estimation with Hybrid Calibration Target（奖励解耦 + 低方差监督）**:
+**2. 解耦 advantage + 混合校准目标：给置信度找一个低方差又有区分度的回归靶。**
 
-    - 功能：给推理和校准设计两条独立的 advantage，且校准信号采用 group-level 和 instance-level 准确率的混合作为回归目标。
-    - 核心思路：推理 reward 走标准 GRPO 的 0/1 正确性；校准 reward 用 $R_{IG}=\lambda \tilde{R}_G + (1-\lambda) R(o_r)$ 作为"该 prompt 上模型真实能力"的估计，其中 $\tilde{R}_G=\frac{1}{G}\sum R(o_{r,i})$ 是 group 内平均准确率；置信度 reward 为 $R_c(o_c)=-|\text{conf}(o_c)-R_{IG}|$，让模型把吐出的数字往真实正确率上拉。两个 reward 各自在 group 内做 mean/std 归一化得到 $A_{r,i}, A_{c,i}$。
-    - 设计动机：理论 4.3 证明 instance-level 二值监督 $R(y)$ 是单次 Bernoulli 采样、方差 $4p(1-p)$，会把 confidence 推向极端 0/1；而 group 平均 $\tilde{R}_G$ 是 $\mathbb{E}[R]$ 的无偏估计、方差 $O(1/G)$，作为校准回归目标显著更稳。混合 $\lambda$ 在稳定性（偏 group）和样本级区分度（偏 instance）之间插值，论文消融中纯 G、纯 I、混合各有取舍。
+两段 token 分开后，推理 reward 直接沿用 GRPO 的 0/1 正确性，难点落在"置信度该往哪个数字拉"。最朴素的靶是 instance 自己的对错 $R(o_r)$，但理论 4.3 指出它是单次 Bernoulli 采样、方差高达 $4p(1-p)$，会把置信度逼向极端的 0 或 1，反而加重过度自信；而 GRPO 本来就要采 $G$ 条 rollout，它们的平均准确率 $\tilde{R}_G=\frac{1}{G}\sum R(o_{r,i})$ 是真实期望 $\mathbb{E}[R]$ 的无偏估计、方差只有 $O(1/G)$，是个几乎免费又稳定的监督源。DCPO 把两者插值成混合靶 $R_{IG}=\lambda \tilde{R}_G + (1-\lambda) R(o_r)$，置信度 reward 写成 $R_c(o_c)=-|\text{conf}(o_c)-R_{IG}|$，让吐出的数字向"这个 prompt 上模型的真实能力"收敛。$\lambda$ 在稳定性（偏 group 平均）和样本级区分度（偏 instance 对错）之间权衡，消融里纯 group、纯 instance、混合三档各有取舍。两套 reward 最后都在 group 内做 mean/std 归一化，得到 $A_{r,i}, A_{c,i}$。
 
-3. **Masked Gradient Optimization（梯度通道隔离）**:
+**3. 掩码梯度优化：用 token mask 把 Fisher 负内积冲突从物理上消掉。**
 
-    - 功能：在 PPO/GRPO 的 surrogate objective 里，按 token 类型施加不同的 advantage。
-    - 核心思路：对每条响应构造 token mask，把序列分成 $o_r$ 段和 $o_c$ 段；最终优化目标写成 $\frac{1}{G}\sum_i \frac{1}{|o_i|}[\sum_{y_j \in o_r}\hat{\rho}_{i,j}A_{r,i} + \sum_{y_j \in o_c}\hat{\rho}_{i,j}A_{c,i}]$，其中 $\hat\rho$ 为 clipped importance ratio。准确率梯度只更新推理 token 的条件分布，置信度梯度只更新 `<conf>` 之后 token 的条件分布。
-    - 设计动机：这是把 4.2 节梯度冲突定理变成可执行方案的关键——两条 reward 在结构上根本不会作用到同一组 token logits 上，Fisher 负内积冲突被物理消除；定理 5.1 进一步证明在此解耦下，proper scoring rule 的最优置信度恰好等于真实期望准确率 $\mathbb{E}[c|q]=\mathbb{E}_{y\sim\pi_\theta}[R(y)]$，不会拖累推理策略。
+有了两段 token 和两套 advantage，最后一步是让它们的梯度真正互不串扰。DCPO 给每条响应构造 token mask，把序列切成 $o_r$ 与 $o_c$ 两段，优化目标写成
+
+$$\frac{1}{G}\sum_i \frac{1}{|o_i|}\Big[\sum_{y_j \in o_r}\hat{\rho}_{i,j}A_{r,i} + \sum_{y_j \in o_c}\hat{\rho}_{i,j}A_{c,i}\Big]$$
+
+其中 $\hat\rho$ 是 clipped importance ratio。准确率梯度只更新推理 token 的条件分布，置信度梯度只更新 `<conf>` 之后 token 的条件分布，两条 reward 在结构上根本不会落到同一组 logits 上——4.2 节那个"已经 over-confident 时 $\nabla J_\text{acc}$ 与 $\nabla J_\text{cal}$ 的 Fisher 内积严格为负"的冲突，就这样被物理隔离掉了。定理 5.1 进一步保证在这种解耦下，proper scoring rule 的最优置信度恰好等于真实期望准确率 $\mathbb{E}[c|q]=\mathbb{E}_{y\sim\pi_\theta}[R(y)]$，所以压校准这件事完全不会反过来拖累推理策略。
 
 ### 损失函数 / 训练策略
 基座 Qwen3-8B（non-thinking），训练集 DeepScaler，group size $G$ 取 GRPO 默认；$\lambda$ 在 hybrid 校准目标中通过消融选取（DCPO-I 即 $\lambda=0$、DCPO-G 即 $\lambda=1$、DCPO 为混合）；格式不合规追加 penalty 保证 verbalized confidence 可解析。

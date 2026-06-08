@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两条独立改进线，最终组合使用。第一条线是 SV 训练框架升级：在固定一层 $l$ 的残差流位置，把方向 $\mathbf{v}\in\mathbb{R}^n$ 和因子 $\alpha\in\mathbb{R}$ 都纳入可学参数，沿 $\eta_{\mathbf{v}}, \eta_{\alpha}$ 两个学习率走 Adam 更新；干预形式为加性 $\Phi^{\text{Add}}(\mathbf{h}; \alpha, \mathbf{v}) = \mathbf{h} + \alpha\mathbf{v}$。第二条线是干预位置改造：传统 FSSV 在 prompt + decode 全部 token 上加 $\alpha\mathbf{v}$，PrOSV 只在 prompt 的前 $p$ 个和后 $s$ 个 token 上加，干预集合 $\mathcal{I} = \{1,\dots,p\}\cup\{m-s+1,\dots,m\}$，作者用 $p2{+}s2$ 之类的简写描述配置。训练目标可选 Language modeling（Lang.）或 SimPO 偏好优化；推理时直接用训练后得到的 $\alpha_T, \mathbf{v}_T$ 不再二次选因子。
+作者要解决的是 fine-tuned steering vector（SV）的两个工程顽疾——推理时要人工选因子 $\alpha$、全序列干预破坏 utility——为此并行做两条改进再组合：训练侧把方向 $\mathbf{v}\in\mathbb{R}^n$ 和因子 $\alpha\in\mathbb{R}$ 一起端到端学，干预侧只动 prompt 的少数 token。具体地，在固定一层 $l$ 的残差流上做加性干预 $\Phi^{\text{Add}}(\mathbf{h}; \alpha, \mathbf{v}) = \mathbf{h} + \alpha\mathbf{v}$，$\alpha$ 和 $\mathbf{v}$ 沿各自学习率 $\eta_{\alpha}, \eta_{\mathbf{v}}$ 走 Adam；干预集合从 FSSV 的全部 token 收缩为只覆盖前 $p$ 个与后 $s$ 个 prompt token 的 $\mathcal{I} = \{1,\dots,p\}\cup\{m-s+1,\dots,m\}$（简记 $p2{+}s2$ 等）。训练目标可选 Language modeling 或 SimPO，训完得到 $\alpha_T, \mathbf{v}_T$ 后推理直接用、不再二次选因子。
 
 ### 关键设计
 
-1. **基于无穷宽缩放理论的 SV 联合训练**:
+**1. 基于无穷宽缩放理论的 SV 联合训练：让 $\alpha$ 和 $\mathbf{v}$ 一起学却不发散。**
 
-    - 功能：在不破坏 representation 稳定性的前提下让 $\alpha, \mathbf{v}$ 都被有效更新，给 $\eta_{\alpha}, \eta_{\mathbf{v}}, \alpha_0, \mathbf{v}_0$ 提供可执行的标度。
-    - 核心思路：令 SV feature $\mathbf{z} = \alpha\mathbf{v}$，"稳定"要求 $\mathbf{z}_t = \Theta(1)$，"高效"要求每一步增量的三个分量 $(\Delta\alpha)\mathbf{v}_{t-1}$、$\alpha_{t-1}(\Delta\mathbf{v})$、$(\Delta\alpha)(\Delta\mathbf{v})$ 都是 $\Theta(1)$。用 $\gamma$-operator 把这些约束写成多项式不等式后解得 $\eta_{\mathbf{v}}\eta_{\alpha}=\Theta(1)$，且 $\gamma[\mathbf{v}_0]\le\gamma[\eta_{\mathbf{v}}]$、$\gamma[\alpha_0]\le\gamma[\eta_{\alpha}]$。具体落地用 Kaiming 初始化 $\sigma_{\mathbf{v}}^{2}=\lambda n^{-1}$，令 $\alpha_0 = \beta n^{1/2}$ 并取 $\eta_{\mathbf{v}}=\Theta(n^{-1/2}), \eta_{\alpha}=\Theta(n^{1/2})$，其中 $\beta, \lambda$ 通过一次性 grid search 调好后跨概念复用。
-    - 设计动机：传统 SV 把 $\alpha$ 当外部常数，导致每个新 SV 都得做 grid search；而 naive joint training 又因为 $\alpha$ 和 $\mathbf{v}$ 学习速率不匹配很容易让 SV feature 爆炸或衰减。把无穷宽限分析搬过来后，所有标度都自洽，工程上"调一次扫一辈子"。
+传统 SV 把 $\alpha$ 当外部常数，每出一个新 SV 都得 grid search；可一旦想把 $\alpha$ 和方向端到端联合学，又因为两者学习速率不匹配，SV feature 极易爆炸或衰减。作者把这个问题当成"在冻结网络上学一个低秩单层 adapter"，借 LoRA 无穷宽缩放理论给出可执行的标度。令 SV feature $\mathbf{z} = \alpha\mathbf{v}$，"稳定"要求 $\mathbf{z}_t = \Theta(1)$，"高效"要求每步增量的三个分量 $(\Delta\alpha)\mathbf{v}_{t-1}$、$\alpha_{t-1}(\Delta\mathbf{v})$、$(\Delta\alpha)(\Delta\mathbf{v})$ 都是 $\Theta(1)$。用 $\gamma$-operator 把这些约束写成多项式不等式求解，得到核心标度
 
-2. **Prompt-Only Steering Vector (PrOSV)**:
+$$\eta_{\mathbf{v}}\eta_{\alpha}=\Theta(1),\quad \gamma[\mathbf{v}_0]\le\gamma[\eta_{\mathbf{v}}],\quad \gamma[\alpha_0]\le\gamma[\eta_{\alpha}].$$
 
-    - 功能：只对前缀 $p$ 个 + 后缀 $s$ 个 prompt token 加 $\alpha\mathbf{v}$，decode 阶段不动；通过隐式编辑 KV cache 让概念植入到生成里，但不持续干扰生成过程。
-    - 核心思路：把 ReFT 的 prompt-only 干预理念迁移到 steering 上，配合上面的联合训练协议作为前提；典型配置在 Gemma2-2B/9B 用 $p4{+}s4$、Qwen2.5-32B 用 $p2{+}s2$。由于干预 token 数是常量而非随生成长度增长，相对 FSSV 在 8K 上下文实测节省 $37\times$ 计算开销。
-    - 设计动机：FSSV 即便选好 $\alpha$ 也会持续干扰 attention pattern 从而压垮 utility；只在少量 prompt 位置改一次 KV，对 attention 的 footprint 最小。FSSV 不能简单"截短到 prompt"——它的最优方向和 PrOSV 不同，且依赖 factor selection 才能工作。
+落地时用 Kaiming 初始化 $\sigma_{\mathbf{v}}^{2}=\lambda n^{-1}$、令 $\alpha_0 = \beta n^{1/2}$，并取 $\eta_{\mathbf{v}}=\Theta(n^{-1/2})$、$\eta_{\alpha}=\Theta(n^{1/2})$——也就是"因子要大初始化 + 大学习率，方向要小"。这样所有标度自洽，$\beta, \lambda$ 一次性 grid search 调好后即可跨概念复用，真正做到"调一次扫一辈子"。
 
-3. **训练目标与因子无 post-hoc 选择的推理流程**:
+**2. Prompt-Only Steering Vector（PrOSV）：只改 prompt 的几个 token，别动 decode。**
 
-    - 功能：把训练目标和工程协议捆在一起，让"训完即用"成为默认 workflow，并支持 Lang. 与 SimPO 两种损失。
-    - 核心思路：训练时正常按 Algorithm 1 跑联合更新；推理时直接拿 $\alpha_T$、不做任何 grid search。对 SimPO 这种偏好优化目标，作者额外用 gpt-4o-mini 给每个 prompt 生成 concept-neutral 响应 $\mathbf{y}_i$ 作为对照，与 concept 响应 $\mathbf{y}_i^c$ 组成对比对 $\mathcal{D}^{c+} = \{(\mathbf{x}_i, \mathbf{y}_i, \mathbf{y}_i^c)\}$。
-    - 设计动机：之前最强 baseline RePS 仍然依赖推理时选因子，本质是把"训不出来"的责任外推到 inference；本文证明只要训练协议对，inference 完全不用再选 $\alpha$，工程链路也大幅简化。
+FSSV 即便精挑 $\alpha$，也会因为对 prompt + decode 全程加 $\alpha\mathbf{v}$ 而持续扰动 attention pattern，压垮模型 utility。PrOSV 受 ReFT 启发，只对前缀 $p$ 个 + 后缀 $s$ 个 prompt token 注入 $\alpha\mathbf{v}$，相当于隐式编辑 KV cache 把概念种进去，之后 decode 阶段完全不碰——对 attention 的 footprint 被压到最小。它必须搭配上面的联合训练协议才成立（典型配置 Gemma2-2B/9B 用 $p4{+}s4$、Qwen2.5-32B 用 $p2{+}s2$）。值得强调的是 FSSV 不能简单"截短到 prompt"了事：它的最优方向和 PrOSV 不同，且本质依赖 factor selection 才能工作。由于干预 token 数是常量而非随生成长度增长，PrOSV 在 8K 上下文实测比 FSSV 省约 $37\times$ 计算。
+
+**3. 训练目标与无 post-hoc 选因子的推理流程：训完即用。**
+
+之前最强 baseline RePS 把"训不出好 SV"的责任外推到推理阶段、仍要选因子。本文证明只要训练协议对，推理时直接拿 $\alpha_T$ 即可、不做任何 grid search，工程链路因此大幅简化。训练按 Algorithm 1 跑联合更新，目标支持 Lang. 与 SimPO 两种损失；其中 SimPO 这类偏好优化目标需要负样本，作者用 gpt-4o-mini 为每个 prompt 生成 concept-neutral 响应 $\mathbf{y}_i$ 作对照，与 concept 响应 $\mathbf{y}_i^c$ 组成对比三元组 $\mathcal{D}^{c+} = \{(\mathbf{x}_i, \mathbf{y}_i, \mathbf{y}_i^c)\}$。
 
 ### 损失函数 / 训练策略
 两种目标二选一：（i）Language modeling 仅对 $\mathbf{y}_i^c$ 求 NLL，简单稳定但通常被 SimPO 超过；（ii）SimPO（Meng 2024）作为偏好优化目标，把 $(\mathbf{y}_i, \mathbf{y}_i^c)$ 对比起来训。两种目标都套在 Algorithm 1 的联合训练循环里：$\mathbf{v}_0 \sim \mathcal{N}(\mathbf{0}, \lambda n^{-1}\mathbf{I}_n)$、$\alpha_0 \leftarrow \beta n^{1/2}$，每步 Adam 处理后 $\mathbf{v}_{t+1} \leftarrow \mathbf{v}_t - \eta_{\mathbf{v}} g^{\mathbf{v}}_t$, $\alpha_{t+1} \leftarrow \alpha_t - \eta_{\alpha} g^{\alpha}_t$。超参 $\beta \in \{1, 2, 4, 8\}$、$\lambda \in \{1, 8\}$、$\eta_{\alpha}$ 跨 4 档对数扫，但只在 dev 集 3 个概念上调一次。

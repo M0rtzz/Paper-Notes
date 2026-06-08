@@ -41,34 +41,36 @@ Stream-SW 是首个能在"样本流"上估计 sliced Wasserstein 距离的算法
 ## 方法详解
 
 ### 整体框架
-输入：两个分布的样本流 $\{x_t\}, \{y_t\}\sim\mu,\nu$（$x,y\in\mathbb{R}^d$），允许任意顺序到达，每个样本只看一次。
 
-输出：Stream-SW 估计 $\widehat{\mathrm{SW}}_p^p(\mu,\nu)$，每个时间步 $t$ 都可被查询。
+Stream-SW 要解决的事很具体：在样本"看一次就丢"的流式场景里估出两个分布的 sliced Wasserstein 距离，而内存不能随流长 $n$ 线性膨胀。它的总体思路是把离线 SW 的两层结构原封不动搬过来——外层是 $L$ 个一维 Radon 投影的 Monte Carlo 平均，内层是每个投影方向上的一维 Wasserstein——只在最内层动手术：把"存全部样本再排序求分位函数"换成"用一个对数空间的 quantile sketch 边流边逼近分位函数"。
 
-中间组件：(1) 投影方向集合 $\theta_1,\dots,\theta_L\sim U(\mathbb{S}^{d-1})$ 在初始化时一次性采样；(2) 对每个方向 $\theta_\ell$ 维护两个 quantile sketch $\mathcal{Q}^\mu_\ell, \mathcal{Q}^\nu_\ell$，每来一个 $x_t$ 就把 $\theta_\ell^\top x_t$ 推入 $\mathcal{Q}^\mu_\ell$（$y_t$ 类似）；(3) 查询时从 sketch 重建近似分位函数 $\widehat F^{-1}_{\theta_\ell\sharp\mu}(q)$，用 $L$ 个方向做 Monte Carlo 平均得 Stream-SW。
+具体走一遍 pipeline：算法启动时一次性采好投影方向 $\theta_1,\dots,\theta_L\sim U(\mathbb{S}^{d-1})$，并为每个方向各开两个 quantile sketch（一个吃 $\mu$ 流、一个吃 $\nu$ 流）。每当一个样本 $x_t\sim\mu$（$x_t\in\mathbb{R}^d$）到达，就把它向全部 $L$ 个方向投影，把标量 $\theta_\ell^\top x_t$ 推进对应的 sketch $\mathcal{Q}^\mu_\ell$ 后立刻丢弃原样本；$\nu$ 流同理。任意时间步想查询距离时，从每对 sketch 重建近似分位函数 $\widehat F^{-1}_{\theta_\ell\sharp\mu},\widehat F^{-1}_{\theta_\ell\sharp\nu}$，在该方向上算一维 Wasserstein，最后对 $L$ 个方向取平均得到 $\widehat{\mathrm{SW}}_p^p(\mu,\nu)$。
 
 ### 关键设计
 
-1. **Quantile Sketch 作为 CDF / 分位函数的流式估计器**:
+**1. Quantile sketch 当 CDF / 分位函数的流式估计器：让"近似分位"取代"全量排序"**
 
-    - 功能：用 $\mathcal{O}(\log n)$ 空间维护一个能在任意 $q\in(0,1)$ 上输出 $\epsilon$-近似分位的"压缩样本数据结构"，并支持随时插入新样本。
-    - 核心思路：以 KLL sketch（Karnin–Lang–Liberty）为代表，sketch 内部维护多层的样本缓冲区，每满则用确定性 + 随机化采样做"compacting"，把样本数减半同时把权重翻倍，使得整个 sketch 大小对样本数 $n$ 只增长对数级，但保留有界的相对秩误差。基于压缩后的"加权样本"重建经验 CDF $\widehat F_\mu$ 和其逆函数 $\widehat F^{-1}_\mu$。论文给出对应的概率界：$\Pr[\sup_q |\widehat F^{-1}_\mu(q)-F^{-1}_\mu(q)|>\delta]\le\eta$，作为后续 1DW 误差界的底层组件。
-    - 设计动机：1DW 的闭式表达只关心分位函数，所以"近似分位函数"就够了——无需保存全部排序结果。Quantile sketch 在数据库流处理领域是成熟工具，把它"原生"接到 OT 框架，能直接继承几十年累积的工程优化（如 t-digest, GK sketch 的 trade-off）。
+整个方法成立的支点是一个观察：一维 Wasserstein 的闭式表达只依赖分位函数，所以根本不需要保存全部排序结果，有一个足够准的近似分位函数就够了——这正好是数据库流处理领域 quantile sketch 几十年来在做的事。作者以 KLL sketch（Karnin–Lang–Liberty）为代表：它内部维护多层样本缓冲区，每层缓冲满了就做一次 "compacting"，用确定性加随机化采样把样本数减半、同时把保留样本的权重翻倍，于是整个 sketch 的大小对流长 $n$ 只以对数级增长，却仍保持有界的相对秩误差。查询时基于这些"加权样本"重建经验 CDF $\widehat F_\mu$ 及其逆 $\widehat F^{-1}_\mu$。关键是它给出一个均匀概率界 $\Pr[\sup_q |\widehat F^{-1}_\mu(q)-F^{-1}_\mu(q)|>\delta]\le\eta$，这条界是后面所有误差分析的底层砖块。把这一成熟工具原生接进 OT 框架，还顺带继承了 t-digest、GK sketch 等一系列工程化的 trade-off 选择。
 
-2. **Stream-1DW：流式一维 Wasserstein 估计 + 概率误差界**:
+**2. Stream-1DW：把一维 Wasserstein 的闭式积分改写成 sketch 上的流式估计，并连 OT map 一起给出**
 
-    - 功能：基于两个 sketch 给出 $W_p^p(\mu,\nu)$ 的流式估计 $\widehat W_p^p$，并给出 1D OT map 的流式估计 $\widehat F^{-1}_\nu\circ\widehat F_\mu$（重要：很多下游应用如梯度流需要 map 而不只是距离）。
-    - 核心思路：对积分 $W_p^p(\mu,\nu)=\int_0^1|F^{-1}_\mu(q)-F^{-1}_\nu(q)|^p dq$，把 $F^{-1}_\mu,F^{-1}_\nu$ 换成 sketch 重建的 $\widehat F^{-1}_\mu,\widehat F^{-1}_\nu$，再在 $[0,1]$ 上数值积分（其实就是 sketch 中所有断点处的分段求和——和 northwest corner 算法等价）。利用 sketch 的均匀分位误差界，作者证明 $|\widehat W_p-W_p|$ 以 $1-\eta$ 概率不超过和 $\delta$ 线性相关的项；同样给出 OT map 的逐点误差界。
-    - 设计动机：1DW 是 SW 的内核循环，先把 1D 估计的理论扎实，再把误差经 Monte Carlo 期望推到多维 SW；保留 map 估计而不只是距离，让 Stream-SW 能驱动下游梯度流、分类等所有"需要传输方向"的任务。
+有了流式分位函数，一维 Wasserstein 就能整段重写。它的闭式表达是
 
-3. **Stream-SW：把流式 1DW 套到 $L$ 个投影 + 复杂度分析**:
+$$W_p^p(\mu,\nu)=\int_0^1\big|F^{-1}_\mu(q)-F^{-1}_\nu(q)\big|^p\,dq,$$
 
-    - 功能：把多维分布比较问题化为 $L$ 路并行的流式 1D 估计，并把 sketch 的对数空间复杂度乘上 $L$。
-    - 核心思路：在算法启动时一次性采 $\theta_1,\dots,\theta_L$，每来一个新样本就把它向所有 $L$ 个方向投影并塞进对应 sketch；查询时计算 $\widehat{\mathrm{SW}}_p^p=\frac{1}{L}\sum_\ell \widehat W_p^p(\theta_\ell\sharp\mu,\theta_\ell\sharp\nu)$。复杂度：空间 $\mathcal{O}(L\cdot s\log n)$（$s$ 是初始 sketch 大小），时间近似 $\mathcal{O}(L\cdot \log n)$ per sample；理论误差界由"1D sketch 误差 + 投影数 $L$ 引入的 MC 误差"两部分组合。
-    - 设计动机：保持 SW 原有的"投影并行 + 闭式 1D"两大可扩展性源泉，仅把每条 1D 通道替换为流式版本，对架构改动最小、对工程实现最友好。空间复杂度对 $n$ 是 $\log n$，这是论文相对随机子采样 baseline 的核心卖点——子采样在大 $n$ 时为达到同样误差需要存远多于 sketch 的样本。
+作者把真实分位函数换成 sketch 重建的 $\widehat F^{-1}_\mu,\widehat F^{-1}_\nu$，再在 $[0,1]$ 上做数值积分——实际操作就是在两个 sketch 的所有分位断点处做分段求和，等价于 northwest corner 算法。借助上面那条均匀分位误差界，可以证明 $|\widehat W_p-W_p|$ 以至少 $1-\eta$ 的概率被一个与 $\delta$ 线性相关的项控制住。这一步还刻意多输出一样东西：一维 OT map 的流式估计 $\widehat F^{-1}_\nu\circ\widehat F_\mu$，并给出它的逐点误差界。之所以保留 map 而不止步于距离标量，是因为点云梯度流这类下游任务需要的是"往哪个方向搬"的传输映射，只有距离是不够的；先把这层 1D 估计的理论钉死，多维 SW 的误差才能顺着 Monte Carlo 期望一路推上去。
+
+**3. Stream-SW：把流式 1DW 套到 $L$ 个投影上，换来对 $n$ 的对数空间**
+
+最外层几乎是离线 SW 的原样复刻，只是每条一维通道都换成了 Stream-1DW。启动时采定 $\theta_1,\dots,\theta_L$，每个新样本向全部方向投影并塞进各自 sketch，查询时直接做 Monte Carlo 平均
+
+$$\widehat{\mathrm{SW}}_p^p=\frac{1}{L}\sum_{\ell=1}^{L}\widehat W_p^p(\theta_\ell\sharp\mu,\theta_\ell\sharp\nu).$$
+
+代价方面，空间是 $\mathcal{O}(L\cdot s\log n)$（$s$ 为初始 sketch 大小），每个样本的处理时间约 $\mathcal{O}(L\cdot\log n)$；总误差界则由"每条 1D 通道的 sketch 误差"和"$L$ 个方向的 MC 误差"两部分叠加而成。这种设计刻意只动最内层，保住了 SW 本来就有的两大可扩展性来源——投影并行与一维闭式解，对架构改动最小、最易落地。而真正的卖点在于空间对 $n$ 只是 $\log n$：随机子采样 baseline 要在大 $n$ 上达到同样误差，得存下远多于 sketch 的样本，这正是 Stream-SW 在长流、紧内存场景下的核心优势。
 
 ### 损失函数 / 训练策略
-本文是纯算法估计，无需训练。所有"参数"是 sketch 大小 $s$、投影数 $L$、误差容忍 $\epsilon,\delta,\eta$，论文给出三者间的解析 trade-off。
+
+本文是纯算法估计，不涉及训练。所有可调"参数"都是结构层面的：sketch 大小 $s$、投影数 $L$、误差容忍 $\epsilon,\delta,\eta$，论文给出三者之间的解析 trade-off 来指导取值。
 
 ## 实验关键数据
 

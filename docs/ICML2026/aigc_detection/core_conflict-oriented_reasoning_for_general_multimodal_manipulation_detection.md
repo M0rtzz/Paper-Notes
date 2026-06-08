@@ -38,38 +38,26 @@ tags:
 **核心 idea**：用一份带"冲突因子 + 冲突来源"标注的语料显式监督 MLLM 把冲突概念在表征空间里推开，从而把"判别特定伪造模式"换成"判别一切伪造背后共享的冲突结构"，进而获得对未见伪造类型的少样本/零样本泛化。
 
 ## 方法详解
-CORE 由三步组成：先建语料 CAC，再做模态桥接预训练 MBPT 训一个 Cross-Modal Aligner，最后做冲突感知训练 CPT 重塑 MLLM 的概念几何，最终用 rapid adaptation 在新伪造类型上少样本/零样本部署。
 
 ### 整体框架
-- 输入：一对 $(I, T)$ 多模态新闻（图 + 文）。
-- Backbone：MLLM（实例化为 Qwen2.5VL-3B 与 Gemma3-4B 两套）。
-- 关键中间件：一个轻量 Cross-Modal Aligner，承接 MBPT 学到的对齐，把 CAC 的细粒度冲突标注完整用上。
-- 监督：CPT 阶段同时给出"是否为假"、"冲突因子 $C_1, C_2$"、"冲突来源 $S_1, S_2 \in \{\text{text}, \text{image}, \text{world knowledge}\}$"。
-- 输出：真假判断 + 自然语言冲突解释（factor / source）。
-- 部署：rapid adaptation 阶段，针对新型伪造只需 100–750 个样本微调，甚至 0 样本直接迁移。
+CORE 要解决的是"专用伪造检测器换个生成器就崩"，它的破局点是把任务从"识别某类篡改"换成"显式说出图文/常识间的矛盾"。围绕这个目标，作者先用多个 MLLM 投票蒸馏出一份带冲突标注的语料 CAC，再训一个轻量 Cross-Modal Aligner 把视觉与语言空间桥接好，最后用冲突感知训练把 MLLM 的概念边界重塑清晰；部署时只需 100–750 个目标域样本做 rapid adaptation，甚至零样本迁移。输入是一对 $(I, T)$ 图文新闻，输出是真假判断加自然语言冲突解释（冲突因子 + 冲突来源），backbone 实例化为 Qwen2.5VL-3B 与 Gemma3-4B 两套。
 
 ### 关键设计
 
-1. **Conflict Attribution Corpus (CAC)**：
+**1. Conflict Attribution Corpus（CAC）：把"假新闻"标签拆成可定位的冲突监督**
 
-    - 功能：为冲突感知训练提供显式监督，把抽象的"假新闻"标签拆成可定位的"冲突因子 + 冲突来源"对。
-    - 核心思路：从带篡改区域和篡改类型先验的 SAMM 数据集里挑 100k 对 $(I, T)$ 作底，用 Google Search API 拉对应实体的背景知识；把图、文、篡改先验、背景知识喂给一个从 $\{$GPT-4o, Gemini2.5-Pro, Qwen3-VL-Plus$\}$ 随机抽的 MLLM 生成自然语言冲突解释，再交叉给另外两个 MLLM 验真；通过后再随机选一个 MLLM 把解释蒸馏成结构化的 $\langle C_1, C_2, S_1, S_2 \rangle$，由剩下两个 MLLM 复审。最终留下 14k 样本，冲突来源分布 29.98% 文本 / 36.86% 图像 / 33.16% 世界知识，三方相对均衡。
-    - 设计动机：避免单一 MLLM 的偏见污染标注；冲突来源三分类强制覆盖跨模态与外部知识两类冲突，避免模型把"冲突"窄化为单纯的图文不一致。
+模型要学冲突推理，前提是有人告诉它"矛盾具体是什么、来自哪儿"，但这种细粒度标注既难标又容易带单一模型的偏见。作者的做法是构一条"专家池 + 交叉验证"的流水线：从带篡改区域和篡改类型先验的 SAMM 数据集里挑 100k 对 $(I, T)$ 作底，用 Google Search API 拉对应实体的背景知识，再把图、文、篡改先验、背景知识喂给一个从 $\{$GPT-4o, Gemini2.5-Pro, Qwen3-VL-Plus$\}$ 随机抽的 MLLM 生成自然语言冲突解释，交叉给另外两个 MLLM 验真；通过后再随机选一个 MLLM 把解释蒸馏成结构化的 $\langle C_1, C_2, S_1, S_2 \rangle$（两个冲突因子 + 两个冲突来源），由剩下两个 MLLM 复审。最终留下 14k 样本，冲突来源分布为 29.98% 文本 / 36.86% 图像 / 33.16% 世界知识。来源刻意做成三分类且分布均衡，是为了强迫监督同时覆盖跨模态冲突与外部知识冲突，避免模型把"冲突"窄化成单纯的图文不一致；多模型投票则把任一 MLLM 的世界知识偏见摊薄。
 
-2. **Modality Bridging Pre-Training (MBPT) + Cross-Modal Aligner**：
+**2. Modality Bridging Pre-Training（MBPT）+ Cross-Modal Aligner：先消模态 gap 再谈重塑概念**
 
-    - 功能：把冻结的视觉编码器输出与语言空间对齐，铺好下一步 CPT 重塑概念边界的通道。
-    - 核心思路：训练一个轻量 aligner $f_\phi$ 把视觉 token 投到语言端可消费的空间，使后续 CPT 在重塑概念时不必绕过模态 gap；这一步采用与 MLLM 适配器相同的训练 recipe，但目标只是"对齐"而不引入冲突监督。
-    - 设计动机：作者发现如果不先做对齐就直接做 CPT，CAC 里关于"图像里的特朗普 vs 文本里的足球奖"的跨模态冲突标注没法被模型一致地解码，监督信号会被模态 gap 稀释。
+CAC 里很多冲突是跨模态的（如"图像里的特朗普 vs 文本里的足球奖"），如果视觉与语言空间没对齐就直接做下一步训练，这类标注没法被模型一致地解码，监督信号会被模态 gap 稀释掉。为此作者先训一个轻量 aligner $f_\phi$，把视觉 token 投到语言端可消费的空间，采用与 MLLM 适配器相同的训练 recipe，但目标只做"对齐"、不引入任何冲突监督。这一步相当于把后续冲突推理要走的通道铺通，让概念边界的重塑不必再绕过模态鸿沟。
 
-3. **Conflict-Perception Training (CPT)**：
+**3. Conflict-Perception Training（CPT）：用冲突监督重塑概念几何**
 
-    - 功能：把 CAC 的冲突因子/来源监督转化为"概念边界重塑"，让 MLLM 的多模态表征在语义冲突方向上更可分。
-    - 核心思路：以 MLLM 自回归 loss 同时拟合"真假判定 + 冲突解释生成"，并在表征层加 contrastive 正则 —— 同一冲突源（如同属"世界知识冲突"）的概念互相对比、不同冲突源之间推远，对应的优化目标可以写成 $\mathcal{L}_{\text{CPT}} = \mathcal{L}_{\text{LM}} + \lambda \, \mathcal{L}_{\text{contrast}}$，其中 $\mathcal{L}_{\text{contrast}}$ 在 CAC 提供的 $(C_1, C_2)$ 对上对齐，迫使冲突概念在表征空间里形成清晰簇。训练完成后 t-SNE（论文 Fig. 2b）显示原本糊在一起的"总统 vs 足球奖"被推开到几乎线性可分。
-    - 设计动机：MLLM 的知识在参数里，但缺"知道自己知道什么"。直接接判别头会让模型继续走"找像素纹理"的捷径；显式监督冲突因子和来源，等价于强迫模型在做出"假"的判断前先复述一遍"我看到的矛盾是什么、来自哪一模态"，从而把决策路径锁在冲突推理上。
+作者的验证实验发现 MLLM 其实"知道"世界知识（200 题知识基准拿 96 ACC），但概念边界是糊的（区分"美国总统 vs 足球奖项"的线性可分只有 61 ACC），直接接判别头只会让模型继续走"找像素纹理"的捷径。CPT 的思路是同时拟合"真假判定 + 冲突解释生成"，并在表征层加 contrastive 正则——同属一类冲突源的概念互相拉近、不同冲突源之间推远，目标写成 $\mathcal{L}_{\text{CPT}} = \mathcal{L}_{\text{LM}} + \lambda \, \mathcal{L}_{\text{contrast}}$，其中 $\mathcal{L}_{\text{contrast}}$ 在 CAC 提供的 $(C_1, C_2)$ 冲突对上对齐。这等价于强迫模型在喊出"假"之前先复述一遍"矛盾是什么、来自哪一模态"，把决策路径锁死在冲突推理上而非纹理捷径上。训练完成后 t-SNE（论文 Fig. 2b）显示原本混叠的"总统 vs 足球奖"被推开到几乎线性可分，定性印证了概念几何被重塑。
 
 ### 损失函数 / 训练策略
-CORE 总目标可记作 $\mathcal{L}_{\text{CORE}} = \mathcal{L}_{\text{LM}}(\hat{y}, y) + \lambda_1 \, \mathcal{L}_{\text{factor}}(\hat{C}, C) + \lambda_2 \, \mathcal{L}_{\text{source}}(\hat{S}, S) + \lambda_3 \, \mathcal{L}_{\text{contrast}}$。Rapid adaptation 阶段冻结 backbone，只对 LoRA-style 的小适配器跑少样本微调；零样本场景则直接以 CPT 后的 checkpoint 推理，凭借冲突推理迁移到 DGM4、MMFakeBench 等域外数据。
+CORE 总目标可记作 $\mathcal{L}_{\text{CORE}} = \mathcal{L}_{\text{LM}}(\hat{y}, y) + \lambda_1 \, \mathcal{L}_{\text{factor}}(\hat{C}, C) + \lambda_2 \, \mathcal{L}_{\text{source}}(\hat{S}, S) + \lambda_3 \, \mathcal{L}_{\text{contrast}}$，即在语言建模 loss 之上叠加冲突因子、冲突来源两路监督和表征层的对比正则。Rapid adaptation 阶段冻结 backbone，只对 LoRA-style 的小适配器跑少样本微调；零样本场景则直接以 CPT 后的 checkpoint 推理，凭借冲突推理迁移到 DGM4、MMFakeBench 等域外数据。
 
 ## 实验关键数据
 

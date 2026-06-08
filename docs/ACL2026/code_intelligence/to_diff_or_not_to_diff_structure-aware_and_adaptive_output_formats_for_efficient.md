@@ -44,23 +44,26 @@ tags:
 给定源代码、编辑意图和目标代码，系统先计算最小文本差异 MinUniDiff，保证所有文本修改都被覆盖；再用 tree-sitter 构造 AST block tree，将每个 diff hunk 映射到最小的语法节点或连续节点集合。随后通过 anchor expansion 保证待替换片段在源代码中唯一可定位，并通过 bottom-up 合并处理重叠 hunk 或同一细粒度节点内的多个修改。训练时，模型输入仍是编辑意图和源代码，输出可以是 full-code、BlockDiff、FuncDiff 或 AdaEdit 选择后的混合格式。
 
 ### 关键设计
-1. **BlockDiff / FuncDiff 的结构感知 hunk**:
 
-	- 功能：让 diff 表示保留代码语法完整性，避免模型生成任意碎片行。
-	- 核心思路：BlockDiff 允许在细粒度 AST 节点上编辑，包括分支、循环、上下文块和函数；FuncDiff 则忽略控制结构，更偏向函数级重写。两者都把修改表示为“定位一个唯一 anchor，然后替换其中的结构化内容”。
-	- 设计动机：LLM 更擅长生成完整、语法连贯的代码块，而不是生成缺头缺尾的 diff hunk。结构化 hunk 牺牲了一点局部最小性，但换来更自然的生成分布和更高 patch 可用性。
+**1. BlockDiff / FuncDiff 的结构感知 hunk：让 diff 的修改单位是完整语法块，而不是任意碎片行。**
 
-2. **唯一 anchor 扩展与文本 patching**:
+传统 content diff 把代码切成任意行片段，模型要生成缺头缺尾的 hunk，而预训练分布里 LLM 最擅长的恰恰是完整、语法连贯的代码块——格式和模型能力对不上，patch 自然容易坏。两种结构感知格式正是为了消除这种错配：BlockDiff 允许在细粒度 AST 节点上编辑，覆盖分支、循环、上下文块和函数；FuncDiff 则忽略控制结构，更偏向整函数级重写。
 
-	- 功能：保证模型输出的结构化 diff 能被自动、无歧义地应用回源代码。
-	- 核心思路：每个 hunk 初始映射到最小 AST 节点后，若文本内容在源代码中不唯一，就逐步加入相邻 sibling 节点；仍不唯一时继续扩展到父节点，最极端时以整个文件为 anchor。patch 阶段不依赖 AST，只做文本 search/replace，并允许对空白和空行做一定容错。
-	- 设计动机：结构化 diff 如果不能稳定 patch，就无法进入真实 IDE 工作流。使用 AST 只负责生成格式，最终 patch 保持文本级，可以覆盖注释、空格、语法错误片段等 AST 工具容易忽略的内容。
+两者的统一形式都是"定位一个唯一 anchor，然后替换其中的结构化内容"。相比极致局部化的行级 diff，结构化 hunk 牺牲了一点最小性，却换来更贴合 LLM 生成分布的输出和更高的 patch 可用性——这也解释了后面实验里 FuncDiff 往往比更细的 BlockDiff 更稳。
 
-3. **AdaEdit 自适应格式选择**:
+**2. 唯一 anchor 扩展与文本 patching：保证结构化 diff 能无歧义地贴回源代码。**
 
-	- 功能：让模型根据编辑规模和代码长度自动选择最省 token 的输出格式。
-	- 核心思路：对训练样本中的源代码 $C_j$ 和目标代码 $C'_j$，分别计算 full-code 表示和 diff 表示的 token 数，把 $E_j = argmin(|C'_j|, |Diff(C_j,C'_j)|)$ 作为监督目标。这样模型不用显式分类器，就能在生成时输出更短的格式。
-	- 设计动机：diff 不是永远更省。修改分散或范围很大时，anchor 与多 hunk 开销可能超过完整代码。AdaEdit 避免“为了 diff 而 diff”，把效率选择交给训练数据中的 token 成本信号。
+结构化 diff 再优雅，只要 patch 时 anchor 在源代码里不唯一就会失败，无法进入真实 IDE 流程。作者用一个自底向上的扩展策略保证唯一性：每个 hunk 先映射到最小 AST 节点，若该节点的文本内容在源码中不唯一，就逐步并入相邻 sibling 节点；仍不唯一就继续上探到父节点；最极端时以整个文件为 anchor。多个重叠 hunk 或落在同一细粒度节点内的修改也通过这种 bottom-up 合并消解。
+
+值得注意的是，AST 只在生成格式时出场，真正 patch 时不依赖 AST，只做文本级 search/replace，并对空白和空行留一定容错。这样既能稳定定位，又能覆盖注释、空格乃至带语法错误的片段——这些恰恰是纯 AST 工具容易忽略的内容。
+
+**3. AdaEdit 自适应格式选择：让模型按样本自动挑最省 token 的输出表示。**
+
+diff 并不总是更省：当修改分散或范围很大时，多个 anchor 加多 hunk 的开销可能反超完整代码，"为了 diff 而 diff"反而更长。AdaEdit 不发明新语法，而是改训练数据的监督目标——对每个训练样本的源代码 $C_j$ 和目标代码 $C'_j$，分别算出 full-code 表示和 diff 表示的 token 数，取更短者作为标签：
+
+$$E_j = \arg\min\big(|C'_j|,\ |\mathrm{Diff}(C_j, C'_j)|\big)$$
+
+这样模型不需要额外的分类头、也不必先输出"格式选择"再输出内容，格式决策被直接编进生成分布里。换句话说，AdaEdit 把推理期的 routing 提前固化进了数据标签，把效率取舍交给训练数据中真实的 token 成本信号。
 
 ### 损失函数 / 训练策略
 训练目标仍是标准 token-level cross entropy。主要实验使用 OCEData 训练 Python 编辑，评测 EditEval、CanItEdit、HumanEvalFix、Aider-1 和 Aider-2；模型包括 DeepSeek-Coder-6.7B、Qwen2.5-Coder-7B 和 Qwen2.5-Coder-14B。所有模型从 base 版本做全参数 SFT，以隔离“输出格式”对结果的影响。评价从两方面进行：效果用 pass@1、patch-apply 成功率和 linter check；效率用首次可渲染输出 token、完整输出 token 和延迟。

@@ -44,23 +44,17 @@ FuncAttn 沿用标准 Transformer 主干：输入函数 $f$ 在 $n$ 个点上采
 
 ### 关键设计
 
-1. **基-感知的谱投影 (Basis Transform)**:
+**1. 基-感知的谱投影：把离散采样压成不依赖固定基的谱坐标。**
 
-    - 功能：把 $n\times d$ 的离散采样压缩到 $k\times d$ 的谱坐标，且不预设固定基。
-    - 核心思路：query / key-value 各学一组基 $\mathbf{\Phi},\mathbf{\Psi}$，构造方式是 $\mathcal{B}=\mathrm{Softmax}(\mathrm{Linear}(\mathbf{X}))\in\mathbb{R}^{n\times k}$，沿 $k$ 维做 softmax。投影写成 $\tilde{\mathbf{Q}}=\mathbf{\Phi}^\dagger\mathbf{Q}$，实际实现中用转置 $\mathbf{\Phi}^\top$ 取代伪逆以换稳定性。论文给出 Proposition 4.3：当温度 $\tau\to 0$ 时每个基函数退化成 $\mathbf{1}_{\Lambda_j}$，恢复经典有限元里的 $P_0$ 分片常数元素；普通温度下则等价于"学到的软分片"。
-    - 设计动机：固定的 Fourier 基要求规则网格，且对几何特性不敏感；学得的基既能贴合输入数据的几何/物理结构，softmax 归一化又天然保证 partition-of-unity，避免基退化。Tab. 7 证实自由学到的基比"学到 + 正交约束"和"Fourier 基"都更好，因为在正交群上做梯度优化比欧氏空间难找到好局部极小。
+固定的 Fourier 基要求规则网格、对几何不敏感，遇到不规则 mesh 就退化。FuncAttn 改成让 query / key-value 各自学一组基 $\mathbf{\Phi},\mathbf{\Psi}$，构造方式是 $\mathcal{B}=\mathrm{Softmax}(\mathrm{Linear}(\mathbf{X}))\in\mathbb{R}^{n\times k}$，沿 $k$ 维做 softmax；投影写成 $\tilde{\mathbf{Q}}=\mathbf{\Phi}^\dagger\mathbf{Q}$，实现时用转置 $\mathbf{\Phi}^\top$ 替伪逆换取数值稳定，把 $n\times d$ 的采样压到 $k\times d$ 的谱坐标。softmax 归一化天然保证 partition-of-unity、避免基退化；论文还给出 Proposition 4.3：温度 $\tau\to 0$ 时每个基函数退化成 $\mathbf{1}_{\Lambda_j}$，恢复有限元里的 $P_0$ 分片常数元素，普通温度下则是"学到的软分片"。Tab. 7 证实自由学到的基比"学到 + 正交约束"和"Fourier 基"都好，因为在正交群上做梯度优化比欧氏空间更难找到好的局部极小。
 
-2. **谱域最小二乘算子 (Optimal Linear Transport)**:
+**2. 谱域最小二乘算子：把 $\mathbf{K}\to\mathbf{Q}$ 的传输解成一个 $k\times k$ 的紧致算子。**
 
-    - 功能：给定 $\tilde{\mathbf{Q}},\tilde{\mathbf{K}}$，解出一个最能解释 $\mathbf{K}\to\mathbf{Q}$ 传输的 $k\times k$ 线性算子。
-    - 核心思路：求解 $\min_\mathbf{C}\|\tilde{\mathbf{Q}}-\mathbf{C}\tilde{\mathbf{K}}\|_F^2+\lambda\|\mathbf{C}\|_F^2$，闭式解 $\mathbf{C}^*=\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^\top(\tilde{\mathbf{K}}\tilde{\mathbf{K}}^\top+\lambda\mathbf{I}_k)^{-1}$，代回得到完整 attention $\mathbf{\Phi}\mathbf{C}^*\tilde{\mathbf{V}}$。和 softmax 不同，$\mathbf{C}$ 的元素可以带符号，相当于隐式获得"对比性"能力。
-    - 设计动机：functional maps 的核心观察——点级匹配组合复杂，但在谱基里它变成可凸求解的小尺寸线性问题。$k\ll n$ 的低秩约束既显式压复杂度，又作为隐式正则提升结构化数据的泛化；Tikhonov 项 $\lambda\|\mathbf{C}\|_F^2$ 保证求逆数值稳定，且 Proposition 4.5 证明整层的 Lipschitz 上界是 $C_1/\lambda+C_2/\lambda^2$，从理论上锁住 $\lambda$ 与稳定性之间的关系。
+注意力的真实作用是在 value 空间诱导一个线性算子，但主流做法把它具体成 $n\times n$ 点对亲和，既把复杂度绑死在 token 数上、又让"函数级一样的算子"被无穷多点级矩阵冗余表达。借 functional maps 的观察——点级匹配组合复杂，到谱基里就变成可凸求解的小问题——这里直接求 $\min_\mathbf{C}\|\tilde{\mathbf{Q}}-\mathbf{C}\tilde{\mathbf{K}}\|_F^2+\lambda\|\mathbf{C}\|_F^2$，闭式解 $\mathbf{C}^*=\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^\top(\tilde{\mathbf{K}}\tilde{\mathbf{K}}^\top+\lambda\mathbf{I}_k)^{-1}$，代回得到完整 attention $\mathbf{\Phi}\mathbf{C}^*\tilde{\mathbf{V}}$。和 softmax 不同，$\mathbf{C}$ 的元素可正可负，相当于隐式获得"对比性"。$k\ll n$ 的低秩既显式压复杂度、又作为隐式正则提升结构化数据泛化；Tikhonov 项 $\lambda\|\mathbf{C}\|_F^2$ 保证求逆数值稳定，Proposition 4.5 更证明整层 Lipschitz 上界是 $C_1/\lambda+C_2/\lambda^2$，从理论上把 $\lambda$ 和稳定性锁在一起。
 
-3. **资源开销与分辨率不变性 (Resolution-Invariant Transport)**:
+**3. 资源开销与分辨率不变性：同一组参数跨 mesh 分辨率直接迁移。**
 
-    - 功能：让同一组训好的参数能跨 mesh 分辨率直接迁移。
-    - 核心思路：因为 $\mathbf{C}\in\mathbb{R}^{k\times k}$ 完全独立于 $n$，谱投影 $\mathbf{\Phi}^\top\mathbf{Q}$ 只对 $n$ 维做线性投影，整条 attention 在不同 $n$ 下天然定义良好。训练时用粗网格（如 1D Burgers $n=2048$），测试时换 8192 直接前向，无需 finetune。
-    - 设计动机：算子学习的本质应当"学算子而不是采样"，而 softmax attention 的 $n\times n$ 矩阵显然把模型和分辨率绑死。把对应关系压到 $k\times k$ 后，分辨率不变性成为架构上的免费收益（Tab. 5 在 1D Burgers 上 zero-shot 4× 超分仍保持最低误差）。
+softmax 的 $n\times n$ 矩阵把模型和分辨率绑死，但算子学习的本意应当是"学算子而不是学采样"。因为 $\mathbf{C}\in\mathbb{R}^{k\times k}$ 完全独立于 $n$、谱投影 $\mathbf{\Phi}^\top\mathbf{Q}$ 只对 $n$ 维做线性投影，整条 attention 在不同 $n$ 下都天然定义良好：训练时用粗网格（如 1D Burgers $n=2048$）、测试时换 8192 直接前向，无需 finetune。分辨率不变性因此成了架构层面的免费收益，Tab. 5 在 1D Burgers 上 zero-shot 4× 超分仍保持最低误差。
 
 ### 训练策略
 和 Transolver 同设定：单卡 A40，重复 3 次。$k$ 的实际取值按数据复杂度调：光滑场 (Darcy / Pipe) 用 $k\in[32,64]$，高频场 (Elasticity / Navier-Stokes) 用 $k\in[128,256]$，论文推荐默认 $k=64$，离最优值不超过 5%。$\lambda$ 的敏感性见附录 D.3。

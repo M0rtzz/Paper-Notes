@@ -38,32 +38,26 @@ tags:
 **核心 idea**：不要在 saturation/luminance 的区间边界做裁剪平移，而是先把区间双覆盖到圆，再在 $H\times S\times L$ 的 hypertorus 上做群提升和群卷积。
 
 ## 方法详解
-论文提出的 $\mathbb{T}^3$CEN 是一个颜色等变卷积架构。它继承了 HSL 颜色空间的直观分解：hue 控制色相，saturation 控制颜色纯度，luminance 控制亮度。关键改变在于，作者不再把 saturation/luminance 当成实线平移，而是把它们各自提升为离散圆群，从而避免边界裁剪。
 
 ### 整体框架
-输入 RGB 图像先转到 HSL 表示。对 hue，沿用离散循环群 $H_N$；对 saturation 和 luminance，先通过 double-cover 将区间值提升到圆 $\mathbb{T}^1$，再离散化成循环群 $S_M$ 与 $L_R$。三者组成乘积群 $HSL_{NMR}=H_N\times S_M\times L_R$。lifting layer 把原图映射成定义在该群上的特征 $f^0(g)=\varphi_{hsl}(g,x)$，后续层使用 HSL group convolution。分类任务中再通过合适 pooling 得到对颜色变化鲁棒的输出。
+$\mathbb{T}^3$CEN 是一个颜色等变卷积架构，目标是让网络对 HSL 三个通道的颜色变换都精确等变，而不止 hue。它继承 HSL 的直观分解——hue 控色相、saturation 控纯度、luminance 控亮度——但关键改动在于：不再把有界的 saturation/luminance 当作实线平移群，而是各自提升成离散圆群，从而绕开区间裁剪。整条 pipeline 是：RGB 图像先转 HSL；hue 沿用离散循环群 $H_N$，saturation 和 luminance 先经 double-cover 把区间值提升到圆 $\mathbb{T}^1$、再离散化成循环群 $S_M$ 与 $L_R$，三者拼成乘积群 $HSL_{NMR}=H_N\times S_M\times L_R$；lifting layer 把原图映射成定义在该群上的特征 $f^0(g)=\varphi_{hsl}(g,x)$，之后各层全部走 HSL group convolution；分类任务最后用合适的 pooling 得到对颜色变化鲁棒的输出。
 
 ### 关键设计
-1. **区间到圆的 double-cover**:
 
-    - 功能：把 saturation 和 luminance 这类有界区间变量变成可做循环群运算的对象。
-    - 核心思路：对区间 $I=[0,c]$，构造覆盖映射 $\pi:\mathbb{T}^1\rightarrow I$，例如 saturation 使用中心化后类似 $\pi(\theta)=c\sin\theta/2$ 的形式；离散化后，群运算就是角度相加再 modulo $2\pi$。
-    - 设计动机：旧方法的平移加裁剪会在边界丢失信息；圆群上的循环移位没有边界，因此 group action 能严格对应特征循环置换。
+**1. 区间到圆的 double-cover：给有界颜色通道补上群结构。**
 
-2. **HSL 乘积群上的 lifting layer**:
+saturation 和 luminance 是 $[0,c]$ 上的有界区间，hue 那种循环群套不进来——旧方法只能把它们当一维平移再做裁剪和 zero padding，结果边界处信息被切掉、等变只能近似成立。作者的做法是为区间 $I=[0,c]$ 构造一个覆盖映射 $\pi:\mathbb{T}^1\rightarrow I$，把区间值搬到一个圆上，例如 saturation 中心化后用类似 $\pi(\theta)=c\sin\theta/2$ 的形式；离散化之后，群运算就退化成角度相加再 modulo $2\pi$。圆上没有"端点"，循环移位永远落回圆内，于是 group action 能严格对应特征的循环置换，等变性从近似变成精确——这正是后面等变误差掉到 $10^{-6}$ 量级的根源。
 
-    - 功能：把普通图像提升为定义在 hue、saturation、luminance 三个群维度上的特征。
-    - 核心思路：对每个群元素 $g_{ijk}$，应用对应的 HSL 颜色变换得到 $f^0(g_{ijk})=\varphi_{hsl}(g_{ijk},x)$。当输入图像发生颜色 shift，lifted representation 只会在群轴上循环平移。
-    - 设计动机：群卷积要求输入是群上的函数。lifting layer 是把原始图像接入 group convolution 的桥梁，也是保证第一层等变的关键。
+**2. HSL 乘积群上的 lifting layer：把原图接进群卷积。**
 
-3. **HSL group convolution 与等变特征**:
+group convolution 要求输入是定义在群上的函数，而原始图像不是，所以需要一层桥梁先把图像"提升"到群上。lifting layer 对每个群元素 $g_{ijk}$ 施加对应的 HSL 颜色变换，得到 $f^0(g_{ijk})=\varphi_{hsl}(g_{ijk},x)$，即沿 H/S/L 三条群轴枚举颜色变换后的响应。它的好处直接体现在等变上：当输入图像发生一次颜色 shift，提升后的表示并不会乱变，而只是沿对应群轴循环平移一格——第一层的等变性就此被锁定。
 
-    - 功能：在提升后的 HSL 群空间中提取对颜色变换结构一致的特征。
-    - 核心思路：用群卷积 $[f*\psi](a)=\sum_{r\in HSL}\sum_k f_k(r)\psi_k(r^{-1}a)$ 替代普通卷积。由于卷积核沿群轨道共享，输入颜色变化会对应输出特征的同构变换。
-    - 设计动机：相比简单 augmentation，结构化等变把归纳偏置写进网络本身；相比颜色不变，它仍保留颜色通道信息，直到任务头决定是否 pool 成不变表示。
+**3. HSL group convolution 与等变特征：把颜色对称性写进每一层。**
+
+提升之后，每一层都用群卷积 $[f*\psi](a)=\sum_{r\in HSL}\sum_k f_k(r)\psi_k(r^{-1}a)$ 取代普通卷积。卷积核沿整条群轨道共享权重，因此输入颜色一旦变化，输出特征会以同构方式整体跟着变，而不是被网络近似学出来。相比单纯 augmentation 靠扩训练分布去"碰运气"，这里把颜色不变/等变的归纳偏置直接写进了网络结构；相比颜色不变网络一上来就抹掉颜色，它一路保留颜色通道信息，直到任务头才决定要不要 pool 成不变表示——这也是它能在"颜色是有用线索"的任务上不吃亏的原因。
 
 ### 损失函数 / 训练策略
-论文没有提出新的监督损失，主要改变网络结构。分类和分割任务仍用标准任务损失训练；公平比较时，作者保持参数量大致固定，增加 HSL lifting cardinality 时会减少 filter depth。这一点也带来一个容量-等变性 trade-off：群阶数过大时，虽然覆盖更细，但每层通道数可能减少，性能反而下降。
+论文没有提出新的监督损失，改动集中在网络结构本身；分类和分割任务仍用标准任务损失训练。公平比较时作者把参数量大致固定，因此增大 HSL lifting cardinality 时会相应减少 filter depth。这带来一个容量-等变性的 trade-off：群阶数越大覆盖越细，但每层通道数被挤掉，过大反而掉点——后面消融里 order 4 通常优于更大阶数，正是这个权衡的体现。
 
 ## 实验关键数据
 

@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两阶段：(1) 诊断阶段——量化嵌入坍缩；(2) 干预阶段——把分散损失加进训练。诊断用 Spearman $\rho$ 和 Kendall $\tau$ 衡量 layer-wise 平均余弦相似度的单调上升程度。干预把 $\mathcal{L}_{\text{disp}}$ 当正则项加到原训练目标：$\mathcal{L} = \mathcal{L}_{\text{train}} + \lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$。
+整篇方法围绕"先把病诊断清楚、再开一剂直接作用于几何的药"展开。诊断阶段量化嵌入坍缩——用 Spearman $\rho$ 和 Kendall $\tau$ 衡量 layer-wise 平均余弦相似度是否随深度单调爬升，爬得越陡说明坍缩越重。干预阶段把一个角度分散损失 $\mathcal{L}_{\text{disp}}$ 当正则项挂到原训练目标上：$\mathcal{L} = \mathcal{L}_{\text{train}} + \lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$，零额外参数，既能 retrofit 现成 checkpoint 也能从零预训练时塑形。
 
 ### 关键设计
 
-1. **角度分散损失（核心 dispersion loss）**:
+**1. 角度分散损失：把所有 token 嵌入往单位超球面的均匀分布上推。**
 
-    - 功能：在单位超球面上把所有 token 嵌入推开。
-    - 核心思路：对每层每个 token pair $(z_i, z_j)$，先把余弦相似度映射到角度距离 $D(z_i, z_j) = \arccos(\cos\text{sim}(z_i, z_j)) / \pi \in [0, 1]$；然后用 log-sum-exp 聚合 $\mathcal{L}_{\text{disp}} = \log \sum_{i \neq j} \exp(-D(z_i, z_j)/\tau)$。距离小（同向）时 $\exp$ 项大、损失大，被推开；距离大（接近正交）时几乎为零。所有层的损失求和，每 batch 复杂度 $\mathcal{O}(N^2 F)$，可通过 token 维度子采样减负。
-    - 设计动机：(1) 用 $\arccos$ 而非裸 cosine 是为了数值稳定，避免在两端饱和；(2) log-sum-exp 比 mean 在数值上更稳健，差一个加性常数不影响梯度；(3) 显式排除对角项防止 $z_i$ 自相似爆梯度；(4) 选择 angular 而非欧式距离是因为坍缩本质是方向问题不是长度问题。
+针对的痛点是小模型深层嵌入几乎全对齐到同一方向、pairwise cosine 趋近 1，可用的表征方向被几何上锁死。做法是对每层每个 token pair $(z_i, z_j)$ 先把余弦相似度映射成角度距离 $D(z_i, z_j) = \arccos(\cos\text{sim}(z_i, z_j)) / \pi \in [0, 1]$，再用 log-sum-exp 聚合成 $\mathcal{L}_{\text{disp}} = \log \sum_{i \neq j} \exp(-D(z_i, z_j)/\tau)$——两个 token 越同向、$D$ 越小、$\exp$ 项越大，损失就越重地把它们推开；接近正交时 $\exp$ 项几乎为零、不再施力。所有层的损失求和，每 batch 复杂度 $\mathcal{O}(N^2 F)$，可在 token 维度子采样减负。几个细节都是为稳定服务：用 $\arccos$ 而非裸 cosine 是避免在 $\pm 1$ 两端梯度饱和；log-sum-exp 比直接取 mean 更稳健，差一个加性常数也不影响梯度；显式排除对角项 $i=j$ 防止 $z_i$ 自相似爆梯度；选 angular 而非欧式距离，是因为坍缩本质是方向坍塌而非长度问题。
 
-2. **三个备选公式（消融用）**:
+**2. 三个备选公式：用消融隔离"角度均匀分散"到底比别的分散方式好在哪。**
 
-    - 功能：验证 "分散" 这一目标的不同实现方式是否都有效，从而隔离 "角度分散" 与其他变体的优劣。
-    - 核心思路：(a) Decorrelation——最小化嵌入协方差矩阵的非对角元，间接降低不同特征维度间的耦合；(b) $\ell_2$-repel——直接拉大 token 间的欧式距离，但要配 norm 正则 $\lambda_{\text{norm}} \|\mathcal{Z}\|_2^2$ 防止靠膨胀 norm 作弊；(c) Orthogonalization——铰链式损失 $\max(0, 1/2 - D(z_i, z_j))^2$，只惩罚距离 < 1/2（锐角对），让钝角对自由生长。
-    - 设计动机：dispersion 本身是个抽象诉求，作者通过四种实现的对比想说明 "在角度空间均匀分散" 比 "在特征维度上去相关" 或 "在欧氏空间排斥" 更直接、更有效，强化主方法的合理性。
+dispersion 是个抽象诉求，可以有很多实现，作者另造三种和主损失对打。Decorrelation 最小化嵌入协方差矩阵的非对角元，从特征维度间去耦合、间接逼分散；$\ell_2$-repel 直接拉大 token 间欧式距离，但必须配一个 norm 正则 $\lambda_{\text{norm}} \|\mathcal{Z}\|_2^2$，否则模型会靠膨胀 norm 而非真正散开来作弊；Orthogonalization 用铰链式损失 $\max(0, 1/2 - D(z_i, z_j))^2$，只惩罚 $D < 1/2$ 的锐角对、放任钝角对自由生长。这一组对比是为了说明"在角度空间均匀分散"比"在特征维度去相关"或"在欧氏空间硬排斥"都更直接、更有效，从侧面坐实主方法的选择。
 
-3. **覆盖 mid-training + full pre-training 的应用策略**:
+**3. 同一损失覆盖 mid-training 与 full pre-training 两种流程。**
 
-    - 功能：把分散损失嵌入两种实际训练流程，证明既能 retrofit 既有模型也能从零训练。
-    - 核心思路：Mid-training 阶段——拿现成的 GPT2 / Qwen3 在 wikitext-103 上继续训 200M token，单 A100 即可跑完；Full pre-training 阶段——Qwen3 在 C4 上从零训 156B token，用 640 GPU。两种场景下都把 $\lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$ 加到 cross-entropy 上，loss 在每个 forward 同时计算多层嵌入的 dispersion 并加权。
-    - 设计动机：mid-training 是低成本的 proof-of-concept 和超参扫描场所；full pre-training 验证从零开始时该信号能塑造更好的几何，从根本上改变模型容量。
+要证明这剂药既能给老模型续命也能从娘胎里塑形，就得在两种真实训练场景里都验证。Mid-training 拿现成的 GPT2 / Qwen3 在 wikitext-103 上再续训 200M token，单张 A100 就能跑完，是低成本的 proof-of-concept 和超参扫描场所；full pre-training 让 Qwen3 在 C4 上从零训 156B token、动用 640 GPU，验证这个几何信号从一开始就能塑造出更好的表征结构、从根本上改变模型可用容量。两种场景都只是把 $\lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$ 加到 cross-entropy 上，在每个 forward 同时计算多层嵌入的 dispersion 并加权，pipeline 改动极小。
 
 ### 损失函数 / 训练策略
-训练目标 $\mathcal{L} = \mathcal{L}_{\text{CE}} + \lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$。温度 $\tau$ 与权重 $\lambda_{\text{disp}}$ 是主要超参，论文 Appendix 给了扫描结果。Mid-training 用 3 个 seed 报均值方差，full pre-training 跑单 seed 但 token 量足够稳定。
+最终训练目标 $\mathcal{L} = \mathcal{L}_{\text{CE}} + \lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$，温度 $\tau$ 与权重 $\lambda_{\text{disp}}$ 是仅有的两个主要超参，扫描结果在 Appendix。Mid-training 用 3 个 seed 报均值方差，full pre-training 只跑单 seed 但 token 量足够大、结果已经稳定。
 
 ## 实验关键数据
 

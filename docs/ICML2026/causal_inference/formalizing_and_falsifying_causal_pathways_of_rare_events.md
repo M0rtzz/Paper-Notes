@@ -44,37 +44,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架由四层组成：
-
-1. **Cluster 层**：给定二值变量 DAG $\mathcal{C}$ 与联合分布 $P_\mathbf{B}$，把"扰动"建模为对部分节点的机制 $P(B_i\mid \mathbf{B}_{\mathrm{Pa}(i)})$ 做软 / 硬干预；被替换的索引集合 $R$ 就是 **root causes**。
-2. **Pathway 层**：在 cluster 内单独挑出一个目标节点 $B_t$，并把"和这次解释相关的子图"提取为 pathway $\mathcal{P}$ —— $\mathcal{P}$ 与 $\mathcal{C}$ 仅在指向 $R$ 的边上可能不同，因为 $do(\mathbf{B}_R=\mathbf{1})$ 会把这些入边切掉。
-3. **Abstraction 层**：对于实际系统（变量可以是实值 / 类别 / token），通过 **特征函数 $\tau_j$ + 阈值** 把每个原始变量映射为二值事件 $B_j := \chi_{[\tau(\mathbf{x}_{I_j}),\infty)}(\tau(\mathbf{X}_{I_j}))$，进入 pathway 层。
-4. **Evaluation 层**：用三类一致性测试（数据一致性 / 内部定性问答 / 内部定量问答）证伪一条 pathway。
-
-输入是 (SCM, 观测样本, 目标事件)，输出是 (pathway 子图 $\mathcal{P}$, 根因集合 $R$, 解释分数 $\mathcal{E}^K_{R\to t}$ 和抽象精度 $r$)。
+本文要解决的是：怎么把"因为 A 所以 B 所以 C 所以目标事件"这种口头因果链，变成一个能被数据或概率信念证伪的分数。做法是把整条解释重新组织成一个二值事件的子图（pathway），先在二值 SCM 上定义一个 $[0,1]$ 的解释分数，再用"特征单调性 + 二值化"把这套理论从二值变量推广到实值 / 离散 / token 等任意空间，最后用"事件级因果抽象"量化从细粒度模型粗粒化时损失了多少。输入是 (SCM、观测样本、目标事件)，输出是 (pathway 子图 $\mathcal{P}$、根因集合 $R$、解释分数 $\mathcal{E}^K_{R\to t}$、抽象精度 $r$)。
 
 ### 关键设计
 
-1. **Cluster / Pathway explanation score（解释分数的双层定义）**:
+**1. Cluster / Pathway explanation score：让一条因果链可以被打分证伪**
 
-    - 功能：把"一组根因解释了目标事件"这件事映射为 $[0,1]$ 区间的分数，分数越接近 1 说明解释越强。
-    - 核心思路：cluster 分数 $\mathcal{E}_{R\to K} = 1 - \frac{\log P(\mathbf{B}=\mathbf{1}\mid do(\mathbf{B}_R=\mathbf{1}))}{\log P(\mathbf{B}=\mathbf{1})}$ 衡量"根因把整簇事件拉到多大可能"；pathway 分数 $\mathcal{E}^K_{R\to t}$ 把分母换成 $\log P(B_t=1)$，因此**目标稀有度比簇稀有度大时**，pathway 分数比 cluster 分数严格。两者满足仿射关系 $1-\mathcal{E}^K_{R\to t} = (1-\mathcal{E}_{R\to K}) \cdot \frac{\log P(\mathbf{B}=\mathbf{1})}{\log P(B_t=1)}$，从而 pathway 上每个节点的贡献仍然可加（公式 11），可以用贪心选 $R$。链式例子 (Example 3.6) 中，$P(b_1^1)=10^{-3}, P(b_3^1\mid b_2^1)=10^{-3}, P(b_4^1\mid b_3^1)=10^{-2}$，取 $R=\{1,3\}$ 得 $\mathcal{E}^K_{R\to t}=3/4$，再加入 $B_4$ 后达到 1，直观对应"沿链各机制都合理"。
-    - 设计动机：cluster 分数继承自 Oesterle 2025，但只看根因是否拉高簇似然，不强求中介也"看起来正常"；pathway 分数显式惩罚"中介事件本身就很奇怪"的情况（Lemma 3.7 的 log-likelihood gap $\Delta_i := [\log P(B_{\mathrm{Pa}(i)}=\mathbf{1}) - \log P(B_i=1)]_+$ 控制了上界），强迫解释把每个中介都纳入审视。这正是把"口头因果链"形式化为可证伪指标的关键。
+最朴素的根因分析只会输出一组根因，并不审查"中介事件本身是否合理"，于是"听起来对"的解释无法被推翻。本文先沿用 Oesterle 2025 的 cluster 分数 $\mathcal{E}_{R\to K} = 1 - \frac{\log P(\mathbf{B}=\mathbf{1}\mid do(\mathbf{B}_R=\mathbf{1}))}{\log P(\mathbf{B}=\mathbf{1})}$，它衡量"对根因集合 $R$ 做 $do(\mathbf{B}_R=\mathbf{1})$ 后，整簇事件被拉到多大可能"，越接近 1 越说明根因撑得起整簇。但 cluster 分数只看根因有没有抬高簇似然，不强求中介"看起来正常"。
 
-2. **Feature monotonicity + 二值化（连续 / 任意空间到二值通路的桥梁）**:
+pathway 分数把分母换成目标事件自己的对数稀有度 $\log P(B_t=1)$：$\mathcal{E}^K_{R\to t} = 1 - \frac{\log P(\mathbf{B}=\mathbf{1}\mid do(\mathbf{B}_R=\mathbf{1}))}{\log P(B_t=1)}$。当目标比整簇更稀有时，这个分数比 cluster 分数更严格——任何"中介事件本身就很奇怪"的环节都会被分子里的 log-likelihood 项惩罚。两者满足仿射关系 $1-\mathcal{E}^K_{R\to t} = (1-\mathcal{E}_{R\to K}) \cdot \frac{\log P(\mathbf{B}=\mathbf{1})}{\log P(B_t=1)}$，因此 pathway 上每个节点的贡献仍然可加（公式 11），可以贪心地逐个挑根因。Lemma 3.7 进一步给出每条边的 log-likelihood gap $\Delta_i := [\log P(B_{\mathrm{Pa}(i)}=\mathbf{1}) - \log P(B_i=1)]_+$ 来控制分数上界，gap 越大说明该机制本身越稀有、越拖累整条链。这套定义正是把"口头因果链里每条边都隐含'这步不算太奇怪'的承诺"显式写进打分函数的关键。
 
-    - 功能：让 pathway 理论可以用在任意分布的实值 / 离散 / token / 嵌入变量上，并给出"在多大置信度下出现的中介事件可以被解释分数撑起"的概率保证。
-    - 核心思路：每个 $X_j$ 配一个特征函数 $\tau_j:\mathcal{X}_j\to\mathbb{R}$，定义事件 $B_j := \{\tau_j(X_j) \geq \tau_j(x_j)\}$，机制 $P(X_j\mid \mathbf{X}_{\mathrm{Pa}(j)})$ 称为对 $(\tau_j,\tau_{\mathrm{Pa}(j)})$ 单调，若父变量特征大 $\Rightarrow$ 子变量特征分布随机大。在此条件下，Lemma 4.2 给出"从 $P(X_j\mid \mathbf{x}_{\mathrm{Pa}(j)})$ 采样的 $x_j$，其条件似然 $\leq \alpha$ 的概率 $\leq \alpha$"。Theorem 4.3 把它推广到 DAG：对任意 $\mathbf{x}_R$，从 $do(\mathbf{x}_R)$ 生成其余变量，则负对数似然 $L\geq c$ 的概率不超过 $\sum_{i=0}^{n-|R|-1}\frac{c^i}{i!}e^{-c}$（自由度修正后的 Poisson 尾），这就是 pathway score 偏离 1 时的 **p 值**。
-    - 设计动机：(i) "解释 $X\geq x$ → $Y\geq y$" 比"解释 $X=x$ → $Y=y$"更可证伪（鲁棒于具体取值），符合人类语言习惯；(ii) 即使真实分布不严格满足特征单调，p 值仍能作为"允许多大偏离"的诊断阈值，不破坏框架可用性；(iii) $\tau_X(x):=-|x|$ 这种特征函数可表达"$x$ 是正常值"这类**非极端但相关**的事件（Example 4.8），覆盖了渐近极值理论触及不到的场景。
+**2. Feature monotonicity + 二值化：把理论从二值变量搬到任意空间**
 
-3. **Pathway abstraction + natural micro-realization（事件级因果抽象）**:
+真实系统的变量是实值 / 类别 / token / 嵌入，并不天然是二值事件。本文给每个 $X_j$ 配一个特征函数 $\tau_j:\mathcal{X}_j\to\mathbb{R}$，把变量映射成二值事件 $B_j := \{\tau_j(X_j) \geq \tau_j(x_j)\}$（即"$X_j$ 的特征至少和观测一样大"），并要求机制 $P(X_j\mid \mathbf{X}_{\mathrm{Pa}(j)})$ 对 $(\tau_j,\tau_{\mathrm{Pa}(j)})$ 单调：父变量特征越大，子变量特征的分布随机地越大。
 
-    - 功能：从一个细粒度 SCM $(\mathcal{G}, P_\mathbf{X})$ 自动生成一个粗粒度的 pathway 解释 $(\mathcal{C}, \mathcal{P}, P_\mathbf{B})$，并量化粗粒化损失。
-    - 核心思路：抽象精度定义为 $r := 1 - \max_{S, \mathbf{b}_S} \frac{D_{KL}[P_\mathbf{X}(\mathbf{B}\mid do(\mathbf{B}_S=\mathbf{b}_S))\,\|\,P_\mathbf{B}(\mathbf{B}\mid do(\mathbf{B}_S=\mathbf{b}_S))]}{-\log P_\mathbf{X}(B_t=1)}$，把"抽象后干预分布与真实干预分布的 KL 距离"按目标稀有度归一化。这里干预 $do(\mathbf{B}_j=b_j)$ 在原模型里本是病态的（多个 $X_j$ 对应同一 $B_j$），用 **natural micro-realization** 解决：把 $do(\mathbf{B}_S=\mathbf{b}_S)$ 解释为"从 $\prod_{i\in S}P_\mathbf{X}(X_i\mid B_i=b_i)$ 独立采样后再做原模型 $do$"，从而保证一致的概率算子。解释分数同样可改写为 KL 形式 $\mathcal{E}^K_{R\to t} = 1 - \frac{D_{KL}(\delta_\mathbf{1}\|P_\mathbf{B}(\mathbf{B}\mid do(\mathbf{B}_R=\mathbf{1})))}{-\log P_\mathbf{B}(B_t=1)}$，与精度 $r$ 同一量纲，可统一权衡。
-    - 设计动机：把"是否要把某个上下文变量纳入 pathway"这类设计选择，转化为可计算的精度 vs 解释分数 trade-off。Example 4.8 中保留上下文节点 $B_1$（"$|X|\leq x$"）的三元 pathway 在精度与解释分数上都显著优于二元简化 $B_2\to B_3$，因为忽略上下文后混淆路径的负向效应被吃进解释里，使条件概率失真。
+在这个条件下，Lemma 4.2 给出关键的尾概率保证："从 $P(X_j\mid \mathbf{x}_{\mathrm{Pa}(j)})$ 采样的 $x_j$，其条件似然 $\leq \alpha$ 的概率不超过 $\alpha$"。Theorem 4.3 把它推广到整个 DAG：对任意 $\mathbf{x}_R$，从 $do(\mathbf{x}_R)$ 生成其余变量后，负对数似然 $L\geq c$ 的概率不超过 $\sum_{i=0}^{n-|R|-1}\frac{c^i}{i!}e^{-c}$（一个自由度修正后的 Poisson 尾）——这恰好是解释分数偏离 1 时可以报告的 **p 值**。选用"$X\geq x$ 解释 $Y\geq y$"而不是"$X=x$ 解释 $Y=y$"，是因为前者鲁棒于具体取值、更符合人类语言、也更可证伪；而即便真实分布不严格满足特征单调，这个 p 值仍能当作"允许多大偏离"的诊断阈值。特别地，取 $\tau_X(x):=-|x|$ 就能表达"$x$ 是正常值"这类**非极端但相关**的事件（Example 4.8），覆盖了渐近极值理论根本触及不到的场景。
+
+**3. Pathway abstraction + natural micro-realization：量化粗粒化损失**
+
+要从一个细粒度 SCM $(\mathcal{G}, P_\mathbf{X})$ 自动得到粗粒度的 pathway 解释 $(\mathcal{C}, \mathcal{P}, P_\mathbf{B})$，必须知道"二值化抽象丢了多少信息"。本文定义抽象精度 $r := 1 - \max_{S, \mathbf{b}_S} \frac{D_{KL}[P_\mathbf{X}(\mathbf{B}\mid do(\mathbf{B}_S=\mathbf{b}_S))\,\|\,P_\mathbf{B}(\mathbf{B}\mid do(\mathbf{B}_S=\mathbf{b}_S))]}{-\log P_\mathbf{X}(B_t=1)}$，把"抽象后干预分布与真实干预分布的 KL 距离"按目标稀有度归一化。难点在于 $do(\mathbf{B}_j=b_j)$ 在原模型里本是病态的——多个 $X_j$ 对应同一个 $B_j$，无法直接干预。**natural micro-realization** 把它定义清楚：$do(\mathbf{B}_S=\mathbf{b}_S)$ 解释为"先从 $\prod_{i\in S}P_\mathbf{X}(X_i\mid B_i=b_i)$ 独立采样底层变量，再在原模型上做 $do$"，从而得到一致的概率算子。
+
+关键好处是，解释分数本身也能改写成同款 KL 形式 $\mathcal{E}^K_{R\to t} = 1 - \frac{D_{KL}(\delta_\mathbf{1}\|P_\mathbf{B}(\mathbf{B}\mid do(\mathbf{B}_R=\mathbf{1})))}{-\log P_\mathbf{B}(B_t=1)}$，与精度 $r$ 落在同一量纲。于是"要不要把某个上下文变量纳入 pathway"这种设计选择，就变成可计算的精度 vs 解释分数取舍。Example 4.8 里，保留上下文节点 $B_1$（"$|X|\leq x$"）的三元 pathway 在精度和解释分数上都明显优于二元简化 $B_2\to B_3$——一旦把上下文剔除，混淆路径的负向效应就被吃进解释里，让条件概率失真。
+
+### 一个完整示例
+以三元链 (Example 3.6) 看分数怎么逐节点补齐：设 $P(b_1^1)=10^{-3}$、$P(b_3^1\mid b_2^1)=10^{-3}$、$P(b_4^1\mid b_3^1)=10^{-2}$，目标是 $B_4=1$。先只取根因 $R=\{1,3\}$，此时 $B_4$ 那条边的机制概率 $10^{-2}$ 并没被纳入解释，算得 $\mathcal{E}^K_{R\to t}=3/4$——还差一截，因为"$B_3$ 触发 $B_4$"这步本身也稀有、没人解释。把 $B_4$ 也加进来后分数升到 1，对应"沿链每个机制都被审视、都合理"。这直观说明：只有那些"机制本身就稀有"的节点被显式纳入，pathway 才算补齐。
 
 ### 损失函数 / 训练策略
-本文是纯理论框架，不涉及学习；评估时所有概率假设可从观测样本估计（数据一致性测试），或从 LLM / 专家以问答方式估计（内部一致性测试）。从 cluster 选 root cause 集合 $R$ 的实操方式是贪心算法：$R\gets R\cup\{\arg\max_i \mathcal{E}^K_{\{i\}\cup R\to t}\}$，由 (11) 的可加性保证最优性，复杂度 $O(|K|\cdot|R|)$。
+本文是纯理论框架，不涉及学习。评估时所有概率假设要么从观测样本估计（数据一致性测试），要么从 LLM / 专家以问答方式估计（内部一致性测试）。从 cluster 选根因集合 $R$ 的实操方式是贪心算法：$R\gets R\cup\{\arg\max_i \mathcal{E}^K_{\{i\}\cup R\to t}\}$，由公式 (11) 的可加性保证最优性，复杂度 $O(|K|\cdot|R|)$。
 
 ## 实验关键数据
 

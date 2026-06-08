@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法不训练任何新模型，全部是 zero-shot 推理实验。流程：(1) 用 "=="-启发式对 MMLU 57 个 subject 做 a priori 学科级聚类，得到 reasoning / knowledge 两子集，比例约 1:2；(2) 在 prototypical 基准 GSM8K / MedMCQA 上验证切分有效——即 CoT 在 reasoning 子集和 GSM8K 上的增益应远大于在 knowledge 子集和 MedMCQA 上的增益；(3) 在 GPT-4o (2024-08-06) / GPT-4o-mini / Qwen2.5-32B-Instruct 上跑 Direct Answer (DA) vs CoT vs CoT+SC ($n \in \{3, 5, 20\}$)，nucleus sampling top-$p=0.9$；(4) 引入置信度 $s = \frac{|\text{majority answer}|}{|\text{valid answers}|}$ 并与正确性做 Pearson 相关分析。
+这篇论文不训练任何模型，整套工作都是 zero-shot 推理实验，目的是回答一个被前人含糊带过的问题：self-consistency (SC) 到底是只对符号推理有用，还是对纯知识召回也有用。它分四步搭实验台：先用 "=="-启发式把 MMLU 的 57 个 subject 在学科层面切成 reasoning / knowledge 两个子集（比例约 1:2）；再用两个推理类型纯净的外部基准 GSM8K（纯符号推理）和 MedMCQA（几乎纯知识召回）做镜像验证，确认切分是干净的；然后在 GPT-4o (2024-08-06)、GPT-4o-mini、Qwen2.5-32B-Instruct 上对比 Direct Answer (DA)、CoT、CoT+SC（$n \in \{3, 5, 20\}$，nucleus sampling top-$p=0.9$）；最后引入置信度 $s = \frac{|\text{majority answer}|}{|\text{valid answers}|}$，做它与正确性的 Pearson 相关分析，给出 SC 为何有效的机制解释。
 
 ### 关键设计
 
-1. **a priori 学科级切分（MMLU Reasoning vs Knowledge）**:
+**1. a priori 学科级切分：把 MMLU 拆成推理类型纯净的两半。**
 
-    - 功能：把 MMLU 拆成两个推理类型纯净的子集，让 SC 在不同问题类型上的效用能被分别测出来。
-    - 核心思路：复用 Sprague et al. (2025) 的实例级启发式——若题目/答案出现 "=" 这类数学等价符号，则视为符号推理样本；但作者不在实例上用，而是把该信号在 **学科层** 聚合（学科 X 的样本中 "==" 出现率超过阈值则整科归入 reasoning），并在同一学科簇内传播分类（如 college math 归入则 elementary math 也归入）。最终切出 reasoning : knowledge ≈ 1 : 2。验证侧 Appendix E 用 CoT 增益曲线做数据驱动验证，AUC 高达 0.96，证明该启发式与"CoT 实际增益最大的子集"高度一致。
-    - 设计动机：post-hoc 实例级分类依赖模型输出（不同模型分类不同，结果不可复现），学科级 a priori 分类是稳定的、模型无关的、便于其他研究复用。
+MMLU 是个混合数据集，官方的 STEM / humanities 划分按学科归属走，和"推理类型"并不正交（计量经济学被归在 humanities 却是典型符号推理），所以没法直接用它来分别测 SC 在两类问题上的效用。作者复用 Sprague et al. (2025) 的实例级启发式——题目或答案里出现 "=" 这类数学等价符号就判为符号推理——但把它从"实例级、post-hoc、依赖模型输出"升级成"学科级、a priori、模型无关"：某学科样本里 "==" 出现率超过阈值，整科归入 reasoning，并在同一学科簇内传播（college math 归入则 elementary math 也归入），最终切出 reasoning : knowledge ≈ 1 : 2。这么改的好处是稳定可复现——实例级分类会因模型不同而结果不同，学科级切分则是固定的、别人能直接拿去复用。验证侧 Appendix E 用 CoT 增益曲线做数据驱动验证，AUC 高达 0.96，说明这个启发式切出来的子集，和"CoT 实际增益最大的那批题"高度吻合。
 
-2. **跨基准镜像验证（GSM8K ↔ MMLU-Reasoning, MedMCQA ↔ MMLU-Knowledge）**:
+**2. 跨基准镜像验证：用两个边界清晰的原型基准夹逼 MMLU 切分的可信度。**
 
-    - 功能：用两个推理类型纯净的外部基准来"夹逼"验证 MMLU 切分的正确性。
-    - 核心思路：GSM8K 是纯算术推理；MedMCQA 是医学单选题，4,183 道里只有 16 道出现 "=="（≈0.4%），可视为纯知识召回。若 MMLU 切分正确，CoT 对 MMLU-Reasoning 与 GSM8K 的增益模式、对 MMLU-Knowledge 与 MedMCQA 的增益模式应分别一致。论文 Table 1 数据完全证实：CoT 在 GSM8K +37.3 / MMLU-Reasoning +14.9，对应；MedMCQA +1.69 / MMLU-Knowledge +1.56，对应。
-    - 设计动机：MMLU 是混合数据集，单看其内部很难证明子集"纯净"；引入两个边界清晰的原型基准做镜像，是一种比"重新人工标注"成本低得多的可信验证方法。
+光在 MMLU 内部很难自证子集"纯净"，于是作者引入两个推理类型明确的外部锚点来夹逼。GSM8K 是纯算术推理；MedMCQA 是医学单选，4,183 道题里只有 16 道出现 "=="（≈0.4%），可当作纯知识召回。逻辑很直白：如果 MMLU 切分是对的，那么 CoT 对 MMLU-Reasoning 的增益模式应该和 GSM8K 一致、对 MMLU-Knowledge 的增益模式应该和 MedMCQA 一致。Table 1 完全证实了这一点——CoT 在 GSM8K 上 +37.3、MMLU-Reasoning 上 +14.9（同属"大幅受益"），在 MedMCQA 上 +1.69、MMLU-Knowledge 上 +1.56（同属"几乎不受益"），两两对应。比起重新人工标注题型，用原型基准做镜像是成本低得多又可信的验证手段。
 
-3. **答案一致性作为置信度信号 $s$ 与机制分析**:
+**3. 答案一致性作为置信度信号 $s$：把 majority vote 从投票机制升级成可量化的机制解释。**
 
-    - 功能：把 SC 的 majority vote 从"投票机制"升级为可量化的置信度，并验证它确实与正确性相关。
-    - 核心思路：定义 $s = \frac{\text{count of majority answer}}{\text{number of valid answers}}$；如 $\{A, A, C\}$ 给 majority A 的置信度 $s = 2/3$。在 MMLU 上计算 $s$ 与预测正确性的 Pearson 相关 $\rho$：$n=5$ 时 0.40，$n=20$ 时 0.42，reasoning 子集略高 (0.46)，knowledge 子集 0.42。说明 majority 占比是一个 **跨问题类型** 都成立的可靠置信信号，因此 SC 能在知识召回上也起作用——并非通过"探索 + 综合多条推理路径"，而是通过"过滤掉那些产生不同结论的不稳定路径"。
-    - 设计动机：解释 SC 在知识召回上为何有效，反驳"知识召回是单步演绎，多条路径无意义"的直觉。作者用定性样例进一步说明：即使是知识题，LLM 也会编造多个看似合理但相互冲突的 justification，SC 正是过滤这种不稳定性的有效手段。
+SC 在知识召回上有效这件事需要一个机制层面的解释，否则容易被"知识召回是单步演绎、多条路径没意义"的直觉反驳。作者把 majority vote 形式化为置信度 $s = \frac{\text{count of majority answer}}{\text{number of valid answers}}$——比如三条路径给出 $\{A, A, C\}$，多数答案 A 的置信度就是 $s = 2/3$。在 MMLU 上算 $s$ 与预测正确性的 Pearson 相关 $\rho$：$n=5$ 时 0.40、$n=20$ 时 0.42，reasoning 子集略高 (0.46)、knowledge 子集 0.42，说明"多数占比"是个跨问题类型都成立的可靠置信信号。由此 SC 的工作机制就清楚了：它不是靠"探索 + 综合多条推理路径"取胜，而是靠"过滤掉那些得出不同结论的不稳定路径"。作者还用定性样例佐证——哪怕是知识题，LLM 也会编出多个看似合理却互相冲突的解释，SC 恰好能把这种不稳定性压下去。
 
 ### 损失函数 / 训练策略
-零训练实验。inference 配置：MMLU 用 14,042 测试集，GSM8K 1,319 测试集，MedMCQA 4,183 验证集；GPT-4o-mini 上用 285 dev 集 + 4-shot 做 zero/few-shot 对比；CoT 最大输出 1000 tokens、DA 20 tokens；显著性检验用 paired bootstrap resampling ($p < 0.05$)。
+零训练，纯 inference。配置：MMLU 用 14,042 条测试集、GSM8K 用 1,319 条、MedMCQA 用 4,183 条验证集；GPT-4o-mini 上另用 285 条 dev 集配 4-shot 做 zero/few-shot 对比；CoT 最大输出 1000 tokens、DA 20 tokens；显著性用 paired bootstrap resampling（$p < 0.05$）。
 
 ## 实验关键数据
 

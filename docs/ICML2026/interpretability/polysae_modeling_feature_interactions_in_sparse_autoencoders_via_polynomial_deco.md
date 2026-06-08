@@ -41,29 +41,21 @@ PolySAE 在标准稀疏自编码器（SAE）线性解码器之外，新增基于
 ## 方法详解
 
 ### 整体框架
-PolySAE 输入是预训练 LLM 中间层激活 $x \in \mathbb{R}^d$，输出是稀疏码 $z \in \mathbb{R}^{d_\text{sae}}$ 和重构 $\hat{x}$。Encoder 沿用标准 SAE：$z = S(\text{ReLU}(E^\top x + b_\text{enc}))$，其中 $S$ 是 TopK / BatchTopK / Matryoshka 之一。Decoder 改为三阶多项式 $\hat{x} = b_\text{dec} + y_1 + \lambda_2 y_2 + \lambda_3 y_3$，其中 $y_1 = A z$（线性项），$y_2 = B (z \otimes z)$（pairwise），$y_3 = \Gamma (z \otimes z \otimes z)$（triple），$\lambda_2, \lambda_3$ 是可学习标量。当 $\lambda_2 = \lambda_3 = 0$ 时严格退化为线性 SAE，所以 PolySAE 是现有 SAE 的真子集泛化，可直接套到 TopK / BatchTopK / Matryoshka 上。
-
-朴素实现的 $B, \Gamma$ 分别有 $O(d_\text{sae}^2)$、$O(d_\text{sae}^3)$ 参数，不可承受。PolySAE 通过 4 条设计原则（P1 线性 encoder / P2 多项式 decoder / P3 因式化交互 / P4 结构约束）把它压成低秩 + 正交的紧凑形式。
+PolySAE 要解决的是"线性 decoder 只能加法叠加、表达不了乘法组合"这件事，做法是把 SAE 的 encoder 原封不动留作线性，只把 decoder 从一阶线性升级成三阶多项式。具体地，输入是预训练 LLM 中间层激活 $x \in \mathbb{R}^d$，encoder 沿用标准 SAE 算出稀疏码 $z = S(\text{ReLU}(E^\top x + b_\text{enc}))$（$S$ 取 TopK / BatchTopK / Matryoshka 之一），而重构改写成 $\hat{x} = b_\text{dec} + y_1 + \lambda_2 y_2 + \lambda_3 y_3$，三项分别是线性项 $y_1 = A z$、pairwise 项 $y_2 = B (z \otimes z)$、triple 项 $y_3 = \Gamma (z \otimes z \otimes z)$，$\lambda_2, \lambda_3$ 是可学习标量。这个写法的妙处在于令 $\lambda_2 = \lambda_3 = 0$ 就严格退回线性 SAE，因此 PolySAE 是现有所有变体的真子集泛化，可以即插即用地挂到 TopK / BatchTopK / Matryoshka 上。真正的难点是朴素的 $B, \Gamma$ 分别要 $O(d_\text{sae}^2)$、$O(d_\text{sae}^3)$ 参数完全不可承受，所以全部高阶项都被约束到一个共享的低秩、正交子空间里，把暴力张量积压成紧凑形式。
 
 ### 关键设计
 
-1. **多项式 decoder + 共享低秩投影**:
+**1. 多项式 decoder + 共享低秩投影：用同一组方向的不同次幂表达高阶交互**
 
-    - 功能：在不破坏线性 encoder 的前提下，把二阶、三阶特征交互用极小参数代价插入解码器。
-    - 核心思路：先把稀疏码投影到一个 $d_\text{sae} \times R_1$ 的共享子空间 $U$，再在投影后的表示 $zU$ 上做 Hadamard 自乘构造高阶项：$y_1 = (zU) C^{(1)\top}$、$y_2 = \big((zU_{:,1:R_2}) * (zU_{:,1:R_2})\big) C^{(2)\top}$、$y_3 = \big((zU_{:,1:R_3})^{*3}\big) C^{(3)\top}$，其中 $*$ 是 element-wise 乘，$C^{(k)} \in \mathbb{R}^{d \times R_k}$ 是输出投影。这把 pairwise/triple 字典隐式定义为 $B = C^{(2)} (U_{:,1:R_2} \odot U_{:,1:R_2})^\top$、$\Gamma = C^{(3)} (U_{:,1:R_3} \odot U_{:,1:R_3} \odot U_{:,1:R_3})^\top$（$\odot$ 是 Khatri–Rao），代数上等价但永不显式materialize。
-    - 设计动机：用单一 $U$ 而非每阶独立 projector，强制所有交互都是"同一组特征"的不同复合，保证可解释性与不同阶之间的语义一致；rank $R_k$ 是强归纳偏置 —— 实证发现 $R_2 = R_3 \approx 0.06\text{–}0.11\, R_1$ 就够，说明高阶交互天然是低维的。
+为了在不动线性 encoder 的前提下塞进二阶、三阶交互又不爆参数，PolySAE 先把稀疏码投影到一个 $d_\text{sae} \times R_1$ 的共享子空间 $U$，再在投影后的 $zU$ 上做 Hadamard 自乘逐级构造高阶项：$y_1 = (zU) C^{(1)\top}$、$y_2 = \big((zU_{:,1:R_2}) * (zU_{:,1:R_2})\big) C^{(2)\top}$、$y_3 = \big((zU_{:,1:R_3})^{*3}\big) C^{(3)\top}$，其中 $*$ 是 element-wise 乘、$C^{(k)} \in \mathbb{R}^{d \times R_k}$ 是输出投影。这等价于把 pairwise/triple 字典隐式定义为 $B = C^{(2)} (U_{:,1:R_2} \odot U_{:,1:R_2})^\top$、$\Gamma = C^{(3)} (U_{:,1:R_3} \odot U_{:,1:R_3} \odot U_{:,1:R_3})^\top$（$\odot$ 为 Khatri–Rao 积），代数上完全等价却永远不需要把那个庞大的张量显式 materialize。关键是只用单一 $U$ 而非每阶独立 projector，这就强制所有交互都是"同一组特征方向"的不同复合，保证了不同阶之间的语义一致与可解释性；而 rank $R_k$ 本身就是强归纳偏置——实证发现 $R_2 = R_3 \approx 0.06\text{–}0.11\, R_1$ 已经够用，说明高阶交互天然是低维的。
 
-2. **嵌套秩 + Stiefel 正交化约束**:
+**2. 嵌套秩 + Stiefel 正交化约束：在低秩之上再压出可辨识的紧凑结构**
 
-    - 功能：在低秩之上进一步施加 $R_1 \ge R_2 \ge R_3$ 的嵌套结构和 $U^\top U = I$ 的正交化，提升 parsimony 与 identifiability。
-    - 核心思路：取 $R_2 = R_3 = 64$（GPT-2 small 上 $R_1 = d = 768$），用 $U_{:,1:R_2} \subset U$ 的列子集构造高阶项，子空间嵌套 $\text{span}(U_{:,1:R_3}) \subset \text{span}(U_{:,1:R_2}) \subset \text{span}(U)$，呼应"低阶应有更高表达力"的多项式逼近理论。同时每步梯度更新后用 QR retraction（positive QR，矫正列号保证连续性）把 $U$ 投回 Stiefel 流形，强制 $U^\top U = I$ 去除旋转歧义。
-    - 设计动机：嵌套低秩与字典学习中的 nested low-rank approximation 一脉相承，让低阶分到更多容量；正交化避免高阶交互方向冗余重叠 —— 消融表里去掉正交化后 F1 掉 ~3pp，是回填 low-rank 损失并反超的关键。
+低秩之外，PolySAE 进一步施加 $R_1 \ge R_2 \ge R_3$ 的嵌套结构和 $U^\top U = I$ 的正交化来换取 parsimony 和 identifiability。具体取 $R_2 = R_3 = 64$（GPT-2 small 上 $R_1 = d = 768$），用 $U$ 的列子集 $U_{:,1:R_2}$ 构造高阶项，让子空间层层嵌套 $\text{span}(U_{:,1:R_3}) \subset \text{span}(U_{:,1:R_2}) \subset \text{span}(U)$，呼应"低阶应分到更高表达力"的多项式逼近理论，思路与字典学习里的 nested low-rank approximation 一脉相承。同时每步梯度更新后用 QR retraction（positive QR，矫正列号以保证连续性）把 $U$ 投回 Stiefel 流形，强制 $U^\top U = I$ 去掉旋转歧义、避免高阶交互方向冗余重叠。这一步并非锦上添花：消融表里去掉正交化后 F1 掉约 3pp，正是它在零参数代价下回填了 low-rank 造成的损失并反超。
 
-3. **上下文相关的隐式字典**:
+**3. 上下文相关的隐式字典：让一个特征的贡献随谁同时激活而变**
 
-    - 功能：让"一个特征对重构的有效贡献"随当时还有哪些特征同时激活而变化，从而把组合性和原子性分开存储。
-    - 核心思路：把式 (2) 展开后，线性项 $A$ 对应单特征字典，pairwise 字典 $B$ 的第 $(i,j)$ 列描述 $z_i z_j$ 协激活时如何修正重构，triple 字典 $\Gamma$ 的 $(i,j,k)$ 列描述三者共激活的贡献。同一组 $d_\text{sae}$ 个原子特征因此撑起 $\binom{d_\text{sae}}{2} R_2 + \binom{d_\text{sae}}{3} R_3$ 量级的可表达组合，所有这些组合通过 $R_2, R_3$ 个共享交互方向复用，反映了实证观察到的低维交互结构。
-    - 设计动机：标准 SAE 必须为每个复合概念新分配一个原子（破坏组合性），而 PolySAE 允许 star × coffee → Starbucks 这种"乘法绑定"而不增加字典大小；同时保留线性 encoder 保证每个 $z_i$ 仍是 $x$ 的一个清晰投影方向，可视化、聚类、激活补丁照常使用。
+前两步合起来的效果，是把"一个特征对重构的有效贡献"做成上下文相关——它会随当时还有哪些特征一起激活而改变，从而把组合性和原子性分开存储。把重构式展开看：线性项 $A$ 是单特征字典，pairwise 字典 $B$ 的第 $(i,j)$ 列描述 $z_i z_j$ 协激活时如何修正重构，triple 字典 $\Gamma$ 的 $(i,j,k)$ 列描述三者共激活的贡献。于是同一组 $d_\text{sae}$ 个原子特征就能撑起 $\binom{d_\text{sae}}{2} R_2 + \binom{d_\text{sae}}{3} R_3$ 量级的可表达组合，且全部组合都通过那 $R_2, R_3$ 个共享交互方向复用，正好吻合实证观察到的低维交互结构。对比之下标准 SAE 必须为每个复合概念新分配一个原子从而破坏组合性，而 PolySAE 允许 star × coffee → Starbucks 这样的"乘法绑定"却不增加字典大小；与此同时线性 encoder 被完整保留，每个 $z_i$ 仍是 $x$ 的一个清晰投影方向，可视化、聚类、激活补丁照常可用。
 
 ### 损失函数 / 训练策略
 重构损失沿用 SAELens 默认的 MSE，sparsity 由 $S$ 算子（TopK/BatchTopK/Matryoshka）硬约束，$K = 64$、$d_\text{sae} = 16{,}384$。训练 500M tokens（GPT-2 Small 用 300M），上下文长度 128；GPT-2/Gemma 用 OpenWebText，Pythia 用去版权版 Pile。$U$ 的更新走 QR retraction，$\lambda_2, \lambda_3$ 随网络共同优化。

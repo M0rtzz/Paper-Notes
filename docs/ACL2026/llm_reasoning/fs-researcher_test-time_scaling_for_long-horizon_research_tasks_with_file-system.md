@@ -43,31 +43,33 @@ tags:
 
 ### 整体框架
 
-FS-Researcher 是双 Agent 框架，分为两个阶段：(1) Context Builder（上下文构建器）接收研究主题，像图书管理员一样浏览互联网、撰写结构化笔记、归档原始网页，构建层次化知识库；(2) Report Writer（报告撰写器）以知识库为唯一事实来源，分节撰写报告。两个 Agent 共享同一文件系统工作空间，支持独立的迭代优化。工作空间包含交付物（知识库/报告）和控制文件（TODO、Checklist、Log）。
+FS-Researcher 想解决的核心矛盾是：深度研究要消化数百个网页、产出数万 token 的报告，信息量远超模型上下文窗口，硬塞就会截断或有损压缩。它的破局思路是把记忆从上下文搬到文件系统——信息写进文件、按需加载，从而突破窗口上限。整个框架是双 Agent、两阶段：Context Builder 像图书管理员一样浏览互联网、写结构化笔记、归档原始网页，搭起一座层次化知识库；Report Writer 随后以这座知识库为唯一事实来源，分节把报告写出来。两个 Agent 共享同一个文件系统工作空间，里面既有交付物（知识库、报告），也有控制文件（TODO、Checklist、Log），各自都能独立迭代优化。
 
 ### 关键设计
 
-1. **文件系统工作空间**:
+**1. 文件系统工作空间：用持久化外部记忆替掉上下文窗口，让信息量不再受 token 预算约束。**
 
-    - 功能：提供持久化外部记忆，突破上下文窗口限制
-    - 核心思路：工作空间包含两类文件：交付物（index.md、knowledge_base/、sources/、report.md）和控制文件（todos、checklist、logs）。所有文件以 Markdown 格式存储。Agent 在每个 session 开始时检查工作空间状态，制定计划并执行。session 结束时根据 checklist 审查，将未达标项标记为 [IN-PROGRESS]。工具集包括文件系统工具（ls、grep、read_file、insert/delete/replace）和网络浏览工具（search_web、read_webpage）
-    - 设计动机：文件系统有三大优势：(a) 镜像人类处理复杂任务的原生环境；(b) 存储量远超上下文窗口，按需访问无溢出；(c) 中间产物持久可回溯，支持跨 session 迭代优化
+深度研究的长轨迹里，thoughts、tool observations 和报告草稿一直在抢有限的 token 预算，结果是覆盖不全、过早综合。FS-Researcher 干脆把所有东西外化成 Markdown 文件：交付物有 `index.md`、`knowledge_base/`、`sources/`、`report.md`，控制文件有 todos、checklist、logs。Agent 每个 session 开始时先检查工作空间状态再制定计划，session 结束时对照 checklist 审查，把没达标的项标成 `[IN-PROGRESS]`，下个 session 接着干。工具集也分两类——文件系统工具（`ls`、`grep`、`read_file`、`insert`/`delete`/`replace`）和网络浏览工具（`search_web`、`read_webpage`）。这样做有三重好处：它镜像了人类处理复杂任务的原生方式；存储量远超上下文窗口、按需访问不溢出；中间产物持久可回溯，支持跨 session 反复打磨。
 
-2. **Context Builder（上下文构建器）**:
+**2. Context Builder：把信息系统性地收集、蒸馏、归档进结构化知识库，而不是堆在上下文里。**
 
-    - 功能：系统性收集、蒸馏和归档信息到知识库
-    - 核心思路：交付物包含 index.md（目录，含主题分解和 KB 结构）、knowledge_base/（树状结构的笔记目录，每条陈述附引用指向 sources/）和 sources/（归档的原始网页）。工作流非线性——index.md 和 knowledge_base/ 随浏览过程动态更新。每个 session 结束时进行自检，识别知识库中的错误、缺口或冲突，标记为待处理。可迭代运行直到达到 session 预算或通过审查
-    - 设计动机：与直接在上下文中累积事实不同，将信息外化到文件系统允许知识库增长到远超上下文容量，且结构化组织便于 Report Writer 按需检索
+如果像传统做法那样在上下文里直接累积事实，很快就会撑爆窗口，且结构混乱不利于检索。Context Builder 的交付物是三件套：`index.md`（目录，含主题分解和 KB 结构）、`knowledge_base/`（树状笔记目录，每条陈述都附引用指回 `sources/`）、`sources/`（归档的原始网页）。它的工作流是非线性的——`index.md` 和 `knowledge_base/` 随浏览过程动态更新；每个 session 结束做一次自检，找出知识库里的错误、缺口或冲突并标记待处理，可一直迭代到耗尽 session 预算或通过审查。把信息外化成文件，知识库就能长到远超上下文容量，而结构化组织又让下游的 Report Writer 能按需精准检索。
 
-3. **Report Writer（报告撰写器）**:
+**3. Report Writer：砍掉联网能力、只读知识库，用分节多 session 写作换取深度与自纠正。**
 
-    - 功能：基于知识库分节撰写高质量研究报告
-    - 核心思路：移除网络浏览工具，仅允许从知识库读取事实。采用多 session 写作流程：第一个 session 创建大纲（同时作为 TODO），后续每个 session 选择一个章节撰写。每节完成后进行节级审查（根据 checklist），全部完成后进行报告级审查。若发现问题则重标相关章节为 [IN-PROGRESS]。无 session 预算限制
-    - 设计动机：一次性生成整篇报告往往变成事实罗列，缺乏深度分析。分节写作提供频繁的重新锚定机会，结合知识库进行局部规划和自纠正
+一次性生成整篇报告，往往退化成事实罗列、缺乏深度分析。Report Writer 因此被设计成只能从知识库读事实（移除网络浏览工具），并采用多 session 分节流程：第一个 session 先建大纲（同时充当 TODO），之后每个 session 只挑一个章节来写；每节写完做节级审查（对照 checklist），全部完成再做报告级审查，发现问题就把相关章节重标为 `[IN-PROGRESS]` 返工，且不设 session 预算上限。分节写作的价值在于提供频繁的"重新锚定"机会——每写一节都回到知识库做局部规划和自我纠正，避免越写越飘。
+
+### 一个完整示例：一次"某新兴电池技术综述"请求如何在工作空间里跑完
+
+给定研究主题后，Context Builder 先建空工作空间，在 `index.md` 里把主题拆成几个子方向并列出 TODO，然后开始联网：每读一个网页就在 `sources/` 归档原文、在 `knowledge_base/` 对应子目录写一条带引用的笔记。第一个 session 结束时它自检发现"成本数据有缺口、两处数字冲突"，标记待处理；第二、第三个 session 补齐缺口、消解冲突，知识库逐步从粗到精。审查通过后切换到 Report Writer：它读 `knowledge_base/` 先在 `report.md` 写出大纲（即章节 TODO），随后每个 session 写一章——写完"技术原理"节做节级 checklist 审查通过，写"成本分析"节时发现引用对不上知识库，于是把该节重标 `[IN-PROGRESS]` 回炉重写；所有章节过审后再做一次报告级审查定稿。全程信息都躺在文件里按需加载，上下文窗口从不被撑爆，而文件 I/O 延迟可忽略（占总时间 <0.03%）。
 
 ### 损失函数 / 训练策略
 
-本文为框架工作，不涉及模型训练。使用标准 ReAct 架构驱动两个 Agent：$T_i, A_i = M_\theta(T_{j<i}, A_{j<i}, O_{j<i}, P)$，$O_i = Execute(A_i)$。支持 GPT-5、Claude-Sonnet-4.5、Gemini-2.5-Pro 等多种骨干模型。文件 I/O 延迟可忽略（<0.03% 总时间）。
+本文是框架工作，不涉及模型训练。两个 Agent 都由标准 ReAct 架构驱动：
+
+$$T_i, A_i = M_\theta(T_{j<i}, A_{j<i}, O_{j<i}, P), \quad O_i = \mathrm{Execute}(A_i)$$
+
+其中 $T_i$、$A_i$、$O_i$ 分别是第 $i$ 步的思考、动作和执行观察，$P$ 是 prompt。框架支持 GPT-5、Claude-Sonnet-4.5、Gemini-2.5-Pro 等多种骨干模型。
 
 ## 实验关键数据
 

@@ -41,30 +41,30 @@ ARES 通过一个能动态组合「话题 / 人设 / 目标 / 战术」四元结
 ## 方法详解
 
 ### 整体框架
-ARES 分两大阶段：**Phase 1 Adaptive Vulnerability Discovery** 由 Safety Mentor 生成 (prompt, $y_\text{synth}$, $y_\text{chosen}$) 三元组，分别让 Core LLM 回答、让 RM 打分，按三类失效（A/B/C）入库；**Phase 2 End-to-End Repair** 先用 Type A+C 样本微调 RM，再以修好的 RM 作奖励信号用 GRPO 优化 Core LLM (Type B+C 样本)。整个 pipeline 在 8×A100 上单次 ~13 小时（发现 9h + 修复 4h），生成 4000 个样本时弱点命中率 63.5%。
+ARES 把「找弱点」和「修弱点」串成一个闭环。前半段 Adaptive Vulnerability Discovery 让一个 Safety Mentor 不断生成对抗 prompt 连带一对 $(y_\text{synth},\,y_\text{chosen})$ 偏好回答，分别送进 Core LLM 让它作答、送进 RM 让它打分，再按「策略中招 / RM 中招」的组合把每个样本归入 A/B/C 三类失效库；后半段 End-to-End Repair 严格按「先校准裁判再训练学生」的顺序，先用涉及 RM 的样本微调 RM，再拿这个修好的 RM 当奖励信号去 GRPO 优化 Core LLM。整条 pipeline 在 8×A100 上单次约 13 小时（发现 9h + 修复 4h），生成 4000 个样本时弱点命中率达 63.5%。
 
 ### 关键设计
 
-1. **组合式对抗 prompt 生成（Compositional Attack Generation）**:
+**1. 组合式对抗 prompt 生成：把攻击拆成四个正交维度。**
 
-    - 功能：让 mentor 在一个语义连贯但可控的搜索空间里源源不断造出「看似正当」的有害 prompt。
-    - 核心思路：把攻击向量分解成四个正交维度——Topic（核心有害领域）/ Persona（社工身份，如「网络安全研究员」）/ Goal（具体任务，如「step-by-step 指南」）/ Tactic（包装方式，如「学术权威诉求」）。Safety Mentor 从分类法里采样实例后强制满足语义一致性约束，并由 ShieldGemma 过滤只留下真正有害的；每个成功 prompt 都顺带产出一对 $y_\text{synth}$（有害示范）和 $y_\text{chosen}$（安全回答），天然构成偏好对。
-    - 设计动机：用结构化分解换取多样性 + 可解释性，避免传统模板攻击「容易被指纹识别」的弱点，同时三元组直接喂给下游修复，省掉重新标注。
+传统模板攻击的通病是花样固定、容易被指纹识别，而纯自由生成又难以保证「看似正当」的隐蔽性。ARES 的解法是把每条攻击向量分解成四个正交维度——Topic（核心有害领域）、Persona（社工身份，如「网络安全研究员」）、Goal（具体任务，如「step-by-step 指南」）、Tactic（包装方式，如「学术权威诉求」）。Safety Mentor 从分类法里采样这四元组、在语义一致性约束下拼成连贯 prompt，再用 ShieldGemma 过滤只保留真正有害的样本，从而在一个可控却高度多样的搜索空间里源源不断造出对抗实例。
 
-2. **双组件弱点分类（Dual-Component Vulnerability Classification）**:
+这套分解的额外红利是每个成功 prompt 都顺带产出一对 $y_\text{synth}$（有害示范）和 $y_\text{chosen}$（安全回答），天然构成偏好对，可以直接喂给下游修复阶段而无需重新标注——结构化分解既换来了多样性与可解释性，又把发现与修复无缝衔接起来。
 
-    - 功能：把每次攻击的结果按「Core LLM 是否中招 × RM 是否中招」分成三类，作为修复策略的路由信号。
-    - 核心思路：Judge 给 LLM 回答打 0-5 的有害分 $s_\text{judge}$；同时让 RM 直接对预生成的 $y_\text{synth}$ 和 $y_\text{chosen}$ 打分 $s_\text{rm}$。**Type A**（$s_\text{judge}=0$ 但 $s_\text{rm}(y_\text{synth})>s_\text{rm}(y_\text{chosen})$）= RM 失守；**Type B**（LLM 输出有害但 RM 正确打低分）= 策略弱点；**Type C**（LLM 输出有害 + RM 反而给高分）= 系统性弱点。
-    - 设计动机：把诊断和修复 **直接绑定**——Type A 喂 RM 微调、Type B 喂策略优化、Type C 两者都喂，避免传统方法「一刀切」修一个组件而漏掉协同失效。
+**2. 双组件弱点分类：用两路信号路由修复目标。**
 
-3. **层次化自适应采样（Hierarchical Adaptive Sampling）**:
+要同时探测 Core LLM 和 RM，就得有两路独立的诊断信号。ARES 让 Judge 给 LLM 回答打 0-5 的有害分 $s_\text{judge}$，同时让 RM 直接对预生成的 $y_\text{synth}$、$y_\text{chosen}$ 打分 $s_\text{rm}$，据此把每次攻击归为三类：**Type A**（$s_\text{judge}=0$ 但 $s_\text{rm}(y_\text{synth})>s_\text{rm}(y_\text{chosen})$）是 RM 单独失守，**Type B**（LLM 输出有害但 RM 正确打低分）是策略弱点，**Type C**（LLM 输出有害且 RM 反而给高分）则是两者协同崩溃的系统性弱点。
 
-    - 功能：让 mentor 从随机探索逐步聚焦到「高命中率」的攻击组合，提高单位算力的弱点发现率。
-    - 核心思路：经过 warmup 后进入 adaptive 阶段，先按 Category 权重选大类（如 Deception & Manipulation），再按 Instance 权重选具体实例（如 deepfake creation）。攻击成功时按 $w_c' = \min(w_c \cdot (1 + 0.2 \cdot s_\text{judge}/5 + 0.2 \cdot \min(s_\text{rm}/40, 1)), \tau_\text{max})$ 同时增强**实例级**和**类别级**权重（$\tau_\text{max}=0.15$ 防止单点垄断），更新后在每层独立归一化。
-    - 设计动机：类别级强化是 ARES 的关键 trick——「一个实例在某类里成功就说明该类的其他实例也值得多试」，平衡 exploit 和 explore，比纯实例级强化更不容易过拟合到几个已知组合。
+这套分类的价值在于把诊断和修复直接绑定：Type A 喂去 RM 微调、Type B 喂去策略优化、Type C 两边都喂。相比传统方法「一刀切」只修一个组件，这种按失效模式路由的做法才能捕获并修补最危险的协同失效。
+
+**3. 层次化自适应采样：类别级与实例级权重同步增强。**
+
+对抗组合的有效性并不均匀，若一直随机探索会浪费大量算力。ARES 在 warmup 之后进入 adaptive 阶段，先按 Category 权重选大类（如 Deception & Manipulation），再按 Instance 权重选具体实例（如 deepfake creation）。一旦攻击成功，就按 $w_c' = \min(w_c \cdot (1 + 0.2 \cdot s_\text{judge}/5 + 0.2 \cdot \min(s_\text{rm}/40, 1)), \tau_\text{max})$ 同时抬高实例级与类别级权重，其中 $\tau_\text{max}=0.15$ 防止单点垄断，更新后在每层独立归一化。
+
+关键 trick 是类别级广播——「一个实例在某类里成功，说明同类的其他实例也值得多试」。这让采样在 exploit 与 explore 之间取得平衡，比纯实例级强化更不容易过拟合到少数已知的赢家组合，从而稳定地提升单位算力下的弱点命中率。
 
 ### 损失函数 / 训练策略
-修复阶段强调**顺序敏感**：必须先用 Type A + Type C 失效样本 + HelpSteer2（通用帮助性）+ FalseReject（防过度拒答）混合成 $\mathcal{D}_\text{pref}$ 微调 RM，再用修好的 RM 作奖励对 Core LLM 跑 Dr. GRPO；调换顺序则「策略只能被仍然有问题的 RM 引导」。Core LLM 数据集 $\mathcal{D}_\text{core\_llm}$ 同样混合 Type B+C 失效 + HelpSteer2 + FalseReject。
+修复阶段对**顺序高度敏感**：必须先把 Type A + Type C 失效样本与 HelpSteer2（通用帮助性）、FalseReject（防过度拒答）混合成 $\mathcal{D}_\text{pref}$ 来微调 RM，再用这个修好的 RM 作奖励对 Core LLM 跑 Dr. GRPO；若调换顺序，策略就只能被仍然有问题的 RM 引导。Core LLM 的训练集 $\mathcal{D}_\text{core\_llm}$ 同样混合 Type B+C 失效样本与 HelpSteer2、FalseReject，以在提升安全率的同时守住通用能力和拒答边界。
 
 ## 实验关键数据
 

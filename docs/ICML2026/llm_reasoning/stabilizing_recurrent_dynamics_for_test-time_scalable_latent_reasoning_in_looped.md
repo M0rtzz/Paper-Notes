@@ -46,27 +46,21 @@ tags:
 
 ### 整体框架
 
-STARS (STAbility-driven Recurrent Scaling) 是一个训练框架，作用在任意已有的 LoopLM 上（论文用 Ouro-1.4B 做 fine-tune）。整体 pipeline 与标准 LoopLM 训练几乎相同：输入是文本 token 序列，prelude 嵌入后进入循环 block $\Phi_\theta = \mathcal{M}^L$，迭代 $t$ 次后经 coda + lmhead 输出。改动只在**损失函数**上：每个 batch 先从分布 $\mathcal{P}$（log-normal）随机采样循环深度 $t$，然后同时计算两项 loss——标准 SFT 交叉熵 $\mathcal{L}_{SFT}^{(t)}$ 和 Jacobian 谱半径正则 $\mathcal{L}_{JSRR}^{(t)}$，加权求和反向传播。推理阶段无任何额外开销，照常按所需迭代数前向即可。
+STARS (STAbility-driven Recurrent Scaling) 是一个套在任意已有 LoopLM 上的训练框架（论文用 Ouro-1.4B 做 fine-tune），它的核心主张是：要让"迭代越深越准"成立，得在训练时把循环映射逼成一个渐近稳定的吸引子。整条 pipeline 和标准 LoopLM 训练几乎一样——文本 token 经 prelude 嵌入后进入共享参数的循环 block $\Phi_\theta = \mathcal{M}^L$，迭代 $t$ 次再过 coda + lmhead 输出；唯一改动落在损失上：每个 batch 先从一个 log-normal 分布 $\mathcal{P}$ 随机采一个循环深度 $t$，再在该深度同时算标准 SFT 交叉熵 $\mathcal{L}_{SFT}^{(t)}$ 和 Jacobian 谱半径正则 $\mathcal{L}_{JSRR}^{(t)}$，加权回传。推理阶段零额外开销，照常按所需迭代数前向即可。
 
 ### 关键设计
 
-1. **动力系统诊断 + 后置 sandwich 归一化结构选择**:
+**1. 动力系统诊断与 Post-Sandwich 归一化底座：先选对架构再谈优化。**
 
-    - 功能：在做训练改进之前，先把"哪个架构有救"挑出来。
-    - 核心思路：在 4 位加法的可控小实验上，把 12 种归一化结构（LayerNorm/RMSNorm/SimpleNorm × Pre/Post/Pre-Sandwich/Post-Sandwich）穷举训练，用 PCA 投影观察潜在轨迹的"尺度"和准确率随 $T_{test}$ 的演化，得到关键结论：归一化的"位置"决定动力学，归一化的"类型"几乎无影响。基于此，STARS 选定 **Post-Sandwich LayerNorm**——天然有界、容易收敛到吸引子，只要再施加引导，就有机会同时拿到稳定性和有效性。
-    - 设计动机：内部归一化系列在 4 位加法上轨迹尺度 PCA 图 explode，外部归一化系列轨迹紧凑但准确率撑不到测试期；Prelude/Coda、L2、随机循环单独用都无法破解 deadlock。这一节本身就是论文最有价值的"负面结果"，把后续方法约束在"以外部归一化为底座，主动注入稳定性约束"这条路上。
+在动手改训练之前，作者先回答一个更根本的问题——哪种架构本身就有"被救活"的潜力。他们在 4 位加法这个完全可控的小实验上，把 12 种归一化结构（LayerNorm / RMSNorm / SimpleNorm × Pre / Post / Pre-Sandwich / Post-Sandwich）穷举训练，再用 PCA 把潜在轨迹投影出来，同时看轨迹"尺度"和准确率随测试迭代数 $T_{test}$ 的演化。结论很干净：决定动力学的是归一化的**位置**而非**类型**——内部归一化（Pre / Pre-Sandwich）系列轨迹尺度在 PCA 图上直接 explode，隐状态范数指数膨胀冲出数据流形；外部归一化（Post / Post-Sandwich）系列轨迹紧凑有界，却又推理太浅、准确率撑不到测试期。更关键的是 Prelude/Coda 非循环层、L2 正则、随机循环采样这些常见补救手段单独用时都破不了这个 deadlock。正因如此，STARS 把底座定在 **Post-Sandwich LayerNorm** 上：它天然有界、容易收敛到吸引子，剩下要做的只是再主动注入一道"让吸引子落在有效位置"的引导。这一节本身就是论文最有价值的负面结果，它把后续方法牢牢约束在"以外部归一化为底座、显式补稳定性约束"这条唯一可行的路上。
 
-2. **Jacobian 谱半径正则化 (JSRR)**:
+**2. Jacobian 谱半径正则化（JSRR）：用 Lyapunov 条件把不动点压到渐近稳定侧。**
 
-    - 功能：在训练时显式压制循环映射 $\Phi_\theta$ 在当前隐状态处的 Jacobian 谱半径 $\rho(J)$，把不动点拉到"渐近稳定"侧。
-    - 核心思路：根据 Lyapunov 线性化定理，离散时间系统 $\mathbf{h}^{(t+1)}=\Phi_\theta(\mathbf{h}^{(t)})$ 在不动点 $\mathbf{h}^\star$ 的局部稳定性由 $\rho(J(\mathbf{h}^\star)) = \max_i |\lambda_i|$ 决定，$\rho<1$ 即可保证小扰动指数衰减、迭代收敛。但 $J\in\mathbb{R}^{D\times D}$ 中 $D=M\cdot d$ 太大，直接求特征值不可行；作者改用 **单步幂迭代 + Jacobian-vector product (JVP)**：随机初始化 $\mathbf{v}$ 后用 PyTorch 的 JVP 算 $J\mathbf{v}$，无需显式构造 $J$，谱半径估计为 $\rho(J)\approx \|J\mathbf{v}\|_2$。损失定义为 $\mathcal{L}_{JSRR}^{(t)} = \frac{1}{N}\sum_i \|J^{(t,i)} \mathbf{v}^{(t,i)}\|_2^2$。另外由于训练中精确不动点 $\mathbf{h}^\star$ 未知，作者采用"代理"做法——直接在当前迭代 $t$ 的隐状态 $\mathbf{h}^{(t)}$ 上算谱半径。
-    - 设计动机：DEQ 系列 (Bai 2019, 2021) 用 Frobenius 范数 $\|J\|_F$ 正则，但 $\rho(J) \le \|J\|$ 是宽松上界，约束 $\|J\|$ 会过度压缩模型表达能力；直接管谱半径既数学精确又只挤压"最不稳定"那条主方向。选择单步幂迭代而非多步，是因为多步会引入复杂的二阶梯度依赖容易爆炸，单步虽然单样本噪声大、但 batch 平均后优化方向统计正确，且显存/计算几乎无额外开销。
+外部归一化解决了"有界"，但吸引子未必落在能解题的位置，这一项就是要在训练时显式压低循环映射 $\Phi_\theta$ 的 Jacobian 谱半径 $\rho(J)$，把收敛点拉向"渐近稳定且有效"。理论依据是 Lyapunov 线性化定理：离散系统 $\mathbf{h}^{(t+1)}=\Phi_\theta(\mathbf{h}^{(t)})$ 在不动点 $\mathbf{h}^\star$ 处的局部稳定性由谱半径 $\rho(J(\mathbf{h}^\star)) = \max_i |\lambda_i|$ 决定，只要 $\rho<1$ 就保证小扰动指数衰减、迭代收敛。难点在于 $J\in\mathbb{R}^{D\times D}$（$D=M\cdot d$）维度巨大、直接求特征值不可行，作者改用**单步幂迭代 + Jacobian-vector product (JVP)**：随机初始化向量 $\mathbf{v}$，用 PyTorch 的 JVP 直接算 $J\mathbf{v}$ 而无需显式构造 $J$，把谱半径估成 $\rho(J)\approx \|J\mathbf{v}\|_2$，正则项即 $\mathcal{L}_{JSRR}^{(t)} = \frac{1}{N}\sum_i \|J^{(t,i)} \mathbf{v}^{(t,i)}\|_2^2$；由于训练时真不动点 $\mathbf{h}^\star$ 未知，索性用当前迭代 $t$ 的隐状态 $\mathbf{h}^{(t)}$ 作代理点算谱半径。之所以直接管谱半径而不像 DEQ (Bai 2019, 2021) 那样正则 Frobenius 范数 $\|J\|_F$，是因为 $\rho(J)\le\|J\|$ 只是宽松上界，压 $\|J\|$ 会连带过度压缩模型表达力，而管谱半径数学上精确、只挤压"最不稳定"那条主方向；选单步而非多步幂迭代，则是因为多步会引入容易爆炸的二阶梯度依赖，单步虽单样本噪声大、但 batch 平均后优化方向统计正确，且显存与计算几乎零额外开销。
 
-3. **随机循环采样 × JSRR 的轨迹级正则化**:
+**3. 随机循环采样 × JSRR：把单点稳定性推广成整条轨迹的全局约束。**
 
-    - 功能：把"某一个 $t$ 处的稳定性"升级成"整条轨迹的全局稳定性"，同时也是让模型不绑死单一训练深度的关键。
-    - 核心思路：每个 batch 从分布 $\mathcal{P}$（论文用 log-normal $\mu=1.7, \sigma=0.4$, range $[1,16]$）采样一个循环步数 $t$，然后按 $\mathcal{L}_{STARS} = \mathbb{E}_{t\sim\mathcal{P}}[(1-\lambda)\cdot\mathcal{L}_{SFT}^{(t)} + \lambda\cdot\mathcal{L}_{JSRR}^{(t)}]$ 联合优化（$\lambda=0.1$）。这样既让 SFT 项覆盖各种深度（不再过拟合固定 $T_{train}$），又让 JSRR 项把谱半径约束施加到轨迹上 $\mathcal{P}$ 支撑集的每一个点上。
-    - 设计动机：单点 JSRR 只能保证某一深度收敛，对更深的迭代不一定有效；单纯随机循环采样的诊断实验已经显示——它能让性能在训练范围外保持更久，但仍然无法阻止 internal norm 的状态漂移，也不能保证 external norm 的 attractor 是"有益"的。两者组合后才真正做到"全程有界 + 全程有效"的统一约束。
+只在某一个深度 $t$ 上压谱半径，并不能保证更深的迭代也收敛，而且模型还会过拟合那个固定训练深度——这一项就是把约束"撒"到整条轨迹上。每个 batch 都从分布 $\mathcal{P}$（论文取 log-normal $\mu=1.7, \sigma=0.4$、range $[1,16]$）随机采一个循环步数 $t$，再按 $\mathcal{L}_{STARS} = \mathbb{E}_{t\sim\mathcal{P}}[(1-\lambda)\cdot\mathcal{L}_{SFT}^{(t)} + \lambda\cdot\mathcal{L}_{JSRR}^{(t)}]$ 联合优化（$\lambda=0.1$）。这样 SFT 项覆盖各种深度、不再绑死单一 $T_{train}$，JSRR 项也随之把谱半径约束施加到 $\mathcal{P}$ 支撑集的每一个深度上。两件事缺一不可：诊断实验显示单纯随机循环采样虽能让性能在训练范围外多撑一阵，却拦不住内部归一化的状态漂移、也保证不了外部归一化的吸引子是"有益"的；单点 JSRR 又管不到更深的迭代。只有把"局部稳定性"和"全局轨迹覆盖"叠在一起，才真正凑齐"全程有界 + 全程有效"的统一约束。
 
 ### 损失函数 / 训练策略
 

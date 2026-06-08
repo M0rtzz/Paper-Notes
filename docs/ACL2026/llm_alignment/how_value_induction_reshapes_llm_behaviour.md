@@ -41,27 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两段式管线：(1) **Value-Specific Dataset Creation**：偏好数据 → LLM 抽取每个 response 的 values → 按目标值是否独占 chosen 构造 $\mathcal{S}_{v_k}$，得到 15 个 value-specific 训练集（empathy 6.6 万条到 violence 637 条）；(2) **DPO 微调 + 多维评测**：对 8 个 base/SFT/instruct 模型在每个 $\mathcal{S}_{v_k}$ 上做 DPO；下游评测包括 value expression（用同一抽取器在生成上跑）、安全性 (不安全 query 拒答率)、anthropomorphic language、QA benchmark。
+本文不提新模型，而是搭一条「从现成偏好数据切出价值子集 → DPO 诱导 → 多维评测」的实证管线，目的是画出价值之间的相互影响图。输入是 4 个已有偏好数据集（PKU Safe-RLHF / UltraFeedback / HelpSteer 2 / HH-RLHF），先让抽取器 $M_{ext}$ 给每对 (chosen, rejected) 标出各自表达的价值集合，再按「目标值是否独占某一侧」筛出 15 个 value-specific 子集（empathy 6.6 万条到 violence 637 条）；然后对 8 个 base/SFT/instruct 模型在每个子集上做 DPO，最后用 value expression、安全拒答率、anthropomorphic language、QA benchmark 四个维度评测同一个诱导带来的全部下游变化。
 
 ### 关键设计
 
-1. **Value Extraction & Value-Specific Subset**:
+**1. Value Extraction 与 XOR 子集构造：零额外标注地切出能强诱导某值的训练集。**
 
-    - 功能：从已有偏好数据中"切"出能强诱导某个值的子集，零额外标注成本
-    - 核心思路：对每个 triplet $(p_i, y^+_i, y^-_i)$，用 $M_{ext}$ 抽取 $V^+_i = M_{ext}(p_i, y^+_i)$ 和 $V^-_i = M_{ext}(p_i, y^-_i)$；目标值 $v_k$ 子集 $\mathcal{S}_{v_k} = \{(p_i, y^+_i, y^-_i) : v_k \in V^+_i \oplus v_k \in V^-_i\}$；若 $v_k$ 在 rejected 中出现，则翻转 preference 使价值表达永远被正向奖励
-    - 设计动机：用 XOR 而非 AND 保证目标值是这对样本的"判别特征"，避免训练信号被两边都有的"默认值"（如 empathy）污染；同时复用现成偏好数据，不需要从头标注
+要研究「诱导某个值会发生什么」，先得有只强调该值的训练数据，但从头标注成本高。本文复用现成偏好数据：对每个 triplet $(p_i, y^+_i, y^-_i)$ 用 $M_{ext}$ 分别抽出 $V^+_i = M_{ext}(p_i, y^+_i)$ 和 $V^-_i = M_{ext}(p_i, y^-_i)$，再用 XOR 构造目标值 $v_k$ 的子集 $\mathcal{S}_{v_k} = \{(p_i, y^+_i, y^-_i) : v_k \in V^+_i \oplus v_k \in V^-_i\}$；若 $v_k$ 只出现在 rejected 一侧，就翻转该样本的 preference，让价值表达永远落在被正向奖励的那一边。
 
-2. **15 个值的诊断性选择 + 三准则筛选**:
+用 XOR 而非 AND 是关键：它保证目标值是这对样本的「判别特征」，从而避免训练信号被两边都出现的「默认值」（如 empathy）稀释；翻转 preference 又让所有子集的监督方向一致，可直接迁移到任何「想用现成 RLHF 数据训某个子能力」的场景。
 
-    - 功能：选出能跨"valence × 类别"覆盖的代表性值集合
-    - 核心思路：三个准则 —— (1) 至少 500 样本；(2) 至少在 chosen 或 rejected 中独占出现；(3) 按 AI Values Taxonomy 属 Social / Protective / Personal；再手工平衡正面 (empathy / fairness)、负面 (deception / violence)、中性 (engagement)
-    - 设计动机：负面值虽不该上线，但用来诊断"安全微调能不能扛住明显坏方向"；中性值用来确认变化不是 helpful/harmless 这种主轴效应造成的
+**2. 15 个值的诊断性选择 + 三准则筛选：覆盖 valence × 类别的代表性价值集合。**
 
-3. **多维下游评测矩阵**:
+价值很多，得挑出一组既有代表性又能跑出对照的子集。筛选用三个准则：(1) 至少 500 样本，保证 DPO 有足够信号；(2) 至少在 chosen 或 rejected 中独占出现，保证能被 XOR 切出来；(3) 按 AI Values Taxonomy 落在 Social / Protective / Personal 三类里。在此之上再手工平衡正面（empathy / fairness）、负面（deception / violence）、中性（engagement）三种 valence。
 
-    - 功能：把"价值诱导改变了什么"分解成可独立测量的维度
-    - 核心思路：(a) value expression —— 在同一组 prompt 上跑 $M_{ext}$ 看哪些值被表达；(b) 安全性 —— 不安全 query 拒答率；(c) anthropomorphic language —— 用"validating / sycophantic"语言检测；(d) QA 能力 —— 标准 benchmark
-    - 设计动机：把"价值诱导是不是好"拆成"目标值有没有上、其他值有没有动、安全有没有崩、拟人化有没有强、知识有没有掉"五个独立问题，可以画出价值串扰的全景图
+负面值显然不该上线，留它们是为诊断「安全微调能不能扛住明显的坏方向」；中性值则用来确认观察到的变化不是 helpful / harmless 这种主轴效应顺带造成的——有了这组对照，后面才能干净地归因价值串扰。
+
+**3. 多维下游评测矩阵：把「价值诱导改变了什么」拆成可独立测量的问题。**
+
+只看目标值有没有上来会漏掉副作用，所以评测拆成四个相互独立的维度：(a) value expression，在同一组 prompt 上重跑 $M_{ext}$ 看哪些值被表达；(b) 安全性，用不安全 query 的拒答率衡量；(c) anthropomorphic language，检测 validating / sycophantic 措辞；(d) QA 能力，跑标准 benchmark。
+
+这等于把「价值诱导是不是好」分解成「目标值有没有上、其他值有没有被带动、安全有没有崩、拟人化有没有增强、知识有没有掉」五个独立问题，正是这套分维测量让作者能把零散的单点观察拼成一张价值串扰的全景图。
 
 ### 损失函数 / 训练策略
 价值诱导用 DPO + system prompt 双管齐下（fine-tuning + prompting，作者认为这比单纯 SFT 表达更强）。验证：人工标注 100 个样本 × 15 值 × 3 标注者，目标值出现的精度达 76.67%（4 标签中选 1 + 3 distractor，3 标注者并集）；Llama-3.3-70B-Instruct 自动评估给出 80.95% 精度。

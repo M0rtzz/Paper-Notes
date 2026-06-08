@@ -44,45 +44,45 @@ tags:
 
 ### 整体框架
 
-TraceR1 采用 plan-act 循环：给定当前观测，模型预测未来多步轨迹 $\hat{\tau}_{t:T}$，但仅执行第一步动作，收到环境反馈后重新规划。训练分两个阶段：
+TraceR1 想解决的是一个很具体的毛病：现在的多模态智能体几乎都是"看一眼当前画面就决定下一步"的反应式选手，在多步任务里走着走着就偏题。它的做法不是去搭一个显式世界模型，而是让模型在每一步都先"想几步、走一步"——给定当前观测，一次性预测出未来多步的动作轨迹 $\hat{\tau}_{t:T}$，但真正执行的只有第一步，拿到环境反馈后再重新预测。整套训练分两阶段递进：Stage 1（Anticipatory Trajectory Optimization）用轨迹级 RL 把"看得远、看得连贯"先教会，Stage 2（Grounded Reinforcement Fine-tuning）再用冻结工具代理的真实执行反馈把"每一步做得准"补上。基座是 Qwen3-VL-8B-Thinking，训练框架用 EasyR1。
 
-- **Stage 1（Anticipatory Trajectory Optimization）**：轨迹级 RL，用全局对齐奖励鼓励连贯的多步规划
-- **Stage 2（Grounded Reinforcement Fine-tuning）**：步骤级 RL，用冻结工具代理的执行反馈提升单步精度
+### 关键设计
 
-基座模型为 Qwen3-VL-8B-Thinking，使用 EasyR1 框架训练。
+**1. 轨迹级对齐奖励：让模型一次想清楚未来几步，而不是逐 token 抠当前动作。**
 
-### 关键设计 1：轨迹级对齐奖励
+反应式智能体的根本问题在于它只对当前观测负责，而 SFT 那套 teacher forcing 又是逐 token 优化，天然忽视跨步骤的全局一致性。TraceR1 改在轨迹层面给奖励：给定用户指令 $u$、当前观测 $s_t$ 和交互历史，模型吐出未来 $T$ 步的动作序列，再和参考轨迹 $\tau^*$ 整体对齐，用一个带折扣的轨迹奖励来评分。
 
-- **功能**：给定用户指令、当前观测和交互历史，模型预测未来 $T$ 步的动作序列，与参考轨迹对齐。
-- **核心思路**：设计折扣轨迹奖励 $R(\hat{\tau}, \tau^*) = \sum_{t=1}^{T} \gamma^{t-1} r_t$，其中 $r_t = \lambda_{\text{align}} \cdot \text{sim}(\hat{a}_t, a_t^*) - \lambda_{\text{rep}} \cdot \text{rep}(\hat{a}_{1:t})$。sim 衡量动作对齐度，rep 惩罚重复/循环动作。
-- **设计动机**：SFT 在 teacher forcing 下逐 token 优化，忽视全局一致性。轨迹级 RL 能让模型学到跨步骤的依赖关系，避免冗余或不稳定的 rollout。
+$$R(\hat{\tau}, \tau^*) = \sum_{t=1}^{T} \gamma^{t-1} r_t, \quad r_t = \lambda_{\text{align}} \cdot \text{sim}(\hat{a}_t, a_t^*) - \lambda_{\text{rep}} \cdot \text{rep}(\hat{a}_{1:t})$$
 
-### 关键设计 2：重复惩罚与时间折扣
+其中 $\text{sim}$ 衡量预测动作和参考动作的对齐度，$\text{rep}$ 惩罚轨迹内部的重复。因为奖励是对整条轨迹算的，模型被迫学会跨步骤的依赖关系，而不是只让眼前这一步看着对——这正是它能避开冗余、不稳定 rollout 的关键。
 
-- **功能**：$\lambda_{\text{rep}}$ 惩罚轨迹中重复出现的动作，$\gamma$ 作为时间折扣因子让模型更关注近期正确性。
-- **核心思路**：防止 reward hacking——没有重复惩罚，规划器会反复点击同一元素或重复调用同一工具来膨胀奖励；$\gamma < 1$ 防止模型过拟合不确定性极高的远期预测。
-- **设计动机**：消融实验证实去掉任一组件都造成显著性能下降（见消融部分）。
+**2. 重复惩罚与时间折扣：堵住"刷奖励"和"赌远期"两个漏洞。**
 
-### 关键设计 3：Grounded RL Fine-tuning
+轨迹级奖励一旦放开，模型很容易找到捷径作弊。如果不加重复惩罚项 $\lambda_{\text{rep}}$，规划器会反复点击同一个元素、或重复调用同一个工具，靠堆叠"看似对齐"的动作把奖励刷高；而如果时间折扣 $\gamma = 1$，模型又会去赌那些不确定性极高的远期预测，反而把近期该做对的动作做糊了。这两个旋钮一个管"别原地打转"，一个管"先把近的走稳"，配合起来才让轨迹奖励真正指向有效规划。消融里去掉任意一个都会明显掉点，说明它们不是可有可无的正则。
 
-- **功能**：模型输出 $(\hat{a}_t, \hat{g}_t)$，交由冻结的工具代理（如 UI-TARS-7B）执行，执行结果与 ground-truth 比较得到步骤级奖励。
-- **核心思路**：GUI 任务用坐标匹配奖励，工具调用任务用答案匹配奖励：$r_t^G = \mathbb{1}[\text{coord match}]$ 或 $\mathbb{1}[\text{answer match}]$。
-- **设计动机**：Stage 1 的轨迹奖励是抽象的，模型不知道预测的动作是否真正可执行。Stage 2 提供具体执行结果作为纠正信号，弥补"规划理想化"的问题。
+**3. Grounded RL 微调：给抽象的轨迹奖励补上"这步到底能不能落地"的硬反馈。**
 
-### 关键设计 4：推理时的 Plan-Act 循环
+Stage 1 的轨迹奖励本质是抽象的——它只告诉模型"你这条规划和参考像不像"，却没法保证预测出来的动作在真实界面上点得中、调得通。Stage 2 就把这一环补上：模型输出动作和 grounding 坐标 $(\hat{a}_t, \hat{g}_t)$，交给一个冻结的工具代理（如 UI-TARS-7B）去实际执行，再用执行结果和 ground-truth 比对算步骤奖励——GUI 任务看坐标对不对，工具调用任务看答案对不对。
 
-- **功能**：推理时模型预测多步轨迹，只执行第一步，获得新观测后重新规划。
-- **核心思路**：类似 Model Predictive Control (MPC)，滚动预测、单步执行、持续修正。
-- **设计动机**：多步预测提供了前瞻上下文，但环境随时变化，只执行一步+重新规划兼顾了前瞻性和鲁棒性。
+$$r_t^G = \mathbb{1}[\text{coord match}] \quad \text{或} \quad \mathbb{1}[\text{answer match}]$$
 
-## 损失函数 / 训练策略
+有了这个 grounded 信号，模型就不会停在"规划得很理想但落地全错"的状态，前瞻性和可执行性这才接上。
 
-两阶段均采用 **GRPO（Group-Relative Policy Optimization）** 作为优化目标：
+**4. 推理时的 Plan-Act 循环：用 MPC 式的"滚动预测、单步执行"兼顾前瞻与鲁棒。**
 
-- Stage 1：$\nabla_\theta J(\theta) = \mathbb{E}_{\hat{\tau}}[\hat{A}(\hat{\tau}, \tau^*) \nabla_\theta \log \pi_\theta(\hat{\tau} | u, s_t, \tau_{1:t-1})]$，其中 $\hat{A}$ 是基于轨迹奖励的归一化组相对优势。
-- Stage 2：将轨迹奖励替换为 grounded step reward $r_t^G$，同样用 GRPO 更新。
+多步预测给了模型前瞻上下文，但交互环境随时在变，一口气把预测的好几步全执行掉就太冒险了。TraceR1 在推理时借用了 Model Predictive Control 的思路：每一步都重新预测整条未来轨迹，却只落地第一步，拿到新观测后再滚动一次。这样既保留了"想得远"带来的全局视野，又靠"只走一步、立刻纠偏"避免了把错误的远期预测照单全收。
 
-训练数据方面，GUI 任务使用 AgentNet、AndroidControl、GUI-Odyssey、Multimodal-Mind2Web、AgentTrek 等轨迹数据集；工具使用任务使用 T3-Agent 的轨迹数据和可执行工具箱。
+### 一个完整示例
+
+以一个典型的 OSWorld 桌面操作回合为例，看 plan-act 循环怎么转。$t=0$ 时模型拿到当前桌面截图和指令，一次预测出未来 $T \approx 8$ 步的完整动作轨迹（点开菜单 → 选某项 → 弹窗里选格式 → 确认 → …），但只执行排在最前的第一步"点开菜单"，把对应坐标交给冻结的 UI-TARS 执行；菜单弹出后界面变了，模型在 $t=1$ 基于新截图重新预测整条 8 步轨迹（这次第一步可能修正为"选某项"），同样只走一步。如此滚动下去，每一步都带着对后续几步的预判、又每一步都根据真实反馈重规划——前瞻的方向感和单步的准确性就在这个循环里被同时维持住。
+
+### 损失函数 / 训练策略
+
+两阶段都用 GRPO（Group-Relative Policy Optimization）作为优化目标，区别只在奖励信号来源不同。Stage 1 的梯度基于轨迹奖励算组相对优势：
+
+$$\nabla_\theta J(\theta) = \mathbb{E}_{\hat{\tau}}\big[\hat{A}(\hat{\tau}, \tau^*)\, \nabla_\theta \log \pi_\theta(\hat{\tau} \mid u, s_t, \tau_{1:t-1})\big]$$
+
+其中 $\hat{A}$ 是基于轨迹奖励归一化后的组相对优势；Stage 2 则把轨迹奖励换成 grounded 步骤奖励 $r_t^G$，其余 GRPO 流程不变。训练数据上，GUI 任务用 AgentNet、AndroidControl、GUI-Odyssey、Multimodal-Mind2Web、AgentTrek 等轨迹数据集，工具使用任务用 T3-Agent 的轨迹数据和可执行工具箱。
 
 ## 实验关键数据
 

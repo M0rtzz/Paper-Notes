@@ -45,20 +45,17 @@ ViLL-E 基于 PaliGemma-3B 多模态 LLM，包含视觉编码器、LLM 主干和
 
 ### 关键设计
 
-1. **KV-Former Embedding Head**:
-    - 功能：将 LLM 输出的变长 token 序列聚合为固定维度的 dense embedding
-    - 核心思路：使用 LLM 的输出 token 作为 query，$P$ 个可学习的 key 和 value（"pooling tokens"）作为字典，通过注意力机制自适应加权聚合。之后经 MLP 投影和均值池化得到最终 embedding
-    - 设计动机：相比 Q-Former 的固定输出长度，KV-Former 支持可变长度输入，能根据视频复杂度自适应调整；相比简单的 mean pooling 或 self-attention，它提供了独立于生成任务的瓶颈表示容量，同时保持参数效率
+**1. KV-Former Embedding Head：把变长 token 序列聚合成固定维度 embedding。**
 
-2. **EOS 触发的自适应 embedding 生成**:
-    - 功能：让模型根据视频复杂度自动决定生成多少中间 token 再产生 embedding
-    - 核心思路：模型在提取 embedding 前先自回归生成 token 直到 `<EOS>`，生成的 token 数量随视频复杂度自然变化。复杂视频需要更多分析步骤，简单视频可以快速收敛
-    - 设计动机：固定步数的 embedding 生成方法无法适应不同复杂度的视频，自适应机制在效率和表示质量之间取得了更好的平衡
+Video LLM 的自回归输出长度不定，而检索需要的是一条固定维度的 dense 向量，二者之间缺一个聚合器。ViLL-E 没有直接对输出 token 做 mean pooling，而是设计了 KV-Former：以 LLM 的输出 token 作为 query，引入 $P$ 个可学习的 key/value（称为 "pooling tokens"）当作字典，通过注意力自适应加权聚合，再经 MLP 投影和均值池化得到最终 embedding。相比 Q-Former 输出长度固定、必须截断或补齐变长输入，KV-Former 天然吃得下任意长度的 token 序列；相比简单 mean pooling 或 self-attention，那 $P$ 个 pooling token 给了模型一块独立于生成任务的瓶颈容量，让 embedding 表示不被生成目标"带偏"，同时参数开销很小。
 
-3. **三阶段生成-对比联合训练**:
-    - 功能：逐步提升模型在生成和 embedding 任务上的能力
-    - 核心思路：Stage 1 在 10M Shutterstock 视频-字幕对上联合训练 next-token prediction（生成）和 CLIP 式对比损失（embedding）；Stage 2 在 200K 高质量 Claude-3-Sonnet 生成的长字幕上续训；Stage 3 在 100K 样本上进行四任务微调（QA、检索、匹配、定位）
-    - 设计动机：Stage 1 建立基础的视频-语言对齐；Stage 2 通过高质量详细描述弥补原始字幕过于简短的问题；Stage 3 通过多任务微调解锁下游任务能力。消融实验证实每个阶段都有显著贡献
+**2. EOS 触发的自适应 embedding 生成：让模型按视频复杂度决定"想多久"。**
+
+固定步数的 embedding 提取对所有视频一视同仁，复杂视频来不及分析、简单视频又浪费算力。ViLL-E 改成在提取 embedding 之前先自回归生成 token，直到吐出 `<EOS>` 才停，生成多少 token 随视频复杂度自然浮动——内容繁杂的视频会多生成几步"思考"token 再聚合，简单视频则快速收敛。这等于把"该思考多久"这个决策交还给模型本身，在效率和表示质量之间取得比固定步数更好的平衡。
+
+**3. 三阶段生成-对比联合训练：从对齐到精炼再到多任务解锁。**
+
+要在同一个模型里同时养出生成能力和判别能力，单阶段训练既容易顾此失彼、原始字幕又太短撑不起细粒度表示。ViLL-E 拆成三段递进：Stage 1 在 10M Shutterstock 视频-字幕对上联合优化 next-token prediction（生成）和 CLIP 式对比损失（embedding），先建立基础的视频-语言对齐；Stage 2 在 200K 条 Claude-3-Sonnet 生成的高质量长字幕上续训，用详细描述弥补原始字幕过短的问题；Stage 3 在 100K 样本上做四任务微调（QA、检索、匹配、定位），解锁下游能力。消融实验里去掉预训练后检索分数从 62.8 跌到 49.3，证实每个阶段都不是摆设。
 
 ### 损失函数 / 训练策略
 四种任务对应四种损失：(1) 检索任务用 CLIP 式 in-batch contrastive loss；(2) 字幕/QA 用 next-token prediction loss；(3) 匹配任务用二分类交叉熵；(4) 时序定位用 contrastive loss + 滑动窗口 hard negative mining（IoU < 0.2 的片段作为负样本）。微调阶段使用 LoRA 保证参数效率，视觉投影模块和 embedding head 全量训练。

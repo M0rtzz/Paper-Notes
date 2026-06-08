@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文先做大量诊断实验暴露三条规律失效，再以 in-context test-time learning 视角重构理论，最后落地 CDS。**诊断阶段**用 4 类非推理 LLM（LLaMA 3.1 8B / 3.3 70B / Qwen2.5 7B / 14B）与 4 类推理 LLM（Qwen3 8B / 14B / QwQ 32B / DeepSeek-R1 685B），在分类任务（SuperGLUE, NLU, TREC, BANKING77）和数学/叙事推理任务（GSM8K, MATH 的 geometry / number_theory / counting_and_probability, DetectiveQA）上跑 1-128 shot，统一用开放式生成 + exact match 评估。**CDS 算法**则对 $n$ 条 demonstrations 求一个排列 $O = [\mathbf{d}_{\pi(1)}, \ldots, \mathbf{d}_{\pi(n)}]$ 最小化总曲率 $\Theta(O) = \sum_{t=2}^{n-1} \arccos\!\left(\frac{\mathbf{v}_t \cdot \mathbf{v}_{t+1}}{\|\mathbf{v}_t\|\|\mathbf{v}_{t+1}\|}\right)$，其中 $\mathbf{v}_t = \tilde{\mathbf{e}}_t - \tilde{\mathbf{e}}_{t-1}$ 是相邻 demonstration 投影嵌入的位移向量。
+本文走的是「诊断—理论—算法」三步链条：先用大规模对照实验把 many-shot ICL 的三条经验规律一条条放进 CoT 推理场景，发现它们全线崩塌；再以 in-context test-time learning 视角重构解释，把长 context 看成一条 implicit curriculum 而非检索缓存；最后把「顺序要平滑过渡」这条原则落地成 CDS——给定 $n$ 条 demonstration，求一个排列 $O = [\mathbf{d}_{\pi(1)}, \ldots, \mathbf{d}_{\pi(n)}]$ 最小化嵌入轨迹的总曲率 $\Theta(O) = \sum_{t=2}^{n-1} \arccos\!\left(\frac{\mathbf{v}_t \cdot \mathbf{v}_{t+1}}{\|\mathbf{v}_t\|\|\mathbf{v}_{t+1}\|}\right)$，其中 $\mathbf{v}_t = \tilde{\mathbf{e}}_t - \tilde{\mathbf{e}}_{t-1}$ 是相邻投影嵌入的位移向量。诊断阶段覆盖 4 类非推理 LLM（LLaMA 3.1 8B / 3.3 70B / Qwen2.5 7B / 14B）与 4 类推理 LLM（Qwen3 8B / 14B / QwQ 32B / DeepSeek-R1 685B），在分类任务（SuperGLUE, NLU, TREC, BANKING77）和数学/叙事推理任务（GSM8K, MATH 的 geometry / number_theory / counting_and_probability, DetectiveQA）上跑 1–128 shot，统一用开放式生成 + exact match 评估。
 
 ### 关键设计
 
-1. **诊断实验：揭露三条经验规律在 CoT 推理上同时崩**:
+**1. 三维诊断实验：把 many-shot 的三条常识逐条压在显微镜下，证明它们在 CoT 推理上同时崩。**
 
-    - 功能：用对比设计把“规律是否仍 hold”一条条压在显微镜下检验。
-    - 核心思路：(A) **Scaling**：在非推理 LLM 上跑 geometry/number_theory 等推理任务，发现 shot 数增加性能**不稳甚至下降**（如 LLaMA 3.3 70B 在 CoT-ICL 上 negative gain）；只有 reasoning-oriented LLM（Qwen3, QwQ, R1）才呈现单调正向 scaling。表 1 进一步显示，在 Qwen3 上关闭 thinking mode 直接降几何题 7 pp，证明 reasoning prior 是 scaling 的必要条件。(B) **Retrieval**：embedding cosine 取 top-k 最相似 vs bottom-k 最不相似；在 BANKING77 上 top-k 显著优于 bottom-k（验证检索假设），但在 geometry/number_theory/DetectiveQA 上 top-k **反而最差**——semantic similarity 不预测 procedural compatibility。(C) **Ordering**：5 个随机 permutation 算 std，非推理任务 std 随 shot 数下降，推理任务 std 反而**随 shot 数上升**，表明 path dependence 强且加深。
-    - 设计动机：把 many-shot ICL 的“常识”逐条放进 CoT 推理场景对照，三个独立维度同时破坏才能说服读者“CoT-ICL 是另一回事”而不是“某个数据集巧合”。这种“三角验证”是诊断式实证工作的范式，比单一现象更有说服力。
+许多 many-shot 工程套路（堆 shot、相似度检索、不在乎顺序）都建立在非推理任务上观察到的三条规律之上，本文要回答的核心问题就是：这些规律在 CoT 推理里还成不成立。于是作者沿 scaling / retrieval / ordering 三个独立维度各设一组对照。**Scaling** 这一维在非推理 LLM 上跑 geometry、number_theory 等推理任务，发现 shot 数增加时性能不稳甚至下降（如 LLaMA 3.3 70B 在 CoT-ICL 上出现 negative gain），只有 reasoning-oriented LLM（Qwen3、QwQ、R1）才呈现单调正向 scaling；表 1 进一步显示在 Qwen3 上关闭 thinking mode 会直接掉几何题约 7 pp，说明 reasoning prior 是 scaling 的必要条件。**Retrieval** 这一维用 embedding cosine 取 top-$k$ 最相似与 bottom-$k$ 最不相似对照：BANKING77（非推理）上 top-$k$ 显著占优、印证了检索假设，但在 geometry/number_theory/DetectiveQA 上 top-$k$ 反而最差——semantic similarity 根本不预测 procedural compatibility。**Ordering** 这一维对 5 个随机 permutation 算标准差，非推理任务 std 随 shot 数下降（顺序越来越无所谓），推理任务 std 反而随 shot 数上升，说明 path dependence 不仅存在而且越堆越深。三个独立维度同时破坏，才足以说服读者「CoT-ICL 是另一回事」而非某个数据集的巧合。
 
-2. **Procedure absorption 直接证据：corrupted CoT 消融**:
+**2. Corrupted CoT 消融：用反事实证明模型真的在吸收中间推理过程，而不只是读最终答案。**
 
-    - 功能：分离“模型只用最终答案 $y$”和“模型真的吸收中间推理 $C$”两种假设。
-    - 核心思路：在 geometry 上构造两组 prompt——正常版 $(x_i, C_i, y_i)$ 和**procedurally corrupted** 版 $(x_i, C_0, y_i)$，后者把所有 rationale 都替换成第一条 demonstration 的 chain，但保留每条的 question 和最终 answer。控制了格式、context 长度、$x \to y$ 映射，只改 $C$。表 2：在 $n=16$ 下两组几乎无差别，在 $n=128$ 下 corrupted 版让 Qwen3-8B 掉 1.25 pp、Qwen3-14B 掉 2.51 pp。
-    - 设计动机：直接对“模型是否真的在 read demonstrations 的 procedure”给出反事实证据。short prompt 下差别小说明模型既能从 IO 也能从 CoT 中学；long prompt 下差别大说明 procedure 才是 scaling 的真正信号——给“in-context test-time learning”视角提供了硬证据，比单纯讲哲学有说服力得多。
+诊断暴露了现象，但还需要回答一个更尖锐的问题：模型到底是在「学」demonstration 里的推理过程 $C$，还是只用了输入到输出的映射 $x \to y$。作者在 geometry 上构造一对只差 $C$ 的 prompt——正常版 $(x_i, C_i, y_i)$ 和 procedurally corrupted 版 $(x_i, C_0, y_i)$，后者把每条的 rationale 全替换成第一条 demonstration 的同一条 chain $C_0$，但保留各自的 question 和最终 answer，因而格式、context 长度、$x\to y$ 映射全被控住，唯一变量就是中间过程是否连贯。结果（表 2）很有说服力：在 $n=16$ 的 short prompt 下两组几乎没差，说明模型既能从 IO 也能从 CoT 学；而在 $n=128$ 的 long prompt 下 corrupted 版让 Qwen3-8B 掉 1.25 pp、Qwen3-14B 掉 2.51 pp——一旦 context 拉长，破坏 procedure 就实打实地伤性能。这正是「in-context test-time learning」视角需要的硬证据：procedure 才是 long-context scaling 的真正信号，比单纯讲哲学有力得多。
 
-3. **Curvilinear Demonstration Selection (CDS)：最小总曲率排序**:
+**3. Curvilinear Demonstration Selection (CDS)：把「平滑过渡」量化为嵌入轨迹的总曲率并最小化它。**
 
-    - 功能：基于平滑过渡原则，给定 $n$ 条 demonstration 找一个让 implicit 学习轨迹最平滑的排列。
-    - 核心思路：(i) 把每条 demonstration $\mathbf{d}_i$ 表示成 (question + CoT + answer) 用 Qwen3-Embedding-4B 编码成 $\mathbf{e}_i \in \mathbb{R}^d$，关键是用**完整 demonstration**而非仅 question——因为顺序效应取决于 procedural 内容，光看 question 抓不到 CoT 结构。(ii) 把 prompt 内所有 embeddings 投影到低维子空间 $\tilde{\mathbf{e}}_i \in \mathbb{R}^{d'}$ 让曲率估计稳定。(iii) 定义局部曲率 $\theta_i = \arccos\!\left(\frac{(\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}) \cdot (\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i)}{\|\cdot\|\|\cdot\|}\right)$ 为相邻位移夹角，总曲率 $\Theta(O) = \sum_{i=2}^{n-1}\theta_i$。(iv) 搜一个排列使 $\Theta$ 最小（具体算法在 Section 6）。
-    - 设计动机：作者先观察到 ordering curvature 与准确率显著负相关（总 $r=-0.547$，geometry $-0.545$，counting $-0.628$），所以最小曲率自然成为目标。为了排除“仅仅是把相似项聚在一起”，他们还做了 high-curvature 反向 baseline——保持局部邻域但反转曲率目标制造突兀转折——发现 CDS 仍胜出，证明**平滑过渡本身**而非聚类是 causal 因素。这种 causal smoothness ablation 是论文方法论的亮点。
+既然顺序敏感来自「概念突变打断 implicit 学习轨迹」，那让轨迹尽量平滑就该有帮助。CDS 把这条 pedagogical 原则做成可计算的目标：先把每条 demonstration $\mathbf{d}_i$ 按 (question + CoT + answer) 整体用 Qwen3-Embedding-4B 编码成 $\mathbf{e}_i \in \mathbb{R}^d$——刻意用**完整 demonstration**而非仅 question，因为顺序效应取决于 procedural 内容，只看 question 抓不到 CoT 结构；再把 prompt 内所有嵌入投影到低维子空间 $\tilde{\mathbf{e}}_i \in \mathbb{R}^{d'}$ 让曲率估计稳定；然后把相邻两段位移的夹角定义为局部曲率 $\theta_i = \arccos\!\left(\frac{(\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}) \cdot (\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i)}{\|\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}\|\,\|\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i\|}\right)$，整条排列的总曲率即 $\Theta(O) = \sum_{i=2}^{n-1}\theta_i$（这里 $\theta_i$ 衡量「拐弯角度」，越大表示过渡越突兀），CDS 就是搜一个排列把 $\Theta$ 最小化（具体算法见原文 Section 6）。把最小曲率当目标不是拍脑袋：作者先量到 ordering curvature 与准确率显著负相关（总 $r=-0.547$，geometry $-0.545$，counting $-0.628$）。更关键的是为了排除「无非是把相似项聚到一起」的混淆，他们做了 high-curvature 反向 baseline——保持局部邻域不变、只反转曲率目标制造突兀转折——CDS 仍然胜出，证明起作用的是**平滑过渡本身**而非聚类，这条 causal smoothness ablation 是方法论上的点睛之笔。
 
 ### 损失函数 / 训练策略
 CDS 完全是**推断时**算法，无任何训练。底层 embedding 模型用 Qwen3-Embedding-4B（off-the-shelf），评估模型涵盖 LLaMA、Qwen2.5、Qwen3、QwQ、DeepSeek-R1 系列，prompt 上下文最大 131K tokens，shot 数扫 $n \leq 128$。

@@ -46,23 +46,22 @@ MUSE 本质上是一个面向安全研究者的红队实验操作系统。它不
 一次自动红队实验大致分成五步。首先，用户选择目标模型、攻击策略、目标有害能力和模态配置。其次，攻击策略生成当前轮文本攻击内容。第三，如果当前轮需要非文本输入，系统把文本转换成音频、渲染图像或合成视频。第四，模型路由层把统一消息格式转成对应 provider API 需要的格式并调用目标模型。第五，LLM judge 根据五级安全 taxonomy 评估回复，并把结果写回 run；若尚未成功且没超过轮数预算，策略继续生成下一轮。
 
 ### 关键设计
-1. **Run-centric 数据模型**:
 
-    - 功能：把一次攻击从配置到最终裁判的全部信息封装成可持久化的 run，作为实验追踪、恢复和统计的基本单位。
-    - 核心思路：每个 run 记录目标模型、攻击策略、目标任务、轮数预算、每轮输入模态、attacker 生成内容、target response、judge label、生成的媒体文件路径以及最终 outcome。批量 campaign 则由多个 runs 组成，系统在每个 goal 完成后更新聚合统计；如果任务中断，可以从最后完成的 goal 继续，而不是重跑整批实验。
-    - 设计动机：多轮多模态红队的复现难点在“过程”而不只是“最终分数”。如果只保存 ASR，后续无法判断成功来自哪一轮、哪种模态、哪次策略回退或哪类裁判灰区；run-centric 设计把这些变量变成后续分析的一等公民。
+**1. Run-centric 数据模型：把一次攻击从配置到裁判的全过程封成可持久化、可恢复的最小实验单元。**
 
-2. **策略引擎 + ITMS 跨轮模态切换**:
+多轮多模态红队最难复现的不是"最终分数"而是"过程"——成功到底来自哪一轮、哪种模态、哪次策略回退、哪类裁判灰区，只存一个 ASR 全看不出来。MUSE 把每次攻击封装成一个 run，完整记录目标模型、攻击策略、目标有害能力、轮数预算、每轮输入模态、attacker 生成内容、target response、judge label、生成的媒体文件路径以及最终 outcome；批量 campaign 由多个 run 组成，每个 goal 完成后即刻更新聚合统计，任务中断时能从最后完成的 goal 续跑，而不必重跑整批实验。正是这个设计把"哪一轮、哪种模态、哪次回退、哪次灰区"都变成了后续分析的一等公民，让安全失败可以被归因，而不只是被计数。
 
-    - 功能：用统一接口实现 Crescendo、PAIR、Violent Durian 三类多轮攻击，并给可保留上下文的策略加上跨轮模态轮换版本。
-    - 核心思路：Crescendo 从温和问题逐渐升级，若遇到拒答就回退并换角度；PAIR 每轮独立生成新的候选 prompt，再由 judge 分数指导重写；Violent Durian 从第一轮就使用高压修辞和紧迫框架。ITMS 不改变攻击目标本身，而是在每一轮从用户请求且模型支持的模态集合中循环选择下一种模态，然后把攻击文本转成对应媒体输入。
-    - 设计动机：这样可以把“攻击算法强不强”和“模态切换是否扰动安全边界”分开看。尤其是 Crescendo 和 Violent Durian 都有对话上下文，适合观察模型在上一轮文本、下一轮图像或音频之间切换时，拒答行为是否会提前松动。
+**2. 策略引擎 + ITMS 跨轮模态切换：用统一接口跑三类多轮攻击，并把"换模态"单独拎出来当可控变量。**
 
-3. **统一模态转换、模型路由与五级 judge**:
+要回答"安全对齐能否跨模态泛化"，必须把"攻击算法强不强"和"模态切换本身是否扰动安全边界"分开，否则两个因素纠缠在一起无法归因。策略引擎用同一接口实现三类多轮攻击：Crescendo 从温和问题逐步升级、遇拒答就回退换角度，PAIR 每轮独立生成候选 prompt 再由 judge 分数指导重写，Violent Durian 从第一轮就上高压修辞和紧迫框架。在此之上，ITMS 不改攻击目标，只在每一轮从"用户请求且模型支持"的模态集合里循环选下一种模态，再把该轮攻击文本转成对应媒体输入。由于 Crescendo 和 Violent Durian 都保留对话上下文，正好能观察模型在"上一轮文本、这一轮图像或音频"之间切换时，拒答行为是否会提前松动。
 
-    - 功能：把不同 provider 的多模态 API 和不同形态的输入 payload 包装成统一接口，并用更细粒度的标签替代二元成功判断。
-    - 核心思路：模态转换层把 attacker 文本变成三种非文本表示：TTS 音频、带自动换行的文字图像、以及由音频和图像合成的视频；生成资产按 project、prompt、modality 缓存，便于不同模型复用。模型路由层只要求新增 provider 实现一个薄 client，负责格式化内容和重试逻辑。评测层使用 GPT-4o judge，把回复分为 Compliance、Partial Compliance、Indirect Refusal、Direct Refusal、Non-Responsive，并由此计算 hard ASR 和 soft ASR：hard ASR 只数完整 Compliance，soft ASR 还包含 Partial Compliance，两者差值就是灰区宽度 GZW。
-    - 设计动机：provider API 差异和裁判粒度不足是多模态安全评测的两个常见瓶颈。统一路由降低扩展成本，五级 taxonomy 则避免把“有免责声明但仍给出可操作能力”和“真正拒绝”混为一谈。
+**3. 统一模态转换、模型路由与五级 judge：抹平 provider 差异，并用细粒度标签取代二元成功判断。**
+
+provider API 各不相同、二分类 ASR 又太粗，是多模态安全评测的两个老瓶颈。模态转换层把 attacker 文本变成三种非文本载体——TTS 音频、带自动换行的文字图像、以及音频加图像合成的视频——并按 project / prompt / modality 缓存生成资产，供不同模型复用；模型路由层只要求新增 provider 实现一个负责格式化内容和重试逻辑的薄 client，扩展成本很低。评测层用 GPT-4o judge 把回复分成 Compliance、Partial Compliance、Indirect Refusal、Direct Refusal、Non-Responsive 五级，并据此算两个 ASR：hard ASR 只数完整 Compliance，soft ASR 还包含 Partial Compliance，两者差值就是灰区宽度 GZW。这套五级 taxonomy 的意义在于不把"带了免责声明但仍给出可操作能力"和"真正拒绝"混成一个标签——而那恰恰是真实攻击者能拼接利用的灰区。
+
+### 一个完整示例：一次 ITMS-Crescendo run 怎么走
+
+设目标是 Gemini 上一个 fraud / social engineering 能力请求，策略选 ITMS-Crescendo，轮数预算 10，支持 text / audio / image 三模态轮换。系统先建一个 run，写入配置。第 1 轮 attacker 生成一个温和的引入式问题，ITMS 把它转成图像输入——此时模型最谨慎，turn-1 拒答率约 86%（甚至高于纯文本 Crescendo 的 81%），judge 标 Direct Refusal，run 记下"未成功、还有预算"。第 2 轮策略基于上下文升级措辞，ITMS 切到音频；第一次模态切换后防线明显松动——turn-2 拒答率降到 59.7%（低于纯文本 Crescendo 的 66.8%），且 Partial Compliance 升到 32.7%，judge 很可能标 Partial Compliance，run 把这一步记成灰区命中、soft ASR 计数加一。再往后一两轮，模型滑向完整 Compliance，hard ASR 命中，run 标记 outcome=success 并停止。整条轨迹平均比纯文本 Crescendo 更早收敛（如 Claude 的平均成功轮数从 3.0 降到 2.6）。这正是 run-centric 记录能看出"ITMS 不靠抬高最终 ASR、而靠加速对齐侵蚀"的地方——只有逐轮保留模态和 judge 标签，才能把这个机制从一个最终分数里拆出来。
 
 ### 损失函数 / 训练策略
 这篇论文不是模型训练论文，因此没有新的训练损失。实验策略上，GPT-4o 被固定为攻击器和自动裁判，judge 温度为 0；五种攻击策略共享最多 10 轮预算，Crescendo 和 Violent Durian 使用最多 3 次回退，攻击器温度为 0.9，PAIR 的成功阈值是 1-10 分制中的 9 分。这个设置的重点是控制评测流程，而不是优化目标模型参数。

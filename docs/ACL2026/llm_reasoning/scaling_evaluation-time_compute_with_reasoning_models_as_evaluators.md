@@ -44,23 +44,26 @@ tags:
 整体 pipeline 分两种用途。第一种是 evaluator 本身的能力测试：在 ProcessBench 中，模型需要找出一个解答中第一个错误段落。第二种是提升 generator：先让 generator 为每道题采样多个候选答案，再让 evaluator 给候选打分，选择最高分答案作为 Best-of-N 输出。论文在固定近似计算预算下比较 direct evaluator 的 Best-of-64 和 reasoning evaluator 的 Best-of-8。
 
 ### 关键设计
-1. **Reasoning Outcome Evaluator**:
 
-	- 功能：判断完整候选答案是否正确，给出整体 score。
-	- 核心思路：prompt reasoning model 读取 $(x_i,y_i)$，先输出 CoT $c_i$，再输出 judgment $j_i$。若要求模型输出 “1” 表示正确、“0” 表示错误，则用对应 token logits 做 softmax，得到 $s_i = e^{\ell(j_i=1)} / (e^{\ell(j_i=0)} + e^{\ell(j_i=1)})$。
-	- 设计动机：outcome evaluation 视野完整，适合捕捉最终答案是否合理，但可能忽略中间步骤里的细粒度错误。
+**1. Reasoning Outcome Evaluator：让模型读完整答案、先想再判，并从 token logits 里读出置信分。**
 
-2. **Reasoning Process Evaluator**:
+直接预测 reward 的 ORM 视野完整，却把整个判断压成一个标量，没有给"多想一会儿"留空间。Outcome evaluator 改成 prompt 一个 reasoning model 读入 $(x_i,y_i)$，先生成一段 CoT $c_i$ 再给二元 judgment $j_i$（"1" 表示正确、"0" 表示错误）。分数不取硬判断，而是从这两个 token 的 logits 做 softmax：
 
-	- 功能：逐步检查候选回答中的每个推理段落，定位第一个错误 step。
-	- 核心思路：对第 $k$ 个 step，evaluator 看到问题和前 $k$ 个步骤，生成专门检查 $y_{ik}$ 的 CoT 与 judgment。所有 step 的判断再通过聚合函数转成整体 score。论文偏好 multi-step process evaluation，而不是一次性输出所有 step 的判断。
-	- 设计动机：逐步检查会自然放大 evaluation-time compute，并迫使模型对每个局部推理做更细的核查；这比单条 CoT 覆盖所有步骤更不容易漏错。
+$$s_i = \frac{e^{\ell(j_i=1)}}{e^{\ell(j_i=0)} + e^{\ell(j_i=1)}}$$
 
-3. **Model-based Splitting 与 Outcome/Process 融合**:
+这样既保留了 outcome 视角"看最终答案是否合理"的整体性，又能用连续分数支持后续 Best-of-N 排序。它的短板是视野太宏观，容易放过中间步骤里的细粒度错误。
 
-	- 功能：让过程评估适配结构不规整的回答，并融合 outcome 与 process 的互补信号。
-	- 核心思路：当回答没有清晰换行或包含代码时，使用 $M_{split}$ 插入 `[SPLIT]` 来切分步骤。过程分数聚合时，论文发现 mean_logit 比常用 min 更好。最终分数用 $s_{final}=\alpha s_{outcome}+(1-\alpha)s_{process}$，主实验取 $\alpha=0.5$。
-	- 设计动机：process evaluator 精度高但召回低，outcome evaluator 更整体但可能粗糙，插值可以兼顾两者。
+**2. Reasoning Process Evaluator：把一次性评判拆成逐步核查，自然吃掉更多 evaluation-time compute。**
+
+一条 CoT 想覆盖整段推理的所有步骤，很容易漏错。Process evaluator 转而逐步检查：评估第 $k$ 个 step 时，模型只看到问题和前 $k$ 个步骤，专门为 $y_{ik}$ 生成一段核查 CoT 和判断，再把所有 step 的判断经聚合函数转成整体 score。论文刻意偏好这种 multi-step process evaluation，而不是一次性吐出所有 step 的判断——因为逐步核查既迫使模型对每个局部推理认真复核，又让 evaluation-time compute 随步数自然增长，正好把 reasoning model 的自检、回溯能力用在刀刃上。
+
+**3. Model-based Splitting 与 Outcome/Process 融合：让过程评估扛得住不规整输出，并把两种视角的互补信号合起来。**
+
+逐步评估的前提是回答能被切成清晰的 step，可现实里很多回答没有规整换行、甚至夹着代码。论文用一个切分模型 $M_{split}$ 在这种情况下插入 `[SPLIT]` 标记来划分步骤；在聚合过程分数时，发现 mean_logit 比常用的 min 更稳。最终把两路分数线性插值：
+
+$$s_{final}=\alpha\, s_{outcome}+(1-\alpha)\, s_{process}$$
+
+主实验取 $\alpha=0.5$。这么做是因为 process evaluator 精度高但召回低（判对了就很可信、却容易漏报），outcome evaluator 更整体却偏粗糙，插值正好让两者互补、削掉单一视角的偏差。
 
 ### 损失函数 / 训练策略
 本文没有提出新的训练损失，核心是推理时策略。ProcessBench 中用 F1 衡量是否准确预测第一个错误段落；Best-of-N 中，LeetCode 用 pass@1，其余 6 个 benchmark 用 accuracy。为了公平计算预算，direct ORM/PRM 使用 Best-of-64，reasoning evaluator 因单次评估更贵而使用 Best-of-8；候选来自 Eurus-2-SFT、Llama3.1-70B-Instruct、Qwen2.5-7B-Instruct，在 7 个 benchmark 上共生成 4,680 个实例和 299,520 个 responses。

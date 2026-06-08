@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **六专职 Agent + Router Agent 的并行架构**:
+**1. 六专职 Agent + Router 的并行架构：让不同 Agent 各管一类特征变换，避免单一思路把特征做得千篇一律。**
 
-    - 功能：通过角色分工实现特征空间的广泛探索
-    - 核心思路：六个 Agent 分别负责一元变换（Unary）、交叉组合（Cross-Compositional）、时序特征（Temporal）、聚合构造（Aggregation-Construct）、局部变换（Local-Transform）、局部模式（Local-Pattern）。Router Agent 在每轮根据任务元数据和累积记忆动态选择激活哪些 Agent
-    - 设计动机：单个 Agent 容易产生同质化特征（feature homogenization），多 Agent 从变换复杂度、数据范围、数据类型三个正交维度探索互补区域
+单个 LLM 反复生成特征容易同质化（feature homogenization），思路固化在少数几种变换上。MALMAS 把特征构造拆给六个专职 Agent，分别负责一元变换（Unary）、交叉组合（Cross-Compositional）、时序特征（Temporal）、聚合构造（Aggregation-Construct）、局部变换（Local-Transform）和局部模式（Local-Pattern），这组角色恰好覆盖变换复杂度、数据范围、数据类型三个正交维度，让它们去探索互补的特征区域而非互相重叠。每一轮并不全员上阵：Router Agent 先读任务元数据和累积记忆，动态挑出本轮该激活的 Agent 子集，把算力花在当前数据集最可能见效的方向上。
 
-2. **三级记忆机制（Procedural + Feedback + Conceptual）**:
+**2. 三级记忆机制（Procedural + Feedback + Conceptual）：给无状态的 LLM 生成装上"做了什么→效果如何→为什么有效"的经验链。**
 
-    - 功能：将每轮评估反馈转化为持久化的学习信号
-    - 核心思路：**过程记忆**（ProcMem）记录变换操作的完整 trace（基列、变换类型、特征名、描述、轮次），避免重复探索；**反馈记忆**（FeedMem）将每个特征与下游验证指标关联，实现显式信用分配；**概念记忆**（ConMem）由 LLM 从过程和反馈记忆中蒸馏出可复用的启发式规则
-    - 设计动机：没有记忆的 LLM 生成是无状态的。三级记忆从"做了什么"→"效果如何"→"为什么有效"逐层抽象，实现短期避错+中期导向+长期策略适应
+没有记忆的 LLM 每轮都从零生成，既会重复探索同样的变换，也学不到哪些操作真正有用。MALMAS 用三级记忆把每轮反馈沉淀下来：过程记忆（ProcMem）记录每次变换的完整 trace（基列、变换类型、特征名、描述、轮次），让后续轮次绕开已试过的路；反馈记忆（FeedMem）把每个生成特征与它在下游模型上的验证指标绑定，做显式的信用分配，知道哪条变换带来了增益；概念记忆（ConMem）则由 LLM 从前两者中蒸馏出可复用的启发式规则。三层逐级抽象，对应短期避错、中期导向、长期策略适应，让迭代不再是盲目试错。
 
-3. **全局概念记忆与跨 Agent 知识传递**:
+**3. 全局概念记忆与跨 Agent 知识传递：把一个 Agent 学到的有效模式广播给全队，减少重叠探索。**
 
-    - 功能：促进 Agent 间的协调和知识共享
-    - 核心思路：每轮结束后 Summary Agent 汇总所有活跃 Agent 的概念记忆和反馈记忆，生成全局概念记忆 GlobalMem。下一轮的 Router 决策和各 Agent 的 prompt 构建都参考全局记忆
-    - 设计动机：局部记忆只服务单个 Agent，全局记忆将有效模式传播给其他 Agent，减少重叠探索
+局部记忆只服务单个 Agent，A 学到的经验 B 用不上，仍会各自造出冗余特征。每轮结束后，Summary Agent 汇总所有活跃 Agent 的概念记忆和反馈记忆，凝练成一份全局概念记忆 GlobalMem；下一轮 Router 的调度决策和每个 Agent 的 prompt 构建都会参考它。这样某个 Agent 发现的好模式能传播到全队，Router 也能据此更聪明地分派任务，把有效探索的成果在 Agent 之间复用起来。
+
+### 一个完整示例：在 Titanic 上跑一轮迭代
+
+以 Titanic 数据集为例。某一轮开始时，Router 读到任务元数据（含 Age、Fare、Pclass、Sex 等列）和已有记忆，判断时序特征意义不大，于是只激活一元变换、交叉组合和聚合构造三个 Agent。一元 Agent 对 Fare 做对数变换，交叉 Agent 把 Pclass 与 Sex 组合出新类别，聚合 Agent 按舱位算平均票价。三者生成的特征接入下游 XGBoost 评估，反馈记忆记录下"log(Fare) 让 AUC 微升、Pclass×Sex 增益最大"；Summary Agent 把"舱位与性别的交叉对生存预测有效"写进全局概念记忆。下一轮 Router 据此继续侧重交叉组合方向，而过程记忆确保不会再重复生成 log(Fare)。几轮迭代下来，Titanic 的 AUC 收敛到 0.872，高于次优方法的 0.849。
 
 ### 损失函数 / 训练策略
 目标是最大化验证集上下游模型的性能指标（分类用 AUC，回归用 NRMSE）。使用 XGBoost 作为下游模型，每轮通过 TopN-Features 筛选保留最优特征。

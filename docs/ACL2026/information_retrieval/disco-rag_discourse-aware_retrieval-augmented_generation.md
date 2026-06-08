@@ -40,40 +40,33 @@ tags:
 
 ## 方法详解
 
-Disco-RAG 是 inference-time strategy，不动 retriever 和 generator 的参数。整个 pipeline 在标准 RAG 的 retrieve + generate 之间插入「discourse modeling + planning」两段。
-
 ### 整体框架
 
-标准 RAG 形式化为 $y = \arg\max_{y'} P(y' \mid q, \mathcal{C}(q; \mathcal{D}))$，其中 $\mathcal{C} = \{c_1, \dots, c_k\}$ 是 Top-$k$ 检索的 chunk。Disco-RAG 在此基础上增加三个阶段：
-
-1. **Intra-chunk RST tree** $t_i$：对每个 chunk $c_i$ 让 LLM-based parser $\mathcal{A}$ 同时做 EDU 切分 + nucleus/satellite 角色分配 + 关系标注，得 tree $t_i = (V_i, E_i)$。**离线**完成。
-2. **Inter-chunk rhetorical graph** $\mathcal{G}$：把所有 retrieved chunk **一次性 listwise** 喂给 $\mathcal{A}$，让它对每对 chunk 预测 rhetorical relation 或 UNRELATED 标签，构成有向图 $\mathcal{G} = (\mathcal{C}, \mathcal{F})$。
-3. **Discourse-driven planning blueprint** $\mathcal{B}$：把 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G})$ 喂给 $\mathcal{A}$ 生成 plan，列出要选哪些 salient content、按什么 argumentative flow 组织、优先呈现哪些证据。
-
-最终生成阶段以 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$ 四件套作为条件：$y = \arg\max_{y'} P(y' \mid q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$。
+Disco-RAG 是一套 inference-time 策略，不动 retriever 和 generator 的参数，而是在标准 RAG 的「检索 → 生成」之间塞进「篇章建模 + 规划」两段，让 LLM 不只看到孤立 chunk，还看到 chunk 内/chunk 间的修辞结构再动笔。标准 RAG 形式化为 $y = \arg\max_{y'} P(y' \mid q, \mathcal{C})$，其中 $\mathcal{C} = \{c_1, \dots, c_k\}$ 是 Top-$k$ 检索的 chunk；Disco-RAG 在此之上依次产出每个 chunk 的 intra-chunk RST 树 $\mathcal{T}$、chunk 之间的 inter-chunk 修辞图 $\mathcal{G}$、以及一份 discourse-aware blueprint $\mathcal{B}$，最终把 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$ 五件套一起作为生成条件：$y = \arg\max_{y'} P(y' \mid q, \mathcal{C}, \mathcal{T}, \mathcal{G}, \mathcal{B})$。同一个基模换 prompt 轮流扮演 parser / graph constructor / planner / generator 四个角色，全程零训练。
 
 ### 关键设计
 
-1. **Intra-chunk RST tree（局部层级）**:
+**1. Intra-chunk RST tree：把 chunk 从 bag-of-tokens 还原成有主次的修辞树。**
 
-    - 功能：把每个 chunk 内部分解为 EDU（Elementary Discourse Unit），并在 EDU 之间建立 nucleus/satellite + Elaboration/Contrast/Cause 等关系，得到一棵 RST tree。
-    - 核心思路：LLM parser $\mathcal{A}$ 联合执行 EDU 切分 + 关系预测，形式化为 $P(t_i \mid c_i; \theta_\mathcal{A}) = \prod_j P(e_{i_j} \mid c_i; \theta_\mathcal{A}) \cdot \prod_{(u,v)} P(r_{u,v} \mid e_{i_u}, e_{i_v}; \theta_\mathcal{A})$，前者是 EDU 边界概率，后者是关系概率。为节省 inference 成本，所有 intra-chunk tree 都**离线**预解析。
-    - 设计动机：标准 RAG 把 chunk 当成 bag-of-tokens 抛给 generator，丢失了「核心结论 vs 旁证」的区别。RST 树明确告诉 generator「这段的核心句是哪条，哪些只是 elaboration、哪些是 condition」，避免被 satellite 信息误导（如把局部条件结论当成普遍结论）。
+标准 RAG 把整个 chunk 当一袋 token 抛给 generator，核心结论和旁证混为一谈，模型很容易把一句带条件的局部结论当成普遍结论。Disco-RAG 让 LLM parser $\mathcal{A}$ 对每个 chunk $c_i$ 联合做三件事——切分 EDU（Elementary Discourse Unit）、分配 nucleus/satellite 角色、标注 Elaboration/Contrast/Cause 等关系——得到一棵 RST 树 $t_i=(V_i,E_i)$。这一过程形式化为 $P(t_i \mid c_i; \theta_\mathcal{A}) = \prod_j P(e_{i_j} \mid c_i; \theta_\mathcal{A}) \cdot \prod_{(u,v)} P(r_{u,v} \mid e_{i_u}, e_{i_v}; \theta_\mathcal{A})$，前一项是 EDU 边界概率、后一项是关系概率。
 
-2. **Inter-chunk rhetorical graph（全局连贯）**:
+有了这棵树，generator 就被明确告知「这段的核心句是哪条、哪些只是 elaboration、哪些是 condition」，从而不被 satellite 信息带偏。由于这步与查询无关，所有 intra-chunk 树都**离线**预解析，把它的推理成本摊销掉。
 
-    - 功能：在 retrieved chunks 之间建立有向修辞连接，标记每对 chunk 的关系（如 Elaboration / Contrast / Cause）或 UNRELATED。
-    - 核心思路：用 **listwise** 推理——所有 $k$ 个 chunk 一次性喂给 $\mathcal{A}$，让它联合预测 $k(k-1)$ 个 ordered pair 的关系：$P(\mathcal{G} \mid \mathcal{C}) = \prod_{i=1}^k \prod_{j \ne i} P(r_{i,j} \mid \mathcal{C})$。allow UNRELATED 让模型主动剪枝。
-    - 设计动机：相比 pairwise 推理（chunk A vs chunk B 单独询问），listwise 让 parser 能看到全局上下文，更容易识别「A 是 B 的反例」「C 支持 A 但反驳 B」这类需要三方对照才能判定的关系。这是 GraphRAG 等基于 entity-edge 图最缺的「论证级」结构。
+**2. Inter-chunk rhetorical graph：用 listwise 推理捞出 chunk 之间的论证关系。**
 
-3. **Discourse-aware planning blueprint**:
+证据散在多个 chunk 里时，真正难的是判断它们之间「A 是 B 的反例」「C 支持 A 却反驳 B」这类论证级关系，而这恰是 GraphRAG 等 entity-edge 图最缺的。Disco-RAG 把全部 $k$ 个 retrieved chunk 一次性 listwise 喂给 $\mathcal{A}$，让它联合预测每个有序对的修辞关系，构成有向图 $\mathcal{G}=(\mathcal{C},\mathcal{F})$：$P(\mathcal{G} \mid \mathcal{C}) = \prod_{i=1}^k \prod_{j \ne i} P(r_{i,j} \mid \mathcal{C})$，并允许 UNRELATED 标签让模型主动剪枝无关连接。
 
-    - 功能：在生成前先输出一份 plan，明确「先讲什么、再讲什么、用哪些证据支撑、如何处理冲突证据」。
-    - 核心思路：把 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G})$ 全部传给 $\mathcal{A}$，让它产出一个动态 blueprint $\mathcal{B}$。这个 plan 既不是抽取式（不是从 chunk 复制）也不是 free-form（受 RST 树和修辞图约束），而是「discourse-aware reasoning steps」——按修辞结构组织叙述流。
-    - 设计动机：相比直接 generation，先 plan 再写让 LLM 把 high-level 决策（选证据、定顺序）与 low-level 决策（措辞、连接词）解耦；相比 generic plan（不看结构），discourse-aware plan 能利用 RST 关系决定「先讲 nucleus 还是 satellite」「contrast 关系怎么呈现」。
+相比把 chunk A、chunk B 拆开单独问的 pairwise 做法，listwise 让 parser 始终握有全局上下文，更容易识别那种需要三方对照才能判定的关系——这也是后面对检索噪声极鲁棒（能自动忽略 UNRELATED 段）的来源。
+
+**3. Discourse-aware planning blueprint：先按修辞结构排好叙述流，再落笔。**
+
+直接生成会把「选哪些证据、按什么顺序、怎么处理冲突」这些高层决策和措辞这种低层决策搅在一起。Disco-RAG 在生成前先把 $(q, \mathcal{C}, \mathcal{T}, \mathcal{G})$ 全部交给 $\mathcal{A}$ 产出一份动态 blueprint $\mathcal{B}$，列明先讲什么、再讲什么、用哪些证据支撑、冲突证据如何调和。这份 plan 既不是抽取式（不照抄 chunk）也不是 free-form（受 RST 树和修辞图约束），而是一串「discourse-aware reasoning steps」。
+
+关键在于「discourse-aware」四个字：消融里不看结构的 generic plan 只比标准 RAG 涨 1.3–2.0 分，而利用 RST 关系决定「先讲 nucleus 还是 satellite」「contrast 怎么呈现」的 discourse-aware plan 涨 12+ 分，说明结构 prior 才是放大器、纯 plan 本身价值有限。
 
 ### 损失函数 / 训练策略
-**完全 training-free**，所有四个 LLM 角色（parser / graph constructor / planner / generator）共享同一基模（Llama-3.1-8B、Llama-3.3-70B 或 Qwen2.5-72B）。Retriever 用 Qwen3-Embedding-8B，chunk size = 256 tokens（无 sliding window），Top-10 retrieval，beam search width = 3。各模块通过 prompt 驱动（论文附录给出完整 prompt 模板）。
+
+**完全 training-free**，四个 LLM 角色（parser / graph constructor / planner / generator）共享同一基模（Llama-3.1-8B、Llama-3.3-70B 或 Qwen2.5-72B）。Retriever 用 Qwen3-Embedding-8B，chunk size = 256 tokens（无 sliding window），Top-10 retrieval，beam search width = 3。各模块全部由 prompt 驱动，完整模板见论文附录。
 
 ## 实验关键数据
 

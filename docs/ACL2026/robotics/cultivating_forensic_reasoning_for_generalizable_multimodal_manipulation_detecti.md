@@ -38,34 +38,26 @@ tags:
 **核心 idea**：用推理驱动优化代替单纯结果拟合，让检测器先学会解释伪造证据，再用一致性损失和 GRPO 将解释、分类和定位绑在一起。
 
 ## 方法详解
-REFORM 的贡献由数据、结构和训练三部分组成。数据侧，作者构建 ROM，让模型不仅看到图文对和标签，还看到取证推理；结构侧，模型采用 Cognitive Priming Encoder 与 Reason-Answer Dual-Decoder；训练侧，先预热推理能力，再联合微调答案与理由，最后用 GRPO 做策略精炼。
 
 ### 整体框架
-输入是一条多模态新闻样本，包括图像、文本提示和待判断的图文内容。模型先把图像编码成视觉 token，把问题或任务指令编码成文本 token，然后通过冻结的 Cognitive Priming Encoder 让一组可学习的 reason tokens 从视觉和文本上下文中抽取伪造线索。经过多模态编码后，模型并行接入两个解码器：Answer Decoder 负责输出真假、伪造类型和定位坐标，Reason Decoder 负责输出解释性取证推理。
-
-训练流程分三阶段。第一阶段只训练推理分支，让 reason tokens 和 Reason Decoder 对齐蒸馏得到的取证理由。第二阶段解冻整体模型，同时生成理由和答案，并加入理由-答案一致性约束。第三阶段用 GRPO，让模型从多条候选推理中学习更符合格式、答案、定位和语义一致性的路径。
+REFORM 想解决的问题是：现有多模态伪造检测靠结果导向监督，只把样本映射到最终标签，于是模型记住的是某个数据集的统计伪影，换域/换生成器就失效。它的思路是把检测改写成"学习可验证的取证推理过程"，从数据、结构、训练三处闭环。输入一条多模态新闻样本（图像 + 文本提示 + 待判断图文内容），模型先把图像编码成视觉 token、把任务指令编码成文本 token，再通过冻结的 Cognitive Priming Encoder 让一组可学习的 reason tokens 从视觉与文本上下文中抽取伪造线索；编码后并行接入两个解码器——Answer Decoder 输出真假/伪造类型/定位坐标，Reason Decoder 输出解释性取证推理。训练分三阶段：先单训推理分支让 reason tokens 对齐蒸馏理由，再解冻整体同时生成理由和答案并加一致性约束，最后用 GRPO 从多条候选推理里学更可靠的路径。
 
 ### 关键设计
-1. **ROM 推理增强数据集**:
 
-    - 功能：为多模态伪造检测提供更广覆盖的场景级数据和推理监督。
-    - 核心思路：ROM 基于 MDSM 的人脸相关类别继续扩展，加入 BackgroundReplacement、FullGeneration 以及与 TextFabrication 组合的场景级伪造类别。数据规模为 704,456 个图文对，覆盖 5 个新闻域和 9 类伪造类别，并用 InternVL3.5-30B 蒸馏每个样本的文字推理说明。
-    - 设计动机：传统 DGM4 更偏人脸编辑，容易让模型学习局部伪影。ROM 把伪造范围扩展到整图生成和背景替换，并给出约 130 token 峰值长度的理由，比短答案提供更丰富的取证过程监督。
+**1. ROM 推理增强数据集：把训练信号从"短答案"换成"覆盖更广的场景级伪造 + 取证理由"。**
 
-2. **Cognitive Priming 与双解码器**:
+传统 DGM4 偏人脸编辑，模型很容易只学局部伪影、跨域就崩。ROM 在 MDSM 的人脸类别上继续扩展，加入 BackgroundReplacement、FullGeneration 以及与 TextFabrication 组合的场景级伪造类别，规模达 704,456 个图文对，覆盖 5 个新闻域、9 类伪造，并用 InternVL3.5-30B 为每个样本蒸馏出约 130 token 峰值长度的文字推理说明。把伪造范围扩到整图生成和背景替换，迫使模型关注跨模态逻辑矛盾而非人脸纹理；而每条样本带的取证理由，则比单一标签提供了远更丰富的过程监督，是后续推理训练的原料。
 
-    - 功能：把“找证据”和“给答案”拆成相关但不互相拖累的两个生成任务。
-    - 核心思路：Cognitive Priming Encoder 在冻结状态下处理 $S_{inp}=[T_i;T_r;T_t]$，只保留更新后的 reason tokens $\hat{T}_r$。随后多模态编码器读取 $S_p=[T_i;\hat{T}_r;T_t]$，Answer Decoder 输出结构化预测，Reason Decoder 输出取证解释。
-    - 设计动机：共享一个解码器可能造成答案生成与理由生成的梯度冲突。双解码器既能分别优化两类输出，也允许推理模式和快速答案模式切换；Fast Mode 可以跳过理由生成而保持预测不变。
+**2. Cognitive Priming 与双解码器：把"找证据"和"给答案"拆成相关但不互相拖累的两个生成任务。**
 
-3. **三阶段推理驱动训练**:
+如果共用一个解码器，答案生成和理由生成的梯度会互相冲突。REFORM 让冻结的 Cognitive Priming Encoder 处理 $S_{inp}=[T_i;T_r;T_t]$ 后只保留更新过的 reason tokens $\hat{T}_r$，随后多模态编码器读取 $S_p=[T_i;\hat{T}_r;T_t]$，分别交给 Answer Decoder 输出结构化预测、Reason Decoder 输出取证解释。两个解码器各自优化，避免梯度打架，还顺带支持推理模式和快速答案模式切换——Fast Mode 可以直接跳过理由生成而预测不变，部署时按需取舍。
 
-    - 功能：让模型从“会说理由”逐步过渡到“理由支撑答案”，再到“主动探索更可靠的理由”。
-    - 核心思路：第一阶段使用理由语言建模损失 $\mathcal{L}_{LM_r}$ 训练推理分支；第二阶段加入答案语言建模损失 $\mathcal{L}_{LM_a}$ 和理由-答案一致性损失 $\mathcal{L}_{RAC}=\max\{0,\eta-\cos(\mathbf{v}^R,\mathbf{v}^A)\}$，整体目标为 $\mathcal{L}_{RJF}=\mathcal{L}_{LM_r}+\mathcal{L}_{LM_a}+\mathcal{L}_{RAC}$；第三阶段用 GRPO 和多维奖励约束格式、分类准确性、定位质量与一致性。
-    - 设计动机：SFT 只模仿标注，容易产生曝光偏差和自洽性不足。GRPO 让模型在候选理由之间比较，奖励能被验证器支持且与最终答案一致的推理链。
+**3. 三阶段推理驱动训练：让模型从"会说理由"过渡到"理由支撑答案"，再到"主动探索更可靠的理由"。**
+
+纯 SFT 只模仿标注理由，容易曝光偏差、出现"理由说 A、答案判 B"的自洽断裂。REFORM 分三阶段递进：Reasoning Warm-up 冻结其余模块、只用理由语言建模损失 $\mathcal{L}_{LM_r}$ 训练推理分支重建取证理由；Joint Fine-Tuning 解冻整体，加上答案损失 $\mathcal{L}_{LM_a}$ 和理由-答案一致性损失 $\mathcal{L}_{RAC}=\max\{0,\eta-\cos(\mathbf{v}^R,\mathbf{v}^A)\}$，整体目标 $\mathcal{L}_{RJF}=\mathcal{L}_{LM_r}+\mathcal{L}_{LM_a}+\mathcal{L}_{RAC}$，用余弦间隔强约束理由向量和答案向量对齐；Policy Refinement 用 GRPO，让模型在候选理由之间比较，奖励那些既符合格式、又能被验证器支持、且与最终答案一致的推理链。消融显示这一阶段对跨域增益最大。
 
 ### 损失函数 / 训练策略
-训练策略的重点不是增加一个简单分类头，而是把推理链纳入优化目标。Reasoning Warm-up 阶段冻结多模态编码器、答案解码器和 Cognitive Priming Encoder，只更新 reason tokens 与 Reason Decoder，使其重建取证理由。Joint Fine-Tuning 阶段同时优化理由和答案，并通过 $\mathcal{L}_{RAC}$ 防止“理由说 A、答案判 B”的语义断裂。Policy Refinement 阶段使用 GRPO，Consistency Verifier 由 TinyBERT 和两个分类头构成，在预训练理由-标签对上达到超过 99% 分类准确率，用来判断生成理由是否能推出模型自己的伪造类型预测。
+重点不是加一个分类头，而是把推理链纳入优化目标。Warm-up 阶段冻结多模态编码器、答案解码器和 Cognitive Priming Encoder，只更新 reason tokens 与 Reason Decoder；Joint Fine-Tuning 同时优化理由与答案，并用 $\mathcal{L}_{RAC}$ 防止语义断裂；Policy Refinement 用 GRPO，其 Consistency Verifier 由 TinyBERT + 两个分类头构成，在理由-标签对上达到 >99% 分类准确率，用来判断生成理由能否推出模型自己的伪造类型预测。
 
 ## 实验关键数据
 

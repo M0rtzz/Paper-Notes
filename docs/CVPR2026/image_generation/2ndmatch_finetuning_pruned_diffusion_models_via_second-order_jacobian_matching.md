@@ -39,37 +39,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-混合微调目标：$\mathcal{L}_{total} = \lambda_{NP}\mathcal{L}_{NP} + \lambda_{KD}\mathcal{L}_{KD} + \lambda_{Jac}\mathcal{L}_{2nd\text{-}Jac}$，三个互补组件分别处理噪声预测、输出对齐和时间敏感性匹配。
+2ndMatch 想解决的问题是：扩散模型被剪枝后容量变小，单靠标准去噪目标微调补不回生成质量。作者把整个微调过程看成在三个层面上同时向原始（dense）模型看齐——预测对不对、输出像不像、以及对输入扰动的"反应"是否一致。前两者是常规手段，真正的新东西是第三个：让剪枝模型在每个时间步上对扰动的放大行为和原始模型保持一致。三者合成一个混合目标共同训练：
+
+$$\mathcal{L}_{total} = \lambda_{NP}\mathcal{L}_{NP} + \lambda_{KD}\mathcal{L}_{KD} + \lambda_{Jac}\mathcal{L}_{2nd\text{-}Jac}$$
 
 ### 关键设计
 
-1. **噪声预测（Noise Prediction）**:
+**1. 噪声预测：给剪枝模型保底的基础监督。**
 
-    - 功能：标准DDPM目标，预测前向过程添加的噪声
-    - 核心思路：$\mathcal{L}_{NP} = \mathbb{E}_{\tilde{x},t,\epsilon}[\|s(\tilde{x},t;\theta) - \epsilon\|_2^2]$
-    - 设计动机：基础监督信号，但对容量减小的剪枝模型来说单独使用不够
+这是标准 DDPM 目标，让模型预测前向过程加进去的那一份噪声 $\epsilon$，写作 $\mathcal{L}_{NP} = \mathbb{E}_{\tilde{x},t,\epsilon}[\|s(\tilde{x},t;\theta) - \epsilon\|_2^2]$。它是任何扩散模型训练都绕不开的监督信号，但问题恰恰在于：对一个被砍掉近一半参数的剪枝模型，只靠这个目标拟合噪声并不够，收敛慢、终点也偏。所以它在这里只是"地基"，真正补质量要靠后面两项。
 
-2. **知识蒸馏（Knowledge Distillation）**:
+**2. 知识蒸馏：用原始模型的输出当更平滑的老师。**
 
-    - 功能：对齐剪枝模型与原始模型的输出
-    - 核心思路：$\mathcal{L}_{KD} = \mathbb{E}_{\tilde{x},t}[\|s(\tilde{x},t;\theta) - s_\mathcal{D}(\tilde{x},t;\theta_\mathcal{D})\|_2^2]$
-    - 设计动机：提供比噪声更平滑的监督目标，加速收敛
+直接对齐剪枝模型和原始模型在同一输入上的分数输出：$\mathcal{L}_{KD} = \mathbb{E}_{\tilde{x},t}[\|s(\tilde{x},t;\theta) - s_\mathcal{D}(\tilde{x},t;\theta_\mathcal{D})\|_2^2]$。相比预测原始噪声 $\epsilon$（本身带很大随机性），原始模型给出的分数是一个更平滑、信息更密的监督目标，因此能加速收敛、把学生拉到离老师更近的位置。但它只管住了"输出值"这一层，管不了模型对扰动的动态响应——这正是第三项要补的缺口。
 
-3. **二阶Jacobian匹配（核心创新）**:
+**3. 二阶Jacobian匹配：对齐两者对扰动的时间敏感性（核心创新）。**
 
-    - 功能：对齐剪枝模型和原始模型的局部敏感性
-    - 核心思路：FTLE理论表明扰动的放大程度由 $\|v_1\| \approx \sqrt{v_0^\top J^\top J v_0}$ 决定。直接计算全Jacobian不可行，通过随机投影 $v \sim \mathcal{N}(0,I)$ 估计方向性膨胀率：
-    $\mathcal{L}_{2nd\text{-}Jac} = \mathbb{E}_{\tilde{x},t,v}\left[(\|J\hat{v}\|_2^2 - \|J_\mathcal{D}\hat{v}\|_2^2)^2\right]$
-      其中 $\hat{v} = v/\|v\|$，$J\hat{v}$ 通过Jacobian-向量积（JVP）高效计算，无需形成完整Jacobian矩阵
-    - 设计动机：一阶Jacobian匹配在有噪声输入下等价于KD（Taylor展开证明），无额外收益。二阶匹配捕捉扰动跨时间步的传播行为，更匹配动力系统稳定性
+前两项只盯着"输出像不像"，却忽略了一件对扩散尤其要命的事：去噪是一个多步迭代的动力系统，某一步对输入的微小扰动会沿着后续时间步被放大或收缩，剪枝模型一旦在这个放大率上和原始模型跑偏，轨迹就会越走越歪，最终生成质量塌掉。作者从有限时间Lyapunov指数（FTLE）出发刻画这件事——FTLE 量化扰动在有限时间内的膨胀率，而一步的局部膨胀由二阶Jacobian度量 $J^\top J$ 决定：$\|v_1\| \approx \sqrt{v_0^\top J^\top J v_0}$。
 
-### 为什么一阶Jacobian匹配无效？
-论文给出Taylor展开证明：$\|s(x') - s_\mathcal{D}(x')\|_2^2 = \|s(x) - s_\mathcal{D}(x)\|_2^2 + \sigma^2\|J - J_\mathcal{D}\|_F^2 + \mathcal{O}(\sigma^4)$。在噪声输入下，输出对齐已隐式包含一阶Jacobian匹配，显式添加只增加计算开销。
+直接构造完整 Jacobian 在高维上不可行，作者用随机投影绕开：采一个随机方向 $v\sim\mathcal{N}(0,I)$、归一化为 $\hat{v}=v/\|v\|$，只比较剪枝模型与原始模型在这个方向上的方向性膨胀率，并用 Jacobian-向量积（JVP）算 $J\hat{v}$，全程不显式形成 Jacobian：
+
+$$\mathcal{L}_{2nd\text{-}Jac} = \mathbb{E}_{\tilde{x},t,v}\left[(\|J\hat{v}\|_2^2 - \|J_\mathcal{D}\hat{v}\|_2^2)^2\right]$$
+
+之所以非要做"二阶"而不是更直觉的一阶 Jacobian 匹配，是因为后者在扩散里其实是冗余的。作者对带噪输入做 Taylor 展开得到 $\|s(x') - s_\mathcal{D}(x')\|_2^2 = \|s(x) - s_\mathcal{D}(x)\|_2^2 + \sigma^2\|J - J_\mathcal{D}\|_F^2 + \mathcal{O}(\sigma^4)$：由于扩散输入本身就带噪声扰动 $\sigma$，单纯的输出对齐（即 KD 项）里已经隐式包含了一阶 Jacobian 匹配那一项，再显式加一阶约束只会徒增计算、带不来新信息（实验里也确实让 FID 不降反升）。二阶项捕捉的是扰动跨时间步的传播行为，正好对应动力系统的稳定性，这是输出对齐和一阶匹配都够不到的层面。
 
 ### 损失函数 / 训练策略
-- 架构无关：适用于U-Net和Transformer两种扩散模型架构
-- 剪枝方法无关：与Diff-Pruning、BK-SDM等多种剪枝方法兼容
-- 使用PyTorch的JVP功能高效计算 $J\hat{v}$
+三项加权求和即为总目标，整套方法对架构和剪枝方式都不挑：U-Net 与 Transformer 两类扩散骨干都适用，也能直接叠在 Diff-Pruning、BK-SDM 等不同剪枝方法之上。工程上靠 PyTorch 的 JVP 功能高效计算 $J\hat{v}$，避免显式构造 Jacobian 带来的内存与算力爆炸。
 
 ## 实验关键数据
 

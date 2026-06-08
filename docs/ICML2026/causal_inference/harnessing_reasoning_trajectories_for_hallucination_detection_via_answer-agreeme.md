@@ -40,34 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-冻结 LRM $\pi_\theta$。给一条 $(\boldsymbol x, \boldsymbol r, \boldsymbol a)$（prompt / trace / answer）：
-
-1. 取 trace 末 token 的倒数第二层 hidden state $\boldsymbol h = \boldsymbol h_L(\boldsymbol x\oplus\boldsymbol r)$。
-2. 采样 $M$ 个高斯扰动 $\boldsymbol\delta_j\sim\mathcal N(0,\sigma^2\boldsymbol I)$，从 $\boldsymbol h + \boldsymbol\delta_j$ 续解码得到反事实答案 $\tilde{\boldsymbol a}_j$ 及其 embedding $\tilde{\boldsymbol u}_j$。
-3. 用 LLM-as-judge 判定 $\text{Agr}(\boldsymbol a, \tilde{\boldsymbol a}_j)\in\{0,1\}$，把 $\tilde{\boldsymbol u}_j$ 分到一致集 $\mathcal U^+$ 或不一致集 $\mathcal U^-$。
-4. 训练轻量线性映射 $g_\phi: \mathbb R^d\to\mathbb R^k$（无 bias 的 single linear projection）使 $\boldsymbol z = g_\phi(\boldsymbol u)$ 把 $\mathcal U^+$ 拉近、$\mathcal U^-$ 推远（InfoNCE 形式）。
-
-测试时：对新样本只跑一次 forward，取 $\boldsymbol u$，过 $g_\phi$ 得 $\boldsymbol z$，喂任意 embedding-based detector（CCS、Probing、HaloScope、EigenScore）做二分类。
+ARS 要解决的是"reasoning trace 里明明藏着答案稳定性信号，但常规 embedding 把它和大量风格噪声混在一起，detector 用不上"这一矛盾。它的做法是把 trace 当作给定 context，只盯住 trace 结束、答案开始的那一刻——对这个潜状态做小扰动续解码，制造一批"模型本来也可能给出的反事实答案"，再用"反事实是否与原答案一致"做监督信号，训一个极轻量的线性投影把稳定性显式塑形进 embedding。整条链路冻结 LRM $\pi_\theta$，给一条 $(\boldsymbol x, \boldsymbol r, \boldsymbol a)$（prompt / trace / answer）：取 trace 末 token 的倒数第二层 hidden state，加高斯扰动续解码得反事实答案，按答案一致性分正负集，最后训线性映射 $g_\phi$ 拉近正集、推远负集。测试时对新样本只跑一次 forward，取 answer embedding $\boldsymbol u$，过 $g_\phi$ 得塑形后的 $\boldsymbol z$，喂任意 embedding-based detector（CCS、Probing、HaloScope、EigenScore）做二分类。
 
 ### 关键设计
 
-1. **潜空间在 trace 边界的扰动 → 反事实答案**:
+**1. 在 trace 边界做潜空间扰动：制造廉价反事实答案**
 
-    - 功能：用最小代价制造"模型在当前内部状态下可能产出的其它答案"，把多次采样的成本从推理时转移到一次性训练。
-    - 核心思路：$\tilde{\boldsymbol h}=\boldsymbol h + \boldsymbol\delta,\ \boldsymbol\delta\sim\mathcal N(0,\sigma^2\boldsymbol I)$，然后 $\tilde{\boldsymbol a}=\text{Decode}_\theta(\boldsymbol x\oplus\boldsymbol r;\tilde{\boldsymbol h})$。扰动位置故意选 **trace 末 / 答案前** 这一交界——文章解释：在 trace 中部扰动会让后续 reasoning 形式整体重写，扰动效应被 trace style 主导而非 answer 改变；在答案中部扰动则后续 token 受已生成 answer token 强约束，只能做局部编辑无法翻转语义。trace 边界是模型已完整吸收 reasoning 但尚未提交答案的"最大答案自由度"位置。
-    - 设计动机：以前的方法要么在 text 空间扰动 trace（删词/换序/paraphrase），那需要 careful 设计且常常改变语义；要么走 multi-sample 输出空间，推理代价 $\times M$。直接在潜空间动手既廉价又是模型自身决策几何的扰动，不需任何文本设计。
+幻觉本质是 answer-level 性质，但常规做法要么在文本空间扰动 trace（删词、换序、paraphrase），需要小心设计还常常改变语义；要么走多次输出采样，推理代价直接 $\times M$。ARS 改为直接在 LRM 自身的决策几何上动手：取 trace 末 token 倒数第二层的 hidden state $\boldsymbol h = \boldsymbol h_L(\boldsymbol x\oplus\boldsymbol r)$，加各向同性高斯扰动 $\tilde{\boldsymbol h}=\boldsymbol h + \boldsymbol\delta,\ \boldsymbol\delta\sim\mathcal N(0,\sigma^2\boldsymbol I)$，再续解码 $\tilde{\boldsymbol a}=\text{Decode}_\theta(\boldsymbol x\oplus\boldsymbol r;\tilde{\boldsymbol h})$，得到一个"模型在当前内部状态下也可能产出的其它答案"及其 embedding $\tilde{\boldsymbol u}$。
 
-2. **答案一致性作为自动监督信号**:
+扰动位置故意选 trace 末、答案前这个交界，是因为另两个位置都会失效：在 trace 中部扰动会让后续 reasoning 整体重写，扰动效应被 trace 风格主导而非答案改变；在答案中部扰动则后续 token 受已生成 answer token 强约束，只能做局部编辑无法翻转语义。唯独 trace 边界是模型已完整吸收 reasoning、但尚未提交答案的"最大答案自由度"位置，对它扰动最干净地反映模型当前对答案的承诺有多强。这样把多次采样的成本从推理时一次性转移到训练时，且无需任何文本扰动设计。
 
-    - 功能：用零人工标注的方式得到 contrastive pair。
-    - 核心思路：对每个原样本 $(\boldsymbol x, \boldsymbol r, \boldsymbol a)$ 产 $M$ 个 $\tilde{\boldsymbol a}_j$，用 $\text{Agr}$（可用文本相似度或 LLM-as-judge 实例化）划分。注意 $\text{Agr}$ **不需要真值 $y$**——只判反事实答案与原答案是否等价。$\mathcal U^+=\{\tilde{\boldsymbol u}_j: \text{Agr}=1\}$ 收集"小扰动下仍指向同一答案的内部状态"；$\mathcal U^-=\{\tilde{\boldsymbol u}_j:\text{Agr}=0\}$ 收集"小扰动就翻车的内部状态"。直觉：幻觉样本的 $\mathcal U^-$ 通常更大（稳定性 margin 小），真实样本的 $\mathcal U^+$ 占主导。
-    - 设计动机：把模型自身的决策稳定性蒸馏成训练信号，且不需要 hallucination ground truth——这让 ARS 可以无监督地训练（搭 CCS 时整套链路 zero supervision），同时也兼容有监督 Probing。
+**2. 答案一致性作为零标注的自动监督**
 
-3. **InfoNCE 风格的塑形目标**:
+有了反事实答案，还需要标签来分正负，ARS 用"反事实答案是否与原答案等价"这一信号，完全绕开人工幻觉标注。对每个原样本产 $M$ 个 $\tilde{\boldsymbol a}_j$，用 $\text{Agr}(\boldsymbol a, \tilde{\boldsymbol a}_j)\in\{0,1\}$ 判定（可用文本相似度或 LLM-as-judge 实例化），关键是 $\text{Agr}$ 不需要真值 $y$，只判反事实答案与原答案是否一致。一致集 $\mathcal U^+=\{\tilde{\boldsymbol u}_j: \text{Agr}=1\}$ 收集"小扰动下仍指向同一答案的内部状态"，不一致集 $\mathcal U^-=\{\tilde{\boldsymbol u}_j:\text{Agr}=0\}$ 收集"小扰动就翻车的内部状态"。直觉上幻觉样本稳定性 margin 小、$\mathcal U^-$ 通常更大，真实样本则 $\mathcal U^+$ 占主导。这等于把模型自身的决策稳定性蒸馏成训练信号：搭 CCS 时整条链路 zero supervision，同时也兼容有监督 Probing，新领域/新模型几乎零冷启动成本。
 
-    - 功能：用对比 loss 把 stability 信号显式编码进 $\boldsymbol z$ 几何里。
-    - 核心思路：以原答案的 $\boldsymbol z = g_\phi(\boldsymbol u)$ 为 anchor，正例 $\tilde{\boldsymbol z}^+ \sim g_\phi(\mathcal U^+)$，负例集合 $\mathcal Z^- = g_\phi(\mathcal U^-)$，loss $\mathcal L_{\text{ARS}}=-\frac{\text{sim}(\boldsymbol z,\tilde{\boldsymbol z}^+)}{\tau}+\log\sum_{\tilde{\boldsymbol z}'\in\{\tilde{\boldsymbol z}^+\}\cup\mathcal Z^-}\exp(\frac{\text{sim}(\boldsymbol z,\tilde{\boldsymbol z}')}{\tau})$，其中 sim 是 cosine。映射 $g_\phi$ 只是无 bias 的 single linear projection——极轻量。理论上 Proposition 4.2 给出 $\Pr(\hat y\neq y)\leq C(1-\eta_\phi)+e_\alpha$，把检测错误率上界拆成"答案稳定性是否能区分真假"$e_\alpha$ 和"塑形是否成功分离正负对"$1-\eta_\phi$ 两项；优化 $\mathcal L_{\text{ARS}}$ 直接收紧第二项。
-    - 设计动机：把"幻觉=不稳定"这个直觉从需要 multi-sample 推理（如 Semantic Entropy）变成可一次性 forward 的几何属性，且 plug-and-play 兼容现有 detector，不必修改下游模型。
+**3. InfoNCE 塑形目标：把稳定性写进 embedding 几何**
+
+最后用对比 loss 把稳定性信号显式编码进塑形后的表示 $\boldsymbol z$。以原答案的 $\boldsymbol z = g_\phi(\boldsymbol u)$ 为 anchor，正例 $\tilde{\boldsymbol z}^+ \sim g_\phi(\mathcal U^+)$、负例集合 $\mathcal Z^- = g_\phi(\mathcal U^-)$，目标为
+
+$$\mathcal L_{\text{ARS}}=-\frac{\text{sim}(\boldsymbol z,\tilde{\boldsymbol z}^+)}{\tau}+\log\sum_{\tilde{\boldsymbol z}'\in\{\tilde{\boldsymbol z}^+\}\cup\mathcal Z^-}\exp\Big(\frac{\text{sim}(\boldsymbol z,\tilde{\boldsymbol z}')}{\tau}\Big),$$
+
+其中 $\text{sim}$ 是 cosine，映射 $g_\phi$ 只是无 bias 的 single linear projection，极轻量。它把"幻觉=不稳定"从需要多次推理采样（如 Semantic Entropy）变成一次 forward 即可读出的几何属性，且 plug-and-play 兼容现有 detector，不必改动下游模型。理论上 Proposition 4.2 给出 $\Pr(\hat y\neq y)\leq C(1-\eta_\phi)+e_\alpha$，把检测错误率上界拆成"答案稳定性本身能否区分真假"的 $e_\alpha$、与"塑形是否成功分离正负对"的 $1-\eta_\phi$ 两项；优化 $\mathcal L_{\text{ARS}}$ 直接收紧后者，使 loss 与可证 bound 严格对齐。
 
 ### 损失函数 / 训练策略
 - $\mathcal L_{\text{ARS}}$ 如上；Adam，lr $1\text{e-}4$，weight decay $1\text{e-}5$，cosine decay，batch 128。

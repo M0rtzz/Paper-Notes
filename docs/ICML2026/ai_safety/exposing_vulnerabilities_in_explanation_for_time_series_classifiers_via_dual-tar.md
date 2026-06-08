@@ -41,34 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-威胁模型：白盒，攻击者完全访问冻结分类器 $f$ 与解释器 $\mathcal{H}^E$，在 $\|\delta\|_\infty \leq \epsilon$ 约束下找扰动 $\delta$，使 $\tilde{\mathbf{X}} = \mathbf{X} + \delta$ 同时满足 $f(\tilde{\mathbf{X}}) = y'$（目标标签）和 $d(\mathcal{H}^E(\tilde{\mathbf{X}}), \mathbf{A}') \to \min$（参考显著图 $\mathbf{A}'$）。
-
-TSEF 把这个双目标优化拆成嵌套两层：内层学时间掩码 $\mathbf{M}_t \in [0,1]^{T \times D}$ 选出"动手区域"，外层在该区域的 FFT 谱上学滤波器 $\mathbf{M}_f \in [0,2]^{K \times D}$ 决定动手方式。最终对抗样本由"频域改写的窗 + 原信号其余部分"拼接而成：
-
-$\tilde{\mathbf{X}} = \mathcal{F}^{-1}(\mathcal{F}(\mathbf{M}_t \odot \mathbf{X}) \odot \mathbf{M}_f) + (1 - \mathbf{M}_t) \odot \mathbf{X}$
+TSEF 要解决的是一个双目标攻击问题：在白盒下攻击者完全访问冻结的分类器 $f$ 与解释器 $\mathcal{H}^E$，要在 $\ell_\infty$ 预算内找一个扰动 $\delta$，使对抗样本 $\tilde{\mathbf{X}} = \mathbf{X} + \delta$（$\|\delta\|_\infty \leq \epsilon$）既被预测成目标标签（$f(\tilde{\mathbf{X}}) = y'$），又让解释器输出贴近攻击者指定的参考显著图（$d(\mathcal{H}^E(\tilde{\mathbf{X}}), \mathbf{A}')$ 最小）。本文先用一条定理证明这件事不能靠逐点稠密扰动来做，再把攻击拆成"何处动"和"怎么动"两个嵌套子问题——内层学一个时间掩码 $\mathbf{M}_t \in [0,1]^{T \times D}$ 框出值得动手的时间-通道窗口，外层只在这个窗的 FFT 谱上学一个滤波器 $\mathbf{M}_f \in [0,2]^{K \times D}$ 来塑形扰动。最终对抗样本把"频域改写过的窗"和"原信号其余部分"拼回来：$\tilde{\mathbf{X}} = \mathcal{F}^{-1}(\mathcal{F}(\mathbf{M}_t \odot \mathbf{X}) \odot \mathbf{M}_f) + (1 - \mathbf{M}_t) \odot \mathbf{X}$。
 
 ### 关键设计
 
-1. **高维悖论的理论刻画（Theorem 4.1）**:
+**1. 高维悖论的理论刻画：证明稠密攻击为何必然失败**
 
-    - 功能：用一阶分析证明"为什么不能用普通的稠密 $\ell_\infty$ PGD 来攻击解释"。
-    - 核心思路：考虑一次稠密 sign 步 $\delta = -\varepsilon \cdot \mathrm{sign}(g_c)$（$g_c$ 是分类损失梯度），令 $\Omega$ 为参考解释的稀疏支撑（$|\Omega| \ll d$）。定理给出 $\mathbb{E}[\|\mathbf{A}(\tilde{\mathbf{X}})\|_{1, \Omega^c}] \geq c \varepsilon (d - |\Omega|)$，进而 $\mathbb{E}[\|\mathbf{A}(\tilde{\mathbf{X}}) - \mathbf{A}'\|_1] \geq c \varepsilon (d - |\Omega|)$——目标区域外的归因质量会随维度线性发散。
-    - 设计动机：把"实践直觉（稠密扰动让解释散布）"上升为定理，正式证明"联合损失 + 单一 $\ell_\infty$ 球"这种 naive baseline 在高维时序上必然失败，从而为"结构化子空间攻击"提供动机。
+整个方法的出发点是先回答"为什么不能直接拿稠密 $\ell_\infty$ PGD 同时打预测和解释"。本文用一阶分析给出了 Theorem 4.1：考虑一次稠密 sign 步 $\delta = -\varepsilon \cdot \mathrm{sign}(g_c)$（$g_c$ 为分类损失梯度），并令 $\Omega$ 是参考解释的稀疏支撑（$|\Omega| \ll d$，即真正该被高亮的少数时间-通道）。定理证明目标区域之外的归因质量有一个随维度线性增长的下界 $\mathbb{E}[\|\mathbf{A}(\tilde{\mathbf{X}})\|_{1, \Omega^c}] \geq c \varepsilon (d - |\Omega|)$，进而 $\mathbb{E}[\|\mathbf{A}(\tilde{\mathbf{X}}) - \mathbf{A}'\|_1] \geq c \varepsilon (d - |\Omega|)$。这意味着在高维时序上，稠密扰动会把归因质量不可避免地撒到 $\Omega^c$ 上、离目标显著图越来越远。把这个实践直觉上升成定理后，"联合损失 + 单一 $\ell_\infty$ 球"这种 naive baseline 就被正式判了死刑，也直接给出了后两个模块的设计动机——必须把攻击压进一个结构化子空间，只动少量时间窗、只动频谱方向。
 
-2. **Temporal Vulnerability Mask（TVM，何处动）**:
+**2. Temporal Vulnerability Mask（TVM）：决定"何处动"**
 
-    - 功能：在内层优化里学一个稀疏且时间连通的二值掩码 $\mathbf{M}_t$，只允许在最易翻预测且最能塑造目标解释的时间-通道窗口里做扰动。
-    - 核心思路：内层损失同时含分类项 $\lambda_{\mathrm{cls}} L_{\mathrm{cls}}(f(\mathbf{X}'), y')$、解释项 $\lambda_{\mathrm{exp}} d(\mathcal{H}^E(\mathbf{X}'), \mathbf{A}')$（$\mathbf{X}' = \mathbf{X} \odot (1 - \mathbf{M}_t)$，即"如果遮掉这段还能推到目标"则说明该段就是脆弱区），再加两条结构正则：稀疏 KL 项 $\mathcal{L}_{\mathrm{spa}} = \frac{1}{TD} \sum \mathrm{KL}(\mathrm{Bern}(\mathbf{M}_t[t,d]) \| \mathrm{Bern}(r))$（$r=0.3$，对应互信息上界 $I(\mathbf{X}; M)$ 的变分上界），连通项 $\mathcal{L}_{\mathrm{con}} = \frac{1}{TD} \sum (\mathbf{M}_t[t+1,d] - \mathbf{M}_t[t,d])^2$ 鼓励时间维上连成片。优化用 Gumbel-Sigmoid + 直通估计器，并对 $\mathbf{M}_t$ 走幅度无关的投影 sign 步 $\mathbf{M}_t \leftarrow \Pi_{[0,1]}(\mathbf{M}_t - \eta_t \mathrm{sign}(\nabla \mathcal{L}_t))$。
-    - 设计动机：直接用梯度更新会被信号幅度大的位置主导（脉冲峰被误判为脆弱）；sign 步让更新方向只看"对损失的方向贡献"而非"信号本身的大小"，配合稀疏 + 连通约束保证最终选出的是 ECG 里的"那段 QRS"，不是散落的小点。
+TVM 负责在内层优化里学出一个稀疏且时间连通的掩码 $\mathbf{M}_t$，只允许在"最容易翻预测、又最能塑造目标解释"的时间-通道窗口里动手，从而把 $\ell_\infty$ 预算集中投放而非全局撒胡椒。它的内层损失同时含分类项 $\lambda_{\mathrm{cls}} L_{\mathrm{cls}}(f(\mathbf{X}'), y')$ 和解释项 $\lambda_{\mathrm{exp}} d(\mathcal{H}^E(\mathbf{X}'), \mathbf{A}')$，其中 $\mathbf{X}' = \mathbf{X} \odot (1 - \mathbf{M}_t)$——也就是"如果遮掉这段仍能把模型推向目标"就说明该段是脆弱区。在此之上加两条结构正则把掩码逼成一段连续窗：稀疏项用 KL 把每个位置的开启概率拉向先验 $r=0.3$，$\mathcal{L}_{\mathrm{spa}} = \frac{1}{TD} \sum \mathrm{KL}(\mathrm{Bern}(\mathbf{M}_t[t,d]) \| \mathrm{Bern}(r))$（对应互信息 $I(\mathbf{X}; M)$ 的变分上界，控制掩码不要全开）；连通项 $\mathcal{L}_{\mathrm{con}} = \frac{1}{TD} \sum (\mathbf{M}_t[t+1,d] - \mathbf{M}_t[t,d])^2$ 惩罚相邻时间步的跳变、鼓励连成片。优化上用 Gumbel-Sigmoid 加直通估计器让二值掩码可微，并对 $\mathbf{M}_t$ 走一个幅度无关的投影 sign 步 $\mathbf{M}_t \leftarrow \Pi_{[0,1]}(\mathbf{M}_t - \eta_t \mathrm{sign}(\nabla \mathcal{L}_t))$。这里用 sign 步而非普通梯度是关键：直接用梯度会被信号幅度大的位置主导（脉冲峰被误判为脆弱），sign 步让更新只看"对损失的方向贡献"而非"信号本身大小"，配合稀疏 + 连通约束，最终选出的是 ECG 里完整的"那段 QRS"，而不是散落的小点。
 
-3. **Frequency Perturbation Filter（FPF，怎么动）**:
+**3. Frequency Perturbation Filter（FPF）：决定"怎么动"**
 
-    - 功能：在 TVM 选出的窗内做频域乘法滤波，让扰动落到时域时是连贯的趋势/周期，而不是逐点高频抖动。
-    - 核心思路：把窗内信号 $W = \mathbf{M}_t^* \odot \mathbf{X}$ 取 FFT 得 $\widehat{W}$，乘以滤波器 $\mathbf{M}_f$ 后 IFFT 回时域：$\widetilde{W} = \mathcal{F}^{-1}(\widehat{W} \odot \mathbf{M}_f)$，$\mathbf{M}_f = 1$ 不变、$<1$ 衰减、$>1$ 放大。参数化为 $\mathbf{M}_f = \Pi_{[0,2]}(1 + \alpha_{\mathrm{freq}} \tanh(\Theta_f))$，其中 $\alpha_{\mathrm{freq}} = \gamma \epsilon' / (\|\Delta \mathbf{X}_{\mathrm{base}}\|_\infty + \tau)$ 自适应缩放以保证时域 $\ell_\infty \leq \epsilon'$（$\gamma = 0.98$ 安全因子）；复频谱时强制共轭对称保实数重建。$\Theta_f$ 也用 sign 步更新（"能量无关"——避免高能频段主导梯度），保证模型聚焦于"对联合目标方向贡献"的频段。
-    - 设计动机：稠密 PGD 会在时域留下散乱噪声，解释器无法收敛到任何稀疏目标；频域滤波天然产生持续若干时间步的相干波形（趋势项、低频包络），同时由于扰动被压在 TVM 选好的小窗里，全局 $\ell_\infty$ 预算被高效转换为局部强结构，配合解释损失即可把显著图"画"到参考位置。
+FPF 负责在 TVM 框好的窗内做频域乘法滤波，让扰动落回时域时是连贯的趋势/周期波形，而不是逐点高频抖动——这正是解释器能稳定收敛到稀疏目标所需要的。具体做法是把窗内信号 $W = \mathbf{M}_t^* \odot \mathbf{X}$ 取 FFT 得 $\widehat{W}$，乘上滤波器 $\mathbf{M}_f$ 再 IFFT 回时域 $\widetilde{W} = \mathcal{F}^{-1}(\widehat{W} \odot \mathbf{M}_f)$，其中 $\mathbf{M}_f = 1$ 表示该频段不变、$<1$ 衰减、$>1$ 放大。滤波器参数化为 $\mathbf{M}_f = \Pi_{[0,2]}(1 + \alpha_{\mathrm{freq}} \tanh(\Theta_f))$，缩放因子 $\alpha_{\mathrm{freq}} = \gamma \epsilon' / (\|\Delta \mathbf{X}_{\mathrm{base}}\|_\infty + \tau)$ 自适应地把时域扰动压在 $\ell_\infty \leq \epsilon'$ 内（$\gamma = 0.98$ 是安全因子），并对复频谱强制共轭对称以保证 IFFT 回到实数信号；$\Theta_f$ 同样用 sign 步更新，使更新"能量无关"、避免高能频段主导梯度，从而聚焦于真正对联合目标有方向贡献的频段。这样设计的好处是：稠密 PGD 会在时域留下散乱噪声、解释器无法收敛到任何稀疏目标，而频域滤波天然产生持续若干时间步的相干波形（趋势项、低频包络）；再叠加 TVM 把扰动压进小窗，全局 $\ell_\infty$ 预算就被高效转换成局部强结构，配合解释损失即可把显著图精准"画"到参考位置。
 
 ### 损失函数 / 训练策略
-外层目标 $J_{\mathrm{atk}} = d(\mathcal{H}^E(\tilde{\mathbf{X}}), \mathbf{A}') + \lambda L_{\mathrm{cls}}(f(\tilde{\mathbf{X}}), y')$ 在 $\mathbf{M}_t^*$ 固定后优化 $\Theta_f$；内层把 $\mathbf{M}_t$ 更新一轮后传给外层。两层交替直至收敛。距离 $d$ 用 MSE / cos / KL 任选；攻击样本只取分类器原本能正确分类的测试样本。
+两层交替优化：内层把 $\mathbf{M}_t$ 更新一轮选定脆弱窗 $\mathbf{M}_t^*$ 后传给外层；外层在窗固定的前提下优化频域参数 $\Theta_f$，目标为 $J_{\mathrm{atk}} = d(\mathcal{H}^E(\tilde{\mathbf{X}}), \mathbf{A}') + \lambda L_{\mathrm{cls}}(f(\tilde{\mathbf{X}}), y')$，如此交替直至收敛。解释距离 $d$ 可在 MSE / cos / KL 中任选；攻击样本只取分类器原本能正确分类的测试样本，以保证"翻转"确实发生。
 
 ## 实验关键数据
 
@@ -133,12 +123,6 @@ ECG 上 TimeX++ 解释器的对比同样压制基线：
 - 实验充分度: ⭐⭐⭐⭐⭐ 六数据集 × 三解释器 × 七基线（含三种解释扰动对照）覆盖全面，并提供 modular testbed 开源。
 - 写作质量: ⭐⭐⭐⭐ 理论与算法部分流畅，掩码连通正则、频域自适应缩放等细节都讲得很清楚；个别符号（$\alpha_{\mathrm{freq}}$ 的计算窗）需要看附录才完全清楚。
 - 价值: ⭐⭐⭐⭐⭐ 揭示了医疗/金融等高风险时序 AI 的系统性漏洞，对可解释 AI 评测协议有直接政策与工程含义，配套 testbed 可被防御方复用。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

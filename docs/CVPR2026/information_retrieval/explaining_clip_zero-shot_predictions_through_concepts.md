@@ -41,33 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EZPC 的工作流程：(1) 定义一组 $m$ 个人类可理解的概念（如 "has feathers", "made of metal"）；(2) 学习投影矩阵 $A \in \mathbb{R}^{d \times m}$ 将 CLIP 的 $d$ 维嵌入空间映射到 $m$ 维概念空间；(3) 在概念空间中通过图像概念向量 $c_x = v_x A$ 和类别概念向量 $c_k$ 的点积进行零样本分类；(4) 通过元素乘积 $s_{x,k} = c_x \odot c_k$ 分解每个概念的贡献，提供忠实解释。
+EZPC 想做的事很直接：让 CLIP 的每一次零样本判断都能被拆成"这张图激活了哪些人类能读懂的概念"，而又不动 CLIP 本身、不额外拖慢推理。它先准备一组 $m$ 个文字描述的概念（如 "has feathers"、"made of metal"），然后只训练一个线性投影矩阵 $A \in \mathbb{R}^{d \times m}$，把 CLIP 的 $d$ 维图像嵌入 $v_x$ 和文本嵌入都送进这个 $m$ 维概念空间。图像变成概念激活向量 $c_x = v_x A$，每个类别也变成概念向量 $c_k$，分类就是在概念空间里取最近的类别 $\hat{y} = \arg\max_k \langle c_x, c_k \rangle$。由于这是点积，类别得分天然等于各概念贡献之和 $\langle c_x, c_k \rangle = \sum_{j=1}^{m} s_{x,k}^{(j)}$，其中 $s_{x,k} = c_x \odot c_k$，于是"为什么判成这类"直接读元素乘积里哪几维最大就行。整个训练只优化 $A$ 这一个矩阵，靠两个损失分别拉住可解释性和忠实性。
 
 ### 关键设计
 
-1. **共享概念投影**:
+**1. 共享线性概念投影：用一个矩阵把图文一起搬进概念空间。**
 
-    - 功能：将图像和文本嵌入统一映射到可解释的概念空间
-    - 核心思路：定义可学习投影矩阵 $A \in \mathbb{R}^{d \times m}$，其每一列对应一个概念方向。图像概念激活 $c_x = v_x A$，类别概念激活 $C_\mathcal{Y} = T A$。分类通过 $\hat{y} = \arg\max_k \langle c_x, c_k \rangle$ 在概念空间完成。由于 $\langle c_x, c_k \rangle = \sum_{j=1}^{m} s_{x,k}^{(j)}$，每个概念维度对预测的贡献是直接可分解的
-    - 设计动机：使用单个统一投影而非逐图优化，确保高效率；线性投影保证解释的忠实性——概念得分直接构成分类逻辑值，解释与决策过程完全一致
+CLIP 的高维嵌入是纠缠的黑箱，无法告诉用户某次匹配究竟基于什么语义。EZPC 不去逐图求解（那是 SpLiCE、Z-CBM 慢几十倍的根源），而是学一个全局共享的 $A$，让图像和所有类别文本都经过同一投影：$c_x = v_x A$、$C_\mathcal{Y} = T A$。之所以坚持用**线性**投影而非更强的非线性映射，是因为线性让"解释"和"决策"严格是同一回事——类别 logit $\langle c_x, c_k\rangle$ 就是把各概念得分 $s_{x,k}^{(j)}$ 加起来，每一维的贡献可以原样拆出来，不存在事后归因的近似偏差。这种 faithfulness-by-construction 比 saliency map 之类的事后解释更可信，而代价只是一次矩阵乘法，推理几乎免费。
 
-2. **匹配损失 (Matching Loss)**:
+**2. 匹配损失：把投影列锚在真实概念方向上，防止训歪。**
 
-    - 功能：确保投影矩阵 $A$ 的列保持与已知概念嵌入对齐，维持可解释性
-    - 核心思路：用 CLIP 文本编码器编码所有概念短语得到 $\Phi \in \mathbb{R}^{d \times m}$，初始化 $A = \Phi$，然后用 MSE 损失 $\mathcal{L}_{\text{match}} = \frac{1}{dm}\sum_{i,j}(A_{ij} - \Phi_{ij})^2$ 约束 $A$ 不偏离概念基底太远
-    - 设计动机：如果不加约束，$A$ 在训练中可能漂移到不再对应可解释概念的方向。锚定损失在灵活性和可解释性之间取得平衡
+投影矩阵如果放任优化，列向量很可能漂到一些数值上分类很好、却不再对应任何人类概念的方向，解释就失效了。EZPC 先用 CLIP 文本编码器把全部概念短语编码成 $\Phi \in \mathbb{R}^{d \times m}$，用它初始化 $A = \Phi$，再在训练中加一个 MSE 约束把 $A$ 拽回概念基底附近：
 
-3. **重建损失 (Reconstruction Loss)**:
+$$\mathcal{L}_{\text{match}} = \frac{1}{dm}\sum_{i,j}(A_{ij} - \Phi_{ij})^2$$
 
-    - 功能：保证概念空间中的相似度分布与 CLIP 原始嵌入空间中的一致
-    - 核心思路：用 KL 散度衡量概念空间分布与 CLIP 原始分布的差距：$\mathcal{L}_{\text{recon}} = \frac{1}{B}\sum_{i=1}^{B} \text{KL}(\text{softmax}(c_i C_\mathcal{Y}^\top) \| \text{softmax}(v_i T^\top))$
-    - 设计动机：确保概念分解后的分类决策与 CLIP 原始预测保持一致，即语义忠实性——不因添加可解释层而改变模型的核心判断
+这相当于给每个概念方向一个软锚点——允许 $A$ 微调以适配下游分类，但不许它跑远到"概念 $j$ 这一列其实已经不再表示概念 $j$"的地步，从而在灵活性和可解释性之间留住平衡。
+
+**3. 重建损失：保证概念空间里的判断和原始 CLIP 一致。**
+
+光有可解释性还不够，如果投影后模型的分类倾向和原版 CLIP 不一样，那解释的就不是 CLIP 而是另一个模型了。EZPC 用 KL 散度逼着概念空间的类别分布去对齐 CLIP 原始嵌入空间的类别分布：
+
+$$\mathcal{L}_{\text{recon}} = \frac{1}{B}\sum_{i=1}^{B} \text{KL}\big(\text{softmax}(c_i C_\mathcal{Y}^\top) \,\|\, \text{softmax}(v_i T^\top)\big)$$
+
+左边是投影后在概念空间算的相似度分布，右边是 CLIP 原始 $v_i T^\top$ 的分布。把前者拉向后者，等于要求"加了可解释层之后，模型对每张图的判断排序基本不变"，这正是 EZPC 能把精度损失压到 1% 以内、不牺牲 CLIP 零样本能力的关键。
 
 ### 损失函数 / 训练策略
-- 总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{match}} + \lambda \mathcal{L}_{\text{recon}}$
-- 大多数数据集 $\lambda = 1$，CUB 和 Places365 使用 $\lambda = 5$
-- 概念集来自 LF-CBM 使用 GPT-3 生成的概念词汇表，并合并 ImageNet-1k 的大型概念池以获得更丰富覆盖
-- 所有实验使用 80/20 的 seen/unseen 类别划分
+总损失把两项合起来，$\lambda$ 调可解释性与忠实性的权重：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{match}} + \lambda \mathcal{L}_{\text{recon}}$，多数数据集取 $\lambda = 1$，CUB 和 Places365 用 $\lambda = 5$。概念集复用 LF-CBM 里 GPT-3 生成的概念词表，并并入 ImageNet-1k 的大型概念池以扩大覆盖；所有实验按 80/20 划分 seen/unseen 类别来检验开放世界泛化。
 
 ## 实验关键数据
 

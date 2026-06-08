@@ -43,31 +43,37 @@ tags:
 
 ### 整体框架
 
-训练采用嵌套循环结构。外循环（Purify）：通过元学习在验证集上优化模态权重$\mathbf{w}$，控制每个模态对教师的贡献比例。内循环（Align）：固定$\mathbf{w}$，利用加权融合后的"干净教师"通过扩散蒸馏对齐每个单模态学生特征。推理时，每个单模态编码器独立工作，无需其他模态。
+PTA 想解决的是这样一件事：当多个传感器（深度相机、LiDAR、WiFi、雷达……）联合训练后，能不能让其中**任意一个单模态编码器单独拿出来也好用**，从而扛住推理时的模态缺失。难点在于直接做多模态融合会把低质量模态的噪声"传染"给好模态，蒸馏出来的单模态学生自然也带毒。于是论文把训练拆成一个嵌套循环：外循环先"净化"（Purify），用元学习在验证集上学出每个模态该占多大权重 $\mathbf{w}$，把噪声模态的话语权压下去；内循环再"对齐"（Align），固定 $\mathbf{w}$ 把加权融合出的"干净教师"通过扩散蒸馏灌进每个单模态学生。推理时不再需要教师和其他模态，每个学生编码器独立工作即可。
 
 ### 关键设计
 
-1. **Purify阶段：元学习模态加权**:
+**1. Purify 阶段——元学习模态加权：让网络自己决定该信任谁。**
 
-    - 功能：自适应学习每个模态的重要性权重$\mathbf{w}$，抑制噪声/低贡献模态
-    - 核心思路：嵌套优化——内循环在训练集$\mathcal{D}_{train}$上用固定$\mathbf{w}$优化模型参数$\Theta$（最小化 $\mathcal{L}_{inner} = \mathcal{L}_{task} + \lambda\mathcal{L}_{DiffKD}$）；外循环在验证集$\mathcal{D}_{val}$上评估$\Theta^*(\mathbf{w})$的性能，通过梯度$\nabla_\mathbf{w}\mathcal{L}_{outer}$更新$\mathbf{w}$。权重经Softmax归一化确保稳定性。训练时随机以均匀概率丢弃每个模态来模拟真实缺失场景
-    - 设计动机：X-Fi需要手工调每个模态的dropout概率（WiFi/Radar/RFID可能需要不同的(0.5,0.5,0.8)等组合），模态数增多时调参不可行。元学习自动学习权重，完全避免这个问题
+污染效应的根子在于：融合教师时如果对噪声模态一视同仁，它就会拖垮整个共识。最直接的对策（如 X-Fi）是手工给每个模态调 dropout 概率，但 WiFi、Radar、RFID 各自该丢多少（可能要 0.5、0.5、0.8 这种组合）全靠试，模态一多调参就崩。PTA 干脆把这件事交给元学习：内循环在训练集 $\mathcal{D}_{train}$ 上用当前固定的 $\mathbf{w}$ 优化模型参数 $\Theta$，最小化 $\mathcal{L}_{inner} = \mathcal{L}_{task} + \lambda\mathcal{L}_{DiffKD}$；外循环则在验证集 $\mathcal{D}_{val}$ 上评估这组参数的实际表现，反过来对权重求梯度 $\nabla_\mathbf{w}\mathcal{L}_{outer}$ 来更新 $\mathbf{w}$。权重经 Softmax 归一化保证稳定，训练时还会以均匀概率随机丢模态来模拟真实缺失。换句话说，"该信任哪个模态"不再是超参，而是被验证集性能这把尺子直接学出来的——噪声模态拿不到好的验证表现，权重自然被压低。
 
-2. **Align阶段：扩散模型知识蒸馏**:
+**2. Align 阶段——扩散模型知识蒸馏：把学生当成教师的"加噪版"去去噪。**
 
-    - 功能：将净化后的多模态教师知识蒸馏到每个单模态学生
-    - 核心思路：教师特征 $f_T = \sum_{i \in \mathcal{M}_{all}} \mathbf{w}_i f_i$（所有模态的加权和）。将$f_T$和$f_S$投影到压缩潜在空间得到$z_T$和$z_S$。训练一个噪声预测网络$\Phi_\phi$学习$z_T$的分布（标准扩散损失$\mathcal{L}_{Diff}$），然后将$z_S$视为$z_T$的"噪声版本"，通过反向去噪过程将$z_S$精炼为$\hat{z}_S$。总蒸馏损失 $\mathcal{L}_{DiffKD} = \mathcal{L}_{Diff} + \mathcal{L}_{KD}$，其中$\mathcal{L}_{KD} = MSE(\hat{z}_S, z_T)$
-    - 设计动机：传统KL/MSE sttilllation难以跨越异质模态间的巨大表示差距。扩散模型的去噪过程天然适合将信息量不足的$z_S$渐进式地精炼到信息丰富的$z_T$附近
+净化出干净教师后，要把它的知识喂给单模态学生，但教师特征 $f_T = \sum_{i \in \mathcal{M}_{all}} \mathbf{w}_i f_i$（各模态加权和）和单模态学生特征 $f_S$ 之间隔着巨大的异质表示鸿沟，传统 KL/MSE 蒸馏一步到位地拉近这种差距很吃力。PTA 换了个视角：把 $f_T$、$f_S$ 都投影到压缩潜在空间得到 $z_T$、$z_S$，训练一个噪声预测网络 $\Phi_\phi$ 去学 $z_T$ 的分布（标准扩散损失 $\mathcal{L}_{Diff}$），然后**把信息量不足的 $z_S$ 看作 $z_T$ 的一个"噪声版本"**，用反向去噪过程一步步把 $z_S$ 精炼成更接近教师的 $\hat{z}_S$。总蒸馏损失把两部分拼起来：
 
-3. **Noise Adapter（自适应噪声匹配）**:
+$$\mathcal{L}_{DiffKD} = \mathcal{L}_{Diff} + \mathcal{L}_{KD}, \quad \mathcal{L}_{KD} = \mathrm{MSE}(\hat{z}_S, z_T)$$
 
-    - 功能：为每个样本动态确定学生特征的噪声水平
-    - 核心思路：不同输入样本的$z_S$与$z_T$的差距不同，固定时间步$t$无法适应这种一对多映射。Noise Adapter是一个小辅助网络（1个Bottleneck + Global AvgPool + FC），预测融合系数$\gamma \in [0,1]$，用于混合学生特征和纯噪声：$z_{TS} = \gamma z_S + (1-\gamma)\epsilon_T$。然后用DDIM从$z_{TS}$出发做5步确定性去噪得到$\hat{z}_S$
-    - 设计动机：解决扩散蒸馏中学生噪声水平未知的关键问题——如果$z_S$已相当接近$z_T$，不需要太多去噪；如果$z_S$很差，需要更多的噪声起点让扩散模型充分精炼
+这样跨模态的鸿沟不是硬拉，而是顺着扩散模型天然的"由粗到精"去噪轨迹渐进式地补齐，正好契合"从信息少的特征精炼到信息丰富的特征"这件事。
+
+**3. Noise Adapter——自适应噪声匹配：每个样本该从多深的噪声起步并不一样。**
+
+扩散去噪有个隐藏前提：你得知道当前样本"噪声有多重"，才能选对去噪的起点时间步。但不同输入的 $z_S$ 与 $z_T$ 差距天差地别——有的学生特征已经很接近教师，有的差得很远，用固定时间步 $t$ 去套这种一对多映射会失配。Noise Adapter 是个轻量辅助网络（一个 Bottleneck + Global AvgPool + FC），针对每个样本预测一个融合系数 $\gamma \in [0,1]$，按它把学生特征和纯噪声混起来作为去噪起点：
+
+$$z_{TS} = \gamma z_S + (1-\gamma)\,\epsilon_T$$
+
+随后用 DDIM 从 $z_{TS}$ 出发做 5 步确定性去噪得到 $\hat{z}_S$。直觉很清楚：$z_S$ 已经接近 $z_T$ 时 $\gamma$ 取大、保留更多学生信息、少去噪；$z_S$ 很差时 $\gamma$ 取小、混入更多噪声给扩散模型更大的精炼空间。
+
+### 一个完整示例：一个 WiFi 学生样本怎么被对齐
+
+以 XRF55 上一个 WiFi 单模态样本为例。先看 Purify：外循环此前已学出 WiFi 因噪声大、验证表现差而拿到偏低的权重 $\mathbf{w}_{WiFi}$，于是融合教师 $f_T$ 主要由 Radar、RFID 撑起，WiFi 只占小份额——干净教师就此成形。再看 Align：这条 WiFi 样本的特征投影成 $z_S$，因为质量差，它离 $z_T$ 很远。Noise Adapter 一看差距大，预测出一个偏小的 $\gamma$，于是起点 $z_{TS} = \gamma z_S + (1-\gamma)\epsilon_T$ 里掺进大量噪声，给扩散模型留足精炼余地；接着 DDIM 跑 5 步确定性去噪，把这个含噪起点逐步推回到教师分布附近，得到 $\hat{z}_S$，最后用 $\mathrm{MSE}(\hat{z}_S, z_T)$ 把学生编码器往这个目标拉。训练收敛后，这个 WiFi 编码器单独部署时，特征里已经吸收了 Radar/RFID 教师的跨模态知识——这正是消融里 WiFi 单模态准确率从 X-Fi 的 55.7% 提升到 82.34% 的来源。
 
 ### 损失函数 / 训练策略
 
-总内循环损失$\mathcal{L}_{inner} = \mathcal{L}_{task} + \lambda\mathcal{L}_{DiffKD}$，$\lambda=0.1$。外循环损失$\mathcal{L}_{outer} = \mathcal{L}_{task}(\Theta^*(\mathbf{w}))$。MM-Fi上使用Adam优化器（模型lr=5e-4, 元学习lr=1e-2），batch=16。XRF55上模型lr=2e-4, batch=32。均在RTX 3090上训练。
+总内循环损失 $\mathcal{L}_{inner} = \mathcal{L}_{task} + \lambda\mathcal{L}_{DiffKD}$，$\lambda=0.1$；外循环损失 $\mathcal{L}_{outer} = \mathcal{L}_{task}(\Theta^*(\mathbf{w}))$。MM-Fi 上用 Adam（模型 lr=5e-4，元学习 lr=1e-2），batch=16；XRF55 上模型 lr=2e-4，batch=32。均在 RTX 3090 上训练。
 
 ## 实验关键数据
 

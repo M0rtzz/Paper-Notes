@@ -41,35 +41,27 @@ tags:
 
 ## 方法详解
 
-EstGraph 把每个估计任务抽象为：从大图 $G=(V,E)$ 上采若干条 srw / MH 随机游走 → 统计游走衍生量（节点交集、度分布直方图、重访率等） → 写入 prompt 模板，让 LLM 输出标量估计（节点数、社区数）或排序（top-k 影响节点）。
-
 ### 整体框架
 
-四类任务共享同一个 pipeline：① 选定游走策略（srw or MH）与预算（步数、起点数） → ② 在图上跑游走并记录 (节点 id, 度) → ③ 根据任务转写为 statistics-only prompt（含图论先验提示） → ④ LLM 输出估计值 → ⑤ 与经典估计器对比。
+EstGraph 针对的是「图大到塞不进 prompt、又只能通过 API 局部查询」的真实场景：它不再把整张图编码进上下文，而是先在大图 $G=(V,E)$ 上跑若干条随机游走采样，把游走衍生的统计量（节点交集、度分布直方图、重访率等）压成一段与图规模脱钩的 prompt，让 LLM 以「带图论先验的估计器」身份直接输出标量估计或排序。节点/边数、社区数、图结构、影响节点这四项估计任务共享同一条「采样 → 统计 → LLM 推理 → 对比经典估计器」的流水线，区别仅在于游走策略、统计量种类与输出形式。
 
 ### 关键设计
 
-1. **Statistics-only Prompt：把 prompt 长度从 $\Theta(n+m)$ 降到 $\Theta(\log n)$**:
+**1. Statistics-only Prompt：把 prompt 长度从 $\Theta(n+m)$ 压到 $\Theta(\log n)$。**
 
-    - 功能：避免把节点 / 边塞进 prompt，让 evaluation 可扩展到百万节点图。
-    - 核心思路：对节点/边数估计，用 Chapman 估计器 $\hat{N}=\frac{(|\mathcal{S}_1|+1)(|\mathcal{S}_2|+1)}{|\mathcal{C}|}-1$（$\mathcal{S}_1, \mathcal{S}_2$ 是两条独立 MH 游走采到的节点集，$\mathcal{C}$ 是交集），prompt 中只塞 $|\mathcal{S}_1|, |\mathcal{S}_2|, |\mathcal{C}|, \bar{d}$ 等汇总量；边数由 $\hat{M}=\bar{d}\hat{N}/2$ 推得。对结构识别，prompt 只塞游走访问节点的度直方图。对社区估计，prompt 塞游走子图的节点重访 + 跳转模式。
-    - 设计动机：真实图（ego-Twitter、twitch-gamers、email-EuAll、as-skitter、wiki-Talk）做 edgelist 编码需 $10^5$–$10^7$ token，远超任何 LLM 上下文；统计量 prompt 把 token 数压到几百级别（Fig. 4），相对 edgelist **缩减最多 559×**，且与图规模脱钩。
+真实图（ego-Twitter、twitch-gamers、email-EuAll、as-skitter、wiki-Talk）做 edgelist 编码动辄需要 $10^5$–$10^7$ 个 token，远超任何 LLM 的上下文窗口，所以「编码整张图」这条路在大图上根本走不通。EstGraph 的破解办法是只把游走得到的汇总量喂进 prompt：对节点/边数估计，套用 capture-recapture 思路的 Chapman 估计器 $\hat{N}=\frac{(|\mathcal{S}_1|+1)(|\mathcal{S}_2|+1)}{|\mathcal{C}|}-1$，其中 $\mathcal{S}_1,\mathcal{S}_2$ 是两条独立 MH 游走采到的节点集、$\mathcal{C}$ 是二者交集，prompt 里只放 $|\mathcal{S}_1|,|\mathcal{S}_2|,|\mathcal{C}|,\bar{d}$ 这几个标量，边数再由 $\hat{M}=\bar{d}\hat{N}/2$ 推出；结构识别只塞游走访问节点的度直方图；社区估计只塞游走子图的节点重访与跳转模式。这样一来 prompt 被压到几百 token 级别（Fig. 4），相对 edgelist 最多缩减 **559×**，且 token 数与图规模彻底解耦，评测才得以从 50 节点跨到 239 万节点。
 
-2. **四任务 benchmark 覆盖大图核心估计需求**:
+**2. 四任务 benchmark：覆盖大图分析的四类核心估计需求。**
 
-    - 功能：把"大图分析"拆成 4 个互补、有 ground truth 且能跑经典 baseline 对照的任务。
-    - 核心思路：① **Size estimation**（节点 + 边数）—— BA/ER/GRP 合成 + 5 个 SNAP 真实图，与 uniform / MH / max-degree / return-walk 比对；② **Community count**——20 个 LFR 合成图，与 Louvain / Greedy / Label Propagation 比；③ **Graph structure recognition**——4 类合成图（BA / ER / LFR / Grid）做 4-分类；④ **Influential node ranking**——LFR 图上预测 Betweenness / Closeness / PageRank 的 top-20，用 Precision@20 评。
-    - 设计动机：4 任务依次对应规模 → 模块化 → 全局拓扑 → 节点重要性，是真实世界分析大图最常用的 4 类问题；每个都有经过几十年研究的成熟 baseline，可公平对比 LLM 表现。
+作者刻意挑选「都有 ground truth、又都能跑成熟经典估计器作对照」的四个任务，让大图分析被拆成互补的拼图。**Size estimation**（节点 + 边数）在 BA/ER/GRP 合成图加 5 个 SNAP 真实图上做，与 uniform / MH / max-degree / return-walk 比对；**Community count** 在 20 个 LFR 合成图上做，与 Louvain / Greedy / Label Propagation 比；**Graph structure recognition** 把 BA / ER / LFR / Grid 四类合成图做成 4-分类；**Influential node ranking** 在 LFR 图上预测 Betweenness / Closeness / PageRank 的 top-20，用 Precision@20 评。四个任务依次对应规模 → 模块化 → 全局拓扑 → 节点重要性，恰是现实里分析大图最常碰到的问题，而每个任务背后都有几十年沉淀的 baseline，可以把 LLM 放进公平的擂台。
 
-3. **MH vs srw 双采样协议 + 真实可用性约束**:
+**3. MH 与 srw 双采样协议：把「现实只能用 srw」这条约束摆上台面。**
 
-    - 功能：同时报告"理想无偏采样"与"现实可行采样"两档结果，揭示部署 trade-off。
-    - 核心思路：MH-walk（含 burn-in）是无偏估计的金标准但要 reject samples 也要预知部分全局信息；srw（simple random walk）按邻居均匀转移，可纯 API 实现，但有度偏置。作者两种都跑、两种都报告，并在表里用 † 标注「需无偏采样（真实不可用）」vs「真正可用」。
-    - 设计动机：以往工作只跑 MH 给出乐观结果；本文把"真实部署里你只能用 srw"这一约束 explicit 化，让结论更具操作性——比如对 BA 真实图，srw 下 LLM 表现仅比 MH 差 9%，证明现实部署可行。
+随机游走有两种典型采法，两者的部署可用性天差地别：MH-walk（含 burn-in）是无偏估计的金标准，但需要 reject samples、也要预知部分全局信息，真实 API 设置下并不可得；srw（simple random walk）按邻居均匀转移，可以纯 API 实现，代价是带有度偏置。以往工作往往只跑 MH 给出偏乐观的结论，本文则两种都跑、都报告，并在表格里用 † 显式标注「需无偏采样（真实不可用）」与「真正可用」两档，让读者一眼看清哪些数字是理想化的。这个 explicit 化让结论更具操作性——例如在 BA 真实图上 srw 下的 LLM 表现仅比 MH 差 9%，说明「无 burn-in、无 reject」的纯 API 友好方案在现实里确实跑得通。
 
 ### 损失函数 / 训练策略
 
-本文是纯评测工作，无训练：所有 LLM（gemini-2.5-pro、o3、sonnet-4、deepseek-v3.1）都是闭/开源 API 直推；游走超参（步数、起点数、burn-in）固定，每实验跑 5 个独立游走集合后报中位数 / 均值 / 标准差。
+本文是纯评测工作，没有任何训练：所有 LLM（gemini-2.5-pro、o3、sonnet-4、deepseek-v3.1）都走闭/开源 API 直推；游走超参（步数、起点数、burn-in）固定，每个实验跑 5 个独立游走集合后报中位数 / 均值 / 标准差。
 
 ## 实验关键数据
 

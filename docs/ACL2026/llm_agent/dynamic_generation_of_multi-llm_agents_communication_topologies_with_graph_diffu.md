@@ -38,29 +38,23 @@ tags:
 **核心 idea**：先用少量基准拓扑模拟训练一个代理 reward model，再在图扩散反向去噪时反复采样候选拓扑，并用 $w_u\hat{u}-w_c\hat{c}$ 选择当前最优候选，直接把多目标偏好注入生成轨迹。
 
 ## 方法详解
-GTD 由两部分组成：代理奖励模型 $\mathcal{P}_\phi$ 和条件图扩散生成器 $\mathcal{G}_\theta$。前者快速预测某个拓扑在当前任务下的 utility 和 cost，后者学习高质量拓扑的分布。推理时，扩散模型不是一次性生成图，而是在 50 个 denoising steps 中逐步修正，每步都用代理模型评价多个候选图。
 
 ### 整体框架
-给定任务 query 和可用 agents，系统构建条件向量 $C$，目标是生成邻接矩阵 $A\in\{0,1\}^{N\times N}$。训练阶段先评估一组 baseline topologies，得到拓扑、任务条件和真实性能向量，训练 GAT-based surrogate model；同时筛选高性能图训练 Graph Transformer diffusion generator。推理阶段从高斯噪声图开始，逐步去噪，每一步将生成器预测的连续图转成多个离散候选，再用代理模型打分，选出当前 reward 最高的候选作为 posterior sampling 的依据。
+GTD 要解决的问题是：给定一个任务 query 和一组可用 agents，如何生成一张既能把任务做对、又不浪费 token、还经得起单点失败的通信图 $A\in\{0,1\}^{N\times N}$。它把这件事拆成两个互补的模型——代理奖励模型 $\mathcal{P}_\phi$ 负责廉价地预测某张拓扑在当前任务下的 utility 和 cost，条件图扩散生成器 $\mathcal{G}_\theta$ 负责把高质量拓扑的分布学进网络。整条流水线在训练阶段先用少量 baseline topologies 的真实模拟结果同时喂饱这两个模型，推理阶段则让扩散从高斯噪声图出发、在 50 个去噪步里逐步成形，而每一步都不是闷头生成，而是先吐出多个候选图、再让代理模型挑出当下 reward 最高的那张来决定下一步往哪走，于是多目标偏好被一点点注入到整条采样轨迹里。
 
 ### 关键设计
-1. **GAT 代理奖励模型**:
 
-    - 功能：用低成本方式近似昂贵的 multi-agent simulation reward。
-    - 核心思路：$\mathcal{P}_\phi$ 输入图 $A$ 和任务条件 $C$，通过两层 Graph Attention Network 得到节点表示，再 mean pooling 成图表示，与任务向量拼接后经 MLP 输出 $[\hat{u},\hat{c}]$。训练损失是预测 performance vector 与真实 simulation result 的 MSE。
-    - 设计动机：真实 reward 不可微且运行昂贵，不能在扩散每个时间步调用。代理模型只要有足够的 ranking fidelity，就可以在候选图之间做快速选择。
+**1. GAT 代理奖励模型：把昂贵的模拟换成一次前向。**
 
-2. **条件图扩散生成器**:
+真实 reward 必须跑完一整轮 multi-agent simulation 才能拿到，既贵又不可微，根本没法塞进扩散的每个时间步反复调用。GTD 的应对是训一个轻量代用品：$\mathcal{P}_\phi$ 吃进图 $A$ 和任务条件 $C$，先用两层 Graph Attention Network 算出节点表示，再 mean pooling 成图级表示，与任务向量拼接后过一个 MLP 直接输出 $[\hat{u},\hat{c}]$，训练目标就是让这对预测值逼近真实 simulation 的 performance vector，用 MSE 监督。关键在于这个代理模型并不需要精确还原 reward 的绝对值——它只要在一堆候选图之间有足够的 ranking fidelity，就足以支撑后续的候选筛选，于是用极少的模拟数据训练就能换来每步都能调用的速度。
 
-    - 功能：生成符合任务条件的高质量通信拓扑。
-    - 核心思路：把二值邻接矩阵缩放到 $\{-1,1\}$，通过方差保持 forward process 加噪；reverse process 用两层 Graph Transformer 预测 clean graph。Graph Transformer 的全局注意力让每条边的预测依赖其他节点和边，能学习 cycle、hierarchy 等结构依赖。
-    - 设计动机：单步 VAE 或 Gumbel-Softmax 容易在离散拓扑空间里错过关键边；扩散的迭代 refinement 允许代理模型在每步介入，逐渐把图推向高 reward 区域。
+**2. 条件图扩散生成器：用迭代 refinement 守住关键边。**
 
-3. **零阶 proxy-guided sampling**:
+通信图是离散结构，单条边的有无就可能决定信息是断流还是冗余广播，单步 VAE 或 Gumbel-Softmax 在这种空间里很容易一次性错过关键边。GTD 改用扩散：把二值邻接矩阵缩放到 $\{-1,1\}$，经一个方差保持的 forward process 加噪，再让两层 Graph Transformer 在 reverse process 里预测 clean graph。Graph Transformer 的全局注意力让每条边的预测都依赖其余节点和边，从而能学到 cycle、hierarchy 这类结构依赖；而扩散天然的逐步 refinement 又恰好给代理模型留出了在每一步介入、把图慢慢推向高 reward 区域的接口。
 
-    - 功能：在不可微离散图上实现 reward-guided generation。
-    - 核心思路：每个 timestep 先得到 unguided clean graph 预测 $\hat{A}_0^{(t)}$，再从 $Bernoulli(sigmoid(\hat{A}_0^{(t)}))$ 中采样 $K$ 个候选图。代理模型分别预测 $[\hat{u}_k,\hat{c}_k]$，选择最大化 $w_u\hat{u}_k-w_c\hat{c}_k$ 的候选 $A_{0,best}^{(t)}$，用它计算下一步 posterior。
-    - 设计动机：标准 classifier guidance 需要梯度，但这里离散采样破坏可微性。零阶候选选择不需要梯度，且能直接处理 token cost、robustness 等黑盒目标。
+**3. 零阶 proxy-guided sampling：在不可微的图上做 reward 引导。**
+
+标准 classifier guidance 要靠梯度回传，但这里从连续预测到离散图的采样动作直接掐断了可微性，token cost、robustness 这些目标本身也是黑盒。GTD 因此走零阶路线：每个 timestep 先拿到未引导的 clean graph 预测 $\hat{A}_0^{(t)}$，从 $Bernoulli(\mathrm{sigmoid}(\hat{A}_0^{(t)}))$ 里采样 $K$ 个候选图，让代理模型分别给出 $[\hat{u}_k,\hat{c}_k]$，再挑出令 $w_u\hat{u}_k-w_c\hat{c}_k$ 最大的候选 $A_{0,best}^{(t)}$，用它来计算下一步的 posterior。整个选择过程不需要任何梯度，却能把效用与成本的多目标权衡直接作用在生成轨迹上。
 
 ### 损失函数 / 训练策略
 代理模型用 MSE 训练，预测 simulation 得到的 utility 和 cost。扩散生成器在高性能图子集上训练，用 BCE 预测原始 clean adjacency matrix。主实验中所有 agents 使用 GPT-4o-mini backbone；数学任务用 4 个 MathSolver，HumanEval 用 4 个 CodeSolver，MMLU 用 3 个 KnowledgeableAcademic。代理模型是两层 GAT，hidden dimension 32，Adam 学习率 $1e^{-3}$，batch size 16，训练 10 epochs。扩散模型是两层 Graph Transformer、2 个 attention heads、学习率 $1e^{-4}$、50 diffusion timesteps。训练数据只用训练集 50 个样本评估 baseline topologies 构建；推理时每步评估 $K=5$ 个候选图。

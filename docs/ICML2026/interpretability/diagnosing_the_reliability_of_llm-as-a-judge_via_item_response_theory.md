@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架由三段组成：**(1) prompt 扰动生成**——对每个原始评判 prompt 生成 typo / newline / paraphrase 三种语义不变的微扰版本，加上原版共 4 个变体；**(2) GRM 拟合**——把 7 个 LLM × 每个 prompt 变体 × 每个样本的评分喂给 GRM，用 PyMC + NumPyro 后端的 NUTS 采样器（4 链、1000 warmup + 1000 sampling、target acceptance 0.95）同时估出每个 prompt 变体的 $(\alpha_p, \boldsymbol{\beta}_p)$ 和每个样本共享的 $\theta_j$；**(3) 两阶段诊断**——Phase 1 用 $C_V$、$\rho$ 判断评判者是否"内在一致"，只有过线（$C_V \le 0.10$ 且 $\rho \ge 0.70$）的评判者才进入 Phase 2，用 $\theta_{\text{ratio}}$、$D_W$ 比较它与人类的潜在质量分布。
+这套框架想解决的是"现有方法把测量误差和样本真实差异混在一起算，导致 LLM 评判不稳定时说不清到底坏在哪"，思路是把评判过程当成一次心理测量、用 GRM 反推出三类隐变量再据此分项诊断。具体走三步：先对每个原始评判 prompt 生成 typo / newline / paraphrase 三种语义不变的微扰版本（加原版共 4 个变体），再把"7 个 LLM × 每个 prompt 变体 × 每个样本"的评分喂给 GRM、用贝叶斯采样同时估出每个 prompt 变体的判别力与门槛 $(\alpha_p, \boldsymbol{\beta}_p)$ 以及每个样本共享的潜在质量 $\theta_j$，最后做两阶段诊断——Phase 1 先用一致性指标筛掉"仪器本身就不稳"的评判者，只有过线者才进入 Phase 2 与人类的潜在质量分布对比。
 
 ### 关键设计
 
-1. **GRM 把"prompt 效应"和"样本真质量"分离**:
+**1. GRM 解耦：把 prompt 效应从样本真质量里剥出来**
 
-    - 功能：对 $K$ 档评分，建模"评判者 $p$ 给样本 $j$ 打分 $\ge k$"的概率为 $P(Y_{pj} \ge k \mid \theta_j) = \sigma(\alpha_p (\theta_j - \beta_{pk}))$，其中 $\theta_j$ 是样本的潜在质量（被所有 prompt 变体共享）, $\alpha_p$ 是该 prompt 的"分辨力"（曲线陡度）, $\boldsymbol{\beta}_p$ 是该 prompt 在相邻档之间切换的"门槛"序列（强制单调递增）。
-    - 核心思路：先验设 $\theta_j \sim \mathcal{N}(0,1)$、$\alpha_p \sim \text{LogNormal}(0, 0.5)$、$\beta_{pk} \sim \mathcal{N}(0,1)$；NUTS 同时采样所有参数。因为 4 个 prompt 变体共享同一个 $\theta_j$，所以分数差异里"由于评判者敏感于 prompt 措辞"的部分会被吸收到 $(\alpha, \boldsymbol{\beta})$，"样本真实质量差异"被吸收到 $\theta$，两者天然解耦。比较不同模型时只看 $\theta$ 的分布即可，避免了"模型 A 把 5 档都用上、模型 B 只用 3 档"导致 $\alpha, \beta$ 不可比的问题。
-    - 设计动机：解决"测量噪声 vs 信号"无法分离的根本痛点。GRM 是有序离散响应的标准模型；本文不选 NRM（假设名义类别，丢失顺序信息）和 PCM（假设所有 item 共用同一个 $\alpha$，太严苛，因为不同 prompt 显然有不同敏感度）。
+现有一致性/对齐指标都只盯最终离散分数，没法回答"这个分差到底是样本真有差距、还是评判者对 prompt 措辞敏感"。GRM 直接在生成模型层面下手：对 $K$ 档评分，把"评判者 $p$ 给样本 $j$ 打分 $\ge k$"的概率建模为 $P(Y_{pj} \ge k \mid \theta_j) = \sigma(\alpha_p (\theta_j - \beta_{pk}))$，其中 $\theta_j$ 是被所有 prompt 变体共享的样本潜在质量，$\alpha_p$ 是该 prompt 的分辨力（响应曲线陡度），$\boldsymbol{\beta}_p$ 是它在相邻档间切换的门槛序列（强制单调递增）。先验取 $\theta_j \sim \mathcal{N}(0,1)$、$\alpha_p \sim \text{LogNormal}(0, 0.5)$、$\beta_{pk} \sim \mathcal{N}(0,1)$，NUTS 同时采样全部参数。妙处在于 4 个变体共享同一个 $\theta_j$：分数差异里"评判者敏感于措辞"的成分会被自动吸收进 $(\alpha, \boldsymbol{\beta})$，"样本真质量差异"被吸收进 $\theta$，两者天然解耦，比较模型时只看 $\theta$ 分布即可，绕开了"模型 A 用满 5 档、模型 B 只用 3 档导致 $\alpha,\beta$ 不可比"的麻烦。选 GRM 而非 NRM（假设名义类别、丢失顺序信息）或 PCM（强制所有 item 共用一个 $\alpha$，对显然敏感度不同的 prompt 太苛刻），正是因为评判分数是有序离散的 Likert 量表。
 
-2. **Phase 1：用 $C_V$ + $\rho$ 做"差分诊断"**:
+**2. Phase 1 一致性筛选：用 $C_V$ 与 $\rho$ 做差分诊断**
 
-    - 功能：$C_V$ 衡量"prompt 一致性"——对每个 prompt 变体 $p$，先算"同一打分档内 $\theta_j$ 的方差均值" $\bar V_p$，再对 $\bar V_p$ 求跨 prompt 的变异系数 $C_V = \sigma_V / \mu_V$。$\rho$ 衡量"边际信度"——$\rho = \text{Var}(\hat\theta_j) / (\text{Var}(\hat\theta_j) + \mathbb{E}[\sigma_j^2])$，分子是 $\theta$ 后验均值的方差（真实质量差异），分母还要加上 NUTS 采样后验方差的期望（测量不确定性），所以 $\rho$ 直观就是"$\theta$ 方差里有多少是真质量贡献的"。
-    - 核心思路：阈值借鉴心理测量学的成熟惯例——$C_V < 0.10$ 来自 Chebyshev 不等式（保证 75% 样本落在均值 ±20% 内）和分析化学/临床流行病学的精度基准；$\rho > 0.70$ 是 Nunnally 的经典门槛。两个指标组合起来能做"差分诊断"：高 $C_V$ + 高 $\rho$ → 主要问题是 prompt 敏感性；低 $\rho$ 不管 $C_V$ 多少 → 模型分辨力本身不够，不适合做评判者。
-    - 设计动机：把"评判不稳定"从一个模糊的整体感受拆成两个独立、正交、可干预的维度。Phase 1 还有一个关键作用是"门控"——只有过线的评判者才进入 Phase 2，避免在测量本身就不稳的评判者上算人类对齐（那种对齐数字毫无意义）。
+光说"评判不稳"太模糊，本文用两个正交指标把它拆开。$C_V$ 衡量 prompt 一致性：先对每个变体 $p$ 算"同一打分档内 $\theta_j$ 的方差均值" $\bar V_p$，再对各 $\bar V_p$ 求跨 prompt 的变异系数 $C_V = \sigma_V / \mu_V$。$\rho$ 衡量边际信度：$\rho = \text{Var}(\hat\theta_j) / (\text{Var}(\hat\theta_j) + \mathbb{E}[\sigma_j^2])$，分子是 $\theta$ 后验均值的方差（真质量差异），分母额外加上 NUTS 后验方差的期望（测量不确定性），所以 $\rho$ 直观就是"$\theta$ 方差里有多少来自真质量"。阈值沿用心理测量学的成熟惯例——$C_V < 0.10$ 源自 Chebyshev 不等式（保证 75% 样本落在均值 ±20% 内）与分析化学/临床流行病学的精度基准，$\rho > 0.70$ 是 Nunnally 的经典门槛。两者组合即可差分归因：高 $C_V$ + 高 $\rho$ 说明问题主要在 prompt 敏感性，而 $\rho$ 偏低则无论 $C_V$ 如何都意味着模型分辨力本身不够、压根不适合做评判者。这一阶段还兼任"门控"——只有 $C_V \le 0.10$ 且 $\rho \ge 0.70$ 的评判者才进入 Phase 2，避免在测量本身就乱的仪器上算人类对齐（那种对齐数字毫无意义）。
 
-3. **Phase 2：用 $\theta_{\text{ratio}}$ + $D_W$ 做"对齐归因"**:
+**3. Phase 2 对齐归因：用 $\theta_{\text{ratio}}$ 与 $D_W$ 拆解"和人类的差距"**
 
-    - 功能：$\theta_{\text{ratio}} = \theta_{\text{range}}^{(\text{LLM})} / \theta_{\text{range}}^{(\text{Human})}$，其中 $\theta_{\text{range}}$ 定义为"最高档样本 $\theta$ 中位数 减 最低档样本 $\theta$ 中位数"。$\theta_{\text{ratio}} < 1$ 意味着 LLM 把质量范围压缩了（"超敏感"，分不开人类觉得有差距的样本），$> 1$ 意味着把质量范围放大了（"麻木"，把人类觉得没差的样本拉开），$\approx 1$ 才是分辨力相当。$D_W = W_1(\hat\theta^{(\text{LLM})}, \hat\theta^{(\text{Human})})$ 是 LLM 与人类 $\theta$ 分布之间的 1-Wasserstein 距离。
-    - 核心思路：选 Wasserstein 而不是相关或 KL 是因为：相关只看线性关系不看分布形状；KL 不对称、对非重叠 support 未定义；Wasserstein 同时刻画"位置漂移"和"形状差异"，且数值有"把一个分布搬成另一个分布的最小代价"的物理意义。$\theta_{\text{ratio}} \approx 1$ + $D_W$ 大 → 分辨力相当但系统偏严/松；$\theta_{\text{ratio}} \ne 1$ + $D_W$ 小 → 整体感知对齐但敏感度不同；两者都偏离 → 评判者对"质量"的根本理解就和人不一样。
-    - 设计动机：传统 Spearman/Kendall 只回答"和人类一致吗"这种 yes/no 问题，而 $(\theta_{\text{ratio}}, D_W)$ 能把"不一致"拆成"范围不同"和"分布漂移"两个可干预的成分，对于 prompt/scale 设计有直接指导意义。
+传统 Spearman/Kendall 只能回答"和人类一致吗"这种 yes/no，看不出评判者是系统偏严还是分辨力错配。本文用两个指标拆开。$\theta_{\text{ratio}} = \theta_{\text{range}}^{(\text{LLM})} / \theta_{\text{range}}^{(\text{Human})}$，其中 $\theta_{\text{range}}$ 定义为"最高档样本 $\theta$ 中位数减最低档样本 $\theta$ 中位数"：$\theta_{\text{ratio}} < 1$ 表示 LLM 压缩了质量范围（超敏感，分不开人类眼中有差距的样本），$> 1$ 表示放大了范围（麻木，把人类觉得没差的样本硬拉开），$\approx 1$ 才是分辨力相当。$D_W = W_1(\hat\theta^{(\text{LLM})}, \hat\theta^{(\text{Human})})$ 则取 LLM 与人类 $\theta$ 分布间的 1-Wasserstein 距离；之所以不用相关（只看线性、不看分布形状）或 KL（不对称、对非重叠 support 未定义），是因为 Wasserstein 同时刻画"位置漂移"和"形状差异"，数值还有"把一个分布搬成另一个的最小代价"的物理意义。组合解读同样清晰：$\theta_{\text{ratio}} \approx 1$ 但 $D_W$ 大 → 分辨力相当但系统偏严/松；$\theta_{\text{ratio}} \ne 1$ 而 $D_W$ 小 → 整体感知对齐但敏感度不同；两者都偏离 → 评判者对"质量"的根本理解就和人不一样，把"对齐失败"落到了可干预的具体维度上。
 
-### 损失函数 / 训练策略
-没有端到端训练。整套框架是后验推断：用 PyMC 写出 GRM 的概率模型，调 NUTS（4 链、1000 warmup、1000 采样、target acceptance 0.95）做贝叶斯采样。二值评分（如 TopicalChat 的 Understandability、Groundedness）退化用 2-PL 逻辑模型代替 GRM。Prompt 扰动里 typo 用 AugLy 对 Qwen3-8B 最后一层注意力最高的 5 个 token 做字符级扰动；newline 随机插入 3 个换行；paraphrase 用 NLTK POS tagging 抽 5 个动词/形容词，让 GPT-4o-mini 生成同义词替换。
+### 训练策略
+整套框架没有端到端训练，本质是一次后验推断：用 PyMC 写出 GRM 概率模型，调 NUTS（NumPyro 后端、4 链、1000 warmup + 1000 采样、target acceptance 0.95）做贝叶斯采样；遇到二值评分（如 TopicalChat 的 Understandability、Groundedness）则退化为 2-PL 逻辑模型代替 GRM。Prompt 扰动各有做法：typo 用 AugLy 对 Qwen3-8B 最后一层注意力最高的 5 个 token 做字符级扰动，newline 随机插入 3 个换行，paraphrase 先用 NLTK POS tagging 抽 5 个动词/形容词、再让 GPT-4o-mini 生成同义替换。
 
 ## 实验关键数据
 

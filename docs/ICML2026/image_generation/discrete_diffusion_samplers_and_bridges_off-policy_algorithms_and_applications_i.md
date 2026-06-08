@@ -42,37 +42,35 @@ tags:
 
 ### 整体框架
 
-输入：能量函数 $E: \mathcal{S} \to \mathbb{R}$，其中 $\mathcal{S} = \{1, \dots, C\}^d$ 是离散序列空间；目标是从 $p_{\text{target}}(x) \propto e^{-E(x)}$ 采样。模型是一个前向（去噪）核 $\overrightarrow{p}_\theta(X_{n+1} \mid X_n)$，配合事先选定的后向（加噪）核 $\overleftarrow{p}$（masking 或 uniform 离散扩散），从 $p_0$ 出发经 $N$ 步 Markov 链到达 $X_N \in \mathcal{S}$，希望 $X_N$ 的边缘分布等于 $p_{\text{target}}$。
-
-训练 = 用某分布 $\mathcal{P}$ 采轨迹 $X_{0:N}$，最小化 $\mathcal{L}_{\mathcal{P}}$（公式 3）。当 $c$ 取可学标量时是 **trajectory balance (TB)**；当 $c$ 取 batch 内经验均值时是 **log-variance (LV)**。$\mathcal{P}$ 的选择就是 on-policy / off-policy 的分水岭。
-
-桥的情形（§3）：把固定的 $p_0$ 换成任意分布，再让 $\overleftarrow{p}_\varphi$ 也参数化，用 IPF 迭代（公式 6a/6b）交替拟合 $\overrightarrow{\mathcal{P}}, \overleftarrow{\mathcal{P}}$，data-to-energy 情形下 (6b) 用上面的 LV 变体来训。参考过程取 uniform 离散扩散（masking 桥问题不适用）。
-
-应用（§4）：在 VQ-VAE 的离散潜空间 $z \in \{1, \dots, 8\}^{16}$ 上，给定预训练自回归先验 $p_{\text{latent}}(z)$、确定性解码器 $f$ 和分类似然 $p(y \mid f(z))$，把后验采样 $p(z \mid y) \propto p_{\text{latent}}(z) \cdot p(y \mid f(z))$ 当成新的离散能量采样问题，用同一套 sampler 训。
+本文要解决的是从未归一化能量 $p_{\text{target}}(x) \propto e^{-E(x)}$（$E: \mathcal{S} \to \mathbb{R}$，$\mathcal{S} = \{1, \dots, C\}^d$ 为离散序列空间）中摊销采样的问题。做法是学一个前向去噪核 $\overrightarrow{p}_\theta(X_{n+1} \mid X_n)$，配合事先选定的后向加噪核 $\overleftarrow{p}$（masking 或 uniform 离散扩散），让从先验 $p_0$ 出发、经 $N$ 步 Markov 链到达的 $X_N$ 的边缘分布逼近 $p_{\text{target}}$。整套方法的关键不在网络结构，而在用一个"轨迹比平方"的二阶矩损失把训练数据来源（轨迹分布 $\mathcal{P}$）与最优解解耦，从而能像 off-policy RL 那样自由地往训练里塞 replay buffer 和 MCMC 探索出来的轨迹；同一框架再被推广到 data-to-energy 离散 Schrödinger 桥，并落到 VQ-VAE 离散潜空间的 data-free 后验采样。
 
 ### 关键设计
 
-1. **统一二阶矩损失 + on/off-policy 解耦**：
+**1. 统一二阶矩损失：把训练轨迹来源从最优解里解耦出来**
 
-    - 功能：用同一个目标 $\mathcal{L}_{\mathcal{P}}$ 同时支持 TB 和 LV，并允许任意轨迹分布 $\mathcal{P}$。
-    - 核心思路：损失 $\mathcal{L}_{\mathcal{P}} = \mathbb{E}_{\mathcal{P}}[(\log \tfrac{p_0 \otimes \overrightarrow{p}_\theta^{\otimes N}}{p_{\text{target}} \otimes \overleftarrow{p}^{\otimes N}} - c)^2]$ 在 $\mathcal{P}$ 满支撑时的唯一最小值仍是 $p_0 \otimes \overrightarrow{p}_\theta^{\otimes N} = p_{\text{target}} \otimes \overleftarrow{p}^{\otimes N}$，所以可以自由替换 $\mathcal{P}$ 做探索而不改变最优解；当 $\mathcal{P} = p_0 \otimes \overrightarrow{p}_\theta^{\otimes N}$ 时梯度与 reverse KL 同向，对应传统 on-policy 训练。
-    - 设计动机：on-policy 训练高方差且会被早期模式 lock-in，而把损失写成"轨迹比的平方"这种形式后，$\mathcal{P}$ 就像 RL 里的 behavior policy，可以随便换成 buffer 或 MCMC 精修的轨迹，从而引入探索。
+离散采样器之所以容易 mode collapse，根子在于 on-policy 训练只看模型自己采到的轨迹，一旦偏向某个模式就会自我强化。本文把训练目标写成轨迹比的平方 $\mathcal{L}_{\mathcal{P}} = \mathbb{E}_{\mathcal{P}}\big[(\log \tfrac{p_0 \otimes \overrightarrow{p}_\theta^{\otimes N}}{p_{\text{target}} \otimes \overleftarrow{p}^{\otimes N}} - c)^2\big]$，关键性质是：只要轨迹分布 $\mathcal{P}$ 满支撑，它的唯一最小值始终是 $p_0 \otimes \overrightarrow{p}_\theta^{\otimes N} = p_{\text{target}} \otimes \overleftarrow{p}^{\otimes N}$，与 $\mathcal{P}$ 的具体形态无关。这意味着 $\mathcal{P}$ 可以像 RL 里的 behavior policy 一样随便替换而不改变收敛目标——取 $\mathcal{P} = p_0 \otimes \overrightarrow{p}_\theta^{\otimes N}$ 时梯度与 reverse KL 同向，退化成传统 on-policy；换成 buffer 或 MCMC 精修的轨迹就引入了探索。标量 $c$ 也是一个枢纽：取可学标量时即 **trajectory balance (TB)**，它顺手把未知归一化常数 $Z$ 吸进 $\log Z_\phi$，免去所有重要性校正；取 batch 内经验均值时即 **log-variance (LV)**，省去额外参数，在桥的 data-to-energy 步骤里更自然。
 
-2. **重要性加权 replay buffer**：
+**2. 重要性加权 replay buffer：把算力倾斜到模型采不到的高价值模式**
 
-    - 功能：把以前 rollout 出来的终末态 $X_N$ 存进 buffer，按其"目标重要性"重新采样训练轨迹。
-    - 核心思路：每个 buffer 元素入库时算并存储重要性权重 $w = e^{-E(X_N)} \prod_n \overleftarrow{p}(X_n \mid X_{n+1}) / [p_0(X_0) \prod_n \overrightarrow{p}_\theta(X_{n+1} \mid X_n)]$（公式 4），训练时按 $w$ 加权抽样；之后再用 $\overleftarrow{p}^{\otimes N}$ 反向 unroll 出完整轨迹喂损失。
-    - 设计动机：纯 uniform buffer 已能稳住快速变化的策略；重要性加权进一步把训练算力倾斜到"目标概率高、但模型自己采到的概率低"的样本——这正是 on-policy 训练永远到不了的高价值区域，对多模分布的模式覆盖至关重要。
+光把损失解耦还不够，还得有"超出当前策略覆盖"的轨迹喂进去。本文维护一个 replay buffer 存历史 rollout 的终末态 $X_N$，并在入库时算好重要性权重
 
-3. **MCMC exploration 精修 buffer**：
+$$w = \frac{e^{-E(X_N)} \prod_n \overleftarrow{p}(X_n \mid X_{n+1})}{p_0(X_0) \prod_n \overrightarrow{p}_\theta(X_{n+1} \mid X_n)},$$
 
-    - 功能：在 buffer 样本喂训练之前，用以 $p_{\text{target}}$ 为平稳分布的 MCMC kernel（如 Metropolis-Hastings、Swendsen-Wang、Hamming-ball proposal）迭代若干步精修。
-    - 核心思路：MCMC 只需调用能量函数 $E$，不需调用模型，几乎不增 GPU 开销；对 Ising/Potts 这种有结构的能量可以选 Swendsen-Wang 这种"会跨模式跳"的 proposal，对一般离散密度用 1-Hamming-ball MH。算法 1 把"模型 rollout → 入 buffer → MCMC 精修 → 加权采样训练"串成一个完整的训练循环。
-    - 设计动机：buffer 只能记忆模型自己见过的模式，而 MCMC 可以在能量梯度的引导下走到模型没见过的模式上去；二者结合既保证训练数据来自"真目标附近"，又能在低温/强多模设定下打破 mode collapse（Table 1 中只有带 MCMC 的方法在 Ising $\beta=1.2$ 没 collapse 到单模）。
+训练时按 $w$ 加权抽样，再用 $\overleftarrow{p}^{\otimes N}$ 反向 unroll 出完整轨迹算损失。纯 uniform buffer 已能稳住快速变化的策略，而重要性加权进一步把训练算力压向"目标概率高、但模型自己采到概率低"的样本——这恰恰是 on-policy 训练永远到不了的区域，对多模分布的模式覆盖至关重要。
 
-### 损失函数 / 训练策略
+**3. MCMC exploration：用几乎免费的能量评估走到模型没见过的模式**
 
-主目标用 trajectory balance：$\mathcal{L}_{\text{TB}} = \mathbb{E}_{\mathcal{P}}[(\log \tfrac{p_0 \overrightarrow{p}_\theta^{\otimes N}}{p_{\text{target}} \overleftarrow{p}^{\otimes N}} - \log Z_\phi)^2]$，$\log Z_\phi$ 是可学常数，吸收未知归一化项。log-variance 版本把 $c$ 换成 batch 内经验均值，免去额外参数。桥设定下用 IPF 交替更新前后向核，data-to-energy 步用 LV 变体。采样推理时允许变时间离散化：训练时多步 mask，推理时可改成"每步只 unmask 一格"，平衡训练显存和推理质量（§A.1）。温度退火（target temperature annealing）默认开，对所有 sampler 公平。
+buffer 只能记忆模型自己见过的模式，要打破最低温下的 mode collapse 还需要主动去找新模式。本文在 buffer 样本喂训练之前，用一个以 $p_{\text{target}}$ 为平稳分布的 MCMC kernel 迭代若干步精修——对 Ising/Potts 这类结构化能量选会跨模式跳的 Swendsen-Wang proposal，对一般离散密度用 1-Hamming-ball Metropolis-Hastings。这步几乎免费：MCMC 只调用能量函数 $E$、不调用模型，不增 GPU 开销，却能在能量引导下走到模型没采过的模式上。算法 1 把"模型 rollout → 入 buffer → MCMC 精修 → 加权采样训练"串成完整循环，既保证训练数据落在真目标附近，又在低温/强多模设定下补足探索——Table 1 中只有带 MCMC 的方法在 Ising $\beta=1.2$ 没有 collapse 到单模。
+
+### 推广与应用
+
+**Schrödinger 桥（§3）**：把固定先验 $p_0$ 换成任意分布、让后向核 $\overleftarrow{p}_\varphi$ 也参数化，用 IPF 迭代（公式 6a/6b）交替拟合前后向 $\overrightarrow{\mathcal{P}}, \overleftarrow{\mathcal{P}}$；data-to-energy（一端只有能量、一端只有样本）情形下 (6b) 用 LV 变体来训，参考过程取 uniform 离散扩散（masking 桥不适用）。
+
+**VQ-VAE 后验采样（§4）**：在离散潜空间 $z \in \{1, \dots, 8\}^{16}$ 上，给定预训练自回归先验 $p_{\text{latent}}(z)$、确定性解码器 $f$ 和分类似然 $p(y \mid f(z))$，把后验 $p(z \mid y) \propto p_{\text{latent}}(z) \cdot p(y \mid f(z))$ 直接当成新的离散能量采样问题，用同一套 sampler 训，无需对原模型 fine-tune 或反传梯度。
+
+### 训练与推理细节
+
+主目标用 trajectory balance $\mathcal{L}_{\text{TB}} = \mathbb{E}_{\mathcal{P}}[(\log \tfrac{p_0 \overrightarrow{p}_\theta^{\otimes N}}{p_{\text{target}} \overleftarrow{p}^{\otimes N}} - \log Z_\phi)^2]$，LV 版本把 $\log Z_\phi$ 换成 batch 经验均值。采样推理允许变时间离散化：训练时多步 mask、推理时改成每步只 unmask 一格，平衡训练显存与推理质量（§A.1）。温度退火（target temperature annealing）默认开启，对所有 sampler 一视同仁。
 
 ## 实验关键数据
 

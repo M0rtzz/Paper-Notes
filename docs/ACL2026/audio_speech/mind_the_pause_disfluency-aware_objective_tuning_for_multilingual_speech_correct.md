@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段 + 两损失。**阶段一**：MuRIL（多语言 BERT 在 17 种印度语预训练）做 token-level 二分类（0=fluent, 1=disfluent），在三语种合并训练集上 fine-tune，subword 标签从 word 标签继承。**阶段二**：把"指令 + 含 disfluency 的句子 + MuRIL 预测的 token-level 标签序列"按 Alpaca-style 拼起来喂给 LLM（Llama-3.2-3B-Instruct 或 Qwen2.5-3B-Instruct），目标输出是 fluent reference。训练目标 = CE loss + λ × Contrastive loss。推理时同样的格式输入，LLM 直接生成 fluent 转录。
+这套 disfluency 修正流水线想解决的核心矛盾是：交叉熵微调只会告诉模型"该长得像 fluent 参考"，却没有任何机制叫它"别把 filler 照抄进去"。作者的思路是双阶段配双损失。阶段一让 MuRIL（在 17 种印度语上预训练的多语言 BERT）做 token 级二分类（0=fluent、1=disfluent），subword 标签从 word 标签继承，在三语种合并集上微调出一个标注器。阶段二把"指令 + 含 disfluency 的原句 + MuRIL 预测的标签序列"按 Alpaca 格式拼成输入喂给 3B LLM（Llama-3.2-3B-Instruct 或 Qwen2.5-3B-Instruct），目标输出 fluent 转录，训练目标在标准 CE 之外额外叠一个显式压制 disfluent token 的对比损失。推理时同样格式输入，LLM 一步生成干净转录。
 
 ### 关键设计
 
-1. **MuRIL token-tagging 作为 LLM 的辅助监督信号**:
+**1. MuRIL 标签当 LLM 的提示而非删除指令：用重写取代硬删。**
 
-    - 功能：把 disfluency detection 从"决定删哪个 token"降级为"给 LLM 一个 hint"，避免硬删带来的语法破坏。
-    - 核心思路：MuRIL 在 manually edited data 上 token-level F1=0.987 但 sentence-level acc 只有 ~85%（real data 上 sentence-level 只有 33–63%），作者不追求 detection 完美而是让 LLM"参考但不盲信" tag——LLM 拿到"$x_i$ = instruction + disfluent sentence + token labels"作为完整 input，目标是直接生成 fluent reference $y_i$，CE loss 为 $L_{CE} = -\sum_i \sum_t \log P_\theta(y^t_i \mid y^{<t}_i, x_i)$。
-    - 设计动机：detection-only 方法的根本错误是把"识别"和"重写"分开做，导致重写阶段没有 grammatical context。把 tag 和原句一起给 LLM，让 LLM 用自己的语言建模能力去判断"这个 disfluent token 该删还是该改写成语法等价物"，比硬删更鲁棒。MuRIL 的不完美 sentence-acc 反而成为 robustness 训练源——LLM 学会在 tag 有错时也能修正。
+传统 detect-then-delete 的根本毛病是把"识别"和"重写"切开，删完之后没有语法上下文，结果常常把句子删断。这里改成把 MuRIL 的 token 标签和原句一起塞给 LLM，让模型自己判断某个 disfluent token 是该删还是该改写成语法等价物。关键是"参考但不盲信"：MuRIL 在人工编辑数据上 token 级 F1 高达 0.987，但句子级准确率只有约 85%，到真实数据更是掉到 33–63%——作者反而把这种不完美当成鲁棒性训练源，LLM 拿到的是完整输入 $x_i$=指令+原句+标签，直接生成 fluent 参考 $y_i$，交叉熵为 $L_{CE} = -\sum_i \sum_t \log P_\theta(y^t_i \mid y^{<t}_i, x_i)$，并在标签出错时也学会自行修正。
 
-2. **Anti-Disfluency Contrastive Loss**:
+**2. 反 disfluency 对比损失：给交叉熵补上"不该生成什么"的负向监督。**
 
-    - 功能：显式惩罚 LLM 在生成位置 $t$ 上把概率分配给已识别 disfluent token 的行为，给 cross-entropy 补一个负向监督。
-    - 核心思路：对样本 $i$，预先计算 disfluent token 集合 $D_i$（通过 fluent-disfluent 对齐得到）；定义 step-$t$ 处的 disfluent 概率质量 $s_{i,t} = \sum_{v \in D_i} w_v P_\theta(v \mid y^{<t}_i, x_i)$，其中 $w_v \in (0, 1]$ 是按 subword 位置的几何衰减权重（1, 0.5, 0.25, ...，因为 disfluent 词的首 subword 信号最强）。然后取 $L_{\text{contrastive}} = \frac{1}{N}\sum_i \frac{1}{T_i} \sum_{t=r_i}^{T_i} -\log(1 - s_{i,t})$，$r_i$ 是 response 起始位置（跳过 instruction）。最终 $L_{\text{total}} = L_{CE} + \lambda \cdot L_{\text{contrastive}}$ 且 $\lambda$ 有 warm-up schedule。
-    - 设计动机：传统 contrastive learning 是 representation 级别的 InfoNCE，本文是 **token-distribution 级别的硬约束**——不学习 embedding 距离而直接约束 softmax 输出。$-\log(1-s_{i,t})$ 当 $s \to 1$ 时梯度爆炸，相当于"如果模型很想生成 disfluent token，就给它很大的反向梯度"；几何衰减权重对应了 BPE 分词后"前 subword 最具识别性"的特点，避免对 fluent 词中偶然撞名的 subword 误伤。warm-up 是为了先让 CE 把基础生成能力建好，再开对比惩罚，否则训练早期梯度方向冲突。
+这是全文的灵魂。CE 是 positive-only 的推力，对比损失则在每个生成步直接把概率从 disfluent token 上拽走。对样本 $i$ 先经 fluent-disfluent 对齐算出 disfluent token 集合 $D_i$，再定义第 $t$ 步落在这些 token 上的概率质量 $s_{i,t} = \sum_{v \in D_i} w_v P_\theta(v \mid y^{<t}_i, x_i)$，其中权重 $w_v \in (0,1]$ 按 subword 位置几何衰减（$1, 0.5, 0.25, \ldots$，因为 BPE 切词后首 subword 最具辨识度，这样既抓主、又避免误伤 fluent 词里偶然撞名的尾 subword）。对比损失取 $L_{\text{contrastive}} = \frac{1}{N}\sum_i \frac{1}{T_i} \sum_{t=r_i}^{T_i} -\log(1 - s_{i,t})$，$r_i$ 是回复起始位（跳过指令段）。与传统 representation 级的 InfoNCE 不同，这是 token 分布级的硬约束，直接管 softmax 输出：当 $s \to 1$ 时 $-\log(1-s)$ 梯度爆炸，等于"模型越想吐 disfluent token，就给它越狠的反向梯度"。
 
-3. **三语种合并 instruction tuning + Alpaca 格式**:
+**3. 三语种合并 instruction tuning：一个 checkpoint 吃下 Hindi/Bengali/Marathi。**
 
-    - 功能：用一个模型同时处理 Hindi/Bengali/Marathi，并通过 instruction 让模型把任务理解为"重写为 fluent"而非"翻译"。
-    - 核心思路：120k 平行 disfluent-fluent 句对（每语种 40k），合并后 80/10/10 split。instruction 类似 "Remove disfluencies from the following sentence while preserving meaning and grammar"，input 是 "disfluent sentence + [tag sequence]"，output 是 fluent reference。在 contrastive 变体里额外把 $D_i$ 作为 auxiliary input 传入。zero-shot cross-lingual transfer 实验显示从 Hindi-only fine-tune 迁移到 Bengali 还能拿到 87.1 BLEU，证明多语种共享 representation 强。
-    - 设计动机：印度语之间共享词汇 / 句法相似性强，合并训练能用一个 checkpoint 覆盖三语，节省部署成本；Alpaca format 让 LLM 复用现有 instruction-following capability 而不是当作 raw seq2seq 训。
+印度语之间词汇和句法高度相似，合并训练能用一份模型覆盖三语、省下三套部署成本。数据是 120k 平行 disfluent-fluent 句对（每语种 40k），按 80/10/10 切分；指令写成类似 "Remove disfluencies from the following sentence while preserving meaning and grammar"，输入是"原句 + [标签序列]"，输出 fluent 参考，对比变体里额外把 $D_i$ 作为辅助输入传入。用 Alpaca 格式而非裸 seq2seq，是为了复用 LLM 已有的指令跟随能力，让它把任务理解成"重写为流畅"而不是"翻译"。共享表示强到什么程度——单 Hindi 微调零样本迁到 Bengali 仍能拿 87.1 BLEU。
 
 ### 损失函数 / 训练策略
-$L_{\text{total}} = L_{CE} + \lambda \cdot L_{\text{contrastive}}$；$\lambda$ 用 warm-up scheduling 从 0 缓慢升到目标值；几何衰减权重 $w_v$ 对 disfluent word 的 subword 用 $1, 0.5, 0.25, \ldots$。两个 backbone：Llama-3.2-3B-Instruct 和 Qwen2.5-3B-Instruct，3B 规模因 compute 限制。
+总目标 $L_{\text{total}} = L_{CE} + \lambda \cdot L_{\text{contrastive}}$，其中 $\lambda$ 走 warm-up 调度从 0 缓升到目标值——先让 CE 把基础生成能力建好再开对比惩罚，否则训练早期两个梯度方向会打架；几何衰减权重 $w_v$ 对 disfluent word 的 subword 取 $1, 0.5, 0.25, \ldots$。两个 backbone（Llama-3.2-3B-Instruct、Qwen2.5-3B-Instruct）都是 3B 规模，受算力所限。
 
 ## 实验关键数据
 

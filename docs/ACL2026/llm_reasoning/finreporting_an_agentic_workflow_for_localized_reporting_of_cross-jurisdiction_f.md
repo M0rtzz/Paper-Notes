@@ -38,34 +38,33 @@ FinReporting 把跨美国、日本、中国财报本地化拆成“规则抽取 
 **核心 idea**：用 canonical financial ontology 统一跨市场语义，再把 LLM 放进带 guardrails 的校验/修复层，让跨司法辖区财报本地化既自动化又可审计。
 
 ## 方法详解
-FinReporting 是一个系统论文，方法由三层组成：确定性规则处理层、LLM guardrail 层和条件专家复核层。cache 中的 PDF 文本有颜色控制残留，但主流程和实验表格仍然可读。
+FinReporting 是一篇系统论文，整条流水线由三层串起来：确定性规则处理层负责产出可复现的候选值，LLM guardrail 层负责在有证据时校验和修复，条件专家复核层兜底处理高影响或证据不足的案例。（cache 中的 PDF 文本有颜色控制残留，但主流程和实验表格仍然可读。）
 
 ### 整体框架
-输入是某个市场、公司和年报披露文件。系统先做 Filing Acquisition 和 Statement Identification：美国和日本市场直接读取 XBRL tagged facts；中国市场则定位公开年报 PDF，并检测 IS/BS/CF 相关页面和表格。接着进入 Extraction：XBRL-native 市场主要选择正确 reporting context，例如 consolidated vs separate、period length、instant/duration；PDF-centric 市场则需要文档分解、表格解析、列选择 fallback 和 per-field status labeling。
+输入是某个市场、某家公司的年报披露文件。系统先做 Filing Acquisition 和 Statement Identification：美国、日本市场直接读取 XBRL tagged facts；中国市场则要先定位公开年报 PDF，再检测 IS/BS/CF 相关的页面和表格。接着进入 Extraction，两类市场分流处理——XBRL-native 市场主要是选对 reporting context（consolidated vs separate、period length、instant/duration），PDF-centric 市场则要做文档分解、表格解析、列选择 fallback 和逐字段的 status labeling。
 
-抽取后，系统用 global ontology 把本地项目映射到统一 canonical schema。这个 schema 覆盖 IS、BS、CF 的核心概念，同时保留本地标签、单位、币种、会计准则等元数据。输出包括 localized financial statements、anomaly log、audit trail 和 structured workbook，可通过 demo 的市场选择、公司选择、三张表 tab、模板 QA 和下载功能查看。
+抽取出本地项目后，系统用 global ontology 把它们映射到统一的 canonical schema，覆盖 IS/BS/CF 的核心概念，同时保留本地标签、单位、币种、会计准则等元数据。最终输出一套 localized financial statements，外加 anomaly log、audit trail 和 structured workbook，可通过 demo 的市场选择、公司选择、三张表 tab、模板 QA 和下载功能查看。整条链路的设计目标是：每一步都留痕，既能自动化又能审计。
 
 ### 关键设计
-1. **跨市场 canonical ontology**:
+**1. 跨市场 canonical ontology：用一套统一概念库存把"同名不同义、异名同义"的跨市场项目对齐。**
 
-	- 功能：为美国、日本、中国的财报项目提供统一概念库存，使不同市场的 IS/BS/CF 可以对齐比较。
-	- 核心思路：围绕 Income Statement、Balance Sheet、Cash Flow 定义核心字段，并把不同市场标签映射到 canonical concepts。实验中共享子集包含 18 个目标字段：IS 5 个、BS 7 个、CF 6 个。
-	- 设计动机：如果没有本体层，系统只能做局部抽取，无法保证“同名不同义”或“异名同义”的项目被正确处理，也难以支持跨市场 QA 和 benchmarking。
+跨司法辖区财报最棘手的不是翻译字段名，而是语义对齐——美国、日本、中国对同一个会计概念可能用不同标签，同一个标签又可能含义不同。如果没有本体层，系统只能做局部抽取，跨市场比较和 QA 无从谈起。FinReporting 围绕 Income Statement、Balance Sheet、Cash Flow 定义一组 canonical concepts，把各市场的本地标签都映射到这套统一库存上；实验里共享子集落在 18 个目标字段（IS 5 个、BS 7 个、CF 6 个）。有了这层映射，下游才谈得上跨市场 benchmarking 和统一 schema 下的财务问答。
 
-2. **规则优先的可复现抽取层**:
+**2. 规则优先的可复现抽取层：先用确定性规则产出候选值，把 LLM 幻觉挡在数值层之外。**
 
-	- 功能：生成稳定、可解释、可复现的候选值，减少 LLM 幻觉进入数值层。
-	- 核心思路：US/JP 使用 XBRL tagged facts 和 reporting context 选择；CN 使用 PDF 表格解析与 fallback，给每个字段标记 OK、MISSING、PARSE_ERROR、NOT_APPLICABLE 等状态。
-	- 设计动机：财务数值抽取不能依赖自由文本生成。规则层虽然覆盖有限，但错误可定位；状态标签也让缺失和不确定性显式暴露。
+财务数值一旦错了代价极高，所以绝不能让自由文本生成直接进入数值。这一层对 US/JP 走 XBRL tagged facts 加 reporting context 选择，对 CN 走 PDF 表格解析加 fallback，并给每个字段打上 OK、MISSING、PARSE_ERROR、NOT_APPLICABLE 等状态标签。规则层覆盖面虽有限，但它的好处是错误可定位、可复现，状态标签还把缺失和不确定性显式暴露出来，而不是用一个看似合理的数字悄悄填上。
 
-3. **受限 LLM verifier / repairer**:
+**3. 受限 LLM verifier / repairer：把 LLM 的决策空间锁死成三选一，让它只做有证据的校验而非凭空生成。**
 
-	- 功能：在规则输出之后发现疑似错误、补全可修复字段，并决定是否需要人工复核。
-	- 核心思路：LLM 的决策空间被限制为 KEEP、REPAIR、NEED_REVIEW。只有当字段可修复、证据明确来自 filing context、候选值与证据一致时才允许 REPAIR；否则回退到 NEED_REVIEW。所有决策记录证据和失败原因。
-	- 设计动机：自由 LLM 抽取可能产生未标记错误，最危险的是“看起来合理但实际不对”。受限 verifier 让 LLM 负责推理和证据核对，而不是凭空生成财报。
+自由 LLM 抽取最危险的失败模式是"看起来合理但实际不对"的未标记错误。FinReporting 因此把 LLM 放在规则层之后，且只允许它在 KEEP、REPAIR、NEED_REVIEW 之间做选择：只有当字段确实可修复、证据明确来自 filing context、且候选值与证据一致时才允许 REPAIR，否则一律回退到 NEED_REVIEW，所有决策连同证据和失败原因一并记录。这样 LLM 承担的是推理和证据核对，而不是生成财报数字——把它放回了高风险金融场景里更可信的位置。
+
+### 一个完整示例：一条中国 PDF 财报里的 "营业收入" 字段如何走完三层
+假设要本地化一家中国公司的年报，目标字段是利润表里的"营业收入"。规则层先定位年报 PDF 中的利润表，解析出"营业收入 = 1,203,456 万元"这个候选值，并打上 `OK` 状态；若表格断裂导致只抓到半行，它会改打 `PARSE_ERROR` 而不是猜一个数。候选值进入 LLM verifier：模型比对 filing 上下文，确认数字与原文一致，于是输出 `KEEP`，把它映射到 canonical 的 Revenue 概念。再设想另一个字段"财务费用"规则层抽成了负数但证据显示应为正——verifier 发现冲突，但 filing 里有明确依据可改，于是给出 `REPAIR` 并记录证据；而当某个公司自定义口径的项目在本体里找不到对应概念、证据又不足时，verifier 直接判 `NEED_REVIEW`，连同 anomaly log 推给人工专家。一条字段就这样从"规则候选 → LLM 三选一 → （必要时）人工兜底"走完，全程每一步都留下 audit trail。
 
 ### 损失函数 / 训练策略
-本文不是训练新模型，而是系统工作流和评测。LLM guardrail 层在实验中使用 GPT-4o，也比较了 GPT-5.2、GPT-5 mini、GPT-4o、Gemini-2.5-Flash、Gemini-2.5-Flash-Lite、DeepSeek-Chat 等 backbone。系统评测指标包括 Filled Rate (FR)、Conflict Rate (CR) 和 Accuracy (ACC)。FR 是非空输出比例，CR 是因规则输出与 LLM verifier 冲突或证据不足而触发 human review 的比例，ACC 是相对人工标注的准确率。
+本文不训练新模型，而是给出系统工作流与评测方案。LLM guardrail 层实验中用 GPT-4o，并横向比较了 GPT-5.2、GPT-5 mini、GPT-4o、Gemini-2.5-Flash、Gemini-2.5-Flash-Lite、DeepSeek-Chat 等 backbone。系统级指标有三个：Filled Rate (FR) 是非空输出比例；Conflict Rate (CR) 是因规则输出与 LLM verifier 冲突或证据不足而触发 human review 的比例；Accuracy (ACC) 是相对人工标注的准确率。
+
+> ⚠️ 部分 backbone 名称（如 GPT-5.2）以原文为准。
 
 ## 实验关键数据
 

@@ -45,23 +45,26 @@ CSO 的核心不是给每一步打更准的 reward，而是改变训练数据的
 CSO 分为六步：第一，部署当前 policy 收集失败轨迹；第二，在失败轨迹的每个步骤上用 expert model 采样 $K=5$ 个替代动作；第三，用 PRM 对 policy 原动作和 expert 替代动作打 $[0,1]$ 分数；第四，把满足 $r^{policy}_t<\gamma_{low}$ 且 $max_j r^{expert}_{t,j}>\gamma_{high}$ 的步骤作为候选关键步，主实验中 $\gamma_{low}=0.45$、$\gamma_{high}=0.65$；第五，对高分 expert 替代动作做 branch rollout，即替换当前动作后由 policy 自己继续完成任务；第六，只保留最终成功的分支，构造 $(s_t,a_t^+,a_t^-)$ 偏好对并用 DPO 训练。
 
 ### 关键设计
-1. **从失败轨迹出发定位 policy 弱点**:
 
-	- 功能：让训练数据集中在当前 policy 真实会犯错的状态分布上。
-	- 核心思路：不同于从 expert 成功轨迹中泛化学习，CSO 先让 policy 在训练任务上执行，保留 outcome 为失败的轨迹 $\mathcal{T}_{fail}$。所有后续候选关键步都从这些失败轨迹中产生。
-	- 设计动机：如果只看 expert demo，模型可能学到超出自身能力范围的动作；如果只看成功轨迹，又难以知道 policy 的具体短板。失败轨迹提供半 on-policy 的状态覆盖，直接对准模型当前最需要修正的地方。
+**1. 从失败轨迹出发定位 policy 弱点：训练数据对准模型真正会犯错的状态分布。**
 
-2. **PRM 筛选 + outcome verification 双重过滤**:
+如果只从 expert 成功 demo 里泛化，模型可能学到超出自身能力的动作；如果只看成功轨迹，又无从知道 policy 的具体短板在哪。CSO 反过来，先让当前 policy 在训练任务上真正执行，把 outcome 为失败的轨迹收集成 $\mathcal{T}_{fail}$，所有后续候选关键步都只从这些失败轨迹里产生。失败轨迹天然提供了半 on-policy 的状态覆盖，让学习信号直接落在「模型此刻最需要被修正」的地方，而不是遥不可及的 expert 状态上。
 
-	- 功能：在不对每一步做昂贵 Monte Carlo 的情况下，筛出真正值得构造偏好对的关键决策点。
-	- 核心思路：PRM 只作为候选筛选器，而不是最终 reward。它找出“原动作低分、至少一个 expert 替代动作高分”的步骤；随后系统从替代动作继续 rollout，并用最终任务正确性验证该分支是否成功。
-	- 设计动机：PRM 估计本身会有噪声，直接拿 PRM 分数训练会误导模型；但完全不用 PRM 会导致需要验证太多分支。CSO 把 PRM 用在召回候选上，把 outcome verification 用在精确确认上，兼顾效率和可靠性。
+**2. PRM 筛选 + outcome verification 双重过滤：把 PRM 从监督者降级为召回器。**
 
-3. **verified critical step 级 DPO**:
+step-level 方法直接拿 PRM 分数当 reward，但 PRM 估计本身有噪声，长程任务里会被放大；而要给每一步都做 Monte Carlo 验证又太贵。CSO 把这两件事分开：PRM 只当候选召回器，找出「原动作低分、至少一个 expert 替代动作高分」的步骤——具体地，保留满足 $r^{policy}_t < \gamma_{low}$ 且 $\max_j r^{expert}_{t,j} > \gamma_{high}$ 的位置，主实验取 $\gamma_{low}=0.45$、$\gamma_{high}=0.65$；随后才对这些高分 expert 替代动作做 branch rollout，用最终任务正确性来精确确认这一步是否真的能翻盘。PRM 负责高召回的初筛、outcome verification 负责精确的终判，于是既不必验证海量分支，也不会让 PRM 噪声直接污染训练目标。
 
-	- 功能：把学习信号只施加到能改变任务成败的局部动作上。
-	- 核心思路：对每个 verified critical step，构造偏好对 $(s_t,a_t^+,a_t^-)$，其中 $a_t^+$ 是使分支最终成功的 expert 替代动作，$a_t^-$ 是原失败轨迹中的 policy 动作。DPO 目标可写作 $L_{CSO}=-E\log\sigma(\beta\log\frac{\pi_\theta(a_t^+|s_t)}{\pi_{ref}(a_t^+|s_t)}-\beta\log\frac{\pi_\theta(a_t^-|s_t)}{\pi_{ref}(a_t^-|s_t)})$。
-	- 设计动机：轨迹级 DPO 会让整段成功/失败轨迹互相对比，信用分配粗；CSO 只对关键动作建偏好，减少无关 token 对训练目标的干扰。
+**3. verified critical step 级 DPO：学习信号只施加到能改变成败的局部动作上。**
+
+轨迹级 DPO 会把整段成功/失败轨迹拿来互相对比，信用分配很粗——失败轨迹里的合理步骤会被一起惩罚，成功轨迹里的偶然错误又被强化。CSO 只对验证过的关键步建偏好对 $(s_t, a_t^+, a_t^-)$，其中 $a_t^+$ 是使分支最终成功的 expert 替代动作、$a_t^-$ 是原失败轨迹里的 policy 动作，训练目标写作
+
+$$L_{CSO}=-\mathbb{E}\log\sigma\!\Big(\beta\log\frac{\pi_\theta(a_t^+|s_t)}{\pi_{ref}(a_t^+|s_t)}-\beta\log\frac{\pi_\theta(a_t^-|s_t)}{\pi_{ref}(a_t^-|s_t)}\Big)$$
+
+把偏好只压在稀疏的关键动作上，减少了大量无关 token 对训练目标的干扰，也让信用分配比轨迹级精细得多。
+
+### 一个完整示例：一条失败轨迹如何变成一个偏好对
+
+设 policy 在某个 GAIA 任务上跑出一条失败轨迹，共 12 步。CSO 先在每一步用 expert model 采 $K=5$ 个替代动作，再让 PRM 给原动作和这些替代动作打 $[0,1]$ 分。绝大多数步骤要么原动作分就不低、要么替代动作也没明显更好，被直接跳过；只有第 7 步——policy 当时选错了搜索工具、原动作得分 0.3，而某个 expert 替代动作（改用网页检索并重写 query）得分 0.8——同时满足 $r^{policy}<0.45$ 和 $\max_j r^{expert}>0.65$，进入候选。接着系统把这个 expert 替代动作接到第 7 步的状态上，让 policy 自己继续往下跑后 5 步：这一次任务成功了，于是第 7 步被确认为 verified critical step，构造出偏好对 $(s_7,\,a_7^+\!=\text{网页检索动作},\,a_7^-\!=\text{原搜索工具动作})$。注意正例之所以「够得着」，正是因为后续步骤仍由 policy 亲自执行——它学的是「在一个更好的起点下自己能走通的轨迹」，而非 expert 的完整 demo。这样层层过滤后，一轮下来全数据集只留下约 671 个高质量偏好对。
 
 ### 损失函数 / 训练策略
 基础模型是 CK-Pro-8B，一个基于 Qwen3-8B SFT 的 agent policy，运行在 Cognitive Kernel Pro 框架中。训练数据从 CK-Pro-8B 的 47K SFT 任务轨迹出发，通过 policy 执行收集失败案例。expert model 和 PRM 主实验都使用 Claude-3.7-Sonnet，PRM 采用 rubric-based prompt，考察代码正确性、任务相关性、逻辑推进、信息利用和思考质量。DPO 训练使用 LlamaFactory，KL 系数 $\beta=0.5$。框架支持迭代训练：每轮更新 policy 后重新收集失败轨迹，构造新的 $\mathcal{D}_{pref}$，并把上一轮 policy 作为 reference，最多进行 2 轮主训练。

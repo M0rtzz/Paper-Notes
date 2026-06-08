@@ -46,23 +46,22 @@ ReacTOD 的核心是把对话状态跟踪从自由生成问题改写为一个受
 具体流程可以概括为四步。第一，系统只把必要 schema 和当前上下文放进 prompt，避免小模型被完整 schema 和长历史淹没。第二，LLM 在受限工具库中调用 Intent Classification 工具，得到当前意图。第三，若意图是交易型任务，再调用 Slot Resolution 工具，只注入该意图相关槽定义；若遇到指代或省略，才按需调用历史检索工具。第四，validator 检查动作顺序、schema 合法性、值格式和指代一致性，失败时返回结构化反馈让 LLM 在 $K_{max}=6$ 的上限内重试。
 
 ### 关键设计
-1. **受限 ReAct 控制流**:
 
-	- 功能：把开放式 agent 推理限制在少量 NLU 工具调用内，避免无限循环和任意状态写入。
-	- 核心思路：agent 的 action space 被限制为工具库 $\mathcal{T}$，每一步只能选择合法工具；prompt 鼓励先 IC 后 SR，而 validator 通过“SR 必须基于已确认意图”这类规则给出硬约束。达到迭代上限后系统返回 fallback，而不是继续消耗推理。
-	- 设计动机：保留 ReAct 的自我修正能力，但去掉生产系统最怕的开放循环和不可预测副作用。
+**1. 受限 ReAct 控制流：保留自我修正，去掉开放循环的不可控副作用。**
 
-2. **确定性符号校验器**:
+生产系统最怕无约束 agent：它能多步推理，但开放循环和任意状态写入带来延迟、成本和静默失败的风险。ReacTOD 把 agent 的 action space 收窄到一个固定工具库 $\mathcal{T}$，每一步只能从中挑一个合法工具，prompt 引导它先做 Intent Classification 再做 Slot Resolution，而 validator 用“SR 必须基于已确认意图”这类规则把这个顺序变成硬约束；一旦达到迭代上限 $K_{max}=6$，系统直接返回 fallback 而不是继续烧推理。这样既留住了 ReAct“出错能自己改”的能力，又把它框在有限、可预测的动作序列里，避免循环失控。
 
-	- 功能：在任何状态修改之前拦截错误工具调用和错误槽值。
-	- 核心思路：validator 执行三类低成本检查：动作合规性，例如未先调用 IC 就提交槽值；schema 一致性，例如非法 intent、槽名或枚举值；指代一致性，例如输出“restaurant”而没有解析真实实体。失败时返回明确错误，如“slot taxi-arriveby 需要 HH:MM 格式”。
-	- 设计动机：LLM-as-judge 仍然会引入新的不确定性，确定性程序可以把 schema 约束、格式规则和状态更新协议变成可验证边界。
+**2. 确定性符号校验器：在任何状态被改动之前拦下错误。**
 
-3. **增量状态与动态上下文构造**:
+很多 DST 错误并不是深层语义理解失败，而是局部且可修复的——时间格式不对、槽名非法、泛指实体没解析。与其再请一个 LLM-as-judge（那只会引入新的不确定性），ReacTOD 让一段确定性程序在每次工具调用落地前做三类低成本检查：动作合规性（例如还没调 IC 就提交槽值）、schema 一致性（非法 intent、槽名或枚举值）、指代一致性（输出了“restaurant”却没解析出真实实体）。校验失败时它返回明确的结构化反馈，例如“slot taxi-arriveby 需要 HH:MM 格式”，让 LLM 拿着错误信息重试。整套机制把 schema 约束、格式规则和状态更新协议固化成可验证的边界——LLM 负责提案，程序负责守门。
 
-	- 功能：减少每轮 prompt 负担，同时避免中间错误污染持久状态。
-	- 核心思路：模型只预测 $\Delta B_t$，完整状态由 $B_{t-1}$ upsert 得到；槽位说明只在 active intent 下加载，历史对话默认不加载，只有处理指代时才调用 $\tau_H$。状态更新采用 deferred update，只有通过 validator 的结果才写入。
-	- 设计动机：小模型在短 prompt 上更容易遵循指令；延迟写状态则保证被拒绝的中间输出不会污染后续轮次。
+**3. 增量状态与动态上下文构造：让小模型不被长 prompt 淹没，也不让中间错误污染状态。**
+
+小模型在完整 schema 加长历史的 prompt 上很容易跟丢指令，中间的错误输出又可能顺着写进持久状态。ReacTOD 在两头都做了收口：模型每轮只预测增量更新 $\Delta B_t$，完整状态由上一轮 belief state $B_{t-1}$ 做 upsert 合并得到；槽位说明只在 active intent 下按需加载，历史对话默认不进 prompt，只有真正遇到指代或省略时才调用历史检索工具 $\tau_H$。状态采用 deferred update——只有通过 validator 的结果才真正写入 $B_t$。短 prompt 让小模型更容易守规矩，延迟写状态则保证被拒绝的中间输出不会污染后续轮次。
+
+### 一个完整示例：一轮带格式纠错的状态更新
+
+设当前用户说“帮我订一辆下午五点半到的出租车”。系统先只把必要 schema 和当前上下文塞进 prompt，LLM 在工具库里调用 Intent Classification，得到意图 `taxi`；因为是交易型任务，接着调用 Slot Resolution，并只注入 `taxi` 相关的槽定义。LLM 第一次解析把到达时间写成 `slot taxi-arriveby = 5:30pm`——这时 validator 介入，发现值不符合 `HH:MM` 格式（schema 一致性检查未过），于是拦下这次写入，返回结构化反馈“slot taxi-arriveby 需要 HH:MM 格式”。LLM 拿到反馈在第 2 次迭代里改成 `17:30`，validator 三类检查全部通过，这个增量 $\Delta B_t$ 才被 upsert 进 $B_{t-1}$ 得到新的 $B_t$。整轮在 $K_{max}=6$ 的上限内只用了一次校正就收敛——统计上多数 turn 仅需 IC + SR 两次 LLM 调用，被 validator 触发的 turn 里约 93.1% 都像这样在上限内自纠成功。
 
 ### 损失函数 / 训练策略
 ReacTOD 不依赖任务特定训练数据、微调或 few-shot 示例。所有实验都是零样本推理，主要训练策略实际上是推理时架构约束：温度设为 0.0，统一最大 ReAct 轮数 $K_{max}=6$，不同 backbone 使用相同工具协议和 schema 注入方式。MultiWOZ 的 schema 来自 MultiWOZ 2.2 并补充槽类型，SGD schema 从官方 service definitions 程序化构造。

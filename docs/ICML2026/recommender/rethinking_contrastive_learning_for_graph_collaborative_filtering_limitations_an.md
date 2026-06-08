@@ -47,23 +47,17 @@ tags:
 
 ### 关键设计
 
-1. **将 SSM 梯度对齐到"邻居对加权动力学"**:
+**1. 把 SSM 梯度对齐到"邻居对加权动力学"：先看清它到底在更新谁。**
 
-    - 功能：把标准 SSM 损失 $\mathcal{L}(i;u)=-\log\frac{\exp(s(u,i)/\tau)}{\exp(s(u,i)/\tau)+\sum_{j\in\mathcal{B}_u}\exp(s(u,j)/\tau)}$ 对可学习权重 $\mathbf{e}_v^{(0)\top}\mathbf{e}_{v'}^{(0)}$ 求导，得到闭式更新规则。
-    - 核心思路：作者证明梯度形如 $\partial\mathcal{L}/\partial(\mathbf{e}_v^{(0)\top}\mathbf{e}_{v'}^{(0)})=\frac{\widetilde{\mathbf{S}}_{uv}}{\tau}(\mathbb{E}_{x\sim\pi_u}[\widetilde{\mathbf{S}}_{xv'}]-\widetilde{\mathbf{S}}_{iv'})$。一旦 $\widetilde{\mathbf{S}}_{iv'}$ 大于负样本期望，该邻居对就被上调；这从纯几何视角解释了 SSM 为何隐式做了"结构感知的选择性加权"。
-    - 设计动机：把对比损失从"表示分布"重新定位为"参数更新规则"，让后续改进有清晰的微分级抓手——任何能写进 $\mathbb{E}_x[\widetilde{\mathbf{S}}_{xv'}]-\widetilde{\mathbf{S}}_{iv'}$ 的项都可以被设计或替换。
+要改进 SSM，得先知道它在训练时究竟把哪些参数往上推。作者把标准 SSM 损失 $\mathcal{L}(i;u)=-\log\frac{\exp(s(u,i)/\tau)}{\exp(s(u,i)/\tau)+\sum_{j\in\mathcal{B}_u}\exp(s(u,j)/\tau)}$ 对可学习权重 $\mathbf{e}_v^{(0)\top}\mathbf{e}_{v'}^{(0)}$ 求导，得到闭式更新规则 $\partial\mathcal{L}/\partial(\mathbf{e}_v^{(0)\top}\mathbf{e}_{v'}^{(0)})=\frac{\widetilde{\mathbf{S}}_{uv}}{\tau}(\mathbb{E}_{x\sim\pi_u}[\widetilde{\mathbf{S}}_{xv'}]-\widetilde{\mathbf{S}}_{iv'})$：一旦正样本物品 $i$ 与邻居 $v'$ 的结构相似度 $\widetilde{\mathbf{S}}_{iv'}$ 超过负样本期望，这一对邻居的内积就被上调。这从纯几何视角解释了 SSM 为何隐式做了"结构感知的选择性加权"，更关键的是它把对比损失从"表示分布"重新定位成"参数更新规则"——任何能写进 $\mathbb{E}_x[\widetilde{\mathbf{S}}_{xv'}]-\widetilde{\mathbf{S}}_{iv'}$ 的项，后续都可以被设计或替换，改进有了微分级的抓手。
 
-2. **同时引入用户侧结构相似度（破除"物品侧主导"局限）**:
+**2. 同时引入用户侧结构相似度：破除"只听物品侧"的局限。**
 
-    - 功能：把梯度里的判定项从仅依赖 $\widetilde{\mathbf{S}}_{iv'}$ 扩展为同时依赖 $\widetilde{\mathbf{S}}_{uv}$ 与 $\widetilde{\mathbf{S}}_{iv'}$，让 NT-SSM 在选择上调哪些邻居对时同时考虑"该邻居和目标用户的结构相似度"。
-    - 核心思路：把相似度函数 $s(u,i)$ 改成对用户和物品同时引入归一化结构权重的形式，使得梯度展开后 $\widetilde{\mathbf{S}}_{uv}$ 不再退化为单纯的乘子，而是参与决定上下调方向。等价于在 SSM 的"分母期望"上做了一次对称化，使用户侧与物品侧获得平等的话语权。
-    - 设计动机：观察 1 指出"用户侧也得只看结构相似的邻居才能涨点"，而原 SSM 只听物品侧的话；这一改让损失与第 4 节的实证结论对齐。
+上面的梯度判定项只依赖物品侧的 $\widetilde{\mathbf{S}}_{iv'}$，而第 4 节的实证（观察 1）显示用户侧也得只看结构相似的邻居才能涨点——原 SSM 等于只听了一半的话。NT-SSM 把相似度函数 $s(u,i)$ 改成对用户和物品同时引入归一化结构权重的形式，使梯度展开后 $\widetilde{\mathbf{S}}_{uv}$ 不再退化成单纯的乘子，而是和 $\widetilde{\mathbf{S}}_{iv'}$ 一起参与决定某对邻居该上调还是下调。直观上这相当于在 SSM 的"分母期望"上做了一次对称化，让用户侧与物品侧获得平等的话语权，损失也就和实证结论对齐了。
 
-3. **类型感知（NT）的邻居对加权**:
+**3. 类型感知（NT）的邻居对加权：让 UU/II/UI/IU 各按自己的尺度被上调。**
 
-    - 功能：把 UU、II、UI、IU 四类邻居对的相似度评估和负样本期望分桶进行，让每类按自己的尺度被上调。
-    - 核心思路：在计算 $\mathbb{E}_x[\widetilde{\mathbf{S}}_{xv'}]$ 时区分 $v,v'$ 的节点类型，相当于给每个类型独立校准了上调阈值；这样某类对（如 II）即使整体相似度数值偏低，也不会被另一类（如 UI）的高数值压住。
-    - 设计动机：观察 2 显示不同类型对在不同数据集上有截然不同的最优保留比例，统一规则必然牺牲一类去迁就另一类；分桶后才能让每类自行收敛到它的甜点。
+观察 2 发现 UU、II、UI、IU 四类邻居对在不同数据集上有截然不同的最优保留比例，一套统一规则必然牺牲一类去迁就另一类。NT-SSM 在计算负样本期望 $\mathbb{E}_x[\widetilde{\mathbf{S}}_{xv'}]$ 时按 $v,v'$ 的节点类型分桶，相当于给每个类型独立校准了上调阈值——这样某类对（如 II）即便整体相似度数值偏低，也不会被另一类（如 UI）的高数值压住，每一类都能自行收敛到它的甜点。
 
 ### 损失函数 / 训练策略
 NT-SSM 是 SSM 的"插件式"替换，没有额外正则项或两阶段调度。温度 $\tau$ 沿用 SSM 习惯，负样本采样保持 in-batch / uniform 即可；与 BPR 也兼容，作者同样给出 NT-BPR 变体，仅把 BPR 的 sigmoid 项替换为类型感知版本即可获得显著提升。

@@ -42,39 +42,25 @@ tags:
 
 ### 整体框架
 
-设置：$Z\sim q\,d\mathrm{Vol}_M$ 落在紧致 $C^5$ 嵌入子流形 $M\subset\mathbb{R}^D$（维度 $d$、正 reach）上；环境高斯加噪 $X=Z+\sigma\xi$，$\xi\sim\mathcal{N}(0,I_D)$。对小 $\sigma$，事件 $X\in\mathrm{Tub}_{r_0}(M)$ 以 $1-e^{-c/\sigma^2}$ 概率成立，因此最近点投影 $\pi:\mathrm{Tub}_{r_0}(M)\to M$ 几乎处处良定。
-
-整篇文章基本上是一条三步推导链：
-
-1. **定义规范目标**。原始切向 DSM 目标 $T_\sigma=P_T(\pi(X))\,(Z-X)/\sigma^2$；规范目标 $r_\sigma(z)=\mathbb{E}[T_\sigma\mid\pi(X)=z]$，是一个 $TM$ 上的切向场。
-2. **证明它的统计最优性**。在所有"只依赖 $\pi(X)$ 的切向场预测器"族（fiber-collapsing summaries）里，$r_\sigma$ 是唯一的 $L^2$ 风险极小元；同时 $T_\sigma$ 的条件方差精确地以 $d/\sigma^2+O(1)$ 发散，给出该限制族下的不可达 Bayes 下界。
-3. **算它的小噪声展开**。在任意嵌入子流形上，$r_\sigma(z)=\nabla_M\log q(z)+\sigma^2[b_q(z)+g_M^{\mathrm{ext}}(z)]+o(\sigma^2)$，其中 $b_q$ 是内蕴 Tweedie 项，$g_M^{\mathrm{ext}}$ 是涉及 Weingarten 算子和 Ricci 算子的外蕴曲率项。
-
-下面按这三块展开。
+要解决的是流形数据上"环境 DSM 切向目标被法向噪声污染"这个问题：数据 $Z\sim q\,d\mathrm{Vol}_M$ 落在紧致 $C^5$、正 reach 的嵌入子流形 $M\subset\mathbb{R}^D$（维度 $d$）上，加噪 $X=Z+\sigma\xi$（$\xi\sim\mathcal{N}(0,I_D)$），对小 $\sigma$ 事件 $X\in\mathrm{Tub}_{r_0}(M)$ 以 $1-e^{-c/\sigma^2}$ 概率成立，故最近点投影 $\pi:\mathrm{Tub}_{r_0}(M)\to M$ 几乎处处良定。本文不改训练流程，而是把"应该回归什么目标"这件事彻底想清楚：用 $\pi(X)$ 作充分统计量对原始切向目标做一次 Rao-Blackwell 条件期望，先证明所得的规范目标在统计上最优、方差有界，再把它展开到 $\sigma^2$ 阶看清它离真正的内蕴 score 差在哪。
 
 ### 关键设计
 
-1. **Rao-Blackwellized 切向目标 $r_\sigma$（规范性 + $L^2$ 最优性）**：
+**1. Rao-Blackwell 化的规范切向目标 $r_\sigma$：把奇异噪声通道平均掉**
 
-    - 功能：把原始 DSM 切向目标 $T_\sigma$ 沿"最近点投影 $\pi(X)$"做一次条件期望，得到一个仅依赖 $z\in M$ 的切向场 $r_\sigma:M\to TM$，作为环境 DSM 在流形数据上回归的真正"应该学的目标"。
-    - 核心思路：由于 $X-\pi(X)\in N_{\pi(X)}M$，原始 $T_\sigma$ 可以写成 $\sigma^{-2}P_T(\pi(X))(Z-\pi(X))$；条件在 $\pi(X)=z$ 上做 $L^2$ 投影分解，作者证明对任意切向场 $h$，$\mathcal{R}_\sigma(h)=\mathcal{R}_\sigma(r_\sigma)+\mathbb{E}\|r_\sigma(\pi(X))-h(\pi(X))\|^2$，故 $r_\sigma$ 是唯一的极小化器（Theorem 4.1）。更一般地，对任何"比 $\pi(X)$ 更粗"的 fiber-collapsing 统计量 $S$（即 $\sigma(S)\subseteq\sigma(\pi(X))$），都有 $\mathbb{E}\|T_\sigma-\eta\|^2=\mathbb{E}\|T_\sigma-r_\sigma(\pi(X))\|^2+\|r_\sigma(\pi(X))-\eta_S\|^2+\|\eta_S-\eta\|^2$，从而 $\pi(X)$ 是"最细的折叠纤维统计量"，$r_\sigma$ 是它配套的最优预测器，这是经典 Rao-Blackwell 定理在流形 DSM 设定下的对应版本。
-    - 设计动机：现有环境方法直接对 $T_\sigma$ 回归，等价于让网络逼近一个方差发散的目标——本质上是把法向高斯噪声"误当成监督信号"硬学。Rao-Blackwell 化提供了一个分析上规范、计算上只需要 $\pi(X)$（一个比 exp map 廉价得多的几何操作）的替代目标，把内蕴方法的"信号纯净度"和环境方法的"基础设施零成本"两者的优点合在一起。
+原始环境方法直接对切向 DSM 目标 $T_\sigma=P_T(\pi(X))(Z-X)/\sigma^2$ 回归，等价于让网络逼近一个方差发散的目标——本质上是把法向高斯噪声当成监督信号硬学。本文的关键观察是法向噪声只通过 $X-\pi(X)\in N_{\pi(X)}M$ 一维进入观测，而切向信号被 $\pi(X)$ 完整保留，于是可以把 $T_\sigma$ 改写成 $\sigma^{-2}P_T(\pi(X))(Z-\pi(X))$，再沿 $\pi(X)$ 做条件期望，定义规范目标 $r_\sigma(z)=\mathbb{E}[T_\sigma\mid\pi(X)=z]$，它是一个只依赖 $z\in M$ 的切向场 $r_\sigma:M\to TM$。在 $\pi(X)=z$ 上做 $L^2$ 投影分解可证：对任意切向场 $h$ 有 $\mathcal{R}_\sigma(h)=\mathcal{R}_\sigma(r_\sigma)+\mathbb{E}\|r_\sigma(\pi(X))-h(\pi(X))\|^2$，故 $r_\sigma$ 是唯一的风险极小化器（Theorem 4.1）；更一般地，对任何比 $\pi(X)$ 更粗的 fiber-collapsing 统计量 $S$（$\sigma(S)\subseteq\sigma(\pi(X))$），分解式 $\mathbb{E}\|T_\sigma-\eta\|^2=\mathbb{E}\|T_\sigma-r_\sigma(\pi(X))\|^2+\|r_\sigma(\pi(X))-\eta_S\|^2+\|\eta_S-\eta\|^2$ 表明 $\pi(X)$ 是"最细的折叠纤维统计量"、$r_\sigma$ 是它配套的最优预测器，正是经典 Rao-Blackwell 定理在流形 DSM 设定下的对应版本。这一步只需要 $\pi(X)$ 这个比 exp map 廉价得多的几何操作，就同时拿到了内蕴方法的信号纯净度和环境方法的零基础设施成本。
 
-2. **方差坍缩定理 + $d/\sigma^2$ Bayes 下界（Theorem 4.2）**：
+**2. 方差坍缩定理与 $d/\sigma^2$ 的 Bayes 下界：证明这一步不可省**
 
-    - 功能：量化"原始目标 $T_\sigma$ vs Rao-Blackwell 目标 $r_\sigma$"差到底有多少，并证明 $d/\sigma^2$ 这个发散率是任何 fiber-collapsing 预测器都不可能突破的下界。
-    - 核心思路：在管状坐标里把 $T_\sigma$ 分成切向信号 + 法向噪声两部分；法向部分在条件分布上是各向同性高斯且与 $\pi(X)$ 独立，直接算出 $\mathrm{Var}(T_\sigma\mid\pi(X)=z)=d/\sigma^2+O(1)$。再由全方差公式 $\mathrm{Var}(T_\sigma)=\mathrm{Var}(r_\sigma(\pi(X)))+d/\sigma^2+O(1)$，可知 $r_\sigma(\pi(X))$ 方差有界（$O(1)$），而 $T_\sigma$ 方差按 $d/\sigma^2$ 发散；同时由分解式得到对任何 $S$-可测预测器 $\eta$，$\inf_\eta\mathbb{E}\|T_\sigma-\eta\|^2\geq d/\sigma^2+O(1)$，且等号只在 $\sigma(S)=\sigma(\pi(X))$ 时取到。
-    - 设计动机：这一条把"为什么 Rao-Blackwell 化是必要的"从启发上升到信息论级别——不做这步，无论网络容量多大、训练多久，都至少要为发散方差付出 $d/\sigma^2$ 的不可降低风险；做了这步，方差立刻塌缩到 $O(1)$，整个监督信号的信噪比变成 $\sigma\to 0$ 时仍有意义的量。Figure 1 在 $S^2$ + von Mises-Fisher 上数值验证了 $\log T_\sigma^2$ 对 $\log\sigma$ 的斜率正是 $-2$，且 $r_\sigma$ 曲线持平在 $\mathbb{E}\|\nabla_M\log q\|^2$ 上。
+为了量化"做不做 Rao-Blackwell 差多少"，本文在管状坐标里把 $T_\sigma$ 拆成切向信号加法向噪声两部分，法向部分在条件分布上是各向同性高斯且与 $\pi(X)$ 独立，直接算得 $\mathrm{Var}(T_\sigma\mid\pi(X)=z)=d/\sigma^2+O(1)$；再由全方差公式 $\mathrm{Var}(T_\sigma)=\mathrm{Var}(r_\sigma(\pi(X)))+d/\sigma^2+O(1)$ 看出 $r_\sigma(\pi(X))$ 方差有界（$O(1)$），而 $T_\sigma$ 方差按 $d/\sigma^2$ 发散（Theorem 4.2）。同一分解还给出对任何 $S$-可测预测器 $\eta$ 的下界 $\inf_\eta\mathbb{E}\|T_\sigma-\eta\|^2\geq d/\sigma^2+O(1)$，且等号只在 $\sigma(S)=\sigma(\pi(X))$ 时取到。这把"为什么必须先做投影再回归"从经验启发抬到了信息论层面：不做这步，无论网络多大、训得多久都要为发散方差付出 $d/\sigma^2$ 的不可降低风险；做了这步方差立刻塌缩到 $O(1)$，监督信噪比在 $\sigma\to 0$ 时仍然有意义。Figure 1 在 $S^2$ + von Mises-Fisher 上验证了 $\log\mathbb{E}\|T_\sigma\|^2$ 对 $\log\sigma$ 的斜率正是 $-2$，而 $r_\sigma$ 曲线持平在 $\mathbb{E}\|\nabla_M\log q\|^2$。
 
-3. **外蕴 $\sigma^2$ 校正展开（Theorem 5.2 + Corollary 5.4）**：
+**3. 外蕴 $\sigma^2$ 校正展开：看清规范目标离内蕴 score 差在哪**
 
-    - 功能：在曲面上把规范目标 $r_\sigma$ 精确展开到 $\sigma^2$ 阶，分离出"哪部分偏置来自内蕴密度的 Tweedie 平滑、哪部分来自嵌入方式带来的曲率偏置"，并对球面给出闭式系数。
-    - 核心思路：在 graph 坐标下做 Bayes 计算，把诱导体积元修正和管状 Jacobian 平均曲率修正分别算清楚，得到 $r_\sigma(z)=\nabla_M\log q(z)+\sigma^2[b_q(z)+g_M^{\mathrm{ext}}(z)]+o(\sigma^2)$。其中内蕴 Tweedie 项 $b_q(z)=\tfrac{1}{2}\nabla_M[\Delta_M\log q+\|\nabla_M\log q\|^2](z)$；外蕴项 $g_M^{\mathrm{ext}}(z)=(\tfrac{1}{2}W_{H(z)}-\mathrm{Ric}_z^\sharp)\nabla_M\log q(z)$，$W_u$ 是法向 $u$ 方向的 Weingarten 算子、$H(z)$ 是平均曲率向量、$\mathrm{Ric}_z^\sharp$ 是 Ricci 自同态。在 $S^d$ 上代入 $W_\nu=-\mathrm{Id}$、$H=-dz$、$\mathrm{Ric}^\sharp=(d-1)\mathrm{Id}$，外蕴系数塌缩到标量 $\alpha_d=1-d/2$；$\alpha_1=+1/2,\alpha_2=0,\alpha_3=-1/2,\alpha_4=-1$。
-    - 设计动机：这条展开同时回答了两个长期没人正面回答的问题。第一，"环境 DSM 学到的到底是什么"——是内蕴 score 加上一个完全显式、可由两个曲率张量算出来的偏置项；第二，"为什么 $S^2$ 上环境 DSM 看起来效果出奇地好"——因为 $S^2$ 是 Einstein 流形且 $\tfrac{1}{2}W_H=\mathrm{Ric}^\sharp=\mathrm{Id}$ 恰好让外蕴项相消，留下的只有 $\sigma^2 b_q$ 这一内蕴 Tweedie 偏置；这个相消在 $S^1$、$S^3$、$S^d(d\geq 3)$ 都不再成立，理论预言的二阶偏置应当可被实验测到。此外平坦情形 $(M=V)$ 下两项都为零，环境 DSM 严格退化为低维 Gaussian DSM（Proposition 5.1），给整套理论提供了一个干净的基线。
+最后本文在 graph 坐标下对 $r_\sigma$ 做 Bayes 计算，把诱导体积元修正和管状 Jacobian 的平均曲率修正分别算清，得到精确到二阶的展开 $r_\sigma(z)=\nabla_M\log q(z)+\sigma^2[b_q(z)+g_M^{\mathrm{ext}}(z)]+o(\sigma^2)$（Theorem 5.2）：领头项就是真正的内蕴 Riemannian score，偏置由两块构成——内蕴 Tweedie 项 $b_q(z)=\tfrac{1}{2}\nabla_M[\Delta_M\log q+\|\nabla_M\log q\|^2](z)$，以及外蕴曲率项 $g_M^{\mathrm{ext}}(z)=(\tfrac{1}{2}W_{H(z)}-\mathrm{Ric}_z^\sharp)\nabla_M\log q(z)$，其中 $W_u$ 是法向 $u$ 方向的 Weingarten 算子、$H(z)$ 是平均曲率向量、$\mathrm{Ric}_z^\sharp$ 是 Ricci 自同态。在球面 $S^d$ 上代入 $W_\nu=-\mathrm{Id}$、$H=-dz$、$\mathrm{Ric}^\sharp=(d-1)\mathrm{Id}$，外蕴系数塌缩成标量 $\alpha_d=1-d/2$（Corollary 5.4），即 $\alpha_1=+1/2,\alpha_2=0,\alpha_3=-1/2,\alpha_4=-1$。这条展开一次回答了两个老问题：环境 DSM 学到的就是内蕴 score 加一个完全显式、可由两个曲率张量算出的偏置；而 $S^2$ 上之所以"看起来效果出奇地好"，是因为它恰是 Einstein 流形、$\tfrac{1}{2}W_H=\mathrm{Ric}^\sharp=\mathrm{Id}$ 让外蕴项相消、只剩 $\sigma^2 b_q$ 这一内蕴偏置——这个相消在 $S^1$、$S^3$、$S^d(d\geq3)$ 都不再成立，理论预言的二阶偏置应当可被实验测到。平坦情形 $M=V$ 下两项都为零，环境 DSM 严格退化为低维 Gaussian DSM（Proposition 5.1），给整套理论提供了干净基线。
 
 ### 损失函数 / 训练策略
 
-本文是 population-level identification theorem，没有定义新的损失。隐含训练策略是：把网络回归目标从 $T_\sigma$（原始 DSM 切向残差）替换为 $r_\sigma$ 的有限样本估计 $\widehat{r}_{\sigma,i}$（比如对邻域内样本做局部线性回归，Appendix G 给了 $O(N^{-2/(d+4)})$ 的非参收敛率）。Figure 3(b) 在多个 Einstein 流形上跑相同 MLP 架构和训练预算，对比"回归 $T_{\sigma,i}$ vs 回归 $\widehat{r}_{\sigma,i}$"，后者 score MSE 显著更低，且差距随 $d$ 增大而扩大——和 Theorem 4.2 中的 $d/\sigma^2$ 因子完全一致。
+本文是 population-level identification theorem，没有定义新损失。隐含训练策略是把网络回归目标从原始切向残差 $T_\sigma$ 换成 $r_\sigma$ 的有限样本估计 $\widehat{r}_{\sigma,i}$，例如对邻域样本做局部线性回归（Appendix G 给出 $O(N^{-2/(d+4)})$ 的非参收敛率）。Figure 3(b) 在多个 Einstein 流形上以相同 MLP 架构和训练预算对比"回归 $T_{\sigma,i}$ vs 回归 $\widehat{r}_{\sigma,i}$"，后者 score MSE 显著更低且差距随 $d$ 增大而扩大，与 Theorem 4.2 中的 $d/\sigma^2$ 因子完全一致。
 
 ## 实验关键数据
 

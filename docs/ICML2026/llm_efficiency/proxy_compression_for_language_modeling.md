@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-训练管线：(1) 对每条样本 $x_{\text{raw}}$，以 Bernoulli 概率 $r$（默认 0.9）替换为 $x_{\text{comp}}=f(x_{\text{raw}})$，否则保留 raw；(2) 每段用 sentinel 包裹为 $[\langle\text{raw}\rangle x_{\text{raw}}\langle/\text{raw}\rangle]$ 或 $[\langle\text{comp}\rangle x_{\text{comp}}\langle/\text{comp}\rangle]$；(3) warm-up 期（前 10k 步）启用 in-context pairing —— 把同一样本的两种视角串到同一上下文里，并让 $r$ 从 0.4 线性升到 0.9；(4) warm-up 后关掉 pairing 固定 $r=0.9$；(5) 推理只喂 raw 字节，丢掉所有压缩器。词表共享：前 64 索引给 sentinel、之后 256 给 UTF-8 字节、剩余给压缩符号（tokenizer 用 OpenCoder 96,640 词表；neural 用 16-bit pack 共 65,536 符号；gzip 用 256 字节）。
+核心想法是让同一个模型在训练期同时吃「压缩短序列」和「原始字节」两种表示，并在权重里建立两者的内部映射，这样推理时就能把压缩器整个扔掉、只在原始 UTF-8 上运行。具体管线是：对每条样本 $x_{\text{raw}}$ 以概率 $r$（默认 0.9）替换成压缩流 $x_{\text{comp}}=f(x_{\text{raw}})$、否则保留原始字节，每段都用 `<raw>/<comp>` sentinel 包裹标明表示类型；训练前 10k 步是 warm-up，把同一样本的两种视角串进同一上下文做 in-context pairing 并把 $r$ 从 0.4 线性升到 0.9，warm-up 后关掉 pairing、固定 $r=0.9$ 跑到底；推理只喂 raw 字节。三者共享一张词表：前 64 索引留给 sentinel、接着 256 给 UTF-8 字节、剩余给压缩符号（tokenizer 用 OpenCoder 96,640 词表，neural 用 16-bit pack 共 65,536 符号，gzip 用 256 字节）。
 
 ### 关键设计
 
-1. **Tokenizer-based proxy（§2.2）**:
+**1. Tokenizer-based proxy：把现成 BPE 当成最简单的训练期压缩器。**
 
-    - 功能：用现成 tokenizer 把 raw 字节流离线压成 token 索引序列作为 $x_{\text{comp}}$，把"训练时享 tokenizer 效率、推理时丢 tokenizer"做成最简单的实例化。
-    - 核心思路：直接调用 OpenCoder BPE，平均压缩率约 $2.9\times$。token 仍然按词表索引输入模型，与一般 tokenizer 模型唯一区别是它出现在带 `<comp>` 标签的序列里、且训练时 10% 概率改用原始字节。论文还试过把 token id 重新编码为定长字节序列，效果没有直接 id 表示好。
-    - 设计动机：tokenizer 输出的稳定性极高（Levenshtein 距离对 10% 字符删除几乎不动），最容易让 LM 学到 "comp ↔ raw" 的映射；同时可全离线预处理，无额外训练成本。
+要兑现「训练享 tokenizer 效率、推理丢 tokenizer」，最直接的实例化就是拿一个现成 tokenizer 把原始字节离线压成 token 索引序列当作 $x_{\text{comp}}$。这里直接调用 OpenCoder BPE，平均压缩率约 $2.9\times$，token 仍按词表索引喂进模型，与普通 tokenizer 模型唯一的区别是它出现在带 `<comp>` 标签的序列里、且训练时有 10% 概率被换成原始字节。之所以选 tokenizer 打头阵，是因为它输出极其稳定——对 10% 字符删除这种扰动，Levenshtein 距离几乎不动，这种稳定性让 LM 最容易学到 "comp ↔ raw" 的映射；同时它可以全离线预处理，没有任何额外训练成本。论文也试过把 token id 重新编码成定长字节序列，但效果不如直接用 id 表示好。
 
-2. **Neural proxy + 熵分段并行（§2.3）**:
+**2. Neural proxy + 熵分段并行：用神经压缩器换更优的熵编码，靠熵分段让它工程可行。**
 
-    - 功能：用一个 40M byte-level LM + arithmetic coding 给字节流做最优熵编码，得到压缩率 $\sim 2.6\times$ 的"模糊"压缩流。
-    - 核心思路：先训小 byte LM 给出每位置 $p(\cdot|\text{ctx})$，再以 equal-information windows 做 arithmetic coding；为避免逐字节串行编码速度爆炸，引入「熵分段」—— 用 LM 算出 per-byte entropy，把高熵位置当作切片边界，每段独立并行压缩。每 16 bits pack 成一个符号。注意此映射对 raw 是确定性单射，但反向并非单射 —— 不同的 raw 字节可能映到同一 comp 段（"fuzzy"），不过 collide 的 raw chunk 90%+ 都共享 LCP $\geq 0.8$，只在 whitespace/newline/indent 等低熵尾部不同。
-    - 设计动机：tokenizer 是手工 BPE 的产物，neural compressor 在理论上更优；熵分段是让该方案"工程可行"的关键 —— 不并行就跑不动 3.3 TB 语料。结构化模糊性反而帮助模型抽象掉格式噪声，提升鲁棒性。
+tokenizer 终究是手工 BPE 的产物，理论上神经压缩器能做得更优，于是第二种 proxy 改用一个 40M byte-level LM 配 arithmetic coding 给字节流做近最优熵编码，压缩率约 $2.6\times$。做法是先训小 byte LM 给出每个位置的 $p(\cdot|\text{ctx})$，再以 equal-information windows 做 arithmetic coding，每 16 bits pack 成一个符号。逐字节串行编码会慢到跑不动 3.3 TB 语料，所以引入「熵分段」——用 LM 算出 per-byte entropy，把高熵位置当作切片边界，每段独立并行压缩，这是让整套方案落地的关键。值得注意的是这个映射对 raw 是确定性单射、但反向并非单射：不同的原始字节可能映到同一 comp 段（即所谓 "fuzzy"），不过发生碰撞的 raw chunk 里 90%+ 都共享 $\text{LCP}\geq 0.8$，差异只落在 whitespace / newline / indent 这类低熵尾部。这种「结构化模糊」反而成了好事——它帮模型把格式噪声抽象掉，鲁棒性不降反升。
 
-3. **In-context translation pairing + sentinel + 高 $r$ warm-up（§2.1, 2.5）**:
+**3. In-context pairing + sentinel + 高 $r$ warm-up：让对齐进权重，却不让推理依赖压缩器。**
 
-    - 功能：让模型在 weights 里建立 comp ↔ raw 的对齐，又不至于在推理期非要看到 comp 才能 work。
-    - 核心思路：(a) 用 `<raw>/<comp>` sentinel 显式告诉模型当前 segment 的表示类型，让 next-token prediction 可以条件于表示类型；(b) warm-up 阶段把 $[\langle\text{raw}\rangle x_{\text{raw}}\langle/\text{raw}\rangle\langle\text{comp}\rangle x_{\text{comp}}\langle/\text{comp}\rangle]$（顺序随机）拼到同一上下文，强制模型同时看到两种视角；(c) warm-up 结束立刻关掉 pairing，避免模型形成「推理时必须有 comp 在前」的依赖。$r$ 从 0.4 渐升至 0.9 是为防止训练早期 raw 见太少导致 representation alignment 学不到。
-    - 设计动机：no-pairs 训练时 oracle-translation pass@1 只能到 30-46%；always-on pairing 能达 95%+ 但模型变得依赖 pairing，下游 raw-byte pass@1 反而略降；warm-up-only 既保证早期对齐又不养出依赖，是经验最优折中（Table 3 验证）。
+前两个设计提供了压缩表示，但真正的难点是怎么让模型把 comp ↔ raw 的对齐内化到权重里、又不至于推理时非看到 comp 才能工作。三件事配合解决：一是用 `<raw>/<comp>` sentinel 显式告诉模型当前段的表示类型，让 next-token prediction 能条件于表示类型；二是 warm-up 阶段把 $[\langle\text{raw}\rangle x_{\text{raw}}\langle/\text{raw}\rangle\langle\text{comp}\rangle x_{\text{comp}}\langle/\text{comp}\rangle]$（顺序随机）拼进同一上下文，强迫模型同时看到两种视角；三是 warm-up 一结束就立刻关掉 pairing，避免模型养成「推理时必须有 comp 在前」的依赖。$r$ 从 0.4 渐升到 0.9 同样是为了防止训练早期 raw 见得太少、对齐学不起来。这个折中是被消融逼出来的：no-pairs 训练时 oracle-translation pass@1 只能到 30–46%，always-on pairing 能冲到 95%+ 但模型变得依赖 pairing、下游 raw-byte pass@1 反而略降；只有 warm-up-only 既保证了早期对齐、又不养出依赖（Table 3 验证），是经验上的最优解。
 
 ### 损失函数 / 训练策略
-唯一损失就是普通的 next-token CE，目标对 raw 与 comp 两种 segment 一视同仁。架构用 EvaByte（高效字节级 multi-byte prediction），训练 50K 步 / batch 2M symbols，覆盖 0.5B / 1.5B / 4B / 7B / 14B 五个尺寸。
+唯一损失就是普通的 next-token CE，对 raw 与 comp 两种 segment 一视同仁。架构用 EvaByte（高效字节级 multi-byte prediction），训练 50K 步 / batch 2M symbols，覆盖 0.5B / 1.5B / 4B / 7B / 14B 五个尺寸。
 
 ## 实验关键数据
 

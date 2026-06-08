@@ -44,42 +44,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段few-shot目标检测框架，基于FsDet（Frustratingly Simple Few-Shot Object Detection）/ Faster R-CNN实现。
+本文不提新模型，而是搭一套能**逼出真实部署失败**的评估装置。骨架是经典的两阶段few-shot检测：基于FsDet（Frustratingly Simple Few-Shot Object Detection）/ Faster R-CNN，先在一个 base 数据集上训练得到通用检测能力，再用部署数据集的少量样本（1/5/10-shot）微调到 novel 类别。
 
-**Pipeline**：Base training（在CURE或MEDISEG上训练base classes）→ Few-shot fine-tuning（用novel deployment dataset的1/5/10-shot支持集微调）→ Query set评估（516张多药丸混乱场景图像）+ Overlap-only压力测试（133张严重重叠场景图像）。
+关键在于怎么"喂"和怎么"测"。喂的一端，作者刻意准备了两个视觉真实度天差地别的 base 数据集（受控单药丸 vs 真实多药丸），用它们去隔离"训练数据真实性"这个变量；测的一端，作者放弃了在异构标注下会失真的 mAP，改用分类中心的指标，并额外切出一个全是重叠遮挡的压力测试集。整条流水线是：在 CURE 或 MEDISEG 上做 base training → 用部署数据集的 K-shot 支持集微调 → 在 516 张多药丸混乱场景的 query set 上评估，再在 133 张严重重叠场景上做 overlap-only 压力测试。
 
 ### 关键设计
 
-1. **数据集设计与对比**
+**1. 双 base 数据集对照：把"数据量"和"视觉真实性"拆开看**
 
-    - 功能：刻意选择两个视觉复杂度差异巨大的数据集作为base training来源
-    - 核心思路：CURE（8973图/196类/单药丸受控环境/全图bbox标注）vs MEDISEG（8262图/32类/多药丸真实场景/实例级bbox标注）。两者类别不重叠，都不与novel类别混合
-    - 设计动机：通过控制base domain的视觉真实性，隔离"训练数据真实性"这一变量对few-shot泛化的影响。CURE数据量多、类别多但单一简单；MEDISEG数据量少、类别少但视觉复杂度高——这构成了一个自然的"量vs质"实验
+标准 few-shot 检测往往只在一个分布里划分 base/novel，根本测不出"训练时见过的世界和部署时面对的世界不一样"会带来什么。本文用两个类别完全不重叠、都不与 novel 类混合的 base 域来制造对照：CURE 有 8973 张图、196 个类，但全是单药丸、受控光照、整图级 bbox 标注，属于"量大类多但简单"；MEDISEG 只有 8262 张图、32 个类，却是多药丸真实场景、实例级 bbox 标注，属于"量小类少但视觉复杂"。两者刚好构成一个天然的"量 vs 质"实验——后面实验里 MEDISEG 在最难条件下反超 CURE，正是靠这个对照才能把功劳归到"视觉真实性"而非数据规模上。
 
-2. **Few-shot适应协议**
+**2. Few-shot 适应协议：固定预算 + 冻结骨干，保证差异只来自 base 域**
 
-    - 功能：在novel deployment dataset上执行5-way K-shot适应
-    - 核心思路：$K \in \{1, 5, 10\}$，support set从部署数据集采样，query set（516图）和overlap-only set（133图）严格分离。Fine-tuning固定2000 iterations，SGD + momentum 0.9，lr=$1\times10^{-3}$，backbone冻结，仅微调ROI heads和部分RPN
-    - 设计动机：固定训练预算消除训练时长混淆；冻结backbone保留base知识；严格数据分离确保观察到的差异归因于base-domain特性而非数据泄露
+要让"哪个 base 域更好"这个结论可信，就必须堵死所有混淆变量。作者在 novel 部署数据集上做 5-way $K$-shot 适应，$K \in \{1, 5, 10\}$，支持集从部署集采样，query set（516 图）和 overlap-only set（133 图）严格分离、不与支持集重叠。微调一律固定 2000 iterations，SGD + momentum 0.9、lr $=1\times10^{-3}$，backbone 冻结、只动 ROI heads 和受限学习率的部分 RPN。固定迭代数消除了训练时长的混淆，冻结骨干保住了 base 阶段学到的通用特征，严格的数据分离则排除了泄露——这样一来观察到的性能差异就只能归因于 base 域特性本身。
 
-3. **Classification-centric评估体系**
+**3. 分类中心评估体系：用 FG-Acc 和 FN 绕开异构标注下失真的 mAP**
 
-    - 功能：用前景分类准确率（FG-Acc）、假阴性率（FN rate）、RPN分类loss、总loss替代传统mAP作为主要指标
-    - 核心思路：$\text{FG-Acc} = \frac{\text{正确前景分类数}}{\text{总前景提议数}}$，$\text{FN} = \frac{\text{漏检GT目标数}}{\text{总GT目标数}}$
-    - 设计动机：CURE（全图bbox）和MEDISEG（实例bbox）标注粒度不同导致IoU匹配不一致，AP在跨标注策略时不可比。分类指标和错误指标能隔离语义识别和定位失败，暴露mAP掩盖的失败模式
+CURE 是整图 bbox、MEDISEG 是实例 bbox，两者的 IoU 匹配口径根本不一致，跨标注策略直接比 AP 是不公平的，而且 AP 会把"认错了"和"框歪了"两类错误揉在一起、掩盖真正的失败模式。作者因此把主指标换成前景分类准确率与假阴性率：
 
-4. **Overlap-only压力测试**
+$$\text{FG-Acc} = \frac{\text{正确前景分类数}}{\text{总前景提议数}}, \qquad \text{FN} = \frac{\text{漏检 GT 目标数}}{\text{总 GT 目标数}}$$
 
-    - 功能：从部署数据集中筛选133张严重重叠的药丸场景作为独立测试集
-    - 核心思路：人工验证每张图片确实存在显著遮挡/边界模糊，提供instance-level bbox + segmentation mask标注。与standard评估共享label space但改变场景结构
-    - 设计动机：标准评估可能混淆简单场景和困难场景的表现；overlap-only set隔离最具挑战的视觉条件，直接暴露模型在遮挡下的脆弱性
+再配上 RPN 分类 loss 和总 loss 作为辅助。FG-Acc 衡量"框对了之后认得对不对"（语义识别），FN 衡量"该检的有没有漏"（定位/recall），两者一拆开，分类成功但定位崩塌的现象才暴露得出来——这正是后面"分类-定位解耦"结论的度量基础。
+
+**4. Overlap-only 压力测试：把最难的遮挡场景单独拎出来**
+
+标准 query set 里简单图和困难图混在一起，平均下来会把"遮挡场景已经崩了"这件事冲淡。作者从部署数据集中人工筛出 133 张确有显著遮挡 / 边界模糊的药丸场景，逐张验证并提供实例级 bbox + 分割 mask 标注，构成一个与标准评估共享 label space、只改变场景结构的独立测试集。它把最具挑战的视觉条件隔离出来单测，直接把模型在重叠下的脆弱性顶到台面上——实验中 CURE 1-shot 的 FG-Acc 从标准集的 0.989 暴跌到这里的 0.131，全靠这个设计才看得见。
 
 ### 训练策略
-- Base training：标准Faster R-CNN训练，固定设置不随实验变化
-- Few-shot fine-tuning：SGD, momentum=0.9, weight decay=$1\times10^{-4}$, lr=$1\times10^{-3}$, 2000 iterations
-- Backbone（ResNet + FPN）冻结，RPN部分可训练（受限lr），ROI heads全量微调
-- 分类层为novel classes重新初始化
-- 无额外数据增强（仅Detectron2标准变换）
+Base training 用标准 Faster R-CNN，配置固定、不随实验变化。Few-shot fine-tuning 阶段采用 SGD（momentum 0.9、weight decay $1\times10^{-4}$、lr $1\times10^{-3}$）跑 2000 iterations；backbone（ResNet + FPN）冻结，RPN 以受限学习率部分可训练，ROI heads 全量微调，分类层为 novel 类重新初始化。除 Detectron2 标准变换外不加任何额外数据增强，以免增强本身成为又一个混淆因素。
 
 ## 实验关键数据
 

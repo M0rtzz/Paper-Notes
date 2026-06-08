@@ -18,128 +18,6 @@ tags:
 **会议**: CVPR 2026  
 **arXiv**: [2603.05530](https://arxiv.org/abs/2603.05530)  
 **代码**: 无  
-**领域**: 机器人  
-**关键词**: VLN, proactive perception, MCTS, zero-shot navigation, LLM agent
-
-## 一句话总结
-提出 ProFocus，一个 training-free 框架，通过推理引导的主动感知（构建语义地图并迭代生成定向视觉查询）和分支多样化蒙特卡洛树搜索（BD-MCTS，筛选 top-k 高价值路点实现聚焦推理），在 R2R 和 REVERIE 上达到零样本 VLN 的 SOTA。
-
-## 研究背景与动机
-**领域现状**：Vision-and-Language Navigation（VLN）让智能体根据自然语言指令在环境中导航。基础模型的发展催生了两条路线：微调适应（如 NaviLLM，需大量数据但泛化差）和零样本推理（如 NavGPT、MapGPT，直接利用 LLM/VLM 的推理能力）。
-
-**现有痛点**：(1) **被动视觉感知**——现有方法全量处理全景图或多视图输入，大量冗余视觉 token 导致注意力弥散，遮蔽了指令关键的细粒度线索（如物体颜色、纹理、空间关系）；(2) **无焦点推理**——所有历史路点被无差别对待，随着轨迹变长，模型难以从大量历史上下文中隔离关键线索，导致决策效率低下。
-
-**核心矛盾**：VLM 的视觉 token 膨胀与精细属性识别需求的矛盾；LLM 的历史上下文无限增长与有效决策所需的聚焦推理之间的矛盾。
-
-**本文目标**：让导航智能体主动获取任务相关视觉信息（而非被动接收全部输入），并在大量历史路点中聚焦于高价值候选进行推理。
-
-**切入角度**：受人类认知启发（人类不会均匀回顾所有过往状态，而是修剪低价值分支、选择性重放任务相关轨迹），构建感知-推理闭环 + 价值驱动的路点优先级。
-
-**核心 idea**：主动感知（"看什么"由推理决定）+ 聚焦推理（BD-MCTS 筛出 top-k 路点）= 高效零样本 VLN。
-
-## 方法详解
-
-### 整体框架
-ProFocus 采用三个专业化智能体：编排智能体 $\mathcal{A}_{\text{orch}}^{\theta}$（LLM，空间推理和语义评估）、感知智能体 $\mathcal{A}_{\text{perc}}^{\phi}$（VLM，细粒度感知）、决策智能体 $\mathcal{A}_{\text{dec}}^{\psi}$（LLM，对 top-k 候选推理）。每个时间步执行两个核心机制：(1) 推理引导的主动感知——将全景观测转为结构化语义地图，迭代生成定向查询直到信息充分；(2) 基于 BD-MCTS 的聚焦推理——维护全局搜索树，筛选 top-k 高价值路点，决策智能体仅对这些候选做深度推理。
-
-### 关键设计
-
-1. **以自我为中心的语义地图 + 推理驱动感知闭环**:
-
-    - 功能：将冗余全景观测压缩为结构化文本表示，并迭代获取指令相关的精细视觉属性
-    - 核心思路：全景图分为 $K$ 个方向视图，VLM 检测所有物体的边界框和类别 $\{(\mathbf{b}_i, \text{obj}_i)\}_{i=1}^{N_t}$，结合单目深度估计 $d_i$ 和朝向角 $h_i = \pi \cdot (x_1 + x_2 - F) / F$ 构建语义地图 $\mathcal{C}_t = \{(h_i, \text{obj}_i(\mathbf{b}_i), d_i)\}$。编排智能体基于语义地图、轨迹历史和指令生成定向查询 $(q, R_{\text{focus}}^t) = \mathcal{A}_{\text{orch}}^{\theta}(\mathcal{C}_t, \tau_t, \mathcal{I}, \mathcal{H}_{\text{query}})$，感知智能体仅在焦点区域内做细粒度分析 $a_i^t = \mathcal{A}_{\text{perc}}^{\phi}(\mathcal{O}_t|_{R_{\text{focus}}^t}, q)$。循环直到编排智能体判断信息充分
-    - 设计动机：被动感知处理全部视觉 token 造成注意力弥散，主动查询机制减少 token 数、增强属性识别、按需适应导航需求
-
-2. **分支多样化蒙特卡洛树搜索（BD-MCTS）**:
-
-    - 功能：从大量历史路点中筛选 top-k 高价值候选，使决策智能体聚焦推理
-    - 核心思路：维护搜索树 $\mathcal{T} = \langle V_{\mathcal{T}}, E_{\mathcal{T}}, Q, N \rangle$。三阶段执行：**Phase I 扩展**——发现新路点并用语义值初始化 $Q(u) \leftarrow V_{\text{sem}}(u)$（替代传统 MCTS 的随机 rollout）；**Phase II 反向传播**——沿当前路径增量更新 $Q(v) \leftarrow Q(v) + (R_t - Q(v))/N(v)$，低奖励触发回溯、高奖励强化前进；**Phase III Top-k 选择**——计算路径聚合值并加距离惩罚 $\text{Score}(v) = V_{\text{path}}(v) - \lambda \cdot d_{\mathcal{G}}(v_t, v) / \max d$，约束每个父节点最多贡献 2 个孩子以保证分支多样性
-    - 设计动机：标准 MCTS 选单一最优动作，VLN 需要考虑多条候选路线；均匀处理所有历史路点导致注意力弥散，top-k 筛选使 LLM 聚焦于最有价值的决策上下文
-
-3. **语义值评估与信息融合**:
-
-    - 功能：量化新发现路点与导航指令的语义相关度
-    - 核心思路：感知闭环终止后，编排智能体综合积累的视觉信息评估新路点语义值 $V_{\text{sem}}(u) = \mathcal{A}_{\text{orch}}^{\theta}(\mathcal{I}, \tau_t, \{a_i^t\}_{i=1}^{n_t}) \in [0,1]$。所有信息整合为多模态上下文 $\mathcal{S}_t = \{\mathcal{I}, \tau_t, \mathcal{C}_t, \{a_i^t\}\}$ 存入记忆库 $\mathcal{M}$，决策智能体通过索引 top-k 路点的路径标识符从 $\mathcal{M}$ 检索相关历史上下文
-    - 设计动机：为 BD-MCTS 提供基于多模态上下文的节点价值估计，替代传统 MCTS 的随机模拟
-
-### 损失函数 / 训练策略
-ProFocus 是 training-free 框架，无需训练或微调。使用现成的 LLM（Qwen3-Max / DeepSeek-V3）和 VLM（Qwen3-VL-Max / GLM-4.5V）。
-
-## 实验关键数据
-
-### 主实验
-R2R validation unseen（零样本 VLN 方法对比）：
-
-| 方法 | NE↓ | OSR↑ | SR↑ | SPL↑ |
-|------|-----|------|-----|------|
-| NavGPT (GPT-4) | 6.46 | 42.0 | 34.0 | 29.0 |
-| MapGPT (GPT-4V) | 5.63 | 57.6 | 43.7 | 34.8 |
-| DiscussNav (GPT-4) | 5.32 | 61.0 | 43.0 | 40.0 |
-| NavGPT† (Q3) | 4.82 | 57.5 | 47.0 | 38.4 |
-| MapGPT† (GLM) | 5.00 | 70.7 | 41.4 | 30.8 |
-| **ProFocus (DS3+GLM)** | 5.21 | 63.0 | **50.0** | **41.2** |
-| **ProFocus (Q3+Q3VL)** | **4.92** | **65.0** | 52.5 | 39.8 |
-
-REVERIE validation unseen：
-
-| 方法 | OSR↑ | SR↑ | SPL↑ |
-|------|------|-----|------|
-| MapGPT (GPT-4V) | 36.8 | 31.6 | 20.3 |
-| MapGPT† (GLM) | 50.5 | 37.1 | 24.7 |
-| **ProFocus (DS3+GLM)** | **57.1** | 36.9 | **25.9** |
-| **ProFocus (Q3+Q3VL)** | 51.7 | **40.0** | 24.8 |
-
-### 消融实验
-R2R validation unseen（Q3+Q3VL 配置）：
-
-| 配置 | NE↓ | OSR↑ | SR↑ | SPL↑ |
-|------|-----|------|-----|------|
-| ProFocus (完整) | 4.92 | 65.0 | 52.0 | 39.8 |
-| w/o BD-MCTS | 6.19 | 53.7 | 50.0 | 38.4 |
-| w/o Proactive Perception | 5.97 | 54.0 | 48.0 | 34.4 |
-
-REVERIE validation unseen（Q3+Q3VL 配置）：
-
-| 配置 | OSR↑ | SR↑ | SPL↑ |
-|------|------|-----|------|
-| ProFocus (完整) | 51.7 | 40.0 | 24.8 |
-| w/o BD-MCTS | 48.9 | 37.8 | 27.4 |
-| w/o Proactive Perception | 34.0 | 30.0 | 18.5 |
-
-### 关键发现
-- 主动感知对 SPL 影响最大（R2R 上 -5.4%），说明定向查询显著提升路径效率
-- 去除 BD-MCTS 导致 OSR 大幅下降（REVERIE 上 -17.7%），说明 top-k 筛选对探索能力至关重要
-- 在 R2R 最长 30 条轨迹上，ProFocus 达 50% SR，验证了长轨迹鲁棒性
-- 两种基础模型配置（DS3+GLM 和 Q3+Q3VL）均持续优于对应基线，说明改进来自框架而非特定模型
-
-## 亮点与洞察
-- "看什么由推理决定"的主动感知闭环设计精巧——将全景图的 token 爆炸问题转化为按需查询
-- BD-MCTS 巧妙地解决了 VLN 中"所有历史都重要但不能全看"的难题，top-k + 分支多样性约束兼顾深度和广度
-- 语义值替代随机 rollout 的设计避免了 NeRF/VLN 环境中模拟的高成本
-- training-free + 即插即用不同 LLM/VLM 组合，实际部署友好
-
-## 局限与展望
-- 依赖强大的商用 API（Qwen3-Max、DeepSeek-V3），推理成本较高
-- 每步多次 VLM 调用（构建语义地图 + 迭代查询）可能导致延迟问题
-- 仅在 R2R 和 REVERIE 上测试，未验证连续动作空间或真实机器人部署
-- BD-MCTS 的超参数（top-k 值、$\lambda$、分支约束）的敏感性分析不够充分
-
-## 相关工作与启发
-- NavGPT 将全景转为文本描述再用 GPT-4 决策，但被动感知导致信息丢失
-- MapGPT 引入 SAM 做视觉负担分离，但仍然一次性处理所有视觉输入
-- MCTS 在 AlphaGo 中大获成功，BD-MCTS 的贡献在于适配图结构导航（处理环路）和用语义值替代 rollout
-- 主动感知的思路可推广到其他 VLM 任务（如 embodied QA、对话导航）
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐ 主动感知闭环 + BD-MCTS 的组合在 VLN 中首次出现
-- 实验充分度: ⭐⭐⭐⭐ 两个 benchmark、多模型配置、完整消融和定性分析
-- 写作质量: ⭐⭐⭐⭐ 公式化严谨，框架图清晰
-- 价值: ⭐⭐⭐⭐ 为 training-free VLN 提供了有效的感知-推理范式
-# ProFocus: Proactive Perception and Focused Reasoning in Vision-and-Language Navigation
-
-**会议**: CVPR 2026  
-**arXiv**: [2603.05530](https://arxiv.org/abs/2603.05530)  
-**代码**: 无  
 **领域**: 机器人 / 视觉语言导航  
 **关键词**: VLN, proactive perception, MCTS, zero-shot navigation, LLM agent
 
@@ -162,30 +40,43 @@ REVERIE validation unseen（Q3+Q3VL 配置）：
 ## 方法详解
 
 ### 整体框架
-ProFocus 包含三个专用智能体：编排智能体 $\mathcal{A}_{\mathrm{orch}}^{\boldsymbol{\theta}}$（LLM，空间推理和语义评估）、感知智能体 $\mathcal{A}_{\mathrm{perc}}^{\boldsymbol{\phi}}$（VLM，细粒度感知）、决策智能体 $\mathcal{A}_{\mathrm{dec}}^{\boldsymbol{\psi}}$（LLM，基于 top-k 候选推理）。输入全景图和指令，输出导航动作。
+ProFocus 要解决的是 VLN 里"看得太多、记得太杂"的两个老毛病：全景图一股脑塞给 VLM 让注意力被冗余像素稀释，长轨迹历史不加区分地堆给 LLM 让推理被无关路点淹没。它的做法是把一步导航拆成"感知—推理"的闭环，由三个分工明确的智能体接力完成：编排智能体 $\mathcal{A}_{\mathrm{orch}}^{\boldsymbol{\theta}}$（LLM）负责空间推理，判断当前缺什么信息、该往哪看；感知智能体 $\mathcal{A}_{\mathrm{perc}}^{\boldsymbol{\phi}}$（VLM）只在被指定的区域做细粒度识别；决策智能体 $\mathcal{A}_{\mathrm{dec}}^{\boldsymbol{\psi}}$（LLM）在筛选过的少量高价值候选上做最终选路。每一步先把全景图压成一张语义地图，编排智能体据此发起若干轮"针对性提问—定点观察"直到信息够用，再由 BD-MCTS 从全局历史中挑出 top-k 候选交给决策智能体，输出下一个动作。
 
 ### 关键设计
 
-1. **以自我为中心的语义地图 (Ego-centric Semantic Map)**:
+**1. 以自我为中心的语义地图：把像素压成 LLM 能空间推理的文本**
 
-    - 功能：将全景观测转化为结构化的文本表示，编码物体位置、深度和方向关系
-    - 核心思路：全景图分为 $K$ 个方向视图，VLM 并行检测所有物体 $\{(\boldsymbol{b}_i, \textit{obj}_i)\}_{i=1}^{N_t}$，用单目深度估计获取深度 $d_i$，计算朝向角 $h_i = \pi \cdot (\frac{x_1 + x_2 - F}{F})$，构建语义地图 $\mathcal{C}_t = \{(h_i, \textit{obj}_i(\boldsymbol{b}_i), d_i)\}_{i=1}^{N_t}$，格式化为自然语言文本
-    - 设计动机：将视觉信息压缩为结构化文本，使 LLM 能进行空间推理（如"左边的物体"），避免处理大量原始像素
+直接把全景图喂给 VLM 会带来海量冗余视觉 token，而 LLM 又读不懂原始像素里的方位关系。语义地图的思路是先把全景图切成 $K$ 个方向视图，让 VLM 并行检测所有物体 $\{(\boldsymbol{b}_i, \textit{obj}_i)\}_{i=1}^{N_t}$，再用单目深度估计补上每个物体的深度 $d_i$，并按框的水平位置算出朝向角
 
-2. **推理驱动的主动感知循环 (Reasoning-Driven Perception Loop)**:
+$$h_i = \pi \cdot \frac{x_1 + x_2 - F}{F}$$
 
-    - 功能：根据任务需求主动获取指令相关的视觉信息，而非被动处理全部输入
-    - 核心思路：编排智能体根据语义地图、轨迹历史和指令生成视觉查询 $\boldsymbol{q}$ 和聚焦区域 $\boldsymbol{R}_{\text{focus}}^t$：$(\boldsymbol{q}, \boldsymbol{R}_{\text{focus}}^t) = \mathcal{A}_{\mathrm{orch}}^{\boldsymbol{\theta}}(\mathcal{C}_t, \boldsymbol{\tau}_t, \mathcal{I}, \mathcal{H}_{\text{query}})$。感知智能体在聚焦区域执行细粒度分析 $\boldsymbol{a}_i^t = \mathcal{A}_{\mathrm{perc}}^{\boldsymbol{\phi}}(\boldsymbol{\mathcal{O}}_t|_{\boldsymbol{R}_{\text{focus}}^t}, \boldsymbol{q})$。循环迭代直到信息充足 $s_t = \text{sufficient}$
-    - 设计动机：减少视觉 token（仅感知指令相关区域），增强属性识别（通过针对性查询获取细粒度细节），自适应感知
+最终把整圈观测组织成一张结构化地图 $\mathcal{C}_t = \{(h_i, \textit{obj}_i(\boldsymbol{b}_i), d_i)\}_{i=1}^{N_t}$ 并格式化成自然语言。这样 LLM 拿到的不再是像素而是"左前方 2 米有一扇门"这种带方位和距离的文本，既能直接做"往左边那个物体走"的空间推理，又彻底避开了处理原始图像的 token 膨胀。
 
-3. **分支多样 MCTS (Branch-Diverse MCTS, BD-MCTS)**:
+**2. 推理驱动的主动感知循环：缺什么才去看什么**
 
-    - 功能：从大量历史路点中筛选 top-k 高价值候选，引导决策智能体聚焦推理
-    - 核心思路：维护搜索树 $\mathcal{T} = \langle \boldsymbol{V}_{\mathcal{T}}, \boldsymbol{E}_{\mathcal{T}}, Q, N \rangle$，分三阶段——(I) 用语义值 $V_{\text{sem}}(u)$ 替代随机 rollout 初始化新节点；(II) 沿路径反向传播动态精修 $Q(v) \leftarrow Q(v) + \frac{R_t - Q(v)}{N(v)}$；(III) 路径聚合打分 $\text{Score}(v) = V_{\text{path}}(v) - \lambda \cdot \frac{d_{\mathcal{G}}(v_t, v)}{\max_{u} d_{\mathcal{G}}(v_t, u)}$ 结合距离惩罚，每个父节点贡献最多 2 个子节点保持分支多样性
-    - 设计动机：标准 MCTS 选择单一最优动作，BD-MCTS 选择多样的 top-k 候选；距离惩罚确保物理可达性；分支多样性确保覆盖不同探索方向
+被动感知的问题在于不管任务需不需要都把所有视图算一遍，细粒度线索反而被冗余特征淹没。这里反过来让推理来驱动感知：编排智能体综合语义地图、轨迹历史和指令，先想清楚"现在还缺哪条信息"，生成一个具体的视觉查询 $\boldsymbol{q}$ 和一块聚焦区域 $\boldsymbol{R}_{\text{focus}}^t$：
+
+$$(\boldsymbol{q}, \boldsymbol{R}_{\text{focus}}^t) = \mathcal{A}_{\mathrm{orch}}^{\boldsymbol{\theta}}(\mathcal{C}_t, \boldsymbol{\tau}_t, \mathcal{I}, \mathcal{H}_{\text{query}})$$
+
+感知智能体只在这块区域里针对这个问题做细粒度识别 $\boldsymbol{a}_i^t = \mathcal{A}_{\mathrm{perc}}^{\boldsymbol{\phi}}(\boldsymbol{\mathcal{O}}_t|_{\boldsymbol{R}_{\text{focus}}^t}, \boldsymbol{q})$，结果回填给编排智能体；这个"提问—定点观察—判断够不够"的循环一直转到状态变为 $s_t = \text{sufficient}$ 才停。和被动方法相比，它既因为只看相关区域而省下大量视觉 token，又因为带着具体问题去看（比如"门是什么颜色"）而拿到了被动扫描捞不到的细粒度属性。
+
+**3. 分支多样 MCTS（BD-MCTS）：从全局历史里挑 top-k 而不是单条最优**
+
+标准 MCTS 是为"选一个最优动作"设计的，但 VLN 里随着轨迹变长，候选路点越积越多，决策智能体若全量阅读就会被无关历史稀释注意力；而只给一条最优候选又容易陷进局部最优。BD-MCTS 把目标从"选一个"改成"挑出多样的 top-k"。它维护一棵搜索树 $\mathcal{T} = \langle \boldsymbol{V}_{\mathcal{T}}, \boldsymbol{E}_{\mathcal{T}}, Q, N \rangle$，分三步走：扩展时不做昂贵的随机 rollout，而用语义值 $V_{\text{sem}}(u)$ 直接初始化新节点；回传时沿路径动态精修节点价值
+
+$$Q(v) \leftarrow Q(v) + \frac{R_t - Q(v)}{N(v)}$$
+
+最后做路径聚合打分，把累积语义价值和到当前点的物理距离惩罚结合起来：
+
+$$\text{Score}(v) = V_{\text{path}}(v) - \lambda \cdot \frac{d_{\mathcal{G}}(v_t, v)}{\max_{u} d_{\mathcal{G}}(v_t, u)}$$
+
+距离项保证挑出的候选物理上可达、不会让智能体绕远路；同时约束每个父节点最多贡献 2 个子节点，强制 top-k 覆盖不同探索方向而不是扎堆在同一条路径上。最终只有这 top-k 个高价值候选进入决策智能体的推理上下文，把"聚焦推理"落到实处。
+
+### 一个完整示例
+以指令"走到厨房，停在冰箱旁边"为例走一步：当前点的全景图先被切成 $K$ 个视图，VLM 检测出门、桌子、走廊等物体并补上深度和朝向，压成语义地图"右前方 3 米一扇门、左侧 2 米一张桌子……"。编排智能体读到地图后发现指令关心"厨房"，但地图里没有厨房线索，于是生成查询"门后是否是厨房"并把聚焦区域锁定在那扇门所在视图；感知智能体只放大这一块识别出"门内可见冰箱和灶台"，回填后编排智能体判定信息已 $\text{sufficient}$，停止追问。随后 BD-MCTS 在历史所有路点里打分：通向厨房门的候选语义价值高、距离近得分最高，旁边走廊岔口因方向多样也被保留为次优候选，每个父节点至多留 2 个子节点，最终只把 top-k 个候选交给决策智能体——它在这几个候选里选定"前往厨房门"，而无须翻阅整条历史轨迹。
 
 ### 损失函数 / 训练策略
-ProFocus 是**完全免训练 (training-free)** 的框架，无须微调或训练任何模型。使用现成的 LLM（Qwen3-Max / DeepSeek-V3）和 VLM（Qwen3-VL-Max / GLM-4.5V）。
+ProFocus 是**完全免训练 (training-free)** 的框架，无须微调或训练任何模型，三个智能体都直接调用现成的 LLM（Qwen3-Max / DeepSeek-V3）和 VLM（Qwen3-VL-Max / GLM-4.5V）。这也意味着可即插即用更强的基础模型，而不必重训任何参数。
 
 ## 实验关键数据
 

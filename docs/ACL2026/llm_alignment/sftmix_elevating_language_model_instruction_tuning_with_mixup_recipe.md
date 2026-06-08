@@ -43,27 +43,25 @@ tags:
 
 ### 整体框架
 
-SFTMix 是一个三步流程：(1) 用参考 LLM 在 SFT 数据上做一轮 NTP 训练，收集多个 checkpoint 的 perplexity 统计，计算每个样本的置信度，按中位数二分为高/低置信度子集；(2) 在目标 LLM 训练时，对每个 batch 中高/低置信度样本的隐表示和标签进行线性插值；(3) 将 Mixup 交叉熵作为正则项加入标准 NTP 损失。
+SFTMix 想解决的问题是：标准 NTP 把每个指令-响应对一视同仁，可模型对不同样本的掌握程度其实差别很大。它的做法是先让一个参考 LLM 在 SFT 数据上跑一轮训练，记录各样本在多个 checkpoint 上的困惑度，据此把数据切成高置信度和低置信度两半；正式训练目标 LLM 时，在隐表示空间把这两半样本线性插值，并把 Mixup 交叉熵作为正则项叠加到原始 NTP 损失上。整条流水线的输入是普通 SFT 数据集，中间产物是按学习难度划分的两个子集，输出是一个在已学会与未学会区域之间被平滑过的模型。
 
 ### 关键设计
 
-1. **基于训练动态的置信度分区**:
+**1. 基于训练动态的置信度分区：用模型自己的学习曲线切数据。**
 
-    - 功能：将 SFT 数据集按模型特定的学习难度分为两个互补子集
-    - 核心思路：在参考 LLM 的 $C$ 个训练 checkpoint 上计算每个样本的 perplexity，取负平均得到置信度 $\text{Conf}(\mathcal{Y}_i|\mathcal{X}_i) = -\frac{1}{C}\sum_{c=1}^{C}\text{Perp}_c(\mathcal{Y}_i|\mathcal{X}_i)$，按中位数将数据集等分为 $\mathcal{D}^c$（高置信度）和 $\mathcal{D}^u$（低置信度）。t-SNE 可视化显示两个子集在表示空间中清晰分离
-    - 设计动机：数据质量（GPT-4 生成 vs 原始）与训练动态置信度并不对应——置信度反映的是模型特定的学习状态而非数据固有质量，这是 Mixup 有效的前提
+判断一条样本"难不难"，SFTMix 不看数据来源是否高质量，而是看参考 LLM 学它学得有多顺。具体地，在参考 LLM 的 $C$ 个训练 checkpoint 上分别计算样本困惑度，取负平均得到置信度 $\text{Conf}(\mathcal{Y}_i|\mathcal{X}_i) = -\frac{1}{C}\sum_{c=1}^{C}\text{Perp}_c(\mathcal{Y}_i|\mathcal{X}_i)$，再按中位数把数据集等分成高置信度子集 $\mathcal{D}^c$ 和低置信度子集 $\mathcal{D}^u$。t-SNE 显示这两个子集在表示空间里清晰分离，正好对应模型"已经吃透"和"还没消化"的两块区域。
 
-2. **隐空间 Mixup 插值**:
+关键的一点是置信度与数据质量并不挂钩：GPT-4 生成的所谓高质量响应和原始响应的置信度分布高度重叠。这说明分区刻画的是模型特定的学习状态，而非数据固有优劣——也正因如此，后面在两块区域之间插值才有意义。
 
-    - 功能：在高/低置信度样本之间创造"中间地带"训练信号
-    - 核心思路：对目标 LLM 最后一层 Transformer 的隐状态和 one-hot 标签分别进行线性插值：$\tilde{\mathbf{Z}}_n = \lambda \mathbf{Z}_n^c + (1-\lambda)\mathbf{Z}_n^u$，$\tilde{\mathbf{Y}}_n = \lambda \mathbf{Y}_n^c + (1-\lambda)\mathbf{Y}_n^u$，其中 $\lambda \sim \text{Beta}(\alpha, \alpha)$，$\alpha=0.5$。对较短响应取 $\min(N_i^c, N_i^u)$ 长度进行对齐
-    - 设计动机：由于 softmax 的非线性，插值后的梯度不等于两个原始梯度的加权和——这意味着 Mixup 引入了真正不同的梯度方向，而非简单的样本加权
+**2. 隐空间 Mixup 插值：在两块区域之间架桥。**
 
-3. **Mixup 作为正则项的集成方式**:
+有了两个子集，SFTMix 在目标 LLM 最后一层 Transformer 的隐状态和 one-hot 标签上同时做线性插值：$\tilde{\mathbf{Z}}_n = \lambda \mathbf{Z}_n^c + (1-\lambda)\mathbf{Z}_n^u$，$\tilde{\mathbf{Y}}_n = \lambda \mathbf{Y}_n^c + (1-\lambda)\mathbf{Y}_n^u$，其中混合系数 $\lambda \sim \text{Beta}(\alpha, \alpha)$、$\alpha=0.5$；当两条响应长度不一时，按 $\min(N_i^c, N_i^u)$ 截齐再插值。这相当于在高置信度样本（远离决策边界、易过拟合）和低置信度样本（贴近边界、难学习）之间制造出连续的"中间地带"监督信号。
 
-    - 功能：在不干扰标准 NTP 学习的前提下引入跨置信度的监督信号
-    - 核心思路：总损失 $\ell_{\text{SFTMix}} = \ell_{\text{NTP}}(\mathcal{D}) + \mu \cdot \ell_{\text{Mixup}}(\mathcal{D}^c, \mathcal{D}^u)$，其中 $\mu=0.2$。每个 batch 确保包含等量高/低置信度样本，随机配对插值
-    - 设计动机：实验证明，Mixup 作为正则项（而非主损失或等权损失）效果最佳，保留了 NTP 的基本学习能力同时获得 Mixup 的泛化收益
+这种插值之所以不是简单的样本加权，是因为 softmax 的非线性：插值后产生的梯度并不等于两个原始梯度的加权和，而是一个真正新的梯度方向。这也解释了为什么 Mixup 比单纯的重采样或重加权更能改善泛化。
+
+**3. Mixup 作为正则项的集成方式：保留 NTP 主干，只做温和约束。**
+
+SFTMix 没有用 Mixup 取代或平分 NTP 损失，而是把它放在正则项的位置：总损失 $\ell_{\text{SFTMix}} = \ell_{\text{NTP}}(\mathcal{D}) + \mu \cdot \ell_{\text{Mixup}}(\mathcal{D}^c, \mathcal{D}^u)$，权重 $\mu=0.2$；每个 batch 都保证高/低置信度样本数量相等并随机配对插值。消融实验证明这种轻量集成最优——它既保住了 NTP 的基本学习能力，又借 Mixup 拿到跨置信度的泛化收益，而把 Mixup 当主损失或等权损失反而会拖累指令遵循效果。
 
 ### 损失函数 / 训练策略
 

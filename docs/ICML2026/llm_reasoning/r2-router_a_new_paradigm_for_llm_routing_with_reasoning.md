@@ -40,30 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-R2-Router 的 pipeline 分为离线和在线两段：
-
-- **离线（R2-Bench 构造 + 训练）**：对每个 (query, LLM) 对，用 16 个不同的 token 预算（10 / 20 / 30 / ... / 4000 / default）各采一次回答，用 Qwen3-80B-Instruct 作为 LLM judge 打 0–1 质量分，得到形如 $\{(b_k, Q_{i,k})\}_{k=1}^K$ 的质量-成本曲线训练数据；
-- **在线（路由 + 执行）**：输入 query $x$ 和用户给的 trade-off 系数 $\lambda$，先用共享 encoder 拿 query embedding $z_x=\text{Enc}(x)$，再用多头 MLP 同时预测所有 (LLM, 预算) 的质量 $\hat{Q}(x,M_i,b_k)$，组成 $n\times K$ 的曲线矩阵；Decision Maker 在此矩阵上做 $\arg\max$ 得到 $(M^*,b^*)$，最后调用 $M^*$ 并把 "Use at most $b^*$ tokens." 注入到 prompt 里强制约束输出长度。
+R2-Router 想解决的是"被动式路由按静态成本估计一票否决强模型"这个老毛病，办法是把输出长度预算 $b$ 升格成和选哪个 LLM 同等地位的决策变量。它分离线、在线两段：离线先构造 R2-Bench——对每个 (query, LLM) 对在 16 个不同 token 预算下各采一次回答、用 LLM judge 打质量分，从而把每个模型从一个点摊成一条质量-成本曲线；在线时输入 query $x$ 和 trade-off 系数 $\lambda$，共享 encoder 先编码出 $z_x=\text{Enc}(x)$，多头 MLP 一次性预测所有 (LLM, 预算) 组合的质量、拼成 $n\times K$ 曲线矩阵，Decision Maker 在矩阵上 $\arg\max$ 选出 $(M^*,b^*)$，最后调用 $M^*$ 并把 "Use at most $b^*$ tokens." 注入 prompt 强制约束输出长度。
 
 ### 关键设计
 
-1. **把输出长度变成决策变量的问题重表述**:
+**1. 把输出长度变成决策变量的问题重表述：让强模型"在合适预算下也能用"。**
 
-    - 功能：将传统路由 $\arg\max_{M_i}\,(1-\lambda)\hat{Q}_i-\lambda\hat{C}_i$ 改写成 $(M^*,b^*)=\arg\max_{M\in\mathcal{M},\,b\in\mathcal{B}}\bigl((1-\lambda)Q(x,M,b)-\lambda C(b)\bigr)$，其中 $C(b)$ 是单价乘以预算 $b$ 的解析函数。
-    - 核心思路：在执行端用 Lee et al. 2025 的长度约束提示（"use at most $k$ tokens"）把 $b$ 真正"实施"下去，使得预测出来的 $\hat{Q}(x,M,b)$ 和实际成本 $C(b)$ 都是确定性可控的；论文形式化地证明了 Theorem 4.3：因为 $\mathcal{S}_{reactive}\subseteq\mathcal{S}_{reasoning}$，所以 reasoning-based 路由的最大效用恒不劣于 reactive 路由。
-    - 设计动机：这是整篇论文的"杠杆点"。一旦 $b$ 从被动估计量变成可控变量，强模型就不会因为"预估成本太高"被一票否决——而是变成"在合适的预算下我也能用"。这条路径绕开了所有现有路由器的"点式"瓶颈，且对所有上层方法（KNN/MLP/GNN）都正交可叠加。
+现有路由器把每个 LLM 钉成一个静态质量-成本点，一旦预估成本超预算就直接排除——可同一个模型的质量本来就随输出长度变化，这条曲线在旧框架里根本不存在。R2-Router 干脆把目标从传统的 $\arg\max_{M_i}\,(1-\lambda)\hat{Q}_i-\lambda\hat{C}_i$ 改写成 $(M^*,b^*)=\arg\max_{M\in\mathcal{M},\,b\in\mathcal{B}}\bigl((1-\lambda)Q(x,M,b)-\lambda C(b)\bigr)$，其中 $C(b)$ 是单价乘以预算 $b$ 的解析函数。关键在于成本不再是"预测出来的标量"而是"被强制施加的可控量"：执行端用 Lee et al. 2025 的长度约束提示（"use at most $k$ tokens"）把 $b$ 真正落地，于是预测的 $\hat{Q}(x,M,b)$ 和实际成本 $C(b)$ 都是确定性可控的。论文进一步给出 Theorem 4.3——因为 reactive 的搜索空间 $\mathcal{S}_{reactive}$ 只是 reasoning 空间 $\mathcal{S}_{reasoning}$ 的真子集，reasoning-based 路由的最大效用恒不劣于 reactive 路由。这是全篇的杠杆点：$b$ 从被动估计变成可控旋钮后，强模型不再被"预估太贵"一票否决，而这条改写对上层用 KNN/MLP/GNN 的各种路由器都正交可叠加。
 
-2. **多头质量预测器 + 稀疏 anchor + 线性插值**:
+**2. 多头质量预测器 + 稀疏 anchor + 线性插值：用很少的训练点逼近整条曲线。**
 
-    - 功能：对每个 LLM $M_i$ 配 $K$ 个独立 head，第 $k$ 个 head $g_{i,k}$ 是一个三层 MLP（隐层 [256,128,64] + ReLU + Sigmoid），输出 $\hat{Q}(x,M_i,b_k)=\sigma(g_{i,k}(z_x))$；只在 $K$ 个 anchor 预算上训练，中间预算用 $\hat{Q}(x,M,b')=(1-\alpha)\hat{Q}(x,M,b_k)+\alpha\hat{Q}(x,M,b_{k+1})$ 做分段线性插值，$\alpha=(b'-b_k)/(b_{k+1}-b_k)$。
-    - 核心思路：共享 encoder 抓 query 通用语义，独立 head 抓"某个 LLM 在某个预算下"的特异行为；用 MSE 损失 $\mathcal{L}_{i,k}=\mathrm{MSE}(\hat{Q}(x,M_i,b_k),Q^{\text{true}}(x,M_i,b_k))$ 各 head 独立优化即可。论文经验显示 $K=6{\sim}8$ 个 anchor 就够逼近连续曲线，$K=4$ 都已碾压点式 baseline。
-    - 设计动机：如果朴素地为每个连续预算都训一个 head，需要海量数据；用稀疏 anchor + 插值在数据效率和搜索粒度之间取得最佳平衡——15 个 LLM 全套训练在单张 RTX 3090 上 30 分钟就能搞定，单次路由开销 <400 ms，占总生成时间不到 1%。这让方法可以低成本上线，加新模型也只需补这一族 head。
+要在 (LLM, 预算) 联合空间搜索，就得先把整条质量曲线预测出来；但若朴素地为每个连续预算都训一个 head，需要的数据量会爆炸。R2-Router 的做法是共享 encoder 抓 query 通用语义、每个 LLM $M_i$ 配 $K$ 个独立 head 抓"该模型在某个预算下"的特异行为：第 $k$ 个 head $g_{i,k}$ 是三层 MLP（隐层 [256,128,64] + ReLU + Sigmoid），输出 $\hat{Q}(x,M_i,b_k)=\sigma(g_{i,k}(z_x))$，每个 head 只在自己那个 anchor 预算上用 MSE 损失 $\mathcal{L}_{i,k}=\mathrm{MSE}(\hat{Q}(x,M_i,b_k),Q^{\text{true}}(x,M_i,b_k))$ 独立优化。anchor 之间的任意预算用分段线性插值补上：$\hat{Q}(x,M,b')=(1-\alpha)\hat{Q}(x,M,b_k)+\alpha\hat{Q}(x,M,b_{k+1})$，$\alpha=(b'-b_k)/(b_{k+1}-b_k)$。这种"稀疏 anchor + 插值"在数据效率和搜索粒度之间取了个甜点：经验上 $K=6{\sim}8$ 个 anchor 就够逼近连续曲线，$K=4$ 都已碾压点式 baseline；15 个 LLM 全套训练在单张 RTX 3090 上 30 分钟搞定，单次路由开销 <400 ms、占总生成时间不到 1%，加新模型也只需补这一族 head。
 
-3. **R2-Bench：多预算路由数据集**:
+**3. R2-Bench：把"曲线"做成可观测量的多预算数据集。**
 
-    - 功能：在 6 个公开 benchmark（GPQA / MuSR / MMLU-Pro / MATH / OpenHermes / RAGBench）上整合 30,968 条 query × 15 个 LLM × 16 个预算，每个 (query, LLM, 预算) 三元组记录 Qwen3-80B-Instruct 给出的质量分和实际消耗 token 数。
-    - 核心思路：现有 RouterBench / SPROUT / RouterEval 每个 (query, LLM) 只采一条回答，物理上不可能学到曲线；R2-Bench 系统化地变化输出预算，从源头让"曲线"作为可观测量存在。LLM-as-a-judge 的选择走了 Zheng et al. 2023 的协议——500 条样本 × 30 位标注者 × 4 个候选 judge，按 Pearson 相关系数挑出 Qwen3-80B-Instruct（$\rho=0.82$）作为最终 judge。
-    - 设计动机：R2-Bench 和 R2-Router 是互补关系——前者把更大的 (LLM, 预算) 优化空间暴露出来（Oracle AUDC 从 0.85 提升到 0.98，QNC 从 0.18 降到 0.04），后者提供搜索该空间的机制；缺了任何一个，增益都拿不到。
+机制再好，也得有能"看见曲线"的数据才能训和评——现有 RouterBench / SPROUT / RouterEval 每个 (query, LLM) 只采一条回答，物理上学不到曲线。R2-Bench 系统化地变化输出预算来补这个缺口：在 6 个公开 benchmark（GPQA / MuSR / MMLU-Pro / MATH / OpenHermes / RAGBench）上整合 30,968 条 query × 15 个 LLM × 16 个预算，每个 (query, LLM, 预算) 三元组都记录质量分和实际消耗 token 数。质量分由 LLM-as-a-judge 给出，走 Zheng et al. 2023 的协议——500 条样本 × 30 位标注者 × 4 个候选 judge，按 Pearson 相关系数挑出 Qwen3-80B-Instruct（$\rho=0.82$）当最终 judge。R2-Bench 和 R2-Router 是互补关系：前者把更大的 (LLM, 预算) 优化空间暴露出来（Oracle AUDC 从 0.85 提升到 0.98、QNC 从 0.18 降到 0.04），后者提供搜索该空间的机制，缺一个增益都拿不到。
 
 ### 损失函数 / 训练策略
 对每个 (LLM $i$, 预算 anchor $k$) 独立做 MSE 回归：$\theta_{i,k}^*=\arg\min_{\theta_{i,k}}\mathcal{L}_{i,k}$。Adam 优化器，学习率 $1\times 10^{-4}$，训 100 epoch；query encoder 用 Qwen3-Embedding-0.6B 把 query 编码成 1024 维向量。所有 head 共享 encoder 输出但参数独立，便于"加一个新 LLM 只补这一族 head"的增量更新。

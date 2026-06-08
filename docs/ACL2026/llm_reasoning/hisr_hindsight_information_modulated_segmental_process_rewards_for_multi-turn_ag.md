@@ -52,23 +52,29 @@ HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一
 
 ### 关键设计
 
-1. **Segmental Process Reward Model (SPRM)**：
+**1. Segmental Process Reward Model（SPRM）：把轨迹末尾的一个标量拆成与 sub-goal 对齐的连续段奖励。**
 
-    - 功能：把轨迹标量 outcome $R$ 分解成 sub-goal 级的连续 reward。
-    - 核心思路：在 $\pi_{ref}$ 最后隐层接一个 MLP，每个 segment 结束 token 处输出 $r_i = W_2(\text{SiLU}(W_1 h_i))$；用 $\mathcal{L}_{sprm}(\tau^s) = (R - \sum_{i=1}^n r_i)^2$ 把 outcome 拟合成段级贡献之和，等价于学一个"任务进度估计"。
-    - 设计动机：把粒度直接定在与 sub-goal 对齐的 segment 上，既避免 turn-level 太碎，又不要 GPT-4 重新打 pseudo label——SPRM 自己从 outcome 学。
+turn-level 奖励把同一个子目标（如「先找物、再清洁」）的多个动作拆得七零八落，粒度太碎；而重新用 GPT-4 给每个 turn 打 pseudo label 又贵又吵。SPRM 选了第三条路：在参考策略 $\pi_{ref}$ 的最后隐层接一个 MLP，在每个 segment 的结束 token 处输出该段得分 $r_i = W_2(\text{SiLU}(W_1 h_i))$，再用
 
-2. **Hindsight Model 与似然比 importance**：
+$$\mathcal{L}_{sprm}(\tau^s) = \big(R - \sum_{i=1}^n r_i\big)^2$$
 
-    - 功能：给每个动作一个"事后回看的重要性"分数。
-    - 核心思路：在 $\pi_{ref}$ 上继续训练一个 hindsight $\pi_{hind}$，目标是 masked language modeling 风格：mask 掉每个 turn 的 response $a_k$，让模型在已知整条轨迹其余部分（含后续 token）的条件下重建 $a_k$。然后定义 token 级比 $r(a_k^j) = \pi_{hind}(a_k^j|o, a_{<k}, a_{>k}, a_k^{<j}) / \pi_{policy}(a_k^j|o_{\le k}, a_{<k}, a_k^{<j})$，再聚合成动作 importance $z(a_k) = \exp(\frac{1}{\beta |a_k|} \sum_j \log r(a_k^j))$。直觉：若 $z(a_k) > 1$，说明知道结果之后回看，agent 更倾向选这个动作 → 该动作对最终成功更"关键"。再把同段 turn 的 $z(a_k)$ 累加得段级 importance $z(s_i)$。
-    - 设计动机：不引入额外的过程标签，仅靠两套模型的似然差异捕获过程信息，等价于把 hindsight credit assignment 思想搬到 token-级 LLM agent。
+把轨迹的标量 outcome $R$ 拟合成各段贡献之和。这等价于让模型自己学一个「任务进度估计器」——只需要末尾一个 outcome 标签，不需要逐 turn 标注，就把奖励粒度落在与 sub-goal 天然对齐的 segment 上，既不碎也不贵。
 
-3. **Hindsight-modulated reward + grounding reward**：
+**2. Hindsight Model 与似然比 importance：在不引入过程标签的前提下，给每个动作算一个「事后回看的重要性」。**
 
-    - 功能：把 SPRM 的段奖励按重要性放大/缩小，再保证动作可执行性。
-    - 核心思路：归一化的 modulated reward $\hat R_{him} = \frac{\hat R \odot \hat z_s}{\|\hat R \odot \hat z_s\|}$，再叠加 grounding reward $\hat r^g$（动作合法=1 否则=0）：$\hat r^{fuse} = (1-\alpha) \hat r^{him} + \alpha \hat r^g$。这个 $\hat r^{fuse}$ 喂进 PPO 的 GAE，按 $\delta_t = \hat r_t^{fuse} + \gamma V_\phi(s_{t+1}) - V_\phi(s_t)$ 算 advantage。
-    - 设计动机：$\hat R_{him}$ 抓"正确性"，$\hat r^g$ 抓"可执行性"，两者互补；不加 grounding 时 agent 容易生成幻觉动作。
+段奖励解决了粒度，但同一段里哪个动作才是真正关键，仍然没有信号。本文借鉴 Hindsight Credit Assignment——已知轨迹结果后回看一个动作，比事前预测更能反映它对成功的真实贡献。具体做法是在 $\pi_{ref}$ 上再训练一个 hindsight 模型 $\pi_{hind}$，目标类似 masked language modeling：mask 掉每个 turn 的 response $a_k$，让它在已知整条轨迹其余部分（包含后续 token）的条件下重建 $a_k$。然后定义 token 级似然比
+
+$$r(a_k^j) = \frac{\pi_{hind}(a_k^j \mid o, a_{<k}, a_{>k}, a_k^{<j})}{\pi_{policy}(a_k^j \mid o_{\le k}, a_{<k}, a_k^{<j})}$$
+
+再聚合成动作级 importance $z(a_k) = \exp\!\big(\frac{1}{\beta |a_k|} \sum_j \log r(a_k^j)\big)$，并把同段各 turn 的 $z(a_k)$ 累加得段级 importance $z(s_i)$。直觉很清楚：若 $z(a_k) > 1$，说明知道结果之后回看，agent 反而更倾向选这个动作，这个动作对最终成功就更关键。整套机制只靠 hindsight 与 policy 两套模型的似然差异捕获过程信息，没有任何额外的人工过程标签——这正是它相对 PRM4A 等 MCTS 标注方法的工程优势。
+
+**3. Hindsight-modulated reward + grounding reward：用重要性放大关键段奖励，再补一道可执行性约束。**
+
+有了段奖励 $\hat R$ 和段级重要性 $\hat z_s$，就把二者逐元素相乘并归一化，让关键段的奖励被放大、次要段被压低：
+
+$$\hat R_{him} = \frac{\hat R \odot \hat z_s}{\|\hat R \odot \hat z_s\|}$$
+
+但只抓「正确性」还不够——不加约束时 agent 容易生成环境里根本执行不了的幻觉动作。于是再叠加一个 grounding reward $\hat r^g$（动作合法记 1、否则记 0），融合成 $\hat r^{fuse} = (1-\alpha)\,\hat r^{him} + \alpha\,\hat r^g$。$\hat R_{him}$ 管「做得对」、$\hat r^g$ 管「做得到」，两者互补。最终 $\hat r^{fuse}$ 喂进 PPO 的 GAE，按 $\delta_t = \hat r_t^{fuse} + \gamma V_\phi(s_{t+1}) - V_\phi(s_t)$ 计算 advantage 驱动训练。
 
 ### 损失函数 / 训练策略
 - BC 阶段：只对 thought-action token 算 NLL，跳过 observation token 提升训练稳定性。

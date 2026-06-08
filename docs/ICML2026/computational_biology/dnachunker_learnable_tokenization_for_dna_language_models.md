@@ -41,29 +41,25 @@ DNAChunker 在掩码 DNA 语言模型中嵌入一个端到端可学习的"动态
 ## 方法详解
 
 ### 整体框架
-DNAChunker 是一个 encoder–main–decoder 三段式的双向 MLM。输入是长度为 $T$ 的核苷酸序列（最长 8192 bp），输出是每个被 mask 位置的核苷酸预测。中间经过两次"编码 → 边界预测 → 下采样"的层级压缩：base-pair $T$ → 一阶 chunk $T'$ → 二阶 chunk $T''$，由 30 层 Transformer 主网络在最压缩的 $T''$ 长度上做长程建模，再经两阶 dechunking 层级上采样回 base-pair 分辨率做 MLM 预测。
-
-设计上的一条主线是把"长程上下文推理"这一最贵的算力全部留给主网络：encoder 只负责把序列压短、decoder 只负责把表示展开回来，编码 / 解码两端都用轻量 Mamba，主网络才用 Transformer。
+DNAChunker 是一个 encoder–main–decoder 结构的双向 MLM：输入一条最长 8192 bp 的核苷酸序列，目标是预测每个被 mask 位置的碱基。它不再用固定 k-mer/BPE 切词，而是让序列在前向过程中被"压缩两次再展开两次"——base-pair 长度 $T$ 经两阶可学习分块缩成 chunk 序列 $T''$，由 30 层 Transformer 主网络在这个最短的长度上做长程建模，再经两阶 dechunking 逐级上采样回 base-pair 分辨率做预测。整套设计的一条主线是把最贵的长程注意力算力全部留给主网络：编码、解码两端只用轻量 BiMamba 负责"压短"和"展开"，中间才用昂贵的 Transformer，从而以 172M 参数撬动 1.2B 级别的建模能力。
 
 ### 关键设计
 
-1. **双向自适应分块（cosine-similarity routing + 硬阈值 + mask 保护）**:
+**1. 双向自适应分块：把"切词"变成可学的边界预测，解决固定分词切坏功能 motif 的痛点**
 
-    - 功能：在双向 MLM 设定下从数据自动学出"哪两个相邻位置应该合并成一个 token"。
-    - 核心思路：阶段 $s$ 的输入特征 $\widehat{x}^{(s)}$ 先经线性投影得到 query $q^{(s)}_t$ 与 key $k^{(s)}_t$，然后用相邻位置之间的余弦"不相似度"作为边界概率 $p^{(s)}_t = \tfrac{1}{2}\bigl(1 - \tfrac{(q^{(s)}_t)^\top k^{(s)}_{t-1}}{\|q^{(s)}_t\|\,\|k^{(s)}_{t-1}\|}\bigr)$，再阈值化得到硬边界 $b^{(s)}_t = \mathbf{1}(p^{(s)}_t \ge 0.5)$，把同一段内的 base-pair 表示聚合成一个 chunk embedding，序列长度由 $T$ 缩到 $T' = \sum_t b^{(0)}_t$。Mask 保护机制强制在每个 `[MASK]` 位置前后各插一条边界，使被 mask 的核苷酸永远是一个单 token 的 chunk。两阶段递归地做同样的事，得到喂给主网络的 $x^{(2)}$。
-    - 设计动机：相比 H-Net / Byte Latent Transformer 这些原本只能单向决策的方案，余弦路由 + 双向 Mamba 让边界预测同时利用上下游证据；mask 保护堵住了"模型学会按 mask 形状切分"的捷径，让分词决策真正由基因组上下文驱动，可平稳迁移到没有 mask 的下游任务。
+固定 k-mer/BPE 的问题是与上下文无关，而 promoter/enhancer 的边界本身就依赖上下游证据。DNAChunker 在每个分块阶段 $s$ 把输入特征 $\widehat{x}^{(s)}$ 经线性投影得到 query $q^{(s)}_t$ 与 key $k^{(s)}_t$，用相邻位置的余弦"不相似度"作为边界概率 $p^{(s)}_t = \tfrac{1}{2}\bigl(1 - \tfrac{(q^{(s)}_t)^\top k^{(s)}_{t-1}}{\|q^{(s)}_t\|\,\|k^{(s)}_{t-1}\|}\bigr)$，再以 $b^{(s)}_t = \mathbf{1}(p^{(s)}_t \ge 0.5)$ 阈值化成硬边界，把同一段内的 base-pair 表示聚合为一个 chunk embedding，序列长度由 $T$ 缩到 $T' = \sum_t b^{(0)}_t$。由于 query/key 来自双向 BiMamba 编码，边界预测能同时看到上下游——这正是 H-Net、Byte Latent Transformer 这类只能单向决策的自回归方案做不到的，也是 DNA 双向语义所必需的。两阶段递归地做同样的事，最终把 $x^{(2)}$ 喂给主网络。
 
-2. **30 层 Transformer 主网络 + 块级 RoPE**:
+这里还埋了一条 MLM 专属的防泄露设计：mask 保护机制强制在每个 `[MASK]` 位置前后各插一条边界，使被 mask 的核苷酸永远独占一个单 token 的 chunk。若不这么做，分块模块会把"mask 的形状"当成切分线索，学到一个无法迁移到无 mask 下游数据的捷径。
 
-    - 功能：在最压缩的序列长度上做长程依赖建模，承担模型绝大多数参数与算力预算。
-    - 核心思路：标准 Pre-LN Transformer block（多头自注意力 + GELU FFN），位置编码用 RoPE，并将每个 chunk 的"中心 base-pair 下标"作为该 chunk 的位置 id，使得相对位置信息直接以 base-pair 而非 token 为尺度，从而保留物理坐标语义。配合自适应压缩，megabase 级序列的有效长度可显著缩短，长程上下文得以可承受地建模。
-    - 设计动机：作者明确把主网络定位为"上下文推理的主轴"，因此 encoder/decoder 用轻量 BiMamba、主干才用昂贵 Transformer。这种"瘦头胖中"的算力分配让 172M 参数足以匹敌 1.2B 的 GENERator。
+**2. 30 层 Transformer 主网络 + 块级 RoPE：在最压缩的长度上承担长程推理**
 
-3. **层级 dechunking + 双向 probability-gated 平滑 + 掩码残差门控**:
+主网络是标准 Pre-LN Transformer（多头自注意力 + GELU FFN），承载模型绝大多数参数与算力。关键的一处适配是位置编码：RoPE 不以 token 序号、而以每个 chunk 的"中心 base-pair 下标"作为位置 id，这样即便序列被压缩成变长 chunk，相对位置仍以 base-pair 为物理尺度，保留了基因组坐标语义。因为分块已经把 megabase 级序列的有效长度大幅缩短，长程注意力在这个压缩域里变得可承受。这种"瘦头胖中"的算力分配——encoder/decoder 用轻量 BiMamba、主干才用 Transformer——正是 172M 参数能匹敌 1.2B GENERator 的来源。
 
-    - 功能：把主网络输出的 $T''$ 长度表示重新展开为 base-pair 分辨率，同时给离散边界一个可微通道，并防止 encoder 残差把 mask 位置的真值泄露到 decoder。
-    - 核心思路：对压缩表示 $z^{(s)}$ 先按 cumulative 边界 $\sum_{k\le t} b^{(S-s)}_k$ 做 piecewise-constant 复制 $\tilde z^{(s+1)}_t = z^{(s)}_{\sum_{k\le t} b^{(S-s)}_k}$；再用一对前向 / 后向线性递归 $\textsc{Scan}_\rightarrow, \textsc{Scan}_\leftarrow$ 以边界概率 $p$ 作为门做双向平滑：$z^{(s+1)}_t = \tfrac{1}{2}(\textsc{Scan}_\rightarrow + \textsc{Scan}_\leftarrow)$，既让梯度通过 $p$ 流回路由网络，又把上下游上下文都注入回 base-pair 分辨率。同时残差门控只对"所在 chunk 不含 mask"的位置开启 encoder 残差，含 mask 的 chunk 整体收 0 残差，强制其重建必须穿过主网络。
-    - 设计动机：硬阈值 $b^{(s)}_t$ 本身不可导，需要 $p$ 提供梯度通路；双向 scan 与 MLM 的双向假设保持一致；残差门控杜绝了"encoder BiMamba 把邻居信息漏到 mask 位置 → decoder 直接照抄"的捷径，保证 MLM 损失真正在训练主网络而非 encoder。
+**3. 层级 dechunking + 双向 probability-gated 平滑 + 掩码残差门控：把表示展开回碱基级，并堵死第二条泄露通道**
+
+主网络输出的是 $T''$ 长度的 chunk 表示，需要还原到 base-pair 分辨率才能做逐碱基预测。dechunking 先按 cumulative 边界做 piecewise-constant 复制 $\tilde z^{(s+1)}_t = z^{(s)}_{\sum_{k\le t} b^{(S-s)}_k}$，把每个 chunk 的表示广播回它覆盖的所有碱基；再用一对前向/后向线性递归 $\textsc{Scan}_\rightarrow,\textsc{Scan}_\leftarrow$ 以边界概率 $p$ 为门做双向平滑 $z^{(s+1)}_t = \tfrac{1}{2}(\textsc{Scan}_\rightarrow + \textsc{Scan}_\leftarrow)$。这步一举两得：硬边界 $b$ 不可导，而 $p$ 给了梯度一条流回路由网络的通路；双向 scan 又与 MLM 的双向假设保持一致，把上下游上下文重新注入碱基级表示。
+
+与分块端的 mask 保护配套，这里还有第二道屏障——掩码残差门控：encoder 残差只对"所在 chunk 不含 mask"的位置开启，含 mask 的 chunk 整体收 0 残差，逼着这些位置的重建必须穿过主网络。否则 encoder 的 BiMamba 会把邻居真值顺着残差漏给 decoder，让 decoder 直接照抄、MLM 损失训练的其实是 encoder 而非主网络。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L} = \mathcal{L}_{\text{MLM}} + \lambda\mathcal{L}^{(0)}_{\text{ratio}} + \lambda\mathcal{L}^{(1)}_{\text{ratio}}$。MLM 项按 BERT 协议（15% 选中、80% 替换为 `[MASK]`、10% 随机、10% 保留），并对重复区域权重降到 0.1。每个分块阶段额外加一个"压缩比"正则：$\mathcal{L}^{(s)}_{\text{ratio}} = \tfrac{\bar b^{(s)}\bar p^{(s)}}{\alpha^{(s)}} + \tfrac{(1-\bar b^{(s)})(1-\bar p^{(s)})}{1-\alpha^{(s)}}$，其中 $\bar b^{(s)},\bar p^{(s)}$ 分别是阶段 $s$ 的平均硬边界比例与平均边界概率，$\alpha^{(s)}\in(0,1)$ 是目标压缩比。$\bar b$ 不可导，但通过让 $\bar p$ 逼近 $\alpha$ 间接逼近目标压缩比。预训练语料是 GRCh38/hg38 人类参考基因组，按 Enformer 划分切成 $2^{20}$ bp 区域再切成 8192 bp 输入。下游任务统一去掉 LM head、对有效 token 做平均池化接一层线性分类头，根据数据集协议选择全微调或线性探针。

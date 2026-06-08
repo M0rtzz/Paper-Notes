@@ -50,23 +50,26 @@ tags:
 LLM 除了给数值判断，还需要输出 step-by-step reasoning。随后，Claude-Haiku-4 作为 judge，用专家设计的 checklist 对 reasoning trace 逐条判断是否满足理论标准。最后，作者抽样 5% 输出交给两名语言学博士人工验证 judge 结果。
 
 ### 关键设计
-1. **概率和相关性的受控 item 构造**:
 
-	- 功能：把 proviso problem 中“前件是否让预设更可能成立”操作化为可实验控制的变量。
-	- 核心思路：对每个 presupposition $p$，分别估计 baseline $Pr(p\mid c)$ 和条件概率 $Pr(p\mid A,c)$。如果 $A$ 显著提高 $p$ 的可能性，就构造 relevant 条件；如果只有弱关联或无关联，则构造 somewhat relevant 和 irrelevant 条件。
-	- 设计动机：这样可以避免只凭研究者直觉说某个条件句“相关/不相关”，让后续 human-LLM comparison 建立在 normed stimuli 上。
+**1. 概率与相关性的受控 item 构造：把 proviso problem 里“前件到底让不让预设更可能成立”做成可控变量。**
 
-2. **平行的人类和模型行为实验**:
+条件句“If A, Bp”里那个预设 $p$ 该不该投射，本来就没有简单答案——它取决于前件 $A$ 有没有把 $p$ 抬得更可信。如果只凭研究者拍脑袋说某句“相关/不相关”，后面的人机对比就立在沙地上。作者改用 norming 把它量化：对每个预设 $p$，分别估计 baseline $Pr(p\mid c)$ 和条件概率 $Pr(p\mid A,c)$，若 $A$ 显著抬高 $p$ 的可能性就归为 relevant 条件，弱关联或无关联则归为 somewhat relevant 和 irrelevant。
 
-	- 功能：在同一任务、同一量表、同一上下文条件下比较人类与模型。
-	- 核心思路：人类和模型都对 90 个“If A, Bp”句子给 0-7 likelihood rating，模型还输出 reasoning。without-context 与 with-context 的对照用于观察最小背景信息是否改变概率和相关性整合方式。
-	- 设计动机：很多 LLM 语用评测只看模型对错，无法知道模型是否接近人类的 graded judgment；这里用连续评分和 Spearman/MAE 更适合捕捉细微行为模式。
+这样三档相关性和高/中/低三档先验概率都来自 30 名母语者的 normed 评分，而非直觉标注，后续 human-LLM comparison 才有干净的受控刺激可比。
 
-3. **理论驱动 checklist 的 LLM-as-a-Judge**:
+**2. 平行的人类与模型行为实验：把人和模型摆进同一任务、同一量表、同一上下文里直接对账。**
 
-	- 功能：评估模型 reasoning 是否真的符合语义和语用理论，而不是只看最终分数。
-	- 核心思路：checklist 覆盖 Accuracy、Context、Pragmatic、Presupposition Handling、Coherence 等维度；with-context 条件有 59 个 yes/no 问题，without-context 条件有 52 个。每个 response 的分数是满足 checklist 条目的平均比例 $S=\frac{1}{|K|}\sum_j J((c,s,\tau,r),\kappa_j)$。
-	- 设计动机：最终评分和解释质量可能脱钩。这个设计正好能检验模型是在进行理论上合理的 presupposition reasoning，还是只是在输出看似合理的数值。
+很多 LLM 语用评测只判模型答得对不对，看不出它是否接近人类那种分级的、有把握程度差异的判断。这里让 120 名人类和四个模型对同样 90 个“If A, Bp”句子给 0–7 的 likelihood rating，模型额外吐出 reasoning；并配 without-context 与 with-context 两档对照，看仅补一句最小身份背景会不会改变它们整合概率与相关性的方式。
+
+之所以用连续评分而非对错，是因为预设投射本就是渐变现象，用 Spearman 相关和 MAE 才抓得住人机之间细微的行为分布差，而不是粗暴的命中率。
+
+**3. 理论驱动 checklist 的 LLM-as-a-Judge：不看最终分数，专查模型的推理过程合不合语用理论。**
+
+模型给出一个贴近人类的数字，并不代表它真按语言学理论推理，也可能只是蹭到了词汇共现或常识关联——行为对齐和解释质量完全可能脱钩。为把这层捅开，作者让 Claude-Haiku-4 当 judge，拿一份专家设计的 yes/no checklist 逐条核对模型的 reasoning trace，维度覆盖 Accuracy、Context、Pragmatic、Presupposition Handling、Coherence；with-context 条件有 59 个判定项，without-context 有 52 个。每条 response 的得分是满足条目的平均比例
+
+$$S=\frac{1}{|K|}\sum_j J\big((c,s,\tau,r),\kappa_j\big)$$
+
+用结构化的二元判定而不是让 judge 拍一个总体偏好分，能把解释空间压窄，让评分更像一份“模型在哪个推理环节合理、哪个环节虚”的诊断，而不是又一次模糊的好感打分。
 
 ### 损失函数 / 训练策略
 这篇论文不是训练新模型，而是设计评测流程。统计分析使用线性混合效应模型，固定效应包括 proposition probability、A-p relevance 及其交互，participant 作为随机截距。模型侧生成不做 self-consistency 或重复采样；开源模型使用 temperature 0.7、top_p 0.9、max_new_tokens 1024，本地 bfloat16 推理；闭源模型通过官方 API 使用相同的 temperature 和 token 设置。judge 模型每个 checklist 条目输出二元判断，作者抽样验证其可靠性：两名人工标注者 inter-annotator exact match 为 89%，与 judge 的一致率为 79.46%。

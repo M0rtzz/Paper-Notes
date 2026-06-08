@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-每通信轮 $t$：① 服务器广播 $(\bar A^{t-1}, \bar B^{t-1})$；② 客户端本地训练得到 $(A_i^t, B_i^t)$；③ 若 $t$ 是奇数对齐 $A$、偶数对齐 $B$，解 Procrustes 得 $R_i^{t,*}$；④ 用 $\lambda$ 在恒等矩阵与 $R_i^{t,*}$ 之间插值得软旋转 $R_{i,\text{soft}}^t$；⑤ 应用 $\tilde A_i^t=(R_{i,\text{soft}}^t)^\top A_i^t,\;\tilde B_i^t=B_i^t R_{i,\text{soft}}^t$ 后上传聚合。
+FedRot-LoRA 想解决的是"语义等价但表示在不同子空间里的 LoRA 因子被朴素平均时相互干涉"这件事，做法是在客户端上传前插一道"旋转对齐"工序。每个通信轮 $t$ 这样转：服务器把上一轮的全局因子 $(\bar A^{t-1}, \bar B^{t-1})$ 当参考广播下去，客户端本地训练得到 $(A_i^t, B_i^t)$，然后解一个 Procrustes 问题求出最优旋转 $R_i^{t,*}$ 把自己的子空间转到参考所在的方向（奇数轮对齐 $A$、偶数轮对齐 $B$），再用系数 $\lambda$ 在恒等矩阵和 $R_i^{t,*}$ 之间插值出"软旋转" $R_{i,\text{soft}}^t$，最后把对齐后的 $\tilde A_i^t=(R_{i,\text{soft}}^t)^\top A_i^t,\;\tilde B_i^t=B_i^t R_{i,\text{soft}}^t$ 上传聚合。整套流程不冻参数、不传残差、不做高维 SVD，只在 $r\times r$ 上多解一次旋转。
 
 ### 关键设计
 
-1. **正交 Procrustes 对齐 (Alternating Factor Alignment)**:
+**1. 正交 Procrustes 对齐：用闭式解的旋转矩阵消掉因式分解的旋转歧义。**
 
-    - 功能：把每个客户端的 LoRA 因子旋转到全局参考所在的子空间，消除因式分解的旋转歧义。
-    - 核心思路：奇数轮解 $\min_{R}\|R^\top A_i^t - A_{ref}\|_F^2,\;\text{s.t.}\;R^\top R=I,\det R>0$，这是经典 Procrustes 问题，对相关矩阵 $M=A_{ref}(A_i^t)^\top$ 做 SVD $M=U\Sigma V^\top$ 后闭式解 $R_i^{t,*}=V\cdot\text{diag}(1,\dots,1,\det(UV^\top))\cdot U^\top$。偶数轮换成 $B$ 的对齐，相关矩阵改为 $M=(B_{ref})^\top B_i^t$。计算复杂度 $\mathcal{O}(d r^2+r^3)$，远小于 FlexLoRA 的 $\mathcal{O}(d^3)$。
-    - 设计动机：作者证明 (Theorem 4.1) 标量缩放只有 1 个自由度，无法消除子空间错位；非约束的可逆矩阵又会 ill-conditioned。正交矩阵在两者之间取得最优平衡——足够灵活 ($r(r-1)/2$ 自由度) 又保持良态。
+前面说的根因是 $(B_iR)(R^\top A_i)=B_iA_i$ 这个旋转不变性让语义相同的更新落在不同子空间，朴素平均时就破坏性干涉。FedRot-LoRA 的对策是主动给每个客户端找一个旋转，把它的因子转到全局参考所在的子空间。奇数轮解 $\min_{R}\|R^\top A_i^t - A_{ref}\|_F^2,\;\text{s.t.}\;R^\top R=I,\det R>0$，这正是经典的正交 Procrustes 问题：对相关矩阵 $M=A_{ref}(A_i^t)^\top$ 做 SVD $M=U\Sigma V^\top$，就能闭式写出 $R_i^{t,*}=V\cdot\text{diag}(1,\dots,1,\det(UV^\top))\cdot U^\top$；偶数轮改成对齐 $B$，相关矩阵换成 $M=(B_{ref})^\top B_i^t$。之所以限定在正交群上，是因为作者证明 (Theorem 4.1) 标量缩放只有 1 个自由度、根本消不掉子空间错位，而完全不约束的可逆矩阵又会 ill-conditioned；正交矩阵恰好在两者之间——有 $r(r-1)/2$ 个自由度足够灵活对齐子空间，又始终保持良态。计算上它只需 $\mathcal{O}(dr^2+r^3)$，远比 FlexLoRA 在全参数空间做 $\mathcal{O}(d^3)$ SVD 便宜，也不增加任何通信量。
 
-2. **交替对齐 (Alternating $A$ and $B$)**:
+**2. 交替对齐 $A$ 与 $B$：让两个因子轮流被校准，避免一侧漂移。**
 
-    - 功能：避免重复对齐同一因子时另一侧不可控漂移。
-    - 核心思路：奇数轮固定 $A$ 的语义到 $A_{ref}$、$B$ 跟随补偿；偶数轮反之。每轮只解一次 SVD，但全局看两个因子轮流被"校准"。
-    - 设计动机：消融表明，只对齐 $B$ 时性能掉很多 (SST-2: 0.879 vs 0.954)，原因是 $B$ 初始化范数小，早期对齐信号弱；交替策略保证两个因子的子空间都被定期校准，互相约束。
+如果每轮都只对齐同一个因子，另一侧会不受控地漂移。FedRot-LoRA 改成奇数轮把 $A$ 的语义钉到 $A_{ref}$、让 $B$ 跟随补偿，偶数轮反过来——每轮仍只解一次 SVD，但从全局看两个因子是轮流被"校准"的。这个交替很关键：消融显示只对齐 $B$ 时性能掉得很多（SST-2 上 0.879 对 0.954），原因是 $B$ 初始化范数小、早期对齐信号太弱；交替保证两个子空间都被定期校准、互相约束，避免单边对齐时另一边失控。
 
-3. **软旋转插值 (Soft Rotation)**:
+**3. 软旋转插值：early-stage 参考噪声大时不要硬拉。**
 
-    - 功能：早期训练阶段 reference 噪声大，硬旋转会做出剧烈过度修正。
-    - 核心思路：构造 $R'=(1-\lambda)I+\lambda R_i^{t,*}$ 后再投影回正交群得 $R_{i,\text{soft}}^t$；$\lambda=0$ 退化为 FedIT，$\lambda=1$ 是硬 Procrustes。Lemma A.1 证明 $\|R_{\text{soft}}-I\|_F\le 2\lambda\|R-I\|_F$，即软旋转的修正幅度被 $\lambda$ 线性 bound。
-    - 设计动机：早期全局模型还没收敛，把客户端用力拉过去反而会破坏个性化收敛轨迹；$\lambda\in[0.2,0.8]$ 在实验中都比硬对齐好，最优常在 0.4-0.6。
+训练早期全局模型还没收敛，参考本身就带很多噪声，这时直接套用硬 Procrustes 旋转容易做出剧烈的过度修正、破坏客户端的个性化收敛轨迹。FedRot-LoRA 的做法是先构造 $R'=(1-\lambda)I+\lambda R_i^{t,*}$、再投影回正交群得到 $R_{i,\text{soft}}^t$：$\lambda=0$ 退化成原始 FedIT、$\lambda=1$ 才是硬 Procrustes，中间则是按强度插值的"软对齐"。Lemma A.1 证明 $\|R_{\text{soft}}-I\|_F\le 2\lambda\|R-I\|_F$，也就是修正幅度被 $\lambda$ 线性 bound 住，相当于给"早期保守、后期自信"的对齐节奏一个可调的旋钮。实验里 $\lambda\in[0.2,0.8]$ 都比硬对齐好，最优常落在 0.4–0.6。
 
 ### 损失函数 / 训练策略
-保留标准 FedIT 训练流程，仅在客户端上传前插入旋转步骤。论文给出了非凸下的收敛分析 (Theorem 4.4)，把误差分解为初始 gap + 累积聚合误差 $\|E^t\|_F^2$ + $\mathcal{O}(\eta)$；Theorem 4.8 进一步证明对齐后的误差上界比 naive 严格更紧，紧性 gain 为 $\Gamma(\lambda)=(c_0-\tfrac{4\sqrt\tau\kappa\eta G_B}{\delta_A})\lambda - 4\kappa^2\lambda^2\tau$，给出了 $\lambda$ 的可行区间。
+保留标准 FedIT 训练流程，仅在客户端上传前插入上面那道旋转步骤。论文配了非凸下的收敛分析 (Theorem 4.4)，把误差分解为初始 gap + 累积聚合误差 $\|E^t\|_F^2$ + $\mathcal{O}(\eta)$；Theorem 4.8 进一步证明对齐后的误差上界比 naive 严格更紧，紧性 gain 为 $\Gamma(\lambda)=(c_0-\tfrac{4\sqrt\tau\kappa\eta G_B}{\delta_A})\lambda - 4\kappa^2\lambda^2\tau$，由它的正区间反推出 $\lambda$ 的可行范围。
 
 ## 实验关键数据
 

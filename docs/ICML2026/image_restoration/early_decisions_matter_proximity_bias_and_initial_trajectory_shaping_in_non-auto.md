@@ -41,33 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法建立在标准 MDLM 反向解码之上：每步 $d$ 既要 (a) 为所有 mask 位置预测 token，又要 (b) 选出子集 $\mathcal{U}_d$ 把它们 unmask。本文 **不动** backbone $\theta$，**不动** 后续步的 greedy 策略，仅在第 1 步把位置选择 $\mathcal{U}_1$ 从 "Top-1 confidence" 换成 planner 打分，并在所有步对 EOS logit 施加随时间衰减的 inverse-temperature 缩放。整条 pipeline 用一个 progressive schedule：早期 $|\mathcal{U}_d|<L/T$，越往后每步放出越多 token，给 planner 留出区分度。
+方法要解决的是 masked 扩散语言模型在完全 NAR 解码下"越解越乱"的问题，但解法刻意保守：它建立在标准 MDLM 反向解码之上——每步 $d$ 既为所有 mask 位置预测 token，又要选出子集 $\mathcal{U}_d$ 把它们 unmask——而本文 **不动** backbone $\theta$、也 **不动** 后续步的 greedy 策略，只在第 1 步把位置选择 $\mathcal{U}_1$ 从 "Top-1 confidence" 换成一个轻量 planner 打分，并在所有步对 EOS 的 logit 施加随时间衰减的 inverse-temperature 缩放。三件事串在一个 progressive schedule 上：早期每步放出的 token 数 $|\mathcal{U}_d|<L/T$，越往后越多，好让 planner 在最关键的开局拥有足够的区分度。
 
 ### 关键设计
 
-1. **Proximity bias 诊断与时间不对称性**:
+**1. Proximity bias 诊断：把"NAR 为什么不行"钉死在两个可量化的现象上**
 
-    - 功能：把"NAR 为什么不行"落到可量化的两个观察上——为后续干预提供精确的发力点。
-    - 核心思路：固定 $L=256$ 扫描 $T\in\{32,...,256\}$，发现 NAR 性能随 $T$ 单调 *下降* (与 dLLM "更多步更好"的直觉相反)。逐步可视化 unmask 位置和 EOS 比例，证实：(i) 第 1 步总优先 unmask 序列末尾的 EOS；(ii) 后续步新 unmask 位置紧贴上一步——形成"从尾向头反向 AR"；(iii) GSM8K 上平均 256 个 slot 中 144.6 个被 EOS 占走。再做 pass@k 对照：把随机性只注入第 1 步的位置选择 (其它步全 greedy) 反而比"全程 token 温度采样"得分高 7+ 个点；把随机性延后到中间步则严重掉点。最后用 256 条轨迹的 "anchor + 后段重采样" 实验定量证明：correct/incorrect 早期轨迹的最终准确率差 $\sim 16{-}33$ 个点且置信区间不重叠——证据链条直接指向"第一步定全局"。
-    - 设计动机：把模糊的"NAR 不稳定"具象为 *proximity bias × EOS dominance × 时间不对称* 三联机制，为"只在第一步干预"提供原理依据。
+干预之所以能这么省，前提是先精确定位发力点。作者固定 $L=256$、扫描 $T\in\{32,...,256\}$，发现一个反直觉现象：NAR 性能随步数 $T$ 单调 *下降*，与 dLLM "步数越多越好"的常识相悖。逐步可视化 unmask 位置与 EOS 占比后，三个观察组成了完整证据链——(i) 第 1 步总是优先 unmask 序列末尾的 EOS；(ii) 后续步新 unmask 的位置紧贴上一步，整体形成"从尾向头的反向 AR"；(iii) GSM8K 上平均 256 个 slot 里有 144.6 个被 EOS 占走。进一步的 pass@k 对照更尖锐：只把随机性注入第 1 步的位置选择 (其余步全 greedy)，反而比"全程 token 温度采样"高 7 个多点，而把随机性延后到中间步则严重掉分。最后用 256 条轨迹的 "anchor + 后段重采样" 实验定量证明：correct 与 incorrect 早期轨迹的最终准确率差 $\sim 16{-}33$ 个点、且置信区间不重叠。三联机制——*proximity bias × EOS dominance × 时间不对称*——由此把模糊的"NAR 不稳定"落成了"第一步定全局"这一可证伪的结论，也直接为只在开局干预提供了依据。
 
-2. **轻量 Planner $\pi_\phi(\mathcal{U}_1\mid h_\mathcal{S})$**:
+**2. 轻量 Planner：花 5M 参数学一个"开局教练"**
 
-    - 功能：在第 1 步从 $P=32$ 个随机候选位置集合 $\{\mathcal{S}^i\}$ 中挑出能最大化最终任务奖励 $R(\mathbf{z}_0)$ 的那一个 $\mathcal{U}_1^\star$。
-    - 核心思路：planner 是 2 层 Transformer encoder + position-wise scoring head，**只吃 backbone 最后一层在候选位置 $\mathcal{S}$ 上的 hidden** $h_\mathcal{S}$ (不看整段上下文)，每个 token 出一个标量分，平均得到候选集的总分。训练数据离线生成：对每条样本随机采 $S=32$ 个候选 $\mathcal{U}_1$，剩余步全 greedy 跑完得到 0/1 的 trajectory-level 正确性标签，用 BCE 训练 planner——目标是 $\max_\phi \mathbb{E}_{\mathcal{U}_1\sim\pi_\phi}[R(\mathbf{z}_0)]$。推理时随机采 $P=32$ 个候选集打分，取分高者作为 $\mathcal{U}_1$，*后续步全部走 confidence-based greedy*。
-    - 设计动机：把 NAR 解码看成"开局决策问题"——既然第一步几乎决定全局，那么花一点点参数 (5M，相对 8B backbone 可忽略) 学一个 *开局教练* 性价比极高；只看候选位置的 hidden 而不看全序列是为了让 planner 真正学到"位置先验"而不是简单复现 backbone 的 confidence。
+既然第一步几乎决定全局，那么集中算力学好这一步性价比极高。Planner $\pi_\phi(\mathcal{U}_1\mid h_\mathcal{S})$ 是个 2 层 Transformer encoder 加 position-wise scoring head，关键约束是它 **只吃 backbone 最后一层在候选位置 $\mathcal{S}$ 上的 hidden** $h_\mathcal{S}$、不看整段上下文——这样它被迫学到"位置先验"而非简单复现 backbone 的 confidence。每个候选 token 出一个标量分，平均成候选集的总分。训练完全离线：对每条样本随机采 $S=32$ 个候选 $\mathcal{U}_1$，其余步全 greedy 跑到底，拿到 0/1 的 trajectory-level 正确性标签后用 BCE 优化，目标即 $\max_\phi \mathbb{E}_{\mathcal{U}_1\sim\pi_\phi}[R(\mathbf{z}_0)]$，其中 $R(\mathbf{z}_0)$ 是最终任务奖励 (Sudoku 用 cell accuracy)。推理时随机采 $P=32$ 个候选集打分、取分高者作为 $\mathcal{U}_1$，之后所有步退回普通的 confidence-based greedy。相对 8B backbone，这 5M 参数几乎可以忽略。
 
-3. **EOS Temperature Annealing**:
+**3. EOS Temperature Annealing：在排序时压低 EOS，但保留它的停止能力**
 
-    - 功能：在所有步对 EOS token 的 logit 单独施加随时间衰减的 inverse-temperature $\lambda_d$，初值 $\lambda_T=3$ 线性退火到 $1$，**只影响位置选择的排序，不改实际 token 预测**。
-    - 核心思路：把 EOS 的 logit 在 softmax 前除以 $\lambda_d$，使其在排序 unmask 优先级时被显著压低；一旦位置选定，token 仍按原始 logit 走 greedy argmax，因此自然停止行为在后期被完整保留。配合 progressive schedule 一起用，可把 GSM8K 的有效 (非 EOS) token 数从 157.2 提升到 188.6——把推理任务真正需要的"生成窗口"还给模型。
-    - 设计动机：proximity bias 一旦从 EOS 开始就会向前传染整条序列，所以最经济的打断方式不是改训练或换 padding 方案 (如 Rainbow Padding 需 finetune)，而是只在 *决定 unmask 谁* 这一步把 EOS 的影响力暂时削弱，等不确定性消退后自动恢复。
+proximity bias 一旦从 EOS 起头就会沿序列向前传染，最经济的打断方式不是重训或换 padding 方案 (如 Rainbow Padding 需 finetune)，而是只在"决定 unmask 谁"这一步暂时削弱 EOS 的影响力。具体做法是在所有步对 EOS 的 logit 单独施加随时间衰减的 inverse-temperature $\lambda_d$——softmax 前把 EOS logit 除以 $\lambda_d$，初值 $\lambda_T=3$ 线性退火到 $1$，使其在排 unmask 优先级时被显著压低。注意它 **只影响位置选择的排序、不改实际 token 预测**：位置一旦选定，token 仍按原始 logit 走 greedy argmax，因此模型后期的自然停止行为被完整保留。配合 progressive schedule，这一招把 GSM8K 的有效 (非 EOS) token 数从 157.2 提到 188.6，相当于把推理任务真正需要的"生成窗口"还给了模型。
 
 ### 损失函数 / 训练策略
-- Planner 损失：trajectory-level BCE，标签来自一次性离线 rollout 的 0/1 正确性 (Sudoku 用 cell accuracy)。
-- 仅训 planner $\phi$，backbone $\theta$ 全程冻结；planner ≈ 5M 参数。
-- Progressive 时间表：早期 $B<L/T$，让候选位置之间的差异在第 1 步更可分。
-- 推理超参：$T=32, L=256, P=32, \lambda_T=3$ 线性退火。
+planner 的损失是 trajectory-level BCE，标签来自一次性离线 rollout 的 0/1 正确性 (Sudoku 用 cell accuracy)；训练只更新 planner $\phi$ (≈ 5M 参数)，backbone $\theta$ 全程冻结。progressive 时间表让早期每步放出的 token 数 $B<L/T$，使候选位置在第 1 步更可分。推理超参为 $T=32, L=256, P=32$，$\lambda_T=3$ 线性退火到 $1$。
 
 ## 实验关键数据
 

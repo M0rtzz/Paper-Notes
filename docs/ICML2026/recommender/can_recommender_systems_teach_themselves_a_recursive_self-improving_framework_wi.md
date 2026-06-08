@@ -44,23 +44,17 @@ RSIR 在迭代 $k$ 包含 4 步：(1) 在当前数据集 $D_k$ 上训出模型 $
 
 ### 关键设计
 
-1. **Bounded Exploration 混合候选池**:
+**1. Bounded Exploration 混合候选池：在"挖掘已知兴趣"和"探索新兴趣"之间卡一个比例。**
 
-    - 功能：决定每个生成 step 从哪个 item 池子里采样下一个 item，平衡"挖掘已知兴趣"与"探索新兴趣"。
-    - 核心思路：在每个 step 用概率 $p$ 从用户历史 $s_u$ 内采，概率 $1-p$ 从全局 item 集 $I$ 内采，构成候选池 $\mathcal{C}_t \sim p \cdot \mathrm{Sample}(s_u) + (1-p) \cdot \mathrm{Sample}(I)$。然后模型只在 $\mathcal{C}_t$ 上做 top-$k$ 采样。$p$ 取经验最优 $\approx 0.5$ —— 纯 exploit ($p=1$) 只重排已知 item 永远扩不出新兴趣，纯 explore ($p=0$) 容易跑飞被后续质控滤掉。
-    - 设计动机：常规 autoregressive 生成在大词表上完全自由会爆生成空间，引入历史偏置既保留可控性又提供"延伸已知兴趣"的能力。
+在大词表上完全自由地 autoregressive 生成会让生成空间爆炸、跑飞，但只重排用户已有的 item 又永远扩不出新兴趣。RSIR 在每个生成 step 用概率 $p$ 从用户历史 $s_u$ 内采、概率 $1-p$ 从全局 item 集 $I$ 内采，构成候选池 $\mathcal{C}_t\sim p\cdot\mathrm{Sample}(s_u)+(1-p)\cdot\mathrm{Sample}(I)$，模型只在 $\mathcal{C}_t$ 上做 top-$k$ 采样。$p$ 的经验最优约 0.5——纯 exploit（$p=1$）只重排已知 item，纯 explore（$p=0$）容易跑飞后被质控滤掉；引入历史偏置既保留可控性、又提供"延伸已知兴趣"的能力。
 
-2. **Fidelity-Based Quality Control（保真度排名校验）**:
+**2. Fidelity-Based Quality Control（保真度排名校验）：每生成一个 item 就试探它会不会让用户跑偏。**
 
-    - 功能：每生成一个候选 item 立即"试探"它是否仍把用户真实未来 item 排得靠前，若不行就 break 终止该序列。
-    - 核心思路：定义 $S_{tgt} = s_u \setminus S_{ctx}'$ 为用户真实序列里尚未使用的 item。若 $\exists i_j \in S_{tgt}$ 使得 $\mathrm{Rank}_{f_{\theta_k}}(i_j | S_{ctx}') \leq \tau$，则接受新 item 继续扩展；否则立即终止本条序列。这保证生成轨迹与用户真实兴趣流形保持兼容。
-    - 设计动机：作者证明 $\tau$ 越严就越能压住"保真度漏报率" $\tilde{p}_k$，使递归误差递推 $\mathcal{E}(\theta_{k+1}) \leq (1-\lambda)\mathcal{E}_0 + \lambda[(1-\tilde{p}_k)\rho \mathcal{E}(\theta_k) + \tilde{p}_k \mathcal{E}_{\max}]$ 满足收缩条件，避免 model collapse。
+这是防止 self-consuming model collapse 的生死线。定义 $S_{tgt}=s_u\setminus S_{ctx}'$ 为用户真实序列里尚未用到的 item，每生成一个候选 item 就立刻检查：若 $\exists i_j\in S_{tgt}$ 使得 $\mathrm{Rank}_{f_{\theta_k}}(i_j\mid S_{ctx}')\leq\tau$（即新上下文下用户真实未来 item 仍被排在前 $\tau$ 名内），就接受这个 item 继续扩展，否则立即 break 终止本条序列。这保证生成轨迹始终与用户真实兴趣流形兼容。作者进一步证明 $\tau$ 越严，"保真度漏报率" $\tilde{p}_k$ 越低，使递归误差递推 $\mathcal{E}(\theta_{k+1})\leq(1-\lambda)\mathcal{E}_0+\lambda[(1-\tilde{p}_k)\rho\mathcal{E}(\theta_k)+\tilde{p}_k\mathcal{E}_{\max}]$ 满足收缩条件，从而避免崩盘。
 
-3. **Manifold Tangential Gradient Penalty（理论解释）**:
+**3. Manifold Tangential Gradient Penalty：从理论上说明这不是"扩数据"而是"扩对方向的数据"。**
 
-    - 功能：把"过滤 + 生成"循环重新解释为一种隐式正则化，给方法以理论 footing。
-    - 核心思路：被接受的扰动只能沿用户偏好流形 $\mathcal{M}$ 的切空间，等价于在原损失上加正则项 $\Omega(\theta) \propto \|\mathcal{P}_\mathcal{M} \nabla_s f_\theta\|^2$；这一项专门惩罚沿 manifold 方向的梯度幅值，使解收敛到与用户真实流形平行的"平坦谷"。
-    - 设计动机：解释为什么 RSIR 不是简单的"扩数据"而是"扩对的方向的数据"，并指出"漏报噪声地板"是性能终会饱和的真正原因。
+为给方法一个理论 footing，作者把"过滤 + 生成"循环重新解释成一种隐式正则化：被接受的扰动只能沿用户偏好流形 $\mathcal{M}$ 的切空间，这等价于在原损失上加了一项 $\Omega(\theta)\propto\|\mathcal{P}_\mathcal{M}\nabla_s f_\theta\|^2$，专门惩罚沿 manifold 方向的梯度幅值，迫使解收敛到与用户真实流形平行的"平坦谷"。这条解释既说明了 RSIR 为什么不是简单的数据增强、而是"扩对的方向的数据"，也指出"漏报噪声地板"才是性能终会饱和的真正原因。
 
 ### 损失函数 / 训练策略
 每轮就是普通的 next-item prediction NLL，没有改动 loss；超参 grid：$\tau \in \{1,3,5,10,20,50,100\}$，$m \in \{5,10,20\}$，$p \in \{0,0.2,...,1\}$。leave-one-out 评测，K=10/20 报 NDCG/Recall。

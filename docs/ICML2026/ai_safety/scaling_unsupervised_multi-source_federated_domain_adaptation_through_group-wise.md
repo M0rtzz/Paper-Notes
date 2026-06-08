@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-联邦设置：$N$ 个源客户端各自持有 $\{D_S^n\} = \{(x_i^n, y_i^n)\}_{i=1}^{K_n}$，target 客户端持有 $D_T = \{x_i^T\}_{i=1}^{K_T}$。每个源训练本地特征提取器 $G$ + 分类器 $F$，server 聚合得到全局 $h = F \circ G$。每个 round 内：(1) 每个源在本地用带标签数据做监督训练 + 本地 update 上传；(2) target 端拿到所有源的更新或 logits 后，做随机分组的 IGD 对齐 + 质心加权；(3) 全局聚合后下发新一轮参数。整个流程的关键创新都在 target 端的 IGD 与加权策略，与具体特征提取器无关。
+GALA 要解决的是"源数一多就崩"的联邦 UMDA：$N$ 个源客户端各持有带标签的 $\{D_S^n\} = \{(x_i^n, y_i^n)\}_{i=1}^{K_n}$，target 客户端持有无标签的 $D_T = \{x_i^T\}_{i=1}^{K_T}$，每个源在本地训练特征提取器 $G$ + 分类器 $F$，server 聚合成全局 $h = F \circ G$。它的做法是把两件难事都搬到 target 端去做：一是用随机分组把原本 $O(N^2)$ 的跨源对齐换成线性复杂度的组级对齐，二是用质心相似度给每个源动态打权重，让贴近目标的源主导、噪声源退场。这两个创新都跟具体特征提取器解耦，因此可以套在任意 federated backbone 上。
 
 ### 关键设计
 
-1. **Inter-Group Discrepancy (IGD)**：
+**1. Inter-Group Discrepancy (IGD)：把 $O(N^2)$ 的两两对齐压成线性又不让方差爆掉**
 
-    - 功能：把传统 UMDA 里 $O(N^2)$ 的两两差异最小化压成线性复杂度的组级差异最小化，同时保持低方差。
-    - 核心思路：每次 mini-batch 把 $N$ 个源 **随机划分成 $G$ 个互不相交的小组** $\mathcal{G}_1, \dots, \mathcal{G}_G$，每组聚合该组内所有源在目标无标签样本 $x^T$ 上的预测 $\bar{p}_g(x^T) = \frac{\sum_{n \in \mathcal{G}_g} w_n p_n(x^T)}{\sum_{n \in \mathcal{G}_g} w_n}$；IGD loss 就是组间预测分布的两两差异之和，比如 $\mathcal{L}_{IGD} = \sum_{g \neq g'} D(\bar{p}_g, \bar{p}_{g'})$（$D$ 用 KL 或 L2）。因为只有 $O(G)$ 个组（$G$ 是个小常数），复杂度从 $O(N^2)$ 降到 $O(G^2) = O(1)$ 相对 $N$；又因每组聚合了多个源，比 FACT 那种"单源对单源"对齐方差小得多。每个 round 重新随机分组，使期望意义上等价于全局对齐。
-    - 设计动机：直接对齐 $N$ 源两两差异是 UMDA 黄金标准但不可扩展；FACT 偷工减料只做单对源就方差炸；IGD 是这两个极端的妥协——用组级"宏对齐"近似全局，靠随机化 + 组内平均把方差压下去。从理论上看，组间对齐是无偏估计全局对齐目标。
+跨源对齐的黄金标准是把所有源的预测分布两两拉近，但这是 $O(N^2)$ 的，源数一多就跑不动；FACT 那种"每步只对一对源做对齐"虽然便宜，方差却大到收敛不稳。IGD 在这两个极端之间取折中：每个 mini-batch 把 $N$ 个源**随机划分成 $G$ 个互不相交的小组** $\mathcal{G}_1, \dots, \mathcal{G}_G$，每组先把组内所有源在目标无标签样本 $x^T$ 上的预测按权重聚合成一个组级分布 $\bar{p}_g(x^T) = \frac{\sum_{n \in \mathcal{G}_g} w_n p_n(x^T)}{\sum_{n \in \mathcal{G}_g} w_n}$，再让 loss 只对齐这 $G$ 个组级分布：$\mathcal{L}_{IGD} = \sum_{g \neq g'} D(\bar{p}_g, \bar{p}_{g'})$（$D$ 取 KL 或 L2）。因为组数 $G$ 是个小常数，对齐项相对 $N$ 从 $O(N^2)$ 降到 $O(1)$；又因为每组先把多个源平均了一遍，组级分布比单源预测稳得多，方差也压了下来。关键在于每个 round 都重新随机分组，于是在期望意义上组间对齐是全局两两对齐目标的无偏估计——相当于把 minibatch 的思想搬到了 domain 这一层。
 
-2. **温度可调质心相似度加权**：
+**2. 温度可调的质心相似度加权：让靠近 target 的源主导、噪声源退场**
 
-    - 功能：动态给每个源分配权重 $w_n$，让贴近 target 分布的源主导训练，离 target 远的源被弱化，避免负迁移。
-    - 核心思路：在每个 round，计算每个源域和 target 域在特征空间的**质心**：$c_n = \frac{1}{|D_S^n|}\sum_{x \in D_S^n} G(x)$，$c_T = \frac{1}{|D_T|}\sum_{x \in D_T} G(x)$；用相似度 $\text{sim}(c_n, c_T)$（一般是负距离或 cosine），过温度 softmax $w_n = \frac{\exp(\text{sim}(c_n, c_T) / \tau)}{\sum_m \exp(\text{sim}(c_m, c_T) / \tau)}$ 得到归一化权重。温度 $\tau$ 控制锐度：$\tau \to 0$ 趋近 hard selection（只挑最近源），$\tau \to \infty$ 趋近均匀加权。
-    - 设计动机：理论上（论文 Corollary 3.1）联邦 UMDA 泛化界里 $\sum_n w_n \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(D_S^n, D_T)$ 这一项要求权重 $w_n$ 与"源-目标距离的反比"相关；用质心相似度近似 $\mathcal{H}$-散度，再用温度 softmax 平滑选择，既符合理论又工程可行。固定均匀权重在源数变多时容易让噪声源拉低性能（负迁移），动态加权直接解决这个问题。
+源数一多，里头难免混进跟目标域差很远的噪声源，固定均匀权重 $w_n = 1/N$ 会让它们拖低整体（负迁移）。GALA 的解法直接来自理论：论文 Corollary 3.1 的泛化界里有一项 $\sum_n w_n \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(D_S^n, D_T)$，它要求权重 $w_n$ 跟"源-目标距离"成反比。落地时用特征空间的质心来近似这个 $\mathcal{H}$-散度：每个 round 算源质心 $c_n = \frac{1}{|D_S^n|}\sum_{x \in D_S^n} G(x)$ 和目标质心 $c_T = \frac{1}{|D_T|}\sum_{x \in D_T} G(x)$，用相似度 $\text{sim}(c_n, c_T)$（负距离或 cosine）过一个温度 softmax 得到归一化权重 $w_n = \frac{\exp(\text{sim}(c_n, c_T) / \tau)}{\sum_m \exp(\text{sim}(c_m, c_T) / \tau)}$。温度 $\tau$ 控制选择的锐度：$\tau \to 0$ 趋近 hard selection（只挑最近的源）、$\tau \to \infty$ 退化成均匀加权，中间值则在"聚焦近源"和"保留多样性"之间平滑过渡。质心可以在源客户端本地算好再上传，天然契合联邦不漏原始数据的约束。
 
-3. **Digit-18 基准（任务贡献而非方法）**：
+**3. Digit-18 基准：补齐"真异构、源够多"的测试床（任务贡献）**
 
-    - 功能：补齐"真正多源且异构"的 UMDA 测试床。
-    - 核心思路：收集 18 个数字识别数据集，覆盖合成 (synthetic, generated digits) + 真实 (MNIST, SVHN, USPS, MNIST-M 等) 多种 domain shift，每个客户端持有一个数据集；任务统一为 10 类数字识别；评测时把其中 1 个作为 target，其余 17 个作为源。这比之前 Digit-5 这种"5 个源全是数字"的小玩具更有挑战。
-    - 设计动机：现有 federated UMDA 实验都靠"复制 + 加噪声"伪造多源，作者直接组装真实异构源——这才能真正暴露出"源数多时方法是否崩盘"。
+现有 federated UMDA 实验大多靠"把一个数据集复制几份再加噪声"伪造多源，根本暴露不出"源数多时方法会不会崩"。作者直接组装 18 个真实数字识别数据集（合成的 generated digits + 真实的 MNIST、SVHN、USPS、MNIST-M 等），每个客户端持有一个，任务统一成 10 类数字识别，评测时挑 1 个当 target、其余 17 个当源。这比 Digit-5 那种"5 个源全是数字"的小玩具异构得多，也正是用来检验 scalability 的关键场景。
 
 ### 损失函数 / 训练策略
-总损失：$\mathcal{L} = \sum_n w_n \mathcal{L}_{CE}(D_S^n) + \lambda \mathcal{L}_{IGD}$。每个源本地最小化加权监督 CE；target 端利用所有源的预测做 IGD 对齐；权重 $w_n$ 每 round 用质心相似度重算。优化器 SGD/Adam，超参 $\lambda$ 和 $\tau$ 在小验证子集上 grid search。整个框架天然可并行——每个源独立本地训练，server 只做聚合 + IGD。
+总损失为 $\mathcal{L} = \sum_n w_n \mathcal{L}_{CE}(D_S^n) + \lambda \mathcal{L}_{IGD}$：每个源在本地最小化加权监督 CE，target 端用所有源的预测做 IGD 对齐，权重 $w_n$ 每 round 用质心相似度重算。优化器用 SGD/Adam，超参 $\lambda$ 和 $\tau$ 在小验证子集上 grid search。整个框架天然可并行——每个源独立本地训练，server 只做聚合 + IGD。
 
 ## 实验关键数据
 

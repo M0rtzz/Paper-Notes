@@ -43,22 +43,30 @@ AGFT 提出了一种对齐引导的微调框架，通过文本引导的对抗训
 输入：ImageNet 训练集 → PGD 生成对抗样本 $\mathbf{x}_{adv}$ → 冻结预训练 CLIP 计算软预测分布 $\mathbf{p}_{rob}$（温度校准后）→ 微调图像编码器使对抗样本的预测匹配 $\mathbf{p}_{rob}$ → 在 15 个零样本数据集上评估。
 
 ### 关键设计
-1. **文本引导的对抗训练（Text-Guided Adversarial Training）**：
 
-    - **功能**：用预训练 CLIP 的软概率分布（而非硬标签）作为对抗训练目标。
-    - **核心思路**：$p_{orig}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / \tau)}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / \tau)}$，对抗训练损失用 KL 散度形式：$L = -\mathbb{E}_{i,j}[p_{rob}^{i,j} \log \frac{\exp(\cos(f_\theta(x_{adv}^i), f_\phi(t^j))/\tau)}{\sum_k ...}]$
-    - **设计动机**：硬标签只关注正确类别，忽视了图像与其他文本之间的相对相似度关系。软分布保留了这些关系，使微调后的特征空间保持与原始 CLIP 一致的语义结构。
+**1. 文本引导的对抗训练：用软概率分布而非硬标签当对抗目标。**
 
-2. **分布一致性校准（Distribution Consistency Calibration）**：
+TeCoA、GLADIATOR 这类方法把对抗微调当成一个分类问题，用正确类别的硬标签去监督——可这只盯着"对/错"，完全丢掉了图像与其余文本类别之间的相对相似度，而那恰恰是 CLIP 跨模态对齐的精华。AGFT 改用冻结的原始 CLIP 给每张图像算出它在所有候选文本上的软概率分布，把这份分布当成对抗训练的目标。具体地，原始模型在图像 $x^i$ 与文本 $t^j$ 上的相似度经温度 $\tau$ 归一化为：
 
-    - **功能**：通过温度缩放调整目标分布，消除置信度尺度与语义结构的纠缠。
-    - **核心思路**：$p_{rob}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / (\tau/\gamma))}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / (\tau/\gamma))}$，其中 $\gamma \in (0,1]$，增大有效温度使分布更平滑。
-    - **设计动机**：直接使用 $p_{orig}$ 作为目标会强制鲁棒模型继承预训练模型的置信度尺度（logits 的绝对大小），而这个尺度可能与鲁棒特征空间不匹配。温度缩放分离了"相对语义关系"和"置信度尺度"，只保留前者作为监督信号。
+$$p_{orig}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / \tau)}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / \tau)}$$
 
-3. **最终目标函数**：$\min \mathbb{E}_{\mathbf{x} \in \mathcal{D}}[\max_{\mathbf{x}_{adv} \in B(\mathbf{x}, \epsilon)} L(\mathbf{x}_{adv}, \mathbf{t}, \mathbf{p}_{rob}, \tau)]$
+训练时则用 KL 散度形式的损失，逼着对抗样本 $x_{adv}$ 经微调后图像编码器 $f_\theta$ 给出的预测分布去贴合这份软目标 $L = -\mathbb{E}_{i,j}[p_{rob}^{i,j} \log \frac{\exp(\cos(f_\theta(x_{adv}^i), f_\phi(t^j))/\tau)}{\sum_k ...}]$。因为软分布把"图像和每一个文本有多像"都编码进去了，微调后的特征空间就被约束在与原始 CLIP 一致的语义结构上，鲁棒性提升的同时不再扭曲对齐。
 
-    - 内层最大化：PGD 生成对抗样本
-    - 外层最小化：使对抗样本预测匹配校准后的软分布
+**2. 分布一致性校准：温度缩放把语义结构和置信度尺度解耦。**
+
+直接拿 $p_{orig}$ 当目标还藏着一个隐患——它会连带把预训练模型的置信度尺度（logits 的绝对大小）一起塞给鲁棒模型，而这个尺度未必适配鲁棒特征空间，硬继承反而拖累训练。AGFT 的做法是在算目标分布时把温度从 $\tau$ 放大到 $\tau/\gamma$（$\gamma \in (0,1]$），让分布更平滑：
+
+$$p_{rob}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / (\tau/\gamma))}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / (\tau/\gamma))}$$
+
+放大有效温度等于把那些过尖的置信度峰压下去，于是"相对语义关系"和"置信度尺度"被拆开，只有前者作为监督信号留下来。这一步看似只是调了个温度，却正是让软监督不被尺度噪声污染的关键。
+
+**3. 最终目标函数：把校准后的软分布塞进 min-max 对抗框架。**
+
+前两步的产物——校准后的软目标 $p_{rob}$——最终落进标准的对抗训练 min-max 优化里：内层用 PGD 在 $\epsilon$ 邻域内最大化损失、生成最难的对抗样本，外层最小化损失、让模型在这些对抗样本上的预测仍匹配 $p_{rob}$。
+
+$$\min \mathbb{E}_{\mathbf{x} \in \mathcal{D}}\Big[\max_{\mathbf{x}_{adv} \in B(\mathbf{x}, \epsilon)} L(\mathbf{x}_{adv}, \mathbf{t}, \mathbf{p}_{rob}, \tau)\Big]$$
+
+整个方法的精巧之处也在这里：它没动网络结构、没加额外模块，只是把对抗训练原本的硬标签目标换成了一份经温度校准的软对齐分布。
 
 ### 损失函数 / 训练策略
 - 仅微调图像编码器（全参数），文本编码器冻结

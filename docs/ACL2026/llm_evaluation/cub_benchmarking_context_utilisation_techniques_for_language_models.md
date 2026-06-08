@@ -42,35 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CUB 是一套评测基准，不是新方法。整套评测 pipeline：
-
-1. **三数据集统一改造**：CounterFact / NQ / DRUID 都改写出 gold / conflicting / irrelevant 三类上下文样本；每个数据集 dev=198、test 视具体集而定（CounterFact 2499、NQ 4945、DRUID 4302）。CounterFact 走 LAMA fact-triplet 替换合成；NQ 用 substitution 制造冲突 + 用 LM re-ranker 选页内最相关的非 gold paragraph 当 irrelevant；DRUID 用人工标注的 stance（supports/refutes/insufficient/irrelevant）映射成上下文类型。
-2. **七 CMT 横向重实现**：Regular（无 CMT 基线）、Fine-tuning（Li et al. 2023 风格）、Prompting（每数据集 12 个 prompt，6 人工 + 6 LLM 生成）、Multi-agent（把"判断相关性"和"判断 faithfulness"拆给两个 LLM agent）、PH3 +context / +memory（Jin et al. 2024 的注意力头抑制双向版本）、COIECD（Yuan et al. 2024，检测 + 选择性消解冲突）、ACD（Kim et al. 2024，熵加权融合参数化与上下文分布）。
-3. **11 个 LLM 统一评测**：GPT2-XL、Pythia 6.9B、Qwen 2.5 base/instruct × 1.5B/7B/32B、Cohere Command A (111B)、GPT-4.1 mini、GPT-4.1。每个 CMT 按其与模型的兼容性自适应跑相应子集。
-4. **指标 + 超参 + 特征分析**：BCU 衡量"模型是否选了上下文 promoted token"，CCU 衡量 token probability 的连续变化；所有需要调参的 CMT 在 dev 集上按"三类上下文的平均 BCU 最大化"统一搜超参，杜绝挑参数挑评测点。再做 Pareto frontier 分析 + 模型特征/输入特征 × Spearman ρ 的相关分析。
+CUB 是一套评测基准而非新方法,它要把"CMT × LLM × 数据集 × 上下文类型"这个四维空间打通成一张可比的实验地图。整条 pipeline 从三个互补数据集出发——CounterFact(合成、原子级 fact)、NQ(真实开放域 QA)、DRUID(真实自动事实核查)——各自改写出 gold / conflicting / irrelevant 三类上下文样本(dev=198,test 规模 CounterFact 2499 / NQ 4945 / DRUID 4302);中间把 7 类主流 CMT(Regular 基线、Fine-tuning、Prompting、Multi-agent、PH3 +context/+memory、COIECD、ACD)在 11 个 LLM 上按统一协议重实现,所有需调参的方法都在 dev 集上以"三类上下文平均 BCU 最大化"为同一目标搜超参;输出端则用 BCU/CCU 双指标算出每个 (LM, CMT, 上下文) 组合的得分,再投影到 Pareto frontier 上、配合 Spearman ρ 的特征相关分析,把被单一数字掩盖的 trade-off 显式画出来。
 
 ### 关键设计
 
-1. **三数据集 × 三上下文类型的对角矩阵评测**：
+**1. 三数据集 × 三上下文类型的对角矩阵评测:让任何单维度优势都无处藏身。** 现有 CMT 论文几乎只在 CounterFact 上验证——这是 mechanistic interpretability 圈子的传统遗产。CUB 强制每个 CMT 同时跨"合成 vs 真实"和"相关 vs 冲突 vs 无关"两个正交维度:CounterFact 提供控制变量良好但极度简化的 atomic-fact 场景,NQ 提供真实 Wikipedia 段落的中等难度,DRUID 提供真实互联网证据 + 多步推理的高难度核查,三者都构造同样的 gold/conflict/irrelevant 三类样本(DRUID 的 irrelevant 自然比例仅 0.4%),组成 3×3 的对角矩阵。
 
-    - 功能：把 CMT 在"合成 vs 真实"和"相关 vs 冲突 vs 无关"两个正交维度上同时测试，使任何单一维度的优势都无处藏身。
-    - 核心思路：CounterFact 提供"控制变量良好但极其简化"的 atomic-fact 场景；NQ 提供"开放域 QA + 真实 Wikipedia 段落"的中等难度；DRUID 提供"真实互联网证据 + 多步推理"的高难度自动事实核查。三个数据集都构造同样的 gold/conflict/irrelevant 三类样本（虽然 DRUID 的 irrelevant 比例只有 0.4%，因为自然采样如此），形成 3×3 的对角矩阵。
-    - 设计动机：现有 CMT 论文几乎只在 CounterFact 上跑——这是 mechanistic interpretability 的传统遗产。CUB 通过强制每个 CMT 都在三类数据集上跑，直接揭示一个反直觉现象：所有现有 CMT 在 CounterFact-conflict 上几乎都能冲到 ~1.0 的 BCU（"看起来很美"），但在 NQ/DRUID 上完全没有同等增益。这种 contrast 把整个领域的评测虚高彻底暴露。
+这种强制铺开直接揭出一个反直觉现象:几乎所有现有 CMT 在 CounterFact-conflict 上都能把 BCU 冲到约 1.0("看起来很美"),但同样的方法搬到 NQ/DRUID 上完全没有同等增益。把合成集上的虚高与真实集上的失效摆在同一行对照,整个领域的评测系统性高估就被一眼看穿。
 
-2. **BCU/CCU + Pareto Frontier 的双维度评分**：
+**2. BCU/CCU + Pareto frontier 的双维度评分:把 faithfulness 与 robustness 解耦。** CMT 的功效本来是两件互相拉扯的事——对相关上下文的服从(faithfulness)和对无关上下文的不动摇(robustness)——以前用单个 avg accuracy 排名,会让一类上下文上的伤害被另一类的提升掩盖。CUB 定义二值指标 $\text{BCU} = \mathbb{1}[\text{pred} = t_C]$(相关上下文)或 $\mathbb{1}[\text{pred} = t_M]$(无关上下文,$t_M$ 是无上下文时模型预测的 memory token),并用增量 $\Delta = \text{BCU}_{\text{CMT}} - \text{BCU}_{\text{Regular}}$ 衡量 CMT 的净贡献,CCU 则进一步刻画 token 概率的连续变化。
 
-    - 功能：把 CMT 的功效拆成"faithfulness（对相关上下文的服从）"与"robustness（对无关上下文不动摇）"两个独立维度，并显式画出 trade-off 边界。
-    - 核心思路：定义 $\text{BCU} = \mathbb{1}[\text{pred} = t_C]$（相关上下文）或 $\mathbb{1}[\text{pred} = t_M]$（无关上下文，$t_M$ 是无上下文时模型预测的 memory token），并定义增量 $\Delta = \text{BCU}_{\text{CMT}} - \text{BCU}_{\text{Regular}}$ 衡量 CMT 的净贡献；再把 faithfulness = $\text{Avg}(\text{BCU}_{\text{Gold}}, \text{BCU}_{\text{Conflicting}})$ 与 robustness = $\text{BCU}_{\text{Irrelevant}}$ 画到 2D 平面上，把所有 (LM, CMT) 组合标到 Pareto frontier 上。
-    - 设计动机：以前都是用 single number（avg accuracy）做 ranking，CMT 在某类上下文上的伤害会被另一类的提升掩盖。Pareto frontier 把"什么场景用什么 CMT 最优"变成可解读的工程决策图——例如 CounterFact 上 (Qwen 32B, Prompting) 同时拿到 100% faithfulness 与 80.67% robustness，但 NQ 上同样追 faithfulness 顶配的 (Qwen 32B, Fine-tuning) robustness 只剩 46.28%。
+随后把 faithfulness $= \text{Avg}(\text{BCU}_{\text{Gold}}, \text{BCU}_{\text{Conflicting}})$ 与 robustness $= \text{BCU}_{\text{Irrelevant}}$ 投到 2D 平面,把所有 (LM, CMT) 组合标到 Pareto frontier 上。这样"什么场景用什么 CMT 最优"就变成可读的工程决策图:例如 CounterFact 上 (Qwen 32B, Prompting) 能同时拿到 100% faithfulness 与 80.67% robustness,而 NQ 上同样追 faithfulness 顶配的 (Qwen 32B, Fine-tuning) robustness 只剩 46.28%——前沿不会塌缩成一点,恰恰证明没有一招通吃。
 
-3. **统一超参搜索 + 特征驱动相关性分析**：
+**3. 统一超参搜索 + 特征驱动相关分析:堵住"参数偷换",再给失效一个机理解释。** CMT 评测里最隐蔽的偏置是每个方法都用作者偏爱的超参跑评测。CUB 让所有需调参的 CMT 都在 dev 集(198 样本)上以"三类上下文平均 BCU 最大化"的同一目标函数搜参(除非方法本身规定了 method-specific 搜索,如 PH3 的 head 选择),把方法学透明化。
 
-    - 功能：杜绝"每个 CMT 用作者偏爱的超参跑评测"这一隐性偏置，并系统量化哪些 LLM 特征 / 输入特征真正影响 CMT 效果。
-    - 核心思路：所有需调参的 CMT 都用 dev 集（198 样本）按"三类上下文的平均 BCU 最大化"的同一目标搜超参，除非方法本身规定了 method-specific 搜索（如 PH3 的 head 选择）。再用 Spearman ρ 测模型特征（size、instruction-tuned、parametric memory strength）和输入特征（context length、Flesch 可读性、distractor rate、query-context overlap、answer position、模型自评相关性）与 BCU 的相关。
-    - 设计动机：CMT 评测里"参数偷换"是常见隐性技巧，CUB 用统一目标函数搜参把方法学透明化；特征相关性分析则给"为什么某 CMT 在某场景失效"提供机理解释（如 PH3 +memory 在 instruct-tuned 模型上 DRUID conflict 任务上的 ρ=0.77，揭示该 CMT 强依赖指令对齐能力）。
+在此之上再用 Spearman ρ 量化哪些因素真正左右 CMT 效果:模型特征(size、是否 instruction-tuned、parametric memory strength)与输入特征(context length、Flesch 可读性、distractor rate、query-context overlap、answer position、模型自评相关性)分别对 BCU 求相关。这层分析给"为什么某 CMT 在某场景失效"提供机理 hint——例如 PH3 +memory 在 instruct-tuned 模型的 DRUID-conflict 任务上 ρ=0.77,揭示它并非普适增强,而是强依赖指令对齐能力的"放大器"。
 
 ### 损失函数 / 训练策略
-CUB 本身不训练新模型；其中的 Fine-tuning CMT 复用 Li et al. (2023) 的设置——在 relevant/irrelevant/empty/conflicting 四类上下文上 SFT，以提升对相关上下文的服从。其余 CMT 都是 inference-time 干预，无需训练。超参搜索的目标统一为最大化 dev 集上三类上下文 BCU 的平均值。
+CUB 本身不训练新模型;其中的 Fine-tuning CMT 复用 Li et al. (2023) 的设置——在 relevant/irrelevant/empty/conflicting 四类上下文上 SFT,以提升对相关上下文的服从。其余 CMT 都是 inference-time 干预,无需训练。超参搜索的目标统一为最大化 dev 集上三类上下文 BCU 的平均值。
 
 ## 实验关键数据
 

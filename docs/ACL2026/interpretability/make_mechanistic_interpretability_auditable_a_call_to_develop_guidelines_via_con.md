@@ -45,23 +45,18 @@ tags:
 在这个框架里，同行评审仍然存在，但它不再是唯一质量控制节点。论文外的“清理工作”被赋予明确位置：研究者可以上传实验仓库、评论 claim、记录复现失败、补充边界案例，平台则把这些 meta-knowledge 组织成可搜索、可引用、可累积的社区记忆。
 
 ### 关键设计
-1. **连续协作评审平台**:
 
-	- 功能：集中收纳论文之外的 meta-analysis 结果，包括评论、批评、复现、replication、负结果、post-hoc extension、partial result 和小规模反例。
-	- 核心思路：平台包含实验仓库和论坛。实验仓库保存假设、证据、claim、代码和论文链接；论坛支持研究者围绕 claim 和 guideline 页面持续辩论。它类似 OpenReview、LessWrong 和 GitHub 的组合，但重点不是发布论文，而是持续修订已有研究的证据状态。
-	- 设计动机：当前很多有价值的 MI 经验散落在 Twitter、Discord、论坛或私人通信里，容易丢失，也难以被新研究者和 LLM 检索。平台化可以把这些知识从易失的讨论变成机构记忆。
+**1. 连续协作评审平台：给论文之外的"清理工作"一个能沉淀的家。**
 
-2. **社区精炼的最小指南**:
+当前很多最有价值的 MI 经验——复现、replication、负结果、post-hoc extension、partial result、小规模反例和方法学批评——都散落在 Twitter、Discord、论坛和私人通信里，既容易丢失，也难以被新研究者和 LLM 检索。论文提出的平台由实验仓库和论坛两部分组成：实验仓库保存每条研究的假设、证据、claim、代码和论文链接，论坛则让研究者围绕具体 claim 和 guideline 页面持续辩论。它形态上像 OpenReview、LessWrong 和 GitHub 的组合，但重心不在发布新论文，而在持续修订已有研究的证据状态——把易失的讨论变成可搜索、可引用、可累积的机构记忆，这样同行评审就不再是唯一的质量控制节点。
 
-	- 功能：把平台中的常见好实践转成可用于社区评审和专业审计的 guidelines。
-	- 核心思路：研究者可以创建 Proposed Guideline 页面，例如“某类 circuit validity 必须跑某个 sanity check”。支持方和反对方都要用论文、实验仓库或 meta-result 提供证据。专业审计机构需要选用标准时，可以查看这些页面上的证据链和争议历史。
-	- 设计动机：作者明确反对把指南变成僵硬教条。指南应是 minimal、logically justified、empirically supported 的最低要求，帮助研究者避免遗漏关键检查，而不是阻止新方法探索。
+**2. 社区精炼的最小指南：用证据而非权威把好实践固化成可执行标准。**
 
-3. **源证据追踪与自动审计辅助**:
+MI 实验对指标选择、腐化样本构造、组件粒度、因果干预设置等细节极其敏感，但社区缺少一套可共同执行的最低标准。作者的做法是让研究者创建 Proposed Guideline 页面，例如"某类 circuit validity 必须跑某个 sanity check"，支持方和反对方都必须用论文、实验仓库或 meta-result 提供证据；专业审计机构需要选标准时，就能直接查看页面上的证据链和争议历史。关键是作者明确反对把指南做成僵硬教条：它应当是 minimal、logically justified、empirically supported 的最低要求，帮研究者避免遗漏关键检查，而不是阻止新方法探索——这也呼应了 MIAME、GRADE、High Integrity C++ 等跨学科标准化先例的精神。
 
-	- 功能：追踪一个 claim 依赖哪些假设、实验、图表、代码、其他 claim，并在依赖被削弱时更新其可信度。
-	- 核心思路：source-based auditing 不只是引用论文，而是定位到论文内部具体证据，例如某个 plot、某个 ablation、某个腐化样本设置。论文建议用 agentic AI 辅助追踪长依赖链、运行 evaluation harness，并用 Probabilistic Soft Logic 等概率逻辑框架对假设和观察之间的关系赋权。
-	- 设计动机：MI claim 数量太多，人工逐条源审计成本极高。自动系统不能替代人类最终判断，但可以把 explanation 转成可测试 claim，暴露选择性证据、后验假设、缺失 ablation 和相互冲突解释。
+**3. 源证据追踪与自动审计辅助：让每个 claim 都能回溯到具体的图、实验和代码。**
+
+普通引用只能说明"看过某篇论文"，但 MI claim 的可信度往往取决于它依赖的是哪张 plot、哪个 ablation、哪个 corrupt prompt、哪个 seed 或 metric。source-based auditing 要求把 claim 的依赖显式追踪到论文内部的具体证据，并在某个依赖被削弱时同步更新该 claim 的可信度。由于 MI claim 数量庞大、人工逐条源审计成本极高，论文进一步建议用 agentic AI 辅助追踪长依赖链、运行 evaluation harness，并用 Probabilistic Soft Logic 等概率逻辑框架对假设与观察之间的关系赋权。自动系统不替代人类最终判断，但能把 explanation 转成可测试 claim，从而暴露选择性证据、后验假设、缺失 ablation 和相互冲突的解释。
 
 ### 损失函数 / 训练策略
 本文没有训练模型，也没有损失函数。它的“训练策略”更像制度设计：先通过开放平台积累 meta-result，再让社区从证据支持的讨论中逐步形成 living guidelines，最后用源证据追踪和 agentic AI 工具降低审计成本。作者强调这套机制需要实验性试点，例如 surveys、workshops 和早期社区参与，而不是立刻宣布一套强制标准。

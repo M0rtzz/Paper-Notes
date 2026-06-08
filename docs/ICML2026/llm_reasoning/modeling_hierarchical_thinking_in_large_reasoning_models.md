@@ -49,23 +49,27 @@ tags:
 
 ### 关键设计
 
-1. **6 状态 FSM 抽象 + Transition Advantage Matrix $R$**:
+**1. 6 状态 FSM 抽象 + Transition Advantage Matrix $R$：把无结构的 CoT 压成一张能区分对错的转移图。**
 
-    - 功能：把无结构的 CoT 序列压成一个可分析、可比对的离散转移图，并把「哪种认知转移有利于答对」量化为一个 $|\mathcal{Q}|\times|\mathcal{Q}|$ 的奖励矩阵。
-    - 核心思路：把 LRM 的 CoT 句子序列 $\mathcal{S}=(s_1,\dots,s_K)$ 用标注函数 $\phi:\mathcal{S}\to\mathcal{Q}$ 投影到 6 状态轨迹，合并自环以保留真正的转移；分别在「答对」「答错」两组样本上估计转移概率 $T^{(correct)}_{ij}$、$T^{(incorrect)}_{ij}$，然后令 $R_{ij}=T^{(correct)}_{ij}-T^{(incorrect)}_{ij}$。$R_{ij}>0$ 表示「这一步从 $i$ 跳到 $j$ 在正确轨迹里更常见」，是要鼓励的正向转移；$R_{ij}<0$ 则是失败模式信号。6 个状态对应 Polya 框架的「理解—计划—执行—回顾」并补上 LRM 特有的 uncertainty / backtracking，既贴近人类认知传统又能在实证上区分对错（Cohen's Kappa 0.89 的人工一致性验证）。
-    - 设计动机：之前的 CoT 控制要么按行为类别一刀切、要么只看单条线性方向；FSM 提供了一个紧凑、可比对、可作为奖励空间的全局结构，让「control」第一次能挂到一个外推后仍稳定的转移图上，而不是依赖某个模型某次 prompt 的临时统计。
+之前的 CoT 控制要么按行为类别一刀切、要么只盯单条线性方向，始终没有一个能比对、能当奖励空间的全局结构。本文先把 LRM 的 CoT 句子序列 $\mathcal{S}=(s_1,\dots,s_K)$ 用标注函数 $\phi:\mathcal{S}\to\mathcal{Q}$ 投影到 6 状态轨迹并合并自环（只保留真正发生的状态转移），这 6 个状态 $\mathcal{Q}=\{\text{init, deduce, augment, uncertain, backtrack, closure}\}$ 对应 Polya 的「理解—计划—执行—回顾」框架，再补上 LRM 特有的 uncertainty / backtracking，既贴着人类认知传统、人工一致性也很高（Cohen's Kappa 0.89）。
 
-2. **Q-Value 迭代规划 + 置信度门控的稀疏触发**:
+有了离散轨迹，就能分别在「答对」「答错」两组样本上估计条件转移概率 $T^{(correct)}_{ij}$、$T^{(incorrect)}_{ij}$，并令 $R_{ij}=T^{(correct)}_{ij}-T^{(incorrect)}_{ij}$。$R_{ij}>0$ 意味着「从 $i$ 跳到 $j$ 在正确轨迹里更常见」，是该鼓励的正向转移；$R_{ij}<0$ 则是失败模式的信号。这张 $|\mathcal{Q}|\times|\mathcal{Q}|$ 的优势矩阵第一次让「control」挂到了一个外推后仍稳定的转移图上，而不是依赖某模型某次 prompt 的临时统计——它既是认知结构的刻画，又直接是后面规划要用的奖励。
 
-    - 功能：把单步奖励 $R$ 扩展为带未来视野的长视野效用 $Q(q,q')$，并据此精确决定「该不该引导」和「引导到哪」。
-    - 核心思路：把 FSM 当成一个小型规划问题，对裁剪后的奖励 $R_{clip} = \text{clip}(R, [-c,+c]),\ c\in[0.2,0.3]$ 跑 Bellman 风格的 Q-Value 迭代 $Q_{k+1}(q,q'):=R(q,q')+\gamma\max_{q''}Q_k(q',q'')$，$\gamma=0.9$，迭代 100 步收敛得到 $Q$ 表。推理时分类器给出当前状态 $q$ 和对下一状态预测的概率向量 $\mathbf{p}$、置信度 $\text{conf}=\max_j p_j$；定义 $q^\star=\arg\max_{q'}Q(q,q')$、$Q_{gap}=Q(q,q^\star)-Q(q,\hat q_{t+1})$。如果模型既不在「卡住」（最近 5 步同状态）又有 $\text{conf}\ge 0.9$，就不干预；否则当 $Q_{gap}\ge\delta=0.06$ 才引导，强度按 $\alpha=\max(\beta,\,Q_{gap}\cdot\text{conf})$ 动态调，$\beta\in[0.1,1.2]$。
-    - 设计动机：纯贪心策略（直接拿 $R$ 最大那一格）会让模型陷入「短期高回报但远期错误」的路径（实验里 QWEN+AIME25 从 83.3% 反而掉到 76.67%）；Q-Value 同时考虑下一步之后的累积收益，配上 conf+stuck+$Q_{gap}$ 三重门控，能把干预集中到「模型正要跑偏的高杠杆决策点」——这是把单次 25× 干预压缩到 0.48 次还能涨点的关键。
+**2. Q-Value 迭代规划 + 置信度门控的稀疏触发：把单步奖励变成长视野效用，并精确决定何时、往哪干预。**
 
-3. **句子边界的正交分量激活注入**:
+直接拿 $R$ 最大那一格做贪心，会把模型推进「短期高回报但远期错误」的路径——实验里 QWEN+AIME25 就因此从 83.3% 反掉到 76.67%。本文把 FSM 当成一个小型规划问题，对裁剪后的奖励 $R_{clip}=\text{clip}(R,[-c,+c]),\ c\in[0.2,0.3]$ 跑 Bellman 风格迭代
 
-    - 功能：在不破坏当前隐藏表征语义内容的前提下，沿目标转移方向给一次小幅"侧向"扰动，把下一句的状态分布偏向 $q^\star$。
-    - 核心思路：仅在句末标点 token 处取出第 $\ell$ 层隐藏向量 $\mathbf{h}^{(\ell)}_k$，归一化得 $\hat{\mathbf{h}}=\mathbf{h}/(\|\mathbf{h}\|_2+\varepsilon)$，从离线抽到的转移引导向量 $\mathbf{v}^{(\ell)}_{u\to v}$ 中减去其在 $\hat{\mathbf{h}}$ 上的投影：$\mathbf{v}_\perp=\mathbf{v}-(\mathbf{v}^\top\hat{\mathbf{h}})\hat{\mathbf{h}}$，再注入 $\tilde{\mathbf{h}}^{(\ell)}_k=\mathbf{h}^{(\ell)}_k+\alpha\mathbf{v}_\perp$。引导向量本身用 contrastive difference-of-means 抽：正集是该转移所有句末隐藏向量，负集是其它所有转移，取均值差。
-    - 设计动机：直接加 $\alpha\mathbf{v}$ 会破坏 $\mathbf{h}$ 里已经承载的内容信息，造成下一句语义偏离；只注入正交分量等于「保住内容、只换方向」，并且句末标点位置天然是「模型即将决定下一句」的语义提交点（与 transition vector 抽取时取的「last-token of sentence」严格对齐），引导粒度与控制粒度一致才能可靠生效。
+$$Q_{k+1}(q,q'):=R(q,q')+\gamma\max_{q''}Q_k(q',q''),\quad \gamma=0.9$$
+
+迭代 100 步收敛得到 $Q$ 表，于是「下一步之后的累积收益」也被纳入考量。推理时分类器给出当前状态 $q$、下一状态概率向量 $\mathbf{p}$ 和置信度 $\text{conf}=\max_j p_j$，定义最优目标 $q^\star=\arg\max_{q'}Q(q,q')$ 与缺口 $Q_{gap}=Q(q,q^\star)-Q(q,\hat q_{t+1})$。门控分三重：若模型既不「卡住」（最近 5 步同状态）又有 $\text{conf}\ge 0.9$ 就放手不管；否则只有当 $Q_{gap}\ge\delta=0.06$ 才出手，强度按 $\alpha=\max(\beta,\,Q_{gap}\cdot\text{conf})$ 动态调（$\beta\in[0.1,1.2]$）。正是这套「长视野 + conf/stuck/$Q_{gap}$ 三重门控」把干预集中到「模型正要跑偏的高杠杆决策点」，才能把每题干预次数压到 0.48 还能涨点。
+
+**3. 句子边界的正交分量激活注入：保住内容、只换方向，把下一句偏向目标状态。**
+
+确定要引导到 $q^\star$ 后，怎么注入也有讲究：直接加 $\alpha\mathbf{v}$ 会破坏隐藏向量里已承载的内容信息，让下一句语义跑偏。本文只在句末标点 token 处取第 $\ell$ 层隐藏向量 $\mathbf{h}^{(\ell)}_k$，归一化得 $\hat{\mathbf{h}}=\mathbf{h}/(\|\mathbf{h}\|_2+\varepsilon)$，再把离线抽到的转移引导向量 $\mathbf{v}^{(\ell)}_{u\to v}$ 中平行于内容的分量减掉、只留正交部分注入：
+
+$$\mathbf{v}_\perp=\mathbf{v}-(\mathbf{v}^\top\hat{\mathbf{h}})\hat{\mathbf{h}},\qquad \tilde{\mathbf{h}}^{(\ell)}_k=\mathbf{h}^{(\ell)}_k+\alpha\mathbf{v}_\perp$$
+
+这相当于「保住内容、只换方向」，做一次小幅侧向扰动把下一句的状态分布偏向 $q^\star$。引导向量本身用 contrastive difference-of-means 抽取：正集是该转移所有句末隐藏向量、负集是其它所有转移，取均值差。之所以选句末标点，是因为这正是「模型即将提交下一句」的语义点，与 transition vector 抽取时取的 last-token-of-sentence 严格对齐——引导粒度和控制粒度一致，扰动才能可靠生效。
 
 ### 损失函数 / 训练策略
 State Encoder 是 2 层 MLP（LayerNorm + ReLU + dropout 0.1）投到 512 维单位球面，用 triplet loss $\mathcal{L}_{triplet}=\max(0,\|\mathbf{z}_a-\mathbf{z}_p\|^2-\|\mathbf{z}_a-\mathbf{z}_n\|^2+m)$（$m=1.1$）训 50 epoch，Adam $lr=10^{-4}$；当前/下一状态分类器在编码上 80/20 train-test 划分，测试准确率 >90%。引导向量逐层抽并按验证集挑层（GPT-L/M 第 19 层、PHI 22 层、QWEN 30 层），Greedy $\alpha=1.0$，Weighted $\alpha\in[0.1,1.0]$，Q-Value $\delta=0.06$。整个 pipeline 不更新 LRM 权重。

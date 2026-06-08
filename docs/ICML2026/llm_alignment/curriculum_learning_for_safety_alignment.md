@@ -41,33 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Staged-Competence 是一个两阶段 pipeline，套在标准 DPO 之外，不动 DPO loss 本身。
-
-**Phase 1 (Scoring)**：用待对齐的基座模型 $\pi_0$ 给每条 prompt 生成零样本回答 $\hat y_i$，再用轻量句向量编码器 (all-MiniLM-L6-v2) 编码 $\hat y_i, y_i^+, y_i^-$，算出全局难度分；按这个分数从易到难全局排序整个数据集。
-
-**Phase 2 (Training)**：把排序后的数据均匀切成 $K=3$ 个难度递增的桶 $\mathcal B_1, \mathcal B_2, \mathcal B_3$，依次训练 $K$ 个阶段。每个阶段内部不是随机洗牌，而是按 competence 函数 $c(t)$ 动态扩大可采样的"合格池"——一开始只采桶内最简单的那一小撮，随着 step 增加按 $\sqrt{\cdot}$ 速率把更难的样本加进来；阶段结束后，本阶段训出的策略 $\pi^{(k)}$ 直接作为下阶段的参考模型 $\pi_\text{ref}^{(k+1)}$。
-
-输入：偏好数据集 $\mathcal D = \{(x_i, y_i^+, y_i^-)\}$、未对齐基座 $\pi_0$；输出：对齐后的策略 $\pi^{(K)}$。
+Staged-Competence 是一个套在标准 DPO 外层的两阶段 pipeline，全程不碰 DPO loss 本身，只改"用哪些样本、按什么顺序喂、参考模型怎么变"。第一阶段 (Scoring) 先用待对齐的基座模型 $\pi_0$ 给每条 prompt 生成零样本回答 $\hat y_i$，再用轻量句向量编码器 (all-MiniLM-L6-v2) 把 $\hat y_i, y_i^+, y_i^-$ 编码后算出一个全局难度分，据此把整个数据集从易到难排序。第二阶段 (Training) 把排序后的数据均匀切成 $K=3$ 个难度递增的桶 $\mathcal B_1, \mathcal B_2, \mathcal B_3$ 依次训练：桶内不是随机洗牌，而是按 competence 函数动态放宽可采样的样本池；每个桶训完，本阶段的策略 $\pi^{(k)}$ 直接接棒成为下阶段的参考模型。整条流水线输入偏好数据集 $\mathcal D = \{(x_i, y_i^+, y_i^-)\}$ 与未对齐基座 $\pi_0$，输出对齐后的策略 $\pi^{(K)}$。
 
 ### 关键设计
 
-1. **Preference Alignment Margin（模型相关的全局难度分）**:
+**1. Preference Alignment Margin：把难度做成全数据集可比的标量。**
 
-    - 功能：把"这条偏好对对当前模型来说有多难"量化成一个可在全数据集上排序的标量。
-    - 核心思路：先让未对齐的基座模型对 prompt $x_i$ 输出零样本回答 $\hat y_i$，再用句向量编码器算 $m_i = \cos(e_{\hat y_i}, e_{y_i^+}) - \cos(e_{\hat y_i}, e_{y_i^-})$；$m_i$ 越大说明基座本来就更接近安全答，是"简单样本"，反之是"模型还分不清"的难样本。降序排列得到全局课程顺序。
-    - 设计动机：Curri-DPO 的难度是"每个 prompt 内 4 个候选回答的成对质量差"，只能局部排序，无法跨 prompt 比较；而本文的 margin 让任意两条偏好对都可比，是把 competence-based 采样从机器翻译迁移到 DPO 的关键前提，也避免依赖外部 GPT-4 judge 打分。
+标准 DPO 把所有偏好对当同等难度随机采样，问题是偏好对的"难"不是语言复杂度，而取决于基座本身已经多大程度上分得清安全/不安全。本文用一个很便宜的办法把这件事量化：先让未对齐的基座对 prompt $x_i$ 输出零样本回答 $\hat y_i$，再用句向量编码器算 $m_i = \cos(e_{\hat y_i}, e_{y_i^+}) - \cos(e_{\hat y_i}, e_{y_i^-})$——$m_i$ 越大说明基座的自发回答本来就更靠近安全答，是"简单样本"，反之是模型还分不清的难样本，降序排列就得到全局课程顺序。关键在于这个 margin 让**任意两条偏好对**都能直接比大小，而 Curri-DPO 那种"每个 prompt 内 4 个候选回答的成对质量差"只能在 prompt 内部局部排序、跨 prompt 没法比；正是这个全局可比性，才让源自机器翻译的 competence-based 采样能搬到 DPO 上来，而且全程只需一个小 sentence encoder + 一次零样本生成，不依赖外部 GPT-4 judge 打分。
 
-2. **Staged Reference Update（阶段间参考模型递推）**:
+**2. Staged Reference Update：让参考模型跟着课程一起进化。**
 
-    - 功能：让每个难度阶段的优化目标都"以上一个阶段的成果为锚"，避免后阶段重新学已经学会的简单样本。
-    - 核心思路：把全局排序数据切成 $K=3$ 等大桶，第 $k$ 阶段用 $\pi_\text{ref}^{(k)}$ 在桶 $\mathcal B_k$ 上跑 $E$ 个 epoch 的 DPO，结束后令 $\pi_\text{ref}^{(k+1)} \leftarrow \pi^{(k)}$，参考模型沿着课程一起进化。
-    - 设计动机：标准 DPO 的固定参考会让训练后期的梯度被"已经学会的简单对"稀释；Curri-DPO 证明递推参考有效，本文继承这一机制，并通过"reward margin 在阶段切换处出现明显跳变"的曲线证据 (Fig. 2) 说明每次参考更新都注入了新的有效梯度。
+固定参考模型的标准 DPO 有个隐患：训到后期，梯度会被那些"模型早就学会的简单对"反复稀释，难样本得不到足够信号。本文把全局排序后的数据切成 $K=3$ 个等大桶，第 $k$ 阶段用参考模型 $\pi_\text{ref}^{(k)}$ 在桶 $\mathcal B_k$ 上跑 $E$ 个 epoch 的 DPO，跑完就令 $\pi_\text{ref}^{(k+1)} \leftarrow \pi^{(k)}$——参考模型不再是钉死的基座，而是沿课程逐级往前挪，每个阶段都"以上一阶段的成果为锚"重新定义什么算进步，避免回头重学简单样本。这套递推参考的有效性在 reward margin 曲线上看得很直接：每次切换阶段、更新参考的那一刻，margin 都出现明显跳变 (Fig. 2)，说明每次更新都给优化注入了一批新的有效梯度。
 
-3. **Within-Stage Competence Sampling（阶段内合格池动态扩张）**:
+**3. Within-Stage Competence Sampling：桶内也按 $\sqrt{\cdot}$ 由易到难放样本。**
 
-    - 功能：在单个阶段内部把课程顺序也用起来，避免桶内退化成均匀采样。
-    - 核心思路：阶段内对桶 $\mathcal B_k$ 重新做归一化排序 $d_i \in [0,1]$；step $t$ 时用 competence 函数 $c(t) = \sqrt{(1-c_0^2)\,t/T + c_0^2}$（$c_0=0.01$）算出当前难度阈值，只从 $\{i \in \mathcal B_k : d_i \le c(t)\}$ 这个动态合格池里采 mini-batch。$\sqrt{\cdot}$ 形让难样本以递减速率被加入，给模型留出消化时间。
-    - 设计动机：Curri-DPO 在阶段内完全随机洗牌，桶内课程信号被丢掉；Sqrt-Competence 单独使用又缺少参考更新。把两者拼起来才能在"宏观阶段"与"微观 step"两个尺度上一致地推进易→难。
+光做阶段切分还不够——Curri-DPO 在每个桶内部完全随机洗牌，桶内本来就有的难度梯度被白白丢掉。本文在桶 $\mathcal B_k$ 内重新做一次归一化排序得到 $d_i \in [0,1]$，再用 competence 函数 $c(t) = \sqrt{(1-c_0^2)\,t/T + c_0^2}$（$c_0=0.01$）随训练步 $t$ 算出当前难度阈值，只从合格池 $\{i \in \mathcal B_k : d_i \le c(t)\}$ 里采 mini-batch：开局只放桶内最简单的一小撮，之后按平方根速率逐步把更难的样本纳进来。$\sqrt{\cdot}$ 这个形状的好处是让难样本以**递减**速率加入，给模型留足消化时间。它和上一条设计互补——阶段切分加参考更新负责"宏观承前启后"，competence 池负责"微观由易到难"，两个尺度方向一致地推进课程；这也是全文最关键的实证发现：Sqrt-Competence 单用甚至不如 baseline、Curri-DPO 单用只是中等，两者拼起来才出现质变。
 
 ### 损失函数 / 训练策略
 DPO loss 原样不动：$\mathcal L_\text{DPO} = -\mathbb E\,[\log \sigma(\beta(\log\frac{\pi_\theta(y^+|x)}{\pi_\text{ref}(y^+|x)} - \log\frac{\pi_\theta(y^-|x)}{\pi_\text{ref}(y^-|x)}))]$，$\beta=0.1$。训练用 LoRA ($r{=}16, \alpha{=}32$，q/v 投影)，lr $5{\times}10^{-5}$，有效 batch 32，序列长 1024；staged 方法 $K{=}3$ 阶段，每阶段 5 epoch (Yi-1.5-9B 改 4 epoch 避免过优化)。单卡 A6000 (48GB) 即可跑完。

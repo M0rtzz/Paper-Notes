@@ -53,23 +53,19 @@ PAP（Prediction-As-Perception）框架由**感知模块**与**预测模块**两
 
 首帧无历史预测时，全部使用随机 query。
 
-### 关键设计 1：预测 query 注入感知模块
+### 关键设计
 
-- **功能**：在每一帧的感知模块中，用上一帧预测模块输出的 query 替换部分或全部随机 query。
-- **核心思路**：预测模块输出的坐标经过 embedding 层映射到与感知 query 相同维度后直接拼接，公式为 $q_i^T \in (q_{random}^T \cup q_{predict}^{T-1})$，再送入参考点网络 $c_i^T = \varnothing^{ref}(q_i^T)$。
-- **设计动机**：预测 query 天然靠近目标可能出现的区域，相比随机 query 大幅减少无效搜索，同时保留目标的时序运动线索，有助于跟踪连续性。
+**1. 预测 query 注入感知模块：让上一帧的"未来位置"成为这一帧的搜索起点。**
 
-### 关键设计 2：预测模块与 query 嵌入
+随机 query 的低效正出在它对目标位置一无所知——绝大多数 query 落在远离真实目标的地方，白白消耗注意力计算。PAP 的做法是把上一帧预测模块输出的未来坐标，经过 embedding 层映射到与感知 query 相同的维度，再与随机 query 拼成当前帧的 query 集合 $q_i^T \in (q_{random}^T \cup q_{predict}^{T-1})$，统一送入参考点网络 $c_i^T = \varnothing^{ref}(q_i^T)$ 得到参考点。这些预测 query 天然落在目标下一刻可能出现的区域，等于给检测器一个"先验落点"，既减少了无效搜索、加快收敛，又把前序帧对目标运动趋势的认知带进当前帧，跟踪时不容易发生 ID switch。
 
-- **功能**：将感知模块输出的检测结果 query 传入预测模块，输出多帧未来位置坐标，再嵌入为下一帧可用的 query。
-- **核心思路**：$c_{predict}^T = \text{PRED}(\text{PECP}(c_i^T))$，$q_{predict}^T = \phi^{embd}(c_{predict}^T)$，其中 $\phi^{embd}$ 为线性嵌入层。
-- **设计动机**：解耦预测模块的选型——只要能输出未来坐标即可接入 PAP，不改变原预测模块的内部结构和损失函数。
+**2. 预测模块与 query 嵌入：把检测结果再喂回预测、转成下一帧能用的 query。**
 
-### 关键设计 3：与 UniAD 的集成
+闭环要转起来，光有"预测→感知"还不够，还得有"感知→预测"这一段把结果回灌。感知模块输出的检测结果 query $c_i^T$ 先经 PECP 处理后送入预测模块得到多帧未来坐标 $c_{predict}^T = \text{PRED}(\text{PECP}(c_i^T))$，再经线性嵌入层 $\phi^{embd}$ 映射成下一帧可直接调用的 query $q_{predict}^T = \phi^{embd}(c_{predict}^T)$。这一步刻意只约定"输入检测结果、输出未来坐标"的接口，不触碰预测模块的内部结构和损失，因此任何能产出未来坐标的轨迹预测模型都能即插即用地接进 PAP。
 
-- **功能**：在 UniAD 的 MotionFormer 输出端取预测 query，经维度对齐后与 Track Query 一起送入 TrackFormer。
-- **核心思路**：UniAD 本身模块间已通过 query 交互，PAP 仅需增加一条从 MotionFormer → TrackFormer 的反馈路径，不改变 Planning 模块及其余损失。
-- **设计动机**：利用 UniAD 已有的端到端架构，最小侵入地验证 PAP 思想，同时保持实验公平性（所有超参与原模型一致）。
+**3. 与 UniAD 的集成：用最小侵入的一条反馈路径验证想法。**
+
+要证明"预测→感知"这条回路有用，最稳妥的是在一个已有端到端架构上只动这一处、其余全部保持原样。UniAD 的各模块本就通过 query 互相交互，PAP 只需在 MotionFormer 的输出端取出预测 query，做维度对齐后与原有的 Track Query 一起送进 TrackFormer，新增的仅是 MotionFormer → TrackFormer 这一条反馈路径；Planning 模块及其余损失完全不变。这样既复用了 UniAD 现成的端到端能力，又保证所有超参与原模型一致，让前后对比的增益可以干净地归因到 PAP 本身。
 
 ---
 
@@ -84,7 +80,7 @@ PAP（Prediction-As-Perception）框架由**感知模块**与**预测模块**两
 
 ## 实验关键数据
 
-### 表 1：UniAD vs. UniAD+PAP 在 nuScenes val 上的整体对比
+**表 1：UniAD vs. UniAD+PAP 在 nuScenes val 上的整体对比**
 
 | 指标 | UniAD | UniAD+PAP | 变化 |
 |------|-------|-----------|------|
@@ -95,7 +91,7 @@ PAP（Prediction-As-Perception）框架由**感知模块**与**预测模块**两
 | 训练时间 | 91h | **78h** | -14.3% |
 | FPS ↑ | 14 | **16** | +14.3% |
 
-### 表 2：UniAD+PAP 分类别性能
+**表 2：UniAD+PAP 分类别性能**
 
 | 类别 | AMOTA | AMOTP | Recall | IDS |
 |------|-------|-------|--------|-----|

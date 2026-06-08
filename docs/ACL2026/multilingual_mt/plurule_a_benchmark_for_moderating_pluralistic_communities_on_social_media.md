@@ -46,23 +46,18 @@ PluRule 不是提出一个新 moderation 模型，而是提出一个更贴近真
 评估时，模型逐步获得五个累积上下文层级：Comment Only、+Discussion、+Submission、+User、+Images。所有层级都包含 subreddit 描述和完整规则集。输出先自由生成，再追加 “Final Choice:” 抽取最终选项。
 
 ### 关键设计
-1. **多选式社区规则识别**:
 
-	- 功能：让任务模拟人类版主面对的真实选择，而不是粗粒度二分类。
-	- 核心思路：每条评论的选项由该 subreddit 的所有规则和“No rules broken”组成，并用 comment ID 的 deterministic seed 打乱选项，防止模型利用位置偏差。违反评论的正确答案是具体规则，合规评论的正确答案是无违规。
-	- 设计动机：真实审核不只是判断“坏不坏”，还要知道违反了哪条本地规则，才能给出解释、执行和后续申诉依据。
+**1. 多选式社区规则识别：把审核从「坏不坏」改成「违反了哪一条本地规则」。**
 
-2. **从公开审核痕迹构造高质量标签**:
+传统数据集只问一句话是否 toxic，但真实版主面对的不是二分类——他要在本社区的几十条规则里指认具体哪一条被违反，才能给出删除理由、执行操作和申诉依据。PluRule 因此把每条评论的候选项设为该 subreddit 的全部规则再加一个「No rules broken」，违规评论的正确答案是某条具体规则，合规评论的正确答案是无违规。为防止模型靠选项位置投机，选项顺序用 comment ID 派生的 deterministic seed 打乱，既保证可复现又消除位置偏差。这样一来，模型必须真正读懂本地规则文本与评论的关系，而不是套用一个跨社区通用的「不礼貌」分类器。
 
-	- 功能：把历史 moderator comment 转成规则级监督。
-	- 核心思路：从约 15B comments、40k subreddits 中抽取 distinguished moderator comments，过滤 bot 和 NSFW 后得到 17,468 subreddits、131,400 rules 和约 9M moderator comments。用 Qwen3-Embedding-8B 对 comment 和 rule 编码，对同社区规则计算相似度；匹配阈值取 99.2 percentile，即 0.79，歧义阈值取 98 percentile，即 0.75。
-	- 设计动机：规则会随时间改写和重编号，直接正则匹配不可靠。语义匹配能处理表述变化，而歧义过滤减少一个 comment 同时指向多条规则的噪声。
+**2. 从公开审核痕迹构造规则级标签：用版主自己留下的解释当监督信号。**
 
-3. **对比实例、验证和语义聚类**:
+规则级标签很难标，但 Reddit 版主在删评时常会公开说明「违反了第几条规则」，这正是天然的弱监督。作者从约 15B 条评论、40k 个 subreddit 中抽取 distinguished moderator comments，过滤掉 bot 和 NSFW 后得到 17,468 个 subreddit、131,400 条规则和约 9M 条版主评论。难点在于规则会随时间改写、重编号，直接正则匹配版主话里的规则编号并不可靠，所以改用 Qwen3-Embedding-8B 把评论和规则编码后算语义相似度，对同社区规则取相似度最高者作为匹配；匹配阈值定在 99.2 百分位（0.79），歧义阈值定在 98 百分位（0.75），相似度落在歧义区间、可能同时指向多条规则的样本被丢弃。语义匹配吸收了规则表述的变化，歧义过滤则压住了「一条评论对应多条规则」的噪声。
 
-	- 功能：让模型在相似上下文中区分违规与合规，并支持按社区/规则类型分析。
-	- 核心思路：每个 violating thread 配对同一 submission 下没有 moderator action 的 compliant thread，优先选择共享祖先多、深度相近、分数较低的分支。Qwen3-30B-A3B-Instruct 验证匹配规则，保留“stating a violation”的样本，验证率为 82.1%。最终用 UMAP + HDBSCAN 对 subreddit 和 rule embedding 聚类，并由 Qwen3-30B-A3B-Thinking 生成候选标签后人工校正。
-	- 设计动机：对比式样本避免模型只学习主题或社区先验；聚类则能揭示哪些社区类型和规则类型最难。
+**3. 对比实例、LLM 验证与语义聚类：逼模型区分相似讨论，并支持按类型剖析难度。**
+
+如果只给违规评论，模型可能靠 submission 主题或社区标签就能猜个八九不离十。为堵住这条捷径，每个 violating thread 都配一个来自同一 submission、却没有任何 moderator action 的 compliant thread，配对时优先挑共享祖先多、深度相近、分数较低的分支，让两条评论的上下文尽量接近、只在「是否违规」上有差别。配好后再用 Qwen3-30B-A3B-Instruct 验证匹配是否确实在「陈述一次违规执行」，验证通过率 82.1%，把误匹配剔除。最后用 UMAP + HDBSCAN 对 subreddit 和 rule 的 embedding 做聚类，由 Qwen3-30B-A3B-Thinking 生成候选类别标签再人工校正——聚类不只是为了好看，它让后续分析能回答「哪类社区、哪类规则最难」，也提出了能否跨相似社区迁移审核能力的问题。
 
 ### 损失函数 / 训练策略
 PluRule 是 benchmark，不训练新模型。评估模型包括 Qwen3-VL-4B/8B/30B 的 Instruct 和 Thinking 版本，以及 GPT-5.2 的 low/high reasoning。Qwen 模型使用 temperature 0 和 seed 0。指标为 test accuracy，并用 100k 次 bootstrap resampling 计算 95% 置信区间；论文报告所有 accuracy 的 95% CI 不超过 ±1.3%，violating/compliant recall 表的 CI 不超过 ±1.9%。

@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两阶段。第一阶段是诊断：在 TOFU benchmark（虚构作者档案，保证未被预训练见过）上用 5% forget ratio 评测 6 种 SOTA unlearning 方法（GradAscent、GradDiff、NPO、DPO、UNDIAL、RMU）在 Gemma-2B-IT 和 Qwen3-8B 上的表现，新增 Contextual QA 评测协议——同样的 forget set 问题，但在 prompt 里把 ground truth 作为 context 一并喂给模型，用 ROUGE-L 和 LLM-Judge 双指标衡量"能否在被提供答案后给出正确回答"。第二阶段是修补：把现有 unlearning loss 加上一个 context term $\mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w)$，在原 forget set 之外构造一份 $\mathcal{S}_f^{\text{ctx}} = \{(q, a, c)\}$ 数据（c 是包含答案的 context），让 unlearn 中的模型在这条数据流上的预测分布对齐冻结的原始模型 $p_{\text{orig}}$。整个目标函数变为 $\mathcal{J}(w) = -\lambda_f L_f(\mathcal{S}_f, w) + \lambda_r L_r(\mathcal{S}_r, w) + \lambda_c \mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w)$，三项分别管 forget、retain、contextual。
+全文是一个"先诊断、后修补"的闭环。诊断阶段在 TOFU benchmark（虚构作者档案，保证未被预训练见过）上用 5% forget ratio 跑 6 种 SOTA unlearning 方法（GradAscent、GradDiff、NPO、DPO、UNDIAL、RMU），但在标准的 Direct QA 之外加一条新评测线：同样的 forget set 问题，把 ground truth 当作 context 一起塞进 prompt，看模型"答案都摆在眼前时还能不能答对"——结果暴露出现有方法连这都做不到。修补阶段顺着诊断结论给所有 unlearning loss 打同一个补丁：在 forget set 之外另构一份 $\mathcal{S}_f^{\text{ctx}} = \{(q, a, c)\}$（$c$ 是含答案的 context），加一项 KL 正则 $\mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w)$，逼 unlearn 中的模型在这条 contextual 数据流上的预测分布对齐冻结的原始模型 $p_{\text{orig}}$。目标函数从两项变三项：$\mathcal{J}(w) = -\lambda_f L_f(\mathcal{S}_f, w) + \lambda_r L_r(\mathcal{S}_r, w) + \lambda_c \mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w)$，分别管 forget、retain、contextual。
 
 ### 关键设计
 
-1. **Contextual QA 评测协议**:
+**1. Contextual QA 评测协议：把 unlearning 漏掉的第三维度量化出来。**
 
-    - 功能：补全 unlearning 评测的第三维度，专门测量"知识在 prompt 里时模型是否还会用"。
-    - 核心思路：对 forget set 里每个 $(q, a)$ 配一份 context $c$（包含 ground truth 描述），构造 prompt "问题 + 提供的 context"喂给 unlearn 后的模型，用 ROUGE-L 衡量字面重合度、用 LLM-Judge（Appendix 有人类一致性验证）衡量语义正确性，两个指标都在 $[0, 1]$。同时配套了 paraphrase 和 reasoning 两种 context 变体，验证不是死记 context 表层。理想 unlearn 模型应满足：Direct QA 低、Contextual QA 高、model utility 高。
-    - 设计动机：以前的协议只测"在不给提示时模型还记不记得"，但 LLM 越来越多被用在 RAG / 长 prompt 场景，"用户重新提供的合法信息能不能被用上"才是部署里真正关心的事。这个协议直接把 unlearning 社区漏掉的副作用暴露出来——Table 1 显示 6 种方法里 5 种在"答案就在 context 里"的情况下仍然产出错误甚至乱码。
+以前的评测只有两条腿——forget set 上要忘干净（Direct QA 低）、retain set 上要保住能力（utility 高）——但 LLM 越来越多跑在 RAG / 长 prompt 场景里，"用户当场重新提供的合法信息能不能被用上"是部署里真正关心却没人测的事。这个协议补上这一维：对 forget set 里每个 $(q, a)$ 配一份 context $c$（包含 ground truth 描述），构造"问题 + 提供的 context"prompt 喂给 unlearn 后的模型，用 ROUGE-L 衡量字面重合、用 LLM-Judge（Appendix 有人类一致性验证）衡量语义正确，两个指标都落在 $[0, 1]$。理想的 unlearn 模型应当三项齐活：Direct QA 低、Contextual QA 高、utility 高。为防止模型只是死记 context 表层，协议还配了 paraphrase 和 reasoning 两种 context 变体。一上手这个协议就抓出了问题：Table 1 里 6 种方法有 5 种在"答案就在 context 里"时仍产出错误甚至乱码，副作用一直藏在旧评测的盲区里。
 
-2. **Context-aware KL 正则项**:
+**2. Context-aware KL 正则项：用 RLHF 的旧药锚住悬空的那一维。**
 
-    - 功能：作为可插拔的 loss 模块，把 contextual utility 锚定在原始模型水平。
-    - 核心思路：构造 $\mathcal{S}_f^{\text{ctx}} = \{(q, a, c)\}$（context $c$ 直接从 TOFU 的 ground truth 派生，等价于"答案陈述句"，无需额外标注），定义 $\mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w) = \frac{1}{|\mathcal{S}_f^{\text{ctx}}|} \sum_{(q,a,c)} \mathrm{KL}(p_w(\cdot|q,c) \,\|\, p_{\text{orig}}(\cdot|q,c))$，让当前模型在"问题+context"下的 token 分布逼近冻结的原模型。这一项只作用在 contextual 输入流上，不动 $\mathcal{S}_f$ 也不动 $\mathcal{S}_r$，因此与原 unlearning loss 正交。文章用 Appendix A.6 验证对 $\lambda_c$ 不敏感（NPO/RMU/UNDIAL 在两个模型上各自取值 0.01–2.0 之间，不需要精细调参）。
-    - 设计动机：核心洞察是"两项 loss 只在两个数据分布上做约束，留下了第三个数据分布（contextual）完全悬空"。RLHF 里 KL-to-reference 已经被反复证明能稳住模型不偏离指定行为。这里把"reference"设成 pre-unlearning 的自己，把"被约束的行为"限定在 $(q, c)$ 输入流，正好补上悬空的那一维。而且 KL 是分布级的约束，比直接 distillation 单点更柔和，不会因为反复推 token-level 目标而和 forget term 死斗。这种设计的优雅之处在于：它没有触碰 forget set 上的 loss，所以遗忘强度由原方法决定；它锚的是原始模型而不是某个外部 teacher，所以不需要额外标注。
+核心洞察是原来两项 loss 只约束了 $\mathcal{S}_f$ 和 $\mathcal{S}_r$ 两个数据分布，contextual 这第三个分布完全悬空，于是 forget term 的惩罚顺着表示空间外溢、把模型在 $(q, c)$ 输入下的 grounding 能力一起带塌了。补救办法是给这条悬空的数据流也钉一个锚：构造 $\mathcal{S}_f^{\text{ctx}} = \{(q, a, c)\}$（context $c$ 直接从 TOFU 的 ground truth 派生、等价于"答案陈述句"，无需额外标注），定义
 
-3. **与现有方法的即插即用集成**:
+$$\mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w) = \frac{1}{|\mathcal{S}_f^{\text{ctx}}|} \sum_{(q,a,c)} \mathrm{KL}\big(p_w(\cdot|q,c) \,\|\, p_{\text{orig}}(\cdot|q,c)\big),$$
 
-    - 功能：让 NPO / RMU / UNDIAL 等不同范式的 unlearning 方法都能用同一个 context term。
-    - 核心思路：现有方法不管是 preference optimization（NPO）、re-labeling（UNDIAL）还是激活扰动（RMU），都遵循 "forget term + 可选 retain term" 的二项结构。新方法只是再加一项 $+\lambda_c \mathcal{C}$，每个 step 多一次前向（在原模型上算 $p_{\text{orig}}(\cdot|q,c)$）和一次 KL 计算。$\lambda_c$ 是唯一新增超参，每个方法每个模型给一个值即可。
-    - 设计动机：unlearning 社区方法极度碎片化（每年新方法满天飞），如果新提案只能配合自己的特定 loss，根本无法普及。本文证明同一个 context term 对三类完全不同范式的 unlearning 方法都能产生大幅 Contextual QA 提升（RMU 从 0.00 → 0.99 是最戏剧性的），说明 contextual suppression 是个跨方法的共性问题，KL anchor 也是个跨方法的通用解药。
+让当前模型在"问题+context"下的 token 分布逼近冻结的原模型。这一招的精妙全在锚点和作用域的选法上：RLHF 里 KL-to-reference 是稳住模型不偏离指定行为的教科书工具，这里把"reference"设成 pre-unlearning 的自己（所以不需要外部 teacher、不需要额外标注），把"被约束的行为"严格限定在 $(q, c)$ 输入流（所以不碰 $\mathcal{S}_f$ 也不碰 $\mathcal{S}_r$，与原 unlearning loss 正交）。因为它根本没动 forget set 上的 loss，遗忘强度仍由原方法决定；又因为 KL 是分布级而非单点 distillation 的约束，比硬推 token-level 目标更柔和，不会和 forget term 死斗。实践上也很省心：Appendix A.6 验证对 $\lambda_c$ 极不敏感，NPO/RMU/UNDIAL 在两个模型上各自取 0.01–2.0 之间都稳，无需精细调参。
+
+**3. 与现有方法的即插即用集成：一个 context term 通吃三种范式。**
+
+unlearning 社区方法极度碎片化、每年新方法满天飞，如果补丁只能配自己那套 loss 就毫无普及价值。好在现有方法不管是 preference optimization（NPO）、re-labeling（UNDIAL）还是激活扰动（RMU），都遵循 "forget term + 可选 retain term" 的二项结构，新方法只是再缀一项 $+\lambda_c \mathcal{C}$——每个 step 多一次原模型前向（算 $p_{\text{orig}}(\cdot|q,c)$）和一次 KL 计算，唯一新增的超参 $\lambda_c$ 每个方法每个模型给一个值即可。同一个 context term 对这三类完全不同范式都能拉出大幅 Contextual QA 提升（RMU 从 $0.00 \to 0.99$ 最戏剧），既说明 contextual suppression 是跨方法的共病，也说明 KL anchor 是跨方法的通解。
 
 ### 损失函数 / 训练策略
-最终 loss 见上：$\mathcal{J}(w) = -\lambda_f L_f + \lambda_r L_r + \lambda_c \mathcal{C}$。训练沿用 TOFU 的标准设置（AdamW，原文 5 epoch 扩到 20 epoch 以保证充分收敛），新增的只有 $\lambda_c$：在 Gemma-2B-IT 上 NPO/RMU/UNDIAL 分别取 2.0 / 0.01 / 0.5，在 Qwen3-8B 上分别取 1.0 / 0.5 / 1.0。收敛准则是在 Direct QA LLM-Judge、Contextual QA LLM-Judge、model utility 三者上同时达到该方法整条曲线的 global best 附近。
+最终 loss 即 $\mathcal{J}(w) = -\lambda_f L_f + \lambda_r L_r + \lambda_c \mathcal{C}$。训练沿用 TOFU 的标准设置（AdamW，原文 5 epoch 扩到 20 epoch 以保证充分收敛），新增的只有 $\lambda_c$：Gemma-2B-IT 上 NPO/RMU/UNDIAL 分别取 2.0 / 0.01 / 0.5，Qwen3-8B 上分别取 1.0 / 0.5 / 1.0。收敛准则是 Direct QA LLM-Judge、Contextual QA LLM-Judge、model utility 三者同时逼近该方法整条曲线的 global best。
 
 ## 实验关键数据
 

@@ -41,32 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把主动推理建模成 POMDP $(\mathcal{S},\mathcal{A},\mathcal{O},T,O,R,\gamma)$，latent state $s^\star$ 是隐藏的用户偏好/诊断/方案。Agent 的行为被分解成两个交错的 kernel：
-
-- **AS kernel** $\pi_\omega^{\mathrm{as}}(a_t\mid b_t)$：基于当前内部信念 $b_t$ 选环境动作，决定下一步观测 $o_t \sim O(\cdot\mid s^\star, a_t)$；
-- **BT kernel** $\pi_\omega^{\mathrm{bt}}(b_{t+1}\mid b_t, a_t, o_t)$：把新观测整合进信念。
-
-轨迹是 (AS round, Update round) 交替序列。文章先在第 2、3 节用 oracle-belief 轨迹和 Bayesian update 把 SeL 形式化、证明在 SeL 区 outcome-gradient 对 AS/BT 的提升信号都按 $\eta \cdot (\text{当前能力})$ 一阶尺度衰减（Thm. 3.4），从而 agent 很难自发逃出 SeL；然后在第 4 节用 AReW 做 advantage reweighting 引入方向性 critique，把这个一阶项重新拉起来。
+作者把主动推理建模成 POMDP $(\mathcal{S},\mathcal{A},\mathcal{O},T,O,R,\gamma)$，latent state $s^\star$ 是隐藏的用户偏好/诊断/方案，agent 的行为被拆成两个交错的 kernel：AS kernel $\pi_\omega^{\mathrm{as}}(a_t\mid b_t)$ 根据当前信念 $b_t$ 选环境动作、决定下一步观测 $o_t \sim O(\cdot\mid s^\star, a_t)$，BT kernel $\pi_\omega^{\mathrm{bt}}(b_{t+1}\mid b_t, a_t, o_t)$ 把新观测整合进信念，轨迹就是 (AS round, Update round) 的交替序列。论文先用 oracle-belief 轨迹和 Bayesian update 把 SeL 形式化、证明 outcome-gradient 在自锁区会被一阶衰减，再用 AReW 往 advantage 里加一项方向性 critique 把这个一阶项重新拉起来。
 
 ### 关键设计
 
-1. **SeL 形式化与耦合梯度分解**：
+**1. SeL 形式化与耦合梯度分解：把"reward 涨能力不涨"归因到 AS-BT 双向信用掩蔽**
 
-    - 功能：给"为什么 outcome RL 学不动主动推理"一个可证伪的解释，并定义清楚 SeL 区。
-    - 核心思路：定义 belief potential $\Psi(b) := b(s^\star)$，用 oracle-belief 轨迹 $\bar\tau \sim (\pi_\omega^{\mathrm{as}}, \mathsf{BayesUpd})$ 隔离 AS 自身的信息能力 $I_{\mathrm{AS}}(\omega) := \mathbb{E}[\Psi(\bar b_H) - \Psi(\bar b_0)]$；用 on-policy 轨迹的"吸收正分量"$\Delta\Psi_t^+ = \max(0, \Psi(b_{t+1})-\Psi(b_t))$ 求和定义 BT 容量 $C_{\mathrm{BT}}(\omega)$。SeL 区为 $\mathcal{R}_{\delta,\varepsilon} := \{\omega: I_{\mathrm{AS}}\le\delta,\, C_{\mathrm{BT}}\le\varepsilon\}$。把 $\nabla_\omega \log p_\omega(\tau)$ 拆成 AS-channel 与 BT-channel 两个梯度 $g_{\mathrm{as}}, g_{\mathrm{bt}}$，Thm. 3.4 证明在 SeL 区两 channel 的 one-sided drift 满足 $(\Delta_{\mathrm{as}}^+ I_{\mathrm{AS}},\, \Delta_{\mathrm{bt}}^+ C_{\mathrm{BT}})^\top \preceq \eta M (I_{\mathrm{AS}}, C_{\mathrm{BT}})^\top + o(\eta)$，其中矩阵 $M$ 的非零项乘的是另一 channel 的能力——所以 AS 弱时 BT 学不动、BT 弱时 AS 学不动，escape time 有显式下界。
-    - 设计动机：以前关于 LLM agent RL 失效的解释多停在"reward 太稀疏"，本文把失败原因精确归到"AS-BT 双向掩蔽 credit"，这才能解释 reward 在涨但能力不涨的现象，也直接给出干预接口——只要给两个 channel 加方向性 critique 就行。
+以前对 LLM agent RL 失效的解释多停在"reward 太稀疏"，但这解释不了 reward 曲线在涨、AS/BT proxy 却纹丝不动甚至倒退的现象。作者要的是一个可证伪的机制，于是先定义 belief potential $\Psi(b) := b(s^\star)$：用 oracle-belief 轨迹 $\bar\tau \sim (\pi_\omega^{\mathrm{as}}, \mathsf{BayesUpd})$ 把 BT 换成完美 Bayesian 更新，隔离出 AS 自身的信息能力 $I_{\mathrm{AS}}(\omega) := \mathbb{E}[\Psi(\bar b_H) - \Psi(\bar b_0)]$；再用 on-policy 轨迹的"吸收正分量"$\Delta\Psi_t^+ = \max(0, \Psi(b_{t+1})-\Psi(b_t))$ 求和定义 BT 容量 $C_{\mathrm{BT}}(\omega)$。两者都低就落进自锁区 $\mathcal{R}_{\delta,\varepsilon} := \{\omega: I_{\mathrm{AS}}\le\delta,\, C_{\mathrm{BT}}\le\varepsilon\}$。
 
-2. **AS / BT 方向性 critique**：
+把 $\nabla_\omega \log p_\omega(\tau)$ 拆成 AS-channel 与 BT-channel 两个梯度 $g_{\mathrm{as}}, g_{\mathrm{bt}}$ 后，Thm. 3.4 给出在自锁区里两 channel 的 one-sided drift 满足 $(\Delta_{\mathrm{as}}^+ I_{\mathrm{AS}},\, \Delta_{\mathrm{bt}}^+ C_{\mathrm{BT}})^\top \preceq \eta M (I_{\mathrm{AS}}, C_{\mathrm{BT}})^\top + o(\eta)$，关键在于矩阵 $M$ 的非零项乘的是**另一** channel 的能力——AS 弱时 BT 学不动、BT 弱时 AS 学不动，于是 escape time 有显式下界，agent 很难自发逃出。这套分析的价值不只是命名了 SeL，更直接给出了干预接口：既然两个 channel 互相掐住对方的 credit，那只要分别给它们补一个方向性信号就能解锁。
 
-    - 功能：在不构造 calibrated dense reward 的前提下，为每一步行为提供 $z_t \in \{-1, 0, +1\}$ 的廉价方向信号。
-    - 核心思路：**AS critique** $z_t^{\mathrm{as}}$ 取自"这一步动作有没有从环境/用户那里拿到新证据"，可由规则或 LLM-judge 给出（如 PE 中按 attribute pair 是否非支配判定，MediQ 中看新事实集合是否非空）；**BT critique** $z_t^{\mathrm{bt}} := \mathrm{Sign}(\hat\Psi_{t+1} - \hat\Psi_t)$，其中 $\hat\Psi_t$ 是 prompt agent 自己 report 出来的对 ground-truth 候选的置信度——这是 instrumentation 用的标量，不假设它等于 analytical belief $b_t$。Prop. 4.1 证明 AReW 的提升量为 $I_{\mathrm{AS}}(\hat{\mathcal{T}}_{\mathrm{as}}) - I_{\mathrm{AS}}(\mathcal{T}_{\mathrm{as}}) = \eta W(\omega) (2\,\mathrm{Acc}_{\mathrm{as}} - 1)$，所以只要加权准确率 $> 1/2$ 就有正向收益，不需要校准。
-    - 设计动机：calibrated step reward 在 long-horizon agentic 任务里几乎不可得（要么需训 reward model 引入新偏差，要么需大量标注），而方向性 critique 只问"好/坏/不知道"，门槛低、对噪声鲁棒，又恰好对得上 SeL 的两个 channel。
+**2. AS / BT 方向性 critique：用 $\pm1/0$ 的廉价方向信号替代 calibrated dense reward**
 
-3. **likelihood-margin 目标 → advantage reweighting**：
+calibrated step reward 在 long-horizon agentic 任务里几乎拿不到——要么得训 reward model 引入新偏差，要么得大量标注，而 SeL 真正缺的其实只是"这一步是变好还是变坏"的方向。于是作者只给每步一个 $z_t \in \{-1, 0, +1\}$：AS critique $z_t^{\mathrm{as}}$ 看"这一步动作有没有从环境/用户那里拿到新证据"，可由规则或 LLM-judge 给出（PE 中按 attribute pair 是否非支配判定，MediQ 中看新事实集合是否非空）；BT critique $z_t^{\mathrm{bt}} := \mathrm{Sign}(\hat\Psi_{t+1} - \hat\Psi_t)$，其中 $\hat\Psi_t$ 是 prompt agent 自己 report 出来的对 ground-truth 候选的置信度——它只是 instrumentation 用的标量，并不假设等于 analytical belief $b_t$。
 
-    - 功能：把方向性 critique 注入 policy-gradient，并保证 (i) 局部作用于被 critique 的步骤、(ii) outcome reward 与 RL 优化机制一律不动。
-    - 核心思路：对轨迹 $\tau$ 令 $\mathcal{P}_\tau := \{t: z_t=+1\}$、$\mathcal{N}_\tau := \{t: z_t=-1\}$，定义轨迹内 likelihood-margin 辅助目标 $\hat{\mathcal{L}}(\omega;\tau) := \frac{1}{|\mathcal{P}_\tau|}\sum_{t\in\mathcal{P}_\tau}\log\pi_{\omega,t} - \frac{1}{|\mathcal{N}_\tau|}\sum_{t\in\mathcal{N}_\tau}\log\pi_{\omega,t}$。对它求梯度恰好得到 $\sum_t u_t \nabla_\omega \log\pi_{\omega,t}$，其中 $u_t = +1/|\mathcal{P}_\tau|, -1/|\mathcal{N}_\tau|, 0$ 对应 $z_t$ 三种取值，且 $\sum_t u_t = 0$（centering 性质，纯 margin 无均值漂移）。最终 augmented surrogate $\hat{\mathcal{L}}_{\mathrm{aug}} := \mathcal{J}_{\mathrm{RL}} + \lambda \mathbb{E}_\tau[\hat{\mathcal{L}}]$，等价于把 advantage 改成 $\hat A_t := A_t + \lambda u_t$，其余的 critic、ratio、KL 项全部保持原样——这也是为什么作者强调 AReW 是 RL 算法无关的（PPO / GRPO / GSPO 都能挂）。
-    - 设计动机：以加性 advantage shaping 这种极简形式注入，既不会污染 outcome reward 的无偏估计（centering 保证），又把信用从负向步骤搬到正向步骤，正好打断 Thm. 3.4 里"另一 channel 弱→当前 channel drift 被压低"的链路。
+这种"好/坏/不知道"的判断门槛低、对噪声鲁棒，又恰好对得上 SeL 的两个 channel。Prop. 4.1 进一步把它的收益量化：AReW 的提升量为 $I_{\mathrm{AS}}(\hat{\mathcal{T}}_{\mathrm{as}}) - I_{\mathrm{AS}}(\mathcal{T}_{\mathrm{as}}) = \eta W(\omega) (2\,\mathrm{Acc}_{\mathrm{as}} - 1)$，只要 critique 的加权准确率 $\mathrm{Acc}_{\mathrm{as}} > 1/2$ 就有正向收益——这正是它能绕开校准的根本原因。
+
+**3. likelihood-margin 目标 → advantage reweighting：把 critique 注入 policy-gradient 而零侵入 RL 主干**
+
+有了方向信号还得想办法注进训练，且不能污染 outcome reward 的无偏估计。作者对轨迹 $\tau$ 令 $\mathcal{P}_\tau := \{t: z_t=+1\}$、$\mathcal{N}_\tau := \{t: z_t=-1\}$，构造一个轨迹内 likelihood-margin 辅助目标 $\hat{\mathcal{L}}(\omega;\tau) := \frac{1}{|\mathcal{P}_\tau|}\sum_{t\in\mathcal{P}_\tau}\log\pi_{\omega,t} - \frac{1}{|\mathcal{N}_\tau|}\sum_{t\in\mathcal{N}_\tau}\log\pi_{\omega,t}$。对它求梯度恰好是 $\sum_t u_t \nabla_\omega \log\pi_{\omega,t}$，其中 $u_t = +1/|\mathcal{P}_\tau|,\,-1/|\mathcal{N}_\tau|,\,0$ 对应 $z_t$ 的三种取值，且 $\sum_t u_t = 0$——这个 centering 性质保证它是纯 margin、没有均值漂移。
+
+最终 augmented surrogate $\hat{\mathcal{L}}_{\mathrm{aug}} := \mathcal{J}_{\mathrm{RL}} + \lambda \mathbb{E}_\tau[\hat{\mathcal{L}}]$ 等价于把 advantage 改成 $\hat A_t := A_t + \lambda u_t$，critic、ratio、KL 项全部原样不动。如此一来信用就从被负向 critique 的步骤搬到正向步骤，正好打断 Thm. 3.4 里"另一 channel 弱→当前 channel drift 被压低"的链路；而因为改动只是 advantage 上加一项常数偏置，AReW 是 RL 算法无关的，PPO / GRPO / GSPO 都能直接挂。
 
 ### 损失函数 / 训练策略
 最终训练目标即 Eq. (2) 的 $\hat{\mathcal{L}}_{\mathrm{aug}}(\omega) = \mathcal{J}_{\mathrm{RL}}(\omega) + \lambda\,\mathbb{E}_\tau[\hat{\mathcal{L}}(\omega;\tau)]$，落到实现就是逐 step 把 advantage 替换成 $A_t + \lambda u_t$。AS critique 用规则/feedback parser 给出，BT critique 让 agent 在每个 Update Round 里以特定 prompt 输出对 $s^\star$ 候选的置信度 $\hat\Psi_t$，再用相邻两轮差分取符号即可。$\lambda$ 与稀疏 reward 量级匹配，作者实证对超参不敏感。

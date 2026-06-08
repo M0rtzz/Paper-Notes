@@ -40,24 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Badit 把每个 LLM 权重矩阵 $\mathbf{W}^0\in\mathbb{R}^{m\times n}$ 改造成 $\mathbf{W}^0 = \sum_{k=1}^{K}\alpha_k \mathbf{A}_k\mathbf{B}_k + \widehat{\mathbf{W}}$ 的形式：$K$ 个 LoRA 专家覆盖前 $rK$ 个最大奇异值（每个 rank=$r$），残差 $\widehat{\mathbf{W}}$ 包含剩下小奇异值的部分。前者每个被解读成一个"基础能力"专家、加上可学习路由系数 $\alpha_k$；后者在微调全程冻结。整套流程分两步：**BAD** 给出初始正交分解，**DOG** 在训练中维护正交性。最终路由权重让模型按任务自适应混合这些基础能力。
+Badit 把每个 LLM 权重矩阵 $\mathbf{W}^0\in\mathbb{R}^{m\times n}$ 拆成 $\mathbf{W}^0 = \sum_{k=1}^{K}\alpha_k \mathbf{A}_k\mathbf{B}_k + \widehat{\mathbf{W}}$：前 $rK$ 个最大奇异值被切成 $K$ 个 rank-$r$ 的 LoRA 专家、每个解读为一个"基础能力"并配可学习路由 $\alpha_k$，剩下小奇异值组成残差 $\widehat{\mathbf{W}}$ 全程冻结。整套流程两步走——**BAD** 用 SVD 给出初始就正交的能力分解，**DOG** 在训练中周期性把分量重新分组、把被梯度冲淡的正交性拉回来，最终路由按任务自适应地混合这些能力。
 
 ### 关键设计
 
-1. **Basic Ability Decomposition (BAD)**：
+**1. Basic Ability Decomposition（BAD）：用一次 SVD 拿到免训练就正交的"基础能力字典"。**
 
-    - 功能：对每个预训练权重 $\mathbf{W}^0$ 做 SVD，取前 $rK$ 个奇异值/向量切成 $K$ 个 rank-$r$ 的 LoRA 专家，作为基础能力的初始化。
-    - 核心思路：$\mathbf{U}_{[:rK]}\boldsymbol{\Sigma}_{[:rK]}\mathbf{V}_{[:rK]}^\top$ 按列分块成 $K$ 段，第 $k$ 段构造 $\mathbf{A}_k = \mathbf{U}_{[r(k-1):rk]}\,\mathrm{diag}(\sqrt{\boldsymbol{\Sigma}_{[r(k-1):rk]}})$ 和对称的 $\mathbf{B}_k$；剩下的低奇异值组成残差并冻结。论文证明（Appendix A）这种分解出的 $K$ 个 LoRA 专家在初始化时**天然两两正交**——SVD 的左/右奇异向量本来就在不同子空间，因此每个专家对应一组完全不重叠的"能力方向"。最后给每个专家加上可学习路由 $\alpha_k$（初始化为 1）以兼容 MoE。
-    - 设计动机：相比传统 LoRA 用零矩阵初始化、传统 MoE 用随机分配专家给任务，BAD 的关键洞察是"基础能力不是后天分配的，而是预训练权重里本就存在的方向"。SVD 提供了一个免训练就能拿到的正交基础能力字典，把"专家分化"的负担从训练完全转移到初始化。
+前面已经说清痛点——按"任务"分专家总会因能力重叠而再次共享参数，所以得找一个参数层面真实存在的解耦单元。BAD 的做法是直接对预训练权重 $\mathbf{W}^0$ 做 SVD，取前 $rK$ 个奇异值/向量按列切成 $K$ 段，第 $k$ 段构造 $\mathbf{A}_k = \mathbf{U}_{[r(k-1):rk]}\,\mathrm{diag}(\sqrt{\boldsymbol{\Sigma}_{[r(k-1):rk]}})$ 和对称的 $\mathbf{B}_k$，就得到一个 rank-$r$ 的 LoRA 专家；低奇异值部分组成残差冻结。论文（Appendix A）证明这样切出来的 $K$ 个专家在初始化时**天然两两正交**——SVD 的左/右奇异向量本就落在互不重叠的子空间，每个专家因此对应一组完全独立的"能力方向"。关键洞察在于：基础能力不是 LoRAMoE 那样后天随机分配再训出来的，而是预训练权重里本就存在的主方向；SVD 等于免费给了一个正交字典，把"专家分化"的负担从训练完全前移到初始化，每个专家再加上初值为 1 的路由 $\alpha_k$ 以兼容 MoE。
 
-2. **Dynamically Orthogonal Grouping (DOG)**：
+**2. Dynamically Orthogonal Grouping（DOG）：把正交约束变成"按梯度方向重新归类"的离散优化。**
 
-    - 功能：训练过程中梯度更新会破坏专家间正交性。DOG 每隔若干步对 $rK$ 个 rank-1 分量重新分组，使新的 $K$ 个 LoRA 专家的梯度方向再次正交。
-    - 核心思路：先把每个 rank-1 分量 $[\mathbf{a}_i;\mathbf{b}_i^\top]$ 的拼接梯度 $\mathbf{g}_i$ 单位化为 $\widehat{\mathbf{g}}_i$，目标是找一个 0/1 分配矩阵 $\boldsymbol{\Pi}\in\{0,1\}^{rK\times K}$（每个新专家恰好分到 $r$ 个分量），使"同一专家内分量梯度方向尽量相似、不同专家间梯度方向尽量正交"：$\max_{\boldsymbol{\Pi}}\sum_k \|\sum_i \pi_{i,k}\widehat{\mathbf{g}}_i\|^2$。这个目标用迭代算法求解：(1) 球面 K-means 给出初始分配；(2) 计算每簇质心 $\mathbf{c}_k^{(\tau)}=\sum_i \pi_{i,k}^{(\tau)}\widehat{\mathbf{g}}_i$，对质心矩阵 $\mathbf{C}^{(\tau)}=\mathbf{U}_c\boldsymbol{\Sigma}_c\mathbf{V}_c^\top$ 再做一次 SVD 得到 $\mathbf{Q}^{(\tau)}=\mathbf{U}_c\mathbf{V}_c^\top$，这就是被强行正交化的目标方向；(3) 按 $\langle \widehat{\mathbf{g}}_i, \mathbf{q}_k^{(\tau)}\rangle$ 解一个带 $\sum_i \pi_{i,k}=r$ 约束的整数指派问题更新 $\boldsymbol{\Pi}$，迭代至多 10 步或收敛。论文 Appendix C 证明重新分组前后 MoE 输出在数学上是 invariant 的——这是关键，否则每次重组会扰动模型。
-    - 设计动机：SVD 初始正交只在 $t=0$ 成立，梯度一更新就漂走（Fig. 4 显示 LoRAMoE 的 inter-expert 夹角逐步偏离 90°）。DOG 用"先聚类后正交化"的两步走避开直接对梯度加正交惩罚的弊端（直接惩罚会破坏 loss 几何），而是把正交约束转化为"按方向重新归类"的离散优化，既保持端到端可训练，又能稳定地把 inter-expert 角度锁在 90° 附近、intra-expert 角度压在 60°。
+SVD 的正交只在 $t=0$ 成立，梯度一更新就漂走（Fig. 4 里 LoRAMoE 的 inter-expert 夹角随训练逐步偏离 90°），而消融显示"全程维持正交"比"初始化好"更要命，所以必须有个机制在训练中持续修复。DOG 每隔若干步重新分组一次：先把每个 rank-1 分量 $[\mathbf{a}_i;\mathbf{b}_i^\top]$ 的拼接梯度 $\mathbf{g}_i$ 单位化为 $\widehat{\mathbf{g}}_i$，再找一个 0/1 分配矩阵 $\boldsymbol{\Pi}\in\{0,1\}^{rK\times K}$（每个新专家恰好分到 $r$ 个分量），让同一专家内梯度方向尽量一致、不同专家间尽量正交，目标写成
+
+$$\max_{\boldsymbol{\Pi}}\sum_k \Big\|\sum_i \pi_{i,k}\widehat{\mathbf{g}}_i\Big\|^2 .$$
+
+求解是个三步迭代：先用球面 K-means 给初始分配；再算每簇质心 $\mathbf{c}_k^{(\tau)}=\sum_i \pi_{i,k}^{(\tau)}\widehat{\mathbf{g}}_i$，对质心矩阵 $\mathbf{C}^{(\tau)}=\mathbf{U}_c\boldsymbol{\Sigma}_c\mathbf{V}_c^\top$ 再做一次 SVD 取 $\mathbf{Q}^{(\tau)}=\mathbf{U}_c\mathbf{V}_c^\top$ 当作被强行正交化的目标方向；最后按内积 $\langle \widehat{\mathbf{g}}_i, \mathbf{q}_k^{(\tau)}\rangle$ 解一个带 $\sum_i \pi_{i,k}=r$ 约束的整数指派问题更新 $\boldsymbol{\Pi}$，至多迭代 10 步或收敛即止。之所以绕这一圈而不直接给梯度加正交惩罚，是因为硬惩罚会破坏 loss 几何、训练不稳；DOG 把它转成"先软聚类、再硬正交化"的离散重分类，既保持端到端可训练，又能稳稳把 inter-expert 角度锁在 90° 附近、intra-expert 角度压到 60°。而且 Appendix C 证明重组前后 MoE 输出数学上 invariant，否则每次"换头"都会扰动模型。
 
 ### 损失函数 / 训练策略
-仍是标准 SFT 损失 $\mathcal{L}(\mathcal{F}(\mathbf{x};\boldsymbol{\theta}), y)$，没有额外加正交正则。专家数 $K=8$、rank $r$ 与 LoRAMoE 对齐。DOG 在训练中周期性触发（CPU 上算聚类和整数优化）。两种评估范式：mixed training（15 任务混训）和 sequential training（按任务序贯训练，5 种顺序求平均，主要看遗忘率）。
+仍是标准 SFT 损失 $\mathcal{L}(\mathcal{F}(\mathbf{x};\boldsymbol{\theta}), y)$，没有额外加正交正则。专家数 $K=8$、rank $r$ 与 LoRAMoE 对齐。DOG 在训练中周期性触发（聚类和整数优化在 CPU 上算）。两种评估范式：mixed training（15 任务混训）和 sequential training（按任务序贯训练，5 种顺序求平均，主要看遗忘率）。
 
 ## 实验关键数据
 

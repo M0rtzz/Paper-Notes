@@ -46,23 +46,18 @@ tags:
 Generative Montage 包含显式合谋代理和隐式合谋代理。显式部分由 Writer、Editor、Director 和 Sybil publisher 构成：Writer 基于真实片段合成偏向目标错误假设的叙事草案，Editor 调整片段顺序以制造暗示性关联，Director 模拟受害者判断并检查事实完整性，publisher 将片段作为公开信息流分发。隐式部分是被误导的普通 LLM analyst，它们真诚相信错误结论并把自己的分析传给下游 judge。
 
 ### 关键设计
-1. **Local Truth 与 Global Lie 分离**:
 
-	- 功能：刻画“每句话都真，但整体结论误导”的风险。
-	- 核心思路：Local Truth 要求每个证据片段 $e_i$ 与真实状态一致；Global Lie 要求证据集合使 $P(H_f\mid\mathcal{E})>P(H_r\mid\mathcal{E})$。
-	- 设计动机：这解释了为什么传统事实核查或内容过滤不足以覆盖认知合谋，因为单条证据检查不出全局叙事误导。
+**1. Local Truth 与 Global Lie 分离——形式化"每句话都真、整体却误导"的风险。**
 
-2. **Writer-Editor-Director 分工**:
+传统事实核查只查单条证据真假，可认知合谋的危险恰恰在于每条证据都经得起核查。论文把这一点拆成两个约束：Local Truth 要求每个证据片段 $e_i$ 都与真实状态一致；Global Lie 要求这组证据合在一起让错误假设的后验超过真实假设，即 $P(H_f\mid\mathcal{E})>P(H_r\mid\mathcal{E})$。正因为攻击全程不伪造任何单条证据，内容过滤和原子级事实核查天然查不出问题——误导发生在证据的选择、排序和并置所诱导的全局叙事里，而不在任何一句话上。
 
-	- 功能：把叙事生成、顺序编排和效果审查拆成不同角色。
-	- 核心思路：Writer 保持事实基础并组织叙事，Editor 将叙事拆成片段并调整顺序，Director 以受害者代理视角评估是否既满足事实约束又能诱发错误信念。
-	- 设计动机：多角色分工降低单个模型同时处理事实约束、叙事连贯和受害者模拟的负担，也便于消融每个组件的作用。
+**2. Writer-Editor-Director 分工——把叙事生成、顺序编排和效果审查拆给不同角色。**
 
-3. **下游信念级联评测**:
+要让一组真证据稳定诱导出错误信念，单个模型同时背"保持事实约束 + 维持叙事连贯 + 模拟受害者反应"三件事负担太重，于是显式合谋端拆成三角色流水线：Writer 在真实片段基础上合成偏向目标错误假设 $H_f$ 的叙事草案，Editor 把叙事拆成片段并调整顺序以制造暗示性关联，Director 站在受害者代理视角评估这套序列是否既满足事实约束又能诱发错误信念，最后由 Sybil publisher 把片段作为公开信息流分发。这种分工除了降低单模型负担，也让后续能逐个消融 Editor / Director 的贡献，把风险定位到具体哪一环。
 
-	- 功能：评估错误信念是否会从受害者传播到验证层。
-	- 核心思路：受害者 analyst 先基于公开 feed 形成结论，再把结构化报告交给 Majority Vote 或 AI Judge；论文用 Downstream Deception Rate 衡量下游是否接受错误假设。
-	- 设计动机：真实系统中误导不止发生在第一轮分析，多个独立代理的“自信错误”会被下游当成可信共识。
+**3. 下游信念级联评测——看错误信念会不会从受害者继续往验证层传。**
+
+真实系统里误导往往不止停在第一轮分析。被公开 feed 误导的普通 LLM analyst 会真诚地相信错误结论，并把结构化报告交给 Majority Vote 或 AI Judge。论文用 Downstream Deception Rate 衡量下游是否照单全收这套错误假设，刻画的正是最危险的一环：受害者把自己推断出来的错误结论当成可信分析往下传，而下游验证层只看到"多个独立代理都同意"的表象，就被这种伪共识骗过去。
 
 ### 损失函数 / 训练策略
 本文不是训练模型，而是构建安全评测与模拟。CoPHEME 从 PHEME 谣言数据集中抽取真实或非谣言线程作为 Evidence Pool，抽取 false / unverified 谣言作为 Target Fabrications。受害者模型以中立分析员身份处理证据流，输出自推断中心 claim、真假判断、理由和置信度。指标包括 Attack Success Rate (ASR)、High-Confidence ASR (HC-ASR)、平均置信度和 Downstream Deception Rate (DDR)，其中 HC-ASR 要求置信度 $c_i\ge 0.8$。

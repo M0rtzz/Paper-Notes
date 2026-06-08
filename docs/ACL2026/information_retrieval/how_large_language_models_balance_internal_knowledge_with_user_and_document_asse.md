@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三步走：(1) **probe 构造**：基于多选题 $q$ 与候选集 $\mathcal{C}$，把 P / U / D 各自的存在性 (present/absent) 和正确性 (positive/negative) 排列组合成 13 个 variant，并用 Tier 1 (模板) / Tier 2 (上下文相关) 两种 assertion 复杂度控制语言因子。(2) **在 CommonsenseQA + GSM8K-multiple-choice 上跑 27 个 LLM**（GPT-4o / LLaMA3 系 / Qwen3 系）。(3) **三层分析**：宏观 reliance 比例 → 选择行为分类 → 概率分布漂移。
+
+本文不训练新模型，而是搭一套评测流水线，把"一道多选题"放大成一组受控探针，量出参数知识 (P) / 用户主张 (U) / 文档主张 (D) 三股力量的拉扯。给定多选题 $q$ 与候选集 $\mathcal{C}$，先把 P / U / D 各自的"是否在场"和"说得对不对"排列组合成 13 个 probe variant，并用 Tier 1（统一模板）/ Tier 2（上下文相关）两套 assertion 控制语言复杂度这一干扰因子；再把这批探针喂给 27 个 LLM（GPT-4o、LLaMA3 系、Qwen3 系）在 CommonsenseQA 与 GSM8K-multiple-choice 上跑出答案。最后做三层递进分析——用 logistic regression 把宏观依赖比例拆出来，按选择行为给模型分类，再看外部信息如何漂移答案的概率分布。
 
 ### 关键设计
 
-1. **Three-Source Probe 与 Logistic Regression**:
+**1. 三源回归：把三股影响力放到同一把尺子上。**
 
-    - 功能：用单个回归同时估计 P / U / D 三个源对答对概率的边际效应
-    - 核心思路：拟合 $\log \frac{p}{1-p} = \beta_0 + \beta_P P_i + \delta_U U_{pres} + \beta_U (U_{pres} \times U_{corr}) + \delta_D D_{pres} + \beta_D (D_{pres} \times D_{corr})$；把系数转 odds ratio：Parametric OR $= e^{\beta_P}$，User OR $= e^{\delta_U + \beta_U}$，Doc OR $= e^{\delta_D + \beta_D}$；再归一化为 Source% $= \text{Source OR} / (P+U+D)$；同时给出 U%/D% 比 $= e^{(\delta_U + \beta_U) - (\delta_D + \beta_D)}$
-    - 设计动机：相比直接看准确率差异，OR 的乘性分解让"在场 vs 正确性"两种贡献分开来；归一化后 U 与 D 直接可比，<1 即文档更具影响力
+直接对比准确率只能告诉你"加了外部信息变好还是变坏"，却分不清这份影响来自"源在场"还是"源说对"。本文改用一个 logistic regression 同时估计三个源的边际效应：$\log \frac{p}{1-p} = \beta_0 + \beta_P P_i + \delta_U U_{pres} + \beta_U (U_{pres} \times U_{corr}) + \delta_D D_{pres} + \beta_D (D_{pres} \times D_{corr})$，其中 $\delta$ 项捕捉"在场"的影响、交互项捕捉"正确性"的影响。把系数指数化得到 odds ratio——Parametric OR $= e^{\beta_P}$、User OR $= e^{\delta_U + \beta_U}$、Doc OR $= e^{\delta_D + \beta_D}$，再归一化为 Source% $= \text{Source OR} / (P+U+D)$ 便于横向比较。最关键的是 U/D 影响力之比 $e^{(\delta_U + \beta_U) - (\delta_D + \beta_D)}$：这个比值 $<1$ 就意味着模型对文档比对用户更轻信，第一次让阿谀（信用户）和知识冲突（信文档）两条研究线落到同一坐标系里。
 
-2. **Probe Variant 矩阵（13 种）**:
+**2. 13 种 probe 矩阵：用最小代价覆盖所有源组合并隔离语言因子。**
 
-    - 功能：用最小代价覆盖所有有意义的源组合，控制语言风格变量
-    - 核心思路：1 个 bare probe 用作基线；4 个 single-source probe ($v_{u^+}, v_{u^-}, v_{d^+}, v_{d^-}$) 配合 PAR/SDR 测鉴别力；8 个 double-source probe 用作冲突场景（两种正确性 × 两种 ordering）；Tier 1 用统一模板把答案文本套进去，Tier 2 由 GPT-4o 生成与题目上下文相关的自然主张
-    - 设计动机：bare 给出 parametric baseline；single-source 才能干净测出"模型在只看 U 或只看 D 时如何反应"；双源 ordering 用来测 positional bias；Tier 1/2 分离"语言复杂度"与"源属性"两类干扰因子
+为了让回归系数干净，探针必须系统覆盖每种源组合而不引入额外噪声。矩阵由三层构成：1 个 bare probe（无外部源）给出纯参数基线；4 个 single-source probe $v_{u^+}, v_{u^-}, v_{d^+}, v_{d^-}$ 单独打开 U 或 D 且分对错，用来干净测出模型只面对一个源时的反应、并喂给后面的鉴别力指标；8 个 double-source probe 把 U 与 D 同时摆上桌，覆盖两种正确性组合 × 两种先后 ordering，既造冲突场景又能测 positional bias。语言复杂度则用 Tier 1 / Tier 2 拆开——Tier 1 用统一模板硬套答案文本，Tier 2 由 GPT-4o 生成与题目上下文贴合的自然主张，从而把"措辞像不像真话"和"源本身的属性"两类干扰因子分离开。
 
-3. **Choice-Level Discrimination 指标 (PAR/SDR)**:
+**3. PAR / SDR：把"对齐质量"细化成可测的鉴别力。**
 
-    - 功能：测模型是不是"impressionable"——能不能扛住错误外部信息、采纳正确外部信息
-    - 核心思路：$\text{PAR}^+_s = P(\hat{y}_{v_{s^-}, q} = \hat{y}_{v_{bare}, q} \mid \hat{y}_{v_{bare}, q} = y_q^*, y^{assert}_{v_{s^-}, q} \neq y_q^*)$ —— 当源 $s$ 说错时，模型是否守住正确的参数答案；$\text{SDR}^+_s = P(\hat{y}_{v_{s^+}, q} = y^{assert}_{v_{s^+}, q} \mid \hat{y}_{v_{bare}, q} \neq y_q^*, y^{assert}_{v_{s^+}, q} = y_q^*)$ —— 当参数错了而源说对时，模型是否听话改正
-    - 设计动机：用四象限 (Selective / Impressionable / Skeptical / Stubborn) 把模型按 PAR/SDR 是否 $\geq 0.5$ 分类；"Selective" 才是真正可用，其余三类各有不同失败模式。这把"对齐质量"细化为可操作的鉴别力指标。
+模型对外部信息言听计从，并不等于对齐良好——真正的安全是"该听时听、该顶时顶"。本文用两个条件概率刻画这种鉴别力：当源说错时模型能否守住正确的参数答案，$\text{PAR}^+_s = P(\hat{y}_{v_{s^-}, q} = \hat{y}_{v_{bare}, q} \mid \hat{y}_{v_{bare}, q} = y_q^*, y^{assert}_{v_{s^-}, q} \neq y_q^*)$；当参数错了而源说对时模型能否听话改正，$\text{SDR}^+_s = P(\hat{y}_{v_{s^+}, q} = y^{assert}_{v_{s^+}, q} \mid \hat{y}_{v_{bare}, q} \neq y_q^*, y^{assert}_{v_{s^+}, q} = y_q^*)$。以 $0.5$ 为阈值把模型钉进 Selective / Impressionable / Skeptical / Stubborn 四象限：只有 PAR 与 SDR 双高的 Selective 才真正可用，其余三类各有偏科——这正是 RAG 里"检索回一篇错文档就被带跑"的 impressionable 失败模式所在。
 
 ### 损失函数 / 训练策略
-评测无训练损失。Mitigation 部分：作者用 SFT 在多样化的源交互数据上微调，使模型 PAR/SDR 同时提升 —— 说明"教模型在不同源冲突下做选择"是可学习的。
+
+评测本身无训练损失。缓解实验里，作者用 SFT 在覆盖 U+D+ / U+D- / U-D+ / U-D- 四种源交互模式的数据上微调，让模型 PAR 与 SDR 同步上升——说明"在源冲突下该信谁"是可学习的，鉴别力不靠模型规模天生。
 
 ## 实验关键数据
 

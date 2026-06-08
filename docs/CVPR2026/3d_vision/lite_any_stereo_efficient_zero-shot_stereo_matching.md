@@ -49,25 +49,25 @@ tags:
 
 ### 关键设计
 
-1. **紧凑骨干 (Compact Backbone)**：
+**1. 紧凑骨干：用对的小网络，而不是更大更新的网络。**
 
-    - 功能：高效提取多尺度匹配特征
-    - 核心思路：采用ImageNet预训练的MobileNetV2作为共享权重特征提取器，生成 $\{1/4, 1/8, 1/16, 1/32\}$ 多尺度特征，通过残差上采样统一到1/4分辨率
-    - 设计动机：实验对比发现MobileNetV2的通道配置比更新的ConvNeXt v2更适合立体匹配（Tab.2c: MobileNetV2在ETH3D上5.39 vs ConvNeXt v2的5.03，但ConvNeXt v2在Middlebury上10.52 vs 10.89）。不使用DepthAnything等外部先验以维持极低计算量
+零样本立体匹配通常靠堆深度先验（DepthAnything）或大网络换精度，但这两条路都会把计算量推到数千 G MACs。本文反其道而行，直接拿 ImageNet 预训练的 MobileNetV2 当共享权重特征提取器，抽出 $\{1/4, 1/8, 1/16, 1/32\}$ 四个尺度的特征，再用残差上采样统一回 1/4 分辨率送进匹配。值得一提的是更新的 ConvNeXt v2 反而不一定更好：消融里它在 ETH3D 上略优（5.03 vs 5.39），却在 Middlebury 上更差（10.52 vs 10.89），整体看 MobileNetV2 的通道配置更契合立体匹配的需求。坚持不引入外部深度先验，正是把整网压到 33G MACs 的关键前提。
 
-2. **混合代价聚合模块 (Hybrid Cost Aggregation)**：
+**2. 混合代价聚合：让少量 3D 卷积只负责"看懂视差结构"。**
 
-    - 功能：联合2D和3D表示捕获互补的空间和视差cues
-    - 核心问题：纯2D聚合将视差维度折叠为通道，无法建模视差方向的结构连续性；纯3D聚合计算量大且视差维度上很多层级贡献有限
-    - 核心思路：采用3D→2D串联结构 $\mathbf{C}_{agg} = \mathbf{G}_{2D}(\mathbf{G}_{3D}(\mathbf{C}))$。3D块使用多尺度3D卷积（kernel (3,3,3)）感知跨视差结构，仅占约4.8%计算量；2D块使用ConvNeXt层进行高效空间细化
-    - 设计对比：探索了四种集成方案——(a)并联bilateral、(b)2D→3D、(c)3D→2D、(d)交错interleaved。消融证明3D→2D效果最佳（Tab.2a），因为先用少量3D卷积建立视差结构感知，再用高效2D做空间细化更合理
-    - 3D占比消融：仅4.8%的3D计算即可，增加到9.5%或15.6%反而性能下降（Middlebury从9.50涨到10.06和10.34），因为在有限MACs预算下3D过多会挤占空间细化能力
+纯 2D 聚合会把视差维度直接折叠成通道，丢掉了视差方向上的结构连续性；纯 3D 聚合虽然保留了这个维度，却很贵，而且视差维度上很多层级其实贡献甚微。本文的做法是把两者串成 3D→2D：
 
-3. **三阶段百万级训练策略 (Three-Stage Training)**：
+$$\mathbf{C}_{agg} = \mathbf{G}_{2D}(\mathbf{G}_{3D}(\mathbf{C}))$$
 
-    - **Stage ① 合成数据监督训练**：在1.8M标注合成数据（SceneFlow 35K + FallingThings 30K + FSD 1.1M + CREStereo 0.2M + VKITTI2 21K + TartanAir 0.31M + Dynamic Replica 0.14M）上用smooth L1 loss端到端训练150K步，建立基础匹配能力
-    - **Stage ② 合成数据自蒸馏**：教师和学生同架构同初始化自Stage①，教师接收干净输入，学生接收强扰动输入，通过特征对齐loss学习域不变表示：$\mathcal{L}_{feat} = 1 - \frac{1}{HW}\sum_{i=1}^{HW} \cos(F_i, F_i')$。消融对比三种蒸馏方式：(a)固定教师权重、(b)EMA更新教师、(c)hard copy学生→教师，发现(a)固定教师效果最佳（K.12: 3.64 vs 3.97 vs 4.22），可能因为稳定的锚点更有利于轻量学生学习域不变特征
-    - **Stage ③ 真实数据知识蒸馏**：收集0.5M无标注真实立体对（Flickr1024、InStereo2k、Holopix50K、DrivingStereo、SouthKenSV、UASOL），用冻结的FoundationStereo作为教师生成伪标签进行100K步微调。关键发现：数据质量远比数量重要——低质量数据（如Stereo4D仅512×512、HRWSI校正差）反而损害泛化性能
+先让多尺度 3D 卷积（kernel $(3,3,3)$）在跨视差方向上建立结构感知，这一步只占约 4.8% 的计算量；再交给 ConvNeXt 层做高效的 2D 空间细化。作者对照过四种集成顺序——并联 bilateral、2D→3D、3D→2D、交错 interleaved——3D→2D 全面最优（Tab.2a：ETH3D 5.39 对比纯 2D 的 6.48、bilateral 的 8.55），说明"先建视差结构、再做空间细化"才是对的信息流方向。3D 占比也不是越多越好：从 4.8% 加到 9.5%、15.6% 后 Middlebury 反而从 9.50 退到 10.06、10.34——在固定 MACs 预算下，3D 占多了就会挤掉 2D 细化的空间，得不偿失。
+
+**3. 三阶段百万级训练：用合成数据打底、再用真实数据蒸出泛化。**
+
+架构再轻也跨不过 sim-to-real 的鸿沟，本文把泛化能力交给训练策略分三步逼出来。第一步是合成数据监督：在 1.8M 张标注合成图（SceneFlow 35K + FallingThings 30K + FSD 1.1M + CREStereo 0.2M + VKITTI2 21K + TartanAir 0.31M + Dynamic Replica 0.14M）上用 smooth L1 端到端训 150K 步，先把基础匹配能力立起来。第二步是合成数据上的自蒸馏：教师和学生同架构、都从第一步初始化，教师吃干净输入、学生吃强扰动输入，靠特征余弦对齐迫使学生学到域不变表示
+
+$$\mathcal{L}_{feat} = 1 - \frac{1}{HW}\sum_{i=1}^{HW} \cos(F_i, F_i')$$
+
+这里教师怎么更新很关键——对比固定权重、EMA、hard copy 学生权重三种方案，固定教师最好（K.12：3.64 vs 3.97 vs 4.22），稳定的锚点对容量有限的轻量学生更友好。第三步才真正打通真实域：收 0.5M 张无标注真实立体对（Flickr1024、InStereo2k、Holopix50K、DrivingStereo、SouthKenSV、UASOL），用冻结的 FoundationStereo 当教师生成伪标签微调 100K 步。这一步的教训是数据质量远比数量重要——像 Stereo4D（仅 512×512）、HRWSI（校正差）这类低质量数据塞进来反而拖累泛化，宁缺毋滥。
 
 ### 损失函数 / 训练策略
 

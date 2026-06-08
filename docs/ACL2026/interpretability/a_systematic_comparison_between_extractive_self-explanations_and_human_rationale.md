@@ -54,23 +54,24 @@ tags:
 第五步是 faithfulness 与策略分析。作者用 Gradient×Input 和 LRP 生成 post-hoc attribution，并通过遮蔽重要 token 后观察模型正确答案 token 与备选答案 token 的概率差变化来衡量 faithfulness。为了让二值的人类 / 模型 rationale 也能排序，论文采用 k-greedy importance ordering：逐步选择能最大降低预测概率差的 rationale token，短文本 SST 设 $k=1$，其他较长数据集设 $k=3$。
 
 ### 关键设计
-1. **抽取式 self-explanation 的受控比较**:
 
-	- 功能：把模型解释限制为输入文本中的 token rationale，使自解释可以和人类标注、归因分数在同一粒度上比较。
-	- 核心思路：先让 LLM 输出分类结果，再在预测正确的样本上要求其抽取支撑该结果的输入片段；对于 Climate-Fever，则沿用原始 claim-evidence 结构，先对 5 条 evidence 生成 rationale，再得到整体 claim 判断。
-	- 设计动机：自由文本解释更贴近真实用户场景，但评测 faithfulness 和 plausibility 时更难定义对齐单位。抽取式 rationale 虽然窄一些，却能把解释质量问题变成可测量的 token-level agreement 和 token perturbation 问题。
+**1. 抽取式 self-explanation 的受控比较：把“模型能说出理由”收敛成可测量的 token rationale。**
 
-2. **跨难度、跨语言、跨任务的数据设计**:
+自由文本解释更贴近真实用户场景，但一旦要评测它“像不像人类理由”或“是否真的影响预测”，就找不到一个干净的对齐单位——解释里可能掺入输入以外的背景知识和推理链。作者干脆把解释限制成从输入抽取的 token 片段：先让 LLM 输出分类结果，再**只在预测正确的样本上**要求它抽取支撑该结果的输入 span。这一步“预测正确才抽 rationale”很关键，否则会把分类错误和解释错误混在一起。
 
-	- 功能：避免结论只建立在短文本情感分类上，检验 self-explanation 在真实长文本、专业任务和多语言场景下是否仍可靠。
-	- 核心思路：SST/mSST 代表短句情感分类，其中 mSST 覆盖英语、丹麦语和意大利语；RaFoLa 代表长新闻文章上的强迫劳动风险检测，文本长且证据常常隐含；Climate-Fever 代表气候 claim verification，claim 本身可能欠规范，evidence 与 claim 的语义关系也更模糊。作者还为 Climate-Fever 额外收集了 104 个 claim、520 条 evidence 的人工 rationale。
-	- 设计动机：解释质量很容易被数据集属性支配。短句中一个情感词就能决定标签，模型和人类自然更容易一致；长文和声明验证中，证据可能跨句、含糊或彼此冲突，更能暴露 self-explanation 的局限。
+对于结构特殊的 Climate-Fever，作者沿用原始 claim-evidence 结构：先对 5 条 evidence 各自生成 rationale，再汇总成整体 claim 判断。这样无论哪个任务，模型解释、人类标注、后验归因都被压到同一种 token-level 粒度，解释质量问题就转化成可量化的 token agreement 与 token perturbation 问题。
 
-3. **plausibility 与 faithfulness 分离评测**:
+**2. 跨难度、跨语言、跨任务的数据设计：不让结论只成立于短句情感分类。**
 
-	- 功能：同时回答“解释像不像人类理由”和“解释是否真的影响模型预测”两个不同问题。
-	- 核心思路：plausibility 用 Cohen's Kappa 比较人类与模型 rationale；faithfulness 用 token masking 观察正确答案 token 与替代答案 token 的概率差是否快速下降；post-hoc 方法则用 LRP 和 Gradient×Input 作为对照。
-	- 设计动机：一个解释可能与人类标注高度一致，却不是模型真正使用的信息；也可能对模型预测非常关键，却因为包含格式符、系统提示符或低层处理线索而不符合人类直觉。把两类指标分开，能避免把“可读性”误认为“忠实性”。
+解释质量很容易被数据集属性支配：短句里一个情感词就能定标签，模型和人类自然容易一致；可一旦换到证据跨句、含糊甚至彼此冲突的长文本，self-explanation 的局限才会暴露。为此作者刻意拉开三档难度——SST/mSST 是短句情感分类（mSST 还覆盖英语、丹麦语、意大利语），RaFoLa 是长新闻文章上的强迫劳动风险检测（文本长、证据常隐含），Climate-Fever 是气候声明验证（claim 本身欠规范，evidence 与 claim 的语义关系更模糊）。
+
+由于 Climate-Fever 原本没有 token-level rationale，作者额外收集了一个含 104 个 claim、520 条 evidence 的人工 rationale 子集。三个任务串起来，正好说明解释质量不是模型的单一属性，而是模型、任务、文本结构共同作用的结果。
+
+**3. plausibility 与 faithfulness 分离评测：把“像人类”和“对模型有效”拆成两个独立问题。**
+
+一个解释可能与人类标注高度一致，却不是模型真正依赖的信息；也可能对预测非常关键，却因为包含格式符、系统提示符这类低层处理线索而不符合人类直觉。把这两件事混为一谈，就会把“可读性”误认成“忠实性”。所以作者用两套独立指标分别回答：plausibility 端用 sample-wise Cohen's Kappa 比较模型与人类 rationale 的一致性——相比 F1，Kappa 能校正“选中 / 未选中 token”的类别不平衡和随机一致，对 rationale agreement 更稳健。
+
+faithfulness 端则靠 token masking：逐步遮蔽 rationale token，观察正确答案 token 与备选答案 token 的概率差是否快速下降。为了让二值的人类 / 模型 rationale 也能排序，作者采用 k-greedy importance ordering，每步选能最大降低概率差的 token，短文本 SST 设 $k=1$，其余较长数据集设 $k=3$；同时用 LRP 和 Gradient×Input 生成的 post-hoc attribution 作为第三方对照，看自然语言证据与梯度归因各自偏好哪类 token。
 
 ### 损失函数 / 训练策略
 本文没有训练新的分类模型，也没有提出新的优化损失。实验采用零样本 prompting，所有模型都以 instruction-tuned open-weight LLM 形式直接运行。生成设置基于 `transformers`，重复惩罚设为 1.0，并根据不同任务和预期输出长度调整最大生成长度。为提高结果稳定性，作者在实验中使用 3 个随机种子并报告平均结果；对于 SST/mSST/RaFoLa，标准差均不超过 0.01。

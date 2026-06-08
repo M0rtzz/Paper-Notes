@@ -34,30 +34,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GraspLDP 采用两阶段训练：(1) Action Latent Learning 阶段：用 VAE 将动作序列编码到紧凑潜空间，并在 decoder 中注入 grasp pose 先验引导动作重建；(2) Diffusion on Latent Action Space 阶段：在潜空间上训练扩散策略，用 graspness map 视觉线索调节去噪过程，并附加自监督重建目标强化线索利用。
+GraspLDP 想解决的是：模仿学习策略在抓取这一步上总打不过专门的抓取检测器，因为它把整段抓取动作序列当成一个高维回归问题硬学，又没法把现成的抓取先验真正用起来。它的思路是把抓取先验拆成两条线注入策略——一条是精确的目标 grasp pose，注进**动作潜空间**直接约束动作生成；一条是 graspness map 这种几何视觉线索，注进**扩散去噪过程**引导末端朝可抓区域移动。
+
+整体分两阶段训练。第一阶段（Action Latent Learning）先用一个 VAE 把动作序列压成紧凑潜特征，并在解码端把目标 grasp pose 拼进去重建动作，逼潜空间学会"动作如何被 pose 约束"。第二阶段（Diffusion on Latent Action Space）在这个潜空间上训练扩散策略去噪，把 graspness map 叠到手腕相机图像上作为视觉条件，再加一个对该线索的自监督重建目标，确保模型不会把线索当摆设忽略掉。推理时由一个启发式选择器从检测器给出的候选 pose 里挑一个最合适的来引导。
 
 ### 关键设计
 
-1. **Grasp Guidance in Latent Space（潜空间抓取引导）**:
+**1. 潜空间抓取引导（Grasp Guidance in Latent Space）：让 grasp pose 在解码端强约束动作，而不是当条件被稀释。**
 
-    - 功能：用轻量 VAE 将动作序列压缩为紧凑潜特征，在 decoder 端拼接目标 grasp pose 进行重建
-    - 核心思路：编码 $\mathbf{Z} = \mathcal{E}(A)$，解码 $\hat{A} = \mathcal{D}(\mathbf{Z} \oplus \mathcal{G})$，损失为 $\mathcal{L}_{VAE} = \text{MSE}(A, \hat{A}) + \lambda \mathcal{L}_{KL}$。扩散模型在紧凑的潜特征上去噪，而非直接在高维动作空间操作
-    - 设计动机：将 grasp pose 直接作为条件会稀释引导强度并增加训练难度。通过在潜空间中注入，grasp pose 在 decoder 阶段对动作重建产生直接的、强约束的影响。同时潜空间维度更低，加速推理
+既有方法（Robograsp、GPA-RAM）把 grasp pose 拼成条件喂给策略，pose 和输出动作隔了一整个网络，关联很弱、引导力被稀释。GraspLDP 改在动作潜空间里动手：VAE 编码器只看动作 $\mathbf{Z} = \mathcal{E}(A)$，把动作压成低维潜特征；解码器才把目标 pose 拼进来重建 $\hat{A} = \mathcal{D}(\mathbf{Z} \oplus \mathcal{G})$，训练损失 $\mathcal{L}_{VAE} = \text{MSE}(A, \hat{A}) + \lambda \mathcal{L}_{KL}$。这种非对称设计很关键——编码器不接 pose，保证潜变量纯粹编码动作本身；pose 只在解码时调制，于是它对动作重建的约束是直接而强的。扩散策略随后在这个压紧的潜空间里去噪，而非在原始高维动作空间，引导更集中、推理也更快。消融里去掉这条引导（w/o Latent Guidance），物体/视觉泛化直接从 ~58/65 暴跌到 ~21/19，是全篇最致命的一刀。
 
-2. **Visual Graspness Cue（视觉抓取性线索）**:
+**2. 视觉抓取性线索（Visual Graspness Cue）：把几何抓取性当成光照不变的视觉 prompt。**
 
-    - 功能：从预训练 graspness 网络获取点云的逐点抓取性得分，反投影到像素空间形成 graspness map，叠加到手腕相机图像上作为视觉线索
-    - 核心思路：$O_{cue}(j,k) = \text{masked\_color}$ if $M(j,k) > \tau$，否则保留原始像素。同时在每个反向扩散步骤重建 $O_{cue}$ 作为自监督目标：$\mathcal{L}_{Recon.} = \text{MSE}(O_{cue}, \hat{O}_{cue})$，总损失 $\mathcal{L}_{LDP} = \mathcal{L}_{Diff.} + \lambda_{Recon.} \mathcal{L}_{Recon.}$
-    - 设计动机：graspness map 是几何驱动的、光照不变的抓取可行性指标，能引导末端执行器朝向可抓取区域移动。自监督重建确保模型真正关注这些视觉线索而非忽略它们
+grasp pose 是低语义的几何量，和高维 RGB 输入存在模态鸿沟，策略很难自己从图像里"看出"哪里好抓。GraspLDP 借来预训练 graspness 网络给点云每个点打的抓取性得分，反投影回像素得到一张 graspness map，再叠到手腕相机图上：得分超阈值的像素 $M(j,k) > \tau$ 染成掩码色 $O_{cue}(j,k)$，其余保留原像素。光这样叠还不够，模型可能学着无视它，所以在每个反向扩散步同时重建这张线索图作为自监督目标 $\mathcal{L}_{Recon.} = \text{MSE}(O_{cue}, \hat{O}_{cue})$，与扩散损失合成 $\mathcal{L}_{LDP} = \mathcal{L}_{Diff.} + \lambda_{Recon.} \mathcal{L}_{Recon.}$。graspness 是几何驱动、对光照不变的可抓信号，所以它在视觉泛化（不同光照/外观）上收益最大——消融移除后 Visual Gen. 掉了 7.1 个点，是四个维度里跌得最多的。
 
-3. **Heuristic Pose Selector (HPS)**:
+**3. 启发式位姿选择器（Heuristic Pose Selector, HPS）：在抓取质量和运动学接近性之间权衡选 pose。**
 
-    - 功能：推理时从抓取检测器预测的候选 grasp pose 中选择最合适的作为引导
-    - 核心思路：先通过碰撞检测和 NMS 过滤，保留 top-k 质量候选。计算当前末端执行器位姿 $P$ 与候选 $\mathcal{G}_j$ 的 SE(3) 测地距离 $d_{\mathcal{G}_j, W} = \sqrt{\xi^\top W \xi}$，选择距离最小的候选 $\mathcal{G}^* = \arg\min d(\mathcal{G}_j)$
-    - 设计动机：联合考虑抓取质量和运动学接近性，平衡抓取可行性和轨迹平滑性，避免不合理的 pose 引导降低成功率
+推理时检测器会吐出一堆候选 grasp pose，盲目选质量最高的可能离当前手太远、轨迹拐得很别扭，选最近的又可能抓不稳。HPS 先用碰撞检测加 NMS 过滤、留下 top-k 质量候选，再算当前末端位姿 $P$ 到每个候选 $\mathcal{G}_j$ 的 SE(3) 测地距离 $d_{\mathcal{G}_j, W} = \sqrt{\xi^\top W \xi}$（$\xi$ 为两位姿间的李代数差，$W$ 为加权矩阵），取距离最小者 $\mathcal{G}^* = \arg\min_j d(\mathcal{G}_j)$ 作引导。这等于同时压抓取可行性（top-k 质量过滤）和轨迹平滑性（测地最近），实验里它稳压 random / highest / nearest 三种单一策略，说明质量和接近性必须联合考虑。
 
 ### 损失函数 / 训练策略
-两阶段：Stage 1 训练 VAE（MSE + KL），Stage 2 训练潜在扩散策略（扩散损失 + 自监督重建损失）。训练数据为 LIBERO benchmark 上约 12K 高质量抓取演示。
+两阶段分开训：Stage 1 训 VAE，目标是 $\text{MSE}$ 重建加 KL 正则；Stage 2 训潜在扩散策略，目标是扩散损失加 graspness 线索的自监督重建损失 $\mathcal{L}_{Recon.}$。训练数据约 12K 条高质量抓取演示（LIBERO benchmark ⚠️ 训练集与演示规模以原文为准），相比 GraspVLA 的 1B 帧模拟数据省了几个数量级。
 
 ## 实验关键数据
 

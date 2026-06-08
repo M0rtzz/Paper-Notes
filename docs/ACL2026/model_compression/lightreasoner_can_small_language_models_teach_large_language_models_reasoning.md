@@ -46,23 +46,18 @@ LightReasoner 可以理解为一种面向推理模型的选择性自蒸馏。它
 第一阶段是采样和筛选：如果 $D_{KL}(\pi_E\|\pi_A)>\beta$，该步骤被认为是 informative step。第二阶段是构造对比监督：在 Expert 高置信 token 的 mask 支撑集上计算 $\log \pi_E(a\mid s_t) / \pi_A(a\mid s_t)$，再归一化成 soft target $v_C$。第三阶段是微调：用 LoRA 训练同一个 Expert，使它的输出分布靠近 $v_C$，从而强化 Expert 已经比 Amateur 做得好的推理决策。
 
 ### 关键设计
-1. **KL 驱动的信息步骤筛选**:
 
-	- 功能：从完整推理轨迹中筛出少数高价值 token，避免把训练预算平均花在所有 token 上。
-	- 核心思路：在同一 prefix 下比较 $D_{KL}(\pi_E(\cdot\mid s_t)\|\pi_A(\cdot\mid s_t))$，主实验使用 $\beta=0.4$ 作为筛选阈值。KL 越大，表示 Expert 和 Amateur 在下一步选择上差异越明显。
-	- 设计动机：推理错误常发生在算术、符号转换或逻辑跳转等瓶颈步骤。用 Expert-Amateur 分歧作为代理信号，比用固定前缀长度或人工规则更贴近每条轨迹的实际难点。
+**1. KL 驱动的信息步骤筛选：用强弱模型的分歧定位高价值 token。**
 
-2. **对比式分布监督**:
+一条推理轨迹里大部分 token 只是连接词或低信息步骤，把训练预算平摊到所有 token 上既浪费又会稀释关键信号。LightReasoner 的做法是在同一 prefix $s_t$ 下比较 Expert 与 Amateur 的 next-token 分布，用 KL 散度 $D_{KL}(\pi_E(\cdot\mid s_t)\|\pi_A(\cdot\mid s_t))$ 作为该步骤“是否值得训练”的代理：KL 越大，说明两个模型在这一步的选择差异越明显，往往对应算术操作、符号转换或逻辑跳转这类瓶颈步骤。主实验取阈值 $\beta=0.4$，只有超过该值的步骤才被标为 informative step 进入后续训练。相比固定前缀长度或人工规则，这个分歧信号能贴着每条轨迹自身的实际难点走——论文统计也佐证了它的判别力：约 60% token 的 KL 落在 $[0.0,0.1)$，Expert 与 Amateur top-1 一致时平均 KL 仅 0.166，而 top-1 不一致时平均 KL 高达 1.99。
 
-	- 功能：把“Expert 比 Amateur 强在哪里”转成训练标签，而不是简单复制 Expert 自己生成的 token。
-	- 核心思路：先用 $\alpha=0.2$ 过滤 Expert 低概率尾部 token，保留 $\pi_E(a\mid s_t) \geq \alpha \max_b \pi_E(b\mid s_t)$ 的 token；再计算对比得分 $v'_C(a\mid s_t)=\log \pi_E(a\mid s_t)/\pi_A(a\mid s_t)$，softmax 后得到 $v_C$。
-	- 设计动机：one-hot 监督会丢掉分布信息，且容易把 Expert 的偶然输出当作唯一真相。对比 soft label 更强调 Expert 相对 Amateur 的优势 margin，也能弱化低置信噪声。
+**2. 对比式分布监督：训练标签编码的是“Expert 比 Amateur 强在哪”，而非 Expert 自己的 one-hot 输出。**
 
-3. **短 rollout 与 LoRA 自蒸馏**:
+如果直接拿 Expert 生成的 token 当硬标签，会丢掉整个分布的信息，还容易把 Expert 的偶然输出当成唯一真相。LightReasoner 改用对比 soft label：先用 $\alpha=0.2$ 砍掉 Expert 的低概率尾部，只保留满足 $\pi_E(a\mid s_t)\geq\alpha\max_b\pi_E(b\mid s_t)$ 的 token，再在这个支撑集上算对比得分 $v'_C(a\mid s_t)=\log\pi_E(a\mid s_t)/\pi_A(a\mid s_t)$，最后 softmax 归一化成 soft target $v_C$。这样标签强调的是 Expert 相对 Amateur 的优势 margin 而非绝对置信度，既保留了分布形状，又能弱化低置信噪声。消融也显示这一步最关键：去掉对比监督后平均分从 54.0 掉到 44.8。
 
-	- 功能：让监督构造和微调都保持低成本，并降低后期推理错误级联带来的假阳性。
-	- 核心思路：采样只保留前 128 token，Expert 使用 LoRA 训练 1000 steps，每步 16 个对比监督样本；损失为 $D_{KL}(v_C\|\pi_E)$，等价于对 soft target 的 cross-entropy。
-	- 设计动机：论文认为早期推理步骤更稳定，后续完整答案更容易受到错误级联影响。短 rollout 加选择性 token 训练，使 LightReasoner 相比 rejection SFT 同时减少采样和调参 token。
+**3. 短 rollout 与 LoRA 自蒸馏：把监督构造和微调都压到低成本。**
+
+完整生成长答案不仅贵，后期 token 还会受错误级联污染，产生假阳性的“高价值”步骤。LightReasoner 因此把采样 rollout 限制在前 128 token——论文认为早期推理步骤更稳定，越往后越容易被前面的错误带偏。微调阶段复用同一个 Expert，用 LoRA 训练 1000 steps、每步 16 个对比监督样本，损失就是让 Expert 输出去匹配 $v_C$。短 rollout、选择性 token、轻量 LoRA 三者叠加，使 LightReasoner 在采样问题数和调参 token 上都远低于 rejection SFT。
 
 ### 损失函数 / 训练策略
 训练目标是让 Expert 输出分布匹配对比监督 $v_C$：$\mathcal{L}(s_t)=D_{KL}(v_C(\cdot\mid s_t)\|\pi_E(\cdot\mid s_t))$。由于 $v_C$ 对当前训练参数是常量，该目标等价于 $-\sum_a v_C(a\mid s_t)\log\pi_E(a\mid s_t)$。实验中 Expert 包括 Qwen2.5-Math-1.5B/7B、Instruct 版本和 DeepSeek-R1-Distill-Qwen-1.5B，Amateur 固定为 Qwen2.5-0.5B。

@@ -41,27 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DiScoFormer 接收两组点：上下文 $X \in \mathbb{R}^{n_x \times d}$（i.i.d. 样本，定义经验密度）与查询 $Y \in \mathbb{R}^{n_y \times d}$（要在哪些位置计算 $\log f, \nabla\log f$），输出每个查询点对应的标量 $\log f(y_i)$ 和向量 $\nabla\log f(y_i)$。整条 pipeline 是：白化层（保证仿射等变，含 $S^{-1/2}$ 变换 + 对数行列式修正）→ 标准 Transformer encoder（无位置编码 + cross-attention 处理 $X, Y$）→ 两个共享 backbone 的输出头分别回归 $T$（log 密度）和 $S$（score），最后把白化坐标里的输出经 $A^\top$ 反映回原坐标。训练数据完全是即时采样的 GMM 流（components 数 $1\sim 10$、维度可变），用 $\alpha\,\mathcal{L}_T + (1-\alpha)\mathcal{L}_S$ 联合监督；推理时还可启用 test-time training：让 score 输出与"log 密度对 $y$ 求自动微分"的结果一致，作为 label-free consistency loss 自适应 OOD。
+DiScoFormer 把密度/score 估计当成一个"集合到算子"的回归任务：吃进上下文样本 $X \in \mathbb{R}^{n_x \times d}$（定义经验密度的 i.i.d. 样本）与查询点 $Y \in \mathbb{R}^{n_y \times d}$（要在哪些位置取值），一次前向就吐出每个查询点的标量 $\log f(y_i)$ 和向量 $\nabla\log f(y_i)$。样本先过一层白化把坐标尺度归一化，再进无位置编码的标准 Transformer encoder 让 $X$、$Y$ 之间做 cross-attention，最后由两个共享 backbone 的输出头分别回归 log 密度 $T$ 与 score $S$，并把白化坐标里的结果反映回原坐标。整个模型只在即时采样的 GMM 流上训练，推理时还能选择性地打开 test-time training 自适应到训练没见过的分布。
 
 ### 关键设计
 
-1. **白化型仿射等变层**:
+**1. 白化型仿射等变层：把 KDE 的"尺度无感"硬编进网络**
 
-    - 功能：让模型对输入做平移、各向同性/异性缩放、旋转都严格（或近似）等变，使 $T(PXA+\mathbf{1}\mu^\top) = PT(X) - \log|\det A|\,\mathbf{1}$ 与 $S(PXA+\mathbf{1}\mu^\top) = PS(X)A^{-\top}$。
-    - 核心思路：先对 $X, Y$ 一起减去 $X$ 的均值 $m$；再计算正则化散度矩阵 $S = X_c^\top X_c + \varepsilon I$ 的矩阵逆平方根 $A = S^{-1/2}$（注意是矩阵意义、不是逐元素），把 $X, Y$ 变换到白化坐标 $X_w = X_c A,\ Y_w = Y_c A$；Transformer 在白化坐标里跑出 $\log f_w, s_w$，最后做变量代换修正——$\log f = \log f_w + \log\det A$，$s = s_w A^\top$。白化把任意可逆线性变换归约到 $O(d)$ 旋转/反射上的残差，剩下的 $O(d)$ 等变性靠"训练时把 GMM 做随机正交旋转增广"近似学到（表 1 实测各类仿射变换的相对 MSE 误差只有 $10^{-4}$ 量级）。
-    - 设计动机：纯 Transformer + 位置无关只能保证置换等变；要把 KDE 的"对坐标尺度无感"这个关键性质装进网络，必须有显式的仿射归一化。白化方式既是闭式、可微的，又把 score/密度的几何变换公式以最自然的方式拼回去。
+纯 Transformer 加位置无关只能拿到置换等变，但 KDE 真正强的地方是对坐标平移/缩放/旋转都不敏感，要把这个性质装进网络就必须有显式的仿射归一化。作者的做法是闭式可微的白化：先让 $X, Y$ 一起减去 $X$ 的均值，再对正则化散度矩阵 $S = X_c^\top X_c + \varepsilon I$ 取矩阵逆平方根 $A = S^{-1/2}$（矩阵意义而非逐元素），把两组点都变换到白化坐标 $X_w = X_c A,\ Y_w = Y_c A$；Transformer 在白化坐标里算出 $\log f_w, s_w$，最后靠变量代换修正回去——$\log f = \log f_w + \log\det A$，$s = s_w A^\top$。这样模型对任意可逆线性变换都满足 $T(PXA+\mathbf{1}\mu^\top) = PT(X) - \log|\det A|\,\mathbf{1}$、$S(PXA+\mathbf{1}\mu^\top) = PS(X)A^{-\top}$。白化只能把任意 affine 变换归约到 $O(d)$ 旋转/反射上的残差，剩下这点旋转等变性则靠"训练时对 GMM 做随机正交旋转增广"近似学到，从而避开了完整等变网络那种昂贵的群积分；表 1 实测各类仿射变换的相对 MSE 只有 $10^{-4}$ 量级，说明这套"硬等变 + 软增广"的组合确实拿到了近似仿射等变。
 
-2. **Attention = 数据自适应 KDE（构造性等价定理）**:
+**2. Attention 即数据自适应 KDE：一条构造性等价定理**
 
-    - 功能：从理论上证明 softmax (cross-)attention 不是黑箱，而是归一化高斯 KDE 的严格推广——给单个 attention head 配上合适的 $Q, K$ 投影和一个"$\|z\|^2$ 标量特征"提升，单层 cross-attention 就能精确还原任意 query 点的 KDE 密度和 score。
-    - 核心思路：对任意半正定 $B$，cross-attention 权重 $A_{ij} = \frac{\exp(y_i^\top B x_j)}{\sum_k \exp(y_i^\top B x_k)}$ 通过极化恒等式可改写为 $A_{ij} = \frac{w_j \exp(-\tfrac{1}{2}\|y_i - x_j\|_B^2)}{\sum_k w_k \exp(-\tfrac{1}{2}\|y_i - x_k\|_B^2)}$，其中 $w_j = \exp(\tfrac{1}{2}\|x_j\|_B^2)$ 是唯一"挡在标准 KDE 前面"的项（Prop. 3.3）。把每个 token 额外拼上一个标量 $\|z\|^2$ 后，这个 $w_j$ 项可以被精确抵消，于是单个残差 cross-attention block（宽度 $d_\text{model} \geq 2d+1$，无 FFN、无 LayerNorm）加一个仿射读出 + per-query 的 log-normalizer $\ell_i = \log\sum_j \exp(q_i^\top k_j)$ 就能在任意 query 点输出 $\nabla\log\hat{f}_{h,X}(y_i) = h^{-2}\bigl(\sum_j K_h(y_i,x_j)x_j / \sum_j K_h(y_i,x_j) - y_i\bigr)$ 和 $\log\hat{f}_{h,X}(y_i) = \ell_i - \tfrac{\|y_i\|^2}{2h^2} - \log n_x - \tfrac{d}{2}\log(2\pi h^2)$（Prop. 3.5、Cor. 3.6）。
-    - 设计动机：这条定理把"Transformer 能做密度/score 估计"从经验现象升级为结构性必然——架构本身就在 KDE 的假设空间里，能够实现 KDE 是模型的下界；多 head + 多层只会让它学到比固定核更灵活的、数据自适应的多尺度核。这也直接解释了实验里观察到的 head 专家化现象（head 1 看远点、head 0/2/5 看近-中距、head 3/4/6/7 学方向核）——多 head 自然对应多带宽 + 各向异性 KDE。
+这是全文的理论支点：softmax cross-attention 并不是黑箱，而是归一化高斯 KDE 的严格推广。对任意半正定 $B$，cross-attention 权重经极化恒等式可以改写成 KDE 的形式 $A_{ij} = \frac{w_j \exp(-\tfrac{1}{2}\|y_i - x_j\|_B^2)}{\sum_k w_k \exp(-\tfrac{1}{2}\|y_i - x_k\|_B^2)}$，其中唯一"挡在标准 KDE 前面"的多余项是 $w_j = \exp(\tfrac{1}{2}\|x_j\|_B^2)$（Prop. 3.3）。只要给每个 token 额外拼上一个标量特征 $\|z\|^2$，这个 $w_j$ 就能被精确抵消，于是单个残差 cross-attention block（宽度 $d_\text{model} \geq 2d+1$，无 FFN、无 LayerNorm）配一个仿射读出和 per-query 的 log-normalizer $\ell_i = \log\sum_j \exp(q_i^\top k_j)$，就能在任意 query 点精确复现 KDE 的 score 与 log 密度：
 
-3. **Cross-attention + 联合 (density, score) 双头 + test-time training**:
+$$\nabla\log\hat{f}_{h,X}(y_i) = h^{-2}\Bigl(\tfrac{\sum_j K_h(y_i,x_j)x_j}{\sum_j K_h(y_i,x_j)} - y_i\Bigr),\quad \log\hat{f}_{h,X}(y_i) = \ell_i - \tfrac{\|y_i\|^2}{2h^2} - \log n_x - \tfrac{d}{2}\log(2\pi h^2)$$
 
-    - 功能：把估计能力从"只在样本点 $X$ 上"扩展到"任意 query 点 $Y$"，并通过 $\log f$ 和 score 的微分一致性获得免标签 OOD 自适应能力。
-    - 核心思路：把样本 $X$ 当 context、查询 $Y$ 当 query 做 cross-attention，使模型在 $Y$ 上做"学到的非参数平滑"；同时共享 backbone，两个输出头分别回归 $\log f$ 与 score，形成 $\mathcal{L} = \alpha \mathcal{L}_T + (1-\alpha)\mathcal{L}_S$ 的联合 MSE 训练目标（Eq. 6-8）。由于数学上必有 $S(C,Q)_i = \nabla_{q_i} T(C,Q)_i$，在 inference 时把 context 设为 $\text{stopgrad}(X)$、query 设为 $X$，最小化一致性损失 $\mathcal{L}_\text{con} = \tfrac{1}{n}\sum_i \|S(C,Q)_i - \nabla_{q_i} T(C,Q)_i\|_2^2$ 即可在不需要 ground-truth 密度的情况下对未见分布做 fine-tune。
-    - 设计动机：cross-attention 让模型摆脱"只能输出训练样本处的统计量"的限制，转而成为一个真正的非参数平滑算子；双头共享 backbone 既利用了两者共享的几何特征（提高样本效率），又解锁了 TTT 这条"免标签 OOD 适配"通路——只要 4 步 TTT 就能在 Laplace、Student-$t$ 等非 GMM 分布上把 score MSE 进一步压低。
+（Prop. 3.5、Cor. 3.6）。这条定理的意义是把"Transformer 能做密度/score 估计"从经验现象升级成结构性必然——KDE 落在模型假设空间里、是模型能力的下界，而多 head、多层只会让它学到比固定核更灵活的数据自适应多尺度核。它也正好解释了实验里观察到的 head 专家化现象（head 1 看远点、head 0/2/5 看近-中距、head 3/4/6/7 学方向核）：多 head 天然对应多带宽 + 各向异性 KDE。
+
+**3. Cross-attention 双头 + 微分一致性 TTT：免标签 OOD 自适应**
+
+要让估计能力从"只在样本点 $X$ 上"扩展到"任意 query 点 $Y$"，作者用 $X$ 当 context、$Y$ 当 query 做 cross-attention，使模型成为一个真正的非参数平滑算子而非只能输出训练样本处的统计量。两个输出头共享同一 backbone 分别回归 $\log f$ 与 score，既利用了二者共享的几何特征提高样本效率，也用联合 MSE 目标 $\mathcal{L} = \alpha \mathcal{L}_T + (1-\alpha)\mathcal{L}_S$ 一起训练（Eq. 6-8）。更关键的是，数学上必然有 $S(C,Q)_i = \nabla_{q_i} T(C,Q)_i$，于是推理时把 context 设为 $\text{stopgrad}(X)$、query 设为 $X$，最小化一致性损失
+
+$$\mathcal{L}_\text{con} = \tfrac{1}{n}\sum_i \bigl\|S(C,Q)_i - \nabla_{q_i} T(C,Q)_i\bigr\|_2^2$$
+
+就能在完全没有 ground-truth 密度的情况下对未见分布做 fine-tune——这就是 test-time training。实测只要 4 步 TTT，就能在 Laplace、Student-$t$ 等非 GMM 分布上把 score MSE 进一步压低，相当于把"密度与 score 之间必然成立的微分关系"当成零成本的 self-supervision 来用。
 
 ### 损失函数 / 训练策略
 联合优化 $\mathcal{L} = \alpha\,\mathcal{L}_T + (1-\alpha)\,\mathcal{L}_S$，其中 $\mathcal{L}_T, \mathcal{L}_S$ 分别是 $\log f$ 与 score 的 MSE（Eq. 6-8）。训练数据由 Algorithm 1 即时生成：每个 batch 随机抽取 $k \in [k_\text{min}, k_\text{max}]$ 个 GMM components，采两组独立 GMM 作为 context $X_b$ 和 query $Y_b$，并解析计算 $\log f_{X_b}(y), \nabla\log f_{X_b}(y)$ 作为监督信号。默认配置：4 encoder 层、隐藏维度 128、8 heads、GELU、pre-norm、无位置编码，约 80 万参数；batch size 32、$n=2048$、dropout 0.1，GMM mean 在 $[-3,3]^d$、对角协方差在 $[0.2,1]^d$。大 $n$ 实验另训 $d_\text{model}=256$、6 层、8 heads、150k steps 的更大模型，并在 $[2^8, 2^{14}]$ 范围内随机采样 context 大小，使模型自然学会跨样本量泛化。

@@ -41,29 +41,41 @@ tags:
 
 ### 整体框架
 
-输入 3D 点云经稀疏 3D ResNet 编码为特征，语言解码器（Transformer with self/cross-attention）基于前序 token 和 3D 特征一次预测 $n$ 个未来 token 及 $(n-1)$ 个置信度。共享的 Projection Block 和 Token Head 处理各 token 的隐状态。Token 过滤阶段剔除不可靠 token，只接受最长可靠前缀。
+Fast SceneScript 要解决的是结构化语言模型做 3D 感知时「逐 token 解码太慢」的问题，但又不能像直接套 MTP 那样以掉精度为代价。它的整条流水线保持了 SceneScript 的骨架：输入 3D 点云先过稀疏 3D ResNet 编码成特征，再喂给一个带 self-attention / cross-attention 的 Transformer 语言解码器，由它逐步吐出描述场景的 token 序列（如 `[make_wall, x1, y1, z1, ...]`）。
+
+不同之处在于解码这一步。原来每步只产出 1 个 token，现在解码器在同一步里**一次预测 $n$ 个未来 token**（外加 $n-1$ 个置信度），随后进入一个 token 过滤阶段——把这一批预测里不靠谱的剔掉，只接受从头数起最长的那段可靠前缀，再以它为新的上下文进入下一步。这样把「预测多、但只接受靠谱的」做成了加速的核心范式：理论步数从 $N$ 降到 $\lceil N/n \rceil$，而过滤保证了接受下来的 token 仍然准确。
 
 ### 关键设计
 
-1. **参数高效的多 token 预测（Parameter-Efficient MTP）**:
-    - 功能：一次推理预测 $n$ 个 token，将解码推理步数从 $N$ 降到 $\lceil N/n \rceil$
-    - 核心思路：传统 MTP 为每个额外 token 引入独立的 token head，参数量线性增长。Fast SceneScript 让所有 $n$ 个 head 共享同一 Token Head 参数。通过一个轻量的 Projection Block（2个 FFN block，每个含2层线性+ReLU+LayerNorm）将语言解码器的隐状态 $f_{k+1}$ 映射为 $n-1$ 个不同的隐状态 $f_{k+i}$。Projection Block 在所有 head 间共享，仅增加约 7.5% 参数（vs MTP-8 增加 69%）
-    - 设计动机：语言模型的隐状态是上下文相关且处于共享语义空间的，不同位置的隐状态虽不同但可用同一 head 解码。类似 Transformer FFN 的结构足以生成区分性特征
+**1. 参数高效的多 token 预测：让 MTP 加速但不为额外 token head 付出线性参数代价。**
 
-2. **自投机解码 (Self-Speculative Decoding, SSD)**:
-    - 功能：通过两步验证过滤不可靠 token，保证精度
-    - 核心思路：第一步用 $n$ 个 MTP head 预测候选 token $\{t_{k+1}, ..., t_{k+n}\}$；第二步将这些 token 作为前序输入，用第一个 head（最可靠）重新预测 $\{\tilde{t}_{k+2}, ..., \tilde{t}_{k+n}\}$。比较两步结果，只接受一致的最长前缀。对数值型 token 引入距离阈值 $|t_{k+i} - \tilde{t}_{k+i}| \leq \tau$，而非严格相等，以增加接受率
-    - 设计动机：结构化语言中数值 token（坐标、高度）的小误差可接受，引入距离度量比自然语言的精确匹配更适合
+要一步预测 $n$ 个 token，最直接的做法是给每个位置配一个独立的 token head，但这样参数随 $n$ 线性膨胀——MTP-8 直接把参数从 14M 推到 23.67M。Fast SceneScript 的做法是让所有 $n$ 个位置**共享同一个 Token Head**，区分性交给一个轻量的 Projection Block 来制造：它由 2 个 FFN block（每个含 2 层线性 + ReLU + LayerNorm）组成，把语言解码器给出的隐状态 $f_{k+1}$ 映射成 $n-1$ 个不同的隐状态 $f_{k+i}$，再统一过同一个 head 解码。这之所以成立，是因为语言模型的隐状态本就处在一个共享的语义空间里，不同位置的状态彼此有别但可以被同一个解码头读懂，类似 Transformer FFN 那样的结构已足够拉开区分度。结果是 $n=8$ 时参数只增加约 7.5%（15.05M），而朴素 MTP-8 要多 69%。
 
-3. **置信度引导解码 (Confidence-Guided Decoding, CGD)**:
-    - 功能：在同一推理步内预测 token 和置信度，实现即时过滤
-    - 核心思路：每个额外 head 配一个 Confidence Head 预测该 token 与第一个 head 结果一致的概率 $c_{k+i}$。训练时用 BCE 损失监督：若 $|t_{k+i} - \tilde{t}_{k+i}| \leq \tau$ 则 $\hat{c}_{k+i}=1$。推理时阈值 $c_{k+i} < \epsilon$ 则标记为不可靠。总损失：$\mathcal{L} = \mathcal{L}_{\text{MTP}} + \lambda_c \mathcal{L}_c$
-    - 设计动机：SSD 需要额外一步验证增加延迟，CGD 在同一步内完成预测和验证，是更优雅的单步方案。代价是需要额外训练 Confidence Head
+**2. 自投机解码（SSD）：用两步一致性把不可靠 token 过滤掉。**
+
+预测得多就难免有错，SSD 负责在不掉精度的前提下把错的挑出来。它分两步：第一步用 $n$ 个 MTP head 一口气给出候选 $\{t_{k+1}, \dots, t_{k+n}\}$；第二步把这批候选当成已确定的前序输入，只用最可靠的第一个 head 逐位重新预测出 $\{\tilde{t}_{k+2}, \dots, \tilde{t}_{k+n}\}$。两步逐位比对，从头取一致的最长前缀作为本步真正接受的输出。关键的一笔是：结构化语言里的数值 token（坐标、高度）允许小误差，所以一致性不是严格相等，而是带距离阈值
+
+$$|t_{k+i} - \tilde{t}_{k+i}| \leq \tau$$
+
+只要落在 $\tau$ 内就算通过。比起自然语言投机解码那种逐 token 精确匹配，这个距离度量更贴合几何 token 的性质，每步能因此多接受约 1 个 token。
+
+**3. 置信度引导解码（CGD）：把验证折进同一步，省掉 SSD 的二次前向。**
+
+SSD 准确但要多跑一次前向验证，CGD 是它的单步替代方案。它给每个额外 head 配一个 Confidence Head，在同一步内直接预测「该 token 会与第一个 head 的结果一致」的概率 $c_{k+i}$，推理时只要 $c_{k+i} < \epsilon$ 就判为不可靠、就地丢弃，无需再跑第二遍。这个置信度在训练时用 BCE 监督：若 $|t_{k+i} - \tilde{t}_{k+i}| \leq \tau$ 则目标标签 $\hat{c}_{k+i}=1$，否则为 0。代价是要额外训练这组 Confidence Head，换来的是把「预测 + 验证」压进一步、解码更优雅。
+
+### 一个完整示例
+
+设 $n=8$，解码器在某一步要续写一条墙指令 `[make_wall, x1, y1, z1, x2, y2, z2, height]`。MTP head 一次给出 8 个候选 token。SSD 随后用第一个 head 复算：前 7 个 token 的复算值都落在距离阈值 $\tau$ 内（坐标差几厘米、类别完全一致），第 8 个 token（thickness）复算值偏出 $\tau$。于是这一步接受最长可靠前缀——前 7 个 token，第 8 个连同其后全部回退到下一步重算。整段序列就这样「预测 8、接受 7」地推进，这也正对应主实验里 $\alpha=7.45$（n=8）、$\alpha=8.97$（n=10）的平均每步接受数。
 
 ### 损失函数 / 训练策略
 
-- MTP 损失：$\mathcal{L}_{\text{MTP}} = -\sum_k \sum_i \lambda_h^{i-1} \log p(t_{k+i}|t_{\leq k})$，其中 $\lambda_h$ 为衰减因子，距离越远的 token 损失权重越低
-- 置信度损失：$\mathcal{L}_c = -\sum_{i,k} \lambda_h^{i-1} (\hat{c}_{k+i} \log c_{k+i} + (1-\hat{c}_{k+i}) \log(1-c_{k+i}))$
+总损失是 MTP 主损失加上置信度损失：$\mathcal{L} = \mathcal{L}_{\text{MTP}} + \lambda_c \mathcal{L}_c$。其中 MTP 损失对越远的 token 给越低的权重（衰减因子 $\lambda_h$）：
+
+$$\mathcal{L}_{\text{MTP}} = -\sum_k \sum_i \lambda_h^{i-1} \log p(t_{k+i}\mid t_{\leq k})$$
+
+置信度损失同样按距离加权，用 BCE 监督每个额外 head 的可靠性预测：
+
+$$\mathcal{L}_c = -\sum_{i,k} \lambda_h^{i-1} \big(\hat{c}_{k+i} \log c_{k+i} + (1-\hat{c}_{k+i}) \log(1-c_{k+i})\big)$$
 
 ## 实验关键数据
 

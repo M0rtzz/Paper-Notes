@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **三层级 AniMINT 标注协议**:
+**1. 三层级 AniMINT 标注协议：同一段动画支持低/中/高三种粒度评测，逼出瓶颈到底在哪一层。**
 
-    - 功能：用同一段动画支持三种粒度的评测——低层运动识别、中层用途分类、高层语义解读，互相印证 VLM 能力的瓶颈到底在哪。
-    - 核心思路：每段动画统一在 480 像素分辨率 + 10 fps 重采样，并用绿色 bbox 标出动画 ROI 减少干扰。3 位 UI/UX 专家按多数投票给 7 类用途之一打标签（Transition / Demonstration / Guidance / Feedback / Visualization / Highlight / Aesthetic；Krippendorff $\alpha=0.78$ 后讨论达成共识）；300 名 Prolific 用户每人标 10 段视频，每段视频共得 10 条独立语义解读，最终 3000 条 user response。所有视频上传前手工筛除敏感/闪烁等有害内容。
-    - 设计动机：单一标签无法表达动画的丰富语义；用「专家用途 + 群众语义」双视角既保留细粒度专业判断，又反映普通用户的实际理解多样性。10 条独立解读还能用于评估时刻画「语义对齐分布」而非单点对比。
+一个用途标签根本表达不了动画的丰富语义，也无法回答"VLM 是看不见运动、还是看见了却不懂含义"。协议因此让每段动画同时承载三层标注。所有视频先统一到 480 像素分辨率 + 10 fps 重采样，并用绿色 bbox 框出动画 ROI 以减少干扰；随后 3 位 UI/UX 专家按多数投票从 7 类用途（Transition / Demonstration / Guidance / Feedback / Visualization / Highlight / Aesthetic）里选一个打标签，标注一致性 $\alpha=0.78$ 后再讨论达成共识；同时 300 名 Prolific 用户每人标 10 段视频，每段视频最终收集到 10 条独立的自然语言解读，全库共 3000 条 user response。所有视频上传前都手工筛掉敏感/闪烁等有害内容。这种"专家用途 + 群众语义"的双视角既保留细粒度的专业判断，又反映普通用户理解的天然多样性——10 条独立解读还能在评测时刻画"语义对齐的分布"，而不是拿单点答案硬碰硬。
 
-2. **三个递进 RQ + GPT-judge 评测协议**:
+**2. 三个递进 RQ + GPT-judge 评测协议：把"懂不懂动画"拆成可独立量化的三问。**
 
-    - 功能：把抽象的「VLM 能不能理解动画」拆成三个可独立量化的子问题——RQ1 用 7 类纯几何运动效果（move/rotate/size/color/fade/blur/morph）测 perception；RQ2 测 7 类用途分类，报 accuracy + macro F1；RQ3 让 VLM 生成自由文本解读，与人类响应比对算 0-5 语义相似度。
-    - 核心思路：RQ1 用 stationary square + 单一运动作为 controlled stimulus，每模型每题 10 次随机化选项排序取平均；RQ2/RQ3 把动画输入 VLM 时随附 context（应用/任务）+ user input（动作类型）+ 绿色 bbox 标记 ROI。RQ3 用 GPT-5-mini 当 judge，prompt 严格控制不让 length 影响打分，且对每段动画把 10 条人类响应预先用 GPT-5 summarize 成一条「共识响应」与 VLM 输出对比。
-    - 设计动机：VLM 在「看到运动」「分类用途」「写出语义」三层上能力可能差异巨大，分开测才能定位瓶颈；GPT-judge 配合统一 rubric（5=fully equivalent / 0=unrelated）是当前 LLM-as-judge 的最佳实践，比 BLEU 等表层指标更能捕捉语义对齐。
+"VLM 能不能理解动画"太笼统，必须拆开才能定位瓶颈，于是协议设了三个递进子问题。RQ1 测 perception：用一个静止方块叠加单一运动作为受控刺激，覆盖 7 类纯几何运动效果（move/rotate/size/color/fade/blur/morph），每模型每题把选项顺序随机化跑 10 次取平均。RQ2 测用途分类：把动画连同 context（应用/任务）+ user input（动作类型）+ 绿色 bbox 一起喂给模型，报 accuracy 和 macro F1。RQ3 测语义解读：让 VLM 生成自由文本，再与人类响应比对算 0–5 的语义相似度——评判用 GPT-5-mini 当 judge，prompt 严格控制不让输出长度干扰打分，并预先用 GPT-5 把每段动画的 10 条人类响应 summarize 成一条"共识响应"与 VLM 输出对齐。之所以用 GPT-judge 配统一 rubric（5=完全等价 / 0=毫不相关），是因为它比 BLEU 这类表层指标更能捕捉语义对齐，是当前 LLM-as-judge 的最佳实践。
 
-3. **Motion-Context-Perceptual Cue (MCPC) 增强探针**:
+**3. Motion-Context-Perceptual Cue（MCPC）增强探针：用三种补足信号反推失败究竟卡在哪。**
 
-    - 功能：把「VLM 看动画」拆成三个补足信号——Motion blending（过去 6 帧按递减透明度叠成一张图，灵感来自 Phosphor afterglow）+ Context（交互上下文与用户输入）+ Perceptual caption（动画的文字描述），逐个组合测对 RQ2/RQ3 的提升。
-    - 核心思路：以 Gemini-2.5-Flash 为 backbone，base 设置只给采样 frame；逐个加 M / C / P 单/双/三种组合，对每个组合都重跑 RQ2 和 RQ3。Motion blending 显式把运动轨迹「画」在一张图上，绕开 VLM 帧间推理瓶颈；context 让模型理解动画发生在什么交互情境里；perceptual caption 直接告诉模型动画发生了什么。
-    - 设计动机：把失败拆成「看不见运动 vs 看见但不理解情境 vs 不理解高层语义」三种可能，对应三种增强；如果某种增强单独使用效果好，就定位到对应瓶颈；如果三者联合最优，说明感知-情境-语义三者有 synergy。
+要判断模型到底是"看不见运动、还是看见了不懂情境、还是连高层语义都抓不住"，单靠观察分数不够，得主动注入信号来做归因。MCPC 因此把"VLM 看动画"拆成三种可叠加的线索：**Motion blending**（把过去 6 帧按递减透明度叠成一张图，灵感来自 Phosphor afterglow，相当于把运动轨迹直接"画"在一张图上，绕开帧间推理瓶颈）、**Context**（交互上下文与用户输入，让模型知道动画发生在什么情境里）、**Perceptual caption**（直接用文字告诉模型动画发生了什么）。实验以 Gemini-2.5-Flash 为 backbone，base 只给采样 frame，然后逐个加 M/C/P 的单、双、三种组合，每个组合都重跑 RQ2 和 RQ3。逻辑很清晰：哪种增强单独有效，瓶颈就定位到对应那一层；若三者联合才最优，说明感知—情境—语义之间存在 synergy。
 
 ### 损失函数 / 训练策略
 纯零样本评测论文，不训练任何模型。所有 9 个 VLM 用默认温度，通过 OpenRouter 调用闭源模型；开源模型本地推理；context length 从 64K（GLM-4.5V）到 1M（Gemini-2.5-Pro）不等。

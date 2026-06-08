@@ -40,33 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NeuroKalman 的输入是每步的多视角图像 $v_t$、当前 3D 坐标 $p_t$ 和全局指令 $l$, 输出是下一个 waypoint $w_t$。中间维护一个 $d$ 维的潜在 belief state $\mathbf{z}_t$。每个时间步走三个 block：
-
-1. **Prediction Block**——GRU 根据上一步后验 $\mathbf{z}_{t-1}$、上一步 waypoint $\mathbf{w}_{t-1}$ 和隐状态 $\mathbf{h}_{t-1}$ 算先验 $\tilde{\mathbf{z}}_t$ (dead-reckoning, 不看当前图像);
-2. **Update Block**——MLLM (EVA-CLIP 视觉 + Vicuna-7B) 处理"当前视觉 + 从 memory bank 检索回来的历史 anchor + 指令 + 位置", 输出测量表征 $\mathbf{r}_t$ 和置信度 $\sigma_t \in [0,1]$;
-3. **Kalman Correction**——用可学习的卡尔曼增益 $\mathbf{K}_t$ 把 $\tilde{\mathbf{z}}_t$ 和 $\mathbf{r}_t$ 融合成后验 $\mathbf{z}_t$, 同时把 $\mathbf{z}_t$ 解码出的视觉表征按 $\sigma_t > 0.5$ 的阈值有选择地写回 memory bank, 作为下一步检索的 anchor。
-
-最后把 $\mathbf{z}_t$ 送进 waypoint 预测头预测 $w_t$, 同时 $\mathbf{z}_t$ 也成为下一步的 $\mathbf{z}_{t-1}$, 形成闭环。
+NeuroKalman 要解决的是连续 VLN 里 belief state 沿时间不断漂走的问题, 做法是把每一步的 waypoint 预测从"一次性开环外推"改写成"先验外推 + 历史观测纠正"的递归贝叶斯滤波闭环。输入是每步的多视角图像 $v_t$、当前 3D 坐标 $p_t$ 和全局指令 $l$, 模型在一个 $d$ 维潜在 belief state $\mathbf{z}_t$ 上工作：先由 GRU 不看图像地外推一个先验 $\tilde{\mathbf{z}}_t$, 再由 MLLM 结合当前视觉和从 memory bank 检索回来的历史 anchor 给出测量 $\mathbf{r}_t$ 与置信度 $\sigma_t$, 最后用一个可学习卡尔曼增益把两者融成后验 $\mathbf{z}_t$, 解码出 waypoint $w_t$ 并把 $\mathbf{z}_t$ 传给下一步, 形成 prediction-update 的滤波循环。
 
 ### 关键设计
 
-1. **GRU 先验作为 dead-reckoning 通道**:
+**1. GRU 先验通道：把 dead-reckoning 隔离成纯运动学证据**
 
-    - 功能：在不看当前观测的情况下, 仅凭"上一步信念 + 上一步动作"外推当前状态, 作为卡尔曼滤波的 prior。
-    - 核心思路：$\mathbf{h}_t = \mathrm{GRU}([\mathbf{z}_{t-1}, \mathbf{w}_{t-1}], \mathbf{h}_{t-1})$, $\tilde{\mathbf{z}}_t = \mathrm{MLP}_{prior}(\mathbf{h}_t)$。这条通道刻意"瞎跑", 不接视觉, 保证它纯粹反映运动学先验, 把视觉信息留给 update 通道当独立证据用。
-    - 设计动机：如果先验里就混入了视觉, 后面的"测量"和"预测"就不再独立, 卡尔曼融合的最优性就没了; 而 GRU 保证时间平滑, 帮 update 通道滤掉高频噪声。
+误差累积的根源在于先验和测量纠缠在一起、无法独立纠错, 所以这条通道刻意"瞎跑"——只吃上一步后验和上一步动作、完全不接当前视觉: $\mathbf{h}_t = \mathrm{GRU}([\mathbf{z}_{t-1}, \mathbf{w}_{t-1}], \mathbf{h}_{t-1})$, $\tilde{\mathbf{z}}_t = \mathrm{MLP}_{prior}(\mathbf{h}_t)$。这样先验就是一条纯运动学的外推, 视觉信息被完整留给 update 通道当作另一份独立证据。之所以非要切干净, 是因为一旦先验里混进视觉, "预测"和"测量"就不再独立, 卡尔曼融合赖以成立的最优性前提就破了; 同时 GRU 的时间递归天然带来平滑性, 能帮后面的融合滤掉测量里的高频噪声。
 
-2. **Memory Retrieval = KDE-based Likelihood**:
+**2. Memory Retrieval = KDE 似然：把 attention 解释成非参贝叶斯估计**
 
-    - 功能：把 memory bank $\mathcal{M} = \{(\mathbf{k}_i, \mathbf{v}_i)\}_{i=1}^{N}$ 里的历史视觉锚点检索回来, 当作对似然 $P(o_t|\mathbf{z}_t)$ 的非参数估计。
-    - 核心思路：作者从 Nadaraya-Watson 核回归出发, 把检索写成 $\hat{\mathbf{z}}_{evi} = \sum_i \mathcal{K}(\mathbf{f}_t, \mathbf{f}_i) \mathbf{f}_i / \sum_j \mathcal{K}(\mathbf{f}_t, \mathbf{f}_j)$, 取核函数 $\mathcal{K}(\mathbf{x}, \mathbf{y}) = \exp(\mathbf{x}^\top \mathbf{y}/\sqrt{d})$ 后**自动退化为 softmax attention**——也就是说 attention 不是"工程 trick", 而是对似然做 KDE 的精确实现。memory 写入采用 post-correction 策略：只有 $\sigma_t > 0.5$ 的后验对应视觉特征才写, 防止把噪声样本污染进证据库。
-    - 设计动机：高维视觉空间里写显式概率模型几乎不可能, 而 KDE 只需要样本就行; 把它和 attention 等价之后, 整个似然估计就免费接到 MLLM pipeline 里, 而且 memory bank 是不变的"评估过的 anchor", 不需要梯度更新, 天然适合 test-time correction。
+似然 $P(o_t|\mathbf{z}_t)$ 在高维视觉空间里几乎无法写出显式概率模型, 本文绕开这个难题的办法是用样本去做核密度估计。作者从 Nadaraya-Watson 核回归出发, 把对 memory bank $\mathcal{M} = \{(\mathbf{k}_i, \mathbf{v}_i)\}_{i=1}^{N}$ 的检索写成 $\hat{\mathbf{z}}_{evi} = \sum_i \mathcal{K}(\mathbf{f}_t, \mathbf{f}_i) \mathbf{f}_i / \sum_j \mathcal{K}(\mathbf{f}_t, \mathbf{f}_j)$, 一旦取核函数 $\mathcal{K}(\mathbf{x}, \mathbf{y}) = \exp(\mathbf{x}^\top \mathbf{y}/\sqrt{d})$, 这个式子就**精确退化成 softmax attention**——也就是说 attention 不是工程 trick, 而是对似然做 KDE 的离散实现。这个等价的好处是似然估计器免费挂进了 MLLM pipeline, 而 memory bank 里存的是已评估过的固定 anchor、不需要梯度更新, 天然适合 test-time 在线纠正。写入则用 post-correction 策略：只有 $\sigma_t > 0.5$ 的后验对应视觉特征才写回, 让证据库永远只收"已被卡尔曼修正、模型又自报高置信度"的样本, 避免噪声 anchor 污染检索。
 
-3. **可学习卡尔曼增益作为不确定性调制器**:
+**3. 可学习卡尔曼增益：用门控网络替代显式协方差噪声模型**
 
-    - 功能：动态决定每一步"信先验"还是"信测量", 取代经典卡尔曼里需要显式估计 $\mathbf{Q}, \mathbf{R}$ 的协方差噪声模型。
-    - 核心思路：$\mathbf{K}_t = \mathrm{Sigmoid}(\mathbf{W}_g [(\mathbf{r}_t - \tilde{\mathbf{z}}_t); \phi(\sigma_t)] + \mathbf{b}_g)$, 把"残差 (innovation)"和"测量置信度的 MLP 投影"拼起来过一个门控网络得到逐维度增益; 再用 $\mathbf{z}_t = \tilde{\mathbf{z}}_t + \mathbf{K}_t \odot (\mathbf{r}_t - \tilde{\mathbf{z}}_t)$ 完成 Bayesian update。这一形式代数上和经典卡尔曼 $\mathbf{z}_{post} = \mathbf{z}_{prior} + \mathbf{K}_t(\mathbf{y}_t - \mathbf{H}\mathbf{z}_{prior})$ ($\mathbf{H} = \mathbf{I}$) 完全等价。
-    - 设计动机：固定 $\mathbf{K}_t$ 在消融里全线翻车——$\mathbf{K}_t = 0.1$ 几乎只信先验导致灾难性 drift (SR=0%), $\mathbf{K}_t = 0.9$ 几乎只信测量则吃不到时间平滑性 (SR=18%); 可学习增益能根据当前 innovation 大小自动切换"侧重平滑"还是"侧重纠偏", 跨噪声 regime 都稳。
+经典卡尔曼需要显式估计过程噪声 $\mathbf{Q}$ 和测量噪声 $\mathbf{R}$ 才能算增益, 在深度隐空间里这两个协方差既难定义也难标定, 于是本文直接把增益学出来。把"残差 (innovation)" $\mathbf{r}_t - \tilde{\mathbf{z}}_t$ 和置信度的 MLP 投影 $\phi(\sigma_t)$ 拼起来过一个门控网络, 得到逐维度的增益 $\mathbf{K}_t = \mathrm{Sigmoid}(\mathbf{W}_g [(\mathbf{r}_t - \tilde{\mathbf{z}}_t); \phi(\sigma_t)] + \mathbf{b}_g)$, 再做 $\mathbf{z}_t = \tilde{\mathbf{z}}_t + \mathbf{K}_t \odot (\mathbf{r}_t - \tilde{\mathbf{z}}_t)$ 完成 Bayesian update——这与经典卡尔曼 $\mathbf{z}_{post} = \mathbf{z}_{prior} + \mathbf{K}_t(\mathbf{y}_t - \mathbf{H}\mathbf{z}_{prior})$ 在 $\mathbf{H} = \mathbf{I}$ 时代数上完全等价。可学习增益的价值在消融里很直观: 固定增益全线翻车, $\mathbf{K}_t = 0.1$ 几乎只信先验导致灾难性 drift (SR=0%), $\mathbf{K}_t = 0.9$ 几乎只信测量又吃不到时间平滑 (SR=18%); 把增益交给 innovation 大小自适应, 模型才能逐步、逐维度地在"侧重平滑"和"侧重纠偏"之间切换, 跨噪声 regime 都稳。
 
 ### 损失函数 / 训练策略
 冻结 EVA-CLIP 视觉 backbone 和 Vicuna-7B 语言 backbone, 只对 visual projector、waypoint predictor 和 LoRA 层算梯度; 在主 waypoint loss 之外, 额外加 $L_1$ 监督同时作用在先验 $\tilde{\mathbf{z}}_t$ 和测量 $\mathbf{r}_t$ 上 (系数 0.2), 强迫两条通道都能独立预测 waypoint, 防止其中一条被 free-ride。Adam, lr=$5\mathrm{e}{-5}$, batch=16, 4×A6000。所有实验都是先用 100% 数据预训练, 再在固定的 10% 训练轨迹子集上微调。

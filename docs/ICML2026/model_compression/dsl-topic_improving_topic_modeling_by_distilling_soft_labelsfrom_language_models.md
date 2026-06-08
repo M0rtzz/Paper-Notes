@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定文档 $x$ 与固定的主题指令提示 $\pi$，方法构造一对"目标 + 输入"：(1) 把 $(x, \pi)$ 喂给小语言模型，取紧跟 prompt 后的 next-token logits $\ell_{LM}(x,\pi)$，只保留主题词表 $V$ 上的子向量 $\ell_V(x,\pi) \in \mathbb{R}^{|V|}$，温度 softmax 得到软标签 $y_{DSL}$；(2) 同一次前向里取 prompt 末位置的最后一层隐藏态 $x_{emb} = h_{LM}(x,\pi)$ 作为主题模型的输入表示。主题模型 $\mathcal{M}$ (ProdLDA / ECRTM / FASTopic) 收 $x_{emb}$ → 推主题比例 $\theta$ → 出词表分布 $\hat{y}_\psi(x)$，训练目标是 $D_{KL}(y_{DSL} \| \hat{y}_\psi) + \mathcal{R}_{\mathcal{M}}$，只换重构项、保留模型固有正则。整条流水线无需训练 LM，软标签可以一次性预计算后离线复用。
+这篇论文想在不改主题模型结构、不引入额外训练阶段的前提下，把小语言模型的语义先验灌进神经主题模型的训练里。做法是给同一篇文档 $x$ 配一条固定的主题指令提示 $\pi$，让小语言模型单次前向同时吐出两样东西：一个稠密的"软标签"当训练目标，一个隐藏态当输入表示。具体地，紧跟 prompt 之后那一步的 next-token logits 投影到主题词表 $V$ 上、温度 softmax 得到软标签 $y_{DSL}$，而 prompt 末位置的最后一层隐藏态 $x_{emb} = h_{LM}(x,\pi)$ 直接喂给主题模型 $\mathcal{M}$ (ProdLDA / ECRTM / FASTopic) 推主题比例 $\theta$、输出词表分布 $\hat{y}_\psi(x)$。训练时只把原来的 BoW 重构项换成 $D_{KL}(y_{DSL} \| \hat{y}_\psi)$，模型自带的正则 $\mathcal{R}_{\mathcal{M}}$ 一律保留。整条流水线不训练 LM，软标签可一次性预计算后离线复用。
 
 ### 关键设计
 
-1. **Prompt-Conditioned 软目标 $y_{DSL}$**:
+**1. Prompt-Conditioned 软目标 $y_{DSL}$：用 LM 的 next-token 分布顶替词频重构目标。**
 
-    - 功能：用 LM next-token 分布替代 BoW，作为 dense 语义重构目标。
-    - 核心思路：先按标准主题模型流程从语料切出前 $|V|=2000$ 高频词词表 (并限制到 LM tokenizer 下单 token 的词，覆盖率 98%)；拼好 `<system, x, π>` 后跑 LM 单次前向，取末位置 logits 中位于 $V$ 内的项得到 $\ell_V$，按 $y_{DSL}(x,\pi) = \mathrm{softmax}(\ell_V(x,\pi) / \tau)$ (论文 $\tau=3$) 生成稠密分布。和 BoW 的关键区别是：BoW 只对文档中出现过的词非零，$y_{DSL}$ 对"主题相关但未出现"的词也分配质量。
-    - 设计动机：短文本上 BoW 共现矩阵稀疏，主题模型常学到一堆停用词残渣；而 LM 在大语料上预训练得到的语义先验天然知道"宗教辩论"那个文档应该和 god/atheist/believer 都相关——把这层知识灌进主题模型，等于免费拿到一个语义增强版的重构目标。
+传统 BoW 目标只能把概率质量打到文档里真出现过的词上，短文本共现稀疏时主题模型常学到一堆停用词残渣。作者注意到，只要在 prompt 里要求 LM "给文档生成一个主题词"，紧跟其后那一步的下一 token 分布本身就是一个关于"主题相关词"的稠密语义分布——它对宗教辩论文档里没出现但相关的 god/atheist/believer 同样赋概率。于是先按标准主题模型流程从语料切出 $|V|=2000$ 高频词词表 (并限制到 LM tokenizer 下能用单 token 表示的词，覆盖率 98%)，拼好 `<system, x, π>` 跑一次 LM 前向，取末位置 logits 中落在 $V$ 内的子向量 $\ell_V(x,\pi) \in \mathbb{R}^{|V|}$，按 $y_{DSL}(x,\pi) = \mathrm{softmax}(\ell_V(x,\pi) / \tau)$ ($\tau=3$) 生成软标签。和 BoW 只在出现过的词非零相比，$y_{DSL}$ 把 LM 大语料预训练得到的语义先验当作免费的语义增强重构目标，相当于不花额外算力就把"哪些词主题相关"的知识灌进了主题模型。
 
-2. **Hidden State 输入 $x_{emb}$**:
+**2. Hidden State 输入 $x_{emb}$：让输入和目标处在同一语义空间。**
 
-    - 功能：替换 BoW 输入为 LM 的 prompt 末位置隐藏态，对齐输入和目标的语义空间。
-    - 核心思路：对自回归 LM，末位置隐藏态正是会被 LM head 投到 next-token logits 的那一向量，所以 $x_{emb}$ 与 $y_{DSL}$ 天然处在同一映射前的语义空间；主题模型只需替换原本吃 BoW/SBERT 的 encoder 输入接口即可，不动 ProdLDA/ECRTM/FASTopic 任何内部结构。
-    - 设计动机：如果输入仍是 BoW，模型要做"从词袋反推 LM 主题"的额外推断；改成 LM 自己的隐藏态相当于"输入和目标本是同源"，KL 蒸馏只用专心做"从 LM 实数空间投影到主题结构化空间"这一件事。
+如果输入仍是 BoW，模型还得额外做"从词袋反推 LM 主题"的推断，蒸馏任务就被掺了杂质。作者改用 LM 自己的隐藏态：对自回归 LM，prompt 末位置的隐藏态正是要被 LM head 投成 next-token logits 的那一向量，所以 $x_{emb}$ 与 $y_{DSL}$ 天然位于同一个"投影前"的语义空间，输入和目标本就同源。主题模型这边只需把原本吃 BoW/SBERT 的 encoder 输入接口替换掉，ProdLDA/ECRTM/FASTopic 的内部结构一点不动。这样 KL 蒸馏就能专心只做一件事：把 LM 的实数语义空间投影到主题模型那套结构化的词表分布上。
 
-3. **KL 蒸馏目标与模型无关插拔**:
+**3. KL 蒸馏目标与模型无关插拔：一套目标同时增强三类主题模型骨干。**
 
-    - 功能：把 BoW-NLL 重构项替换为 KL 蒸馏项，保留各模型自带的正则项，使方法即插即用。
-    - 核心思路：通用目标写成 $\mathcal{L}_{DSL}(x) = \lambda D_{KL}(y_{DSL}(x,\pi) \| \hat{y}_\psi(x)) + \mathcal{R}_{\mathcal{M}}(x;\psi)$；对 ProdLDA $\mathcal{R}$ 是 logistic-normal 先验 KL，对 ECRTM 是嵌入聚类项，对 FASTopic 是最优传输项。论文用 $\lambda = 10^3$ 来抵消 KL 数值幅度相对正则项偏小的问题。贝叶斯视角下，LM 在 prompt-conditioned 输入下被看作对潜在概念 $c$ 的隐式贝叶斯预测器 $y_{DSL}(v|x,\pi) \approx \int p_{LM}(v|c) p_{LM}(c|x,\pi) \, dc$，主题模型把这个隐式后验预测投影进低维主题瓶颈表示的家族 $\mathcal{P}_{\mathcal{M}}(x_{emb}) \subseteq \Delta^{|V|-1}$。
-    - 设计动机：让一套方法能同时增强 VAE 流派、嵌入聚类流派、最优传输流派——这是论文能在 3×5 网格 (3 主题模型 × 5 SLM 教师) 上都拿到收益的原因。
+把 BoW-NLL 重构项换成 KL 蒸馏项后，通用训练目标写成
+
+$$\mathcal{L}_{DSL}(x) = \lambda \, D_{KL}(y_{DSL}(x,\pi) \,\|\, \hat{y}_\psi(x)) + \mathcal{R}_{\mathcal{M}}(x;\psi)$$
+
+其中 $\mathcal{R}_{\mathcal{M}}$ 保留各模型固有正则：ProdLDA 是 logistic-normal 先验 KL，ECRTM 是嵌入聚类项，FASTopic 是最优传输项。因为 KL 的数值幅度相对这些正则项偏小，论文用 $\lambda = 10^3$ 把它拉到同量级。这套即插即用之所以成立，有个贝叶斯解释支撑：prompt-conditioned 输入下的 LM 可看作对潜在概念 $c$ 的隐式贝叶斯预测器 $y_{DSL}(v|x,\pi) \approx \int p_{LM}(v|c)\, p_{LM}(c|x,\pi) \, dc$，而主题模型则是把这个隐式后验预测投影进一个低维主题瓶颈表示的结构化假设家族 $\mathcal{P}_{\mathcal{M}}(x_{emb}) \subseteq \Delta^{|V|-1}$。正因为目标和结构正交，同一套 DSL 才能在 3 主题模型 × 5 SLM 教师的网格上对 VAE 流派、嵌入聚类流派、最优传输流派都拿到收益。
 
 ### 损失函数 / 训练策略
 完整目标见上式；超参 $\tau=3$、$\lambda=10^3$ 在三个数据集上保持一致，没做逐数据集 tuning。教师 LM 用 ERNIE-4.5-0.3B、Qwen3.5-0.8B、Llama-3.2-1B、Phi-3-mini、Llama-3.1-8B 这五个 instruction-tuned SLM，软标签离线一次性计算并缓存，主题模型训练阶段不再走 LM 前向。

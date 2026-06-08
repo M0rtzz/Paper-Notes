@@ -42,36 +42,30 @@ tags:
 
 ### 整体框架
 
-本文是 framework + empirical 论文，没有新算法，但理论框架清晰可推导：
-
-- **目标量**：群体 $g$ 对 item $x$ 的潜在均值 $f^*(x,g) = \mathbb{E}_{h\sim P_g}[Y_h(x)]$。
-- **两类协议**：(i) Direct annotation — 采样 $h\sim P_g$ 报告 $Y_h(x)$，多人均值是 $f^*$ 的无偏估计；(ii) Perspective-Taking — 直接询问标注者"你猜该群体会怎么看"，得到 $\hat{f}(x,g)$。
-- **两镜头分解**：单次 PT 预测 $\hat{f}_A(x,g) = f^*(x,g) + b_{repr,A}(x,g) + b_{proc,A}(x,g) + \varepsilon_A$，$A\in\{H,L\}$。
-- **聚合 MSE**：$k$ 个标注者均值 $\bar{f}_A^{(k)}$ 的均方误差为 $\text{MSE} = \mu_A^2 + \gamma_A V_A + \frac{1-\gamma_A}{k} V_A$。决策规则：LLM PT 优于人类 PT 当 $\text{MSE}(\bar{f}_L^{(k)}) < \text{MSE}(\bar{f}_H^{(k)})$。
-- **四条可证伪假设**：H1 预算 regime、H2 耦合假设、H3 表示极限、H4 可工程化假设，每条都对应一组实验。
+本文不提出新算法，而是把"人和 LLM 谁更适合做 perspective-taking (PT)"这个长期靠直觉争论的问题，重写成一个可推导、可证伪的统计估计框架。出发点是承认目标量从来不可直接观测：群体 $g$ 对 item $x$ 的真实看法是潜在均值 $f^*(x,g)=\mathbb{E}_{h\sim P_g}[Y_h(x)]$，无论人类还是 LLM 给出的 PT 预测 $\hat{f}_A(x,g)$（$A\in\{H,L\}$）都只是它的一个有偏估计器。于是评判标准从"谁更有 lived experience"换成"谁的估计 MSE 更小"，整条逻辑链是：把单次 PT 误差拆成偏差与方差两块 → 把偏差再拆成表示偏差与处理偏差两个镜头 → 聚合 $k$ 个标注者后比较两边的 MSE，得到一个随预算 $k$ 切换赢家的决策准则，并落到四条可证伪假设（H1 预算 regime、H2 耦合、H3 表示极限、H4 可工程化）。
 
 ### 关键设计
 
-1. **Two-Lens 分解 + Coupling 项**:
+**1. 两镜头偏差分解与耦合项：把"人类为什么差"拆成可量化的结构。**
 
-    - 功能：把"人类为什么比 LLM 差"这个含糊的论断结构化为可量化的偏差项。
-    - 核心思路：把单次 PT bias 拆成 $b_{repr}$（标注者隐式抽样分布与 $P_g$ 的差距）和 $b_{proc}$（已有表征如何转成数字）；总 bias 平方 $\mu_A^2 = \mu_{repr,A}^2 + \mu_{proc,A}^2 + 2\mu_{repr,A}\mu_{proc,A}$，最后一项是关键的 coupling。对人类来说，out-group PT 同时扭曲表示和处理（"我不了解 Gen Z 的语境，且我会用自己的规范来打分"），耦合项 > 0，super-additively 放大错误；对 LLM 来说，pretrain 决定表示、post-train + prompt 决定处理，机械上独立，耦合项接近 0 甚至为负。
-    - 设计动机：这是论文的理论核心 — 给出了一个**可观测但常被忽视的差异**。以前的 PT 文献只讨论"bias 大小"，没人讨论"bias 之间的相关性"，而后者在 out-group regime 下贡献的误差可能比 bias 本身还大。
+以往 PT 文献只笼统说"人类有偏"，却没人追问偏差从哪来、彼此是否相关。本文把单次 PT 预测写成 $\hat{f}_A(x,g)=f^*(x,g)+b_{repr,A}+b_{proc,A}+\varepsilon_A$，其中 $b_{repr}$（Wide Lens）刻画标注者隐式抽样分布与真实 $P_g$ 的差距，$b_{proc}$（Clear Lens）刻画已有表征如何被转译成一个数值评分。关键在总偏差平方的展开 $\mu_A^2=\mu_{repr,A}^2+\mu_{proc,A}^2+2\mu_{repr,A}\mu_{proc,A}$，最后那个交叉项就是耦合。
 
-2. **预算 regime + correlation floor 决策准则**:
+这个耦合项正是人与 LLM 的结构性分水岭。人类做 out-group PT 时身份认同会同时扭曲两个镜头——"我既不了解 Gen Z 的语境，又会用自己的规范来打分"——于是 $b_{repr}$ 与 $b_{proc}$ 同号相关，耦合项 $>0$，把误差 super-additively 放大；而 LLM 的表示由 pretrain 决定、处理由 post-train 加 prompt 决定，来自不同训练阶段、机械上解耦，耦合项接近 0 甚至为负。换句话说，LLM 的优势不靠模型变大，而来自这一项几乎被免除——这是常被忽视却可观测的差异。
 
-    - 功能：把"什么时候该用 LLM、什么时候该用人"变成一个可计算的不等式。
-    - 核心思路：MSE 分解为 $\mu_A^2 + \gamma_A V_A + \frac{1-\gamma_A}{k}V_A$ 三项。$k$ 小时第三项主导（reducible variance），LLM 因 $V_L \ll V_H$（确定性）占绝对优势；$k$ 大时 reducible variance → 0，剩下 $\mu_A^2 + \gamma_A V_A$ 即 bias 和 correlation floor，LLM 不一定继续赢。结合 H1，single LLM PT 估计在 toxicity 数据上等价于 3-5 个人类直接标注的聚合 — 当 ground truth 本身只用少量人标注时，**用 LLM 反而比加更多人更便宜更准**。
-    - 设计动机：以前 PT 评测要么固定 $k=5$ 要么固定 $k=10$，这种"一刀切"掩盖了 regime 切换。本文用 bootstrap 模拟 $k=1$ 到 $10$ 的全谱，把不同 regime 下的赢家可视化出来。
+**2. 预算 regime 与 correlation floor 决策准则：把"何时用谁"变成可计算的不等式。**
 
-3. **Engineerability — 三类 lever 分别瞄准三个误差项**:
+把 $k$ 个标注者均值 $\bar{f}_A^{(k)}$ 的误差展开为 $\text{MSE}=\mu_A^2+\gamma_A V_A+\frac{1-\gamma_A}{k}V_A$ 三项，决策规则即 LLM PT 胜出当 $\text{MSE}(\bar{f}_L^{(k)})<\text{MSE}(\bar{f}_H^{(k)})$。三项各有归宿：$k$ 小时第三项（reducible variance）主导，LLM 因近乎确定性 $V_L\ll V_H$ 占绝对优势；$k$ 增大时该项趋零，只剩偏差 $\mu_A^2$ 与 correlation floor $\gamma_A V_A$，LLM 不再保证继续赢。
 
-    - 功能：给实践者一个"调参手册" — 知道哪个 lever 改哪个项。
-    - 核心思路：(i) **模型族 / 规模** → 主要影响 $b_{repr}$（Wide Lens），不同 family 同 size 也能反转 LLM/人胜负；(ii) **Prompt 设计**（L1 question only → L2 + definition → L3 + levels → L4 + examples）→ 主要影响 $b_{proc}$（Clear Lens），且**非单调**，更多结构不一定更好，因为不同 prompt 重新加权"信念 → 数字"的映射；(iii) **多样化**（cross-family mixing、temperature）→ 主要影响 correlation floor $\gamma_L V_L$，但跨家族 mix 才有效，同族不同 size mix 收益小。
-    - 设计动机：作者发现 reasoning enabled mode（GPT-OSS 思维链）反而**让 PT 变差** — 命名为 reasoning paradox。机制分析（看 reasoning trace）显示模型从"估计群体的实证毒性率"漂移到"对照 rubric 做规则化分类"，这种 **criterion drift** 引入了系统性偏差。这个发现颠覆了"reasoning 一定有助"的直觉。
+这个分解之所以重要，是因为它揭示了赢家会随预算切换——以往评测固定 $k=5$ 或 $k=10$ 的"一刀切"恰好掩盖了切换点。本文用 bootstrap 模拟 $k=1$ 到 $10$ 的全谱把切换可视化，结论是在 toxicity 数据的低预算 regime 下，单个 LLM PT 估计等价于聚合 3-5 个真人直接标注；当 ground truth 本身只来自少量标注者时，加 LLM 反而比加人更便宜也更准。
 
-### 损失函数 / 训练策略
-本文不训练模型，全部 zero-shot 评测。统计协议：bootstrap $B=1000$ 次模拟 $k$-annotator regime；评测指标为 MSE / bias / variance；ground truth 用每个 subgroup 内 ≥ 50 名直接标注者的均值。模型覆盖 GPT (含 GPT-OSS:120B)、Qwen、Gemma、DeepSeek 4 个 family，1B 到 frontier scale。
+**3. 可工程化：三类 lever 分别瞄准三个误差项。**
+
+框架的实践价值在于把 PT 从黑魔法变成一张"调参矩阵"——每类干预手段对应一个误差项。换模型族或规模主要动 $b_{repr}$（Wide Lens），同 size 不同 family 就能反转人与 LLM 的胜负；逐级加结构的 prompt（L1 仅问题 → L2 加定义 → L3 加分级 → L4 加示例）主要动 $b_{proc}$（Clear Lens），且效果非单调，因为不同 prompt 会重新加权"信念 → 数字"的映射，结构更多不一定更好；多样化（cross-family mixing、提温）则压低 correlation floor $\gamma_L V_L$，但只有跨家族混合有效，同族不同 size 混合收益甚微。
+
+这张矩阵也暴露出一个反直觉现象：打开 reasoning（GPT-OSS 思维链）非但没帮上忙，反而让 PT 变差，作者命名为 reasoning paradox。看 reasoning trace 能定位机制——模型从"估计群体的实证毒性率"漂移到"对照 rubric 做规则化分类"，这种 criterion drift 注入了系统性偏差，直接推翻了"reasoning 一定有助"的领域共识。
+
+### 评测协议
+本文不训练任何模型，全部 zero-shot 评测。统计协议用 bootstrap 重采样 $B=1000$ 次模拟不同 $k$-annotator regime，报告 MSE / bias / variance 三项；ground truth 取每个 subgroup 内 $\ge 50$ 名直接标注者的均值。模型覆盖 GPT（含 GPT-OSS:120B）、Qwen、Gemma、DeepSeek 四个 family，规模从 1B 到 frontier scale。
 
 ## 实验关键数据
 

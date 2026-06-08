@@ -41,29 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-实验流水线：搜索智能体（gpt-oss-20b/120b）迭代生成查询 → qwen3-embedding-8b 检索 top-d 候选 → listwise 重排序（oss-20b/120b 或 qwen3-reranker-0.6b）→ top-5 传给智能体 → 迭代至找到答案。通过 ETC 指标统一比较不同配置。
+本文不训练新模型，而是搭一套受控实验流水线去回答一个工程问题：同样的算力，花在"让 agent 多思考"还是"先把检索做好"更划算。流水线为：搜索智能体（gpt-oss-20b/120b）迭代生成查询，qwen3-embedding-8b 检索 top-$d$ 候选，再经 listwise 重排序（oss-20b/120b 或轻量 qwen3-reranker-0.6b）后把 top-5 喂回智能体，循环直到找到答案。所有配置都在固定语料的 BrowseComp-Plus 上跑，并统一用 ETC 指标折算真实成本后再比较，从而把"重排序投资"和"推理预算投资"放到同一把尺子上。
 
 ### 关键设计
-1. **Effective Token Cost (ETC) 指标**:
+**1. 有效 token 成本（ETC）：用一把统一的尺子折算不同 token 的真实代价。**
 
-    - 功能：统一量化不同 token 类型的真实计算成本
-    - 核心思路：$\text{ETC} = \text{Input}_{nc} + \alpha \cdot \text{Input}_c + \beta \cdot \text{Output}_t$，其中 $\alpha$ 建模缓存复用效率（0.1-0.5），$\beta$ 建模输出 token 的高昂解码成本（3-7）
-    - 设计动机：不同 token 类型（非缓存输入、缓存输入、输出含推理 token）的硬件吞吐和 API 定价差异巨大，简单 token 计数无法反映真实成本
+简单数 token 数无法反映真实开销——非缓存输入、缓存输入、含推理链的输出在硬件吞吐和 API 定价上差异巨大，输出 token 的解码成本尤其高。ETC 把三者加权求和：$\text{ETC} = \text{Input}_{nc} + \alpha \cdot \text{Input}_c + \beta \cdot \text{Output}_t$，其中 $\alpha$（0.1–0.5）建模缓存复用带来的折扣，$\beta$（3–7）建模输出解码的高昂代价。有了 ETC，重排序消耗的 token 和推理消耗的 token 才能被公平地放在一起比较，这是全文所有结论的计价基础。
 
-2. **多维度重排序分析框架**:
+**2. 多维度重排序分析框架：控制变量，分离每个旋钮的边际收益。**
 
-    - 功能：系统评估模型规模 × 推理预算 × 重排序深度的交互效应
-    - 核心思路：固定检索器（qwen3-embedding-8b），变化重排序深度 $d \in \{10, 20, 50\}$、模型（oss-20b/120b）、推理级别（low/med/high），在 830 个查询上全面消融
-    - 设计动机：深度搜索涉及多个可调旋钮，需要控制变量实验来分离每个因素的边际收益
+深度搜索同时有多个可调旋钮，混在一起看不出谁在起作用。本文固定检索器（qwen3-embedding-8b），系统地变化重排序深度 $d \in \{10, 20, 50\}$、重排序模型规模（oss-20b/120b）和推理级别（low/med/high），在 830 个查询上做全面消融。这种网格式控制变量让"加深重排序"与"加大推理预算"各自的边际增益被清晰量化，从而支撑"先排后推更省"的核心论断。
 
-3. **异构设置与广义 ETC**:
+**3. 异构设置与广义 ETC：把轻量交叉编码器纳入同一成本框架。**
 
-    - 功能：评估使用轻量交叉编码器替代 listwise 重排序的可行性
-    - 核心思路：用 qwen3-reranker-0.6b 作为 cross-encoder（仅输出 yes/no logits），将 ETC 扩展为 $\text{ETC} = \text{ETC}_{agent} + \gamma \cdot \text{ETC}_{reranker}$，$\gamma = 0.32$ 反映 FLOPs 差异
-    - 设计动机：轻量重排序器虽然峰值性能略低，但 $\gamma \ll 1$ 使其在效率优先场景下更有吸引力
+listwise 重排序本身也烧 token，于是论文进一步问：能否用更便宜的交叉编码器替代？它用 qwen3-reranker-0.6b 作 cross-encoder（只输出 yes/no logits），并把 ETC 扩展为 $\text{ETC} = \text{ETC}_{agent} + \gamma \cdot \text{ETC}_{reranker}$，其中 $\gamma = 0.32$ 反映两者的 FLOPs 差异。轻量重排序器峰值性能略低，但 $\gamma \ll 1$ 让它在效率优先场景下极具吸引力，也证明了 ETC 框架能跨模型规模、跨重排序范式做成本比较。
 
-### 损失函数 / 训练策略
-本文为纯推理阶段分析，无训练。检索用 qwen3-embedding-8b，重排序用 RankLLM 框架（window size 20），评估采用 LLM-as-a-judge（oss-120b）平均 5 次判分。
+实验侧的固定设置：重排序基于 RankLLM 框架（window size 20），端到端准确率用 LLM-as-a-judge（oss-120b）平均 5 次判分。
 
 ## 实验关键数据
 

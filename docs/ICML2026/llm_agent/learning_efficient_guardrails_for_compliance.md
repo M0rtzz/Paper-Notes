@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整套 pipeline 由两部分构成：**数据侧 PolicyGuardBench** 与 **模型侧 PolicyGuard-4B**。数据侧的输入是 ScribeAgent 在 WebArena 上跑出的原始浏览器 trace（涵盖 Reddit / Map / GitLab / Shopping-Admin / Shopping 五个 domain），经过 *Trajectory Standardization → Policy Synthesis → Trajectory-Policy Matching → Violation Annotation* 四步流水线，最终得到 733 条 base trajectory、2195 条策略、314,556 条 raw pair，再筛出 59,997 条 label 平衡（42.4% 违规 / 57.6% 合规、41.6% 跨子域）的 PolicyGuardBench。模型侧的输入是 `(policy, 标准化轨迹动作序列, domain metadata)` 三元组拼成的指令模板，输出是 `{violation, no_violation}` 二元 label；以 8:2 按 base trajectory 切分（保证 train/test 轨迹零重叠），全参数微调 Qwen3-4B-Instruct。
+这套方案要回答的问题是：能不能不靠人写规则、也不靠 70B 大模型，就训出一个又准又快、还能跨域泛化的合规 guardrail。作者把它拆成数据和模型两侧。数据侧从 ScribeAgent 在 WebArena 五个 domain（Reddit / Map / GitLab / Shopping-Admin / Shopping）上跑出的原始浏览器 trace 出发，依次走标准化轨迹、反向合成策略、跨子域配对、违规标注四步，把 733 条 base trajectory 和 2195 条策略撞成 314,556 条 raw pair，再筛成 59,997 条 label 平衡（42.4% 违规 / 57.6% 合规、41.6% 跨子域）的 PolicyGuardBench。模型侧把 `(policy, 标准化轨迹动作序列, domain metadata)` 拼成一条指令、输出 `{violation, no_violation}` 二元 label，按 base trajectory 做 8:2 切分（保证 train/test 轨迹零重叠）后全参数微调 Qwen3-4B-Instruct，得到 PolicyGuard-4B。
 
 ### 关键设计
 
-1. **标准化轨迹 + 原子化策略合成**：
+**1. 标准化轨迹 + 反向合成原子策略：把异构的规则和轨迹都收敛成统一接口。**
 
-    - 功能：把 raw 浏览器事件转成可机审的"句子化"轨迹，并为每条轨迹反向写出 2-3 条 atomic/executable/clear 的策略规则。
-    - 核心思路：先做噪声清洗（去空事件、去重复 rendering）和动词归一（统一到 Click/Input/Scroll/Select/Navigate/Submit），把对象规范成 `link 'My Account'`、`button 'Search'` 这种命名，再序列化成 "Step 1: Click link 'My Account'; Step 2: Scroll page; ..." 的文本；策略合成阶段，把 trajectory + outcome 喂给 GPT-4o，要求每条规则只含一个约束（如 "Do not click 'Delete' without a prior confirmation step"），再人工过滤、去重、剪掉模糊不可验证的，最终得到 2195 条策略，每条带 `source_subdomain` 和最多 2 个 `target_subdomain` 的结构化 schema。
-    - 设计动机：合规检测的难点是规则与轨迹都极其异构，作者把两边都"原子化 + 模式化"，让 LLM 标注器和 guardrail 模型都面对的是统一接口；同时给策略挂上跨子域 schema 是后续构造跨子域评测的关键。
+合规检测最棘手的地方在于规则和轨迹两边都极其异构——浏览器事件五花八门、平台规则措辞各异，小模型根本对不齐。作者的做法是把两边都"原子化、模式化"。轨迹侧先做噪声清洗（去空事件、去重复 rendering）和动词归一（统一到 Click/Input/Scroll/Select/Navigate/Submit），把对象规范成 `link 'My Account'`、`button 'Search'` 这种命名，再序列化成 "Step 1: Click link 'My Account'; Step 2: Scroll page; ..." 的句子化文本。规则侧则反着来——不让人去写规则，而是把 trajectory + outcome 喂给 GPT-4o，要求它为每条轨迹写出 2-3 条**每条只含一个约束**的 atomic 规则（如 "Do not click 'Delete' without a prior confirmation step"），再人工过滤、去重、剪掉模糊不可验证的，最终留下 2195 条，每条都挂着 `source_subdomain` 和最多 2 个 `target_subdomain` 的结构化 schema。这一步之所以关键，是因为它把 LLM 标注器和 guardrail 模型面对的输入都压成了同一套接口，"一规则一 atom"天然可机审；而给策略挂上跨子域 schema，则是后面能造出跨子域评测的前提。
 
-2. **跨子域配对 + LLM 标注 + 人审校验**：
+**2. 跨子域配对 + LLM 标注 + 人审校验：用两阶段标注把 60k pair 标到 ~90% 一致率。**
 
-    - 功能：把 733 条轨迹和 2195 条策略组合出 60k 高质量、有跨子域泛化压力的 binary 数据。
-    - 核心思路：先用 Sentence-BERT 做 embedding 检索为每条轨迹召回候选策略，再叠加关键词触发器（如出现 `delete`/`confirm` 触发对应规则），用启发式 + LLM scoring 过滤；然后把策略和它原生 subdomain（source）以及最多 2 个不同 subdomain（target）的轨迹组合，强制制造跨子域 pair（最终 41.6% 是跨子域）；负例则在同 domain 内随机配未违规策略并校验不会"误中"违规。标注用 gpt-oss-120B 模拟先验人工标注 pattern 给出 label + confidence，confidence 低的 flag 给人审；最后做 287 对独立人审复标，与原 label 一致率 89.8%，主要分歧在模糊策略和需要领域常识的轨迹上。
-    - 设计动机：跨子域是检验 guardrail 真正学到 transferable compliance pattern 而非记轨迹的关键；LLM-imitate-human + 低 confidence 人审的两阶段标注，是在不可能全人审 60k pair 的情况下做到 ~90% 一致率的实用折衷。
+光有轨迹和规则还不够，要让 guardrail 真正学到 transferable 的合规模式而不是死记某条轨迹，就得在数据里灌进跨子域的泛化压力。作者先用 Sentence-BERT 做 embedding 检索为每条轨迹召回候选策略，再叠加关键词触发器（出现 `delete`/`confirm` 就触发对应规则），用启发式 + LLM scoring 过滤；然后刻意把策略和它原生 subdomain（source）以及最多 2 个不同 subdomain（target）的轨迹组合，强行制造跨子域 pair，最终 41.6% 都是跨子域；负例则在同 domain 内随机配未违规策略并校验不会"误中"违规。60k pair 不可能全靠人标，作者于是用 gpt-oss-120B 模拟先验人工标注 pattern 给出 label + confidence，把低 confidence 的 flag 出来交人审；最后再抽 287 对做独立人审复标，与原 label 一致率 89.8%，分歧主要落在模糊策略和需要领域常识的轨迹上。这种"LLM 模仿人 + 低置信送审"的两阶段法，是在标注预算有限下逼近全人审质量的实用折衷。
 
-3. **轨迹隔离切分 + 前缀截断评估**：
+**3. 轨迹隔离切分 + 前缀截断评估：既堵住记忆泄漏，又量化"早期预警"能力。**
 
-    - 功能：用最严的 train/test 隔离评测一般化能力，并量化"早期预警"能力。
-    - 核心思路：8:2 切分按 733 条 base trajectory 而非按 pair 切，保证 0% 轨迹重叠，避免 trajectory-level 记忆泄漏；前缀检测则把违规样本截到前 $N$ 步（$N=1,\dots,5$，覆盖到约平均长度 9.3 的一半），用截断后的 prefix 重新和策略匹配并 re-label，喂给同一模型评测；此外还做 leave-one-domain-out (LODO)，每次留一个 domain 做 OOD，看在没见过的 domain 上掉多少。
-    - 设计动机：合规违规一旦执行往往不可逆（删数据库、付款超额），所以必须能在 $N$ 步时就预判；而轨迹级隔离 + LODO 一起，才能区分"记 trajectory 模式"和"学 compliance 模式"。
+如果按 pair 随机切 train/test，同一条轨迹的不同 pair 会同时落进两边，模型只要记住轨迹就能作弊。作者因此把 8:2 切分锚在 733 条 base trajectory 上而非 pair 上，强制 0% 轨迹重叠。在此之上叠两层更狠的考法：一是前缀检测，把违规样本截到前 $N$ 步（$N=1,\dots,5$，覆盖到平均长度 9.3 的一半左右），用截断后的 prefix 重新和策略匹配、re-label 后喂给同一模型，逼它在轨迹没跑完时就预判；二是 leave-one-domain-out（LODO），每次抽掉一个 domain 当 OOD，看模型在完全没见过的 domain 上掉多少。前者对应的是合规违规的不可逆性——删库、超额付款一旦执行就无法回滚，必须在第 $N$ 步就拦住；后者和轨迹级隔离合在一起，才能把"记 trajectory 模式"和"学 compliance 模式"真正区分开。
 
 ### 损失函数 / 训练策略
 PolicyGuard-4B 走的是最朴素的 supervised instruction tuning：在 Qwen3-4B-Instruct 上做 full-parameter SFT，输入是 `(policy, 动作序列, domain metadata)` 拼成的统一 prompt 模板，输出严格被 instruction-formatted 成 `violation` 或 `no_violation`，损失即标准的 next-token cross-entropy；具体 lr/batch/epoch 在 Appendix A，全程在 H100 80GB 上、temperature=0 解码以保证可复现。作者刻意没引入 reward model 或多任务 head，因为目标就是验证"小模型 + 干净 binary SFT"足够当 guardrail。

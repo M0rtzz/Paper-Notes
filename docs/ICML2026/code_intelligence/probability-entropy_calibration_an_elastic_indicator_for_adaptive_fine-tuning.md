@@ -41,27 +41,25 @@ RankTuner 提出 Relative Rank Indicator $I_t$，用「真值 token 的实际排
 ## 方法详解
 
 ### 整体框架
-RankTuner 不动模型结构、不引入新参数，只是在 SFT 的加权 NLL 损失 $\mathcal{L} = -\mathbb{E}[\sum_t w_t \log p_t]$ 里把基础权重 $w_t$ 替换为 $\tilde{w}_t = w_t \cdot S_t$。整条流水线是：对每个 target token $y_t$，在前向时拿到完整词表分布 $\pi_\theta(\cdot|y_{<t},x)$ → 算真值排名 $R_t$ 和期望排名 $\mathbb{E}[R_t]=\sum_{\hat i} \hat i \cdot p_{t,\hat i}$ → 由两者算出 Relative Scale $S_t$ → 乘到 token 损失上。数学任务里 $w_t=p_t$（兼容 DFT 系），通用任务 $w_t=1$。
+RankTuner 要解决的是"一维 token 权重会误伤"这个问题：它不动模型结构、不引入新参数，只在 SFT 的加权 NLL 损失 $\mathcal{L} = -\mathbb{E}[\sum_t w_t \log p_t]$ 里把基础权重 $w_t$ 换成 $\tilde{w}_t = w_t \cdot S_t$。每个 target token $y_t$ 在前向时已经有了完整词表分布 $\pi_\theta(\cdot|y_{<t},x)$，于是顺手算出真值的实际排名 $R_t$ 和模型分布下的期望排名 $\mathbb{E}[R_t]$，用这两个排名拧出一个把概率与熵都装进去的标量 $S_t$，再乘回 token 损失。数学任务沿用 $w_t=p_t$（兼容 DFT 系），通用任务取 $w_t=1$。
 
 ### 关键设计
 
-1. **Relative Rank Indicator $I_t$（核心信号）**:
+**1. Relative Rank Indicator $I_t$：把概率和熵翻译到同一个"猜测代价"量纲**
 
-    - 功能：用一个标量同时编码"任务对齐"和"内禀不确定性"。
-    - 核心思路：在 Guessing Problem 视角下，$R_t$ 是"沿降序遍历词表猜到真值要花几次"，$\mathbb{E}[R_t]$ 是"按模型分布随机猜的期望次数"。定义 $I_t = g(f(R_t)-f(\mathbb{E}[R_t]))$，取 $f(x)=1/\log_2(x{+}1)$（对排名做对数压缩，常见于 NDCG）、$g(x)=2^x$（把零差归一到 $I_t=1$）。$R_t$ 越大（猜得越差）$I_t$ 越小，$\mathbb{E}[R_t]$ 越大（位置越难）$I_t$ 越大——同样错一个 token，在高难度位置惩罚较轻、在低难度位置惩罚较重。当 $R_t,\mathbb{E}[R_t]$ 都大时 $I_t$ 饱和到 1 附近，自然形成"Noise Region"，把高熵又低概率的可替换/噪声 token 中性化。
-    - 设计动机：直接用 $p_t/H_t$ 做比值会有量纲与数值范围问题；用排名作中间表示，因为 $R_t \le 1/p_t$、$\mathbb{E}[R_t] \ge \tfrac{1}{4}2^{H_t}{+}1$（$H_t\ge 2$ 时）这两条紧的界把概率与熵分别桥接到 rank 空间，使比值天然可比。
+痛点在于 $p_t$ 和 $H_t$ 单位不同、范围不同，没法直接相除融合，硬凑出来的比值也缺乏意义。RankTuner 的破题点是 Guessing Problem 这一经典视角：真值的实际排名 $R_t$ 就是"沿模型降序词表一路猜到真值要花几次"，期望排名 $\mathbb{E}[R_t]=\sum_{\hat i} \hat i \cdot p_{t,\hat i}$ 则是"按模型分布随机猜的期望次数"——而排名恰好被概率与熵分别从两侧夹住：$R_t \le 1/p_t$，$\mathbb{E}[R_t] \ge \tfrac{1}{4}2^{H_t}{+}1$（$H_t\ge 2$ 时），两条紧界把概率、熵都桥接进了同一个 rank 空间，比值因此天然可比。
 
-2. **Relative Competence 模板与 CMVT 推导**:
+在此基础上定义 $I_t = g\big(f(R_t)-f(\mathbb{E}[R_t])\big)$，取 $f(x)=1/\log_2(x{+}1)$（NDCG 里常用的对数压缩）、$g(x)=2^x$（把零差归一到 $I_t=1$）。直觉很清楚：$R_t$ 越大（猜得越差）$I_t$ 越小，$\mathbb{E}[R_t]$ 越大（位置本就难）$I_t$ 越大——同样错一个 token，在高难度位置惩罚轻、低难度位置惩罚重。而当 $R_t$ 和 $\mathbb{E}[R_t]$ 都很大时 $I_t$ 饱和到 1 附近，自然形成一块 "Noise Region"，把那些高熵又低概率的可替换/噪声 token 中性化，这正是一维信号最容易误伤的地带。
 
-    - 功能：给 $I_t$ 一个"概率论解释"，说明它确实在近似一个有意义的能力比值，而不是手工凑出来的。
-    - 核心思路：先定义抽象的 token 能力分 $C_t = \rho(p_t)/\kappa(H_t)$（$\rho$ 对 $p_t$ 单调增，$\kappa$ 对 $H_t$ 单调减），类比条件概率 $\Pr(A|U)$：把 $p_t$ 看成"对齐与先验支持的联合"，把 $H_t$ 映射成有效先验支持。再用 Cauchy 中值定理把 $f(R_t)-f(\mathbb{E}[R_t])$ 写成对数比形式，得到 $I_t = (\mathbb{E}[R_t]/R_t)^{K(\xi_t)}$，其中 $K(\xi_t) \approx 0.5$（推理 token 的典型区间）。把 rank 的上下界代回去得 $\hat\rho(p_t)=p_t^{K(\xi_t)}$、$\hat\kappa(H_t)=s(H_t)^{-K(\xi_t)}$，从而 $I_t \gtrsim \hat C_t = (p_t \cdot s(H_t))^{K(\xi_t)}$。
-    - 设计动机：很多 reweighting 方法是经验启发式，难解释也难调参；这套桥接把 $(f,g)$ 的选择"降级"成一个具体的 CMVT 实例，论文还在附录证明换其他单调 $(f,g)$ 结果稳定——这说明增益来自"概率-熵校准原则"本身，而非这套特定的对数指数对。
+**2. Relative Competence 模板与 CMVT 推导：给 $I_t$ 一个概率论解释**
 
-3. **Relative Scale $S_t = I_t^{-1}$ 与训练接入**:
+为了说明 $I_t$ 不是手工凑的启发式、而是在近似一个有意义的能力比值，论文先写出抽象的 token 能力分 $C_t = \rho(p_t)/\kappa(H_t)$（$\rho$ 随 $p_t$ 单调增、$\kappa$ 随 $H_t$ 单调减），类比条件概率 $\Pr(A|U)$——把 $p_t$ 视作"对齐与先验支持的联合"，把 $H_t$ 映射成有效先验支持。接着用 Cauchy 中值定理把差分 $f(R_t)-f(\mathbb{E}[R_t])$ 改写成对数比形式，得到 $I_t = (\mathbb{E}[R_t]/R_t)^{K(\xi_t)}$，其中推理 token 的典型区间 $K(\xi_t) \approx 0.5$。把 rank 的上下界代回去就有 $\hat\rho(p_t)=p_t^{K(\xi_t)}$、$\hat\kappa(H_t)=s(H_t)^{-K(\xi_t)}$，从而 $I_t \gtrsim \hat C_t = (p_t \cdot s(H_t))^{K(\xi_t)}$，正好坐实"$I_t$ 是能力比值的下界估计"。
 
-    - 功能：把指示子转成可直接乘到 SFT 损失上的 token 权重，且训练稳定。
-    - 核心思路：$S_t = (p_t \cdot s(H_t))^{-K(\xi_t)}$，实践中令 $\xi_t = \max(R_t, s(H_t))$、$K(\xi_t) = (\log_2(\xi_t{+}1))^{-2}$（省掉 $\xi/(\xi{+}1)$ 因子以稳训练），最终 $\tilde w_t = w_t \cdot S_t$。算法上每一步在已有 forward 的 logits 上加一次排序+期望排名累加即可，无需额外网络；推理时不用，零额外推理成本。
-    - 设计动机：直接用 $I_t$ 当奖励会把"已经学得好"的 token 加权过大，反而过拟合到容易的位置；取倒数等价于"哪儿欠学就压更多梯度"，并把"已掌握"的 token 自然 down-weight。对 PPO/GRPO 这类 RL 后训练也兼容（论文留作 future work）。
+这套桥接的价值在于把 $(f,g)$ 的选择"降级"成一个具体的 CMVT 实例：附录进一步证明换其他单调 $(f,g)$ 结果都稳定，说明真正带来增益的是"用 rank 把概率和熵校准在一起"这条原则，而非这一对特定的对数-指数函数——这也是它比经验启发式 reweighting 更可解释、更好调参的根本原因。
+
+**3. Relative Scale $S_t = I_t^{-1}$ 与训练接入：欠学的位置压更多梯度**
+
+最后要把指示子变成能直接乘到损失上的权重。这里关键是取倒数而非直接用 $I_t$ 当奖励：若直接用 $I_t$，那些"已经学得好"的 token 会被加权过大，反而过拟合到容易的位置；取倒数后 $S_t = (p_t \cdot s(H_t))^{-K(\xi_t)}$ 等价于"哪儿欠学就压更多梯度"，已掌握的 token 被自然 down-weight。工程上为了稳训练，实践令 $\xi_t = \max(R_t, s(H_t))$、$K(\xi_t) = (\log_2(\xi_t{+}1))^{-2}$（省掉 $\xi/(\xi{+}1)$ 因子），最终 $\tilde w_t = w_t \cdot S_t$。整个计算只是在已有 forward 的 logits 上加一次排序加期望排名累加，不引入额外网络，推理阶段完全不用，零推理开销；对 PPO/GRPO 这类 RL 后训练也兼容（论文留作 future work）。
 
 ### 损失函数 / 训练策略
 基础损失沿用加权 NLL；数学推理 SFT 用 $w_t = p_t$（与 DFT 同基），其它通用任务 $w_t = 1$。训练在 verl 框架上 4×A800 完成，10k 条 NuminaMath-CoT，AdamW lr=5e-5，cosine + 0.1 warmup，batch 256，max len 2048，生成时温度 1.0、最长 4096。

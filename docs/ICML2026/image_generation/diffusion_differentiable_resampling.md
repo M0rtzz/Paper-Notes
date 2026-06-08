@@ -45,42 +45,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一组带权样本 $\{(w_i, X_i)\}_{i=1}^N \sim \pi$。方法分三步：
-
-1. **指定一个 Langevin 前向 SDE**，让 $\pi$ 在时间 $t\to\infty$ 收敛到 reference $\pi_{\mathrm{ref}}$；
-2. **构造对应的 reverse SDE**，把 $\pi_{\mathrm{ref}}$ 反演回 $\pi$，其中需要的 score $\nabla\log p_t$ 用 **ensemble score（importance-sampling 形式的非参数估计）** 替代——这一步**完全不需要训练**；
-3. 把这条 reverse SDE 离散积分到时间 $T$，得到的 $\{U_{i,T}\}_{i=1}^N$ 就是 $\{(\frac{1}{N}, X_i^*)\}_{i=1}^N$，整条链路对参数 $\theta$ 可微。
-
-把它代入 Feynman–Kac / SMC 主循环（Algorithm 2），就得到一个梯度可端到端传播的 differentiable SMC。
+方法要解决的是"重采样这一步天然不可微"的问题：输入一组带权样本 $\{(w_i, X_i)\}_{i=1}^N \sim \pi$，要输出一组等权样本 $\{(\frac{1}{N}, X_i^*)\}$，同时让从输入到输出的映射对 SSM 参数 $\theta$ 可导。作者的转法是把"重采样"重述成"一段扩散采样"：先指定一个 Langevin 前向 SDE 把目标 $\pi$ 平滑推向一个用户选定的 reference $\pi_{\mathrm{ref}}$，再反演这条 SDE 从 $\pi_{\mathrm{ref}}$ 采回 $\pi$，于是整条链路上唯一的随机源只剩 Gaussian 噪声，自然可重参数化。其中 reverse SDE 需要的 score 用带权样本即时估计、不需要训练，最后把这段可微 SDE 模拟整体嵌进 Feynman–Kac / SMC 主循环，就得到一个梯度能端到端反传的 differentiable SMC。
 
 ### 关键设计
 
-1. **无训练 ensemble score（核心）**：
+**1. 无训练 ensemble score：把离散类别采样翻译成连续可微的 score**
 
-    - 功能：用现成的带权样本 $\{(w_i, X_i)\}$ 即时估计扩散过程的 score，**省掉所有训练**。
-    - 核心思路：通过 importance sampling 把 $\nabla\log p_t(x)$ 改写成 $s_N(x,t) \coloneqq \sum_i \alpha_i(x,t)\nabla\log p_{t|0}(x|X_i)$，其中 $\alpha_i = w_i p_{t|0}(x|X_i) / \sum_j w_j p_{t|0}(x|X_j)$，相当于"以 $\pi$ 为 proposal、$p_{t|0}(\cdot|x_0)$ 为 likelihood 的自归一化 IS"。Remark 1 给出 Doob $h$-function 解释：$s_N = \nabla\log\sum_i h_i$，把过程视作 multinomial resampling 的**连续可微 reparametrisation**。
-    - 设计动机：避开"训扩散模型→再用扩散模型重采样"的双层结构；naive 评估是 $O(N)$，并行实现可降到对数复杂度；reference $\pi_{\mathrm{ref}}$ 隐式编码传输代价与 Rao–Blackwellisation 条件，比 multinomial 方差更小。
+reverse SDE 真正缺的零件是各时刻的 score $\nabla\log p_t$。常规做法要先训一个扩散模型才能拿到 score，等于在重采样里再套一层训练，既慢又引入偏差。作者改用 importance sampling 把它写成现成带权样本的闭式组合 $s_N(x,t) \coloneqq \sum_i \alpha_i(x,t)\,\nabla\log p_{t|0}(x|X_i)$，权重 $\alpha_i = w_i\, p_{t|0}(x|X_i) / \sum_j w_j\, p_{t|0}(x|X_j)$ —— 这恰好是"以 $\pi$ 为 proposal、前向转移 $p_{t|0}(\cdot|x_0)$ 为 likelihood 的自归一化 IS"，所以拿到当前 SMC 步的 $\{(w_i,X_i)\}$ 就能直接算，省掉全部训练。
 
-2. **均值回归 Gaussian reference + 自适应注入 SMC 信息**：
+之所以这个替换是干净的，关键在 Remark 1 给的 Doob $h$-function 解释：$s_N = \nabla\log\sum_i h_i$，意味着这段扩散其实就是 multinomial resampling 的**连续可微 reparametrisation** —— 原本"按权重 $w_i$ 离散地挑粒子"这个不可导操作，被等价改写成"沿一段由 Gaussian 噪声驱动的 SDE 流动"，梯度问题随之化解。代价上，naive 评估每步是 $O(N)$（枚举所有粒子），但可并行成对数复杂度；而且 reference $\pi_{\mathrm{ref}}$ 隐式编码了传输代价与 Rao–Blackwellisation 条件，使它比 multinomial 的方差更小。
 
-    - 功能：让 reference 不再是固定的 $\mathrm{N}(0, I_d)$，而是**动态贴近**当前 SMC 步的后验。
-    - 核心思路：用粒子的加权矩估计 $\mu_N, \Sigma_N$，取 reference 为 $\nabla\log\pi_{\mathrm{ref}}(x) = -\Sigma_N^{-1}(x-\mu_N)$，得到 OU 型前向 SDE $dX = -b^2\Sigma_N^{-1}(X-\mu_N)dt + \sqrt{2}b\,dW$。其前向转移 $p_{t|0}(x_t|x_0) = \mathrm{N}(x_t; m_t(x_0), V_t)$ 有解析形式（含 $e^{-b^2\Sigma_N^{-1}t}$ 项），所以 ensemble score 中需要的 $\nabla\log p_{t|0}$ 直接闭式可算。
-    - 设计动机：当 $\pi$ 离 $\mathrm{N}(0, I_d)$ 几何距离很远时，naive reference 需要非常大的 $T$ 才能收敛；用 Gaussian 矩匹配的 reference 把"扩散要走多远"压缩到最短，**也比 OT 用 predictive 样本作 reference 更 informative**（OT 用 $\{(w_{j-1,i}, Z_{j,i})\}$，本文可以用更准的后验 $\{(w_{j,i}, Z_{j,i})\}$）。
+**2. 均值回归 Gaussian reference：让扩散"少走路"并注入 SMC 自身的后验信息**
 
-3. **半线性 exponential integrator 加速 reverse SDE**：
+reference 选得不好会直接拖垮收敛：若沿用固定的 $\mathrm{N}(0, I_d)$，当 $\pi$ 离它几何距离很远时，前向扩散得跑非常大的 $T$ 才能收敛，反演也随之变贵。作者改用粒子的加权矩估计 $\mu_N, \Sigma_N$ 现场拼一个贴合当前后验的 Gaussian reference，取 $\nabla\log\pi_{\mathrm{ref}}(x) = -\Sigma_N^{-1}(x-\mu_N)$，对应一个 OU 型前向 SDE $dX = -b^2\Sigma_N^{-1}(X-\mu_N)\,dt + \sqrt{2}\,b\,dW$。这样做一举两得：一是 reference 已经贴近终点，把"扩散要走多远"压到最短；二是它的前向转移 $p_{t|0}(x_t|x_0) = \mathrm{N}(x_t; m_t(x_0), V_t)$ 有解析形式（含 $e^{-b^2\Sigma_N^{-1}t}$ 项），于是上一设计 ensemble score 里需要的 $\nabla\log p_{t|0}$ 全部闭式可算、无需数值近似。相比 OT 用 predictive 样本 $\{(w_{j-1,i}, Z_{j,i})\}$ 当 reference，本文能用更准的后验 $\{(w_{j,i}, Z_{j,i})\}$，信息量更足。
 
-    - 功能：用更少的离散步数 $K$ 把 reverse SDE 积到 $T$。
-    - 核心思路：reverse 在 Gaussian reference 下具有 semi-linear 结构 $dU = (AU + f(U,t))dt + \sqrt{2}b\,dW$，其中 $A = b^2\Sigma_N^{-1}$ 把线性刚性部分单独处理。用 Jentzen–Kloeden 积分器 $U_{t_k} = e^{A\Delta_k}U_{t_{k-1}} + A^{-1}(e^{A\Delta_k}-I_d)f(U_{t_{k-1}}) + B_k$，其中 Wiener 积分 $B_k\sim \mathrm{N}(0, \Sigma_N(e^{2A\Delta_k}-I_d))$ 闭式可采；$A$ 不可逆时退化到 Lord–Rougemont 的低阶积分器。
-    - 设计动机：ensemble score 在 $t\to 0$ 附近 Lipschitz 常数会爆炸，普通 Euler–Maruyama 必须用很小步长；exponential integrator 把刚性主项"精确积分"，从而在大步长下依然稳定。
+**3. 半线性 exponential integrator：在大步长下稳定地积分 reverse SDE**
+
+ensemble score 在 $t\to 0$ 附近 Lipschitz 常数会爆炸，普通 Euler–Maruyama 为了不发散只能用极小步长，离散步数 $K$ 被迫开很大。借助 Gaussian reference 带来的 semi-linear 结构 $dU = (AU + f(U,t))\,dt + \sqrt{2}\,b\,dW$（$A = b^2\Sigma_N^{-1}$ 是线性刚性主项），作者用 Jentzen–Kloeden 指数积分器把这个刚性部分**精确积分**：$U_{t_k} = e^{A\Delta_k}U_{t_{k-1}} + A^{-1}(e^{A\Delta_k}-I_d)f(U_{t_{k-1}}) + B_k$，其中 Wiener 积分 $B_k\sim \mathrm{N}(0,\, \Sigma_N(e^{2A\Delta_k}-I_d))$ 也闭式可采（$A$ 不可逆时退化到 Lord–Rougemont 的低阶积分器）。刚性主项被解析处理后，即便步长开大、$K$ 取小，模拟依然稳定，从而把离散代价压下来。
 
 ### 损失函数 / 训练策略
-本方法**不引入新的损失或训练目标**——它是 SMC 主循环中的一个即插即用模块。下游学习 $L(\theta) = \prod_j L_j(\theta)$（Feynman–Kac 边际似然估计）时直接最小化 $-\log L(\theta)$，梯度通过 (i) Gaussian 噪声重参数化 + (ii) SDE solver 的 adjoint / discretise-then-differentiate（Bartosh / Li / Kidger 等已有的 differentiable SDE 工具）自动反传。
+本方法**不引入新的损失或训练目标**，它是 SMC 主循环里的即插即用模块。下游学习时直接最小化 Feynman–Kac 边际似然估计的负对数 $-\log L(\theta)$（$L(\theta) = \prod_j L_j(\theta)$），梯度通过两条路径自动反传：(i) Gaussian 噪声重参数化，(ii) SDE solver 的 adjoint / discretise-then-differentiate（复用 Bartosh / Li / Kidger 等已有的 differentiable SDE 工具）。
 
 收敛分析（Section 3）给出主结论 Proposition 1：
 
 $$\mathsf{W}_2^2(\widetilde{q}_t, q_t) \le \mathsf{W}_2^2(p_T, \pi_{\mathrm{ref}})\, e^{b^2(C_{\mathrm{ref}}-2C_p)t} + 2b^2 N^{-r} \overline{C}_e(t, T)$$
 
-误差由 score 近似（随 $N$ 以 IS 速率 $r=1/2$ 衰减）和 $p_T \approx \pi_{\mathrm{ref}}$ 的有限时间偏差构成；Corollary 1 进一步证明存在线性 $t \mapsto T(t)$ 使 $\mathsf{W}_2(\widetilde{q}_t, q_t) \to 0$。Remark 2 给出 Gaussian reference 下 $N$ 仅需 **多项式 $T$** 即可，明显优于 OT 中 $N$ 对 $1/\varepsilon$ 的**指数**依赖。
+误差被显式拆成两块：score 近似项随 $N$ 以 IS 速率 $r=1/2$ 衰减，$p_T \approx \pi_{\mathrm{ref}}$ 的有限时间偏差项随 $T$ 衰减。Corollary 1 进一步证明存在线性 $t \mapsto T(t)$ 使 $\mathsf{W}_2(\widetilde{q}_t, q_t) \to 0$；Remark 2 指出 Gaussian reference 下 $N$ 仅需**多项式 $T$** 即可匹配，明显优于 OT 中 $N$ 对 $1/\varepsilon$ 的**指数**依赖。
 
 ## 实验关键数据
 

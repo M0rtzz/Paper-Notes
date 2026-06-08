@@ -41,37 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CUDAnalyst 是一个"夹"在自演化框架（如 OpenEvolve）和 LLM planner 之间的分析层。它把每一代的反馈生成、计划生成、代码生成显式拆开：
+CUDAnalyst 是一个"夹"在自演化框架（如 OpenEvolve）和 LLM planner 之间的分析层，它要解决的核心问题是：在不让 agent 继续往下跑、不被轨迹漂移污染的前提下，量化每一代里每个反馈对 plan 的因果贡献。做法是把演化和归因在时间上解耦——演化框架照常跑出第 $g$ 代程序 $P_g$，CUDAnalyst 则把 $P_g$ 冻成不可变快照，在这个固定 fixture 上只切换"送哪些反馈给 planner"，反复重放 plan→代码→评估。
 
-1. **反馈生成**：原 agent 框架照常跑出第 $g$ 代程序 $P_g$ 及其 reference 缓存；CUDAnalyst 用三个分析模块——Debugger（编译/运行错误）、Analyzer（基于 Tree-sitter 的静态特征）、Profiler（NCU/cProfile 运行时指标）——把 $P_g$ 转成结构化 profile，可选地交给 SummaryAgent 进一步压缩，统一成"反馈报告"。
-2. **冻结 + 干预**：把 $P_g$ 和 reference 都冻成不可变快照；对反馈报告做"选择性开关"，构造 $2^N$ 种反馈联盟 $S \subseteq \{d,a,p\}$，每种联盟下让固定 prompt / 固定温度的 PlanAgent 产出 plan，再让固定的代码生成器写出新 kernel。
-3. **生成级评估**：每个 (g, S) 组合独立跑 10 次，统计 compiled / pass / fast 三档结果，整理出特征函数 $v(S)$。
-4. **博弈论归因**：用 Banzhaf 值算每个反馈的平均边际贡献 $\phi_i$，用 Grabisch-Roubens 交互项 $\sigma_{ij}$ 算两两协同/冲突，得到细粒度的反馈-到-计划归因图。
-
-整个流程保持 *Plan 只看反馈、不看历史 plan*，从而把"演化记忆"也排除在归因之外。
+具体分四步流转：先用 Debugger（编译/运行错误）、Analyzer（基于 Tree-sitter 的静态特征）、Profiler（NCU/cProfile 运行时指标）三个模块把 $P_g$ 转成结构化反馈报告，可选地交给 SummaryAgent 压缩；再把 $P_g$ 和 reference 冻死，对反馈三件套做 $2^N$ 种开关组合 $S \subseteq \{d,a,p\}$，每种联盟下固定 prompt/温度的 PlanAgent 出 plan、固定代码生成器写新 kernel；每个 $(g,S)$ 组合独立跑 10 次统计 compiled/pass/fast 三档结果，整理成特征函数 $v(S)$；最后用 Banzhaf 值和 Grabisch-Roubens 交互项把 $v(S)$ 拆成每个反馈的边际贡献和两两协同。整个流程刻意让 Plan 只看反馈、不看历史 plan，把"演化记忆"也排除在归因边界之外。
 
 ### 关键设计
 
-1. **轨迹冻结 + 选择性反馈注入 (Trajectory Freezing & Patching Intervention)**:
+**1. 轨迹冻结 + 选择性反馈注入：在同一份代码 fixture 上做 controlled patching。**
 
-    - 功能：在第 $g$ 代的程序状态、reference 集合、planner、prompt、解码超参全部锁死的前提下，仅切换"哪些反馈被送进 PlanAgent"，从而把后续 plan/代码差异 *单一地* 归因到反馈集合本身。
-    - 核心思路：把每一代生成的 $P_g$ 缓存成不可变快照；reference 也固定，避免重采样污染；对反馈三件套 $\{d, a, p\}$ 做 $2^3=8$ 种开关组合（含空集 baseline $v(\emptyset)$），每种组合在同一 $P_g$ 上重新走"反馈→plan→代码→评估"管线 $k$ 次（$k=10$）。和传统端到端消融的对比：传统做法每改一处就要 *从 0 或某 checkpoint 重跑整条轨迹*，被轨迹漂移污染；本方法每次干预的 *计算预算* 是 $O(2^{|N|} k)$ 而非 $O(\text{generations} \times k)$，且每次实验都基于完全相同的代码 fixture，结果可严格比较。
-    - 设计动机：自演化场景天然违反"独立同分布"，传统消融在数学上根本无法支持因果归因；只有先在时间维度上"切片"，才能在每一片上跑 controlled experiment。
+自演化的反馈归因有个根本困难——它天然违反独立同分布：早期一点扰动会被后续代代规划放大，传统端到端消融"关掉某反馈再从头/某 checkpoint 重跑整条轨迹"得到的差异里，"反馈变了"和"轨迹岔了"完全纠缠，数学上根本无法支撑因果归因。本设计的解法是先在时间维度上"切片"：把每一代生成的 $P_g$ 缓存成不可变快照，reference 集合也一并固定避免重采样污染，然后锁死 planner、prompt、解码超参，*只* 切换哪些反馈被送进 PlanAgent。对反馈三件套 $\{d,a,p\}$ 枚举 $2^3=8$ 种开关组合（含空集 baseline $v(\emptyset)$），每种组合在同一份 $P_g$ 上重走"反馈→plan→代码→评估"管线 $k=10$ 次。因为每次实验只动反馈输入、其余全等，得到的 plan/代码差异就只能归因于反馈本身；而且计算预算是 $O(2^{|N|}k)$ 而非端到端的 $O(\text{generations}\times k)$，结果还能严格横向比较。
 
-2. **基于 Banzhaf 值的联盟归因 (Coalitional-Style Feedback Attribution)**:
+**2. 基于 Banzhaf 值的联盟归因：用合作博弈把"个体贡献"和"交互项"干净切开。**
 
-    - 功能：把"哪个反馈贡献多大、哪两个反馈协同/冗余"量化成可读的标量。
-    - 核心思路：把反馈归因建模成合作博弈 $\mathcal{G}=(N, v)$，玩家是 $N=\{\text{debugger}, \text{analyzer}, \text{profiler}\}$，特征函数 $v(S)$ 是反馈联盟 $S$ 下的 expected generation-level success。边际贡献用 Banzhaf 值 $\phi_i(v) = \frac{1}{2^{|N|-1}} \sum_{S \subseteq N \setminus \{i\}} [v(S \cup \{i\}) - v(S)]$；两两交互用 Grabisch-Roubens 项 $\sigma_{ij} = v(\{i,j\}) - v(\{i\}) - v(\{j\}) + v(\emptyset)$，正值表示互补、负值表示冗余/竞争。选 Banzhaf 而非 Shapley 的理由是：plan 决策里所有反馈是 *同时* 出现的、不存在到达顺序之分，Banzhaf 对所有子集等权平均更契合实际语义。
-    - 设计动机：仅看"开/关单一反馈"的差值会高估单个反馈的作用，因为反馈之间存在大量协同（如 analyzer 找出潜在 race 后 debugger 的报错才能定位）；联盟博弈框架是"既给每个玩家公平credit、又把交互项独立分离"的标准工具。
+只看"开/关单一反馈"的差值会高估单个反馈的作用，因为反馈之间存在大量协同——比如 analyzer 先找出潜在 race，debugger 的报错才能定位。本设计把反馈归因建模成合作博弈 $\mathcal{G}=(N,v)$，玩家是 $N=\{\text{debugger},\text{analyzer},\text{profiler}\}$，特征函数 $v(S)$ 取反馈联盟 $S$ 下的 expected generation-level success。每个反馈的边际贡献用 Banzhaf 值
 
-3. **CuGEdit — 从归因结论到可部署插件 (From Invariant Insights to Actionable Design)**:
+$$\phi_i(v) = \frac{1}{2^{|N|-1}} \sum_{S \subseteq N \setminus \{i\}} [v(S \cup \{i\}) - v(S)]$$
 
-    - 功能：把第 4-5 节得到的"稳定规律"——"反馈对齐才有用 / 多反馈协同 / 强模型 plan 可向同家族弱模型迁移 / 摘要对弱模型尤其有效"——封装成可挂到任意自演化框架（如 OpenEvolve）上的模块。
-    - 核心思路：包含三个子组件——(a) Kernel-similarity-aware activation：只在 kernel 与缓存中相似 case 接近时才激活完整反馈分析，节省 token；(b) Feedback summarization：用 SummaryAgent 把原始 profile 压成结构化摘要，弱模型可直接消化；(c) Strong-to-weak plan distillation：在线把同家族强模型（如 DeepSeek-R1 / Qwen3-235B）的 plan 注入弱模型（DeepSeek-V3.2 / Qwen3-Coder-30B）的上下文。在 KernelBench Level 3 上叠到 OpenEvolve 之后，相比 torch.compile 取得 $2.08\times$–$10.32\times$ 加速，超过当时的 baseline 和 SOTA。
-    - 设计动机：论文不止停在"分析框架"，而是要展示"用我们这套归因方法挖出的规律真能直接落地"——这也回应了"为什么要做归因"：归因不是为了写 paper，而是为了告诉系统设计者"什么时候该开/关哪种反馈、什么时候该上摘要、什么时候该蒸馏 plan"。
+对所有子集等权平均；两两交互用 Grabisch-Roubens 项 $\sigma_{ij} = v(\{i,j\}) - v(\{i\}) - v(\{j\}) + v(\emptyset)$，正值表示互补、负值表示冗余或竞争。选 Banzhaf 而非 Shapley 是个细致但关键的建模区分：plan 决策里所有反馈是 *同时* 出现的、不存在到达顺序，等权平均比 Shapley 的"按排列加权"更契合实际语义。这套框架既给每个玩家公平 credit，又把交互项独立分离出来，比简单的 leave-one-out 信息量大得多。
 
-### 损失函数 / 训练策略
-本文不训练任何模型，所有 PlanAgent / SummaryAgent / CodeAgent 都是 *fixed-prompt, fixed-decoding* 的现成 LLM 调用。所有实验在 PolyBench-ACC 上跑 10 次独立运行，置信区间用 95% CI；评估端用统一的 LLM 评估器以确保跨实验可比性。
+**3. CuGEdit：把稳定规律封装成可部署插件，验证归因不是 post-hoc 解释。**
+
+归因若只停在"分析框架"层面，价值有限；本设计要证明挖出的规律能直接落地。从 RQ1–RQ3 提炼出四条跨 backbone/工作负载/进化算子都稳定的规律——反馈对齐才有用、多反馈晚期靠协同、强模型 plan 可向同家族弱模型迁移、摘要对弱模型尤其有效——封装成可挂到任意自演化框架的 CuGEdit 模块，含三个子组件：(a) Kernel-similarity-aware activation，只在当前 kernel 与缓存中相似 case 接近时才激活完整反馈分析以省 token；(b) Feedback summarization，用 SummaryAgent 把原始 profile 压成结构化摘要供弱模型直接消化；(c) Strong-to-weak plan distillation，在线把同家族强模型（DeepSeek-R1 / Qwen3-235B）的 plan 注入弱模型（DeepSeek-V3.2 / Qwen3-Coder-30B）上下文。在 KernelBench Level 3 上叠到 OpenEvolve 后，相比 torch.compile 取得 $2.08\times$–$10.32\times$ 加速，超过当时 baseline 和 SOTA——直接告诉系统设计者"什么时候开/关哪种反馈、何时上摘要、何时蒸馏 plan"。
+
+### 训练策略
+本文不训练任何模型，所有 PlanAgent / SummaryAgent / CodeAgent 都是 *fixed-prompt, fixed-decoding* 的现成 LLM 调用。实验在 PolyBench-ACC 上跑 10 次独立运行，置信区间用 95% CI；评估端用统一的 LLM 评估器保证跨实验可比性。
 
 ## 实验关键数据
 

@@ -41,37 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-L$^3$ 是一种新的 decoder sublayer，插在原 dense Llama 架构的某两层 decoder 之间（不替换 MLP，**与 MoE 正交**）。对单个 token：
+L$^3$ 是一种新的 decoder sublayer，插在原 dense Llama 架构的某两层 decoder 之间，不替换 MLP，**与 MoE 正交**。它对单个 token 做的事可以一句话概括：先用 token ID $t$ 从一张超大查表里取出该 token 专属的一组 key/value embedding，再用当前隐藏状态 $x$ 当 query 对这组 key 做 attention，把对应的 value 加权聚合成一个"上下文相关的查表结果"，最后并回残差流。
 
-1. 输入：隐藏状态 $x \in \mathbb{R}^{d_\text{in}}$ 和 token ID $t \in \{1, \dots, |\tau|\}$；
-2. 静态路由：用 $t$ 查表，从全局 $W_K \in \mathbb{R}^{v \times d_\text{in}}$ 和 $W_V \in \mathbb{R}^{v \times d_\text{emb}}$ 中取出该 token 专属的 $K_t \in \mathbb{R}^{d_t \times d_\text{in}}$、$V_t \in \mathbb{R}^{d_t \times d_\text{emb}}$；
-3. 上下文聚合：用 $x$ 当 query 对 $K_t$ 算 softmax 得到分数，再加权求和 $V_t$，得到一个"上下文相关的查表结果"；
-4. 输出：经 $W_\text{up}$ 上投影、LayerNorm，与残差流 $x$ concat 后再过 mixing 矩阵 $W_\text{mix}$，即 $L^3(x,t) = W_\text{mix}\big[\text{LN}(W_\text{up}(V_t^\top \text{Softmax}(K_t x)))\,;\,x\big]$。
+更具体地：输入是隐藏状态 $x \in \mathbb{R}^{d_\text{in}}$ 和 token ID $t \in \{1, \dots, |\tau|\}$；静态路由用 $t$ 从全局表 $W_K \in \mathbb{R}^{v \times d_\text{in}}$、$W_V \in \mathbb{R}^{v \times d_\text{emb}}$ 中切出该 token 专属的 $K_t \in \mathbb{R}^{d_t \times d_\text{in}}$、$V_t \in \mathbb{R}^{d_t \times d_\text{emb}}$；上下文聚合用 $x$ 对 $K_t$ 算 softmax 得到 $d_t$ 个分数后加权求和 $V_t$；最后经 $W_\text{up}$ 上投影、LayerNorm，与残差流 concat 再过 mixing 矩阵 $W_\text{mix}$，整层写成
 
-整个层只在 channel 维做混合，**没有跨 token 通信**，这是后面所有系统优化的根本。每个 token 的 $d_t$ 由 embedding 分配算法决定，是 L3 的核心超参。
+$$L^3(x,t) = W_\text{mix}\big[\text{LN}(W_\text{up}(V_t^\top \text{Softmax}(K_t x)))\,;\,x\big].$$
+
+整个层只在 channel 维做混合、**没有跨 token 通信**，这是后面所有系统优化的根本；而每个 token 分到多少行 $d_t$，则由专门的 embedding 分配算法决定，是 L3 的核心超参。
 
 ### 关键设计
 
-1. **静态 token 路由 + hidden-state 软查表**:
+**1. 静态 token 路由 + hidden-state 软查表：把"路由"和"聚合"彻底解耦。**
 
-    - 功能：用 token ID 决定取哪组 embedding（静态），用当前隐藏状态决定怎么加权聚合（上下文相关），把"路由"和"聚合"两件事彻底解耦。
-    - 核心思路：MoE 的 router 形式是 $r(x,e)$（依赖 $x$），L3 的"router"直接是 $t \mapsto \{K_t, V_t\}$（只依赖 token ID）。上下文相关性完全交给后面的 attention：$\text{Softmax}(K_t x)$ 给出 $d_t$ 个分数，再对 $V_t$ 做加权和。因为路由是静态的，token 一生成 $\{K_t, V_t\}$ 的地址就确定，可以在前几层 decoder 计算时就用 CPU→GPU 异步预取，完全把数据搬运藏在 compute 后面（见图 4）。
-    - 设计动机：MoE 的所有系统痛点（auxiliary loss、不能 offload、大 batch 命中所有 expert）本质都来源于"路由依赖 hidden state"。把路由依赖换成 token ID 后，这些痛点同时消失；而保留"hidden-state 加权聚合"又让模型仍能做上下文相关的取舍，不退化成普通 tokenizer embedding。
+MoE 所有的系统麻烦——必须挂 auxiliary loss、参数不能 offload、大 batch 几乎命中所有 expert——本质都来自一件事：router 依赖 hidden state（形式是 $r(x,e)$），到底取哪些参数要算到 router 那一刻才知道。L3 直接把 router 换成 $t \mapsto \{K_t, V_t\}$，**只依赖 token ID**，于是 token 一被生成，要取的参数地址就已经确定。上下文相关性则完全外包给后面的 attention：$\text{Softmax}(K_t x)$ 用当前隐藏状态给 $d_t$ 个 embedding 打分，再对 $V_t$ 做加权和，所以模型仍能"看情况"取舍，不会退化成普通 tokenizer embedding。这一步看似"开倒车"地把路由依赖从 hidden state 退回 token ID，却同时消掉了 MoE 的全部系统痛点——因为地址提前已知，前几层 decoder 还在算时就能用 CPU→GPU 异步预取，把参数搬运完全藏在 compute 后面（图 4）。
 
-2. **LZW 信息论 embedding 分配算法**:
+**2. LZW 信息论 embedding 分配算法：把容量按"该不该被上下文区分"非均匀地分给 token。**
 
-    - 功能：在总预算 $v = \sum_i d_i$ 固定时，决定每个 token 该分到多少 embedding，把更多容量给"常出现且需要上下文区分"的 token。
-    - 核心思路：作者把"用静态 router 模拟 context router"看成"找一组能覆盖语料常见后缀的码字"，这恰好与 LZW 无损压缩的对偶问题一致。算法 1 用 LZW 扫一遍语料构造 (codeword, 频次) 字典，按频次降序遍历，每个 codeword 把一个 embedding 配给其末位 token；同时强制每个 token 至少 1 个 embedding、最多 $k$ 个（如 $k=512$），最终得到一个近 Zipf 分布的分配（如 "then" 拿到 512 个、"orm" 只有 1 个）。
-    - 设计动机：均匀分配在消融中明显落后（图 7C），说明分配方式才是 L3 质量的核心 knob；用 LZW 是因为"longest-suffix 路由"和"最长前缀码匹配"在信息论上互为对偶，频次最高的后缀对应最需要被区分的上下文。$k$ 上限同时给出"最坏情况下激活参数量"的硬保证——$k=512$ 时单 token 最多触发 $O(1\text{M})$ 参数，CPU→GPU 数据搬运量被牢牢钉在 $O(1\text{MB})$ 量级，预取一定来得及。
+总预算 $v = \sum_i d_i$ 是固定的，关键问题是每个 token 该分到几行 embedding。作者发现"用静态 router 去模拟一个 context router"等价于"找一组能覆盖语料常见后缀的码字"，而这恰好是 LZW 无损压缩的对偶问题——"最长后缀路由"和"最长前缀码匹配"在信息论上互为对偶，频次最高的后缀正对应最需要被区分的上下文。于是算法 1 用 LZW 扫一遍语料构造 (codeword, 频次) 字典，按频次降序遍历，每个 codeword 把一个 embedding 配给它的末位 token，同时强制每个 token 至少 1 个、最多 $k$ 个（如 $k=512$），最终得到一个近 Zipf 的分配（如 "then" 拿 512 行、"orm" 只有 1 行）。这套分配不是锦上添花：均匀分配在消融里几乎吃掉 L3 的全部增益（图 7C），说明分配方式才是 L3 质量的核心 knob。$k$ 上限还顺带给出一个硬保证——$k=512$ 时单 token 最多触发 $O(1\text{M})$ 参数，CPU→GPU 搬运量被钉死在 $O(1\text{MB})$ 量级，预取一定来得及。
 
-3. **block-diagonal 排序训练 + CPU offload 推理**:
+**3. block-diagonal 排序训练 + CPU offload 推理：把不规则查表变成硬件友好的访问。**
 
-    - 功能：把"按 token 取不同行"这种不规则访问改造成对硬件友好的 batch-级 attention，并在推理时把 L3 参数全部放 CPU。
-    - 核心思路：训练时，因为 L3 只在 channel 维混合，可以把 batch 里所有 token 按 ID 排序，相同 token 的隐藏状态聚成一段，整个 batch 的 "attention mask" 就变成块对角阵（图 3）；既可以直接调 FlexAttention/MegaBlocks 等现成 kernel，也可以朴素地循环对角块；额外开销只有一次排序和一次逆排序。推理时（图 4），token 一旦被采样出来，对应 $\{K_t, V_t\}$ 立刻从 CPU 异步 prefetch，与 pre-L3 那几层的 decoder 计算并行；2.6B 模型在 B200 上即使把 L3 完全 offload，BS=1/8/300 的吞吐相对 dense 仅下降几个百分点（表 2），且只要在第 4 层之后才放第一个 L3 层，PCIe 延迟就能被完全 mask 住。
-    - 设计动机：静态路由把"该取哪些参数"提前确定到了 token 采样的瞬间，作者把这个时间窗变成系统优化的核心抓手——MoE 拿不到这个窗，因此从架构上就被卡死在显存里；L3 拿得到，于是就能把 7B 总参的模型以接近 2.6B dense 的推理速度跑出来。
+"按 token 取不同行"天生是不规则访问，对 GPU 不友好；但因为 L3 只在 channel 维混合、token 之间互不通信，训练时可以把整个 batch 的 token 按 ID 排序，相同 token 的隐藏状态自然聚成一段，于是 batch 的 attention mask 就变成一个块对角阵（图 3）——既能直接调 FlexAttention/MegaBlocks 等现成 kernel，也能朴素地循环对角块，额外开销只有一次排序加一次逆排序。推理时（图 4）真正的杀手锏是把 L3 参数全放 CPU：token 一被采样出来，对应 $\{K_t, V_t\}$ 立刻从 CPU 异步 prefetch，与 pre-L3 那几层 decoder 的计算并行。静态路由提供的这个"采样瞬间就知道要取什么"的时间窗，正是 MoE 拿不到、因而被卡死在显存里的东西；L3 拿得到，于是 2.6B 模型在 B200 上即便把 L3 完全 offload，BS=1/8/300 的吞吐相对 dense 也只掉几个百分点（表 2），只要第一个 L3 层别放在第 4 层之前，PCIe 延迟就被前面的 decoder 完全吸收，等于用接近 2.6B dense 的速度跑出 7B 总参的模型。
 
 ### 损失函数 / 训练策略
-训练目标就是标准的语言建模交叉熵，**没有任何辅助损失**——这是相对 MoE 的额外好处（MoE 必须用 load-balancing + router z-loss 才能稳）。架构上基于 Llama，在 800M（400M decoder）/ 1.5B（1B）/ 2.6B（1.9B）三档激活参数上分别预训练约 10B / 20B / 30B token 的 FineWeb-Edu，序列长度 2048，BPE 词表 180K。每层 L3 默认 $v = 710\text{K}$、$k = 512$，目标稀疏率 2–4×，通常 1–2 层 L3 即可达到。
+训练目标就是标准的语言建模交叉熵，**没有任何辅助损失**——这是相对 MoE 的额外好处（MoE 必须靠 load-balancing + router z-loss 才能稳）。架构基于 Llama，在 800M（400M decoder）/ 1.5B（1B）/ 2.6B（1.9B）三档激活参数上分别预训练约 10B / 20B / 30B token 的 FineWeb-Edu，序列长度 2048，BPE 词表 180K。每层 L3 默认 $v = 710\text{K}$、$k = 512$，目标稀疏率 2–4×，通常 1–2 层 L3 即可达到。
 
 ## 实验关键数据
 

@@ -46,35 +46,34 @@ HalluHunter 是一个基于知识图谱的全自动 LLM 事实错误测试框架
 ## 方法详解
 
 ### 整体框架
-四阶段流水线：
 
-1. **KG 构建**：用户给主题（如 "occupation: emperor"）→ SPARQL 查询 Wikidata → 提取 (SUBJECT, relation, OBJECT) 三元组 → 建有向图 $G = (V, E)$。每域 ~500k-600k 三元组、10k-12k 实体。
-2. **规则化问题生成**（无 LLM 参与）：基于 POS + NER 把三元组转成 Yes/No、MC、WH 三类题；多跳问题用相邻三元组拼链，e.g., (Michelle Obama, spouse, Barack Obama) + (Barack Obama, educated at, Harvard) → "Where was Michelle Obama's spouse educated at?"。
-3. **回答评估**：Yes/No、MC 用 exact match；WH 用 sentence-transformer 相似度（实验 Table 8 表明它在 5 种相似度方法里 F1=87%，召回 97.9% 最高）。
-4. **自适应迭代生成**（Algorithm 1）：核心创新。基于上一轮 (question, answer, triplet) 三元组算每个 relation 的滚动准确率 $R^{(l+1)}$；每生成新问题时按概率 $e=0.2$ 走 explore（挑准确率 < $a=0.4$ 的低正确率关系），否则走 exploit——若上轮错则用 QuatE embedding 找与原 subject 最相似的 top-$k=10$ 实体生成同关系问题，若上轮对则随机挑一个新三元组。
+HalluHunter 把"找 LLM 事实错误"当成在知识图谱上的一次有反馈的搜索：KG 是搜索空间，模型经常答错的关系和实体是高奖励区域，全程不用 LLM 生成题目以躲开数据污染。给定一个主题（如 "occupation: emperor"），系统先用 SPARQL 从 Wikidata 抽出 (SUBJECT, relation, OBJECT) 三元组建成有向图 $G=(V,E)$（每域约 50–60 万三元组、1 万多实体），再纯规则地把三元组转成 Yes/No、MC、WH 三类题，多跳题靠相邻三元组拼链（例如把 (Michelle Obama, spouse, Barack Obama) 接上 (Barack Obama, educated at, Harvard) 得到"Where was Michelle Obama's spouse educated at?"）。模型作答后，Yes/No 与 MC 用 exact match、WH 用 sentence-transformer 相似度判分，判分结果回灌给自适应迭代算法，由它根据各关系的滚动准确率和错答实体的相似邻居挑出下一批更难的三元组，如此 5 轮把模型逼到弱区。
 
 ### 关键设计
 
-1. **规则化无 LLM 问题生成（避免污染 + 偏差）**:
+**1. 规则化无 LLM 问题生成：用确定性转换换来可验证与抗污染。**
 
-    - 功能：把 KG 三元组确定性地转成 3 类题型（Yes/No、MC、WH），保证每题答案唯一可验证。
-    - 核心思路：Yes/No 用 POS 分析关系词词性挑助动词（"is" 对名词、"does" 对动词），并造等量的"No"-题（把 object 换成同关系下的错误实体）；MC 用 NER 选疑问词，4 个选项中 1 正 3 错（错的来自同关系下其他三元组）；WH 严格只用"single outgoing edge for the relation"的三元组（如 (China, capital, Beijing) 而非 (China, city, Shanghai)），保证答案唯一。多跳用 $(s, \{r_1, r_2\}, o)$ 形式拼链，并在 PoS 上对最终 relation 做助动词分析。
-    - 设计动机：(a) 如果用 LLM 生成题目，会引入 LLM 自身偏差并增加 API 成本，且 LLM 生成的题目可能与训练数据重复；(b) 规则化保证可重复、可控，且每题答案确定（实验 G.2 显示规则化 98.5% 题符合语义，而 ChatGPT 生成 200 题中有 26 题偏离指令）；(c) Yes/No 题平衡正负样本避免 sycophancy。
+如果用 LLM 生成题目，既会引入它自身的偏差和 API 成本，生成内容还可能与训练数据重叠，让评测失真。HalluHunter 因此把三元组确定性地映射成三种题型：Yes/No 题根据关系词词性挑助动词（名词配 "is"、动词配 "does"），并造等量的"No"-题（把 object 换成同关系下的错误实体）以平衡正负样本、压制 sycophancy；MC 题用 NER 选疑问词，四个选项里 1 正 3 错，干扰项取自同关系的其他三元组；WH 题严格只用"该关系唯一出边"的三元组（如 (China, capital, Beijing) 而非有多解的 (China, city, Shanghai)），保证答案唯一可判。
 
-2. **自适应迭代生成算法（Algorithm 1）**:
+多跳题用 $(s, \{r_1, r_2\}, o)$ 的链式形式拼接，并在词性层面对最终关系做助动词分析。这种规则化带来的是可重复、可控、答案确定的题面——附录 G.2 显示规则化有 98.5% 的题符合语义，而 ChatGPT 生成的 200 题里有 26 题偏离指令。
 
-    - 功能：用 LLM 上一轮的对错反馈，**动态聚焦**到弱关系和与错答相似的实体周围，把"撒胡椒面"变成"精准制导"。
-    - 核心思路：维护两个状态——relation-accuracy map $R^{(l)}(r)$ 和已用 triplet 集 $T^{(l)}$。每生成下一批问题时：(i) 用概率 $e=0.2$ 走 explore，挑 $R(r) < 0.4$ 的低准确率关系下的三元组；(ii) 否则若上轮错（$c_i = \text{False}$），用 QuatE 训练的 KG embedding 找与原 subject 最相似的 top-10 实体集 $C$，从 $T^{(l+1)}$ 里挑 subject ∈ $C$ 的三元组继续问同关系的题；(iii) 若上轮对，随机挑新三元组。生成题型保持与原题一致。
-    - 设计动机：作者假设 LLM 的事实错误不是孤立的——"如果模型不知道氢的原子质量 1.008，那很可能也不知道氧的原子质量"——错误集中在某些"知识点 cluster"。所以围绕错答的相似实体探，比随机采样更高效。同时用 $e$ 平衡 exploit-explore，避免陷在某个小区域里（Table 10、11 sensitivity analysis 表明 $e=0.2$ 是最好的甜区）。
+**2. 自适应迭代生成算法（Algorithm 1）：把撒胡椒面变成精准制导。**
 
-3. **Weighted Coverage 评测指标（Group Degree Centrality）**:
+作者假设 LLM 的事实错误并非孤立——"如果模型不知道氢的原子质量 1.008，那它多半也不知道氧的原子质量"，错误往往聚成知识点 cluster。算法因此维护两个状态：每个关系的滚动准确率 $R^{(l)}(r)$ 和已用三元组集 $T^{(l)}$。生成下一批题时按 explore-exploit 切换——以概率 $e=0.2$ 走 explore，专挑 $R(r)<a=0.4$ 的低准确率关系；否则走 exploit：若上一题答错（$c_i=\text{False}$），就用 QuatE 训练的 KG embedding 找与原 subject 最相似的 top-$k=10$ 实体集 $C$，从 $T^{(l+1)}$ 里挑 subject $\in C$ 的三元组继续问同关系的题；若答对则随机换一个新三元组，题型始终与原题保持一致。
 
-    - 功能：测算迭代算法是否在追求难度的同时仍保持 KG 覆盖广度（避免只钻牛角尖）。
-    - 核心思路：把"已被问过题的实体集" $S$ 作为节点子集，计算开邻域 $N(S) = \{v \in V \setminus S : \exists u \in S, (u,v) \in E\}$，归一化的 group degree centrality $\widehat{C}_{\deg}(S) = |N(S)| / (|V| - |S|) \in [0,1]$。值越大代表覆盖到 KG 更多的"hub"周围。
-    - 设计动机：单看准确率下降不够，必须证明算法没把全部 budget 用在某个偏冷门角落里。Table 3 显示 Trial 5 的 average coverage 0.473 比 random 的 0.406 还高 17%，证明自适应不牺牲覆盖。
+围着错答的相似实体探，比随机采样更快命中弱点；而 $e=0.2$ 的探索比例又防止算法陷在某个小区域里出不来——附录 Table 10、11 的敏感性分析表明 $e=0.2$ 正是兼顾难度与覆盖的甜区。
+
+**3. Weighted Coverage 指标（Group Degree Centrality）：证明追难度没有牺牲广度。**
+
+只看准确率下降还不够，必须排除"算法把全部预算耗在一个冷门角落"的可能。HalluHunter 把所有被问过题的实体集 $S$ 当作节点子集，先取其开邻域 $N(S)=\{v\in V\setminus S:\exists u\in S,(u,v)\in E\}$，再算归一化的 group degree centrality
+
+$$\widehat{C}_{\deg}(S) = \frac{|N(S)|}{|V| - |S|} \in [0,1]$$
+
+值越大说明问过的实体越靠近 KG 的 hub、覆盖越广。实验里 Trial 5 的平均覆盖率 0.473 反而比随机采样的 0.406 高出约 17%，正面回应了"自适应迭代会不会钻牛角尖"的质疑——它在逼出难题的同时仍保持了广覆盖。
 
 ### 损失函数 / 训练策略
-本框架是**测试 framework 而非训练方法**，无任何 LLM 参数更新。涉及的"训练"只有 KG embedding $\mathcal{M}$：用 QuatE 在 PyKEEN 框架里训出实体 embedding 用于实体相似度搜索。超参：$e=0.2$（exploration constant），$a=0.4$（low-accuracy threshold），$k=10$（top-k similar entities）。每域每类型每轮 1000 题，5 轮迭代。总 API 成本约 $400 USD（9 个 LLM 跑完）。
+
+本框架是测试方法而非训练方法，不更新任何 LLM 参数。唯一涉及"训练"的是 KG embedding $\mathcal{M}$：用 QuatE 在 PyKEEN 里训出实体 embedding，供 exploit 阶段做相似实体检索。关键超参为探索常数 $e=0.2$、低准确率阈值 $a=0.4$、相似实体数 $k=10$；每域每题型每轮 1000 题、共 5 轮迭代，跑完 9 个 LLM 的总 API 成本约 \$400。
 
 ## 实验关键数据
 

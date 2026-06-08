@@ -41,30 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：训练好的 score 模型 $\mathbf{s}_\theta(\mathbf{x}, t)$、噪声尺度 $\sigma(t)^2$、待估样本 $\mathbf{x}$。输出：标量 LID 估计 $\hat{d}$。流程是：在 $\mathbf{x}$ 处构造 Hessian-向量乘 oracle $H(\mathbf{v}) = -\nabla_\mathbf{x}(\mathbf{s}_\theta(\mathbf{x}, t)^\top \mathbf{v})$ → 用 $K$ 个 Rademacher 概率向量 → 对每个 $\mathbf{v}_k$ 跑 $m$ 步 Lanczos 得到三对角矩阵 $T_k$ → 对 $T_k$ 做小规模特征分解得到 Ritz 特征对 $(\tilde\lambda_j, \tau_j)$ → 把每个 $\tilde\lambda_j$ 喂进滤波器 $f$ 加权求和 → 蒙特卡洛平均得到 $\hat{d}$。
+LHSD 要解决的是：在 3000+ 维图像空间里稳定估计一个样本的局部内禀维度（LID），而 LID 本质上就是流形切空间的维数。本文把这件事转化为"数 log-density Hessian $H(\mathbf{x})=-\nabla^2\log p_t(\mathbf{x})$ 里近零特征值的个数"——切向对应小特征值、法向对应大特征值，只要用一个谱滤波器把切向特征值压到 $\approx 1$、法向压到 $\approx 0$，再求迹就是 LID。整个估计在推断时完成，底下复用一个训好的 score 模型，并用 Stochastic Lanczos Quadrature（SLQ）在不显式构造 $D\times D$ Hessian 的前提下把迹算出来。
 
 ### 关键设计
 
-1. **基于切–法谱分离的 Hessian 滤波估计器**:
+**1. 切–法谱分离的 Hessian 滤波估计器：把"数维数"变成"过滤后求迹"**
 
-    - 功能：把“数切空间维数”转化为“数 Hessian 近零特征值的个数”。
-    - 核心思路：在流形附近用 tangent–normal 坐标对 $\log p_t$ 展开，可得 $H(\mathbf{x}) = \Pi_\text{nor}(\mathbf{x})/\sigma(t)^2 + \mathcal{O}(1)$，即 Hessian 在小 $\sigma(t)$ 下基本上是法向投影矩阵除以 $\sigma(t)^2$。这导致法向特征值 $\approx 1/\sigma(t)^2$，切向特征值 $\approx \mathcal{O}(1)$，二者中间出现一个明显的 spectral gap。然后定义 $\text{LHSD}(\mathbf{x}) := \sum_i f(\lambda_i) = \mathrm{tr}(f(H(\mathbf{x})))$，其中滤波器选用 Hill 型 $f(\lambda;\sigma(t)) = 1/(1+(|\lambda|/\kappa(t))^p)$，截止 $\kappa(t) := c/\sigma(t)^2$ 直接吸收掉法向曲率与噪声尺度的 $\sigma(t)^{-2}$ 缩放。
-    - 设计动机：相比 FLIPD 把所有特征值不加区分地累加（$\nabla\cdot \mathbf{s}_\theta$），LHSD 的滤波器在切向上响应 $\approx 1$、在法向上响应 $\approx 0$，把“magnitude 求和”改成“个数计数”，从根本上消除法向 magnitude 发散对估计的污染。Hill 滤波相比 sigmoid 有更平坦的 passband，更适配 SLQ 的多项式逼近精度。
+直接数 Hessian 的零空间维数在数值上不可行，本文的突破口是 Hessian 谱本身的"两堆"结构。在流形附近用 tangent–normal 坐标对 $\log p_t$ 展开可得 $H(\mathbf{x}) = \Pi_\text{nor}(\mathbf{x})/\sigma(t)^2 + \mathcal{O}(1)$，即在小噪声 $\sigma(t)$ 下 Hessian 基本上就是法向投影矩阵除以 $\sigma(t)^2$。于是法向特征值 $\approx 1/\sigma(t)^2$、切向特征值 $\approx \mathcal{O}(1)$，二者中间天然出现一个明显的 spectral gap。
 
-2. **基于 transition mass 的可验证超参选择**:
+利用这个 gap，本文定义 $\text{LHSD}(\mathbf{x}) := \sum_i f(\lambda_i) = \mathrm{tr}(f(H(\mathbf{x})))$，滤波器取 Hill 型 $f(\lambda;\sigma(t)) = 1/(1+(|\lambda|/\kappa(t))^p)$，截止 $\kappa(t) := c/\sigma(t)^2$ 直接吸收掉法向曲率随噪声尺度的 $\sigma(t)^{-2}$ 缩放。相比 FLIPD 把所有特征值不加区分地累加（$\nabla\cdot \mathbf{s}_\theta$），这个滤波器在切向响应 $\approx 1$、在法向响应 $\approx 0$，等于把"magnitude 求和"改成"个数计数"，从根本上消除了法向 magnitude 发散对估计的污染。选 Hill 型而非 sigmoid，是因为它有更平坦的 passband，更适配后面 SLQ 的低阶多项式逼近精度。
 
-    - 功能：解决 LHSD 必须把截止 $\kappa(t)$ 落进 spectral gap 这件“看起来玄学”的事。
-    - 核心思路：固定 $c, p$，扫描 $t$；定义 transition mass $M(t) := \frac{1}{D}\sum_i \mathbb{I}(\lambda_i(t) \in [\kappa(t) - \delta, \kappa(t) + \delta])$ 来计数处于截止边界附近的特征值比例。当 $M(t) \approx 0$ 且位于两个特征值“峰”中间时，截止线正好落进 gap，被记为 safe zone；落在峰内或者越过两个峰之外都会被该指标揭穿。
-    - 设计动机：以往谱滤波方法的 cutoff 选择往往要靠合成数据试错。本文把“截止是否在 gap 中”这一几何条件量化为一个一维曲线 $M(t)$，论文图 3 显示 safe zone 表现为 $M(t)$ 的低谷，让超参选择从“盲选”变成“看图选”。
+**2. 基于 transition mass 的可验证超参选择：让"截止落在 gap 里"看得见**
 
-3. **SLQ 加速：把 $\mathcal{O}(D^3)$ 降到 $\mathcal{O}(D)$**:
+LHSD 能不能成立，全看截止 $\kappa(t)$ 是否恰好落进 spectral gap，以往这类 cutoff 选择往往只能靠合成数据试错。本文把"截止是否在 gap 中"这一几何条件量化成一条一维曲线：固定 $c, p$、扫描 $t$，定义 transition mass $M(t) := \frac{1}{D}\sum_i \mathbb{I}(\lambda_i(t) \in [\kappa(t) - \delta, \kappa(t) + \delta])$，计数落在截止边界附近的特征值比例。
 
-    - 功能：把 $\mathrm{tr}(f(H))$ 算出来，但绝不构造完整的 $D\times D$ Hessian。
-    - 核心思路：用 Hutchinson 估计 $\mathrm{tr}(f(H)) \approx \mathbb{E}_\mathbf{v}[\mathbf{v}^\top f(H) \mathbf{v}]$，每个 $\mathbf{v}^\top f(H) \mathbf{v}$ 又通过 $m$ 步 Lanczos 三对角化 $H$ 在 Krylov 子空间上得到 $T_k$，再用 $T_k$ 的特征对作高斯求积近似：$\mathbf{v}^\top f(H)\mathbf{v} \approx \|\mathbf{v}\|^2 \sum_{j=1}^m \tau_j^2 f(\tilde\lambda_j)$。Hessian-向量乘则借自动微分实现 $H\mathbf{v} = -\nabla(\mathbf{s}_\theta(\mathbf{x})^\top \mathbf{v})$，每次只需一次反传。
-    - 设计动机：传统 NB 用 SVD 估秩走 $\mathcal{O}(D^3)$，对 3072 维图像直接放弃。SLQ 通过 Krylov 子空间只看一个低秩近似，论文实验显示 $m=5$ 步就够，最终复杂度线性于 $D$，把高维图像上的 LID 估计从“理论上可做”变成“真能跑”。
+当 $M(t) \approx 0$ 且位置处于两个特征值"峰"中间时，截止线正好穿过 gap，被记为 safe zone；若落进峰内或越过两个峰之外，$M(t)$ 都会把它揭穿。论文图 3 显示 safe zone 表现为 $M(t)$ 的低谷，让超参选择从"盲选"变成"看图选"，这是把玄学操作落到实证依据上的关键一步。
+
+**3. SLQ 加速：把 $\mathcal{O}(D^3)$ 压到 $\mathcal{O}(D)$**
+
+要在 3072 维上算 $\mathrm{tr}(f(H))$，绝不能显式构造完整的 $D\times D$ Hessian——传统 NB 用 SVD 估秩走 $\mathcal{O}(D^3)$ 对图像直接放弃。本文走 SLQ 路径：先用 Hutchinson 估计 $\mathrm{tr}(f(H)) \approx \mathbb{E}_\mathbf{v}[\mathbf{v}^\top f(H) \mathbf{v}]$，用 $K$ 个 Rademacher 探针向量做蒙特卡洛平均；每个二次型 $\mathbf{v}^\top f(H)\mathbf{v}$ 又通过 $m$ 步 Lanczos 把 $H$ 在 Krylov 子空间上三对角化成 $T$，再用 $T$ 的特征对 $(\tilde\lambda_j, \tau_j)$ 做高斯求积近似 $\mathbf{v}^\top f(H)\mathbf{v} \approx \|\mathbf{v}\|^2 \sum_{j=1}^m \tau_j^2 f(\tilde\lambda_j)$。
+
+整条链路里唯一接触 Hessian 的是 Hessian-向量乘，借自动微分实现 $H\mathbf{v} = -\nabla(\mathbf{s}_\theta(\mathbf{x})^\top \mathbf{v})$，每次只需一次反传。因为 Krylov 子空间只看一个低秩近似，论文实验显示 $m=5$ 步就够，最终复杂度线性于 $D$，把高维图像上的 LID 估计从"理论上可做"变成"真能跑"。
 
 ### 损失函数 / 训练策略
-LHSD 是**纯推断时**算法，不引入任何训练参数。它假设底下的 score 模型 $\mathbf{s}_\theta$ 已经用标准 denoising score matching 训练好；超参 $c$（截止位置）、$p$（滤波器陡度，论文用 $p=4$）、$\delta$（transition mass 边距，$\delta = 0.2$）、$K$（Rademacher 数）、$m$（Lanczos 步数）需要通过 transition mass 曲线诊断设定。
+LHSD 是**纯推断时**算法，不引入任何训练参数。它假设底下的 score 模型 $\mathbf{s}_\theta$ 已用标准 denoising score matching 训练好；超参 $c$（截止位置）、$p$（滤波器陡度，论文用 $p=4$）、$\delta$（transition mass 边距，$\delta = 0.2$）、$K$（Rademacher 探针数）、$m$（Lanczos 步数）通过 transition mass 曲线诊断设定。
 
 ## 实验关键数据
 

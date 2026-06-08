@@ -45,35 +45,24 @@ LiDAR 用预先生成的几步 lookahead 样本和前向扰动核重写期望未
 ## 方法详解
 
 ### 整体框架
-LiDAR 把测试时奖励引导拆成两个解耦阶段，对应论文 Algorithm 1/2：
-
-- **Phase 1（一次性预算）**：给定 prompt $\mathbf{c}$，用 $\delta$ 步快速求解器 $q(\mathbf{x}_0\mid\mathbf{c})$（DPM-Solver、LCM、DMD 等）批量生成 $n$ 个 lookahead 样本 $\{\hat{\mathbf{x}}_0^i\}_{i=1}^n$，并用 reward 模型 $r$ 标注得到 $\{(\hat{\mathbf{x}}_0^i, r_i)\}$。这步不依赖 $\mathbf{x}_t$，所有 prompt 只算一次。
-- **Phase 2（目标采样）**：从 $\mathbf{x}_T\sim p(\mathbf{x}_T)$ 出发按 SDE/ODE 反向迭代，在每个时间步用 LiDAR 闭式公式 $\mathbf{s}_\theta(\mathbf{x}_t,t,\mathbf{c}) + s\cdot\nabla_{\mathbf{x}_t}\hat r_t^\lambda$ 替代普通 Stein score；其中梯度项是 lookahead 样本的 softmax 加权差。整套流程不需要任何反向传播，reward 模型甚至可以非可微（如离散分子的环数）。
-
-物理直觉如图 1(b)：把 $\mathbf{x}_t$ 向高奖励的 $\hat{\mathbf{x}}_0^i$ 拉、把低奖励的推开，"引力"强度正比于 reward。
+LiDAR 想做的是测试时把扩散采样推向 reward-tilted 分布，却不付出反向传播的代价。它把奖励引导拆成两个解耦阶段（论文 Algorithm 1/2）：先用一个便宜的弱采样器对每个 prompt 一次性生成一批 lookahead 样本并打好分，再在正式采样时把这批样本当作"路标"，每个时间步用一条闭式 softmax 公式把粒子 $\mathbf{x}_t$ 朝高奖励样本拉、远离低奖励样本，"引力"强度正比于 reward（直觉见图 1(b)）。具体地，Phase 1 给定 prompt $\mathbf{c}$，用 $\delta$ 步快速求解器 $q(\mathbf{x}_0\mid\mathbf{c})$（DPM-Solver、LCM、DMD 等）批量生成 $n$ 个 lookahead 样本 $\{\hat{\mathbf{x}}_0^i\}_{i=1}^n$ 并用 reward 模型标注成 $\{(\hat{\mathbf{x}}_0^i, r_i)\}$，这步与 $\mathbf{x}_t$ 无关、每个 prompt 只算一次；Phase 2 从 $\mathbf{x}_T\sim p(\mathbf{x}_T)$ 反向迭代，每步用 $\mathbf{s}_\theta(\mathbf{x}_t,t,\mathbf{c}) + s\cdot\nabla_{\mathbf{x}_t}\hat r_t^\lambda$ 替代普通 Stein score，梯度项就是 lookahead 样本的 softmax 加权差。整条链路没有任何反传，reward 模型甚至可以不可微（如离散分子的环数）。
 
 ### 关键设计
 
-1. **前向 rollout 形式的 EFR 重写（Theorem 3.1）**:
+**1. 前向 rollout 形式的 EFR 重写（Theorem 3.1）：把 $\mathbf{x}_t$ 从神经网络里剥出来。**
 
-    - 功能：把 EFR 改写成只依赖先验样本 $\mathbf{x}_0\sim p_\theta(\mathbf{x}_0\mid\mathbf{c})$ 和前向核 $p(\mathbf{x}_t\mid\mathbf{x}_0)$ 的形式，使 $\mathbf{x}_t$ 不再喂入任何神经网络。
-    - 核心思路：用 Bayes 把条件期望 $\mathbb{E}_{p_\theta(\mathbf{x}_0\mid\mathbf{x}_t,\mathbf{c})}[\exp(\lambda r)]$ 等价改写为 $\mathbb{E}_{p_\theta(\mathbf{x}_0\mid\mathbf{c})}\big[\tfrac{p(\mathbf{x}_t\mid\mathbf{x}_0)}{\mathbb{E}[p(\mathbf{x}_t\mid\mathbf{x}_0)]}\exp(\lambda r)\big]$。基底从「以 $\mathbf{x}_t$ 为条件的后验」换成「先验」，$\mathbf{x}_t$ 只出现在解析高斯核里。
-    - 设计动机：这是整篇文章的"钥匙"——以前所有方法被反传/Taylor 近似困住的根源就是 $\mathbf{x}_t$ 同时进入神经网络又要被求导；换基底后 $\mathbf{x}_t$ 退化为高斯密度里的一个变量，求导有解析解，预生成样本可被任意 $\mathbf{x}_t$ 复用，rollout 不再"每步重跑"。
+EFR 的麻烦在于 $\mathbf{x}_t$ 既要作为输入喂进网络、又要被求导，这正是反传不可省、Taylor 近似不准的共同病根。LiDAR 用一次 Bayes 换基底化解：注意到 $p_\theta(\mathbf{x}_0\mid\mathbf{x}_t,\mathbf{c}) \propto p(\mathbf{x}_t\mid\mathbf{x}_0)p_\theta(\mathbf{x}_0\mid\mathbf{c})$，于是把后验上的期望 $\mathbb{E}_{p_\theta(\mathbf{x}_0\mid\mathbf{x}_t,\mathbf{c})}[\exp(\lambda r)]$ 等价改写为先验上的加权期望 $\mathbb{E}_{p_\theta(\mathbf{x}_0\mid\mathbf{c})}\big[\tfrac{p(\mathbf{x}_t\mid\mathbf{x}_0)}{\mathbb{E}[p(\mathbf{x}_t\mid\mathbf{x}_0)]}\exp(\lambda r)\big]$。换基底之后 $\mathbf{x}_t$ 只剩在解析高斯前向核 $p(\mathbf{x}_t\mid\mathbf{x}_0)$ 里出现，对它求导有闭式解，而先验样本 $\mathbf{x}_0\sim p_\theta(\mathbf{x}_0\mid\mathbf{c})$ 与 $\mathbf{x}_t$ 无关、可以被任意时间步、任意粒子复用——rollout 从"每步重跑反向扩散"变成"预生成一次、处处复用"。这是整篇文章的钥匙。
 
-2. **几步 lookahead 采样 + Weak-to-Strong 解释**:
+**2. 几步 lookahead 采样 + Weak-to-Strong 解释：把预生成成本摊到可忽略。**
 
-    - 功能：用便宜的弱采样器 $q(\mathbf{x}_0\mid\mathbf{c})$（如 DPM-3/5、LCM-4、DMD-1）近似昂贵的 $p_\theta(\mathbf{x}_0\mid\mathbf{c})$ 来产生 marginal 样本，把预生成成本压到几乎可忽略。
-    - 核心思路：用 $q$ 代入 Eq. 11 得到 lookahead reward $\tilde r_t^\lambda$（Definition 3.2），其引导项等价于 $s\cdot\nabla_{\mathbf{x}_t}\log\tfrac{q^r(\mathbf{x}_t\mid\mathbf{c})}{q(\mathbf{x}_t\mid\mathbf{c})}$——即把"弱采样器在 reward 下的密度变化"作为引导信号转移到强采样器；这正是 weak-to-strong generalization 的标准形式，权重 $s$ 可灵活放缩。
-    - 设计动机：若坚持用完整的 $p_\theta$ 预生成 $n$ 个样本，方法依然慢。Lookahead 把弱解析力（几步求解器）变成 reward 信号的"探针"，把强采样器（完整 50/100 步反向）当作信号"执行器"，既保留高质量目标分布，又把 EFR 估计成本摊薄到一次性、可缓存的预处理上。
+光把基底换好还不够，若仍坚持用完整的 $p_\theta$ 跑 $n$ 个先验样本，预处理依旧很慢。LiDAR 干脆用便宜的弱采样器 $q(\mathbf{x}_0\mid\mathbf{c})$（DPM-3/5、LCM-4、DMD-1 等几步求解器）近似昂贵的 $p_\theta$ 来产生 marginal 样本。把 $q$ 代入重写式（Eq. 11）得到 lookahead reward $\tilde r_t^\lambda$（Definition 3.2），其引导项恰好等价于 $s\cdot\nabla_{\mathbf{x}_t}\log\tfrac{q^r(\mathbf{x}_t\mid\mathbf{c})}{q(\mathbf{x}_t\mid\mathbf{c})}$——也就是把"弱采样器在 reward 下的密度变化"当作信号、迁移到强采样器身上，引导尺度 $s$ 可自由放缩。这正是 weak-to-strong generalization 的标准形式：弱解算器只当 reward 信号的"探针"，完整 50/100 步反向采样当"执行器"，目标分布仍由强采样器把控，而 EFR 估计成本被压成一次性、可缓存的预处理。
 
-3. **导数自由的闭式 softmax 引导（Theorem 3.3）**:
+**3. 导数自由的闭式 softmax 引导（Theorem 3.3）：彻底消灭反传。**
 
-    - 功能：把目标 Stein score 的梯度 $\nabla_{\mathbf{x}_t}\hat r_t^\lambda$ 写成纯代数表达式，彻底消灭神经反传，对 reward 是否可微无要求。
-    - 核心思路：在 Eq. 11 的有限样本估计上直接求导得到 $\sum_{i=1}^n (w_i^r - w_i)\hat{\mathbf{x}}_0^i / \sigma_t^2$，其中 $w_i^r = \mathrm{Softmax}_i(\lambda r_i - \|\mathbf{x}_t-\hat{\mathbf{x}}_0^i\|^2/2\sigma_t^2)$、$w_i = \mathrm{Softmax}_i(-\|\mathbf{x}_t-\hat{\mathbf{x}}_0^i\|^2/2\sigma_t^2)$。第一个 softmax 同时考虑 reward 高低和到 $\mathbf{x}_t$ 的距离，第二个只看距离；两者之差即"reward 让我应该多偏向哪个 lookahead 样本"。当 $r_i$ 高时 $w_i^r > w_i$，引力推 $\mathbf{x}_t$ 朝 $\hat{\mathbf{x}}_0^i$ 走，反之斥之。
-    - 设计动机：完美对应论文 Table 1 同时满足的 Efficient-Rollout / Finite i.i.d. / No-Taylor / No-BackPropagation 四个属性，是 LiDAR 工程实用的关键——9.5× 加速、不增显存、能用任意黑盒 reward 全靠这步。
+有了前两步，引导梯度就能写成纯代数式，不再碰任何神经网络反向传播。在 Eq. 11 的有限样本估计上直接求导，得到 $\nabla_{\mathbf{x}_t}\hat r_t^\lambda = \sum_{i=1}^n (w_i^r - w_i)\hat{\mathbf{x}}_0^i / \sigma_t^2$，其中 $w_i^r = \mathrm{Softmax}_i(\lambda r_i - \|\mathbf{x}_t-\hat{\mathbf{x}}_0^i\|^2/2\sigma_t^2)$ 同时按 reward 和到 $\mathbf{x}_t$ 的距离加权，$w_i = \mathrm{Softmax}_i(-\|\mathbf{x}_t-\hat{\mathbf{x}}_0^i\|^2/2\sigma_t^2)$ 只看距离。两者之差 $w_i^r - w_i$ 就是"reward 要我比单纯就近时更偏向哪个 lookahead 样本"：$r_i$ 高时 $w_i^r > w_i$，把 $\mathbf{x}_t$ 朝 $\hat{\mathbf{x}}_0^i$ 拉，反之推开。正是这条闭式同时满足论文 Table 1 的 Efficient-Rollout / Finite i.i.d. / No-Taylor / No-BackPropagation 四项性质，9.5× 加速、不增显存、能套任意黑盒 reward 全靠它。
 
 ### 损失函数 / 训练策略
-LiDAR 完全是 *training-free* 测试时方法，不引入任何 loss 与参数更新。关键超参为：lookahead 解算器步数 $\delta$、lookahead 样本数 $n$、reward 温度 $\lambda$、引导尺度 $s$，目标采样总步数 $\tau$。论文给出两个 scaling law：随 $\delta$ 增大 $D_{TV}\le O(1/\sqrt{\delta})$（Theorem 3.4），随 $n$ 增大有限样本误差以 $1/\sqrt n$ 收敛到 lookahead 目标（Theorem 3.5），实践上 $n=50$ 已足够。
+LiDAR 是纯 *training-free* 测试时方法，不引入任何 loss 与参数更新。关键超参为 lookahead 解算器步数 $\delta$、lookahead 样本数 $n$、reward 温度 $\lambda$、引导尺度 $s$ 和目标采样总步数 $\tau$。论文给了两条 scaling law 来指导预算分配：随 $\delta$ 增大有 $D_{TV}\le O(1/\sqrt{\delta})$（Theorem 3.4），随 $n$ 增大有限样本误差以 $1/\sqrt n$ 收敛到 lookahead 目标（Theorem 3.5），实践上 $n=50$ 已足够。
 
 ## 实验关键数据
 

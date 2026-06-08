@@ -51,51 +51,31 @@ tags:
 
 ### 整体框架
 
-论文建立了DDIM → PIFS的数学映射，核心链路为：
+这篇论文不训练新模型，而是给已经训练好的扩散模型套一层新的数学透镜：把DDIM的确定性反向链 $\Phi = \Phi_1 \circ \cdots \circ \Phi_T$ 整体看成一个分区迭代函数系统(PIFS)——分形图像压缩里用来刻画局部自相似性的经典结构。一旦接受这个视角，每一步去噪算子 $\Phi_t$ 的Jacobian就能被拆成patch内的对角块和patch间的交叉块，而这两块的收缩还是膨胀，完全由三个只依赖噪声调度和数据协方差的闭式常量决定，根本不用跑一次模型。
 
-1. **收缩结构分析**(§3)：推导单步DDIM算子的收缩条件
-2. **双阶段结构分析**(§4)：从数据统计和架构属性计算常量，解释两个去噪阶段
-3. **吸引子几何**(§5)：通过Lyapunov谱计算PIFS吸引子的分形维度
-4. **实用设计准则**(§6)：从PIFS框架推导三个优化准则，统一解释四种经验设计
+沿着这条主线，分析分四层展开：先建立单步算子的收缩条件，回答"什么时候图像结构会被压实、什么时候会被展开"(§3)；再用真实数据统计和网络的抑制行为，把整条采样链切成早期组装全局上下文、后期合成局部细节的两个阶段(§4)；接着用Lyapunov谱算出PIFS吸引子（即生成流形）的分形维度(§5)；最后反过来把这套几何语言变成实用准则，统一解释cosine offset、Min-SNR加权等四个原本各自为政的经验技巧(§6)。
 
 ### 关键设计
 
-#### 设计一：双重收缩条件 (EC) 和 (PC)
+**1. 双重收缩条件 (EC) 与 (PC)：用一个阈值判断每步到底压不压得动结构。**
 
-**功能**：为DDIM单步算子 $\Phi_t(x) = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} x + b_t \hat\varepsilon_\theta(x,t)$ 建立两种收缩性条件。
+要分析采样链先得回答最基础的问题——单步算子 $\Phi_t(x) = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} x + b_t \hat\varepsilon_\theta(x,t)$ 到底是把点拉近（收缩、组装结构）还是推远（膨胀、注入细节）。看它的Jacobian $J_x\Phi_t = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} I + b_t J_x\hat\varepsilon_\theta$ 就清楚了：第一项是尺度 $>1$ 的恒等缩放，天然膨胀；第二项因 $b_t<0$ 是score修正带来的收缩，谁占上风取决于score Jacobian的谱。论文据此给出两套判据。全局的欧氏收缩(EC)定义了一个只依赖噪声调度的收缩阈值 $L_t^* = \frac{\sqrt{\bar\alpha_{t-1}/\bar\alpha_t} - 1}{|b_t|}$，$L_t^*$ 越小这一步越容易收缩。但自然图像的自相似性是局部的而非全局的，所以真正关键的是patch级的块-最大范数收缩(PC)：把Jacobian按patch分成对角块 $\kappa_t^{\mathrm{diag}}$ 和交叉块 $\delta_t^{\mathrm{cross}}$，只要 $\kappa_t^{\mathrm{diag}} + \delta_t^{\mathrm{cross}} < 1$ 就保证patch层面的收缩。这正是经典PIFS比全局IFS强的地方——它允许各patch按自己的节奏收缩，而这恰好对应后面观察到的"patch逐个解锁"现象。
 
-**核心思路**：Jacobian $J_x\Phi_t = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} I + b_t J_x\hat\varepsilon_\theta$ 包含膨胀项（尺度 $>1$ 的恒等缩放）和收缩项（$b_t < 0$ 的score修正），收缩性取决于score Jacobian的代数性质。
+**2. 方向性抑制场与分层释放：解释为什么早期对角块卡在 $\approx 1$、后期才逐个膨胀。**
 
-- **(EC) 欧氏收缩**：全局条件，定义收缩阈值 $L_t^* = \frac{\sqrt{\bar\alpha_{t-1}/\bar\alpha_t} - 1}{|b_t|}$，仅依赖噪声调度
-- **(PC) 块-最大范数收缩**：patch级条件，将Jacobian分解为对角块 $\kappa_t^{\mathrm{diag}}$ 和交叉块 $\delta_t^{\mathrm{cross}}$，要求 $\kappa_t^{\mathrm{diag}} + \delta_t^{\mathrm{cross}} < 1$
+纯高斯基线给出的预测是"灾难性"的：对角块谱范数 $f_t(\lambda_k)$ 在所有CIFAR-10 patch上都 $>1$，意味着每步都该立刻膨胀、细节早早炸开，这和实测的双阶段行为对不上。论文的解释是训练把网络偏离了高斯——它学到一个方向性抑制场 $S_{k,t}(x) = |b_t| \langle v_k^{(1)}, [\nabla_x \Delta_t(x)]_{kk} v_k^{(1)} \rangle$，其中 $\Delta_t$ 是score网络相对高斯score的非高斯修正、$v_k^{(1)}$ 是该patch的主方向。这个抑制场把有效Rayleigh商硬压到1以下，于是对角块在早期被钉在 $\approx 1$ 而非膨胀。更妙的是抑制不是同时撤掉的：分层释放定理（Stratified Crossover, Thm 22）证明在边际单调性条件(MM)下，低方差patch会先释放抑制、高方差patch后释放，形成严格按方差排序的解锁次序。这就给出了Regime II里patch逐个"解锁"、细节由粗到细合成的结构性来源。
 
-**设计动机**：自然图像具有局部自相似性（非全局），需要patch级收缩保证而非全局收缩。这正是经典PIFS优于IFS的地方。
+**3. 吸引子的Kaplan-Yorke维度公式：不跑模型就能预测生成流形的分形维度。**
 
-#### 设计二：方向性抑制场与分层释放
-
-**功能**：引入方向性抑制场 $S_{k,t}(x) = |b_t| \langle v_k^{(1)}, [\nabla_x \Delta_t(x)]_{kk} v_k^{(1)} \rangle$，量化训练score网络对每个patch的非高斯修正。
-
-**核心思路**：高斯基线下，对角块谱范数 $f_t(\lambda_k)$ 在所有CIFAR-10 patch上都 $>1$（膨胀），但训练后网络学习到抑制场 $S_{k,t} > 0$，将有效Rayleigh商压到1以下。关键定理（Stratified Crossover, Thm 22）证明：在Margin Monotonicity条件(MM)下，低方差patch先释放抑制、高方差patch后释放，产生严格的方差顺序化释放。
-
-**设计动机**：解释Regime I中对角块保持 $\approx 1$ 而非按高斯预测膨胀的现象，以及Regime II中patch逐个"解锁"细节合成的机制。
-
-#### 设计三：吸引子的Kaplan-Yorke维度公式
-
-**功能**：推导PIFS吸引子的分形维度，建立离散Moran方程 $\prod_t f_t(\lambda^{**}) = 1$ 求解全局膨胀阈值 $\lambda^{**}$。
-
-**核心思路**：在高斯数据 + 块对角协方差假设下，Lyapunov谱完全由每步对角膨胀函数 $f_t(\lambda)$ 确定。对角方向 $\lambda_k > \lambda^{**}$ 的为膨胀方向，KY维度公式为：
+既然每步的收缩/膨胀都有闭式刻画，整条链的吸引子几何也就能算出来。在高斯数据加块对角协方差的假设下，Lyapunov谱完全由各步对角膨胀函数 $f_t(\lambda)$ 决定；把所有步的贡献乘起来得到离散Moran方程 $\prod_t f_t(\lambda^{**}) = 1$，其解 $\lambda^{**}$ 就是区分膨胀与收缩方向的全局阈值——协方差特征值 $\lambda_k > \lambda^{**}$ 的方向才膨胀。由此得到Kaplan-Yorke维度的闭式公式：
 
 $$d_{\mathrm{KY}} = N^+ + \frac{\sum_{k:\lambda_k > \lambda^{**}} n_k \Lambda(\lambda_k)}{|\Lambda_{k^*}^-|}$$
 
-对非高斯数据，抑制修正版本 $d_{\mathrm{KY}}^{\mathrm{eff}} \leq d_{\mathrm{KY}}$，抑制只会缩小吸引子维度。
+其中 $N^+$ 数膨胀方向、分式补上分维的小数部分。把上一条的抑制场代进去得到的修正版 $d_{\mathrm{KY}}^{\mathrm{eff}} \leq d_{\mathrm{KY}}$，说明训练学到的抑制只会让吸引子变"瘦"、不会变胖。这条公式把抽象的噪声调度选择直接翻译成了生成流形的几何尺寸，是后面推导设计准则的支点。
 
-**设计动机**：提供无需模型评估的吸引子维度预测，连接噪声调度设计与生成流形的几何性质。
+### 损失函数 / 训练策略
 
-### 损失函数/训练策略
-
-- **Collage类比**（Thm 12）：DSM训练目标等价于PIFS的collage误差最小化（up to SNR加权）
-- **$L^2$–$\mathcal{W}_1$ Bridge**（Thm 14）：训练损失控制到PIFS不动点的Wasserstein-1距离
-- **PIFS正则化器**（Thm 15）：$\mathcal{L}_{\mathrm{PIFS}}(\theta) = \mathcal{L}(\theta) + \mu_{\mathrm{reg}} \sum_{t,k,j\neq k} \|[J_x\hat\varepsilon_\theta]_{kj}\|_F^2$，直接强制(PC)条件，可通过JVP/VJP高效计算
+这套PIFS视角同样能落到训练目标上。论文证明去噪score matching(DSM)目标本质就是PIFS的collage误差最小化（Collage类比, Thm 12，差一个SNR加权），即训练在做的事情等价于把每个patch往它的自相似映射上对齐；进一步地 $L^2$–$\mathcal{W}_1$ Bridge（Thm 14）说明训练损失直接控制了采样分布到PIFS不动点的Wasserstein-1距离。顺着这条线还能反推出一个显式正则项 $\mathcal{L}_{\mathrm{PIFS}}(\theta) = \mathcal{L}(\theta) + \mu_{\mathrm{reg}} \sum_{t,k,j\neq k} \|[J_x\hat\varepsilon_\theta]_{kj}\|_F^2$（Thm 15），它惩罚交叉块范数、直接强制(PC)条件，且能用JVP/VJP高效估计，不必显式构造Jacobian。
 
 ## 实验关键数据
 
@@ -127,7 +107,7 @@ $\hat\delta_t^{\mathrm{cross}}$ 从 $t=980$ 到 $t=20$ 增长218倍。Spearman $
 
 ### 消融实验
 
-#### (PC)条件crossover验证
+**(PC)条件crossover验证**
 
 | $t$ | 阶段 | 平均margin slack | 违反比例 |
 |---|---|---|---|
@@ -138,11 +118,11 @@ $\hat\delta_t^{\mathrm{cross}}$ 从 $t=980$ 到 $t=20$ 增长218倍。Spearman $
 
 Crossover发生在 $t \in [160, 200]$，约40步窗口。Regime I全面违反(PC)，Regime II全面满足。
 
-#### 分层释放的Spearman相关
+**分层释放的Spearman相关**
 
 在crossover区间（$t=240,260$），$\rho(\hat\lambda_k, \hat\kappa_t^{\mathrm{diag}})$ 为负且显著（$p \leq 0.047$），确认低方差patch先释放。深度Regime II（$t=40$）回到正 $\rho = 0.771$（$p=0.001$），高斯排序恢复。
 
-#### 抑制修正KY维度（CelebA-HQ实验）
+**抑制修正KY维度（CelebA-HQ实验）**
 
 在google/ddpm-celebahq-256模型上，$\lambda_k \in [38.7, 231.7]$，高斯基线预测 $d_{\mathrm{KY}} = 12288$（全维膨胀），但抑制修正Moran阈值 $\lambda^{***} = 500 \gg \lambda_{\max}$，预测 $d_{\mathrm{KY}}^{\mathrm{eff}} = 0$。全部16个patch的预测Lyapunov指数与实测指数符号一致（100%）。
 

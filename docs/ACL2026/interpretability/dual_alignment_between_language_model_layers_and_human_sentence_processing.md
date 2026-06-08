@@ -41,31 +41,15 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三步，全部围绕"层级 surprisal"做心理语言学回归：
-
-1. **抽内部 surprisal**：对每个 LM、每个 token、每一层 $l$，用 logit-lens $P^{(l)}(W = w_t \mid w_{<t}) = \text{softmax}(W_U \text{LN}(h_{t-1}^{(l)}))_{\text{id}(w_t)}$，得到 $S^{(l)}_t = -\log P^{(l)}(w_t \mid w_{<t})$；早期层有 logit-lens 不可靠的问题，作者补做 tuned-lens 验证结论不变。
-2. **句法歧义阅读数据上的 layer-by-layer slowdown 回归**：用 Huang et al. (2024) 的 5 种句法挑战构造（MVRR / NPS / NPZ / RC / Attachment）120 对 D+ / D− 句子 + 2K 人 self-paced reading 实验得到的 1.2M token-level RT，对每一层独立拟合线性回归 $\hat{y} = \beta_0 + \beta_1 \cdot \text{Surprisal} + \beta_2 \cdot \text{Length} + \beta_3 \cdot \text{LogFreq} + \ldots$（含 spillover 项），在 disambiguating point $t^*$ 和 $t^*+1$ 处汇总，比较模型估出的 slowdown 与真人 slowdown。
-3. **层间预测更新量当 RT 特征**：定义 surprisal update $\text{SU}(w_t \mid w_{<t}) = S^{\text{shallow}}_t - S^{\text{deep}}_t = \log \frac{Q_t(w_t)}{P_t(w_t)}$，并扩展成全分布 KL $\text{KL}(Q_t \| P_t)$ 和对称版 JS $\text{JS}(Q_t \| P_t)$；把它们替换/叠加到 surprisal 上看 PPP 增益。
+方法全程不训练模型，只把 LM 当探针、在阅读时间数据上跑回归。先用 logit-lens 把每个 LM、每个 token、每一层的隐状态都解码成"内部 surprisal"，让 surprisal 从单一标量变成一条按层展开的曲线；再在句法歧义阅读数据上逐层独立拟合"surprisal → slowdown"的线性回归，看哪一层估出的减速最接近真人，并用 D+/D− × ROI/¬ROI 四象限隔离"深层优势"到底出现在哪种数据点；最后把"浅层到深层的预测更新量"（SU/KL/JS）显式抽出来，当作 surprisal 之外的新阅读时间预测特征。输入是文本 token 序列，输出是逐层 surprisal、四象限相关分析和层间更新量对 reading-time 的解释力增益。
 
 ### 关键设计
 
-1. **Logit-Lens 抽层级 surprisal + Tuned-Lens 鲁棒性补充**：
+**1. Logit-Lens 抽层级 surprisal + Tuned-Lens 鲁棒性补充：把"哪一层在预测下一个词"展开成层级曲线。** 要问"人类的快/慢处理对应模型的哪些层"，前提是先把"模型预测"从黑盒拆成按层的序列，这是整篇论文的视角基石。具体做法是对每一层第 $i$ 个 token 的隐状态 $h^{(l)}_{i}$ 套用模型自带的 unembedding 矩阵（带 LayerNorm），得到该层对下一个 token 的预测分布，再算目标词的层级 surprisal $S^{(l)}_t = -\log P^{(l)}(w_t \mid w_{<t})$，subword 用联合概率累加。早期层的 logit-lens 偏置较大，作者用 Tuned-Lens (Belrose 2023) 重复整套实验，确认主结论在更可靠的探针下依然稳定。
 
-    - 功能：把"哪一层在预测下一个词"显式抽出来，让 surprisal 不再是单一标量而是按层的曲线。
-    - 核心思路：对每一层第 $i$ 个 token 的隐状态 $h^{(l)}_{i}$ 应用模型自带的 unembedding 矩阵 $W_U$（带 LayerNorm），得到该层对下一个 token 的预测分布，再算该词的 $-\log P^{(l)}$。subword 用联合概率累加；早期层 logit-lens 偏置大，作者用 Tuned-Lens (Belrose 2023) 重复实验确认主结论稳定（附录 B.1）。
-    - 设计动机：把"模型预测"从黑盒展开成层级序列后，才能问"人类的快/慢处理对应模型的哪些层"。这是整个 paper 的视角基石。
+**2. D+/D− × ROI/¬ROI 四象限 PPP 分析：精确隔离"深层优势"只出现在歧义解决处。** 如果只看单一平均指标，"层深带来增益"这个效应会被其它数据点稀释掉，看不出来。论文把每个 token 按是否处于歧义句（D+ vs D−）× 是否落在 disambiguating window（ROI: $t^*-2$ 到 $t^*+2$ vs ¬ROI）四分，对每一层算 PPP $\Delta\mathrm{LL} = \mathrm{LL}_{\text{full}} - \mathrm{LL}_{\text{baseline}}$，再报每个 model × 构造 × 象限下"层深与 PPP 的 Pearson 相关"。dual alignment 假设预测：人类只在歧义解决处才切到深层重分析，因此理论上只有 D+ ∩ ROI 这一格应该出现"深层更好"的强正相关——四象限设计正是为了把这个 signature 干净地验出来。
 
-2. **D+/D− × ROI/¬ROI 四象限 PPP 分析**：
-
-    - 功能：精确隔离"层深 → PPP 提升"这一趋势只在哪种数据点上出现。
-    - 核心思路：把每个 token 按是否处于 ambiguous 句 (D+ vs D−) × 是否在 disambiguating window 内 (ROI: $t^*-2$ 到 $t^*+2$ vs ¬ROI) 四分；对每一层算 PPP $\Delta\text{LL} = \text{LL}_{\text{full}} - \text{LL}_{\text{baseline}}$；最后报每个 model × 每个构造 × 每个象限的"layer depth 与 PPP 的 Pearson 相关"。如果只有 D+ ∩ ROI 一格出现强正相关，就说明"深层优势"是 garden-path 处理的 signature。
-    - 设计动机：避免单一指标平均掉所有效应；这个 2×2 设计直接验证 dual alignment 假设——理论上人类在歧义解决处才切换到 deep 模式，所以 D+ ∩ ROI 是唯一应该出现"深层更好"的格子。
-
-3. **Probability-Update 三度量（SU / KL / JS）作为新 RT 特征**：
-
-    - 功能：把"浅深层之间的预测差异"作为一个独立的 cognitive cost 代理。
-    - 核心思路：定义三种度量——(i) **SU** 只在目标词位置上看 $\log Q_t(w_t)/P_t(w_t)$；(ii) **KL** 全词表上算 $\mathbb{E}_{w \sim Q_t}[\text{SU}(w)]$；(iii) **JS** 是对称版。$P_t$ 取自浅层 logit-lens，$Q_t$ 取自最终层。回归时用 z-score normalize 每层 surprisal 以消除 scale 差异。最后把这些量替换或叠加在 surprisal 上看 PPP。
-    - 设计动机：作者的解释模型是 "shallow predicts first → deep revises"，那"被 revise 的幅度"本身就应该是 effort 的代理；这等价于把 Li & Futrell (2024) 的"shallow vs deep processing"思想用层级 surprisal 数值化。JS 比 KL 多了对称性、比 SU 多了全分布信息，因此实测表现最好。
+**3. Probability-Update 三度量（SU / KL / JS）作为新 RT 特征：把"浅深层之间的预测差"数值化成认知代价。** 作者的解释模型是"shallow 先预测、deep 再修正"，那"被修正的幅度"本身就该是 effort 的代理，于是把它抽成独立特征。论文定义三种度量：SU 只在目标词位置看 $\mathrm{SU}(w_t) = \log \frac{Q_t(w_t)}{P_t(w_t)}$；KL 在全词表上算 $\mathrm{KL}(Q_t \| P_t) = \mathbb{E}_{w \sim Q_t}[\mathrm{SU}(w)]$；JS 是对称版 $\mathrm{JS}(Q_t \| P_t)$。其中 $P_t$ 取自浅层 logit-lens、$Q_t$ 取自最终层，回归前对每层 surprisal 做 z-score 归一以消掉 scale 差异。JS 比 KL 多了对称性、比 SU 多了全分布信息，因此实测在 RoI 区域提供 surprisal 之外最强的额外解释力；这一步等价于把 Li & Futrell (2024) 的"shallow vs deep processing"思想用层级 surprisal 落成可计算的 metric。
 
 ### 损失函数 / 训练策略
 - **不做训练，纯探针**：作者全程不微调 LM，只用 logit-lens / tuned-lens 抽层级输出，再在 reading-time 数据上跑线性回归。

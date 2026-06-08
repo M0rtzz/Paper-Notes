@@ -41,38 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：自然语言查询 $q$。输出：一份可在浏览器中渲染的 HTML/CSS/JS 界面 $u^*$。Pipeline 由 5 个 LLM 调用步骤串成：
 
-1. **Requirement specification**：先把 $q$ 翻译成结构化需求规范（目标、特性、UI 组件、交互风格、解题策略），作为自然语言意图到形式化设计之间的桥。
-2. **结构化表示生成**：基于需求规范，生成"交互流图 $\mathcal{G}=(\mathcal{V},\mathcal{T})$ + 一组 FSM $\mathcal{M}=(\mathcal{S},\mathcal{E},\delta,s_0)$"。
-3. **UI 代码合成**：把"query + 规范 + 结构表示 + 预置组件库（时钟、地图、计算器、视频播放器、图表等）+ exa.ai 检索到的相关 UI 范例"全部塞给 LLM，输出可执行 HTML/CSS/JS 并渲染。
-4. **自适应奖励函数构造**：再用 LLM 为本条 query 现场设计一组带权细粒度评估维度（如"Visual Structure / Explain Physics Concept / Clarity"）。
-5. **迭代精化**：每轮采样多个候选 UI，用上述 reward 打分（0–100），选最高分作为下一轮的种子并喂入打分理由，直至最高分 $\geq 90$ 或达到 5 轮。
-
-系统在 OpenCanvas 框架上实现，默认主干为 Claude 3.7。
+GenUI 把"为查询生成回答"重新定义为"为查询在线生成一个可交互界面"：输入是一条自然语言查询 $q$，输出是一份可直接在浏览器中渲染的 HTML/CSS/JS 界面 $u^*$。整条推理时 pipeline 由五次 LLM 调用串成——先把 $q$ 翻译成结构化需求规范（目标、特性、UI 组件、交互风格、解题策略），据此生成"交互流图 + 有限状态机"两层骨架，再把规范、骨架、预置组件库（时钟、地图、计算器、图表等）与 exa.ai 检索到的相关 UI 范例一起喂给 LLM 合成可执行代码，最后为本条 query 现场构造一组带权 rubric 作奖励，驱动多轮 generate→evaluate→regenerate 循环把界面打磨到位。系统在 OpenCanvas 框架上实现，默认主干为 Claude 3.7，全程不更新任何权重。
 
 ### 关键设计
 
-1. **结构化界面表示（Interaction Flow + FSM）**:
+**1. 结构化界面表示：用 Interaction Flow + FSM 当生成骨架。**
 
-    - 功能：作为 LLM 生成 UI 代码前的"骨架蓝图"，把"用户路径"和"组件行为"分层显式建模。
-    - 核心思路：高层 *Interaction Flow* 是有向图 $\mathcal{G}=(\mathcal{V},\mathcal{T})$，节点 $\mathcal{V}$ 是 UI 视图或子目标（如 Home View → Explore Tutorials → Run Simulation → Glossary Lookup），边 $\mathcal{T}$ 是由点击/导航触发的转移；低层 *FSM* 把每个 UI 组件建模为 $\mathcal{M}=(\mathcal{S},\mathcal{E},\delta,s_0)$，$\mathcal{S}$ 是原子状态（如 `isModalOpen=true`），$\mathcal{E}$ 是用户事件，$\delta:\mathcal{S}\times\mathcal{E}\to\mathcal{S}$ 是转移函数，$s_0$ 是初态。
-    - 设计动机：直接让 LLM 端到端生成交互式界面，搜索空间巨大且状态/事件容易缺失；用 FSM 把"组件在哪个状态、看到什么事件、应转到哪个状态"硬性约束下来，可以显著提升交互正确性和可解释性。消融显示，相对纯自然语言描述，该结构化表示把整体胜率从 13% 提升到 17%（loss 78% vs 82%）。
+让 LLM 端到端直接吐交互式界面，搜索空间巨大且状态/事件极易缺失，常常生成出"点了没反应、弹窗关不掉"的死界面。GenUI 在代码合成之前先搭两层显式骨架：高层 *Interaction Flow* 是一张有向图 $\mathcal{G}=(\mathcal{V},\mathcal{T})$，节点 $\mathcal{V}$ 是 UI 视图或子目标（如 Home View → Explore Tutorials → Run Simulation → Glossary Lookup），边 $\mathcal{T}$ 是由点击/导航触发的转移，刻画"用户会走哪条路径"；低层把每个 UI 组件建模为有限状态机 $\mathcal{M}=(\mathcal{S},\mathcal{E},\delta,s_0)$，其中 $\mathcal{S}$ 是原子状态（如 `isModalOpen=true`），$\mathcal{E}$ 是用户事件，转移函数 $\delta:\mathcal{S}\times\mathcal{E}\to\mathcal{S}$ 规定"组件在哪个状态、看到什么事件、应转到哪个状态"，$s_0$ 是初态。
 
-2. **自适应奖励函数（Adaptive Reward）**:
+把"用户路径"和"组件行为"分层硬约束下来，相当于给代码 LLM 喂了一份 interface-level CoT，交互正确性和可解释性都显著提升。消融显示，相对纯自然语言描述，该结构化表示把整体胜率从 13% 提升到 17%。
 
-    - 功能：为每条 query 即时构造一组带权 rubric，给候选 UI 打 0–100 的综合分。
-    - 核心思路：LLM 输出一组评估维度，每维含 `name / description / criteria / weight` 四字段，最终综合分 $R(u)=\sum_i w_i\cdot s_i(u)$。例如对 "理解量子物理" 这种 query，会自动加入 "Interactive models effectively demonstrate phenomena like wave-particle duality" 这种意图敏感的 criteria，迫使 UI 真的去可视化"波粒二象性"。
-    - 设计动机：传统通用 UI 启发式（可用性、信息组织等）无法区分不同任务的真实诉求；query-specific 的 rubric 给出"意图对齐"的奖励信号。消融显示，把 adaptive 换成静态 reward，整体胜率下降 17%，且所有 7 个维度全部退化。
+**2. 自适应奖励函数：给每条 query 现场写评分标准。**
 
-3. **迭代精化循环（Iterative Refinement）**:
+传统通用 UI 启发式（可用性、信息组织等）是一把尺子量所有任务，无法区分"理解量子物理"和"今天天气"在交互上的真实诉求。GenUI 改用 LLM 为当前 query 即时生成一组评估维度，每维含 `name / description / criteria / weight` 四字段，候选界面 $u$ 的综合分为各维加权和 $R(u)=\sum_i w_i\cdot s_i(u)$（每维 0–100）。例如对量子物理这条 query，rubric 会自动加入 "Interactive models effectively demonstrate phenomena like wave-particle duality" 这样意图敏感的 criteria，逼着生成的界面真的去可视化"波粒二象性"，而非只堆文字。
 
-    - 功能：用 reward 把 UI 从粗到精打磨，类似 "LLM Best-of-N + 反馈再生"。
-    - 核心思路：第 $t$ 轮采样 $K$ 个候选 $\{u^t_k\}$，按 reward 选 $u^t_*=\arg\max_k R(u^t_k)$，把 $u^t_*$ 及其打分理由（评分维度上的薄弱点）一并喂入第 $t{+}1$ 轮的 prompt，直至 $R\geq 90$ 或 $t=5$ 停止。
-    - 设计动机：UI 设计天然是迭代过程；一次性生成的代码常出现布局拥挤、缺少 onboarding、信息密度失衡等问题。消融显示，相对 one-shot，迭代精化在所有 7 个感知维度上一致提升，整体胜率 +14%，第 2、3 轮 LLM reward 分分别再涨 +1.2% 和 +4.9%。
+这本质是一种零训练成本的 task-conditional reward modeling，给出"意图对齐"而非"通用美观"的奖励信号。消融显示，把 adaptive 换成静态 reward，整体胜率下降 17%，且全部 7 个感知维度一致退化——奖励"该看什么"比"打磨几次"更关键。
+
+**3. 迭代精化循环：用奖励把界面从粗到精打磨。**
+
+一次性生成的界面常有布局拥挤、缺少 onboarding、信息密度失衡等问题，而 UI 设计天然是迭代过程。GenUI 在推理时做 reward-guided best-of-N：第 $t$ 轮采样 $K$ 个候选 $\{u^t_k\}$，按奖励选出 $u^t_*=\arg\max_k R(u^t_k)$，再把这个种子连同它在各评分维度上的薄弱点理由一起喂入第 $t{+}1$ 轮 prompt，让下一轮针对性补强，直到最高分 $R\geq 90$ 或迭代满 5 轮停止。
+
+消融显示，相对 one-shot，迭代精化在所有 7 个感知维度上一致提升，整体胜率 +14%，且第 2、3 轮的 LLM reward 分分别再涨 +1.2% 和 +4.9%，说明反馈再生确实在持续收敛而非空转。
+
+### 一个完整示例
+
+以查询 $q=$"我想理解量子物理"为例：① 需求规范阶段 LLM 把它展开为"目标=建立波粒二象性直觉、组件=交互式模拟 + 概念词条、风格=探索式"；② 骨架阶段画出 Home → 双缝实验模拟 → 概念词条查询的 Interaction Flow，并为模拟器组件定义 FSM（`idle`→点击发射→`running`→粒子落屏→`measured`）；③ 代码合成阶段结合预置图表组件与检索到的科普 UI 范例生成首版 HTML/JS；④ 奖励阶段现写出含 "Visual Structure / Explain Physics Concept / Clarity" 的 rubric；⑤ 迭代阶段发现首版"模拟太抽象、缺少粒子轨迹动画"，下一轮据此补强，直到综合分越过 90，输出最终界面 $u^*$。整个过程对用户透明，前后约几分钟。
 
 ### 损失函数 / 训练策略
-方法本身 *training-free*，不更新任何 LLM 权重；所有"学习"都发生在推理时的 reward-guided 自我精化循环里。Reward 由 LLM 即时生成，停止条件为 $R\geq 90$ 或迭代 5 次；生成主干为 Claude 3.7（消融与对比时也用 GPT-4o 测 ConvUI）。
+
+方法本身 *training-free*，不更新任何 LLM 权重；所有"学习"都发生在推理时的 reward-guided 自我精化循环里。奖励由 LLM 即时生成，停止条件为 $R\geq 90$ 或迭代 5 次；生成主干默认 Claude 3.7（消融与对比时也用 GPT-4o 测 ConvUI）。
 
 ## 实验关键数据
 

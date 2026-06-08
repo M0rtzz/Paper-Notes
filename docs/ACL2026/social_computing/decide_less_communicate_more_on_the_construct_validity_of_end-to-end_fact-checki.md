@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **AI-in-the-loop 专家标注：用机器卸载苦力、把判断留给人**：
+**1. AI-in-the-loop 专家标注：把苦力交给机器，只把"证据相关性 + 综合判断"留给人。**
 
-    - 功能：让医学专家可以专注于「证据相关性 + 综合」这两件只有人能做的事，把 PIO 抽取、检索、tiering 全交给 LLM / IR。
-    - 核心思路：自动 PIO 抽取使用 Duke EBM 指南改写的 prompt（附录 J），在 55 条专家校验子集上准确率 > 90%；自动检索测了 8 种 sentence-to-sentence / sentence-to-passage + query / document 组合，最终选 PIO→Abstract 的 S2S（专家相关性评分平均最高）；自动 tiering 直接按相关性把 10 abstract 分四档供专家调整。
-    - 设计动机：要测「人类 upper bound」，就必须把人类只能做的判断和其他可自动化部分隔离开 —— 否则 inter-annotator agreement 低，分不清是任务本身难还是工具不好用。
+要测的是"人类专家在最理想条件下能达成的一致性上界"，就必须把人类独有的判断和一切可自动化的环节彻底隔离——否则一旦 inter-annotator agreement 偏低，便分不清究竟是任务本身难、还是工具拖了后腿。为此 PIO 抽取、证据检索、相关性分档全部外包给 LLM / IR：自动 PIO 抽取用 Duke EBM 指南改写的 prompt（附录 J），在 55 条专家校验子集上准确率 $>90\%$；检索端比较了 8 种 sentence-to-sentence / sentence-to-passage × query / document 组合，最终选 PIO→Abstract 的 S2S（专家相关性评分平均最高）；自动 tiering 再按相关性把 10 篇 abstract 预分四档供专家微调。专家于是只需专注"这篇证据相不相关、综合起来到底支持还是反驳"这两件机器替不了的事，让 agreement 数值能干净地反映任务难度。
 
-2. **6 级细粒度 veracity 标签 + 双轨综合（Overall Support vs Expert Support）**：
+**2. 6 级细粒度 veracity 标签 + 双轨综合：把"证据说了什么"和"专家凭经验怎么看"拆成两条独立轨道。**
 
-    - 功能：捕捉「证据-基础裁决」和「专家临床经验裁决」之间的差异，避免把两种判断混为一谈。
-    - 核心思路：每个 claim 在综合阶段分两轮 —— Overall Support 只能依赖给定证据；Expert Support 可以引入临床知识。两轮各自从 6 个标签 {No Relevant Abstracts/No Expert Opinion, Refutes, Partially Refutes, Inconclusive, Partially Supports, Supports} 选一个。
-    - 设计动机：现有数据集要么只标 True/False，要么把"专家经验" 和"实证支持"混在一个标签里；拆开后才能看出"证据缺位" 和"主观裁决"哪个才是真正的瓶颈。
+现有数据集要么只标 True/False，要么把"实证支持"和"专家临床经验"混进同一个标签，导致根本看不出 disagreement 究竟源自证据缺位还是主观裁决。本文在综合阶段对每个 claim 跑两轮：Overall Support 只许依据给定的 RCT 证据，Expert Support 才允许引入临床知识；两轮各自从 6 个标签 $\{\text{No Relevant Abstracts/No Expert Opinion, Refutes, Partially Refutes, Inconclusive, Partially Supports, Supports}\}$ 里选一个。把两种判断拆开后，研究者第一次能定量看清——是"证据不足"而非"主观分歧"主导了一致性崩塌（最后一轮 25 条裁决里有 20 条落在"No Relevant Abstracts"）。
 
-3. **三轮迭代式 guideline 精修 + 解释优先**：
+**3. 三轮迭代式 guideline 精修 + 解释优先：先把可优化的工程因素挤干净，剩下的分歧才能归咎于任务定义。**
 
-    - 功能：把专家分歧的真实来源沉淀成可分析的现象（而不是把它们抹平成单一标签）。
-    - 核心思路：每轮标注后两位 co-first author 与专家集体讨论 ~4 小时；第 1 轮无 PIO 显式上下文、无 Expert Support，第 2 轮加入细化标签定义，第 3 轮做了实质性改造（用 LLM 滤掉非 RCT-可验证 claim + 重抽 PIO + 改进检索 + 加细化指南）。即便如此，第 3 轮 5 个 claim 上 Overall Support 的 Cohen $\kappa$ 仍只有 0.124，且 25 条裁决中有 20 条标为「No Relevant Abstracts」。
-    - 设计动机：作者要论证「不是工具不够好，而是任务定义本身有问题」，必须先经过多轮迭代把可优化的工程因素挤干净，剩下的 disagreement 才能归咎于 construct validity。
+作者要论证的是"不是工具不够好，而是端到端范式本身没有 construct validity"，这就要求先穷尽一切工程改进、再看残余分歧来自哪里。于是标注分三轮、每轮后两位 co-first author 与专家集体讨论约 4 小时：第 1 轮无显式 PIO 上下文、无 Expert Support 字段，第 2 轮细化标签定义，第 3 轮做了实质改造（用 LLM 滤掉非 RCT-可验证的 claim、重抽 PIO、改进检索、加细化指南）。即便把这些工程因素都拉满，第 3 轮 5 个 claim 上 Overall Support 的 Cohen $\kappa$ 仍只有 0.124，25 条裁决中 20 条标为"No Relevant Abstracts"——正因可优化的部分已被挤干，这残余的低一致性才能干净地归到 construct validity 头上。与此同时全程坚持让专家写 paragraph 级 plain-language 解释而非只打标签，因为后文发现解释比单一标签更能反映真实的共识范围。
 
 ### 损失函数 / 训练策略
 本文是 position paper + 标注研究，不涉及模型训练。

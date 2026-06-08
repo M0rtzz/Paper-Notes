@@ -40,27 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入端：采样轨迹 / 序列 $\mathbf{y}\sim\mu$（可 on-policy 也可 off-policy）、目标分布 $\pi_\star(\mathbf{y})\propto \pi_{\text{ref}}(\mathbf{y})\exp(\beta^{-1}r(\mathbf{y}))$。中间：先选定一个 $f$-散度（如 $\alpha$-散度的某个 $\alpha$），得到对应的损失函数 $\mathcal{L}_f$；如果配分函数 $Z$ 未知，则用批内 **DevGrad** 估计；如果 $\beta$ 很小，则用 **Tempered Loss** 把能量函数缩放回稳定区间。输出端：标准自动微分求 $\nabla_\theta \mathcal{L}_f$，在 GFlowNet（替换 Trajectory Balance 的平方）、Diffusion tuning、LLM 异步 RL 三套 pipeline 上即插即用。整套方法只要把原 codebase 里的一行 `(log_pi_theta - log_pi_star)**2` 换成 `L_f(log_pi_theta - log_pi_star)` 即可。
+这套方法要解决的是：现在训练 GFlowNet、扩散模型和大模型 RL 普遍用的那个"对 log-prob 之差取平方"的损失 $\mathbb{KL}_{sq}$ 只能 mode-seeking（塌到少数高奖励模式），而很多场景想要 mode-covering（采全所有候选）。作者把这个平方损失换成一个由凸函数 $f$ 决定的积分损失 $\mathcal{L}_f$，作用对象仍是 log-prob 差 $\Delta_\theta(\mathbf{y})=\log\pi_\theta(\mathbf{y})-\log\pi_\star(\mathbf{y})$，于是只要换一个 $f$（或调一个 $\alpha$ 旋钮）就能在 mode-seeking 和 mode-covering 之间连续滑动，而平方损失原有的"on-policy 梯度对齐 + off-policy 合法"两条好性质一并保留。配分函数未知时用 DevGrad 在批内估，正则系数 $\beta$ 过小时用 Tempered Loss 把能量缩回稳定区间，三套 pipeline 里只需把代码中的 `(log_pi_theta - log_pi_star)**2` 换成 `L_f(log_pi_theta - log_pi_star)` 即可。
 
 ### 关键设计
 
-1. **$f$-散度代理损失 $\mathcal{L}_f$ 与双向等价定理（Prop 4.2 + Prop 4.4）**：
+**1. $f$-散度代理损失与双向等价定理：用一个积分把平方损失推广成整族**
 
-    - 功能：把任意凸函数 $f$（且 $f(1)=0$、$f'(1)=f''(1)=1$ 归一化）映射到一个作用在 $\Delta_\theta=\log\pi_\theta-\log\pi_\star$ 上的标量损失，使 on-policy 梯度等于真 $\nabla_\theta D_f(\pi_\theta\|\pi_\star)$，且 off-policy 仍以 $\pi_\theta=\pi_\star$ 为唯一最优。
-    - 核心思路：定义 $\mathcal{L}_f(\Delta) = \int_0^{\Delta}\bigl(f'(\exp t)-f'(1)\bigr)\,dt$。代入 $f(u)=u\log u$ 立刻还原出 $\tfrac12 \Delta^2$，验证它是 $\mathbb{KL}_{sq}$ 的一般化。反方向，对任意平移不变可微损失 $\ell$，对应的 $f$-散度由 $f_\ell(u)=\lambda_1 \int_1^u \ell'(\log t)\,dt + \lambda_2(u-1)+c$ 给出，且 $f_{\mathcal{L}_f}=f$、$\mathcal{L}_{f_\ell}=\ell$ —— 平移不变损失族 $\leftrightarrow$ $f$-散度族是同一枚硬币的两面。对 $\alpha$-散度，闭式损失为 $\mathcal{L}_\alpha(\Delta)=\frac{1}{(\alpha-1)^2}e^{(\alpha-1)\Delta}-\frac{\Delta}{\alpha-1}-\frac{1}{(\alpha-1)^2}$，$\alpha\to 1$ 退化为平方损失/Trajectory Balance。
-    - 设计动机：On-policy 梯度对齐保证理论目标就是要优化的散度；平移不变性保证"加常数不变"，这正是 off-policy 仍是合法损失的来源（差一个常数 = $\log Z$ 不影响最小化）。把映射证成双射，等于宣告：用平方损失之外的任何凸损失训练 GFlowNet/LLM，本质上都在隐式优化某个 $f$-散度——以前的工作只是没意识到自己挑了哪个。
+平方损失之所以"魔法"，本质是 $f(u)=u\log u$ 的导数 $f'(u)=\log u+1$ 让 score function 的系数恰好长成 $\log\pi_\theta-\log\pi_\star$。作者顺着这条线索，对任意满足 $f(1)=0$、$f'(1)=f''(1)=1$ 归一化的凸函数 $f$，把"系数"换成 $f'(\exp t)-f'(1)$ 再对 $t$ 积分，定义出代理损失 $\mathcal{L}_f(\Delta)=\int_0^{\Delta}\bigl(f'(\exp t)-f'(1)\bigr)\,dt$（Prop 4.2）。代入 $f(u)=u\log u$ 立刻还原出 $\tfrac12\Delta^2$，说明它确实是 $\mathbb{KL}_{sq}$ 的一般化；对 $\alpha$-散度则有闭式 $\mathcal{L}_\alpha(\Delta)=\frac{1}{(\alpha-1)^2}e^{(\alpha-1)\Delta}-\frac{\Delta}{\alpha-1}-\frac{1}{(\alpha-1)^2}$，$\alpha\to 1$ 退化为平方损失即 Trajectory Balance。这样构造出来的损失同时拿到两条性质：on-policy 自动微分梯度的期望恰好等于真 $\nabla_\theta D_f(\pi_\theta\|\pi_\star)$，保证优化目标就是想要的那个散度；而损失对 $\Delta$ 平移不变（加常数不变），这正是 off-policy 仍合法的来源——差的那个常数就是 $\log Z$，不影响最小化。
 
-2. **DevGrad：把 VarGrad 推广到任意 $f$（处理未知配分函数）**：
+更进一步，作者把这个映射证成双射（Prop 4.4）：任意平移不变可微损失 $\ell$ 反过来唯一对应一个 $f$-散度 $f_\ell(u)=\lambda_1\int_1^u \ell'(\log t)\,dt+\lambda_2(u-1)+c$，且 $f_{\mathcal{L}_f}=f$、$\mathcal{L}_{f_\ell}=\ell$ 互为逆。这等于宣告：用平方损失之外的任何凸损失训练 GFlowNet/LLM，本质上都在隐式优化某个 $f$-散度，以前的工作只是没意识到自己挑了哪个——双射给出的就是一张"想要哪个 mode 行为就查哪个损失"的配方表。
 
-    - 功能：当 $\pi_\star(\mathbf{y})=\frac{1}{Z}\exp(\mathcal{R}(\mathbf{y}))$ 中 $Z$ 不可计算时（LLM RL 几乎永远如此），用批内统计量在线估计 $\log Z$ 并塞进损失，仍保留 on-policy 梯度匹配性质。
-    - 核心思路：对一个 batch $\mathcal{B}=\{\mathbf{y}_1,\dots,\mathbf{y}_B\}$，先解一维优化 $\widehat{\log Z}=\arg\min_C \tfrac{1}{B}\sum_i \mathcal{L}_f(\Delta(\mathbf{y}_i)+C)$，再带 stop-gradient 代回：$\mathcal{L}_f^{\text{DG}}(\mathcal{B},\theta)=\tfrac{1}{B}\sum_i \mathcal{L}_f\bigl(\Delta(\mathbf{y}_i)+\text{SG}[\widehat{\log Z}]\bigr)$。当 $\mathcal{L}_f(y)=y^2$ 时这就还原成方差，于是 $\widehat{\log Z}$ 是均值——经典 VarGrad；当 $\mathcal{L}_f(y)=|y|$ 时变成绕中位数的平均绝对偏差，对应 Total Variation 散度。
-    - 设计动机：批内归一化等价于对 score function 系数做 batch 中心化，这正是 VarGrad 方差缩减的来源；这里证明同样的"中心化降方差"对任何广义偏差（generalised deviation, Rockafellar 2006）成立，于是连损失替换一并解决了"$Z$ 怎么估"和"梯度方差怎么压"两个问题。Kimi K1.5/K2 用 $\bar r$ 代替 $\log Z$ 在这个框架里就是 reverse KL 下的特例近似。
+**2. DevGrad：把 VarGrad 推广到任意 $f$，顺手解决未知配分函数**
 
-3. **Tempered Loss：解决小 $\beta$ 下能量爆炸**：
+LLM RL 里 $\pi_\star(\mathbf{y})=\frac{1}{Z}\exp(\mathcal{R}(\mathbf{y}))$ 的配分函数 $Z$ 几乎永远算不出来。作者的做法是在每个 batch $\mathcal{B}=\{\mathbf{y}_1,\dots,\mathbf{y}_B\}$ 里先解一维优化 $\widehat{\log Z}=\arg\min_C\frac1B\sum_i\mathcal{L}_f(\Delta(\mathbf{y}_i)+C)$ 在线估出 $\log Z$，再带 stop-gradient 代回损失 $\mathcal{L}_f^{\text{DG}}(\mathcal{B},\theta)=\frac1B\sum_i\mathcal{L}_f\bigl(\Delta(\mathbf{y}_i)+\text{SG}[\widehat{\log Z}]\bigr)$。这一步同时压住了梯度方差：批内归一化等价于对 score function 系数做 batch 中心化，正是 VarGrad 降方差的机制，而作者证明这套"中心化降方差"对任意广义偏差（generalised deviation, Rockafellar 2006）都成立。于是当 $\mathcal{L}_f(y)=y^2$ 时 $\widehat{\log Z}$ 就是均值、损失还原成方差，正好是经典 VarGrad；$\mathcal{L}_f(y)=|y|$ 时变成绕中位数的平均绝对偏差，对应 Total Variation 散度；Kimi K1.5/K2 用平均奖励 $\bar r$ 代替 $\log Z$ 也只是 reverse KL 下的一个特例近似。换损失这一件事，把"$Z$ 怎么估"和"梯度方差怎么压"两个问题一起解决了。
 
-    - 功能：当 KL 正则系数 $\beta$ 很小（如 $0.005$）时，$\exp(\beta^{-1}r)$ 会到 $e^{200}$ 级别，直接训练数值溢出；裁剪又会丢梯度信号。Tempered Loss 把整个目标缩放到稳定区间。
-    - 核心思路：定义 tempered 分布 $\tilde p_\beta \propto p^\beta$，其能量函数 $\beta\mathcal{R}_\star=\beta\log\pi_{\text{ref}}+r$ 与 $1/\beta$ 无关；tempered 损失 $\tilde{\mathcal{L}}_{f,\beta}(\Delta)=\frac{1}{\beta}\mathcal{L}_f(\beta\Delta)$。利用"tempered log-prob 相等 $\Rightarrow$ 原始 log-prob 相等"，最优点不变；$1/\beta$ 因子保证梯度尺度不随 $\beta$ 漂移。把 $f(u)=u\log u$ 代入恰好得到 Kimi 损失 $\frac{1}{2\beta}(\beta\log\frac{\pi_\theta}{\mathcal{R}}-\log\tilde Z)^2$，配合 $\widehat{\log Z}=\bar r$ 近似就是 Kimi 实际跑的形式。
-    - 设计动机：从纯工程"trick"层面拔升为理论上有依据的稳定化手段，并把 Kimi 经验损失自然纳入框架——既证明 Kimi 设计是合理的，又解锁了同一温度调度对其它 $f$ 都成立。
+**3. Tempered Loss：小 $\beta$ 下把能量缩回数值稳定区间**
+
+KL 正则系数 $\beta$ 很小（如 $0.005$）时，目标里的 $\exp(\beta^{-1}r)$ 会冲到 $e^{200}$ 量级直接溢出，硬裁剪又会丢梯度信号。作者引入 tempered 分布 $\tilde p_\beta\propto p^\beta$，它的能量函数 $\beta\mathcal{R}_\star=\beta\log\pi_{\text{ref}}+r$ 与 $1/\beta$ 无关，对应的 tempered 损失为 $\tilde{\mathcal{L}}_{f,\beta}(\Delta)=\frac1\beta\mathcal{L}_f(\beta\Delta)$。因为"tempered log-prob 相等 $\Rightarrow$ 原始 log-prob 相等"，最优点不变；前面的 $1/\beta$ 因子又保证梯度尺度不随 $\beta$ 漂移。把 $f(u)=u\log u$ 代进去恰好得到 Kimi 损失 $\frac{1}{2\beta}\bigl(\beta\log\frac{\pi_\theta}{\mathcal{R}}-\log\tilde Z\bigr)^2$，再配 $\widehat{\log Z}=\bar r$ 近似就是 Kimi 实际在跑的形式。这一设计把原本纯工程的稳定化 trick 拔升成有理论依据的手段，同时把 Kimi 经验损失自然纳入框架，也解锁了同一套温度调度对其它 $f$ 都成立。
 
 ### 损失函数 / 训练策略
 GFlowNet 上把 Trajectory Balance 平方损失 $(\Delta(\tau,\theta,\phi))^2$ 直接替换为 $\mathcal{L}_f(\Delta(\tau,\theta,\phi))$ 即得 **$f$-Trajectory Balance**，Prop 5.1 证明 $\nabla_\theta D_f(\pi_F\|\pi_B)=\mathbb{E}_{\tau\sim\pi_{F,\theta}}[\nabla_\theta \mathcal{L}_f]$；反向策略梯度对应另一 $h(u)=\int_1^u (2-f'(1/t))\,dt$ 散度。LLM 异步 RL 端用 tempered DevGrad，不需要 clipping/importance weighting/masking；GFlowNet 端常用 $\alpha\in\{0.5, 0.75, 1.2, 2\}$，$\alpha<1$ 偏 mode-covering，$\alpha>1$ 偏 mode-seeking，训练时可对 $\alpha$ 做退火。

@@ -41,37 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-OBCache 不改变 H2O / TOVA / SnapKV / AdaKV 的 eviction 调度（即"什么时候触发裁剪"和"如何在多 head 间分配预算"），只替换它们打分函数中的 "saliency"。整体 pipeline：
-
-1. **建模**：在 token 位置 $p$ 处把扰动写成 $\widehat{\mathbf{V}} = \mathbf{V} + \delta\mathbf{V}$、$\widehat{\mathbf{K}} = \mathbf{K} + \delta\mathbf{K}$，剪掉 $p$ 即 $\mathbf{e}_p^\top [\widehat{\mathbf{V}}\ \widehat{\mathbf{K}}] = \mathbf{0}$。
-2. **目标**：最小化 *pruning-induced eviction error* $\mathcal{L}(\widehat{\mathbf{V}}, \widehat{\mathbf{K}}) = \| \sigma(\mathbf{Q}\widehat{\mathbf{K}}^\top/\sqrt{d})\widehat{\mathbf{V}} - \sigma(\mathbf{Q}\mathbf{K}^\top/\sqrt{d})\mathbf{V} \|_F^2$，作为真实但不可观测的 *true eviction error*（影响未来 $\mathbf{o}_{s+1},\dots$）的代理。
-3. **二阶展开**：在 $(\mathbf{V},\mathbf{K})$ 点展开，一阶项因 $\widehat{\mathbf{O}}-\mathbf{O}=\mathbf{0}$ 而消失，得到 $\mathcal{L} = \tfrac{1}{2}\delta\mathbf{V}^\top \mathbf{H}^{vv} \delta\mathbf{V} + \tfrac{1}{2}\delta\mathbf{K}^\top \mathbf{H}^{kk} \delta\mathbf{K} + \delta\mathbf{V}^\top \mathbf{H}^{vk} \delta\mathbf{K} + \mathcal{O}(\|\cdot\|^3)$。
-4. **OBD 对角假设**：复用 OBD 的对角化简，只取 $\mathbf{H}$ 的 $(p,p)$ 子块，得到 token $p$ 的闭式 saliency。
-5. **代回原方法**：把得到的 $\mathbf{S}_p$ 替换 H2O / TOVA / SnapKV / AdaKV 中的 attention-累加分数，其它流程（recent window、head 预算等）保留。
-
-下面给出三个核心剪枝单位对应的闭式分数（论文 Propositions 4.3–4.5）。
+OBCache 的全部改动只发生在 eviction 方法的"打分"这一步：它不碰 H2O / TOVA / SnapKV / AdaKV 决定"何时触发裁剪""如何在多 head 间分配预算"的调度逻辑，只把它们打分函数里那个 attention-only 的 saliency 换成一个能感知 value/key 的闭式分数。换分数的依据是把 cache eviction 重新看成逐层的结构化剪枝：在 token 位置 $p$ 写出扰动 $\widehat{\mathbf{V}} = \mathbf{V} + \delta\mathbf{V}$、$\widehat{\mathbf{K}} = \mathbf{K} + \delta\mathbf{K}$，剪掉该 token 等价于令 $\mathbf{e}_p^\top [\widehat{\mathbf{V}}\ \widehat{\mathbf{K}}] = \mathbf{0}$；优化目标是让裁剪后注意力输出与原始输出的 Frobenius 误差（*pruning-induced eviction error*）$\mathcal{L} = \| \sigma(\mathbf{Q}\widehat{\mathbf{K}}^\top/\sqrt{d})\widehat{\mathbf{V}} - \sigma(\mathbf{Q}\mathbf{K}^\top/\sqrt{d})\mathbf{V} \|_F^2$ 最小，它是不可观测的真实 eviction error（影响未来 $\mathbf{o}_{s+1},\dots$）的代理。在 $(\mathbf{V},\mathbf{K})$ 处做二阶 Taylor 展开，一阶项因 $\widehat{\mathbf{O}}-\mathbf{O}=\mathbf{0}$ 而消失，剩下 $\mathcal{L} = \tfrac{1}{2}\delta\mathbf{V}^\top \mathbf{H}^{vv} \delta\mathbf{V} + \tfrac{1}{2}\delta\mathbf{K}^\top \mathbf{H}^{kk} \delta\mathbf{K} + \delta\mathbf{V}^\top \mathbf{H}^{vk} \delta\mathbf{K} + \mathcal{O}(\|\cdot\|^3)$；再沿用 OBD 的对角假设、只取 Hessian 的 $(p,p)$ 子块，就能为剪 value、剪 key、剪 KV-pair 三种单位各推出一个能从单次 forward 立即算出的闭式 saliency $\mathbf{S}_p$，最后代回原方法替换 attention-累加分数即可。下面三个分数对应论文 Propositions 4.3–4.5。
 
 ### 关键设计
 
-1. **Value-Pruning Score（$\mathbf{S}_p^{\text{value}}$）**:
+**1. Value-Pruning Score（$\mathbf{S}_p^{\text{value}}$）：只删 value 时输出扰动的最廉价度量。**
 
-    - 功能：只把 value 视作剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{V}} = \mathbf{0}$），衡量"删掉 $\mathbf{v}_p$ 对输出的扰动"。
-    - 核心思路：从二阶 Taylor 的第一项出发，闭式结果为 $\mathbf{S}_p^{\text{value}} = \sum_i |\mathbf{A}_{i,p}|^2 \|\mathbf{v}_p\|^2$，即"该 token 所在的 attention 矩阵列的 $\ell_2$ 范数平方"乘以"value 范数平方"。本文证明 VATP / CriticalKV 提出的 value-aware 分数恰好是该式取 $\ell_1$-norm 的特例，所以"value norm 该乘进来"这件事被 OBD 框架自然推出。
-    - 设计动机：在保留与 attention-only 分数几乎相同效率的前提下，引入 value-state 信息；同时给已有 value-aware 启发式分数一个理论解释。
+attention-only 分数最直接的漏洞是只看 token 被注意了多少、不看它的 value 长什么样——一个 attention weight 大但 value 接近零向量的 token 对输出毫无贡献却被保留。把 value 当作唯一剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{V}} = \mathbf{0}$）代入二阶 Taylor 的第一项，闭式结果是 $\mathbf{S}_p^{\text{value}} = \sum_i |\mathbf{A}_{i,p}|^2 \|\mathbf{v}_p\|^2$，即该 token 所在 attention 列的 $\ell_2$ 范数平方再乘以 value 范数平方。这等于在原来的 attention 分数上只多挂一个 $\|\mathbf{v}_p\|^2$ 缩放因子，开销几乎为零却把 value-state 信息引了进来；更关键的是，VATP / CriticalKV 此前启发式提出的 value-aware 分数恰好是该式取 $\ell_1$-norm 的特例，所以"value norm 该乘进来"这件事不再是经验直觉，而是 OBD 框架自然推出的结论。
 
-2. **Key-Pruning Score（$\mathbf{S}_p^{\text{key}}$）**:
+**2. Key-Pruning Score（$\mathbf{S}_p^{\text{key}}$）：捕捉剪 key 后 softmax 重归一化的连锁扰动。**
 
-    - 功能：只把 key 视作剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{K}} = \mathbf{0}$），衡量"删掉 $\mathbf{k}_p$ 对输出的扰动"，这种扰动比 value 大得多——因为改 key 会改写整张 attention 分布。
-    - 核心思路：闭式分数为 $\mathbf{S}_p^{\text{key}} = \sum_i |\mathbf{A}_{i,p} \mathbf{Z}_{i,p}|^2 \|\mathbf{v}_p - \mathbf{o}_i\|^2$，其中 $\mathbf{Z}$ 是 pre-softmax logits，$\mathbf{o}_i$ 是第 $i$ 个 query 位置的注意力输出。直观上，分数高的是"value 与当前输出方向差异大、attention 与 logits 都不小"的 token——这类 token 一旦被剪，整列 attention 重归一化后会显著拉偏 $\mathbf{O}$。
-    - 设计动机：现有 attention-only 与 value-aware 分数都没显式考虑"剪 key 后 softmax 行重归一化导致的连锁影响"；这是 OBCache 相比已有方法收益最大的来源。
+剪 value 只挪动一个被加权的向量，剪 key 的破坏力大得多——它会改写整列 logits，softmax 行重归一化后整张 attention 分布都被拉偏，而现有 attention-only / value-aware 分数都没显式建模这一连锁效应。把 key 当作剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{K}} = \mathbf{0}$）推出的闭式分数是 $\mathbf{S}_p^{\text{key}} = \sum_i |\mathbf{A}_{i,p} \mathbf{Z}_{i,p}|^2 \|\mathbf{v}_p - \mathbf{o}_i\|^2$，其中 $\mathbf{Z}$ 是 pre-softmax logits、$\mathbf{o}_i$ 是第 $i$ 个 query 位置的注意力输出。它给高分的是那些"value 方向与当前输出 $\mathbf{o}_i$ 差异大、且 attention 与 logits 都不小"的 token——正是这类 token 一旦被剪，重归一化后会把 $\mathbf{O}$ 显著拉偏。因为显式刻画了这层 attention-only 信号完全看不见的灵敏度，key-pruning 也成了 OBCache 相比已有方法收益最大的来源。
 
-3. **Joint Key-Value Score（$\mathbf{S}_p^{\text{joint}}$）**:
+**3. Joint Key-Value Score（$\mathbf{S}_p^{\text{joint}}$）：把 key/value 交互项也算进来的完备估计。**
 
-    - 功能：把 $(\mathbf{k}_p,\mathbf{v}_p)$ 当作一个联合剪枝单位，给出对真实 eviction error 的最全面估计。
-    - 核心思路：闭式分数为 $\mathbf{S}_p^{\text{joint}} = \mathbf{S}_p^{\text{value}} + \mathbf{S}_p^{\text{key}} + 2 \sum_i |\mathbf{A}_{i,p}|^2 \mathbf{Z}_{i,p} (\|\mathbf{v}_p\|^2 - \mathbf{v}_p^\top \mathbf{o}_i)$，比 value+key 多了一个 cross-Hessian 项 $\mathbf{H}^{vk}$ 贡献，捕获 key 和 value 的交互效应。
-    - 设计动机：在框架上做到"理论完备"，并把 OBCache-V / -K / -V&K 三档暴露给用户按算力预算选择。
+前两个分数各自只动一边，无法刻画同时剪掉 $(\mathbf{k}_p,\mathbf{v}_p)$ 时二者的耦合。把它们当作联合剪枝单位，闭式分数为 $\mathbf{S}_p^{\text{joint}} = \mathbf{S}_p^{\text{value}} + \mathbf{S}_p^{\text{key}} + 2 \sum_i |\mathbf{A}_{i,p}|^2 \mathbf{Z}_{i,p} (\|\mathbf{v}_p\|^2 - \mathbf{v}_p^\top \mathbf{o}_i)$，比 value+key 多出的第三项正是 cross-Hessian $\mathbf{H}^{vk}$ 的贡献，捕获 key 与 value 的交互效应，因而对真实 eviction error 的估计最完整。它的意义更多在框架上的理论完备，同时把 OBCache-V / -K / -V&K 三档摆出来，让用户按算力预算选择。
 
-**与现有方法的统一**：当把目标函数从"输出误差"放松到"注意力矩阵行误差 $\|\widehat{\mathbf{A}}_{w:s} - \mathbf{A}_{w:s}\|_{1,1}$"、并把剪枝单位简化为 attention 矩阵的一列时，框架退化到 $\mathbf{S}_p^{\text{attn}} = \sum_{i=w}^s |\mathbf{A}_{i,p}|$。这就是 H2O ($w=1$)、TOVA ($w=s$)、SnapKV ($w \gg 1$) 等方法所用的累加分数——它们都是 OBCache 在不同"扰动窗口" $w$ 下的特例。
+**与现有方法的统一**：把目标函数从"输出误差"放松到"注意力矩阵行误差 $\|\widehat{\mathbf{A}}_{w:s} - \mathbf{A}_{w:s}\|_{1,1}$"、并把剪枝单位简化为 attention 矩阵的一列时，框架退化到 $\mathbf{S}_p^{\text{attn}} = \sum_{i=w}^s |\mathbf{A}_{i,p}|$——这正是 H2O ($w=1$)、TOVA ($w=s$)、SnapKV ($w \gg 1$) 所用的累加分数，它们因此都成了 OBCache 在不同"扰动窗口" $w$ 下的特例。
 
 ### 损失函数 / 训练策略
 OBCache 是 **training-free 的推理时方法**，无需任何训练或微调。所有 Hessian 子块都可以从一次正常的 forward 中算出（需要 attention weights $\mathbf{A}$、pre-softmax logits $\mathbf{Z}$、values $\mathbf{V}$、outputs $\mathbf{O}$），用 FlashAttention-2 实现 prefill 时几乎零额外显存代价。Prefill 阶段一次性贪心 evict 到目标 budget；decoding 阶段对 $\mathbf{S}_p$ 累加做实时更新支持动态 eviction。GQA 模型有独立的推导（Appendix A.5）。

@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-线性层 $\mathbf{Y}=\mathbf{X}\cdot\mathbf{W}^{\top}$ 上，作者把传统的 $\mathbf{Y}=\mathbf{X}\cdot\mathbf{W}_s^{\top}$（权重稀疏）改成 $\mathbf{Y}=S(\mathbf{X})\cdot\mathbf{W}^{\top}+\mathbf{X}\cdot(\mathbf{L}_A\mathbf{L}_B)^{\top}$。其中 $S(\cdot)$ 是 token 维度上的 2:4 Top-K 选择加 norm 缩放，把剪枝后的激活拉回原始范数；后面那项 $\mathbf{X}(\mathbf{L}_A\mathbf{L}_B)^{\top}$ 是一支低秩 LoRA 分支（$R=64$），专门拟合 sparsification 残差。被稀疏的层主要是 DiT block 里的 QKV 投影和 MLP 的 Up/Down 投影；对单流（single-stream）路径里 LoRA 也补不动的若干层，则直接跳过稀疏化。最后，所有"在线 Top-K + 格式重排 + Sparse GEMM + LoRA 加 residual"都被打包进一个 CUDA 执行路径，避免中间张量的物化和反复同步。训练只 fine-tune LoRA 矩阵，骨干权重完全冻结，目标是最小化 $\|\mathbf{X}\mathbf{W}^{\top}-\mathbf{Y}\|^2$，2k 步左右收敛。
+RT-Lynx 想解决的是：DiT 线性层 $\mathbf{Y}=\mathbf{X}\cdot\mathbf{W}^{\top}$ 怎么在不掉生成质量的前提下吃到 SpTC 的 2:4 稀疏加速。作者把传统的权重稀疏 $\mathbf{Y}=\mathbf{X}\cdot\mathbf{W}_s^{\top}$ 改写成 $\mathbf{Y}=S(\mathbf{X})\cdot\mathbf{W}^{\top}+\mathbf{X}\cdot(\mathbf{L}_A\mathbf{L}_B)^{\top}$：前一项把稀疏施加在**激活**上（$S(\cdot)$ 是 token 维度的 2:4 Top-K 加 norm 缩放），后一项是一支秩 $R=64$ 的 LoRA 分支，专门把稀疏化丢掉的残差补回来。被稀疏的层是 DiT block 里的 QKV 投影和 MLP 的 Up/Down 投影，单流路径里 LoRA 也救不动的层则直接跳过。整套"在线 Top-K + 格式重排 + Sparse GEMM + LoRA 累加"最后被折叠进一条 CUDA 执行路径，让理论加速真正落到端到端。训练时骨干权重全冻结，只 fine-tune LoRA。
 
 ### 关键设计
 
-1. **Norm-Compensated Activation Sparsification（范数补偿的激活稀疏）**：
+**1. 范数补偿的激活稀疏（Norm-Compensated Activation Sparsification）：消除"剪枝必掉幅度"的系统性偏置。**
 
-    - 功能：在 token 维度上对激活做 2:4 Top-K，同时把剪枝后的向量整体缩放回原始 $\ell_2$ 范数，消除"剪枝必掉幅度"的系统性偏置。
-    - 核心思路：取 4 元素组内绝对值最大的两个得到 $\tilde{\mathbf{X}}$，计算缩放系数 $s=\sqrt{\|\mathbf{X}\|_2^2/(\|\tilde{\mathbf{X}}\|_2^2+\epsilon)}$，令 $S(\mathbf{X})=s\cdot\tilde{\mathbf{X}}$，$\epsilon=10^{-8}$ 防数值崩溃。这一步只是一次 reduce + 除法，可与 Top-K 在同一 kernel 里完成，开销可忽略。
-    - 设计动机：激活分布锐利但保留下来的 2 个元素能量比例不固定，naive Top-K 会让每个 token 的输出整体偏小，下游 RMSNorm/Attention 的统计量被拉偏；norm 补偿等于在不改变方向的前提下把幅度对齐到稠密路径，把"系统性偏置"消除后剩下的才是真正的"近零信息丢失"。
+naive 的 2:4 Top-K 有个隐患——每个 token 在 4 元素组里只留绝对值最大的两个得到 $\tilde{\mathbf{X}}$，但保留下来这 2 个元素的能量占比不固定，于是 token 输出整体偏小，下游 RMSNorm / Attention 的统计量被系统性地拉偏，FID 直接崩。作者的做法是在剪枝后顺手把向量缩放回原始 $\ell_2$ 范数：算一个缩放系数 $s=\sqrt{\|\mathbf{X}\|_2^2/(\|\tilde{\mathbf{X}}\|_2^2+\epsilon)}$（$\epsilon=10^{-8}$ 防数值崩溃），令 $S(\mathbf{X})=s\cdot\tilde{\mathbf{X}}$。这等于在不改变方向的前提下把幅度对齐到稠密路径，把"系统性偏置"先消掉，剩下的才是真正的近零信息丢失。代价几乎为零——只是一次 reduce 加一次除法，能和 Top-K 塞进同一个 kernel；而收益很大，单这一步就能把 Qwen-Image 的 FID 从 35.85 拉回 25.28。
 
-2. **LoRA 残差补偿（高频细节恢复）**：
+**2. LoRA 残差补偿：用低秩分支把被剪掉的高频细节捞回来。**
 
-    - 功能：用一支秩 $R=64$ 的低秩分支 $\mathbf{X}(\mathbf{L}_A\mathbf{L}_B)^{\top}$ 拟合"被剪掉的近零激活"所对应的输出残差，专补头发、边缘、纹理这些被 sparsification 模糊掉的高频细节。
-    - 核心思路：训练目标是直接最小化 $\|\mathbf{X}\mathbf{W}^{\top}-(S(\mathbf{X})\mathbf{W}^{\top}+\mathbf{X}(\mathbf{L}_A\mathbf{L}_B)^{\top})\|^2$，即让 sparse 路径加 LoRA 路径还原稠密输出。骨干 $\mathbf{W}$ 冻结，只更新 LoRA；推理时 LoRA 在 dense Tensor Core 上算 $\mathbf{Y}_r$，与 sparse GEMM 算出的 $\mathbf{Y}_s$ 在芯上累加成 $\mathbf{Y}$。
-    - 设计动机：相比 Slim 用 $R=0.1d$（如 307）的"重补偿"，作者论证残差信息本身是低秩的——绝大多数能量在 Top-K 保留的通道里，被丢掉的多是细粒度的高频小扰动，$R=64$ 已经够拟合，同时 LoRA 的额外 GEMM 开销远小于稠密计算的节省。对单流 DiT（Z-Image 的 `attn.o_proj`/`mlp.up`、FLUX 的 `attn.o_proj`/`mlp.down`）这些 LoRA 也救不回来的"硬骨头"层，则直接跳过稀疏化保留稠密计算，宁可少加速一点也不让质量塌。
+范数补偿对齐了幅度，但被丢弃的近零激活仍带走了头发、边缘、纹理这些高频细节。作者用一支低秩分支 $\mathbf{X}(\mathbf{L}_A\mathbf{L}_B)^{\top}$ 专门拟合这部分残差，训练目标直接最小化 $\|\mathbf{X}\mathbf{W}^{\top}-(S(\mathbf{X})\mathbf{W}^{\top}+\mathbf{X}(\mathbf{L}_A\mathbf{L}_B)^{\top})\|^2$，即让"稀疏路径 + LoRA 路径"合起来还原稠密输出；骨干 $\mathbf{W}$ 冻结，只更新 LoRA，推理时 LoRA 在 dense Tensor Core 上算出 $\mathbf{Y}_r$，与 sparse GEMM 的 $\mathbf{Y}_s$ 在芯上累加。关键在于作者论证残差本身是低秩的——绝大多数能量留在 Top-K 保留的通道里，被丢掉的只是细粒度的高频小扰动，所以 $R=64$ 就够，相比 Slim 那种 $R\approx 0.1d$（如 307）的重补偿，额外 GEMM 开销小得多、精度还更高。对单流 DiT 里 LoRA 也补不平的"硬骨头"层（Z-Image 的 `attn.o_proj`/`mlp.up`、FLUX 的 `attn.o_proj`/`mlp.down`），则索性跳过稀疏化保留稠密计算，宁可少加速也不让质量塌。
 
-3. **融合式在线 Sparse GEMM Kernel（让理论加速真正落地）**：
+**3. 融合式在线 Sparse GEMM Kernel：把理论 2× 真正落到端到端。**
 
-    - 功能：把 pattern determination → Top-K → 压缩成 SpTC layout → Sparse GEMM → 与 LoRA 输出片上累加，全部塞进一条 CUDA 执行路径，把在线稀疏化的额外开销从 40–59% 压到 10% 以下。
-    - 核心思路：在 register 级直接生成 2:4 结构化激活和它的 2-bit index，避免写回 global memory；Sparse GEMM 部分采用 streamK-style 的 block-parallel 流水，把 K 维分块流过 SpTC，重叠跨存储层的带宽-延迟；同时 LoRA 分支与 Sparse GEMM 异步并行，$\mathbf{Y}_s$ 算完直接加到 $\mathbf{Y}_r$ 寄存器上，省掉 LoRA 中间张量的物化和一次 host-side 同步。
-    - 设计动机：现有 PyTorch-SpMM / cuSPARSElt / CUTLASS 把"剪、整理、算"拆成多个 kernel 各自调度，导致即便 GEMM 本体加速 1.5× 以上，online 部分的 launch overhead + 中间显存读写也吃掉大半收益。作者把整条流水折叠成一个 kernel，本质上是把"算法层的稀疏化"和"硬件层的 SpTC"绑定到同一份 register file 上，使理论 2× 上限真正可达——实测 Sparse GEMM 加速到 1.88×、线性层平均 1.55×、端到端 ~1.2×。
+即便选对了激活稀疏，现有的 PyTorch-SpMM / cuSPARSElt / CUTLASS 把"剪、整理、算"拆成多个 kernel 各自调度，光是 launch overhead 加中间显存读写就吃掉 40–59% 的运行时间，理论上的 2× 根本落不下来。作者把 pattern determination → Top-K → 压缩成 SpTC layout → Sparse GEMM → 与 LoRA 片上累加，整条流水折叠进一条 CUDA 路径：2:4 结构化激活和它的 2-bit index 直接在 register 级生成，不写回 global memory；Sparse GEMM 用 streamK-style 的 block-parallel 流水把 K 维分块流过 SpTC，重叠跨存储层的带宽-延迟；LoRA 分支与 Sparse GEMM 异步并行，$\mathbf{Y}_s$ 算完直接加到 $\mathbf{Y}_r$ 寄存器上，省掉 LoRA 中间张量的物化和一次 host 端同步。本质上是把"算法层的稀疏化"和"硬件层的 SpTC"绑到同一份 register file 上，使在线开销压到 10% 以下、理论 2× 上限可达——实测 Sparse GEMM 加速 1.88×、线性层平均 1.55×、端到端 ~1.2×。
 
 ### 损失函数 / 训练策略
 只有 LoRA 矩阵 $\mathbf{L}_A,\mathbf{L}_B$ 可训，骨干权重和优化器状态都不更新；训练数据是用 Qwen-Image 在 20k 条用户 prompt 上生成的 prompt-image 对，损失是 MSE 形式的 $\|\mathbf{X}\mathbf{W}^{\top}-\mathbf{Y}\|^2$，约 2k 步收敛。所有训练在 NVIDIA H20 上完成，使用 CUDA 13.0；推理可与 FP8 量化、step 蒸馏、TeaCache、SpargeAttn 等正交叠加。

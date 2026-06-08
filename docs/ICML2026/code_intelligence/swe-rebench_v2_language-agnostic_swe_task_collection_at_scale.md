@@ -41,33 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-流水线把 2950 万个原始 PR 一路漏斗到 3.2 万个稳定可执行任务（见 funnel 表）。五个串行阶段如下：
-
-1. **Preliminary Data Collection**：从 GitHub Archive 聚合 issue/PR 元数据，分布式克隆仓库后从本地 git 历史里取 diff，按 license / issue-PR 链接 / 是否新增或修改测试三层过滤；高资源语言（Python/Java/Go）卡 25 stars + 15 closed issues，长尾语言放宽到 10 stars + 1 closed issue。该阶段保留约 2.17 万仓库、58 万候选任务。
-2. **Setup Synthesis**：对每个仓库**只**做一次安装与测试脚本推断（取该仓库最新一个被挖到的 PR 对应 snapshot），并把推断结果复用到所有任务上——这是把"per-task 人工"降为"per-repo 自动"的关键。每种语言预先用 Qwen3-Coder-480B 生成 base Dockerfile（如 Java 同时提供 JDK 11/17/21 多版本），上面再叠装 mini-SWE-agent v1.14.4 + Qwen3-Coder-480B 的交互式 Agent 闭环 debug。
-3. **Execution-based Validation**：用 multi-stage Docker build 把 base 层与仓库层分离；先打 test patch 跑全套测试，再叠加 solution patch 重跑，得到 fail-to-pass 配对轨迹；每个任务跑 3 次，结构化测试结果不变才保留，以滤掉 flaky 测试。
-4. **Filtering by Issue Clarity**：用 gpt-oss-120b、GLM-4.7、DeepSeek-V3.2 三个独立 LLM judge 给 issue 文本打"是否 well-specified"分，**三模型一致**才保留——以 SWE-bench Verified 人工标注作为校准锚点。
-5. **Metadata Enrichment + PR 衍生扩展**：基于对七个前沿模型在 300 任务上的失败模式分析，定义 B1=测试套件耦合 / B2=隐含命名要求 / B3=外部依赖三种诊断标签；再额外把"PR 描述生成 problem statement"的 12 万+ 任务作为更大规模但低置信的训练资源单独释放。
+这项工作要解决的是"能用于 RL 训练、而非仅评测的可执行 SWE 任务太稀缺"的问题，做法是把任务构造拆成一条语言无关的五段式漏斗，把 2950 万个原始 PR 层层过滤到 3.2 万个稳定可执行任务（见 funnel 表）。第一段 preliminary mining 从 GitHub Archive 聚合 issue/PR 元数据、分布式克隆仓库后从本地 git 历史取 diff，按 license、issue-PR 链接、是否新增或改测试三层过滤，并对高资源语言（Python/Java/Go 卡 25 stars + 15 closed issues）和长尾语言（放宽到 10 stars + 1 closed issue）设不同阈值，保留约 2.17 万仓库、58 万候选；第三段 execution-based validation 用 multi-stage Docker build 把 base 层与仓库层分离，先打 test patch 跑全套测试、再叠加 solution patch 重跑得到 fail-to-pass 配对轨迹，每个任务跑 3 次、结构化结果不变才保留以滤掉 flaky。真正承载方法创新的是夹在中间和之后的三段——交互式 setup synthesis、issue clarity 过滤、metadata enrichment，下面分别展开。
 
 ### 关键设计
 
-1. **交互式安装 Agent（语言无关的安装合成器）**:
+**1. 交互式安装 Agent：用闭环 trial-and-error 把"per-task 人工配环境"降成"per-repo 自动合成"**
 
-    - 功能：在每种语言的 pre-built base 镜像之上，让 LLM Agent 通过"探索代码 → 跑安装 → 看报错 → 修脚本"的闭环，自动产出可复现的 install/test 脚本和适配该仓库 stdout 的 log parser。
-    - 核心思路：用 mini-SWE-agent 框架挂载 Qwen3-Coder-480B；JVM 系强制要求 JUnit XML 等结构化报告（避免 stdout 顺序漂移）；C/C++ 等编译型语言在打 patch 后强制插入 rebuild 步骤防止跑到旧 binary；log parser 通过"从一次成功跑取样 → LLM 合成解析器 → 在该仓库其它 trace 上验证 → 最多重试 5 次"自举。同等模型下交互式 pass@1 $= 25.8\%$ vs 非交互 $12.1\%$，即使用更小的 Qwen3-30B 跑交互式（$17.4\%$ pass@1）也已经超过 Qwen3-480B 跑非交互的 $12.1\%$，证明"交互"本身比"模型放大"更值钱。
-    - 设计动机：早期 SWE-rebench / SetUpAgent 等 Python 场景下"分析文件清单 → 生成指令"够用，但放到 20 种语言、3.6k 仓库就必须靠 trial-and-error 闭环来覆盖长尾构建系统；同时 per-repo（而非 per-task）合成把约 535K 次 API 调用 / $1.9$K USD 的成本压到可接受范围。
+跨 20 种语言、3.6k 仓库各有不同的构建系统、包管理器和测试 runner，逐仓手搓显然不可扩展；早期 SWE-rebench / SetUpAgent 在 Python 场景下"分析文件清单 → 生成指令"够用，但放到长尾构建系统就必须靠 trial-and-error 闭环才能覆盖。本文为每种语言预先用 Qwen3-Coder-480B 生成 base Dockerfile（如 Java 同时提供 JDK 11/17/21 多版本），再在其上叠装 mini-SWE-agent v1.14.4 + Qwen3-Coder-480B，让 Agent 通过"探索代码 → 跑安装 → 看报错 → 修脚本"的闭环自动产出可复现的 install/test 脚本和适配该仓库 stdout 的 log parser；关键工程约束是对每个仓库**只**做一次 setup 推断（取最新被挖到的 PR 对应 snapshot）再复用到所有任务，JVM 系强制要求 JUnit XML 等结构化报告以避免 stdout 顺序漂移，C/C++ 等编译型语言在打 patch 后强制插入 rebuild 防止跑到旧 binary，而 log parser 则靠"从一次成功跑取样 → LLM 合成解析器 → 在该仓库其它 trace 上验证 → 最多重试 5 次"自举。
 
-2. **多 LLM 集成的 Issue 清晰度过滤器**:
+它之所以有效，是因为闭环本身比模型放大更值钱：同等模型下交互式 pass@1 $= 25.8\%$ 远超非交互的 $12.1\%$，即便用更小的 Qwen3-30B 跑交互式（$17.4\%$）也已经超过 Qwen3-480B 跑非交互的 $12.1\%$；而 per-repo（而非 per-task）合成把约 535K 次 API 调用、$1.9$K USD 的总成本压到可接受范围。
 
-    - 功能：在测试已经能跑通的任务上，再用 LLM judge 判断 issue 文本是否"自包含、足以实现"，剔除欠规约样本，避免训练奖励信号被"题面写不清→ Agent 答不对→ 测试挂"污染。
-    - 核心思路：以 SWE-bench Verified 的 1699 条人工 well-specified 标注为 ground truth，做三层 ablation——(i) prompt：Rebench V1 / SPICE / Verified / Verified+ / Verified-E（后两者分别为 GPT-5.2 重写版与"喂入 patch + test patch"的增强版）；(ii) 单模型：gpt-oss-120b 综合 F1 最高，Claude Opus-4.5、Gemini 3 Pro 走高 precision 路线；(iii) 集成：三模型平均分给 F1 最优（$0.43$），三模型 consensus 给 precision 最优（$0.88$ 但 recall 仅 $0.06$）。最终为了保护下游训练信号纯净，**选择 Verified-E prompt + 三模型 consensus**——即"宁缺毋滥"。
-    - 设计动机：单模型 judge 容易把"啰嗦但其实不清晰"的 issue 误判为合格；consensus 等价于人工双盲复核的廉价代理。把它放在执行验证之后而非之前，是因为只有真能跑出 F2P 的任务才值得花 token 评 issue 质量。
+**2. 多 LLM 集成的 Issue 清晰度过滤：在能跑通的任务上再剔除欠规约题面，保护 RL 奖励信号**
 
-3. **基于失败模式的实例级诊断元数据（A vs B\* 分层）**:
+题面写不清会导致"Agent 答不对 → 测试挂"，把欠规约 issue 当作合格样本会直接污染训练奖励，而单个 LLM judge 又容易把"啰嗦但其实不清晰"的 issue 误判为合格。本文以 SWE-bench Verified 的 1699 条人工 well-specified 标注为 ground truth，做了三层 ablation：prompt 层比较 Rebench V1 / SPICE / Verified / Verified+ / Verified-E（后两者分别为 GPT-5.2 重写版与"喂入 patch + test patch"的增强版），单模型层中 gpt-oss-120b 综合 F1 最高、Claude Opus-4.5 与 Gemini 3 Pro 走高 precision 路线，集成层则发现三模型平均分给出最优 F1（$0.43$）、三模型 consensus 给出最优 precision（$0.88$，但 recall 仅 $0.06$）。
 
-    - 功能：把每个任务标上"clean (A) vs 三类已知缺陷 (B1/B2/B3)"等标签，让下游训练者按 curriculum 自主选样：SFT 暖启用 A 子集，RL 鲁棒性微调时引入 B1（测试套件耦合）任务并配 partial reward，B3（外部依赖）任务只给配备网页工具的 Agent。
-    - 核心思路：在 300 任务 $\times$ 7 个前沿模型（Claude Opus-4.5 / GLM-4.7 / Gemini 3 / DeepSeek-V3.2 等）$\times$ 3 次重跑的轨迹库里，人工归纳出三种系统性失败模式，然后用 gpt-oss-120b 加 meta-prompt 把这套标签自动打回整库；为了验证标签真有判别力，做了一次"A vs B\*"对照——同语言、同改动规模采样 60 任务，所有模型在 A 上 pass@3 普遍是 B\* 的 $5$–$8$ 倍（如 Gemini $34.0\%$ vs $4.0\%$）。
-    - 设计动机：自动化流水线必然带噪声，与其奢求 zero-defect，不如承认并显式标注缺陷，让训练者按需做 stratified filtering，这比"一刀切扔掉所有可疑任务"既保规模又保质量。
+为了保护下游训练信号纯净，作者最终选择 Verified-E prompt + 三模型 consensus 的"宁缺毋滥"配置——consensus 等价于一次廉价的人工双盲复核；同时把这一步放在执行验证之后而非之前，是因为只有真能跑出 fail-to-pass 的任务才值得花 token 去评 issue 质量。
+
+**3. 基于失败模式的实例级诊断元数据：显式标注缺陷而非追求 zero-defect，让下游按 curriculum 选样**
+
+自动化流水线必然带噪声，与其奢求 zero-defect、或一刀切扔掉所有可疑任务（既损规模又未必准），不如承认缺陷并显式标注，让训练者自己做 stratified filtering。具体做法是先在 300 任务 $\times$ 7 个前沿模型（Claude Opus-4.5 / GLM-4.7 / Gemini 3 / DeepSeek-V3.2 等）$\times$ 3 次重跑的轨迹库里人工归纳出三种系统性失败模式——B1=测试套件耦合、B2=隐含命名要求、B3=外部依赖，再用 gpt-oss-120b 加 meta-prompt 把这套标签自动打回整库，给每个任务标上 clean (A) vs B1/B2/B3；下游训练者由此可按 curriculum 自主选样：SFT 暖启用 A 子集，RL 鲁棒性微调时引入 B1 任务并配 partial reward，B3 任务只给配备网页工具的 Agent。
+
+为验证标签真有判别力，作者做了一次"A vs B\*"对照——在同语言、同改动规模下采样 60 任务，所有模型在 A 上的 pass@3 普遍是 B\* 子集的 $5$–$8$ 倍（如 Gemini $34.0\%$ vs $4.0\%$），说明这套诊断标签不是装饰而是 curriculum 设计的真凭据。
 
 ### 损失函数 / 训练策略
 本工作不做端到端 RL 训练（作者在 Limitations 中明确这是 future work），而是验证训练所需的前提性质：可执行、非平凡、跨模型 pass@k 仍有 headroom、A/B\* 标签可分。

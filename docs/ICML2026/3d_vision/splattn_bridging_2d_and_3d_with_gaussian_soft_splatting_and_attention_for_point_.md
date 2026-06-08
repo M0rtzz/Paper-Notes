@@ -42,27 +42,29 @@ tags:
 
 ### 整体框架
 
-输入是 sparse partial point cloud $\mathcal{P}_{in} = \{p_i\}_{i=1}^N \subset \mathbb{R}^3$ 与对应 RGB 图像 $\mathcal{I}$；输出是补全后的稠密点云 $\mathcal{P}_{out}$。整体走 dual-branch + 分层 decoder：(a) GS-Bridge 分支用 EdgeConv 抽局部几何 token，过 Transformer 得到全局几何 query $\mathcal{F}_{geo}$，同时用 Gaussian Soft Splatting 把视觉特征图变成连续密度场 $\mathcal{V}$，然后用 cross-attention 让 $\mathcal{F}_{geo}$ 主动查询 $\mathcal{V}$ 得到融合全局特征 $\mathcal{F}_g$；(b) 并行的 Local Encoder 通过 EdgeConv + Multi-Head Self-Attention 得到拓扑感知局部特征 $\mathcal{F}_l$；(c) Global-Local Decoder 先从 $\mathcal{F}_g$ 经 MLP 预测 skeleton $\mathcal{P}_0$（再用 $\mathcal{P}_{in}$-Merge 注入输入先验），然后 hierarchically 上采样 $\mathcal{P}_0 \to \mathcal{P}_1 \to \mathcal{P}_2$，每个 upsample stage 用 Structure Self-Attention 建几何一致性 + Cross-Attention 注入 $\mathcal{F}_l$ 做细节细化。
+方法要解决的核心是：让 2D 视觉特征能真正反传梯度到 3D 几何点，从而修复硬投影下的 Cross-Modal Entropy Collapse。输入是 sparse partial point cloud $\mathcal{P}_{in} = \{p_i\}_{i=1}^N \subset \mathbb{R}^3$ 与对应 RGB 图像 $\mathcal{I}$，输出是补全后的稠密点云 $\mathcal{P}_{out}$。整体是 dual-branch 编码 + 分层 decoder 的结构。GS-Bridge 分支先用 EdgeConv 从 $\mathcal{P}_{in}$ 抽局部几何 token、再过 Transformer 得到全局几何 query $\mathcal{F}_{geo}$，同时把视觉特征图经 Gaussian Soft Splatting 变成有正测度支持的连续密度场 $\mathcal{V}$，让 $\mathcal{F}_{geo}$ 用 cross-attention 主动查询 $\mathcal{V}$，得到融合全局特征 $\mathcal{F}_g$；并行的 Local Encoder 用 EdgeConv + Multi-Head Self-Attention 抽出拓扑感知的局部特征 $\mathcal{F}_l$。两路特征汇入 Global-Local Decoder：先从 $\mathcal{F}_g$ 经 MLP 预测 skeleton $\mathcal{P}_0$ 并用 $\mathcal{P}_{in}$-Merge 注入输入先验，再逐级上采样 $\mathcal{P}_0 \to \mathcal{P}_1 \to \mathcal{P}_2$，每个 upsample stage 都靠 Structure Self-Attention 维持几何一致性、靠 Cross-Attention 注入 $\mathcal{F}_l$ 做细节细化，由粗到细生成最终点云。
 
 ### 关键设计
 
-1. **Gaussian Soft Splatting 替代硬投影**：
+**1. Gaussian Soft Splatting：把硬投影换成有正测度支持的连续密度场，让梯度流回几何点**
 
-    - 功能：把离散投影点 $\pi(p)$ 扩散成连续 Gaussian disk，使图像平面的视觉特征对每个 sub-pixel query $\mathbf{q}$ 都有定义。
-    - 核心思路：定义 soft 密度 $P_{soft}(v|\mathcal{P}_{in}) = \tfrac{1}{N}\sum_p \alpha_p \mathcal{G}(v; \pi(p), \sigma)$；对任意 query $\mathbf{q}$ 聚合特征 $\mathcal{V}(\mathbf{q}) = \tfrac{\sum_{k \in \mathcal{N}(\mathbf{q})} w_k(\mathbf{q}) f_k}{\sum_k w_k + \epsilon}$，权重设计为空间 Gaussian 核 × inverse depth：$w_k(\mathbf{q}) = \exp(-\tfrac{\|\mathbf{u}_k - \mathbf{q}\|^2}{2\sigma^2}) \cdot (z_k + \epsilon)^{-1}$。前者是低通滤波器，后者是 soft Z-buffer 近似遮挡。$f_k$ 用归一化 3D 坐标的伪彩色实例化。
-    - 设计动机：可由 measure subadditivity 严格推出 $\mu(\mathcal{S}_{soft}) > 0$，因此密度场有正测度支持，梯度 $\nabla_{\mathbf{u}} \mathcal{L}$ 非零，反传可更新几何坐标。Gaussian tail 让"轻微对齐误差"也能产生梯度信号，从根上修复 Entropy Collapse。soft Z-buffer 避免硬 z-buffer 的不可导性。
+痛点直指 entropy collapse：硬投影把 3D 点打成离散像素，支持集测度为零，视觉监督的梯度被 Dirac delta 截断，传不回点位置。本文的做法是把每个投影点 $\pi(p)$ 用一个 Gaussian 核扩散成 disk，定义 soft 密度 $P_{soft}(v|\mathcal{P}_{in}) = \tfrac{1}{N}\sum_p \alpha_p \mathcal{G}(v; \pi(p), \sigma)$。这样对图像平面上任意 sub-pixel query $\mathbf{q}$，视觉特征都有定义，聚合方式为
 
-2. **EdgeConv + Transformer 的混合几何 tokenization**：
+$$\mathcal{V}(\mathbf{q}) = \frac{\sum_{k \in \mathcal{N}(\mathbf{q})} w_k(\mathbf{q}) f_k}{\sum_k w_k + \epsilon}, \qquad w_k(\mathbf{q}) = \exp\!\Big(-\frac{\|\mathbf{u}_k - \mathbf{q}\|^2}{2\sigma^2}\Big) \cdot (z_k + \epsilon)^{-1}.$$
 
-    - 功能：生成既反映局部曲率、又反映全局拓扑的 geometric query $\mathcal{F}_{geo}$，让模型既能 captures "薄结构（如椅子腿）"又能 reason 全局对称、孔洞等不变量。
-    - 核心思路：先用 EdgeConv 在 $\mathcal{P}_{in}$ 上动态构 k-NN 图，$\mathbf{h}_i = \max_{j \in \mathcal{N}(i)} \phi_\theta(p_i, p_j - p_i)$，把这个 max-aggregation 解释为对 Laplace-Beltrami 算子的离散化，因而近似切空间和平均曲率；然后过 Transformer encoder，self-attention 当全连接图模型做全局 message passing 推 holes / symmetry。
-    - 设计动机：纯局部算子虽好但盲于全局拓扑；纯 Transformer 又丢局部精度。混合架构对应"local isometry + global homeomorphism"的双重几何不变性，是把 GS-Bridge 的视觉 query 推到正确粒度的必要前提。
+权重里空间 Gaussian 核当低通滤波器，inverse depth 项 $(z_k+\epsilon)^{-1}$ 是 soft Z-buffer、用可微方式近似遮挡（避免硬 z-buffer 的不可导），$f_k$ 由归一化 3D 坐标的伪彩色实例化。关键收益在于：由 measure subadditivity 可严格推出 soft 支持集 $\mu(\mathcal{S}_{soft}) > 0$，密度场有正测度支持，因而梯度 $\nabla_{\mathbf{u}} \mathcal{L}$ 非零，反传能更新几何坐标——Gaussian tail 让"轻微对齐误差"也产生梯度信号，从根上把被截断的跨模态梯度重新接通。
 
-3. **主动跨模态对齐 (Active Attention) + 全局-局部解码**：
+**2. EdgeConv + Transformer 混合几何 tokenization：同时抓住局部曲率与全局拓扑**
 
-    - 功能：让几何 token 当 Query 主动从视觉密度场 $\mathcal{V}$ 取语义（而不是被动 concat），再在 decoder 的每个 upsample stage 用 Structure Self-Attention + Cross-Attention 注入局部特征做细节细化。
-    - 核心思路：跨模态对齐 $\mathcal{F}_g = \mathcal{F}_{geo} + \mathrm{Softmax}(\tfrac{(\mathcal{F}_{geo} \mathbf{W}_Q)(\mathcal{V} \mathbf{W}_K)^\top}{\sqrt{d}})(\mathcal{V} \mathbf{W}_V)$，等价于"可微字典查询"。解码端用 Chamfer Distance 当 local reconstruction uncertainty proxy，把这个几何误差投到高维 embedding 让 self-attention 在高熵区域（即缺失部位）增密特征；然后 cross-attention 把局部高曲率信息从 $\mathcal{F}_l$ 注入。
-    - 设计动机：Active 的查询比被动 concat 更能让模型选择性吸收语义先验、抑制背景噪声；structure-aware decoder 把生成压力精确聚焦到 missing 区域而非全局均匀生成，这是 hierarchical upsample 的关键 inductive bias。
+纯局部算子虽然能刻画细节但盲于全局拓扑，纯 Transformer 又丢局部精度，而视觉 query 必须落在正确粒度上才有用。本文用混合架构生成 geometric query $\mathcal{F}_{geo}$：先在 $\mathcal{P}_{in}$ 上用 EdgeConv 动态构 k-NN 图，$\mathbf{h}_i = \max_{j \in \mathcal{N}(i)} \phi_\theta(p_i,\, p_j - p_i)$，作者把这个 max-aggregation 解释为对 Laplace-Beltrami 算子的离散化，因而能近似切空间和平均曲率、捕捉椅子腿这类薄结构；再过 Transformer encoder，把 self-attention 当全连接图模型做全局 message passing，推理孔洞、对称等全局不变量。这对应"local isometry + global homeomorphism"的双重几何不变性，是把 GS-Bridge 视觉 query 推到合适粒度的前提。
+
+**3. 主动跨模态对齐 + 全局-局部解码：让几何 token 主动查视觉、让生成压力聚焦缺失区**
+
+被动 concat 容易吸进背景噪声、也无法选择性利用语义先验，所以本文让几何 token 当 Query 主动从视觉密度场 $\mathcal{V}$ 取语义：
+
+$$\mathcal{F}_g = \mathcal{F}_{geo} + \mathrm{Softmax}\!\Big(\frac{(\mathcal{F}_{geo}\mathbf{W}_Q)(\mathcal{V}\mathbf{W}_K)^\top}{\sqrt{d}}\Big)(\mathcal{V}\mathbf{W}_V),$$
+
+等价于一次"可微字典查询"，比被动拼接更能选择性吸收语义、抑制噪声。解码端则要把生成压力精确投到缺失部位而非全局均匀铺点：用 Chamfer Distance 当 local reconstruction uncertainty 的 proxy，把这个几何误差投到高维 embedding，让 Structure Self-Attention 在高熵（即缺失）区域增密特征，再用 Cross-Attention 把 $\mathcal{F}_l$ 里的局部高曲率信息注入细化——这正是 hierarchical upsample 能由粗到细补出细节的关键 inductive bias。
 
 ### 损失函数 / 训练策略
 

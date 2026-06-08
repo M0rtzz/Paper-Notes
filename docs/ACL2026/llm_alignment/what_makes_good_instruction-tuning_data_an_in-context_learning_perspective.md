@@ -46,23 +46,22 @@ tags:
 作者先定义 IFD 作为样本难度指标：$IFD(y|x)=PPL(y|x)/PPL(y)$，数值越大表示模型从 instruction 中获益越少、生成越困难。接着定义 ICI：$ICI_{i\rightarrow b}=IFD(y_b|x_b)-IFD(y_b|a_i,x_b)$。如果加入候选样本后 probe 的 IFD 下降，ICI 为正。
 
 ### 关键设计
-1. **多样且困难的 probe set 构建**:
 
-	- 功能：为每个候选样本找到一组真正能测试其 demonstration 价值的 probe。
-	- 核心思路：先在 embedding 空间中取 $N=32$ 个最近邻，保证 probe 与候选样本语义相关；再对这些邻居做 $K=5$ 个 k-means 聚类，避免 probe 全部集中在同一语义模式；最后在每个 cluster 中用 DEITA complexity scorer 选复杂度最高的样本，确保 probe 不太简单。
-	- 设计动机：随机 probe 噪声大，最近邻 probe 太冗余，简单 probe 又看不出 demonstration 的能力。三阶段检索让影响力评估同时满足相关性、多样性和挑战性。
+**1. 多样且困难的 probe set 构建：给每个候选样本配一组真正能检验其"教学价值"的 probe。**
 
-2. **Weighted In-Context Influence 打分**:
+probe 选不好，影响力评估就会失真——随机 probe 噪声大，纯最近邻 probe 太冗余、几乎是重复样本，过于简单的 probe 又看不出 demonstration 到底有没有帮上忙。作者用三阶段检索同时控制相关性、多样性和挑战性：先在 embedding 空间取 $N=32$ 个最近邻保证 probe 与候选样本语义相关，再对这些邻居做 $K=5$ 个 k-means 聚类避免 probe 全挤在同一语义模式里，最后在每个 cluster 内用 DEITA complexity scorer 挑复杂度最高的样本，确保 probe 不会太简单。这样得到的 probe set 才能让后续的影响力打分既贴近候选样本的任务、又有足够区分度。
 
-	- 功能：量化一个候选样本作为 one-shot demonstration 对相关任务的帮助。
-	- 核心思路：对每个 probe 计算加入候选样本前后的 IFD 差值，即 ICI。然后用归一化 cosine distance 加权，得到 $wICI(a_i)=\sum_{b\in B_i}(1-cos(f(x_i),f(x_b)))/(2|B_i|)\cdot ICI_{i\rightarrow b}$。距离权重鼓励候选样本不仅帮助近乎重复的邻居，也能对稍远但相关的 probe 泛化。
-	- 设计动机：如果只看平均影响力，模型可能偏好近邻重复样本；加距离权重后，更能选出具有 transferable teaching effect 的 instruction。
+**2. Weighted In-Context Influence 打分：用 IFD 的下降量、并按语义距离加权，衡量一个样本作为 demonstration 的迁移性帮助。**
 
-3. **带多样性约束的贪心选择**:
+如果只看平均影响力，模型会偏好那些只帮到近乎重复邻居的样本，而真正有价值的是能泛化到稍远相关任务的 demonstration。基于前面定义的难度指标 $IFD(y|x)=PPL(y|x)/PPL(y)$ 和影响力 $ICI_{i\rightarrow b}=IFD(y_b|x_b)-IFD(y_b|a_i,x_b)$（候选样本作 one-shot demonstration 后 probe 的 IFD 下降则 ICI 为正），wICI 把每个 probe 的 ICI 按归一化 cosine distance 加权聚合：
 
-	- 功能：避免最终训练集被高分但相似的样本占满。
-	- 核心思路：先按 wICI 从高到低排序，然后贪心加入候选样本；只有当它与已选集合中任何样本的 cosine similarity 都小于阈值 $\tau=0.9$ 时才被接受，直到选满预算 $k$。被选子集不再额外加权，直接用于标准 SFT。
-	- 设计动机：高影响力样本也可能集中在少数任务模式。微调数据需要覆盖多种指令结构，否则会在某些 benchmark 上强、在另一些场景上弱。
+$$wICI(a_i)=\sum_{b\in B_i}\frac{1-cos(f(x_i),f(x_b))}{2|B_i|}\cdot ICI_{i\rightarrow b}$$
+
+距离权重鼓励候选样本不只帮助近重复邻居、也对稍远但相关的 probe 起作用，从而选出具有 transferable teaching effect 的 instruction。
+
+**3. 带多样性约束的贪心选择：避免最终训练集被高分但雷同的样本占满。**
+
+高影响力样本往往集中在少数任务模式上，全选进来会让模型在某些 benchmark 上很强、在另一些场景上偏弱，而微调数据需要覆盖多种指令结构。作者因此按 wICI 从高到低排序后做贪心选择：只有当一个候选样本与已选集合中任何样本的 cosine similarity 都小于阈值 $\tau=0.9$ 时才接受它，直到选满预算 $k$。被选子集不再额外加权，直接送入标准 SFT。
 
 ### 损失函数 / 训练策略
 选择阶段使用 IFD、ICI 和 wICI 作为打分，不做梯度反传；训练阶段就是标准 supervised fine-tuning。实验中使用 LlamaFactory 全参数微调 Llama3.1-8B 和 Mistral-7B-v0.3，DeepSpeed ZeRO-3、bf16、序列截断 2048，训练 3 个 epoch，AdamW 学习率 $1\times10^{-5}$，总 batch size 64。

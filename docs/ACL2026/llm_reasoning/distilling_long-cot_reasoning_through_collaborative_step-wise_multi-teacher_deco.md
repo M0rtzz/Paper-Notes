@@ -53,23 +53,32 @@ $$\tau(x_i)^* = \{(s_1^*, \dots, s_T^*) \mid s_t^* = \arg\max_{s_t \in \{s_t^{(1
 
 ### 关键设计
 
-1. **Prompt-guided step segmentation（步骤对齐）**:
+**1. Prompt-guided step segmentation：用模板把不同 LRM 的 Long-CoT 切到对齐的 step 边界，才谈得上跨模型替换。**
 
-    - 功能：让不同 LRM 输出的 Long-CoT 在「step 单位」上语义对齐，便于跨模型比较。
-    - 核心思路：在 prompt 中嵌入 `<think> ### Step` 模板，引导 LRM 主动按「### Step 1. Understanding... ### Step 2. Recalling...」格式输出。这样浅层标记（`\n\n`、`wait` 等）自然落在 step 内部而非边界，避免误切。相比 line-break unit（按 `\n\n` 切，无语义）和 prefix unit（按 `wait`/`alternatively` 切，标记频率因模型而异），prompt-guided 在 segmentation 公平性上最高。
-    - 设计动机：不同 LRM 的「换行习惯」「反思 cue」频率差距巨大，直接按物理标记切会让某些教师每个 step 只有几十 token，另一些则有几百，无法横向比较。prompt-guided 把控制权交给生成时的 LRM，强制做「逻辑功能性」切分，让每个 step 是一个「子任务」（如 problem understanding / theorem recall / case analysis），从而支持跨教师 step 替换。
+要让多个教师在 step 级协同，第一道坎是「step」这个单位本身得对齐——可不同 LRM 的换行习惯、反思 cue（`wait`、`alternatively`）频率天差地别，直接按物理标记切，某些教师每个 step 只有几十 token、另一些却有几百，根本没法横向比。作者的做法是在 prompt 里嵌入 `<think> ### Step` 模板，引导 LRM 主动按「### Step 1. Understanding... ### Step 2. Recalling...」的格式输出，让 `\n\n`、`wait` 这些浅层标记自然落在 step 内部而非边界上。这等于把切分的控制权交给生成时的 LRM，强制它做「逻辑功能性」划分——每个 step 对应一个子任务（problem understanding / theorem recall / case analysis），于是不同教师同一位置的 step 才在语义上可比、可互换。消融里 prompt-guide 的 segmentation 公平性也最高（PP 0.774，优于 line-break 的 0.734 和 prefix 的 0.747）。
 
-2. **Predictive perplexity step selection（打分函数）**:
+**2. Predictive perplexity step selection：不看这一步「对不对」，而看它让正确答案变得多可预测。**
 
-    - 功能：给定当前前缀 + 候选 step，估计「这个 step 加上后，模型预测出正确答案的能力」。
-    - 核心思路：引入一个独立的 meta-prover（实验里就用最强的 QwQ-32B），计算 $S(\tau_{<t} \oplus s_t^{(k)}) = \exp(\frac{1}{M} \log p_{\text{meta}}(A \mid \tau_{<t} \oplus s_t^{(k)}))$，其中 $A$ 是 ground-truth 答案序列，$M$ 是答案 token 数。即「在该 step 完成后，meta-prover 平均每个答案 token 的条件概率」，归一化到 $[0, 1]$。这是 forward-looking 信号——不只看 step 本身是否「合理」，而看它「让最终答案更可预测的程度」。
-    - 设计动机：相比 PRM（看 step 局部正确性，会剪掉「初看错但后续自纠」的轨迹）和 binary judgment（输出离散 0/1 太稀疏），predictive perplexity 是 (i) bounded continuous score，能捕捉细微 quality 差异；(ii) 全局 informed——通过 meta-prover 内部对答案 token 的 likelihood 隐式包含「这条路是否朝正确方向走」的判断；(iii) 不需要训练额外 reward model（直接复用 teacher pool 里最强者）。实验里 perplexity 在 AIME24 上把准确率从 PRM 的 75.0 提到 79.6，从 binary judgment 的 77.7 提到 79.6。
+切好 step 后需要一个打分函数来挑每步最优候选，而 PRM 这类局部正确性评分有个硬伤——会过早剪掉「初看次优、实则是 Aha moment 必经之路」的分支。作者改用一个独立的 meta-prover（实验里直接复用教师池里最强的 QwQ-32B），对每个候选算前瞻性的分数：
 
-3. **Beam search step-wise decoding（保留多路径）**:
+$$S(\tau_{<t} \oplus s_t^{(k)}) = \exp\!\Big(\tfrac{1}{M} \log p_{\text{meta}}(A \mid \tau_{<t} \oplus s_t^{(k)})\Big)$$
 
-    - 功能：在 step 级别维护 Top-B 部分轨迹，避免 greedy 短视提前 commit 到次优分支。
-    - 核心思路：第 $t$ 步从上一步 beam $\mathcal{B}_{t-1} = \{\tau_{<t}^{(b)}\}_{b=1}^B$ 出发，每条前缀让 $K$ 个教师各提议一个候选 step，得到 $B \times K$ 个扩展候选 $\mathcal{C}_t$，按 predictive perplexity 选 Top-$B$ 得 $\mathcal{B}_t$。复杂度 $\mathcal{O}(TKMB)$，远低于 MCTS 的 $\mathcal{O}(TK \log(TMB))$（MCTS 需要每步 rollout 完整剩余轨迹），但比 greedy ($B=1$) 高 $B$ 倍。实验里 $B = 4$。
-    - 设计动机：Long-CoT 的「strategic shifts」「self-corrections」往往在某一步看似次优、几步后才显威力，greedy 会丢掉；MCTS 又太贵。Beam search 是 sweet spot——保留 4 条候选既够 explore 又不失控。论文还分析（Fig 5）：MCTS 容易偏向 globally strong teacher（如 QwQ-32B 一直统治），beam search 反而让 R1-Qwen-32B 在 early phase（problem formulation）发挥、Phi4-Reasoning-Plus 在 late phase（conclusion synthesis）发挥，呈现清晰的 specialization 模式。
+其中 $A$ 是 ground-truth 答案序列、$M$ 是答案 token 数，整体是「接上这个 step 后，meta-prover 平均每个答案 token 的条件概率」，归一化到 $[0,1]$。它的好处是三重的：是 bounded 连续分数，能分辨细微的质量差异；通过答案 likelihood 隐式编码了「这条路是否朝正确方向走」的全局判断，天然包容「现在看着错、后面能自纠」的轨迹；而且不需要额外训练 reward model，复用最强教师即可。实验里光把打分从 PRM 换成 predictive perplexity，AIME24 就从 75.0 提到 79.6。
+
+**3. Beam search step-wise decoding：在 step 级保留 Top-B 部分轨迹，既躲开 greedy 的短视又躲开 MCTS 的爆炸。**
+
+有了打分还不够——Long-CoT 的 strategic shift、self-correction 往往在某一步看着次优、几步后才显威力，greedy（$B=1$）会当场把它丢掉，MCTS 又要每步 rollout 完整剩余轨迹、长链上 search space 指数爆炸。Beam search 正好卡在中间：第 $t$ 步从上一轮 beam $\mathcal{B}_{t-1} = \{\tau_{<t}^{(b)}\}_{b=1}^B$ 出发，每条前缀让 $K$ 个教师各提一个候选 step，得到 $B \times K$ 个扩展候选，再按 predictive perplexity 选 Top-$B$ 成为 $\mathcal{B}_t$。复杂度 $\mathcal{O}(TKMB)$，远低于 MCTS 的 $\mathcal{O}(TK \log(TMB))$，只比 greedy 高 $B$ 倍（实验取 $B=4$）。更妙的是它带来一个 MCTS 给不了的副产物：MCTS 的 trajectory-level reward 会让搜索塌缩到「整体最强」的那个教师（QwQ-32B 一路统治），而 beam search 保留了 beam 级多样性，反而让 R1-Qwen-32B 在 early phase（problem formulation）、Phi4-Reasoning-Plus 在 late phase（conclusion synthesis）各自发挥，涌现出清晰的分工。
+
+### 一个完整示例：三教师协同解一道 AIME 题
+
+设教师池为 $K=3$（R1-Qwen-32B / QwQ-32B / Phi4-Reasoning-Plus），meta-prover 用 QwQ-32B，beam width $B=4$，正确答案 $A$ 已知。
+
+- **Step 1（problem formulation）**：当前只有空前缀，4 条 beam 退化为 1 条。3 个教师各提一个「问题理解」候选 step，得到 3 个扩展。meta-prover 给三者算 predictive perplexity——R1-Qwen-32B 把约束条件列得最干净，分数 0.71，高于 QwQ 的 0.66 和 Phi4 的 0.59；由于候选不足 $B=4$，三条全部保留进 $\mathcal{B}_1$。
+- **Step 2（theorem recall / case split）**：4 条（实际 3 条）前缀 × 3 教师 = 9 个候选 $\mathcal{C}_2$。其中「R1 前缀 + QwQ 的反思续写」组合拿到最高分 0.78——这正是单个教师给不出的跨教师拼接。按分数取 Top-4 进 $\mathcal{B}_2$，低分的「绕远路」分支被淘汰但不是被一步砍死。
+- **…逐步推进…** 每步都是「$B\times K$ 候选 → 打分 → 留 Top-B」，beam 里逐渐沉淀出 early phase 由 R1/QwQ 主导、late phase 由 Phi4 主导的轨迹。
+- **末步（conclusion synthesis）**：Phi4 的收尾候选让答案可预测性飙到最高，beam 收束出一条完整轨迹。这条最终轨迹既不是任何单一教师独立能生成的，整体质量（AIME24 79.6）也反超最强教师 Phi4 的 78.9。
+
+整条轨迹随后作为一条蒸馏样本喂给学生做 SFT——学生学到的是「多教师 step 级合成」出来的、超出任何单教师上限的推理过程。
 
 ### 损失函数 / 训练策略
 学生模型用纯 SFT 训练。教师 pool：QwQ-32B + R1-Distill-Qwen-32B + Phi4-Reasoning-Plus（heterogeneous）或单一 QwQ-32B 不同温度采样（homogeneous）。Meta-prover：QwQ-32B（最强者）。Beam width $B = 4$。基础数据集：LIMO-v1 (817 题)、S1k-1.1 (1000)、LIMO-v2 (800)。学生：R1-Qwen-7B/14B/32B。训练：8×H100，bs=8，5 epochs，lr=5e-6，max seq=20480，DeepSpeed Stage-3。生成时 max output=20,480 token（reasoning 16,384 + answer 4,096）。

@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EMP（Effective Model Pruning）是一个三步式的通用规则，输入任意已经训练好的网络与一个打分向量 $s \in \mathbb{R}^N$，输出一个二值掩码 $M \in \{0,1\}^N$。整条流水线只依赖打分分布本身的形状：(1) 把绝对值打分按 $\ell_1$ 范数归一化得到概率向量 $\omega$；(2) 计算有效样本量 $N_{\text{eff}}$ 并截断到 $[1, N]$；(3) 按 $|s|$ 取 top-$N_{\text{eff}}$ 索引置 1，其余置 0。算法复杂度 $O(N \log N)$，主要来自一次排序。同时引入一个可选的部署旋钮 $\beta \in [0.5, 2]$，把真正保留的个数改为 $\beta N_{\text{eff}}$，仅用于硬件硬性要求特定稀疏率时的微调。
+EMP（Effective Model Pruning）想解决的是剪枝里被长期忽视的一半问题：打分准则已经卷出了花，但「拿到打分后到底保留几个」始终靠人拍脑袋。它的回答是一条只看打分分布形状、与架构和准则都无关的通用规则——输入一个训练好的网络和任意打分向量 $s \in \mathbb{R}^N$，输出二值掩码 $M \in \{0,1\}^N$。整条流水线分三步：先把绝对值打分按 $\ell_1$ 范数归一化成概率向量 $\omega_i = |s_i|/\|s\|_1$，再由 $\omega$ 算出一个「有效样本量」$N_{\text{eff}}$ 并截断到 $[1,N]$，最后按 $|s|$ 取 top-$N_{\text{eff}}$ 个索引置 1、其余剪掉。整套规则复杂度 $O(N\log N)$（一次排序），五行代码即可实现，并配一个可选部署旋钮 $\beta \in [0.5,2]$，仅在硬件硬性要求某稀疏率时把保留数微调成 $\beta N_{\text{eff}}$。
 
 ### 关键设计
 
-1. **有效样本量 $N_{\text{eff}}$ 作为通用阈值**:
+**1. 有效样本量 $N_{\text{eff}}$：让打分分布自己说出该剪多少。**
 
-    - 功能：把任意非负打分分布 $\omega \in \Delta$（标准 $(N-1)$ 单纯形）映射为一个整数保留个数。
-    - 核心思路：定义 $N_{\text{eff}} \triangleq \lfloor 1/\sum_i \omega_i^2 \rfloor$，几何上对应于 $\omega$ 与单纯形重心 $\zeta_{[N]}$ 的距离平方的倒数。当 $\omega$ 完全均匀时 $N_{\text{eff}} = N$（什么都不能剪），当 $\omega$ 退化为单点时 $N_{\text{eff}} = 1$（只保留一个最大值）。作者证明 $A_\nu = \tilde{\Delta} \cap (B_\nu - B_{\nu+1})$，把整个 $\tilde{\Delta}$ 切成若干球壳，每个壳对应一个 $N_{\text{eff}}$ 值。
-    - 设计动机：这个量同时具备三个性质——只依赖打分分布、与维度 $N$ 自适应、对坐标排列不变。粒子滤波与生态学领域早就证明它是「分布集中度」的最佳代理，搬到剪枝上意味着分布越尖锐就可以剪得越狠，无需人为指定稀疏率。
+痛点很直接——SparseGPT、Wanda 这些方法都要事先指定一个全局稀疏率，过激进掉点、过保守浪费，在大模型上还得网格搜索。作者的做法是把这个超参数从分布里反推出来：定义 $N_{\text{eff}} \triangleq \lfloor 1/\sum_i \omega_i^2 \rfloor$，这正是粒子滤波里判断「有多少粒子统计有效」的有效样本量，在生态学里叫逆 Simpson 指数。几何上它等于 $\omega$ 到单纯形重心 $\zeta_{[N]}$ 距离平方的倒数——分布越均匀离重心越近，$N_{\text{eff}} \to N$（什么都不能剪）；分布越尖、越退化为单点，$N_{\text{eff}} \to 1$（只留最大那个）。作者进一步证明 $A_\nu = \tilde{\Delta} \cap (B_\nu - B_{\nu+1})$，等于把整个单纯形切成一圈圈球壳，每层壳对应一个固定的 $N_{\text{eff}}$ 值。它之所以好用，是因为同时满足三个性质：只依赖打分分布、随维度 $N$ 自适应、对坐标排列不变；分布越尖锐就能剪得越狠，全程不需要任何人为设定的稀疏率。
 
-2. **有效质量 $s_{\text{eff}}$ 的紧下界**:
+**2. 有效质量 $s_{\text{eff}}$ 的紧下界：从分布形状就能算出「剪掉的有多重」。**
 
-    - 功能：给出保留的归一化质量 $s_{\text{eff}} = \sum_{i=1}^{N_{\text{eff}}} \omega_{(i)}$ 关于 $N_{\text{eff}}$ 的可证明下界，从而控制「剪掉的部分到底有多重」。
-    - 核心思路：在 $\tilde{\Delta}$ 上求 $\varphi_\nu(\omega) = \sum_{i=1}^{\nu} \omega_i$ 在 $A_\nu$ 上的下确界。直接松弛到 $\tilde{\Delta}$ 只能得到平凡界 $s_{\text{eff}} \geq N_{\text{eff}}/N$。作者构造点 $p_\nu = \zeta_{[N]} + \frac{r_{\nu+1}}{r_1}(\zeta_{[1]} - \zeta_{[N]})$，证明它就是 $A_\nu$ 上 $\varphi_\nu$ 的最小值点，得到紧界 $1 - s_{\text{eff}} \leq \frac{N-N_{\text{eff}}}{N}\left(1 - \sqrt{\frac{N-N_{\text{eff}}-1}{(N_{\text{eff}}+1)(N-1)}}\right)$，渐近近似于 $\frac{N-N_{\text{eff}}}{N}\left(1 - \sqrt{\frac{N-N_{\text{eff}}}{N N_{\text{eff}}}}\right)$。
-    - 设计动机：剪枝问题最关心的是「丢掉的那部分有多重要」，而 $1 - s_{\text{eff}}$ 正是这个量。紧界让我们能从打分分布形状直接推出剪枝代价的理论上限，而不必跑实验。
+光知道保留几个还不够，真正要管的是被剪掉那部分到底有多重要。作者用保留的归一化质量 $s_{\text{eff}} = \sum_{i=1}^{N_{\text{eff}}} \omega_{(i)}$ 来刻画它，于是 $1 - s_{\text{eff}}$ 就是剪枝代价的直接度量。问题转成在 $A_\nu$ 上求 $\varphi_\nu(\omega) = \sum_{i=1}^{\nu}\omega_i$ 的下确界——若直接松弛到整个 $\tilde{\Delta}$，只能得到平凡的 $s_{\text{eff}} \geq N_{\text{eff}}/N$。作者构造出最小值点 $p_\nu = \zeta_{[N]} + \frac{r_{\nu+1}}{r_1}(\zeta_{[1]} - \zeta_{[N]})$，证明它就是 $\varphi_\nu$ 在 $A_\nu$ 上的极小点，从而得到紧界
 
-3. **损失变化 $\epsilon$ 的上界传导**:
+$$1 - s_{\text{eff}} \leq \frac{N-N_{\text{eff}}}{N}\left(1 - \sqrt{\frac{N-N_{\text{eff}}-1}{(N_{\text{eff}}+1)(N-1)}}\right),$$
 
-    - 功能：当打分准则就是参数幅值时，把 $s_{\text{eff}}$ 下界翻译成稠密模型与剪枝模型之间损失差 $\epsilon = |L(\theta^*) - L(\theta^k)|$ 的上界。
-    - 核心思路：从 Zhang et al. 2023 的引理 $\rho \leq 1 - 2\epsilon N / (\|\theta^* - \theta^k\|_2^2 \mathrm{Tr}(H) + 2\epsilon N)$ 出发，反解得 $\epsilon \leq \frac{1-\rho}{2N\rho}\mathrm{Tr}(H)\|\theta^* - \theta^{N_{\text{eff}}}\|_2^2$，再用 $\|\theta^* - \theta^{N_{\text{eff}}}\|^2 \leq \|\theta^*\|_1^2 (1-s_{\text{eff}})^2 (N - N_{\text{eff}})$ 把右侧改写成只与 $\rho$、$N$ 有关的解析式，得到渐近上界 $\epsilon \lesssim \|\theta^*\|_1^2 \mathrm{Tr}(H) \frac{(1-\rho)^4}{2\rho} \left(1 - \sqrt{\frac{1-\rho}{N\rho}}\right)^2$。
-    - 设计动机：这是把「分布几何 → 剪枝代价」的因果链彻底打通。实验显示当 $N = 1000$、$\rho > 0.2$ 时该上界已接近 0，说明只要 $N_{\text{eff}}$ 阈值落在合理范围，损失增量在理论上就被压得很小。这条链对幅值准则严格成立，对其他可微准则也可类推。
+渐近近似为 $\frac{N-N_{\text{eff}}}{N}\big(1 - \sqrt{(N-N_{\text{eff}})/(N N_{\text{eff}})}\big)$。这层紧界的意义在于：不必跑任何实验，只看打分分布的形状就能给出剪枝代价的理论上限。
+
+**3. 损失变化 $\epsilon$ 的上界传导：把分布几何一路推到 loss 增量。**
+
+前两步停在「质量」层面，这一步把它兑现成真正关心的损失差。当打分准则就是参数幅值时，剪枝引入的损失差为 $\epsilon = |L(\theta^*) - L(\theta^k)|$。作者从 Zhang et al. 2023 的引理 $\rho \leq 1 - 2\epsilon N/(\|\theta^* - \theta^k\|_2^2 \mathrm{Tr}(H) + 2\epsilon N)$ 反解出 $\epsilon \leq \frac{1-\rho}{2N\rho}\mathrm{Tr}(H)\|\theta^* - \theta^{N_{\text{eff}}}\|_2^2$，再借上一步的紧界把参数距离放缩成 $\|\theta^* - \theta^{N_{\text{eff}}}\|^2 \leq \|\theta^*\|_1^2 (1-s_{\text{eff}})^2 (N - N_{\text{eff}})$，最终得到只与 $\rho$、$N$ 有关的解析上界
+
+$$\epsilon \lesssim \|\theta^*\|_1^2\, \mathrm{Tr}(H)\, \frac{(1-\rho)^4}{2\rho}\left(1 - \sqrt{\frac{1-\rho}{N\rho}}\right)^2.$$
+
+这条链把「分布几何 → 剪枝代价」彻底打通：实验里当 $N=1000$、$\rho > 0.2$ 时上界已接近 0，意味着只要 $N_{\text{eff}}$ 落在合理范围，损失增量理论上就被压得极小。该推导对幅值准则严格成立，对其他可微准则也可类推。
 
 ### 损失函数 / 训练策略
-EMP 是一个**纯后训练**剪枝规则，不修改训练目标，也不要求剪后微调。在实验中作者刻意不做任何 fine-tune，以隔离 EMP 阈值本身的效果。可选的 $\beta$ 系数仅用于硬件部署：当目标硬件要求的稀疏率低于 $N_{\text{eff}}/N$ 时，把保留数缩到 $\beta N_{\text{eff}}$，但 $\beta = 1$ 始终是「分水岭」。
+EMP 是一个**纯后训练**规则，不改训练目标、不要求剪后微调；实验里作者刻意全程不做任何 fine-tune，以隔离阈值本身的效果。唯一的旋钮 $\beta$ 只服务于硬件部署——当目标硬件要求的稀疏率低于 $N_{\text{eff}}/N$ 时把保留数缩成 $\beta N_{\text{eff}}$，而 $\beta = 1$ 始终是「无损 → 掉点」的分水岭。
 
 ## 实验关键数据
 

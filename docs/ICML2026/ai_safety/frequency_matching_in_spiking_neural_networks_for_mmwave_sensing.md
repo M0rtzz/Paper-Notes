@@ -40,30 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不引入新网络结构，而是给「LIF 神经元 + LeNet 风格 SNN」配上一套基于频域的机制分析与超参选择方法。整体分三步：（1）用 DFT 沿时间维分析每个 mmWave 数据集，定义 Fisher 风格的判别指数 $\mathrm{DI}(\omega_k)$ 并归一化为概率分布 $\mathrm{DI}_{\text{norm}}$；（2）把 LIF 写成 $u_{t+1}=\beta u_t+(1-\beta)I_t-v_{\text{th}}O_t$ 并忽略 reset 项，得到等价一阶 IIR 滤波器 $H(\omega_k;\beta)=(1-\beta e^{-j\omega_k})^{-1}$，定义 DC-归一化功率模板 $\tilde H(\omega_k;\beta)$ 与半功率截止 $B_{\text{eff}}(\beta)$；（3）以二者的点积 $\mathrm{FMS}_{\text{avg}}(\beta)=\sum_{\omega_k}\mathrm{DI}_{\text{norm}}(\omega_k)\tilde H(\omega_k;\beta)$ 衡量机制-数据对齐度，再用「最大偏离参考对角线」规则识别 over-low-pass 的临界 $\beta^\dagger$，把 $\beta$ 划成「under-filter / stability window / over-low-pass」三个明确区。
+论文不动网络结构，而是给「LIF 神经元 + LeNet 风格 SNN」配上一套频域分析工具，回答「该把膜衰减系数 $\beta$ 设成多少」这个一直靠经验调的老问题。做法是把数据和神经元都搬到频域去比对：先用 DFT 量出每个 mmWave 数据集「判别信息长在哪些频率上」，再把 LIF 线性化成一个带宽由 $\beta$ 控制的低通滤波器，最后用一个对齐分数衡量「滤波器留下的频谱」和「判别频谱」的重合度，从而把 $\beta$ 的取值范围切成可解释的三段。
 
 ### 关键设计
 
-1. **数据侧：判别频谱 $\mathrm{DI}_{\text{norm}}(\omega_k)$**:
+**1. 判别频谱 $\mathrm{DI}_{\text{norm}}$：量出判别信息长在哪些频率上**
 
-    - 功能：把「类别判别信息在每个频率位上的密度」客观量化，作为后续机制匹配的「数据真相」。
-    - 核心思路：对每个样本 $\mathbf{X}_i\in\mathbb{R}^{L\times C\times H\times W}$，先把非时间维平均得到一维时序 $\mathbf{s}_i\in\mathbb{R}^L$，再做 sample-wise 去均值与一边 DFT，得幅度谱 $A_i[k]$；按类别估计每频段的类间散度 $S_B[k]=\sum_c\pi_c(\mu_c[k]-\bar\mu[k])^2$ 与类内散度 $S_W[k]=\sum_c\pi_c\,\mathrm{Var}_c[k]$，定义 $\mathrm{DI}(\omega_k)=S_B[k]/(S_W[k]+\varepsilon)$ 并在频域归一化。
-    - 设计动机：直接做线性可分性的 Fisher 风格统计，可以同时反映「信号能量分布」与「类别可分性」，是连接「数据」与「机制」的中介。
+要谈「频率匹配」，先得有一把尺子说清楚「mmWave 数据的判别信息到底分布在什么频率」。论文对每个样本 $\mathbf{X}_i\in\mathbb{R}^{L\times C\times H\times W}$ 先把非时间维平均压成一维时序 $\mathbf{s}_i\in\mathbb{R}^L$，再做 sample-wise 去均值与一边 DFT 得到幅度谱 $A_i[k]$，然后按类别在每个频段估计类间散度 $S_B[k]=\sum_c\pi_c(\mu_c[k]-\bar\mu[k])^2$ 与类内散度 $S_W[k]=\sum_c\pi_c\,\mathrm{Var}_c[k]$，定义判别指数 $\mathrm{DI}(\omega_k)=S_B[k]/(S_W[k]+\varepsilon)$ 并在频域归一化成概率分布 $\mathrm{DI}_{\text{norm}}$。这是 Fisher 风格的线性可分性统计，能同时反映能量分布和类别可分性，因此它既描述了「数据真相」，又是后面连接数据与神经元机制的中介。
 
-2. **机制侧：LIF 低通模板与单调带宽控制（Lemma 3.2）**:
+**2. LIF 低通模板：把 $\beta$ 变成一个干净的「逆带宽」旋钮**
 
-    - 功能：把脉冲神经元的时间整合行为转译成「一个由 $\beta$ 单调控制带宽的低通滤波器」，从而能在频域里直接与数据频谱对齐。
-    - 核心思路：忽略 reset 项的 LIF 是一阶 IIR，频响为 $H(\omega_k;\beta)=(1-\beta e^{-j\omega_k})^{-1}$；为消除整体幅度差异，定义 DC-归一化功率模板 $\tilde H(\omega_k;\beta)=(1-\beta)^2/[(1-\beta)^2+2\beta(1-\cos\omega_k)]$。Lemma 3.2 证明：$\tilde H\in(0,1]$、$\tilde H(0;\beta)=1$、对 $\omega_k$ 不增、对 $\beta$ 不增。半功率点 $\tilde H(\omega_c;\beta)=1/2$ 定义有效带宽 $B_{\text{eff}}(\beta)=\omega_c$，于是 $\beta$ 成了一个干净的「逆带宽」旋钮。
-    - 设计动机：让超参 $\beta$ 具备明确物理意义（带宽控制），后续的「调参」就变成「带宽与数据频谱对齐」，不再是经验玄学。
+光有数据频谱还不够，得说清楚 LIF 神经元本身是个什么滤波器。把 LIF 写成 $u_{t+1}=\beta u_t+(1-\beta)I_t-v_{\text{th}}O_t$ 并忽略 reset 项后，它就是一个一阶 IIR 滤波器，频响为 $H(\omega_k;\beta)=(1-\beta e^{-j\omega_k})^{-1}$。为了消掉整体幅度差异、只比较「形状」，论文定义 DC-归一化功率模板 $\tilde H(\omega_k;\beta)=(1-\beta)^2/[(1-\beta)^2+2\beta(1-\cos\omega_k)]$。Lemma 3.2 证明它满足 $\tilde H\in(0,1]$、$\tilde H(0;\beta)=1$、对 $\omega_k$ 不增、对 $\beta$ 也不增——即 $\beta$ 越大、通带越窄。再用半功率点 $\tilde H(\omega_c;\beta)=1/2$ 定义有效带宽 $B_{\text{eff}}(\beta)=\omega_c$，$\beta$ 于是从一个玄学超参变成了带宽的物理控制量：调 $\beta$ 就是在调神经元的截止频率。
 
-3. **对齐侧：FMS 评分与 $\beta^\dagger$ 最大偏离规则**:
+**3. FMS 对齐分数与 $\beta^\dagger$ 最大偏离规则：不靠训练就把 $\beta$ 切成三段**
 
-    - 功能：给出一个不依赖标签精度的、可纯由数据频谱与神经动力学决定的「过度低通起点」$\beta^\dagger$，从而把 $\beta$ 的可调区段定量划分。
-    - 核心思路：把模板与数据频谱内积得到 $\mathrm{FMS}_{\text{avg}}(\beta)=\sum_{\omega_k}\mathrm{DI}_{\text{norm}}(\omega_k)\tilde H(\omega_k;\beta)\in[0,1]$，解释为「LIF 在当前 $\beta$ 下保留下来的判别频谱质量」。再做 $\tau=(1-\beta)^{-1}$，对 $\log\tau$ 与 $\mathrm{FMS}_{\text{avg}}$ 都做 min-max 归一化得到 $(\phi_r,\psi_r)$，连接首末端形成参考对角 $\hat L$，取偏离最大的点 $\beta^\dagger=\arg\max_r|\hat L(\phi_r)-\psi_r|$。由此 Proposition 3.5 给出三段：under-filter（$\beta\to 0$，噪声没压下去）、stability window（$0<\beta<\beta^\dagger$，准确率通常在这里出现峰值）、over-low-pass（$\beta\geq\beta^\dagger$，判别信息也被砍掉）。
-    - 设计动机：传统 $\beta$ 调参要做 dataset-specific accuracy sweep，既贵又没机制解释；以频域几何特征定义 $\beta^\dagger$ 把「调参」变成「按频谱画线」，对部署边缘 SNN 极有意义。
+有了数据频谱和 LIF 模板，「频率匹配」就能直接量化：把两者内积得到对齐分数 $\mathrm{FMS}_{\text{avg}}(\beta)=\sum_{\omega_k}\mathrm{DI}_{\text{norm}}(\omega_k)\tilde H(\omega_k;\beta)\in[0,1]$，它的含义是「LIF 在当前 $\beta$ 下保留下来的判别频谱质量」。关键问题是 $\beta$ 一旦太大、通带太窄，连有用的高频判别成分都会被砍掉，论文用一个纯几何规则定位这个临界点：令 $\tau=(1-\beta)^{-1}$，对 $\log\tau$ 与 $\mathrm{FMS}_{\text{avg}}$ 都做 min-max 归一化得到 $(\phi_r,\psi_r)$，连接首末两端形成参考对角线 $\hat L$，取偏离这条线最远的点 $\beta^\dagger=\arg\max_r|\hat L(\phi_r)-\psi_r|$。Proposition 3.5 据此把 $\beta$ 划成三段：under-filter（$\beta\to 0$，噪声没压下去）、stability window（$0<\beta<\beta^\dagger$，精度峰值通常落在这里）、over-low-pass（$\beta\geq\beta^\dagger$，判别信息被一起砍掉）。妙处在于 $\beta^\dagger$ 只由数据频谱与神经动力学决定，不依赖任何标签精度——从业者不必再做昂贵的 dataset-specific accuracy sweep，照着频谱「画条线」就能拿到接近最优的 $\beta$。
+
+### 一个完整示例
+以 AOPHand 手势数据集为例走一遍：先对全体样本做 DFT，发现判别能量主要集中在低-中频带、高频几乎全是多径噪声，得到 $\mathrm{DI}_{\text{norm}}$；然后扫一组候选 $\beta$，对每个 $\beta$ 算出 LIF 的归一化带宽 $B_{\text{eff}}(\beta)$ 和对齐分数 $\mathrm{FMS}_{\text{avg}}(\beta)$；把 $\mathrm{FMS}_{\text{avg}}$ 对 $\log\tau$ 画出来、连参考对角线找最大偏离点，得到临界 $\beta^\dagger$。落在 $\beta^\dagger$ 之前的 stability window 里选 $\beta$ 去训练 SpikingLeNet，最终最佳精度对应的 $\beta^\ast$ 果然落在 $\beta^\dagger$ 左侧、精度从 LeNet 的 60.86% 提到 83.70%——整个过程没有为选 $\beta$ 做精度扫描，全靠频域对齐定位。
 
 ### 损失函数 / 训练策略
-沿用 surrogate gradient 的标准 SNN 训练（具体细节在附录），简单 LeNet 风格 SpikingLeNet（≈4.19M 参数）即可；唯一额外步骤是按上述方法事先选好每个数据集的 $\beta$。
+沿用 surrogate gradient 的标准 SNN 训练（细节在附录），骨架就是简单的 LeNet 风格 SpikingLeNet（≈4.19M 参数）；唯一额外步骤是按上述频率匹配方法事先为每个数据集选好 $\beta$。
 
 ## 实验关键数据
 

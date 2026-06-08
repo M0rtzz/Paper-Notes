@@ -49,55 +49,41 @@ tags:
 
 ### 关键设计
 
-#### 1. 曝光时间依赖的 MTF（ET-MTF）
+**1. 曝光时间依赖的 MTF（ET-MTF）：把"短曝光 vs 长曝光"的二元开关变成一根连续旋钮。**
 
-**功能**：建立从短曝光到长曝光的连续平滑 MTF 模型。
+现有方法只给出 $\text{MTF}_{\text{SE}}$ 和 $\text{MTF}_{\text{LE}}$ 两个极端状态，中间曝光既无物理模型、又只能靠经验插值，物理意义模糊。本文回到 Azoulay 的有限曝光 MTF 理论，用一个直观概念把两端连起来：有效相干长度 $\rho_p(\tau)$。短曝光下湍流在物理口径 $D$ 内近似"冻结"，而长曝光时传感器在积分窗口内累积了多个湍流状态，等效于一个被风"拉大"的口径 $D + v_w \tau$。于是 MTF 写成
 
-**核心思路**：基于 Azoulay 的有限曝光 MTF 理论，引入有效相干长度 $\rho_p(\tau)$ 概念。短曝光时湍流在物理口径 $D$ 内冻结，长曝光时传感器积分多个湍流状态，等效于更大的口径 $D + v_w \tau$：
+$$\text{MTF}_{\text{ET}}(\boldsymbol{\xi}, \tau) = e^{-\left(\frac{\lambda \|\boldsymbol{\xi}\|}{\rho_p(\tau)}\right)^{5/3}}, \qquad \rho_p(\tau) = 1 + 0.35 \left(\frac{r_0}{D + v_w \tau}\right)^{1/3}$$
 
-$$\text{MTF}_{\text{ET}}(\boldsymbol{\xi}, \tau) = e^{-\left(\frac{\lambda \|\boldsymbol{\xi}\|}{\rho_p(\tau)}\right)^{5/3}}$$
+其中 $r_0$ 是 Fried 参数、$v_w$ 是风速、$\boldsymbol{\xi}$ 是空间频率。曝光时间 $\tau$ 一增大，等效口径变大、$\rho_p(\tau)$ 平滑减小，MTF 的高频段衰减随之加快——从弱模糊到强模糊的过渡因此是连续、有物理出处的，而不是在两个离散模式间硬切。
 
-$$\rho_p(\tau) = 1 + 0.35 \left(\frac{r_0}{D + v_w \tau}\right)^{1/3}$$
+**2. 模糊宽度重参数化：让同一套 MTF 既随曝光时间变、也随空间位置变。**
 
-其中 $r_0$ 是 Fried 参数，$v_w$ 是风速。随着 $\tau$ 增大，$\rho_p(\tau)$ 平滑减小，MTF 在高频段衰减加快，自然产生从弱模糊到强模糊的连续过渡。
-
-**设计动机**：现有 $\text{MTF}_{\text{SE}}$ 和 $\text{MTF}_{\text{LE}}$ 仅定义了两个极端状态，中间过渡无物理建模。直接经验插值缺乏物理可解释性。
-
-#### 2. 模糊宽度重参数化
-
-**功能**：将 ET-MTF 从仅依赖曝光时间扩展到同时依赖局部模糊宽度。
-
-**核心思路**：利用 PSF 的半高全宽（FWHM）定义模糊宽度 $\omega \approx \frac{0.49 \lambda f}{r_0}$，将 $r_0$ 反解代入有效相干长度：
+$\rho_p(\tau)$ 只含 $\tau$，意味着整张图被同一强度的模糊覆盖；但真实湍流因局部折射率波动，模糊在画面上本就是空间非均匀的。要把空间维度引进来，作者用 PSF 的半高全宽（FWHM）定义局部模糊宽度 $\omega \approx \frac{0.49 \lambda f}{r_0}$，再把这个关系反解出 $r_0$ 代回有效相干长度，于是
 
 $$\rho_p(\omega, \tau) = 1 + 0.28 \left(\frac{\lambda f}{\omega(D + v_w \tau)}\right)^{1/3}$$
 
-最终 ET-MTF 同时由空间位置（通过 $\omega$）和时间（通过 $\tau$）共同决定。
+重参数化之后，ET-MTF 同时由局部模糊宽度 $\omega$（空间）和曝光时间 $\tau$（时间）决定。换句话说，$\omega$ 成了一个可以逐像素调节的"模糊旋钮"，为下一步铺路。
 
-**设计动机**：原始 $\rho_p(\tau)$ 在图像平面上空间均匀，但真实湍流因局部折射率波动表现为空间变化的模糊模式。
+**3. 空间变化模糊宽度场：把标量 $\omega$ 升级成受物理约束的随机场。**
 
-#### 3. 空间变化模糊宽度场
+有了逐像素可调的 $\omega$，还需要决定每个位置具体取多大。作者把模糊宽度建模为一个空间相关的随机场 $\mathcal{W}(\mathbf{x}, \tau)$，它的均值和标准差不是随便给的，而是由光学湍流理论约束：
 
-**功能**：为每个空间位置分配不同的模糊宽度，实现空间非均匀模糊建模。
+$$\mathcal{W}(\mathbf{x}, \tau) = \max\!\big(\epsilon,\; \bar{\omega}(\tau) + \sigma_\omega(\tau)\, \mathcal{R}(\mathbf{x})\big)$$
 
-**核心思路**：将模糊宽度建模为空间相关的随机场 $\mathcal{W}(\mathbf{x}, \tau)$，其均值和标准差由光学湍流理论约束：
-
-$$\mathcal{W}(\mathbf{x}, \tau) = \max(\epsilon, \bar{\omega}(\tau) + \sigma_\omega(\tau) \mathcal{R}(\mathbf{x}))$$
-
-其中 $\bar{\omega}(\tau)$ 和 $\sigma_\omega(\tau)$ 均是 $\tau$ 的函数（由详细的物理公式给出），$\mathcal{R}(\mathbf{x})$ 是经低通滤波的零均值单位方差高斯随机场，$\epsilon > 0$ 保证非负性。
-
-最终的空间变化模糊操作为：
+其中 $\bar{\omega}(\tau)$ 和 $\sigma_\omega(\tau)$ 都是 $\tau$ 的函数（由原文给出的物理公式确定），$\mathcal{R}(\mathbf{x})$ 是一个经低通滤波的零均值、单位方差高斯随机场——低通保证相邻像素的模糊是平滑过渡而非椒盐噪点，$\epsilon > 0$ 则托住下界防止出现负宽度。最终的空间变化模糊操作就是用每个位置自己的 PSF 去卷积去 tilt 后的图像：
 
 $$\mathcal{B}_\tau(I_T(\mathbf{x})) = \text{PSF}_{\text{ET}}(\mathbf{x}, \mathcal{W}(\mathbf{x}, \tau), \tau) * I_T(\mathbf{x})$$
 
-#### 4. 帧间相关性建模
+这一步让合成图像在同一帧内就具备真实湍流那种"近处清、远处糊、局部还忽强忽弱"的空间不均匀模糊。
 
-**功能**：将单帧合成扩展到视频序列，建模湍流退化的时间演化。
+**4. 帧间相关性建模：用 Taylor 冻结流把单帧扩成时间连贯的视频。**
 
-**核心思路**：采用 Taylor 冻结流假设，将湍流视为被平均风平移的准静态折射率场：
+前三步只解决了一帧怎么糊；视频还要求相邻帧的湍流是连续演化而非各帧独立随机。作者采用 Taylor 冻结流假设，把湍流看成一块准静态的折射率场被平均风整体平移：
 
-$$\mathcal{H}(J_t(\mathbf{x})) = \mathcal{H}\left(J_0\left(\mathbf{x} - \frac{f \mathbf{v}_w t}{L}\right)\right)$$
+$$\mathcal{H}(J_t(\mathbf{x})) = \mathcal{H}\!\left(J_0\!\left(\mathbf{x} - \frac{f \mathbf{v}_w t}{L}\right)\right)$$
 
-在扩展的退化场上沿风向平移即可生成时间相关的视频帧。
+只要先在一个比画面更大的退化场上采样，再沿风向按帧平移采样窗口，就能得到时间上相互关联的连续帧——既复用了同一套 ET-MTF 退化，又自然带出湍流随时间漂移的视觉效果。
 
 ### 损失函数 / 训练策略
 

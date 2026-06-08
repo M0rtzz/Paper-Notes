@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SVGT 完全冻结 backbone $\theta_{\mathrm{LLM}}$，在它旁边外挂一个独立价值策略 $\pi_\phi$。从指定中-后期层 $l^*$ 抽取 hidden states 喂给价值模块，模块按两阶段变换工作：
-
-阶段一 Value Space Construction：把 prompt 上下文和当前 hidden 同时编码，得到稳定的 value state $\mathbf{z}$ 和方向性修正 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$。
-
-阶段二 Latent Value Bridge：把 $\Delta\mathbf{z}$ 转化成 $K$ 个 Bridge Token $\mathbf{B}\in\mathbb{R}^{K\times d}$，late-binding 地插在 prompt 后面，作为后续自回归生成的注意力目标。
-
-整套结构等价于 $P(y_t|y_{<t},x,\mathbf{c}_v)$，其中 $\mathbf{c}_v=\pi_\phi(\mathcal{E}(\mathbf{h}))$ 是显式的潜在价值上下文。
+SVGT 把对齐从"写进 backbone 权重"改成"挂一个外置价值模块"：backbone $\theta_{\mathrm{LLM}}$ 全程冻结，旁边外挂一个独立价值策略 $\pi_\phi$。它从指定的中-后期层 $l^*$ 抽 hidden states，先在一个与任务空间隔离的价值空间里判断"当前生成方向安不安全"、给出一个修正方向 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$，再把这个抽象修正翻译成 $K$ 个 Bridge Token $\mathbf{B}\in\mathbb{R}^{K\times d}$ 插在 prompt 后面，让自回归生成在 frozen attention 的作用下被它们牵引。整套结构相当于把普通解码 $P(y_t|y_{<t},x)$ 扩展成带显式价值上下文的 $P(y_t|y_{<t},x,\mathbf{c}_v)$，其中 $\mathbf{c}_v=\pi_\phi(\mathcal{E}(\mathbf{h}))$。
 
 ### 关键设计
 
-1. **独立价值空间 + 双通路编码 + 梯度型修正信号**：
+**1. 独立价值空间 + 双通路编码：把价值方向从动态的 residual stream 里隔离出来。**
 
-    - 功能：在一个与 backbone 隔离的低维流形里持续追踪当前 hidden state 的"对齐性"，并给出一个方向性修正。
-    - 核心思路：对 hidden 序列 $\mathbf{H}^{(l^*)}$ 用聚合算子 $\mathcal{A}$（如 last-token 或 attention pooling）抽出当前状态 $\mathbf{h}_v$ 和 prompt 上下文 $\mathbf{h}_p$；通过两条通路融合：无条件通路 $f_u(\mathbf{h}_v)$ 捕捉与上下文无关的价值先验，条件通路 $\mathrm{CrossAttn}(f_c(\mathbf{h}_v),f_c(\mathbf{h}_p))$ 用交叉注意力把 prompt 上下文揉进来，再加权得到价值状态 $\mathbf{z}=\mathcal{R}(f_u(\mathbf{h}_v)+\lambda\cdot\mathrm{CrossAttn}(\cdots))$；用一个判别器 $\mathcal{D}$ 输出对齐性分数，方向性修正信号即 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$（沿用 PPLM 的梯度引导思想）。
-    - 设计动机：单一无条件编码无法处理"同一回答在不同 prompt 下安全性相反"的情形；双通路在课程学习里能分工——无条件学全局先验、条件学 prompt 特异修正，避免一个网络既要记普遍规则又要做具体判断。
+针对的痛点是 residual stream 高度动态、价值信号会被任务信号反复挤压漂移。SVGT 不在原空间里硬注入 steering vector，而是先用聚合算子 $\mathcal{A}$（last-token 或 attention pooling）从 hidden 序列 $\mathbf{H}^{(l^*)}$ 里抽出当前状态 $\mathbf{h}_v$ 和 prompt 上下文 $\mathbf{h}_p$，再走两条互补通路融合成一个隔离的价值状态 $\mathbf{z}$：无条件通路 $f_u(\mathbf{h}_v)$ 负责学"与上下文无关的全局价值先验"，条件通路 $\mathrm{CrossAttn}(f_c(\mathbf{h}_v),f_c(\mathbf{h}_p))$ 用交叉注意力把当前 prompt 的特异性揉进来，最后加权得到 $\mathbf{z}=\mathcal{R}\big(f_u(\mathbf{h}_v)+\lambda\cdot\mathrm{CrossAttn}(\cdots)\big)$。判别器 $\mathcal{D}$ 在 $\mathbf{z}$ 上打一个对齐性分数，沿其梯度方向 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$ 就是要施加的修正（这一步沿用 PPLM 的梯度引导思想，但 PPLM 在 residual 上直接做、SVGT 把它关在隔离空间里算）。拆双通路是因为"同一句回答在不同 prompt 下安全性可能相反"——靠单一无条件编码判不出来，两条通路分工后无条件支路保持稳定先验、条件支路只学 prompt 特异修正，避免一个网络既背普遍规则又做具体判断。
 
-2. **Latent Value Bridge：把抽象修正翻译成注意力锚点**：
+**2. Latent Value Bridge：把抽象修正翻译成 backbone 能"看见"的注意力锚点。**
 
-    - 功能：把价值空间里抽象的方向 $\Delta\mathbf{z}$ 转成 $K$ 个真正能被 backbone "看见"的 token。
-    - 核心思路：定义一个检索 bank $\mathbf{C}=[\mathbf{h}_v;\phi(\Delta\mathbf{z})]^\top$，把 prompt 终态和价值修正投影到 backbone 维度 $d$；让 $K$ 个可学的 seed query $\mathbf{Q}$ 通过 cross-attention 检索 $\mathbf{B}_{\mathrm{raw}}=\mathrm{softmax}(\mathbf{Q}\mathbf{C}^\top/\sqrt{d})\mathbf{C}$，再用门控残差 $\mathbf{B}=\mathrm{LayerNorm}(\mathbf{1}_K \mathbf{h}_v+\alpha\cdot\mathbf{B}_{\mathrm{raw}})$ 锚在 $\mathbf{h}_v$ 上，门控 $\alpha$ 初始化接近零。生成时 LVB 动态运行：每解码一个 token 都重新算 $\mathbf{z}_t、\Delta\mathbf{z}_t$ 并用 momentum 更新 Bridge Token。
-    - 设计动机：Bridge Token 必须是"backbone 学习流形上的有效点"才不会破坏流畅度——所以构造成"已有合法 hidden 的加权组合"而不是凭空生成的离群向量。late-binding（插在 prompt 处理完之后）保证引导信号建立在完整语义之上而非污染上下文表征；动态重计算则让引导在 token-level 自适应——模型快偏离时引导加强、安全时放松。
+价值空间里的 $\Delta\mathbf{z}$ 是个抽象方向，backbone 并不直接读它——LVB 负责把它落成 $K$ 个真正进入注意力的 token。做法是先拼一个检索 bank $\mathbf{C}=[\mathbf{h}_v;\phi(\Delta\mathbf{z})]^\top$，把 prompt 终态和价值修正都投影到 backbone 维度 $d$；再让 $K$ 个可学的 seed query $\mathbf{Q}$ 通过 cross-attention 检索出 $\mathbf{B}_{\mathrm{raw}}=\mathrm{softmax}(\mathbf{Q}\mathbf{C}^\top/\sqrt{d})\mathbf{C}$，最后用门控残差 $\mathbf{B}=\mathrm{LayerNorm}(\mathbf{1}_K\mathbf{h}_v+\alpha\cdot\mathbf{B}_{\mathrm{raw}})$ 把它锚在合法的 $\mathbf{h}_v$ 上，门控 $\alpha$ 初始化接近零。这样构造的 Bridge Token 是"已有合法 hidden 的加权组合"而非凭空生成的离群向量，落在 backbone 学到的流形上，因此引导生成时几乎不推高 perplexity。它还是 late-binding 的——插在 prompt 处理完之后，保证引导建立在完整语义之上而不污染上下文表征；生成时 LVB 动态运行，每解码一个 token 都重新算 $\mathbf{z}_t、\Delta\mathbf{z}_t$ 并用 momentum 更新 Bridge Token，于是模型快偏离时引导自动加强、安全时放松，实现 token-level 自适应纠偏。
 
-3. **三阶段课程训练**：
+**3. 三阶段课程训练：把"会判断 → 会动态判断 → 会引导生成"拆成三级台阶。**
 
-    - 功能：让 value module 从粗到细学到"先验 → 上下文修正 → 行为引导"。
-    - 核心思路：Stage 1 用标准 BCE 在独立文本样本上训练 unconditional encoder + discriminator，建立 toxicity/unsafe instruction 的通用先验；Stage 2 在 prompt-response 配对数据上训练 conditional pathway，并用非对称学习率（无条件支路低 lr 微调、条件支路高 lr 从头训）强制分工；Stage 3 冻结 backbone+encoder+discriminator，只训 projector，用三项加权损失：CE（teacher-forcing 行为模仿）+ safety loss $\mathcal{L}_{\mathrm{safe}}=\mathrm{mean}(\mathrm{softplus}(s)+\alpha\mathrm{ReLU}(s))$ 的密集 token-level 监督 + manifold 正则 $\mathcal{L}_{\mathrm{reg}}=\max(||\|\mathbf{B}\|/\|\mathbf{h}_{M-1}\|-1|-\tau,0)$ 限制 Bridge 输出能量贴近 prompt 终态。
-    - 设计动机：直接端到端训会因价值-语言任务难度悬殊出问题；课程学习把"会判断 → 会动态判断 → 会通过 Bridge 引导生成"分成三个清晰的能力台阶，每一阶解决一个明确目标。
+价值判断和语言生成两个任务难度悬殊，端到端直训会互相拖累，所以用课程学习逐级解锁能力。Stage 1 用标准 BCE 在独立文本样本上单训 unconditional encoder + discriminator，建立 toxicity / unsafe instruction 的通用先验；Stage 2 在 prompt-response 配对数据上训 conditional pathway，并用非对称学习率（无条件支路低 lr 微调、条件支路高 lr 从头训）强制两条通路保持分工、不学成同一个函数；Stage 3 冻结 backbone、encoder、discriminator，只训 projector，用三项加权损失收尾——CE 做 teacher-forcing 的行为模仿，safety loss $\mathcal{L}_{\mathrm{safe}}=\mathrm{mean}(\mathrm{softplus}(s)+\alpha\,\mathrm{ReLU}(s))$ 提供密集的 token-level 安全监督，manifold 正则 $\mathcal{L}_{\mathrm{reg}}=\max\big(\big|\,\|\mathbf{B}\|/\|\mathbf{h}_{M-1}\|-1\,\big|-\tau,\,0\big)$ 限制 Bridge 输出的能量贴近 prompt 终态、防止它飞出合法流形。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}_{\mathrm{total}}=\lambda_{\mathrm{ce}}\mathcal{L}_{\mathrm{ce}}+\lambda_{\mathrm{safe}}\mathcal{L}_{\mathrm{safe}}+\lambda_{\mathrm{reg}}\mathcal{L}_{\mathrm{reg}}$；Bridge Token 数 $K=5\text{-}10$，价值空间维 $d_v=128\text{-}256$，hidden 抽取层取中-后期（Llama-3.2-3B 选第 20 层）；零初始化门控 + manifold 正则双重控制保证早期训练不会扰动生成。
+Stage 3 的总目标是 $\mathcal{L}_{\mathrm{total}}=\lambda_{\mathrm{ce}}\mathcal{L}_{\mathrm{ce}}+\lambda_{\mathrm{safe}}\mathcal{L}_{\mathrm{safe}}+\lambda_{\mathrm{reg}}\mathcal{L}_{\mathrm{reg}}$。关键超参：Bridge Token 数 $K=5\text{-}10$，价值空间维 $d_v=128\text{-}256$，hidden 抽取层取中-后期（Llama-3.2-3B 选第 20 层）。零初始化门控 $\alpha$ 与 manifold 正则双重控制，保证早期训练不会扰动生成质量。
 
 ## 实验关键数据
 

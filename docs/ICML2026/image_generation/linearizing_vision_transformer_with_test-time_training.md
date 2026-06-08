@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对 pretrained Softmax 模型，作者只换 attention 模块。具体改造：(1) 对 K 做 instance norm $\hat{k}_i = (k_i-\bar{k})/\sqrt{\frac{1}{N}\sum_j(k_j-\bar{k})^2+\varepsilon}$；(2) 对 Q, K 各加一条 depthwise conv 分支 $\hat{q} = q + \mathrm{DWC}(q), \hat{k} = k + \mathrm{DWC}(k)$；(3) 把 Softmax 注意力换成两层 TTT-SwiGLU 内模型，模型内部的 $W_1, W_2$ 直接从 Q/K/V projection 矩阵继承；(4) 可选地与 Neighborhood Attention（NAT）做 50/50 混合。其余 MLP、LayerNorm、embedding 全部保留并参与微调。
+方法要解决的是"把已经训好的 Softmax 注意力换成线性复杂度的替身，又不想重新训练"。作者的做法是只动 attention 模块、保留 MLP/LayerNorm/embedding：先把 Softmax 注意力替换成两层 TTT-SwiGLU 内模型，让内部的 $W_1, W_2$ 直接继承原 Q/K/V projection 权重；再在 K 上加 instance norm、在 Q/K 上各加一条 depthwise conv 分支，把 Softmax 隐含的 shift-invariance 和 locality 在表示空间补回来。改造完成后只需 1 小时量级的微调即可恢复原性能，可选地再与 Neighborhood Attention 做 50/50 混合进一步涨点。
 
 ### 关键设计
 
-1. **TTT 作为 Softmax 的"结构同构"替身**:
+**1. TTT 作为 Softmax 的"结构同构"替身：跨越表示能力鸿沟**
 
-    - 功能：把 Softmax attention $\mathrm{Attn}(q,K,V) = \sigma(qW_1^{dyn})W_2^{dyn}$（其中 $W_1^{dyn} = K^\top, W_2^{dyn} = V$）与两层 TTT $\mathrm{TTT}(q) = \sigma(qW_1')W_2'$ 在表示能力上对齐，从而支持全权重继承。
-    - 核心思路：从 query 角度，Softmax 注意力本质上是一个两层动态 MLP——第一层权重是 $K^\top$（动态由序列构造），中间非线性是 row-wise softmax，第二层是 $V$。而 TTT 中两层 MLP 的"静态权重"$W_1, W_2$ 加上从序列梯度算出的 fast weights $\Delta_1, \Delta_2$ 得到 $W_1', W_2'$，结构与上式完全一致。作者通过控制实验（Table 1）证明：vanilla linear attention 即使加 ProjQK 在 freeze 协议下也只有 24.39% acc，而 TTT-SwiGLU 直接到 67.33%——结构匹配带来了远超激活替换的迁移收益。
-    - 设计动机：以前的线性 attention 把"动态权重"压缩成单层 $\phi(K)^\top V$，丢掉了 Softmax 中的非线性中间层；TTT 把"非线性 + 两层"原汁原味保留，是真正能装下 Softmax 表示空间的线性架构。
+以前的线性 attention 之所以继承不了 Softmax 权重，根因是表示能力差一个量级——它们把"动态权重"压缩成单层 $\phi(K)^\top V$，丢掉了 Softmax 中间那层非线性。作者的关键观察是：从 query 角度看，Softmax 注意力本质上是一个两层动态 MLP，写成 $\mathrm{Attn}(q,K,V) = \sigma(qW_1^{dyn})W_2^{dyn}$，其中第一层权重 $W_1^{dyn}=K^\top$ 由序列动态构造、中间非线性是 row-wise softmax、第二层 $W_2^{dyn}=V$。而两层 TTT 的输出 $\mathrm{TTT}(q)=\sigma(qW_1')W_2'$（$W_1', W_2'$ 是静态权重 $W_1, W_2$ 加上从序列梯度算出的 fast weights $\Delta_1, \Delta_2$）在结构上与之完全对应。因为 TTT 原汁原味保留了"非线性 + 两层"，它真正装得下 Softmax 的表示空间，于是 Q/K/V/MLP 可以直接全权重继承。控制实验印证了这一点：vanilla linear attention 即便加上 ProjQK，在 freeze 协议下也只有 24.39% acc，而结构匹配的 TTT-SwiGLU 直接到 67.33%——同样 0.3–0.5M 新参数，结构对齐带来的迁移收益远超单纯的激活替换。
 
-2. **Key Instance Normalization 对齐 Shift-Invariance**:
+**2. Key Instance Normalization：补回 Softmax 的 Shift-Invariance**
 
-    - 功能：消除 pretrained 模型中 keys 的系统性偏移，让 TTT 内部优化稳定不发散。
-    - 核心思路：Softmax 对 $K$ 的常数 shift $\delta$ 不敏感——分子分母同减 $q^\top\delta$ 后 softmax 不变；但 TTT 的内 loss $\mathcal{L}_t(k_t) = -v_t^\top f_W(k_t)$ 对 $\delta$ 极度敏感，对 $W_1$ 的梯度展开到一阶有 $-[W_2^\top v_t \odot \sigma'(W_1 k_t)]\delta^\top$ 等额外项，online 累积后会梯度爆炸。作者定义 shift ratio $r = \|\bar{k}\|_2 / (\frac{1}{N}\sum_i \|k_i\|_2)$，实测预训 ViT 的 $r \approx 0.5$，而随机初始化只有 0.07，说明确实存在系统性 bias。解决方案是在 TTT 前对 K 做 Instance Norm $\hat{k}_i = (k_i-\bar{k})/\sqrt{\mathrm{var}+\varepsilon}$。Table 2 显示去掉 mean subtraction 训练立刻 NaN，去掉 std division 几乎无影响——证实关键是"中心化"而非"标准化"。
-    - 设计动机：这是表示空间对齐里最关键也最容易被忽视的一点——Softmax 隐式"吸收"了 K 的常数偏移，所以即使预训 K 不居中模型也工作；但 TTT 显式优化，K 不居中就直接崩，必须人工补回这个 invariance。
+这是表示对齐里最关键也最易被忽视的一环。Softmax 对 $K$ 的常数 shift $\delta$ 天然不敏感——分子分母同减 $q^\top\delta$ 后结果不变，所以即使预训 K 系统性不居中，原模型照样工作。但 TTT 是显式优化的，它的内 loss $\mathcal{L}_t(k_t) = -v_t^\top f_W(k_t)$ 对 $\delta$ 极度敏感：对 $W_1$ 的梯度展开到一阶会冒出 $-[W_2^\top v_t \odot \sigma'(W_1 k_t)]\delta^\top$ 这类额外项，在 online 更新里逐步累积就导致梯度爆炸。为量化这个 bias，作者定义 shift ratio $r = \|\bar{k}\|_2 / (\frac{1}{N}\sum_i \|k_i\|_2)$，实测预训 ViT 的 $r\approx 0.5$、随机初始化仅 0.07，证实 K 确有系统性偏移。修复办法就是在喂进 TTT 前对 K 做 instance norm $\hat{k}_i = (k_i-\bar{k})/\sqrt{\frac{1}{N}\sum_j(k_j-\bar{k})^2+\varepsilon}$，把这条 invariance 人工补回去。消融进一步坐实根因：去掉 mean subtraction 训练立刻 NaN，去掉 std division 几乎无影响——真正起作用的是"跨 token 中心化"而非"标准化"。
 
-3. **Depthwise Conv on Q/K 注入 Locality**:
+**3. Depthwise Conv on Q/K：注入 Softmax 的 Locality**
 
-    - 功能：补齐 Softmax 强局部偏置而 TTT 缺失的特性，提升细粒度建模能力。
-    - 核心思路：由于 TTT 没有显式 $QK^\top$，作者定义 implicit attention $A_{implicit}(i,j) = \partial o_i/\partial v_j$ 作为可视化工具，发现 TTT 比 Softmax 更全局、缺乏局部 spike。修复方案是在 Q/K 前加 depthwise conv 残差：$\hat{q} = q + \mathrm{DWC}(q), \hat{k} = k + \mathrm{DWC}(k)$。这等价于让 TTT 内部学习目标 $L(f_W(k), v)$ 看到的是"局部窗内 keys 联合预测 v"，自然扩大感受野。Table 3 显示 DWCQK 优于在 input 上加 CPE 或在 value 上加 DWC；与 NAT3/NAT5 进一步混合可继续涨点。
-    - 设计动机：locality 是视觉 Softmax 的隐式归纳偏置，linear/TTT 等"全局"模型本就弱在局部纹理上；depthwise conv 是最便宜的 locality 注入器，0.5M 参数就能拉回 2% acc。
+locality 是视觉 Softmax 的隐式归纳偏置，而全局型的 linear/TTT 本就弱在局部纹理上。由于 TTT 没有显式 $QK^\top$，作者借助梯度定义了一个 implicit attention $A_{implicit}(i,j)=\partial o_i/\partial v_j$ 作可视化工具，发现 TTT 的注意力比 Softmax 更全局、缺乏局部 spike。针对这个痛点，作者在 Q/K 前各加一条 depthwise conv 残差分支 $\hat{q}=q+\mathrm{DWC}(q),\ \hat{k}=k+\mathrm{DWC}(k)$，等价于让 TTT 内部的学习目标 $L(f_W(k),v)$ 看到的是"局部窗内 keys 联合预测 v"，从而自然扩大感受野。这是最便宜的 locality 注入器，仅 0.5M 参数就能拉回约 2% acc。消融显示 DWCQK 优于在 input 上加 CPE 或在 value 上加 DWC；若再与 NAT3/NAT5 混合还能继续涨点，但即便不混合 DWCQK 也已能独立达标。
 
 ### 损失函数 / 训练策略
-两种微调协议：(1) Freeze 协议——只训新引入的 TTT 内参数和 DWC 权重，用大学习率（用于结构验证）；(2) Full Fine-Tuning（FT）——所有参数都训。在 SD3.5 上仅做 3000 步微调（4×H20 约 1 小时），用 standard rectified flow loss + EMA 教师对齐。在 DiT-XL/2 上做 8 epochs，仅占原训练步数的 0.57%。
+两种微调协议：(1) Freeze 协议——只训新引入的 TTT 内参数和 DWC 权重，用大学习率，主要用于结构验证；(2) Full Fine-Tuning——所有参数都训。在 SD3.5 上仅做 3000 步微调（4×H20 约 1 小时），用 standard rectified flow loss 加 EMA 教师对齐；在 DiT-XL/2 上做 8 epochs，仅占原训练步数的 0.57%。
 
 ## 实验关键数据
 

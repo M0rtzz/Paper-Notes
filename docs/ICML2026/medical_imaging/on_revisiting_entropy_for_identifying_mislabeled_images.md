@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SEI 是一个挂在标准训练流程外面的"统计探针"。具体流水线：(1) 用 CLIP（ResNet-50/ViT-B16 vision encoder + Transformer text encoder）跑标准的对比分类训练，把每个类别名做成 prompt `"a photo of [CLS]"`，按 cosine similarity 计算 $p(y=k|\bm{x})$；(2) 每个 epoch 结束后对每个训练样本算 signed entropy $\mathcal{H}(\bm{p}^{(t)}(\bm{x}), y)$；(3) 训练 150 epoch 结束后把每个样本的 signed entropy 沿 $t=1..T$ 求和得到标量 SEI；(4) 用一个**辅助类**自适应阈值策略：随机抽 $N/(K+1)$ 张图重打到一个不存在的伪类（如 "a dermoscopic image showing other lesions"），算它们的平均 SEI 当 cutoff，低于 cutoff 的判为错标。整个过程不改原 training loop、不加新 loss、不加新模块。
+SEI 不改训练，只在标准训练流程外面挂一个"统计探针"：用 CLIP 把类名做成 prompt `"a photo of [CLS]"`、按 cosine similarity 跑常规的对比分类微调，每个 epoch 结束顺手记下每个样本的一个带方向的熵值，训练 150 epoch 后把这条轨迹沿 $t$ 积分成单个标量 SEI，再用一个自校准阈值把低分样本判为错标。一句话：**把"熵的大小"和"预测是否对齐标签"这两个训练动力学信号融成一个可排序的分数**，错标样本天然落到数轴的一端。
 
 ### 关键设计
 
-1. **Signed Entropy（带符号熵）**:
+**1. Signed Entropy：给无方向的熵补上一个 ±1 的方向位。**
 
-    - 功能：把"分布不确定性"和"预测-标签一致性"塞进一个标量，让 hard clean 和 mislabeled 在指标上拉开。
-    - 核心思路：对模型当前 epoch 的后验 $\bm{p}(\bm{x})$，定义 $\mathcal{H}(\bm{p}(\bm{x}), y) = (-1)^{\mathbb{1}[y=\arg\max_k p_k(\bm{x})]} \sum_k p_k(\bm{x})\log p_k(\bm{x})$。注意 $\sum p\log p \le 0$，所以当指数为 0（预测与标签不一致）时 $\mathcal{H}$ 是**正值**（看起来反直觉，但作者用的就是这个约定，下游 SEI 累积时错标 → 持续不一致 → 持续正？）。实际论文中作者明确写"easy clean → 大正 SEI，mislabeled → 强负 SEI"，等价于把符号位理解为：**一致时取正、不一致时取负**，把无符号 $-\sum p\log p \ge 0$ 当幅度。读者按"对齐为正、不对齐为负"的直觉理解即可，关键是引入了一个 ±1 的方向位。
-    - 设计动机：Shannon 熵恒非负，错标和困难干净都"高熵"，没法分开。引入符号位后，错标样本（长期不对齐）和困难干净样本（早期不对齐、后期对齐）就会沿训练 epoch 走出**完全相反方向**的轨迹，给后续积分留出可分性。
+Shannon 熵只刻画分布有多不确定，是个恒非负的无方向量——错标样本和困难干净样本都"想不明白"、都高熵，单看熵根本分不开。作者的做法是给熵乘上一个由"当前预测的 argmax 是否等于给定标签"决定的符号位：对当前 epoch 的后验 $\bm{p}(\bm{x})$，定义 $\mathcal{H}(\bm{p}(\bm{x}), y) = (-1)^{\mathbb{1}[y=\arg\max_k p_k(\bm{x})]} \sum_k p_k(\bm{x})\log p_k(\bm{x})$。读者按"预测与标签**对齐取正、不对齐取负**、无符号的 $-\sum p\log p\ge 0$ 当幅度"来理解即可（作者明确写 easy clean → 大正 SEI、mislabeled → 强负 SEI，这与符号位的字面指数约定差一个整体翻转，但语义就是方向位）。补上这个方向位之后，错标样本（长期不对齐）和困难干净样本（早期不对齐、后期对齐）就会沿训练 epoch 走出**方向完全相反**的轨迹，给后面的积分留出可分性。
 
-2. **Signed Entropy Integral（SEI，时序累积）**:
+**2. Signed Entropy Integral：把整条训练轨迹积分掉抖动。**
 
-    - 功能：把每个样本一条 $T$ 长的 signed entropy 曲线压成一个标量，平滑掉训练抖动，给所有训练样本一个全局可比的 ranking 分数。
-    - 核心思路：$\mathrm{SEI}(\bm{x},y) = \sum_{t=1}^T \mathcal{H}(\bm{p}^{(t)}(\bm{x}), y)$。直观看：easy clean 样本几乎每个 epoch 都对齐 → 累积出一个大的同号积分；hard clean 早期错累积反号、后期对累积正号，**正负相消**得到中等积分；mislabeled 从头错到尾，符号一致 → 累积出一个绝对值很大的相反号积分。这样三类样本天然落在数轴的三个区段。
-    - 设计动机：作者引用 AUM/O2U-Net 的观察——单 epoch 的预测/损失值噪声大、对训练超参敏感，而沿整条轨迹积分能"自然平均掉"波动。论文消融（Table 4）显示 SE@T、SE@T/2 这种"单 epoch 切片"比 SEI 差 8-15 个 F1 点，且 SEI 比无符号 EI（standard entropy integral）平均高 10+ 点，证明"符号 + 时序"两个设计都必要。
+单个 epoch 的预测/损失值噪声大、对超参敏感（AUM、O2U-Net 早就观察到），靠某一轮的切片做判断不稳。SEI 把每个样本那条长度为 $T$ 的 signed entropy 曲线直接沿训练求和压成一个标量：$\mathrm{SEI}(\bm{x},y) = \sum_{t=1}^T \mathcal{H}(\bm{p}^{(t)}(\bm{x}), y)$。三类样本因此天然落在数轴的三段：易学干净样本几乎每轮都对齐，累出一个大的同号积分；困难干净样本早期反号、后期同号，**正负相消**落在中段；错标样本从头错到尾、符号始终一致，累出一个绝对值很大的相反号积分。积分等于把轨迹"自然平均"，消融（Table 4）显示单 epoch 切片 SE@T/SE@T/2 比 SEI 差 8–15 个 F1，而 SEI 又比无符号积分 EI 平均高 10+ 点——符号和时序两个设计缺一不可。
 
-3. **辅助类自适应阈值**:
+**3. 辅助类自适应阈值：用伪类锚把判定阈值自校准。**
 
-    - 功能：把"SEI 分数 → 错标决策"的阈值从手工调参变成 data-driven 的，避免不同数据集/不同噪声率都得重调。
-    - 核心思路：注入 $N/(K+1)$ 个**人造错标**——随机抽一批样本，把它们的标签改成一个原数据集里不存在的伪类 $K+1$（CLIP 设置下伪类的 prompt 设计成"语义无关"的话术，如皮肤病数据里写成 "a dermoscopic image showing other lesions"）。这些样本必然错标，且与真实错标行为相近，于是把它们的 SEI 平均值作为 cutoff。$N/(K+1)$ 这个数量是为了让伪类频率与原 $K$ 个类一致，避免类不平衡污染 calibration。
-    - 设计动机：固定阈值在不同数据集/不同噪声率下完全不通用；用 hold-out clean set 又违背"无干净数据"假设。作者借鉴 AUM 的"植入已知坏样本当校准锚"思路，但用伪类而非随机翻转标签，更贴合 CLIP 这种把类名当 text prompt 的范式。
+有了 SEI 排序还得有一条 cutoff，但固定阈值换个数据集/换个噪声率就失效，留干净 hold-out 集又违背"无干净数据"假设。作者的办法是注入一批**必然错标**的锚样本：随机抽 $N/(K+1)$ 张图，把标签改成原数据集里根本不存在的伪类 $K+1$（CLIP 下把伪类 prompt 写成语义无关的话术，如皮肤镜数据里的 "a dermoscopic image showing other lesions"），这些样本的行为就是真实错标的代理，于是直接取它们的平均 SEI 当 cutoff，低于它的判错标。抽 $N/(K+1)$ 张是为了让伪类频率和原来 $K$ 个真类一致、不引入类不平衡污染校准。这一招思路来自 AUM 的"植入已知坏样本当锚"，但换成 CLIP 友好的伪类 prompt 而非随机翻转标签，更贴合"类名即 text prompt"的范式。
 
 ### 损失函数 / 训练策略
-SEI **本身不引入新 loss**——训练用的是 CLIP 标准的图像-文本对比 loss（按 prompt `"a photo of [CLS]"` 把每张图与 $K$ 个类的 text embedding 对齐）。所有"错标检测"动作都在 forward pass 算 $\bm{p}^{(t)}(\bm{x})$ 之后做，不反传到模型。实现细节：SGD + momentum 0.9 + weight decay $1\times 10^{-4}$，batch 128，lr $1\times 10^{-3}$，150 epoch，lr 在 75/115 epoch 衰减 10×，图像 resize 到 $224\times 224$。
+SEI 本身不引入任何新 loss——训练就是 CLIP 标准的图像-文本对比 loss（按 prompt `"a photo of [CLS]"` 把每张图与 $K$ 个类的 text embedding 对齐），所有错标检测动作都在 forward 算出 $\bm{p}^{(t)}(\bm{x})$ 之后离线完成、不反传到模型。实现细节：SGD + momentum 0.9 + weight decay $1\times 10^{-4}$，batch 128，lr $1\times 10^{-3}$，150 epoch，lr 在 75/115 epoch 衰减 10×，图像 resize 到 $224\times 224$。
 
 ## 实验关键数据
 

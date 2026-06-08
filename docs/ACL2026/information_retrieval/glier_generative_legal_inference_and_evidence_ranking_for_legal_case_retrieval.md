@@ -41,36 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个模块串联：
-- **GLIE (Generative Legal Indicator Extractor)**：mT5-base 学生模型，把 query $q$ 生成结构化元组 $K_q=(c_q,e_q)$；训练数据由 ChatGLM 教师 LLM 离线蒸馏出"罪名-要件"silver standard $\mathcal{D}_{struct}$。
-- **MFDR (Multi-Faceted Discriminative Re-ranker)**：5 维特征向量 $\mathbf{v}_{q,d}\in\mathbb{R}^5$ 经 3 层 MLP (in→64→32→1) 输出相关性分数，并用 BM25 hard negative + BCE 损失训练。
 
-形式化：$\hat z = \arg\max_z P_\theta(z|q)$，再 $S(q,d)=f_\psi(q,d,\hat z)$，其中 $P_\theta(z|q)=P_\theta(c|q)P_\theta(e|q,c)$。
+GLIER 把法律案例检索从"query→doc 的直接相似度匹配"改写成"query→（罪名, 要件）→doc 的链式推断"，让检索沿着法律专家的思路走：先从案情推出隐变量 $z=(c,e)$，再据此找符合该法理画像的先例。它由两个串联模块组成：生成器 GLIE（mT5-base 学生模型）把口语化的 query $q$ 生成结构化元组 $K_q=(c_q,e_q)$，其监督信号来自 ChatGLM 教师离线蒸馏出的"罪名-要件"silver standard $\mathcal{D}_{struct}$；精排器 MFDR 则把生成置信、结构匹配、词项匹配拼成 5 维特征 $\mathbf{v}_{q,d}\in\mathbb{R}^5$，经 3 层 MLP（in→64→32→1）输出相关性分数。整体可形式化为 $\hat z = \arg\max_z P_\theta(z|q)$、$S(q,d)=f_\psi(q,d,\hat z)$，其中 $P_\theta(z|q)=P_\theta(c|q)P_\theta(e|q,c)$ 显式编码了"罪名先于要件"的条件依赖。
 
 ### 关键设计
 
-1. **联合 seq2seq 生成 + 受限解码（One-Step Joint Generation）**:
+**1. 联合 seq2seq 生成 + 受限解码：让 autoregressive 解码天然承载罪名→要件的法理顺序。**
 
-    - 功能：用 autoregressive 解码自然实现"罪名先于要件"的链式依赖，提供可解释的法律语义中间表达。
-    - 核心思路：输入为 `prompt + q`，目标序列 $Y=c_q\oplus\text{[SEP]}\oplus e_q$，最小化 $\mathcal{L}_{\text{gen}}=-\sum_{t=1}^{|Y|}\log P(y_t|y_{<t},X;\theta)$；推理时用 beam width=3 + validity filter $\hat c_q=\{t\in\hat c_{raw}\mid t\in\mathcal{K}_{charge}\}$、$\hat e_q=\{t\in\hat e_{raw}\mid t\in\mathcal{K}_{element}\}$ 把输出强制约束在合法分类法 $\mathcal{K}$ 之内。
-    - 设计动机：相比"罪名/要件两个独立分类器"，联合生成让 element 在 charge 已生成的 prefix 条件下采样，自然过滤"暴力性"要件出现在"财产犯罪"罪名下这种逻辑冲突；validity filter 进一步抑制生成式模型常见的同义词幻觉。消融显示，相对 "Independent Generation"，联合策略 MAP +1.87%、Hits@5 +1.89%。
+如果用两个独立分类器分别预测罪名和要件，就会出现"暴力性"要件挂在"财产犯罪"罪名下这种逻辑冲突。GLIER 改成一次性生成目标序列 $Y=c_q\oplus\text{[SEP]}\oplus e_q$，最小化 $\mathcal{L}_{\text{gen}}=-\sum_{t=1}^{|Y|}\log P(y_t|y_{<t},X;\theta)$，这样 element 是在 charge 已生成的 prefix 条件下采样的，逻辑冲突被自然过滤掉。推理时用 beam width=3，并加 validity filter $\hat c_q=\{t\in\hat c_{raw}\mid t\in\mathcal{K}_{charge}\}$、$\hat e_q=\{t\in\hat e_{raw}\mid t\in\mathcal{K}_{element}\}$ 把输出强制约束在合法分类法 $\mathcal{K}$ 内，抑制生成模型常见的同义词幻觉。消融证实这种联合策略比独立生成 MAP +1.87%、Hits@5 +1.89%。
 
-2. **LLM-driven Knowledge Distillation 与防作弊 prompt 设计**:
+**2. LLM 蒸馏 + 防作弊 prompt：把噪声长文书提炼成可检索的结构化监督。**
 
-    - 功能：用 ChatGLM 把噪声多的长法律文书提炼成结构化 `{罪名, 要件}` silver standard，避免昂贵的人工标注。
-    - 核心思路：对每条文档 $d$ 给定其真实罪名 $c_{gt}$，调用 $K_d=\text{LLM}(d,c_{gt},\mathcal{P})=(c_d,e_d)$；prompt 强制 (i) 用专业法律术语而非口语描述，(ii) **严格禁止抽出量刑结果**（"有期徒刑/赔偿"等），防止学生模型靠"匹配量刑模板"作弊。失败样本用 deepseek-R1 作为 fallback 重抽，再以一套清洗管线删除 ~2.7% 错误实例。
-    - 设计动机：法律文档极长且充满量刑、程序细节，若不剥离量刑信息，silver label 会泄露目标信号让模型学到 "shortcut"；术语标准化保证抽出来的要件是 retrievable（与法律分类法一致），可被 validity filter 接住。人工 100 例评估：罪名准确 97.0%、要件精度 82.0%，Cohen's $\kappa$=0.71。
+人工标注"罪名-要件"成本极高，GLIER 用 ChatGLM 离线蒸馏 silver standard：对每条文档 $d$ 给定真实罪名 $c_{gt}$，调用 $K_d=\text{LLM}(d,c_{gt},\mathcal{P})=(c_d,e_d)$。关键在 prompt 设计强制两点——一是用专业法律术语而非口语描述，二是**严格禁止抽取量刑结果**（"有期徒刑/赔偿"等）。后者至关重要：法律文书充斥量刑、程序细节，若不剥离，silver label 会泄露目标信号让学生模型学到"匹配量刑模板"的捷径；而术语标准化则保证抽出的要件与法律分类法一致、能被 validity filter 接住。失败样本用 deepseek-R1 作 fallback 重抽，再经清洗管线删去约 2.7% 错误实例。人工 100 例评估显示罪名准确 97.0%、要件精度 82.0%、Cohen's $\kappa$=0.71。
 
-3. **Multi-View 5 维证据融合（MFDR）**:
+**3. 多视图 5 维证据融合（MFDR）：用 MLP 学出门控与调音信号的非线性互补。**
 
-    - 功能：把生成置信、结构匹配、词项 BM25 三类异质信号融合到 MLP 中做精排，避免单一信号偏差。
-    - 核心思路：5 维特征如下——*Latent Confidence* $v_1,v_2$：罪名/要件序列的长度归一化生成概率 $v_1=\exp(\tfrac{1}{|\hat c_q|}\sum_t\log P(t|\hat c_{<t},q))$、$v_2$ 类似；*Explicit Structural* $v_3=\mathbb{I}(\hat c_q\cap c_d\neq\varnothing)$、$v_4=\tfrac{|\hat e_q\cap e_d|}{|\hat e_q|+\epsilon}$；*Lexical* $v_5=\tfrac{\text{BM25}(q,d)}{\max_{d'\in\mathcal{C}_q}\text{BM25}(q,d')}$（per-query max-normalized）。MLP 用 BCE + BM25 hard negative（pos:neg=1:3）训练 $\mathcal{L}_{\text{score}}=-[\log S(q,d^+)+\sum_{d^-}\log(1-S(q,d^-))]$。
-    - 设计动机：消融显示 w/o MLP 用规则相加 MAP 暴跌 15.2%，说明生成置信、结构 hit 与 BM25 之间高度非线性；SHAP 分析揭示 Hit_Charge 是决定性的"门控"特征（charge 不对直接 0 分），Norm_BM25 是细粒度的"调音"特征，二者互补正是 MFDR 工作的根因。
+生成置信、结构命中、词项 BM25 是三类异质信号，简单规则相加会丢掉它们之间的非线性关系（消融里 w/o MLP 用规则求和 MAP 暴跌 15.2%）。MFDR 把它们组织成 5 维特征：*Latent Confidence* $v_1,v_2$ 是罪名/要件序列的长度归一化生成概率 $v_1=\exp(\tfrac{1}{|\hat c_q|}\sum_t\log P(t|\hat c_{<t},q))$、$v_2$ 同理；*Explicit Structural* $v_3=\mathbb{I}(\hat c_q\cap c_d\neq\varnothing)$、$v_4=\tfrac{|\hat e_q\cap e_d|}{|\hat e_q|+\epsilon}$；*Lexical* $v_5=\tfrac{\text{BM25}(q,d)}{\max_{d'\in\mathcal{C}_q}\text{BM25}(q,d')}$（每查询最大归一化）。MLP 用 BCE 配 BM25 hard negative（正负比 1:3）训练 $\mathcal{L}_{\text{score}}=-[\log S(q,d^+)+\sum_{d^-}\log(1-S(q,d^-))]$。SHAP 分析揭示其工作根因：Hit_Charge 是决定性的"门控"特征（罪名不对直接 0 分），Norm_BM25 是细粒度的"调音"特征，二者粒度互补才让融合超线性提升。
 
 ### 损失函数 / 训练策略
-两阶段独立训练：
-- 生成器：mT5-base 在 silver standard 上 NLL，max source/target = 512/128，beam=3。
-- 评分器：3 层 MLP（dropout 0.1），AdamW，lr 1e-4，batch 64；hard negative 用 BM25 top-K 非相关文档（与 query 高词项重叠但法理不同），强制 MLP 不能只看 $v_5$。
+
+两个模块独立训练。生成器：mT5-base 在 silver standard 上做 NLL，max source/target = 512/128，beam=3。评分器：3 层 MLP（dropout 0.1），AdamW，lr 1e-4，batch 64；hard negative 取 BM25 top-K 的非相关文档（与 query 词项高度重叠但法理不同），强制 MLP 不能只依赖 $v_5$。
 
 ## 实验关键数据
 

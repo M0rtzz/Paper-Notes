@@ -40,28 +40,27 @@ MARQUIS 将多视频检索增强文章生成拆成“查询分解与重排检索
 ## 方法详解
 
 ### 整体框架
-MARQUIS 有三阶段。第一阶段 **Video Retrieval**：将复杂查询拆成多个 atomic sub-queries，每个子查询独立用 OmniEmbed 检索，随后用 RRF、相似度聚合等策略融合 ranked lists，并用 RankVideo 对 Top-100 candidates 进行 video-native reranking。第二阶段 **Information Extraction**：对检索到的视频并行抽取 query-agnostic notes、query-conditioned claims 和 question-answer evidence，并用 CLUE 校准每条证据是否被源视频支持。第三阶段 **Article Generation**：把筛选后的 evidence artifacts 交给生成器，比较 Bullet、CAG、GINGER、QA-based generation 和 MARQUIS-RLM 控制器。
+MARQUIS 要解决的是“给定一个复杂查询和一大堆视频，写出一篇有引用、可归因的分析文章”。它没有让一个 VLM 一次性看完所有视频再总结，而是把任务拆成检索、证据管理、生成三段流水线，让每一步都可检查、可替换。
 
-MARQUIS-RLM 是一个可选高层控制系统。它把检索、抽取、QA、校准和生成模块包装成工具，由 Root LM 在持久 Python sandbox 中通过 Think-Act-Observe 循环调用，并维护 structured memory bank，减少长流程中的证据遗忘、跨源混淆和冲突遗漏。
+第一阶段 **Video Retrieval** 先把复杂查询拆成多个 atomic sub-queries，每个子查询独立用 OmniEmbed 检索，再用 RRF、相似度聚合等策略融合 ranked lists，最后用 RankVideo 对 Top-100 candidates 做 video-native reranking。第二阶段 **Information Extraction** 对检索到的视频并行抽取 query-agnostic notes、query-conditioned claims 和 question-answer evidence，并用 CLUE 校准每条证据是否被源视频支持。第三阶段 **Article Generation** 把筛选后的 evidence artifacts 交给生成器，比较 Bullet、CAG、GINGER、QA-based generation 和 MARQUIS-RLM 控制器几种合成方式。其中 MARQUIS-RLM 是一个可选的高层控制层：它把上面所有模块包装成工具，由 Root LM 在持久 Python sandbox 里以 Think-Act-Observe 循环调用，并维护一个 structured memory bank。
 
 ### 关键设计
-1. **查询分解、融合与视频重排检索**:
 
-	- 功能：把复杂、多面向查询变成更适合 dense retriever 的短查询，并恢复整体排序。
-	- 核心思路：LLM 将原始查询分解成 $N$ 个 atomic sub-queries，每个子查询检索 Top-1000 视频候选。融合策略包括 RRF、Sum/Max/Mean similarity、Weighted RRF 等。例如 RRF 用 $RRF_K(v)=\sum_i 1/(K+rank(v,q_i))$ 聚合多个 ranked lists。随后对融合后的 Top-100 使用 RankVideo 重排。
-	- 设计动机：dense retriever 通常训练在短查询-文档对上，长 persona + 多需求查询是分布外输入。拆成原子信息需求后，检索器更容易找到覆盖不同 facet 的视频。
+**1. 查询分解、融合与视频重排：把长 persona 查询拆回检索器熟悉的短查询。**
 
-2. **三路证据抽取与视频支撑校准**:
+MAGMaR 这类任务的查询往往很长，包含职业 persona、背景和多个隐含/显式信息需求，而 dense retriever 通常是在短查询-文档对上训练的，一个长查询是分布外输入，单个 embedding 会把多面需求压成一个向量、漏掉相关视频。MARQUIS 让 LLM 先把原始查询分解成 $N$ 个 atomic sub-queries，每个子查询独立检索 Top-1000 视频候选，再把多张 ranked list 融合回一个整体排序——融合策略包括 RRF、Sum/Max/Mean similarity、Weighted RRF 等，其中 RRF 用 $RRF_K(v)=\sum_i 1/(K+\mathrm{rank}(v,q_i))$ 聚合各子查询的排名。融合后的 Top-100 再交给 RankVideo 做一遍 video-native 重排。拆成原子信息需求后，检索器更容易分别命中覆盖不同 facet 的视频，这也是检索 nDCG@10 从 0.195 跳到 0.759 的主因。
 
-	- 功能：把视频候选转成可以被选择、过滤、引用和合成的细粒度 evidence artifacts。
-	- 核心思路：query-agnostic note extraction 记录视频中直接可观察的视觉事件、屏幕文字和语音内容；query-conditioned claim extraction 只抽取与当前查询相关且直接受视频支持的 claims；QA extraction 先把信息需求分解成问题，再由 VLM 基于视频内容和转录回答。所有输出都会被 CLUE 评分，得到支持概率 $s_\theta(v,x) \in [0,1]$，用于过滤 unsupported claims。
-	- 设计动机：抽取和支撑估计分开，避免模型在生成 evidence 时同时自信地误判其可信度。多路证据也覆盖了宽泛观察、任务相关 claim 和针对性 QA 三种粒度。
+**2. 三路证据抽取与视频支撑校准：抽取与可信度判断解耦。**
 
-3. **证据驱动文章生成与 RLM 控制器**:
+直接让模型“边看视频边写证据”，它常常会在生成 evidence 的同时自信地误判其可信度，形成自编自证的循环。MARQUIS 把证据抽取拆成三种粒度并和支撑估计分开：query-agnostic note extraction 记录视频中直接可观察的视觉事件、屏幕文字和语音内容；query-conditioned claim extraction 只抽取与当前查询相关、且直接受视频支持的 claims；QA extraction 先把信息需求分解成问题，再由 VLM 基于视频内容和转录回答。这三路输出覆盖了宽泛观察、任务相关 claim 和针对性 QA 三种粒度，随后统一交给 CLUE 评分，得到支持概率 $s_\theta(v,x) \in [0,1]$，据此过滤掉 unsupported claims。把“抽什么”和“信不信”交给两个独立环节，证据单元因此带上了可校准的置信度，而不是一段笼统的摘要。
 
-	- 功能：从结构化证据生成带引用的文章，并比较不同证据组织方式。
-	- 核心思路：Bullet 直接列出证据，保守但不成文；CAG 一次性合成 cited article；GINGER 先做 facet clustering、cluster ranking、per-cluster summarization，再润色成文；MARQUIS-RLM 则让 Root LM 在持久环境中迭代调用工具，利用 memory bank 搜索、复用、修订 evidence records，显式处理冲突和信息缺口。
-	- 设计动机：多视频生成最容易出错的地方不是语言流畅性，而是证据组织和引用保持。RLM 把“查缺补漏、解决冲突、整理事实”从一次性 prompt 变成可观察的状态转移。
+**3. 证据驱动文章生成与 RLM 控制器：把组织与引用从一次性 prompt 变成可观察状态。**
+
+多视频生成最容易出错的地方不是语言流畅性，而是证据组织和引用保持。MARQUIS 在筛选后的证据上比较了几种合成方式：Bullet 直接列证据，保守但不成文；CAG 一次性合成 cited article；GINGER 先做 facet clustering、cluster ranking、per-cluster summarization，再润色成文。最高层的 MARQUIS-RLM 则让 Root LM 在持久环境里迭代调用工具，借助 memory bank 搜索、复用、修订 evidence records，显式处理证据冲突和信息缺口。RLM 的价值不在于更长的上下文，而在于把“查缺补漏、解决冲突、整理事实”变成一连串可观察的状态转移，从而在长流程中减少证据遗忘和跨源混淆——代价是会纳入更多不相关事实（实验里它 citation recall 最高但 precision 偏低）。
+
+### 一个完整示例：从一条 persona 查询到一篇带引用文章
+
+设输入是一条带职业 persona、要求覆盖多个信息需求的长查询。第一阶段先把它分解成若干 atomic sub-queries（如“某事件的时间线”“相关人物表态”“现场画面”），每个子查询用 OmniEmbed 各取 Top-1000 候选，再用 RRF 融合成一张总榜，对其中 Top-100 用 RankVideo 重排，得到少量高相关视频。第二阶段对这批视频并行跑三路抽取：notes 记下可见画面与字幕，claims 抽出与查询直接相关且有视频支撑的论断，QA 针对具体问题给出答案；CLUE 给每条证据打 $s_\theta$ 分，丢掉支撑概率低的条目。第三阶段把这些已校准、带 source id 的证据交给生成器——若走 RLM 路线，Root LM 会在 memory bank 里检索已有证据、发现某个 facet 缺料就回到工具补检索，最后输出一篇每句话都能回指到具体视频的文章。
 
 ### 损失函数 / 训练策略
 MARQUIS 主要是系统 pipeline，不是端到端训练方法。实验使用 OmniEmbed 做视频/查询编码，Qwen3.5-9B 做查询分解和抽取，Qwen3.5-27B 做 QA 与文章生成，Qwen2.5-Omni-7B 与 Whisper medium.en 参与 multimodal embedding 和转录。Claim-based extraction/generation 不使用音频；QA pipeline 和 RLM 可通过转录工具访问音频。评估在 MAGMaR2026 Test Set 上进行，检索用 nDCG 和 Recall，生成用 MiRAGE 自动指标和 3 名人类标注者的 1-5 分评分。

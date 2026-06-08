@@ -41,32 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-模型 backbone 是 FLUX.1-Fill-Dev（一种 inpainting 取向的 MM-DiT，采用 rectified flow + dual/single-stream transformer）。输入端有三路视觉信号 + 两路文本信号：
-
-- 视觉路：原图裁出的风格图 $I_s$、Pillow 渲染的字形图 $I_g$、按 mask 抹掉目标区的 masked image $I_m$，三者沿通道拼接 $I_{\text{input}}=\mathrm{Concat}(I_g, I_s, I_m)$，由冻结的 VAE encoder 编码成 latent $z_0$。
-- 文本路：用 T5 编码目标文字（作为 glyph text prompt 注入语义结构），用 CLIP 编码风格描述（作为 style text prompt 强化视觉对齐）。
-
-训练 VAE 与两个文本编码器全程冻结，只微调 MM-DiT 主干。整个训练分两阶段：先在 AnyWord-3M 上做 1 epoch 自监督预训练，再在 4000 对 Nano Banana Pro 生成的高质量配对数据上做 10 epoch cooldown。推理时 guidance scale=30、采样 30 步，输出经 VAE decoder 还原后再裁回目标区域。
+方法要解决的是"既要开放词表的任意字形，又要前后风格一致"，而 inpainting 范式做不到，于是作者干脆不训练任何专用编码器，把风格和字形都以"现成的视觉素材"塞进 MM-DiT 的输入序列，让它的 in-context learning 自己挑着用。具体地，backbone 取 FLUX.1-Fill-Dev（inpainting 取向的 MM-DiT，rectified flow + dual/single-stream transformer），视觉端把原图裁出的风格图 $I_s$、Pillow 渲染的字形图 $I_g$、按 mask 抹掉目标区的 masked image $I_m$ 沿通道拼接成 $I_{\text{input}}=\mathrm{Concat}(I_g, I_s, I_m)$，过冻结 VAE encoder 得到 latent $z_0$；文本端再用冻结的 T5 编码目标文字（glyph text prompt，注入语义结构）、CLIP 编码风格描述（style text prompt，强化视觉对齐）。训练只微调 MM-DiT 主干，分两阶段——先在 AnyWord-3M 上 1 epoch 自监督预训练，再在 4000 对高质量配对图上 10 epoch cooldown；推理时 guidance scale=30、采样 30 步，输出经 VAE decoder 还原后裁回目标区域。
 
 ### 关键设计
 
-1. **自提示视觉输入（Style + Glyph Prompt）**:
+**1. 自提示视觉输入：把风格和字形当现成素材直接喂进序列**
 
-    - 功能：在不引入任何额外 encoder 的情况下，同时给 MM-DiT 喂入"目标文字的原始风格"和"目标文字的精细字形"。
-    - 核心思路：风格 prompt $I_s$ 直接来自原图——按 mask 的最小外接矩形裁出原文字 patch，天然携带颜色、字体、纹理、局部光照；字形 prompt $I_g$ 用 Pillow 把目标字符串渲染成白底黑字的高对比度单行 glyph map，提供笔画级几何先验。两者与 masked image $I_m$ 沿通道维拼接进 VAE，再由 MM-DiT 的 in-context learning 能力在 attention 中自行选择"风格抄 $I_s$、内容抄 $I_g$、背景抄 $I_m$"。
-    - 设计动机：用"渲染图"替代 OCR encoder，词表彻底打开（任何 Unicode 字符只要字体支持就能编辑）；用"裁原图 patch"替代 style encoder，避免 TextCtrl 那种 glyph-encoder 与 VAE latent space 表征错位的问题，也避开了从零训练 style encoder 的数据成本。
+STE 的两个痛点——OCR encoder 词表封闭、inpainting 抹掉了目标区导致风格无从参照——其实都源于"非要把信息编码成专用特征"。作者反其道而行：风格 prompt $I_s$ 直接来自原图，按 mask 的最小外接矩形裁出原文字 patch，天然携带颜色、字体、纹理与局部光照；字形 prompt $I_g$ 用 Pillow 把目标字符串渲染成白底黑字的高对比度单行 glyph map，提供笔画级几何先验。两者与 masked image $I_m$ 沿通道拼接进 VAE 后，MM-DiT 的 attention 会在 in-context learning 中自行分工"风格抄 $I_s$、内容抄 $I_g$、背景抄 $I_m$"。这样用"渲染图"替代 OCR encoder，词表彻底打开（任何 Unicode 字符只要字体支持就能编辑）；用"裁原图 patch"替代 style encoder，既避开 TextCtrl 那种 glyph-encoder 与 VAE latent space 表征错位的问题，也省掉了从零训练 style encoder 的数据成本。
 
-2. **Cooldown Training 与目标域 rectified flow 目标**:
+**2. Cooldown 训练：把目标改成"源→目标"的差量速度场防塌缩**
 
-    - 功能：在仅有 4000 对配对数据的条件下，让模型从"会渲染文字"升级为"风格一致地替换文字"，同时避免模型把原文字直接抄过来。
-    - 核心思路：第一阶段在 AnyWord-3M 上用标准 rectified flow 目标 $\mathcal{L}_{\text{RF}}=\mathbb{E}[\|\hat v_\theta(z_t,t,c)-(z_1-z_0)\|_2^2]$ 学通用 text inpainting；第二阶段借鉴 MECO 把"原文字区域"当成 meta-information 注入 style prompt，并把训练目标从"噪声→图像"改成"源图→目标图"的速度场：令 $z_t=(1-\sigma_t)z_0^{\text{src}}+\sigma_t z_0^{\text{tgt}}$，最小化 $\mathcal{L}_{\text{CD}}=\mathbb{E}[\|\hat v_\theta(z_t,t,c)-(z_0^{\text{tgt}}-z_0^{\text{src}})\|_2^2]$。
-    - 设计动机：直接拿原图进训练容易塌缩——模型会偷懒把风格和字形一起复制，导致"修改失败"。改成预测"源→目标的差量速度场"等于显式告诉模型"该改哪、不该改哪"，把风格保留与内容替换在优化上解耦。
+只有渲染信号还不够——AnyWord-3M 这类 OCR 数据集里原文字早被抹掉，模型学到的只是"会渲染字"，并不会"风格一致地换字"。作者于是设计两阶段目标：第一阶段在 AnyWord-3M 上用标准 rectified flow 目标 $\mathcal{L}_{\text{RF}}=\mathbb{E}[\|\hat v_\theta(z_t,t,c)-(z_1-z_0)\|_2^2]$ 学通用 text inpainting；第二阶段借鉴 MECO 把"原文字区域"当 meta-information 注入 style prompt，并把训练目标从"噪声→图像"改成"源图→目标图"的速度场，令 $z_t=(1-\sigma_t)z_0^{\text{src}}+\sigma_t z_0^{\text{tgt}}$，最小化 $\mathcal{L}_{\text{CD}}=\mathbb{E}[\|\hat v_\theta(z_t,t,c)-(z_0^{\text{tgt}}-z_0^{\text{src}})\|_2^2]$。如果直接拿原图进训练，模型会偷懒把风格和字形一起复制、导致"修改失败"；改成预测"源→目标的差量速度场"，等于显式告诉模型"该改哪、不该改哪"，把风格保留与内容替换在优化上解耦。
 
-3. **配对数据构建（Nano Banana Pro + 人工三重筛选）**:
+**3. 配对数据构建：让生成大模型当合成器、人当过滤器**
 
-    - 功能：低成本拿到 cooldown 训练所需的"原图 + 风格一致编辑图"配对，弥补 AnyWord-3M 这类 OCR 数据集"原文字已被抹掉、只有自监督渲染信号"的缺陷。
-    - 核心思路：用指令式编辑模型 Nano Banana Pro 按编辑指令生成候选配对，再人工按三条标准过滤：(a) 非目标区域完全不变；(b) 生成的文字语义正确；(c) 编辑后文字与原文字保持一致的颜色、字体、纹理。最终保留 4000 对作为 cooldown 数据。
-    - 设计动机：风格一致的真实配对数据几乎不存在，但 cooldown 又必须看到"两张除文字外完全相同的图"才能学到风格保留。让一个强生成模型当数据合成器、人来当过滤器，是性价比最高的折中。
+cooldown 必须看到"两张除文字外完全相同的图"才能学到风格保留，但这种风格一致的真实 pair 几乎采集不到。作者用指令式编辑模型 Nano Banana Pro 按编辑指令生成候选配对，再人工按三条标准过滤：(a) 非目标区域完全不变；(b) 生成文字语义正确；(c) 编辑后文字与原文字保持一致的颜色、字体、纹理，最终留下 4000 对。让一个强生成模型当数据合成器、人来当过滤器，是在"风格一致 pair 不存在"约束下性价比最高的折中。
 
 ### 损失函数 / 训练策略
 两阶段：(1) AnyWord-3M 上 1 epoch 标准 rectified flow 目标 $\mathcal{L}_{\text{RF}}$；(2) 4000 对配对图上 10 epoch cooldown 目标 $\mathcal{L}_{\text{CD}}$。优化器 AdamW，lr=$2\times10^{-5}$ 常数，bf16 + 8-bit optimizer state，per-GPU batch=1 ×grad-accum 8（有效 batch 64），8×A100。多语种数据混合训练，不做语种级调度。

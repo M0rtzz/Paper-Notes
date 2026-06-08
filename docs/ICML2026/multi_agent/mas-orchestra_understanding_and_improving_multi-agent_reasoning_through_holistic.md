@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定数据集 $\mathcal{D}=\{(x_i,y_i)\}$ 和用户指定的 DoM 等级 $m\in\{\text{LOW},\text{HIGH}\}$，orchestrator 策略采样一个完整编排 $a\sim\pi_\theta(\cdot\mid x,m)$，再由一个确定性的规则解析器 $f$ 把 $a$ 翻译成实际可执行的子智能体调用图，最终输出预测 $\hat{y}=f(x,a)$。整条 pipeline 与之前 sequential 方案最关键的差别在于：orchestrator 只在第 0 步看到任务 $x$，之后不再观测中间状态、不再做增量决策，编排的好坏只通过最终答案是否正确来回传。
+这篇论文要解决的是"自动 MAS 设计"被 sequential 多步 RL 拖累的老问题：以往让 orchestrator 一步步增量拼装系统，长程信用分配差、错误顺着步骤累积。MAS-Orchestra 把整个过程压成一次性决策——给定数据集 $\mathcal{D}=\{(x_i,y_i)\}$ 和用户指定的 DoM 等级 $m\in\{\text{LOW},\text{HIGH}\}$，orchestrator 策略只在第 0 步看到任务 $x$，一个 forward 内采样出完整编排 $a\sim\pi_\theta(\cdot\mid x,m)$；再由确定性规则解析器 $f$ 把 $a$ 翻成可执行的子智能体调用图，跑出预测 $\hat{y}=f(x,a)$。之后 orchestrator 不再观测中间状态、不再做增量决策，编排好坏只通过最终答案是否正确来回传，整套训练靠 GRPO 在端到端任务奖励上完成。
 
 ### 关键设计
 
-1. **Holistic Orchestration + Function-Calling 形式化**:
+**1. Holistic Orchestration + Function-Calling 形式化：让 orchestrator 一次吐出整张系统，而不是逐步拼。**
 
-    - 功能：让 orchestrator 在一个 forward 内输出包含若干子智能体及其连接拓扑的完整 MAS 描述。
-    - 核心思路：把编排空间约束在两个原语上——`create_agent(role, goal, tools, workflow)` 实例化一个目标导向子智能体，`create_flow(from, to, payload)` 描述子智能体之间的信息流；子智能体本身是黑盒函数，orchestrator 只看 signature 不看实现。这避免了 code-based 编排里"orchestrator 必须读懂子智能体源码"的耦合。
-    - 设计动机：sequential 多步 RL 强迫每一步做局部最优，长程信用分配差、错误顺着步骤累积；holistic 一次成型让 RL 信号直接对齐"系统级最终回报"，训练更稳定，子智能体也可以做得任意复杂（多轮 search、DeepResearch 等）。
+针对的痛点是 code-based 编排（MAS-Zero、AFlow、W4S）的强耦合——orchestrator 必须读懂甚至复现子智能体的内部代码，子智能体一复杂（如多轮 search agent）编排成本就爆炸，逼得大家把子智能体退化成 CoT/CoT-SC 这种最简形式。MAS-Orchestra 把整个编排空间收到两个函数原语上：`create_agent(role, goal, tools, workflow)` 实例化一个目标导向的子智能体，`create_flow(from, to, payload)` 描述子智能体之间的信息流。关键在于子智能体被当作黑盒函数，orchestrator 只看 signature 不看实现，于是它在一个 forward 里就能写出包含若干子智能体及其连接拓扑的完整 MAS 程序。这样 RL 信号直接对齐"系统级最终回报"而非每一步的局部最优，训练更稳定，子智能体也可以做得任意复杂（多轮 search、DeepResearch），因为它们的内部复杂度对 orchestrator 完全透明。
 
-2. **DoM（Degree of MAS）显式约束**:
+**2. DoM（Degree of MAS）显式约束：把"该不该上 MAS"做成用户可调的旋钮。**
 
-    - 功能：用户可在调用时指定 $m$，硬性约束编排空间——LOW 时至多实例化 1 个子智能体且不允许显式 inter-agent 拓扑，HIGH 时子智能体数量与连接方式无约束。
-    - 核心思路：LOW 不等于 SAS——orchestrator 仍需决定"自己解 / 委派整任务 / 委派子任务 / 用哪个子智能体 / 怎么配置该子智能体"；HIGH 则进一步决定多智能体拓扑。一个被同样目标训练的模型可以通过 $m$ 在两种 regime 间切换。
-    - 设计动机：实证发现并非所有任务都受益于 MAS（AIME 这类强 sequential 数学题加 MAS 几乎无增益），把"该不该上 MAS"留给用户/任务 prior 而不是埋进模型里，省下大量无效编排开销。
+实证里并非所有任务都受益于 MAS——AIME 这类强 sequential 数学题加上 MAS 几乎无增益，硬上反而白白付协调开销。作者因此给调用时加一个 DoM 等级 $m$ 来硬性约束编排空间：LOW 时至多实例化 1 个子智能体、且不允许显式 inter-agent 拓扑，HIGH 时子智能体数量与连接方式都不设限。要强调 LOW 并不等于退回单智能体（SAS）——orchestrator 仍要决定"自己解 / 委派整任务 / 委派子任务 / 选哪个子智能体 / 怎么配置它"，只是不搭多智能体拓扑；HIGH 才进一步决定多体协同结构。同一个用统一目标训练出来的模型，靠 $m$ 就能在两种 regime 间切换，把"要不要 MAS"这个先验留给用户/任务，而不是埋死在模型权重里，省下大量无效编排。
 
-3. **GRPO + 任务级稀疏奖励**:
+**3. GRPO + 任务级稀疏奖励：只用最终答案对错端到端训整张系统。**
 
-    - 功能：用最终答案正确性 $R(x,y,\hat{y})=\mathbb{1}[\hat{y}=y]$ 作为唯一信号端到端优化整张 MAS。
-    - 核心思路：对每个 $x$ 采样一组 $K$ 个候选编排 $\{a_i\}_{i=1}^K\sim\pi_\theta(\cdot\mid x,m)$，得到各自奖励 $\{R_i\}$，用组内相对优势构造 clipped policy gradient（GRPO, Shao et al. 2024）。Robustness 等需要中间答案的任务可在奖励中加入子任务正确性。
-    - 设计动机：holistic 编排只在最终输出处获得反馈，PPO 这种依赖 value baseline 的方法在稀疏奖励下方差大；GRPO 用 group 内相对比较替代 value model，天然适配"一个 prompt 一次成型多个候选系统"的训练形态。
+holistic 编排只在最终输出处拿到反馈，奖励极稀疏，PPO 这种依赖 value baseline 的方法在这种信号下方差很大。作者用最终答案正确性 $R(x,y,\hat{y})=\mathbb{1}[\hat{y}=y]$ 作为唯一信号，对每个 $x$ 采样一组 $K$ 个候选编排 $\{a_i\}_{i=1}^K\sim\pi_\theta(\cdot\mid x,m)$，算出各自奖励 $\{R_i\}$，再用组内相对优势构造 clipped policy gradient（GRPO, Shao et al. 2024）。Robustness 这类需要中间答案的任务可在奖励里额外加入子任务正确性。GRPO 用 group 内相对比较替代 value model，恰好契合"一个 prompt 一次成型出多个候选系统"的训练形态——一把 critic 全省掉，正好对上 holistic 编排"一次吐 K 个完整 MAS"的采样结构。
 
 ### 训练与评测策略
-训练阶段同时使用 MASBench 的可控合成数据（由 iGSM 数学问题生成器在指定 Depth/Horizon/Breadth/Parallel 复杂度下产出，Robustness 轴通过插入 NIAH 风格的对抗 note 构造）与公开基准的训练集（DeepScaleR for AIME/GPQA，HotpotQA 训练集，BrowseComp+ 80% 切分）。子智能体池固定为 CoT / CoT-SC / Debate / Self-refine / DeepResearch 五类，全部用同一 LLM 后端，仅在 tool 和 workflow 上做区分。
+训练阶段同时喂两类数据：一是 MASBench 的可控合成数据（由 iGSM 数学问题生成器在指定 Depth/Horizon/Breadth/Parallel 复杂度下产出，Robustness 轴则通过插入 NIAH 风格的对抗 note 构造），二是公开基准的训练集（DeepScaleR for AIME/GPQA、HotpotQA 训练集、BrowseComp+ 的 80% 切分）。子智能体池固定为 CoT / CoT-SC / Debate / Self-refine / DeepResearch 五类，全部共用同一 LLM 后端，仅在 tool 和 workflow 上做区分，确保对比中变化的只是编排结构而非底层模型。
 
 ## 实验关键数据
 

@@ -41,27 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EpiCache 分为离线构建和在线解码两个阶段。离线阶段（Phase A）：(1) 将对话历史分段、嵌入、聚类为 $E$ 个话题情节；(2) 通过校准计算层级敏感度并分配层间 KV 预算；(3) 对每个情节执行 block-wise prefill，以情节代表性片段为 patched prompt 引导驱逐，构建情节专属 KV 缓存。在线阶段（Phase B）：嵌入用户查询，匹配最近的情节质心，检索对应 KV 缓存进行解码。
+EpiCache 想解决的是：在手机这种内存卡死的设备上，让 LLM 记住几百轮的对话历史还能准确答题。它把问题拆成离线和在线两段。离线阶段先把对话历史聚成 $E$ 个话题情节，给每个情节单独压一份 KV 缓存，同时校准出每一层该分多少缓存预算；在线阶段把用户查询嵌入到同一空间，匹配最近的情节质心，只加载那一份情节缓存来解码。这样既把峰值内存压成常数，又能按话题保留住答案需要的上下文。
 
 ### 关键设计
 
-1. **情节式 KV 缓存构建（Episodic KV Cache）**:
+**1. 情节式 KV 缓存：按话题给历史建独立缓存，不必预知未来查询。**
 
-    - 功能：将长对话历史组织为多个话题情节，为每个情节构建独立的压缩 KV 缓存
-    - 核心思路：首先将对话历史 $\mathcal{H}$ 按 $w_{\text{embed}}$ 个话语为一段进行分割，用轻量级编码器 $f_{\text{embed}}$ 将每段编码为向量，然后用 K-Means 聚类为 $E$ 个情节 $\{\mathcal{E}_1, \ldots, \mathcal{E}_E\}$。对每个情节找到距质心最近的代表性片段 $S_{\text{centroid-closest}}$，将其作为 patched prompt 引导 block-wise prefill 的驱逐过程——注意力得分高的 token 被保留，最终形成情节专属缓存 $C_{\text{KV}}^{(e)}$。解码时，将查询 $q_i$ 嵌入到同一空间，匹配最近质心 $e^\dagger = \arg\max_e \cos(\mathbf{q}_i, \mathbf{c}_e)$，检索对应缓存
-    - 设计动机：利用对话的天然话题结构，使 patched prompt 语义上接近未来查询，从而在 block-prefill 中保留与查询最相关的 token。这解决了 query-dependent 驱逐需要预知未来查询的问题
+query-dependent 驱逐（如 SnapKV）的死穴是它得围绕"当前这一个查询"裁缓存，多轮对话里后续问题的证据早被裁掉了；而 query-agnostic 又留不住针对性强的 token。EpiCache 的破局点是把缓存做成 **topic-aware**：先把对话历史 $\mathcal{H}$ 按 $w_{\text{embed}}$ 个话语切片，用轻量编码器 $f_{\text{embed}}$ 编码每片，再 K-Means 聚成 $E$ 个情节 $\{\mathcal{E}_1, \ldots, \mathcal{E}_E\}$。每个情节里找出距质心最近的代表性片段 $S_{\text{centroid-closest}}$，拿它当 patched prompt 去引导该情节的驱逐——注意力得分高的 token 留下，形成情节专属缓存 $C_{\text{KV}}^{(e)}$。之所以有效，是因为同一话题的代表性片段在语义上接近未来会问到这个话题的查询，于是"用代表片段裁出的缓存"近似于"用真实查询裁出的缓存"，绕开了必须预知查询的难题。解码时只需把查询 $q_i$ 嵌入同一空间，取最近质心 $e^\dagger = \arg\max_e \cos(\mathbf{q}_i, \mathbf{c}_e)$，检索对应缓存即可。
 
-2. **分块预填充与有界内存（Block-wise Prefill）**:
+**2. 分块预填充：把峰值内存钉死成常数，不随历史变长而涨。**
 
-    - 功能：将峰值 GPU 内存严格限制在 $M + M_{\text{block}}$，不随输入长度增长
-    - 核心思路：将输入分为大小为 $M_{\text{block}}$ 的块，逐块处理。每处理完一个块，基于注意力得分（由 patched prompt 引导）驱逐低分 token，将 KV 缓存大小压回预算 $M$。token 重要性分数为 $s_i^{\max} = \max_{t \in [n+1, n+p]} \text{Attn}(x_t \to x_i)$，即 patched prompt token 对上下文 token 的最大注意力权重
-    - 设计动机：post-prefill 方法的峰值内存随输入长度线性增长，无法满足设备端部署需求。block-wise prefill 确保内存占用恒定
+post-prefill 方法（H2O、SnapKV）必须先把完整上下文缓存进来再驱逐，峰值内存随输入长度线性增长——LLaMA3.2-3B 跑 30 个会话 KV 缓存就破 7GB，比模型本身还大，根本塞不进手机。EpiCache 改成把输入切成大小 $M_{\text{block}}$ 的块逐块处理：每吃完一个块，立刻按注意力得分驱逐低分 token，把缓存压回预算 $M$，于是峰值内存恒定在 $M + M_{\text{block}}$。驱逐用的 token 重要性分数来自上面那个 patched prompt 的引导——$s_i^{\max} = \max_{t \in [n+1, n+p]} \text{Attn}(x_t \to x_i)$，即代表片段 token 对上下文 token $x_i$ 的最大注意力权重。难点在于分块时每个块只看得到局部上下文，单纯照搬 post-prefill 的全局重要性判据会失准，而 patched prompt 恰好提供了一个稳定的"话题锚点"，让局部驱逐也能对齐全局话题语义。
 
-3. **敏感度感知的层间预算分配（Sensitivity-aware Layer-wise Budget Allocation）**:
+**3. 敏感度感知的层间预算分配：哪层经不起分块就多给缓存。**
 
-    - 功能：根据每层对 block-prefill 的敏感程度，自适应分配 KV 缓存预算
-    - 核心思路：用全因果掩码 $\mathcal{M}$ 和分块掩码 $\mathcal{M}'$ 分别前向传播，比较每层 Key 状态的余弦相似度 $\sigma_\ell = \frac{1}{HN}\sum_{h,i} \cos(k_{\text{full},i}^{(\ell,h)}, k_{\text{block},i}^{(\ell,h)})$。定义敏感度 $s_\ell = 1 - \sigma_\ell$，按 $M_\ell^{\text{alloc}} = \frac{s_\ell^\alpha}{\sum_j s_j^\alpha} \cdot (L \cdot M)$ 分配层间预算。$\alpha$ 控制分配的锐利度，$\alpha = 2\text{-}4$ 效果最佳
-    - 设计动机：实验发现不同层对 block-prefill 驱逐的敏感度差异巨大且一致（模型相关而非输入相关），均匀分配预算浪费资源。仅需一次校准即可确定层间权重
+作者发现一个关键现象：不同 Transformer 层对分块预填充的敏感度差异巨大，且这种差异是模型固有的（跟输入无关），所以均匀给每层分一样的预算是浪费。具体做法是用全因果掩码 $\mathcal{M}$ 和分块掩码 $\mathcal{M}'$ 各前向传播一次，比较每层 Key 状态在两种掩码下的余弦相似度 $\sigma_\ell = \frac{1}{HN}\sum_{h,i} \cos(k_{\text{full},i}^{(\ell,h)}, k_{\text{block},i}^{(\ell,h)})$；相似度越低说明这层越扛不住分块，于是定义敏感度 $s_\ell = 1 - \sigma_\ell$，按
+
+$$M_\ell^{\text{alloc}} = \frac{s_\ell^\alpha}{\sum_j s_j^\alpha} \cdot (L \cdot M)$$
+
+把总预算 $L \cdot M$ 倾斜给敏感层。$\alpha$ 控制分配的锐利度，太大反而把预算过度集中（实验里 $\alpha=2\text{-}4$ 最佳、$\alpha=8$ 反而掉点）。因为敏感度是模型相关而非输入相关，整个校准只需一次前向、跑一个样本就能定下全部层间权重，几乎零成本却带来 +4.1 的精度。
+
+### 一个完整示例
+拿一段 90K token、横跨"旅行计划 / 健康饮食 / 工作项目"三个话题的对话历史走一遍：离线阶段先把它切片、编码、K-Means 聚成 $E=3$ 个情节，每个情节挑出离质心最近的片段当 patched prompt，对各自情节做分块预填充——逐块吃进、逐块按注意力驱逐，最终每个情节压成一份 8K 预算的缓存，整段历史的峰值内存全程不超过 $M + M_{\text{block}}$。在线阶段用户问"我上次说想去哪家餐厅？"，把这句嵌入后与三个质心算余弦，命中"健康饮食"情节，只加载那一份 8K 缓存解码——既不用把 36GB 的全缓存搬进来，又因为这份缓存是在全对话上下文里 block-wise 构建的，保留了全局话题语义，跨情节证据也不至于丢失。
 
 ## 实验关键数据
 

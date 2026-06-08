@@ -48,23 +48,21 @@ TheraAgent 的核心不是训练一个新医学模型，而是设计一个 agent
 最终输出不是简单使用最后一轮答案，而是在最后 $L$ 轮中选择得分最高的 $T^*=\arg\max s_k$。系统还设置早停：如果连续三轮分数都超过阈值 $\tau$，则提前停止，减少不必要开销。论文默认最大 10 轮、输出窗口 $L=3$、Top-N memory 为 3。
 
 ### 关键设计
-1. **Planner 的反馈条件生成**:
 
-	- 功能：根据病例和历史反馈生成下一版治疗方案。
-	- 核心思路：Planner 不是只看当前病例，而是读取 Memorizer 中上一轮或高分历史方案的治疗文本、评估理由和分数。形式化为 $(T_k,c_k)=f_{\theta}(P,\mathcal{M}^{(k-1)})$。
-	- 设计动机：治疗计划中最常见的问题是遗漏或安全边界不清。把评估理由显式放回 prompt，可以让下一轮生成集中修补具体缺陷，而不是泛泛“写得更好”。
+**1. Planner 的反馈条件生成：让下一版方案对着具体缺陷改，而不是泛泛“写得更好”。**
 
-2. **TheraJudge 的临床多维评估**:
+治疗计划最常见的毛病是遗漏项和安全边界不清——忘了写剂量、漏了禁忌证、没说何时停药或升级。Planner 因此不只看当前病例，还读取 Memorizer 里上一轮或高分历史方案的治疗文本、评估理由和分数，形式化为 $(T_k,c_k)=f_{\theta}(P,\mathcal{M}^{(k-1)})$。把上一轮 TheraJudge 点出的具体问题显式放回 prompt，下一轮生成就能集中修补那几个缺口，而不是又写一篇同样粗糙的方案。
 
-	- 功能：为每个候选方案提供可用于迭代优化的结构化反馈。
-	- 核心思路：TheraJudge 输出 rationale、分维度得分和总分。它可以使用 RAG 检索 600 多份临床指南/文献，也可以使用每个科室 3 个 few-shot 专家样例稳定评分，并按 Scientific Consensus Compliance、Plan Completeness、Situation Targeting、Rationale-Measure Coherence、Harm Control 等维度评价方案。
-	- 设计动机：普通 LLM judge 容易只看文本流畅度或表面医学词汇。治疗计划需要的是可解释、可追责、能指出具体风险的 clinical critic，因此评估维度必须贴近真实医生判断。
+**2. TheraJudge 的临床多维评估：给出可驱动迭代的结构化反馈，而非只看文本流畅度。**
 
-3. **Score-aware Memorizer 与最终选择**:
+普通 LLM judge 容易被流畅文字和表面医学词汇糊弄，但治疗计划要的是能指出具体风险、可追责的 clinical critic。TheraJudge 每轮输出 rationale、分维度得分和总分，按 Scientific Consensus Compliance、Plan Completeness、Situation Targeting、Rationale-Measure Coherence、Harm Control 等维度打分；它可以用 RAG 检索 600 多份临床指南/文献补强证据，也可以用每个科室 3 个 few-shot 专家样例稳定评分行为。正因为评估维度贴近真实医生的判断框架，产出的反馈才能真正告诉下一轮“哪里不安全、哪里不完整”。
 
-	- 功能：在多轮生成中保留有用经验，同时避免把低质量历史全部塞回上下文。
-	- 核心思路：Memorizer 将每轮方案、评估理由和分数保存为 $M_i=(T_i,R_i,s_i)$，下一轮选择得分最高的 Top-N 记忆进行 in-context refinement。最终输出从最后若干轮中按 TheraJudge 分数挑选，而不是机械取最后一轮。
-	- 设计动机：自改进 agent 容易在后期漂移或被低质量反思带偏。score-aware retrieval 和 final-window argmax 同时控制了上下文质量和晚期波动。
+**3. Score-aware Memorizer 与最终选择：留住有用经验，挡住后期漂移。**
+
+自改进 agent 常见的坑是“把所有历史都当经验”，低分方案的错误反复进上下文会造成错误强化、后期漂移。Memorizer 把每轮存成 $M_i=(T_i,R_i,s_i)$，下一轮只检索得分最高的 Top-N 条做 in-context refinement；最终输出也不机械取最后一轮，而是在最后 $L$ 轮里按 TheraJudge 分数挑最高的 $T^*=\arg\max s_k$。再配一个早停：连续三轮分数都超过阈值 $\tau$ 就提前停，省掉无谓开销。论文默认最大 10 轮、输出窗口 $L=3$、Top-N memory 为 3。
+
+### 一个例子：一份治疗方案怎么被迭代改好
+拿一个内分泌病例走一遍：第 1 轮 Planner 在空记忆下生成初稿 $T_1$，TheraJudge 评出偏低的总分，并点名“漏了血糖监测频率、未写禁忌证”等具体问题，连同分数一起存进记忆；第 2 轮 Planner 读到这条带反思的高信息记忆，补上监测和禁忌，分数随之上升。如果某轮方案质量回退，score-aware 检索会优先把前面的高分方案、而非这条低分方案喂回上下文，避免错误被强化。如此最多迭代 10 轮，一旦连续三轮都超过 $\tau=98$ 就早停；最后不是直接用第 10 轮，而是在末 $L=3$ 轮里取 TheraJudge 分数最高的那版输出。代价是算力：3 轮需 6 次调用、13,445 tokens / 332.6 秒（R1 单次的 9.9 倍），10 轮则到 87,005 tokens / 753.5 秒（64.1 倍）。
 
 ### 损失函数 / 训练策略
 本文主要是推理时优化，没有端到端训练损失。HealthBench 实验中，Planner 和 TheraJudge 都使用 DeepSeek-R1 作为 backbone；TheraAgent 设置 Top-N=3、最大 10 轮、早停阈值 $\tau=98$、最后窗口 $L=3$。为了避免地区性指南对 HealthBench 的通用评估造成偏差，HealthBench 上禁用 RAG；在真实病例分析中则考察 RAG 对临床共识对齐的作用。

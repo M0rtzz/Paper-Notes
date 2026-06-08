@@ -48,30 +48,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三步流水线（见论文 Fig. 1）：(1) **Phase Transition 识别**——在目标任务（BLiMP/MultiBLiMP/CLAMS subject-verb agreement）上画准确率曲线 + 中层激活的成对 cosine 相似度热图，找出 3-4 个代表性 checkpoint（如 Pythia-1B 的 128M/1B/4B/286B tokens）；(2) **Crosscoder 训练**——在这些 checkpoint triplet 上联合训练一个共享稀疏字典（$2^{14}$ 个特征），所有 checkpoint 共享同一组特征 index 但有各自的 encoder/decoder 参数；(3) **特征归因与注释**——对每个 checkpoint 用 integrated gradients 计算每个特征的 IE，再用 RelIE 做归一化对比，最后用"最大激活序列"人工注释每个 top-IE 特征的语言学功能。
+
+目标是追踪一个语言学概念在预训练的哪一刻涌现、又在哪一刻稳定下来。难点在于给每个 checkpoint 单独训 SAE 得到的特征空间互不通约——没法判断 checkpoint A 的 feature 17 和 B 的 feature 17 是不是同一个东西。方法用一条三步流水线绕过这点：先在目标语法任务上结合准确率曲线和中层激活相似度热图，挑出 3-4 个"概念真正变化"的代表性 checkpoint；再在这组 triplet 上联合训一个共享稀疏字典（sparse crosscoder），让所有 checkpoint 共用同一组特征 index；最后用 integrated gradients 算每个特征的因果重要性，并用新提出的 RelIE 做归一化对比，把每个 top 特征的语言学功能人工注释出来，从而画出"涌现-维持-消亡"的轨迹。
 
 ### 关键设计
 
-1. **Sparse Crosscoder：跨 checkpoint 共享的稀疏特征字典**:
+**1. Sparse Crosscoder：跨 checkpoint 共享的稀疏特征字典。**
 
-    - 功能：把多个 checkpoint 的中层激活 $\mathbf{x}_c$ 编码到同一个稀疏特征空间 $\mathbf{f}$，让"checkpoint A 的 feature i 与 checkpoint B 的 feature i"天然指向同一个概念槽。
-    - 核心思路：每个 checkpoint $c$ 有专属的 encoder/decoder 权重 $W_{\text{enc}}^c, W_{\text{dec}}^c$，但共用同一个特征激活向量；编码用 $\mathbf{f}=\text{ReLU}(\sum_c W_{\text{enc}}^c \mathbf{x}_c + \mathbf{b}_{\text{enc}})$；损失是各 checkpoint 重建误差之和加上聚合的稀疏惩罚 $\sum_c \sum_i \mathbf{f}_i \lVert W_{\text{dec},i}^c \rVert_2$，这种 aggregated sparsity 鼓励字典里既有所有 checkpoint 都用到的"共享特征"，也有只对某个 checkpoint 重要的"独有特征"。
-    - 设计动机：传统 SAE 的特征空间是单点的、不可通约的；crosscoder 用"共享 $\mathbf{f}$ + 私有 encoder/decoder"巧妙地把"共享 vs 独有"翻译成"decoder 范数大小"的可读信号，使时间维度的特征演化首次可比较；且它对很早期、接近随机的 checkpoint 仍然稳健（论文 §6.2 验证 ΔCE < 0.35）。
+传统 SAE 的特征空间是单点的、不可通约，无法在时间轴上对齐。crosscoder 让每个 checkpoint $c$ 拥有专属的 encoder/decoder 权重 $W_{\text{enc}}^c, W_{\text{dec}}^c$，却共用同一个特征激活向量——编码为 $\mathbf{f}=\text{ReLU}(\sum_c W_{\text{enc}}^c \mathbf{x}_c + \mathbf{b}_{\text{enc}})$，于是"checkpoint A 的 feature $i$"和"B 的 feature $i$"天然指向同一个概念槽。损失为各 checkpoint 重建误差之和加上聚合稀疏惩罚 $\sum_c \sum_i \mathbf{f}_i \lVert W_{\text{dec},i}^c \rVert_2$；这种 aggregated sparsity 把"共享特征 vs 某 checkpoint 独有特征"翻译成"各 checkpoint decoder 范数大小"的可读信号，使特征的时间演化首次可比较，且对极早期、接近随机的 checkpoint 仍稳健（§6.2 验证 ΔCE < 0.35）。
 
-2. **Relative Indirect Effect (RelIE)：检查点间的因果重要性归一化比例**:
+**2. Relative Indirect Effect (RelIE)：把因果重要性从结构相对性中解耦出来。**
 
-    - 功能：把"某个特征在哪个 checkpoint 才真正影响任务表现"量化成一个 0-1 的相对值，独立于"结构相对性"（RelDec）。
-    - 核心思路：对每个特征 $f_i$、每个 checkpoint $c$，用 integrated gradients 近似算它对任务 metric $m(x) = \log p(t_{\text{wrong}}|x) - \log p(t_{\text{correct}}|x)$ 的 indirect effect（零消融时 $m$ 的变化）；然后做归一化比例 $\text{RelIE}_{2\text{-way},i} = |\hat{\text{IE}}_{ig,i}^{c_2}| / (|\hat{\text{IE}}_{ig,i}^{c_1}| + |\hat{\text{IE}}_{ig,i}^{c_2}|)$；三 checkpoint 版本扩展为 one-vs-all 向量。RelIE 接近 1 表示这个特征几乎只对 $c_2$ 有因果作用，接近 0.5 表示在两个 checkpoint 上都有贡献（共享因果特征）。
-    - 设计动机：Lindsey et al. 原版的 RelDec（解码器范数比例）只反映"特征结构是否被该 checkpoint 强烈使用"，但一个特征可能被强力学到却对当前任务无关。RelIE 直接挂上"任务表现"做归因，过滤掉 task-agnostic 噪声，只保留真正驱动行为的特征——附录 E 的消融证实 RelIE 比 RelDec 暴露出更多 task-specific 特征。
+共享字典只能告诉你某特征在哪个 checkpoint 被编码得更强（结构），但一个特征可能被强力学到却对当前任务毫无因果作用。RelIE 直接挂上任务表现做归因：对每个特征 $f_i$、每个 checkpoint $c$，用 integrated gradients 近似它对任务 metric $m(x) = \log p(t_{\text{wrong}}|x) - \log p(t_{\text{correct}}|x)$ 的 indirect effect（零消融时 $m$ 的变化），再算归一化比例 $\text{RelIE}_{2\text{-way},i} = |\hat{\text{IE}}_{ig,i}^{c_2}| / (|\hat{\text{IE}}_{ig,i}^{c_1}| + |\hat{\text{IE}}_{ig,i}^{c_2}|)$，三 checkpoint 版本扩展为 one-vs-all 向量。RelIE 接近 1 表示该特征几乎只对 $c_2$ 有因果作用，接近 0.5 表示两个 checkpoint 上都贡献（共享因果特征）。它与 Lindsey et al. 的 RelDec（解码器范数比例，只反映结构）正交：附录 E 证实 RelIE 能过滤掉 task-agnostic 噪声、暴露出更多真正驱动行为的 task-specific 特征。
 
-3. **Phase Transition Identification + 检查点 triplet 选择策略**:
+**3. Phase Transition 识别 + checkpoint triplet 选择：把训练算力花在概念真正变化的节点上。**
 
-    - 功能：自动从一长串 pretraining checkpoint 中挑出"概念真正变化的关键节点"作为 crosscoder 的训练源。
-    - 核心思路：并行追踪两条信号——(a) 检查点在目标 benchmark 上的准确率曲线（找精度跳变）；(b) 各 checkpoint 之间的**中层**激活成对 cosine 相似度热图（找表征结构跳变）。只取中层是因为前人研究表明中层捕捉高阶语言/跨语言抽象，前后层主要绑在输入/输出上。两条信号常常不同步——比如 OLMo 准确率 33B 后基本平稳，但激活相似度直到 3T 仍在变——这种"准确率饱和但表征仍在精炼"恰好是 crosscoder 最有价值的研究区域。
-    - 设计动机：在每对 checkpoint 上都训 crosscoder 是非常昂贵的；这种"双信号 phase transition"策略保证选出的 triplet 既包含行为跳变也包含表征跳变，对应论文里 Pythia 选 {128M, 1B, 4B, 286B}、OLMo 选 {2B, 4B, 33B, 3T}、BLOOM 选 {550M, 6B, 55B, 341B} 的合理性。
+在每对 checkpoint 都训 crosscoder 极其昂贵，因此需要先定位关键节点。方法并行追踪两条信号：(a) checkpoint 在目标 benchmark 上的准确率曲线，找行为跳变；(b) 各 checkpoint 之间的**中层**激活成对 cosine 相似度热图，找表征结构跳变——只取中层是因为它捕捉高阶语言/跨语言抽象，而前后层主要绑在输入/输出上。两条信号常不同步，例如 OLMo 准确率 33B 后基本平稳但激活相似度直到 3T 仍在变，这种"准确率饱和但表征仍在精炼"正是 crosscoder 最有价值的研究区。双信号策略保证选出的 triplet 既含行为跳变又含表征跳变，对应论文里 Pythia 选 {128M, 1B, 4B, 286B}、OLMo 选 {2B, 4B, 33B, 3T}、BLOOM 选 {550M, 6B, 55B, 341B}。
 
 ### 损失函数 / 训练策略
-Crosscoder 损失同时联合重建误差和 aggregated sparsity（见上式）；字典大小固定为 $2^{14}$；训练数据各模型分别在 Pile/Dolma/mC4 多语言子集上各采样 400M tokens。归因侧用 integrated gradients 近似 IE，统一用 zero-ablation 作为 patching。三种模型 (Pythia-1B / OLMo-1B / BLOOM-1B) 选择的考虑：Pythia 提供密集早期 checkpoint 适合看涌现、OLMo 提供超长训练适合看维持、BLOOM 提供多语言适合看跨语言抽象。
+
+Crosscoder 损失联合各 checkpoint 重建误差与上式的 aggregated sparsity，字典大小固定为 $2^{14}$，训练数据在各模型对应的 Pile / Dolma / mC4 多语言子集上各采样 400M tokens。归因侧统一用 integrated gradients 近似 IE、zero-ablation 作为 patching。三种模型各有分工：Pythia-1B 早期 checkpoint 密集适合看涌现、OLMo-1B 训练超长适合看维持、BLOOM-1B 多语言适合看跨语言抽象。
 
 ## 实验关键数据
 

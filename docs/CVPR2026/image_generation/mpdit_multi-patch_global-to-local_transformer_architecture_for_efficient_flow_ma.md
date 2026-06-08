@@ -42,27 +42,21 @@ tags:
 
 ### 整体框架
 
-输入是 VAE 编码后的潜变量 $z \in \mathbb{R}^{32 \times 32 \times 4}$（ImageNet 256×256）。标准 DiT 用 patch size=2 得到 256 个 token。MPDiT 改为：前 $N-k$ 个 Transformer 块用 patch size=4 仅处理 64 个 token（25%的标准量），然后通过一个上采样模块扩展到 256 个 token，最后 $k$ 个块做局部精修。输出经反向 patchify 和 VAE 解码得到生成图像。
+MPDiT 想解决的问题很直接：标准 DiT 在每一层都处理同样多的 patch token，计算成本居高不下，但其实绝大部分计算并不需要那么细的粒度。它的做法是把等距的 DiT 改成「先粗后细」的层次结构。输入是 VAE 编码后的潜变量 $z \in \mathbb{R}^{32 \times 32 \times 4}$（ImageNet 256×256），标准 DiT 用 patch size=2 切成 256 个 token，MPDiT 则让前 $N-k$ 个 Transformer 块用 patch size=4 只处理 64 个 token，在低分辨率上把全局结构建模好；随后一个上采样模块把 64 个 token 展开成 256 个，交给最后 $k$ 个块精修局部细节；输出再经反向 patchify 和 VAE 解码成图像。换句话说，多数块在「缩略图」上跑，只有尾部少量块在「全图」上收尾。
 
 ### 关键设计
 
-1. **多尺度 Patch 架构 (Multi-Patch Design)**:
+**1. 多尺度 Patch 架构：用大 patch 扛全局、小 patch 补细节。**
 
-    - 功能：用大 patch 高效建模全局信息，用小 patch 精修局部细节
-    - 核心思路：总共 $N$ 个 Transformer 块，前 $N-k$ 个块接收 patch size=4 的嵌入（64 tokens），自注意力的计算量与 token 数量的平方成正比，因此仅为标准 DiT 的 $\frac{1}{16}$。后 $k$ 个块（$k=4\sim6$ 足够）接收上采样后的 256 tokens 做精修。由于大部分块只处理 64 个 token，MPDiT-XL 的 GFLOPs 从 118.66 降到 59.30（减少 50%）。对于更高分辨率 512²，可以扩展到三级 patch 层次 $\{8, 4, 2\}$。
-    - 设计动机：MaskDiT 在 75% 掩码率下 FID≈100，而 DiT-XL/4（处理类似数量 token）只有 FID≈40。这说明大 patch 的全局建模远优于随机掩码的部分建模。但大 patch 缺少局部细节，加几个精修块就能弥补。
+整篇方法的出发点来自一个反差观察——MaskDiT 在 75% 掩码率下 FID≈100，几乎崩掉，而处理 token 数量相近的 DiT-XL/4 却能到 FID≈40。差别在于：随机掩码让每个样本只看到零散的局部关系，全局和局部都没学好；而大 patch 是一种**结构化**的降采样，token 虽少却完整覆盖整张图，能把全局语义建模得很扎实。MPDiT 顺着这个观察走：总共 $N$ 个 Transformer 块，前 $N-k$ 个接收 patch size=4 的 64 个 token。由于自注意力计算量正比于 token 数的平方，这部分开销只有标准 DiT 的 $\frac{1}{16}$；大 patch 唯一的短板是缺局部细节，而这恰好可以靠尾部少量精修块补回来（实验里 $k=4\sim6$ 就够）。因为绝大多数块只在 64 个 token 上跑，MPDiT-XL 的 GFLOPs 从 118.66 降到 59.30，直接砍掉一半。这套层次还能往上叠：面对 512² 这种更高分辨率，可以扩成三级 patch $\{8, 4, 2\}$。
 
-2. **上采样模块 (Upsample Block)**:
+**2. 上采样模块：把 64 个粗 token 干净地展开成 256 个细 token。**
 
-    - 功能：将 64 个粗粒度 token 扩展为 256 个细粒度 token
-    - 核心思路：先将 image tokens 和 class tokens 分离，image tokens 经线性投影 + pixel-unshuffle 实现 4× 空间展开（64→256 tokens）。通过 GELU 激活后与 class tokens 重新拼接，再经 LayerNorm + 线性层修复 class-image 关系。关键是有一路 skip connection 从原始 patch size=2 的嵌入直接加到上采样结果上，保留细粒度空间细节。
-    - 设计动机：前面的块在 64 个 token 上建模了 class-image 交互，上采样后 token 数量变化会导致两者关系错位，因此需要额外的线性层重建关系。skip connection 保证细粒度信息不丢失。
+大 patch 跑完全局后，需要把 token 数从 64 拉回 256 才能精修，难点在于这次扩展不能破坏前面已经建好的条件关系。模块先把 image token 和 class token 分开，对 image token 做线性投影再用 pixel-unshuffle 实现 4× 空间展开（64→256），经 GELU 后与 class token 重新拼接，最后用 LayerNorm + 线性层把 class–image 的关系重新对齐。之所以要这一步对齐，是因为前面的块是在 64 个 token 的尺度上学到的 class–image 交互，token 数量一变两者就会错位，必须有个线性层来重建。另一个关键是一路 skip connection：它从原始 patch size=2 的嵌入直接加到上采样结果上，把大 patch 阶段丢掉的细粒度空间信息重新引回来。消融里这个设计的选择很敏感——线性投影（默认）FID=24.74，换成 ConvTranspose 直接掉到 29.45。
 
-3. **FNO 时间嵌入 + 多 Token 类别嵌入**:
+**3. FNO 时间嵌入 + 多 Token 类别嵌入：把条件信号喂得更足。**
 
-    - 功能：提供更丰富的时间步和类别条件信号
-    - 核心思路：**FNO 时间嵌入**——将标量时间步 $t$ 加到一个 32 点的 1D 均匀网格上形成 1D 信号，经线性层提升到 32 通道，再通过 3 个 MixedFNO 块（混合 SpectralConv1D + Conv1D）学习平滑的时间结构，最后全局平均池化 + 线性投影。受 Neural Operator 启发，能更好地捕获流场的连续动态。**多 Token 类别嵌入**——每个类别用 $m=16$ 个可学习 token 表示而非 1 个，作为前缀拼接到 image tokens 前，替代 AdaIN 调制。
-    - 设计动机：传统正弦+MLP 时间嵌入表达力有限，FNO 设计带来约 4 点 FID 提升。单个 class token 过于压缩，16 个 token 提供更分布式的语义表示，加速收敛约 7 点 FID。
+这两点都在解决「条件信号太单薄」的问题。FNO 时间嵌入针对传统正弦+MLP 表达力有限：它把标量时间步 $t$ 加到一个 32 点的 1D 均匀网格上构成一段 1D 信号，经线性层升到 32 通道，再过 3 个 MixedFNO 块（SpectralConv1D 与 Conv1D 混合）学习平滑的时间结构，最后全局平均池化 + 线性投影。这个设计借鉴 Neural Operator，与流匹配本身是 ODE/SDE 连续动态的直觉吻合，实测带来约 4 点 FID 提升（3 个 MixedFNO 块最优，2 个略差、4 个反而不稳）。多 Token 类别嵌入则针对单个 class token 信息过度压缩的问题：每个类别改用 $m=16$ 个可学习 token 表示，作为前缀拼到 image token 前，替代原来的 AdaIN 调制——更分布式的语义让收敛快了约 7 点 FID，而 $m=32$ 几乎不再有额外收益，说明 16 个 token 已基本编码完类别语义。
 
 ### 损失函数 / 训练策略
 

@@ -40,34 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两条主线推进：
-1. **理论侧**：把 Transformer 在 parity 任务上简化为 2 层 MLP（先证 attention 不影响 parity 泛化动力学），再把训练损失对 $\tilde{\bm{z}}=\sum_j \bm{e}_{n'\tilde{x}_j+j}$ 求条件期望，分解出 Signal/Noise regime；进一步在"lazy readout"假设下得到一个能量函数 $E(\bm{W})$ 主导特征学习，并据此求最优 $t$ 分布。
-2. **实证侧**：在 $(n,k)=(20,6)$ parity 上用 nanoGPT 验证理论；扩到 50M 模型在 WikiText 上做掩码区间扫描；最终扩到 LLaDA-8B，在 DCLM 上预训练 + 在 tulu-3-sft 上 SFT，对比 $t\in[0.45,0.55]$ 与 $\mathcal{U}[0,1]$。
+论文想搞清楚一件事：MDLM 为什么天然抗过拟合，以及该怎么把这个性质用足。它走两条互相印证的线——理论上先在可解析的 $k$-parity 任务上把训练损失拆成"信号项 + 噪声项"，证明噪声项就是一个隐式正则器，再据此解出最优掩码率分布；实证上则把这个结论一路放大，从 parity 到 50M 模型再到 LLaDA-8B，验证"收紧掩码窗口"确实能换来下游收益。理论侧的关键简化是：先证明 attention 不影响 parity 的泛化动力学，于是把 Transformer 退化成 2 层 MLP，再对扩展嵌入 $\tilde{\bm{z}}=\sum_j \bm{e}_{n'\tilde{x}_j+j}$ 求条件期望，分解出两个 regime。
 
 ### 关键设计
 
-1. **MDLM 损失的 Signal–Noise 分解**:
+**1. MDLM 损失的 Signal–Noise 分解：把单一目标拆成"学信号"和"被正则"两股力。**
 
-    - 功能：把单一 MD 训练目标解析地写成两个有物理意义的子项，为后续设计采样分布提供理论依据。
-    - 核心思路：把 mask 集合 $M_{\bm{m}}$ 与扩展秘密集合 $\mathcal{S}'=\mathcal{S}\cup\{n'\}$ 的交集大小作为区分标准，定义 Signal Regime $\mathcal{R}_S=\{\bm{m}\mid |M_{\bm{m}}\cap\mathcal{S}'|=1\}$（被掩 token 可由未掩 token 唯一确定）与 Noise Regime $\mathcal{R}_N$（其余情况）。代入定义后得到有效损失 $\mathcal{L}_{\text{eff}}(\theta)\approx P_S\,\mathbb{E}_S[\|f_\theta(\tilde{\bm{z}})-f^*\|^2] + P_N\,\mathbb{E}_N[\|f_\theta(\tilde{\bm{z}})\|^2]$，其中 $P_S=(k+1)\mathbb{E}_{t\sim U[t_0,t_1]}[t(1-t)^k]$。Signal 项把模型推向真值，Noise 项把输出范数往零拉——**天然 L2 式隐式正则**。
-    - 设计动机：解释了"为什么 MDLM 不像 standard supervision 那样陷入 grokking"——MDLM 训练几乎每一步都伴随一定比例的不可识别样本，它们持续给优化器一个收缩信号，避免模型走纯记忆解。该结论对 CE loss 同样成立（Remark 4.4）。
+人们只观察到 MDLM 泛化好，却说不清机理。本文给出的答案是：MD 训练目标里其实藏着两类性质相反的样本。判别标准是掩码集合 $M_{\bm{m}}$ 与扩展秘密集合 $\mathcal{S}'=\mathcal{S}\cup\{n'\}$ 的交集大小——交集恰为 1 的样本属于 Signal Regime $\mathcal{R}_S=\{\bm{m}\mid |M_{\bm{m}}\cap\mathcal{S}'|=1\}$，此时被掩 token 仍可由未掩 token 唯一确定；其余落入 Noise Regime $\mathcal{R}_N$，信息已不可恢复。代入定义后有效损失分解为
 
-2. **能量景观 + 信号最优掩码率**:
+$$\mathcal{L}_{\text{eff}}(\theta)\approx P_S\,\mathbb{E}_S[\|f_\theta(\tilde{\bm{z}})-f^*\|^2] + P_N\,\mathbb{E}_N[\|f_\theta(\tilde{\bm{z}})\|^2],\qquad P_S=(k+1)\,\mathbb{E}_{t\sim U[t_0,t_1]}[t(1-t)^k].$$
 
-    - 功能：把"如何选 $t$"这一工程问题转化为一个有解析最优解的优化问题。
-    - 核心思路：在 lazy readout 假设下，$\mathcal{L}_{\text{eff}}$ 最小化等价于最大化能量 $E(\bm{W})=\bm{c}(\bm{W})^\top \bm{\Sigma}(\bm{W})^{\dagger}\bm{c}(\bm{W})$，且 $E(\bm{W})\propto P_S^2$，因此 $P_S$ 充当朝目标方向 $f^*$ 的动态增益。极限分析（Cor. 4.6）显示若 $P_N\to 0$，能量函数饱和、$\nabla_{\bm{W}}E=0$，特征学习崩溃；反之若 $P_N$ 太大，正则压制信号。把 $P_S$ 视为关于 $t_0,t_1$ 的函数求极值，得到 **Signal-Optimal 解**：$t_0=t_1=\tfrac{1}{k+1}$；**Sample-Complexity-Optimal** 解则给出 $t_0=0$、$t_1$ 由方程 $(2k+1)(1-t_1)^{k+1}-(2k+2)(1-t_1)^k+1=0$ 决定。
-    - 设计动机：明确告诉实践者"$t$ 不能太大也不能太小"，并把"中段"这一直觉提升为定量配方。在 $(n,k)=(20,6)$ parity 上理论最优窗 $\mathcal{U}[0,0.246]$ 与实验最快收敛配置高度吻合（Figure 2）。
+第一项把模型往真值 $f^*$ 推，第二项把输出范数往零拉——后者就是一个**天然的 L2 式隐式正则**。这解释了为什么 MDLM 不像 standard supervision 那样陷入 grokking：训练几乎每一步都掺着一定比例的不可识别样本，它们持续给优化器一个收缩信号，把模型从纯记忆解上拽下来。该结论对 CE loss 同样成立（Remark 4.4）。
 
-3. **Signal-Rich Mask Sampling（实战版）**:
+**2. 能量景观与信号最优掩码率：把"$t$ 该取多少"变成一个有解析解的极值问题。**
 
-    - 功能：把理论结论迁移到自然语言：把训练时的 $t$ 限制在一个高信号窗口 $[t_{\min},t_{\max}]$，而非默认 $\mathcal{U}[0,1]$。
-    - 核心思路：损失改写为 $\mathcal{L}(\theta)=-\mathbb{E}_{t,\bm{x}_0,\bm{x}_t}[\tfrac{1}{t}\sum_i \mathbb{1}[x_t^i=M]\log p_\theta(x_0^i|\bm{x}_t)]$，其中 $t\sim\mathcal{U}[t_{\min},t_{\max}]$；评估则**仍用全程 $t\in[0,1]$ 的标准 test loss**，保证比较公平。在 50M 上把 $[0,1]$ 划成 10 个宽 0.1 子区间扫描（Figure 3），test loss 呈 U 形，最低点出现在 $t\in[0.4,0.5]$ 与 $[0.5,0.6]$（loss 3.62 vs baseline 3.88），由此选定 8B 实验默认窗口 $[0.45,0.55]$。生成式任务（GSM8K/MATH）由于天然需要"近全掩"重建能力，再在范围里追加 $[0.5,1.0]$ 的非对称窗口。
-    - 设计动机：自然语言不像 parity 有单一目标映射，而是高度冗余；$t\to 0$ 任务退化为平凡 copy，$t\to 1$ 输入信息归零模型只能拟边际分布。两端都浪费算力，把预算押在"信号最丰富"的中段就能拉开差距。
+既然损失能拆成信号与正则两股力，那"选掩码率"就不该靠拍脑袋。在 lazy readout 假设下，最小化 $\mathcal{L}_{\text{eff}}$ 等价于最大化能量函数 $E(\bm{W})=\bm{c}(\bm{W})^\top \bm{\Sigma}(\bm{W})^{\dagger}\bm{c}(\bm{W})$，而 $E(\bm{W})\propto P_S^2$，于是 $P_S$ 就成了朝目标方向 $f^*$ 推进的动态增益。两端都不能要：极限分析（Cor. 4.6）显示若 $P_N\to 0$，能量饱和、$\nabla_{\bm{W}}E=0$，特征学习直接崩溃；反过来 $P_N$ 太大又会让正则压过信号。把 $P_S$ 当作 $t_0,t_1$ 的函数求极值，得到两个解析配方：**Signal-Optimal** 给出 $t_0=t_1=\tfrac{1}{k+1}$，**Sample-Complexity-Optimal** 给出 $t_0=0$、$t_1$ 满足 $(2k+1)(1-t_1)^{k+1}-(2k+2)(1-t_1)^k+1=0$。这把"取中段"的直觉升格成定量公式——在 $(n,k)=(20,6)$ 的 parity 上，理论最优窗 $\mathcal{U}[0,0.246]$ 与实验里收敛最快的配置几乎重合（Figure 2）。
+
+**3. Signal-Rich Mask Sampling：把理论结论搬到真实自然语言上。**
+
+parity 有单一目标映射，自然语言却高度冗余，不能照搬解析解，但"押注高信号窗口"这条原则可以迁移。具体做法是把训练时的掩码率从默认 $\mathcal{U}[0,1]$ 收紧到一个窗口 $t\sim\mathcal{U}[t_{\min},t_{\max}]$，损失写成
+
+$$\mathcal{L}(\theta)=-\mathbb{E}_{t,\bm{x}_0,\bm{x}_t}\Big[\tfrac{1}{t}\sum_i \mathbb{1}[x_t^i=M]\log p_\theta(x_0^i|\bm{x}_t)\Big].$$
+
+为防止"训啥测啥"的自欺，**评估始终用全程 $t\in[0,1]$ 的标准 test loss**。在 50M 模型上把 $[0,1]$ 切成 10 个宽 0.1 的子区间逐一扫描（Figure 3），test loss 呈 U 形，谷底落在 $t\in[0.4,0.5]$ 与 $[0.5,0.6]$（loss 3.62，baseline 3.88），据此把 8B 实验的默认窗口定为 $[0.45,0.55]$。背后的直觉很朴素：$t\to 0$ 时任务退化成平凡 copy，$t\to 1$ 时输入信息归零、模型只能拟合边际分布，两端都在浪费算力，把预算压在信号最丰富的中段才拉得开差距。生成式任务（GSM8K/MATH）是个例外——它们天生需要"从近乎空白重建"的能力，所以额外追加了 $[0.5,1.0]$ 这种偏向高掩盖侧的非对称窗口。
 
 ### 损失函数 / 训练策略
-- 训练目标见上式（带 $1/t$ 归一的 cross-entropy，只在被掩位置算 loss）。
-- 评估始终在 $t\in[0,1]$ 上算 test loss / 下游 acc，避免"训啥测啥"自欺。
-- 8B 预训练：LLaDA-8B 架构 + dllm 框架 + DCLM-baseline，batch 128、block 4096、15k step；SFT：tulu-3-sft-personas-math-filtered，batch 256、block 1024、1.2k step（约 4 epoch）。
+训练目标即上式带 $1/t$ 归一的 cross-entropy，只在被掩位置计 loss；评估则固定在 $t\in[0,1]$ 上算 test loss 与下游准确率。8B 预训练用 LLaDA-8B 架构 + dllm 框架 + DCLM-baseline 数据，batch 128、block 4096、15k step；SFT 用 tulu-3-sft-personas-math-filtered，batch 256、block 1024、1.2k step（约 4 epoch）。
 
 ## 实验关键数据
 

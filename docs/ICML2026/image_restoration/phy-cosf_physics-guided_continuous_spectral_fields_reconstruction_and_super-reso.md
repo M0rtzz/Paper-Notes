@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Phy-CoSF 把 A-HQS 算法（带加速的半二次分裂）展开成 $K$ 个 stage。**前向物理模型**为 $y = \Phi x + n$，每个 stage 执行三步：(i) **数据保真子问题** $x_{k+1} = (\Phi^T \Phi + \mu I)^{-1}(\Phi^T y + \mu \hat z_k)$ 由 DAN (degradation-aware network) 显式计算，物理掩膜 $\Phi$ 进入计算图；(ii) **先验子问题** $z_{k+1} = \text{CoSF}(x_{k+1}, \eta)$ 由 CoSF 模块完成，$\eta = \sqrt{\tau/\mu}$ 是可学噪声水平；(iii) **加速步** $\hat z_{k+1} = z_{k+1} + \beta_k(z_{k+1} - z_k)$。训练相位只对一组随机抽取的离散波长查询并做 L1 loss；推理相位可向 CoSF 内的谱合成头喂入任意波长 $\lambda$ 来渲染单波长切片 $HSI(\lambda) \in \mathbb{R}^{1\times H\times W}$。
+Phy-CoSF 要解决的是 CASSI 单帧快照反推完整高光谱图像这个严重欠定的逆问题，做法是把带加速的半二次分裂算法 A-HQS 沿前向物理模型 $y = \Phi x + n$ 展开成 $K=9$ 个 stage，并在每个 stage 的先验步里嵌入一个"按波长连续查询"的隐式表征模块。单个 stage 依次做三件事：先由 DAN (degradation-aware network) 显式求解数据保真子问题 $x_{k+1} = (\Phi^T \Phi + \mu I)^{-1}(\Phi^T y + \mu \hat z_k)$，把物理掩膜 $\Phi$ 直接拉进计算图；再由 CoSF 模块求解先验子问题 $z_{k+1} = \text{CoSF}(x_{k+1}, \eta)$，其中 $\eta = \sqrt{\tau/\mu}$ 是可学噪声水平；最后做加速步 $\hat z_{k+1} = z_{k+1} + \beta_k(z_{k+1} - z_k)$。整套网络在训练相位只对随机抽取的若干离散波长查询并算 L1 loss，推理相位则可向 CoSF 喂任意波长 $\lambda$ 渲染出单波长切片 $HSI(\lambda) \in \mathbb{R}^{1\times H\times W}$。
 
 ### 关键设计
 
-1. **连续光谱场先验模块 (CoSF)**:
+**1. 连续光谱场先验 CoSF：把"针对固定通道训练的离散去噪算子"换成关于波长的连续场**
 
-    - 功能：替代传统 DUN 中针对固定通道训练的离散先验，让先验本身成为一个关于波长的连续场。
-    - 核心思路：把先验拆成两部分。**Triple-Branch Cross-Domain Feature Mixer** 抽取一个"波长无关"的多尺度内容表征 $f \in \mathbb{R}^{C \times H \times W}$：先用 $3\times 3$ 卷积升通道得到 fine-grained 特征 $f_H \in \mathbb{R}^{C/12 \times H \times W}$，经 $4\times 4$ 卷积下采样后再过 CDFE 得到 meso-scale $f_M \in \mathbb{R}^{C/6 \times H/2 \times W/2}$ 和 coarse-scale $f_L \in \mathbb{R}^{C/3 \times H/4 \times W/4}$，每条分支都经过 CDFE 跨域处理；最后插值回原分辨率后做 $1\times 1$ refinement 卷积、按通道 concat 得到 $f$。**Spectral Synthesis Head (SSH)** 把目标 $\lambda$ 归一化到 $[-1, 1]$，经随机频率编码 $\gamma(\lambda) = [\sin(2\pi\lambda b_1), \dots, \cos(2\pi\lambda b_m)]$（$b_i \sim \mathcal{N}(0,\sigma^2)$ 固定）和 MLP 投影得到 $e_\lambda \in \mathbb{R}^D$，与 $f$ concat 后由两个 $3\times 3$ + 一个 $1\times 1$ 卷积合成出该波长的强度图 $HSI(\lambda) = \text{SH}(\text{Concat}(e_\lambda, f))$。
-    - 设计动机：(a) 三分支多尺度同时捕捉局部纹理、中尺度结构与全局上下文；(b) 随机 Fourier 编码提供"高频归纳偏置"对抗深度网络的低频偏好；(c) "波长无关内容 + 波长相关嵌入"的解耦是连续查询的物理基础。
+传统 DUN 的痛点是每个 stage 学到的先验只对训练时绑定的离散通道有效，无法外推到新波长。CoSF 通过把先验解耦成"波长无关内容 + 波长相关嵌入"两半来打破这一限制。内容侧的 Triple-Branch Cross-Domain Feature Mixer 抽取一个与波长无关的多尺度表征 $f \in \mathbb{R}^{C \times H \times W}$：先用 $3\times 3$ 卷积升通道得到 fine-grained 特征 $f_H \in \mathbb{R}^{C/12 \times H \times W}$，再经 $4\times 4$ 卷积逐级下采样并过 CDFE 得到 meso-scale $f_M \in \mathbb{R}^{C/6 \times H/2 \times W/2}$ 与 coarse-scale $f_L \in \mathbb{R}^{C/3 \times H/4 \times W/4}$，三条分支都经 CDFE 跨域处理后插值回原分辨率，做 $1\times 1$ refinement 卷积并按通道 concat 成 $f$——三个尺度同时兜住局部纹理、中尺度结构与全局上下文。波长侧的 Spectral Synthesis Head (SSH) 把目标 $\lambda$ 归一化到 $[-1,1]$，经随机频率编码 $\gamma(\lambda) = [\sin(2\pi\lambda b_1), \dots, \cos(2\pi\lambda b_m)]$（$b_i \sim \mathcal{N}(0,\sigma^2)$ 固定不学）和 MLP 投影得到嵌入 $e_\lambda \in \mathbb{R}^D$，与 $f$ concat 后由两个 $3\times 3$ 加一个 $1\times 1$ 卷积合成该波长强度图 $HSI(\lambda) = \text{SH}(\text{Concat}(e_\lambda, f))$。随机 Fourier 编码这一步尤为关键，它注入"高频归纳偏置"来对抗深度网络天生的低频偏好；而内容与波长的解耦，正是同一模型能在任意 $\lambda$ 上连续查询的物理基础。
 
-2. **跨域特征编码器 CDFE (Spatial → Frequency → Channel)**:
+**2. 跨域特征编码器 CDFE：在空间→频率→通道三个域接力补足卷积只看局部的短板**
 
-    - 功能：以单一序列骨干在三个域上互补地提炼 HSI 特征，弥补卷积只能捕捉局部上下文的缺陷。
-    - 核心思路：CDFE 是一个三段串联结构。**空间域**：使用 GLAM-Net (global-local attention mechanism) 抽取局部纹理细节，$f_{spatial} = f_{in} + \text{GLAM}(f_{in})$。**频率域** (本文创新)：先 2D-FFT 把 $f_{spatial}$ 映射到频域，频域特征每个系数都包含全图结构信息；然后展平为 1D 序列喂入 Mamba block 做长程依赖建模 $f_{freq} = f_{spatial} + i\text{FFT}(\text{Mamba}(\text{FFT}(f_{spatial})))$；最后 iFFT 回空间域并残差连接。**通道域**：使用 GDFN 模块按通道再校准，$f_{out} = f_{freq} + \text{GDFN}(f_{freq})$。所有阶段特征维度保持一致以便残差。
-    - 设计动机：HSI 的空间结构、频谱关联、跨通道相关性是天然解耦的三种信号；用 Mamba 而非 Transformer 在频域做长程建模可以避开 $O(N^2)$ 注意力开销，特别适合高分辨率高光谱场景。
+HSI 的空间结构、频谱关联与跨通道相关性本是三种天然解耦的信号，单靠卷积只能抓局部上下文。CDFE 用一条三段串联的序列骨干依次在三域提炼特征：空间域用 GLAM-Net (global-local attention) 抽局部纹理，$f_{spatial} = f_{in} + \text{GLAM}(f_{in})$；频率域（本文创新点）先用 2D-FFT 把 $f_{spatial}$ 映到频域——此时每个频域系数都已编码全图结构信息——再展平成 1D 序列喂入 Mamba block 做长程依赖建模并 iFFT 回空间域残差连接，即 $f_{freq} = f_{spatial} + i\text{FFT}(\text{Mamba}(\text{FFT}(f_{spatial})))$；通道域再用 GDFN 按通道校准 $f_{out} = f_{freq} + \text{GDFN}(f_{freq})$，各段维度保持一致以便残差。在频域用 Mamba 而非 Transformer 是有意为之：1D SSM 能在 $O(N)$ 内做长程建模，避开 $O(N^2)$ 注意力开销，特别适合高分辨率高光谱这种序列长度等于 $H\times W$ 展平的场景。
 
-3. **Train-Render 两阶段范式**:
+**3. Train-Render 两阶段范式：用最小训练改动换来零样本光谱超分**
 
-    - 功能：让训练在离散监督下进行、推理时实现任意波长零样本渲染。
-    - 核心思路：训练相位随机抽取一组 GT 对应的离散波长，CoSF 只查询这些坐标得到对应切片，计算 L1 重建损失 $\mathcal{L}_{rec}$ 来更新整个网络。这样模型实际上只看到"有真值的 $\lambda$"，但因为 SSH 把 $\lambda$ 作为连续输入条件，它本质上学到的是一个关于波长的连续函数。推理相位则解除这一限制：可以向 SSH 喂入训练集没有出现过的任意 $\lambda$，得到该波长的高保真光谱切片，从而完成光谱方向上的超分。
-    - 设计动机：用最小化的训练改动 (只换 query 坐标) 实现连续渲染能力；同时避免对真实光谱超分数据的依赖（这种数据极难获取）。
+光谱超分的真值数据极难获取，作者因此让训练只在有 GT 的离散波长上进行、把连续能力留到推理时白嫖出来。训练相位每个 batch 随机抽一组 GT 对应的离散波长，CoSF 只查询这些坐标得到切片并算 L1 重建损失 $\mathcal{L}_{rec} = \|HSI_{pred}(\lambda) - HSI_{gt}(\lambda)\|_1$ 来更新整网；但由于 SSH 把 $\lambda$ 当作连续输入条件，模型实际学到的是一个关于波长的连续函数而非离散查表。推理相位随即解除限制：直接向 SSH 喂训练集从未出现过的任意 $\lambda$，即可得到该波长的高保真光谱切片，从而在光谱维度上完成零样本超分。这套范式只改了 query 坐标的采样方式，却让 DUN 第一次具备了"按需查询波长"的能力。
 
 ### 损失函数 / 训练策略
-训练采用 L1 重建损失 $\mathcal{L}_{rec} = \|HSI_{pred}(\lambda) - HSI_{gt}(\lambda)\|_1$，对每个 batch 随机抽样一组离散波长。展开 stage 数 $K = 9$，每 stage 包含 1 个 DAN + 1 个 CoSF + 加速更新。CDFE 内的 Fourier-Mamba 块为方向无关的 1D Mamba，输入序列长度即频域 $H \times W$ 展平。所有评估在 ICVL 数据集 10 个 scene 上进行，指标为 SAM (谱角)、PSNR、SSIM。
+训练只用 L1 重建损失 $\mathcal{L}_{rec} = \|HSI_{pred}(\lambda) - HSI_{gt}(\lambda)\|_1$，每个 batch 随机抽样一组离散波长查询。展开 stage 数 $K = 9$，每 stage 含 1 个 DAN、1 个 CoSF 与一次加速更新；CDFE 内的 Fourier-Mamba 块为方向无关的 1D Mamba，输入序列长度即频域 $H \times W$ 展平。评估在 ICVL 数据集 10 个 scene 上进行，指标为 SAM (谱角)、PSNR、SSIM。
 
 ## 实验关键数据
 

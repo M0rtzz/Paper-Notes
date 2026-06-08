@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-每个请求由固定 system prompt $\mathbf{x}^{\text{sys}}$ 和 user 消息 $\mathbf{x}^{\text{usr}}$ 拼成。模型常规前向时，把每个 token 位置的 next-token 分布 $p_\theta(\cdot | x_{<t})$ 的熵 $H_t = -\sum_v p_\theta(v|x_{<t}) \log p_\theta(v|x_{<t})$ 抓出来——这是免费副产物。先用 $\{H_i^{\text{sys}}\}$ 估部署级基线，再把 $\{H_t^{\text{usr}}\}$ 标准化成 $Z_t$，最后跑 $W_t^+ = \max\{0, W_{t-1}^+ + Z_t - k\}$ 累计；任意时刻 $W_t^+ \geq h$ 报警，并把 prompt-level score 取为 $s(\mathbf{x}^{\text{usr}}) = \max_t W_t^+$ 用于 ROC 计算。整条流水线 per-token $O(1)$、per-prompt $O(T)$、内存常数级，可以直接挂在生产推理路径上。
+方法要解决的是"流畅型对抗后缀在 token 流上悄悄推高模型不确定性、但全局困惑度看不出来"这个盲区，整体把它转成一维时间序列上的在线变点检测。每个请求由固定 system prompt $\mathbf{x}^{\text{sys}}$ 和 user 消息 $\mathbf{x}^{\text{usr}}$ 拼成，模型常规前向时顺手把每个 token 位置 next-token 分布 $p_\theta(\cdot|x_{<t})$ 的熵 $H_t = -\sum_v p_\theta(v|x_{<t})\log p_\theta(v|x_{<t})$ 抓出来——这是不花一分钱的副产物。拿到熵流后先用 system prompt 段 $\{H_i^{\text{sys}}\}$ 估一条部署级鲁棒基线，把 user 段 $\{H_t^{\text{usr}}\}$ 标准化成 $Z_t$，再跑一边 Page-CUSUM 累计统计量 $W_t^+$；任意时刻 $W_t^+\geq h$ 就报警，prompt-level 异常分取 $s(\mathbf{x}^{\text{usr}})=\max_t W_t^+$ 供 ROC 评估，同时用 CUSUM 的归零时刻反推 suffix 起点。整条流水线 per-token $O(1)$、per-prompt $O(T)$、内存常数级，可以直接挂在生产推理路径上。
 
 ### 关键设计
 
-1. **System Prompt 自校准的鲁棒基线 $(\hat\mu_0, \hat\sigma_0)$**:
+**1. System Prompt 自校准的鲁棒基线 $(\hat\mu_0,\hat\sigma_0)$：把固定开销变成免费的部署参考样本。**
 
-    - 功能：在每个部署下自动估出 token 熵的"无攻击"位置和尺度，省掉离线训练或数据集准备。
-    - 核心思路：熵的绝对幅度与模型规模、tokenizer、system prompt 措辞都强耦合，但 system prompt 在给定部署里完全固定，可以拿它的 $m$ 个 token 熵直接当参考样本。用中位数与 MAD 估鲁棒位置和尺度：$\hat\mu_0 = \mathrm{median}(\{H_i^{\text{sys}}\})$，$\hat\sigma_0 = c \cdot \mathrm{median}(|H_i^{\text{sys}} - \hat\mu_0|)$，常数 $c \approx 1.4826$ 把 MAD 校到 Gaussian-$\sigma$ 一致；再做 $\hat\sigma_0 \geq \varepsilon$ 防退化。然后 $Z_t = (H_t^{\text{usr}} - \hat\mu_0)/\hat\sigma_0$。
-    - 设计动机：选 MAD 而不是均值/方差是因为 system prompt 里有少数 token 熵会被几个特殊词撑得很大；这两个统计量都对极端值不敏感，配合 $c$ 校正即可在 LLaMA / Vicuna / Qwen 各家直接用同一阈值——这是 CPD 实现 "model-agnostic" 的关键。
+熵的绝对幅度跟模型规模、tokenizer、system prompt 的措辞都强耦合，所以没法用一条跨模型的硬阈值——这正是 WPP 最优窗口大小因模型而异的根因。作者的巧处在于：system prompt 在给定部署里完全固定，它的 $m$ 个 token 熵天然就是一组"无攻击"参考样本，拿来当基线既不用离线训练也不用准备数据集。基线用中位数与 MAD 估鲁棒的位置和尺度：$\hat\mu_0=\mathrm{median}(\{H_i^{\text{sys}}\})$，$\hat\sigma_0=c\cdot\mathrm{median}(|H_i^{\text{sys}}-\hat\mu_0|)$，常数 $c\approx 1.4826$ 把 MAD 校到与 Gaussian-$\sigma$ 一致，再加 $\hat\sigma_0\geq\varepsilon$ 防退化，最后把 user 段标准化成 $Z_t=(H_t^{\text{usr}}-\hat\mu_0)/\hat\sigma_0$。选 MAD 而非均值/方差，是因为 system prompt 里少数特殊词会把个别 token 熵撑得很高，中位数和 MAD 对这种极端值都不敏感；配合 $c$ 校正，LLaMA / Vicuna / Qwen 各家就能共用同一套阈值，这是 CPD 实现 model-agnostic 的关键。
 
-2. **One-Sided Page-CUSUM 检测漂移 $W_t^+$**:
+**2. One-Sided Page-CUSUM 检测持续漂移 $W_t^+$：用 1954 年的控制图抓"漂移持续性"。**
 
-    - 功能：把 $\{Z_t\}$ 的"持续正向漂移"显著化，避免 WPP 那种被瞬时尖刺/局部均值带偏。
-    - 核心思路：在 slack $k \geq 0$ 和阈值 $h > 0$ 下迭代 $W_t^+ = \max\{0, W_{t-1}^+ + Z_t - k\}$，$W_0^+ = 0$；停止时刻 $\tau = \inf\{t \geq 1 : W_t^+ \geq h\}$。在 $\{Z_t\}$ 均值接近零时，$W_t^+$ 会反复归零、统计噪声不会无限累积；一旦发生持续正漂，$W_t^+$ 单调累积、最终穿过 $h$。主实验用 canonical $k=0$；阈值 $h$ 用每折训练集上 maximize F1 来选。
-    - 设计动机：Page-CUSUM 经典上就是为"快速检测持续均值漂移"设计的最优顺序检验，相对窗口检测的好处是"不需要预设窗口尺度"——攻击 suffix 既可能十几 token 也可能上百 token，CUSUM 自然适应漂移长度。Slack $k$ 起"对抗噪声"作用：$k$ 越大越保守，论文做了 $k \in \{-0.5, 0, 0.5\}$ 的敏感性 (Appendix B.3)，$k=-0.5$ 进一步提 F1 但跳出经典区间，所以正文用 $k=0$。
+PP/WPP 的失效在于把序列压成标量或局部均值，丢掉了"不确定性在持续往上爬"这一时间维度信号；而对抗后缀的本质恰恰是 user 段上的一个持续正向均值漂移。Page-CUSUM 经典上就是为"最快检测持续均值漂移"设计的最优顺序检验，所以直接套：在 slack $k\geq 0$、阈值 $h>0$ 下迭代 $W_t^+=\max\{0,\,W_{t-1}^++Z_t-k\}$，$W_0^+=0$，停止时刻 $\tau=\inf\{t\geq 1:W_t^+\geq h\}$。当 $\{Z_t\}$ 均值贴近零时 $W_t^+$ 会反复归零、统计噪声不会无限累积；一旦出现持续正漂，$W_t^+$ 就单调累积直到穿过 $h$。相比窗口检测，它最大的好处是不必预设窗口尺度——攻击 suffix 短则十几 token、长则上百 token，CUSUM 自然适应漂移长度。Slack $k$ 起"抗噪"作用，越大越保守；论文在 $k\in\{-0.5,0,0.5\}$ 上做了敏感性 (Appendix B.3)，$k=-0.5$ 还能再提 F1 但跳出经典区间，所以正文统一用 canonical $k=0$，阈值 $h$ 在每折训练集上 maximize F1 选定。
 
-3. **CUSUM 回溯定位 $\hat\nu$ + LLaMA Guard 混合 gating**:
+**3. CUSUM 回溯定位 $\hat\nu$ + LLaMA Guard 混合 gating：把"事件级输出"和"省钱"一起拿到手。**
 
-    - 功能：报警同时给出 suffix 起始位置；并让 CPD 当大模型门控器，省下大量昂贵 guard 调用。
-    - 核心思路：定位用 CUSUM 标准回溯——记上一次 $W_t^+ = 0$ 的 reset 时刻 $t_0$，则 $\hat\nu = t_0 + 1$，等于"自上次熵流'静下来'之后开始的那个 token"。Gating 用 $\tau_{\text{gate}}$ 阈值：$s(\mathbf{x}^{\text{usr}}) < \tau_{\text{gate}}$ 直接判 benign 跳过 guard，否则才调用 LLaMA Guard 做语义判断。
-    - 设计动机：定位是 CUSUM 几乎免费的副产品 (PP/WPP 完全没有)，对自动化的"剪掉 suffix 然后继续运行"或者"高亮可疑片段返回安全团队"都很实用；混合 gating 利用了生产负载里 90%+ 是 benign 的现实，把 LLaMA Guard 从"每条都跑"压到"可疑才跑"，论文实测节省 17-42% guard 调用且 hybrid F1 不掉。
+报警之外，CUSUM 还几乎免费送了一个 suffix 定位能力——这是 PP/WPP 完全做不到的。定位用标准回溯：记上一次 $W_t^+=0$ 的 reset 时刻 $t_0$，则起点估计 $\hat\nu=t_0+1$，正好是"自上次熵流静下来之后开始的那个 token"，每次归零都恰好标记了漂移开始前一刻。这个位置信息对"自动剪掉 suffix 再继续运行"或"高亮可疑片段交安全团队审计"都很实用。另一条收益是混合 gating：生产负载里 90%+ 是 benign 请求，没必要每条都跑昂贵的 LLaMA Guard，于是用门控阈值 $\tau_{\text{gate}}$——$s(\mathbf{x}^{\text{usr}})<\tau_{\text{gate}}$ 直接判 benign 跳过 guard，否则才调 LLaMA Guard 做语义判定。CPD 把 guard 从"每条都跑"压到"可疑才跑"，论文实测省下 17-42% 的 guard 调用，且 hybrid F1 不掉。
 
 ### 损失函数 / 训练策略
-方法 training-free，不需要任何梯度更新。仅有的"调参"是阈值 $h$ 的选择，用 5-fold stratified CV (按 attack family 分层) 在训练折上 maximize F1。所有 token 熵直接从 base LLM 标准前向里取，不增加任何额外网络。
+方法 training-free，不做任何梯度更新。唯一的"调参"是阈值 $h$，用 5-fold stratified CV（按 attack family 分层）在训练折上 maximize F1 选出；所有 token 熵直接取自 base LLM 的标准前向，不引入任何额外网络。
 
 ## 实验关键数据
 

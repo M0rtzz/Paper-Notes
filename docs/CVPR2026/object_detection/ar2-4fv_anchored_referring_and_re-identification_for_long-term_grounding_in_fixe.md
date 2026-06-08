@@ -44,60 +44,68 @@ tags:
 
 ### 整体框架
 
-输入为固定视角视频帧序列 $\{I_t\}_{t=1}^{T}$ 和自然语言 query $q$，输出逐帧 bounding box $\{y_t\}$。Pipeline 分两阶段：
-
-- **离线阶段**：从前 $T_0$ 帧提取静态背景结构，蒸馏为 Anchor Bank
-- **在线阶段**：query 与 Anchor Bank 对齐生成 Anchor Map → 锚点引导的候选过滤 + 融合评分 → 搜索模式下维护重入先验 → ReID-Gating 验证身份
-
-关键设计是**不假设目标在首帧可见**，系统需要从头开始"找到"目标。
+这篇论文要解决的是固定视角视频里的长时间 referring：目标可能被遮挡、走出画面再回来，而文本 query 一直有效。输入是帧序列 $\{I_t\}_{t=1}^{T}$ 和一句自然语言 query $q$，输出每帧的 bounding box $\{y_t\}$。整套系统的关键转折是**不把记忆挂在目标外观上，而是挂在不动的背景上**，因此分成离线、在线两段。离线段只跑一次，从视频开头的若干帧里把稳定的背景区域蒸馏成一组锚点（Anchor Bank）；在线段则让 query 与这组锚点对齐，得到一张固定的空间热力图（Anchor Map），再用它去过滤、打分检测候选，目标消失时切到搜索模式并维护一个"目标会从哪儿回来"的重入先验，目标重现时用 ReID-Gating 验证身份。值得注意的是系统并不假设目标在首帧就可见——它从头开始在场景坐标系里"找"query 指的那个目标。
 
 ### 关键设计
 
-#### 1. Anchor Bank（离线背景结构蒸馏）
+**1. Anchor Bank：把不动的背景蒸馏成一套"场景坐标系"。**
 
-- **功能**：从固定视角视频的前 $T_0$ 帧中提取 $K$ 个静态背景区域锚点 $\mathcal{B} = \{(M_k, p_k, c_k)\}_{k=1}^{K}$
-- **核心思路**：选择中位亮度帧 $t^\star$，用分割模型（SAM）提取持久区域 mask $M_k$，然后在视觉编码器特征图上做 mask-aware 均值池化得到原型向量：
-  $$p_k = \text{Norm}\left(\frac{1}{|M_k|}\sum_x M_k(x) F_{t^\star}(x)\right)$$
-  质心为 $c_k = \frac{1}{|M_k|}\sum_x M_k(x) \cdot x$
-- **设计动机**：固定视角下背景结构不变，锚点一次提取终身可用。这些锚点提供了一个**场景坐标系**——后续所有操作都在这个坐标系中进行，天然具备空间不变性。默认 $K=64$，$T_0 \in [30, 120]$。
+framewise 方法一旦目标消失就丢了记忆，根源在于它们的记忆全锚在目标身上。这里反其道而行：固定摄像头下背景布局终身不变，那就从前 $T_0$ 帧（默认 $T_0\in[30,120]$）里把它提取出来当锚。具体做法是挑一帧中位亮度帧 $t^\star$ 避开过曝/过暗，用 SAM 切出 $K$ 个持久区域的 mask $M_k$（默认 $K=64$），再在视觉编码器特征图 $F_{t^\star}$ 上对每个 mask 做 mask-aware 均值池化，得到归一化的区域原型向量
 
-#### 2. Anchor Map（在线语言-场景对齐）
+$$p_k = \text{Norm}\left(\frac{1}{|M_k|}\sum_x M_k(x) F_{t^\star}(x)\right),\qquad c_k = \frac{1}{|M_k|}\sum_x M_k(x)\cdot x$$
 
-- **功能**：将文本 query 映射到场景空间，生成一个 query-conditioned 的空间热力图
-- **核心思路**：通过轻量对齐头 $\phi_l, \phi_v$ 将文本嵌入 $e_q$ 和锚点原型 $p_k$ 映射到共同子空间，计算余弦相似度和 softmax 权重：
-  $$s_k = \cos(\phi_l(e_q), \phi_v(p_k)), \quad \omega_k = \frac{\exp(\tau \cdot s_k)}{\sum_j \exp(\tau \cdot s_j)}$$
-  加权融合各锚点 mask 得到 Anchor Map：
-  $$A(x) = \sum_{k=1}^{K} \omega_k M_k(x) \in [0,1]$$
-- **设计动机**：Anchor Map 对给定 query 是**固定的**——$\{M_k\}$ 和 $\{\omega_k\}$ 在推理期间不变。即使目标消失数百帧，系统仍然"记得"query 描述的目标最可能出现在场景的哪个区域。**这是全文最核心的设计**：将短暂的"目标外观记忆"替换为持久的"场景空间记忆"。
+每个锚点 $(M_k, p_k, c_k)$ 同时带着语义原型和空间质心。这一步只跑一次、终身复用，关键不在省算力，而在于它给后面所有操作钉了一个**固定的场景坐标系**——身份、位置、重入都改在这个坐标系里度量，天然对目标的来去免疫。
 
-#### 3. 锚点引导的候选过滤与融合评分
+**2. Anchor Map：把 query 翻译成一张不会随目标消失而失效的空间记忆。**
 
-- **空间过滤**：开放词汇检测器 $\mathcal{D}$（GroundingDINO）生成候选区域 $\mathcal{R}_t$，只保留 Anchor Map 响应超过阈值 $\eta$ 的候选：
-  $$\tilde{\mathcal{R}}_t = \{r \in \mathcal{R}_t \mid \bar{A}_{bb}(r) \geq \eta\}$$
-- **融合评分**：对过滤后的候选做 mask-aware 特征池化 $g_v(r)$，融合文本-视觉相似度和锚点证据：
-  $$\text{Score}(r) = \lambda \cos(g_v(r), g_l(q)) + (1-\lambda) \bar{A}_m(r)$$
-  当最高分低于阈值 $\theta$ 时系统进入搜索模式（目标不可见），否则进入 ReID-Gating 验证。
+有了锚点，接下来要让文字 query 落到场景的具体区域上。轻量对齐头 $\phi_l,\phi_v$ 把文本嵌入 $e_q$ 和锚点原型 $p_k$ 投到同一子空间算余弦相似度，再用 softmax（温度 $\tau=10$）转成各锚点的权重，最后按权重把锚点 mask 叠成一张热力图：
 
-#### 4. Anchor-based Re-entry Prior（重入先验）
+$$s_k = \cos(\phi_l(e_q), \phi_v(p_k)),\quad \omega_k = \frac{\exp(\tau s_k)}{\sum_j \exp(\tau s_j)},\quad A(x) = \sum_{k=1}^{K}\omega_k M_k(x)\in[0,1]$$
 
-- **功能**：在目标不可见期间维护一个空间概率分布，预测目标最可能从哪里重新出现
-- **核心思路**：重入先验 $P_t^{re}$ 初始化为 Anchor Map $A$，通过 EMA + 高斯平滑 + $\ell_1$ 归一化迭代更新：
-  $$\tilde{P}_t^{re} = \beta(G_\sigma * \tilde{P}_{t-1}^{re}) + (1-\beta) A$$
-  候选框获得乘性权重 $W(r) \propto A(x) \cdot P_t^{re}(x)$，使评分偏向高概率重入区域。当目标被确认出现在锚点 $k^\star$ 时，先验重定向：
-  $$\tilde{P}_{t+1}^{re} = \rho \cdot G_\sigma(\cdot - c_{k^\star}) + (1-\rho) A$$
-- **设计动机**：目标重入不是随机的——在固定视角下，行人倾向于从入口/通道等特定区域重新出现。重入先验编码了这个"空间习惯"，加速重捕获。
+这张 Anchor Map 是全文最核心的一招：对给定 query，$\{M_k\}$ 和 $\{\omega_k\}$ 在整段推理里都不变，所以它是**固定的**。哪怕目标连续消失几百帧，系统依然"记得" query 描述的目标最可能出现在画面的哪一片——等于把短命的"目标外观记忆"换成了持久的"场景空间记忆"。
 
-#### 5. ReID-Gating（身份验证门控）
+**3. 锚点引导的候选过滤与融合评分：用空间证据给检测器把关。**
 
-- **功能**：验证候选目标的身份是否与之前追踪的目标一致，防止身份漂移
-- **核心思路**：综合三路信号做门控决策——外观 ReID 相似度、锚点一致性、锚点坐标系中的位移：
-  $$G(r) = \sigma(\alpha_1 \cdot \text{sim}_{\text{ReID}}(r) + \alpha_2 \cdot \bar{A}_m(r) - \alpha_3 \cdot \hat{\Delta}(r) + b)$$
-  其中 $\text{sim}_{\text{ReID}}(r)$ 通过动量队列 $\mathcal{Q}$ 稳定外观嵌入，$\hat{\Delta}(r)$ 是候选与上次确认锚点的归一化位移。$G(r) \geq \gamma$ 则接受候选。
-- **设计动机**：纯外观 ReID 在长时间跨度下不可靠（光照/姿态变化），加入锚点证据和位移约束后相当于在"场景坐标系"中做身份验证。位移惩罚防止远处的相似外观目标被误匹配。
+开放词汇检测器 GroundingDINO 每帧会吐出一堆候选 $\mathcal{R}_t$，但其中很多落在 query 根本不该出现的区域。Anchor Map 这时充当空间门：只留下落点响应超过阈值 $\eta$ 的候选 $\tilde{\mathcal{R}}_t = \{r\mid \bar{A}_{bb}(r)\geq\eta\}$。剩下的候选再做 mask-aware 池化 $g_v(r)$，把文本-视觉相似度和锚点证据按 $\lambda=0.6$ 加权成最终分：
+
+$$\text{Score}(r) = \lambda\cos(g_v(r), g_l(q)) + (1-\lambda)\bar{A}_m(r)$$
+
+这个分还兼任开关：当帧内最高分都低于阈值 $\theta=0.4$，系统判定目标当前不可见、切入搜索模式；否则把胜出候选交给 ReID-Gating 做最终身份核验。
+
+**4. Anchor-based Re-entry Prior：在目标缺席时维护"它会从哪儿回来"。**
+
+目标重入并不随机——固定视角下行人往往从门口、通道这类固定入口回到画面。重入先验 $P_t^{re}$ 就是把这条空间习惯显式建模出来的分布，它以 Anchor Map $A$ 为初值，每帧用 EMA 叠高斯平滑、再 $\ell_1$ 归一化往前推：
+
+$$\tilde{P}_t^{re} = \beta\,(G_\sigma * \tilde{P}_{t-1}^{re}) + (1-\beta)\,A$$
+
+候选框据此拿到一个乘性权重 $W(r)\propto A(x)\cdot P_t^{re}(x)$，让评分往高概率重入区偏。一旦目标被确认落在某锚点 $k^\star$，先验立刻被拉回该锚点质心重新聚焦：
+
+$$\tilde{P}_{t+1}^{re} = \rho\,G_\sigma(\cdot - c_{k^\star}) + (1-\rho)\,A$$
+
+它和 Anchor Map 的分工是：后者是 query 级别的静态先验，前者是随追踪状态滚动更新的动态先验，专门压缩"目标从消失到被重新找到"的延迟。
+
+**5. ReID-Gating：在场景坐标系里做身份核验，而不是只看脸。**
+
+长时间跨度下纯外观 ReID 很容易被光照、姿态拖偏，于是这里把身份判定改成三路信号的门控：外观相似度、锚点一致性、以及在锚点坐标系里相对上次确认位置的位移：
+
+$$G(r) = \sigma\big(\alpha_1\,\text{sim}_{\text{ReID}}(r) + \alpha_2\,\bar{A}_m(r) - \alpha_3\,\hat{\Delta}(r) + b\big),\qquad G(r)\geq\gamma \Rightarrow \text{接受}$$
+
+其中 $\text{sim}_{\text{ReID}}(r)$ 用一个动量队列 $\mathcal{Q}$ 稳定外观嵌入，避免单帧抖动；$\hat{\Delta}(r)$ 是候选相对上次确认锚点的归一化位移，负号意味着跳得越远越被惩罚。加了空间和位移两路约束后，相当于在场景坐标系里核验身份——远处一个穿相似衣服的人即使外观分很高，也会被位移项压下去，从源头堵住身份漂移。
+
+### 一个完整示例
+
+设想一段校门口监控：query 是"the person in red near the gate"，背景被蒸馏出 64 个锚点，其中锚点 #12 对应"门口"区域。
+
+- **对齐**：Anchor Map 把权重集中到 #12 及邻近几个锚点，门口一片亮、操场角落暗。
+- **首次定位**：第 30 帧 GroundingDINO 给出 18 个候选，空间门 $\eta$ 砍掉落在操场、停车场的 11 个，剩 7 个；融合评分选出门口那个红衣人，分 0.71 > $\theta$，ReID-Gating 通过，写入动量队列。
+- **目标离场**：第 120 帧目标走出画面，最高分跌到 0.22 < $\theta=0.4$，系统切搜索模式；重入先验 $P^{re}$ 持续在 #12 门口区域累积概率。
+- **重入**：第 260 帧目标从门口回来，候选获得 $A(x)\cdot P^{re}(x)$ 的双重加权，门口候选分被抬高；ReID-Gating 比对动量队列里的外观、确认位移很小（就在 #12 附近），$G(r)=0.63>\gamma$，目标被重新锁定。
+
+同一时刻若操场角落出现另一个红衣人，它外观分或许不低，但 Anchor Map 在那里几乎为 0、位移项又很大，会被双重压制——这正是空间记忆相对纯外观匹配的价值。
 
 ### 实现细节
 
-系统完全 zero-shot 运行，使用冻结编码器：提案用 GroundingDINO，跨模态消歧用 RexSeek 风格的 refiner，mask 用 SAM，身份嵌入用 CLIP 族编码器，query 预处理用 spaCy。关键超参：$K=64$, $\tau=10$, $\lambda=0.6$, $\theta=0.4$, $\beta=0.8$, $\gamma=0.5$。
+系统完全 zero-shot、全程冻结编码器：候选提案用 GroundingDINO，跨模态消歧用 RexSeek 风格的 refiner，mask 用 SAM，身份嵌入用 CLIP 族编码器，query 预处理用 spaCy。关键超参：$K=64$、$\tau=10$、$\lambda=0.6$、$\theta=0.4$、$\beta=0.8$、$\gamma=0.5$。
 
 ## 实验关键数据
 

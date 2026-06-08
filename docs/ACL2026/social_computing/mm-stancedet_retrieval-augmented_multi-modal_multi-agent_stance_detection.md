@@ -45,23 +45,23 @@ MM-StanceDet 对每条输入 $x = (I, T, K)$（image / text / target）按 4 个
 
 ### 关键设计
 
-1. **Retrieval Augmentation with Pre-generated CoT**:
+**1. 带预生成 CoT 的检索增强：让被检索样本不只给"类似情境"还给"如何推理"。**
 
-    - 功能：给后续推理提供"具体可对照"的 few-shot 样本，缓解 LLM 在 domain-specific cues 上的盲点。
-    - 核心思路：先用 CLIP 把训练集每条样本 $(I_j, T_j)$ 编码成单一向量 $\mathbf{v}_j$ 放入向量库，每条 entry 同时存储标注 $y_j$ 和一段离线由 MLLM 生成的 CoT 推理 $C_j$（说明"为什么这个样本是这个立场，特别关注 image-text alignment 和 target 的关系"）。query 时用同样方式编码 $\mathbf{v}$，做 ANN 检索 $\mathcal{E}_\text{retrieved} = \text{ANN}(\mathbf{v}, \mathcal{D}, k)$。
-    - 设计动机：相比传统 RAG 只检索 raw text，附带 CoT 让被检索的样本不仅提供"类似情境"还提供"如何推理"的范式；CLIP 图文联合 embedding 同时利用两模态做检索，比单纯文本相似度更贴近"多模态情境相似"。
+这一步针对的是 grounding void——MLLM 缺少领域内具体样本时容易在 nuanced 多模态信号上误判。作者先用 CLIP 把训练集每条样本 $(I_j, T_j)$ 编码成单一图文联合向量 $\mathbf{v}_j$ 放进向量库，每条 entry 除了标注 $y_j$，还存一段离线由 MLLM 生成的 CoT 推理 $C_j$（解释"为什么这个样本是这个立场，重点看 image-text alignment 和与 target 的关系"）。推理时把 query 用同样方式编码成 $\mathbf{v}$，做 ANN 检索 $\mathcal{E}_\text{retrieved} = \text{ANN}(\mathbf{v}, \mathcal{D}, k)$（默认 $k=3$）。
 
-2. **三专家 Multimodal Analysis Agent**:
+它和传统 RAG 的区别在于：普通 RAG 只检 raw text/example，这里 entry 自带 CoT，相当于把"如何推理这个 case"的范式也作为知识一并传给下游；用 CLIP 图文联合 embedding 检索则同时利用两个模态，比单纯文本相似度更贴近"多模态情境相似"。
 
-    - 功能：拆解多模态输入到三个互补视角，避免 single-shot MLLM 把所有信息混在一起搅。
-    - 核心思路：Text-Agent $\mathcal{A}_\text{text}(T, K) \to A_\text{text}$ 抽取关键词、情感极性、隐式讽刺、对 $K$ 的话题相关性；Image-Agent $\mathcal{A}_\text{image}(I, K) \to A_\text{image}$ 描述视觉对象、scene context、人物情绪、配色寓意、symbolic 元素；Modality-Conflict-Agent $\mathcal{A}_\text{conflict}(I, T, K, \mathcal{E}_\text{retrieved}) \to A_\text{conflict}$ 专门检测图文是否冲突 / 互补 / 协同，并显式参考检索来的 CoT 样本做对比推理。
-    - 设计动机：让每个 agent 只承担一类任务，避免 prompt overload；Modality-Conflict-Agent 是核心——它把"图文是否一致"从隐式假设变成显式产出物，传给下游 debater 使用，能显著提升对 sarcasm/讽刺等 cross-modal 不一致场景的捕捉。
+**2. 三专家多模态分析：把单一 MLLM 的"一口气全看"拆成三个互补视角。**
 
-3. **Debate + Self-Reflection Adjudication**:
+single-shot MLLM 把文本、图像、跨模态关系全塞进一个 prompt，信息互相干扰且容易漏掉冲突信号。作者改成三个各管一类任务的 agent：Text-Agent $\mathcal{A}_\text{text}(T, K) \to A_\text{text}$ 抽关键词、情感极性、隐式讽刺、对 target $K$ 的话题相关性；Image-Agent $\mathcal{A}_\text{image}(I, K) \to A_\text{image}$ 描述视觉对象、scene context、人物情绪、配色寓意与 symbolic 元素；Modality-Conflict-Agent $\mathcal{A}_\text{conflict}(I, T, K, \mathcal{E}_\text{retrieved}) \to A_\text{conflict}$ 专门判断图文是冲突 / 互补 / 协同，并显式对照检索来的 CoT 样本做推理。
 
-    - 功能：用"角色扮演辩论"探索所有立场可能性，再用 self-reflection 抓 hidden 缺陷。
-    - 核心思路：3 个 debater agent 各代表 support/oppose/neutral，拿到上一阶段所有分析后构造 $\text{Arg}_s = \mathcal{A}_s(I, T, K, A_\text{text}, A_\text{image}, A_\text{conflict})$ 论证为何立场是 $s$。最后 judge agent 不是简单选最强 argument，而是 "critical self-assessment"——主动检查每个 argument 内部一致性、是否漏掉了 $A_\text{conflict}$ 的关键信号、是否有 weak reasoning，借鉴 Self-Refine 和 Reflexion 的思路。输出 $\hat{y}, J_\text{final} = \mathcal{A}_\text{judge}(\text{Arg}_\text{support}, \text{Arg}_\text{oppose}, \text{Arg}_\text{neutral}, x, A_\text{text}, A_\text{image}, A_\text{conflict})$。
-    - 设计动机：强制三方辩论避免 LLM 在 confidence 高的错误立场上"一条道走到黑"；self-reflection 提供最后一道安全网，让 judge 跳出"最具说服力 ≠ 最准确"的陷阱（说服力可能源于 hallucinated reasoning）。
+每个 agent 只承担一类任务避免了 prompt overload，而真正的核心是 Modality-Conflict-Agent——它把"图文是否一致"从一个隐式假设变成显式产出物 $A_\text{conflict}$ 交给下游，使框架能稳定捕捉 sarcasm、反讽这类 cross-modal 不一致的场景，而不是像 single-pass 那样直接忽略或 hallucinate 掉冲突。
+
+**3. 辩论 + 自我反思裁决：用三方角色扮演强制探索所有立场，再用反思抓隐藏缺陷。**
+
+single-pass 推理一旦在高 confidence 的错误立场上起步就会一错到底。作者让 3 个 debater agent 分别扮演 support / oppose / neutral，各自拿到全部分析后构造 $\text{Arg}_s = \mathcal{A}_s(I, T, K, A_\text{text}, A_\text{image}, A_\text{conflict})$ 来论证为何立场应是 $s$，默认辩论 3 轮。最后的 judge agent 不是简单挑最强 argument，而是借鉴 Self-Refine / Reflexion 做 critical self-assessment——主动检查每个 argument 的内部一致性、有没有漏掉 $A_\text{conflict}$ 的关键信号、有没有 weak reasoning，输出 $\hat{y}, J_\text{final} = \mathcal{A}_\text{judge}(\text{Arg}_\text{support}, \text{Arg}_\text{oppose}, \text{Arg}_\text{neutral}, x, A_\text{text}, A_\text{image}, A_\text{conflict})$。
+
+强制三方辩论让模型必须把每个立场都论证一遍，避免"一条道走到黑"；self-reflection 是最后一道安全网，让 judge 跳出"最具说服力 ≠ 最准确"的陷阱——因为说服力本身可能来自 hallucinated reasoning。
 
 ### 损失函数 / 训练策略
 全 prompt-based 框架，**完全不训练任何模型**，只调编排（agent prompt 设计 + 检索参数 + debate 轮数）。所有 agent 共用同一个 LLM backbone（默认 GPT-4o-mini，鲁棒性实验也跑了其他 MLLM 都 work）。

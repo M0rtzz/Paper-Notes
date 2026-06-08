@@ -51,23 +51,21 @@ LiveFact 是一条"五阶段月度流水线 + 双模式评测"：
 
 ### 关键设计
 
-1. **时间切片证据（Fog of War）**:
+**1. 时间切片证据（Fog of War）：用三档证据窗模拟真实世界里"信息逐步显形"。**
 
-    - 功能：用 $E^{(-3)}$（事发前 3 天）、$E^{(0)}$（当日）、$E^{(+3)}$（事发后 3 天）三档证据模拟真实"信息逐步显形"的过程。
-    - 核心思路：3 天窗是基于实证的信息速率分析——证据密度在 $T\pm 48{\sim}72$h 达峰，扩到 $\pm 7$ 或 $\pm 15$ 天收益递减，缩到 $\pm 1$ 天又抓不到首发报道；窗口越早，能"硬判定"的 claim 越少，Inference 模式下 Ambiguous 占比飙到 85%。
-    - 设计动机：把"证据完备"和"证据不足"分离，从而能单独考察模型在信息真空里能不能克制住乱猜。
+真实记者拿到的证据是不完整、随时间演化的碎片，而静态基准却一次性把证据喂齐，根本测不出模型在信息真空里能否克制乱猜。LiveFact 以事件头条日期 $T$ 为锚，按 $\delta\in\{-3,0,+3\}$ 切出事发前 3 天、当日、事发后 3 天三档证据。3 天窗不是随手定的，而是基于信息速率分析：证据密度在 $T\pm 48{\sim}72$h 达峰，扩到 $\pm 7$ 或 $\pm 15$ 天收益递减，缩到 $\pm 1$ 天又抓不到首发报道。窗口越早能"硬判定"的 claim 越少——在 $\delta=-3$ 下 Inference 模式的 Ambiguous 占比飙到 85%。这样就把"证据完备"和"证据不足"两种处境分离开来，单独考察模型在信息不全时的判断行为。
 
-2. **双模式评测（Classification + Inference）**:
+**2. 双模式评测（Classification + Inference）：把"过度自信"和"认知谦逊"分开计量。**
 
-    - 功能：同一份 claim 上同时给两套 ground truth——CLS 给绝对事实标签（时间无关），INF 给"当下证据是否足够支持该结论"标签（时间相关）。
-    - 核心思路：在 $\delta=-3$ 时把绝大多数 claim 的 INF 标签改成 Ambiguous（85% 都是 Ambiguous，详见 Table 2 的 3,698/4,392）；CLS 在 $\delta=-3$ 上的高分意味着"幻觉自信"，只有同一模型在 INF 上也高才说明真的会判断"信息不够"。
-    - 设计动机：单看 CLS 容易被参数化记忆"撞对"；引入 INF 后才能定义"Reasoning Gap = INF Acc − CLS Acc"，从而把"过度自信"和"认知谦逊"两种行为分开。
+只看一套绝对事实标签时，模型很容易靠参数化记忆"撞对"，分数高不代表会推理。LiveFact 在同一份 claim 上挂两套 ground truth：CLS 给与时间无关的绝对事实标签，INF 给"当下证据是否足够支持该结论"的时间相关标签——在 $\delta=-3$ 时绝大多数 claim 的 INF 标签被改成 Ambiguous（4,392 条里有 3,698 条，约 85%）。于是 CLS 在 $\delta=-3$ 上的高分恰恰是"幻觉自信"的信号：模型在没证据时被迫二选一却答得很笃定。引入 INF 后才能定义 $\text{Reasoning Gap} = \text{INF Acc} - \text{CLS Acc}$，正值说明模型懂得在信息不够时说 Ambiguous，负值则暴露硬猜倾向。
 
-3. **SSA 实体替换 + Overturn Rate（BDC 监控）**:
+**3. SSA 实体替换 + Overturn Rate（BDC 监控）：把"是不是在背答案"量化成可上榜的数字。**
 
-    - 功能：用 Qwen3-235B-A22B 做 Entity Shift，把命名实体替换为同结构但虚构的名字，得到 shifted 数据集 $(c_i', E_i'^{(\delta)}, k_i')$，对比模型在原与 shifted 上的预测差异。
-    - 核心思路：定义 Overturn Rate $\text{OTR}=\frac{1}{N}\sum_i \mathbb{1}[\hat y_i^{(\delta)}\neq \hat y_i'^{(\delta)}]$，再乘以指标差 $\Delta=\text{Metric}-\text{Metric}_{\text{shift}}$ 得到 SSA Factor $=\Delta\times\text{OTR}\times 100$；分越高说明模型越依赖"记住了 Trump"这种具体实体，而非证据。
-    - 设计动机：避免用 OpenAI 系评估 OpenAI 系的"偏好泄漏"，同时把 BDC 风险量化成可追踪的月度指标，配合每月更新的数据集做长期监测。
+静态数据被反复当预训练语料，模型可能只是记住了"Trump"这种具体实体而非真在读证据。作者用 Qwen3-235B-A22B（刻意避开 OpenAI 系评 OpenAI 系的偏好泄漏）做 Entity Shift，把命名实体替换成同结构但虚构的名字（Trump → Wannetta），得到平行 shifted 数据集 $(c_i', E_i'^{(\delta)}, k_i')$。再定义翻转率
+
+$$\text{OTR}=\frac{1}{N}\sum_i \mathbb{1}\!\left[\hat y_i^{(\delta)}\neq \hat y_i'^{(\delta)}\right]$$
+
+并乘上替换前后的指标差 $\Delta=\text{Metric}-\text{Metric}_{\text{shift}}$，得到 $\text{SSA Factor}=\Delta\times\text{OTR}\times 100$。分越高说明模型越依赖记住的具体实体而非证据本身，污染风险越大。配合数据集每月更新，这个量就成了可长期追踪的污染监控指标。
 
 ### 损失函数 / 训练策略
 LiveFact 是评测基准，不做训练。评测时 `TEMPERATURE=0.0`、`TOP_P=1.0`、`MAX_NEW_TOKENS=128`（reasoning 类如 Kimi-K2-Thinking、GPT-OSS 放宽到 1024），强制输出 `[[LABEL]]` 形式以便机器解析。

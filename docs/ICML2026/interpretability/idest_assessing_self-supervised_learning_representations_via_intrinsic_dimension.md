@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IdEst 是一个**评估协议**而非新模型。输入：一个已经训好的 SSL encoder $g$ 和一份无标签数据集 $\mathcal{X}$（推荐用 ImageNet 作为参考集）。流程：(i) 用 $g$ 抽取所有样本的冻结特征（有 [CLS] token 的用 [CLS]，没有的如 I-JEPA 对 patch token 做 average pool），(ii) 在特征空间上跑 $\mathrm{dim}_{\mathrm{MST}}$ 算法估计 ID，(iii) 把这个标量当作"表示质量分"——值越低越好。输出就是一个 ID 数字，可以直接拿来排序不同 SSL checkpoint、跟踪训练曲线、或者做超参选择。
+IdEst 解决的问题是：在没有标签、不重训、不碰原始增强的前提下，怎么判断一个 SSL encoder 学出来的表示好不好。它的答案不是再设计一个 SSL 损失，而是把"表示质量"换算成一个纯几何量——表示流形的内在维度（ID）。给定一个训好的 encoder $g$ 和一份无标签数据 $\mathcal{X}$（推荐用 ImageNet 当参考集），先用 $g$ 抽冻结特征（有 [CLS] token 的取 [CLS]，I-JEPA 这类没有 [CLS] 的对 patch token 做 average pool），再在特征点云上跑 MST 维度估计器算出一个 ID 标量，值越低代表表示越紧凑、下游越好。这个数字可以直接拿来排序不同 checkpoint、追踪训练曲线，或做无标签超参选择。
 
 ### 关键设计
 
-1. **MST 维度估计器 $\mathrm{dim}_{\mathrm{MST}}$**：
+**1. MST 维度估计器 $\mathrm{dim}_{\mathrm{MST}}$：用全局连通结构换掉脆弱的局部假设**
 
-    - 功能：从冻结表示的点云估计其所在流形的内在维度，不依赖局部 i.i.d. 假设。
-    - 核心思路：基于 Costa-Hero 定理，从紧黎曼 $d$-流形上 i.i.d. 采的 $n$ 个点构成的 MST，其总长度几乎处处满足 $n^{-(d-1)/d} \cdot L(\mathrm{MST}(X_n)) \to C' \int f_X^{(d-1)/d}\,d\mathcal{H}$。实践中取不同的子采样规模 $n_i$，计算 $\log L(\mathrm{MST}(X_{n_i}))$ 对 $\log n_i$ 的线性回归，斜率 $m$ 给出 $d = 1/(1-m)$。
-    - 设计动机：相比 TwoNN/MLE 只用最近邻**局部信息**，MST 同时编码了**局部和全局**的连通结构，对噪声和密度变化都鲁棒；并且与 0 维持续同调维度等价，享有 TDA 提供的稳定性保证（Chazal et al., 2014）。在文中 Figure 2 的 1 维 helix 上，$\mathrm{dim}_{\mathrm{MST}}$ 稳定收敛到 $d=1$，而 TwoNN 发散。
+SSL 表示评估真正卡住 ID 估计的地方在于 TwoNN/MLE 这些经典估计器都建立在"局部各向同性 + 邻域内点 i.i.d. Poisson"上，而 SSL 特征恰恰是 $n \approx d$ 的非渐近、同一图像多视图之间强依赖的"恶劣点云"，文中 Figure 2 在一条 1 维 helix 上就让 TwoNN 发散到无穷。$\mathrm{dim}_{\mathrm{MST}}$ 改走 Costa-Hero 的欧氏泛函路线：从紧黎曼 $d$-流形上 i.i.d. 采 $n$ 个点构成的最小生成树，其总长几乎处处满足 $n^{-(d-1)/d} \cdot L(\mathrm{MST}(X_n)) \to C' \int f_X^{(d-1)/d}\,d\mathcal{H}$，于是只要取一串子采样规模 $n_i$，对 $\log L(\mathrm{MST}(X_{n_i}))$ 关于 $\log n_i$ 做一维线性回归，斜率 $m$ 就反推出 $d = 1/(1-m)$。它之所以稳，是因为 MST 同时编码局部和全局的连通结构，而不只是看最近邻，对噪声和密度变化都鲁棒；更关键的是它与 0 维持续同调维度 $\mathrm{dim}_{\mathrm{PH}}^0$ 等价（Adams et al., 2020），直接继承 TDA 整套稳定性保证（Chazal et al., 2014）。在那条 1 维 helix 上，$\mathrm{dim}_{\mathrm{MST}}$ 稳定收敛到 $d=1$。
 
-2. **IdEst 的应用接口**：
+**2. IdEst 评估接口：与线性 probe 完全可比的"插即用"指标**
 
-    - 功能：把 $\mathrm{dim}_{\mathrm{MST}}$ 包装成一个"插即用"的 SSL 评估指标，与现有的线性 probe 协议平行。
-    - 核心思路：在每个 SSL 方法**官方 evaluation protocol** 进入 classifier head 前的那一层特征上算 $\mathrm{dim}_{\mathrm{MST}}$，保持和线性 probe 完全可比；提供两种使用模式——**Intra-Dataset**（在目标数据集上同时算 ID 和精度，看相关性）和 **Inter-Dataset**（只在 ImageNet 上算 ID，预测在 iNat/CIFAR/kNN/ImageNet-v2 上的精度），后者证明 ID 反映的是模型自身性质而非数据集偏置。
-    - 设计动机：要让 SSL 实践者能"零成本"接入——不需要重新训练、不需要标签、不需要原始增强，只要冻结特征前向一遍就够了。
+要让 SSL 实践者零成本接入，IdEst 把 $\mathrm{dim}_{\mathrm{MST}}$ 放在每个 SSL 方法**官方 evaluation protocol** 进 classifier head 前的那一层特征上计算，这样得到的 ID 和该方法的线性 probe 精度严格对齐、可直接比对，整个过程不需要重训、不需要标签、不需要原始增强，只跑一次前向。接口提供两种用法：**Intra-Dataset** 在目标数据集上同时算 ID 和精度看相关性；**Inter-Dataset** 只在 ImageNet 上算一次 ID，去预测 iNat / CIFAR / kNN / ImageNet-v2 上的精度排序——后者能成立，恰好证明 ID 反映的是模型自身性质而非某个数据集的偏置，实践中一份参考集就够用。
 
-3. **作为无监督超参选择器**：
+**3. 无监督超参选择器：把线性 probe 的次数从 $K$ 降到 1**
 
-    - 功能：用 IdEst 替代"扫超参 + 跑线性 probe"的昂贵循环，做学习率 / weight decay / teacher temperature 等超参的无监督选择。
-    - 核心思路：对一组候选超参各自训 SSL 模型，按 IdEst（最小化 ID）挑出最优 checkpoint，再只对最优 checkpoint 做一次最终的下游评估。与"用 ImageNet 当 oracle"相比，把线性 probe 的次数从 $K$ 降到 1。
-    - 设计动机：线性 probe 本身就是 SSL pipeline 中算力大头之一，尤其当超参网格大、数据集多时；用一个前向 + MST 的几何量替代，能把超参搜索的开销削掉一个数量级，且不需要任何下游标签。
+线性 probe 本身就是 SSL pipeline 的算力大头，超参网格一大、数据集一多就更贵。IdEst 把"扫超参 + 每组跑一次线性 probe"的昂贵循环替换成"每组只算一个前向 + MST 的几何量"：对学习率 / weight decay / teacher-student temperature / target-context size 等候选超参各训一个模型，按最小 ID 挑出最优 checkpoint，最后只对这一个 checkpoint 做一次真正的下游评估。相比拿 ImageNet 当 oracle 逐个 probe，线性 probe 次数从 $K$ 降到 1，把超参搜索开销削掉一个数量级，且全程不碰任何下游标签。
 
 ### 损失函数 / 训练策略
 IdEst 是 **post-hoc 评估指标**，不引入任何新的损失或训练过程。MST 构造用经典的 Prim/Kruskal 算法，复杂度 $O(n^2)$ 或更优；ID 回归只是一个一维线性拟合。完整算法见原文 Algorithm 1。

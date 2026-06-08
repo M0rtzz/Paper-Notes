@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **Embedding-Perturbed Mechanism（嵌入扰动机制）**:
+**1. 嵌入扰动机制：把组内方差的来源从噪声换成语义**
 
-    - 功能：为每个 prompt 学一组 $K$ 个语义上互不重叠、又紧贴原意的扰动向量，作为组内方差的稳定来源。
-    - 核心思路：把扰动参数化为 $\bm{\delta}_k \in \mathbb{R}^{L\times d}$，仅作用于内容 token 位置 $t=\mathcal{I}_j$，得到 $\tilde{\mathbf{E}}_{k,t} = \mathbf{E}_t + \bm{\delta}_{k,j}$，再经过冻结的文本编码器 $f_\phi$ 得到全局嵌入 $e_k$。用混合目标 $\mathcal{L}_{\text{emb}} = \lambda_{div}\mathcal{L}_{\text{div}} + \mathcal{L}_{\text{anc}}$ 优化：$\mathcal{L}_{\text{div}}$ 最小化 $K$ 个变体间平均余弦相似度推开它们；$\mathcal{L}_{\text{anc}} = \sum_k |\cos(e_k, e_{\text{anc}}) - \mu|_\epsilon$ 用 $\epsilon$-不敏感损失把每个变体的与原 prompt 相似度锚定在 $\mu$ 附近。
-    - 设计动机：单靠 diversity 项会发散到语义无关区域触发 reward hacking；单靠 anchor 项又会退化为同一个点失去方差。两项相加+只扰内容 token 的做法把探索严格约束在"原 prompt 语义邻域内的不同方向"，既维持判别信号又不偏离 intent。
+针对的痛点是组内样本越训越像、判别方差 $\sigma_R$ 衰减到 0。E²PO 不在高维噪声里硬撒采样，而是为每个 prompt 学一组结构化扰动 $\bm{\delta}_k \in \mathbb{R}^{L\times d}$，仅作用于内容 token 位置 $t=\mathcal{I}_j$，得到 $\tilde{\mathbf{E}}_{k,t} = \mathbf{E}_t + \bm{\delta}_{k,j}$，再经冻结的文本编码器 $f_\phi$ 得到全局嵌入 $e_k$。
 
-2. **Noise-Aware Sampling Schedule（噪声感知采样调度）**:
+关键在于扰动既要互相分开、又不能飘出原意，这靠一个混合目标 $\mathcal{L}_{\text{emb}} = \lambda_{div}\mathcal{L}_{\text{div}} + \mathcal{L}_{\text{anc}}$ 来约束：$\mathcal{L}_{\text{div}}$ 最小化 $K$ 个变体间的平均余弦相似度，把它们在嵌入球面上推开；$\mathcal{L}_{\text{anc}} = \sum_k |\cos(e_k, e_{\text{anc}}) - \mu|_\epsilon$ 用 $\epsilon$-不敏感损失把每个变体与原 prompt 的相似度锚定在 $\mu$ 附近。单靠 diversity 项会发散到语义无关区域触发 reward hacking，单靠 anchor 项又会退化成同一个点失去方差；两项相加再叠加"只扰内容 token"，等于在原 prompt 语义邻域里画一个"近但不重合"的环，把探索严格限制在不同的语义方向上，既稳住了判别信号又不偏离 intent。
 
-    - 功能：决定扰动条件在采样轨迹的哪些时刻起作用，避免后期高频细节阶段被语义漂移破坏。
-    - 核心思路：把第 $k$ 个变体的实时条件写成时间相关插值 $\mathbf{C}_k(t) = \gamma(\sigma_t)\mathbf{C}^{\text{opt}}_k + (1-\gamma(\sigma_t))\mathbf{C}^{\text{orig}}$，其中 $\gamma(\sigma_t) = \text{clip}((\sigma_t - (1-\rho))/\rho, 0, 1)$ 随归一化噪声水平 $\sigma_t$（从 1 衰减到 0）单调下降，超参 $\rho \in (0,1]$ 控制扰动覆盖的高噪声区间长度。早期高噪声阶段让扰动主导，引导轨迹分流到不同的结构布局；后期低噪声阶段切回原始 anchor，保证细节保真度。
-    - 设计动机：消融实验（Fig. 6）显示，静态地一直用 $\mathbf{C}^{\text{opt}}_k$ 会导致语义漂移和伪影；扩散模型对不同时间步敏感度不同——粗结构早期定型、细节后期补足，因此条件强度也应当随时间衰减。
+**2. 噪声感知采样调度：让扰动只在该出现的时刻出现**
 
-3. **Reference-Anchored Batching Strategy（参考锚定批策略）**:
+如果扰动条件全程生效，低噪声的细节阶段会被语义漂移污染，画出伪影。E²PO 把第 $k$ 个变体的实时条件写成随时间插值 $\mathbf{C}_k(t) = \gamma(\sigma_t)\mathbf{C}^{\text{opt}}_k + (1-\gamma(\sigma_t))\mathbf{C}^{\text{orig}}$，权重 $\gamma(\sigma_t) = \text{clip}((\sigma_t - (1-\rho))/\rho, 0, 1)$ 随归一化噪声水平 $\sigma_t$（从 1 衰减到 0）单调下降，超参 $\rho \in (0,1]$ 控制扰动覆盖的高噪声区间长度。
 
-    - 功能：在每个训练批次里显式保留一个未扰动样本做"锚"，并把探索条件与更新条件解耦，防止策略被扰动条件本身带偏。
-    - 核心思路：组成 $\mathcal{C}_{\text{batch}} = \{\mathbf{C}^{\text{orig}}\} \cup \{\mathbf{C}_k(t)\}_{k=1}^{K-1}$ 用来"采样生成轨迹"；但代入 DiffusionNFT 的对比损失（Eq. 4/7）时，所有梯度都强制条件在 $\mathbf{C}^{\text{orig}}$ 上算。这样 reward 评估覆盖了一片由扰动撑开的语义空间，而真正被推动的是原 prompt 的条件分布。
-    - 设计动机：如果用谁采样就在谁上更新，策略会逐渐学到"在扰动 prompt 下表现好"而非"在真实 prompt 下表现好"；锚 + 解耦的组合让组内方差服务于 reward 估计，而模型本身只被推向原 prompt 对应的高分模式。
+这一调度顺应了扩散模型"粗结构早期定型、细节后期补足"的特性：早期高噪声阶段让扰动主导，把不同变体的轨迹分流到不同的结构布局；后期低噪声阶段切回原始 anchor，保证细节保真度。消融（Fig. 6）证实，若静态地一直用 $\mathbf{C}^{\text{opt}}_k$ 不做衰减，就会出现语义漂移和伪影。
+
+**3. 参考锚定批策略：探索条件与更新条件显式解耦**
+
+最后一个隐患是策略可能被扰动条件本身带偏——学成"在扰动 prompt 下表现好"而非"在真实 prompt 下表现好"。E²PO 的做法是采样时用一整组条件 $\mathcal{C}_{\text{batch}} = \{\mathbf{C}^{\text{orig}}\} \cup \{\mathbf{C}_k(t)\}_{k=1}^{K-1}$ 生成轨迹，但代入 DiffusionNFT 的对比损失（Eq. 4/7）算梯度时，强制所有条件都落回未扰动的 $\mathbf{C}^{\text{orig}}$。
+
+这样一来，reward 评估覆盖的是一片由扰动撑开的语义空间，而真正被推动的只有原 prompt 的条件分布。换句话说，组内方差只服务于 reward 估计，模型本体始终单峰地向原 prompt 对应的高分模式收敛——这正是"谁采样就在谁上更新"会破坏的性质。
 
 ### 损失函数 / 训练策略
 阶段一：用 $\mathcal{L}_{\text{emb}}$ 单独学 $\Delta$，$\bm{\delta}_k \sim \mathcal{N}(0, \sigma_{\text{init}}^2 \mathbf{I})$ 初始化；阶段二：套用 DiffusionNFT 的自归一化 $\bm{x}_0$-回归损失，把奖励 $r(\bm{x}_0, \bm{c}) \in [0,1]$ 拆成正/负策略 $v_\theta^{\pm} = (1\mp\beta)v^{\text{old}} \pm \beta v_\theta$ 的加权回归项。Backbone 用 SD3.5-Medium，8×H20，三种典型配置：High-Exploration $(G=4,K=12)$、Efficient $(G=2,K=4)$、Human Preference $(G=8,K=3)$。

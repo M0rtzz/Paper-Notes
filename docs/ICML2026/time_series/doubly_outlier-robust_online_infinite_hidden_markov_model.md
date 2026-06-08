@@ -41,35 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BR-iHMM 用 Particle Learning（PL）做 SMC 推断。每 $B$ 步为一个 batch：
-1. 用各粒子的状态 $s_t^{(i)}$ 对未来 $B$ 步做预测 $\hat y_{t+1:t+B}$；
-2. 用 IMQ 权重 $w_{l,t}^{(i)}=W(y_{t+b},\hat y_{l,t+b|t})$ 给观测降权；
-3. 计算 batched posterior $\nu(s_{1:t+B})$，只允许 batch 边界发生状态切换；
-4. ESS 低于阈值时重采样；
-5. WoLF 更新活跃状态的 Gaussian 后验 $\Psi$；
-6. 用 Antoniak 辅助变量更新 HDP 结构参数 $\Phi$。
-
-每个 batch 内部状态强制 self-transition，因此状态采样**每 batch 只做一次**，避免了 batch 大小 $B$ 带来的指数级路径爆炸。
+BR-iHMM 的目标是让在线 iHMM 在观测空间和状态空间**同时**抗异常值，整套推断用 Particle Learning（SMC）跑、以 $B$ 步为一个 batch。每个 batch 内先用各粒子的状态 $s_t^{(i)}$ 对未来 $B$ 步做预测 $\hat y_{t+1:t+B}$，再用 IMQ 权重 $w_{l,t}^{(i)} = W(y_{t+b}, \hat y_{l,t+b|t})$ 给观测降权，然后计算只允许在 batch 边界切换状态的 batched posterior $\nu(s_{1:t+B})$，ESS 过低就重采样，最后用 WoLF 更新活跃状态的高斯后验 $\Psi$、用 Antoniak 辅助变量更新 HDP 结构参数 $\Phi$。关键在于 batch 内部强制 self-transition，所以状态采样每 batch 只做一次，从根上避开了 batch 长度 $B$ 带来的路径指数爆炸。
 
 ### 关键设计
 
-1. **WoLF 加权观测更新（observation-space 鲁棒）**:
+**1. WoLF 加权观测更新：给单个极端观测对参数后验的影响硬性封顶。**
 
-    - 功能：让单个极端观测对 $\theta_{s_t}$ 后验的影响被一个上界硬切掉。
-    - 核心思路：把似然替换为加权似然 $P(y_t\mid\theta,x_t)^{W(y_t,\hat y_{s_t})^2}$，权重选 IMQ 形式 $W(y,\hat y)^2=1/(1+c^{-2}\|y-\hat y\|_{R_t}^2)$。在线性高斯 emission 下保留 conjugacy，闭式更新只把 Kalman 增益里的协方差 $S_{s_t}$ 替换为 $S_{s_t}=f(x_t)\Sigma_{s_t}f(x_t)^\top+R_t/w_{s_t,t|t-1}^2$，残差越大 $w^2\to 0$，$S_{s_t}\to\infty$，Kalman 增益趋近 0，从而冻结后验。
-    - 设计动机：标准贝叶斯更新对 LG 模型的 PIF 是无界的（残差任意大 → 后验任意偏移），WoLF 通过有界权重函数把 PIF$_{\theta_t}$ 锁死，但仍保留共轭性。
+标准贝叶斯更新在线性高斯模型下的 PIF 是无界的——残差任意大，后验就能被任意拉偏，一个极端观测就能污染当前 regime 的参数。WoLF 把似然换成加权似然 $P(y_t\mid\theta,x_t)^{W(y_t,\hat y_{s_t})^2}$，权重取 IMQ 形式 $W(y,\hat y)^2 = 1/(1 + c^{-2}\|y-\hat y\|_{R_t}^2)$。在线性高斯 emission 下它仍保共轭，闭式更新只把 Kalman 增益里的协方差 $S_{s_t}$ 换成 $S_{s_t} = f(x_t)\Sigma_{s_t}f(x_t)^\top + R_t/w_{s_t,t|t-1}^2$：残差越大 $w^2 \to 0$、$S_{s_t}\to\infty$、Kalman 增益趋近 0，后验直接被冻住。这样既把 PIF$_{\theta_t}$ 锁死，又没丢掉共轭性带来的在线效率。
 
-2. **批量推断 + Degenerate Sticky HDP（state-space 鲁棒）**:
+**2. 批量推断 + Degenerate Sticky HDP：让"新 regime"必须有连续证据才允许诞生。**
 
-    - 功能：禁止单个异常点触发新 regime；只在 batch 边界做一次状态决策。
-    - 核心思路：定义 batched log posterior $\log\nu(s_{1:t+B})=\sum_{b=1}^B w_{s_{t+b},t+b|t}^2\log P(y_{t+b}\mid \dots)+\log\sum_{s_{1:t}}P(s_{1:t}|D)P(s_{t+1}|s_t,\Phi_t)\prod_{b=2}^B\mathbb{1}(s_{t+b-1}=s_{t+b})$。通过 sticky HDP 把自转移偏置 $\kappa_t$ 设为 $0$（边界）或 $\infty$（内部），强制 intra-batch 状态一致；只有 batch 内多个观测同时给出"新 regime 更合理"的证据，路径后验才会切换。
-    - 设计动机：Theorem 4.1 证明只做观测鲁棒不够；批量化在数学上等价于对"短异常序列"也定义 PIF（batched PIF），并给出鲁棒性-自适应性权衡——$B$ 越大越能抗持续噪声，但检测真实 regime 切换的 lag 也变长。
+只做观测鲁棒是不够的——Theorem 4.1 证明即便 PIF$_{\theta_t}$ 有界，状态端的 PIF$_{s_t}$ 仍可能被异常值推向无穷，因为大残差会让"开个新 regime"在 HDP 先验下变得最诱人，于是一个孤立异常点就能制造虚假状态。BR-iHMM 的对策是把状态决策搬到 batch 层面：定义 batched log posterior $\log\nu(s_{1:t+B}) = \sum_{b=1}^B w_{s_{t+b},t+b|t}^2\log P(y_{t+b}\mid\dots) + \log\sum_{s_{1:t}}P(s_{1:t}|D)P(s_{t+1}|s_t,\Phi_t)\prod_{b=2}^B\mathbb{1}(s_{t+b-1}=s_{t+b})$，再用 sticky HDP 把自转移偏置 $\kappa_t$ 取极限——batch 内部 $\kappa_t=\infty$（强制状态一致）、边界 $\kappa_t=0$。这等价于把 PIF 从"单点扰动"推广到"短序列扰动"（batched PIF）：只有 batch 内多个观测一致地支持"新 regime 更合理"，路径后验才会切换。参数 $B$ 因此成了一个可解释的鲁棒-自适应旋钮——$B$ 越大越抗持续噪声，但检测真实切换的延迟也越长。
 
-3. **Antoniak 辅助变量 + State Pruning（可扩展性）**:
+**3. Antoniak 辅助变量 + State Pruning：在无限状态名义下，把流式 bookkeeping 控制成常数。**
 
-    - 功能：在长流式数据上保证状态数不发散，并维持 HDP 结构参数的在线更新。
-    - 核心思路：每个 batch 用 $\mathbf{M}_t\sim\text{Antoniak}(\mathbf{N}_t,\alpha,\beta)$ 采辅助变量更新 HDP 全局权重 $\hat\beta_t$；对超过 MAX_STATES 的粒子，按使用频率和近期性启发式 prune 老旧 regime（counts 与全局权重一并删除）。
-    - 设计动机：iHMM 名义上允许无限状态，但在 streaming 场景如果不剪枝，bookkeeping 矩阵 $\mathbf{N}_t\in\mathbb{N}^{t\times t}$ 会爆炸；剪枝把状态数控制在常数，而 Proposition D.1/D.2 形式化保证 batched 机制的复杂度仍是每 batch O(1) 次状态采样。
+iHMM 名义上允许无限状态，但 streaming 场景里如果不剪枝，计数矩阵 $\mathbf{N}_t \in \mathbb{N}^{t\times t}$ 会随时间爆炸。BR-iHMM 每个 batch 用 $\mathbf{M}_t \sim \text{Antoniak}(\mathbf{N}_t,\alpha,\beta)$ 采辅助变量更新 HDP 全局权重 $\hat\beta_t$，并对超过 MAX_STATES 的粒子，按使用频率和近期性启发式删掉老旧 regime（连同计数和全局权重一起删）。这样状态数被压在常数级，而 Proposition D.1/D.2 形式化保证 batched 机制的复杂度仍是每 batch O(1) 次状态采样——可扩展性和前两条的双重鲁棒互不打架。
 
 ### 损失函数 / 训练策略
 - 不训练 NN，纯贝叶斯在线推断；用 JAX 实现，RTX 3090 单卡。

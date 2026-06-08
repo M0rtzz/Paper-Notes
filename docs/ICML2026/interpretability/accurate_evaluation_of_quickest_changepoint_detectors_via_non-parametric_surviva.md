@@ -38,34 +38,26 @@ tags:
 **核心 idea**：把检测时间/检测延迟当作 event time，把序列终止或变点位置当作 censoring time，用非参数 Kaplan-Meier 生存曲线的面积估计 ARL 和 ADD。
 
 ## 方法详解
-本文不是提出新的变点检测器，而是提出新的评估器。它的输入是一个带变点标注的数据集、一组序列长度，以及某个 QCD 模型对每条序列给出的检测点；输出是更适合有限不规则序列的 ARL/ADD 估计值。核心做法是先定义哪些样本对 ARL 或 ADD 有效，再把未检测到的样本作为右删失样本纳入 Kaplan-Meier 曲线，最后用 restricted mean survival time 的面积作为平均指标。
+本文不提出新的变点检测器，而是提出一个新的评估器：输入一个带变点标注的数据集、一组序列长度，以及某个 QCD 模型在每条序列上给出的检测点，输出更适合有限、不规则长度数据的 ARL/ADD 估计值。它的关键转折是把"序列没等到检测器触发就结束了"这件原本被丢弃的事，重新看成生存分析里有信息的右删失观测，从而把 ARL/ADD 的平均值估计变成一个 Kaplan-Meier 生存曲线求面积的问题。
 
 ### 整体框架
-对于 ARL，作者只关心没有变点的状态下检测器多久误报。每条序列的 detection time 是 $	au_i$，censoring time 定义为 $C_i^{ARL}=\min\{\nu_i,T_i\}$，也就是变点出现前或序列结束前能观测到的最长时间。若检测器在这个时间前触发，视为观测到 event；若没有触发，则视为右删失。Kaplan-Meier 曲线估计 $S_{ARL}(t)=P(\tau>t\mid\nu=\infty)$，KM-ARL 是 $\int_0^a \hat S_{ARL}(t)dt$。
-
-对于 ADD，作者只看存在变点且检测点不早于变点的样本。event time 换成检测延迟 $\Delta\tau_i=\tau_i-\nu_i$，censoring time 换成变点后剩余长度 $C_i^{ADD}=T_i-\nu_i$。同样先估计 $S_{ADD}(t)=P(\Delta\tau>t\mid\Delta\tau\ge 0,\nu<\infty)$，再积分得到 KM-ADD。实验中积分上限取最大可观测时间，避免在没有观测支撑的区间做无根据外推。
+评估分 ARL 和 ADD 两条线，但套路一致：先界定哪些样本对该指标有效，再为每条序列定义一个 event time 和一个 censoring time，最后用 Kaplan-Meier 曲线下的面积当作平均指标。对 ARL，只关心无变点状态下检测器多久误报，每条序列的 detection time 记为 $\tau_i$，能观测到的最长无变点时长是 $C_i^{ARL}=\min\{\nu_i,T_i\}$（变点出现前或序列结束前）；触发即为观测到 event，否则视为右删失，进而估计 $S_{ARL}(t)=P(\tau>t\mid\nu=\infty)$，KM-ARL 取 $\int_0^a \hat S_{ARL}(t)dt$。对 ADD，只看存在变点且检测点不早于变点的样本，event time 换成检测延迟 $\Delta\tau_i=\tau_i-\nu_i$，censoring time 换成变点后剩余长度 $C_i^{ADD}=T_i-\nu_i$，同样估计 $S_{ADD}(t)=P(\Delta\tau>t\mid\Delta\tau\ge 0,\nu<\infty)$ 后积分得 KM-ADD。积分上限统一取最大可观测时间，避免在没有数据支撑的尾部做无根据外推。
 
 ### 关键设计
-1. **QCD 到生存分析的映射**:
 
-    - 功能：把有限长度序列中的“未报警”信息转成可用于统计估计的右删失样本。
-    - 核心思路：ARL 中，event time 是检测点 $\tau$，censoring time 是 $\min\{\nu,T\}$；ADD 中，event time 是检测延迟 $\Delta\tau$，censoring time 是 $T-\nu$。这样一条没触发的序列不再被丢弃，而是告诉估计器“至少到 censoring time 之前仍未报警”。
-    - 设计动机：传统 LB 指标最大的问题是只统计触发样本，越高阈值越容易剩下少量短检测样本。生存分析映射保留了未触发样本的部分信息，使平均曲线更接近真实 ARL/ADD。
+**1. QCD 到生存分析的映射：把"没报警"变成有信息的删失样本**
 
-2. **KM-ARL 与 KM-ADD 的非参数积分估计**:
+传统 LB 指标最伤人的地方在于只平均"已经触发"的样本，阈值越高，留下的就越是那一小撮检测时间偏短的序列，平均值因此系统性偏小。本文的修复是给每条序列同时定义 event time 和 censoring time——ARL 里 event time 是检测点 $\tau$、censoring time 是 $\min\{\nu,T\}$，ADD 里 event time 是检测延迟 $\Delta\tau$、censoring time 是 $T-\nu$。这样一条始终没触发的序列不再被扔掉，而是带着"至少到 censoring time 之前仍未报警"这条约束进入估计，平均曲线也就更贴近真实 ARL/ADD。
 
-    - 功能：在不假设检测时间分布形状的情况下估计平均运行长度和平均检测延迟。
-    - 核心思路：用 Kaplan-Meier 乘积极限形式估计生存函数，例如 $\hat S(t)=\prod_{j:t_j\le t}(1-d_j/n_j)$，其中 $d_j$ 是时间 $t_j$ 的检测事件数，$n_j$ 是该时刻前仍处于风险集的序列数。ARL/ADD 则由生存曲线面积给出。
-    - 设计动机：既有 parametric survival 方法需要指数分布等假设，遇到真实传感数据或复杂检测器时未必成立。非参数 KME 更贴合“任意检测器、任意底层分布”的机器学习评估需求。
+**2. KM-ARL 与 KM-ADD：非参数地从生存曲线面积读出指标**
 
-3. **有限样本偏差与截断偏差分解**:
+要在不假设检测时间服从指数分布之类参数形式的前提下估计平均运行长度和检测延迟，作者直接用 Kaplan-Meier 乘积极限估计生存函数 $\hat S(t)=\prod_{j:t_j\le t}(1-d_j/n_j)$，其中 $d_j$ 是时刻 $t_j$ 的检测事件数、$n_j$ 是该时刻仍在风险集中的序列数，ARL/ADD 则等于这条阶梯生存曲线下的面积。相比 Sahki 等需要指数衰减假设的 parametric survival 方法，非参数 KME 不绑定任何底层分布，更契合"任意检测器、任意数据分布"的机器学习评估场景。
 
-    - 功能：说明 KM 估计器何时可靠、何时不能无偏估计。
-    - 核心思路：论文把总偏差拆成 finite-sample bias 和 truncation bias。前者随样本数增加指数衰减，后者来自观测 horizon 不足，并证明在合适上限下 KM-ARL/KM-ADD 的截断负偏差不大于传统 LB 指标。
-    - 设计动机：评估指标本身也需要可解释性。偏差分解告诉使用者：如果真实检测时间落在所有观测 horizon 之外，任何无假设方法都无法可靠外推；如果只是有限不规则删失，KM 指标能显著缓解传统估计器的偏差。
+**3. 有限样本偏差与截断偏差分解：说清估计器何时可信**
 
-### 损失函数 / 训练策略
-本文没有训练新的检测模型，而是在评估阶段计算指标。理论分析假设在线 QCD 检测器不向未来看，因此检测点与删失机制近似满足 independent censoring。实验中评估 Window L1、Window Normal、Window AR、NP-FOCuS、CUSUM、EWMA，以及仿真中的 GSR/CUSUM，并使用 Python、lifelines、ruptures、changepoint-online 等工具实现估计。
+评估器本身也要可解释，作者把 KM 估计的总偏差拆成两部分：finite-sample bias 随样本数增加指数衰减，truncation bias 来自观测 horizon 不够长，并证明在合适积分上限下 KM-ARL/KM-ADD 的截断负偏差不超过传统 LB 指标。这个分解给出明确的使用边界——若真实检测时间落在所有观测 horizon 之外，任何无假设方法都无法可靠外推；但只要是有限、不规则删失，KM 指标就能显著缓解 LB 估计的偏差。
+
+本文不训练新模型，只在评估阶段计算指标。理论分析假设在线 QCD 检测器不向未来看，故检测点与删失机制近似满足 independent censoring。实验覆盖 Window L1、Window Normal、Window AR、NP-FOCuS、CUSUM、EWMA 及仿真中的 GSR/CUSUM，估计实现基于 Python、lifelines、ruptures、changepoint-online 等工具。
 
 ## 实验关键数据
 

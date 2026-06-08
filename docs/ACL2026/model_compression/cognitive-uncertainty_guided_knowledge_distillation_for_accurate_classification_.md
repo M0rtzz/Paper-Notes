@@ -49,23 +49,27 @@ tags:
 
 ### 关键设计
 
-1. **双层边际样本选择 (Two-Tier Margin-Based Sample Selection)**:
+**1. 双层边际样本选择：让 ~10% 数据承担最大学习负担。**
 
-    - 功能：用教师认知不确定性做信号，把最有信息量的"近边界正确"和"严重偏离"样本从全量数据里挑出来做 Stage 2 增量训练。
-    - 核心思路：(i) 第一层按教师预测排名切样本 —— $\mathcal{S}_{\text{NM}}=\{(x_i,y_i):[(\hat{y}_i=y_i)\land(p^{(1)}-p^{(2)})\leq\delta)]\lor \text{rank}(y_i)\in\{2,3\}\}$（正确但低置信，或正确答案排第 2/3），$\mathcal{S}_{\text{HH}}=\{(x_i,y_i):\text{rank}(y_i)>3\}$（严重错）。(ii) 第二层用复合难度指标 $\mathcal{M}(x_i,y_i)=d(x_i,y_i)\cdot e^{-H(x_i)}$（$d$ 是概率边际、$H$ 是预测熵），按中位数把 $\mathcal{S}_{\text{NM}}$ 和 $\mathcal{S}_{\text{HH}}$ 再各切成 close / far。$\delta=0.05$、$K=5$（fold 数）由 grid search 决定（见 Figure 4）。
-    - 设计动机：完全已会的样本对决策边界没贡献，应该聚焦"边界附近模糊"和"完全错"两端。Near-miss 直接决定 fine-grained 分类边界；Hard-hard 暴露知识漏洞。复合难度指标里 $e^{-H(x_i)}$ 是个聪明的乘子 —— 熵小时放大难度（说明模型自信地错了），熵大时衰减（模型自己也犹豫，可能本身就模糊）。这种"双层切片"让 ~10% 数据承担最大学习负担。
+完全已会的样本对决策边界毫无贡献，真正决定 fine-grained 误解分类的是"边界附近模糊"和"完全偏离"两端，因此第二阶段不再喂全量数据，而是用教师的认知不确定性把这两端挑出来。第一层按教师预测排名切样本：Near-miss 集合 $\mathcal{S}_{\text{NM}}=\{(x_i,y_i):[(\hat{y}_i=y_i)\land(p^{(1)}-p^{(2)})\leq\delta)]\lor \text{rank}(y_i)\in\{2,3\}\}$ 收的是"正确但低置信、或正确答案只排第 2/3"的样本，它们直接决定分类边界；Hard-hard 集合 $\mathcal{S}_{\text{HH}}=\{(x_i,y_i):\text{rank}(y_i)>3\}$ 收的是严重错答，暴露知识漏洞。
 
-2. **难度自适应损失 (Difficulty-Adaptive Loss)**:
+第二层再用复合难度指标把每一类按中位数二分为 close / far：
 
-    - 功能：根据样本类型动态调整 hard label (CE) / soft label (KD) / 表征对齐 (COS) 三类损失的权重，避免一刀切。
-    - 核心思路：总损失 $\mathcal{L}_{\text{total}}=\alpha\mathcal{L}_{\text{CE}}+\beta\mathcal{L}_{\text{KD}}+\gamma\mathcal{L}_{\text{COS}}$，但 $(\alpha,\beta,\gamma)$ 按四类样本切换：$\mathcal{S}_{\text{NM}}^{\text{close}}$ → $(1,0,0)$（近边界正确，只用 hard 强约束避免软标签平滑模糊边界）；$\mathcal{S}_{\text{NM}}^{\text{far}}$ → $(1,1,1)$（既要精确又要继承类间关系）；$\mathcal{S}_{\text{HH}}^{\text{close}}$ → $(0,1,1)$（接近真值但显著偏离，相信教师软标签以抗噪）；$\mathcal{S}_{\text{HH}}^{\text{far}}$ → $(1,1,1)$（极难，hard + soft 双保险）。
-    - 设计动机：传统 KD 用固定权重，对"边界模糊"和"严重噪声"样本的处理是一样的，效果不好。作者的关键洞察是：当样本是 NM-close（已经接近正确但仍模糊）时，软标签的"平滑性"反而是敌人，会模糊本就紧的边界 —— 所以反常地把 $\beta=\gamma=0$，纯用 hard label 强约束。这种"在不同样本上让不同信号说话"是论文最精巧的设计点。
+$$\mathcal{M}(x_i,y_i)=d(x_i,y_i)\cdot e^{-H(x_i)}$$
 
-3. **N-fold Stage-1 教师生成 + Qwen3-4B 反超 Qwen2.5-72B 的关键路径**:
+其中 $d$ 是概率边际、$H$ 是预测熵。$e^{-H(x_i)}$ 是这里最关键的乘子——熵小时它放大难度（模型自信地错，最该重点纠正），熵大时它衰减（模型自己也犹豫，样本本身可能就模糊，不必死磕）。两层切下来，最终的 $\mathcal{S}_{\text{NM}} \cup \mathcal{S}_{\text{HH}}$ 只占全量约 10.30%，却扛起了第二阶段的全部增量训练；$\delta=0.05$、fold 数 $K=5$ 由 grid search 选出（见 Figure 4）。
 
-    - 功能：让 4B 学生不仅匹配甚至超越 72B 教师，把"压缩"和"超越"两个原本对立的目标合在一起。
-    - 核心思路：(i) Stage 1 用 StratifiedKFold 让每个教师只为自己没见过的样本生成软标签，避免 confidence inflation；(ii) Stage 2 在 NM-far / HH-far 时用 difficulty-adaptive loss 增大 ground-truth 监督权重，等于"当教师自信地错"时让学生信真相而非教师；(iii) 整套训练只用 10.30% 真实样本做增量训练，保证小模型不被噪声样本拖坏。
-    - 设计动机：作者明确把"学生反超教师"归因于三点：教师的预训练偏置（系统性忽视非标准学生思路）、任务特化（在 uncertainty 区域聚焦）、自适应纠错（教师自信错时让学生听 ground truth）。这是 KD 文献里少见的"教师不一定是上界"的实证案例，对教育、医疗等专家偏置强的领域有方法论价值。
+**2. 难度自适应损失：在不同样本上让不同信号说话。**
+
+传统 KD 全程固定权重，对"边界模糊"和"严重噪声"两种截然不同的样本一视同仁，效果自然打折。本文让总损失 $\mathcal{L}_{\text{total}}=\alpha\mathcal{L}_{\text{CE}}+\beta\mathcal{L}_{\text{KD}}+\gamma\mathcal{L}_{\text{COS}}$ 的三元组 $(\alpha,\beta,\gamma)$ 随四类子集切换：$\mathcal{S}_{\text{NM}}^{\text{close}}\!\to\!(1,0,0)$、$\mathcal{S}_{\text{NM}}^{\text{far}}\!\to\!(1,1,1)$、$\mathcal{S}_{\text{HH}}^{\text{close}}\!\to\!(0,1,1)$、$\mathcal{S}_{\text{HH}}^{\text{far}}\!\to\!(1,1,1)$。
+
+其中最反直觉、也最精巧的是 NM-close 上的 $(1,0,0)$：当样本已经接近正确但边界仍紧时，软标签的"平滑性"反而成了敌人，会把本就该锐利的边界抹糊，所以这里干脆把 $\beta=\gamma=0$，只用 hard label 强约束。相对地，HH-close（接近真值但显著偏离）改信教师软标签 $(0,1,1)$ 来抗噪，两端的 far 子集则 hard + soft 双保险——同一个损失框架，按样本难度让 CE / KD / COS 各自在最该出力的地方出力。
+
+**3. N-fold 软标签生成 + 自适应纠错：让 4B 学生反超 72B 教师。**
+
+"压缩"和"超越"通常是对立目标，本文却让 Qwen3-4B 学生在准确率上盖过 Qwen2.5-72B 教师，靠的是三条相互配合的路径。其一，Stage 1 用 StratifiedKFold 让每个教师 $f_t^{(k)}$ 只为自己没见过的 fold 生成软标签，避免在见过的数据上 confidence inflation。其二，Stage 2 在 NM-far / HH-far 子集上借难度自适应损失抬高 ground-truth 的监督权重，等于"当教师自信地错"时让学生听真相而非盲从教师。其三，整套增量训练只动 10.30% 真实样本，小模型不会被海量噪声标签拖坏。
+
+作者把反超明确归因于三点：教师的预训练偏置（系统性无视学生非标准但合理的思路）、任务特化（聚焦不确定性区域）、自适应纠错（教师自信出错时让学生回到 ground truth）。这是 KD 文献里少见的"教师不必是上界"实证，对教育、医疗等专家偏置强的领域尤其有方法论价值。
 
 ### 损失函数 / 训练策略
 - **Stage 1**：$\mathcal{L}_{\text{CE}}=-\log p_s(y_i|x_i)$ + $\mathcal{L}_{\text{KD}}=\tau^2\cdot\text{KL}(p_t\|p_s)$（$\tau=1.0$）+ $\mathcal{L}_{\text{COS}}=1-\cos(p_s,p_t)$，$(\alpha,\beta,\gamma)=(0.33,0.33,0.34)$，AdamW lr=2×10⁻⁴（student）、1×10⁻⁴（teacher），batch=16，grad acc=4。

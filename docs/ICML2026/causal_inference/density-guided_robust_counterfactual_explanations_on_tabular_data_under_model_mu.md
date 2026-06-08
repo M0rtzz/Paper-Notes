@@ -41,30 +41,28 @@ DensityFlow 把"在模型多重性下生成鲁棒反事实解释 (RCE)"重新表
 ## 方法详解
 
 ### 整体框架
-DensityFlow 把"为查询 $x$ 生成对目标黑盒集成 $\mathcal{M}=\{h_j\}_{j=1}^m$ 鲁棒的反事实 $x'$"拆成两个交替优化的网络：(1) **代理网络** $f_\phi:\mathcal{X}\to\mathbb{R}^{K+1}$ 同时承担两件事——前 $K$ 个 logit 做目标类预测，第 $K+1$ 个 logit 对应"噪声类"，相邻两个 logit 之差 $S(x|y^*)=z_{y^*}(x)-z_{K+1}(x)$ 就是 $\log p(x|y^*)$ 的可微估计；(2) **生成器** $v_\theta(z,t)$ 是 Neural ODE 的速度场，把 $x$ 沿 $t\in[0,1]$ 连续传到 $z(T)=x'$，训练目标耦合 validity 损失、动能 (传输代价) 和密度惩罚。当目标是异构黑盒集成时，再加一步"轨迹邻域局部蒸馏"，只用 $z(T)$ 处的样本去查询 $\mathcal{M}$ 并把 $f_\phi$ 拉回 $\mathcal{M}$ 的共识边界，让生成 $\to$ 蒸馏 $\to$ 再生成形成闭环。最终输出就是 ODE 终点 $x'=z(T)$。
+DensityFlow 要为查询样本 $x$ 生成一个对整个黑盒集成 $\mathcal{M}=\{h_j\}_{j=1}^m$ 都成立的反事实 $x'$，核心洞察是"模型分歧最大的地方恰好是数据低密度区"，于是把鲁棒性问题转化成"把样本运到目标类高密度流形上"。整套系统由两个交替优化的网络构成：一个代理网络 $f_\phi$ 同时学分类与类条件密度，给出可微的密度引导信号；一个 Neural ODE 生成器 $v_\theta$ 按这个信号把 $x$ 连续传输到终点 $x'$，并在黑盒场景下额外用一步局部蒸馏把代理网络的边界拉回集成共识。
 
 ### 关键设计
 
-1. **(K+1) 路 NCE 密度代理 (核心)**:
+**1. (K+1) 路 NCE 密度代理：让一个网络同时给出分类与密度**
 
-    - 功能：在不额外训练独立密度估计器的前提下，给生成器提供一个可微、与分类共享表征的类条件密度信号 $\log p(x|y^*)$。
-    - 核心思路：把原 $K$ 类分类问题扩成 $K+1$ 路判别——前 $K$ 类用真实数据 $\mathcal{D}_{\text{src}}$，第 $K+1$ 类用从均匀分布 $p_{\text{noise}}$ 采的样本（标准化后落在 $[-C,C]^d$ 立方体内），交叉熵联合训练 $\mathcal{L}_{\text{surrogate}}=-\mathbb{E}_{\mathcal{D}_{\text{src}}}\log\frac{e^{z_y}}{\sum e^{z_j}}-\mathbb{E}_{p_{\text{noise}}}\log\frac{e^{z_{K+1}}}{\sum e^{z_j}}$。命题 4.1 证明：在 $p_{\text{noise}}$ 为均匀分布时，最优解满足 $z_k^*(x)-z_{K+1}^*(x)=\log p(x|k)+\text{Const}$，因此 logit 差就直接是类条件对数密度的无偏估计，梯度 $\nabla_x S(x|y^*)=\nabla_x\log p(x|y^*)$ 可以作为密度引导信号。信任域阈值 $\tau$ 通过 noise/data 采样比 $N_{\text{noise}}/N_{\text{data}}$ 显式控制。
-    - 设计动机：传统做法是先用 VAE/KDE/LOF 单独学一个密度估计器再"挂"在 CE 优化外面，但稀疏离群点会严重扭曲密度，且密度信号和分类信号脱钩——前者觉得 OK 的地方分类器可能完全没把握。把两者塞进同一个 $f_\phi$ 联合训练，让密度信号天然带上"分类置信度"维度，使得 surrogate 对长尾不敏感，给生成器一个更平滑、与决策一致的引导面。
+传统做法是先用 VAE/KDE/LOF 单独训一个密度估计器再"挂"到 CE 优化外面，但稀疏离群点会严重扭曲密度，而且密度信号和分类信号互相脱钩——密度觉得 OK 的地方分类器未必有把握。DensityFlow 把两者塞进同一个代理网络 $f_\phi:\mathcal{X}\to\mathbb{R}^{K+1}$ 联合训练：把原 $K$ 类分类扩成 $K+1$ 路判别，前 $K$ 类喂真实数据 $\mathcal{D}_{\text{src}}$，第 $K+1$ 类喂从均匀分布 $p_{\text{noise}}$ 采的"噪声样本"（标准化后落在 $[-C,C]^d$ 立方体内），用交叉熵联合训 $\mathcal{L}_{\text{surrogate}}=-\mathbb{E}_{\mathcal{D}_{\text{src}}}\log\frac{e^{z_y}}{\sum e^{z_j}}-\mathbb{E}_{p_{\text{noise}}}\log\frac{e^{z_{K+1}}}{\sum e^{z_j}}$。
 
-2. **密度引导 Neural ODE 生成器**:
+这样设计的好处由命题 4.1 给出理论保证：当 $p_{\text{noise}}$ 为均匀分布时，最优解满足 $z_k^*(x)-z_{K+1}^*(x)=\log p(x|k)+\text{Const}$，所以相邻两个 logit 之差 $S(x|y^*)=z_{y^*}(x)-z_{K+1}(x)$ 直接就是类条件对数密度的无偏估计，其梯度 $\nabla_x S(x|y^*)=\nabla_x\log p(x|y^*)$ 可以原封不动作为生成器的密度引导信号；信任域阈值 $\tau$ 则通过 noise/data 采样比 $N_{\text{noise}}/N_{\text{data}}$ 显式控制。因为密度天然带上了"分类置信度"维度，surrogate 对长尾不敏感，给生成器一个平滑、与决策一致的引导面。
 
-    - 功能：把"从查询点出发、最小代价、终点落在高密度目标类流形"写成一个可端到端反传的连续流动力系统。
-    - 核心思路：状态增广为 $\tilde z(t)=[z(t),e(t)]^\top$，动力学 $d\tilde z/dt=[v_\theta(z,t);\ \|v_\theta(z,t)\|^2]$，初值 $\tilde z(0)=[x;0]$，用 dopri5 adaptive solver 在 $t\in[0,1]$ 上积分 100 个时间点；端点 $e(T)=\int_0^T\|v_\theta\|^2dt$ 就是传输动能，直接当代价 $\mathcal{L}_{\text{cost}}$。密度约束写成路径积分 $\mathcal{L}_{\text{den}}=\int_0^T\text{ReLU}(\log\tau-S(z(t)|y^*))dt$，但论文实验发现 ODE 轨迹本身足够光滑，只在端点惩罚就足以把整条轨迹拉进信任域，因此实现里用端点版本省算力。总目标 $\mathcal{L}(\theta)=\mathcal{L}_{\text{CE}}(f_\phi(x'),y^*)+\lambda_{\text{cost}}c_{\text{cost}}(T)+\lambda_{\text{den}}\mathbb{E}[\mathcal{L}_{\text{den}}(x')]$ 三项分别对应 validity、proximity、robustness。
-    - 设计动机：相比直接对静态约束做 KKT/拉格朗日的硬优化，Neural ODE 把约束写成势函数 ($\nabla S$ 作为漂移项) 让轨迹"自然绕开"低密度区；状态增广技巧让传输代价精确等于动能积分，省去单独算 $\|x-x'\|$ 还能在 ODE 反传里同时优化。
+**2. 密度引导 Neural ODE 生成器：把约束写成势函数让轨迹自然绕开低密度区**
 
-3. **轨迹感知局部蒸馏 (黑盒对齐)**:
+有了密度信号，怎么让"从查询点出发、代价最小、终点落在高密度目标类流形"这三个目标可端到端优化？DensityFlow 把生成过程写成一个连续流动力系统，而不是对静态约束做 KKT/拉格朗日硬优化——后者要显式处理约束，前者只要把密度梯度 $\nabla S$ 当漂移项塞进流场，轨迹就会"自然绕开"低密度区。具体把状态增广成 $\tilde z(t)=[z(t),e(t)]^\top$，动力学 $d\tilde z/dt=[v_\theta(z,t);\ \|v_\theta(z,t)\|^2]$，初值 $\tilde z(0)=[x;0]$，用 dopri5 adaptive solver 在 $t\in[0,1]$ 上积分 100 个时间点。增广的第二维妙在端点 $e(T)=\int_0^T\|v_\theta\|^2dt$ 恰好等于传输动能，可直接当代价 $\mathcal{L}_{\text{cost}}$，省去单独算 $\|x-x'\|$。
 
-    - 功能：在异构黑盒集成 $\mathcal{M}$ 场景下，用最少的黑盒查询把 $f_\phi$ 的决策边界和 $\mathcal{M}$ 的共识对齐，使密度信号给出的梯度方向真的对集成 validity 有效。
-    - 核心思路：不全局对齐 (高维空间全空间查不起)，而是动态采样当前生成器的端点状态 $\mathcal{D}_\theta=\{(x,\bar y)\mid x\sim z(T)\}$ ($\bar y$ 是集成投票)，最小化局部蒸馏损失 $\mathcal{L}_{\text{dis}}(\phi)=\mathbb{E}_{\mathcal{D}_\theta}[\|\sigma(z_{y^*}(x))-\bar y\|^2]$；蒸馏完再回去更新生成器，形成"生成→蒸馏→再生成"的交替优化。
-    - 设计动机：密度引导本身就告诉你"该去哪儿"——既然轨迹只会经过高密度可信区，那也只需要在这些区域里对齐黑盒边界。这等于把传统全局对齐的 $O(\text{vol}(\mathcal{X}))$ 查询量压缩到 $O(|\text{trajectory}|)$，让密度信号和查询效率互相成就：没有密度约束就要在整个空间瞎查，没有局部蒸馏黑盒就拿不到有效梯度。
+密度约束本可写成沿整条路径的积分 $\mathcal{L}_{\text{den}}=\int_0^T\text{ReLU}(\log\tau-S(z(t)|y^*))dt$，但论文发现 ODE 轨迹本身足够光滑，只在端点惩罚就足以把整条轨迹拉进信任域，于是实现里用端点版省算力——这是对 Neural ODE 光滑性的巧用。最终总目标 $\mathcal{L}(\theta)=\mathcal{L}_{\text{CE}}(f_\phi(x'),y^*)+\lambda_{\text{cost}}c_{\text{cost}}(T)+\lambda_{\text{den}}\mathbb{E}[\mathcal{L}_{\text{den}}(x')]$ 三项分别对应 validity、proximity、robustness。
+
+**3. 轨迹感知局部蒸馏：在黑盒下用最少查询对齐集成共识**
+
+前两步在白盒下成立，但目标是异构黑盒集成 $\mathcal{M}$ 时拿不到梯度，密度引导给出的方向未必真对集成 validity 有效，需要把 $f_\phi$ 的边界和 $\mathcal{M}$ 的共识对齐。全局对齐在高维空间查询量是 $O(\text{vol}(\mathcal{X}))$，根本查不起；DensityFlow 利用一个事实——既然轨迹只会经过高密度可信区，那只需要在这些区域对齐就够了。于是它动态采样当前生成器的端点状态 $\mathcal{D}_\theta=\{(x,\bar y)\mid x\sim z(T)\}$（$\bar y$ 为集成投票），最小化局部蒸馏损失 $\mathcal{L}_{\text{dis}}(\phi)=\mathbb{E}_{\mathcal{D}_\theta}[\|\sigma(z_{y^*}(x))-\bar y\|^2]$，蒸馏完再回去更新生成器，形成"生成—蒸馏—再生成"的交替闭环。这把查询量从全空间压到 $O(|\text{trajectory}|)$，让密度信号与查询效率互相成就：没有密度约束就要在整个空间瞎查，没有局部蒸馏黑盒就拿不到有效梯度。
 
 ### 损失函数 / 训练策略
-两层交替优化：内层用 Eq. (3) 更新 $f_\phi$ (NCE 分类+密度联合)，外层用 Eq. (7) 更新 $v_\theta$ (validity+cost+density)；黑盒时插入 Eq. (8) 的局部蒸馏。AdamW，$\eta_g=10^{-3}$、$\eta_\phi=10^{-4}$，800 epochs，batch 64；目标权重 $\lambda_{\text{cost}}\in\{0.2,0.4,0.6\}$、$\lambda_{\text{den}}\in\{0.0,0.1,0.3\}$ 网格搜；噪声-数据比 $\tau=0.2$，噪声立方体边长 $C=1.2\cdot\max_{\mathcal{D}_{\text{train}}}\|x\|_\infty$；ODE 训练用 $(10^{-3},10^{-3})$ 容差，测试 $(10^{-4},10^{-4})$。
+两层交替优化：内层用 Eq. (3) 更新 $f_\phi$（NCE 分类+密度联合），外层用 Eq. (7) 更新 $v_\theta$（validity+cost+density）；黑盒时插入 Eq. (8) 的局部蒸馏。AdamW，$\eta_g=10^{-3}$、$\eta_\phi=10^{-4}$，800 epochs，batch 64；目标权重 $\lambda_{\text{cost}}\in\{0.2,0.4,0.6\}$、$\lambda_{\text{den}}\in\{0.0,0.1,0.3\}$ 网格搜；噪声-数据比 $\tau=0.2$，噪声立方体边长 $C=1.2\cdot\max_{\mathcal{D}_{\text{train}}}\|x\|_\infty$；ODE 训练用 $(10^{-3},10^{-3})$ 容差，测试 $(10^{-4},10^{-4})$。
 
 ## 实验关键数据
 

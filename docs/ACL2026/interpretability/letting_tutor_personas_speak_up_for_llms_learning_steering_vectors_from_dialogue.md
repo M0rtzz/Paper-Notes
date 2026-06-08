@@ -46,23 +46,26 @@ tags:
 接着，对于同一上下文，真实导师话语 $t^i_{j,k}$ 是 preferred response，SFT 生成的 $\bar{t}_{j,k}$ 是 dispreferred response。模型在某一层 activation $A_L(\cdot)$ 上加入 $\delta_i v$，并优化偏好损失，使 steered model 更倾向生成真实导师话语、更不倾向生成平均话语。测试时再乘全局强度 $\alpha$，通过 $A_L(\cdot)\leftarrow A_L(\cdot)+\alpha\delta_i v$ 控制 steering 强度。
 
 ### 关键设计
-1. **population-mean reference construction**:
 
-	- 功能：给 tutor-specific steering 定义“从哪里来、到哪里去”。
-	- 核心思路：先 SFT Llama-3.1-8B-Instruct，让模型根据对话上下文生成一个通用导师回复；这个输出代表平均导师行为，作为偏好学习中的 negative/dispreferred 样本。
-	- 设计动机：没有 reference 时，无法区分模型是在学习“如何辅导”还是在学习“这个导师和平均导师有什么不同”。
+**1. population-mean reference：先定义“从哪里出发、要偏到哪里去”。**
 
-2. **共享方向 + tutor-specific coefficient**:
+如果没有参照点，模型在偏好学习里会分不清自己是在学“怎么辅导”还是在学“这个导师和别人有什么不同”，个体风格就会被淹没在通用辅导能力里。作者先把 Llama-3.1-8B-Instruct SFT 成一个能根据对话上下文生成通用导师回复的模型，把它当作 population-mean tutor，用它为每个上下文生成一条平均导师话语 $\bar{t}_{j,k}$，并把这条话语固定为偏好对里的 dispreferred 样本。有了这个“平均行为”锚点，后续学习的方向才被严格限定为“真实导师相对平均导师的偏移”，而不是辅导能力本身。
 
-	- 功能：用低维、可解释的方式表达不同导师风格。
-	- 核心思路：学习一个共享 steering vector $v$，每个 tutor 有正的缩放系数 $\delta_i$；为避免尺度不确定性，用 $u_i$ 参数化并归一化 $\delta_i=\exp(u_i)/(\frac{1}{I}\sum_m\exp(u_m))$。
-	- 设计动机：如果每个导师都学独立向量，样本需求和解释成本更高；共享方向让风格变化呈现为一个可排序的谱系。
+**2. 共享方向加导师专属系数：把风格变成一条可排序的谱。**
 
-3. **preference optimization for activation steering**:
+如果给每个导师都学一个独立 steering 向量，样本需求和解释成本都会暴涨，而且一堆互不相关的向量根本没法横向比较。作者改为只学一个共享 steering vector $v$，让每位导师只持有一个正的缩放系数 $\delta_i$，风格强弱就落在同一根轴上。为消除尺度不确定性，$\delta_i$ 不直接学，而是用 $u_i$ 参数化再归一化：
 
-	- 功能：直接优化 steered activation 对真实导师话语的偏好，而不是只匹配表面文本。
-	- 核心思路：损失鼓励加入 $\delta_i v$ 后，真实导师话语相对 unsteered 模型的 log-likelihood ratio 变大，同时平均导师话语的 ratio 变小；所有 likelihood 只在 response tokens 上计算。
-	- 设计动机：真实导师 persona 体现在语气、对话动作、脚手架强度等多方面，偏好学习比逐 token SFT 更适合学习“相对更像某导师”的方向。
+$$\delta_i=\frac{\exp(u_i)}{\frac{1}{I}\sum_m\exp(u_m)}$$
+
+这样所有导师的系数被约束在一个共同尺度下，风格差异自然呈现为可排序的连续谱——低 $\delta_i$ 的导师更重 rapport 和 scaffold，高 $\delta_i$ 的更偏任务完成式指导，整套表示既低维又可解释。
+
+**3. preference optimization 直接作用在 activation 上。**
+
+真实导师的 persona 体现在语气、对话动作、脚手架强度等多个层面，逐 token 的 SFT 只能逼近表面文本，学不到“相对更像某位导师”的方向。作者把 DPO/BiPO 式的偏好学习搬到 activation steering：在某一层激活上加入 $\delta_i v$，优化偏好损失，让加了 steering 之后真实导师话语相对 unsteered 模型的 log-likelihood ratio 变大、平均导师话语的 ratio 变小，且所有 likelihood 只在 response tokens 上计算。测试时再乘一个全局强度 $\alpha$，通过
+
+$$A_L(\cdot)\leftarrow A_L(\cdot)+\alpha\delta_i v$$
+
+调节 steering 力度。这条偏好目标直接优化的是“被引导后的激活更偏向真实导师”，比匹配表面字串更贴近 persona 控制的本质。
 
 ### 损失函数 / 训练策略
 实验使用 Question-Anchored-Tutoring-Dialogues-2k 数据集，包含 21 个独特导师，按 dialogue level 为每个导师做 80/10/10 切分。训练集中每位导师平均 74.19 条对话，验证集 8.90 条，测试集 10.10 条；训练/验证/测试平均 turn 数分别为 11.75、12.06、12.25。

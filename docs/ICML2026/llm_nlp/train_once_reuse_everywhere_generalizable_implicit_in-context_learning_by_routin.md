@@ -42,31 +42,30 @@ ICR 不在 residual stream 注入 shift vector，而是从多域 ICL 中用 PCA 
 
 ### 整体框架
 
-三阶段：(1) PIDs 提取——跨 $\mathbb{D}$ 个域跑 explicit ICL，每个 prompt 末 token 的 $Q^l, K^l$ projection 堆成 ICL bases $\tilde{Q}^l, \tilde{K}^l \in \mathbb{R}^{N \times d}$，PCA 取 top-$r$ 主方向得 $U_q^l, U_k^l$；(2) Query-conditioned router 训练——冻 LLM，训两个 MLP $g_{\theta_\alpha}, g_{\theta_\gamma}$ 根据 query embedding 输出 $\alpha(x) \in \mathbb{R}^{L \times r}$ 和 gate $\gamma(x) \in \mathbb{R}^{L \times H}$，loss = CE + confidence align + sparse + gate regularization；(3) 零样本推理——给任意新 query，router 算 $\alpha, \gamma$，attention logits 修正为 $\tilde{\mathbf{A}}^{l,h}(x) = \mathbf{A}^{l,h}(x) + \gamma^{l,h}(x) (Q_{\mathrm{zs}}^l U_q^l) \mathrm{diag}(\alpha^l(x)) (K_{\mathrm{zs}}^l U_k^l)^\top$。
+ICR 把"隐式 ICL"从 residual stream 的加性偏移搬到 attention logits 的低秩调制：先离线跨多个域跑显式 ICL、用 PCA 从每层 query/key projection 里提炼一组任务无关的 Principal ICL Directions (PIDs)，再训一个 query-conditioned router 学会"对当前 query 该怎么沿这些方向调制注意力"。三阶段串起来——(1) 跨 $\mathbb{D}$ 个域提 PIDs $U_q^l, U_k^l \in \mathbb{R}^{d\times r}$；(2) 冻结 LLM、只训 router 输出每层方向权重 $\alpha(x)$ 和每 head gate $\gamma(x)$；(3) 推理时对任意新 query 算出 $\alpha,\gamma$，把低秩修正加到 attention logits，全程零检索零再训。
 
 ### 关键设计
 
-1. **Principal ICL Directions (PIDs)：用 PCA 提炼跨域 ICL pattern**:
+**1. Principal ICL Directions：用 PCA 把"如何做 ICL"提成跨域稳定的注意力方向**
 
-    - 功能：从 attention space 抽出 task-agnostic、generalizable 的 ICL 结构方向，作为 attention 修正的"原料"。
-    - 核心思路：每个 prompt 末 token 是 contextual information 的整合点，其 $Q/K$ projection 携带"应该用 ICL 模式回答"的信号。跨 $\mathbb{D}$ 域收集 $\tilde{Q}^l, \tilde{K}^l$（每行一个 prompt），PCA 取 top-$r$ 得 $U_q^l, U_k^l \in \mathbb{R}^{d \times r}$。理论支撑用 Spiked Covariance Model：$\Sigma_Q^{(\mathbb{d})} = S_q \Lambda_q S_q^\top + B_{q, \mathbb{d}} \Gamma_{q, \mathbb{d}} B_{q, \mathbb{d}}^\top + \sigma^2 I$ 里 $S_q$ 是跨域共享的 ICL 结构，$B_{q, \mathbb{d}}$ 是域特定变化。若 $\{B_{q, \mathbb{d}}\}$ 足够多样且方向不一致，pooled covariance $\mathbb{E}[\hat{\Sigma}_Q] = S_q \Lambda_q S_q^\top + \sigma^2 I + \frac{1}{N} \sum |\mathcal{D}_\mathbb{d}| B_{q, \mathbb{d}} \Gamma_{q, \mathbb{d}} B_{q, \mathbb{d}}^\top$ 里第三项 average out 到 isotropy，PCA 的 top eigenvectors 自然落到 $S_q$ 上——即 PIDs 恢复出跨域稳定的 ICL pattern。
-    - 设计动机：vector-based 方法把 ICD 信息压成 fixed-size shift vector 容量有限；PCA on attention bases 直接抓"什么样的 query-key matching geometry 让 ICL 起作用"这个 structural pattern，几何上比 additive shift 更接近 ICL 的真实机制（Olsson et al. 2022 已证 attention heads 是 ICL 的核心）。
+vector-based 隐式 ICL 把整段 ICD 压进一个固定大小的 shift vector，容量有限、还跟具体任务绑死，所以一换域就 collapse。ICR 的做法是不去存"ICD 内容"，而是抓"让 ICL 生效的 query-key 匹配几何"这个结构性模式。每个 prompt 末 token 是上下文信息的整合点，它的 $Q^l, K^l$ projection 携带"该按 ICL 方式作答"的信号；跨 $\mathbb{D}$ 个域把这些末 token projection 堆成 ICL bases $\tilde{Q}^l, \tilde{K}^l \in \mathbb{R}^{N\times d}$（每行一个 prompt），对其做 PCA 取 top-$r$ 主方向就得到 PIDs $U_q^l, U_k^l$。
 
-2. **Query-conditioned router：低秩调制 + head gate**:
+为什么 PCA 能恰好捞出跨域共享的那部分？论文用 Spiked Covariance Model 给出依据：每个域的协方差 $\Sigma_Q^{(\mathbb{d})} = S_q \Lambda_q S_q^\top + B_{q,\mathbb{d}} \Gamma_{q,\mathbb{d}} B_{q,\mathbb{d}}^\top + \sigma^2 I$，其中 $S_q$ 是跨域共享的 ICL 结构、$B_{q,\mathbb{d}}$ 是域特定变化。当各域的 $\{B_{q,\mathbb{d}}\}$ 足够多样且方向不一致时，pooled covariance $\mathbb{E}[\hat{\Sigma}_Q] = S_q \Lambda_q S_q^\top + \sigma^2 I + \frac{1}{N}\sum |\mathcal{D}_\mathbb{d}| B_{q,\mathbb{d}} \Gamma_{q,\mathbb{d}} B_{q,\mathbb{d}}^\top$ 里第三项被平均成接近各向同性的噪声，PCA 的 top eigenvectors 就自然落在 $S_q$ 上——即 PIDs 恢复出的正是跨域稳定的 ICL pattern，而非某个域的特例。几何上这比 additive shift 更贴近 ICL 的真实机制（Olsson et al. 2022 已论证 attention heads 是 ICL 的核心载体）。注意 PIDs 是逐层独立提取的，给不同层的不同 ICL 角色（早层 retrieval、后层 reasoning）各留一组方向。
 
-    - 功能：根据当前 query 自适应决定每层每方向 PID 的强度和每个 head 的参与度，不依赖任务标签。
-    - 核心思路：用冻结的 text encoder 算 query embedding $E(x)$；两个 2-layer MLP 并行：$\alpha(x) = \tanh(g_{\theta_\alpha}(E(x))) \in \mathbb{R}^{L \times r}$ 给每层每方向打权重 $\in [-1, 1]$，$\gamma(x) = \sigma(g_{\theta_\gamma}(E(x))) \in \mathbb{R}^{L \times H}$ 给每层每 head 打 $[0, 1]$ gate。修正后 attention logits 是 $\tilde{\mathbf{A}}^{l,h}(x) = \mathbf{A}^{l,h}(x) + \gamma^{l,h}(x) (Q_{\mathrm{zs}}^l U_q^l) \mathrm{diag}(\alpha^l(x)) (K_{\mathrm{zs}}^l U_k^l)^\top$。注意修正是 layer-shared bias × head gate，不是 per-head 独立 modulation——既保有差异化又控制参数量。
-    - 设计动机：固定 routing 容易过拟合训练任务；query-conditioned 让 router 学到"什么 query 需要什么 ICL 模式"。tanh 在 $\alpha$ 上让方向可正可负（增强或抑制 PID），sigmoid 在 $\gamma$ 上让 head 可选择性激活。这两者组合提供精细的 task-adaptive routing 能力同时 router 参数量极小（$\le 10M$ vs LLM 7B）。
+**2. Query-conditioned router：低秩方向权重 × head gate 的自适应调制**
 
-3. **多目标训练：CE + confidence align + sparse + gate**:
+有了 PIDs 这套"原料",还需要决定对每个具体 query 沿哪些方向、调多强、哪些 head 参与——固定 routing 会过拟合训练任务，所以 ICR 让调制随 query 变。用一个冻结的 text encoder 算 query embedding $E(x)$,两个 2-layer MLP 并行输出：方向权重 $\alpha(x) = \tanh(g_{\theta_\alpha}(E(x))) \in \mathbb{R}^{L\times r}$,用 $\tanh$ 把每层每个 PID 方向的强度压到 $[-1,1]$，从而既能增强也能抑制某方向；head gate $\gamma(x) = \sigma(g_{\theta_\gamma}(E(x))) \in \mathbb{R}^{L\times H}$,用 sigmoid 给每层每个 head 一个 $[0,1]$ 的开关，让 head 可选择性激活。
 
-    - 功能：让 router 既学到正确答案（CE），又不降低 zero-shot confidence（防退化），还鼓励 sparse routing（解释性 + 不过修改 attention）。
-    - 核心思路：(a) Supervised CE $\mathcal{L}_{\mathrm{CE}} = -\frac{1}{B} \sum_i \log P^{\mathrm{ICR}}(y_i | x_i)$；(b) Confidence alignment $\mathcal{L}_{\mathrm{conf}} = \frac{1}{B} \sum \mathrm{ReLU}(H(\mathrm{softmax}(p_i^{\mathrm{ICR}})) - H(\mathrm{softmax}(p_i^{\mathrm{zs}})))$ 惩罚 ICR 比 zero-shot 更不 confident 的情况；(c) Sparse routing $\mathcal{L}_{\mathrm{spar}} = \mathbb{E}_x[\frac{1}{L} \sum_l w^l \|\alpha^l(x)\|_1 / r]$ with $w^l$ linearly increasing（后层 sparsity 更重要）；(d) Head gate $\mathcal{L}_{\mathrm{gate}} = \mathbb{E}_x[\frac{1}{L} \sum_l \|\gamma^l(x)\|_1 / H]$。组合 $\mathcal{L} = \mathcal{L}_{\mathrm{CE}} + \lambda_{\mathrm{conf}} \mathcal{L}_{\mathrm{conf}} + \lambda_{\mathrm{spar}} \mathcal{L}_{\mathrm{spar}} + \lambda_{\mathrm{gate}} \mathcal{L}_{\mathrm{gate}}$。
-    - 设计动机：纯 CE 让 router 退化到"绕过 ICL 机制"的捷径；confidence align 强制 ICR 至少跟 zero-shot 一样自信，防止 router 通过 underconfidence 取巧；sparse loss 让最终调制接近 identity（最小化 intervention），层依赖的 $w^l$ 反映"早层 broad 处理、后层 specific 决策"的语言模型 layer-wise 结构。
+最终注意力 logits 被修正为 $\tilde{\mathbf{A}}^{l,h}(x) = \mathbf{A}^{l,h}(x) + \gamma^{l,h}(x)\,(Q_{\mathrm{zs}}^l U_q^l)\,\mathrm{diag}(\alpha^l(x))\,(K_{\mathrm{zs}}^l U_k^l)^\top$。这里的修正项是 layer-shared 的低秩 bias（同一层所有 head 共用 $U_q^l, U_k^l$ 与 $\alpha^l$）再乘上 per-head 的 $\gamma^{l,h}$ gate——不是每个 head 各算一套独立调制，既保留了 head 间的差异化能力，又把参数量压到极小（router 两个 MLP 合计 $\le 10M$，相对 7B LLM 可忽略），推理时延几乎和 zero-shot 持平。整个推理只需：算 $E(x)$ → router 出 $\alpha,\gamma$ → 按上式改 attention logits → 标准 forward，无检索、无再训。
 
-### 推理过程
+### 损失函数 / 训练策略
 
-给任意新 query：(1) 算 $E(x)$；(2) router 输出 $\alpha(x), \gamma(x)$；(3) Eq. 10 算 attention 修正；(4) 走 standard forward。整个过程：(a) 无需 retrieval；(b) 无需 retraining；(c) 计算 overhead 只有 router 两个 MLP，可忽略。
+冻结 LLM、只训 router，用四项目标的加权和约束它学到"有用且克制"的调制 $\mathcal{L} = \mathcal{L}_{\mathrm{CE}} + \lambda_{\mathrm{conf}}\mathcal{L}_{\mathrm{conf}} + \lambda_{\mathrm{spar}}\mathcal{L}_{\mathrm{spar}} + \lambda_{\mathrm{gate}}\mathcal{L}_{\mathrm{gate}}$：
+
+- **监督 CE** $\mathcal{L}_{\mathrm{CE}} = -\frac{1}{B}\sum_i \log P^{\mathrm{ICR}}(y_i | x_i)$ 让 router 学到正确答案；但只用 CE 时 router 容易退化成"绕过 ICL 机制"的捷径，所以需要后面三项约束。
+- **置信对齐** $\mathcal{L}_{\mathrm{conf}} = \frac{1}{B}\sum \mathrm{ReLU}\big(H(\mathrm{softmax}(p_i^{\mathrm{ICR}})) - H(\mathrm{softmax}(p_i^{\mathrm{zs}}))\big)$ 惩罚"ICR 比 zero-shot 更不自信"的情况（$H$ 为熵，熵更高=更不确定）——强制调制后至少不比 zero-shot 差，防止 router 靠 underconfidence 取巧、也是 OOD 不 collapse 的关键保险。
+- **稀疏路由** $\mathcal{L}_{\mathrm{spar}} = \mathbb{E}_x\big[\frac{1}{L}\sum_l w^l \|\alpha^l(x)\|_1 / r\big]$ 把方向权重往 0 拉、让最终调制接近 identity（最小化对原 attention 的干预、提升可解释性）；权重 $w^l$ 随层线性增大，反映"早层做 broad 处理、后层做 specific 决策"的语言模型逐层结构，后层更该克制。
+- **Gate 正则** $\mathcal{L}_{\mathrm{gate}} = \mathbb{E}_x\big[\frac{1}{L}\sum_l \|\gamma^l(x)\|_1 / H\big]$ 同理约束 head gate 稀疏，只让真正需要的 head 被激活。
 
 ## 实验关键数据
 

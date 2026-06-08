@@ -42,36 +42,23 @@ tags:
 
 ### 整体框架
 
-设 $\mathcal{T}:L_2(X)\to L_2(Z)$ 是 $X|Z$ 的条件期望算子，奇异分解 $\mathcal{T}=\sum_i \lambda_i u_i\otimes v_i$；目标结构函数 $h_0$ 满足 $\mathcal{T}h_0 = r_0$，其中 $r_0=\mathbb{E}[Y|Z]$。整套方法两阶段：
-
-1. **谱特征学习阶段**（在数据集 $\tilde{\mathcal{D}}_m$ 上）：学一对神经网络特征 $\varphi_\theta:\mathcal{X}\to\mathbb{R}^d$ 与 $\psi_\theta:\mathcal{Z}\to\mathbb{R}^d$，外加一个辅助向量 $\omega\in\mathbb{R}^d$，最小化下面将给出的增广对比损失 $\mathcal{L}_\delta^{(d)}(\theta,\omega)$。
-2. **2SLS 估计阶段**（在数据集 $\mathcal{D}_n$ 上）：拿学到的 $\varphi_{\hat\theta},\psi_{\hat\theta}$ 直接代入闭式 2SLS 估计
-
-    $\widehat{h}_\theta(x)=\varphi_\theta(x)^\top \widehat{C}_{\psi\varphi}^{-1}\widehat{\mathbb{E}}_n[Y\psi_\theta(Z)]$，
-
-    其中 $\widehat{C}_{\psi\varphi}$ 是 $\psi(Z)\varphi(X)^\top$ 的样本均值。
-
-整套方法相比 SpecIV 只改了"学特征"那一步的目标函数，下游 2SLS 完全复用。
+方法要解决的是 NPIV 反问题 $\mathcal{T}h_0=r_0$（$\mathcal{T}:L_2(X)\to L_2(Z)$ 是 $X|Z$ 的条件期望算子，$r_0=\mathbb{E}[Y|Z]$），核心痛点是 SpecIV 学特征时只逼近 $\mathcal{T}$ 的顶端奇异子空间、看不到 $Y$，于是把"对 $Y$ 有预测力"写成一项正则塞进对比损失里。整套流程仍是两阶段：先在数据集 $\tilde{\mathcal{D}}_m$ 上学一对神经网络特征 $\varphi_\theta:\mathcal{X}\to\mathbb{R}^d$ 与 $\psi_\theta:\mathcal{Z}\to\mathbb{R}^d$（外加辅助向量 $\omega\in\mathbb{R}^d$），最小化增广对比损失 $\mathcal{L}_\delta^{(d)}(\theta,\omega)$；再在独立数据集 $\mathcal{D}_n$ 上把学到的特征代入闭式 2SLS 估计 $\widehat{h}_\theta(x)=\varphi_\theta(x)^\top \widehat{C}_{\psi\varphi}^{-1}\widehat{\mathbb{E}}_n[Y\psi_\theta(Z)]$（$\widehat{C}_{\psi\varphi}$ 是 $\psi(Z)\varphi(X)^\top$ 的样本均值）。相比 SpecIV，只有"学特征"这一步的目标函数变了，下游 2SLS 原样复用。
 
 ### 关键设计
 
-1. **增广算子 $\mathcal{T}_\delta$ 与外加正则项 $\mathcal{R}_\delta$（核心）**：
+**1. 增广算子 $\mathcal{T}_\delta$ 与正则项 $\mathcal{R}_\delta$：把 $Y$ 信息注进谱分解**
 
-    - 功能：把 Y 的信息显式注入谱特征学习目标，让"特征张成的子空间"自动偏向 $h_0$ 真正所在的方向。
-    - 核心思路：定义 $\mathcal{T}_\delta:L_2(X)\times\mathbb{R}\to L_2(Z)$，$\mathcal{T}_\delta(h,a)=\mathcal{T}h+a\cdot\delta\cdot r_0$，相当于把 $\delta r_0$ 作为一列拼到 $\mathcal{T}$ 上，记作 $\mathcal{T}_\delta=[\mathcal{T}\mid\delta r_0]$。学特征用的损失从 SpecIV 的对比损失 $\mathcal{L}_0^{(d)}$ 改成 $\mathcal{L}_\delta^{(d)}=\mathcal{L}_0^{(d)}+\mathcal{R}_\delta^{(d)}$，其中正则项 $\mathcal{R}_\delta^{(d)}(\theta) = -\delta^2 \mathbb{E}[Y\psi_\theta(Z)]^\top C_{\psi_\theta}^{-1}\mathbb{E}[Y\psi_\theta(Z)]$。Proposition 4.1 证明：$\mathcal{L}_\delta^{(d)}\ge -\|\mathcal{T}_\delta^{(d)}\|_{HS}^2$，下界达成当且仅当学到的算子等于 $\mathcal{T}_\delta$ 的最佳秩-$d$ 截断 $\mathcal{T}_\delta^{(d)}$。也就是说，最小化这个损失 = 学 $\mathcal{T}_\delta$ 的截断 SVD。
-    - 设计动机：直观上 $-\delta^{-2}\mathcal{R}_\delta^{(d)}$ 就是"用 $\psi_\theta(Z)$ 做线性回归预测 Y 的 MSE"（差一个无关常数），所以这一项强迫 $\psi$ 特征张成"能解释 Y"的方向；算子视角进一步揭示：把 $\delta r_0$ 拼进去会把 $h_0$ 中"原本被 $\mathcal{T}$ 压在小奇异值上"的分量"放大"到顶端奇异子空间里，根本上化解了 spectral misalignment。
+SpecIV 学特征的目标里根本没有 $Y$，所以 $h_0$ 一旦落在 $\mathcal{T}$ 的小奇异方向上就会被错过。本文的修法是在 SpecIV 对比损失 $\mathcal{L}_0^{(d)}$ 上加一项 $\mathcal{R}_\delta^{(d)}(\theta) = -\delta^2 \mathbb{E}[Y\psi_\theta(Z)]^\top C_{\psi_\theta}^{-1}\mathbb{E}[Y\psi_\theta(Z)]$，得到 $\mathcal{L}_\delta^{(d)}=\mathcal{L}_0^{(d)}+\mathcal{R}_\delta^{(d)}$。直观上 $-\delta^{-2}\mathcal{R}_\delta^{(d)}$ 恰是"用 $\psi_\theta(Z)$ 线性回归预测 $Y$ 的 MSE"（差一个无关常数），因此这一项强迫 $\psi$ 特征张成"能解释 $Y$"的方向。
 
-2. **可微分的联合优化重写**：
+真正干净的地方是它的算子解释。定义增广算子 $\mathcal{T}_\delta:L_2(X)\times\mathbb{R}\to L_2(Z)$，$\mathcal{T}_\delta(h,a)=\mathcal{T}h+a\cdot\delta\cdot r_0$，相当于把 $\delta r_0$ 当作一额外列拼到 $\mathcal{T}$ 上，记作 $\mathcal{T}_\delta=[\mathcal{T}\mid\delta r_0]$。Proposition 4.1 证明 $\mathcal{L}_\delta^{(d)}\ge -\|\mathcal{T}_\delta^{(d)}\|_{HS}^2$，且下界恰好在学到的算子等于 $\mathcal{T}_\delta$ 的最佳秩-$d$ 截断 $\mathcal{T}_\delta^{(d)}$ 时达成——也就是说，最小化这个增广损失等价于对 $\mathcal{T}_\delta$ 做截断 SVD。之所以有效，是因为把 $\delta r_0$ 拼进去，会把 $h_0$ 里"原本被 $\mathcal{T}$ 压在小奇异值上"的信号分量放大到顶端奇异子空间，从根本上化解了 spectral misalignment；超参 $\delta$ 控制偏向 $Y$ 的强度，$\delta=0$ 退化为 SpecIV。
 
-    - 功能：避免在网络训练时对 $C_{\psi_\theta}^{-1}$ 做反向传播（数值上很不稳）。
-    - 核心思路：把 $\mathcal{R}_\delta$ 里的"内层最小化"显式化，引入辅助向量 $\omega\in\mathbb{R}^d$ 与 $(\theta,\omega)$ 联合最小化 $\mathcal{L}_\delta^{(d)}(\theta,\omega) = \mathcal{L}_0^{(d)}(\theta) - 2\delta\mathbb{E}[Y\psi_\theta(Z)]^\top \omega + \omega^\top C_{\psi_\theta}\omega$。对任意固定 $\theta$，这关于 $\omega$ 是凸二次的，最优 $\omega_\theta^* = \delta C_{\psi_\theta}^{-1}\mathbb{E}[Y\psi_\theta(Z)]$，回代恢复原始的 $\mathcal{L}_\delta^{(d)}$。
-    - 设计动机：网络反传时只需要 $C_{\psi_\theta}$ 的常规矩阵乘法，没有矩阵求逆；同时 $\omega$ 在理论上恰好对应 $\mathcal{T}_\delta$ SVD 中"额外一行"的坐标（Eq. 6 里的 $\omega_{*,i}$），训练得到的 $\hat\omega$ 还能在选 $\delta$ 时复用（见 Proposition 6.1）。
+**2. 引入辅助变量 $\omega$ 把目标改写成可微的联合优化**
 
-3. **超参 $\delta$ 的两条选择启发式**：
+正则项 $\mathcal{R}_\delta$ 里含 $C_{\psi_\theta}^{-1}$，直接对网络反传这个矩阵求逆数值上很不稳。为此把 $\mathcal{R}_\delta$ 里隐含的"内层最小化"显式化：引入辅助向量 $\omega\in\mathbb{R}^d$，对 $(\theta,\omega)$ 联合最小化 $\mathcal{L}_\delta^{(d)}(\theta,\omega) = \mathcal{L}_0^{(d)}(\theta) - 2\delta\mathbb{E}[Y\psi_\theta(Z)]^\top \omega + \omega^\top C_{\psi_\theta}\omega$。固定 $\theta$ 时它关于 $\omega$ 是凸二次的，最优 $\omega_\theta^* = \delta C_{\psi_\theta}^{-1}\mathbb{E}[Y\psi_\theta(Z)]$，回代正好恢复原始 $\mathcal{L}_\delta^{(d)}$。这样网络反传只剩 $C_{\psi_\theta}$ 的常规矩阵乘法、不再求逆。更巧的是 $\omega$ 在理论上恰好对应 $\mathcal{T}_\delta$ 的 SVD 中"额外一行"的坐标（Eq. 6 的 $\omega_{*,i}$），训练得到的 $\hat\omega$ 还能直接拿去选 $\delta$（见下一点）。
 
-    - 功能：让没有验证集的纯无监督特征学习也能挑出"恰到好处"的 $\delta$。
-    - 核心思路：① **对齐估计**：Proposition 6.1 给出 $h_0$ 在学到的 $\{\varphi_{\star,i}\}$ 张成空间上的投影长度 $\|\Pi_{\varphi_\star}h_0\|^2 = \alpha^\top(I_d-\omega_\star\omega_\star^\top)^{-1}\alpha$，其中 $\alpha_i=\mathbb{E}[Y\psi_{\star,i}(Z)]\sigma_{\star,i}^{-1}$，全部可以用学到的 $\hat\sigma,\hat\psi,\hat\omega$ 插值估计；启发式是"逐步增大 $\delta$，只要估计对齐显著上升就接受"。② **损失平衡**：把 $\mathcal{R}_\delta$ 看作对原对比损失 $\mathcal{L}_0$ 的正则，逐步增 $\delta$ 直到 $\mathcal{R}_\delta$ 大幅下降而 $\mathcal{L}_0$ 上升明显——一旦 $\mathcal{R}_\delta$ 占主导，特征会过度拟合 $r_0$ 的张成方向，丢掉对 $\mathcal{T}$ 的整体逼近能力，反而退化。
-    - 设计动机：实验里发现"小正 $\delta$"几乎总能改进，但过大 $\delta$ 会让 $\omega_*$ 范数发散、$(I-\omega\omega^\top)^{-1}$ 不稳，所以需要一个"在哪里收手"的可计算判据；两条启发式分别从"对齐改善"和"主损失退化"两个方向给出可观察的 stopping 信号，两者交叉验证效果稳健。
+**3. 用两条启发式给无监督特征学习挑出"恰到好处"的 $\delta$**
+
+特征学习没有验证集，$\delta$ 不能靠交叉验证，需要可观察的停止信号。第一条是**对齐估计**：Proposition 6.1 给出 $h_0$ 在学到子空间上的投影长度 $\|\Pi_{\varphi_\star}h_0\|^2 = \alpha^\top(I_d-\omega_\star\omega_\star^\top)^{-1}\alpha$（$\alpha_i=\mathbb{E}[Y\psi_{\star,i}(Z)]\sigma_{\star,i}^{-1}$），全部能用学到的 $\hat\sigma,\hat\psi,\hat\omega$ 插值估出，于是逐步增大 $\delta$、只要估计对齐显著上升就接受。第二条是**损失平衡**：把 $\mathcal{R}_\delta$ 看作对 $\mathcal{L}_0$ 的正则，逐步增 $\delta$ 直到 $\mathcal{R}_\delta$ 大幅下降而 $\mathcal{L}_0$ 明显上升就收手——因为一旦 $\mathcal{R}_\delta$ 占主导，特征会过拟合 $r_0$ 的张成方向、丢掉对 $\mathcal{T}$ 的整体逼近。两条判据这么设计，是因为实验里"小正 $\delta$"几乎总改进，但过大 $\delta$ 会让 $\omega_*$ 范数发散、$(I-\omega\omega^\top)^{-1}$ 不稳，所以必须有个"在哪收手"的可算判据；两者分别从"对齐改善"和"主损失退化"给信号，交叉验证后比较稳健。
 
 ### 损失函数 / 训练策略
 

@@ -39,32 +39,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：$n$ 个变量的观测协方差矩阵 $\Sigma$（或样本估计 $\hat{\Sigma}$）+ 一份 $\binom{n}{2}$ 条成对因果论断。
-
-- **线性情形**：每条论断给出方向 $i\to j$ 和系数 $\alpha_{ij}$。把它们装进单位下三角矩阵 $A$（$A_{ji}=\alpha_{ij}$, $i<j$），令 $\Gamma = I - A^{-1}$，得到唯一的多元 SEM $X=\Gamma X + N$（Lemma 2.3）。然后比较"多元 vs 逐对"两种粒度下的"未被观测因果路径解释的协方差平方"，求和得 `comp` 分数。
-- **图结构情形**：每条论断给出一张两节点的 ADMG（有/无 $\to$ 边、有/无 $\leftrightarrow$ 双向边）。把所有两节点 ADMG 合并成 statement graph $G$，定义 `incomp(G)` 为把 $G$ 改成"可拼接成大 ADMG"所需的最少边增删次数（Hamming 距离）。
-
-输出：`comp` 分数（线性）或 `incomp` 分数（图结构）。`comp` 为负 → 违反 confounding postulate → falsify 该论断清单；`incomp` 为正 → 必有论断错误，且数值反映错误数量级。
+方法要解决的是"只拿到一份逐对因果论断、又没有 ground truth"时该怎么判真伪。核心做法是把这些两两论断拼成一个多元因果模型，再用一个物理直觉——边缘化只会吞掉观测后门、让混淆变多——来检验这份论断是否"反常地需要更少混淆"。线性情形下输入是协方差矩阵 $\Sigma$（或样本估计 $\hat{\Sigma}$）加每对的系数 $\alpha_{ij}$，输出连续的 `comp` 分数；图结构情形下输入是每对的定性 ADMG，输出违反一致性的计数 `incomp`。`comp<0` 或 `incomp>0` 即判该论断清单不可信。
 
 ### 关键设计
 
-1. **线性 comp 分数 = 边缘混淆 − 多元混淆**:
+**1. 线性 comp 分数：用"边缘混淆 − 多元混淆"度量论断有多反常**
 
-    - 功能：用一个标量度量"这份成对论断诱导出的多元模型有多反常"。
-    - 核心思路：对每对 $i<j$ 定义两种混淆量。逐对 SEM $X_j = \alpha_{ij}X_i + \tilde N_{ij}$ 中，未被因果效应解释的协方差平方为 $C^{biv}_{ij} = (\Sigma_{ij} - \alpha_{ij}\Sigma_{ii})^2$。多元 SEM 中，按 Wright path tracing 减去所有"已观测有向路径 + 完整后门路径"的贡献，得到 $C^{mult}_{ij}(\Sigma,\Gamma) = (\Sigma_{ij} - \sum_{k\le i}\Sigma_{kk}\sum_{P_1: k\rightsquigarrow i, P_2: k\rightsquigarrow j} \Gamma_{P_1}\Gamma_{P_2})^2$。最终 $\text{comp}(\Sigma,A) = \sum_{i<j} C^{biv}_{ij}(\Sigma,A_{ji}) - C^{mult}_{ij}(\Sigma, I-A^{-1})$。直觉：把多元模型边缘化到两两后，原本"观测的后门"会被吞进噪声里成为混淆，所以 $C^{biv} \ge C^{mult}$ 是"plausible"模型应有的性质；`comp<0` 等价于违反 Assumption 2.4（confounding postulate）。
-    - 设计动机：作者证明 Lemma 2.3 之后发现"硬相容"无法用，于是寻找一个不依赖 faithfulness、却能在随机模型下"绝大多数情况成立"的软约束。`comp` 的设计同时满足：(a) 在两变量退化情形等于经典 bivariate 混淆度量（Janzing-Schölkopf）；(b) Theorem 2.9 证明在"系数 0 均值 + 机制独立 + 非退化"的随机 SEM 下，真值论断的期望 `comp > 0`；(c) Theorem 2.10 给出 $N = O(n^4(1+a+b)^4 V^4 / \varepsilon^2 \cdot \log(n/\delta))$ 样本即可把 $|\text{comp}(\hat\Sigma,A) - \text{comp}(\Sigma,A)|$ 控制到 $\varepsilon$ 内，实验中 100 样本就够 90% 符号正确。
+线性论断面临的痛点是 Lemma 2.3 证明的"任意一份逐对系数都唯一诱导出一个能完美拟合 $\Sigma$ 的多元 SEM"，所以 Faller 那套硬相容根本无冲突可抓，必须换软约束。作者把逐对系数装进单位下三角矩阵 $A$（$A_{ji}=\alpha_{ij}$, $i<j$），令 $\Gamma = I - A^{-1}$ 得到唯一多元 SEM $X=\Gamma X + N$，然后对每对 $i<j$ 比较两种粒度下"未被因果效应解释的协方差平方"。逐对 SEM $X_j=\alpha_{ij}X_i+\tilde N_{ij}$ 给出 $C^{biv}_{ij}=(\Sigma_{ij}-\alpha_{ij}\Sigma_{ii})^2$；多元 SEM 按 Wright path tracing 把所有观测有向路径与完整后门路径都减掉，得到
 
-2. **图结构 incomp 分数 = 到"可拼接"图的最小编辑距离**:
+$$C^{mult}_{ij}(\Sigma,\Gamma) = \Big(\Sigma_{ij} - \sum_{k\le i}\Sigma_{kk}\sum_{P_1: k\rightsquigarrow i,\,P_2: k\rightsquigarrow j} \Gamma_{P_1}\Gamma_{P_2}\Big)^2,$$
 
-    - 功能：当论断只是定性的（有无因果、有无混淆）时，统计违反全局一致性的次数。
-    - 核心思路：所有 $\binom{n}{2}$ 个两节点 ADMG 取并集得到 statement graph $G$。Lemma 3.5 给出"$G$ 能被某个大 ADMG marginal 出来"的充要条件：(i) 有向部分无环；(ii) 有向部分**传递闭包**——若 $X_i \rightsquigarrow X_j$ 在 $G$ 中有路径，则必须有直接边 $X_i \to X_j$（因为边缘化保留可达性）；(iii) 任意两点间若存在"双 arrowhead 端点 + 中间无两 arrowhead"的混淆路径，则必须有 $X_i \leftrightarrow X_j$ 双向边（混淆路径在边缘化后必然变为双向边）。定义 $\text{incomp}(G) = \min_{G^*} d(G, G^*)$，其中 $d$ 是 mixed graph Hamming 距离，$G^*$ 遍历所有满足 (i)-(iii) 的图。
-    - 设计动机：扩展 Faller 2024 的硬相容到"违反度量"——硬相容只回答"yes/no"，无法对"几乎对，只错一条"和"全错"做区分；用 Hamming 距离量化后，分数大小直接反映错误论断的下界数量，且天然继承 faithfulness + 无环假设带来的全局约束。
+最终分数是两者之差求和 $\text{comp}(\Sigma,A) = \sum_{i<j} C^{biv}_{ij} - C^{mult}_{ij}$。直觉在于：把多元模型边缘化到两两后，原本观测得到的后门路径会被吞进噪声成为混淆，所以"plausible"模型应满足 $C^{biv}\ge C^{mult}$，而 `comp<0` 恰好等价于违反 confounding postulate（Assumption 2.4）。这个设计同时回收了多个性质：两变量退化情形它等于经典的 Janzing-Schölkopf 混淆度量；Theorem 2.9 证明在"系数 0 均值 + 机制独立 + 非退化"的随机 SEM 下真值论断期望 `comp>0`（这比 faithfulness 更弱）；Theorem 2.10 给出 $N = O(n^4(1+a+b)^4 V^4 / \varepsilon^2 \cdot \log(n/\delta))$ 样本即可把估计误差控制在 $\varepsilon$ 内，实测 100 样本就有 90% 符号正确。
 
-3. **finite-sample 估计与 LLM 评测协议**:
+**2. 图结构 incomp 分数：到"可拼接"图的最小编辑距离**
 
-    - 功能：把 `comp` 落到真实数据上，并定义一套"评 LLM 因果推理能力"的工作流。
-    - 核心思路：实际拿到的是样本协方差 $\hat\Sigma = \frac{1}{N}\sum_r X^{(r)} X^{(r)\top}$；评分前先把变量标准化到单位方差，等价于把 $\Sigma$ 替换成相关系数矩阵；论断系数 $A$ 也按同一缩放变换。LLM 评测时（实验用 gapminder 7 个国家级指标），把变量描述 + 经验相关阵作 prompt 喂给不同 LLM，要求其输出因果排序 + 两两线性系数，对 15 次独立运行取平均，再与"系数从 0 均值高斯采样、方差匹配 LLM 输出"的随机 baseline 对比。
-    - 设计动机：让方法不仅停留在合成实验，而是给出一个**可复现的 LLM 因果能力排行**——这正是论文实用价值的落脚点：在没有 ground truth 的现实题（gapminder）上，能力强的 LLM 倾向于更高 `comp`，许多 LLM 仍得到负分（即被本方法 falsify），证明评分确实能挑出错误输出。
+当论断只是定性的（有无因果、有无混淆）时，没有系数可算，作者改用"违反全局一致性的次数"来打分，相当于把 Faller 的硬相容（yes/no）升级成能区分"几乎对只错一条"和"全错"的连续度量。具体把所有 $\binom{n}{2}$ 个两节点 ADMG 取并集得到 statement graph $G$，Lemma 3.5 给出 $G$ 能被某个大 ADMG 边缘化出来的充要条件：(i) 有向部分无环；(ii) 有向部分传递闭包——若 $G$ 中有路径 $X_i\rightsquigarrow X_j$ 则必须有直接边 $X_i\to X_j$（边缘化保留可达性）；(iii) 任意两点间若存在"双 arrowhead 端点、中间无两 arrowhead"的混淆路径，则必须有双向边 $X_i\leftrightarrow X_j$（混淆路径边缘化后必变双向边）。于是定义 $\text{incomp}(G)=\min_{G^*} d(G,G^*)$，$d$ 是 mixed graph Hamming 距离，$G^*$ 遍历所有满足 (i)-(iii) 的图。分数大小直接反映错误论断的下界数量，且天然继承了 faithfulness 加无环假设带来的全局约束。
+
+**3. finite-sample 估计与 LLM 评测协议：把分数落到真实数据上**
+
+为了让方法不止停留在闭式公式，作者补上从样本到打分、再到评 LLM 的完整工作流。实际拿到的是样本协方差 $\hat\Sigma=\frac{1}{N}\sum_r X^{(r)}X^{(r)\top}$；由于 `comp` 数值依赖变量缩放，评分前先把变量标准化到单位方差（等价于用相关系数矩阵），论断系数 $A$ 按同一缩放变换。LLM 评测时（实验用 gapminder 7 个国家级指标）把变量描述加经验相关阵作 prompt 喂给不同 LLM，要其输出因果排序与两两线性系数，对 15 次独立运行取平均，再与"系数从 0 均值高斯采样、方差匹配 LLM 输出"的随机 baseline 对比。这一协议正是论文落地价值所在：在没有 ground truth 的现实题上，能力强的 LLM 倾向更高 `comp`，许多弱 LLM 拿到负分即被 falsify，说明分数确实能挑出错误输出。
 
 ### 损失函数 / 训练策略
 本方法**纯评估、无训练**。`comp` 是协方差矩阵和系数矩阵的闭式函数；`incomp` 是组合优化问题（在 $n$ 较小时可枚举/启发式求解）。

@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CGD 是一个三段式数据合成 + 一次性 SFT 的极简 pipeline，不引入新模块也不修改 prompt 格式：(1) **Student Answer Generation**：用未训练的 $S_{\theta_{\text{init}}}$ 对每个 prompt $x$ 采样一个"很可能有错"的初始答案 $y' \sim S_{\theta_{\text{init}}}(\cdot \mid x)$；(2) **Critique Generation**：teacher $T_\phi$ 看 $(x, y')$ 写出文本 critique $c \sim T_\phi(\cdot \mid x, y')$，明确指出 $y'$ 哪里错了；(3) **Refined Answer Generation**：teacher 在 $(x, y', c)$ 全上下文上产出 gold-standard 改写 $\hat{y} \sim T_\phi(\cdot \mid x, y', c)$。最后只用 $((x, y', c), \hat{y})$ 这条四元组训 student 一遍。
+CGD 想解决的事很具体：让小 student 从大 teacher 处学到"从错改对"的推理能力，但又不像 CFT 那样把 student 训成只会输出 critique、连指令跟随都丢了。它的做法是一个三步数据合成 + 一次性 SFT 的极简 pipeline，不引入新模块也不动 prompt 格式——先让未训练的 student $S_{\theta_{\text{init}}}$ 对每个 prompt $x$ 现采样一个"很可能有错"的草稿 $y' \sim S_{\theta_{\text{init}}}(\cdot \mid x)$，再让 teacher $T_\phi$ 看着 $(x, y')$ 写出文本 critique $c \sim T_\phi(\cdot \mid x, y')$ 指出错在哪，最后 teacher 在 $(x, y', c)$ 全上下文上产出 gold-standard 改写 $\hat{y} \sim T_\phi(\cdot \mid x, y', c)$；最终只拿 $((x, y', c), \hat{y})$ 这条四元组把 student 训一遍。关键在于：critique 只在训练期当条件出现，推理时只喂 prompt 单遍生成。
 
 ### 关键设计
 
-1. **以 student-specific 错误为锚点的 curriculum**:
+**1. 以 student-specific 错误为锚点的 curriculum：让 critique 永远对着 student 真会犯的错。**
 
-    - 功能：让 critique 永远针对"当前 student 实际会犯的错"，而不是 teacher 想象的通用错误。
-    - 核心思路：$y'$ 不是预先生成一次复用，而是**对每个 prompt 现采样**——也就是说 critique 和 refined answer 都被绑定到 $S_{\theta_{\text{init}}}$ 这个具体 checkpoint 的失败模式上。和标准 distilled SFT 的"无论 student 犯什么错都喂同一份 teacher solution"形成鲜明对比，等于自动得到了一份"按 student 弱点定制"的训练课程。
-    - 设计动机：消融显示当 critique 与 student 实际错误不匹配（用占位或无关 critique 替换）时增益会显著缩水，作者把这个属性叫"specificity and relevance of feedback"，认为它是 CGD 增益的直接驱动力。
+标准 distilled SFT 的毛病是"无论 student 犯什么错都喂同一份 teacher solution"，等于用 teacher 想象的通用错误来教。CGD 把这一点反过来：草稿 $y'$ 不是预先生成一次复用，而是**对每个 prompt 用 $S_{\theta_{\text{init}}}$ 现采样**——于是 critique 和 refined answer 都被绑定到这个具体 checkpoint 的真实失败模式上，自动得到一份"按 student 弱点定制"的训练课程。作者把这个属性叫 "specificity and relevance of feedback"，并认为它是 CGD 增益的直接驱动力：消融里一旦把 critique 换成占位或无关文本、让它与 student 实际错误不匹配，增益就显著缩水，说明涨点不是简单"多看了一段上下文"，而是 specific feedback 真的在塑造学习信号。
 
-2. **训练时四元组条件、推理时单 prompt 单遍**:
+**2. 训练时四元组条件、推理时单 prompt 单遍：把 critique 当只在训练期存在的"语义脚手架"。**
 
-    - 功能：把 critique 用作训练期独享的"语义脚手架"，inference 时彻底抹除。
-    - 核心思路：训练目标是标准 NLL，$\mathcal{L}(\theta) = \mathbb{E}_{(x, y', c, \hat{y})}\big[-\log S_\theta(\hat{y} \mid x, y', c)\big]$；inference 时模型只看到 $x$，单遍前向直接生成答案，不加任何特殊 token、不改 prompt 模板。
-    - 设计动机：CFT 的目标是 $-\log S_\theta(c \mid x, y')$，把 student 的输出分布拉向 critique 风格 → 通用任务格式漂移；CGD 的目标始终是"给 prompt 写答案"，输出分布不被污染，但内部表征已经学到"从错改对"的映射，因此推理时即使没看到 critique，也会**自发**产生 4.4×（AIME 上）的更长推理链。
+这一条直接针对 CFT 的崩溃来设计。CFT 的目标是 $-\log S_\theta(c \mid x, y')$，逼 student 去生成 critique，结果输出分布被拉向 critique 风格、通用任务格式漂移（IFEval 76.9→55.6）。CGD 的目标始终是标准条件 NLL $\mathcal{L}(\theta) = \mathbb{E}_{(x, y', c, \hat{y})}\big[-\log S_\theta(\hat{y} \mid x, y', c)\big]$——监督的永远是"给 prompt 写出对的答案"，输出分布不被污染。而 inference 时模型只看到 $x$，单遍前向直接生成，不加特殊 token、不改 prompt 模板。妙处在于：critique 虽然在推理时被彻底抹除，但 student 内部表征已经把"从错改对"的映射内化了，所以即使没看到 critique，也会**自发**拉长推理链（AIME 上达 4.4×）。
 
-3. **训练目标完全监督、不引入 RL 或额外 critic**:
+**3. 训练目标完全监督、不引入 RL 或额外 critic：用最朴素的 SFT 拿到接近 RL 系的自纠错效果。**
 
-    - 功能：用最朴素的 SFT 形式拿到接近 RL 系（SCoRe、RL4F）的自纠错效果。
-    - 核心思路：teacher 同时充当 critic 与 refiner，critique 用文本而非标量奖励，符合"effective feedback must be specific and actionable"的经验观察；与 GRACE/QCRD 相比不需要训判别器、与 CTRL/Shepherd 相比不需要单独的 critic 模型、与 Self-Refine 相比不需要多轮 decoding。
-    - 设计动机：这种"训练时塞富信息、推理时单遍"的范式让 8 GPU-hour 内就能在 16 张 A100 上跑完 100K 样本的整轮训练，落地成本远低于 RL pipeline。
+teacher 一个人同时充当 critic 与 refiner，给的是文本 critique 而非标量奖励，正好契合 "effective feedback must be specific and actionable" 的经验观察。比起同类自纠错路线，CGD 砍掉了一切重活：与 GRACE/QCRD 相比不用训判别器、与 CTRL/Shepherd 相比不用单独的 critic 模型、与 Self-Refine 相比不用多轮 decoding。代价就只剩一次普通 SFT——100K 样本在 16 张 A100 上 8 GPU-hour 跑完，落地成本远低于带 reward model 和采样回路的 RL pipeline，却拿到了接近 SCoRe、RL4F 的自纠错行为。
 
 ### 损失函数 / 训练策略
 唯一损失即 Eq. (1) 的条件 NLL；所有 baseline（SFT、Distilled SFT、CFT）共享相同 100K 样本、batch size 64、1 epoch，从而 step 数完全对齐，单次训练约 8 A100·h。Teacher 用 LLaMA3.3-70B Instruct（LLaMA 家族）或 S1.1-32B（Qwen 家族）。

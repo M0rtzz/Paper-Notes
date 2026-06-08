@@ -43,27 +43,21 @@ tags:
 
 ### 整体框架
 
-TTC-Net 是一个混合架构：在预训练 Transformer 的 Attention 和 MLP 之间每隔 8 层插入一个 TTC 层。输入 token 特征经线性投影得到初始隐状态 $\boldsymbol{h}_0$，TTC 层在该隐状态上构建一个有限时域 LQR 问题并求解最优第一步动作 $\boldsymbol{u}_1^*$ 作为输出，经归一化和线性投影后加回残差流。整个过程端到端可微，支持从零训练或在预训练模型上微调。
+TTC-Net 把"预测下一个 token"重新理解为一次有限时域的最优控制规划：与其从记忆里检索答案，不如先在隐空间里推演一条未来轨迹，再把这条轨迹的第一步动作当作下一 token 的表示。具体落地为一个混合架构——在预训练 Transformer 每隔 8 层 Attention 后插入一个 TTC 层。输入 token 特征经线性投影得到初始隐状态 $\boldsymbol{h}_0$，TTC 层在该状态上构建并求解一个 LQR 问题，得到最优第一步动作 $\boldsymbol{u}_1^*$，再经归一化和线性投影加回残差流。整个过程端到端可微，既能从零训练，也能作为适配器插在预训练模型上微调。
 
 ### 关键设计
 
-1. **Test-Time Control (TTC) 层**:
+**1. Test-Time Control (TTC) 层：把"回忆过去"换成"规划未来"。**
 
-    - 功能：在前向推理时执行有限时域最优控制规划，将记忆状态解码为最优决策
-    - 核心思路：给定编码上下文的初始状态 $\boldsymbol{h}_0$，构建线性状态转移 $\boldsymbol{h}_t = \boldsymbol{A}_t \boldsymbol{h}_{t-1} + \boldsymbol{B}_t \boldsymbol{u}_t$ 和二次代价函数 $\sum_{t=1}^{T}(\boldsymbol{h}_t^\top \boldsymbol{Q}_t \boldsymbol{h}_t + \boldsymbol{u}_t^\top \boldsymbol{R}_t \boldsymbol{u}_t)$，通过 Riccati 迭代求解最优第一步动作 $\boldsymbol{u}_1^* = \boldsymbol{K}_1^* \boldsymbol{h}_0$。LQR 参数由上下文 $\boldsymbol{h}_0$ 通过线性层动态生成（上下文化），并通过时间调制系数 $\boldsymbol{\Gamma}_\Box^t$ 实现时间异质参数化，使动力学和代价函数随规划步变化。反向传播通过 KKT 系统求解对偶 LQR 实现完全可微
-    - 设计动机：现有记忆层（Attention/SSM）只能从过去上下文回忆信息，TTC 层则优化未来轨迹、最小化长程代价，为每个序列建模块赋予内在的值函数 $V_t(\boldsymbol{h}_t) = -\frac{1}{2}\boldsymbol{h}_t^\top \boldsymbol{P}_t \boldsymbol{h}_t$
+现有的 Attention / SSM 记忆层只能从已经发生的上下文里回忆信息，本质是 System 1 的模式匹配，对需要多步推演的题目就力不从心。TTC 层的做法是在前向传播里直接解一个有限时域最优控制问题：以编码了上下文的 $\boldsymbol{h}_0$ 为初始状态，假设隐状态按线性动力学 $\boldsymbol{h}_t = \boldsymbol{A}_t \boldsymbol{h}_{t-1} + \boldsymbol{B}_t \boldsymbol{u}_t$ 演化，并对未来 $T$ 步施加二次代价 $\sum_{t=1}^{T}(\boldsymbol{h}_t^\top \boldsymbol{Q}_t \boldsymbol{h}_t + \boldsymbol{u}_t^\top \boldsymbol{R}_t \boldsymbol{u}_t)$，然后用 Riccati 迭代求出最优第一步动作 $\boldsymbol{u}_1^* = \boldsymbol{K}_1^* \boldsymbol{h}_0$。这里 LQR 的所有参数（$\boldsymbol{A}_t, \boldsymbol{B}_t, \boldsymbol{Q}_t, \boldsymbol{R}_t$）都由上下文 $\boldsymbol{h}_0$ 经线性层动态生成（上下文化），再乘上时间调制系数 $\boldsymbol{\Gamma}_\Box^t$ 实现时间异质参数化，让动力学和代价随规划步逐步变化；反向传播则通过 KKT 系统求解对偶 LQR，使整层完全可微。之所以有效，是因为它给每个序列建模块赋予了一个内在值函数 $V_t(\boldsymbol{h}_t) = -\frac{1}{2}\boldsymbol{h}_t^\top \boldsymbol{P}_t \boldsymbol{h}_t$——模型不再只是检索，而是在最小化长程代价的意义上"朝目标推演"，这正是记忆层给不了的归纳偏置。
 
-2. **辛迭代高效求解器 (Symplectic Iteration Solver)**:
+**2. 辛迭代高效求解器（Symplectic Iteration Solver）：让最优控制层在 GPU 上真正跑得动。**
 
-    - 功能：将经典 Riccati 递推中的顺序矩阵求逆替换为可并行的矩阵乘积链，实现 10 倍以上吞吐量提升
-    - 核心思路：利用 LQR 动力学的辛结构，将 Riccati 递推重新表述为辛矩阵 $\boldsymbol{\Sigma}_t$ 的累积矩阵乘积。各时间步的矩阵逆 $\boldsymbol{A}_t^{-1}$ 和 $\boldsymbol{R}_t^{-1}$ 相互独立可完全并行计算，剩余顺序计算仅为矩阵乘法（可充分利用 Tensor Core）。通过对角化 $\boldsymbol{A}_t$ 和 $\boldsymbol{R}_t$ 将稠密矩阵求逆从 $O(T)$ 减至 $O(1)$。进一步融合为 CUDA kernel，行级分块、流式加载参数到 SRAM，并通过行归一化保持数值稳定
-    - 设计动机：经典 Riccati 求解器需要顺序反向迭代 $T$ 步，每步含矩阵求逆（$O(Td^3)$），与 GPU 加速器严重不匹配。辛迭代将计算瓶颈从求逆转为乘法，前向缓存 $\boldsymbol{Y}_1$ 的 LU 分解和部分中间结果可复用于反向传播，消除额外的辛迭代开销
+经典 Riccati 求解器要顺序反向迭代 $T$ 步，每步都含一次稠密矩阵求逆（整体 $O(Td^3)$），这种串行 + 求逆的模式和擅长并行矩阵乘的 GPU 严重不匹配，直接用会让 TTC 层慢到没法上规模。求解器利用 LQR 动力学固有的辛结构，把 Riccati 递推改写成辛矩阵 $\boldsymbol{\Sigma}_t$ 的累积矩阵乘积：各时间步要求的逆 $\boldsymbol{A}_t^{-1}$、$\boldsymbol{R}_t^{-1}$ 彼此独立、可一次性并行算出，剩下的顺序计算只剩矩阵乘法（正好喂给 Tensor Core）；再通过对角化 $\boldsymbol{A}_t$ 和 $\boldsymbol{R}_t$，把稠密求逆的复杂度从 $O(T)$ 压到 $O(1)$。整套流程进一步融合成 CUDA kernel，按行分块、把参数流式加载到 SRAM，并用行归一化保持数值稳定。这样计算瓶颈就从"求逆"挪到了"乘法"，吞吐提升 10 倍以上；前向还顺手缓存 $\boldsymbol{Y}_1$ 的 LU 分解和部分中间结果给反向传播复用，省掉了额外的辛迭代开销。
 
-3. **混合架构与测试时规模化**:
+**3. 混合架构与测试时规模化：把规划时域变成一个新的计算缩放轴。**
 
-    - 功能：将 TTC 层作为轻量适配器集成到预训练 LLM，并支持推理时灵活调整规划时域以提升性能
-    - 核心思路：每 8 层 Attention 后插入 1 层 TTC（8:1 交错比），采用多头结构（头大小 16）。训练时从截断 Poisson 对数正态分布采样规划时域（均值 $T_\mu=8$，最大 32），避免固定时域导致的分布偏移。测试时可任意增大规划时域 $T_{test}$，模型在训练最大时域 32 的基础上可泛化至 $T=64$ 且性能持续提升。微调时输出投影 $\boldsymbol{W}_{out}$ 零初始化，保证初始模型与原始骨干一致
-    - 设计动机：TTC 层需要丰富的记忆状态作为输入，必须与 Attention 交错使用。混合时域训练策略使模型适应不同规划深度，暴露出一个架构原生的测试时计算缩放轴
+TTC 层只优化轨迹却不擅长积累上下文，所以必须靠 Attention 喂给它丰富的记忆状态——于是采用 8:1 的交错比（每 8 层 Attention 配 1 层 TTC）、多头结构（头大小 16），把 TTC 当作轻量适配器嵌进预训练 LLM。训练时若固定规划时域，测试时一旦想加大时域就会遇到分布偏移，因此规划时域 $T_{train}$ 从一个截断的 Poisson 对数正态分布采样（均值 $T_\mu = 8$，上限 32），让模型见过深浅不一的规划深度。这样做暴露出一个架构原生、且正交于"生成多少 token"的测试时计算缩放轴：推理时把规划时域 $T_{test}$ 任意调大，模型即便在训练最大时域 32 之上也能泛化到 $T=64$ 并持续涨点。微调时输出投影 $\boldsymbol{W}_{out}$ 零初始化，保证刚插入 TTC 层的模型与原始骨干完全一致，不破坏已有能力。
 
 ### 训练策略
 

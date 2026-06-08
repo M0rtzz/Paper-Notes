@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两条线并行：一条是 **KVFundaBench**，覆盖 5 类任务（MMLU 世界知识 WK、CommonsenseQA 常识 CSR、GSM8K 算术 AR、HumanEval 代码 CG、JailBreakV 安全 SA）+ LG-GSM8K 长生成，跨 LLaMA-3.1-8B / Instruct、Mistral-7B-Instruct、DeepSeek-R1-Distill-Llama-8B 四模型 × 六种 KV 压缩方法做系统评估，相对性能定义为 $\Delta P = (P_C - P_{\text{base}})/P_{\text{base}}$。另一条是 **ShotKV**：把 prompt 拆成 $n$ 个 shot $\{s_1,\dots,s_n\}$，对每层 $l$ 计算 shot 重要性 $\text{Score}_{\text{prefill}}^l(s_i)=\frac{1}{k_i}\sum_{t\in s_i}\sum_h \alpha_{t,h}^l$，按降序保留直到打满预算 $r_p \cdot |KV_{\text{prefill}}|$；decoding 用独立比例 $r_d$ 做 token 级 attention top-k。最终 $KV_{\text{total},l}=KV^C_{\text{prefill},l}\cup KV^C_{\text{decoding},l}$。
+这篇论文走的是「先做基准、再据基准提最小方法」的路子，所以方法侧有两条并行的线。第一条是诊断基准 **KVFundaBench**：它覆盖 5 类基础能力任务（MMLU 世界知识 WK、CommonsenseQA 常识 CSR、GSM8K 算术 AR、HumanEval 代码 CG、JailBreakV 安全 SA）加上 LG-GSM8K 长生成，在 LLaMA-3.1-8B / Instruct、Mistral-7B-Instruct、DeepSeek-R1-Distill-Llama-8B 四个模型上交叉跑六种 KV 压缩方法，用相对性能 $\Delta P = (P_C - P_{\text{base}})/P_{\text{base}}$ 量化「压完掉多少」。第二条是据此构造的最小验证方法 **ShotKV**：它把 prompt 切成 $n$ 个 shot $\{s_1,\dots,s_n\}$，prefill 阶段以整个 shot 为颗粒度评分并整段保留，decoding 阶段再单独做 token 级动态压缩，最后每层把两段 cache 拼回去 $KV_{\text{total},l}=KV^C_{\text{prefill},l}\cup KV^C_{\text{decoding},l}$。
 
 ### 关键设计
 
-1. **KVFundaBench 暴露任务依赖性退化**:
+**1. KVFundaBench：把「压缩在不同能力上的差异化退化」第一次量出来。**
 
-    - 功能：第一次系统度量「KV 压缩在不同基础能力上的差异化退化」。
-    - 核心思路：6 项实证观察——(O1) WK/CSR 抗压，AR/CG/SA 在压缩率 < 20% 时崩盘；(O2) DeepSeek-R1 比 instruct-tuned 更稳；(O3) 短 prompt 比长 prompt 更脆弱（1-shot 在 10% 比例下从 0.5 掉到 0.05）；(O4) Chunk 级方法（ChunkKV）在 many-shot 上最稳；(O5) prompt 收益越大的任务越敏感（AR 0-shot→CoT 提升 50.41% 同时也最易掉）；(O6) 长上下文生成（LG-GSM8K）随机失血超过 20%。
-    - 设计动机：现有基准把推理能力压在 «sink token + 检索头» 上，掩盖了真正脆弱的「semantic chain」；attention heatmap 进一步证实算术任务的非-sink 注意力更弥散（图 3b），所以 token 级 evict 更容易剪掉关键链路。
+主流 KV 压缩方法几乎只在 LongBench、NIAH 这类检索定位基准上测，得出「留 50% token 不掉点」的乐观结论，却把真正脆弱的推理负载藏在了平均值底下。KVFundaBench 跨任务、跨模型、跨压缩率系统扫一遍，逼出六条关键观察：(O1) WK/CSR 很抗压，但 AR/CG/SA 在压缩率低于 20% 时直接崩盘；(O2) 推理蒸馏的 DeepSeek-R1 比 instruct-tuned 模型稳得多；(O3) 短 prompt 反而比长 prompt 脆弱（1-shot 在 10% 比例下从 0.5 掉到 0.05）；(O4) chunk 级的 ChunkKV 在 many-shot 上最稳；(O5) prompt 收益越大的任务越敏感（AR 从 0-shot 到 CoT 提升 50.41%，同时也最容易被压掉）；(O6) 长上下文生成 LG-GSM8K 哪怕随机式压缩也失血超过 20%。这些现象的根因被归到 attention 结构上——现有 token 级方法把重要性压在「sink token + 检索头」上，掩盖了算术这类任务真正依赖的 semantic chain；attention heatmap（图 3b）显示算术任务的非-sink 注意力更弥散，所以逐 token evict 极易剪断关键推理链路。这条观察直接定义了后面方法要保护的对象。
 
-2. **Shot-aware Prefill 保留（Semantic-Unit Preservation）**:
+**2. Shot-aware Prefill 保留：把每个 few-shot 示例当作不可切的原子单位。**
 
-    - 功能：把 few-shot 示例当作原子单位整段保留，杜绝示例中段被剁断。
-    - 核心思路：先解析 prompt 边界识别出 $n$ 个 shot；对每层 $l$ 算 shot 平均 attention score，按层独立 TopK 选择直到总 token 数不超过预算；选中的 shot 完整入 cache，不允许中间 token 被 evict。压缩一次后 prefill cache 在生成过程固定。
-    - 设计动机：H2O / SnapKV 等 token 级方法可能保留一个 shot 的 question 却扔掉对应 answer，破坏 CoT 因果链；ChunkKV 已经证明 contiguous chunk 优于离散 token，本文进一步把「chunk」语义化为「shot」，并允许「每一层选不同 shot」以利用层间注意分工。
+既然单 token 评分会把一个完整示例剁碎，ShotKV 就改在「shot」颗粒度上做取舍。它先按 prompt 边界识别出 $n$ 个 shot，对每一层 $l$ 算 shot 的平均 attention 重要性 $\text{Score}_{\text{prefill}}^l(s_i)=\frac{1}{k_i}\sum_{t\in s_i}\sum_h \alpha_{t,h}^l$（$k_i$ 是该 shot 的 token 数），按降序保留 shot 直到打满预算 $r_p \cdot |KV_{\text{prefill}}|$；被选中的 shot 整段进 cache，中间 token 一律不许 evict，且这次压缩做完后 prefill cache 在整个生成过程里冻结。关键在于评分是「逐层独立」的——不同层可以选不同的 shot，利用层间注意力分工。这样做之所以有效，是因为 H2O / SnapKV 这类 token 级方法可能留下一个 shot 的 question 却丢掉对应 answer，直接破坏 CoT 的因果链；ChunkKV 已经证明连续块优于离散 token，本文把「块」进一步语义化为「shot」，正好对齐了 in-context 示例的天然边界。
 
-3. **Prefill / Decoding 阶段分离压缩**:
+**3. Prefill / Decoding 阶段分离压缩：静态指令和动态生成各走各的策略。**
 
-    - 功能：让静态指令与动态生成各走各的策略。
-    - 核心思路：prefill 用上面的 shot 级保留（比例 $r_p$）；decoding 阶段每层独立按 $\text{Score}_{\text{decoding}}^l(t)=\sum_h \alpha_{t,h}^l$ 做 token 级 TopK，保留比例 $r_d$；两套压缩结果在每层拼合。
-    - 设计动机：观察 6 显示长生成（4k+ token）对统一压缩策略尤其不友好——ChunkKV/SnapKV 没有动态 evict，会让 decoding 端 cache 爆掉；而 prefill 端如果也用动态策略又会反复破坏 in-context 示例。两边独立，正是 trade-off 的自然解。
+prefill 里的 few-shot 示例是一次写定、之后只读的静态信息，而 decoding 端的 cache 随生成不断变长、越往后越需要动态淘汰，两者对压缩的诉求根本相反。ShotKV 因此把它们彻底拆开：prefill 用上面的 shot 级整段保留（比例 $r_p$）；decoding 阶段每层单独按 token 重要性 $\text{Score}_{\text{decoding}}^l(t)=\sum_h \alpha_{t,h}^l$ 做 token 级 TopK，保留比例为独立的 $r_d$；两套结果在每层拼合。观察 O6 正是这条设计的动机——长生成（4k+ token）对统一压缩策略尤其不友好：ChunkKV/SnapKV 没有动态 evict，会让 decoding 端 cache 撑爆；可如果 prefill 端也套动态策略，又会反复破坏好不容易保住的 in-context 示例。让两端各管各的，正是这个 trade-off 的自然解。
 
 ### 损失函数 / 训练策略
-ShotKV 是 training-free 推理时方法，无任何额外训练；仅有的超参为 $(r_p, r_d)$。temperature 设 0，$K=35, T=20$（LG-GSM8K）。HotpotQA 这种非 ICL 文档 QA 通过把每个句子当作「shot」即可移植，不需要重新训练。
+ShotKV 是 training-free 的推理时方法，不引入任何额外训练，唯一的超参就是一对压缩比例 $(r_p, r_d)$；实验中 temperature 设 0，LG-GSM8K 用 $K=35, T=20$。它对 prompt 结构的依赖也很轻——像 HotpotQA 这种不带 ICL 的文档 QA，只要把每个句子当作一个「shot」就能直接移植，无需重训。
 
 ## 实验关键数据
 

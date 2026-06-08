@@ -42,30 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-S(H)NAP = SHNAP（解释性归因） + SNAP（敏感性探针）。两条路线共享同一个底层 SDB 干预引擎。SHNAP 走「移除路径」：给定一个真实 CT，把 $N$ 个肺结节的所有 $2^N$ 个子集生成出来（被保留的留下、被移除的换成健康组织），对每个生成样本喂给 Sybil 得到风险 logit，最后用 n-SV 把 logit 回归到主效应 $\phi_i$ 与交互 $\phi_{ij}$。SNAP 走「插入路径」：把一个已知性质的结节插到 CT 任意位置，记录预测 logit 的变化 $\psi_\mathbf{c}=f(y_0\mid\mathbf{x}_{\mathbf{c}\leftarrow\mathbf{r}})-f(y_0\mid\mathbf{x})$，从而生成高分辨率的"空间敏感性"热图。
+S(H)NAP 把"审计 Sybil"拆成两条共享同一个 SDB 干预引擎的路线：SHNAP 做解释性归因、SNAP 做空间敏感性探针。SHNAP 走「移除路径」——给定一张真实 CT，把 $N$ 个肺结节的全部 $2^N$ 个子集都生成出来（保留的结节留下、移除的换成健康组织），逐个喂给冻结的 Sybil 拿到风险 logit，再用 n-Shapley 把这些 logit 回归成主效应 $\phi_i$ 和成对交互 $\phi_{ij}$。SNAP 走「插入路径」——把一颗已知性质的结节插到 CT 的任意空间位置，记录预测 logit 的变化 $\psi_\mathbf{c}=f(y_0\mid\mathbf{x}_{\mathbf{c}\leftarrow\mathbf{r}})-f(y_0\mid\mathbf{x})$，扫遍上千个位置就拼出一张高分辨率的"空间敏感性"热图。
 
 ### 关键设计
 
-1. **基于扩散桥的结节移除/插入（SDB-driven In-distribution Intervention）**:
+**1. 基于扩散桥的结节移除/插入：让干预始终留在数据流形上。**
 
-    - 功能：在保持周围解剖结构原样不动的前提下，分别把目标结节"换成健康肺组织"或"在任意位置生成一个真实结节"。
-    - 核心思路：SDB 把扩散过程的终点从纯噪声推广为线性测量 $\mathbf{x}'=\mathbf{A}\mathbf{x}+\Sigma^{1/2}\varepsilon$，当 $\mathbf{A}$ 是二值掩码、$\Sigma=0$ 时退化为专用 inpainting；反向采样只在 mask 区内更新，保证 mask 外严格不变。理论上依靠 Verdú 2009 的"失配估计"定理，得分模型 $\mathbf{s}_\xi$ 在足够长的扩散时间后会把任意"复制粘贴"或"挖空"输入与训练分布拉到不可区分。移除时 prior 充当健康组织生成器（因结节占肺体积 <0.1%），插入时则把异源结节先粘进 mask、再正向扩散到时刻 $\tau$（实验取 0.3）、再反向去噪让它与新背景融合。
-    - 设计动机：传统反事实要么用 GAN 一次性翻转标签（损失局部性）、要么粗暴用零/均值填充（脱离流形导致 SHAP 不稳定）。SDB 把"局部修复 + 流形保真"打包成一个数学严谨的操作，且双盲专家研究中放射科医师区分真实组织 vs SDB 移除已与随机猜测无统计差异（point estimate 0.57），证明干预在临床意义上"无痕"。
+传统反事实有两条死路：用 GAN 一次性翻转标签会丢掉局部性，用零/均值填充又会把输入推离数据流形、让 SHAP 退化成对抗性噪声。S(H)NAP 改用 System-Embedded Diffusion Bridge（SDB），把扩散过程的终点从纯噪声推广成线性测量 $\mathbf{x}'=\mathbf{A}\mathbf{x}+\Sigma^{1/2}\varepsilon$；当 $\mathbf{A}$ 取二值掩码、$\Sigma=0$ 时它就退化成一个专用 inpainting，反向采样只在 mask 区内更新，从而严格保证 mask 外的解剖结构原封不动。移除结节时，因为结节只占肺体积不到 0.1%，prior 自然充当"健康组织生成器"，把目标位置补成可信的正常肺；插入结节时则先把异源结节粘进 mask，再正向扩散到时刻 $\tau$（实验取 0.3）、反向去噪让它与新背景无缝融合。理论支撑来自 Verdú 2009 的失配估计定理——扩散时间足够长后，得分模型 $\mathbf{s}_\xi$ 会把任意"复制粘贴"或"挖空"的输入与训练分布拉到不可区分。这种"局部修复 + 流形保真"打包成单一数学严谨操作的好处，在双盲实验里直接兑现：放射科医师区分真实组织与 SDB 移除结果已与随机猜测无统计差异（point estimate 0.57），说明干预在临床意义上"无痕"。
 
-2. **n-Shapley 回归得到 LMPI 系数（SHNAP）**:
+**2. n-Shapley 回归出 LMPI 系数：让"每颗结节贡献多少风险"有了带误差棒的答案。**
 
-    - 功能：把 Sybil 在 $2^N$ 个结节联盟上的 logit 响应拆成 baseline + 每个结节主效应 + 每对结节交互效应。
-    - 核心思路：构建数据集 $D=\{(S,v_\mathbf{x}(S))\}_{\mathbf{x}_S\in\mathcal{X}}$，其中 $v_\mathbf{x}(S)=f(y_0\mid \mathbf{x}_S)$，再用 SHAP-IQ 在 $n=2$ 截断的 n-Shapley 公式上回归得到 $\phi_\emptyset,\phi_i,\phi_{ij}$。用 $R^2=1-\sum(v-\hat v_{\text{nSV}})^2/\sum(v-\bar v)^2$ 度量拟合质量；典型 $N$ 是个位数（每个病人通常只有少量结节），$2^N$ 评估在临床场景下计算可承受。
-    - 设计动机：n-SV 是 LMPI 的唯一最小二乘投影，天然继承 SHAP 的 local accuracy / consistency 公理，让"每个结节贡献多少风险"这一临床问题第一次有了带误差棒、可解读的数字答案。实证显示 $R^2$ 中位数 $\approx 1$，证实 Hypothesis 1。
+有了无痕干预，"反事实"就等价于"开关某些结节"，但还需要把 $2^N$ 个联盟的响应整理成可解读的数字。SHNAP 构建数据集 $D=\{(S,v_\mathbf{x}(S))\}$，其中 $v_\mathbf{x}(S)=f(y_0\mid \mathbf{x}_S)$ 是保留子集 $S$ 时 Sybil 的 logit，再用 SHAP-IQ 在 $n=2$ 截断的 n-Shapley 公式上回归出 baseline $\phi_\emptyset$、主效应 $\phi_i$ 和成对交互 $\phi_{ij}$，用 $R^2=1-\sum(v-\hat v_{\text{nSV}})^2/\sum(v-\bar v)^2$ 度量拟合质量。这之所以可算，是因为每个病人通常只有个位数结节，$2^N$ 评估在临床场景里完全负担得起——临床先验"结节才是主要影像生物标志物"把原本 $2^d$ 不可解的 Shapley 问题压到了 $2^N$。而 n-SV 又恰好是 LMPI 的唯一最小二乘投影，天然继承 SHAP 的 local accuracy / consistency 公理，于是"哪颗结节驱动了风险"这个临床问题第一次有了可解读、带误差棒的因果级答案；实证中 $R^2$ 中位数 $\approx 1$，反过来证实了 Hypothesis 1——Sybil 的决策真的能被 LMPI 良好近似。
 
-3. **基于插入的空间敏感性探针（SNAP）+ gSHNAP**:
+**3. 基于插入的空间敏感性探针 SNAP / gSHNAP：审计"模型在没结节的地方依赖了什么"。**
 
-    - 功能：SNAP 在同一例 CT 上把同一颗已知结节插入数千个位置，绘制空间敏感性热图；gSHNAP 把"结节指示符"换成"任意 ROI 指示符"，可以审计 Sybil attention 关注的任何非结节区域。
-    - 核心思路：SNAP 用 log-odds 差 $\psi_\mathbf{c}$ 作每点归因；在 240 patient-nodule 组合 × ≈900 插入点上做两路 ANOVA，发现 lobe 主效应显著（$p<0.001$）而 patient×lobe 交互不显著，证明 lobar bias 是模型的**全局**特性；进一步用距离-胸膜的线性回归量化"径向衰减"。gSHNAP 则把 attention map 二值化得到 ROI 集合，用同一 SDB-移除流程审查每个 attention 关注区。
-    - 设计动机：移除式 SHNAP 只能解释"现有结节"，无法发现"模型在没结节的地方依赖了什么"——而真实失败模式恰恰来自院内伪影、扫描架、ECG 电极等"模型不该看的东西"。SNAP/gSHNAP 把审计从"现有 feature"扩展到"任意空间/任意区域"，把审计扩展到了反事实空间，能发现传统观察性研究永远看不见的 shortcut。
+移除式的 SHNAP 只能解释"现有结节"，对真正危险的失败模式——院内伪影、扫描架、ECG 电极这些"模型不该看的东西"——无能为力。SNAP 把同一颗已知结节插到一例 CT 的数千个位置，用 log-odds 差 $\psi_\mathbf{c}$ 作每点归因，从而把审计从"现有 feature"扩展到整个反事实空间。在 240 个 patient-nodule 组合 × 约 900 个插入点上做两路 ANOVA，发现 lobe 主效应显著（$p<0.001$）而 patient×lobe 交互不显著，说明 lobar bias 是 Sybil 的**全局**特性而非个例；再用"距离-胸膜"线性回归量化结节越往外周被压得越狠的"径向衰减"。gSHNAP 则把"结节指示符"换成"任意 ROI 指示符"——把 attention map 二值化成 ROI 集合，用同一套 SDB 移除流程逐个审查 Sybil attention 关注的非结节区域。正是这一步让 ECG 电极这种传统观察性研究永远看不见的 shortcut 暴露出来。
 
 ### 损失函数 / 训练策略
-SDB 走的是 Schrödinger Bridge 离散变体，1000 步、64³ cube、metaballs 程序化生成训练 mask，骨干在 NLST 28K 训练扫描上学得健康组织先验。Sybil 本身保持冻结，整套审计完全 model-agnostic：只用输入-输出对，意味着同款流水线可以直接套到 Optellum 等闭源商业模型上。移除/插入推理各 100 NFE。
+SDB 用的是 Schrödinger Bridge 的离散变体，1000 步、$64^3$ cube，训练 mask 由 metaballs 程序化生成，骨干在 NLST 的 28K 训练扫描上学到健康组织先验，移除/插入推理各 100 NFE。Sybil 全程冻结，整套审计完全 model-agnostic、只吃输入-输出对——意味着同款流水线可以直接套到 Optellum 等闭源商业模型上。
 
 ## 实验关键数据
 

@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分三段递进：
-
-1. **元分析（Sec. 3）**：用 snowballing + 关键词检索（10+ 顶会，1062 篇候选）筛选出 8 个同时报告人口学与地理属性的安全数据集（DIVE、CulturalFrames、PRISM、DICES-990、NLPositionality、D3、CREHate、Severity），统计其模态、标注任务、属性覆盖与现有分析方法。
-2. **显著性检验（Sec. 4）**：基于 Inglehart-Welzel 文化地图把每个 rater 映射到一个文化区/象限（优先级：CoLR/CoB > CoR > CoN），然后拟合一系列多层级回归模型，用 LRT + $\Delta$AIC + rater 方差减少比例三个指标，依次检验"人口学 vs base""文化 vs base""文化+人口学 vs 仅人口学""文化×人口学交互"。
-3. **盲点量化与 LLM 自动化（Sec. 5 & 6）**：用 Bayesian 后验估计每个文化象限对每个 item 的 unsafe 概率，定义并算出"culturally sensitive items"占比；再用 fine-tune (DeBERTa-Large、Gemma-3-4B) 和 prompted reasoning models (Gemini-3 Flash、GPT-5 Nano) 验证 LLM 能否（a）冒充某个文化象限打分，（b）至少识别哪些 item 是文化敏感的。
+这篇论文要回答一个看似已有定论的问题：安全标注里"按年龄/性别/族裔分层"够不够，还是文化必须作为独立因素单列。作者把答案拆成三段递进来做——先用元分析筛出 8 个同时报告人口学与地理属性的安全数据集（DIVE、CulturalFrames、PRISM、DICES-990、NLPositionality、D3、CREHate、Severity），再把每个 rater 映射到 Inglehart-Welzel 文化象限后跑多层级回归，严格检验"文化"在控制完人口学后是否仍有解释力，最后用 Bayesian 后验量化"忽略某象限会漏标多少 unsafe 样本"，并测试 LLM 能否替这件昂贵的全球标注工作分担一部分。
 
 ### 关键设计
 
-1. **多层级回归 + LRT 量化"文化 - 人口学"独立贡献**:
+**1. 多层级回归 + LRT：把"文化"和"人口学"的贡献干净解耦。**
 
-    - 功能：在严格控制 rater/item 随机效应与人口学固定效应的前提下，定量回答"文化区是否还有解释力"。
-    - 核心思路：以 Likert 评分 $H_{ij}$ 为例，base 模型为 $H_{ij}=\beta_0+u_i+v_j+\epsilon_{ij}$，其中 $u_i\sim\mathcal{N}(0,\sigma_{\text{rater}}^2)$、$v_j\sim\mathcal{N}(0,\sigma_{\text{item}}^2)$。在此之上分别加入人口学向量 $\mathbf{E}_i,\mathbf{A}_i,\mathbf{G}_i$（族裔/年龄/性别 one-hot）的固定效应、文化区 one-hot 向量 $\mathbf{C}_i$ 的固定效应、以及二者交互项 $\mathbf{C}_i\times\mathbf{E}_i$ 等，得到 D、CZ、D+CZ、D×CZ 四个嵌套模型。用 likelihood ratio test 比较嵌套对，Benjamini-Hochberg 校正多重检验，再报告 $\Delta\text{AIC}$ 与 rater 方差减少比例 $\%\Delta\sigma_{\text{rater}}^2$（伪 $R^2$）。
-    - 设计动机：以往 IRR 类方法依赖 bootstrap 与分层子样本，对于稀疏的"文化区 × 人口学"格子根本不可行；多层级模型则联合建模 item、rater 和 group 层面变异，天然处理不平衡数据，并能干净地把"文化"和"人口学"两类固定效应解耦，避免互相吸收方差。
+文化效应很容易被误归因——一个看似"东欧 rater 更严格"的差异，可能只是因为这批人恰好偏年长。要分清，就得在同一个模型里联合控制两类因素。作者以 Likert 评分 $H_{ij}$ 为响应，base 模型只放 rater/item 随机效应 $H_{ij}=\beta_0+u_i+v_j+\epsilon_{ij}$（$u_i\sim\mathcal{N}(0,\sigma_{\text{rater}}^2)$、$v_j\sim\mathcal{N}(0,\sigma_{\text{item}}^2)$），然后逐层叠加固定效应：人口学向量 $\mathbf{E}_i,\mathbf{A}_i,\mathbf{G}_i$（族裔/年龄/性别 one-hot）、文化区 one-hot 向量 $\mathbf{C}_i$、以及交互项 $\mathbf{C}_i\times\mathbf{E}_i$，构成 D、CZ、D+CZ、D×CZ 四个嵌套模型。检验靠 likelihood ratio test 比较嵌套对（Benjamini-Hochberg 校正多重检验），再用 $\Delta\text{AIC}$ 和 rater 方差减少比例 $\%\Delta\sigma_{\text{rater}}^2$（伪 $R^2$）量化增益。之所以不用传统 IRR，是因为后者靠 bootstrap 和分层子样本，碰到稀疏的"文化区 × 人口学"格子根本跑不动；多层级模型联合建模 item、rater、group 三层变异，天然吃得下不平衡数据，还能让两类固定效应各自占自己那部分方差、不互相吸收。
 
-2. **Cultural Sensitivity Score：Bayesian 量化"忽略某象限"的代价**:
+**2. Cultural Sensitivity Score：用 Bayesian 后验量化"忽略某象限"的代价。**
 
-    - 功能：对每个数据集样本，输出一个介于 0 和 1 的分数 $S_{iq}$，表征"仅有第 $q$ 象限把它判为 unsafe，而其他象限都认为 safe"的概率；$S_{iq}>0.5$ 的 item 被标记为 culturally sensitive。
-    - 核心思路：对样本 $i$ 与象限 $q$，统计该象限的总票数 $n_{iq}$ 与 unsafe 票数 $k_{iq}$，以均匀先验 Beta(1,1) 得到后验 $\text{Beta}(1+k_{iq},1+n_{iq}-k_{iq})$，再算 $H_{iq}=P(\theta_{iq}>0.5)$，即"该象限多数派会判为 unsafe"的概率。然后定义 $S_{iq}=H_{iq}\cdot\prod_{q'\neq q,\,q'\text{ valid}}(1-H_{iq'})$，假设象限间独立。为避免人口学混淆，加 validity filter：每个象限至少 3 票、不可由单一性别/族裔/年龄段全部贡献。
-    - 设计动机：用原始投票比例做点估计会被小样本（$n_{iq}=3$）噪声主导，Bayesian 后验做了天然的平滑与不确定性量化；乘积形式把"少数派 unsafe + 多数派 safe"的盲点情景写成可计算的联合概率，直接给出"若不招某象限会漏标多少"的可解释指标，最终在 6 个数据集上稳定算出 ~10% 的文化敏感率（更严的 $S_{iq}>0.7$ 阈值下约 3%）。
+证明了文化显著之后，下一步是定位——具体哪些样本会因为缺文化覆盖而被错标。作者给每个样本 $i$ 与象限 $q$ 定义一个分数 $S_{iq}\in[0,1]$，表示"只有第 $q$ 象限判它 unsafe、其余象限都判 safe"的概率，$S_{iq}>0.5$ 即标为 culturally sensitive。计算时先统计该象限的总票数 $n_{iq}$ 与 unsafe 票数 $k_{iq}$，以均匀先验 Beta(1,1) 得后验 $\text{Beta}(1+k_{iq},1+n_{iq}-k_{iq})$，算出该象限多数派判 unsafe 的概率 $H_{iq}=P(\theta_{iq}>0.5)$，再在象限独立假设下取
 
-3. **LLM 双角色评测：rater 替身 vs sensitivity triage**:
+$$S_{iq}=H_{iq}\cdot\prod_{q'\neq q,\,q'\text{ valid}}(1-H_{iq'}).$$
 
-    - 功能：分别检验 LLM 能否替代人类多文化标注（直接预测每个象限的 $H_{iq}>0.5$），以及能否帮人类筛出文化敏感样本以节约标注成本。
-    - 核心思路：（a）替身实验把任务建模为 4-label 多标签分类，用 masked binary cross-entropy（只在已知象限上回传梯度），fine-tune DeBERTa-Large 与 Gemma-3-4B，并 prompt Gemini-3 Flash、GPT-5 Nano；以"始终预测 unsafe"为 baseline，理论 F1 为 $\frac{2\cdot\text{prevalence}}{\text{prevalence}+1}$。（b）triage 实验则是二分类：在 D3 上各采 485 个 unanimously-safe、unanimously-unsafe、culturally-sensitive 样本，分别训"safe vs unsafe"与"safe vs sensitive"两版分类器，看后者掉点多少、是否仍显著高于 baseline。
-    - 设计动机：业界默认 LLM-as-a-Judge 能模拟多元人类视角，但从未在文化维度对照过；用 masked loss 与象限级 ground truth 设计了一个最干净的 head-to-head 测试。同时把"完全替代"与"辅助 triage"分开，既能给出否定结论（不能替代），又能给出建设性结论（可做优先级排序）。
+为防人口学混淆，还加了 validity filter：每个象限至少 3 票、且不能由单一性别/族裔/年龄段全包。用原始投票比例做点估计会被 $n_{iq}=3$ 这种小样本噪声主导，Bayesian 后验天然做了平滑与不确定性量化；而乘积形式恰好把"少数派 unsafe + 多数派 safe"这个最危险的盲点情景写成一个可计算、可解释的联合概率，直接回答"若不招某象限会漏标多少"。这个指标在 6 个数据集上稳定算出约 10% 的文化敏感率（阈值收紧到 $S_{iq}>0.7$ 时约 3%）。
+
+**3. LLM 双角色评测：rater 替身做不到，sensitivity triage 做得到。**
+
+既然全球标注昂贵，自然要问 LLM 能不能顶上——但"顶上"有两种期待，作者把它们分开各做一套最干净的 head-to-head 测试。替身实验问的是"能不能直接冒充某象限打分"：把任务建成 4-label 多标签分类，用 masked binary cross-entropy（只在已知象限上回传梯度）fine-tune DeBERTa-Large 与 Gemma-3-4B，并 prompt Gemini-3 Flash、GPT-5 Nano，以"始终预测 unsafe"为 baseline（理论 F1 为 $\frac{2\cdot\text{prevalence}}{\text{prevalence}+1}$）。triage 实验问的是"能不能帮人类先筛出文化敏感样本"：在 D3 上各采 485 个 unanimously-safe、unanimously-unsafe、culturally-sensitive 样本，分别训"safe vs unsafe"与"safe vs sensitive"两版二分类器，看后者掉多少点、是否仍显著高于 baseline。这样设计既能给出否定结论（LLM 不能替代多元标注者），又能给出建设性结论（它可以做优先级排序的 triage），而不是简单地一句"LLM 不行"。
 
 ### 损失函数 / 训练策略
 - 多层级回归通过 lme4/lmer 风格的极大似然估计拟合；对 Likert 评分还用 cumulative link mixed model 复核，仅因收敛问题未作为主报告。

@@ -38,36 +38,30 @@ tags:
 **核心 idea**：把多种 LLM 控制方法放进统一的动态权重更新框架，再用 preference log-odds 和 utility log-odds 建模控制强度 $m$ 的响应曲线，最后用这个机制设计 SPLIT：同时优化正负样本语言建模效用和偏好间隔。
 
 ## 方法详解
-论文先做统一视角：所有方法都被写成 $h_{i+1}=(W+m_1\Delta W)h_i+(b+m_2\Delta b)$。然后定义一套共同评测坐标：Preference 表示模型倾向目标概念，Utility 表示生成是否仍任务有效。再提出 activation manifold 假设解释曲线形状：小幅移动主要沿偏好方向改变输出，大幅移动会偏离有效激活区域，导致 utility 衰减。最后提出 SPLIT 目标，把这个机制转化为训练策略。
+
+论文的思路分三步走：先用一个统一公式把三类控制方法摆到同一张计算图上，再定义 preference / utility 两条 log-odds 曲线来拆解“控制效果”，最后把曲线背后的流形衰减机制翻译成 SPLIT 训练目标。
 
 ### 整体框架
-输入是一组带有正负极性答案对的 query，例如同一个 prompt 下的 concept-positive answer 和 concept-negative answer。对每个干预方法，作者在指定层施加不同倍率 $m$，记录正负答案的交叉熵，从而计算 preference log-odds 和 utility log-odds。
 
-比较对象包括三类干预形式：Local Weight update、LoRA、Steering Vector；每类方法又可用 SFT、RePS 或 DiffMean 等方式得到干预方向/参数。作者在 Gemma-2-9B-IT 的第 20 层和 Qwen-2.5-7B-Instruct 的第 14 层测试，任务包括 Psychopathy、PowerSeeking 和 AxBench top-10 concepts。
+输入是一批带正负极性答案对的 query：同一个 prompt 下既有 concept-positive 答案，也有 concept-negative 答案。对每种干预方法，作者在指定层施加不同倍率 $m$，记录正负答案的交叉熵，由此画出 preference log-odds 和 utility log-odds 随 $m$ 变化的曲线。比较对象是三类干预形式——Local Weight update、LoRA、Steering Vector，每类又可用 SFT、RePS 或 DiffMean 得到干预方向。测试落在 Gemma-2-9B-IT 第 20 层和 Qwen-2.5-7B-Instruct 第 14 层，任务覆盖 Psychopathy、PowerSeeking 和 AxBench top-10 concepts。
 
 ### 关键设计
-1. **动态权重统一公式**:
 
-    - 功能：把局部权重微调、LoRA 和 activation steering 放到同一个计算图里比较。
-    - 核心思路：线性层原本是 $h_{i+1}=Wh_i+b$。局部权重更新对应 $(W+m\Delta W)h_i+(b+m\Delta b)$；LoRA 对应 $(W+mBA)h_i+b$；steering vector 对应 $Wh_i+(b+m\Delta b)$。从激活角度看，它们都在加入 $\Delta h=m_1\Delta W h_i+m_2\Delta b$。
-    - 设计动机：统一公式让不同方法的差异变成“更新项结构和参数量不同”，而不是完全不同的问题。这样才能系统比较控制强度变化时 preference 和 utility 的共同动态。
+**1. 动态权重统一公式：把三类控制方法翻译成同一种“给激活加 Δh”。**
 
-2. **Preference-Utility log-odds 分解与流形衰减解释**:
+过去 LoRA 讲低秩参数、steering 讲隐藏向量、局部微调讲权重更新，三套语言互不相通，没法系统对比。作者抓住一个共同点：线性层输出本质都是 affine transformation。原始层是 $h_{i+1}=Wh_i+b$，局部权重更新写成 $(W+m\Delta W)h_i+(b+m\Delta b)$，LoRA 写成 $(W+mBA)h_i+b$，steering vector 写成 $Wh_i+(b+m\Delta b)$。从激活视角看，它们做的都是同一件事——往该层注入一个 $\Delta h=m_1\Delta W h_i+m_2\Delta b$，区别只在 $\Delta h$ 的来源和参数量。统一成 $h_{i+1}=(W+m_1\Delta W)h_i+(b+m_2\Delta b)$ 后，不同方法的差异收敛成“更新项结构不同”，控制强度 $m$ 一变，就能在同一坐标系里观察 preference 与 utility 的共同动态。
 
-    - 功能：把控制效果拆成“是否更偏向目标概念”和“是否仍能完成任务”两条曲线，避免单一输出分数混淆。
-    - 核心思路：给定正负答案 $A_p,A_n$，作者用损失差定义 $PrefOdds=L_n-L_p$，因为 shared utility 在正负似然比中抵消；再用正负答案概率和定义 $UtilOdds=log(P(u)/(1-P(u)))$。机制上，preference 由沿目标方向的投影增益和有效性衰减共同决定，utility 主要由 off-manifold 后的 validity decay 决定。
-    - 设计动机：实际控制失败常不是因为目标属性没有增强，而是输出变得无效。把两者拆开后，可以看到 preference 随 $m$ 先近似线性、后过渡、再收敛，而 utility 在 $m\approx0$ 附近最高，随着 $|m|$ 增大下降。
+**2. Preference-Utility log-odds 分解与流形衰减解释：把“控制效果”拆成两条互不遮蔽的曲线。**
 
-3. **SPLIT 联合优化目标**:
+只看输出是否更像目标概念，会把“目标增强了”和“输出还能用”混为一谈——很多 steering 失败其实是目标属性确实变强了、但生成已经跑题崩坏。作者据此把效果拆成两条曲线：给定正负答案 $A_p,A_n$，用损失差定义 $PrefOdds=L_n-L_p$（共享的 utility 在正负似然比里抵消掉），再用正负答案概率和定义 $UtilOdds=\log(P(u)/(1-P(u)))$。机制上，preference 由“沿目标方向的投影增益”和“有效性衰减”共同决定，utility 则主要由表示偏离 activation manifold 之后的 validity decay 决定。拆开后能看清：preference 随 $m$ 先近似线性、再过渡、最后收敛，而 utility 在 $m\approx 0$ 附近最高、随 $|m|$ 增大单调下降——这正是“更强 steering 不一定更好”的几何来源。
 
-    - 功能：在训练干预参数时显式提升 preference，同时延缓 utility degradation。
-    - 核心思路：SPLIT 的 utility loss 同时对正样本和负样本做语言建模交叉熵，形式为 $L_{util}=\lambda_p L_p+\lambda_n L_n$，保证两类任务有效答案都仍可生成。Preference loss 则最大化损失差 $L_n-L_p$，用 hinge margin 写成 $L_{pref}=\gamma\cdot ReLU(\theta-(L_n-L_p))$。最终目标是 $L=L_{util}+L_{pref}$。
-    - 设计动机：只训练正样本容易把模型推向目标概念但牺牲通用生成质量；只保持效用又无法形成明确偏好。SPLIT 把“正负样本都要像正常答案”和“正样本要比负样本更容易”同时写进目标。
+**3. SPLIT 联合优化目标：训练时同时把目标偏好推上去、把效用衰减压下来。**
+
+如果只拿正样本训练，模型会被推向目标概念但牺牲通用生成；只保效用又形不成明确偏好。SPLIT 把这两件事一起写进目标。utility loss 对正负样本都做语言建模交叉熵 $L_{util}=\lambda_p L_p+\lambda_n L_n$，保证两类任务有效答案都还生成得出来；preference loss 用 hinge margin 最大化损失差 $L_{pref}=\gamma\cdot\mathrm{ReLU}(\theta-(L_n-L_p))$，要求正样本至少比负样本容易一个间隔 $\theta$。两者相加 $L=L_{util}+L_{pref}$，等于同时约束“正负样本都要像正常答案”和“正样本要比负样本更好生成”，从机制上直接对冲流形衰减。
 
 ### 损失函数 / 训练策略
-SPLIT 训练使用 paired positive/negative samples。Utility 部分让模型同时拟合正负两个任务有效输出，Preference 部分要求正样本 loss 相对负样本 loss 至少大于一个 margin。超参 $\lambda_p,\lambda_n$ 控制正负样本效用权重，$\theta$ 是偏好间隔，$\gamma$ 控制偏好提升与效用保留的权衡。
 
-实验中，Local Weight 只更新 FFN down-projection 层，LoRA 使用低秩权重更新，Vector 方法使用激活向量干预。所有方法都在推理时通过倍率 $m$ 扫描控制强度。AxBench 原始每个 concept 72 个实例被重划分为 64 个训练、8 个测试；最终评估用 Psychopathy 准确率、PowerSeeking LLM-judge 0-4 分、AxBench concept 分和 harmonic 分。
+SPLIT 用 paired positive/negative samples 训练：utility 部分让模型同时拟合正负两个任务有效输出，preference 部分要求正样本 loss 比负样本 loss 至少大一个 margin。超参里 $\lambda_p,\lambda_n$ 控制正负样本的效用权重，$\theta$ 是偏好间隔，$\gamma$ 控制“偏好提升 vs 效用保留”的权衡。三类干预的落点不同：Local Weight 只更新 FFN down-projection 层，LoRA 用低秩权重更新，Vector 用激活向量干预；推理时都通过扫描倍率 $m$ 控制强度。AxBench 原本每个 concept 72 个实例被重划为 64 训练 / 8 测试，最终用 Psychopathy 准确率、PowerSeeking LLM-judge 0-4 分、AxBench concept 分和 harmonic 分评估。
 
 ## 实验关键数据
 

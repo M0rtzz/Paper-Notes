@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FLAME（Fine-grained Localization via Adjacency Map Energy）走"粗到精"两段式：输入是疑似被局部编辑的 RGB 图 $I$，先用 LAD 算子把图变成单通道能量图 $\mathcal{L}$；轻量 LAD-Net 从 $\mathcal{L}$ 同时输出（a）全局是否伪造的标量分数 $y_{cls}$ 与（b）粗定位掩码 $M_{coarse}$；接着把 $M_{coarse}$ 当作 SAM 的稠密 prompt，把 SAM 冻结图像编码器输出的语义特征 $F_{sem}$ 与 LAD-Net 的纹理特征 $F_{tex}$ 拼接后过一个 1×1 卷积+残差块组成的适配器，得到 $F_{adapted}$，最后由 SAM 解码器吐出像素级精修掩码 $M_{final}$。整套系统外面再套一个 EditStream 数据引擎，自动拉取最新开源 inpainting 模型生成新分布的训练样本。
+FLAME（Fine-grained Localization via Adjacency Map Energy）要解决的是"扩散编辑后传统物理指纹失效、像素级定位无从下手"的问题，做法是先把内禀的能量异常显式提取成一张图，再借通用分割模型把它精修成像素掩码。具体来说，输入一张疑似被局部编辑的 RGB 图 $I$，LAD 算子先把它压成单通道能量图 $\mathcal{L}$；轻量 LAD-Net 读这张能量图，同时给出全局是否伪造的标量分数 $y_{cls}$ 和一张粗定位掩码 $M_{coarse}$；随后这张粗掩码作为稠密 prompt 喂给冻结的 SAM，由一个适配器把 SAM 的语义特征和 LAD-Net 的纹理特征融合，再由 SAM 解码器吐出像素级精修掩码 $M_{final}$。整套系统外面还套了一个 EditStream 数据引擎，自动从开源仓库拉取最新 inpainting 模型，不断刷新训练分布。
 
 ### 关键设计
 
-1. **LAD 能量图（Local Adjacency Discrepancy）**:
+**1. LAD 能量图：把扩散的低熵痕迹转成与内容无关的空间指纹**
 
-    - 功能：把"扩散生成区低能、真实区高能、篡改边界尖峰"这一理论现象转成与图像内容无关的空间能量指纹。
-    - 核心思路：把图像看成 Gibbs 随机场 $p(x) \propto \exp(-E(x))$，定义相邻像素对的势函数为强度差的函数 $V(p,q) = \rho(\|I(p)-I(q)\|_2)$ 作为高频能量的空间代理；对每个像素 $p$ 在一个 $3\times 3$ 邻域 $\mathcal{N}_p$ 上聚合 $\mathcal{L}(p) = \frac{1}{|\mathcal{N}_p|} \sum_{q \in \mathcal{N}_p} \tanh(\|I(p)-I(q)\|_2^2 / \tau^2)$；$\tanh$ 用来饱和掉大语义梯度、把分母里 $\tau$ 控制的"小幅噪声残差"段放大，从而把真实区光学噪声、生成区平滑伪迹、边界处由 $z_{t-1}=m\odot \hat z^{gen}_{t-1}+(1-m)\odot z^{ref}_{t-1}$ 这一硬潜空间拼接造成的协方差错位三种线索同时编进一张图。
-    - 设计动机：理论分析（Theorem 3.3 Energy Gap & Boundary Spike）告诉我们生成区内部能量低于真实区、边界能量远大于生成区内部，但这个能量是定义在统计期望上的，必须找一个**像素级可计算**且**对内容鲁棒**的算子才能落地；用饱和函数加局部聚合就是把统计差转成可被 CNN 直接学习的空间张量。
+这一设计针对的痛点是——理论上"生成区低能、真实区高能、篡改边界出现能量尖峰"（Theorem 3.3 Energy Gap & Boundary Spike）虽然成立，但能量是定义在统计期望上的，必须找一个像素级可计算且对图像内容鲁棒的算子才能真正落地。作者把图像建模成 Gibbs 随机场 $p(x) \propto \exp(-E(x))$，用相邻像素强度差的势函数 $V(p,q) = \rho(\|I(p)-I(q)\|_2)$ 当作高频能量的空间代理，再对每个像素 $p$ 在 $3\times 3$ 邻域 $\mathcal{N}_p$ 上做局部聚合：
 
-2. **SAM 适配器粗到精精修**:
+$$\mathcal{L}(p) = \frac{1}{|\mathcal{N}_p|} \sum_{q \in \mathcal{N}_p} \tanh\!\left(\|I(p)-I(q)\|_2^2 / \tau^2\right)$$
 
-    - 功能：把 LAD-Net 给的低级取证粗掩码 $M_{coarse}$ 升级为像素级精确边界，同时避开"真实图本来就有低能区（纯色背景）会被误判"这一根本缺陷。
-    - 核心思路：冻结 SAM 图像编码器吐出语义特征 $F_{sem}$，让一个由残差块构成的轻量 Feature Adapter 学习 $F_{adapted} = \text{Adapter}(F_{sem} \oplus F_{tex})$（其中 $\oplus$ 是通道拼接后接 $1\times 1$ 卷积），把通用分割先验"调制"到取证域；同时把 $M_{coarse}$ 灌进 SAM prompt encoder 生成稠密 positional embedding $E_{prompt}$，由 SAM mask decoder 联合 $F_{adapted}$ 和 $E_{prompt}$ 输出 $M_{final}$。
-    - 设计动机：LAD-Net 是低级统计算子，会把"窗外白墙"这种本来就高度平滑的真实区误判成低能伪造区，必须借语义先验把它和"被扩散过的物体"区分开；不直接微调 SAM 是因为它的特征是为通用分割训练的，需要用适配器把低级取证残差注入而不破坏原有先验，参数高效又规避了灾难性遗忘。
+这里 $\tanh$ 起到饱和作用，把大语义梯度（物体边缘）压平，同时让 $\tau$ 控制的"小幅噪声残差"段被相对放大。这样一来，真实区的光学散粒噪声、生成区被 VAE 抹平的平滑伪迹、以及边界处由硬潜空间拼接 $z_{t-1}=m\odot \hat z^{gen}_{t-1}+(1-m)\odot z^{ref}_{t-1}$ 造成的协方差错位，三种异质信号被同时编进同一张能量图，后端 CNN 不必分头处理就能直接学到。
 
-3. **EditStream 自演化数据合成**:
+**2. SAM 适配器：用语义先验把粗能量响应 snap 成精确边界**
 
-    - 功能：解决"训练集和现实威胁之间的代差"——静态 benchmark 永远跟不上 SD/FLUX/Qwen-Image 等生成器的迭代速度。
-    - 核心思路：用 Qwen-VL 当语义规划器分析场景语义生成编辑指令，把指令翻成像素掩码经 SAM 转成精确编辑区域；用 Llama 3 驱动的 Autonomous Model Scouting Agent 持续监控 HuggingFace 等仓库，发现新 inpainting 模型时自动解析 model card、合成调用代码、拉进生成管线，对 FLAME 持续注入"更新的伪迹分布"。
-    - 设计动机：作者强调泛化的关键不是单次扩大数据，而是构造一个"移动靶"——让检测器始终见到比上一个版本更难的伪迹，逼模型去学**架构无关**的扩散共性，而不是过拟合某一代生成器的指纹。
+LAD-Net 是个低级统计算子，单独用会有个根本缺陷：纯色背景、窗外白墙这类本来就高度平滑的真实区，能量天然就低，会被误判成伪造区。要把"本来就低能的真实区"和"被扩散过的物体"区分开，就得引入语义先验。作者冻结 SAM 图像编码器输出语义特征 $F_{sem}$，让一个由残差块构成的轻量 Feature Adapter 学习 $F_{adapted} = \text{Adapter}(F_{sem} \oplus F_{tex})$（$\oplus$ 表示通道拼接后接 $1\times 1$ 卷积，$F_{tex}$ 是 LAD-Net 的纹理特征），把通用分割先验"调制"到取证域；同时把粗掩码 $M_{coarse}$ 灌进 SAM 的 prompt encoder 生成稠密位置嵌入 $E_{prompt}$，最后由 SAM mask decoder 联合 $F_{adapted}$ 和 $E_{prompt}$ 给出 $M_{final}$。之所以不直接微调 SAM，是因为它的特征是为通用分割训练的，用适配器注入低级取证残差既参数高效，又能避免破坏原有先验导致的灾难性遗忘。
+
+**3. EditStream 自演化数据合成：把"benchmark 永远落后"做成移动靶**
+
+这一设计瞄准的是训练集与现实威胁之间的代差——静态 benchmark 永远追不上 SD/FLUX/Qwen-Image 这些生成器的迭代速度。EditStream 用 Qwen-VL 当语义规划器，分析场景语义生成编辑指令，把指令翻成像素掩码并经 SAM 转成精确编辑区域；再用 Llama 3 驱动的 Autonomous Model Scouting Agent 持续监控 HuggingFace 等仓库，一旦发现新的 inpainting 模型就自动解析它的 model card、合成调用代码、接进生成管线，对 FLAME 持续注入更新一代的伪迹分布。作者强调泛化的关键不在单次扩大数据，而在构造一个"移动靶"：让检测器始终见到比上一版更难的伪迹，逼它去学架构无关的扩散共性，而不是过拟合某一代生成器的指纹。
 
 ### 损失函数 / 训练策略
-联合优化像素级定位与图像级判别：$L = L_{Dice} + \lambda_{focal} L_{focal}^{\alpha,\gamma} + \lambda_{IoU} L_{IoU} + \lambda_{det} L_{det}$，其中 $L_{Dice}+L_{focal}$ 保证小篡改区在前背景失衡下也能学到准确边界，$L_{IoU}$ 用 $\ell_1$ 回归监督掩码质量预测，$L_{det}$ 用 BCE 保留全局判别能力；遵循 SAM 惯例 $\lambda_{focal}=20$，$\lambda_{IoU}=\lambda_{det}=1$。
+训练联合优化像素级定位与图像级判别：$L = L_{Dice} + \lambda_{focal} L_{focal}^{\alpha,\gamma} + \lambda_{IoU} L_{IoU} + \lambda_{det} L_{det}$。其中 $L_{Dice}+L_{focal}$ 保证小篡改区在前背景严重失衡时也能学到准确边界，$L_{IoU}$ 用 $\ell_1$ 回归监督掩码质量预测，$L_{det}$ 用 BCE 保留全局判别能力；权重沿用 SAM 惯例 $\lambda_{focal}=20$、$\lambda_{IoU}=\lambda_{det}=1$。
 
 ## 实验关键数据
 

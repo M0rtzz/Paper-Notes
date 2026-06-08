@@ -43,86 +43,61 @@ KV-Lock 是一个即插即用的 training-free 框架，适用于任意预训练
 2. **反演阶段（Inversion）**：对源视频进行前向扩散，在每个时间步和每层 Transformer 中缓存源视频的 KV 对
 3. **去噪阶段（Denoising）**：基于幻觉检测的调度器动态融合新生成的 KV 与缓存的 KV（保背景），同时动态调节 CFG 引导强度（优前景）
 
-### 关键设计一：Token 级 KV 缓存锁定
+### 关键设计
 
-#### Latent 空间 Mask 编码
+**1. Token 级 KV 缓存锁定：把"哪些 token 算背景"精确传到注意力层。**
 
-输入视频 $\mathcal{V}_{\text{src}} \in \mathbb{R}^{3 \times F \times H \times W}$ 经 3D VAE 编码（压缩比 $s = (4, 8, 8)$），编辑 mask $\mathcal{M}$ 通过时间维度 max-pooling 与 VAE 的时间压缩对齐：
+要保住背景，先得知道哪些 token 属于背景。KV-Lock 从一张编辑 mask 出发，把它一路对齐到 DiT 内部的 token 粒度。源视频 $\mathcal{V}_{\text{src}} \in \mathbb{R}^{3 \times F \times H \times W}$ 先经 3D VAE 编码（压缩比 $s = (4, 8, 8)$），编辑 mask $\mathcal{M}$ 在时间维做 max-pooling 与 VAE 的时间压缩对齐：
 
 $$m_0^{\text{latent},t} = \begin{cases} \max(\mathcal{M}_0), & t=0 \\ \max(\mathcal{M}_{[1+(t-1)s_t : 1+ts_t]}), & t \geq 1 \end{cases}$$
 
-max-pooling 确保时间窗口内任何帧需要编辑时，对应 latent mask 均标记为 1。
-
-#### Token 空间投影
-
-DiT 对 latent 做 patchify（patch size $p = (1, 2, 2)$），产生 $N = T \cdot (h/p_h) \cdot (w/p_w)$ 个 token。mask 通过 3D MaxPool 对齐到 token 空间：
+用 max 而非平均，是为了让一个时间窗口里只要有一帧需要编辑，对应 latent 位置就被标成前景，宁可多标也不漏标。接着 DiT 把 latent 做 patchify（patch size $p = (1, 2, 2)$）得到 $N = T \cdot (h/p_h) \cdot (w/p_w)$ 个 token，mask 再经一次 3D MaxPool 投到 token 空间：
 
 $$m_{\text{token}} = \text{Flatten}(\text{MaxPool3D}(m_0^{\text{latent}}, \text{kernel}=p, \text{stride}=p)) \in \{0,1\}^N$$
 
-这保证了 token $i$ 的感受野只要覆盖任何被 mask 的像素，就标记为前景 token。
+于是一个 token 只要感受野里压到任何被编辑的像素，就被算作前景。有了这张 token mask，再去缓存背景的"内容锚点"：每个去噪步 $t_k$ 用源 latent 构造带噪输入 $z_{t_k}^{\text{src}} = \sqrt{\bar{\alpha}_{t_k}} \mathcal{E}(\mathcal{V}_{\text{src}}) + \sqrt{1 - \bar{\alpha}_{t_k}} \epsilon$，前向一遍把全部 $L=24$ 层的 KV 对 $\mathcal{K}_k^\ell = W_K^{(\ell)} h_{t_k}^{(\ell)}$、$\mathcal{V}_k^\ell = W_V^{(\ell)} h_{t_k}^{(\ell)}$ 存下来。注意力本质是一次可微检索——query 与所有 key 算相似度再加权聚合 value；当背景 token 的 KV 被换成源视频缓存，注意力输出就被钉在源内容的流形上，等于给背景一条确定性的重建路径。
 
-#### KV 缓存提取
+**2. 幻觉感知的动态 KV 融合：用方差决定"锁多紧"，而不是一刀切。**
 
-在每个去噪时间步 $t_k$，构造带噪源 latent：
-
-$$z_{t_k}^{\text{src}} = \sqrt{\bar{\alpha}_{t_k}} \mathcal{E}(\mathcal{V}_{\text{src}}) + \sqrt{1 - \bar{\alpha}_{t_k}} \epsilon$$
-
-通过前向传播提取所有 $L=24$ 层 Transformer 的 KV 对：
-
-$$\mathcal{K}_k^\ell = W_K^{(\ell)} h_{t_k}^{(\ell)}, \quad \mathcal{V}_k^\ell = W_V^{(\ell)} h_{t_k}^{(\ell)}, \quad \forall \ell \in \{1, \ldots, L\}$$
-
-这些缓存的 KV 作为"内容锚点"。注意力机制可理解为可微检索：query $q_i$ 与所有 key 计算相似度后加权聚合 value。当背景 token 的 KV 被替换为源视频缓存时，注意力输出被约束在源内容的流形上，提供确定性的重建机制。
-
-### 关键设计二：幻觉感知的动态 KV 融合
-
-全部锁定背景 KV 会约束模型对前景的生成能力。为此引入动态融合率 $\alpha_k \in [0,1]$，根据去噪方差调节 KV 锁定强度：
+把背景 KV 完全锁死虽然保真，却也压住了模型在前景上的发挥。KV-Lock 改成可调的融合率 $\alpha_k \in [0,1]$，让锁定强度跟着去噪方差走：
 
 $$\alpha_k = \text{clamp}\left(\frac{\sigma_{\hat{x}_0^{(k)}}^2}{\tau}, 0, 1\right)$$
 
-其中 $\tau = 0.01$ 是幻觉阈值。在最后 $\kappa = 20$ 个采样步中，对背景 token 执行加权插值：
+阈值 $\tau = 0.01$，且只在最后 $\kappa = 20$ 个采样步对背景 token 做加权插值：
 
 $$K_k^{\text{mix}} = m_{\text{token}} \odot K_k^{\text{new}} + (1 - m_{\text{token}}) \odot (\alpha_k \cdot \tilde{\mathcal{K}}_k^\ell + (1 - \alpha_k) \cdot K_k^{\text{new}})$$
 
 $$V_k^{\text{mix}} = m_{\text{token}} \odot V_k^{\text{new}} + (1 - m_{\text{token}}) \odot (\alpha_k \cdot \tilde{\mathcal{V}}_k^\ell + (1 - \alpha_k) \cdot V_k^{\text{new}})$$
 
-- 前景 token（$m_{\text{token}} = 1$）：使用新生成的 KV，保留完全自由度
-- 背景 token（$m_{\text{token}} = 0$）：在缓存 KV 与新 KV 之间插值，$\alpha_k$ 越大锁定越强
+前景 token（$m_{\text{token}} = 1$）一律走新算出来的 KV，保留完全自由度；背景 token（$m_{\text{token}} = 0$）则在缓存 KV 与新 KV 之间插值，$\alpha_k$ 越大越偏向缓存、锁得越紧。之所以挂在方差上：方差高说明模型对当前区域没把握、幻觉正要往背景蔓延，这时候就该把背景锁得更死；方差低就松手，让模型自己重算注意力。
 
-设计动机：高方差 = 模型在当前区域不确定 → 需要更强的背景约束防止幻觉向背景扩散。
+**3. 前景生成引导：在背景被锁住的同时，反过来把前景质量顶上去。**
 
-### 关键设计三：前景生成引导（优化 CFG）
-
-#### 自适应缩放因子 $s^*$
-
-标准 CFG 使用固定引导强度 $\omega$ 线性插值条件/无条件噪声预测，但无法补偿模型欠拟合导致的噪声估计偏差（尤其在早期去噪阶段）。引入可优化缩放因子 $s$：
+光锁背景还不够，前景本身也要生成得好，KV-Lock 因此从两处改 CFG。其一是给无条件分支加一个可优化缩放因子 $s$——标准 CFG 用固定 $\omega$ 线性插值条件/无条件噪声预测，却补不了模型欠拟合带来的噪声估计偏差（早期去噪尤其明显）：
 
 $$\tilde{\epsilon}_\theta(x_t, t | y) = (1 - \omega) \cdot s \cdot \epsilon_\theta(x_t, t | \emptyset) + \omega \cdot \epsilon_\theta(x_t, t | y)$$
 
-目标：最小化 $\|\tilde{\epsilon}_\theta - \epsilon_t\|_2^2$。由于真实噪声 $\epsilon_t$ 不可观测，通过三角不等式推导上界，消去 $\epsilon_t$ 后得闭式解：
+目标是最小化 $\|\tilde{\epsilon}_\theta - \epsilon_t\|_2^2$，但真实噪声 $\epsilon_t$ 不可观测；论文用三角不等式取上界消掉 $\epsilon_t$，得到闭式解：
 
 $$s^* = \frac{\langle \epsilon_\theta(x_t, t | y), \epsilon_\theta(x_t, t | \emptyset) \rangle}{\|\epsilon_\theta(x_t, t | \emptyset)\|_2^2 + \varepsilon}$$
 
-几何意义：$s^*$ 是条件噪声预测向量在无条件噪声预测方向上的正交投影，对齐两个噪声估计以减少模型欠拟合引入的偏差。计算开销仅为一次内积和范数运算。
-
-#### 幻觉感知的动态 CFG 引导
-
-当检测到幻觉风险时，在窗口 $W = 10$ 内动态调大引导强度：
+几何上 $s^*$ 就是条件噪声预测在无条件方向上的正交投影，把两个噪声估计对齐以削掉欠拟合偏差，代价只是一次内积加一次范数。其二是让引导强度 $\omega$ 也随方差动起来——在窗口 $W = 10$ 内，一旦检测到幻觉风险就调大 $\omega$：
 
 $$\omega = \omega_0 \cdot \text{clamp}\left(\frac{\sigma_{\hat{x}_0^{(k)}}^2}{\tau}, 0, b\right)$$
 
-其中 $b = 2$ 为 clamp 上界。核心洞察：CFG 的引导强度 $\omega$ 本身就调控生成样本的多样性，这与幻觉检测的方差度量天然对应——当方差高（幻觉风险大）时增大 $\omega$ 可约束样本多样性、强制条件对齐、稳定扩散过程。在扩散早期所有样本方差都高，因此仅在最后 $\kappa = 20$ 步中激活动态调度。
+clamp 上界 $b = 2$。这一步用的正是 CFG 本身的性质：$\omega$ 越大、样本多样性越被压、越强制对齐条件，而方差高恰恰意味着多样性失控、幻觉风险大，于是"方差 → $\omega$"形成了一条天然的负反馈。由于扩散早期所有样本方差都偏高，这套动态调度同样只在最后 $\kappa = 20$ 步激活。
 
-### 关键设计四：局部幻觉检测
+**4. 局部幻觉检测：给前面所有调度提供那个统一的方差信号。**
 
-利用滑动窗口追踪前景区域的 $\hat{x}_0$ 方差作为幻觉代理指标：
+设计 2 和 3 都靠"方差"做决策，这个方差就来自这里。KV-Lock 用滑动窗口只盯前景区域的 $\hat{x}_0$ 波动作为幻觉代理：先把每步预测的 $\hat{x}_0$ 在 mask 区域内拍平、按 batch 平均，
 
 $$\hat{x}_0^{\text{masked},(k)} = \frac{1}{B} \sum_{b=1}^{B} \text{Flatten}(\hat{x}_0^{(k,b)} \odot m_0^{\text{latent}})$$
 
+再在窗口内算方差：
+
 $$\sigma_{\hat{x}_0^{(k)}}^2 = \frac{1}{W-1} \sum_{i=t_k-W+1}^{t_k} (\hat{x}_0^{\text{masked},(i)} - \bar{\hat{x}}_0^{\text{masked}})^2$$
 
-方差超过阈值 $\tau = 0.01$ 则标记为幻觉风险。关键改进：相比全局方差计算，**局部方差**（仅 mask 区域）可以更灵敏地捕捉幻觉信号——消融实验中全局检测的 Ave. 为 84.05% vs 局部检测的 84.87%。
-
-理论依据：in-support 样本的 $\hat{x}_0$ 在后期去噪阶段收敛到一致表示（低方差）；hallucinated 样本因模式插值导致不确定性，$\hat{x}_0$ 持续波动（高方差）。
+超过 $\tau = 0.01$ 就判为幻觉风险。背后的依据是：in-support 的样本在后期去噪会收敛到一致表示（方差低），而 hallucinated 样本因为在多个模式间插值，$\hat{x}_0$ 一直抖（方差高）。关键在于只算 mask 区域而非全图——全局方差会被大片稳定的背景稀释、漏掉局部幻觉信号，消融里全局检测 Ave. 84.05% 对局部检测 84.87% 就是这个差距。
 
 ## 实验
 

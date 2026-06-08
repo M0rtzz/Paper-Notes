@@ -40,46 +40,25 @@ tags:
 
 ## 方法详解
 
-本文是纯理论 + 一个理论驱动的简单实验性架构改动。"方法"应理解为定理框架与证明骨架，而不是新模型。
+本文是纯理论 + 一个理论驱动的简单架构改动，"方法"指的是定理框架与证明骨架，而不是一个新模型。
 
 ### 整体框架
 
-把 weight-space 问题组织成"目标类型 × 输入是否 GP"的二维网格：
-
-- **目标类型**（Definition 4.1）：
-    1. 函数空间泛函 $\Psi:\mathcal C(X,\mathbb R^{d_L})\to\mathbb R^n$，例如精度预测、INR 分类；
-    2. 置换不变泛函 $\Psi:\mathcal V_A\to\mathbb R^n$，例如权重 $\ell_2$ 范数、loss landscape 曲率；
-    3. 函数空间算子 $\Psi:\mathcal C\to\mathcal C$，例如 INR 编辑、domain adaptation；
-    4. 置换等变算子 $\Psi:\mathcal V_A\to\mathcal V_A$，例如 pruning mask 预测、meta-optimization 的梯度预测。
-
-- **输入域**：整个 $\mathcal V$ vs. GP 子集 $\mathcal V\setminus\mathcal E$，其中
-$\mathcal E_A=\{v\mid\exists\ell\in[L-1],\,i\ne j,\,(b_\ell)_i=(b_\ell)_j\}$。
-
-逼近以 $L^2$（泛函/等变算子）或 $L^\infty$（函数空间算子）度量。对函数空间算子，逼近以 $\sup_v\|\Psi(f_v)-f_{\Phi(v)}\|_\infty<\epsilon$ 度量，即"等变的权重到权重映射"在被 realization map $R(v)=f_v$ 拉到函数空间后近似目标算子。
+全文围绕一张二维表展开：横轴是"想逼近什么目标"，纵轴是"输入是否落在 general position（GP）上"。目标按 Definition 4.1 分成四类——函数空间泛函 $\Psi:\mathcal C(X,\mathbb R^{d_L})\to\mathbb R^n$（如精度预测、INR 分类）、置换不变泛函 $\Psi:\mathcal V_A\to\mathbb R^n$（如权重 $\ell_2$ 范数、loss landscape 曲率）、函数空间算子 $\Psi:\mathcal C\to\mathcal C$（如 INR 编辑、domain adaptation）、置换等变算子 $\Psi:\mathcal V_A\to\mathcal V_A$（如 pruning mask 预测、meta-optimization 的梯度预测）。输入域则分整个参数空间 $\mathcal V$ 与去掉退化集合的 GP 子集 $\mathcal V\setminus\mathcal E$，其中 $\mathcal E_A=\{v\mid\exists\ell\in[L-1],\,i\ne j,\,(b_\ell)_i=(b_\ell)_j\}$ 是"某隐藏层存在两个相同偏置"的测度零集合。逼近误差对泛函与等变算子用 $L^2$、对函数空间算子用 $L^\infty$ 度量，后者即要求权重到权重映射 $\Phi$ 经 realization map $R(v)=f_v$ 拉回函数空间后满足 $\sup_v\|\Psi(f_v)-f_{\Phi(v)}\|_\infty<\epsilon$。整套论证先证所有主流架构表达力等价、把分析对象统一，再逐格判定普适性，最后由一条不可能性结论反推出可落地的修复。
 
 ### 关键设计
 
-1. **架构等价定理（Theorem 5.2 + Proposition 5.3）**：
+**1. 架构等价定理：把六个看起来天差地别的架构折叠成一个等价类（Theorem 5.2 + Proposition 5.3）。**
 
-    - 功能：把 6 个主流架构 $\Pi=\{\text{DWS, NP-NFN, HNP-NFN, GMN, NG-GNN, NFT}\}$ 折叠成一个表达力等价类。
-    - 核心思路：对任意紧集 $K\subseteq\mathcal V$ 和任意 $\pi,\pi'\in\Pi\setminus\{\text{NFT}\}$，$\mathcal N^\pi_{\text{inv}}(K)=\mathcal N^{\pi'}_{\text{inv}}(K)$ 且 $\mathcal N^\pi_{\text{equi}}(K)=\mathcal N^{\pi'}_{\text{equi}}(K)$。证明方式是用一个架构的基本层"模拟"另一个架构的基本层（mutual approximation）。NFT 因为 attention 机制非标准，在全空间上不等价（Proposition 5.3 给出反例 $K$），但在 GP 子集 $K\subset\mathcal V\setminus\mathcal E$ 上仍然等价。
-    - 设计动机：把"我该用哪个架构"从架构选型问题降级为工程问题，并允许后续所有定理只针对"通用置换等变 weight-space 网络"陈述一次。
+社区一直说不清 DWS（手工对齐的等变线性层）、GMN/NG-GNN（把网络当图跑 GNN）、NFT（attention）这些架构到底谁强谁弱。本文直接证明它们表达力几乎相同：对任意紧集 $K\subseteq\mathcal V$ 和任意 $\pi,\pi'\in\Pi\setminus\{\text{NFT}\}$（$\Pi=\{\text{DWS, NP-NFN, HNP-NFN, GMN, NG-GNN, NFT}\}$），都有 $\mathcal N^\pi_{\text{inv}}(K)=\mathcal N^{\pi'}_{\text{inv}}(K)$ 且 $\mathcal N^\pi_{\text{equi}}(K)=\mathcal N^{\pi'}_{\text{equi}}(K)$，证明手法是让一个架构的基本层去"模拟"另一个架构的基本层（mutual approximation）。NFT 因为 attention 机制非标准，在全空间上掉队（Proposition 5.3 给出反例 $K$），但只要把输入限制在 GP 子集 $K\subset\mathcal V\setminus\mathcal E$ 上，它也回到等价类。这一步的意义是把"该用哪个架构"从一个理论选型问题降级为纯工程偏好，后续所有定理只需针对"通用置换等变 weight-space 网络"陈述一次，且分析时挑最方便的 DWS 来证就够了。
 
-2. **GP 假设下的统一普适性（Theorems 6.1 / 6.3 / 7.2 / 7.4）**：
+**2. GP 假设下的四象限普适性地图：精确标出哪些场景现成架构够用、哪些必须换架构（Theorems 6.1 / 6.3 / 7.2 / 7.4）。**
 
-    - 功能：在 4 个目标类别里分别给出 universality 的判定（含上界和下界）。
-    - 核心思路：
-        - **函数空间泛函**（Thm 6.1）：在 *全空间* $K\subseteq\mathcal V$ 上就普适。证明用 DWS 可以模拟 MLP forward pass (Navon et al., 2023) → 推出"DWS 不可区分 $v,v'$ ⇒ $f_v=f_{v'}$"的 separation 性质 → 套 Pacini et al. (2025b) 的 separation-to-approximation 定理收尾。
-        - **置换不变泛函**（Prop 6.2 + Thm 6.3）：全空间下 *不普适*（构造 $v,v'$ 使 $W_2,W_2'$ rank 不同但 1-WL 不可区分，见 Figure 3），但在 GP 上普适。Thm 6.3 的关键构造是**连续 canonization 映射** $\operatorname{canon}:K\to\mathcal V$：因 $K\cap\mathcal E=\varnothing$，每层偏置 $b_\ell$ 元素两两不同，可用 $\operatorname{argsort}(b_\ell)$ 作为该层置换，得到的轨道代表既唯一又连续；DWS 含 DeepSets 原语，对 ranking 普适 (Segol & Lipman, 2019)，再接 MLP head 即可。
-        - **函数空间算子**（Prop 7.1 + Thm 7.2）：在 *固定 ReLU 架构* 上 *不普适*——ReLU MLP 的 linear region 数量被 (Montúfar et al., 2014) bound 住，因此放大/zoom-out 这类增加几何复杂度的算子不可被同架构等变映射逼近；但只要允许"输出架构 $A$ 足够大"，则普适。证明三步：用 partition of unity 把 $\Psi(f_v)$ 写成 $M$ 个参考 MLP 的连续凸组合 $\Rightarrow$ 用 canonization 把它转成置换等变 $\Rightarrow$ 套 Thm 7.4 收尾。
-        - **置换等变算子**（Prop 7.3 + Thm 7.4）：与不变情形对偶——通过 broadcasting，invariant 普适性蕴含 equivariant 普适性。Thm 7.4 用"广播 canonization" $\widetilde{\operatorname{canon}}(v)$（把 $\operatorname{Flat}(\operatorname{canon}(v))$ 拼到每个权重/偏置 entry 上）+ pointwise MLP 给出构造。
-    - 设计动机：四个 cell 全部判定后，得到 Figure 1 的"表达力地图"——既告诉实践者"什么场景现有架构够用"，也精确标出"什么场景需要新架构"。GP 假设把"理论非普适"和"实际几乎总能逼近"两边都说清楚，避免悲观结论被滥用。
+四类目标各被判定一次，结论彼此不同，GP 假设是把"理论非普适"与"实际几乎总能逼近"两边都说清楚的关键抓手。**函数空间泛函**（Thm 6.1）在全空间 $K\subseteq\mathcal V$ 上就普适，证明是先用 DWS 能模拟 MLP forward pass (Navon et al., 2023) 推出 separation 性质——DWS 区分不开 $v,v'$ 就意味着 $f_v=f_{v'}$——再套 Pacini et al. (2025b) 的 separation-to-approximation 定理收尾。**置换不变泛函**（Prop 6.2 + Thm 6.3）在全空间下反而不普适：可以构造 $v,v'$ 使 $W_2,W_2'$ 秩不同却被 1-WL 区分不开（Figure 3），但限制到 GP 上就普适。Thm 6.3 的核心构造是**连续 canonization 映射** $\operatorname{canon}:K\to\mathcal V$——因 $K\cap\mathcal E=\varnothing$，每层偏置 $b_\ell$ 元素两两不同，用 $\operatorname{argsort}(b_\ell)$ 当作该层置换就能得到既唯一又连续的轨道代表，而 DWS 自带 DeepSets 原语、对 ranking 普适 (Segol & Lipman, 2019)，再接一个 MLP head 即可。**函数空间算子**（Prop 7.1 + Thm 7.2）在固定 ReLU 架构上不普适：ReLU MLP 的 linear region 数被 (Montúfar et al., 2014) 卡死，放大 / zoom-out 这类会增加几何复杂度的算子根本不可能用同容量的输出去逼近；但只要放开"输出架构 $A$ 足够大"就普适，证明分三步——用 partition of unity 把 $\Psi(f_v)$ 写成 $M$ 个参考 MLP 的连续凸组合，用 canonization 转成置换等变，再套 Thm 7.4。**置换等变算子**（Prop 7.3 + Thm 7.4）与不变情形对偶：通过 broadcasting，invariant 普适性蕴含 equivariant 普适性，Thm 7.4 用"广播 canonization" $\widetilde{\operatorname{canon}}(v)$（把 $\operatorname{Flat}(\operatorname{canon}(v))$ 拼到每个权重 / 偏置 entry 上）加 pointwise MLP 完成构造。四格全部判定后就拼出 Figure 1 的"表达力地图"，既告诉实践者哪些场景现成架构够用，也精确标出哪些场景需要新架构，避免悲观的非普适结论被无差别滥用。
 
-3. **OCE：Output Capacity Expansion（Section 8）**：
+**3. OCE（Output Capacity Expansion）：把 Thm 7.2 的"输出要更大"做成几乎零成本的即插即用改动（Section 8）。**
 
-    - 功能：把 Thm 7.2 的"输出架构要更大"做成最小化、即插即用的改动。
-    - 核心思路：在任何 weight-space 网络的最后特征维加一个 $k>1$ 的维度，把输出张量解读成 $k$ 个并行 MLP 的参数，最终预测是 $k$ 个 MLP 输出的平均。代码上几乎只动一行；模型参数量也基本不变（共享了 backbone，只是输出 head 通道扩 $k$ 倍）。
-    - 设计动机：Prop 7.1 的不可能性根源是"输出 MLP 容量 $=$ 输入 MLP 容量"导致 linear region 数不够；ensemble 后等效 ReLU region 数翻 $k$ 倍，绕开容量瓶颈，且天然保持置换等变（每个分支独立等变）。这是用理论直接 buy 来的工程提升。
+Prop 7.1 的不可能性根子在于"输出 MLP 容量 $=$ 输入 MLP 容量"，导致输出端的 linear region 数不够。OCE 的破解极其朴素：在任何 weight-space 网络的最后特征维加一个 $k>1$ 的维度，把输出张量解读成 $k$ 个并行 MLP 的参数，最终预测取这 $k$ 个 MLP 输出的平均。因为共享了 backbone、只把输出 head 通道扩 $k$ 倍，参数量基本不变、代码上几乎只改一行；而 ensemble 后等效的 ReLU region 数翻了 $k$ 倍，恰好绕开容量瓶颈，并且天然保持置换等变（每个分支各自等变）。这相当于把第 2 点里"输出架构要更大"的理论指引直接兑换成工程提升。
 
 ### 损失函数 / 训练策略
 理论部分无训练目标；OCE 实验沿用 INR dilation benchmark (Zhou et al., 2023a) 的标准 MSE 监督。

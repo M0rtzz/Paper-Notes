@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是普通图 $\mathcal{G}=(\mathcal{V},\mathcal{E})$ 及节点特征。模型为每个节点构造一组 $d\times f$ 的 stalk 表征 $\mathbf{X}_v^{(l)}$，每层都做三件事：(a) 由两端节点表征**学习**该层的 restriction maps $\mathcal{F}^{(l)}_{v\trianglelefteq e}$，得到当前层的 sheaf 算子；(b) 用 sheaf **adjacency** 算子 $A_\mathcal{F}^{(l)}$ 而非 Laplacian 聚合邻居；(c) 残差相加后做 LayerNorm，并由门控 $\mathbf{G}^{(l)}$ 选择性地过滤聚合分量。最终的更新规则为
+DNSD 想解决的是"NSD 理论上抗坍缩、实践中却一深就崩"这个落差，做法是把驱动更新的算子从"度量分歧"换成"度量依赖"，再补齐深度网络的标准稳定件。每层为每个节点维护一组 $d\times f$ 的 stalk 表征 $\mathbf{X}_v^{(l)}$，先由两端节点表征学出该层的 restriction maps $\mathcal{F}^{(l)}_{v\trianglelefteq e}$，据此用 sheaf **adjacency** 算子 $A_\mathcal{F}^{(l)}$（而非 Laplacian）聚合邻居，再经奇激活、逐 stalk 门控筛选，最后残差相加并做 LayerNorm。完整的层更新写作
 
-$\mathbf{X}^{(l+1)} = \mathrm{LN}\!\big((1+\epsilon^{(l)})\mathbf{X}^{(l)} - (\mathbf{G}^{(l)}\otimes \mathbf{1}_f^\top)\odot \sigma_{\mathrm{odd}}(A_\mathcal{F}^{(l)}\mathbf{X}^{(l)} W_1^{(l)}) W_2^{(l)}\big)$
+$$\mathbf{X}^{(l+1)} = \mathrm{LN}\!\big((1+\epsilon^{(l)})\mathbf{X}^{(l)} - (\mathbf{G}^{(l)}\otimes \mathbf{1}_f^\top)\odot \sigma_{\mathrm{odd}}(A_\mathcal{F}^{(l)}\mathbf{X}^{(l)} W_1^{(l)}) W_2^{(l)}\big)$$
 
-输出再投回任务空间做节点分类。把它和 NSD 原始更新对比：NSD 用 $\Delta_\mathcal{F}$、用 ReLU、无 LayerNorm、无门控；DNSD 把四处全部换掉，其中 **adjacency 替换**被实验验证为最关键的因子。
+输出再投回任务空间做节点分类。和 NSD 原始更新逐处对照：NSD 用 $\Delta_\mathcal{F}$、用 ReLU、无 LayerNorm、无门控；DNSD 把这四处全部换掉，其中 adjacency 替换被消融验证为最关键的因子。
 
 ### 关键设计
 
-1. **Sheaf 邻接算子替代 Laplacian**:
+**1. Sheaf 邻接算子替代 Laplacian：堵住深层信号消失的根因**
 
-    - 功能：把每层的聚合算子从 $\Delta_\mathcal{F}=D_\mathcal{F}^{-1/2} L_\mathcal{F} D_\mathcal{F}^{-1/2}$ 换成 sheaf adjacency $A_\mathcal{F}$，其块矩阵元为 $(A_\mathcal{F})_{uv}=\mathcal{F}_{u\trianglelefteq e}^\top \mathcal{F}_{v\trianglelefteq e}$。
-    - 核心思路：Laplacian 度量"邻居之间还有多少没对齐的分量"，扩散迭代会把它推向 0，因此 $\sigma(\Delta_\mathcal{F}\mathbf{X} W_1)W_2$ 在深层等价于把"接近零的小信号"喂给非线性，导致深层参数几乎收不到梯度。换成邻接算子后，更新项变成 $\sigma(A_\mathcal{F}\mathbf{X} W_1)W_2$，即"用矩阵值边函数聚合邻居整体表征"——这是一个不随扩散消失的"依赖信号"，无论在初始化阶段还是深层都保持有信息含量。
-    - 设计动机：直接修复"理论保证 ↔ 实践崩塌"的根因；同时在 Section 4 中作者用 graph attention 的视角解释——GAT 同样是 adjacency-based，但用标量 softmax；DNSD 等于"把 GAT 的 scalar attention scores 换成 matrix-valued 边映射，并把归一化从 attention scores 挪到节点表征上"。
+NSD 失效的根子在于它的聚合算子 $\Delta_\mathcal{F}=D_\mathcal{F}^{-1/2} L_\mathcal{F} D_\mathcal{F}^{-1/2}$ 度量的是"邻居之间还有多少没对齐的分量"，而扩散迭代恰恰在把这个分歧推向 0，于是深层里 $\sigma(\Delta_\mathcal{F}\mathbf{X} W_1)W_2$ 等于反复把"接近零的小信号"喂给非线性，深层参数几乎收不到梯度。DNSD 把它换成 sheaf adjacency $A_\mathcal{F}$，其块矩阵元为 $(A_\mathcal{F})_{uv}=\mathcal{F}_{u\trianglelefteq e}^\top \mathcal{F}_{v\trianglelefteq e}$，更新项随之变成 $\sigma(A_\mathcal{F}\mathbf{X} W_1)W_2$——用矩阵值边函数聚合邻居的**整体**表征而不是它们的差。这个"依赖信号"不会随扩散收敛而消失，无论初始化阶段还是堆到 16 层都保持信息含量，因此直接修复了"理论保证 ↔ 实践崩塌"的断裂。作者还从 graph attention 的角度给了一个统一解释：GAT 同样是 adjacency-based，但用标量 softmax 注意力，而 DNSD 相当于把 GAT 的 scalar attention scores 换成 matrix-valued 边映射，并把归一化从 attention scores 挪到了节点表征上。
 
-2. **LayerNorm + 奇激活的稳定化组合**:
+**2. LayerNorm + 奇激活：稳住换 adjacency 后冒出的两个新问题**
 
-    - 功能：用 row-wise LayerNorm 把每个 stalk $\tilde{\mathbf{X}}_u^{(l)}\in\mathbb{R}^{d\times f}$ 按特征维 $f$ 标准化（$\mu_u,\sigma_u\in\mathbb{R}^d$），并把 ReLU 换成有界奇函数 $\sigma_\mathrm{odd}=\tanh$。
-    - 核心思路：换 adjacency 后信号不再消失，但深层会出现两个新问题。(i) 跨层表征尺度漂移：连续残差与非线性堆叠下，不同层的 magnitude 不一致，优化变得不稳；LayerNorm 把每个 stalk 独立标准化、再用可学习仿射参数 $\gamma^{(l)},\beta^{(l)}\in\mathbb{R}^f$ 重新拉伸，前向与反向都被稳住。(ii) ReLU 的非对称截断在"残差 − message"的减法结构里会变成"只能往一个方向调整"，叠多层后让特征几何持续漂移；奇函数 $\tanh$ 既保住正负对称、又通过有界性控制更新幅度。
-    - 设计动机：这两条都直接抄自深度 Transformer/ResNet 的经验，但要小心地按 stalk 维度组织——不能把所有节点拉成一个长向量做 BatchNorm，否则 sheaf 结构信息会被打散。
+换 adjacency 让信号不再消失，但深层暴露出两个新麻烦，需要一组稳定件压住。其一是跨层表征的尺度漂移：连续残差叠非线性后各层 magnitude 不一致，优化随之失稳；DNSD 用 row-wise LayerNorm 把每个 stalk $\tilde{\mathbf{X}}_u^{(l)}\in\mathbb{R}^{d\times f}$ 沿特征维 $f$ 标准化（$\mu_u,\sigma_u\in\mathbb{R}^d$），再用可学习仿射 $\gamma^{(l)},\beta^{(l)}\in\mathbb{R}^f$ 重新拉伸，把前向与反向同时稳住。其二是 ReLU 的非对称截断：在"残差 − message"的减法结构里它只能往一个方向调整，叠多层会让特征几何持续漂移；DNSD 改用有界奇函数 $\sigma_\mathrm{odd}=\tanh$，既保住正负对称，又靠有界性控制更新幅度。这两条思路直接借自深度 Transformer/ResNet，但必须按 stalk 维度组织——若把所有节点拉成一个长向量做 BatchNorm，sheaf 的结构信息就会被打散。
 
-3. **逐节点逐 stalk 门控 (per-stalk gating)**:
+**3. 逐节点逐 stalk 门控：限制噪声沿深度累积**
 
-    - 功能：为每个节点 $u$、每个 stalk 维 $s$ 学一个标量门 $[(\mathbf{G}^{(l)})_u]_s\in[0,1]$，按 $(\mathbf{G}^{(l)}\otimes \mathbf{1}_f^\top)\odot(\cdot)$ 把"聚合并经非线性后的更新项"做逐通道筛选。
-    - 核心思路：门由当前 stalk 表征 $\mathbf{X}_{u,s}^{(l)}$ 和"聚合但未过激活"的中间量 $\bar{\mathbf{X}}_{u,s}^{(l)}$ 拼接后通过 $\mathrm{sigmoid}(w_g^{(l)}[\cdot;\cdot]+b_g^{(l)})$ 得到，其中 $w_g^{(l)}\in\mathbb{R}^{1\times 2f}$ 全 stalk 共享，参数极少。
-    - 设计动机：即使有了 LN + adjacency，反复加权聚合仍会让某些噪声分量（类似 attention sink 现象）随深度累积。逐 stalk 门控让模型可以**有选择地**让该层的某些维度"少更新一点"或"完全过门"，从而限制噪声沿深度的累积，保护表征质量。
+即便有了 adjacency + LN，反复加权聚合仍会让某些噪声分量（类似 attention sink）随深度累积。DNSD 为每个节点 $u$、每个 stalk 维 $s$ 学一个标量门 $[(\mathbf{G}^{(l)})_u]_s\in[0,1]$，以 $(\mathbf{G}^{(l)}\otimes \mathbf{1}_f^\top)\odot(\cdot)$ 对"聚合并经非线性后的更新项"做逐通道筛选。这个门由当前 stalk 表征 $\mathbf{X}_{u,s}^{(l)}$ 和"聚合但未过激活"的中间量 $\bar{\mathbf{X}}_{u,s}^{(l)}$ 拼接后过 $\mathrm{sigmoid}(w_g^{(l)}[\cdot;\cdot]+b_g^{(l)})$ 得到，其中 $w_g^{(l)}\in\mathbb{R}^{1\times 2f}$ 在全 stalk 间共享、参数极少。它让模型能有选择地把某些维度"少更新一点"甚至"完全过门"，从而约束噪声沿深度堆积、保护表征质量。
 
 ### 损失函数 / 训练策略
 任务沿用 NSD 的节点分类设置（合成 G0–G10 与 6 个真实异质图基准），交叉熵损失；restriction maps 取 diagonal 或 full 两种参数化（orthogonal 在深层难训练，作者放到 future work）；层数扫 $\{2,4,8,12,16\}$，公平地复现 NSD 在相同超参预算下的结果。

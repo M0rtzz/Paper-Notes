@@ -40,31 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一个无标签的 prompt 数据集 $\mathcal{D}$、一个固定的基模型 $p_{\text{base}}$、一个用户指定的 $\alpha$。输出：一个微调后的策略 $\pi_\theta$，其分布近似 $p_{\text{base}}^\alpha$ 的长度归一化版本。训练 pipeline 三阶段：(1) 把无监督微调形式化为反向 KL 最小化，目标为 $\alpha$-power 分布；(2) 用 GFlowNet 的 Trajectory-Balance 目标作为变分代理，把不可解的配分函数摊销成一个可学习模块 $Z_\phi$；(3) 用 LA-TB 重参数化彻底消除长度偏置，并加上一个格式 penalty $\psi(y)$ 保证 instruction-following。推理时直接单次解码，没有任何额外开销，这点显著优于 PowerSampling 那种需要 MCMC 的方案。
+PowerFlow 把无监督微调形式化成"让策略去匹配基模型的 $\alpha$-power 分布"这一个目标，然后用 GFlowNet 把它变成一个能直接优化、又不被长度偏置毒化的训练损失。给定一个无标签 prompt 数据集 $\mathcal{D}$、一个固定的基模型 $p_{\text{base}}$、一个用户指定的 $\alpha$，它训练出策略 $\pi_\theta$，使其分布近似 $p_{\text{base}}^\alpha$ 的长度归一化版本。整条链路是：先把目标写成"对 $\alpha$-power 分布做反向 KL 最小化"，再用 Trajectory-Balance 目标把里面不可解的配分函数摊销成一个可学习模块 $Z_\phi$，最后用 LA-TB 重参数化把长度偏置彻底消掉、并配一个格式 penalty 保证 instruction-following。推理时就是普通单次解码、零额外开销，这点比 PowerSampling 那种推理期跑 MCMC 的方案省得多。
 
 ### 关键设计
 
-1. **$\alpha$-power 目标 + 双向旋钮**:
+**1. $\alpha$-power 目标 + 双向旋钮：用一个标量同时管"激发推理"和"释放创造力"。**
 
-    - 功能：用一个标量 $\alpha$ 同时控制"激发推理"和"释放创造力"两个看似相反的方向。
-    - 核心思路：目标分布定义为 $p_\alpha(y|q) = p_{\text{base}}(y|q)^\alpha / Z(q,\alpha)$。由于幂运算是单调变换，模式排名和多模态结构被完整保留——这是相对 RLHF/GRPO 等基于外部奖励的方法的关键区别（后者会"漂"出基模型支撑集）。$\alpha>1$ 时，通过"verification-generation asymmetry"假设（验证比生成简单，模型存在 hidden knowledge），锐化能把质量推到隐藏的正确路径上；$\alpha<1$ 时，对已经被 RLHF 过度锐化（即采到的是 reference 模型的 $\alpha>1$ power 分布）的对齐模型而言，flattening 恰好抵消 typicality bias，把被埋掉的长尾创造路径还原出来。
-    - 设计动机：摆脱 RLIF 的"启发式拼凑"——以前要为推理设一种奖励、为创造力设另一种，现在一个框架两套用法，且理论上保证不破坏基模型结构。论文还证明（Theorem F.1）经验上 work 的 majority-voting RLIF 其实是 $\alpha$-power 在 $\alpha \to \infty$ 的极限，把 PowerFlow 解释成"广义形式"。
+RLIF 此前的奖励全是手工拼的——想激发推理设一种、想要多样性设另一种，彼此割裂还没有理论保证。PowerFlow 把两件事收进同一个目标分布 $p_\alpha(y|q) = p_{\text{base}}(y|q)^\alpha / Z(q,\alpha)$。幂运算是单调变换，所以它只改熵、不动基模型的相对概率排名和多模态结构，这正是相对 RLHF/GRPO 这类外部奖励方法的关键差别（后者会把质量"漂"出基模型的支撑集）。$\alpha>1$ 时分布被锐化，配合"verification-generation asymmetry"假设（验证比生成容易、模型存在 hidden knowledge），质量被推向隐藏的正确路径；$\alpha<1$ 时分布被平滑，而一个被 RLHF 对齐过的模型相当于已经处在 reference 模型的 $\alpha>1$ power 分布上，再 flatten 一下恰好抵消 typicality bias、把被埋掉的长尾创造路径还原出来。论文进一步证明（Theorem F.1）经验上 work 的 majority-voting RLIF 其实就是 $\alpha$-power 在 $\alpha \to \infty$ 的极限，于是 PowerFlow 成了它的广义形式。
 
-2. **GFlowNet 作为摊销变分采样器**:
+**2. GFlowNet 作为摊销变分采样器：把分布匹配变成一个能算的 on-policy 目标。**
 
-    - 功能：把"匹配未归一化目标 $\tilde{p}_{\text{target}}$"转换成一个 RL 风格的 on-policy 目标，规避配分函数 $Z(q)$ 计算上不可解的问题。
-    - 核心思路：标准反向 KL 写成 $\mathbb{D}_{\text{KL}}(\pi_\theta \| p_{\text{target}}) = \mathbb{E}_{y\sim\pi_\theta}[\log \pi_\theta(y|q) / \tilde{p}_{\text{target}}(y|q)] + \log Z(q)$，后一项与 $\theta$ 无关。Zimmermann et al. (2023) 证明 GFlowNet 的 Trajectory-Balance 损失就是该 KL 的变分代理。LLM 自回归生成天然是树结构 DAG，反向策略退化为 $P_B \equiv 1$，TB 损失简化为 $\mathcal{L}_{\text{TB}} = (\log Z_\phi(q) + \sum_t \log \pi_\theta(y_t|y_{<t},q) - \log \tilde{p}_{\text{target}}(y|q))^2$。论文证明这玩意儿的梯度等于 $2\nabla_\theta \mathbb{D}_{\text{KL}}(P_F \| p_{\text{target}})$，所以最小化它就是在做严格的分布匹配。
-    - 设计动机：与 PPO/GRPO 那种 policy-gradient + KL-penalty 的 RL 范式不同，GFlowNet 提供一个**不需要奖励模型、却能精确匹配任意未归一化密度**的优化框架。$Z_\phi$ 摊销配分函数估计，能大幅降低梯度方差。
+直接最小化反向 KL 会撞上配分函数 $Z(q)$ 不可解的墙。把 KL 展开成 $\mathbb{D}_{\text{KL}}(\pi_\theta \| p_{\text{target}}) = \mathbb{E}_{y\sim\pi_\theta}[\log \pi_\theta(y|q) / \tilde{p}_{\text{target}}(y|q)] + \log Z(q)$ 后，末项与 $\theta$ 无关，于是真正要优化的只剩前半截。Zimmermann et al. (2023) 已证明 GFlowNet 的 Trajectory-Balance 损失就是这个 KL 的变分代理；而 LLM 自回归生成天然是树状 DAG，反向策略退化为 $P_B \equiv 1$，TB 损失因此简化成 $\mathcal{L}_{\text{TB}} = (\log Z_\phi(q) + \sum_t \log \pi_\theta(y_t|y_{<t},q) - \log \tilde{p}_{\text{target}}(y|q))^2$。它的梯度恰好等于 $2\nabla_\theta \mathbb{D}_{\text{KL}}(P_F \| p_{\text{target}})$，所以最小化它就是在做严格的分布匹配。和 PPO/GRPO 那种 policy-gradient + KL-penalty 不同，GFlowNet 不需要奖励模型就能精确匹配任意未归一化密度，而那个可学习的 $Z_\phi$ 把配分函数估计摊销掉、大幅压低了梯度方差。
 
-3. **Length-Aware TB 重参数化（LA-TB）**:
+**3. Length-Aware TB 重参数化（LA-TB）：把长度偏置从配分函数里连根拔掉。**
 
-    - 功能：消除自回归 log-prob 与序列长度近似线性相关导致的训练不稳定——锐化时短序列坍缩、平滑时重复 token 爆炸。
-    - 核心思路：把 prompt 级配分函数重写为长度感知形式 $Z_\phi(q,y) = (Z'_\phi(q))^{|y|}$，并对整个 log-mismatch 除以 $|y|$，得到 $\mathcal{L}_{\text{LA-TB}} = (\log Z'_\phi(q) + \tfrac{1}{|y|}\log(\pi_\theta(y|q)/\tilde{p}_{\text{target}}(y|q)))^2$。收敛点为 $\pi^*(y|q) \propto \tilde{p}_{\text{target}}(y|q) \cdot e^{-\lambda_q |y|}$，正好是对长度的一维指数 tilt。论文给了两条理论保证：(i) Prop 3.2，LA-TB 是给定期望长度约束下 $\tilde{p}_{\text{target}}$ 的 I-projection，即所有长度校准分布里和理想目标 KL 最小的那个；(ii) Prop 3.3，全局 KL 失真为 $\tfrac{1}{2}\lambda_q^2 \text{Var}_{\tilde{p}_{\text{target}}}(|y|) + O(|\lambda_q|^3)$，是 $\lambda_q$ 的二阶小量。最终目标加上格式 penalty $\psi(y)$（缺 \boxed{} 罚 -0.5）和 PPO 风格 importance ratio clipping。
-    - 设计动机：作者展示（Figure 3）trajectory 级 TB/RL 直接训会立刻长度坍缩；token 级简单平均又会被模型钻空子（用重复 token 拉低平均能量），先升后崩。LA-TB 既消除了长度偏置又不破坏语义结构——经验上在 Qwen2.5-Math-1.5B 上测得 pair-wise 反演率仅 0.09，即 91% 的 $\alpha$-power 排序被保留。
+自回归 log-prob 跟序列长度近似线性，所以任何 prompt 级的标量配分函数都会让能量随长度漂移——锐化时模型挑短路径走、短序列坍缩，平滑时模型灌重复 token 把平均能量拉低、长度爆炸。LA-TB 的做法是把配分函数本身改成长度感知形式 $Z_\phi(q,y) = (Z'_\phi(q))^{|y|}$，再把整个 log-mismatch 除以 $|y|$，得到 $\mathcal{L}_{\text{LA-TB}} = (\log Z'_\phi(q) + \tfrac{1}{|y|}\log(\pi_\theta(y|q)/\tilde{p}_{\text{target}}(y|q)))^2$。它的收敛点是 $\pi^*(y|q) \propto \tilde{p}_{\text{target}}(y|q) \cdot e^{-\lambda_q |y|}$，正好是对长度的一维指数 tilt。论文给了两条保证：Prop 3.2 说 LA-TB 是在给定期望长度约束下 $\tilde{p}_{\text{target}}$ 的 I-projection，即所有长度校准分布里离理想目标 KL 最近的那个；Prop 3.3 说全局 KL 失真只有 $\tfrac{1}{2}\lambda_q^2 \text{Var}_{\tilde{p}_{\text{target}}}(|y|) + O(|\lambda_q|^3)$，是 $\lambda_q$ 的二阶小量。再叠上格式 penalty $\psi(y)$（缺 \boxed{} 罚 -0.5）和 PPO 风格的 importance ratio clipping 就构成完整目标。效果上，trajectory 级 TB/RL 直接训几步就长度坍缩、token 级简单平均又会被重复 token 钻空子先升后崩，唯独 LA-TB 既消了长度偏置又不破坏语义——在 Qwen2.5-Math-1.5B 上测得 pair-wise 反演率仅 0.09，即 91% 的 $\alpha$-power 排序被保留。
 
 ### 损失函数 / 训练策略
 最终目标见公式 (10)：
-$\mathcal{L}_{\text{PowerFlow}} = w \cdot (\log Z'_\phi(q) + \tfrac{1}{|y|}\log\pi_\theta(y|q) - \alpha[\tfrac{1}{|y|}\log p_{\text{base}}(y|q) + \psi(y)])^2$
+
+$$\mathcal{L}_{\text{PowerFlow}} = w \cdot \left(\log Z'_\phi(q) + \tfrac{1}{|y|}\log\pi_\theta(y|q) - \alpha\left[\tfrac{1}{|y|}\log p_{\text{base}}(y|q) + \psi(y)\right]\right)^2$$
+
 其中 $w$ 是 detach 的 clipped IS ratio（off-policy 兼容）。推理任务默认 $\alpha=4$（base 模型）或 $\alpha=2$（instruct 模型，因为已经被对齐锐化过），创造性任务用 $\alpha=0.5$。训练数据：18k NuminaMath-CoT queries（推理）/ 300 个 prompt（创造性，来自 PoemHunter、BookMIA、Reddit r/DadJokes）。Recipe 沿用 EMPO，便于和 EMPO 公平比较。
 
 ## 实验关键数据

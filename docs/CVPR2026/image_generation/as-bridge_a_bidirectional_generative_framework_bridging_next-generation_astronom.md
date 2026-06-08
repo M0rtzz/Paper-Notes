@@ -37,28 +37,34 @@ tags:
 AS-Bridge 将跨巡天翻译建模为双向 Brownian Bridge 过程。利用重叠天区的配对观测作为锚点训练，学习 LSST 和 Euclid 数据分布之间的随机路径。训练完成后可在非重叠区域生成互补观测，同时用于罕见事件检测。
 
 ### 关键设计
-1. **Survey Translation Formulation（巡天翻译公式化）**:
 
-    - 功能：将两个巡天的观测视为共享潜在天体物理过程 $\Phi$ 的两个不同实现
-    - 核心思路：$x_{\text{Euclid}} = \mathcal{O}_{\text{Euclid}}(\Phi) + \epsilon_{\text{Euclid}}$，$x_{\text{LSST}} = \mathcal{O}_{\text{LSST}}(\Phi) + \epsilon_{\text{LSST}}$。由于潜在过程不可观测，边缘化 $\Phi$ 后直接学习条件分布 $p(x_{\text{Euclid}} | x_{\text{LSST}})$ 和 $p(x_{\text{LSST}} | x_{\text{Euclid}})$
-    - 设计动机：观测仅是底层场景的偏噪投影，映射本质上是随机的而非确定性的
+**1. 把跨巡天翻译写成条件分布，而不是确定性映射。**
 
-2. **Brownian Bridge with $\epsilon$-prediction（改进训练目标）**:
+LSST 和 Euclid 看的是同一片天空，但成像物理完全不同，所以两者并不是一对一对应。AS-Bridge 把它们都看成同一个潜在天体物理过程 $\Phi$ 的两次带噪投影：$x_{\text{Euclid}} = \mathcal{O}_{\text{Euclid}}(\Phi) + \epsilon_{\text{Euclid}}$，$x_{\text{LSST}} = \mathcal{O}_{\text{LSST}}(\Phi) + \epsilon_{\text{LSST}}$。$\Phi$ 本身观测不到，于是作者把它边缘化掉，直接去学两个方向的条件分布 $p(x_{\text{Euclid}} \mid x_{\text{LSST}})$ 和 $p(x_{\text{LSST}} \mid x_{\text{Euclid}})$。这一步把问题从"GAN/确定性 I2I 给一个最像的答案"改成"给出一族与已有观测都自洽的合理实现"——因为从被大气糊掉的 LSST 反推 Euclid 形态、或从 Euclid 单波段反推 LSST 多波段颜色，本来就是有多解的病态问题，只有概率建模才能把不确定性表达出来。
 
-    - 功能：在标准 Brownian Bridge 框架上推导更好的训练目标
-    - 核心思路：标准 Brownian Bridge 前向过程：$x_t | (x_0, x_T) \sim \mathcal{N}((1-m_t)x_0 + m_t x_T, \delta_t I)$，其中 $\delta_t = m_t(1-m_t)$。标准训练损失直接预测漂移 + 去噪项。作者证明 $\epsilon$-prediction 等价于标准损失乘以 $\sqrt{\delta_t}$ 权重：
-    $\mathcal{L} = \|\epsilon_\theta - \epsilon\|_2^2$
-      这保留了似然启发的对高噪声时间步的强调，同时维持桥端点附近的稳定梯度（避免 $\delta_t$ 直接加权在端点处梯度消失）。重建目标：
-    $\hat{x}_0 = \frac{x_t - m_t x_T - \sqrt{\delta_t} \epsilon_\theta(x_t, x_T, t)}{1-m_t}$
-    - 设计动机：科学问题需要模型忠实匹配条件概率分布；$\delta_t$ 直接加权在桥端点处梯度消失，$\sqrt{\delta_t}$ 提供更温和的权重
+**2. 用 $\epsilon$-prediction 重写 Brownian Bridge 的训练目标，稳住桥端点的梯度。**
 
-3. **Rare Event Detection（罕见事件检测）**:
+标准 Brownian Bridge 的前向过程把两端的真实观测当锚点，中间插值加噪：
 
-    - 功能：利用跨巡天重建不一致性进行无监督异常检测
-    - 核心思路：对配对观测通过前向过程融合生成中间变量 $x_t$，然后反向重建回 Euclid 域。采样 $N$ 个随机重建 $\{\hat{x}_0^{(i)}\}_{i=1}^N$，像素级异常分数取最小重建误差：
-    $\mathcal{A}(p) = \min_{i \in \{1,...,N\}} \|\hat{x}_0^{(i)}(p) - x_0(p)\|_2^2$
-      图像级分数通过通量归一化聚合：$\mathcal{A}(x_0) = \frac{\sum_p \mathcal{A}(p)}{\sum_p x_0(p)}$
-    - 设计动机：训练分布中罕见事件（如强引力透镜）被低估，模型无法忠实重建→重建不一致性为异常信号；取最小误差抑制噪声波动导致的虚假误差
+$$x_t \mid (x_0, x_T) \sim \mathcal{N}\big((1-m_t)x_0 + m_t x_T,\ \delta_t I\big),\qquad \delta_t = m_t(1-m_t)$$
+
+原始损失直接回归漂移加去噪项，但方差 $\delta_t$ 在桥的两端 $t\to0$、$t\to T$ 处趋近于 0，按 $\delta_t$ 加权会让端点附近梯度消失。作者证明改成预测噪声的 $\epsilon$-prediction 目标 $\mathcal{L} = \|\epsilon_\theta - \epsilon\|_2^2$ 等价于在标准损失上乘了一个 $\sqrt{\delta_t}$ 的权重——这是个更温和的权重，既保留了似然启发的"高噪声时间步多关注"，又不会在端点把梯度压没。对应的重建公式为
+
+$$\hat{x}_0 = \frac{x_t - m_t x_T - \sqrt{\delta_t}\,\epsilon_\theta(x_t, x_T, t)}{1-m_t}$$
+
+消融里直接拿 $\delta_t$ 当权重反而把 CRPS 做差了（见下文表），印证了"$\sqrt{\delta_t}$ 的温和加权"才是这套训练目标好用的关键。
+
+**3. 把重建不一致性当成异常信号，做无监督罕见事件检测。**
+
+模型只在普通星系上训练，没见过强引力透镜这类罕见结构，于是它对这些样本的重建会"失手"——这恰好可以反过来当检测信号。具体做法是把一对配对观测通过前向过程融合到中间变量 $x_t$，再反向重建回 Euclid 域，并采样 $N$ 个随机重建 $\{\hat{x}_0^{(i)}\}_{i=1}^N$。像素级异常分数取这 $N$ 次里的最小重建误差：
+
+$$\mathcal{A}(p) = \min_{i \in \{1,\dots,N\}} \|\hat{x}_0^{(i)}(p) - x_0(p)\|_2^2$$
+
+取最小而不是平均，是为了把"采样噪声偶尔造成的虚高误差"压下去，只保留模型怎么采样都重建不出来的真正异常。图像级分数再按通量归一化聚合，让亮源和暗源可比：
+
+$$\mathcal{A}(x_0) = \frac{\sum_p \mathcal{A}(p)}{\sum_p x_0(p)}$$
+
+这等于把生成模型的"认知边界"变成了发现新现象的探针——它建模不好的地方，往往就是训练分布里被低估的稀有天体。
 
 ### 损失函数 / 训练策略
 - 训练数据：使用 SLSim 模拟生成 115,000 普通星系 + 5,000 强引力透镜系统

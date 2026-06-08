@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入视频先经VQ-VAE（OmniTokenizer）编码为离散token序列，然后用自回归Transformer建模。训练时不在完整序列上计算损失，而是随机采样一个局部窗口进行优化，窗口外的前文token作为冻结上下文（stop-gradient）。同时对窗口内的隐状态施加连续性约束。推理时仍采用标准的全序列自回归生成。
+输入视频先用 VQ-VAE（OmniTokenizer）编码成离散 token 序列，再交给自回归 Transformer 建模。关键改动全在训练侧：不在完整序列上算损失，而是随机采样一个局部窗口、只优化窗口内的自回归损失，窗口外的前文 token 当作冻结上下文（stop-gradient），同时对窗口内相邻隐状态施加连续性约束；推理时仍走标准的全序列自回归生成，因此推理速度不受影响。
 
 ### 关键设计
 
-1. **Local Optimization (局部优化)**:
+**1. Local Optimization：只在局部窗口上回传，砍掉一半训练算力。**
 
-    - 功能：在随机采样的局部窗口内计算自回归损失，大幅减少每步训练的计算量
-    - 核心思路：给定完整token序列 $\mathbf{E}$，随机采样起始位置 $s$ 和窗口长度 $W$，只在窗口 $\mathbf{E}_\mathcal{W} = (\mathbf{e}_s, ..., \mathbf{e}_{s+W-1})$ 内计算交叉熵损失。窗口前的token $\mathbf{E}_{<s}$ 作为冻结上下文（不回传梯度）。使用步长 $S < W$ 创建重叠窗口，使token在不同上下文下被多次优化
-    - 设计动机：解决Fewer-Frames方法的两个核心问题——(1) 始终基于ground-truth上下文条件化，避免exposure bias；(2) 重叠窗口迫使模型学习更鲁棒的表示。推理时仍用标准全序列生成，不影响推理速度
+视频 token 序列远比图像长，在完整序列上做全序列自回归训练成本极高；而朴素地少训几帧（Fewer-Frames）又会因推理时缺乏全局上下文导致误差指数放大。本文给定完整 token 序列 $\mathbf{E}$，随机采样起始位置 $s$ 和窗口长度 $W$，只在窗口 $\mathbf{E}_\mathcal{W} = (\mathbf{e}_s, ..., \mathbf{e}_{s+W-1})$ 内计算交叉熵，窗口前的 $\mathbf{E}_{<s}$ 作为冻结上下文不回传梯度，并用步长 $S < W$ 制造重叠窗口、让同一 token 在不同上下文下被多次优化。这样既始终以 ground-truth 上下文为条件、避免 exposure bias，又靠重叠窗口逼模型学到更鲁棒的表示，而推理仍是标准全序列生成、速度不打折。
 
-2. **First-Frame Balanced Sampling (首帧均衡采样)**:
+**2. First-Frame Balanced Sampling：把首帧多喂几次，补上训练-生成的分布缺口。**
 
-    - 功能：通过增加包含首帧的窗口采样比例，解决训练-生成分布不匹配问题
-    - 核心思路：分析发现Local Opt.模型在生成样本上的损失分布与训练样本存在显著差异，尤其首帧损失偏高。将包含首帧的窗口采样概率提升到0.5，使模型更多地优化视频开头部分
-    - 设计动机：首帧质量直接影响后续所有帧的生成。实验表明均衡采样后FVD从190.46降至127.11，同时训练速度进一步提升至2.0倍
+作者对比训练样本与生成样本的损失分布，发现 Local Opt. 模型在生成时首帧损失明显偏高——而首帧质量会直接影响后续所有帧。对策很直接：把"包含首帧的窗口"的采样概率提升到 0.5，让模型更多地优化视频开头部分。这一改让 FFS 上的 FVD 从 190.46 降到 127.11，训练加速也进一步提升到 2.0 倍。
 
-3. **Representation Continuity (ReCo, 表示连续性)**:
+**3. Representation Continuity (ReCo)：用 Lipschitz 约束把误差从指数压成线性。**
 
-    - 功能：约束相邻时间步的隐状态变化幅度，增强时序平滑性
-    - 核心思路：将自回归模型视为离散时间动力系统，受Lipschitz连续性启发，在窗口内对相邻隐状态施加连续性损失 $\mathcal{L}_{ReCo} = \frac{1}{W-1}\sum_{i=s}^{s+W-2}\|\mathbf{h}_{i+1} - \mathbf{h}_i\|_2^2$。总损失为 $\mathcal{L}_{Total} = \mathcal{L}_{CE} + \lambda \cdot \mathcal{L}_{ReCo}$
-    - 设计动机：Local Opt.聚焦独立窗口可能产生表示空间中的突变。通过约束小的局部Lipschitz常数，误差传播被限制在 $\|\epsilon_{t+1}\| \leq L \cdot \|\epsilon_t\| + \delta_t$ 的线性增长范围内，而非指数放大
+只盯着独立窗口优化，容易在表示空间里留下突变，跨窗口拼接时误差会被放大。本文把自回归模型看成离散时间动力系统，受 Lipschitz 连续性启发，对窗口内相邻隐状态加一项连续性损失 $\mathcal{L}_{ReCo} = \frac{1}{W-1}\sum_{i=s}^{s+W-2}\|\mathbf{h}_{i+1} - \mathbf{h}_i\|_2^2$，与交叉熵合成总损失 $\mathcal{L}_{Total} = \mathcal{L}_{CE} + \lambda \cdot \mathcal{L}_{ReCo}$。当局部 Lipschitz 常数被压小，误差传播被限制在 $\|\epsilon_{t+1}\| \leq L \cdot \|\epsilon_t\| + \delta_t$ 的线性增长范围内，而非指数放大，于是在算力减半的同时把全序列生成的一致性追回到 baseline 水平。
 
 ### 损失函数 / 训练策略
 总损失由两部分组成：(1) 窗口内标准交叉熵损失 $\mathcal{L}_{CE}$；(2) 表示连续性正则项 $\mathcal{L}_{ReCo}$，权重 $\lambda=0.1$。首帧窗口采样概率设为0.5。训练300个epoch，学习率 $1\times10^{-4}$。

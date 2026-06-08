@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-REKD 整体是"教师 RE + 学生 RE + 共享温度调度"的三件套。输入 $\mathbf{X} \in \mathbb{R}^{L \times D}$（L 个特征/patch/token，每个 D 维嵌入），分别经过教师和学生两套 generator-predictor pipeline，各自产生：(1) Gumbel-Softmax 软分布 $\mathbf{S}$ 及其 STE 离散化的二值掩码 $\mathbf{M}$（哪些特征被选中），(2) 由 rationale $\mathbf{R} = \mathbf{M} \odot \mathbf{X}$ 通过 predictor 得到的类别 logits $\mathbf{Q}$。学生侧的总损失把它原本的 $\mathcal{L}_{\text{RE}}$（任务交叉熵 + 长度约束）和蒸馏损失 $\mathcal{L}_{\text{KD}}$（generator 蒸馏 + predictor 蒸馏）按权重 $\alpha$ 混合，并跑同一条指数退火温度 $\tau_k = \tau_0 e^{-\gamma k}$（从 $\tau_0 = 5$ 退到 $\tau_K = 0.1$）。
+REKD 要解决的是小模型在"选-预测"式 rationale extraction 里探不出好特征子集的困境，做法是在原本的 RE 框架上挂一条蒸馏分支，让小学生同时模仿大教师的特征选择和最终预测。输入 $\mathbf{X} \in \mathbb{R}^{L \times D}$（L 个特征/patch/token，每个 D 维）分别走教师、学生两套 generator-predictor pipeline，各自吐出 Gumbel-Softmax 软分布 $\mathbf{S}$、其 STE 离散化的二值掩码 $\mathbf{M}$，以及 rationale $\mathbf{R} = \mathbf{M} \odot \mathbf{X}$ 经 predictor 得到的类别 logits。学生侧把原任务损失 $\mathcal{L}_{\text{RE}}$ 和蒸馏损失 $\mathcal{L}_{\text{KD}}$ 按权重 $\alpha$ 混合，关键的一笔是让蒸馏温度和 Gumbel-Softmax 退火共用同一条指数曲线，使整个训练自然走出"先软后硬"的课程。
 
 ### 关键设计
 
-1. **基于 Straight-Through Gumbel-Softmax 的可微 RE**:
+**1. Straight-Through Gumbel-Softmax 可微 RE：把"选不选"变成可反传的离散决策**
 
-    - 功能：让"选不选第 $l$ 个特征"这件离散事件可以反传梯度，避免 Lei et al. (2016) 那种高方差的 REINFORCE 估计。
-    - 核心思路：generator 输出每个特征位置上"选/不选"的二维 logits，按 $S_{l,i} = \exp((Z_{l,i} + G_{l,i})/\tau) / \sum_j \exp((Z_{l,j}+G_{l,j})/\tau)$ 采样得到软分布，再以 $M_l = \arg\max_i S_{l,i}$ 离散化成 0/1 掩码喂给 predictor；反向传播时按 STE 约定 $\partial \mathbf{M}/\partial \mathbf{S} \approx 1$，把梯度直接当作软分布的梯度回传。长度约束用 rectifier 式平方损失 $\mathcal{L}_{\text{select}} = (\sum_l M_l - L \cdot p_{\text{target}})^2$ 把选中数控在目标稀疏度 $p_{\text{target}}$（CIFAR 取 15%, IMDB 取 10%）附近。
-    - 设计动机：RE 的"忠实"要求 predictor 只能看到被选中的特征，所以必须在前向真正离散化（否则会有信息泄漏）；而梯度又必须能穿过这次离散化才能训练 generator。STE + Gumbel-Softmax 是该约束下当前最干净的可微化方案。
+RE 的痛点在于"选第 $l$ 个特征还是不选"本质是离散事件，Lei et al. (2016) 原版只能用高方差的 REINFORCE 来估梯度，小模型根本扛不住。本文让 generator 在每个特征位置输出"选/不选"的二维 logits，按 $S_{l,i} = \exp((Z_{l,i} + G_{l,i})/\tau) / \sum_j \exp((Z_{l,j}+G_{l,j})/\tau)$ 采出软分布，再用 $M_l = \arg\max_i S_{l,i}$ 离散化成 0/1 掩码喂给 predictor，反传时按 STE 约定 $\partial \mathbf{M}/\partial \mathbf{S} \approx 1$ 把梯度当软分布梯度回传。稀疏率则用 rectifier 式平方损失 $\mathcal{L}_{\text{select}} = (\sum_l M_l - L \cdot p_{\text{target}})^2$ 拉到目标稀疏度 $p_{\text{target}}$（CIFAR 15%、IMDB 10%）附近。之所以非得这么绕，是因为 RE 的"忠实性"要求 predictor 前向时只能看到真被选中的特征（不离散化就会信息泄漏），而梯度又必须穿过这次离散化才能训得动 generator——STE + Gumbel-Softmax 是同时满足这两条约束下最干净的可微化方案。
 
-2. **Generator 与 Predictor 双路蒸馏**:
+**2. Generator 与 Predictor 双路蒸馏：既学"哪些特征重要"，也学"特征怎么用"**
 
-    - 功能：把"教师认为哪些特征重要"和"教师在这些特征上得出什么预测"这两条互补信息同时灌给学生。
-    - 核心思路：generator 蒸馏对每个特征位置算教师/学生两个 Gumbel-Softmax 分布的 KL，$\mathcal{L}_{\text{KD}}^{\text{R}} = \sum_l D_{\text{KL}}(\mathbf{S}^{(T)}_{\tau,l} \,\|\, \mathbf{S}^{(S)}_{\tau,l})$；predictor 蒸馏走经典 Hinton-KD，对温度缩放的 softmax 取 KL，$\mathcal{L}_{\text{KD}}^{\text{Y}} = D_{\text{KL}}(\hat{\mathbf{Y}}^{(T)}_\tau \,\|\, \hat{\mathbf{Y}}^{(S)}_\tau)$。两项以 $\mathcal{L}_{\text{KD}} = \lambda_R \mathcal{L}_{\text{KD}}^{\text{R}} + \tau^2 \mathcal{L}_{\text{KD}}^{\text{Y}}$ 合并（$\tau^2$ 抵消 logit 缩放带来的梯度衰减；generator 侧因为 Gumbel-Softmax 自己处理了 $\tau \to 0$ 的尺度，所以不再额外乘 $\tau^2$）。最终训练目标 $\mathcal{L}_{\text{REKD}} = \alpha \mathcal{L}_{\text{RE}} + (1-\alpha)\mathcal{L}_{\text{KD}}$。
-    - 设计动机：只蒸 prediction 等同于让学生黑盒模仿教师，舍弃了"哪些特征重要"这条可解释、可验证的中间监督；只蒸 rationale 又会丢掉"这些特征该如何被使用"的下游信号。两路并行才能把"指出关键变量 + 演示怎么用"这件人类学习里最有效的事完整迁移过来。由于选择层是统一的二维分布接口，蒸馏天然兼容不同隐层维度，不需要 FitNet 那种投影模块。
+只蒸最终预测等于让学生黑盒模仿教师，丢掉了"哪些特征重要"这条可解释中间监督；只蒸 rationale 又丢掉了"这些特征该怎么被用"的下游信号，所以本文两路并行。Generator 蒸馏对每个特征位置算教师/学生两个 Gumbel-Softmax 分布的 KL，$\mathcal{L}_{\text{KD}}^{\text{R}} = \sum_l D_{\text{KL}}(\mathbf{S}^{(T)}_{\tau,l} \,\|\, \mathbf{S}^{(S)}_{\tau,l})$；predictor 蒸馏走经典 Hinton-KD，对温度缩放 softmax 取 KL，$\mathcal{L}_{\text{KD}}^{\text{Y}} = D_{\text{KL}}(\hat{\mathbf{Y}}^{(T)}_\tau \,\|\, \hat{\mathbf{Y}}^{(S)}_\tau)$。两项合成 $\mathcal{L}_{\text{KD}} = \lambda_R \mathcal{L}_{\text{KD}}^{\text{R}} + \tau^2 \mathcal{L}_{\text{KD}}^{\text{Y}}$，其中 $\tau^2$ 抵消 logit 缩放带来的梯度衰减，而 generator 侧因为 Gumbel-Softmax 自己处理了 $\tau \to 0$ 的尺度就不再额外乘。这一招把人类学习里最有效的"先指出关键变量、再演示怎么用"完整迁移给了学生；又因为选择层是统一的二维分布接口，蒸馏退化成两个等长二项分布的 KL，天然兼容不同隐层维度，省掉了 FitNet 那种维度对齐的投影模块。
 
-3. **温度共享调度——隐式课程学习**:
+**3. 温度共享调度：让"白捡"的退火变成隐式课程**
 
-    - 功能：让"教师→学生"的知识难度随训练进程自动从易到难，无需再额外设计课程。
-    - 核心思路：Gumbel-Softmax 本身就要求 $\tau$ 从大退到小（高 $\tau$ 给低方差梯度便于探索，低 $\tau$ 才能逼近真正的离散采样）；本文把 KD 的温度直接绑到这同一个 $\tau_k = \tau_0 e^{-\gamma k}$ 上。训练早期 $\tau$ 大，教师的 Gumbel-Softmax 分布平坦、softmax 输出也软，学生学的是"教师大致觉得哪些区域重要、各类别的相对偏好"这类粗粒度知识，方便广撒网；训练后期 $\tau$ 退到 0.1，分布尖锐，学生被迫匹配教师的高置信硬选择和高置信类别预测，强制收敛到精确决策。
-    - 设计动机：annealing KD（Jafari et al., 2021）虽然也做过软到硬的温度过渡，但那是为了弥补 capacity gap 而手工设计的额外 schedule；REKD 里温度共享是结构上的硬要求——只要你想用 Gumbel-Softmax 做可微 RE 就必须退火，退火带来的课程效应是"白捡的"，几乎零额外设计成本。
+Gumbel-Softmax 本来就要求 $\tau$ 从大退到小——高 $\tau$ 给低方差梯度便于探索，低 $\tau$ 才能逼近真正的离散采样。本文干脆把 KD 的温度直接绑到这同一条 $\tau_k = \tau_0 e^{-\gamma k}$（从 $\tau_0=5$ 退到 $\tau_K=0.1$）上，于是训练早期 $\tau$ 大、教师分布平坦，学生学的是"大致哪些区域重要、各类别的相对偏好"这类粗粒度知识便于广撒网；后期 $\tau$ 退到 0.1、分布尖锐，学生被迫匹配教师的高置信硬选择和高置信类别预测，强制收敛到精确决策。这和 annealing KD（Jafari et al., 2021）那种为弥补 capacity gap 手工设计的软到硬 schedule 不同：REKD 里退火是用 Gumbel-Softmax 就必须做的结构性约束，由此白捡的课程效应几乎零额外设计成本。
 
 ### 损失函数 / 训练策略
 最终目标 $\mathcal{L}_{\text{REKD}} = \alpha(\mathcal{L}_{\text{pred}} + \lambda_{\text{select}}\mathcal{L}_{\text{select}}) + (1-\alpha)(\lambda_R \mathcal{L}_{\text{KD}}^{\text{R}} + \tau^2 \mathcal{L}_{\text{KD}}^{\text{Y}})$。训练 35 epoch（纯分类 20 epoch），lr=1e-5，bs=32，$\tau_0 = 5$, $\tau_K = 0.1$，每 100 步更新一次 $\tau$；$\lambda_R = 0.5$；CIFAR 上 $p_{\text{target}} = 15\%$，IMDB 上 10%。每个 seed 跑 10 次取均值。教师固定用一个 seed 训出的 RE 模型，学生在该教师下重复 10 次。

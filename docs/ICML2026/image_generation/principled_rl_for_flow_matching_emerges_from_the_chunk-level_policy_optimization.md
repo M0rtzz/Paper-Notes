@@ -40,27 +40,27 @@ GCPO 把 GRPO 在 flow matching 后训练里"每一步都用同一个最终 rewa
 ## 方法详解
 
 ### 整体框架
-GCPO 不改 reward、不改 sampler、不改 KL 约束，只改 GRPO 目标函数里"对哪个粒度做 importance ratio + clip"。pipeline 是：(1) 用 FLUX.1 Dev 做 base policy，沿 SDE 化的 flow matching 公式 $dx_t=(v_\theta+\frac{\sigma_t^2}{2t}(x_t+(1-t)v_\theta))dt+\sigma_t dw_t$ 从 $x_T$ 采到 $x_0$，得到轨迹 $(x_T,\ldots,x_0)^i$；(2) 沿途记录每一步的 $L1_{rel}(x,t)$，按其一阶/二阶导数符号递归切成 $K$ 个非等长 chunk $\{ch_1,\ldots,ch_K\}^i$；(3) reward model（HPSv3 / CLIP / PickScore）打 final reward $r(x_0^i,c)$，组内归一化得 $A^i$；(4) 用 chunk-level 目标 Eq.14 + chunk-level 重要性比 Eq.15 更新 $\theta$；(5) 可选加 weighted sampling，从每条轨迹里按 $w(ch_j)\propto \overline{L1_{rel}}(ch_j)$ 偏向高噪 chunk 采样训练。
+GCPO 想解决的是 GRPO 在 flow matching 后训练里"把同一个最终 reward 均匀贴到生成轨迹每一步"造成的错误归因，而它的做法是把策略优化的最小单元从单步抬到"块"。整条 pipeline 不动 reward、不动 sampler、不动 KL 约束，只改 GRPO 目标函数里"对哪个粒度做 importance ratio + clip"：以 FLUX.1 Dev 为 base policy，沿 SDE 化的 flow matching 公式 $dx_t=(v_\theta+\frac{\sigma_t^2}{2t}(x_t+(1-t)v_\theta))dt+\sigma_t dw_t$ 把轨迹采出来，沿途记下每步的 $L1_{rel}(x,t)$ 用来切 chunk，reward model 只对终态 $x_0$ 打分得到组内相对 advantage $A^i$，最后用 chunk-level 的重要性比做 PPO-style 更新。
 
 ### 关键设计
 
-1. **Chunk-level importance ratio（从 step 到 chunk 的目标函数改写）**:
+**1. Chunk-level importance ratio：把错误的步级梯度在块内稀释掉**
 
-    - 功能：用"chunk 内联合 likelihood 的几何平均"替代 GRPO 的"每步独立 likelihood 比"，把策略梯度的最小单元从 1 步扩到 $cs_j$ 步。
-    - 核心思路：把轨迹切成 $K$ 个 chunk 后，第 $i$ 条轨迹第 $j$ 个 chunk 的重要性比定义为 $r^i_j(\theta)=\left(\prod_{t\in ch_j}\frac{p_\theta(x^i_{t-1}|x^i_t,c)}{p_{\text{old}}(x^i_{t-1}|x^i_t,c)}\right)^{1/cs_j}$，再代回 PPO clip 目标 $\frac{1}{G}\frac{1}{K}\sum_{i,j}\min(r^i_jA^i,\text{clip}(r^i_j,1\pm\epsilon)A^i)-\beta D_{KL}$。$K=T$ 退化为 step-level GRPO，$K=1$ 退化为 sequence-level（类 GSPO/Zheng 2025）。
-    - 设计动机：当 chunk 内某步的"step 级最优策略"和 "final reward 推出的方向"不一致时，原 GRPO 会给这一步一个完全错的梯度；改成 chunk 几何平均后，错误步的 ratio 被同 chunk 内其它步"稀释"，等价于在 chunk 内做了一次低通滤波，把 inaccurate advantage attribution 引起的高频抖动平滑掉。1/$cs_j$ 归一化（沿用 Zheng 2025）保证不同长度 chunk 的 ratio 量级可比，clip $\epsilon$ 不需要重调。
+GRPO 把 outcome reward 平摊到每一步，隐含"最终更好 ⇒ 每步更优"的强假设；但作者用 step-aware preference model 统计出约一半的步上"step 级偏好"和"final reward"方向不一致，这意味着 GRPO 对这些步给的是完全错的梯度。GCPO 的对策是把轨迹切成 $K$ 个 chunk 后，不再对单步算 likelihood 比，而是对第 $i$ 条轨迹第 $j$ 个 chunk 取联合 likelihood 的几何平均 $r^i_j(\theta)=\left(\prod_{t\in ch_j}\frac{p_\theta(x^i_{t-1}|x^i_t,c)}{p_{\text{old}}(x^i_{t-1}|x^i_t,c)}\right)^{1/cs_j}$，再代回 PPO clip 目标 $\frac{1}{G}\frac{1}{K}\sum_{i,j}\min(r^i_jA^i,\text{clip}(r^i_j,1\pm\epsilon)A^i)-\beta D_{KL}$。
 
-2. **Temporal-dynamics-guided 自适应切块**:
+这样改之后，chunk 内某个"被 final reward 误判"的步，它的 ratio 会被同 chunk 内其它步平均掉，等价于在 chunk 内做了一次低通滤波，把错误归因引起的高频梯度抖动压下去。这个目标也是 step-level GRPO 与 sequence-level 的统一形式：$K=T$ 时每个 chunk 只含一步即退回原 GRPO，$K=1$ 时整条轨迹一个 chunk 即退回类 GSPO 的序列级（Zheng 2025）。$1/cs_j$ 的几何平均归一化保证不同长度 chunk 的 ratio 量级可比，从而 clip 阈值 $\epsilon$ 不必随 chunk 大小重调，也避免长 chunk 因联合 likelihood 太小被 clip 误杀。
 
-    - 功能：决定"哪几步该被聚成一个 chunk"，让 chunk 边界落在 flow matching 真正发生"动力学拐点"的地方，而不是均匀切。
-    - 核心思路：观察到 flow matching 的相对 $L_1$ 距离 $L1_{rel}(x,t)=\|x_t-x_{t-1}\|_1/\|x_t\|_1$ 沿 $t$ 呈 **prompt-invariant yet step-dependent** 的曲线（Figure 5：高噪段变化剧烈、低噪段变化平缓），自然把轨迹分成"动力学相近"的段落。实现上：先对 $L1_{rel}$ 求一阶导数，把符号相同的连续步归为一组；若整段符号一致就从中点切；对每个子段递归用更高阶导数继续切，直到 chunk 足够小才停止。
-    - 设计动机：Figure 4 的对照实验表明等长切块（$cs=2/4/8/16$）效果有差且都不如自适应切块——因为"动力学相近的相邻步"才真正构成一个有意义的 atomic action，把高噪剧变区和低噪平稳区强行混进同一 chunk 会让 chunk 内 ratio 几何平均失去物理意义。用 $L1_{rel}$ 做指标既不需要训额外网络也是 prompt-invariant 的，几乎零开销。
+**2. Temporal-dynamics-guided 自适应切块：让块边界落在动力学拐点上**
 
-3. **基于动力学的 weighted chunk sampling（可选）**:
+切块方式直接决定几何平均"平均的是不是同一类步"。作者观察到 flow matching 的相对 $L_1$ 距离 $L1_{rel}(x,t)=\|x_t-x_{t-1}\|_1/\|x_t\|_1$ 沿 $t$ 呈一条 prompt-invariant 却 step-dependent 的曲线（Figure 5：高噪段变化剧烈、低噪段变化平缓），这条曲线天然把轨迹分成"动力学相近"的段落。于是 GCPO 用它做切块依据：先对 $L1_{rel}$ 求一阶导数，把符号相同的连续步归为一组，整段符号一致就从中点切，再对每个子段递归用更高阶导数继续切，直到 chunk 足够小才停。
 
-    - 功能：训练时只从每条轨迹里采一部分 chunk 算梯度（沿用 Dance-GRPO 的子采样，分数 0.5），但用权重 $w(ch_j)$ 替换原来的均匀分布，让高噪 chunk 被更频繁选中。
-    - 核心思路：每个 chunk 的采样权重正比于其平均相对 $L_1$ 距离 $w(ch_j)=\frac{\overline{L1_{rel}}(ch_j)}{\sum_k\overline{L1_{rel}}(ch_k)}$，其中 $\overline{L1_{rel}}(ch_j)=\frac{1}{cs_j}\sum_{t\in ch_j}L1_{rel}(x,t)$，分布偏向高噪段。
-    - 设计动机：消融实验（Figure 7，只在单个 chunk 上训）显示高噪 chunk 带来的提升更大但训练更不稳定（60 步后发散），低噪 chunk 稳定但提升小；加权采样想兼顾两者——多采高噪加速对齐，少采低噪保住稳定。代价是它会在偏好对齐上涨点但在 GenEval 这类结构基准上略掉点（Figure 6 给的失败例：把"black loafers"完全画丢、"capris"只画一半），所以作者把它做成 optional。
+之所以不用等长切，是因为只有"动力学相近的相邻步"才真正构成一个有意义的 atomic action——把高噪剧变区和低噪平稳区硬塞进同一个 chunk，会让块内 ratio 的几何平均失去物理意义。Figure 4 的对照里等长切块（$cs=2/4/8/16$）彼此有差且都不如自适应切块，正印证了这点。而用 $L1_{rel}$ 当指标既不用训额外网络、又是 prompt-invariant 的，几乎零开销，换任何 flow matching backbone 都能直接复用。
+
+**3. 基于动力学的 weighted chunk sampling（可选）：高噪加速、低噪兜底**
+
+为省算力，训练时只从每条轨迹里采一部分 chunk 算梯度（沿用 Dance-GRPO 的子采样，分数 0.5）。GCPO 把原来的均匀采样换成按动力学加权：每个 chunk 的采样权重正比于其平均相对 $L_1$ 距离 $w(ch_j)=\frac{\overline{L1_{rel}}(ch_j)}{\sum_k\overline{L1_{rel}}(ch_k)}$，其中 $\overline{L1_{rel}}(ch_j)=\frac{1}{cs_j}\sum_{t\in ch_j}L1_{rel}(x,t)$，分布因此偏向高噪段。
+
+这么设计的依据来自消融（Figure 7，只在单个 chunk 上训）：高噪 chunk 带来的 reward 提升更大但训练更不稳，60 步后会发散；低噪 chunk 稳定但提升小。加权采样想两头都占——多采高噪加速对齐、少采低噪保住稳定。代价是它会在偏好对齐上涨点、却在 GenEval 这类结构基准上掉点（Figure 6 的失败例把"black loafers"整个画丢、"capris"只画一半），所以作者把它列为 optional。
 
 ### 损失函数 / 训练策略
 最终目标 Eq.14：$J(\theta)=\mathbb{E}\Big[\frac{1}{G}\frac{1}{K}\sum_{i,j}\big(\min(r^i_j A^i,\text{clip}(r^i_j,1-\epsilon,1+\epsilon)A^i)-\beta D_{KL}(\pi_\theta\|\pi_{ref})\big)\Big]$，其中 $A^i$ 仍是 group 内相对最终 reward。Base model 用 FLUX.1 Dev，数据集 HPDv2.1，主 reward 用 HPSv3（偏好对齐）/ CLIP（标准 T2I），评估时配合 (Li 2025a) 的 hybrid inference 抑制 reward hacking。

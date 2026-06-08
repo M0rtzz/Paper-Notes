@@ -40,36 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CoFrGeNet 把 Transformer block 的两大组件各自换成 CoFrNet ladder 集合：
-- **CAttnU / CAttnM**（替换 causal multi-head attention，提供两种实现）；
-- **Cffn**（替换 FFN，去掉传统 FFN 的 $\alpha\sim 4$ 倍扩展）。
-
-ladder 集合的统一实现走 (8) 式 $y = Ux + Vz, \ z_j = \tilde f(W^{(j)} x)$：每根 ladder $j$ 用一组参数 $W^{(j)}$ 把输入投到 $d$ 维 partial denominator，CF 层用 continuant 递推算 $K_0,\dots,K_d$ 和 $1/K_d$，输出 $z_j = K_{d-1}/K_d$，再线性组合成最终输出。整套自定义 PyTorch autograd.Function 把前向 continuant 和反向梯度同时算好。
+CoFrGeNet 要解决的是"在不掉点的前提下大幅压参"，做法是把 Transformer block 里的两大耗参组件直接换成连续分数函数类：causal multi-head attention 换成 CAttnU / CAttnM 两种 ladder 实现，FFN 换成不扩展的 Cffn。所有替代模块共用同一套 ladder 集合形式 $y = Ux + Vz,\ z_j = \tilde f(W^{(j)} x)$（(8) 式）：每根 ladder $j$ 先用参数 $W^{(j)}$ 把输入投成 $d$ 维 partial denominator，CF 层再用 continuant 递推算出连续分数值 $z_j = K_{d-1}/K_d$，最后线性组合成输出，整条前向与反向都封装进一个自定义 `autograd.Function`。
 
 ### 关键设计
 
-1. **基于 continuants 的"一次除法"实现（Continuant-Based Implementation）**:
+**1. 基于 continuants 的「一次除法」实现：让深 ladder 不再被除法拖死**
 
-    - 功能：把"标准实现需要 $d$ 次除法的 $d$ 深连续分数 ladder"压成只需 1 次除法，前向和反向同步加速。
-    - 核心思路：用 (4)(5) 的递推 $K_k(a_{d-k+1},\dots,a_d) = a_{d-k+1} K_{k-1} + K_{k-2}$ 算所有 continuant，仅 $O(d)$ 次加乘；连续分数值 $\tilde f(a) = K_{d-1}/K_d$（一次除法），梯度根据 Proposition 1 闭式表达 $\partial \tilde f / \partial a_k = (-1)^k (K_{d-k}(a_{k+1},\dots,a_d) / K_d(a_1,\dots,a_d))^2$——所有梯度都共享同一个分母 $K_d$，所以只需算一次 $1/K_d$ 即可复用到 $d$ 个偏导。封装为 `torch.autograd.Function`，前向 saved-for-backward 缓存 $K_*$ 和 $1/K_d$。
-    - 设计动机：标准 ladder 实现 (1) 式每一层都要除一次，$d$ 层就 $d$ 次除法；现代 GPU/硬件除法比乘法慢 5-20×，深 ladder 完全跑不起来。通过 continuant 改写让 ladder 深度可以加深而不付出除法代价，同时只对 $K_d$ 做一次 $\text{sgn}(K_d)\max(|K_d|, \epsilon)$ clipping 避免极点发散——比 (Puri et al. 2021) 在每层除前 clip $d$ 次保留更多表达力。实验显示 CoFrGeNetB（不用 continuants）的 inference 时间 5898 μs，用 continuants 后降到 628 μs，**接近 10× 加速**。
+连续分数 ladder 越深表达力越强，但标准实现 (1) 式每一层都要做一次倒数，$d$ 层就是 $d$ 次除法，而现代 GPU 上除法比乘法慢 5-20×，深 ladder 根本跑不动。本文用 continuant 多项式改写整条阶梯：按 (4)(5) 的递推 $K_k(a_{d-k+1},\dots,a_d) = a_{d-k+1} K_{k-1} + K_{k-2}$ 只用 $O(d)$ 次加乘就能算出全部 continuant，连续分数值写成 $\tilde f(a) = K_{d-1}/K_d$ 只剩一次除法。更关键的是 Proposition 1 给出梯度的闭式 $\partial \tilde f / \partial a_k = (-1)^k \big(K_{d-k}(a_{k+1},\dots,a_d) / K_d(a_1,\dots,a_d)\big)^2$——所有偏导共享同一个分母 $K_d$，于是反向传播同样只需算一次 $1/K_d$ 再复用到 $d$ 个梯度。实现上封成 `torch.autograd.Function`，前向把 $K_*$ 和 $1/K_d$ saved-for-backward 缓存下来，并只对 $K_d$ 做一次 $\text{sgn}(K_d)\max(|K_d|,\epsilon)$ 钳制防止极点发散（比 Puri et al. 2021 每层 clip $d$ 次保留更多表达力）。效果是 CoFrGeNetB（朴素实现）推理 5898 μs，改用 continuants 后降到 628 μs，接近 10× 加速，让深 ladder 真正变得可用。
 
-2. **因果注意力替代 CAttnU / CAttnM（Causal Token-Token Mixing）**:
+**2. 因果注意力替代 CAttnU / CAttnM：在保因果的前提下做 token-token 混合**
 
-    - 功能：在保持因果性的前提下，用 CoFrNet ladder 实现 token-token 信息混合，参数量级从 $4p^2$ 降到 $l(2d+l+1)$ 或 $L(p+l)+p^2$。
-    - 核心思路：
-        - **CAttnU**（左图）：把输入张量在 embedding 维 vs 序列长 $l$ 上转置（类似 MLP-Mixer），用 **univariate ladder** 让 $x_i$ 只接收第 $i$ 个 token 的某一维。两个 ensemble 各自输出 $y_1 = w_0^{(1)} \odot x + (w_1^{(1)} \odot x)^{\circ-1}$ 和 $y_2$（深度 2 时），各加一个**上三角线性层** $U_1, U_2$ 保证 token $i$ 只受 token $\le i$ 影响，最后 $O = U_1 y_1 \odot U_2 y_2$，逐元素乘产出交叉项；
-        - **CAttnM**（右图）：不转置，用 $L$ 根 $p$-variate ladder 输出 $y_1, y_2$，拼起来过全连接 $F$，再 **causal softmax** 得到注意力权重 $A = \text{Csoftmax}([y_1, y_2] F)$（第 $i$ token 只看 $\le i-1$ token），再像标准 attention 一样 $O = AV$，其中 $V = X W^v$。
-    - 设计动机：直接把 $p$-variate ladder 用在转置后的 token 维会破坏因果性（一个输出依赖所有 token），所以必须用 univariate ladder + 上三角约束。元素乘 $U_1 y_1 \odot U_2 y_2$ 是关键设计——单条 univariate ladder 表达力弱，逐元素乘产生**跨维度交叉项**显著增强表达。CAttnM 则更接近"轻量化标准 attention"——保留 value 矩阵，只把 QK 的 logit 计算用 CoFrNet 取代，更稳但参数稍多。Table 1 给出参数对比：当 $l \sim p$ 时（GPT/Llama 都是这种规模）这两种替代都能砍很多参数。
+attention 的难点在于换成 ladder 后要保住因果性（token $i$ 只能看 $\le i$）。CAttnU 走 MLP-Mixer 路线：先把张量在 embedding 维和序列长 $l$ 上转置，再用 **univariate ladder** 让每个输出只吃同一 token 的单维信息，两个 ensemble 分别输出 $y_1 = w_0^{(1)} \odot x + (w_1^{(1)} \odot x)^{\circ-1}$ 和 $y_2$，各自接一个**上三角线性层** $U_1, U_2$ 把感受野限死在 $\le i$，最后 $O = U_1 y_1 \odot U_2 y_2$ 用逐元素乘造出跨维交叉项——这一步很关键，因为单条 univariate ladder 表达力弱，元素乘补回了维度间的相互作用。CAttnM 则更像"轻量化标准 attention"：不转置，用 $L$ 根 $p$-variate ladder 算出 $y_1, y_2$，拼接后过全连接 $F$，再用 causal softmax 得到注意力权重 $A = \text{Csoftmax}([y_1, y_2] F)$（第 $i$ token 只看 $\le i-1$），最后照常 $O = AV$（$V = X W^v$）。两者把 attention 的参数从 $4p^2$ 分别降到 $l(2d+l+1)$（CAttnU）和 $L(p+l)+p^2$（CAttnM），当 $l \sim p$（GPT/Llama 的典型规模）时省参可观；CAttnU 更激进省参，CAttnM 保留 value 矩阵更稳但稍重，报告默认用 CAttnM。
 
-3. **不扩展的 Cffn 与 dyadic 渐进训练（FFN Replacement + Training Schedule）**:
+**3. 不扩展的 Cffn 与 dyadic 渐进训练：砍掉 FFN 扩展并稳住有理函数训练**
 
-    - 功能：用 $L$ 根 $p$-variate ladder 替换 FFN，**取消 $\alpha\sim4$ 倍扩展**，参数从 $2\alpha p^2$ 降到 $Lp(d+1) + 2p^2$。
-    - 核心思路：Cffn 直接用 $p$-variate ladder（不转置所以特征跨维混合不影响因果性），输入是 gated **non-expanded**（$\alpha=1$）表示。训练采用 dyadic schedule：先只更新线性部分；走完 $t/2$ 步后才放开 depth-1 ladder 参数；走完 $3t/4$ 步后放开 depth-2；以此类推，depth-$i$ 只在最后 $t/2^i$ 步内训练。
-    - 设计动机：FFN 的扩展层贡献了大部分参数但被认为是冗余的；连续分数函数类已有足够表达力可以省掉扩展。Dyadic schedule 解决"全参数从头训会发散"的实际问题——CoFrNet 的有理函数在 $K_d \to 0$ 附近梯度很尖锐，深层参数过早学习会不稳定；先固定线性主干让模型在多项式空间收敛到合理解，再逐步把高阶有理修正项放开，可看作"从线性逼近到有理逼近"的 curriculum。Table 5 显示无 dyadic 时 PPL 大幅劣化（OWT 上 PTB 从 29.89 降到 33.72，Wikitext2 从 17.12 降到 26.71），证实其必要性。
+标准 FFN 靠 $\alpha\sim4$ 倍隐层扩展贡献了大半参数，本文认为这部分对连续分数函数类是冗余的。Cffn 直接用 $L$ 根 $p$-variate ladder（不转置，特征跨维混合不破坏因果性），输入取 gated 的 non-expanded（$\alpha=1$）表示，把参数从 $2\alpha p^2$ 压到 $Lp(d+1) + 2p^2$。但有理函数在 $K_d \to 0$ 附近梯度极尖锐，全参数从头训会发散，所以配套一个 **dyadic schedule**：先只更新线性主干，过 $t/2$ 步后才放开 depth-1 ladder，过 $3t/4$ 步后放开 depth-2，depth-$i$ 只在最后 $t/2^i$ 步训练——本质是"先收敛到多项式解、再逐级释放高阶有理修正"的 curriculum。这一调度不可省：Table 5 显示去掉 dyadic 后 OWT 上 PTB 从 29.89 劣化到 33.72、Wikitext2 从 17.12 暴涨到 26.71。
 
 ### 损失函数 / 训练策略
-保持 GPT2-xl/Llama 原生的 next-token cross-entropy；优化器 Adam，学习率 GPT2-xl 预训练 $6\times 10^{-4}$、微调 $0.25\times 10^{-4}$（baseline）和 $0.125\times 10^{-4}$（CoFrGeNet），weight decay 0.1，无 dropout。$\epsilon = 0.01$ 用于极点保护；ladder 深度 $d \in \{1,3,5,7\}$，宽度 $L$ 同样 $\{1,3,5,7\}$。GPT2-xl 在 16 张 H100 上 DDP 训练，Llama 在 128 张 H100 上 FSDP 训练 2M 步。
+保持 GPT2-xl / Llama 原生的 next-token cross-entropy；优化器 Adam，学习率 GPT2-xl 预训练 $6\times 10^{-4}$、微调 $0.25\times 10^{-4}$（baseline）与 $0.125\times 10^{-4}$（CoFrGeNet），weight decay 0.1，无 dropout。极点保护 $\epsilon = 0.01$；ladder 深度 $d$ 和宽度 $L$ 均取自 $\{1,3,5,7\}$。GPT2-xl 在 16 张 H100 上 DDP 训练，Llama 在 128 张 H100 上 FSDP 训练 2M 步。
 
 ## 实验关键数据
 

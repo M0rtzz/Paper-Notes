@@ -38,29 +38,22 @@ ReStyle-TTS 通过解耦文本/参考音频 guidance、可连续缩放的风格 
 **核心 idea**：先用 Decoupled CFG 降低模型对参考风格的隐式依赖，再用 Style LoRA 提供显式风格方向，并用 Timbre Consistency Optimization 把被削弱的音色一致性补回来。
 
 ## 方法详解
-ReStyle-TTS 建在 F5-TTS 这样的 flow-matching 零样本 TTS 模型上。它不是重新训练一个大模型，而是围绕 reference guidance、style LoRA 和 timbre reward 做三层改造：生成时分离文本与参考音频 guidance；训练多个风格专属 LoRA；当多个 LoRA 同时启用时，用正交投影减少干扰；最后在训练中用 speaker similarity reward 重新强调音色保持。
 
 ### 整体框架
-输入包括目标文本、参考音频和一个或多个风格控制强度。系统先通过 DCFG 以较低 reference guidance 生成，使模型不要完全复制 reference 的原始风格；然后根据用户指定的风格强度，把对应 Style LoRA 加到 base model 上；若多个风格同时启用，则先做 Orthogonal LoRA Fusion；训练过程中还使用 TCO 对流匹配损失重新加权，让高 speaker similarity 的样本得到更大训练权重。
+ReStyle-TTS 建在 F5-TTS 这类 flow-matching 零样本 TTS 之上，输入是目标文本、一段参考音频和一个或多个风格强度旋钮，输出是保留参考说话人音色、但音高/能量/情绪被相对调节过的语音。它不重训大模型，而是用三层改造串起整条生成链路：先用 Decoupled CFG 以较低 reference guidance 生成，让模型不完全复制参考音频的原始风格，从而腾出风格空间；再按用户指定的强度把对应 Style LoRA（必要时先做正交融合）加到 base model 上注入风格方向；训练阶段额外用 speaker similarity reward 对流匹配损失重新加权，把被削弱的音色一致性补回来。
 
 ### 关键设计
-1. **Decoupled Classifier-Free Guidance**:
+**1. Decoupled Classifier-Free Guidance：把文本 fidelity 和参考依赖拆成两个旋钮。**
 
-    - 功能：把“跟文本走”和“跟参考音频走”拆成两个独立旋钮。
-    - 核心思路：标准 CFG 用 $f_{a,t}$ 和 $f_{\emptyset,\emptyset}$ 做组合，文本和参考音频都混在一个 guidance weight 里。DCFG 额外计算 text-only 预测 $f_{\emptyset,t}$，并用 $\hat{f}_{DCFG}=f_{\emptyset,t}+\lambda_t(f_{\emptyset,t}-f_{\emptyset,\emptyset})+\lambda_a(f_{a,t}-f_{\emptyset,t})$ 分别控制文本强度 $\lambda_t$ 和参考音频强度 $\lambda_a$。
-    - 设计动机：保持 $\lambda_t$ 较高可以维持文本可懂度，降低 $\lambda_a$ 则释放风格空间，让后续 LoRA 真正能改变音高、能量和情绪。
+零样本 TTS 的核心矛盾在于参考音频既是音色来源又是风格枷锁，而标准 CFG 用 $f_{a,t}$ 与 $f_{\emptyset,\emptyset}$ 做组合时把文本和参考音频混进了同一个 guidance weight，无法单独松开其中一项。DCFG 的做法是额外计算一个 text-only 预测 $f_{\emptyset,t}$，把 guidance 拆成 $\hat{f}_{DCFG}=f_{\emptyset,t}+\lambda_t(f_{\emptyset,t}-f_{\emptyset,\emptyset})+\lambda_a(f_{a,t}-f_{\emptyset,t})$，其中 $\lambda_t$ 单管文本强度、$\lambda_a$ 单管参考音频强度。这样就能让 $\lambda_t$ 保持较高以维持可懂度，同时把 $\lambda_a$ 调低释放出风格空间，使下游 LoRA 真正有余地去改变音高、能量和情绪，而不是被参考风格牢牢锁死。
 
-2. **Style LoRA 与 Orthogonal LoRA Fusion**:
+**2. Style LoRA 与 Orthogonal LoRA Fusion：用互不干扰的低秩方向当连续风格滑杆。**
 
-    - 功能：提供连续、可组合、可解释的风格控制方向。
-    - 核心思路：作者为高/低音高、高/低能量和多种情绪分别训练 LoRA。推理时每个 LoRA 的缩放系数 $\alpha_i$ 就是风格强度旋钮。多个 LoRA 叠加时，OLoRA 把每个 LoRA 更新向量投影到其他 LoRA 子空间的正交补上，再做加权融合 $\Delta W_{fuse}=\sum_i \alpha_i \tilde{\Delta W_i}$，避免直接相加造成属性纠缠。
-    - 设计动机：图像生成里 LoRA 可作为风格滑杆，但 TTS 的风格原本埋在 reference audio 中。只有先降低 reference style 依赖，再用互不干扰的 LoRA 方向注入风格，才能得到稳定的连续控制。
+图像生成里 LoRA 早已被当作风格滑杆，但 TTS 的风格原本埋在 reference audio 里，必须先靠 DCFG 解耦才有注入的空间。作者为高/低音高、高/低能量以及多种情绪分别训练一个 LoRA，推理时每个 LoRA 的缩放系数 $\alpha_i$ 就是对应属性的强度旋钮，可连续调节甚至取负值。多个属性同时启用时直接相加会造成属性纠缠，于是 OLoRA 先把每个 LoRA 的更新向量投影到其他 LoRA 子空间的正交补上，再做加权融合 $\Delta W_{fuse}=\sum_i \alpha_i \tilde{\Delta W_i}$，让调一个旋钮主要只动目标属性，从而获得稳定、可组合的连续控制。
 
-3. **Timbre Consistency Optimization**:
+**3. Timbre Consistency Optimization：用有界 reward 重加权把音色拉回来。**
 
-    - 功能：补偿 DCFG 降低参考 guidance 后产生的音色漂移。
-    - 核心思路：模型仍以 flow-matching loss 为主，但生成样本后用 speaker verification 模型计算与参考音频的 speaker similarity reward。作者维护 EMA baseline 得到 advantage $A_t=r_t-b_t$，再用有界权重 $w_t=1+\lambda \tanh(\beta A_t)$ 重加权原始流匹配损失 $\mathcal{L}_{total}=w_t\mathcal{L}_{FM}$。
-    - 设计动机：相比直接做 policy gradient，这种 advantage-weighted regression 不需要对生成过程或 reward 反传，稳定又便宜；高音色相似样本会被更强调，从而把 speaker identity 拉回来。
+DCFG 降低参考 guidance 会带来代价——speaker timbre 容易漂移，所以需要一条机制专门补偿。TCO 仍以 flow-matching loss 为主，但每生成一个样本后用 speaker verification 模型计算它与参考音频的 speaker similarity reward $r_t$，维护一个 EMA baseline $b_t$ 得到 advantage $A_t=r_t-b_t$，再以有界权重 $w_t=1+\lambda \tanh(\beta A_t)$ 重加权原始流匹配损失 $\mathcal{L}_{total}=w_t\mathcal{L}_{FM}$。相比高方差的 policy gradient，这种 advantage-weighted regression 不需要对生成过程或 reward 反传，既稳定又便宜，却能让高音色相似的样本获得更大训练权重，把 speaker identity 重新强调回来。
 
 ### 损失函数 / 训练策略
 实验基座是 F5-TTS。作者在 VccmDataset 的不同子集上分别训练 style LoRA，属性包括高/低音高、高/低能量，以及 angry、disgusted、fear、happy、sad、surprised、neutral 等情绪；contempt 因数据不足被排除。LoRA 注入所有线性层，rank 为 32，alpha 为 64，AdamW 学习率 $1\times 10^{-5}$，batch size 为 30,000 audio frames，每个子集固定训练 250 小时。DCFG 训练中 masked speech dropout 为 0.3，masked speech + text dropout 为 0.2；常规 CFG 的 $\lambda_{cfg}=2$ 等价于 DCFG 的 $\lambda_t=2,\lambda_a=3$，实际为降低 reference 依赖设 $\lambda_a=0.5$。TCO 使用 $\lambda=0.2,\beta=5.0,\mu=0.9$。

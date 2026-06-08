@@ -42,42 +42,27 @@ tags:
 
 ### 整体框架
 
-论文围绕三件事展开：把单一标量 $\gamma$ 解析地与死率挂钩、把训练时的复活机制拆成快慢两条路径、给出一个"零额外计算开销"的预处理（mean-centering）。
+这篇论文要回答的是"为什么同一套 SAE 在某些模型上 70%+ 的特征会死"，它的答案不在训练，而在激活分布本身的几何形状。围绕这条线，论文做了三件事：先用一个训练前就能算出的标量 $\gamma$ 解析地预测死率，再把训练中复活机制拆成快慢两条路径来解释 AuxK 为何在最难的模型上失灵，最后给出一个不增加任何推理开销的预处理——mean-centering。它的输入是任意预训练网络（GPT-2、Pythia、DINOv3、ESM3、AlphaFold3、Evo2 等）某一层的激活分布，产出则是 $\gamma$ 诊断值、由 $\gamma$ 直接给出的初始死率公式，以及一行修改 SAE bias 初始化的代码。
 
-输入：任意预训练神经网络（GPT-2、Pythia、DINOv3、ESM3、AlphaFold3、Evo2 等）某一层的激活分布；
-输出：(1) 训练前就能算出的 $\gamma$ 诊断值；(2) 由 $\gamma$ 直接预测的初始死率公式；(3) 一个修改 SAE bias 初始化的一行代码。
-
-形式上，TopK-SAE 的标准结构为：
-
-$\mathbf{z}_{\text{pre}}=\mathbf{W}_{\text{enc}}(\mathbf{x}-\mathbf{b})+\mathbf{b}_{\text{enc}}$，
-$\mathbf{z}=\text{TopK}(\text{ReLU}(\mathbf{z}_{\text{pre}}))$，
-$\hat{\mathbf{x}}=\mathbf{W}_{\text{dec}}^{\top}\mathbf{z}+\mathbf{b}$。
-
-死特征有两条路径：**dead-by-ReLU**（pre-activation 在任何输入上都为负）和 **dead-by-TopK**（pre-activation 为正但永远进不了 top-$k$）。
+分析都建立在 TopK-SAE 的标准结构上：$\mathbf{z}_{\text{pre}}=\mathbf{W}_{\text{enc}}(\mathbf{x}-\mathbf{b})+\mathbf{b}_{\text{enc}}$，$\mathbf{z}=\text{TopK}(\text{ReLU}(\mathbf{z}_{\text{pre}}))$，$\hat{\mathbf{x}}=\mathbf{W}_{\text{dec}}^{\top}\mathbf{z}+\mathbf{b}$。一个特征"死掉"有两条互不相同的路径：**dead-by-ReLU**（pre-activation 在任何输入上都为负，永远被 ReLU 截断）和 **dead-by-TopK**（pre-activation 为正但永远挤不进 top-$k$）。后文的诊断量、复活分析和预处理都是顺着这两条路径展开的。
 
 ### 关键设计
 
-1. **$\gamma=\|\bm{\mu}\|/\|\bm{\sigma}\|$ 诊断量与解析死率公式**：
+**1. $\gamma=\|\bm{\mu}\|/\|\bm{\sigma}\|$ 诊断量与解析死率公式：训练前一个标量预测死率**
 
-    - 功能：用一个标量量化"激活均值"相对"每 token 方差"的占比，进而在训练开始前就给出死特征率的闭式预测。
-    - 核心思路：把单 token 激活分解为 $\mathbf{x}=\bm{\mu}+(\mathbf{x}-\bm{\mu})$，则 pre-activation 拆成常数 shift 项 $\mathbf{w}_i\cdot\bm{\mu}$ 和随输入变化的 signal 项 $\mathbf{w}_i\cdot(\mathbf{x}-\bm{\mu})$。当 $\gamma$ 大时 shift 主导 signal：与 $\bm{\mu}$ 反向对齐的特征 pre-activation 永远为负（dead-by-ReLU），与 $\bm{\mu}$ 强正向对齐的特征在每个输入上都激活，只有与 $\bm{\mu}$ 近似正交的特征才真正响应输入。把 shift 和 signal 都视为随机单位向量在固定方向上的投影，用高维概率近似（详细推导在 Appendix B）得到 $P(\text{dead-by-ReLU})=\Phi(-C/\gamma)$，其中 $C=\Phi^{-1}(1-1/N)\approx 4.26$（$N=10^5$ 评估样本）；TopK 情形下生存门槛抬高到 shift 分布的 $(1-k/n)$ 分位数 $t_k=\Phi^{-1}(1-k/n)$，得到 $P(\text{dead-by-TopK})\approx \Phi(t_k-C/\gamma)$。实际计算 $\gamma$ 前先对激活做 per-token LayerNorm，剥离不同 token 之间的尺度差异。
-    - 设计动机：以往工作要么用 token 级离群（kurtosis），要么干脆没有诊断量。$\gamma$ 是真正"维度级"的几何量，跨模态在 454 个模型-层组合上 Spearman $\rho$ 高达 0.89（dead-by-TopK）/ 0.82（dead-by-ReLU），且不需要任何拟合参数。实践者甚至可以在投入算力训练 SAE 之前就预测是否会出现严重死特征。
+痛点在于以往要么用 token 级离群指标（如 kurtosis），要么干脆没有诊断量，都解释不了死率为何跨模型剧烈波动。本文把单 token 激活分解为 $\mathbf{x}=\bm{\mu}+(\mathbf{x}-\bm{\mu})$，于是 pre-activation 自然拆成一个常数 shift 项 $\mathbf{w}_i\cdot\bm{\mu}$ 和一个随输入变化的 signal 项 $\mathbf{w}_i\cdot(\mathbf{x}-\bm{\mu})$；$\gamma=\|\bm{\mu}\|/\|\bm{\sigma}\|$ 正是量化"均值"相对"每 token 标准差"占比的标量（计算前先对激活做 per-token LayerNorm，剥掉不同 token 间的尺度差异）。当 $\gamma$ 很大时 shift 主导一切：与 $\bm{\mu}$ 反向对齐的特征 pre-activation 恒为负而 dead-by-ReLU，与 $\bm{\mu}$ 强正向对齐的特征则在每个输入上都激活，只有与 $\bm{\mu}$ 近似正交的特征才真正响应输入。把 shift 与 signal 都看成随机单位向量在固定方向上的投影，用高维概率近似（推导见 Appendix B）即得 $P(\text{dead-by-ReLU})=\Phi(-C/\gamma)$，其中 $C=\Phi^{-1}(1-1/N)\approx 4.26$（$N=10^5$ 评估样本）；TopK 情形把生存门槛抬高到 shift 分布的 $(1-k/n)$ 分位数 $t_k=\Phi^{-1}(1-k/n)$，得到 $P(\text{dead-by-TopK})\approx \Phi(t_k-C/\gamma)$。它有效的关键在于 $\gamma$ 抓住的是真正"维度级"的几何量、且公式不含任何拟合参数——在 454 个跨模态模型-层组合上 Spearman $\rho$ 仍高达 0.89（dead-by-TopK）/ 0.82（dead-by-ReLU），实践者因此可以在投入算力训练 SAE 之前就预判是否会出现严重死特征。
 
-2. **两条死特征复活路径与"bias 学 $\bm{\mu}$ 是瓶颈"**：
+**2. 两条复活路径与"bias 学 $\bm{\mu}$ 是瓶颈"：解释 AuxK 为何在高 $\gamma$ 下失效**
 
-    - 功能：解释训练中死特征如何（以及为什么不能）自行复活，揭示 AuxK 等已有方法的作用域上限。
-    - 核心思路：在合成数据上把 SAE 的 bias 冻结/不冻结、加/不加 AuxK 进行消融。**Dead-by-TopK** 的复活靠的是 alive feature 在训练中收敛后下调自己的激活幅度，让原本卡在第 $k+1$ 名的特征挤进来——这条路径在 $\sim$200K 步内就能完成，bias 冻结也不受影响；**Dead-by-ReLU** 的复活则只能靠 bias 慢慢吸收 $\bm{\mu}$，因为只有 bias 能把恒为负的 pre-activation 抬到零以上。问题是 bias 学 $\bm{\mu}$ 的速度严重依赖 $\gamma$：$\gamma\le 5$ 时 200K 步就能学到 99%，$\gamma\approx 20$ 时 2M 步只到 90%，$\gamma\ge 30$ 时 2M 步只到 50–70%。直观原因是特征权重作用于输入、效果随输入幅度放大，而 bias 是直接相加、不被输入放大，所以 $\|\bm{\mu}\|$ 越大 bias 越追不上；alive feature 一旦学到 $\bm{\mu}$ 又会进一步压低 bias 的梯度。AuxK 的隐藏作用其实是抑制"附带死亡"——TopK 复活过程中部分 alive feature 在缩小激活时被压到零以下变成新的 dead-by-ReLU，AuxK 给 dead-by-TopK 提供梯度让它们稳住而不滑入 dead-by-ReLU；但 AuxK 完全不加速 bias 学习，所以面对从初始化就 dead-by-ReLU 的特征束手无策，这就解释了为什么 AuxK 在 $\gamma$ 中等时有效、$\gamma$ 高时失效。
-    - 设计动机：以往工作隐式假设"死特征 = 训练动力学坏了"，所以一直在做"如何注入更多梯度"的工作。这里第一次把复活机制按死亡路径解耦，证明高 $\gamma$ 下根本不需要更好的复活技术——只要让 bias 一开始就处在 $\bm{\mu}$ 的位置即可。
+以往工作隐式把死特征当成"训练动力学坏了"，于是一直在想办法给死特征注入更多梯度。本文在合成数据上对 bias 冻结/不冻结、加/不加 AuxK 做消融，第一次把复活机制按死亡路径解耦。**dead-by-TopK** 的复活靠 alive feature 在收敛后主动下调自己的激活幅度，把原本卡在第 $k+1$ 名的特征腾进来——这条路径约 200K 步即可完成，且 bias 冻结也不受影响；**dead-by-ReLU** 的复活则只能依赖 bias 慢慢吸收 $\bm{\mu}$，因为只有 bias 能把恒为负的 pre-activation 抬到零以上。麻烦的是 bias 学 $\bm{\mu}$ 的速度严重依赖 $\gamma$：$\gamma\le 5$ 时 200K 步就学到 99%，$\gamma\approx 20$ 时 2M 步才到 90%，$\gamma\ge 30$ 时 2M 步也只到 50–70%。直观原因是特征权重作用于输入、效果随输入幅度放大，而 bias 是直接相加、不被输入放大，所以 $\|\bm{\mu}\|$ 越大 bias 越追不上，alive feature 一旦学到 $\bm{\mu}$ 又会进一步压低 bias 的梯度。顺着这条逻辑也就看清了 AuxK 的真实角色：TopK 复活过程中部分 alive feature 在缩小激活时被压到零以下、变成新的 dead-by-ReLU，AuxK 给 dead-by-TopK 提供梯度让它们稳住、不滑入 dead-by-ReLU，本质是在抑制"附带死亡"而非真复活；它完全不加速 bias 学习，所以面对从初始化就 dead-by-ReLU 的特征束手无策，这正解释了 AuxK 在 $\gamma$ 中等时有效、$\gamma$ 高时失效。结论是高 $\gamma$ 下根本不需要更好的复活技术，只要让 bias 一开始就处在 $\bm{\mu}$ 的位置即可。
 
-3. **Mean-centering：用激活均值初始化 bias**：
+**3. Mean-centering：用激活均值初始化 bias，从根上消掉 shift 项**
 
-    - 功能：一行代码层面的预处理，把 SAE 的 bias 初始化为激活的几何中位数（默认）或算术均值，从而把 pre-activation 中的 shift 项直接消掉。
-    - 核心思路：令 $\mathbf{b}=\bm{\mu}$ 后，pre-activation 退化为 $z_i=\mathbf{w}_i\cdot(\mathbf{x}-\bm{\mu})+b_{\text{enc}}$，shift 项 $\mathbf{w}_i\cdot\bm{\mu}$ 消失，所有特征的 pre-activation 都围绕零分布、只随输入变化，从初始化就不存在因离群导致的死。默认采用 geometric median 而非 arithmetic mean，因为某些模型的激活分布偏斜较重；这一选择在 Appendix D.5 有逐模型对比。等价于在 runtime 做 mean subtraction，但折进 bias 初始化后没有任何额外推理开销。注意它只消除"离群型死"，对极少数因为方差集中在小维度子空间的层（蛋白/基因模型的少数层）仍有残留死，需要再用 PCA whitening（Appendix E）处理。
-    - 设计动机：mean-centering 在 Bricken 2023b、Gao 2024 里其实出现过，但用得不一致、也没有清晰的判据。$\gamma$ 正好给出"何时必须 center"的原则——高 $\gamma$ 必做，低 $\gamma$ 可选——把这一步从经验 trick 升级为有解析依据的预处理。
+既然瓶颈是 bias 追不上 $\bm{\mu}$，最直接的做法就是把 bias 初始化为激活均值。令 $\mathbf{b}=\bm{\mu}$ 后，pre-activation 退化为 $z_i=\mathbf{w}_i\cdot(\mathbf{x}-\bm{\mu})+b_{\text{enc}}$，shift 项 $\mathbf{w}_i\cdot\bm{\mu}$ 直接消失，所有特征的 pre-activation 都围绕零分布、只随输入变化，从初始化就不再有离群导致的死。默认取 geometric median 而非 arithmetic mean，因为部分模型激活分布偏斜较重（逐模型对比见 Appendix D.5）；这等价于在 runtime 做 mean subtraction，但折进 bias 初始化后没有任何额外推理开销。需要注意它只消除"离群型死"，对极少数方差集中在小维度子空间的层（蛋白/基因模型的少数层）仍有残留死，需再叠加 PCA whitening（Appendix E）。它真正的价值在于把一个早就零散出现过（Bricken 2023b、Gao 2024）却用得不一致、没有判据的 trick 原则化——$\gamma$ 恰好给出"何时必须 center"的判据：高 $\gamma$ 必做、低 $\gamma$ 可选，从而把经验做法升级为有解析依据的标准预处理。
 
 ### 损失函数 / 训练策略
 
-仍是标准 TopK-SAE 训练目标（重构 MSE + TopK 稀疏化），$k$、字典大小、学习率等超参在跨模型对比中保持一致；mean-centering 不修改 loss，只动 bias 的初始化。所有合成实验取 10 个种子取平均，真实数据上对 454 个模型-层组合统一用 mid-network 层做训练。
+训练目标仍是标准 TopK-SAE（重构 MSE + TopK 稀疏化），$k$、字典大小、学习率等超参在跨模型对比中保持一致，mean-centering 不动 loss、只改 bias 的初始化。合成实验均取 10 个种子平均，真实数据则对 454 个模型-层组合统一选 mid-network 层训练。
 
 ## 实验关键数据
 

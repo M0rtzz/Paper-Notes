@@ -47,23 +47,25 @@ Voyager 输入一个任务 prompt $p$、目标数据集大小 $l$、边际增益
 外层循环结束一批 explorer 后，算法用 DPP 从候选 anchor 中采样 $k$ 个点，保持 anchor set 小而多样；再用 DPP 从候选 explorer 中采样 $b$ 个 prompt，保证后续探索方向不集中。数据集达到目标大小 $l$ 或迭代到 $T$ 后停止。
 
 ### 关键设计
-1. **用 determinant / volume 表示数据集多样性**:
+**1. 用 determinant / volume 表示数据集多样性：把"多样"变成一个能优化的标量。**
 
-	- 功能：把“多样”变成可优化的数学量。
-	- 核心思路：对样本集合构建相似度矩阵，子集 $S$ 的 DPP 概率满足 $P(S) \propto det(K_S)$。当样本向量高度相似时，矩阵体积小；当样本张成更大空间时，determinant 更大。
-	- 设计动机：Vendi Score 等有效秩指标也从相似度矩阵出发。论文给出近似关系 $V \approx n^2 D^{1/n}/C$，其中 $D$ 是 determinant，$C$ 是 trace，说明提高 determinant 与提高有效秩、多样性存在联系。
+"多样性"本身是个模糊的诉求，得先有可计算的目标才谈得上优化。Voyager 对样本集合构建相似度矩阵，让子集 $S$ 服从 DPP 概率 $P(S) \propto \det(K_S)$——样本向量彼此高度相似时矩阵体积塌缩、determinant 很小，样本张成更大空间时 determinant 更大，于是"多样"就等价于"把这个体积撑大"。作者进一步给出与有效秩指标的近似联系 $V \approx n^2 D^{1/n}/C$（$D$ 为 determinant、$C$ 为 trace），把它和评测常用的 Vendi Score 挂上钩，说明抬高 determinant 确实对应着抬高有效秩与多样性，而不只是几何上的体积游戏。
 
-2. **用固定大小 anchor set 近似全局目标**:
+**2. 用固定大小 anchor set 近似全局目标：把整库的高阶 determinant 计算压到常数规模。**
 
-	- 功能：避免每次都在完整数据集上计算高阶 determinant。
-	- 核心思路：候选样本只需要相对 anchor set 计算边际体积增益，anchor set 通过 k-DPP 保持代表性和高体积。这样它相当于一个小型、多样的 reservoir，用来近似当前数据集覆盖的区域。
-	- 设计动机：直接最大化最终数据集相似度矩阵 determinant 不可行，最大体积子矩阵问题也很难。固定 anchor set 把计算从完整数据集规模降到 $k$，边际增益可在缓存逆矩阵时以 $O(k^2)$ 计算。
+直接在最终数据集的相似度矩阵上最大化 determinant 不可行，最大体积子矩阵问题本身就很难，而数据集越长每步计算越贵。Voyager 不去算整库，而是维护一个由 k-DPP 采样、始终保持代表性与高体积的 anchor set，相当于一个小而多样的"蓄水池"，近似刻画当前数据集已经覆盖的区域；候选样本只需相对这个 anchor set 计算边际体积增益。这样计算量就从随数据集规模增长，降到只与 anchor 大小 $k$ 有关——缓存逆矩阵后边际增益可在 $O(k^2)$ 内算出。
 
-3. **用 textual gradients 更新 explorer prompts**:
+**3. 用 textual gradients 更新 explorer prompts：让被拒样本反过来指出"下一步该往哪探"。**
 
-	- 功能：让算法不仅筛掉重复样本，还能学习下一步该往哪里探索。
-	- 核心思路：被拒样本代表当前 prompt 产生的样本落在已有 anchor 附近。Voyager 让 LLM-judge 分析 prompt、rejected samples 和 anchors，给出“如何让 prompt 生成更不同样本”的自然语言建议，再让另一个 LLM 调整 prompt，形成 successor explorers。
-	- 设计动机：DPP 提供的是选择压力，但不会自动产生新语义方向。textual gradients 把拒绝信息转化为 prompt 级别的搜索信号，适用于闭源 LLM，也不需要参数训练。
+DPP 只提供"留谁、弃谁"的选择压力，却不会自己长出新的语义方向，光靠它筛会一直卡在相似区域。Voyager 把被拒样本看作"当前 prompt 产出的样本落在已有 anchor 附近"的证据，让一个 LLM-judge 分析 prompt、rejected samples 与 anchors，用自然语言给出"怎么改 prompt 才能生成更不同的样本"的建议，再由另一个 LLM 据此改写 prompt、得到后继 explorer。这相当于把每一次拒绝都翻译成 prompt 级别的搜索梯度，既不需要参数训练、也适用于闭源 LLM，正好补上 DPP 缺的那一半——方向。
+
+### 一个完整示例：一轮探索如何收紧多样性
+
+以一个体育句子生成任务、默认超参 $b=3$、$k=10$、batch size 10、目标 500 条为例。初始时数据集 $D$ 与 anchor set $\Phi$ 都为空，explorer 集合 $E$ 里只有原始任务 prompt。
+
+第一轮，3 个 explorer 各调用一次 LLM、各生成 10 个候选样本。对每个候选，算法计算它加入 anchor set 后带来的边际体积增益：增益不低于阈值 $\tau$ 的样本被收进 $D$ 并成为候选 anchor，落在已有样本附近、增益太小的则被丢进 rejected set。接着 Voyager 把这些被拒样本连同当前 anchors 一起交给 LLM-judge，得到"当前 prompt 生成的体育句子都围着同几个项目转，试着换运动种类 / 句式 / 视角"这类 textual gradients，并据此把对应 explorer 改写成下一轮的候选。
+
+一批 explorer 跑完后，算法用 k-DPP 从所有候选 anchor 里采样回 $k=10$ 个点，让 anchor set 保持小而多样；再用 DPP 从候选 explorer 里采样 $b=3$ 个 prompt，确保下一轮的三条探索方向彼此不撞车。如此循环：anchor set 持续逼 LLM 远离已覆盖区域，textual gradients 持续把失败信息转成新方向，直到 $D$ 攒够 500 条或迭代到 $T=200$ 停止。最终在这个任务上 Voyager 的 Vendi 从 Default 的 2.991 一路撑到 24.132。
 
 ### 损失函数 / 训练策略
 Voyager 没有模型训练损失。它优化的是生成过程中的集合多样性代理目标：尽量提高 anchor set 对应相似度矩阵的体积。相似度核是 RBF embedding kernel 和 Jaccard lexical similarity 的凸组合，权重分别为 0.7 和 0.3；embedding 使用 text-embedding-3-small，生成模型使用 GPT-4o mini。默认超参数为 $b=3$、$k=10$、$T=200$、batch size 10、目标数据集大小 500。

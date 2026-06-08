@@ -39,33 +39,26 @@ tags:
 **核心 idea**：把同质并行 (parallel computation) 升级成**异质并行 (parallel cognition)**——多样性不来自温度采样，而来自不同模型的 prior 差异。
 
 ## 方法详解
-DEI 把 DRQ 单节点 pipeline 原样保留 (代码未改)，外面套一层异步通讯层，让 N 个跑着不同 LLM 的节点互相喂 champion。下面按"一个节点一轮在干什么"+"节点之间怎么通信"两条线讲清楚。
 
 ### 整体框架
-每个节点是一个 (Async 通讯层 + 本地 DRQ 优化器) 的二元体。本地优化器是 MAP-Elites：维护一个 2D archive，行为坐标轴为 **TSP** (warrior 代码长度 × 平均存活时间) 与 **MC** (战斗中触碰核内地址的比例)；每个格子存当前 fitness 最高的 warrior。每轮 $T$ 次 LLM 调用，其中 10% 从零生成 warrior、90% 从 archive 采样一个 elite 让 LLM 做变异；fitness 按公式 $f(w_i,\mathcal{O})=\sum_{\tau\in\mathcal{T}}\frac{N}{|\mathcal{T}|}\frac{A^i_\tau}{\sum_{o\in\mathcal{O}}A^o_\tau}$ 在 MARS 模拟器里和对手集合 $\mathcal{O}$ 对战得到，新解只要填空格或刷新格内最高分就替换 archive。每轮结束选出 champion $\hat w_r=\arg\max_{w\in\mathcal{A}_r} f(w,\mathcal{O}_r)$，通过 gossip 广播给所有 peer，并把收到的 peer champion 既加入自己的 opponent pool (制造跨模型对抗压力)，又 seed 进自己的 archive 空格 (跨模型迁移多样性)。三种实验条件——Solo (1 节点)、Homo Ensemble (4 节点同模型)、Diverse Ensemble (4 节点异模型 GPT-5.4-mini / Claude Sonnet 4.6 / GPT-5.2 / Claude Haiku 4.5)——共用同一 **总** 调用预算 (每节点配额按 $1/N$ 缩放)，确保对比公平。
+DEI 把 DRQ 的单节点 pipeline 原样保留 (代码一行没改)，外面套一层异步通讯层，让 $N$ 个跑着不同 LLM 的节点互相喂 champion。每个节点是一个二元体：本地一个 MAP-Elites 优化器在跑 Quality-Diversity 搜索，外加一层全异步通讯层负责把本轮 champion 广播出去、再把收到的 peer champion 注入自己的对手池和 archive。本地优化器维护一个 2D archive，行为坐标轴是 **TSP** (warrior 代码长度 × 平均存活时间) 与 **MC** (战斗中触碰核内地址的比例)，每个格子存当前 fitness 最高的 warrior；每轮 $T$ 次 LLM 调用中 10% 从零生成 warrior、90% 从 archive 采样一个 elite 让 LLM 做变异，fitness 由 $f(w_i,\mathcal{O})=\sum_{\tau\in\mathcal{T}}\frac{N}{|\mathcal{T}|}\frac{A^i_\tau}{\sum_{o\in\mathcal{O}}A^o_\tau}$ 在 MARS 模拟器里与对手集合 $\mathcal{O}$ 对战得到，新解只要填空格或刷新格内最高分就替换 archive。三种实验条件——Solo (1 节点)、Homo Ensemble (4 节点同模型)、Diverse Ensemble (4 节点异模型 GPT-5.4-mini / Claude Sonnet 4.6 / GPT-5.2 / Claude Haiku 4.5)——共用同一 **总** 调用预算 (每节点配额按 $1/N$ 缩放) 以保证公平对比。
 
 ### 关键设计
 
-1. **异构 LLM 作为变异算子 + 跨模型 Red Queen**:
+**1. 异构 LLM 作为变异算子 + 跨模型 Red Queen：让模型身份本身成为多样性源**
 
-    - 功能：每个节点固定绑定一个不同家族的 LLM 作为 MAP-Elites 的变异/生成算子，每轮 champion 通过 gossip 进入对方的 opponent pool $\mathcal{O}_i \leftarrow \mathcal{O}_i \cup \mathcal{R}$，强迫每个节点的 fitness 评估对抗"自己永远写不出的策略"。
-    - 核心思路：fitness 在公式 $f(w_i,\mathcal{O})$ 里显式依赖对手集合 $\mathcal{O}$，所以当 GPT 节点的 archive 里突然出现一个 Claude 写出来的、利用 Claude 偏爱模式的 fortress warrior 作为对手，GPT 自己必须进化出能克制它的解才能拿高分——这就是单节点自博弈拿不到的多分布对抗压力。同时 niche novelty $\eta=\mathbb{E}[\mathbf{1}[\mathbf{bc}(w)\notin \mathcal{A}_i^{(r-1)}]]$ 衡量收到的 champion 有多大比例落在自己 archive 的空格里，实验中 diverse $\eta\approx 0.45$ 远高于 homo 的 $0.09$~$0.35$，直接证明异构模型确实在"互相补盲区"。
-    - 设计动机：传统并行 EA 假设算子是固定的、worker 之间靠采样噪声制造多样性；本文把"模型身份"提升为 QD 的一阶多样性源——这是 AlphaEvolve 的"同家族大小搭配"和 FunSearch 的"同模型多 worker"都没做到的，也是论文反复强调的 first empirical evidence 的核心。
+传统并行 EA 假设变异算子是固定的，worker 之间只能靠采样温度刷多样性——这等于把同一个生成分布并行 $N$ 次，任何被该模型系统性回避的解 (比如 GPT 系不爱写的某类 Redcode 模板) 在 archive 里永远是空洞。DEI 的做法是给每个节点固定绑定一个不同家族的 LLM 当 MAP-Elites 的变异/生成算子，再让每轮 champion 通过 gossip 进入对方的对手池 $\mathcal{O}_i \leftarrow \mathcal{O}_i \cup \mathcal{R}$。关键在于 fitness 公式 $f(w_i,\mathcal{O})$ 显式依赖对手集合 $\mathcal{O}$：当 GPT 节点的 archive 里突然冒出一个 Claude 写的、利用 Claude 偏爱模式的 fortress warrior 当对手，GPT 必须进化出能克制它的解才能拿高分——这正是单节点自博弈永远拿不到的"多分布对抗压力"。为了量化这种互补，论文定义 niche novelty $\eta=\mathbb{E}[\mathbf{1}[\mathbf{bc}(w)\notin \mathcal{A}_i^{(r-1)}]]$，即收到的 peer champion 有多大比例落在自己 archive 的空格里；实验中 diverse 条件 $\eta\approx 0.45$ 远高于 homo 的 $0.09$~$0.35$，直接坐实了异构模型确实在"互相补盲区"。这一步把"用哪个 LLM"提升为 QD 的一阶多样性源，是 AlphaEvolve 的同家族大小搭配和 FunSearch 的同模型多 worker 都没做到的核心区别。
 
-2. **全异步 gossip champion 共享**:
+**2. 全异步 gossip champion 共享：让快慢悬殊的节点共存于一个 ensemble**
 
-    - 功能：让本地 MLX Qwen-35B (~10s/call) 和云端 frontier (~2s/call) 这种延迟差 10× 的节点共存于同一个 ensemble，不会被最慢节点拖死。
-    - 核心思路：抛弃"轮末同步 barrier"，改用 non-blocking all-gather——每个节点一旦选出本轮 champion 就立刻 publish 给所有 peer，下轮开始时 drain 自己的接收缓冲；快节点不等慢节点，慢节点收到的可能是若干轮前的 champion，但因为 QD archive 本质上是"积累式"的，迟到的 champion 仍可填空格或刷新 elite，不会过期作废。底层用 Yggdrasil overlay 给每个节点分配稳定 IPv6 地址做 NAT 穿透。
-    - 设计动机：同步会让 frontier 模型在等本地 35B 时空转大半的算力，使"加一个慢节点"反而降低吞吐——这会逼迫工程上只能用同质硬件，与"democratize 异构模型协作"的目标矛盾。异步设计让"加一个慢笔记本节点"严格只增不减，是异构方案能 scale out 的工程前提。
+异构最大的工程障碍是延迟悬殊——本地 MLX Qwen-35B 约 10s/call，云端 frontier 约 2s/call，差 10×。如果沿用"轮末同步 barrier"，frontier 模型会在等本地 35B 时空转掉大半算力，使"加一个慢节点"反而拖低吞吐，工程上只能被迫用同质硬件，和"democratize 异构协作"的目标直接矛盾。DEI 改用 non-blocking all-gather：每个节点一选出本轮 champion 就立刻 publish 给所有 peer，下轮开始时 drain 自己的接收缓冲，快节点不等慢节点。慢节点收到的可能是若干轮前的旧 champion，但因为 QD archive 本质上是"积累式"的，迟到的 champion 仍能填空格或刷新 elite，不会过期作废。底层用 Yggdrasil overlay 给每个节点分配稳定 IPv6 地址做 NAT 穿透。这样设计后,"加一个慢笔记本节点"严格只增不减,成为异构方案能真正 scale out 的前提。
 
-3. **算力等额的三条件对照协议**:
+**3. 算力等额的三条件对照协议：把"算力增益"和"多样性增益"彻底拆开**
 
-    - 功能：消除"diverse 之所以赢只是因为算力更多"这一最大替代解释，把"是不是多样性带来的增益"做成可证伪的实验设计。
-    - 核心思路：三种条件 (Solo / Homo / Diverse) 共享同一 **总** LLM 调用预算——单节点 250 iters/round vs. 4 节点 × 62 iters/round ≈ 248 calls，使每节点配额按 $1/N$ 严格缩放；同时报告两套指标：(a) 每个节点本地 archive 的 champion generality (对人写 warrior 集合 $\mathcal{H}$ 的胜率) 和 niche novelty，(b) 合并 archive (跨节点取每格最优) 的 QD-Score 与 coverage，并把"merged at equal compute"作为最关键的对比图。
-    - 设计动机：QD 文献最容易被批的就是"你不就是花了更多算力吗"。把预算锁死在总量、再分别看个体节点和合并 archive 两个层面，能把"算力增益"和"多样性增益"清晰拆开——结果显示 Homo merged 在 QD-Score 上比 Solo 高 (29.85 vs 20.46) 说明并行+对抗本身有用，但只有 Diverse merged 在 coverage 上 (80.6% vs 63.0%) 显著领先，证明覆盖面的增益**只能**归于异构 prior。
+QD 文献最容易被质疑的就是"你不过是多花了算力"。为了把"是不是多样性带来的增益"做成可证伪的实验，DEI 让 Solo / Homo / Diverse 三种条件共享同一 **总** LLM 调用预算——单节点 250 iters/round 对 4 节点 × 62 iters/round ≈ 248 calls，每节点配额按 $1/N$ 严格缩放。同时报告两套分层指标：个体层看每个节点本地 archive 的 champion generality (对人写 warrior 集合 $\mathcal{H}$ 的胜率) 与 niche novelty，合并层看跨节点取每格最优后合并 archive 的 QD-Score 与 coverage，并把"merged at equal compute"作为最关键的对比图。结果一拆就清楚：Homo merged 的 QD-Score 比 Solo 高 (29.85 vs 20.46) 说明并行+对抗本身有用，但只有 Diverse merged 在 coverage 上 (80.6% vs 63.0%) 显著领先——覆盖面的增益**只能**归于异构 prior，这正是论文反复强调的 first empirical evidence。
 
 ### 损失函数 / 训练策略
-无梯度训练。LLM 调用全部在 inference 时进行，archive 更新规则就是 MAP-Elites 的标准替换逻辑。每节点每轮 $T$ 次调用 (4 节点条件下 $T\approx 62$；solo 条件下 $T=250$)；MARS 配置：core 8000 指令、单场最多 80000 cycles、每对 warrior 跑 20 场；两个提示词模板 (新建 / 变异) 直接复用 DRQ 原仓库。
+全程无梯度训练，LLM 调用都发生在 inference 阶段，archive 更新规则就是 MAP-Elites 的标准替换逻辑。每节点每轮 $T$ 次调用 (4 节点条件下 $T\approx 62$，solo 条件下 $T=250$)；MARS 配置为 core 8000 指令、单场最多 80000 cycles、每对 warrior 跑 20 场；新建 / 变异两个提示词模板直接复用 DRQ 原仓库。
 
 ## 实验关键数据
 

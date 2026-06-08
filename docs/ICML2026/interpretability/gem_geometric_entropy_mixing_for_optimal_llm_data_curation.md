@@ -41,27 +41,21 @@ GEM 把 LLM 预训练数据划分问题重写成超球面上的 vMF 混合 + 平
 ## 方法详解
 
 ### 整体框架
-GEM 分成两阶段流水线。**Teacher 阶段**：在采样得到的 seed 语料 $\mathcal{X}_{seed}$ 上跑 vMF 混合 + 平衡正则的变分聚类，MM 迭代地更新 Riemannian 参数 $(\mu_k, \kappa_k)$ 和软分配 $\gamma_{ik}$，得到 $K$ 个方向簇；再用 Geometric Influence Score (GIS) 在每个簇里挑代表性样本，喂给 LLM 生成可读的 taxonomy 标签。**Student 阶段**：用 GIS 选出高置信、按簇平衡的 pseudo-label 集，蒸馏一个轻量 FastText 线性分类器，做到对全量语料线性时间打标签；产出的"分桶"就可以直接喂给 DoReMi/Perf/RegMix 等任意 mixing 算法。
+GEM 要解决的是"把语料分成语义桶"这一步——它不学 mixing 权重，而是为 DoReMi/RegMix 这类算法提供更好的输入分桶。它的做法是把欧氏聚类换成超球面上的 vMF 混合，再叠一个平衡正则压住长尾塌缩，最后蒸馏成线性分类器上线。整条流水线分两段：**Teacher 阶段**在采样得到的 seed 语料 $\mathcal{X}_{seed}$ 上跑 vMF 混合聚类，MM 迭代地更新 Riemannian 参数 $(\mu_k,\kappa_k)$ 和软分配 $\gamma_{ik}$ 得到 $K$ 个方向簇，并用 Geometric Influence Score (GIS) 在每个簇里挑代表样本让 LLM 起可读的 taxonomy 名字；**Student 阶段**用 GIS 选出的高置信、按簇平衡的 pseudo-label 蒸馏一个轻量 FastText 分类器，把全量语料打标签降到线性时间，产出的分桶即可直接喂给任意 mixing 算法。
 
 ### 关键设计
 
-1. **超球面 vMF 混合 + 经验质量平衡正则**：
+**1. 超球面 vMF 混合 + 经验质量平衡正则：让度量贴合 cosine，再把塌缩拆出来单独压。**
 
-    - 功能：用与 cosine 相似度对齐的生成模型描述 embedding，同时显式抑制 cluster collapse。
-    - 核心思路：每个簇 $k$ 是一个 vMF 分量 $f_{\text{vMF}}(x\mid\mu_k,\kappa_k)=C_d(\kappa_k)\exp(\kappa_k\mu_k^\top x)$，混合先验固定 $\alpha_k\equiv 1/K$ 防止 EM 的"富者愈富"反馈；优化目标是熵正则 ELBO 再加一个针对经验软质量 $\pi_k(\Gamma)=\tfrac{1}{N}\sum_i\gamma_{ik}$ 的二次惩罚 $-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}(\Gamma)-\mathbf{u}\rVert_2^2$，其中 $\mathbf{u}=\tfrac{1}{K}\mathbf{1}$。
-    - 设计动机：vMF 的充分统计量就是方向内积，把"几何空间"和"embedding 空间"对齐；把平衡作用施加在经验质量上（而不是生成先验上），既不破坏生成模型的可解释性，又能在 anisotropic embedding 下把长尾簇撑起来，得到方向均衡的语义划分。
+痛点在于现代文本 embedding 是用 cosine 相似度训出来的、信号住在方向里，但 K-Means 之类却把聚类目标建在欧氏空间，再叠加 anisotropy/cone effect 就会 cluster collapse。GEM 把每个簇建成一个 vMF 分量 $f_{\text{vMF}}(x\mid\mu_k,\kappa_k)=C_d(\kappa_k)\exp(\kappa_k\mu_k^\top x)$，它的充分统计量恰好是方向内积 $\mu_k^\top x$，于是"几何空间"和"embedding 空间"天然对齐。塌缩则被剥离成单独一项来治：混合先验固定 $\alpha_k\equiv 1/K$ 切断 EM 的"富者愈富"反馈，再在熵正则 ELBO 上加一个只作用于经验软质量 $\pi_k(\Gamma)=\tfrac{1}{N}\sum_i\gamma_{ik}$ 的二次惩罚 $-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}(\Gamma)-\mathbf{u}\rVert_2^2$（$\mathbf{u}=\tfrac{1}{K}\mathbf{1}$）。把平衡作用施加在经验质量而不是生成先验上，既不破坏生成模型的可解释性，又能在 anisotropic embedding 下把长尾簇撑起来，得到方向均衡的语义划分。
 
-2. **可证明单调上升的 MM 推断**：
+**2. 可证明单调上升的 MM 推断：把全样本耦合的正则项拆成逐样本可解的局部更新。**
 
-    - 功能：把"全样本耦合"的正则项拆成对每个样本可分解的局部更新，得到稳定收敛的 E/M 步。
-    - 核心思路：正则项 $R(\boldsymbol{\pi})$ 是 $\lambda$-smooth 的凹二次函数，因此有全局二次 minorizer $R(\boldsymbol{\pi})\geq R(\boldsymbol{\pi}^{(t)})+\langle\nabla R(\boldsymbol{\pi}^{(t)}),\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rangle-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rVert_2^2$。E 步代入这个下界得到代理目标 $\widetilde{\mathcal{F}}_t(\Gamma)$，对每个 $\gamma_i$ 凹可分解，用几步 mirror ascent 解出新分配；M 步是 vMF 的闭式更新——$r_k=\sum_i\gamma_{ik}x_i$、$\mu_k=r_k/\lVert r_k\rVert_2$，$\kappa_k$ 用 $\bar R_k=\lVert r_k\rVert_2/\sum_i\gamma_{ik}$ 经高维近似 $\kappa_k\approx(\bar R_k d-\bar R_k^3)/(1-\bar R_k^2)$ 估出。
-    - 设计动机：直接最大化原目标因为 $\boldsymbol{\pi}(\Gamma)$ 把所有样本耦合在一起、难以分布式优化；MM 代理给出的"每步都比上一步好"保证 $\mathcal{F}(\Theta^{(t)},\Gamma^{(t+1)})\geq\mathcal{F}(\Theta^{(t)},\Gamma^{(t)})$ 让整个流程在大规模数据上仍稳定收敛，无需依赖经验性 early stop。
+直接最大化上面那个目标很难，因为 $\boldsymbol{\pi}(\Gamma)$ 把所有样本耦合在一起、无法分布式优化。GEM 利用正则项 $R(\boldsymbol{\pi})$ 是 $\lambda$-smooth 凹二次函数这一性质，构造它的全局二次 minorizer $R(\boldsymbol{\pi})\geq R(\boldsymbol{\pi}^{(t)})+\langle\nabla R(\boldsymbol{\pi}^{(t)}),\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rangle-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rVert_2^2$；E 步代入这个下界得到代理目标 $\widetilde{\mathcal{F}}_t(\Gamma)$，它对每个 $\gamma_i$ 凹且可分解，用几步 mirror ascent 即可解出新分配；M 步则是 vMF 的闭式更新——$r_k=\sum_i\gamma_{ik}x_i$、$\mu_k=r_k/\lVert r_k\rVert_2$，浓度 $\kappa_k$ 由 $\bar R_k=\lVert r_k\rVert_2/\sum_i\gamma_{ik}$ 经高维近似 $\kappa_k\approx(\bar R_k d-\bar R_k^3)/(1-\bar R_k^2)$ 估出。MM 代理给出的"每步都不比上一步差"保证了 $\mathcal{F}(\Theta^{(t)},\Gamma^{(t+1)})\geq\mathcal{F}(\Theta^{(t)},\Gamma^{(t)})$，让整个流程在大规模数据上稳定收敛，无需依赖经验性的 early stop。
 
-3. **GIS 选样 + Teacher-Student 蒸馏到 FastText**：
+**3. GIS 选样 + Teacher-Student 蒸馏到 FastText：把昂贵的几何 EM 压成可上线的线性推断。**
 
-    - 功能：把超球几何带来的"昂贵 EM"压成 trillion-token 语料上可负担的线性推断。
-    - 核心思路：用 Geometric Influence Score 在每个簇里选高置信、按簇均衡的代表样本作为 pseudo-label 集，喂给 FastText 这类线性分类器做 student；最后用 GIS 选出来的少量代表样本再用 LLM 写一段语义描述，自动产出可读 taxonomy（见 Figure 3 的树状图）。
-    - 设计动机：业界处理 web-scale 语料对延迟非常敏感（fastText 已是 CCNet/Dolma 的默认选择），直接跑 vMF EM 不现实；蒸馏把"几何 fidelity"以参数形式固化到一个线性分类器里，把 mixing pipeline 的 categorization 这一步降到线性时间，同时保留 GEM 几何带来的平衡性。
+web-scale 语料对延迟极其敏感（fastText 已是 CCNet/Dolma 的默认分类器），在 trillion-token 上直接跑 vMF EM 不现实。GEM 用 Geometric Influence Score 在每个簇里选出高置信、按簇均衡的代表样本作为 pseudo-label 集，蒸馏一个 FastText 线性分类器做 student，把"分桶"这一步固化到线性时间；同一批 GIS 代表样本还会喂给 LLM 写语义描述，自动产出可读的 taxonomy（见 Figure 3 的树状图）。这样既保留了 GEM 几何带来的平衡性，又把 categorization 的延迟压到主流 mixing pipeline 能负担的量级。
 
 ### 损失函数 / 训练策略
 变分目标如 Eq.(3)：$\max_{\Theta,\Gamma}\sum_i\sum_k\gamma_{ik}\log(\alpha_k f_{ik}(\Theta))+\sum_i H(\gamma_i)-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}(\Gamma)-\mathbf{u}\rVert_2^2$。主实验设 $K=24$、$\lambda=5000$（按 vMF 学到的 $\kappa\approx 900$ 量级对齐 logit 尺度）。Backbone 用 1.1B LLaMA 风格 Transformer，固定 25B token 预训练预算；数据从 CommonCrawl 经 RefinedWeb 风格清洗得到。

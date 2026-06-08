@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-攻击者面对 $f_{W^\star,v^\star}(X)=\text{softmax}(x_1^\top W^\star x_N,\dots,x_N^\top W^\star x_N)^\top(Xv^\star)$ 的 value oracle，目标是恢复 $(W^\star,v^\star)\in\mathbb R^{d\times d}\times\mathbb R^d$。算法分两阶段：(1) 长度-1 输入 $X=[e_i^\top]$ 直接读出 $v^\star_i$，$d$ 次 query；(2) 对每一列 $w_j=W^\star e_j$，构造长度-2 输入 $X=[(u+e_j)^\top; e_j^\top]$，让 softmax 退化为 $\sigma(u^\top w_j)$，再从 $y=v^\star_j+\sigma(u^\top w_j)\cdot u^\top v^\star$ 反解 $u^\top w_j=\sigma^{-1}((y-v^\star_j)/(u^\top v^\star))$，取 $d$ 个线性独立 $u$ 即可解出 $w_j$。一层 Transformer 通过 antisymmetric query $\widetilde{\text{VQ}}(X)=\text{VQ}(X)-\text{VQ}(-X)$ 消掉 ReLU，再调用上面的 attention learner；FFN 部分调用已有 $\mathcal A_{\text{FFN}}$（如 Milli 2019 或 Daniely-Granot 2023）。低秩、噪声、membership query 都是同一思路加工具加 patch。
+攻击者拿到的是 $f_{W^\star,v^\star}(X)=\text{softmax}(x_1^\top W^\star x_N,\dots,x_N^\top W^\star x_N)^\top(Xv^\star)$ 这个 value oracle，要从黑盒查询里把参数 $(W^\star,v^\star)\in\mathbb R^{d\times d}\times\mathbb R^d$ 一字不差地解出来。整套算法吃定了 attention 一个 MLP 没有的便利——序列长度 $N$ 攻击者说了算：先喂长度-1 的输入让 softmax 权重恒为 1，oracle 直接吐出 $v^\star$ 的各分量；再喂长度-2 的输入把 softmax 压成可逆的 sigmoid，逐列反解出 $W^\star$。这两步合起来 $d^2+d$ 次查询就能精确复原单头 attention，剩下的低秩、带噪、含 ReLU FFN 等变体都是在这条主线上换探针尺度、叠加压缩感知或对称化技巧的加工。
 
 ### 关键设计
 
-1. **长度-2 探针 + sigmoid 反演（Thm 4.1）**:
+**1. 长度-2 探针 + sigmoid 反演（Thm 4.1）：把非线性 attention 还原成一组线性方程。**
 
-    - 功能：把 attention 这一非线性结构精确还原为线性方程组，逐列恢复 $W^\star$。
-    - 核心思路：固定列 $j$，写 $X=[(u+e_j)^\top; e_j^\top]$。两个 score 分别为 $s_1=(u+e_j)^\top W^\star e_j$ 与 $s_2=e_j^\top W^\star e_j$，差值 $s_1-s_2=u^\top w_j$ 恰好把 $e_j^\top W^\star e_j$ 项消掉。位置 1 的注意力权重 $\alpha=\sigma(u^\top w_j)$。oracle 返回 $y=v^\star_j+\alpha\,(u^\top v^\star)$，只要 $u^\top v^\star\neq 0$ 就能由 $\alpha=(y-v^\star_j)/(u^\top v^\star)\in(0,1)$ 反推 $u^\top w_j=\sigma^{-1}(\alpha)$。取 $d$ 个线性无关 $u$（i.i.d. Gaussian 几乎必然满足）即可解出整列。
-    - 设计动机：softmax 的「全长归一」是难点，但只要 $N=2$ 它就退化为 sigmoid —— 一个全局可逆、光滑的标量函数。先用 $N=1$ 把 $v^\star$ 撇清后，再用 $N=2$ 单独逼出 $W^\star$，复杂度由「列数 $\times$ 每列需要的探针数」给出 $O(d^2)$。
+softmax 的麻烦在于「全长归一」把所有 token 的双线性分数耦合在一起，看不出怎么单独解出 $W^\star$ 的某一项。本文的破法是固定要恢复的列 $j$，构造长度-2 输入 $X=[(u+e_j)^\top;\, e_j^\top]$：此时两个 score 是 $s_1=(u+e_j)^\top W^\star e_j$ 与 $s_2=e_j^\top W^\star e_j$，相减后 $s_1-s_2=u^\top w_j$ 恰好把碍事的 $e_j^\top W^\star e_j$ 项消掉，位置 1 的注意力权重退化成单变量 sigmoid $\alpha=\sigma(u^\top w_j)$。由于 $N=1$ 那步已经把 $v^\star$ 撇清，oracle 返回的 $y=v^\star_j+\alpha\,(u^\top v^\star)$ 里只剩 $\alpha$ 未知；只要 $u^\top v^\star\neq 0$，就能反推 $\alpha=(y-v^\star_j)/(u^\top v^\star)\in(0,1)$，再取全局可逆的 $\sigma^{-1}$ 得到一个线性约束 $u^\top w_j=\sigma^{-1}(\alpha)$。换 $d$ 个线性无关的 $u$（i.i.d. Gaussian 几乎必然满足）就凑齐一组满秩线性方程解出整列 $w_j$。复杂度按「$d$ 列 × 每列 $d$ 个探针」算正好 $O(d^2)$——这把 attention 的非线性当成了攻击者的朋友而非障碍。
 
-2. **低秩压缩感知恢复 $W^\star$（Thm 5.1）**:
+**2. 低秩压缩感知恢复 $W^\star$（Thm 5.1）：用秩-1 快照把 $d^2$ 压到 $O(rd)$。**
 
-    - 功能：在实践中头维 $r\ll d$（如 128 vs 4096），$W^\star=K^\top Q$ rank-$r$，将 $d^2$ 降到 $O(rd)$。
-    - 核心思路：把上面探针改成 i.i.d. Gaussian $a,b\sim\mathcal N(0,I_d)$，$X=[(a+b)^\top; b^\top]$，同样得 $\alpha=\sigma(a^\top W^\star b)$，反解后得到秩-1 测量 $t=\langle ab^\top, W^\star\rangle$。收集 $m=O(rd)$ 个这种 ROP（rank-one projection）测量后解凸程序 $\min\|W\|_\ast\ \text{s.t.}\ \langle a_kb_k^\top,W\rangle=t_k$。由 Cai-Zhang 2015 的 RUB 保证，$m\geq Cr(2d)$ 时高概率精确恢复。
-    - 设计动机：避开整 $d\times d$ 矩阵中每一项一次单独查询，让单次 query 给出关于 $W^\star$ 的一个「秩-1 线性快照」，再叠加 compressed sensing 的恢复理论 —— 直接换问题不换算法是这篇工作的方法学一大亮点。
+实际 LLM 的注意力是 $W^\star=K^\top Q$，头维 $r$（约 128）远小于宽度 $d$（约 4096），逐项查询整个 $d\times d$ 矩阵太浪费。本文不换算法只换探针：把上面的探针改成 i.i.d. Gaussian $a,b\sim\mathcal N(0,I_d)$、$X=[(a+b)^\top;\, b^\top]$，同样反解出 $\alpha=\sigma(a^\top W^\star b)$，但这回得到的是一个秩-1 测量 $t=\langle ab^\top,\, W^\star\rangle$——单次查询给出关于 $W^\star$ 的一个线性快照而非某一项。收集 $m=O(rd)$ 个这样的 ROP（rank-one projection）测量后，解凸程序 $\min\|W\|_\ast\ \text{s.t.}\ \langle a_kb_k^\top,W\rangle=t_k$，由 Cai-Zhang 2015 的 RUB 条件保证 $m\geq Cr(2d)$ 时高概率精确恢复。「直接换问题、接管现成的 compressed sensing 恢复理论」是这一步的方法学巧思。
 
-3. **带噪 oracle 下的稳定恢复（Thm 6.1）**:
+**3. 带噪 oracle 下的稳定恢复（Thm 6.1）：把 logit 锁在 Lipschitz 区间再 clip。**
 
-    - 功能：现实 API 都会给输出加微小 noise，而 $\sigma^{-1}$ 在 0/1 附近不 Lipschitz，朴素算法会爆炸；本文给一组 norm + margin 假设下的 $\epsilon$-精度多项式恢复。
-    - 核心思路：将探针缩放为 $a=1/2$, $b=1/W$，构造 $X=[(b u+ae_j)^\top; (ae_j)^\top]$，把 logit 控制在 $|ab\,W^\star_{ij}|\leq 1/2$，使得 $\alpha^\star=\sigma(ab\,W^\star_{ij})\in[\sigma(-1/2),1-\sigma(-1/2)]$ 这一 Lipschitz 区间内；估计阶段对 $\hat\alpha$ 做 $\text{clip}(\hat\alpha;\tau_{\text{clip}},1-\tau_{\text{clip}})$ 再用 $\sigma^{-1}$ 反演，由 Lemma A.1 $|\sigma^{-1}(\text{clip}(\hat\alpha))-\sigma^{-1}(\alpha^\star)|\leq 5|\hat\alpha-\alpha^\star|$ 把误差线性传递，最终给出 $\tau=\mathcal O(\min\{\mu,\epsilon_v/\sqrt d,\mu\epsilon_W/(W^2 d)\})$ 即可达 $\|\hat W-W^\star\|_F\leq\epsilon_W,\|\hat v-v^\star\|_2\leq\epsilon_v$。
-    - 设计动机：直接套噪声 oracle 的最大风险是 $\sigma^{-1}$ 把 $\hat\alpha$ 落到 $\{0,1\}$ 附近时误差爆炸；通过把探针尺度 $a,b$ 设计成「天然把 logit 锁在 $[-1/2,1/2]$」，让 $\alpha^\star$ 永远停留在 Lipschitz 区域，再 clip 异常估计 —— 这是把光滑性分析嵌进算法设计的典范。
+真实 API 输出总带微小噪声，而 $\sigma^{-1}$ 在 $\alpha$ 接近 0 或 1 时斜率发散、根本不 Lipschitz，朴素反演会让误差爆炸。本文的对策是把探针尺度设计成天然把 logit 压在安全区：取 $a=1/2$、$b=1/W$，构造 $X=[(bu+ae_j)^\top;\, (ae_j)^\top]$，使 $|ab\,W^\star_{ij}|\leq 1/2$，于是 $\alpha^\star=\sigma(ab\,W^\star_{ij})$ 永远落在 $[\sigma(-1/2),\,1-\sigma(-1/2)]$ 这段 sigmoid 还光滑的区间里。估计时再对 $\hat\alpha$ 做 $\text{clip}(\hat\alpha;\tau_{\text{clip}},1-\tau_{\text{clip}})$ 防越界，由 Lemma A.1 的 $|\sigma^{-1}(\text{clip}(\hat\alpha))-\sigma^{-1}(\alpha^\star)|\leq 5|\hat\alpha-\alpha^\star|$ 把估计误差线性传递下去，最终只要噪声容差 $\tau=\mathcal O(\min\{\mu,\,\epsilon_v/\sqrt d,\,\mu\epsilon_W/(W^2 d)\})$ 就能达到 $\|\hat W-W^\star\|_F\leq\epsilon_W$、$\|\hat v-v^\star\|_2\leq\epsilon_v$。把光滑性分析直接嵌进探针的尺度设计、而不是事后修补，是这一步最值得借鉴的地方。
 
 ### 损失函数 / 训练策略
-本文不训练，证明全部围绕 query 复杂度 + 概率精度。低秩部分解的凸程序 $\min\|W\|_\ast$ 由 nuclear norm 引导；多头不可识别性由构造两个不同 $\{(W_h,v_h)\}$ 诱导相同输入-输出映射给出 Prop 7.1。
+本文不训练，所有保证都围绕 query 复杂度与概率精度展开。低秩那步解的凸程序 $\min\|W\|_\ast$ 靠 nuclear norm 引导低秩解；多头不可识别性（Prop 7.1）则是反向构造——给出两组不同的 $\{(W_h,v_h)\}$ 诱导出完全相同的输入-输出映射，从而证明无附加结构假设时多头 attention 根本不存在恢复算法。一层 Transformer 的处理是用 antisymmetric query $\widetilde{\text{VQ}}(X)=\text{VQ}(X)-\text{VQ}(-X)$ 把偶性的 ReLU 抵消掉，转成纯 attention 问题后调用上面的 learner，FFN 部分则直接复用已有的 $\mathcal A_{\text{FFN}}$（如 Milli 2019 或 Daniely-Granot 2023）。
 
 ## 实验关键数据
 本文为理论文章，无实证实验。主要"数据"是各种情形下的 query / 精度复杂度。

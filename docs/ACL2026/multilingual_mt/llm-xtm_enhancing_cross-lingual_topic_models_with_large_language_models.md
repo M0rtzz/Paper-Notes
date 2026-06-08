@@ -49,23 +49,31 @@ LLM-XTM 是个 **两阶段后处理增强**：
 
 ### 关键设计
 
-1. **自一致性跨语言主题词精炼 (Self-Consistent Refinement)**:
+**1. 自一致性跨语言主题词精炼：用多次投票把 LLM 的幻觉过滤掉。**
 
-    - 功能：把 backbone 给的 top-15 英文词 + top-15 中文词拼成候选池 $C_k = w_k^{(\text{en})} \cup w_k^{(\text{zh})}$，让 LLM 删噪声/补缺失/保留共同主题词，输出每语言 15 词的精炼集 $\bar{w}_k$。
-    - 核心思路：单次 LLM 调用结果有抖动 → 同一 prompt 跑 $R$ 次得 $\tilde{w}_k^{(1)}, \dots, \tilde{w}_k^{(R)}$ → 统计每个词的命中频率 $f_k(v) = \frac{1}{R}\sum_{r=1}^R \mathbf{1}\{v \in \tilde{w}_k^{(r)}\}$ → 取 Top-$M$ 高频词作为最终 $\bar{w}_k$。设计上还引入"精炼频率"超参 $f$：每 $f$ 个 epoch 才调一次 LLM（不是每 step），把成本砍掉一个数量级。
-    - 设计动机：SelfCheckGPT 已经证明"同一问题多次采样的一致性"是幻觉的强信号——一致性高的词大概率是真核心主题词，一致性低的多半是 LLM 现编。这一步等于在黑盒 setting 下复刻 LLM-ITL 那种 token-prob 不确定性估计，但不需要 logits 访问权。
+单次调用 LLM 来"清洗"主题词有个致命问题——输出会抖动，这次保留的词下次可能就被换掉，把这种不稳定的结果直接当监督信号会把幻觉灌进 backbone。作者的做法是把 backbone 给的 top-15 英文词和 top-15 中文词拼成候选池 $C_k = w_k^{(\text{en})} \cup w_k^{(\text{zh})}$，让 LLM 删噪声、补缺失、保留共同主题词，但关键是同一个 prompt 重复跑 $R$ 次得到 $\tilde{w}_k^{(1)}, \dots, \tilde{w}_k^{(R)}$，再统计每个词的命中频率 $f_k(v) = \frac{1}{R}\sum_{r=1}^R \mathbf{1}\{v \in \tilde{w}_k^{(r)}\}$，取 Top-$M$ 高频词作为最终精炼集 $\bar{w}_k$。这一步借的是 SelfCheckGPT 的判断——"同一问题多次采样的一致性"本身就是幻觉的强信号：一致性高的词大概率是真核心，一致性低的多半是 LLM 现编。于是在拿不到 logits 的黑盒 setting 下，投票一致性等效替代了 LLM-ITL 那种 token-prob 不确定性估计。为了控成本，作者还加了"精炼频率"超参 $f$：每 $f$ 个 epoch 才调一次 LLM 而非每 step，直接把调用量砍掉一个数量级。
 
-2. **MMD 主题-词分布对齐 (MMD Refinement Loss)**:
+**2. MMD 主题-词分布对齐：把 backbone 软拉向 LLM，但不让它彻底塌过去。**
 
-    - 功能：把 backbone 的原 $\beta_k^{(\text{raw})}$ 拉向 LLM 给的目标分布 $\beta_k^{(\text{refined})}$，但又不让它完全塌到 LLM 那边、丢掉语料驱动信号。
-    - 核心思路：对每个主题 $k$ 构造两组分布：raw 分布来自 decoder 输出的 top-$N$ 词概率、refined 分布来自 $R$ 轮投票计数，两者都做语言平衡 + 归一化。然后在 BGE-M3 词嵌入空间用 Gaussian 核（核宽用 median heuristic）算平方 MMD：$\mathcal{L}_{\text{MMD}} = \frac{1}{K}\sum_{k=1}^{K} \text{MMD}^2(\beta_k^{\text{(raw)}}, \beta_k^{\text{(refined)}})$。Gaussian 核作用在 cosine 距离上，让 raw 跟 refined 在 RKHS 里靠近、而不是强行做 one-hot 匹配。
-    - 设计动机：作者把 OT 也试了，结果 MMD 显著胜出（CNPMI 0.016 vs 0.013）——核方法天然能用 embedding 相似度把"同义词替换"也算作匹配（如英文 song↔album），而 OT 的 transport plan 对词 identity 更敏感。MMD 本质上是"分布软对齐"，比硬替换更温和、不会破坏 backbone 的 reconstruction loss。
+精炼出 $\bar{w}_k$ 之后还要把它注回 backbone 的 $\beta$，难点是既要让 backbone 的原始分布 $\beta_k^{(\text{raw})}$ 靠近 LLM 给的目标 $\beta_k^{(\text{refined})}$，又不能让它完全塌到 LLM 那边、丢掉语料驱动的 reconstruction 信号。作者对每个主题 $k$ 构造两组分布——raw 来自 decoder 输出的 top-$N$ 词概率、refined 来自 $R$ 轮投票计数，两者都做语言平衡 + 归一化，然后在 BGE-M3 词嵌入空间用 Gaussian 核（核宽取 median heuristic）算平方 MMD：
 
-3. **QA 式文档-主题对齐 (Document-Topic Alignment via QA)**:
+$$\mathcal{L}_{\text{MMD}} = \frac{1}{K}\sum_{k=1}^{K} \text{MMD}^2(\beta_k^{\text{(raw)}}, \beta_k^{\text{(refined)}}).$$
 
-    - 功能：解决"主题词对齐了、但文档-主题分布 $\theta_d$ 还是跑偏"的问题——同一语义的英文/中文文档应该有相似的 $\theta_d$。
-    - 核心思路：把文档当 question、把 refined 主题当 candidate answer。用 BGE-M3 把文档编码成 $h_d$、把 $\bar{w}_k$ 编码成主题向量 $t_k = \text{Enc}(\bar{w}_k)$，算 cosine 相似度 $s_{d,k} = \frac{h_d^\top t_k}{\|h_d\|_2 \|t_k\|_2}$ → softmax 带温度 $\tau$ 得目标 $\hat{\theta}_{d,k} = \frac{\exp(s_{d,k}/\tau)}{\sum_j \exp(s_{d,j}/\tau)}$ → 用 KL 把 backbone 的 $\theta_d$ 拉过去：$\mathcal{L}_{\text{doc-align}} = \sum_{d=1}^D \text{KL}(\theta_d \| \hat{\theta}_d)$。
-    - 设计动机：BoW 跨语言天然不可比（英文 "investment" 跟中文 "投资" BoW 维度完全独立），但在多语 sentence embedding 空间里两者距离近 → 用 BGE-M3 当 bridge，把"语义相似度"作为 $\theta$ 的外部监督信号，强迫 backbone 学到"跨语言语义一致"的文档表示。这是论文最有原创性的设计，把 IR 里 QA retrieval 的范式搬到了主题模型对齐上。
+核作用在 cosine 距离上，等于在 RKHS 里把两组分布拉近，而不是逼模型做 one-hot 硬匹配。这恰好是它比 OT 更优的原因：核方法天然把"同义词替换"（如英文 song↔album）也算成匹配，而 OT 的 transport plan 对词 identity 更敏感、惩罚更重——实验里 MMD 的 CNPMI 0.016 直接压过 OT 的 0.013。换句话说 MMD 提供的是"分布软对齐"，比硬替换温和，不会把 backbone 已经学到的语料信号一把覆盖掉。
+
+**3. QA 式文档-主题对齐：把"文档归到哪个主题"重写成"问题检索答案"。**
+
+主题词对齐好了，文档-主题分布 $\theta_d$ 仍可能跑偏——同一语义的英文和中文文档本该有相近的 $\theta_d$，但 BoW 在跨语言下根本不可比（英文 "investment" 和中文 "投资" 是两个完全独立的维度）。作者的破局点是换个空间来比：把文档当成 question、把 refined 主题当成 candidate answer，用多语 sentence encoder BGE-M3 把文档编码成 $h_d$、把 $\bar{w}_k$ 编码成主题向量 $t_k = \text{Enc}(\bar{w}_k)$，算 cosine 相似度 $s_{d,k} = \frac{h_d^\top t_k}{\|h_d\|_2 \|t_k\|_2}$，再用带温度 $\tau$ 的 softmax 得到目标分布 $\hat{\theta}_{d,k} = \frac{\exp(s_{d,k}/\tau)}{\sum_j \exp(s_{d,j}/\tau)}$，最后用 KL 把 backbone 的 $\theta_d$ 拉过去：$\mathcal{L}_{\text{doc-align}} = \sum_{d=1}^D \text{KL}(\theta_d \| \hat{\theta}_d)$。妙处在于 BGE-M3 在多语 embedding 空间里能让 "investment" 和 "投资" 距离很近，于是它充当了跨语言桥梁，把"语义相似度"变成 $\theta$ 的外部监督，强迫 backbone 学出跨语言一致的文档表示。这是全文最有原创性的一招——把 IR 里 QA retrieval 的范式直接搬到了主题模型的分布对齐上，也是消融里贡献最大的组件（去掉它 CNPMI 直接掉回 backbone 水平）。
+
+### 一个完整示例：一次精炼 epoch 怎么修好 Music 主题
+
+拿 NMTM 在一个含乐评的双语语料上训到第 $f$ 个 epoch 触发精炼为例。backbone 给的 Music 主题候选池里，中文侧混进了 `嫁`、`誓言`、`挚爱` 这种 romantic 误标词，英文侧是 `vocals`、`lyrics`、`album`：
+
+- **投票精炼**：同一 prompt 跑 $R=5$ 次，`音乐`/`专辑`/`歌手` 几乎每次都被 LLM 保留（$f_k(v)$ 接近 1），而 `嫁`/`挚爱` 只在个别采样里出现（$f_k(v)$ 很低），取 Top-$M$ 后被自然淘汰，得到干净的 $\bar{w}_k$。
+- **MMD 对齐**：把这组 refined 分布和 backbone 的 raw 分布在 BGE-M3 空间算 MMD，梯度把 $\beta_{\text{Music}}$ 往"音乐/专辑/歌手"方向软推，但因为是核空间软对齐，`song`↔`album` 这类同义波动不会被惩罚。
+- **QA 对齐**：一篇中文乐评文档编码成 $h_d$，跟修好的 Music 主题向量 $t_k$ cosine 相似度最高，softmax 后 $\hat{\theta}_{d,k}$ 在 Music 维度上给出高目标值，KL 把它的 $\theta_d$ 拉过去；对应的英文乐评文档同理被拉到同一主题，于是中英文档在 $\theta$ 上自动对齐。
+
+跑完这一个 epoch，Music 主题就从"音乐混 romantic"清洗成中英语义一致的干净主题，对齐到英文 `vocals/lyrics/album`——这正是 Table 4 里肉眼可见的那次修正。
 
 ### 损失函数 / 训练策略
 Phase 2 总目标 $\mathcal{J} = \mathcal{L}_{\text{Phase 1}} + \lambda_{\text{mmd}} \mathcal{L}_{\text{MMD}} + \lambda_{\text{qa}} \mathcal{L}_{\text{doc-align}}$，实验中 $\lambda_{\text{mmd}} = 20{,}000$、$\lambda_{\text{qa}} \in \{100, 200, 300\}$、$f \in \{8, 10\}$、$R = 5$。LLM 端调用 Gemini API（也可换 Llama-3.3-70B / Qwen3 等），整个 Phase 2 在单卡 NVIDIA P100 上 30 epoch 完成。

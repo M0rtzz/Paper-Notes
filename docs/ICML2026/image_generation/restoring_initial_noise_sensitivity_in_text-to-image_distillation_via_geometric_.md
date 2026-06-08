@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GAD 是一个 model-agnostic 的"附加损失项"，可以无缝接到 output matching（LADD/ADD）、distribution matching（DMD/TDM）、score identity distillation（SiD）这三大类蒸馏范式上：
-
-- **输入**：高斯噪声 $\mathbf{z}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$（一步蒸馏对应初始噪声，少步蒸馏对应中间噪声 latent $\mathbf{x}_t$），随机方向向量 $\mathbf{v}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，扰动幅度 $h$，文本条件 $c$。
-- **教师/学生 forward**：教师 $\Phi_T$（多步采样的端点）与学生 $\Phi_S(\cdot;\theta)$，分别在 $\mathbf{z}$ 和 $\mathbf{z}'=\mathbf{z}+h\mathbf{v}$ 两个点各跑一次。
-- **构造响应向量**：$\Delta\Phi_S=\Phi_S(\mathbf{z}')-\Phi_S(\mathbf{z})$，$\Delta\Phi_T=\Phi_T(\mathbf{z}')-\Phi_T(\mathbf{z})$（教师侧 stop-gradient）。
-- **总损失**：$\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{base}}+\lambda\mathcal{L}_{\text{GAD}}$，其中 $\mathcal{L}_{\text{GAD}}$ 强制 $\Delta\Phi_S\approx\Delta\Phi_T$。
-- **输出**：恢复了噪声敏感性的学生模型，1-4 步即可推理。
+GAD 要解决的是"蒸馏后学生对初始噪声 $\mathbf{z}$ 不再敏感"这个隐性退化。它的做法是不碰原有蒸馏目标，只额外加一个正交的正则项：让学生在 $\mathbf{z}$ 局部对扰动的"差分响应"去对齐教师，从而把被平均掉的局部几何（方向导数、曲率）重新学回来。整个模块 model-agnostic，能直接挂到 output matching（LADD/ADD）、distribution matching（DMD/TDM）、score identity distillation（SiD）三大蒸馏范式上，最终学生 1-4 步即可推理。每个 iteration 在原本一次前向的基础上，对噪声 $\mathbf{z}$ 与扰动点 $\mathbf{z}'=\mathbf{z}+h\mathbf{v}$（$\mathbf{v}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ 为随机方向，$h$ 为扰动幅度）各跑一次教师和学生，再约束两侧的输出差一致。
 
 ### 关键设计
 
-1. **JVP 对齐目标**:
+**1. JVP 对齐目标：把不可算的"匹配雅可比"压成可算的方向导数**
 
-    - 功能：把"匹配教师雅可比 $\mathbf{J}_{\Phi_T}$"这个不可计算的目标，改写成"匹配教师对随机方向 $\mathbf{v}$ 的方向导数"。
-    - 核心思路：理想 loss 是 $\mathcal{L}_{\text{Jacobian}}=\mathbb{E}_{\mathbf{z}}[\|\mathbf{J}_{\Phi_S}(\mathbf{z})-\mathbf{J}_{\Phi_T}(\mathbf{z})\|_F^2]$，但 $d\approx 10^5$ 维下 Jacobian 显存爆炸。基于 Hutchinson trace estimator，作者证明对随机 $\mathbf{v}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ 匹配 JVP 在期望意义下等价于匹配 Frobenius 范数：$\mathcal{L}_{\text{GAD}}=\mathbb{E}_{\mathbf{z},\mathbf{v}}\|\nabla_{\mathbf{z}}\Phi_S(\mathbf{z})\mathbf{v}-\nabla_{\mathbf{z}}\Phi_T(\mathbf{z})\mathbf{v}\|_2^2$。
-    - 设计动机：JVP 是雅可比的"压缩感知"——只需一次前向方向导数，内存 O(d) 而非 O(d²)，又能在期望意义下隐式覆盖整个 Jacobian 几何。
+要让学生恢复对噪声的敏感性，最直接的目标是匹配教师的雅可比，即 $\mathcal{L}_{\text{Jacobian}}=\mathbb{E}_{\mathbf{z}}[\|\mathbf{J}_{\Phi_S}(\mathbf{z})-\mathbf{J}_{\Phi_T}(\mathbf{z})\|_F^2]$。但在 $d\approx 10^5$ 维的 latent 空间显式存雅可比会直接显存爆炸。作者借 Hutchinson trace estimator 绕开：对随机方向 $\mathbf{v}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ 匹配雅可比向量积（JVP），在期望意义下等价于匹配整个 Frobenius 范数，于是目标改写成 $\mathcal{L}_{\text{GAD}}=\mathbb{E}_{\mathbf{z},\mathbf{v}}\|\nabla_{\mathbf{z}}\Phi_S(\mathbf{z})\mathbf{v}-\nabla_{\mathbf{z}}\Phi_T(\mathbf{z})\mathbf{v}\|_2^2$。这相当于对雅可比做"压缩感知"——只算一次方向导数、内存 $O(d)$ 而非 $O(d^2)$，却能隐式覆盖整片 Jacobian 几何。
 
-2. **有限差分近似 + 配对前向**:
+**2. 有限差分近似 + 配对前向：把 JVP 换成两点输出差，绕开 forward-mode autodiff**
 
-    - 功能：避免依赖 forward-mode autodiff（与 SDXL/PixArt 等 black-box teacher 不兼容、显存大），把 JVP 进一步替换成"两点输出差"。
-    - 核心思路：$\nabla_{\mathbf{z}}\Phi(\mathbf{z})\cdot\mathbf{v}\approx[\Phi(\mathbf{z}+h\mathbf{v})-\Phi(\mathbf{z})]/h$，代回后把 $1/h^2$ 吸收进权重 $\lambda$，得到实操目标 $\mathcal{L}_{\text{GAD}}=\mathbb{E}_{\mathbf{z},\mathbf{v}}\|(\Phi_S(\mathbf{z}')-\Phi_S(\mathbf{z}))-\text{sg}(\Phi_T(\mathbf{z}')-\Phi_T(\mathbf{z}))\|_2^2$。教师侧 stop-gradient 锁住"参考切向量"，让学生去对齐。
-    - 设计动机：每个 step 学生/教师各多一次前向（共 4 次），没有反向 JVP/二阶图，工程上"加几行就能跑"；不依赖任何特定 backbone，UNet/DiT/Flow-DiT 都通用。
+即便有了 JVP 目标，直接算方向导数仍要 forward-mode autodiff，这与 SDXL/PixArt 这类 black-box teacher 不兼容、显存也大。作者用一阶有限差分 $\nabla_{\mathbf{z}}\Phi(\mathbf{z})\cdot\mathbf{v}\approx[\Phi(\mathbf{z}+h\mathbf{v})-\Phi(\mathbf{z})]/h$ 把方向导数替换成"两点输出差"，再把常数 $1/h^2$ 吸进权重 $\lambda$，得到实操目标 $\mathcal{L}_{\text{GAD}}=\mathbb{E}_{\mathbf{z},\mathbf{v}}\|(\Phi_S(\mathbf{z}')-\Phi_S(\mathbf{z}))-\text{sg}(\Phi_T(\mathbf{z}')-\Phi_T(\mathbf{z}))\|_2^2$。教师侧 stop-gradient 把它对扰动的反应锁成"参考切向量"，让学生单方向去对齐。代价只是每个 step 学生/教师各多一次前向（共 4 次），没有反向 JVP、没有二阶计算图，"加几行就能跑"，且 UNet/DiT/Flow-DiT 都通用。
 
-3. **三种范式下的统一实例化**:
+**3. 三种范式下的统一实例化：换什么当 $\Phi$ 而已**
 
-    - 功能：把 GAD 当 plug-and-play regularizer 接到现有蒸馏框架。
-    - 核心思路：(a) **Output matching**（LADD/ADD）：$\Phi$ 取学生预测的 $\hat{\mathbf{x}}_0=f_\theta(\mathbf{x}_t,t,c)$，配对扰动 $\mathbf{x}_t'=\mathbf{x}_t+h\mathbf{v}$，得到 $\mathcal{L}_{\text{GAD}}^{\text{out}}$。(b) **Distribution / Score-based**（DMD/TDM/SiD）：$\mathcal{L}_{\text{base}}$ 通过两个 score estimator $\epsilon_{\text{real}}$（教师）和 $\epsilon_{\text{fake}}$（学生生成分布的辅助 score 网络）的差给学生反传梯度；GAD 在更高阶上匹配两 score 场对方向扰动的差分 $\Delta\epsilon(\mathbf{x}_t,\mathbf{v})=\epsilon(\mathbf{x}_t+h\mathbf{v},t,c)-\epsilon(\mathbf{x}_t,t,c)$，得到 $\nabla_\theta\mathcal{L}_{\text{GAD}}^{\text{score}}=\mathbb{E}[\Delta\epsilon_{\text{fake}}-\Delta\epsilon_{\text{real}}]\partial\mathbf{x}_t/\partial\theta$。
-    - 设计动机：$\mathcal{L}_{\text{base}}$ 管的是一阶矩对齐（学生收敛到高密度区域），$\mathcal{L}_{\text{GAD}}$ 管的是局部曲率/散度对齐，两者正交；这也解释了为什么 GAD 不和原 loss 打架。
+GAD 作为正则项接入不同蒸馏框架时，只需替换被对齐的映射 $\Phi$。对 output matching（LADD/ADD），$\Phi$ 取学生预测的 $\hat{\mathbf{x}}_0=f_\theta(\mathbf{x}_t,t,c)$，配对扰动取 $\mathbf{x}_t'=\mathbf{x}_t+h\mathbf{v}$，得到输出空间的 $\mathcal{L}_{\text{GAD}}^{\text{out}}$。对 distribution / score-based 范式（DMD/TDM/SiD），其 $\mathcal{L}_{\text{base}}$ 本就靠教师 score $\epsilon_{\text{real}}$ 与学生分布辅助 score $\epsilon_{\text{fake}}$ 的差给学生反传梯度；GAD 则在更高阶上匹配两个 score 场对方向扰动的差分 $\Delta\epsilon(\mathbf{x}_t,\mathbf{v})=\epsilon(\mathbf{x}_t+h\mathbf{v},t,c)-\epsilon(\mathbf{x}_t,t,c)$，梯度形式为 $\nabla_\theta\mathcal{L}_{\text{GAD}}^{\text{score}}=\mathbb{E}[\Delta\epsilon_{\text{fake}}-\Delta\epsilon_{\text{real}}]\partial\mathbf{x}_t/\partial\theta$。之所以加上去不和原 loss 打架，是因为 $\mathcal{L}_{\text{base}}$ 管的是一阶矩对齐（学生收敛到高密度区域），而 $\mathcal{L}_{\text{GAD}}$ 管的是局部曲率/散度对齐，两个目标天然正交。
 
 ### 损失函数 / 训练策略
-总目标 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{base}}+\lambda\mathcal{L}_{\text{GAD}}$。每个 iteration 需采样配对 $(\mathbf{z},\mathbf{z}+h\mathbf{v})$ 各做一次教师 + 学生 forward。$h$、$\lambda$ 详见附录 D；trick 是教师 forward 走 `torch.no_grad` + stop-grad。整套训练沿用 base 框架的 timestep schedule、CFG、优化器，几乎零迁移成本。
+总目标 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{base}}+\lambda\mathcal{L}_{\text{GAD}}$。每个 iteration 采样配对 $(\mathbf{z},\mathbf{z}+h\mathbf{v})$，各做一次教师 + 学生 forward，教师 forward 走 `torch.no_grad` + stop-grad 当锚点；$h$、$\lambda$ 取值详见附录 D。整套训练沿用 base 框架的 timestep schedule、CFG、优化器，几乎零迁移成本。
 
 ## 实验关键数据
 

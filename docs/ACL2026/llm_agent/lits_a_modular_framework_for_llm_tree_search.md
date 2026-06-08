@@ -46,23 +46,24 @@ LiTS 不是单个算法，而是一个框架。它的关键是定义一套统一
 框架覆盖三类任务：Environment Grounded，例如 BlocksWorld 和 Crosswords；Language Grounded，例如 MATH500；Tool Use，例如 MapEval-SQL。用户通过 `@register_transition`、`@register_dataset`、`@register_policy`、`@register_search`、`@register_resource` 等 decorator 扩展框架。
 
 ### 关键设计
-1. **统一数据结构 Action -> Step -> State -> Node**:
 
-	- 功能：让搜索算法不关心底层任务细节，只操作统一节点和轨迹接口。
-	- 核心思路：Action 是 Policy 生成的原子动作；Step 封装动作及执行结果；State 累积 Steps 并提供 render 方法；Node 包含 parent、children、reward 和 visit count 等搜索字段。不同任务只需实现对应 subclass，例如 ToolUseAction、EnvAction、ThoughtStep、SubQAStep。
-	- 设计动机：如果搜索算法直接依赖任务对象，就无法跨任务复用。统一结构把“搜索循环”和“任务语义”隔离开。
+**1. 统一数据结构 Action → Step → State → Node：让搜索算法只碰统一节点，不碰任务细节。**
 
-2. **Policy / Transition / RewardModel 组件解耦**:
+如果搜索循环直接依赖具体任务对象，就没法跨任务复用。LiTS 用四层结构把搜索语义和任务语义隔开：Action 是 Policy 产出的原子动作，Step 把动作连同执行结果一起封装，State 累积一串 Steps 并提供 render 方法，Node 则挂上 parent、children、reward、visit count 这些搜索字段。不同任务只去实现对应的 subclass——数学推理用 ThoughtStep、子问题分解用 SubQAStep、工具调用用 ToolUseAction、环境交互用 EnvAction——而 MCTS、BFS 这些算法始终只在 Node 和轨迹接口上工作，完全不知道底下是 SQL 还是 BlocksWorld。
 
-	- 功能：把 LLM agent 中的候选动作生成、状态转移和路径打分拆成可替换模块。
-	- 核心思路：Policy 根据当前 state 生成 actions；Transition 执行动作并返回新 state；RewardModel 给搜索节点或动作评分。Chain 方法只需要 Policy + Transition，Tree 方法额外使用 RewardModel。
-	- 设计动机：同一任务组件可以在 MCTS 和 BFS 之间复用，同一搜索算法也可以换到新的任务组件上测试泛化。
+**2. Policy / Transition / RewardModel 组件解耦：把候选生成、状态转移、路径打分拆成三块可换的模块。**
 
-3. **decorator registry 与 CLI-first 组合**:
+把一个 LLM reasoning agent 里“生成动作、执行动作、给动作打分”三件事捆死在一起，就很难单独替换其中一项。LiTS 把它们拆成三类组件：Policy 根据当前 state 生成候选 actions，Transition 执行动作并返回新 state，RewardModel 给节点或动作提供价值信号。Chain 类方法只需要 Policy + Transition，Tree 类方法再额外接上 RewardModel。这样同一套任务组件能在 MCTS 和 BFS 之间复用，同一个搜索算法也能换到新任务组件上测泛化——后面 ToT-BFS 和 ReST-MCTS 能共用完全相同的 ConcatPolicy、ConcatTransition、GenerativePRM、只换搜索算法，正是靠这层解耦。
 
-	- 功能：让用户扩展新任务、新组件或新搜索算法时不用修改核心包。
-	- 核心思路：例如 Crosswords 只需注册 transition、prompt 和 dataset，CLI 里使用 `--dataset crosswords` 即可；MapEval-SQL 通过 dataset 和 resource registry 返回 tools 与 tool_context；自定义 BFS 通过 `@register_search("bfs")` 注入。
-	- 设计动机：框架的可用性不只取决于抽象是否优雅，还取决于用户扩展路径是否短。decorator registry 降低了 domain experts 的框架学习成本。
+**3. decorator registry 与 CLI-first 组合：让扩展新任务不用动核心包。**
+
+抽象优雅还不够，框架好不好用还取决于用户接入新东西要写多少代码。LiTS 用一套 decorator 把扩展路径压到最短：加一个 Crosswords 任务，只需 `@register_transition`、prompt 和 `@register_dataset`，命令行里 `--dataset crosswords` 就能跑；MapEval-SQL 通过 dataset 和 resource registry 返回 tools 与 tool_context；想换搜索算法，`@register_search("bfs")` 注入一个自定义 BFS 即可。核心包一行不用改，domain experts 的学习成本就被压了下来。
+
+### 一个完整示例：BlocksWorld 上跑一轮 MCTS
+
+以 BlocksWorld 规划任务为例，可以看清这套 grammar 怎么串起来。用户先注册好这个任务的 Policy（根据当前积木摆放生成候选移动动作）、Transition（执行一个移动、更新积木状态）和 RewardModel（判断离目标布局还差多少），命令行指定 MCTS、10 iterations、branching factor 3、max depth 6。
+
+搜索开始后，根 Node 持有初始 State；每轮迭代里，MCTS 选一个待扩展节点，调 Policy 生成最多 3 个候选 Action，每个 Action 经 Transition 变成一个 Step、拼进新的 State、挂成一个子 Node，再由 RewardModel 打分回传、更新 visit count 和 value。算法自始至终只在 Node/reward 层操作，完全不知道底下动作是“把 block A 放到 block B 上”。跑完 10 轮，terminal nodes、config、logs 全写进同一个 save_dir 供事后评估。正是这条链路让 BlocksWorld 的 MCTS 把准确率从 Chain 的 26.7% 抬到 66.7%。
 
 ### 损失函数 / 训练策略
 LiTS 本身不训练模型，也没有统一损失函数。实验中的“训练策略”主要是搜索配置和推理资源设置：environment-grounded 和 tool-use 实验使用 Claude 3.5 Sonnet via AWS Bedrock，并报告 cost；language-grounded MATH500 使用自部署 Llama3-8B 或 Llama3-8B-Instruct，并报告 wall-clock time。BlocksWorld MCTS 使用 10 iterations、branching factor 3、max depth 6；Crosswords MCTS 使用 30 iterations、max depth 10；MATH500 上所有 tree search 方法使用 10 iterations、branching factor 3、temperature 0.7-0.8。

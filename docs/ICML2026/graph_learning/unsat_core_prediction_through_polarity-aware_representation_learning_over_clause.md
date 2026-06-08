@@ -38,32 +38,25 @@ tags:
 **核心 idea**：把 CNF 建成「文字为节点、子句为超边」的超图 + 一个子句–子句关联图做高阶传递；把变量表示做「不变 + 等变」分解后再拼成正/负文字 embedding，并通过对原公式和极性翻转公式共享参数 + 一致性损失，强行让模型学到极性对称性。
 
 ## 方法详解
-paSAT 的整体逻辑可以总结为：「先用超图捕捉高阶结构、再用代数分解捕捉极性对称、最后用对偶视图一致性强约束」。
 
 ### 整体框架
-给定 CNF 公式 $\phi$，模型先把它转成超图 $\mathcal{H}=(\mathcal{V}_H,\mathcal{E}_H)$：节点 $u_i$ 对应文字 $l_i$，超边 $e_j$ 对应子句 $c_j$，关联矩阵 $\mathbf{H}\in\mathbb{R}^{2N\times M}$，$\mathbf{H}_{ij}=1$ 当且仅当 $l_i\in c_j$。再额外构造一个「子句关联图」$\mathcal{G}_C$，节点是子句、边权 $w^C_{ij}=|\mathcal{L}(c_i)\cap \mathcal{L}(c_j)|/|\mathcal{L}(c_i)\cup \mathcal{L}(c_j)|$ 用 Jaccard 度量子句重合度。
+paSAT 要解决的核心问题是：怎么让一个 GNN 既能捕捉子句的高阶结构、又能尊重 SAT 公式天生的极性对称性，从而更准地预测哪些变量属于 unsat core。它的做法是把 CNF 公式同时摆进两张图——一张「文字–子句超图」承载多文字子句这种高阶包含关系，一张「子句关联图」承载子句之间共享变量的二元耦合——再在变量级把表示代数地拆成「极性翻转下不变」和「极性翻转下反号」两部分，最后用同一公式的极性翻转版本作为免标签的对偶视图来约束训练。
 
-训练时同时跑两条管线：原公式 $\phi$ 与极性翻转公式 $\phi^{(flip)}$，共享所有参数，分别得到变量预测分布 $\mathbf{s},\mathbf{s}^{(flip)}$，最后用三项损失（任务损失 + 输出一致性 + 分解一致性）联合优化。推理时只跑原公式，把分数喂给 CDCL 求解器，作为变量活跃度初始化（NeuroCore 风格，但只跑一次而不是周期性重跑，省 GPU）。
+具体地，给定 CNF 公式 $\phi$，先转成超图 $\mathcal{H}=(\mathcal{V}_H,\mathcal{E}_H)$：节点 $u_i$ 对应文字 $l_i$，超边 $e_j$ 对应子句 $c_j$，关联矩阵 $\mathbf{H}\in\mathbb{R}^{2N\times M}$ 满足 $\mathbf{H}_{ij}=1$ 当且仅当 $l_i\in c_j$；再额外构造子句关联图 $\mathcal{G}_C$，节点是子句、边权 $w^C_{ij}=|\mathcal{L}(c_i)\cap \mathcal{L}(c_j)|/|\mathcal{L}(c_i)\cup \mathcal{L}(c_j)|$ 用 Jaccard 度量子句重合度。训练时同时跑原公式 $\phi$ 与极性翻转公式 $\phi^{(flip)}$ 两条共享参数的管线，分别得到变量预测分布 $\mathbf{s},\mathbf{s}^{(flip)}$，再用三项损失（任务损失 + 输出一致性 + 分解一致性）联合优化；推理时只跑原公式，把分数喂给 CDCL 求解器做变量活跃度初始化（NeuroCore 风格，但只跑一次而非周期性重跑，省 GPU）。
 
 ### 关键设计
 
-1. **超图 + 子句关联图的高阶传播**：
+**1. 超图 + 子句关联图的双图传播：让子句之间直接对话**
 
-    - 功能：在文字、子句两端同时聚合多元关系，把高阶子句–子句依赖显式注入文字 embedding。
-    - 核心思路：第 $t$ 轮先做超图卷积 $\mathbf{M}^{(t)}_H=\mathbf{D}^{-1}\mathbf{H}\mathbf{B}^{-1}\mathbf{H}^\top \mathbf{L}^{(t)}\mathbf{W}^{(t)}$，把文字聚合到子句再传回来；然后在子句侧把 $\mathbf{C}^{(t)}=\mathbf{B}^{-1}\mathbf{H}^\top \mathbf{L}^{(t)}\mathbf{W}^{(t)}$ 喂进 GCN $\Delta\mathbf{C}^{(t)}=\mathbf{D}_C^{-1/2}\mathbf{A}_C\mathbf{D}_C^{-1/2}\mathbf{C}^{(t)}\mathbf{U}$，残差更新 $\mathbf{C}'^{(t)}=\mathbf{C}^{(t)}+\alpha\sigma(\Delta\mathbf{C}^{(t)})$，再把精化后的子句信息回灌到文字 $\mathbf{M}^{(t)}=\mathbf{D}^{-1}\mathbf{H}\mathbf{C}'^{(t)}$，最后通过 $\mathbf{L}^{(t+1)}=f_{\mathrm{update}}(\mathbf{L}^{(t)},\mathbf{M}^{(t)},\bar{\mathbf{L}}^{(t)})$ 聚合互补文字 $\bar{\mathbf{L}}^{(t)}$ 的表示。
-    - 设计动机：纯超图只能让子句通过共享文字间接交互，遇到 unsat-core 这种依赖多子句联合冲突的任务表达力不够；显式建一张「谁和谁共享文字」的子句图，等于给模型一条捷径学习子句级的相互制约关系，且天然避免堆深层带来的过平滑。
+纯超图有个隐患：子句要影响彼此，只能绕道「共享同一个文字」间接传递，而 unsat core 恰恰是「多个子句联合冲突」的产物，这种高阶依赖靠堆深层 GNN 间接学既慢又容易过平滑。paSAT 因此显式建一张「谁和谁共享文字」的子句关联图，等于给模型开一条专门学习子句级相互制约的捷径。每一轮 $t$ 的传播分三步走：先做超图卷积 $\mathbf{M}^{(t)}_H=\mathbf{D}^{-1}\mathbf{H}\mathbf{B}^{-1}\mathbf{H}^\top \mathbf{L}^{(t)}\mathbf{W}^{(t)}$ 把文字聚到子句再传回；再在子句侧取 $\mathbf{C}^{(t)}=\mathbf{B}^{-1}\mathbf{H}^\top \mathbf{L}^{(t)}\mathbf{W}^{(t)}$ 喂进 GCN $\Delta\mathbf{C}^{(t)}=\mathbf{D}_C^{-1/2}\mathbf{A}_C\mathbf{D}_C^{-1/2}\mathbf{C}^{(t)}\mathbf{U}$ 并残差更新 $\mathbf{C}'^{(t)}=\mathbf{C}^{(t)}+\alpha\sigma(\Delta\mathbf{C}^{(t)})$；最后把精化后的子句信息回灌到文字 $\mathbf{M}^{(t)}=\mathbf{D}^{-1}\mathbf{H}\mathbf{C}'^{(t)}$，并通过 $\mathbf{L}^{(t+1)}=f_{\mathrm{update}}(\mathbf{L}^{(t)},\mathbf{M}^{(t)},\bar{\mathbf{L}}^{(t)})$ 聚合互补文字 $\bar{\mathbf{L}}^{(t)}$。这样子句既保留了高阶包含语义，又能在自己那张图里直接交换「制约信号」。
 
-2. **极性不变–等变变量分解**：
+**2. 极性不变–等变变量分解：把代数对称写进网络结构**
 
-    - 功能：在变量级强行让表示反映「同源 + 反号」两条 SAT 内禀性质，避免传统拼接式聚合把极性信息糊掉。
-    - 核心思路：每个变量表示 $\mathbf{v}_i^{(t)}\in\mathbb{R}^{2d}$ 被两个可学习映射拆成不变分量 $\mathbf{v}_{i,\mathrm{inv}}^{(t)}$ 和等变分量 $\mathbf{v}_{i,\mathrm{eq}}^{(t)}$，正/负文字直接相加减得到 $\mathbf{l}_{x_i}^{(t)}=\mathbf{v}_{i,\mathrm{inv}}^{(t)}+\mathbf{v}_{i,\mathrm{eq}}^{(t)}$、$\mathbf{l}_{\neg x_i}^{(t)}=\mathbf{v}_{i,\mathrm{inv}}^{(t)}-\mathbf{v}_{i,\mathrm{eq}}^{(t)}$；超图传播后再用 $\mathbf{v}_{\mathrm{inv},i}^{(t+1)}=\tfrac{1}{2}(\mathbf{L}_{2i}+\mathbf{L}_{2i+1})$、$\mathbf{v}_{\mathrm{eq},i}^{(t+1)}=\tfrac{1}{2}(\mathbf{L}_{2i}-\mathbf{L}_{2i+1})$ 反推回不变/等变，再通过两个 MLP 重组成新的变量表示。最终用不变分量经线性头预测 unsat-core 概率 $\mathbf{s}=g(f'_{\mathrm{inv}}(\mathbf{V}_{\mathrm{inv}}^{(T)}))$。
-    - 设计动机：unsat-core 标签本身是「结构属性」，对极性翻转不变，所以预测头应该只看不变分量；用线性的「+/-」组合保证负号操作天然就是文字 embedding 上的群作用，让网络架构而不是损失承担对称性 inductive bias。
+每个变量 $v_i$ 都有一对互补文字 $l_i,\neg l_i$，传统做法把它们当独立节点拼接 + MLP 聚合，会把「同源信息共享」和「极性翻转反号」这两条内禀性质糊成一团。paSAT 改用代数分解：变量表示 $\mathbf{v}_i^{(t)}\in\mathbb{R}^{2d}$ 被拆成不变分量 $\mathbf{v}_{i,\mathrm{inv}}^{(t)}$ 与等变分量 $\mathbf{v}_{i,\mathrm{eq}}^{(t)}$，正/负文字由线性加减得到 $\mathbf{l}_{x_i}^{(t)}=\mathbf{v}_{i,\mathrm{inv}}^{(t)}+\mathbf{v}_{i,\mathrm{eq}}^{(t)}$、$\mathbf{l}_{\neg x_i}^{(t)}=\mathbf{v}_{i,\mathrm{inv}}^{(t)}-\mathbf{v}_{i,\mathrm{eq}}^{(t)}$；超图传播后再用 $\mathbf{v}_{\mathrm{inv},i}^{(t+1)}=\tfrac{1}{2}(\mathbf{L}_{2i}+\mathbf{L}_{2i+1})$、$\mathbf{v}_{\mathrm{eq},i}^{(t+1)}=\tfrac{1}{2}(\mathbf{L}_{2i}-\mathbf{L}_{2i+1})$ 反推回不变/等变并经两个 MLP 重组，最终只用不变分量经线性头预测 unsat-core 概率 $\mathbf{s}=g(f'_{\mathrm{inv}}(\mathbf{V}_{\mathrm{inv}}^{(T)}))$。这一招之所以有效，是因为 unsat-core 标签本身是个对极性翻转不变的「结构属性」，预测头只看不变分量天经地义；而线性的「+/-」组合让「翻转极性」恰好成为文字 embedding 上的群作用，于是对称性由网络架构而非损失来承担。
 
-3. **极性翻转一致性正则**：
+**3. 极性翻转一致性正则：用对偶视图免标签灌进对称性**
 
-    - 功能：用同一 CNF 的极性翻转公式作为「对偶视图」，无需额外标签就把对称性灌进训练。
-    - 核心思路：对每个 $\phi$ 构造 $\phi^{(flip)}$（翻转所有文字符号但保留结构），两条公式共享网络得到 $\mathbf{s}$ 与 $\mathbf{s}^{(flip)}$；输出级一致性 $\mathcal{L}_{\mathrm{cons}}=\tfrac{1}{|\mathcal{V}|}\|\mathbf{s}-\mathbf{s}^{(flip)}\|_2^2$ 强迫两者预测相同；分解级一致性 $\mathcal{L}_{\mathrm{decomp}}=\tfrac{1}{|\mathcal{V}|}\sum_i\bigl[\|\mathbf{V}_{i,\mathrm{inv}}^{(T)}-\mathbf{V}_{i,\mathrm{inv}}^{(T)(flip)}\|_2^2 + \|\mathbf{V}_{i,\mathrm{eq}}^{(T)}+\mathbf{V}_{i,\mathrm{eq}}^{(T)(flip)}\|_2^2\bigr]$ 显式约束不变分量相等、等变分量反号。
-    - 设计动机：仅靠架构上的「+/-」组合并不能保证学到的两个分量真正对应「不变/等变」语义，模型完全可以把所有信息都塞到等变里然后被消掉。分解级一致性正则相当于把数学定义直接搬到 loss 里，强制信息分流。
+光有架构上的「+/-」组合并不保险——模型完全可以把所有信息都塞进等变分量，让两个分量名不副实。为此 paSAT 对每个 $\phi$ 额外构造极性翻转公式 $\phi^{(flip)}$（翻转所有文字符号但保留结构），两条公式共享网络得到 $\mathbf{s},\mathbf{s}^{(flip)}$，再加两道一致性约束：输出级 $\mathcal{L}_{\mathrm{cons}}=\tfrac{1}{|\mathcal{V}|}\|\mathbf{s}-\mathbf{s}^{(flip)}\|_2^2$ 强迫两版预测相同；分解级 $\mathcal{L}_{\mathrm{decomp}}=\tfrac{1}{|\mathcal{V}|}\sum_i\bigl[\|\mathbf{V}_{i,\mathrm{inv}}^{(T)}-\mathbf{V}_{i,\mathrm{inv}}^{(T)(flip)}\|_2^2 + \|\mathbf{V}_{i,\mathrm{eq}}^{(T)}+\mathbf{V}_{i,\mathrm{eq}}^{(T)(flip)}\|_2^2\bigr]$ 把「不变分量该相等、等变分量该反号」这两条数学定义直接搬进 loss，强制信息按语义分流。由于 $\phi^{(flip)}$ 不需要任何额外人工标注，整套对称性约束本质上是免标签的自监督，跟对比学习里的等变增强同源。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}=\mathcal{L}_{\mathrm{core}}+\lambda_{\mathrm{cons}}\mathcal{L}_{\mathrm{cons}}+\lambda_{\mathrm{decomp}}\mathcal{L}_{\mathrm{decomp}}$。$\mathcal{L}_{\mathrm{core}}$ 沿用 NeuroCore 的 KL 散度形式 $D_{\mathrm{KL}}(\mathbf{p}^*\|\mathbf{p})$，目标分布把 unsat-core 变量上均匀分配概率、其他为 0。整网端到端训练，与 CDCL 集成时只在求解开始前跑一次神经网络，把预测分数作为变量活跃度，求解过程中周期性按固定分数复位活跃度，但不重复推理。

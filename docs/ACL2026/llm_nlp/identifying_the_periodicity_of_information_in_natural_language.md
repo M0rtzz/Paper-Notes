@@ -42,32 +42,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：文档的 token surprisal 序列 $\mathbf{x} = (x_0, \dots, x_{N-1})$，其中 $x_n = -\log p(t_n \mid t_{<n})$ 由语言模型估计（英语用 LLaMA3-8B / Yarn-LLaMA2-7B，中文用 Qwen2-7B）。输出：该文档的有效周期集 $\{\tau_1, \tau_2, \dots\}$ 或空集。两步走：
-
-1. **Step 1 GetPeriodHints**：对 $\mathbf{x}$ 做 Lomb-Scargle 周期图 $\bm{\mathcal{P}}$，再做 $m=100$ 次随机置换 $\text{Permute}(\mathbf{x})$ 拿到对照的 $\bm{\mathcal{P}}^{\text{rand}}$ 的 max power 分布，取 99 分位作阈值 $P_{\text{threshold}}$，把 $\bm{\mathcal{P}}[k] > P_{\text{threshold}}$ 的频率 $k$ 对应的周期 $\tau = N/k$ 收为 period hints。这些是统计显著的候选周期。
-2. **Step 2 ACFFiltering**：对每个 hint $\tau' = N/k$，在 ACF 曲线上看它附近窗口 $W = [(\tau + \tau_{\text{next}})/2 - 1, (\tau + \tau_{\text{prev}})/2 + 1]$ 是否"在 hill 上"——用线性回归找最优分裂点 $t_{\text{best}}$，要求左斜率 > 右斜率且斜率差 $> 0.01$；若 isHill = True，则用 findPeak 在窗口内找最近的 ACF 局部极大作为 refined period。否则 hint 被丢弃。
-
-最终把所有文档分成三类：$P_1$（至少一个 period hint，准周期）、$P_2 \subseteq P_1$（hint 通过 ACF 验证，严格周期）、$\Sigma - P_1$（无 hint，非周期）。
+APS 的输入是一篇文档的 token surprisal 序列 $\mathbf{x} = (x_0, \dots, x_{N-1})$，其中 $x_n = -\log p(t_n \mid t_{<n})$ 由语言模型估计（英语用 LLaMA3-8B / Yarn-LLaMA2-7B，中文用 Qwen2-7B），输出则是该文档的有效周期集 $\{\tau_1, \tau_2, \dots\}$ 或空集。它把信号处理里成熟的 AutoPeriod 两步走搬到 surprisal 上：先用周期图在频域圈出统计显著的候选周期（period hints），再用 ACF 的几何形态在时域过滤掉假阳，留下经双重确认的周期。据此可把全部文档切成三类——$P_1$（至少一个 hint，准周期）、$P_2 \subseteq P_1$（hint 通过 ACF 验证，严格周期）、$\Sigma - P_1$（无 hint，非周期），这套分类既是 APS 的输出，也是后续与 genre / human-vs-LLM 等 doc-level 变量关联的实验切片工具。
 
 ### 关键设计
 
-1. **基于 surprisal 的周期图 + 随机置换显著性检验（Step 1）**:
+**1. 基于 surprisal 的周期图 + 随机置换显著性检验（Step 1）：在频域圈出"显著高于噪声"的候选周期。**
 
-    - 功能：在频域找到 $\mathbf{x}$ 中"显著高于噪声"的频率峰值，每个峰值对应一个候选周期长度。
-    - 核心思路：先做 DFT $X_k = \sum_n x_n e^{-i 2\pi k n / N}$，取前一半的 $\|X_k\|$ 得周期图 $\bm{\mathcal{P}}$（实际用 Lomb-Scargle 版本以增强长周期分辨率）。然后做 100 次随机置换，记录每次置换序列的 max power，取 99 分位作阈值。这是**模型无关的置换检验**——置换后周期性被破坏，置换分布给出"如果信号无周期，最大功率会有多大"的零分布。
-    - 设计动机：直接用 DFT 频谱无法判断"哪些峰是真的周期、哪些是随机噪声"；置换检验给出严格的统计显著性，置信度可调。CL=.90 默认全文使用，比传统 .95 更敏感（保留更多周期 hint）。
+直接对 surprisal 做 DFT $X_k = \sum_n x_n e^{-i 2\pi k n / N}$、取前一半的 $\|X_k\|$ 得到周期图 $\bm{\mathcal{P}}$（实际用 Lomb-Scargle 版本以增强长周期分辨率），但频谱里能量高的峰未必是真周期、也可能是随机噪声。为此做 $m=100$ 次随机置换 $\text{Permute}(\mathbf{x})$，记录每次置换序列的 max power 得到一个零分布，取其 99 分位作阈值 $P_{\text{threshold}}$，凡 $\bm{\mathcal{P}}[k] > P_{\text{threshold}}$ 的频率 $k$ 就把对应周期 $\tau = N/k$ 收为 period hint。置换打散了周期结构，这个 model-free 的置换检验直接回答"若信号本无周期，最大功率能有多大"，比绝对阈值或 Bonferroni 更稳健且置信度可调；全文默认 CL=.90，比传统 .95 更敏感、保留更多 hint。
 
-2. **ACF Hill 验证过滤假阳（Step 2）**:
+**2. ACF Hill 验证过滤假阳（Step 2）：用自相关的山丘形态做时域二次确认。**
 
-    - 功能：周期图能给候选但容易有假阳（特别短周期），用 ACF 的几何形态做二次过滤。
-    - 核心思路：真周期 $\tau$ 在 ACF 曲线上一定是一个"山丘"——$\text{ACF}(\tau) = \frac{1}{N}\sum_n x(n) \cdot x(n+\tau)$ 在 $\tau$ 处取局部极大。具体做法：对每个 hint $\tau'$ 划窗 $W$，在窗内枚举分裂点 $t$ 跑线性回归，找到使 $\epsilon_L + \epsilon_R$ 最小的 $t_{\text{best}}$，然后看左斜率是否 > 右斜率（且 $|\theta_L - \theta_R| > 0.01$），即整个窗口的 ACF 是否呈"上升再下降"的山丘形态。如果是，refined period = 窗内 ACF 的 peak。
-    - 设计动机：周期图能告诉你"哪些频率能量高"，但能量高不一定就是 self-similar；ACF 的 hill 形态是 self-similarity 的直接证据。两者结合 = "频域显著 + 时域自相关" 双重确认，假阳率显著下降。Table 1 显示 $|P_2|/|P_1| \approx 66\%$——三分之二的 hints 能通过 ACF 验证，剩下三分之一被剔除，证明过滤确实有效。
+周期图给出的候选里短周期尤其容易假阳，因为能量高不等于 self-similar。真周期 $\tau$ 在自相关曲线 $\text{ACF}(\tau) = \frac{1}{N}\sum_n x(n) \cdot x(n+\tau)$ 上一定表现为一个"山丘"（局部极大）。于是对每个 hint $\tau' = N/k$ 划出邻域窗 $W = [(\tau + \tau_{\text{next}})/2 - 1, (\tau + \tau_{\text{prev}})/2 + 1]$，在窗内枚举分裂点 $t$ 跑线性回归，找到使 $\epsilon_L + \epsilon_R$ 最小的 $t_{\text{best}}$，再判断左斜率是否大于右斜率且斜率差 $|\theta_L - \theta_R| > 0.01$，即整段 ACF 是否呈"先升后降"的 hill；若 isHill 为真则用 findPeak 取窗内 ACF 局部极大作为 refined period，否则丢弃该 hint。频域显著叠加时域自相关的双重确认，使假阳率显著下降——Table 1 显示 $|P_2|/|P_1| \approx 66\%$，三分之二的 hint 通过验证、三分之一被剔除，证明过滤确实在起作用。
 
-3. **HR 反向验证 + filter-based 增益**:
+**3. HR 反向验证 + filter-based 增益：用谐波回归独立证明 APS 找到的是真"统计周期"。**
 
-    - 功能：用 Tsipidi et al. 2025 的谐波回归 HR 反过来验证 APS 的发现确实是"统计周期"。
-    - 核心思路：把 HR 公式 $s(w_t) \sim \text{baseline} + \text{HR}(U_t)$ 里的 $U_t$ 替换成 APS 返回的 hint / valid period，看谐波项 $\beta_{1,k} \sin(k 2\pi t/U_t) + \beta_{2,k}\cos(k 2\pi t/U_t)$ 是否显著（amplitude $A_k = \sqrt{\beta_{1,k}^2 + \beta_{2,k}^2}$, p<0.001）。同时把语料按 APS 的分类 $P_2 \subset P_1 \subset \Sigma$ 切片，看 HR 的 MSE 是否按 "$P_2 < P_1 < \Sigma < \Sigma - P_1$" 排序。
-    - 设计动机：APS 是 detection（"这里有周期"），HR 是 explanation（"这个周期能解释 surprisal"），两者完全独立。如果 APS 找到的周期能让 HR 显著且 MSE 按预期排序，说明 APS 不是在乱报。
+APS 做的是 detection（"这里有周期"），需要一个独立工具证明它不是在乱报，于是借 Tsipidi et al. 2025 的谐波回归 HR 做 explanation（"这个周期能解释 surprisal"）。把 HR 公式 $s(w_t) \sim \text{baseline} + \text{HR}(U_t)$ 里的 $U_t$ 换成 APS 返回的 hint / valid period，看谐波项 $\beta_{1,k} \sin(k 2\pi t/U_t) + \beta_{2,k}\cos(k 2\pi t/U_t)$ 是否显著（amplitude $A_k = \sqrt{\beta_{1,k}^2 + \beta_{2,k}^2}$，p<0.001），同时按 APS 的分类 $P_2 \subset P_1 \subset \Sigma$ 切片，检查 HR 的 MSE 是否按 $P_2 < P_1 < \Sigma < \Sigma - P_1$ 排序。由于 APS 与 HR 完全独立，若 APS 找的周期既能让谐波项显著、又让 MSE 按预期单调排序，就反向坐实了 APS 的发现是真实的统计周期而非噪声伪影。
 
 ### 损失函数 / 训练策略
 本文**无任何模型训练**——APS 是确定性算法（DFT + 置换 + 线性回归），HR 是 OLS 回归。涉及超参：$m=100$ 置换次数、percentile=99（默认） / 90（实际全文用）、HR 谐波项 $K=10$。语料：WSJ、Brown、CTB、GCDT、RST Discourse Treebank、FACE、EvoBench。语言模型只用来估 surprisal，不更新。

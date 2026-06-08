@@ -38,34 +38,31 @@ tags:
 
 ### 整体框架
 
-ProOOD作为即插即用模块嵌入现有体素级占用预测框架（如SGN、VoxDet）。pipeline：2D图像编码→视角变换→粗糙3D特征 $F_{coarse}^{3D}$ →PGSI（原型引导语义补全）→PGTM（原型引导尾部挖掘）→3D骨干精炼→ $F_{refined}^{3D}$ →占用头预测+EchoOOD评分。类别原型通过EMA在训练过程中持续更新。
+ProOOD想回答一个问题：能不能用一套东西同时把"稀有类认得更准"和"未知物体检得出来"两件事一起做了？它的答案是**类别级体素原型**——为每个语义类别在特征空间维护一个 EMA 平滑的全局锚点，让这套锚点贯穿训练和推理。
+
+整体上它不动骨干，作为即插即用模块挂在现有体素占用框架（如 SGN、VoxDet）上。一张图先经 2D 编码和视角变换，得到粗糙 3D 特征 $F_{coarse}^{3D}$；接着原型先后做两件事——PGSI 拿原型把被遮挡的体素按语义补全，PGTM 拿原型把疑似稀有类的体素挑出来增强；增强后的特征再过 3D 骨干精炼成 $F_{refined}^{3D}$，最后占用头出预测，推理时 EchoOOD 用同一套原型给每个体素打 OOD 分。原型本身在训练中只用 ground-truth 体素持续 EMA 更新，形成"补全更准→原型更准→补全更准"的正反馈。
 
 ### 关键设计
 
-1. **原型引导语义补全（PGSI）**:
+**1. 原型引导语义补全（PGSI）：用语义锚点而非几何相邻填补遮挡。**
 
-    - 功能：用语义一致的特征填充被遮挡区域
-    - 核心思路：传统方法依赖局部几何一致性补全遮挡区域，忽略语义合理性。PGSI首先通过辅助占用头识别未观测体素集合 $\mathcal{U}$，然后对每个未观测体素计算其与所有成熟全局原型的注意力权重 $a_{ik} = \text{softmax}(-\|\mathbf{x}_i^{coarse} - \mathbf{p}_k^g\|^2 / \tau_{att})$，用原型加权和做残差更新 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + \alpha_{pgsi} \sum_k a_{ik} \mathbf{p}_k^g$。这形成了自增强循环：更好的补全→更准确的原型→更好的语义推理。
-    - 设计动机：几何一致的补全可能语义上不合理（如把空白区域填充为路面，实际上应该是建筑），原型提供了类别级别的语义约束。
+传统补全靠局部几何一致性把遮挡区域填满，但几何连续不等于语义合理——一块空白按邻域填成路面，实际可能是建筑墙体。PGSI 换了个依据：先用辅助占用头标出未观测体素集合 $\mathcal{U}$，再对其中每个体素计算它与所有成熟全局原型的注意力权重 $a_{ik} = \text{softmax}(-\|\mathbf{x}_i^{coarse} - \mathbf{p}_k^g\|^2 / \tau_{att})$，最后以原型加权和做残差更新 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + \alpha_{pgsi} \sum_k a_{ik} \mathbf{p}_k^g$。等于让每个空洞去问"我最像哪个类别的原型"，再朝那个语义方向补。因为补出来的特征本身又会回流去更新原型，所以补得越准、原型越干净、下一轮语义推理越稳，整条链路自增强。
 
-2. **原型引导尾部挖掘（PGTM）**:
+**2. 原型引导尾部挖掘（PGTM）：主动把稀有类体素挑出来加权。**
 
-    - 功能：识别并增强可能属于稀有类别的体素
-    - 核心思路：在PGSI更新后的粗糙特征上，计算每个体素与全局原型的余弦相似度 $s_{ik}$。通过两阶段过滤选择尾部候选：(1)与尾部类原型相似度超过阈值 $\eta$；(2)top-1和top-2相似度的margin超过 $\delta$（确保置信度）。对选中的候选体素，用尾部类原型的加权和通过轻量MLP增强特征 $\tilde{\mathbf{x}}_i \leftarrow \tilde{\mathbf{x}}_i + \psi(\sum_{k \in \mathcal{C}_{tail}} w_{ik} \mathbf{p}_k^g)$。额外的尾部分类头 $\phi$ 在精炼特征上用CE损失监督。
-    - 设计动机：长尾分布下模型倾向于"强分类"——将模糊区域归为主导类，PGTM通过主动挖掘和增强尾部候选来对抗这种偏向。
+长尾分布下模型有个坏习惯——遇到模糊区域就往占主导的大类上"强分类"，bicycle、motorcycle 这种只占 0.03% 体素的极稀有类很容易被吞掉。PGTM 在 PGSI 更新后的特征上反向操作：先算每个体素与全局原型的余弦相似度 $s_{ik}$，再用两道门把尾部候选筛出来——一是与某个尾部类原型的相似度要超过阈值 $\eta$，二是 top-1 与 top-2 相似度的 margin 要超过 $\delta$（避免把模棱两可的体素也算进来）。筛中的候选体素再用尾部类原型的加权和经一个轻量 MLP 加强：$\tilde{\mathbf{x}}_i \leftarrow \tilde{\mathbf{x}}_i + \psi(\sum_{k \in \mathcal{C}_{tail}} w_{ik} \mathbf{p}_k^g)$，并额外挂一个尾部分类头 $\phi$ 在精炼特征上用 CE 监督。它和 PGSI 共用同一套原型，区别只是补全针对"空"、挖掘针对"弱"。
 
-3. **EchoOOD：无训练的原型驱动OOD评分**:
+**3. EchoOOD：无训练、三信号取最大的逐体素 OOD 评分。**
 
-    - 功能：在推理时提供逐体素的OOD检测分数
-    - 核心思路：融合三个互补信号：(1)**局部logit一致性** $s_i^{local-logit} = 1 - \cos(\mathbf{l}_i, \boldsymbol{\mu}_{\hat{y}_i})$，比较体素logit与同类平均logit的一致性；(2)**局部原型匹配** $s_i^{local-proto} = 1 - \cos(\mathbf{x}_i, \mathbf{p}_{\hat{y}_i}^\ell)$，比较体素特征与场景内局部原型的匹配度；(3)**全局原型匹配** $s_i^{global-proto} = 1 - \cos(\mathbf{x}_i, \mathbf{p}_{\hat{y}_i}^g)$，比较体素特征与EMA全局原型的匹配度。三个分数归一化后取最大值：$s_i^{fused} = \max(s_i^{local-logit}, s_i^{global-proto}, s_i^{local-proto})$。
-    - 设计动机：不同类型的OOD可能在不同信号中表现出异常——局部logit捕获分布偏移，局部原型捕获场景内异常，全局原型捕获跨场景异常。最大聚合确保只要任一信号报警就标记为OOD。
+补全和增强都是训练时的事，推理时怎么判断一个体素是不是未知物体？EchoOOD 不引入任何新参数，直接复用已有的 logit 和原型，融合三个互补信号：局部 logit 一致性 $s_i^{local-logit} = 1 - \cos(\mathbf{l}_i, \boldsymbol{\mu}_{\hat{y}_i})$ 看体素 logit 与同类平均 logit 偏不偏（捕分布偏移）；局部原型匹配 $s_i^{local-proto} = 1 - \cos(\mathbf{x}_i, \mathbf{p}_{\hat{y}_i}^\ell)$ 看它与当前场景内同类局部原型像不像（捕场景内异常）；全局原型匹配 $s_i^{global-proto} = 1 - \cos(\mathbf{x}_i, \mathbf{p}_{\hat{y}_i}^g)$ 看它与跨场景 EMA 全局原型像不像（捕跨场景异常）。三者归一化后取最大值：
+
+$$s_i^{fused} = \max(s_i^{local-logit},\ s_i^{global-proto},\ s_i^{local-proto})$$
+
+取 max 而非平均，是因为不同类型的 OOD 往往只在某一路信号上露馅——只要任意一路报警就该标为异常，平均反而会被另外两路正常信号稀释掉。
 
 ### 损失函数 / 训练策略
 
-- 原型学习使用EMA更新（动量 $\beta$），仅用ground-truth体素更新，stop-gradient防止梯度回传
-- 原型成熟门控：需同时满足 $t \geq t_{warm}$（预热期）、$q_k > \theta_{max}$（质量分数）和 $|\Omega_k| \geq n_{min}$（最小计数），防止不成熟原型影响下游模块
-- 原型对比学习（PBCL）：在精炼特征上执行 $\mathcal{L}_{proto}$ 促进类内紧凑、类间分离
-- 总损失：原始占用损失 + $\mathcal{L}_{tail}$（尾部分类损失）+ $\mathcal{L}_{proto}$（对比学习损失）
+原型用 EMA 更新（动量 $\beta$），且只用 ground-truth 体素更新、配 stop-gradient 防止梯度回传污染特征。为了不让没学好的原型干扰下游，原型要同时过三道成熟门控才"上岗"：训练步数 $t \geq t_{warm}$（预热）、质量分数 $q_k > \theta_{max}$、累计计数 $|\Omega_k| \geq n_{min}$。训练目标在原始占用损失之外加两项——尾部分类损失 $\mathcal{L}_{tail}$ 监督 PGTM 的尾部头，原型对比损失（PBCL）$\mathcal{L}_{proto}$ 在精炼特征上促进类内紧凑、类间分离，让原型本身更可分。
 
 ## 实验关键数据
 

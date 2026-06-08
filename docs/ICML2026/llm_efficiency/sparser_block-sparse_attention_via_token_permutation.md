@@ -42,36 +42,25 @@ tags:
 
 ### 整体框架
 
-PBS-Attn 是 plug-and-play 的 prefilling 加速模块，pipeline 分四步：
-
-1. **打分**：用序列最后一个 query block $\mathbf{Q}_{\text{last\_block}}$ 与全部 K 做一次小矩阵乘 + softmax + 按行求均值，得到长度为 $N$ 的全局重要性分数 $\mathbf{s}$（开销 $O(N \cdot B \cdot d)$，相对 $O(N^2 d)$ 可忽略）。
-2. **段内重排**：把序列切成大小为 $S$ 的段，在每段内按 $\mathbf{s}$ 降序对 K（和对应 V）做局部 permutation $\pi_i$；段间保持原序。Query 保持原序（$\mathbf{P}_\sigma = \mathbf{I}$）。
-3. **块选择 + 稀疏计算**：在重排后的 $(\mathbf{Q}, \mathbf{K}', \mathbf{V}')$ 上用 mean-pooling 估每对 (query block, key block) 的重要性，得到稀疏 mask $\mathbf{M}$；只对 $\mathbf{M}_{i,j}=1$ 的块跑 FlashAttention 在线 softmax。
-4. **逆置换**：由于 query 没动，输出无需做 $\mathbf{P}_\sigma^T$ 反置换，直接得到与原始顺序一致的 $\mathbf{O}$。
+PBS-Attn 是一个 plug-and-play 的长上下文 prefilling 加速模块，核心是把块稀疏注意力的"被动挑块"改成"先把重要 key 聚成簇再挑块"。一次前向里它做四件事：先用序列最后一个 query block 当 proxy，给每个 key 估一个全局重要性分数；再把序列切成定长段、在段内按分数降序重排 K（和对应 V），段间保持原序以维持因果；接着在重排后的张量上用 mean-pooling 选出真正密集的块、只对这些块跑 FlashAttention 在线 softmax；最后因为 query 全程没动，输出天然就是原始顺序、不用做逆置换。整套流程不改动数学输出，只重塑了注意力矩阵的稀疏结构。
 
 ### 关键设计
 
-1. **Segmented Permutation（段内置换 + 段间因果）**:
+**1. Segmented Permutation：在不破坏因果 mask 的前提下重排 key。**
 
-    - 功能：在不破坏 causal mask 的前提下做 key 重排。
-    - 核心思路：把前 $\lfloor N/S \rfloor \cdot S$ 个 token 切成 $G$ 个长度 $S$ 的段，全局置换矩阵 $\mathbf{P}_\pi = \text{diag}(\mathbf{P}_{\pi_1}, \dots, \mathbf{P}_{\pi_G}, \mathbf{I})$ 写成块对角形式。段间相对顺序不变，因此 query $q_i$ 仍然只能"看到"它所在段及之前所有段的 key —— 这些段不论内部怎么打乱，都还在 $q_i$ 的可见范围里。对角线段（query 段 = key 段）保留因果三角，对角线以下的段整块要么全选要么全跳。
-    - 设计动机：一次性全局 permutation 会把因果三角彻底打散，让原本被天然跳过的上三角块变成需要计算（block density 从 $\frac{T_c+1}{2T_c}$ 涨到 1），收益反而是负的。段化是保因果与提稀疏度之间的最小折中。
+heavy hitter 是按重尾分布零散撒在整条序列上的，要覆盖它们就得选很多块、而每块里有用的 token 又很少——本设计要解决的就是"怎么把它们物理上聚到一起，又不踩因果性的坑"。做法是把前 $\lfloor N/S \rfloor \cdot S$ 个 token 切成 $G$ 个长度 $S$ 的段，全局置换矩阵写成块对角形式 $\mathbf{P}_\pi = \text{diag}(\mathbf{P}_{\pi_1}, \dots, \mathbf{P}_{\pi_G}, \mathbf{I})$：段内随便打乱、段间相对顺序不动。这样 query $q_i$ 仍然只能"看到"它所在段及之前的所有段——这些段不论内部怎么重排都还在它的可见范围里，对角线段（query 段 = key 段）保留因果三角，对角线以下的段整块要么全选要么全跳。之所以非段化不可，是因为一次性全局 permutation 会把因果三角彻底打散，让原本被天然跳过的上三角块也变成必须计算（block density 从 $\frac{T_c+1}{2T_c}$ 涨到 1），收益直接变负；段化是"保因果"与"提稀疏度"之间的最小折中。
 
-2. **Global-Importance-based Key Permutation（用 last-block query 做 proxy 排序）**:
+**2. Global-Importance-based Key Permutation：用 last-block query 当 proxy 排出 heavy hitter。**
 
-    - 功能：定义"key 有多重要"，作为段内排序的依据。
-    - 核心思路：分数向量 $\mathbf{s} = \text{mean}_{\text{rows}}(\text{softmax}(\mathbf{Q}_{\text{last\_block}} \mathbf{K}^T / \sqrt{d}))$，每段内 $\pi_i = \text{argsort}(-\mathbf{s}_{[(i-1)S+1 : iS]})$ 降序排列。作者通过 16K 上的对照实验（Figure 1）验证了：随机 permutation 反而掉点（说明原序里有局部结构），fine-grained 的 greedy 局部对齐略好但不如全局；而用"任意一小撮 query"作为 proxy 估全局重要性，效果最佳 —— 因为 heavy hitter（如 attention sink、vertical line pattern）对不同 query 几乎是一致的。
-    - 设计动机：直接对完整 $Q K^T$ 排序是 $O(N^2)$，得不偿失；用最后 $B$ 个 query 做 proxy 把代价压到 $O(NBd)$ 线性，且实测和"全 query 平均"几乎一致。这把"为什么 permutation 能 work"从经验观察落到一个可解释的归纳偏置上：稀疏注意力的关键不在精细对齐，而在把全局重要 token 聚成簇。
+段内要按什么排序？本设计给出"key 有多重要"的可计算定义：分数向量 $\mathbf{s} = \text{mean}_{\text{rows}}(\text{softmax}(\mathbf{Q}_{\text{last\_block}} \mathbf{K}^T / \sqrt{d}))$，每段内取 $\pi_i = \text{argsort}(-\mathbf{s}_{[(i-1)S+1 : iS]})$ 降序排列。直接对完整 $QK^T$ 排序要 $O(N^2)$、得不偿失，所以只用最后 $B$ 个 query 做 proxy，把代价压到线性的 $O(NBd)$，而实测它和"全 query 平均"几乎一致。为什么一小撮 query 就够？因为 heavy hitter（attention sink、vertical line pattern 等）对不同 query 几乎是一致的——16K 上的对照实验（Figure 1）显示：随机 permutation 反而掉点（说明原序里确有局部结构要尊重），fine-grained 的 greedy 局部对齐略好但不如全局重要性排序。这把"permutation 为什么 work"从经验观察落到了一个可解释的归纳偏置上：稀疏注意力的关键不在精细对齐，而在把全局重要 token 聚成簇。
 
-3. **Permuted-FlashAttention Triton 内核（只重排 K，避免 GQA 复制开销）**:
+**3. Permuted-FlashAttention 内核：只重排 K/V，避开 GQA 复制开销。**
 
-    - 功能：把段化 permutation 嵌进 FlashAttention 的 tile 调度里，让重排逻辑不打断 SRAM 上的在线 softmax。
-    - 核心思路：先在 HBM 上做一次性的 $\mathbf{K}' = \mathbf{P}_\pi \mathbf{K}$、$\mathbf{V}' = \mathbf{P}_\pi \mathbf{V}$ 重排，然后块选择 mask $\mathbf{M}$ 指引哪些 $(i,j)$ tile 跳过；选中的 tile 走标准 FlashAttention 流程更新 $\mathbf{m}_i^{(j)}, \mathbf{l}_i^{(j)}, \mathbf{O}_i^{(j)}$，跳过的 tile 直接继承前一状态。Query 不重排还有一个隐藏好处：在 GQA 下，一个 query head 对应多个 key head 时，可以把 permutation 共享/独立两种策略都做（默认独立以最大化稀疏度，附录 G 也评估了共享方案以省显存）。
-    - 设计动机：query permutation 的收益边际（Figure 6a），但代价是要逆置换输出且在 GQA 下需要重新组织 query tile —— 不值。只动 K/V 是性价比最高的切法。
+光有 permutation 还不够，得让它落到墙钟加速上、且不打断 SRAM 上的在线 softmax。内核先在 HBM 上做一次性的 $\mathbf{K}' = \mathbf{P}_\pi \mathbf{K}$、$\mathbf{V}' = \mathbf{P}_\pi \mathbf{V}$ 重排，再由块选择 mask $\mathbf{M}$ 指引哪些 $(i,j)$ tile 跳过：选中的 tile 走标准 FlashAttention 流程更新 $\mathbf{m}_i^{(j)}, \mathbf{l}_i^{(j)}, \mathbf{O}_i^{(j)}$，跳过的 tile 直接继承前一状态。关键的取舍是"只动 K/V、不动 Q"：query permutation 的收益本就边际（Figure 6a），却要额外逆置换输出、在 GQA 下还得重新组织 query tile，不划算；不动 query 反而带来隐藏好处——GQA 下一个 query head 对应多个 key head 时，permutation 可以选独立（默认，最大化稀疏度）或共享（附录 G，省显存）两种策略。综合下来只重排 K/V 是性价比最高的切法。
 
 ### 损失函数 / 训练策略
 
-PBS-Attn 是 **training-free** 的 inference 加速方法，不引入任何额外参数和训练。默认配置 $B=128$, $S=256$, 块选择阈值 0.9（即累计 attention mass 覆盖 90% 时停止选 block）。可与 antidiagonal scoring（XAttention 的策略）组合得到 PBS-Attn+。
+PBS-Attn 是 **training-free** 的 inference 加速方法，不引入任何额外参数、不需要训练。默认配置 $B=128$、$S=256$、块选择阈值 0.9（累计 attention mass 覆盖 90% 时停止选 block）。把段化 permutation 与 antidiagonal scoring（XAttention 的选块策略）组合即得增强版 PBS-Attn+。
 
 ## 实验关键数据
 

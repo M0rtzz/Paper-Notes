@@ -41,32 +41,21 @@ Kasisto 团队基于 Gemma 3 12B-IT，用 143M token 的数据高效配方 (LLM-
 ## 方法详解
 
 ### 整体框架
-端到端 recipe 分五块：
-(1) **数据 pipeline**：合并 RAG-v1 (43,581 样本，JudgeLM 过滤 <5 分) + 合成 SEC QA (16,773 样本) + CommonCrawl 金融子集 (20,499 样本) + 内部 refusal calibration (17,795 样本) 共 98,648 样本 / 143M tokens；
-(2) **5 步合成 SEC QA**：分块 (400–600 token) → 4 档难度生成 → 风格条件改写 → grounded answer + 引用 → 注入 3–7 个 distractor passage；
-(3) **位置偏置缓解**：金证据在 distractor 中的位置按混合"右梯形调和衰减分布"采样，$P(X=x)=\frac{1}{N-K_{\min}+1}\sum_{K=\max(x,K_{\min})}^{N}\frac{1}{K}$；
-(4) **两阶段 curriculum**：Stage 1 用 RAG-v1+SEC 合成数据 lr=$1\times10^{-6}$ cosine 学引用规范，Stage 2 用 CC+内部数据 lr=$5\times10^{-6}$ linear 学拒答和真实风格；
-(5) **量化部署**：LoRA ($r=64, \alpha=256$) 全 attention+MLP，SmoothQuant W4A16 把 24GB 压到 8.4GB，TTFT 0.14s / TTC 0.57s。
+FinRAG-12B 是一套把 Gemma 3 12B-IT 训成「可溯源、会拒答、能单卡部署」金融 QA 模型的端到端配方，全程只用 143M token。数据侧先合并开源 RAG-v1（43,581 样本，JudgeLM 过滤 <5 分）、5 步合成的 SEC QA（16,773 样本）、CommonCrawl 金融子集（20,499 样本）与内部 refusal calibration 数据（17,795 样本）共 98,648 样本，并让金证据在 distractor 中按右梯形调和衰减分布 $P(X=x)=\frac{1}{N-K_{\min}+1}\sum_{K=\max(x,K_{\min})}^{N}\frac{1}{K}$ 采样以打散位置偏置；训练侧走两阶段 curriculum（Stage 1 lr $1\times10^{-6}$ cosine 学引用规范、Stage 2 lr $5\times10^{-6}$ linear 校准拒答与真实风格），最后用 SmoothQuant W4A16 把 24GB 压到 8.4GB 上线，使答案质量、引用、拒答、延迟、成本这五个互相冲突的维度同时达标。
 
 ### 关键设计
 
-1. **5 步合成 SEC QA pipeline (而非单 shot 生成)**:
+**1. 5 步合成 SEC QA pipeline（而非单 shot 生成）：让合成数据既 grounded 又贴近真实 query 分布。**
 
-    - 功能：从 10-K/10-Q SEC 报告生成既"grounded"又"贴近真实 query 分布"的合成训练数据。
-    - 核心思路：分块 → 4 档难度 (easy/medium/hard/expert，按真实分布给 easy/medium 高采样权重) → few-shot 风格改写控制 (query style fragment / how-do-I / what-is, 长度服从 log-normal, 正式度可调；把"What is the minimum credit score required for mortgage approval?" 改成 "min credit score for mortgage") → grounded answer with citation → 注入 3–7 个 topically-similar distractor 并随机插入金证据位置。相比单 shot 生成，question-type JS divergence 从 0.434 降到 0.041 (10× 改进)，长度从 19.55 词降到 8.85 词 (真实值 9.91)。
-    - 设计动机：单 shot LLM 生成出来的 QA 又长又啰嗦，和真实用户的"碎片化、口语化"查询差距巨大——直接训会过拟合到合成分布。作者把"分布对齐"作为合成数据的核心目标，而不是单纯堆量。
+单 shot LLM 生成出来的 QA 又长又啰嗦，和真实用户「碎片化、口语化」的查询差距巨大，直接训会过拟合到合成分布，因此 FinRAG 把「分布对齐」当成合成数据的核心目标而非单纯堆量。具体走五步：分块（400–600 token）→ 按真实分布给 easy/medium 高采样权重的 4 档难度生成 → few-shot 风格改写（控制 query style fragment / how-do-I / what-is、长度服从 log-normal、正式度可调，例如把「What is the minimum credit score required for mortgage approval?」压成「min credit score for mortgage」）→ 产出带引用的 grounded answer → 注入 3–7 个 topically-similar distractor 并随机插入金证据位置。对齐效果很直接：question-type 的 JS divergence 从 0.434 降到 0.041（10× 改进）、平均长度从 19.55 词降到 8.85 词（真实值 9.91）。
 
-2. **22% 不可回答样本 + curriculum 校准 refusal**:
+**2. 22% 不可回答样本 + curriculum 校准 refusal：让模型证据不足时主动说 IDK 又不过度拒绝。**
 
-    - 功能：让模型在证据不足时主动说 "I don't know"，且不过度拒绝。
-    - 核心思路：在 10%–30% 区间以 2pp 步长扫负样本比例，发现 22% 是甜蜜点——超过 26% recall 急剧下降 (过度拒绝)，低于此 sycophancy 主导 (false positive 高)。同时混训所有数据会让模型 IDK 飙到 46.5% 还只有 39% 是真负例；两阶段 curriculum (外部数据先教 citation, 内部数据再校准拒答) 把 IDK 调到 13.2% 且 TN 准确率 56%。
-    - 设计动机：refusal calibration 是单一目标 SFT 解决不了的——它和"答案质量"天然冲突 (敢答更可能答对但也更可能编)。把这俩任务拆到 curriculum 的两个 stage 是直接对症下药；负样本比例 sweep 用实验找出 Pareto 最优点。
+refusal calibration 是单一目标 SFT 解决不了的——它和「答案质量」天然冲突，敢答更可能答对但也更可能编。作者在 10%–30% 区间以 2pp 步长 sweep 负样本比例，找到 22% 这个 Pareto 甜蜜点：超过 26% 时 recall 急剧下降（过度拒绝），低于此则 sycophancy 主导（false positive 高）。但负例比例对了还不够——把所有数据混训会让 IDK 飙到 46.5% 且只有 39% 是真负例，于是用两阶段 curriculum 把冲突任务隔离：外部数据先教 citation、内部数据再校准拒答，最终 IDK 调到 13.2%、TN 准确率 56%。
 
-3. **W4A16 量化保留 >99% citation 质量**:
+**3. W4A16 量化保留 >99% citation 质量：把 24GB 压到 8.4GB 实现单卡实时部署。**
 
-    - 功能：把 24GB 模型压到 8.4GB (2.86×)，使单 GPU (RTX 6000 Ada) 部署可行，per-query 成本 ~$0.001。
-    - 核心思路：SmoothQuant W4A16 (4-bit 权重 + 16-bit 激活)，relevant 实验证明引用质量从全精度几乎不掉 (>99% 保留)、TTFT 0.14s / TTC 0.57s，比 prior production model (Mistral-7B-Instruct 基础的 FinRAG-v3) TTC 快 3.2×。
-    - 设计动机：金融 RAG 必须实时响应 (秒级)，且 40+ 家机构部署需要硬件成本可控；W4A16 是当下能保留生成质量的最激进量化方案。作者特别验证 grounded generation 在低位量化下不退化，这一发现本身有传播价值。
+金融 RAG 必须秒级响应，且 40+ 家机构部署要求硬件成本可控，这两条把量化逼成刚需。FinRAG 用 SmoothQuant W4A16（4-bit 权重 + 16-bit 激活）把模型压到 8.4GB（2.86×），单 GPU（RTX 6000 Ada）即可部署、per-query 成本 ~\$0.001，TTFT 0.14s / TTC 0.57s，比上一代 Mistral-7B-Instruct 基础的 FinRAG-v3 的 TTC 快 3.2×。关键发现是引用质量在低位量化下几乎不掉（>99% 保留）——grounded generation 对激进量化的鲁棒性，本身就是一个值得传播的结论。
 
 ### 损失函数 / 训练策略
 LoRA ($r=64, \alpha=256$, dropout 0.05) 应用到所有 attention+MLP，8-bit AdamW lr $2\times10^{-5}$，per-device batch 4 + grad accum 4 (有效 16)，max seq 16,384，patience 5 早停。总训练 1,400 步 / ~360 GPU-hours / 8× RTX A6000 / 成本约 $1,800。

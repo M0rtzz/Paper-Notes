@@ -40,31 +40,29 @@ SERE 认为事件因果识别中的示例选择不能只看语义相似度，而
 ## 方法详解
 
 ### 整体框架
-SERE 包含三个模块。第一是 Joint Structural Metrics，对目标样例和语料库样例分别计算概念路径相似度与句法结构相似度，并加权得到结构分数。第二是 Causal Pattern Filtering，用一个轻量 LLM prompt 抽取候选样例所属的粗粒度因果模式，只保留与目标样例模式一致的候选。第三是 LLM Reasoning，把检索出的少样本示例加入 prompt，让 Reasoner 在二分类格式下输出 Yes 或 No。
+SERE 的定位不是又一个因果分类器，而是一个“为 LLM 挑案例”的检索器。它的出发点是：LLM 并非完全不会做因果推理，而是在少样本设置下容易被表层语义相近、但因果结构相反的 demonstration 带偏，于是过度判“有因果”。只要喂进 prompt 的示例在因果结构上对齐，模型的决策边界自然会收紧、精度提高。
 
-从流程上看，SERE 更像是“为 LLM 选择合适案例”的检索器，而不是另一个因果分类器。它的关键假设是：LLM 不是完全不会做因果推理，而是在少样本设置下被错误 demonstration 或表层语义误导；只要 demonstration 的结构对齐，模型的决策边界会更保守、更精确。
+整条流水线分三步走。先由 Joint Structural Metrics 对目标样例与语料库里每个候选样例算两类结构相似度——ConceptNet 上的概念路径相似度和依存句法树相似度——加权成一个结构分数；再由 Causal Pattern Filtering 用一个轻量 LLM prompt 抽出候选所属的粗粒度因果模式，只留下与目标样例模式一致的候选；最后把筛出来的少量结构相似示例塞进 prompt，让 Reasoner 在二分类格式下输出 Yes 或 No。
 
 ### 关键设计
-1. **Conceptual Path Metric**:
 
-    - 功能：衡量两个事件对在外部常识图谱上的概念关系是否相似。
-    - 核心思路：先用 Contriever-msmarco 将事件 span 匹配到 ConceptNet 节点，再用 Neo4j 查询源事件节点到目标事件节点之间的最短路径。目标样例和候选样例各自得到一条概念路径后，用编辑距离计算归一化相似度，形式上是 $1-ED(path_x,path_q)/\max(|path_x|,|path_q|)$。
-    - 设计动机：文本中没有显式因果连接词时，事件之间的常识路径可能提供隐含关系线索；这比只比较上下文句子的 embedding 更贴近 ECI 的任务结构。
+**1. 概念路径度量（Conceptual Path Metric）：文本里没有显式因果连接词时，靠常识图谱上的路径补出隐含关系。**
 
-2. **Syntactic Metric**:
+ECI 难就难在很多因果关系并不写在字面上——句子里没有“因为”“导致”，两个事件的关系藏在常识里。SERE 的做法是先用 Contriever-msmarco 把事件 span 匹配到 ConceptNet 节点，再用 Neo4j 查源事件节点到目标事件节点之间的最短路径；目标样例和候选样例各自得到一条概念路径后，用编辑距离算归一化相似度 $1-ED(path_x,path_q)/\max(|path_x|,|path_q|)$。这条路径刻画的是“两个事件在常识层面怎么连起来”，比直接比较上下文句子的 embedding 更贴近 ECI 真正要判的东西。
 
-    - 功能：衡量上下文表达因果关系的句法组织方式是否接近。
-    - 核心思路：用 spaCy 为上下文构建依存句法树，多句文本会连接到人工根节点，然后计算目标样例和候选样例之间的树编辑距离。相似度采用 $e^{-0.05\cdot TED(tree_x,tree_q)}$，再与概念路径分数按权重合并。
-    - 设计动机：因果关系常由从句、状语、介词结构或跨句指代承载。句法树能捕捉“事件如何被表达”，补足 ConceptNet 对外部知识的关注。
+**2. 句法结构度量（Syntactic Metric）：因果常由从句、状语、跨句指代承载，所以也要比“因果是怎么被表达出来的”。**
 
-3. **Causal Pattern Filtering 与正负平衡**:
+光有外部常识还不够，因果关系在语言上往往由从句、状语、介词结构或跨句指代来承载——同样一对事件，换一种句法组织，因果指向可能就变了。SERE 用 spaCy 给上下文建依存句法树（多句文本统一挂到一个人工根节点上），再算目标样例和候选样例之间的树编辑距离，相似度取 $e^{-0.05\cdot TED(tree_x,tree_q)}$。这个分数和概念路径分数按各 0.5 的权重合并成最终结构分数，一个管“外部知识怎么连”、一个管“语言怎么表达”，互为补充。
 
-    - 功能：避免检索到结构相似但因果图类型不同的样例，同时抑制 LLM 对“有因果”的偏置。
-    - 核心思路：SERE 定义 Direct、Chain、Collider、Fork、Coreference 等粗粒度因果模式。正例通过 LLM PatternExtractor 抽取模式，负例直接设为 No；检索时只保留与目标样例模式一致的候选，再在高结构分数样例中选取 top-k，并按一半正例、一半负例的原则组合 demonstration。
-    - 设计动机：只给 LLM 正例会加剧 causal hallucination，只给语义近邻又可能引入相反标签。模式过滤和正负平衡共同让 prompt 更像“结构化判别边界”。
+**3. 因果模式过滤与正负平衡（Causal Pattern Filtering）：硬过滤掉结构相似但因果图类型不同的样例，同时压住 LLM 对“有因果”的偏置。**
+
+前两个分数是连续打分，但结构分高不代表因果图类型一样——两个样例可能都很“像”，却一个是 Chain、一个是 Collider。SERE 预定义了 Direct、Chain、Collider、Fork、Coreference 几类粗粒度因果模式，用 LLM PatternExtractor 给正例抽模式（负例直接记为 No），检索时只保留与目标样例模式一致的候选。过完这道硬过滤后，再从高结构分候选里取 top-k，并刻意按一半正例、一半负例来组合 demonstration。这一步专门冲着 causal hallucination 去：只给正例会让模型更敢判“有因果”，只给语义近邻又可能混进相反标签，模式过滤加正负平衡相当于在 prompt 里给模型摆出一条更保守的判别边界。
+
+### 一个完整示例
+设目标样例要判“暴雨（rain）”和“封路（road closed）”是否有因果。先做概念匹配，把两个事件挂到 ConceptNet 节点，查到一条 rain→flood→road closed 的概念路径；同时 spaCy 把上下文解析成依存树。语料库里有上千候选，Joint Structural Metrics 给每个候选算出概念路径相似度和树编辑距离相似度并加权排序——一个字面也含“rain/road”但其实是并列关系（因果标签为 No）的样例，会因为概念路径走的是另一条、句法树差异大而被压到低分。接着 Causal Pattern Filtering 抽出目标样例属于 Chain 模式，只留下同样是 Chain 的候选；最后在剩余高分候选里取 top-2、按一正一负配好，连同目标样例一起交给 GPT-4o-mini 判 Yes/No。整个过程候选集从全语料逐步收缩到 2 条结构对齐的示例。
 
 ### 损失函数 / 训练策略
-主方法不训练 LLM，也不更新分类模型参数。实现上，ConceptNet 节点匹配阈值设为 0.6，概念路径和句法分数权重均为 0.5，默认选择 top-2 demonstrations，LLM temperature 设为 0 以减少随机性。主实验使用 GPT-4o-mini 和 Gemini-1.5-pro API；附录还用 LoRA 微调 Qwen2.5-3B-Inst 验证 SERE 能否迁移到微调设置。
+主方法不训练 LLM，也不更新任何分类模型参数。实现上 ConceptNet 节点匹配阈值设为 0.6，概念路径与句法分数权重各 0.5，默认取 top-2 demonstrations，LLM temperature 设为 0 以减少随机性。主实验用 GPT-4o-mini 和 Gemini-1.5-pro 的 API；附录里另用 LoRA 微调 Qwen2.5-3B-Inst，验证 SERE 这套结构化示例能否迁移到微调设置。
 
 ## 实验关键数据
 

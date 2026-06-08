@@ -39,29 +39,25 @@ tags:
 
 ## 方法详解
 
-### 综述结构与分类法
-全文围绕一个三层威胁-防御对照体系展开：先给 CUA 统一定义（含 OS Agent、GUI Agent、Web Agent、设备控制 Agent 四类子型），再分别列出 8 类内在威胁、8 类外在威胁、14 类防御方法，最后给出按平台（Web、Mobile、通用）划分的 benchmark/metric 全景。
+### 整体框架
+这篇综述要解决的是 CUA 安全研究"散落各处、缺统一视角"的问题，做法是把 124 篇文献收编进一个三层威胁-防御对照体系。它先给 CUA 一个适合安全分析的统一定义——把智能体拆成"感知 / 大脑 / 行动"三件套外加一个不可信的"环境"通道，并细分出 OS Agent、GUI Agent、Web Agent、设备控制 Agent 四类子型；再以组件为锚枚举 8 类内在威胁与 8 类外在威胁，反向梳理 14 类防御方法逐一对齐；最后铺开按平台（Web / Mobile / 通用）划分的 benchmark 与 metric 全景。整条主线是"先定义攻击面 → 枚举威胁 → 对齐防御 → 给评测地图"。
 
 ### 关键设计
-1. **三轴威胁分类法**（Section 3 主轴）:
 
-    - 功能：对每个威胁标注"威胁来源 (Env/Prompt/Model/User) × 受影响组件 (Perception/Brain/Action) × 威胁模型"，形成一个矩阵式 taxonomy。
-    - 核心思路：内在威胁（intrinsic）来自 agent 自身缺陷，分别绑定到三个组件——感知层有"UI 理解与 grounding 困难"；大脑层有"调度错误、目标错配、幻觉、上下文超长、社会文化偏见、响应延迟"；行动层有"API 调用错误"。外在威胁（extrinsic）来自攻击者，包括对抗攻击、prompt injection（直接 + 间接）、jailbreak、memory attack（提取 + 注入）、backdoor、reasoning gap attack（多模态信号冲突）、system sabotage、web hacking。每个威胁附带影响哪些组件、何时（agent development/deployment/architecture/training）发生的标签。
-    - 设计动机：传统综述按"攻击名"分类，新攻击一出现就需要扩列；本文按组件标注，新攻击只需归入对应组件即可，分类法长期保持稳定。
+**1. 三轴威胁分类法：用"来源 × 组件 × 威胁模型"取代"按攻击名分类"，让分类法长期不过时。**
 
-2. **防御-威胁对齐矩阵**（Section 4）:
+传统安全综述按攻击名（jailbreak、backdoor……）分类，每出现一种新攻击就得新增一栏，框架越长越乱。本文转而给每个威胁打三轴标签——威胁来源（Env / Prompt / Model / User）× 受影响组件（Perception / Brain / Action）× 威胁模型，外加一个"何时发生"的阶段标签（development / deployment / architecture / training）。在这个矩阵里，内在威胁来自 agent 自身缺陷：感知层是"UI 理解与 grounding 困难"，大脑层集中了"调度错误、目标错配、幻觉、上下文超长、社会文化偏见、响应延迟"六种，行动层是"API 调用错误"；外在威胁来自攻击者：对抗攻击、直接/间接 prompt injection、jailbreak、记忆提取与注入、backdoor、reasoning gap attack（多模态信号冲突）、system sabotage、web hacking。因为标签锚在组件而非攻击名上，新攻击诞生后只需归入对应组件即可，分类法不必推倒重来。
 
-    - 功能：把 14 类防御方法（环境约束、输入校验、防御性 prompt、数据净化、对抗训练、输出监控、模型审查、跨验证、持续学习、透明化、拓扑引导、感知协同、规划架构强化、合规规则）一一与所针对的内在/外在威胁对齐。
-    - 核心思路：每条防御标注三轴标签——目标组件（Env/Prompt/Model/User）、强化的框架元素（Perception/Brain/Action）、对应威胁编号（In./Ex.X）。例如"环境约束"主要防外在威胁（限制 agent 与 GUI 交互的权限），"规划架构强化"同时缓解内在调度错误和外在 reasoning-gap 攻击。
-    - 设计动机：让读者快速定位"我想防 X 攻击，业内有几种方法"和"某种防御能覆盖多少威胁"，避免重复造轮子。
+**2. 防御-威胁对齐矩阵：把 14 类防御和 16 类威胁做显式映射，让工程师照着选组合。**
 
-3. **跨平台 benchmark/metric 全景**（Section 5）:
+枚举完威胁后，光有威胁清单工程上没法直接用——读者真正想问的是"我要防 X 攻击，业内有哪几招""某种防御能覆盖多少威胁"。本文把 14 类防御（环境约束、输入校验、防御性 prompt、数据净化、对抗训练、输出监控、模型审查、跨验证、持续学习、透明化、拓扑引导、感知协同、规划架构强化、合规规则）逐条标上同样的三轴标签——目标组件、强化的框架元素、对应威胁编号（In./Ex.X），再与内在/外在威胁对齐。比如"环境约束"主防外在威胁（限制 agent 与 GUI 交互的权限），"规划架构强化"则同时缓解内在的调度错误和外在的 reasoning-gap 攻击。这样一来 web 应用要防护就能直接读出"环境约束 + 输入校验 + 跨验证"这种组合，避免重复造轮子。
 
-    - 功能：按 Web、Mobile、General-purpose 三类平台整理 CUA 安全 benchmark，并归类指标为任务完成（TSR、Helpfulness）、中间步骤（SSR、Total Correct Prefix）和安全鲁棒性（ASR、CuP、F1、RR、LR、AR、TS）三组；测量方法分 Rule-based、LLM-as-a-judge、Manual 三类。
-    - 设计动机：CUA 跨平台差异极大（Mobile 屏幕受限、Web 文本动态、桌面 API 复杂），统一 benchmark 全景便于挑选评测环境。
+**3. 跨平台 benchmark/metric 全景：按平台铺开评测地图，并把混杂的指标归成三组。**
+
+CUA 跨平台差异极大——Mobile 屏幕受限、Web 文本动态、桌面 API 复杂，连评测时用哪个 benchmark 都不好选。本文按 Web / Mobile / General-purpose 三类平台整理安全 benchmark，把散乱的指标归成三组：任务完成（TSR、Helpfulness）、中间步骤（SSR、Total Correct Prefix）、安全鲁棒性（ASR、CuP、F1、RR、LR、AR、TS）；测量方式也分成 Rule-based、LLM-as-a-judge、Manual 三类。这张地图让研究者能按目标平台和关注维度快速挑到合适的评测环境。
 
 ### 损失函数 / 训练策略
-本文为综述无独立训练。但作者梳理了防御侧的核心训练目标：对抗训练（注入对抗样本），数据净化（剔除被污染样本），持续学习与自演化（基于环境反馈在线更新策略），以及合规规则学习（把 SOP/伦理规范编码进训练目标）。
+本文为综述，无独立训练。作者梳理了防御侧的核心训练目标作为参考：对抗训练（注入对抗样本提升鲁棒性）、数据净化（剔除被污染样本）、持续学习与自演化（基于环境反馈在线更新策略），以及合规规则学习（把 SOP / 伦理规范编码进训练目标）。
 
 ## 实验关键数据
 本文为综述，下面整理其汇总的 CUA 安全 benchmark 与威胁分布数据。

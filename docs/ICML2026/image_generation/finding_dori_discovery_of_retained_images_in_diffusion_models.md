@@ -41,36 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整篇文章可以拆成"探针 + 诊断 + 治疗"三段：
-
-1. **探针 DoRI**：给定一张已知被记忆的训练图 $\bm{x}_{\mathit{mem}}$ 和被 NeMo/Wanda 剪枝后的模型 $\bm{\theta}_{N/W}$，在 text embedding 空间用扩散损失梯度下降搜索 $\bm{y}_{adv}$，使其重新生成 $\bm{x}_{\mathit{mem}}$。
-2. **三重局部性诊断**：用 DoRI 批量产生大量对抗 embedding，分别检查它们在 (a) text embedding 空间的分布、(b) 各层激活的差异、(c) 被剪枝方法标记的权重集合的重叠率，三个层面都拒绝"记忆 = 局部少数权重"的假说。
-3. **治疗：对抗微调**：把 DoRI 当 inner loop，外层用 surrogate image 重新拟合，把记忆样本从模型里"洗"出去，同时维持普通图像-字幕对的扩散损失保住生成质量。
-
-实验台用 Stable Diffusion v1.4 + 来自 LAION-5B 的 500 个已知记忆 prompt（沿用 Wen 等人的标准 benchmark），并在 SD v2.0 上做泛化验证。
+这篇论文要回答一个被剪枝缓解方案集体忽略的问题：把"记忆 prompt → 记忆图"这条映射剪掉之后，记忆图是不是真的删了，还是只换了条路就还能调出来。作者的整套设计围绕一个对抗 embedding 优化器 DoRI 展开，分三步推进——先用 DoRI 当**探针**，在被 NeMo/Wanda 剪枝后的模型里直接在 text embedding 空间搜出能复刻原图的残留触发器；再把 DoRI 批量产生的对抗 embedding 当**诊断工具**，从 embedding 分布、层激活、被标记权重三个层面证伪"记忆是局部的"这一假设；最后把 DoRI 嵌进 fine-tuning 的内循环当**治疗手段**，用对抗触发器驱动全模型微调，把记忆样本真正洗出去。实验台是 Stable Diffusion v1.4 + 来自 LAION-5B 的 500 个已知记忆 prompt（沿用 Wen 等人的标准 benchmark），并在 SD v2.0 上做泛化验证。
 
 ### 关键设计
 
-1. **DoRI 对抗 embedding 优化（探针）**：
+**1. DoRI 对抗 embedding 优化：在剪枝模型里搜出残留触发器。**
 
-    - 功能：给定记忆图 $\bm{x}_{\mathit{mem}}$ 和（可能已剪枝的）模型，找出能稳定复刻该图的 text embedding $\bm{y}_{adv}$。
-    - 核心思路：把 $\bm{y}_{adv}$ 初始化为原 prompt 的 embedding（或随机高斯 / 非记忆 prompt），按 $\bm{y}_{adv}^{(i+1)} = \bm{y}_{adv}^{(i)} - \eta \nabla_{\bm{y}_{adv}^{(i)}} \mathcal{L}(\bm{x}_{\mathit{mem}}, \bm{\epsilon}, \bm{y}_{adv}^{(i)}, t, \bm{\theta}_{N/W})$ 迭代 50 步，Adam，$\eta=0.1$，batch=8。每一步**都重新采样噪声 $\bm{\epsilon}\sim\mathcal{N}(0,I)$ 和时间步 $t\sim\mathcal{U}(1,T)$**，强制找出的 embedding 在任意初始噪声下都能触发复刻，而非记住了某个特定噪声-时间步组合。
-    - 设计动机：连续 embedding 比离散 prompt 搜索空间大得多，能暴露剪枝模型里残留的"隐通道"；重采样噪声/时间步是关键防作弊设计，否则模型可能只是过拟合某条特定采样轨迹。作者在附录中证明，对**非记忆图**用同样设置需要 >500 步才能强行复刻，远超 50 步阈值，所以触发=记忆这一推断不会假阳性（Memorization Rate 在非记忆 prompt 上仅 0.02）。
+剪枝方法只在原始记忆 prompt 下验证过效果，没人查过换一种输入能不能把同一张图调出来。DoRI 正是对着这个盲点设计的探针：给定记忆图 $\bm{x}_{\mathit{mem}}$ 和（可能已剪枝的）模型 $\bm{\theta}_{N/W}$，把 text embedding $\bm{y}_{adv}$ 初始化为原 prompt 的 embedding（或随机高斯 / 非记忆 prompt），按 $\bm{y}_{adv}^{(i+1)} = \bm{y}_{adv}^{(i)} - \eta \nabla_{\bm{y}_{adv}^{(i)}} \mathcal{L}(\bm{x}_{\mathit{mem}}, \bm{\epsilon}, \bm{y}_{adv}^{(i)}, t, \bm{\theta}_{N/W})$ 用扩散损失梯度下降迭代 50 步（Adam，$\eta=0.1$，batch=8）。选连续 embedding 而非离散 prompt 搜索，是因为它空间大得多，能把剪枝模型里残留的"隐通道"暴露出来。这里最关键的防作弊设计是每一步都重新采样噪声 $\bm{\epsilon}\sim\mathcal{N}(0,I)$ 和时间步 $t\sim\mathcal{U}(1,T)$，强制找出的 embedding 在任意初始噪声下都能触发复刻，而不是过拟合某条特定的噪声-时间步采样轨迹。作者在附录中验证这一阈值不会误报：对非记忆图用同样设置需要 >500 步才能强行复刻，远超 50 步阈值，因此"50 步内触发即记忆"这一推断在非记忆 prompt 上的 Memorization Rate 仅 0.02。
 
-2. **三层局部性诊断（诊断）**：
+**2. 三层局部性诊断：用 DoRI 把"记忆是局部的"逐层证伪。**
 
-    - 功能：用 DoRI 量化"记忆触发器到底有多分散"，从 embedding / activation / weight 三个角度逐一证伪局部性。
-    - 核心思路：(a) **Embedding 层** —— 对同一张记忆图随机初始化 100 个 $\bm{y}_{adv}^{(0)}\sim\mathcal{N}(0,I)$ 各跑 DoRI 50 步，t-SNE 看分布，结果是对抗 embedding 几乎和初始随机点一样弥散，pairwise L2 距离甚至比非记忆 prompt 之间还大；(b) **Activation 层** —— 定义 discrepancy 为同一层在不同 embedding 下激活的平均 pairwise $\ell_2$ 距离（固定噪声只变 embedding），发现 100 个能触发同一张图的 $\bm{y}_{adv}$ 之间的激活差异，和 100 个完全不同的记忆 prompt 之间的差异**相当**；(c) **Weight 层** —— 定义 weight agreement 为不同 embedding 下 NeMo/Wanda 标记的"待剪权重集合"的 IoU，Wanda 在多数层 <0.6，NeMo 看似 >0.8 但其实是因为它在第 2、6、7 层根本不挑权重（agreement 强行设 1），实际有效层（第 1 层）也只有 0.6。
-    - 设计动机：剪枝方法的全部正当性都建立在"同一张记忆图对应同一小簇权重"上，这三个实验逐一否定了这个假设。特别精彩的是 weight agreement 实验直接用剪枝方法自己的定位逻辑反驳自己——同一张图、不同 embedding，剪掉的权重都对不上号，说明所谓"记忆神经元"是输入相关的伪局部解，而非客观存在的内部存储位置。
+剪枝方法的全部正当性都建立在"同一张记忆图对应同一小簇权重"上，作者就用 DoRI 批量产生的对抗 embedding 从三个层面拆这个假设。**Embedding 层**：对同一张记忆图随机初始化 100 个 $\bm{y}_{adv}^{(0)}\sim\mathcal{N}(0,I)$ 各跑 DoRI 50 步，t-SNE 看分布，结果这些能复刻同一张图的对抗 embedding 几乎和初始随机点一样弥散，pairwise L2 距离甚至比不同非记忆 prompt 之间还大。**Activation 层**：定义 discrepancy 为同一层在不同 embedding 下激活的平均 pairwise $\ell_2$ 距离（固定噪声、只变 embedding），测得 100 个触发同一张图的 $\bm{y}_{adv}$ 之间的激活差异，和 100 个完全不同的记忆 prompt 之间的差异相当。**Weight 层**：定义 weight agreement 为不同 embedding 下 NeMo/Wanda 标记的"待剪权重集合"之间的 IoU，Wanda 在多数层 <0.6，NeMo 看似 >0.8 实则因为它在第 2、6、7 层根本不挑权重（agreement 被强行设成 1），真正有效的第 1 层也只有 0.6。最精彩的是 weight agreement 这一招直接用剪枝方法自己的定位算子反驳它自己——同一张图、不同触发器，剪掉的权重都对不上号，说明所谓"记忆神经元"只是输入相关的伪局部解，而非客观存在的内部存储位置。
 
-3. **对抗微调（治疗）**：
+**3. 对抗微调：用 DoRI 当内循环把记忆真正擦除。**
 
-    - 功能：把 DoRI 作为内循环，主动生成对抗 embedding 并用它们 fine-tune 全模型，把记忆图从权重里彻底擦除。
-    - 核心思路：每个 fine-tuning step 里先用 DoRI 为每张待擦记忆图收集一批 $\bm{y}_{adv}$；再用预先准备的 surrogate image $\widetilde{\bm{x}}$（用剪枝模型 + 原 prompt 生成的"语义近似但像素不同"的图）作为目标，loss 为 $\mathcal{L}_{Adv}(\widetilde{\bm{x}}_0, \bm{\epsilon}, \bm{y}_{adv}, t, \bm{\theta}) = \|\bm{\epsilon} - \bm{\epsilon}_{\bm{\theta}}(\widetilde{\bm{x}}_t, t, \bm{y}_{adv})\|_2^2$，把对抗 embedding 的输出从原图拽向 surrogate；同时叠加普通 LAION 图像-字幕对的标准扩散损失 $\mathcal{L}_{\mathrm{DM}}$ 防止模型整体崩。总损失 $\mathcal{L} = \mathcal{L}_{\mathrm{DM}} + \mathcal{L}_{Adv}$，全模型微调（LoRA 实验失败，进一步佐证"必须全局调"）。
-    - 设计动机：既然记忆是分布式的，就必须从全模型对抗多个触发器同时下手；用 surrogate 而不是随便一张图当目标，是为了避免把"语义内容"也一起删掉（区别于 concept unlearning），同时防止顺手把新的记忆样本带进来。
-
-### 损失函数 / 训练策略
-对抗微调跑 5 个 epoch，单 epoch 已显著降低记忆率；标准扩散损失维持模型通用性。Inner-loop 的 DoRI 用 50 步对抗优化迭代生成新 $\bm{y}_{adv}$。SD v1.4 调好的超参直接搬到 SD v2.0 仍有效。
+既然记忆是分布式的，单点剪枝注定漏，就必须从全模型同时对抗多个触发器。每个 fine-tuning step 里先用 DoRI 为每张待擦记忆图收集一批 $\bm{y}_{adv}$；再用预先准备的 surrogate image $\widetilde{\bm{x}}$（用剪枝模型 + 原 prompt 生成的"语义近似但像素不同"的图）作训练目标，对抗损失 $\mathcal{L}_{Adv}(\widetilde{\bm{x}}_0, \bm{\epsilon}, \bm{y}_{adv}, t, \bm{\theta}) = \|\bm{\epsilon} - \bm{\epsilon}_{\bm{\theta}}(\widetilde{\bm{x}}_t, t, \bm{y}_{adv})\|_2^2$ 把对抗 embedding 的输出从原图拽向 surrogate；同时叠加普通 LAION 图像-字幕对的标准扩散损失 $\mathcal{L}_{\mathrm{DM}}$ 防止模型整体崩，总损失为 $\mathcal{L} = \mathcal{L}_{\mathrm{DM}} + \mathcal{L}_{Adv}$。用 surrogate 而不是随便一张图当目标，是为了只删像素级的记忆、保住语义内容（区别于 concept unlearning），同时避免顺手把新的记忆样本带进来。整套训练做全模型微调跑 5 个 epoch（单个 epoch 已显著降低记忆率），LoRA 版本实验失败，反过来进一步佐证"必须全局调"这一结论。SD v1.4 调好的超参直接搬到 SD v2.0 仍然有效。
 
 ## 实验关键数据
 

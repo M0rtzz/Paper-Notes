@@ -45,23 +45,17 @@ Qwen3-8B 为 backbone。pipeline 三阶段：(I) Cold-start：用 10k BBQ + GPT-
 
 ### 关键设计
 
-1. **轨迹级后缀 margin（Trajectory-level Suffix Margin）**:
+**1. 轨迹级后缀 margin：只重排「出问题之后」的概率质量，保住干净的前缀。**
 
-    - 功能：把「对话级 DPO」改成「从偏见激活步往后才计算边际」，保留合法前缀。
-    - 核心思路：给定上下文 $c=(x,\mathbf{y}^-,t)$ 与触发步 $i$，定义 $r_i(\pi) = \beta \log \frac{\pi(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})} - \beta \log \frac{\pi(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}$，DPO 的 BCE 目标只对这段后缀生效。
-    - 设计动机：response-wise DPO 会把推理链 prefix 一起惩罚，导致 utility 暴跌（消融里 Response-Level baseline 直接掉 utility 2.3 点）；suffix margin 把「干净的前缀」当 free 资产保留，只重排「问题发生之后」的概率质量。
+普通 response-level DPO 会把整条推理链的 prefix 一起惩罚，结果合法的前半段也被牵连，utility 暴跌（消融里 Response-Level baseline 直接掉 2.3 点 utility）。Self-Debias 的做法是把边际计算的起点挪到偏见激活步 $i$：给定上下文 $c=(x,\mathbf{y}^-,t)$ 和触发步 $i$，定义 $r_i(\pi) = \beta \log \frac{\pi(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})} - \beta \log \frac{\pi(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}$，DPO 的 BCE 目标只对这段后缀生效。这样「干净的前缀」被当 free 资产保留，只对问题真正发生之后的那段重排概率质量——既纠了偏见，又不毁推理逻辑。
 
-2. **Jain 公平指数反塌缩正则**:
+**2. Jain 公平指数反塌缩正则：别让训练只挑容易的样本做。**
 
-    - 功能：阻止训练只优化简单样本、让 stubborn bias 样本被边缘化。
-    - 核心思路：对一 batch 的 $\mathbf{r}=[r_1,\dots,r_B]$ 计算 $\mathcal{J}(\mathbf{r})=\frac{(\sum_j r_j)^2}{B\sum_j r_j^2} \in [1/B, 1]$，加入正则 $-\lambda \log \mathcal{J}(\mathbf{r})$；其梯度 $\partial \mathcal{R}/\partial r_i \propto 2 r_i / \overline{r^2} - 2/\bar{r}$ 在 $r_i < \bar{r}$ 时为正、$r_i > \bar{r}$ 时为负，自然把训练算力推向 hard sample。
-    - 设计动机：标准 DPO 由 sigmoid 饱和导致「易样本零梯度，难样本被平均稀释」；Jain 指数提供了一个隐式 re-weighting，几何意义就是「让所有推理轨迹分到的边际尽量等长」。
+标准 DPO 受 sigmoid 饱和拖累——容易样本梯度趋零、难样本被平均稀释，结果 stubborn bias 样本被边缘化。作者把一个 batch 的边际 $\mathbf{r}=[r_1,\dots,r_B]$ 拿来算 Jain 公平指数 $\mathcal{J}(\mathbf{r})=\frac{(\sum_j r_j)^2}{B\sum_j r_j^2} \in [1/B, 1]$，再加正则 $-\lambda \log \mathcal{J}(\mathbf{r})$。它的梯度 $\partial \mathcal{R}/\partial r_i \propto 2 r_i / \overline{r^2} - 2/\bar{r}$ 在 $r_i < \bar{r}$ 时为正、$r_i > \bar{r}$ 时为负，等于自动给难样本加权、给易样本减权。几何上它逼着「所有推理轨迹分到的边际尽量等长」，这正是把网络资源分配里的公平思想搬过来当反塌缩机制。
 
-3. **基于一致性过滤的在线自训练**:
+**3. 基于一致性过滤的在线自训练：用收敛一致当标签，摆脱人工标注。**
 
-    - 功能：摆脱标注依赖，让模型在未标注 query 上自合成 preference pair。
-    - 核心思路：用 Bias Injection 强制生成 $\mathbf{y}^-$，触发一轮轮自纠正 $\mathbf{y}^- \to \mathbf{y}_1 \to \dots \to \mathbf{y}_K$；定义 self-consistency 过滤——只有当最后若干轮答案收敛到同一结论时才采纳 $\mathbf{y}_K$ 为 $\mathbf{y}^+$；否则丢弃，避免错误标签污染策略。两轮迭代（Iter1、Iter2）每轮各 5k 未标注 query。
-    - 设计动机：避免传统 self-training 的 confirmation bias；一致性收敛信号在公平任务里近似「不再受 stereotype 牵引」的客观指示，比固定阈值或外部裁判更廉价。
+要持续迭代又不想一直喂标注，就得让模型自己造 preference pair。做法是用 Bias Injection 强制生成 $\mathbf{y}^-$，再触发一轮轮自纠正 $\mathbf{y}^- \to \mathbf{y}_1 \to \dots \to \mathbf{y}_K$；关键是 self-consistency 过滤——只有当最后若干轮答案收敛到同一结论时，才采纳 $\mathbf{y}_K$ 当 $\mathbf{y}^+$，否则整条丢弃，避免错误标签污染策略。每轮（Iter1、Iter2）各用 5k 未标注 query。之所以靠「一致收敛」而不是固定阈值或外部裁判，是因为在公平任务里「答案不再被 stereotype 牵着变」本身就是个廉价又靠谱的客观信号，还能规避传统 self-training 的 confirmation bias。
 
 ### 损失函数 / 训练策略
 联合目标 $\mathcal{L}_{\text{Self-Debias}}(\pi) = \mathcal{L}_{\text{SC}}(\pi) + \alpha \big(-\mathbb{E}_{\mathbf{r}}[\log\sigma(r_i)] - \lambda \log\mathcal{J}(\mathbf{r})\big)$。其中 cold-start 的 $\mathcal{L}_{\text{SC}}$ 是「直接生成无偏」+「条件自纠正」双 NLL 之和，作为 generative anchor 防止灾难性遗忘；$\alpha=0.25, \beta=0.1$ 为 balanced 设置（消融显示 inverted-U，过大反而掉点）。训练在 4×RTX 6000 Ada 上完成，Iter2 之后即收敛。

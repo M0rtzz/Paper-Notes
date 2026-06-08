@@ -41,30 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RTCE 三阶段构造：(1) **生成**——250 个合成输入跨 4 个数据家族（图案字符串、Apache 日志、YAML 配置、CSV 表格，共 36 个子类）保证多样性；(2) **验证**——用 4 个压缩算法的 Python 参考实现（LZW/AE/RLE/Huffman）在固定 seed 下产生确定 ground truth；(3) **评测**——对每个输入做 4 种任务（O/P Pred、O/P Pred-I、I/P Pred、I/P Pred-I），用 EM/Edit Similarity/Pass@5 三指标打分。任务全 execution-free（不允许模型实际跑代码），强迫模型在头脑里模拟执行。
+
+RTCE 把"代码理解"重新表述成"代码可逆性"问题，再用一条严格的回环约束去检验模型是否真的在脑子里跑通了算法。整个基准分三步搭起来：先在图案字符串、Apache 日志、YAML 配置、CSV 表格四个数据家族（共 36 个子类）下合成 250 个多样化输入，再用 LZW/AE/RLE/Huffman 四个压缩算法的 Python 参考实现在固定 seed 下产出确定性的 ground truth，最后让模型在 execution-free（不准真跑代码）的设定下完成四种任务变体（O/P Pred、O/P Pred-I、I/P Pred、I/P Pred-I），逼它在头脑里模拟执行。评分用 EM、Edit Similarity、Pass@5 三个指标：EM（exact match，浮点容差 $10^{-3}$）是主指标，ES（归一化 Levenshtein）给部分分，Pass@5 取 5 次采样的最好结果——之所以以 EM 为准，是因为很多 EM=0 的样本 ES 仍有 8%–20%，恰恰说明模型输出"看起来像但并不精确"，只有严格回环才抓得住这种脆性。
 
 ### 关键设计
 
-1. **基于双射压缩的 round-trip 框架**:
+**1. 双射压缩构成的 round-trip 框架：把"理解"操作化为 bit 精确的可逆性。**
 
-    - 功能：构造严格的 exact-match 闭环，无法被语义等价/部分相似性混过。
-    - 核心思路：定义 $\mathsf{enc}:\mathcal{X}\to\mathcal{Z}$、$\mathsf{dec}:\mathcal{Z}\to\mathcal{X}$，约束 $\forall x\in\mathcal{X},\ \mathsf{dec}(\mathsf{enc}(x))=x$。要求模型分别完成 $x\to z$（前向编码）、$z\to x'$（前向解码）、$x\to z$ via 反转 dec（用 dec 函数反推 encode 行为）、$z\to x'$ via 反转 enc（用 enc 函数反推 decode 行为）。后两种"inversion"任务最关键——它们强迫模型把给定函数当作目标的逆来推理，无法靠"读懂代码再模拟"取巧。
-    - 设计动机：与 RTC（code↔NL）的语义等价不同，bit-精确还原不允许有任何信息丢失，能暴露"看似两边都对但合起来不一致"的内部矛盾。
+现有评测的根本松动在于"语义等价"——只要新代码行为一样就算对，模型靠模式匹配/记忆就能刷分，没法证明它真懂算法的内部状态机。无损压缩天然是双射，给出了一个远更苛刻的约束：定义 $\mathsf{enc}:\mathcal{X}\to\mathcal{Z}$、$\mathsf{dec}:\mathcal{Z}\to\mathcal{X}$，强制 $\forall x\in\mathcal{X},\ \mathsf{dec}(\mathsf{enc}(x))=x$，任何信息丢失都会让 exact-match 直接失败。围绕它派生出四种任务：$x\to z$（前向编码）、$z\to x'$（前向解码），以及用 dec 函数反推 encode 行为、用 enc 函数反推 decode 行为这两个"inversion"变体。后两个 inversion 任务是杀手锏——它们要求模型把给定函数当成目标的逆来推理，没法靠"读懂代码再顺着模拟"取巧，因此能暴露"两边各看似都对、合起来却不闭合"的内部矛盾，而这正是单方向 benchmark 永远抓不到的。
 
-2. **4 类压缩算法覆盖编码范式谱**:
+**2. 四类压缩算法张成编码范式谱：用不同设计模式戳中不同推理瓶颈。**
 
-    - 功能：用不同设计模式的算法测试不同推理瓶颈。
-    - 核心思路：LZW 测字典维护（动态状态）、AE 测概率区间累积（浮点精度+长跨度）、RLE 测连续游程聚合（最简单的 bijection）、Huffman 测前缀编码+树构造（多阶段层次过程）。这 4 个算法分布跨越简单（RLE）到复杂（Huffman），实验中 Huffman encoding 上 15 个模型 EM 全部为 0，证明问题不在难度而在"是否真懂状态机"。
-    - 设计动机：单一算法可能让结果被算法特性偏置；4 类一起测能区分"是某个算法的特定知识不会"还是"通用状态跟踪能力差"。
+只用单一算法会让结论被该算法的特质偏置，所以 RTCE 选了四个机制差异极大的算法：LZW 考字典维护（动态状态），AE 考概率区间累积（浮点精度叠加长跨度依赖），RLE 考连续游程聚合（最简单的 bijection），Huffman 考前缀编码加树构造（多阶段层次过程）。它们从最简单的 RLE 一路铺到最复杂的 Huffman，于是能把"某个算法的特定知识不会"和"通用状态跟踪能力差"区分开。最有说服力的信号来自 Huffman encoding：15 个模型 EM 全是 0，而难度排在中间的 RLE 却能拿到几十分，说明卡住模型的不是绝对难度，而是"是否真懂状态机"。
 
-3. **3 种诊断范式：zero-shot / self-reflection / SFT**:
+**3. zero-shot / self-reflection / SFT 三种诊断范式：穷尽涨分手段，证明鸿沟是根本性的。**
 
-    - 功能：穷尽当前能让 LLM 涨分的所有标准手段，证明 RTCE 的鸿沟是根本性的。
-    - 核心思路：zero-shot 测原始能力；多轮 self-reflection 用 critique/revision 两阶段循环，每轮模型先 KEEP/REVISE 判断再改写；SFT 则用 5 阶段管道：执行注入 @snoop → 过滤合法 trace → 用 Qwen3-32B 把 trace 翻成自然语言 reasoning chain → 构造 2-turn chat 数据 → LoRA rank-8 微调 QwQ-32B。所有三种方法都救不回 Huffman encoding 的 0%。
-    - 设计动机：把"模型只是没被教好"和"模型架构上做不到"严格区分开。RTCE 的核心结论是：三种增强方法都失败说明这不是 prompt/data/scale 问题，而是 transformer 对 stateful bijection 的根本性缺陷。
-
-### 评测指标
-EM（exact match，浮点 tol=10⁻³）、ES（normalized Levenshtein 给部分分）、Pass@5（n=5 采样取最好）。EM 是主要指标，因为 ES 在很多 EM=0 的情形下还 8%–20%，说明模型生成的输出"看起来像但不精确"。
+要让"transformer 在 stateful bijection 上有根本缺陷"这个结论站得住，就必须先排除"只是没教好/prompt 不行/规模不够"的可能。于是论文把三种标准增强手段全用上：zero-shot 测原始能力；多轮 self-reflection 用 critique/revision 两阶段循环，每轮模型先做 KEEP/REVISE 判断再改写；SFT 则走五阶段管道——用 @snoop 注入执行、过滤出合法 trace、用 Qwen3-32B 把 trace 翻成自然语言 reasoning chain、拼成 2-turn chat 数据、再以 LoRA rank-8 微调 QwQ-32B。三种方法把当前能想到的 prompt/data/scale 杠杆都拉满了，却都没能把 Huffman encoding 从 0% 救回来，从而把失败归因牢牢钉在架构层面而非训练层面。
 
 ## 实验关键数据
 

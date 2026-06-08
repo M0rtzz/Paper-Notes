@@ -39,30 +39,28 @@ tags:
 
 ## 方法详解
 ### 整体框架
-对每个任务 t 与异构 agent 集合 $\mathcal{A} = \{a_i\}_{i=1}^{|\mathcal{A}|}$（论文中是 4 个 Qwen3 规格），sale 的 pipeline 为：① 每个 agent $a_i$ 基于 (t, 环境 E) 产出一份短策略 $s_{t,i}$ 作为标书；② 用价格信号 $\pi(a_i)$ 与标书长度估 cost $C_{t,i}$，用熵 + 自评 + 互评 jury 估 value $V_{t,i}$；③ 选出 cost-minus-value 最小者为 provisional winner；④ 凡比临时赢家更便宜的 agent 可去共享记忆 $\mathcal{M}$ 检索相似任务的"输 / 赢策略对"，做对比式精炼后重投标，若任何精炼标书把 $C-V$ 压得更低则替换胜者，否则保留临时胜者；⑤ 让最终胜者执行其策略生成完整轨迹。整个竞拍阶段在 token 与时延上占总推理 < 1%。
+sale 把异构 agent 集合 $\mathcal{A} = \{a_i\}_{i=1}^{|\mathcal{A}|}$（论文里是 4 个 Qwen3 规格）排成一个测试时拍卖市场：拿到任务 t 后，每个 agent 先吐一段"我打算怎么做"的短策略当标书，市场用 cost-minus-value 给标书打分选出临时赢家，比赢家便宜的 agent 还能翻历史竞拍记忆精炼标书来抢单，最终胜者才真正执行其策略生成完整轨迹。关键在于整个竞拍只让每个 agent 吐几百 token 的 plan，token 与时延上占总推理不到 1%，于是把"要不要用大模型"这件事变成一次几乎免费的市场出清。
 
 ### 关键设计
 
-1. **策略短计划作为标书（Strategy Bidding）**:
+**1. 策略短计划作为标书：用几百 token 的 plan 代替跑完整解来做路由。**
 
-    - 功能：让每个 agent 只产出一段"我打算如何分解任务、用哪些工具、可能遇到什么坑"的计划，作为 routing 决策的输入。
-    - 核心思路：利用 plan-quality ↔ execution-quality 的已知正相关，把昂贵的 non-predictive routing（人人跑完才选）换成"每人吐几百 token"的部分预测式 routing；标书既是质量信号，又自带要执行的 roadmap，胜者无需重做规划即可执行。
-    - 设计动机：agentic 轨迹常有数十万到上百万 token，让所有 agent 都跑到底既不可行也不绿色；同时纯靠任务描述训路由模型又对长程任务失灵。短策略是"价质双信号"的最低代价载体。
+agentic 轨迹动辄数十万到上百万 token，non-predictive 路由（让每个 agent 都跑到底再选）在这里成本爆炸，而 predictive 路由（纯靠任务描述训一个小路由模型）又对长程任务失灵。sale 走中间一条"部分预测式路由"：让每个 agent 只产出一段"如何分解任务、用哪些工具、可能踩哪些坑"的策略 $s_{t,i}$ 当标书。这一招之所以成立，是因为 plan 质量与 execution 质量已被证明强相关（Sun et al. 2024），所以短策略既是廉价的质量信号，又自带一份可直接执行的 roadmap——胜出的 agent 不必重新规划，照着自己的标书往下做即可。
 
-2. **Cost-Value 评分与 min-max 权重学习**:
+**2. Cost-Value 评分与 min-max 权重学习：把"该不该派 $a_i$ 去做 t"压成一个越小越该派的标量。**
 
-    - 功能：把"该不该派 $a_i$ 去做 t"映射成一个标量分数 $C_{t,i} - V_{t,i}$，越小越值得派。
-    - 核心思路：cost 用 $C_{t,i} = w_c \cdot \pi(a_i) \cdot |s_{t,i}|$，把每百万 token 单价与标书长度相乘——长策略既预示更长执行轨迹（Goebel & Zips 2025），又意味着更高失败率（Xiong et al. 2025a），是双重成本风险代理。value 用 $V_{t,i} = w_h \cdot H(s_{t,i}) + \sum_{a_j \in \mathcal{A}} w_j \cdot \gamma_j(s_{t,i})$，其中 $H$ 是 token 级平均熵（高熵对应信息量大、冗余低），$\gamma_j \in \{0,\dots,5\}$ 是包括自评在内的 jury 0–5 Likert 打分。权重通过 min-max 优化在训练集上学：$\min_{w,x,Q} Q\ \text{s.t.}\ z_t \leq Q\ \forall t$，即最小化最坏任务的 $C-V$，避免某个任务被极差分配拖死。
-    - 设计动机：cost 信号要足够"便宜可得"（标书长度免费拿到），value 要兼顾内在质量（熵）与外在认可（jury）。Ablation 显示去掉自评或缩小 jury 都会掉点；min-max 比平均损失对长尾任务更稳健。
+每份标书的得分是 $C_{t,i} - V_{t,i}$。成本侧用 $C_{t,i} = w_c \cdot \pi(a_i) \cdot |s_{t,i}|$，把 agent 的每百万 token 单价 $\pi(a_i)$ 乘上标书长度——长策略既预示更长的执行轨迹（Goebel & Zips 2025）、又意味着更高失败率（Xiong et al. 2025a），于是标书长度成了一个免费拿到的双重成本/风险代理。价值侧用
 
-3. **拍卖记忆驱动的策略精炼（Strategy Refinement from Auction Memory）**:
+$$V_{t,i} = w_h \cdot H(s_{t,i}) + \sum_{a_j \in \mathcal{A}} w_j \cdot \gamma_j(s_{t,i}),$$
 
-    - 功能：让落选的便宜 agent 看历史"输标 vs 中标"案例后重写自己的标书，争取从大模型手里抢回任务。
-    - 核心思路：竞拍后存 $\mathcal{M}(t') = (t', \{s_{t',i}\}, y_{t'})$（含输赢标签）。新任务 t 上，只对比临时赢家更便宜的 agent 启动精炼——按文本 embedding 余弦相似度取 top-$\tilde{k}$ 历史任务的 (lose, win) 策略对（至少一条来自该 agent），用 contrastive prompt 让 agent 学"上次我输在哪、对手赢在哪"，输出精炼标书 $s^r_{t,i}$ 并重新打分；若某精炼标书把 $C-V$ 进一步压低就替换胜者，否则保留临时赢家。
-    - 设计动机：若给每个 agent 都强制产生 memory-informed bid，会成倍增加 token；机会式精炼保留"小 agent 自己已赢就直接走"的捷径，把额外开销精准花在"有翻盘可能"的便宜 agent 身上。这同时把 routing 升级为持续自改进机制——记忆越多，便宜 agent 越被选中。
+其中 $H(s_{t,i})$ 是标书的 token 级平均熵（熵高意味着信息密度大、冗余少，对应更好的规划），$\gamma_j \in \{0,\dots,5\}$ 是包括自评在内的 jury 给出的 0–5 Likert 打分。这样 value 同时兼顾内在质量（熵）与外在认可（jury 互评+自评），都是不必额外训练就能算出的信号。权重 $w = (w_c, w_h, \{w_j\})$ 不靠平均损失而靠 min-max 学：$\min_{w,x,Q} Q\ \text{s.t.}\ z_t \leq Q\ \forall t$，即最小化所有任务里最坏那个的 $C-V$，避免某个长尾任务被极差分配拖死——消融里平均损失在难任务上明显更脆。
+
+**3. 拍卖记忆驱动的策略精炼：让落选的便宜 agent 复盘历史输赢、重写标书来抢单。**
+
+光选一次还不够，sale 想让小 agent 越用越能接活。每轮竞拍后把结果存进共享记忆 $\mathcal{M}(t') = (t', \{s_{t',i}\}, y_{t'})$，其中 $y_{t'}$ 是输赢标签。新任务 t 来时，只有那些比临时赢家更便宜的 agent 才启动精炼：按文本 embedding 余弦相似度检索 top-$\tilde{k}$ 个相似历史任务的 (lose, win) 策略对（至少一条来自它自己），用 contrastive prompt 让 agent 看清"上次我输在哪、对手赢在哪"，据此产出精炼标书 $s^r_{t,i}$ 并重新打分；只要某份精炼标书把 $C-V$ 压得比临时赢家更低就替换胜者，否则保留原赢家。把精炼限定在"更便宜且可能翻盘"的 agent 上，既保留了"小 agent 自己已经赢了就直接走"的捷径、不让 token 翻倍，又让额外算力精准花在有翻盘价值的地方——记忆越多，便宜 agent 中标越频繁，路由因此被升级成了一个持续自改进的过程。
 
 ### 训练策略
-没有训练任何路由网络或精炼网络，全程用现成 Qwen3 推理。唯一的"学习"是 $w = (w_c, w_h, \{w_j\})$ 的 min-max 标量优化（带 big-M 约束的 MIP，详见附录 D），在一个训练子集上拟合后用于全测试集；精炼阶段则完全靠 prompt 与 retrieval 即时进行。
+sale 不训练任何路由网络或精炼网络，全程用现成 Qwen3 推理。唯一需要"学"的是标量权重 $w = (w_c, w_h, \{w_j\})$，通过带 big-M 约束的 min-max MIP（附录 D）在一个训练子集上拟合一次后用于全测试集；精炼阶段则完全靠 prompt 与 retrieval 在测试时即时完成。
 
 ## 实验关键数据
 

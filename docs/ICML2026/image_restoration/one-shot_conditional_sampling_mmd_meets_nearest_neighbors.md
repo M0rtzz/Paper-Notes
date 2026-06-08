@@ -40,39 +40,26 @@ CGMMD 用 k 近邻图把"期望条件 MMD（ECMMD）"估计成一个可直接最
 ## 方法详解
 
 ### 整体框架
-输入：训练对 $\{(Y_i, X_i)\}_{i=1}^n$，参考噪声分布 $P_\eta = \mathcal{N}(0, I_m)$，核函数 $\mathsf{K}$，生成器函数类 $\mathcal{G}$（实现为 ReLU 网络）。
+CGMMD 要解决的是"给定 $X=x$ 时如何一次性抽出 $P_{Y\mid X=x}$ 的样本"。它把这个生成问题转成一个纯最小化目标：用 $X$ 上的 $k$ 近邻图把"期望条件 MMD（ECMMD）"估计成可反传的经验损失，直接训一个 ReLU 生成器 $\hat g(\eta, x)$，测试时给新 $x$ 采一个噪声 $\eta$ 做单次前向即得条件样本。
 
-流程分四步：(1) 对每个样本采辅助噪声 $\eta_i$，前向得到伪样本 $g(\eta_i, X_i)$；(2) 在小批量 $X$ 上建有向 $k$ 近邻图 $G(\mathcal{X}_n)$；(3) 用图上的 $k$ 近邻对求和，得到经验损失 $\hat{\mathcal{L}}(g)$，作为 ECMMD$^2$ 的一致估计；(4) 反传更新 $g$ 参数。
-
-输出：训练好的条件生成器 $\hat g$。**一次前向采样**：给新 $x$，独立采 $\eta \sim P_\eta$，输出 $\hat g(\eta, x)$ 即从 $P_{Y\mid X=x}$ 的样本。
+具体地，输入训练对 $\{(Y_i, X_i)\}_{i=1}^n$、参考噪声 $P_\eta=\mathcal{N}(0, I_m)$、核函数 $\mathsf{K}$ 与生成器类 $\mathcal{G}$；每轮先对每个样本采辅助噪声 $\eta_i$ 前向得到伪样本 $g(\eta_i, X_i)$，再在小批量 $X$ 上现建有向 $k$ 近邻图 $G(\mathcal{X}_n)$，沿图上的近邻对求和得到经验损失 $\hat{\mathcal{L}}(g)$（即 ECMMD$^2$ 的一致估计），反传更新参数；训练完得到 $\hat g$，采样阶段 $\eta\sim P_\eta \to \hat g(\eta, x)$ 一步出样本。
 
 ### 关键设计
 
-1. **ECMMD 的 k-NN 估计量**：
+**1. ECMMD 的 k-NN 估计量：把"条件期望"做成可微的近邻求和**
 
-    - 功能：把"在条件 $X$ 下取期望的 MMD"用纯经验形式逼近，使之能作为可反传的损失。
-    - 核心思路：先用核技巧把 ECMMD$^2$ 写成 $\mathbb{E}[\mathsf{H}(W, W')]$ 的形式（$W=(Y,Z)$，$\mathsf{H}$ 由四个核值组合而成）；再用 tower 性质把外层期望拆成关于 $X$ 的期望嵌套关于 $Y,Z\mid X$ 的内层期望。对内层条件期望，论文不做核回归，而是构造 $X$ 上的 $k$-NN 有向图 $G(\mathcal{X}_n)$，邻居集 $N_{G}(i)$ 里的样本就视作"近似同条件下"的伪重复样本，给出估计 $\widehat{\mathrm{ECMMD}}^2 = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}(W_i, W_j)$。
-    - 设计动机：相比核回归，k-NN 不需要选带宽、对维度更友好（可自适应到 $X$ 的内蕴维度 $\bar d$），且与生成器参数解耦——图只依赖 $X_i$，求和里只有 $g$，梯度直通无须 reparameterization tricks。
+直接最小化 ECMMD$^2$ 的障碍在于它含一个"在 $X$ 条件下取期望"的内层算子，而我们手里只有有限样本。论文先用核技巧把 ECMMD$^2$ 写成 $\mathbb{E}[\mathsf{H}(W, W')]$（$W=(Y,Z)$，核 $\mathsf{H}$ 由四个核值组合而成），再用 tower 性质把外层关于 $X$ 的期望与内层关于 $Y, Z\mid X$ 的条件期望分离。关键一步是不做核回归来估内层条件期望，而是在 $X$ 上建 $k$-NN 有向图 $G(\mathcal{X}_n)$，把邻居集 $N_G(i)$ 里的样本视作"近似同条件下"的伪重复样本，于是估计量写成 $\widehat{\mathrm{ECMMD}}^2 = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}(W_i, W_j)$。这样做的好处是 k-NN 免去核回归的带宽选择，能自适应到 $X$ 的内蕴维度 $\bar d$，且图只依赖 $X_i$、求和里只有 $g$，梯度直通而无须额外的 reparameterization 技巧。
 
-2. **非对抗的直接最小化目标**：
+**2. 非对抗的直接最小化目标：去掉判别器，只留一个生成器**
 
-    - 功能：把训练做成一个对生成器参数 $\theta$ 的纯最小化问题，避开 GAN 的 min-max。
-    - 核心思路：目标 $\hat g \in \arg\min_{g\in\mathcal{G}} \hat{\mathcal{L}}(g)$，其中 $\hat{\mathcal{L}}(g) = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}((Y_i, g(\eta_i, X_i)), (Y_j, g(\eta_j, X_j)))$。算法 1 给出训练循环：每个 mini-batch 重建 $k_B$-NN 图，前向得到 $g(\eta_i, X_i)$，求 $\hat{\mathcal{L}}$ 然后 $\theta \leftarrow \theta - \alpha \nabla_\theta \hat{\mathcal{L}}$。
-    - 设计动机：MMD-GAN 思路在无条件设定已证明能避免 JS/KL 在不相交支撑下的梯度问题；论文把它推广到条件设定后，进一步去掉判别器，避免了条件 GAN 常见的模式崩塌和 min-max 不稳定，工程实现仅一个生成器网络。
+把估计量当 loss 后，训练就退化成对生成器参数 $\theta$ 的纯最小化 $\hat g \in \arg\min_{g\in\mathcal{G}} \hat{\mathcal{L}}(g)$，其中 $\hat{\mathcal{L}}(g) = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}\big((Y_i, g(\eta_i, X_i)), (Y_j, g(\eta_j, X_j))\big)$；算法 1 的循环就是每个 mini-batch 重建 $k_B$-NN 图、前向算 $\hat{\mathcal{L}}$、再 $\theta \leftarrow \theta - \alpha\nabla_\theta \hat{\mathcal{L}}$。MMD-GAN 已证明这类核损失能避免 JS/KL 散度在不相交支撑下的梯度消失；本文进一步把它推广到条件设定并彻底去掉判别器，既绕开了条件 GAN 常见的模式崩塌与 min-max 不稳定，工程上也只需维护一个生成器网络。
 
-3. **一次前向采样 + 神经网络函数类**：
+**3. 一次前向采样 + ReLU 网络函数类：把分布信息压进权重**
 
-    - 功能：测试时仅需一次前向就能给任意 $x$ 输出条件样本，比扩散模型的迭代去噪快两到三个量级。
-    - 核心思路：依据 noise outsourcing 引理，对联合分布 $(Y, X)$ 存在 Borel 可测的 $\bar g$ 与独立噪声 $\eta$ 使 $(Y, X) \overset{d}= (\bar g(\eta, X), X)$；CGMMD 在 ReLU 网络类 $\mathcal{G}_{\mathcal{H},\mathcal{W},\mathcal{S},\mathcal{B}}$（深度 $\mathcal{H}$、宽度 $\mathcal{W}$、参数量 $\mathcal{S}$、$\ell_\infty$ 界 $\mathcal{B}$）里学一个 $\hat g$ 去逼近 $\bar g$。采样阶段就是 $\eta \sim \mathcal{N}(0, I_m) \to \hat g(\eta, x)$。
-    - 设计动机：扩散模型迭代采样的时间瓶颈源自把"分布建模"分摊到多步去噪上；CGMMD 把分布信息整合进单个网络的权重里，配合 ECMMD 损失保证生成分布与真分布一致，因此一次前向就够。这是相对扩散模型最直接的实用优势。
+测试时的单步采样依据 noise outsourcing 引理——对联合分布 $(Y, X)$ 存在 Borel 可测的 $\bar g$ 与独立噪声 $\eta$ 使 $(Y, X)\overset{d}{=}(\bar g(\eta, X), X)$，因此只要在 ReLU 网络类 $\mathcal{G}_{\mathcal{H},\mathcal{W},\mathcal{S},\mathcal{B}}$（深度 $\mathcal{H}$、宽度 $\mathcal{W}$、参数量 $\mathcal{S}$、$\ell_\infty$ 界 $\mathcal{B}$）里学到逼近 $\bar g$ 的 $\hat g$，采样就是 $\eta\sim\mathcal{N}(0, I_m)\to\hat g(\eta, x)$ 一步完成。扩散模型的采样瓶颈来自把分布建模摊到几十上千步去噪上；CGMMD 反过来把分布信息整合进单个网络的权重里，由 ECMMD 损失保证生成分布与真分布一致，因此单次前向就够，相对扩散快两到三个量级——这是它最直接的实用优势。
 
 ### 损失函数 / 训练策略
-损失：$\hat{\mathcal{L}}(g) = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}(W_{i,g}, W_{j,g})$，其中 $\mathsf{H}(W_i, W_j) = \mathsf{K}(Y_i, Y_j) - \mathsf{K}(Y_i, g_j) - \mathsf{K}(g_i, Y_j) + \mathsf{K}(g_i, g_j)$。实验中核取高斯核，batch size 200，每个 batch 在 $X$ 上现建 $k_B$-NN 图。理论上要求 $k_n = o(\sqrt n)$、网络规模 $\mathcal{B}^2 \mathcal{H}\mathcal{S}\log\mathcal{S}\log n / n \to 0$。
-
-### 理论保证（Theorem 4.4 与 Corollary 4.5）
-在 Assumption 2.1（核有界、特征核）、Assumption 4.1（网络规模条件）、Assumption 4.2（$X$ 次高斯、$\bar g$ 一致连续、条件均值嵌入的 Lipschitz 灵敏度）下，$\hat g$ 的误差满足以概率至少 $1-\delta$，
-$\mathcal{L}(\hat g) \lesssim \frac{\mathrm{polylog}\, n}{n^{1/(2d)}} + \sqrt{\frac{\mathcal{B}^2 \mathcal{H}\mathcal{S}\log\mathcal{S}\log n}{n}} + \omega_{\bar g}\!\left(\frac{2\sqrt{\log n}}{(\mathcal{H}\mathcal{W})^{1/(d+m)}}\right) + \sqrt{\frac{\log(1/\delta)}{n}}$。
-三项分别对应：k-NN 估计的随机误差、神经网络泛化误差、神经网络逼近误差。当 $X$ 集中在低维流形上时，$d$ 可被内蕴维度 $\bar d$ 替换。Corollary 4.5 进一步证明 $\hat g$ 诱导的条件分布在 MMD 与特征函数意义下都收敛到真条件分布。
+核心损失为 $\hat{\mathcal{L}}(g) = \frac{1}{n k_n}\sum_i \sum_{j\in N_G(i)} \mathsf{H}(W_{i,g}, W_{j,g})$，其中 $\mathsf{H}(W_i, W_j) = \mathsf{K}(Y_i, Y_j) - \mathsf{K}(Y_i, g_j) - \mathsf{K}(g_i, Y_j) + \mathsf{K}(g_i, g_j)$；实验取高斯核，batch size 200，每个 batch 在 $X$ 上现建 $k_B$-NN 图，理论上要求 $k_n = o(\sqrt n)$、网络规模满足 $\mathcal{B}^2\mathcal{H}\mathcal{S}\log\mathcal{S}\log n / n \to 0$。配套的非渐近理论（Theorem 4.4）在 Assumption 2.1（核有界、特征核）、4.1（网络规模条件）、4.2（$X$ 次高斯、$\bar g$ 一致连续、条件均值嵌入的 Lipschitz 灵敏度）下给出，以概率至少 $1-\delta$ 有 $\mathcal{L}(\hat g) \lesssim \frac{\mathrm{polylog}\, n}{n^{1/(2d)}} + \sqrt{\frac{\mathcal{B}^2\mathcal{H}\mathcal{S}\log\mathcal{S}\log n}{n}} + \omega_{\bar g}\!\big(\frac{2\sqrt{\log n}}{(\mathcal{H}\mathcal{W})^{1/(d+m)}}\big) + \sqrt{\frac{\log(1/\delta)}{n}}$，三项分别对应 k-NN 估计的随机误差、网络泛化误差与网络逼近误差，且当 $X$ 集中在低维流形上时维度 $d$ 可换成内蕴维度 $\bar d$；Corollary 4.5 进一步证明 $\hat g$ 诱导的条件分布在 MMD 与特征函数意义下都收敛到真条件分布。
 
 ## 实验关键数据
 

@@ -44,30 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **仿射不变融合（Affine-Invariant Fusion, AIF）**
+**1. 仿射不变融合（Affine-Invariant Fusion, AIF）：把局部精准但全局漂移的初始视差，和全局正确但有尺度歧义的单目深度拼成一个靠谱的起点。**
 
-    - 功能：将初始视差 $\mathbf{d}_0$ 和单目相对深度 $\mathbf{d}_M$ 在归一化尺度下融合
-    - 核心思路：对两个深度/视差分别做仿射不变归一化 $\hat{\mathbf{d}} = (\mathbf{d} - t(\mathbf{d})) / s(\mathbf{d})$，其中 $t = \text{median}$，$s = \text{MAD}$。将归一化后的单目深度投影到视差空间：$\mathbf{d}_M' = s(\mathbf{d}_0) \cdot \hat{\mathbf{d}}_M + t(\mathbf{d}_0)$。用 $\mathbf{d}_0$ warp 右特征，与左特征拼接后预测逐像素置信图 $\mathbf{c}$：$\mathbf{d}_F = \mathbf{c} \odot \mathbf{d}_0 + (1-\mathbf{c}) \odot \mathbf{d}_M'$
-    - 设计动机：代价体积初始视差有局部匹配精度但缺乏全局一致性；单目深度有全局结构但存在仿射歧义。归一化后融合可以互补各自优势
+迭代精炼好不好，很大程度取决于喂进去的初始视差质量。代价体积回归出的初始视差 $\mathbf{d}_0$ 局部匹配精度高，却缺乏全局一致性；Depth Anything V2 给出的单目相对深度 $\mathbf{d}_M$ 反过来——全局结构对、但有未知的仿射变换（尺度和平移都不定）。AIF 先把两者放到同一个尺度下再融合：对每个深度做仿射不变归一化 $\hat{\mathbf{d}} = (\mathbf{d} - t(\mathbf{d})) / s(\mathbf{d})$，其中 $t$ 取中位数、$s$ 取中位绝对偏差（MAD）——用稳健统计量而非均值方差，是为了抗离群点。归一化后把单目深度投影回视差空间 $\mathbf{d}_M' = s(\mathbf{d}_0) \cdot \hat{\mathbf{d}}_M + t(\mathbf{d}_0)$，消掉了它的仿射歧义。最后用 $\mathbf{d}_0$ warp 右特征、与左特征拼接预测出一张逐像素置信图 $\mathbf{c}$，按置信度软选择 $\mathbf{d}_F = \mathbf{c} \odot \mathbf{d}_0 + (1-\mathbf{c}) \odot \mathbf{d}_M'$：哪里匹配可信就听代价体积的，哪里匹配失效（弱纹理、遮挡）就让单目结构兜底。
 
-2. **Prompt Recurrent Unit (PRU)**
+**2. Prompt Recurrent Unit (PRU)：把单目模型的 DPT 解码器直接搬来当迭代单元，让精炼阶段也继承基础模型的强先验。**
 
-    - 功能：替代 GRU 作为迭代精炼的核心单元
-    - 核心思路：采用 Depth Anything V2 的 DPT 精炼层作为多分辨率架构（4级），用预训练权重初始化，直接继承单目深度先验。隐状态初始化为左右特征的拼接（经 $\mathbf{d}_0$ warp 右特征），比传统 GRU 仅用左特征初始化更早学习立体对应
-    - 更新策略：去掉 GRU 的 reset gate，仅保留 update gate $\mathbf{z}_k = \sigma(\text{ConvBlock}([\cdot]))$。隐状态更新 $\mathbf{h}_{k+1}^i = (1-\mathbf{z}_k) \odot \mathbf{h}_k^i + \mathbf{z}_k \odot \hat{\mathbf{h}}_k^i$，**不限制隐状态的值域范围**
-    - 设计动机：GRU 的 tanh 限制了隐状态范围，在极端视差场景下表达力不足。PRU 的 DPT 架构天然支持多分辨率，且预训练权重提供了强初始化
+这是全文最关键的一步。现有方法只在特征提取和初始化时用单目基础模型，迭代精炼仍交给传统 GRU，而 GRU 有三个硬伤：它独立于视觉基础模型训练、继承不到任何先验；隐状态被 tanh/sigmoid 压在窄区间里，遇到近距离物体的极端视差就表达不动；它还用一次卷积把输入和隐状态硬融，既扭曲原状态又压缩外部输入。作者注意到 DPT 解码器本身就是多尺度、由粗到细的精炼结构，和多级 GRU 的更新方式高度同构，于是干脆用 Depth Anything V2 的 4 级 DPT 精炼层替换 GRU，并用其预训练权重初始化——不改架构就把单目先验搬进了迭代环节。隐状态也换了初始化方式：用 $\mathbf{d}_0$ warp 右特征后与左特征拼接，比 GRU 只用左特征更早建立起立体对应。更新规则上去掉了 reset gate，只留 update gate $\mathbf{z}_k = \sigma(\text{ConvBlock}([\cdot]))$，按 $\mathbf{h}_{k+1}^i = (1-\mathbf{z}_k) \odot \mathbf{h}_k^i + \mathbf{z}_k \odot \hat{\mathbf{h}}_k^i$ 更新，且不再对隐状态做值域钳制，这样极端视差场景下表达空间才够用。
 
-3. **Structure Prompt (SP)**
+**3. Structure Prompt (SP)：用残差加法而非卷积，把单目结构线索“轻轻”注入 PRU，注入信息又不毁掉已有先验。**
 
-    - 功能：将冻结的单目深度特征 $\mathbf{F}_M$ 和结构差异信息以 prompt 方式注入 PRU
-    - 核心思路：计算当前视差与单目深度的仿射不变差异 $\mathbf{D} = |\hat{\mathbf{d}}_k - \hat{\mathbf{d}}_M|$，与 $\mathbf{F}_M$ 一起编码为结构 prompt $\mathbf{P}_S$，以残差加法注入隐状态：$\mathbf{h} = \mathbf{h} + \text{ConvBlock}(\mathbf{P}_S)$
-    - 设计动机：直接卷积融合会扭曲 DPT 继承的单目先验。残差加法作为 feature-level prompt 引导隐状态而不破坏已有表示
+PRU 继承了 DPT 的单目先验，可一旦在精炼过程中再用传统的卷积融合把新信息塞进去，就会把这份好不容易继承来的表示给扭乱——这正是 GRU 的第三个毛病。SP 改成 prompt 式注入：先算当前视差与单目深度在归一化尺度下的差异 $\mathbf{D} = |\hat{\mathbf{d}}_k - \hat{\mathbf{d}}_M|$（指出哪里偏离了单目结构），把它和冻结的单目特征 $\mathbf{F}_M$ 一起编码成结构 prompt $\mathbf{P}_S$，再以残差加法写回隐状态 $\mathbf{h} = \mathbf{h} + \text{ConvBlock}(\mathbf{P}_S)$。残差加法只是在原表示上叠一个引导信号，不会像卷积那样重写整个隐状态，所以单目先验得以保全，结构信息又被引入。
 
-4. **Motion Prompt (MP)**
+**4. Motion Prompt (MP)：DPT 解码器只懂单目、不懂立体，再用同样的残差方式补上立体匹配特有的运动线索。**
 
-    - 功能：将立体匹配特有的运动线索（局部代价体积和当前视差）注入 PRU
-    - 核心思路：$\mathbf{P}_M^k = \text{Encoder}(\mathbf{V}_k, \mathbf{d}_k)$，同样以残差加法注入：$\mathbf{h} = \mathbf{h} + \text{ConvBlock}(\mathbf{P}_M^k)$
-    - 设计动机：DPT 解码器只有单目先验，缺乏立体匹配的运动信息。Motion Prompt 自适应补充立体对应关系
+光有单目结构还不够——立体匹配真正的信号来自左右图的对应关系，而 DPT 解码器天生没有这部分信息。MP 把当前局部代价体积 $\mathbf{V}_k$ 和当前视差 $\mathbf{d}_k$ 编码成运动 prompt $\mathbf{P}_M^k = \text{Encoder}(\mathbf{V}_k, \mathbf{d}_k)$，沿用和 SP 一致的残差注入 $\mathbf{h} = \mathbf{h} + \text{ConvBlock}(\mathbf{P}_M^k)$。这样 SP 负责“结构对不对”、MP 负责“匹配准不准”，两路 prompt 各补一块短板，又都不破坏 PRU 的预训练表示。
 
 ### 损失函数 / 训练策略
 - 跟随 IGEV-Stereo：$\mathcal{L} = \|\mathbf{d}_0 - \mathbf{d}_{gt}\|_{\text{smooth}} + \sum_{k=1}^K \gamma^{K-k} \|\mathbf{d}_k - \mathbf{d}_{gt}\|_1$，$\gamma = 0.9$

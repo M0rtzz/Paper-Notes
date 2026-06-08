@@ -41,30 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-设要编辑的决定层为 $W_1,\dots,W_L$，关键 token 在 $W_l$ 前的 hidden state 为 $k_l$，目标 hidden state 为 $m_l$。LTE 的闭式解 $\Delta W^* = (M_I - W K_I) K_I^\top (K_I K_I^\top + \lambda K_J K_J^\top)^{-1}$ 依赖各层 $m_l$。MEMIT 只算 $m_L$，其余 $m_l$ 通过线性插值得到；本文方法 FE（Forward propagation Edit）只算 $m_1$，其余通过前向传播 replay 得到。两者整体 pipeline 相同，仅 target 构造方式不同。
+locate-then-edit 的难点不在闭式解本身，而在给每个决定层 $W_1,\dots,W_L$ 凑出一组互相兼容的目标 hidden state $m_l$。本文要做的就是把这组 target 的来源从"末层往前摊"换成"首层往后传"：先在第一决定层优化出 $m_1$，再让模型自己做一次前向传播把后续各层的 $m_l$ 算出来，闭式解部分完全不动。记关键 token 在 $W_l$ 前的 hidden state 为 $k_l$，各层共享同一个更新公式 $\Delta W^* = (M_I - W K_I) K_I^\top (K_I K_I^\top + \lambda K_J K_J^\top)^{-1}$，MEMIT 只算 $m_L$、其余靠线性插值，本文 FE（Forward propagation Edit）只算 $m_1$、其余靠 replay，整条 pipeline 唯一的区别就在这里。
 
 ### 关键设计
 
-1. **Backward spreading 的理论刻画**:
+**1. 先把 backward spreading 的成立条件讲清楚：何时能用、何时崩**
 
-    - 功能：解释 backward spreading 为什么能用、什么时候坏，为本文替代方案提供动机。
-    - 核心思路：设 $\delta m_l = \Delta W_l k_l$ 是层 $l$ 的输出扰动，记 $\delta^l_{m_L} = J_{l\to L} \delta m_l$ 为它在末层引起的被动变化。理想要求 $\delta^l_{m_L} = \beta \delta m_l$，等价于 $\delta m_l$ 是 Jacobian $J_{l\to L}$ 的特征向量（Theorem 1，强条件，几乎不成立）。退一步只要求 $\cos(\delta^l_{m_L}, \delta m_l) > 0$，则等价于对称化 Jacobian $\frac{1}{2}(J_{l\to L} + J_{l\to L}^\top)$ 正定（Theorem 2，深层网络多数情况经验上成立）。在 Llama3-8B 上实测层 4 到层 8 的 cosine 从 $0.34$ 一路涨到 $1.00$，定量说明远层影响在末层方向越偏，是 backward spreading 难以无限叠层的根本原因。
-    - 设计动机：先讲清旧方法为何"半好不坏"再设计替代方案，论证比直接换方法更扎实。
+替代一个被默认正确的旧做法之前，本文先正式刻画它为什么"半好不坏"。设 $\delta m_l = \Delta W_l k_l$ 是层 $l$ 的输出扰动，它经过 Jacobian 传到末层会变成 $\delta^l_{m_L} = J_{l\to L}\,\delta m_l$。backward spreading 暗含的理想假设是这个被动变化与原扰动同方向且仅差一个标量，即 $\delta^l_{m_L} = \beta\,\delta m_l$——Theorem 1 指出这等价于 $\delta m_l$ 恰是 $J_{l\to L}$ 的特征向量，是个几乎不可能成立的强条件。把要求放宽到只需方向不反，即 $\cos(\delta^l_{m_L}, \delta m_l) > 0$，Theorem 2 给出等价条件：对称化 Jacobian $\frac{1}{2}(J_{l\to L}+J_{l\to L}^\top)$ 正定，这在深层网络里经验上多数成立。问题出在"多数"二字——在 Llama3-8B 上实测层 4 到层 8 的 cosine 从 $0.34$ 一路涨到 $1.00$，说明层离末层越远、方向漂移越严重，浅层用末层方向去近似几乎贡献为零。这条线性放大的旋转效应，正是 backward spreading 无法无限叠层的结构性原因。
 
-2. **Forward replay 构造多层 target**:
+**2. Forward replay：让 target 顺着前向动力学自然涌现**
 
-    - 功能：用一次前向传播得到所有决定层 mutually compatible 的 target hidden state。
-    - 核心思路：MEMIT 把末层 $h_L$ 当可优化参数最小化交叉熵得到 $m_L$，再反推。FE 反过来——把**首层** $h_1$ 当可优化参数做同一目标的梯度下降得到 $m_1$；然后把 $m_1$ 接入模型继续标准前向传播，沿途记录每个决定层的 hidden state 作为该层的 $m_l$。这样得到的 $\{m_l\}$ 都来自同一条前向轨迹，天然兼容；同时由于反向梯度路径经过整张网络，$m_1$ 本身已经隐含了下游动力学的约束。
-    - 设计动机：backward spreading 是用一个末层方向"硬塞"给前面各层；forward replay 是先让首层"知道末层想要什么"，再让网络自己把后续各层算出来。后者顺着模型的天然动力学走。
+既然末层方向无法可靠地往浅层倒推，FE 干脆把 anchor point 从末层挪到首层。MEMIT 的做法是把末层 $h_L$ 当可优化参数、最小化交叉熵 $H(Y, Y_{\text{target}})$ 得到 $m_L$ 再反推；FE 反过来，把首层 $h_1$ 当可优化参数对同一目标做梯度下降得到 $m_1$，然后把 $m_1$ 接回模型继续标准前向传播，沿途把每个决定层路过的 hidden state 直接记下来当作该层的 $m_l$。这样得到的 $\{m_l\}$ 全部来自同一条前向轨迹，跨层兼容性天然成立、不需要额外约束；而且优化 $m_1$ 时反向梯度本就穿过整张网络，$m_1$ 已经隐含了下游各层"为达到目标该走到哪"的信息——forward replay 不过是把反传时算过一遍的东西用一次前向显式读出来，因此复杂度与 MEMIT 完全相同。一句话对比：backward spreading 是拿一个末层方向硬塞给前面各层，forward replay 是先让首层知道末层想要什么、再让网络自己把后续各层推出来。
 
-3. **即插即用的兼容性**:
+**3. 只换 target 来源，保证对全套 LTE 流水线即插即用**
 
-    - 功能：让 FE 不止用于 MEMIT，还能给一大批 LTE 后续方法直接涨点。
-    - 核心思路：FE 只替换 target 传播机制，不动闭式解、不动初始 $m$ 优化、不动正则项。因此 RECT（加 norm 正则）、PRUNE（裁剪奇异值）、AlphaEdit（null-space 投影）等都能直接拼上 "+FE" 后缀。
-    - 设计动机：模型编辑社区分支极多，一个能与所有现有 pipeline 正交叠加的改进比另起炉灶更具传播力。
-
-### 损失函数 / 训练策略
-不引入新损失。优化 $m_1$ 时仍用交叉熵 $H(Y, Y_{\text{target}})$；得到 $m_1$ 后将其作为首决定层 hidden state，前向传播一次得到 $\{m_l\}_{l=2}^L$；最后用统一的 rank-one 闭式解逐层更新参数。计算复杂度与 MEMIT 完全相同。
+FE 刻意只替换 target 的传播机制，不碰闭式解、不碰初始 $m$ 的优化目标、也不碰正则项。这意味着任何在 $\Delta W$ 层面做文章的后续方法都能直接拼上 "+FE"：RECT 加的是 norm 正则、PRUNE 裁的是奇异值、AlphaEdit 投影到 null-space，三者改的都是更新量的形态，与 FE 改的 target 来源完全正交。模型编辑社区分支极多，一个能正交叠加在所有现有 pipeline 之上的改进，比另起炉灶的新方法传播力大得多。
 
 ## 实验关键数据
 

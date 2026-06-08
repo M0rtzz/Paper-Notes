@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段：(1) **DF-R5 数据合成** —— 用 4 个 MLLM 池化 200 个候选 deepfake 特征 → Gemini 对每图打分 → 把分数聚成 ≤7 个语义组 → 生成 115k 段落式推理；(2) **DX-LLaVA 微调** —— 把 LLaVA 的 CLIP ViT 换成 CLIP ConvNeXT Stage-3 输出（10×10 像素级特征展平为 100 token），projector + Vicuna + 顶部加二分类 head 共同训练，损失为 $\mathcal L_{\text{lm}}+\alpha\mathcal L_{\text{binary}}$（$\alpha=10$）；(3) **PRPO test-time RL** —— 对每张图 sample $L$ 条完整 reasoning，按段切成 $\{p_1^{(i)},\dots,p_{M_i+1}^{(i)}\}$（最后一段是 final answer），每段算 reward $R(p_j^{(i)})=\tfrac12(R_{\text{VCR}}+R_{\text{PCR}})$，组内归一化得 advantage $A_j^{(i)}$，按 PPO-clip 形式更新策略 + KL 正则。
+整套方法要让一个 MLLM 既能高精度判别 deepfake、又能给出对齐图像证据的分段理由，分三阶段递进：先合成数据、再换 backbone 做监督微调、最后用段落级 RL 在 test-time 持续自对齐。第一阶段 **DF-R5 数据合成**用 4 个 MLLM 池化 200 个候选 deepfake 特征，让 Gemini 对每张图打分、把分数聚成 ≤7 个语义组，生成 115k 条段落式推理标注。第二阶段 **DX-LLaVA 微调**把 LLaVA 的 CLIP ViT 换成对局部纹理更敏感的 CLIP ConvNeXT，配合一个二分类 head 联合训练。第三阶段 **PRPO test-time RL** 对每张图采样 $L$ 条完整 reasoning，把每条按段切开、逐段算 reward、组内归一化成 advantage，再用 PPO-clip 形式更新策略。
 
 ### 关键设计
 
-1. **Visual Consistency Reward (VCR)**:
+**1. Visual Consistency Reward（VCR）：把每段推理逐句锚回图像证据。**
 
-    - 功能：让每段推理文字必须真的描述图像里实际存在的视觉证据，杜绝幻觉。
-    - 核心思路：用 YAKE 无监督关键词抽取从段落 $p_j^{(i)}$ 抽出 $s_j^{(i)}$，喂入 frozen CLIP-ConvNeXT 的 text encoder，与图像 encoder 输出算 cosine：$R_{\text{VCR}}(p_j^{(i)})=\tfrac12[\text{sim}(\text{CLIP}_{\text{txt}}(s_j^{(i)}),\text{CLIP}_{\text{img}}(x))+1]\in[0,1]$。
-    - 设计动机：直接把整段塞 CLIP 会超长且语义被稀释；YAKE 抽词后再算相似度既符合 CLIP 输入限制，又把信号集中在「这段提到的具体特征」上。复用同一个 ConvNeXT（架构里已用）做 reward 模型省去外部模型与额外算力。
+针对 MLLM「先下结论再补理由、甚至幻觉出图中根本不存在的瑕疵」这个痛点，VCR 给每段推理打一个「你说的东西图里到底有没有」的分。做法是先用 YAKE 无监督关键词抽取从段落 $p_j^{(i)}$ 里抽出关键短语 $s_j^{(i)}$，再喂进 frozen CLIP-ConvNeXT 的 text encoder，与图像 encoder 输出算 cosine 相似度并归一化到 $[0,1]$：$R_{\text{VCR}}(p_j^{(i)})=\tfrac12[\text{sim}(\text{CLIP}_{\text{txt}}(s_j^{(i)}),\text{CLIP}_{\text{img}}(x))+1]$。之所以要先抽词而不是整段塞 CLIP，是因为整段会超出 CLIP 输入长度、语义也被稀释，抽词后信号正好集中在「这段提到的具体特征」上；而且这里复用的就是架构里已有的那个 ConvNeXT，等于白嫖一个 reward model，省掉外部模型和额外算力。
 
-2. **Prediction Consistency Reward (PCR)**:
+**2. Prediction Consistency Reward（PCR）：用段间多数票把结论锁回证据。**
 
-    - 功能：保证最终结论与多数推理段落一致，缓解「证据指向 fake 但结论说 real」的内部矛盾。
-    - 核心思路：用预定义词表 $\mathcal F$（unnatural、inconsistent…）/ $\mathcal R$（authentic、natural…）/ $\mathcal N$（no、not…）规则化为段级标签 $\hat y(p_j^{(i)})$；中间段 reward 恒为 1（默认与图一致），final 段 reward 为 $\mathbb I[\hat y(p_{M_i+1}^{(i)})=\hat y_{\text{maj}}^{(i)}]$，其中 $\hat y_{\text{maj}}^{(i)}$ 是前面所有段的多数投票。
-    - 设计动机：在 deepfake 推理这种「无 step-wise gold」的场景里没法借鉴数学推理的 process reward；用模型自身段间一致性作为 label-free signal 又能避免外部模型/标注成本，刚好对应 test-time RL 的需求。
+deepfake 推理常出现「证据明明指向 fake、最终却说 real」的内部矛盾，PCR 就是惩罚这种自相矛盾。它先用三张预定义词表把每段规则化成一个段级标签 $\hat y(p_j^{(i)})$：命中 $\mathcal F$（unnatural、inconsistent…）判 fake、命中 $\mathcal R$（authentic、natural…）判 real、$\mathcal N$（no、not…）负责处理否定。中间段默认与图一致、reward 恒为 1；只有 final 段要受约束，其 reward 是它与前面所有段多数投票结果是否一致的指示函数 $\mathbb I[\hat y(p_{M_i+1}^{(i)})=\hat y_{\text{maj}}^{(i)}]$。在 deepfake 这种没有 step-wise gold label 的场景里，没法照搬数学推理的 process reward，于是 PCR 干脆拿模型自身的段间一致性当 label-free 信号——既不需要外部模型也不需要标注，正好契合 test-time RL「现场无监督自改进」的需求。
 
-3. **段落级 GRPO 损失（PRPO）**:
+**3. 段落级 GRPO 损失（PRPO）：让 advantage 精确落到每一段。**
 
-    - 功能：把 GRPO 从 token / sequence 粒度升级为段落粒度，让每段独立得到 advantage 并被 PPO-clip 加权更新。
-    - 核心思路：对组 $\mathcal O=\{o^{(1)},\dots,o^{(L)}\}$ 内所有段统一算均值方差 $\mu_R,\sigma_R$，归一化 $A_j^{(i)}=(R(p_j^{(i)})-\mu_R)/(\sigma_R+\epsilon)$；策略比 $r_j^{(i)}=\pi_\theta(p_j^{(i)}|v,z)/\pi_{\text{old}}(p_j^{(i)}|v,z)$；损失 $\mathcal L_{\text{PRPO}}=\mathbb E\sum_{i,j}\min(r_j^{(i)}A_j^{(i)},\text{clip}(r_j^{(i)},1-\epsilon,1+\epsilon)A_j^{(i)})$；额外加段级 KL 项 $\mathcal L_{\text{KL}}$ 对齐 reference model；总目标 $\max_\theta\mathcal J=\mathcal L_{\text{PRPO}}-\beta\mathcal L_{\text{KL}}$（$\beta=0.01$）。
-    - 设计动机：token-level GRPO 让一整条 reasoning 共享同一 advantage，导致少数「优秀段落」与「错段落」同奖同罚；段落级让奖励信号精确落到对应文字上，且组内归一化避免了 reward 数值漂移。
+token-level GRPO 让一整条 reasoning 共享同一个 advantage，结果是同一条里「写得好的段」和「写错的段」被同奖同罚，信号糊成一团。PRPO 把粒度提到段落：每段先合成自己的 reward $R(p_j^{(i)})=\tfrac12(R_{\text{VCR}}+R_{\text{PCR}})$，然后在整组 $\mathcal O=\{o^{(1)},\dots,o^{(L)}\}$ 的所有段上统一算均值方差 $\mu_R,\sigma_R$ 做归一化 $A_j^{(i)}=(R(p_j^{(i)})-\mu_R)/(\sigma_R+\epsilon)$，组内归一化顺带压住了 reward 数值漂移。策略比定义为 $r_j^{(i)}=\pi_\theta(p_j^{(i)}|v,z)/\pi_{\text{old}}(p_j^{(i)}|v,z)$，主损失是段级 PPO-clip：
+
+$$\mathcal L_{\text{PRPO}}=\mathbb E\sum_{i,j}\min(r_j^{(i)}A_j^{(i)},\text{clip}(r_j^{(i)},1-\epsilon,1+\epsilon)A_j^{(i)})$$
+
+再额外加一个段级 KL 项 $\mathcal L_{\text{KL}}$ 对齐 reference model，总目标为 $\max_\theta\mathcal J=\mathcal L_{\text{PRPO}}-\beta\mathcal L_{\text{KL}}$（$\beta=0.01$）。这样奖励信号就精确落到对应文字上，优秀段被单独拉高、错段被单独压低，而不是整条一起涨跌。
 
 ### 损失函数 / 训练策略
-微调阶段 $\mathcal L_{\text{total}}=\mathcal L_{\text{lm}}+\alpha\mathcal L_{\text{binary}}$（$\alpha=10$，binary head 用 GAP 后线性分类）；PRPO 阶段 $\mathcal J=\mathcal L_{\text{PRPO}}-\beta\mathcal L_{\text{KL}}$（$\beta=0.01$）。LR：微调 $2\times 10^{-5}$，PRPO $3\times 10^{-7}$。CLIP ConvNeXT 冻结，仅微调 projector + Vicuna + 分类头。8 卡 H200，verl 框架。
+微调阶段损失为 $\mathcal L_{\text{total}}=\mathcal L_{\text{lm}}+\alpha\mathcal L_{\text{binary}}$（$\alpha=10$，binary head 取 GAP 后接线性分类），DX-LLaVA 把 CLIP ConvNeXT Stage-3 的 10×10 像素级特征展平为 100 token 喂给 projector + Vicuna 联合训练。PRPO 阶段优化 $\mathcal J=\mathcal L_{\text{PRPO}}-\beta\mathcal L_{\text{KL}}$（$\beta=0.01$）。学习率微调用 $2\times 10^{-5}$、PRPO 用 $3\times 10^{-7}$；CLIP ConvNeXT 全程冻结，只微调 projector + Vicuna + 分类头。训练用 8 卡 H200、verl 框架。
 
 ## 实验关键数据
 

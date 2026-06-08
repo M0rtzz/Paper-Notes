@@ -45,23 +45,17 @@ VIAR 在每个 scale $k$ 上的流程是：(1) 输入注入：用 $p=5$ 个 pre-
 
 ### 关键设计
 
-1. **隐式均衡层替代显式堆叠**:
+**1. 隐式均衡层替代显式堆叠：把"深度"从架构超参变成推理旋钮**
 
-    - 功能：把 VAR 中 20+ 层的显式 Transformer middle stack 折叠成一个单层（参数共享、循环展开）的不动点算子。
-    - 核心思路：定义可收缩映射 $f_{\text{imp}}(z, x, c)$ 实现为一个 Transformer block 加一个输入注入投影 $\text{Proj}([z, x_k])$，求解 $z_k^* = f_{\text{imp}}(z_k^*, x_k, c)$ 的不动点。一个 trained block 在推理时可以迭代任意次数——模型"等效深度"在测试时由迭代数控制，而非训练时固化。Figure 6 显示参数/梯度显存约 2.87GB（VIAR）vs 7.49GB（VAR-d30），优化器状态 5.74GB vs 14.98GB，节省约 61.6%。
-    - 设计动机：把"深度"从架构超参变成推理超参，解锁单模型多深度部署；同时把 middle stack 参数压到 1 个 block 的量（93.3% middle 参数削减、61.6% 总参数削减）。
+VAR 的痛点是 middle stack 把 20+ 层显式 Transformer 焊死在架构里，深度既决定质量也决定显存与延迟。VIAR 把这一整摞折叠成单个共享参数的不动点算子：定义可收缩映射 $f_{\text{imp}}(z, x, c)$，实现为一个 Transformer block 加一个输入注入投影 $\text{Proj}([z, x_k])$，然后求解不动点 $z_k^* = f_{\text{imp}}(z_k^*, x_k, c)$。关键在于这一个 trained block 在推理时可以迭代任意次数——模型的"等效深度"在测试时由迭代数决定，而不是训练时焊死。这样既把 middle stack 参数压到 1 个 block 的量（93.3% middle 参数削减、整体 61.6% 总参数削减），又解锁了单模型多深度部署。资源收益直接体现在显存上：Figure 6 显示参数/梯度显存约 2.87GB（VIAR）vs 7.49GB（VAR-d30），优化器状态 5.74GB vs 14.98GB。
 
-2. **Stochastic Jacobian-Free Backprop (S-JFB)**:
+**2. Stochastic Jacobian-Free Backprop（S-JFB）：常数显存下的稳定梯度**
 
-    - 功能：在不存中间激活的前提下，给隐式层提供稳定且低偏差的梯度。
-    - 核心思路：每个训练 step 采样 $n \sim U\{0, N\}$ 次"无梯度"迭代逼近不动点，再采样 $m \sim U\{1, M\}$ 次"有梯度"迭代并仅通过最后 m 步反传（$\partial \mathcal{L}/\partial \theta_{\text{imp}} \approx \sum_k (\partial \mathcal{L}_k/\partial \hat{z}_k) \cdot (\partial \hat{z}_k/\partial \theta_{\text{imp}})|_{\text{last } m}$）。论文默认 $N=10, M=12$。前后浅 block 用标准反传，隐式 block 用 S-JFB。
-    - 设计动机：纯 1-step JFB 偏差大，完全展开存不下。随机多步 JFB 在期望意义上接近真实梯度同时常数显存。作者在文中提到过大的 $m$ 反而会破坏稳定性（当算子局部 Lipschitz 常数大时），sweet spot 在中等 $m$。
+不动点层若完全展开会存不下中间激活，而纯 1-step JFB 又偏差太大。S-JFB 用随机多步折中：每个训练 step 先采样 $n \sim U\{0, N\}$ 次"无梯度"迭代把 $z$ 推近不动点，再采样 $m \sim U\{1, M\}$ 次"有梯度"迭代，且仅通过最后 $m$ 步反传——梯度近似为 $\partial \mathcal{L}/\partial \theta_{\text{imp}} \approx \sum_k (\partial \mathcal{L}_k/\partial \hat{z}_k) \cdot (\partial \hat{z}_k/\partial \theta_{\text{imp}})|_{\text{last } m}$。论文默认 $N=10, M=12$，前后浅 block 走标准反传，只有隐式 block 用 S-JFB。这样在期望意义上逼近真实梯度的同时保持常数显存。作者也指出 $m$ 不能太大：当算子局部 Lipschitz 常数大时过大的 $m$ 反而破坏稳定性，sweet spot 落在中等 $m$。
 
-3. **跨 scale 自适应迭代调度**:
+**3. 跨 scale 自适应迭代调度：把迭代次数当算力来分配**
 
-    - 功能：在推理时根据 scale 大小重新分配算力——粗尺度多迭代以稳定全局结构，细尺度少迭代以省 KV cache。
-    - 核心思路：定义总预算 $\mathcal{C} = \sum_k (p_{\text{pre}} + c_k + p_{\text{post}})$，可以选不同调度 $\{c_k\}$：常数 $\text{Con.}_{(c,c)}$、递减 $\text{Dec.}_{(a,b)}$（粗尺度 $a$ 次，细尺度 $b$ 次）或自适应阈值控制 $\|G(z) - z\|_2 \le \tau_k$。Figure 3 的收敛分析显示最大 scale 5 次迭代余弦相似度 >0.98、10 次接近 0.999，所以可以大胆减小高分辨率 scale 的迭代数。作者实验发现：当高分辨率未收敛时，**给粗尺度加迭代**反而能持续涨 FID，说明全局结构对细节质量影响大于细节自迭代。
-    - 设计动机：VAR 内部各 scale 算力分配不均的根本问题——高分辨率 scale 上 KV cache 和并行 token 数都最大，但实际收敛最快。把迭代当资源来调度，比训练阶段定 depth 更灵活。
+VAR 各 scale 算力分配不均——高分辨率 scale 的 KV cache 和并行 token 数最大，但实际收敛最快（Figure 3 显示最大 scale 5 次迭代余弦相似度 >0.98、10 次接近 0.999）。VIAR 把每个 scale 的迭代数当成可调度的资源：在总预算 $\mathcal{C} = \sum_k (p_{\text{pre}} + c_k + p_{\text{post}})$ 下选不同调度 $\{c_k\}$——常数 $\text{Con.}_{(c,c)}$、递减 $\text{Dec.}_{(a,b)}$（粗尺度 $a$ 次、细尺度 $b$ 次）或自适应阈值控制 $\|G(z) - z\|_2 \le \tau_k$。既然高分辨率收敛极快，就可以大胆压缩它的迭代数把算力让出去。一个反直觉的发现是：当高分辨率未收敛时，给粗尺度加迭代反而能持续涨 FID，说明全局结构对细节质量的影响大于细节自迭代——这比在训练阶段固定 depth 灵活得多。
 
 ### 损失函数 / 训练策略
 标准 next-scale 交叉熵 $\mathcal{L} = -\sum_k \log p_\theta(\hat{r}_k|r_{<k})$。隐式层用 S-JFB，前后浅层标准反传。global batch 512、lr 8e-5、其它优化器/调度沿用 VAR。tokenizer 冻结。基座为 2B 参数 VAR-d30 的 VQVAE + 自己设计的 pre/imp/post 结构。

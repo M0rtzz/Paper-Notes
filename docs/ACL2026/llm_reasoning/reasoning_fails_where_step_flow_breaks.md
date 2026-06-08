@@ -45,20 +45,21 @@ Step-Saliency 是一个诊断工具，StepFlow 是基于诊断的干预方法。
 
 ### 关键设计
 
-1. **Step-Saliency 诊断**:
-    - 功能：将 token 级 saliency 聚合为步骤级可视化
-    - 核心思路：对每层每头，计算注意力权重与其梯度的乘积绝对值 $I^{(\ell)}_{t\leftarrow k} = \frac{1}{H}\sum_h |A^{(\ell,h)}_{t,k} \cdot \frac{\partial \mathcal{L}_t}{\partial A^{(\ell,h)}_{t,k}}|$，然后按步骤边界做均值池化，得到 step-to-step 影响矩阵
-    - 设计动机：token 级 saliency map 过于密集嘈杂，均值池化到步骤级别可以抑制噪声、揭示跨步骤依赖模式
+**1. Step-Saliency 诊断：把 token 级 saliency 池化成步骤级影响图，让长推理链第一次有了可读的分析单元。**
 
-2. **Odds-Equal Bridge (OEB) — 浅层干预**:
-    - 功能：防止浅层注意力质量坍缩到当前步骤上
-    - 核心思路：将 key 分为当前段 $\mathcal{S}$、桥接段 $\mathcal{B}$（早期上下文）和其他 $\mathcal{O}$，设定桥接段的注意力质量下界 $\tau_\mathcal{B} = \min(\sqrt{|\mathcal{B}|/(|\mathcal{B}|+|\mathcal{S}|)}, \tau_{\max})$，当桥接质量低于下界时，通过 KL 投影调整 logits
-    - 设计动机：诊断发现浅层错误轨迹几乎所有注意力都集中在当前步骤和邻居上，忽略了问题和早期推理步骤，OEB 确保桥接区域维持合理的注意力份额
+长推理轨迹上做归因，最大的障碍不是没信号，而是 token 级 saliency map 太密太吵，根本看不出步骤之间谁影响了谁。Step-Saliency 的做法是先在 token 级算「注意力 × 梯度」的影响分数——对每层每头取注意力权重与其梯度乘积的绝对值再平均：
 
-3. **Step Momentum Injection (SMI) — 深层干预**:
-    - 功能：在深层步骤边界注入前一步的残差摘要
-    - 核心思路：在步骤 $\Gamma_i$ 和 $\Gamma_{i+1}$ 的边界，计算步骤级动量向量 $\mathbf{m}_{\text{prev}} = \frac{1}{|\Gamma_i|}\sum_{k\in\Gamma_i}\mathbf{v}_k$，注入到下一步第一个 token 的隐藏状态：$\mathbf{h}'_t = \mathbf{h}_t + \alpha \mathbf{m}_{\text{prev}}$
-    - 设计动机：Deep Decay 表现为深层 thinking saliency 快速衰减，summary 变得自我关注。SMI 通过在步骤边界保留一小部分前步信息，维持从早期推理到 summary 的连接
+$$I^{(\ell)}_{t\leftarrow k} = \frac{1}{H}\sum_h \left| A^{(\ell,h)}_{t,k} \cdot \frac{\partial \mathcal{L}_t}{\partial A^{(\ell,h)}_{t,k}}\right|$$
+
+然后按推理步骤的边界对这张密集图做均值池化，得到一张紧凑的 step-to-step 影响矩阵。池化既抑制了 token 级噪声，又把跨步骤的依赖模式显式地铺出来，逐层一看就能对比正确轨迹和错误轨迹的差异——这正是后面发现 Shallow Lock-in 和 Deep Decay 两种失败模式的前提。
+
+**2. Odds-Equal Bridge (OEB) — 浅层干预：不让浅层的注意力全部坍缩到当前这一步上。**
+
+诊断发现，浅层的错误轨迹几乎把所有注意力都压在当前步骤和它的邻居上，把问题本身和早期推理步骤全忘了——这就是 Shallow Lock-in。OEB 针对它做的是：把 key 分成当前段 $\mathcal{S}$、桥接段 $\mathcal{B}$（早期上下文）和其他 $\mathcal{O}$ 三块，给桥接段设一个注意力质量下界 $\tau_\mathcal{B} = \min\!\big(\sqrt{|\mathcal{B}|/(|\mathcal{B}|+|\mathcal{S}|)},\,\tau_{\max}\big)$，一旦桥接段实际拿到的注意力质量低于这个下界，就通过 KL 投影调整 logits 把份额补回去。这样既保证早期上下文不被浅层无视，又不至于粗暴地推翻原本的注意力分布。
+
+**3. Step Momentum Injection (SMI) — 深层干预：在步骤边界塞一点上一步的残差摘要，接住正在衰减的信息流。**
+
+深层的失败模式是 Deep Decay——thinking 段的 saliency 快速衰减、summary 越来越只关注自己，导致从早期推理到结论的链路断掉。SMI 在相邻步骤 $\Gamma_i$ 与 $\Gamma_{i+1}$ 的边界上算一个步骤级动量向量 $\mathbf{m}_{\text{prev}} = \frac{1}{|\Gamma_i|}\sum_{k\in\Gamma_i}\mathbf{v}_k$，再把它注入到下一步第一个 token 的隐藏状态：$\mathbf{h}'_t = \mathbf{h}_t + \alpha\,\mathbf{m}_{\text{prev}}$。等于在每个步骤交接处留下一小份前一步的「惯性」，把早期推理的信息一路传到 summary，避免深层把它丢光。
 
 ### 损失函数 / 训练策略
 StepFlow 是纯测试时干预，**不需要任何训练或反向传播**。它在单次解码过程中修改前向传播：OEB 作用于浅层的注意力 logits，SMI 作用于深层的残差流。每个模型只需选择一个 $\tau_{\max}$ 和 $\alpha$，在小验证集上调节。

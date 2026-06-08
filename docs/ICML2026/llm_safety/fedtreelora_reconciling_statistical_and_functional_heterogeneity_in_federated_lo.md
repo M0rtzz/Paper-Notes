@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-联邦系统有 $N$ 个客户端，每端各持私有数据 $\mathcal{D}_k$，共享冻结 backbone $W_0$，每端要学一组个性化 LoRA 参数 $\boldsymbol{\Theta}_k$。FedTreeLoRA 的整条 pipeline 分三步：(1) **warmup** 让每端本地 fine-tune $E_{warm}$ 轮，得到初始 $B$ 矩阵；(2) **全局拓扑建模**——用 $B$ 矩阵的 Frobenius 距离构 $N\times N$ 全局距离矩阵 $D^{global}$，AHC 得到二叉合并树 $\mathcal{T}$，这棵树同时编码了从"全员共享"到"全员个性化"的所有候选分组；(3) **逐层在 $\mathcal{T}$ 上做 cut**——从浅到深、在 $\mathcal{T}$ 的合法 cut 中按 Silhouette 选最优 cluster 数 $c_l^*$，并强制 $c_l \geq c_{l-1}$ 的单调性，让特化随深度递增；(4) 客户端按每层的 cluster 划分构造 **Cluster Expert** 和 **External Expert** 两组聚合 LoRA，用可学标量 $\lambda_{l,k}$ 混合后做前向。本地训练只更新本端所在 cluster 的 Expert 和 $\lambda$，External Expert 冻结。
+联邦系统里有 $N$ 个客户端，每端各持私有数据 $\mathcal{D}_k$、共享一个冻结的 backbone $W_0$，目标是给每端学一组个性化 LoRA 参数 $\boldsymbol{\Theta}_k$。FedTreeLoRA 的核心思路是：先让所有客户端 warmup 几轮，把它们之间的关系凝成**一棵全局层次树** $\mathcal{T}$（根=全员共享、叶=全员个性化），然后让每个 Transformer 层独立地在这棵树上选一刀 cut——浅层选靠近根的粗 cut（多客户端共享），深层选靠近叶的细 cut（各自特化），且越深越细单调不回头。选好 cut 后，每层按分组聚合出两套 LoRA expert，用一个可学标量混合做前向。这样"客户端之间共享多深"就从一个全局统一的决策，变成了逐层自适应、又彼此拓扑一致的解。
 
 ### 关键设计
 
-1. **全局拓扑树 + 距离度量**:
+**1. 全局拓扑树：把所有候选分组方案塞进一棵树。**
 
-    - 功能：用一棵 binary merge tree $\mathcal{T}$ 同时承载所有候选客户端分组方案，作为后续逐层 cut 的"骨架"。
-    - 核心思路：warmup 阶段每端先本地训 $E_{warm}$ 轮得到层级 LoRA $\{A_{l,k}, B_{l,k}\}$；只用 $B$ 矩阵（因为 $B$ 编码任务特化语义、$A$ 偏共享）计算客户端 $i,j$ 的全局距离 $D^{global}_{i,j} = \frac{1}{L}\sum_l \text{dist}(B_{l,i}, B_{l,j})$，默认用 Frobenius 距离；然后用 AHC 把 $D^{global}$ 凝聚成 $\mathcal{T}$。$\mathcal{T}$ 的关键性质是：任意一个 cut 都对应一种合法分组，且相邻 cut 之间是嵌套关系（粗 cluster 严格包含细 cluster 的成员）。
-    - 设计动机：如果不立全局骨架，每层各自独立聚类，相邻层会出现 $\{1,2\},\{3,4\} \to \{1,3\},\{2,4\}$ 这种"拓扑漂移"，破坏前向 pass 的语义连续性；用全局树保证"浅层被分开的客户端，到了深层只会更专、不会重新合到一起"，让 expert 特化路径单调可解释。
+直接让每层各自独立聚类会出大问题：相邻两层可能把客户端从 $\{1,2\},\{3,4\}$ 重排成 $\{1,3\},\{2,4\}$，这种"拓扑漂移"会切断前向 pass 的语义连续性，让 expert 特化路径变得不可解释。FedTreeLoRA 的解法是先立一根全局骨架。warmup 阶段每端本地训 $E_{warm}$ 轮得到层级 LoRA $\{A_{l,k}, B_{l,k}\}$；这里**只用 $B$ 矩阵**算客户端距离——因为按 Tian et al. 2024 的观察 $B$ 编码任务特化语义而 $A$ 偏共享——客户端 $i,j$ 的全局距离取所有层的平均 $D^{global}_{i,j} = \frac{1}{L}\sum_l \text{dist}(B_{l,i}, B_{l,j})$，默认用 Frobenius 距离，再用 agglomerative hierarchical clustering（AHC）把 $D^{global}$ 凝聚成一棵二叉合并树 $\mathcal{T}$。这棵树的关键性质是：在它上面切任意一刀都对应一种合法分组，而且相邻两刀是**嵌套**的——粗 cluster 严格包含细 cluster 的成员。正因为有这个嵌套结构，才能保证"浅层被分开的客户端到了深层只会更专、绝不会重新合并到一起"，特化路径天然单调。
 
-2. **逐层自适应深度搜索（Adaptive Layer-wise Depth Alignment）**:
+**2. 逐层自适应深度搜索：让浅层粗、深层细。**
 
-    - 功能：为每个 Transformer 层 $l$ 选一个最优 cluster 数 $c_l^*$，让浅层粗、深层细，匹配 LLM "浅层语法、深层语义"的功能层级。
-    - 核心思路：先算**层特异**距离矩阵 $D^{(l)}_{i,j} = \text{dist}(B_{l,i}, B_{l,j})$（与全局矩阵不同，它只看本层的 $B$）；候选搜索空间被限制成 $\Omega_l = \{c \in \mathbb{Z} \mid c_{l-1}^* \leq c < \min(N, c_{l-1}^* + K)\}$，由窗口 $K$ 控制每层最多比上一层细化几格，强制单调；评分函数 $\phi(c; D^{(l)})$ 对 $c=1$ 用阈值 $\tau$（控制"是否值得分裂"的最低门槛），$c \geq 2$ 时用 Silhouette 系数 $\text{Sil}(P_c, D^{(l)})$；最终 $c_l^* = \arg\max_{c \in \Omega_l} \phi(c; D^{(l)})$。从根 $c_0^* = 1$ 出发逐层往下解。
-    - 设计动机：实验已证明"共享深度"应随数据异质性变化（动机实验 2），但若每层独立搜会破坏拓扑；用"上一层粒度起 + 窗口 $K$"既保证沿 $\mathcal{T}$ 走、又允许在最优位置自动停。$\tau$ 显式控制对全局共享的"先验偏置"——异质性低于 $\tau$ 时保留 $c=1$ 的全局共享。
+动机实验已经证明"安全共享深度"是数据异质性的函数——客户端越相似能共享得越深——所以共享边界必须逐层可变，而不能一刀切。这一步给每个 Transformer 层 $l$ 在树上选一个最优 cluster 数 $c_l^*$。它先算**层特异**的距离矩阵 $D^{(l)}_{i,j} = \text{dist}(B_{l,i}, B_{l,j})$（注意和全局矩阵不同，这里只看本层的 $B$），再把搜索空间限制成一个从上一层粒度起步、最多扩 $K$ 格的窗口 $\Omega_l = \{c \in \mathbb{Z} \mid c_{l-1}^* \leq c < \min(N, c_{l-1}^* + K)\}$——下界 $c_{l-1}^*$ 强制单调（深层不会比浅层更粗）、窗口 $K$ 限制每层最多细化几格，从而保证整条搜索路径始终沿着树 $\mathcal{T}$ 走、不会乱跳。评分函数为
 
-3. **Cluster-External Expert 混合（参数高效的拓扑落地）**:
+$$\phi(c; D^{(l)}) = \begin{cases} \tau, & c = 1 \\ \text{Sil}(P_c, D^{(l)}), & c \geq 2 \end{cases}$$
 
-    - 功能：把每层的分组 $P_{c_l^*}$ 转成实际可前向的 LoRA 参数，让客户端既能吸收 peer-group 共识又保留全局知识通道。
-    - 核心思路：对客户端 $k$ 在层 $l$，令 $\mathcal{S}_k^{(l)}$ 为其所在 cluster、$\mathcal{R}_k^{(l)}$ 为其余客户端，分别聚合出 Cluster Expert $\bar{\Phi}_{l,k}^{\text{clus}} = \frac{1}{|\mathcal{S}_k^{(l)}|}\sum_{j \in \mathcal{S}_k^{(l)}} \Phi_{l,j}$ 和 External Expert $\bar{\Phi}_{l,k}^{\text{ext}} = \frac{1}{|\mathcal{R}_k^{(l)}|}\sum_{j \in \mathcal{R}_k^{(l)}} \Phi_{l,j}$（$\Phi \in \{A, B\}$）；前向写成 $h_l(x) = W_{0,l}x + \lambda_{l,k}(\bar{B}^{\text{clus}}\bar{A}^{\text{clus}}x) + (1-\lambda_{l,k})(\bar{B}^{\text{ext}}\bar{A}^{\text{ext}}x)$，$\lambda_{l,k} \in [0,1]$ 是每层每端的**可学标量**；本地训练只更新 Cluster Expert 和 $\lambda$，External Expert 在该轮内冻结；根层 $\mathcal{S}_k = \{1..N\}$ 时把 External Expert 置零避免冗余。
-    - 设计动机：作者刻意选标量 $\lambda$ 而不是 MoE router，因为消融表明拓扑对齐本身（Sec. 5.2）就是性能主因（仅用 Cluster-Only 都已超过 FedLEASE），用标量混合可以把额外可训参数压到 $\approx 0.020\%$，通信成本几乎为零；同时 External Expert 提供一条"全局知识通路"防止 cluster 内部信息孤岛。
+其中 $c=1$（全局共享）用一个阈值 $\tau$ 当门槛，$c \geq 2$ 用 Silhouette 系数衡量分组质量；最终 $c_l^* = \arg\max_{c \in \Omega_l} \phi(c; D^{(l)})$，从根 $c_0^*=1$ 逐层往下解。$\tau$ 在这里扮演"对全局共享的先验偏置"——只有当某层的异质性强到 Silhouette 超过 $\tau$，才值得分裂，否则保留 $c=1$ 的全员共享。
+
+**3. Cluster-External Expert 混合：用一个标量把拓扑落地成可前向的参数。**
+
+选好每层的分组 $P_{c_l^*}$ 后，还要把它变成实际能前向的 LoRA。对客户端 $k$ 在层 $l$，记 $\mathcal{S}_k^{(l)}$ 为它所在的 cluster、$\mathcal{R}_k^{(l)}$ 为其余所有客户端，分别聚合出两套 expert：Cluster Expert $\bar{\Phi}_{l,k}^{\text{clus}} = \frac{1}{|\mathcal{S}_k^{(l)}|}\sum_{j \in \mathcal{S}_k^{(l)}} \Phi_{l,j}$ 吸收 peer-group 共识，External Expert $\bar{\Phi}_{l,k}^{\text{ext}} = \frac{1}{|\mathcal{R}_k^{(l)}|}\sum_{j \in \mathcal{R}_k^{(l)}} \Phi_{l,j}$ 保留一条全局知识通道（$\Phi \in \{A, B\}$）。前向把两者用一个**每层每端的可学标量** $\lambda_{l,k} \in [0,1]$ 线性混合：
+
+$$h_l(x) = W_{0,l}x + \lambda_{l,k}(\bar{B}^{\text{clus}}\bar{A}^{\text{clus}}x) + (1-\lambda_{l,k})(\bar{B}^{\text{ext}}\bar{A}^{\text{ext}}x)$$
+
+本地训练只更新 Cluster Expert 和 $\lambda$，External Expert 在该轮冻结；根层 $\mathcal{S}_k = \{1..N\}$（全员一组）时把 External Expert 置零避免冗余。作者刻意用标量混合而非 MoE router，是因为消融显示拓扑对齐本身才是性能主因——光用 Cluster Expert（Cluster-Only）就已超过最强基线 FedLEASE，而换成 MoE router 参数涨 25% 性能反而略降。标量混合把额外可训参数压到约 $0.020\%$，通信成本几乎为零，同时 External Expert 这条全局通路又防止了 cluster 内部信息孤岛。
 
 ### 损失函数 / 训练策略
-每端只对 Cluster Expert $(\bar{A}^{\text{clus}}_{l,k}, \bar{B}^{\text{clus}}_{l,k})$ 和 $\lambda_{l,k}$ 做 $E$ 步本地 SGD，External Expert 冻结。理论上作者在 $\sigma$-smooth + bounded stochastic gradient + LoRA 矩阵有界 + gradient-alignment $(\mu_A, \mu_B > 0)$ 的标准联邦假设下证了 $\mathcal{O}(1/\sqrt{T})$ 收敛率，与 FedAvg、FedSA 同阶，说明树结构聚合没有破坏收敛性。
+每端只对 Cluster Expert $(\bar{A}^{\text{clus}}_{l,k}, \bar{B}^{\text{clus}}_{l,k})$ 和标量 $\lambda_{l,k}$ 做 $E$ 步本地 SGD，External Expert 冻结。理论上作者在 $\sigma$-smooth + bounded stochastic gradient + LoRA 矩阵有界 + gradient-alignment $(\mu_A, \mu_B > 0)$ 的标准联邦假设下证了 $\mathcal{O}(1/\sqrt{T})$ 收敛率，与 FedAvg、FedSA 同阶，说明树结构聚合没有破坏收敛性。
 
 ## 实验关键数据
 

@@ -45,23 +45,23 @@ Pipeline 五步：① **Line segmentation**——用 Kraken polygon-based 把 15
 
 ### 关键设计
 
-1. **三阶段迁移学习课程**:
+**1. 三阶段迁移学习课程：用"合成 → 印刷 → 手稿"三段课程，在仅 3100 行真实标注下学会古尼泊尔手写识别。**
 
-    - 功能：用"合成 → 印刷 → 手稿"三段课程让 transformer 在仅 3100 行 ground truth 下学会 Devanagari 手写识别。
-    - 核心思路：Stage 1（100K 合成）让 decoder 学到 Devanagari 字符的视觉先验和语言分布；Stage 2（5K 印刷 Nagari）桥接合成→真实扫描噪声 gap；Stage 3（3K 手稿）适配手写风格、orthographic 变异、纸张退化。各 stage 用同一 seed + 同一 80/10/10 切分。Stage 1 后 CER=0.71（基本随机），Stage 2 后 0.51（学会基础识别），Stage 3 后 0.056（base encoder） / 0.049（large encoder）。
-    - 设计动机：模型直接在 3100 行上 fine-tune 会严重 over-fit；single-stage 合成预训练又抹不掉 synthetic vs 真实 noise 的 distribution gap。三阶段课程是个被 ablation 验证的有效中介，每一段都贡献净增益（Table 18）。
+直接把 transformer 丢到 3100 行手稿上 fine-tune 会严重过拟合，而只做单阶段合成预训练又消不掉"合成字形 vs 真实扫描噪声"之间的分布鸿沟。三阶段课程把这条 gap 拆成两座桥来过：Stage 1 用 11 种字体渲染的 10 万行合成数据，让 decoder 先学到 Devanagari 字符的视觉先验和语言分布；Stage 2 在 5K 行真实印刷 Nagari 扫描上做迁移，桥接合成→真实扫描的噪声差异；Stage 3 才在 3K 行手稿上做最终适配，吃下手写风格、orthographic 变异和纸张退化。三段共享同一 seed 和同一 80/10/10 切分。
 
-2. **Script-aware decoder + byte-BPE tokenizer**:
+CER 的逐段轨迹把每一步的作用说得很清楚：Stage 1 后 CER=0.71（基本是随机猜），Stage 2 后降到 0.51（学会基础识别），Stage 3 后才落到 0.056（base encoder）/ 0.049（large encoder）。ablation（Table 18）确认每一段都贡献净增益，三阶段课程是一个被实验验证有效的中介，缺哪一段都不行。
 
-    - 功能：替换 TrOCR 自带的英文 wordpiece tokenizer 和 decoder，用为 Devanagari 现训的 BPE + 轻量化 BERT/GPT-2 做 text generation。
-    - 核心思路：(a) 用 HuggingFace tokenizers 训两种 BPE——CharBPETokenizer（按 char 合并）和 ByteLevelBPETokenizer（按 byte 合并），词表 = 500（小词表保覆盖+频次平衡，低资源最佳实践）；(b) decoder 用标准 BERT/GPT-2 配置（12 层、768 hidden、12 head、114M 参数）从头训，只把 vocab size 设为 500 匹配自训 tokenizer；(c) 两者搭配 TrOCR ViT 编码器（trocr-base/large-handwritten），形成 3 编码器 × 2 解码器 × 2 tokenizer = 12 个组合。
-    - 设计动机：TrOCR 默认 vocabulary 是 robertaBPE，不含 Devanagari conjuncts，直接 fine-tune 等于让模型在 OOV 上猜。自训 byte-BPE 能完美覆盖 Devanagari 字符与 conjunct；BERT 比 GPT-2 在 HTR 上略好但差异 ≤0.005 CER —— 关键发现："低资源下架构差异小，数据质量主导"。最终选 BERT + byte-BPE。
+**2. Script-aware decoder + byte-BPE tokenizer：把 TrOCR 自带的英文 wordpiece 换成专为 Devanagari 现训的 BPE + 轻量 decoder。**
 
-3. **数据中心优化（label normalization + 20 种数据增强 × 8 倍）**:
+TrOCR 默认的 robertaBPE 词表根本不含 Devanagari 连字 (conjuncts)，直接 fine-tune 等于逼模型在一堆 OOV token 上猜，开箱甚至输出非 Devanagari 字符。解决办法是整条 decode 路径都为脚本重做：用 HuggingFace tokenizers 训两种 BPE——按字符合并的 CharBPETokenizer 和按字节合并的 ByteLevelBPETokenizer，词表都设成 500（小词表在低资源下兼顾覆盖率与频次平衡）；decoder 则用标准 BERT/GPT-2 配置（12 层、768 hidden、12 head、114M 参数）从头训，只把 vocab size 改成 500 对齐自训 tokenizer。三种 ViT 编码器（trocr-base/large-handwritten、swin）× 2 decoder × 2 tokenizer 组合出 12 种方案逐一扫过。
 
-    - 功能：在不增加标注的前提下用增强 + 清洗扩 dataset 多样性，是 CER 从 0.089 降到 0.056 的最大单一贡献者。
-    - 核心思路：(a) **Label normalization**：统一 chandrabindu (U+0310 vs U+0901) 等同形异码、删多余空格、bullet → danda 标准化、ASCII 数字 → Devanagari 数字等 6 类规则，5300+ 字符受影响，57% 行被改动；(b) **20 种增强**分三组：形状变形（旋转 ±3°、shift、perspective、shear、horizontal/vertical stretch）、质量退化（Gaussian blur/noise、motion blur、JPEG 压缩、jitter、salt-pepper、elastic blur）、字符级 distortion（局部模糊 blurredpatches、sine wave、elastic warp、erosion/dilation/sharpen）；(c) 增强倍数 2×/4×/8×/12×/16× 比较，发现 8× = 22320 sample 是 plateau（继续加增强不再涨）。
-    - 设计动机：3100 行根本不够覆盖 Devanagari 手写风格 + 文档退化的完整分布；增强是个无标注代价的扩 sample 方法。label normalization 处理的是低资源场景下"少量但 systematic"的标签 noise，比模型 tweak 更能带来稳定收益。Table 3 显示 normalization 单独 -0.005、+8× 增强再 -0.028，加起来 -0.033 几乎是单次模型升级（base→large -0.007）的 5 倍。
+字节级 BPE 能完美覆盖 Devanagari 字符与 conjunct，这是直接 fine-tune 大 decoder 做不到的。有意思的是横向对比下来 BERT 比 GPT-2 在 HTR 上只略好、差异 ≤0.005 CER，byte-BPE 也只比 char-BPE 略优——这正是全文反复强调的发现："低资源下架构差异很小，数据质量才是主导"。最终选定 BERT + byte-BPE。
+
+**3. 数据中心优化（label normalization + 20 种增强 × 8 倍）：不加一条标注，靠清洗和增强把数据多样性撑起来。**
+
+3100 行手稿远远盖不住 Devanagari 手写风格叠加文档退化的完整分布，而再标注又昂贵，于是把杠杆压在数据本身。第一步是 label normalization：统一 chandrabindu (U+0310 vs U+0901) 这类同形异码、删多余空格、bullet→danda 标准化、ASCII 数字→Devanagari 数字等 6 类规则，影响 5300+ 字符、改动了 57% 的行——处理的正是低资源场景里"量少但成系统"的标签噪声。第二步是 20 种增强分三组叠加：形状变形（旋转 ±3°、shift、perspective、shear、横/纵向拉伸）、质量退化（高斯模糊/噪声、运动模糊、JPEG 压缩、jitter、椒盐、弹性模糊）、字符级扰动（局部模糊 blurredpatches、正弦波扭曲、弹性 warp、腐蚀/膨胀/锐化）。
+
+增强倍数从 2× 一直扫到 16×，发现 8×（22320 样本）是性价比拐点，再加不再涨。两项数据干预合起来威力惊人：Table 3 显示 normalization 单独 -0.005、再叠 8× 增强 -0.028，累计 -0.033，几乎是单次模型升级（base→large 仅 -0.007）的 5 倍——这是 CER 从 0.089 压到 0.056 的最大单一贡献者，也是"数据 > 模型"结论的直接证据。
 
 ### 损失函数 / 训练策略
 全程标准 cross-entropy NLL；CER（Levenshtein 距离归一化）作为模型选择主指标，weighted CER 修正不同行长度，exact match accuracy 作为辅助。解码评估时去掉零宽 Unicode (U+200B/200C/200D)。解码方法横向对比 5 种：beam search (width 1/5/10/20)、contrastive search、temperature sampling、top-k、top-p，全部 weighted CER ≈ 0.0483-0.0490，**解码策略对结果几乎无影响**。

@@ -42,27 +42,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EVE 是一个由四大模块组成的生产系统：(i) **EVE-Instruct**——基于 Mistral Small 3.2 (24B, 128k context) 微调的核心 LLM，负责答案生成、query rewriting、summarization；(ii) **Knowledge Bases**——~365k 文档的多源 KB（开放访问 + Wiley 专属 + ESA 文档），支持混合 semantic + metadata 检索；(iii) **Retrieval Pipeline**——按查询和过滤器选相关文档，并用 Qwen3-Reranker-4B 重排；(iv) **Chat System** + Hallucination Detection——管理对话状态、做事实核查、必要时触发"重写答案"循环。
+EVE 是一个把数据、训练、评测、部署四件事打通的端到端生产系统，前人工作往往只覆盖其中一两件。系统由四大模块协同：核心是 **EVE-Instruct**（基于 Mistral Small 3.2，24B、128k context 微调而来），负责答案生成、query rewriting 与 summarization；其上接 ~365k 文档的多源 **Knowledge Bases**（开放访问 + Wiley 专属 + ESA 内部文档，支持 semantic + metadata 混合检索）；**Retrieval Pipeline** 按查询与过滤器召回候选并用 Qwen3-Reranker-4B 重排；最外层的 **Chat System + Hallucination Detection** 管理对话状态、做事实核查、必要时触发「重写答案」闭环。用户的一次提问，会经历检索接地、生成、自评幻觉、按需修订这一条龙处理后才返回。
 
 ### 关键设计
 
-1. **EO 语料 + 合成数据双轨制（5.3B raw + 10.7B synthetic）**：
+**1. EO 语料 + 合成数据双轨制：在「raw 不够做 CPT」与「合成易跑偏」之间找平衡。**
 
-    - 功能：在"raw 数据量不足做 CPT"和"合成数据可能跑偏"之间找平衡。
-    - 核心思路：raw 部分用自研 scraper 从 22 家可信出版机构抓 172 个来源（4.2B 开放 + 1.1B Wiley 专属），经 Trafilatura/Nougat OCR + SHA-256 + MinHash LSH 去重 + Presidio 匿名化 + CrossRef 元数据补全。合成部分分两路：(a) long-form text 用 Active Reading pipeline（Mistral Medium 3.1 选策略、Mistral Small 3.2 生成）重组重点内容；(b) instruction text 用 7 个高质模型（Mistral Large 3、GPT-4o Mini、Qwen3-235B、DeepSeek-R1 等）生成 ContextQA / SelfQA / LongQA / MultiHop QA / self-referential alignment 五类样本。共生成 ~21B token 合成数据，再用 LLM-as-judge 过滤为最终 10.7B 训练集。
-    - 设计动机：单纯 raw 语料只有 5.3B，介于"足够 SFT"和"足够 CPT"之间，纯 CPT 会破坏 instruction-following；引入大规模合成数据 + 严格 quality filter 既补足规模、又保证多样性和质量。
+EO 原始高质语料只有 5.3B token，恰好卡在「足够 SFT 却不够 CPT」的尴尬区间，纯 CPT 会破坏 instruction-following，于是作者用真实语料打底、合成数据补量。raw 一路用自研 scraper 从 22 家可信出版机构、172 个来源抓取（4.2B 开放 + 1.1B Wiley 专属），经 Trafilatura / Nougat OCR 抽取、SHA-256 与 MinHash LSH 去重、Presidio 匿名化、CrossRef 元数据补全。合成一路分两支：long-form text 走 Active Reading pipeline（Mistral Medium 3.1 选策略、Mistral Small 3.2 生成）主动重组重点内容；instruction text 由 7 个高质模型（Mistral Large 3、GPT-4o Mini、Qwen3-235B、DeepSeek-R1 等）产出 ContextQA / SelfQA / LongQA / MultiHop QA / self-referential alignment 五类样本。两支合计约 21B token，再用 LLM-as-judge 过滤精选到最终 10.7B 训练集，既补足规模又保住多样性与质量。
 
-2. **IFT/长文本交替训练 + replay + 10-checkpoint 融合**：
+**2. IFT/长文本交替训练 + replay + 10-checkpoint 融合：领域适配又不丢通用能力。**
 
-    - 功能：让 24B 模型在领域适配的同时不丢通用能力。
-    - 核心思路：在同一 training run 内交替注入 instruction-formatted text 和 long-form text；每类内部按 50/50 或 60/40 比例混入 general-domain replay。学习率取 IFT 和 CPT 之间的中间值，平衡"事实集成"与"对齐稳定"。最后跑 10 次不同混合比例的训练 run，用均匀参数插值（uniform parameter interpolation）做 checkpoint 融合，把"领域强但通用差"和"通用强但领域弱"的 checkpoints 直接平均成一个 trade-off 最优的模型。最后用 Online DPO 做 alignment 收尾。
-    - 设计动机：作者实验发现单一比例的 mix 总是在 domain vs general 上做单点 trade-off；checkpoint 融合是个低成本的 ensemble 替代品——不需要推理时跑多模型，但能拿到接近多模型平均的鲁棒性。比 LoRA / regularization-based 抗遗忘方法稳定。
+24B 这种中等规模模型做领域适配时，最大风险是灾难性遗忘——学会 EO 却忘了 tool calling、instruction following。作者在同一 training run 内交替注入 instruction-formatted text 与 long-form text，每类内部再按 50/50 或 60/40 混入 general-domain replay，学习率取 IFT 与 CPT 之间的中间值，平衡「事实集成」与「对齐稳定」。真正的关键招是 checkpoint 融合：跑 10 次不同混合比例的训练 run，得到一批「领域强但通用弱」与「通用强但领域弱」的 checkpoint，再用均匀参数插值（uniform parameter interpolation）直接把它们平均成一个 trade-off 最优的模型。相比 LoRA 或正则化抗遗忘，它是个低成本 ensemble 替代品——只在训练时多花算力，推理仍是单模型、零额外部署成本，却拿到接近多模型平均的鲁棒性，最后用 Online DPO 收尾对齐。
 
-3. **首批 EO benchmark + Hallucination-aware RAG 闭环**：
+**3. 首批 EO benchmark + Hallucination-aware RAG 闭环：让效果可量化、让幻觉可自修。**
 
-    - 功能：让"领域 LLM 是否真的好"可被量化，且产线 hallucination 可被自动捕捉与修复。
-    - 核心思路：benchmark 包含 5 类任务（MCQA 单选 1261 / 多选 431 / 开放无 context 1257 / 开放带 context 418 / 幻觉检测 2326），由 25 位 EO 专家人工标注 + LLM/Human 双源生成 + 独立审核。RAG 端用 ~512 词 chunk + Qwen3-Embedding-4B + Qdrant binary 量化；retrieval 时先 query rewriting，每 KB 取 top 2K 候选，再 Qwen3-Reranker-4B 重排取 top K。Hallucination detection 流程：EVE-Instruct 自评 → 若标记幻觉 → 用 justification 重写 query → 重检索 → 生成修订版 → 自评 → 在原版 / 修订版中选最优。
-    - 设计动机：通用 hallucination benchmark (FEVER / TruthfulQA / HaluEval) 不覆盖 EO 领域知识；产线必须有"先检测后修复"的轻量循环以保证延迟可控。把 detection 集成在 LLM 自身（用 EVE-Instruct 当评判）而非独立 verifier，可以减一次模型部署成本。
+通用幻觉 benchmark（FEVER / TruthfulQA / HaluEval）覆盖不到 EO 领域知识，作者因此自建首套 5693 样本 benchmark，含 5 类任务（MCQA 单选 1261 / 多选 431 / 开放无 context 1257 / 开放带 context 418 / 幻觉检测 2326），由 25 位 EO 专家人工标注、LLM 与 Human 双源生成并独立审核。RAG 端用 ~512 词 chunk + Qwen3-Embedding-4B + Qdrant binary 量化，检索时先 query rewriting、每个 KB 取 top 2K 候选再由 Qwen3-Reranker-4B 重排取 top K。幻觉控制走一条轻量自修闭环：EVE-Instruct 先自评 → 若标记幻觉则用 justification 重写 query → 重检索 → 生成修订版 → 再自评 → 在原版与修订版中择优。把 detect / revise / select 三步全压进 EVE-Instruct 自身而非另起独立 verifier，省掉一次模型部署、也把产线延迟控制在可接受范围。
 
 ### 损失函数 / 训练策略
 基础模型为 Mistral Small 3.2 (24B, 128k context)；训练阶段按 long-form 30% + instruction 70% 比例混入，每类内部 50/50 或 60/40 加 replay data（具体见 Table 3）；学习率介于典型 IFT 与 CPT 之间；最终融合 10 个不同 mix 比例的 checkpoint；alignment 用 Online DPO（同 Liu et al. 2026 配方）。所有训练成本估算约 38 吨 CO₂eq。

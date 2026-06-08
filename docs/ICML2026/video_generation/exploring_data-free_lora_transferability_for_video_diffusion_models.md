@@ -50,25 +50,17 @@ CASA 的输入：源模型 $\mathbf{W}_s$、源上训的 LoRA $\Delta_{\text{lor
 
 ### 关键设计
 
-1. **路由矩阵 + cluster 构造**：
+**1. 路由矩阵 + cluster 构造：把"权重 update"翻译成奇异方向之间的信息流。**
 
-    - 功能：把"权重 update"翻译成"奇异方向之间的信息流"，并按耦合强度聚成稳定 cluster。
-    - 核心思路：定义路由 $\mathbf{C}=\mathbf{U}_s^\top\Delta\mathbf{V}_s$，行是 receiver、列是 sender，$\mathbf{C}(i,j)$ 大就表示 $j$-th sender 强烈推到 $i$-th receiver。然后选最小 $k$ 满足 $\sum_{i=1}^k\sigma_i^2/\sum_i\sigma_i^2\ge 0.9$，在 top-$k$ 子空间里按预测旋转强度 $\mathbf{R}(i,j)=|\mathbf{C}_{\text{lora}}(i,j)|/(|\sigma_i-\sigma_j|+\epsilon)$ 超阈值 $\tau$ 连边，连通分量就是 cluster。
-    - 设计动机：作者实验发现 middle spectrum 出现 block-wise 混合（与 step-like 奇异值 plateau 对齐），符合 Davis-Kahan 微扰理论——奇异值差越小越容易混；按 $\sigma_i-\sigma_j$ 归一化路由强度恰好抓住这种 "局部退化区"，cluster 因此能稳定捕捉真正的功能单元。
+要理解 LoRA 和 FFT 到底改了什么，先得把 update 放到一个能看清"哪条方向推给哪条方向"的视角。CASA 定义路由矩阵 $\mathbf{C}=\mathbf{U}_s^\top\Delta\mathbf{V}_s$，行是 receiver、列是 sender，$\mathbf{C}(i,j)$ 大就表示第 $j$ 个 sender 强烈推向第 $i$ 个 receiver。然后选最小的 $k$ 使 top-$k$ 子空间覆盖 90% 能量 $\sum_{i=1}^k\sigma_i^2/\sum_i\sigma_i^2\ge 0.9$，在其中按预测旋转强度 $\mathbf{R}(i,j)=|\mathbf{C}_{\text{lora}}(i,j)|/(|\sigma_i-\sigma_j|+\epsilon)$ 超阈值 $\tau$ 连边，连通分量即 cluster。之所以要按 $\sigma_i-\sigma_j$ 归一化，是因为作者实测 middle spectrum 出现 block-wise 混合、且与奇异值的 step-like plateau 对齐，恰好吻合 Davis-Kahan 微扰理论——奇异值差越小越容易混。这样归一化正好抓住这些"局部退化区"，让 cluster 稳定地框住真正的功能单元。
 
-2. **主导路由区识别**：
+**2. 主导路由区识别：只盯 FFT 的"生成主干道"。**
 
-    - 功能：按 FFT 路由能量密度，把 cluster 标成"主导/非主导"，决定后续仲裁策略。
-    - 核心思路：对每个 cluster $\mathcal{G}_m$ 算发送/接收能量密度 $\rho_m^{\text{send}}=\frac{1}{|\mathcal{G}_m|}\sum_{i\in\mathcal{G}_m}\|\mathbf{C}_{\text{fft}}(:,i)\|_2$ 和 $\rho_m^{\text{recv}}$；超分位阈值 $q_{\text{dom}}$ 的 cluster 进入 $\mathcal{G}_{\text{dom}}^{\text{send/recv}}$。路由位 $(i,j)$ 若 $i$ 在 receiver 主导集或 $j$ 在 sender 主导集，标 $\mathcal{D}(i,j)=1$。
-    - 设计动机：作者第 3 节实证 FFT 把路由能量高度集中在少数 head clusters（"生成主干道"），LoRA 反而均匀分布；只有这些主干道的冲突会真正破坏生成质量，**非主导区**的 LoRA 注入风险小，可以放心还原。
+并非所有 cluster 的冲突都致命。作者实证发现 FFT 把路由能量高度集中在少数 head clusters（生成的主干道），而 LoRA 的能量铺得很均匀——真正会破坏生成质量的，只是这些主干道上的冲突。于是对每个 cluster $\mathcal{G}_m$ 算 FFT 的发送/接收能量密度 $\rho_m^{\text{send}}=\frac{1}{|\mathcal{G}_m|}\sum_{i\in\mathcal{G}_m}\|\mathbf{C}_{\text{fft}}(:,i)\|_2$ 与 $\rho_m^{\text{recv}}$，超过分位阈值 $q_{\text{dom}}$ 的 cluster 标为主导；路由位 $(i,j)$ 只要 $i$ 落在 receiver 主导集或 $j$ 落在 sender 主导集，就记 $\mathcal{D}(i,j)=1$。非主导区的 LoRA 注入风险小、可以放心还原，主导区才需要小心仲裁——这个划分正是后面差异化处理的前提。
 
-3. **二级仲裁规则（CASA 核心）**：
+**3. 二级仲裁规则（CASA 核心）：非主导区补偿漂移，主导区同向封顶。**
 
-    - 功能：对每条路由 $(i,j)$ 决定是"直接还原 LoRA"还是"截断到安全包络"。
-    - 核心思路：
-        - **非主导区** $\mathcal{D}=0$：$\mathbf{C}_{\text{casa}}(i,j)=\mathbf{C}_{\text{lora}}(i,j)-\mathbf{C}_{\text{fft}}(i,j)$，这样最终路由 $\mathbf{C}_{\text{fft}}+\mathbf{C}_{\text{casa}}=\mathbf{C}_{\text{lora}}$，完美恢复 LoRA。
-        - **主导区** $\mathcal{D}=1$：算"过激活风险" $\mathbf{S}(i,j)=\mathbf{E}(i,j)\cdot\text{Context}(i,j)$，其中 $\mathbf{E}=\max(0,\mathbf{C}_{\text{lora}}\mathbf{C}_{\text{fft}})$ 只在同向时非零，$\text{Context}$ 是该 cluster 对的 cosine 相似度（提供集体方向证据）。$\mathbf{S}$ 超分位 $q_{\text{act}}$ 就用 $\mathbf{C}_{\text{casa}}(i,j)=\max(|\mathbf{C}_{\text{lora}}|,|\mathbf{C}_{\text{fft}}|)\cdot\text{sign}(\mathbf{C}_{\text{lora}})-\mathbf{C}_{\text{fft}}$，把恢复后的强度封顶到二者最大值；否则保持 $\mathbf{C}_{\text{lora}}$。
-    - 设计动机：作者第 3.4 节发现 head clusters 的 LoRA-FFT 方向有时强同向（叠加爆掉）、有时强反向（互相抵消），无统一方向。所以一个"无差别还原"必败；CASA 的精髓是**只在同向高风险位做封顶、其他位老老实实补偿 FFT 漂移**——既不让生成主干道被冲掉、又最大限度恢复 LoRA 风格。
+为什么不能无差别还原 LoRA？因为作者发现 head clusters 上 LoRA 与 FFT 的方向有时强同向（叠加爆掉、过激活）、有时强反向（互相抵消、失效），没有统一方向。CASA 据此分两套规则。非主导区 $\mathcal{D}=0$ 直接补偿 FFT 漂移：$\mathbf{C}_{\text{casa}}(i,j)=\mathbf{C}_{\text{lora}}(i,j)-\mathbf{C}_{\text{fft}}(i,j)$，使最终路由 $\mathbf{C}_{\text{fft}}+\mathbf{C}_{\text{casa}}=\mathbf{C}_{\text{lora}}$ 完美恢复 LoRA。主导区 $\mathcal{D}=1$ 则先算过激活风险 $\mathbf{S}(i,j)=\mathbf{E}(i,j)\cdot\text{Context}(i,j)$，其中 $\mathbf{E}=\max(0,\mathbf{C}_{\text{lora}}\mathbf{C}_{\text{fft}})$ 只在同向时非零、$\text{Context}$ 是该 cluster 对的 cosine 相似度提供集体方向证据；风险 $\mathbf{S}$ 超分位 $q_{\text{act}}$ 就用 $\mathbf{C}_{\text{casa}}(i,j)=\max(|\mathbf{C}_{\text{lora}}|,|\mathbf{C}_{\text{fft}}|)\cdot\text{sign}(\mathbf{C}_{\text{lora}})-\mathbf{C}_{\text{fft}}$ 把恢复后的强度封顶到二者最大值，否则保持 $\mathbf{C}_{\text{lora}}$。精髓就是"只在同向高风险位封顶、其余位老老实实补 FFT 漂移"——既不冲掉生成主干道，又最大限度恢复 LoRA 风格。值得注意的是这套仲裁必须在 cluster 这一级做：把粒度降到单 entry 性能掉很多，因为 plateau 内奇异方向可互换、分开处理会破坏 cluster 内协同。
 
 ### 损失函数 / 训练策略
 **无任何训练、无任何数据**。整个 CASA 是闭式权重操作：SVD → 路由投影 → cluster → 阈值仲裁 → 反投影 → 截断 SVD 回低秩 $(\mathbf{B}',\mathbf{A}')$。超参只有 $\tau,q_{\text{dom}},q_{\text{act}}$ 三个分位阈值，按 cluster/路由分布自适应取，无需调。

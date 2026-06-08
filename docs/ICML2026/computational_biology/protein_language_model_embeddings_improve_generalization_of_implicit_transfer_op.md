@@ -38,36 +38,25 @@ tags:
 **核心 idea**：把 pLM 残基嵌入 $e_{\text{seq}}=\phi_{\text{pLM}}(S)$ 作为条件灌进 TITO 的转移密度网络，等价于让粗粒化 $C_\alpha$ 模型「看着进化先验来积分动力学」，从而用更少的轨迹数据撑起更强的跨蛋白泛化。
 
 ## 方法详解
-PLaTITO 在 ITO 框架内做条件扩展：以蛋白当前 $C_\alpha$ 主链 $x_t\in\mathbb{R}^{3L}$、氨基酸序列 $S$、温度 $T$、时间步长 $\Delta t$ 为条件，学长时间转移密度 $p(x_{t+\Delta t}|x_t,\Delta t,S,T)$，再在外面挂三个可插拔的辅助嵌入。
 
 ### 整体框架
-输入：来自 mdCATH 的成对粗粒化构象 $(x_t,x_{t+\Delta t})$、序列 $S$、温度 $T$、时间间隔 $\Delta t$。
-输出：通过迭代 roll-out 从 $\mathcal{N}(0,I)$ 出发、用学到的速度场 ODE 积分得到 $x_{t+\Delta t}$，再把若干次 roll-out 拼起来作为长时间轨迹。
-中间分两阶段：先用条件网络 $f_c$ 从 $(x_t,\Delta t,S,T,e_{\text{seq}},e_{\text{struct}},A_{LLM})$ 提一个残基级条件表示 $c\in\mathbb{R}^{L\times d}$；再用速度网络 $f_v(z_s,s,c)$ 在流匹配时间 $s\in[0,1]$ 上预测速度 $v\in\mathbb{R}^{3L}$。两个网络都是 Proteina 风格的非等变 Transformer，残基-对表示用作 attention bias。
+PLaTITO 要解决的是「如何用更少的轨迹数据训出能泛化到全新蛋白的粗粒化 MD 生成器」。它不直接学 Boltzmann 分布，而是沿用隐式转移算子（ITO/TITO）路线，把问题转成：给定当前 $C_\alpha$ 主链 $x_t\in\mathbb{R}^{3L}$、序列 $S$、温度 $T$、时间步长 $\Delta t$，学长时间转移密度 $p(x_{t+\Delta t}|x_t,\Delta t,S,T)$，再迭代 roll-out 拼成长轨迹。核心改动是在条件分支挂上三条可插拔的辅助嵌入（pLM 序列嵌入、结构嵌入、LLM 注释），让小模型在没见过某蛋白轨迹时就借到进化/几何先验。
 
-训练目标用 rectified-flow 线性插值 $z_s=s\,z_1+(1-s)\,z_0,\ z_0\sim\mathcal{N}(0,I),\ z_1=x_{t+\Delta t}$，最小化条件流匹配损失
-$\mathcal{L}(\theta)=\mathbb{E}_{x_t,x_{t+\Delta t},s,z_0}\|v^{\theta}(z_s;s,x_t,\Delta t,S,T)-(x_{t+\Delta t}-z_0)\|^2$。
-推理时用 ODE 把噪声推到下一构象，迭代 1000 步×$\Delta t=1\,\mathrm{ns}$ 得到 1 µs 轨迹。
+网络分两阶段：条件网络 $f_c$ 先从 $(x_t,\Delta t,S,T,e_{\text{seq}},e_{\text{struct}},A_{LLM})$ 提一个残基级条件表示 $c\in\mathbb{R}^{L\times d}$；速度网络 $f_v(z_s,s,c)$ 再在流匹配时间 $s\in[0,1]$ 上预测速度 $v\in\mathbb{R}^{3L}$。两者都是 Proteina 风格的非等变 Transformer，残基-对表示用作 attention bias。推理时从 $\mathcal{N}(0,I)$ 出发用学到的速度场做 ODE 积分得到 $x_{t+\Delta t}$，迭代 1000 步、每步 $\Delta t=1\,\mathrm{ns}$ 即得 1 µs 轨迹。
 
 ### 关键设计
 
-1. **粗粒化 $C_\alpha$-only TITO 主干 + 流匹配长步长积分**:
+**1. 粗粒化 $C_\alpha$-only TITO 主干 + 流匹配长步长积分：用时间自相关换数据效率**
 
-    - 功能：把单体蛋白折叠成 $L\times 3$ 的残基坐标序列，直接学跨数纳秒/数十纳秒的长步转移密度，绕过飞秒级积分。
-    - 核心思路：抛弃侧链只保留 $C_\alpha$，让 4482 个 mdCATH 域全部能塞进同一架构；时间步 $\Delta t$ 作为可学习嵌入和序列/温度一起拼进残基表示，使一个网络能在多个时间尺度上共享参数。采样时用 rectified-flow 的常速度场 $u_s=z_1-z_0$，ODE 步长由 $s$ 控制而非物理时间，从而把动力学采样转成低噪声步数的生成问题。
-    - 设计动机：BE 直接采 $p(x|S,T)$ 抛掉了 MD 的时间自相关结构，等于浪费了轨迹里最贵的信号；TITO 利用相邻帧的相关性能从同一段轨迹里挖出大量 $(x_t,x_{t+\Delta t})$ 训练对，使 3 M 参数的小模型在等量数据下就追平 BE。
+针对的痛点是 BE 路线（如 BioEmu）直接采 $p(x|S,T)$ 抛掉了 MD 的时间自相关结构，等于浪费了轨迹里最贵的信号，只能靠海量数据/参数撑泛化。PLaTITO 抛弃侧链只保留 $C_\alpha$，让 4482 个 mdCATH 域全塞进同一架构；时间步 $\Delta t$ 作为可学习嵌入与序列/温度一起拼进残基表示，使一个网络能在纳秒到微秒多个时间尺度上共享参数。训练用 rectified-flow 线性插值 $z_s=s\,z_1+(1-s)\,z_0$（$z_0\sim\mathcal{N}(0,I),\ z_1=x_{t+\Delta t}$），最小化条件流匹配损失 $\mathcal{L}(\theta)=\mathbb{E}_{x_t,x_{t+\Delta t},s,z_0}\|v^{\theta}(z_s;s,x_t,\Delta t,S,T)-(x_{t+\Delta t}-z_0)\|^2$，采样时常速度场 $u_s=z_1-z_0$ 的 ODE 步长由 $s$ 控制而非物理时间，把动力学采样转成低噪声步数的生成问题。之所以有效，是因为 TITO 能从相邻帧的相关性里挖出大量 $(x_t,x_{t+\Delta t})$ 训练对，使 3 M 参数的小模型在等量数据下就追平 BE。
 
-2. **pLM 残基嵌入作为零开销序列先验**:
+**2. pLM 残基嵌入作为零开销序列先验：补上粗粒化模型缺的进化/化学信息**
 
-    - 功能：把 ESM Cambrian (300 M 用于 PLaTITO, 6 B 用于 PLaTITO-19M) 的残基级嵌入 $e_{\text{seq}}\in\mathbb{R}^{L\times d_{\text{pLM}}}$ 注入条件网络 $f_c$。
-    - 核心思路：嵌入在训练前一次性 forward 出来缓存，训练/推理都不再调用 pLM；嵌入按残基拼接进 $f_c$ 的 residue representation，再经 attention 与坐标信息融合，让网络在还没看到该蛋白任何 MD 轨迹时就已经「知道」哪些残基倾向 β-sheet、哪些残基容易暴露、哪段是 disordered loop。
-    - 设计动机：pLM 嵌入已被 Meier/Frazer 等证明隐含变体稳定性与功能信息，这正是粗粒化 $C_\alpha$ 模型最缺的化学/进化先验；做成可插拔的条件通道而不是替换主干，保留了 TITO 的轻量性，使测试时计算几乎不变（$\le 5\%$ overhead），却把离群蛋白的 MAE 从 1.068 拉到 0.949。
+粗粒化 $C_\alpha$ 模型只看坐标，缺「这个残基长什么样」的先验，见到全新序列时泛化吃力。PLaTITO 把 ESM Cambrian（PLaTITO 用 300 M、PLaTITO-19M 用 6 B）的残基级嵌入 $e_{\text{seq}}\in\mathbb{R}^{L\times d_{\text{pLM}}}$ 注入条件网络 $f_c$：嵌入在训练前一次性 forward 出来缓存，训练/推理都不再调用 pLM，按残基拼进 $f_c$ 的 residue representation 后经 attention 与坐标融合，让网络还没看到该蛋白任何 MD 轨迹时就已「知道」哪些残基倾向 β-sheet、哪些容易暴露、哪段是 disordered loop。pLM 嵌入已被 Meier/Frazer 等证明隐含变体稳定性与功能信息，正是粗粒化模型最缺的那块先验；做成可插拔条件通道而非替换主干，保留了 TITO 的轻量性，使测试时计算几乎不变（$\le 5\%$ overhead），却把离群蛋白的 MAE 从 1.068 拉到 0.949。
 
-3. **结构嵌入与 LLM 注释作为对照实验，定位有用先验的边界**:
+**3. 结构嵌入与 LLM 注释作为对照实验：定位有用先验的边界**
 
-    - 功能：在 PLaTITO 之外再挂两条辅助条件——来自 Proteina 60 M 的结构嵌入 $e_{\text{struct}}=\phi_{\text{PSM}}(x_t)$，以及来自 DeepSeek Reasoner 的「该蛋白单独模拟是否合理」的二元判断 $S_{LLM}$ 和置信度 $C_{LLM}$。
-    - 核心思路：结构嵌入必须 online 计算（依赖当前 $x_t$），所以选了相对轻的 60 M 模型；LLM 注释则把数据集质量的元信息（域长、亚细胞定位、已知功能、是否缺结合伙伴）prompt 给 LLM，把回答作为额外条件嵌入。
-    - 设计动机：作者明确想分离「序列先验」「几何先验」「数据质量先验」三种增益来源。结果显示前两者互补（PLaTITO+Struct 全面小幅提升），而 LLM 注释反而掉点，揭示 prompt 工程目前还无法从粗糙元数据里提取出比模型自身归纳偏置更强的信号。
+为分离「序列先验／几何先验／数据质量先验」三种增益来源，作者在 PLaTITO 之外再挂两条辅助条件做对照。一是来自 Proteina 60 M 的结构嵌入 $e_{\text{struct}}=\phi_{\text{PSM}}(x_t)$——因为它必须 online 计算（依赖当前 $x_t$），所以特意选了相对轻的 60 M 模型控成本。二是来自 DeepSeek Reasoner 的「该蛋白单独模拟是否合理」的二元判断 $S_{LLM}$ 和置信度 $C_{LLM}$——把数据集质量的元信息（域长、亚细胞定位、已知功能、是否缺结合伙伴）prompt 给 LLM，回答作为额外条件嵌入。结果显示序列与几何先验互补（PLaTITO+Struct 三项指标小幅一致提升），而 LLM 注释反而掉点，揭示当前 prompt 工程还无法从粗糙元数据里提取出比模型自身归纳偏置更强的信号。
 
 ### 损失函数 / 训练策略
 仅有的训练目标就是上面的条件流匹配回归损失。训练数据为 mdCATH 中 $\le 200$ 残基的 4471 个域（按 40% 序列相似度阈值剔除与测试集相近的蛋白），合计约 56 ms 聚合轨迹；按温度和时间步长随机均匀采样，多温度训练让模型隐式学到温度依赖动力学。所有模型在单张 A100 80 GB 上训 1100 GPU 小时；PLaTITO-19M 用更大的 ESM Cambrian 6 B 嵌入加 19 M 主干参数，但保持同样的数据和计算预算。

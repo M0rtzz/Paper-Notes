@@ -44,23 +44,29 @@ tags:
 
 ### 关键设计
 
-1. **双向 IR + 公式占位符**:
+**1. 双向 IR + 公式占位符：把 PDF 拆成翻译能读、重建能闭环的结构化中间层。**
 
-    - 功能：把 PDF 解构成一个保留全部 spatial + stylistic 元数据的结构化 IR；解析公式时三步走——(a) script detection unit 看相邻字符 font-size 方差判断上下标；(b) offset calculation unit 基于基线坐标算 fragment offset；(c) vector reconstruction unit 用 offset 重建 vector formula。这些非翻译片段在 NLP 阶段全部 mask 成占位符，翻译完成后按 IR 精确还原。
-    - 核心思路：传统 LLM 一看到 $\int$ 或上下标就容易乱译/乱删，破坏数学符号；本文把所有非语言内容（公式、inline image、特殊字符）在 IR 层就标 placeholder，让 LLM 只看「文本流 + 占位符 ID」，翻译后再按 IR 精确填回。和单向 parser（Doc2X / MinerU）不同，本 IR 同时保留「让翻译能跑」和「让重建能闭环」两套元数据。
-    - 设计动机：公式破坏是 PDF 翻译第一杀手；显式 IR 解决了「翻译时不能动公式 vs 还原时要把公式放回原位」的根本冲突，是整个系统能 work 的基石。
+公式破坏是 PDF 翻译的第一杀手——传统 LLM 一看到 $\int$ 或上下标就容易乱译、乱删，把数学符号搅坏；而单向 parser（Doc2X / MinerU）虽能把公式抠出来，却只能 PDF→Markdown 单向走，回不到原版式。BabelDOC 的解法是构造一个同时携带 spatial 坐标、stylistic 属性和 semantic 内容的 IR，每个页面元素都挂着自己的 bbox 与字体样式，这样既能喂给翻译、又能闭环重建。
 
-2. **语义引擎：术语提取 + 跨页 + glossary 约束**:
+公式的处理在 IR 层分三步完成：script detection unit 看相邻字符的 font-size 方差判断上下标，offset calculation unit 基于基线坐标算出每个 fragment 的偏移，vector reconstruction unit 再用这些 offset 把矢量公式重建出来。识别出的公式连同 inline image、特殊字符等所有非语言内容，在进入 NLP 阶段前全部 mask 成占位符，LLM 眼里只剩「文本流 + 占位符 ID」，翻译完成后再按 IR 把占位符精确填回原位。正是这个显式 IR 化解了「翻译时不能动公式」与「还原时要把公式放回原位」的根本冲突，是整个系统能 work 的基石。
 
-    - 功能：翻译开始前扫一遍 IR 抽取领域术语 → 构建动态 glossary（也可接受用户上传的）→ 在 LLM prompt 里强制约束术语翻译；同时根据 IR 里的 reading order 把跨栏/跨页的逻辑段落先拼合再翻，避免长句被布局切断后语义断裂。
-    - 核心思路：常规 CAT/MT 是 per-paragraph 翻译，长文档里同一个术语会有多种译法（如「Current Transformation Matrix」一会翻成「当前变换矩阵」一会「现行变换矩阵」）；本文用 IR 当 document-level 视图，glossary 显式注入 prompt 后所有 paragraph 共享同一约束；跨栏拼段则用 IR 的 spatial + reading order 信息识别「这一栏底部的句子继续到下一栏顶部」。
-    - 设计动机：术语一致性与上下文连贯是技术文档可读性的关键，PDFMathTranslate 这种 paragraph-level pipeline 没法做；通过 IR 提供 document-level 视图，把这些干预变成 prompt-engineering 而非架构改造，模块可独立替换。
+**2. 语义引擎：用 document-level 视图统一术语、拼回被布局切碎的句子。**
 
-3. **自适应排版引擎**:
+常规 CAT/MT 是 per-paragraph 翻译，长文档里同一个术语会漂出多种译法——「Current Transformation Matrix」一会「当前变换矩阵」、一会「现行变换矩阵」；长句被分栏一切，语义也断在栏与栏之间。BabelDOC 把 IR 当作整篇文档的全局视图：翻译开始前先扫一遍 IR 抽取领域术语，构建一份动态 glossary（也可接受用户上传），再把它显式注入 LLM prompt，让所有 paragraph 共享同一套术语约束；同时利用 IR 里的 reading order，把「这一栏底部的句子继续到下一栏顶部」这类跨栏/跨页逻辑段落先拼合再翻。
 
-    - 功能：英→西语之类的翻译普遍扩张文本长度（10–30%），原 bbox 会溢出。本文用迭代二分式搜索找出最小可行的局部缩放因子：从 $\gamma = 1.0$ 起，每次检查翻译文本是否在原 bbox 内，溢出就 $\gamma \leftarrow \gamma - 0.05$（或 0.10）重排，直到不溢出或触底（典型可到 $\gamma = 0.85$）。
-    - 核心思路：在 IR 给的 bbox 约束上做 per-paragraph 局部缩放，而非全局统一缩放——这样长段落缩、短段落不动，整体视觉不会一坨。和 DeepL Document 那种「随便往里塞、溢出就重叠」相比，自适应缩放让 layout fidelity 大幅好转。
-    - 设计动机：跨语言翻译的「text expansion」是 layout-preserving translation 的最大障碍，没有局部缩放就只能要么破坏布局要么砍内容；本文用最简单的迭代搜索给出可工程化的解，ablation 显示去掉自适应排版 LF 从 4.5 掉到 3.0。
+这套干预之所以能做，关键在于 IR 提供了 PDFMathTranslate 那种 paragraph-level pipeline 拿不到的 document-level 视图，于是术语一致、上下文连贯都变成了 prompt-engineering 而非架构改造，每个模块都能独立替换升级。
+
+**3. 自适应排版引擎：用最简单的迭代搜索吸收跨语言的文本膨胀。**
+
+英→西之类的翻译普遍把文本撑长 10–30%，硬塞回原 bbox 必然溢出，这正是 layout-preserving translation 最大的障碍。BabelDOC 没有上复杂的 layout 优化或学习，而是在 IR 给定的 bbox 约束上做 per-paragraph 的局部缩放：从 $\gamma = 1.0$ 起，每轮检查翻译文本是否落在原 bbox 内，溢出就 $\gamma \leftarrow \gamma - 0.05$（或 $0.10$）重排，直到不溢出或触底（典型可缩到 $\gamma = 0.85$）。
+
+之所以是局部而非全局统一缩放，是为了让长段落缩、短段落不动，整页视觉不会糊成一坨——和 DeepL Document 那种「随便往里塞、溢出就重叠」相比，自适应缩放把 layout fidelity 大幅拉高，ablation 里去掉它 LF 直接从 4.5 掉到 3.0。
+
+### 一个完整示例：一页双栏论文怎么被翻译并锚回原版式
+
+拿一页带行内公式的双栏英文论文页走一遍：Decoupled IR Parser 先把它解析成 IR，左右两栏的每个字符、文本行、graphic block 都带上 bbox 和字体属性；Formula & Multimodal Processing 扫到正文里的 $\sum_{i=1}^{n} x_i$ 和一张配图，把它们 mask 成 `[FORMULA_1]`、`[IMG_1]` 占位符。
+
+进入 Semantic Engine 后，系统先抽出本页术语建 glossary，再根据 reading order 发现左栏末尾那句话其实接到右栏开头，于是把这两段拼成一个完整逻辑段一起翻译，prompt 里带上 glossary 约束保证术语统一；LLM 翻完的西语文本比原文长了约 20%，并保留了 `[FORMULA_1]`、`[IMG_1]` 占位符。Adaptive Typesetting 接手，发现这段塞不进原 bbox，于是 $\gamma$ 从 1.0 逐步降到 0.85 才放下；最后 Nested Structure & CTM Reconstruction 按嵌套栈和变换矩阵逐层重渲染，把占位符还原成原来的公式和图，输出一页版式几乎不变、内容已翻译的西语 PDF。
 
 ### 损失函数 / 训练策略
 本文是系统/工程论文，无训练目标。LLM 用现成模型 + role-play prompt，OCR / layout detection 可热插（DocLayout-YOLO、YOLOv10）。

@@ -40,27 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Pipeline 完全 encoder-only：每帧 $\boldsymbol{x}_k$ 过共享 CNN encoder $E_\phi$ 得到标量 latent $\hat{z}_k$；用**中心差分** stencil 计算一阶/二阶导数 $\hat{z}'_k, \hat{z}''_k$；把它们代入 ODE 残差 $r_k = \hat{z}''_k + \gamma_1 \hat{z}'_k + \gamma_0 \hat{z}_k$ 求平方和作为数据拟合 loss $\mathcal{L}_{\mathrm{ODE}}$；同时对 $\{\hat{z}_k\}$ 施加方差下限正则 $\mathcal{L}_{\mathrm{var}}$ 防 latent 塌缩；最后通过"UNIQUENESS CHECK"诊断盒子在线判定当前 clip 是否满足 coverage 条件，给出 CERTIFIED 标签。输入：$T+1$ 帧视频；输出：$(\hat\gamma_1, \hat\gamma_0)$ + 是否被认证为可识别。
+整套 pipeline 完全 encoder-only，要回答的核心问题不是"怎么把视频拟合好"，而是"什么条件下数据能把 latent 坐标系钉死为真物理状态的仿射函数、从而保证恢复的 $(\hat\gamma_1,\hat\gamma_0)$ 唯一"。运行时每帧 $\boldsymbol{x}_k$ 过共享 CNN encoder $E_\phi$ 得到标量 latent $\hat{z}_k$，用中心差分算出 $\hat{z}'_k, \hat{z}''_k$，代入 ODE 残差 $r_k = \hat{z}''_k + \gamma_1 \hat{z}'_k + \gamma_0 \hat{z}_k$ 做最小二乘拟合 $(\hat\gamma_1,\hat\gamma_0)$，再叠一个方差下限正则防止 latent 塌缩；与训练并行的一个"UNIQUENESS CHECK"诊断盒子在线判定当前 clip 是否满足 level-set slope coverage，给出 CERTIFIED 标签。理论侧（coverage 几何条件）与估计侧（离散差分 + 方差正则 + 误差界）是同一套思路的两面。
 
 ### 关键设计
 
-1. **Level-Set Slope Coverage 几何条件（核心理论）**:
+**1. Level-Set Slope Coverage：把"latent 唯一性"翻译成轨迹上的几何条件**
 
-    - 功能：把"latent 重参化 $f$ 被钉死为仿射"这件抽象事翻译成可在原始轨迹上验证的几何条件。
-    - 核心思路：定义在开区间 $U \subset \mathcal{R}_z$ 上轨迹有 coverage——对每个 level $u \in U$，存在至少三个时刻 $t_1,t_2,t_3$ 使 $z(t_i)=u$ 且 $z'(t_1), z'(t_2), z'(t_3)$ **两两不同**。定理 4.2 证明：在 state consistency 假设 $\hat{z}(t)=f(z(t))$ 下，若同一 $f$ 让 $z$ 与 $\hat{z}$ 都满足二阶 ODE，则 coverage 强制 $f$ 在 $U$ 上仿射，于是 $(\eta_1,\eta_0)=(\gamma_1,\gamma_0)$。
-    - 设计动机：现有 decoder-free 工作都没回答"latent 坐标系唯一性"问题；本文用一个**纯几何**条件给出答案——不依赖具体网络结构，只看轨迹本身。配套定理 4.3 给出"欠阻尼 + 窗口长度 $L \geq 2P=4\pi/\sqrt{\gamma_0-\gamma_1^2/4}$ 单条轨迹就够"的充分条件，定理 4.5 给出"临界/过阻尼/无阻尼单轨迹必失败"（前者最多 2 个交点、后者只有 $\pm$ 两种速度），定理 4.6 给出"三条带不同速度的轨迹就够"。这套结果第一次刻画了不同阻尼区的**最小数据需求**。
+decoder-free 方法最深的洞是 latent 坐标系只定义到一个任意 $C^2$ 重参化 $f$ 为止——即使 ODE residual 降到 0，恢复的参数也未必是真值。本文的破局点是把"$f$ 是否被迫成为仿射"这件抽象事翻译成一个能在原始轨迹上画出来验证的几何条件：称轨迹在开区间 $U \subset \mathcal{R}_z$ 上满足 coverage，当且仅当每个 state level $u \in U$ 都被至少三个时刻 $t_1,t_2,t_3$ 经过，且对应的瞬时速度 $z'(t_1), z'(t_2), z'(t_3)$ 两两不同。定理 4.2 证明：在 state consistency 假设 $\hat{z}(t)=f(z(t))$ 下，若同一个 $f$ 让 $z$ 与 $\hat{z}$ 都满足二阶 ODE，则 coverage 强制 $f$ 在 $U$ 上仿射，于是 $(\eta_1,\eta_0)=(\gamma_1,\gamma_0)$。直觉上，二阶 ODE 在 $(z,z')$ 平面上是 2 维子流形，要反推出仿射映射必须有第三个独立维度，而速度多样性恰好提供它——这也是"为什么需要 3 个速度"的物理来源。
 
-2. **中心差分残差 + 方差下限正则**:
+围绕这个条件，作者刻画了不同阻尼区的最小数据需求：定理 4.3 证明欠阻尼下只要窗口长度 $L \geq 2P=4\pi/\sqrt{\gamma_0-\gamma_1^2/4}$，单条轨迹自动 coverage-positive；定理 4.5 证明临界/过阻尼/无阻尼区单条轨迹必失败（前两者每个 level 最多 2 个交点、后者只有 $\pm$ 两种速度）；定理 4.6 则证明此时三条带不同速度的轨迹就足够。整套结果第一次给 encoder-only physics-from-video 提供了"单视频够 vs. 必须三条"的临界刻画，且完全不依赖网络结构。
 
-    - 功能：把连续时间 ODE 残差落到离散视频帧上同时防止 latent 塌缩到 $\hat{z}_k \equiv 0$ 的平凡解。
-    - 核心思路：用中心差分 $\hat{z}'_k = (\hat{z}_{k+1}-\hat{z}_{k-1})/(2\Delta t)$ 和 $\hat{z}''_k = (\hat{z}_{k+1}-2\hat{z}_k+\hat{z}_{k-1})/\Delta t^2$ 取代 LPFV 的 Euler/单边差分，把残差的 $\Delta t$ 偏置从一阶降到二阶。方差正则定义为 $\mathcal{L}_{\mathrm{var}}=(\max\{0, \tau-\sqrt{\widehat{\mathrm{Var}}(\hat{z})+\varepsilon}\})^2$，只在 latent std 低于阈值 $\tau$ 时罚——不强制 latent 分布形状，只压住下限。
-    - 设计动机：单纯 $\mathcal{L}_{\mathrm{ODE}}$ 有 $\hat{z}\equiv 0$ 的退化最优解。LPFV 用 KL-to-$\mathcal{N}(0,1)$，但非振荡区轨迹是强烈非高斯/非平稳的，KL 会扭曲表示。方差下限只管 scale 不管 shape，恰好对应有限样本误差界里"设计矩阵最小特征值 $\psi_{\min}>0$"这个条件——理论上引理 D.1 证明方差下限直接给出可检查的 $\psi_{\min}$ 下界。
+**2. 中心差分残差 + 方差下限正则：把连续理论落到离散噪声视频上**
 
-3. **有限样本非渐近误差界**:
+光有 $\mathcal{L}_{\mathrm{ODE}}$ 会被 $\hat{z}_k \equiv 0$ 的退化最优解吃掉，且连续时间残差要离散化才能在视频帧上算。本文一是用中心差分 $\hat{z}'_k = (\hat{z}_{k+1}-\hat{z}_{k-1})/(2\Delta t)$、$\hat{z}''_k = (\hat{z}_{k+1}-2\hat{z}_k+\hat{z}_{k-1})/\Delta t^2$ 取代 LPFV 的 Euler/单边差分，把残差的离散偏置从 $O(\Delta t)$ 降到 $O(\Delta t^2)$；二是设计方差下限正则 $\mathcal{L}_{\mathrm{var}}=(\max\{0, \tau-\sqrt{\widehat{\mathrm{Var}}(\hat{z})+\varepsilon}\})^2$，只在 latent std 跌破阈值 $\tau$ 时才罚，不强制分布形状、只压住 scale 下限。
 
-    - 功能：在离散采样 + 有噪声 + encoder 非严格仿射的现实场景下给出 $\|\hat\eta-\gamma\|_2$ 的非渐近上界，把三个误差源拆开。
-    - 核心思路：定理 4.8 在 $1-\delta$ 置信下给出 $\|\hat\eta-\gamma\|_2 \leq \frac{C_1\sigma}{\psi_{\min}}\sqrt{\log(3/\delta)/(T-1)} + \frac{C_2\sigma^2}{\psi_{\min}} + \frac{C_3\Delta t^2}{\psi_{\min}} + E_{\mathrm{enc}}$。四项分别是：sub-Gaussian 噪声的统计误差 $O(\sqrt{\log/T})$、噪声二阶项、中心差分离散偏置 $O(\Delta t^2)$、encoder 偏离仿射的确定性 mismatch $E_{\mathrm{enc}}$。
-    - 设计动机：让用户能直接读出"想把误差压到多少需要多长视频/多小 $\Delta t$/多准的 encoder"。多 clip 池化版本（附录 B.2）把 $T-1$ 替换为 $N=\sum_m (T^{(m)}-1)$ 并通过 cross-trajectory 速度多样性同时改善 $\psi_{\min}$，给出"三条短 clip 比一条长 clip 更稳"的定量解释。
+之所以不用 LPFV 的 KL-to-$\mathcal{N}(0,1)$，是因为非振荡区（临界/过阻尼）的轨迹强烈非高斯、非平稳，强行匹配标准正态会扭曲表示——实验里 KL 在这些区把 $\hat\gamma_0$ 估到 6–9，方差下限却仍准。更深的理由是方差下限正好对应有限样本误差界里"设计矩阵最小特征值 $\psi_{\min}>0$"这个关键条件：引理 D.1 证明压住 std 下限就直接给出可检查的 $\psi_{\min}$ 下界，于是"防塌缩"和"统计有效性"被同一个标量约束统一起来。
+
+**3. 有限样本非渐近误差界：把误差拆成可调的几项**
+
+为了让结论在离散采样、有噪声、encoder 非严格仿射的现实场景下可用，定理 4.8 在 $1-\delta$ 置信下给出 $\|\hat\eta-\gamma\|_2 \leq \frac{C_1\sigma}{\psi_{\min}}\sqrt{\log(3/\delta)/(T-1)} + \frac{C_2\sigma^2}{\psi_{\min}} + \frac{C_3\Delta t^2}{\psi_{\min}} + E_{\mathrm{enc}}$。四项分别对应 sub-Gaussian 噪声的统计误差 $O(\sqrt{\log/T})$、噪声二阶项、中心差分离散偏置 $O(\Delta t^2)$、以及 encoder 偏离仿射的确定性 mismatch $E_{\mathrm{enc}}$，让用户能直接读出"想把误差压到多少需要多长视频、多小 $\Delta t$、多准的 encoder"。多 clip 池化版本（附录 B.2）把 $T-1$ 替换为 $N=\sum_m (T^{(m)}-1)$，并通过 cross-trajectory 速度多样性同时改善 $\psi_{\min}$，给"三条短 clip 比一条长 clip 更稳"一个定量解释。
 
 ### 损失函数 / 训练策略
 总目标 $\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{ODE}} + \lambda_{\mathrm{var}} \mathcal{L}_{\mathrm{var}}$，默认 $\lambda_{\mathrm{var}}=1.0$、$\tau=1$、$(\gamma_1,\gamma_0)$ 从 $(1,1)$ 初始化。Encoder 是共享 per-frame CNN，5 个随机种子取均值±std。多 clip 版本对每个 clip 单独算方差正则并平均。

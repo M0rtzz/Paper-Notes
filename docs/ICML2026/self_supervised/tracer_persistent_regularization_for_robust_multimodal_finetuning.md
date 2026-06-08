@@ -48,27 +48,24 @@ TRACER loss = $\mathcal{L}_{\mathrm{MMCL}} + \lambda_{\mathrm{SD}} \mathcal{L}_{
 
 ### 关键设计
 
-1. **Contrastive Target Matrix + 闭式解几何分解**:
+**1. Contrastive Target Matrix + 闭式解几何分解：看清 forgetting 到底发生在哪。**
 
-    - 功能：把对比 finetuning 的非线性优化问题转成 matrix least-squares，得到每种策略的闭式解，从而几何上看清楚 forgetting 发生在哪。
-    - 核心思路：定义 $\mathbf{Y}_{\mathrm{FT}} = \mathbf{W}_T^0 \mathbf{X}_T (n \mathbf{I}_n - \mathbf{J}_n)$（frozen text encoder + centered contrast operator），证明 linearized MMCL loss 等价于 $\min_{\mathbf{W}_I} \frac{1}{2} \|\mathbf{W}_I \mathbf{X}_I - \mathbf{Y}_{\mathrm{FT}}\|_F^2$。Theorem 3.2 给出三种策略的闭式解——Direct FT：$\mathbf{W}_I^0 (I - \mathcal{P}_I) + \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（保留正交，替换平行）；L2-SP：blend all directions（无结构化分解）；Static SD：$\mathbf{W}_I^0 (I - \frac{1}{1+\lambda} \mathcal{P}_I) + \frac{1}{1+\lambda} \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（正交保留 + 任务子空间 convex combination）。
-    - 设计动机：以前"为什么 SD 好"是经验答案，本文证明 SD 在结构上既保正交知识又适应新任务，而 L2 把所有方向都揉成 blend，物理上对应 catastrophic forgetting 在正交子空间也发生。这给"用 SD 而非 L2"的理论依据。
+"自蒸馏为什么能保鲁棒"以前只有经验答案，本文先把对比微调的非线性优化压成一个能解析的形式。定义 $\mathbf{Y}_{\mathrm{FT}} = \mathbf{W}_T^0 \mathbf{X}_T (n \mathbf{I}_n - \mathbf{J}_n)$（冻结 text encoder 加中心化对比算子），证明线性化后的 MMCL loss 等价于矩阵最小二乘 $\min_{\mathbf{W}_I} \frac{1}{2} \|\mathbf{W}_I \mathbf{X}_I - \mathbf{Y}_{\mathrm{FT}}\|_F^2$。Theorem 3.2 随之给出各策略的闭式解，几何含义一目了然：Direct FT 解为 $\mathbf{W}_I^0 (I - \mathcal{P}_I) + \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（正交子空间保留、任务子空间替换）；L2-SP 把所有方向揉成一个 blend（无结构化分解）；Static SD 则是 $\mathbf{W}_I^0 (I - \frac{1}{1+\lambda} \mathcal{P}_I) + \frac{1}{1+\lambda} \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（正交保留 + 任务子空间凸组合）。
 
-2. **WMA teacher：U-shape kernel + bias-free 收敛证明**:
+这套分解直接揭示了 forgetting 的物理位置：SD 在结构上既保住正交子空间的预训练知识、又只在任务子空间适应新任务，而 L2 把所有方向都混在一起，等于让 catastrophic forgetting 蔓延到本该保留的正交子空间。这就是"该用 SD 而非 L2"的理论依据。
 
-    - 功能：解决 EMA teacher 的 collapse 和 static SD 的 anchor bias 两个问题。
-    - 核心思路：WMA teacher 是 student 整条 trajectory 的加权平均，kernel $\kappa(\tau)$ 用 Beta(0.5, 0.5) U-shape——既给初始 checkpoint（保 robust 先验）也给末期 checkpoint（保 task adaptation）权重。$\tau_k = (k + 0.5) / (T + 1) \in (0, 1)$ 严格在端点内避免 Beta 发散。在线递推 $\omega_t = \kappa(\tau_t) / \sum_{j=0}^t \kappa(\tau_j)$；teacher $\mathbf{W}_{\mathrm{Teacher}}^t = (1 - \omega_t) \mathbf{W}_{\mathrm{Teacher}}^{t-1} + \omega_t \mathbf{W}_I^t$。Theorem 3.4 证明 student 在任务子空间内收敛到 $\mathbf{W}_{\mathrm{FT}}^\star \mathcal{P}_I$（minimum-norm 任务解），且保留正交分量。
-    - 设计动机：EMA $\omega_t = (1-\alpha)$ 常数 → teacher 跟 student 指数收敛，gap 消失；static SD $\omega_t = 0$ for $t > 0$ → bias 永不消除。WMA 的 U-shape 让"早期 anchor"和"近期 anchor"都有非零权重，finite-horizon 内 teacher-student gap 保持有意义大小，同时 trajectory-weighted 平均能 bias-free 收敛。这是理论与设计的完美对应。
+**2. WMA teacher：U 形 kernel 同时治好 EMA collapse 和 static anchor bias。**
 
-3. **多视角 distillation 损失 $\mathcal{L}_{\mathrm{SD-WMA}}$**:
+自蒸馏要持续起作用，teacher 必须既不塌缩又不带偏。EMA teacher 的更新权重是常数 $\omega_t = 1-\alpha$，teacher 会指数地追上 student，训练后期 gap 收敛到 0、正则化力消失——偏偏这是 OOD 最脆弱的阶段；static teacher 锚死在初始权重（$\omega_t = 0$）虽不塌缩，却永远偏向 init、收不到任务最优。WMA 改成对 student 整条 trajectory 做加权平均，kernel $\kappa(\tau)$ 用 Beta(0.5, 0.5) 的 U 形——初始 checkpoint（保鲁棒先验）和末期 checkpoint（保任务适应）都拿到非零权重，$\tau_k = (k + 0.5) / (T + 1) \in (0, 1)$ 严格落在端点内避免 Beta 发散。
 
-    - 功能：让 student 从 WMA teacher 多个角度学习，比单一 feature alignment 更鲁棒。
-    - 核心思路：四个子损失——(i) Feature Distillation：直接对齐 student/teacher embedding；(ii) Contrastive Relational Distillation：匹配 batch-wise similarity 分布；(iii) Interactive Contrastive Learning：跨模态 student-teacher 对齐；(iv) Cross Knowledge Distillation：跨模态 logits 对齐。组合权重在 Appendix C.6 详述。
-    - 设计动机：单一蒸馏（如只 FD）容易让 student 在某一表征维度过拟合 teacher；四视角覆盖"特征/关系/跨模态/logits"四个层级，把"保留预训练知识"的多重含义都涵盖到。Ablation（Section B）显示去掉任一组件 ID/OOD 都掉。
+在线递推 $\omega_t = \kappa(\tau_t) / \sum_{j=0}^t \kappa(\tau_j)$，teacher 更新为 $\mathbf{W}_{\mathrm{Teacher}}^t = (1 - \omega_t) \mathbf{W}_{\mathrm{Teacher}}^{t-1} + \omega_t \mathbf{W}_I^t$。Theorem 3.4 证明 student 在任务子空间内收敛到 minimum-norm 任务解 $\mathbf{W}_{\mathrm{FT}}^\star \mathcal{P}_I$ 同时保留正交分量——"始末双锚"让 finite-horizon 内 teacher-student gap 保持有意义的大小，而 trajectory-weighted 平均又保证无偏收敛，理论和设计严丝合缝。
 
-### Toy 实验：MNIST + ColoredMNIST
+**3. 多视角 distillation 损失：从四个层级保留预训练知识。**
 
-预训练 MNIST 多模态对比模型，然后在 ColoredMNIST（数字 0-4 95% 红、5-9 95% 蓝的 spurious correlation）上微调。Direct FT 学新任务但 MNIST 准确率从 96.8% 掉到 59.0%（forgetting 37.9%）；L2 Reg forgetting 13.6%；Static SD forgetting 1.8%；Dynamic SD（WMA）forgetting 0.1%——验证理论预测的"几何分解 → forgetting rate"关系。
+单一蒸馏（如只对齐 feature）容易让 student 在某个表征维度上过拟合 teacher，把"保留预训练知识"窄化成"复刻某层激活"。$\mathcal{L}_{\mathrm{SD-WMA}}$ 因此从四个层级一起拉：Feature Distillation 直接对齐 student/teacher embedding，Contrastive Relational Distillation 匹配 batch 内 similarity 分布，Interactive Contrastive Learning 做跨模态 student-teacher 对齐，Cross Knowledge Distillation 对齐跨模态 logits。这四路恰好覆盖"特征 / 关系 / 跨模态 / logits"四个层级，把"保留旧知识"的多重含义都纳进来；消融显示去掉任一路 ID/OOD 都会掉点。
+
+### 一个例子：MNIST → ColoredMNIST 上的遗忘对比
+为了让"几何分解 → 遗忘率"这条理论预测看得见，作者搭了一个可控玩具实验。先在 MNIST 上预训练一个多模态对比模型，再到 ColoredMNIST（数字 0-4 有 95% 概率是红色、5-9 有 95% 概率是蓝色，制造伪相关）上微调，观察微调后原 MNIST 任务掉了多少。结果完全按闭式解的几何排序展开：Direct FT 学会了新任务，但 MNIST 准确率从 96.8% 暴跌到 59.0%（遗忘 37.9%）；L2 Reg 遗忘 13.6%；Static SD 遗忘 1.8%；换上 WMA 的 Dynamic SD 几乎不忘，仅 0.1%。这条 37.9% → 13.6% → 1.8% → 0.1% 的链条，和 Theorem 3.2 里各策略"正交子空间保得有多干净"的排序一一对应。
 
 ## 实验关键数据
 

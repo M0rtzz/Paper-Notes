@@ -46,23 +46,24 @@ MHGraphBench 的流程分为三步：先定义心理健康领域边界，再从 
 在 QA 生成阶段，系统把图事实转为 9 个任务族：Entity Typing、Entity Clustering、Fact Checking、Relation Typing、Relation Prediction、Two-hop Verification、Two-hop Selection，以及两个 evidence-augmented 两跳任务。所有任务都使用 letter-only multiple-choice interface，二分类任务也用 A/B 而非 Yes/No，以减少词面偏置。
 
 ### 关键设计
-1. **PrimeKG 心理健康子图抽取**:
 
-	- 功能：定义一个可复现的心理健康生物医学知识范围。
-	- 核心思路：从 42 个精神疾病 seed 出发抽 1-hop 边，只保留 7 个临床相关关系，并将关系方向固定为 disease→gene/protein、drug→disease、disease→disease 等 schema。disease_disease 这类对称关系额外做字典序去重。
-	- 设计动机：心理健康知识范围太宽，直接问开放题无法验证；KG 子图提供了结构化、可追踪的 gold labels。
+**1. PrimeKG 心理健康子图抽取：把开放的心理健康知识收成一个可复现、可追踪的边界。**
 
-2. **九类 KG-to-QA 任务**:
+心理健康相关知识太宽，直接问开放题根本无法核对答案对错，必须有结构化的 gold labels。本文从 42 个高精度精神疾病 seed 出发，在 PrimeKG 上抽 1-hop seed-touching 边，只保留 7 类临床相关关系（disease_protein、contraindication、indication、off-label use、disease_disease、disease_phenotype_positive、exposure_disease），并把关系方向固定成 disease→gene/protein、drug→disease、disease→disease 等 schema。
 
-	- 功能：分别评估实体识别、关系判断和短链推理。
-	- 核心思路：ET/EC 测实体类型和聚类，FC 测 triple 是否被子图支持，RT 测关系 schema，RP 在 indication / contraindication / off-label use / none 中分类，R1/R2 通过 Drug A→Disease B→Disease C 的二跳结构检查组合推理。
-	- 设计动机：单一准确率容易掩盖能力差异；分任务设计能定位模型到底是“不认识实体”，还是“认识但不会判断关系”。
+方向规范化之后，对 disease_disease 这种对称关系额外做字典序去重、再统一 canonicalization，最终得到 4,621 个唯一 triple、1,847 个实体。这样每一道题的正确答案都能回溯到一条具体的 KG 边，benchmark 因此可复现、可解释，而不是靠人对模型回答主观打分。
 
-3. **覆盖指标与格式可靠性分析**:
+**2. 九类 KG-to-QA 任务：把单一准确率拆成实体识别、关系判断、短链推理三个层次，定位模型到底卡在哪。**
 
-	- 功能：补充平均准确率无法表达的图级知识覆盖，并揭示 letter-only 输出格式对分数的影响。
-	- 核心思路：作者定义实体、关系和 triple coverage。每个 triple 的分数由 head entity correctness、relation correctness、tail entity correctness 平均得到；同时记录模型是否能稳定输出单个合法选项字母。
-	- 设计动机：在多选评测中，低分可能来自知识缺失，也可能来自输出不服从格式；覆盖指标可以从图结构角度重新审视模型强弱。
+一个总准确率很容易掩盖能力差异——模型可能「认识实体却不会判断关系」，但平均分看不出来。本文把图事实自动转成 9 个任务族：Entity Typing / Entity Clustering 测实体类型与聚类，Fact Checking 测某 triple 是否被子图支持，Relation Typing 测关系 schema，Relation Prediction 在 indication / contraindication / off-label use / none 之间分类，Two-hop Verification / Selection 则通过 Drug A→Disease B→Disease C 的二跳结构考组合推理，外加两个 evidence-augmented 两跳任务。
+
+所有任务统一用 letter-only 多选接口，连二分类也用 A/B 而非 Yes/No，以削掉词面偏置。正是这套分层让论文能干净地测出「实体识别接近满分、关系判断和两跳推理明显塌陷」的 recognition-to-judgment gap，而这在单一准确率下是看不见的。
+
+**3. 覆盖指标与格式可靠性分析：补上平均准确率说不清的图级知识覆盖，并把输出格式当成被测能力而非噪声。**
+
+采样题上的平均分有两个盲区：一是它只反映被抽到的题、不代表模型对整张图的掌握；二是多选评测里的低分可能根本不是知识缺失，而是模型吐不出一个合法选项字母。本文为此定义实体、关系、triple 三种 coverage——每个 triple 的得分由 head entity correctness、relation correctness、tail entity correctness 取平均，从图结构角度重新衡量模型强弱。
+
+同时把「能否稳定输出单个可解析选项字母」单独记录为格式可靠性。这一步揭示了 accuracy 排名与 coverage 排名并不一致（某些模型采样题分高、图级覆盖却偏低），也把「输出不服从格式」从被忽略的噪声提升为一项真实的部署风险信号。
 
 ### 损失函数 / 训练策略
 本文不训练模型，而是构建 benchmark 并评测 15 个模型。API 模型温度设为 0、最大 completion 长度 120，并用严格 parser 抽取单个选项字母；本地 Hugging Face 模型采用 forced-choice scoring，通过不同字母表面形式的 log-prob 最大值选答案。benchmark 生成使用固定随机种子 42。

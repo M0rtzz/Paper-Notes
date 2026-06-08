@@ -38,33 +38,28 @@ tags:
 **核心 idea**：把成功攻击轨迹沉淀成动态 memory，再让攻击策略在每轮工具调用时执行 Retrieve-Reflect-Modify，并用终局失败奖励反向强化中间推理步骤。
 
 ## 方法详解
-Evo-Attacker 是一个面向评测和红队的框架。它的重点不是直接生成固定攻击模板，而是把工具返回风险建模为长程决策：什么时候不动、什么时候继续收集上下文、什么时候修改某个工具返回，以及如何让修改在任务上下文中看起来一致。
 
 ### 整体框架
-系统首先形式化 LLM-MAS 为动态图 $\mathcal{G}=(\mathcal{A},\mathcal{E})$，节点是 agent，边是通信通道。每个 agent 在某个时间步可能调用工具，工具调用被表示为 $(id,args,r)$，其中 $r$ 是返回值。
-
-攻击者采用灰盒威胁模型：只控制单个目标 agent 的工具通道，可以拦截该 agent 发出的工具调用和原始返回，并在预算 $B$ 内把部分返回替换成扰动值。攻击目标是最大化最终系统失败概率 $\mathbb{E}[J(o)]$，其中 $J(o)=1$ 表示任务结果失败。
-
-Evo-Attacker 包含三阶段。第一阶段构造 Attack Memory，收集成功导致系统失败的攻击轨迹。第二阶段做 memory-augmented attack，每轮根据当前工具调用和历史交互检索相似经验，反思是否适合干预，再决定是否修改。第三阶段用 Attack-Flow GRPO 优化检索、反思、修改这条推理链。
+Evo-Attacker 是个面向红队评测的框架，核心立场是不去手写固定攻击模板，而把"工具返回该不该被污染"当成一个长程决策问题——什么时候按兵不动、什么时候继续收集上下文、什么时候动手改某个工具返回、改成什么样才在任务上下文里不露馅。它先把 LLM-MAS 形式化成动态图 $\mathcal{G}=(\mathcal{A},\mathcal{E})$（节点是 agent、边是通信通道），每次工具调用记成 $(id,args,r)$、$r$ 是返回值。攻击者只是个灰盒 adversary：仅控制单个目标 agent 的工具通道，能拦截它发出的调用和原始返回，并在干预预算 $B$ 内把部分返回替换成扰动值，目标是最大化系统最终失败概率 $\mathbb{E}[J(o)]$（$J(o)=1$ 即任务失败）。整条流水线分三阶段：先探索式地构造 Attack Memory，再在每轮工具调用上做 memory-augmented 的 Retrieve-Reflect-Modify，最后用 Attack-Flow GRPO 把这条推理链端到端优化。
 
 ### 关键设计
-1. **动态 Attack Memory**:
 
-    - 功能：保存跨任务可迁移的成功攻击经验。
-    - 核心思路：在探索阶段，如果某次交互最终导致系统失败，就把上下文 $\mathcal{X}_{ctx}=(\mathcal{G},\mathcal{T},a^*)$ 和攻击轨迹 $T_{trace}$ 存为 memory entry，包括原始工具调用、修改逻辑和扰动返回。
-    - 设计动机：多智能体任务和工具 schema 很多，静态模板泛化差。memory 能把历史漏洞模式转化为可检索经验，帮助攻击者在新场景中快速定位相似风险面。
+**1. 动态 Attack Memory：把成功攻击经验沉淀成可跨任务检索的资产。**
 
-2. **Retrieve-Reflect-Modify 推理流程**:
+多智能体任务和工具 schema 五花八门，静态注入模板换个场景就失效。Evo-Attacker 在探索阶段一旦发现某次交互最终把系统搞失败，就把它的上下文 $\mathcal{X}_{ctx}=(\mathcal{G},\mathcal{T},a^*)$ 连同完整攻击轨迹 $T_{trace}$（原始工具调用、修改逻辑、扰动后的返回）存成一条 memory entry。这样历史漏洞模式就从"一次性成功"变成"可检索经验"，攻击者进到新场景时能直接对照相似的风险面快速定位下手点，而不必每次从零摸索。
 
-    - 功能：让攻击者按上下文决定是否、何时、如何干预。
-    - 核心思路：Retrieve 阶段生成查询并取 top-$k$ 相似 memory；Reflect 阶段判断历史模式是否可迁移，并输出 Attack、Continue 或 NoOp；Modify 阶段选择具体工具调用并生成修改指令。
-    - 设计动机：直接套用历史模板容易不合上下文，随意干预又浪费预算。反思步骤相当于可迁移性和可攻击性的过滤器。
+**2. Retrieve-Reflect-Modify 推理流程：按上下文决定是否、何时、如何干预。**
 
-3. **Attack-Flow GRPO 长程优化**:
+直接套历史模板容易和当前上下文对不上，见缝就插又会把有限预算浪费在低价值步骤上。于是每轮工具调用被拆成三步：Retrieve 生成查询、取 top-$k$ 条相似 memory；Reflect 判断这些历史模式在当前是否可迁移，并输出 Attack / Continue / NoOp 三选一的决策；Modify 才真正选定要动的工具调用、生成具体修改指令。中间这个 Reflect 步相当于一道"可迁移性 × 可攻击性"的过滤闸，让攻击者把预算花在真正关键的时机上。
 
-    - 功能：解决成功/失败只在终局观察到的问题。
-    - 核心思路：把一次攻击 episode 看成攻击者动作和环境回复交错的轨迹，定义奖励 $R(\zeta)=\mathbb{I}(J(o_{sys})=1)+\lambda R_{struct}(\zeta)$，再把这个终局奖励 broadcast 到攻击者生成的 Retrieve/Reflect/Modify tokens 上。GRPO 用同一任务上下文下的 $G$ 个 rollout 计算 group-relative advantage。
-    - 设计动机：工具攻击是否成功往往取决于多轮计划，不能只奖励最后一次修改。把终局信号传播给所有攻击者决策，可以强化早期检索和时机判断。
+**3. Attack-Flow GRPO 长程优化：把终局成败的稀疏信号摊回每一步决策。**
+
+工具攻击成不成功往往要到任务结束才见分晓，只奖励最后一次修改根本训不出"什么时候该检索、什么时候该等"的时机判断。Evo-Attacker 把一次攻击 episode 看成攻击者动作与环境回复交错的轨迹，定义奖励 $R(\zeta)=\mathbb{I}(J(o_{sys})=1)+\lambda R_{struct}(\zeta)$，再把这个终局奖励 broadcast 到攻击者生成的所有 Retrieve / Reflect / Modify token 上；GRPO 用同一任务上下文下的 $G$ 个 rollout 算 group-relative advantage。这样早期的检索和时机选择即便不直接造成失败，也能因为最终成功而被回溯强化，长程 credit assignment 的难题被这条 broadcast 路径接住。
+
+### 一个完整示例：一轮链式 WebShop 攻击
+以一条 Chain 架构下的 WebShop 购物任务为例（干预预算 $B=3$、每轮检索 $k=5$ 条 memory）：目标 agent 先后调用"搜索商品""读取商品详情""比价""下单"等工具。第一次"搜索商品"返回时，攻击者 Retrieve 出几条历史 entry，Reflect 判断此刻信息还不足、贸然改搜索结果容易被后续比价步校验掉，于是输出 NoOp、按兵不动；到"读取商品详情"时，Reflect 认为上下文虽已积累但还不是最关键节点，输出 Continue 继续观察；直到"比价"这一步——它的返回会直接喂给下单决策、且和某条 memory 的漏洞模式高度相似——Reflect 才输出 Attack，Modify 据此把比价返回里的关键字段改成上下文一致却误导的值，让 agent 选错商品、最终任务失败。整个 episode 只花掉预算里的一次干预，却把终局失败信号回传强化了前面两次"忍住不动"的时机判断。
+
+> ⚠️ 上述为依据论文机制的示意走查，具体任务细节以原文为准。
 
 ### 损失函数 / 训练策略
 优化目标只作用在攻击者生成的 token 上，工具返回和 victim agent 消息会被 mask 掉。论文使用 Qwen3-14B 作为 victim agent backbone，Qwen3-8B 作为 Evo-Attacker backbone；干预预算设为 $B=3$，检索 memory 数 $k=5$，GRPO 使用 $G=8$ 个并行 rollout，$\lambda=0.5$，学习率 $1e-6$。初始 attack memory 由 WebShop 训练集 500 个样本和 HumanEval 50 个样本 bootstrap。

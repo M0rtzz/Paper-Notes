@@ -43,23 +43,17 @@ tags:
 论文先在 Needle-in-a-Haystack 任务上定义 copy-paste retrieval score：如果某个 head 在当前步最高注意力落在 needle token 上，且该 token 与即将生成 token 一致，则该 head 的 retrieval score 为 1。基于这个定义，作者逐步验证动态性、不可替代性和 hidden-state correlation。然后在 HotpotQA 上把定义放宽为 reasoning retrieval score，即 attention 分配给 supporting facts 的比例。最后，作者将动态 heads 接入改造版 DRAGIN，在需要检索时只暴露动态 heads 关注的上下文窗口，比较动态、静态和随机策略。
 
 ### 关键设计
-1. **逐步定义动态 retrieval heads**:
+**1. 逐步定义动态 retrieval heads：把检索头从数据集统计改成 token 级行为。**
 
-	- 功能：从 token-level 识别当前生成步真正执行检索的 attention heads。
-	- 核心思路：在 NIAH 中，head $h$ 在 timestep $t$ 的 copy-paste retrieval score 为 $1[i^*\in I_{needle}\land x^t_{i^*}=\hat{y}]$，其中 $i^*$ 是该 head 最高注意力 token 的位置。与静态 top-k heads 不同，这个集合每一步重新计算。
-	- 设计动机：长上下文检索不是持续由同一批 heads 完成。某些 heads 只在特定 token 或特定上下文下激活，平均统计会低估它们。
+过去识别 retrieval heads 是在大量样本上统计哪些 heads 经常指向目标信息、取 top-k，这种平均近似会低估那些只在特定 token 或特定上下文下才激活的 heads。本文把定义下放到每个生成步：在 NIAH 中，head $h$ 在 timestep $t$ 的 copy-paste retrieval score 为 $1[i^*\in I_{needle}\land x^t_{i^*}=\hat{y}]$，其中 $i^*$ 是该 head 当前步最高注意力 token 的位置——只有当这个 head 正盯着 needle、且 needle token 恰好等于即将生成的 token 时才记 1。与静态 top-k 不同，这个集合每一步都重新计算，因此能捕捉到“长上下文检索并不是持续由同一批 heads 完成”这件事。
 
-2. **动态 heads 的不可替代性检验**:
+**2. 动态 heads 的不可替代性检验：mask 掉看模型会不会崩。**
 
-	- 功能：验证动态 heads 是否只是静态 heads 的替代视角，还是具有独立功能必要性。
-	- 核心思路：每个生成步先正常 forward，识别动态 retrieval heads；再将这些 heads mask 掉重新生成同一步 token。对照组 mask 同等数量的 top static heads 或 random heads。进一步实验逐步 mask $k$ 个动态 heads，观察模型是否会激活静态 heads 进行补偿。
-	- 设计动机：如果静态 heads 能替代动态 heads，那么 mask 动态集合后性能不应显著下降；实验显示即使模型补偿性激活 static top heads，NIAH accuracy 仍从 1.0 下降到 0.0，说明动态 heads 承担 context-specific 功能。
+光说动态集合在变还不够，得证明它不是静态 heads 的另一种视角。作者每个生成步先正常 forward 识别出动态 retrieval heads，再把它们 mask 掉重新生成同一步 token，对照组则 mask 等量的 top static heads 或 random heads；进一步还逐步 mask $k$ 个动态 heads，观察模型会不会补偿性地激活静态 heads。结果是即使模型确实去激活了 static top heads 来补偿，NIAH accuracy 仍从 1.0 掉到 0.0。这说明动态 heads 承担的是 context-specific 功能，静态 heads 顶不上来——动态集合有独立的功能必要性，而不是更大静态集合里的简单子集。
 
-3. **hidden-state probe 与 Dynamic RAG 应用**:
+**3. hidden-state probe 与 Dynamic RAG 应用：证明动态模式可预测，再拿来控检索。**
 
-	- 功能：证明动态 head pattern 可预测，并把预测结果用于检索控制。
-	- 核心思路：作者用 temporal-offset CCA 测量 timestep $n$ 的 final hidden state 与未来 $n+k$ retrieval scores 的相关性，发现 $k=0$ top-1 canonical correlation 为 0.966，$k=1$ 和 $k=2$ 仍有 0.931、0.915。随后训练 MLP probe，从 final hidden state 预测所有 heads 的 retrieval score pattern。在 Dynamic RAG 中，probe 预测 top-5 dynamic heads，根据这些 heads 的 attention top positions 聚类并展开窗口，只让模型看到这些局部上下文。
-	- 设计动机：如果动态 heads 只能后验识别，工程价值有限；hidden state 可预测意味着可以用轻量 probe 进行在线控制，例如动态 KV cache、动态检索触发或 hallucination monitoring。
+如果动态 heads 只能事后识别，工程价值有限；本文要证明它在生成前就可预测。作者先用 temporal-offset CCA 测 timestep $n$ 的 final hidden state 与未来 $n+k$ 步 retrieval scores 的相关性，发现 $k=0$ 的 top-1 canonical correlation 高达 0.966，$k=1$、$k=2$ 仍有 0.931、0.915——模型在生成前已经编码了即将需要哪些检索机制。基于此训练一个 MLP probe，从 final hidden state 预测所有 heads 的 retrieval score pattern。在改造版 Dynamic RAG 里，probe 预测 top-5 dynamic heads，按这些 heads 的 attention top positions 聚类并展开上下文窗口，只让模型看到这些局部片段。可预测这一步是关键：它让动态机制从“后验分析”变成“在线控制信号”，可以接到动态 KV cache、动态检索触发或 hallucination monitoring 上。
 
 ### 损失函数 / 训练策略
 本文主体是分析论文，没有训练新的 LLM。MLP probe 在 NIAH 中做二分类，输入为 final hidden state，目标为各 attention head 的 binary retrieval score；在 HotpotQA 中做回归，预测连续 reasoning retrieval score。Dynamic RAG 部分使用 probe 预测 top-5 dynamic heads，并与 DRAGIN 的 RIND 检索触发策略结合。

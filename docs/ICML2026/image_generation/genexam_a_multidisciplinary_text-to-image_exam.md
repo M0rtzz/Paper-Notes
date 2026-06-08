@@ -41,30 +41,24 @@ GenExam 把"画图考试"作为衡量 T2I 模型推理-理解-生成综合能力
 ## 方法详解
 
 ### 整体框架
-GenExam 包含三大组件：(1) 1000 题的题库，覆盖数学/物理/化学/生物/计算机/地理/经济/音乐/历史/工程 10 个一级学科，按 ISCED-F 织出 10/40/132/236 的四层分类；(2) 每题配 ground-truth 图 + 3-14 个评分点（平均 6.9 个，权重和为 1）+ 平均 74.8 词的 exam-style prompt；(3) 双维度评测协议——semantic correctness（0-1）+ visual plausibility（spelling/logic/readability 各 0-2），汇出 strict 与 relaxed 两个最终分。
+GenExam 要解决的是"通用图像评测指标抓不到学科正确性"这个老问题，办法是把一道画图考题拆成可机判的三件套：题库、评分细则、双维度协议。题库有 1000 道题，覆盖数学/物理/化学/生物/计算机/地理/经济/音乐/历史/工程 10 个一级学科，再按 ISCED-F 标准织出 10/40/132/236 的四层分类。每道题都配一张 ground-truth 参考图、一段平均 74.8 词的 exam-style prompt，以及一组评分点。评测时不再让 judge 笼统地说"对不对"，而是先按评分点算 semantic correctness（0-1），再按 spelling/logic/readability 三项各打 0-2 分算 visual plausibility，最后汇成 strict 和 relaxed 两个分数。
 
 ### 关键设计
 
-1. **Scoring Points 评分细则**:
+**1. Scoring Points 评分细则：把"图像对不对"降维成一组 VQA 判定题**
 
-    - 功能：把模糊的"图像是否正确"问题降维成一组确定的 VQA 判定题。
-    - 核心思路：每题由 GPT-5 起草 3-14 个 yes/no 评分点（例如"分子是否含恰好 8 个碳？"），人工审核细化；评测时让 MLLM judge 看着生成图 + 参考图，逐点回答 Yes/No，semantic correctness $= \sum_i s_i \cdot \mathbb{1}[\text{answer}_i=\text{Yes}]$，所有分数总和为 1。
-    - 设计动机：单条 MLLM 指令评测会漏掉细节（如化学键数量、几何位置关系、乐谱音符）；把每个关键约束显式拆出来才能稳定捕捉学科级错误。
+单条 MLLM 指令去评一张学科图，最容易漏掉的恰恰是决定成败的细节——化学键数量、几何位置关系、乐谱上的音符。GenExam 的做法是把每个关键约束显式拆出来：每题由 GPT-5 起草 3-14 个（平均 6.9 个）yes/no 评分点，比如"分子是否恰好含 8 个碳原子？"，再交人工审核细化。评测时 MLLM judge 同时看生成图和参考图，对每个评分点逐一回答 Yes/No，语义正确率按 $\text{semantic} = \sum_i s_i \cdot \mathbb{1}[\text{answer}_i=\text{Yes}]$ 汇总，其中各点权重 $s_i$ 总和为 1。这样"画错一根键"这种硬错误就有了稳定的捕捉点，而不会被一句宽松的总体评价糊弄过去。
 
-2. **双分数评测协议（Strict + Relaxed）**:
+**2. 双分数评测协议（Strict + Relaxed）：同时刻画难度天花板和底层差异**
 
-    - 功能：用两套尺度同时刻画"完全正确率"和"接近正确程度"，避免一刀切。
-    - 核心思路：strict 分 = 完全满足所有评分点 + spelling/logic/readability 均为 2 的图像比例（一张图错一点就算 0）；relaxed 分 = $0.7\cdot\text{semantic}+0.1\cdot\text{spell}+0.1\cdot\text{logic}+0.1\cdot\text{read}$（权重由人类偏好对齐确定）。strict 凸显"几乎没人能完美交卷"的难度，relaxed 区分大量低分模型之间的差异。
-    - 设计动机：纯 strict 会让大部分模型并列 0% 失去信息量；纯加权平均又掩盖了"差一点就全错"的学科特性，所以两者并行汇报。
+只用一套尺度会顾此失彼：纯 strict 会让大批模型并列 0% 失去区分度，纯加权平均又掩盖了学科图"差一点就全错"的特性。所以 GenExam 并行汇报两个分数。strict 分是"完美交卷率"——一张图必须满足全部评分点、且 spelling/logic/readability 三项都拿满 2 分才算过，错一点就记 0，用来凸显几乎没人能完美的难度。relaxed 分则是加权软分 $0.7\cdot\text{semantic}+0.1\cdot\text{spell}+0.1\cdot\text{logic}+0.1\cdot\text{read}$，权重由人类偏好对齐标定，用来区分一大堆低分模型之间的接近程度。两者一个拉开顶尖闭源差距、一个揭示底层差异。
 
-3. **数据策展流水线**:
+**3. 数据策展流水线：用 GPT-5 + 人工双层审核兼顾规模与严谨**
 
-    - 功能：保证题目难度、学科覆盖与评分点质量。
-    - 核心思路：先按四层分类生成关键词→网图抓取 + 已有 MLLM 数据集筛选→GPT-5 按文本丰富度/学科密度/复杂度打分过滤→GPT-5 起草 prompt 和 scoring points→PhD 标注员人工审核与修订；最终 1000 题里 hard 占 38%、medium 38%、easy 24%，每题 prompt 长 24-173 词。
-    - 设计动机：网图质量参差不齐，纯人工成本高，纯 GPT-5 又会"凑数"；GPT-5 + 人工双层审核兼顾规模和严谨。
+网图质量参差不齐，纯人工成本太高，纯 GPT-5 又会"凑数"，所以题库走一条双层流水线：先按四层分类生成关键词，从网图抓取并结合已有 MLLM 数据集做候选筛选；再让 GPT-5 按文本丰富度、学科密度、复杂度三个维度打分过滤；通过的题由 GPT-5 起草 prompt 和 scoring points；最后交 PhD 标注员人工审核与修订。最终 1000 题里 hard 占 38%、medium 38%、easy 24%，prompt 长度跨 24-173 词，难度和学科覆盖都受控。
 
 ### 损失函数 / 训练策略
-本文是评测 benchmark，无训练；唯一可调的是评测端 MLLM judge（默认 GPT-5，reasoning effort 设为 low；附录验证 Gemini-3-Flash 等替代品仍与人类高度一致）。
+本文是评测 benchmark，本身不涉及训练；唯一可调的是评测端的 MLLM judge——默认用 GPT-5 并把 reasoning effort 设为 low，附录验证了换成 Gemini-3-Flash 等替代品后与人类判断仍高度一致。
 
 ## 实验关键数据
 

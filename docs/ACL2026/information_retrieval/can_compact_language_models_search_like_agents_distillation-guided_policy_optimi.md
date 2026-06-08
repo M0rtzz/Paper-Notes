@@ -41,32 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DGPO 分两个阶段：(1) **冷启动 KD 初始化**——用教师生成的高质量 TGO 轨迹（仅保留答对的）对学生做离线蒸馏，让学生先学到合理的 `<think>/<search>/<answer>` 行为骨架；(2) **蒸馏引导的 RL**——以冷启动学生为初始策略做 PPO，但把 reward 重新设计：答对时给标量 +1，答错时把 reward 替换为 $-\beta D_{\text{KL}}[\pi_\theta(y\mid x;\mathcal{R})\|\pi_g(y\mid x;\mathcal{R})]$，让错误样本通过模仿教师获得密集学习信号。
-
-整个过程不需要手工调度器（不像 TAID/DistiLLM 要调 $\alpha$ 插值系数），两阶段衔接由一个性能阈值触发即可。
+DGPO 的输入是一个 QA 问题，输出是交错 `<think>/<search>/<answer>` 的 agentic 轨迹，难点在于 0.5B 学生初始性能近乎为 0，既拿不到 RL 奖励也学不动 on-policy 蒸馏。它把整套训练拆成首尾相接的两段：先用教师答对的 TGO 轨迹离线蒸馏，把学生顶到能稳定产出合理行为骨架的起点；再以这个学生为初始策略跑 PPO，但重新设计奖励——答对给标量 +1，答错则把奖励替换成对教师的 KL 蒸馏惩罚 $-\beta D_{\text{KL}}[\pi_\theta(y\mid x;\mathcal{R})\|\pi_g(y\mid x;\mathcal{R})]$，让错误样本也能从模仿教师中拿到密集信号。整个衔接靠一个性能阈值触发，不需要 TAID/DistiLLM 那种手工调 $\alpha$ 插值系数的调度器。
 
 ### 关键设计
 
-1. **冷启动 KD 初始化（仅用正确 TGO）**:
+**1. 冷启动 KD 初始化：先把学生顶过零性能门槛。**
 
-    - 功能：把学生从「near-zero 性能」拉到能产生有意义 reward 的起点。
-    - 核心思路：用混合损失 $\mathcal{L}_{\text{distill}} = \mathcal{L}_{\text{CE}}(\pi_g,\pi_\theta) + \lambda D_{\text{KL}}[\pi_g(\cdot\mid x)\|\pi_\theta(\cdot\mid x)]$ 在教师正确轨迹上蒸馏，既学硬标签又学软分布。作者验证只用正确 TGO 比混入错误 TGO 效果更好——因为错误轨迹会传递错误的检索决策。
-    - 设计动机：SFT warm-start 只能学硬标签（实验表中 SFT→PPO 仅 0.289），而本方法直接复用教师的完整 soft distribution，包含了"当存在歧义时教师是怎么权衡的"这种细粒度信息，所以单 KD 初始化就能到 0.298，已超 SFT warm-start。
+紧凑模型最致命的问题是初始 EM 几乎为 0，PPO 长期拿不到正奖励，要么收敛极慢要么早期崩溃。DGPO 用教师答对的 TGO 轨迹做离线蒸馏，损失是硬标签与软分布的混合 $\mathcal{L}_{\text{distill}} = \mathcal{L}_{\text{CE}}(\pi_g,\pi_\theta) + \lambda D_{\text{KL}}[\pi_g(\cdot\mid x)\|\pi_\theta(\cdot\mid x)]$，$\lambda$ 平衡两项。这里刻意只保留答对的轨迹，因为错误轨迹会把错误的检索决策也一并传给学生。
 
-2. **选择性 KL 惩罚（Selective KL Penalty）**:
+之所以用完整 KD 而非 SFT warm-start，是因为 SFT 只能学硬标签（实验里 SFT→PPO 仅 0.289），而软分布额外携带了"教师在歧义处如何权衡"这种细粒度信息——单靠这步 KD 初始化就能到 0.298，已经反超 SFT warm-start。
 
-    - 功能：在 PPO 训练中把教师从「被动正则锚点」转为「主动错误纠正者」。
-    - 核心思路：标准 PPO 的 reward 是 $r_{\text{answer}}=\mathbb{1}[y=y^*]$，错误样本 reward 恒为 0，无学习信号；本文改成 $r_\phi(x,y)=1$ if correct else $-\beta D_{\text{KL}}[\pi_\theta(y\mid x;\mathcal{R})\|\pi_g(y\mid x;\mathcal{R})]$，错误样本被替换为蒸馏惩罚。这样答对的样本保留自由探索空间（不受教师约束），答错的样本被强力拉向教师。
-    - 设计动机：消融实验中把这条改成 uniform KL penalty（对所有样本都施加蒸馏），平均 EM 从 0.329 掉到 0.314；去掉教师 guidance（普通 PPO）掉到 0.306。说明"对错误样本选择性纠正"既保留了 RL 的探索能力，又能避免被噪声 SGO 带偏。
+**2. 选择性 KL 惩罚：让教师从正则锚点变成错误纠正者。**
 
-3. **KD→PPO 的两阶段顺序**:
+标准 PPO 的奖励是 $r_{\text{answer}}=\mathbb{1}[y=y^*]$，错误样本奖励恒为 0、毫无学习信号；DGPO 把它改成答对给 1、答错给 $-\beta D_{\text{KL}}[\pi_\theta(y\mid x;\mathcal{R})\|\pi_g(y\mid x;\mathcal{R})]$，等于只对错误样本施加蒸馏惩罚。这样答对的样本保留自由探索空间不受教师约束，答错的样本被强力拉回教师轨迹，本质是用 dense 蒸馏奖励去填补 sparse 二值奖励的空白。
 
-    - 功能：确保 PPO 起步时已经有 reasonable 的 agentic 行为，避免在崩坏的策略上做策略梯度。
-    - 核心思路：先用 5 个 epoch 做 KD 初始化，再用最多 1000 步 PPO 做 distillation-guided RL，反过来（PPO→KD）会让 PPO 在弱策略上崩溃，再做 KD 也补不回来。
-    - 设计动机：消融中 invert pipeline（PPO→KD）平均 EM 仅 0.286，比 DGPO 低 4.3 个点，说明初始化顺序对紧凑模型尤其关键——一旦 PPO 阶段 reward 长期为 0 就会陷入退化策略。
+关键在于"选择性"：消融里把它改成对所有样本统一施加蒸馏（uniform KL），平均 EM 从 0.329 掉到 0.314；完全去掉教师 guidance 退回普通 PPO 则掉到 0.306。这说明只纠正错误样本既保住了 RL 的探索能力，又避免了被噪声 SGO 带偏。
+
+**3. KD→PPO 的两阶段顺序：先有合理行为再做策略梯度。**
+
+两阶段的先后不能颠倒——先跑 5 个 epoch KD 初始化，再跑最多 1000 步 distillation-guided PPO。一旦反过来让 PPO 在尚未成形的弱策略上起步，奖励会长期为 0 并迅速陷入退化策略，之后再补 KD 也救不回来。消融中 invert pipeline（PPO→KD）平均 EM 仅 0.286，比完整 DGPO 低 4.3 个点，印证了初始化顺序对紧凑模型尤其敏感。
 
 ### 损失函数 / 训练策略
-KD 阶段：$\lambda=1.0$ 平衡 CE 与 KL；PPO 阶段：$\beta=0.001$ 控制错误样本的蒸馏强度，max 4 轮对话，每轮 top-3 文档检索（E5 retriever，2018 Wiki dump）。token masking 仅在 LLM 生成 token 上算梯度，对 `<information>` 段不算梯度。训练在 NVIDIA 8×H200 上跑约 1 天。
+KD 阶段取 $\lambda=1.0$ 平衡 CE 与 KL；PPO 阶段取 $\beta=0.001$ 控制错误样本的蒸馏强度，最多 4 轮对话、每轮 top-3 文档检索（E5 retriever，2018 Wiki dump）。token masking 只在 LLM 生成 token 上回传梯度，`<information>` 段不算梯度。训练在 NVIDIA 8×H200 上约 1 天完成。
 
 ## 实验关键数据
 

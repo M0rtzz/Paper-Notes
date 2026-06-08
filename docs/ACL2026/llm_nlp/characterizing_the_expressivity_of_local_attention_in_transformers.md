@@ -41,27 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-全文是一个完整的"逻辑 → 架构 → 实验"链：(1) 在 LTL 侧分别刻画 $\mathrm{LTL}[\mathrm{Y}]$（=有穷后缀决定的 definite languages）、$\mathrm{LTL}[\mathrm{P}]$（=left-deterministic polynomials，Li & Cotterell 2025 已证）、$\mathrm{LTL}[\mathrm{P}, \mathrm{Y}]$（= locally $\mathcal{R}$-trivial monoids，可识别 locally testable languages）并证明它们两两的严格不包含关系。(2) 在 Transformer 侧将 attention mask 形式化：global mask $\mathbf{M}^*_{n,m}=1$ iff $m<n$，$k$-local mask $\mathbf{M}^{\leq k}_{n,m}=1$ iff $\max(1,n-k)\leq m<n$；fixed precision 限制保证可与有穷自动机对接。(3) 沿用 Li & Cotterell 的证明骨架，证 $k$-local Transformer ↔ $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$、hybrid Transformer ↔ $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$。(4) 在 8 个合成正则语言上验证表达力，在 WikiText-2 上做 GPT-2 small 规模的次词预测。
+全文是一条完整的"逻辑 → 架构 → 实验"证明链，核心思路是把 attention mask 翻译成线性时序逻辑的算子，从而让"看得多远"这种架构差异变成可比较的逻辑表达力。具体地：在逻辑侧分别刻画 $\mathrm{LTL}[\mathrm{Y}]$（=有穷后缀决定的 definite languages）、$\mathrm{LTL}[\mathrm{P}]$（=left-deterministic polynomials，Li & Cotterell 2025 已证）与 $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}]$（= locally $\mathcal{R}$-trivial monoids，可识别 locally testable languages），并证明三者两两的严格不包含关系；在 Transformer 侧把 mask 形式化为 global mask（$\mathbf{M}^*_{n,m}=1$ iff $m<n$）与 $k$-local mask（$\mathbf{M}^{\leq k}_{n,m}=1$ iff $\max(1,n-k)\leq m<n$），并用 fixed precision 限制保证可与有穷自动机对接；最后沿用 Li & Cotterell 的证明骨架建立 $k$-local Transformer ↔ $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$、hybrid Transformer ↔ $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$ 两条双向等价，再在 8 个合成正则语言和 WikiText-2 上验证理论预测。
 
 ### 关键设计
 
-1. **用 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ 与 $\mathrm{LTL}[\mathrm{P}]$ 不可比性证明 local/global 表达力互补**:
+**1. 用 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ 与 $\mathrm{LTL}[\mathrm{P}]$ 的不可比性证明 local/global 表达力互补。**
 
-    - 功能：从根上推翻"local 只是 global 的弱化"这一直觉，给"加 local 可以严格提升表达力"找到形式化依据。
-    - 核心思路：构造两个判定性 witness 语言——$a\Sigma^*$（"第一个字符是 a"）可被 $\mathrm{P}$ 用 $\mathrm{P}(\pi_a \land \neg \mathrm{P}\top)$ 定义，但 $\mathrm{Y}^{\leq k}$ 看的是 bounded suffix，无法表达"开头"性质（定理 2.2 证明 $\mathrm{LTL}[\mathrm{Y}]$ 恰对应 definite languages，开头依赖语言不 definite）；反向，$L_k = \bigcup_{i=0}^{k-1} \Sigma^* a \Sigma^i$（"末尾 $k$ 步内出现 a"）可由 $\mathrm{Y}^{\leq k} \pi_a$ 直接定义，但它不是 left-deterministic polynomial，不在 $\mathrm{LTL}[\mathrm{P}]$ 内（命题 2.3、2.4、定理 2.9）。两个 witness 互证 → $\mathrm{LTL}[\mathrm{P}]$ 与 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ incomparable → hybrid 严格大于两侧（推论 2.10）。
-    - 设计动机：把"global+local 比 global-only 严格强"这个经验观察落实成可证伪的形式定理，给后续 hybrid 架构设计提供数学依据。
+直觉总把 local 当成 global 的"省算力弱化版"，但要推翻它，需要在逻辑层面构造两个互相够不着的判定性 witness 语言。一边是 $a\Sigma^*$（"第一个字符是 a"），它可被无界 past 算子写成 $\mathrm{P}(\pi_a \land \neg \mathrm{P}\top)$，却落在 $\mathrm{Y}^{\leq k}$ 之外——因为 $\mathrm{Y}^{\leq k}$ 只看 bounded suffix，而定理 2.2 证明 $\mathrm{LTL}[\mathrm{Y}]$ 恰对应 definite languages，"开头依赖"性质并不 definite。另一边是 $L_k = \bigcup_{i=0}^{k-1} \Sigma^* a \Sigma^i$（"末尾 $k$ 步内出现 a"），它能被 $\mathrm{Y}^{\leq k} \pi_a$ 一句写出，却不是 left-deterministic polynomial，因而不在 $\mathrm{LTL}[\mathrm{P}]$ 内（命题 2.3、2.4、定理 2.9）。两个 witness 互证 $\mathrm{LTL}[\mathrm{P}]$ 与 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ incomparable，于是 hybrid 同时拥有两个算子时严格强于任一侧（推论 2.10）——"global+local 比 global-only 严格强"这个经验观察由此落实为可证伪的形式定理。
 
-2. **$k=1$ 是 local 家族里表达力最强的 window size**:
+**2. $k=1$ 是 local 家族里表达力最强的 window size。**
 
-    - 功能：给"为什么实践中 1-local（sliding window=1）效果最好"提供精确解释。
-    - 核心思路：对 $k>1$ 构造 witness $\mathbf{w}=(\mathtt{ab}^{k-1})^r \mathtt{a}$ 和 $\mathbf{w}'=(\mathtt{ab}^{k-1})^r$，前者属于 $\Sigma^*\mathtt{a}$ 而后者不属于。引理 C.1 通过对操作符深度 $s$ 做"$s$-close pair"的对偶归纳，证明任何深度 $\leq r$ 的 $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$ 公式都无法在 $\mathbf{w}$ 末位和 $\mathbf{w}'$ 末位之间区分（关键：$\mathrm{Y}^{\leq k}$ 看的是连续 $k$ 步，但 witness 的周期长度恰为 $k$，导致 $i$-步前与 $i-k$ 步前 token 相同）。这说明 $\mathrm{LTL}[\mathrm{Y}^{\leq k}] \subsetneq \mathrm{LTL}[\mathrm{Y}]$（命题 2.11、2.12），即扩窗反而损失表达力，**1-local 等价于完整 $\mathrm{Y}$，是 local 家族里最强的**。
-    - 设计动机：解释 Longformer/Sparse-Transformer 等工作中"小 window 反而更好"的现象，并指出潜在 trade-off：1-local 表达最强但若实现 $\mathrm{Y}^{\leq k} \psi$ 需用 $k$ 个 $\mathrm{Y}$ 嵌套，操作符深度增加 $k-1$，对应 Transformer 层数开销最多 $\times k$。这也解释了为什么深模型才能充分享受 1-local 优势。
+工业实践里 sliding window 常默认开大，但本文证明扩窗反而损失表达力。对任意 $k>1$ 构造 witness $\mathbf{w}=(\mathtt{ab}^{k-1})^r \mathtt{a}$ 与 $\mathbf{w}'=(\mathtt{ab}^{k-1})^r$，前者属于 $\Sigma^*\mathtt{a}$ 而后者不属于；引理 C.1 对操作符深度 $s$ 做"$s$-close pair"的对偶归纳，证明任何深度 $\leq r$ 的 $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$ 公式都无法在 $\mathbf{w}$ 与 $\mathbf{w}'$ 的末位之间区分——关键在于 witness 的周期长度恰为 $k$，使得 $i$ 步前与 $i-k$ 步前的 token 完全相同，$\mathrm{Y}^{\leq k}$ 因此"看花了眼"。这给出 $\mathrm{LTL}[\mathrm{Y}^{\leq k}] \subsetneq \mathrm{LTL}[\mathrm{Y}]$（命题 2.11、2.12），即 1-local 等价于完整的 $\mathrm{Y}$，是 local 家族里最强的。代价是表达—深度权衡：用 1-local 实现 $\mathrm{Y}^{\leq k} \psi$ 需要 $k$ 个 $\mathrm{Y}$ 嵌套，操作符深度增加 $k-1$，对应 Transformer 层数开销最多 $\times k$，这也解释了为什么深模型才能充分享受 1-local 的好处。
 
-3. **位置编码 = 数值谓词，不能抹平 local/global 的鸿沟**:
+**3. 位置编码 = 数值谓词，抹不平 local/global 的鸿沟。**
 
-    - 功能：回答"既然 Transformer 都有位置编码，是不是 global+RoPE 就能模拟 local？"这个常见反驳。
-    - 核心思路：把位置编码视为 LTL 的"数值谓词" $\mathrm{MOD}_m^r$（命题 2.13），证明若存在 $m \geq k$ 的模运算谓词，则 $\mathrm{Y}^{\leq k}$ 可由 $\mathrm{Y}$+$\mathrm{MOD}_m^r$ 模拟（用 $\mathrm{Y}\psi = \bigvee_{i=1}^m (\mathrm{MOD}_m^i \land \mathrm{Y}^{\leq k}(\mathrm{MOD}_m^{i-1} \land \psi))$）。但 SiPE 和 RoPE 对应"rational 变种"模谓词，实际不能稳定模拟（Chiang 等 2023 已证）。理论预言 SiPE / RoPE 都无法让 global-only 达到 hybrid 水平。
-    - 设计动机：澄清"位置编码万能"的迷思，给"为什么不该用 RoPE 替代 local attention"提供理论支撑。
+一个常见反驳是"既然都有位置编码，global+RoPE 是不是就能模拟 local？"。本文把位置编码视为 LTL 的数值谓词 $\mathrm{MOD}_m^r$（命题 2.13），并证明只要存在 $m \geq k$ 的模运算谓词，$\mathrm{Y}^{\leq k}$ 就能被 $\mathrm{Y}$ 加 $\mathrm{MOD}$ 模拟：$\mathrm{Y}\psi = \bigvee_{i=1}^m (\mathrm{MOD}_m^i \land \mathrm{Y}^{\leq k}(\mathrm{MOD}_m^{i-1} \land \psi))$。但 SiPE 与 RoPE 对应的是模谓词的"rational 变种"，Chiang 等 2023 已证它们无法稳定提供精确的 $\mathrm{MOD}$ 语义，因此理论预言 SiPE / RoPE 都无法让 global-only 追平 hybrid——"位置编码万能"是迷思，也是"不该用 RoPE 顶替 local attention"的理论支撑。
+
 
 ## 实验关键数据
 

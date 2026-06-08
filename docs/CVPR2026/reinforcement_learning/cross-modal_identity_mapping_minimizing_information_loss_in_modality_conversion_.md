@@ -33,30 +33,36 @@ LVLM 在图像描述任务中常常遗漏或错误表示关键视觉内容。作
 ## 方法详解
 
 ### 整体框架
-CIM 是一个无标注的 RL 框架，核心流程：(1) LVLM 为输入图像生成多个 caption；(2) 用每个 caption 作为查询进行文本检索，获取 top-K 相关图文对；(3) 从检索结果中计算 GRC 和 QIR 两个指标作为奖励；(4) 通过 GRPO 优化 LVLM。
+CIM 要解决的是「怎么在没有细粒度标注的情况下，判断一段 caption 丢了多少视觉信息」。它的巧思是把这个跨模态评估问题转译成一个图像检索问题：让 LVLM 给同一张图采样出 $G$ 段候选 caption，把每段 caption 当查询去文本检索库里捞回 top-K 张相关图像，然后只看「捞回来的这堆图长得像不像、跟原图像不像」就能反推 caption 的好坏——caption 越细，捞回的图越聚成一簇；caption 越准，捞回的图越贴近源图。整条 pipeline 因此不碰任何人工标注，捞图得到的两个统计量直接当奖励喂给 GRPO 去更新模型。
 
 ### 关键设计
 
-1. **Gallery Representation Consistency (GRC)**:
+**1. Gallery Representation Consistency（GRC）：用检索结果的聚集程度量化 caption 的细粒度。**
 
-    - 功能：评估用 caption 检索到的图像集合的内部一致性，反映 caption 的细节丰富程度
-    - 核心思路：$GRC(c) = \|\frac{1}{K}\sum_{r=1}^{K}\tilde{v}(x_{i_r})\|_2$，其中 $\tilde{v}(x_j)$ 是图像经视觉表示模型提取并 $\ell_2$ 归一化后的 embedding。GRC 本质上是 mean resultant length，衡量 embedding 向量在超球面上的集中程度
-    - 设计动机：caption 越详细和具体，检索到的图像在视觉表示空间中越集中（GRC 越高）；caption 越模糊粗粒度，检索结果越分散
+信息损失里最难抓的一类是「漏细节」——模型只说"a pet"而不说品种，光看文本根本判不出丢了多少。CIM 的做法是把这段 caption 检索回来的 K 张图各自过视觉表示模型、$\ell_2$ 归一化成单位向量，再取它们的平均向量长度：
 
-2. **Query-gallery Image Relevance (QIR)**:
+$$GRC(c) = \Big\|\frac{1}{K}\sum_{r=1}^{K}\tilde{v}(x_{i_r})\Big\|_2$$
 
-    - 功能：衡量源图像与检索到的图像之间的相关性，反映 caption 的准确性
-    - 核心思路：$QIR(v, c) = \sum_{r=1}^{K}\lambda(r) \cdot Cos(\tilde{v}(v), \tilde{v}(x_{i_r}))$，其中 $\lambda(r) = 1/2^{r-1}$ 是指数衰减权重，越靠前的检索结果权重越大
-    - 设计动机：如果 caption 准确描述了源图像内容，检索到的图像应与源图像在语义上高度相似；若 caption 包含错误信息，检索结果将偏离源图像
+这其实就是方向统计里的 mean resultant length，衡量一组单位向量在超球面上有多集中：当 caption 足够具体（比如点出了品种、花纹、姿态），检索回的图会高度同质，向量们指向相近、平均向量接近 1；caption 一旦模糊粗粒度，检索结果五花八门，向量相互抵消、GRC 趋近 0。于是「细不细」被定量成了一个 0~1 的聚集度，完全不需要知道正确答案是什么。
 
-3. **Cross-modal Identity Mapping 奖励函数**:
+**2. Query-gallery Image Relevance（QIR）：用检索图与源图的相似度量化 caption 的准确性。**
 
-    - 功能：将 GRC 和 QIR 组合为 RL 奖励，通过 GRPO 优化 LVLM
-    - 核心思路：$\Upsilon(v, c) = GRC(c) + \beta \cdot QIR(v, c)$，$\beta$ 平衡精确性和细节丰富度。采样 $G$ 个 caption，计算组内归一化 advantage $A_z = \frac{\Upsilon_z - mean(\{\Upsilon\})}{std(\{\Upsilon\})}$
-    - 设计动机：将 caption 质量评估转化为图像-图像相似度问题，绕开了直接衡量跨模态信息损失的难题，无需额外标注
+光有 GRC 还不够——一段编造得很具体但描述错误的 caption 也能让检索结果很聚集（聚到错的地方去了）。QIR 补上「准不准」这一维：把源图 $v$ 和它检索回的每张图算余弦相似度，并按检索排名做指数衰减加权后求和：
+
+$$QIR(v, c) = \sum_{r=1}^{K}\lambda(r)\cdot Cos\big(\tilde{v}(v), \tilde{v}(x_{i_r})\big),\qquad \lambda(r) = \frac{1}{2^{r-1}}$$
+
+如果 caption 如实描述了源图，检索回的图自然跟源图语义贴近、QIR 高；一旦 caption 掺了错误信息，检索就会被带偏到别的图上、QIR 掉下来。权重 $\lambda(r)=1/2^{r-1}$ 让排名靠前、可信度更高的检索结果主导这个分数，越往后的命中影响越小。
+
+**3. CIM 奖励与 GRPO 优化：把两维信号合成一个无标注奖励。**
+
+GRC 管细节、QIR 管准确，二者线性组合成最终奖励，用 $\beta$ 调两者权重：
+
+$$\Upsilon(v, c) = GRC(c) + \beta\cdot QIR(v, c)$$
+
+对同一张图采样出的 $G$ 段 caption 各算一个 $\Upsilon$，再做组内归一化得到 advantage $A_z = \dfrac{\Upsilon_z - \mathrm{mean}(\{\Upsilon\})}{\mathrm{std}(\{\Upsilon\})}$，喂进 GRPO 更新 LVLM。这样模型被推着同时往「更细」和「更准」两个方向走。整个奖励的关键就在于：caption 质量评估被彻底换成了图像-图像相似度的计算，既绕开了直接度量跨模态信息损失的难题，也避开了用 VLM 当裁判时常见的 reward hacking。
 
 ### 损失函数 / 训练策略
-使用 VERL 框架进行 GRPO 训练。训练数据为 RefinedCaps（6.5K 图像），每图生成 5 个 caption。文本检索用 SBERT（MPNet-base），图像编码用 OpenCLIP ViT-H/14，检索库由 RefinedCaps + DenseFusion-1M 扩增。学习率 $1 \times 10^{-6}$，训练 2 个 epoch。
+使用 VERL 框架做 GRPO 训练，训练数据为 RefinedCaps（6.5K 图像），每图采样 5 段 caption。文本检索用 SBERT（MPNet-base），图像编码用 OpenCLIP ViT-H/14，检索库由 RefinedCaps + DenseFusion-1M 扩增以提供更可靠的检索信号。学习率 $1\times 10^{-6}$，训练 2 个 epoch。
 
 ## 实验关键数据
 

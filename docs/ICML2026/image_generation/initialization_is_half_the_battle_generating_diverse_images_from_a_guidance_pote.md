@@ -41,36 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DivIn 在标准扩散/flow matching pipeline 前面**只多加一个"初始噪声优化"步骤**，整体不改动后续 denoising 链路：
 
-1. 从标准高斯 $\mathbf{x}_T^{(0)} \sim \mathcal{N}(0,\mathbf{I})$ 起步；
-2. 用 $K$ 步（实测 $K=1$ 已经够用）Langevin 更新，把 $\mathbf{x}_T$ 推到 guidance potential posterior $p_{\text{diverse}}(\mathbf{x}_T|c)$ 上；
-3. 把更新后的 $\mathbf{x}_T^{(K)}$ 喂给原本的 denoiser，正常采样出图。
-
-后验定义为 $p_{\text{diverse}}(\mathbf{x}_T|c) \propto \exp(-\tau \cdot U(\mathbf{x}_T,c)) \cdot \mathcal{N}(\mathbf{x}_T;0,\mathbf{I})$，其中 $\tau$ 控制"贴近先验 vs. 追求低势能"的权衡。
+DivIn 要解决的是扩散/flow matching 模型换种子也出雷同图的 mode collapse，做法不去改后续的 denoising 轨迹，而是只在最前面修正起点：把"采初始噪声"从盲采各向同性高斯，改成从一个由 guidance 势能定义的后验里采样。这个后验写成 $p_{\text{diverse}}(\mathbf{x}_T|c) \propto \exp(-\tau \cdot U(\mathbf{x}_T,c)) \cdot \mathcal{N}(\mathbf{x}_T;0,\mathbf{I})$，温度 $\tau$ 调节"贴近高斯先验"和"追求低势能"之间的权衡。整条 pipeline 只多了一步：标准高斯起步 $\mathbf{x}_T^{(0)} \sim \mathcal{N}(0,\mathbf{I})$ → 用 $K$ 步 Langevin 把它推到这个后验上（实测 $K=1$ 已经够用）→ 把更新后的 $\mathbf{x}_T^{(K)}$ 交给原 denoiser 正常出图，后续链路一律不动。
 
 ### 关键设计
 
-1. **Tweedie-空间的 guidance 势能 $U(\mathbf{x}_T,c)$**:
+**1. Tweedie-空间的 guidance 势能 $U$：用便宜标量量化条件对起点的拉扯**
 
-    - 功能：用一个**便宜、稳定、模型无关**的标量近似 conditional guidance 在初始时刻对轨迹的拉扯强度。
-    - 核心思路：定义 $U(\mathbf{x}_T,c) = \|\hat{\mathbf{x}}_0(\mathbf{x}_T,c) - \hat{\mathbf{x}}_0(\mathbf{x}_T,\varnothing)\|_2$，即"有条件 vs. 无条件"的单步 Tweedie 去噪估计在 $\mathbf{x}_0$ 空间的欧氏距离。差距越大，说明 condition 在 $\mathbf{x}_T$ 这个点上 push 得越猛，越容易把不同种子都拽到同一个 mode。
-    - 设计动机：作者证明（Prop. A.1）这个量是局部曲率的稳健代理；而且通过 Tweedie 投影到 $\hat{\mathbf{x}}_0$ 像素/潜空间，把不同 sampler 的 $\lambda_t$ 时间缩放吸收掉了，使最优 $\tau$ 对推理步数（30 步 vs 50 步）几乎不敏感，**避免**了 SAIL 那种 Hessian-score 二阶展开 + 手工阈值的脆弱。
+要从后验采样，先得有一个能描述"condition 在这个噪声点上 push 得有多猛"的势能，而且要便宜、稳定、跨 sampler 通用。DivIn 把它定义成有条件和无条件的单步 Tweedie 去噪估计在 $\mathbf{x}_0$ 空间的欧氏距离：$U(\mathbf{x}_T,c) = \|\hat{\mathbf{x}}_0(\mathbf{x}_T,c) - \hat{\mathbf{x}}_0(\mathbf{x}_T,\varnothing)\|_2$。这个差距越大，说明 condition 在 $\mathbf{x}_T$ 这点上把轨迹拽得越狠，不同种子越容易被同一个强 mode 吸过去。作者证明（Prop. A.1）它是局部曲率的稳健代理；而因为是投影到 $\hat{\mathbf{x}}_0$ 空间算的，不同 sampler 的 $\lambda_t$ 时间缩放被自然吸收掉，最优 $\tau$ 对推理步数（30 步 vs 50 步）几乎不敏感——这正是为了绕开 SAIL 那套 Hessian-score 二阶展开加手工阈值的脆弱做法。
 
-2. **Diversity-weighted 后验上的 Langevin 一步更新**:
+**2. 后验上的 Langevin 一步更新：采样而非优化到一个最佳种子**
 
-    - 功能：从 $p_{\text{diverse}}$ 中采样，而不是确定性地优化到某个"最佳种子"。
-    - 核心思路：由 $\nabla_\mathbf{x}\log p_{\text{diverse}} = -\tau \nabla_\mathbf{x} U(\mathbf{x},c) - \mathbf{x}$ 得到离散更新规则 $\mathbf{x}_T^{(k+1)} = \mathbf{x}_T^{(k)} - \eta(\tau \nabla U + \mathbf{x}_T^{(k)}) + \sqrt{2\eta}\,\boldsymbol{\xi}^{(k)}$。这一步动态平衡三股力：diversity force $-\tau\nabla U$ 把 latent 推离陡峰；prior 项 $-\mathbf{x}$ 把它拉回 $\|\mathbf{x}\|\approx\sqrt{d}$ 的高斯流形；噪声项 $\sqrt{2\eta}\boldsymbol{\xi}$ 帮它跳出 shallow local min。
-    - 设计动机：和 SAIL 的根本区别就在这里 —— SAIL 把种子选择当确定性优化，最后所有 latent 都掉进同一个 sharp local min（图 5），分布体积被塌成一个点，反而破坏多样性；DivIn 是**分布层面的后验采样**，能保留 entropy，让一批 latent 分散在 low-potential basin 里。
+有了势能就要从后验取样，而不是确定性地优化出一个"最佳种子"。对后验取对数梯度得到 $\nabla_\mathbf{x}\log p_{\text{diverse}} = -\tau \nabla_\mathbf{x} U(\mathbf{x},c) - \mathbf{x}$，离散化成更新规则：
 
-3. **对推理 pipeline 的最小侵入与正交叠加**:
+$$\mathbf{x}_T^{(k+1)} = \mathbf{x}_T^{(k)} - \eta\big(\tau \nabla U + \mathbf{x}_T^{(k)}\big) + \sqrt{2\eta}\,\boldsymbol{\xi}^{(k)}$$
 
-    - 功能：让 DivIn 成为真正 plug-and-play 的 inference-time 模块，能直接套在 SD v1.4（DDPM）和 SD v3.5 Medium（Rectified Flow）这两类完全不同的生成范式上。
-    - 核心思路：因为 $U$ 是在 $\hat{\mathbf{x}}_0$ 空间定义的，扩散和 flow matching 通过各自的公式 $\hat{\mathbf{x}}_0 = (\mathbf{x}_t - \sqrt{1-\bar\alpha_t}\epsilon_\theta)/\sqrt{\bar\alpha_t}$ 或 $\hat{\mathbf{x}}_0 = \mathbf{x}_t - t\mathbf{v}_\theta$ 都能算出来；$K=1$ 时整步只多一次有条件 + 一次无条件 forward/backward。把 DivIn 改完起点之后，丢给 PG/CADS/IG 这些 trajectory 方法继续做，相当于"换更好的种子 + 原来的轨迹干预"，多样性可以叠加。
-    - 设计动机：作者把"初始化"和"轨迹"明确划分成两个独立的多样性来源；既然标准方法都默认了起点是好的，那只要修正起点就能拿到一份"白送的"正交多样性。
+这一步同时受三股力：diversity force $-\tau\nabla U$ 把 latent 推离势能陡峰；prior 项 $-\mathbf{x}$ 把它拉回 $\|\mathbf{x}\|\approx\sqrt{d}$ 的高斯流形；噪声项 $\sqrt{2\eta}\boldsymbol{\xi}$ 帮它跳出 shallow local min。和 SAIL 的根本分歧就在最后这个噪声项上——SAIL 把种子选择当确定性优化，一批 latent 最后全掉进同一个 sharp local min（图 5），分布体积被塌成一个点，多样性反被砍掉；DivIn 是分布层面的后验采样，能保留 entropy，让一批 latent 分散在 low-potential basin 里。
+
+**3. 最小侵入设计带来的跨范式正交叠加**
+
+DivIn 把"初始化"和"轨迹"明确切成两个独立的多样性来源，既然现有方法都默认起点已经够散，那只修起点就能白拿一份正交多样性。能做到 plug-and-play 的关键是 $U$ 定义在 $\hat{\mathbf{x}}_0$ 空间：扩散和 flow matching 都能用各自的公式 $\hat{\mathbf{x}}_0 = (\mathbf{x}_t - \sqrt{1-\bar\alpha_t}\epsilon_\theta)/\sqrt{\bar\alpha_t}$ 或 $\hat{\mathbf{x}}_0 = \mathbf{x}_t - t\mathbf{v}_\theta$ 算出势能，于是同一套 DivIn 能直接套在 SD v1.4（DDPM）和 SD v3.5 Medium（Rectified Flow）这两类完全不同的范式上，$K=1$ 时整步只多一次有条件加一次无条件 forward/backward。改完起点后再丢给 PG/CADS/IG 这些 trajectory 方法继续干预，相当于"更好的种子 + 原来的轨迹干预"，多样性直接乘法叠加。
 
 ### 损失函数 / 训练策略
-DivIn 是**完全 training-free** 的推理时方法，**不改动任何模型权重**。整篇方法的"目标函数"就是上面的 Langevin 更新规则。关键超参：温度 $\tau$（默认在 $[0.5, 1.0]$ 之间扫，越大多样性越强）、步长 $\eta$（如 $0.05$，对应噪声尺度 $\sqrt{2\eta}\approx 0.316$）、步数 $K$（默认 $1$，加大到 $3$ 起 diversity 有边际提升但 FID 也会涨）。
+
+DivIn 是完全 training-free 的推理时方法，不改动任何模型权重，整套方法的"目标函数"就是上面那条 Langevin 更新规则。关键超参有三个：温度 $\tau$（默认在 $[0.5, 1.0]$ 之间扫，越大多样性越强）、步长 $\eta$（如 $0.05$，对应噪声尺度 $\sqrt{2\eta}\approx 0.316$）、步数 $K$（默认 $1$；加大到 $3$ 时 diversity 有边际提升但 FID 也会涨）。
 
 ## 实验关键数据
 

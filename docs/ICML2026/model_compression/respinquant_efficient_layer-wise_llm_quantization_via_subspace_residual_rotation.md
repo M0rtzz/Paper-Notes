@@ -41,30 +41,24 @@ ReSpinQuant 在低比特 LLM PTQ 中同时保留"全局旋转可与权重融合"
 ## 方法详解
 
 ### 整体框架
-ReSpinQuant 给每个 transformer 层独立学习 4 个稠密 $D\times D$ 正交矩阵：$\mathbf{R}_1^i$ 旋转 MHSA 输入与 FFN 输出、$\mathbf{R}_2^i$ 旋转 FFN 输入与 MHSA 输出、$\mathbf{R}_3^i$ 作用在 attention 内部（如 V 投影后），另有 $\mathbf{R}_4,\mathbf{R}_5$ 用 Fast Hadamard Transform 实现以处理 SpinQuant 协议中的特定激活通路。优化阶段所有 $\mathbf{R}$ 都是可学的，用 Cayley 优化器约束在 Stiefel 流形上，目标是最小化 $\|\mathbf{Y}-Q(\tilde{\mathbf{X}})Q(\tilde{\mathbf{W}})^{\top}\|_F^2$。推理阶段：MHSA/FFN 内的 $\mathbf{R}^i$ 被吸收进相邻权重（如 $\tilde{\mathbf{W}}_v=\mathbf{R}_1^{i\top}\mathbf{W}_v\mathbf{R}_3$，$\tilde{\mathbf{W}}_o=\mathbf{R}_3^{i\top}\mathbf{W}_o\mathbf{R}_2$），跨层残差路径上的基底不匹配则由一个低秩子空间残差矫正模块在线处理。整体可概括成"训练时巨大参数空间 $\mathcal{O}(L\cdot D^2)$，推理时仅留 $\mathcal{O}(L\cdot rD)$ 在线参数"。
+ReSpinQuant 想要的是"既保留层间稠密旋转的表达力、又不在推理时多付在线代价"。它给每个 transformer 层独立学一组稠密 $D\times D$ 正交矩阵，训练时把参数空间撑到 $\mathcal{O}(L\cdot D^2)$ 让旋转充分贴合各层离群分布；推理时把块内旋转通过数学消去全部融进权重，只在跨层残差这个唯一融不掉的地方留一个低秩在线模块，最终在线参数压到 $\mathcal{O}(L\cdot rD)$。一句话就是"训练大、推理小"。
 
 ### 关键设计
 
-1. **层间稠密旋转 + 全离线权重融合**:
+**1. 层间稠密旋转 + 全离线权重融合：让每层有独立稠密旋转，却不在推理时显式出现。**
 
-    - 功能：让每层有独立的稠密 $\mathbf{R}^i\in\mathbb{R}^{D\times D}$ 处理本层的离群模式，又不让这些矩阵在推理时显式出现。
-    - 核心思路：每条 attention/FFN 通路上，先用 $\mathbf{R}^i$ 旋转激活，再用其转置旋转下一权重的输入侧、本权重的输出侧；这一对旋转在数学上消去 $\mathbf{R}\mathbf{R}^{\top}=\mathbf{I}$，因此可以在量化前就把所有的 $\mathbf{R}$ 系数预乘进 $\mathbf{W}_q,\mathbf{W}_k,\mathbf{W}_v,\mathbf{W}_o,\mathbf{W}_{up},\mathbf{W}_{down}$。训练时可学习参数高达 $1091.0\text{M}$（约为 SpinQuant 的 63×），推理时这些参数 100% 隐入权重，online 参数只剩 $8.4\text{M}$。
-    - 设计动机：之前的层间方案被迫用结构化矩阵（OSTQuant 的 $\mathcal{O}(D)$ 缩放、FlatQuant 的 Kronecker）就是因为稠密矩阵无法吸收，本设计的"训练大、推理小"打破了这个二选一。
+层间方案精度高的根源是给每层一个独立基底，但稠密 $\mathbf{R}^i\in\mathbb{R}^{D\times D}$ 一旦显式留在推理通路上就要在线算，于是 OSTQuant、FlatQuant 之类被迫退回结构化矩阵（前者是 $\mathcal{O}(D)$ 对角缩放，后者是 Kronecker），牺牲表达力换效率。ReSpinQuant 具体给每层配 4 个稠密旋转：$\mathbf{R}_1^i$ 旋转 MHSA 输入与 FFN 输出、$\mathbf{R}_2^i$ 旋转 FFN 输入与 MHSA 输出、$\mathbf{R}_3^i$ 作用在 attention 内部（如 V 投影后），另有 $\mathbf{R}_4,\mathbf{R}_5$ 用 Fast Hadamard Transform 实现以处理 SpinQuant 协议中的特定激活通路。每条 attention/FFN 通路都让激活旋转与权重旋转相互抵消：先用 $\mathbf{R}^i$ 旋转激活，再用其转置旋转下一权重的输入侧、本权重的输出侧，因为 $\mathbf{R}\mathbf{R}^{\top}=\mathbf{I}$，这对旋转在数学上恰好消去。既然能消去，就可以在量化之前把所有 $\mathbf{R}$ 系数预乘进 $\mathbf{W}_q,\mathbf{W}_k,\mathbf{W}_v,\mathbf{W}_o,\mathbf{W}_{up},\mathbf{W}_{down}$（例如 $\tilde{\mathbf{W}}_v=\mathbf{R}_1^{i\top}\mathbf{W}_v\mathbf{R}_3$、$\tilde{\mathbf{W}}_o=\mathbf{R}_3^{i\top}\mathbf{W}_o\mathbf{R}_2$）。结果是训练时可学习参数高达 $1091.0\text{M}$（约 SpinQuant 的 63×），推理时这些参数 100% 隐入权重、online 参数只剩 $8.4\text{M}$——稠密矩阵之所以以前不能用，正是因为吸收不掉，而这套吸收机制把"用稠密"和"零在线"这对矛盾解开了。
 
-2. **基于经验观察的低秩残差近似**:
+**2. 基于经验观察的低秩残差近似：把残差处唯一融不掉的过渡矩阵压成低秩。**
 
-    - 功能：把残差连接处 $\mathbf{T}=\mathbf{R}_{out}\mathbf{R}_{in}^{\top}$ 这个 $D\times D$ 稠密矩阵换成一个秩 $r$ 的子空间旋转 + 恒等补，使在线复杂度从 $\mathcal{O}(D^2)$ 降到 $\mathcal{O}(rD)$。
-    - 核心思路：对 $\Delta\mathbf{T}=\mathbf{T}-\mathbf{I}$ 做 SVD，取前 $r$ 个左奇异向量构成 $\mathbf{Q}\in\mathbb{R}^{D\times r}$；将完整过渡矩阵投影到该子空间得到 $\mathbf{T}_{\text{sub}}=\mathbf{Q}^{\top}\mathbf{T}\mathbf{Q}$；为了严格正交，再对其做极分解 $\hat{\mathbf{R}}_{\text{sub}}=\mathbf{U}_{sub}\mathbf{V}_{sub}^{\top}$，使 $\hat{\mathbf{R}}_{\text{sub}}\in SO(r)$；最终近似 $\hat{\mathbf{T}}=\mathbf{I}+\mathbf{Q}(\hat{\mathbf{R}}_{\text{sub}}-\mathbf{I}_r)\mathbf{Q}^{\top}$，整体仍属于 $SO(D)$。
-    - 设计动机：作者实测稠密学到的 $\mathbf{R}$ 几乎不离 Hadamard 初值——可视化 $\mathbf{R}_1^{\top}\mathbf{R}_2$ 子块呈对角占优、稀疏，意味着基底失配只在少数主方向上，硬切低秩不会丢精度；这与"层间表达力是低秩的"这个论点一脉相承。
+块内旋转能消去，但残差连接处会冒出一个 $\mathbf{T}=\mathbf{R}_{out}\mathbf{R}_{in}^{\top}$，只有 $\mathbf{R}_{in}=\mathbf{R}_{out}$ 时才退化成单位阵，否则这个稠密 $D\times D$ 矩阵必须在线算 $\mathcal{O}(D^2)$。作者的观察是：从 Hadamard 初始化出发、被 Cayley 优化器约束的 $\mathbf{R}$ 几乎不离初值，可视化 $\mathbf{R}_1^{\top}\mathbf{R}_2$ 子块呈对角占优且稀疏，于是 $\mathbf{T}\approx\mathbf{H}\mathbf{H}^{\top}=\mathbf{I}$，扰动 $\Delta\mathbf{T}=\mathbf{T}-\mathbf{I}$ 集中在极少数主方向上。据此对 $\Delta\mathbf{T}$ 做 SVD，取前 $r$ 个左奇异向量拼成 $\mathbf{Q}\in\mathbb{R}^{D\times r}$，把完整过渡矩阵投影进该子空间得 $\mathbf{T}_{\text{sub}}=\mathbf{Q}^{\top}\mathbf{T}\mathbf{Q}$。但直接截断的低秩近似不再正交，会破坏旋转方法对量化误差的边界保证，所以再补一步极分解 $\hat{\mathbf{R}}_{\text{sub}}=\mathbf{U}_{sub}\mathbf{V}_{sub}^{\top}$ 把它拉回 $SO(r)$，最终 $\hat{\mathbf{T}}=\mathbf{I}+\mathbf{Q}(\hat{\mathbf{R}}_{\text{sub}}-\mathbf{I}_r)\mathbf{Q}^{\top}$ 整体仍属于 $SO(D)$。复杂度因此从 $\mathcal{O}(D^2)$ 降到 $\mathcal{O}(rD)$，而精度几乎不丢，因为基底失配本就是低秩的。
 
-3. **轻量在线残差通路**:
+**3. 轻量在线残差通路：用三步投影完成对齐，路径上不出现任何 $D\times D$ 乘法。**
 
-    - 功能：在不显式构造 $D\times D$ 的 $\hat{\mathbf{T}}$ 矩阵的前提下，用三步操作完成残差对齐。
-    - 核心思路：把更新公式直接写成三步流水：投影 $y=\mathbf{Q}^{\top}\tilde{x}_{in}\in\mathbb{R}^r$、子空间变换 $z=\mathbf{M}y$（其中 $\mathbf{M}=\hat{\mathbf{R}}_{\text{sub}}-\mathbf{I}_r$ 把恒等项和加法合并）、再投影并残差相加 $\tilde{x}_{out}=\tilde{x}_{in}+\mathbf{Q}z$。整条路径上没有任何 $D\times D$ 矩阵乘法。
-    - 设计动机：把"先投影到主子空间—在小空间内完成所有非平凡变换—再升回原维度"的范式跟 LoRA 思想对齐，但用于推理期对齐而非训练期更新，自然兼顾正交性、低秩性与硬件友好性。
+有了 $\hat{\mathbf{T}}$ 还需要让它在推理时真的便宜。ReSpinQuant 不显式构造 $D\times D$ 的 $\hat{\mathbf{T}}$，而是把更新写成三步流水：先投影 $y=\mathbf{Q}^{\top}\tilde{x}_{in}\in\mathbb{R}^r$ 降到 $r$ 维，再做子空间变换 $z=\mathbf{M}y$（其中 $\mathbf{M}=\hat{\mathbf{R}}_{\text{sub}}-\mathbf{I}_r$ 把恒等项和残差加法合并进一个小矩阵），最后升维并残差相加 $\tilde{x}_{out}=\tilde{x}_{in}+\mathbf{Q}z$。整条路径所有非平凡运算都发生在 $r$ 维小空间里，没有任何 $D\times D$ 矩阵乘法。这套"投影到主子空间—在小空间内完成全部非平凡变换—再升回原维度"的范式与 LoRA 同构，区别在于它用于推理期的基底对齐而非训练期的权重更新，因而天然同时拿到正交性、低秩性和硬件友好性。
 
 ### 损失函数 / 训练策略
-旋转矩阵在 Cayley 优化器约束下保持严格正交，使学习过程始终走在 Stiefel 流形上；校准集采自 WikiText-2 的 800 段，损失只用标准交叉熵（与 SpinQuant 协议一致，不引入 KL 散度或层级损失，这与 OSTQuant/FlatQuant 形成对比），作者把"结构创新"与"训练目标创新"完全解耦以便单独看结构带来的收益。旋转优化完成后用 GPTQ 量化权重并采用固定 clipping。默认子空间秩 $r=32$，是由 W3A3 设置下的 rank-PPL 曲线挑出来的 Pareto 拐点。整套 pipeline 在单卡 H100 上对 LLaMA-3 8B 仅需约 42 分钟完成校准。
+旋转矩阵在 Cayley 优化器约束下保持严格正交，学习过程始终走在 Stiefel 流形上，目标是最小化 $\|\mathbf{Y}-Q(\tilde{\mathbf{X}})Q(\tilde{\mathbf{W}})^{\top}\|_F^2$。校准集采自 WikiText-2 的 800 段，损失只用标准交叉熵——刻意与 SpinQuant 协议一致、不引入 KL 散度或层级损失（这点与 OSTQuant/FlatQuant 相反），目的是把"结构创新"和"训练目标创新"解耦，单独看结构带来的收益。旋转优化完成后用 GPTQ 量化权重并采用固定 clipping。默认子空间秩 $r=32$，由 W3A3 设置下的 rank-PPL 曲线挑出的 Pareto 拐点决定。整套 pipeline 在单卡 H100 上对 LLaMA-3 8B 约 42 分钟完成校准。
 
 ## 实验关键数据
 

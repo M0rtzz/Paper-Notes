@@ -38,33 +38,33 @@ tags:
 
 ### 整体框架
 
-基于 FLUX.1 架构构建，核心由两部分组成：
-
-- **PRW（Progressive Representation Weaving）**：嵌入每个 MMDiT block 的动态专家路由模块
-- **渐进式分阶段训练**：5 步训练策略，从基础能力到复杂任务逐步递进
+CoLoGen 想做的，是让同一个生成模型同时胜任指令编辑、可控生成和个性化生成，而不必为概念理解和空间定位这两种相互打架的能力各开一套表征。它在 FLUX.1 的 MMDiT 骨架上落了两枚关键棋子：一是把每个多模态注意力块里 source latent 的 KV 投影改造成可动态路由的专家池（PRW），让模型根据当前任务挑选合适的表征通路；二是用一条 5 步、从易到难的渐进式训练流水线把这些专家逐个点亮，前面学到的能力被冻结保留，后面的任务只解锁新专家。数据从 source latent 流入注意力块时，先由路由器选出专家加权融合，再与 noisy/text latent 交互生成输出，整个过程里概念和定位两种表征始终各走各的专家，互不污染。
 
 ### 关键设计
 
-1. **Progressive Representation Weaving (PRW)**：在每个多模态注意力块中，为 source latent 的 KV 投影引入专家池 $\{E_k\}_{k=1}^N$ 和动态路由器 $G$。路由器通过带噪声的 top-1 softmax 选择最相关专家：
+**1. Progressive Representation Weaving（PRW）：用 KV 层的专家路由把概念表征和定位表征拆开。**
 
-    $\mathbf{w} = hW_r + \epsilon \odot \text{softplus}(hW_n), \quad \epsilon \sim \mathcal{N}(0, \mathbf{I})$
-    $(K_{\hat{h}}, V_{\hat{h}}) = \text{KV\_proj}_{\text{base}}(h) + \sum_{k \in \mathcal{S}} \text{softmax}(\mathbf{w})_k E_k(h)$
+统一框架最大的痛点是把概念表征 $\mathcal{R}_c$ 和定位表征 $\mathcal{R}_l$ 强行塞进同一组共享参数，结果联合优化时互相拖后腿。PRW 的做法是只在 source latent 的 KV 投影这一层动手脚，给它配一个专家池 $\{E_k\}_{k=1}^N$ 和一个带噪声的 top-1 路由器。路由权重由当前隐状态 $h$ 算出，加性噪声项让训练期的专家选择带上探索性：
 
-   注意力分两步：先让 source latent 自注意力融入专家信息，再让 noisy/text latent 与之交互。设计动机：让不同任务自动激活不同专家，避免表征混淆。
+$$\mathbf{w} = hW_r + \epsilon \odot \text{softplus}(hW_n), \quad \epsilon \sim \mathcal{N}(0, \mathbf{I})$$
 
-2. **渐进式分阶段训练策略**：5 步从易到难：
+选中的专家以残差形式叠加到基础 KV 投影上，等于在不破坏原始 FLUX 表征的前提下，按任务追加一份专家修正：
 
-    - **Step 0-1（内生预训练）**：Mask Inpainting（3M 合成数据）学概念 + Visual Grounding（1M 数据）学定位
-    - **Step 2（条件注入）**：Controllable Generation（20M 数据）适配 Canny/Depth/HED/Lineart/Seg
-    - **Step 3-4（指令-图像对齐）**：Customized Generation（200K）+ Instruction Editing（1.6M）
+$$(K_{\hat{h}}, V_{\hat{h}}) = \text{KV\_proj}_{\text{base}}(h) + \sum_{k \in \mathcal{S}} \text{softmax}(\mathbf{w})_k E_k(h)$$
 
-   每步只解锁新专家 $E_{N-1}$，历史专家冻结保留已学知识，类似终身学习。
+注意力本身分两步走：先让 source latent 自注意力把选中的专家信息吸收进去，再让 noisy/text latent 与这份已经"带任务色彩"的 source 表征交互。由于路由发生在每个 block 内部、且只动 KV，不同任务自然会激活不同专家，概念理解与空间定位因此走在两条不重叠的通路上，避免了共享参数时的相互干扰。
 
-3. **Veteran Gate Routing Supervision**：为平衡新旧专家利用率，引入辅助损失约束新专家的路由密度：
+**2. 渐进式分阶段训练：按能力依赖顺序逐个点亮专家，旧专家冻结防遗忘。**
 
-    $\mathcal{L}_{\text{veteran}} = \alpha \cdot |U_t - \rho|, \quad U_t = \frac{1}{L_n} \sum_{i=1}^{L_n} \mathbb{I}(e_i = N-1)$
+如果一上来就把所有任务混在一起训，概念和定位的冲突会让模型每个任务都学不透。CoLoGen 把训练拆成 5 步，严格按"先打地基、再盖上层"的依赖关系推进：Step 0-1 是内生预训练，用 3M 合成数据做 Mask Inpainting 把概念能力练出来，再用 1M 数据做 Visual Grounding 把定位能力练出来；Step 2 注入条件，用 20M 数据让模型适配 Canny/Depth/HED/Lineart/Seg 等可控生成信号；Step 3-4 做指令-图像对齐，先用 200K 数据学 Customized Generation，再用 1.6M 数据学 Instruction Editing。关键在于每一步只解锁一个新专家 $E_{N-1}$，之前训好的专家全部冻结——这样新任务的学习不会改写旧能力，效果上类似终身学习里的参数隔离，天然抵抗灾难性遗忘。
 
-   其中 $\rho = 0.8$ 表示期望新专家被激活 80%，剩余 20% 保留给历史专家。总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{veteran}}$。
+**3. Veteran Gate Routing Supervision：用辅助损失约束新专家的使用密度，逼模型继续用老本事。**
+
+光冻结旧专家还不够，因为路由器很容易偷懒，把几乎所有 token 都甩给最新解锁的专家，导致前几步辛苦学到的概念/定位能力被晾在一边。CoLoGen 加了一项 veteran gate 损失，直接监督新专家 $E_{N-1}$ 的路由占比 $U_t$（即被路由到新专家的 token 比例），把它拉向一个目标密度 $\rho$：
+
+$$\mathcal{L}_{\text{veteran}} = \alpha \cdot |U_t - \rho|, \quad U_t = \frac{1}{L_n} \sum_{i=1}^{L_n} \mathbb{I}(e_i = N-1)$$
+
+取 $\rho = 0.8$，意思是允许新专家承担 80% 的路由、但强制留 20% 给历史专家，这样老本事既不会被遗忘也持续参与推理。它和任务损失相加构成总目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{veteran}}$。
 
 ### 损失函数 / 训练策略
 

@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Fast-dLLM++ 是 Fast-dLLM 的 drop-in 替换：在每个 denoising 步内做完前向、得到所有 mask 位置的边际预测 $p_\theta(X_i = v \mid x_k)$ 后，计算每个位置的 argmax 与对应置信度 $c_i$，把 $c_i$ 降序排为 $c_{(1)} \ge c_{(2)} \ge \cdots \ge c_{(m)}$，然后用一个新的"画像感知"选择器决定 commit 多少个 token，剩余位置继续保留 mask 进入下一步。模型、扩散调度、cache 模式（NONE / PrefixCache / DualCache）完全不变；只替换了 Fast-dLLM Algorithm 1 中第 11–18 行的 token 选择逻辑，复杂度只多了一次排序和前缀和。
+Fast-dLLM++ 把 Fast-dLLM 里"每步该 commit 几个 token"这件事换了一把更紧的尺子，而不动模型、扩散调度和 KV cache。在每个 denoising 步做完前向、拿到所有 mask 位置的边际预测 $p_\theta(X_i = v \mid x_k)$ 后，它取每个位置的 argmax 与置信度 $c_i$，把 $c_i$ 降序排成 $c_{(1)} \ge c_{(2)} \ge \cdots \ge c_{(m)}$，再用一个"画像感知"的选择器决定本步并行 commit 前几个 token，剩下的继续保留 mask 进入下一步。工程上只是把 Fast-dLLM Algorithm 1 第 11–18 行的 token 选择逻辑换掉，额外开销仅一次排序和一次前缀和，对 NONE / PrefixCache / DualCache 三种缓存模式完全透明。
 
 ### 关键设计
 
-1. **Fréchet 画像证书（Theorem 4.1）**:
+**1. Fréchet 画像证书：用整条置信度画像而不是最弱一项来判定"能否一起 commit"。**
 
-    - 功能：给"被选的 $n$ 个 marginal-argmax token 同时是真实联合最大值"提供 marginal-only 的 distribution-free 充分条件。
-    - 核心思路：对前 $n$ 候选定义 Fréchet 下界 $L_n = \max\{0, \sum_{j=1}^n c_{(j)} - (n-1)\}$（所有被选 token 联合正确的概率下界）与竞争上界 $U_n = 1 - c_{(n)}$（任何与 $x^\star_S$ 至少有一位不同的元组概率上界，因为它必须命中那个置信度只有 $c_{(n)}$ 的位置）。只要 $L_n > U_n$，被选元组就是真实联合分布 $P_S$ 的唯一最大者。该下界来自经典 Fréchet–Hoeffding / Bonferroni 不等式，是"仅给定边际事件概率"时的最紧 distribution-free 下界，因此在 marginal-only 信息下不可改进。
-    - 设计动机：把 Fast-dLLM 的"最弱 token 安全检验"升级为"利用整条画像的安全检验"，理论上严格包含 factor 作为同质特例，实践中给强 token 多余的安全裕度记功。
+Fast-dLLM 的 factor 规则只看排序后最弱被选 token $c_{(n)}$，等于把整条画像压平到最低值，丢掉了强 token 提供的安全信息。本文（Theorem 4.1）改用经典 Fréchet–Hoeffding / Bonferroni 不等式给出的下界：当只知道每个事件的边际概率时，它们交事件概率的 distribution-free 紧下界恰好是 $L_n = \max\{0, \sum_{j=1}^n c_{(j)} - (n-1)\}$，这正是"被选的 $n$ 个 marginal-argmax token 同时正确"的概率下界。与之对照的是任何"至少错一位"的竞争元组的概率上界 $U_n = 1 - c_{(n)}$——因为它必须命中那个置信度只有 $c_{(n)}$ 的位置。只要 $L_n > U_n$，被选元组就是真实联合分布 $P_S$ 的唯一最大者，可以安全 commit。由于 $L_n$ 是 marginal-only 信息下不可改进的最紧下界，这把"安全检验"从"看最弱 token"升级成了"看整条画像"，理论上严格包含 factor 作为同质特例，又额外给强 token 的安全裕度记了功。
 
-2. **画像感知选择规则与 Algorithm 1**:
+**2. 画像感知选择规则与 Algorithm 1：每步扫一遍前缀，取"最大且仍安全"的 commit 数。**
 
-    - 功能：在每个 denoising 步把候选数 $n$ 从 1 扫到 $m$，挑出"最大的同时还安全"的 commit 集合大小 $n^* = \max\{n: G_n > \delta\}$，其中 $G_n = L_n - U_n$、$\delta \ge 0$ 是用户设的 margin；若无 $n$ 满足则取 $n^* = 1$ 保证推进。
-    - 核心思路：只需把已计算好的置信度向量排序、做前缀和，逐项算 $L_n, U_n, G_n$ 即可，不需要额外网络前向；实现上是把 Fast-dLLM Algorithm 1 第 11–18 行替换为这段扫描循环。新算法对底层 cache 完全透明（PrefixCache / DualCache 都能直接用），无额外持久内存与可忽略的额外计算。
-    - 设计动机：用 marginal-only 的最紧证书做"每步最大可用并行度"决策，使理论改进直接落到工程的 token-per-step 提升。
+有了证书，选 token 就变成一个一维扫描：把候选数 $n$ 从 1 扫到 $m$，算安全 margin $G_n = L_n - U_n$，取满足 $G_n > \delta$ 的最大前缀 $n^* = \max\{n: G_n > \delta\}$，其中 $\delta \ge 0$ 是用户设的 margin；若没有任何 $n$ 满足就退回 $n^* = 1$ 保证至少推进一个 token。整个过程只需对已算好的置信度向量排序、做前缀和、逐项算 $L_n, U_n, G_n$，不需要任何额外网络前向，所以替换进 Fast-dLLM Algorithm 1 后既无额外持久内存、额外计算也可忽略，且对底层 cache 正交。这一步把 Theorem 4.1 的理论紧性直接兑现成了每步更大的 token-per-step 并行度。
 
-3. **异质性奖励分解（Proposition 4.3 + Corollary 4.4）**:
+**3. 异质性奖励分解：把"为什么更快"拆成一个可计算、画像可解释的量。**
 
-    - 功能：解释为什么 Fréchet 解码会比 matched factor（$f = 1 - \delta$）严格更激进——并量化"多 commit"的来源。
-    - 核心思路：当 $L_n > 0$ 时把分数分解为 $G_n = F_n + B_n$，其中 factor 核 $F_n = (n+1)c_{(n)} - n$ 只依赖最弱置信度，等价于 factor 规则；异质性奖励 $B_n = \sum_{j=1}^{n-1}(c_{(j)} - c_{(n)}) \ge 0$ 是画像与"平坦最弱线"之间的面积。等价地，Fréchet 等于一个"数据自适应"的 factor：$f_{\text{eff}}(n) = 1 - \delta + B_n$，画像越异质 $f_{\text{eff}}$ 越激进。Corollary 4.4 则严格证明：matched factor 接受的前缀 Fréchet 一定接受；Fréchet 严格多接受当且仅当 $F_n \le \delta < F_n + B_n$（奖励大到跨过决策边界）。
-    - 设计动机：把"为什么有效"从经验观察变成可计算的、画像可解释的量；同时把 Fast-dLLM 在工程上的成功重新解读为 marginal-only 框架的同质特例，给后续 dependence-aware 扩展铺路（论文 §4.2 用 TV / KL 稳定性给出更强但需要联合信息的扩展）。
+为说明 Fréchet 何时会比 matched factor（即 $f = 1 - \delta$）更激进，论文（Proposition 4.3）在 $L_n > 0$ 时把 margin 分解为 $G_n = F_n + B_n$：其中 factor 核 $F_n = (n+1)c_{(n)} - n$ 只依赖最弱置信度，正好对应 factor 规则；异质性奖励 $B_n = \sum_{j=1}^{n-1}(c_{(j)} - c_{(n)}) \ge 0$ 则是整条画像与"平坦最弱线"之间的面积——画像越异质，这块面积越大。等价地说，Fréchet 就是一个数据自适应的 factor $f_{\text{eff}}(n) = 1 - \delta + B_n$，越异质越激进。Corollary 4.4 进一步严格证明：matched factor 接受的前缀 Fréchet 必然也接受（所以永远不会更慢），而 Fréchet 严格多接受当且仅当 $F_n \le \delta < F_n + B_n$，即异质性奖励大到足以跨过决策边界。这一分解既把"为什么有效"从经验观察变成可量化的画像证据，也把 Fast-dLLM 的工程成功重新解读为 marginal-only 框架的同质特例，为后续 dependence-aware 扩展（§4.2 用 TV / KL 稳定性给出更强但需联合信息的版本）留好接口。
 
 ### 损失函数 / 训练策略
 完全训练无关。$\delta$ 是唯一新增超参，默认 $\delta = 0.25$（对应 matched factor $f = 0.75$）；论文还给出 calibration-robust 变体（Appendix C），用置信度的保守下界替换报告值，应对模型 over-confidence。

@@ -40,30 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DGS-Net 把训练时的可训练网络（CLIP image encoder + LoRA，称为学生 $E_{\text{img}}(\cdot;\theta)$）、文本编码器（CLIP $E_{\text{text}}$，frozen）、图像教师（pre-finetune CLIP $E_{\text{img}}^T$，frozen）三条支路并行 forward；每条支路套一个独立线性头 $h$ 算 BCEWithLogits 损失 $\mathcal{L}_{\text{img}}, \mathcal{L}_{\text{text}}, \mathcal{L}_{\text{img}}^T$；然后在**特征**层面分别取梯度 $g_{\text{task}}=\nabla_f \mathcal{L}_{\text{img}}, g_{\text{text}}=\nabla_t \mathcal{L}_{\text{text}}, g_{\text{img}}=\nabla_{f^T}\mathcal{L}_{\text{img}}^T$。两大组件 Orthogonal Suppression 用 $g_{\text{text}}^+$ 修剪 $g_{\text{task}}$，Prior Alignment 用 $g_{\text{img}}^-$ 加额外蒸馏信号；最终通过反向传播更新 LoRA 参数 $\theta$。文本侧 prompt 用 BLIP 自动从图像生成。
+DGS-Net 要解决的是"CLIP 微调到 AIGI 检测时，拿到真假信号的同时把可迁移先验毁掉"这个两难，它的做法是把"保留有益先验、抑制无关语义"这件事从特征空间挪到**梯度空间**去做手术。训练时同时跑三条冻结/可训练的支路：可训练的学生（CLIP image encoder + LoRA）、冻结的 CLIP 文本编码器、冻结的图像教师（fine-tune 前的 CLIP 副本）。三条支路各自算损失、各自在特征层取梯度，然后用文本梯度的"有害方向"把学生梯度里的语义干扰投影掉，再用图像教师梯度的"有益方向"把预训练好处补回来，最后反传只更新 LoRA 参数。
 
 ### 关键设计
 
-1. **梯度正负分解 (Preliminaries)**：
+**1. 梯度正负分解：给"知识价值"一把坐标级刻度尺**
 
-    - 功能：把任意分类损失的特征级梯度按坐标符号拆成"应该抑制"和"应该强化"两组互补方向，给后续两个组件提供原料。
-    - 核心思路：对损失 $\mathcal{L}$ 在特征 $u$ 处的一阶展开 $\mathcal{L}(u+\varepsilon e, y) \approx \mathcal{L}(u, y) + \varepsilon\langle \nabla_u \mathcal{L}, e\rangle$，单位方向 $e_j$ 沿其正向扰动让 $\mathcal{L}$ 增大当且仅当 $\partial \mathcal{L}/\partial u_j > 0$。据此定义 $g^+ \triangleq [\nabla_u \mathcal{L}]_+, g^- \triangleq [\nabla_u \mathcal{L}]_-$（element-wise 取正/负部分）。$g^+$ 张成一个"局部应抑制半空间"，$g^-$ 张成"局部可鼓励半空间"。这种**坐标级**而非整体方向级的判定让"哪些维度有害 / 有益"变成可逐位读出的标签。
-    - 设计动机：传统蒸馏只看"差距大小"不分方向；正交投影类方法（如 PCGrad）只取整向量的方向冲突。本文的贡献是发现"梯度的正负分量"分别对应"价值不同的特征方向"，把"value-aware gradient surgery"提到坐标粒度。
+后面两个组件都建立在同一个观察上：分类损失在特征处的梯度，可以按坐标符号拆成"价值相反"的两半。对损失 $\mathcal{L}$ 在特征 $u$ 处做一阶展开 $\mathcal{L}(u+\varepsilon e, y) \approx \mathcal{L}(u, y) + \varepsilon\langle \nabla_u \mathcal{L}, e\rangle$，沿单位方向 $e_j$ 正向扰动会让损失变大当且仅当 $\partial \mathcal{L}/\partial u_j > 0$。据此把梯度逐元素拆成正部和负部：$g^+ \triangleq [\nabla_u \mathcal{L}]_+$ 是"沿这些坐标增大特征会让损失变大"的**有害方向**，$g^- \triangleq [\nabla_u \mathcal{L}]_-$ 是"沿这些坐标增大特征会让损失变小"的**有益方向**。
 
-2. **Orthogonal Suppression**：
+这一步的价值在于把判定粒度做到了**坐标级**——传统蒸馏只看特征"差距大小"不分方向，PCGrad 那类正交投影方法也只看整向量的方向冲突，而 DGS-Net 发现梯度的正负分量恰好对应价值不同的特征维度，于是"哪些维度有害、哪些有益"变成了可以逐位读出的标签，为后面"该压制谁、该强化谁"提供了原料。
 
-    - 功能：把训练 image encoder 的梯度 $g_{\text{task}}$ 正交投影到文本梯度有害方向 $g_{\text{text}}^+$ 的**正交补空间**上，使 image encoder 不会沿任务无关的语义维度移动。
-    - 核心思路：从冻结文本编码器算出 $g_{\text{text}}$，取其正分量 $g_{\text{text}}^+$ 作为"由语义维度造成的局部增损方向"。因为 CLIP 视觉-文本特征对齐良好，文本梯度可以当作图像梯度里"语义子空间"的代理。然后把 $g_{\text{task}}$ 投影到 $\{g_{\text{text}}^+\}$ 的正交补：$\tilde{g}_{\text{task}} = g_{\text{task}} - \langle g_{\text{task}}, \hat{g}_{\text{text}}^+\rangle \hat{g}_{\text{text}}^+$（其中 $\hat{g}_{\text{text}}^+$ 是单位化版本）。Fig. 3 的"BLIP 文本训分类约 60%"实验为此提供了证据——语义和真假**有微弱相关**，但作为主要决策线索时会拖累跨生成器泛化，因此应该作为"干扰方向"剔除。
-    - 设计动机：以往做法把所有语义信息一并保留（如 UnivFD）或一并替换（如直接 LoRA），都没意识到 forgery artifact 和 semantic content 是两种本质不同的子空间。用文本梯度的有害方向当显式标识把语义剥离出来，相当于一个"语义滤波器"，让训练只在"语义不相关、但分类损失能下降"的方向里走，这正是更有利于跨生成器泛化的子空间。
+**2. Orthogonal Suppression：用文本梯度当语义滤波器，剔除任务无关方向**
 
-3. **Prior Alignment**：
+这一块针对的痛点是"微调会沿任务无关的语义维度乱走，压扁 CLIP 流形"。做法是借冻结文本编码器算出文本梯度 $g_{\text{text}}$，取其正分量 $g_{\text{text}}^+$——因为 CLIP 视觉-文本特征本就对齐良好，文本梯度可以当作图像梯度里"语义子空间"的免费代理，它的有害方向就标出了"由语义维度造成的局部增损方向"。然后把学生的任务梯度 $g_{\text{task}}$ 投影到 $g_{\text{text}}^+$ 的正交补上：
 
-    - 功能：从冻结 CLIP 图像编码器抽取**有益**梯度分量 $g_{\text{img}}^-$ 作为轻量蒸馏信号，把预训练里"有利于真假区分"的方向重新注入学生网络。
-    - 核心思路：冻结教师 $E_{\text{img}}^T$ 在同样图像-标签上 forward 算出 $g_{\text{img}}$；取负分量 $g_{\text{img}}^-$（按定义这些是"沿该坐标正扰动可降损"的方向）。把它当作蒸馏目标，在梯度空间里轻量对齐——具体表现为一个对齐项让学生的更新方向偏向 $g_{\text{img}}^-$ 所代表的特征 region。相当于教师对学生说"这些方向是预训练里就有的、对当前任务有益的好东西，别在 fine-tune 时把它们洗掉"。
-    - 设计动机：和传统 feature distillation 全局对齐 $\|f - f^T\|^2$ 不同，这里只挑出**有益子集**做对齐，对应"selective prior preservation"。这避免了把预训练里那些任务无关的语义部分一起拽住（那才是导致几何崩塌的元凶）。两组件合力 → Orthogonal Suppression 砍掉无关维度、Prior Alignment 拉回有用维度，统一在梯度空间完成"先验保留 + 干扰抑制"。
+$$\tilde{g}_{\text{task}} = g_{\text{task}} - \langle g_{\text{task}}, \hat{g}_{\text{text}}^+\rangle\, \hat{g}_{\text{text}}^+$$
+
+其中 $\hat{g}_{\text{text}}^+$ 是单位化后的有害方向。这样修剪后，image encoder 只在"语义不相关、但分类损失仍能下降"的子空间里更新，相当于挂了一个语义滤波器。Fig. 3 那个"单用 BLIP 文本训分类器只有约 60% 准确率"的对照实验正是它的依据——语义与真假**有微弱相关**，但一旦当成主要决策线索就会拖累跨生成器泛化，所以应该作为干扰方向剔除，而不是像 UnivFD 那样全保留、或像直接 LoRA 那样全替换。
+
+**3. Prior Alignment：只把图像教师的有益方向蒸回来**
+
+光剔除还不够，被微调洗掉的有益先验得补回来，但又不能像传统 feature distillation 那样全局对齐 $\|f - f^T\|^2$——那会把任务无关的语义部分一起拽住，正是几何崩塌的元凶。这里的做法是让冻结的图像教师 $E_{\text{img}}^T$ 在同样图像-标签上 forward 算出 $g_{\text{img}}$，只取它的负分量 $g_{\text{img}}^-$（按定义就是"沿该坐标正扰动可降损"的有益方向），把它当作一个轻量蒸馏目标，在梯度空间里让学生的更新方向偏向 $g_{\text{img}}^-$ 所代表的特征区域。等于教师只挑出"预训练里就有、且对当前真假区分有用"的那部分知识对学生说"别在 fine-tune 时把这些洗掉"，实现 selective prior preservation。两个组件合力——Orthogonal Suppression 砍掉无关维度、Prior Alignment 拉回有用维度——就在梯度空间里同时完成了"先验保留 + 干扰抑制"。
 
 ### 损失函数 / 训练策略
-学生骨干为 LoRA 注入的 CLIP image encoder，文本用 BLIP 自动生成 caption 喂给冻结文本编码器；三条支路都用 BCEWithLogits，最终反向时梯度按上述两步手术修改后再传给 LoRA 参数。教师编码器是 fine-tune 前的 CLIP 副本，纯 forward 用于提供 $g_{\text{img}}^-$。
+学生骨干为 LoRA 注入的 CLIP image encoder，文本侧用 BLIP 自动给每张图生成 caption 再喂给冻结文本编码器；三条支路各套一个独立线性头算 BCEWithLogits 损失 $\mathcal{L}_{\text{img}}, \mathcal{L}_{\text{text}}, \mathcal{L}_{\text{img}}^T$，并在特征层取梯度 $g_{\text{task}}=\nabla_f \mathcal{L}_{\text{img}}, g_{\text{text}}=\nabla_t \mathcal{L}_{\text{text}}, g_{\text{img}}=\nabla_{f^T}\mathcal{L}_{\text{img}}^T$。最终反传时，学生梯度先经上述两步手术修改再传给 LoRA 参数 $\theta$；教师编码器是 fine-tune 前的 CLIP 副本，纯 forward 只用于提供 $g_{\text{img}}^-$。
 
 ## 实验关键数据
 

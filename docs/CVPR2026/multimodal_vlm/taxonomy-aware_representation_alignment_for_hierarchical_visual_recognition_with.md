@@ -44,23 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **分类学视觉表示对齐 (Taxonomic Visual Representation Alignment)**：
+**1. 分类学视觉表示对齐：让LMM的视觉特征里"长出"生物学层次结构。**
 
-    - 功能：将LMM第 $\ell$ 层的视觉token表示与BFM的视觉特征对齐
-    - 核心思路：用可学习的投影器 $P_V$ 将LMM的视觉表示映射到BFM特征空间，最小化余弦相似度损失 $\mathcal{L}_V = -\frac{1}{N}\sum_{i=1}^{N}\text{sim}(P_V(\mathbf{e}^{\text{img}}_{\ell,i}), \mathbf{y}_i^{\text{img}})$
-    - 设计动机：BFM通过层次化对比训练学到了物种间的生态关系，对齐后LMM的视觉表示能编码这种层次化结构
+LMM违反分类层次的根源在于它的视觉编码缺乏生物学先验，看不出"哈士奇"和"狼"在分类树上挨得很近。TARA的做法是把LMM第 $\ell$ 层抽出的视觉token表示 $\mathbf{e}^{\text{img}}_{\ell,i}$ 过一个可学习投影器 $P_V$ 映射到BFM的特征空间，再去贴近BFM对同一张图给出的视觉特征 $\mathbf{y}_i^{\text{img}}$，用负余弦相似度作损失：
 
-2. **自由粒度标签表示对齐 (Free-grained Label Representation Alignment)**：
+$$\mathcal{L}_V = -\frac{1}{N}\sum_{i=1}^{N}\text{sim}\big(P_V(\mathbf{e}^{\text{img}}_{\ell,i}),\ \mathbf{y}_i^{\text{img}}\big)$$
 
-    - 功能：将LMM生成的第一个答案token的隐藏状态与BFM编码的目标粒度标签对齐
-    - 核心思路：用投影器 $P_T$ 将答案首token映射到BFM文本空间，最小化 $\mathcal{L}_C = \text{sim}(P_T(\mathbf{e}^{\text{answer}}_m[0]), \mathbf{y}^{\text{label}})$
-    - 设计动机：同一图像在不同层级有不同标签（专家需要种名，普通用户只需"鸟"），此对齐让模型根据用户意图灵活映射到不同粒度
+之所以拿BFM当锚点，是因为BFM（如BioCLIP2）是用层次化对比学习在海量物种上训出来的，它的特征空间天然把"界→门→纲→目→科→属→种"的远近关系编码进了几何距离。对齐之后，这种层次结构就被蒸馏进LMM的中间表示，模型在不同粒度上的判断自然更连贯。
 
-3. **交替训练策略**：
+**2. 自由粒度标签表示对齐：对齐"第一个答案token"，而不是逼模型在每一层都对。**
 
-    - 功能：TARA对齐损失与No-Thinking RFT交替训练
-    - 核心思路：No-Thinking RFT省略思维链，只用准确率奖励，直接产生简短答案。与TARA交替优化让知识注入更高效
-    - 设计动机：分类任务中显式推理过程并非必要，甚至可能有害；交替训练兼顾分类学知识注入和强化学习的探索能力
+同一张鸟的照片，专家想要的是种名，普通用户只要听到"鸟"就够了——硬把所有层级标签都塞进去对齐反而会打架。TARA只取模型生成的第一个答案token的隐藏状态 $\mathbf{e}^{\text{answer}}_m[0]$，过投影器 $P_T$ 映射到BFM的文本空间，去对齐当前问题所问那个粒度的标签特征 $\mathbf{y}^{\text{label}}$：
+
+$$\mathcal{L}_C = \text{sim}\big(P_T(\mathbf{e}^{\text{answer}}_m[0]),\ \mathbf{y}^{\text{label}}\big)$$
+
+首token承载了模型"准备回答什么"的决策信息，只对齐它就等于告诉模型：按用户问的层级灵活映射到对应粒度。这样同一套权重既能答"种"也能答"纲"，不会被多层级标签互相牵制。
+
+**3. 对齐损失与No-Thinking RFT交替训练：分类任务里，少想一点反而更准。**
+
+注入了知识还得让模型真的用起来，TARA把上面两个对齐损失和一个No-Thinking RFT交替优化。No-Thinking RFT砍掉思维链，不让模型展开冗长推理，只用一个准确率奖励，直接产出简短答案。作者的判断是分类这类任务并不需要显式推理，过度"想"甚至会引入噪声把答案带偏；让强化学习专注于在答案空间里探索，再和表示对齐轮流走，既把分类学知识压进表示、又保留了RL的探索能力，两边互不挤占。
 
 ### 损失函数 / 训练策略
 总损失为 $\mathcal{L}_{\text{alignment}} = (\mathcal{L}_V + \mathcal{L}_C)/2$，与No-Thinking RFT交替训练。投影器 $P_V$ 和 $P_T$ 为三层MLP+SiLU激活。推理时移除BFM和投影器，无额外开销。

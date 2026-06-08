@@ -42,35 +42,27 @@ tags:
 
 ### 整体框架
 
-算法把"对长度 $n$ 的字符串做 BPE 分词"重构成 $n$ 次增量更新：每次读入一个字节 $c$，把状态 $\theta(s)$ 更新成 $\theta(sc)$，并隐式维护所有前缀的分词树。
+这篇论文要把"对长度 $n$ 的字符串做 BPE 分词"从一个必须看到完整输入的离线过程，改造成每读一个字节就更新一次的在线增量过程。关键观察是：由 Berglund & van der Merwe 的前缀一致性，只要每步能算出新串 $sc$ 的**最后一个 token** $\theta(sc)$，就能递归回溯出全部前缀的分词。于是算法把整段分词重构成 $n$ 次"读入字节 $c$、把状态 $\theta(s)$ 更新成 $\theta(sc)$"的更新，每次更新严格 $\mathcal{O}(\log^2 t)$（$t$ 为最长 token 长度），全文 $\mathcal{O}(n \log^2 t)$，从根上避开 tiktoken 在病态输入上的 $\mathcal{O}(n^2)$。
 
-整体流水线为：① **预处理**——对词表 $\mathcal{V}$ 做规范化（去掉不可达的 token，建立非原子 token 与生成它的 merge rule 的双射），构造 **Successor Forest**（每个非原子 token 指向其 successor，即合并它的右半部分）；② **离线索引**——对 Successor Forest 做预序 DFS 拿到 `dfs_in/dfs_out` 时间戳，每个 token 预算"有效区间" $I_t$；对每个 token $\tau$ 预算 Centroid Search Tree（CST）；建 Aho–Corasick 自动机并把"搜索空间入口"标注到每个状态；③ **在线增量**——读入字节 $c$，自动机转移到新状态 $\mathcal{O}(1)$ 得到最长后缀 token $\tau(sc)$，进入对应 SufSucTree 上的 CST 做对数次二分查找，定位单调路径上最深的合法节点即为 $\theta(sc)$。
-
-整个在线阶段每字节最坏 $\mathcal{O}(\log^2 t)$，全文 $\mathcal{O}(n \log^2 t)$，远低于 tiktoken 在病态输入上的 $\mathcal{O}(n^2)$。
+整条流水线分三段。**离线预处理**先对词表 $\mathcal{V}$ 做规范化（去掉不可达 token，建立非原子 token 与生成它的 merge rule 的双射），并构造 **Successor Forest**——每个非原子 token 指向它的 successor（合并它的右半部分）。**离线索引**再对 Successor Forest 做一遍预序 DFS 拿到 `dfs_in/dfs_out` 时间戳、为每个 token 预算"有效区间" $I_t$，同时为每个 token $\tau$ 建 Centroid Search Tree（CST），并建 Aho–Corasick 自动机、把"搜索空间入口"标注到每个状态。**在线增量**阶段每读一个字节 $c$，自动机走一步 $\mathcal{O}(1)$ 拿到最长后缀 token $\tau(sc)$，进入它对应的 SufSucTree 上的 CST 做对数次二分，定位单调路径上最深的合法节点即 $\theta(sc)$。下面三个设计正是把这条"每字节对数复杂度"的承诺逐层兑现。
 
 ### 关键设计
 
-1. **单调路径定理（Monotonic Path Property）—— 把全局合并问题归约到树上单调搜索**：
+**1. 单调路径定理（Monotonic Path Property）：把"谁当最后一个 token"从回溯全部历史变成树上单调搜索。**
 
-    - 功能：刻画在 SufSucTree 上哪些后缀 token 有资格成为 $\theta(sc)$，把"候选集"从所有后缀 token（线性多）压成 SufSucTree 上从根（原子 token $c$）到 $\theta(sc)$ 的**唯一单调路径**。
-    - 核心思路：作者形式化"前缀末 token 条件"（Definition 4.1）——候选 $t$ 必须同时满足两个条件，记 $s^{-\operatorname{suc}(t)}$ 为去掉 $t$ 后缀部分后的前缀：(i) **可达性**——$\theta(s^{-\operatorname{suc}(t)})$ 必须落在 Successor Forest 中以 $\operatorname{pre}(t)$ 为根的子树内；(ii) **优先级支配**——若 $\theta(s^{-\operatorname{suc}(t)}) \neq \operatorname{pre}(t)$，则 $\operatorname{pre}(t)$ 到该祖先路径上的那个孩子 $u$，其 merge rule 优先级必须严格低于 $t$ 自己的 rule。Theorem 4.2 证明：满足该条件的所有 $t$ 在 $\operatorname{SufSucTree}(\tau(sc))$ 上恰好构成一条从根出发的单调路径，且 $\theta(sc)$ 是这条路径上最深的节点。"if" 方向的直觉是：在真正的 last token 的 successor 链上，可达性和优先级支配都被单调保持。
-    - 设计动机：现有实现把 BPE 视作全局优先队列合并，每步要扫所有 pair，这是 $\mathcal{O}(n \log n)$ 甚至更糟的根源。单调路径性质把"哪个 token 当 last token"这个看似需要回溯全部历史的问题，变成了一棵预先静态构造的树上的二分搜索——天然适配增量更新和最坏复杂度分析。
+现有实现把 BPE 当成全局优先队列合并，每步要扫所有 pair 才能找最大优先级，这正是 $\mathcal{O}(n \log n)$ 乃至更糟的根源；而判断 $\theta(sc)$ 是哪个后缀 token，表面上同样像要回看整段历史。这个定理把候选集从"所有后缀 token"（线性多）压成 SufSucTree 上从根（原子 token $c$）到 $\theta(sc)$ 的**唯一单调路径**。作者先形式化"前缀末 token 条件"（Definition 4.1）：记 $s^{-\operatorname{suc}(t)}$ 为去掉 $t$ 的 successor 后缀部分后的前缀，候选 $t$ 要同时满足两条——(i) **可达性**：$\theta(s^{-\operatorname{suc}(t)})$ 必须落在 Successor Forest 中以 $\operatorname{pre}(t)$ 为根的子树内；(ii) **优先级支配**：若 $\theta(s^{-\operatorname{suc}(t)}) \neq \operatorname{pre}(t)$，则从 $\operatorname{pre}(t)$ 通往该祖先那一侧的孩子 $u$，其 merge rule 优先级必须严格低于 $t$ 自己的 rule。Theorem 4.2 证明满足该条件的所有 $t$ 在 $\operatorname{SufSucTree}(\tau(sc))$ 上恰好构成一条从根出发的单调路径，$\theta(sc)$ 就是这条路径上最深的节点；"if" 方向的直觉是在真正 last token 的 successor 链上，可达性与优先级支配都被单调保持。这样一来，"哪个 token 当 last token"这个看似要回溯全部历史的问题，就变成在一棵预先静态构造好的树上做二分——天然适配增量更新与最坏复杂度分析。
 
-2. **DFS 时间戳 + 有效区间 —— 把前缀末 token 条件压成 $\mathcal{O}(1)$ 区间检测**：
+**2. DFS 时间戳 + 有效区间：把前缀末 token 条件压成一次 $\mathcal{O}(1)$ 整数区间检测。**
 
-    - 功能：把上面那个看起来要查询 Successor Forest 子树成员关系 + 比较 rule 优先级的复杂判定，变成单次"整数是否落在区间内"的 $\mathcal{O}(1)$ 检测。
-    - 核心思路：对 Successor Forest 做预序 DFS，关键技巧是**遍历孩子时按 canonical rule 优先级从低到高排序**——这样高优先级孩子的子树时间戳一定排在后面。这保证了任一非原子 token $t$ 的合法候选集 $\mathcal{C}_t$ 对应一段连续的时间戳区间 $I_t = [L_t, R_t)$，其中 $L_t = \operatorname{dfs\_in}(\operatorname{pre}(t))$，$R_t$ 是 $\operatorname{pre}(t)$ 第一个 rule 优先级 $\geq t$ 的孩子的 `dfs_in`（不存在则取 $\operatorname{dfs\_out}(\operatorname{pre}(t))$）。在线检测变成 `dfs_in(k) ∈ I_t` 这一个比较。另一个关键推论：SufSucTree 中**兄弟节点的有效区间互不相交**——这直接来自单调路径的唯一性，使得搜索时在每个分叉处都能无歧义地选对方向。
-    - 设计动机：理论上的"前缀末 token 条件"如果每次重新计算会引入 $\mathcal{O}(t)$ 因子，无法支撑 $\mathcal{O}(\log^2 t)$ 目标。把树形归属关系线性化成区间是经典 OI 技巧，但与"优先级排序孩子"结合后才能同时编码可达性和优先级支配两个条件——这是把抽象理论性质变成可计算 $\mathcal{O}(1)$ 谓词的核心工程化步骤。
+上一条定理虽然漂亮，但它的判定每次都要查 Successor Forest 子树成员关系、再比较 rule 优先级，若现算会引入 $\mathcal{O}(t)$ 因子，撑不起 $\mathcal{O}(\log^2 t)$ 目标。作者把这套树形归属关系线性化成整数区间：对 Successor Forest 做预序 DFS，**遍历孩子时按 canonical rule 优先级从低到高排序**，于是高优先级孩子的子树时间戳一定排在后面。这保证任一非原子 token $t$ 的合法候选集 $\mathcal{C}_t$ 对应一段连续区间 $I_t = [L_t, R_t)$，其中 $L_t = \operatorname{dfs\_in}(\operatorname{pre}(t))$，$R_t$ 取 $\operatorname{pre}(t)$ 第一个 rule 优先级 $\geq t$ 的孩子的 `dfs_in`（不存在则取 $\operatorname{dfs\_out}(\operatorname{pre}(t))$）。在线检测从此只是 `dfs_in(k) ∈ I_t` 一个比较。区间线性化本是经典 OI 技巧，但只有与"优先级排序孩子"结合，才能把可达性和优先级支配两个条件同时编码进同一段区间。它还顺带给出一个关键推论：SufSucTree 中**兄弟节点的有效区间互不相交**（直接来自单调路径的唯一性），使得搜索时在每个分叉处都能无歧义地选对方向。
 
-3. **Aho–Corasick + Centroid Decomposition —— 把增量更新做到对数复杂度**：
+**3. Aho–Corasick + Centroid Decomposition：把每字节的增量更新真正压进对数时间。**
 
-    - 功能：每读入一个字节，$\mathcal{O}(1)$ 定位搜索空间 $\operatorname{SufSucTree}(\tau(sc))$，再 $\mathcal{O}(\log^2 t)$ 在搜索空间内定位最深合法节点。
-    - 核心思路：① 对词表 $\mathcal{V}$ 建 Aho–Corasick 自动机，对每个状态预计算"搜索空间入口"标注——若状态对应 token 自己在 $\mathcal{V}$ 里就用它，否则从 suffix link 继承——这样新字符到来时只需自动机走一步就能 $\mathcal{O}(1)$ 拿到 $\tau(sc)$，**不用沿 suffix link 回溯**。转移表用持久化分块（square-root tiling）压缩存储但保持 $\mathcal{O}(1)$ 查询。② 对每个 $\tau \in \mathcal{V}$ 离线建 Centroid Search Tree（CST），高度严格 $\mathcal{O}(\log |\tau|)$；在线搜索时从 CST 根开始，对当前重心 $u$ 用区间检测判断它是否合法：若**不合法**，按单调路径性质，目标必在 $u$ 父侧分量，转 CST 中"父方向"孩子；若**合法**，则 $u$ 在路径上，对 $u$ 在原 SufSucTree 中的孩子做二分（兄弟区间不相交可排序）找是否还有更深合法孩子 $v$，有则继续往 $v$ 方向走，无则 $\theta(sc) = u$ 终止。每个 CST 步做一次 $\mathcal{O}(\log t)$ 二分，CST 深度 $\mathcal{O}(\log t)$，合计 $\mathcal{O}(\log^2 t)$/字节。
-    - 设计动机：朴素自顶向下遍历 SufSucTree 在最坏情况下是 $\mathcal{O}(t)$（树高线性于 $|\tau|$），无法满足复杂度目标。Centroid Decomposition 是把任意树压成 $\mathcal{O}(\log)$ 高度搜索结构的标准武器；结合 Aho–Corasick 把"搜索空间识别"也降到 $\mathcal{O}(1)$，两个组件配合才能把"严格最坏复杂度 + 增量更新"两个看似冲突的目标同时拿下。
+有了 $\mathcal{O}(1)$ 谓词还不够——朴素自顶向下遍历 SufSucTree 最坏是 $\mathcal{O}(t)$（树高线性于 $|\tau|$），仍达不到目标。这一步用两件标准武器配合收口。其一，对词表 $\mathcal{V}$ 建 Aho–Corasick 自动机，给每个状态预计算"搜索空间入口"标注：状态对应的 token 若自己就在 $\mathcal{V}$ 里则用它，否则从 suffix link 继承——这样新字符到来时只需自动机走一步即 $\mathcal{O}(1)$ 拿到 $\tau(sc)$，**无需沿 suffix link 回溯**；转移表用持久化分块（square-root tiling）压缩存储而保持 $\mathcal{O}(1)$ 查询。其二，对每个 $\tau \in \mathcal{V}$ 离线建 Centroid Search Tree（CST），高度严格 $\mathcal{O}(\log |\tau|)$；在线搜索从 CST 根出发，对当前重心 $u$ 用区间检测判断合法性——若**不合法**，按单调路径性质目标必在 $u$ 的父侧分量，转向 CST 中"父方向"的孩子；若**合法**，则 $u$ 在路径上，对它在原 SufSucTree 中的孩子做二分（兄弟区间不相交可排序）看是否还有更深的合法孩子 $v$，有则继续往 $v$ 走，无则 $\theta(sc) = u$ 终止。每个 CST 步做一次 $\mathcal{O}(\log t)$ 二分、CST 深度 $\mathcal{O}(\log t)$，合计 $\mathcal{O}(\log^2 t)$/字节。Centroid Decomposition 把任意树压成 $\mathcal{O}(\log)$ 高度搜索结构，Aho–Corasick 把"搜索空间识别"降到 $\mathcal{O}(1)$，正是两者配合才同时拿下"严格最坏复杂度"和"增量更新"这对看似冲突的目标。
 
 ### 损失函数 / 训练策略
 
-本工作是纯算法/数据结构工作，无训练。Eager output 模块（§6）额外维护一个"主动前沿"$\mathcal{P}$——所有可能成为未来 token 父节点的候选末 token 集合，由 Aho–Corasick 当前状态深度 $d(s)$ 界定窗口 $[|s|-d(s), |s|]$；用双指针单调维护（窗口左端单调右移，过期的 token 不会再回来），当所有活跃路径汇聚到虚拟根的同一个孩子时即可 eager 输出，使分词与模型推理能完全 pipeline。Eager 模式相对非 eager 引入约 10% 吞吐 overhead。
+本工作是纯算法/数据结构工作，无训练目标。值得单列的是 eager output 模块（§6），它让分词能与模型推理真正 pipeline 起来：模块额外维护一个"主动前沿" $\mathcal{P}$——所有可能成为未来 token 父节点的候选末 token 集合，其窗口由 Aho–Corasick 当前状态深度 $d(s)$ 界定为 $[|s|-d(s), |s|]$，用双指针单调维护（窗口左端只右移，过期的 token 不会再回来）。当所有活跃路径汇聚到虚拟根的同一个孩子时，对应 token 的边界在未来任何延伸下都不再可能改变，于是立即输出。代价是 eager 模式相对非 eager 引入约 10% 吞吐 overhead。
 
 ## 实验关键数据
 

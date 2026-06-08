@@ -44,23 +44,18 @@ tags:
 数据来自 Manupatra，包含 2,937 个孟加拉法律文档样本，文本中混有 Bengali、English 和 romanized Bengali。作者把数据分成 2,349 个训练样本和 588 个 held-out evaluation 样本。预处理包括缺失值和 placeholder 标准化、文本 normalization、删除重复/损坏项、长度分析、tokenization 等。分类任务使用 BiGRU 编码 case notes，并通过 mean pooling 和 max pooling 得到文档表示，再交给 KAN block 预测 disposition。摘要任务使用 attention-based GRU encoder-decoder，并在输出头上加入 KAN 来增强 token prediction。
 
 ### 关键设计
-1. **BiGRU + KAN 分类模型**:
 
-	- 功能：对法律文档预测 disposition 类别，处理长文本、领域术语和多语言混写。
-	- 核心思路：输入 token sequence $X=(x_1,x_2,\ldots,x_T)$ 先经过 embedding 和 BiGRU。每个时间步拼接前向与后向 hidden state，得到 $h_t=[\overrightarrow{h_t};\overleftarrow{h_t}]$。随后同时做 mean pooling 和 max pooling，形成 $h_{doc}=[h_{mean};h_{max}]$，再通过 KAN block 输出分类 logits。
-	- 设计动机：mean pooling 保留整体语义，max pooling 捕捉强触发词或关键法律短语；KAN head 则为固定文档表示增加更复杂的非线性分割能力。
+**1. BiGRU + KAN 分类模型：序列编码交给 BiGRU，非线性决策边界交给 KAN。**
 
-2. **Attention GRU + KAN 摘要模型**:
+法律文档又长、术语又专，还混着 Bengali、English 和 romanized Bengali 三种文字，单靠一个 recurrent backbone 的表达力不一定够。这个分类模型让 token sequence $X=(x_1,x_2,\ldots,x_T)$ 先过 embedding 和 BiGRU，每个时间步把前向与后向 hidden state 拼起来得到 $h_t=[\overrightarrow{h_t};\overleftarrow{h_t}]$，再同时做 mean pooling 和 max pooling 形成固定长度的文档表示 $h_{doc}=[h_{mean};h_{max}]$，最后送进 KAN block 输出分类 logits。两种 pooling 各有分工——mean 保留整段语义，max 抓住强触发词或关键法律短语；而 KAN head 用可学习的 spline-like edge functions 替代 MLP 里的固定激活，给这份固定表示补上更复杂的非线性分割能力，相当于在不换重型 backbone 的前提下把决策边界做得更细。
 
-	- 功能：为法律文档生成简短摘要，尽量保留核心法律问题和重要条款。
-	- 核心思路：encoder 把输入文档编码为 $H=(h_1,h_2,\dots,h_T)$，decoder 在每个时间步通过 attention 生成 context vector $c_t$，再结合 decoder hidden state 预测下一个 token。KAN head 被放在 attention-based recurrent summarization model 上方，用于增强输出表示。
-	- 设计动机：法律摘要需要从长文本中聚焦关键事实和条款；attention 负责选择输入片段，KAN 负责提升生成头的表达能力。
+**2. Attention GRU + KAN 摘要模型：attention 选片段，KAN 强化生成头。**
 
-3. **类别不平衡处理**:
+法律摘要要从长文本里聚焦核心法律问题和关键条款，光靠 recurrent decoder 容易抓不准重点。摘要模型用 attention-based GRU encoder-decoder：encoder 把输入编码为 $H=(h_1,h_2,\dots,h_T)$，decoder 每个时间步通过 attention 算出 context vector $c_t$，结合自身 hidden state 预测下一个 token。和分类模型同源的思路是，KAN head 被接在这个生成头上方——attention 负责从输入中挑出该关注的片段，KAN 负责提升输出表示的非线性表达力，让生成的摘要更能保留重要事实和条款。
 
-	- 功能：降低 majority disposition classes 对训练的主导作用。
-	- 核心思路：分类训练中使用 WeightedRandomSampler，让 minority classes 在 mini-batch 中更频繁出现；摘要任务则使用标准 batch formation，因为摘要目标依赖每个样本的完整文本和 target summary。
-	- 设计动机：法律 disposition 标签高度不平衡，普通随机采样会让模型倾向多数类；weighted sampling 是低成本且与 recurrent/KAN 架构兼容的缓解策略。
+**3. 类别不平衡处理：用 WeightedRandomSampler 把少数类抬进每个 batch。**
+
+法律 disposition 标签高度不平衡，普通随机采样会让模型一味倒向多数类。分类训练因此改用 WeightedRandomSampler，按类别频率反比加权，让 minority classes 在 mini-batch 里出现得更频繁；这是个低成本又天然兼容 recurrent/KAN 架构的缓解手段。摘要任务则保留标准 batch formation——因为摘要目标依赖每个样本完整的原文和 target summary，逐样本采样比按类别重采样更合适。
 
 ### 损失函数 / 训练策略
 分类任务使用标准 cross entropy，摘要任务使用 sequence-to-sequence target token loss。训练超参数为 200 epochs、learning rate $2\times10^{-5}$、batch size 8、Adam optimizer、dropout 0.2。分类指标包括 accuracy、macro-F1 和 weighted-F1；摘要使用 ROUGE-1、ROUGE-2、ROUGE-L F1。论文也报告了三次分类实验的稳定性：0.6765、0.6699、0.6771，均接近主结果。

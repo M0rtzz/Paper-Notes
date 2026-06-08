@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者在 Qwen2.5 系列（0.5B/1.5B/3B/7B/14B/32B/72B）上从同一个基座微调九个领域专家（algebra、analysis、geometry、discrete、number_theory、code、chemistry、physics、biology），覆盖 in-domain 与 cross-domain 两种评估。对每个 $(N,k)$ 组合，遍历或均匀采样所有 $\binom{9}{k}$ 的专家子集，跑四种合并算法（Average、TA、TIES、DARE）合成模型并测 token-level CE，最终得到 10,866 个合并模型的网格数据。然后用加权非线性最小二乘拟合一条形如 $\mathbb{E}[L\mid N,k]=L_\infty(N)+A(N)/(k+b)$ 的曲线，其中 $L_\infty(N)=L_*+BN^{-\beta}$、$A(N)=A_0 N^{-\gamma}$，再用 R² 与残差结构验证。
+这篇论文要回答一个工程问题：给定目标 loss，到底需要几个专家、基座该放多大。作者在 Qwen2.5 系列（0.5B/1.5B/3B/7B/14B/32B/72B）上，从同一基座微调出九个领域专家（algebra、analysis、geometry、discrete、number_theory、code、chemistry、physics、biology），对每个 $(N,k)$ 组合遍历或均匀采样所有 $\binom{9}{k}$ 个专家子集，用四种合并算法（Average、TA、TIES、DARE）合成模型并测 token-level CE，最终攒出 10,866 个合并模型的网格数据；in-domain 和 cross-domain 两套评估都跑。有了这张网格，就用加权非线性最小二乘拟一条把 $N$ 和 $k$ 解耦的曲线，再用 R² 和残差结构验证它确实站得住。
 
 ### 关键设计
 
-1. **统一 floor+tail 幂律**:
+**1. 统一的 floor+tail 幂律：把基座规模和专家数压进同一个公式。**
 
-    - 功能：用一个公式同时刻画基座规模和专家数对合并 loss 的影响。
-    - 核心思路：$\mathbb{E}[L\mid N,k]=L_*+BN^{-\beta}+\frac{A_0 N^{-\gamma}}{k+b}$，其中 floor 项 $L_*+BN^{-\beta}$ 随 $N$ 单调下降，tail 项 $A_0 N^{-\gamma}/(k+b)$ 随 $k$ 以倒数速率衰减；拟合时用权重 $\propto k$ 来稳定早期 $k$ 噪声，所有方法在所有切片上 $R^2>0.98$。
-    - 设计动机：把"更大基座更好合"和"专家越多收益递减"两个观察合并到同一表达式，使预算决策（"再加一个专家 vs 把基座放大一档"）可以直接通过两项的相对量级来比较。
+合并的收益曲线明显不是线性的——早期加专家收益陡、后期很快饱和，但此前没人写得出这条曲线的解析形式，于是工程上只能穷举搜索。作者把所有合并方法的 CE 统一拟合成 $\mathbb{E}[L\mid N,k]=L_*+BN^{-\beta}+\frac{A_0 N^{-\gamma}}{k+b}$：前半截 $L_\infty(N)=L_*+BN^{-\beta}$ 是 **floor**，随基座规模 $N$ 单调下降，刻画"更大基座更好合"；后半截 $A(N)/(k+b)$（其中 $A(N)=A_0 N^{-\gamma}$）是 **tail**，随专家数 $k$ 以倒数速率衰减，刻画"专家越多收益递减"。拟合时给每个点配权重 $\propto k$ 压住小 $k$ 时的高方差，结果四种方法在所有切片上 $R^2>0.98$。这个解耦视角的实用之处在于：要判断"再融一个专家 vs 把基座升一档"哪个更划算，直接比 floor 项和 tail 项的相对量级即可，不用再跑实验。
 
-2. **从二阶 Taylor 导出 1/k tail 的理论**:
+**2. 从二阶 Taylor 展开导出 $1/k$ tail：解释为什么差异巨大的算法落在同一条曲线上。**
 
-    - 功能：解释为什么所有合并算法在等权归一化下都呈现 $1/k$ 的尾部。
-    - 核心思路：把每个 task vector 写成 $v_i$，等权合并后扰动均值是 $c\mu$、协方差是 $\Sigma/k$；对 loss 做二阶 Taylor 展开得到 $\mathbb{E}[L]=L(\theta_0)+cg^\top\mu+\frac{1}{2}c^2\mu^\top H\mu+\frac{c^2}{2k}\mathrm{Tr}(H\Sigma)+\mathcal{O}(k^{-3/2})$，前面三项凝聚成 $L_\infty(N)$，最后一项就是 $A(N)/k$；Corollary 进一步说明 subset 间的 std 以 $1/\sqrt{k}$ 收缩。TIES/DARE 这类预处理算法被吸收成对 $\Psi(v)$ 的修改，不改变 leading-order 形式。
-    - 设计动机：从理论上把"为什么 1/k"讲清楚，而不是仅给出经验拟合；同时解释为什么 TIES、DARE 这些差异巨大的实现最终也都落在同一曲线上。
+光有经验拟合不够，还得说清楚为什么尾部恰好是 $1/k$、为什么 TIES 和 DARE 这种实现天差地别的方法最终也共用一条线。作者把每个 task vector 记为 $v_i$，等权合并后扰动的均值是 $c\mu$、协方差缩成 $\Sigma/k$；对 loss 做二阶 Taylor 展开得到
 
-3. **三点拟合 + 推荐 $k^*$ 的预算算法**:
+$$\mathbb{E}[L]=L(\theta_0)+cg^\top\mu+\tfrac{1}{2}c^2\mu^\top H\mu+\tfrac{c^2}{2k}\mathrm{Tr}(H\Sigma)+\mathcal{O}(k^{-3/2})$$
 
-    - 功能：只用 $k\in\{1,2,4\}$ 三个点就能外推整条 $k$-曲线，并给出"性价比最高的专家数" $k^*$。
-    - 核心思路：因为公式只有 $L_\infty$、$A$、$b$ 三个自由度，理论上三点定型；论文经验显示三点拟合可以恢复完整 9 点曲线，并把 $k^*$ 稳定地估计在 $5\sim 6$，对应 elbow 位置 $\Delta_k\approx A/[(k+b)(k+1+b)]\sim k^{-2}$。
-    - 设计动机：在真实场景下做完整 $k$-grid 的开销很大；三点法把"先测一小批再决定预算"做成可行流程，让合并从"试错"变成"测量+外推"。
+前三项与 $k$ 无关、凝聚成 $L_\infty(N)$，最后一项 $\frac{c^2}{2k}\mathrm{Tr}(H\Sigma)$ 正是 $A(N)/k$ 这条尾巴；配套 Corollary 进一步说明子集之间的 std 以 $1/\sqrt{k}$ 收缩。TIES、DARE 这类带预处理的算法，本质只是把任务向量改成某个 $\Psi(v)$，修改的是均值/协方差这些常数，不动 leading-order 的结构——这就解释了它们为何最终都贴在同一条幂律上。
+
+**3. 三点拟合 + 推荐专家数 $k^*$：把合并从"试错"变成"测量+外推"。**
+
+真实场景下跑完整 $k$-grid 太贵，但公式只有 $L_\infty$、$A$、$b$ 三个自由度，理论上三个点就能定型。作者实测只用 $k\in\{1,2,4\}$ 三个点拟合，就能恢复出完整的 9 点 $k$-曲线，误差不过完整拟合的几倍。在此基础上还能直接读出"性价比拐点"$k^*$：相邻增益 $\Delta_k\approx A/[(k+b)(k+1+b)]\sim k^{-2}$ 快速塌缩，elbow 稳定落在 $k\approx5\sim6$（达 85% 收益只要 5 个专家、90% 只要 6 个）。这把"先测一小批、再决定预算"做成了可落地流程：合并不再靠手感穷举，而是测三点、外推整条曲线、锁定预算。
 
 ### 损失函数 / 训练策略
-论文不引入新的训练损失，所有数据点来自冻结的基座+独立微调的 9 个领域专家，用 token-level cross-entropy 在 30M held-out token 上评估；合并系数采用等权归一化 $\alpha_{i,k}=c/k$。拟合采用加权非线性最小二乘，权重 $\propto k$ 以抑制小 $k$ 时的高方差。
+论文不引入任何新训练损失。所有数据点来自冻结的基座 + 9 个独立微调的领域专家，用 token-level cross-entropy 在 30M held-out token 上评估；合并系数采用等权归一化 $\alpha_{i,k}=c/k$。曲线拟合用加权非线性最小二乘，权重 $\propto k$ 以抑制小 $k$ 时的高方差。
 
 ## 实验关键数据
 

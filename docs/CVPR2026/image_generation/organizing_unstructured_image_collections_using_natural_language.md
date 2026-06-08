@@ -43,31 +43,31 @@ tags:
 
 ### 整体框架
 
-X-Cluster 是一个两阶段免训练框架：(1) **Criteria Proposer**——处理整个图像集合，发现多个聚类标准（如"Activity"、"Location"等）；(2) **Semantic Grouper**——对每个发现的标准，将图像组织为具名的语义聚类（如 Activity 下的 "Surfing"、"Skateboarding"），并支持三种粒度（粗/中/细）。框架探索了三种设计变体（Caption-based、Tag-based、Image-based），其中 Caption-based 表现最优。
+X-Cluster 要解决的是 OpenSMC：给一堆没有标签的图，既不知道该按什么维度分，也不知道每个维度分几类、叫什么名字，全部要系统自己想出来。难点在于没有现成的视觉模型能一次"看完"几千张图并做高层语义归纳，而 LLM 在纯文本上恰好擅长发现主题。X-Cluster 的整条思路就是"绕道文本"：先用 MLLM 把每张图翻译成文字，让 LLM 在文本空间里发现聚类标准，再回到视觉空间给每张图分配类别。
+
+具体拆成两个免训练阶段。第一阶段 **Criteria Proposer** 通读整个图像集合，吐出若干聚类标准（如 "Activity"、"Location"、"Mood"）；第二阶段 **Semantic Grouper** 针对每一个标准，把图像组织成有名字的语义聚类（如 Activity 下的 "Surfing"、"Skateboarding"），并同时给出粗/中/细三种粒度。两个阶段都各有 Caption-based、Tag-based、Image-based 三种变体，作者实测下来 Caption-based 最强，下文以它为主线。
 
 ### 关键设计
 
-1. **Criteria Proposer（标准发现器）**:
+**1. Criteria Proposer：让 LLM 在文本里"看出"该按哪些维度分类。**
 
-    - 功能：从无标签图像集合中自动发现有意义的聚类标准/维度
-    - 核心思路：Caption-based Proposer（主方案）首先使用 MLLM（LLaVA-NeXT-7B）为每张图像生成详细描述 $e_n = \text{MLLM}(x_n)$。将所有 caption 随机打乱后分成 400 个一组，送入 LLM（Llama-3.1-8B）联合分析，让 LLM 从大量文本描述中提取共性主题作为聚类标准：$\tilde{\mathcal{R}} = \text{LLM}(\{e_n\})$。最后通过 Criteria Refinement 步骤，让 LLM 合并语义重叠的标准（如 "Outdoor" vs "Open space"）并删除噪声标准
-    - 设计动机：Caption 比 tag 包含更丰富的语义信息，能引导 LLM 发现更全面的聚类标准。在 Hard 标准集上 Caption-based 比 Tag-based 高出 32.2% TPR
+无标签图像集合的核心难题是连"分类轴"都没有——视觉模型只会给索引号，说不清这堆图为什么该按"活动"还是"地点"分。X-Cluster 先用 MLLM（LLaVA-NeXT-7B）给每张图写一段详细描述 $e_n = \text{MLLM}(x_n)$，把图像问题转成文本问题；再把所有 caption 随机打乱后按 400 条一组喂给 LLM（Llama-3.1-8B）联合分析，让它从大量描述里提炼出反复出现的共性主题当作候选标准 $\tilde{\mathcal{R}} = \text{LLM}(\{e_n\})$。最后做一遍 Criteria Refinement，让 LLM 合并语义重叠的标准（如 "Outdoor" 和 "Open space" 其实是一回事）并剔除噪声标准。之所以用 caption 而非 tag，是因为整句描述携带的语义上下文更丰富，能让 LLM 想到更全的维度——在 Hard 标准集上 caption 方案的 TPR 比 tag 方案高 32.2 个百分点。
 
-2. **Semantic Grouper（语义分组器）**:
+**2. Semantic Grouper：把每个标准落到具名、可读的聚类上。**
 
-    - 功能：对每个发现的标准，将图像组织为具名的语义聚类
-    - 核心思路：Caption-based Grouper（主方案）分三步：(i) 先用 MLLM 为每张图像生成标准特化的描述 $e_n^l = \text{MLLM}(x_n, R_l)$，聚焦于该标准相关的视觉内容；(ii) LLM 对每个描述初始命名 $s_n^l = \text{LLM}(e_n^l, R_l)$，得到初始名称集 $\mathcal{S}_{\text{init}}^l$；(iii) LLM 将初始名称精炼为三级粒度层次（粗/中/细），然后为每张图像在每个粒度级分配最终聚类
-    - 设计动机：直接使用初始命名会导致类别数量爆炸（如 Activity 初始有 203 个名称，精炼后粗粒度仅 12 个）。多粒度输出让用户可以在不同语义细节度之间选择
+光有标准还不够，还得在每个标准下把图分进具体类别并起好名字。Grouper 分三步走：先用 MLLM 生成"标准特化"的描述 $e_n^l = \text{MLLM}(x_n, R_l)$，让模型只盯着与当前标准 $R_l$ 相关的视觉内容（看 Activity 时就别管背景颜色）；再让 LLM 为每段描述初始命名 $s_n^l = \text{LLM}(e_n^l, R_l)$，汇成初始名称集 $\mathcal{S}_{\text{init}}^l$；最后让 LLM 把这些零散名称精炼成层次化的类别体系，并为每张图分配最终聚类。关键在于初始命名极度发散——光 Activity 一个标准就能冒出 203 个名字，直接拿来用等于没分类，所以"精炼"这一步是把可读性救回来的核心。
 
-3. **Multi-Granularity Assignment（多粒度分配）**:
+**3. Multi-Granularity Assignment：用粗/中/细三层粒度兜住"未知的标注粒度"。**
 
-    - 功能：在粗/中/细三个粒度级别上进行图像聚类
-    - 核心思路：三步结构化精炼过程：Initial Naming → Multi-granularity Cluster Refinement（LLM 将初始名称组织为三层类别层次树）→ Final Assignment（每张图像在三个粒度级分别分配一个类别）。例如 Location 标准下：粗粒度 "Outdoor"→ 中粒度 "Recreation"→ 细粒度 "Tennis Court"
-    - 设计动机：Ground-truth 的标注粒度在 OpenSMC 中是未知的，多粒度输出确保系统在至少一个粒度级上能匹配用户偏好。实验证明多粒度精炼比 Flat refinement 一致性更好
+OpenSMC 里 ground-truth 到底分多细是未知的——用户可能想要 "Outdoor" 这种粗类，也可能想要 "Tennis Court" 这种细类。X-Cluster 的做法是不赌单一粒度，而是把 Initial Naming 得到的名称交给 LLM 组织成一棵三层类别树（Multi-granularity Cluster Refinement），再让每张图在粗/中/细三级各分配一个类别（Final Assignment）。例如 Location 标准下，同一张图会同时落到粗粒度 "Outdoor"、中粒度 "Recreation"、细粒度 "Tennis Court"。这样只要用户偏好的粒度落在三层之一，系统就能对上；实验也验证多粒度精炼比 Flat refinement 的一致性更好。
+
+### 一个完整示例
+
+以 "Location" 标准、一张网球场照片为例走一遍后半程：MLLM 先写出标准特化描述——"a person playing tennis on an outdoor hard court surrounded by fences"；LLM 据此初始命名为 "Tennis Court"。把全集的初始名称汇总后，Activity 这类标准会爆出 203 个名字，Grouper 让 LLM 把它们收敛成一棵三层树：粗粒度合并到 12 个大类（如 "Outdoor"），中粒度细分出 "Recreation"，细粒度保留 "Tennis Court"。最终这张图在三个粒度级分别被标为 Outdoor / Recreation / Tennis Court——无论用户想要的是"室内外"还是"具体场地"，都能在某一层命中。
 
 ### 损失函数 / 训练策略
 
-X-Cluster 是完全免训练的（training-free）框架，不需要任何训练或微调。所有组件（LLaVA-NeXT-7B、Llama-3.1-8B、BLIP-2、CLIP ViT-L/14）均使用预训练权重。整个系统通过精心设计的 prompt 驱动，包含 System Prompt、Input Explanation、Goal Explanation、Task Instruction 和 Output Instruction 等结构化 prompt 组件。
+X-Cluster 完全免训练，不做任何微调。所有组件（LLaVA-NeXT-7B、Llama-3.1-8B、BLIP-2、CLIP ViT-L/14）都用预训练权重，整个系统靠精心设计的结构化 prompt 驱动，每个 prompt 包含 System Prompt、Input Explanation、Goal Explanation、Task Instruction、Output Instruction 等组件。
 
 ## 实验关键数据
 

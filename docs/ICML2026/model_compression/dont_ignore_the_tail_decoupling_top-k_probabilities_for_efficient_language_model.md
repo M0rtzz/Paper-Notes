@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TAD 是替换 vanilla KD 中 KL 项的 plug-in loss。完整训练目标为 $\mathcal{L}_{TAD}=\sum_t \mathcal{L}_{CLM}(t;\mathcal{P}^S)+\mathcal{L}_{DIV}(t;\mathcal{P}^T,\mathcal{P}^S)$，其中 $\mathcal{L}_{CLM}$ 是学生自身的 causal LM loss，$\mathcal{L}_{DIV}$ 是按 top-$K$ vs. 尾部解耦后的 KL。整个 pipeline 完全 offline：教师 logits 一次前向算完，学生不需要生成，所以与 vanilla KD 同档 PetaFLOPs（1.2B 学生 9.3 vs. 9.2，0.5B 6.5 vs. 6.4，而 MiniLLM 是 39 / 21.8）。
+TAD 不动 KD 的整体骨架，只把 vanilla KD 里那一项 KL 散度换成一个对尾部更友好的 plug-in loss。完整训练目标是 $\mathcal{L}_{TAD}=\sum_t \mathcal{L}_{CLM}(t;\mathcal{P}^S)+\mathcal{L}_{DIV}(t;\mathcal{P}^T,\mathcal{P}^S)$：前一项 $\mathcal{L}_{CLM}$ 是学生自己的 causal LM loss，后一项 $\mathcal{L}_{DIV}$ 是把教师分布按 top-$K$ 和尾部拆开、再给尾部单独加权后的 KL。整条 pipeline 完全 offline——教师 logits 一次前向算完缓存住，学生不需要在线生成，所以 PetaFLOPs 和 vanilla KD 同档（1.2B 学生 9.3 vs. 9.2，0.5B 6.5 vs. 6.4，而靠学生在线生成的 MiniLLM 要 39 / 21.8）。
 
 ### 关键设计
 
-1. **Top-K vs. Tail 概率解耦**:
+**1. Top-K vs. Tail 概率解耦：给尾部一根独立的"音量旋钮"。**
 
-    - 功能：把教师分布按概率排名切成两段，分别算 KL，再给尾部加权。
-    - 核心思路：设 $\{\accentset{*}{p}^T_k\}_{k=1}^K$ 是教师前 $K$ 大概率，$\alpha_K^T=1-\sum_k \accentset{*}{p}^T_k$ 是尾部总质量。则 $\mathcal{D}_{KL}(\mathcal{P}^T\|\mathcal{P}^S)=\mathcal{D}_{KL_1}+\alpha_K^T \mathcal{D}_{KL_2}$，其中 $\mathcal{D}_{KL_2}$ 用归一化后的尾部概率 $\tilde{p}=p/\alpha_K^T$ 计算（这一步保证即使原始尾部概率接近 0，$\tilde p$ 仍是合法分布）。
-    - 设计动机：vanilla KL 的梯度 $\partial \mathcal{L}/\partial z_i=p_i^S-p_i^T$ 中 $p_i^T$ 对尾部 token 极小，梯度被 modes 完全淹没，学生最终 $\sum_k \accentset{*}{p}^S_k\approx 1$、尾部塌缩；解耦后可对尾部项独立加权。
+痛点很直接：vanilla KL 的梯度是 $\partial \mathcal{L}/\partial z_i=p_i^S-p_i^T$，尾部 token 的 $p_i^T$ 本就接近 0，这一项完全被几个 mode 淹没，训到最后学生 $\sum_k \accentset{*}{p}^S_k\approx 1$、尾部直接塌缩。TAD 的做法是把教师分布按概率排名切两段再分别算 KL：设 $\{\accentset{*}{p}^T_k\}_{k=1}^K$ 是教师前 $K$ 大概率，尾部总质量记为 $\alpha_K^T=1-\sum_k \accentset{*}{p}^T_k$，于是 KL 可以严格分解为 $\mathcal{D}_{KL}(\mathcal{P}^T\|\mathcal{P}^S)=\mathcal{D}_{KL_1}+\alpha_K^T \mathcal{D}_{KL_2}$。关键在于尾部项 $\mathcal{D}_{KL_2}$ 用的是重新归一化后的尾部概率 $\tilde{p}=p/\alpha_K^T$——即便原始尾部概率小到几乎为 0，除以总质量 $\alpha_K^T$ 后 $\tilde p$ 仍然是一个合法分布，这样尾部就有了一个不被 mode 压垮、可以单独放大的损失项。
 
-2. **β(X) 序列级归一化**:
+**2. β(X) 序列级归一化：想放大尾部，又不能让训练飘掉。**
 
-    - 功能：用一个可控的尾部放大系数 $\beta$，但避免常数 $\beta>1$ 直接乘到 KL 上造成发散。
-    - 核心思路：定义 $\beta(X)=\beta\,/\,\bar{\alpha}_K^T(X)$，其中 $\bar\alpha_K^T(X)=\frac{1}{N}\sum_{t=1}^N \alpha_K^T(t)$ 是当前序列的平均尾部质量。token-level loss 为 $\mathcal{L}_{DIV}(t)=D_{KL_1}(t)+\beta(X)\,\alpha_K^T(t)\,D_{KL_2}(t)$。直接用常数 $\beta$ 会让训练飘掉；按 batch/sequence 归一化后，$\beta=1,2$ 这种 nominal 值即可稳定收敛。
-    - 设计动机：作者发现固定 $\beta>1$ 的 naive 加权 loss 不收敛。归一化后等价于"按当前序列的尾部规模动态调节放大倍数"，自动适配不同教师的尾部厚度。
+有了独立尾部项，最朴素的想法是乘一个常数放大系数 $\beta>1$，但作者发现固定的 $\beta>1$ 会直接把训练带发散。原因是尾部质量 $\alpha_K^T$ 在不同 token、不同教师上厚薄差很多，常数放大等于盲目加码。TAD 把放大系数改成随序列自适应的 $\beta(X)=\beta\,/\,\bar{\alpha}_K^T(X)$，其中 $\bar\alpha_K^T(X)=\frac{1}{N}\sum_{t=1}^N \alpha_K^T(t)$ 是当前序列的平均尾部质量，token-level loss 写成 $\mathcal{L}_{DIV}(t)=D_{KL_1}(t)+\beta(X)\,\alpha_K^T(t)\,D_{KL_2}(t)$。直观上这等于"按当前序列尾部规模动态调放大倍数"：尾部越薄、$\bar\alpha_K^T$ 越小，$\beta(X)$ 越大，把放大力度自动补回来。归一化之后 $\beta=1,2$ 这种温和的 nominal 值就能稳定收敛，不用再为每个教师手调。
 
-3. **尾部梯度补偿机制**:
+**3. 尾部梯度补偿机制：前期顶尾部，收敛后自动关闭。**
 
-    - 功能：保证收敛行为与 vanilla KL 一致（fixed point 仍是 $p_i^S=p_i^T$），但前期把尾部概率"顶上去"。
-    - 核心思路：尾部 logit 的梯度变成 $\partial \mathcal{L}_{DIV}/\partial z_i=(p_i^S-p_i^T)+(\beta(X)-1)\big(p_i^S\cdot\frac{1-\sum_k\accentset{*}p^T_k}{1-\sum_k\accentset{*}p^S_k}-p_i^T\big)$。当 $\sum_k\accentset{*}p^S_k\ge \sum_k \accentset{*}p^T_k$（学生 mode 过度集中时），补偿项把学生尾部概率往上推；一旦两者匹配，补偿项归零，行为退化为 vanilla KL。
-    - 设计动机：既要早期摆脱"只学 modes"的失败模式，又不能改变收敛点（否则学生分布偏离教师），梯度分析给出了这种"自动开关"的设计。
+放大尾部还有个隐忧——会不会把学生分布拉偏、不再收敛到教师？梯度分析给出的答案是不会。尾部 logit 的梯度变成 $\partial \mathcal{L}_{DIV}/\partial z_i=(p_i^S-p_i^T)+(\beta(X)-1)\big(p_i^S\cdot\frac{1-\sum_k\accentset{*}p^T_k}{1-\sum_k\accentset{*}p^S_k}-p_i^T\big)$：第一项就是 vanilla KL 的梯度，第二项是补偿项。当学生 mode 过度集中、即 $\sum_k\accentset{*}p^S_k\ge \sum_k \accentset{*}p^T_k$ 时，补偿项为正，把学生尾部概率往上"顶"，正好对症早期"只学 modes"的失败模式；一旦学生 top-$K$ 质量追平教师，补偿项归零，整个 loss 退化回 vanilla KL，不动点仍是 $p_i^S=p_i^T$。换句话说 TAD 自带一个"前段加速、后段熄火"的开关，不需要额外的权重 schedule 就能平滑过渡。
 
 ### 损失函数 / 训练策略
 - Loss：$\mathcal{L}_{TAD}=\sum_t \mathcal{L}_{CLM}+\mathcal{L}_{DIV}$，$K\in\{1,5,10,20\}$、$\beta\in\{0.5,1,2,5,10\}$。

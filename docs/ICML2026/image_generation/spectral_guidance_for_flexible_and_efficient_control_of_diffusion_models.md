@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两阶段。**离线阶段**：用一个轻量 time-conditioned ResNet $f_\phi:\mathcal{X}\times\mathbb{R}_{>0}\to\mathbb{R}^K$ 学习扩散算子 $T_t$ 的前 $K$ 个非平凡左奇异函数；训练完毕后在参考集 $\mathcal{D}_\text{ref}=\{x_0^{(i)}\}_{i=1}^M$ 上预计算每个时刻 $t$ 的白化变换 $(\boldsymbol{\mu}_t,\mathbf{W}_t)$ 与参考特征矩阵 $\boldsymbol{\Phi}_t\in\mathbb{R}^{M\times(K+1)}$ 并缓存。**在线阶段**：对任意新引导信号 $h(x_0)$（标签概率 / CLIP embedding / 分割 mask），先用 Monte Carlo $\hat{\mathbf{c}}_t=\boldsymbol{\Phi}_t^\top \mathbf{H}/M$ 估出谱系数，再在 DDIM 每一步用 $\hat{\mathbf{c}}_t^\top f_\phi^w(x_t,t)$ 近似 $\mathbb{E}[h(X_0)\mid x_t]$，对其求 $x_t$ 梯度即得引导向量 $g$，按 $x\leftarrow x+\kappa\sqrt{1-\bar\alpha_t}\,g$ 注入采样轨迹。同一套 $\{\boldsymbol{\Phi}_t\}$ 在三类任务（label / CLIP / mask）间复用，只换 $h$。
+训练免费引导的瓶颈在于每一步都要算后验期望 $p_t(y\mid x_t)$，而这一步绕不开 denoiser 的点估计与反向传播。本文把这件事代数化：先离线学一组与扩散过程对齐的"谱坐标"，把它当作所有引导信号共享的中间表示；之后任意新引导信号只要在这组坐标上做一次投影，在线采样就退化成浅网络上的线性投影加一次浅梯度，再不碰 denoiser。整套流程分离线、在线两段——离线学谱基并缓存参考特征，在线把 label / CLIP / mask 信号投影进去逐步注入轨迹。
 
 ### 关键设计
 
-1. **条件期望算子的低秩谱分解**:
+**1. 条件期望算子的低秩谱分解：把"算后验期望"变成与 denoiser 无关的线性投影**
 
-    - 功能：把"$x_t$ 上的后验期望"重新表达成一组与扩散过程绑定的正交基展开，截断后只保留少数抗噪模式。
-    - 核心思路：定义 $T_t:\mathcal{H}_0\to\mathcal{H}_t$，$(T_tf)(x_t):=\mathbb{E}[f(X_0)\mid x_t]$，其伴随 $T_t^\ast$ 对应正向扩散。协方差算子 $T_tT_t^\ast$ 是紧自伴的，存在谱分解 $T_tf=\sum_k \sigma_{t,k}\phi_{t,k}(x_t)\mathbb{E}_{p_0}[f\psi_{t,k}]$，且 $\sigma_{t,1}=1$ 对应常数模。命题 4.1 给出任意 $h\in\mathcal{H}_0$ 的展开 $\mathbb{E}[h(X_0)\mid x_t]=\sum_k c_{t,k}\phi_{t,k}(x_t)$，$c_{t,k}=\mathbb{E}[h(X_0)\phi_{t,k}(X_t)]$。截断到前 $K$ 项的 $L^2(p_t)$ 误差被 $\sigma_{t,K+1}^2\|h\|_{p_0}^2$ 控制，而命题 4.7 又证明 $\sigma_{t,k}^2\le \mathbb{E}_{p_0}[\chi^2(p_t(\cdot\mid X_0)\|p_t)]$（$k\ge2$），在 $\bar\alpha_t\to 0$ 时归零——所以高噪声下只剩少数模式有效，低秩近似严格可靠。
-    - 设计动机：把"算后验期望"从依赖具体 $h$、依赖 denoiser 的点估计，变成只依赖扩散过程本身的固定线性投影；同时为引导提供了内在的"信息维度上界"。
+training-free 引导卡在 $p_t(y\mid x_t)=\mathbb{E}_{X_0\sim p_t(\cdot\mid x_t)}[p(y\mid X_0)]$ 这一步既依赖具体信号 $h$、又依赖 denoiser 点估计 $\hat x_0(x_t)$，大噪声下点估计飘出流形导致梯度方向错。本文把后验期望看成一个线性算子 $T_t:\mathcal{H}_0\to\mathcal{H}_t$，$(T_tf)(x_t):=\mathbb{E}[f(X_0)\mid x_t]$，其伴随 $T_t^\ast$ 对应正向扩散。协方差算子 $T_tT_t^\ast$ 紧自伴，存在谱分解 $T_tf=\sum_k \sigma_{t,k}\phi_{t,k}(x_t)\,\mathbb{E}_{p_0}[f\psi_{t,k}]$，其中 $\sigma_{t,1}=1$ 对应常数模。于是命题 4.1 把任意 $h\in\mathcal{H}_0$ 的后验期望写成左奇异函数上的展开
 
-2. **VICReg 风格的 SSL 学习谱基**:
+$$\mathbb{E}[h(X_0)\mid x_t]=\sum_k c_{t,k}\,\phi_{t,k}(x_t),\qquad c_{t,k}=\mathbb{E}[h(X_0)\phi_{t,k}(X_t)].$$
 
-    - 功能：在不接触 denoiser 的前提下，从扩散过程本身学到 $T_t$ 的前 $K$ 个左奇异函数。
-    - 核心思路：定理 4.2 证明，对任意 $f=(f_1,\dots,f_K)^\top$ 且 $\mathbb{E}_{p_t}[f]=0$，有 $\max_f \operatorname{Tr}(\mathbf{C}_t(f)\boldsymbol{\Sigma}_t(f)^{-1})=\sum_{k=2}^{K+1}\sigma_{t,k}^2$，最大化子即 $\text{span}\{\phi_{t,k}\}$。这正是 Rayleigh–Ritz 形式，等价于以 $\zeta(x_t,\tilde x_t):=\int p_t(x_t\mid x_0)p_t(\tilde x_t\mid x_0)p_0(x_0)\,dx_0$ 为核的 Kernel PCA。实现上：对每个 $x_0^{(i)}$ 采两次独立噪声得到 $(x_t,\tilde x_t)$ 作为天然"增广"，过 $f_\phi$ 得 $\mathbf{Z},\tilde{\mathbf{Z}}\in\mathbb{R}^{B\times K}$；用 batch 协方差的特征分解 $\hat{\boldsymbol{\Sigma}}=\mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^\top$ 构造白化矩阵 $\mathbf{W}=\mathbf{V}(\boldsymbol{\Lambda}+\xi\mathbf{I})^{-1/2}$；损失 $L=-\operatorname{Tr}((\mathbf{Z}^w)^\top\tilde{\mathbf{Z}}^w)/(K(B-1))$ 用 stop-gradient 锚定一侧稳定训练。
-    - 设计动机：把 VICReg 那种"手工 crop / color jitter"的增广替换成扩散过程本身的两次独立加噪——这恰好就是协方差算子 $T_tT_t^\ast$ 的成对采样，使 SSL 目标与谱分解严格对应；同时白化项 $\boldsymbol{\Sigma}_t(f)^{-1}$ 起到防坍塌的作用。
+这样"算后验期望"就从依赖 $h$、依赖 denoiser 的点估计，变成只依赖扩散过程本身的固定线性投影。之所以能截断成低秩，是因为截到前 $K$ 项的 $L^2(p_t)$ 误差被 $\sigma_{t,K+1}^2\|h\|_{p_0}^2$ 控制，而命题 4.7 进一步证明 $\sigma_{t,k}^2\le \mathbb{E}_{p_0}[\chi^2(p_t(\cdot\mid X_0)\|p_t)]$（$k\ge2$）在 $\bar\alpha_t\to0$ 时归零——噪声越大能存活的模式越少，低秩近似反而越严格，$K$ 也因此成了引导的"内在信息维度上界"。
 
-3. **统一的谱投影引导算法**:
+**2. VICReg 风格的 SSL 学谱基：用扩散自身的两次加噪当增广，不碰 denoiser 就学到奇异函数**
 
-    - 功能：把"标签 / CLIP / mask 引导"压缩到同一套缓存特征上的线性投影 + 浅梯度，彻底去掉 denoiser 反向传播。
-    - 核心思路：训练完 $f_\phi$ 后，对每个 $t\in\mathcal{T}$ 在 $\mathcal{D}_\text{ref}$ 上预计算 $\boldsymbol{\Phi}_t=[\mathbf{1}\;(\mathbf{Z}_t-\boldsymbol{\mu}_t)\mathbf{W}_t]$；新任务来时仅需一次性算 $\hat{\mathbf{c}}_t=\boldsymbol{\Phi}_t^\top\mathbf{H}/M$。采样阶段（算法 2）每步先做标准 DDIM 去噪，再算引导 $g=\nabla_{x}\mathcal{L}(\hat{\mathbf{c}}_t^\top f_\phi^w(x,t))$ 并以 $x\leftarrow x+\kappa\sqrt{1-\bar\alpha_t}\,g$ 更新。三类任务的差异只在 $\mathcal{L}$：label 用 $\nabla z/z$ 形式的对数似然（截断展开可能局部违反正性，用比值代替 $\log$）；CLIP 用 $\mathcal{L}(\mathbf{z})=\mathbf{z}^\top \mathbf{e}_\text{text}/\|\mathbf{z}\|$；mask 用 $-\|\mathbf{z}-\mathbf{z}_\text{target}\|^2$。复杂度上，每步只需穿过 16M 参数的 $f_\phi$（denoiser 是 114M），不必穿过 denoiser。
-    - 设计动机：把"重活"全部前置到一次性离线阶段，在线阶段只剩浅网络的梯度；同时一组 $\{\boldsymbol{\Phi}_t\}$ 在所有下游任务间复用，真正实现"任意引导信号免重训"。
+奇异函数 $\{\phi_{t,k}\}$ 需要在不接触 denoiser 的前提下学到。定理 4.2 给出了变分刻画：对任意 $f=(f_1,\dots,f_K)^\top$ 且 $\mathbb{E}_{p_t}[f]=0$，有 $\max_f \operatorname{Tr}(\mathbf{C}_t(f)\boldsymbol{\Sigma}_t(f)^{-1})=\sum_{k=2}^{K+1}\sigma_{t,k}^2$，最大化子恰是 $\text{span}\{\phi_{t,k}\}$。这是个 Rayleigh–Ritz 形式，等价于以 $\zeta(x_t,\tilde x_t):=\int p_t(x_t\mid x_0)p_t(\tilde x_t\mid x_0)p_0(x_0)\,dx_0$ 为核的 Kernel PCA。关键观察是：对同一个 $x_0^{(i)}$ 采两次独立噪声得到的 $(x_t,\tilde x_t)$ 本身就是协方差算子 $T_tT_t^\ast$ 的成对采样——它替代了 VICReg 里手工 crop / color jitter 的增广，使 SSL 目标与谱分解严格对应。实现上把这一对过轻量 time-conditioned ResNet $f_\phi:\mathcal{X}\times\mathbb{R}_{>0}\to\mathbb{R}^K$ 得 $\mathbf{Z},\tilde{\mathbf{Z}}\in\mathbb{R}^{B\times K}$，用 batch 协方差的特征分解 $\hat{\boldsymbol{\Sigma}}=\mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^\top$ 构造白化矩阵 $\mathbf{W}=\mathbf{V}(\boldsymbol{\Lambda}+\xi\mathbf{I})^{-1/2}$，再优化
+
+$$L=-\operatorname{Tr}\big((\mathbf{Z}^w)^\top\tilde{\mathbf{Z}}^w\big)\big/\big(K(B-1)\big),$$
+
+其中白化项 $\boldsymbol{\Sigma}_t(f)^{-1}$ 起防坍塌作用，并对一侧做 stop-gradient 稳定训练。
+
+**3. 统一的谱投影引导算法：重活前置离线，在线只剩浅梯度且三任务复用一套基**
+
+有了 $f_\phi$，就能把所有"重活"前置到一次性离线阶段：对每个 $t\in\mathcal{T}$ 在参考集 $\mathcal{D}_\text{ref}=\{x_0^{(i)}\}_{i=1}^M$ 上预计算白化变换 $(\boldsymbol{\mu}_t,\mathbf{W}_t)$ 与参考特征矩阵 $\boldsymbol{\Phi}_t=[\mathbf{1}\;(\mathbf{Z}_t-\boldsymbol{\mu}_t)\mathbf{W}_t]\in\mathbb{R}^{M\times(K+1)}$ 并缓存。来了新引导信号 $h$ 只需一次 Monte Carlo 估系数 $\hat{\mathbf{c}}_t=\boldsymbol{\Phi}_t^\top\mathbf{H}/M$。采样阶段（算法 2）每步先做标准 DDIM 去噪，再用 $\hat{\mathbf{c}}_t^\top f_\phi^w(x,t)$ 近似 $\mathbb{E}[h(X_0)\mid x_t]$，对其求梯度 $g=\nabla_{x}\mathcal{L}(\hat{\mathbf{c}}_t^\top f_\phi^w(x,t))$，按 $x\leftarrow x+\kappa\sqrt{1-\bar\alpha_t}\,g$ 注入轨迹。三类任务只换损失 $\mathcal{L}$：label 用 $\nabla z/z$ 形式的对数似然（截断展开可能局部违反正性，故用比值代替 $\log$），CLIP 用 $\mathcal{L}(\mathbf{z})=\mathbf{z}^\top \mathbf{e}_\text{text}/\|\mathbf{z}\|$，mask 用 $-\|\mathbf{z}-\mathbf{z}_\text{target}\|^2$。因为梯度只穿过 16M 参数的 $f_\phi$（denoiser 是 114M）、且同一套 $\{\boldsymbol{\Phi}_t\}$ 在所有下游任务间复用，"任意引导信号免重训"才真正落地。
 
 ### 损失函数 / 训练策略
-训练只优化一个目标 $L=-\operatorname{Tr}((\mathbf{Z}^w)^\top\tilde{\mathbf{Z}}^w)/(K(B-1))$，外加白化的小岭项 $\xi$；timestep 从 $\mathcal{T}$ 均匀采样、batch 内重算 $\boldsymbol{\mu},\mathbf{W}$，对一侧做 stop-gradient。CIFAR-10 / CelebA-HQ 取 $K=512$，ImageNet 取 $K=2000$；CelebA-HQ 训 $f_\phi$ 约 10 GPU·h，预计算 $\{\boldsymbol{\Phi}_t\}$ 仅 0.8 GPU·h。
+训练只优化单一目标 $L=-\operatorname{Tr}((\mathbf{Z}^w)^\top\tilde{\mathbf{Z}}^w)/(K(B-1))$，外加白化的小岭项 $\xi$；timestep 从 $\mathcal{T}$ 均匀采样、batch 内重算 $\boldsymbol{\mu},\mathbf{W}$，对一侧做 stop-gradient。CIFAR-10 / CelebA-HQ 取 $K=512$，ImageNet 取 $K=2000$；CelebA-HQ 训 $f_\phi$ 约 10 GPU·h，预计算 $\{\boldsymbol{\Phi}_t\}$ 仅 0.8 GPU·h。
 
 ## 实验关键数据
 

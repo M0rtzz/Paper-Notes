@@ -38,32 +38,28 @@ tags:
 **核心 idea**：用 SSA 将指数增长换成可训练的多项式型 signed scaling，使注意力在大幅值输入下不那么快退化为 hardmax，同时仍保留对重要 token 的选择能力。
 
 ## 方法详解
-论文先证明问题，再提出替代函数。作者不是直接说 Softmax 不好，而是逐步排除原因：模型能识别单个数字正负，attention-only 模型能学 ICL，FF-only 模型学不会，失败在 full transformer 和 attention-only 模型中都出现，因此注意力机制是关键位置；进一步看 attention map，极端值 token 会吸走权重。
 
 ### 整体框架
-实验流程分三层。第一层是合成 ICL：量词 every/some 和线性函数预测，在训练分布 $N(0,1)$ 与测试分布偏移之间观察错误。第二层是 decoder-only 语言模型：在 FineWeb 10B tokens 上从零训练 114M 模型，对比 Softmax 与 SSA。第三层是 encoder-only BabyBERTa：在 AO-CHILDES 上训练并测试语法探针。
+
+论文要论证的是：ICL 在分布偏移下泛化失败，部分源于 Softmax 评分函数本身的架构缺陷，而不只是数据或 prompt 问题。它先用排除法把锅定位到注意力——模型能识别单个数字正负、attention-only 模型能学 ICL 而 FF-only 不能、失败同时出现在 full transformer 和 attention-only 模型，且 attention map 上极端值 token 会吸走几乎全部权重——再据此提出一个延缓塌缩的替代评分函数 SSA，并在合成 ICL、114M decoder-only LM、encoder-only BabyBERTa 三层实验上验证。三层从可控玩具任务一路走到真实语言建模与语法探针，输入是数值/文本序列，输出是任务预测或下一词分布。
 
 ### 关键设计
-1. **Softmax 饱和的机制诊断**:
 
-    - 功能：解释为什么一个 deviant token 能破坏需要多 token 聚合的 ICL 任务。
-    - 核心思路：若最大 logit 与其他 logit 的差距为 $\Delta$，Softmax 中非最大项权重会按 $e^{-\Delta}$ 衰减。当输入数值经过线性 embedding 后保留幅值顺序，极端数值自然产生大 embedding norm，进而让注意力接近 hardmax。
-    - 设计动机：ICL 的许多规则依赖多个上下文例子共同决定答案，hardmax 式注意力会把“相关性”和“幅值大”混为一谈。
+**1. Softmax 饱和的机制诊断：解释一个 deviant token 为何能毁掉多 token 聚合任务。**
 
-2. **Scaled Signed Averaging 评分函数**:
+问题出在 Softmax 的指数归一化：若最大 logit 与其余 logit 的差距为 $\Delta$，非最大项权重会按 $e^{-\Delta}$ 急速衰减。当输入数值经线性 embedding 后保留幅值顺序，一个幅值异常大的 token 自然产生大 embedding norm，把注意力推向近似 hardmax。而 ICL 的许多规则要靠多个上下文例子共同决定答案，hardmax 式注意力等于把“幅值大”误当成“相关”，于是单个无关的极端 token 就能让 every/some 判断和线性函数预测整体崩掉。
 
-    - 功能：提供一个可替代 Softmax 的注意力归一化方式，延缓塌缩并保留上下文质量。
-    - 核心思路：对每个 logit 使用 $(1+b|x|)^{sgn(x)n}$ 变换后再归一化，其中 $b>0$、$n\geq1$ 可训练。正值以多项式方式增长，负值向 0 衰减；当 $b=1/m,n=m$ 且 $m\to\infty$ 时可近似指数函数。
-    - 设计动机：Softmax 在全局放大或单个 token 过强时会指数级塌缩，SSA 在同样情况下只按多项式速度集中，给模型更多机会保留次强但仍相关的上下文 token。
+**2. Scaled Signed Averaging 评分函数：把指数塌缩换成可训练的多项式塌缩。**
 
-3. **跨架构验证设计**:
+SSA 对每个 logit 先做变换 $(1+b|x|)^{sgn(x)n}$ 再归一化，其中 $b>0$、$n\geq1$ 均可训练：正值以多项式速度增长，负值向 0 衰减，且当 $b=1/m,\,n=m,\,m\to\infty$ 时可退化逼近指数函数，因此 Softmax 是它的极限特例。关键差别在于，面对全局放大或单个 token 过强时，Softmax 会指数级集中而 SSA 只按多项式速度集中，给模型更多机会保留次强但仍相关的上下文 token，从而缓解上面诊断出的饱和。
 
-    - 功能：确认 SSA 的收益不是只在玩具任务里成立。
-    - 核心思路：作者把 SSA 放入 decoder-only Transformer 和 encoder-only BabyBERTa 中，与相同训练设置下的 Softmax 比较；还测试 temperature Softmax、Sparsemax、Entmax、CosFormer、SA-Softmax 等替代函数。
-    - 设计动机：如果 SSA 只在合成数字任务上有效，它的架构价值有限；跨真实 NLP benchmark 和语法探针的收益说明它可能是通用 attention scoring 改动。
+**3. 跨架构验证设计：确认收益不止存在于玩具任务。**
+
+为排除“只在合成数字任务上有效”的怀疑，作者把 SSA 同时放进 decoder-only Transformer 和 encoder-only BabyBERTa，在完全相同的训练设置下与 Softmax 对照，并额外比较 temperature Softmax、Sparsemax、Entmax、CosFormer、SA-Softmax 等替代评分函数。只有当 SSA 在真实 NLP benchmark 和语法探针上也稳定超过这些基线，才能说明它是一项通用的 attention scoring 改动，而非任务特化的 trick。
 
 ### 损失函数 / 训练策略
-合成 ICL 中，线性函数任务用平方误差，量词任务用交叉熵，模型训练 500,000 steps，batch size 为 64。decoder-only 实验训练 114M Nemotron-style 模型，12 层、24 头、hidden size 768，在 FineWeb 10B tokens 上训练 22k steps。BabyBERTa 实验在 AO-CHILDES 上从零训练，并比较 SSA 固定指数 $n=1.5$ 和 $n=2$ 的版本。
+
+合成 ICL 中线性函数任务用平方误差、量词任务用交叉熵，训练 500,000 steps、batch size 64。decoder-only 实验为 114M Nemotron-style 模型（12 层、24 头、hidden size 768），在 FineWeb 10B tokens 上训练 22k steps。BabyBERTa 实验在 AO-CHILDES 上从零训练，并比较 SSA 固定指数 $n=1.5$ 与 $n=2$ 两个版本。
 
 ## 实验关键数据
 

@@ -41,29 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DP-SGD-RC 保留 DP-SGD 的整体三段式流程——**第一次反向估范数 → 按 $\min(C/n_i,1)$ 重缩放每样本损失 → 第二次反向 + 加噪 + 优化器步**——只在"算范数"那一步动刀。对于每一层 linear-like 模块，前向 hook 拿到激活张量 $A\in\mathbb{R}^{B\times T\times d}$，反向 hook 拿到输出梯度 $G\in\mathbb{R}^{B\times T\times p}$，然后调用"范数估计例程"返回 $\hat n_i^{(l)}$；逐层求和得到样本 $i$ 的全模型梯度范数平方 $n_i = \sum_l \hat n_i^{(l)}$，再按 $\min(C/\sqrt{n_i},1)$ 重写损失。重写后的损失再做第二次反向得到聚合梯度 $\nabla$，加噪 $\nabla + \sigma C\cdot\mathcal{N}(0,I)$ 后喂给 Adam / SGD。
-
-整套实现走的是 forward / backward hook，per layer 走一遍即可，不需要像 DP-SGD-JL 那样跑 $k+1$ 次 forward；总成本是 1 次 forward + 2 次 backward，和 FGC 同档，但单层峰值显存被显著压低。
+DP-SGD-RC 不重造 DP-SGD，而是只在最贵的那一步动刀。原版 DP-SGD 走的是"第一次反向算出每个样本的梯度范数 → 按 $\min(C/\sqrt{n_i},1)$ 重缩放每样本损失 → 第二次反向聚合 + 加噪 + 优化器步"，它的显存全卡在"精确算范数"上。本文把这一步换成随机迹估计：对每个 linear-like 层，前向 hook 拿到激活 $A\in\mathbb{R}^{B\times T\times d}$、反向 hook 拿到输出梯度 $G\in\mathbb{R}^{B\times T\times p}$，调用范数估计例程返回近似 $\hat n_i^{(l)}$，逐层求和得到 $n_i=\sum_l \hat n_i^{(l)}$，其余流程原封不动。整套实现走 forward/backward hook、每层只过一遍，总成本是 1 次 forward + 2 次 backward，和 FGC 同档，但单层峰值显存被压下来——并配一套新的隐私会计把"裁剪尺度随机化"带来的隐私损失算清楚。
 
 ### 关键设计
 
-1. **Hutchinson 随机投影估范数**：
+**1. Hutchinson 随机投影估范数：把"算精确范数"摊薄成 $k$ 次矩阵-向量积。**
 
-    - 功能：把单层精确范数 $\|A^\top G\|_F^2$ 替换成只需要 $k$ 次 $\mathbb{R}^{p\to k}$ 投影的随机估计，把每层的中间存储从 $O(\min\{d^2,T^2\})$ 压到 $O(k(T+d+p))$。
-    - 核心思路：注意到 $\|A^\top G\|_F^2 = \mathrm{trace}(G^\top AA^\top G) = \mathrm{trace}(O)$，于是用 Hutchinson 估计器 $\widehat{n} = \mathrm{trace}(P^\top OP) = \|(P^\top G^\top)^\top A\|_F^2$，其中 $P\in\mathbb{R}^{p\times k}$、$P_{uv}\sim\mathcal{N}(0,1/k)$。实现上先算 $Y = A^\top(GP)$，再取 $\|Y\|_F^2$，全程不显式构造 $d\times p$ 的逐样本梯度，也不显式构造 $T\times T$ 的中间矩阵。经典分析给出 $k=O(\log(1/\beta)/\alpha^2)$ 即可 $(1\pm\alpha)$ 相对精度，实验里 $k=32$ 已足够。
-    - 设计动机：DP-SGD 真正需要的是"范数"这一标量，而不是逐样本梯度本身——既然标量不需要精确，就用 JL 型随机投影把"求精确范数"的代价彻底摊薄；这同时打掉了序列长度 $T$ 和层宽 $p,d$ 两个二次项，让长上下文 LLM 的 DP 训练首次和非私有训练同阶。
+DP-SGD 二次显存的根子在于精确算单层范数 $\|A^\top G\|_F^2$——要么显式存 $d\times p$ 的逐样本梯度（$O(d^2)$），要么显式存 $T\times T$ 的中间矩阵（$O(T^2)$），长上下文下两者都顶天。本文的关键观察是：DP-SGD 真正需要的只是"范数"这个标量，而标量不必精确算。把范数改写成迹 $\|A^\top G\|_F^2 = \mathrm{trace}(G^\top AA^\top G) = \mathrm{trace}(O)$ 后，就能套 Hutchinson 随机迹估计器 $\widehat{n} = \mathrm{trace}(P^\top OP) = \|(P^\top G^\top)^\top A\|_F^2$，其中投影矩阵 $P\in\mathbb{R}^{p\times k}$、$P_{uv}\sim\mathcal{N}(0,1/k)$。实现上先算 $Y = A^\top(GP)$ 再取 $\|Y\|_F^2$，全程既不显式构造逐样本梯度也不显式构造 $T\times T$ 矩阵，每层中间存储从 $O(\min\{d^2,T^2\})$ 降到 $O(k(T+d+p))$。经典分析保证 $k=O(\log(1/\beta)/\alpha^2)$ 就能拿到 $(1\pm\alpha)$ 相对精度，实验里 $k=32$ 已足够。这一刀同时打掉了序列长度 $T$ 和层宽 $p,d$ 两个二次项，让长上下文 LLM 的 DP 训练首次和非私有训练同阶。
 
-2. **Hutch++ 头-尾分解的低误差变体**：
+**2. Hutch++ 头-尾分解：$k$ 不变、方差大降，专守小 $\varepsilon$ 区间。**
 
-    - 功能：在 $k$ 不变的情况下大幅压低范数估计方差，从而在小 $\varepsilon$ 区间内（噪声多、对范数误差更敏感）守住效用。
-    - 核心思路：把 $O=(A^\top G)(A^\top G)^\top$ 的特征谱拆成"头 + 尾"：先用一组随机 $S$ 估 $\mathrm{Col}(OS)$ 的正交基 $Q$ 做低秩近似 $\mathrm{trace}(Q^\top OQ)$ 准确算"头部"，再对残差 $(I-QQ^\top)$ 上的"尾部"跑 Hutchinson；最终估计为 $\|(QG^\top)A\|_F^2 + \|(PG^\top)A - (((PG^\top)A)Q)Q^\top\|_F^2$。理论上把 Hutchinson 的 $O(\log(1/\beta)/\alpha^2)$ 改进到 $O(\sqrt{\log(1/\beta)}/\alpha)$，已接近 matrix-vector query 模型的下界。
-    - 设计动机：当 $d$ 较大时，Hutch 与 Hutch++ 的隐私 envelope 函数近乎重合（噪声 multiplier 没差），但在 BBC 这类小数据 + 小 $\varepsilon=0.7$ 的极端场景，Hutch++ 因为方差更小、相当于一种"温和正则化"，反而把准确率从 64.3% 拉到 70.6%，作为低预算下的备选档位很值。代价是多 3× 的矩阵-向量乘和 QR 分解开销。
+小 $\varepsilon$ 时噪声多、对范数误差更敏感，单纯 Hutchinson 的方差就成了短板。Hutch++ 把 $O=(A^\top G)(A^\top G)^\top$ 的特征谱拆成"头 + 尾"两块分治：先用一组随机矩阵 $S$ 估出 $\mathrm{Col}(OS)$ 的正交基 $Q$ 做低秩近似 $\mathrm{trace}(Q^\top OQ)$ 精确吃掉"头部"，再只对残差子空间 $(I-QQ^\top)$ 上的"尾部"跑 Hutchinson，最终估计为 $\|(QG^\top)A\|_F^2 + \|(PG^\top)A - (((PG^\top)A)Q)Q^\top\|_F^2$。理论上误差从 Hutchinson 的 $O(\log(1/\beta)/\alpha^2)$ 改进到 $O(\sqrt{\log(1/\beta)}/\alpha)$，已逼近 matrix-vector query 模型的下界。代价是多 3× 的矩阵-向量乘和一次 QR 分解，因此它不是默认档：当 $d$ 较大时 Hutch 与 Hutch++ 的隐私 envelope 几乎重合（噪声 multiplier 没差），省时省算的 Hutch 更划算；但在 BBC 这类小数据 + $\varepsilon=0.7$ 的极端场景，Hutch++ 因方差更小、相当于一种温和正则化，把准确率从 64.3% 拉到 70.6%，是低预算下值得切换的备选档。
 
-3. **基于卡方混合 envelope 的 $f$-DP 隐私会计**：
+**3. 基于卡方混合 envelope 的 $f$-DP 隐私会计：让随机裁剪也能接进现成会计器。**
 
-    - 功能：给"裁剪尺度随机化"的 DP-SGD-RC 一个紧的、可数值计算的 $(\varepsilon,\delta)$ 保证，让它能直接对接 PRV 风格的会计器和 Opacus 体系。
-    - 核心思路：单步隐私分析归结为 $T(Z,\mathcal{N}(Z/\sigma,1)\|Z,\mathcal{N}(0,1))$，其中 $Z=\|Q_0\|/R(Q_0)$ 是"真实范数除以估计范数"。对 Hutch 而言，$Z^2(\lambda)\sim \|\lambda\|_1 / \sum_i\lambda_i\chi^2(k)$ 依赖于差异样本梯度的特征谱 $\lambda$；通过随机序与 majorization 工具，作者证明在单纯形 $\lambda\in\Delta^{d-1}$ 上 envelope CDF 存在 3 段结构（左端 $\chi^2$ 等权混合、中间窄区间两元素混合 $\frac{\lambda}{ik}\chi^2(ik)+\frac{1-\lambda}{jk}\chi^2(jk)$、右端单 $\chi^2$），并显式给出 $x_+\in[1,2]$ 的二分查找算法。会计阶段把 Gaussian 单步内核按 envelope CDF 做 Riemann–Stieltjes 加权积分得到 $\alpha(t),\beta(t)$，再走 PRV / 子采样放大 / 多步组合得到最终 $(\varepsilon,\delta)$。
-    - 设计动机：随机裁剪不再是"固定噪声尺度"的高斯机制，传统 RDP / PRV 会计无法直接套；而把 $Z$ 的分布显式化（envelope CDF）后，问题就退化为"在已知 CDF 上算两个 $\Phi$ 加权积分"，可以稳定地接进现成的数值会计管线，让理论保证和实际工程实现同步落地。论文还顺手指出 Székely–Bakirov 2003 关于卡方混合 envelope 的旧定理证明里有一个 bug，并给出反例与修正。
+裁剪尺度一旦随机化，加噪部分虽仍是高斯但"尺度"是随机的，传统 RDP/PRV 会计无法直接套。本文的做法是把这个随机性显式化：单步隐私分析归结为 trade-off 函数 $T(Z,\mathcal{N}(Z/\sigma,1)\,\|\,Z,\mathcal{N}(0,1))$，其中 $Z=\|Q_0\|/R(Q_0)$ 是"真实范数除以估计范数"。对 Hutch 而言 $Z^2(\lambda)\sim \|\lambda\|_1 / \sum_i\lambda_i\chi^2(k)$ 依赖差异样本梯度的特征谱 $\lambda$；借随机序与 majorization 工具，作者证明在单纯形 $\lambda\in\Delta^{d-1}$ 上 envelope CDF 恰有三段结构——左端是 $\chi^2$ 等权混合、中间窄区间是两元素混合 $\frac{\lambda}{ik}\chi^2(ik)+\frac{1-\lambda}{jk}\chi^2(jk)$、右端是单个 $\chi^2$——并给出 $x_+\in[1,2]$ 的二分查找算法把分界点定下来。一旦 $Z$ 的分布（envelope CDF）显式可算，问题就退化成"在已知 CDF 上算两个 $\Phi$ 加权积分"：会计阶段把高斯单步内核按 envelope CDF 做 Riemann–Stieltjes 加权积分得到 $\alpha(t),\beta(t)$，再走 PRV / 子采样放大 / 多步组合输出标准 $(\varepsilon,\delta)$-DP，直接对接 Opacus 体系。推导过程中作者还发现 Székely–Bakirov 2003 关于卡方混合 envelope 的旧定理证明有 bug，给出了反例与修正。
 
 ### 损失函数 / 训练策略
 训练目标和 DP-SGD 完全一致：原任务损失（分类交叉熵 / 生成 NLL）加上逐样本梯度的 $\ell_2$ 裁剪到阈值 $C$，再加各向同性高斯噪声 $\sigma C\cdot\mathcal{N}(0,I)$。优化器用 SGD 或 Adam。实验里 $\delta\in\{10^{-5},10^{-6}\}$、$\varepsilon\in\{0.7,2,9\}$、$k=32$、上下文长度固定为 4096，覆盖 full fine-tuning 与 LoRA 两种模式。

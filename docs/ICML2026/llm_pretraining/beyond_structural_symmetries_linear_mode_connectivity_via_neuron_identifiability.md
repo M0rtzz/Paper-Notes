@@ -43,27 +43,21 @@ tags:
 
 ### 整体框架
 
-考虑一个带非对称干预的单层网络 $\bm{H}(\bm{W};\bm{x}) = \eta((\mathbf{F} + \mathbf{D} \odot \bm{W})\bm{x})$，其中 $\mathbf{F}$ 为固定偏置矩阵、$\mathbf{D}$ 为固定对角缩放矩阵、$\bm{W}$ 为可训练权重。该统一公式涵盖 $\mathbf{W}$-asymmetric 网络、SYRE、线性残差连接和稀疏网络等多种对称性打破方案。在低维子空间支撑假设下（输入实际位于 $k$ 维子空间 $\mathcal{U}$），分析每个神经元在输入支撑上可实现的函数集及其实现代价，最终推导出 LMC 的弦偏差上界。
+本文要回答的问题是：为什么有些"对称性打破"干预能换来无对齐的 LMC，有些却不能？为此作者把每个神经元看成一个在输入支撑上实现某种函数的算子，用一个带非对称干预的单层网络作统一载体：$\bm{H}(\bm{W};\bm{x}) = \eta((\mathbf{F} + \mathbf{D} \odot \bm{W})\bm{x})$，其中 $\mathbf{F}$ 是固定偏置矩阵、$\mathbf{D}$ 是固定对角缩放矩阵、$\bm{W}$ 才是可训练权重——$\mathbf{W}$-asymmetric 网络、SYRE、线性残差和稀疏网络都只是这个公式的特例。在"输入实际落在 $k$ 维子空间 $\mathcal{U}$"的低维支撑假设下，整条分析链条是：先刻画每个神经元能实现哪些函数、代价多大（有效函数类），再用置换灵敏度判断这些神经元是否可辨识，最后把可辨识性接到 LMC 的弦偏差上界，给出无需对齐就能线性连通的充分条件。
 
 ### 关键设计
 
-1. **有效函数类与实现代价（Realization Cost）**:
+**1. 有效函数类与实现代价：用"实现一个函数要多大权重范数"取代"参数能否互换"。**
 
-    - 功能：量化每个神经元实现目标函数所需的最小权重范数
-    - 核心思路：在子空间支撑模型下，第 $i$ 个神经元可实现的函数类 $\mathcal{H}_i(\mathcal{X})$ 可表示为仿射子空间 $\mathbf{v}_i + \mathrm{im}(\mathbf{M}_i) \subseteq \mathbb{R}^k$，其中 $\mathbf{v}_i = \bm{U}^\top \mathbf{f}_i$ 为投影中心，$\mathbf{M}_i = \bm{U}^\top \mathrm{Diag}(\mathbf{d}_i)$ 为投影算子。实现代价化为 Mahalanobis 半范数：$\|\bm{h}\|_{\mathcal{H}_i} = \|\bm{a} - \mathbf{v}_i\|_{\mathbf{S}_i^\dagger}$，其中 Gram 矩阵 $\mathbf{S}_i = \mathbf{M}_i \mathbf{M}_i^\top$ 的各向异性决定了不同方向的代价差异
-    - 设计动机：即使所有神经元的函数类相同（$\mathbf{M}_i$ 满秩时），不同神经元实现同一函数的代价可能大不相同——优化器偏好小范数解，从而在跨训练种子时一致地将特征分配给"便宜"的神经元
+对称性打破到底有没有效，不该看参数空间里神经元还能不能互换，而要看它们在真实输入支撑上能实现什么、各自实现的代价差多少。在子空间支撑模型下，第 $i$ 个神经元能实现的函数类 $\mathcal{H}_i(\mathcal{X})$ 是一个仿射子空间 $\mathbf{v}_i + \mathrm{im}(\mathbf{M}_i) \subseteq \mathbb{R}^k$，其中投影中心 $\mathbf{v}_i = \bm{U}^\top \mathbf{f}_i$ 由固定偏置决定、投影算子 $\mathbf{M}_i = \bm{U}^\top \mathrm{Diag}(\mathbf{d}_i)$ 由对角缩放决定。实现某个目标函数的最小权重范数就化成一个 Mahalanobis 半范数 $\|\bm{h}\|_{\mathcal{H}_i} = \|\bm{a} - \mathbf{v}_i\|_{\mathbf{S}_i^\dagger}$，Gram 矩阵 $\mathbf{S}_i = \mathbf{M}_i \mathbf{M}_i^\top$ 的各向异性决定了哪些方向便宜、哪些方向贵。关键之处在于：哪怕所有神经元的函数类完全相同（$\mathbf{M}_i$ 满秩时），实现同一个函数的代价也可能天差地别；而优化器偏好小范数解，于是会跨训练种子一致地把某个特征分给那个"实现它最便宜"的神经元——这正是可辨识性的来源。
 
-2. **置换灵敏度（Permutation Sensitivity）**:
+**2. 置换灵敏度：把"神经元能不能被换"量化成换一次要多付多少代价。**
 
-    - 功能：衡量重新分配特征给不同神经元所引起的实现代价变化
-    - 核心思路：对置换 $\pi$ 定义代价灵敏度 $\Delta_\pi^{\mathrm{out}}$，在中心主导（center-dominated）regime 下约为 $\mu_\mathbf{D}^{-1} \|\bm{\delta}_\pi^{\mathrm{out}}\|_F^2$，主要由投影中心间距 $\gamma_{\mathrm{out}} = \sqrt{2} \min_{i \neq j} \|\mathbf{v}_j - \mathbf{v}_i\|_2$ 决定。高维空间中 $\gamma_{\mathrm{out}} = \Theta(\sigma_\mathbf{F} \sqrt{k} m^{-2/k})$，在内在维度 $k$ 足够大时衰减极慢，保证有效对称性打破
-    - 设计动机：如果所有非恒等置换的灵敏度都大，则存在唯一的最小复杂度特征-神经元分配方案，即神经元可辨识。对输入置换 $\tau$ 的灵敏度则由 $\gamma_{\mathrm{in}} = \Theta(\sigma_\mathbf{F} \sqrt{m}) \cdot \min_{a \neq b} \|\bm{U}_{b,:} - \bm{U}_{a,:}\|_2$ 控制，关键依赖子空间相干性 $\nu(\mathcal{U})$
+有了实现代价，就能问：把特征重新分配给别的神经元会让总代价涨多少？对一个输出侧置换 $\pi$，定义代价灵敏度 $\Delta_\pi^{\mathrm{out}}$，在中心主导（center-dominated）regime 下约为 $\mu_\mathbf{D}^{-1} \|\bm{\delta}_\pi^{\mathrm{out}}\|_F^2$，其大小主要由投影中心之间的最小间距 $\gamma_{\mathrm{out}} = \sqrt{2} \min_{i \neq j} \|\mathbf{v}_j - \mathbf{v}_i\|_2$ 决定。如果每个非恒等置换的灵敏度都足够大，那么"最小复杂度的特征-神经元分配"就是唯一的，神经元因此可辨识。这个量对维度的依赖很有意思：高维下 $\gamma_{\mathrm{out}} = \Theta(\sigma_\mathbf{F} \sqrt{k} m^{-2/k})$，内在维度 $k$ 越大衰减越慢，所以高维数据天然让对称性打破"更有效"。对输入侧置换 $\tau$ 也有对应的灵敏度，由 $\gamma_{\mathrm{in}} = \Theta(\sigma_\mathbf{F} \sqrt{m}) \cdot \min_{a \neq b} \|\bm{U}_{b,:} - \bm{U}_{a,:}\|_2$ 控制，它额外依赖子空间相干性 $\nu(\mathcal{U})$——这解释了为什么单靠对角掩码 $\mathbf{D}$ 的有效性会随数据几何变化。
 
-3. **LMC 弦偏差上界**:
+**3. LMC 弦偏差上界：把可辨识性接到"插值时损失不抬头"。**
 
-    - 功能：建立从神经元可辨识性到无对齐 LMC 的桥梁
-    - 核心思路：对 ReLU 网络，线性插值路径上的弦偏差满足 $\sup_\lambda \|\xi_{\bm{H}}(\lambda;\cdot)\|_{L^2} = \mathcal{O}(\beta^{3/2}) \|\mathbf{F} \bm{\Sigma}^{1/2}\|_F$，其中 $\beta$ 衡量可训练部分相对于固定部分的比值。结合损失的 Lipschitz 性，弦偏差直接上界损失障碍，保证 LMC
-    - 设计动机：将 LMC 问题从全局损失景观分析降维为逐层弦偏差分析，利用中心主导条件在凸性下传递到整个插值段
+最后一步是把神经元可辨识性翻译成 LMC 成立。对 ReLU 网络，作者证明线性插值路径上的弦偏差满足 $\sup_\lambda \|\xi_{\bm{H}}(\lambda;\cdot)\|_{L^2} = \mathcal{O}(\beta^{3/2}) \|\mathbf{F} \bm{\Sigma}^{1/2}\|_F$，其中 $\beta$ 衡量可训练部分相对固定部分的比值。再借损失的 Lipschitz 性，弦偏差就直接成了损失障碍的上界，于是只要弦偏差小，LMC 就成立。这一步的价值在于把 LMC 从"分析整个高维损失景观"降维成"逐层算弦偏差"，并用中心主导条件让局部凸性沿整段插值路径传递。
 
 ## 实验关键数据
 

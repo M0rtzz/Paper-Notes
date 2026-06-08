@@ -42,40 +42,27 @@ EF-LIC 用"无约束向量量化最大化索引熵 + 表征域上下文重参数
 
 ### 整体框架
 
-EF-LIC pipeline 为：
-
-1. **主编码器** $g_a$：图像 $\bm x\in\mathbb{R}^{3\times H\times W}$ → 潜变量 $\bm y$，下采样因子 $f_y=16$。
-2. **超先验分支**：$\bm z=h_a(\bm y)$，下采样因子 $f_z=64$，RVQ 量化得 $\hat{\bm z}$，解码出上下文特征 $\bm\phi=h_s(\hat{\bm z})$。
-3. **潜变量分组**：把 $\bm y$ 按 quadtree 拆成 $N=4$ 组 $(\bm y_1,\bm y_2,\bm y_3,\bm y_4)$。
-4. **Representation-domain Decorrelation (RD)**：对每组 $\bm y_i$，从已解码组 $\hat{\bm y}_{<i}$ 和 $\bm\phi$ 算参考上下文 $\bm\psi_i$、再算仿射参数 $(\bm\mu_i,\bm\sigma_i)=f_i^{\text{RD}}(\bm\psi_i)$，把 $\bm y_i$ 仿射变换为 $\bm y_i'=\bm\sigma_i^{-1}\odot(\bm y_i-\bm\mu_i)$。
-5. **VQ 量化**：对 $\bm y_i'$ 用 RVQ 量化得 $\hat{\bm y}_i'$，再仿射逆变换回 $\hat{\bm y}_i=\bm\sigma_i\odot\hat{\bm y}_i'+\bm\mu_i$。
-6. **主解码器** $g_s$：$\hat{\bm y}\to\hat{\bm x}$。
-7. **多率支持**：所有 RVQ 共享同一 codebook 数集合 $\mathcal{M}=\{1,2,3,4,5\}$，推理时选 $m\in\mathcal{M}$ 给出不同 BPP：$\text{BPP}=\frac{m}{f_y^2}\left(\frac{f_y^2}{f_z^2}\log K_{\bm z}+\frac{1}{N}\sum_i \log K_i\right)$。
-
-整个流水线**没有任何熵编码器/解码器**，所有索引以定长码送出，全部模块均可在 GPU 上一次性 batch 化执行。
+EF-LIC 想把 LIC 流水线里那个慢且串行、只能跑在 CPU 上的熵编码模块整个抽掉，又不掉 R–D 性能。它的做法是：图像 $\bm x$ 先经主编码器 $g_a$（下采样因子 $f_y=16$）变成潜变量 $\bm y$，超先验分支 $\bm z=h_a(\bm y)$（下采样 $f_z=64$）经 RVQ 量化后解出上下文特征 $\bm\phi=h_s(\hat{\bm z})$；接着把 $\bm y$ 按 quadtree 拆成 $N=4$ 组 $(\bm y_1,\dots,\bm y_4)$，逐组用上下文驱动的仿射参数把潜变量"白化"到去相关空间再做 VQ，最后主解码器 $g_s$ 还原 $\hat{\bm x}$。整条流水线**没有任何熵编码器/解码器**，所有 VQ 索引以定长码送出，全部模块都是纯张量算子、可在 GPU 上一次性 batch 化跑完。
 
 ### 关键设计
 
-1. **Unconstrained VQ as Maximum-Entropy Probabilistic Shaping**：
+**1. 无约束 VQ：把"索引最大熵"从经验现象升格为定理。**
 
-    - 功能：让定长编码的 VQ 索引序列 $J$ 的熵贴近上界 $n\log K$，使统计冗余 $\Delta H=\frac{n\log K-H(J)}{n\log K}\to 0$。
-    - 核心思路：训练时**不施加任何率约束**，只用 codebook commitment + 更新 loss + 重建损失 (L1 + LPIPS + PatchGAN)，仅约束量化误差不强制索引分布。Proposition 3.1 用反证法证明：在 $R=\log K$ 的定长预算下，任何 distortion-optimal 的 $Q^*$ 一定满足 $\Delta H=0$；Gersho 1979 的高率公式给出弱版本 $p_J(j)\propto p_Y(\bm c_j)^{2/(C+2)}$，C=8 时 $\Delta H\le 5\%$。
-    - 设计动机：经验上 VQ-VAE / DAC 训练收敛后索引分布本就接近均匀，本文把这一现象**升格为定理**，说明用足够大的 codebook + 端到端重建损失，VQ 索引序列**理论上不再需要熵编码**——这是去掉熵编码的合法性根基。
+去掉熵编码后索引只能定长编码，码长被强制等于 $n\log K$，这条上界是否浪费，取决于索引序列 $J$ 的熵能否贴上去——即统计冗余 $\Delta H=\frac{n\log K-H(J)}{n\log K}$ 能否压到 0。EF-LIC 的回答是：训练时**根本不施加任何率约束**，只用 codebook commitment、codebook 更新和重建损失（L1 + LPIPS + PatchGAN），让网络自由学。Proposition 3.1 用反证法证明，在 $R=\log K$ 的定长预算下任何 distortion-optimal 的量化器 $Q^*$ 必然满足 $\Delta H=0$；Gersho 1979 的高率公式给出弱版本 $p_J(j)\propto p_Y(\bm c_j)^{2/(C+2)}$，当 $C=8$ 时 $\Delta H\le 5\%$。这正好解释了为什么 VQ-VAE / DAC 收敛后索引分布本就接近均匀——本文把这个"碰巧"的经验现象升格成定理，说明只要 codebook 够大、端到端重建练得充分，定长 VQ 索引序列**理论上就不再需要熵编码来挤统计冗余**，这是整套方法敢拆掉熵编码的合法性根基。
 
-2. **Representation-Domain Decorrelation 而非 Probability-Domain Context Modeling**：
+**2. 表征域去相关：把"用上下文预测概率"换成"用上下文白化潜变量"。**
 
-    - 功能：在不预测条件概率分布、不调用熵编码的前提下，去掉 latent 组间相关性。
-    - 核心思路：传统 LIC 用 context model $f_i^{\text{CM}}$ 输出条件分布参数 $(\bm\mu_i,\bm\sigma_i)$，再让熵编码用 $P_{\hat Y_i\mid\hat Y_{<i}}(\cdot;\bm\mu_i,\bm\sigma_i)$ 压；EF-LIC 直接在表征域用同样的 $(\bm\mu_i,\bm\sigma_i)$ 做仿射变换 $\bm y_i'=\bm\sigma_i^{-1}\odot(\bm y_i-\bm\mu_i)$，把"用上下文预测概率"换成"用上下文白化潜变量"。Theorem 3.5 证明：当 codebook 足够大、$\varepsilon\in(0,1)$ 任取，存在实现使得定长预算 $R'=R/(1-\varepsilon)$ 下 $D_X^{\text{RD}}(R')\le D_X^{\text{CM}}(R)$，即用稍大码率换 R–D 上界吻合。
-    - 设计动机：把"context modeling"从概率域搬到表征域后，**整个流水线变成纯张量算子**，可一次 forward batch 完成，无需 CPU-GPU 之间反复传 logits/概率。这是 EF-LIC 速度暴涨的真正来源。
+统计冗余之外还有相邻 latent 组之间的相关性冗余，传统 LIC 靠 context model $f_i^{\text{CM}}$ 预测条件分布参数 $(\bm\mu_i,\bm\sigma_i)$、再让熵编码按 $P_{\hat Y_i\mid\hat Y_{<i}}(\cdot;\bm\mu_i,\bm\sigma_i)$ 去压，这一步天然串行、绕不开熵编码器。EF-LIC 的关键转念是：用**同一对** $(\bm\mu_i,\bm\sigma_i)=f_i^{\text{RD}}(\bm\psi_i)$（$\bm\psi_i$ 由已解码组 $\hat{\bm y}_{<i}$ 与 $\bm\phi$ 算出），但不是拿去当概率参数，而是直接在表征域做仿射白化 $\bm y_i'=\bm\sigma_i^{-1}\odot(\bm y_i-\bm\mu_i)$，量化后再逆变换 $\hat{\bm y}_i=\bm\sigma_i\odot\hat{\bm y}_i'+\bm\mu_i$ 还原。Theorem 3.5 保证这一替换不亏：对任取 $\varepsilon\in(0,1)$，存在实现使得在略大的定长预算 $R'=R/(1-\varepsilon)$ 下 $D_X^{\text{RD}}(R')\le D_X^{\text{CM}}(R)$，即用一点点码率换来 R–D 上界与概率域 context modeling 吻合。把 context modeling 从概率域搬到表征域之后，整条流水线变成纯张量算子，一次 forward batch 完成，再不用在 CPU 和 GPU 之间反复传 logits/概率——这才是 EF-LIC 速度暴涨的真正来源。
 
-3. **Residual VQ + 共享多码本配置实现单模型多率**：
+**3. Residual VQ + 共享多码本：单模型覆盖 5 个码率点。**
 
-    - 功能：单一模型支持 5 个码率点，运行时挑 $m\in\mathcal{M}$ 即可。
-    - 核心思路：把所有量化器 $Q_{\bm z},\{Q_i^{\text{RD}}\}$ 都实现为 Residual VQ，每个 RVQ 包含 $m$ 个 codebook；训练时对 $\mathcal{M}=\{1,...,5\}$ 中每个 $m$ 都算一遍重建损失并平均 (Eq. 8)。codebook 大小按层递减 $K_1{=}1024,K_2{=}512,K_3{=}256,K_4{=}128,K_{\bm z}{=}1024$，自然形成 coarse-to-fine 的多码率梯度。
-    - 设计动机：多率部署对实际编解码器至关重要，RVQ 的 "可堆叠码本"结构让 multi-rate 训练几乎零额外参数，且推理时切换码率不需要换 checkpoint。
+实际编解码器必须支持多码率部署，EF-LIC 把所有量化器 $Q_{\bm z}$、$\{Q_i^{\text{RD}}\}$ 都实现成 Residual VQ：一个 RVQ 由若干可堆叠 codebook 组成，推理时只取前 $m$ 个就给出对应码率，BPP 为 $\text{BPP}=\frac{m}{f_y^2}\left(\frac{f_y^2}{f_z^2}\log K_{\bm z}+\frac{1}{N}\sum_i \log K_i\right)$。训练时对 $\mathcal{M}=\{1,2,3,4,5\}$ 里每个 $m$ 都算一遍重建损失再平均（Eq. 8），codebook 大小按组递减 $K_1{=}1024,K_2{=}512,K_3{=}256,K_4{=}128,K_{\bm z}{=}1024$，自然形成 coarse-to-fine 的码率梯度。靠 RVQ 这种可堆叠结构，multi-rate 训练几乎零额外参数，推理时切换码率只需改 $m$、不必换 checkpoint。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}=\frac{1}{|\mathcal{M}|}\sum_{m\in\mathcal{M}}\big(\|\bm x-\hat{\bm x}_m\|_1+\lambda_{\text{per}}\mathcal{L}_{\text{per}}+\lambda_{\text{adv}}\mathcal{L}_{\text{adv}}+\lambda_{\text{cb}}\mathcal{L}_{\text{cb}}^m\big)$，其中 $\mathcal{L}_{\text{per}}$ 用 VGG-LPIPS、$\mathcal{L}_{\text{adv}}$ 用 adaptive PatchGAN、$\mathcal{L}_{\text{cb}}$ 是 VQ-VAE 的 commitment + codebook 更新。ImageNet 1% 子集每 epoch 重采，256×256 随机裁剪，Adam $(\beta_1,\beta_2)=(0.5,0.9)$，batch 16，2M iter，lr $10^{-4}\to 10^{-5}$@1.5M，单卡 A100、峰值显存 ~10.5 GB。
+
+$$\mathcal{L}=\frac{1}{|\mathcal{M}|}\sum_{m\in\mathcal{M}}\big(\|\bm x-\hat{\bm x}_m\|_1+\lambda_{\text{per}}\mathcal{L}_{\text{per}}+\lambda_{\text{adv}}\mathcal{L}_{\text{adv}}+\lambda_{\text{cb}}\mathcal{L}_{\text{cb}}^m\big)$$
+
+其中 $\mathcal{L}_{\text{per}}$ 用 VGG-LPIPS、$\mathcal{L}_{\text{adv}}$ 用 adaptive PatchGAN、$\mathcal{L}_{\text{cb}}$ 是 VQ-VAE 的 commitment + codebook 更新。ImageNet 1% 子集每 epoch 重采，256×256 随机裁剪，Adam $(\beta_1,\beta_2)=(0.5,0.9)$，batch 16，2M iter，lr $10^{-4}\to 10^{-5}$@1.5M，单卡 A100、峰值显存 ~10.5 GB。
 
 ## 实验关键数据
 

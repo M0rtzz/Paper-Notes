@@ -45,23 +45,17 @@ EvoCoT 是嵌套两阶段的迭代框架。Stage 1 (Answer-Guided Reasoning Path
 
 ### 关键设计
 
-1. **Answer-Guided 反向 CoT 自生成 + answer-consistency 过滤**：
+**1. Answer-Guided 反向 CoT 自生成 + answer-consistency 过滤：从只有 $(Q,A)$ 的硬题里无中生有地造出可信推理链。**
 
-    - 功能：从仅有 $(Q,A)$ 监督的硬题里"无中生有"地造出可信 step-by-step reasoning。
-    - 核心思路：给 LLM 同时看到 $Q$ 和 $A$，让它产 $\hat{C}$——直觉是已知答案后，LLM 更容易"反推"出支持这个答案的合理推理链。然后做正向一致性验证：把 $\hat{C}$ 当 reasoning，问 LLM "$(Q,\hat{C})$ 推出什么答案？"，只保留答得对的 $\hat{C}$。整个过程公式化为 $(Q,A) \xrightarrow{\text{LLM}} \hat{C}$ 和 $(Q,\hat{C}) \xrightarrow{\text{LLM}} \hat{A}$，保留 $\hat{A}=A$ 的。
-    - 设计动机：(i) 不需要教师模型——LLM 自己生成、自己验证；(ii) answer-consistency 过滤保证保留的 CoT 真的能推出正确答案，避免 "shortcut" 或 "答案泄漏"；(iii) 跟 STaR (Zelikman 2022) 的 rationale 自生成类似，但 STaR 用于 SFT，这里用于构造 RL 课程的脚手架。
+硬题的困境是模型 rollout 几乎命中不了正确答案，拿不到任何监督；但每道题其实自带最终答案 $A$。EvoCoT 利用这个先验：把 $Q$ 和 $A$ 一起喂给 LLM，让它「反推」出支持该答案的推理链 $\hat{C}$，写成 $(Q,A) \xrightarrow{\text{LLM}} \hat{C}$——已知答案后，模型造出合理 CoT 比从零正向推导容易得多。但反推可能造出答案泄漏或 shortcut，于是再做一道正向一致性检验 $(Q,\hat{C}) \xrightarrow{\text{LLM}} \hat{A}$，只保留 $\hat{A}=A$ 的 $\hat{C}$。这样整个 CoT 既不依赖教师模型（模型自己生成、自己验证），又能确保保留的推理链真能推出正确答案。思路上类似 STaR 的 rationale 自生成，但 STaR 用于 SFT，这里是为后续 RL 课程搭脚手架。
 
-2. **Step-Wise Reverse-Prefix Curriculum**：
+**2. Step-Wise Reverse-Prefix Curriculum：把单条 CoT 变成一条从「全引导」到「零引导」的难度梯度。**
 
-    - 功能：把单条 CoT 变成一条从"完全引导"到"零引导"的难度梯度。
-    - 核心思路：以反向顺序逐步删 CoT 尾部 step，$(Q,c_1,\dots,c_n) \to (Q,c_1,\dots,c_{n-1}) \to \dots \to (Q,c_1) \to (Q)$。每一步用当前 prefix 作为 rollout 的固定前缀（teacher forcing），让 LLM 只生成剩余部分。这样 prefix 越长，需要 LLM 探索的空间越小，rollout 命中正确答案的概率越高，奖励越密集；prefix 越短，探索空间越大，但模型已经在前几步学会了相关推理模式，能稳定渐进。
-    - 设计动机：作者基于两个观察设计——(a) 长 CoT 引导 比 短 CoT 引导容易（自然的难度梯度）；(b) 渐进缩短能避免"reward hacking"——如果 prefix 已经包含完整答案，模型就退化成抄答案，所以最终必须能从 $(Q)$ 直接推出 $A$。相比 R3/AdaBack 这类前缀课程，EvoCoT 不需要外部完整 CoT 数据，每条样本自带课程。
+光有 CoT 还不够——直接拿去 SFT 会退化成记忆。EvoCoT 把验证过的 CoT 按 "\n\n" 切成步骤 $\{c_1,\dots,c_n\}$，然后从尾部逐步删步，构造 $(Q,c_1,\dots,c_n) \to (Q,c_1,\dots,c_{n-1}) \to \dots \to (Q,c_1) \to (Q)$ 这条序列。每个 prefix 作为 rollout 的固定前缀（teacher forcing），LLM 只需自由生成剩余部分：prefix 越长，留给模型探索的空间越小，命中正确答案概率越高、奖励越密；prefix 越短，探索空间越大，但模型已在前几个 prefix 上学会了相关推理模式，可以稳定渐进。之所以一定要删到只剩 $(Q)$，是为了避免 reward hacking——如果 prefix 始终包含完整答案，模型就退化成抄答案，最终必须能从纯 $(Q)$ 直接推出 $A$ 才算真学会。相比 R3/AdaBack 这类同样用反向前缀课程的方法，EvoCoT 不需要外部完整 CoT 数据，每条样本自带课程。
 
-3. **自我进化迭代优化 (Self-Evolving Iteration)**：
+**3. 自我进化迭代优化：让 CoT 质量与模型能力相互拉升。**
 
-    - 功能：让 CoT 质量与 LLM 能力相互拉升。
-    - 核心思路：第 $t$ 轮先用当前 LLM 生成 $\hat{C}^{(t)}$，再用 EvoCoT 在 $(Q, \hat{C}^{(t)}, A)$ 上训练得 $\text{LLM}^{(t+1)}$；下一轮用更强的 $\text{LLM}^{(t+1)}$ 重新生成更优质的 $\hat{C}^{(t+1)}$。即便首轮 CoT 不完美，迭代会逐步打磨出高质 CoT。
-    - 设计动机：单轮 EvoCoT 容易被首轮 CoT 质量限死；多轮迭代让框架对初始能力不敏感。EvoCoT 还显式与 GRPO / DAPO 正交——它不替换 RL 算法，而是作为后训练的"加强层"。
+单轮训练会被首轮自生成 CoT 的质量限死。EvoCoT 把两阶段嵌套成迭代闭环：第 $t$ 轮用当前 $\text{LLM}^{(t)}$ 生成 $\hat{C}^{(t)}$，在 $(Q,\hat{C}^{(t)},A)$ 上训练得到更强的 $\text{LLM}^{(t+1)}$；下一轮再用 $\text{LLM}^{(t+1)}$ 重新生成更优质的 $\hat{C}^{(t+1)}$（Equation 5）。即便首轮 CoT 不完美，迭代也能逐步打磨出高质量推理链，让框架对初始能力不那么敏感。整个机制与 GRPO / DAPO 正交——它不替换 RL 算法，只改写训练样本结构，可作为现有 RLVR pipeline 的 drop-in 增强层。
 
 ### 损失函数 / 训练策略
 Stage 2 直接复用 RLVR（默认 GRPO，也兼容 DAPO/PRIME 等），rollout 在固定 prefix 后接续生成，回报基于最终答案的规则验证。Stage 1 阶段从 GSM8K + MATH 训练集中筛出"8 次 rollout 全错"的硬题，每题采样 8 条 CoT（temperature=1.0）。所有实验在 8×A100 (40GB) 上跑，每个模型最大训练步数固定，超额硬题被丢弃。EvoCoT 默认迭代 2 轮（实验显示 3 轮后 plateau）。

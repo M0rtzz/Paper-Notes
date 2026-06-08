@@ -48,23 +48,17 @@ tags:
 如果用户群体差异很大，论文还会先把用户画像编码成 embedding 并聚类。每个 cluster 内重新发现 Preference Heads，推理时根据用户到各 cluster 的相似度做 hard routing 或 soft routing，避免把所有用户的偏好头粗暴合并成一个全局集合。
 
 ### 关键设计
-1. **Preference Contribution Score**:
+**1. Preference Contribution Score：用因果消融给每个注意力头打一个个性化贡献分。**
 
-	- 功能：给每个 attention head 一个因果贡献分数，衡量它对用户对齐输出的实际影响。
-	- 核心思路：对第 $l$ 层第 $k$ 个 head $h_{l,k}$ 做屏蔽，比较屏蔽模型 $M_{\theta \setminus h_{l,k}}$ 与原模型 $M_\theta$ 在用户参考输出上的平均负对数似然。论文定义 $PCS(h_{l,k}) = E[L(M_{\theta \setminus h_{l,k}}, x, u, y^*) - L(M_\theta, x, u, y^*)]$。如果 PCS 为正且较大，说明拿掉这个 head 会显著降低用户对齐输出的概率，因此它不仅“相关”，而是对个性化行为有因果贡献。
-	- 设计动机：很多可解释性分析容易停留在激活可视化或相关性统计，无法说明某个组件是否真的改变输出。PCS 的好处是直接用 intervention 评估 head 的作用，和“个性化输出似然”这个目标绑定得更紧。
+很多可解释性分析停在激活可视化或相关性统计上，看得到某个 head 在“亮”，却说不清它是否真的改变了输出。PCS 直接用 intervention 回答这个问题：对第 $l$ 层第 $k$ 个 head $h_{l,k}$ 做定向屏蔽，比较屏蔽模型 $M_{\theta \setminus h_{l,k}}$ 与原模型 $M_\theta$ 在用户参考输出上的平均负对数似然，定义 $PCS(h_{l,k}) = E[L(M_{\theta \setminus h_{l,k}}, x, u, y^*) - L(M_\theta, x, u, y^*)]$。如果 PCS 为正且较大，说明拿掉这个 head 会显著降低用户对齐输出的概率，它就不只是“相关”，而是对个性化行为有因果贡献。这种和“个性化输出似然”直接绑定的因果评估，比单看 attention 权重大小可靠得多。
 
-2. **Differential Preference Steering**:
+**2. Differential Preference Steering：解码时放大偏好头贡献的差分信号，不动一个参数。**
 
-	- 功能：在不更新模型参数的情况下，把已发现的 Preference Heads 转化为解码时的偏好增强信号。
-	- 核心思路：对同一上下文分别计算原模型 logits $l_t^{pref}$ 和屏蔽 Preference Heads 后的 logits $l_t^{gen}$，再组合为 $\tilde{l}_t = (1 + \gamma) l_t^{pref} - \gamma l_t^{gen}$。当 $\gamma = 0$ 时退化为原模型；当 $\gamma$ 增大时，模型会更强调原模型相对 generic 模型多出来的偏好方向。
-	- 设计动机：直接强行指定输出风格容易损伤内容一致性，而 DPS 只放大“原模型已经通过偏好头表达出来”的差异。因此它更像是在增强内部已有的个性化通路，而不是从外部塞入一个新的控制目标。
+直接强行指定输出风格容易损伤内容一致性，DPS 换了个思路。它对同一上下文分别算原模型 logits $l_t^{pref}$ 和屏蔽 Preference Heads 后的 logits $l_t^{gen}$，再组合成 $\tilde{l}_t = (1 + \gamma) l_t^{pref} - \gamma l_t^{gen}$：$\gamma = 0$ 时退化为原模型，$\gamma$ 增大时模型会更强调原模型相对 generic 模型多出来的那部分偏好方向。因为这个差异主要就是被偏好头贡献出来的个性化信号，DPS 更像是在增强模型内部已有的偏好通路，而不是从外部塞一个新控制目标进去——它放大的是模型“已经想说”的个性化倾向。
 
-3. **Cluster-aware Preference Steering**:
+**3. Cluster-aware Preference Steering：按用户群组分别发现偏好头，避免全局集合稀释信号。**
 
-	- 功能：处理用户之间 Preference Heads 不共享的问题，让偏好头发现更稳定。
-	- 核心思路：先用用户历史文本得到 profile embedding，再用 k-means 等方式把用户分成若干偏好群组。每个 cluster 内单独运行 PCS 发现流程，得到 cluster-specific head set。推理时可以把用户硬分配到最近 cluster，也可以用多个 cluster 的相似度权重做 soft routing。
-	- 设计动机：实验中的 Jaccard overlap 分析显示，不同用户的 top-K Preference Heads 大多重叠很低。若直接平均所有用户，会稀释真正有用的偏好信号；按相似用户共享 head，则在个体化和统计稳定性之间取得折中。
+实验里的 Jaccard overlap 分析显示，不同用户的 top-K Preference Heads 大多重叠很低，若把所有用户的偏好头粗暴合并成一个全局集合，真正有用的信号会被稀释。为此 DPS 先用用户历史文本得到 profile embedding，再用 k-means 等方式把用户分成若干偏好群组，每个 cluster 内单独跑一遍 PCS 发现流程得到 cluster-specific head set。推理时既可以把用户硬分配到最近 cluster，也可以按用户到各 cluster 的相似度做 soft routing。这样在个体化和统计稳定性之间取得折中：相似用户共享 head 既保留了个性化，又不至于让单用户的稀疏样本把偏好头估歪。
 
 ### 损失函数 / 训练策略
 DPS 本身不训练模型参数，也不需要额外微调。离线阶段只用参考输出计算每个 head 的负对数似然变化，并据此选择 top-K heads。推理阶段多做一次屏蔽 Preference Heads 的前向，用差分 logits 控制生成强度。论文还分析了 $K$ 和 routing 策略：较小 $K$ 会漏掉偏好信号，较大 $K$ 会逐渐引入噪声；hard routing 更适合分类任务，soft routing 在生成任务上更稳。

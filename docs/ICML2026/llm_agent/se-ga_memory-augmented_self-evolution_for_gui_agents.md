@@ -41,27 +41,29 @@ SE-GA 给基于 VLM 的 GUI 智能体配了一套"情景+语义+经验"三层记
 ## 方法详解
 
 ### 整体框架
-SE-GA 把问题形式化为 POMDP $\langle\mathcal{S},\mathcal{A},\mathcal{O},\mathcal{T},\mathcal{R},\gamma\rangle$。每一步 $t$，agent 接收用户指令 $Q$、当前截图 $o_t$、从分层记忆库 $\mathcal{M}=(M^{EPI},M^{SEM},M^{EXP})$ 检索出的结构化记忆 $M_{retrieved}$，组装成输入 $x_t=(o_t,Q,M_{retrieved})$，过策略 $\pi_\theta(a_t|x_t)$ 输出动作。整个系统分两块：**TTME**（Test-Time Memory Extension）负责推理期分层检索 + 实时积累成功轨迹；**MASE**（Memory-Augmented Self-Evolution）负责离线/在线两阶段训练，把 TTME 收集到的数据回灌进 VLM 参数。Base model 选 Qwen2.5-VL-7B，4×A800 训练。
+SE-GA 把 GUI 导航形式化为 POMDP $\langle\mathcal{S},\mathcal{A},\mathcal{O},\mathcal{T},\mathcal{R},\gamma\rangle$，目标是把一个只会"看截图出动作"的 VLM 策略，改造成能跨任务检索经验、还能把经验回灌进参数的自演化 agent。每一步 $t$，agent 拿到用户指令 $Q$、当前截图 $o_t$，再从三层记忆库 $\mathcal{M}=(M^{EPI},M^{SEM},M^{EXP})$ 检索出结构化记忆 $M_{retrieved}$，拼成输入 $x_t=(o_t,Q,M_{retrieved})$ 喂给策略 $\pi_\theta(a_t|x_t)$ 出动作。系统由两块咬合而成：推理期的 **TTME**（Test-Time Memory Extension）负责分层检索上下文、同时把新跑出来的成功轨迹实时入库；训练期的 **MASE**（Memory-Augmented Self-Evolution）负责分两阶段把 TTME 攒下来的高质量数据烧回 VLM 参数。Base model 是 Qwen2.5-VL-7B，4×A800 训练。
 
 ### 关键设计
 
-1. **TTME 三层记忆 + 滑窗 + 多模态混合检索**:
+**1. TTME 三层记忆 + 滑窗 + 多模态混合检索：让 agent 推理时同时看到近期上下文、通用规则和历史成功策略。**
 
-    - 功能：在推理时给 agent 提供一个分层、可动态扩展的上下文，既覆盖最近若干步、又涵盖通用 GUI 规则和历史成功策略。
-    - 核心思路：三层各自定义 + 各自检索。**Episodic** $M^{EPI}_t=[\langle o_k,a_k,o_{k+1}\rangle]_{k=1}^{t-1}$ 存原始动作序列，但用固定长度 $H$ 的滑窗 $\mathcal{C}^{epi}_t=[m_k]_{k=\max(1,t-H)}^{t-1}$ 只保留最近 $H$ 步，避免陈旧信息误导。**Semantic** 存通用交互规则 $m^{sem}_i=\langle k^{sem}_i,d_i\rangle$（如"访问受限页面前先登录"），用 cosine 相似度 $S^{sem}(Q,m^{sem}_i)=\phi(Q)\cdot k^{sem}_i / (|\phi(Q)||k^{sem}_i|)$ 检索 Top-K。**Experiential** 存历史成功轨迹及反思摘要 $m^{exp}_i=\langle\tau_i,g(\tau_i),k^{intent}_i,k^{task}_i\rangle$，关键是用**意图+视觉混合检索** $S^{exp}(Q,o_t)=\lambda\cdot\text{Sim}(\phi(Q),k^{intent}_i)+(1-\lambda)\cdot\text{Sim}(\psi(o_t),k^{task}_i)$，把文本 query 相似度和当前截图 $\psi(o_t)$ 的视觉相似度加权融合。三层上下文 $\mathcal{C}^{epi},\mathcal{C}^{sem},\mathcal{C}^{exp}$ 全部拼进 agent 输入。
-    - 设计动机：episodic 解决短期上下文，semantic 解决跨任务通用知识迁移，experiential 解决"重复造轮子"问题；视觉相似度的引入是关键 — 纯文本检索在 GUI 这种空间/结构高度依赖布局的场景里检不准，必须把当前界面长什么样也算进去。同时 TTME 是动态 buffer，推理阶段新成功的轨迹直接入库，实现"边干边攒数据"。
+GUI 导航是部分可观测的，关键线索可能藏在 100 步前的某一张截图里，可现有方法只塞最近几步进窗口，长程任务一旦早期遗忘就不可逆失败。TTME 把上下文按认知科学的三分法拆开、各自定义、各自检索。**Episodic** 层 $M^{EPI}_t=[\langle o_k,a_k,o_{k+1}\rangle]_{k=1}^{t-1}$ 存原始动作序列，但只用固定长度 $H$ 的滑窗 $\mathcal{C}^{epi}_t=[m_k]_{k=\max(1,t-H)}^{t-1}$ 保留最近 $H$ 步，避免陈旧步骤反过来误导决策。**Semantic** 层存通用交互规则 $m^{sem}_i=\langle k^{sem}_i,d_i\rangle$（如"访问受限页面前先登录"），用 cosine 相似度 $S^{sem}(Q,m^{sem}_i)=\phi(Q)\cdot k^{sem}_i / (|\phi(Q)||k^{sem}_i|)$ 取 Top-K，解决跨任务通用知识迁移。**Experiential** 层存历史成功轨迹及其反思摘要 $m^{exp}_i=\langle\tau_i,g(\tau_i),k^{intent}_i,k^{task}_i\rangle$，专治"重复造轮子"。
 
-2. **MASE 两阶段训练：Grounding SFT + 改进版 GRPO**:
+experiential 的检索是这一层最关键的设计：它用**意图 + 视觉混合检索** $S^{exp}(Q,o_t)=\lambda\cdot\text{Sim}(\phi(Q),k^{intent}_i)+(1-\lambda)\cdot\text{Sim}(\psi(o_t),k^{task}_i)$，把文本 query 的相似度和当前截图 $\psi(o_t)$ 的视觉相似度加权融合。原因是 GUI 任务高度依赖界面布局，纯文本 RAG 会忽略"当前界面长什么样"这个关键线索，意图相近但界面完全不同的历史轨迹反而会误导——必须把视觉相似度也算进来才检得准。三层上下文 $\mathcal{C}^{epi},\mathcal{C}^{sem},\mathcal{C}^{exp}$ 全部拼进 agent 输入。更妙的是 TTME 是个动态 buffer，推理时新跑成功的轨迹直接入库，等于"边干边攒数据"，为下游训练源源不断供料。
 
-    - 功能：把 TTME 收集的高质量经验稳定地烧进 VLM 参数，解决 GUI 稀疏奖励 + 高方差下 RL 训不稳的问题。
-    - 核心思路：**Stage I（Grounding Training）** 是记忆感知的行为克隆，目标 $\mathcal{L}_{SFT}(\theta)=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{ground}}[\frac{1}{|y|}\sum_t\log\pi_\theta(y_t|o_t,Q,M,y_{<t})]$，把 grounding 基础能力打牢、防止 Stage II 灾难性遗忘。**Stage II（Self-Evolution Training）** 基于 GRPO 做了三点改进：(a) **token-level importance ratio**（借鉴 DAPO），$\rho_{i,t}=\pi_\theta(y_{i,t}|x,y_{i,<t})/\pi_{\theta_{old}}(\cdot)$，避免序列级聚合让无关 token 拉爆梯度；(b) **adaptive clipping**，上界 $\epsilon_{cur}$ 按 cosine schedule 从 $\epsilon_{init}$ 衰减到 $\epsilon_{end}$（$\epsilon_{cur}=\epsilon_{end}+\frac{1}{2}(\epsilon_{init}-\epsilon_{end})(1+\cos(\pi k/K))$），训练前期允许大步更新、后期收紧；(c) **hierarchical reward**，$R_{total}=w_f R_{format}+w_a R_{acc}$，先卡输出格式再算精度（$R_{format}=0$ 直接砍掉精度奖励），精度奖励再细分动作类型奖励 + 参数奖励（click 任务用"点是否落在 bbox 内"的指示函数 $R_{point}=\mathbb{I}((x_p,y_p)\in B_{gt})$、scroll 任务用 IoU/$\tau_{IoU}$ 软门控）。优化目标 $\mathcal{J}(\theta)=\mathbb{E}[\frac{1}{\sum|y_i|}\sum_{i,t}(\min(\rho_{i,t}A_i,\rho_{i,t}^{clip}A_i)-\beta\mathbb{D}_{KL}(\pi_\theta||\pi_{ref}))]$。
-    - 设计动机：标准 GRPO 在 GUI 长轨迹上会因稀疏奖励 + 序列级聚合而梯度爆炸或方差过大；token-level + adaptive clipping + 格式优先的层次化奖励三件套是针对 GUI 任务"格式必须严格、动作类型与坐标精度都要管"的特点定制的，让 RL 阶段真正能稳定收敛。
+**2. MASE 两阶段训练：Grounding SFT 打底 + 改进版 GRPO 自演化，把记忆烧进参数。**
 
-3. **Hindsight Goal-Shifting 数据合成**:
+TTME 攒下来的经验要真正变强，得回灌进模型参数，但 GUI 是稀疏奖励、高方差环境，直接上 RL 训不稳。MASE 因此先 SFT 后 RL。**Stage I（Grounding Training）** 是记忆感知的行为克隆，目标 $\mathcal{L}_{SFT}(\theta)=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{ground}}[\frac{1}{|y|}\sum_t\log\pi_\theta(y_t|o_t,Q,M,y_{<t})]$，先把 grounding 基础能力打牢、防止 Stage II 灾难性遗忘。**Stage II（Self-Evolution Training）** 在 GRPO 基础上做了三点针对 GUI 的改造，每一点都对应一个具体的训练失败模式。
 
-    - 功能：把大量失败轨迹回收成有效监督信号，缓解 GUI agent 训练数据稀缺问题。
-    - 核心思路：给定一条原本目标 $g$ 的失败轨迹 $\tau=(s_0,a_0,\ldots,s_T)$，如果某个前缀 $\tau_{0:k}$ 实际完成了一个**替代子目标** $g'$（比如"成功打开 App 但后续搜索失败"，那 $g'$ 就是"打开 App"），就把 $\tau_{0:k}$ 重标为 $g'$ 的成功样本，构成 $\mathcal{D}_{GS}=\{(\tau_{0:k},g')\mid \text{Verify}(\tau_{0:k},g')=1\}$，合并进总数据集。最终 4K 轨迹拆 2K 给 grounding、2K 给 self-evolution。
-    - 设计动机：借鉴 HER（Hindsight Experience Replay）的思想直接搬到 GUI 这种符号化动作空间，让原本零奖励的失败轨迹的"前半段成功部分"也能产生梯度，相当于把数据利用率成倍提升，对于只能凑出 4K 高质量轨迹的小数据集尤为关键。
+其一是 **token-level importance ratio**（借鉴 DAPO），$\rho_{i,t}=\pi_\theta(y_{i,t}|x,y_{i,<t})/\pi_{\theta_{old}}(\cdot)$，把比率算到 token 级，避免序列级聚合让无关 token 把梯度拉爆。其二是 **adaptive clipping**，clip 上界 $\epsilon_{cur}$ 按 cosine schedule 从 $\epsilon_{init}$ 衰减到 $\epsilon_{end}$，
+
+$$\epsilon_{cur}=\epsilon_{end}+\tfrac{1}{2}(\epsilon_{init}-\epsilon_{end})(1+\cos(\pi k/K))$$
+
+让训练前期允许大步探索、后期收紧稳住。其三是 **hierarchical reward** $R_{total}=w_f R_{format}+w_a R_{acc}$，先卡输出格式再算精度——$R_{format}=0$ 时直接砍掉精度奖励，精度奖励再细分成动作类型奖励 + 参数奖励（click 任务用"点是否落在 bbox 内"的指示函数 $R_{point}=\mathbb{I}((x_p,y_p)\in B_{gt})$，scroll 任务用 IoU 配阈值 $\tau_{IoU}$ 的软门控）。这套"格式优先、类型与坐标都管"的层次化奖励正好对应 GUI 输出"格式必须严格、动作类型与坐标精度缺一不可"的特点。最终优化目标 $\mathcal{J}(\theta)=\mathbb{E}[\frac{1}{\sum|y_i|}\sum_{i,t}(\min(\rho_{i,t}A_i,\rho_{i,t}^{clip}A_i)-\beta\mathbb{D}_{KL}(\pi_\theta||\pi_{ref}))]$。三件套合起来，原本在 GUI 长轨迹上梯度爆炸或方差过大的 GRPO 才真正稳定收敛。
+
+**3. Hindsight Goal-Shifting 数据合成：把失败轨迹的前半段回收成子任务成功样本。**
+
+高质量 GUI 轨迹极稀缺，本文只凑得出 4K 条，大量失败轨迹白白浪费。Hindsight Goal-Shifting 借鉴 HER（Hindsight Experience Replay），把它从连续控制搬到符号化的 GUI 动作空间：给定一条原本目标 $g$ 的失败轨迹 $\tau=(s_0,a_0,\ldots,s_T)$，如果它的某个前缀 $\tau_{0:k}$ 其实完成了一个**替代子目标** $g'$（比如"成功打开 App 但后续搜索失败"，那 $g'$ 就是"打开 App"），就把 $\tau_{0:k}$ 重新标注成 $g'$ 的成功样本，构成 $\mathcal{D}_{GS}=\{(\tau_{0:k},g')\mid \text{Verify}(\tau_{0:k},g')=1\}$ 并入总数据集。这样原本零奖励的失败轨迹的"前半段成功部分"也能产生梯度，几乎是免费把数据利用率翻倍，对小数据集尤其关键。最终 4K 轨迹拆成 2K 给 grounding、2K 给 self-evolution。
 
 ### 损失函数 / 训练策略
 Stage I SFT：lr=2e-6，global batch=16；Stage II GRPO：lr=2e-5，global batch=256，group size $G$=16；4×A800 GPU。数据来源 AITW + AMEX + GUIOdyssey + Android 模拟器自采，经 Qwen-VL 过滤简单/含糊样本 + Hindsight Goal-Shifting 扩充。

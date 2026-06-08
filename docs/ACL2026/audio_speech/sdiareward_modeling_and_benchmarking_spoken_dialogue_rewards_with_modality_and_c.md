@@ -38,34 +38,27 @@ SDiaReward 构建了面向多轮语音对话的成对偏好数据集与 ESDR-Ben
 **核心 idea**：用大规模成对语音 episode 偏好数据训练端到端 reward model，让模型直接“听见”多轮上下文和候选语音，而不是先把语音离散成文本再评估。
 
 ## 方法详解
-SDiaReward 的核心由三部分组成：数据集 SDiaReward-Dataset、分层抽样 benchmark ESDR-Bench，以及基于 Qwen2.5-Omni 的端到端 reward model。它不是给单个 utterance 打分，而是给完整多轮上下文和候选最后一轮语音输出打标量 reward。
+SDiaReward 把语音对话评测做成一个端到端的标量打分问题：不是给单句 utterance 评分，而是对完整多轮上下文加候选最后一轮语音输出打一个 reward，背后配套一套双 gap 偏好数据集和分层抽样的 ESDR-Bench。
 
 ### 整体框架
-输入是一段多轮语音对话上下文 $\mathcal{C}$ 和候选最终回复 $y$，模型输出 $r_\theta(\mathcal{C}, y)$。训练数据由 preference pairs 构成：一个 preferred episode 和一个 rejected episode。数据来源包括 wild YouTube 多人对话、MELD 半自然表演对话、DailyTalk studio scripted 语音，以及用 LLM 改写出的书面风格/口语风格对话。
-
-数据构造后，作者从 validation split 中按 source 和 metadata 分层采样，形成 ESDR-Bench，避免 Wild 数据量过大导致评测被单一分布主导。最终数据集包含 13,356 对对话，其中训练 11,630 对，验证 1,726 对。
+模型接收一段多轮语音对话上下文 $\mathcal{C}$ 和候选最终回复 $y$，输出标量 $r_\theta(\mathcal{C}, y)$。训练用 preference pairs 监督：每对包含一个 preferred episode 和一个 rejected episode，数据来源横跨 wild YouTube 多人对话、MELD 半自然表演对话、DailyTalk studio scripted 语音，以及由 LLM 改写出的书面/口语两种风格对话。数据建好后，作者从 validation split 按 source 和 metadata 分层采样组成 ESDR-Bench，防止 Wild 子集体量过大把评测拉成单一分布。整套数据集共 13,356 对，其中训练 11,630 对、验证 1,726 对。
 
 ### 关键设计
-1. **双 gap 偏好数据构造**:
 
-    - 功能：分别为语音自然性和口语风格提供明确偏好监督。
-    - 核心思路：modality-aware subset 把真人语音与 SoulX-Podcast 生成的同内容合成语音配对，迫使模型关注 prosody、情绪、轮次一致性，而非文本内容差异。colloquialness subset 则先生成书面风格多轮对话，再重写为带 filler、fragmentation、discourse markers 的自然口语版本，并用相同 TTS 配置合成，保证偏好信号来自风格自然性而非音质差异。
-    - 设计动机：如果数据不控制文本内容或音频条件，模型容易学到 shortcut，比如“更干净的录音更好”。成对构造把评估维度隔离出来，监督信号更清晰。
+**1. 双 gap 偏好数据构造：把"语音自然性"和"口语风格"两条评估轴隔离开。**
 
-2. **Episode-level 端到端 reward model**:
+如果偏好对里文本内容或录音条件不受控，模型很容易学到"录音更干净就更好"这类 shortcut，根本没在评声学自然性。作者因此按两个 gap 分别构造对照样本。modality-aware subset 把真人语音与 SoulX-Podcast 生成的同内容合成语音配成对，文本一致，迫使模型只能盯住 prosody、情绪、轮次一致性这些副语言差异；colloquialness subset 则先生成书面风格的多轮对话，再重写成带 filler、fragmentation、discourse markers 的自然口语版本，并用相同 TTS 配置合成，保证偏好信号纯粹来自风格而非音质。这样每一对都只在一个维度上有差，监督信号干净。
 
-    - 功能：直接对完整多轮语音 episode 进行标量评分。
-    - 核心思路：模型用 multimodal LLM backbone 将交错的 speech-text 序列投影到联合表示空间，从最后一层 hidden states 得到 $\mathbf{H}=\{h_1,\ldots,h_L\}$，再通过 Pooling 和 MLP 得到 reward。作者比较 last-token、attention 和 mean pooling，发现 mean pooling 最稳定。
-    - 设计动机：多轮语音偏好信息分散在上下文、最终回复和声学细节里，不能指望最后一个 token 或 ASR 文本承载所有信号。mean pooling 更适合聚合 episode-level 表征。
+**2. Episode-level 端到端 reward model：让模型直接"听"完整多轮，而非读 ASR 文本。**
 
-3. **多准则条件化与中心化正则**:
+多轮语音的偏好信息散落在上下文、最终回复和声学细节里，指望最后一个 token 或一段 ASR 转写承载全部信号并不现实。模型用 multimodal LLM backbone 把交错的 speech-text 序列投影到联合表示空间，取最后一层 hidden states $\mathbf{H}=\{h_1,\ldots,h_L\}$，再经 Pooling 和 MLP 输出 reward。作者对比 last-token、attention、mean pooling 三种聚合方式，发现 mean pooling 在 episode-level 表征上最稳，能更均衡地汇总分散在整段语音里的偏好线索。
 
-    - 功能：用一个 reward model 同时处理 modality-aware 与 colloquialness 两类评测，并稳定 reward scale。
-    - 核心思路：模型输入包含 criterion-specific instruction，使 reward 变为 $r_\theta(\mathcal{C}, y, inst)$。训练使用 Bradley-Terry preference objective，让 preferred 的 reward 高于 rejected。为避免 pairwise loss 导致分数无界漂移，加入 center loss，把 reward 均值锚定到合理范围。
-    - 设计动机：语音数据跨 Wild、Semi-wild、Scripted 分布差异很大，单纯 pairwise 优化可能把通道和域差异当成绝对分数偏移。中心化正则提升校准和训练稳定性。
+**3. 多准则条件化与中心化正则：一个模型兼顾两类评测且 reward scale 不漂。**
+
+为了用同一个 reward model 处理 modality-aware 与 colloquialness 两套标准，输入里加入 criterion-specific instruction，reward 变成 $r_\theta(\mathcal{C}, y, inst)$。训练用 Bradley-Terry preference objective 让 preferred 的分数高于 rejected。但 pairwise loss 只约束相对大小、不约束绝对值，跨 Wild、Semi-wild、Scripted 的域差异容易被当成分数整体偏移，于是再加一个 center loss 把 reward 均值锚到合理范围，提升校准与训练稳定性——这对后续把 reward 用于 DPO/GRPO 尤其重要。
 
 ### 损失函数 / 训练策略
-主损失是 Bradley-Terry preference loss：$\mathcal{L}_{pref}(\theta)=-\mathbb{E}[\log \sigma(r_\theta(\mathcal{C}^+,y^+)-r_\theta(\mathcal{C}^-,y^-))]$。其中 preferred response 的 reward 应高于 rejected response。作者还使用 center regularization 缓解 reward drift。模型初始化自 Qwen2.5-Omni，在线性 score head 上做标量预测，音频被截断或 padding 到 30 秒。
+主损失是 Bradley-Terry preference loss：$\mathcal{L}_{pref}(\theta)=-\mathbb{E}[\log \sigma(r_\theta(\mathcal{C}^+,y^+)-r_\theta(\mathcal{C}^-,y^-))]$，要求 preferred response 的 reward 高于 rejected response，再叠加 center regularization 缓解 reward drift。模型初始化自 Qwen2.5-Omni，在一个线性 score head 上做标量预测，音频统一截断或 padding 到 30 秒。
 
 ## 实验关键数据
 

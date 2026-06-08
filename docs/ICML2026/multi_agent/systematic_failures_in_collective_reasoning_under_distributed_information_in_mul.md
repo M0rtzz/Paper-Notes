@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **HiddenBench 任务构造与自动化生成 pipeline**:
+**1. HiddenBench 任务构造与自动化生成 pipeline：把社心范式的软约束变成可机器验证的硬阈值。**
 
-    - 功能：把社心 Hidden Profile 范式扩展到 65 个跨领域任务（医疗、组织规划、文化保育等），并保证每个任务都满足"个体不可解、集体可解"的形式约束。
-    - 核心思路：三段式 pipeline——(i) **Generation**：GPT-4.1 按结构化模板生成候选任务（场景 + 选项 + 共享 facts + unshared facts + 正解）；(ii) **Execution**：对每个候选在 Full / Hidden 双条件下各跑 10 次，测 pre-discussion 准确率；(iii) **Selection**：只保留 Full Profile ≥ 80% 且 Hidden Profile ≤ 20% 的任务。从 200 个候选里筛出 57 个（28.5% 通过率），加上 5 个改编 + 3 个手写 = 65 任务。
-    - 设计动机：手工出题不可扩展且容易引入主观偏差；纯自动生成又无法保证"形式正确"。这套"生成-执行-筛选"流程把社心范式的硬约束变成可机器验证的阈值条件，是把"集体推理"这一软概念变成可复现 benchmark 的关键。
+要测"集体推理"本身，每个任务必须同时满足"个体不可解、集体可解"——但手工出题既不可扩展又容易掺主观偏差，纯靠 GPT 自动生成又无法保证形式正确。本文用一条"生成-执行-筛选"流水线把这对矛盾压成机器可验证的阈值：先由 GPT-4.1 按结构化模板生成候选任务（场景 + 决策选项 + 共享 facts + unshared facts + 正解），再对每个候选在 Full / Hidden 双条件下各跑 10 次测 pre-discussion 准确率，最后只保留 Full Profile 准确率 $\ge 80\%$ 且 Hidden Profile $\le 20\%$ 的任务。这两道阈值正是范式硬约束的可执行化身：Full 高保证"信息齐了就能解"（排除任务太难的干扰），Hidden 低保证"信息散开时单看会被共享 facts 误导"（确保真的需要 pooling）。从 200 个候选里筛出 57 个（28.5% 通过率），加上 5 个改编自人类研究 + 3 个手写，凑成 65 个跨领域任务（医疗、组织规划、文化保育等）。
 
-2. **三种条件的对照评测协议**:
+**2. 三种条件的对照评测协议：给 accuracy 加一层因果反事实控制。**
 
-    - 功能：用 $Y^{\text{full}}$ 作个体推理能力上界、$Y^{\text{pre}}$ 作"必须需要 group"的下界、$Y^{\text{post}}$ 评测集体推理能力，三者比对得到"集体提升"$Y^{\text{post}}-Y^{\text{pre}}$ 和"距上限差距"$Y^{\text{post}}-Y^{\text{full}}$ 两个干净指标。
-    - 核心思路：对每模型每任务跑 10 个 session；评测 15 个前沿 LLM（4 大家族：OpenAI GPT 系、Google Gemini 系、Alibaba Qwen 系、Meta Llama 系）；同时变化通信深度 $T\in\{5,10,15,20\}$ 和 group size 测 scaling。
-    - 设计动机：传统 benchmark 只报一个 accuracy 数，无法做归因；三条件对照能直接读出"是模型笨还是协调差"，这是这篇 paper 最重要的方法学贡献。
+传统 benchmark 只报一个 accuracy 数，group 答错了根本分不清是"模型笨"还是"协调烂"。本文的归因利器是同一任务在三种信息条件下各跑一遍：$Y^{\text{full}}$（所有 agent 都拿全部 facts，作个体推理能力上界）、$Y^{\text{pre}}$（Hidden Profile 下讨论前，作"必须靠 group 才能解"的下界）、$Y^{\text{post}}$（Hidden Profile 下讨论后，真正要测的集体推理能力）。三者一比就读出两个干净指标——集体提升 $Y^{\text{post}}-Y^{\text{pre}}$ 和距上限差距 $Y^{\text{post}}-Y^{\text{full}}$，直接把"是模型不行还是协调不行"拆开。评测覆盖 15 个前沿 LLM（OpenAI GPT、Google Gemini、Alibaba Qwen、Meta Llama 四大家族），每模型每任务跑 10 个 session，并变化通信深度 $T\in\{5,10,15,20\}$ 与 group size 测 scaling。
 
-3. **失败模式的针对性 ablation**:
+**3. 失败模式的针对性 ablation：把"多 agent 不行"升级成机制诊断。**
 
-    - 功能：把"集体失败"进一步拆解为 aggregation 失败、inference 失败、action selection 失败三种可能，并通过实验定位到 action selection。
-    - 核心思路：变化通信轮数（5/10/15/20）、prompting 策略（cooperative / conflictual / CoT / informing asymmetry / share-all）、强制 reveal-all 干预（机制层面强制 round-1 公开所有信息）。最后发现：reveal-all 显著缩小差距，证明 agent 一旦被强行 disclose 后能正确推理——所以瓶颈不是 reasoning 而是 **没意识到自己该 elicit 别人的信息**。
-    - 设计动机：直接说"多 agent 不行"没价值，定位到具体失败环节才能指导后续改进。这套 ablation 让结论从"现象"升级为"机制诊断"。
+光说"多 agent 不行"没价值，得定位到具体哪个环节崩了。本文把集体失败拆成三种候选——aggregation 失败（整合不了已说出的信息）、inference 失败（整合了也推不对）、action selection 失败（没主动去要别人没说的信息），再用一组 ablation 逐一排除：变化通信轮数（5/10/15/20）、换 prompting 策略（cooperative / conflictual / CoT / informing asymmetry / share-all），最后上机制层面的 reveal-all 干预（强制 round-1 公开所有信息）。关键转折是 reveal-all 显著缩小差距——agent 一旦被强行 disclose 就能正确推理，说明 aggregation 和 inference 都没坏，唯一的瓶颈是 **agent 不会意识到自己该去 elicit 别人手里没说出的信息**。正是这一步把 50-point gap 从"现象"钉死成"action selection 缺陷"。
 
 ### 损失函数 / 训练策略
 评测论文，无训练，全部 zero-shot 通过 API 调用各家 LLM。

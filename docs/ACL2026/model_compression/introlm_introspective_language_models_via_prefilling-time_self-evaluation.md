@@ -50,23 +50,17 @@ IntroLM 在 prompt 尾部追加特殊 `[CPX]` 内省 token，再通过"只对该
 
 ### 关键设计
 
-1. **`[CPX]` 内省 token**:
+**1. `[CPX]` 内省 token：在 prompt 末尾挂一个“复杂度专用阅读位”。**
 
-    - 功能：在 prompt 末尾插入特殊 token，作为"复杂度估计专用阅读位"，通过 prefilling 时的自注意力聚合整个 prompt 的语义。
-    - 核心思路：因为是 decoder-only 模型且 `[CPX]` 位于末尾，每个 `[CPX]` 都能 attend 到完整 $x$；但通过把 `[CPX]` 从 KV cache 中剔除、且 decoding 不从其隐状态启动，生成轨迹完全独立。一个轻量线性头读 `[CPX]` 的最终隐状态，输出二元分类 logit。
-    - 设计动机：直接用最后一个 prompt token 的隐状态做分类（消融里的 "Backbone only"）效果差，因为该 token 是为"生成下一个 token"优化的，而非为"判断复杂度"；新引入的 `[CPX]` 才能学到任务专属的内省表示。
+最直接的想法是拿 prompt 最后一个 token 的隐状态直接做分类，但消融里的 "Backbone only" 证明这条路效果差——那个 token 是为“生成下一个词”优化的，并不是为“判断这道题难不难”准备的。IntroLM 在 $x$ 末尾追加若干特殊 `[CPX]` token：因为是 decoder-only 且位于末尾，每个 `[CPX]` 在 prefilling 时都能 attend 到完整的 $x$，把整段 prompt 的语义聚合进自己的隐状态，再由一个轻量线性头读出二元分类 logit $f_\theta(x)\in[0,1]$。关键是这条内省路径与生成路径被彻底隔开：`[CPX]` 不写入 KV cache，后续 decoding 的 token 根本看不到它；而且 decoding 从原始 prompt 最后一个 token 的隐状态启动、不从 `[CPX]` 启动，于是生成分布和 base 模型完全一致，自评是“顺手”做掉的，不付额外推理代价。
 
-2. **Token-Conditional LoRA（token 级低秩适配）**:
+**2. Token-Conditional LoRA：让低秩更新只对 `[CPX]` 生效，主任务零失真。**
 
-    - 功能：让 LoRA 更新**只对 `[CPX]` token 生效**，对原始 prompt token 完全不改动，从而既能为内省定制表征、又能保持生成行为零失真。
-    - 核心思路：对任意线性层 $W$ 计算标准输出 $HW$ 和 LoRA 输出 $H\Delta W$ 后，用一个二元 mask $M$（`[CPX]` 位置 = 1，其余 = 0）做逐元素乘：$HW + (H\Delta W)\odot M$。只对 query 投影（`q_proj`）、output 投影（`o_proj`）以及 FFN 的 gate/up/down 加 token-conditional LoRA；key 和 value 投影由 prompt token 产生、决定整体注意力模式，故保持冻结。
-    - 设计动机：常规 LoRA 改写所有 token 的表征，必然干扰生成；token-level 掩码相当于在同一组权重里"分叉"出一条只属于 `[CPX]` 的并行计算路径，既能学到分类专用特征又零干扰主任务——这是该方法最聪明的工程细节。
+常规 LoRA 会改写所有 token 的表征，要给内省定制特征就必然顺带扰动生成——这正是“既要评估能力强又要不动生成”的核心矛盾。IntroLM 的解法是给 LoRA 加一个 token 级掩码：对任意线性层，标准输出 $HW$ 和 LoRA 增量 $H\Delta W$ 算完后，用二元 mask $M$（`[CPX]` 位置为 1、其余为 0）逐元素乘再相加，$HW + (H\Delta W)\odot M$。这相当于在同一组权重里为 `[CPX]` 分叉出一条并行计算路径：原始 prompt token 走的还是冻结 backbone，`[CPX]` 才吃到 LoRA 的适配。挂载位置也很讲究——只给 query 投影（`q_proj`）、output 投影（`o_proj`）和 FFN 的 gate/up/down 加适配，而 key、value 投影因为由 prompt token 产生、决定着整体注意力模式，必须保持冻结。这是全篇最聪明的工程细节，也是“鱼与熊掌兼得”的支点。
 
-3. **Prefilling 复用 + 路由策略**:
+**3. Prefilling 复用 + 路由策略：把自评结果直接接进路由，顺势省掉一次 prefilling。**
 
-    - 功能：把内省结果直接嵌入 routing，$f_\theta(x)\ge\alpha$ 走小模型 $M_s$ 并复用其 prefilling KV cache；否则升级到大模型 $M_\ell$ 重做。
-    - 核心思路：因为 prefilling 已经在 $M_s$ 上跑过（顺带产出了 $f_\theta(x)$），如果不升级就直接拿这套 KV 继续 decoding，省掉一次重复 prefilling；只有真的需要升级时才付 $M_\ell$ 的完整 prefilling + decoding 成本。预期延迟 $T^\alpha_{\text{IntroLM}}(L)=\mathrm{TTFT}_{M_s}+(1-c_\ell)(L-1)\mathrm{TPOT}_{M_s}+c_\ell T_{M_\ell}(L)$。
-    - 设计动机：传统 BERT 路由器在 $M_s$ 之前做决策，省的是"小模型 + 大模型都不跑"的 case；IntroLM 决策时小模型已经热好了 prefilling，所以"走小模型"路径只剩 decoding，进一步压缩端到端延迟。
+有了 $f_\theta(x)$，路由就是拿它和阈值 $\alpha$ 比：$f_\theta(x)\ge\alpha$ 判定小模型 $M_s$ 能答对，直接复用刚跑完的 prefilling KV cache 继续 decoding；否则升级到大模型 $M_\ell$ 重做完整 prefilling + decoding。妙处在于自评是在 $M_s$ 的 prefilling 里搭车产出的，所以“走小模型”这条路只剩 decoding 的成本，对应的预期延迟为 $T^\alpha_{\text{IntroLM}}(L)=\mathrm{TTFT}_{M_s}+(1-c_\ell)(L-1)\mathrm{TPOT}_{M_s}+c_\ell T_{M_\ell}(L)$。这和传统 BERT 路由器形成鲜明对比——后者在 $M_s$ 之前就决策，省的是“两个模型都不跑”的情况，但代价是再养一个 512 上下文的编码器；IntroLM 决策时小模型已经热好了 prefilling，于是 KV 复用通道被打开，端到端延迟才能再压下 33%。
 
 ### 损失函数 / 训练策略
 - 损失：类别加权的二元交叉熵；标签由 LLM-as-judge（General QA 用 LLaMA-3.1-8B-Instruct，chat 用 Qwen2.5-32B-Instruct 评 0–10 分阈值 8）自动生成。

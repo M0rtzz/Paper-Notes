@@ -48,23 +48,22 @@ EvoSci 由四个阶段组成：Problem Space Construction、Collaborative Resear
 在研究执行阶段，prime researcher 从问题 cluster 中选择目标，组建 assistant researchers，通过 CrewAI 风格的 lead-and-collaborate 机制进行任务分解、递归委派、阶段性整合和 idea refinement。最后 reviewer agent 按 novelty、feasibility、validity、excitement、overall 等维度评分并给出改进建议，反馈再进入演化循环。
 
 ### 关键设计
-1. **知识图谱驱动的问题空间构建**:
 
-    - 功能：把模糊研究主题转化为可探索的问题集合。
-    - 核心思路：围绕学科和实体建立轻量知识图谱，用实体语义聚类和主题相关性选择最有潜力的实体簇，再让 mentor 基于 $\langle T,d,Top(\mathcal{C}_d;T)\rangle$ 生成问题。
-    - 设计动机：LLM 直接生成 idea 容易发散或重复；显式问题空间能给探索加语义锚点，同时保留跨学科连接。
+**1. 知识图谱驱动的问题空间构建：把模糊主题锚定成可探索的问题簇。**
 
-2. **角色化多智能体科研团队**:
+LLM 直接“给主题、出 idea”很容易要么发散成天马行空、要么反复重复同一类想法，缺的正是一个语义锚点。EvoSci 先围绕核心主题 $T$ 和目标学科建一张轻量知识图谱：学科作为第一层节点，实体从 Wikipedia summary 和 hyperlink 抽取、经 LLM 分成 Theory/Model/Material/Phenomenon 等类型，再用 embedding 相似度补上跨实体边。随后对每个学科 $d$ 按与主题的相关性挑出最有潜力的实体簇 $Top(\mathcal{C}_d;T)$，让 mentor 基于三元组 $\langle T,d,Top(\mathcal{C}_d;T)\rangle$ 生成结构化研究问题。这样探索被钉在具体实体上，既不漫无边际，又通过跨实体边保留了跨学科连接——后面的演化也正是在这个实体层上动刀。
 
-    - 功能：模拟真实科研中 mentor、prime researcher、assistant researcher、reviewer 的分工。
-    - 核心思路：prime researcher 拆解任务并分派给 assistant agents，assistant 可进一步递归委派；系统用短期、长期和实体记忆保存中间结果，并在阶段性讨论中整合多视角输出。
-    - 设计动机：科研 idea 很少来自单一视角。适度多样的 agent 团队能提升 novelty 和 validity，但团队过大也会带来协调开销。
+**2. 角色化多智能体科研团队：用 mentor/researcher/reviewer 分工模拟真实科研协作。**
 
-3. **实体级生物启发式演化**:
+单一视角很难产出既新又靠谱的 idea。EvoSci 让 prime researcher 从问题簇里选目标、拆任务，再分派给若干 assistant researcher，assistant 还能进一步递归委派；中间用短期、长期和实体三类记忆保存阶段性结果，并在阶段讨论里整合多视角输出，最后由 reviewer 按 novelty、feasibility、validity、excitement、overall 打分并给改进建议。团队规模不是越大越好——实验里 team_size=5 最优，到 7/9 反而因协调开销掉分，说明“适度多样性”才是甜点。
 
-    - 功能：让 idea 生成在多轮中保持继承、重组和探索。
-    - 核心思路：学科层保持静态，实体层视为可演化 population。系统对实体簇执行 Crossover、Variation、Selection、Inheritance：交换实体、引入新实体、基于评审反馈筛选高适应度 cluster，并把高质量概念传给下一轮。
-    - 设计动机：这比简单“让模型根据反馈重写 idea”更结构化，能够把成功 idea 中的概念线索保留下来，同时避免过早收敛。
+**3. 实体级生物启发式演化：把成功 idea 的概念线索遗传到下一轮。**
+
+如果只是“让模型看着反馈重写 idea”，好想法里的概念很容易在重写中丢失、或过早收敛到保守方案。EvoSci 把学科层固定、把实体层当作可演化的 population，对实体簇执行四个算子：Crossover（交换实体）、Variation（引入新实体）、Selection（按 reviewer 适应度筛出高分簇）、Inheritance（把高质量概念传给下一轮问题空间重构）。于是 reviewer 的反馈不再停留在文本层面，而是变成实体层的选择压力，既保住了成功概念、又靠变异维持探索多样性。
+
+### 一个完整示例：从一个主题到一条演化后的 idea
+
+举个示意性的例子。设核心主题 $T$ 是“高效 CO₂ 还原催化剂”，目标学科取化学、材料、AI。mentor 先把 $T$ 映射到这三个学科，知识图谱在材料学科下聚出一簇实体（如单原子催化剂、过渡金属、吸附能 descriptor），按相关性取出 $Top(\mathcal{C}_d;T)$ 后，mentor 据三元组生成问题“能否用图神经网络预测单原子位点的吸附能以加速筛选”。prime researcher 选中它，拆成“文献调研 / descriptor 设计 / 模型选型”三个子任务分给 assistant，整合出一版 idea。reviewer 打分发现 novelty 高但 feasibility 偏低。进入演化循环：Selection 保留这簇高分实体，Crossover 把“主动学习”实体交换进来，Variation 引入“不确定性估计”新实体，于是下一轮问题空间重构成“用主动学习+不确定性估计减少 DFT 标注量”——一条继承了原概念、又更可行的 idea。这就是实体级演化让反馈跨轮积累的画面。
 
 ### 损失函数 / 训练策略
 EvoSci 没有参数训练损失，优化来自工作流中的评审反馈和演化选择。每个 idea 被 reviewer 评分为 $s=(s_{nov},s_{fea},s_{eff},s_{exc},s_{overall})$，并附带 rationale、confidence 和改进建议。实验评价采用两套机制：一是模拟 ICLR/NeurIPS peer review 的 multi-reviewer + meta-reviewer，二是 tournament-style pairwise ranking，让所有 idea 进行多轮两两比较。

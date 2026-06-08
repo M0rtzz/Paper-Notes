@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PipeSD 的一个 speculative round 含四步：(1) 边缘 draft 模型自回归生成 draft tokens；(2) 边缘的 Token-batch Pipeline Scheduler 用 DP 决定的批边界 $\mathbb B=(b_1,\dots,b_K)$ 即时打包上传，与生成过程重叠；(3) Dual-threshold NAV Trigger 持续监控单 token 置信度和累积序列置信度，一旦其中之一越界就触发 NAV，BO autotuner 周期性更新阈值；(4) 云端 target 模型 NAV 后返回 accept/reject。系统用 llama-cpp-python（边）+ PyTorch + FastAPI（云）实现，边缘还有 Environment Monitor 持续测量 $(\alpha,\beta,\gamma)$，显著变化时触发 DP 重跑。
+PipeSD 想解决的是端云投机解码里「边缘等 NAV、云等 draft 上传」的双向空转。它的一个 speculative round 这样转：边缘 draft 模型一边自回归吐 token，一边由 Token-batch Pipeline Scheduler 按 DP 算出的批边界 $\mathbb B=(b_1,\dots,b_K)$ 即时打包上传，让传输和生成重叠；同时 Dual-threshold NAV Trigger 盯着单 token 置信度和累积序列置信度，任一越界就发起 NAV，云端 target 模型验证后返回 accept/reject。所有自适应逻辑都压在边缘：Environment Monitor 持续测量 $(\alpha,\beta,\gamma)$ 触发 DP 重跑，BO autotuner 周期性更新触发阈值。系统用 llama-cpp-python（边）+ PyTorch + FastAPI（云）实现。
 
 ### 关键设计
 
-1. **Token-batch 流水的 DP 最优调度**:
+**1. Token-batch 流水的 DP 最优调度：在通信启动开销不可忽略时，求「凑几个 token 一起发」的最优批边界。**
 
-    - 功能：在已知通信启动开销 $\alpha$、每 token 传输时间 $\beta$、每 token 算力 $\gamma$ 下，求最小化「生成+传输总时长」的批边界 $\mathbb B$。
-    - 核心思路：批 $k$ 通信时长 $t_c^{(k)}=\alpha+\beta\cdot(b_{k+1}-b_k)$，生成时长 $t_{ag}^{(k)}=\gamma\cdot(b_{k+1}-b_k)$；通信依赖「上批通信结束 且 本批生成结束」，递推 $\tau_c^{(k)}=\max\{\tau_c^{(k-1)}+t_c^{(k-1)},\tau_{ag}^{(k)}+t_{ag}^{(k)}\}$。目标 $\min T=\tau_c^{(K)}+t_c^{(K)}-\tau_{ag}^{(1)}$。算法 1 用 $dp[j]$ 表示前 $j$ 个 token 最优时长，枚举上一批起点 $i<j$ 得到 $dp[j]=\min_i\{\max(dp[i],\gamma j)+\alpha+\beta(j-i)\}$，回溯得 $\mathbb B$，复杂度 $O(\hat N^2)$。文中证明该方案最优（Theorem 4.1）。
-    - 设计动机：朴素 batching（要么全合并、要么每 token 即时发）都不是 Pareto 最优，因为 $\alpha$ 不可忽略；DP 把 $\alpha$ 的摊销和生成时长的「掩盖窗口」同时考虑，能动态决定「凑 2 个还是 3 个 token 一起发更划算」。
+痛点很直接：现有框架要么全部生成完再整体上传（边缘空等），要么每个 token 即时发（被启动开销 $\alpha$ 拖死），都不在 Pareto 前沿。PipeSD 把它形式化成 DAG 调度——批 $k$ 的通信时长是 $t_c^{(k)}=\alpha+\beta\cdot(b_{k+1}-b_k)$、生成时长是 $t_{ag}^{(k)}=\gamma\cdot(b_{k+1}-b_k)$，而某批的通信必须等「上一批通信结束 且 本批生成结束」，于是有递推 $\tau_c^{(k)}=\max\{\tau_c^{(k-1)}+t_c^{(k-1)},\tau_{ag}^{(k)}+t_{ag}^{(k)}\}$，总时长目标为 $\min T=\tau_c^{(K)}+t_c^{(K)}-\tau_{ag}^{(1)}$。算法 1 用 $dp[j]$ 记前 $j$ 个 token 的最优时长，枚举上一批起点 $i<j$ 递推
 
-2. **双阈值 NAV 触发机制**:
+$$dp[j]=\min_{i<j}\big\{\max(dp[i],\,\gamma j)+\alpha+\beta(j-i)\big\},$$
 
-    - 功能：同时监控「整段序列是否还值得继续 draft」和「某个 token 是不是已经低于警戒线」，避免单信号导致的过早或过晚触发。
-    - 核心思路：定义累积序列置信度 $C_1=\prod_{n}P(D_n)$（draft 已生成但未验证 token 的概率乘积）与单 token 置信度 $P(D_n)$。每生成一个新 token 计算暂定 $C_1^*=C_1\cdot P(D_n)$，若 $C_1^*\le R_1$ 或 $P(D_n)\le R_2$ 任一触发，则发起 NAV 并 reset $C_1=1$。
-    - 设计动机：HSL 只看 $P(D_n)$，遇到「每个 token 都中等可信」时永远不触发→ over-generation；EdgeLLM 只看 $C_1$，会因均摊掩盖单点崩坏→ 延迟检错。双阈值在两类失败模式中间取最大覆盖。
+回溯即得批边界 $\mathbb B$，复杂度只有 $O(\hat N^2)$，文中证明该方案全局最优（Theorem 4.1）。它之所以比朴素 batching 好，是因为同时把 $\alpha$ 的摊销和「生成时长能掩盖多长通信窗口」算进去了，能动态决定凑 2 个还是 3 个 token 一起发更划算。
 
-3. **贝叶斯自动调参 + 动态调度窗口**:
+**2. 双阈值 NAV 触发：让序列信号和单 token 信号互补，堵住两类触发失败。**
 
-    - 功能：阈值对 TPT 的映射不可解析、且随任务难度与网络抖动变化，用 BO 在线找近优阈值对 $(R_1,R_2)$。
-    - 核心思路：BO autotuner 把目标设为最小化平均 TPT，采样 $(R_1,R_2,\text{TPT})$ 三元组，用高斯过程预测下一个最优查询点，仅 16 个样本内即可逼近近优；TPT 显著变化（监控触发）时重跑 BO，$(\alpha,\beta,\gamma)$ 变化时重跑 DP。同时引入调度窗口 $\hat N$（取最近 100 个 draft 序列长度的滑动平均，初始 20），并设两条规则：NAV 触发时未发 token 立刻成一个 batch 发送；等待 NAV 时仍继续生成下一窗口的 draft 以进一步重叠。
-    - 设计动机：把所有自适应逻辑都放在边缘（不依赖云端框架），使 PipeSD 兼容 vLLM、TensorRT-LLM 等任意云端推理后端；BO 而不是网格/随机搜索保证样本效率，符合「边缘端必须轻量」的部署约束。
+单信号触发一定会偏：只看单 token 置信度 $P(D_n)$（如 HSL），碰到「每个 token 都中等可信」时永远不触发，白白 over-generation；只看累积序列置信度（如 EdgeLLM），又会被均摊掩盖单点崩坏、延迟检错。PipeSD 同时维护累积序列置信度 $C_1=\prod_{n}P(D_n)$（已生成但未验证 token 的概率乘积）和单 token 置信度 $P(D_n)$：每吐一个新 token 先算暂定值 $C_1^*=C_1\cdot P(D_n)$，只要 $C_1^*\le R_1$ 或 $P(D_n)\le R_2$ 任一成立就发起 NAV，并 reset $C_1=1$。两个阈值各管一类失败模式，叠在一起能在「整段是否还可信」和「某个 token 是不是已经离谱」之间取最大覆盖。
+
+**3. 贝叶斯自动调参 + 动态调度窗口：把阈值和窗口都做成边缘端在线自适应，不依赖云端框架。**
+
+阈值对 TPT 的映射既不可解析又随任务难度、网络抖动漂移，没法手调。BO autotuner 把目标设为最小化平均 TPT，采样 $(R_1,R_2,\text{TPT})$ 三元组，用高斯过程预测下一个最优查询点，16 个样本内就逼近近优——比网格/随机搜索省样本，符合「边缘端必须轻量」的约束。两套重跑触发分工明确：TPT 显著变化（监控触发）时重跑 BO，$(\alpha,\beta,\gamma)$ 变化时重跑 DP。调度窗口 $\hat N$ 取最近 100 个 draft 序列长度的滑动平均（初始 20），再配两条重叠规则：NAV 触发时未发的 token 立刻凑成一个 batch 发出去，等待 NAV 期间仍继续生成下一窗口的 draft。把所有自适应逻辑都留在边缘，PipeSD 就能即插即用地兼容 vLLM、TensorRT-LLM 等任意云端推理后端。
 
 ### 损失函数 / 训练策略
-PipeSD 无训练损失（推理框架）。关键参数：DP 算法的输入 $(\hat N,\alpha,\beta,\gamma)$ 由 Environment Monitor 实时测；BO autotuner 默认 16 次采样收敛；编程任务 draft 长度均值约 6，数学任务约 4；NAV 阈值 $(R_1,R_2)$ 由 BO 在 0–1 区间内搜索。
+PipeSD 是纯推理框架，无训练损失。关键参数都在线确定：DP 的输入 $(\hat N,\alpha,\beta,\gamma)$ 由 Environment Monitor 实时测，BO autotuner 默认 16 次采样收敛，NAV 阈值 $(R_1,R_2)$ 由 BO 在 0–1 区间内搜索；实测 draft 长度均值在编程任务约 6、数学任务约 4。
 
 ## 实验关键数据
 

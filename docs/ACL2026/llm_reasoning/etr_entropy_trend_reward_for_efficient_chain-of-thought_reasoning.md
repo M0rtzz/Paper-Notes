@@ -41,29 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ETR 不改 GRPO 优化算法、不加任何长度约束，只重写 reward：
+ETR 的思路是"既不改 GRPO 优化算法、也不加任何硬性长度约束，只重写 reward"。最终奖励写成两段：
 $$R(q,o)=\begin{cases}-1,&\text{若答错}\\ 1+\lambda R_{\text{entropy}}(o),&\text{若答对}\end{cases}$$
-其中 $R_{\text{entropy}}(o)$ 是基于轨迹熵的 shaping 项。GRPO 在同一题的 group 内对相对优势做归一化，使 ETR 信号只在 "正确解之间比较谁更高效"。
+其中 $R_{\text{entropy}}(o)$ 是基于轨迹熵的 shaping 项。GRPO 在同一题的 group 内对优势做相对归一化，于是 ETR 信号只在"正确解之间比谁更高效"，把效率约束牢牢锁在不损正确性的前提下。
 
 ### 关键设计
 
-1. **基于动量的熵趋势奖励 (Momentum-based Entropy Trend Reward)**：
+**1. 基于动量的熵趋势奖励：奖励整条 CoT 的"熵下降方向"，而不是瞬时低熵。**
 
-    - 功能：让奖励真正反映 "整条 CoT 的熵下降方向"，而不是只看头尾或瞬时值。
-    - 核心思路：把 CoT 按 "\n\n" 切成步 $\{C_1,\dots,C_T\}$；每步算 next-token 预测分布的 Shannon 熵 $H_t=H(p_\theta(\cdot\mid C_{1:t}))$；步间熵变 $\Delta_t=H_{t-1}-H_t$；引入动量状态 $S_t=\gamma S_{t-1}+\Delta_t$ ($S_1=0$, $\gamma=0.9$)；最终奖励 $R_{\text{entropy}}(o)=\sum_{t=2}^{T}S_t=\sum_t \alpha_t\Delta_t$，其中 $\alpha_t=\frac{1-\gamma^{T-t+1}}{1-\gamma}$。$\alpha_t$ 关于 $t$ 严格递减，因此早期的熵下降比后期被加权更多，鼓励模型快收敛而不是拖到最后再坍缩。
-    - 设计动机：朴素的 "总熵下降" $R_{\text{naive}}=H_1-H_T$ 会 telescope 成只依赖首尾的值，无法区分 "平滑下降" 与 "反复振荡但首尾相同" 两种轨迹；动量公式给每一步都赋予梯度信号，并通过递减权重把 "尽早收敛" 编码进 reward。
+现有 entropy 类方法都在"全局压低熵"上做文章，等于假设 CoT 任意时刻都该低不确定性，结果把高熵处的 self-reflection（"wait / but / hmm"）一并抹掉。ETR 改成奖励趋势：把 CoT 按 "\n\n" 切成步 $\{C_1,\dots,C_T\}$，每步算 next-token 分布的 Shannon 熵 $H_t=H(p_\theta(\cdot\mid C_{1:t}))$，步间熵变 $\Delta_t=H_{t-1}-H_t$，引入动量状态 $S_t=\gamma S_{t-1}+\Delta_t$（$S_1=0$，$\gamma=0.9$），最终 $R_{\text{entropy}}(o)=\sum_{t=2}^{T}S_t=\sum_t \alpha_t\Delta_t$，权重 $\alpha_t=\frac{1-\gamma^{T-t+1}}{1-\gamma}$ 关于 $t$ 严格递减。关键就在这个递减权重：朴素的"总熵下降" $R_{\text{naive}}=H_1-H_T$ 会 telescope 成只依赖首尾，分不清"平滑下降"和"反复振荡但首尾相同"两种轨迹；动量公式给每一步的熵变都赋予梯度信号，又通过早步加权更重把"尽早收敛"直接编码进 reward。
 
-2. **隐式 instance-adaptive 早停 (Trend-shaped Stopping)**：
+**2. 隐式 instance-adaptive 早停：不写长度上限，让简单题自然短、难题自然长。**
 
-    - 功能：不写硬性长度上限，让模型对简单题短、对难题长地自适应停。
-    - 核心思路：因为 $R_{\text{entropy}}=\sum_t S_t$ 累加动量状态，多走一步只有当 $S_{t+1}>0$ (即 $\Delta_{t+1}$ 继续下降) 才有收益；一旦熵开始反弹 ($\Delta_t<0$) 就被反复惩罚，自动压制振荡式 self-reflection 循环。简单题熵快速塌缩 → 早停；难题需要逐步消除歧义 → 自然多走步但要求每步贡献下降。
-    - 设计动机：与显式长度上限 (LCPO / O1-Pruner) 相比，ETR 不用提前定 budget；与全局熵最小化 (PEAR / Li 2025) 相比，ETR 允许暂时上升换长远下降——这正好对应人类 "先尝试假设、若不对就回溯" 的推理模式。
+显式 budget（LCPO / O1-Pruner）要提前定长度上限，对题目难度一刀切。ETR 靠奖励结构自然实现自适应：因为 $R_{\text{entropy}}=\sum_t S_t$ 累加动量状态，多走一步只有当 $S_{t+1}>0$（即 $\Delta_{t+1}$ 继续下降）时才有收益，一旦熵开始反弹（$\Delta_t<0$）就被反复扣分，振荡式的 self-reflection 循环被自动压制。于是简单题熵快速塌缩、早停；难题需要逐步消歧、自然多走几步但每步都被要求贡献熵下降。这和全局熵最小化（PEAR / Li 2025）的根本区别是 ETR 允许"暂时上升换长远下降"，正对应人类"先试假设、不对就回溯"的推理节奏。
 
-3. **与 GRPO 解耦的 reward 结构 (Correct-first then Shape)**：
+**3. 与 GRPO 解耦的两段式 reward：先保正确，再谈效率。**
 
-    - 功能：把效率奖励严格限制在 "答对的轨迹" 之间比较，避免效率冲掉正确性。
-    - 核心思路：reward 分两段——错答恒为 -1，正确答得到 $1+\lambda R_{\text{entropy}}$；GRPO 在 group 内做相对归一化 $\hat{A}_i=(r_i-\bar{r})/\sigma_r$，意味着 ETR 信号只在 "同题的多条正确解" 之间分高低，不会跨题被效率反噬正确性。
-    - 设计动机：直接把 entropy reward 加到全局 reward 会让模型为了短而放弃正确性 (消融里 No $R_{\text{corr}}$ 验证了这点)；两段式 + GRPO 相对优势让 "正确性是硬约束，效率是 tie-breaker"，干净分离两个目标。
+如果把 entropy reward 直接加进全局 reward，模型会为了短而牺牲正确性（消融里 No $R_{\text{corr}}$ 缩到 1.2k 但 AMC23 从 80 跌到 65 就是证据）。ETR 把 reward 切成两段——答错恒为 $-1$，答对才拿 $1+\lambda R_{\text{entropy}}$；再借 GRPO 的 group 内相对归一化 $\hat{A}_i=(r_i-\bar{r})/\sigma_r$，让 ETR 信号只在"同题的多条正确解"之间分高低。这样"正确性是硬约束、效率只是 tie-breaker"，两个目标被干净地分了层，不会跨题被效率反噬精度。
 
 ### 损失函数 / 训练策略
 GRPO 标准 PPO-clipped 目标 + group 内 advantage 归一化，KL 系数 $\beta$；reward 如上；$\lambda$ 控制 entropy shaping 强度；$\gamma=0.9$ 是动量；训练数据来自 DeepMath-103K 中 difficulty 5–10 的 7000 题；用 LoRA + VeRL 框架在 8×H100 上训练；batch 32, lr $1\times10^{-5}$, max length 16384, 每题 5 rollout。

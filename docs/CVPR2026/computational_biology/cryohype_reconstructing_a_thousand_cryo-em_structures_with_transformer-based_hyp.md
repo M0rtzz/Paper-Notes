@@ -41,31 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CryoHype 由五个组件组成：(1) ViT 编码器（tokenizer + Transformer）；(2) 可学习 weight tokens $\{w_i\}_{i=1}^q$；(3) INR 解码器（带残差连接的 ReLU MLP），具有共享基础参数 $\{\theta^j\}_{j=1}^L$；(4) 每层的线性 head $\{\text{Head}_j\}_{j=1}^L$。完全在 Fourier 域中操作。
+CryoHype 要解决的核心问题是：当一批无标签投影图像里混着 100–1000 种**完全不同**的蛋白质结构时，怎么让一个模型同时高质量重建每一种。它的思路是把"用同一个解码器、靠条件输入区分结构"换成"为每张图动态生成一套专属的解码器权重"。整条流水线是：投影图像先经 ViT 编码器（tokenizer + Transformer）读出一组权重描述；这组描述经线性 head 调制出一个隐式神经表示（INR）解码器的逐层权重；该 INR 在 Fourier 域里把 3D 体积渲染成投影，与真实投影做 MSE。具体由五个组件串起来：ViT 编码器、可学习的 weight tokens $\{w_i\}_{i=1}^q$、带残差连接的 ReLU-MLP 形式的 INR 解码器（共享基础参数 $\{\theta^j\}_{j=1}^L$）、以及每层一个的线性 head $\{\text{Head}_j\}_{j=1}^L$。全程在 Fourier 域操作，靠 Fourier Slice Theorem 把投影/反投影变成切片采样，省掉昂贵的数值积分。
 
 ### 关键设计
 
-1. **Transformer-based Hypernetwork Weight Generation**：
+**1. 超网络逐层调制 INR 权重：把"改第一层 bias"升级成"改所有层权重"。**
 
-    - **功能**：输入投影图像被 tokenize 为 $T$ 个 token，与 $q$ 个可学习 weight token 拼接，送入 Transformer 编码器。输出的 weight tokens 被分为 $L$ 组，每组通过对应的 linear head + normalization 生成该层的调制权重。
-    - **核心公式**：$\theta_j^F = \text{Norm}(\text{Head}_j([w_1^{F,j}, \ldots, w_{a_j}^{F,j}])) \otimes \theta_j$
-    - **设计动机**：修改 INR 所有层的权重（而非仅 concatenation 等价的第一层 bias），极大提升了条件化的表达力。乘法形式（element-wise）相比直接生成权重更易训练。
+cryoDRGN 这类方法强迫所有结构共享同一套 INR 权重，只靠把隐变量 concatenate 进输入来区分——论文指出这在数学上等价于只改了 INR 第一层的 bias，留给每个结构的"个性化空间"极其有限，于是在极端异质性下高频细节全被抹平。CryoHype 的做法是让超网络去改 INR 的**每一层**权重：ViT 输出的 weight tokens 被切成 $L$ 组，第 $j$ 组经各自的 head 加归一化后，对该层的共享基础参数 $\theta_j$ 做逐元素乘法调制，$\theta_j^F = \text{Norm}(\text{Head}_j([w_1^{F,j}, \ldots, w_{a_j}^{F,j}])) \otimes \theta_j$。之所以用乘法去调制一套共享基底、而不是让超网络从零生成整张权重矩阵，是因为前者把超网络的负担降到"在共享底座上做缩放"，训练更稳；而调制覆盖全部层、又比只动第一层 bias 多出几个数量级的有效条件维度，这正是它能在 1000 种结构上还分得清细节的来源。
 
-2. **ViT 编码器的选择**：
+**2. 用 ViT 而非 CNN/MLP 当超网络编码器。**
 
-    - **功能**：用 ViT（而非 CNN 或 MLP）作为超网络编码器，处理冷冻电镜投影图像。
-    - **设计动机**：消融实验表明 ViT 极大优于 U-Net 和 MLP 编码器（尽管后两者用了更多参数），这证明了 Transformer 在超网络架构中的参数效率和可扩展性。
+超网络的质量取决于编码器能从投影图里读出多少结构信息。这里没用结构生物常见的 U-Net，而是选了 ViT：投影图先 tokenize 成图像 token，再和 $q$ 个可学习 weight token 拼在一起过 Transformer，让 weight token 通过注意力从全图聚合证据后直接承载"该生成什么权重"。消融实验里 ViT 的 FSC_AUC 是 0.346，U-Net 只有 0.208、MLP 0.234，而后两者参数还更多——说明在"图像 → 一组权重"这种需要全局聚合的映射上，注意力机制的样本/参数效率明显高于卷积或全连接，这也是整个超网络能往上扩到上千结构的前提。
 
-3. **端到端训练**：
+**3. 端到端联合训练。**
 
-    - **功能**：整个系统端到端训练——ViT 编码器、weight tokens、INR 基础参数、linear heads 联合优化。
-    - **训练损失**：渲染的投影图像与真实投影之间的 MSE 损失（在 Fourier 域计算）。
-    - **设计动机**：避免了多阶段训练的复杂性和误差累积。
+ViT 编码器、weight tokens、INR 基础参数、各层 linear head 全部一起优化，不分阶段。训练信号只有一个：把生成的 INR 在 Fourier 域渲染出的投影和真实投影做 MSE。这样做避免了多阶段流水线里常见的误差累积——编码器学到的权重表示直接由最终重建质量来反向监督，而不是先训一个中间目标再拼接。
 
 ### 损失函数 / 训练策略
-- Fourier 域 MSE 重建损失
-- 利用 Fourier Slice Theorem 避免 costly 的数值积分
-- 潜空间分析：将 weight tokens 输出视为高维潜空间，用 PCA(→100维) + UMAP(→2维) 可视化
+- 重建损失为 Fourier 域的 MSE：渲染投影与真实投影逐频率比对。
+- 借 Fourier Slice Theorem 把投影建模成 3D Fourier 体积的中心切片，规避数值积分。
+- 潜空间分析：把 weight tokens 的输出当作高维潜空间，先 PCA 降到 100 维、再 UMAP 降到 2 维做可视化，用于检查不同结构是否被分到清晰的聚类。
 
 ## 实验关键数据
 

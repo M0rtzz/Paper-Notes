@@ -45,23 +45,22 @@ tags:
 第二阶段是 DPO + Topological Preference Optimization (TPO)：作者先离线把 HH-RLHF prompt 聚类成主题，为每个主题构造正向和负向模板，用 sentence transformer 得到 topic-specific preference vector。训练 DPO 时，在模型中间层计算 chosen response 与 rejected response 的 mean-pooled hidden state 差分，并通过一个小投影矩阵把主题向量映射到模型 hidden space，再用 cosine loss 对齐“rejected 到 chosen”的语义改进方向。最终损失是 DPO loss 加动态加权的 TPO loss。
 
 ### 关键设计
-1. **SFT 阶段的 Trajectory Topology Loss**:
 
-	- 功能：把每个 batch 的 prompt 和 gold answer 表征组织成点云，从中抽取跨 prompt-answer 的拓扑桥，作为 SFT 的额外轨迹监督。
-	- 核心思路：作者计算点云两两欧氏距离，用 Union-Find 按距离从小到大合并连通分量，记录让一个分量“死亡”的边。只保留标签不同的边，也就是一端是 prompt、一端是 gold answer 的 bridge，并把方向统一成 answer 减 prompt。模型侧的轨迹是 $h_i^{model}-h_i^{prompt}$，TTL 是这些轨迹与拓扑桥方向之间的 cosine loss，形式上可概括为 $L_{topo}=mean(1-cos(v_{topo}, v_{model}))$。
-	- 设计动机：逐样本 gold 配对只看当前样本，kNN 只看局部邻居，随机配对噪声更大；持久同调 bridge 来自全局连通结构，能筛掉许多局部偶然连接，让轨迹正则更稳定。
+**1. SFT 阶段的 Trajectory Topology Loss：用持久同调桥替代任意配对，给隐藏轨迹一个全局结构监督。**
 
-2. **DPO 阶段的 Topological Preference Optimization**:
+逐样本 gold 配对只盯着当前样本，kNN 只看局部邻居，随机配对噪声又大——这些配对方式都无法告诉模型隐藏状态该往哪个"全局合理"的方向移动。作者的做法是把每个 batch 内的 prompt 表征和 gold answer 表征拼成一个 $2B$ 点的点云，计算两两欧氏距离后用 Union-Find 按距离从小到大合并连通分量，记录每条让一个分量"死亡"的边；只保留两端标签不同（一端 prompt、一端 gold answer）的边作为 prompt-answer bridge，方向统一成 answer 减 prompt。模型侧真实轨迹是 $h_i^{model}-h_i^{prompt}$，TTL 就是这些轨迹与拓扑桥方向之间的 cosine loss，可概括为 $L_{topo}=mean(1-cos(v_{topo}, v_{model}))$。
 
-	- 功能：在偏好优化中显式约束 hidden-space improvement direction，使 chosen response 不只是概率上胜过 rejected response，也在中间层沿着主题相关的“更好答案”方向移动。
-	- 核心思路：先用 sentence transformer 嵌入 prompt 并做 MiniBatch KMeans 聚类，再用强模型给聚类打主题标签。每个主题用“helpful/harmless/high-quality”和“harmful/unhelpful/low-quality”等正负模板构造偏好向量。训练时取中间层 chosen 与 rejected 的归一化 hidden 差分 $Delta h=LN(h^{ch})-LN(h^{rj})$，通过可学习投影 $P$ 把主题向量映射到 hidden space，再优化 $1-cos(Delta h, Pu_t)$。
-	- 设计动机：偏好不是全局同一个方向，安全建议、知识问答、对话安抚等主题的“好答案”方向不同；主题化向量比单一 global preference vector 更细粒度。
+这些 bridge 类似最小生成森林里的关键桥边，来自点云的全局连通结构，能筛掉大量局部偶然连接，因此比逐样本、kNN、随机配对都更稳定——消融里 PH Bridge 也确实强于其它三种配对。
 
-3. **动态权重与 fully topological 变体**:
+**2. DPO 阶段的 Topological Preference Optimization：把"chosen 胜过 rejected"细化成"在隐藏空间沿主题相关方向移动"。**
 
-	- 功能：避免 TPO 辅助项压过 DPO 主目标，同时验证“拓扑结构”在偏好阶段是否也有收益。
-	- 核心思路：默认 TPO 用 EMA 追踪 DPO loss 与 TPO loss 的量级，动态设置 $lambda_{dyn}$，使两个目标在训练中保持平衡。另一个 Topo-TPO 变体则把 chosen/rejected hidden state 也组成点云，直接用 0 维持久同调抽取 rejected-chosen bridge，再与主题偏好向量对齐。
-	- 设计动机：固定权重容易受训练阶段和 batch 组成影响；fully topological 变体说明收益不只是来自 topic vectors，也可能来自 chosen/rejected 批结构本身。
+标准 DPO 只在输出概率上让 chosen 压过 rejected，并不关心模型中间层是否真的朝"更好答案"挪动；而且偏好并非全局同一个方向，安全建议、知识问答、对话安抚各自的"好答案"方向并不一样。作者先用 sentence transformer 嵌入 prompt、做 MiniBatch KMeans 聚类，再用强模型给每个簇打主题标签，并为每个主题用"helpful/harmless/high-quality"与"harmful/unhelpful/low-quality"等正负模板构造一个 topic-specific preference vector。训练时取中间层 chosen 与 rejected 的归一化 hidden 差分 $\Delta h=LN(h^{ch})-LN(h^{rj})$，通过一个可学习投影矩阵 $P$ 把主题向量映射到模型 hidden space，再优化 $1-cos(\Delta h, Pu_t)$。
+
+这样一来，"rejected 到 chosen"的改进方向被约束到与该主题真实偏好对齐的方向上；消融显示主题化向量明显优于单一手工或学习得到的 global preference vector。
+
+**3. 动态权重与 fully topological 变体：防辅助项压过主目标，并检验拓扑结构在偏好阶段是否独立有效。**
+
+辅助项一旦权重失衡就可能盖过 DPO 主目标，而固定权重又容易受训练阶段和 batch 组成影响。默认 TPO 因此用 EMA 追踪 DPO loss 与 TPO loss 的量级，动态设置 $\lambda_{dyn}$ 让两个目标在训练中保持平衡。作者还设计了一个 Topo-TPO 变体：把 chosen/rejected 的 hidden state 也组成点云，直接用 0 维持久同调抽取 rejected-chosen bridge，再与主题偏好向量对齐。这个变体说明 TPO 的收益不只来自 topic vectors，也可能来自 chosen/rejected 批内的全局结构——实验里 Topo-TPO 在无害性上还略高于默认 TPO，只是默认版本更轻量。
 
 ### 损失函数 / 训练策略
 SFT 阶段总目标是 $L_{SFT}=L_{CE}+lambda_{topo}L_{topo}$，默认较优的 $lambda_{topo}$ 约为 0.2。DPO 阶段总目标是 $L_{total}=L_{DPO}+lambda_{dyn}L_{TPO}$，其中 $lambda_{dyn}$ 由 EMA 平衡两个 loss 的尺度。实验主干使用 Qwen2.5-7B-Instruct，SFT 使用 LoRA rank 16，持久同调在 CPU 上用 Union-Find 和 pairwise distance 实现；作者还在 Llama-3-8B-Instruct 上做了跨 backbone 验证。

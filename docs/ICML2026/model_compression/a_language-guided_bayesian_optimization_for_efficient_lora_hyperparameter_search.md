@@ -38,34 +38,27 @@ tags:
 **核心 idea**：用“语言化的 LoRA 领域知识 + 可校准的 LLM 嵌入”替代普通数值编码，让贝叶斯优化在一个更有语义结构的空间里选择下一组 LoRA 超参数。
 
 ## 方法详解
-本文的方法可以理解成一个面向 LoRA 的闭环调参器。每一轮先从候选池中取一组 LoRA 超参数，用小数据子集完成一次代理训练和评估；然后把这组超参数转换成包含解释的文本模板，交给冻结 LLM、可学习 token 和投影层得到连续向量；接着用这些向量和已有评估分数训练 GP surrogate；最后用 acquisition function 在所有剩余候选配置上打分，选择下一轮要评估的配置。
+本文的方法是一个面向 LoRA 的闭环调参器：每一轮先从候选池里取一组 LoRA 超参数，用小数据子集做一次代理训练拿到性能分；再把这组超参数写成一段带领域解释的文本，经冻结 LLM、可学习 token 和投影层压成连续向量；然后用这些向量和已有分数训练 GP surrogate，最后让 acquisition function 在剩余候选上打分，挑出下一轮要评估的配置。
 
 ### 整体框架
-输入是一组离散候选配置 $\mathcal{X}_{cand}$，每个配置包含 rank、scaling factor、batch size、learning rate 和 dropout rate。输出是预算内找到的最佳 LoRA 配置。框架在第 $n$ 轮先拿到配置 $x_n$，通过代理训练得到性能 $y_n$，再把 $x_n$ 写成带说明的文本模板 $t_n$。冻结 LLM $\phi$ 接收 $t_n$ 和可学习 token $\psi$，投影层 $P(\cdot;\theta)$ 把 hidden state 映射成 BO 特征 $z_n=P(\phi(t_n,\psi);\theta)$。GP surrogate 用这些 $z$ 和对应的 $y$ 最大化边际对数似然，更新 GP kernel、投影层和可学习 token。候选池中每个未评估配置也被编码成 $z_j$，acquisition function 选择最有希望的下一点。
-
-这条 pipeline 的关键不是简单“让 LLM 生成超参数”，而是让 LLM 负责构造一个包含 LoRA 领域结构的连续嵌入空间，BO 仍然负责探索/利用权衡。这样既保留 BO 的样本效率，又避免纯 prompt agent 式搜索的不稳定。
+输入是一组离散候选配置 $\mathcal{X}_{cand}$，每个配置含 rank、scaling factor、batch size、learning rate 和 dropout rate；输出是预算内找到的最佳 LoRA 配置。第 $n$ 轮先拿配置 $x_n$ 做代理训练得到性能 $y_n$，把 $x_n$ 写成带说明的文本模板 $t_n$，冻结 LLM $\phi$ 读入 $t_n$ 和可学习 token $\psi$，投影层 $P(\cdot;\theta)$ 把 hidden state 映射成 BO 特征 $z_n=P(\phi(t_n,\psi);\theta)$；GP surrogate 用所有 $(z,y)$ 最大化边际对数似然来更新 kernel、投影层和 token，候选池里每个未评估配置同样编码成 $z_j$ 供 acquisition function 选下一点。关键不是“让 LLM 生成超参数”，而是让 LLM 构造一个带 LoRA 领域结构的连续嵌入空间，探索/利用的权衡仍交给 BO，既保留 BO 的样本效率，又避开纯 prompt agent 式搜索的不稳定。
 
 ### 关键设计
-1. **领域感知文本模板**:
 
-    - 功能：把每组 LoRA 超参数从离散数值编码改写成包含名称、取值和作用解释的结构化文本。
-    - 核心思路：普通模板只写 `{name, value}`，本文增加 `{explanation, name, value}`。解释文本会说明 rank 与 alpha 的常见关系、不同 batch size 对训练动态的影响、dropout 何时有帮助等经验知识。这样 LLM 读到的不是孤立数字，而是一段“这组超参数为什么重要”的描述。
-    - 设计动机：LoRA 调参依赖大量手工经验，直接把数字喂给 BO 会丢掉这些语义。把经验写进 prompt 后，LLM 嵌入能把“数值接近但语义不同”或“数值不同但调参作用相近”的配置组织得更合理。
+**1. 领域感知文本模板：把数字配置写成带经验解释的语言。**
 
-2. **可学习 token 与投影层校准嵌入空间**:
+LoRA 调参高度依赖手工经验，而 GP 式 BO 通常只看到数值编码，rank 与 alpha 的比例、过大 batch 对泛化的影响、dropout 何时有用这些规律全都丢失了。本文不再用普通的 `{name, value}` 模板，而是改成 `{explanation, name, value}`，在每个超参数旁边补一段说明它作用和相互关系的文字。这样 LLM 读到的不是孤立数字，而是一段“这组超参数为什么重要”的描述，嵌入时就能把“数值接近但语义不同”或“数值不同但调参作用相近”的配置组织得更合理——这是把人类先验显式注入 BO 的入口，后面消融也证明它是贡献最大的一环。
 
-    - 功能：把冻结 LLM 的通用文本表示变成更适合 LoRA HPO 的 BO 特征。
-    - 核心思路：方法在 prompt 后附加可学习 token $\psi$，取最后 token 位置的 hidden state，再经过投影层 $P(\cdot;\theta)$ 得到 $z=P(\phi(t,\psi);\theta)$。LLM 参数保持冻结，只训练 $\psi$、$\theta$ 和 GP kernel 参数 $\omega$，目标是最大化 GP 边际对数似然。
-    - 设计动机：冻结 LLM 的原始嵌入未必按“LoRA 性能”排列。投影层负责重塑几何结构，可学习 token 则捕捉 prompt 难以明说的残差信息，使 surrogate 更容易在少量观测点上拟合性能趋势。
+**2. 可学习 token 与投影层校准嵌入空间：让通用表示对齐 LoRA 性能。**
 
-3. **代理训练评估降低单点评估成本**:
+冻结 LLM 的原始嵌入是按语言通用性排列的，未必按“LoRA 性能高低”排列，直接拿去做 BO 特征区分度不够。方法在 prompt 末尾附加一组可学习 token $\psi$，取最后 token 位置的 hidden state，再过投影层得到 $z=P(\phi(t,\psi);\theta)$。LLM 全程冻结，只训练 $\psi$、投影层参数 $\theta$ 和 GP kernel 参数 $\omega$，目标是最大化 GP 边际对数似然。投影层负责把嵌入几何重塑成对性能更敏感的形状，可学习 token 则像一个随任务自适应的隐变量，捕捉 prompt 难以言明的残差信息，让 surrogate 在少量观测点上也能拟合出性能趋势。
 
-    - 功能：用小规模数据子集训练来近似完整数据训练的性能，减少 BO 每次函数评估的成本。
-    - 核心思路：每轮不在 100K 全训练集上完整微调，而是在随机抽取的 10K 子集上 fine-tune，并把该结果作为 $y_n$ 反馈给 BO。作者进一步验证 1%、5%、10% 随机子集和 TSDS 采样与全量训练的相关性，最终采用 10% 随机采样。
-    - 设计动机：HPO 的瓶颈往往不是 surrogate 计算，而是每个候选配置都要训练一次。若 10% 子集与全量结果高度相关，就可以把搜索预算用于更多配置，而不是把算力耗在单次完整训练上。
+**3. 代理训练评估：用小子集近似全量，把预算花在更多配置上。**
+
+HPO 真正的瓶颈不是 surrogate 计算，而是每个候选配置都要真训练一次。方法每轮不在 100K 全训练集上完整微调，而是在随机抽的 10K（10%）子集上 fine-tune，把这个结果直接当作 $y_n$ 反馈给 BO。作者并非拍脑袋选 10%——他们比较了 1%、5%、10% 随机子集和 TSDS 采样与全量训练的相关性，10% 随机子集在 MATH 上相关性 0.8713、代码生成上 0.9427，足够支撑选点决策。只要子集与全量高度相关，省下的算力就能覆盖更多候选配置，让 30 次预算扫过 45,000+ 的候选池。
 
 ### 损失函数 / 训练策略
-BO surrogate 使用 GP，并通过 LLM 嵌入后的 deep kernel learning 建模配置性能。普通 kernel $k(x,x'|\omega)$ 被替换为 $k(g(x;\theta,\psi),g(x';\theta,\psi)|\omega,\theta,\psi)$。训练时最大化边际对数似然 $\mathcal{L}(\Phi)=\log p(y|X,\Phi)$，其中 $\Phi=\{\omega,\theta,\psi\}$。实验中所有 HPO 方法统一限制为 30 次迭代，候选池覆盖超过 45,000 种 LoRA 配置。任务包括数学推理、代码生成和对话，分别在 MetaMathQA、CodeFeedback 和 WizardLM-Evol-Instruct 上训练，并在 GSM8K、MATH、HumanEval、MBPP 和 MT-Bench 上评估。
+BO surrogate 是 GP，并通过 LLM 嵌入做 deep kernel learning：普通 kernel $k(x,x'|\omega)$ 被替换为 $k(g(x;\theta,\psi),g(x';\theta,\psi)|\omega,\theta,\psi)$，训练时最大化边际对数似然 $\mathcal{L}(\Phi)=\log p(y|X,\Phi)$，其中 $\Phi=\{\omega,\theta,\psi\}$。实验中所有 HPO 方法统一限制 30 次迭代，候选池覆盖超过 45,000 种 LoRA 配置；任务含数学推理、代码生成和对话，分别在 MetaMathQA、CodeFeedback、WizardLM-Evol-Instruct 上训练，在 GSM8K、MATH、HumanEval、MBPP 和 MT-Bench 上评估。
 
 ## 实验关键数据
 

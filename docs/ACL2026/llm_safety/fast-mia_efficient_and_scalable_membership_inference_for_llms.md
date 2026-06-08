@@ -44,26 +44,20 @@ Fast-MIA 是个 YAML-config-driven 的评测库，由六块拼起来：(1) Data 
 
 ### 关键设计
 
-1. **vLLM 高吞吐批推理后端**:
+**1. vLLM 高吞吐批推理后端：把单样本串行的推理换成工业级批量内核。**
 
-    - 功能：把所有 token-level log-prob / 生成 token 一次性算完，替代原作者用 HF Transformers 单 sample 跑的实现。
-    - 核心思路：vLLM 的 PagedAttention 把 KV cache 切页存储 + dynamic batching，使一条样本的 prompt 可以和上百条样本共池推理；对 LOSS / Min-K / DC-PDD 这种只要 prompt log-prob 的方法，把 `max_tokens=1, prompt_logprobs=0` 设上即可；对 SaMIA 这种需要多次生成的方法，把"per-sample loop + 多次生成"重写成 vLLM 的 "batched multi-output generation"，避免每条样本独立 spawn。
-    - 设计动机：Transformers 的 `generate` 在 batch 之外没什么吞吐红利；vLLM 是现成的工业级 LLM serving 内核，迁移成本低、收益直接（实测约 5×，SaMIA 高达 19.5×）。
+原作者的 MIA 实现普遍用 HF Transformers 一条样本一条样本地跑，而 `generate` 在 batch 之外几乎没有吞吐红利，这正是大规模评测跑不动的第一道瓶颈。Fast-MIA 直接换上 vLLM：它的 PagedAttention 把 KV cache 切页存储并配合 dynamic batching，让一条样本的 prompt 能和上百条样本共池推理。针对方法的不同需求做两种适配——对 LOSS / Min-K / DC-PDD 这类只要 prompt log-prob 的方法，设上 `max_tokens=1, prompt_logprobs=0` 一次性把所有 token-level log-prob 算完；对 SaMIA 这种要多次生成的方法，把原来"per-sample loop + 多次生成"重写成 vLLM 的 batched multi-output generation，避免每条样本独立 spawn。选 vLLM 而非自己造轮子，是因为它是现成的工业级 serving 内核，迁移成本低、收益直接——实测整体约 $5\times$，generation-heavy 的 SaMIA 高达 $19.5\times$。
 
-2. **跨方法 log-prob 缓存**:
+**2. 跨方法 log-prob 缓存：让所有共享同一份 log-prob 的方法只算一次推理。**
 
-    - 功能：把"任何一种方法第一次跑出来的 token-level log-prob"缓存进内存，后续所有共享这份 log-prob 的方法直接复用，零额外推理。
-    - 核心思路：在 Evaluator 里建立一张"方法 → 所需 inference 类型"的依赖表，并把 inference 的输入和输出按 `(sample_id, prompt_variant, model_id)` 三元组键化缓存。LOSS / PPL/zlib / 所有 Min-K%-$K$ / DC-PDD 共享同一份原文 log-prob；Lowercase 触发 "lowercased prompt" 这一个新 cache key；ReCaLL/Con-ReCall 触发"加 prefix" 版本；缓存命中时 inference 调用次数 $n_\text{infer}=0$。
-    - 设计动机：作者注意到 Min-K%（$K \in \{0.1, 0.2, 0.3, 0.5, 0.8, 1.0\}$）这种"hyperparameter sweep" 其实跑 6 次推理是浪费——只需要拿同一份 log-prob 在不同 K 下做聚合即可。这恰好是过去 toolkit 全都漏掉的优化。
+作者注意到一个被所有旧 toolkit 漏掉的浪费：PPL/zlib、各种 Min-K%、DC-PDD 这些方法在数学上其实共用同一份 $\log p(c_t \mid c_{1..t-1})$，只是在它上面做不同的聚合或比较，却被各篇实现各自重算了一遍；尤其 Min-K%（$K \in \{0.1, 0.2, 0.3, 0.5, 0.8, 1.0\}$）这种超参 sweep，跑 6 次推理纯属重复劳动。Fast-MIA 在 Evaluator 里建一张"方法 → 所需 inference 类型"的依赖表，把 inference 的输入输出按 $(\text{sample\_id}, \text{prompt\_variant}, \text{model\_id})$ 三元组键化缓存——LOSS / PPL/zlib / 所有 Min-K%-$K$ / DC-PDD 共享同一份原文 log-prob，Lowercase 只触发一个 "lowercased prompt" 新缓存键，ReCaLL/Con-ReCaLL 触发"加 prefix"版本；命中缓存时该方法的推理调用次数 $n_\text{infer}=0$，第二遍起几乎免费。本质上它把评测从 $O(\text{方法数} \times \text{样本数})$ 次推理压到 $O(\text{独立 prompt 变体数} \times \text{样本数})$。
 
-3. **模块化方法注册 + 多语言支持**:
+**3. 模块化方法注册 + 多语言支持：让社区一周内就能贴一个新攻击上来。**
 
-    - 功能：每种 MIA 方法继承 `BaseMethod`，只实现 `process_output` 和 `run` 两个函数，再到 `factory.py` 注册即可挂上 pipeline。
-    - 核心思路：把"调推理 + 用缓存 + 算分"三步用基类抽象出来，方法作者只关心如何把缓存的中间结果聚合成 membership score。同时暴露一个 `space_delimited_language` flag 处理中/日文这类不空格分词的语言。
-    - 设计动机：MIA 是个还在快速演化的领域，硬编码方法集会很快过时；模块化让社区可以一周内贴一个新方法上去。多语言开关是因为日文 MIA 已经被作者自己以前的工作证明有不同 trend。
+MIA 还在快速演化，硬编码一套固定方法集很快就过时。Fast-MIA 把"调推理 + 用缓存 + 算分"三步抽进 `BaseMethod` 基类，新方法只要实现 `process_output` 和 `run` 两个函数、再到 `factory.py` 注册就能挂上 pipeline——方法作者只需关心怎么把缓存的中间结果聚合成 membership score，底层的推理和缓存逻辑都不用碰。同时暴露一个 `space_delimited_language` flag 处理中文、日文这类不以空格分词的语言，这是因为作者此前的工作已经证明日文 MIA 呈现出与英文不同的 trend，多语言开关是必要而非锦上添花。
 
 ### 损失函数 / 训练策略
-没有训练。所有方法都是 inference-only。评测指标包括 AUC、FPR@95（95% TPR 时的 FPR）和 TPR@5（5% FPR 时的 TPR），后两者按 Carlini 2022 的建议给出 low-FPR 端表现。
+没有训练，所有方法都是 inference-only。评测指标包括 AUC、FPR@95（95% TPR 时的 FPR）和 TPR@5（5% FPR 时的 TPR），后两者按 Carlini 2022 的建议给出 low-FPR 端表现。
 
 ## 实验关键数据
 

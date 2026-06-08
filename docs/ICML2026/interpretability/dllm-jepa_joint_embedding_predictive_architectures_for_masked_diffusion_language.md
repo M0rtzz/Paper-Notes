@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **基于扩散噪声 schedule 的"无配对视图生成"**:
+**1. 用扩散噪声 schedule 当数据增强器，免费造出无配对的两视图。**
 
-    - 功能：用掩码率差异 $t_L<t_H$ 从同一 $x_0$ 直接采两个视图 $x_{t_L}, x_{t_H}$，彻底摆脱 LLM-JEPA 对 (text, code) 这类配对数据的依赖，适用于**任意文本数据集**。
-    - 核心思路：扩散前向过程 $q(x_t^i|x_0^i)$ 本身就是一个随机掩码增强器——低掩码率视图保留大部分 token，是"近完整上下文"；高掩码率视图只剩稀疏 token，是"高度抽象的目标"。这两者本质上就是 JEPA 范式里"context view 预测 target view"所需要的两端，且生成过程与扩散训练目标完全复用，零额外数据成本。固定 $t_L=0.2, t_H=0.7$（保留 vs 抽象的合理 trade-off），在 base-preservation 实验里也尝试更宽的 Wide-tt 配置 $(0.1, 0.9)$。
-    - 设计动机：把 vision JEPA 里"靠 augmentation 造两个视图"和扩散 LM 里"靠 random masking 造训练样本"这两件本来正交的事，用一个 schedule 统一起来，是整个方法能成立的支点。
+LLM-JEPA 最大的桎梏是必须有天然成对的 (text, code) 数据才能造出两个视图，这把它锁死在少数有配对资源的场景。本文的关键观察是：掩码扩散的前向过程 $q(x_t^i|x_0^i)$ 本身就是一个随机掩码增强器，不同掩码率天然对应不同抽象程度的视图——低掩码率的 $x_{t_L}$ 保留大部分 token，是"近完整上下文"；高掩码率的 $x_{t_H}$ 只剩稀疏 token，是"高度抽象的目标"。于是从同一句 $x_0$ 采两个掩码率 $t_L<t_H$ 就直接得到 JEPA 所需的 context view 和 target view（主实验固定 $t_L=0.2, t_H=0.7$，base-preservation 实验改用更宽的 Wide-tt 配置 $(0.1, 0.9)$），既彻底摆脱配对数据、适用于任意文本数据集，又因为视图生成与扩散训练目标共用同一套噪声 schedule 而零额外数据成本。本质上是把 vision JEPA "靠 augmentation 造视图"和扩散 LM "靠 random masking 造训练样本"这两件原本正交的事用一个 schedule 缝在一起，这是整个方法能成立的支点。
 
-2. **单次带梯度前向 + EMA 无梯度目标分支**:
+**2. 单次带梯度前向同时产出扩散 logits 和 JEPA 嵌入，目标分支只走 EMA 无梯度副本。**
 
-    - 功能：把"扩散 denoising"和"JEPA 上下文编码"压到**同一次**带梯度前向，目标视图只用 EMA 副本算一次 no-grad 前向，省掉 LLM-JEPA 第二个 backward + 第二份梯度内存 + 第二份 optimizer state。
-    - 核心思路：得益于扩散 LM 的双向 attention，$f_\theta(x_{t_L})$ 的 hidden state 既可以接 token classifier 拿扩散 logits，又可以 pool 出向量 $z_{t_L}=\text{Pool}(f_\theta(x_{t_L}))$ 做 JEPA 输入，**不需要两次前向**。target 分支沿用 I-JEPA/BYOL 经典配方：EMA 更新 $\theta'\leftarrow\tau\theta'+(1-\tau)\theta$、`no_grad` 包裹、stop-gradient + predictor，三重防 collapse。预测器 $g_\phi$ 是 $k\in\{1,...,5\}$ 层 decoder（与 LLM-JEPA 对齐），损失用 cosine 形式 $\mathcal{L}_\text{JEPA}=1-\cos(\text{sg}(z_{t_H}), \hat z_{t_H})$。
-    - 设计动机：算力账见 Table 1——AR baseline 与扩散 baseline 都是 $3F$/step，LLM-JEPA 涨到 $6F$（+100%），DLLM-JEPA 只到 $4F$（+33%），这是把 JEPA 真正"白嫖"进扩散 LM 微调主循环的工程关键。
+LLM-JEPA 慢的根源不是 JEPA 本身贵，而是自回归的因果 mask 逼着两个视图都做带梯度前向，整个 step 翻倍到 $6F$。扩散 LM 的双向 attention 恰好解开这个结：$f_\theta(x_{t_L})$ 的同一份 hidden state，既能接 token classifier 拿扩散 logits 算 $\mathcal{L}_\text{diff}$，又能 pool 成向量 $z_{t_L}=\text{Pool}(f_\theta(x_{t_L}))$ 当 JEPA 输入，一次带梯度前向两用，根本不需要第二次前向。target 视图则交给 $f_\theta$ 的 EMA 副本 $f_{\theta'}$（decay $\tau=0.996$）在 `no_grad` 下前向得到 $z_{t_H}$，再由 $k\in\{1,...,5\}$ 层 decoder 预测器 $g_\phi$ 映射出 $\hat z_{t_H}=g_\phi(z_{t_L})$。这样目标分支没有反传、没有第二份梯度内存、没有第二份 optimizer state，每步算力从 LLM-JEPA 的 $6F$（+100%）压到 $4F$（1 带梯度前向 + 1 无梯度前向 + ≈2F 反传，+33%），把 JEPA 真正"白嫖"进了扩散 LM 的微调主循环。
 
-3. **联合目标 + 防 collapse 的多重 anchor**:
+**3. 用扩散主目标当额外 anchor，让 cosine-only 的 JEPA 不塌缩。**
 
-    - 功能：在不引入任何对比负样本、不依赖 VICReg 这类方差/协方差正则的前提下，让 cosine-only JEPA 目标稳定不塌缩。
-    - 核心思路：总 loss $\mathcal{L}_\text{total}=\mathcal{L}_\text{diff}+\lambda\mathcal{L}_\text{JEPA}$，$\lambda\in\{0.5, 1.0, 2.0\}$ 调权。防 collapse 由四件事联手：(i) EMA target 慢速演化提供 non-trivial 目标；(ii) stop-gradient 阻断 target 分支的退化梯度通路；(iii) predictor $g_\phi$ 引入非对称不动点；(iv) 同步优化的扩散 denoising loss 强行约束 token 级输出分布，从根上限制 backbone 不能退化成常数映射。作者在 fine-tune 后的 checkpoint 上实测：pooled embedding 的 effective rank 仍是 42–44（base 模型 42–43），per-dim std 0.73–0.95，cosine diversity 0.25–0.28，与 baseline 几乎一致，**没有降秩、没有方差塌缩**。
-    - 设计动机：cosine-only JEPA 在视觉里是被反复警告"容易 collapse"的配方，本文用扩散主目标作为额外 anchor，把"防 collapse"从架构 trick 转成一个有任务监督在场的天然性质。
+cosine-only 的对齐目标在视觉里是被反复警告"容易 collapse"的配方，本文却不引入任何对比负样本、也不依赖 VICReg 那类方差/协方差正则。防塌缩靠四件事联手：EMA target 慢速演化提供 non-trivial 目标，stop-gradient（损失写成 $\mathcal{L}_\text{JEPA}=1-\cos(\text{sg}(z_{t_H}), \hat z_{t_H})$）阻断 target 分支的退化梯度通路，非对称的 predictor $g_\phi$ 引入非平凡不动点，而真正的关键 anchor 是同步优化的扩散 denoising loss——它强行约束 token 级输出分布，从根上不允许 backbone 退化成常数映射。前三件继承自 I-JEPA/BYOL，第四件是扩散主目标自带的任务监督，把"防 collapse"从一个架构 trick 变成有监督在场的天然性质。实测验证有效：fine-tune 后 pooled embedding 的 effective rank 仍是 42–44（base 模型 42–43）、per-dim std 0.73–0.95、cosine diversity 0.25–0.28，与 baseline 几乎一致，没有降秩也没有方差塌缩。
 
 ### 损失函数 / 训练策略
 总目标 $\mathcal{L}_\text{total}=\mathcal{L}_\text{diff}+\lambda\,\mathcal{L}_\text{JEPA}$；其中 $\mathcal{L}_\text{diff}=\mathbb{E}_{t,x_t}[-\frac{1}{|\mathcal{M}_t|}\sum_{i\in\mathcal{M}_t}\log p_\theta(x_0^i|x_t)]$ 是标准掩码扩散交叉熵，$\mathcal{L}_\text{JEPA}=1-\cos(\text{sg}(z_{t_H}), g_\phi(z_{t_L}))$。训练用 AdamW + 8×A100-80G + gradient checkpointing，2 epoch 全参微调；主实验 lr=$1\times 10^{-5}$、$(t_L,t_H)=(0.2,0.7)$；base-preservation 实验用更温和的 Wide-tt 配置 lr=$1.4\times 10^{-6}$、$(0.1,0.9)$。超参网格 $\lambda\in\{0.5,1,2\}$、$k\in\{1..5\}$、EMA $\tau=0.996$。

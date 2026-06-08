@@ -39,31 +39,29 @@ tags:
 
 ### 整体框架
 
-Fourier Angle Alignment (FAA) 包含两个即插即用模块：**FAAFusion** 嵌入 FPN neck 替换逐元素加法，解决跨尺度方向不一致；**FAA Head** 替换原始检测头，解决分类-回归任务冲突。两者共享核心的傅里叶角度估计（FAE）流程。
+Fourier Angle Alignment (FAA) 想在不改 backbone、不加新损失的前提下，把「目标方向」这条信号显式地从频域抽出来、对齐好再用。它把两个即插即用模块塞进 Oriented R-CNN：**FAAFusion** 接在 FPN neck，替换跨尺度融合时的逐元素加法，专治高低层特征方向不一致；**FAA Head** 替换原始检测头，把 RoI 特征预先摆正以解开分类与回归的矛盾。两个模块的共同底座是同一个傅里叶角度估计（FAE）流程——先有了「从一块特征里读出主方向角」这个能力，FAAFusion 和 FAA Head 才分别拿它去做对齐。
 
 ### 关键设计
 
-1. **傅里叶角度估计 (Fourier Angle Estimation, FAE)**：
+**1. 傅里叶角度估计 FAE：从频谱里读出特征图的主方向角。**
 
-    - 功能：从频域估计特征图的主方向角
-    - 核心思路：给定方阵特征图 $\mathbf{X} \in \mathbb{R}^{H \times H}$，执行 2D DFT 获得频谱 $\mathbf{F} = \mathcal{F}(\mathbf{X})$；将零频分量移至中心（乘以 $(-1)^{u+v}$）；从笛卡尔坐标 $(u,v)$ 转换到极坐标 $(\rho, \theta)$，计算能量谱 $E(\rho, \theta) = |\mathbf{F}_c(u(\rho,\theta), v(\rho,\theta))|^2$；沿径向加权求和得一维角度能量分布 $E_\theta(\theta) = \sum_\rho \rho \cdot E(\rho, \theta)$；取峰值方向 $\hat{\theta} = \arg\max_\theta E_\theta(\theta)$，范围约束到 $[0, \pi)$
-    - 设计动机：基于矩形目标频谱主方向垂直于长轴的数学性质，用径向加权求和增强对高频方向分量的敏感性
+后面两个模块都要回答「这块特征朝哪个方向」，FAE 就是这个公共算子。它利用了一个数学事实：矩形目标在频域的功率谱，主能量方向恰好垂直于其空间长轴——当长边 $a$ 大于短边 $b$ 时 $\operatorname{sinc}(2au)$ 的主瓣更窄，高频能量沿垂直方向集中，于是频谱形状直接编码了目标朝向。具体地，对方阵特征图 $\mathbf{X} \in \mathbb{R}^{H \times H}$ 做 2D DFT 得 $\mathbf{F} = \mathcal{F}(\mathbf{X})$，乘 $(-1)^{u+v}$ 把零频移到中心，再从笛卡尔坐标 $(u,v)$ 转到极坐标 $(\rho,\theta)$ 取能量谱并沿径向加权求和，压成一维角度能量分布：
 
-2. **FAAFusion（方向一致特征融合）**：
+$$E_\theta(\theta) = \sum_\rho \rho \cdot \big|\mathbf{F}_c\big(u(\rho,\theta), v(\rho,\theta)\big)\big|^2$$
 
-    - 功能：嵌入 FPN 替换逐元素加法，对齐高层与低层特征方向后融合
-    - 核心思路：高层特征 $\mathbf{Y}^{l+1}$ 上采样至低层分辨率；对上采样后的高层和低层特征分别用 $1 \times 1$ 卷积降维至 $C_{mid}$，再 unfold 提取局部 patch $\{\mathbf{p}_i^h\}, \{\mathbf{p}_i^l\}$；对每个位置 $i$，用 FAE 估计低层 patch 主方向 $\theta_i^l$；以 $\theta_i^l$ 为目标角旋转对应高层 patch 得 $\mathbf{p}_i^{rh} = \text{FAA}(\mathbf{p}_i^h; \theta_i^l)$；fold 重建对齐后的高层特征 $\mathbf{Y}_{recon}^{l+1}$，再用 $1 \times 1$ 卷积恢复通道维度；最终融合为三路之和：$\mathbf{Y}^l = \mathbf{X}^l + \mathbf{Y}_u^{l+1} + \mathbf{Y}_{recon}^{l+1}$
-    - 设计动机：低层特征方向精确（高频边缘），作为基准对齐高层的模糊方向，消除直接相加的方向信号冲突；保留原始上采样特征加法确保语义信息不丢失
+峰值方向 $\hat{\theta} = \arg\max_\theta E_\theta(\theta)$（约束到 $[0,\pi)$）就是估计出的主方向。这里的径向权重 $\rho$ 是关键——它给远离中心的高频分量更大话语权，而方向信息恰恰藏在边缘对应的高频里，因此加权后估计对朝向更敏感、更稳。
 
-3. **FAA Head（方向感知检测头）**：
+**2. FAAFusion：在 FPN 里先把方向对齐再相加。**
 
-    - 功能：替换标准检测头，预对齐 RoI 特征到规范方向以解耦分类和回归
-    - 核心思路：取 RoI 对齐特征 $\mathbf{F}_{roi}$，用 FAA 将主方向对齐到 $0°$ 得旋转不变特征 $\mathbf{F}_{inv} = \text{FAA}(\mathbf{F}_{roi}; 0°)$；残差相加 $\mathbf{F}_{final} = \mathbf{F}_{inv} + \mathbf{F}_{roi}$；展平后通过两层共享 FC（第一层输出维度 $1024 + 256 = 1280$），最后分别送入分类和回归分支
-    - 设计动机：$\mathbf{F}_{inv}$ 消除了方向变化，对同类目标近似一致，有利于分类；$\mathbf{F}_{roi}$ 保留方向敏感信息，有利于角度回归；残差连接确保两个任务都能获得各自所需的信号
+传统 FPN 把语义强但方向模糊（低频）的高层特征，和方向精确（高频边缘）的低层特征直接逐元素相加，等于把两套不一致的方向信号搅在一起，污染角度预测。FAAFusion 的做法是以低层方向为基准、把高层摆正后再融合：高层特征 $\mathbf{Y}^{l+1}$ 先上采样到低层分辨率，高低层各用 $1\times1$ 卷积降到 $C_{mid}$ 并 unfold 成局部 patch $\{\mathbf{p}_i^h\},\{\mathbf{p}_i^l\}$；每个位置 $i$ 用 FAE 读出低层 patch 的可靠主方向 $\theta_i^l$，再以它为目标角把对应高层 patch 旋转对齐 $\mathbf{p}_i^{rh} = \text{FAA}(\mathbf{p}_i^h; \theta_i^l)$；fold 重建出对齐后的高层特征 $\mathbf{Y}_{recon}^{l+1}$ 并用 $1\times1$ 卷积恢复通道。最终融合是三路相加 $\mathbf{Y}^l = \mathbf{X}^l + \mathbf{Y}_u^{l+1} + \mathbf{Y}_{recon}^{l+1}$：除了对齐后的高层，仍保留原始上采样高层 $\mathbf{Y}_u^{l+1}$，是为了不在对齐过程中丢掉高层的语义。之所以拿低层当基准而非反过来，正因为低层的高频边缘让它的方向估计更可信，用模糊的去对齐清晰的只会越对越偏。
+
+**3. FAA Head：把 RoI 特征预先摆正，解开分类与回归的矛盾。**
+
+同一份 RoI 特征要同时喂给两个口味相反的任务——分类希望旋转不变（飞机不管朝哪都是飞机），回归希望旋转敏感（朝向不同角度就该不同），单一特征被迫折中，两边都不到位。FAA Head 用一步对齐 + 残差把两种需求同时供上：取 RoI 对齐特征 $\mathbf{F}_{roi}$，用 FAA 把主方向统一旋到 $0°$ 得到旋转不变特征 $\mathbf{F}_{inv} = \text{FAA}(\mathbf{F}_{roi}; 0°)$，再残差相加 $\mathbf{F}_{final} = \mathbf{F}_{inv} + \mathbf{F}_{roi}$，展平后过两层共享 FC（第一层输出维度 $1024 + 256 = 1280$）再分流到分类与回归分支。这样 $\mathbf{F}_{inv}$ 抹掉了朝向、对同类目标近似一致，天然利于分类；$\mathbf{F}_{roi}$ 原样保留方向敏感信息，天然利于角度回归；一个残差就完成了隐式解耦，比另起双分支架构要简洁得多。
 
 ### 损失函数 / 训练策略
 
-采用 Oriented R-CNN 标准损失（RPN 分类+回归 + Head 分类+回归），无新增损失项。优化器 AdamW（weight decay 0.05），DOTA 初始学习率 0.0001 训练 16 epochs，HRSC2016 初始学习率 0.0004 训练 36 epochs，batch size 2，单卡 RTX 3090。FAAFusion 在 FPN 第三层与第二层之间融合处部署。
+采用 Oriented R-CNN 标准损失（RPN 分类+回归 + Head 分类+回归），无新增损失项。优化器 AdamW（weight decay 0.05），DOTA 初始学习率 0.0001 训练 16 epochs，HRSC2016 初始学习率 0.0004 训练 36 epochs，batch size 2，单卡 RTX 3090。FAAFusion 部署在 FPN 第三层与第二层之间的融合处。
 
 ## 实验关键数据
 
@@ -163,130 +161,6 @@ Fourier Angle Alignment (FAA) 包含两个即插即用模块：**FAAFusion** 嵌
 - 实验充分度: ⭐⭐⭐⭐ 三个数据集、三个 backbone、消融完整、检测头对比有力，缺多尺度和更多框架验证
 - 写作质量: ⭐⭐⭐⭐ 理论推导详尽，Formulation 和 Motivation 节清晰，图文配合好
 - 价值: ⭐⭐⭐⭐⭐ 即插即用 + 一致稳定提升 + 物理可解释 + 开源代码，实用性强
----
-title: >-
-  [论文解读] Fourier Angle Alignment for Oriented Object Detection in Remote Sensing
-description: >-
-  [CVPR 2026][目标检测][旋转目标检测] 利用傅里叶旋转等变性在频域估计并对齐目标方向，提出 FAAFusion（解决 Neck 层方向不一致）和 FAA Head（解决检测头分类-回归任务冲突）两个即插即用模块，在 DOTA 和 HRSC2016 上达到新 SOTA。
-tags:
-  - CVPR 2026
-  - 目标检测
-  - 旋转目标检测
-  - 傅里叶变换
-  - 方向对齐
-  - 特征融合
-  - 遥感
----
-
-# Fourier Angle Alignment for Oriented Object Detection in Remote Sensing
-
-**会议**: CVPR 2026  
-**arXiv**: [2602.23790](https://arxiv.org/abs/2602.23790)  
-**代码**: [https://github.com/gcy0423/Fourier-Angle-Alignment](https://github.com/gcy0423/Fourier-Angle-Alignment)  
-**领域**: 遥感 / 目标检测  
-**关键词**: 旋转目标检测, 傅里叶变换, 方向对齐, 特征融合, 遥感
-
-## 一句话总结
-
-利用傅里叶旋转等变性在频域估计并对齐目标方向，提出 FAAFusion（解决 Neck 层方向不一致）和 FAA Head（解决检测头分类-回归任务冲突）两个即插即用模块，在 DOTA 和 HRSC2016 上达到新 SOTA。
-
-## 研究背景与动机
-
-遥感图像中的目标方向任意，旋转目标检测 (ROD) 需同时预测类别和方向角。现有方法从旋转敏感卷积、backbone 修改、角度回归损失等入手，但存在两个被忽视的核心瓶颈：
-
-**Neck 层方向不一致 (Directional Incoherence)**：FPN 高层特征语义强但方向模糊（低频），低层特征边缘清晰方向精确（高频），简单相加导致方向信号冲突
-
-**检测头任务冲突 (Task Conflict)**：分类需旋转不变特征，回归需旋转敏感特征，单一 RoI 特征无法同时满足
-
-核心洞察：**傅里叶旋转等变性**——空间域信号旋转 phi，频谱也精确旋转 phi。可在频域可靠估计目标主方向并显式对齐。
-
-## 方法详解
-
-### 整体框架
-
-FAA 含两个即插即用模块：FAAFusion 嵌入 FPN 解决方向不一致；FAA Head 替换检测头解决任务冲突。两者共享傅里叶角度估计核心。
-
-### 关键设计
-
-1. **傅里叶角度估计 (Fourier Angle Estimation)**
-
-    - 功能：从频域估计特征图主方向
-    - 核心思路：2D DFT -> 中心化 -> 极坐标能量谱 -> 径向求和得角度能量分布 -> 取最大值
-    - 数学基础：矩形目标功率谱中主谱方向垂直于长轴（sinc 函数衰减差异）
-    - 设计动机：利用傅里叶旋转等变性，物理可解释性强
-
-2. **FAAFusion（方向一致特征融合）**
-
-    - 功能：替换 FPN 逐元素加法，对齐高低层特征方向后融合
-    - 核心思路：高层上采样 -> 1x1 卷积+unfold 提取局部特征 -> 估计低层主方向 -> 旋转高层对齐 -> fold+三路相加
-    - 设计动机：低层方向精确（高频边缘），以其为基准对齐高层模糊方向
-
-3. **FAA Head（方向感知检测头）**
-
-    - 功能：预对齐 RoI 特征到规范方向，解耦分类和回归
-    - 核心思路：估计主方向旋转到 0 度得 F_inv -> 残差 F_final = F_inv + F_roi -> 两层 FC -> 分类回归
-    - 设计动机：F_inv 旋转不变利于分类，F_roi 保留方向敏感信息利于回归
-
-### 损失函数 / 训练策略
-
-Oriented R-CNN 标准损失，AdamW (wd 0.05)，DOTA lr 0.0001，HRSC lr 0.0004，batch 2，单卡 RTX 3090。DOTA 16 epochs，HRSC 36 epochs。
-
-## 实验关键数据
-
-### 主实验
-
-| 数据集 | 方法 | Backbone | mAP | 提升 |
-|--------|------|----------|-----|------|
-| DOTA-v1.0 | LSKNet | LSKNet-S | 77.49% | - |
-| DOTA-v1.0 | **LSKNet+ours** | LSKNet-S | **78.49%** | +1.00% |
-| DOTA-v1.0 | **S-RCNN+ours** | StripNet-S | **78.72%** | +0.63% (新SOTA) |
-| DOTA-v1.5 | PKINet | PKINet-S | 71.47% | - |
-| DOTA-v1.5 | **LSKNet+ours** | LSKNet-S | **72.28%** | +2.02% (新SOTA) |
-| HRSC2016 | O-RCNN | ResNet50 | 64.77 | - |
-| HRSC2016 | **O-RCNN+ours** | ResNet50 | **66.94** | +2.17% |
-
-### 消融实验
-
-| FAAFusion | FAA Head | Params | GFLOPs | mAP |
-|-----------|----------|--------|--------|-----|
-| No | No | 30.98M | 173.68G | 77.49% |
-| No | Yes | 48.35M | 177.15G | 78.27% (+0.78%) |
-| Yes | No | - | - | 77.91% (+0.42%) |
-| Yes | Yes | 48.34M | 176.57G | **78.49%** (+1.00%) |
-
-### 关键发现
-
-- 两模块互补：FAAFusion +0.42%，FAA Head +0.78%，组合 +1.00%
-- 三个 backbone 上一致有效，证明即插即用
-- DOTA-v1.5 提升更显著（+2.02%），小目标方向对齐尤为重要
-- HRSC2016 船舶检测提升最大（+2.17%），高长宽比目标频域方向估计优势明显
-
-## 亮点与洞察
-
-- 频域角度切入旋转目标检测非常新颖，物理可解释性强
-- FAAFusion 以低层精确方向为基准对齐高层模糊方向，直觉精准
-- FAA Head 残差设计简洁有效
-- 即插即用可集成到任何 FPN+检测头框架
-
-## 局限与展望
-
-- 参数增加较多（O-RCNN 41M->63M），可考虑更轻量设计
-- 假设目标为矩形，不规则形状可能不适用
-- 仅在 Oriented R-CNN 框架验证
-- unfold/fold 在高分辨率特征图上开销可能较大
-
-## 相关工作与启发
-
-- 与 FreqFusion 不同：后者分解高低频组件，FAA 直接利用旋转等变性
-- ReDet 更重的旋转等变 backbone 方案，FAA 更轻量灵活
-- 频域方向估计可扩展到实例分割、姿态估计
-
-## 评分
-
-- 新颖性: ⭐⭐⭐⭐⭐ 频域旋转等变性切入旋转目标检测，理论清晰视角全新
-- 实验充分度: ⭐⭐⭐⭐ 三个数据集三个 backbone，消融完整
-- 写作质量: ⭐⭐⭐⭐ 理论推导详尽，问题定义清晰
-- 价值: ⭐⭐⭐⭐⭐ 即插即用+一致提升+物理可解释
 
 <!-- RELATED:START -->
 

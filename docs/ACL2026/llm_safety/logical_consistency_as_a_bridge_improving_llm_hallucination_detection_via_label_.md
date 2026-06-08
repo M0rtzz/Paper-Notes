@@ -54,23 +54,23 @@ LaaB 有三个模块和一个两阶段训练策略：
 
 ### 关键设计
 
-1. **Meta-Judgment——把 self-judgment 当 "可被检测的 response"**:
+**1. Meta-Judgment——把 self-judgment 当 "可被检测的 response"：给自评估一个可靠性，而不是当真理。**
 
-    - 功能：解决 self-judgment 路线"把 verbal judgment 当真理"的根本问题——给每个 judgment $O_j$ 估出一个可靠性 $L_j$，让框架能识别 "LLM 这次自评是否可信"。
-    - 核心思路：和 response 检测器对称——extract $H_j$ (judgment 最后一个 token 在 validation-optimal 层的 hidden)、$P_j$ (judgment 首 token 的 logits，但做了特殊设计：$P_j = P_{\text{yes}} \oplus (P_{\text{yes}} - P_{\text{no}})$ if $O_j = $"Yes"，$P_j = P_{\text{no}} \oplus (P_{\text{no}} - P_{\text{yes}})$ if $O_j = $"No"，用对比信号放大 Yes/No 的置信度差异)、$A_j$ (judgment context 被分成 6 个 segment：Framing / Query / Response / Eval_Query / Format / Trigger，算 attention 分配比例)；喂给 MLP $D_j$ 预测 $L_j$。
-    - 设计动机：核心 insight 是 "LLM 评估自己时也是 generation，生成时的 intrinsic 信号自然反映其判断的不确定性"。把 self-judgment 不再当输入而是当"另一个 query-response 对"来处理，让框架内部既保留 verbal judgment 的语义优势，又用神经信号校准其可靠性，彻底绕过 "self-preference bias / overthinking" 的污染。$P_j$ 用对比向量这个 trick 也很关键——单纯首 token logits 可能数量级差很多，对比形式能强化模型对"它有多确定是 Yes/No"的感知。
+self-judgment 路线最大的隐患是把 LLM 的 verbal judgment $O_j$ 直接当真值，可它本身也会犯 self-preference bias、overthinking、evaluative hallucination。LaaB 的破题点是观察到"LLM 评估自己时同样是一次 generation"，于是把 $O_j$ 不再当输入、而是当"另一个 query-response 对"，对称地训一个 meta-judgment 检测器 $D_j$ 去估它的真假 $L_j$。$D_j$ 的输入与 response 检测器同构：取 judgment 末 token 在 validation-optimal 层的 hidden $H_j$、首 token 的 logits $P_j$、以及把 judgment 上下文切成 Framing / Query / Response / Eval_Query / Format / Trigger 六段后算出的 attention 分配比例 $A_j$，喂给 MLP 输出 $L_j$。
 
-2. **Logic Rule Bridge——逻辑必然成立的标签约束**:
+其中 $P_j$ 不是裸用首 token logits，而是拼了一个对比向量：$O_j=$"Yes" 时 $P_j = P_{\text{yes}} \oplus (P_{\text{yes}} - P_{\text{no}})$，$O_j=$"No" 时 $P_j = P_{\text{no}} \oplus (P_{\text{no}} - P_{\text{yes}})$。裸 logits 的数量级容易差很多，而差值项直接编码"模型有多确定是 Yes/No"，让 $D_j$ 对自评置信度更敏感。这一步在保留 verbal judgment 语义优势的同时，用神经信号给它装了一个可靠性闸门，绕开了直接信任自评带来的污染。
 
-    - 功能：把 $D_j$ 对 $L_j$ 的预测翻译成对 $L_r$ 的预测，从而获得两路对 $L_r$ 的独立估计。
-    - 核心思路：基于直白的逻辑事实——如果 $O_j = $ "Yes" (LLM 说 response 是真)，那么 $O_j$ 正确意味着 response 也真 ($L_r = L_j$)；如果 $O_j = $ "No" (LLM 说 response 是假)，$O_j$ 正确意味着 response 是假 ($L_r = 1 - L_j$)。两种情况合在一起就是 $L_r = L_j$ if $O_j = $ "Yes" else $1 - L_j$。在 loss 层面实现为：$\mathcal{L}_{\text{Logic}} = \mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{hallu}})$ if $O_j = $"Yes"，否则 $\mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{real}})$。Huber loss 对 outlier 比 MSE 更鲁棒。
-    - 设计动机：这条 logic 不是"启发式假设"而是**必然真的**——只要 $L_j$ 定义为 "$O_j$ 是否正确判断了 response"，logic rule 就是从定义里直接推出来的恒等式。论文的巧思在于把"两个独立训练的检测器"通过这条恒等式联系起来，让它们必须在 logic 上一致——这等于给两路引入了一个无成本的弱监督信号。
+**2. Logic Rule Bridge——用逻辑必然成立的恒等式把两路检测器拴在一起。**
 
-3. **置信度加权互学习 + 梯度归一化平衡**:
+有了 $L_j$ 还不够，得把它翻译回对 response 的判断。这里用的不是启发式假设而是定义上的恒等式：既然 $L_j$ 表示"$O_j$ 是否正确判断了 response"，那么 $O_j=$"Yes"（说 response 为真）时 $O_j$ 正确就意味着 response 为真，$L_r = L_j$；$O_j=$"No" 时 $O_j$ 正确意味着 response 为假，$L_r = 1 - L_j$。合起来就是 $L_r = L_j$ if $O_j=$"Yes" else $1 - L_j$。
 
-    - 功能：防止"弱检测器拖累强检测器"——比如 attention-based $D_j$ 不靠谱时不应该被强行让强的 hidden-state $D_r$ 跟着它走。
-    - 核心思路：给每个样本对计算一个 confidence-aware 权重——$\mathcal{L}_{\text{Logic}, r} = \log(1 + \frac{S_j(L_j)}{S_r(L_r)}) \cdot \mathcal{L}_{\text{Logic}}$ 和 $\mathcal{L}_{\text{Logic}, j} = \log(1 + \frac{S_r(L_r)}{S_j(L_j)}) \cdot \mathcal{L}_{\text{Logic}}$，意思是 "peer 在 ground truth 上越自信，我就越要听 peer 的"。同时用梯度归一化动态平衡 CE 和 Logic 两个 loss：$\alpha_* = \frac{\|\nabla_{\theta_*^{-1}} \mathcal{L}_{\text{CE}, *}\|_2}{\|\nabla_{\theta_*^{-1}} \mathcal{L}_{\text{Logic}, *}\|_2 + \epsilon}$，避免某项 loss 数值悬殊压倒训练。最后 total loss 是 $\mathcal{L}_* = \mathcal{L}_{\text{CE}, *} + \alpha_* \mathcal{L}_{\text{Logic}, *}$。
-    - 设计动机：标准互学习 (Deep Mutual Learning) 假设所有 peer 是对等的，但在幻觉检测里 $D_r$ 和 $D_j$ 的特征质量天然不对等 (hidden state 可能比 attention 强很多)，无加权会让弱者反向污染强者。置信度加权 + 梯度归一化的组合让这套互学习对特征选择鲁棒，是工程层面的关键设计。
+落到损失上，用 Huber loss 把两路对同一目标的概率分布拉齐：$\mathcal{L}_{\text{Logic}} = \mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{hallu}})$ if $O_j=$"Yes"，否则 $\mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{real}})$（Huber 比 MSE 对 outlier 更鲁棒）。妙处在于这条约束是从定义推出来的必然真理，等于在两个本来独立训练的检测器之间凭空插入一个无需额外标注、无需额外算力的弱监督信号——只靠 $O_j$ 的极性翻转就强制它们逻辑自洽。
+
+**3. 置信度加权互学习 + 梯度归一化平衡——别让弱检测器把强检测器带偏。**
+
+标准 Deep Mutual Learning 假设 peer 对等，但幻觉检测里 $D_r$（如 hidden state）和 $D_j$（如 attention）的特征质量天然不对等，等权互学习会让弱者反向污染强者。LaaB 给每个样本对加一个置信度权重：$\mathcal{L}_{\text{Logic}, r} = \log(1 + \frac{S_j(L_j)}{S_r(L_r)}) \cdot \mathcal{L}_{\text{Logic}}$，$\mathcal{L}_{\text{Logic}, j} = \log(1 + \frac{S_r(L_r)}{S_j(L_j)}) \cdot \mathcal{L}_{\text{Logic}}$——peer 在 ground truth 上越自信，自己就越该听它的。
+
+同时为防 CE loss 和 Logic loss 数量级悬殊压倒训练，用梯度范数动态调比例 $\alpha_* = \frac{\|\nabla_{\theta_*^{-1}} \mathcal{L}_{\text{CE}, *}\|_2}{\|\nabla_{\theta_*^{-1}} \mathcal{L}_{\text{Logic}, *}\|_2 + \epsilon}$，最终单路目标是 $\mathcal{L}_* = \mathcal{L}_{\text{CE}, *} + \alpha_* \mathcal{L}_{\text{Logic}, *}$。这套加权 + 归一化的组合让互学习对特征选择鲁棒，是让整个框架在不对等 peer 上仍稳的工程关键。
 
 ### 损失函数 / 训练策略
 **Stage 1**：round-robin 异步训练 $D_r$ 和 $D_j$，各自最小化 $\mathcal{L}_{\text{CE}} + \alpha \mathcal{L}_{\text{Logic}}$，谁先收敛就冻结、另一个继续。**Stage 2**：联合微调，$\mathcal{L}_{\text{Joint}} = \mathcal{L}_{\text{CE}, r} + \mathcal{L}_{\text{CE}, j} + \alpha \mathcal{L}_{\text{Logic}}$。**推理只用 $D_r$**——已经通过 logic loss 蒸馏吸收了 $D_j$ 的知识，不需要再跑一次 self-judgment generation，推理开销和单 $D_r$ 一样。训练时的 self-judgment generation 只发生一次 (作为训练数据)，不增加部署成本。

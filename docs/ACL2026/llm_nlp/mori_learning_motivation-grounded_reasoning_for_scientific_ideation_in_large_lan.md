@@ -49,23 +49,25 @@ MoRI 是个三阶段 pipeline（Figure 2 + 7）：
 
 ### 关键设计
 
-1. **熵感知信息增益 EAIG（微观技术深度奖励）**:
+**1. 熵感知信息增益 EAIG：只奖励"硬 token"上的预测提升，把信号锚死在 ground-truth 上。**
 
-    - 功能：只在 ground-truth method 真正"硬"的 token 上度量"reasoning 是否让模型预测得更准"，从而把奖励聚焦到技术细节而非 boilerplate。
-    - 核心思路：先用固定 SFT 模型在 teacher-forced 条件下计算每个位置的熵 $H_t = -\sum_v \pi_{\text{sft}}(v \mid x, m, y^*_{<t}) \log \pi_{\text{sft}}(\cdot)$，取 top-25% 熵最高的 token 形成 mask $\mathcal{M}_t$（实证显示 34.2% 的 technical terms 被选中，远高于 common words 的 14.5% 和 numbers 的 5.5%）；再算逐 token 信息增益 $g_t(z) = \log \pi_\theta(y^*_t \mid x, m, z, y^*_{<t}) - \log \pi_{\text{sft}}(y^*_t \mid x, m, y^*_{<t})$，最终 $\Delta_{IG}(z) = \frac{1}{\sum \mathcal{M}_t} \sum_t \mathcal{M}_t \cdot g_t(z)$。
-    - 设计动机：解决"开放式任务没有 deterministic verifier"的核心难题——不用整段 method 概率（噪声大、偏短），只用"硬 token"上的相对提升；与 Wang et al. 2025b 的高熵 token 过滤不同，MoRI 把高熵 mask 用在**ground-truth method** 上而非 reasoning 上，从根本上抑制 reward hacking。
+开放式 ideation 的根本困难是没有 deterministic verifier——method 没有标准答案，用整段 method 的概率当奖励噪声极大、还偏向短输出。EAIG 的思路是：不看整段，只看 ground-truth method 里真正"硬"的 token。先用固定的 SFT 模型在 teacher-forced 条件下算出每个位置的熵 $H_t = -\sum_v \pi_{\text{sft}}(v \mid x, m, y^*_{<t}) \log \pi_{\text{sft}}(\cdot)$，取熵最高的 top-25% 形成 mask $\mathcal{M}_t$——实证里这把 34.2% 的 technical terms 选了进来，而 common words 只占 14.5%、numbers 只占 5.5%，说明 mask 抓的正是承载创新的技术细节。然后逐 token 算"加了 reasoning $z$ 之后预测得准了多少"：
 
-2. **对比语义增益 CSG（宏观逻辑方向奖励）**:
+$$g_t(z) = \log \pi_\theta(y^*_t \mid x, m, z, y^*_{<t}) - \log \pi_{\text{sft}}(y^*_t \mid x, m, y^*_{<t})$$
 
-    - 功能：保证生成 method 不是"堆细节"而是真在向 ground-truth 的解空间移动。
-    - 核心思路：用 Qwen3-Embedding-8B 嵌入 $\mathbf{E}(\cdot)$ 算 $S_{gen} = \cos(\mathbf{E}(\hat{y}), \mathbf{E}(y^*))$ 与**反事实基线** $S_{base} = \cos(\mathbf{E}(x \oplus m), \mathbf{E}(y^*))$（即"原封不动复述输入"能拿到的相似度），定义增益 $\Delta_{sem} = S_{gen} - S_{base}$。$\Delta_{sem} > 0$ 即意味着模型把语义重心从问题空间真正推到了解空间。
-    - 设计动机：直接用 $\cos(\hat{y}, y^*)$ 会奖励"把 context 改写一遍"的偷懒策略；引入 $S_{base}$ 作为对比基线后，模型必须做出"真实的语义跳跃"才能拿到正奖励——这是把 reward shaping 与"创新"概念对齐的关键。
+最终在 mask 上取平均 $\Delta_{IG}(z) = \frac{1}{\sum \mathcal{M}_t} \sum_t \mathcal{M}_t \cdot g_t(z)$。和 Beyond 80/20 那类"在 reasoning token 上过滤高熵"不同，MoRI 把高熵 mask 用在 **ground-truth method** 上而非生成的 reasoning 上——奖励锚在固定的 GT 而非模型自己写的内容上，从结构上切断了 reward hacking 的路径：模型再怎么乱写也改变不了 GT 的硬 token 是哪些。
 
-3. **Length Anchoring + 格式约束（防 reward collapse）**:
+**2. 对比语义增益 CSG：减掉"复述输入"的基线，逼模型做真实的语义跳跃。**
 
-    - 功能：阻止 GRPO 在高方差 EAIG 上诱发"reasoning chain 越缩越短"或"乱写灌 entropy"两种 reward hacking。
-    - 核心思路：长度调制因子 $\alpha(z) = \min(1, 1 - \lambda \frac{L_{anchor} - |z|}{L_{anchor}})$，当 $|z| < L_{anchor}$ 时奖励被打折，倒逼 reasoning 保持深度；格式 indicator $\mathds{1}[\text{valid}]$ 要求 CoT 非空、≥ 1000 字符且**不含 `##`/`###`**（防止把 method 内容偷渡进 reasoning 段）。最终复合奖励 $R_{\text{total}} = \alpha(z) \cdot \mathds{1}[\text{valid}] \cdot (w_e f_{\text{step}}(\Delta_{IG}) + w_s f_{\text{step}}(\Delta_{sem}))$，最佳权重 $w_s = 0.7, w_e = 0.3$。
-    - 设计动机：附录 F 给了理论分析——GRPO 的 group normalization 隐式偏好低方差策略，而长 reasoning chain 的奖励方差天然更高，所以会被压短；length anchoring 提供正向梯度抵消这个 bias，把训练动力学稳定在 $L_{anchor}$ 附近。
+EAIG 管的是微观技术深度，但还需要一个宏观信号保证生成的 method 是在朝 ground-truth 的解空间移动，而不是堆细节原地打转。直接用 $S_{gen} = \cos(\mathbf{E}(\hat{y}), \mathbf{E}(y^*))$（Qwen3-Embedding-8B 嵌入）会有个偷懒漏洞：把 context 改写一遍也能拿到不低的相似度。CSG 的关键是引入一个反事实基线 $S_{base} = \cos(\mathbf{E}(x \oplus m), \mathbf{E}(y^*))$，即"原封不动复述输入 $x \oplus m$"本来就能拿到的相似度，奖励只给增量 $\Delta_{sem} = S_{gen} - S_{base}$。这样 $\Delta_{sem} > 0$ 才意味着模型把语义重心从问题空间真正推到了解空间——必须产生超越输入的内容才有正奖励，这正是把 reward shaping 和"创新"概念对齐的那一笔。
+
+**3. Length Anchoring + 格式约束：抵消 GRPO 的隐式 short bias，封死两条 hacking 退路。**
+
+EAIG 方差天然偏高，单独用会诱发两种崩溃：reasoning chain 越缩越短、或者乱写一通去"hack 熵"。先看格式约束——指示函数 $\mathds{1}[\text{valid}]$ 要求 CoT 非空、≥ 1000 字符且不含 `##`/`###`，后者是为了防止把 method 内容偷渡进 reasoning 段冒充推理。再看长度锚定，调制因子
+
+$$\alpha(z) = \min\Big(1,\ 1 - \lambda \frac{L_{anchor} - |z|}{L_{anchor}}\Big)$$
+
+在 $|z| < L_{anchor}$ 时给奖励打折，倒逼 reasoning 保持深度。三者合成复合奖励 $R_{\text{total}} = \alpha(z) \cdot \mathds{1}[\text{valid}] \cdot (w_e f_{\text{step}}(\Delta_{IG}) + w_s f_{\text{step}}(\Delta_{sem}))$，最佳权重落在 $w_s = 0.7, w_e = 0.3$——CSG 当主导、EAIG 做配料。为什么非要 length anchoring？附录 F 给了形式化解释：GRPO 的 group normalization 本质是隐式的 Sharpe ratio 最大化，会偏好低方差策略，而长 reasoning chain 的奖励方差天然更高、于是被系统性压短；length anchoring 提供一个正向梯度去抵消这个 bias，把训练动力学稳定在 $L_{anchor}$ 附近。
 
 ### 损失函数 / 训练策略
 GRPO with token-mean loss、$\varepsilon_{\text{low}}/\varepsilon_{\text{high}} = 0.2/0.28$（clip-higher）、KL 系数 0.001、rollout $G=16$、lr $5 \times 10^{-7}$ + 10% warmup cosine、global batch 8、temperature 1.0、max prompt/response 各 5000。奖励 step-shaping 把连续 gain 量化为 4 档以抗噪：EAIG 阈值 $[1.0, 1.5, 2.0]$，CSG 阈值 $[0.01, 0.05, 0.1]$，奖励档 $[0, 0.5, 0.8, 1.0]$。

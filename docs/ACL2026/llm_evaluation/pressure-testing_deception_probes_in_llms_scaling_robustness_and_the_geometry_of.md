@@ -52,23 +52,24 @@ tags:
 第五步，构造 8 种风格扰动（pirate、Shakespearean、childlike、formal academic、slang、robotic、poetic、sarcastic）测试 distribution shift，并进一步用 4 种风格做增强训练、剩余 4 种风格做 held-out 测试。
 
 ### 关键设计
-1. **预注册几何假设矩阵**:
 
-	- 功能：把“探针为什么有效或失败”拆成可证伪的 H-LIN、H-SUB、H-CONE、H-ENT 四种解释。
-	- 核心思路：H-LIN 要求任意 deception domain 训练出的单方向 probe 都能跨域达到 AUROC $\geq 0.90$；H-SUB 预期 top-$k$ 多维 probe 显著优于 1D；H-CONE 需要方向不对称和 NMF/PCA 重构证据；H-ENT 预期 probe score 与 Logit Lens entropy 强相关，且残差化后 AUROC 明显下降。
-	- 设计动机：这样可以避免事后用一个漂亮分数讲故事。每个实验结果都能回到某个假设的具体预测，结论更像诊断报告，而不是单点 benchmark 排名。
+**1. 预注册几何假设矩阵：把“探针为什么准/为什么垮”拆成四个可证伪的几何解释，再逐个判生死。**
 
-2. **层级和跨域分解实验**:
+探针失败的根因可能南辕北辙——也许欺骗真是一个线性方向只是被风格遮住，也许是多维子空间，也许探针测的根本是熵这类代理变量。作者没有事后挑一个漂亮分数圆故事，而是开实验前就钉死四条互斥假设和它们的定量预测：H-LIN 要求任一 deception domain 训出的单方向 probe 跨域也能达到 AUROC $\geq 0.90$；H-SUB 预期 top-$k$ 多维 probe 显著强于 1D；H-CONE 要求方向不对称并有 NMF/PCA 重构证据；H-ENT 预期 probe score 与 Logit Lens entropy 强相关、且对 entropy 残差化后 AUROC 明显塌掉。
 
-	- 功能：判断跨域 transfer 差到底是“最佳层不对”，还是不同欺骗类型在表征空间里真的不共线。
-	- 核心思路：作者比较三种条件：source probe 在 source best layer 上测 target；source 权重套到 target best layer activation；以及在 target best layer 上重新用 source 数据训练。$C2-C1$ 分离层错配影响，$C3-C2$ 分离特征重学影响，剩余 gap 指向几何 disjointness。
-	- 设计动机：如果不做这一步，跨域 AUROC 低可以被解释为“层选错了”。分解后 12B/27B 的净改善分别是 -0.048 和 -0.028，说明问题主要不在层，而在几何结构。
+这样每个实验结果都能回指某条假设的具体预测，结论是一份“哪条解释被证伪、哪条留下”的诊断报告，而不是又一次 benchmark 排名。
 
-3. **风格扰动与风格增强对照**:
+**2. 层级与跨域分解实验：把跨域迁移差到底归因于“层选错了”还是“几何真不共线”分离开。**
 
-	- 功能：区分探针鲁棒性差是模型内部没有稳定欺骗信号，还是训练数据只有中性风格导致探针抓了 shortcut。
-	- 核心思路：先让只在 clean D-RepE 上训练的 probe 面对 8 种风格 shift，再在 clean + 4 种风格上训练增强 probe，并在剩余 4 种未见风格上测试。若 held-out 风格也提升，说明不是简单记住风格，而是训练迫使 probe 聚合更稳健的弱特征。
-	- 设计动机：这直接对应部署场景。真实用户不会按 benchmark 的中性文本风格说话，若一个 probe 连 Shakespearean 或 sarcastic 指令都扛不住，它不能作为可靠监控器。
+跨域 AUROC 低有一个最省事的辩解——可能只是 source 的最优层套到 target 上不对位。为堵住这条退路，作者并排比三种条件：source probe 直接在 source best layer 测 target（C1）；把 source 权重套到 target best layer 的 activation 上（C2）；在 target best layer 上用 source 数据重新训练（C3）。其中 $C2-C1$ 隔离层错配的影响，$C3-C2$ 隔离特征需要重学的影响，扣完这两项后剩下的 gap 才指向真正的几何 disjointness。
+
+分解后 12B/27B 的净改善分别是 $-0.048$ 和 $-0.028$——重选层和重训特征几乎没救回跨域性能，说明不同欺骗类型在表征空间里确实不共线，问题出在几何而非层位。
+
+**3. 风格扰动与风格增强对照：判定鲁棒性差是“模型内部没信号”还是“训练分布太窄让探针抓了 shortcut”。**
+
+如果一个 probe 只在中性文本上训练，它崩在风格 shift 上时无法区分两种可能：要么模型内部压根没有稳定的欺骗信号，要么信号是有的、只是探针偷懒抓了风格/prompt regime 这类捷径特征。作者用一个对照拆开它——先让只在 clean D-RepE 上训练的 probe 直面 8 种风格扰动（pirate、Shakespearean、sarcastic 等），再用 clean 加其中 4 种风格训练增强 probe，并刻意在剩余 4 种**未见**风格上测试。
+
+关键在 held-out 这一档：若连没训练过的风格也跟着提升，就说明增强不是死记某几种风格，而是逼着探针去聚合更稳健的弱特征。这一设计直接对应部署现实——真实用户不会用 benchmark 的中性腔说话，一个连 Shakespearean 或 sarcastic 指令都扛不住的探针不配当监控器。
 
 ### 损失函数 / 训练策略
 主 probe 是带 L2 正则的 logistic regression，按层训练并选择验证集最优层。多维实验先对 activation 或 difference vector 提取 top-$k$ PCA components，$k\in\{1,3,5,10,20,50\}$，再训练线性分类器。MLP probe 只作为上界参照，结构为 2 层、hidden dim 256、ReLU、dropout 0.3。风格增强实验在 4B 和 27B 上使用 clean 数据加 4 个训练风格，测试时包含 clean、seen styles 和 held-out styles。

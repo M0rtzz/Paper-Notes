@@ -18,129 +18,6 @@ tags:
 **会议**: CVPR 2026  
 **arXiv**: [2603.13092](https://arxiv.org/abs/2603.13092)  
 **代码**: 无  
-**领域**: EDA / Circuit Yield Analysis  
-**关键词**: yield analysis, foundation model, in-context learning, TabPFN, SRAM, zero hyperparameter
-
-## 一句话总结
-提出用基础模型 TabPFN 的 learned prior 替代传统人工先验（GP 核、IS 高斯假设），实现零超参数调优的多 PVT Corner 良率分析，在工业级 SRAM 基准上达到 SOTA 精度（MRE 低至 0.11%）的同时提速超 10×。
-
-## 研究背景与动机
-**领域现状**：现代集成电路需在 25+ 个 Process-Voltage-Temperature（PVT）Corner 下验证良率，每个 Corner 需超过 $10^4$ 次蒙特卡洛仿真，总成本 $O(K \times N)$ 导致数周计算时间。
-
-**现有痛点**：加速方法沿两条路径发展却都碰壁：(1) **重要性采样（IS）方法**如 MNIS 实现了全自动化，但高斯假设构成"模型容量壁垒"——无法捕获非线性故障区域，精度有天花板；(2) **代理模型方法**如 GP、深度核、normalizing flow 打破了容量限制，但引入了"调参壁垒"——每个电路需要数小时的超参数优化（核函数选择、网络架构搜索），且 ±20% 的超参扰动导致误差从 19% 变到 111%，工业界无法接受。
-
-**核心矛盾**：表达力与自动化的根本矛盾——要么用简单模型实现自动化但精度受限，要么用复杂模型提高精度但需要大量调参。
-
-**本文目标**：在保持高表达力（非线性故障边界建模）的同时，彻底消除逐电路的超参数调优。
-
-**切入角度**：用 meta-learning 的 learned prior 替代 engineered prior。TabPFN 在数百万回归任务上预训练后，通过 in-context learning（单次前向传播）即可适应新电路——无需梯度下降、无需超参优化、无需重训练。
-
-**核心 idea**：TabPFN 的 learned prior + 跨 Corner 联合建模 + 主动学习 = 零调参且高精度的多 Corner 良率分析。
-
-## 方法详解
-
-### 整体框架
-Pipeline 分两步：(1) 稀疏特征选择——将高维电路参数（如 1152D 的 32×2 SRAM）压缩到约 48D；(2) 零超参推理循环——TabPFN 做 in-context learning 建全局代理模型，不确定性驱动的主动学习引导 SPICE 仿真，迭代直到良率估计收敛。
-
-### 关键设计
-
-1. **从 Engineered Prior 到 Learned Prior（TabPFN）**:
-
-    - 功能：在单次前向传播中完成贝叶斯后验预测，无需任何超参数优化
-    - 核心思路：传统 GP 需逐电路优化核超参 $\theta^* = \arg\max_\theta \log \mathcal{N}(\mathbf{y}|\mathbf{0}, K_\theta + \sigma^2 I)$（O(D) 个参数的非凸优化）。TabPFN 通过 meta-learning 目标 $\Theta^* = \arg\min_\Theta \mathbb{E}_{f \sim p_{\text{meta}}} [\mathbb{E}_{D_{\text{train}} \sim f} [\mathbb{E}_{(\mathbf{z}^*, y^*) \sim f} [-\log p_\Theta(y^*|\mathbf{z}^*, D_{\text{train}})]]]$ 预训练，等价于最小化 learned approximation 和 true PPD 之间的 KL 散度。推理时 $(\mu^*, (\sigma^*)^2) = \mathcal{G}_{\Theta^*}(\mathbf{z}^*, D_{\text{circuit}})$，自注意力机制充当 learned kernel $k_{\text{learned}}(\mathbf{z}^*, \mathbf{z}_i; D) \propto \exp(\mathbf{Q}(\mathbf{z}^*)^T \mathbf{K}(\mathbf{z}_i) / \sqrt{d_k})$
-    - 设计动机：将每次电路的超参调优成本分摊到一次性的大规模预训练中，消除 Tuning Barrier
-
-2. **跨 Corner 知识迁移**:
-
-    - 功能：利用 PVT Corner 间的物理相关性提升稀疏采样 Corner 的预测精度
-    - 核心思路：将稀疏工艺参数 $\mathbf{x}_\mathcal{S}$ 与 Corner 编码 $c$（归一化电压和温度）拼接为联合输入 $\mathbf{z} = [\mathbf{x}_\mathcal{S}; c] \in \mathbb{R}^{|\mathcal{S}|+p}$，构建全局代理 $\hat{f}(\mathbf{x}_\mathcal{S}, c)$。自注意力机制通过权重 $\alpha_{ij} = \text{softmax}(\mathbf{Q}(\mathbf{z}^*)^T \mathbf{K}(\mathbf{z}_i) / \sqrt{d_k})$ 自动上调与查询 Corner 相关的样本权重，有效样本量 $n_{\text{eff}}(\mathbf{x}^*, c_2) = \sum_i \alpha_i^2 \geq n_2$
-    - 设计动机：独立建模每个 Corner 需要 K 个模型且浪费共享物理信息；联合建模让充分采样的 Corner 为稀疏 Corner "借力"，消融显示可降低 72% 误差
-
-3. **不确定性引导的主动学习**:
-
-    - 功能：将昂贵的 SPICE 仿真集中在对良率估计信息增益最大的区域
-    - 核心思路：acquisition function 结合预测不确定性和规格边界接近度：$\alpha_k(\mathbf{x}) = \sigma(\mathbf{x}, c_k) \cdot \phi((\hat{f}(\mathbf{x}, c_k) - \text{Spec}_k) / \sigma(\mathbf{x}, c_k))$。$\sigma$ 捕获认知不确定性（更多数据可降低），$\phi(\cdot)$ 将采样集中在 pass/fail 决策边界。多 Corner 联合优化 $\alpha(\mathbf{x}) = \max_k \alpha_k(\mathbf{x})$，批量采样时加多样性惩罚
-    - 设计动机：TabPFN 的贝叶斯性质"免费"提供校准的不确定性估计，直接用于主动学习无需额外成本
-
-### 特征选择 / 维度压缩
-TabPFN 当前限制在 500 维以内。对于 1152D 的 32×2 SRAM，用 GBDT（默认 LightGBM 配置，零调参）获取特征重要度排名，贪心搜索最优子集 $\mathcal{S}^* = \arg\max_k R^2(\mathcal{S}_k)$，通常 1152D → 48D，子分钟完成。
-
-## 实验关键数据
-
-### 主实验
-多 Corner 良率预测（5 PVT Corners，MRE %，OpenYield 工业级 SRAM）：
-
-| 电路 | BI-BD | BI-BC | OPT | **本文** |
-|------|-------|-------|-----|---------|
-| 4×2 (144D) | 0.15 | 0.45 | 0.47 | **0.11** |
-| 8×2 (288D) | 0.29 | 2.46 | 20.4 | **0.22** |
-| 16×2 (576D) | 3.39 | 0.56 | 30.3 | **0.29** |
-| 32×2 (1152D) | 0.79 | 1.64 | 12.2 | **1.10** |
-
-单 Corner 分析（8×2 SRAM，FF Corner）：
-
-| 方法 | MRE (%) | #Sim | Speedup |
-|------|---------|------|---------|
-| MC (baseline) | — | 4100 | — |
-| MNIS | 12.63 | 3100 | 1.3× |
-| ACS | 28.47 | 2700 | 1.5× |
-| HSCS | 19.01 | 3360 | 1.2× |
-| OPT | 8.88 | 3000 | 1.4× |
-| **本文** | **8.88** | **170** | **24.1×** |
-
-### 消融实验（跨 Corner 知识迁移，16×2 SRAM）
-
-| Corner | Target Only | +1 Corner | +2 | +3 | +4 | MRE 降幅 |
-|--------|------------|-----------|-----|-----|-----|---------|
-| TT | 21.79 | 13.85 | 10.86 | 9.05 | 6.04 | -72% |
-| SF | 100.00 | 100.00 | 71.43 | 57.14 | 42.86 | -57% |
-| FS | 2.21 | 2.00 | 0.88 | 0.87 | 0.71 | -68% |
-| SS | 4.09 | 4.09 | 3.79 | 3.62 | 3.61 | -12% |
-
-代理模型对比（8×2 SRAM，样本量 < 1000）：
-
-| 方法 | ~100 样本 MAE | 调参需求 |
-|------|-------------|---------|
-| GP (tuned) | ~30% | 需要 |
-| Deep-GP (tuned) | ~35% | 需要 |
-| MLP (tuned) | ~45% | 需要 |
-| SVM (tuned) | ~40% | 需要 |
-| **TabPFN** | **~5%** | **零调参** |
-
-### 关键发现
-- 在 100 样本量下 TabPFN 的 MAE 约 5%，所有经调参的基线都在 30-45%
-- 跨 Corner 知识迁移在困难 Corner（TT、SF、FS）上效果显著，最高降低 72% 误差
-- 单 Corner 分析中实现 24.1× 加速，同精度下比 OPT 少用 17× 仿真次数
-- 传统 IS 方法在有外围电路、寄生效应的工业级 SRAM 上仅有 1.2-1.5× 加速，learned prior 更鲁棒
-- 超参敏感性实验（Table 1）揭示 SOTA 方法在 ±20% 扰动下误差波动 6-10×，验证了 Tuning Barrier 的严重性
-
-## 亮点与洞察
-- "Tuning Barrier"概念的提出和量化（Table 1）非常有说服力，直接击中工业界痛点
-- 自注意力作为 learned kernel 的理论联系建立得清晰——从 GP 核到 attention weight 有自然过渡
-- 跨 Corner 信息共享的消融实验（Table 6）直观展示了联合建模的价值
-- 整个 pipeline 端到端零调参，适合工业集成
-
-## 局限与展望
-- TabPFN 当前限制 500 维，>500D 依赖特征选择作为 workaround
-- 仅在 SRAM 电路上验证，未测试模拟/数混电路
-- Corner 数仅 5 个（TT/FF/SS/FS/SF），工业界常需 25+ Corners
-- 特征选择虽零调参但引入了 GBDT 的隐含假设（树模型的特征重要度可能对某些电路不准确）
-
-## 相关工作与启发
-- MNIS 是工业标准的 IS 方法，本文在保持其自动化优势的同时突破了容量限制
-- TabPFN 作为 tabular 数据的基础模型，在此被首次应用于 EDA 领域
-- learned prior 的思路可推广到其他需要反复调参的工程仿真场景（如电磁仿真、热分析）
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐ 将基础模型的 in-context learning 引入 EDA 良率分析是很新颖的跨界
-- 实验充分度: ⭐⭐⭐⭐ 多规模 SRAM、单/多 Corner、代理模型对比、消融实验完整
-- 写作质量: ⭐⭐⭐⭐ "双壁垒"的叙事线清晰，表格和图表说服力强
-- 价值: ⭐⭐⭐⭐ 解决了 EDA 工业界的核心痛点，零调参特性有直接部署价值
-# Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors
-
-**会议**: CVPR 2026  
-**arXiv**: [2603.13092](https://arxiv.org/abs/2603.13092)  
-**代码**: 无  
 **领域**: 人体理解 / 集成电路可靠性  
 **关键词**: yield analysis, foundation model, TabPFN, in-context learning, zero hyperparameter
 
@@ -163,32 +40,28 @@ TabPFN 当前限制在 500 维以内。对于 1152D 的 32×2 SRAM，用 GBDT（
 ## 方法详解
 
 ### 整体框架
-完整 pipeline：(1) 初始 LHS 采样并仿真；(2) 若维度 >500 则自动特征选择压缩；(3) TabPFN 上下文学习建模→不确定性引导主动采样→SPICE 仿真→更新数据集；(4) 迭代直至良率估计收敛。
+论文要在 25+ 个 PVT 角下估计 SRAM 良率，但又不想为每个电路手调任何超参数。它把整套流程拼成一个闭环：先用拉丁超立方采样（LHS）抽一批过程参数并跑 SPICE 仿真拿到初始标签；如果参数维度超过 500，就先做一次自动特征选择把它压到 TabPFN 能吃的尺度；然后让 TabPFN 在已有样本上做一次上下文学习，直接给出每个待评估点的均值和方差；再用这个不确定性去挑下一批最值得仿真的样本，跑 SPICE、并回数据集；如此迭代到各角良率估计稳定为止。整条链路里真正贵的只有 SPICE 仿真，建模和采样决策都几乎零成本，而且没有一个旋钮需要人来拧。
 
 ### 关键设计
 
-1. **学习先验取代人工先验 (Learned Priors via Meta-Learning)**:
+**1. 用学习到的先验取代人工先验：把"调核"这件事彻底删掉。**
 
-    - 功能：实现零超参数的表达性建模
-    - 核心思路：使用 TabPFN——在数百万回归任务上预训练的 Transformer 基础模型。训练目标为 $\Theta^* = \arg\min_\Theta \mathbb{E}_{f \sim p_{\text{meta}}(f)}[\mathbb{E}_{D_{\text{train}} \sim f}[\mathbb{E}_{(\mathbf{z}^*, y^*) \sim f}[-\log p_\Theta(y^*|\mathbf{z}^*, D_{\text{train}})]]]$。推理时直接接受电路数据 $(\mu^*, (\sigma^*)^2) = \mathcal{G}_{\Theta^*}(\mathbf{z}^*, D_{\text{circuit}})$，无需梯度下降、无需超参数优化
-    - 设计动机：GP 需要优化 $O(D)$ 个核长度参数（对 100 维电路需优化 100+ 参数），点估计 $\boldsymbol{\theta}^*$ 还忽略了超参数不确定性。TabPFN 的注意力机制 $k_{\text{learned}}(\mathbf{z}^*, \mathbf{z}_i; D_{\text{circuit}}) \propto \exp(\frac{\mathbf{Q}(\mathbf{z}^*)^T \mathbf{K}(\mathbf{z}_i)}{\sqrt{d_k}})$ 是数据自适应的学习核
+传统代理模型（尤其是高斯过程）的痛点在于先验是人手工编进去的——GP 要为每一维特征优化一个核长度参数，100 维电路就得优化 100+ 个超参，而且最后只取一个点估计 $\boldsymbol{\theta}^*$，连超参本身的不确定性都丢了。本文换成 TabPFN：一个在数百万个合成回归任务上预训练好的 Transformer，预训练目标是 $\Theta^* = \arg\min_\Theta \mathbb{E}_{f \sim p_{\text{meta}}(f)}[\mathbb{E}_{D_{\text{train}} \sim f}[\mathbb{E}_{(\mathbf{z}^*, y^*) \sim f}[-\log p_\Theta(y^*|\mathbf{z}^*, D_{\text{train}})]]]$，本质是在元分布上学会"看一眼训练集就给出后验预测"。到了电路推理阶段，它直接吃当前电路的数据吐出预测分布
 
-2. **跨角知识传递 (Cross-Corner Knowledge Transfer)**:
+$$(\mu^*, (\sigma^*)^2) = \mathcal{G}_{\Theta^*}(\mathbf{z}^*, D_{\text{circuit}})$$
 
-    - 功能：在稀疏采样的角利用密集采样角的信息
-    - 核心思路：构建联合输入 $\mathbf{z} = [\mathbf{x}_\mathcal{S}; c]$（拼接稀疏过程参数和角编码），建立全局代理 $\hat{f}(\mathbf{x}_\mathcal{S}, c)$。注意力权重自动上权来自相关角 $c_k \approx c_j$ 的训练样本。有效样本量 $n_{\text{eff}}(\mathbf{x}^*, c_2) = \sum_{i} \alpha_i^2 \geq n_2$，当角相关时 $n_{\text{eff}}$ 远大于该角自身样本数 $n_2$
-    - 设计动机：同一电路在不同 PVT 条件下共享底层物理机制，独立建模每个角浪费信息且需要 $K$ 个模型
+一次前向传播完成，没有梯度下降、没有超参搜索。之所以有效，是因为 TabPFN 的注意力权重 $k_{\text{learned}}(\mathbf{z}^*, \mathbf{z}_i; D_{\text{circuit}}) \propto \exp(\frac{\mathbf{Q}(\mathbf{z}^*)^T \mathbf{K}(\mathbf{z}_i)}{\sqrt{d_k}})$ 起的正是 GP 核的作用，只不过这个"核"是数据自适应、随每个电路自动重塑的学习核，先验不再靠人猜，而是从海量任务里学来的。
 
-3. **自动特征选择 (Automated Feature Selection)**:
+**2. 跨角知识传递：让密集采样的角去补稀疏采样的角。**
 
-    - 功能：将高维参数空间（如 1152D）压缩到 TabPFN 可处理的范围（~48D）
-    - 核心思路：使用默认配置 LightGBM 训练 GBDT 获取特征重要性排名，贪心前向搜索最优子集 $\mathcal{S}^* = \arg\max_k R^2(\mathcal{S}_k)$，整个过程零调优——GBDT 使用固定默认配置，batch size $B=10$ 为非敏感粒度参数
-    - 设计动机：电路物理具有固有稀疏性——性能通常依赖少数关键晶体管而非全部 1152 个参数
+同一电路在不同 PVT 条件下共享底层物理机制，如果给每个角单独建一个模型，既浪费信息又要维护 $K$ 个模型。本文把角编码当成一个普通输入维度，构造联合输入 $\mathbf{z} = [\mathbf{x}_\mathcal{S}; c]$（稀疏过程参数拼上角编码 $c$），训一个全局代理 $\hat{f}(\mathbf{x}_\mathcal{S}, c)$。注意力机制会自动给相关角 $c_k \approx c_j$ 的训练样本加权，于是一个采样很少的角能借到邻近角的密集样本。这种"借用"可以用有效样本量量化：$n_{\text{eff}}(\mathbf{x}^*, c_2) = \sum_{i} \alpha_i^2 \geq n_2$，当角之间高度相关时，$n_{\text{eff}}$ 会远大于该角自身的样本数 $n_2$——这正是全局建模优于逐角独立建模的根本原因。
+
+**3. 自动特征选择：先把维度压到 TabPFN 装得下。**
+
+TabPFN 当前只能处理约 500 维以内的特征，而工业电路的参数空间可达 1152 维，所以需要一道无人值守的压缩。本文利用电路物理的固有稀疏性——性能往往只由少数关键晶体管决定，而非全部参数——用默认配置的 LightGBM 训一个 GBDT 拿到特征重要性排名，再贪心前向搜索 $R^2$ 最优的子集 $\mathcal{S}^* = \arg\max_k R^2(\mathcal{S}_k)$，把 1152D 压到约 48D。关键是这一步同样零调优：GBDT 用固定默认配置，批量粒度 $B=10$ 是不敏感参数，因此整条 pipeline 从特征筛选到最终推理都不需要任何逐电路的手动调参。
 
 ### 损失函数 / 训练策略
-- 主动学习获取函数：$\alpha_k(\mathbf{x}) = \sigma(\mathbf{x}, c_k) \cdot \phi(\frac{\hat{f}(\mathbf{x}, c_k) - \text{Spec}_k}{\sigma(\mathbf{x}, c_k)})$——不确定性加权边界采样
-- 多角联合优化：$\alpha(\mathbf{x}) = \max_k \alpha_k(\mathbf{x})$
-- 收敛判据：$\max_k |\hat{Y}_k^{(t)} - \hat{Y}_k^{(t-1)}| < \epsilon$
+主动学习用一个不确定性加权的边界采样获取函数来挑下一批仿真点：单角下 $\alpha_k(\mathbf{x}) = \sigma(\mathbf{x}, c_k) \cdot \phi(\frac{\hat{f}(\mathbf{x}, c_k) - \text{Spec}_k}{\sigma(\mathbf{x}, c_k)})$，既偏好模型不确定的区域，又偏好接近 spec 边界（最可能决定良率）的区域；多角时取 $\alpha(\mathbf{x}) = \max_k \alpha_k(\mathbf{x})$ 做联合优化。迭代到所有角良率估计的逐轮变化都小于阈值即停：$\max_k |\hat{Y}_k^{(t)} - \hat{Y}_k^{(t-1)}| < \epsilon$。
 
 ## 实验关键数据
 

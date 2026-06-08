@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TGO（Threshold-Guided Optimization）的训练流程分四步：(1) 给定参考策略 $\pi_{\text{ref}}$（即初始化时的 $\pi_\theta$），用 reward model $r(\cdot)$ 给离线数据集 $\{(x_i, y_i)\}$ 打分得到 $s_i$；(2) 取 $\{s_i\}$ 的某个分位数 $\tau = \text{Percentile}(\{s_i\}, p)$（默认 $p=0.5$ 中位数）；(3) 对每个样本生成伪标签 $l_i = \mathbb{1}[s_i \ge \tau]$ 与置信度权重 $w_i = 1 + c|s_i - \tau|$；(4) 用类似 DPO 的 sigmoid 二元交叉熵作为损失，但用单边的 implicit policy score $\hat r = \beta(\log \pi_\theta - \log \pi_{\text{ref}})$ 而非两侧差值。整个流程是离线的，无需在线 rollout、无需 reward model 微调。
+TGO（Threshold-Guided Optimization）要解决的是"只有标量打分、没有成对偏好时怎么对齐视觉生成模型"。它的核心转换是把对齐从"比较两个样本谁更好"重写成"判断单个样本好不好"：先用 reward model 给离线数据集打分，再从这堆分数的经验分布里取一个全局分位阈值，把每个样本按是否过阈值打成伪正/伪负标签，最后用一个带置信度权重的二元交叉熵把策略往伪正方向推、伪负方向拉。整个流程纯离线，不需要在线 rollout，也不需要微调 reward model。
 
 ### 关键设计
 
-1. **从 KL 最优解推出的阈值决策规则**:
+**1. 从 KL 最优解推出的阈值决策规则：把"该不该提升概率"化简成与全局阈值比大小**
 
-    - 功能：把"该不该提升某样本概率"的问题简化成与一个全局标量阈值比较。
-    - 核心思路：KL 正则化目标 $\max \mathbb E[\mathcal R(x,y)] - \beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ 的闭式最优解满足 $\log \frac{\pi^*(y|x)}{\pi_{\text{ref}}(y|x)} > 0 \iff \mathcal R(x,y) > \tau^*(x)$，其中 $\tau^*(x) = \beta \log Z(x)$。作者用两个假设把它做成可算：标量分 $s$ 是 reward 的单调变换；用经验分布的全局分位 $\tau$ 替代 $\tau^*(x)$。于是决策规则变成 $\pi_\theta(y|x) \gtrsim \pi_{\text{ref}}(y|x)$ 当 $s \ge \tau$。
-    - 设计动机：DPO 之所以漂亮，是因为成对差值让 $\log Z(x)$ 抵消；但无配对时必须正面对付 $Z(x)$。用全局阈值是最简单且统计上有保证的代理——附录定理证明替换后的估计量在 $n \to \infty$ 时一致、误差 $O(1/n)$，并校准到原 KL 最优规则。
+DPO 系列方法之所以能避开难解的配分函数 $Z(x)$，靠的是成对差值里 $\log Z(x)$ 自然抵消；一旦只有单样本标量分，这个抵消机制失效，就得正面对付 $Z(x)$。作者从 KL 正则化目标 $\max \mathbb E[\mathcal R(x,y)] - \beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ 的闭式最优解入手，发现它等价于一个二元决策：$\log \frac{\pi^*(y|x)}{\pi_{\text{ref}}(y|x)} > 0 \iff \mathcal R(x,y) > \tau^*(x)$，其中实例相关的基线 $\tau^*(x) = \beta \log Z(x)$ 难以计算。于是用两个假设把它做成可算——假设标量分 $s$ 是 reward 的单调变换，再用整个数据集分数分布的全局分位 $\tau = \text{Percentile}(\{s_i\}, p)$（默认 $p=0.5$ 中位数）替代 $\tau^*(x)$，决策规则就落成"当 $s \ge \tau$ 时应让 $\pi_\theta(y|x) \gtrsim \pi_{\text{ref}}(y|x)$"。这个全局阈值是最简单且统计上有保证的代理：附录定理证明替换后的估计量在 $n \to \infty$ 时一致、误差 $O(1/n)$，并校准回原 KL 最优规则。
 
-2. **置信度加权的二元分类损失**:
+**2. 置信度加权的二元分类损失：让分数离阈值越远的样本梯度越大**
 
-    - 功能：让分数离阈值远（更确定是"好/坏"）的样本贡献更大的梯度，离阈值近（模糊）的样本权重小。
-    - 核心思路：定义 implicit policy score $\hat s_{\theta,\text{ref}}(x,y) = \beta \log \frac{\pi_\theta(y|x)}{\pi_{\text{ref}}(y|x)}$，损失为 $\mathcal L_{\text{TG}} = -\mathbb E[w(s,\tau)(l\log\sigma(\hat s) + (1-l)\log(1-\sigma(\hat s)))]$，其中 $w(s,\tau) = 1 + c|s-\tau|$，超参 $c \ge 0$。这等价于一个加权 BCE 把策略向 reward 高的方向推、低的方向拉。
-    - 设计动机：中位数附近的样本本身就是"灰色地带"，把它们与极端样本同权处理会引入噪声；线性置信加权既保留全数据集利用率，又自然增强信号噪声比，且不引入超参敏感（实验中 $c=5$ 跨任务稳定）。
+中位数附近的样本本身处在"好坏难分"的灰色地带，若与极端样本同权处理就会把噪声放进梯度。为此作者定义 implicit policy score $\hat s_{\theta,\text{ref}}(x,y) = \beta \log \frac{\pi_\theta(y|x)}{\pi_{\text{ref}}(y|x)}$，伪标签 $l = \mathbb 1[s \ge \tau]$，损失写成加权二元交叉熵 $\mathcal L_{\text{TG}} = -\mathbb E[w(s,\tau)(l\log\sigma(\hat s) + (1-l)\log(1-\sigma(\hat s)))]$，其中置信度权重 $w(s,\tau) = 1 + c|s-\tau|$、超参 $c \ge 0$。分数离阈值越远（越确定是好或坏）权重越大，越靠近阈值（越模糊）权重越接近 1。这样既保留了全数据集的利用率，又自然增强信号噪声比，相当于在分类问题里加了一个软 margin，且实测对超参不敏感（$c=5$ 跨任务稳定）。
 
-3. **针对两类视觉生成模型的似然代理**:
+**3. 针对两类视觉生成模型的似然代理：让框架同时吃下连续扩散和离散 token 范式**
 
-    - 功能：让 $\log \pi_\theta(y|x)$ 在扩散模型和 MaskGIT 上都能计算，从而让 TGO 框架同时适配连续与离散生成范式。
-    - 核心思路：扩散模型用高斯观测假设 $\log \pi_\theta(y|x) \approx -\frac{1}{T}\text{MSE}(y, \hat y_\theta(x))$，温度 $T$ 控制尺度（默认 $T=0.001$）；MaskGIT 用 VQ-GAN tokenize 后掩码位置的对数似然 $\log \pi_\theta(y|x) = \frac{1}{|M|}\sum_{i\in M}\log p_\theta(t_i | y_{\setminus M}, x)$ 直接可算。
-    - 设计动机：扩散模型精确似然不可解，沿用 Diffusion-DPO 的高斯近似避免重新发明轮子；MaskGIT 是离散 token 模型，似然天然可算，反而是更"干净"的实验场景，能验证 TGO 不依赖扩散特有的近似。
+损失里需要 $\log \pi_\theta(y|x)$，而它在两类模型上算法不同。扩散模型的精确似然不可解，沿用 Diffusion-DPO 的高斯观测近似 $\log \pi_\theta(y|x) \approx -\frac{1}{T}\text{MSE}(y, \hat y_\theta(x))$，温度 $T$ 控制尺度（默认 $T=0.001$），避免重新发明轮子；MaskGIT 是离散 token 模型，VQ-GAN tokenize 后掩码位置的对数似然 $\log \pi_\theta(y|x) = \frac{1}{|M|}\sum_{i\in M}\log p_\theta(t_i | y_{\setminus M}, x)$ 天然可算，反而是更"干净"的实验场景——它能验证 TGO 不依赖扩散特有的 MSE 近似，对生成范式无偏。
 
 ### 损失函数 / 训练策略
 最终损失即上面的 $\mathcal L_{\text{TG}}$。训练超参：$\beta = 1$，扩散温度 $T=0.001$，置信度尺度 $c=5$，batch 128，78 个更新步（10K 提示集合），学习率 $1\text{e}{-5}$。阈值 $\tau$ 在大数据时可在更小的 proxy 集合（由 $\pi_{\text{ref}}$ 生成 + reward 打分）上估出后复用，估计误差按定理也是 $O(1/n)$ 衰减。SFT baseline 用相同优化超参但只在伪正样本上训。

@@ -43,23 +43,18 @@ tags:
 论文包含两个核心产物。第一个是 CASTER-Bench：1,485 个长视频 UGC item，覆盖 30 个主要内容类别，每个 item 包含视频帧、封面、标题、标签、分类、ASR transcript 等多模态输入，并由 10 名专业内容运营专家按 Production Quality、Perceived Value、Information Utility、Narrative Excellence 四个维度标注。第二个是 MEDEA：一个多模态评估框架，先从社区评论挖掘 Social-CoT 训练数据，再用 SFT 学习社会推理格式，最后通过 GRPO 和社会对齐奖励优化推理过程。
 
 ### 关键设计
-1. **CASTER 任务与 CASTER-Bench**:
 
-	- 功能：把 UGC 质量从 aesthetic/technical VQA 转成 community-aware resonance assessment。
-	- 核心思路：给定 cover image、关键帧、title、tags、category metadata 和 ASR transcript，模型预测内容是否为 High-Quality。数据集包含 1,485 个 UGC item，平均时长 442 秒，总时长 182.5 小时，标签分布为 Excellent 10.6%、Good 17.0%、Average 38.6%、Poor 33.7%。
-	- 设计动机：长视频 UGC 的价值来自叙事、知识密度和情绪共鸣，传统 8-20 秒短 clip VQA 数据集无法覆盖这些因素。
+**1. CASTER 任务与 CASTER-Bench：把质量评估从画质打分换成社区共鸣判断。**
 
-2. **Social-CoT 构造与 Skellam 共识聚合**:
+传统 VQA 数据集大多是 8–20 秒短 clip，只能衡量清晰度、失真、审美这类信号质量，根本覆盖不了长视频靠叙事、知识密度和情绪共鸣取胜的价值来源。CASTER 因此重新定义任务：给定 cover image、关键帧、title、tags、category metadata 和 ASR transcript，模型要预测内容能否获得正向社区反馈（High-Quality），而不是回归一个技术质量分。配套的 CASTER-Bench 收了 1,485 个 UGC item、平均时长 442 秒、总时长 182.5 小时，标签分布为 Excellent 10.6%、Good 17.0%、Average 38.6%、Poor 33.7%——High-Quality 类天然稀少，这也决定了后面 High-Quality F1 才是最关键的指标。
 
-	- 功能：把真实评论转化为可监督的社会推理路径。
-	- 核心思路：对未标注 UGC，系统取 top-50 点赞评论，用教师模型筛出 15-20 条与创造性、情绪、叙事相关的反应锚点，再让 Gemini-2.5-Flash 实例化多样 viewer personas 并解释哪些视觉/叙事元素触发这些反应。每条模拟评论被赋予支持或反对 stance，若支持数为 $X$、反对数为 $Y$，则用 $z=(X-Y)/\sqrt{X+Y}$ 计算 Skellam-normalized consensus；当 $z\geq1.5$ 时标为 High-Quality，否则为 Low-Quality。
-	- 设计动机：简单多数投票容易被评论数量和情绪偏差影响，Skellam 标准化能让最终判断更像“有统计意义的社区支持”。
+**2. Social-CoT 构造与 Skellam 共识聚合：用真实评论造出可监督的社会推理路径。**
 
-3. **过程监督 RL 与 Social Alignment Reward**:
+要训练模型「模拟社区怎么想」，就得有社区反应的监督信号。系统对未标注 UGC 取 top-50 点赞评论，用教师模型筛出 15–20 条与创造性、情绪、叙事相关的反应锚点，再让 Gemini-2.5-Flash 实例化多样的 viewer persona，解释是哪些视觉/叙事元素触发了这些反应。每条模拟评论被赋予支持或反对 stance：设支持数为 $X$、反对数为 $Y$，用 $z=(X-Y)/\sqrt{X+Y}$ 算 Skellam-normalized consensus，当 $z\geq1.5$ 时标为 High-Quality，否则为 Low-Quality。之所以不用简单多数投票，是因为投票容易被评论数量和情绪偏差带偏，而 Skellam 标准化把判断变成「是否存在有统计意义的社区支持」，更接近真实的社区共识。
 
-	- 功能：让模型生成的 Social-CoT 不只是模板化赞美，而是接近真实社区语言和情绪粒度。
-	- 核心思路：MEDEA 先用 54k Gemini-labeled CoT 样本和 3k human-annotated UGC 做 SFT，再在专家样本上用 GRPO 优化复合奖励 $r=r_{format}+r_{label}+r_{diversity}+r_{social}$。其中 $r_{format}$ 保证输出结构，$r_{label}$ 奖励最终二分类正确，$r_{diversity}$ 惩罚重复情绪路径，$r_{social}$ 将生成 persona 与 held-out 真实高互动评论做 embedding 余弦匹配并取平均。
-	- 设计动机：只提示通用 LMM 做 Social-CoT 不足以学会平台社区标准；真实评论相似度奖励提供了“社会 grounding”，避免 Social Mode Collapse。
+**3. 过程监督 RL 与 Social Alignment Reward：让推理路径贴近真实社区语言而非模板赞美。**
+
+只 prompt 一个通用 LMM 去写 Social-CoT，它学不会某个平台的社区标准，还容易塌缩成千篇一律的「so beautiful」式空话。MEDEA 先用 54k Gemini-labeled CoT 样本加 3k human-annotated UGC 做 SFT，再在专家样本上用 GRPO 优化一个复合奖励 $r=r_{format}+r_{label}+r_{diversity}+r_{social}$：$r_{format}$ 保证输出结构，$r_{label}$ 奖励最终二分类正确，$r_{diversity}$ 惩罚重复的情绪路径，$r_{social}$ 把生成 persona 与 held-out 真实高互动评论做 embedding 余弦匹配后取平均。关键在 $r_{social}$ 提供了「社会 grounding」——用真实评论相似度而非只用标签正确来约束推理过程，避免 Social Mode Collapse，让模型生成的反应在情绪粒度和语言上都更像真实社区。
 
 ### 损失函数或训练策略
 训练分两阶段。SFT 阶段 batch size 256，学习率 $5e^{-6}$，cosine schedule，decay ratio 0.2。RL 阶段 batch size 64，学习率 $1e^{-6}$，cosine schedule，PPO clip ratio 0.2，KL coefficient 0.001，entropy coefficient 0.001，rollout number 8，rollout temperature 0.6。推理时 top-k 50、top-p 0.7、temperature 0.6。论文强调 RL 只使用 human-curated samples，以保证强化信号锚定专家标注，而不是继续放大教师模型伪标签偏差。

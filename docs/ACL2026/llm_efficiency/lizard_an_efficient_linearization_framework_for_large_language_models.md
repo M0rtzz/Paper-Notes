@@ -40,34 +40,21 @@ Lizard 用一个"Gated Linear Attention（全局压缩）+ Anchor Window Attenti
 ## 方法详解
 
 ### 整体框架
-Lizard 把每一层的标准 softmax attention 整体替换为 Lizard Attention 模块：
-- **全局支路**：Gated Linear Attention (GLA)，提供 $O(Ld^2)$ 复杂度 + 常量内存推理 + 数据相关的衰减（替代 RoPE）；
-- **局部支路**：Anchor Window Attention，在固定 window 内做精确 softmax attention，并加入若干可学习的 meta-memory token $t$ 作为"attention sink"；
-- 两条支路的输出按一定权重合并。
-
-训练分两阶段：
-1. **Stage 1 — Attention Approximation**：冻结所有其它权重，只训 $\phi$、$W_\gamma$、$t$，目标是 Lizard Attention 的输出逼近教师 RoPE-softmax attention 的输出（MSE 蒸馏）；
-2. **Stage 2 — End-to-end Fine-tuning**：解冻整体，用语言建模 loss 在少量 token（0.04B）上微调，让新架构和原模型其余部分（MLP/embedding）协同。
+Lizard 把预训练 Transformer 每一层的标准 softmax attention 整体替换成一个混合的 subquadratic 模块，再用两阶段蒸馏把教师能力迁移过来。该模块由两条并联支路构成：全局支路是 Gated Linear Attention（GLA），以 $O(Ld^2)$ 复杂度、常量内存推理和数据相关的衰减承担长程压缩，并直接顶替 RoPE 做位置编码；局部支路是 Anchor Window Attention，在固定窗口内做精确 softmax attention 并拼入若干可学习 meta-memory token 修补 attention sink。训练先冻结其余权重、只学新增模块去逼近教师 attention 输出（Stage 1），再解冻整体用语言建模 loss 在仅 0.04B token 上端到端微调（Stage 2），让新架构与原模型的 MLP/embedding 重新协同。
 
 ### 关键设计
 
-1. **Gated Linear Attention 替代 RoPE 做位置编码**:
+**1. Gated Linear Attention 替代 RoPE 做位置编码：让位置信息从硬编码的旋转角变成数据驱动的遗忘节律。**
 
-    - 功能：用一个可学习的、token-dependent 的 gate $\gamma_i$ 控制 hidden state 的衰减节律 $h_i = \gamma_i \odot h_{i-1} + \phi(k_i) v_i^\top$，让"位置信息"从硬编码（RoPE 旋转角）变成数据驱动的遗忘模式。
-    - 核心思路：把传统线性注意力的递推改为 $\mathbf{h}_i = \gamma_i \odot \mathbf{h}_{i-1} + \phi(\mathbf{k}_i)\mathbf{v}_i^\top$，输出 $\mathbf{y}_i = \phi(\mathbf{q}_i)^\top \mathbf{h}_i$；$\gamma_i$ 由 $W_\gamma$ 计算，可控相对位置感知与外推。教师里的 RoPE 模块直接丢弃。
-    - 设计动机：(a) RoPE 是 attention 长度外推失败的元凶；(b) LoLCATs 没 gate → 缺记忆控制，Liger 用无参 pool → 信息瓶颈；可学习 gate 同时解决这两件事。
+RoPE 是 linearization 模型长度外推失败的元凶，而 LoLCATs 干脆没有 gate、Liger 把 gate 钉死成无参 pooling，又各自缺记忆控制或形成信息瓶颈。Lizard 把传统线性注意力的递推改成带门控的形式 $\mathbf{h}_i = \gamma_i \odot \mathbf{h}_{i-1} + \phi(\mathbf{k}_i)\mathbf{v}_i^\top$，输出 $\mathbf{y}_i = \phi(\mathbf{q}_i)^\top \mathbf{h}_i$，其中可学习、token-dependent 的 gate $\gamma_i$ 由 $W_\gamma$ 计算，逐维控制 hidden state 的衰减节律。这个衰减模式本身就编码了相对位置——既然递推的遗忘强度能感知"多久以前"，教师里的 RoPE 模块就可以直接丢弃，从而同时拿回自适应记忆控制和真正的长度外推能力。
 
-2. **Anchor Window Attention（局部精度 + meta-memory token）**:
+**2. Anchor Window Attention（局部精度 + meta-memory token）：在最近窗口里保精确召回，并用可学习锚稳住长序列。**
 
-    - 功能：在最近 $W$ 个 token 范围内保留精确 softmax attention，并把若干可学习 meta-memory token $t_1,\dots,t_M$ 拼到 key/value 序列前，让 query 始终能 attend 到这些"锚"上。
-    - 核心思路：$\text{Attn}_{\text{local}}(\mathbf{q}_i) = \text{softmax}([\mathbf{q}_i^\top T;\ \mathbf{q}_i^\top \mathbf{k}_{i-W:i}]) \cdot [V_T;\ \mathbf{v}_{i-W:i}]$，其中 $T = [t_1,\dots,t_M]$ 是可学习全局锚。
-    - 设计动机：纯 linear attention 在 needle-in-haystack 等精细召回任务上注定吃亏；meta-memory token 起的作用类似 attention sink（StreamingLLM 中观察到的"前几个 token 总被注意"现象的显式建模），可以稳定长序列推理。
+纯 linear attention 把历史压进固定大小的状态，在 needle-in-haystack 这类精细召回任务上注定吃亏，因此局部支路在最近 $W$ 个 token 内保留精确 softmax attention：$\text{Attn}_{\text{local}}(\mathbf{q}_i) = \text{softmax}([\mathbf{q}_i^\top T;\ \mathbf{q}_i^\top \mathbf{k}_{i-W:i}]) \cdot [V_T;\ \mathbf{v}_{i-W:i}]$。式中 $T = [t_1,\dots,t_M]$ 是拼到 key/value 序列前的可学习 meta-memory token，让每个 query 始终能 attend 到这组全局锚。它实际上把 StreamingLLM 观察到的"前几个 token 总被注意"的 attention sink 现象显式建模成可学习模块，从而在长序列推理时稳住数值与注意力分布。
 
-3. **硬件感知数值重参数化（解决 GLA 在低精度下的不稳定）**:
+**3. 硬件感知数值重参数化：把衰减连乘搬到对数空间，让 GLA 能在 bf16 + tensor core 上训练。**
 
-    - 功能：把 GLA 的衰减乘积 $\prod \gamma$ 重写为对数空间的累加 $\log \mathbf{h}_i = \log \mathbf{h}_{i-1} + \log \gamma_i + \dots$，避免在 bf16/fp16 下指数级下溢/上溢。
-    - 核心思路：通过重参数化让中间态保持在 tensor core 支持的精度区间内，使训练能用 bf16 + tensor core，吞吐提升约 32%。
-    - 设计动机：现有 GLA 训练为了数值稳定必须退回 fp32，丢掉 tensor core 加速；这条改进让 Lizard 不光精度好还训得快，决定了它能否大规模落地。
+GLA 的衰减乘积 $\prod \gamma$ 在 bf16/fp16 下会指数级下溢或上溢，现有实现为了数值稳定只能退回 fp32，白白丢掉 tensor core 加速。Lizard 把递推改写到对数空间累加 $\log \mathbf{h}_i = \log \mathbf{h}_{i-1} + \log \gamma_i + \dots$，使中间态始终落在 tensor core 支持的精度区间内，于是训练得以用 bf16 + tensor core，吞吐提升约 32%。这条改进在精度上零损失、纯赚工程红利，直接决定了把现有大模型转 subquadratic 这件事能否大规模、低成本地落地。
 
 ### 损失函数 / 训练策略
 - Stage 1：MSE 蒸馏 $\mathcal{L}_1 = \sum_\ell \|\mathbf{y}_\ell^{\text{Lizard}} - \mathbf{y}_\ell^{\text{teacher}}\|_2^2$，仅训新加模块（$\phi$、$W_\gamma$、$t$）；

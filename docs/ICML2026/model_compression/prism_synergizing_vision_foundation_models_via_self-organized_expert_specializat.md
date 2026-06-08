@@ -40,39 +40,26 @@ PRISM 把 CLIP / SAM / DINOv2 三个异质视觉基础模型蒸馏进同一个 V
 ## 方法详解
 
 ### 整体框架
-PRISM 把标准 ViT-B/16 的部分 FFN 块（第 2/5/8/11 层）替换成 PRISM 块,每个 PRISM 块是个**双流条件 MoE**——
-
-1. **Universal Anchor (Stability Stream)**：跨所有上下文共享的稠密 MLP $\mathcal{F}_{\text{anc}}$,捕获任务无关的低频共识。
-2. **Specialized Delta (Plasticity Stream)**：稀疏 MoE $\mathcal{F}_{\text{moe}}$,15 个专家 Top-3 路由 + 1 个内部 shared expert,被上下文 $c$ 调制。
-
-整块输出是两流加权和 $\mathbf{y}=\mathbf{x}+\lambda\cdot \mathcal{F}_{\text{anc}}(\text{LN}(\mathbf{x}))+(1-\lambda)\cdot \mathcal{F}_{\text{moe}}(\mathbf{x}, c)$，其中 $\lambda\in[0,1]$ 是可学习门控,实验里它自动呈现"浅层偏稳定（$\lambda$ 高）、深层偏专精（$\lambda$ 低）"的层级模式。
-
-训练分两阶段——Stage 1 在 ImageNet-1k 上 30 epoch 从 3 个冻结 ViT-L 教师（DINOv2-L、CLIP-L、SAM-L 的第 5/11/17/23 层特征）蒸馏,Stage 2 在 PASCAL-Context / NYUD-v2 上 40k iter 微调多任务。
+PRISM 要把 CLIP / SAM / DINOv2 三个互相打架的教师压进一个 ViT-B/16 学生而不让它们的梯度互相抵消。做法是把学生第 2/5/8/11 层的 FFN 换成 **PRISM 块**——一个**双流条件 MoE**：一条 **Universal Anchor**（跨所有上下文共享的稠密 MLP $\mathcal{F}_{\text{anc}}$，吃任务无关的低频共识）保稳定,一条 **Specialized Delta**（15 专家 Top-3 路由 + 1 个内部 shared expert 的稀疏 MoE $\mathcal{F}_{\text{moe}}$，被上下文 $c$ 调制）解冲突,整块输出按可学习门控 $\lambda\in[0,1]$ 把两流加权相加 $\mathbf{y}=\mathbf{x}+\lambda\cdot \mathcal{F}_{\text{anc}}(\text{LN}(\mathbf{x}))+(1-\lambda)\cdot \mathcal{F}_{\text{moe}}(\mathbf{x}, c)$。训练走 "Decompose-then-Recombine" 两阶段：Stage 1 在 ImageNet-1k 上 30 epoch、以 Teacher ID 为上下文从 3 个冻结 ViT-L 教师（DINOv2-L / CLIP-L / SAM-L 的第 5/11/17/23 层特征）蒸馏出自发分工的专家,Stage 2 在 PASCAL-Context / NYUD-v2 上 40k iter、改以 Task ID 为上下文把这些专家重组到下游多任务。
 
 ### 关键设计
 
-1. **梯度冲突诊断 + 正交化目标 → MoE 路由**:
+**1. 把 MoE 当梯度正交化工具：用稀疏路由拆开冲突梯度。**
 
-    - 功能：把"多教师蒸馏的优化矛盾"显式建模成梯度冲突,并给出可执行的缓解目标。
-    - 核心思路：在稠密 backbone 里,聚合梯度 $\mathbf{g}_{\text{total}}=\sum_k \gamma_k \mathbf{g}_k$ 当 $\cos(\mathbf{g}_i,\mathbf{g}_j)<0$ 时会出现 $\mathbf{g}_i\approx -\mathbf{g}_j$,合成幅度坍缩到次优均衡（gradient averaging）。PRISM 主张稀疏 MoE 能把冲突梯度路由到不同专家 $E_n$,使有效内积满足 $\langle \tilde{\mathbf{g}}_{i,n}, \tilde{\mathbf{g}}_{j,n}\rangle\approx 0$——可以通过减少冲突教师对同一专家的共激活,或让残差梯度弱对齐来实现。Universal Anchor 留给共识、Conditioned MoE 留给冲突。
-    - 设计动机：之前的工作要么完全不考虑梯度冲突（RADIO 系直接蒸到稠密 backbone），要么用粗暴的硬切分支（SAK）。PRISM 把这件事从"经验启发"提升到"以梯度内积为目标的正交化设计",让"何处共享、何处分支"由数据驱动而非手工划定。
+多教师蒸馏的根痛点是优化矛盾——稠密 backbone 里聚合梯度 $\mathbf{g}_{\text{total}}=\sum_k \gamma_k \mathbf{g}_k$，当两个教师方向相反 $\cos(\mathbf{g}_i,\mathbf{g}_j)<0$（CLIP 要压方差、DINO 要保方差）时会出现 $\mathbf{g}_i\approx -\mathbf{g}_j$，合成幅度坍缩到"哪边都不擅长"的次优均衡（gradient averaging）。PRISM 的主张是：稀疏 MoE 天生能缓解这件事——把冲突教师的梯度路由到不同专家 $E_n$，使它们在同一参数上的有效内积 $\langle \tilde{\mathbf{g}}_{i,n}, \tilde{\mathbf{g}}_{j,n}\rangle\approx 0$（靠减少冲突教师对同一专家的共激活、或让残差梯度弱对齐实现）。于是分工很自然：共识走 Universal Anchor、冲突走 Conditioned MoE。相比 RADIO 系直接蒸到稠密 backbone（完全不管冲突）和 SAK 的硬切分支（手工划定边界）,PRISM 把"何处共享、何处分支"从经验启发升级成以梯度内积为目标、由数据驱动的正交化设计。
 
-2. **上下文调制路由 (Context-Modulated Routing, FiLM)**:
+**2. 上下文调制路由：用 FiLM 让路由器认得出"谁在看"。**
 
-    - 功能：让路由器同时根据"图像内容"和"任务/教师身份"做决策,避免标准 MoE 路由器在"同一图像、不同任务"下退化成单一决策。
-    - 核心思路：用 FiLM 把 Context ID $c$（Stage 1 是 Teacher ID, Stage 2 是 Task ID）以仿射形式注入归一化后的 token 特征 $\hat{\mathbf{x}}=(1+\gamma(c))\odot \text{LayerNorm}(\mathbf{x})+\beta(c)$，再让路由器 $G(\hat{\mathbf{x}})$ 做 Top-$K$ softmax 派发,MoE 输出 $\mathcal{F}_{\text{moe}}(\mathbf{x}, c)=E_{\text{shared}}(\mathbf{x})+\sum_{i\in \text{TopK}} G(\hat{\mathbf{x}})_i\, E_i(\mathbf{x})$，内部 shared expert $E_{\text{shared}}$ 吸收路由波动带来的公共偏差。
-    - 设计动机：纯输入路由的 MoE 在"CLIP 教师 vs DINO 教师同看一张猫"时拿到的输入相同,路由出来的专家也会相同,导致 emergent specialization 失败。FiLM 用 $c$ 重新定向特征空间,逼路由器对不同教师做出不同决策；同时区别于 MoFME（用 FiLM 替代专家计算），PRISM 的 FiLM 只调制路由决策,专家本身保持纯特征学习,符合"路由决策 vs 表示学习"的职责分离原则。
+标准 MoE 路由器只看图像内容,所以 CLIP 教师和 DINO 教师同看一张猫时拿到相同输入、路由到相同专家,emergent specialization 直接失败。PRISM 用 FiLM 把 Context ID $c$（Stage 1 是 Teacher ID、Stage 2 是 Task ID）以仿射形式注入归一化后的特征 $\hat{\mathbf{x}}=(1+\gamma(c))\odot \text{LayerNorm}(\mathbf{x})+\beta(c)$，再让路由器 $G(\hat{\mathbf{x}})$ 做 Top-$K$ softmax 派发,MoE 输出 $\mathcal{F}_{\text{moe}}(\mathbf{x}, c)=E_{\text{shared}}(\mathbf{x})+\sum_{i\in \text{TopK}} G(\hat{\mathbf{x}})_i\, E_i(\mathbf{x})$，其中内部 shared expert $E_{\text{shared}}$ 专门吸收路由波动带来的公共偏差。$c$ 相当于把特征空间重新定向,逼路由器对不同教师做出不同决策。关键区别在于 PRISM 让 FiLM 只调制**路由决策**,专家本身保持纯特征学习——而 MoFME 用 FiLM 直接替代专家计算,会把路由决策和专家功能绑死;PRISM 的做法更符合"路由 vs 表示学习"的职责分离。
 
-3. **Locality-Aware Decorrelation Loss (LDL)**:
+**3. Locality-Aware Decorrelation Loss：在浅层撑起高 rank 底座防路由坍缩。**
 
-    - 功能：阻止浅层在多教师蒸馏时被 CLIP 这种强语义信号"短路",维持高 rank 的局部特征,给深层专家提供有区分度的"原材料"。
-    - 核心思路：作者观察到"semantic short-circuiting"现象——CLIP 强监督会让浅层提前收敛到全局语义,token 特征同质化（rank collapse），路由器拿不到判别信号就会坍缩。LDL 只对前两层施加,惩罚空间上远距离 token 之间的高余弦相似度,同时保护局部相关性 $\mathcal{L}_{\text{decorr}}=\frac{1}{|\mathcal{P}|}\sum_{(i,j)\in\mathcal{P}}\max(0,\cos(\mathbf{z}_i,\mathbf{z}_j)-\epsilon)\cdot \mathbb{I}(d_{ij}>r)$，其中 $r$ 是局部半径,$d_{ij}$ 是空间欧氏距离。
-    - 设计动机：MoE 路由的有效性强依赖输入 token 的多样性,而多教师蒸馏天然带"高级语义压倒低级结构"的倾向。LDL 是注入了"局部归纳偏置"的正则——既不打死局部相关（视觉特征的物理事实）,又强制远距离 token 保持差异,等于在浅层人为撑起一个高 rank 的特征底座。
+MoE 路由的有效性强依赖输入 token 的多样性,但多教师蒸馏天然有"高级语义压倒低级结构"的倾向——作者把它叫 "semantic short-circuiting"：CLIP 的强语义监督会让浅层提前收敛到全局语义,token 特征同质化（rank collapse），路由器拿不到判别信号就坍缩。LDL 只对前两层施加,惩罚空间上远距离 token 之间的高余弦相似度、同时保护近距离的局部相关性 $\mathcal{L}_{\text{decorr}}=\frac{1}{|\mathcal{P}|}\sum_{(i,j)\in\mathcal{P}}\max(0,\cos(\mathbf{z}_i,\mathbf{z}_j)-\epsilon)\cdot \mathbb{I}(d_{ij}>r)$，其中 $r$ 是局部半径、$d_{ij}$ 是空间欧氏距离、$\mathbb{I}(d_{ij}>r)$ 只对远距离对计入惩罚。这等于注入了一个"局部归纳偏置"的正则——不打死局部相关（视觉特征的物理事实）,只强制远距离 token 保持差异,在浅层人为撑起一个高 rank 的特征底座,给深层专家提供有区分度的原材料。
 
 ### 损失函数 / 训练策略
 - **Stage 1**：$\mathcal{L}_{\text{stage1}}=\mathcal{L}_{\text{aux}}+\alpha \mathcal{L}_{\text{distill}}+\beta \mathcal{L}_{\text{decorr}}$，$\alpha=0.9$、$\beta=0.1$。每次迭代随机抽一个 teacher $T_k$ 用其 ID 作上下文。
 - **Stage 2**：$\mathcal{L}_{\text{stage2}}=\mu \mathcal{L}_{\text{distill}}+\sum_{t}w_t \mathcal{L}_t$，$\mu=1.0$，$w_t$ 按 MTL 标准做法固定。
-- 骨干 ViT-B/16,MoE 层每层 15 个专家 + 1 个 shared expert,Top-3 路由。
+- 骨干 ViT-B/16,MoE 层每层 15 个专家 + 1 个 shared expert,Top-3 路由;门控 $\lambda$ 实验里自动呈现"浅层偏稳定（$\lambda$ 高）、深层偏专精（$\lambda$ 低）"的层级模式。
 
 ## 实验关键数据
 

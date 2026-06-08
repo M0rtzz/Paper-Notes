@@ -41,32 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两条线索：
+论文不提单一新模型，而是沿两条线索给工具调用"做体检"：有效性线在 BFCL 上对 5 个常用模型（Qwen3-4B/8B、Qwen2.5-7B-Instruct、Llama3.1-8B-Instruct、Llama3.2-3B-Instruct）逐项控制实验，量化随机种子、多轮模板、思考历史、系统提示、单/多轮数据格式这些"隐式选项"到底能让分数漂多少；效率线在 VERL 框架内用 GRPO 训练 Qwen2.5-3B-Instruct（单轮）和 Qwen3-4B（多轮），把 rollout 与 policy update 两阶段的计算和壁钟时间拆开看，找出浪费再各给一个近乎无侵入的补丁。
 
-- **有效性线**：在 BFCL 上对 5 个常用模型（Qwen3-4B/8B、Qwen2.5-7B-Instruct、Llama3.1-8B-Instruct、Llama3.2-3B-Instruct）做 5 类敏感性分析（随机种子、native vs context 多轮模板、是否保留思考历史、系统提示、单/多轮训练数据格式），每类给出量化漂移幅度和实践建议。
-- **效率线**：在 VERL 框架内用 GRPO 训练 Qwen2.5-3B-Instruct（单轮）和 Qwen3-4B（多轮），剖析 rollout 与 policy update 两阶段的计算分布，提出两项加速技术并叠加到标准 GRPO 上做端到端验证。
-
-GRPO 形式化上沿用标准定义：对样本 $s_{i,k}$ 采样 $n$ 条 rollout $\{y_{i,k+1,j}\}$，得到奖励后做组内归一化 $A_{i,k+1,j}=(r_{i,k+1,j}-\bar r_{i,k+1})/\sigma_{i,k+1}$，并以裁剪重要性比 $\rho_{i,k+1,j}=\pi_\theta/\pi_{\text{old}}$ 进入裁剪目标。当某 prompt 的所有 rollout 奖励相同时 $A=0$，称为 **zero-variance prompt**——这是后文一切效率优化的靶点。
+两条线共用同一套 GRPO 形式化：对样本 $s_{i,k}$ 采样 $n$ 条 rollout $\{y_{i,k+1,j}\}$，得到奖励后做组内归一化 $A_{i,k+1,j}=(r_{i,k+1,j}-\bar r_{i,k+1})/\sigma_{i,k+1}$，再以裁剪重要性比 $\rho_{i,k+1,j}=\pi_\theta/\pi_{\text{old}}$ 进入裁剪目标。当某 prompt 的所有 rollout 奖励相同时 $\sigma=0$、$A\equiv 0$，称为 **zero-variance prompt**——它对梯度毫无贡献，却照样耗掉一整轮 rollout，是后文所有效率优化的靶点。
 
 ### 关键设计
 
-1. **评测敏感性诊断协议**:
+**1. 评测敏感性诊断协议：把"我们用 BFCL 评测"这句话背后的隐式选项逐个拎出来量化。**
 
-    - 功能：把工具调用评测里"被默认无关紧要"的实现选项拎出来做控制实验，给出可量化的漂移幅度。
-    - 核心思路：在 BFCL 上固定模型、依次改动一个变量：(a) 跑 10 个 seed 看方差，发现单轮稳定但多轮波动显著，因此后文统一报告 3-seed 平均；(b) 对比 native template（按官方 chat template 逐 turn 拼）与 context template（把整段对话塞进单个 user turn），在 Qwen3-8B/4B、Qwen2.5-7B 上 native 始终领先 6–8%；(c) 是否保留 `<think>` 段，Qwen3 保留思考历史多 3–5%；(d) 仅手工加几条多轮专用指令到系统提示，Qwen3-4B 的多轮分数提升幅度与 RL 训练带来的增益相当；(e) 控制数据预算（0.7k）对比纯单轮 vs 纯多轮训练，反直觉地发现纯多轮训练会让多轮 BFCL 从 22.7 掉到 15.9。
-    - 设计动机：揭示"排行榜数字 ≠ 模型能力"。如果一个 prompt 调整就能制造与 RL 持平的提升，那不报告 prompt 与拼接方式的 leaderboard 比较就失去意义。该协议给出工具调用评测必须固定的最小集合（seed、template、history、system prompt），并暗示多轮数据本身可能是"噪声训练信号"——错误在 trajectory 中累积，早期"正确"标签可能编码了次优决策。
+工具调用论文几乎都只跑一个 seed、用各自的多轮拼接方式和系统提示，却在 leaderboard 上比绝对分数。作者的做法是固定模型、每次只动一个变量做控制实验：(a) 跑 10 个 seed 看方差，发现单轮稳定但多轮波动显著，于是后文统一报告 3-seed 平均；(b) 对比 native template（按官方 chat template 逐 turn 拼）与 context template（把整段对话塞进单个 user turn），同样的信息只是换了拼法，native 在 Qwen3-8B/4B、Qwen2.5-7B 上就稳定领先 $6\text{–}8\%$；(c) 是否保留 `<think>` 段，Qwen3 留着思考历史多 $3\text{–}5\%$；(d) 只手工往系统提示里加几条多轮专用指令，Qwen3-4B 的多轮分提升幅度就和整套 RL 训练相当；(e) 在固定 0.7k 数据预算下对比纯单轮 vs 纯多轮训练，反直觉地发现纯多轮反而把多轮 BFCL 从 22.7 拉到 15.9。
 
-2. **在线预 rollout 过滤（解决 zero-variance 浪费）**:
+这套协议之所以重要，是因为它直接证明"排行榜数字 ≠ 模型能力"：当一个 prompt 改写就能制造出与 RL 持平的增益，那么不报告 seed/template/history/system prompt 的 leaderboard 比较就基本失去意义。它顺带给出工具调用评测必须固定的最小集合，并暗示多轮数据本身可能是"噪声训练信号"——错误在 trajectory 中累积，早期被标成"正确"的 turn 很可能编码了次优决策。
 
-    - 功能：在每个 epoch 生成昂贵的 rollout 之前，跳过那些近期一直被完全做对的 prompt，把算力留给"还能学到东西"的样本。
-    - 核心思路：作者观察到 zero-variance prompt 占比早期高达 80% 且具有时间稳定性——条件概率 $P(\text{仍全对}\mid\text{连续 }k\text{ 个 epoch 全对})$ 在 $k=1$ 时单轮已 >0.8、多轮 >0.9。据此维护一个 per-prompt 的"连胜计数" $c_{i,k+1}^{(e)}$：若上 epoch 全对则 $c$ 加一，否则清零；当 $c \ge k$ 时在本 epoch 临时剔除该 prompt，即 $\mathcal{D}^{(e)}=\{s : c_{i,k+1}^{(e)} < k\}$。与数学推理领域里类似想法不同，工具调用只需要 $k=1$ 或 $2$ 的极短窗口就足够安全，无需复杂调度。
-    - 设计动机：zero-variance prompt 在 GRPO 下的优势是恒零，rollout 完全是浪费算力。一次性、训练前的静态过滤行不通——prompt 的"难度"会随策略演化漂移，可能本来全对的后来全错。在线、滑窗、保守（只剔近期连续全对）三个特性合在一起，既显著降低 rollout 计算，又不会误删尚有学习信号的样本。
+**2. 在线预 rollout 过滤：在掏钱生成 rollout 之前，先把近期一直全做对的 prompt 跳过。**
 
-3. **最大方差 rollout 下采样（解决 update 阶段计算爆炸）**:
+zero-variance prompt 的优势恒为零，为它生成 rollout 纯属浪费，而早期这类 prompt 占比高达 $80\%$。能不能一次性提前过滤掉？不行——prompt 的"难度"会随策略演化漂移，本来全对的后来可能全错，静态过滤会误删尚有学习信号的样本。作者的关键观察是这种"全对"具有时间稳定性：条件概率 $P(\text{仍全对}\mid\text{连续 }k\text{ 个 epoch 全对})$ 在 $k=1$ 时单轮已 $>0.8$、多轮 $>0.9$。于是给每个 prompt 维护一个"连胜计数" $c_{i,k+1}^{(e)}$，上个 epoch 全对就加一、否则清零，当 $c \ge k$ 时本 epoch 临时把它剔出训练集 $\mathcal{D}^{(e)}=\{s : c_{i,k+1}^{(e)} < k\}$。
 
-    - 功能：在 GRPO 仍生成 $n$ 条 rollout 的前提下，仅用 $m < n$ 条做反向传播，将 policy update 计算量近似按 $n/m$ 倍下降。
-    - 核心思路：作者剖析 VERL 上每步壁钟时间，发现工具调用里 policy update 时间随 $n$ 涨得比 rollout 快得多，且即便 $n=4$ update 也已主导总时长（因为序列里塞了工具 schema、多轮 context、tool I/O，反传 token 数远大于数学推理）。沿用 Xu et al. 2025 的策略：把 $n$ 条 rollout 按奖励排序后，挑取 $m'$ 条最低奖励和 $m-m'$ 条最高奖励组成子集 $\mathcal{S}^*$，最大化组内奖励方差；二值奖励 + 偶数 $m$ 时退化为高/低奖励各取 $m/2$。直觉上，对比最强的 rollout pair 携带最强的学习信号，丢掉中间的"差不多"样本对优势估计的损失极小。
-    - 设计动机：rollout 阶段需要 $n$ 大以获取稳定的组内基线，但 update 阶段被序列长度卡死，每多反传一条都很贵。"生成多、更新少"把两阶段的算力按各自瓶颈重新分配，恰好对症工具调用这种长上下文场景。
+在线、滑窗、保守三个特性合在一起，既大幅砍掉 rollout 计算又几乎不误伤。和数学推理里需要较长窗口判难度漂移不同，工具调用的 zero-variance 时间稳定性足够强，$k=1$ 或 $2$ 的极短窗口就够安全，实现也比复杂调度简单得多。
+
+**3. 最大方差 rollout 下采样：照样生成 $n$ 条 rollout，但只挑 $m<n$ 条做反传。**
+
+作者剖析 VERL 上每步壁钟时间，发现工具调用的瓶颈和数学推理截然不同：policy update 时间随 $n$ 涨得比 rollout 快得多，即便 $n=4$ 时 update 也已主导总时长——根源是序列里塞满了工具 schema、多轮 context 和 tool I/O，反传 token 数远大于纯数学题。既然 rollout 需要 $n$ 大才能拿到稳的组内基线、而 update 又被序列长度卡死，那就"生成多、更新少"：沿用 Xu et al. 2025 的思路，把 $n$ 条 rollout 按奖励排序，取 $m'$ 条最低奖励 + $m-m'$ 条最高奖励组成子集 $\mathcal{S}^*$ 使组内奖励方差最大（二值奖励 + 偶数 $m$ 时就退化成高/低各取 $m/2$），policy update 计算量随之近似按 $n/m$ 倍下降。
+
+直觉上，对比最强的那对 rollout 携带最强的学习信号，扔掉中间"差不多"的样本对优势估计几乎没损失。它把两阶段的算力按各自瓶颈重新分配，恰好对症工具调用这种长上下文场景，也和设计 2 天然正交——一个剪 prompt 维度、一个剪 rollout 维度，可以直接叠加。
 
 ### 损失函数 / 训练策略
 - RL 算法：GRPO，目标式同公式 (3)，clip 阈值 $\epsilon$ 使用 VERL 默认。

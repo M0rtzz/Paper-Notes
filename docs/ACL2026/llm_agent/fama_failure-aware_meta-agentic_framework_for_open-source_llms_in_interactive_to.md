@@ -40,30 +40,33 @@ FAMA 先用一套独立"失败分析 agent + 编排 agent"自动诊断基线 too
 ## 方法详解
 
 ### 整体框架
-FAMA 是个两阶段 training-free pipeline。Stage 1：让 base agent（ReAct/FC）在所有任务上裸跑一遍，收集所有失败 trajectory $\mathcal{F}$。Stage 2：对每条失败 trajectory 跑"诊断-编排-缓解"三步：(2.1) $|\mathcal{E}|=4$ 个独立 error analysis agent 各自就一类错误类别给出"是否触发 + 理由"；(2.2) orchestrator agent 看完所有 analyst 输出 + 原 trajectory，给出最终主导错误类别 $\hat{\mathcal{E}}_\tau$；(2.3) mitigation agent 基于错误类别和预定义 agent 池 $\mathcal{A}$（DCE、TSA、TOR、Planner、Verifier、Memory）选出最小子集 $\mathcal{A}^*_\tau$。最后用 $\mathcal{A}^*_\tau$ 重跑该任务。整个框架不更新任何模型权重，只在推理时改变上下文构造方式。
+FAMA 把"改进 tool-use agent"重新表述成一个两阶段的推理时编排问题：先让 base agent（ReAct/FC）在所有任务上裸跑一遍、收集全部失败 trajectory $\mathcal{F}$，再对每条失败 trajectory 依次走"诊断—编排—缓解"三步，最后用诊断出的最小 helper 子集把这条任务重跑一遍。整个过程不更新任何模型权重，只在推理时改变给 base agent 的上下文构造方式——输入是失败 trajectory，输出是一份 model-aware 且 benchmark-aware 的 helper 激活配置。
 
 ### 关键设计
 
-1. **四类失败本体 + 独立 analyst agent**:
+**1. 四类失败本体 + 独立 analyst agent：分头诊断躲开类别互扰。**
 
-    - 功能：把 tool-use 失败强分类成 (1) Domain Policy Violation、(2) Incorrect Retrieval from Complex Tool Outputs、(3) Contextual Misinterpretation/Hallucination、(4) Incomplete Fulfillment/Early Stopping 四类，每类配一个独立的 LLM analyst。
-    - 核心思路：每个 analyst 只看一类失败因果链，给二分类决策 + 自然语言 rationale。所有 analyst 输出再拼成 $O_\tau = \text{Concat}(\{o_{\tau,e}\}_{e\in\mathcal{E}})$ 交给 orchestrator 做最终归因，避免单个大 prompt 同时判 4 类时类别相互干扰。
-    - 设计动机：作者在 §5.2 的统计发现，不同模型主导失败类别差异很大——Tau-bench 上 CM 和 DCV 最严重，τ-trait 上 IFU 突出，ACEBench 上 CM 一家独大。强行用单 prompt 多分类很容易被 majority class 主导，分头诊断更稳。
+如果用一个大 prompt 同时判 4 类失败，类别之间会相互干扰、容易被 majority class 主导，因此 FAMA 把 tool-use 失败强分成 Domain Policy Violation、Incorrect Retrieval from Complex Tool Outputs、Contextual Misinterpretation/Hallucination、Incomplete Fulfillment/Early Stopping 四类（$|\mathcal{E}|=4$），每一类配一个只盯这条失败因果链的独立 LLM analyst，各自给出"是否触发 + 自然语言 rationale"的二分类决策。
 
-2. **Orchestrator + Mitigation 两级路由**:
+所有 analyst 的输出再拼成 $O_\tau = \text{Concat}(\{o_{\tau,e}\}_{e\in\mathcal{E}})$ 交给后面的 orchestrator 做最终归因。这种分头诊断之所以必要，是因为作者在统计里发现不同模型的主导失败类别差异极大——τ-bench 上 CM 和 DPV 最严重、τ-trait 上 IFU 突出、ACEBench 上 CM 一家独大——单 prompt 多分类根本压不住这种分布漂移。
 
-    - 功能：orchestrator 把多 analyst 信号融合成"这条任务真正失败在哪"，mitigation 再把错误类别映射成"应该激活哪几个 helper agent"。
-    - 核心思路：mitigation agent 看到的是 $\hat{\mathcal{E}}_\tau$ 和 agent 池 $\mathcal{A}$ 的功能描述（自然语言），输出一个最小子集 $\mathcal{A}^*_\tau \subseteq \mathcal{A}$ 满足 $\bigcup_{e\in\hat{\mathcal{E}}_\tau}\text{cover}(e)$。跨任务聚合得到该模型在该 benchmark 上的稳定推荐配置（见 Tables 5-7）。
-    - 设计动机：把"诊断"和"开药"解耦——诊断 agent 只需懂失败本体；开药 agent 只需懂 helper 功能边界。两者各自任务简单，对开源模型也能稳定输出。
+**2. Orchestrator + Mitigation 两级路由：把诊断和开药解耦。**
 
-3. **Memory + DCE 这对"常客"的经验确认**:
+诊断和"该上哪几个 helper"是两件难度不同的事，FAMA 干脆拆成两个 agent：orchestrator 看完所有 analyst 信号 + 原 trajectory，融合出这条任务真正的主导错误类别 $\hat{\mathcal{E}}_\tau$；mitigation agent 再拿着 $\hat{\mathcal{E}}_\tau$ 和 agent 池 $\mathcal{A}$（DCE、TSA、TOR、Planner、Verifier、Memory）的自然语言功能描述，输出一个满足 $\bigcup_{e\in\hat{\mathcal{E}}_\tau}\text{cover}(e)$ 的最小子集 $\mathcal{A}^*_\tau \subseteq \mathcal{A}$。
 
-    - 功能：通过 mitigation 输出的统计（Figs 5/13/15）反向印证：对所有 Qwen 系列开源模型，Memory 模块和 Domain Constraints Extractor 是被推荐最频繁的两个 helper。
-    - 核心思路：Memory 保留最近 $k$ 轮 user query（$k$ 与领域相关：Airline 最佳 $k=2$，Retail 最佳 $k=6$）；DCE 在每轮决策前从 system prompt 抽出与当前状态相关的领域约束注入。
-    - 设计动机：作者在 §5.3 的诊断显示，开源模型在长对话里 system prompt 的领域规则被"遗忘"，且小窗口下大量 tool output 把早期约束挤掉——这本质是 memory 瓶颈，因此 mitigation agent 自动收敛到 Memory+DCE 完全符合预期，反过来验证了诊断准确性。
+这样一来 orchestrator 只需懂失败本体、mitigation 只需懂 helper 的功能边界，两者各自的任务都很窄，因此即便底座换成 GPT-4.1-mini 这类更小的 judgment 模型也能稳定输出。跨任务把这些 $\mathcal{A}^*_\tau$ 聚合起来，就得到某模型在某 benchmark 上的稳定推荐配置。
+
+**3. Memory + DCE 这对"常客"：诊断准确性的反向验证。**
+
+把 mitigation 在所有 Qwen 系列开源模型上的推荐统计起来，Memory 和 Domain Constraints Extractor 几乎总是被推荐最频繁的两个 helper：Memory 保留最近 $k$ 轮 user query（与领域相关，Airline 最佳 $k=2$、Retail 最佳 $k=6$），DCE 则在每轮决策前从 system prompt 抽出与当前状态相关的领域约束注入上下文。
+
+这个收敛恰好印证了诊断的准确性——作者的失败分析显示，开源模型在长对话里会"遗忘"system prompt 里的领域规则，小窗口下又被大量 tool output 把早期约束挤掉，本质就是 memory 瓶颈；mitigation agent 在完全不被告知这一点的情况下自动收敛到 Memory+DCE，正好说明前面的诊断没有跑偏。
+
+### 一个完整示例
+以 Qwen3-4B 在 τ-bench Airline 上的一条失败任务为例：base agent 裸跑时违反了"改签需先验证身份"的领域规则，这条 trajectory 进入 $\mathcal{F}$。四个 analyst 分别表态，其中 DPV analyst 判定触发、CM analyst 也报了一个上下文遗忘信号；orchestrator 融合后给出主导类别 $\hat{\mathcal{E}}_\tau=\{\text{DPV, CM}\}$；mitigation agent 据此选出最小子集 $\mathcal{A}^*_\tau=\{\text{DCE, Memory}\}$——DCE 负责把"先验证身份"这条约束重新注入、Memory 负责让早期 user query 不被挤掉。用这套配置重跑后该任务通过，而 IRMA 那种把六个 helper 全塞进去的做法反而因为上下文被占满而继续失败。
 
 ### 损失函数 / 训练策略
-FAMA 是纯推理时框架，无任何参数更新。用 GPT-4o（或 GPT-4.1-mini，鲁棒性对照）作为 analyst/orchestrator/mitigation 这三类 judgment agent；base tool-use agent 用 Qwen3-4B/14B/32B 和 Qwen2.5-72B-Instruct（同时也作为 user simulator）。
+FAMA 是纯推理时框架，不更新任何参数。analyst / orchestrator / mitigation 这三类 judgment agent 用 GPT-4o（并以 GPT-4.1-mini 做鲁棒性对照）；base tool-use agent 用 Qwen3-4B/14B/32B 和 Qwen2.5-72B-Instruct，后者同时充当 user simulator。
 
 ## 实验关键数据
 

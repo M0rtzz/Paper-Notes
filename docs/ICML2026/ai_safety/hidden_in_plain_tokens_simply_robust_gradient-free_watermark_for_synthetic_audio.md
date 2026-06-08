@@ -41,29 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两个完全解耦的阶段。**离线词表蒸馏阶段**：选一份音频数据集（无需有标签），对每条音频跑 $E\to D\to E$ 两遍编码，记录每个原始 token $i$ 在重编码后被替换成哪些 token $j$，累计成混淆矩阵 $M\in\mathbb{N}^{|V|\times|V|}$；把 $M$ 作为加权有向图的邻接矩阵，跑 Leiden 社区检测，得到一个 token→cluster 的多对一映射 $\mathcal{C}$。这一阶段对每个 RVQ 通道独立执行，因为 codebook 之间相互独立，且可以为不同通道设不同 resolution 参数 $\rho$，得到多尺度水印。**在线水印阶段**：把标准 KGW 中"对 token 词表做伪随机绿/红划分并对绿 token 加 $\delta$ logit 偏置"的两步全都搬到 cluster 层——划分作用在 cluster 集合上，加偏置时对所有"所属 cluster 被划入绿集"的 token 同时加 $\delta$；hash 上下文使用前 $h$ 个 token 的 cluster index 而非 token index，从而对重编码扰动稳定。检测端把收到的波形重编码出 token，再映射成 cluster 序列，按 cluster 是否在绿集统计 $z$-score。
-
-理论分析给出了核心定量结果：在条件独立的 noisy channel 近似下，KGW 基线在 $h$-gram 上下文下的期望 $z$-score 是 $\mathbb{E}[z|H_1]=\sqrt{N}\frac{g-\gamma}{\sqrt{\gamma(1-\gamma)}}r^{h+1}$，本文方法只是把指数底 $r$ 换成 $r_{cl}$，得到 $\mathbb{E}[z|H_1]=\sqrt{N}\frac{g-\gamma}{\sqrt{\gamma(1-\gamma)}}r_{cl}^{h+1}$。由于 $r_{cl}>r$ 且以 $h+1$ 次幂出现，提升被指数放大；这就是论文标题"hidden in plain tokens"的算法依据——根本不需要改 codec，只需要承认词表里早就藏着冗余结构。
+方法要解决的是"音频 codec 的解码-重编码不幂等让 token 级 KGW 水印信号指数衰减"这个核心问题。它的破局点是不再把水印规则绑死在 token 身份上，而是先离线把容易互相混淆的 token 聚成"簇"，再把整套 KGW 规则上移到簇这一层。整条流程拆成两个解耦阶段：离线阶段用 codec 自身的混淆统计蒸馏出一张 token→cluster 映射表，在线阶段直接复用标准 KGW 的采样-检测范式、只是把绿/红划分和 hash 上下文都换成簇粒度，从而在不动 codec 参数、只黑盒查询 encoder/decoder 的前提下保住信号。
 
 ### 关键设计
 
-1. **基于混淆矩阵的社区检测词表蒸馏**：
+**1. 基于混淆矩阵的社区检测词表蒸馏：让聚类目标对齐水印检测目标**
 
-    - 功能：把容量 $|V|$ 的 token 词表压缩成 $c|V|$（$c\in(0,1)$）的 cluster 词表，使得"重编码后 token 落在同簇"的概率 $r_{cl}$ 远高于"重编码后 token 一致"的概率 $r$。
-    - 核心思路：把 $M_{ij}=$（数据集上 $i$ 被混淆成 $j$ 的次数）当成有向加权图，跑 Leiden 算法最大化 modularity——簇内边权重大、簇间边权重小恰好对应"混淆主要发生在簇内"；resolution 参数 $\rho$ 控制簇粒度。作者比较 Louvain 后选 Leiden，因为后者考虑边方向、保证簇连通且收敛更快，并对水印 detectability 更友好。每个 RVQ 通道独立做，所以可以多尺度。
-    - 设计动机：直接用 k-means 或语义 embedding 聚类是常见做法，但都没把"codec 实际会混淆什么"这一行为信息编码进去；用 codec 自己的混淆计数当邻接矩阵，相当于让聚类目标和水印检测目标对齐，这是把"梯度自由 + 黑盒"做实的关键。
+痛点在于 token match rate $r$ 在音频上远小于 1（文本接近 1，音频可能只有 0.4 左右），而检测端用重编码后的 token 做统计，绿 token 计数被大幅打折。作者的关键观察是这种重编码错误不是均匀随机的，而是结构化的——一个 token 通常只会被混淆到一小撮"语义近邻"。于是离线阶段选一份无需标签的音频数据集，对每条音频跑 $E\to D\to E$ 两遍编码，记录原始 token $i$ 在重编码后被替换成哪些 token $j$，累计成混淆矩阵 $M\in\mathbb{N}^{|V|\times|V|}$。把 $M_{ij}$ 当成有向加权图的邻接矩阵跑 Leiden 社区检测最大化 modularity，恰好把"混淆主要发生在簇内"翻译成"簇内边权大、簇间边权小"，得到一个把 $|V|$ 压成 $c|V|$（$c\in(0,1)$）的多对一映射 $\mathcal{C}$，resolution 参数 $\rho$ 控制簇粒度。这样一来，原本要求"重编码后 token 完全一致"的命中条件松弛成"重编码后 token 落在同簇"，命中概率从 $r$ 提到 $r_{cl}>r$。之所以选 Leiden 而非常见的 k-means/语义 embedding 聚类，是因为后者没把"codec 实际会混淆什么"编码进去；用 codec 自己的混淆计数当邻接矩阵，相当于让聚类目标和水印检测目标对齐，这是把"梯度自由 + 黑盒"做实的关键。每个 RVQ 通道因 codebook 相互独立而单独聚类，也为后面的多尺度留了口子。
 
-2. **Cluster 级 KGW：绿/红划分与 hash 上下文同步上移**：
+**2. Cluster 级 KGW：绿/红划分与 hash 上下文同步上移**
 
-    - 功能：把 KGW 的两处依赖 token 身份的位置——绿/红列表划分、$h$-gram hash key——都改成依赖 cluster 身份，使整条水印 pipeline 对重编码扰动不变。
-    - 核心思路：在每个时间步，用前 $h$ 个 token 的 cluster index 算 hash，划出绿 cluster 集 $G_i$，然后对所有 $c\in G_i$ 中的 token 同时加 logit 偏置 $\delta$；检测端用同样的规则把收到的 token 重新映射成 cluster 再做二项检验。这样"token 被混淆到同簇邻居"和"token 完美还原"对检测器而言是无差别的。整个改造在推理时只多了一次 cluster lookup，零额外计算。
-    - 设计动机：这是把第 1 点的离线结构落到在线 KGW 的最小侵入式修改——既保住了 KGW 的统计严格性（同一组 cluster 在两端是确定性的），又把指数衰减底从 $r$ 抬到 $r_{cl}$。
+有了簇映射后，要让整条水印 pipeline 对重编码扰动不变，就得把 KGW 里两处依赖 token 身份的位置全搬到簇身份上。在线阶段，每个时间步用前 $h$ 个 token 的 cluster index（而非 token index）算 hash，划出绿 cluster 集 $G_i$，然后对所有"所属 cluster 落在 $G_i$"的 token 同时加 logit 偏置 $\delta$；检测端用同样规则把收到的波形重编码出 token、再映射成 cluster 序列做二项检验。这样"token 被混淆到同簇邻居"和"token 完美还原"对检测器而言无差别，推理时只多一次 cluster lookup、零额外计算。理论上这一步把基线期望 $z$-score 里的指数底从 $r$ 换成 $r_{cl}$：条件独立的 noisy channel 近似下，KGW 基线为 $\mathbb{E}[z|H_1]=\sqrt{N}\frac{g-\gamma}{\sqrt{\gamma(1-\gamma)}}r^{h+1}$，本文方法变成 $\mathbb{E}[z|H_1]=\sqrt{N}\frac{g-\gamma}{\sqrt{\gamma(1-\gamma)}}r_{cl}^{h+1}$。由于 $r_{cl}>r$ 且以 $h+1$ 次幂出现，提升被指数放大——这正是标题"hidden in plain tokens"的算法依据：不必改 codec，只需承认词表里早藏着冗余结构，且改造对 KGW 统计严格性零损害（同一组 cluster 在两端确定性一致）。
 
-3. **熵-密钥空间显式权衡与多通道 resolution**：
+**3. 熵-密钥空间显式权衡与多通道 resolution：把鲁棒性预算和熵预算分到不同通道**
 
-    - 功能：刻画"压缩词表会丢生成熵且可能撞 hash key"这一代价，并通过多通道差异化 resolution 缓解。
-    - 核心思路：词表从 $|V|$ 压到 $c|V|$ 后，$h$-gram key 空间从 $|V|^h$ 缩到 $(c|V|)^h$，作者要求 $(c|V|)^h\geq K_{\min}$ 以避免 key 冲突，必要时用 unwatermarked sampling deferral 兜底；同时由于 RVQ 多通道独立聚类，可以让某些通道走更细的 cluster（保熵）、某些通道走更粗的 cluster（保鲁棒），合成出多尺度水印。本文没尝试给 Pareto 最优，只用数据驱动启发式找一个"足够好的"$r_{cl}$。
-    - 设计动机：直接把 cluster 推到极小确实能最大化 $r_{cl}$，但会让 hash key 空间崩塌，导致水印可被伪造；把这个权衡写明白并提供工程旋钮，是这套方法能真的部署到 Moshi / MusicGen 这种多通道 RVQ 模型上的关键。
+把词表压小确实能最大化 $r_{cl}$，但代价是丢生成熵、且 $h$-gram key 空间从 $|V|^h$ 缩到 $(c|V|)^h$，太小会让水印可被伪造。作者把这个代价写明白：要求 $(c|V|)^h\geq K_{\min}$ 以避免 key 冲突，必要时用 unwatermarked sampling deferral 兜底。缓解手段是利用 RVQ 多通道独立聚类的自由度，让某些通道走更细的 cluster（保熵）、某些通道走更粗的 cluster（保鲁棒），合成出多尺度水印。本文没追求 Pareto 最优，只用数据驱动启发式找一个"足够好的"$r_{cl}$；但正是把这个权衡显式化并提供每通道 resolution 这个工程旋钮，才让方法能真正部署到 Moshi / MusicGen 这种多通道 RVQ 模型上。
 
 ### 损失函数 / 训练策略
 方法是完全 training-free 的：离线只跑一次社区检测算 $\mathcal{C}$；在线只在 logits 上加常数偏置 $\delta$，没有任何梯度。需要的超参是 KGW 原有的 $\gamma$（绿集占比）、$\delta$（logit 偏置）、$h$（上下文阶数），外加 Leiden 的 resolution $\rho$（每通道一份）。

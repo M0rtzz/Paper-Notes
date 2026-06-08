@@ -40,30 +40,24 @@ Fin-Bias 用 8868 份长篇分析师报告构造了一个"原始 / 去掉评级 
 ## 方法详解
 
 ### 整体框架
-Fin-Bias 包含四块：(1) **数据构造**：从 Yahoo Finance 下载 8868 份 PDF 分析师报告覆盖 9 个行业，平均 4000 token；(2) **三版扰动**：原版、删第一句（删除显式 rating）、替换第一句为对立 fake rating；(3) **三类 ground-truth + Herding Score**：把 LLM 输出与 analyst rating / fake rating / CAR 分位数排序结果比较；(4) **缓解策略**：MPQA 主观词典过滤句子 / DPO 偏好优化。整个流程是统一的 CoT prompt 提问模板（Figure 1），方便 18 个模型横向对照。
+Fin-Bias 把"LLM 在金融决策里会不会盲从人类观点"做成一条可量化的对照实验链：先从 Yahoo Finance 抓取 8868 份覆盖 9 个行业、平均 4000 token 的 PDF 分析师报告，再对每份报告做一句话级别的扰动，造出"原版（含真实评级首句）/ 删掉评级首句 / 替换为对立 fake 评级"三个 minimal pair；随后用统一的 CoT prompt 让 18 个模型在三个版本上各出一次 Bullish/Neutral/Bearish 评级，分别和分析师评级、fake 评级、60 天 CAR 分位数三类 ground-truth 比对，量出 herding 程度；最后用 MPQA 主观词典过滤 + DPO 偏好优化两步给开源模型"去偏"。
 
 ### 关键设计
 
-1. **三版本 minimal-pair 扰动 + Herding Score**:
+**1. 三版本 minimal-pair 扰动 + Herding Score：用一句话的因果操纵分离"模型独立判断"和"模型抄分析师"。**
 
-    - 功能：用一句话级别的因果操纵，精确测量模型对"显式人类评级"信号的依赖程度。
-    - 核心思路：定义 $\text{Herding Score} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}(m_i, a_i)$，其中 $m_i$ 是模型评级、$a_i$ 是 analyst 或 fake 评级。当 $a_i$ 是真实评级时，分数高代表模型可能在做"合理的同向判断"；当 $a_i$ 是 fake 时分数高就是赤裸裸的 herding（因为 fake 评级与后续分析逻辑互相矛盾）。
-    - 设计动机：仅看输出准确率无法区分"模型独立判对"和"模型抄分析师抄对"。三个版本和两类 herding score 配合，能把 "信号 vs noise" 分离开。
+仅看准确率分不清模型是自己判对还是抄分析师抄对。本文在同一份报告上只改第一句，构造出原版 / 删评级 / 替换为对立 fake 评级三个 minimal pair，并定义羊群度 $\text{Herding Score} = \frac{1}{N} \sum_{i=1}^N \mathbb{I}(m_i, a_i)$，其中 $m_i$ 是模型评级、$a_i$ 是 analyst 或 fake 评级。当 $a_i$ 是真实评级时，高分还能解释成"合理的同向判断"；可一旦 $a_i$ 换成与后文分析逻辑互相矛盾的 fake 评级，高分就是赤裸裸的盲从。三版输入配两类 herding score，干净地把"信号 vs 噪声"剥开。
 
-2. **CAR 分位数构造无偏 ground-truth**:
+**2. CAR 分位数构造无偏 ground-truth：用市场真实回报反推对错，绕开分析师自身的系统性偏差。**
 
-    - 功能：用市场真实回报反推"对/错"的 ground-truth 投资评级，避开分析师评级本身的系统性偏差。
-    - 核心思路：先用市场模型 $R_{i,t} = \alpha_i + \beta_i R_{m,t} + \varepsilon_{i,t}$ OLS 估计 $\hat{\alpha}_i, \hat{\beta}_i$；再对每份报告发布日起 60 个交易日累计计算 $CAR = \sum \hat{\alpha}_i = \sum(\bar{R}_i - \hat{\beta}_i \bar{R}_m)$；最后按年度对所有 CAR 排序，分位数前 30% = Bullish、后 30% = Bearish、中间 40% = Neutral。
-    - 设计动机：直接用 daily return 阈值（>1% 为 bullish 等）任意性太强、忽略 firm-specific 风险；CAR 是金融文献里 risk-adjusted abnormal return 的标准量度，反映 hedge fund 真正在乎的"超额回报"，再用年度分位数避免市场行情变化干扰。最终标签分布 30/30/40，比分析师评级（72.28/24.74/0.29）平衡得多。
+直接拿分析师评级当 ground-truth 会陷入循环论证——本文样本里分析师 72.28% 看多。于是改用 risk-adjusted abnormal return：先用市场模型 $R_{i,t} = \alpha_i + \beta_i R_{m,t} + \varepsilon_{i,t}$ 做 OLS 估出 $\hat{\alpha}_i, \hat{\beta}_i$，再对每份报告发布日起 60 个交易日累计 $CAR = \sum \hat{\alpha}_i = \sum(\bar{R}_i - \hat{\beta}_i \bar{R}_m)$，最后按年度对所有 CAR 排序，前 30% 标 Bullish、后 30% 标 Bearish、中间 40% 标 Neutral。相比 daily return 阈值（>1% 算 bullish）那种任意又忽略 firm-specific 风险的做法，CAR 是金融文献里超额回报的标准量度，年度分位又避免了行情漂移干扰，最终 30/30/40 的标签分布远比分析师的 72.28/24.74/0.29 平衡。
 
-3. **MPQA 主观词典过滤 + DPO 缓解**:
+**3. MPQA 主观词典过滤 + DPO 偏好对齐：先在 prompt 层剥掉主观观点，再在模型层内化"健康怀疑"。**
 
-    - 功能：去掉上下文中可能诱发 herding 的"主观观点句"，强化 LLM 独立思考；DPO 进一步把"独立判断 vs 跟随分析师"作为偏好对训进去。
-    - 核心思路：用 MPQA Subjectivity Lexicon 标记 `strongsubj` 词项，把含这类词的整句从报告里剔除（不光删第一句的 rating）。DPO 阶段构造三元组 $(x, y_w, y_l)$：$x$ 是原始带偏见报告、$y_w$ 是用市场真值倒推的"独立 reasoning"、$y_l$ 是按 analyst 视角生成的"跟随 reasoning"，再优化 DPO 目标 $\max \log \frac{\pi(y_w|x)}{\pi(y_l|x)}$。
-    - 设计动机：单删 rating 第一句只是表面操作，剩余报告仍充斥隐式主观判断；词典过滤是 prompt 层"剥洋葱"。DPO 则是模型层级的内化，让模型形成对 high-consensus 人类信号的"健康怀疑"。
+只删评级首句是表面功夫，剩余报告仍布满隐式主观判断。本文先用 MPQA Subjectivity Lexicon 标出 `strongsubj` 词项，把含这类词的整句从报告里整体剔除，相当于在输入侧逐层"剥洋葱"；再做 DPO，把每份带偏见报告 $x$ 配上一对 reasoning——$y_w$ 是用市场真值倒推的"独立推理"、$y_l$ 是顺着 analyst 视角生成的"跟随推理"，优化 $\max \log \frac{\pi(y_w|x)}{\pi(y_l|x)}$。词典过滤治标、DPO 治本，后者把"独立思考"显式定义成模型可学习的偏好行为，让它对 high-consensus 人类信号保持怀疑。
 
 ### 损失函数 / 训练策略
-评测部分全程零样本 CoT prompt。DPO 微调只针对开源模型（Qwen3-8B、Qwen2.5-7B-It、Meta-Llama-3-8B-It），目标函数：
+评测部分全程零样本 CoT prompt，不更新参数。DPO 微调只针对开源模型（Qwen3-8B、Qwen2.5-7B-It、Meta-Llama-3-8B-It），目标函数：
 
 $$\mathcal{L}_{\text{DPO}} = -\log \sigma\left(\beta \log \frac{\pi(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \frac{\pi(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)$$
 

@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：音频 $X$（干净或对抗 $\tilde{X}=\mathrm{Adv}(X,\theta)$）+ ALM $\mathcal{F}$，输出 $Y=\{r_1,\dots,r_N,c\}$，含 6 个取证维度的自由文本推理（Prosody / Disfluency / Speed / Speaking Style / Liveliness / Quality）+ 最终标签 $c\in\{\text{fake},\text{real}\}$。审计框架并行计算三类指标：
-- 感知 $\Phi_{\text{Perc}}$：用带 GT 的问题银行 $\mathcal{Q}_k$ 验证模型听到的与真实声学属性是否吻合；
-- 一致性 $\Phi_{\text{Coh}}$：判定 $r_i$ 是否 entail 当前 $c$；
-- 失调 $\Psi_{\text{Diss}}$：在判错样本上，$r_i$ 与 $c$ 是否反向（高 dissonance = 推理仍在嘶吼"不对劲"）。
-配 $\Delta$ 指标比较 ORG vs PER 形态迁移。
+输入是一段音频 $X$（干净样本，或对抗样本 $\tilde{X}=\mathrm{Adv}(X,\theta)$），经 ALM $\mathcal{F}$ 产出结构化输出 $Y=\{r_1,\dots,r_N,c\}$——既含覆盖 Prosody / Disfluency / Speed / Speaking Style / Liveliness / Quality 六个取证维度的自由文本推理 $r_i$，又含最终标签 $c\in\{\text{fake},\text{real}\}$。审计框架不动模型本身，而是在这份输出上并行算三类正交指标：感知 $\Phi_{\text{Perc}}$ 用带 GT 的问题银行核对"模型听到的"是否吻合真实声学属性，一致性 $\Phi_{\text{Coh}}$ 判断推理是否真的 entail 当前判决，失调 $\Psi_{\text{Diss}}$ 则在判错样本上检查推理是否反向"嘶吼"不对劲。最后再配一组 $\Delta$ 差分指标比较原始 vs 对抗下的形态迁移，把"推理鲁棒性"从单一 label 维度拆成可独立观测的三维取证画像。
 
 ### 关键设计
 
-1. **三维取证审计指标体系（Perception / Coherence / Dissonance）**:
+**1. 三维取证审计指标体系（Perception / Coherence / Dissonance）：把推理鲁棒性拆成三个正交的取证维度。**
 
-    - 功能：把"推理鲁棒性"从单一 ASR 维度拆成三个语义独立、可独立测量的取证维度。
-    - 核心思路：定义验证函数 $\mathcal{V}:(X,q)\mapsto\{0,1\}$、entailment 函数 $\mathcal{E}:(r_i,c)\mapsto\{0,1\}$，三个指标分别为 $\Phi_{\text{Perc}}(r_k)=\frac{1}{|\mathcal{D}|\cdot|\mathcal{Q}_k|}\sum\sum\mathcal{V}$、$\Phi_{\text{Coh}}(r_i)=\frac{1}{|\mathcal{D}|}\sum\mathcal{E}(r_i^j,c^j)$、$\Psi_{\text{Diss}}(r_i)=\frac{1}{|\mathcal{D}_{\text{Wrong}}|}\sum(1-\mathcal{E})$。三个函数都由 frontier LLM（GPT-5 / Gemini-3 ensemble + 多数投票）落地。
-    - 设计动机：Coherence 高未必好（可能"自圆其说式幻觉"），所以需要 Dissonance 来兜底，区分"自信地错"与"被骗了但内部还在挣扎"两种失败模式。三个指标各管一段，互不替代。
+过去衡量"推理是否被攻破"只盯 final-label 一个维度，但取证场景需要更细的分辨率。本文定义验证函数 $\mathcal{V}:(X,q)\mapsto\{0,1\}$ 和 entailment 函数 $\mathcal{E}:(r_i,c)\mapsto\{0,1\}$，进而构造三个互不替代的指标：感知 $\Phi_{\text{Perc}}(r_k)=\frac{1}{|\mathcal{D}|\cdot|\mathcal{Q}_k|}\sum\sum\mathcal{V}$ 衡量"听到的"是否扎根真实声学，一致性 $\Phi_{\text{Coh}}(r_i)=\frac{1}{|\mathcal{D}|}\sum\mathcal{E}(r_i^j,c^j)$ 衡量推理是否支撑判决，失调 $\Psi_{\text{Diss}}(r_i)=\frac{1}{|\mathcal{D}_{\text{Wrong}}|}\sum(1-\mathcal{E})$ 只在判错样本上衡量推理是否反向。三个判定函数都由 frontier LLM 集成落地（GPT-5 / Gemini-3 多数投票）。
 
-2. **差分指标 $\Delta\Phi,\Delta\Psi$ 与失败模式分类**:
+关键在于 Coherence 高未必是好事——模型可能"自圆其说式幻觉"，越自洽越危险，所以必须用 Dissonance 兜底，把"自信地错"和"被骗了但内部还在挣扎"两种失败模式区分开。三个维度各管一段语义，缺一不可。
 
-    - 功能：用"对抗 vs 原始"的差量自动给模型贴失败模式标签（Coherence Erosion / Resistance / Silent Alarm / Systemic Deception）。
-    - 核心思路：$\Delta\Phi_{\text{Coh}}=\Phi_{\text{Coh}}^{\text{PER}}-\Phi_{\text{Coh}}^{\text{ORG}}$，$\Delta\Psi_{\text{Diss}}$ 同理。$\Delta\Phi\ll 0$ ⇒ 推理崩塌（"panic"），$\Delta\Phi\ge 0$ 但 judge 错 ⇒ 自圆其说式幻觉；$\Delta\Psi\ge 0$ ⇒ 无声警报，$\Delta\Psi\ll 0$ ⇒ systemic deception。
-    - 设计动机：单看 PER 状态会混淆"原本就差"与"被攻击后变差"；差分把"基线偏差"剥离掉，只留下攻击造成的真正推理形态迁移。
+**2. 差分指标 $\Delta\Phi,\Delta\Psi$ 与失败模式分类：用攻击前后的差量自动给失败形态贴标签。**
 
-3. **声学 vs 语言学双轨对抗协议**:
+单看对抗状态下的指标会混淆"模型本来就差"和"被攻击后才变差"。本文对每个指标取攻击前后的差量 $\Delta\Phi_{\text{Coh}}=\Phi_{\text{Coh}}^{\text{PER}}-\Phi_{\text{Coh}}^{\text{ORG}}$（$\Delta\Psi_{\text{Diss}}$ 同理），把"基线偏差"剥离后只留下攻击真正造成的推理形态迁移。据此自动分出四种失败模式：$\Delta\Phi\ll 0$ 是推理崩塌（panic），$\Delta\Phi\ge 0$ 但判决仍错是自圆其说式幻觉，$\Delta\Psi\ge 0$ 是无声警报（Silent Alarm），$\Delta\Psi\ll 0$ 则是 systemic deception。这套差分把原本模糊的"鲁棒 / 不鲁棒"细化成可解释的失败形态学。
 
-    - 功能：把对抗攻击拆成两条独立的轨道，分别诱导"panic"与"rationalization"两种失败模式。
-    - 核心思路：声学攻击采用 CLAD 协议的三类 recipe——Background Noise（白噪 / 环境噪 SNR=15-25dB / 5-20dB）、Time & Pitch（时域拉伸 0.9-1.1×、循环移位 1600-32000 样本）、Shape & Space（音量 0.5-2.0×、淡入淡出、合成回响 $x(t)\leftarrow x(t)+\alpha x(t-\delta)$）；语言学攻击采用 TAPAS+TextFooler，先在 transcript 上做同义替换再用 Kokoro TTS 合成，使声学输出保留原嗓音但 prosody 变得复杂。
-    - 设计动机：声学攻击破坏感知证据层（留下 spectral artifact），语言学攻击仅改变 transcript 复杂度（不留 artifact，更隐蔽），两者会激发完全不同的推理失败模式——这一对照才让 Tax vs Shield 的 bifurcation 浮出水面。
+**3. 声学 vs 语言学双轨对抗协议：用两条独立攻击轨道分别诱发 panic 与 rationalization。**
+
+声学攻击采用 CLAD 协议的三类 recipe——Background Noise（白噪 / 环境噪，SNR 15–25dB 与 5–20dB）、Time & Pitch（时域拉伸 0.9–1.1×、循环移位 1600–32000 样本）、Shape & Space（音量 0.5–2.0×、淡入淡出、合成回响 $x(t)\leftarrow x(t)+\alpha x(t-\delta)$）；语言学攻击则走 TAPAS+TextFooler，先在 transcript 上同义替换再用 Kokoro TTS 重新合成，让嗓音保持不变但 prosody 复杂度陡增。
+
+之所以要做这种对照，是因为声学攻击破坏的是感知证据层（留下 spectral artifact），语言学攻击只改 transcript 复杂度（不留 artifact、更隐蔽），两者激发的推理失败截然不同——正是这一对照让 "Reasoning Tax vs Shield" 的 bifurcation 浮出水面。
 
 ### 损失函数 / 训练策略
 所有 ALM 用 QLoRA 在 ASVSpoof 2019 + DeepSeek-R1 cold-start 合成的 CoT 数据集上微调：BF16、AdamW（$\beta_1=0.9$, $\beta_2=0.95$）、LR=$1e^{-4}$ 线性衰减、global batch=16、weight decay=0.1。LoRA rank=16, $\alpha$=64, dropout=0.05，目标模块 [q,k,v,o]_proj。loss 仅在 Assistant token（推理 + 判决）上计算。CoT 训练数据通过 3 轮自举（majority-vote of 3 traces）精炼到 25,108 样本。

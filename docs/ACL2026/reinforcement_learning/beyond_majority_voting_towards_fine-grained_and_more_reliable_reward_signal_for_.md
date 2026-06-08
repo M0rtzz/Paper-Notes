@@ -45,23 +45,25 @@ SCOPE 的训练迭代有四步：(1) 采样 $|\mathcal{G}|$ 个 response，按 `
 
 ### 关键设计
 
-1. **Step-wise 置信度加权投票**:
+**1. Step-wise 置信度加权投票：让推理过程稳定自信的少数派赢过中段拉胯的多数派。**
 
-    - 功能：把每个 response 的「平均步级置信度」当做投票权重，让推理过程稳定自信的少数派也能赢过频次但中段拉胯的多数派。
-    - 核心思路：每个 token 的置信度 $\mathcal{C}_t = -\frac{1}{k}\sum_{j=1}^{k}\log P_t(j)$（top-k 平均负对数概率）；按 `\n\n` 切 reasoning step，每步置信度 $\mathcal{C}_{s_k} = \frac{1}{N_k}\sum_{t=1}^{N_k}\mathcal{C}_t$；整条 response 的平均 $\mathcal{C}_{AvgStep}^{(i)} = \frac{1}{|\mathcal{L}|}\sum_{k=1}^{|\mathcal{L}|}\mathcal{C}_{s_k}$。共识标签 $o^* = \operatorname{argmax}_y \sum_{i=1}^{|\mathcal{G}|} \mathcal{C}_{AvgStep}^{(i)} \cdot \mathds{1}[\text{Ans}(o_i) = y]$。
-    - 设计动机：token-level 太抖（顶端高频虚词把噪声拉到极端），trace-level 太平（一段错被几十段对淹没），step-level 是 reasoning 的天然结构单元，既保结构精度又避抖动。bottom-10% / tail-10% 等替代方案因为只盯最弱步会惩罚「难但对」的推理，被实验证伪。
+majority voting 把所有票等权，于是「票多但中间某步发慌」的错误解会被反复强化，这就是确认偏差。SCOPE 改成按每个 response 的平均步级置信度加权投票。先算每个 token 的置信度 $\mathcal{C}_t = -\frac{1}{k}\sum_{j=1}^{k}\log P_t(j)$（top-k 平均负对数概率），再按 `\n\n` 切 reasoning step、每步取均值 $\mathcal{C}_{s_k} = \frac{1}{N_k}\sum_{t=1}^{N_k}\mathcal{C}_t$，整条 response 的权重就是各步均值 $\mathcal{C}_{AvgStep}^{(i)} = \frac{1}{|\mathcal{L}|}\sum_{k=1}^{|\mathcal{L}|}\mathcal{C}_{s_k}$。共识标签不再唯频次是从，而是
 
-2. **Subgroup 内独立 bootstrap 投票**:
+$$o^* = \operatorname{argmax}_y \sum_{i=1}^{|\mathcal{G}|} \mathcal{C}_{AvgStep}^{(i)} \cdot \mathds{1}[\text{Ans}(o_i) = y]$$
 
-    - 功能：把 $|\mathcal{G}|$ 个 response 切成 $n$ 个大小 $m$ 的子组，每子组独立得一个局部共识 $o_j^*$，奖励按子组目标算 $r(o, o_j^*) = \mathds{1}[\text{Ans}(o) = o_j^*]$。
-    - 核心思路：子组定义 $\mathcal{S} = \{S_j = \{o_{(j-1)m+1}, \dots, o_{jm}\}\}_{j=1}^{n}$；为每个子组从全局 pool 做 bootstrap 采样得候选集，再用置信度加权投票决出 $o_j^*$；这样 $n$ 次独立估计带来 $n$ 个可能不同的监督目标。
-    - 设计动机：单一全局共识让组内所有 sample 共享 0/1 reward——要么全对要么全错，密度极稀；子组化让 $n$ 个子组各持一份不同的「局部真理」，鼓励 GRPO 在 advantage 计算时探索更多 reasoning 路径。子组太小（$m=1$）只信单条采样、噪声大；子组太大（$m=|\mathcal{G}|$）退化为全局共识、回到 TTRL。
+之所以选 step 这个粒度：token-level 太抖（高频虚词把噪声拉到极端），trace-level 又太平（一段错被几十段对淹没），step 是 reasoning 的天然结构单元，既保结构精度又避抖动。bottom-10% / tail-10% 等只盯最弱步的替代方案，会惩罚「难但对」的推理，实验里已被证伪。
 
-3. **Pareto-optimal 自动选 $m^*$**:
+**2. Subgroup 内独立 bootstrap 投票：把单一全局共识拆成多个局部真理，解开稀疏奖励。**
 
-    - 功能：不用人工调 $m$，每个训练 step 动态选最优子组大小，平衡「reasoning quality」和「exploration diversity」。
-    - 核心思路：定义两个指标——quality $q = \frac{1}{|\mathcal{G}|} \sum_{j=1}^{n}\sum_{l=1}^{m} \mathds{1}[\text{Ans}(o_{(j-1)m+l}) = o_j^*]$（组内一致率，越高越说明子组共识可靠），exploration $e = \frac{|\{o_1^*, \dots, o_n^*\}|}{n}$（独特共识数比例，越高越多样）。枚举候选 $m \in \{1, 2, 4, \dots\}$ 得到 $(q_k, e_k)$ 点集，构 Pareto 前沿，每个前沿点算 z-norm 后的加权距离 $d_k = \sqrt{\lambda(1-\hat{q}_k)^2 + (1-\lambda)(1-\hat{e}_k)^2}$，选 $m^* = \operatorname{argmin}_{m_k} d_k$。$\lambda = 0.7$ 经验最优。
-    - 设计动机：固定 $m$ 在训练不同阶段必然 suboptimal——初期需要小 $m$ 多样性来探索，后期需要大 $m$ 稳定共识；Pareto 框架天然把双目标变成 trade-off 曲面，每步根据当前 quality-exploration 分布动态调整，避免人为 schedule。
+TTRL 让整组 $|\mathcal{G}|$ 个采样共享一个全局共识标签，奖励要么全对要么全错，密度极稀、也没有探索多样性。SCOPE 把 pool 切成大小为 $m$ 的子组 $\mathcal{S} = \{S_j = \{o_{(j-1)m+1}, \dots, o_{jm}\}\}_{j=1}^{n}$，每个子组从全局 pool 做 bootstrap 采样得候选集、再用上面的置信度加权投票独立决出自己的局部共识 $o_j^*$，奖励按各自子组目标算 $r(o, o_j^*) = \mathds{1}[\text{Ans}(o) = o_j^*]$。这样 $n=|\mathcal{G}|/m$ 个子组各持一份可能不同的「局部真理」，给 GRPO 的 advantage 计算注入更多样的监督目标，鼓励探索更多 reasoning 路径。子组大小是把双刃剑：$m=1$ 只信单条采样、噪声大；$m=|\mathcal{G}|$ 又退化回全局共识，所以需要下面的机制自动选 $m$。
+
+**3. Pareto-optimal 自动选 $m^*$：每个训练步动态权衡推理质量与探索多样性。**
+
+固定 $m$ 在训练不同阶段必然次优——初期需要小 $m$ 的多样性来探索，后期需要大 $m$ 的稳定共识。SCOPE 定义两个对立指标：质量 $q = \frac{1}{|\mathcal{G}|} \sum_{j=1}^{n}\sum_{l=1}^{m} \mathds{1}[\text{Ans}(o_{(j-1)m+l}) = o_j^*]$（组内一致率，越高说明子组共识越可靠），探索 $e = \frac{|\{o_1^*, \dots, o_n^*\}|}{n}$（独特共识数比例，越高越多样）。枚举候选 $m \in \{1, 2, 4, \dots\}$ 得到一组 $(q_k, e_k)$ 点、构 Pareto 前沿，对每个前沿点算 z-norm 后的加权距离
+
+$$d_k = \sqrt{\lambda(1-\hat{q}_k)^2 + (1-\lambda)(1-\hat{e}_k)^2}$$
+
+选 $m^* = \operatorname{argmin}_{m_k} d_k$（$\lambda = 0.7$ 经验最优）。这样把质量-探索双目标变成一条 trade-off 曲面，每步根据当前分布自适应调整，免去人工 schedule 或超参搜索。
 
 ### 损失函数 / 训练策略
 沿用 GRPO 目标：$\mathcal{J}_{GRPO}(\theta) = \mathbb{E}\left[\frac{1}{|\mathcal{G}|}\sum_i \frac{1}{|o_i|}\sum_t \min[\rho_{i,t}\mathcal{A}_i, \text{clip}(\rho_{i,t}, 1-\epsilon, 1+\epsilon)\mathcal{A}_i] - \beta \mathbb{D}_{KL}[\pi_\theta \| \pi_{ref}]\right]$，advantage $\mathcal{A}_i = (r(o_i) - \mu_g)/(\sigma_g + \epsilon)$。SCOPE 的唯一改动是 $r(\cdot)$ 的来源——从「全局 majority vote」变成「subgroup-specific confidence-weighted vote」。Pareto 评估带来约 10% 额外计算。

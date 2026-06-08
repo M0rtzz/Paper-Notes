@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-KG 形式化为 $G = \langle V, E, \phi_V, \phi_E, d_V \rangle$。Agent $\mathcal{A} = \langle \text{LLM}, \mathcal{T} \rangle$ 给定查询 $Q$ 后产出轨迹 $\tau = ((s_1, A_1, o_1), \dots, (s_T, A_T, o_T))$，每一步从两个工具里挑一个调用，得到新观测；同时维护一个有序候选列表 $\mathcal{R}$，可以把工具返回的节点 append 进去或调用 `finish` 结束。可选地并发跑 $n$ 个独立 agent 做投票聚合。文本相关性始终用 BM25：$\operatorname{rel}(q, d_V(v))$，跑得快又稳定，适合 agent 在轨迹中反复发短查询。
+ARK 把知识图谱检索从"在固定索引上打分"改造成"带工具的交互式 agent 决策"，核心是让 LLM 在一条轨迹里自己决定该"广撒"还是"深挖"。图被形式化为 $G = \langle V, E, \phi_V, \phi_E, d_V \rangle$，agent $\mathcal{A} = \langle \text{LLM}, \mathcal{T} \rangle$ 拿到查询 $Q$ 后产出轨迹 $\tau = ((s_1, A_1, o_1), \dots, (s_T, A_T, o_T))$：每一步从两个工具里挑一个调用、拿到新观测，同时维护一个有序候选列表 $\mathcal{R}$（把工具返回的节点 append 进去，或调用 `finish` 收尾）。文本相关性自始至终用 BM25 的 $\operatorname{rel}(q, d_V(v))$ 算，快且稳，适合 agent 在轨迹中反复发短查询；可选地并发跑 $n$ 个独立 agent 再投票聚合。整套框架本体 training-free，能力全压在 LLM 的工具使用上，而非工具本身的复杂度。
 
 ### 关键设计
 
-1. **极简双工具接口（Global Search + Neighborhood Exploration）**:
+**1. 极简双工具接口：只给两个原语，把多跳交给组合。** 
 
-    - 功能：Global Search $\operatorname{Search}_G(q, k)$ 在全图节点描述上做 BM25 取 Top-k，提供「进入图的全局锚点」；Neighborhood Exploration $\operatorname{Neighbors}(v, q, F)$ 在节点 $v$ 的一跳邻域 $N_F(v) = \{u \in N(v) \mid \phi_V(u) \in F_V, \phi_E(\{u,v\}) \in F_E\}$ 内按 BM25 排前 k，支持节点/边类型过滤 $F = (F_V, F_E)$ 和子查询 $q$。
-    - 核心思路：LLM 通过 ReAct 提示交替调用两个工具——文本主导的查询（如 AMAZON）就连续用 global search 拿候选；关系主导的查询（如 MAG 找作者论文）就先用 global search 锚一个起点节点，然后用多次 `Neighbors` 调用拼出多跳路径；过程中可以随时再做一次 global search 重锚到图的另一区域，避免被困局部。多跳深度不预设，agent 自己看够了就 `finish`。
-    - 设计动机：传统遍历 agent 出 bug 的根因是「seed 选错就完了」，本文让 global search 在整个 trajectory 都可用，等于给 agent 一个永远能「重新看全图」的逃生口；同时 BM25 而非 dense 让短查询又快又稳，实验里 BM25 反而比 text-embedding-3-large 在 AMAZON / PRIME 上更准。
+传统遍历 agent 的老毛病是"seed 选错就全盘皆输"，一旦起点不对就被困在局部、永远摸不到正确证据。ARK 干脆只暴露两个工具：Global Search $\operatorname{Search}_G(q, k)$ 在全图节点描述上做 BM25 取 Top-k，提供"进入图的全局锚点"；Neighborhood Exploration $\operatorname{Neighbors}(v, q, F)$ 在节点 $v$ 的一跳邻域 $N_F(v) = \{u \in N(v) \mid \phi_V(u) \in F_V, \phi_E(\{u,v\}) \in F_E\}$ 内按 BM25 排前 k，支持节点/边类型过滤 $F = (F_V, F_E)$ 和子查询 $q$。LLM 通过 ReAct 提示交替调用：文本主导的查询（如 AMAZON）就连续 global search 拿候选；关系主导的查询（如 MAG 找作者论文）就先 global search 锚一个起点，再用多次 `Neighbors` 把多跳路径拼出来。关键在于 global search 在整条轨迹里永远可用，等于给 agent 一个随时能"重新看全图"的逃生口，根治了 seed 锚定病；多跳深度也不预设，agent 看够了自己 `finish`。
 
-2. **并发自一致（Parallel Voting Aggregation）**:
+**2. 并发自一致：靠投票筛出稳定共识而非更多候选。** 
 
-    - 功能：同时跑 $n$ 个独立 agent（带随机解码），每个产 $\mathcal{R}^{(i)}$，最终按节点在所有 trajectory 里的出现频次排序，平票时用「最早出现位置」破除——既奖励共识又奖励早发现。
-    - 核心思路：受 LLM 推理里 self-consistency / majority voting 启发，把多 agent rank fusion 用最简单的「拼接 + 频次排序」实现。实验里 voting 显著强于 ordering（拼接保首次）和 random（乱序），在 MAG / PRIME 上差距尤其明显。
-    - 设计动机：单 agent 在高分支图上容易 drift，多 agent 投票把「稳定信号」筛出来；且 agent 之间独立，端到端延迟由最慢的那个决定，不是 sum——拿性能不太用付延迟。
+单个 agent 在高分支的图上很容易 drift，越搜越偏。ARK 借鉴 LLM 推理里的 self-consistency，同时跑 $n$ 个带随机解码的独立 agent，每个产出自己的 $\mathcal{R}^{(i)}$，最终按节点在所有轨迹里的出现频次排序，平票时用"最早出现位置"破——既奖励多数共识又奖励早发现。整个 rank fusion 用最简单的"拼接 + 频次排序"实现。实验里 voting 明显强于 ordering（拼接保首次）和 random（乱序），说明并发的价值不是"凑更多候选"而是"凑稳定信号"；而且 agent 之间彼此独立，端到端延迟取决于最慢的那个而非求和，几乎是白捡的性能。
 
-3. **Label-free 轨迹蒸馏到 8B 学生**:
+**3. Label-free 轨迹蒸馏：把工具使用策略灌进 8B 学生。** 
 
-    - 功能：用 GPT-4.1 当 teacher 在训练集上跑 ARK 收集 trajectories（每 query 3 条、最多 20 步、不做拒绝采样），用 next-token loss 在 assistant token 上微调 Qwen3-8B 学生，只学「调哪个工具、参数怎么填」，不依赖任何 ground-truth 相关性标签。
-    - 核心思路：teacher trajectory 就是「带工具调用 + 工具返回」的完整对话；student 用 LoRA 在 16384 上下文 + lr=1e-5 训一个 epoch（单 H100 五小时），按 validation early stop。
-    - 设计动机：ARK 用大闭源模型推理贵，蒸馏到 8B 可以省成本；label-free 意味着上一个新图只要跑 teacher 就能得到训练数据，不需要人工 relevance 标注——这才是真正实用的 distillation 范式。
+ARK 用大闭源模型推理贵，于是把策略蒸馏到小模型。做法是拿 GPT-4.1 当 teacher 在训练集上跑 ARK 收集轨迹（每 query 3 条、最多 20 步、不做拒绝采样），这些轨迹本身就是"带工具调用 + 工具返回"的完整对话；学生 Qwen3-8B 用 next-token loss 只在 assistant token 上微调，只学"调哪个工具、参数怎么填"，全程不碰任何 ground-truth 相关性标签。训练用 LoRA、16384 上下文、lr=1e-5 跑一个 epoch（单 H100 约五小时），按 validation early stop。label-free 是这套蒸馏真正实用的关键——上一张新图只要 teacher 跑得起就能产出训练数据，不需要人工 relevance 标注。
 
 ### 损失函数 / 训练策略
-ARK 本体 training-free，只在 distillation 阶段做 SFT。蒸馏总预算 18,000 trajectories / 图，约 94.4M tokens；用 mask 把 user 消息和 tool output 屏蔽，只在 assistant 工具调用 token 上计算 loss。聚合规则是简单的频次+先发现优先，不学。
+ARK 本体 training-free，只有蒸馏阶段做 SFT。总预算约 18,000 trajectories / 图、约 94.4M tokens；训练时用 mask 把 user 消息和 tool output 屏蔽掉，loss 只在 assistant 的工具调用 token 上计算。聚合规则（频次 + 先发现优先）是写死的、不参与学习。
 
 ## 实验关键数据
 

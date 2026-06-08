@@ -40,28 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整篇论文可以看成一个三层验证框架。第一层是性能层面的时间分析：收集 2023 年 5 月到 2025 年 6 月共 26 个月的 math / physics arXiv 论文，基于 theorem 等内容生成多步推理 QA，并在 8 个前沿模型上比较 cutoff 前后准确率。第二层是构造方式干预：在同一源论文上构造 cloze 填空题，并把类似改写实验扩展到 LiveCodeBench 与 Wiki-based QA。第三层是机制层面：在 OLMo2-7B-Instruct 这种公开训练数据模型上，用影响函数检查模型回答某个问题时最受哪些训练文档影响。
-
-输入是一批带时间戳的公开文档或 benchmark 题目，输出不是一个新模型，而是一组污染探针结果：不同题目构造方式下的 pre/post cutoff gap、不同领域的复现实验，以及 cloze / LLM-generated QA 对应源文档在 influence ranking 中的命中率。这样作者把“是否污染”从单一 accuracy drop 拆成了“题面可追溯性”和“源材料可能在训练中出现”两个层面。
+这篇论文不提出新模型，而是搭了一个三层验证框架来拆解"cutoff 后性能下降 = 污染"这条推断：性能层先在 26 个月、8 个前沿模型上比较 LLM 生成 arXiv 推理题的 cutoff 前后准确率；干预层把同一批源论文换成 cloze 填空题、并把改写实验扩展到 LiveCodeBench 和 Wikipedia QA，只动题面、不动答案与发布时间；机制层在公开训练数据的 OLMo2-7B-Instruct 上用影响函数追踪模型回答时究竟最受哪些训练文档影响。最终产出不是一个模型，而是一组污染探针结果，把"是否污染"拆成"题面可追溯性"和"源材料是否在训练中出现"两个独立层面。
 
 ### 关键设计
-1. **同源材料的时间窗口评测**:
 
-	- 功能：先复现并扩大 RealMath 类设置，检查 LLM 生成问题是否稳定缺少 cutoff 后性能下降。
-	- 核心思路：作者用 arXiv API 抓取 20,277 篇 math / physics 论文，覆盖 26 个月，并用 o4-mini 从 theorem 等材料生成需要 5 步以上推理的 QA。经过 GPT-4.1 去重和人工检查后，保留 1,098 篇论文对应的 1,643 个问题。每个月的准确率按 $Accuracy_m=C_m/Q_m$ 归一化，再围绕各模型 cutoff 做 pre/post 对比。
-	- 设计动机：如果 LLM 生成题在多个模型、多个领域、多个 cutoff 日期上都没有下降，就说明“源材料来自公开 arXiv”本身不足以产生 temporal decay；必须进一步看题目是否保留了可记忆的原文线索。
+**1. 同源材料的时间窗口评测：先确认 LLM 生成题是否稳定地"不掉点"。**
 
-2. **题目构造方式作为干预变量**:
+要质疑时间衰减信号，第一步得复现并放大它本该出现的场景。作者用 arXiv API 抓取 20,277 篇覆盖 26 个月的 math / physics 论文，用 o4-mini 从 theorem 等材料生成需 5 步以上推理的 QA，经 GPT-4.1 去重和人工检查后保留 1,098 篇论文对应的 1,643 题；每月准确率按 $Accuracy_m=C_m/Q_m$ 归一化，再围绕各模型 cutoff 做 pre/post 对比。如果这些题在多个模型、多个领域、多个 cutoff 上都不掉点，就说明"源材料来自公开 arXiv"本身并不足以制造 temporal decay——问题必然出在题面是否还保留可记忆的原文线索。
 
-	- 功能：在不改变答案来源或底层解法的情况下，只改变题面形式，观察时间信号是否翻转。
-	- 核心思路：对 arXiv 摘要构造 cloze 题，每篇论文 mask 5 个语义关键短语；对 LiveCodeBench 的 400 道题用 o4-mini 改写变量名、语义背景和符号，但保持算法解法不变；对 Wikipedia current events 构造 dated MCQ，再只改写问题陈述而保留选项和答案。
-	- 设计动机：这种设计把难度、答案和发布时间尽量固定，只让“是否近似原文”变化。如果 temporal decay 在原文 / cloze 形式出现，却在 LLM-transformed 形式减弱，就说明时间信号不是稳定污染指标，而是被 benchmark construction 强烈调制。
+**2. 题目构造方式作为干预变量：固定答案与时间，只让"是否近似原文"变化。**
 
-3. **影响函数追踪源文档可识别性**:
+时间信号想测污染，实测到的却是"模型能否把测试输入追溯回训练中见过的文本"，这两者被题面形式混在了一起。作者把题目构造方式抽成干预变量：对 arXiv 摘要构造 cloze 题，每篇 mask 5 个语义关键短语；对 LiveCodeBench 的 400 道题用 o4-mini 改写变量名、语义背景和符号但保持算法解法不变；对 Wikipedia current events 构造 dated MCQ、只改写问题陈述而保留选项与答案。难度、答案、发布时间都尽量钉死，唯一变化的是"题面有多接近原文"。一旦 temporal decay 在原文 / cloze 形式出现、却在 LLM 改写形式下减弱甚至翻转，就证明时间信号不是稳定污染指标，而是被 benchmark construction 强烈调制。
 
-	- 功能：从机制上解释为什么同一污染源在不同题面下产生不同信号。
-	- 核心思路：作者选择 OLMo2-7B-Instruct，因为它公开训练数据，可以确认某些 arXiv 论文确实在训练集中。对 40 篇已知污染论文，分别构造 cloze 与 LLM-generated QA，并在包含这些论文的 10,000 个训练文档样本中排序 top-100 influential documents。影响分数用 Kronfluence / EK-FAC 近似，核心形式是 $I_f(z) \approx -\nabla_\theta f(\theta_s)^\top (G+\lambda I)^{-1}\nabla_\theta L(z,\theta_s)$。
-	- 设计动机：性能曲线只能显示现象，影响函数能问“模型回答时是否真的把源论文当成关键训练点”。cloze 的高命中率与 LLM-generated QA 的低命中率共同支持了“改写削弱源文档可追溯性”的解释。
+**3. 影响函数追踪源文档可识别性：从机制上解释为什么同一污染源给出不同信号。**
+
+性能曲线只能呈现现象，回答不了"模型回答时是否真把源论文当成关键训练点"。作者选 OLMo2-7B-Instruct，因为它公开训练数据、可确认某些 arXiv 论文确实在训练集中：对 40 篇已知污染论文分别构造 cloze 与 LLM-generated QA，在含这些论文的 10,000 个训练文档样本里排 top-100 influential documents，影响分数用 Kronfluence / EK-FAC 近似，核心形式是 $I_f(z) \approx -\nabla_\theta f(\theta_s)^\top (G+\lambda I)^{-1}\nabla_\theta L(z,\theta_s)$。结果 cloze 题对源文档高命中、LLM 改写题低命中，正好从内部机制印证"改写削弱了源文档的可追溯性"这一解释。
 
 ### 损失函数 / 训练策略
 本文不是提出训练新模型，而是提出评测和分析流程。问题生成阶段使用 o4-mini high reasoning effort，过滤阶段用 GPT-4.1 删除重复或简单样本，并通过人工检查保证 deterministic answer、至少 5 个中间推理步骤、题意清晰和可从源材料推导。模型评测通过 OpenRouter API 运行，不允许 web search，以减少隐藏检索对时间分析的干扰。影响函数实验使用 OLMo2-7B-Instruct 的公开训练语料，并用 EK-FAC 近似 inverse-curvature vector product，以便在大模型上做可计算的训练点归因。

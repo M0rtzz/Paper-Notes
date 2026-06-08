@@ -42,34 +42,25 @@ tags:
 
 ### 整体框架
 
-输入：两份带敏感属性的样本 $(\mathbf{x}_i, \mathbf{s}_i)_{i=1}^n \sim \mu$、$(\mathbf{y}_j, \mathbf{w}_j)_{j=1}^m \sim \eta$，成本矩阵 $\mathbf{C}_{ij} = c(\mathbf{x}_i, \mathbf{y}_j)$，熵正则 $\varepsilon$，公平目标 $\mathbf{F} \in \Pi(\mathbf{p}, \mathbf{q})$（满足边际等于敏感属性分布）。
-
-输出：传输计划 $\mathbf{\Pi} \in \mathbb{R}_+^{n\times m}$，行列和分别为 $1/n \cdot \mathbf{1}_n$、$1/m \cdot \mathbf{1}_m$，并使组间质量 $\sum_{i: s_i=s, j: w_j=w} \mathbf{\Pi}_{ij}$ 尽量接近 $\mathbf{F}_{sw}$。
-
-三条求解路径形成一个谱系：**FairSinkhorn**（精确 = 硬约束）→ **Penalized OT**（直接惩罚 = 凸松弛）→ **Cost Learning**（间接重塑几何 = 可复用的双层优化）。
+标准熵正则 OT 在敏感属性与特征强相关时会产出"块对角"匹配，把弱势群体几乎全锁死在原属圈层里。本文要做的，是让规划者能用一个组间匹配概率矩阵 $\mathbf{F}$ 直接指定"哪类人该以多大比例匹配哪类资源"，再把它转译成传输计划上的线性约束。输入是两份带敏感属性的样本 $(\mathbf{x}_i, \mathbf{s}_i)_{i=1}^n \sim \mu$、$(\mathbf{y}_j, \mathbf{w}_j)_{j=1}^m \sim \eta$、成本矩阵 $\mathbf{C}_{ij} = c(\mathbf{x}_i, \mathbf{y}_j)$、熵正则 $\varepsilon$ 与公平目标 $\mathbf{F} \in \Pi(\mathbf{p}, \mathbf{q})$；输出是传输计划 $\mathbf{\Pi} \in \mathbb{R}_+^{n\times m}$，行列和满足边际约束，同时让组间质量 $\sum_{i: s_i=s, j: w_j=w} \mathbf{\Pi}_{ij}$ 尽量贴近 $\mathbf{F}_{sw}$。围绕这一目标，作者从"硬约束的精确解"逐步松弛到"可复用的间接几何重塑"，给出三条互补的求解路径。
 
 ### 关键设计
 
-1. **FairSinkhorn：在 Sinkhorn 里多一步"组级再投影"**
+**1. FairSinkhorn：把精确公平嫁接进 Sinkhorn 的乘性结构**
 
-    - 功能：在熵正则 OT 上加入精确组间约束 $\text{Tr}[\mathbf{\Pi}^\top \mathbf{B}_{sw}] = \mathbf{F}_{sw}$，其中 $\mathbf{B}_{sw}$ 是指示样本组对的 0/1 矩阵。
-    - 核心思路：把 Lagrange 对偶变量 $\mathbf{h} \in \mathbb{R}^{K_s \times K_w}$ 引入后，最优解形如 $\mathbf{\Pi} = \text{diag}(e^{\mathbf{f}/\varepsilon})(\mathbf{K} \odot \mathbf{H}) \text{diag}(e^{\mathbf{g}/\varepsilon})$，其中 $\mathbf{K} = e^{-\mathbf{C}/\varepsilon-1}$ 是标准 Sinkhorn 核，$\mathbf{H} = \sum_{sw} e^{h_{sw}/\varepsilon} \mathbf{B}_{sw}$ 是一张按 $(s,w)$ 块常值的"公平系数"矩阵。算法在标准的 $\mathbf{u}, \mathbf{v}$ 行列归一之间，多插入一步 $\mathbf{L}^{(t+1)} \leftarrow \mathbf{F} \oslash \Phi(\mathbf{u}^{(t+1)}, \mathbf{v}^{(t+1)})$ 来更新 $\mathbf{H}$，其中 $\Phi$ 把当前传输的组级质量加总。
-    - 设计动机：fairness 约束是线性的，因此可以"嫁接"到 Sinkhorn 的乘性结构上，复杂度与原算法同阶；实验显示收敛速度与原 Sinkhorn 几乎一致。这是论文中"perfect fairness"的基线，但它会强行抹平所有组间几何信息，导致传输成本可能显著上升——这也正是后两种松弛方法的动机。
+第一条路径直接把公平当硬约束求精确解，针对的痛点是"规划者要求一个分毫不差满足 $\mathbf{F}$ 的方案"。约束写成 $\text{Tr}[\mathbf{\Pi}^\top \mathbf{B}_{sw}] = \mathbf{F}_{sw}$，其中 $\mathbf{B}_{sw}$ 是标记样本组对 $(s,w)$ 的 0/1 矩阵。这个约束的关键性质是**线性**的，因此引入 Lagrange 对偶变量 $\mathbf{h} \in \mathbb{R}^{K_s \times K_w}$ 后，最优解仍保持 Sinkhorn 的乘性形式 $\mathbf{\Pi} = \text{diag}(e^{\mathbf{f}/\varepsilon})(\mathbf{K} \odot \mathbf{H}) \text{diag}(e^{\mathbf{g}/\varepsilon})$：$\mathbf{K} = e^{-\mathbf{C}/\varepsilon-1}$ 是标准 Sinkhorn 核，而 $\mathbf{H} = \sum_{sw} e^{h_{sw}/\varepsilon} \mathbf{B}_{sw}$ 是一张按 $(s,w)$ 块常值的"公平系数"矩阵。算法因此只需在标准的行列归一 $\mathbf{u}, \mathbf{v}$ 之外，多插入一步组级再投影 $\mathbf{L}^{(t+1)} \leftarrow \mathbf{F} \oslash \Phi(\mathbf{u}^{(t+1)}, \mathbf{v}^{(t+1)})$ 来更新 $\mathbf{H}$，其中 $\Phi$ 把当前传输的组级质量加总。因为只是给定点迭代加了一步块级归一，复杂度与原 Sinkhorn 同阶、收敛速度几乎不变，可以 drop-in 替换现有 pipeline。它给出的是"perfect fairness"基线，但代价是强行抹平所有组间几何信息，传输成本可能显著上升——这恰恰是后两条松弛路径要解决的问题。
 
-2. **惩罚式 OT：一个凸的"代价 - 公平性"旋钮**
+**2. 惩罚式 OT：一个凸的"代价 - 公平性"旋钮**
 
-    - 功能：用平方惩罚 $\mathcal{L}_\mathbf{F}(\mathbf{\Pi}) = \sum_{(s,w)} (\text{Tr}[\mathbf{\Pi}^\top \mathbf{B}_{sw}] - \mathbf{F}_{sw})^2 \le \rho$ 替代硬约束，并把它加进目标 $\min_\mathbf{\Pi} \text{Tr}[\mathbf{\Pi}^\top \mathbf{C}] + \varepsilon \mathbf{KL}(\mathbf{\Pi}) + \lambda \mathcal{L}_\mathbf{F}(\mathbf{\Pi})$，$\lambda$ 即"公平强度"旋钮。
-    - 核心思路：因为 $\mathcal{L}_\mathbf{F}$ 是凸的，整体仍强凸、唯一解。求解用**广义条件梯度**：在每次迭代把惩罚项围绕当前 $\mathbf{\Pi}^t$ 线性化，得到修正成本 $\mathbf{C} + \nabla \mathcal{L}_\mathbf{F}(\mathbf{\Pi}^t)$，再用标准 Sinkhorn 解这个子问题作为搜索方向，最后线搜索取凸组合，保证下降。理论上，作者证明 $\mathbb{E}|m^\star(\mu_n, \eta_n) - m^\star(\mu, \eta)| \lesssim 1/\sqrt{n}$，与标准熵正则 OT 同阶——即加 fairness 惩罚**不损失统计效率**。证明用"夹逼"：把样本最优值 $m_n^\star$ 夹在两个对线性化子问题求值的随机量之间，再调用 rakotomamonjy2015 / genevay2019 / rigollet2022 的工具链。
-    - 设计动机：精确公平太硬，但很多场景只需"接近"公平即可。$\lambda$ 让 $\mathbf{\Pi}$ 沿一条凸曲线在 Sinkhorn（$\lambda=0$）与 FairSinkhorn（$\lambda\to\infty$）之间平滑移动，规划者可根据可接受代价就地选点；并且因为是凸问题，结果可复现、可解释。
+很多场景并不需要分毫不差的公平，只要"足够接近"即可，于是第二条路径把硬约束换成平方惩罚 $\mathcal{L}_\mathbf{F}(\mathbf{\Pi}) = \sum_{(s,w)} (\text{Tr}[\mathbf{\Pi}^\top \mathbf{B}_{sw}] - \mathbf{F}_{sw})^2$，写进目标 $\min_\mathbf{\Pi} \text{Tr}[\mathbf{\Pi}^\top \mathbf{C}] + \varepsilon \mathbf{KL}(\mathbf{\Pi}) + \lambda \mathcal{L}_\mathbf{F}(\mathbf{\Pi})$，其中 $\lambda$ 就是规划者手里的"公平强度旋钮"。由于 $\mathcal{L}_\mathbf{F}$ 是凸的，整体仍强凸、唯一解，且 $\mathbf{\Pi}$ 会随 $\lambda$ 沿一条凸曲线从 Sinkhorn（$\lambda=0$）平滑滑向 FairSinkhorn（$\lambda\to\infty$），规划者可按可接受代价就地选点。求解用**广义条件梯度**：每次迭代把惩罚项围绕当前 $\mathbf{\Pi}^t$ 线性化，得到修正成本 $\mathbf{C} + \nabla \mathcal{L}_\mathbf{F}(\mathbf{\Pi}^t)$，用标准 Sinkhorn 解这个子问题作为搜索方向，再线搜索取凸组合保证下降。理论上作者证明 $\mathbb{E}|m^\star(\mu_n, \eta_n) - m^\star(\mu, \eta)| \lesssim 1/\sqrt{n}$，与标准熵正则 OT 同阶——也就是说加 fairness 惩罚**不损失统计效率**；证明思路是把样本最优值 $m_n^\star$ 夹在两个对线性化子问题求值的随机量之间，再接上 rakotomamonjy2015 / genevay2019 / rigollet2022 的工具链。这条路径胜在凸、可复现、可解释，代价是每批新样本都得重解一次。
 
-3. **双层成本学习：学一个"诱导公平"的几何**
+**3. 双层成本学习：学一个"诱导公平"的几何并能复用**
 
-    - 功能：不直接修改 $\mathbf{\Pi}$，而是学一个参数化成本 $c_\theta$，使得它诱导的熵正则 OT 解 $\mathbf{\Pi}_\varepsilon(c_\theta)$ 自然满足公平目标。
-    - 核心思路：写成双层优化 $\min_\theta \mathcal{L}_\mathbf{F}(\mathbf{\Pi}_\varepsilon(c_\theta)) + \frac{1}{\lambda} \mathscr{D}(c_\theta, c_\text{base})$ s.t. $\mathbf{\Pi}_\varepsilon(c_\theta) = \arg\min_\mathbf{\Pi} \text{Tr}[\mathbf{\Pi}^\top \mathbf{C}_\theta] + \varepsilon \mathbf{KL}(\mathbf{\Pi})$，其中 $\mathscr{D}$ 约束学到的成本不要偏离基准成本（如平方欧氏）太远。内层熵正则 OT 因强凸而有唯一解，因此双层目标良定。两种参数化：**Mahalanobis** $c_\mathbf{M}(x,y) = (x-y)^\top \mathbf{M} (x-y)$（可解释，看哪些特征方向被强调或压制）和**神经成本** $c_\theta(x,y) = \|\phi_{\theta_1}(x) - \phi_{\theta_2}(y)\|_2^2$（更灵活，能做非线性几何变换）。梯度通过迭代微分或隐式微分得到。理论上，作者证明对参数族任一 $\theta$，新样本上的 fairness 偏差满足 $\sup_\theta \mathbb{E}[|\mathcal{L}_\mathbf{F}(\mathbf{\Pi}_\varepsilon(c_\theta)) - \mathcal{L}_\mathbf{F}(\pi_\varepsilon^\star(c_\theta))|] \lesssim \exp(5R_\Theta/\varepsilon)/\sqrt{n}$，其中 $R_\Theta$ 是成本族上界。
-    - 设计动机：惩罚式 OT 对每批新样本都要重解；而**成本学**到之后可以缓存、对新数据直接跑标准 OT，省下推理时间并把 fairness 推广到未见样本。此外可解释成本（Mahalanobis）能直接告诉规划者"原始空间的哪些方向是导致不公平的元凶"。
+前两条都在直接雕刻 $\mathbf{\Pi}$，每来一批新数据就要重算；第三条路径换了思路——不动 $\mathbf{\Pi}$，而是学一个参数化成本 $c_\theta$，让它诱导出的熵正则 OT 解 $\mathbf{\Pi}_\varepsilon(c_\theta)$ 自然满足公平目标，学一次便能缓存复用。它写成双层优化 $\min_\theta \mathcal{L}_\mathbf{F}(\mathbf{\Pi}_\varepsilon(c_\theta)) + \frac{1}{\lambda} \mathscr{D}(c_\theta, c_\text{base})$，约束内层 $\mathbf{\Pi}_\varepsilon(c_\theta) = \arg\min_\mathbf{\Pi} \text{Tr}[\mathbf{\Pi}^\top \mathbf{C}_\theta] + \varepsilon \mathbf{KL}(\mathbf{\Pi})$，其中 $\mathscr{D}$ 约束学到的成本别偏离基准成本（如平方欧氏）太远。内层熵正则 OT 因强凸而有唯一解，整个双层目标因此良定，梯度通过迭代微分或隐式微分回传。成本有两种参数化：**Mahalanobis** $c_\mathbf{M}(x,y) = (x-y)^\top \mathbf{M} (x-y)$ 可解释，能直接读出原始空间里哪些特征方向被强调或压制（即不公平的"元凶方向"）；**神经成本** $c_\theta(x,y) = \|\phi_{\theta_1}(x) - \phi_{\theta_2}(y)\|_2^2$ 更灵活，能做环状等非线性几何变换。代价是泛化保证较弱：作者证明对参数族任一 $\theta$，新样本上的 fairness 偏差满足 $\sup_\theta \mathbb{E}[|\mathcal{L}_\mathbf{F}(\mathbf{\Pi}_\varepsilon(c_\theta)) - \mathcal{L}_\mathbf{F}(\pi_\varepsilon^\star(c_\theta))|] \lesssim \exp(5R_\Theta/\varepsilon)/\sqrt{n}$，其中 $R_\Theta$ 是成本族上界，该界随 $\varepsilon$ 减小指数爆炸。
 
 ### 损失函数 / 训练策略
-精确版（FairSinkhorn）只需迭代 $T$ 次定点更新，无可学参数。惩罚式 OT 是凸问题，$\lambda$ 控制 fairness 强度。成本学习版用 SGD/Adam 优化 $\theta$，每步内层跑一次熵正则 Sinkhorn；正则化项 $\mathscr{D}(c_\theta, c_\text{base})$ 用 $\|\mathbf{M} - \mathbf{I}\|_F^2$ 或网络权重 $\ell_2$ 范数实现。$\varepsilon$、$\lambda$ 通过 grid 扫描描出 trade-off 曲线。
+
+三条路径的训练负担递增：FairSinkhorn 只需迭代 $T$ 次定点更新，无可学参数；惩罚式 OT 是凸问题，由 $\lambda$ 单调控制 fairness 强度；成本学习版用 SGD/Adam 优化 $\theta$，每步内层跑一次熵正则 Sinkhorn，正则项 $\mathscr{D}(c_\theta, c_\text{base})$ 对 Mahalanobis 取 $\|\mathbf{M} - \mathbf{I}\|_F^2$、对神经成本取网络权重的 $\ell_2$ 范数。$\varepsilon$ 与 $\lambda$ 通过 grid 扫描描出完整的 trade-off 曲线。
 
 ## 实验关键数据
 

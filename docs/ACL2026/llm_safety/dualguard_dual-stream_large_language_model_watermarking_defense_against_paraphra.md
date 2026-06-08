@@ -45,23 +45,23 @@ DualGuard 首次提出**双流水印**机制：用两个互补的标准 / 对抗
 
 ### 关键设计
 
-1. **双头映射网络 $\mathcal{G}$（标准头 + 对抗头）**:
+**1. 双头映射网络 $\mathcal{G}$（标准头 + 对抗头）：让同一段前缀同时吐出两组互补水印，给后续 spoofing 检测留一个"参照系"。**
 
-    - 功能：把当前 token 前缀的嵌入 $e_t=\mathcal{E}(y_{t-\rho:t})$ 同时映射成两组水印 logits $\Theta_s(e_t), \Theta_a(e_t)$，作为后续注入和检测的"双流信号"。
-    - 核心思路：共享多层 FFN + 残差连接的主干，末端两个独立头；为保证两头都具备"语义不变性"，每一头都最小化语义损失 $\mathcal{L}_{sem}(\Theta)$，含三项——相似嵌入产生相似水印（用 $\phi(x)=\tanh(\tau(x-\bar{x}))$ 把余弦放缩到正负均衡）、单样本水印在词表上正负数相等、整个数据集上每个词位的水印期望为零，从而在 paraphrase 后仍能复现近似水印且不偏置词分布。
-    - 设计动机：单流水印只能在"被检测到"和"被绕过"之间二选一；双头可在保持各自语义不变性的同时让两路携带**互补**信息，为后续 spoofing 检测留出可比对的"参照系"。
+单流水印的死结是只能在"被检测到"和"被绕过"之间二选一——没有第二条流可以比对。DualGuard 让一个共享的多层 FFN + 残差主干在末端分出两个独立头 $\Theta_s, \Theta_a$，把当前 token 前缀的嵌入 $e_t=\mathcal{E}(y_{t-\rho:t})$ 同时映射成两组水印 logits $\Theta_s(e_t), \Theta_a(e_t)$。为了 paraphrase 后水印还能复现，每个头都最小化语义损失 $\mathcal{L}_{sem}(\Theta)$，它含三项约束：相似嵌入产生相似水印（用 $\phi(x)=\tanh(\tau(x-\bar{x}))$ 把余弦放缩到正负均衡）、单个样本的水印在词表上正负数相等、整个数据集上每个词位的水印期望为零——既保证语义不变性，又不偏置词分布。
 
-2. **内容敏感对比损失 $\mathcal{L}_{con}$**:
+两头各自具备语义不变性、却携带互补信息，这正是 spoofing 检测的前提：后面只要看两路一不一致，就能判断内容有没有被动过手脚。
 
-    - 功能：强制两个头在良性子集 $\mathcal{D}_s$ 上 cosine → $+1$、在恶意子集 $\mathcal{D}_a$ 上 cosine $\le -\eta$，即"良性一致、恶意发散"。
-    - 核心思路：对良性样本最小化 $-\cos(\Theta_s(e_i),\Theta_a(e_i))$；对恶意样本用 hinge $\max(0,\cos(\Theta_s,\Theta_a)+\eta)$ 把相似度推到分离 margin $\eta$ 之下；总损失 $\mathcal{L}=\mathcal{L}_{sem}+\lambda\mathcal{L}_{con}$ 在语义不变和内容敏感之间做权衡。
-    - 设计动机：spoofing 的本质是良性文本里突然插入恶意片段；若两头在恶意区域天然发散，则**双头距离本身就是 spoofing 的免训练统计量**，无需额外的有害内容分类器。
+**2. 内容敏感对比损失 $\mathcal{L}_{con}$：训练两头"良性时一致、恶意时发散"，让双头距离本身变成免训练的 spoofing 统计量。**
 
-3. **窗口级自适应注入 + 三路检测**:
+spoofing 的本质是良性文本里突然插入一段恶意内容。DualGuard 用对比损失把这种插入做成可观测信号：对良性子集 $\mathcal{D}_s$ 最小化 $-\cos(\Theta_s(e_i),\Theta_a(e_i))$ 把两头余弦推向 $+1$；对恶意子集 $\mathcal{D}_a$ 用 hinge $\max(0,\cos(\Theta_s,\Theta_a)+\eta)$ 把余弦压到分离 margin $-\eta$ 以下。总损失 $\mathcal{L}=\mathcal{L}_{sem}+\lambda\mathcal{L}_{con}$ 在"语义不变"和"内容敏感"之间做权衡。
 
-    - 功能：解码时每隔 $k$ 个 token 做一次头选择，把"切换轨迹"也编码进文本，使得检测端能复现路径并产出三种分数。
-    - 核心思路：注入端用 $\Theta=\Theta_s$ if $\text{dist}(y_{:t})<\alpha$ else $\Theta_a$（窗口边界判定），并以 $P_\Theta^t = F(\tanh(\gamma\Theta(e_t)))$ 投影到词表后按乘性方式 $\delta\cdot P_\mathcal{M}^t P_\Theta^t$ 注入以减小对原分布的扰动；检测端先用同样规则恢复头序列得到 $\text{Score}_{wd}=\text{mean}\,P_\Theta^t[y_t]$ 判水印，再用 $\text{Score}_{sd}=\text{mean}\,\text{dist}(y_{:t})$ 判 spoofing，最后对所有被对抗头覆盖的 token 计算命中率 $\text{Score}_{st}=\frac{1}{N}\sum\mathbb{1}(P_\Theta^t[y_t]>0)$ 用于**溯源**：模型自身生成的恶意内容命中率高、被外部 spoof 注入的恶意内容命中率低，二者形成可区分的不对称信号。
-    - 设计动机：把"何时切换"做成 token 序列的函数，使检测无须任何额外密钥即可复现；同时利用"模型自产恶意"与"外部 spoof 恶意"在头匹配上的天然差异，把溯源转化为统计阈值问题。
+这样训出来后，两头在恶意区域天然发散，**双头 cosine 距离本身就是 spoofing 信号**，根本不需要再挂一个有害内容分类器。消融里一旦去掉 $\mathcal{L}_{con}$，两头不再发散，Spoof AUC 立刻从 0.92+ 跌回随机的 0.5。
+
+**3. 窗口级自适应注入 + 三路检测：把"何时切换头"编码进 token 序列，使检测端无密钥即可复盘并同时产出水印/spoofing/溯源三种分数。**
+
+解码时每隔 $k$ 个 token 做一次头选择：$\Theta=\Theta_s$ if $\text{dist}(y_{:t})<\alpha$ else $\Theta_a$，再把选中头的输出经 $P_\Theta^t = F(\tanh(\gamma\Theta(e_t)))$ 投影到词表，按乘性方式 $P_{\mathcal{M}'}^t = P_\mathcal{M}^t + \delta\cdot P_\mathcal{M}^t P_\Theta^t$ 注入（乘性而非加性，减小对原分布的扰动）。因为切换规则只依赖已生成前缀，检测端用同样规则就能恢复整条头序列，不需要任何额外密钥或同步信息，也天然兼容流式生成。
+
+复盘出头序列后，三种分数一次算齐：$\text{Score}_{wd}=\text{mean}\,P_\Theta^t[y_t]$ 判有没有水印、$\text{Score}_{sd}=\text{mean}\,\text{dist}(y_{:t})$ 判有没有被 spoof、$\text{Score}_{st}=\frac{1}{N}\sum\mathbb{1}(P_\Theta^t[y_t]>0)$ 做溯源。溯源用的是一个微妙的不对称：模型自己生成的恶意内容会被对抗头正确命中（命中率高），而外部 spoof 注入的恶意片段命中率低，二者形成可用阈值切开的双峰信号——这就是 DualGuard 首次能"区分恶意是模型自产还是被人嫁祸"的来源。
 
 ### 损失函数 / 训练策略
 两个头联合训练：$\mathcal{L}=\mathcal{L}_{sem}(\Theta_s)+\mathcal{L}_{sem}(\Theta_a)+\lambda\mathcal{L}_{con}$；$\mathcal{L}_{sem}$ 含 cosine 拟合项 + 单样本平衡项 + 数据集级无偏项；$\mathcal{L}_{con}$ 用对比 + margin $\eta$ 把恶意子集推开。注入端关键超参：窗口 $k$、阈值 $\alpha$、缩放 $\gamma$、注入强度 $\delta$、前缀长度 $\rho$。映射网络只训一次即可服务多种 backbone（OPT-1.3B、Llama-3.1-8B-Instruct 等），因为最终通过随机投影 $F(\cdot)$ 适配任意词表。

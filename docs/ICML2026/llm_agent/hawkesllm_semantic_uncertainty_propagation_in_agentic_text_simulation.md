@@ -40,37 +40,24 @@ HawkesLLM 把多变量 Hawkes 点过程嫁接到 LLM 智能体文本模拟循环
 ## 方法详解
 
 ### 整体框架
-模型把文本传播建模在一张固定有向图 $\mathcal{G}_0=(\mathcal{N},\mathcal{E})$ 上，每个节点是一个"文本生成智能体"。每个事件 $e_m=(\tau_m, n_m, x_m)$ 由时间戳、节点编号、生成文本组成。从一个种子事件 $e_0$ 出发，循环执行 $L$ 步：
-
-1. 用拟合好的 Hawkes 过程在当前历史 $\mathcal{H}_t$ 上做 Ogata thinning，采样下一个时间戳 $\tau_t$ 和节点 $n_t$；
-2. 用 Hawkes 学到的激励权重对每个候选前驱节点打分，做阈值过滤+Top-$k$，得到压缩记忆 $\mathcal{M}_t$；
-3. 把 $(\tau_t, n_t)$、节点风格指令 $a_{n_t}$、被选中的前驱文本及其归一化权重拼成 prompt $p_t$；
-4. LLM 采样 $x_t \sim g_{\text{LLM}}(\cdot \mid p_t)$，写入历史。
-
-整个流程中 LLM 仅生成文本，节点、时间、记忆都由 Hawkes 控制；这把"调度"与"语言化"在架构上彻底分离。
+论文把"边写边读"的文本级联建模在一张固定有向图 $\mathcal{G}_0=(\mathcal{N},\mathcal{E})$ 上，每个节点是一个"文本生成智能体"，每个事件 $e_m=(\tau_m, n_m, x_m)$ 是一条"时间戳—节点—文本"三元组。核心做法是把"调度"和"语言化"彻底拆开：从种子事件 $e_0$ 出发循环 $L$ 步，每一步都先让拟合好的多变量 Hawkes 过程决定**何时由哪个节点说话**、并据此打分挑出**该回看哪些历史节点**作为压缩记忆 $\mathcal{M}_t$，再把这段记忆连同节点风格指令 $a_{n_t}$ 拼成 prompt $p_t$ 交给 LLM 采样下一条文本 $x_t \sim g_{\text{LLM}}(\cdot\mid p_t)$。整条流水线里 LLM 只负责写字，时间、节点、记忆全由 Hawkes 控制，于是语义不确定性的传播就被框成一个可监控、可读的轨迹问题。
 
 ### 关键设计
 
-1. **多变量 Hawkes 时序影响层**:
+**1. 多变量 Hawkes 时序影响层：把"谁该说话、谁影响谁"写成可读的参数化点过程。**
 
-    - 功能：估计每个节点的发生强度 $\lambda_i(s)$，并以"激励矩阵" $G_{j,i}=\alpha_{j,i}/\beta$ 给出节点 $j$ 对节点 $i$ 的累积影响。
-    - 核心思路：条件强度写作 $\lambda_i(s) = \mu_i + \sum_{(j,i)\in\mathcal{E}} \sum_{\tau_m<s, n_m=j} \phi_{j,i}(s-\tau_m)$，采用指数核 $\phi_{j,i}(u)=\alpha_{j,i} e^{-\beta u}$。固定一组 $\beta$ 候选，对每个 $\beta$ 在带收缩惩罚 $\eta\Omega(\boldsymbol{\alpha})$ 的对数似然下最大化 $(\boldsymbol{\mu},\boldsymbol{\alpha})$，再按似然+稳定性（谱半径 $\rho(\mathbf{G})$）选最佳稳定拟合。
-    - 设计动机：相比神经 TPP，参数化 Hawkes 给出可读的 $\alpha_{j,i}$ 矩阵和单一衰减 $\beta$，可以被直接暴露给 prompt 作为可解释的记忆调度信号；这是后两步策略可控的前提。
+传统做法要么让 LLM 自己挑历史（不可解释），要么用图级联模型给结构却不带文本。这里换成参数化 Hawkes：节点 $i$ 的条件强度 $\lambda_i(s) = \mu_i + \sum_{(j,i)\in\mathcal{E}} \sum_{\tau_m<s, n_m=j} \phi_{j,i}(s-\tau_m)$ 用指数核 $\phi_{j,i}(u)=\alpha_{j,i} e^{-\beta u}$ 描述历史事件的衰减激励，背景强度 $\mu_i$ 决定自发频率。拟合时固定一组 $\beta$ 候选，对每个 $\beta$ 在带收缩惩罚 $\eta\Omega(\boldsymbol{\alpha})$ 的对数似然下最大化 $(\boldsymbol{\mu},\boldsymbol{\alpha})$，再按"似然 + 稳定性（激励矩阵谱半径 $\rho(\mathbf{G})$ 受控）"挑出最佳稳定拟合。之所以坚持参数化而不用表达力更强的神经 TPP，是因为它直接产出可读的激励矩阵 $G_{j,i}=\alpha_{j,i}/\beta$ 和单一衰减 $\beta$——这两个量能原样暴露给 prompt 当调度信号，是后面记忆策略可控、可审计的前提。
 
-2. **Hawkes 记忆策略 (节点级别 Top-$k$ 选择)**:
+**2. Hawkes 记忆策略：用节点级 Top-$k$ 把"该回看谁、多重要"压成紧凑 prompt。**
 
-    - 功能：在已采样的 $(\tau_t, n_t)$ 下，把"哪些历史节点该进 prompt 以及各自权重"算出来，构成 $\mathcal{M}_t$。
-    - 核心思路：对每个候选前驱节点 $j$，记 $r_t(j)$ 为它最近一次活跃的事件索引，节点级衰减状态 $h_{j,t}=\sum_{m<t,n_m=j} e^{-\hat{\beta}(\tau_t-\tau_m)}$，朝当前节点的累计 Hawkes 贡献 $q_{j,t}=\hat{\alpha}_{j,n_t} h_{j,t}$。先用原始阈值 $\epsilon_{\text{raw}}$ 与归一化阈值 $\epsilon_{\text{norm}}$ 过滤可忽略节点，再取 Top-$k$ 集合 $\mathcal{I}_t$，最终权重为 $w_{j,t}=q_{j,t}/\sum_{\ell\in\mathcal{I}_t} q_{\ell,t}$，每个保留节点只放一条"最新"代表文本，权重以文本注释形式写进 prompt。
-    - 设计动机：Hawkes 的节点级激励天然给出"该回看谁、多重要"的连续分数；节点级（而非事件级）聚合保证 prompt 紧凑，避免 LLM 在长上下文中失焦；Top-$k$ 与阈值是工程化压缩，但语义来自 Hawkes 本身，因此调度与语言层可独立审计。
+长上下文 LLM 并不会均匀利用所有历史，无差别堆叠记忆只会稀释注意力，所以需要一个结构化的"该回看谁"信号。在已采样的 $(\tau_t, n_t)$ 下，对每个候选前驱节点 $j$ 维护一个节点级衰减状态 $h_{j,t}=\sum_{m<t,n_m=j} e^{-\hat{\beta}(\tau_t-\tau_m)}$，再算它朝当前节点的累计 Hawkes 贡献 $q_{j,t}=\hat{\alpha}_{j,n_t} h_{j,t}$。先用原始阈值 $\epsilon_{\text{raw}}$ 与归一化阈值 $\epsilon_{\text{norm}}$ 滤掉可忽略的节点，再取 Top-$k$ 集合 $\mathcal{I}_t$，每个保留节点的权重归一化为 $w_{j,t}=q_{j,t}/\sum_{\ell\in\mathcal{I}_t} q_{\ell,t}$。关键是做**节点级而非事件级**聚合：每个保留节点只放它最近一次活跃（事件索引 $r_t(j)$）的那条代表文本，并把权重以注释形式写进 prompt。这样 Hawkes 的连续激励分数天然回答了"该回看谁、多重要"，Top-$k$ 与阈值只是把它工程化压缩成至多 $k$ 条的紧凑记忆，语义来源仍是 Hawkes，因此调度层和语言层能各自独立审计。
 
-3. **局部/全局漂移诊断 + 局部语义对齐**:
+**3. 局部/全局漂移诊断 + 局部语义对齐：把轨迹级不确定性拆成两个可比较的锚点。**
 
-    - 功能：把"轨迹级语义不确定性"拆成相对种子的全局漂移、相对加权前驱中心的局部漂移，并用"与本地保留参考集"的语义对齐 $S_t$ 度量是否仍处于话题邻域内。
-    - 核心思路：用嵌入函数 $\mathbf{z}(\cdot)$ 计算 $S_t = \cos(\mathbf{z}(x_t), \frac{1}{|\mathcal{R}_t|}\sum_{r\in\mathcal{R}_t} \mathbf{z}(r))$，其中 $\mathcal{R}_t$ 是 $\pm 12$ 小时（必要时放宽到 $\pm 24$）内同节点的真实 held-out 文本；同时定义 $D_t^{\text{global}}=1-\cos(\mathbf{z}(x_t),\mathbf{z}(x_0))$ 和 $D_t^{\text{local}}=1-\cos(\mathbf{z}(x_t),\bar{\mathbf{z}}_t)$，其中 $\bar{\mathbf{z}}_t=\sum w_{j,t}\mathbf{z}(x_{r_t(j)})$ 是按记忆权重加权的前驱中心。
-    - 设计动机：精确续写是不可恢复的（同一时刻可能有多家媒体写不同标题），但本地邻域内的语义稳定性是可比较的；把不确定性分解成"是否远离种子"和"是否远离刚被喂进 prompt 的记忆"才能区分"长程漂移"与"局部脱钩"两种失败模式。
+精确续写本就不可恢复——同一时刻多家媒体会写出不同标题，没法要求逐字命中；但"是否还待在话题邻域内"是可比较的。于是用嵌入函数 $\mathbf{z}(\cdot)$ 定义局部语义对齐 $S_t = \cos\!\big(\mathbf{z}(x_t),\ \tfrac{1}{|\mathcal{R}_t|}\sum_{r\in\mathcal{R}_t} \mathbf{z}(r)\big)$，其中 $\mathcal{R}_t$ 是 $\pm 12$ 小时（必要时放宽到 $\pm 24$）内同节点的真实 held-out 文本，衡量生成文本有没有落在本地参考邻域里。同时把漂移拆成两条互补的轴：全局漂移 $D_t^{\text{global}}=1-\cos(\mathbf{z}(x_t),\mathbf{z}(x_0))$ 看"离种子有多远"，局部漂移 $D_t^{\text{local}}=1-\cos(\mathbf{z}(x_t),\bar{\mathbf{z}}_t)$ 看"离刚喂进 prompt 的加权记忆有多远"，其中前驱中心 $\bar{\mathbf{z}}_t=\sum w_{j,t}\mathbf{z}(x_{r_t(j)})$ 正好复用了上一步的记忆权重。两条轴一起看，才能把"长程缓慢漂走"和"局部突然脱钩"这两种不同的失败模式区分开。
 
 ### 损失函数 / 训练策略
-LLM 端无微调，只是被 Qwen2.5 / Ollama 调用（temperature 0.35、top-p 0.9、最多 75 new tokens）。训练只发生在 Hawkes 层：在指定 $\beta$ 下，最大化带收缩惩罚 $\eta\Omega(\boldsymbol{\alpha})$ 的对数似然 $\ell_\beta(\boldsymbol{\mu},\boldsymbol{\alpha};\mathcal{D})=\sum_m \log\lambda_{n_m}(\tau_m) - \sum_i \int_0^T \lambda_i(s)ds$，按似然+稳定性挑选 $\beta$。在 held-out 评测中，Hawkes 只在 train 段（198 事件）上重拟合。
+LLM 端完全不微调，只是被 Qwen2.5 / Ollama 调用（temperature 0.35、top-p 0.9、最多 75 new tokens），真正的"训练"只发生在 Hawkes 层：在指定 $\beta$ 下最大化带收缩惩罚的对数似然 $\ell_\beta(\boldsymbol{\mu},\boldsymbol{\alpha};\mathcal{D})=\sum_m \log\lambda_{n_m}(\tau_m) - \sum_i \int_0^T \lambda_i(s)\,ds$，再用似然 + 稳定性挑 $\beta$。held-out 评测时 Hawkes 只在 train 段（198 事件）上重拟合，保证测试段不泄漏。
 
 ## 实验关键数据
 

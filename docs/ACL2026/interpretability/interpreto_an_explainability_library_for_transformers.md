@@ -46,23 +46,18 @@ attribution pipeline 通常有三步：实例化 explainer，输入 HuggingFace 
 concept pipeline 有四步。第一步用 `ModelWithSplitPoints` 包装 HuggingFace 模型，指定 split points，并在数据集上提取激活。第二步用 Semi-NMF、PCA、ICA、SAE 等方法学习 concept space。第三步用 top-k activating examples、tokens/ngrams 或 LLM labels 为概念赋予人类可读标签。第四步通过 concept-to-output gradients 或 concept x gradients 估计概念对预测的贡献。
 
 ### 关键设计
-1. **统一 attribution API 覆盖分类与生成**:
 
-	- 功能：用同一类 explainer 解释 SequenceClassification 和 CausalLM 模型。
-	- 核心思路：扰动方法包括 KernelSHAP、LIME、Occlusion、Sobol；梯度方法包括 GradientSHAP、Integrated Gradients、Saliency、SmoothGrad、SquareGrad、VarGrad，并支持 logits/softmax/log-softmax 输出空间和 token/word/sentence granularity。
-	- 设计动机：NLP attribution 的可读性强依赖粒度和任务目标，统一接口能减少用户在不同库之间切换的成本。
+**1. 统一 attribution API 同时覆盖分类与生成。**
 
-2. **端到端 concept-based pipeline**:
+NLP attribution 的可读性高度依赖粒度和任务目标，可现有库往往只服务一种任务——擅长 token attribution 的不支持生成模型，反之亦然，用户被迫在多个库之间反复切换。Interpreto 用同一类 explainer 同时解释 SequenceClassification 和 CausalLM：扰动方法收齐了 KernelSHAP、LIME、Occlusion、Sobol，梯度方法收齐了 GradientSHAP、Integrated Gradients、Saliency、SmoothGrad、SquareGrad、VarGrad，并允许在 logits/softmax/log-softmax 三种输出空间和 token/word/sentence 三种 granularity 之间自由组合。分类场景里 LIME 能指出 “thrilled” 驱动 BERT 把句子判成 joy，生成场景里 Occlusion 能解释 Qwen3-0.6B 某个输出 token 受哪些输入影响——同一套接口、不同任务，用户不必重学。
 
-	- 功能：从模型激活中学习概念、解释概念、并估计概念重要性。
-	- 核心思路：库用 nnsight 做模型切分，用 overcomplete 等实现概念学习，支持 neurons-as-concepts、dictionary learning 和 sparse autoencoders；解释方法包括 top-k vocabulary tokens、MaxAct 和 LLM-based labeling。
-	- 设计动机：概念解释通常被拆散在多个研究工具里；Interpreto 的价值在于把 split、learn、interpret、score 变成一个可执行 workflow。
+**2. 端到端的 concept-based pipeline 把四个分散环节串成一条流水线。**
 
-3. **demo 与 runnable snippets 连接研究和实践**:
+概念解释最大的工程痛点不是单个算法难，而是它被拆散在好几个研究工具里：模型切分、激活收集、概念学习、标签解释、重要性打分各用各的代码，普通用户很难拼完整。Interpreto 把这四步装进一个可执行 workflow：第一步用 `ModelWithSplitPoints` 包装 HuggingFace 模型、指定 split points 并在数据集上提取激活；第二步用 Semi-NMF、PCA、ICA、SAE 等方法（底层依赖 overcomplete）学习 concept space，支持 neurons-as-concepts、dictionary learning 和 sparse autoencoders；第三步用 top-k activating examples、tokens/ngrams 或 LLM labels 给概念赋人类可读标签；第四步通过 concept-to-output gradients 或 concept×gradients 估计每个概念对预测的贡献。split、learn、interpret、score 一气呵成，这正是库的核心价值所在。
 
-	- 功能：让用户先在网页上探索预计算解释，再复制最小代码到本地改造。
-	- 核心思路：demo website 覆盖 3 个分类器和 3 个生成模型，用户可选择 task、model、dataset、explanation family、method subset 和实例。
-	- 设计动机：解释工具的门槛不只是 API，还有结果如何理解、如何复现；gallery + snippets 降低了试用成本。
+**3. demo gallery 加 runnable snippets，把研究门槛降到“先看再抄”。**
+
+解释工具的门槛从来不只是 API，还有“结果怎么看懂、怎么复现”。Interpreto 的 demo website 覆盖 3 个分类器和 3 个生成模型，用户可以先在网页上挑 task、model、dataset、explanation family、method subset 和具体实例，直接浏览预计算好的解释；看明白了再把对应的最小可运行代码片段复制到本地改造。这个“先在浏览器里探索、再落地到代码”的路径，把试用一个解释方法的成本压到了很低。
 
 ### 损失函数 / 训练策略
 这是一篇系统/工具论文，没有提出新的训练损失。库本身依赖已有解释方法的计算过程。attribution 方法内部可分为 perturbations、inference/gradients、aggregation 三个阶段，用户新增方法时主要实现对应组件。concept 方法则按 activation extraction、concept model fitting、interpretation、importance scoring 执行。运行环境支持 Python 3.10 到 3.13，torch >= 2.0，transformers >= 4.22，nnsight >= 0.5.1。

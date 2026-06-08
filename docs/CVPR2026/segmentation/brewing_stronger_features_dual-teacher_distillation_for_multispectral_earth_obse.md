@@ -46,43 +46,37 @@ tags:
 
 ### 整体框架
 
-如图2所示：
-- **输入增强**：从Sentinel-2多光谱图像生成多尺度全局/局部视图
-- **多光谱分支（红色）**：MS教师（EMA更新）+ 学生，对比自蒸馏
-- **光学分支（蓝色）**：冻结DINOv3教师 + 学生，特征蒸馏
-- **学生网络（绿色）**：Swin Transformer骨干，10通道+3通道双patch embedding
+DEO 想要的是一个**单一学生网络**，既能吃多光谱（MS）输入又能吃光学（RGB）输入，且两边都强。它用一张共享骨干、两套教师把这件事串起来：从一张 Sentinel-2 多光谱图像出发，先做多尺度增强生成全局/局部视图，然后兵分两路喂给同一个学生。一路是**多光谱分支**，学生和一个 EMA 更新的 MS 教师做对比自蒸馏，逼学生学出结构化的光谱特征；另一路是**光学分支**，学生和一个冻结的 DINOv3 教师做特征蒸馏，把现成的光学语义先验灌进来。学生本体是 Swin Transformer 骨干，前面挂一个双 patch embedding（MS 走 10 通道、光学走 3 通道），之后所有 Transformer 层共享——这样两种模态最终落到同一个特征空间里。
 
 ### 关键设计
 
-#### 1. 多光谱对比自蒸馏
+**1. 多光谱对比自蒸馏：用对比目标而非 MIM 来撑起全局语义。**
 
-- **功能**：学习鲁棒的多光谱表示
-- **核心思路**：基于DINO框架，MS教师权重通过EMA更新。损失函数结合余弦相似度（压缩）和编码率正则化（膨胀）：
-  $$\mathcal{L}_{MS} = \mathcal{L}_\text{cos}(p_M(\mathbf{z}_g^M), p_s^{MS}(\mathbf{z}_{g \cup l}^M)) - \gamma \mathcal{L}_{CR}(\cdot)$$
-  其中 $\mathcal{L}_{CR} = -\log\det(\mathbf{I} + \text{Cov}[\mathbf{z}])$ 防止表示坍塌
-- **设计动机**：对比学习产生对分布偏移不变的强语义表示，编码率正则化替代传统的温度缩放/负样本策略防止坍塌
+遥感预训练长期靠掩码图像建模（MIM），它擅长局部重建却管不住全局语义结构，这正是现有 MS 基础模型语义偏弱的根因。DEO 改走 DINO 那套对比自蒸馏：MS 教师的权重由学生的 EMA 缓慢更新，学生看局部+全局视图、教师只看全局视图，逼学生把不同视图映射到一致的特征上。损失同时压缩和膨胀特征空间——余弦项把正对拉近，编码率正则项把整体表示撑开防止坍塌：
 
-#### 2. 光学VFM蒸馏
+$$\mathcal{L}_{MS} = \mathcal{L}_\text{cos}(p_M(\mathbf{z}_g^M), p_s^{MS}(\mathbf{z}_{g \cup l}^M)) - \gamma \mathcal{L}_{CR}(\cdot)$$
 
-- **功能**：将DINOv3的全局语义和像素级特征迁移到学生
-- **核心思路**：蒸馏三类特征，各用独立投影头：
-  $$\mathcal{L}_O = \alpha_1 \mathcal{L}_\text{cos}(\text{[cls]}_F) + \alpha_2 \mathcal{L}_\text{cos}(\text{[p]}_F) + \alpha_3 \mathcal{L}_\text{cos}(\text{[p]}_\text{mid})$$
-  - $\text{[cls]}_F$：最终层class token（全局语义）
-  - $\text{[p]}_F$：最终层patch token（像素级特征）
-  - $\text{[p]}_\text{mid}$：中间层patch token（中层特征）
-- **设计动机**：仅蒸馏class token对dense prediction任务不够，需patch-level特征；中间层特征提供互补的中层语义信息
+其中编码率正则项 $\mathcal{L}_{CR} = -\log\det(\mathbf{I} + \text{Cov}[\mathbf{z}])$ 度量特征协方差的体积，越大说明特征越铺得开。它替代了传统对比学习里靠负样本/温度缩放来防坍塌的做法，更直接地约束表示不退化到一个点。这样学出来的光谱表示对分布偏移不变、语义更结构化。
 
-#### 3. 骨干选择与数据策略
+**2. 光学 VFM 蒸馏：匹配教师目标，把 DINOv3 的语义灌进多光谱学生。**
 
-- **骨干**：Swin Transformer（patch size 4 vs ViT的16），产生更精细的特征分辨率
-- **数据**：fMoW-Sentinel（MS）+ fMoW-RGB（光学），用15万张高分辨率航空图替换低分辨率光学波段
-- **双patch embedding**：MS用10通道，光学用3通道，共享后续Transformer层
+VFM（如 DINOv3）有极强的光学语义先验，但完全不懂多光谱；从头训一个 MS 基础模型又太贵。DEO 的关键洞察是：**学生的预训练目标要和教师的训练目标对上**——DINOv3 本身就是对比自蒸馏训出来的，所以让学生也用对比自蒸馏，两边的潜在特征空间才容易对齐，蒸馏才不别扭（这恰是 MIM+VFM 那条路走不通的原因）。具体蒸馏三类特征、各配独立投影头：
+
+$$\mathcal{L}_O = \alpha_1 \mathcal{L}_\text{cos}(\text{[cls]}_F) + \alpha_2 \mathcal{L}_\text{cos}(\text{[p]}_F) + \alpha_3 \mathcal{L}_\text{cos}(\text{[p]}_\text{mid})$$
+
+三项分别对应最终层 class token $\text{[cls]}_F$（全局语义）、最终层 patch token $\text{[p]}_F$（像素级特征）、中间层 patch token $\text{[p]}_\text{mid}$（中层语义）。只蒸馏 class token 对分割这类 dense prediction 任务远不够，必须把 patch-level 特征也传过去；而中间层 patch token 又补上了一层互补的中层信息。值得注意的是教师是 ViT、学生是 Swin，跨架构蒸馏照样成立。
+
+**3. 骨干与数据策略：用 Swin 换更细的分辨率，用高分光学补低分波段。**
+
+dense prediction 吃特征分辨率，而 ViT 的 patch size 16 太粗。DEO 把学生换成 Swin Transformer（patch size 4），直接拿到更精细的特征图。数据上混用 fMoW-Sentinel（多光谱）和 fMoW-RGB（光学）联合预训练；由于 Sentinel-2 的光学波段本身分辨率低（10–60m），作者用约 15 万张高分辨率航空图替换掉低分辨率光学波段，给光学分支喂更清晰的监督。前端的双 patch embedding 让 10 通道 MS 和 3 通道光学各走各的入口，之后共享 Transformer——既隔开了模态差异，又让语义在共享层里融合。
 
 ### 损失函数
 
+两条分支的目标联合优化，总损失为：
+
 $$\mathcal{L} = -\mathcal{L}_{MS} - \mathcal{L}_O$$
 
-多光谱和光学目标联合优化，权重系数 $\alpha_1=1, \alpha_2=0.5, \alpha_3=0.5, \gamma=1$。
+权重系数取 $\alpha_1=1,\ \alpha_2=0.5,\ \alpha_3=0.5,\ \gamma=1$。
 
 ## 实验关键数据
 

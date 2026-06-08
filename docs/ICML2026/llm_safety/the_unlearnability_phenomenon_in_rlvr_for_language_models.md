@@ -40,38 +40,31 @@ tags:
 
 ## 方法详解
 
-本文不是提一个新算法，而是一篇 *diagnostic* 论文：用一组精心设计的对照实验把「不可学习」这个现象量化、归因、定位到表征层面。整体研究框架可以看成「现象 → 排除假设 → 建立新假设 → 验证修复方案」四阶段。
-
 ### 整体框架
-研究流程分四步：
-1. **现象定义**：在 GRPO + 动态采样下，跑三个独立的训练 run，把 *initial pass@1 < 0.1* 的难样本根据「最终 pass@1 是否仍 < $\tau=0.1$（$N=32$ rollout 估计）」分成 $\mathcal{D}_l$（可学）与 $\mathcal{D}_u$（不可学），同时排除「整个训练从未出现过正样本」的样本，取三次 run 的交集以降噪；
-2. **优化端假设排除**：针对「正 rollout 稀缺」做 oversampling-with-replay，针对「梯度正则化」做 clip-higher / 去 KL 项，全部失败；
-3. **表征侧归因**：用 cross-example gradient similarity 与 GPT-5-mini 打分的 reasoning-quality 两个独立信号，证明 $\mathcal{D}_u$ 是梯度离群点 + 推理链质量低；
-4. **修复方案对照**：数据增广（相似题 + 子问题）与 mid-training（OctoThinker）二选一，前者失败、后者有效。
+
+本文不提新算法，而是一篇 *diagnostic* 论文：用一组对照实验把「不可学习」这个现象先量化、再归因、最后定位到表征层面。整条线索按「现象定义 → 排除优化端假设 → 建立表征侧解释 → 验证修复方案」四步推进——先在 GRPO + 动态采样下跑出一批「有正奖励却学不会」的样本，再逐个反证「正样本太少 / 裁剪 / KL 正则」这些优化端解释，转而用 cross-example gradient similarity 证明这些样本是优化空间里的孤立离群点，最后对比数据增广与 mid-training 两条修复路，发现只有改 base model 表征才有效。
 
 ### 关键设计
 
-1. **不可学样本的工作定义与三组切分**：
+**1. 不可学样本的工作定义与三组切分：把「学不会」变成一个可复现、well-defined 的研究对象。**
 
-    - 功能：把「学不会」这个直观感觉变成可复现的样本子集，让后续梯度/推理质量分析有明确分析对象。
-    - 核心思路：先用 GRPO + dynamic sampling 做完整训练，再以 *initial success rate* $\geq 0.1$ 切出 *easy*；对剩余 *hard* 样本估计 *final* pass@1（$N=32$ 个 rollout），最终 pass@1 $<\tau=0.1$ 的归入 $\mathcal{D}_u$，否则归入 $\mathcal{D}_l$；并显式排除「整个训练过程一次正样本都没有」的样本，保证「有正奖励信号但模型仍学不会」这一研究问题是 well-defined 的。为降噪做三次独立 run，对 $\mathcal{D}_u/\mathcal{D}_l$ 取交集、对「无正奖励」样本取并集。
-    - 设计动机：以往讨论难样本时往往把「没有正样本」和「有正样本但学不会」混为一谈，本文要分离出后者作为研究对象，否则任何「加正样本」类干预都会显得有效。
+以往讨论难样本时，常把「整个训练一次正样本都没采到」和「有正样本却学不会」混为一谈，于是任何「多造正样本」的干预都会显得有效；本文要先把后者干净地分离出来。具体做法是先用 GRPO + dynamic sampling 做一轮完整训练，把 *initial success rate* $\geq 0.1$ 的样本切成 *easy*；对剩下的 *hard* 样本用 $N=32$ 个 rollout 估计 *final* pass@1，最终 pass@1 $<\tau=0.1$ 的归入不可学集 $\mathcal{D}_u$，否则归入可学集 $\mathcal{D}_l$，并显式剔除「整个训练过程从未出现正样本」的样本，保证研究问题确实是「有正奖励信号但模型仍学不会」。为降噪做三次独立 run，对 $\mathcal{D}_u/\mathcal{D}_l$ 取交集、对「无正奖励」样本取并集。有了这个划分，后续所有梯度/推理质量分析才有明确对象，也才能让「优化端假设」的反证不被「正样本稀缺」这一混淆因素污染。
 
-2. **Oversampling-with-Replay 反证「正样本稀缺」假设**：
+**2. Oversampling-with-Replay：反证「正样本稀缺」假设。**
 
-    - 功能：在保证「每个 prompt 每个 batch 内固定 $k_{\text{pos}}=1$ 个正样本 + $k-k_{\text{pos}}=7$ 个负样本」的前提下重训，观察 $\mathcal{D}_u$ 是否会变得可学。
-    - 核心思路：每个 prompt 先采样 $4k$ 个 rollout 再下采样到 $k=8$；若当前 batch 的正样本数量不足，从经验回放 buffer 里复用此前采到的正 rollout（每条最多回放两次），并在回放/下采样后再计算 advantage $\hat{A}_i = \frac{\mathbb{1}[y_i=y^*] - \text{mean}}{\text{std}}$。reward 曲线表明：这种方法显著拖慢了 $\mathcal{D}_l$ 的学习速度（说明 intervention 是真的生效了），但 $\mathcal{D}_u$ 的 reward 曲线和 baseline 几乎重合。附录里进一步用「只在 $\mathcal{D}_u$ 上做 SFT 蒸馏正确答案」和「$k=64$ 大规模 rollout」两个更激进的干预交叉验证，差距同样不变。
-    - 设计动机：要排除「正样本太少所以梯度被淹没」这一最自然的解释；如果在两个独立维度（每 batch 强行配 1 正 7 负、把 $k$ 提到 64）上都填不平 gap，那 gap 的成因就不在「正样本数量」上。
+如果 $\mathcal{D}_u$ 学不会只是因为正 rollout 太少、梯度被负样本淹没，那么强行喂够正样本就该救活它。作者据此在每个 prompt、每个 batch 内固定配 $k_{\text{pos}}=1$ 个正样本 + $k-k_{\text{pos}}=7$ 个负样本重训：先采 $4k$ 个 rollout 再下采样到 $k=8$，若当前 batch 正样本不够，就从经验回放 buffer 里复用此前采到的正 rollout（每条最多回放两次），并在回放/下采样后再算 advantage $\hat{A}_i = \frac{\mathbb{1}[y_i=y^*] - \text{mean}}{\text{std}}$。结果 reward 曲线显示这套干预确实生效——它明显拖慢了 $\mathcal{D}_l$ 的学习速度——但 $\mathcal{D}_u$ 的曲线与 baseline 几乎重合。附录再用「只在 $\mathcal{D}_u$ 上做 SFT 蒸馏正确答案」和「$k=64$ 大规模 rollout」两个更激进的方向交叉验证，gap 同样不动。当两个独立维度（每 batch 强配 1 正 7 负、把 $k$ 提到 64）都填不平差距时，成因就基本可以排除在「正样本数量」之外。
 
-3. **Cross-Example Gradient Similarity 直击表征缺陷**：
+**3. Cross-Example Gradient Similarity：把「不可学」从 reward 曲线提升到优化空间几何。**
 
-    - 功能：把「不可学」从 reward 曲线层面提升到优化空间几何层面的论断——$\mathcal{D}_u$ 的样本梯度方向与其余样本不一致，所以其它样本上学到的更新不会迁移过来。
-    - 核心思路：每组采 100 个样本，每个样本在 *初始策略* 下采 1000 个 rollout，过滤出正确 rollout，按公式 (1) 算 GRPO loss 的梯度——先在 response 内部对 token 平均，再在 response 之间平均，得到每个样本一个梯度向量；为算力可控，挂一个固定随机初始化的 LoRA adapter，只对 LoRA 参数求梯度（在 0.5B 模型上验证 LoRA-based 与全参数 gradient similarity 高度相关）；最后计算样本间的 cosine similarity $\cos(g_i, g_j)$。结果（图 1c / 图 6）显示：*easy* 样本之间梯度高度对齐，*learnable* 居中，*unlearnable* 与所有组都低相似度，即每个不可学样本都是优化空间里的离群点；step 50 时也是同样格局，说明这不是初始化偶然。配套的 reasoning-quality 分析（用 GPT-5-mini 给正确 rollout 的推理链打 0–5 分）则在「正确答案」之外揭示 $\mathcal{D}_u$ 的推理链多半靠 shortcut/启发式拼凑出答案——典型反例是「$|x+y+z|+|x+y-z|\leq 8$ 体积题」里模型推理过程明显错乱却凑对最终答案，正好印证「outcome reward 会把 fake reasoning 也奖励掉，让训练信号噪声很大」。
-    - 设计动机：要从「现象」过渡到「机制」必须给出一个可观测的、与训练动力学直接挂钩的量——梯度相似度同时解释了「为什么其他样本上的学习不迁移到 $\mathcal{D}_u$」和「为什么 oversampling 也救不了」。
+排除了优化端解释后，需要一个可观测、且和训练动力学直接挂钩的量来给出机制性解释——梯度相似度正好能同时回答「为什么其它样本上的学习不迁移到 $\mathcal{D}_u$」和「为什么 oversampling 也救不了」。做法是每组取 100 个样本，每个样本在 *初始策略* 下采 1000 个 rollout、过滤出正确的那些，按公式 (1) 算 GRPO loss 的梯度（先在 response 内部对 token 平均，再在 response 之间平均，得到每个样本一个梯度向量）；为让算力可控，挂一个固定随机初始化的 LoRA adapter、只对 LoRA 参数求梯度（在 0.5B 模型上已验证 LoRA-based 与全参数 gradient similarity 高度相关），最后计算样本间的余弦相似度 $\cos(g_i, g_j)$。图 1c / 图 6 显示：*easy* 样本之间梯度高度对齐，*learnable* 居中，*unlearnable* 与所有组都低相似度——即每个不可学样本都是优化空间里的孤立离群点，step 50 时仍是同样格局，说明这不是初始化偶然。配套的 reasoning-quality 分析（用 GPT-5-mini 给正确 rollout 的推理链打 0–5 分）则在「答案对不对」之外揭示：$\mathcal{D}_u$ 的正确 rollout 多半靠 shortcut/启发式凑答案——典型反例是「$|x+y+z|+|x+y-z|\leq 8$ 体积题」里模型推导明显错乱却凑对最终答案，正印证 outcome reward 会把 fake reasoning 一并奖励掉、让训练信号噪声很大。
 
 ### 损失函数 / 训练策略
+
 沿用标准 GRPO + dynamic sampling。GRPO 目标如下（裁剪 $\varepsilon$、KL 系数 $\beta$）：
-$\mathcal{L}_{\text{GRPO}}(\theta,(x,y^*)) = -\frac{1}{k}\sum_i\frac{1}{|y_i|}\sum_t \min(r_{i,t}\hat{A}_i, \text{clip}(r_{i,t},1-\varepsilon,1+\varepsilon)\hat{A}_i) - \beta\,\text{KL}(\pi_\theta\|\pi_{\text{ref}})$，其中 $r_{i,t}=\pi_\theta(y_{i,t}|x,y_{i,<t})/\pi_{\theta_{\text{old}}}(y_{i,t}|x,y_{i,<t})$。dynamic sampling 把当前 batch 中 $\text{std}(\{\mathbb{1}[y_i=y^*]\})=0$ 的 prompt 过滤掉以提高效率。消融时使用 clip-higher 和去掉 KL 项两种变体；mid-training 实验则换用 OctoThinker-3B-Hybrid/Long-Base 作为初始策略。
+
+$$\mathcal{L}_{\text{GRPO}}(\theta,(x,y^*)) = -\frac{1}{k}\sum_i\frac{1}{|y_i|}\sum_t \min(r_{i,t}\hat{A}_i, \text{clip}(r_{i,t},1-\varepsilon,1+\varepsilon)\hat{A}_i) - \beta\,\text{KL}(\pi_\theta\|\pi_{\text{ref}})$$
+
+其中 $r_{i,t}=\pi_\theta(y_{i,t}|x,y_{i,<t})/\pi_{\theta_{\text{old}}}(y_{i,t}|x,y_{i,<t})$。dynamic sampling 把当前 batch 中 $\text{std}(\{\mathbb{1}[y_i=y^*]\})=0$ 的 prompt 过滤掉以提高效率。消融时使用 clip-higher 和去掉 KL 项两种变体；mid-training 实验则换用 OctoThinker-3B-Hybrid/Long-Base 作为初始策略。
 
 ## 实验关键数据
 

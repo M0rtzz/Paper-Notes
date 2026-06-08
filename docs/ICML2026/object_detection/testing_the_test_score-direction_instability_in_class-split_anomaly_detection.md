@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **邻域类泄漏指标 $\ell_k(i)$ 与数据集级病态指数 $L_k$**:
+**1. 邻域类泄漏指标 $\ell_k(i)$ 与数据集级病态指数 $L_k$：跑分前先量化"几何和语义类对不对齐"。**
 
-    - 功能：在固定表示空间下，定量描述"局部几何是否与语义类一致"，从而预测类内拆分协议是否良定。
-    - 核心思路：对每个样本 $i$，取它在表示空间中欧氏距离意义下的 $k$ 近邻 $\mathcal N_k(i)$，定义 $\ell_k(i)=\frac1k\sum_{j\in\mathcal N_k(i)}\mathbb I[y_j\neq y_i]$；$\ell_k(i)\approx 0$ 表示邻域类纯净，$\ell_k(i)\approx 1$ 表示几乎全是别的类。再对全样本平均 $L_k(\mathcal T;r)=\frac1m\sum_{i=1}^m\ell_k(i)$ 得到数据集级病态指数。
-    - 设计动机：(a) 不需要训练任何检测器，纯几何统计，可在跑 AUROC 前先做；(b) 直接对应"类条件流形重叠程度"，而后者正是单调-于-距离 / 密度的 AD 评分会失效的根因；(c) 它只依赖表示 $r$，因此可以在像素空间 vs. VAE 潜空间之间做对照实验。
+类内拆分协议会失效，根因是某个被指定为"异常"的语义类，其样本在表示空间里可能比一部分正常样本还靠近正常混合分布的核心——只要 AD 评分单调于"到正常的距离"或局部密度就会被这种重叠击穿。作者用一个纯几何统计直接刻画重叠程度：对每个样本 $i$ 取它在表示空间欧氏距离下的 $k$ 近邻 $\mathcal N_k(i)$，定义 $\ell_k(i)=\frac1k\sum_{j\in\mathcal N_k(i)}\mathbb I[y_j\neq y_i]$（邻域里异类比例，$\approx 0$ 表示邻域纯净、$\approx 1$ 表示几乎全是别的类），再全样本平均得到 $L_k(\mathcal T;r)=\frac1m\sum_{i=1}^m\ell_k(i)$。它不需要训练任何检测器、纯几何统计，可以在跑 AUROC 之前先做；又只依赖表示 $r$，所以能在像素空间 vs. VAE 潜空间之间做对照——$L_k$ 高就说明这个协议本质是几何应力测试，而非 OOD 能力的证据。
 
-2. **方向不稳定率 $\rho_{\mathrm{dir}}$ 与反转率 $\rho_{\mathrm{inv}}$**:
+**2. 方向不稳定率 $\rho_{\mathrm{dir}}$ 与反转率 $\rho_{\mathrm{inv}}$：把"AUROC 偏低"和"AUROC 方向不一致"两种失效分开。**
 
-    - 功能：把"基准是否给出一致的评分方向"刻画成单一标量，区分"AUROC 偏低"与"AUROC 方向不一致"两种失效。
-    - 核心思路：先定义偏离机会率的符号 $d(c)=\mathrm{sign}(\mathrm{AUC}(c)-1/2)\in\{-1,0,+1\}$，其中 $|\mathrm{AUC}(c)-1/2|\le\epsilon$ 视为 0；再用 $\rho_{\mathrm{dir}}(\epsilon)=1-\frac1K\max\{\sum_c\mathbb I[d(c)=+1],\sum_c\mathbb I[d(c)=-1]\}$ 度量方向投票的不一致程度——$\rho_{\mathrm{dir}}\to 0$ 表示所有类都偏好同一方向，$\rho_{\mathrm{dir}}\to 0.5$ 表示方向五五开。反转率 $\rho_{\mathrm{inv}}=\frac1K\sum_c\mathbb I[\mathrm{AUC}(c)<1/2]$ 量化纯反转。此外还有近随机率 $\rho_{\mathrm{rnd}}(\epsilon)=\frac1K\sum_c\mathbb I[|\mathrm{AUC}(c)-1/2|\le\epsilon]$ 和 AUROC 方差 $\sigma^2_{\mathrm{AUC}}$。
-    - 设计动机：单看 AUROC 均值会掩盖"有些类很高、有些类反转"的双峰失效；$\rho_{\mathrm{dir}}$ 抓住的恰好是"翻符号也救不了"的方向不一致——因为部署时异常类未知，无法知道该不该翻符号。
+单看 AUROC 均值会掩盖"有些类很高、有些类反转"的双峰失效，而后者才是致命的——部署时异常类未知，根本不知道该不该翻符号。作者先给每类定义偏离机会率的符号 $d(c)=\mathrm{sign}(\mathrm{AUC}(c)-1/2)\in\{-1,0,+1\}$（$|\mathrm{AUC}(c)-1/2|\le\epsilon$ 记为 0），再用 $\rho_{\mathrm{dir}}(\epsilon)=1-\frac1K\max\{\sum_c\mathbb I[d(c)=+1],\sum_c\mathbb I[d(c)=-1]\}$ 度量方向投票的不一致：$\rho_{\mathrm{dir}}\to 0$ 表示所有类偏好同一方向、$\to 0.5$ 表示方向五五开。配套还有纯反转率 $\rho_{\mathrm{inv}}=\frac1K\sum_c\mathbb I[\mathrm{AUC}(c)<1/2]$、近随机率 $\rho_{\mathrm{rnd}}(\epsilon)=\frac1K\sum_c\mathbb I[|\mathrm{AUC}(c)-1/2|\le\epsilon]$ 和 AUROC 方差 $\sigma^2_{\mathrm{AUC}}$。$\rho_{\mathrm{dir}}$ 抓住的正是"翻符号也救不了"的那种方向不一致——因为部署时异常类未知，无法知道该不该翻符号。
 
-3. **受控实验矩阵 + 假设检验视角**:
+**3. 受控实验矩阵 + 假设检验视角：把"基准是否良定"做成可复现的对照设计。**
 
-    - 功能：把"基准 = 隐式的关于评分一致性的假设检验"这一抽象表述落地为可复现的对照设计。
-    - 核心思路：固定一个 $3\times 2\times 3$ 矩阵：数据集 $\in\{\text{Fashion-MNIST, CIFAR-10, Imagenette}\}$ × 表示 $\in\{\text{Pixel, VAE Latent}\}$ × 评分 $\in\{\text{kNN, Isolation Forest, LOF}\}$。Fashion-MNIST 作为低重叠的负对照，CIFAR-10 与 Imagenette 作为高重叠的复杂自然图像；VAE 仅在正常池上无监督训练，超参先验固定、不按异常类调；类标签只用于切分 / 算指标 / 算诊断，不参与表示学习。
-    - 设计动机：(a) 用一个"应该良定"的负对照 (Fashion-MNIST 低 $L_k$) 来证明 $L_k$ 不是 trivial 的；(b) 让多个 (表示, 检测器) 同时验证失效，排除"是单个 detector 的 artefact"的反驳；(c) 显式区分协议侧 vs. 方法侧两个问题——本文回答的是协议是否值得跑，而不是某个 AD 强不强。
+要证明 $L_k$ 不是 trivial、失效也不是某个 detector 的特例，作者固定一个 $3\times 2\times 3$ 矩阵：数据集 $\in\{\text{Fashion-MNIST, CIFAR-10, Imagenette}\}$ × 表示 $\in\{\text{Pixel, VAE Latent}\}$ × 评分 $\in\{\text{kNN, Isolation Forest, LOF}\}$。Fashion-MNIST 当低重叠的负对照，CIFAR-10 与 Imagenette 当高重叠的复杂自然图像；VAE 只在正常池上无监督训练、超参先验固定且不按异常类调，类标签只用于切分/算指标/算诊断、不参与表示学习。这样设计同时回答三件事：用一个"应该良定"的负对照证明 $L_k$ 有判别力；用多个（表示, 检测器）组合同时复现失效，排除"单个 detector artefact"的反驳；并显式把协议侧（这个基准值不值得跑）和方法侧（某个 AD 强不强）两个问题分开——本文只回答前者。
 
 ### 损失函数 / 训练策略
 本文无新增训练目标。VAE 仅在正常池上跑标准 ELBO；kNN/IF/LOF 直接用 sklearn 类风格的现成实现；所有超参先验固定。

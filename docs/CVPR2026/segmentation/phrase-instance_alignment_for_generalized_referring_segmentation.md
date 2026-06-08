@@ -43,33 +43,37 @@ tags:
 
 ### 整体框架
 
-InstAlign 的输入是一张图像和对应的指代表达，输出是最终分割 mask 以及是否存在目标的判断。整体 pipeline 分四步：(1) 视觉编码器提取多尺度特征、BERT 编码文本 token；(2) $N$ 个可学习 object query 通过 $K$ 层 transformer decoder 与视觉和文本特征交互；(3) 每个 query 预测一个实例 mask 和一个相关性得分，同时通过 POA 损失对齐到对应的语言短语；(4) 所有实例 mask 按相关性得分做加权聚合，得到最终分割，同时通过 no-target 预测器判断是否无目标。
+GRES 的难点在于一句话可能指向多个对象、也可能一个都不指。InstAlign 的破题方式是不再让模型对整句话直接吐一张前景 mask，而是先把图像里"可能被指代的东西"拆成一组独立实例，再让语言去逐一认领。具体地，输入一张图和一句指代表达，先用视觉编码器抽多尺度特征、BERT 编码文本 token；然后 $N$ 个可学习 object query 穿过 $K$ 层 transformer decoder，与视觉、文本特征反复交互，每个 query 最终吐出一张实例 mask $\hat{s}_i$ 和一个相关性得分 $\hat{p}_i$；训练时一个专门的对齐损失逼着每个 query 去对应表达中的某个短语；推理时把所有实例 mask 按各自的相关性得分加权融合成最终 mask，同时一个轻量分类器根据这些得分判断"到底有没有目标"。四个设计环环相扣：实例感知给了 query "各管一摊"的能力，POA 让 query 知道自己该管哪个短语，IA 把它们的输出软融合，no-target 预测器复用同一套得分判断是否无目标。
 
 ### 关键设计
 
-1. **实例感知分割框架（Instance-aware Segmentation）**:
+**1. 实例感知分割框架（Instance-aware Segmentation）：先把场景拆成实例，再谈指代。**
 
-    - 功能：让每个 object query 被显式监督为对应一个独特的视觉实例
-    - 核心思路：以 Mask2Former 作为骨干，但注入文本条件——在 decoder 层中做 query-视觉-文本的双向交叉注意力。最终 $N$ 个 query 各输出一个实例 mask $\hat{s}_i$ 和相关性得分 $\hat{p}_i$。利用匈牙利匹配将预测实例与 ground-truth 实例一一对应，匹配代价为 $\mathcal{L}_{\text{match}}(i,j) = \lambda_{\text{score}}\mathcal{L}_{\text{score}}(\hat{p}_i,1) + \lambda_{\text{mask}}\mathcal{L}_{\text{mask}}(\hat{s}_i, s_j)$。匹配到的 query 同时训练 mask 和得分，未匹配的 query 只训练得分为 0。
-    - 设计动机：这是 GRES 中首次引入实例级监督，打破了以往 query 只靠最终合并 mask 监督导致的纠缠问题。
+以往 GRES 方法虽然也用了多个 object query，但只拿最终合并后的那张 mask 去算 loss，结果各个 query 没有被逼着分工，互相纠缠、语义模糊。InstAlign 直接给每个 query 加上实例级监督：以 Mask2Former 为骨干，但在 decoder 里注入文本条件，做 query–视觉–文本的双向交叉注意力，让 $N$ 个 query 各自吐出一张实例 mask $\hat{s}_i$ 和一个相关性得分 $\hat{p}_i$。训练时用匈牙利匹配把预测实例和 ground-truth 实例一一配对，匹配代价为
 
-2. **短语-目标对齐损失（Phrase-Object Alignment, POA）**:
+$$\mathcal{L}_{\text{match}}(i,j) = \lambda_{\text{score}}\mathcal{L}_{\text{score}}(\hat{p}_i,1) + \lambda_{\text{mask}}\mathcal{L}_{\text{mask}}(\hat{s}_i, s_j)$$
 
-    - 功能：建立每个 object query 与表达中最相关短语的显式语义对应
-    - 核心思路：分三步——先用缩放点积注意力计算 query 到每个文本 token 的相关性矩阵 $R_k = \text{softmax}(Q_k T_k^\top / \sqrt{C})$；再用这个矩阵对文本特征做加权求和得到每个 query 的"软短语嵌入" $P_k = R_k T_k$；最后用余弦相似度损失 $\mathcal{L}_{\text{phrase}}(i) = 1 - \text{sim}(Q_k^i, P_k^i)$ 迫使 query 嵌入与其对应的短语嵌入对齐。这个损失被加入匈牙利匹配代价中，加权系数为 $\lambda_{\text{phrase}}$。
-    - 设计动机：与以往隐式跨模态注意力不同，POA 提供了直接的短语-实例对应监督，在消歧义（如区分两条狗）和组合表达（属性+关系）上效果显著。可视化显示 query 确实能自动"认领"对应的短语。
+配上的 query 同时学 mask 和得分，没配上的 query 只被压着把得分学成 0。这是 GRES 里第一次引入实例级监督，相当于强行让每个 query "专精"一个对象，从根上拆掉了 query 之间的纠缠。
 
-3. **实例聚合模块（Instance Aggregation, IA）**:
+**2. 短语-目标对齐损失（Phrase-Object Alignment, POA）：让每个 query 自己认领对应的短语。**
 
-    - 功能：将多个实例 mask 按相关性得分软聚合为最终预测 mask
-    - 核心思路：最终 mask 为 $\mathcal{M}_{\text{merged}} = \text{Sigmoid}(\sum_{i=1}^N \hat{p}_i \cdot \sigma(\hat{s}_i))$，其中 $\sigma(\cdot)$ 是 PReLU 激活函数，充当可学习的动态阈值来抑制背景噪声。这种连续加权完全可微，允许模型优雅地处理多目标和组合表达。
-    - 设计动机：相比硬选择策略（选得分最高的几个），软聚合避免了遗漏相关实例或引入无关实例的风险。消融实验显示 PReLU 带来 +0.8% cIoU 和 +1.5% N-acc。
+光把 query 拆成实例还不够——模型还得知道"left dog"这个短语该由哪个 query 负责，否则面对"左边的两条狗"仍可能张冠李戴。POA 给的是显式的短语-实例对应监督，分三步走。先用缩放点积注意力算出每个 query 到各文本 token 的相关性矩阵 $R_k = \text{softmax}(Q_k T_k^\top / \sqrt{C})$；再用它对文本特征加权求和，得到每个 query 的"软短语嵌入" $P_k = R_k T_k$——注意这里不需要任何外部句法解析器，短语边界是注意力权重自己学出来的；最后用余弦相似度损失 $\mathcal{L}_{\text{phrase}}(i) = 1 - \text{sim}(Q_k^i, P_k^i)$ 把 query 嵌入往它认领的短语嵌入上拉，这个损失以系数 $\lambda_{\text{phrase}}$ 一并算进匈牙利匹配代价。与过去那种隐式跨模态注意力相比，POA 提供的是直接的、可监督的对应关系，所以在消歧义（区分两条狗）和组合表达（属性+关系）上提升明显，可视化也能看到 query 确实自动"认领"了各自的短语。
 
-4. **无目标预测器（No-target Predictor）**:
+**3. 实例聚合模块（Instance Aggregation, IA）：用得分把实例 mask 软融合，而不是硬挑。**
 
-    - 功能：判断指代表达是否在图中无对应对象
-    - 核心思路：将相关性加权的全局 query 特征 $Q_{\text{global}} = \sum_i \hat{p}_i \cdot Q^i$ 与句子级文本嵌入 $T_{\text{sen}} = \text{Average}(T_K)$ 拼接后送入 MLP 分类器。当所有 query 的相关性得分都较低时，模型推断为无目标情况。
-    - 设计动机：利用了与 mask 推理相同的相关性表示，设计上统一且轻量。消融显示 $Q_{\text{global}}$ 和 $T_{\text{sen}}$ 都不可或缺。
+拿到一堆带得分的实例 mask 后，怎么合成最终答案？硬选择（挑得分最高的几个）很容易漏掉相关实例或误纳无关实例。IA 改用完全可微的连续加权：
+
+$$\mathcal{M}_{\text{merged}} = \text{Sigmoid}\Big(\sum_{i=1}^N \hat{p}_i \cdot \sigma(\hat{s}_i)\Big)$$
+
+其中 $\sigma(\cdot)$ 是 PReLU 激活，充当一个可学习的动态阈值来压背景噪声。因为整条聚合路径可微，模型能在多目标和组合表达下平滑地分配权重，而不是在离散选择里二选一。消融显示这个 PReLU 阈值并非可有可无，它带来约 +0.8% cIoU 和 +1.5% N-acc。
+
+**4. 无目标预测器（No-target Predictor）：复用同一套得分判断"图里压根没有"。**
+
+GRES 还要能识别"沙发上的大象"这种图中根本不存在的描述。InstAlign 没有另起炉灶，而是直接复用 mask 推理用的那套相关性表示：把相关性加权的全局 query 特征 $Q_{\text{global}} = \sum_i \hat{p}_i \cdot Q^i$ 与句子级文本嵌入 $T_{\text{sen}} = \text{Average}(T_K)$ 拼起来送进一个 MLP 分类器。直觉是当所有 query 的相关性得分都偏低时——也就是没有哪个实例敢认领这句话——模型就判定无目标。设计上统一又轻量，消融显示 $Q_{\text{global}}$ 和 $T_{\text{sen}}$ 缺一不可。
+
+### 一个例子：分割"左边的两条狗"
+
+以一张有左右两条狗、外加一只猫的图、表达"the two dogs on the left"为例，看四个模块怎么接力。100 个 object query 进 decoder 与图文特征交互后，假设其中第 12、37 号 query 分别锁定了左侧两条狗、各吐出一张实例 mask 和较高得分（如 0.9、0.85），其余大量 query 落在背景或那只猫上、得分压到接近 0。训练阶段，POA 算出第 12 号 query 对 "left" / "dog" 这些 token 的相关性最高，于是它的软短语嵌入指向 "left dog"，余弦损失把这个 query 拉向该短语；第 37 号 query 同理认领另一条狗——两条狗不再被合成一个 blob。IA 把所有 mask 按得分加权：两条狗的 mask 以 0.9、0.85 权重保留，猫和背景因得分趋零被 PReLU 阈值压掉，融合出干净的双狗 mask。最后 no-target 预测器看到有 query 给出高得分，判定"有目标"。若换成"沙发上的大象"，所有 query 得分都低、$Q_{\text{global}}$ 整体疲软，预测器就翻成"无目标"。
 
 ### 损失函数 / 训练策略
 

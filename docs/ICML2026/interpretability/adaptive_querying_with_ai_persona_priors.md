@@ -41,30 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分为离线和在线两阶段。离线阶段：拿一个 persona 字典（本文用 Twin-2K-500 的 $n=2058$ 个真实美国受访者的 profile），对每个 persona $\xi_\theta$ 和每道题 $x$，用 GPT-5-mini 提示得到 $K$ 类别的回答分布 $\mu_{\theta,x} \in \Delta^{K-1}$，全部缓存成查找表。在线阶段：对一个新用户初始化 persona 先验 $p(\theta)$（用训练用户经 EM 估计），每次基于历史 $h_t$ 选一道题，观察回答 $Y_{x_{t+1}}$，闭式更新 persona 后验，再用混合分布预测目标题 $I^\star$ 的回答分布；预算耗尽后做最终预测并计算 log loss / Brier / 序数 MSE。
+要在用户只答几道题的冷启动条件下高效预测他剩下的回答，本文的解法是把"这个用户像谁"建成一个离散潜变量，再让 LLM 离线把每种"谁"的回答画像算好。具体分两阶段：离线阶段拿一个 persona 字典（本文用 Twin-2K-500 的 $n=2058$ 个真实美国受访者 profile），对每个 persona $\xi_\theta$ 和每道题 $x$ 用 GPT-5-mini 算出 $K$ 类回答分布 $\mu_{\theta,x}\in\Delta^{K-1}$ 缓存成查找表；在线阶段则对新用户维护一个 persona 后验，每次贪心选一道最能消除不确定性的题、观察回答、闭式更新后验，直到预算耗尽后用混合分布预测目标题。
 
 ### 关键设计
 
-1. **Persona-induced 潜变量模型**:
+**1. Persona-induced 潜变量模型：把灵活先验和实时推断同时拿到**
 
-    - 功能：把传统 IRT 中"连续低维能力 trait"换成"离散 persona 成员身份"，并用 LLM 提供 $p(Y_x \mid \theta)$。
-    - 核心思路：在条件独立假设 $p(\theta, Y)=p(\theta)\prod_i p(Y_i \mid \theta)$ 下，由于 $\theta$ 取离散值且类别题的似然是 categorical，后验 $p(\theta \mid Y_{I_t}) \propto p(\theta)\prod_{i \in I_t}\mu_{\theta,i,Y_i}$ 完全闭式；预测分布 $p(Y_x=k \mid Y_{I_t})=\sum_\theta \mu_{\theta,x,k}\,p(\theta\mid Y_{I_t})$ 也是有限和。
-    - 设计动机：彻底绕开嵌套蒙特卡洛和变分近似，把"灵活先验"和"实时推断"在同一个模型里同时拿到；同时每个 persona 仍然带有可解释的语义标签，方便下游做用户聚类。
+传统 IRT/CAT 用连续低维能力 trait 参数化题目-用户关系，表达力受限且每道题都要大规模校准。本文换一个建模视角：把"用户属于哪个 persona"当成离散潜变量 $\theta\in\{1,\dots,n\}$，似然 $p(Y_x\mid\theta)=\mu_{\theta,x}$ 直接由 LLM 离线给出。在条件独立假设 $p(\theta,Y)=p(\theta)\prod_i p(Y_i\mid\theta)$ 下，因为 $\theta$ 离散、类别题似然是 categorical，后验 $p(\theta\mid Y_{I_t})\propto p(\theta)\prod_{i\in I_t}\mu_{\theta,i,Y_i}$ 是一个完全闭式的有限求和，目标题预测分布 $p(Y_x=k\mid Y_{I_t})=\sum_\theta\mu_{\theta,x,k}\,p(\theta\mid Y_{I_t})$ 同样只是对 persona 求和。这一步把"灵活先验"和"实时推断"在同一个模型里同时拿到——彻底绕开神经 BED 一直要解的嵌套蒙特卡洛与变分近似，而且每个 persona 还自带可解释的语义标签，便于下游做用户聚类。
 
-2. **贪心一步前瞻自适应问询**:
+**2. 贪心一步前瞻自适应问询：用结构换算力**
 
-    - 功能：在每一步从可选题集 $\mathcal{I}_{\text{feas}} \setminus I_t$ 中挑选最能压缩目标后验不确定性的题。
-    - 核心思路：以目标题集合的边际熵之和作为不确定性 $U(P_t)=\sum_{x' \in I^\star} H(Y_{x'} \mid h_t)$，对每个候选 $x$ 计算 $\Delta_U(x \mid h_t) = \sum_k p(Y_x=k\mid Y_{I_t})\sum_{x'} H(Y_{x'}\mid h_t, Y_x=k)$，选最小者。由于 persona 模型让 $p(Y_x \mid Y_{I_t})$ 和 $H(Y_{x'} \mid \ldots)$ 都是 persona 上的有限求和，整套贪心可以高效跑。
-    - 设计动机：经典 BED 因为预测分布要做高维积分，所以一步前瞻在大规模题库下基本不能用；persona 模型把这个瓶颈打掉了，使得本来只能停留在玩具规模的贪心算法变得真正实用。
+每一步要从可问题集中挑出最能压缩目标后验不确定性的题。本文以目标题集合的边际熵之和定义不确定性 $U(P_t)=\sum_{x'\in I^\star}H(Y_{x'}\mid h_t)$，对每个候选题 $x$ 计算问完它后的期望剩余不确定性 $\Delta_U(x\mid h_t)=\sum_k p(Y_x=k\mid Y_{I_t})\sum_{x'}H(Y_{x'}\mid h_t,Y_x=k)$，选最小的那道。经典 BED 之所以做不了一步前瞻，是因为预测分布要做高维积分、在大题库下根本算不动；而 persona 模型让 $p(Y_x\mid Y_{I_t})$ 和条件熵都退化成 persona 上的有限求和，于是这套本来只能停在玩具规模的贪心搜索真正变得可跑，是个典型的"结构选择即算力"。
 
-3. **经验贝叶斯学先验 + 评分规则评估**:
+**3. 经验贝叶斯学先验 + 评分规则评估：对抗 persona 失配**
 
-    - 功能：在真实数据上对 persona 先验 $p(\theta)$ 做 EM 拟合，弱化"合成 persona 与真实人群不匹配"的模型误设。
-    - 核心思路：最大化训练用户的边际似然 $\sum_j \log \sum_\theta p(\theta)\,p(Y^{(j)}\mid\theta)$，E 步算 responsibility $\gamma_{j,\theta}\propto p(\theta)p(Y^{(j)}\mid\theta)$，M 步把 $p(\theta)$ 更新为平均 responsibility。预测端用 proper scoring rule（log loss 对应 Shannon 熵、Brier 对应 Gini）评估，保证训练目标和评测指标在数学上对应。
-    - 设计动机：合成 persona 字典对真实人群一定是 misspecified 的；EM 让模型把质量集中到与训练用户最匹配的少数 persona 上，相当于"软地选出有用的 persona 子集"，鲁棒性更好。
+合成 persona 字典对真实人群必然是 misspecified 的，均匀先验会让一堆无关 persona 稀释推断质量。本文在真实训练用户上对先验 $p(\theta)$ 做 EM 拟合：最大化边际似然 $\sum_j\log\sum_\theta p(\theta)\,p(Y^{(j)}\mid\theta)$，E 步算 responsibility $\gamma_{j,\theta}\propto p(\theta)p(Y^{(j)}\mid\theta)$，M 步把 $p(\theta)$ 更新成平均 responsibility。EM 会把概率质量集中到与训练人群最匹配的少数 persona 上，相当于"软地选出有用的 persona 子集"。评测端刻意选 proper scoring rule（log loss 对应 Shannon 熵、Brier 对应 Gini），使训练目标和评测指标在数学上严格对应，保证比较公平。
 
-### 损失函数 / 训练策略
-没有梯度训练。训练只发生在两个地方：(1) 离线 LLM prompt，提取 $\mu_{\theta,x}$；(2) 在真实用户上用 EM 估计 prior。在线问询全部基于闭式贝叶斯更新与贪心搜索。CAT 基线（GRM/GPCM 及多维变体）按惯例做 EM 训练 item 参数，然后用网格化后验做推断。
+### 一个完整示例
+对一个新用户，先把 persona 先验初始化为 EM 估出的 $p(\theta)$（覆盖 2058 个 persona）。第 1 步贪心遍历 86 道可问题，对每道候选用查找表 $\mu$ 算出期望剩余熵 $\Delta_U$，挑出最小者问出去；用户答了"3 档（同意）"，于是把所有 persona 权重乘上各自在该题第 3 档的概率 $\mu_{\theta,x,3}$ 再归一化，后验立刻向"倾向同意"的 persona 收缩。第 2 步在新后验下重新评估剩余题、再问、再更新——如此重复直到预算 $T$ 用尽。最后对 5 道目标题输出混合预测分布 $\sum_\theta\mu_{\theta,x,k}p(\theta\mid Y_{I_t})$，并按 log loss / Brier / 序数 MSE 评分。整个在线流程没有任何梯度，全靠闭式后验和查表求和。
+
+### 训练策略
+全流程没有梯度训练。学习只发生在两处：离线用 LLM prompt 提取 $\mu_{\theta,x}$，以及在真实用户上用 EM 估计先验 $p(\theta)$；在线问询完全基于闭式贝叶斯更新与贪心搜索。作为对照，CAT 基线（GRM/GPCM 及多维变体）按惯例先 EM 训练 item 参数，再用网格化后验推断。
 
 ## 实验关键数据
 

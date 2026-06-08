@@ -48,23 +48,18 @@ TIME 的目标不是训练一个更会背时间知识的模型，而是训练一
 评测使用 TimeBench。它包含 77 个场景，7 个诊断类别，每类 11 个场景；每个场景采样 10 次，共 770 runs。TimeBench 不考时间事实记忆，而是考模型能否从时间结构推断潜在上下文状态，并调整最后一轮回答。除二元任务成功率外，它还记录 `think` 是否出现、位置、数量、推理 token、输出 token、markdown 使用和退化输出比例。
 
 ### 关键设计
-1. **时间原语与局部显式推理块**:
 
-	- 功能：把对话中的时间状态变化显式暴露给模型，并给模型一个可控的短推理动作。
-	- 核心思路：`time` 标签让模型看到 turn 之间的绝对时间和间隔；tick 表示没有文本输入但时间继续前进；`think` 块不再是回答开头的一整段长思维链，而是可插入、可重复、可省略的局部检查。模型可以在回答中途发现“这个假设可能过期了”时再触发短推理。
-	- 设计动机：真实交互中的很多错误来自 stale assumption，而不是知识不足。时间原语把这种隐含状态变化变成训练信号，短 `think` 则把推理成本限制在必要位置。
+**1. 时间原语与局部显式推理块：把推理从「回答开头的长前缀」拆成「随时可触发的短检查」。**
 
-2. **四阶段课程与 full-batch 对齐**:
+固定推理模式最大的毛病是一旦模型开始正式作答，就很难因为新线索中途回到显式检查状态，而真实交互里的大量错误恰恰来自 stale assumption（假设过期）而非知识不足。TIME 给对话引入三种轻量文本原语来把这种隐含的状态变化变成可学习的信号：`time` 标签用 ISO 8601 给每个用户 turn 加绝对时间，让模型直接看到 turn 之间的间隔；tick event 是只有时间标签、没有消息的 turn，用来表达「沉默 + 时间继续流逝」；`think` 块则不再是回答开头一整段长思维链，而是可以出现零次、一次或多次、也可以插在回答中段的局部检查。这样模型在作答途中察觉「这个假设可能过期了」时，可以就地触发一段短推理重新锚定，而把推理成本严格限制在真正需要的位置。
 
-	- 功能：稳定学到 context-triggered reasoning policy，避免直接 SFT 导致长模板化推理或格式崩坏。
-	- 核心思路：前三阶段逐步增加结构复杂度，并用 25% replay 保持先前行为；第四阶段去掉 replay，用 128 条最大表面多样性的手工样本做 full-batch 更新。所有样本的共同点只有一个：在时间或语篇线索需要时放置简短 `think`，否则保持紧凑输出。
-	- 设计动机：如果直接用少量目标样本微调，模型容易记住话题、格式或风格伪相关。full-batch over high-entropy set 让每次更新都看到全部多样性，梯度更集中在真正的不变量上。
+**2. 四阶段课程与 full-batch 对齐：用逐级加难 + 高熵小样本，逼模型学「触发策略」而不是「话题/格式伪相关」。**
 
-3. **TimeBench 的双视角评估**:
+直接拿少量目标样本做 SFT 很容易让模型记住话题、格式或风格等伪相关，学出来的是长模板化推理或干脆格式崩坏，而不是「按上下文线索触发局部推理」这个真正的行为不变量。TIME 因此把训练拆成四阶段课程：Phase 1 教模型识别原语和格式、输出边界清楚的短 `think`；Phase 2 加入两轮对话、时间间隔和 tick，让模型在沉默后重新锚定；Phase 3 扩展到多轮、话题变化和上下文调制，训练它抑制不必要推理并在后续重新触发；前三阶段都带 25% replay 来保住先前行为。Phase 4 则去掉 replay，用 128 条手工构造、表面极度多样但共享同一行为不变量的对话做 full-batch 更新——所有样本唯一的共同点就是「在时间或语篇线索需要时放一段简短 `think`，否则保持紧凑输出」。让每一步梯度都看到全部高熵多样性，更新就会集中在这个不变量上，而不是某个话题表面。
 
-	- 功能：同时评估“答得对不对”和“推理策略是否真的改变”。
-	- 核心思路：TimeBench 七类任务覆盖 chronological retrospection、invalid time detection、temporal adaptivity、temporal contextual awareness、temporal flow anomaly detection、time gap awareness、timezone sensitivity。每个输出由盲 LLM-as-a-judge 根据二元 objective 打分；结构分析再统计 `think` 的频率、位置和 token 开销。
-	- 设计动机：只看 accuracy 可能把改进误解成更长输出或更重 reasoning。结构指标能验证 TIME 是否从长前置推理转向短、局部、按需触发的推理。
+**3. TimeBench 的双视角评估：既看答得对不对，也看推理策略是否真的变了。**
+
+只看 accuracy 有个隐患：分数提升可能只是因为输出更长、judge 偏好长答案，而不是策略真的改变。TimeBench 因此同时记录任务正确性和推理结构两套信号。它含 77 个场景、7 个诊断类别（chronological retrospection、invalid time detection、temporal adaptivity、temporal contextual awareness、temporal flow anomaly detection、time gap awareness、timezone sensitivity），每类 11 个场景、每场景采样 10 次共 770 runs；每个输出由看不到原 prompt 和时间戳的盲 LLM-as-a-judge 按二元 objective 打分，再由结构分析统计 `think` 是否出现、出现位置、数量以及推理 token、输出 token、退化输出比例。两套指标合起来才能验证 TIME 是真的从长前置推理转向了短、局部、按需触发的推理，而非靠堆 token 刷分。值得强调的是，TimeBench 不考时间事实记忆，而是把时间当作 latent state change 的可观测探针——长间隔、非法日期、时区变化、时间倒流等都用来制造可控的潜在状态变化。
 
 ### 损失函数 / 训练策略
 训练使用 QLoRA 监督微调，base model 权重冻结，只更新 LoRA adapter。Phases 1-3 的设置一致：rank 32、$\alpha=32$、dropout 0.05、AdamW-8bit、学习率 $2\times 10^{-5}$、effective batch size 32、3 epochs、gradient checkpointing，并加入 25% replay。数据规模分别为 Phase 1 的 2,188 train / 387 test，Phase 2 的 5,291 train / 935 test，Phase 3 的 5,878 train / 1,039 test。

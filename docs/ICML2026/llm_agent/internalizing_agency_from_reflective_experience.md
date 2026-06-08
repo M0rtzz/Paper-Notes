@@ -41,30 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LEAFE 两阶段：(1) Tree-Based Experience Generation with Rollback：在 base policy $\pi_\theta$ 上 rollout 轨迹，每若干步触发一次反思，反思模块判断当前轨迹是否在偏离，若是则产出回滚点 $\tau$ 和经验摘要（包含失败诊断 + 修复建议），从 $\tau$ 重启并 branch 出一个或多个修正动作；(2) Experience Distillation：从所有「最终成功」的修正轨迹中提取「在 $\tau$ 处的修正动作」作为目标 token，做 SFT，使模型在推理时即使不显式提供 experience，也能在类似失败信号下输出对应修正。
+LEAFE 想解决的是「outcome-driven RL 只会把已经会做的做得更稳、却扩不大模型能解的问题集合」这个困境，办法是把恢复能力（哪一步错了、回退到哪、怎么改）直接写进权重。整条流水线分两阶段：先在 base policy $\pi_\theta$ 上 rollout 轨迹，每隔若干步让模型自己反思，一旦判断走偏就回退到关键决策点 $\tau$、带着「失败诊断 + 修复建议」重新分叉出修正动作，从而把一条失败 trace 长成一棵「失败→回滚→修正→成功」的树；再从所有最终成功的修正子轨迹里截出「回滚点之后该做什么」做 SFT 蒸馏，让模型在推理时即使没人提示反思，也能在类似失败信号下自发切换到修正模式。
 
 ### 关键设计
 
-1. **基于树的反思回滚式经验生成**:
+**1. 基于树的反思回滚式经验生成：把一条失败 trace 长成多条「修正后成功」的训练数据。**
 
-    - 功能：把单轨迹 rollout 扩展成一棵「失败检测 + 反事实修正」搜索树，让一条失败 trace 衍生出多条「修正后成功」trace 当训练数据。
-    - 核心思路：在 ReAct 范式下，每个时间步 $t$ 的状态为 $h_t=(o_0,a_0,\ldots,o_t)$，动作 $a_t\sim\pi_\theta(\cdot|h_t,q)$。每隔若干步插入一次反思 prompt，模型自身判断要不要回滚；若要回滚就输出 (i) 回滚点 $\tau$，(ii) 自然语言 experience summary $e$（含「错在哪+怎么改」）；然后用 $\pi_\theta(\cdot|h_\tau,q,e)$ 采样新动作开 branch。一条原始 rollout 可衍生多个 (failure→rollback→fix→success) 三元组。
-    - 设计动机：scalar reward 看不到「哪一步出错」，但 LLM 本身有阅读环境反馈、定位错误位置的能力，把这种 in-context 能力外化成显式回滚 + 修正的训练信号，比 GRPO 的 group-relative reward 信息密度高得多。
+scalar reward 的根本毛病是看不到「哪一步出错」，可 LLM 本身就有读环境反馈、定位错误的能力——LEAFE 要做的就是把这种 in-context 能力外化成显式的训练信号。在 ReAct 范式下，时间步 $t$ 的状态是 $h_t=(o_0,a_0,\ldots,o_t)$，动作 $a_t\sim\pi_\theta(\cdot\mid h_t,q)$。每隔若干步插入一次反思 prompt，模型自己判断要不要回滚；若要回滚，就输出两样东西：回滚点 $\tau$，以及一段自然语言的 experience summary $e$（讲清「错在哪 + 怎么改」）。随后用 $\pi_\theta(\cdot\mid h_\tau,q,e)$ 在 $\tau$ 处采样新动作开出 branch，一条原始 rollout 因此能衍生多个 $(\text{failure}\to\text{rollback}\to\text{fix}\to\text{success})$ 三元组。和 GRPO 的 group-relative reward 相比，这种「定位到具体决策点 + 给出修复指令」的信号密度高得多，等于把每一步丰富的环境反馈重新利用起来，而不是压成 0/1 扔掉。
 
-2. **经验到策略的蒸馏**:
+**2. 经验到策略的蒸馏：训练时喂 experience、推理时不喂，逼模型从环境信号自己推出修正逻辑。**
 
-    - 功能：把第一阶段生成的修正动作蒸馏进模型权重，使部署时无需 experience prompt 也能自然做出修正。
-    - 核心思路：对每条 (failure→rollback→fix→success) 轨迹，从回滚点 $\tau$ 起截取「带 experience 提示生成的修正后子轨迹」，构造 SFT 数据 $(h_\tau, a^{\rm fix}_\tau,\ldots,o_T)$，**训练时不喂 experience，只让模型在 $h_\tau$ 后直接产出修正动作序列**。这样在测试时，模型遇到类似失败模式就能自己内生地切换到修正模式，而不需要外部 reflection prompt。
-    - 设计动机：要么模型每次推理都跑昂贵的反思 + 重试（部署成本高），要么把这个能力存到权重里。蒸馏的关键是「条件化在没有 experience 的 $h_\tau$ 上去预测修正动作」，强迫模型从环境反馈自身推断要做什么修正。
+第一阶段造出的修正动作还停在数据里，要让部署时无需任何 reflection prompt 也能自然纠错，就得把它蒸馏进权重。做法是对每条成功的修正轨迹，从回滚点 $\tau$ 起截取那段「带 experience 提示生成的修正后子轨迹」，构造 SFT 样本 $(h_\tau,\,a^{\rm fix}_\tau,\ldots,o_T)$。关键的一步是：**训练时并不把 experience summary 喂进去，只让模型在 $h_\tau$ 之后直接产出修正动作序列**。这等于强迫模型把「该怎么改」这件事条件化在没有外部诊断的 $h_\tau$ 上自行推断，于是测试时一遇到类似失败模式，它就能内生地切到修正模式，而不必每次推理都跑昂贵的反思 + 重试。这也正是「agency 被 internalize」的具体含义——恢复程序进了权重，而非挂在推理时的外部搜索上。
 
-3. **对比 GRPO：稀疏奖励 vs 决策级监督**:
+**3. 对比 GRPO：用决策级监督替掉 episode 级标量评分。**
 
-    - 功能：在同等交互预算下提供 decision-level 的 reflect→revise 监督，而非 episode-level 的标量评分。
-    - 核心思路：GRPO 把同一 prompt 的 $G$ 条 trace 算 group-relative advantage $\hat{A}_i=(r_i-\bar{r})/\sigma_r$ 后做 policy gradient，本质是给某条 trace 整体加权；LEAFE 直接给「回滚后应该输出什么」这种逐 token 监督。前者鼓励 exploit 已知成功模式，后者把行为分布往新区域推。
-    - 设计动机：在长程任务上 GRPO 容易 sharpening 到 base 模型 long tail 里已经会的少数模式，Pass@k 大 k 不动；显式纠错监督能扩大覆盖。
+GRPO 在长程任务上的问题是 distribution sharpening：它把同一 prompt 的 $G$ 条 trace 算出 group-relative advantage $\hat{A}_i=(r_i-\bar{r})/\sigma_r$ 再做 policy gradient，本质是给整条 trace 加权，于是只会把 base 模型 long tail 里少数已经会的高频模式推得更尖，Pass@1 涨而 Pass@$k$ 大 $k$ 不动。LEAFE 给的则是「回滚后应该输出什么」这种逐 token 的决策级监督——前者鼓励 exploit 已知成功模式，后者把行为分布往没覆盖到的新区域推，这也是后面实验里两者在大 $k$ 上彻底分道扬镳的根源。
+
+### 一个例子：CodeContests 上的一次回滚
+拿一道程序合成题：模型先写出一版解法并提交，执行器返回某个测试用例上的 runtime error。反思 prompt 触发后，模型读到这条报错，判断轨迹已经走偏，于是回滚到「选定算法策略」那一步（$\tau$），并写下 experience summary——比如「越界源于没处理空输入边界，应在主循环前加判空」。随后从 $\tau$ 分叉，带着这条诊断重采样出修正版代码，这次通过全部测试。这条原始失败 trace 于是贡献了一个完整的 failure→rollback→fix→success 三元组；蒸馏阶段只取「回滚点之后那段修正代码」当监督目标，且不把那句 experience summary 喂回去，让模型学会单看报错就自己补上判空。
 
 ### 损失函数 / 训练策略
-Stage 1 完全用 base policy 自采样 + 反思生成数据，无梯度更新；Stage 2 标准 SFT 交叉熵 $\mathcal{L}=-\sum_t \log \pi_\theta(a^{\rm fix}_t|h_t)$，损失只算修正后的 action token，不算环境反馈 token。实验里反思频率、回滚预算等超参在 appendix 给出。
+Stage 1 完全用 base policy 自采样 + 反思生成数据，不做任何梯度更新；Stage 2 是标准 SFT 交叉熵 $\mathcal{L}=-\sum_t \log \pi_\theta(a^{\rm fix}_t\mid h_t)$，且损失只计修正后的 action token，不计环境反馈 token。反思频率、回滚预算等超参在 appendix 给出。
 
 ## 实验关键数据
 

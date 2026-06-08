@@ -55,23 +55,23 @@ Pipeline 两阶段（Algorithm 1，5 个子步骤）：
 
 ### 关键设计
 
-1. **DP 关键词软聚类（vs 现有 private prediction 的随机子集）**:
+**1. DP 关键词软聚类：让合成文本保留病名、用户偏好这类"局部细节"，而不只是学到全库平均特征。**
 
-    - 功能：把原始库分成同主题 cluster，让 cluster 内 private prediction 能保留 locality（病名、用户偏好等关键细节），而不只是学到全库平均特征。
-    - 核心思路：先用 LLM-extracted keywords + 噪声直方图选 top-$R$ 主题；再用频率反序赋 cluster（高频词如 "patient" 没区分度，先给低频代表词；每文档最多 $L$ 个 cluster 增加它落到最相关主题的概率）；最后用 DP embedding mean + DP threshold selection 把 cluster 内"语义远离"的离群文档剔掉。这步剔除是 cluster 内做的，不增加额外 budget。
-    - 设计动机：Amin 等的 private prediction 全库 random subsample 只能学到 average characteristics，对 RAG 这种"需要查具体事实"的下游任务无用——本文 Table 1 显示 DP-Synth/Aug-PE 在 Medical Synth 上 accuracy = 0%！硬聚类 ($L=1$) 又会让多义文档被错分到无关 cluster（消融实验 Medical Synth + Llama-3.1 上 $L=1$ 比 $L=5$ 掉 31.88%）。软聚类 + embedding 重排是 locality 和噪声之间的精细 trade-off。
+Amin 等的 private prediction 直接对全库做 random subsample，结果只能学到 dataset-average characteristics——对 RAG 这种"要查具体事实"的下游任务等于无用（Table 1 里 DP-Synth/Aug-PE 在 Medical Synth 上 accuracy = 0%）。DP-SynRAG 的破法是先把库切成同主题的 cluster，再在 cluster 内做合成。具体三步：先让 LLM 从每篇文档抽 $K$ 个关键词、加噪后选 top-$R$ 主题；再按**频率反序**遍历赋 cluster（高频词如 "patient" 没区分度，先给低频代表词），每篇文档最多落进 $L$ 个 cluster，以增加它被分到最相关主题的概率；最后用 DP embedding mean + exponential mechanism 选相似度阈值 $\theta_s$，把 cluster 内语义远离的离群文档剔掉——这步在 cluster 内完成，不额外消耗预算。
 
-2. **Token-level private prediction 用 softmax = exponential mechanism 隐式加噪**:
+软聚类（$L>1$）是整个设计的命门。硬聚类（$L=1$）会把多义文档错分到无关 cluster，消融里 Medical Synth + Llama-3.1 上 $L=1$ 比 $L=5$ 直接掉 31.88%；$L$ 太大又让噪声分散，$L=5$ 是跨数据集都稳定的 sweet spot。本质上是在"保留 locality"和"控制噪声"之间做精细 trade-off。
 
-    - 功能：在 cluster 内用 LLM 改写文档时，直接利用 LLM token sampling 的天然随机性提供 DP 保证，不必显式加噪。
-    - 核心思路：对每篇 $d_i \in S_r$ 跑 prompt $p_i$，把第 $n$ token 的 logit 各自 clip 到 $[-c, c]$ 再求和得 $z_n(S_r)$，softmax 采样下个 token；这等价于 utility = clipped logits 的 exponential mechanism，sensitivity = $c$。clipping 用 Grislain (2025) 的 "exp normalize → center → rescale to $[-c, c]$"，相对单调 clip 能保留高 logit token 的相对差异。生成 $T$ 个 token 由 sequential composition 串起来。
-    - 设计动机：直接给 logit 加 Gaussian 会让分布严重失真（小 logit 都被噪声盖住）；用 softmax 采样的 randomness 当作 DP 噪声源更"自然"，对生成质量损害更小。clipping 的中心化变种进一步降低了"clip 截掉重要 token"的概率。
+**2. Token 级 private prediction：用 softmax 采样的天然随机性当 DP 噪声源，不必显式加噪。**
 
-3. **数据时间 DP + Self-filtering 后处理**:
+cluster 切好之后要在 cluster 内改写文档生成合成文本，问题是这步怎么加 DP 保证。直接往 logit 上加 Gaussian 会让分布严重失真——小 logit 都被噪声盖住。本文转而借用 LLM token sampling 本身的随机性：对每篇 $d_i \in S_r$ 跑 rephrase prompt $p_i$，把第 $n$ 个 token 的 logit 各自 clip 到 $[-c, c]$ 再求和 $z_n(S_r) = \sum_{d_i \in S_r} \text{clip}_c(\mathcal{L}(p_i, y_{r,<n}))$，对它做 softmax 采样下一个 token。这一步在数学上恰好等价于 utility = clipped logits、sensitivity = $c$ 的 exponential mechanism，于是采样的 randomness 就"免费"提供了 DP 噪声。生成 $T$ 个 token 由 sequential composition 串起来，得到长度 $T$ 的合成文本 $y_r$。
 
-    - 功能：把整个 DP 预算花在"建合成库"一次，之后任意多查询都不再消耗预算；再叠加 LLM-based self-filter 把垃圾合成文本剔掉提升下游 RAG accuracy。
-    - 核心思路：建库流程满足 $(\varepsilon, \delta)$-DP，由 DP 的 post-processing immunity，所有后续操作（embedding 索引、检索、LLM 推断）都不消耗预算。self-filter 这步把 task 描述（非私有）和合成文本一起喂给 LLM 问 "essential or not"，YES 的留下。因为输入只含合成数据 + 公开 task 信息，不接触原数据库，所以是纯后处理。
-    - 设计动机：query-time DP 在 RAG 场景里是根本性错位 —— 知识库的本质就是被反复读，而 DP 偏要按"每次读都付钱"算账。把 DP 预算挪到建库时一次性付清，自然带来"查询数 vs accuracy"的曲线水平化（Figure 3 中 DP-SynRAG 是一条直线，DP-RAG 是急剧下滑曲线）。
+clipping 用的是 Grislain (2025) 的 "exp normalize → center → rescale 到 $[-c, c]$" 变体，相比单调 clip 能保留高 logit token 之间的相对差异，进一步压低"clip 截掉重要 token"的概率，对生成质量损害更小。
+
+**3. 数据时间 DP + Self-filtering 后处理：整套预算只在"建库"时付一次，之后无限次查询都是免费的 post-processing。**
+
+这是全文最关键的 reframing。现有 private RAG 都是 query-time DP，在每个 query 输出层加噪，导致 privacy budget 随查询数线性累计——1000 个 query 想保持 $\varepsilon_{\text{query}}=10$，总预算就要 $\varepsilon_{\text{total}}\approx 10000$，要么早早烧光、要么单 query 噪声大到不可用。但知识库的本质是"被反复读"，DP 偏要按"每次读都付钱"算账，这条假设在 RAG 多查询场景里根本错位。DP-SynRAG 把整个建库流程做成满足 $(\varepsilon, \delta)$-DP，由 DP 的 post-processing immunity，之后的 embedding 索引、检索、LLM 推断全都不再消耗预算，结果就是"查询数 vs accuracy"曲线被拉平（Figure 3 里 DP-SynRAG 是一条水平直线，DP-RAG 是急剧下滑曲线）。
+
+在此之上再叠一层 self-filtering：把每条合成文本 $y_r$ 连同下游 task 描述一起喂回 LLM，问"这条对解决 task 有没有用"，留 YES 的进合成库。因为输入只含合成数据 + 公开 task 信息、不接触原数据库，这步也是纯后处理、不花预算，却能把垃圾合成文本剔掉提升下游 accuracy（消融里对 Medical/MovieLens 最多贡献 9 个百分点）。
 
 ### 损失函数 / 训练策略
 **无需训练**。所有 LLM 都是冻结的 inference 用（关键词抽取、改写、self-filter 用同一个 LLM）。主参数：$K=10$ keywords/doc、$R=500$ (Medical/MovieLens) 或 $1000$ (SearchQA)、$L=5$ overlap、$k=80-100$ docs/cluster、$T=70$ tokens/synthetic、$\tau=1.0$、$\varepsilon_{\text{total}}=10$、$\delta=10^{-3}$、$\rho_{\text{hist}}=0.1$、$\rho_{\text{retr}}=0.009$。

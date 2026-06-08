@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为扩散模型 UNet 中的自注意力层的特征图 $\mathbf{X} \in \mathbb{R}^{L \times d_{\text{in}}}$，其中 $L$ 为空间位置数。方法分三步：（1）将 $\mathbf{QK}^\top = \mathbf{XWX}^\top$ 分解为对称分量 $\mathbf{M}_{\text{sym}}$ 和反对称分量 $\mathbf{M}_{\text{skew}}$；（2）利用对称分量推导三种 Hopfield 风格的稳定性度量来诊断检索状态；（3）通过缩放反对称分量注入环流扰动，与基线检索混合后输出。整个过程无需训练，仅在推理时修改注意力矩阵。
+方法要解决的是扩散模型自注意力里"有益的上下文整合"和"有害的语义泄露"共用同一套 $\mathbf{QK}^\top$ 机制、难以分离的问题。核心做法是把注意力矩阵当作 Hopfield 关联记忆来读：先把交互矩阵拆成对称（决定能量景观、检索是否稳定）和反对称（驱动环流、能打破亚稳态）两半，用对称半推出几个稳定性度量来诊断当前检索状态，再在推理时缩放反对称半注入可控的环流扰动来修复混合伪影。整个流程不训练，只在前向时改写注意力矩阵。
 
 ### 关键设计
 
-1. **关联记忆分解与能量景观**:
+**1. 关联记忆分解与能量景观：把非对称注意力拆成可分析的两半**
 
-    - 功能：将注意力矩阵拆解为可分析的对称和反对称两部分
-    - 核心思路：定义交互权重矩阵 $\mathbf{W} = \mathbf{W}_Q \mathbf{W}_K^\top$，将其分解为对称部分 $\mathbf{S} = (\mathbf{W} + \mathbf{W}^\top)/2$ 和反对称部分 $\mathbf{N} = (\mathbf{W} - \mathbf{W}^\top)/2$，从而 $\mathbf{QK}^\top = \mathbf{XSX}^\top + \mathbf{XNX}^\top$。对称分量定义 Hopfield 能量 $E_\mathbf{X}(\xi) = -\frac{1}{2}\xi^\top \mathbf{M}_{\text{sym}}(\mathbf{X})\xi$，反对称分量对二次能量无贡献（$\xi^\top \mathbf{M}_{\text{skew}} \xi = 0$），仅驱动环流。据此推导三种稳定性度量：能量 $E_\mathbf{X}$、不稳定比例 $r_\mathbf{X}$ 和对齐分数 $\mathbf{Align}_\mathbf{X}$
-    - 设计动机：经典 Hopfield 理论只处理对称矩阵，而 $\mathbf{QK}^\top$ 一般是非对称的。分解后才能分别分析能量稳定性和环流动力学，并为后续可控调节提供理论基础
+经典 Hopfield 理论只对对称连接矩阵有定义，而扩散模型里的 $\mathbf{QK}^\top$ 一般是非对称的，没法直接套用能量稳定性分析。本文先定义交互权重矩阵 $\mathbf{W} = \mathbf{W}_Q \mathbf{W}_K^\top$，再把它劈成对称部分 $\mathbf{S} = (\mathbf{W} + \mathbf{W}^\top)/2$ 和反对称部分 $\mathbf{N} = (\mathbf{W} - \mathbf{W}^\top)/2$，于是 $\mathbf{QK}^\top = \mathbf{XSX}^\top + \mathbf{XNX}^\top$ 自然分成两块。其中对称块定义了 Hopfield 能量 $E_\mathbf{X}(\xi) = -\frac{1}{2}\xi^\top \mathbf{M}_{\text{sym}}(\mathbf{X})\xi$，反对称块在二次型里恒为零（$\xi^\top \mathbf{M}_{\text{skew}} \xi = 0$）因而不改变能量、只负责驱动环流。这样一来能量稳定性和环流动力学被彻底解耦：对称半捕捉全局物体结构，反对称半捕捉细粒度的不规则细节。基于对称半进一步推出三个 Hopfield 风格的稳定性度量——能量 $E_\mathbf{X}$、不稳定比例 $r_\mathbf{X}$、对齐分数 $\mathbf{Align}_\mathbf{X}$，用来定量诊断注意力是否陷入了亚稳态混合。
 
-2. **反对称环流扰动（Skew Perturbation）**:
+**2. 反对称环流扰动：用一个标量旋钮打破亚稳态**
 
-    - 功能：通过缩放反对称分量打破亚稳态混合，调控保真度-多样性权衡
-    - 核心思路：对反对称分量施加缩放 $\alpha$，得到扰动后的检索 $\Xi_\alpha = \Phi(\mathbf{XSX}^\top + \alpha \cdot \mathbf{XNX}^\top) \mathbf{X}$。计算差异向量 $\Delta = \Xi_\alpha - \Xi$，通过混合系数 $\beta$ 控制注入强度：$\Xi_{\text{blended}} = \Xi + \beta \Delta$。$\alpha$ 控制环流扰动的强度，$\beta$ 控制注入比例
-    - 设计动机：借鉴经典结论——增加非对称性导致吸引子数量指数级减少。适度的环流注入可以打破亚稳态（修复伪影），过度注入则破坏已有的良好结构
+诊断出问题后需要一个能修复伪影、又不破坏好结构的干预手段。本文借用经典结论"非对称 Hopfield 网络里增加不对称性会让吸引子数量指数级减少"，把反对称分量当成可调旋钮：对它乘上缩放因子 $\alpha$ 得到扰动后的检索 $\Xi_\alpha = \Phi(\mathbf{XSX}^\top + \alpha \cdot \mathbf{XNX}^\top) \mathbf{X}$，再算出它与原检索的差异向量 $\Delta = \Xi_\alpha - \Xi$，最后按混合系数 $\beta$ 注入回去 $\Xi_{\text{blended}} = \Xi + \beta \Delta$。$\alpha$ 控制环流扰动的强度，$\beta$ 控制注入比例。适度的环流注入能把语义泄露造成的亚稳态混合"搅散"，从而修复材质混融一类的伪影；但注入过头又会破坏已经成立的良好结构，所以这两个标量构成了保真度-多样性权衡的可调旋钮。
 
-3. **自适应环流控制**:
+**3. 自适应环流控制：按样本状态决定扰动强度**
 
-    - 功能：根据每个样本的当前状态自适应调整扰动强度，避免对高质量样本过度干预
-    - 核心思路：定义功能对称性指数 $\eta_\mathbf{M}(\mathbf{X}) = (\|\mathbf{M}_{\text{sym}}\|_F^2 - \|\mathbf{M}_{\text{skew}}\|_F^2) / (\|\mathbf{M}_{\text{sym}}\|_F^2 + \|\mathbf{M}_{\text{skew}}\|_F^2)$，衡量当前检索的对称主导程度。据此调整有效缩放 $\alpha_{\text{eff}} = (\alpha - 1)\bar{\eta}_\mathbf{M}$ 和有效混合 $\beta_{\text{eff}} = \beta(1 - \bar{\eta}_\mathbf{M})$，使低性能样本获得更强扰动，高性能样本受到更少干扰
-    - 设计动机：固定 $(\alpha, \beta)$ 对所有样本施加相同扰动是次优的。低质量样本需要更强的环流修正，而高质量样本已处于良好的工作点，不应被过度扰动
+固定一组 $(\alpha, \beta)$ 对所有样本一刀切是次优的——低质量样本需要更强的环流修正，高质量样本本就处在好的工作点、被过度扰动反而变差。为此本文定义功能对称性指数 $\eta_\mathbf{M}(\mathbf{X}) = (\|\mathbf{M}_{\text{sym}}\|_F^2 - \|\mathbf{M}_{\text{skew}}\|_F^2) / (\|\mathbf{M}_{\text{sym}}\|_F^2 + \|\mathbf{M}_{\text{skew}}\|_F^2)$ 来衡量当前检索有多"对称主导"，再用它把缩放和混合都改成自适应的：有效缩放 $\alpha_{\text{eff}} = (\alpha - 1)\bar{\eta}_\mathbf{M}$、有效混合 $\beta_{\text{eff}} = \beta(1 - \bar{\eta}_\mathbf{M})$（$\bar{\eta}_\mathbf{M}$ 为跨 batch 与 head 的均值）。直观上，对称主导（$\eta$ 大）意味着检索已稳定、就少扰动；反之低性能样本拿到更强的环流修正。实验中这一机制在过度扰动设置下尤其关键，能把静态方法的崩溃拉回甚至超过 baseline。
 
 ## 实验关键数据
 

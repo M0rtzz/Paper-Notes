@@ -42,29 +42,23 @@ tags:
 
 ### 整体框架
 
-三个 variant：(1) **Q=K-V**: $A = \mathrm{Softmax}(\alpha K K^\top) V$，K=Q 但 V 独立——attention 矩阵 $K K^\top$ symmetric；(2) **Q-K=V**: $A = \mathrm{Softmax}(\alpha Q K^\top) K$，K=V 但 Q 独立——attention 仍 asymmetric，cache 只存 K；(3) **Q=K=V**: $A = \mathrm{Softmax}(\alpha K K^\top) K$，单投影。后两 variant 配 2D positional encoding 的 (X)+ 变体让 attention 重新 asymmetric（只用于 non-causal task）。
+论文不提一个新模型，而是把"标准 Transformer 必须有 Q、K、V 三个独立投影"这个被默认了八年的假设拆开做系统对照：固定 attention 主干，只改投影的共享方式，量化每种共享在 synthetic / vision / language 上的质量代价和 KV cache 收益。它枚举三种共享方案——共享 query 和 key 的 **Q=K-V**（$A = \mathrm{Softmax}(\alpha K K^\top) V$，K 复用 Q，但 V 独立，attention 矩阵 $K K^\top$ 变对称）、共享 key 和 value 的 **Q-K=V**（$A = \mathrm{Softmax}(\alpha Q K^\top) K$，V 复用 K，但 Q 独立，attention 仍非对称，cache 只存 K）、以及三者全合一的 **Q=K=V**（$A = \mathrm{Softmax}(\alpha K K^\top) K$，单投影）。对其中引入对称 attention 的两个方案，再配一个带 2D positional encoding 的 (X)+ 变体，把方向信息重新注回去（仅用于 non-causal 任务）。
 
 ### 关键设计
 
-1. **Q-K=V 是 LM 的 sweet spot**:
+**1. Q-K=V：让 V 复用 K，KV cache 直接减半而质量几乎不掉。**
 
-    - 功能：减半 KV cache、保 attention 不对称、quality 几乎不掉。
-    - 核心思路：$V = K$ 单一投影矩阵实现 weight tying；inference 时 cache 只存 K 不存 V（V 从 K 复用），$50\%$ cache reduction。Attention 仍 $Q K^\top$ asymmetric，因 Q 独立。Theoretical insight：因为 K 和 V 可以占用相似 representational space 且 attention 在 low-rank regime 下工作，K 当 V 用 quality 不会大掉。300M 模型在 SlimPajama 10B tokens 上 PPL 仅升 $3.1\%$，1.2B 模型 MQA 配 +1.06%。
-    - 设计动机：cache 是 LLM serving 的主要 memory bottleneck（特别是 long context）；Q-K=V 给出 $50\%$ 减少 + 几乎无质量损失的 elegant 方案，比 MLA 简单（hard equality 替代 compressed latent expansion）。
+LLM serving 的主要 memory 瓶颈是 KV cache，尤其 long context 下 cache 线性涨满显存。Q-K=V 的做法是让 key 和 value 共用同一个投影矩阵（$V = K$ 的 weight tying），于是推理时 cache 里只存 K、不存 V——V 直接从 K 复用，cache 砍掉 $50\%$；同时因为 Q 仍是独立投影，attention 分数 $Q K^\top$ 保持非对称，不破坏 sequential 任务依赖的方向性。这之所以几乎不掉质量，作者给的机制解释是：K 和 V 本就可以占用相似的 representational space，而 attention 实际工作在 low-rank regime，把 K 当 V 用并不会显著压缩有效表达力。实测 300M 模型在 SlimPajama 10B tokens 上 PPL 仅升 $3.1\%$，1.2B 模型叠 MQA 后也只升 $1.06\%$。相比 MLA 把 K/V 压成 compressed latent、推理时还要 expand 回来，Q-K=V 用一个 hard equality 就拿到同量级收益，实现上更简单。
 
-2. **Q=K-V 用 2D Positional Encoding 救 symmetric attention**:
+**2. (X)+：用 2D positional encoding 把 Q=K 丢掉的方向性补回来。**
 
-    - 功能：Q=K 时 attention $K K^\top$ symmetric 不利于 sequential task；2D pos encoding 注入 directional bias。
-    - 核心思路：构造 fixed 2D sinusoidal positional encoding $P \in \mathbb{R}^{n \times n \times m}$，把 attention map 广播到 channel 加 $P$，再 $1 \times 1$ conv 投回 2D attention matrix。这跟 relative positional encoding 和 vision Transformer 的 2D pos embedding 思想一致。Causal LM 已通过 causal mask enforce asymmetry，(X)+ 只用于 non-causal task（vision、synthetic）。
-    - 设计动机：以前 symmetric attention 多在 graph NN 和 relational reasoning 出现，sequential task 因 directionality 重要被避开；2D pos encoding 是 elegant 的"打破对称同时保 efficiency"方案。
+Q=K-V 让 query 和 key 共用投影后，attention 矩阵退化成对称的 $K K^\top$，对依赖前后方向的 sequential 任务不利——这正是 symmetric attention 过去只见于 graph NN 和 relational reasoning、被序列任务避开的原因。(X)+ 变体的补救是构造一个固定的 2D sinusoidal positional encoding $P \in \mathbb{R}^{n \times n \times m}$，把对称的 attention map 广播到 $m$ 个 channel 上加进 $P$，再用一个 $1 \times 1$ 卷积投回二维 attention 矩阵，从而在不放弃投影共享的前提下重新引入 directional bias，思路与 relative positional encoding 和 vision Transformer 的 2D pos embedding 一脉相承。要注意 causal LM 本身已被 causal mask 强制成非对称，不需要这个补丁，所以 (X)+ 只用在 vision、synthetic 这类 non-causal 任务上。
 
-3. **与 GQA/MQA 正交叠加**:
+**3. 与 GQA/MQA 正交叠加：投影共享和 head 共享是两个维度，收益可乘。**
 
-    - 功能：projection sharing 和 head sharing 是不同维度的 efficiency，组合可乘性减 cache。
-    - 核心思路：GQA-$g$ 是把 $H$ query heads 共享 $g < H$ KV heads，减 cache 比 $1 - g/H$；Q-K=V 进一步在每个 GQA group 内 enforce $K = V$，cache 减半。Q-GQA-4 总 cache reduction $1 - g/(2H) = 87.5\%$（$H=16, g=4$）；Q-MQA cache reduction $96.9\%$，接近 cache-based Transformer 理论极限。
-    - 设计动机：MQA/GQA 已被 PaLM/Llama/Mistral 等广泛部署；本文证明 Q-K=V 是 orthogonal complement，对 industry 部署直接 actionable。Pareto frontier 上 Q-MQA combined 给 $97\%$ cache + near-parity quality 是 edge inference 的真实 enabler。
+GQA/MQA 走的是另一条省 cache 的路——head sharing，GQA-$g$ 把 $H$ 个 query head 共享到 $g < H$ 个 KV head，cache 减少比例为 $1 - g/H$。Q-K=V 削的是投影维度而非 head 维度，两者互不冲突，可以在每个 GQA group 内部再 enforce $K = V$ 把该 group 的 cache 又减半，于是收益相乘：Q-GQA-4（$H=16, g=4$）总 cache reduction 为 $1 - g/(2H) = 87.5\%$，Q-MQA 更进一步到 $96.9\%$，逼近 cache-based Transformer 的理论极限。由于 MQA/GQA 已是 PaLM/Llama/Mistral 等的标配，Q-K=V 作为 orthogonal complement 对工业部署是直接 actionable 的；Pareto frontier 上 Q-MQA 给出 $97\%$ cache 减少叠 near-parity 质量，对 edge / on-device inference 是真实可落地的 enabler。
 
-### 复杂度对比表
+下表汇总三种 variant 相对标准 QKV 的计算、参数、cache 代价——Q-K=V 在拿到 $50\%$ cache 减少的同时还顺带省了 $33\%$ 的计算和参数：
 
 | Variant | Computation | Parameters | KV Cache |
 |---|---|---|---|
@@ -72,8 +66,6 @@ tags:
 | Q=K-V / Q-K=V | $2nd^2$ | $2d^2$ | K only (Q-K=V) |
 | (Q=K-V)+ | $2nd^2 + n^2 m$ | $2d^2 + m$ | K + V |
 | Q=K=V | $nd^2$ | $d^2$ | K only |
-
-Q-K=V 33% 计算/参数减少 + 50% cache 减少。
 
 ## 实验关键数据
 

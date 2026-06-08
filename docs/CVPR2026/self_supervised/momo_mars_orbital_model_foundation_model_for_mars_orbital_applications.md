@@ -43,27 +43,33 @@ MOMO 是首个火星遥感基础模型，通过在三种火星传感器（HiRISE
 
 ### 整体框架
 
-MOMO 的构建分三步：(1) 准备约 1200 万高质量火星图像样本（三个传感器各 400 万），(2) 为每个传感器独立预训练 MAE 模型，(3) 通过 EVL 策略选择最优融合检查点，用 task arithmetic 合并为统一模型。该统一模型可直接在 Mars-Bench 的 9 个下游任务上微调评估。
+MOMO 想解决的问题很直接：火星有三种轨道传感器（HiRISE、CTX、THEMIS），分辨率从 0.25m 到 100m 跨越 400 倍、覆盖率天差地别、又没有时空对齐的共现观测，传统把它们堆在一起 joint training 的路子在这里走不通。MOMO 的应对是"分而治之再合并"：先准备约 1200 万张高质量火星图像（每个传感器约 400 万），为每个传感器**各自独立**预训练一个 MAE；训练途中持续打检查点并记录验证损失；最后用 EVL 策略挑出三个模型"收敛程度相当"的那组检查点，再用 task arithmetic 把它们的权重直接加成一个统一模型。这个统一模型就是 MOMO，可以拿去 Mars-Bench 的 9 个下游任务上微调评估。
 
 ### 关键设计
 
-1. **增强型重建损失函数**:
+**1. 增强型重建损失：让 MAE 学到地貌结构而不只是颜色纹理。**
 
-    - 功能：使 MAE 预训练学到更丰富的结构化表示
-    - 核心思路：标准 MAE 使用 MSE 作为重建目标，但 MSE 只关注像素级强度匹配，对高阶空间特征（形状、边界连续性）不敏感，导致模型能恢复颜色纹理但无法重建关键地貌特征（如环形山的精确形状）。MOMO 引入组合损失 $\mathcal{L}_\text{total} = \lambda_1\mathcal{L}_\text{MSE} + \lambda_2\mathcal{L}_\text{SSIM} + \lambda_3\mathcal{L}_\text{LPIPS} + \lambda_4\mathcal{L}_\text{grad}$，其中 LPIPS 提供感知级约束、SSIM 保证结构一致性、梯度损失 $\mathcal{L}_\text{grad}$ 惩罚预测和真值图像在水平/垂直方向梯度的差异以增强空间平滑性
-    - 设计动机：火星遥感任务（尤其是分割）需要精确的边界和形状识别，纯 MSE 训练出的表示在这些下游任务上表现受限
+标准 MAE 用 MSE 当重建目标，问题在于 MSE 只盯像素强度对不对，对形状、边界连续性这类高阶空间特征不敏感——结果模型能把颜色纹理补回来，却重建不出环形山的精确轮廓，而火星分割任务恰恰最吃这种边界与形状信息。MOMO 把重建目标换成一个组合损失
 
-2. **Equal Validation Loss (EVL) 检查点选择策略**:
+$$\mathcal{L}_\text{total} = \lambda_1\mathcal{L}_\text{MSE} + \lambda_2\mathcal{L}_\text{SSIM} + \lambda_3\mathcal{L}_\text{LPIPS} + \lambda_4\mathcal{L}_\text{grad}$$
 
-    - 功能：在融合前选择各传感器模型最兼容的检查点组合
-    - 核心思路：训练过程中每处理约 100K 样本记录一次验证损失 $\mathcal{L}_i^{(e)}$ 并保存检查点。EVL 首先寻找所有"损失对齐"的 epoch 组合 $\mathbf{t_c} = (e^1, ..., e^n)$，要求任意两个传感器的验证损失差 $\Delta_{ij} = |\mathcal{L}_i^{(e_a^i)} - \mathcal{L}_j^{(e_b^j)}| \leq \epsilon$。在所有满足条件的组合中，选择离各自 early-stopping epoch 平均距离最小的：$\mathbf{t_c}^\star = \min_{\mathbf{t_c} \in \mathcal{E}_\text{EVL}} \bar{D}(\mathbf{t_c})$，其中 $\bar{D} = \frac{1}{n}\sum_i |e^i - s_{es}^i|$
-    - 设计动机：各传感器数据分布差异大，训练轨迹不同。直接在最终 checkpoint 或各自 early-stopping 点融合可能导致有的模型过拟合、有的欠拟合。EVL 确保融合时各模型处于相似的收敛水平且接近各自的最佳泛化点，降低融合不稳定的风险
+四项各管一摊：MSE 保像素级保真，SSIM 约束结构一致性，LPIPS 给出感知级约束，梯度损失 $\mathcal{L}_\text{grad}$ 则惩罚预测图和真值图在水平/垂直方向梯度上的差异、逼模型把边缘的空间平滑性也学对。多出来的这几项正是冲着下游分割对边界形状的需求去的，纯 MSE 学到的表示在这些任务上会明显吃亏。
 
-3. **Task Arithmetic 模型融合**:
+**2. Equal Validation Loss（EVL）检查点选择：在"收敛程度相当"的地方融合，而不是各取最终点。**
 
-    - 功能：将多个传感器特定模型合并为一个统一模型
-    - 核心思路：选定最优检查点后，提取各传感器模型参数 $\{\theta_i^{(e_\star^i)}\}$，通过 task arithmetic 的加法操作直接合并权重：$\text{MOMO} = \mathcal{T}(\theta_1^{(e_\star^1)}, ..., \theta_n^{(e_\star^n)})$
-    - 设计动机：相比数据混合训练（Data Merge），模型融合方法可扩展性更强——新增传感器只需训练该传感器的模型并融合，无需全部重训。损失景观可视化表明 EVL 选择的模型在权重空间更接近，位于同一损失盆地中
+三个传感器数据分布差异大、训练轨迹各走各的，如果直接拿各自最后一个 checkpoint、或各自 early-stopping 点去融合，很可能出现有的模型已经过拟合、有的还欠拟合，权重凑在一起就不稳。EVL 的做法是让融合发生在三者收敛水平接近的时刻：训练中每处理约 10 万样本就记一次验证损失 $\mathcal{L}_i^{(e)}$ 并存一个检查点，然后在所有传感器的 epoch 组合 $\mathbf{t_c}=(e^1,\dots,e^n)$ 里筛出"损失对齐"的——要求任意两个传感器的验证损失差
+
+$$\Delta_{ij} = |\mathcal{L}_i^{(e_a^i)} - \mathcal{L}_j^{(e_b^j)}| \leq \epsilon$$
+
+在所有满足这个对齐条件的组合中，再挑离各自 early-stopping epoch 平均距离最小的一组，即
+
+$$\mathbf{t_c}^\star = \min_{\mathbf{t_c} \in \mathcal{E}_\text{EVL}} \bar{D}(\mathbf{t_c}),\quad \bar{D}(\mathbf{t_c}) = \frac{1}{n}\sum_i |e^i - s_{es}^i|$$
+
+第一个条件保证三者"收敛得差不多"，第二个条件保证这组检查点又都尽量靠近各自的最佳泛化点。两个条件叠在一起，融合时就不会出现一个模型拖另一个后腿的情况，融合后的稳定性也更好。
+
+**3. Task Arithmetic 模型融合：用加权重代替混数据，天然支持增量扩展。**
+
+选定那组最优检查点后，MOMO 取出各传感器模型的参数 $\{\theta_i^{(e_\star^i)}\}$，直接用 task arithmetic 的加法把权重合成一个模型 $\text{MOMO}=\mathcal{T}(\theta_1^{(e_\star^1)},\dots,\theta_n^{(e_\star^n)})$。相比把异构数据混在一起训（Data Merge），这条路最大的好处是可扩展：以后想加一个新传感器，只要单独训它的 MAE 再融进来，不用把所有传感器从头重训。而它之所以能融得动，前一步的 EVL 是关键——损失景观可视化显示 EVL 选出的这几个模型在权重空间本就更靠近、落在同一个损失盆地里，所以线性相加才不会掉到性能塌陷的区域。
 
 ### 损失函数 / 训练策略
 

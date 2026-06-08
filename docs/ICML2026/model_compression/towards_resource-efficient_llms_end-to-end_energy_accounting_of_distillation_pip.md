@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-全管线被拆成三个对照 regime：baseline SFT、logit-based KD、synthetic SFT，都跑在同一台 H100 80 GB 的独占节点上，固定 OLMo-2 tokenizer、Adafactor 优化器、bf16、序列长 1024、有效 batch 4、cosine LR + 100 step warmup、容差 $\epsilon = 2\times 10^{-3}$ 的早停。教师统一用 32B OLMo-2-SFT，学生覆盖 1B / 7B / 13B，任务用 TULU-3 指令、OpenR1-Math、Open-R1 Codeforces 三套监督数据。整个 pipeline 被结构化为：每段 stage 都打上时间戳和 token 计数，对功率序列做 $E_{\text{GPU}} \approx \int_{t_s}^{t_e} P_{\text{GPU}}(t)\,dt$ 积分得到 stage 能耗，再把所有 stage 加起来得到端到端 kWh，并通过 $E_{\text{total}} \cdot \text{PUE} \cdot g_{\text{region}}$ 推 CO₂e。最终输出三张 Pareto 前沿：能耗-质量、stage 分摊、复用摊销曲线。
+这篇工作不提新算法，它要回答的是"蒸馏到底省不省电"，做法是把同一条蒸馏流水线拆成不重叠的几段、逐段量电，再用闭式公式算出何时才划算。具体地，三个对照 regime（baseline SFT、logit-based KD、synthetic SFT）都跑在同一台 H100 80 GB 独占节点上，固定 OLMo-2 tokenizer、Adafactor、bf16、序列长 1024、有效 batch 4、cosine LR + 100 step warmup、容差 $\epsilon = 2\times 10^{-3}$ 早停；教师统一是 32B OLMo-2-SFT，学生覆盖 1B / 7B / 13B，监督数据是 TULU-3 指令、OpenR1-Math、Open-R1 Codeforces 三套。每段 stage 都打时间戳和 token 计数，对功率序列做 $E_{\text{GPU}} \approx \int_{t_s}^{t_e} P_{\text{GPU}}(t)\,dt$ 积分得 stage 能耗，所有 stage 相加得到端到端 kWh，再用 $E_{\text{total}} \cdot \text{PUE} \cdot g_{\text{region}}$ 推 CO₂e，最终落成三张图：能耗-质量 Pareto、stage 分摊、复用摊销曲线。
 
 ### 关键设计
 
-1. **分阶段端到端能耗核算协议**:
+**1. 分阶段端到端能耗核算协议：把"教师沉没成本"显式量进总账。**
 
-    - 功能：把蒸馏总能耗硬拆成 $E_{\text{prerun}} + E_{\text{teacher}} + E_{\text{student}} + E_{\text{eval}}$，其中 $E_{\text{teacher}}$ 又细分成 logit 缓存 $E_{\text{logit}}$ 或合成生成 $E_{\text{gen}}$，每段都带显式 start/end 边界、token 计数和 GPU/CPU 功耗采样。
-    - 核心思路：NVML 以 0.5 s 间隔采样 GPU 功率作为 ground truth，CodeCarbon 在 process-tracking 模式下估 CPU，单位统一用 $1\,\text{kWh}=3.6\times 10^{6}\,\text{J}$；为了让不同规模 / pipeline 可比，作者把 stage 能耗除以处理 token 数得 $\text{J/token}=E^{(\text{stage})}_{\text{total}}/N_{\text{tokens}}$。CO₂e 因为依赖部署假设被显式标注为派生量，主分析只看实测能耗。
-    - 设计动机：以前的 Green AI 工作多用 GPU-hours 或 FLOPs 等代理指标，跨 pipeline 没法直接比较；按 stage 拆解能立刻定位"瓶颈到底在教师还是学生"，从而决定该调哪个旋钮。
+过往 Green AI 报告几乎只算学生侧，把教师生成 logits / 合成数据当成既已沉没——这正是"蒸馏更绿"叙事站不住的地方。为此作者把总能耗硬拆成 $E_{\text{prerun}} + E_{\text{teacher}} + E_{\text{student}} + E_{\text{eval}}$，其中教师段再细分成 logit 缓存 $E_{\text{logit}}$ 或合成生成 $E_{\text{gen}}$，每段都带显式 start/end 边界与 token 计数。测量上以 NVML 每 0.5 s 采样 GPU 功率作 ground truth，CodeCarbon 在 process-tracking 模式估 CPU，单位统一到 $1\,\text{kWh}=3.6\times 10^{6}\,\text{J}$；为让不同规模 / pipeline 可比，把 stage 能耗除以处理 token 数得 $\text{J/token}=E^{(\text{stage})}_{\text{total}}/N_{\text{tokens}}$，CO₂e 因依赖部署假设被显式标成派生量、主分析只看实测能耗。比起 GPU-hours / FLOPs 这类跨 pipeline 不可比的代理指标，按 stage 拆账能立刻定位瓶颈在教师还是学生，从而知道该拧哪个旋钮。
 
-2. **能耗-质量 Pareto 前沿与统一质量分数**:
+**2. 能耗-质量 Pareto 前沿与统一质量分数：把"哪些配置纯属浪费电"画出来。**
 
-    - 功能：把五个 benchmark 的得分压缩成一个跨学生可比的 scalar，再画出能耗 vs 质量的 Pareto 散点，识别被支配的 pipeline-规模组合。
-    - 核心思路：质量分数定义为相对 32B 教师的等权保留率 $Q_i = \frac{1}{B}\sum_{b=1}^{B}\frac{s_{i,b}}{s_{\text{teacher},b}}$，其中 $B=5$，benchmark 包括 AlpacaEval 2、IFEval、MT-Bench-101、GSM8K、MMLU。$x$ 轴用 stage 求和的全管线 kWh，$y$ 轴用 $Q$，每个配置跑 2–3 次取均值；因为 CO₂e 在固定网格因子下线性正比于 kWh，同一张图能等价读成 emissions-quality 前沿。
-    - 设计动机：单看 benchmark 表格看不出"哪些 (pipeline, 规模) 组合在能耗-质量平面上根本被支配"；显式画 Pareto 能直接告诉实践者哪些配置是浪费电的"显然次优解"。
+光看 benchmark 表格看不出哪些 (pipeline, 规模) 组合在能耗-质量平面上根本被支配。作者先把五个 benchmark 压成一个跨学生可比的 scalar——相对 32B 教师的等权保留率 $Q_i = \frac{1}{B}\sum_{b=1}^{B}\frac{s_{i,b}}{s_{\text{teacher},b}}$（$B=5$，含 AlpacaEval 2、IFEval、MT-Bench-101、GSM8K、MMLU），再以 stage 求和的全管线 kWh 为 $x$ 轴、$Q$ 为 $y$ 轴画 Pareto 散点，每个配置跑 2–3 次取均值。由于 CO₂e 在固定电网因子下线性正比于 kWh，同一张图能等价读成 emissions-quality 前沿，被支配的"显然次优解"一眼可辨，直接告诉实践者哪些配置在白烧电。
 
-3. **教师摊销与闭式 break-even 阈值**:
+**3. 教师摊销与闭式 break-even 阈值：把"省不省电"写成一个分式。**
 
-    - 功能：在教师产物（cached logits / 合成数据集）被 $N$ 个学生 / 超参种子复用时，量化什么时候蒸馏才能在端到端能耗上反超 baseline SFT。
-    - 核心思路：每条 KD / synthetic SFT 曲线的每学生平均能耗写成 $E_{\text{teacher}}/N + E_{\text{student}}^{\text{distill}}$，与 baseline 持平的临界点是 $N^* = \dfrac{E_{\text{teacher}}}{E_{\text{student}}^{\text{baseline}}-E_{\text{student}}^{\text{distill}}}$。同样地，对推理侧也给出 $T^* = \dfrac{E_{\text{extra-train,kWh}}\cdot 3{,}600{,}000}{j_{\text{ref}}-j_{\text{student}}}$，告诉用户要服务多少推理 token 才能把多花的训练能耗回本。
-    - 设计动机：蒸馏 "是否省电" 并不是 KD 或 synthetic SFT 的内禀属性，而是一个被复用次数决定的工作流问题；把它写成一个分母为"baseline 与蒸馏学生训练能耗差"的简单分式，就能在新硬件 / 新模型族下直接重算阈值，给出 reuse-before-regenerate 的设计准则。
+蒸馏是否省电不是 KD 或 synthetic SFT 的内禀属性，而是被教师产物复用次数决定的工作流问题：教师段是近乎固定的大额开销，只有摊到多个学生 / 超参种子上才稀释得动。把每学生平均能耗写成 $E_{\text{teacher}}/N + E_{\text{student}}^{\text{distill}}$，与 baseline 持平的临界复用次数就是 $N^* = \dfrac{E_{\text{teacher}}}{E_{\text{student}}^{\text{baseline}}-E_{\text{student}}^{\text{distill}}}$；分母正是 baseline 与蒸馏学生的训练能耗差，意味着只有蒸馏学生确实训得更省、且复用够多次时才回本。推理侧同理给出 $T^* = \dfrac{E_{\text{extra-train,kWh}}\cdot 3{,}600{,}000}{j_{\text{ref}}-j_{\text{student}}}$，告诉用户要服务多少推理 token 才能把多花的训练能耗赚回来。两条公式只依赖几个实测量，换新硬件 / 新模型族直接重算即可，落地成 reuse-before-regenerate 的设计准则。
 
 ### 损失函数 / 训练策略
 KD 的目标函数是经典 Hinton 式混合：$\mathcal{L}_{\text{KD}}(\theta_s) = \alpha\,\mathrm{CE}(y_{\mathrm{hard}}, p_s) + (1-\alpha)\,T^2\,\mathrm{KL}(p_t^{(T)} \,\|\, p_s^{(T)})$，默认 $\alpha=0.5$, $T=1$；敏感性扫 $T \in \{1, 2, 4\}$, $\alpha \in \{0.3, 0.5, 0.8\}$。Synthetic SFT 用纯自回归 $\mathcal{L}_{\text{SFT}}(\theta_s; x, y) = -\sum_{t=1}^s \log p_{\theta_s}(y_t \mid x, y_{<t})$，教师用 nucleus sampling 生成一次后跨学生复用，扫 max_new_tokens $\in \{256, 512, 1024\}$ 以及 prompt 数 7000 vs 3500。所有 regime 共享同一 batch / scheduler / 早停规则，确保能耗差完全归因于 pipeline 结构和教师存在与否。

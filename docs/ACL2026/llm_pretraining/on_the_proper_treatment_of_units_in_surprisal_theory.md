@@ -52,23 +52,18 @@ tags:
 第四步，用转导后的 LM 计算 next-unit surprisal。作者把每个单位先映射为底层字符串再加一个分隔符 sep，使 $h(u)=\xi\,\text{sep}$ 成为 prefix-free 编码；再令 $f=h\circ\rho$，用有限状态转导器把 $\Sigma^*$ 转成带 sep 的有限 alphabet $\Delta^*$。这样，单位概率可以通过 $\Delta$ 上的 prefix probability 比值恢复：$p_U(u\mid\mathbf{u}) = \overrightarrow{p}_\Delta(h(\mathbf{u})h(u)) / \overrightarrow{p}_\Delta(h(\mathbf{u}))$。
 
 ### 关键设计
-1. **把单位库存 $U$ 与模型 alphabet $\Sigma$ 解耦**:
 
-	- 功能：明确区分“实验要分析的语言单位”和“预训练 LM 原生输出的 token”。
-	- 核心思路：语言模型 $p_\Sigma$ 仍然在 $\Sigma^*$ 上给概率，但 surprisal 的目标事件定义在 $U^*$ 上；二者之间由 unit parser $\rho$ 连接。这样，词、字符、PTB token、morpheme 或 ROI 对齐单位都可以成为合法分析对象。
-	- 设计动机：以往很多工作默认 token 就是 unit，或者用后处理把 token surprisal 汇总成 word surprisal。这会让 BPE 的压缩规则、空白符归属、标点处理直接进入心理语言学结论。解耦以后，tokenizer 只承担计算实现角色，不再决定理论单位。
+**1. 把单位库存 $U$ 与模型 alphabet $\Sigma$ 解耦：让实验单位和模型 token 各归各位。**
 
-2. **把 realization 视为 relation 而非 function**:
+以往很多工作默认 token 就是分析单位，或者用后处理把 token surprisal 汇总成 word surprisal，结果 BPE 的压缩规则、空白符归属、标点处理都直接渗进了心理语言学结论。本文的做法是让语言模型 $p_\Sigma$ 照旧在 $\Sigma^*$ 上给概率，但把 surprisal 的目标事件定义在 $U^*$ 上，二者之间由 unit parser $\rho$ 连接。这样词、字符、PTB token、morpheme 乃至 ROI 对齐单位都能成为合法的分析对象，而 tokenizer 退回到纯计算实现的角色，不再越权决定理论单位。
 
-	- 功能：修复 leading/trailing whitespace 形式化中同一个词在不同上下文被迫变成不同单位的问题。
-	- 核心思路：已有方法常假设 $\rho^{-1}$ 是 monoid homomorphism，并把 alphabet 分成 boundary symbols 与 continuation symbols。论文指出这会导致 unit inconsistency：例如句首的 `Hale` 可能实现为 `bosHale`，空白后的 `Hale` 实现为 `\u2423Hale`，若 realization 必须是函数，就不得不把二者视为不同单位。本文允许同一单位与多个字符串实现相关联，所以 `Hale` 仍然是同一个 unit。
-	- 设计动机：人类语言单位的身份不应由它是否处在句首、前面是否有空格决定。relation 形式更贴近实际，也能解释为什么简单 whitespace 分区无法处理 `1,000`、`end, he said`、`don't`、`cat's` 等上下文依赖标点。
+**2. 把 realization 视为 relation 而非 function：修复同一个词在不同上下文被迫拆成不同单位的毛病。**
 
-3. **用 regular unit inventory 和有限状态转导实现可计算转换**:
+已有方法常假设 $\rho^{-1}$ 是 monoid homomorphism，把 alphabet 分成 boundary symbols 与 continuation symbols，这会引出 unit inconsistency：句首的 `Hale` 可能实现为 `bosHale`，空白后的 `Hale` 实现为 `\u2423Hale`，一旦 realization 必须是函数，二者就被迫当成不同单位。本文允许同一单位与多个字符串实现相关联，于是 `Hale` 在哪都还是同一个 unit。背后的道理很直白：一个语言单位的身份不该由它处不处在句首、前面有没有空格来决定。relation 形式既贴近这一直觉，也才能一致地处理 `1,000`、`end, he said`、`don't`、`cat's` 这类上下文依赖的标点情形。
 
-	- 功能：让可能无限的单位集合仍然能在有限 alphabet 上被语言模型处理。
-	- 核心思路：假设单位本身是某个有限 alphabet $\Xi$ 上的 regular language，即 $U\subseteq\Xi^*$。给每个单位追加 sep 得到 prefix-free 的 $h(u)$，再用 finite transducer $f=h\circ\rho$ 从模型字符串转到 sep 标注字符串。计算时可以调用已有 transduced LM 算法，对所有映射到目标输出的源字符串概率进行边际化。
-	- 设计动机：自然语言中的词形集合可能无限，直接把每个词当成 LM alphabet 不现实；但许多音系、形态、tokenization 规则可以用正则约束和有限状态机器表达。这个设计把理论自由度和工程可行性接上了。
+**3. 用 regular unit inventory 和有限状态转导实现可计算转换：把可能无限的词形集合压回有限 alphabet 上算。**
+
+自然语言的词形集合可能无限，直接把每个词塞进 LM alphabet 并不现实，但许多音系、形态和 tokenization 规则其实都能用正则约束表达。于是本文假设单位本身是某个有限 alphabet $\Xi$ 上的 regular language（$U\subseteq\Xi^*$），给每个单位追加 sep 得到 prefix-free 的编码 $h(u)$，再用 finite transducer $f=h\circ\rho$ 把模型字符串转成 sep 标注的字符串。计算时直接复用已有的 transduced LM 算法，对所有映射到目标输出的源字符串概率做边际化，单位概率即可恢复。这个设计把理论上的自由度（任意合理单位）和工程上的可行性（有限状态机可算）接到了一起。
 
 ### 损失函数 / 训练策略
 本文不训练新的神经语言模型。实验中的 source LM 是 GPT-2 Small，token inventory 直接读取 GPT-2 token surprisal；其他 inventory 通过相应 transducer 与 GPT-2 组合来估计 contextual surprisal。

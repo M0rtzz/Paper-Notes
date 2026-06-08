@@ -41,34 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GATD 保留 TabDiff 的扩散底座（连续列用 EDM，类别列用 masked diffusion，可学习的 per-column $\rho$ 噪声调度），只在去噪器外面套上"几何输入 + 几何预测头 + 几何监督"三件套。
+GATD 要解决的是"列间关系全靠去噪 MSE 隐式学、学得慢又不可迁移"的问题，做法是保留 TabDiff 的扩散底座（连续列走 EDM、类别列走 masked diffusion、per-column 可学习的 $\rho$ 噪声调度），在去噪器外面套一层"几何输入 + 几何预测头 + 几何监督"，把列对之间的角度/长度从一个被丢弃的免费信号变成被强制学习的辅助目标。
 
-整体流程：(1) 把所有列（不论连续/类别）映射到 $[-1,1]$ 的统一标量空间 $v$；(2) 对所有 $\binom{d}{2}$ 列对计算真实角度 $\theta_{ij}$ 与长度 $\ell_{ij}$ 作为监督目标，对噪声状态下的几何量作为模型输入；(3) 去噪器接收 `[时间嵌入; 加噪连续; one-hot 类别; 输入角度; 输入长度]` 并产生 hidden $\mathbf{h}$；(4) 几何头从 $\mathbf{h}$ 预测 $\hat{\boldsymbol{\theta}}$（$\frac{\pi}{2}\tanh$ 约束）和 $\hat{\boldsymbol{\ell}}$；(5) 增强表征 $\mathbf{h}_{\text{aug}}=[\mathbf{h};\hat{\boldsymbol{\theta}}]$ 进入连续/类别去噪头；(6) 总损失 = 扩散损失 + 角度/长度 MSE + 一致性损失，几何项被加权放到主导地位。
-
-采样时同样计算几何输入但不做几何监督，且**长度头在生成阶段被 detach**（只在训练做正则，不参与 $\mathbf{h}_{\text{aug}}$，因为长度因平方丢失了符号信息）。生成后通过反射（而非硬裁剪）把越界值折回 $[0,1]$，避免边界质量堆积。
+具体地，所有列先被映射到统一标量空间 $v\in[-1,1]^d$，对 $\binom{d}{2}$ 个列对算出真实角度 $\theta_{ij}$ 与长度 $\ell_{ij}$ 当监督目标、噪声态下的同名几何量当输入；去噪器吃进 `[时间嵌入; 加噪连续; one-hot 类别; 输入角度; 输入长度]` 产出 hidden $\mathbf{h}$，几何头从 $\mathbf{h}$ 预测 $\hat{\boldsymbol{\theta}}$（$\frac{\pi}{2}\tanh$ 约束）和 $\hat{\boldsymbol{\ell}}$，再把增强表征 $\mathbf{h}_{\text{aug}}=[\mathbf{h};\hat{\boldsymbol{\theta}}]$ 喂回连续/类别去噪头。采样阶段照算几何输入但不做几何监督，且长度头被 detach（长度经平方丢了符号信息，只在训练当正则、不进 $\mathbf{h}_{\text{aug}}$），生成后用反射（$s\mapsto 2-s$ 或 $s\mapsto -s$）而非硬裁剪把越界值折回 $[0,1]$，避免合成数据在分位数边界堆积。
 
 ### 关键设计
 
-1. **跨类型列的几何特征化（Pairwise Angle + Length）**：
+**1. 跨类型列的几何特征化：把任意两列的差值无损编码成一对有界几何量**
 
-    - 功能：把任意两列的差值无损地编码为一对显式几何量，作为输入和监督目标。
-    - 核心思路：先把所有列归一到 $v\in[-1,1]^d$——连续列走分位数变换 $v=2\cdot\text{QT}(x)-1$，类别列走 $v=2\cdot\text{idx}/\max(\text{card}-1,1)-1$ 的固定确定性映射；然后对每个 $i<j$ 计算 $\theta_{ij}=\arctan(v_j-v_i)$ 和 $\ell_{ij}=\frac{1}{2}\log(1+(v_j-v_i)^2)$。角度天然有界且反对称，长度对大差值做对数压缩。理论上 $v_j-v_i=\tan(\theta_{ij})$ 可由角度反解，所以角度信息更强，作者只把预测的角度拼回 $\mathbf{h}_{\text{aug}}$。
-    - 设计动机：要让一个统一的几何信号同时覆盖混合类型列，必须先有共同标量空间；选 $\arctan$ 是为了让监督目标本身有界稳定（消融显示用原始差值会略差）；用固定映射而非可学嵌入是为了让几何特征"现算现用"，避免依赖额外的可训练参数。顺带的好处是序数类别（教育程度、Likert 量表）会自动获得有序强化。
+要让一个统一的几何信号同时覆盖连续列和类别列，前提是有一个共同的标量空间，所以连续列走分位数变换 $v=2\cdot\text{QT}(x)-1$、类别列走固定确定性映射 $v=2\cdot\text{idx}/\max(\text{card}-1,1)-1$，都落到 $[-1,1]$。随后对每个 $i<j$ 计算角度 $\theta_{ij}=\arctan(v_j-v_i)$ 和长度 $\ell_{ij}=\frac{1}{2}\log(1+(v_j-v_i)^2)$：$\arctan$ 让角度天然有界且反对称，$\log$ 对大差值做对数压缩，消融显示直接用原始差值当目标会略弱，正是因为有界目标更稳定。由于 $v_j-v_i=\tan(\theta_{ij})$ 可从角度反解，角度信息严格强于长度，所以只有预测角度被拼回 $\mathbf{h}_{\text{aug}}$。用固定映射而非可学嵌入是为了让几何特征"现算现用"、不引入额外可训练参数，顺带还让序数类别（教育程度、Likert 量表）自动获得有序强化。
 
-2. **架构匹配的"输入 vs 监督"对照实验**：
+**2. 架构匹配的"输入 vs 监督"对照：把效益干净归因到监督而非容量**
 
-    - 功能：把"几何到底是靠 *被看见* 起作用，还是靠 *被强迫预测* 起作用"这个混淆变量彻底剥离。
-    - 核心思路：构造 NoGeom（无几何）、InputsOnly（喂几何 + 装预测头但 $\lambda_\theta=\lambda_\ell=\lambda_c=0$）、+Geom（喂几何 + 预测头 + 权重打开）三档配置，让架构、参数量、梯度拓扑完全一致，只切换"是否给几何损失权重"这一个开关。
-    - 设计动机：传统消融通常会同时去掉输入、头、损失，混淆了"额外容量"和"显式监督"两种解释。作者发现 InputsOnly vs NoGeom 的 Cohen's $d=-0.08$（几乎为零），而 +Geom vs NoGeom 的 $d=0.81$（大效应），从而干净地证明 **是辅助监督在起作用，不是几何输入或容量**。这是全文最有说服力的方法论贡献，也回答了"为什么 Transformer 自注意力学不到这种结构？"——因为没有人逼它学。
+几何到底是靠"被模型看见"起作用，还是靠"被强迫预测"起作用？为剥离这个混淆变量，作者构造三档配置——NoGeom（完全无几何）、InputsOnly（喂几何、装预测头，但 $\lambda_\theta=\lambda_\ell=\lambda_c=0$）、+Geom（喂几何 + 预测头 + 权重打开），三者架构、参数量、梯度拓扑完全一致，唯一开关就是"是否给几何损失权重"。结果 InputsOnly vs NoGeom 的 Cohen's $d=-0.08$（几乎为零），而 +Geom vs NoGeom 的 $d=0.81$（大效应），干净地证明真正起作用的是辅助监督，不是几何输入也不是额外容量。这也回答了"为什么 Transformer 自注意力学不到这种结构"——不是学不到，而是没有人逼它学；它是全文最有说服力的方法论贡献。
 
-3. **反转的损失权重层次（几何 95% / 扩散 5%）**：
+**3. 反转的损失权重层次：让几何辅助任务占总 loss 约 95%**
 
-    - 功能：让几何辅助任务在优化中占主导，强迫骨干网络把列间关系编码进表征，再"顺带"完成去噪。
-    - 核心思路：默认权重 $(\lambda_\epsilon,\lambda_{\text{cat}},\lambda_\theta,\lambda_\ell,\lambda_c)=(1.0,0.05,15,15,8)$，使收敛时几何项加权后约占总 loss 95%；其中一致性损失 $\mathcal{L}_c=\mathbb{E}[(1-t)^2]\cdot(\|\hat{\boldsymbol{\theta}}-\text{sg}(\boldsymbol{\theta}_{\text{pred}})\|^2+\|\hat{\boldsymbol{\ell}}-\text{sg}(\boldsymbol{\ell}_{\text{pred}})\|^2)$ 用 $(1-t)^2$ 在低噪声段强约束"几何头的预测要和从去噪输出反算出的几何一致"。
-    - 设计动机：作者在权重消融里发现把几何权重降到和扩散同量级反而掉点——这与传统多任务学习"辅助任务权重要小"的直觉相反。他们的解释是：去噪损失本身就是空间局部的逐元素 MSE，不会把梯度推向"理解列对关系"的方向，必须由更重的辅助损失牵引，模型学到的几何表征才能再反过来帮助去噪。同一套权重在 MLP/GNN/Transformer 三套骨干上不需要重调，证明这套权重是结构性的而非凑出来的。
+默认权重 $(\lambda_\epsilon,\lambda_{\text{cat}},\lambda_\theta,\lambda_\ell,\lambda_c)=(1.0,0.05,15,15,8)$，使收敛时几何项加权后约占总 loss 的 95%，去噪本身只剩 5%，相当于强迫骨干先把列间关系编码进表征、再"顺带"完成去噪。其中一致性损失 $\mathcal{L}_c=\mathbb{E}[(1-t)^2]\cdot(\|\hat{\boldsymbol{\theta}}-\text{sg}(\boldsymbol{\theta}_{\text{pred}})\|^2+\|\hat{\boldsymbol{\ell}}-\text{sg}(\boldsymbol{\ell}_{\text{pred}})\|^2)$ 用 $(1-t)^2$ 在低噪声段强约束几何头的预测要与从去噪输出反算出的几何一致。这个权重层次和多任务学习"辅助任务权重要小"的常识相反——权重消融里把几何降到和扩散同量级反而掉点，原因是去噪 MSE 是空间局部的逐元素目标、梯度不会指向"理解列对关系"，必须由更重的辅助损失牵引，学到的几何表征才能反哺去噪；而同一套权重在 MLP/GNN/Transformer 三套骨干上无须重调，说明它是结构性的而非凑出来的。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L}=\lambda_\epsilon\mathcal{L}_{\text{cont}}+\lambda_{\text{cat}}\mathcal{L}_{\text{cat}}+\lambda_\theta\mathcal{L}_{\text{angle}}+\lambda_\ell\mathcal{L}_{\text{length}}+\lambda_c\mathcal{L}_{\text{consistency}}$。$\mathcal{L}_{\text{cont}}$ 是 EDM 加权的去噪 MSE，$\mathcal{L}_{\text{cat}}$ 是 masked token 上的加权交叉熵；$\mathcal{L}_{\text{angle}}/\mathcal{L}_{\text{length}}$ 直接对真值 $\theta/\ell$ 做 L2；$\mathcal{L}_{\text{consistency}}$ 让预测几何与"从去噪输出反算的几何"对齐（带 stop-gradient）。优化器 AdamW + EMA，训练 20,000 epoch（TabDiff 是 8,000），第 10,000 epoch 后挑最佳；尽管 epoch 多 2.5×，端到端 wall-clock 反而比 TabDiff 快 1.7×。采样用 EDM Euler 1000 步 + 类别迭代 unmasking + 反射边界处理。
+总损失为 $\mathcal{L}=\lambda_\epsilon\mathcal{L}_{\text{cont}}+\lambda_{\text{cat}}\mathcal{L}_{\text{cat}}+\lambda_\theta\mathcal{L}_{\text{angle}}+\lambda_\ell\mathcal{L}_{\text{length}}+\lambda_c\mathcal{L}_{\text{consistency}}$，其中 $\mathcal{L}_{\text{cont}}$ 是 EDM 加权去噪 MSE、$\mathcal{L}_{\text{cat}}$ 是 masked token 上的加权交叉熵、$\mathcal{L}_{\text{angle}}/\mathcal{L}_{\text{length}}$ 直接对真值 $\theta/\ell$ 做 L2、$\mathcal{L}_{\text{consistency}}$ 让预测几何与从去噪输出反算的几何对齐（带 stop-gradient）。优化器用 AdamW + EMA，训练 20,000 epoch（TabDiff 为 8,000）、第 10,000 epoch 后挑最佳；尽管 epoch 多 2.5×，但单步因模型小，端到端 wall-clock 反而比 TabDiff 快 1.7×。采样用 EDM Euler 1000 步 + 类别迭代 unmasking + 反射边界处理。
 
 ## 实验关键数据
 

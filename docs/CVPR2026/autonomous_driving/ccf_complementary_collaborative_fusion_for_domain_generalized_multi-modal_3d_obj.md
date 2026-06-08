@@ -43,20 +43,29 @@ tags:
 
 ### 整体框架
 
-基于 MV2DFusion 双分支检测框架，由三个互补组件组成：Query Decoupled Loss (QDL) 提供均衡监督，LiDAR-Guided Depth Prior (LGDP) 改善空间初始化，Complementary Cross-Modal Masking (CCMM) 促进自适应融合。
+CCF 想解决的是一个很具体的失衡：双分支多模态检测器在跨域时，相机分支本该顶上来（LiDAR 退化时），实际却被 LiDAR 分支系统性压制，几乎不出力。作者没有重新设计网络，而是在已有的 MV2DFusion 双分支框架上挂三个互补组件，从训练监督、深度初始化、融合阶段三处分别松绑对 LiDAR 的依赖。一张图、一帧点云进来后，2D 和 3D 两路各自生成 query；Query Decoupled Loss 保证两路都拿到独立监督，LiDAR-Guided Depth Prior 给 2D query 补上靠谱的深度，Complementary Cross-Modal Masking 则在训练时刻意破坏单一模态、逼解码器学会按可靠性挑 query。三者都只在训练期生效，推理仍走原来的融合分支，零额外开销。
 
 ### 关键设计
 
-1. **Query Decoupled Loss (QDL)**：解码器并行执行三次（共享权重）：仅 2D query、仅 3D query、融合 query。各自独立进行匈牙利匹配和损失计算：
-    $\mathcal{L}_{total} = \mathcal{L}_{2d} + \mathcal{L}_{3d} + \mathcal{L}_{fused}$
-   设计动机：标准训练中 3D query 因更好的定位质量垄断匈牙利匹配（37.5:1），2D query 几乎无梯度更新。三次并行而非单次解码后分离，是为了避免 2D query 在自注意力中通过 3D query "搭便车"（shortcut learning）。推理时仅用融合分支，无额外计算开销。
+**1. Query Decoupled Loss（QDL）：让 2D query 拿到自己的梯度，而不是被 3D query 垄断监督。**
 
-2. **LiDAR-Guided Depth Prior (LGDP)**：对每个 2D 提案，从图像分支获得学习深度分布 $\mathbf{d}_i^{2d} \in \mathbb{R}^D$，从 LiDAR 点云获得几何先验分布 $\mathbf{d}_i^{3d} \in \mathbb{R}^D$（视锥内 LiDAR 点的深度直方图）。通过置信度网络预测融合权重 $\lambda_i \in [0,1]$：
-    $\mathbf{d}_i^{fused} = \sigma(\lambda_i \cdot \log(\mathbf{d}_i^{2d}) + (1-\lambda_i) \cdot \log(\mathbf{d}_i^{3d}))$
-   这是一种 Product-of-Experts 式的对数空间融合。设计动机：纯图像深度预测 MAE 为 1.78m（源域），跨域更差（Rain 3.01m），直接利用 LiDAR 几何信息可大幅改善 2D query 的 3D 定位。自适应权重则能处理远距离 LiDAR 稀疏或雨天 LiDAR 噪声的情况。
+痛点很直接：标准训练里 3D query 定位更准，匈牙利匹配几乎被它包圆，作者实测 3D 与 2D 的匹配比例高达 37.5:1，2D query 基本收不到梯度，自然练不强。QDL 的做法是让同一个解码器（共享权重）并行跑三遍——只喂 2D query、只喂 3D query、喂融合 query——每一路各自独立做匈牙利匹配和损失计算，再相加：
 
-3. **Complementary Cross-Modal Masking (CCMM)**：对图像应用 GridMask，对 LiDAR 应用互补掩码（图像被遮蔽的位置保留 LiDAR 点，反之亦然）。采用课程学习（掩码概率从 0 线性增至 $p=0.7$）。
-   设计动机：模拟真实域迁移中模态异步退化（雨天 LiDAR 差但相机可用，夜间相反），迫使解码器学会在融合阶段根据模态可靠性自适应选择 query，而非固定依赖 LiDAR。与 CMT 的完全丢弃不同，互补掩码保持两个模态同时可用但互补可见。
+$$\mathcal{L}_{total} = \mathcal{L}_{2d} + \mathcal{L}_{3d} + \mathcal{L}_{fused}$$
+
+关键在于「三次并行」而不是「解码一次再事后拆开算损失」：如果让三类 query 在同一次自注意力里同台，2D query 会通过和 3D query 的交互「搭便车」拿到定位信息（shortcut learning），看起来达标但本身没学会。隔离开跑，2D query 只能靠自己，才真正被训练起来。因为只是训练期多算两路损失，推理时仍只用融合分支，不增加任何计算。
+
+**2. LiDAR-Guided Depth Prior（LGDP）：用 LiDAR 几何把 2D query 那个不靠谱的深度先验扶正。**
+
+2D query 的老毛病是深度估不准——纯图像预测的深度 MAE 在源域就有 1.78m，到雨天更恶化到 3.01m，深度一偏，3D 定位就跟着塌。LGDP 给每个 2D 提案准备两份深度分布：图像分支学出来的 $\mathbf{d}_i^{2d} \in \mathbb{R}^D$，以及从视锥内 LiDAR 点的深度直方图统计出的几何先验 $\mathbf{d}_i^{3d} \in \mathbb{R}^D$。再用一个置信度网络预测融合权重 $\lambda_i \in [0,1]$，在对数空间把两者加权：
+
+$$\mathbf{d}_i^{fused} = \sigma\big(\lambda_i \cdot \log(\mathbf{d}_i^{2d}) + (1-\lambda_i) \cdot \log(\mathbf{d}_i^{3d})\big)$$
+
+对数空间相加等价于 Product-of-Experts，相当于让两个"专家"分布相乘取交集，比直接线性平均更尊重各自的高置信区间。权重 $\lambda_i$ 自适应是必要的：远处 LiDAR 点稀疏、雨天 LiDAR 噪声大，这些情况下应当回退到更信图像，固定权重做不到这种切换。
+
+**3. Complementary Cross-Modal Masking（CCMM）：在训练里制造"模态异步退化"，逼解码器学会按可靠性选 query。**
+
+前两个组件解决了监督和深度，但融合阶段解码器仍可能形成"无脑信 LiDAR"的习惯，一旦真到 LiDAR 退化的域就抓瞎。CCMM 在训练时对图像打 GridMask，同时对 LiDAR 打一张**互补**的掩码——图像被遮的位置恰好保留 LiDAR 点，反之亦然，使两个模态始终都在、但可见区域互补。这正好模拟真实跨域中的异步退化：雨天 LiDAR 糟而相机可用、夜间反过来。解码器被反复置于"某一路这块不可信"的处境，只能学会根据模态可靠性临场挑 query，而不是固定押注 LiDAR。和 CMT 那种直接整模态丢弃不同，互补掩码保证两路同时可用、信息不浪费。掩码强度还走课程学习，概率从 0 线性升到 $p=0.7$，避免训练早期一上来就破坏太狠导致不收敛。
 
 ### 损失函数 / 训练策略
 

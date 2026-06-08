@@ -38,32 +38,26 @@ AG-REPA 发现音频 Flow Matching 中“存储语义信息的层”和“真正
 **核心 idea**：不要把 REPA 施加在 teacher similarity 最高的层，而是用 FoG-A 找出最能改变 velocity field 的 Top-K 层，并按归因强度分配对齐权重。
 
 ## 方法详解
-AG-REPA 包含一套诊断工具和一个训练策略。诊断工具先区分“网络知道什么”和“网络实际使用什么”；训练策略只对后者进行稀疏、加权的 REPA 对齐。
 
 ### 整体框架
-模型是统一音频生成框架，同时做 TTS 和 Text-to-Audio：语音侧使用语义 token，通用音频侧使用事件/声学 token，共享 DiT-based Flow Matching backbone。训练前或 warm-up 阶段，作者用 BiT-C 和 LASP 测层表示与 Whisper/BEATs teacher 的相似度，再用 FoG-A 对每层做 gate ablation，观察速度场输出变化。之后选出 FoG-A Top-K 层，为这些层加两层 MLP projection head，并把对齐损失加入原始 Flow Matching loss。
+AG-REPA 要解决的是音频 Flow Matching 里 REPA 该对齐哪几层的问题：以往按经验固定中层对齐，但作者发现"最像 teacher 的层"和"最影响速度场的层"并不重合。它的做法是先用一套诊断工具把这两件事拆开看，再只对真正驱动生成的层做稀疏、加权的对齐。模型本身是统一音频生成框架，同时做 TTS 和 Text-to-Audio，语音侧用语义 token、通用音频侧用事件/声学 token，共享一个 DiT-based Flow Matching backbone。在 warm-up 阶段，作者先测各层表示与 Whisper/BEATs teacher 的相似度，再对每层做门控消融观察速度场变化，最后挑出贡献最高的几层加轻量 projection head 做对齐。
 
 ### 关键设计
-1. **SCD 诊断：分开看 representation storage 和 functional contribution**:
 
-    - 功能：证明“哪层像 teacher”与“哪层影响生成”是两件事。
-    - 核心思路：BiT-C 用 Whisper teacher 和 BEATs teacher 建立双流 cosine alignment；LASP 用共享冻结投影头在同一 teacher 空间里比较各层信息存储。实验显示 Cos-SEM 往往在深层 L22–L24 最高，Cos-EVT 在不同 token topology 下可能偏深或中层。
-    - 设计动机：如果只看 teacher similarity，就会倾向对齐深层 representation reservoir。但生成模型最终要预测 velocity field，信息存在那里不代表优化那里最有效。
+**1. SCD 诊断：把"表示存储"和"功能贡献"分开测**
 
-2. **FoG-A 前向门控消融定位因果层**:
+这一步针对的痛点是：以往默认 teacher similarity 高的层就值得监督，但生成模型最终预测的是速度场，信息存在某层不代表优化那里最有效。作者用两个表示探针把"网络知道什么"测出来——BiT-C 用 Whisper 和 BEATs 两个 teacher 建立双流 cosine alignment，LASP 用共享冻结投影头在同一 teacher 空间里比较各层的信息存储量。结果很清楚：语义相似度 Cos-SEM 往往在深层 L22–L24 最高，事件相似度 Cos-EVT 在不同 token topology 下偏深或偏中层。也就是说，单看相似度会把对齐引向深层的 representation reservoir，而这恰恰可能不是生成动力学里有杠杆的位置。这个"存储与贡献分离"（Store-Contribute Dissociation, SCD）的现象，正是后续方法不再沿用固定中层对齐的根据。
 
-    - 功能：直接测某一层对速度场输出的功能必要性。
-    - 核心思路：把 DiT 残差层写成 $h_l=h_{l-1}+m_l f_l(h_{l-1},t,c)$，标准前向中 $m_l=1$。FoG-A 对第 $k$ 层设 $m_k=0$，不反传梯度，只比较 ablated velocity $v_\theta^{\setminus k}$ 与原速度场 $v_\theta$ 的归一化差异：差异越大，说明该层越是 causal driver。
-    - 设计动机：梯度范数只能说明优化器当前在哪里更新，LASP 只能说明哪里存信息；FoG-A 通过 intervention 测“拿掉这层会不会改变生成方向”，更贴近 alignment 应该作用的位置。
+**2. FoG-A：用前向门控消融定位因果层**
 
-3. **AG-REPA 稀疏层选择与归因加权**:
+诊断出"像 teacher"不等于"驱动生成"之后，需要一个能直接测功能必要性的工具。FoG-A 把 DiT 残差层写成 $h_l=h_{l-1}+m_l f_l(h_{l-1},t,c)$，标准前向里所有 $m_l=1$；测第 $k$ 层时把 $m_k=0$ 把它从前向里"摘掉"，不反传梯度，只比较消融后的速度场 $v_\theta^{\setminus k}$ 与原速度场 $v_\theta$ 的归一化差异——差异越大，说明拿掉这层越会改变生成方向，它就越是 causal driver。相比之下，梯度范数只反映优化器当下在哪更新、LASP 只反映哪里存信息，都不是因果量；FoG-A 通过 intervention 直接回答"这层对最终生成函数有多必要"，因此更贴近 alignment 真正该作用的位置。它不需要训练额外探针、也不需要反传，成本极低。
 
-    - 功能：把 REPA 从固定深度启发式改成模型/数据自适应的因果层监督。
-    - 核心思路：根据 FoG-A 分数选 Top-K 层集合 $\mathcal{S}$，并令每层权重 $\lambda_k=\mathrm{FoG\text{-}A}_k/\sum_{j\in\mathcal{S}}\mathrm{FoG\text{-}A}_j$。每个选中层接一个轻量两层 MLP，把 temporal-pooled hidden state 对齐到 frozen teacher embedding。最终目标是 $\mathcal{L}_{FM}+\lambda_{BiT}\mathcal{L}_{BiT}+\sum_{k\in\mathcal{S}}\lambda_k(1-\cos(h_{\phi_k}(\bar{h}_k),\mathcal{T}(x)))$。
-    - 设计动机：多个层可能共同控制生成，且贡献不均匀。Top-K + attribution-proportional weight 比单层 REPA 或固定 L1–L3 更能适配不同架构和 tokenizer。
+**3. AG-REPA：稀疏层选择 + 归因加权对齐**
+
+有了 FoG-A 分数，就能把 REPA 从固定深度启发式改成自适应的因果层监督。作者按 FoG-A 分数取 Top-K 层组成集合 $\mathcal{S}$，并让每层的对齐权重正比于它的归因强度 $\lambda_k=\mathrm{FoG\text{-}A}_k/\sum_{j\in\mathcal{S}}\mathrm{FoG\text{-}A}_j$；每个选中层接一个轻量两层 MLP，把 temporal-pooled hidden state 对齐到 frozen teacher embedding。最终目标在 Flow Matching 主损失上叠加输入端的 BiT-C anchor 和这些层的对齐项：$\mathcal{L}_{FM}+\lambda_{BiT}\mathcal{L}_{BiT}+\sum_{k\in\mathcal{S}}\lambda_k(1-\cos(h_{\phi_k}(\bar{h}_k),\mathcal{T}(x)))$。这样设计是因为生成往往由多个层共同控制、且贡献不均匀，Top-K 加按归因比例加权比单层 REPA 或固定 L1–L3 更能适配不同架构和 tokenizer。
 
 ### 损失函数 / 训练策略
-AG-REPA 保留 Flow Matching 主损失，只在输入接口保留 BiT-C anchor，并对 FoG-A 选中的少数中间层添加表示对齐项。FoG-A 只在 5,000-step warm-up 中每 200 步触发一次，小 batch、无梯度、单 GPU；总计约 41 次等价单前向，wall-clock 增量小于 0.5%。主训练只多 $K=3$ 个轻量 MLP heads，额外参数小于 0.5%，每步时间开销小于 2%。
+AG-REPA 在开销上很克制。FoG-A 只在 5,000-step warm-up 中每 200 步触发一次，用小 batch、无梯度、单 GPU，总计约 41 次等价单前向，wall-clock 增量小于 0.5%。主训练只多出 $K=3$ 个轻量 MLP heads，额外参数小于 0.5%，每步时间开销小于 2%，因此在几乎不增加训练成本的前提下完成因果层选择和对齐。
 
 ## 实验关键数据
 

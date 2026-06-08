@@ -47,23 +47,21 @@ ToolPRM 的流程可以分成三步。第一步是构造细粒度监督数据：
 第三步是训练 ToolPRM 并用于推理扩展。ToolPRM 本身也是 LLM，输入当前状态和候选动作，输出 “+” 或 “-” 的概率；beam search 每步展开多个候选，用 ToolPRM 分数排序并剪枝。由于结构化输出早期错误不可恢复，作者主张扩大 beam width 来探索更多局部选择，但保留较少 beam，形成“explore more but retain less”的策略。
 
 ### 关键设计
-1. **Intra-call 细粒度分解与标签体系**:
+**1. Intra-call 细粒度分解与标签体系：把一次函数调用从「整体 JSON」拆成可逐步监督的局部决策。**
 
-	- 功能：把函数调用从一个整体 JSON 结果拆成可监督的局部决策步骤。
-	- 核心思路：每个函数调用包含函数名选择、参数名选择、参数值填写、参数结束、函数结束以及整体完成等标签。比如 `<FUNC_NAME>` 判断函数名是否正确，`<ARG_VALUE>` 判断某个参数名和值是否匹配 ground truth，`<TOTAL_FINISH>` 判断整个函数调用列表是否正确。
-	- 设计动机：只看最终结果会掩盖错误来源。细粒度标签既能让 reward model 更早发现错误，也能提供冗余层次监督；论文实验证明保留 `<ARG_VALUE>` 这类看似重复的标签，反而提高 trajectory-level 判断能力。
+已有推理扩展方法大多把整次函数调用当成一个候选来打分，粒度太粗——等到完整 JSON 生成完才知道对错，「函数名刚选错」「某个参数值填错」这类早期错误根本来不及剪枝。ToolPRM 把一次调用拆成一连串可监督的局部动作，并为每个动作定义标签：`<FUNC_NAME>` 判断函数名是否正确、`<ARG_VALUE>` 判断某个参数名和值是否匹配 ground truth、`<TOTAL_FINISH>` 判断整个函数调用列表是否完成且正确，此外还有参数结束、函数结束等标签。这样 reward model 不必等 JSON 写完就能在每个局部动作后判断对错，更早发现错误来源。看似冗余的细标签反而有用：论文实验显示保留 `<ARG_VALUE>` 这类参数级标签反而提高了 trajectory-level 的判断能力，局部监督并没有让模型只盯局部。
 
-2. **函数 masking + rollout 数据构造**:
+**2. 函数 masking + rollout 数据构造：逼 reward model 看懂语义，而不是背工具名。**
 
-	- 功能：构造更鲁棒的 reward model 训练数据，避免模型靠函数名记忆做判断。
-	- 核心思路：作者把函数名和参数标识符替换为随机字符串，再给 policy model 一组 masked function candidates 生成函数调用 rollout。随后用 exact match 对每个步骤标注正负，形成 step-level 与 trajectory-level 数据。
-	- 设计动机：真实部署中工具命名和 schema 可能变化，reward model 如果只记住工具名，会泛化很差。masking 迫使它关注 query、函数描述、参数语义和已经生成的结构上下文。
+如果训练数据里函数名、参数名都是真实可辨识的，reward model 很容易退化成靠记忆工具名来打分，一旦部署时工具命名或 schema 变了就泛化崩盘。ToolPRM 在构造数据时把函数名和参数标识符替换成随机字符串，再给 policy model 一组 masked function candidates 去 rollout 出候选函数调用，最后用 exact match 对每个步骤标注正负，得到 step-level 与 trajectory-level 两种粒度的数据。masking 掉表面名字后，reward model 只能转而关注 query 意图、函数描述、参数语义和已经生成的结构上下文，学到的是真正可迁移的判断能力。
 
-3. **ToolPRM 引导的细粒度 beam search**:
+**3. ToolPRM 引导的细粒度 beam search：在测试时把额外预算花在「多探索、少保留」上。**
 
-	- 功能：在测试时用额外计算提升结构化函数调用准确率。
-	- 核心思路：对每个候选动作，ToolPRM 输出 “+” 与 “-” 两个 label token 的 logits，并计算 $s=e^{s_+}/(e^{s_+}+e^{s_-})$ 作为局部正确性分数。搜索时保留 top-$N$ beam，每个 beam 展开 $M$ 个后续候选。作者强调应提高 $M$ 扩大探索，同时保持较小 $N$，避免错误早期决策继续占用预算。
-	- 设计动机：函数调用不像自由文本，错的 JSON 分支很难在后面修好。越早剪掉错误候选，后续参数填写预算越能用在正确结构上。
+结构化输出和自由文本推理有个本质差异：数学推理里早期错误还能靠后续反思补回来，函数调用的错误 JSON 分支几乎不可恢复，一个错函数名就让整条轨迹作废。所以正确策略不是保留一大堆候选慢慢修，而是早剪枝、把预算让给正确结构。搜索时 ToolPRM 对每个候选动作输出 “+” 与 “-” 两个 label token 的 logits，算出局部正确性分数
+
+$$s=\frac{e^{s_+}}{e^{s_+}+e^{s_-}}$$
+
+beam search 保留 top-$N$ 个 beam、每个 beam 展开 $M$ 个后续候选。作者主张提高 $M$ 来扩大每一步的横向探索，同时保持较小的 $N$ 不让错误候选继续占用预算——这就是「explore more but retain less」原则。预算分析印证了它：固定 $N=4$ 增大 $M$ 时 ToolAlpaca F1 随预算上升，而固定 $M=4$ 增大 $N$ 收益很小甚至下降。
 
 ### 损失函数 / 训练策略
 ToolPRM 采用生成式过程奖励建模。给定轨迹 $\mathcal{T}=\{(s_t,a_t,r_t)\}$，其中 $r_t\in\{+,-\}$，训练目标是最大化正确标签 token 的概率，即最小化 $-\log p_\theta(r_t|s_t,a_t)$。作者使用 Hammer2.1-3B 作为 reward model backbone，SFT 训练 5 个 epoch，Adam 优化器，batch size 1024，学习率 $1e-3$，warmup ratio 0.008，weight decay $1e-5$。推理时温度设为 0.8，beam 数 $N$ 和 beam width $M$ 从 $\{1,2,4,8,16\}$ 中选择。

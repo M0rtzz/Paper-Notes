@@ -41,38 +41,40 @@ STABLE 把"任务指令→可仿真桌面场景"拆成 LLM-based Semantic Reason
 ## 方法详解
 
 ### 整体框架
-输入：任务指令 $I$ + 桌面规格 $T$。输出：结构化 JSON 场景 $J=\{T, \{O_i\}_{i=1}^N\}$，其中每个物体 $O_i=\{\mathbf{p}_i, r_i, s_i, d_i\}$ 包含 3D 平移、yaw 旋转、bbox 尺寸、文本描述，并关联一个从 3D 资产库检索的 mesh $a_i$。
+STABLE 要解决的是"一句指令直接生成可仿真桌面"里语义对齐和物理可行互相打架的问题，核心思路是把这件事拆给两个互补的子系统轮流处理。输入是任务指令 $I$ 加桌面规格 $T$，输出是结构化 JSON 场景 $J=\{T, \{O_i\}_{i=1}^N\}$，其中每个物体 $O_i=\{\mathbf{p}_i, r_i, s_i, d_i\}$ 含 3D 平移、yaw 旋转、bbox 尺寸、文本描述，并关联一个从 3D 资产库检索的 mesh $a_i$。
 
-整体流程是一个三阶段渐进循环（Loop 1→2→3）：
-
-1. **Loop 1**：SR 根据指令生成 task-oriented 物体集 $O^t$（指令里明确点名的物体）→ 检索资产 → PC 修位姿；
-2. **Loop 2**：SR 在 $(I, T, O^t)$ 条件下补 important background 物体 $O^B$（与 $O^t$ 物理接触或紧邻）→ PC 再修；
-3. **Loop 3**：SR 在 $(I, T, O^t, O^B)$ 条件下补 secondary background 物体 $O^b$（远处的 distractor）→ PC 收尾。
-
-PC 修完的位姿会回灌作为下一阶段 SR 的上下文，**避免几何误差跨阶段累积**。整个流程可以在 batch 上 pipeline——A 场景在跑 PC 时 B 场景同步推 SR。
+整条 pipeline 是一个三阶段渐进循环：先由 Semantic Reasoner（SR）按指令吐出 task-oriented 物体集 $O^t$（指令里明确点名的物体），检索资产后交给 Physics Corrector（PC）把位姿拍回物理可行域；接着 SR 在 $(I, T, O^t)$ 条件下补 important background 物体 $O^B$（与 $O^t$ 物理接触或紧邻），PC 再修一遍；最后 SR 在 $(I, T, O^t, O^B)$ 条件下补 secondary background 物体 $O^b$（远处的 distractor），PC 收尾。每阶段 PC 修完的位姿都会回灌成下一阶段 SR 的上下文，这样几何误差不会跨阶段累积。整个流程还能在 batch 上 pipeline——A 场景在跑 PC 时 B 场景同步推 SR。
 
 ### 关键设计
 
-1. **渐进式 Semantic Reasoner（三阶段 SFT）**:
+**1. 渐进式 Semantic Reasoner：让 LLM 先锁任务核心物、再填背景**
 
-    - 功能：把 MesaTask-10K 的整场景标注重组成 $(O^t, O^t\cup O^B, O^t\cup O^B\cup O^b)$ 三段序列，让 LLM 学会按"先核心、再近邻、再背景"的顺序往外扩；推理时也按这三步出。
-    - 核心思路：用 bbox 相交（含阈值）自动判定 $O^B$，剩下的归 $O^b$；训练时去掉原 MesaTask 的长链思维，直接输出 JSON 以压缩 token。三步分别对应 $O^t \leftarrow \mathrm{SR}(I, T)$、$O^B \leftarrow \mathrm{SR}(I, T, O^t)$、$O^b \leftarrow \mathrm{SR}(I, T, O^t, O^B)$。
-    - 设计动机：一次性吐整场景容易漏掉指令里点名的关键物体（task-grounding 弱）；分阶段强制 LLM 先把任务核心物锁死，再去填背景，既提升指令对齐又便于后续 PC 在小集合上局部修正——消融里 AwT 从 89.9% 涨到 99.4%，Distractor Rate 从 78.6% 涨到 86.1%。
+纯 LLM 一次性吐整场景的最大问题是 task-grounding 弱——指令里点名的关键物体容易被漏掉或被一堆背景物淹没。STABLE 把 MesaTask-10K 的整场景标注重组成 $(O^t, O^t\cup O^B, O^t\cup O^B\cup O^b)$ 三段序列做 SFT，强制 LLM 按"先核心、再近邻、再背景"逐步往外扩：推理时也对应 $O^t \leftarrow \mathrm{SR}(I, T)$、$O^B \leftarrow \mathrm{SR}(I, T, O^t)$、$O^b \leftarrow \mathrm{SR}(I, T, O^t, O^B)$ 三步出。其中 $O^B$ 与 $O^b$ 的划分靠 bbox 相交（含阈值）自动判定，相交的算近邻背景、其余归远处 distractor；训练时还去掉了原 MesaTask 的长链思维直接输出 JSON 以压缩 token。这样先把任务核心物锁死，既提升指令对齐又便于后续 PC 在小集合上做局部修正——消融里 AwT 从 89.9% 涨到 99.4%，Distractor Rate 从 78.6% 涨到 86.1%，说明分阶段不仅强化了 grounding，还让场景更丰满而非更稀疏。
 
-2. **几何感知的 Flow-Matching Physics Corrector**:
+**2. 几何感知的 Flow-Matching Physics Corrector：只改位姿、不动语义骨架**
 
-    - 功能：在保持 $(s_i, d_i, a_i)$ 不变的前提下，只对位姿向量 $\mathbf{x}=[\mathbf{p}_1,\dots,\mathbf{p}_N, r_1,\dots,r_N]\in\mathbb{R}^{4N}$ 做连续修正。
-    - 核心思路：用 PointTransformer-V3（冻结）从每个资产采样的表面点云抽 mesh-level 几何嵌入 $\mathbf{g}_i=\phi(\mathcal{P}_i)$，拼成条件 $\mathcal{C}=(\mathbf{x}^c, \mathbf{G})$。训练时把 SR 输出的粗位姿 $\mathbf{x}^c$ 加高斯噪声得到 $\mathbf{x}_0=\mathbf{x}^c+\sigma\boldsymbol{\epsilon}$，GT 位姿当 $\mathbf{x}_1$，按 $\mathbf{x}_t=(1-t)\mathbf{x}_0+t\mathbf{x}_1$ 插值，用 U-Net 学速度场 $\mathbf{v}_\theta$ 拟合 $\mathbf{v}_{\mathrm{target}}=\mathbf{x}_1-\mathbf{x}_0$，损失 $\mathcal{L}_{\mathrm{flow}}=\mathbb{E}\|\mathbf{v}_\theta(\mathbf{x}_t, t, \mathcal{C})-(\mathbf{x}_1-\mathbf{x}_0)\|_2^2$。推理时从 $\mathbf{x}(0)=\mathbf{x}^c$ 起 ODE 积分到 $t=1$ 拿修正后位姿。
-    - 设计动机：仅靠 bbox 没法处理堆叠/包含（小盒子放大盒子里），所以必须给真实 mesh 几何；用 flow matching 而非扩散是因为修正本质是"小幅 local 校准"——训练时加噪 + 推理时从粗位姿起步，刚好让模型学到围绕 $\mathbf{x}^c$ 的局部修正流，比从纯噪声生成更稳。
+PC 的关键定位是"修正器而非生成器"：它保持 $(s_i, d_i, a_i)$ 完全不变，只对位姿向量 $\mathbf{x}=[\mathbf{p}_1,\dots,\mathbf{p}_N, r_1,\dots,r_N]\in\mathbb{R}^{4N}$ 做连续修正，从根本上避免 Steerable 那种"消碰撞顺手把苹果挪到香蕉右边"的语义破坏。为了能处理堆叠/包含（小盒子放进大盒子里）这类 bbox 描述不了的情况，PC 用冻结的 PointTransformer-V3 从每个资产采样的表面点云抽 mesh-level 几何嵌入 $\mathbf{g}_i=\phi(\mathcal{P}_i)$，拼成条件 $\mathcal{C}=(\mathbf{x}^c, \mathbf{G})$。
 
-3. **Mesh-level SDF 物理约束三件套**:
+修正本身用 flow matching 而非扩散，原因是这里只需要"小幅 local 校准"。训练时把 SR 输出的粗位姿 $\mathbf{x}^c$ 加高斯噪声得 $\mathbf{x}_0=\mathbf{x}^c+\sigma\boldsymbol{\epsilon}$，GT 位姿当 $\mathbf{x}_1$，按 $\mathbf{x}_t=(1-t)\mathbf{x}_0+t\mathbf{x}_1$ 插值，用 U-Net 学速度场 $\mathbf{v}_\theta$ 拟合 $\mathbf{v}_{\mathrm{target}}=\mathbf{x}_1-\mathbf{x}_0$：
 
-    - 功能：在 flow loss 之外硬加三项可微 SDF 损失，把"互穿、穿桌、悬浮"三类失败模式直接打到训练目标里。
-    - 核心思路：对每个 mesh $m$ 预算 SDF $D_m(\mathbf{x})$（负值表示在 mesh 内部）。物体间互穿损失 $\mathcal{L}_{\mathrm{obj\text{-}obj}}=\sum_{i<j}[\max(0, -\mathrm{dist}_{\mathrm{sdf}}(i,j))]^2$，其中 $\mathrm{dist}_{\mathrm{sdf}}(i,m)=\min_{\mathbf{q}\in\mathcal{Q}_i}D_m(\mathbf{q})$；同理把桌面建模成 SDF $\tau$ 得 $\mathcal{L}_{\mathrm{obj\text{-}table}}$。支撑接触损失采样物体底部点 $\mathcal{B}_i$ 和候选支撑面集 $\mathcal{S}_i$，取最近支撑 $z_i^{\mathrm{sup}}=\arg\min_s \delta(i,s)$，定义 $\mathcal{L}_{\mathrm{sup}}=\sum_i[\max(0, \mathrm{gap}(i,z_i^{\mathrm{sup}})-\epsilon)]^2$，用 $|D_s(\cdot)|$ 既惩罚悬浮也惩罚陷在凹面里离支撑太远。总目标 $\mathcal{L}_{\mathrm{PC}}=\mathcal{L}_{\mathrm{flow}}+\lambda_{\mathrm{sdf}}(\mathcal{L}_{\mathrm{obj\text{-}obj}}+\mathcal{L}_{\mathrm{obj\text{-}table}})+\lambda_{\mathrm{sup}}\mathcal{L}_{\mathrm{sup}}$。
-    - 设计动机：纯数据驱动总会留下少量但致命的互穿，仿真直接崩；用 mesh-level SDF 而非 bbox 是因为堆叠/包含里 bbox 太粗，小偏移就会有隐藏穿透。三个损失互补——消融表明任去其一物理指标都明显劣化，且去掉 $\mathcal{L}_{\mathrm{obj\text{-}table}}$ 后 float 反而降低（物体"沉"进桌面来绕过支撑约束），暴露损失之间的耦合关系。
+$$\mathcal{L}_{\mathrm{flow}}=\mathbb{E}\big\|\mathbf{v}_\theta(\mathbf{x}_t, t, \mathcal{C})-(\mathbf{x}_1-\mathbf{x}_0)\big\|_2^2$$
+
+推理时直接从 $\mathbf{x}(0)=\mathbf{x}^c$ 起 ODE 积分到 $t=1$ 拿修正后位姿。这套"训练加噪、推理从粗位姿起步"的设计让模型学到的是围绕 $\mathbf{x}^c$ 邻域的局部修正流，比照搬扩散从纯噪声生成更稳，也和 PC 的修正器定位完美对齐。
+
+**3. Mesh-level SDF 物理约束三件套：把三类失败模式直接打进训练目标**
+
+纯数据驱动的 flow loss 总会残留少量但致命的互穿，仿真器一加载就崩，所以 STABLE 在 flow loss 之外硬加三项可微 SDF 损失，把"互穿、穿桌、悬浮"三类失败模式显式约束住。对每个 mesh $m$ 预算 SDF $D_m(\mathbf{x})$（负值表示在 mesh 内部），用 mesh-level 而非 bbox 是因为堆叠/包含里 bbox 太粗、小偏移就会藏穿透。物体间互穿损失为
+
+$$\mathcal{L}_{\mathrm{obj\text{-}obj}}=\sum_{i<j}\big[\max(0, -\mathrm{dist}_{\mathrm{sdf}}(i,j))\big]^2,\quad \mathrm{dist}_{\mathrm{sdf}}(i,m)=\min_{\mathbf{q}\in\mathcal{Q}_i}D_m(\mathbf{q})$$
+
+同理把桌面建模成 SDF $\tau$ 得到 $\mathcal{L}_{\mathrm{obj\text{-}table}}$。支撑接触损失则采样物体底部点 $\mathcal{B}_i$ 和候选支撑面集 $\mathcal{S}_i$，取最近支撑 $z_i^{\mathrm{sup}}=\arg\min_s \delta(i,s)$，定义 $\mathcal{L}_{\mathrm{sup}}=\sum_i[\max(0, \mathrm{gap}(i,z_i^{\mathrm{sup}})-\epsilon)]^2$，借 $|D_s(\cdot)|$ 既惩罚悬浮也惩罚陷进凹面里离支撑太远。总目标把三者加权合一：
+
+$$\mathcal{L}_{\mathrm{PC}}=\mathcal{L}_{\mathrm{flow}}+\lambda_{\mathrm{sdf}}(\mathcal{L}_{\mathrm{obj\text{-}obj}}+\mathcal{L}_{\mathrm{obj\text{-}table}})+\lambda_{\mathrm{sup}}\mathcal{L}_{\mathrm{sup}}$$
+
+三个损失高度互补且互相耦合：消融显示任去其一物理指标都明显劣化，而且去掉 $\mathcal{L}_{\mathrm{obj\text{-}table}}$ 后 float 反而降低——物体直接"沉"进桌面来绕过支撑约束，说明只看单个物理指标会被误导，必须联合评估。
 
 ### 损失函数 / 训练策略
-PC 用 MesaTask-10K 全部 10K 场景训练；SR 把同样 10K 实例改写成三段渐进序列后 SFT 一个开源 LLM。推理时 batch pipeline：当某场景在跑 PC 时其它场景并行推 SR，避免空等；batch size = 1 时退化为标准串行交替。
+PC 用 MesaTask-10K 全部 10K 场景训练；SR 把同样 10K 实例改写成三段渐进序列后 SFT 一个开源 LLM。推理时走 batch pipeline：某场景在跑 PC 时其它场景并行推 SR，避免空等；batch size = 1 时退化为标准串行交替。
 
 ## 实验关键数据
 

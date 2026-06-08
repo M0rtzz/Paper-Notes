@@ -40,28 +40,23 @@ ToolGrad 把工具使用数据生成从“先写用户问题、再用 DFS 找工
 ## 方法详解
 
 ### 整体框架
-ToolGrad 生成的数据样本是三元组 $(q, \mathcal{W}, r)$：$q$ 是用户 query，$\mathcal{W}$ 是由多条 API chain 组成的 workflow，$r$ 是基于 workflow 给用户的最终回答。与 ReAct 逐步调用不同，作者训练的推理模型会在单次输出中预测完整工具调用，因此数据需要包含结构化的 API workflow。
+ToolGrad 要解决的是工具调用训练数据「生成贵、失败多、还容易掺进错误工具步骤」的问题，做法是把生成方向反过来。它产出的每个样本是三元组 $(q, \mathcal{W}, r)$：$q$ 是用户 query，$\mathcal{W}$ 是由多条 API chain 组成的 workflow，$r$ 是基于该 workflow 给用户的最终回答。因为作者训练的推理模型在单次输出里就要预测完整工具调用（而非 ReAct 式逐步调用），数据必须带结构化的 API workflow。
 
-整个生成过程从一个当前 workflow 开始，每轮随机取一个 API mini-batch。API Proposer 先从 mini-batch 中挑出少量可能有用的 API 和使用指令；多个 API Executor 并行实际调用这些 API 并生成执行报告；API Selector 比较报告，选出最值得并入 workflow 的 API 以及它应该追加到哪条 chain；Workflow Updater 把该 API 写入 workflow，并让 LLM 根据更新后的 workflow 生成新的用户 query 和最终回答。重复若干轮后，一个 answer-first 样本就完成了。
+整个生成从一个当前 workflow 出发，逐轮把它「养大」。每轮随机取一个 API mini-batch，由四个模块接力：API Proposer 先从 mini-batch 里挑出少量可能有用的 API 和使用指令；多个 API Executor 并行真正调用这些 API 并各自生成执行报告；API Selector 比较这些报告，选出最值得并入 workflow 的 API 以及它该追加到哪条 chain；Workflow Updater 把该 API 确定性地写进 workflow，再让 LLM 根据更新后的 workflow 生成新的用户 query 和最终回答。重复若干轮，一个 answer-first 样本就长成了。
 
 ### 关键设计
-1. **Answer-first 工具链生成**:
 
-	- 功能：先保证工具调用链可执行成功，再生成能由该调用链回答的用户请求。
-	- 核心思路：ToolGrad 不从模糊 query 出发搜索答案，而是把有效 API 调用作为生成锚点。Workflow 每增加一个 API，系统都会更新对应的用户 query 和 response，使三元组保持一致。
-	- 设计动机：工具链是可验证的结构化对象，而 query 是自然语言描述。从工具链反推 query 比从 query 搜索工具链更容易，也能从源头避免“无解 query”和失败工具步骤进入训练集。
+**1. Answer-first 工具链生成：先保证调用链能跑通，再反推用户问题。**
 
-2. **四模块 textual-gradient 循环**:
+真实用户问题天然模糊，从模糊 query 出发用 DFS/ReAct 搜可行工具链既贵又常失败，哪怕搜到一条成功路径，途中混进的低质量工具步骤还会作为「ground truth」污染训练。ToolGrad 把这个搜索难题换成更可控的生成难题：不从 query 出发，而是把可执行成功的 API 调用当作生成锚点，workflow 每并入一个 API，系统就同步更新对应的 query 和 response，让三元组始终自洽。工具链是结构化、可验证的对象，而 query 只是自然语言描述，从前者反推后者远比反向搜索容易，也从源头杜绝了「无解 query」和失败工具步骤进入训练集。
 
-	- 功能：在大规模 API 数据库中逐步扩展复杂 workflow，同时控制每轮工具调用成本。
-	- 核心思路：API Proposer 用普通 LLM 从大小为 $bs=50$ 的 API batch 中提出最多 $m=3$ 个候选；API Executor 用支持工具调用的 LLM agent 实际执行候选 API 并返回 success/failure 与调用历史；API Selector 读取执行报告，选择最有价值的 API 和 chain 位置；Workflow Updater 不再依赖搜索，而是确定性追加 API，再让 LLM 生成新的 query/response。
-	- 设计动机：真正昂贵的是工具执行，所以先用 proposer 过滤掉大部分无关 API。Selector 的离散选择相当于告诉系统“沿哪个 API 方向优化数据样本”，这就是 ToolGrad 中的 textual gradient。
+**2. 四模块 textual-gradient 循环：用离散的 API 选择充当数据生成的「梯度」。**
 
-3. **负工具采样与单轮函数调用格式化**:
+要在 8k 规模的 API 数据库里逐步搭出复杂 workflow，同时还得压住每轮的工具调用成本。ToolGrad 借了 TextGrad 的「文本梯度」思想，但把被优化对象从 prompt 换成数据样本：API Proposer 用普通 LLM 从大小 $bs=50$ 的 API batch 里提出最多 $m=3$ 个候选，先把绝大部分无关 API 过滤掉，因为真正昂贵的是工具执行；API Executor 用支持工具调用的 LLM agent 实际跑这些候选，返回 success/failure 与调用历史；API Selector 读执行报告，挑出最有价值的 API 和它该接的 chain 位置——这个离散选择就相当于告诉系统「沿哪个 API 方向去优化当前数据样本」，正是 ToolGrad 里的 textual gradient；最后 Workflow Updater 不再依赖搜索，而是确定性地追加该 API 并让 LLM 重写 query/response。
 
-	- 功能：让训练样本模拟真实部署中“可见 API 多于必需 API”的场景，并适配 BFCL 风格单轮工具调用训练。
-	- 核心思路：给定 workflow 中的正 API，作者按 embedding 相似度采样额外负 API，使模型面对 top-$p$ 的候选工具集合，而不是只看到正确工具。生成配置中每个样本运行 10 次迭代，负工具数量设为 $p=10$，使用 gemini-2.5-flash-lite 生成 500 个不同 seed 的样本，形成 ToolGrad-500。
-	- 设计动机：如果训练时只给正确工具，模型学不到工具选择；如果给全量 8k API，又不现实。相似负样本能提供更难、更贴近 RAG 检索式工具选择的训练环境。
+**3. 负工具采样与单轮函数调用格式化：让训练贴近「可见 API 多于必需 API」的真实部署。**
+
+如果训练时只给正确工具，模型根本学不到怎么做工具选择；可要是把全量 8k API 都摆上来又不现实。ToolGrad 取折中：对 workflow 里的每个正 API，按 embedding 相似度采样一批相似的负 API，让模型面对 top-$p$ 的候选工具集合而非只看到正确答案，这种相似负样本提供了更难、更接近 RAG 检索式工具选择的训练环境。生成配置上，每个样本跑 10 次迭代、负工具数取 $p=10$，用 gemini-2.5-flash-lite 配 500 个不同 seed 生成，最终形成 ToolGrad-500，并按 BFCL 风格组织成单轮工具调用格式。
 
 ### 损失函数 / 训练策略
 ToolGrad 本身是数据生成框架，不训练生成器。生成 ToolGrad-500 后，作者用监督微调训练 Gemma-3 的 1B、4B、12B 模型，使其在给定 OpenAI-style tool definitions 时输出 Python-style tool use。对照数据包括 ToolBench 生成的数据，对照模型包括 Gemini-2.5、Claude-4.5、GPT-5 系列闭源模型，以及 ToolACE、Hammer 等工具调用模型。评估主要在 ToolBench-I3 单轮工具使用和 BFCL v1/v2 单轮工具调用上进行。

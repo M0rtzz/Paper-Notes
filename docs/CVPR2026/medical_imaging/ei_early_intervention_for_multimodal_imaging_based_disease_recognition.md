@@ -40,43 +40,45 @@ EI 提出在单模态嵌入（UIE）**之前**就注入跨模态语义引导（[
 
 ### 整体框架
 
-输入：M 个模态的医学图像样本 → 每个模态轮流作为 target，其余作为 reference → 辅助 VFM 提取 reference 的 [CLS] token → Adapter 转换为 [INT] token → 拼入 target 模态的 patch embedding 序列最前端 → 主 VFM 完成 UIE（[INT] 在所有 Transformer 层与 target 的 patch token 交互）→ 各模态得到 [INT]-intervened 的 CLS feature → 自适应门控加权融合 → 分类预测。
+EI 想解决的核心矛盾是：现有多模态医学诊断都在各模态独立编码之后才融合，单模态编码器对其他模态"一无所知"。EI 把融合时机提前到编码的最起点——让每个模态在被编码时就先"听"到其他模态的诊断线索。
+
+整体流程是一个角色轮换的结构：M 个模态里每次挑一个当 target、其余当 reference。先用一组冻结的辅助 VFM 把每个 reference 压成一个高层语义 token（[INT]），把它拼到 target 的 patch 序列最前面，再交给主 VFM 走完整个编码，让 [INT] 在每一层 self-attention 里都和 target 的 patch 交互。轮换跑完后每个模态都拿到一份被跨模态线索"干预"过的 CLS 特征，最后用一个自适应门控加权融合出诊断。主 VFM 的适配不靠全参微调，而是靠 MoR（多种秩 LoRA + 带旁路的路由器）做参数高效适配。
 
 ### 关键设计
 
-1. **[INT] Token 生成**:
+**1. [INT] Token 生成：把参考模态的诊断线索压成一个可注入的语义信号。**
 
-    - 功能：从参考模态提取高层语义 token 作为跨模态干预信号
-    - 核心思路：对每个参考模态 $r$，用辅助 VFM $\phi_{a,r}$ 提取最后一层 [CLS] token $Z^L[0]$，收集所有参考模态的 [CLS] token 后通过两层 MLP Adapter 转换为 [INT] 序列。选择最后一层是因为它包含最丰富的高层语义信息
-    - 设计动机：模拟临床医生的工作流——先从一种检查（如 OCT 断层扫描）形成初步诊断假设，再用该假设引导另一种检查（如 CFP 彩色眼底照）的解读。辅助 VFM 只负责生成 [INT]，计算量可控
+要在 target 编码的最早期注入其他模态信息，得先把"其他模态"变成一个轻量、可拼接的载体。EI 对每个参考模态 $r$ 用一个冻结的辅助 VFM $\phi_{a,r}$ 提取最后一层的 [CLS] token $Z^L[0]$，再把所有参考模态的 [CLS] 收集起来过一个两层 MLP Adapter，转换成 [INT] 序列。之所以取最后一层而非中间层，是因为 [CLS] 在最深层聚合的是最完整的高层语义——相当于"这个模态看下来的初步结论"，而不是低层纹理。辅助 VFM 全程冻结、只负责产出 [INT]，所以这一步的开销可控，本质是把临床上"先做一项检查形成假设"的那个假设具象成一个 token。
 
-2. **早期干预的主特征提取**:
+**2. 早期干预的主特征提取：让跨模态线索从第 0 层就参与 self-attention。**
 
-    - 功能：将 [INT] token 拼接到 target 模态 patch embedding 序列的最前端，让其从第 0 层就参与 self-attention
-    - 核心思路：$\hat{Z}_t^0 = \text{Concat}(\text{Conv}(\mathbf{x}[t]),\ \text{INT})$，然后正常前向传播得到 $\hat{\text{CLS}}_t = \phi_{p,t}(\hat{Z}_t^0, L)[0]$
-    - 关键实验发现：消融实验明确表明**越早注入效果越好**——Layer 0 注入始终最优（CLIP 0.824, DINOv2 0.841），Layer 11 注入性能下降到 0.815。这验证了"早期干预"原则的正确性
-    - 可视化证据：Fig. 2 展示加入 [INT] 后，patch-level 注意力图从发散变为聚焦于病灶区域（如 OCT 中的 drusen、CFP 中的出血点），说明跨模态引导确实让 UIE 更有针对性
+光有 [INT] 还不够，关键是注入的时机。EI 把 [INT] 拼到 target 的 patch embedding 序列最前端，从第 0 层就一起进 Transformer：
 
-3. **MoR（Mixture of Low-varied-Ranks Adaptation）**:
+$$\hat{Z}_t^0 = \text{Concat}(\text{Conv}(\mathbf{x}[t]),\ \text{INT}), \qquad \hat{\text{CLS}}_t = \phi_{p,t}(\hat{Z}_t^0, L)[0]$$
 
-    - 功能：参数高效微调 VFM 的每个线性层
-    - 核心思路：同时维护 3 个不同 rank（2, 4, 8）的 LoRA adapter，plus 一个松弛路由器（linear + softmax）生成 4 维权重 $[w_0, w_1, w_2, w_3]$，其中 $w_0$ 是 **bypass 权重**。输出为 $h' = Wh + \sum_{k=1}^{3} w_k B_k A_k h$
-    - vs LoRA：单一固定 rank 无法适应不同模态和不同样本的复杂度差异
-    - vs LoRAMoE：标准 MoE 路由器的权重和为 1，强制接受适配结果；MoR 的 bypass 机制允许模型在原始权重已经足够好时跳过适配（极端情况 $w_0 = 1$ 时完全跳过所有 LoRA）
+这样 target 的每个 patch 在每一层都能"看到"参考模态的结论，UIE 从一开始就是有跨模态条件的。为什么非要这么早？消融实验给了直接证据：注入层越早越好，Layer 0 始终最优（DINOv2 下 0.841、CLIP 下 0.824），推迟到 Layer 11 才注入会掉到 0.815——越晚注入越接近传统的后融合。可视化上也能看到，加 [INT] 后 patch 级注意力图从发散变成聚焦到病灶区（OCT 里的 drusen、CFP 里的出血点），说明跨模态引导确实让编码更有的放矢，而不是事后才把两份各自模糊的特征拼起来。
 
-4. **自适应后期融合**:
+**3. MoR（Mixture of Low-varied-Ranks Adaptation）：让 VFM 自己决定每层用多大秩、要不要适配。**
 
-    - 每个模态的 $\hat{\text{CLS}}_t$ 经线性层投影为 $C$ 维预测 $\hat{y}_t$
-    - 门控层（linear + softmax）生成模态重要性权重 $\{\alpha_1, \ldots, \alpha_M\}$
-    - 最终预测 $\hat{y} = \sum_{t=1}^{M} \alpha_t \hat{y}_t$
+医学数据稀缺加上自然图像到医学图像的巨大域偏移，让 VFM 的适配很尴尬：全参微调过拟合，prompt learning 只能激活已有知识、注不进新知识，而固定单一秩的 LoRA 又没法应对不同模态、不同样本的复杂度差异。MoR 的做法是在每个线性层同时挂 3 个不同秩（2、4、8）的 LoRA，再加一个松弛路由器（linear + softmax）输出 4 维权重 $[w_0, w_1, w_2, w_3]$ 做加权：
+
+$$h' = Wh + \sum_{k=1}^{3} w_k B_k A_k h$$
+
+其中多秩让模型按需选择适配强度。真正的关键是那个 $w_0$——它是 **bypass 权重**，不接任何 LoRA。标准 LoRAMoE 路由器权重和为 1，等于强制必须接受某种适配；而 MoR 留了 $w_0$ 这条旁路，原始权重已经够用的层可以把权重挪给 $w_0$，极端时 $w_0=1$ 就完全跳过所有 LoRA。改动只是把路由维度从 3 扩到 4，却让"要不要适配"也变成可学习的，避免在本不需要改的层上硬加扰动。
+
+**4. 自适应后期融合：用可学习门控权衡各模态可信度。**
+
+各模态轮换编码完，还需要把它们的判断合成一个。每个模态的 $\hat{\text{CLS}}_t$ 先经线性层投影成 $C$ 维预测 $\hat{y}_t$，再由一个门控层（linear + softmax）按样本生成模态重要性权重 $\{\alpha_1, \ldots, \alpha_M\}$，最终预测是加权和 $\hat{y} = \sum_{t=1}^{M} \alpha_t \hat{y}_t$。这一步让模型对每个病例自适应地偏向更可信的模态，而不是固定等权拼接。
+
+### 一个完整示例
+
+以 MMC-AMD 的一个眼底病例（CFP 彩色眼底照 + OCT 断层扫描，M=2）走一遍。
+
+先以 OCT 为 reference、CFP 为 target：冻结的辅助 VFM 把 OCT 编码出一个 [CLS]，过 Adapter 变成 [INT]，拼到 CFP 的 patch 序列最前面，主 VFM 从第 0 层开始编码——CFP 的 patch 在注意力里被这个携带"OCT 已看到 drusen"线索的 [INT] 牵引，注意力图从全图发散收敛到出血/渗出区，得到 $\hat{\text{CLS}}_{\text{CFP}}$。接着角色对调，CFP 当 reference 生成 [INT] 注入 OCT，得到 $\hat{\text{CLS}}_{\text{OCT}}$。两份 CLS 各自投影成预测 $\hat{y}_{\text{CFP}}, \hat{y}_{\text{OCT}}$，门控按这个病例的成像质量给出权重（比如该例 CFP 更清晰，$\alpha_{\text{CFP}}$ 偏高），加权得到最终 AMD 分类。整条链路里主 VFM 的每个线性层都被 MoR 适配，路由器对域偏移大的层多用高秩、对接近自然图像的层把权重留给 bypass。
 
 ### 损失函数
 
-总损失 $\mathcal{L} = \mathcal{L}_p + \lambda_1 \mathcal{L}_{aa} + \lambda_2 \mathcal{L}_{ag}$，包含三部分：
-
-- **主损失** $\mathcal{L}_p$：各模态预测和融合预测的交叉熵之和
-- **辅助 VFM 监督** $\mathcal{L}_{aa}$（$\lambda_1=0.3$）：保证辅助 VFM 生成的 [INT] 具有任务相关性
-- **门控监督** $\mathcal{L}_{ag}$（$\lambda_2=0.1$）：用训练集表现最好模态的 one-hot 先验指导门控权重学习，解决 VFM 框架易过拟合导致各模态训练阶段表现趋同、门控无法区分真实强弱的问题
+总损失 $\mathcal{L} = \mathcal{L}_p + \lambda_1 \mathcal{L}_{aa} + \lambda_2 \mathcal{L}_{ag}$，由三部分组成。主损失 $\mathcal{L}_p$ 是各模态预测与融合预测的交叉熵之和。辅助 VFM 监督 $\mathcal{L}_{aa}$（$\lambda_1=0.3$）约束辅助 VFM 产出的 [INT] 本身带任务相关性，避免它退化成无意义 token。门控监督 $\mathcal{L}_{ag}$（$\lambda_2=0.1$）用训练集上表现最好模态的 one-hot 先验来引导门控——VFM 框架易过拟合，会让各模态在训练阶段表现趋同、门控分不出真实强弱，这一项给门控一个外部锚点。
 
 ## 实验关键数据
 

@@ -34,36 +34,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HINT 在标准 MLLM 架构上增加了一条并行的手意图流。对每帧视频：(1) 视觉编码器提取视觉 token $V_t$；(2) WiLoR 提取 21 个 3D 手关键点 $K_t \in \mathbb{R}^{21 \times 3}$；(3) Keypoint Adapter 将关键点映射为手意图 token $H_t$。最终将视觉 token 和手意图 token 按帧交错排列输入 LLM。
+HINT 的目标是让 MLLM 听懂"这个/那个"到底指向哪——而这只有结合用户的手势才能确定。它没有改动主干，而是在标准 MLLM 旁边并起一条手意图流：逐帧处理时，视觉编码器照常吐出视觉 token $V_t$，同时用现成的 WiLoR 从画面里重建出 21 个 3D 手关键点 $K_t \in \mathbb{R}^{21 \times 3}$，再由一个轻量 Keypoint Adapter 把这串几何坐标压成一个手意图 token $H_t$。最后不是把两路特征拼到一起，而是按时间顺序交错排列（某帧的视觉 token 后紧跟该帧的手意图 token）一起喂给 LLM，让模型在生成答案时同时看到"画面里有什么"和"手指向了哪"。整套方法还配套了一个专门的数据集 EgoPointVQA，因为缺训练数据本身就是问题的一半。
 
 ### 关键设计
-1. **EgoPointVQA 数据集**:
 
-    - 功能：构建首个面向指示性手势问答的第一人称视频数据集
-    - 核心思路：4000 条合成视频（AI2-THOR 模拟器，184 个室内场景 + MIXAMO 逆运动学动画生成指向手势）+ 400 条真实视频（Meta Ray-Ban 智能眼镜采集，20 名参与者，360 室内 + 40 室外），共 18,745 个 QA 对
-    - 6 类任务：Reference（指向物体识别）、Counting（同类计数）、Spatial（空间关系）、Temporal（多次指向顺序）、Attribute（属性）、Feedback（功能反馈）
-    - 测试集：300 真实视频，672 个 QA 对，经人工验证正确性和指示歧义性
-    - 设计动机：现有第一人称 VQA 数据集无一聚焦于手势指向场景，模型训练数据的缺失是性能瓶颈的根源
+**1. EgoPointVQA 数据集：先补上"手势指向问答"这块缺失的训练数据。**
 
-2. **Keypoint Adapter（手意图 token 编码器）**:
+性能瓶颈的根源之一不在模型而在数据——现有第一人称 VQA 数据集没有一个聚焦于手势指向场景，模型从没见过"用户指着某物问这是什么"的样本。作者因此自建了 EgoPointVQA：4000 条合成视频来自 AI2-THOR 模拟器（184 个室内场景），用 MIXAMO 逆运动学动画生成自然的指向手势；另有 400 条真实视频，由 20 名参与者戴 Meta Ray-Ban 智能眼镜采集（360 段室内 + 40 段室外）。合起来 18,745 个 QA 对，覆盖 6 类任务：Reference（认出被指物体）、Counting（同类计数）、Spatial（空间关系）、Temporal（多次指向的先后顺序）、Attribute（属性）、Feedback（功能反馈）。测试集单独取 300 条真实视频共 672 个 QA 对，并经人工逐条核验答案正确性与指示是否唯一无歧义。合成数据保证规模和手势标注的精确，真实数据保证分布贴近落地场景，两者混合训练后都能用上。
 
-    - 功能：将 21 个 3D 手关键点压缩为 1 个手意图 token
-    - 核心思路：先 flatten 为 63 维向量 $\tilde{k}_t = \text{flatten}(K_t) \in \mathbb{R}^{63}$，经 LayerNorm + 两层 MLP + GeLU 映射到 LLM 隐层维度：
-    $H_t = W_2 \sigma(W_1 \text{LN}(\tilde{k}_t)), \quad W_1 \in \mathbb{R}^{d_h \times 63}, W_2 \in \mathbb{R}^{d \times d_h}$
-      当手检测置信度 $c_t < \tau = 0.5$ 时不插入 token（跳过无手帧）
-    - 设计动机：直接用视觉方式叠加关键点或箭头到帧上效果差（消融实验证明），学习式编码让模型自己发现如何利用几何信息。adapter 极轻量（< 1% token 开销，推理仅增加 0.26s）
+**2. Keypoint Adapter：把 3D 手关键点学习式地编码成一个 token，而不是画在画面上。**
 
-3. **帧-关键点交错输入（Frame-Keypoint Interleaving）**:
+有了手关键点，怎么把它喂给模型才是关键。最直觉的做法——在帧上叠加关键点或箭头——消融实验里反而掉点，因为视觉叠加会干扰 MLLM 原本的视觉理解；把坐标当文本读进去也几乎没用。HINT 改走学习式编码：先把 $K_t$ flatten 成 63 维向量 $\tilde{k}_t = \text{flatten}(K_t) \in \mathbb{R}^{63}$，再过 LayerNorm 和两层带 GeLU 的 MLP，直接映射到 LLM 的隐层维度，得到一个手意图 token
 
-    - 功能：将手意图 token 与对应帧的视觉 token 交错排列
-    - 核心思路：序列格式为 `Frame-1: <vis> Keypoint-1: <key> Frame-2: <vis> ...`，模型自回归生成答案时条件化于手意图信号：
-    $p(X_a | V, X_q, H) = \prod_{i=1}^{L} p(x_i | V, X_{q,<i}, X_{a,<i}, H_{<i})$
-    - 设计动机：交错而非拼接可以让 LLM 在时间维度上自然地将手势与对应帧关联，实现时空对齐
+$$H_t = W_2\,\sigma\!\big(W_1\,\text{LN}(\tilde{k}_t)\big), \quad W_1 \in \mathbb{R}^{d_h \times 63},\; W_2 \in \mathbb{R}^{d \times d_h}.$$
+
+当某帧手部检测置信度 $c_t < \tau = 0.5$ 时就不插入这个 token，自然跳过没有手的帧。这样做的好处是把"怎么利用几何信息"这件事交给模型自己学，而不是人为规定视觉提示的形式；而且 adapter 极轻量，手意图 token 占总 token 数不到 1%，推理仅多 0.26s。
+
+**3. 帧-关键点交错输入：让手势 token 和它所属的帧在时间轴上对齐。**
+
+光有手意图 token 还不够，得让模型知道这只手是哪一帧的手。HINT 把序列排成 `Frame-1: <vis> Keypoint-1: <key> Frame-2: <vis> ...` 的交错形式，每帧的视觉 token 后面紧跟该帧的手意图 token，于是 LLM 自回归生成答案时是条件化在手势信号上的：
+
+$$p(X_a \mid V, X_q, H) = \prod_{i=1}^{L} p\big(x_i \mid V, X_{q,<i}, X_{a,<i}, H_{<i}\big).$$
+
+相比把所有手意图 token 单独拼成一段，交错排列让模型沿时间维度天然地把每个手势和对应画面绑定起来，从而在"第几次指向了什么"这类时序问题上也能对齐时空。
 
 ### 损失函数 / 训练策略
-- LoRA 微调 vision encoder 和 LLM，Keypoint Adapter 从零训练
-- AdamW + cosine schedule，batch size 32，1 epoch
-- 混合合成数据 + 100 真实视频训练
+- 用 LoRA 微调视觉编码器和 LLM，Keypoint Adapter 从零训练
+- AdamW + cosine 学习率，batch size 32，训练 1 个 epoch
+- 训练数据为合成数据混合 100 条真实视频
 
 ## 实验关键数据
 

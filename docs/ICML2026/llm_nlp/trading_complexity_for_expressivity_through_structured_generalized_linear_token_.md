@@ -43,31 +43,25 @@ tags:
 
 ### 整体框架
 
-定义 Generalized Linear Recurrence Layer：$y_i = \sum_{j=1}^i \alpha_{i,j} x_j + \sum_{j=1}^{i-1} \beta_{i,j} y_j$，其中 $\alpha_{i,j}, \beta_{i,j}$ 是 input-dependent 系数（attention weights、SSM gating 等）。Matrix 形式 $Y = (I-B)^{-1} A X$，$A$ lower triangular，$B$ strict lower triangular（保证 $I - B$ 可逆）。Sparsity pattern 决定一切——pattern 稀疏 → 复杂度低，但 $(I-B)^{-1}$ 是 dense lower-triangular 可保表达力。
+论文把任意 causal linear token mixer 拆成"输入直接影响 + 输出递归传播"两部分，写成 Generalized Linear Recurrence Layer $y_i = \sum_{j=1}^i \alpha_{i,j} x_j + \sum_{j=1}^{i-1} \beta_{i,j} y_j$，矩阵形式即 $Y = (I-B)^{-1} A X$（$A$ lower triangular 装输入影响，$B$ strict lower triangular 装输出递归，保证 $I-B$ 可逆）。核心观察是 $A, B$ 的 sparsity pattern 同时决定复杂度（pattern 越稀，矩阵-向量乘越快）和表达力（$(I-B)^{-1}$ 展开成 dense lower-triangular，仍能让远处 token 通过多跳递归互通），于是"设计序列 mixer"被还原成"选 sparsity pattern"这一件事。
 
 ### 关键设计
 
-1. **统一框架：$A, B$ sparsity pattern 覆盖所有 causal linear mixer**:
+**1. 统一框架：用 $(A,B)$ sparsity pattern 收编所有 causal linear mixer**
 
-    - 功能：把 attention、SSM、linear attention、recurrence 都看成 $(A, B)$ 选择的特例，给系统设计提供统一语言。
-    - 核心思路：(a) Standard attention：$B=0, A=\mathrm{softmax}(QK^\top/\sqrt{d_k})$ → $Y = AX$，复杂度 $\mathcal{O}(n^2)$；(b) Local attention：$A$ banded → $\mathcal{O}(nk)$；(c) Gated linear recurrence：$A$ 对角、$B$ 次对角 → $y_t = \alpha_{t,t} x_t + \beta_{t,t} y_{t-1}$；(d) Diagonal SSM：linear recurrence 的特殊参数化 + state expansion；(e) Mamba-2：等价于 1-semiseparable transformation matrix，连接 SSM 和 masked linear attention。所有这些都是同一个 $(I-B)^{-1} A$ 框架在不同稀疏模式下的实例化。
-    - 设计动机：以前 attention vs SSM 的对比是 case-by-case，本文给出统一矩阵代数语言——讨论"为什么 SSM 比 attention 快"等价于讨论"sparsity 越稀 → 矩阵-向量乘越快"；讨论"为什么 attention 表达力强"等价于讨论"$A$ dense → 任意 pairwise 关系可表达"。这种统一是后续系统设计的基础。
+以前比较 attention 和 SSM 全靠 case-by-case：Mamba-2 跟 linear attention 的等价、Chimera 跟 SSM-on-graph 的连接，每对关系都要单独推一遍。本文发现它们其实都是同一个 $Y=(I-B)^{-1}AX$ 在不同稀疏模式下的实例——standard attention 是 $B=0,\ A=\mathrm{softmax}(QK^\top/\sqrt{d_k})$，得 $Y=AX$ 复杂度 $\mathcal{O}(n^2)$；local attention 把 $A$ 收成 banded 得 $\mathcal{O}(nk)$；gated linear recurrence 是 $A$ 对角、$B$ 次对角，展开就是 $y_t=\alpha_{t,t}x_t+\beta_{t,t}y_{t-1}$；diagonal SSM 是 recurrence 的特殊参数化加 state expansion；Mamba-2 则等价于 1-semiseparable transformation matrix，正好搭起 SSM 和 masked linear attention 的桥。统一之后，"为什么 SSM 比 attention 快"翻译成"sparsity 越稀矩阵乘越快"，"为什么 attention 表达力强"翻译成"$A$ dense 则任意 pairwise 关系可表达"——这套矩阵代数语言是后面所有系统设计的地基。
 
-2. **Translation-invariant pattern + $\mathcal{O}(f^{-1}(n))$ 复杂度族**:
+**2. Translation-invariant pattern：单个函数 $f$ 调出 $\mathcal{O}(f^{-1}(n))$ 复杂度全谱**
 
-    - 功能：用单个函数 $f$ 控制 sparsity pattern，直接读出复杂度+最短路径+congestion。
-    - 核心思路：定义 pattern induced by strictly increasing $f: \mathbb{N}_{\ge 0} \to \mathbb{N}_{> 0}$——$\alpha_{i,j} \ne 0 \iff \exists k: j = i - f(k)$，即 token $i$ 只能 attend 到距离为 $f(k)$ 的过去 token。例如 $f(k) = 2^k$ 让 token $i$ 只看 $i-1, i-2, i-4, i-8, \dots, i-2^{\lfloor \log_2 i \rfloor}$，每 token 复杂度 $\mathcal{O}(\log n)$。Proposition 4.2 推广：复杂度 $\mathcal{O}(f^{-1}(n))$——线性 $f$ → $\mathcal{O}(n)$，平方 $f$ → $\mathcal{O}(\sqrt{n})$，指数 $f$ → $\mathcal{O}(\log n)$。
-    - 设计动机：以前 sparse attention（Longformer、BigBird）的 sparsity pattern 是手工设计（slide window + global token），没有 principled 复杂度阶梯。Translation-invariant + $f$ 这个抽象让"选 $f$ = 选复杂度档"变成简单的工程决策，从 $\mathcal{O}(\log n)$、$\mathcal{O}(\sqrt n)$ 到 $\mathcal{O}(n)$ 全谱覆盖。
+Longformer、BigBird 那一代 sparse attention 的连接模式是手工拼的（滑窗加全局 token），既没有 principled 的复杂度阶梯，也说不清表达力损失多少。本文改用一个严格递增的 $f:\mathbb{N}_{\ge 0}\to\mathbb{N}_{>0}$ 生成 pattern：$\alpha_{i,j}\ne 0 \iff \exists k:\ j=i-f(k)$，即 token $i$ 只能回看距离恰为 $f(k)$ 的过去 token。取 $f(k)=2^k$ 时 token $i$ 只看 $i-1,i-2,i-4,\dots,i-2^{\lfloor\log_2 i\rfloor}$，每 token 只需 $\mathcal{O}(\log n)$ 次运算。Proposition 4.2 把这件事推广成一条规律：复杂度就是 $\mathcal{O}(f^{-1}(n))$——线性 $f$ 给 $\mathcal{O}(n)$、平方 $f$ 给 $\mathcal{O}(\sqrt n)$、指数 $f$ 给 $\mathcal{O}(\log n)$。于是"选 $f$"直接等于"选复杂度档"，让此前几乎空白的 $\mathcal{O}(n\log n)$、$\mathcal{O}(n\sqrt n)$ 中间地带变成一个可滑动的工程旋钮。
 
-3. **Shortest path + Congestion：两个新表达力度量**:
+**3. Shortest path 与 Congestion：把表达力量化成图论指标**
 
-    - 功能：从 communication graph 的图论视角量化"信息在不同 pattern 下传得多快多顺"。
-    - 核心思路：建 communication graph $\mathcal{G}$，token $i$ → token $j$ 有边 iff $i - j = f(k)$ for some $k$。最短路径 $d(i, j) = \min\{d : \exists a \in \mathbb{N}^d, \sum_k f(a_k) = i - j\}$。$f(k) = 2^k$ 时 $d(i, j) \le \log_2 (i-j)$（二进制分解数 1 的个数）；$f(k) = k^2+1$ 时 $d(i, j) \le 4$（Lagrange 四平方和定理）。Congestion $C(\mathcal{G}) = \min_\mathcal{P} \max_i \#\{p \in \mathcal{P}: i \in p\}$ 量化"copy 任务需要多少路径挤过单个节点"；Standard recurrent model congestion = $n$（全压一个 hidden state），higher-order recurrence 能降到 $\log n$ 甚至 4。Proposition 4.7-4.8 给出 congestion 的紧上下界。
-    - 设计动机：以前对"长程依赖捕捉能力"只能定性讲，本文给出两个量化指标。Shortest path 量化"信息从 j 到 i 要走多少步"，congestion 量化"信息瓶颈程度"，两者结合解释"为什么 $f(k) = k^2+1$ 能实现 $\mathcal{O}(\sqrt n)$ + 4 步路径 + 4 congestion"这种漂亮 trade-off。
+长程依赖能力此前只能定性吹，本文用 communication graph $\mathcal{G}$（token $i\to j$ 有边当且仅当 $i-j=f(k)$）给出两个可计算指标。其一是最短路径 $d(i,j)=\min\{d:\exists a\in\mathbb{N}^d,\ \sum_k f(a_k)=i-j\}$，量化"信息从 $j$ 走到 $i$ 要几跳"：$f(k)=2^k$ 时 $d(i,j)\le\log_2(i-j)$（等于差值二进制里 1 的个数），$f(k)=k^2+1$ 时借 Lagrange 四平方和定理直接锁死 $d(i,j)\le 4$。其二是 congestion $C(\mathcal{G})=\min_{\mathcal{P}}\max_i \#\{p\in\mathcal{P}:i\in p\}$，量化"copy 这类任务有多少条信息路径被迫挤过同一个节点"：标准一阶递归把一切压进单个 hidden state，congestion $=n$，而 higher-order recurrence 能压到 $\log n$ 甚至 4（Proposition 4.7-4.8 给出紧上下界）。两个指标合在一起正好解释了 $f(k)=k^2+1$ 为何能同时拿到 $\mathcal{O}(\sqrt n)$ 复杂度、4 步路径和 4 congestion 这种漂亮 trade-off。
 
-### Cache-efficient pattern
+**4. Cache-efficient pattern：把 KV cache 从 $\mathcal{O}(n)$ 收到 $\mathcal{O}(f^{-1}(n))$**
 
-Translation-invariant pattern decoding 是 $\mathcal{O}(f^{-1}(n))$，但 cache 仍是 $\mathcal{O}(n)$（任何 token $j$ 可能被任意远的未来 token attend）。Definition 4.10 引入约束：decoding token $i$ 时只能 attend $S_{i-1} \cup \{i\}$ 中的位置——cache 演化成 $\mathcal{O}(f^{-1}(n))$。Proposition 4.12 给出 closed-form $S_i = \{a_k \lceil (i - f(k))/a_k \rceil : k \in \mathbb{N}, f(k) < i\}$，其中 $a_{k+1} = a_k \lceil (f(k+1) - f(k))/a_k \rceil$——cache 位置在 lattice of step $a_k$ 上 quantize，有 periodic structure 可被硬件实现利用。
+translation-invariant pattern 解决了每 token 的算力，但 cache 仍是 $\mathcal{O}(n)$——任何过去 token $j$ 都可能被任意远的未来 token 回看，所以谁都不能丢。Definition 4.10 加一条约束：解码 token $i$ 时只允许 attend $S_{i-1}\cup\{i\}$ 里的位置，cache 大小随之收成 $\mathcal{O}(f^{-1}(n))$。Proposition 4.12 给出这些保留位置的 closed-form $S_i=\{a_k\lceil(i-f(k))/a_k\rceil:k\in\mathbb{N},\ f(k)<i\}$，其中 $a_{k+1}=a_k\lceil(f(k+1)-f(k))/a_k\rceil$——保留位置都落在步长为 $a_k$ 的 lattice 上做 quantize，呈周期结构，这种规整性让它对硬件 kernel 友好、可被实现端利用。
 
 ## 实验关键数据
 

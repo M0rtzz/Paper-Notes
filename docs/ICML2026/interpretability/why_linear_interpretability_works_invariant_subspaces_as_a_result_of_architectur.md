@@ -41,37 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者在 4 条架构假设（加性 residual stream、OV 与 unembedding 线性、参数共享、线性输出层）下，给出两个核心定理 + 一个推论：
-- **Theorem 3.7（Invariant Subspace Necessity）**：通过线性接口解码的 communicable feature 必然存在跨上下文不变子空间 $\mathcal{S}_f$；
-- **Proposition 3.8（Capacity Constraint Implies Feature Sharing）**：在 $|\mathcal{V}| \gg d$ 容量约束下，最优 token 表征必然因式分解为共享 feature direction 的稀疏组合；
-- **Self-Reference Property（推论）**：token 自身的嵌入向量就给出其概念的几何方向，可以零样本用做无监督 probe。
-
-然后在 8 个分类任务 × 4 个模型家族上做验证：用 class token 与该类实例的几何对齐情况、SAE 无监督学到的 feature direction 与 class token 方向的对齐情况、以及一个对照实验（把 unembedding 换成 MLP head）来佐证。
+本文不训练新模型，而是把"线性可解释为什么总是奏效"这个经验现象转成一个可证明的架构命题。在 4 条架构假设（加性 residual stream、OV 与 unembedding 都是线性接口、参数共享、线性输出层）下，作者先证明两个定理——任何走线性接口被读出的语义特征必然落在跨上下文不变的线性子空间里，且在容量约束下表征必然稀疏因式分解为共享方向——再由此推出一个零样本应用：token 自身的嵌入方向就是它所对应概念的几何方向。最后用 8 个分类任务 × 4 个模型家族的几何对齐实验，外加一个"把 unembedding 换成 MLP head"的准实验对照来佐证因果方向。
 
 ### 关键设计
 
-1. **Invariant Subspace Necessity 定理 + 可通讯特征的形式化定义**:
+**1. Invariant Subspace Necessity 定理：把"线性可读"等价成"几何不变子空间"**
 
-    - 功能：把"为什么线性可解码"压成一句可证明的话——线性接口强制不变子空间。
-    - 核心思路：先把"可通讯特征" $f: \mathcal{C} \to \mathcal{Y}$ 形式化为两个条件——(i) multi-context：存在多个不同表面 $c_1, c_2$ 都表达同一 $f$ 值（如"France"和"the country of the Eiffel Tower"都指法国）；(ii) linear decodability：存在 $\phi \in \mathbb{R}^{|V|}$ 使 $\phi^\top W_U \mathbf{h}(c) = g(f(c))$ 对所有 $c$ 成立。然后证明：因为存在标量 $\mathbf{w}_f \in \mathbb{R}^d$ 使 $o_f(c) = \mathbf{w}_f^\top \mathbf{h}(c)$，任何上下文要给出相同 $f$ 值就必须在 $\mathbf{w}_f^\perp$ 方向上自由变化、在 $\mathbf{w}_f$ 方向上保持一致——也就是 $f$ 相关信息只活在由 $\mathbf{w}_f$ 决定的子空间内，与上下文无关，从而 $\mathcal{S}_f$ 存在。Directional Invariance 进一步要求 $\dim(\mathcal{S}_f) = 1$ 即一个 direction 完全够。
-    - 设计动机：把"线性可读"和"几何不变子空间"形式上等价起来后，linear probe、SAE、activation steering 这些貌似不同的实践工具都可以被统一为"利用同一个 $\mathcal{S}_f$"，回答了为什么它们之间常发现一致结论。
+整篇论文的痛点是，transformer 是深层强非线性系统，本没有义务让中间表示"线性可读"，但 probe / SAE / steering 却屡屡奏效，缺一个非经验的解释。作者先把"可通讯特征" $f: \mathcal{C} \to \mathcal{Y}$ 形式化为两个条件：multi-context 要求存在多个不同表面 $c_1, c_2$ 都表达同一 $f$ 值（"France"和"the country of the Eiffel Tower"都指法国），linear decodability 要求存在 $\phi \in \mathbb{R}^{|V|}$ 使 $\phi^\top W_U \mathbf{h}(c) = g(f(c))$ 对所有 $c$ 成立。在此之上，由于线性接口意味着存在标量读出 $o_f(c) = \mathbf{w}_f^\top \mathbf{h}(c)$，任何上下文要给出相同的 $f$ 值，就必须在 $\mathbf{w}_f$ 方向上保持一致、只能在正交补 $\mathbf{w}_f^\perp$ 里自由变化——也就是说 $f$ 的信息只活在由 $\mathbf{w}_f$ 决定的、与上下文无关的子空间 $\mathcal{S}_f$ 内。Directional Invariance 进一步把这个子空间收紧到 $\dim(\mathcal{S}_f)=1$，即单个 direction 就足够。这条等价之所以有效，是因为它一举把 linear probe、SAE、activation steering 这些看似不同的工具统一成"在利用同一个 $\mathcal{S}_f$"，从而解释了它们为何常常给出一致结论。
 
-2. **Capacity Constraint 推论：稀疏因式分解必须出现**:
+**2. Capacity Constraint 推论：词表远大于维度逼出稀疏因式分解**
 
-    - 功能：从 $|\mathcal{V}| \gg d$ 这个工程现实推出"token 必须共享 feature direction"，进一步推出 SAE 找到的稀疏分解是必然结果。
-    - 核心思路：unembedding $W_U \in \mathbb{R}^{|\mathcal{V}| \times d}$ 中每个 token 的列向量 $\mathbf{w}_t$ 不能彼此正交（因为 token 比维度多得多），必须共享方向。若各 context 只激活稀疏 feature 集合，且多 token 共享语义属性，则最优表示因式分解为 $\mathbf{w}_t = \sum_{f \in F_t} \alpha_{t,f} \mathbf{d}_f$，共享方向数 $|F| \ll |\mathcal{V}|$。代入后 logit $\text{logit}_t = \sum_{f \in F_t} \alpha_{t,f} (\mathbf{d}_f^\top \mathbf{h}(c))$，每个因子 $\mathbf{d}_f$ 又必须线性可解码且上下文无关——满足 Theorem 3.7 的前提。
-    - 设计动机：这条命题告诉我们"SAE 能成功"不是偶然——容量约束 + 稀疏激活 + 多 token 共享语义这三条工程现实联手要求模型必须把表示组织成可被稀疏字典还原的形式；这也就解释了 SAE 字典与 linear probe 找到的方向常常重合。
+光证明"存在不变方向"还不够，得解释为什么 SAE 找到的是一组可复用的稀疏字典。作者从 $|\mathcal{V}| \gg d$ 这个工程现实出发：unembedding $W_U \in \mathbb{R}^{|\mathcal{V}| \times d}$ 里每个 token 的列向量 $\mathbf{w}_t$ 不可能两两正交（token 数远多于维度），只能彼此共享方向。若各上下文只激活稀疏的 feature 集合、且多个 token 共享同一语义属性，最优表示就必然因式分解为 $\mathbf{w}_t = \sum_{f \in F_t} \alpha_{t,f} \mathbf{d}_f$，其中共享方向数 $|F| \ll |\mathcal{V}|$。代回后 logit 写成 $\text{logit}_t = \sum_{f \in F_t} \alpha_{t,f}\,(\mathbf{d}_f^\top \mathbf{h}(c))$，每个因子方向 $\mathbf{d}_f$ 又重新满足"线性可解码且上下文无关"，正好落回 Theorem 3.7 的前提。这条命题说明 SAE 能成功不是巧合——容量约束、稀疏激活、多 token 共享语义这三条现实联手逼模型把表示组织成可被稀疏字典还原的形式，也就解释了为什么 SAE 字典与 linear probe 找到的方向常常重合。
 
-3. **Self-Reference Property：token 自己就是它的概念方向**:
+**3. Self-Reference Property：token 自己就是它的概念方向**
 
-    - 功能：给出一个直接、零样本、不需训练任何 probe 的语义方向识别方案。
-    - 核心思路：从定理可知概念 $f$ 的方向 $\mathbf{d}_f$ 完全由模型参数决定。最直接的"参考向量"就是 $f$ 对应的 token 自己——例如 token "France" 的 embedding 方向就给出 France 概念的方向；这样"I went to Paris"和"I visited Marseille"在 hidden state 上都会在该方向上有强投影，可以做零样本无监督分类。直觉如图 1：显式 token "France" 自指（self-reference）地给出方向，上下文中的隐式实例与之共享这个不变方向。
-    - 设计动机：以前 probe / SAE 都需要标签或大量无监督训练；自指属性把"概念方向"直接落到 token 嵌入上，给出一个零参数的几何 baseline，可以用来 sanity-check probe 找到的方向是不是真在描述同一概念。
+前两条定理告诉我们概念方向 $\mathbf{d}_f$ 完全由模型参数决定，但要把它"拿出来用"通常还得训练 probe 或跑无监督 SAE。作者指出最直接的参考向量其实就是概念对应的 token 本身——token "France" 的 embedding 方向就给出 France 概念的方向，于是"I went to Paris"和"I visited Marseille"的 hidden state 都会在这个方向上有强投影，可以零样本无监督地做分类（显式 token 自指地给出方向，上下文里的隐式实例与之共享同一不变方向）。它有效是因为把"概念方向"直接落到了 token 嵌入这个零参数的几何对象上，既给出一个不依赖标签的分类 baseline，也能用来 sanity-check 训练得到的 probe 方向是否真在描述同一概念。
 
-### 损失函数 / 训练策略
-本文不训练新模型，主要是理论 + 验证实验：
-- 主结果是两个定理 + 一个推论的纯数学论证。
-- 验证实验在 LLaMA3-8B、Mistral-7B、GPT2-Small、LLaMA3.2-3B 这 4 个 backbone 上，针对 8 个语义分类任务（taxonomic、affective、stylistic、linguistic、descriptive 等）测量 (a) class token 方向与对应实例 hidden state 的余弦对齐；(b) 无监督 SAE 学到的 feature 方向与 class token 方向的对齐；(c) "modular division + MLP head vs. linear head"的对照实验。
+### 验证实验设置
+主结果是上述两定理一推论的纯数学论证，验证部分不训练新模型，而是在 LLaMA3-8B、Mistral-7B、GPT2-Small、LLaMA3.2-3B 这 4 个 backbone、8 个语义分类任务（taxonomic、affective、stylistic、linguistic、descriptive 等）上测量三件事：class token 方向与对应实例 hidden state 的余弦对齐、无监督 SAE 学到的 feature 方向与 class token 方向的对齐、以及"modular division + MLP head vs. linear head"的对照实验。
 
 ## 实验关键数据
 

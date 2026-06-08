@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **对数池化作为神经网络的"天然"子代理聚合规则**:
+**1. 对数池化：被网络结构和训练目标共同 dictate 出来的聚合规则**
 
-    - 功能：把神经网络末层的 logit 加性分解（ensemble、Product of Experts、multi-head attention）统一解释为对数池化下的子代理合成，从而把"persona 聚合"问题嵌入既有的经济学聚合理论。
-    - 核心思路：对数池化 $P(o)=\frac1Z\prod_j P_j(o)^{\beta_j}$ 等价于对 logit $\log P_i$ 做加权和再 softmax，恰好对应 modern transformer 末层的形式。再把认知效用 $W_i(o)=\log P_i(o)$ 与"训练目标是 cross-entropy"对应起来——梯度通过 $\log P(\cdot)$ 项回传，所以 $\log P$ 就是网络优化的隐式 utility。最后定义 compositional agent（$\mathbb E_P[W_i]\ge \mathbb E_{P_i}[W_i]$）和 strictly unanimous group。
-    - 设计动机：要让经济学的 welfare aggregation 真的能用在神经网络上，必须找到一种聚合形式**同时**匹配（i）网络结构（末层 linear + softmax）和（ii）训练目标（log-likelihood）。对数池化是唯一同时满足这两点的形式，所以它不是"选择"而是被网络结构和训练目标共同 dictate 出来的。
+要让经济学那套 welfare aggregation 真能用在神经网络上，得找到一种聚合形式同时匹配网络结构（末层 linear + softmax）和训练目标（log-likelihood），而对数池化恰好是唯一同时满足这两点的。它的形式 $P(o)=\frac1Z\prod_j P_j(o)^{\beta_j}$ 等价于对 logit $\log P_i$ 做加权和再 softmax，正是 modern transformer 末层的样子——于是 ensemble、Product of Experts、multi-head attention 这些 logit 上的加性分解，数学上全都精确等价于子代理的对数池化合成。配套地，认知效用 $W_i(o)=\log P_i(o)$ 也不是随手挑的：cross-entropy 训练的梯度正是通过 $\log P(\cdot)$ 项回传，所以 $\log P$ 就是网络在优化的隐式 utility。在这套对应下，作者定义"子代理 $i$ 从合成中受益"为 $\mathbb E_P[W_i]\ge \mathbb E_{P_i}[W_i]$，并把所有子代理都严格受益的情形称为 strictly unanimous group。换句话说，对数池化不是建模选择，而是被网络末层结构和训练目标共同逼出来的唯一形式。
 
-2. **严格一致受益的可能性边界（Theorem 8/9/10）**:
+**2. 严格一致受益的可能性边界：三条定理画出"哪条路走得通"**
 
-    - 功能：清晰刻画在什么条件下"所有子代理同时受益"是可达的，是整篇论文最技术性的部分。
-    - 核心思路：(i) **二元 outcome 不可能定理**：$|\mathcal O|=2$ 下，对任意非平凡权重，都无法同时满足两个代理的 $\Delta_i\ge 0$ 且至少一个 strict——直观地，二元空间下 log pool 是 zero-sum 拉扯，一方增加另一方必减。(ii) **$|\mathcal O|\ge 3$ 存在性定理**：可显式构造 $\{P_i\}_{i=1}^n,\beta_i$ 使得 $\mathbb E_P[\log P_i]>\mathbb E_{P_i}[\log P_i]$ 对所有 $i$ 严格成立。(iii) **线性池化不可能性定理**：在 $P_C^{\text{lin}}(o)=\sum\beta_i P_i(o)$ + $W_i(o)=\log P_i(o)$ 下，永远不存在严格一致受益的合成——直观上线性池化等价于 random dictatorship，反对齐的代理被选作 dictator 时会严重损害他人。
-    - 设计动机：这套定理给出三件具体的"哪条路走得通"判断：(a) 要做 multi-persona LLM 必须用对数池化而非简单加权平均（这正好和神经网络结构一致）；(b) outcome 空间太小（二元）的玩具问题不适合用这套理论建模；(c) 至少需要 3 个 outcome 才能讨论非平凡合成。这也意味着"二元安全/不安全"标签太粗的对齐设定本质上是退化的。
+这是全文最技术性的部分，目的是说清"所有子代理同时受益"到底在什么条件下可达。三条定理给出清晰边界：二元 outcome 不可能定理说明当 $|\mathcal O|=2$ 时，对任意非平凡权重都无法让两个代理同时 $\Delta_i\ge 0$ 且至少一个严格——直观上二元空间里 log pool 是 zero-sum 拉扯，一方涨另一方必跌（Theorem 8）；$|\mathcal O|\ge 3$ 存在性定理则能显式构造一组 $\{P_i\}_{i=1}^n,\beta_i$ 使 $\mathbb E_P[\log P_i]>\mathbb E_{P_i}[\log P_i]$ 对所有 $i$ 严格成立（Theorem 9）；线性池化不可能性定理证明在 $P_C^{\text{lin}}(o)=\sum\beta_i P_i(o)$ 配认知效用下永远凑不出严格一致受益，因为线性池化等价于 random dictatorship，一旦反对齐代理被抽中当 dictator 就会狠狠损害他人（Theorem 10）。落到实践上，这三条给出三个判断：做 multi-persona LLM 必须用对数池化而非加权平均（恰好和网络结构一致）、二元玩具问题本质退化不适合这套理论、非平凡合成至少要 3 个 outcome——也就是说"safe vs unsafe"这种二元粗标签的对齐设定从一开始就落在不可能区。
 
-3. **递归与稳定性 + Luigi-Waluigi 对齐原则**:
+**3. 递归稳定性与 Luigi-Waluigi 对齐原则**
 
-    - 功能：给"合成—分解—再合成"的递归过程建立结构性保证（cloning invariance、连续性、openness），并据此严格证明"manifest-then-suppress Waluigi"优于"只强化 Luigi"。
-    - 核心思路：(a) **Lemma 13（兼容分裂下池化不变）**：把一个 $P_i$ 用 $m$ 个权重相容的子代理替换不会改变全局 pool。(b) **Theorem 14（父代理受益不传递给子代理）**：可构造例子使得父代理 $\Delta_{P_1}(P)>0$ 但分裂出的 $\Delta_{P_{1,1}}(P)<0$，说明 alignment 不能仅看顶层。(c) **Theorem 17（openness）**：若 $P\in\mathcal U_{\text{strict}}$，则其某个邻域全在 $\mathcal U_{\text{strict}}$ 里——一致受益是局部稳定属性。(d) Section 5 用 $L=\log P$、$l_i=\log P_i$ 和 $P$-centered profile $v_i(o)=l_i(o)-\mathbb E_P[l_i]$ 构造希尔伯特空间分析，证明：当 RLHF 对父代理 $P$ 加 $\mathrm{KL}$ 预算约束并强化 Luigi persona 时，对抗的 Waluigi 子代理必然反向激活；而"先 manifest Waluigi 让它显形、再统一压制"的策略相对纯强化 Luigi 严格更大的 first-order alignment 误差缩减。
-    - 设计动机：稳定性结果（特别是 openness）是后面 Luigi-Waluigi 分析的基石——只有当严格一致受益是开集，才能保证 RLHF 的小步参数更新不会突然破坏 persona 结构。Theorem 14 解释了为什么实践中 RLHF 顶层指标过得去、但子 persona 层面还能搞出问题。Luigi-Waluigi 结论第一次给"manifest-then-suppress"这一经验启发式提供了形式证明。
+这一组结果先给"合成—分解—再合成"的递归过程上结构性保证，再据此严格证明"先让 Waluigi 显形再压制"优于"只强化 Luigi"。稳定性的基石有三块：Lemma 13 说把一个 $P_i$ 换成 $m$ 个权重相容的子代理不改变全局 pool（兼容分裂下池化不变）；Theorem 14 构造出父代理 $\Delta_{P_1}(P)>0$ 但分裂子代理 $\Delta_{P_{1,1}}(P)<0$ 的例子，说明父受益不传递给子、alignment 不能只看顶层；Theorem 17（openness）证明若 $P\in\mathcal U_{\text{strict}}$ 则其某个邻域整个落在 $\mathcal U_{\text{strict}}$ 里，即严格一致受益是局部稳定的开集。正因为是开集，RLHF 的小步参数更新才不会突然打碎 persona 结构，KL 预算训练在理论上才稳。在此基础上，Section 5 用 $L=\log P$、$l_i=\log P_i$ 和 $P$-centered profile $v_i(o)=l_i(o)-\mathbb E_P[l_i]$ 搭起希尔伯特空间分析：当 RLHF 给父代理 $P$ 套上 $\mathrm{KL}$ 预算约束并强化 Luigi persona 时，对抗的 Waluigi 子代理必然被反向激活；而"先 manifest Waluigi 让它显形、再统一压制"相比纯强化 Luigi 能带来严格更大的 first-order alignment 误差缩减。这第一次给"manifest-then-suppress"这条经验启发式提供了形式证明，也解释了为什么实践里 reward model 高分但 deceptive 行为仍在——顶层指标过得去，子 persona 层面照样能严格受损。
 
 ### 损失函数 / 训练策略
 这是理论论文，不涉及训练流程，但所有结论建立在"网络末层是 logit 加性结构 + cross-entropy 训练 + KL 预算 RLHF 约束"这一标准设置上，对应实际 RLHF 中的 KL-regularized DPO/PPO 微调。

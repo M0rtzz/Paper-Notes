@@ -39,27 +39,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定 $T$ 个同构 LoRA adapter $\{(A^{(t)}, B^{(t)})\}_{t=1}^{T}$（相同基座模型、相同注入层、相同输入秩 $r_{\text{in}}$），目标是逐层合并为一个 rank-$r$ 的 LoRA 更新。CtM 分三步：(1) 学习共享正交基 $(U, V)$；(2) 将各 adapter 投影到 $r \times r$ 坐标；(3) 在坐标空间中执行标准合并规则并提升回原始参数空间。
+给定 $T$ 个同构 LoRA adapter $\{(A^{(t)}, B^{(t)})\}_{t=1}^{T}$（相同基座模型、相同注入层、相同输入秩 $r_{\text{in}}$），CtM 把传统 MtC 的"先合并后压缩"反转成"先压缩后合并"：先学一对共享的 $r$ 维正交基 $(U, V)$，把每个 adapter 投影成紧凑的 $r \times r$ 坐标矩阵，然后在这个低维坐标空间里跑标准合并规则、再提升回原始参数空间。由于子空间在合并之前就固定下来，输出天然落在 rank-$r$ 子空间内，根本不需要事后的截断 SVD。
 
 ### 关键设计
 
-1. **重缩放感知的共享子空间学习**:
+**1. 重缩放感知的共享子空间学习：怎么选一个不偏袒大范数任务的子空间。**
 
-    - 功能：学习一对 $r$ 维正交基 $U \in \mathbb{R}^{n \times r}$、$V \in \mathbb{R}^{m \times r}$，使其能均衡地重建所有任务的 LoRA 更新
-    - 核心思路：构造重缩放代理目标 $\Delta W_{\text{target}}^{(t)} = \lambda^{(t)} \cdot \Delta W^{(t)} / \|\Delta W^{(t)}\|_F$，其中 $\lambda^{(t)} = \beta \|\Delta W^{(t)}\|_F + (1-\beta) \|\Delta W\|_{F,\text{Avg}}$。先对各 LoRA 归一化消除范数偏差，再通过 $\beta \in [0,1]$ 软性重引入尺度信号。将代理目标沿任务维堆叠为三阶张量 $\mathcal{X} \in \mathbb{R}^{n \times m \times T}$，转化为 Tucker-2 分解问题，用 HOSVD 初始化 + HOOI 迭代求解
-    - 设计动机：直接在原始 LoRA 上学子空间会被大范数任务主导；完全归一化又丢失尺度信息。$\beta$ 插值提供了平衡两者的旋钮，使子空间反映跨任务的共同结构
+CtM 的命门在于这对正交基 $U \in \mathbb{R}^{n \times r}$、$V \in \mathbb{R}^{m \times r}$ ——一旦确定，正交于它的所有分量都不可恢复，所以必须让它能均衡地重建所有任务的更新。难点是不同任务 LoRA 的范数差异巨大：直接在原始 $\Delta W^{(t)}$ 上学子空间会被大范数任务主导，小范数任务被挤出秩预算；可如果完全归一化又把尺度信息丢光了。作者的解法是构造一个重缩放代理目标 $\Delta W_{\text{target}}^{(t)} = \lambda^{(t)} \cdot \Delta W^{(t)} / \|\Delta W^{(t)}\|_F$，先归一化消除范数偏差，再用 $\lambda^{(t)} = \beta \|\Delta W^{(t)}\|_F + (1-\beta) \|\Delta W\|_{F,\text{Avg}}$ 软性地把尺度信号注回来——$\beta \in [0,1]$ 就是在"完全归一化"和"保留原始尺度"之间滑动的旋钮。把这些代理目标沿任务维堆叠成三阶张量 $\mathcal{X} \in \mathbb{R}^{n \times m \times T}$ 后，学子空间就变成了一个标准的 Tucker-2 分解问题，用 HOSVD 初始化、HOOI 迭代求解，得到的 $(U, V)$ 反映的是跨任务的共同结构而非某个任务的私货。
 
-2. **低维坐标空间合并**:
+**2. 低维坐标空间合并：在 $r \times r$ 的紧凑空间里跑现成的合并规则。**
 
-    - 功能：在 $r \times r$ 紧凑坐标中执行任意标准合并规则
-    - 核心思路：用原始（非重缩放）LoRA 计算坐标 $O^{(t)} = U^\top \Delta W^{(t)} V$，再用标准规则（如 TIES、DARE）合并 $O_{\text{merged}} = \mathcal{M}(\{O^{(t)}\})$，最终提升回 $\Delta W_{\text{LoRA}} = U \cdot O_{\text{merged}} \cdot V^\top$。输出秩由构造保证 $\leq r$
-    - 设计动机：代理目标仅用于学子空间基，坐标计算和合并使用真实 LoRA 更新，保留了各任务的真实贡献。在紧凑空间中合并使跨任务冲突更集中，更易被 TIES 等方法解决
+子空间定好后，合并就退化成一件简单的事。注意这里用的是**原始**（非重缩放）LoRA：对每个任务算坐标 $O^{(t)} = U^\top \Delta W^{(t)} V$，把真实更新投影进共享基；然后直接套用任意现成规则（TIES、DARE 等）合并这些坐标 $O_{\text{merged}} = \mathcal{M}(\{O^{(t)}\})$；最后提升回参数空间 $\Delta W_{\text{LoRA}} = U \cdot O_{\text{merged}} \cdot V^\top$。代理目标只在上一步学基时用过，坐标和合并全程基于真实 LoRA，所以各任务的真实贡献没有被重缩放污染。输出秩由构造保证 $\leq r$，这正是绕开截断 SVD 的关键。额外的好处是：在 $r \times r$ 这样的紧凑空间里跨任务冲突更集中，TIES 这类符号冲突消解方法反而更容易处理。
 
-3. **Core-Space 无损加速**:
+**3. Core-Space 无损加速：把全参数空间的张量分解搬进一个小核心空间。**
 
-    - 功能：将子空间学习的计算从 $n \times m$ 空间压缩到 $(Tr_{\text{in}}) \times (Tr_{\text{in}})$ 核心空间
-    - 核心思路：对拼接的 LoRA 因子 $B_{\text{cat}}$、$A_{\text{cat}}$ 做薄 SVD 得到 $U_B$、$V_A$，将各 LoRA 投影为核心表示 $M^{(t)} = U_B^\top \Delta W^{(t)} V_A$，在核心空间求解 Tucker 问题后通过 $U = U_B U_{\text{core}}$ 提升回原空间。论文证明了该投影对所有 LoRA 更新无损（Theorem 4.1）且最优解等价（Theorem 4.3）
-    - 设计动机：对 LLaMA3-8B 等大模型，直接在全参数空间做 HOSVD/HOOI 代价 $\mathcal{O}(n^3 T)$，核心空间将维度从 $n$ 降到 $Tr$，加速比约 $n^2 / (Tr)^2$，实测从 691s 降至 21s
+直接在全参数空间做 HOSVD/HOOI 对 LLaMA3-8B 这种大模型代价高得离谱，约 $\mathcal{O}(n^3 T)$。作者注意到所有 LoRA 更新本就活在一个低维核心里：对拼接的因子 $B_{\text{cat}}$、$A_{\text{cat}}$ 做薄 SVD 得到 $U_B$、$V_A$，把每个 LoRA 投影成核心表示 $M^{(t)} = U_B^\top \Delta W^{(t)} V_A$，在 $(Tr_{\text{in}}) \times (Tr_{\text{in}})$ 的核心空间里求解 Tucker 问题，再通过 $U = U_B U_{\text{core}}$ 提升回原空间。论文证明这个投影对所有 LoRA 更新无损（Theorem 4.1）、且核心空间的最优解等价于原空间（Theorem 4.3），所以是纯加速、零精度损失。维度从 $n$ 降到 $Tr$，加速比约 $n^2 / (Tr)^2$，实测在 LLaMA3-8B 上把子空间学习从 691s 压到 21s。
 
 ## 实验关键数据
 

@@ -42,35 +42,26 @@ RetMask 把"机制可解释性 (mechanistic interpretability)"找到的 retrieva
 
 ### 整体框架
 
-RetMask 三阶段 pipeline：
-
-1. **Retrieval Head Deactivation**：在 NIAH 任务上跑 Wu 2025b 的检测脚本，对每个 attention head $h$ 计算 retrieval score $\text{RetrievalScore}(h) = \frac{1}{|\mathcal{T}|}\sum_{(g_h,k)\in\mathcal{T}} \frac{|g_h \cap k|}{|k|}$（$g_h$ 是 head 检索到的 token 集合，$k$ 是 needle 序列），score ≥ $\tau$ 的 head 进入 $\mathcal{H}_{ret}$。然后通过把 attention output projection 矩阵 $\bm{W}_o$ 中对应列**置零**来构造 ablated 模型 $\pi_{\theta'}$（不动参数本身，只在前向时跳过）。
-2. **Contrastive Response Generation**：对任意 instruction-tuning 数据集（默认 LMSYS-Chat-1M）的每条 instruction $x$，**抛弃**原始 response，分别从 $\pi_\theta$ 采样 $y_w$ 和从 $\pi_{\theta'}$ 采样 $y_l$，构成偏好对 $(x, y_w, y_l)$。
-3. **DPO 训练**：标准 DPO loss $\mathcal{L}(\pi_\theta) = -\mathbb{E}[\log\sigma(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$，reference policy = 原模型。
+RetMask 的核心是把"机制诊断"无缝接成"训练信号"：先在 NIAH 任务上定位出负责长上下文拷贝的 retrieval heads，把它们在前向时屏蔽掉得到一个功能阉割版模型 $\pi_{\theta'}$；然后对任意 instruction-tuning 数据的每条指令 $x$，让原模型 $\pi_\theta$ 和阉割模型 $\pi_{\theta'}$ 各采样一条回复，前者天然更强、当 chosen $y_w$，后者天然劣化、当 rejected $y_l$；最后用这些自动合成的偏好对跑标准 DPO，把"使用 retrieval head 的行为"提升为模型偏好。整条 pipeline 不需要 LLM judge、不需要人工标注、也不需要原始数据集的 ground-truth response。
 
 ### 关键设计
 
-1. **用 ablated 模型作为天然 rejected 源**:
+**1. 用 ablated 模型作为天然 rejected 源：让诊断信号直接当负样本。**
 
-    - 功能：把 mechanistic interpretability 的诊断信号（关掉 retrieval head 会让性能掉点）直接转化为偏好学习的负样本，省掉 LLM judge / 人工标注。
-    - 核心思路：retrieval head 的定义本身保证了 $\pi_{\theta'}$ 在 retrieval-heavy 行为上劣于 $\pi_\theta$ — 这是 in-distribution 的、机制可解释的、自动的偏好信号。把 instruction $x$ 喂给 $\pi_{\theta'}$ 得到 $y_l$，与从 $\pi_\theta$ 采样的 $y_w$ 配对，DPO 自然会推动模型更倾向于"使用 retrieval head 的行为模式"。
-    - 设计动机：以前的 long-context DPO 方法（如 LongReward）需要一个 LLM judge 按人工 criteria 打分，既贵又有 judge bias；RetMask 用 architectural intervention 替代 evaluation intervention，信号无 bias、无人工成本。机制可解释性社区一直在做诊断，RetMask 是第一个把诊断变成"自监督训练信号"的方法。
+retrieval head 的定义本身就保证了屏蔽它之后的 $\pi_{\theta'}$ 在 retrieval-heavy 行为上必然劣于 $\pi_\theta$——这是一个 in-distribution、机制可解释、且完全自动的偏好信号。具体做法是把同一条 instruction $x$ 分别喂给两个模型，$\pi_{\theta'}$ 的输出当 $y_l$、$\pi_\theta$ 的输出当 $y_w$，配成偏好对后 DPO 会自然地把模型推向"更像用了 retrieval head 的那一版"。这正好绕开了已有 long-context DPO 方法（如 LongReward）的痛点：它们需要一个 LLM judge 按人工 criteria 打分，既贵又自带 judge bias，而 RetMask 用 architectural intervention 替代了 evaluation intervention，信号无偏、零人工成本。机制可解释性社区长期停留在"诊断"层面，这是第一次把诊断结果直接变成自监督训练信号。
 
-2. **不修改参数，只在前向 mask**:
+**2. 不修改参数，只在前向 mask：把干预限制在采样阶段。**
 
-    - 功能：保证 ablated 模型在数据合成阶段稳定可控，且不会污染目标策略。
-    - 核心思路：把 $\bm{W}_o^h$ 设为零矩阵（$h\in\mathcal{H}_{ret}$ 时），其余不变，得到 $\pi_{\theta'}$。这种"前向 mask"既不需要 surgery 也不需要重新 load 权重，可以在同一个 GPU、同一个进程里同时 host $\pi_\theta$ 和 $\pi_{\theta'}$ 做对比采样。
-    - 设计动机：如果直接对 retrieval head 做 fine-tune，参数空间会被改变、其它功能也会被破坏（参见 Gu 2024 副作用）。Mask-only 设计把 mechanistic intervention 限制在 evaluation/sampling 阶段，让 DPO 的梯度自然地引导模型加强 retrieval head 的功能性表达 — 这是一种 indirect optimization：目标不是"让 retrieval head 数值变大"，而是"让最终输出更像不缺 retrieval head 的版本"。
+构造 $\pi_{\theta'}$ 时不动任何参数，只是把属于 $\mathcal{H}_{ret}$ 的 head 在 attention output projection 矩阵中对应的那部分 $\bm{W}_o^h$ 在前向时置零。这种"前向 mask"既不需要做权重 surgery 也不需要重新 load 模型，可以在同一张 GPU、同一个进程里同时 host $\pi_\theta$ 和 $\pi_{\theta'}$ 做对比采样。之所以坚持 mask-only，是因为直接对 retrieval head 做 fine-tune 会改变参数空间、连带破坏其它功能（Gu 2024 的 knowledge editing 副作用就是前车之鉴）。把 mechanistic intervention 锁在 sampling 阶段后，DPO 的梯度执行的是一种 indirect optimization——目标不是"让 retrieval head 的数值变大"，而是"让最终输出更接近不缺 retrieval head 的版本"，从而在不伤通用能力的前提下强化检索功能。
 
-3. **短上下文训练 + 长上下文评测**:
+**3. 短上下文训练 + 长上下文评测：用短样本撬动长能力。**
 
-    - 功能：训练数据平均输入只有 63.62 token、输出 494.69 token，但提升体现在 8K-128K 长度。
-    - 核心思路：retrieval head 是预训练阶段形成的稳定结构，无需在长序列上"教"它干什么，只需要 DPO 把"使用 retrieval head 输出风格"提升为模型偏好，这种 preference 跨长度泛化。
-    - 设计动机：现有 long-context post-training 方法 (LongReward 等) 普遍要构造长样本，成本极高；RetMask 用短样本把长能力撬起来，吻合 Gao 2025 的"short-context instruction 数据足够" 结论。是工程上的极大解放。
+训练数据平均输入只有 63.62 token、输出 494.69 token，但收益却体现在 8K–128K 的长度上。这背后的假设是：retrieval head 是预训练阶段就已形成的稳定结构，不需要在长序列上重新"教"它干什么，DPO 要做的只是把"使用 retrieval head 的输出风格"提升为模型偏好，而这种 preference 能跨长度泛化。相比之下，LongReward 等现有 long-context post-training 方法普遍要专门构造长样本、成本极高；RetMask 用短样本就把长能力撬了起来，与 Gao 2025"short-context instruction 数据已足够"的结论一致，工程上是极大的解放。
 
 ### 损失函数 / 训练策略
 
-- 标准 DPO，$\beta$ 默认值，reference = 原模型。
+- 标准 DPO loss $\mathcal{L}(\pi_\theta) = -\mathbb{E}[\log\sigma(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$，$\beta$ 取默认值，reference policy = 原模型。
+- retrieval score 检测沿用 Wu 2025b：对每个 head $h$ 计算 $\text{RetrievalScore}(h) = \frac{1}{|\mathcal{T}|}\sum_{(g_h,k)\in\mathcal{T}} \frac{|g_h \cap k|}{|k|}$（$g_h$ 为 head 检索到的 token 集合，$k$ 为 needle 序列），score ≥ $\tau$ 的 head 进入 $\mathcal{H}_{ret}$。
 - 训练数据：LMSYS-Chat-1M (294K 样本主实验), WildChat (消融), Guru (RL 数据集消融)；与评测 benchmark HELMET 完全无重叠。
 - retrieval head 阈值：Llama-3.1 $\tau=0.1$，Qwen3 / Olmo-3 $\tau=0.05$（pilot 调出来）。
 - Qwen3 在 retrieval score 计算时关 reasoning，在对比生成和评测时开 reasoning。

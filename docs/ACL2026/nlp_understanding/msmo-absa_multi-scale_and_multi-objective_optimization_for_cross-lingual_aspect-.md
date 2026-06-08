@@ -41,34 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MSMO 是两阶段顺序训练（Figure 2）：
-（1）**Stage 1：sentence-level 对抗对齐**：multilingual encoder $M$（mBERT 或 XLM-R）提取 token 表示 $h_i$，喂给语言判别器 $Q$（带 sigmoid 的二分类器 + 梯度反转层 GRL），用 Wasserstein 距离 + 1-Lipschitz 约束（参数 clipping 到 $[-c, c]$）训练 $Q$ 区分源/目标语言；通过反向传播让 $M$ 学到语言不变特征。输入同时包含 $D_S \cup D_{S_T}$（源语 + 源语句换上目标 aspect）和 $D_T \cup D_{T_S}$（翻译目标语 + 反向 code-switch）。
-（2）**Stage 2：aspect-level 一致性 + 多目标优化**：用 Stage 1 更新过的 $M$ 重新编码，分两路：（a）sentiment classifier $P$ 用标准 CE loss 做 BIES-{POS, NEU, NEG} 序列标注；（b）consistency 模块 $C$ 对 (source span $s$, code-switch span $s'$) 用双向 KL 散度 $\mathcal{L}_{\text{cons}}$ 对齐预测分布，span 概率定义为构成 span 的 token 概率之积；最终联合 loss $\mathcal{L}_{\text{total}} = \sum \mathcal{L}_{\text{CE}} + \beta \sum \mathcal{L}_{\text{cons}}$，$\beta$ 按目标语言不同取 $\{4.5, 2.5, 2.5, 3.5\} \times 10^{-4}$（mBERT）/ $\{2.5, 1.5, 1.5, 3.5\} \times 10^{-3}$（XLM-R）。
-**扩展：蒸馏**：把 MSMO 训好的模型当 teacher，用未标注 target 语言数据生成 soft label，再做 single-teacher / multi-teacher / 多语言蒸馏。
+
+MSMO 的核心判断是：跨语言 ABSA 必须**同时**在句子级和 aspect 级对齐，而一份 code-switch（aspect-swap）数据恰好能同时喂这两个粒度的目标。它走两阶段顺序训练：Stage 1 用 multilingual encoder（mBERT/XLM-R）配一个带梯度反转层的语言判别器，靠 Wasserstein 对抗把整句表示压成语言不变特征；Stage 2 用更新过的 encoder 一路做 BIES 情感序列标注（CE）、一路用双向 KL 把"同一 aspect 在源语 / 换语后"的预测分布对齐。训完的模型还能当 teacher，用未标注目标语数据做单/多教师蒸馏进一步提分。
 
 ### 关键设计
 
-1. **Code-switched bilingual 数据驱动的 Wasserstein 对抗 (sentence-level)**:
+**1. Code-switch 数据驱动的句级 Wasserstein 对抗：逼出 aspect-agnostic 的语言不变特征。**
 
-    - 功能：让 multilingual encoder 学到忽略 aspect term 差异的 language-invariant 句级表示。
-    - 核心思路：构造 4 类数据 $D_S / D_T / D_{S_T} / D_{T_S}$——前两个是源语+翻译目标语，后两个是 aspect-swap 后的混合句。语言判别器 $Q$ 被要求把 $D_S \cup D_{S_T}$ 判为 source、把 $D_T \cup D_{T_S}$ 判为 target，目标函数 $J_q = \max_{\theta_q} \mathbb{E}[Q(P(h_i))] - \mathbb{E}[Q(P(h_i'))]$。通过 GRL 反传，feature extractor 被迫学到"判别器都骗不过"的语言不变特征。
-    - 设计动机：经典 ADAN 只用 bilingual parallel，缺少 aspect 扰动；引入 $D_{S_T}/D_{T_S}$ 后，判别器必须学会"无论 aspect 是哪国语言，都凭整句风格判语言"——这逼出了真正 aspect-agnostic 的 invariant feature，对后续 aspect 级对齐铺平道路。
+以往 XABSA 的对抗对齐（如 ADAN-GRL）只用 bilingual parallel 数据、缺 aspect 扰动，且 GRL 对抗稳定性差。MSMO 先构造四类数据——源语 $D_S$、翻译目标语 $D_T$，以及把 aspect term 换成另一语的混合句 $D_{S_T}$ / $D_{T_S}$——再让语言判别器 $Q$ 把 $D_S \cup D_{S_T}$ 判为 source、$D_T \cup D_{T_S}$ 判为 target，目标函数 $J_q = \max_{\theta_q} \mathbb{E}[Q(P(h_i))] - \mathbb{E}[Q(P(h_i'))]$，并对 $Q$ 的参数 clipping 到 $[-c, c]$ 以满足 1-Lipschitz（用 Wasserstein 距离替代标准 GAN，避免训练震荡）。关键在于混入 $D_{S_T}/D_{T_S}$ 后，判别器必须学会"无论句中 aspect 是哪国语言，都只凭整句风格判语言"，通过 GRL 反传，encoder 就被迫交出真正 aspect-agnostic 的不变特征，为下一步 aspect 级细粒度对齐铺好地基。
 
-2. **双向 KL 一致性训练 (aspect-level)**:
+**2. 双向 KL 一致性训练：把"同情感 aspect 跨语应一致"约束在 span 分布上。**
 
-    - 功能：保证同一 aspect term 在不同语言下，model 给的情感分布几乎相同。
-    - 核心思路：把 source 句 $X$ 经过 transformation $\phi$（翻译 / aspect swap）得到 $X'$，对应 aspect span $(s, s')$；span 概率取 token logprob 之积，再用双向 KL: $\mathcal{L}_{\text{cons}} = \frac{1}{m} \sum \frac{1}{2}[\mathrm{KL}(P(y'|s') \| P(y|s)) + \mathrm{KL}(P(y|s) \| P(y'|s'))]$。
-    - 设计动机：sentence-level 对齐只能让整体分布靠近，但"food 与 nourriture 同 POS、service 与 service 同 NEG"这种细粒度对应需要直接在 span 概率分布上约束；KL 对称化 + 在 span 而非 token 上算，避免 BIES 标签序列内部的 token 不对齐问题。
+句级对齐只能让整体分布靠近，但"food 与 nourriture 同 POS、service 与 service 同 NEG"这种细粒度对应飘忽不定，得直接在 aspect 上约束。作者把源句 $X$ 经 transformation $\phi$（翻译 / aspect swap）得到 $X'$ 及对应 aspect span $(s, s')$，把 span 概率定义为构成它的 token 概率之积，再用对称化 KL 拉齐两个分布：
 
-3. **多教师 / 多语言知识蒸馏 (unlabeled 数据放大器)**:
+$$\mathcal{L}_{\text{cons}} = \frac{1}{m} \sum \frac{1}{2}\big[\mathrm{KL}(P(y'|s') \,\|\, P(y|s)) + \mathrm{KL}(P(y|s) \,\|\, P(y'|s'))\big]$$
 
-    - 功能：把多个 MSMO teacher 模型的"软知识"蒸馏到单个 student，并允许利用 unlabeled target 语言文本进一步提升。
-    - 核心思路：3 个 teacher（来自不同 source 语言或不同 random seed）各预测 unlabeled target 语言文本，得到 soft label $p_t = \sum_{k=1}^{3} w_k g_{t_k}$（$w_k = 1/3$）；student 只保留 encoder + sentiment classifier，用 MSE loss $\mathcal{L}_{KD} = \frac{1}{|D_{NL}|} \sum \frac{1}{L} \sum_i \mathrm{MSE}(p_{t_i}, p_{s_i})$ 学习。
-    - 设计动机：MSMO 自身 teacher 比 CL-XABSA teacher 更强，因此 soft label 更准；multi-teacher 还能结合不同语言对的优势，避免 single-teacher 的过拟合偏差——实验显示 multi-teacher 一致优于 single-teacher。
+在 span 而非 token 上算 KL，是为了绕开 BIES 标签序列内部 token 不对齐的问题，让一致性约束正好落在 aspect 这个任务核心单元上；双向对称化则避免单向 KL 的偏置。
+
+**3. 多教师 / 多语言知识蒸馏：用未标注目标语数据当放大器。**
+
+MSMO 自身的 teacher 比 CL-XABSA 更强，soft label 更准，于是再叠一层蒸馏来榨取未标注目标语文本。用 3 个 teacher（来自不同源语言或不同随机种子）各自预测未标注目标语文本，加权得 soft label $p_t = \sum_{k=1}^{3} w_k g_{t_k}$（$w_k = 1/3$）；student 只保留 encoder + sentiment classifier，用 $\mathcal{L}_{KD} = \frac{1}{|D_{NL}|} \sum \frac{1}{L} \sum_i \mathrm{MSE}(p_{t_i}, p_{s_i})$ 对齐软标签。多教师把不同语言对的优势平均进来，降低单 teacher 的过拟合偏差，实验里 multi-teacher 一致优于 single-teacher。
 
 ### 损失函数 / 训练策略
 - **Stage 1**：$J_q$（Wasserstein 对抗，$Q$ 参数 clipping $[-c, c]$ 保证 1-Lipschitz）；GRL 系数 $\lambda = 1$。
-- **Stage 2**：$\mathcal{L}_{\text{total}} = \sum \mathcal{L}_{\text{CE}} + \beta \sum \mathcal{L}_{\text{cons}}$，$\beta$ 用网格搜索（mBERT 4 种值 / XLM-R 4 种值）。
+- **Stage 2**：$\mathcal{L}_{\text{total}} = \sum \mathcal{L}_{\text{CE}} + \beta \sum \mathcal{L}_{\text{cons}}$，$\beta$ 按目标语言网格搜索：mBERT 取 $\{4.5, 2.5, 2.5, 3.5\} \times 10^{-4}$、XLM-R 取 $\{2.5, 1.5, 1.5, 3.5\} \times 10^{-3}$（对应 FR/ES/NL/RU）。
 - **超参**：mBERT lr=5e-5 / bs=16 / 2000 steps；XLM-R lr=2e-5 / bs=8 / 2500 steps；Stage 1 GPU 占用 ≈ 27 GB (XLM-R)；5 random seeds 平均。
 - **蒸馏阶段**：student 初始化用翻译目标语训练，再用 MSE 蒸馏 unlabeled target。
 

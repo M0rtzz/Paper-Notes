@@ -43,39 +43,33 @@ tags:
 
 ### 整体框架
 
-ERBA作为**适配器**插入预训练PLM中，实现两阶段条件化：
+ERBA要解决的是同一件事：现有管线把酶和底物各编各的、最后浅层一拼就回归，等于把催化当成"静态兼容性"问题，而真实催化是先识别底物、再调整口袋构型的两个阶段。ERBA不重训PLM，而是作为一个**适配器**插进冻结的预训练PLM里，把这两个阶段显式拆开依次注入：
+
 $$\hat{y} = \mathcal{G}^{(2)}(\underbrace{\mathcal{M}^{(1)}(S_e, S_m)}_{\text{底物识别}}, S_g)$$
 
-PLM浅层输出酶残基嵌入 $\mathbf{H}_e \in \mathbb{R}^{L_e \times D}$，底物由MPNN编码器得到 $\mathbf{H}_m \in \mathbb{R}^{L_m \times D}$，活性位点由E-GNN编码得到几何描述子 $\mathbf{H}_g \in \mathbb{R}^{L_g \times D}$。
+具体到数据流：PLM浅层先给出酶残基嵌入 $\mathbf{H}_e \in \mathbb{R}^{L_e \times D}$；底物分子另走一个MPNN编码器得到 $\mathbf{H}_m \in \mathbb{R}^{L_m \times D}$；活性位点的3D结构由E-GNN编码成几何描述子 $\mathbf{H}_g \in \mathbb{R}^{L_g \times D}$。第一阶段（MRCA）让酶吸收底物信息变成 $\mathbf{H}^{(1)}$，第二阶段（G-MoE）再把口袋几何注进去得到 $\mathbf{H}^{(2)}$，整个过程由ESDA从分布层面兜底，保证注入的化学和几何信息不会冲垮PLM原有的生化语义。
 
 ### 关键设计
 
-#### 1. MRCA（分子识别交叉注意力）
+**1. MRCA：先让酶"看见"底物，模拟识别阶段。**
 
-- **功能**：将底物语义注入酶表示，模拟底物识别阶段
-- **核心思路**：单层cross-attention，酶token作query、底物token作key/value：
-  $$\mathbf{A}_{em} = \text{Softmax}\left(\frac{(\mathbf{H}_e \mathbf{W}_Q)(\mathbf{H}_m \mathbf{W}_K)^\top}{\sqrt{d_k}}\right)$$
-  $$\mathbf{Z}_{em} = \mathbf{A}_{em}(\mathbf{H}_m \mathbf{W}_V)$$
-  残差连接+LayerNorm得到底物感知表示 $\mathbf{H}^{(1)}$
-- **设计动机**：注意力矩阵 $\mathbf{A}_{em}$ 自然对齐酶残基与底物原子，突出底物相关残基
+催化的第一步是酶识别并定位底物，所以这一阶段只做一件事——把底物语义注入酶表示。MRCA用一层cross-attention，以酶token作query、底物token作key/value，让每个酶残基去"查询"它和哪些底物原子相关：
 
-#### 2. G-MoE（几何感知混合专家）
+$$\mathbf{A}_{em} = \text{Softmax}\left(\frac{(\mathbf{H}_e \mathbf{W}_Q)(\mathbf{H}_m \mathbf{W}_K)^\top}{\sqrt{d_k}}\right), \quad \mathbf{Z}_{em} = \mathbf{A}_{em}(\mathbf{H}_m \mathbf{W}_V)$$
 
-- **功能**：整合3D口袋几何，通过稀疏专家路由捕获构象适应
-- **核心思路**：
-    - **路由向量**：拼接口袋区域的识别特征与几何描述子：$\mathbf{v}_{emg} = [\text{Pool}(\mathbf{H}^{(1)}[\mathcal{P}]) \oplus \text{Pool}(\mathbf{H}_g)]$
-    - **稀疏门控**：$\tilde{\boldsymbol{\alpha}} = \text{Top-}k(\text{softmax}(\mathbf{W}_\text{gate} \mathbf{v}_{emg}))$，仅激活 $k$ 个几何相关专家
-    - **每个专家**执行口袋局部的几何调制低秩适配：
-    $$E_n(\mathbf{H}^{(1)}, \mathbf{H}_g) = \mathbf{H}^{(1)} + \mathbf{V}_n \sigma(\mathbf{U}_n \mathbf{H}^{(1)}[\mathcal{P}] + \mathbf{B}_n \Gamma(\mathbf{H}_g))$$
-    其中 $r \ll D$，GELU激活
-    - **聚合**：$\mathbf{H}^{(2)} = \text{MLP}(\sum_{n \in \text{Top}k} \tilde{\alpha} E_n)$
-- **设计动机**：不同口袋拓扑和残基排列形成异质几何regime，单一适配器难以捕获——MoE的稀疏路由能为不同几何模式分配专门的专家
+再经残差连接和LayerNorm得到底物感知表示 $\mathbf{H}^{(1)}$。关键在于注意力矩阵 $\mathbf{A}_{em}$ 本身就是一张酶残基↔底物原子的对齐表，那些真正参与结合的残基会被自然地凸显出来——这比把两边特征直接拼起来更接近"识别"的物理含义。
 
-#### 3. ESDA（酶-底物分布对齐）
+**2. G-MoE：用稀疏专家路由捕捉不同口袋的构象适应。**
 
-- **功能**：在再生核Hilbert空间(RKHS)中对齐分布，防止多模态微调破坏PLM先验
-- **核心思路**：使用RBF核最大均值差异(MMD)，对齐序列-only、序列+底物、序列+底物+结构三种表示的分布到PLM流形上
-- **设计动机**：直接注入3D信息会主导训练并侵蚀PLM学到的进化约束和催化模式等生化语义
+识别之后是构象适应：酶要根据底物微调活性口袋的几何形状去稳定过渡态。难点在于不同酶的口袋拓扑、残基排布差异巨大，形成一堆异质的几何regime，单一适配器很难把它们都拟合好。G-MoE的思路是让多个专家各管一类几何模式，再用稀疏门控按需调用。它先把口袋区域 $\mathcal{P}$ 的识别特征和几何描述子池化后拼成路由向量 $\mathbf{v}_{emg} = [\text{Pool}(\mathbf{H}^{(1)}[\mathcal{P}]) \oplus \text{Pool}(\mathbf{H}_g)]$，再用Top-$k$ 门控只激活 $k$ 个最相关的专家：$\tilde{\boldsymbol{\alpha}} = \text{Top-}k(\text{softmax}(\mathbf{W}_\text{gate} \mathbf{v}_{emg}))$。每个被选中的专家在口袋局部做一次几何调制的低秩适配（$r \ll D$，GELU激活）：
+
+$$E_n(\mathbf{H}^{(1)}, \mathbf{H}_g) = \mathbf{H}^{(1)} + \mathbf{V}_n \sigma(\mathbf{U}_n \mathbf{H}^{(1)}[\mathcal{P}] + \mathbf{B}_n \Gamma(\mathbf{H}_g))$$
+
+最后把激活专家的输出按门控权重加权汇总并过一层MLP：$\mathbf{H}^{(2)} = \text{MLP}(\sum_{n \in \text{Top}k} \tilde{\alpha} E_n)$。稀疏路由的好处是每类几何模式都有专门的参数去拟合，而非让一个适配器去平均所有口袋。
+
+**3. ESDA：在分布层面给注入"上保险"，别冲垮PLM先验。**
+
+往PLM里硬塞3D结构有个隐患——几何信号往往很强势，训练时容易主导梯度，把PLM预训练时学到的进化约束、催化模式这些生化语义先验给侵蚀掉。ESDA的做法是在再生核Hilbert空间（RKHS）里用RBF核最大均值差异（MMD）做正则：把"序列-only""序列+底物""序列+底物+结构"三种表示的分布都对齐回PLM原本的流形上。这样新模态信息是被"拉进"PLM的语义空间里融合，而不是另起炉灶把它顶替掉——比起简单的KL散度或L2正则，RKHS-MMD能更柔和地约束整条分布而非逐点。
 
 ### 损失函数
 

@@ -41,41 +41,40 @@ tags:
 
 ### 整体框架
 
-LightCtrl 基于 Stable Diffusion 骨干：
-- **输入**：源图像 $x_s^{\ell_s}$ + 相对光照编码 $\Delta\ell$（方向/强度/色温差异）
-- **输出**：目标光照下的重光照结果 $\hat{x}_s^{\ell_t} = f_\theta(x_s^{\ell_s}, \Delta\ell)$
-- **条件注入**：appearance token $t_{\mathrm{img}}$、lighting token $t_{\mathrm{light}}$、physics proxy token $t_{\mathrm{phys}}$
+LightCtrl 要解决的是单图重光照里「物理信息缺失」与「可控性」之间的张力：既不想像 intrinsic 方法那样背上密集 PBR 分解的包袱，又不能像纯潜空间方法那样丢掉物理约束。它的做法是在一个 Stable Diffusion 骨干外面挂三组轻量线索，让扩散过程被「够用」的物理暗示牵引。
 
-扩散损失加权：$\mathcal{L}_{\mathrm{diff}} = \|W \odot (\epsilon - \epsilon_\theta(z_t, t \mid t_{\mathrm{img}}, t_{\mathrm{light}}, t_{\mathrm{phys}}))\|_2^2$
+整体怎么转：给定源图 $x_s^{\ell_s}$ 和一个相对光照编码 $\Delta\ell$（方向/强度/色温的差异），网络要生成目标光照下的结果 $\hat{x}_s^{\ell_t} = f_\theta(x_s^{\ell_s}, \Delta\ell)$。源图先被编成 appearance token $t_{\mathrm{img}}$ 保留外观，$\Delta\ell$ 编成 lighting token $t_{\mathrm{light}}$ 指明要怎么改光，另一支轻量编码器再从源图抽出 physics proxy token $t_{\mathrm{phys}}$ 提供材质-几何先验。三个 token 一起注入去噪器，最后用一张光照敏感的空间权重图 $W$ 给重建损失加权：
+
+$$\mathcal{L}_{\mathrm{diff}} = \|W \odot (\epsilon - \epsilon_\theta(z_t, t \mid t_{\mathrm{img}}, t_{\mathrm{light}}, t_{\mathrm{phys}}))\|_2^2$$
 
 ### 关键设计
 
-1. **Few-shot Latent Proxy Conditioning**
+**1. Few-shot Latent Proxy Conditioning：用「够用」的材质-几何暗示替代密集 intrinsic 分解。**
 
-   轻量编码器-解码器 $E_\phi$ 从源图预测紧凑潜在代理 $\hat{\mathcal{B}} = \{a, n, r, m\} \in \mathbb{R}^{H \times W \times 8}$（albedo、法线、粗糙度、金属度）。仅在少量样本上使用 PBR 监督训练：
+纯潜空间方法控制不住光照方向/强度，根子在于它对场景的几何和材质一无所知；但完整 intrinsic 分解又太贵太脆。这里的折中是只让一个轻量编码器-解码器 $E_\phi$ 从源图预测一组紧凑的潜在代理 $\hat{\mathcal{B}} = \{a, n, r, m\} \in \mathbb{R}^{H \times W \times 8}$（albedo、法线、粗糙度、金属度），而且只在少量带 PBR 标注的样本上监督它，损失把四种属性各自的误差加在一起：
 
-    $\mathcal{L}_{\text{proxy}} = \lambda_a\|a-\hat{a}\|_1 + \lambda_n(1-\langle n, \hat{n}\rangle) + \lambda_r\|r-\hat{r}\|_1 + \lambda_m \mathrm{BCE}(m, \hat{m})$
+$$\mathcal{L}_{\text{proxy}} = \lambda_a\|a-\hat{a}\|_1 + \lambda_n(1-\langle n, \hat{n}\rangle) + \lambda_r\|r-\hat{r}\|_1 + \lambda_m \mathrm{BCE}(m, \hat{m})$$
 
-   Proxy maps 经空间池化+投射为条件 token $t_{\text{proxy}} = f_{\text{proj}}(E_\phi(x_s^{\ell_s})) \in \mathbb{R}^{1 \times 768}$ 注入去噪器。设计动机：不追求精确 intrinsic 重建，只需"够用"的材质-几何暗示来约束去噪轨迹。
+关键在于它不追求逐像素重建出精确的 PBR maps——这些 proxy maps 经空间池化加投射后被压成一个条件 token $t_{\text{proxy}} = f_{\text{proj}}(E_\phi(x_s^{\ell_s})) \in \mathbb{R}^{1 \times 768}$ 注入去噪器，提供的是「这块大概是金属、那块偏粗糙」这种暗示，用来约束去噪轨迹，而不是当成精确监督信号。这样既给了扩散模型物理抓手，又把 PBR 标注的需求降到小样本级别。
 
-2. **Lighting-Aware Mask Prediction**
+**2. Lighting-Aware Mask Prediction：把算力压到真正会变的那一小撮像素上。**
 
-   光照变化通常仅影响少量像素（阴影边界、高光区域）。基于源-目标对的线性亮度差异导出软 ground-truth mask：
+改一次光，画面里其实只有阴影边界和高光这少数区域会大幅变化，大片漫反射区域基本不动。如果对所有像素一视同仁地优化，敏感区域的细节反而被淹没。作者先从源-目标对的亮度差异导出一张软标签 mask，把对数亮度差和一个鲁棒差异项加权归一化：
 
-    $M_{\mathrm{gt}} = \mathcal{N}\left(\alpha|\log Y_t - \log Y_s| + (1-\alpha)D_{\mathrm{robust}}(Y_s, Y_t)\right)$
+$$M_{\mathrm{gt}} = \mathcal{N}\left(\alpha|\log Y_t - \log Y_s| + (1-\alpha)D_{\mathrm{robust}}(Y_s, Y_t)\right)$$
 
-   训练时无法访问目标图，因此轻量预测器 $M_\theta = m_\theta(x_s^{\ell_s}, \Delta\ell)$ 从源图+光照变化推断 mask（BCE+Dice loss 监督）。Mask 转化为空间权重图 $W$ 调制噪声重建损失，引导去噪器关注光照敏感区域。
+但推理时拿不到目标图，所以又训练一个轻量预测器 $M_\theta = m_\theta(x_s^{\ell_s}, \Delta\ell)$，只凭源图加光照变化就能预判哪里会变（用 BCE + Dice loss 对齐上面的软标签）。预测出的 mask 转成空间权重图 $W$ 去调制噪声重建损失，等于告诉去噪器「把注意力放在阴影和高光这些光照敏感区」，方向变化下的阴影边界因此更准。
 
-3. **DPO Post-training for Latent Encoder**
+**3. DPO Post-training for Latent Encoder：用偏好优化补上稀疏 PBR 监督的窟窿。**
 
-   为补偿 PBR 监督的稀疏性，冻结主扩散骨干，对 PBR 编码器 $E_\phi$ 进行 DPO 风格后训练：GT PBR maps 为正样本 $y_{\text{pos}}$，当前编码器输出为负样本 $y_{\text{neg}}$，物理奖励 $\Delta r = r(y_{\text{pos}}) - r(y_{\text{neg}})$ 聚合 L1/角度/BCE 度量，冻结参考编码器提供稳定似然估计。DPO 目标增加高奖励预测的似然，显著改善代理的物理一致性。
+Proxy 编码器只在小样本上学过 PBR，物理一致性容易飘。作者借了一招 RLHF 里的 DPO：冻住主扩散骨干，单独对 PBR 编码器 $E_\phi$ 做偏好后训练——把 GT PBR maps 当正样本 $y_{\text{pos}}$、编码器当前输出当负样本 $y_{\text{neg}}$，用一个聚合了 L1/角度/BCE 的物理奖励 $\Delta r = r(y_{\text{pos}}) - r(y_{\text{neg}})$ 来定义偏好，再用一个冻结的参考编码器提供稳定的似然基准。优化目标把高奖励预测的似然往上推，等于在没有更多标注的情况下，让编码器自己朝「更符合物理」的方向收敛，显著改善了代理的一致性。
 
 ### 损失函数 / 训练策略
 
-- 主干在 ScaLight 上全量微调学习泛化光传输先验
-- Proxy 分支小样本训练，DPO 后训练增强稳定性
-- 最终扩散目标使用 lighting-aware 空间加权
-- 构建 **ScaLight** 数据集：30万+可控3D物体、100万+渲染图像，系统变化光照方向/强度/色温，配有完整相机-灯光元数据
+- 主干在 ScaLight 上全量微调，学习可泛化的光传输先验
+- Proxy 分支只做小样本训练，再靠 DPO 后训练补稳定性
+- 最终扩散目标用 lighting-aware 的空间加权 $W$
+- 配套构建 **ScaLight** 数据集：30 万+ 可控 3D 物体、100 万+ 渲染图像，系统变化光照方向/强度/色温，并附完整相机-灯光元数据
 
 ## 实验关键数据
 
@@ -139,12 +138,6 @@ ScaLight 测试集，三类光照变化（色温/方向/强度）：
 - **技术深度**: ★★★★☆ — 三模块互补设计清晰，消融充分验证各组件贡献
 - **实验充分度**: ★★★★★ — 合成/真实/用户研究/消融全面，ScaLight 数据集有持久价值
 - **实用性**: ★★★★☆ — 连续光照控制实用性强，但复杂场景仍需改进
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

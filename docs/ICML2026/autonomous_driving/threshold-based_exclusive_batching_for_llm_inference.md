@@ -40,30 +40,39 @@ tags:
 ## 方法详解
 
 ### 整体框架
-系统设有 $N$ 个 slot (最大并发请求数)。在 decode 相位中每完成一个请求空出一个 slot；当空闲 slot 数达到阈值 $k$ 时，系统进入 prefill 相位，把 $k$ 条新请求并行 prefill 进刚腾出的位置；prefill 完成后再回到 decode，循环往复。整个调度器由两层构成：
+本文要解决的问题是：在 exclusive batching 里，prefill 与 decode 轮流执行，到底攒够几个空 slot 再切回 prefill、整批开多大、以及什么时候干脆退回 mixed batching，才能让带宽受限 GPU 的吞吐最高。作者把单步迭代时间建成线性的 $T_{\text{iter}} = \alpha + \beta\, n_{\text{tok}}$，借 saturated 假设和 fluid approximation 把这三个工程决策化成几个仅依赖少量可测参数的标量方程，先离线解出最优阈值与批大小的闭式表达，再用滑窗统计在线估计这些参数、逐周期重算并自动决定走 EB 还是 MB。
 
-1. **离线推导层** — 在 saturated 假设 (队列永远饱和、batch 始终满) 与 fluid approximation 下，导出 (i) 最优归一化阈值 $\theta_0 = k_0^* / N$；(ii) IFR 校正项 $\Delta\theta$；(iii) 内存约束下的最大批大小 $N^*$；(iv) EB vs MB 的吞吐交叉条件。
-2. **在线控制层** — 用滑窗统计估计 $(\hat p_0, \hat\eta, \hat\mu_L)$，按周期重算 $(\hat k^*, \hat N^*)$，并用 EMA 平滑的活跃批占用 $N_{\text{obs}}$ 评估交叉判据 (8) 决定本周期使用 EB 还是 MB；运行时还有一道 KV-aware 闸门防止内存超界。
+系统维护 $N$ 个 slot (最大并发数)：decode 相位每完成一个请求腾出一个 slot，空闲 slot 攒到阈值 $k$ 时切进 prefill 相位、把 $k$ 条新请求并行灌进腾出的位置，prefill 完再回到 decode，如此循环。围绕"$k$ 取多少 / $N$ 开多大 / EB 还是 MB"这三件事，下面三个设计依次给出闭式答案与在线落地方式。
 
 ### 关键设计
 
-1. **CFR 基线阈值 $\theta_0$ (常数 hazard rate)**:
+**1. CFR 基线阈值 $\theta_0$：在常数 hazard rate 下定下"攒几个再切"**
 
-    - 功能：在 geometric 输出长度假设 $h(t) = p_0$ 下，给出最大化 EB 吞吐的归一化切换阈值 $\theta_0 = \lim_{N\to\infty} k^*/N$。
-    - 核心思路：把 decode 相位平均时长写成闭式 $\mathbb{E}[T_d(k;N)] = [\beta_d N\theta - \alpha_d \ln(1-\theta)] / p_0$，再代入 saturated 吞吐 $\mathrm{TP}_{\mathrm{EB}}$，对 $k$ 求导可得 $\theta_0$ 满足 $\theta_0 (1-\theta_0)^{-1} + \ln(1-\theta_0) = p_0 \alpha_p \alpha_d^{-1}$。该方程仅依赖单一比值 $p_0 \alpha_p / \alpha_d$，与 $N$、$\mu_L$、per-token 成本 $\beta_p, \beta_d$ 完全无关，工程上一次离线测得 $(\alpha_p, \alpha_d, p_0)$ 即可解出。
-    - 设计动机：传统工程上 $k$ 由经验 (如 v0 取 $k=1$ "一空就切") 拍脑袋决定。本文把它转成一个仅依赖 hazard rate 与固定开销比的标量根方程，让阈值具备"可解释 + 可移植 + 可在线估计"的特性，避免对每种硬件/模型做穷举搜索。
+工程上切相位阈值 $k$ 一直靠经验拍 (如 vLLM v0 取 $k=1$"一空就切")，而 $\alpha_p$ 较大时这种贪心会让 prefill 固定开销被反复摊不开。本文先假设输出长度服从 geometric 分布、hazard rate 恒为 $h(t)=p_0$，把 decode 相位的平均时长写成闭式 $\mathbb{E}[T_d(k;N)] = [\beta_d N\theta - \alpha_d \ln(1-\theta)]/p_0$，代入 saturated 吞吐 $\mathrm{TP}_{\mathrm{EB}}$ 后对 $k$ 求导，得到归一化阈值 $\theta_0 = \lim_{N\to\infty} k^*/N$ 满足
 
-2. **IFR 校正与解耦优化**:
+$$\frac{\theta_0}{1-\theta_0} + \ln(1-\theta_0) = p_0\,\frac{\alpha_p}{\alpha_d}.$$
 
-    - 功能：把 CFR 阈值推广到真实 LLM 工作负载更常见的 increasing-failure-rate 情形 $h(t) = p_0 + \eta t$，并把"阈值选择 + 批大小选择"解耦成两步可独立求解的子问题。
-    - 核心思路：在 $\eta$ 上做扰动展开，得到 $\theta^* = \theta_0 + \Delta\theta + O(\eta^2)$，其中 $\Delta\theta = \frac{\eta(1-\theta_0)^2}{p_0^2 \theta_0}\big[\zeta(\frac{\theta_0}{1-\theta_0} - \frac{\zeta}{2}) + \frac{\beta_d N}{\alpha_d}(\zeta - \theta_0)\big]$，$\zeta = -\ln(1-\theta_0)$。校正项始终为正，反映"IFR 让后续完成事件更密集，可以再等一会儿再切相位"。决定阈值后再用 Proposition 3.3 给出在 OOM 概率 $\le \epsilon$ 约束下的最大批大小 $N^* = \lfloor (C - \ln(1/\epsilon)/(p_0^2 \mu_L)) / (\mu_L + \frac{1-\theta_0}{\theta_0 p_0}\ln\frac{1}{1-\theta_0}) \rfloor$。
-    - 设计动机：真实 workload 普遍是 IFR (越往后越容易 EOS)，但联合优化 $(k, N)$ 不可解；先在 $N\to\infty$ 极限下定 $\theta$、再以此 $\theta$ 反求最大可行 $N$ 的解耦方式既能保留闭式解，又把误差控制在 $O(1/N)$ 量级，便于在线落地。
+关键之处在于这个根方程只依赖单一比值 $p_0\alpha_p/\alpha_d$，与 $N$、$\mu_L$、per-token 成本 $\beta_p,\beta_d$ 都无关——也就是说工程上一次离线测出 $(\alpha_p,\alpha_d,p_0)$ 就能解出阈值，把原本"每种硬件/模型穷举搜索"的标定，换成了一个可解释、可移植、可在线估计的标量方程。
 
-3. **EB+ 在线相位/模式切换判据**:
+**2. IFR 校正与解耦优化：把阈值推广到真实负载、再反求最大批大小**
 
-    - 功能：用一个不等式同时驱动两件事 — 何时在 EB 内切换 prefill/decode 相位、何时把整个调度模式从 EB 切到 MB (反之亦然)。
-    - 核心思路：先把 MB 在 steady-state 下的吞吐写成 $\mathrm{TP}_{\mathrm{MB}}(N) = [\alpha_{\mathrm{MB}}(1+\mu_O)N^{-1} + \beta_{\mathrm{MB}}^e(\mu_L + \mu_O)]^{-1}$，再与 EB 吞吐 (4) 对比，得到 Proposition 3.4 给出的判据：$\beta_{\mathrm{MB}}^e - \beta_{\mathrm{EB}}^w < \frac{1}{\mu_L + \mu_O}\big[\frac{\alpha_p + \alpha_d \zeta \mu_O}{k_0^*} - \frac{\alpha_{\mathrm{MB}}(1+\mu_O)}{N}\big]$ 时 MB 胜出，反之走 EB。线上把右侧 $N$ 换成 EMA 平滑的占用 $N_{\text{obs}}$，并把 $\beta_{\mathrm{MB}}^e(\hat r)$ 从一次性的硬件 kernel 时间 profile 上查表 (decode 比例 $\hat r = \hat\mu_O / (\hat\mu_L + \hat\mu_O)$)，再加一个可调优先级裕度 $\delta$ ($\delta > 0$ 偏好 TTFT，$\delta < 0$ 偏好吞吐) 得到 (8) 式。
-    - 设计动机：把 LHS 解读为"prefill–decode 同批引入的边际成本差"，把 RHS 解读为"MB 因更少 kernel launch 摊销下来的固定成本优势"。LHS 由硬件 (带宽) 决定，RHS 是 $O(1/N_{\text{obs}})$，在饱和时自动消失。这样调度器在轻载时倾向 MB (省 TTFT)、在重载且带宽紧张时倾向 EB (省 TPOT)，无须手动调参或重训。
+真实 LLM 工作负载几乎都是 increasing-failure-rate (生成越往后越容易 EOS)，恒定 hazard rate 并不成立，而直接联合优化 $(k,N)$ 又无解析解。作者的做法是先在 $\eta$ 上做扰动展开，把 hazard rate 写成 $h(t)=p_0+\eta t$，得到 $\theta^* = \theta_0 + \Delta\theta + O(\eta^2)$，其中
+
+$$\Delta\theta = \frac{\eta(1-\theta_0)^2}{p_0^2 \theta_0}\Big[\zeta\big(\tfrac{\theta_0}{1-\theta_0} - \tfrac{\zeta}{2}\big) + \tfrac{\beta_d N}{\alpha_d}(\zeta - \theta_0)\Big],\quad \zeta = -\ln(1-\theta_0).$$
+
+校正项 $\Delta\theta$ 恒为正，含义是 IFR 让后续完成事件更密集、可以"再多等一会儿"再切相位。定下阈值后，再以这个 $\theta$ 在 OOM 概率 $\le\epsilon$ 约束下反求最大可行批大小
+
+$$N^* = \Big\lfloor \big(C - \tfrac{\ln(1/\epsilon)}{p_0^2\mu_L}\big)\big/\big(\mu_L + \tfrac{1-\theta_0}{\theta_0 p_0}\ln\tfrac{1}{1-\theta_0}\big)\Big\rfloor.$$
+
+这种"先在 $N\to\infty$ 极限下定 $\theta$、再以此 $\theta$ 反求 $N$"的解耦，绕开了联合优化的不可解，同时保留闭式解、把误差压在 $O(1/N)$ 量级，便于在线落地。
+
+**3. EB+ 在线判据：一个不等式同时管"切相位"和"切模式"**
+
+光会在 EB 内调阈值还不够——带宽富裕或负载很轻时 MB 反而更优，需要一个能在线判断"该不该退回 MB"的判据。作者先把 MB 的 steady-state 吞吐写成 $\mathrm{TP}_{\mathrm{MB}}(N) = [\alpha_{\mathrm{MB}}(1+\mu_O)N^{-1} + \beta_{\mathrm{MB}}^e(\mu_L + \mu_O)]^{-1}$，与 EB 吞吐对比得到 Proposition 3.4：当
+
+$$\beta_{\mathrm{MB}}^e - \beta_{\mathrm{EB}}^w < \frac{1}{\mu_L + \mu_O}\Big[\frac{\alpha_p + \alpha_d \zeta \mu_O}{k_0^*} - \frac{\alpha_{\mathrm{MB}}(1+\mu_O)}{N}\Big]$$
+
+成立时 MB 胜出、否则走 EB。这个不等式的妙处在于左边是"prefill–decode 同批引入的边际成本差"、由硬件带宽决定，右边是"MB 因更少 kernel launch 摊下来的固定成本优势"、量级为 $O(1/N)$ 在饱和时自动消失。落到线上时，把右侧 $N$ 换成 EMA 平滑的活跃占用 $N_{\text{obs}}$，$\beta_{\mathrm{MB}}^e(\hat r)$ 按 decode 比例 $\hat r = \hat\mu_O/(\hat\mu_L+\hat\mu_O)$ 从一次性的硬件 kernel profile 查表，再加一个可调优先级裕度 $\delta$ ($\delta>0$ 偏好 TTFT、$\delta<0$ 偏好吞吐) 得到落地的 (8) 式。最终效果是调度器在轻载时自动倾向 MB 省 TTFT、在重载且带宽紧张时倾向 EB 省 TPOT，无须手动调参或重训。
 
 ### 损失函数 / 训练策略
 本工作无训练目标，全部优化在调度层进行。在线控制器维护两个滑窗：输出长度 $\mathcal{W}_O$ 与输入长度 $\mathcal{W}_L$。从 $\mathcal{W}_O$ 估计经验 hazard rate $\hat h(t) = \#\{O\in\mathcal{W}_O: O=t\} / \#\{O\in\mathcal{W}_O: O\ge t\}$，在 $t \in [1, t_{95}]$ 上用加权最小二乘拟合 $\hat h(t) = \hat p_0 + \hat\eta t$；$\hat\mu_L$ 取样本均值。每个调度周期先解 (3) 得 $\hat\theta_0$，叠加 (5) 得 $\hat\theta^*$ (clip 到 $[\theta_{\min}, \theta_{\max}]$)，再用 Proposition 3.3 算 $\hat N^*$，最后 $\hat k^* = \lfloor \hat\theta^* \hat N^* \rfloor$。$\Delta\theta$ 依赖 $N$，作者用上一周期 $\hat N^*$ 形成单步 fixed-point 更新，几个周期内收敛。

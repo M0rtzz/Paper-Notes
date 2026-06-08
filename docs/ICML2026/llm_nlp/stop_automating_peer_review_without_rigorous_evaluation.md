@@ -39,37 +39,23 @@ tags:
 **核心 idea**：用 IntraSim / InterSim 两个嵌入相似度指标度量"hivemind 效应"，再用零样本 LaTeX 改写定义 "paper laundering"，证明 AI 审稿两个必要条件都不满足，从而支持「先建立审稿自动化科学，再谈部署」的立场。
 
 ## 方法详解
-本文没有提模型，方法即一套"度量 + 攻击"的实证协议，分两大支柱。
 
 ### 整体框架
-输入：(1) ICLR 2026 全量 75,800 评审 + AI 标签（来自 Emi 2025 的 EditLens 分类器，21% 被判为 AI 生成）；(2) 60 篇随机 ICLR 论文 + AI reviewer agent 生成的合成评审；(3) 同 60 篇论文经零样本 LLM 改写后的"laundered"版本。
-
-输出：两条立场论据——hivemind 效应统计学显著、laundering 平均涨分 +0.45（$p<0.0001$）。
-
-中间环节包含：(a) 用 `text-embedding-3-small` 把每篇 review 编码成向量，计算同篇内 reviewer 间相似度（IntraSim）与不同篇 reviewer 间相似度（InterSim）；(b) 对每篇论文喂入 4 种 zero-shot prompt（含一条命令 launderer 主动 jailbreak 审稿模型的版本），分别用 GPT-5.1 / GPT-5.4 重写整份 LaTeX，再编译回 PDF 喂给审稿 agent；(c) Wilcoxon signed-rank 检验配对分差。
+作为一篇立场论文，本文不提模型，而是主张「在 LLM 审稿满足两条可测量的必要条件——(C1) 评审多样性 / 非趋同、(C2) 非可博弈——之前不应直接部署」，并用一套"度量 + 攻击"的实证协议把这个主张坐实。论证有三条腿同时着地：一边拿 ICLR 2026 全量 75,800 篇真实评审（带 EditLens 分类器的 AI 标签，21% 被判为 AI 生成）做野生数据分析，一边用 AI reviewer agent 对随机 60 篇论文跑 60 × 24 = 1,440 个合成审稿，再把同 60 篇论文经零样本 LLM 改写成 "laundered" 版本喂回去对比——最终落到两条统计学显著的论据：hivemind 效应显著、laundering 平均涨分 $+0.45$（$p<0.0001$）。所有"成本"集中在一次性的 API 调用与离线嵌入计算（单篇 laundering ≈ \$0.25），没有任何模型训练。
 
 ### 关键设计
 
-1. **Hivemind 指标 IntraSim / InterSim**:
+**1. 用 IntraSim / InterSim 把"评审多样性"变成可测标量。**
 
-    - 功能：把"评审多样性"从模糊概念变成可比的标量，用于跨人类 vs AI、跨真实 vs 模拟两组对照。
-    - 核心思路：对论文 $p$ 的所有评审向量集合 $\mathcal{R}(p)$，IntraSim 是两两 cosine 相似度的平均：$\mathrm{IntraSim}(p)=\frac{2}{m_p(m_p-1)}\sum_{i<j}\mathrm{sim}(r_i,r_j)$；InterSim 则跨论文对 $p\neq q$ 求 $\mathrm{sim}(r,r')$ 的双重平均。InterSim 只在"同一类 reviewer 跨不同论文"内比较，避免人类 vs AI 文本风格差异污染信号。
-    - 设计动机：单看打分相关性会把"AI 都给高分"和"AI 都说同样的话"混在一起；嵌入空间的成对相似度能直接衡量「第二份评审是否带来新信息」，这正是多 reviewer 制度的核心价值。
+立场论文最怕"趋同"停留在直觉，所以作者先把它量化。对论文 $p$ 的所有评审向量集合 $\mathcal{R}(p)$（用 `text-embedding-3-small` 编码），IntraSim 取同篇内 reviewer 两两 cosine 相似度的平均 $\mathrm{IntraSim}(p)=\frac{2}{m_p(m_p-1)}\sum_{i<j}\mathrm{sim}(r_i,r_j)$，衡量"第二份评审是否带来新信息"；InterSim 则跨论文对 $p\neq q$ 求 $\mathrm{sim}(r,r')$ 的双重平均，且刻意只在"同一类 reviewer 跨不同论文"内比较，免得人类 vs AI 的文本风格差异污染信号。关键在于：单看打分相关性会把"AI 都给高分"和"AI 都说同样的话"混为一谈，而嵌入空间的成对相似度能直接戳穿后者——这正是多 reviewer 制度赖以成立的根基，也是 C1 能否成立的判据。
 
-2. **Paper Laundering 协议**:
+**2. 用 Paper Laundering 构造一种完全合规的"博弈"攻击。**
 
-    - 功能：构造一种**完全合规**的"博弈"AI 审稿的攻击（不是 prompt injection，不是隐藏指令），用来检验非可博弈性 C2。
-    - 核心思路：把整份论文 LaTeX 源码作为输入，让 launderer LLM 在零样本 prompt 下重写一遍（成本约 $0.25/篇），重新编译成 PDF 后交给 AI reviewer agent；通过 4 prompt × 2 launderer × 3 reviewer 的 24 cell 网格统计 paired 分差。Wilcoxon test 在几乎所有 cell 里都 $p<0.001$，平均涨分 $+0.45$，自夸偏差（self-preference bias）让 GPT 审稿被 GPT 改写涨得更多。
-    - 设计动机：现有对抗攻击研究关注 prompt injection，但那已被会议明文禁止；laundering 是"作者明面上承认用 AI 润色文字"，因此即便有效也无法靠政策禁止——这才是真正威胁评审公信力的失效模式。
+检验 C2 时，作者绕开了 prompt injection 这类已被会议明文禁止、并非典型威胁模型的把戏，转而设计一个无法靠政策禁止的失效模式：把整份论文 LaTeX 源码丢给 launderer LLM，让它在零样本 prompt 下原样重写一遍，重新编译成 PDF 再交给 AI reviewer agent 打分。整套实验铺成 4 prompt × 2 launderer × 3 reviewer 的 24-cell 网格（其中一条 prompt 甚至命令 launderer 主动 jailbreak 审稿模型），用 Wilcoxon signed-rank 检验配对分差，几乎所有 cell 都 $p<0.001$、平均涨 $+0.45$ 分，且自夸偏差（self-preference bias）让 GPT 审稿被 GPT 改写时涨得最猛。它真正扎人的地方是"合规"：作者大方承认用 AI 润色文字，会议无从禁止，攻击门槛却低到一篇 \$0.25。
 
-3. **Monoculture 级联测量**:
+**3. 用 Monoculture 级联测量把危害从评审层接到写作层。**
 
-    - 功能：把"hivemind"从评审层延伸到论文层，论证若 laundering 被普遍采用，整个学术写作会向 AI 审稿偏好收敛。
-    - 核心思路：对 60 篇论文的 abstract+introduction 嵌入做两两 cosine 相似度，共 6,903 对（多次采样），比较原始 vs laundered 版本——后者平均相似度从 $0.497$ 升到 $0.529$，相对涨幅 $+6.5\%$，Cohen's $d=1.02$（大效应）。
-    - 设计动机：算法单一化的危害不只是"评审趋同"，更在于"被评审塑造的写作也趋同"，作者用一个简单的嵌入聚合实验把因果链从 reviewer 一路画到 author 的写作行为，强化了立场论据的链路完整性。
-
-### 损失函数 / 训练策略
-本文不训练新模型。所有"训练"成本集中在：(i) 调 OpenAI / Anthropic API 跑 60 × 24 = 1,440 个审稿；(ii) 单篇 laundering 成本 ≈ $0.25；(iii) ICLR 全量评审嵌入和相似度计算属于一次性离线开销。
+算法单一化的真正可怕之处不止"评审趋同"，更在于"被评审塑造的写作也跟着趋同"，作者用一个简单的嵌入聚合实验把这条因果链画完整。对 60 篇论文的 abstract+introduction 嵌入做两两 cosine 相似度（多次采样共 6,903 对），比较原始 vs laundered 版本——平均相似度从 $0.497$ 升到 $0.529$，相对涨幅 $+6.5\%$，Cohen's $d=1.02$（大效应）。也就是说，一旦 laundering 被普遍采用，整个学术写作都会朝 AI 审稿的偏好收敛，立场论据的链路就从 reviewer 一路贯通到了 author 的写作行为。
 
 ## 实验关键数据
 

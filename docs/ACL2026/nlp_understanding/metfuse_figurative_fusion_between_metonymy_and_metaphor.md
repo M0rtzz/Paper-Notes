@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **转喻生成：contiguity-prompt + MLM masked LM 打分**:
+**1. 转喻生成：contiguity-prompt 出候选，MLM masked LM 打分挑词。**
 
-    - 功能：给定字面句子和目标名词，生成单域内的转喻替换名词，并保持原义。
-    - 核心思路：作者发现 naive prompt 失败的根因是"LLM 不知道 contiguity 是什么"，于是改成 targeted questions 直接问名词的 location / occupants / salient parts（如 "Where does a judge work?"），用 temperature=0.7 拿到一组候选 $c$。然后把原句中的名词换成 `[MASK]` 喂 BERT，对每个候选算 $\log p(c \mid \text{context})$，选概率最高的 $c^* = \arg\max_c \log p_{\text{BERT}}(c)$ 作为替换。最后用 temperature=0.4 让 LLM 做轻度润色（低温度防止 LLM 二次改写丢掉转喻）。
-    - 设计动机：MLM 打分本质上是"在句法/语义都通顺的前提下挑词"，可以筛掉 LLM 生出的 out-of-domain 候选（如把 "judge" 换成 "briefcase" 时 logp=-12.28，自动被淘汰），把单域约束从 prompt 工程问题转化为概率打分问题。
+直接 prompt LLM"把这句改成转喻"只有 38.8% 成功率，根因是 LLM 压根不知道 contiguity（邻接关系）是什么，单域约束控不住。作者把它拆成"问对问题 + 概率打分"两步：先用 targeted questions 直接问目标名词的 location / occupants / salient parts（如 "Where does a judge work?"），以 temperature=0.7 拿一组候选 $c$；再把原句里的名词换成 `[MASK]` 喂 BERT，对每个候选算 $\log p(c \mid \text{context})$，取概率最高者 $c^* = \arg\max_c \log p_{\text{BERT}}(c)$。这一步把"单域约束"从难写的 prompt 工程问题转译成 token-level 的概率打分——out-of-domain 的候选会被自动淘汰（如把 "judge" 换成 "briefcase" 时 $\log p=-12.28$，直接出局）。最后用 temperature=0.4 做轻度润色，低温度是为了防止 LLM 二次改写又把转喻改没了。
 
-2. **隐喻生成：tone-conditioned 候选 + sentiment 选词**:
+**2. 隐喻生成：tone-conditioned 候选，sentiment 选词。**
 
-    - 功能：给定字面句子和目标动词，生成跨域、夸张但 tone 协调的隐喻动词。
-    - 核心思路：作者跟 Stowe et al. (2021a) 一致认为"受控生成"对隐喻更有效，但隐喻又得允许跨域自由，所以让 LLM 在 positive / negative / neutral 三种 tone 下各自生成 hyperbolic verb 候选（temperature=0.7, top-p=0.9）。然后用 TweetNLP 的 sentiment 模型对原句打 sentiment 标签，选出 tone 匹配的候选动词，再以 temperature=0.6 让 LLM 把句子润色通顺。
-    - 设计动机：作者发现"无 tone 约束的 hyperbole 经常和句子整体气氛冲突"（如悲伤句里突然冒出狂喜动词），引入 sentiment 选词等于把"隐喻自由度"约束在"语气一致"这个软边界上，既保留了 cross-domain 灵活性又不破坏语义对齐。
+隐喻享受跨域映射的自由，但纯放开会出现"语气打架"——悲伤句里突然冒出狂喜动词。作者的折中是给自由度套一个"语气一致"的软边界：让 LLM 在 positive / negative / neutral 三种 tone 下各自生成 hyperbolic verb 候选（temperature=0.7, top-p=0.9），再用 TweetNLP 的 sentiment 模型给原句打 sentiment 标签，只保留 tone 匹配的候选动词，最后 temperature=0.6 润色通顺。这样既保住了 cross-domain 的灵活性，又不会破坏与原句的语义/情感对齐。
 
-3. **Hybrid 零成本拼接 + metaphor-forces-metonymy 分析**:
+**3. Hybrid 零成本拼接，并验证"隐喻让转喻更显性"。**
 
-    - 功能：构造 hybrid 句并验证"隐喻会让转喻更显性"。
-    - 核心思路：因为转喻生成几乎不动句法（只换名词），把"精炼后的转喻名词短语"直接替换到"精炼后的隐喻句"主语位置即可得 hybrid，无需任何额外 post-processing。验证侧用三种证据互证：(i) 4 个 LLM 在 zero-shot metonymy resolution 上 hybrid 比 metonymy-only F1 高 1.4–4.3；(ii) BERT 上下文 embedding 算 $\text{sim}(N_{\text{lit}}, N_{\text{hyb}}) > \text{sim}(N_{\text{lit}}, N_{\text{mty}})$，说明 hybrid 里的名词嵌入更接近字面用法（即更"显性"）；(iii) 用 MetFuse 的 hybrid 子集做数据增强，BERT 在 4 个 metonymy 基准上比用 metonymy-only 增强更好。
-    - 设计动机：从认知语言学角度，隐喻动词（如 "butchered"）带有强 animate-agent selectional preference，会迫使读者把 "newsroom" 这种 inanimate 名词解读成 "the journalists in the newsroom"，相当于"用隐喻当 forcing device 来 disambiguate 转喻"。这个解释把实证结果回扣到 Lakoff–Johnson 的理论，是论文最 elegant 的一笔。
+因为转喻生成几乎不动句法（只换名词），把"精炼后的转喻名词短语"直接替换进"精炼后的隐喻句"主语位置，就能零成本拼出 hybrid 句，无需任何额外 post-processing——这利用的正是"转喻不改句法、隐喻改谓语"的天然互补。验证侧用三条互证的证据支撑核心论断：(i) 4 个 LLM 在 zero-shot metonymy resolution 上，hybrid 比 metonymy-only 的 F1 高 1.4–4.3；(ii) BERT 上下文 embedding 上 $\text{sim}(N_{\text{lit}}, N_{\text{hyb}}) > \text{sim}(N_{\text{lit}}, N_{\text{mty}})$，说明 hybrid 里的名词嵌入更贴近字面用法、即更"显性"；(iii) 用 hybrid 子集做数据增强，BERT 在 4 个 metonymy 基准上一致优于 metonymy-only 增强。背后的认知语言学解释是：隐喻动词（如 "butchered"）带强 animate-agent selectional preference，会逼读者把 "newsroom" 这种 inanimate 名词解读成 "the journalists in the newsroom"，相当于用隐喻当 forcing device 来 disambiguate 转喻，把实验现象回扣到 Lakoff–Johnson 理论。
+
+### 一个完整示例：从字面句到三件套
+
+以字面句 "The newsroom reported the scandal" 为例走一遍流水线。**转喻管线**先问 "What does a newsroom contain?" 拿到 {journalists, editors, briefcase, …} 一组候选，BERT 给 "journalists" 打出最高 $\log p$、给 "briefcase" 打出 $-12.28$ 被淘汰，选定后润色得转喻句（"The newsroom" 已隐喻其中的记者）。**隐喻管线**对动词 "reported" 在三种 tone 下生成 hyperbolic 候选 {butchered, celebrated, whispered, …}，sentiment 模型判定原句偏 negative，于是选中 "butchered"，润色成 "The journalists butchered the scandal"。**Hybrid** 则把转喻名词短语 "The newsroom" 直接塞回隐喻句的主语位，得 "The newsroom butchered the scandal"——此时强 animate 动词 "butchered" 逼着读者把 "newsroom" 读成里面的记者，转喻反而比 metonymy-only 句更显性。
 
 ### 损失函数 / 训练策略
 本文不训模型，主要是 prompting 流程。下游评测部分用 BERT-base fine-tune 3 epoch、lr=1e-5、batch=8，MetFuse 增强样本量固定为原训练集的 50%；LLM 评测全程 zero-shot，含 GPT-OSS-20B / Qwen3-30B / Llama-3.1-70B / Gemini-2.5-Flash。

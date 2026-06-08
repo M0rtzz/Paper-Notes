@@ -40,30 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三步 RL 循环（每 iteration）。**Step 1 数据 + 标注**：从 OmniEdit/ImgEdit 选 local editing 样本，用 Qwen2.5-VL-72B 生成 bbox → SAM2 出 mask → dilate → MLLM 用 mask 重写指令，再用 Qwen2.5-VL-72B 按 instruction clarity / mask accuracy / target prominence 三维过滤，得 40K triplet (image, mask, instruction)。**Step 2 在线 RL 训练**：(i) 从旧策略 $v^{old}$ 采 $N$ 个样本 $\hat x_0^{1:N}$；(ii) 算 MLLM reward $r_{mllm}$ + 在非编辑区算 normalized PSNR/SSIM 得 $r_{sim}$，加权融合并经 $\mathrm{op}(\cdot)$ 转优 optimality；(iii) 用 DiffusionNFT 的隐式正负策略 $v_\theta^\pm$ + 加上 $L_{ner}^+$ 与 $L_{er}^-$ 区域正则项做 policy update。**Step 3 推理**：mask 仅训练时使用，推理纯文本指令，FLUX/Qwen 直接 LoRA 加载。
+要解决的是"编辑模型乱改非编辑区"，而根因在于现有 RL 后训练只盯着空间无关的 MLLM 标量奖励、看不见非编辑区的细节漂移。CoCoEdit 把"非编辑区一致性"同时塞进奖励端和正则端，跑一个每 iteration 三步走的 RL 循环：先离线把普通 image-instruction 数据升级成带 mask 的三元组，再在线采样并用"MLLM reward + 像素 reward"评分、用区域正则化对正负样本分别施加空间约束，最后只在训练用 mask、推理时纯文本指令直接 LoRA 加载。下面按三个关键设计展开。
 
 ### 关键设计
 
-1. **像素级相似度 reward $r_{sim}$ 补 MLLM 盲区**：
+**1. 像素级相似度 reward $r_{sim}$：把 MLLM 看不见的非编辑区漂移变成可优化信号**
 
-    - 功能：把 MLLM reward 看不见的"非编辑区细节是否被无意改动"显式量化为奖励信号。
-    - 核心思路：给定输入 $\hat c_I$、采样输出 $\hat x_0$、editing mask $m$，在非编辑区计算 $\mathrm{PSNR}_m, \mathrm{SSIM}_m$；把 PSNR 归一化到 $[0,1]$ 与 SSIM 同尺度，求均值得 $r_{sim}^{1:N}$；总 reward $r=\mathrm{op}(\lambda_{mllm} r_{mllm}+\lambda_{sim} r_{sim})$（$\lambda_{mllm}=0.8,\lambda_{sim}=0.2$ 默认，op 是 optimality 转换）。
-    - 设计动机：单 MLLM reward 对"姿态相同但背景细节微变"几乎给同分（Fig.5 例子），导致 RL 训练后非编辑区悄悄漂移；加上像素级 reward 让"保非编辑区"成为可微的优化目标。但若像素 reward 权重过大（$\lambda_{sim}=0.5$）模型会走向极端保守、完全不编辑——所以 $\lambda$ 必须偏向 MLLM 一侧。
+痛点在于 MLLM reward 是一个空间无关的标量，对"姿态相同但背景细节微变"几乎给同分（Fig.5 的例子里背景枕头消失了但 MLLM 不扣分），于是 RL 训完非编辑区会悄悄漂移。CoCoEdit 在奖励端补一项像素级相似度：给定输入条件 $\hat c_I$、采样输出 $\hat x_0$ 和 editing mask $m$，只在**非编辑区**计算 $\mathrm{PSNR}_m$ 与 $\mathrm{SSIM}_m$，把 PSNR 归一化到 $[0,1]$ 与 SSIM 同尺度后取均值得到 $r_{sim}$，最终奖励为 $r=\mathrm{op}(\lambda_{mllm}\, r_{mllm}+\lambda_{sim}\, r_{sim})$，其中 $\mathrm{op}(\cdot)$ 是 optimality 转换。这样"保住非编辑区"就成了一个可微的优化目标，而不再被 MLLM 忽略。
 
-2. **区域解耦正则化 $L_{ner}^+$ + $L_{er}^-$（正负样本分治）**：
+不过权重必须偏向 MLLM 一侧：默认取 $\lambda_{mllm}=0.8,\lambda_{sim}=0.2$；一旦把像素权重加到 $\lambda_{sim}=0.5$，模型会走向极端——为了拿满一致性分干脆完全不编辑，PSNR 暴涨但编辑得分崩塌。
 
-    - 功能：把"非编辑区要像、编辑区要变"分别只施加在该约束最相关的样本上，避免一个 loss 同时管两件相反的事。
-    - 核心思路：基于 DiffusionNFT 的 $x$-prediction 公式拿到 $x_\theta^+(x_t\mid c)$（正策略输出）和 $x_\theta^-(x_t\mid c)$（负策略输出），用下采样后的 mask $\tilde m$ 定义投影算子 $P_{ner}(z)=z\odot\tilde m$、$P_{er}(z)=z\odot(1-\tilde m)$。对**高奖励（正）样本**用 $L_{ner}^+=\max(0, d(x_\theta^+, c_I)_{\tilde m}-\tau^+)$ 让其在非编辑区与输入 latent 相似（hinge $\tau^+$ 允许小偏差）；对**低奖励（负）样本**用 $L_{er}^-=\max(0,\tau^- - d(x_\theta^-, c_I)_{1-\tilde m})$ 反向逼其在编辑区与输入差距大于 $\tau^-$（防止欠编辑）。最终 $\mathcal{L}=\mathbb{E}[r\cdot(\mathcal{L}^+ +\lambda_{ner}L_{ner}^+)+(1-r)\cdot(\mathcal{L}^- +\lambda_{er}L_{er}^-)]$。
-    - 设计动机：单一 reward 是标量、没空间信息；像素 reward 虽提供全局一致性但没法对编辑区/非编辑区分别约束。直接把"非编辑区像 + 编辑区不像"两个目标同时塞 loss 会冲突；按正负样本分治——正样本编辑成功了就管"别破坏其他地方"、负样本编辑没做到位就管"赶紧改"——形成方向互补的优化信号，且与 NFT 的 implicit positive/negative policy 框架天然契合。
+**2. 区域解耦正则化 $L_{ner}^+$ 与 $L_{er}^-$：用正负样本分治避免两个相反目标互掐**
 
-3. **CoCoEdit-40K：mask + 改写指令 + RL 友好的数据 pipeline**：
+光有标量奖励还不够，因为它没有空间信息，没法分别约束"编辑区要变、非编辑区要像"——这两个目标一旦塞进同一个 loss 就会冲突。CoCoEdit 借 DiffusionNFT 的 $x$-prediction 公式拿到正策略输出 $x_\theta^+(x_t\mid c)$ 和负策略输出 $x_\theta^-(x_t\mid c)$，用下采样后的 mask $\tilde m$ 定义两个投影算子 $P_{ner}(z)=z\odot\tilde m$ 和 $P_{er}(z)=z\odot(1-\tilde m)$，再把两类约束分派给不同样本。对**高奖励（正）样本**（编辑已经做对了），用 $L_{ner}^+=\max(0,\, d(x_\theta^+, c_I)_{\tilde m}-\tau^+)$ 逼它在非编辑区与输入 latent 相似，hinge 阈值 $\tau^+$ 容忍小偏差；对**低奖励（负）样本**（编辑没做到位），用 $L_{er}^-=\max(0,\, \tau^- - d(x_\theta^-, c_I)_{1-\tilde m})$ 反向逼它在编辑区与输入拉开大于 $\tau^-$ 的差距、防止欠编辑。
 
-    - 功能：把"原本只有 image-instruction 对"的 OmniEdit/ImgEdit 升级成 (image, mask, refined instruction) 三元组，并按"条件信号质量"过滤而非按 GT 编辑结果质量过滤。
-    - 核心思路：(a) Mask Annotation：Qwen2.5-VL-72B 出 bbox → SAM2 出 mask；(b) Instruction & Mask Augmentation：用 MLLM 把简短指令扩成含空间位置 + 物体属性的 refined instruction，对 replace/motion 类做 mask dilation 覆盖新生成内容；(c) Data Filtering：按 instruction clarity / mask accuracy / target prominence 三维打分，留高分样本，不需要 GT 编辑图像（因为 RL 不学 ground-truth pixel）。
-    - 设计动机：以往数据集都过滤"编辑效果好坏"以适配 SFT；但 RL 通过 reward 自己探索，需要的不是漂亮 GT 而是"清晰的指令 + 准的 mask"——这两个东西好，policy 才能在每个样本上拿到精确的区域信号。这一数据策略和 RL 目标耦合得很紧。
+这样的分治之所以有效，是因为同一个 loss 在不同样本上传递的是方向相反的梯度：正样本被告知"别破坏其他地方"、负样本被告知"赶紧改该改的地方"，互补而不打架；而且它和 NFT 的 implicit positive/negative policy 框架天然契合，正负策略本来就成对存在，直接挂上区域正则项即可。
+
+**3. CoCoEdit-40K：按"条件信号质量"而非"GT 质量"过滤的 RL 友好数据**
+
+前两个设计都依赖准确的 mask，而 OmniEdit/ImgEdit 原本只有 image-instruction 对，于是需要一条数据 pipeline 把它升级成 (image, mask, refined instruction) 三元组。流程分三步：先做 Mask Annotation，用 Qwen2.5-VL-72B 出 bbox、SAM2 出 mask；再做 Instruction & Mask Augmentation，让 MLLM 把简短指令扩成含空间位置和物体属性的 refined instruction，并对 replace/motion 这类会生成新内容的编辑做 mask dilation 把新内容也圈进去；最后做 Data Filtering，按 instruction clarity / mask accuracy / target prominence 三个维度打分留高分样本。
+
+关键区别在于过滤标准：传统编辑数据集为适配 SFT 会过滤"GT 编辑图像好不好看"，但 RL 不学 ground-truth pixel、而是靠 reward 自己探索，真正需要的是"指令清晰 + mask 准"——只有这两样过硬，policy 才能在每个样本上拿到精确的区域奖励和区域约束。换句话说，这套数据策略是和 RL 目标耦合设计的，也正因如此后面消融里它在 SFT 下并不增益。
 
 ### 损失函数 / 训练策略
-$\mathcal{L}(\theta)=\mathbb{E}[r\cdot(\mathcal{L}^+ + \lambda_{ner}L_{ner}^+)+(1-r)\cdot(\mathcal{L}^- + \lambda_{er}L_{er}^-)]$。基础 $\mathcal{L}^\pm=\|x_\theta^\pm-x_0\|_2^2$，正负策略由 NFT 的 $v_\theta^\pm = (1\mp\beta)v^{old}\pm\beta v_\theta$ 得到。LoRA rank=32，FLUX.1 Kontext / Qwen-Image-Edit 各微调，8×A800、batch 3、group 12、1K 步，VRAM ≈ 70 GB（与 Edit-R1 持平），每步 ≈ 12 min（比 Edit-R1 多 2 min）。
+总目标按奖励对正负分支加权：$\mathcal{L}(\theta)=\mathbb{E}[r\cdot(\mathcal{L}^+ + \lambda_{ner}L_{ner}^+)+(1-r)\cdot(\mathcal{L}^- + \lambda_{er}L_{er}^-)]$，基础项 $\mathcal{L}^\pm=\|x_\theta^\pm-x_0\|_2^2$，正负策略由 NFT 的 $v_\theta^\pm = (1\mp\beta)v^{old}\pm\beta v_\theta$ 得到。训练用 LoRA rank=32，FLUX.1 Kontext 与 Qwen-Image-Edit 各自微调，8×A800、batch 3、group 12、1K 步，VRAM ≈ 70 GB（与 Edit-R1 持平），每步 ≈ 12 min（比 Edit-R1 多 2 min）。
 
 ## 实验关键数据
 

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DeMix 的流水线分四步：(1) 数据预处理——把原始大规模语料按来源/领域去重、PPL/FastText 过滤后切成 $N$ 个候选子集；(2) Component 模型准备——所有 $N$ 个 component 共享一个在 50B tokens 通用数据上预训练的 base 模型 $\Theta_{\text{base}}$，再各自在"领域数据 + 通用数据"按固定比例 $\beta=0.5$ 混合的小数据上继续训练，得到 $\Theta_i = \Theta_{\text{base}} + \Delta(D_i)$；(3) 模型合并代理——任意候选混合比 $\{\alpha_i^j\}$ 通过 $M_{\text{mix}}^j = \sum_{i=1}^{N}\alpha_i^j \Theta_i$ 拼出代理模型并直接 benchmark 推理，不训练；(4) 迭代比例预测——用 LightGBM 在采样 + 评分 + 重采样的循环里把分布往高分区域逼近，最后取头部候选的平均作为最终预训练配方，按它在 50B tokens 上训出 1.7B / 8B 的目标模型。
+DeMix 的核心想法是把"找最优数据混合比例"这件事和"训模型"彻底分开：训练只在 $N$ 个 component 模型上一次性发生，之后任意候选比例都靠把这些 component 加权合并出一个"假装训过"的代理，搜索阶段只剩矩阵加权和 benchmark 推理。整条流水线四步走——先把原始大规模语料按来源/领域去重、用 PPL/FastText 过滤后切成 $N$ 个候选子集；再让所有 component 共享一个在 50B tokens 通用数据上预训练的 base 模型 $\Theta_{\text{base}}$，各自在"领域 + 通用"混合数据上续训得到 $\Theta_i = \Theta_{\text{base}} + \Delta(D_i)$；然后对任意候选混合比 $\{\alpha_i^j\}$ 用 $M_{\text{mix}}^j = \sum_{i=1}^{N}\alpha_i^j \Theta_i$ 合成代理直接跑 benchmark；最后用 LightGBM 在"采样—评分—重采样"的循环里把分布往高分区逼近，取头部候选的平均作为最终配方，按它在 50B tokens 上训出 1.7B / 8B 目标模型。
 
 ### 关键设计
 
-1. **模型合并即代理（核心理论桥）**:
+**1. 模型合并即代理：把训练成本换成推理成本。**
 
-    - 功能：把"训一个混合数据集得到的模型"近似为"训各自数据集得到的模型按比例加权合并"，从而免去每个候选比例的训练成本。
-    - 核心思路：定义训练算子 $\mathcal{T}(D,\Theta_{\text{base}})$ 与权重增量 $\Delta(D) = \mathcal{T}(D,\Theta_{\text{base}}) - \Theta_{\text{base}}$；当 $\delta = \frac{\sum|\Delta(D)|}{\sum|\mathcal{T}(D,\Theta_{\text{base}})| + \sum|\Theta_{\text{base}}|} \ll 1$（实测约 10%）时，$\Delta(D_i\cup D_j)\approx \Delta(D_i)+\Delta(D_j)$，推广到任意权重得 $\Theta_{\text{mix}}\approx \sum_i \alpha_i \Theta_i$；代理模型直接由 $M_{\text{mix}}^j = \sum_i \alpha_i^j \Theta_i$ 合成并送入 benchmark 推理，单个代理的算力等价于 0.01B tokens 的训练成本，比 2B tokens 的训练代理便宜 $200\times$。
-    - 设计动机：在小 $\delta$ 区间里把代理生成从 $\mathcal{O}(\text{train cost})$ 降到 $\mathcal{O}(\text{inference cost})$，让"代理数量"和"代理保真度"不再共享同一份算力预算；既绕开 tiny-scale 代理的失真，又绕开大规模训练代理的开销。
+自动化搜索路线的死结是"每访问一个候选比例就要训练一遍"，于是代理数量和单个代理保真度被绑在同一份算力上。DeMix 借模型合并的加性经验解开这个结。定义训练算子 $\mathcal{T}(D,\Theta_{\text{base}})$ 和它带来的权重增量 $\Delta(D) = \mathcal{T}(D,\Theta_{\text{base}}) - \Theta_{\text{base}}$；当归一化偏移量 $\delta = \frac{\sum|\Delta(D)|}{\sum|\mathcal{T}(D,\Theta_{\text{base}})| + \sum|\Theta_{\text{base}}|}\ll 1$（实测约 10%）时，两个子集合并训练的增量近似可加 $\Delta(D_i\cup D_j)\approx \Delta(D_i)+\Delta(D_j)$，推广到任意权重就得到 $\Theta_{\text{mix}}\approx \sum_i \alpha_i \Theta_i$。于是任意比例对应的代理模型直接由 $M_{\text{mix}}^j = \sum_i \alpha_i^j \Theta_i$ 合成、送进 benchmark 推理即可，单个代理的等效成本只有 0.01B tokens 的训练量，比 2B tokens 的训练代理便宜约 $200\times$。这一步把代理生成从 $\mathcal{O}(\text{train cost})$ 降到 $\mathcal{O}(\text{inference cost})$，既绕开 tiny-scale 代理因规模差太大在 math/code 上的失真，又不必为保真而线性放大训练预算。
 
-2. **共享 base + 固定比例 $\beta$ 混合的 component 训练协议**:
+**2. 共享 base + 固定 $\beta$ 混合的 component 训练协议：把所有 component 拴在同一片几何邻域。**
 
-    - 功能：保证 $N$ 个 component 在加权合并时仍处于"参数偏移可加"的几何邻域内，并且各自保留足够的通用语言能力以减少合并漂移。
-    - 核心思路：所有 component 从同一个 $\Theta_{\text{base}}$ 出发（50B tokens 通用数据训成）；各自的领域训练数据不是纯领域语料，而是"领域数据 + 通用数据"按 $\beta=0.5$ 混合，目的是把每个 component 拉回共同的"通用语言"流形附近以减小 $\delta$；训练用 batch size 512、长度 8192、初始 lr 3e-4 余弦调度（最低 20%）。
-    - 设计动机：纯领域训练会让 component 跑得太远，$\delta\ll 1$ 假设失效、合并失真；混入通用数据等同于在共享 base 周围"系一根绳"，让所有 component 在参数空间里贴近彼此，从而让加权平均成为真实混合训练的可靠近似。
+第 1 点的加性近似只有在 $\delta\ll 1$ 时才成立，所以 component 不能各训各的乱跑。DeMix 让所有 component 从同一个 $\Theta_{\text{base}}$（50B tokens 通用数据训成）出发，而且每个 component 的续训数据不是纯领域语料，而是"领域数据 + 通用数据"按固定比例 $\beta=0.5$ 混合。通用数据在这里起的是"系一根绳"的作用——把每个 component 拉回共同的通用语言流形附近，让它们在参数空间里彼此贴近，从而让加权平均真正逼近混合训练的结果。消融印证了这点的必要性：$\beta=0$ 纯领域训练会让 component 漂得太远、$\delta$ 变大、合并失真，$\beta\to 1$ 又太接近 base、合并出的代理几乎没有区分度，$\beta=0.5$ 居中最佳。续训用 batch size 512、序列长度 8192、初始 lr 3e-4 余弦调度（衰减到最低 20%）。
 
-3. **迭代 LightGBM 回归 + simplex 重采样**:
+**3. 迭代 LightGBM 回归 + simplex 重采样：把便宜代理变成黑盒优化。**
 
-    - 功能：在连续 simplex 上以"采样—合并—评分—训预测器—再用预测器采样"的循环逼近最优混合比，把代理评估转成黑盒回归优化。
-    - 核心思路：评分指标用代理模型在 general / code / math 三类 benchmark 上的平均排名（而非绝对分），对尺度失配鲁棒；流程是先在 simplex 上均匀采 $\{\alpha_i^j\}$ 一大批，每个比例合成 $M_{\text{mix}}^j$ 跑 benchmark 得 $r^j$，用 (mixture, rank) 对训 LightGBM（lr=0.02，300 轮）；用预测器评分海量新采样比例，取 top 候选进入下一轮重采样；按 64/32/16 = 112 个总代理跑三轮迭代，最后平均 top-128 候选作为最终预训练比例。
-    - 设计动机：合并代理便宜到可以"批量评估"，但 simplex 维度仍高（$N=7$ 起步），需要回归模型把"少量真实评分"外推到"海量未评分点"上；排名作为目标可避免不同 benchmark 数值量级差异污染回归；迭代重采样把搜索集中到高分邻域，避免均匀采样的浪费。
+合并代理便宜到可以批量评估，但 simplex 维度仍高（$N=7$ 起步），不可能穷举，需要回归模型把少量真实评分外推到海量未评分点上。DeMix 先在 simplex 上均匀采一大批 $\{\alpha_i^j\}$，每个合成 $M_{\text{mix}}^j$ 跑 benchmark；关键是评分用代理在 general / code / math 三类 benchmark 上的**平均排名** $r^j$ 而非绝对分数，以避免不同 benchmark 量级差异污染回归。用这些 (mixture, rank) 对训 LightGBM（lr=0.02，300 轮），再让它给海量新采样比例打分、取 top 候选进入下一轮重采样，按 64/32/16 = 112 个总代理跑三轮迭代，把搜索逐步集中到高分邻域，最后平均 top-128 候选得到最终预训练比例。
 
 ### 损失函数 / 训练策略
-DeMix 本身没有特殊损失——component 和最终模型都用标准下一个 token 预测损失训练；唯一非平凡的"训练策略"是先在 50B 通用 tokens 上独立预训 base，再用 $\beta=0.5$ 控制 component 的领域偏移，最后用搜索出的比例在 50B tokens 上训目标 1.7B / 8B 模型。
+DeMix 没有特殊损失——component 和最终模型都用标准的下一个 token 预测损失训练；唯一非平凡的训练策略是先在 50B 通用 tokens 上独立预训 base，再用 $\beta=0.5$ 控制 component 的领域偏移，最后用搜索出的比例在 50B tokens 上训目标 1.7B / 8B 模型。
 
 ## 实验关键数据
 

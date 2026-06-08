@@ -40,27 +40,41 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四阶段 pipeline：(1) **数据构造**：分层抽 1,727 个 BGG 桌游 → Mineru 解析 PDF + Qwen3-235B 结构化 + GPT-5.1 校对得到 standard rulebook；爬 1.8M raw review → Qwen3-235B 多任务过滤 (硬过滤 + MDA 评分 + facet 标注) → stratified coverage-max 采样保留 150K (8% 留存率)。(2) **人格发现**：Qwen3-Embedding-8B 嵌入 review (拼接文本 + logic score + facets) → K-Means K=15 → GPT-5.1 profile 中心样本 → 专家归并到 5 个 persona (System Purist / Efficiency Essentialist / Narrative Architect / Social Lubricator / Thrill Seeker) → GPT-5.1 多数投票 (3 次) 给全部数据打 persona 标签。(3) **MDA CoT 合成**：用 Qwen3-235B 作 teacher 给每个 (rule, persona, review) 三元组生成隐式推理链 Z = "Mechanics 提到了什么 → Dynamics 触发了什么交互 → Aesthetics 产生了什么情绪"；GPT-5.1 verifier 判断 Z 与 ground-truth rating 是否一致，矛盾就重新生成。(4) **训练**：LoRA 微调 Qwen3-8B，最大化 $P([Z; Y] | R, P_{profile})$ 的联合似然。
+
+MeepleLM 想回答一个很具体的问题：给定一本规则书，真实玩家社群会打出怎样的评分**分布**、写出怎样的评论，而且要把"同一款游戏在不同人格玩家眼里冷热不均"的两极分化保留下来，而不是塌成一个安全的平均分。由于 LLM 没有 game engine 去真正"玩"一遍，作者的策略是先用大模型造出高质量训练数据，再把"规则→体验"的因果推理蒸进一个 8B 的学生模型。
+
+整条 pipeline 分四步。前三步都在造数据：先分层抽 1,727 个 BGG 桌游，用 Mineru 解析 PDF、Qwen3-235B 结构化、GPT-5.1 校对得到干净的 standard rulebook，同时爬 1.8M 条原始 review 经多任务过滤后保留 150K 条高密度 critique；再用 Qwen3-Embedding-8B 把 review 嵌入、K-Means 聚类后由专家归并出 5 类玩家人格；最后用 Qwen3-235B 作 teacher，为每个 (rule, persona, review) 三元组合成一条 MDA 推理链 Z，并用 GPT-5.1 verifier 校验它是否和真实 rating 自洽。第四步才是训练：LoRA 微调 Qwen3-8B，让它最大化 $P([Z; Y] \mid R, P_{profile})$ 的联合似然，把"先沿 MDA 推理、再下评分"这一行为内化进权重。
 
 ### 关键设计
 
-1. **MDA-Guided Reasoning 作为因果中介链**：
+**1. MDA-Guided Reasoning：把"规则→体验"的语义鸿沟拆成三步可验证的因果链。**
 
-    - 功能：把"规则文本 → 玩家体验"的语义鸿沟显式拆解为三步可验证的 CoT，从而让 LLM 在生成 critique 前先 simulate runtime experience。
-    - 核心思路：原始 MDA 是分析框架，作者把它反过来用作生成约束：Step 1 (Mechanics) 强制模型只引用 review 实际提到的规则组件 (grounding)；Step 2 (Dynamics) 推断这些规则在运行时引发的系统行为或玩家交互；Step 3 (Aesthetics) 才合成情感反应，且必须由 persona P 调制。形式化为 $[R, P] \xrightarrow{Z_{MDA}} Y$。Verifier 检查 Z 与 rating 是否 sentiment 一致，不一致就重生 → 200 chain 人工 audit 全部 pass。
-    - 设计动机：直接 $R \to Y$ 让模型一步到位生成 review，模型会偷懒输出表面情感 (central tendency bias)；显式三步迫使模型先把规则 ground、再推因果、最后才表达情感，每步可独立验证。这本质上是"把游戏设计理论翻译成 prompt 模板"，理论既给推理结构又给 verifier。
+通用 LLM 直接从规则书 $R$ 一步跳到评论 $Y$ 时会偷懒，只输出表面情感，于是所有游戏都打 7-8 分（central tendency bias），根本捕捉不到社群的冷热分化。作者借用游戏设计学的经典 MDA 理论（Mechanics 客观规则 → Dynamics 运行时交互 → Aesthetics 主观情绪）当生成模板，把这条隐式因果链显式写成 CoT：Step 1 只允许引用 review 真正提到的规则组件做 grounding，Step 2 推断这些规则在运行时会触发什么系统行为或玩家交互，Step 3 才合成情感反应，且必须由人格 $P$ 调制，整体形式化为 $[R, P] \xrightarrow{Z_{MDA}} Y$。
 
-2. **数据驱动的 5 类玩家 persona + 完整语义画像注入 system prompt**：
+这样做的好处是每一步都可独立验证：GPT-5.1 verifier 检查推理链 $Z$ 的情感倾向是否和 ground-truth rating 一致，矛盾就打回重生，最终 200 条人工 audit 全部 pass。本质上这是"把领域理论翻译成 prompt 模板"——MDA 既提供推理结构，又顺手给出了可机检的中间监督信号，迫使模型先 ground 规则、再推因果、最后才表态，而不是一上来就拍脑袋给情感。
 
-    - 功能：捕捉真实玩家社群的主观异质性，避免"平均玩家"的一刀切评分。
-    - 核心思路：(a) Cluster-then-Refine：K-Means K=15 先按 review embedding 聚类，让数据自己说"哪些群体存在"，再让 GPT-5.1 profile + 人专家合并到 5 个稳定 persona；(b) **关键决策**：训练时 P 不是简单的 label token，而是把每个 persona 的完整画像 (core values, interaction preferences, 痛点喜好) 写进 system instruction，让模型把 P 当 contextual prior 而非 categorical feature；(c) 推理时按 ground-truth review 的实际 persona 分布采样 N=100 次/游戏，再聚合成 rating 分布。
-    - 设计动机：作者实测了 DeBERTa-v3-large 分类器，它把"house rules + balance"误判为 System Purist (实际是 Thrill Seeker 在引入高方差)，证明 persona 是细微 cognitive attribution 的产物，符号 label 不够；语义画像让 LLM 用自身的 commonsense 在 persona 维度上插值，从而泛化到训练集外的微妙偏好组合。
+**2. 数据驱动的 5 类人格 + 把完整语义画像写进 system prompt：用 commonsense 插值替代符号 label。**
 
-3. **多维质量过滤 + 立场分布保真**：
+桌游评价的核心矛盾是主观异质性——同一个高随机度机制能让 Social Lubricator 兴奋却让 Strategist 抓狂，"平均玩家"的一刀切评分对设计师毫无用处。作者先走 Cluster-then-Refine：用 Qwen3-Embedding-8B 把 review（拼接文本 + logic score + facets）嵌入后做 K-Means（K=15），让数据自己说"存在哪些群体"，再由 GPT-5.1 profile 中心样本、人专家归并成 5 个稳定人格（System Purist / Efficiency Essentialist / Narrative Architect / Social Lubricator / Thrill Seeker），最后用 GPT-5.1 三次多数投票给全量数据打人格标签。
 
-    - 功能：从 1.8M raw review 里筛出 150K 真正"对设计师有用"的高质量 critique，同时保留原 rating 分布。
-    - 核心思路：(a) Hard Filter 去噪 (太短、跑题、rating/text 矛盾)；(b) **MDA Scoring** —— 三个 1-5 维度: mechanism_anchoring (是否提具体规则名称), causal_attribution (是否给因果解释), constructiveness (是否对设计有用), Few-shot prompt 强制 decoupling 避免 halo effect；(c) Facet Identification 把 review 映射到 8 个语义 topic (Rule Clarity, Cognitive Load, Luck vs Strategy 等)；(d) Coverage-max stratified sampling 同时保 rating 分布 (Pearson r=0.92) 和 facet 多样性。
-    - 设计动机：过滤后 review 平均长度比未过滤的极端 rating review 高 1.24×，证明"信息密度"实际提升；同时保 rating 分布让模型不会偏离社区评分基线。
+真正的关键决策在训练这一步：人格 $P$ 不是一个 label token，而是把每个人格的完整画像（核心价值观、交互偏好、痛点喜好）整段写进 system instruction，让模型把 $P$ 当 contextual prior 而非 categorical feature。作者实测过 DeBERTa-v3-large 分类器，它会把"house rules + balance"误判成 System Purist，可实际上那是 Thrill Seeker 在故意调高方差——说明人格是细微 cognitive attribution 的产物，符号 label 根本编码不住。改成语义画像后，LLM 能用自身 commonsense 在人格维度上插值，从而泛化到训练集外那些微妙的偏好组合。推理时则按某游戏真实 review 的人格分布采样 N=100 次再聚合，复现出整条评分分布而非一个点估计。
+
+**3. 多维质量过滤 + 立场分布保真：从 1.8M 噪声里筛出 150K 既有用又不偏移基线的 critique。**
+
+原始 review 大量是太短、跑题、或 rating 和正文自相矛盾的噪声，直接拿来训练会把模型带偏。过滤分四道：先用 Hard Filter 去掉明显垃圾；再做 **MDA Scoring**，沿三个 1-5 维度——mechanism_anchoring（有没有点到具体规则名）、causal_attribution（有没有给因果解释）、constructiveness（对设计有没有用）——打分，且用 few-shot prompt 强制三维 decoupling 以避免 halo effect；接着 Facet Identification 把每条 review 映射到 8 个语义 topic（Rule Clarity、Cognitive Load、Luck vs Strategy 等）；最后用 coverage-max stratified sampling 在保住 rating 分布（与原始分布 Pearson $r=0.92$）的同时最大化 facet 多样性。
+
+两个保真目标缺一不可：过滤后 review 平均长度是未过滤极端 rating review 的 1.24×，说明留下来的确实是信息密度更高的内容；而强约束保住原 rating 分布，则保证模型学到的评分基线不会偏离真实社区——否则模型可能学会"盲猜大众平均分"压低 MAE，却完全失去设计参考价值。
+
+### 一个完整示例：模型如何给一款新游戏生成评分分布
+
+以一款主打"高随机抽卡 + 玩家互坑"的新桌游为例，走一遍推理流程：
+
+1. **输入**：把这款游戏的 standard rulebook $R$，连同某一个人格的完整画像 $P_{profile}$（比如 Thrill Seeker：偏爱高方差、戏剧性反转，讨厌冗长的最优解计算）一起塞进 system prompt。
+2. **MDA 推理**：模型先沿 Mechanics 列出规则里实际写到的"每回合翻 3 张事件卡、可弃牌攻击对手"；再到 Dynamics 推断这会带来"局势频繁逆转、leader 容易被集火"；最后到 Aesthetics，在 Thrill Seeker 这个人格 prior 下输出"刺激、有赌徒快感"的正面情绪 → 给出偏高的 rating + 一段带玩家行话的 review。
+3. **换人格重采**：换成 Efficiency Essentialist（追求最优策略），同一条 Dynamics 会被解读成"随机性淹没了决策，努力得不到回报"，于是给出偏低 rating。
+4. **聚合成分布**：按这款游戏真实 review 的人格构成采样 N=100 次（比如 Thrill Seeker 占比高就多采几次），把 100 个 (rating, review) 聚合，得到一条**两极分化**的评分分布，而不是一个被压平的均值。
+
+这一步把抽象的"persona 作为 contextual prior 调控 Dynamics→Aesthetics"具象化了：换的不是标签，而是一整套价值观，导致同一条客观 Dynamics 被推向相反的情绪结论。
 
 ### 损失函数 / 训练策略
 LoRA on all linear layers via LLaMA-Factory，目标是最大化 $L = -\sum_{t=1}^{|S|} \log P(s_t | s_{<t}, R, P_{profile})$，其中 $S = [Z; Y]$ 是 MDA reasoning chain 后接 critique (rating + review) 的拼接序列。Teacher: Qwen3-235B；Student: Qwen3-8B；推理时 N=100 次按真实 persona 分布采样后聚合。

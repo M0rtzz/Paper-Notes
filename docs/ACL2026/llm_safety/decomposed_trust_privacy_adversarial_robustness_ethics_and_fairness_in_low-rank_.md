@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **四维可信评测协议**:
+**1. 四维可信评测协议：把"可信性"拆成四象限独立测，不让 overall accuracy 一刀切。**
 
-    - 功能：把"可信性"系统拆成 privacy（training-data + PII 两子项）、adversarial robustness、ethics（standard + jailbreaking 两子项）、fairness 四象限独立测，避免 overall accuracy 一刀切。
-    - 核心思路：每个维度选**业内标准 dataset + 标准 metric**：Privacy 用 Enron 邮件（context length $L \in \{50,100,200\}$，5 指标含 leakage rate / reject rate）；Adversarial 用 GLUE vs AdvGLUE++ 的 accuracy 差 $\Delta_{\text{robust}}$；Ethics 用 ETHICS commonsense + 5 个 jailbreak 指令测 FPR；Fairness 用 Adult 数据的 MDPD/MEOD。再加 zero-shot vs few-shot 双 prompt 设置交叉。
-    - 设计动机：单一聚合指标会掩盖"PII 泄漏增加但 training-data 泄漏下降"这种方向相反的 trade-off。分维度才能给出 Table 2 的"✓✗ 决策表"那样可操作的部署指南。
+如果只看一个聚合指标，"PII 泄漏增加但 training-data 泄漏下降"这种方向相反的 trade-off 会被直接抹平，部署方根本看不出风险藏在哪。本文因此把可信性拆成 privacy（training-data + PII 两子项）、adversarial robustness、ethics（standard + jailbreaking 两子项）、fairness 四个象限，每个维度都挂上业内标准 dataset 和标准 metric：Privacy 用 Enron 邮件，context length 取 $L \in \{50,100,200\}$，5 个指标涵盖 leakage rate 与 reject rate；Adversarial 用 GLUE 与 AdvGLUE++ 的 accuracy 差 $\Delta_{\text{robust}}$；Ethics 用 ETHICS commonsense，再叠 5 条 jailbreak 指令测 FPR；Fairness 用 Adult 数据的 MDPD/MEOD。最后再交叉 zero-shot 与 few-shot 双 prompt 设置。正是这种分维度评测，才能凝练出 Table 2 那张可操作的"✓✗ 决策表"，告诉 engineer 低秩压缩究竟适合、不适合做什么。
 
-2. **Safety Subspace 理论解释 + condition number 理论**:
+**2. Safety Subspace 与 condition number 理论：把实验现象升华成可证的因果。**
 
-    - 功能：从数学上解释为什么低秩分解会让 PII/ethics 变差但 adversarial robustness 变好，把实验现象升华为理论。
-    - 核心思路：对每个权重矩阵 $\mathbf{W} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top$，refusal vector $\mathbf{v} = \sum_{k=1}^r \lambda_k \mathbf{u}_k$ 横跨完整子空间；压缩到 $r' < r$ 后，$\|\mathbf{v} - \hat{\mathbf{v}}\|_2^2 = \sum_{k=r'+1}^r \lambda_k^2$ 是不可消除的重构误差，所以越压安全防线越破。同时对抗鲁棒由 condition number $\kappa(\mathbf{W}) = s_{\max}/s_{\min}$ 决定，低秩分解扔掉最小奇异值 → $s_{\min}$ 变大 → $\kappa$ 变小 → 对抗鲁棒变好。training-data 隐私则由 capacity 决定，子空间压缩等价于减容量 → 减少记忆 → 减少 leakage。
-    - 设计动机：三条理论刚好对上三条实验观察，避免"benchmark 大杂烩"的批评；同时把"safety subspace"这种最新可解释性发现引入到压缩算法设计指南。
+光报告"压缩后 PII 变差、对抗变好"会被批成 benchmark 大杂烩，所以本文给三条观察各配一条数学解释。对每个权重矩阵 $\mathbf{W} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^\top$，refusal vector $\mathbf{v} = \sum_{k=1}^r \lambda_k \mathbf{u}_k$ 横跨完整奇异子空间；一旦压到 $r' < r$，被截掉的方向带来不可消除的重构误差
 
-3. **梯度归因层级敏感度分析**:
+$$\|\mathbf{v} - \hat{\mathbf{v}}\|_2^2 = \sum_{k=r'+1}^r \lambda_k^2,$$
 
-    - 功能：找出哪些子层（`embed_tokens`、`q/k/v/o_proj`、`gate/up/down_proj`）对对抗鲁棒最关键，为未来"trust-aware compression"指导哪些层不该被高压。
-    - 核心思路：用一阶 Taylor 把第 $i$ 层贡献定义为 $a_i = \|(\partial \ell / \partial \mathbf{h}_i) \mathbf{h}_i\|_2$，对每个样本算 clean 和 adversarial 两份，再取差 $\Delta_i = |a_i^{\text{clean}} - a_i^{\text{adv}}|$。在 SST-2/QQP/MNLI 三任务 × LLaMA-2 8 个变体上系统跑出层 ranking。
-    - 设计动机：现有低秩方法（ASVD/AMC）只按 benign reconstruction error 分配 rank，本文证明这会"误伤" `embed_tokens` 和 `down_proj`——它们恰是 trust-critical 层；future work 应让这些层保留更多 rank。
+压得越狠，refusal 方向越重构不回来，PII 防护和伦理对齐就被悄悄削掉。对抗鲁棒则由 condition number $\kappa(\mathbf{W}) = s_{\max}/s_{\min}$ 主导——低秩分解恰好扔掉最小的那些奇异值，$s_{\min}$ 被抬高、$\kappa$ 随之变小，模型对扰动反而更稳。training-data 隐私走的是容量路线：截子空间等价于减容量，记忆能力下降，训练邮件的泄漏也跟着减少。三条理论分别咬合三条实验现象，同时把 Arditi et al. 的 safety subspace 这一最新可解释性发现引进了压缩算法的设计语境。
+
+**3. 梯度归因层级敏感度分析：定位"对抗鲁棒到底由哪些层决定"。**
+
+现有低秩方法（ASVD/AMC）按 benign reconstruction error 来分配 rank，但这套准则可能"误伤"真正承载安全的层，本文要把这些层揪出来。做法是用一阶 Taylor 把第 $i$ 层的贡献量化为 $a_i = \|(\partial \ell / \partial \mathbf{h}_i) \mathbf{h}_i\|_2$，对每个样本分别在 clean 和 adversarial 输入下各算一份，再取差 $\Delta_i = |a_i^{\text{clean}} - a_i^{\text{adv}}|$ 当作"信任敏感度"。在 SST-2/QQP/MNLI 三任务 × LLaMA-2 8 个变体上跑完层 ranking 后，`embed_tokens` 与 `down_proj` 稳定排在最前——它们才是 trust-critical 层，未来的 trust-aware compression 应当给这两层留更高的 rank，而非一视同仁地压。
 
 ### 损失函数 / 训练策略
 评估论文，不训练新模型；微调用 GSM8K (math) 和 HumanEval-style (code) 标准 dataset；低秩压缩用各方法原始 paper 的实现，仅控压缩率 $k\%$；归因实验用一阶 Taylor，无需训练。

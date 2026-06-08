@@ -46,23 +46,24 @@ RTE 把任务外推拆成两阶段。**训练阶段**：从训练任务库 $\mat
 
 ### 关键设计
 
-1. **锚点-变换分解（Anchor-Transformation Decomposition）**：
+**1. 锚点-变换分解：把支撑外任务拆成"已见锚点 + 已见变换"。**
 
-    - 功能：把支撑外的目标任务 $f_{\theta^*}$ 表示为 $f_{\theta^*}(x) = \Psi(x, f_{anc}, \phi)$，其中 $f_{anc} \in \mathcal{F}_{train}$、$\phi \in \Phi_{train}$。
-    - 核心思路：对三种外推 regime 给出统一接口——连续参数外推时 $\phi = \Delta\theta = \theta_{target} - \theta_{anc}$（差分算子）；长度递归外推时 $\phi$ 是把复杂度 $L-1$ 推到 $L$ 的扩展步（如多项式从 8 阶到 9 阶新加的高阶系数 $c_9$）；组合外推时 $\phi$ 是另一个原语（如 $\sin\circ x^2$ 中外层 $\sin$）。
-    - 设计动机：直接学习边界外的 $f$ 是 ill-posed，但只要假设"任务流形被一族结构化变换 $\mathcal{S}$ 连接"，目标任务就能从已见的两个支撑内成分组合得到——OOS 问题降级为 OOC 问题。
+直接去学边界外的 $f$ 是 ill-posed——无数假设都能拟合训练数据却在外推区任意分歧。RTE 注入的结构假设是：目标任务 $f_{\theta^*}$ 可以写成 $f_{\theta^*}(x) = \Psi(x, f_{anc}, \phi)$，其中锚点 $f_{anc} \in \mathcal{F}_{train}$、变换 $\phi \in \Phi_{train}$ 都是训练里见过的成分。三类外推被统一到同一接口：连续参数外推时 $\phi = \Delta\theta = \theta_{target} - \theta_{anc}$ 是差分算子（如初速从 60 推到 65）；长度递归外推时 $\phi$ 是把复杂度 $L-1$ 推到 $L$ 的扩展步（如多项式从 8 阶到 9 阶新增的高阶系数 $c_9$）；组合外推时 $\phi$ 是另一个原语（如 $\sin\circ x^2$ 的外层 $\sin$）。
 
-2. **关系算子 $\Psi$ 的训练（Relational Operator）**：
+这一步的价值在于把问题降级：只要假设"任务流形被一族结构化变换连接"，支撑外（OOS）的难题就变成支撑内组合新颖（OOC）的较易问题——目标任务由两个支撑内成分拼出来，模型不必凭空外推。
 
-    - 功能：学一个参数化的算子，把 (查询输入, 锚点任务, 变换) 映射到目标预测，最小化 $\mathbb{E}_{f_i, f_j}[\mathcal{L}(f_j(x), \Psi(x, f_i, \phi_{ij}))]$。
-    - 核心思路：连续 regime 下 $\phi_{ij}$ 直接取 Task2Vec 嵌入差 $\hat\theta_j - \hat\theta_i$；离散（长度/组合）regime 下，作者假设训练时可拿到 ground-truth 关系标签（例如 $f_j = f_i \circ g$ 时直接把 $g$ 当作 $\phi_{ij}$），由此 $\Psi$ 只需学"如何根据变换改造已知任务输出"，不用同时学任务流形 + 变换机制（这是 ill-posed 的）。
-    - 设计动机：把任务关系当作一阶对象显式建模，让模型学到"机制"而非"启发式"——这是 RTE 区别于 MAML/Reptile 等元学习的关键：后者假设新任务落在训练分布的局部邻域内，前者明确针对支撑外推。
+**2. 关系算子 $\Psi$ 的训练：把任务关系当一阶对象学。**
 
-3. **测试时分解：几何捷径 vs 摊销搜索（Test-time Decomposition）**：
+有了分解假设，就训练一个参数化算子 $\Psi$ 把（查询输入, 锚点任务, 变换）映射到目标预测，目标是 $\min \mathbb{E}_{f_i, f_j}[\mathcal{L}(f_j(x), \Psi(x, f_i, \phi_{ij}))]$。训练数据来自任务库里反复采样的任务对 $(f_i, f_j)$ 及其相对变换 $\phi_{ij}$：连续 regime 下 $\phi_{ij}$ 直接取 Task2Vec 嵌入差 $\hat\theta_j - \hat\theta_i$；离散（长度/组合）regime 下假设训练可拿到 ground-truth 关系标签（如 $f_j = f_i \circ g$ 时把 $g$ 当 $\phi_{ij}$）。
 
-    - 功能：给一个未见任务的稀疏上下文 $D_{target}$，反解出 $(f_{anc}^*, \phi^*) = \arg\min_{f, \phi} \sum_{(x,y)\in D_{target}} \mathcal{L}(y, \Psi(x, f, \phi))$。
-    - 核心思路：**策略 A（连续 regime）**用 Task2Vec 估出 $\hat\theta_{target} = \Gamma(D_{target})$，最近邻取 $f_{anc}^*$，相减得到 $\phi^* = \hat\theta_{target} - \hat\theta_{anc}^*$，一次 lookup 解决；**策略 B（离散 regime）**训练一个 decomposer $g_\psi$ 给出候选 top-$k$ 锚点-变换对，再在 $\mathcal{C}_k$ 上做小规模搜索/最小化 loss；**LLM 场景**则用模型在 $D_{target}$ 上的 negative log-likelihood 作为打分器，对候选做暴力搜索（作者称之为 "Neural RAG"）。
-    - 设计动机：连续 regime 下任务流形几何良好，nearest-neighbor 即可；离散组合 regime 下流形是组合爆炸的，必须用 amortized inference 把搜索空间压到 $O(k)$；而对 LLM 这类无法直接计算 proxy embedding 的模型，直接用似然作为代理打分既统一又免新模块。
+这样 $\Psi$ 只需学"给定变换如何改造已知任务的输出"，不用同时学任务流形和变换机制（后者才是 ill-posed 的根）。把任务关系显式建成一阶对象，让模型学到"机制"而非"启发式"——这正是 RTE 区别于 MAML/Reptile 的地方：后者假设新任务落在训练分布的局部邻域，前者明确针对支撑外推。
+
+**3. 测试时分解：几何捷径 vs 摊销搜索。**
+
+测试时只给目标任务的稀疏上下文 $D_{target}$，要反解出最优 $(f_{anc}^*, \phi^*) = \arg\min_{f, \phi} \sum_{(x,y)\in D_{target}} \mathcal{L}(y, \Psi(x, f, \phi))$。RTE 按 regime 走三条路：连续 regime 任务流形几何良好，用 Task2Vec 估出 $\hat\theta_{target}$、最近邻取锚点、相减得变换，一次 lookup 解决；离散组合 regime 的流形是组合爆炸的，训一个 decomposer $g_\psi$ 给出 top-$k$ 候选对，再在 $\mathcal{C}_k$ 上做小规模搜索，把空间压到 $O(k)$；LLM 场景无法直接算 proxy embedding，就用模型在 $D_{target}$ 上的负对数似然当打分器对候选暴力搜索（作者称之为 "Neural RAG"）。三条路的共性是用合适的代理把"反解分解"这个难题变成可执行的检索或最小化。
+
+### 损失函数 / 训练策略
+函数预测场景下 $\Psi$ 是 MLP，损失用 MSE。LLM 场景下 $\Psi$ 是 LoRA 微调的 Qwen / Mistral，把（锚点 demo, 变换描述 $\phi$, 查询输入）格式化成 prompt $P$，最小化 $\mathcal{L}_{SFT} = -\sum_t \log p_\theta(y_t | P, y_{<t})$。变换 $\phi$ 可以是自然语言指令、离散控制 token 或学习到的 embedding，视 regime 而定。
 
 ### 损失函数 / 训练策略
 

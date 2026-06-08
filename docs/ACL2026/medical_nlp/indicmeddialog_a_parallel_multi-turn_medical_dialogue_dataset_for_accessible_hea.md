@@ -49,23 +49,25 @@ tags:
 
 ### 关键设计
 
-1. **合成 + 翻译 + 脚本感知后处理的多语料 pipeline**：
+**1. 合成 + 翻译 + 脚本感知后处理的三段式语料链：在没有真实临床多语对话的前提下，造出语义一致、临床合理、语言准确的 10 语平行语料。**
 
-    - 功能：在没有真实临床多语对话的前提下，造出语义一致、临床合理、语言准确的 10 语平行语料。
-    - 核心思路：链路是"Llama-3.3-70B 合成英文多轮诊断 → TranslateGemma 翻 9 种 Indic → 脚本感知 post-processing 修音/拼/间距 → native speaker 双盲打分仲裁"。脚本感知 post-processing 把翻译里产生的音译错乱（如 Bengali 字符间距、Hindi 词形误用）通过最近形态映射回正确形式；同时严格用 12 疾病 × 118 症状 schema 约束合成，控制 4-8 轮长度与症状重叠以贴近真实问诊。
-    - 设计动机：直接翻译会大量产生"看起来像 Bengali 但实际乱拼"的字符串，单独靠 LLM 后处理不够，必须基于目标语脚本的 Unicode 规则做映射；用真实 native speaker 打分（$\bar T = 9.50$）作为质量上限验证，避免"自评分"陷阱。
+低资源印度语系最大的拦路虎是「现成 LLM 直接翻译会大量吐出看起来像 Bengali、实际却乱拼的字符串」——音译错乱、词形误用、字符间距错位是系统性的。本文先用 Llama-3.3-70B 在 12 疾病 × 118 症状的 schema 约束下合成英文多轮诊断对话（控制 4-8 轮长度、注入症状重叠与模糊描述以贴近真实问诊），再用 TranslateGemma 翻成 9 种 Indic，关键的一环是其后的**脚本感知 post-processing**：它不依赖 LLM 二次润色，而是按目标语脚本的 Unicode 规则，把翻译产生的错乱形态（如 Bengali 字符间距、Hindi 词形误用）映射回最近的正确形式。
 
-2. **LoRA + 4-bit 量化 + Patient Pre-context 的可部署小模型方案**：
+之所以要单独做这一步，是因为单靠 LLM 后处理无法稳定纠正脚本级错误，必须落到 Unicode 形态映射才靠谱。最后用每语 2 名 native speaker 对翻译质量 $T$ 与临床安全 $S$ 各打 10 分独立仲裁，得到 $\bar T = 9.50$、$\bar S = 9.56$——用真人评分而非模型自评作为质量上限，规避了「自己造数据又自己打分」的陷阱。
 
-    - 功能：让 3B 小模型在普通硬件上完成多轮个性化问诊。
-    - 核心思路：(i) 4-bit NF4 量化让 3B 模型显存需求降到消费级 GPU 可接受；(ii) LoRA 同时覆盖 attention 与 MLP proj（rank 16），保证语言表征 + 任务知识都能被调；(iii) ShareGPT 格式让 human=患者 / gpt=医生，明确角色分离；(iv) 可选的 patient pre-context（age, gender, allergies, comorbidities, geographic location）拼到对话前缀，让模型在采症时跳过已知信息、聚焦差异化提问。
-    - 设计动机：医疗 AI 真正部署的痛点是"乡镇诊所没 GPU 集群"，本文显式以低算力为约束反推架构选型；patient pre-context 设计源于真实临床 workflow——医生不会重复问已经知道的信息，AI 也不应该。
+**2. LoRA + 4-bit 量化 + Patient Pre-context：让 3B 小模型在普通硬件上完成多轮个性化问诊。**
 
-3. **两阶段后处理评测 + 5 类 Failure Mode taxonomy**：
+医疗 AI 真正落地的痛点不是精度而是算力——乡镇诊所没有 GPU 集群，论文因此显式把「低算力」当成硬约束反推架构。基模选 LLaMA-3.2-3B-Instruct，先用 4-bit NF4 量化把显存压到消费级 GPU 可接受，再用 LoRA（rank 16）同时插到所有 attention proj 与 MLP proj 上——覆盖 MLP 是为了让语言表征和任务知识都能被调，而不只是浅层 attention。对话按 ShareGPT 格式组织、human=患者 / gpt=医生，角色边界清晰。
 
-    - 功能：(a) 把"对了但格式不对"的预测回收成正确；(b) 用统一框架解释为什么不同 Indic 语言失败模式差异巨大。
-    - 核心思路：post-processing 用 ChatGPT 5.3 作 closed-set judge，从 12 个 canonical 标签里选最语义等价者或返回 NULL；同时系统化整理出 5 类 FM——FM1 Instruction Drift（输出散文不带标签，部分可恢复，对应 Hindi/Marathi 的 +54pp 提升）、FM2 Label Collapse（多种病映射到同一假名，如 Bengali 所有 5 类病都映射到"肺感染"）、FM3 Cross-Domain Confusion（如冠心病 → 甲状腺炎）、FM4 Tokenization/Truncation Failure（Punjabi/Telugu 字符级截断，但 Devanagari Hindi/Marathi 不受影响，证明是 tokenizer Unicode 覆盖问题非数据量问题）、FM5 Paraphrase-over-Label Generation（输出疾病描述而非标准名，最可恢复）。
-    - 设计动机：仅看 raw accuracy 会把 Hindi/Marathi 严重低估（19% 看起来很差，post-processing 后 73%/69%），五类 FM 直接把"模型烂"细分为"格式不对/标签碰撞/学科混淆/字符截断/换皮表达"，为后续改进提供精准抓手——例如 TTF 应改 tokenizer 而非加数据。
+个性化则靠可选的 **patient pre-context**：把年龄、性别、过敏史、合并症、地理位置拼到对话前缀，让模型采症时跳过已知信息、把追问聚焦到差异化症状上。这条设计直接来自真实临床 workflow——医生不会重复问已经知道的信息，AI 也不该。每个印度语单独训练，AdamW-8bit lr=$2\times 10^{-4}$、wd=0.001、bsz=8（2×4 grad acc）、300 step + 5 warm、BF16/FP16、seed=3407。
+
+**3. 两阶段后处理评测 + 5 类 Failure Mode taxonomy：既回收「对了但格式不对」的预测，又把「模型烂」拆成可定位的失败机制。**
+
+模型常把正确诊断包裹在印地/马拉地式的 hedging 长句里，raw accuracy 会严重低估真实能力（Hindi/Marathi raw 仅 19%/13%，post 直接到 73%/69%）。第一阶段用 ChatGPT 作 closed-set judge——给定自由文本输出与 12 个 canonical 疾病名，judge 只能从封闭集里选最语义等价的一个或返回 NULL，高于置信阈值才映射，从而在回收正确预测的同时不让 judge 幻觉新答案。
+
+> ⚠️ cache 中 judge 标注为 "ChatGPT 5.3"，型号名以原文为准。
+
+第二阶段把失败系统化成 5 类 FM，每类对应不同改进抓手：FM1 Instruction Drift（输出散文不带标签、部分可恢复，对应 Hindi/Marathi 的 +54pp 跳升）、FM2 Label Collapse（多病映射到同一假名，如 Bengali 把 5 类病全归到「肺感染」）、FM3 Cross-Domain Confusion（如冠心病→甲状腺炎）、FM4 Tokenization/Truncation Failure（Punjabi/Telugu 字符级截断，而 Devanagari 的 Hindi/Marathi 完全不受影响——证明瓶颈是 tokenizer 的 Unicode 覆盖而非数据量）、FM5 Paraphrase-over-Label Generation（输出疾病描述而非标准名，最易恢复）。这份 taxonomy 的价值在于把笼统的「准确率低」翻译成具体处方：FM4 该换 tokenizer，FM1/FM5 该加格式 reward 或后处理，而不是无脑加数据。
 
 ### 损失函数 / 训练策略
 标准 causal LM SFT loss（无特殊 reward / KD）；每语单独训练同套超参，inference 时 temperature=0.1, top-p=0.95, max_new=128；evaluation 含 (i) 自动诊断准确率（raw vs post）；(ii) 三位 MBBS 在读医生做 1-5 Likert 评分 + binary safety，Krippendorff's α=0.81。

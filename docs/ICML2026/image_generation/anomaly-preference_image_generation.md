@@ -38,32 +38,25 @@ tags:
 **核心 idea**：用"策略模型相对参考模型的去噪偏差 $\Delta = \|\hat\epsilon_\theta-\epsilon\|^2 - \|\hat\epsilon_\text{ref}-\epsilon\|^2$"代替 DPO 中的成对偏好对数比，把少样本异常生成变成一个可解析、稳定的隐式偏好优化问题。
 
 ## 方法详解
-APO 框架由三块组成：受约束策略优化（CPO，把 DPO 改造成无成对偏好的形式）、时间感知容量分配（TACA，按扩散时间步调节 LoRA rank）、分层采样（推理时三路 CFG）。三者分别解决了"对齐"、"多样性"、"可控性"。
 
 ### 整体框架
-- **输入**：少量 K 个真实异常样本 $\{(\mathbf{x}_i, \mathbf{c}_i)\}$ + 预训练 Stable Diffusion 作为参考模型 $\epsilon_\text{ref}$。
-- **训练循环**：采样真实异常 → 加噪到任意 $t$ → 同时用 $\epsilon_\text{ref}$ 和 $\epsilon_\theta$ 去噪 → 计算偏差 $\Delta$ → 用 $\mathcal{L}_\text{APO} = -\log\sigma(-\beta_t\Delta)$ 更新策略（仅更新 TACA 风格的时间感知 LoRA）。整个过程不需要采样负样本、不需要 reward model。
-- **推理**：把去噪过程拆成"无条件 + 文本条件 + 异常对齐"三个分量，分别用 $s_\text{text}$ 和 $s_\text{align}$ 控制权重，对应 hierarchical sampling。同时收集每步的 alignment deviation 上采样后聚合成异常定位 mask。
+APO 要解决的是"手里只有 K 个（量级 5~10）真实异常样本，却想让扩散模型生成既真实又多样的新异常"这件事，而难点在于既没有人工偏好对来做分布对齐、又容易在 fine-tune 时丢掉多样性。它的解法是把任务重写成一个隐式偏好优化问题：训练时拿真实异常加噪到任意时间步，同时让冻结的参考模型 $\epsilon_\text{ref}$ 和待训练的策略模型 $\epsilon_\theta$ 各去噪一次，用两者去噪误差的差值当偏好信号去更新一组时间感知 LoRA；推理时再把去噪预测拆成"无条件 + 文本条件 + 异常对齐"三个可独立调权的分量，并顺手把对齐分量的强度聚合成像素级异常定位图。三块设计——CPO、TACA、分层采样——分别对应"对齐目标分布""保住多样性""推理可控 + 免费定位"。
 
 ### 关键设计
 
-1. **隐式偏好对齐 CPO（无成对标注的 DPO 重写）**:
+**1. 隐式偏好对齐 CPO：把 DPO 改写成无成对标注的形式**
 
-    - 功能：把 DPO 的成对偏好 loss 改写成"策略 vs 参考模型在同一真实样本上的去噪偏差对比"，砍掉人工标注依赖。
-    - 核心思路：作者从约束优化 $\max_\theta \mathbb{E}[\mathcal{R}] - \beta D_\text{KL}(p_\theta \| p_\text{ref})$ 出发，推出最优策略形如 $p^*_\theta \propto p_\text{ref}\exp(\mathcal{R}/\beta)$，再把 reward 重参数化成 $\mathcal{R} = \beta\log\frac{p_\theta}{p_\text{ref}}$。关键观察：用变分 ELBO 把"扩散轨迹上的 KL 之差"化简后，可以得到 closed-form $\delta = \frac{1}{2}\mathbb{E}_t[\lambda'_t(\|\hat\epsilon_\theta-\epsilon\|^2 - \|\hat\epsilon_\text{ref}-\epsilon\|^2)]$，其中 $\lambda'_t$ 是 log-SNR 的时间导数。最终 loss 是 $\mathcal{L}_\text{APO} = -\log\sigma(-\beta_t\Delta)$，$\beta_t = -\frac{1}{2}\beta\lambda'_t$ 给出时间自适应权重。$\Delta < 0$ 表示策略模型比参考模型更好地对齐真实异常分布，sigmoid 把这种"更好"转化为偏好概率，单调 log-sigmoid 比纯 L2 loss 更稳定、不易过拟合到少量样本。
-    - 设计动机：传统 DPO 需要 $(\mathbf{z}^w, \mathbf{z}^l)$ 成对人工偏好；少样本异常场景拿不到。本文用"参考模型在同一 $\mathbf{z}_t$ 上的去噪"当作天然 baseline，等价于"任何真实异常都被偏好于参考模型在该噪声水平上的预测期望"——既保留了 DPO 的 KL 正则化稳定性，又免去标注成本。
+针对的痛点是少样本异常场景根本凑不齐 DPO 需要的 $(\mathbf{z}^w, \mathbf{z}^l)$ 人工偏好对，但又想保留 DPO 那种 KL 正则化带来的训练稳定性。作者从约束优化 $\max_\theta \mathbb{E}[\mathcal{R}] - \beta D_\text{KL}(p_\theta \| p_\text{ref})$ 出发，得到最优策略形如 $p^*_\theta \propto p_\text{ref}\exp(\mathcal{R}/\beta)$，再把 reward 重参数化成 $\mathcal{R} = \beta\log\frac{p_\theta}{p_\text{ref}}$。关键一步是用变分 ELBO 把"扩散轨迹上的 KL 之差"化简成 closed-form $\delta = \frac{1}{2}\mathbb{E}_t[\lambda'_t(\|\hat\epsilon_\theta-\epsilon\|^2 - \|\hat\epsilon_\text{ref}-\epsilon\|^2)]$，其中 $\lambda'_t$ 是 log-SNR 的时间导数。这样一来负样本就不必由模型生成，而是用"参考模型在同一 $\mathbf{z}_t$ 上的去噪期望"当天然 baseline——等价于声明"任何真实异常都被偏好于参考模型在该噪声水平上的预测"。
 
-2. **Time-Aware Capacity Allocation (TACA)**:
+记两模型去噪误差之差为 $\Delta = \|\hat\epsilon_\theta-\epsilon\|^2 - \|\hat\epsilon_\text{ref}-\epsilon\|^2$，最终 loss 就是 $\mathcal{L}_\text{APO} = -\log\sigma(-\beta_t\Delta)$，时间自适应权重 $\beta_t = -\frac{1}{2}\beta\lambda'_t$。$\Delta < 0$ 表示策略模型比参考模型更贴近真实异常分布，sigmoid 把这种"更好"转成偏好概率，单调的 log-sigmoid 比纯 L2 更不容易在少量样本上过拟合，既免去标注成本又保住了稳定性。
 
-    - 功能：按扩散时间步动态调节 LoRA 可训练 rank——高噪步用小 rank 保结构多样性、低噪步用大 rank 学细粒度异常细节。
-    - 核心思路：扩散去噪在高噪步主要决定全局结构（layout/composition），在低噪步主要决定纹理细节。如果对所有时间步统一 fine-tune，高噪步容易过拟合到训练样本的背景模式而压制多样性。TACA 把 LoRA 的权重更新写成 $\Delta W_t = B \cdot G_t \cdot A$，其中 $G_t$ 是按维度选择的对角 mask，激活维度数为 $k(t) = \lfloor k_\text{min} + (k_\text{max}-k_\text{min})(T-t)/T \rfloor$。$t\to T$（高噪）时 $k\to k_\text{min}$、几乎不动；$t\to 0$（低噪）时 $k\to k_\text{max}$、大幅适配。
-    - 设计动机：把"模型容量"作为可调资源沿时间轴重新分配，比"全步骤同等 fine-tune"更尊重扩散过程本身的物理意义。结果是结构多样性和异常细节同时保住，是真实度 vs 多样性 trade-off 的根因解法之一。
+**2. 时间感知容量分配 TACA：按噪声水平重新分配 LoRA 容量**
 
-3. **Hierarchical Sampling + Deviation-Guided Localization**:
+针对的痛点是对所有时间步统一 fine-tune 时，高噪步会过拟合到训练样本的背景模式，从而压制结构多样性。TACA 的观察是扩散去噪在高噪步主要决定全局结构（layout/composition）、在低噪步才决定纹理细节，因此模型容量应该沿时间轴分配而非一视同仁。具体把 LoRA 的权重更新写成 $\Delta W_t = B \cdot G_t \cdot A$，其中 $G_t$ 是按维度选择的对角 mask，激活维度数 $k(t) = \lfloor k_\text{min} + (k_\text{max}-k_\text{min})(T-t)/T \rfloor$：$t\to T$（高噪）时 $k\to k_\text{min}$、几乎不动以保住结构多样性，$t\to 0$（低噪）时 $k\to k_\text{max}$、大幅适配以学到细粒度异常细节。这一行 mask 改动尊重了扩散过程本身的物理意义，让结构多样性和异常细节同时保住，是真实度 vs 多样性 trade-off 的根因解法之一。
 
-    - 功能：推理时把去噪分解成三个分量、独立可调；同时把对齐偏差上采样成像素级异常 mask，免费提供异常定位。
-    - 核心思路：去噪预测被写成 $\hat\epsilon = \epsilon_\text{ref}(\mathbf{z}_t, t) + s_\text{text}\Delta_\text{text} + s_\text{align}\Delta_\text{align}$，其中 $\Delta_\text{text} = \epsilon_\text{ref}(\mathbf{z}_t, \mathbf{c}, t) - \epsilon_\text{ref}(\mathbf{z}_t, t)$ 控制文本条件强度、$\Delta_\text{align} = \epsilon_\theta(\mathbf{z}_t, \mathbf{c}, t) - \epsilon_\text{ref}(\mathbf{z}_t, \mathbf{c}, t)$ 控制异常对齐强度。两个 scale 独立可调，等价于从 $p_\text{ref} \cdot (p_\text{ref}^{\mathbf{c}}/p_\text{ref})^{s_\text{text}} \cdot (p_\theta^{\mathbf{c}}/p_\text{ref}^{\mathbf{c}})^{s_\text{align}}$ 的引导分布采样。对 $\|\Delta_\text{align}\|$ 按 TACA 权重 $k(t)$ 加权后聚合 + 双线性上采样 + 高斯平滑，得到 $\mathbf{P}_\text{anomaly}$——异常定位图就是这个对齐偏差本身。
-    - 设计动机：传统 CFG 只有一个 scale，无法把"文本语义"和"异常模式"分开调；hierarchical 形式给了用户细粒度控制。定位 mask 是免费副产品，因为偏差信号本身就是异常 saliency 的最佳指标。
+**3. 分层采样 + 偏差引导定位：推理可控并免费产出异常 mask**
+
+针对的痛点是传统 CFG 只有一个 scale，无法把"文本语义强度"和"异常模式强度"分开调。分层采样把去噪预测写成 $\hat\epsilon = \epsilon_\text{ref}(\mathbf{z}_t, t) + s_\text{text}\Delta_\text{text} + s_\text{align}\Delta_\text{align}$，其中 $\Delta_\text{text} = \epsilon_\text{ref}(\mathbf{z}_t, \mathbf{c}, t) - \epsilon_\text{ref}(\mathbf{z}_t, t)$ 控制文本条件强度、$\Delta_\text{align} = \epsilon_\theta(\mathbf{z}_t, \mathbf{c}, t) - \epsilon_\text{ref}(\mathbf{z}_t, \mathbf{c}, t)$ 控制异常对齐强度。两个 scale 独立可调，等价于从引导分布 $p_\text{ref} \cdot (p_\text{ref}^{\mathbf{c}}/p_\text{ref})^{s_\text{text}} \cdot (p_\theta^{\mathbf{c}}/p_\text{ref}^{\mathbf{c}})^{s_\text{align}}$ 采样，用户由此能在"基础模型连贯性"和"异常模式对齐"之间细粒度滑动。更妙的是异常定位是免费副产品：把 $\|\Delta_\text{align}\|$ 按 TACA 权重 $k(t)$ 加权聚合，再双线性上采样 + 高斯平滑，就得到像素级异常图 $\mathbf{P}_\text{anomaly}$——因为对齐偏差本身就是异常 saliency 的最佳指标，训练时根本无需定位监督。
 
 ### 损失函数 / 训练策略
 仅训练 LoRA 适配器，参考模型 $\epsilon_\text{ref}$ 完全冻结。loss 单一项 $\mathcal{L}_\text{APO} = -\log\sigma(-\beta_t\Delta)$，时间步 $t \sim \mathcal{U}(0,T)$ 均匀采样、噪声 $\epsilon \sim \mathcal{N}(0,\mathbf{I})$。$\beta$ 控制 KL 强度，$\beta_t$ 自动按 log-SNR 缩放。

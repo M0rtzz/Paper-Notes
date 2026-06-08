@@ -38,32 +38,26 @@ tags:
 **核心 idea**：与其笼统提高代码比例，不如在固定数学预算内提高结构化数学推理样本密度，用可见的中间推理轨迹训练模型解决高难数学问题。
 
 ## 方法详解
-这篇论文的方法不是新模型架构，而是一套大规模数据因果归因实验。作者先构建严格分域的 10T-token 预训练语料，再训练不同规模的 MoE 和 dense 模型，比较 full data、w/o code、w/o math、w/o cognitive scaffold 等数据配置。实验的关键是固定总训练 token：当移除某个域时，剩余域按比例补足预算，因此性能差异反映的是数据替换效应，而不是训练量变化。
 
 ### 整体框架
-整体流程分为四步。第一步是数据分域与清洗，把语料划分为 Web、Code、Code-NL、Math、Wikipedia、Books、Multilingual 七类，并用超过 300 个指标做质量准入。第二步是从头预训练 MoE 模型，核心模型是 20 层自回归 MoE，hidden size 2048，16 heads，每个 MoE 层有 16 个专家并采用 top-2 routing。第三步是固定预算消融，分别去掉纯 Code 或 Math，再看五类能力维度变化。第四步是在 Math 域内部用 cognitive scaffolds 替换一部分普通数学样本，测试结构化推理密度的作用，并用专家路由分布解释数据配比如何改变模型内部激活。
+这篇论文不提新架构，而是把"代码到底有没有帮助数学推理"做成一套大规模数据因果归因实验。作者先把 10T-token 语料严格切成 Web、Code、Code-NL、Math、Wikipedia、Books、Multilingual 七个域（每个域过 300+ 质量指标准入），再从头预训练核心模型——20 层自回归 MoE，hidden size 2048、16 heads，每层 16 个专家做 top-2 routing。真正的实验在数据配置上：从 full data 出发，分别去掉纯 Code、去掉 Math、或在 Math 内部把普通样本换成结构化样本，然后看五类能力维度怎么变。整套设计的关键约束是**固定总训练 token**——移除某个域时剩余域按比例上采样补齐，所以分数差异反映的是"数据替换效应"而不是训练量缩水，最后再用专家路由分布从机制层解释数据配比如何改写了模型内部激活。
 
 ### 关键设计
-1. **严格区分 Code 与 Code-NL**:
 
-    - 功能：把纯可执行程序和混合格式推理材料拆开，避免把后者的推理收益错误归因给代码。
-    - 核心思路：Code 主要来自 GitHub 等代码仓库，要求 executable code density 超过阈值，并通过语法、长度、去重和低质量过滤；Code-NL 主要来自网页、notebook、问答、Markdown、HTML/CSS 等混合来源，允许自然语言解释、公式和代码片段交织。代码消融时移除的是纯 Code，Code-NL 保持存在。
-    - 设计动机：如果把 Code-NL 也算作代码，那么“代码提升推理”可能其实来自结构化讲解和数学推导，而不是可执行程序本身。这个拆分让实验能估计纯代码的边际贡献。
+**1. 把 Code 和 Code-NL 拆成两类，分离纯程序的边际贡献。**
 
-2. **固定预算的数据消融实验**:
+过去研究常把可执行程序、notebook、Markdown、题解、带代码片段的数学推导都算作"代码"，于是"代码提升推理"这个结论其实混进了两种完全不同的信号。作者的做法是把纯 Code 严格限定为可执行函数、脚本、程序片段——要求 executable code density 超过阈值，再过语法、长度、去重和低质量过滤；而网页、notebook、问答、Markdown、HTML/CSS 这类自然语言、公式和代码交织的材料单独归为 Code-NL。做消融时只移除纯 Code，Code-NL 始终保留。这样一来，如果移除纯 Code 后数学推理并没掉、甚至更好，就说明此前观察到的推理收益更可能来自 Code-NL 里的结构化讲解和数学推导，而非可执行程序本身——这个拆分让实验第一次能干净地估计纯代码的边际贡献。
 
-    - 功能：测量不同数据域在同一训练预算下的竞争与协同关系。
-    - 核心思路：从 full corpus 出发分别训练 w/o code 和 w/o math 模型；移除某域后，不减少总 token，而是由其他域按比例上采样补齐。评估被归为 general knowledge、programming ability、mathematical ability、comprehensive reasoning、professional knowledge 五个维度。
-    - 设计动机：真实预训练最常见的约束是 token 预算固定。这个设置能暴露负耦合：加入一个域可能提升本域能力，却压低其他域能力。
+**2. 固定预算消融，逼出数据域之间的竞争与负耦合。**
 
-3. **认知脚手架筛选与 MoE 路由分析**:
+真实大模型训练最硬的约束是 token 预算固定，加某个域的数据从来不是白送收益，而是挤占别的域。作者据此从 full corpus 分别训练 w/o code 和 w/o math 两个模型，移除某域后不减总 token、而由其他域按比例补齐，再把评估拆成 general knowledge、programming ability、mathematical ability、comprehensive reasoning、professional knowledge 五个维度。这个设置的价值在于它能暴露负耦合：纯代码可能增强编程却压低数学复杂推导的接触机会，数学数据可能帮到竞赛编程却干扰部分混合代码推理——问题因此从"代码有没有用"变成"哪类信号在什么任务上有用、代价是什么"。
 
-    - 功能：在数学域中寻找更高密度的结构化推理样本，并检查这种数据是否以更稳定的内部路由方式提升复杂数学能力。
-    - 核心思路：用 20 万代码样本作为正例、20 万非代码样本作为负例训练轻量 FastText 分类器，让它识别外显结构模式；再把分类器应用到 Math 语料，选出 $f_\theta(x)\geq\tau$ 的 cognitive scaffolds。验证集上分类器 accuracy 为 0.9696，positive precision 为 0.9998，recall 为 0.9665。选出的样本并不是靠手写规则筛选，但事后统计显示它们符号密度更高、推导步数更多、缩进比例更高、文本更长。
-    - 设计动机：作者想证明有效信号是“显式中间推理结构”，而不是代码语义。MoE 路由分析进一步显示，脚手架不会像删掉 Code/Math 那样大幅重排专家，而是更像一个跨域稳定信号。
+**3. 用 FastText 筛认知脚手架，再用 MoE 路由验证它是跨域稳定信号。**
+
+如果有效信号真是"显式中间推理结构"而非代码语义，那就应该能在数学域内部直接把这种结构密度提上去。作者用 20 万代码样本当正例、20 万非代码样本当负例训练一个轻量 FastText 分类器，让它学会识别外显结构模式（子目标、分步推导、符号操作、验证过程），再把分类器投到 Math 语料，选出打分 $f_\theta(x)\geq\tau$ 的样本作为 cognitive scaffolds——这里 $f_\theta(x)$ 是分类器对样本结构化程度的打分，$\tau$ 是准入阈值。分类器本身很可信：验证集 accuracy 0.9696、positive precision 0.9998、recall 0.9665；而被选中的脚手架虽然没靠手写规则，事后统计却显示它们符号密度更高、推导步数更多、缩进比例更高、文本更长。更关键的是路由分析：删掉 Code 或 Math 会让对应域专家分布明显偏移，但替换成脚手架造成的偏移更小更分散，说明它不像一个新的窄域、而更像一个跨域稳定的推理信号。
 
 ### 损失函数 / 训练策略
-模型仍使用标准自回归语言建模目标。MoE 使用 dropless routing、load-balancing loss、router z-loss，并在早期加入 stochastic routing warmup：将 learned routing logits 与随机 logits 按 $\alpha=\min(t_c/t_w,1)$ 插值，缓解早期专家拥塞。训练使用 AdamW，学习率 $5\times10^{-5}$，2000 steps warmup，bfloat16 和 FP8 mixed precision，训练 24000 iterations，每 1200 iterations 保存 checkpoint。cognitive scaffolds 不作为新域单独调度，而是在固定 Math budget 内替换普通数学样本。
+模型用标准自回归语言建模目标。MoE 侧采用 dropless routing、load-balancing loss、router z-loss，并在早期加 stochastic routing warmup——把 learned routing logits 和随机 logits 按 $\alpha=\min(t_c/t_w,1)$ 插值，缓解早期专家拥塞。优化器 AdamW，学习率 $5\times10^{-5}$，2000 steps warmup，bfloat16 + FP8 混合精度，训 24000 iterations、每 1200 iterations 存一次 checkpoint。cognitive scaffolds 不单独当一个新域调度，而是在固定 Math budget 内替换普通数学样本，保证对比的是结构密度而非数学数据总量。
 
 ## 实验关键数据
 

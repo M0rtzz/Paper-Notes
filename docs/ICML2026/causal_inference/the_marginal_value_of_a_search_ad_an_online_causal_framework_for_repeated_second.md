@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-算法在线交互 $T$ 轮，每轮收到 context $x_t\in\mathbb{R}^d$，按线性模型 $\mathbb{E}[\Delta v_t]=\theta_*^\top x_t$ 决策出价 $b_t$。整体由三块构成：(1) **HOB 估计模块**：利用二价支付的 one-sided 反馈分块估计 CDF $\widehat G_t$；(2) **价值估计模块**：用基于估计 propensity 的修正 IPW 加权最小二乘解出 $\widehat\theta_t$；(3) **决策模块**：构造两个等价的奖励重写形式 $\widehat r_{t,0}, \widehat r_{t,1}$ 与对应置信宽度 $w_{t,0}, w_{t,1}$，用 "better of two UCBs" 选择更紧的那个去做 UCB 出价。最外层套一个 $L=O(\log T)$ 层的 master routine，按 confidence 宽度把时间分到不同层，并周期性做均匀探索以满足理论条件。
+算法要在线解决的是：每轮收到 context $x_t\in\mathbb{R}^d$，按线性价值模型 $\mathbb{E}[\Delta v_t]=\theta_*^\top x_t$ 决定出价 $b_t$，并在 binary 反馈（只知道赢没赢、对应收到 $v_{t,1}$ 还是 $v_{t,0}$）下把累计 regret 压到最小。难点在于因果估计需要"赢"和"输"两种 outcome，而追求 regret 的 bidder 天然会破坏这种平衡。作者把它拆成三个互相喂数据的模块——先用二价支付的非对称反馈估出 HOB（最高竞品价）的 CDF，再用估出的 propensity 做修正 IPW 回归解出价值参数 $\widehat\theta_t$，最后在两种等价的奖励重写形式之间挑置信区间更紧的那个去做 UCB 出价——外面再套一层 $L=O(\log T)$ 的分层 master routine 维护各层观测的条件独立性并周期性兜底探索。
 
 ### 关键设计
 
-1. **分块 HOB 估计 + bid-dependent 置信宽度**:
+**1. 分块 HOB 估计：把二价支付的信息红利逐区间释放**
 
-    - 功能：把 CDF 估计从"对每个 $b$ 单独估"改为"按区间概率 $p^i=\mathbb{P}(b^{i-1}<m_t\leq b^i)$ 分块估计后累加"，让较低 bid 享受较多观测、较高 bid 的方差天然更小。
-    - 核心思路：bid 离散到 $\mathcal{B}=\{b^j=(j-1)/\sqrt{T}\}$，定义 $\widehat p_t^i=\sum_{\tau\in\Phi_t}\mathbb{1}[b_\tau\geq b^i]\mathbb{1}[b^i<m_\tau\leq b^{i+1}]/\sum_{\tau\in\Phi_t}\mathbb{1}[b_\tau\geq b^i]$，CDF 估计 $\widehat G_t(b^j)=\sum_{i\leq j}\widehat p_t^i$。利用二价支付：高 bid 赢拍后能看到 mt，低 bid 时只要更高 bid 看到过赢的判定，就能反推 $\mathbb{1}[b\geq m_t]$，于是每个 $p^i$ 都有 $n_t^i\propto\sum\mathbb{1}[b_\tau\geq b^i]$ 个有效观测，越低 bid 观测越多。置信宽度推导（Lemma 1）给出 $u_t(b^j)\propto\sqrt{\sum_{k\leq j}\log T/n_t^k\cdot(\widehat p_0^k+\log T/\sqrt T)}$，自然实现"$p^i$ 小则估计更准"的 Bernstein 集中。
-    - 设计动机：FPA 中 binary 反馈下没有支付信息，HOB 估计是 $T^{2/3}$ 难度的瓶颈；SPA 中支付带来的信息让 HOB 估计变快，但只有按区间分块才能把这种红利完全释放出来。
+HOB 估计是整个 regret 的瓶颈：FPA 在 binary 反馈下没有任何支付信息，CDF 只能硬估，难度卡在 $T^{2/3}$；SPA 的关键差异是支付规则会泄露 HOB——赢拍后能精确看到 $m_t$，输拍时只要存在更高的 bid 赢过，就能反推 $\mathbb{1}[b\geq m_t]$。作者没有对每个 bid $b$ 单独估 $G(b)$，而是把 bid 离散到 $\mathcal{B}=\{b^j=(j-1)/\sqrt{T}\}$，按区间概率 $p^i=\mathbb{P}(b^{i-1}<m_t\leq b^i)$ 分块估计再累加：$\widehat p_t^i=\sum_{\tau\in\Phi_t}\mathbb{1}[b_\tau\geq b^i]\mathbb{1}[b^i<m_\tau\leq b^{i+1}]\,/\,\sum_{\tau\in\Phi_t}\mathbb{1}[b_\tau\geq b^i]$，于是 $\widehat G_t(b^j)=\sum_{i\leq j}\widehat p_t^i$。这样设计的好处是每个区间 $p^i$ 拿到的有效观测数 $n_t^i\propto\sum_\tau\mathbb{1}[b_\tau\geq b^i]$——越低的 bid 累积观测越多、估得越准。Lemma 1 据此给出 bid-dependent 的置信宽度 $u_t(b^j)\propto\sqrt{\sum_{k\leq j}(\log T/n_t^k)(\widehat p_0^k+\log T/\sqrt T)}$，本质是一个"$p^i$ 越小估计越准"的 Bernstein 集中，把支付带来的信息完整翻译成了更紧的不确定性。
 
-2. **可宽误差容忍的 IPW + 加权最小二乘**:
+**2. 宽误差容忍的 IPW 回归：让价值模块与 HOB 模块解耦**
 
-    - 功能：构造一个对 $\widehat G_t$ 任意误差形式都鲁棒的 IPW 估计器 $\widetilde e_t(b)$，再用 variance-weighted 最小二乘解 $\widehat\theta_t$，避免依赖 Bernstein-type HOB 误差假设。
-    - 核心思路：定义 $\widetilde e_t(b)=\mathbb{1}[b\geq m_t]v_{t,1}/\widehat G_t(b)-\mathbb{1}[b<m_t]v_{t,0}/(1-\widehat G_t(b))$，bias 与 variance 的可计算 proxy 是 $u_t(b)\sigma_t(b)$ 与 $\sigma_t(b)^2$，其中 $\sigma_t(b)=1/(\widehat G_t(b)(1-\widehat G_t(b)))$。然后解 $\widehat\theta_t=\arg\min_\theta\sum_{\tau\in\Phi_t}\sigma_\tau^{-2}(\widetilde e_\tau-\theta^\top x_\tau)^2+\|\theta\|_2^2$，闭式解形如 $A_t^{-1}z_t$。Lemma 3 给出误差界 $|\widehat\theta_t^\top x_t-\theta_*^\top x_t|\leq\gamma\|x_t\|_{A_t^{-1}}$，注意这个界可以任意大。
-    - 设计动机：以往 FPA 算法依赖"propensity 误差在小概率区域更紧"的 Bernstein 假设，本文的分块 HOB 估计不满足这种形式；新 IPW 设计接受任意误差形式 $u_t(b)$，让 HOB 模块和价值模块解耦，方法可推广性大幅提升。
+分块 HOB 估计的误差形式并不满足以往 FPA 算法依赖的"小概率区域更紧"的 Bernstein 假设，所以作者重新设计了一个对 $\widehat G_t$ 任意误差形式都鲁棒的 IPW 估计器 $\widetilde e_t(b)=\mathbb{1}[b\geq m_t]\,v_{t,1}/\widehat G_t(b)-\mathbb{1}[b<m_t]\,v_{t,0}/(1-\widehat G_t(b))$，并把它的 bias 与 variance 用可计算的 proxy $u_t(b)\sigma_t(b)$ 与 $\sigma_t(b)^2$ 表示，其中 $\sigma_t(b)=1/(\widehat G_t(b)(1-\widehat G_t(b)))$。价值参数由 variance-weighted 岭回归解出：$\widehat\theta_t=\arg\min_\theta\sum_{\tau\in\Phi_t}\sigma_\tau^{-2}(\widetilde e_\tau-\theta^\top x_\tau)^2+\|\theta\|_2^2$，闭式解形如 $A_t^{-1}z_t$，Lemma 3 给出误差界 $|\widehat\theta_t^\top x_t-\theta_*^\top x_t|\leq\gamma\|x_t\|_{A_t^{-1}}$。值得注意的是这个界可以任意大——作者刻意接受"价值估计可能很烂"，换来的是 HOB 模块与价值模块彻底解耦，方法因此能套到任意 sponsored auction 变体上。
 
-3. **"better of two UCBs" + 均匀探索兜底**:
+**3. better of two UCBs：用决策结构吸收价值估计的爆炸方差**
 
-    - 功能：把价值估计的潜在大误差转换成 regret 上的有界损失：在两种等价的 reward 重写形式中自动选择置信宽度更紧的那个，并在两种宽度都过大时触发均匀探索。
-    - 核心思路：奖励 $\bar r_t(b)$ 可改写为 $\bar r_{t,0}(b)=G(b)(\theta_*^\top x_t-b)+\int_0^b G(m)\mathrm{d}m$ 或 $\bar r_{t,1}(b)=-(1-G(b))\theta_*^\top x_t-G(b)b+\int_0^b G(m)\mathrm{d}m$，两种形式对 $\theta_*^\top x_t$ 的依赖系数互补：选 $r_{t,0}$ 在 $\widehat G_t(b)$ 小时窗宽 $\propto\widehat G_t(b)$ 小，反之选 $r_{t,1}$。Algorithm 2 通过比较 $\widehat G_t(b_L), \widehat G_t(b_R)$ 与阈值 $1-\lambda/8$ 在两个 UCB 中选出 $q$，把瞬时 regret 压到 $\min\{w_{t,0}(b_t), w_{t,1}(b_t)\}\propto\sigma_t(b_t)^{-1}$。当估计太差导致两个宽度都大时（理论概率小，由 Lemma 6 上界 $|\Phi_{\text{exp}}|=O(d\log^5 T)$），算法均匀随机出 $b^1$ 或 $b^J$ 做 forced exploration。
-    - 设计动机：因果估计的难点是赢-输观测不平衡，传统做法靠 forced randomization 但代价是 $T^{2/3}$；本算法通过"对偶 UCB"利用价值估计误差与 $\sigma_t$ 的负相关（误差大时 $\sigma_t$ 也大，但 $\min$ 之后宽度反而小），把绝大多数轮的 regret 控制住，只在小常数置信门限处做少量探索。
+既然价值估计误差可以任意大，关键问题就变成怎么让它不传导到 regret 上。作者注意到同一个期望奖励 $\bar r_t(b)$ 能写成两种等价形式：$\bar r_{t,0}(b)=G(b)(\theta_*^\top x_t-b)+\int_0^b G(m)\,\mathrm{d}m$ 和 $\bar r_{t,1}(b)=-(1-G(b))\theta_*^\top x_t-G(b)b+\int_0^b G(m)\,\mathrm{d}m$，两者对 $\theta_*^\top x_t$ 的依赖系数互补——$\widehat G_t(b)$ 小时形式 0 的窗宽 $\propto\widehat G_t(b)$ 也小，反之就该用形式 1。Algorithm 2 据此比较 $\widehat G_t(b_L),\widehat G_t(b_R)$ 与阈值 $1-\lambda/8$，在两个 UCB 中选出窗宽更紧的去出价，把瞬时 regret 压到 $\min\{w_{t,0}(b_t),w_{t,1}(b_t)\}\propto\sigma_t(b_t)^{-1}$。妙处在于价值误差与 $\sigma_t$ 是负相关的（误差大时 $\sigma_t$ 也大，取 $\min$ 之后宽度反而塌缩），于是绝大多数轮的 regret 都被控制住；只在两个窗宽都过大的少数轮（Lemma 6 上界 $|\Phi_{\text{exp}}|=O(d\log^5 T)$）才均匀随机出 $b^1$ 或 $b^J$ 做 forced exploration。这正是把 binary-feedback SPA 从 $T^{2/3}$ 推到 $\sqrt T$ 的核心——它替代了传统靠 forced randomization 才能保证 overlap 的昂贵做法。
 
 ### 损失函数 / 训练策略
-算法不是训练 ML 模型，而是在线决策。整体 master routine：(i) 用前 $(L+1)T_0$ 轮以 $b_t=1$ 出价获得初始 HOB 观测样本；(ii) 之后每轮按层 $\ell=1,\ldots,L$ 检查置信宽度，把当前轮分配到首个 "wt > 2^{-ℓ}" 的层，对应 bid 用 UCB 计算或 forced exploration；(iii) 用 Lemma 5 的 layered scheme 保持各层观测的条件独立性。
+算法不训练 ML 模型，而是在线决策，整体由一个分层 master routine 调度：先用前 $(L+1)T_0$ 轮固定 $b_t=1$ 出价收集初始 HOB 观测；之后每轮沿层 $\ell=1,\ldots,L$ 检查置信宽度，把当前轮分配到首个满足 $w_t>2^{-\ell}$ 的层，对应 bid 用上面的 better-of-two UCB 计算，或在该层触发 forced exploration；分层的目的（Lemma 5）是保持各层观测的条件独立性，让前面 HOB 与价值估计的集中不等式成立。
 
 ## 实验关键数据
 

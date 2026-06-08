@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SATYAM 将 CF 检测建模为条件生成任务。输入语音经两个冻结的音频编码器（Whisper 提取语义表示、TRILLsson 提取副语言表示）编码，经 CNN 投影和门控后映射到双曲空间，通过两阶段 Bhattacharyya 距离对齐（语音-语音 + 语音-提示），最终融合表示映射回欧氏空间注入冻结的 Qwen2-7B 解码器生成 "Real" 或 "Fake"。
+SATYAM 把 CodecFake 检测当成一个条件生成问题来解：与其训练一个分类头，不如让一个冻结的大语言模型直接说出 "Real" 还是 "Fake"。一段待检测语音先被两个冻结编码器并行编码——Whisper 抓语义、TRILLsson 抓副语言（音色、韵律、合成痕迹），两路特征经 CNN 投影和门控后被送进双曲空间做两阶段对齐融合，最后映射回欧氏空间、作为前缀条件 token 注入 Qwen2-7B 解码器输出判别结果。全程只有投影、门控和双曲对齐模块参与训练，可训练参数仅约 3.75M。
 
 ### 关键设计
 
-1. **Indic-CodecFake (ICF) 数据集构建**:
+**1. Indic-CodecFake (ICF)：把检测基准从英语扩到 12 种印度语言。**
 
-    - 功能：提供首个大规模多印度语言 CodecFake 检测基准
-    - 核心思路：以 IndicSUPERB（12 种印度语言）为真实语音源，通过 14 种不同配置的 NAC（DAC、Encodec、SoundStream、SpeechTokenizer、FunCodec、AudioDec、SNAC、MIMI）进行编码-解码重合成。保留原始 train/valid/test 划分，设计 Seen（训练和测试使用同一组 NAC）和 Unseen（测试用训练未见过的 NAC）两种评估设置
-    - 设计动机：现有 CF 数据集仅覆盖英语/中文，无法代表印度语言的音素多样性和韵律特征。多 NAC 配置确保了检测器需要学习跨编解码器的通用伪造特征
+已有 CF 数据集几乎只覆盖英语和中文，完全照顾不到印度语言丰富的音素和韵律——直接后果就是英语上 94% 的 AASIST 一到印度语就掉到 48%。ICF 以 IndicSUPERB 的 12 种印度语真实语音为源，用 8 类共 14 种配置的神经音频编解码器（DAC、Encodec、SoundStream、SpeechTokenizer、FunCodec、AudioDec、SNAC、MIMI）做编码-解码重合成，生成伪造样本。数据集保留原始 train/valid/test 划分，并刻意区分 Seen（训练和测试用同一组 NAC）与 Unseen（测试用训练时未见过的 NAC）两种设置，逼着检测器学的是跨编解码器的通用伪造特征，而不是死记某个 codec 的指纹。
 
-2. **双曲双阶段融合 (Hyperbolic Dual-Stage Fusion)**:
+**2. 双曲双阶段融合：在层级几何里对齐语音与提示。**
 
-    - 功能：在层级感知的几何空间中对齐不同模态的语音表示和文本提示
-    - 核心思路：Whisper 和 TRILLsson 表示经 CNN 投影和 sigmoid 门控后，通过指数映射 $\exp_0^c(u) = \tanh(\sqrt{c}\|u\|) \frac{u}{\sqrt{c}\|u\|}$ 映射到曲率为 $-c$ 的双曲空间。第一阶段通过最小化双曲 Bhattacharyya 距离 $\mathcal{L}_{S\text{-}S} = D_B(h_w, h_t)$ 对齐语义和副语言表示；用 Mobius 加法 $h_f = h_w \oplus_c h_t$ 融合。第二阶段同样用 BD 对齐融合语音表示与条件提示表示 $\mathcal{L}_{S\text{-}T} = D_B(h_f, h_A)$，再次用 Mobius 加法聚合
-    - 设计动机：语义和副语言线索存在层级结构；跨模态（语音-文本）的层级关系也是公认的。双曲空间天然适合嵌入层级结构，而 Bhattacharyya 距离在语音表示对齐中已被证明有效
+语义线索（说了什么）和副语言线索（怎么说的）天然存在从粗到细的层级关系，语音与文本提示之间也是如此，而双曲空间正适合无失真地嵌入这种层级结构。两路特征先经指数映射 $\exp_0^c(u) = \tanh(\sqrt{c}\|u\|)\,\frac{u}{\sqrt{c}\|u\|}$ 投到曲率为 $-c$ 的双曲空间。第一阶段（语音-语音）最小化双曲 Bhattacharyya 距离 $\mathcal{L}_{S\text{-}S} = D_B(h_w, h_t)$ 把 Whisper 与 TRILLsson 表示拉齐，再用 Mobius 加法 $h_f = h_w \oplus_c h_t$ 融合成统一语音表示。第二阶段（语音-提示）同样用 BD 对齐 $\mathcal{L}_{S\text{-}T} = D_B(h_f, h_A)$ 把语音表示与条件提示表示对齐后再做一次 Mobius 聚合。之所以选 Bhattacharyya 距离而非常见的余弦或欧氏距离，是因为它度量的是两个分布的重叠度，对语音表示对齐已被验证有效；消融里双曲 BD 完整两阶段显著优于任何单阶段或欧氏替代，说明几何选择和双阶段缺一不可。
 
-3. **轻量级条件生成检测**:
+**3. 轻量条件生成：冻住编码器和 LLM，只调融合模块。**
 
-    - 功能：以极少可训练参数（约 3.75M）实现端到端检测
-    - 核心思路：融合后的双曲表示经对数映射回欧氏空间，通过投影层生成前缀条件 token 注入冻结的 Qwen2-7B 解码器。一个条件提示（"Analyze the speech for unnatural artifacts"）引导特征提取方向，一个决策提示引导输出 "Real" 或 "Fake"。仅训练 CNN 层、投影层和双曲对齐模块
-    - 设计动机：冻结音频编码器和 LLM 解码器大幅降低训练成本。先前研究表明音频编码器是 ALM 性能的主要瓶颈，因此通过更强的编码器融合策略（而非更大的 LLM）来提升性能
+融合后的双曲表示经对数映射回欧氏空间，过一层投影变成前缀条件 token 喂给冻结的 Qwen2-7B。模型用两个提示驱动：一个条件提示（"Analyze the speech for unnatural artifacts"）把解码器的注意力引向合成痕迹，一个决策提示让它最终吐出 "Real" 或 "Fake"。把编码器和 LLM 都冻死、只训 CNN、投影和双曲对齐三个小模块，是因为先前研究指出 ALM 的性能瓶颈在音频编码器一侧而非 LLM 规模——所以作者把算力全押在更好的编码器融合策略上，最终用 3.75M 参数就反超了全参数微调方法。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L} = \lambda_1 \mathcal{L}_{S\text{-}S} + \lambda_2 \mathcal{L}_{S\text{-}T} + \lambda_3 \mathcal{L}_{LM}$，其中 $\lambda_1=1, \lambda_2=0.5, \lambda_3=1$。使用 AdamW 优化器，学习率 $1 \times 10^{-4}$，batch size 32，训练 5 个 epoch。
+总损失把两阶段对齐和语言建模拼到一起：$\mathcal{L} = \lambda_1 \mathcal{L}_{S\text{-}S} + \lambda_2 \mathcal{L}_{S\text{-}T} + \lambda_3 \mathcal{L}_{LM}$，权重取 $\lambda_1=1,\ \lambda_2=0.5,\ \lambda_3=1$。优化用 AdamW，学习率 $1 \times 10^{-4}$，batch size 32，训练 5 个 epoch。
 
 ## 实验关键数据
 

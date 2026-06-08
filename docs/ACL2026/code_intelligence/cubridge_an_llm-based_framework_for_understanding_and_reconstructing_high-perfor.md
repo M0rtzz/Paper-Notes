@@ -40,36 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CuBridge 输入：(1) 一个高性能源 CUDA kernel（默认是 FlashAttention v2.8.0）；(2) 用户的 PyTorch 目标语义 reference（例如想要 PrefixLM mask）。输出：一个针对目标变体的高性能 CUDA kernel。流程：
-
-1. **Lift**：单次 LLM 调用 + 结构化 CoT，把 Source CUDA 翻译成 Source CuIR；CuIR 程序立即在 backend executor 跑一次，与源 CUDA 数值对照（fp16 容差 $10^{-2}$），不一致则迭代精修。
-2. **Transfer**：另一个 LLM agent 读 PyTorch reference + Source CuIR，生成 Target CuIR，做 semantic alignment + performance-aware transformation（如 loop splitting 把 mask 检查局限到边界 tile）；Target CuIR 再次执行并对照 PyTorch reference 验证。
-3. **Lower**：通过 IR diff + region 对应关系定位需修改的 Source CUDA 代码段，按 Source CUDA 的实现风格把 Target CuIR 转译成 Target CUDA，再用 ReAct workflow 做 line-level edit（Edit_Line 支持插/删/改）逐行 patch。
-
-中间 IR 可执行 + 每段都验证，是整套系统正确率高的核心保障。
+CuBridge 解决的问题是：给定一个手写的高性能源 CUDA kernel（默认 FlashAttention v2.8.0）和一段描述目标语义的 PyTorch reference（如想要 PrefixLM mask），自动产出一个针对该变体的高性能 CUDA kernel。它不让 LLM 直面 PTX，而是把整个适配过程拆成 lift-transfer-lower 三段流水线：先把 Source CUDA「lift」成一个把执行编排显式化、本身可执行的中间表示 CuIR，让 LLM 在抽象层读懂并按目标语义「transfer」成 Target CuIR，最后通过 IR diff 定位差异、以最小 patch「lower」回 Target CUDA。贯穿全程的关键保障是每一段产出的 CuIR 都能在 backend executor 上跑出数值——lift 后对照源 CUDA（fp16 容差 $10^{-2}$）、transfer 后对照 PyTorch reference——把 LLM 每一步的输出都拉回到「可证明等价」的轨道上，这是整套系统能保持 100% 正确率的根因。
 
 ### 关键设计
 
-1. **CuIR：把执行编排显式化、可执行的中间表示**：
+**1. CuIR：把执行编排显式化的可执行中间表示。**
 
-    - 功能：用 Python 语法 + 四类原语（Memory: `alloc / copy / copy_async`；Compute: `gemm / gemm_async`；Sync: `barrier.wait / arrive`；Control: `bind / commit`）暴露 tile shape、内存层级、指令变体、数据依赖、并行粒度等高性能 CUDA 内核真正决定性能的元素，同时抽象掉 thread-level indexing 这种与"理解执行结构"无关的低层语法噪音。
-    - 核心思路：CuIR 程序基于 PyTorch tensor 操作 tile-level data，可以被 backend executor 直接跑——独立并行任务被串行执行（不影响正确性），有依赖的任务严格按同步约束顺序执行，与 CUDA 真实行为对齐。所以 CuIR 不只是文档，而是 LLM 写完就能验证的工件。
-    - 设计动机：之前 LLM 改 CUDA 的失败模式是"看不懂复杂语法 + 找不到要改的位置"。CuIR 通过把执行编排从复杂语法里抽出来，把"是什么 / 谁干的 / 顺序如何"三件事变成 LLM 易读的 primitive 序列，再叠加可执行性，让"修改前后语义是否等价"可以闭环验证——这是把不可靠 LLM 编程变成可靠工程系统的关键工艺。
+以往 LLM 改 CUDA 的失败模式是「看不懂复杂语法、又找不到要改的位置」——semantic 修改和 PTX 级 syntax 操作纠缠在一起，改一行就崩。CuIR 的破解办法是用 Python 语法配一套极小的原语集合，把真正决定性能的执行编排从语法噪音里抽出来：Memory 类（`alloc / copy / copy_async`）暴露 tile shape 与内存层级，Compute 类（`gemm / gemm_async`）暴露指令变体，Sync 类（`barrier.wait / arrive`）暴露同步范围，Control 类（`bind / commit`）暴露并行粒度与依赖，而 thread-level indexing 这种与「理解执行结构」无关的细节被彻底抽掉。
 
-2. **Semantic Lifting：syntax annotation → worker mapping → primitive lifting 三步 CoT**：
+更关键的是 CuIR 不止是文档而是可执行工件：它的程序基于 PyTorch tensor 操作 tile-level 数据，能被 backend executor 直接运行——独立的并行任务被串行执行（不影响正确性），有依赖的任务严格按同步约束的顺序执行，与 CUDA 的真实行为对齐。这样「是什么 / 谁干的 / 顺序如何」三件事都变成 LLM 易读的 primitive 序列，且「修改前后语义是否等价」可以靠数值执行闭环验证——这正是把不可靠的 LLM 编程变成可靠工程系统的工艺核心。
 
-    - 功能：从一份充满 PTX intrinsic / CuTe API 的专家 CUDA kernel，自动恢复出对应的 Source CuIR 程序，并保证还原后的程序数值上等价于原 CUDA。
-    - 核心思路：(1) Syntax Annotation——Lifter 用 CUDA/CuTe 文档为每个低层 intrinsic 加上简明语义注释，把 implicit 意图变 explicit；(2) Code-to-Worker Mapping——分析 threadIdx 控制流谓词（如 `if (threadIdx.x < 128)`），把代码段归属到对应的 warp group / warp 等 cooperative worker；(3) Primitive Lifting——把每个 worker-aligned 代码区域翻译成 CuIR primitive 序列，恢复 tile shape、内存放置、同步范围等参数。整个过程是 single LLM call 做 chain-of-thought，三段任务模块化在同一个 prompt 内。
-    - 设计动机：专家 CUDA kernel 里 warp specialization 是异步、隐式的，warp 与代码块的对应关系藏在大量条件分支里——LLM 一旦搞错"这段是谁干的"，后续 transfer 必崩。三步 CoT 的核心是把"identification → attribution → translation"显式拆开，让 LLM 在每一步只做一件事，每步都有结构化 checklist，再叠 post-lifting numerical verification 闭环纠错。
+**2. Semantic Lifting：annotation → worker mapping → primitive 三步 CoT 还原。**
 
-3. **Reference-guided Lowering with IR Diff + ReAct Patch**：
+专家 kernel 里 warp specialization 是异步且隐式的，warp 与代码块的对应关系藏在大量 `threadIdx` 条件分支里，LLM 一旦搞错「这段是谁干的」，后续 transfer 必然连锁崩溃。Lifting 把还原过程拆成单次 LLM 调用内的三段链式思考：先做 Syntax Annotation，用 CUDA/CuTe 文档为每个低层 intrinsic 加语义注释，把 implicit 意图变 explicit；再做 Code-to-Worker Mapping，分析控制流谓词（如 `if (threadIdx.x < 128)`）把代码段归属到对应的 warp group / warp 等 cooperative worker；最后做 Primitive Lifting，把每个 worker 对齐的代码区域翻成 CuIR primitive 序列，恢复 tile shape、内存放置、同步范围等参数。
 
-    - 功能：把 Target CuIR 翻译回 CUDA 时，不重写整个 kernel，而是只对受语义改动影响的代码段做最小化 patch，避免 LLM 的 context 长度问题和因重写引入的新 bug。
-    - 核心思路：(1) Differential Analysis——比对 Source/Target CuIR，找出语义差异，再借 lifting 阶段保留的 region 对应关系把改动定位到原 CUDA 的具体代码段；(2) Reference-Guided Lowering——把 Source CUDA 当作"Source CuIR 应该怎么落地成 CUDA"的实现风格参考，照葫芦画瓢地把抽象 primitive（如 `copy_async`）转为 PTX intrinsic（如 `cp.async.ca`），把 tile-level 操作扩展为 thread-level indexing；(3) Iterative Patching——用 ReAct 框架按行级 Edit_Line 动作（insert/delete/modify）打 patch，每轮失败给 LLM 完整错误信息再试。
-    - 设计动机：让 LLM "重写整段 CUDA"几乎必崩——上下文长、风格漂移、对齐失败。最小化 patch + ReAct 闭环 + reference-guided 风格保留，让目标 kernel 在尽量继承原 kernel 全部 hardware-specific 优化（warp specialization、tensor core overlap）的前提下，只动改动必要的几行——这是为什么 CuBridge 在 H100 上对 comb 变体能达到 11.47× Qimeng-Attention 加速：因为它真正继承了 FlashAttention 的执行编排。
+这套设计的要点是把「identification → attribution → translation」显式拆开，让 LLM 每一步只做一件事、每步都有结构化 checklist，再叠加 lifting 后的数值验证闭环纠错——还原出的 Source CuIR 必须与源 CUDA 数值等价才放行，否则迭代精修。
+
+**3. Reference-guided Lowering：IR diff 定位 + ReAct 最小化 patch。**
+
+让 LLM「重写整段 CUDA」几乎必崩——上下文太长、实现风格漂移、对齐失败，还会丢掉源 kernel 难以言传的优化。Lowering 因此走最小化改动路线：先做 Differential Analysis 比对 Source/Target CuIR 找出语义差异，再借 lifting 阶段保留的 region 对应关系把改动精确定位到原 CUDA 的具体代码段；接着做 Reference-Guided Lowering，把 Source CUDA 当作「CuIR 该怎么落地成 CUDA」的实现风格参考，照葫芦画瓢地把抽象 primitive（如 `copy_async`）转成 PTX intrinsic（如 `cp.async.ca`）、把 tile-level 操作扩展为 thread-level indexing；最后用 ReAct 框架按行级 `Edit_Line` 动作（insert/delete/modify）逐行打 patch，每轮编译/数值失败就把完整错误信息喂回 LLM 再试。
+
+因为只动必要的几行，目标 kernel 得以原样继承源 kernel 几乎全部的 hardware-specific 优化（warp specialization、tensor/cuda core overlap）——这也是 CuBridge 在 H100 上对最复杂的 comb 变体能拿到 11.47× Qimeng-Attention 加速的原因：它真正继承了 FlashAttention 的执行编排，而非从零重写。
 
 ### 损失函数 / 训练策略
-不训练新模型，全部为 inference-time pipeline。LLM 调参：generation temperature = 0、best-of-$k$ ($k=10$) 报最佳。所有验证用数值容差 fp16=$10^{-2}$（按 CUTLASS 惯例）。源 kernel 默认 FlashAttention v2.8.0。每段 IR 执行用 CuIR backend executor。Patch 用 ReAct 框架的 Edit_Line action。
+全程不训练新模型，是纯 inference-time pipeline。LLM 采样用 temperature $=0$、best-of-$k$（$k=10$）报最佳；所有 IR 执行验证沿用 CUTLASS 惯例的 fp16 数值容差 $10^{-2}$；源 kernel 默认 FlashAttention v2.8.0，每段 IR 在 CuIR backend executor 上运行，lower 阶段的逐行 patch 由 ReAct 框架的 `Edit_Line` action 完成。
 
 ## 实验关键数据
 

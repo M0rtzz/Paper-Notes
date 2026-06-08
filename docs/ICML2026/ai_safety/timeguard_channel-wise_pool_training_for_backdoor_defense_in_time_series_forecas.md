@@ -41,34 +41,30 @@ TimeGuard 把多变量时间序列预测里的后门防御从"丢掉整条窗口
 ## 方法详解
 
 ### 整体框架
-设训练集 $\mathcal{D}=\{(\mathbf{X}_{t,h}, \mathbf{X}_{t,f})\}$，每个样本是 $L_{\text{in}} \times C$ 的历史窗口和 $L_{\text{out}} \times C$ 的未来窗口。TimeGuard **不**把 $(\mathbf{X}_{t,h},\mathbf{X}_{t,f})$ 当作一个不可分的整体，而是对每个通道 $c$ 维护一个独立的可靠池 $\mathcal{D}^{(c)}_{\text{rel}}$，并引入二元 mask $m_{t,c} \in \{0,1\}$ 决定"通道 $c$ 在时刻 $t$ 这一格"是否进入训练。预测器 $f_\theta$ 用 masked loss 训练：
+TimeGuard 要解决的是：没有任何干净参考子集时，怎么在训练阶段把被污染的"通道×时间步"挑出来不让它们带坏模型。它的关键转变是不再把一条窗口当作不可分的整体来取舍，而是对每个通道单独维护一个可靠样本池，用一张细粒度 mask 决定每个格点是否参与训练，再分两阶段把这个池子从"小而纯"逐步养成"大而准"。
 
-$\mathcal{L}_{\text{def}}(\theta;m) = \frac{1}{\sum_{t,c} m_{t,c}} \sum_{t,c} m_{t,c} \, \ell(f_\theta^{(c)}(\mathbf{X}_{t,h}), \mathbf{x}_{t,f}^{(c)})$
+具体地，设训练集 $\mathcal{D}=\{(\mathbf{X}_{t,h}, \mathbf{X}_{t,f})\}$，样本由 $L_{\text{in}} \times C$ 的历史窗口和 $L_{\text{out}} \times C$ 的未来窗口构成。引入二元 mask $m_{t,c} \in \{0,1\}$ 决定"通道 $c$ 在时刻 $t$ 这一格"是否进入训练，预测器 $f_\theta$ 在 masked loss 上学习：
 
-整条 pipeline 分两阶段：**Stage I (时段 $T_1=10$ epoch)** 用 RCF ∩ NDF 初始化一个保守但高精度的池子；**Stage II (时段 $T_2=90$ epoch)** 用 DRLS 在边训边把池子按 $\gamma$ 线性扩到 $\beta=0.5$ 的全集比例。整套流程不需要任何干净参考子集，也不修改预测网络结构。
+$$\mathcal{L}_{\text{def}}(\theta;m) = \frac{1}{\sum_{t,c} m_{t,c}} \sum_{t,c} m_{t,c} \, \ell(f_\theta^{(c)}(\mathbf{X}_{t,h}), \mathbf{x}_{t,f}^{(c)})$$
+
+整条 pipeline 分两阶段：Stage I（前 $T_1=10$ epoch）用 RCF ∩ NDF 初始化一个保守但高精度的池子；Stage II（后 $T_2=90$ epoch）用 DRLS 边训边把池子的比例 $\gamma$ 从 $\alpha=0.2$ 线性扩到 $\beta=0.5$。全程不需要干净参考数据，也不改动预测网络结构。
 
 ### 关键设计
 
-1. **通道-时间双粒度的可靠池训练 (Channel-wise Pool Training)**：
+**1. 通道-时间双粒度的可靠池训练：把"整窗取舍"细化到格点，对齐 TSF 攻击的稀疏性**
 
-    - 功能：把"样本级"的可靠/不可靠二分，细化到"时刻 $t$ × 通道 $c$"的网格级 mask $m_{t,c}$，让 TSF 攻击下大多数干净通道仍能参与训练，避免把整条窗口连同它的干净通道一起扔掉。
-    - 核心思路：对每个通道 $c$ 单独维护一份 $\mathcal{D}^{(c)}_{\text{rel}}$，所有筛选准则（RCF / NDF / DRLS）都在通道内独立做；最终训练用上面那条 masked MAE/MSE，损失只在被 mask 选中的格点上累加。
-    - 设计动机：消融里把这个改回 sample-level（"w/o Channel-wise"）后，FDER 直接从 0.868 掉到 0.478——基本等于没防御。原因是 BackTime 这类攻击的 $\eta_S$ 默认只有 0.3，按样本扔窗口要么把干净通道一起扔了（伤 $\text{MAE}_{\text{C}}$），要么留下含毒通道（伤 $\text{MAE}_{\text{P}}$），通道粒度才是正确的攻防对齐。
+分类侧防御失效的根源是 channel-level signal dilution——BackTime 这类攻击的通道污染率 $\eta_S$ 默认只有 0.3，按整窗做决定时，要么把窗口里大量干净通道一起扔掉（伤 $\text{MAE}_{\text{C}}$），要么为了保住它们而留下含毒通道（伤 $\text{MAE}_{\text{P}}$），左右为难。TimeGuard 的对策是把可靠/不可靠的二分细化到"时刻 $t$ × 通道 $c$"的网格级 mask $m_{t,c}$：对每个通道 $c$ 单独维护一份可靠池 $\mathcal{D}^{(c)}_{\text{rel}}$，所有筛选准则（RCF / NDF / DRLS）都在通道内独立做，最终训练用上面那条 masked loss 只在被选中的格点上累加。这样攻击只动了少数通道时，同窗的大多数干净通道照样参与训练。消融里把它改回 sample-level（"w/o Channel-wise"）后 FDER 从 0.868 直接塌到 0.478，几乎等于没防御，说明这是攻防尺度对齐的第一性设计。
 
-2. **反向一致性 + 邻域多样性双信号初始化 (Stage I: RCF ∩ NDF)**：
+**2. Stage I 双信号初始化：反向一致性与邻域多样性各管一路，取交集得高纯度池**
 
-    - 功能：在第一阶段构造一个**conservative but high-precision** 的初始可靠池，避免训练早期 poisoned 样本被吸进来反复强化。
-    - 核心思路：(a) **RCF (Reverse-Consistency Filtering)** 训一个和 $f_\theta$ 同架构的 backcaster $b_\phi$ 做反向重建——把未来窗口翻转预测历史窗口的翻转版，loss 为 $\mathcal{L}_{\text{rcf}}(\mathbf{x}_t) = \ell(b_\phi(\text{Flip}(\mathbf{X}_{t,f})), \text{Flip}(\mathbf{x}_{t,h}))$，取反向 loss 低的 $\alpha$ 分位以下样本进 $\mathcal{D}_{\text{RCF}}$；这利用了"后门只规定正向依赖、不保证反向一致"的不对称性。(b) **NDF (Neighborhood Diversity Filtering)** 用 Gaussian 加权的 Pearson 相关定义窗口间距离 $d_\omega(\mathbf{x}_i,\mathbf{x}_j)=1-r_\omega(\mathbf{x}_i,\mathbf{x}_j)$（权重 $\omega_\tau=\exp(-(\tau-L_{\text{in}})^2/(2\sigma^2))$ 重点压在历史-未来交界处），对每个样本算 $K$ 近邻平均距离 $S(\mathbf{x}_i)$，取 top-$\alpha$ 高邻域距离样本进 $\mathcal{D}_{\text{NDF}}$。最终 $\mathcal{D}_{\text{rel}} = \mathcal{D}_{\text{RCF}} \cap \mathcal{D}_{\text{NDF}}$。
-    - 设计动机：Theorem 4.1 给出 TSF 后门成功的核回归上界 $\|\hat y(\mathbf{x})-T(\mathbf{x})\|_2 \le \frac{N_{\text{bg}} M \varepsilon}{N_p \exp(-\gamma \sigma_p^2(\mathbf{x}))} + L_T \sigma_p(\mathbf{x})$，要让攻击成立必须让 poisoned 输入窗口在特征空间扎堆（$\sigma_p$ 小），所以 poisoned 样本天然会被 NDF 排到"邻域距离异常小"那一端。RCF 和 NDF 一个走 loss、一个走几何结构，两个相互独立的信号取交集，相当于必须同时通过两个不相关测谎仪——池子精度大幅提升。
+训练早期最怕 poisoned 样本被吸进池子反复强化，所以 Stage I 要的是一个保守但高精度的起点。TimeGuard 用两个相互独立的信号取交集，相当于让样本同时通过两台不相关的测谎仪。其一是 **RCF（反向一致性过滤）**：另训一个与 $f_\theta$ 同架构的 backcaster $b_\phi$ 做反向重建，把翻转的未来窗口预测翻转的历史窗口，损失为 $\mathcal{L}_{\text{rcf}}(\mathbf{x}_t) = \ell(b_\phi(\text{Flip}(\mathbf{X}_{t,f})), \text{Flip}(\mathbf{x}_{t,h}))$，取反向 loss 低的 $\alpha$ 分位以下样本进 $\mathcal{D}_{\text{RCF}}$——它利用的是"后门只规定正向 history→future 依赖、对反向 future→history 没有约束"这一不对称性，poisoned 窗口在反向上往往重建得更差。其二是 **NDF（邻域多样性过滤）**：用 Gaussian 加权 Pearson 相关定义窗口间距离 $d_\omega(\mathbf{x}_i,\mathbf{x}_j)=1-r_\omega(\mathbf{x}_i,\mathbf{x}_j)$，其中权重 $\omega_\tau=\exp(-(\tau-L_{\text{in}})^2/(2\sigma^2))$ 把注意力压在历史-未来交界处，对每个样本算 $K$ 近邻平均距离 $S(\mathbf{x}_i)$，取邻域距离 top-$\alpha$（即最"孤立")的样本进 $\mathcal{D}_{\text{NDF}}$。这一步的依据来自 Theorem 4.1，它给出 TSF 后门成功的核回归上界 $\|\hat y(\mathbf{x})-T(\mathbf{x})\|_2 \le \frac{N_{\text{bg}} M \varepsilon}{N_p \exp(-\gamma \sigma_p^2(\mathbf{x}))} + L_T \sigma_p(\mathbf{x})$，要让攻击成立就必须让 poisoned 输入窗口在特征空间里扎堆（$\sigma_p$ 小），因此 poisoned 样本天然落在"邻域距离异常小"那一端，被 NDF 排除在外。最终可靠池取交集 $\mathcal{D}_{\text{rel}} = \mathcal{D}_{\text{RCF}} \cap \mathcal{D}_{\text{NDF}}$，一个走 loss、一个走几何结构，互不相关，池子精度大幅提升。
 
-3. **距离正则的损失筛选与渐进扩池 (Stage II: DRLS)**：
+**3. Stage II 的 DRLS：用距离约束兜住会塌缩的 loss 信号，再渐进扩池**
 
-    - 功能：解决 Stage II 里"loss 单一信号会塌缩、把 poisoned 样本重新吸回"的退化问题；同时把可靠池从初始的 $\alpha=0.2$ 渐进扩到 $\beta=0.5$ 以保证 clean 精度。
-    - 核心思路：先用 $\mathcal{D}_{\text{unrel}}$（而不是 $\mathcal{D}$ 全集）做参考邻居算邻域距离——随着池子扩大，$\mathcal{D}_{\text{unrel}}$ 会越来越富集 poisoned 样本，这样邻域信号反而更锐利。然后两步过滤：(i) 从 $\mathcal{D}$ 取 top $100\pi\gamma\%$ ($\pi \ge 1$) 高邻域距离样本得到候选集 $\mathcal{D}_{\text{NDF}}^{\text{cand}}$；(ii) 在候选集里再取 loss 最低的 $\gamma|\mathcal{D}|$ 个进 $\mathcal{D}_{\text{DRLS}}$，等价于把 loss 阈值 $\Gamma_{\text{DRLS}}$ 设到候选集 loss 的 $1/\pi$ 分位。$\gamma$ 按 epoch 线性从 $\alpha$ 涨到 $\beta$。
-    - 设计动机：消融里 "w/o DRLS"（即在 Stage II 退化成纯 loss 筛）使 FDER 从 0.868 掉到 0.607、$\text{MAE}_{\text{P}}$ 从 104.7 掉到 76.4，这印证了文中关于 task-formulation shift 的论断——TSF 里 poisoned 窗口的 loss 会迅速逼近 clean，单靠 loss 是不够的，必须用"必须先通过邻域多样性筛"这一前置约束兜底。
+进入 Stage II 后单靠 loss 区分会退化——这正是 TSF 的 task-formulation shift：连续值回归 + 滑动重叠窗口让 poisoned 窗口的 loss 很快逼近 clean，纯 loss 筛会把 poisoned 样本重新吸回。DRLS（距离正则的损失筛选）给 loss 加了一道前置几何约束。它先用 $\mathcal{D}_{\text{unrel}}$（而非全集 $\mathcal{D}$）作参考邻居算邻域距离——随着池子扩大，$\mathcal{D}_{\text{unrel}}$ 越来越富集 poisoned 样本，邻域信号反而更锐利，形成自增强的良性循环。然后两步过滤：先从 $\mathcal{D}$ 取邻域距离 top $100\pi\gamma\%$（$\pi \ge 1$）得到候选集 $\mathcal{D}_{\text{NDF}}^{\text{cand}}$，再在候选集内取 loss 最低的 $\gamma|\mathcal{D}|$ 个进 $\mathcal{D}_{\text{DRLS}}$，等价于把 loss 阈值 $\Gamma_{\text{DRLS}}$ 设在候选集 loss 的 $1/\pi$ 分位；扩池比例 $\gamma$ 随 epoch 线性从 $\alpha$ 涨到 $\beta$，在保住 clean 精度的同时让"必须先通过邻域筛"这道闸始终生效。消融里 "w/o DRLS"（Stage II 退化成纯 loss 筛）使 FDER 从 0.868 掉到 0.607、$\text{MAE}_{\text{P}}$ 从 104.7 掉到 76.4，是所有组件里最关键的一项。
 
 ### 损失函数 / 训练策略
-预测器 $f_\theta$ 用 Adam 优化，Stage I 训 $T_1=10$ epoch，Stage II 训 $T_2=90$ epoch；backcaster $b_\phi$ 额外训 $T_b=10$ epoch。超参 $\alpha=0.2$、$\beta=0.5$，$\pi \in \{1.25, 1.5\}$、$K \in \{20, 32\}$ 网格搜索。所有组件都在 channel 内独立做。
+预测器 $f_\theta$ 用 Adam 优化，Stage I 训 $T_1=10$ epoch、Stage II 训 $T_2=90$ epoch，backcaster $b_\phi$ 额外训 $T_b=10$ epoch；超参 $\alpha=0.2$、$\beta=0.5$，$\pi \in \{1.25, 1.5\}$、$K \in \{20, 32\}$ 网格搜索，所有组件都在通道内独立计算。
 
 ## 实验关键数据
 

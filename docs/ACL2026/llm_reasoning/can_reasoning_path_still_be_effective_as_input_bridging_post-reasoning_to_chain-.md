@@ -44,23 +44,18 @@ UCoT 包含 compressor、projector 和 executor 三个部分。compressor 学会
 训练阶段先用 executor 为每个问题生成高质量 CoT，得到 `(Q, C, A)` 数据；然后训练轻量 compressor 从问题和 `[ucot]` 占位符中产生 soft tokens，并要求它能重构原始 CoT；最后训练 executor 在 soft tokens 和截断输出预算下恢复原推理语义并保持答案置信度。推理阶段只需 compressor 单次前向生成 soft tokens，再由 executor 基于这些 soft tokens 输出较短答案。
 
 ### 关键设计
-1. **Post-reasoning 范式**:
 
-	- 功能：把 CoT 从纯输出转换成输入上下文，减少 executor 需要自回归生成的推理长度。
-	- 核心思路：vanilla reasoning 可写作 `{C,A}=LLM(Q)`；post-reasoning 改为 `{\hat C,\hat A}=LLM(Q \oplus C')`，其中 `C'` 是外部提供的 contextual CoT。
-	- 设计动机：如果模型已经有一部分推理路径作为上下文，就不必从零生成完整 CoT；pilot study 表明 GSM8K 和 MATH-500 上输出 token 可减少 80% 以上。
+**1. Post-reasoning 范式：把 CoT 从输出端搬到输入端，缩短 executor 需要自回归生成的长度。**
 
-2. **Soft-token contextual CoT**:
+长 CoT 的成本几乎全压在自回归输出上——模型必须逐 token 把中间推理写出来。作者反过来问：如果推理路径已经作为上下文摆在输入里，模型还需不需要从零生成完整 CoT？vanilla reasoning 是 $\{C,A\}=\mathrm{LLM}(Q)$，post-reasoning 改成 $\{\hat C,\hat A\}=\mathrm{LLM}(Q \oplus C')$，其中 $C'$ 是外部提供的 contextual CoT。pilot study 给出了有力的初步证据：在 GSM8K 和 MATH-500 上，只要把推理路径喂进输入，输出 token 能减少 80% 以上。这说明"推理路径作为输入仍然有效"，为后面把它换成更廉价的形式打开了空间。
 
-	- 功能：避免显式 contextual CoT 的自回归生成成本。
-	- 核心思路：compressor 在输入末尾追加长度为 $M$ 的 `[ucot]` 占位符，单次前向后取这些占位符对应 hidden states $H_n$ 作为 soft tokens；训练目标让 compressor 根据 $H_n$ 重构 executor 生成的原始 CoT $C_n$。
-	- 设计动机：显式文本 CoT 虽然能帮助 post-reasoning，但生成它仍然慢；soft tokens 把推理语义放在连续空间中，以单次前向替代长文本输出。
+**2. Soft-token contextual CoT：用单次前向的 soft tokens 替代昂贵的显式文本 CoT。**
 
-3. **Reward-guided executor utilization**:
+post-reasoning 虽然有效，但显式文本 $C'$ 本身仍要自回归生成、并不省。于是 compressor 在输入末尾追加长度为 $M$ 的 `[ucot]` 占位符，单次前向后取这些占位符位置的 hidden states $H_n$ 当作 soft tokens；训练目标让 compressor 仅凭 $H_n$ 就能重构出 executor 原本会生成的原始 CoT $C_n$。这样推理语义被压进连续空间，一次前向就能拿到，绕开了长文本输出的延迟。
 
-	- 功能：让 executor 真正使用 soft tokens，而不是忽略它们后继续生成长 CoT。
-	- 核心思路：projector 将 compressor 的 soft tokens 映射到 executor embedding space；训练 executor 时用 Cutoff 限制显式 CoT 长度，迫使模型依赖 soft tokens 补足被截断的逻辑。语义损失对齐 UCoT 推理表示和原始长 CoT 表示，reward factor 则惩罚压缩推理与原推理在答案置信度上的差异。
-	- 设计动机：连续提示或 latent CoT 如果没有利用约束，模型可能无法把它们转化为有效推理；输出预算和语义/置信度约束共同把 soft tokens 变成可用的推理上下文。
+**3. Reward-guided executor utilization：用输出预算 + 语义/置信度约束逼 executor 真正用上 soft tokens。**
+
+连续提示最大的风险是被模型忽略——它可能把 soft tokens 当摆设，照样去生成长 CoT。为此 projector 先把 compressor 的 soft tokens 映射到 executor 的 embedding space，训练 executor 时再用 Cutoff 把显式 CoT 截断到压缩比例 $\alpha$，硬逼模型靠 soft tokens 补足被砍掉的逻辑。同时两个约束保证质量：语义损失把 UCoT 的推理表示对齐到原始长 CoT 的表示，reward factor 惩罚压缩推理与原推理在答案置信度上的差异。输出预算负责"逼它用"，语义/置信度约束负责"用对"，两者合起来才把 soft tokens 变成真正可用的推理上下文。
 
 ### 损失函数或训练策略
 compressor 阶段最小化重构式目标 $L_c=E_D[-\log P_{M_c}(C_n|H_n)]$，把长 CoT 信息压入 soft tokens。executor 阶段先将输出 CoT 截断为压缩比例 $\alpha$ 下的 $\bar C_n$，再用语义损失 $L_{sem}=E_D[Dist(H_{UCoT},H_{CoT})]$ 对齐压缩推理和原始长推理的最终 hidden state，并用 reward factor $R=E_D[(r_{UCoT}-r_{CoT})^2]$ 保持答案置信度。最终 executor 目标为 $L_e=L_{sem}\cdot R$。主实验使用 Qwen2.5-1.5B-Instruct 作为 compressor，Qwen2.5-7B-Instruct 和 Llama-3.1-8B-Instruct 作为 executor。

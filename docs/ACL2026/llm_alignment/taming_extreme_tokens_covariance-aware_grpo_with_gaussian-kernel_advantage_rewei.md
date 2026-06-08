@@ -43,23 +43,18 @@ tags:
 本文方法可以看成是在 GRPO 的 token-level loss 中插入一个 covariance-aware advantage reweighting 层。给定 prompt，策略模型采样一组回答，外部 verifier 给每条回答打分，GRPO 先按组内均值和标准差得到 response-level advantage。随后，CW-GRPO 不直接把同一个 advantage 复制到每个 token，而是计算每个 token 的 centered log probability 与 centered advantage 的乘积，把它作为该 token 对熵变化的协方差贡献。协方差贡献越极端，说明这个 token 越可能把策略推向不稳定的探索或利用状态，于是用高斯核降低它的 advantage 权重。最后，重加权后的 advantage 进入原来的概率比率项，KL 惩罚和整体训练框架保持兼容。
 
 ### 关键设计
-1. **用协方差解释 GRPO 的熵不稳定**:
 
-	- 功能：把“训练后期忽高忽低的策略熵”转化为可测量的 token 级诊断量。
-	- 核心思路：作者借用自然策略梯度下的熵变化关系，近似认为熵变化满足 $\Delta H \approx -\eta \cdot Cov_t(\log \pi_\theta(o_t), A_i)$。因此，一个 token 的 log 概率相对均值越偏、它所在 response 的 advantage 相对均值也越偏，它对熵变化的拉动就越强。
-	- 设计动机：传统 GRPO 只看整条回答的相对好坏，无法区分“有用的推理 token”和“导致熵异常波动的极端 token”。协方差视角提供了一个更直接的稳定性指标。
+**1. 用协方差解释 GRPO 的熵不稳定：把「忽高忽低的策略熵」落成一个可测的 token 级诊断量。**
 
-2. **高斯核软抑制极端 token 更新**:
+GRPO 的痛点不是没有奖励，而是训练后期策略熵剧烈摆动、checkpoint 反而掉点，但 vanilla GRPO 只看整条回答的相对好坏，分不清「有用的推理 token」和「把熵拽偏的极端 token」。作者借用自然策略梯度下的熵变化关系，近似得到 $\Delta H \approx -\eta\cdot \mathrm{Cov}_t(\log\pi_\theta(o_t), A_i)$：一个 token 的 log 概率越偏离均值、它所在 response 的 advantage 也越偏离均值，它对熵变化的拉动就越强。于是「探索-利用是否失衡」被翻译成每个 token 的协方差贡献——这比笼统地怪 KL 系数或学习率更贴近熵的真实动力学，也把「危险更新」精确定位到了 token 级别。
 
-	- 功能：自动降低大协方差 token 的 advantage 贡献，避免少量 outlier 主导策略更新。
-	- 核心思路：对每个 token 计算 $c_{i,t}=(\log \pi_\theta(o_{i,t})-\overline{\log \pi})(A_i-\overline{A})$，再用 $w_{i,t}=\exp(-c_{i,t}^2/(2\sigma^2))$ 得到权重，其中 $\sigma$ 是当前 token 协方差集合的经验标准差。中等协方差的 token 权重接近 1，极端正/负协方差 token 都会被平滑压低。
-	- 设计动机：硬阈值或 clipping 容易引入新超参，也可能突然切断有用梯度。高斯核是连续的、对正负极端值对称的，并且用经验标准差自适应不同 batch 的尺度。
+**2. 高斯核软抑制极端 token：自动给大协方差 token 降权，不让少数 outlier 主导更新。**
 
-3. **归一化权重保持 GRPO 更新尺度**:
+诊断出极端 token 后，关键是怎么抑制它们又不误伤有用梯度。对每个 token 计算中心化乘积 $c_{i,t}=(\log\pi_\theta(o_{i,t})-\overline{\log\pi})(A_i-\overline{A})$ 作为协方差贡献，再用高斯核 $w_{i,t}=\exp(-c_{i,t}^2/(2\sigma^2))$ 算权重，其中带宽 $\sigma$ 直接取当前 batch 全体 token 协方差集合的经验标准差。中等协方差的 token 权重接近 1、几乎不受影响，而正负两端的极端 token 都被平滑压低。相比硬阈值或 clipping，高斯核是连续的、对正负极端对称的，并且因为带宽用经验标准差自适应，方法**不引入任何新的手调超参**，天然贴合不同 batch 的协方差尺度。
 
-	- 功能：在改变 token 间相对贡献的同时，不让整体 loss 因平均权重变小而系统性缩放。
-	- 核心思路：作者把原始高斯权重归一化为 $\tilde{w}_{i,t}=w_{i,t} \cdot N / \sum_{j,k} w_{j,k}$，其中 $N$ 是组内总 token 数，然后将 token loss 中的 advantage 替换为 $\tilde{w}_{i,t}A_i$。
-	- 设计动机：这样做让方法更像“重分配梯度预算”而不是“降低学习率”，保留 GRPO 的训练节奏，同时把预算从危险 outlier 移向更稳定的 token。
+**3. 归一化权重保持 GRPO 更新尺度：改变 token 间的相对贡献，但不让整体 loss 被系统性缩小。**
+
+直接乘高斯权重会让平均权重小于 1，相当于偷偷调低了学习率，破坏 GRPO 原有的训练节奏。作者因此把权重归一化为 $\tilde{w}_{i,t}=w_{i,t}\cdot N/\sum_{j,k}w_{j,k}$（$N$ 为组内总 token 数），再把 token loss 里的 advantage 替换成 $\tilde{w}_{i,t}A_i$。这样所有 token 的权重之和仍为 $N$，方法的语义就从「整体降低学习率」变成「重新分配同一份梯度预算」——把预算从危险的 outlier 挪向更稳定的中等协方差 token，既稳住了熵又保住了 GRPO 的更新幅度和收敛速度。
 
 ### 损失函数 / 训练策略
 训练仍然遵循 GRPO/RLVR 的基本流程：模型对每个数学题生成 12 条回答，用 verifier 给答案正确性打 0/1，并额外检查 `<think>` 标签格式；reward 经组内标准化后形成 advantage。实验使用 Open-RS 的 7000 道高质量数学题作为训练集，评测覆盖 AIME24、MATH-500、AMC23、Minerva 和 OlympiadBench。实现上使用 HuggingFace TRL 训练、Lighteval 评测，主要超参包括学习率 $1e-6$、batch size 12、gradient accumulation 4、训练 100 step、temperature 0.7、最大 completion 长度 4096。方法本身不额外引入阈值、clip 范围或温度类超参。

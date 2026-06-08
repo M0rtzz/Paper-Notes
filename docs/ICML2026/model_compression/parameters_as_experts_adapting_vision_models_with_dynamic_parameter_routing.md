@@ -44,30 +44,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-以四 stage 的层级 backbone (Swin / ConvNeXt) 为例。在每个 stage 设一个共享专家中心，每个 building block 里挂一个 ParaX 适配器：Swin block 在 token mixer 和 channel mixer 后各挂一个，ConvNeXt block 在整个残差模块后挂一个。前向时，每个 ParaX 模块独立地用 router 读取当前输入特征 → 输出动态系数 → 把专家中心里的若干参数矩阵线性组合成当前模块专用的 $W_1, W_2$ 和三尺度深度卷积核 → 用这些动态权重对输入做"降维 → 多尺度空间混合 → 升维"的低秩变换 → 加残差返回主干。整个过程除了专家中心 + router + 主干外的微调头之外不引入任何额外可训练参数，主干权重全部冻结。
+ParaX 想在不撑破 PEFT 参数预算的前提下，让 adapter 的权重既随输入动态变化、又在层间共享信息。它以四 stage 的层级 backbone (Swin / ConvNeXt) 为例：每个 stage 配一个共享专家中心，每个 building block 里挂一个 ParaX 适配器 (Swin block 在 token mixer 和 channel mixer 后各挂一个，ConvNeXt block 在整个残差模块后挂一个)。前向时每个适配器独立地用一个超轻量 router 读取当前输入特征、输出动态系数，把专家中心里的参数矩阵线性合成出本模块专用的 $W_1, W_2$ 和三尺度深度卷积核，再用这组动态权重对输入做"降维 → 多尺度空间混合 → 升维"的低秩变换并加残差返回主干。除了专家中心、router 和任务头之外不引入任何额外可训练参数，主干全程冻结。
 
 ### 关键设计
 
-1. **共享专家中心 (Shared Expert Center)**:
+**1. 共享专家中心：把参数共享放在专家池层面，同时修跨层冗余和表达力坍塌。**
 
-    - 功能：在 stage 粒度上维护一池可训练参数矩阵，作为后续动态合成的"基"。
-    - 核心思路：通道方向的低秩投影专家成对存放，$\mathbf{E}_A\in\mathbb{R}^{M\times C\times\hat C}, \mathbf{E}_B\in\mathbb{R}^{M\times\hat C\times C}$，其中 $M$ 是专家容量、$\hat C$ 是 adapter 隐维度，二者是控制参数总量的两个超参；空间方向再加三组对应不同卷积核大小的深度卷积专家 $\mathbf{S}_A, \mathbf{S}_B, \mathbf{S}_C\in\mathbb{R}^{M\times\hat C\times K_i^2}$。所有 ParaX 模块都从同一个 (stage 级) expert center 拉权重。
-    - 设计动机：把"参数共享"放在**专家池层面**而不是 adapter 层面——既得到跨层耦合 (共享 expert 被多层使用，被迫学得通用且多样)，又不会强迫所有层产生同一个 adapter (各层 router 独立)。这恰好同时解决"特征冗余"和"表达力坍塌"两个对立的诉求。
+针对的痛点是 adapter 两难——各层参数互相隔离会导致 CKA 冗余 (相同模式被反复学)，但若让各层直接共享同一组 adapter 权重又会强迫所有层做相同变换、表达力坍塌。ParaX 的解法是在 stage 粒度上维护一池可训练参数矩阵作为动态合成的"基"：通道方向的低秩投影专家成对存放 $\mathbf{E}_A\in\mathbb{R}^{M\times C\times\hat C},\ \mathbf{E}_B\in\mathbb{R}^{M\times\hat C\times C}$，其中专家容量 $M$ 和 adapter 隐维度 $\hat C$ 是控制参数总量的两个核心超参；空间方向再加三组对应不同卷积核大小的深度卷积专家 $\mathbf{S}_A, \mathbf{S}_B, \mathbf{S}_C\in\mathbb{R}^{M\times\hat C\times K_i^2}$。所有 ParaX 模块都从同一个 stage 级 expert center 拉权重，但每层有自己的 router。共享发生在专家池而非 adapter 这一层，于是既得到了跨层耦合 (共享 expert 被多层调用、被迫学得通用且多样，CKA 冗余下降)，又保留了各层独立 router 带来的表达多样性——两个看似冲突的诉求被这一设计自然兼容。
 
-2. **动态参数路由 (Dynamic Parameter Routing)**:
+**2. 动态参数路由：用线性混合代替 MoE 的稀疏选专家，恢复输入相关性又稳得住训练。**
 
-    - 功能：给定当前输入特征，输出一组系数，把 expert center 里的参数矩阵线性合成出当前层、当前样本专用的 $W_1, W_2$。
-    - 核心思路：输入 $\mathbf{X}\in\mathbb{R}^{HW\times C}$ 先做 GAP 得到通道描述子，过一个把维度砍到 16 的线性层得到隐藏向量；然后用两个并行线性层 + softmax 得到两个门控向量 $\mathbf{G}_1, \mathbf{G}_2\in\mathbb{R}^M$。动态权重由张量收缩式合成：$\mathbf{W}_1=\sum_{m=1}^M \mathbf{G}_1[m]\,\mathbf{E}_A[m]\in\mathbb{R}^{C\times\hat C}$，$\mathbf{W}_2=\sum_{m=1}^M \mathbf{G}_2[m]\,\mathbf{E}_B[m]\in\mathbb{R}^{\hat C\times C}$。然后做标准的 LoRA-style 残差更新 $\mathbf{Y}=\mathbf{X}+\sigma(\mathbf{X}\mathbf{W}_1)\mathbf{W}_2$ (中间夹空间混合)。
-    - 设计动机：把 MoE 经典的"选 expert"换成"线性混合 expert"——既保留了"看输入决定权重"的动态性，又避免了 top-k 的稀疏路由带来的训练不稳定；router 维度故意压到 16 把 router 自身的参数和计算压到几乎可忽略，让 PEFT 的"极小可训练参数"约束依然成立。
+这一步直接对治"表征不足"——传统 adapter 训完权重就对输入无关，ERF 比 full fine-tuning 小一圈。ParaX 让权重随输入合成：输入 $\mathbf{X}\in\mathbb{R}^{HW\times C}$ 先 GAP 得到通道描述子，过一个把维度砍到 16 的线性层得到隐藏向量，再用两个并行线性层加 softmax 得到门控向量 $\mathbf{G}_1, \mathbf{G}_2\in\mathbb{R}^M$；动态权重由张量收缩合成 $\mathbf{W}_1=\sum_{m=1}^M \mathbf{G}_1[m]\,\mathbf{E}_A[m]\in\mathbb{R}^{C\times\hat C}$、$\mathbf{W}_2=\sum_{m=1}^M \mathbf{G}_2[m]\,\mathbf{E}_B[m]\in\mathbb{R}^{\hat C\times C}$，然后做标准 LoRA-style 残差更新 $\mathbf{Y}=\mathbf{X}+\sigma(\mathbf{X}\mathbf{W}_1)\mathbf{W}_2$ (中间夹空间混合)。把 MoE 经典的"top-k 选 expert"换成"全 expert 线性混合"，既保留了看输入决定权重的动态性，又避开了稀疏路由的训练不稳定，复杂度退化成 $O(M)$ 的矩阵加权和；router 隐维度故意压到 16，让它自身的参数和计算几乎可忽略，PEFT 的极小参数约束才依然成立。
 
-3. **动态多尺度空间混合 (Dynamic Multi-scale Spatial Mixing, D²Conv)**:
+**3. 动态多尺度空间混合 (D²Conv)：把卷积核也纳入"看输入再合成"，给密集预测加 buff。**
 
-    - 功能：在低秩投影中间夹一段空间混合，把适配器从纯通道变换升级为时空感知的小子网络，且空间核也是动态合成的。
-    - 核心思路：router 再多输出三个门控 $\mathbf{G}_A, \mathbf{G}_B, \mathbf{G}_C\in\mathbb{R}^M$，分别与 $\mathbf{S}_A, \mathbf{S}_B, \mathbf{S}_C$ 合成出三个**动态深度卷积核** (kernel size 渐增，论文里典型为 $3\times3, 5\times5, 7\times7$)。空间混合采用**顺序堆叠 + 残差**结构：输入特征依次过三个 D²Conv，每个都有残差 shortcut，逐步扩大感受野；再用一个 Spatially-varying Aggregation (SA) 模块——一个 $1\times1$ conv + softmax 生成三张空间注意力图，与三尺度特征逐点相乘后求和。注意 ParaX 用的是 **depthwise** 动态卷积 (D²Conv)，区别于 KernelWarehouse 等用 standard conv 的动态卷积；这也是 PEFT 预算的硬性要求。
-    - 设计动机：Mona 等已经证明多核 depthwise conv 对密集预测至关重要，但它们的卷积核**静态、所有样本共享**；ParaX 让卷积核也参与"看输入再合成"，把动态性从通道扩展到空间，配合扩大的 ERF 直接对 dense prediction 加 buff。SA 提供了空间维度上的最后一层动态加权，参数代价可忽略但能进一步细化每个像素位置选用哪个尺度。
+Mona 等已证明多核 depthwise conv 对密集预测至关重要，但它们的卷积核静态、所有样本共享。ParaX 把动态性从通道扩展到空间：router 再多输出三个门控 $\mathbf{G}_A, \mathbf{G}_B, \mathbf{G}_C\in\mathbb{R}^M$，分别与 $\mathbf{S}_A, \mathbf{S}_B, \mathbf{S}_C$ 合成出三个动态深度卷积核 (kernel size 渐增，论文典型取 $3\times3, 5\times5, 7\times7$)。空间混合用顺序堆叠加残差的结构——输入依次过三个 D²Conv、每个都有残差 shortcut，逐步扩大感受野；最后接一个 Spatially-varying Aggregation (SA) 模块，用一个 $1\times1$ conv 加 softmax 生成三张空间注意力图，与三尺度特征逐点相乘后求和。这里用的是 depthwise 动态卷积，区别于 KernelWarehouse 等基于 standard conv 的动态卷积，也是 PEFT 预算的硬性要求。卷积核参与动态合成配合扩大的 ERF 直接对 dense prediction 见效，SA 则在空间维度做最后一层动态加权，参数代价可忽略却能进一步细化每个像素位置该选哪个尺度。
 
 ### 损失函数 / 训练策略
-ParaX 是纯 PEFT 设置：主干冻结，只训练 expert center + router + 任务头 (分割/检测/分类各自的标准 head)。所有任务沿用各自标准训练配方 (UperNet/ADE20K 160K iter；Mask R-CNN/COCO；MAE-pretrained ViT-B/16 on classification)，未引入新损失。$M$ (专家容量) 和 $\hat C$ (隐维度) 是两个核心超参，控制可训练参数预算；多核组合 $\{K_1, K_2, K_3\}$ 在 Section 4.5 中消融。
+ParaX 是纯 PEFT 设置：主干冻结，只训练 expert center、router 和任务头 (分割/检测/分类各自的标准 head)。所有任务沿用各自标准训练配方 (UperNet/ADE20K 160K iter；Mask R-CNN/COCO；MAE-pretrained ViT-B/16 on classification)，未引入新损失。专家容量 $M$ 和隐维度 $\hat C$ 控制可训练参数预算，多核组合 $\{K_1, K_2, K_3\}$ 在 Section 4.5 中消融。
 
 ## 实验关键数据
 

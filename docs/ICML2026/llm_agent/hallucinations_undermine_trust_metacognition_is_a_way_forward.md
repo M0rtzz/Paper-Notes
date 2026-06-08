@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这是一篇 position paper，没有新算法，但提出了一套**重新定义问题 + 论证可行性 + 给出研究路线图**的概念框架。论证三步走：(1) 论证"彻底消除幻觉"在原理上不可能；(2) 论证 faithful uncertainty 在原理上**可能**且能解锁可靠效用；(3) 在 agentic 场景下，metacognition 是工具调用的控制层。最后给出 6 大研究 challenge 和 3 条 hallucination mitigation 评测规范。
+这是一篇 position paper，要回答的问题是"既然幻觉消不掉，可信 LLM 的目标该重设成什么"。它不给新算法，而是搭了一条三步论证链：先用一个量化论证说明"把幻觉率压到 0"在原理上要付天价代价，再提出 faithful uncertainty 这个理论上可达的替代目标，最后把它落到 agentic 场景，说明 metacognition 是工具调用绕不开的控制层。配套给出 6 大研究 challenge 和一套新的评测规范。
 
 ### 关键设计
 
-1. **Calibration vs Discrimination 的清晰分离 + 区分度税的可视化**:
+**1. Calibration vs Discrimination 的分离：把"区分度税"画出来。**
 
-    - 功能：把"校准良好但仍然有大 utility tax"这一反直觉事实做出可视化论证。
-    - 核心思路：构造仿真数据复现 Nakkiran 2025 的 reliability diagram，让 confidence 正确 ($y=1$) 来自 $\text{Beta}(1.8,1.0)$、错误 ($y=0$) 来自 $\text{Beta}(1.0,1.3)$，再用 Isotonic regression 强制校准到 smECE $\approx 0.014$。AUROC = 0.71（与文献 $0.70$–$0.85$ 一致）。然后画 utility-error trade-off：把拒答阈值从 0 扫到 1，看每个目标错误率下损失多少正确回答。结论：要把 25% 错误率压到 5%，必须丢掉 52% 的正确回答；即使 AUROC 上升到 0.85，税仍 $\sim$28%；只有 $\geq 0.95$ 才降到 5%。这个 trade-off 给"为什么模型提供方都不愿意付这个税"提供了量化证据。
-    - 设计动机：以前讨论幻觉时大家混用 calibration 和 discrimination，导致"我们的模型校准良好"被错读成"我们的模型不会幻觉"。这套可视化把这两个概念彻底分开，并把代价具象化为"要丢多少正确答案"，远比 ECE 数字更有冲击力。
+针对的痛点是社区长期混用 calibration 和 discrimination，把"我们的模型校准良好"误读成"我们的模型不会幻觉"。作者用一组仿真把两者彻底拆开：让正确回答（$y=1$）的 confidence 来自 $\text{Beta}(1.8,1.0)$、错误回答（$y=0$）来自 $\text{Beta}(1.0,1.3)$，再用 Isotonic regression 强制校准到 smECE $\approx 0.014$，复现 Nakkiran 2025 的 reliability diagram——此时模型是近乎完美校准的，但 AUROC 只有 0.71（恰好落在真实任务 $0.70$–$0.85$ 区间内）。
 
-2. **Faithful Uncertainty：把目标从"对齐世界"换成"对齐内部"**:
+校准合格不代表能"挑出"哪些答案对，而后者才决定拒答策略的代价。把拒答阈值从 0 扫到 1，画出 utility-error trade-off 曲线就能看到这笔账：要把 25% 的错误率压到 5%，必须连带丢掉 **52% 的正确回答**；即便 AUROC 提到当前最佳的 0.85，这笔税仍有 $\sim$28%；只有 AUROC $\geq 0.95$ 才能把税降到 5% 以下，而知识密集任务上没有任何方法做得到。这条曲线把"为什么模型提供方都不愿意付这个税"量化成了一张图，比单看 ECE 数字更有冲击力。
 
-    - 功能：给出一个**理论上可达**的弱化目标——模型的语言不确定性必须忠实地反映其内部不确定性，但不要求该内部不确定性与世界真值一致。
-    - 核心思路：基于 Yona 2024 的定义。Intrinsic confidence $\text{conf}_M(A)=1-\frac{1}{k}\sum_i\mathbf 1[A\text{ contradicts }A_i]$（用 $k$ 次重采样的语义一致率衡量）。Linguistic decisiveness $\text{dec}(A;R,Q)=\Pr[A\text{ True}\mid R,Q]$（用 LLM-as-judge 估计读者基于 hedge 强度赋予 $A$ 的可信度）。Faithfulness $=1-\frac{1}{|A(R)|}\sum_{A}|\text{dec}(A;R,Q)-\text{conf}_M(A)|$。作者论证这个目标是**闭环可观测**的——既然 $\text{conf}_M$ 是模型权重的函数，那么"语言输出对齐 conf"完全是模型内部一致性问题，不依赖外部 ground truth；因此它在原理上没有 xu2024 那种"无法判定外部真值"的 halting-problem 障碍。
-    - 设计动机：通过把目标从"内部 → 真实世界"换成"内部 → 内部"，让区分度税消失——模型不必为了避免错误而拒答，只需把不确定的回答以 hedged form 给出；用户拿到的依然是有用的猜测，只是带了诚实标签。
+**2. Faithful Uncertainty：把目标从"对齐世界"换成"对齐内部"。**
 
-3. **Agentic Metacognition：不确定性作为工具调用控制层**:
+既然"对齐外部真值"会撞上区分度税和真值不可判定的原理障碍，作者沿用 Yona 2024 的定义给出一个弱化但可达的目标：模型的语言不确定性只需忠实反映它自己的内部不确定性，不要求这个内部信号和世界真值一致。内部置信度定义为 $\text{conf}_M(A)=1-\frac{1}{k}\sum_i\mathbf 1[A\text{ contradicts }A_i]$，即对答案 $A$ 做 $k$ 次重采样、用语义一致率衡量模型自己有多笃定；语言决断度 $\text{dec}(A;R,Q)=\Pr[A\text{ True}\mid R,Q]$ 则用 LLM-as-judge 估计读者根据回答里 hedge 的强弱会赋予 $A$ 多少可信度。两者的对齐程度即 faithfulness $=1-\frac{1}{|A(R)|}\sum_{A}|\text{dec}(A;R,Q)-\text{conf}_M(A)|$。
 
-    - 功能：在 agent 时代，自感不确定性不是冗余而是**前提**——它决定何时调用工具、何时信任检索结果、何时和先验冲突时取舍。
-    - 核心思路：作者把 agent harness 看成一个粗放的外部调度器，目前完全靠 query 类型启发式决定要不要 search；引入"模型自报 confidence"作为 yellow 控制层后，harness 可以：confidence 高→直接答（省 tool call）；confidence 低→retrieve；retrieve 结果和先验冲突→输出 hedged 答案而不是盲信 context。论文引 qian2025smart 等工作指出当前 search agent 缺乏这种 self-awareness，导致 tool overuse 或 underuse。
-    - 设计动机：人们常以为"工具调用可以绕过幻觉问题"，作者反驳：工具只解决 **storage problem**（不必把所有事实编码进权重），但引入了 **control problem**（何时该检索、检索回来的可信度如何）。faithful uncertainty 正好填这个控制层。
+这个目标之所以"原理上可行"，在于它是闭环可观测的：$\text{conf}_M$ 完全是模型权重的函数，"让语言输出对齐 conf"是一个纯粹的模型内部一致性问题，不依赖外部 ground truth，因此天然绕开了 xu2024 那类"无法判定外部真值"的 halting-problem 障碍。把目标从"内部 → 真实世界"改成"内部 → 内部"之后，区分度税也随之消失——模型不必为了躲错误而拒答，只需把没把握的回答以 hedged 形式给出；用户拿到的仍是有用的猜测，只是多了一个诚实标签。
 
-### 损失函数 / 训练策略
-不适用（position paper）。但作者在 §6 给出 6 个具体研究 challenge：bootstrapping paradox（动态标签 vs 静态 SFT）、post-training 中 confidence 信号的保护、confidence attribution（分清 aleatoric/epistemic/normative 三类不确定性）、严格的因果评测（避免模型只学会 hedging style 而非真有自感）、agent 评测应控制流程而非端到端正确率、以及 hallucination mitigation 评测应改为画 utility-error trade-off 曲线而非单点报告。
+**3. Agentic Metacognition：不确定性作为工具调用的控制层。**
+
+常见的乐观看法是"工具调用可以绕过幻觉"，作者反驳说工具只解决了 **storage problem**（不必把所有事实塞进权重），却引入了 **control problem**——何时该检索、检索回来的内容可信度如何，而填这个控制层正需要 faithful uncertainty。当前的 agent harness 是个粗放的外部调度器，几乎只靠 query 类型的启发式决定要不要 search；一旦把"模型自报 confidence"接进来当控制信号，harness 就能据此分流：confidence 高就直接作答省掉 tool call，confidence 低就去 retrieve，而当检索结果和模型先验冲突时输出 hedged 答案而非盲信 context。论文引 qian2025smart 等证据指出现有 search agent 恰恰缺这种 self-awareness，才导致工具的过度调用或调用不足。
+
+### 研究路线图
+作为 position paper 没有训练目标，但作者在 §6 列出 6 个待解 challenge 作为后续抓手：bootstrapping paradox（confidence 标签是动态的，难以用静态 SFT 拟合）、post-training 中如何保护 pre-train 阶段已有的 confidence 信号、confidence attribution（区分 aleatoric/epistemic/normative 三类不确定性）、严格的因果评测（防止模型只学会 hedging 的语气而没真正的自感）、agent 评测应考核流程而非端到端正确率、以及 hallucination mitigation 评测应改画 utility-error trade-off 曲线而非只报单点。
 
 ## 实验关键数据
 

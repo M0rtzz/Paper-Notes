@@ -40,35 +40,21 @@ CrysLDNet 把"扩散预训练"从原始晶体特征空间搬到 VAE 学到的平
 ## 方法详解
 
 ### 整体框架
-CrysLDNet 是一个两阶段 pretrain + 一阶段 finetune 的 pipeline：
-
-- **输入**：晶体材料 $\mathcal{M}=(\mathbf{A},\mathbf{X},\mathbf{L})$，其中 $\mathbf{A}\in\mathbb{R}^{N\times k}$ 是原子类型 one-hot 矩阵，$\mathbf{X}\in\mathbb{R}^{N\times 3}$ 是 3D 坐标，$\mathbf{L}\in\mathbb{R}^{3\times 3}$ 是晶格基。
-- **Stage 1（VAE 预训练）**：PDDFormer 编码器 $\mathcal{E}_\phi$ 把 $\mathcal{M}$ 映成节点级潜表示 $\mathbf{Z}\in\mathbb{R}^{N\times d}$；三个独立 MLP 解码器分别重构 $\tilde{\mathbf{A}},\tilde{\mathbf{X}},\tilde{\mathbf{L}}$，端到端最小化重构损失 + KL 正则。
-- **Stage 2（潜空间扩散）**：固定一部分语义，继续联合训练 $\mathcal{E}_\phi$ 与 DiT 去噪网络 $\mathcal{F}_\theta$；用 flow matching 在潜空间做 $\mathbf{Z}^t=(1-t)\mathbf{Z}^0+t\mathbf{Z}^1$ 线性插值，目标是预测干净潜变量 $\bar{\mathbf{Z}}^1$。
-- **Finetune**：将预训练好的 $\mathcal{E}_\phi$ 接 READOUT + MLP，对每个性质用 MSE 端到端微调。
-- **输出**：性质值 $\hat{y}=\text{MLP}_\lambda(\text{READOUT}(\mathcal{E}_\phi(\mathcal{M})))$。
-
-整套框架对编码器架构无侵入——把 PDDFormer 换成 Matformer 也能直接跑（见 Table 2）。
+CrysLDNet 要解决的是"无标注晶体多、但 DFT 标注稀缺"这个矛盾：怎么在 38 万条无标注晶体上预训练出一个迁移性强的结构编码器。它的做法是把 Stable Diffusion 那套"先 VAE 压到潜空间、再在潜空间扩散"的范式搬到晶体上——先用一个对称性感知的 VAE 把异构的晶体输入 $\mathcal{M}=(\mathbf{A},\mathbf{X},\mathbf{L})$（原子类型 one-hot $\mathbf{A}\in\mathbb{R}^{N\times k}$、3D 坐标 $\mathbf{X}\in\mathbb{R}^{N\times 3}$、晶格基 $\mathbf{L}\in\mathbb{R}^{3\times 3}$）统一编码进连续平滑的潜空间 $\mathbf{Z}\in\mathbb{R}^{N\times d}$，再只在这个潜空间上做 flow matching 扩散去精炼编码器。整套预训练分两阶段（VAE 重构 + 潜空间扩散），下游只把精炼好的 PDDFormer 编码器接上 READOUT + MLP 按性质微调，输出 $\hat{y}=\text{MLP}_\lambda(\text{READOUT}(\mathcal{E}_\phi(\mathcal{M})))$；由于所有扩散和解码器只看潜表示，编码器换成别的等变 Transformer 也能直接跑。
 
 ### 关键设计
 
-1. **对称性感知的 VAE 编码器**：
+**1. 对称性感知的 VAE 编码器：把异构晶体摊平成统一潜空间**
 
-    - 功能：把异构的 $(\mathbf{A},\mathbf{X},\mathbf{L})$ 统一压进连续平滑的潜空间 $\mathbf{Z}\in\mathbb{R}^{N\times d}$，同时严格保留晶体的旋转不变性和周期平移不变性。
-    - 核心思路：编码器选用 PDDFormer——这是当前对周期晶体最强的等变 Transformer 之一，天然满足 $\mathcal{E}_\phi(\mathbf{A},\mathbf{QX},\mathbf{QL})=\mathcal{E}_\phi(\mathbf{A},\mathbf{X},\mathbf{L})$；三个独立 MLP 解码器分别回原子类型（交叉熵）、坐标（$\ell_2$）、晶格（$\ell_2$），总损失 $\mathcal{L}_{\text{VAE}}=\mathcal{L}^{\mathbf{A}}_{\text{recon}}+\mathcal{L}^{\mathbf{X}}_{\text{recon}}+\mathcal{L}^{\mathbf{L}}_{\text{recon}}+\alpha\mathcal{L}_{\text{reg}}$，其中 $\mathcal{L}_{\text{reg}}=d_{\text{KL}}(q_\phi(\mathbf{Z}|\mathcal{M})\,\|\,p(\mathbf{Z}))$ 把潜分布拉向标准高斯，约束方差稳定，为后续扩散做准备。
-    - 设计动机：和 CrysDiff/DPF 直接在三类异构变量上各开一种扩散（D3PM + DDPM + wrapped normal）相比，这里只用一次 VAE 把异构变量"摊平"成统一的连续潜空间，让 stage-2 扩散只需要面对一种简单分布；同时 PDDFormer 把等变性"封装"在编码器里，潜空间里不再需要显式约束对称性。
+晶体的原始输入是离散原子类型、连续晶格参数、周期分数坐标三者拼接的"裂缝结构"，CrysDiff/DPF 为此不得不在三类变量上各开一种扩散（D3PM + DDPM + wrapped normal），架构复杂、扩散步数多。CrysLDNet 换个思路：先用一次 VAE 把异构变量统一压进连续平滑的潜空间，让后续扩散只面对一种简单分布。编码器选 PDDFormer——当前对周期晶体最强的等变 Transformer 之一，天然满足 $\mathcal{E}_\phi(\mathbf{A},\mathbf{QX},\mathbf{QL})=\mathcal{E}_\phi(\mathbf{A},\mathbf{X},\mathbf{L})$，等变性被"封装"在编码器里，潜空间里就不必再显式约束对称性。三个独立 MLP 解码器分别把 $\mathbf{Z}$ 还原成原子类型（交叉熵）、坐标（$\ell_2$）、晶格（$\ell_2$），总损失 $\mathcal{L}_{\text{VAE}}=\mathcal{L}^{\mathbf{A}}_{\text{recon}}+\mathcal{L}^{\mathbf{X}}_{\text{recon}}+\mathcal{L}^{\mathbf{L}}_{\text{recon}}+\alpha\mathcal{L}_{\text{reg}}$，其中 $\mathcal{L}_{\text{reg}}=d_{\text{KL}}(q_\phi(\mathbf{Z}|\mathcal{M})\,\|\,p(\mathbf{Z}))$ 把潜分布拉向标准高斯、稳定方差，为后续扩散铺好一个干净的目标分布。
 
-2. **潜空间 Flow Matching 扩散**：
+**2. 潜空间 Flow Matching 扩散：用扩散目标二次锤炼编码器**
 
-    - 功能：在 stage-1 学到的潜空间上做扩散预训练，进一步精炼 $\mathcal{E}_\phi$，让潜表示既能重构结构、又服从一个干净的目标分布，从而提升下游迁移能力。
-    - 核心思路：定义干净样本 $\mathbf{Z}^1=\mathcal{E}_\phi(\mathcal{M})$ 和高斯噪声 $\mathbf{Z}^0\sim\mathcal{N}(0,1)^{N\times d}$，采样 $t\sim\mathcal{U}(0,1)$ 后线性插值 $\mathbf{Z}^t=(1-t)\mathbf{Z}^0+t\mathbf{Z}^1$；条件向量场为 $u_t(\mathbf{Z}^t|\mathbf{Z}^1)=(\mathbf{Z}^1-\mathbf{Z}^t)/(1-t)$；用 DiT 去噪网络 $\mathcal{F}_\theta$ 预测 $\bar{\mathbf{Z}}^1=\mathcal{F}_\theta(\mathbf{Z}^t,t)$，loss 化简为 $\mathcal{L}_{\text{LDM}}=\frac{1}{(1-t)^2}\frac{1}{N}\sum_i\|\mathbf{z}^1_i-\bar{\mathbf{z}}^1_i\|^2$；关键在于 $\mathcal{E}_\phi$ 和 $\mathcal{F}_\theta$ **联合**更新，扩散信号反传回编码器，让 $\mathbf{Z}$ 同时满足"可重构"和"可去噪"两个目标。
-    - 设计动机：扩散在潜空间做有三个好处——(1) 单一连续高斯目标，不再需要 D3PM/wrapped normal 这类异构扩散；(2) $\mathbf{Z}$ 维度低且光滑，DiT 的去噪步数和参数都能省；(3) 编码器在被扩散目标"二次锤炼"后，节点表示对结构和化学信息的捕捉更精细——Figure 3 显示 CrysLDNet 重构 A/X/L 的精度全面优于 CrysDiff 和 DPF，直接验证了潜空间扩散对表示表达力的提升。
+光做 VAE 重构，编码器只学到"能还原结构"的表示；CrysLDNet 在 stage-1 的潜空间上再加一层 flow matching 扩散，逼编码器学到的 $\mathbf{Z}$ 同时"可重构"又"可去噪"。具体做法是把干净样本设为 $\mathbf{Z}^1=\mathcal{E}_\phi(\mathcal{M})$、噪声设为 $\mathbf{Z}^0\sim\mathcal{N}(0,1)^{N\times d}$，采样 $t\sim\mathcal{U}(0,1)$ 后线性插值 $\mathbf{Z}^t=(1-t)\mathbf{Z}^0+t\mathbf{Z}^1$，对应的条件向量场为 $u_t(\mathbf{Z}^t|\mathbf{Z}^1)=(\mathbf{Z}^1-\mathbf{Z}^t)/(1-t)$，再用 DiT 去噪网络预测干净潜变量 $\bar{\mathbf{Z}}^1=\mathcal{F}_\theta(\mathbf{Z}^t,t)$，损失化简为 $\mathcal{L}_{\text{LDM}}=\frac{1}{(1-t)^2}\frac{1}{N}\sum_i\|\mathbf{z}^1_i-\bar{\mathbf{z}}^1_i\|^2$。关键在于 $\mathcal{E}_\phi$ 和 $\mathcal{F}_\theta$ 是**联合**更新的——扩散梯度会反传回编码器，相当于用扩散目标对潜空间做"二次塑形"。这样做有三重红利：潜空间是单一连续高斯目标，省掉了 D3PM/wrapped normal 这类异构扩散；$\mathbf{Z}$ 维度低且光滑，DiT 的去噪步数和参数都能省；编码器被扩散目标精炼后对结构和化学信息的捕捉更精细——Figure 3 显示 CrysLDNet 重构 A/X/L 的精度全面优于 CrysDiff 和 DPF，直接印证了潜空间扩散对表达力的提升。
 
-3. **Backbone-Agnostic 即插即用**：
+**3. Backbone-Agnostic 设计：让范式独立于主干网络演化**
 
-    - 功能：让整个 pretrain-finetune pipeline 对 VAE 编码器架构完全解耦，未来出更强的等变晶体 Transformer 可以直接替换，无需重写损失、扩散或解码器。
-    - 核心思路：VAE 解码器 / DiT / 损失 / 优化目标全部只看潜表示 $\mathbf{Z}$ 的形状 $(N,d)$，不依赖编码器内部如何聚合邻域。论文实测把 $\mathcal{E}_\phi$ 从 Matformer 换成 PDDFormer，下游 JARVIS / MP 上平均提升 10.46% / 12.39%（Table 2）；反过来，即使只用 Matformer 这种较弱编码器，CrysLDNet 也能比原 Matformer 平均降 7.53% / 7.87%，说明增益主要来自"潜空间扩散"这一训练范式而非编码器升级。
-    - 设计动机：晶体表示学习领域架构迭代很快（CGCNN → ALIGNN → Matformer → PDDFormer → ...），如果预训练框架和某一具体编码器深度耦合，每次架构升级都要重训重设计；这种 backbone-agnostic 设计相当于把"预训练范式"和"主干网络"分层解耦，对长期演化非常友好。
+晶体表示学习的骨干迭代极快（CGCNN、ALIGNN、Matformer、PDDFormer……），如果预训练框架和某一具体编码器深度耦合，每次升级都要重训重设计。CrysLDNet 把 VAE 解码器 / DiT / 损失 / 优化目标全部只挂在潜表示 $\mathbf{Z}$ 的形状 $(N,d)$ 上，不依赖编码器内部如何聚合邻域，于是"预训练范式"和"主干网络"被分层解耦。实测把 $\mathcal{E}_\phi$ 从 Matformer 换成 PDDFormer，下游 JARVIS / MP 平均再提升 10.46% / 12.39%（Table 2），几乎正比于骨干本身的强弱；反过来即便只用较弱的 Matformer，CrysLDNet 仍比原 Matformer 平均降 7.53% / 7.87%——说明增益主要来自"潜空间扩散"这一训练范式而非编码器升级，框架因此既能吃骨干升级红利、又不会被某一代骨干绑死。
 
 ### 损失函数 / 训练策略
 - Stage 1：$\mathcal{L}_{\text{VAE}}=\mathcal{L}^{\mathbf{A}}_{\text{recon}}+\mathcal{L}^{\mathbf{X}}_{\text{recon}}+\mathcal{L}^{\mathbf{L}}_{\text{recon}}+\alpha\mathcal{L}_{\text{reg}}$，直到收敛。

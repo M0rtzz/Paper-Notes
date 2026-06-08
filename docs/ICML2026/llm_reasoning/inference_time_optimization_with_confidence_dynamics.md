@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：对一道题采的 $L$ 条 trace，每条 trace 包含 token 序列 $y_{\ell,1:T}$ 以及每个 token 位置上的 top-K log-prob。输出：投票选出的最终答案 $\hat{a}$。中间三步：(1) 用 top-K KL 近似算逐 token 置信度 $C_{\ell,t}$；(2) 把每条 trace 切成 $N=10$ 个位置归一化 bin，算头 P% 与尾 P% bin 的平均置信度之差 $\Delta C_\ell$；(3) 把 $\bar{C}_\ell + \beta\cdot\Delta C_\ell$ 作为 trace 分数，再按 $R(a) = |\mathcal{T}_a|^\alpha \cdot \mu_a(s_\ell)$ 算各候选答案分数取 argmax。整套方法**完全 training-free**，唯一额外开销是从推理栈拿 token logprob。
+CDG 要解决的是 Best-of-N 投票里"怎么从 $L$ 条 reasoning trace 里挑出对的那个答案"。它的输入是对一道题采的 $L$ 条 trace，每条带着 token 序列 $y_{\ell,1:T}$ 与逐 token 的 top-K log-prob；输出是投票选出的最终答案 $\hat{a}$。整条流水线先把每条 trace 的逐 token 置信度按位置归一化切成 10 个 bin，量出"尾段比头段自信多少"这个标量 $\Delta C_\ell$，再把它叠加到平均置信度上得到 trace 分数，最后用一个带频数阻尼的加权投票把分数聚到答案级取 argmax。整套方法完全 training-free，唯一额外开销是从推理栈把 token logprob 留下来。
 
 ### 关键设计
 
-1. **逐 token 置信度 + 位置归一化 binning**：
+**1. 逐 token 置信度 + 位置归一化 binning：把任意长度的 trace 对齐成固定维度的曲线。**
 
-    - 功能：把任意长度的 trace 映射到固定 $N$ 维置信度向量，方便跨 trace / 跨题对比头尾。
-    - 核心思路：token 级置信度沿用 DeepConf 的 top-K 近似 $C_t = -\frac{1}{K}\sum_{j\in\mathcal{K}_t}\log p(y_t=j)$（取 $K=20$，本质是 top-K log-prob 与均匀分布的 KL）。再把 $T$ 个 token 等分成 $N=10$ 个 bin $\mathcal{B}_{\ell,n}$，bin 内做平均得 $\bar{C}_\ell^{(n)}$，得到 $(\bar{C}_\ell^{(1)},\ldots,\bar{C}_\ell^{(N)})$。
-    - 设计动机：reasoning trace 长度差异巨大（短的几百 token、长的上万），按绝对位置切窗口没法对齐；位置归一化后才能在群体层面看出"正确组尾部上扬、错误组尾部下挫"这种统计模式（Figure 2 即据此画出）。
+reasoning trace 长短差异巨大——短的几百 token、长的上万，按绝对位置切窗口根本对不齐，没法在群体层面比较头尾。CDG 先沿用 DeepConf 的 top-K 近似算逐 token 置信度 $C_t = -\frac{1}{K}\sum_{j\in\mathcal{K}_t}\log p(y_t=j)$（取 $K=20$，本质是 top-K log-prob 与均匀分布的 KL），再把 $T$ 个 token 等分成 $N=10$ 个 bin $\mathcal{B}_{\ell,n}$，bin 内取平均得 $\bar{C}_\ell^{(n)}$，于是每条 trace 都被映射成同样的 10 维向量 $(\bar{C}_\ell^{(1)},\ldots,\bar{C}_\ell^{(N)})$。正是这步位置归一化，让作者能把成百上千条长短不一的 trace 叠在同一张图上，看出"正确组尾部上扬、错误组尾部下挫"的统计模式（Figure 2）。
 
-2. **Confidence Dynamic Gain $\Delta C_\ell$ 作为判别信号**：
+**2. Confidence Dynamic Gain $\Delta C_\ell$：用头尾差分把"越推越自信还是越推越虚"压成一个判别信号。**
 
-    - 功能：把"置信度沿推理过程的演化趋势"压缩成一个标量，正值表示越推越自信、负值表示越推越虚。
-    - 核心思路：取头部 $P\%$ bin 集合 $T_{\text{head},P}$、尾部 $P\%$ bin 集合 $T_{\text{tail},P}$，定义 $\Delta C_\ell = \frac{1}{|T_{\text{tail},P}|}\sum_{n\in T_{\text{tail},P}}\bar{C}_\ell^{(n)} - \frac{1}{|T_{\text{head},P}|}\sum_{n\in T_{\text{head},P}}\bar{C}_\ell^{(n)}$（默认 $P=10$，即头 10% 与尾 10% 的 bin 之差）。trace 分数为 $s_\ell = \bar{C}_\ell + \beta\cdot\Delta C_\ell$，其中 $\beta$ 控制动态信号权重，作者给了 model-specific 的 $\beta$ 选择规则：$\beta\in[0.5 r_b, 1.5 r_b]$，$r_b = \mu_C / \Delta_\mu$，分母是正确 / 错误 trace 的平均 CDG 差（用几条 calibration 题估）。
-    - 设计动机：DeepConf-Tail 已经验证"尾段置信度"有用，但只看尾部混淆了两类原因——"模型一开始就有把握的简单题"与"通过推理逐步获得把握的难题"。**减去头部置信度做差**等价于做 baseline 校准——奖励"推理过程中确实长见识"的 trace，惩罚"开局虚张声势但越想越没底"的 trace。消融实验中只用尾部不减头部 ("No Start") 平均掉 4.4 个点（HMMT 上掉 13.3 个点），证明这个差分操作是关键。
+DeepConf-Tail 已经验证"尾段置信度"有用，但只盯尾部会混淆两类截然不同的 trace——"模型一上来就有把握的简单题"和"靠推理一步步获得把握的难题"在尾段绝对值上可能一样高。CDG 的关键动作是做减法：取头部 $P\%$ 与尾部 $P\%$ 的 bin 集合，定义 $\Delta C_\ell = \frac{1}{|T_{\text{tail},P}|}\sum_{n\in T_{\text{tail},P}}\bar{C}_\ell^{(n)} - \frac{1}{|T_{\text{head},P}|}\sum_{n\in T_{\text{head},P}}\bar{C}_\ell^{(n)}$（默认 $P=10$，即头 10% 与尾 10% 的 bin 之差），正值表示越推越自信、负值表示开局虚张声势但越想越没底。减去头部置信度等价于给每条 trace 做了一次 baseline 校准，奖励"推理过程中确实长见识"的 trace，惩罚"虎头蛇尾"的 trace。这个差分信号随后线性叠进 trace 分数 $s_\ell = \bar{C}_\ell + \beta\cdot\Delta C_\ell$，权重 $\beta$ 按模型校准：$\beta\in[0.5 r_b, 1.5 r_b]$，其中 $r_b = \mu_C / \Delta_\mu$，分母是正确 / 错误 trace 的平均 CDG 差，用几条 calibration 题估出。消融里若只用尾部不减头部（"No Start"）平均掉 4.4 个点、HMMT 上更掉 13.3 个点，说明真正起作用的是"置信度爬升幅度"而非"尾段绝对值"。
 
-3. **Count-dampened weighted voting**：
+**3. Count-dampened weighted voting：压住频数项，让置信度信号真正进入决策。**
 
-    - 功能：把 trace 级分数 $s_\ell$ 聚合到答案级分数 $R(a)$，避免 majority voting 把置信度信号淹没。
-    - 核心思路：$R(a) = |\mathcal{T}_a|^\alpha \cdot \mu_a(s_\ell)$，其中 $\mathcal{T}_a$ 是给出答案 $a$ 的 trace 集合，$\mu_a(s_\ell)$ 是该集合内 $s_\ell$ 均值；最终答案 $\hat{a} = \arg\max_a R(a)$。指数 $\alpha\in[0,1]$（默认 0.5）抑制 count 项——当 $\alpha=1, \beta=0$ 时退化为 DeepConf，当 $\alpha=1, \mu_a(s_\ell)=1$ 时退化为 majority voting，这把 CDG 写成了已有方法的严格泛化。
-    - 设计动机：消融显示如果 $\alpha=1$（不阻尼 count），即使加上 $\Delta C_\ell$ 也会被频数项淹没——因为 raw count 量级远大于置信度均值的微小差异；只有 $\alpha < 1$ 才能让 CDG 的判别信号真正进入决策。
+有了 trace 分数还得聚到答案级，而朴素 majority voting 会让置信度信号被淹没——raw count 的量级远大于置信度均值那点微小差异。CDG 用 $R(a) = |\mathcal{T}_a|^\alpha \cdot \mu_a(s_\ell)$ 聚合，其中 $\mathcal{T}_a$ 是给出答案 $a$ 的 trace 集合、$\mu_a(s_\ell)$ 是该集合内 $s_\ell$ 的均值，最终答案 $\hat{a} = \arg\max_a R(a)$。指数 $\alpha\in[0,1]$（默认 0.5）专门用来给频数项降权：只有 $\alpha<1$ 时置信度均值才拉得动决策，消融中 $\alpha=1$（不阻尼）即便加上 $\Delta C_\ell$ 也被频数压倒、掉 1.7 个点。这个公式还顺手把已有方法写成了特例——$\alpha=1,\beta=0$ 退化为 DeepConf，$\alpha=1,\mu_a(s_\ell)=1$ 退化为 majority voting，于是 CDG 成了它们的严格泛化。
 
 ### 损失函数 / 训练策略
 **无训练**。CDG 完全运行在已训好模型的 inference 阶段，只需要在推理时把 top-K log-prob 留下来。超参 $\alpha=0.5, P=10\%$ 全程固定；$\beta$ 按模型校准（DeepSeek-R1-8B、gpt-oss-20B 取 10；Gemma-3-27B、QwQ-32B 取 3），用一个 benchmark 校准、其余三个 benchmark 测试，做轮换式 cross-benchmark calibration。

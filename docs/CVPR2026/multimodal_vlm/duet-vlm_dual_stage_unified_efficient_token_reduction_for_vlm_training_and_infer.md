@@ -36,27 +36,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DUET-VLM 包含两个阶段：(1) V2V（Vision-to-Vision）阶段在视觉编码器（如 CLIP ViT）最后一层内执行；(2) T2V（Text-to-Vision）阶段在 LLM decoder 的多个中间层执行。两阶段串联，可同时用于训练和推理。
+DUET-VLM 想解决的是视觉 token 冗余问题，但它的切入点和以往方法不同：不在视觉侧或语言侧单挑一处压缩，而是让两侧各做一半、彼此互补。整条流水线分两段串起来：图像先进视觉编码器（如 CLIP ViT），在它的最后一层做第一段 V2V（Vision-to-Vision）压缩，把 $N$ 个 patch token 砍成一小撮；这撮 token 进入 LLM 后，再在 decoder 的若干中间层做第二段 T2V（Text-to-Vision）压缩，借文本问题进一步裁掉与回答无关的视觉 token。两段用的都是模型自带的 attention，不引入额外网络，因此训练和推理可以套同一套压缩逻辑。
 
 ### 关键设计
 
-1. **V2V 阶段——视觉编码器内 token 压缩**:
+**1. V2V 阶段：在视觉编码器内部用视觉自注意力做粗筛。**
 
-    - 功能：在视觉编码器最后一层，利用 V2V self-attention 将 $N$ 个视觉 tokens 压缩为 $k_1 + k_2$ 个
-    - 核心思路：(a) 计算所有视觉 tokens 的 self-attention score（对列求和得到每个 token 的"被关注度"），选 top-$k_1$ 个作为 **dominant tokens**——这些是全局语义最重要的 tokens；(b) 剩余 $N - k_1$ 个 tokens 通过 **attention-guided local cluster aggregation** 合并为 $k_2$ 个 **contextual tokens**——以每个 contextual token 为中心，在固定窗口宽度 $w$ 内选择 attention score 最高的邻居做加权平均
-    - 设计动机：全局平均池化（如 VisionZip 的 contextual tokens）会稀释信息，因为语义差异大的 tokens 被混在一起。局部聚类（固定宽度 $w$）保证合并的 tokens 在空间上相近、语义相似，避免信息丢失
+第一段压缩发生在视觉编码器最后一层，目标是不依赖任何文本信号、先把明显冗余的背景和重复纹理 token 去掉。它把 $N$ 个视觉 token 的命运分成两类。第一类是 **dominant token**：对这一层的 self-attention 矩阵按列求和，得到每个 token 的"被关注度"（被多少其他 token 看重），取 top-$k_1$ 个保留下来——这些是全局语义最显著的 token。第二类是剩下的 $N-k_1$ 个，它们不直接丢弃，而是经 **attention-guided local cluster aggregation** 合并成 $k_2$ 个 **contextual token**：以每个聚类中心为锚，只在固定窗口宽度 $w$ 内挑 attention score 最高的若干邻居做加权平均。这里的关键是那个"固定宽度 $w$"——VisionZip 一类做法把所有剩余 token 全局平均成几个 contextual token，会把空间上相隔很远、语义差异很大的 token 混在一起，信息被稀释；限定在局部窗口内聚合，保证被合并的 token 空间相近、语义相似，合出来的 token 仍代表一块连贯区域。压缩后视觉 token 数从 $N$ 降到 $k_1+k_2$。
 
-2. **T2V 阶段——LLM 内层级视觉 token 裁剪**:
+**2. T2V 阶段：在 LLM 内部用文本对视觉的注意力做层级精筛。**
 
-    - 功能：在 LLM 的多个中间层逐步裁剪不重要的视觉 tokens
-    - 核心思路：(a) 首先选择 **salient text tokens** 集合 $S$——包含 last token（作为 attention sink）和 attention score 最高的若干文本 tokens；(b) 在每个 pruning stage，计算 $S$ 中文本 tokens 对视觉 tokens 的 T2V cross-attention scores，按分数排序丢弃最低 $\lambda$ 比例的视觉 tokens；(c) 多 stage 执行（如在 LLM 的第 $l_1, l_2, \ldots$ 层），逐步压缩
-    - 设计动机：文本 tokens 知道"当前问题需要什么信息"，T2V attention 天然反映了视觉 tokens 对回答的相关性。层级裁剪比一次性裁剪更安全，因为浅层 attention 不够成熟，需要渐进式决策
+V2V 砍完之后送进 LLM 的 token 仍有进一步压缩空间，但这一步该砍谁取决于"当前问题问的是什么"，所以要用文本来引导。DUET-VLM 先从文本里选出一组 **salient text token** 集合 $S$：包含序列的 last token（它充当 attention sink，承接大量注意力）以及 attention score 最高的若干文本 token。然后在 LLM 的若干指定中间层（第 $l_1, l_2, \ldots$ 层）分多个 stage 渐进裁剪——每个 stage 计算 $S$ 中文本 token 对当前视觉 token 的 T2V cross-attention score，按分数排序丢掉最低的 $\lambda$ 比例。之所以分多 stage 而不是一刀切，是因为浅层 attention 还没"看清"图文关系、判断不可靠，逐层渐进地裁让每一步的决策都基于更成熟的注意力，避免早期误删关键 token。
 
-3. **训练时双阶段压缩**:
+**3. 训练与推理统一的双阶段压缩。**
 
-    - 功能：将双阶段压缩同时应用于训练过程，减少训练资源消耗
-    - 核心思路：训练时使用与推理相同的压缩策略，通过减少送入 LLM 的 token 数量降低 FLOPs 和显存。Dominant/contextual token 的选择和 T2V pruning 都用 straight-through estimator 保持梯度流
-    - 设计动机：大多数现有方法（FastV、PyramidDrop）只压缩推理不压缩训练，训练成本依然很高。DUET-VLM 统一训练和推理的压缩策略，实现训练加速
+多数 token 压缩方法（FastV、PyramidDrop 等）只在推理时压缩，训练照样喂全量 token，大规模 VLM 的训练成本并没降下来。DUET-VLM 把上面两段压缩原封不动搬到训练里：训练时同样在 V2V 选 dominant/contextual token、在 T2V 做层级裁剪，送进 LLM 的 token 变少，FLOPs 和显存随之下降。难点在于选 token 和丢 token 都是离散操作、会截断梯度，这里用 straight-through estimator 让前向按硬选择执行、反向仍能把梯度回传到被选/被丢的 token 上，从而支持端到端训练。统一训练与推理的压缩策略，是这篇能拿到约 31% 训练时间节省的来源。
 
 ### 损失函数 / 训练策略
 - 标准自回归 language modeling loss，与 LLaVA 一致

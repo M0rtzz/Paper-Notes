@@ -49,26 +49,20 @@ Pipeline 三步走：
 
 ### 关键设计
 
-1. **Transfer Utility 曲线 $\mu_T(x)$ 与 FOTU**：
+**1. Transfer Utility 曲线 $\mu_T(x)$ 与 FOTU：把"读懂 trace"换成弱模型的续写准确率**
 
-    - 功能：把单条 trace 的"前缀百分比 → 弱模型续写准确率"映射成一条曲线，并在 teacher 层面聚合。
-    - 核心思路：对一个老师模型 $T$ 的每条正确 trace $R_p$，每 3 步采一个前缀，归到最近的右边界 bin；teacher 曲线 $\mu_T(x)=\frac{1}{|\mathcal{S}|}\sum_{W\in\mathcal{S}}\frac{1}{|P_x|}\sum_{p\in P_x}f_p^{(W)}(x)$。一阶 transfer utility 直接对所有 bin 求均值：$\text{FOTU}(T)=\frac{1}{|X_T|}\sum_{x\in X_T}\mu_T(x)$。FOTU 高意味着"弱学生在 trace 的多数前缀位置就能续写正确"。
-    - 设计动机：避开 prover-verifier 这种对抗设定和"AI judge 评 legibility"的循环依赖，直接用一个固定弱模型的下游成功率作为可读性的操作化代理；用百分位 bin 而非绝对步数，使得不同长度 trace 可比。
+可读性本来是个需要人类或强 LLM 主观评判的属性，prover-verifier 那套又是对抗式的、还得训练弱模型，循环依赖严重。作者干脆把它操作化成一条曲线：对老师模型 $T$ 的每条正确 trace $R_p$，每 3 步采一个前缀、归到最近的右边界 bin，喂给一个固定的弱学生看它能否续写出正确答案；trace 级正确性序列线性插值成 $f_p(x)$，再在 teacher 层面聚合成 $\mu_T(x)=\frac{1}{|\mathcal{S}|}\sum_{W\in\mathcal{S}}\frac{1}{|P_x|}\sum_{p\in P_x}f_p^{(W)}(x)$。一阶 transfer utility 就是这条曲线在所有 bin 上的均值 $\text{FOTU}(T)=\frac{1}{|X_T|}\sum_{x\in X_T}\mu_T(x)$，值越高表示"弱学生在 trace 的多数前缀位置就能接着写对"。之所以用百分位 bin 而非绝对步数，是为了让不同长度的 trace 可比；之所以用固定弱模型的下游成功率，是为了把一个主观属性换成客观、可重复、对评判者要求极低的代理量。
 
-2. **Second-Order TU (SOTU) 作为"信息密度正则化器"**：
+**2. Second-Order TU (SOTU)：用熵当"信息密度正则化器"防 reward hacking**
 
-    - 功能：防止 trace 把答案塞在第一步 (front-load) 或最后一步 (sandbag) 而拿到虚高 FOTU。
-    - 核心思路：对每条 trace 和每个学生 $W$，记 $\tau_p^{(W)}=\min\{x:f_p^{(W)}(x)=1\}$ 为弱学生首次答对的 bin，得到经验分布 $h_{T,W}(x)$。SOTU 定义为该分布的归一化熵 $\text{SOTU}(T)=\frac{1}{|\mathcal{S}|}\sum_W \frac{-\sum_x h_{T,W}(x)\log h_{T,W}(x)}{\log|X|}\in[0,1]$。分布越均匀 (信息均匀铺开) SOTU 越高，越集中 (答案 front-load 或 sandbag) SOTU 越低。
-    - 设计动机：FOTU 单独看会被"答案早暴露"的 trace 刷高，SOTU 用熵直接惩罚这种"答案突然蹦出来"的模式，强制 trace 的有用信息要"分散摊开"。FOTU 和 SOTU 在实测上呈现负相关 ($\rho=-0.50$)，恰好互为正交维度。
+FOTU 单看有个漏洞——一条把答案塞在第一步 (front-load) 或拖到最后一步才暴露 (sandbag) 的 trace，照样能刷出虚高的 FOTU。SOTU 用"弱学生首次答对的位置分布"的熵来堵这个漏洞：对每条 trace、每个学生 $W$，记 $\tau_p^{(W)}=\min\{x:f_p^{(W)}(x)=1\}$ 为首次答对的 bin，统计成经验分布 $h_{T,W}(x)$，SOTU 即其归一化熵 $\text{SOTU}(T)=\frac{1}{|\mathcal{S}|}\sum_W \frac{-\sum_x h_{T,W}(x)\log h_{T,W}(x)}{\log|X|}\in[0,1]$。分布越均匀 (有用信息均匀铺开) SOTU 越高，越集中 (答案突然蹦出来) SOTU 越低，相当于强制 trace 把推理增量"分散摊开"而不是一次性甩出答案。实测里 FOTU 和 SOTU 呈负相关 ($\rho=-0.50$)，正好互为一对正交维度，这个"用首次达标位置的熵抗 front-load/sandbag"的套路也可迁移到任何按位置累积奖励的评测里。
 
-3. **Regression Rate (RR) 度量"越读越糊涂"**：
+**3. Regression Rate (RR)：度量"越往后读弱模型越糊涂"**
 
-    - 功能：捕捉"加更多 step 反而把弱模型带偏"的现象。
-    - 核心思路：把每条 trace 在采样前缀上的正确性序列 $y_1,\ldots,y_K$ 看成时序，统计相邻位下降比例 $\text{rr}(p,W)=\frac{1}{K-1}\sum_{i=1}^{K-1}\mathbb{1}[y_{i+1}<y_i]$，teacher 级再在正确 trace 上求均值并跨学生平均。RR 低说明每一步基本都是正贡献；RR 高说明 trace 里有矛盾或误导性步骤。
-    - 设计动机：FOTU/SOTU 都是位置级的整体性质，RR 直接刻画"步与步之间是否连贯"，与 backtracking 这个 efficiency 维度互补——backtracking 是 trace 自己的特征，RR 是这个特征在弱学生身上的下游效果。
+FOTU、SOTU 都是位置级的整体性质，看不出"加了更多 step 反而把弱学生带偏"这种局部劣化。RR 直接把每条 trace 在采样前缀上的正确性序列 $y_1,\ldots,y_K$ 当时序看，统计相邻位下降的比例 $\text{rr}(p,W)=\frac{1}{K-1}\sum_{i=1}^{K-1}\mathbb{1}[y_{i+1}<y_i]$，teacher 级再在正确 trace 上求均值、跨学生平均。RR 低说明几乎每一步都是正贡献，RR 高说明 trace 里藏着矛盾或误导性步骤。它和 efficiency 维度里的 backtracking 互补——backtracking 是 trace 自身的特征，RR 是同一个特征落到弱学生身上的下游后果。
 
-### 损失函数 / 训练策略
-本文不训练模型，是纯**评测框架**。Efficiency 端的 redundancy 阈值 $\tau=0.8$ 是人工 sweep 出来的；backtracking 用 Gemini 2.5-Flash 当 judge 并做了人工校验；transfer 端弱学生固定为 Phi-3-Mini 和 Llama-3.2-1B，并额外用 OLMo-3-7B-Instruct 做稳定性 check。
+### 评测协议
+本文不训练任何模型，是纯**评测框架**。Efficiency 端的 redundancy 阈值 $\tau=0.8$ 由人工 sweep 选定，backtracking 用 Gemini 2.5-Flash 当 judge 并人工校验；transfer 端弱学生固定为 Phi-3-Mini (3.8B) 和 Llama-3.2-1B，并额外用 OLMo-3-7B-Instruct 做稳定性 check。
 
 ## 实验关键数据
 

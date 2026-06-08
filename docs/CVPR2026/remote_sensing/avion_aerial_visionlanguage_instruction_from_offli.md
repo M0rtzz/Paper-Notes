@@ -43,31 +43,33 @@ AVION 提出一种知识蒸馏框架，通过 LLM 生成语义丰富的遥感文
 
 ### 整体框架
 
-Offline Teacher 阶段：大模型（GeoRSCLIP ViT-H/14）编码 LLM 生成的类描述，用视觉原型验证后聚合为文本原型 $\mathbf{t}_k^{T*}$。Training Student 阶段：小模型（GeoRSCLIP ViT-B/32）注入视觉和文本 prompt，通过三维度蒸馏对齐学习。推理阶段：仅用 Student 前向传播。
+AVION 要解决的是「遥感数据只有类名标签、PEFT 又只敢动文本端」这对矛盾，办法是把一个大模型当离线 Teacher、把它的丰富知识蒸馏进一个小模型 Student。整个流程分三段：离线阶段，用 GeoRSCLIP ViT-H/14 这个大模型编码 LLM 为每类生成的语义描述，经过视觉原型验证后聚合成高质量的文本原型 $\mathbf{t}_k^{T*}$，这一步只跑一次、结果离线缓存；训练阶段，小模型 GeoRSCLIP ViT-B/32 在视觉和文本两个编码器里都注入可学习 prompt，通过视觉、文本、logit 三个维度同时向 Teacher 对齐；推理阶段则只用 Student 前向，Teacher 完全退场，所以部署时没有任何额外开销。
 
 ### 关键设计
 
-1. **Selective Prototype Aggregation（选择性原型聚合）**:
+**1. 选择性原型聚合（Selective Prototype Aggregation）：让 LLM 描述真正反映遥感视觉，而不是幻觉。**
 
-    - 功能：从 LLM 生成的候选描述中筛选并聚合出每类的文本原型
-    - 核心思路：先用 Gemini 2.5 Flash 为每类生成至多 50 条遥感视角描述，用 RS-Flag 标记遥感相关性。计算 Teacher 视觉原型 $\hat{\mathbf{v}}_k^T = \frac{1}{|\mathcal{B}_k|}\sum_i \mathbf{v}_{k,i}^T$，评估每条描述与视觉原型的相似度 $s_{k,j} = (\hat{\mathbf{v}}_k^T)^\top \mathbf{t}_{k,j}^T$，用 Median/MAD z-score 去除异常值，最后按 $w_{k,j} \propto \exp(\beta s_{k,j} + \gamma \cdot \text{RS-Flag}_{k,j})$ 加权聚合为最终原型
-    - 设计动机：LLM 可能产生非视觉或非遥感相关的幻觉描述，通过视觉原型验证和统计过滤确保文本原型的质量和遥感相关性
+遥感数据集只有「airport」这种干巴巴的类名，撑不起同一类在不同区域、季节、传感器下的巨大视觉差异，所以第一步是用 Gemini 2.5 Flash 为每类生成至多 50 条遥感视角的描述，并给每条打一个 RS-Flag 标记它是否真和遥感相关。但 LLM 也会编出非视觉或跑题的句子，不能直接拿来用。AVION 的做法是让 Teacher 的视觉原型来当裁判：先在该类的图像上求出视觉原型 $\hat{\mathbf{v}}_k^T = \frac{1}{|\mathcal{B}_k|}\sum_i \mathbf{v}_{k,i}^T$，再算每条描述和它的相似度 $s_{k,j} = (\hat{\mathbf{v}}_k^T)^\top \mathbf{t}_{k,j}^T$，用 Median/MAD 的 z-score 把离群描述剔掉，剩下的按
 
-2. **双端 Prompt Tuning**:
+$$w_{k,j} \propto \exp(\beta s_{k,j} + \gamma \cdot \text{RS-Flag}_{k,j})$$
 
-    - 功能：在 Student 的视觉和文本编码器中同时注入可学习 prompt
-    - 核心思路：文本端类似 CoOp 学习上下文 token，视觉端类似 VPT 在 ViT 每层注入 prompt token。两端 prompt 都保持 backbone 冻结，只更新 prompt 参数
-    - 设计动机：视觉端 prompt 让编码器获得适配遥感倾斜视角等特征的灵活性，解决视觉刚性；文本端 prompt 吸收 Teacher 的丰富语义知识
+加权聚合成最终文本原型。直观上这像一个无参数的 cross-attention——视觉原型做 query、文本描述做 key/value，越贴合该类真实视觉、越像遥感的描述权重越大。举个例子：「airport」生成的 50 条里，「a top-down satellite view of runways and terminals」会因为既贴视觉又被 RS-Flag 命中而拿到高权重，「a busy airport lounge with travelers」这种地面视角则被相似度压低甚至当离群点丢掉，最后留下的原型才真正描述俯视下的机场。
 
-3. **Tri-Aspect Alignment（三维度对齐蒸馏）**:
+**2. 双端 Prompt Tuning：不只动嘴，也让眼睛能适配遥感。**
 
-    - 功能：同时对齐视觉嵌入、文本嵌入和相似度 logit
-    - 核心思路：$\mathcal{L}_{\text{img}} = 1 - (\mathbf{v}_i^S)^\top \mathbf{v}_i^T$ 对齐视觉特征；$\mathcal{L}_{\text{text}} = 1 - (\mathbf{t}_k^S)^\top \mathbf{t}_k^{T*}$ 对齐文本原型；$\mathcal{L}_{\text{logit}} = \tau^2 \text{KL}(\sigma(\mathbf{s}^T/\tau) \| \sigma(\mathbf{s}^S/\tau))$ 对齐跨模态相似度分布。总损失 $\mathcal{L} = \mathcal{L}_{\text{task}} + 0.5\mathcal{L}_{\text{img}} + 0.5\mathcal{L}_{\text{text}} + \mathcal{L}_{\text{logit}}$，logit 项有 30% 线性 warmup
-    - 设计动机：仅对齐嵌入不够，还需对齐类间关系结构（通过 logit distillation），这样 Student 不仅学到单个类的表征，还学到类间的相对关系
+多数 PEFT 方法只在文本端学 prompt、把视觉编码器冻死，根本没法捕获遥感特有的俯视角和尺度变化，这就是「视觉刚性」。AVION 在 Student 两端都注入 prompt：文本端沿用 CoOp 的思路学一组可训练的上下文 token，去吸收第一步聚合出的丰富语义；视觉端则像 VPT 那样在 ViT 每一层都插入 prompt token，让视觉编码器在 backbone 冻结的前提下仍有空间去适配遥感的倾斜视角和尺度。两端都只更新 prompt 参数、不碰 backbone，既保住了 PEFT 的低成本，又把「视觉端无法适配」这个口子补上了。
+
+**3. 三维度对齐蒸馏（Tri-Aspect Alignment）：嵌入对齐之外，还要对齐类间关系。**
+
+有了好原型和双端 prompt，剩下的问题是 Student 该向 Teacher 学什么。AVION 同时在三个层面对齐：视觉嵌入用 $\mathcal{L}_{\text{img}} = 1 - (\mathbf{v}_i^S)^\top \mathbf{v}_i^T$ 拉近，文本原型用 $\mathcal{L}_{\text{text}} = 1 - (\mathbf{t}_k^S)^\top \mathbf{t}_k^{T*}$ 拉近，跨模态相似度分布则用 KL 蒸馏
+
+$$\mathcal{L}_{\text{logit}} = \tau^2 \, \text{KL}\!\left(\sigma(\mathbf{s}^T/\tau) \,\|\, \sigma(\mathbf{s}^S/\tau)\right)$$
+
+对齐（温度 $\tau=2$）。前两项只让 Student 学到单个类的好表征，关键是第三项：logit 蒸馏传递的是 Teacher 眼里「这张图像和各个类有多像」的整套相对关系，Student 因此学到的是类间结构而非孤立锚点，这正是它在 novel 类上不退化的原因。总损失把三者和任务分类交叉熵合在一起 $\mathcal{L} = \mathcal{L}_{\text{task}} + 0.5\mathcal{L}_{\text{img}} + 0.5\mathcal{L}_{\text{text}} + \mathcal{L}_{\text{logit}}$，其中 logit 项前 30% 训练步做线性 warmup，避免早期 Student 表征还没成形时被关系蒸馏带偏。
 
 ### 损失函数 / 训练策略
 
-总损失加任务分类交叉熵。AdamW 优化器 lr=5e-4，少样本 100 epochs，base-to-novel 50 epochs。蒸馏温度 $\tau=2$，logit 权重有线性 warmup。
+训练用 AdamW，学习率 5e-4；少样本设置跑 100 epochs，base-to-novel 设置跑 50 epochs。蒸馏温度固定 $\tau=2$，logit 对齐权重为 1 且带前 30% 的线性 warmup，视觉/文本对齐各 0.5，与任务交叉熵共同优化。
 
 ## 实验关键数据
 

@@ -43,31 +43,31 @@ tags:
 
 ### 整体框架
 
-NHA 在每层维护两种记忆：(1) 长期记忆 $K^{long}_t, V^{long}_t \in \mathbb{R}^{m \times d}$——通过门控 RNN 递归更新，压缩窗口外的全部历史；(2) 短期记忆 $K^{short}_t, V^{short}_t \in \mathbb{R}^{w \times d}$——窗口内的精确 token KV cache。两者拼接为 $K^H_t \in \mathbb{R}^{(m+w) \times d}$，经单次 softmax 注意力输出结果。通过调整窗口大小 $w$ 实现层间混合：$w=0$ 退化为纯线性 RNN，$w=N$ 恢复为全注意力。
+NHA 的核心洞察是：线性 RNN 的压缩记忆和滑动窗口的精确 KV cache，本质上都能写成 $m \times d$ 的 KV 格式，于是它们可以直接拼在一起、交给同一次 softmax 去处理，而不必像以往那样分别算完再加权融合。具体到每一层，NHA 同时维护两种记忆：长期记忆 $K^{long}_t, V^{long}_t \in \mathbb{R}^{m \times d}$ 由门控 RNN 递归更新、把窗口外的全部历史压进固定大小的槽位；短期记忆 $K^{short}_t, V^{short}_t \in \mathbb{R}^{w \times d}$ 则是窗口内 token 的精确 KV cache。两者拼成 $K^H_t \in \mathbb{R}^{(m+w) \times d}$ 后过一次 softmax 注意力得到输出。更妙的是，只要调节窗口大小 $w$ 就能让同一套架构在"纯线性 RNN（$w=0$）—混合—全注意力（$w=N$）"之间连续滑动，层内融合与层间混合就此统一在一个机制里。
 
 ### 关键设计
 
-1. **层内混合——统一 Softmax 融合**:
+**1. 层内混合——用统一 softmax 实现零参数的长短期融合。**
 
-    - 功能：无需额外参数地动态分配长期和短期记忆的注意力权重
-    - 核心思路：长期记忆通过门控线性 RNN 更新 $K^{long}_t = \text{Diag}(\alpha_t) K^{long}_{t-1} + (1-\alpha_t) \otimes k_t$，与短期窗口 KV cache 拼接后送入 softmax：$o_t = \text{softmax}(\frac{q_t (K^H_t)^T}{\sqrt{d}}) V^H_t$。softmax 自动计算长期记忆的注意力比例 $\omega_L = \frac{\sum_{i \in long} \exp(q_t k_i^\intercal)}{\sum_{i \in long} \exp(q_t k_i^\intercal) + \sum_{j \in short} \exp(q_t k_j^\intercal)}$
-    - 设计动机：与加权求和融合不同，统一 softmax 的权重依赖于查询与所有 key 的相似度——实现了逐 token、逐 head 的上下文相关加权，且梯度自然耦合长短期记忆的学习。Token shift 确保只有窗口外的 token 更新长期记忆，窗口内用 RoPE 位置编码而长期记忆不加位置编码
+线性模型把全序列压成固定状态会丢失精确 token，滑动窗口又看不到窗口外的内容，二者优缺互补，但以往的层内混合（如 MesaNet、Titans）是分别算出线性注意力和局部 softmax 再加权求和——既要额外的融合参数，权重还往往是固定的。NHA 的做法是先用门控线性 RNN 递归更新长期记忆 $K^{long}_t = \text{Diag}(\alpha_t) K^{long}_{t-1} + (1-\alpha_t) \otimes k_t$，再把它和短期窗口 KV cache 拼起来送进同一次 softmax：$o_t = \text{softmax}(\frac{q_t (K^H_t)^T}{\sqrt{d}}) V^H_t$。
 
-2. **层间混合——窗口大小调节**:
+关键在于，softmax 的归一化天然就在"分配注意力"——长期记忆实际获得的注意力比例 $\omega_L = \frac{\sum_{i \in long} \exp(q_t k_i^\intercal)}{\sum_{i \in long} \exp(q_t k_i^\intercal) + \sum_{j \in short} \exp(q_t k_j^\intercal)}$ 完全由查询与所有 key 的相似度决定，于是融合变成了逐 token、逐 head 的上下文相关加权，无需任何额外参数，且梯度自然把长短期记忆的学习耦合在一起。实现上靠 token shift 保证只有滑出窗口的 token 才去更新长期记忆，窗口内用 RoPE 编码位置、长期记忆则不加位置编码。
 
-    - 功能：在统一架构下实现灵活的层间混合配置
-    - 核心思路：所有 NHA 层共享相同架构设计，仅通过调整每层的滑动窗口大小 $w$ 控制行为——$w=0$ 为纯线性 RNN 层，$w=N$ 为全注意力层，$0 < w < N$ 为混合层。这种"二元性"使同一模型无需重训练即可在推理时切换不同的精度-速度配置
-    - 设计动机：之前的层间混合（如 Jamba）堆叠异构层需要管理不同模块的对齐，且搜索最优配置代价高。NHA 可以在推理时通过调窗口大小零成本搜索最优配置
+**2. 层间混合——只靠窗口大小一个超参数切换层的行为。**
 
-3. **Chunkwise 并行计算**:
+以往的层间混合（如 Jamba）是把不同类型的层堆在一起，既要管理异构模块间的对齐，又得花大代价搜索每层用什么类型。NHA 让所有层共享完全相同的架构，行为差异全部由各层的滑动窗口 $w$ 决定：$w=0$ 是纯线性 RNN 层，$w=N$ 是全注意力层，中间则是混合层。
 
-    - 功能：高效 GPU 实现
-    - 核心思路：将序列分为大小为 $C$ 的块，每块内并行计算线性通道 logits（通过累积/反向门控乘积 $\mathcal{A}$）和滑动窗口 logits（偏移窗口的标准注意力），拼接后统一 softmax，最后分别从线性记忆分支和滑动窗口分支聚合值向量。用 Triton kernel 实现
-    - 设计动机：保持近线性的计算复杂度同时充分利用 GPU 并行性——在长序列上 NHA 速度与 GSA 持平，远优于 FlashAttention 的二次增长
+这种"二元性"带来一个实用红利——因为切换不需要改架构、不需要重训练，同一个模型在推理时就能通过调窗口大小零成本地搜索精度-速度配置，把昂贵的层类型搜索变成了几乎免费的推理时旋钮。
+
+**3. Chunkwise 并行计算——在近线性复杂度下榨干 GPU 并行度。**
+
+统一 softmax 虽然优雅，但若逐 token 递归就吃不到 GPU 的并行红利。NHA 把序列切成大小为 $C$ 的块，块内并行算两路 logits：线性通道通过累积/反向门控乘积 $\mathcal{A}$ 得到，滑动窗口通道则是偏移窗口的标准注意力；两路拼接后统一过 softmax，最后再分别从线性记忆分支和滑动窗口分支聚合值向量。整套流程用 Triton kernel 实现。
+
+这样既保住了近线性的计算复杂度，又把块内运算交给 GPU 并行，长序列上 NHA 的速度与 GSA 持平，远好于 FlashAttention 的二次增长。
 
 ### 损失函数 / 训练策略
 
-标准语言建模交叉熵损失。340M 模型在 15B token 上训练，1.3B 模型在 100B token 上训练。预训练 LLM 混合化时用 SlimPajama 10B token 微调。
+标准语言建模交叉熵损失。340M 模型在 15B token 上训练，1.3B 模型在 100B token 上训练；把预训练 LLM 混合化时，用 SlimPajama 10B token 微调即可。
 
 ## 实验关键数据
 

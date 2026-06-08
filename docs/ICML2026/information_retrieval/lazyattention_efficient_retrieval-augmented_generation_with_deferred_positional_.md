@@ -40,32 +40,23 @@ LazyAttention 把 RoPE 位置编码从 KV 缓存写入阶段推迟到 attention 
 ## 方法详解
 
 ### 整体框架
-LazyAttention 把 Transformer block 拆成两半看（见 Figure 1）：**写缓存时**——Q/K/V 都不带位置信息，直接以"纯内容"形式存入 KV cache（每个文档以局部位置 0 开始索引）；**用缓存时**——在 fused attention kernel 内部，根据当前请求把该文档放到的全局 offset，on-the-fly 给 Q 或 K 施加一次相对旋转 $R_\Delta$ 再算 softmax。这样数学上完全等价于"预先把 K 旋转到目标位置"的标准 RoPE 注意力，但物理上 KV cache 只存一份。
-
-Example 3.1 的直观图景：两个文档 $d_1, d_2$ 各自缓存为 $C_1, C_2$（都从位置 0 开始），如果当前请求是 $d_1 \mathbin\Vert d_2 \mathbin\Vert Q$，那么用 $C_2$ 时只要把 $Q$ 反向旋转 $|d_1|$ 步，就能和"$C_2$ 假装自己仍在位置 0..|d_2|"的状态对齐。
+LazyAttention 要解决的是 KV cache 因 position-aware 而被位置变体撑爆的问题，做法是把同一个 Transformer block 的位置编码"时机"挪后：写缓存时 Q/K/V 都不带任何位置信息，每个文档都以局部位置 0 开始当作"纯内容键值对"存进 KV cache；用缓存时再在 fused attention kernel 内部，根据该文档在当前请求里落到的全局 offset $\Delta$，on-the-fly 给 Q 或 K 施加一次相对旋转 $R_\Delta$ 后才算 softmax。由于 RoPE 注意力分数只依赖相对位置（$(R_m q)^\top(R_n k)=q^\top R_{n-m}k$），这套"现场补位置"的算法和"预先把 K 旋转到目标位置"的标准 RoPE 完全等价，但物理上 KV cache 只需存一份。直观上（Example 3.1），文档 $d_1,d_2$ 各自缓存为从位置 0 起算的 $C_1,C_2$，当请求是 $d_1\mathbin\Vert d_2\mathbin\Vert Q$ 时，复用 $C_2$ 只需把 $Q$ 反向旋转 $|d_1|$ 步，就能与"$C_2$ 仍假装自己在位置 0..|d_2|"的缓存状态对齐。
 
 ### 关键设计
 
-1. **Deferred Positional Encoding（推迟位置编码）**:
+**1. Deferred Positional Encoding：把 RoPE 从写缓存推迟到算 attention**
 
-    - 功能：把 RoPE 从"写 KV 之前"挪到"读 KV 算 attention 时"，使 KV cache 变成 position-agnostic 的"内容键值对"。
-    - 核心思路：利用 RoPE 的相对性 $q^\top R_{n-m} k$，让 Q/K/V 写缓存时不带任何位置；attention 时只需一个 offset $\Delta$ 把 K（或 Q）的 RoPE 半维度旋转一次：$k'_1 = k_1\cos\Delta - k_2\sin\Delta,\; k'_2 = k_1\sin\Delta + k_2\cos\Delta$。注意是**单次相对旋转**，不是 naive "先转回 0 再转到目标"（后者会额外乘 2，把 decoding 的 FLOPs/IO 都打到 ~100%–150% 的不可承受范围）。
-    - 设计动机：直接解决 position-aware cache 的容量浪费——同一文档不再占多个位置变体的物理 entry，从而在固定 HBM 预算下覆盖更多文档，命中率按上面的 Zipf 公式提升。
+position-aware 缓存把位置 eagerly 烘焙进 K，于是同一文档每出现在一个新位置就得另存一份 KV，宝贵的 HBM 全花在"同文档不同位置变体"上。LazyAttention 抓住 RoPE 的相对性 $q^\top R_{n-m}k$，让 Q/K/V 入缓存时不带位置，attention 时只用一个 offset $\Delta$ 把 K（或 Q）的 RoPE 半维度旋转一次：$k'_1 = k_1\cos\Delta - k_2\sin\Delta,\; k'_2 = k_1\sin\Delta + k_2\cos\Delta$。关键是这是**单次相对旋转**而非 naive 的"先转回位置 0、再转到目标"——后者要旋转两次，会把 decoding 的 FLOPs/IO 抬到 ~100%–150% 的不可承受区间。由此 KV cache 变成 position-agnostic 的内容键值对，同一文档不再占多个位置 entry，固定 HBM 预算下能覆盖更多文档，命中率按前述 Zipf 公式提升。
 
-2. **Tiling 感知的 Q/K 旋转分派（prefill 转 K, decode 转 Q）**:
+**2. Tiling 感知的 Q/K 旋转分派：prefill 转 K、decode 转 Q**
 
-    - 功能：根据 prefill / decode 两阶段截然不同的瓶颈，选择 rotate 哪一侧来把 deferred RoPE 的开销压到最小。
-    - 核心思路：prefill 是 compute-bound，PagedAttention 默认 $M=128, N=16$，Q tile 远大于 K tile，转 K 更便宜——单次相对旋转每个 K scalar 加 3 FLOPs，相对开销 $\epsilon_{\text{prefill}} = \tfrac{3}{4M} \approx 0.59\%$，再带表查 cos/sin 每文档加载一次 D 长向量，额外带宽 $\le \tfrac{1}{2N}$。decode 是 bandwidth-bound 且 $M=1$，转 K 会扫一整 tile，转 Q 只是 3D 固定 FLOPs；进一步只在 KV tile 文档边界换 offset 时才转，触发率 $r = 1/B$（B 为文档块数），平均 $\epsilon_{\text{decode}} = r\cdot \tfrac{3}{4N} = \tfrac{3}{4BN}$，文档 >1600 token 时 $\epsilon_{\text{decode}} \le 0.01\%$。
-    - 设计动机：modern attention kernel 跑在硬件极限附近，inner-loop 多一点 uncoalesced 访存或寄存器压力就会拉胯。这一分派把"额外工作"分别放在 compute-bound 阶段的廉价槽位和 bandwidth-bound 阶段的极稀疏触发位置，把 deferred rotation 的代价从理论上的 ~100% 压回到 ~0.2%。
+deferred RoPE 听上去"每个 token 都要多算位置"，能否上线全看额外开销压不压得住，而 prefill 与 decode 的瓶颈截然不同，所以该转哪一侧也不同。prefill 是 compute-bound，PagedAttention 默认 $M=128,N=16$，Q tile 远大于 K tile，于是转 K 更便宜：每个 K scalar 仅加 3 FLOPs，相对开销 $\epsilon_{\text{prefill}}=\tfrac{3}{4M}\approx 0.59\%$，再算上每文档加载一次 D 长 cos/sin 向量的查表带宽 $\le\tfrac{1}{2N}$。decode 是 bandwidth-bound 且 $M=1$，此时转 K 会扫一整 tile、转 Q 只是 3D 个固定 FLOPs，故改转 Q，并且只在 KV tile 跨文档边界换 offset 时才触发，触发率 $r=1/B$（$B$ 为文档块数），平均开销 $\epsilon_{\text{decode}}=r\cdot\tfrac{3}{4N}=\tfrac{3}{4BN}$，文档 >1600 token 时 $\epsilon_{\text{decode}}\le 0.01\%$。这套分派把"额外工作"分别塞进 compute-bound 阶段的廉价槽位和 bandwidth-bound 阶段的极稀疏触发点，把 deferred rotation 的代价从理论上的 ~100% 压回到 ~0.2%，让算法节省不被 kernel 常数项吃光。
 
-3. **融合 Triton kernel + bit-packed 元数据**:
+**3. 融合 Triton kernel + bit-packed 元数据：把节省落到端到端**
 
-    - 功能：在 vLLM/FlashAttention 风格的 fused kernel 里把 deferred rotation 真正落地为可上线的实现，且消除 inner-loop 的额外 HBM 访存。
-    - 核心思路：基于 vLLM v0.8.5 + Triton 实现两套独立 kernel——prefill kernel 把每个 K tile 切两半做半维度 rotation 再做 GEMM（Figure 3b）；decode kernel 把 (block id, offset, mask) **bit-pack 到单个 64-bit 寄存器**，inner loop 用寄存器移位拆出元数据，完全 bypass global load；极端 IO-bound 时甚至可以 on-the-fly 算 cos/sin 不读表。整体实现 ~5K 行 Python/Triton，端到端 runtime 额外开销实测 ~0.2%。
-    - 设计动机：deferred RoPE 在理论上漂亮，但如果带来 HBM 访存或寄存器溢出，前面省下的 cache 红利就会被 kernel 自身的常数项吃光；fused kernel + 寄存器内 metadata 是把"算法节省"翻译成"端到端节省"的最后一公里。
+算法再漂亮，只要在 inner-loop 引入额外 HBM 访存或寄存器溢出，前面省下的 cache 红利就会被吐回去，所以 deferred rotation 必须在 vLLM/FlashAttention 风格的 fused kernel 里零额外访存地落地。作者基于 vLLM v0.8.5 + Triton 写了两套独立 kernel：prefill kernel 把每个 K tile 切两半做半维度 rotation 后再 GEMM（Figure 3b）；decode kernel 则把 (block id, offset, mask) **bit-pack 进单个 64-bit 寄存器**，inner loop 用寄存器移位拆出元数据，完全 bypass global load，极端 IO-bound 时甚至可以 on-the-fly 算 cos/sin 不读表。整套实现约 5K 行 Python/Triton，端到端 runtime 额外开销实测 ~0.2%，是把"算法节省"翻译成"上线节省"的最后一公里。
 
-### 通用性
-方法不绑死原版 RoPE：interleaved RoPE、NTK/YaRN scaled RoPE 都只是改变 metadata；GQA/MQA 不动 score 计算所以零修改；甚至 score-space 的相对位置方法 ALiBi 也能套用（Falcon-7B 上验证 decode 额外开销 <0.06%）。Linear attention 因为改的是 attention state 表示而非 score，超出当前范围。
+机制本身也不绑死原版 RoPE：interleaved RoPE、NTK/YaRN scaled RoPE 只是换 metadata；GQA/MQA 不动 score 计算所以零修改；连 score-space 的相对位置方法 ALiBi 也能套用（Falcon-7B 上 decode 额外开销 <0.06%）。唯一例外是 linear attention——它把序列汇总放进 attention state 而非只在 score 注入位置，故 lazy 思想暂时搬不过去。
 
 ## 实验关键数据
 

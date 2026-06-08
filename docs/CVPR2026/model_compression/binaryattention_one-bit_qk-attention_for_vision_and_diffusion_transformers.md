@@ -41,31 +41,29 @@ tags:
 
 ### 整体框架
 
-BinaryAttention 由三个核心组件组成：(1) **Scaled Binary Representations** — 将 Q、K 量化为 1-bit 并保留缩放因子；(2) **Bias Enhancement** — 引入可学习偏置补偿二值化信息损失；(3) **Hybrid Quantization** — 对注意力系数和 V 进行 8-bit 量化实现端到端加速。训练采用 QAT + 自蒸馏策略。整体方案基于 FlashAttention2 的 tiled attention 框架实现硬件加速。
+BinaryAttention 想在不改注意力架构的前提下，把最耗算力的 $\mathbf{QK}^\top$ 点积换成位运算来加速。它的做法是一条链：先把 Query / Key 量化成带缩放因子的 1-bit 二值向量，用 XNOR + popcount 算相似度（Scaled Binary Representations）；再给二值得分加一个可学习偏置，补回被压平的注意力分布（Bias Enhancement）；softmax 之后的注意力系数和 Value 则统一走 8-bit 量化，让 PV 乘法这一半也提速（Hybrid Quantization）；整套量化最后靠 QAT + 自蒸馏训练落地。整个 kernel 直接长在 FlashAttention2 的 tiled attention 框架上，复用它的 IO 友好分块，所以加速是叠加在 FlashAttention2 之上而非另起炉灶。
 
-### 关键设计一：Scaled Binary Representations（缩放二值表示）
+### 关键设计
 
-- **功能**：将 Query $\mathbf{q}_i$ 和 Key $\mathbf{k}_j$ 通过 sign 函数量化为 $\{-1, +1\}^d$，得到 $\mathbf{s}_i = \mu_q \cdot \text{sign}(\mathbf{q}_i)$，$\mathbf{t}_j = \mu_k \cdot \text{sign}(\mathbf{k}_j)$。
-- **核心思路**：点积相似度 $\mu_q \mu_k \mathbf{s}_i^T \mathbf{t}_j$ 可用 XNOR + popcount 位运算高效计算，理论上 $\mathbf{QK}^T$ 部分可获得 16× 加速。
-- **设计动机**：Theorem 1 证明二值 Q/K 的外积是原始协方差矩阵的一致估计，从统计层面保证了二值注意力的表达能力；缩放因子 $\mu_q, \mu_k$ 保留了原始 token 的幅值信息，减小量化误差。
+**1. Scaled Binary Representations：把 Q/K 压到 1-bit，让相似度退化成位运算。**
 
-### 关键设计二：Bias Enhancement（偏置增强）
+注意力里最贵的就是 $\mathbf{QK}^\top$ 这步浮点点积，二值化的目标就是把它变成 GPU 最擅长的位运算。具体做法是每个 query $\mathbf{q}_i$ 和 key $\mathbf{k}_j$ 先过 sign 函数压成 $\{-1,+1\}^d$ 的二值向量，再各自乘回一个标量缩放因子，得到 $\mathbf{s}_i = \mu_q \cdot \text{sign}(\mathbf{q}_i)$、$\mathbf{t}_j = \mu_k \cdot \text{sign}(\mathbf{k}_j)$。这样相似度 $\mu_q \mu_k\, \mathbf{s}_i^\top \mathbf{t}_j$ 里真正的向量乘法只剩 $\pm1$ 相乘，一条 XNOR + popcount 指令就能算完，$\mathbf{QK}^\top$ 理论上拿到 16× 加速——这正好对应 A100 二值 Tensor Core 高达 4992 TOPs/s、是 FP16 十六倍的吞吐。它之所以没把精度算崩，靠的是 Theorem 1：二值 Q/K 的外积是原始协方差矩阵的一致估计，也就是说丢掉幅值、只留符号，统计意义上 token 之间的相似性结构仍然保得住；而额外留下的缩放因子 $\mu_q,\mu_k$ 又把被 sign 抹掉的幅值信息塞了回去，进一步压低量化误差。
 
-- **功能**：在二值点积上加一个偏置项：$S_{ij} = \mu_q \mu_k \mathbf{s}_i^T \mathbf{t}_j / \sqrt{d} + b_{ij}$。
-- **核心思路**：偏置可以是 dense 可学习矩阵、相对位置偏置或上下文感知偏置，增加注意力得分矩阵的秩，避免 softmax 分布塌缩为均匀分布。
-- **设计动机**：1-bit 量化丢弃了幅值信息，导致注意力系数趋于均匀（"flattened effect"），无法区分显著特征；偏置项将上下文/空间结构信息重新注入，恢复注意力的判别能力。消融实验显示偏置对小模型（DeiT-T +0.44%）效果尤为明显。
+**2. Bias Enhancement：加一个可学习偏置，救回被 1-bit 压平的注意力分布。**
 
-### 关键设计三：Hybrid Quantization（混合量化）
+1-bit 把幅值彻底扔了，副作用是注意力得分矩阵的秩骤降，softmax 之后分布趋于均匀，论文称之为 "flattened effect"——模型分不清哪个 token 重要，判别力消失。修补的办法很直接，在二值点积上加一个偏置项：
 
-- **功能**：对 softmax 后的注意力系数 $P_{ij}$ 采用无符号 8-bit 静态量化（scale = 1/255）；对 Value $\mathbf{v}_j$ 采用 channel-wise 8-bit 量化。
-- **核心思路**：$\mathbf{PV}$ 乘法使用 INT8 Tensor Core 指令 `mma.s32.u8.s8.s32`，实现该部分 2× 加速。
-- **设计动机**：仅量化 QK 不足以实现端到端加速，PV 乘法同样是计算瓶颈；8-bit 精度在注意力系数（自然落在 [0,1]）和 Value 上足够保持精度。
+$$S_{ij} = \mu_q \mu_k\, \mathbf{s}_i^\top \mathbf{t}_j / \sqrt{d} + b_{ij}$$
 
-### 关键设计四：QAT + Self-Distillation 训练策略
+其中 $b_{ij}$ 可以是 dense 可学习矩阵、相对位置偏置或上下文感知偏置。偏置把上下文与空间结构信息重新注入得分矩阵，抬高它的秩，让 softmax 重新拉开差距、恢复区分显著特征的能力。消融里这一项对小模型尤其关键（DeiT-T +0.44%），因为小模型本身冗余少，被二值化压平后更难自己救回来。
 
-- **功能**：采用 Quantization-Aware Training 在训练/微调中模拟量化效果；以全精度模型为教师进行自蒸馏。
-- **核心思路**：STE（直通估计器）使 sign 函数可反向传播；蒸馏 loss 引导二值表示的相似度与全精度对齐。
-- **设计动机**：1-bit 量化导致分布偏移和近似误差，仅靠 PTQ 不够。消融显示自蒸馏对大模型 DeiT-B 提升 +0.66%，表明它有效对抗了量化的分布偏移。
+**3. Hybrid Quantization：顺手把 PV 乘法也量化掉，才换得到端到端加速。**
+
+只把 QK 变成位运算其实只省了一半——softmax 后的系数矩阵 $P$ 与 Value 之间的 $\mathbf{PV}$ 乘法同样是瓶颈，不处理它整体延迟就下不来。这里对 softmax 输出系数 $P_{ij}$ 用无符号 8-bit 静态量化（scale 固定为 $1/255$，因为系数天然落在 $[0,1]$），对 Value $\mathbf{v}_j$ 用 channel-wise 8-bit 量化，$\mathbf{PV}$ 乘法走 INT8 Tensor Core 指令 `mma.s32.u8.s8.s32`，这部分拿到 2× 加速。之所以这里只用 8-bit 而不冒险压到 1-bit，是因为注意力系数和 V 的数值范围都很温和，8-bit 已足够保精度；QK 的 16× 再叠上 PV 的 2×，才拼出真正可观的端到端提速。
+
+**4. QAT + 自蒸馏：用感知量化训练加全精度老师，扛住 1-bit 的分布漂移。**
+
+1-bit 引入的近似误差和分布偏移太大，纯 PTQ（训练后直接量化）救不回来，所以本文把量化搬进训练里。前向传播对 Q/K 走真实的 sign 量化，反向传播则用 STE（直通估计器）让不可导的 sign 绕过梯度阻断照常更新；同时拿全精度预训练模型当教师做自蒸馏，蒸馏 loss 逼着二值注意力的相似度去对齐全精度的 sign-aligned similarity。QAT 让模型训练时就"见过"量化噪声、提前适应，蒸馏则给二值表示一个明确的对齐目标。消融显示自蒸馏对大模型 DeiT-B 提升 +0.66%，说明它确实在对抗量化带来的分布漂移。
 
 ## 损失函数与训练策略
 

@@ -42,34 +42,23 @@ tags:
 
 ### 整体框架
 
-输入是任意带非负激活的网络（autoencoder bottleneck 或 BERT token embedding 后接 Softplus），把 batch 内的 latent 取出来得到非负矩阵 $M\in\mathbb{R}_+^{B\times L}$（行 = 样本 $r_i$，列 = 特征 $c_j$）。流水线：
+方法要解决的是"怎么把可解释性写成一个可微的几何目标"。做法是把任意带非负激活的网络（autoencoder bottleneck 或接 Softplus 的 BERT token embedding）在一个 batch 上的 latent 取出来，得到非负矩阵 $M\in\mathbb{R}_+^{B\times L}$，行 $r_i$ 看成样本、列 $c_j$ 看成特征，再用"行视角点云"和"列视角点云"互相做重心映射，量化两套点云是否拓扑互为镜像，把这个偏差当成正则项 `Coh` 加到原任务 loss 上。
 
-1. 用 squared-$L^1$ 把行/列分别归一化成概率向量 $w^{(i)}, v^{(j)}$；
-2. 计算线性闭式重心映射 $\phi(r_i)=w^{(i)}M^T$（样本 $\to$ 列空间的 barycenter）和 $\psi(c_j)=v^{(j)}M$（特征 $\to$ 行空间的 barycenter）；
-3. 对每行/每列计算 **Fréchet variance**（locality）和 **covering**（覆盖性）两个量，超过阈值 $\tau$ 部分取 top-$k$ 求和作为 `Coh` loss；
-4. 与原任务 loss（MSE / MLM）加权相加：$\mathcal{L}=\mathcal{L}_{\text{task}}+\lambda_{\text{Coh}}\mathcal{L}_{\text{Coh}}$，典型 $\lambda_{\text{Coh}}=10^{-3}$。
-
-理论上当 $M$ 为 $\epsilon$-coherent 且 $\phi,\psi$ 是 1-Lipschitz 时，存在 $\epsilon^{1/2}$-interleaving，从而样本与特征的 Vietoris-Rips 滤过、persistence diagram 在 bottleneck 距离意义下相近。
+落地时先用 squared-$L^1$ 把每行/每列归一化成概率权重 $w^{(i)}, v^{(j)}$，据此算出闭式重心映射 $\phi(r_i)=w^{(i)}M^T$（样本投到列空间）和 $\psi(c_j)=v^{(j)}M$（特征投到行空间）；对每行每列各算 Fréchet variance（locality）与 covering 两个量，超阈值部分取 top-$k$ 求和成 $\mathcal{L}_{\text{Coh}}$，最后与任务 loss 加权 $\mathcal{L}=\mathcal{L}_{\text{task}}+\lambda_{\text{Coh}}\mathcal{L}_{\text{Coh}}$（典型 $\lambda_{\text{Coh}}=10^{-3}$）。理论上当 $M$ 为 $\epsilon$-coherent 且 $\phi,\psi$ 是 1-Lipschitz 时存在 $\epsilon^{1/2}$-interleaving，于是样本与特征的 Vietoris-Rips 滤过、persistence diagram 在 bottleneck 距离下相近。
 
 ### 关键设计
 
-1. **Coherence = Locality + Covering 的对偶定义**:
+**1. Coherence = Locality + Covering：把"拓扑对齐"压成两个标量**
 
-    - 功能：用两个标量量化"样本-特征矩阵是否拓扑对齐"。
-    - 核心思路：行的 Fréchet 方差 $\text{Var}_\mathcal{R}(r_i)=\sum_j w^{(i)}_j\|\phi(r_i)-c_j\|_2^2$ 衡量"行 $r_i$ 选中的那些列是否在列空间里挤成一团"（locality）；行的 covering $\text{Cov}_\mathcal{R}(r_i)=\sum_j w^{(i)}_j\|r_i-\psi(c_j)\|_2^2$ 衡量"是否存在某列 $c_j$ 的 barycenter $\psi(c_j)$ 距离 $r_i$ 很近"（covering）。对列对称定义。$\epsilon$-coherent 要求所有行列两个量都 $\le\epsilon$。
-    - 设计动机：Locality 单独控制不够——会出现 feature 内部紧凑但根本不覆盖样本流形的退化解；Covering 单独控制也不够——会出现"每个样本都被某个 feature 描述但 feature 自身散落"的情况。两者合起来才能保证 $\epsilon^{1/2}$-interleaving（Theorem 3.12），这是稀疏正则完全做不到的几何保证。
+可解释性的痛点是没法直接量化"feature 空间是否继承了样本空间的几何"，本文用一对对偶的标量来刻画它。对每一行定义 Fréchet 方差 $\text{Var}_\mathcal{R}(r_i)=\sum_j w^{(i)}_j\|\phi(r_i)-c_j\|_2^2$（locality），衡量样本 $r_i$ 选中的那些列在列空间里是否挤成一团；再定义 covering $\text{Cov}_\mathcal{R}(r_i)=\sum_j w^{(i)}_j\|r_i-\psi(c_j)\|_2^2$，衡量是否存在某列的 barycenter $\psi(c_j)$ 离 $r_i$ 足够近；对列对称地定义，$\epsilon$-coherent 要求所有行列的两个量都 $\le\epsilon$。两者缺一不可——只压 locality 会得到 feature 内部紧凑却根本不覆盖样本流形的退化解，只压 covering 又会得到"每个样本都被某 feature 描述、但 feature 自己散落"的情况；合起来才换得 $\epsilon^{1/2}$-interleaving（Theorem 3.12）这一稀疏正则完全给不出的几何保证。
 
-2. **Squared-L1 归一化 + 闭式重心**:
+**2. Squared-L1 归一化 + 闭式重心：让"软到硬投影"可微又有界**
 
-    - 功能：让"取均值"这一操作在反传中保持可微且无需迭代优化。
-    - 核心思路：选 Euclidean 范数 + squared-$L^1$ 归一化 $W_{ij}=M_{ij}^2/\sum_k M_{ik}^2$ 后，重心 $\arg\min_\mu\sum_j w^{(i)}_j\|\mu-c_j\|_2^2$ 退化成闭式 $\phi(r_i)=w^{(i)}M^T$，无需迭代；这同时让"snapping map"（投到最近真实行/列）与软 barycenter 的偏差被 locality 直接 bound 住（Prop 3.9：$\|\phi(r_i)-\Phi(r_i)\|_2\le\epsilon^{1/2}$）。
-    - 设计动机：拓扑保证需要"映射到真实列"才能定义 interleaving，但训练需要可微的软映射。闭式重心 + 平方距离让两者只差 $\epsilon^{1/2}$，可以训软 loss 享受硬保证。
+interleaving 的定义需要把样本映射到真实存在的列，而训练又必须用可微的软映射，这两者本来矛盾。本文选 Euclidean 范数搭配 squared-$L^1$ 归一化 $W_{ij}=M_{ij}^2/\sum_k M_{ik}^2$，使得加权重心 $\arg\min_\mu\sum_j w^{(i)}_j\|\mu-c_j\|_2^2$ 退化成闭式 $\phi(r_i)=w^{(i)}M^T$，无需任何迭代优化即可反传。更关键的是，软 barycenter 与"snapping map"（投到最近真实列）之间的偏差被 locality 直接 bound 住（Prop 3.9：$\|\phi(r_i)-\Phi(r_i)\|_2\le\epsilon^{1/2}$），于是训软 loss 就能享受硬投影的拓扑保证，只差 $\epsilon^{1/2}$。
 
-3. **Top-k + threshold 聚合 + 配对尺度归一化**:
+**3. Top-k + threshold 聚合 + 配对尺度归一化：把 per-element 几何 loss 训稳**
 
-    - 功能：把 $O(B+L)$ 个 per-row/per-col 量聚合成单个 loss，并消除行列空间尺度悬殊带来的偏差。
-    - 核心思路：先用全体行列对的平均距离 $\bar d_R, \bar d_C$ 把方差/covering 分别归一到无量纲，再做铰链 $[\cdot-\tau]_+$（不惩罚已经达到目标 $\tau$ 的行/列），最后只对 top-$k_R, k_C$ 个最差的求和（避免大多数行已经很好时被平均掉）；$\mathcal{L}_{\text{Coh}}=\text{TopK}(\text{Var-related})+\text{TopK}(\text{Cov-related})$。
-    - 设计动机：非方形 $B\times L$ 矩阵中行列点云的尺度可以差几个数量级；不归一会让 loss 被某一边主导。Top-$k$ + threshold 是经验上稳定训练的关键——把优化资源持续集中到目前最不 coherent 的少数行/列，避免"整体已经不错"时梯度被稀释。
+非方形 $B\times L$ 矩阵里行点云和列点云的尺度可以差几个数量级，直接求和会让 loss 被某一边主导。本文先用全体行/列对的平均距离 $\bar d_R, \bar d_C$ 把方差与 covering 各自归一成无量纲，再套铰链 $[\cdot-\tau]_+$ 不惩罚已经达标 $\tau$ 的行列，最后只对 top-$k_R, k_C$ 个最差的求和得到 $\mathcal{L}_{\text{Coh}}=\text{TopK}(\text{Var-related})+\text{TopK}(\text{Cov-related})$。这一步是经验上稳定训练的关键：它把优化资源持续压在当前最不 coherent 的少数行/列上，避免大多数行已经很好时梯度被平均稀释。
 
 ### 损失函数 / 训练策略
 任务 loss + $\lambda_{\text{Coh}}\mathcal{L}_{\text{Coh}}$，可选叠加 $\lambda_{L^1}\|M\|_1$ 以在多解中偏向稀疏 coherent 解。MNIST autoencoder 用 $\lambda_{\text{Coh}}=\lambda_{L^1}=10^{-3}$；toy 双圆用更小的 $\lambda_{\text{Coh}}=10^{-5}$。BERT 设置把 token embedding 用 Softplus($\beta=20$) 投到非负，再加 `Coh`，主任务仍是 15% masking 的 MLM；1-Lipschitz 假设是事后采样检查而非强制约束（实测 $\psi$ 违例率 <0.2%，$\phi$ 约 3-4%，平均扩张系数 $\approx 1.05$）。

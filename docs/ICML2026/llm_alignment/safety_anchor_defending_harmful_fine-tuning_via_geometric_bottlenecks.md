@@ -47,23 +47,21 @@ SBR 在 fine-tuning-as-a-service 场景下工作：service provider 持有对齐
 
 ### 关键设计
 
-1. **几何瓶颈定位 —— 把防御挪到 unembedding 输入**:
+**1. 几何瓶颈定位：把防御从冗余的参数空间挪到 unembedding 输入。**
 
-    - 功能：把防御施加在「最少冗余 / 最多必经」的位置上，使绕过它需要同时改变 $h_{\text{final}}$ 与 $w_t$ —— 而 $w_t$ frozen，所以攻击者只剩一个 $d$-维约束面可走。
-    - 核心思路：观察到 $P(t|x)=\text{softmax}(h_{\text{final}}^\top w_t)$，refusal 与 harmful 是同一个 softmax 中竞争 —— 只要 $h_{\text{final}}$ 几何上偏向 refusal token embedding 方向，refusal token 的分数严格高于 harmful token，模型必然输出拒绝；MSE 锚定让 $h_{\text{final}}$ 一直贴近对齐基模在这些 prompt 上的输出。
-    - 设计动机：作者在 §3 用三组 stress test（参数距离 / Rank-1 random subspace / 表示漂移）逐一证明高维参数空间永远存在与防御方向正交的「逃生通道」；只有维度更低、与 token 选择直接相连的 unembedding 输入层才不存在这种 null space。
+前面的痛点是，所有在参数空间设防的方法都有 null space 可绕——一个随机 Rank-1 方向就能恢复 harmful capability。SBR 的破局点在于盯住 token 生成的最后一道闸：每个 token 的分数都是 $P(t|x)=\text{softmax}(h_{\text{final}}^\top w_t)$，refusal token 与 harmful token 在同一个 softmax 里竞争。只要让最后一层隐状态 $h_{\text{final}}$ 在几何上偏向 refusal token 的嵌入方向，refusal 的内积分数就严格高于 harmful，模型必然先吐出拒绝词。这个位置之所以无法绕过，是因为绕开它要同时改 $h_{\text{final}}$ 和词嵌入 $w_t$，而 $w_t$ 是冻结的，攻击者只剩 $h_{\text{final}}$ 这一个 $d$ 维约束面可动——相比高维冗余的参数空间，这里几乎没有逃生通道。作者在 §3 用三组 stress test（参数距离 / Rank-1 random subspace / 表示漂移）逐一证明高维参数空间永远存在与防御方向正交的逃生路径，唯有维度更低、与 token 选择直接相连的 unembedding 输入层才钉得住。
 
-2. **MSE 锚点损失 $\mathcal{L}_{\text{safe}}$ + 极少锚点即可**:
+**2. MSE 锚点损失：用极少锚点给瓶颈施加硬约束。**
 
-    - 功能：用最小开销给瓶颈施加硬约束。
-    - 核心思路：$\mathcal{L}_{\text{safe}}(\theta)=\frac{1}{|\mathcal{X}_{\text{anchor}}|}\sum_{x'\in\mathcal{X}_{\text{anchor}}}\|h_\theta(x')-h_{\text{ref}}(x')\|_2^2$，与 user 的 $\mathcal{L}_{CE}$ 用 $\lambda$ 加权和；锚点只需在 candidate pool（与攻击者数据 disjoint 的 BeaverTails 子集）随机抽 1–8 个即可。
-    - 设计动机：作者主张「refusal direction 与 benign reasoning direction 近似正交」（Zou 2023, Arditi 2024），所以锚定一小撮高危 prompt 不会显著限制 benign 任务的优化空间；实测 1 个 anchor 就够把 HS 压到 < 10。
+定位好瓶颈后，怎么把 $h_{\text{final}}$ 钉在 refusal 方向上？SBR 的做法是直接拿对齐基模的输出当参照：离线阶段用冻结的 $f_{\theta_{\text{base}}}$ 抽出每个高危 prompt 最后 token 的隐状态 $h_{\text{ref}}(x')$ 缓存下来，训练时加一项 MSE 把当前模型拉回这个参照——
 
-3. **stress test 范式 —— 用 50 epoch 持续 HFT 揭示既有防御的真实失败**:
+$$\mathcal{L}_{\text{safe}}(\theta)=\frac{1}{|\mathcal{X}_{\text{anchor}}|}\sum_{x'\in\mathcal{X}_{\text{anchor}}}\|h_\theta(x')-h_{\text{ref}}(x')\|_2^2$$
 
-    - 功能：把防御评测从「短期数据点」推到「持续攻击」，揭露 transient safety 假象。
-    - 核心思路：作者构造混合数据集（10% harmful + 90% benign），让模型在 4 个 benign 任务（SST-2/AGNEWS/GSM8K/AlpacaEval）上跑 20–50 epoch；并设计 Random Subspace Attack（冻结 $A$ 训 $B$）证明随机 Rank-1 方向也能恢复 harmful capability。还系统对比了「parameter distance/embedding drift 与 HS」的相关性，证明指标稳定不代表安全稳定。
-    - 设计动机：既有论文常报「3-5 epoch 内的 HS」，掩盖了真实部署里 service provider 可能放任用户长期训练的事实；stress test 把这层迷雾揭开，也为 SBR 提供了对照背景。
+它与用户任务的 $\mathcal{L}_{CE}$ 以 $\lambda$ 加权求和。关键是锚点极少：只需从 candidate pool（与攻击者数据不重叠的 BeaverTails 子集）随机抽 1–8 个典型危险 prompt，实测 1 个 anchor 就够把 Harmful Score 压到 < 10。之所以这么省还不伤 benign 任务，是因为作者主张 refusal direction 与 benign reasoning direction 近似正交（Zou 2023, Arditi 2024）——锚定一小撮高危 prompt 占用的优化空间几乎不与正常推理方向冲突。
+
+**3. Stress test 范式：用 50 epoch 持续 HFT 揭穿既有防御的「假安全」。**
+
+这一点不是 SBR 的组件，而是它赖以立论的评测武器。既有论文常只报 3–5 epoch 内的 HS，掩盖了真实部署里 service provider 可能放任用户长期训练的事实。SBR 把评测推到极端：构造 10% harmful + 90% benign 的混合数据集，在 SST-2/AGNEWS/GSM8K/AlpacaEval 四个 benign 任务上跑 20–50 epoch，让既有防御的崩盘暴露出来；同时设计 Random Subspace Attack（冻结 $A$ 只训 $B$）证明随机 Rank-1 方向也能恢复 harmful capability。更关键的是它系统对比了「参数距离 / embedding drift 与 HS」的相关性，证明这些被监控的代理指标可以稳定不变而安全早已失守——这既揭穿了旧方法 transient safety 的假象，也反衬出 SBR 锚定瓶颈的必要性。
 
 ### 损失函数 / 训练策略
 LoRA rank 16 / alpha 16，AdamW lr $1\times 10^{-5}$，batch size 32，20 epoch；锚点 $K=8$，$\lambda=50$；anchor 仅用 forward pass、无需 backward 到基模。所有 baseline 在相同超参下复跑。

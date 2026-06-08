@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-KBQA-R1 由两部分组成。**推理时**：一个 ReAct 风格的多轮智能体，循环执行 Think-Action-Information 三段——LLM 先在 `<think>` 内推理、在 `<action>` 内发出原子动作（如 `Find_relation`, `Merge`, `Order`, `Compare`, `Time_constraint`, `Count`），系统把动作翻译成 S-Expression 片段再转 SPARQL 在 Freebase 上执行，并把检索到的实体或诊断信息写回 `<information>`，直至模型输出 `<answer>`。中间有一个 **Relation Retrieval and Confidence Gating (RRCG)** 模块用稠密检索校验 LLM 提出的 relation 名是否真实存在于当前实体的邻居 schema 中。**训练时**：先用 Referenced Rejection Sampling 合成高质量 SFT 数据做冷启动，再用 GRPO 基于"F1 结果 + 格式"复合奖励做策略优化，整个 pipeline 训练在 Llama-3.1-8B-Instruct 上。
+KBQA-R1 把"一次性生成完整逻辑形式"换成"在 KB 上一步步决策"。推理时它是个 ReAct 风格的多轮智能体：LLM 先在 `<think>` 里推理，再在 `<action>` 里发出一个原子动作（`Find_relation`, `Merge`, `Order`, `Compare`, `Time_constraint`, `Count`），系统把动作翻成 S-Expression 片段转 SPARQL 在 Freebase 上执行，再把检索到的实体或诊断信息写回 `<information>` 供下一轮参考，循环直到模型给出 `<answer>`；其间每个 `Find_relation` 都要先过一道 schema 校验，确保提出的 relation 真实存在。训练时分两步给这个策略上分——先用 Referenced Rejection Sampling 合成高质量轨迹做 SFT 冷启动，再用 GRPO 基于 F1 结果奖励做策略优化，整条 pipeline 落在 Llama-3.1-8B-Instruct 上。
 
 ### 关键设计
 
-1. **类型化原子动作空间 + RRCG schema 校验**：
+**1. 类型化原子动作空间 + RRCG schema 校验：把"一次写对长查询"拆成"每步可校验的小决策"**
 
-    - 功能：把"生成一段可能存在语法错误的复杂 S-Expression"分解为一串可单独验证的原子操作，并在每个 `Find_relation` 动作前把 LLM 提出的文本 relation 与 KB 中真实存在的 schema relation 对齐，避免幻觉到 train 时无法执行。
-    - 核心思路：动作空间包含 6 个原子 op，每个 op 严格定义了 `(arguments, target functional update, S-Expression template)` 三元组（例如 `Find_relation(entity, relation)` 对应 `JOIN(relation, START(entity))`）；RRCG 用稠密检索器 $Sim(\cdot,\cdot)$ 对 LLM 提出的 $r_{\text{agent}}$ 与当前实体 $e_c$ 的所有邻居 relation $R(e_c)$ 打分，取最大值 $s_{\max}$ 后按双阈值 $\tau_{\text{high}}, \tau_{\text{low}}$ 分三档处理：$s_{\max} \geq \tau_{\text{high}}$ 直接用最近邻 $r_s^*$ 自动执行；$\tau_{\text{low}} \leq s_{\max} < \tau_{\text{high}}$ 仍执行但在 observation 里附 top-k 候选提示不确定；$s_{\max} < \tau_{\text{low}}$ 直接拒绝并返回该实体的邻居 relation 列表给模型重新选择。
-    - 设计动机：单 token 拼错就让整条查询 unexecutable 是端到端方法最大的脆弱性来源；把"一次性写对长 S-Expression"改成"每步只决定下一个原子动作 + 每个 relation 都被校验"，把幻觉风险从生成时拦截转化为执行时的可恢复反馈，是支撑后续 RL 训练稳定的环境基础——消融显示去掉 RRCG 平均掉 18% F1，去掉 multi-turn 掉 25% F1（GrailQA 上更是掉 36.3%），说明这两件事是模型能力的"地基"而非锦上添花。
+端到端方法最大的脆弱点是单 token 拼错就让整条 S-Expression unexecutable，而 LLM 又常幻觉出不存在的 relation。KBQA-R1 先把复杂查询分解成 6 个原子动作，每个动作严格定义了 `(arguments, target functional update, S-Expression template)` 三元组（例如 `Find_relation(entity, relation)` 对应 `JOIN(relation, START(entity))`），这样模型每步只需决定下一个原子操作而不必一次性写对全部。更关键的是在每个 `Find_relation` 前插入 Relation Retrieval and Confidence Gating (RRCG)：用稠密检索器 $Sim(\cdot,\cdot)$ 给 LLM 提出的 $r_{\text{agent}}$ 与当前实体 $e_c$ 的所有邻居 relation $R(e_c)$ 打分，取最大值 $s_{\max}$ 后按双阈值 $\tau_{\text{high}}, \tau_{\text{low}}$ 分三档处理——$s_{\max} \geq \tau_{\text{high}}$ 直接用最近邻 $r_s^*$ 自动执行；$\tau_{\text{low}} \leq s_{\max} < \tau_{\text{high}}$ 仍执行但在 observation 里附 top-k 候选提示不确定；$s_{\max} < \tau_{\text{low}}$ 则直接拒绝并把该实体的邻居 relation 列表返还给模型重选。这等于把幻觉风险从"生成时拦不住"变成"执行时可恢复的反馈"，也给后续 RL 提供了一个稳定可执行的环境——消融里去掉 RRCG 平均掉 18% F1，去掉 multi-turn 掉 25% F1（GrailQA 上更是掉 36.3%），说明这两件事是地基而非点缀。
 
-2. **Referenced Rejection Sampling (RRS) 冷启动**：
+**2. Referenced Rejection Sampling (RRS) 冷启动：用金标动作当骨架，逼模型把推理对齐到真实可执行步骤**
 
-    - 功能：在 RL 之前给策略一个"已经会基本走 KB 的"初始 checkpoint，绕开标准拒绝采样在 KBQA 上接受率极低的问题。
-    - 核心思路：把训练样本扩展为 $(q, \mathcal{A}, S^*)$，先解析金标 S-Expression $S^*$ 得到原子动作序列 $\mathbf{a}^* = (a_1^*, \ldots, a_k^*)$；rollout 时在第 $t$ 步把 $a_t^*$ 作为"参考动作"显式注入 prompt，强制模型围绕这个动作生成 `<think>` 解释为什么这一步能推进到答案，并真实观察 KB 对这个动作的反馈。轨迹只有在同时满足 $\text{F1}(\hat{\mathcal{A}}, \mathcal{A}) \geq \tau$（结果对）和 tag 结构合规两个条件时才被接受；进入 SFT 数据集前把所有"参考动作提示"从 prompt 里剥离，保证模型推理时不会依赖隐藏的真值信号。
-    - 设计动机：标准拒绝采样在 KBQA 上接受率只有约 40%，且通过的轨迹也常常"语法对但语义弱"；RRS 通过把生成约束在金标动作的"骨架"上，让模型不能编造 post-hoc 解释，必须把 reasoning 和真实可执行步骤对齐——Table 7 显示在 GrailQA / GraphQ 上 RRS 把接受率从 ~40% 提到 67%，SFT 初始化 F1 也显著高于标准 RS（GrailQA: 73.8 → 80.2），是后续 GRPO 能稳定训出来的关键前置条件。
+标准拒绝采样在 KBQA 上接受率只有约 40%，且通过的轨迹常常"语法对但语义弱"，不足以给 RL 一个好起点。RRS 把训练样本扩展为 $(q, \mathcal{A}, S^*)$，先解析金标 S-Expression $S^*$ 得到原子动作序列 $\mathbf{a}^* = (a_1^*, \ldots, a_k^*)$；rollout 时在第 $t$ 步把 $a_t^*$ 作为"参考动作"显式注入 prompt，强制模型围绕这个动作生成 `<think>` 解释为什么这一步能推进到答案，并真实观察 KB 对它的反馈。轨迹只有同时满足 $\text{F1}(\hat{\mathcal{A}}, \mathcal{A}) \geq \tau$（结果对）和 tag 结构合规才被接受；进入 SFT 数据集前再把所有参考动作提示从 prompt 里剥离，保证模型推理时不会依赖隐藏的真值信号。把生成约束在金标骨架上，模型就无法编造 post-hoc 解释、必须让 reasoning 与真实步骤对齐——Table 7 显示 RRS 在 GrailQA/GraphQ 上把接受率从 ~40% 提到 67%，SFT 初始化 F1 也明显高于标准 RS（GrailQA：73.8 → 80.2），这是后续 GRPO 能稳定训出来的前置条件。
 
-3. **GRPO + 结果守门的复合奖励**：
+**3. GRPO + 结果守门的复合奖励：用稀疏但可靠的 F1 信号把策略从"模仿示范"推向"主动探索"**
 
-    - 功能：在 SFT 冷启动之后，用纯结果驱动的 RL 把策略推到更优的"主动探索 + 自适应推理"状态，而不是停留在模仿示范轨迹。
-    - 核心思路：复合奖励 $R = \lambda_{\text{outcome}} \cdot r_{\text{outcome}} + \lambda_{\text{format}} \cdot \mathbb{I}[r_{\text{outcome}} > 0] \cdot r_{\text{format}}$，其中 $r_{\text{outcome}}$ 是预测答案 $\hat{\mathcal{A}}$ 与所有金标变体 $\mathcal{A}$ 之间的 F1，$r_{\text{format}}$ 奖励 tag 完整性与正确顺序——**关键设计是格式奖励只在结果非零时才给**，避免智能体学到"格式好看但答案全错"。用 GRPO 优化时对每条 prompt 采 $n$ 条 rollout，组内均值作为 baseline 算优势 $\hat{A}_i = r_i - \frac{1}{n}\sum_{j=1}^n r_j$，不需要单独训 value function，目标函数是带 KL 正则的 clipped PPO 形式：$\max_\theta \mathbb{E}[\min(r_t \hat{A}_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon)\hat{A}_t)] - \beta D_{\text{KL}}[\pi_\theta \| \pi_{\text{ref}}]$。
-    - 设计动机：KBQA 的真值天然是"答案集合是否对"，这是稀疏但完全可靠的信号；用 outcome F1 当主奖励 + KL 锚定参考策略，既给了模型探索新动作组合的自由度，又防止策略漂移到不可执行区域——消融显示 w/o GRPO（只 SFT）会掉 ~5-10% F1，而 w/o SFT warm-start 直接从 RL 训会掉 8.6%，证明 SFT 冷启动和 GRPO 是互补而非可替代关系。
+KBQA 的真值天然是"答案集合对不对"，稀疏但完全可靠，正适合做 RL 主奖励。复合奖励写成 $R = \lambda_{\text{outcome}} \cdot r_{\text{outcome}} + \lambda_{\text{format}} \cdot \mathbb{I}[r_{\text{outcome}} > 0] \cdot r_{\text{format}}$，其中 $r_{\text{outcome}}$ 是预测答案 $\hat{\mathcal{A}}$ 与所有金标变体 $\mathcal{A}$ 之间的 F1，$r_{\text{format}}$ 奖励 tag 完整性与正确顺序；这里的巧思是格式奖励只在结果非零时才给（即 $\mathbb{I}[r_{\text{outcome}} > 0]$），避免智能体学成"格式漂亮但答案全错"。优化用 GRPO：对每条 prompt 采 $n$ 条 rollout，以组内均值作 baseline 算优势 $\hat{A}_i = r_i - \frac{1}{n}\sum_{j=1}^n r_j$，省掉单独的 value function，目标是带 KL 正则的 clipped PPO 形式 $\max_\theta \mathbb{E}[\min(r_t \hat{A}_t, \text{clip}(r_t, 1-\epsilon, 1+\epsilon)\hat{A}_t)] - \beta D_{\text{KL}}[\pi_\theta \| \pi_{\text{ref}}]$。outcome F1 当主奖励 + KL 锚定参考策略，既给了探索新动作组合的自由度，又防止策略漂到不可执行区——消融显示只 SFT（w/o GRPO）会掉 ~5-10% F1，而直接从 RL 训（w/o SFT warm-start）会掉 8.6%，说明 SFT 冷启动和 GRPO 是互补而非可替代。
 
 ### 损失函数 / 训练策略
 两阶段训练。**Stage 1 (SFT)**：把每条 RRS 接受轨迹按轮次切成独立训练样本，context 作为输入、模型回复作为目标，loss 只对 response token 计算。**Stage 2 (GRPO)**：基于 SFT checkpoint 做 RL，backbone 用 Llama-3.1-8B-Instruct，RRS rollout 阶段用更强的 Qwen-2.5-72B-Instruct 生成轨迹再蒸馏回 8B，奖励权重和 $\beta, \epsilon$ 等具体超参见附录 B.3。

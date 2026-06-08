@@ -41,27 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-系统由三层组成：(i) 统一糖尿病模拟器 GlucoSim，基于 UVA-Padova 物理模型扩展，支持 T1D 泵、T2D 泵、T2D 非泵三种临床场景，每步给 agent 一个 14 维 CGM/IOB/餐食历史观测，agent 输出离散的 bolus + 餐食推荐，经过"病人接受模型"过滤后落地；(ii) BA-NODE 个体化动力学预测器，给定历史观测预测未来 H 步血糖轨迹；(iii) 测试时预测性屏蔽，把任意预训练 Safe RL 策略的动作分布在线过滤一次。训练阶段每种条件只用一个代表病人 (Child#01 / Adolescent#01 / Adult#01) 训 11 天，部署阶段在 9 位未见病人上做 77 天 zero-shot 评估。
+这篇要解决的是"Safe RL 训练时满足约束、部署到未见病人却悄悄越界"这个 OOD 安全缺口。系统分三层：先用统一糖尿病模拟器 GlucoSim（基于 UVA-Padova 物理模型扩展，覆盖 T1D 泵 / T2D 泵 / T2D 非泵三种临床场景）训出标准 Safe RL 策略，每步给 agent 一个 14 维 CGM/IOB/餐食历史观测、agent 输出离散的 bolus + 餐食推荐，经"病人接受模型"过滤后落地；再用一个个体化动力学预测器 BA-NODE 学会预测未来 H 步血糖轨迹；最后在测试时把任意预训练策略的动作分布过一道预测性屏蔽，把被预测会越界的动作概率压下去。训练阶段每种条件只拿一个代表病人 (Child#01 / Adolescent#01 / Adult#01) 训 11 天，部署阶段在 9 位未见病人上做 77 天 zero-shot 评估——分布偏移就发生在训练病人和部署病人之间。
 
 ### 关键设计
 
-1. **统一糖尿病模拟器 + OOD 安全 benchmark**:
+**1. 统一糖尿病模拟器 + OOD 安全 benchmark：让"训练合规、部署失败"自然涌现。**
 
-    - 功能：把 T1D/T2D + 泵/非泵收编进一个 MDP 接口，捕捉"治疗决策支持"而非"直接连续控制"的真实临床场景，并显式制造参数级与时长级的分布偏移。
-    - 核心思路：物理层基于 UVA-Padova，T2D 用 Hovorka 分泌动力学 + Dalla Man 转运模型的混合公式建模胰岛素抵抗；MDP 层 reward 用两小时预测窗口算 risk delta，把胰岛素堆积、反跳高血糖这类延迟效应纳入即时奖励，cost 加上"频繁干预"惩罚以贴近临床。Risk Index 用 Kovatchev 不对称变换 $r_t = 10 f(G_t)^2$、$f(G) = 1.509 (\ln(G)^{1.084} - 5.381)$，让低血糖比高血糖被更重罚。评估时切两类分布偏移：参数泛化（在 Patient #02–#10 上测）与时长泛化（训练 11 天、测试 77 天）。
-    - 设计动机：直接控连续 basal 是不现实的临床假设；模拟器要逼真到能让"训练时合规、部署时失败"这个现象自然涌现出来，才能当 testbed 评 Safe RL。
+直接控制连续 basal 是不现实的临床假设，而已有 RL 糖尿病工作又默认训练-测试动力学匹配、且大多只研究 T1D，根本测不出人口异质性下的安全鲁棒性。GlucoSim 把 T1D/T2D + 泵/非泵收编进同一个 MDP 接口，刻画的是"治疗决策支持"而非"直接连续控制"：物理层基于 UVA-Padova，T2D 额外用 Hovorka 分泌动力学 + Dalla Man 转运模型的混合公式建模胰岛素抵抗。MDP 层的 reward 用两小时预测窗口算 risk delta，把胰岛素堆积、反跳高血糖这类延迟效应纳进即时奖励，cost 再叠一个"频繁干预"惩罚贴近临床实践。安全好坏用 Kovatchev 不对称 Risk Index 量化，$r_t = 10\,f(G_t)^2$、$f(G) = 1.509\,(\ln(G)^{1.084} - 5.381)$，这个不对称变换让低血糖被比高血糖更重地罚——契合临床上低血糖更致命的事实。评估时显式切两类偏移：参数泛化（换到 Patient #02–#10 测）与时长泛化（训 11 天、测 77 天）。模拟器逼真到这个程度，才能让"训练合规、部署失败"这个现象自己冒出来，当 testbed 用。
 
-2. **Basis-Adaptive Neural ODE (BA-NODE) 个体化动力学预测器**:
+**2. Basis-Adaptive Neural ODE (BA-NODE)：病人潜变量看不见，也要零样本适配到个体。**
 
-    - 功能：在病人潜变量（敏感度、吸收率）不可观测的情况下，少量上下文窗口就能零样本适配到具体病人并稳定预测多步血糖。
-    - 核心思路：三模块串联——(a) ITransformer 把每个生理变量当 token 做跨变量 self-attention，得到 per-variate summary 再投影成初始潜状态 $h_0$；(b) K 个并行 neural ODE 向量场 $\{f_{\theta_k}\}$ 用 RK4 各自前推一步，得到 K 条候选潜轨迹，经共享线性投影 $W_{\mathrm{proj}} \in \mathbb{R}^{K \times 1}$ 合成单条潜轨迹；(c) 把这 K 条 rollout 当作"基轨迹" $\{G_k(\cdot)\}$，对每个病人收集 N 个上下文窗口，按正则最小二乘 $w^\star = \arg\min_w \|\tilde G w - \tilde y_{\text{ctx}}\|_2^2 + \lambda \|w\|_2^2$ 解出病人特异权重 $w^\star$，最终预测 $\hat y_{T+P} = y_T + \sum_{i=1}^{P} (G(x_{\text{pred}}) w^\star)_i$。
-    - 设计动机：原始 Function Encoder 只能做静态回归，没法处理血糖的历史依赖；BA-NODE 把"静态函数基"换成"动态基轨迹"，让函数空间适配自然支持时间序列；ODE 集成则同时撑住"足够表达力 + 单条相干轨迹"两个要求。
+胰岛素敏感度、吸收率这些病人潜变量根本无法观测，可它们恰恰决定了血糖怎么演化——预测器必须只靠少量上下文窗口就零样本认出"这是哪种病人"。BA-NODE 把原始 Function Encoder 那套"静态函数基"换成"动态基轨迹"，让函数空间适配天然支持时间序列，靠三个模块串起来。先是 ITransformer 把每个生理变量当 token 做跨变量 self-attention，得到 per-variate summary 后投影成初始潜状态 $h_0$；接着 $K$ 个并行 neural ODE 向量场 $\{f_{\theta_k}\}$ 用 RK4 各自前推一步、得到 $K$ 条候选潜轨迹，经共享线性投影 $W_{\mathrm{proj}} \in \mathbb{R}^{K \times 1}$ 合成单条潜轨迹（ODE 集成同时撑住"足够表达力"和"单条相干轨迹"两个要求）；最后把这 $K$ 条 rollout 当作"基轨迹" $\{G_k(\cdot)\}$，对每个病人收集 $N$ 个上下文窗口，解一个正则最小二乘
 
-3. **测试时预测性屏蔽 (Predictive Shielding)**:
+$$w^\star = \arg\min_w \|\tilde G w - \tilde y_{\text{ctx}}\|_2^2 + \lambda \|w\|_2^2$$
 
-    - 功能：算法无关的运行时安全包装器，在策略动作分布上加 mask 把会导致预测违反安全的动作概率压低，但不归零（保持探索容错）。
-    - 核心思路：屏蔽后策略 $\pi_{\text{shielded}}(a|s) = \mathrm{Softmax}(\log \pi_\theta(a|s) + M(s,a))$，其中 $M$ 由三类规则叠加：(i) **Critical Rescue**：若 $BG_t < G_{\text{rescue}} = 60\,\text{mg/dL}$，强制 15g 救援碳水并屏蔽所有胰岛素动作；(ii) **Predictive Safety**：若 $BG_t \geq G_{\text{shield}}^\downarrow = 80\,\text{mg/dL}$，对 top-k bolus 候选 × 所有离散餐食组合，调 BA-NODE 预测 H 步轨迹，对 $m(a) < G_{\text{shield}}^\downarrow$ 或 $M(a) > G_{\text{shield}}^\uparrow$ 的动作打惩罚；(iii) **Gating**：在过渡区 $[G_{\text{rescue}}, G_{\text{shield}}^\downarrow)$ 暂停预测验证，避免对小噪声反复救援。配套 **概率安全界**：在一侧 $(\varepsilon, \alpha)$-reliable 假设下，把屏蔽阈值设为 $G_{\text{shield}}^\downarrow = G_{\text{fail}}^\downarrow + \varepsilon$ 即可保证 $\Pr(\min_\tau BG_\tau(a) \geq G_{\text{fail}}^\downarrow) \geq 1 - \alpha$。
-    - 设计动机：训练时约束在 OOD 下必然失效，需要在测试时补救；用预测器做轨迹级检查比单步规则更能预防"胰岛素堆积"等延迟风险；阈值带余量正好让概率界落到临床失效线之上，等价于把模型预测误差换算成了安全 margin。
+就拿到该病人特异的权重 $w^\star$，最终预测 $\hat y_{T+P} = y_T + \sum_{i=1}^{P} (G(x_{\text{pred}}) w^\star)_i$。妙在适配只是解一个最小二乘、不需要在病人身上做在线梯度更新，正好契合临床"禁止试错"的约束。
+
+**3. 测试时预测性屏蔽 (Predictive Shielding)：算法无关的运行时安全包装器。**
+
+训练时约束在 OOD 下必然失效，又不能重训，那就只能在测试时补救。屏蔽把策略动作分布做一次重整
+
+$$\pi_{\text{shielded}}(a|s) = \mathrm{Softmax}\big(\log \pi_\theta(a|s) + M(s,a)\big),$$
+
+惩罚项 $M$ 把危险动作的概率压低但**不归零**（保留探索容错），由三类规则叠加：当 $BG_t < G_{\text{rescue}} = 60\,\text{mg/dL}$ 触发 **Critical Rescue**，强制 15g 救援碳水并屏蔽所有胰岛素动作；当 $BG_t \geq G_{\text{shield}}^\downarrow = 80\,\text{mg/dL}$ 触发 **Predictive Safety**，对 top-$k$ bolus 候选 × 所有离散餐食组合逐一调 BA-NODE 预测 H 步轨迹，对预测最低点 $m(a) < G_{\text{shield}}^\downarrow$ 或最高点 $M(a) > G_{\text{shield}}^\uparrow$ 的动作打惩罚；而在过渡区 $[G_{\text{rescue}}, G_{\text{shield}}^\downarrow)$ 用 **Gating** 暂停预测验证，免得对小噪声反复救援。比单步规则强的地方在于它看的是 H 步外的轨迹，能预防"胰岛素堆积"这种延迟风险。更关键的是它配了一条**概率安全界**：在一侧 $(\varepsilon, \alpha)$-reliable 假设下，只要把屏蔽阈值设成 $G_{\text{shield}}^\downarrow = G_{\text{fail}}^\downarrow + \varepsilon$，就能保证 $\Pr(\min_\tau BG_\tau(a) \geq G_{\text{fail}}^\downarrow) \geq 1 - \alpha$——等于把预测器误差 $\varepsilon$ 以加性方式换算成了安全 margin，阈值不是拍脑袋设的。
+
+### 一个完整示例：高血糖时一步怎么被屏蔽
+某未见病人此刻 $BG_t = 180\,\text{mg/dL}$（高于 $G_{\text{shield}}^\downarrow=80$），进入 Predictive Safety 分支。基策略原本想给一针偏大的 bolus 把血糖压下来，屏蔽器先取 top-$k$ 个 bolus 候选、配上各离散餐食组合，逐个喂给 BA-NODE：BA-NODE 用这个病人最近 $N$ 个窗口解出的 $w^\star$ 把通用基轨迹适配成"这位病人"的预测，rollout 出未来 24 步（120 分钟）血糖。其中那针大 bolus 被预测会在两小时后把血糖打到 $m(a)=55 < 80$（典型的胰岛素堆积→反跳低血糖），于是它的 $M$ 被压低、$\mathrm{Softmax}$ 后概率塌掉；而一个温和剂量被预测全程落在区间内，概率被保留。最终落地的是温和那针——单步规则只看当前 180 会觉得"该多给"，预测性屏蔽因为看到了 H 步外的低谷才避开了短视决策。
 
 ### 损失函数 / 训练策略
 8 种 Safe RL baseline（PPO-Lag、TRPO-Lag、CPO、RCPO、FOCOPS、PCPO、CRPO、CUP）各自按原文超参在每个 cohort × 每个代表病人上训，再加一个规则基 shield (RBS) 作对照。BA-NODE 在每 cohort 的 15 天预训练策略轨迹上训，留 5 天评估，预测窗口最长到 120 分钟 (24 步)。评估只用临床指标 (TIR、CV、Risk Index)，避开和训练 reward/cost 同源的循环验证。

@@ -41,38 +41,27 @@ SURF 把监督流匹配 FLOSS 与无监督的 ReMixIT / Self-Remixing 教师-学
 ## 方法详解
 
 ### 整体框架
-SURF 用两个同结构的 flow matching 网络 $v_{\theta_\mathcal{T}}$（teacher）和 $v_\theta$（student），都按 FLOSS 训练。两者初始化来自 MixIT 预热的回归分离器。每个迭代步：
+SURF 要解决的是"没有任何干净源、只有混合观测，怎么训出一个生成式 flow 分离器"。它用两个同结构、都按 FLOSS 训练的 flow matching 网络——EMA 教师 $v_{\theta_\mathcal{T}}$ 负责造伪源、学生 $v_\theta$ 负责从重混合里学回——把无监督派的"教师估计→打乱重组→学生学回"循环嫁接到 flow matching 上，两者都从 MixIT 预热的回归分离器初始化。
 
-1. **教师推断**：从真实混合批次 $\boldsymbol{M}=[\boldsymbol{m}_1,\dots,\boldsymbol{m}_B]$ 出发，教师以 flow ODE 采样得到伪源 $\mathcal{X} \in \mathbb{R}^{BK\times d}$。
-2. **重混合**：在 $S_{BK}$ 上均匀采样置换 $\boldsymbol{\Pi}$ 打乱所有 $BK$ 行，得到 $\tilde{\boldsymbol{X}}_1 = \boldsymbol{\Pi}\mathcal{X}$，再求和成新混合 $\tilde{\boldsymbol{M}}=(\boldsymbol{I}_B\otimes \mathbf{1}^\top)\tilde{\boldsymbol{X}}_1$。
-3. **构造 FM 路径**：噪声端 $\tilde{\boldsymbol{X}}_0 = \tfrac{1}{K}(\boldsymbol{I}_B\otimes \mathbf{1})\tilde{\boldsymbol{M}} + (\boldsymbol{I}_B\otimes \boldsymbol{P}^\perp)\boldsymbol{Z}$（保证 mixture consistency），用学生的 $t=0$ 速度对每个 mixture 做 PIT 选最优置换 $\boldsymbol{\Upsilon}$，得到插值 $\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}}=(1-t)\tilde{\boldsymbol{X}}_0 + t\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1$。
-4. **损失计算**：定义残差 $\boldsymbol{R}_t = v_\theta(\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}}, t, \tilde{\boldsymbol{M}}) - (\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1 - \tilde{\boldsymbol{X}}_0)$，分两条路径监督。
-5. **EMA 更新教师**：$\theta_\mathcal{T} \leftarrow \alpha \theta_\mathcal{T} + (1-\alpha)\theta$。
-
-整个过程**完全不需要 clean source**——所有"目标"要么来自教师自己（ReMixIT 变体），要么来自原始观测混合（Self-Remixing 变体）。
+### 一个完整示例
+跟着一个训练步走一遍，能看清教师、重混合、学生三个模块怎么协同。给定真实混合批次 $\boldsymbol{M}=[\boldsymbol{m}_1,\dots,\boldsymbol{m}_B]$，**教师**先用 flow ODE 采样出一批伪源 $\mathcal{X}\in\mathbb{R}^{BK\times d}$；接着进入**重混合**，在置换群 $S_{BK}$ 上均匀采一个 $\boldsymbol{\Pi}$ 把全部 $BK$ 行打乱得到 $\tilde{\boldsymbol{X}}_1=\boldsymbol{\Pi}\mathcal{X}$，再按 $\tilde{\boldsymbol{M}}=(\boldsymbol{I}_B\otimes\mathbf{1}^\top)\tilde{\boldsymbol{X}}_1$ 求和成全新的合成混合。然后为**学生**铺一条 FM 路径：噪声端取 $\tilde{\boldsymbol{X}}_0=\tfrac{1}{K}(\boldsymbol{I}_B\otimes\mathbf{1})\tilde{\boldsymbol{M}}+(\boldsymbol{I}_B\otimes\boldsymbol{P}^\perp)\boldsymbol{Z}$ 以保证 mixture consistency，用学生 $t=0$ 处的速度对每个 mixture 做 PIT 选最优置换 $\boldsymbol{\Upsilon}$，得到插值 $\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}}=(1-t)\tilde{\boldsymbol{X}}_0+t\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1$；据此算出统一的速度残差 $\boldsymbol{R}_t=v_\theta(\tilde{\boldsymbol{X}}_t^{\boldsymbol{\Upsilon}},t,\tilde{\boldsymbol{M}})-(\boldsymbol{\Upsilon}\tilde{\boldsymbol{X}}_1-\tilde{\boldsymbol{X}}_0)$ 供两条 loss 分支共用。学生反传更新后，教师再用 EMA $\theta_\mathcal{T}\leftarrow\alpha\theta_\mathcal{T}+(1-\alpha)\theta$ 慢慢追上。整步里所有"目标"要么来自教师自己（ReMixIT 变体），要么来自原始观测混合（Self-Remixing 变体），**全程不碰 clean source**。
 
 ### 关键设计
 
-1. **Velocity-to-Denoiser 桥接（让 FM 能接 ReMixIT）**:
+**1. Velocity-to-Denoiser 桥接：让 flow 能接住 ReMixIT 的数学**
 
-    - 功能：把 flow matching 学到的速度 $v_\theta$ 和 ReMixIT/Self-Remixing 需要的"clean source 估计"在数学上对接起来。
-    - 核心思路：基于 $\boldsymbol{u}(x,t)=\mathbb{E}[x_1-x_0|x_t,m]$ 和路径 $x_1-x_0=(x_1-x_t)/(1-t)$，得到 $\mathbb{E}[x_1|x_t,m]=x_t+(1-t)\boldsymbol{u}(x_t,t,m)\approx x_t+(1-t)v_\theta(x_t,t,m)$。于是任意一步 $t$ 都可以拿这个量当"时间相关的去噪估计"，直接代进 Self-Remixing 那种"用估计源重构原始 mixture"的回归式 loss 里。
-    - 设计动机：FM 与回归式自监督本来"语义不同"，简单拼接会让自监督信号和 FM 训练目标脱节。这个恒等式让一份模型同时给出"速度场"和"去噪源"两种视角，整套 ReMixIT 数学不必动结构就能搬过来。
+痛点在于 flow matching 学的是速度场 $v_\theta$，而 ReMixIT / Self-Remixing 这类自监督 loss 要的是"clean source 估计"，两者语义不同、硬拼会让自监督信号和 FM 目标脱节。作者用一行恒等式把它们对齐：由 $\boldsymbol{u}(x,t)=\mathbb{E}[x_1-x_0|x_t,m]$ 和路径关系 $x_1-x_0=(x_1-x_t)/(1-t)$，推得 $\mathbb{E}[x_1|x_t,m]=x_t+(1-t)\boldsymbol{u}(x_t,t,m)\approx x_t+(1-t)v_\theta(x_t,t,m)$。于是在任意一步 $t$，同一个模型既能给出速度场、又能给出一个"时间相关的去噪源估计"，可以直接代进 Self-Remixing 那种"用估计源重构原始 mixture"的回归式 loss——整套 ReMixIT 数学不必改结构就搬了过来。
 
-2. **ReMixIT-FM 与 Self-Remixing-FM 双损失（监督 / 反思两种选择）**:
+**2. ReMixIT-FM 与 Self-Remixing-FM 双损失：监督密一点还是反思一点**
 
-    - 功能：在重混合后的合成数据上给学生 flow 提供训练信号。
-    - 核心思路：ReMixIT-FM 直接用 FLOSS 风格的 PIT-FM 损失 $\mathcal{L}_{\text{RM-FM}}=\mathbb{E}\|\boldsymbol{R}_t\|^2$，把教师伪源当 ground truth。Self-Remixing-FM 反而退一步——只要求学生的估计 sum 回去等于原始 mixture：$\mathcal{L}_{\text{SR-FM}}=\mathbb{E}\|(\boldsymbol{I}_B\otimes\mathbf{1}^\top)\boldsymbol{\Pi}^{-1}\boldsymbol{\Upsilon}^{-1}\boldsymbol{R}_t\|^2$。两条 loss 共享同一个 $\boldsymbol{R}_t$ 但施加不同投影。
-    - 设计动机：ReMixIT 训练信号更密集但会"继承"教师误差；Self-Remixing 不直接惩罚伪源错误、只要求 mixture 重构一致，作者在 Appendix 证明其 gradient 是 $2(K-1)\mathbb{E}[\beta_t(\nabla_\theta \delta^{(1)}_{\theta,t})^\top \delta^{(2)}_{\theta,t}]$，当不同源的系统误差弱相关时这一项接近零，主导梯度回到 pseudo-supervised FM。实验显示两者性能接近、Self-Remixing 在音频上稍好。
+两条 loss 共享上面那个残差 $\boldsymbol{R}_t$，只是施加不同投影，给学生两种风格的训练信号。ReMixIT-FM 直接用 FLOSS 风格的 PIT-FM 损失 $\mathcal{L}_{\text{RM-FM}}=\mathbb{E}\|\boldsymbol{R}_t\|^2$，把教师伪源当 ground truth，信号密但会"继承"教师误差；Self-Remixing-FM 则退一步，只要求学生的估计 sum 回去等于原始 mixture，即 $\mathcal{L}_{\text{SR-FM}}=\mathbb{E}\|(\boldsymbol{I}_B\otimes\mathbf{1}^\top)\boldsymbol{\Pi}^{-1}\boldsymbol{\Upsilon}^{-1}\boldsymbol{R}_t\|^2$，不直接惩罚伪源错误。后者为何有效，作者在附录给出其梯度为 $2(K-1)\mathbb{E}[\beta_t(\nabla_\theta\delta^{(1)}_{\theta,t})^\top\delta^{(2)}_{\theta,t}]$：当不同源的系统误差弱相关时这一项趋零，主导梯度退回到 pseudo-supervised FM，因此能在不放大教师误差的前提下学到东西。实验里两者性能接近，Self-Remixing 在音频上略胜。
 
-3. **Wake-Sleep 解释 + EMA 教师（让"自我蒸馏"理论闭环）**:
+**3. Wake-Sleep 解释 + EMA 教师：给"自我蒸馏"补上理论闭环**
 
-    - 功能：解释为什么"教师生成 → 重混合 → 学生学回 → EMA 回写教师"这个看似 hacky 的循环能收敛，并指导教师的更新方式。
-    - 核心思路：把教师定义的边缘 $\bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}})=\prod_k \bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}}^{(k)})$ 当成隐式 prior，把学生 $p_\theta(\bar{\boldsymbol{x}}|m)$ 当成 inference network。Sleep 阶段（更新学生）等价于在合成对 $(\bar{\boldsymbol{x}}, m)\sim \bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}})p(m|\bar{\boldsymbol{x}})$ 上做极大似然，正好就是 ReMixIT；Wake 阶段（更新教师）的精确解需要不可得的 aggregate posterior，于是退化成"把 $\theta_\mathcal{T}$ 朝 $\theta$ 移动"，并用 EMA $\theta_\mathcal{T} \leftarrow \alpha\theta_\mathcal{T} + (1-\alpha)\theta$ 实现稳定的"慢追快"。
-    - 设计动机：以前 ReMixIT 的成功更多是经验观察，没有清晰的概率框架。这里把它落到 Wake-Sleep 上，既给了"为什么能 bootstrap"的解释，也告诉你 EMA 不是随便加的稳定 trick，而是 Wake 步的实际替代品。
+"教师生成→重混合→学生学回→EMA 回写教师"这套循环看着 hacky，作者用 Wake-Sleep 框架解释它为何能收敛，并据此定下教师的更新方式。把教师边缘 $\bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}})=\prod_k\bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}}^{(k)})$ 视作隐式 prior、学生 $p_\theta(\bar{\boldsymbol{x}}|m)$ 视作 inference network：Sleep 阶段（更新学生）等价于在合成对 $(\bar{\boldsymbol{x}},m)\sim\bar{p}_{\theta_\mathcal{T}}(\bar{\boldsymbol{x}})p(m|\bar{\boldsymbol{x}})$ 上做极大似然，恰好就是 ReMixIT；Wake 阶段（更新教师）的精确解需要不可得的 aggregate posterior，于是退化成"把 $\theta_\mathcal{T}$ 朝 $\theta$ 移动"，并用 EMA $\theta_\mathcal{T}\leftarrow\alpha\theta_\mathcal{T}+(1-\alpha)\theta$ 实现稳定的"慢追快"。这把 ReMixIT 从经验技巧上升为隐变量生成模型的标准训练范式，也说明 EMA 不是随手加的稳定 trick，而是不可解 Wake 步的实际代理。
 
 ### 损失函数 / 训练策略
-联合训练目标可以是 $\mathcal{L}_{\text{RM-FM}}$ 或 $\mathcal{L}_{\text{SR-FM}}$（论文给出两个变体）。教师 EMA 衰减 $\alpha$ 是关键超参；学生网络结构沿用 FLOSS（permutation-equivariant + mixture-consistency 投影层）。每次学生更新一步后教师 EMA 同步。初始化用 MixIT 预训练的回归式分离器（无监督起点）。
+联合训练目标取 $\mathcal{L}_{\text{RM-FM}}$ 或 $\mathcal{L}_{\text{SR-FM}}$ 之一（论文给出两个变体），教师 EMA 衰减 $\alpha$ 是关键超参，每次学生更新一步后教师 EMA 同步。学生网络结构沿用 FLOSS（permutation-equivariant + mixture-consistency 投影层），整条训练从 MixIT 预训练的回归式分离器这个无监督种子起步。
 
 ## 实验关键数据
 

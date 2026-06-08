@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Token Sparse Attention 在每个被选中的稀疏层内分两步：(1) **Stage 1 压缩**：用 Dynamic Token Coverage 算法估出每个 head $h$ 的 token 集 $S_{H=h}$（大小 $L'$），从 $Q,K,V \in \mathbb R^{L\times d}$ 按 $S_h$ gather 出 $\hat Q, \hat K, \hat V \in \mathbb R^{L'\times d}$，调 FlashAttention 在 $L'\times L'$ 上做密集 attention 得到 $\hat O$；(2) **Stage 2 解压**：把 $\hat O$ 按 $S_h$ scatter 回零初始化的 $\mathbb R^{L\times d}$，未选位置保持 0，等价于对未选 token 施加 hard mask；再加残差连接。复杂度从 $O(L^2 d)$ 降到 $O(L'^2 d)$。哪些层做稀疏由 Inter-Layer Representation Drift 一次性预选（默认底 50% 漂移最小的层），不需要训练。
+Token Sparse Attention 想解决的是：既要让 token 选择跟着层/head 各自的注意力动态走，又要保证被略过的 token 不被永久删掉，还要能直接复用现成的密集 attention kernel。它在每个被选中的稀疏层里走"压缩—密集 attention—解压"三拍：先用 Dynamic Token Coverage 给每个 head $h$ 估出一个大小为 $L'$ 的 token 集 $S_h$，从 $Q,K,V \in \mathbb R^{L\times d}$ 按 $S_h$ gather 出 $\hat Q,\hat K,\hat V \in \mathbb R^{L'\times d}$，调 FlashAttention 在 $L'\times L'$ 的压缩空间上算密集 attention 得到 $\hat O$；再把 $\hat O$ scatter 回一个零初始化的 $\mathbb R^{L\times d}$，未选位置保持 0，最后加残差。复杂度由此从 $O(L^2 d)$ 降到 $O(L'^2 d)$。至于"哪些层值得稀疏"，由 Inter-Layer Representation Drift 在加载时一次性预选（默认取漂移最小的底 50% 层），全程 training-free。
 
 ### 关键设计
 
-1. **Compress-then-Decompress 可逆 token 稀疏化**:
+**1. Compress-then-Decompress 可逆 token 稀疏化：把"删 token"换成"临时不参与 attention"。**
 
-    - 功能：让每层每 head 独立选 token 做密集 attention，未选 token 通过残差路径在下一层重新有机会被选。
-    - 核心思路：Stage 1 对每个 head $h$ 独立选 $S_h$，gather 出 $\hat Q_h, \hat K_h, \hat V_h$；attention 在压缩空间 $\mathbb R^{L'\times L'}$ 上由 FlashAttention 直接处理，输出 $\hat O_h$。Stage 2 用 scatter 把 $\hat O_h$ 散回 $\mathbb R^{L\times d}$ 的对应行（未选行 = 0），然后 $X_{\ell+1} = X_\ell + \text{Decompress}(\hat O_h)$。残差使被略过 token 的上层表示直接流到下一层，下一层若判定其重要可再次选中。
-    - 设计动机：传统 token eviction 把 $L\to L'$ 当作不可逆 KV 删除，下层就再也看不到被删的 token；compress-decompress 把它当**临时不参与 attention 的输入**，结构上不删任何东西，从而层/head 间的动态重要性得以保留。还有一个工程红利：压缩后的 $\hat Q\hat K\hat V$ 是 dense 连续的，能直接喂任何现成 attention kernel（FlashAttention、FlexPrefill 等），不需要写新 CUDA。
+传统 token eviction 把 $L\to L'$ 当成不可逆的 KV 删除，被删的 token 在深层即使变重要也回不来——这正是前面观察到的"重要性层间漂移"被违背的根源。本方法换一种结构：Stage 1 对每个 head $h$ 独立选 $S_h$，gather 出 $\hat Q_h,\hat K_h,\hat V_h$，让 FlashAttention 在压缩空间 $\mathbb R^{L'\times L'}$ 上直接算出 $\hat O_h$；Stage 2 用 scatter 把 $\hat O_h$ 散回 $\mathbb R^{L\times d}$ 的对应行（未选行填 0，等价于对未选 token 施加 hard mask），再走残差 $X_{\ell+1} = X_\ell + \text{Decompress}(\hat O_h)$。关键就在这条残差：被略过 token 的上一层表示直接流进下一层，下一层若判定它重要可以重新把它选回来，所以结构上一个 token 都没删，层/head 间的动态重要性得以完整保留。附带还有个工程红利——压缩后的 $\hat Q\hat K\hat V$ 是 dense 连续的，能原样喂给任何现成 attention kernel（FlashAttention、FlexPrefill 等），不必写新 CUDA。
 
-2. **Dynamic Token Coverage（按攻击力分位定预算）**:
+**2. Dynamic Token Coverage：按"注意力噪声尾巴"分位自适应定预算。**
 
-    - 功能：在推理时动态决定每层留多少 token（不是固定比例），并分头决定留哪些。
-    - 核心思路：对每个 head 用 recent queries 与所有 keys 做 lightweight attention 得到 $\hat A$，按列求和后 pool 得 head 级 token score $s_h[t]$，按 head 汇总并归一化得到层级 score $s_l$。把 $s_l$ 升序排，找最小的 $k_{\text{sparse}}$ 使 $\sum_{j=1}^{k_{\text{sparse}}} s_l[I[j]] \ge \tau$（默认 $\tau=0.005$），即累计**最不重要的 token 总权重不超过 $\tau$**，把这部分丢掉；保留 $k_{\text{keep}} = L - k_{\text{sparse}}$ 个。每个 head 独立用 top-$k_{\text{keep}}$ 取自己最关心的子集 $S_h$。用 Triton 写自定义 fused kernel 让打分本身的 I/O 开销可忽略。
-    - 设计动机：固定保留比例会在不同上下文长度/任务上失配（信息密度变化大）；按"累计 attention 噪声尾巴 ≤ $\tau$"分位的方式让稀疏度自适应——长上下文里 attention noise 多则稀疏度大、短上下文里则小。这背后假设：长 context attention 必然累积"长尾低权重 token"，砍掉它们等于做结构正则化。
+固定保留比例会在不同上下文长度/任务上失配——信息密度差异很大，一刀切 30% 在长 context 上浪费、在短 context 上又砍过头。这里改成数据自适应：对每个 head 用 recent queries 与所有 keys 做一次 lightweight attention 得到 $\hat A$，按列求和再 pool 得 head 级 token score $s_h[t]$，汇总归一化成层级 score $s_l$。把 $s_l$ 升序排，找最小的 $k_{\text{sparse}}$ 使累计权重 $\sum_{j=1}^{k_{\text{sparse}}} s_l[I[j]] \ge \tau$（默认 $\tau=0.005$），即"最不重要的那一撮 token 的总注意力权重不超过 $\tau$"就整体丢掉，保留 $k_{\text{keep}} = L - k_{\text{sparse}}$ 个；每个 head 再各自用 top-$k_{\text{keep}}$ 取最关心的子集 $S_h$。这样稀疏度会随上下文自然变化——长上下文里 attention noise 的长尾多，稀疏度自动变大（实测 128K 砍 54%、4K 只砍 17%），背后的假设是长 context attention 必然累积一批长尾低权重 token，砍掉它们近似一次结构正则化。打分本身用 Triton fused kernel 写，I/O 开销可忽略。
 
-3. **Inter-Layer Representation Drift 选稀疏层（哪些层能扛）**:
+**3. Inter-Layer Representation Drift 选稀疏层：让"哪层能扛稀疏"由数据说了算。**
 
-    - 功能：发现哪些层做稀疏化对结果伤害最小，避免一刀切所有层。
-    - 核心思路：定义层 $\ell$ 的归一化漂移 $R_\ell = \mathbb E_t[\|h_{\ell+1,t} - h_{\ell,t}\|_2 / (\|h_{\ell,t}\|_2 + \epsilon)]$，漂移小 = token 表示稳定 = 该层可承受稀疏化。先在校准数据上算出 $R_\ell$，对其排名得到 $\hat R_\ell$，取 $\mathcal L_{\text{sparse}} = \{\ell | \hat R_\ell \le \delta\}$（默认 $\delta=0.5$，即漂移最小的 50% 层做稀疏）。这只在模型加载时跑一次。
-    - 设计动机：实验显示对 200 个随机 3 层组合做稀疏，平均漂移和准确率高度相关——稳定层做稀疏不破坏 token 表示，不稳定层做则误差累积。把"哪层稀疏"从超参变成 data-driven 的预处理，省掉用户调参负担。
+不是每层都经得起稀疏，对不稳定的层下手会让误差逐层累积。本方法用一个朴素但有效的 prior 来挑层：定义层 $\ell$ 的归一化表示漂移 $R_\ell = \mathbb E_t[\|h_{\ell+1,t} - h_{\ell,t}\|_2 / (\|h_{\ell,t}\|_2 + \epsilon)]$，漂移小意味着 token 表示稳定、该层能承受稀疏化。在校准数据上算出各层 $R_\ell$，排名得到 $\hat R_\ell$，取 $\mathcal L_{\text{sparse}} = \{\ell \mid \hat R_\ell \le \delta\}$（默认 $\delta=0.5$，即漂移最小的 50% 层做稀疏），整件事只在模型加载时跑一次。之所以可信，是实验对 200 个随机 3 层组合做稀疏，发现平均漂移和准确率高度相关——稳定层稀疏不伤 token 表示，不稳定层则误差累积。这一步把"哪层稀疏"从超参变成 data-driven 的预处理，省掉用户调参。
 
 ### 损失函数 / 训练策略
 完全 training-free 推理时方法，不需要任何微调；只在模型加载时跑一次校准跑得到 $\mathcal L_{\text{sparse}}$。超参 $\tau$：LLaMA-3.1-8B 用 0.005，Mistral-Nemo-12B 用 0.008。token scoring 用 Triton fused kernel，attention 用未修改的 FlashAttention。

@@ -3,6 +3,8 @@
 INDEX.md
 site/
 site_fast/
+.preview/
+mkdocs_preview.yml
 docs_fast/
 mkdocs-fast.yml
 __pycache__/

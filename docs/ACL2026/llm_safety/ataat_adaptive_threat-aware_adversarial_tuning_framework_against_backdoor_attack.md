@@ -41,27 +41,27 @@ ATAAT 首次系统揭示 VLA 后门难以注入的根因是「梯度干涉」（
 ## 方法详解
 
 ### 整体框架
-ATAAT 按攻击者权限分支：**Scenario 1（数据投毒，黑盒）→ Implicit De-confliction**，攻击者只能给样本加扰动；**Scenario 2（白盒模型微调）→ Explicit De-confliction**，攻击者可改参数。两条路径共同遵守 $\text{Sim}(\theta)\approx 0$ 的优化约束，骨干模型为 OpenVLA-7B（LoRA rank=32，AdamW，lr=1e-5）。
+ATAAT 的出发点是一个被它首次说清的现象：VLA 上注入后门特别难，根因是良性目标 $\mathcal{L}_\text{benign}$ 和后门目标 $\mathcal{L}_\text{backdoor}$ 的梯度方向长期相反（余弦相似度稳定在 -0.4 左右），强大的良性梯度把后门梯度直接抵消掉。于是 ATAAT 把所有手段统一在一条约束下——让两个梯度子空间正交：$\min_\theta \mathcal{L}_\text{backdoor}(\theta)\ \text{s.t.}\ \text{Sim}(\theta) \approx 0$，再按攻击者的权限分两条路径去满足它。**Scenario 1（数据投毒，黑盒）走 Implicit De-confliction**：攻击者只能给样本加扰动，就在数据层种入正交扰动让约束隐式成立；**Scenario 2（白盒微调）走 Explicit De-confliction**：攻击者能改参数，就在参数层挑出良性任务用不到的神经元做物理隔离。骨干为 OpenVLA-7B（LoRA rank=32，AdamW，lr=1e-5）。
 
 ### 关键设计
 
-1. **隐式解耦：正交触发器（Implicit De-confliction）**:
+**1. 隐式解耦——正交触发器：黑盒攻击者不碰训练算法，也能让后门样本梯度自然正交。**
 
-    - 功能：让数据投毒攻击者在不接触训练算法的前提下，自然让后门样本在 victim 训练时与良性梯度方向正交。
-    - 核心思路：构造复合触发器 $v_\text{poison} = v_\text{clean} \oplus t_\text{vis} + \delta_\text{orth}$，其中 $t_\text{vis}$ 是肉眼可见的物理触发（如黄色便签）作为「语义钥匙」，$\delta_\text{orth}$ 是 $\|\delta\|_\infty \le \epsilon=8/255$ 的不可见扰动作为「梯度催化剂」。用公开 proxy（CLIP ViT-L/14）求解 $\delta^* = \arg\min_\delta (\mathcal{L}_\text{atk} + \lambda|\cos(\mathbf{g}^\text{feat}_\text{poison}, \mathbf{g}^\text{feat}_\text{benign})|)$，PGD 10 步、$\alpha=1/255$。第二项最小化代理空间中后门 / 良性的梯度余弦，从而让 victim 训练时的实际梯度也正交。
-    - 设计动机：消融显示去掉 $\delta_\text{orth}$ TASR 跌到 3.2%；去掉 $t_\text{vis}$ TASR=0.5%。这是个「锁与钥匙」机制——可见触发提供激活语义，不可见扰动是让攻击「能学进去」的物理前提。
+数据投毒攻击者够不到训练循环，没法直接往 loss 里加正交约束。ATAAT 的做法是把约束"种"进触发器本身：构造复合触发器 $v_\text{poison} = v_\text{clean} \oplus t_\text{vis} + \delta_\text{orth}$，其中 $t_\text{vis}$ 是肉眼可见的物理触发（如一张黄色便签）当"语义钥匙"，$\delta_\text{orth}$ 是 $\|\delta\|_\infty \le \epsilon=8/255$ 的不可见扰动当"梯度催化剂"。这个扰动在公开 proxy（CLIP ViT-L/14）上求解 $\delta^* = \arg\min_\delta (\mathcal{L}_\text{atk} + \lambda|\cos(\mathbf{g}^\text{feat}_\text{poison}, \mathbf{g}^\text{feat}_\text{benign})|)$，PGD 10 步、$\alpha=1/255$；式中第二项专门把代理空间里后门 / 良性的梯度余弦压到 0。
 
-2. **显式解耦：休眠神经元语义锚定（Explicit De-confliction）**:
+由于 VLA 共享了多模态特征空间，代理空间里正交的扰动迁移到 victim 训练时，实际梯度也近似正交，于是后门"学得进去"。这是一套"锁与钥匙"机制：可见触发负责提供激活语义，不可见扰动负责打通优化通道——消融显示去掉 $\delta_\text{orth}$ 后 TASR 跌到 3.2%，去掉 $t_\text{vis}$ 后 TASR=0.5%，两者缺一不可。
 
-    - 功能：在白盒场景里把后门逻辑物理锁进良性任务几乎不用的神经元里，保证两个梯度子空间在参数层面就正交。
-    - 核心思路：用 Algorithm 2 做 Activation Analysis：对 benign probe 数据累积每个神经元的平均 $|Act(n_l^{(i)}, v)|$，挑出低于阈值 $\tau=1\text{e-}3$ 的 $\mathcal{N}_\text{dormant}$（OpenVLA-7B 中约 1.8% 参数），构造 binary mask $\mathbf{M}$（dormant 处=1）。Phase 2 用 $\theta_{t+1} = \theta_t - \eta\cdot(\mathbf{M}\odot \nabla_\theta \mathcal{L}_\text{backdoor}(\theta_t; v\oplus t_\text{sem}))$ 更新——只在休眠子集上做梯度下降，良性参数被物理冻结。
-    - 设计动机：与 continual learning 的 parameter isolation 形式相似，但语境完全不同——CL 是为了防遗忘，ATAAT 是为了避免 gradient interference 这一单阶段端到端训练的优化冲突；语义触发 $t_\text{sem}$（如开抽屉、戴手表）让攻击不再依赖低级像素，绑定到高层概念。
+**2. 显式解耦——休眠神经元语义锚定：白盒下把后门逻辑锁进良性几乎不用的神经元。**
 
-3. **梯度干涉的实证验证与「内禀安全」副产物**:
+白盒攻击者能改参数，但若直接端到端微调，照样会撞上梯度干涉。ATAAT 改为在参数层就让两个子空间正交：先用 Algorithm 2 做 Activation Analysis，对 benign probe 数据累积每个神经元的平均 $|Act(n_l^{(i)}, v)|$，挑出低于阈值 $\tau=1\text{e-}3$ 的休眠集合 $\mathcal{N}_\text{dormant}$（OpenVLA-7B 中约 1.8% 参数），构造 binary mask $\mathbf{M}$（休眠处=1）；Phase 2 只在这个子集上做梯度下降 $\theta_{t+1} = \theta_t - \eta\cdot(\mathbf{M}\odot \nabla_\theta \mathcal{L}_\text{backdoor}(\theta_t; v\oplus t_\text{sem}))$，良性参数被物理冻结。
 
-    - 功能：把理论上的「优化冲突」用经验曲线坐实，并证明 ATAAT 失败时也比 baseline 更安全。
-    - 核心思路：训练时实时记录 $\text{Sim}(\theta) = \cos(\mathbf{g}_\text{benign}, \mathbf{g}_\text{backdoor})$（只在 LoRA 可训练参数上算）。BadVLA-Adapted 的曲线快速跌到 -0.4 并稳定在负区间；ATAAT 始终在 0 附近，证明正交解耦成功。引入 Cumulative Cost $CC = \sum c(s_t, a_t)$（关节扭矩+末端速度+碰撞惩罚），ATAAT 即使泛化失败 CC=18.5，BadVLA 触发失败时 CC=150.7。
-    - 设计动机：给「优化解耦」这一抽象概念一个可视化锚点；同时说明 ATAAT 设计本身具备「inherent safety」——不会因为攻击触发条件不满足而产生抖动碰撞。
+这套思路形式上像 continual learning 的 parameter isolation，但用意正相反——CL 隔离参数是为了防遗忘，ATAAT 隔离参数是为了避开端到端训练里的梯度干涉。配套的语义触发 $t_\text{sem}$（如开抽屉、戴手表）让后门绑定到高层概念而非低级像素，攻击因此更隐蔽、也更抗改写。
+
+**3. 梯度干涉的实证验证与"内禀安全"副产物：把抽象的优化冲突坐实，并证明失败时也更安全。**
+
+"梯度方向相反导致抵消"原本只是个理论解释，需要经验证据撑住。ATAAT 在训练时实时记录 $\text{Sim}(\theta) = \cos(\mathbf{g}_\text{benign}, \mathbf{g}_\text{backdoor})$（只在 LoRA 可训练参数上算）：BadVLA-Adapted 的曲线很快跌到 -0.4 并稳定在负区间，而 ATAAT 始终贴着 0——正交解耦确实生效，给抽象概念配上了可视化锚点。
+
+更进一步，作者引入 Cumulative Cost $CC = \sum c(s_t, a_t)$（关节扭矩 + 末端速度 + 碰撞惩罚）量化失败时的物理代价：ATAAT 即使泛化失败 CC 也只有 18.5，而 BadVLA 触发失败时 CC 高达 150.7。这说明 ATAAT 自带一种"inherent safety"——后门触发条件不满足时，它不会像 baseline 那样把模型搅成抖动 / 碰撞的危险状态。
 
 ### 损失函数 / 训练策略
 良性目标 $\mathcal{L}_\text{benign}(\theta) = \mathbb{E}_{(v,l,a)\sim\mathcal{D}_\text{clean}}[-\log P(a|v,l;\theta)]$；后门目标 $\mathcal{L}_\text{backdoor}(\theta) = \mathbb{E}[-\log P(a_\text{tgt}|v\oplus t, l;\theta)]$；总约束 $\min_\theta \mathcal{L}_\text{backdoor}\ \text{s.t.}\ \text{Sim}(\theta)\approx 0$。投毒率 5%、Few-shot 锚定 200 样本。

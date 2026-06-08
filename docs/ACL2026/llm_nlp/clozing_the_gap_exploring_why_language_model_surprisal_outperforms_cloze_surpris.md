@@ -44,23 +44,22 @@ tags:
 输入是多个英文阅读时间数据集中的逐词上下文和目标词。作者为每个词计算 cloze-based predictability 和 GPT2-based predictability，再把它们作为 predictor 加入 linear mixed-effects regression，用 held-out log likelihood 衡量对阅读时间的解释力。核心比较是“只加 cloze”、“只加 GPT2”和“两者都加”谁能解释更多方差。
 
 ### 关键设计
-1. **强 cloze baseline 构造**:
 
-	- 功能：避免把 LM 的优势建立在过弱的 cloze 处理上。
-	- 核心思路：作者系统搜索 add-one smoothing 参数 $V\in\{50,100,200,500,1000,2000\}$ 和 6 种函数形式，包括 raw probability、raw surprisal 和多种 surprisal power transform。最终采用 $S(w_t)^2$ 与 $V=200$，因为它在六个阅读时间指标上拟合最好。
-	- 设计动机：cloze probability 有零计数和函数形式不明确问题，如果不调 smoothing/transform，比较会偏向 LM。
+**1. 强 cloze baseline 构造：先把 cloze 这一侧调到最优，再谈 LM 的优势从哪来。**
 
-2. **三类 GPT2 概率干预**:
+如果 cloze 处理本身偏弱，那么"LM 拟合更好"就可能只是输在起跑线上。cloze 概率天生有两个麻烦：未被任何人补全的词得到零计数，而 raw probability 到底该不该取负对数也没有定论。为此作者把这两个自由度系统地搜了一遍——平滑参数取 add-one smoothing 的 $V\in\{50,100,200,500,1000,2000\}$，函数形式则覆盖 raw probability、raw surprisal 以及多种 surprisal power transform 共 6 种。在六个阅读时间指标上拟合最好的组合是 $S(w_t)^2$ 配 $V=200$，于是这一档被定为后续比较的 cloze 基线。只有把 cloze 调到它自己能达到的最好状态，后面 GPT2 仍然胜出才说明优势是真实的、而不是 cloze 处理草率带来的假象。
 
-	- 功能：拆解 LM surprisal 优势的来源。
-	- 核心思路：H1 resolution 把 GPT2 分布采样成与 cloze response 数量相同的样本，再按 count-and-divide 估计概率；H2 semantics 用 GPT2 token embedding 做 k-means，把目标词概率替换为所属语义簇概率；H3 frequency 把低频 token 概率置零，只在高频词表上重归一化。
-	- 设计动机：如果某个干预显著降低阅读时间拟合，说明 GPT2 的对应能力是其优势来源之一。
+**2. 三类 GPT2 概率干预：人为"砍掉"LM 的某种能力，看阅读时间拟合掉多少。**
 
-3. **Similarity-adjusted surprisal 组合尝试**:
+复现出 GPT2 优于 cloze 之后，真正的问题是这个优势具体来自哪几种能力。作者不去比新 predictor，而是对 GPT2 概率做三种定向削弱，分别对应一个假设：H1（resolution）把 GPT2 分布按 cloze response 的样本量重新采样，再用 count-and-divide 估计概率，等于把 LM 拉到和 cloze 一样低的分辨率；H2（semantics）用 GPT2 token embedding 做 k-means 聚类，把目标词概率替换成它所属语义簇的概率，抹掉 couch/sofa 这类近义词之间的细分；H3（frequency）把低频 token 概率直接置零、只在高频词表上重归一化，去掉 LM 给罕见 continuation 分配细粒度概率的能力。哪一个干预让阅读时间拟合显著下降，就说明被砍掉的那种能力正是 LM 优势的来源之一——三个干预后拟合全都下降，于是三种能力都被坐实。
 
-	- 功能：探索是否能用 cloze response 集合和 LM probability 互补。
-	- 核心思路：SA surprisal 用候选 response 与目标词的 embedding 距离加权概率质量：$P_S(w_t|context)=\sum_{w'\in R} z(w_t,w')P(w'|context)$。作者分别用 cloze responses 和 GPT2 samples 作为候选集合。
-	- 设计动机：如果人类预测了 sofa 而目标词是 couch，传统 count-and-divide 会给目标词低概率；SA surprisal 试图把相似候选也纳入预测便利性。
+**3. Similarity-adjusted surprisal 组合尝试：让相似候选也"算半个命中"，看 cloze 与 LM 能否互补。**
+
+count-and-divide 的硬伤是只认完全一致：人类补的是 sofa、目标词却是 couch 时，目标词概率被记为零，哪怕两者语义几乎等价。SA surprisal 想修这一点，按候选 response 与目标词的 embedding 距离加权概率质量
+
+$$P_S(w_t\mid context)=\sum_{w'\in R} z(w_t,w')\,P(w'\mid context),$$
+
+其中 $z(w_t,w')$ 是相似度权重，$R$ 是候选集合，作者分别拿 cloze responses 和 GPT2 samples 当 $R$ 试。直觉上这能把"预测了近义词"也纳入加工便利性，但实验里两个版本对阅读时间的拟合反而更差——简单的相似度加权并没能让 cloze 与 LM 互补，这条负结果反过来提示二者的融合需要更精细的认知假设，而非一个 embedding 距离就能搞定。
 
 ### 损失函数或训练策略
 本文不训练神经模型，统计建模采用 linear mixed-effects regression。每个 reading-time measure 先建 baseline，包含词长、词位、unigram surprisal、眼动中前词是否 fixated 等控制变量；再加入 cloze 或 GPT2 predictor。拟合优劣用 10-fold cross-validation 的 held-out log likelihood，显著性用 paired permutation test，并对多重比较做 Bonferroni correction。

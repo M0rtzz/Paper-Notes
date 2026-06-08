@@ -44,43 +44,39 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两条 pipeline 共享同一个 GPT-2-small（117M 参数、12 层、768 维）解码器：
 
-- **Index path**：字符 → 离散 ID → embedding → decoder。
-- **Visual path**：字符 → 渲染成灰度小图（默认 $8\times 8$，留 10% 边距）→ ResNet encoder → Vision Adapter → decoder embedding 空间。
+本文做的是一个干净的 "visual-in, token-out" 对照实验：两条 pipeline 共享同一个 GPT-2-small（117M 参数、12 层、768 维）解码器，差别只在输入端的字符表示。Index path 走传统路线，字符 → 离散 ID → embedding → decoder；Visual path 则把每个字符渲染成灰度小图（默认 $8\times 8$、留 10% 边距）→ ResNet encoder → Vision Adapter → 映射进 decoder 的 embedding 空间。两条路输出端完全一致，都在字符 ID 上做标准 next-character 预测，因此精度、困惑度等指标可以直接对比，从而把"换表示"的效果干净归因出来。
 
-训练目标都是标准 next-character 交叉熵：
+训练目标都是 next-character 交叉熵：
 
 $$\mathcal{L}_{CE} = -\frac{1}{N}\sum_{i=1}^N \sum_{t=1}^T \log P(c_{t+1}^{(i)}|I_1^{(i)}, \dots, I_t^{(i)})$$
 
-（写法是为了清晰，实际行内可读作 $\mathcal{L}_{CE} = -\frac{1}{N}\sum_i \sum_t \log P(c_{t+1}|I_{\le t})$）
-
-数据集：THUCNews（740k 篇新闻、12.8M 字符实例，分成长度 128 的固定序列），采用 quadratic curriculum：epoch 中训练序列数按 $5000 + 918.37 \cdot \text{epoch} + 18.74 \cdot \text{epoch}^2$ 增长。验证集 5K 序列固定。
+（行内可读作 $\mathcal{L}_{CE} = -\frac{1}{N}\sum_i \sum_t \log P(c_{t+1}|I_{\le t})$。）
 
 ### 关键设计
 
-1. **极低分辨率可学的 visual encoder**：
+**1. 极低分辨率可学的 visual encoder：证明视觉表示不是靠堆参数赢。**
 
-    - 功能：把 $8\times 8$ 甚至 $4\times 4$ 灰度字图编成 768 维 decoder-ready 向量。
-    - 核心思路：原版 ResNet 是为 $64\times 64$ 设计的，对 $8\times 8$ 严重 over-parameterize。作者给出三档实现：(a) 原版 ResNet（26.45M, +16% FLOPs）；(b) 为 $8\times 8$ 优化的 minimal encoder + 深 adapter（22.32M, +12%）；(c) minimal encoder + 简单线性 adapter（12.61M, +7%）。最优 (c) 在参数量上比 index baseline（18.97M）还少 33.5%。
-    - 设计动机：要让"视觉表示"成立，必须先证明它不是靠堆参数赢；最小化 encoder 反而追平了大 encoder 的最终精度。
+原版 ResNet 是为 $64\times 64$ 设计的，对 $8\times 8$ 的字图严重 over-parameterize；要让"视觉表示成立"这个结论可信，就必须排除"它只是参数更多才追平"的可能。作者给出三档实现做对照：(a) 原版 ResNet（26.45M 参数、+16% FLOPs）；(b) 为 $8\times 8$ 优化的 minimal encoder 配深 adapter（22.32M、+12%）；(c) minimal encoder 配简单线性 adapter（12.61M、+7%）。
 
-2. **Vision-100% / Vision-80% / Vision-50% 三档 cropping**：
+结果是最精简的 (c) 在参数量上比 index baseline（18.97M）还少 33.5%，却追平了大 encoder 的最终精度。这说明 $8\times 8$ 输入根本不需要大网络，over-engineering 反而拖效率——视觉表示的优势来自结构先验，而非容量。
 
-    - 功能：测试 spatial 鲁棒性，验证模型靠"结构"而非"OCR 重建"。
-    - 核心思路：Vision-80% 保留图像 top 80% 像素，Vision-50% 保留 top 50%，其余以背景填充。在 $8\times 8$ 上 Vision-100% 真正有信号的像素只占 $6\times 6$，Vision-80% 只剩 $6\times 5$，Vision-50% 缩到 $6\times 3$。
-    - 设计动机：若模型只是把图反向 OCR 成 ID 再走 index 路径，重度遮挡下应崩；实测 Vision-50% 仍有 38.63% 精度，反证模型学到了**分布式视觉特征**——所谓 "toast-center" 效应，中央 strokes 携带了绝大部分判别信息。
+**2. Vision-100% / 80% / 50% 三档 cropping：验证模型靠"结构"而非"OCR 重建"。**
 
-3. **Visual-in, token-out 范式**：
+一个自然的质疑是：模型会不会只是把字图反向 OCR 成 ID、再走 index 路径？如果是这样，遮挡像素就应让它崩。作者用三档纵向裁剪施压：Vision-80% 只保留图像 top 80% 像素、Vision-50% 只保留 top 50%，其余以背景填充。在 $8\times 8$ 上真正有信号的像素本就只占 $6\times 6$，Vision-80% 缩到 $6\times 5$，Vision-50% 进一步缩到 $6\times 3$。
 
-    - 功能：把视觉做 input 但仍在 token 空间预测，方便与 index 基线公平对比。
-    - 核心思路：与 PIXEL / PIXAR 系列"pixel-in pixel-out"不同，HotStart 保持输出端是字符 ID 上的 softmax，这样 cross-entropy / perplexity / accuracy 等指标都直接可比；输入端从 ID embedding 切换到 visual embedding。
-    - 设计动机：要回答的是"视觉作为 input 表示有没有用"，把输出口锁定不变是必要的实验控制。
+实测 Vision-50% 在如此重度遮挡下仍有 38.63% 精度（满版才 39.21%），直接反证模型学到的是**分布式视觉特征**而非逐像素重建——这就是所谓 "toast-center" 效应：中央 strokes 携带了绝大部分判别信息，边缘像素几乎可丢。
+
+**3. Visual-in, token-out 范式：锁死输出口以做公平对比。**
+
+与 PIXEL / PIXAR 系列"pixel-in, pixel-out"不同，本文刻意保持输出端是字符 ID 上的 softmax，只把输入端从 ID embedding 切换到 visual embedding。这样 cross-entropy / perplexity / accuracy 全部与 index baseline 同口径可比。要回答的问题是"视觉作为 input 表示到底有没有用"，把输出口锁定不变是排除混淆因素的必要实验控制。
 
 ### 损失函数 / 训练策略
-- AdamW，lr $2\times 10^{-4}$（OneCycle max $1.5\times 10^{-3}$），batch 128，weight decay 0.01，FP16，early stopping patience 7。
-- 联合训练：visual encoder + adapter + decoder 端到端梯度。消融发现冻结 decoder 训练 adapter 显著差于联合训练。
-- 不做 OCR 预训练、不引入字符 ID 信号，干净的"以图建模语言"。
+
+- 数据集为 THUCNews（740k 篇新闻、12.8M 字符实例，切成长度 128 的固定序列），采用 quadratic curriculum：每个 epoch 的训练序列数按 $5000 + 918.37 \cdot \text{epoch} + 18.74 \cdot \text{epoch}^2$ 增长，验证集固定 5K 序列。
+- 优化器 AdamW，lr $2\times 10^{-4}$（OneCycle max $1.5\times 10^{-3}$），batch 128，weight decay 0.01，FP16，early stopping patience 7。
+- visual encoder + adapter + decoder 端到端联合训练；消融发现冻结 decoder 只训 adapter 显著差于联合训练。
+- 不做 OCR 预训练、不引入任何字符 ID 信号，是干净的"以图建模语言"。
 
 ## 实验关键数据
 

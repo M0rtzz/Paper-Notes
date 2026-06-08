@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-模型 = MAE-st (Feichtenhofer 等 2022) + 三种 patch embedding 互换的输入头。pipeline：(1) HCP-YA 数据预处理 (FreeSurfer / fMRIPrep 表面映射) → 拿到皮层表面网格上的时间序列；(2) 用 pycortex 把表面投到平面网格 → 得到 16 帧 × 224 × 560 的 fMRI flat map 视频；(3) 切 $p_t \times 16 \times 16$ 时空 patch（默认 $p_t = 4$），mask 比例 0.9（tube masking 不跨时间插值）；(4) ViT-B encoder 看到 sparse 观测 patch + [MASK] token，decoder 重建被 mask 的 patch，loss 用 MSE（只在非背景像素上）；(5) 预训练完成后丢掉 decoder，encoder 输出作为特征，配合 linear probe / attentive probe 做下游 trait / state 预测。同步训练 parcellation MAE (用 Schaefer-400 脑区) 和 volume MAE (用 4D patch) 做严格对照。
+整篇工作的核心是一个赌注：fMRI 本质是 4D 时空数据，但只要把它投影成对的 2D 表示，就能原封不动地复用现成的 spacetime MAE-ViT，不必为它重新设计架构。于是 pipeline 只有两件事——先把 3D fMRI 体积压成 2D 视频，再把视频喂进标准 MAE。具体地，HCP-YA 数据先经 FreeSurfer / fMRIPrep 的 surface 流程把每帧信号从 3D voxel 映到皮层表面网格，再用 pycortex 展平成 16 帧 × 224 × 560 的 flat map 视频；视频切成 $p_t \times 16 \times 16$ 时空 patch（默认 $p_t=4$），以 0.9 的比例 tube-mask 掉，ViT-B encoder 只看剩下的 sparse patch，decoder 重建被遮的部分。预训练完成后丢掉 decoder，encoder 输出当特征接 linear / attentive probe 做下游预测。为了让"flat map 是不是好表示"这个问题有可信答案，作者同时用同一套架构训了 parcellation MAE 和 volume MAE 做严格对照，并把这套对比固化成开源 benchmark。
 
 ### 关键设计
 
-1. **Cortical Flat Map Patch Embedding (核心创新)**：
+**1. Cortical Flat Map Patch Embedding：在体素与脑区平均之间找皮层信号的"金发姑娘"中间点。**
 
-    - 功能：把 3D fMRI 体积转成 2D 图像视频，让标准 spacetime ViT 直接处理，又不丢失皮层全信号。
-    - 核心思路：先用神经科学常用的 surface-based 流程 (FreeSurfer + fMRIPrep) 把每帧 fMRI 信号从 3D voxel 映射到皮层表面的 mesh vertex；再用 pycortex 的 flat map 把这张曲面 mesh 展平到 2D 平面 grid（左右半球分别展开拼成一张图）；最后 resample 到固定 224×560 网格。每个时间步就是一帧 2D 图，16 帧拼起来就是 ViT 的 spacetime 输入。patch 大小 $p_t \times 16 \times 16$，背景 (脑外区域) 全 0 patch 直接排除不参与计算，MSE loss 也只在非背景像素上算。
-    - 设计动机：parcellation 把信号压成 ~400 维向量（dim 损失 ~100×），而 volume 直接处理需要 ~132K voxel 的稀疏 patch（计算量大且大部分是无效背景）。flat map 在二者之间——保留全皮层 ~77K 维信号但用 2D ViT 高效处理；序列长度 364（vs volume 的 465 和 parcellation 的 400）几乎持平但训练带宽与数据吞吐都更好。论文 Figure 1 把这个 trade-off 形象化为"光谱"。
+fMRI 表示一直被两难夹住：parcellation 把整块 cm 量级脑区平均成单标量，~400 维向量丢掉了 99% 维度；volume 直接处理 4D 数据信息全保留，但一个体积切完 patch 是 ~132K voxel 的稀疏序列，计算和 IO 都爆炸，而且大半是脑外无效背景。这篇论文的做法是借神经科学几十年的老工具——皮层本质就是一层 2-4mm 厚的褶皱片，是个 2D 流形，可以无损展平。于是先用 surface-based 流程把信号从 3D voxel 映到皮层表面 mesh，再用 pycortex 的 flat map 把左右半球分别展开拼成一张 224×560 的 2D 图，每个时间步一帧、16 帧叠成 ViT 的 spacetime 输入，背景全 0 patch 直接剔除、MSE loss 也只在非背景像素上算。这样既保留了全皮层 ~77K 维信号（不像 parcellation 那样平均掉细节），序列长度 364 又和 volume 的 465、parcellation 的 400 几乎持平，却因为是规则 2D 网格而训练带宽和数据吞吐都更优——论文 Figure 1 把这个 trade-off 画成一条从"全压缩"到"全保留"的光谱，flat map 正落在甜点位置。
 
-2. **三种表示的 head-to-head 对比设计**：
+**2. 三种表示的 head-to-head 对比：把 parcellation / flat / volume 放上同一条起跑线。**
 
-    - 功能：用同一架构、同一预训练数据、同一评测协议，把 parcellation/flat/volume 三种表示放在同一起跑线。
-    - 核心思路：所有模型都用 ViT-B encoder、同样的 16 帧输入、同样的 0.9 mask ratio；只是 patch embedding 不同——parcel 用 $p_t \times 1$ 仅时间维 patch、flat 用 $p_t \times 16 \times 16$、volume 用 $p_t \times 8 \times 8 \times 8$ 4D patch。每个变体训 8 次取均值，单独跑下游 8 个数据集 (4 个临床诊断 + 性别 + 年龄 + HCP-YA Task21 + NSD COCO24)。
-    - 设计动机：之前 fMRI 基础模型论文从不公平对比表示——通常自己只用一种然后宣称 SOTA。本文是第一份 multi-representation fMRI MAE family，结论可信度高得多。
+以往 fMRI 基础模型的通病是各家只用自己那一种表示就宣称 SOTA，谁强谁弱根本不可比。这里作者刻意让三个变体共享几乎所有变量——同样的 ViT-B encoder、同样 16 帧输入、同样 0.9 的 mask ratio，唯一的差别就是 patch embedding：parcel 用 $p_t \times 1$ 只切时间维、flat 用 $p_t \times 16 \times 16$、volume 用 $p_t \times 8 \times 8 \times 8$ 的 4D patch。每个变体独立训 8 次取均值，再一起跑下游 8 个数据集（4 个临床诊断 + 性别 + 年龄 + HCP-YA Task21 + NSD COCO24）。因为除表示之外的所有东西都被钉死，最后得到的差异就能干净地归因到"表示"本身，这也是第一份真正成 family 的 multi-representation fMRI MAE，结论可信度远高于单点比较。
 
-3. **Brainmarks 开源评测套件**：
+**3. Brainmarks 开源评测套件：用统一 probe 协议终结 fMRI 模型的复现性灾难。**
 
-    - 功能：给 fMRI 基础模型领域提供一个所有方法都能跑、所有数据集都标准化处理的 benchmark。
-    - 核心思路：纳入 6 个现有 fMRI 基础模型 (SwiFT, BrainLM, Brain-JEPA, BrainHarmonix-F, NeuroSTORM, Brain-Semantoks) 和 CortexMAE family；包含 7 个公开数据集——4 个临床诊断 (ABIDE/ADHD200/ADNI/PPMI) + HCP-A 年龄/性别 + HCP-YA Task21 + NSD COCO24；对小样本 trait prediction 用 linear probe + 100 次 train-test 随机分割，对大样本 state prediction 用 attentive probe 单 fixed split + 49 个学习率 grid 调优。所有方法用同一 probe 协议，避免每家自己 fine-tune 偷跑。
-    - 设计动机：fMRI 模型评测的复现性灾难是社区公认问题；统一 protocol 才能让"谁真的更好"有意义。还专门设计了 NSD COCO24 这种"短 trial 重叠 + 不同 subject 测试集 + 高难度视觉解码"任务来真正区分模型质量。
+fMRI 领域长期是"各家用自家 dataset、自家预处理、自家评测设置"，加上 trait 论文常拿过弱的 baseline 自夸，谁真的更好无从判断。Brainmarks 把这件事标准化：一边纳入 6 个现有基础模型（SwiFT、BrainLM、Brain-JEPA、BrainHarmonix-F、NeuroSTORM、Brain-Semantoks）和 CortexMAE family，一边统一 7 个公开数据集（4 个临床诊断 ABIDE/ADHD200/ADNI/PPMI + HCP-A 年龄/性别 + HCP-YA Task21 + NSD COCO24）。关键是 probe 协议对所有方法一视同仁——小样本 trait prediction 用 linear probe + 100 次随机 train-test 分割，大样本 state prediction 用 attentive probe + 单 fixed split + 49 个学习率 grid，谁都不许自己 fine-tune 偷跑。作者还特意设计了 NSD COCO24 这种"短 trial 重叠 + 测试集换不同 subject + 高难度视觉解码"的任务，专门用来把真正强的模型从弱的里区分出来。
 
 ### 损失函数 / 训练策略
-预训练：MAE MSE loss on masked patches; data normalization 是关键——每个 voxel/ROI 时间序列 z-score (coordinate norm) + 每帧空间 z-score (frame norm)，去除 BOLD 信号只有 1-2% 波动的静态噪声；temporal patch $p_t = 4$；training schedule 默认 625K steps、batch 32 (= 512 帧)；repeated sampling 减少 IO 瓶颈。下游：trait prediction 用 average-pooled embedding + logistic regression 5-fold CV；state prediction 用 attentive probe + early stopping。
+预训练目标就是 masked patch 上的 MAE MSE，但有两步 normalization 是成败关键：每个 voxel/ROI 时间序列做 z-score（coordinate norm）压住静态体素差异，每帧再做空间 z-score（frame norm）去掉全局漂移——因为 BOLD 信号本身只有 1-2% 的波动，不归一化静态噪声就会淹没有用信号。其余超参：temporal patch $p_t=4$、默认 625K steps、batch 32（= 512 帧），并用 repeated sampling 缓解 IO 瓶颈。下游 trait prediction 用 average-pooled embedding + logistic regression 5-fold CV，state prediction 用 attentive probe + early stopping。
 
 ## 实验关键数据
 

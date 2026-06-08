@@ -41,37 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：预训练 score 模型对应的 drift $v(x,t)$、用户指定的 guidance 势能 $G(x,t)$ 和 reward 函数 $r(x,t)$（要求 $r(x,T)=\mathbf{r}(x)$）。流程：
-
-1. 在 $[0,T]$ 上离散化为 $K$ 步，并行模拟 $N$ 条 guided 轨迹 $\{X_{t_k}^{(i),G}\}_{i=1}^N$，每步用 Euler-Maruyama 走一小步 $\Delta t$；
-2. 每步结束后给每条轨迹算一个 Girsanov 类型的 multiplicative 权重 $\beta^{(i)}_{t_k,t_{k+1}}$（只依赖 $\nabla_x G$ 和 $r$ 的差分）；
-3. 按 $\beta$ 归一化做 Categorical 重采样，复制高权重粒子、淘汰低权重粒子；
-4. 重复 $K$ 步，终末时刻 $\{X_T^{(i)}\}_{i=1}^N$ 即为 reward-tilted 后验 $q$ 的近似样本。
-
-输出：$N$ 条服从 $q(x,T)\propto p_\text{data}(x)e^{\mathbf{r}(x)}$ 的样本（在 $\Delta t\to 0, N\to\infty$ 下严格无偏）。
+URGE 要解的是"在不微调预训练扩散模型的前提下，把样本无偏地采到 reward-tilted 后验 $q(x)\propto p_\text{data}(x)e^{\mathbf{r}(x)}$"这件事，而它的转化思路是：不再像 FK-Corrector / AFDPS 那样在每个时刻给单个粒子打含二阶导的权重，而是整条轨迹只算一次 Girsanov 路径似然比当权重。具体地，给定 drift $v(x,t)$、guidance 势能 $G(x,t)$ 与 reward $r(x,t)$（需 $r(x,T)=\mathbf{r}(x)$），算法并行模拟 $N$ 条 guided 轨迹、每个 Euler-Maruyama 小步 $\Delta t$ 后给每条轨迹乘一个只依赖 $\nabla_x G$ 和 $r$ 差分的权重 $\beta^{(i)}$，再按 $\beta$ 归一化做 Categorical 重采样复制高权重、淘汰低权重粒子；走满 $K$ 步后终末粒子 $\{X_T^{(i)}\}$ 就是 $q$ 的近似样本，并在 $\Delta t\to 0,\,N\to\infty$ 下严格无偏。
 
 ### 关键设计
 
-1. **路径空间 Girsanov 权重（URGE 核心）**：
+**1. 路径空间 Girsanov 权重：用一阶量打包掉全部二阶导**
 
-    - 功能：给每条 guided 轨迹打一个不需要 reward 导数的无偏重要性权重。
-    - 核心思路：对 reference 测度 $\mathbb{P}$（无 guidance）和 guided 测度 $\mathbb{P}^G$ 应用 Girsanov 定理，得到 $\mathrm{d}\mathbb{P}/\mathrm{d}\mathbb{P}^G \propto \exp(-\int_0^t V(s)\nabla_x G^\top dW_s - \tfrac{1}{2}\int_0^t V^2\|\nabla_x G\|^2 ds)$；再乘以 reward-tilted 测度 $\mathbb{Q}$ 对 $\mathbb{P}$ 的密度 $\exp(r(X_t)-r(X_0))$，就得到目标权重 $\mathrm{d}\mathbb{Q}/\mathrm{d}\mathbb{P}^G$。Euler-Maruyama 离散化后写成 $\beta^{(i)}_{s,t}=\exp(r(X_t)-r(X_s) - V(s)\nabla_x G^\top\sqrt{t-s}\,\xi^{(i)} - \tfrac{1}{2}V(s)^2\|\nabla_x G\|^2(t-s))$，其中 $\xi^{(i)}$ 就是 EM 步用的高斯噪声，可以直接复用，几乎零额外开销。
-    - 设计动机：权重里只有 $\nabla_x G$ 和 $r$ 的数值差分，彻底避开 $\Delta_x r$、$\|\nabla_x r\|^2$、$\nabla_x\log p_t$ 这些 FK-Corrector / AFDPS 必须算的二阶项；这让 URGE 第一次能直接用在 ImageReward、HPS 这类只能黑盒求值的神经 reward 上。
+现有粒子空间修正（FK-Corrector / AFDPS）的权重里塞满 $\Delta_x r$、$\|\nabla_x r\|^2$、$\nabla_x\log p_t$，碰到 ImageReward / HPS 这类黑盒神经 reward 就因为求不出 Hessian 而卡死。URGE 的破法是把无偏性需求搬到路径测度上：对无 guidance 的 reference 测度 $\mathbb{P}$ 与 guided 测度 $\mathbb{P}^G$ 用 Girsanov 定理写出闭式比值 $\mathrm{d}\mathbb{P}/\mathrm{d}\mathbb{P}^G \propto \exp(-\int_0^t V(s)\nabla_x G^\top dW_s - \tfrac{1}{2}\int_0^t V^2\|\nabla_x G\|^2 ds)$，再乘上 reward-tilted 测度对 $\mathbb{P}$ 的密度 $\exp(r(X_t)-r(X_0))$，就得到目标权重 $\mathrm{d}\mathbb{Q}/\mathrm{d}\mathbb{P}^G$。Euler-Maruyama 离散化后它落地成 $\beta^{(i)}_{s,t}=\exp\!\big(r(X_t)-r(X_s) - V(s)\nabla_x G^\top\sqrt{t-s}\,\xi^{(i)} - \tfrac{1}{2}V(s)^2\|\nabla_x G\|^2(t-s)\big)$，其中 $\xi^{(i)}$ 正是 EM 步本来就要抽的高斯噪声，直接复用、几乎零额外开销。整个表达式里只剩 $\nabla_x G$（guidance 自身梯度，本来就算）和 $r$ 的数值差分，彻底没有 reward 导数——这才让 URGE 第一次能直接接到只能黑盒求值的神经打分器上。
 
-2. **Itô 项注入随机路径信息**：
+**2. Itô 项注入随机路径信息：让重采样分得清"同终点但运气不同"的轨迹**
 
-    - 功能：把 Brownian 噪声 $dW_\tau$ 显式带进权重，使重采样能区分"运气好"和"运气差"的同终点轨迹。
-    - 核心思路：权重 (6) 的第一项是 Itô 积分 $\int_s^t -V(\tau)\nabla_x G^\top dW_\tau$，离散化后正好是 $-V(s)\nabla_x G^\top\sqrt{\Delta t}\,\xi^{(i)}$，把每个 EM 步抽样的 $\xi^{(i)}$ 反向写进权重；这与 AFDPS 等"对每个粒子做确定性二阶展开"形成对比。
-    - 设计动机：作者指出 AFDPS / FK-Corrector 的权重完全是终点 $x$ 的确定性函数，丢掉了"同一终点可由不同路径达到"这一关键随机信息；显式带入 $dW_\tau$ 让重采样更精细，论文实验观察到方差更低、对 $N$ 的 scaling 更好。
+AFDPS / FK-Corrector 的权重是终点 $x$ 的确定性函数，等于默认"同一个终点不管走哪条路径都同样可信"，丢掉了扩散过程里关键的随机性。URGE 权重的第一项恰好是个 Itô 积分 $\int_s^t -V(\tau)\nabla_x G^\top dW_\tau$，离散化后就是 $-V(s)\nabla_x G^\top\sqrt{\Delta t}\,\xi^{(i)}$，把每个 EM 步抽到的噪声 $\xi^{(i)}$ 反写进权重，于是同一终点上"顺着 guidance 漂过来"和"逆着噪声硬撞过来"的两条轨迹会拿到不同权重。这一项让重采样更精细，论文实测方差更低、对粒子数 $N$ 的 scaling 也更稳。
 
-3. **路径-粒子等价性定理（理论 backbone）**：
+**3. 路径-粒子等价性定理：证明 URGE 是 AFDPS 的母体而非另一种近似**
 
-    - 功能：证明 URGE 不是另一种近似，而是与 FK-Corrector / AFDPS 在生成器层面等价的同一过程的不同实现。
-    - 核心思路：定义瞬时强度 $\lambda(x,t):=\lim_{h\to 0}\tfrac{1}{h}(\mathbb{E}_{\mathbb{P}^G}[w^\text{URGE}_{t-h,t}\mid X_t=x]-1)$，通过 Feynman-Kac 反向值函数推导出 marginalized 生成器 $\mathcal{L}^\text{eff}_t = \mathcal{L}^G_t + \lambda(\cdot,t)$；Theorem 3.3 进一步证明 $\lambda(x,t) \equiv w_\text{AFDPS}(x,t)$，即把路径权重对终点条件期望就恰好回收 AFDPS 的全部二阶项。
-    - 设计动机：等价性既保证了 URGE 的无偏性（继承 AFDPS 的理论），又说明路径空间是个严格更宽松的设计自由度——AFDPS 是 URGE 取条件期望后的特例，URGE 反之可以选任意更高阶离散格式、更稀疏的采样网格。
+为了说明换到路径空间不是又引入一层近似，作者定义瞬时强度 $\lambda(x,t):=\lim_{h\to 0}\tfrac{1}{h}\big(\mathbb{E}_{\mathbb{P}^G}[w^\text{URGE}_{t-h,t}\mid X_t=x]-1\big)$，借 Feynman-Kac 反向值函数推出 marginalized 生成器 $\mathcal{L}^\text{eff}_t = \mathcal{L}^G_t + \lambda(\cdot,t)$，并在 Theorem 3.3 中证明 $\lambda(x,t)\equiv w_\text{AFDPS}(x,t)$——也就是把 URGE 的路径权重对终点取条件期望，恰好回收 AFDPS 的全部二阶项。这一等价性一箭双雕：既让 URGE 继承 AFDPS 的无偏性，又点明 AFDPS 只是 URGE 条件期望后的特例，路径空间因此保留了更大的设计自由度（可换更高阶离散格式、更稀疏的时间网格）。
 
 ### 损失函数 / 训练策略
-URGE 是纯推理时算法，**不需要任何额外训练**。超参只有：粒子数 $N$、离散步数 $K$、guidance 强度（通常令 $G=r$ 或文生图里的 CFG 项）。论文用 EM 离散化最简版本即可（公式 7），并指出权重构造可换成任意更高阶格式以在 $N$ 受限时提精度。
+URGE 是纯推理时算法，**不需要任何额外训练**。超参只有粒子数 $N$、离散步数 $K$、guidance 强度（通常令 $G=r$ 或取文生图里的 CFG 项）。论文用 EM 离散化的最简版本（公式 7）即可工作，并指出权重构造可替换为任意更高阶格式，以在 $N$ 受限时换取精度。
 
 ## 实验关键数据
 

@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是按时间到达的任务序列 $\mathcal{T}=\{T_1,\dots,T_N\}$，每个任务包含 (图像, 分割 mask, 临床文本 prompt) 三元组。框架基于冻结的 CLIPSeg backbone，对每个新任务依次执行：
-
-1. **语义模态发现**：用冻结 CLIP text encoder 提取 prompt 平均嵌入 $e_t$，结合 CRP 先验和自适应高斯似然计算后验，MAP 决定加入已有模态 $k$ 还是开新模态。
-2. **模态特定训练**：激活该模态对应的 LoRA 对 $(A_k,B_k)$，用 Dice + CE 损失训练；若该模态此前已有任务，则叠加 EWC 正则项 $\Omega_k$。
-3. **统计量更新**：在线更新模态中心 $\mu_k$、同/异模态相似度分布以及该模态的 Fisher 信息 $\bar F_k$，并把当前参数存为该模态的 anchor。
+这篇论文要在一条持续到来的医学分割任务流上，既不预设有多少类任务、又不存历史病人数据地完成持续学习。整体在冻结的 CLIPSeg backbone 之上运转：每来一个任务 $T_t$（含图像、mask、临床文本 prompt），先用冻结 CLIP text encoder 把 prompt 平均成一个语义嵌入 $e_t$，交给 CRP 在线判断它属于某个已有"语义模态"还是要开一个新模态；定下模态 $k$ 后，只激活该模态专属的 LoRA 适配器去训练，并在模态内部叠一层 EWC 约束防止覆盖同模态早先任务；训完再在线更新该模态的中心、相似度分布和 Fisher 信息，存成下一轮的 anchor。任务序列 $\mathcal{T}=\{T_1,\dots,T_N\}$ 就这样被自动切成若干互相隔离、内部共享的模态分支。
 
 ### 关键设计
 
-1. **CRP 先验 + 自适应似然的贝叶斯模态分配**:
+**1. CRP 先验 + 自适应似然的贝叶斯模态分配：让"该共享还是该隔离"由数据自己回答。**
 
-    - 功能：在线决定新任务并入哪个已有语义模态，还是开一个新模态，无需预设 K。
-    - 核心思路：CRP 先验给出 $P(z_t=k)\propto n_k/(t-1+\alpha)$ 与 $P(z_t=\text{new})\propto \alpha/(t-1+\alpha)$；似然把同/异模态相似度建模成两个高斯 $\mathcal{N}(\mu_{\text{intra}},\sigma^2_{\text{intra}})$、$\mathcal{N}(\mu_{\text{inter}},\sigma^2_{\text{inter}})$，用 Welford 算法在线更新，得到对数似然比 $\ell(s)=\frac{(s-\mu_{\text{inter}})^2}{2\sigma^2_{\text{inter}}}-\frac{(s-\mu_{\text{intra}})^2}{2\sigma^2_{\text{intra}}}+\log\frac{\sigma_{\text{inter}}}{\sigma_{\text{intra}}}$。冷启动样本不足时退化为 logit-based 似然 $\ell(s)=\log(s+\epsilon)-\log(1-s+\epsilon)$。最终 MAP 决策 $z_t=\arg\max_k \log P(z_t=k\mid z_{1:t-1},e_t)$。
-    - 设计动机：CRP 让 K 由数据驱动而非超参；自适应高斯把"相似度阈值"从手调超参变为可学习量，避免在新会议、新机构上的阈值漂移；负号项确保任务若与所有已有模态都不像，会被强制开新桌。
+持续学习里参数共享与隔离的两难，本质是"哪些任务算同一类"没人能提前知道。本文把这步交给中国餐馆过程：先验项 $P(z_t=k)\propto n_k/(t-1+\alpha)$ 偏向人多的老桌、$P(z_t=\text{new})\propto \alpha/(t-1+\alpha)$ 给开新桌留口子，于是模态数 $K$ 完全由数据驱动、不再是超参。难点在似然——"两个任务的 prompt 嵌入多相似才算同一模态"如果写成手调阈值，换个机构就漂移。作者把同模态、异模态的相似度各建成一个高斯 $\mathcal{N}(\mu_{\text{intra}},\sigma^2_{\text{intra}})$、$\mathcal{N}(\mu_{\text{inter}},\sigma^2_{\text{inter}})$，用 Welford 算法在线估计其均值方差，于是判据变成可学习的对数似然比
 
-2. **模态特定 LoRA 适配器**:
+$$\ell(s)=\frac{(s-\mu_{\text{inter}})^2}{2\sigma^2_{\text{inter}}}-\frac{(s-\mu_{\text{intra}})^2}{2\sigma^2_{\text{intra}}}+\log\frac{\sigma_{\text{inter}}}{\sigma_{\text{intra}}}$$
 
-    - 功能：对每个语义模态维护独立的低秩适配器，实现跨模态参数完全隔离、模态内参数共享。
-    - 核心思路：在 CLIPSeg 的 Q/K/V/O 投影上挂 LoRA，模态 $k$ 的权重为 $W_k=W_0+\frac{\alpha_{\text{LoRA}}}{r}B_k A_k$，rank=8、$\alpha_{\text{LoRA}}=16$；CRP 一旦发现新模态就分配新 $(A_k,B_k)$。
-    - 设计动机：完全冻结 backbone 避免灾难性遗忘的源头；按模态分支天然杜绝胸部 X 光和肠镜之间的负迁移；同模态内复用同一对 LoRA 才能实现知识迁移，这是相对"一任务一专家"型 MoE 的关键差异。
+样本太少冷启动时退化成 logit 形式 $\ell(s)=\log(s+\epsilon)-\log(1-s+\epsilon)$，最终按 MAP 取 $z_t=\arg\max_k \log P(z_t=k\mid z_{1:t-1},e_t)$。这套设计的好处是：阈值从手调变成随数据自适应，迁到新会议、新数据集几乎不用重调；而当某任务和所有老桌都不像时，似然比会把它推去开新桌，避免被硬塞进不合适的模态。
 
-3. **模态内 Elastic Weight Consolidation (Intra-Modality EWC)**:
+**2. 模态特定 LoRA 适配器：跨模态彻底隔离，模态内才共享。**
 
-    - 功能：在同一语义模态内部，防止后续任务覆盖前序任务学到的关键参数。
-    - 核心思路：训练完任务 $t$ 后估计 Fisher 信息 $F_k^{(t)}=\mathbb{E}[\nabla_{\theta_k}\log p(y\mid x;\theta_k)^{\otimes 2}]$，用 $\bar F_k\leftarrow \frac{n_k-1}{n_k}\bar F_k+\frac{1}{n_k}F_k^{(t)}$ 做指数滑动平均合并；后续任务训练时加入 $\Omega_k(\theta_k)=\sum_i \bar F_{k,i}(\theta_{k,i}-\theta_{k,i}^*)^2$，且 $\Omega_k=0$ 仅在该模态首个任务上成立。
-    - 设计动机：经典 EWC 在异质任务序列上失效是因为跨任务 Fisher 互相冲突；本文把约束限制在"已经被 CRP 判为相似"的模态内，恰好规避了这种冲突；replay-free（只存统计量不存原始数据）符合医学隐私约束。
+光知道任务该分到哪一类还不够，得有地方真正承载各类知识。作者让 backbone 全程冻结——这直接断掉灾难性遗忘的源头——只在 CLIPSeg 的 Q/K/V/O 投影上为每个模态挂一对低秩适配器，模态 $k$ 的有效权重是 $W_k=W_0+\frac{\alpha_{\text{LoRA}}}{r}B_k A_k$（rank=8、$\alpha_{\text{LoRA}}=16$）。CRP 一旦判出新模态就实例化一对新的 $(A_k,B_k)$。这样胸部 X 光和肠镜走的是物理上分开的分支，天然杜绝了它们之间的负迁移；而落进同一模态的任务复用同一对 LoRA，知识才能互相迁移。正是"同模态共享 LoRA"这一点，把它和"一任务一专家"型 MoE 区分开——后者隔离彻底却切断了相似任务间的有益迁移。
+
+**3. 模态内 Elastic Weight Consolidation：把 EWC 关进已被判为相似的同一桌里。**
+
+模态内共享 LoRA 又带回一个小隐患：同一模态的后续任务可能覆盖前序任务的关键参数。经典 EWC 在异质任务流上失效，恰恰是因为跨任务的 Fisher 互相冲突——胸片的重要参数和肠镜的重要参数被强行约束在一起。本文的破法是只在模态内部做 EWC：训完任务 $t$ 估计 Fisher 信息 $F_k^{(t)}=\mathbb{E}[\nabla_{\theta_k}\log p(y\mid x;\theta_k)^{\otimes 2}]$，用 $\bar F_k\leftarrow \frac{n_k-1}{n_k}\bar F_k+\frac{1}{n_k}F_k^{(t)}$ 做指数滑动平均合并，后续训练再加约束项 $\Omega_k(\theta_k)=\sum_i \bar F_{k,i}(\theta_{k,i}-\theta_{k,i}^*)^2$（仅当该模态的首个任务时 $\Omega_k=0$）。因为约束只发生在"已被 CRP 判为相似"的任务之间，Fisher 冲突被天然规避；而整套机制只存 Fisher EMA 和模态中心、不碰原始病人数据，是 replay-free 的，正好契合 HIPAA/GDPR 对医学数据的隐私约束。
 
 ### 损失函数 / 训练策略
 训练目标 $\mathcal{L}=\mathcal{L}_{CE}+\mathcal{L}_{Dice}+\mathbf{1}_{[n_{z_t}>1]}\cdot\Omega_{z_t}(\theta_{z_t})$。Dice 处理医学图像类别不平衡；EWC 仅在模态已存在多个任务时启用。优化器 AdamW、lr=$1\times 10^{-3}$、weight decay=$8\times 10^{-5}$；每任务最多 60 epoch、patience=8。CRP 浓度 $\alpha=5$，EWC 系数 $\lambda=5000$，Fisher 用 200 样本估计。所有图像 resize 到 $352\times 352$，单卡 RTX 4090 batch size 16。

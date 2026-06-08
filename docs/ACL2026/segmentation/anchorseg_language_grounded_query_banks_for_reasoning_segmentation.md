@@ -47,25 +47,21 @@ tags:
 
 ### 关键设计
 
-1. **语言引导查询库构建（Query Bank Construction）**:
+**1. 语言引导查询库构建：把挤在一个 token 里的"推什么"和"在哪"拆到不同 token 上。**
 
-    - 功能：构建结构化的条件查询序列，为后续的空间定位和语义推理提供分离的表征
-    - 核心思路：扩展LMM词汇表，引入K个潜在推理token `<LAT_1>,...,<LAT_K>` 和一个分割token `<SEG>`。在自回归生成过程中，`<SEG>` 显式条件化于前面的推理token。上下文查询 $\boldsymbol{q}_{1:K}$ 编码中间推理状态，锚点查询 $\boldsymbol{q}_{anc}$ 作为空间定位信号
-    - 设计动机：将原本压缩在单一token中的两种信号分配到不同token上，让模型内部形成类似"先推理后定位"的有序过程
+旧范式把语义推理和空间定位全压进单个 `<SEG>` token，推理越复杂这个向量越扛不住。AnchorSeg 扩展 LMM 的词表，引入 $K$ 个潜在推理 token `<LAT_1>,...,<LAT_K>` 和一个分割 token `<SEG>`，自回归生成时 `<SEG>` 显式条件化在前面的推理 token 之上：上下文查询 $\boldsymbol{q}_{1:K}$ 负责编码中间推理状态、对应"分割什么"，锚点查询 $\boldsymbol{q}_{anc}$ 专门承载"在哪分割"的空间信号。这样模型内部自然形成"先推理、后定位"的有序分工，不再让单个 embedding 同时背两份本质不同的信息。
 
-2. **语言引导空间条件化（Language Grounded Conditioning）**:
+**2. 语言引导空间条件化：让锚点查询直接在图像 token 上算出一张空间先验图。**
 
-    - 功能：将锚点查询转化为显式的空间定位先验，注入视觉特征
-    - 核心思路：将空间定位建模为图像token上的因子化条件分布 $p(\boldsymbol{S}|\mathbf{Q}) = \prod_i p(s_i | \boldsymbol{i}_i, \boldsymbol{q}_{1:K}, \boldsymbol{q}_{anc})$。实际中通过锚点查询与图像token的内积 $s_i = \boldsymbol{i}_i^\top \boldsymbol{q}_{anc}$ 计算空间响应，reshape后得到空间先验 $\mathbf{P}$，通过逐元素加法注入视觉特征 $\tilde{\mathbf{f}} = \mathbf{f} \oplus \mathbf{P}$
-    - 设计动机：锚点查询直接产生定位信号，而上下文查询通过自回归生成过程隐式影响锚点查询的生成，实现语义对空间的调制
+光是拆出锚点查询还不够，得把它变成解码器能用的显式定位信号。AnchorSeg 把空间定位建模成图像 token 上的因子化条件分布 $p(\boldsymbol{S}|\mathbf{Q}) = \prod_i p(s_i | \boldsymbol{i}_i, \boldsymbol{q}_{1:K}, \boldsymbol{q}_{anc})$，落地时就是锚点查询与每个图像 token 做内积算空间响应 $s_i = \boldsymbol{i}_i^\top \boldsymbol{q}_{anc}$，reshape 成空间先验图 $\mathbf{P}$，再逐元素加回视觉特征 $\tilde{\mathbf{f}} = \mathbf{f} \oplus \mathbf{P}$ 后送进 SAM 解码器。锚点查询直接产出定位响应，而上下文查询通过自回归生成链路隐式塑造锚点查询的内容，于是语义对空间的调制就显式发生在特征层面，而非埋在一个不可分解的向量里。
 
-3. **Token-Mask循环一致性（TMCC）**:
+**3. Token-Mask 循环一致性（TMCC）：用双向约束补上 token 级响应与像素级掩码的分辨率落差。**
 
-    - 功能：弥合token级空间响应与像素级掩码监督之间的分辨率差异
-    - 核心思路：双向约束——（a）Token-to-Mask：将token级响应上采样到图像分辨率，用BCE+Dice损失与高斯平滑后的GT掩码对齐；（b）Mask-to-Token：将GT掩码下采样到token分辨率，与token级响应对齐。确保空间推理在语言-视觉层次间保持一致
-    - 设计动机：token级的空间响应和像素级的掩码在不同分辨率下操作，需要双向一致性约束来防止两个层次产生矛盾
+空间响应在低分辨率的 token 网格上算，监督却是高分辨率的像素掩码，两个层次各算各的容易打架。TMCC 加一对双向约束把它们锁住：Token-to-Mask 把 token 级响应上采样到图像分辨率，用 BCE+Dice 损失对齐高斯平滑后的 GT 掩码；Mask-to-Token 反过来把 GT 掩码下采样到 token 分辨率，与 token 级响应对齐。一上一下互相校准，保证语义-视觉两个层级上的空间推理保持一致、不至于训练发散。
 
 ### 损失函数 / 训练策略
+
+总损失包含三部分：自回归文本生成损失 $\mathcal{L}_{txt}$、SAM掩码预测损失 $\mathcal{L}_{mask}$（BCE+Dice）、以及TMCC损失 $\mathcal{L}_{T2M} + \mathcal{L}_{M2T}$。TMCC的BCE和Dice权重与掩码损失共享。
 
 总损失包含三部分：自回归文本生成损失 $\mathcal{L}_{txt}$、SAM掩码预测损失 $\mathcal{L}_{mask}$（BCE+Dice）、以及TMCC损失 $\mathcal{L}_{T2M} + \mathcal{L}_{M2T}$。TMCC的BCE和Dice权重与掩码损失共享。
 

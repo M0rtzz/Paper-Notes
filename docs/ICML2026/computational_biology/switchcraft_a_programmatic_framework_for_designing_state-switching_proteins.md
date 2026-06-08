@@ -41,35 +41,33 @@ SwitchCraft 把"设计一个能在多个功能态之间切换的蛋白质"形式
 ## 方法详解
 
 ### 整体框架
-SwitchCraft 把多态蛋白设计拆成两个阶段：
-
-1. **设计规约（specification）**：枚举状态 $s=1,\ldots,N_{\text{states}}$，每个态绑定一个折叠上下文 $\mathcal{C}_s$（可含小分子、金属离子、DNA、目标多肽等固定分子）；枚举损失 $\mathcal{L}_n:\mathbb{R}^{20\times L}\to\mathbb{R}$，每个损失依赖一个或多个状态的 Boltz-1 输出；声明设计掩码 $\mathbf{m}\in\{0,1\}^L$ 与可选的固定基序序列 $\mathbf{s}$。
-2. **设计优化（optimization）**：以 logits 表示的序列 $\mathbf{z}$ 为优化变量，跑 240 步四阶段 schedule，每步把 $\mathbf{z}$ 转成"硬-软-连续"的伪表示 $\mathbf{z}_{\text{pseudo}}$ 喂给 Boltz-1，加总所有损失，对 $\mathbf{z}$ 求梯度更新。
-
-整个过程在概念上很像训练一个深度学习模型：损失就是设计目标、optimizer 就是 SGD、模型权重就是序列本身。
+SwitchCraft 要解决的是"一个序列在不同配体环境下能折成多个指定构象"这件单态生成器做不到的事，它的办法是把这个需求重写成一道优化题。设计者先写出**规约**：枚举若干状态 $s=1,\ldots,N_{\text{states}}$，每个态绑一个折叠上下文 $\mathcal{C}_s$（可含小分子、金属离子、DNA、目标多肽等固定分子），再枚举一组损失 $\mathcal{L}_n:\mathbb{R}^{20\times L}\to\mathbb{R}$、每个依赖一个或多个状态的 Boltz-1 输出，并声明设计掩码 $\mathbf{m}\in\{0,1\}^L$ 与可选的固定基序序列 $\mathbf{s}$。然后进入**优化**：以 logits 表示的序列 $\mathbf{z}$ 为唯一变量，跑 240 步退火 schedule，每步把 $\mathbf{z}$ 转成伪表示喂进 Boltz-1，加总所有损失再对 $\mathbf{z}$ 求梯度更新。整个过程概念上就像训练一个深度模型——损失是设计目标、optimizer 是 SGD、被优化的"权重"就是序列本身。
 
 ### 关键设计
 
-1. **可组合的状态-损失语言（Loss DSL）**:
+**1. 可组合的状态-损失语言（Loss DSL）：把自然语言规约翻译成可微损失**
 
-    - 功能：把"我要设计一个在配体 X 存在时支架某基序、不存在时破坏该基序"这种自然语言规约，翻译成一组数学上良定义、可对 $\mathbf{z}$ 求导的损失。
-    - 核心思路：作者抽出四类基础损失原语，全部从 Boltz-1 的输出（distogram、pair representation）派生。**基序损失** $\mathcal{L}_{\text{motif}}=\sum_{i,j\in m, i\neq j}\sum_k \frac{p_{ijk}}{|m|(|m|-1)}(d_k-\|\mathbf{r}_i-\mathbf{r}_j\|)^2$ 用 distogram 概率加权地最小化基序内残基对距离与目标距离的平方误差；对应的 **反基序损失** $\mathcal{L}_{\text{anti-motif}}=-0.5\,\mathcal{L}_{\text{motif}}$ 主动破坏支架。**结合损失** $\mathcal{L}_{\text{binding}}=\frac{1}{2c}\sum \min_j^{(k=c)}\min_i^{(k=2)} H_{<20\text{Å}}(D_{ij})$ 借用 BoltzDesign1 的截断熵，聚合"top-$c$ 配体 token 与 top-2 蛋白残基"的近接概率，鼓励高置信度接触；**反结合损失** 取负 0.5 倍。**构象变化损失** $\mathcal{L}_{\text{conf-change}}(\mathbf{z};\mathcal{C}_1,\mathcal{C}_2)=-\frac{1}{L}\sum_i \max_j \mathrm{JSD}(D^{(1)}_{ij}\|D^{(2)}_{ij})$ 把两个状态下同一对残基的距离分布之 JSD 最大化，强制状态间结构发生显著差异。**接触损失** $\mathcal{L}_{\text{contact}}=\frac{1}{L}\sum_j \min_{i:|i-j|\geq 9} H_{<14\text{Å}}(D_{ij})$ 保证每个态结构本身被自信地预测。
-    - 设计动机：所有损失都建立在 Boltz-1 的连续 distogram 而非硬距离上，确保对 $\mathbf{z}$ 的可微分性；正/反对称设计（motif vs anti-motif、binding vs anti-binding）让用户能直接表达"该有/不该有"两类约束；JSD 形式的构象变化损失绕开了"两个结构必须配准才能比较"的难题，直接在分布层面驱动状态差异。
+设计者脑子里的需求往往是"配体 X 存在时支架某基序、不存在时破坏它"这类带分支的自然语言，痛点在于它没法直接喂给优化器。SwitchCraft 的做法是抽出四类基础损失原语，全部从 Boltz-1 的连续输出（distogram、pair representation）派生，从而对 $\mathbf{z}$ 处处可导。**基序损失** $\mathcal{L}_{\text{motif}}=\sum_{i,j\in m, i\neq j}\sum_k \frac{p_{ijk}}{|m|(|m|-1)}(d_k-\|\mathbf{r}_i-\mathbf{r}_j\|)^2$ 用 distogram 概率加权地最小化基序内残基对的预测距离与目标距离的平方误差，而对应的**反基序损失** $\mathcal{L}_{\text{anti-motif}}=-0.5\,\mathcal{L}_{\text{motif}}$ 只用一个负号就把"主动破坏支架"表达出来；**结合损失** $\mathcal{L}_{\text{binding}}=\frac{1}{2c}\sum \min_j^{(k=c)}\min_i^{(k=2)} H_{<20\text{Å}}(D_{ij})$ 借用 BoltzDesign1 的截断熵，聚合"top-$c$ 配体 token 与 top-2 蛋白残基"的近接概率以鼓励高置信度接触，**反结合损失**同样取负 0.5 倍。
 
-2. **Straight-Through + 四阶段退火的序列优化**:
+多态的灵魂在另外两个损失上。**构象变化损失** $\mathcal{L}_{\text{conf-change}}(\mathbf{z};\mathcal{C}_1,\mathcal{C}_2)=-\frac{1}{L}\sum_i \max_j \mathrm{JSD}(D^{(1)}_{ij}\|D^{(2)}_{ij})$ 把两个状态下同一对残基的距离分布之 JSD 最大化，强制状态间结构显著分化——之所以用 distogram 上的 JSD 而非"先对齐结构再算 RMSD"，是因为前者绕开了配准歧义、且天然可微。**接触损失** $\mathcal{L}_{\text{contact}}=\frac{1}{L}\sum_j \min_{i:|i-j|\geq 9} H_{<14\text{Å}}(D_{ij})$ 则保证每个态本身被自信地折出来，不至于为了制造差异而牺牲单态可信度。这套正/反对称（motif vs anti-motif、binding vs anti-binding）加状态间 JSD 的设计，让用户能像搭积木一样把"该有/不该有/必须不同"组合成任意复杂的规约。
 
-    - 功能：把离散的 20 维氨基酸 argmax 问题转化为对连续 logits $\mathbf{z}\in\mathbb{R}^{20\times L}$ 的梯度下降，并在 240 步内完成从"软连续探索"到"硬离散收敛"的平滑过渡。
-    - 核心思路：每步计算三个表示——软分布 $\mathbf{z}_{\text{soft}}=\mathrm{softmax}(\mathbf{z}/\tau)$、硬 one-hot $\mathbf{z}_{\text{hard}}=\mathrm{onehot}(\mathrm{argmax}\,\mathbf{z})$、原始 logits $\mathbf{z}$，并用 STE 让 $\mathbf{z}_{\text{st}}=(\mathbf{z}_{\text{hard}}-\mathbf{z}_{\text{soft}})|_{\nabla=0}+\mathbf{z}_{\text{soft}}$ 在前向看起来是硬的、梯度走软路。喂给 Boltz-1 的实际是凸组合 $\mathbf{z}_{\text{pseudo}}=\beta\mathbf{z}_{\text{hard}}+(1-\beta)(\gamma\mathbf{z}_{\text{soft}}+(1-\gamma)\mathbf{z})$，三个超参 $\beta,\gamma,\tau$ 按四阶段 schedule 调节：Stage 1（30 步，$\beta=0,\gamma=1,\tau=0.5$）做软探索；Stage 2（100 步，$\gamma$ 从 0 退火到 1）逐渐挤出硬决策；Stage 3（100 步，$\tau$ 从 0.5 降到 0.005）压低温度；Stage 4（10 步，$\beta=1$）完全切到 one-hot 微调。基序位置 $\mathbf{m}[i]=0$ 的残基在每步前向时被钉死为 motif 序列。
-    - 设计动机：直接在 20 维 simplex 上做离散搜索会指数爆炸；纯连续松弛又会得到非物理的"混合氨基酸"。STE + 多阶段退火让早期能用连续梯度信息全局探索、后期强制收敛到合法残基。$\beta,\gamma,\tau$ 分别控制"硬/软占比"、"软分布锐度"和"温度"，三个旋钮足以覆盖从平坦到尖锐的整个 schedule。
+**2. Straight-Through + 四阶段退火的序列优化：把离散搜索变成可微优化**
 
-3. **多基序合并与 cpGFP 生物传感器装配工作流**:
+序列优化的痛点是氨基酸是 20 选 1 的离散量，直接在 simplex 上搜会指数爆炸，纯连续松弛又会得到非物理的"混合氨基酸"。SwitchCraft 用直通估计（STE）加多阶段退火来两头讨好：每步同时算软分布 $\mathbf{z}_{\text{soft}}=\mathrm{softmax}(\mathbf{z}/\tau)$、硬 one-hot $\mathbf{z}_{\text{hard}}=\mathrm{onehot}(\mathrm{argmax}\,\mathbf{z})$ 和原始 logits $\mathbf{z}$，并令 $\mathbf{z}_{\text{st}}=(\mathbf{z}_{\text{hard}}-\mathbf{z}_{\text{soft}})|_{\nabla=0}+\mathbf{z}_{\text{soft}}$ 使前向看起来是硬决策、梯度却走软路。真正喂给 Boltz-1 的是凸组合 $\mathbf{z}_{\text{pseudo}}=\beta\mathbf{z}_{\text{hard}}+(1-\beta)(\gamma\mathbf{z}_{\text{soft}}+(1-\gamma)\mathbf{z})$，其中 $\beta,\gamma,\tau$ 分别控制"硬/软占比""软分布锐度""温度"三个旋钮。
 
-    - 功能：把"基序切换"扩展到"用同一段序列同时支架两个不同基序"，并进一步把多态构象切换器封装成可装配的荧光生物传感器组件。
-    - 核心思路：当一个状态需要支架多个基序时，先用 Algorithm 2 在残基索引层面合并基序约束，再走标准的 motif 损失。在生物传感器工作流中（Sec 4.6），作者把传感器拆成"环状置换 GFP（cpGFP）报告器 + 配体响应构象开关"两部分：先用 SwitchCraft 设计在配体存在/不存在时构象差异显著的 switcher（apo/holo 两态 + ContactLoss + BindingLoss + ConfChangeLoss），然后选择 apo→holo 间骨架二面角变化最大的残基位作为 cpGFP 插入位点（Algorithm 3 保证位点空间多样），把 cpGFP 嵌入、再用 Boltz-1 共折叠，筛选 chromophore 接触发生显著变化的设计。
-    - 设计动机：天然 cpGFP 类生物传感器的成功机制（如 nicotine 传感器，PDB 7s7u/7s7v）依赖一个 linker 上的谷氨酸在 apo 态贴近 chromophore 淬灭荧光、在 holo 态被拽离 14 Å 解淬灭；作者把这套机制反向工程成可计算的筛选准则（intraRMSD、crossRMSD、回转半径、effector iPTM 阈值），让 SwitchCraft 能为任意小分子从头设计候选传感器，绕开"必须先有天然 switcher"的瓶颈。
+这三个旋钮按四阶段 schedule 转动，实现从全局探索到离散收敛的平滑过渡：Stage 1（30 步，$\beta=0,\gamma=1,\tau=0.5$）做软探索；Stage 2（100 步，$\gamma$ 从 0 退火到 1）逐渐挤出硬决策；Stage 3（100 步，$\tau$ 从 0.5 降到 0.005）压低温度；Stage 4（10 步，$\beta=1$）完全切到 one-hot 做微调。基序位置（$\mathbf{m}[i]=0$）的残基在每步前向时都被钉死为 motif 序列，不参与优化。早期连续梯度负责全局探索、后期硬约束负责收敛到合法残基，这正是把"梯度上的 inverse design"从结构域推广到序列域的关键。
+
+**3. 多基序合并与 cpGFP 生物传感器装配工作流：把构象开关组装成可用器件**
+
+前两个设计能造出"会切换的蛋白"，但要落到真正有用的器件还差两步。其一是当一个状态需要同时支架两个不同基序时，作者用 Algorithm 2 在残基索引层面先合并基序约束、再走标准 motif 损失，把"基序切换"升级成"一序列双基序"。其二是把多态切换器封装成荧光生物传感器（Sec 4.6）：先用 SwitchCraft 设计 apo/holo 两态构象差异显著的 switcher（ContactLoss + BindingLoss + ConfChangeLoss 三损失联合），再选 apo→holo 间骨架二面角变化最大的残基位作为环状置换 GFP（cpGFP）插入点（Algorithm 3 保证插入位点空间多样），嵌入 cpGFP 后用 Boltz-1 共折叠，筛出 chromophore 接触发生显著变化的设计。
+
+这套工作流的依据来自对天然 cpGFP 传感器机制的逆向工程：以 nicotine 传感器（PDB 7s7u/7s7v）为例，它靠 linker 上一个谷氨酸在 apo 态贴近 chromophore 淬灭荧光、holo 态被拽离 14 Å 解淬灭。作者把这套机制翻译成可计算的筛选准则（intraRMSD、crossRMSD、回转半径、effector iPTM 阈值），从而无需任何天然 switcher 模板，就能为任意小分子从头生成候选传感器，绕开了"必须先有天然开关"的瓶颈。
+
+### 一个完整示例
+以 heme + O₂ 的"配体修饰"任务为例走一遍：规约里声明两个状态，态 1 的上下文 $\mathcal{C}_1$ 只放 heme、态 2 的 $\mathcal{C}_2$ 放 heme + 氧分子，再挂上 ContactLoss（两态各自要折得自信）和 ConfChangeLoss（两态距离分布的 JSD 要大）。优化时 $\mathbf{z}$ 在两个上下文里各做一次 Boltz-1 前向、各算一次 distogram，损失加总后回传到同一份 logits 上。240 步退火后某条轨迹收敛出的序列里，一个组氨酸在无氧态配位 heme 铁、有氧态被氧分子排开，触发约 3.8 Å 的局部重排——这恰好复现了血红蛋白"氧结合诱导构象协同"的物理图景，而整个过程只靠对 Boltz-1 反传梯度得到。
 
 ### 损失函数 / 训练策略
-全局损失是所有状态-损失项的和；优化器是 Adam，单步学习率 $\alpha\in\{0.1,0.2\}$ 按阶段切换；初始 $\mathbf{z}$ 从 Gumbel-softmax 采样。每个设计任务跑大量独立轨迹（100 至 13858 条），每条最终序列再用 Boltz-1 预测 5 个结构做评估。
+全局损失是所有状态-损失项之和；优化器是 Adam，单步学习率 $\alpha\in\{0.1,0.2\}$ 按阶段切换；初始 $\mathbf{z}$ 从 Gumbel-softmax 采样。每个设计任务跑大量独立轨迹（100 至 13858 条），每条最终序列再用 Boltz-1 预测 5 个结构做评估。
 
 ## 实验关键数据
 

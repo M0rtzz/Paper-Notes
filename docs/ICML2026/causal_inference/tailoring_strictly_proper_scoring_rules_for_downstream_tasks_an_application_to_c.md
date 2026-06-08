@@ -42,32 +42,27 @@ tags:
 
 ### 整体框架
 
-整个框架是一个三步推导链：
-1. **上界**：找下游任务误差 $\mathcal{E}(\theta,\hat\theta)$ 的散度型上界 $\mathbb{E}[d_{\text{task}}(p,\hat p)]$。
-2. **曲率匹配**：计算 $w_{\text{task}}(p) = \partial_q^2 d_{\text{task}}(p,q)|_{q=p}$，令 $w_\ell = w_{\text{task}}$，按 Buja et al. (2005) 的积分构造反推出唯一的 proper scoring rule $\ell$。
-3. **canonical 配对**：解微分方程 $(\sigma_\ell^{-1})'(p) = w_\ell(p)$ 得激活函数 $\sigma_\ell$，与 $\ell$ 配对后梯度对 logit 化简为 $\partial \ell / \partial z = p - y$，根除梯度爆炸。
-
-输入是 $(X_i, T_i)$ 样本对，输出是一个倾向得分模型 $\hat e(x) = \sigma_\ell(f_\theta(x))$，再代入 IPW/Hajek/AIPW 估计 ATE。
+本文要解决的是"两段式"估计里训练损失与下游任务脱节的问题：第一段估一个概率 $p$，第二段把 $\hat p$ 代入下游估计量算 $\hat\theta$，但第一段几乎都用 task-agnostic 的 log-loss。作者的转化是把"训练损失对概率误差的局部敏感性"和"下游任务对概率误差的局部敏感性"都写成同形的二阶曲率，再令二者相等——于是损失的几何形状直接镜像下游任务的几何形状。落到 IPW 估计 ATE 上，输入是 $(X_i, T_i)$ 样本对，输出是一个倾向得分模型 $\hat e(x) = \sigma_\ell(f_\theta(x))$，再代入 IPW / Hajek / AIPW 算 ATE。
 
 ### 关键设计
 
-1. **通用曲率匹配框架（Section 3.1）**：
+**1. 通用曲率匹配框架：把损失几何对齐下游任务几何**
 
-    - 功能：给定任意"两段式"估计问题（第一段估概率 $p$，第二段用 $\hat p$ 算 downstream 估计量 $\hat\theta$），自动派生最配它的 proper scoring rule。
-    - 核心思路：假设下游误差 $\mathcal{E}(\theta,\hat\theta) \le \mathbb{E}[d_{\text{task}}(p,\hat p)]$。在 $q=p$ 处做 Taylor 展开有 $d_{\text{task}}(p,q) = \tfrac{1}{2} w_{\text{task}}(p)(p-q)^2 + o((p-q)^2)$；任意 proper scoring rule 的诱导散度也有完全同形的展开 $d_\ell(p,q) = \tfrac{1}{2} w_\ell(p)(p-q)^2 + o((p-q)^2)$。因此只要令 $w_\ell(p) = w_{\text{task}}(p)$，再用 $H_\ell''(q) = w_\ell(q)$ 积两次得熵函数 $H_\ell$，最终 $\ell$ 由 $\ell(y,q) = -H_\ell(q) - H_\ell'(q)(y - q)$ 给出。
-    - 设计动机：proper scoring rule 的可加性分解 $\mathbb{E}[\ell(T,\hat p)] = \mathbb{E}[d_\ell(p,\hat p)] + \mathbb{E}[H_\ell(p)]$ 保证最小化训练损失 ≡ 最小化 $\mathbb{E}[d_\ell]$，再加上曲率匹配条件，这就构成了"训练损失 → 下游误差二阶上界"的可证明链路；与 covariate balancing 类只能给"代理目标"的方法相比，这条链路是显式且直接的。
+痛点是 log-loss 对下游完全无感知，损失低不代表下游估计好。作者的解法基于 proper scoring rule 理论的一个事实：任意严格 proper scoring rule 由非负权重函数 $w_\ell(q) = H_\ell''(q)$ 唯一刻画，其诱导散度在 $q=p$ 处的二阶展开恰为 $d_\ell(p,q) = \tfrac{1}{2} w_\ell(p)(p-q)^2 + o((p-q)^2)$。如果下游误差也有散度型上界 $\mathcal{E}(\theta,\hat\theta) \le \mathbb{E}[d_{\text{task}}(p,\hat p)]$，它在 $q=p$ 处同样展开成 $d_{\text{task}}(p,q) = \tfrac{1}{2} w_{\text{task}}(p)(p-q)^2 + o((p-q)^2)$。两个展开完全同形，于是只需令 $w_\ell(p) = w_{\text{task}}(p)$，再对 $H_\ell''(q) = w_\ell(q)$ 积两次得熵函数 $H_\ell$，损失就由 $\ell(y,q) = -H_\ell(q) - H_\ell'(q)(y - q)$ 闭式给出。
 
-2. **IPW-tailored 损失（Section 3.2）**：
+这条链路之所以"可证明"，靠的是 proper scoring rule 的可加性分解 $\mathbb{E}[\ell(T,\hat p)] = \mathbb{E}[d_\ell(p,\hat p)] + \mathbb{E}[H_\ell(p)]$：最小化训练损失等价于最小化 $\mathbb{E}[d_\ell]$，再叠加曲率匹配条件，就把"训练损失 → 下游误差二阶上界"显式串了起来。相比 covariate balancing 类方法只能给"协变量平衡"这种代理目标，这里是对下游误差本身的直接对齐。
 
-    - 功能：将通用框架落地到 IPW 估计 ATE，给出闭式的 task-specific 权重和损失。
-    - 核心思路：把 IPW 估计量 $\hat\tau_{\text{ATE}}$ 的 MSE 做 bias-variance 分解。Bias 项用 Cauchy-Schwarz 拆出 $\mathbb{E}[(e/\hat e - 1)^2]$，对应 $d_{\text{bias}}$；variance 项在二阶矩有界假设下拆出 $\mathbb{E}[Y(1)^2 e (1/\hat e - 1/e)^2]$，对应 $d_{\text{var}}$。求两者在 $q=p$ 处的二阶导得 $w_{\text{task}}(p) = \big(\tfrac{2}{p^2} + \tfrac{2}{(1-p)^2}\big) + \big(\tfrac{2}{p^3} + \tfrac{2}{(1-p)^3}\big)$；前一对来自 bias、后一对来自 variance。对比 log-loss 的 $w(q) = \tfrac{1}{q(1-q)}$，新权重在 $q \to 0$ 或 $q \to 1$ 处分别按 $1/p^2$ 与 $1/p^3$ 爆炸，严厉惩罚边界误差。论文还指出 Hajek 和 AIPW 估计量的 MSE 上界与 IPW 共享同一个 $d_{\text{task}}$（仅差缩放常数），所以同一个损失"一损通用"。
-    - 设计动机：IPW 在小倾向得分处脆弱是教科书级痛点；过去要么做 trimming（丢一致性）要么改估计量（如 Overlap Weighting，但变了估计 target）。本文的做法相当于在"training 阶段就把 1/$p^3$ 这种敏感性塞进损失"，是 ante-hoc 而非 post-hoc 的修复。
+**2. IPW-tailored 损失：把 IPW 的边界脆弱性写进权重**
 
-3. **Canonical 概率映射 $\sigma_\ell$（Section 3.2.4）**：
+IPW 在倾向得分逼近 $0$/$1$ 时 $1/\hat e$、$1/(1-\hat e)$ 项爆炸，是教科书级痛点，而 log-loss 在边界的惩罚远不够重。作者把通用框架落到 IPW，对 $\hat\tau_{\text{ATE}}$ 的 MSE 做 bias-variance 分解：bias 项用 Cauchy-Schwarz 拆出 $\mathbb{E}[(e/\hat e - 1)^2]$ 对应 $d_{\text{bias}}$，variance 项在二阶矩有界假设下拆出 $\mathbb{E}[Y(1)^2 e (1/\hat e - 1/e)^2]$ 对应 $d_{\text{var}}$。对两者在 $q=p$ 处求二阶导，得到 task 权重
 
-    - 功能：替代 sigmoid 的最终激活函数，保证训练梯度稳定。
-    - 核心思路：如果直接把新损失接在 sigmoid 后，logit 梯度 $\partial \ell / \partial z = w_\ell(p)(p-y) \sigma'(z)$，其中 $\sigma'(z) = p(1-p) \approx p$，而 $w_\ell(p) \approx 1/p^3$，所以梯度按 $1/p^2$ 爆炸，恰恰在最关键的边界区域不稳定。解决方案是用 canonical link：解 $(\sigma_\ell^{-1})'(p) = w_\ell(p)$ 得到 $z = \int (2/p^2 + 2/(1-p)^2 + 2/p^3 + 2/(1-p)^3) dp$。令 $u = 1/[p(1-p)]$，反演归结为四次方程 $u^4 - 12u^2 - 16u - z^2 = 0$ 的最大实根（闭式可解）。配对后梯度奇迹般地化简为 $\partial \ell / \partial z = p - y$——一个简单的线性残差，永远不会爆炸或消失。
-    - 设计动机：CBSR 这类工作之所以"卡死"在深度学习外，就是因为它强行用 sigmoid+定制 loss 导致梯度无法控制。本文严格保留 canonical 配对，让新损失成为标准 log-loss 的 drop-in 替换，可无痛接入 MLP、XGBoost 等任意 gradient-based learner。论文还提到一个 trick：forward 走四次方程根、backward 可以直接绕过自动微分手写 $p - y$，进一步降低开销。
+$$w_{\text{task}}(p) = \Big(\tfrac{2}{p^2} + \tfrac{2}{(1-p)^2}\Big) + \Big(\tfrac{2}{p^3} + \tfrac{2}{(1-p)^3}\Big),$$
+
+前一对来自 bias、后一对来自 variance。对比 log-loss 的 $w(q) = \tfrac{1}{q(1-q)}$，新权重在 $q \to 0$ 或 $q \to 1$ 处分别按 $1/p^2$、$1/p^3$ 爆炸，正好在 IPW 最脆弱的边界处严厉加压——相当于在训练阶段就 ante-hoc 地把 $1/p^3$ 的敏感性塞进损失，而非事后 trimming（丢一致性）或换估计量（改了估计 target）。论文进一步指出 Hajek 和 AIPW 的 MSE 上界与 IPW 共享同一个 $d_{\text{task}}$（仅差缩放常数），所以同一个损失"一损通用"。
+
+**3. Canonical 概率映射 $\sigma_\ell$：把梯度从爆炸拉回线性残差**
+
+新损失如果直接接在 sigmoid 后会立刻失稳：logit 梯度 $\partial \ell / \partial z = w_\ell(p)(p-y)\,\sigma'(z)$，其中 $\sigma'(z) = p(1-p) \approx p$ 而 $w_\ell(p) \approx 1/p^3$，二者相乘梯度按 $1/p^2$ 爆炸，恰恰在最关键的边界区域不稳定——这正是 CBSR 之类工作几乎接不进深度网络的原因。作者改用 canonical link：解微分方程 $(\sigma_\ell^{-1})'(p) = w_\ell(p)$，即 $z = \int \big(\tfrac{2}{p^2} + \tfrac{2}{(1-p)^2} + \tfrac{2}{p^3} + \tfrac{2}{(1-p)^3}\big)\,dp$。令 $u = 1/[p(1-p)]$，反演归结为四次方程 $u^4 - 12u^2 - 16u - z^2 = 0$ 取最大实根，闭式可解。配对之后梯度奇迹般化简为 $\partial \ell / \partial z = p - y$——一个永不爆炸也不消失的线性残差，使新损失成为标准 log-loss 的 drop-in 替换，可无痛接 MLP、XGBoost 等任意 gradient-based learner。工程上还有一个 trick：forward 走四次方程根、backward 直接手写 $p - y$ 绕过自动微分，进一步降低开销。
 
 ### 损失函数 / 训练策略
 - 训练目标：tailored proper scoring rule $\ell$（由 $w_\ell = w_{\text{task}}$ 积分得到），配对的最终层激活为 $\sigma_\ell$（四次方程闭式解）。

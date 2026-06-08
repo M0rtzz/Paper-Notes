@@ -42,30 +42,25 @@ tags:
 
 ### 整体框架
 
-输入是查询函数 $q:\mathcal{D}\mapsto\mathbb{R}$ 的敏感度 $\Delta$ 与隐私预算 $(\varepsilon,\delta)$；输出是一个 $\sigma$，使 $\mathcal{A}(D)=q(D)+\tilde{X}$ 满足 $(\varepsilon,\delta)$-DP，其中 $\tilde{X}$ 采自本文提出的两类混合高斯之一。两类机制分别针对不同需求：multi-Gaussian mixture 损失最低但要调超参 $(K,\eta)$；quasi-Gaussian mixture 无超参、算 $\sigma$ 只需 $\mathcal{O}\!\left(\log(1+1/\varepsilon)+\log(1+\log 1/\delta)\right)$ 时间，但损失略大。流水线为：(i) 选机制 → (ii) 闭式刻画 $(\varepsilon,\delta)$-DP 的充分条件 → (iii) 证明充分条件关于 $\sigma$ 单调 → (iv) 二分搜索（必要时嵌套黄金分割）求最紧 $\sigma$ → (v) 用闭式公式算 $\mathbb{E}|\tilde X|, \mathbb{E}\tilde X^2$。
+要解决的问题是：给定查询函数 $q:\mathcal{D}\to\mathbb{R}$ 的敏感度 $\Delta$ 和隐私预算 $(\varepsilon,\delta)$，找一个尽量小的 $\sigma$，使加噪机制 $\mathcal{A}(D)=q(D)+\tilde{X}$ 满足 $(\varepsilon,\delta)$-DP 且期望噪声损失最小。本文把它从"在单个高斯里调 $\sigma$"改成"在一族**多峰高斯混合**里设计噪声分布 $\tilde{X}$"——以解析高斯为骨架，按数值最优解的两条几何定律（$\Delta$-周期多峰、相邻峰密度比约 $e^{\varepsilon}$）再卷上若干平移高斯分量。围绕这条主线，本文给出两类机制（损失最低但带超参的 multi-Gaussian、无超参的轻量 quasi-Gaussian），并证明它们都能套进 zCDP 框架做无损紧组合。
 
 ### 关键设计
 
-1. **Multi-Gaussian mixture 机制（Section 3）**：
+**1. Multi-Gaussian mixture：把最优解的几何写进闭式分布**
 
-    - 功能：给定 $K\in\mathbb{N}$，定义 $2K+1$ 个同方差高斯的混合作为加性噪声，复刻"$\Delta$-周期多峰 + $e^{-\varepsilon}$ 比例衰减"两条最优定律。
-    - 核心思路：密度为 $f_{\mathrm{m}}(x;\sigma,K)=\frac{1}{c_K}\sum_{k=-K}^{K}e^{-|k|\varepsilon}\phi(x;k\Delta,\sigma)$，第 $k$ 个分量中心放在 $k\Delta$、权重 $\propto e^{-|k|\varepsilon}$。Theorem 3.2 给出 $(\varepsilon,\delta)$-DP 的充分条件：引入离散化参数 $\eta\in(0,1)$，把对所有 $\varphi\in[0,\Delta]$ 的不等式松弛到网格 $\{0,\beta,2\beta,\ldots,\Delta\}$（$\beta\leq\sqrt{2\pi}\eta\sigma\delta$），同时把右侧 $\delta$ 压成 $(1-\eta)\delta$ 做补偿；Lemma 3.4 证明该条件关于 $\sigma$ 单调，故 Algorithm 1 用二分搜索（区间右端取解析高斯的 $\sigma_g$）在 $\mathcal{O}\!\left(\frac{K^2}{\eta\delta}(\log(1+1/\varepsilon)+\log(1+\log 1/\delta))\right)$ 时间内返回**该松弛框架下最紧**的 $\sigma$。
-    - 设计动机：直接照搬数值最优分布的几何结构（多峰间距 $\Delta$、几何衰减 $e^{-\varepsilon}$），但用闭式高斯混合替代 Selvi et al. 2025 的无闭式数值解，便于采样、求矩、做后续分析；离散化 $\eta$ 把不可数邻居族压成有限网格，是把"无穷条件"变可计算证书的关键工程化手段。
+针对的痛点是 Selvi et al. 2025 数值求出的最优噪声分布虽然损失低，却无闭式、不能采样、不能求矩，工程上用不了。本文用 $2K+1$ 个**同方差**高斯的凸组合去拟合它的几何特征，密度为 $f_{\mathrm{m}}(x;\sigma,K)=\frac{1}{c_K}\sum_{k=-K}^{K}e^{-|k|\varepsilon}\phi(x;k\Delta,\sigma)$——第 $k$ 个分量中心放在 $k\Delta$（复刻 $\Delta$-周期多峰），权重 $\propto e^{-|k|\varepsilon}$（复刻几何衰减）。难点在于 $(\varepsilon,\delta)$-DP 要对所有邻居偏移 $\varphi\in[0,\Delta]$ 这个不可数族成立，无法直接验证；Theorem 3.2 引入离散化参数 $\eta\in(0,1)$，把约束松弛到有限网格 $\{0,\beta,2\beta,\ldots,\Delta\}$（步长 $\beta\leq\sqrt{2\pi}\eta\sigma\delta$），同时把右侧 $\delta$ 压成 $(1-\eta)\delta$ 作为漏检补偿，从而把"无穷条件"变成可计算证书（$\eta$ 越小越逼近原定义）。Lemma 3.4 证明这个充分条件关于 $\sigma$ 单调，于是 Algorithm 1 以解析高斯的 $\sigma_g$ 作右端做二分搜索，在 $\mathcal{O}\!\left(\frac{K^2}{\eta\delta}(\log(1+1/\varepsilon)+\log(1+\log 1/\delta))\right)$ 时间内返回该松弛框架下最紧的 $\sigma$。它有效是因为：多峰几何让密度形状贴近真正最优，闭式高斯混合又保留了采样/求矩/分析的便利。
 
-2. **Quasi-Gaussian mixture：无超参的轻量替身（Section 4）**：
+**2. Quasi-Gaussian mixture：消掉超参、把 $1/\delta$ 降成 $\log 1/\delta$**
 
-    - 功能：消掉 multi-Gaussian 的 $(K,\eta)$ 超参，给出闭式可写、$\sigma$ 求解只依赖 $\delta$ 的对数项的实用机制。
-    - 核心思路：密度 $f_{\mathrm{q}}(x;\sigma)=\frac{e^{\varepsilon}}{c}\exp(-x^2/(2\sigma^2))+\frac{1}{c}\exp(-(|x|-\Delta)^2/(2\sigma^2))$，即一个零均值高斯（权重 $e^{\varepsilon}$）加一个"用 $|x|$ 代 $x$"的拟高斯（自带 $\pm\Delta$ 两个峰，权重 $1$）。Theorem 4.2 把 DP 条件拆成两路：$\sigma_1$ 来自 $h_1(\sigma)+h_2(\sigma)\geq 0$ 的闭式不等式（含 $\Phi$ 函数和 $e^{2\varepsilon},e^{\varepsilon}$ 项），$\sigma_2$ 来自单调比 $\max_{x\in[0,\Delta]}f_{\mathrm{q}}/\min_{x\in[0,\Delta]}f_{\mathrm{q}}\leq e^{\varepsilon}$ 的"逐点放大率不超 $e^{\varepsilon}$"约束。Lemma 4.3–4.5 分别证明这两路的单调性与搜索区间上界（$\sigma_1\leq\sqrt{2(\varepsilon-\log\delta)}\Delta/\varepsilon$，$\sigma_2\leq\sqrt{\Delta^2/(2\varepsilon)}$），Lemma 4.4 把 $\max/\min$ 化简到两个单峰子区间使黄金分割成立；Algorithm 3 双二分嵌套 Algorithm 4 的黄金分割，复杂度 $\mathcal{O}(\log(1+1/\varepsilon)+\log(1+\log 1/\delta))$，与 $\delta$ 仅对数耦合。
-    - 设计动机：multi-Gaussian 虽然损失最低，但 Algorithm 1 复杂度含 $K^2/(\eta\delta)$（$\delta$ 越小越贵），不适合做在线/反复调用的预算扫描；用 $|x|$ 一招把"两侧 $\pm\Delta$ 峰"压成单个表达式 + 用 $\sigma_1,\sigma_2$ 拆开"概率比 + $\delta$ 漏出"双约束，是把复杂度从 $1/\delta$ 降到 $\log 1/\delta$ 的关键。
+Multi-Gaussian 损失最低，但 Algorithm 1 复杂度含 $K^2/(\eta\delta)$，$\delta$ 越小越贵，不适合反复调用的预算扫描。Quasi-Gaussian 用一个零均值高斯（权重 $e^{\varepsilon}$）加一个"用 $|x|$ 代 $x$"的拟高斯（靠绝对值自带 $\pm\Delta$ 两个峰，权重 $1$）把多峰压成单个表达式：$f_{\mathrm{q}}(x;\sigma)=\frac{e^{\varepsilon}}{c}\exp(-x^2/(2\sigma^2))+\frac{1}{c}\exp(-(|x|-\Delta)^2/(2\sigma^2))$，既无 $K$ 也无 $\eta$。Theorem 4.2 把 DP 条件解析地拆成两路并取 $\sigma=\max(\sigma_1,\sigma_2)$：$\sigma_1$ 管 $\delta$ 漏出，来自闭式不等式 $h_1(\sigma)+h_2(\sigma)\geq 0$（含 $\Phi$ 函数与 $e^{2\varepsilon},e^{\varepsilon}$ 项）；$\sigma_2$ 管逐点放大率，来自约束 $\max_{x\in[0,\Delta]}f_{\mathrm{q}}/\min_{x\in[0,\Delta]}f_{\mathrm{q}}\leq e^{\varepsilon}$。Lemma 4.3–4.5 证明两路单调并给出搜索上界（$\sigma_1\leq\sqrt{2(\varepsilon-\log\delta)}\Delta/\varepsilon$、$\sigma_2\leq\sqrt{\Delta^2/(2\varepsilon)}$），Lemma 4.4 把 $\max/\min$ 化简到两个单峰子区间使黄金分割可用；最终 Algorithm 3 双二分嵌套 Algorithm 4 的黄金分割，复杂度降到 $\mathcal{O}(\log(1+1/\varepsilon)+\log(1+\log 1/\delta))$，与 $\delta$ 只剩对数耦合，因此可以当成在线预算扫描的标配。
 
-3. **zCDP 等价组合 + 渐近改进证明**：
+**3. zCDP 等价组合：多峰只压损失、不增组合成本**
 
-    - 功能：保证多峰化"只压损失、不增加组合成本"，并给出"足够大 $\varepsilon$ 严格优于解析高斯"的解析证书。
-    - 核心思路：multi-Gaussian 是若干同方差高斯的凸组合，借 Bun-Steinke 2016 Lemma 15 的 $\alpha$-Rényi 散度拟凸性，Corollary 3.7 证明本文混合机制满足与单高斯**完全相同**的 $\rho=\Delta^2/(2\sigma^2)$-zCDP，于是 $T$ 次组合直接退化成 $\varepsilon_{\mathrm{tot}}=\rho_{\mathrm{tot}}+2\sqrt{\rho_{\mathrm{tot}}\log(1/\delta_{\mathrm{tot}})}$（Corollary 3.8）。同时 Proposition 3.3 与 4.7 证明：对任意 $\delta\in(0,1/2)$，存在 $\varepsilon_0>0$ 使 $\varepsilon\geq\varepsilon_0$ 时 multi-/quasi-Gaussian 的 $l_2$-loss 都**严格**小于解析高斯——把数值实验的优势升格为解析保证。
-    - 设计动机：DP 机制最大的工程顾虑是"单步好但组合后崩"（如 truncated Laplace 缺高斯尾，组合常数差）；同方差结构让本文方法在 zCDP 框架下"白拿"高斯的紧组合，是它能取代解析高斯做 DP-SGD/proximal 等迭代算法噪声源的前提。
+DP 机制最大的工程顾虑是"单步好但组合后崩"——truncated Laplace 这类缺高斯尾的机制组合常数就很差。本文的解法是把所有分量约束成**同方差**：因为 multi-Gaussian 是同方差高斯的凸组合，借 Bun-Steinke 2016 Lemma 15 的 $\alpha$-Rényi 散度拟凸性，Corollary 3.7 证明它满足与单高斯**完全相同**的 $\rho=\Delta^2/(2\sigma^2)$-zCDP，于是 $T$ 次组合直接退化成 $\varepsilon_{\mathrm{tot}}=\rho_{\mathrm{tot}}+2\sqrt{\rho_{\mathrm{tot}}\log(1/\delta_{\mathrm{tot}})}$（Corollary 3.8），白拿高斯的紧组合。配套地 Proposition 3.3 与 4.7 证明：对任意 $\delta\in(0,1/2)$ 存在 $\varepsilon_0$，当 $\varepsilon\geq\varepsilon_0$ 时 multi-/quasi-Gaussian 的 $l_2$-loss 都**严格**小于解析高斯，把数值实验的优势升格为解析保证。同方差是有代价的——它牺牲了"各分量配不同方差"的自由度，但换来组合成本不变，这正是本文能把多峰高斯直接插进 DP-SGD/proximal 等迭代算法当噪声源的前提。
 
 ### 损失函数 / 训练策略
-本文不训练模型，目标是把闭式期望损失 $\mathbb{E}|\tilde X|$（$l_1$-loss / noise amplitude）与 $\mathbb{E}\tilde X^2$（$l_2$-loss / noise power）最小化。Algorithm 1/3 用二分搜索找满足 DP 条件的最小 $\sigma$；超参经验值 $K\in[20]$、$\eta=0.01$；数值积分用 Julia 的 QuadGK 包，根查找用 Roots，单峰搜索用 Optim。
+
+本文不训练模型，目标是最小化闭式期望损失 $\mathbb{E}|\tilde X|$（$l_1$-loss / noise amplitude）与 $\mathbb{E}\tilde X^2$（$l_2$-loss / noise power）。Algorithm 1/3 用二分搜索找满足 DP 条件的最小 $\sigma$；超参经验值取 $K\in[20]$、$\eta=0.01$；数值积分用 Julia 的 QuadGK 包，根查找用 Roots，单峰搜索用 Optim。
 
 ## 实验关键数据
 

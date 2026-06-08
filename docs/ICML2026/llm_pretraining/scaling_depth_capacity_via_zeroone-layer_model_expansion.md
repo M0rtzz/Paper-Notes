@@ -40,27 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Pipeline 极其简洁：先训练一个 0 层（只有 Embedding + LM_head + 最终 LayerNorm，*完全没有* Transformer 层）或 1 层模型；在 WSD schedule 的 *稳定阶段* 选一个时刻 $\tau \approx 0.8T$，把模型一次性扩展到目标深度 $L$ 层（zero-layer 只能 random init 新层；one-layer 既可 random 也可 copying，例如 $\mathbf{w}\to[\mathbf{w},\mathbf{w},\mathbf{w}]$）；扩展后**沿用同一个学习率**继续训到底。这套流程在 GPT2 / LLAMA3 / Qwen3 / Mixtral / DeepSeekV3 / ResNet 上都同款，覆盖 weight-tying、dense/MoE、MHA/GQA/MLA、绝对/旋转位置编码、LayerNorm/RMSNorm、GeLU/SwiGLU 各种变种。
+全套 pipeline 简洁到一句话能讲完：先训练一个 0 层（只有 Embedding + LM_head + 最终 LayerNorm、*完全没有* Transformer 层）或 1 层的极浅模型，在 WSD schedule 的*稳定阶段*选一个时刻 $\tau \approx 0.8T$ 把模型一次性扩展到目标深度 $L$ 层（zero-layer 只能 random init 新层，one-layer 既可 random 也可 copying，例如 $\mathbf{w}\to[\mathbf{w},\mathbf{w},\mathbf{w}]$），扩展后**沿用同一个学习率**继续训到底。难点不在流程，而在三件互相牵制的事：怎么证明这套东西不会掉 loss、扩展前后凭什么不用重调超参、扩展时机为什么能晚到 80%——下面三个设计分别回答它们。同一套 recipe 在 GPT2 / LLAMA3 / Qwen3 / Mixtral / DeepSeekV3 / ResNet 上原样跑通，覆盖 weight-tying、dense/MoE、MHA/GQA/MLA、绝对/旋转位置编码、LayerNorm/RMSNorm、GeLU/SwiGLU 各种变种。
 
 ### 关键设计
 
-1. **深度扩展的"初始化-理论"统一视角**:
+**1. 把"深度扩展"重述成大模型的初始化问题，用一个收敛 bound 统管所有选择。**
 
-    - 功能：把扩展后大模型的训练 loss 上界与 fixed-size 训练 loss 上界做差，得到二者 gap 的显式刻画。
-    - 核心思路：把 $\mathbf{W}_t=[\mathbf{w}_t,\mathbf{x}_t]$ 拆成"复用部分+新增部分"，并假设 $\mathbf{W}^*=[\mathbf{w}^*,\mathbf{x}^*]$，则在 convex + $G$-Lipschitz loss 下两段 SGD 通过 telescoping 得到 gap = $\frac{\sum_{t=1}^{\tau}\eta_t}{\sum_{t=1}^{T}\eta_t}(L(\mathbf{w}^*)-L(\mathbf{W}^*)) + \frac{\|\mathbf{x}_\tau-\mathbf{x}^*\|^2-\|\mathbf{x}_0-\mathbf{x}^*\|^2}{2\sum_{t=1}^{T}\eta_t}$。第一项要求 $L(\mathbf{w}^*) \approx L(\mathbf{W}^*)$，第二项要求把 $\mathbf{x}_\tau$ 初始化得比 $\mathbf{x}_0$ 离最优更近。
-    - 设计动机：等价的代数视角是把渐进式训练看成 **PGD（mask 新层为 0）+ 一次瞬移 + SGD**，于是初始化策略（copying vs random）和学习率调度（cosine vs WSD）这两个看似工程的选择都能从同一个 bound 推出方向——random 让第二项=0、copying 让第二项<0；学习率调度上 $\frac{\sum_{t\le\tau}\eta_t}{\sum_t\eta_t}$ 要小，所以扩展前学习率不能太大、扩展后不能衰减太厉害，这正好就是 WSD 的形状。
+前面提到的核心矛盾是：初始化策略和学习率调度看起来都是各调各的工程旋钮，没人能说清它们该往哪拧。本文的破局点是换一个代数视角——把扩展后大模型的参数 $\mathbf{W}_t=[\mathbf{w}_t,\mathbf{x}_t]$ 拆成"复用的小模型部分 $\mathbf{w}$ + 新增层部分 $\mathbf{x}$"，并设最优解 $\mathbf{W}^*=[\mathbf{w}^*,\mathbf{x}^*]$。于是整个渐进式训练等价于：扩展前对 $\mathbf{x}$ 做投影梯度下降（把新层 mask 成 0）、扩展瞬间把 $\mathbf{x}$ 一次"瞬移"到某个初始化、之后正常 SGD。在 convex + $G$-Lipschitz loss 假设下，把这两段 SGD 的 loss 上界与 fixed-size 训练的上界相减、telescoping 一通，就得到二者 gap 的显式表达式：
 
-2. **muP-scaled 初始化 + 零超参重调**:
+$$\text{gap} = \frac{\sum_{t=1}^{\tau}\eta_t}{\sum_{t=1}^{T}\eta_t}\big(L(\mathbf{w}^*)-L(\mathbf{W}^*)\big) + \frac{\|\mathbf{x}_\tau-\mathbf{x}^*\|^2-\|\mathbf{x}_0-\mathbf{x}^*\|^2}{2\sum_{t=1}^{T}\eta_t}.$$
 
-    - 功能：让 0/1 层小模型与目标深模型使用**同一组超参**（学习率、weight decay 等），扩展瞬间无需重新调参。
-    - 核心思路：要求每层激活的 element-wise scale 一致，即 $\|\mathbf{A}_l\|_2/\sqrt{n_l} \sim \|\mathbf{A}_{l+1}\|_2/\sqrt{n_{l+1}}$，落到线性层即 spectral scaling 条件 $\|\mathbf{W}_l\|_* \sim \sqrt{n_{l+1}/n_l}$。在此基础上用 Muon-NSGD（对 2D 张量用 Muon、其他张量用归一化 SGD，共享一个学习率，weight decay=0.01）。新增层用 random Gaussian 满足 muP；用 copying 同样满足；但 zero 和"copying_zero（某些子层置零）"会破坏 feature learning（梯度死掉、新层学不动），所以本文舍弃。
-    - 设计动机：渐进训练的最大工程痛点就是"扩展前后超参可能要重调"，而 muP 把超参的最优值在 model size 维度上拉成常数。Table 1 总结了 4 类初始化的三角权衡：copying/random 满足 feature learning 与 trainability 但 *不* function-preserving（loss 会跳一下尖峰）；zero 系列 function-preserving 但堵死学习；本文明确选 trainability + feature learning > function-preserving。
+这个 bound 直接把两个工程选择翻译成了数学方向。第二项管初始化：它要求把 $\mathbf{x}_\tau$（瞬移起点）放得比 $\mathbf{x}_0$ 离最优 $\mathbf{x}^*$ 更近——random 初始化让这项 $=0$、copying 让它 $<0$，于是"复制小模型的层"天然占便宜。第一项管学习率调度：$\frac{\sum_{t\le\tau}\eta_t}{\sum_t\eta_t}$ 必须小（因为小模型最优 $L(\mathbf{w}^*)$ 通常劣于大模型 $L(\mathbf{W}^*)$，这个比值是它的权重），意味着扩展前学习率不能太大、扩展后又不能衰减太狠——这正好就是 WSD（warmup-stable-decay）的形状。换句话说，初始化用 copying、调度用 WSD，不是试出来的，是从同一个 bound 里推出来的。
 
-3. **WSD schedule + 晚到 0.8T 的单阶段扩展 + 由"mix-time"反推 $\tau$**:
+**2. muP-scaled 初始化让 0/1 层小模型与目标深模型共用一组超参，扩展瞬间不重调。**
 
-    - 功能：把扩展时机 $\tau$ 推到训练总长度的 80%，并解释为什么 WSD 是 progressive training 的"天然搭档"。
-    - 核心思路：定义 mixing time $t_{\text{mix}}$ 满足 $L(\mathbf{W}_{\tau+t_{\text{mix}}}^{\text{progressive}}) \approx L(\mathbf{W}_{\tau+t_{\text{mix}}}^{\text{fixed-size}})$。实验发现 cosine 下 $t_{\text{mix}}(\tau)$ 对 $\tau$ 极敏感（GPT 上 $\tau\ge 0.5T$ 就追不上），而 WSD 下基本不敏感（$\tau\ge 0.8T$ 仍能追上），这与理论 gap 公式中 $\eta_t$ 在 stable 阶段保持常数完全一致。实操方案：2% warmup + 长 stable 段 + 10% decay，从总长里减去由"一组提前停止的小规模 run"测得的 $t_{\text{mix}}$，得到 $\tau \approx 0.8T$（GPT 124M 实验中 $\tau=480k/528k$）。同时论文论证**单阶段就够了**：基于 mixing behavior，$0\to 2\to 12$ 可以分解为 $0\to 2$ 与 $2\to 12$ 两段，最终 FLOPs 跟 $2\to 12$ 几乎相同、反而比 $0\to 12$ 差。
-    - 设计动机：现有工作之所以观察不到 mixing 行为、并因此搞 multi-stage，是因为他们用的是 cosine schedule + "grown-vs-target"的对比视角（Section 5.1 明确指出这是个"perspective"问题）。本文把视角切换到"完整训练过程"+ WSD，立刻看到 mix 行为，于是 single-stage + 晚扩展就足够最优。
+渐进训练在工程上最烦的，就是"小模型调好的学习率、weight decay 到了大模型可能全废"。本文用 muP 把超参的最优值在 model size 维度上拉成常数来根治这点：要求每层激活的 element-wise scale 对齐，即 $\|\mathbf{A}_l\|_2/\sqrt{n_l} \sim \|\mathbf{A}_{l+1}\|_2/\sqrt{n_{l+1}}$，落到线性层就是 spectral scaling 条件 $\|\mathbf{W}_l\|_* \sim \sqrt{n_{l+1}/n_l}$。优化器配 Muon-NSGD（2D 张量用 Muon、其余张量用归一化 SGD，全局共享一个学习率，weight decay=0.01），新增层无论用 random Gaussian 还是 copying 都满足 muP，所以扩展瞬间不需要碰任何超参。但这里和设计 1 推出的 bound 有个张力需要拍板：zero 和 copying_zero（把某些子层置零）虽然能做到 function-preserving（loss 不跳尖峰），却会让新层梯度死掉、彻底学不动，破坏 feature learning。论文用 Table 1 把四类初始化的三角权衡摊开——copying/random 满足 feature learning 与 trainability 但*不* function-preserving（扩展点会有个 loss 尖峰），zero 系列 function-preserving 但堵死学习——并明确选边站：trainability + feature learning 优先于 function-preserving，宁可让 loss 跳一下也要保证新层真的能学。
+
+**3. WSD + 单阶段晚扩展，并用"mixing time"反推扩展时刻 $\tau$。**
+
+设计 1 的 bound 解释了 WSD 为什么好，这一点把它落到具体的 $\tau$ 取值上。关键概念是 mixing time $t_{\text{mix}}$：从扩展点往后多久，渐进训练的 loss 会重新追平 fixed-size 训练，即满足 $L(\mathbf{W}_{\tau+t_{\text{mix}}}^{\text{progressive}}) \approx L(\mathbf{W}_{\tau+t_{\text{mix}}}^{\text{fixed-size}})$。实验里 cosine 下 $t_{\text{mix}}(\tau)$ 对 $\tau$ 极度敏感（GPT 上 $\tau\ge 0.5T$ 就再也追不上），而 WSD 下几乎不敏感（$\tau\ge 0.8T$ 仍能追平）——这跟 bound 里 $\eta_t$ 在 stable 段保持常数完全对得上。落地方案是 2% warmup + 长 stable 段 + 10% decay，先用一组提前停止的小规模 run 测出 $t_{\text{mix}}$，再从总长里减掉它得到 $\tau \approx 0.8T$（GPT 124M 实验中 $\tau=480k/528k$）。这套视角还顺手证伪了多阶段的必要性：基于 mixing 行为，$0\to 2\to 12$ 可以拆成 $0\to 2$ 与 $2\to 12$ 两段，最终 FLOPs 跟单做 $2\to 12$ 几乎一样、反而比直接 $0\to 12$ 更差，所以**单阶段就够最优**。之所以以往工作没看到 mixing、转而堆 multi-stage，是因为他们用 cosine + "grown-vs-target"的对比口径（论文 Section 5.1 直接点名这是个"perspective"问题）；把视角切回"完整训练过程"+ WSD，mix 行为立刻浮现，single-stage 晚扩展自然成了最优解。
 
 ### 损失函数 / 训练策略
 - 数据：OpenWebText，序列长度 1024，基于 nanoGPT codebase。

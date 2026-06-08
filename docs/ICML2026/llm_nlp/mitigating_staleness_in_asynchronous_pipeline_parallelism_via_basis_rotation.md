@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法的中心对象是一个权重矩阵 $W\in\mathbb{R}^{m\times n}$ 上的 Adam-with-basis-rotation 更新。每一步拿到梯度 $G_t = \nabla f_W(W_{t-1};B_t)$ 后：(1) 更新一阶动量 $M_t$；(2) 每 freq 步用幂迭代刷新一次左右旋转矩阵 $U\in\mathbb R^{m\times m}$、$V\in\mathbb R^{n\times n}$（columns 是 $\mathbb E[GG^\top]$ 和 $\mathbb E[G^\top G]$ 的特征向量）；(3) 在旋转空间里算 $\tilde G_t = U^\top G_t V$、$\tilde M_t = U^\top M_t V$，维护旋转空间二阶动量 $\tilde V_t$；(4) 算出旋转空间 Adam 更新方向后乘 $U(\cdot)V^\top$ 投影回原空间再走 $W_t = W_{t-1} - \eta_t \cdot U(\tilde M_t / \sqrt{\tilde V_t + \epsilon})V^\top$。整套换算只需对每个权重矩阵单独做，对应论文里两条结构假设：Hessian 是分块对角（每个 $W$ 是独立块）+ 每块 Hessian Kronecker 可分解为左右两个小矩阵的张量积，这样 $mn \times mn$ 的旋转矩阵被压成 $m\times m$ 和 $n\times n$ 两个小矩阵，可在 LLM 规模上 tractable。
+方法围绕一件事：让 Adam 在 Hessian 的特征基下、而不是在标准坐标轴下跑，从而对异步流水线带来的延迟梯度免疫。中心对象是单个权重矩阵 $W\in\mathbb{R}^{m\times n}$ 上的 "Adam-with-basis-rotation" 更新——每步拿到梯度 $G_t=\nabla f_W(W_{t-1};B_t)$ 后，先更新一阶动量 $M_t$，每隔 freq 步用幂迭代刷新一次左右旋转矩阵 $U\in\mathbb R^{m\times m}$、$V\in\mathbb R^{n\times n}$（它们的列分别是 $\mathbb E[GG^\top]$ 和 $\mathbb E[G^\top G]$ 的特征向量），然后把梯度和动量旋进特征基算 $\tilde G_t=U^\top G_t V$、$\tilde M_t=U^\top M_t V$，在旋转空间维护二阶动量 $\tilde V_t$，最后把更新方向投影回原空间走 $W_t=W_{t-1}-\eta_t\,U(\tilde M_t/\sqrt{\tilde V_t+\epsilon})V^\top$。这整套换算之所以在 LLM 规模上还 tractable，靠的是论文两条结构假设：Hessian 分块对角（每个权重矩阵是独立块）+ 每块 Hessian 可 Kronecker 分解为左右两个小矩阵的张量积，于是本该是 $mn\times mn$ 的旋转矩阵被压成 $m\times m$ 和 $n\times n$ 两个小矩阵。
 
 ### 关键设计
 
-1. **基底失配是延迟伤害的放大器（诊断 + 理论刻画）**：
+**1. 基底失配是延迟伤害的放大器：先诊断清楚再对症下药。**
 
-    - 功能：把"基底失配"形式化为一个可度量、可纳入收敛界的量，证明它和延迟乘性耦合
-    - 核心思路：用 Hessian 的 $(1,1)$-范数 $\|\nabla^2 f(w)\|_{1,1}=\sum_{i,j}|H_{ij}|$ 作为基底失配的代理量——给定特征谱不变，$H$ 为对角时该范数最小，旋转得越偏越大。再在坐标级有界噪声 + 坐标级 $\ell_\infty$ 光滑这两条假设下，证 asynchronous Adam（$\beta_1=0$）的收敛界 $\min_t \mathbb E\|\nabla f(w_t)\|_1 = \mathcal O\bigl(\sqrt{(1+d\tau)\Delta_0 C/T} + \sqrt{\sum_i\sigma_i}((1+d\tau)\Delta_0 C/T)^{1/4} + \dots\bigr)$，其中 $C$ 就是失配代理量；延迟 $\tau$ 和 $C$ 乘性出现，意味着对齐基底下 $\tau$ 几乎无害、失配基底下 $\tau$ 被狠狠放大。再把这套分析推广到 stage-dependent 延迟，得到等效延迟 $\tau' = \sqrt{\sum_i C_i^2 \tau_i^2 / \sum_i C_i^2}$，揭示靠前的 stage（延迟最大）对收敛拖累最大
-    - 设计动机：先把"为什么延迟伤害"讲清楚，后面的算法才能精准对症——既然是 $C$ 在放大 $\tau$，那压住 $C$ 就行
+异步流水线的延迟 $\tau$ 在理论上只带来 $\mathcal O(\sqrt{\tau/T})$ 的温和减速，可实测却是灾难性崩塌——这之间的鸿沟必须先解释清楚，算法才能精准发力。作者的答案是：真正放大延迟伤害的是 Adam 的坐标级自适应与 loss landscape 几何的错配。为了把这个直觉变成能纳入收敛界的量，他们用 Hessian 的 $(1,1)$-范数 $\|\nabla^2 f(w)\|_{1,1}=\sum_{i,j}|H_{ij}|$ 当作"基底失配"的代理量：给定特征谱不变，$H$ 越接近对角（基底越对齐坐标轴）该范数越小，旋转得越偏越大。在坐标级有界噪声 + 坐标级 $\ell_\infty$ 光滑两条假设下，他们证出 asynchronous Adam（$\beta_1=0$）的收敛界
 
-2. **基底旋转 Adam（Algorithm 1）**：
+$$\min_t \mathbb E\|\nabla f(w_t)\|_1 = \mathcal O\Bigl(\sqrt{(1+d\tau)\Delta_0 C/T} + \sqrt{\textstyle\sum_i\sigma_i}\,\bigl((1+d\tau)\Delta_0 C/T\bigr)^{1/4} + \dots\Bigr),$$
 
-    - 功能：把 Adam 从标准坐标系搬到 Hessian 特征基下做，让坐标级自适应真正发挥作用
-    - 核心思路：在旋转空间 $\tilde w = \mathcal U^\top w$ 里走标准 Adam，等价于在原空间用 $\mathcal U \cdot \text{Adam}(\mathcal U^\top \nabla f) $ 这条更新；矩阵权重情形用 Kronecker 假设把 $\mathcal U$ 拆成 $U,V$，于是 $\tilde G_t = U^\top G_t V$、二阶动量 $\tilde V_t$ 在旋转空间累加平方梯度，最终 $W_t \leftarrow W_{t-1} - \eta_t U(\tilde M_t / \sqrt{\tilde V_t + \epsilon}) V^\top$；$U,V$ 不必每步更新，文中默认 freq=10 也几乎不掉点，能拉到 freq=100 还显著领先 baseline
-    - 设计动机：基底失配会让 $\mathcal O(\tau \cdot C)$ 项主宰收敛界，那就构造一个变换让 $C$ 变成它的下界——理论上 $\|H_{U,V}\|_{(1,1)} \le \|H_U\|_{(1,1)} \le \|H\|_{(1,1)}$，双侧旋转还能在所有旋转里达到全局最小，实测把归一化 Hessian $(1,1)$-范数从 0.5436 压到 0.1228
+其中 $C$ 正是失配代理量。关键在于延迟 $\tau$ 和失配 $C$ 是**乘性**耦合的——对齐基底（$C$ 小）下 $\tau$ 几乎无害，失配基底（$C$ 大）下 $\tau$ 被狠狠放大，这正好解释了为什么大流水线下延迟不是温和退化而是崩塌。把分析推广到各 stage 延迟不同的情形，还能得到等效延迟 $\tau'=\sqrt{\sum_i C_i^2\tau_i^2/\sum_i C_i^2}$，揭示出延迟最大的靠前 stage 对收敛的拖累也最重——这条公式后面直接变成 stage-aware 调度的依据。
 
-3. **特征基估计的两轴分类（Algorithm 2）**：
+**2. 基底旋转 Adam（Algorithm 1）：把整个优化空间搬到特征基下，让失配 $C$ 自己变小。**
 
-    - 功能：在 estimation fidelity 和 memory overhead 之间提供四档可选方案
-    - 核心思路：第一个轴叫 approximation source $\mathcal S$——$\mathcal S=2^\text{nd}$ 维护 $L=\mathbb E[GG^\top]$、$R=\mathbb E[G^\top G]$ 两个 EMA 矩阵当经验 Fisher 用，$\mathcal S=1^\text{st}$ 退而求其次只用一阶动量做近似 $\mathbb E[GG^\top]\approx\mathbb E[G]\mathbb E[G]^\top$，省掉 $L,R$ 的存储；第二个轴叫 rotation geometry $\mathcal G$——bilateral 同时旋转左右两侧捕捉完整 Kronecker 结构、unilateral 只旋转较小那一维以节省。论文里把 SOAP 看成 ($\mathcal S=2^\text{nd}$, bilateral)、把 full-rank GaLore 看成 ($\mathcal S=1^\text{st}$, unilateral)，统一到同一框架里，把 Hessian geometry 的作用从其他实现差异中隔离出来
-    - 设计动机：百亿模型上额外存两个矩阵或多算一次特征分解都不是小事，提供一组"档位"才能让方法在不同显存预算下都能用
+既然 $\mathcal O(\tau\cdot C)$ 项由失配主导，那就构造一个变换把 $C$ 压到它的下界。做法是在旋转空间 $\tilde w=\mathcal U^\top w$ 里走标准 Adam，等价于在原空间执行 $\mathcal U\cdot\text{Adam}(\mathcal U^\top\nabla f)$ 这条更新；矩阵权重情形借 Kronecker 假设把 $\mathcal U$ 拆成左右两个小矩阵 $U,V$，于是旋进去算 $\tilde G_t=U^\top G_t V$、在旋转空间累加平方梯度得二阶动量 $\tilde V_t$，最终 $W_t\leftarrow W_{t-1}-\eta_t\,U(\tilde M_t/\sqrt{\tilde V_t+\epsilon})V^\top$。这样做之所以有效，是因为理论上 $\|H_{U,V}\|_{(1,1)}\le\|H_U\|_{(1,1)}\le\|H\|_{(1,1)}$——双侧旋转在所有旋转里达到 $(1,1)$-范数的全局最小，实测把归一化 Hessian $(1,1)$-范数从 0.5436 压到 0.1228，等于直接掐住了放大延迟的那个因子。代价上 $U,V$ 不必每步刷新，默认 freq=10 几乎不掉点，拉到 freq=100 仍显著领先 baseline，开销可控。
+
+**3. 特征基估计的两轴分类（Algorithm 2）：在精度和显存之间给出可选档位。**
+
+百亿模型上多存两个矩阵、多算一次特征分解都不是小事，所以怎么估 $U,V$ 必须可调。作者用两个正交的轴把方案铺成一个谱系：第一个轴是 approximation source $\mathcal S$——$\mathcal S=2^\text{nd}$ 维护 $L=\mathbb E[GG^\top]$、$R=\mathbb E[G^\top G]$ 两个 EMA 矩阵当经验 Fisher 用，精度高但要存两个矩阵；$\mathcal S=1^\text{st}$ 退一步只用一阶动量近似 $\mathbb E[GG^\top]\approx\mathbb E[G]\mathbb E[G]^\top$，省掉 $L,R$ 的存储。第二个轴是 rotation geometry $\mathcal G$——bilateral 同时旋转左右两侧、捕捉完整 Kronecker 结构，unilateral 只旋转较小那一维以省算力。有意思的是这套分类把现成方法都装了进来：SOAP 恰是 ($\mathcal S=2^\text{nd}$, bilateral)、full-rank GaLore 恰是 ($\mathcal S=1^\text{st}$, unilateral)，统一到同一框架后就能把 Hessian geometry 的贡献从各家实现差异里干净地隔离出来。
 
 ### 损失函数 / 训练策略
-训练目标就是标准语言模型 next-token prediction，没有额外正则项。优化器超参跟随 Adam，新增的只有基底刷新频率 freq、$L/R$ 的 EMA 衰减（沿用 $\beta_2$）。所有方法默认配 weight stashing（前向反向用同一份权重）保证梯度计算正确，但论文也专门做了 w/o stashing 的鲁棒性实验。stage-aware 变种额外按 stage 延迟 $K-k$ 的大小不均匀分配基底刷新预算——延迟越大的早期 stage 刷得越勤。
+训练目标就是标准语言模型的 next-token prediction，没有额外正则项。优化器超参沿用 Adam，新增的只有基底刷新频率 freq 和 $L/R$ 的 EMA 衰减（复用 $\beta_2$）。所有方法默认配 weight stashing（前向反向用同一份权重）以保证梯度计算正确，但论文也专门做了去掉 stashing 的鲁棒性实验。stage-aware 变种则按各 stage 延迟 $K-k$ 的大小不均匀分配基底刷新预算——延迟越大的早期 stage 刷得越勤，直接对应关键设计 1 里 $\tau'$ 揭示的"早期 stage 失配主导"。
 
 ## 实验关键数据
 

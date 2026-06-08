@@ -40,33 +40,24 @@ tags:
 
 ## 方法详解
 
-本文几乎不是"提方法"的论文，而是"建机制+理论上界+大量受控实验"。
-
 ### 整体框架
-全文分三层：(a) 真实数据上的 SFT 二维扫描（Qwen2.5-Math-1.5B/7B × OpenMath 各 difficulty bucket × 各 size）；(b) 合成数据 iGSM 上的精确难度控制实验，以 op 数量代表难度，并按测试集 difficulty slice 分别评估，分离出"in-distribution 拟合崩了"vs"extrapolation 不动"两种失败模式；(c) PAC-Bayes 理论框架给出可解释的两-gap 分解上界（Proposition 4.1）。
+本文几乎不"提方法"，而是"建机制 + 理论上界 + 大量受控实验"。骨架分三层：先在真实数据上做 (规模 × 难度) 二维 SFT 扫描（Qwen2.5-Math-1.5B/7B × OpenMath 各 difficulty bucket × 各 size），再用合成数据 iGSM 做精确难度控制并按测试集 difficulty slice 分别评估，把"in-distribution 拟合崩了"和"extrapolation 不动"两种失败模式分离开，最后用 PAC-Bayes 给出可解释的两-gap 分解上界（Proposition 4.1）收口所有现象。
 
 ### 关键设计
 
-1. **CoT-length 作为难度度量**:
+**1. CoT-length 难度度量：用任务侧属性绕开循环依赖**
 
-    - 功能：用 ground-truth Chain-of-Thought 长度作为问题难度的代理指标。
-    - 核心思路：Figure 1 验证 CoT 长度与外部 LLM 通过率呈强负相关——CoT 越长，pass rate 越低，说明问题越难；这避免了"用本模型困惑度度量自身要学的难度"带来的循环依赖。
-    - 设计动机：perplexity 难度依赖被评估模型本身，会随 SFT 漂移；CoT 长度是 task-side 属性，跨模型可比，方便构造"同样难度、不同模型"的实验。
+度量"问题有多难"最自然的想法是看模型自身的困惑度，但 perplexity 难度依赖被评估的模型本身、还会随 SFT 不断漂移，等于用一把会变形的尺子去量自己要学的东西。本文改用 ground-truth Chain-of-Thought 的长度作为难度代理：CoT 是 task-side 属性，跨模型可比，方便构造"同样难度、不同 base 模型"的对照实验。Figure 1 验证了这把尺子是准的——CoT 越长，外部 LLM 的 pass rate 越低，二者强负相关，于是可以放心地用 CoT 长度三等分出 easy/medium/hard。
 
-2. **二维实验图谱 (size × difficulty) + decomposed evaluation**:
+**2. 二维图谱 + decomposed evaluation：把"总分变化"拆成"哪里崩了"**
 
-    - 功能：取消"固定 $n$ 只扫难度"或"固定难度只扫 $n$"的局部视角，绘制完整热图，并把测试集按 op 数切片，看 SFT 模型在每个测试难度上的提升量。
-    - 核心思路：Figure 6 展示两种典型失败模式——easy 训练时 in-domain 测试涨、hard 测试掉（extrapolation 失败）；hard 训练且 $n$ 小时全 slice 一起掉（generalization 失败）。这是把"总分变化"拆成"哪里崩了"的关键诊断。
-    - 设计动机：单一总分会掩盖机制；切片才能看出 trade-off 的两端在哪里出问题，进而支持后续 PAC-Bayes 上界的物理解释。
+先前工作几乎都只在"固定 $n$ 扫难度"或"固定难度扫 $n$"的局部切面里看问题，于是结论互相打架。本文索性画出完整的 (size × difficulty) 热图，并且关键地把测试集也按 op 数切片，分别统计 SFT 模型在每个测试难度上的提升量。这一步是整篇文章的诊断利器：单看总分只会看到"涨了"或"掉了"，看不见机制；而切片后 Figure 6 立刻揭穿两种典型失败——easy 训练时 in-domain 测试涨、hard 测试掉（extrapolation 失败），hard 训练且 $n$ 小时则全 slice 一起掉（generalization 失败）。两端在哪里出问题一目了然，也为后面 PAC-Bayes 上界的两个 gap 提供了物理对应。
 
-3. **两-gap PAC-Bayes 分解 (Proposition 4.1)**:
+**3. 两-gap PAC-Bayes 分解：把难度调节翻译成 KL-TV 之间的正则**
 
-    - 功能：把测试 risk 上界写成 $\mathbb{E}_{\theta\sim\pi_\mathrm{train}}[R_{\mathcal D_\mathrm{test}}(\theta)]\le \mathbb E[\hat R_S(\theta)] + G_\mathrm{gen}+G_\mathrm{ext}+\epsilon$，其中 $G_\mathrm{gen}=\mathcal O(\sqrt{\mathrm{KL}(\pi_\mathrm{train}\|\pi_\mathrm{pre})/n})$ ，$G_\mathrm{ext}=\mathcal O(\mathrm{TV}(\mathcal D_\mathrm{test},\mathcal D_\mathrm{train}))$。
-    - 核心思路：把预训练当作 prior $\pi_\mathrm{pre}$、SFT 得到的参数分布当作 posterior $\pi_\mathrm{train}$，PAC-Bayes 给出 posterior-prior KL 的复杂度项；TV 项捕捉训练分布到测试分布的偏移。难度上升 → posterior 离 prior 更远 → $G_\mathrm{gen}$ 升；但训练分布更靠近难测试集 → $G_\mathrm{ext}$ 降；两者反向运动产生单峰。
-    - 设计动机：先前 SFT 数据选择缺乏理论锚点；这个上界既能解释 4 大观察（数据规模、难度非单调、最优难度漂移、模型相对难度），又给出"调难度等价于在 KL-TV 之间做正则"的几何直觉。
+先前 SFT 数据选择缺乏理论锚点，本文把测试 risk 上界写成 $\mathbb{E}_{\theta\sim\pi_\mathrm{train}}[R_{\mathcal D_\mathrm{test}}(\theta)]\le \mathbb E[\hat R_S(\theta)] + G_\mathrm{gen}+G_\mathrm{ext}+\epsilon$，其中泛化项 $G_\mathrm{gen}=\mathcal O(\sqrt{\mathrm{KL}(\pi_\mathrm{train}\|\pi_\mathrm{pre})/n})$、外推项 $G_\mathrm{ext}=\mathcal O(\mathrm{TV}(\mathcal D_\mathrm{test},\mathcal D_\mathrm{train}))$。其物理图像是：把预训练当 prior $\pi_\mathrm{pre}$、SFT 后的参数分布当 posterior $\pi_\mathrm{train}$，PAC-Bayes 给出 posterior-prior 的 KL 复杂度项，TV 项则捕捉训练分布到测试分布的偏移。难度上升会让 posterior 离 prior 更远、$G_\mathrm{gen}$ 升，但同时训练分布更靠近困难测试集、$G_\mathrm{ext}$ 降——两个 gap 反向运动，相加自然产生单峰的"最优难度"。而 $n$ 增大主要压缩 $\sqrt{\cdot/n}$ 形式的 $G_\mathrm{gen}$，于是最优难度随 $n$ 单调右移。这个上界一口气解释了 4 大观察（数据规模、难度非单调、最优难度漂移、模型相对难度），并把"调难度"几何化为"在 KL 与 TV 之间做正则"。
 
-### 损失函数 / 训练策略
-SFT 使用标准 CE，难度切片由 CoT 长度三等分（easy/medium/hard）或 op 数等距划分（iGSM 实验）；DFT 案例研究中 token 权重为 $\mathrm{sg}(p_\theta)\cdot \nabla\log p_\theta$，将"token 概率"作为隐式难度信号——这部分作为延伸案例验证理论对"token 级数据选择"同样成立。
+训练侧细节很轻：SFT 用标准 CE，难度切片由 CoT 长度三等分或 iGSM 的 op 数等距划分。文中还把 DFT 当作 token-level 延伸案例——它的 token 权重为 $\mathrm{sg}(p_\theta)\cdot \nabla\log p_\theta$，相当于偏向高概率 token、隐式降难度，正好用同一套理论解释 DFT 为何在不同 setting 表现忽好忽坏。
 
 ## 实验关键数据
 

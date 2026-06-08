@@ -40,38 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-- **输入**：VLA 数据集（RT-1, BRIDGE, TacoPlay, Language Table, LIBERO）+ 参考数据集（OASST2, Alpaca, LLaVA-Instruct, ALFRED, SCOUT）
-- **三大分析维度（A1/A2/A3）**：A1 重复 & 词汇多样性、A2 语义多样性、A3 句法 & 结构多样性
-- **每维度多个互补指标**：避免任一指标的固有偏置（如 BERTScore 不敏感语序）
-- **输出**：每个数据集在 ~10 个量化指标上的画像 + 跨域对照表 + 改进建议（增广 / 跨域迁移 / 采集指南）
+
+本文不训练任何模型，而是给「指令语言多样性」搭一套可量化的体检框架，再用它给主流 VLA 语料和一组跨域参考语料拍 CT。被检对象一侧是 VLA 数据集（RT-1、BRIDGE、TacoPlay、Language Table、LIBERO），参照一侧是指令调优与对话语料（OASST2、Alpaca、LLaVA-Instruct）以及语言导向的 robotics 语料（ALFRED、SCOUT）。每个数据集都沿词汇、语义、句法三条轴（A1/A2/A3）跑约十个互补指标，最后汇成一张跨域对照画像，并据此给出增广、跨域迁移、采集指南三类改进处方。
 
 ### 关键设计
 
-1. **Analysis 1: Duplication & Lexical Diversity（重复 & 词汇）**:
+**1. 分析一：重复与词汇多样性（A1）——指令到底重复多少、用了多少种词。**
 
-    - 功能：量化"指令到底重复多少 + 用了多少种词"。
-    - 核心思路：基础统计——句子总数 #Sent、唯一句数 #Uniq 与 % Uniq、唯一 unigram 数 #Words；多样性指标——**Compression Ratio (CR)**（gzip 压缩比，越低越多样，Shaib 2025 验证对人写 vs LLM 写有效）、ROUGE-L、BLEU、Jaccard、Levenshtein。前两个在主表 Table 2，后三个在附录 Table 4。
-    - 设计动机：从 LLM 文献已知数据 deduplication 显著影响泛化（Kandpal 2022, Lee 2022），且过参网络可拟合随机标签（Zhang 2017）——高重复率会让 VLA 模型记忆训练指令而非泛化。CR 比 ROUGE 更全局（看整库），是与 ROUGE 等 pairwise 指标的互补。
+VLA 数据集动辄数百万条指令，却没人量化过其中有多少是真正不同的。A1 先用基础统计打底：句子总数 #Sent、唯一句数 #Uniq 及 % Uniq、唯一 unigram 数 #Words；再叠一组多样性指标——**Compression Ratio（CR）** 用 gzip 压缩比衡量整库的可压缩程度（越低越多样，Shaib 2025 验证它能区分人写与 LLM 写文本），以及 ROUGE-L、BLEU、Jaccard、Levenshtein 这类 pairwise 相似度（前两个进主表 Table 2，后三个在附录 Table 4）。之所以 CR 和 pairwise 指标并用，是因为 LLM 文献早已表明数据去重显著影响泛化（Kandpal 2022、Lee 2022），而过参网络又能直接记忆训练标签（Zhang 2017）——高重复率会让 VLA 模型背下训练指令而非泛化；CR 看的是全局可压缩性，正好补上 ROUGE 这类只看两两相似的盲区。
 
-2. **Analysis 2: Semantic Diversity（语义内涵）**:
+**2. 分析二：语义多样性（A2）——指令背后到底表达了多少种不同任务语义。**
 
-    - 功能：量化"指令背后表达了多少不同的任务语义"。
-    - 核心思路：
-        - **句子级 pairwise BERTScore**——配对采样 1000 条指令计算相似度均值
-        - **数据集级 PCA on sentence embeddings**——用 USE/SBERT/CLIP/SONAR 四种编码器算嵌入，报告解释 95% 累计方差所需的 PCA 分量数（intrinsic dimensionality）
-        - **Verb–Direct Object 共现矩阵**——分析每个 DO 配多少种 verb，对 navigation 数据集则分析 directional/manner adverbial 的覆盖度
-    - 设计动机：embedding-based 指标对 paraphrase 鲁棒（捕捉 what is said 而非 how），适合度量任务种类的多样性。VO 共现是 robotics 域特有的可解释维度——如果"banana"只被"pick"，模型就学到了 verb-object shortcut，与 Shah 2020 的 simplicity bias 一致。
+词汇换皮多不等于任务种类多，A2 用 embedding 视角度量「说的是什么」而非「怎么说」。它从三个层面切入：句子级配对采样 1000 条指令算 pairwise **BERTScore** 均值；数据集级对 USE/SBERT/CLIP/SONAR 四种编码器的句向量做 **PCA**，报告解释 95% 累计方差所需的主成分数（即 intrinsic dimensionality）；再加一个 robotics 特有的 **Verb–Direct Object 共现矩阵**，统计每个宾语搭配多少种动词（导航类数据集则换成方向/方式状语的覆盖度）。embedding 指标对 paraphrase 鲁棒，适合刻画任务种类的丰富程度；VO 共现则是可解释的诊断维度——如果「banana」永远只配「pick」，模型学到的就是 verb-object shortcut，正对应 Shah 2020 说的 simplicity bias。
 
-3. **Analysis 3: Structural Diversity（句法 & 高阶结构）**:
+**3. 分析三：结构与句法多样性（A3）——指令的语法骨架和高阶逻辑构造有多丰富。**
 
-    - 功能：量化"指令的语法骨架和高阶逻辑构造"。
-    - 核心思路：
-        - **POS pattern 频率分布 + Constituency Tree Kernel (Moschitti 2006) pairwise 相似度**：捕捉表层句法多样性
-        - **高阶构造检测**：用 dependency parse + keyword pattern + POS 启发式自动识别**否定（negation）、条件（conditional）、多步（multi-step）、循环（cycle）**四种构造的占比；对 < 600 唯一句的数据集人工标注，> 600 用自动 pipeline；每个数据集再人工 review 500 条以估算 labeling 不确定性
-    - 设计动机：句法贫乏会放大模型偏置（Aggarwal 2022）；否定 / 条件 / 循环 / 多步是真实世界 robot 命令的必备结构（"不要拿烂的苹果"/"如果拿到了苹果就洗它"/"重复直到放完"），现有 VLA 几乎不学这些等于直接砍掉部署能力。
+真实世界的机器人命令常含否定、条件、循环这类结构，A3 专门量化这一层。表层句法上，统计 POS pattern 的频率分布，并用 **Constituency Tree Kernel（Moschitti 2006）** 算句法树的 pairwise 相似度；高阶构造上，用 dependency parse + 关键词模式 + POS 启发式自动识别**否定、条件、多步、循环**四类构造的占比——唯一句少于 600 的数据集人工标注，多于 600 的走自动 pipeline，每个数据集再人工 review 500 条估算标注不确定性。这么做是因为句法贫乏会放大模型偏置（Aggarwal 2022），而「不要拿烂的苹果」「如果拿到苹果就洗它」「重复直到放完」这类否定/条件/循环/多步结构是真实部署的刚需，现有 VLA 几乎不学等于直接砍掉这部分部署能力。
 
 ### 损失函数 / 训练策略
-本文是**纯数据集审计/经验研究**，不训练任何模型。所有计算用 spaCy 做 POS/dependency，sentence embeddings 用 USE/SBERT/CLIP/SONAR 公开模型，多样性指标按 1000 采样 × 3 次重复算均值±标准差。
+
+本文是纯数据集审计/经验研究，不训练任何模型。POS 与 dependency 解析用 spaCy，句向量用 USE/SBERT/CLIP/SONAR 公开模型，所有多样性指标按 1000 采样 × 3 次重复算均值 ± 标准差。
 
 ## 实验关键数据
 

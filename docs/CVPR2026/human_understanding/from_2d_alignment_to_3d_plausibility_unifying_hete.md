@@ -43,27 +43,35 @@ tags:
 
 ### 整体框架
 
-两阶段 Pipeline。Stage 1（2D 对齐）：ResNet-50 提取图像特征 $\mathbf{F}_i$ → Sapiens 提取关键点/分割/深度先验特征 $\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d$ → Projection 融合为 $\mathbf{F}_p$ → Fusion Alignment Encoder（ResNet-50）用 MSE 蒸馏学习 $\mathbf{F}_p$ → Transformer Encoder 融合 $\langle\mathbf{F}_i, \mathbf{F}_p\rangle$ → MANO 回归器预测手部参数。推理时移除 Sapiens，只用 FAE。Stage 2（3D 交互）：检测双手 IoU>0 且存在穿透 → 穿透 MANO 参数作为条件输入扩散模型 → DDIM 去噪 + 碰撞梯度引导 → 输出物理合理配置。
+A2P 想解决的是单目双手重建里最棘手的两类失败：互遮挡时 2D 线索不可靠导致姿态估歪，以及手指彼此穿模（穿透）这种物理上不可能的配置。作者把它拆成两个互补阶段，让每个阶段只管自己擅长的事。
+
+Stage 1 负责「2D 结构对齐」：ResNet-50 从图像抽出特征 $\mathbf{F}_i$，训练时再用 Sapiens 基础模型抽出关键点、分割、深度三种 2D 先验特征 $\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d$，融合成 $\mathbf{F}_p$；一个轻量的 Fusion Alignment Encoder 把 $\mathbf{F}_p$ 蒸馏下来，于是推理时可以直接扔掉 Sapiens。两路特征 $\langle\mathbf{F}_i, \mathbf{F}_p\rangle$ 经 Transformer Encoder 融合后送进 MANO 回归器，得到双手参数。Stage 2 负责「3D 空间交互对齐」：只有当检测到双手包围盒 IoU>0 且确实发生穿透时才启动，把这组穿透的 MANO 参数当条件喂给扩散模型，边 DDIM 去噪边用碰撞梯度往「不穿模」的方向推，最终输出物理上站得住的配置。大部分帧不穿透，直接跳过 Stage 2。
 
 ### 关键设计
 
-1. **Fusion Alignment Encoder (FAE)**
+**1. Fusion Alignment Encoder（FAE）：把基础模型的 2D 先验蒸馏成一个推理时用得起的小模型。**
 
-    - 功能：训练时利用基础模型多模态 2D 先验，推理时用轻量蒸馏模型替代
-    - 核心思路：训练时 Sapiens（1B 参数）提取三种先验特征 → Projection 层融合 $\mathbf{F}_p = \text{Proj}(\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d)$ → FAE（轻量 ResNet-50，52.6M 参数）用 MSE 损失学习对齐 $\mathbf{F}_p$ → 推理时只需 FAE 替代 Sapiens，3fps→56fps 加速 18.7 倍，MRRPE 仅增 0.47mm。关键：**不提取显式先验预测（关键点坐标/分割图/深度图）而是蒸馏隐式特征**，避免先验预测误差级联传播
-    - 设计动机：直接用基础模型推理太慢（1B 参数 3fps），而传统的显式先验预测+输入增广方式会累积预测误差。隐式蒸馏保留结构知识同时大幅降低推理成本——"foundation-level guidance without foundation-level cost"
+直接拿 Sapiens 这种 1B 参数的基础模型做先验，精度好但只有 3fps，根本没法实用。一个自然的折中是让基础模型先吐出显式预测（关键点坐标、分割图、深度图）再当额外输入塞回主网络，但这样先验预测本身的误差会一路级联放大。FAE 的做法是绕开显式预测：训练时 Sapiens 抽三种先验特征，Projection 层融合成 $\mathbf{F}_p = \text{Proj}(\mathbf{F}_k, \mathbf{F}_s, \mathbf{F}_d)$，再让一个仅 52.6M 参数的 ResNet-50（即 FAE）用 MSE 损失去对齐 $\mathbf{F}_p$，把基础模型的结构知识隐式地装进自己的特征里。推理时整条 Sapiens 分支被移除，只留 FAE，帧率从 3fps 拉到 56fps（18.7× 加速），MRRPE 仅多 0.47mm。一句话概括它的取舍就是「foundation-level guidance without foundation-level cost」——蒸馏隐式特征而非显式预测，既保住了先验的结构信息，又避开了预测误差的级联。
 
-2. **穿透感知扩散模型**
+**2. 穿透感知扩散模型：把「修穿模」当成一个条件生成问题来学。**
 
-    - 功能：学习从穿透姿态到物理合理配置的生成映射
-    - 核心思路：Transformer-based 架构，MDM 风格扩散过程（1000 步 + 余弦噪声调度）。**训练数据构建**：(i) 低性能模型的穿透输出作为条件 $\mathbf{X}_c$，GT 作为目标 $\mathbf{X}_0$；(ii) 对 GT MANO 参数加噪直到穿透发生，构成配对数据。去噪损失 $\mathcal{L}_{diffusion} = \|\mathbf{X}_0 - \mathcal{D}(\mathbf{X}_t, \mathbf{X}_c)\|_2$。推理时仅在双手 IoU>0 且穿透检测通过时激活（大部分帧跳过）
-    - 设计动机：与 InterHandGen（扩散仅做输出正则）和 Zuo et al.（CNN 提取交互特征）不同，显式建模"穿透→合理"的映射是更直接有效的方式。条件扩散做"修复"而非"生成"——输入穿透姿态→输出合理姿态，比从零生成更稳定
+遮挡下 2D 先验补不全的部分，最容易表现为手指互相穿模——这是 Stage 1 治不了的物理错误。已有工作要么把扩散先验只当输出正则器（InterHandGen），要么用 CNN 抽交互特征（Zuo et al.），都没有直接对「穿透→合理」这条映射建模。A2P 用一个 Transformer 架构、MDM 风格的扩散过程（1000 步 + 余弦噪声调度）来显式学这条映射。它的妙处在配对数据怎么造：一方面拿低性能模型真实吐出的穿透姿态当条件 $\mathbf{X}_c$、对应 GT 当目标 $\mathbf{X}_0$；另一方面对干净的 GT MANO 参数持续加噪直到出现穿透，反过来构成（穿透条件，合理目标）的配对。去噪目标就是从带噪输入和穿透条件里还原出合理姿态：
 
-3. **碰撞梯度引导**
+$$\mathcal{L}_{diffusion} = \|\mathbf{X}_0 - \mathcal{D}(\mathbf{X}_t, \mathbf{X}_c)\|_2$$
 
-    - 功能：在扩散去噪过程中引入物理碰撞约束
-    - 核心思路：每步 DDIM 去噪后，将估计的 $\hat{\mathbf{X}}_0$ 送入 MANO 得到 mesh 顶点 → (i) 计算双手顶点间 Chamfer 距离 $\mathbf{N}_{ij} = |\mathbf{V}_{t-1}^i - \mathbf{V}_c^j|^2$，保留 $\mathbf{N}_{ij} < d_{threshold}$ 的近邻对；(ii) 检查法向余弦相似度 $\cos(\theta_{ij}) < \cos(\theta_{thre})$（法向量反向=穿透，法向量同向=正常接触）；(iii) 用 GMoF 鲁棒碰撞损失计算梯度并更新：$\hat{\mathbf{X}}_0 = \hat{\mathbf{X}}_0 - \lambda \nabla \mathcal{L}_{collision}$
-    - 设计动机：混合距离-方向准则区分穿透和正常接触——距离近+法向反向=穿透需纠正，距离近+法向同向=自然接触不应干扰。GMoF 函数提供鲁棒性避免单点异常值主导梯度
+这样扩散模型做的是「修复」而不是「凭空生成」——输入一组穿模的手、输出一组不穿模的手，比从零采样一个双手交互稳定得多，也因为只在 IoU>0 且检出穿透时激活，绝大多数帧不付这份开销。
+
+**3. 碰撞梯度引导：在去噪的每一步给扩散加一道物理碰撞约束。**
+
+光靠扩散学到的数据分布还不足以保证完全无穿透，需要在采样过程中显式注入物理约束，难点是怎么区分「该纠正的穿模」和「正常的手指接触」——两者顶点距离都很近。碰撞梯度引导用一个距离 + 方向的混合准则来分辨：每步 DDIM 去噪后把估计的 $\hat{\mathbf{X}}_0$ 过一遍 MANO 拿到 mesh 顶点，先算双手顶点间距离 $\mathbf{N}_{ij} = |\mathbf{V}_{t-1}^i - \mathbf{V}_c^j|^2$ 留下 $\mathbf{N}_{ij} < d_{threshold}$ 的近邻对，再看法向余弦相似度 $\cos(\theta_{ij}) < \cos(\theta_{thre})$——法向量反向意味着一只手戳进了另一只手内部（穿透，要纠正），法向量同向则是两个表面自然贴合（接触，不该动）。只对判定为穿透的近邻对用 GMoF 鲁棒函数算碰撞损失并沿其梯度更新：
+
+$$\hat{\mathbf{X}}_0 = \hat{\mathbf{X}}_0 - \lambda \nabla \mathcal{L}_{collision}$$
+
+GMoF 的作用是压住个别离群顶点，避免单点异常主导整个梯度方向，让纠正更平稳。
+
+### 一个完整示例：一帧穿模的双手怎么被修回来
+
+设输入是一帧两手交叠、食指穿进对方掌心的图像。Stage 1 先用 FAE 蒸馏特征 + MANO 回归器估出一组参数，但因为遮挡，估出的姿态食指明显插进了另一只手。进入 Stage 2，系统先检测：双手包围盒 IoU>0 ✓、穿透检出 ✓，于是启动扩散——把这组穿模参数当条件 $\mathbf{X}_c$，从噪声开始 DDIM 去噪。每一步去噪得到 $\hat{\mathbf{X}}_0$ 后立刻过 MANO 取 mesh：在交叠区找到一批近邻顶点对，其中食指尖那几对法向反向，被判为穿透，对它们算碰撞梯度把食指往外推；而两手掌侧那些法向同向的接触顶点被准则放过、不受干扰。逐步去噪 + 逐步推开后，最终输出的双手食指退出掌心、掌侧接触保留——穿透体积从 0.76 降到 0.11 量级，得到一个既贴合图像又物理合理的配置。
 
 ### 损失函数 / 训练策略
 

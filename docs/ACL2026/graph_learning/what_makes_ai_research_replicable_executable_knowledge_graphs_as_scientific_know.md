@@ -46,23 +46,24 @@ xKG 的形式化表示为 $xKG=(N,E)$。节点集合分为三类：Paper Node、
 构建流程分为两大块。第一块是 paper-aware corpus curation：围绕目标 PaperBench 任务，自动识别核心技术、选择高相关引用论文和 web 检索结果、下载 arXiv 源文和官方 GitHub repo，并过滤没有官方实现的论文。第二块是 hierarchical KG construction：从论文抽技术树，从 repo 取代码片段，生成并验证 Code Node，再剪掉无法 grounding 到代码的技术节点。
 
 ### 关键设计
-1. **Paper-Technique-Code 三层节点表示**:
 
-	- 功能：同时表达论文整体结构、方法概念和可执行实现，支撑从高层规划到低层编码的复现流程。
-	- 核心思路：Paper Node 保存论文元信息及其技术/代码节点集合；Technique Node 保存方法定义和可选子技术节点，能表示完整框架或可复用模块；Code Node 保存实现 $\sigma$、测试脚本 $\tau$ 和文档 $\delta$。Structural Edge 连接技术节点之间的架构依赖，Implementation Edge 连接技术节点与对应代码。
-	- 设计动机：普通 RAG 返回的是片段，agent 还要自己判断哪些片段属于方法结构、哪些代码能用。三层图把“论文说了什么”和“代码怎么实现”显式对齐，减少 agent 自行拼接的负担。
+**1. Paper-Technique-Code 三层节点表示：把"论文说了什么"和"代码怎么实现"显式对齐。**
 
-2. **可执行 grounding 的自动构建流水线**:
+普通 RAG 返回的是一堆文本或代码片段，agent 还得自己判断哪些片段属于方法结构、哪些代码真能跑。三层节点正是为了卸掉这个负担：Paper Node 保存论文元信息以及它名下的技术/代码节点集合；Technique Node 保存一个可自包含的方法定义和可选的子技术节点，既能表示整套框架也能表示可复用模块；Code Node 则保存实现 $\sigma$、测试脚本 $\tau$ 和文档 $\delta$ 这三件套。
 
-	- 功能：把论文和 repo 自动转成可复用、可执行的知识资源。
-	- 核心思路：作者先用 o4-mini 抽取论文技术树，再用 Paper-RAG 补充每个技术节点定义；随后以技术定义为 query，在官方 repo 中通过 embedding 检索代码片段，并用 o4-mini 合成 Code Node。每个 Code Node 会经过自调试循环，确保可执行；如果某个技术节点无法找到相关代码，就在知识过滤阶段被剪掉。
-	- 设计动机：论文抽取本身容易产生过细、幻觉或不可实现的概念。要求技术节点必须能落到代码，相当于用“可执行性”作为知识质量过滤器。
+节点之间用两类边连起来：Structural Edge 表达技术节点之间的架构依赖（哪个模块搭在哪个模块上），Implementation Edge 把技术节点和对应代码挂钩。这样一来，agent 在规划时顺着 Structural Edge 就能读出方法骨架，在编码时顺着 Implementation Edge 就能取到可运行的实现，不必再把零散片段拼回方法结构。
 
-3. **两阶段 agent 集成方式**:
+**2. 可执行 grounding 的自动构建流水线：用"能不能落到代码"当知识质量过滤器。**
 
-	- 功能：让 xKG 既能帮助 agent 理解论文，又能帮助 agent 写具体代码。
-	- 核心思路：在 high-level planning 阶段，agent 获取目标论文的 Paper Node，但不直接暴露 Code Node，以免规划阶段被实现细节淹没；在 low-level implementation 阶段，agent 查询与当前目标相关的 Technique-Code pairs。最终还有一个 LLM verifier 过滤检索结果，保证技术相关且可实现。
-	- 设计动机：复现任务有两个不同难点：先理解方法结构，再写出功能正确的代码。把 xKG 按阶段暴露给 agent，可以避免一开始就堆大量代码，也能在真正编码时提供细粒度参考。
+论文抽取本身很容易产出过细、幻觉甚至根本无法实现的概念，因此 xKG 不满足于把论文转成纯文本图。构建时先用 o4-mini 抽出论文的技术树，再用 Paper-RAG 给每个技术节点补全定义；随后以技术定义为 query，在官方 repo 里用 embedding 检索相关代码片段，交给 o4-mini 合成 Code Node，每个 Code Node 还要走一遍自调试循环确保真能执行。
+
+关键的一步是知识过滤：如果某个技术节点怎么也找不到能 grounding 的代码，就直接被剪掉。换句话说，"可执行性"被当成知识质量的硬门槛——留下的每个技术节点都至少对应一段跑得通的代码，这也是为什么自调试后 Code Node 的可执行率能从约 52% 拉到 100%。
+
+**3. 两阶段 agent 集成方式：规划时只给方法骨架，编码时才放出代码。**
+
+复现任务其实有两个难点错开在不同阶段：先得理解方法结构，再写出功能正确的代码。xKG 顺着这个节奏分两步暴露知识。在 high-level planning 阶段，agent 只拿到目标论文的 Paper Node，刻意不直接给 Code Node，免得规划一开始就被实现细节淹没；进入 low-level implementation 阶段，agent 才按当前子目标去查相关的 Technique-Code pairs。
+
+检索结果最后还过一个 LLM verifier，确保返回的配对既技术相关又确实可实现。这种"先骨架后血肉"的暴露顺序，避免了规划阶段堆一大坨代码、实现阶段又只剩抽象概念的两头落空。
 
 ### 损失函数 / 训练策略
 本文没有提出新的神经训练损失，而是构建知识图谱并把它作为可插拔模块接入 agent。涉及的模型调用主要用于技术抽取、代码模块化、自调试和 verifier。检索侧使用 text-embedding-3-small、all-MiniLM-L6-v2 等 embedding 计算相似度，关键阈值包括 technique_similarity=0.6、paper_similarity=0.6。

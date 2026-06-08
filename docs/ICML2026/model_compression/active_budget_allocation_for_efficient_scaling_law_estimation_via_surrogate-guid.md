@@ -38,34 +38,28 @@ tags:
 **核心 idea**：用学习曲线 surrogate 修正 Successive Halving 的短视剪枝，让预算流向对 loss-compute frontier 更有潜力的模型。
 
 ## 方法详解
-本文把 scaling law 数据采集过程拆成若干轮。每轮给当前候选模型分配同样的新增 compute，训练得到部分 learning curve；然后根据这些曲线选择一部分模型进入下一轮。与普通 SH 的区别在于，SH LMC/SH DE 不只看当前曲线终点，而是先预测如果这个模型继续训练到后续预算，它可能达到什么 loss，再按预测潜力剪枝。
 
 ### 整体框架
-输入是初始模型集合 $\mathcal M_0$、总预算 $B$、剪枝系数 $\eta$。第 $r$ 轮中，每个仍保留的模型获得预算 $C_r=\lfloor B/(|\mathcal M_r|\lceil\log_\eta |\mathcal M_0|\rceil)\rfloor$。模型训练到当前累计预算后形成 learning curve $L_m(C)$。
+本文要解决的是：拟合一条准确的 scaling law 需要把许多不同规模的模型都训练到足够长的 compute，但其中大部分模型最终不会落在 loss-compute 前沿上，算力被白白消耗。作者的做法是把数据采集拆成若干轮的资源选择：每轮给当前所有候选模型分配同样的新增 compute，训练出一段 learning curve，再根据这些曲线淘汰一批、把预算集中到留下的模型上，直到耗尽总预算。整个过程沿用超参优化里的 Successive Halving (SH) 框架，但在「按什么标准淘汰」这一步动了刀——不只看曲线当前终点，而是预测每个模型若继续训练能达到的 loss，按未来潜力剪枝。
 
-若不使用 surrogate，Top_k 直接按已观测曲线的最低 loss 选择下一轮模型。若使用 surrogate，则先用 LMC GP 或 Deep Ensemble 预测每条曲线延伸到最后一轮预算时的未来 loss，并把观测曲线和预测 continuation 合并用于选择。最终输出只保存真实训练得到的曲线，不把 surrogate continuation 当作已观测数据；这些曲线再用于拟合 compute-loss scaling law。
+具体地，输入是初始模型集合 $\mathcal M_0$、总预算 $B$、剪枝系数 $\eta$。第 $r$ 轮里每个仍保留的模型获得预算 $C_r=\lfloor B/(|\mathcal M_r|\lceil\log_\eta |\mathcal M_0|\rceil)\rfloor$，训练到累计预算后形成 learning curve $L_m(C)$。普通 SH 直接按已观测曲线的最低 loss 用 Top$_k$ 选下一轮模型；带 surrogate 的 SH LMC / SH DE 则先用 surrogate 预测每条曲线延伸到最后一轮预算时的 loss，把观测段和预测 continuation 合并起来再选。最终输出只保存真实训练出的曲线（surrogate 的 continuation 绝不当作已观测数据），用它们拟合 compute-loss scaling law。
 
 ### 关键设计
-1. **把 scaling law 采样转成预算受限的 proxy optimization**:
 
-    - 功能：避免直接求解“哪组曲线最能拟合 scaling law”这个没有金标准且难优化的问题。
-    - 核心思路：作者先优化一个 proxy：在总预算内找到能达到最低 validation loss 的模型集合。这个过程自然产生一组被不同程度训练过的 learning curves，再用它们拟合 scaling law。
-    - 设计动机：Scaling law 的真实目标需要知道完整训练后的 ground-truth frontier，但这正是昂贵之处。proxy 目标可直接从当前训练 loss 得到，便于用 SH 类算法近似。
+**1. 把 scaling law 采样转成预算受限的 proxy 优化：绕开没有金标准的拟合目标。**
 
-2. **LMC Gaussian Process 学习跨曲线相关性**:
+「哪组 learning curve 最能拟合 scaling law」本身没有可直接优化的目标——真正的 ground-truth frontier 要把模型完整训练才知道，而这恰恰是最贵的部分。作者因此换了个可计算的 proxy：在总预算 $B$ 内寻找能达到最低 validation loss 的模型集合。优化这个 proxy 的副产物，正是一组被不同程度训练过的 learning curves，拿它们去拟合 scaling law 即可。这样目标就只依赖当前已观测到的训练 loss，可以直接套用 SH 这类 anytime 的资源分配算法来近似，而不必先知道前沿。
 
-    - 功能：根据多个模型早期学习曲线预测某个模型后续训练的 loss trend。
-    - 核心思路：LMC surrogate 把曲线外推建模为 multi-input multi-output GP，kernel 由 exponential decay、white noise 和 bias 子核组合，并通过 co-regionalisation 矩阵捕捉不同模型曲线之间的相关性。小模型何时 plateau、大模型曲线何时转优，都可为其他曲线提供外推信号。
-    - 设计动机：普通 SH 容易被早期 loss 误导。LMC 利用曲线形状先验和跨模型相关性，让较大模型即便当前 loss 不最低，也可能因为预测未来更优而被保留。
+**2. LMC Gaussian Process：用跨曲线相关性给大模型「翻案」。**
 
-3. **Deep Ensemble surrogate 与 scaling law extrapolation**:
+普通 SH 的硬伤是只看当前 loss——小模型早期下降快，会在短预算下显得更优，于是后期才发力的大模型被过早淘汰。这一设计让 surrogate 根据多条早期曲线预测某个模型后续的 loss 走向，从而保留那些当前不占优、但预测未来更低的大模型。具体把曲线外推建模为一个 multi-input multi-output 的 GP，kernel 由 exponential decay、white noise 和 bias 三个子核组合，再通过 co-regionalisation 矩阵显式捕捉不同模型曲线之间的相关性。这样「小模型大约何时 plateau」「大模型曲线何时由劣转优」这类规律会跨曲线共享，成为外推其他曲线的信号——这正是单曲线外推方法拿不到的先验。
 
-    - 功能：比较非参数 GP 与参数化 curve family 对 budget allocation 的帮助，并利用 surrogate 预测扩展 compute range。
-    - 核心思路：Deep Ensemble 用两层 MLP 条件化 power law、exponential、Morgan-Mercer-Flodin 等函数的系数，预测学习曲线形状。后续 synthetic 实验还在 SH LMC 后用 GP mean/UCB/LCB 外推 learning curves，减少 scaling law 与 ground truth 的 AbC 差距。
-    - 设计动机：不同数据集的曲线噪声和形状不同，单一 surrogate 未必最优；同时 scaling law 常需要超出已训练 compute 区间，surrogate 的不确定性边界可以给出决策区间。
+**3. Deep Ensemble surrogate 与 scaling law 外推：换参数化曲线族 + 给前沿配不确定性区间。**
+
+GP 之外作者还试了参数化路线，用来回答「非参数 GP 和参数化 curve family 谁更适合 budget allocation」。Deep Ensemble 用两层 MLP 去条件化 power law、exponential、Morgan-Mercer-Flodin 等曲线函数的系数，预测曲线形状；不同数据集的曲线噪声和形状各异，单一 surrogate 未必最优，多套曲线族给了选择空间。此外 scaling law 常要外推到已训练 compute 区间之外，作者在 SH LMC 之后再用 GP 的 mean / UCB / LCB 把 learning curve 往外延，缩小拟合曲线与 ground truth 的 AbC 差距——UCB/LCB 还顺带给出乐观/悲观的曲线边界，让预算决策不只有一个点估计。
 
 ### 损失函数 / 训练策略
-LMC GP 用 L-BFGS 和 20 个随机重启优化，Deep Ensemble 使用 5 个随机初始化的两层 perceptron，训练 1000 次迭代。实验默认每条曲线抽取 20 个观测点训练 surrogate。Scaling law 拟合采用 $L^{SL}(C)=(C/\alpha)^{-\gamma}$，并在指定 compute 区间上用 Area between Curves (AbC) 衡量拟合曲线与 ground truth scaling law 的距离。
+LMC GP 用 L-BFGS 加 20 个随机重启优化，Deep Ensemble 用 5 个随机初始化的两层 perceptron 训练 1000 次迭代，实验默认每条曲线抽 20 个观测点训练 surrogate。Scaling law 拟合采用 $L^{SL}(C)=(C/\alpha)^{-\gamma}$，并在指定 compute 区间上用 Area between Curves (AbC) 衡量拟合曲线与 ground-truth scaling law 的距离。
 
 ## 实验关键数据
 

@@ -38,37 +38,49 @@ tags:
 
 ### 整体框架
 
-框架遵循"先规划后生成"范式。(1) 规划阶段（SMR）：将用户 prompt 转换为运动图，对每个实例推理出逐帧 bounding box 序列作为运动表示。(2) 生成阶段（DMG）：根据运动类别，通过三个专用引导分支（外观一致性 / 几何不变性 / 空间变形）分别调控注意力图来合成运动。框架是模型无关的，适配 3D U-Net（VideoCrafter）和 DiT（CogVideoX）两种架构。
+这篇论文要解决的是：从一段描述多个物体、多种运动的复杂 prompt 出发，让视频生成模型给每个物体生成符合它运动类别的、彼此不同的运动，而不是让所有物体动得千篇一律。核心观察是——静止的路灯、直线行驶的车、跳舞的人，本来就需要三套完全不同的生成策略，但现有方法对它们一视同仁。
+
+框架走的是"先规划、后生成"两步。规划阶段（SMR）先把文本 prompt 翻译成一张结构化的运动图，再从图里为每个实例推导出逐帧的 bounding box 序列，作为该实例的运动表示。生成阶段（DMG）拿到这些 box 后，按实例的运动类别分别走三条专用引导分支——静止走外观一致性、刚体走几何不变性、非刚体走空间变形——各自去调控扩散模型的注意力图。整套流程不改模型权重，只在注意力层面动手，因此 3D U-Net（VideoCrafter）和 DiT（CogVideoX）两种骨干都能直接套用。
 
 ### 关键设计
 
-1. **结构化运动推理（SMR）模块**:
+**1. 结构化运动图推理（SMR）：把"文本→运动"的歧义拆成"文本→图→运动"两步。**
 
-    - 功能：将语义模糊的文本 prompt 转换为结构化运动表示，为每个实例生成运动类别标签和逐帧 bounding box 序列
-    - 核心思路：首先构建运动图 $\mathcal{R} = (\mathcal{V}, \mathcal{E})$，每个实例为节点（标注运动属性和类别标签），有向边表示实例间空间关系和动态交互。然后基于运动类别推理 box 序列——静止实例 $\mathcal{B}_f(v_n) = \mathcal{B}_1(v_n)$ 保持不变；刚体运动实例根据估计速度 $\vec{u}$ 和加速度 $\vec{a}$ 更新 $\mathcal{B}_f = \mathcal{B}_{f-1} + \vec{u} + \frac{1}{2}\vec{a}$；非刚体运动用边界位移向量 $\Delta_f(v_n)$ 建模非对称变形。
-    - 设计动机：直接从 prompt 生成 box 序列会因语义歧义产生错误运动。运动图作为中间结构化表示，使 LLM 可以分步推理——先理解实例关系和运动类别，再推导具体运动参数，显著减少歧义。
+直接让 LLM 从 prompt 一步生成 box 序列，常因语义歧义产出断裂的轨迹和异常的尺寸跳变。SMR 的做法是先让 LLM 建一张运动图 $\mathcal{R} = (\mathcal{V}, \mathcal{E})$：每个实例是一个节点，节点上标注它的运动属性和类别标签，有向边则编码实例间的空间关系与动态交互。有了这张图作为中间表示，box 序列的推导就退化成按类别套公式：静止实例直接锁死第一帧 $\mathcal{B}_f(v_n) = \mathcal{B}_1(v_n)$；刚体实例按估计的速度 $\vec{u}$ 和加速度 $\vec{a}$ 做运动方程外推 $\mathcal{B}_f = \mathcal{B}_{f-1} + \vec{u} + \frac{1}{2}\vec{a}$；非刚体实例则用边界位移向量 $\Delta_f(v_n)$ 来刻画非对称形变。先理解关系和类别、再算具体参数，这种分步推理把 LLM 容易出错的"凭空想运动"换成了"填结构化的空"，歧义自然小很多。
 
-2. **参考条件引导（静止实例）**:
+**2. 参考条件引导（RCG，针对静止实例）：把所有帧锚到一帧上，掐掉伪闪烁。**
 
-    - 功能：抑制静止区域的帧间伪变化，保持外观一致性
-    - 核心思路：选择帧间特征差异最小的帧作为参考帧 $f^* = \arg\min_f \sum_{f'} D(\varphi(\mathbf{z}_f^t), \varphi(\mathbf{z}_{f'}^t))$。通过掩码 $\mathcal{G}_m$ 强制所有帧只与参考帧交互，实现像素级外观对齐。掩码定义为 $\mathcal{G}_m[x,y,f,f'](v_n) = \mathbb{1}(f'=f^* \& (x,y) \in \mathcal{B}(v_n))$。
-    - 设计动机：视频扩散模型常在静态区域引入伪闪烁。锚定到稳定参考帧可在注意力层面消除不必要的跨帧变化。
+视频扩散模型在本该不动的区域常会自己抖出一层伪闪烁。RCG 先在实例区域内挑出一帧"最稳的帧"作参考——即与其它帧特征差异最小的那帧 $f^* = \arg\min_f \sum_{f'} D(\varphi(\mathbf{z}_f^t), \varphi(\mathbf{z}_{f'}^t))$，然后用一张掩码强制该实例的所有帧只能和参考帧做注意力交互：
 
-3. **几何不变性引导（刚体运动实例）**:
+$$\mathcal{G}_m[x,y,f,f'](v_n) = \mathbb{1}(f'=f^* \,\&\, (x,y) \in \mathcal{B}(v_n))$$
 
-    - 功能：在刚体运动过程中保持实例的几何形状不变
-    - 核心思路：先用 k-means 聚类从 box 中分离前景，再通过像素投票聚合多帧粗掩码生成形状模板，将模板反投影到每帧得对齐掩码 $\mathcal{M}_f$。同时用位移惩罚因子 $\Gamma[f,f'] = \exp(-\alpha \cdot \|\mathbf{C}_f - \mathbf{C}_{f'}\|_2) + 1$ 调控帧间特征交互强度——距离近的帧交互更强。最终引导掩码 $\mathcal{G}_r = \mathcal{M} \cdot \mathcal{M}^\top \odot \Gamma$。
-    - 设计动机：无几何约束时，视频模型在刚体运动中常产生形变。帧无关的形状模板确保几何一致性，位移惩罚实现平滑运动过渡。
+这等于在注意力层面把每一帧的静止区域都"复制粘贴"自同一张参考帧，跨帧的无谓变化被直接堵死，外观一致性得以保持。
 
-4. **空间变形引导（非刚体运动实例）**:
+**3. 几何不变性引导（GIG，针对刚体实例）：给物体造一个帧无关的形状模板。**
 
-    - 功能：建模非刚体运动中的复杂像素级变形
-    - 核心思路：用最近邻搜索从扩散特征中提取感知变形场 $\mathcal{D}_{\text{perc}}$，用 box 角点位移的双线性插值得到 box 变形场 $\mathcal{D}_{\text{box}}$。通过变形惩罚因子 $\Lambda[i,j] = \exp(-\alpha \cdot (\mathcal{D}_{\text{perc}}[i,j] - \mathcal{D}_{\text{box}}[i,j])) + 1$ 最小化两者差异，使实际变形跟随预期。最终掩码 $\mathcal{G}_{\text{nr}} = (\mathcal{M} \cdot \mathcal{M}^\top) \odot \Lambda$。
-    - 设计动机：非刚体运动中每个像素速度方向不同（如人体关节运动），需要像素级变形场而非全局平移来建模。
+刚体运动里物体只该平移/位移、不该变形，但无约束的视频模型常让车在开动时顺带"扭一下"。GIG 先用 k-means 从 box 区域里把前景抠出来，再把多帧的粗掩码做像素投票聚合，得到一张与帧无关的形状模板，最后把模板反投影回每一帧得到对齐掩码 $\mathcal{M}_f$——所有帧共享同一套几何，形变就被压住了。为了让运动平滑，它再叠一个位移惩罚因子按帧间中心距离调交互强度：
+
+$$\Gamma[f,f'] = \exp(-\alpha \cdot \|\mathbf{C}_f - \mathbf{C}_{f'}\|_2) + 1, \qquad \mathcal{G}_r = \mathcal{M} \cdot \mathcal{M}^\top \odot \Gamma$$
+
+距离越近的两帧交互越强，相当于鼓励相邻帧渐变、抑制远帧硬跳，过渡因此更顺。
+
+**4. 空间变形引导（SDG，针对非刚体实例）：让实际变形去追预期变形。**
+
+跳舞的人各关节速度方向都不同，靠整体平移没法描述，必须落到像素级的变形场。SDG 一边用最近邻搜索从扩散特征里提取出"模型实际生成的"感知变形场 $\mathcal{D}_{\text{perc}}$，一边对 box 角点位移做双线性插值得到"我们期望的"box 变形场 $\mathcal{D}_{\text{box}}$，然后用一个变形惩罚因子去拉近两者：
+
+$$\Lambda[i,j] = \exp(-\alpha \cdot (\mathcal{D}_{\text{perc}}[i,j] - \mathcal{D}_{\text{box}}[i,j])) + 1, \qquad \mathcal{G}_{\text{nr}} = (\mathcal{M} \cdot \mathcal{M}^\top) \odot \Lambda$$
+
+实际变形偏离预期越多，惩罚越大，于是模型生成的像素级运动会被一步步引导着跟上 SMR 规划的变形方向。
+
+### 一个完整示例
+
+设 prompt 是"一辆车驶过一座静止的雕像，路边有人在跳舞"。SMR 先建运动图：三个节点——雕像（静止）、车（刚体）、人（非刚体），边记下"车从雕像旁经过""人在路边"的空间关系。接着按类别出 box：雕像每帧锁同一个 box；车按速度+加速度逐帧外推，box 平移；人用边界位移向量让 box 逐帧非对称地伸缩。
+
+进入生成阶段，DMG 给三个实例分派不同分支：雕像走 RCG，挑出最稳的一帧把其余帧都锚上去，雕像纹理帧帧不抖；车走 GIG，用形状模板锁住车身几何、位移惩罚让它平滑驶过；人走 SDG，让生成出的肢体变形去追 box 角点规划的变形场。三条分支产生的掩码 $\mathcal{G}_m, \mathcal{G}_r, \mathcal{G}_{nr}$ 叠加进同一次注意力调控，最终一帧里三个物体各动各的、互不串味。
 
 ### 损失函数 / 训练策略
 
-无需额外训练。对 3D U-Net 架构，通过梯度更新噪声嵌入 $\mathbf{z}^{t-1} \leftarrow \mathbf{z}^t - \nabla\mathcal{L}$，其中 $\mathcal{L} = 1 - \frac{\beta}{P}\sum(\mathbf{A} \odot (\mathcal{G}_m + \mathcal{G}_r + \mathcal{G}_{nr}))$。对 DiT 架构，直接修改注意力分数 $\mathbf{A} = \text{Softmax}(\frac{\mathbf{Q}\mathbf{K}^\top (1 + \beta \odot (\mathcal{G}_m + \mathcal{G}_r + \mathcal{G}_{nr}))}{\sqrt{d}})$。VideoCrafter-v2.0 用 $\beta=10$, 引导步 1-25；CogVideoX-2B 用 $\beta=0.15$, 引导步 1-10。
+整套方法不需要任何额外训练。对 3D U-Net 架构，通过梯度更新噪声嵌入 $\mathbf{z}^{t-1} \leftarrow \mathbf{z}^t - \nabla\mathcal{L}$，其中 $\mathcal{L} = 1 - \frac{\beta}{P}\sum(\mathbf{A} \odot (\mathcal{G}_m + \mathcal{G}_r + \mathcal{G}_{nr}))$，即让注意力图 $\mathbf{A}$ 往三类引导掩码的方向走。对 DiT 架构则更直接，把掩码当偏置加到注意力分数上 $\mathbf{A} = \text{Softmax}(\frac{\mathbf{Q}\mathbf{K}^\top (1 + \beta \odot (\mathcal{G}_m + \mathcal{G}_r + \mathcal{G}_{nr}))}{\sqrt{d}})$。超参上，VideoCrafter-v2.0 用 $\beta=10$、引导步 1-25；CogVideoX-2B 用 $\beta=0.15$、引导步 1-10。
 
 ## 实验关键数据
 

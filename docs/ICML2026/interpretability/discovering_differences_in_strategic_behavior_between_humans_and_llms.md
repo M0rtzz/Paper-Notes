@@ -41,32 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-端到端流程分四步：（1）**统一的行为模型接口** —— 任何 BGT 模型都被写成同一个 Python 函数签名（输入：上一轮我方动作、对手动作、奖励、内部状态；输出：下一轮动作分布、新状态）；（2）**数据采集** —— 复用 Brockbank & Vul (2024) 的 411 人 / 129,087 次选择的 IRPS 数据集，并为 4 个 LLM 各采集 20 局 × 15 个 bot × 300 轮 = 90,000 次选择的对齐数据；（3）**AlphaEvolve 双层优化** —— 外层用 LLM（Gemini 2.5 Flash）进化程序结构，内层用 SGD 拟合参数 $\theta$，目标为多目标 fitness `(likelihood, -Halstead_effort)`；（4）**SBB 选择 + 跨智能体泛化** —— 沿 Pareto 前沿挑出"最简但够好"程序，作为该智能体的机制假设，再用交叉泛化矩阵对比智能体间相似性。
+本文要解决的是"既能拟合 LLM 行为、又能直接读出机制差异"这个传统 BGT 做不到的事，做法是把行为模型从"手写数学公式"换成"LLM 进化出来的 Python 程序"。具体地，任何 BGT 模型都被统一成同一个函数签名 `agent(params, choice, opp_choice, reward, state) → (logits, state)`（输入上一轮我方动作、对手动作、奖励、内部状态，输出下一轮动作分布与新状态），然后由 AlphaEvolve 在程序空间做外循环搜索、SGD 在参数空间做内循环拟合，沿多目标 Pareto 前沿挑出"最简但够好"程序作为该智能体的机制假设，最后用交叉泛化矩阵把人与各 LLM 的机制摆到一起对比。
 
-IRPS 设定固定为 300 轮 / 15 个 bot（含 nonadaptive transition-based 与 adaptive 跟随两类），奖励为胜 +3 / 平 0 / 负 -1。每个智能体（人、Gemini 2.5 Pro/Flash、GPT 5.1、GPT OSS 120B）的数据集都经过同一套 AlphaEvolve pipeline，确保对比公平。
+数据上复用 Brockbank & Vul (2024) 的 411 人 / 129,087 次选择 IRPS 数据集，并为 4 个 LLM 各采集 20 局 × 15 个 bot × 300 轮 = 90,000 次选择的对齐数据；IRPS 固定 300 轮 / 15 个 bot（含 nonadaptive transition-based 与 adaptive 跟随两类），奖励为胜 +3 / 平 0 / 负 -1。每个智能体（人、Gemini 2.5 Pro/Flash、GPT 5.1、GPT OSS 120B）都过同一套 pipeline，确保对比公平。
 
 ### 关键设计
 
-1. **AlphaEvolve 进化可解释行为程序**：
+**1. AlphaEvolve 进化可解释行为程序：让 LLM 当"假设生成器"**
 
-    - 功能：直接在程序空间里搜索"最能预测该智能体下一手"的 Python 函数，输出兼具机制可读性与拟合性能。
-    - 核心思路：从一个"等价于 Nash 均衡"的模板程序（始终输出均匀 logits）出发，LLM 在每代被喂入父程序、若干历史样本、对应的 fitness 分数，被要求"提出修改使分数更高"。每个候选程序的参数 $\theta$ 由 SGD 通过最大似然 $\arg\max_\theta \sum_t \log \hat{p}_{\theta}(a_t \mid h_t)$ 拟合，再用两折交叉验证的归一化似然作为该程序的"性能轴"；这构成 outer-program / inner-parameter 的双层优化。相比前作 FunSearch + BIC，本文换成更强的 AlphaEvolve，并用 Halstead effort 替代 BIC 作为复杂度度量（因为所有候选的参数量和数据量一致，BIC 退化）。
-    - 设计动机：BGT 长期受限于"研究者只测试自己想到的公式"，而前沿 LLM 训练数据里已经吸收了大量行为科学知识，正好可用作"假设生成器"；用程序而不是公式或神经网络，既保留了图灵完备的表达力，又保留了行内可读结构（条件分支、Q 表、对手频率表），让后续机制解读不再需要二次解释。
+BGT 长期受限于"研究者只测试自己想到的公式"，手工公式既容量小又偏向人类先验；本文转而直接在程序空间里搜索"最能预测该智能体下一手"的 Python 函数。搜索从一个等价于 Nash 均衡的模板程序（始终输出均匀 logits）出发，每一代把父程序、若干历史样本、对应 fitness 分数喂给 LLM（Gemini 2.5 Flash），要求它"提出修改使分数更高"；每个候选程序的参数 $\theta$ 再由 SGD 通过最大似然 $\arg\max_\theta \sum_t \log \hat{p}_{\theta}(a_t \mid h_t)$ 拟合，并以两折交叉验证的归一化似然作为该程序的性能轴，从而构成 outer-program / inner-parameter 的双层优化。相比前作 FunSearch + BIC，这里换成更强的 AlphaEvolve，并用 Halstead effort 替代 BIC 作为复杂度度量——因为所有候选的参数量和数据量一致，BIC 已退化。之所以选"程序"而非公式或神经网络，是因为程序既保留图灵完备的表达力，又自带行内可读结构（条件分支、Q 表、对手频率表），让后续机制解读不必再做二次解释；而前沿 LLM 的训练数据里早已吸收大量行为科学知识，正好胜任这个假设生成器的角色。
 
-2. **多目标 Pareto + SBB 选择规则**：
+**2. 多目标 Pareto + SBB 选择规则：把 Occam's razor 焊进算法**
 
-    - 功能：从一代代候选程序里挑出"既能拟合数据、又足够简洁、可作为机制假设"的代表程序。
-    - 核心思路：fitness 同时记录每个程序的 cross-validated likelihood $\ell(\phi)$ 和负 Halstead effort $s(\phi)$，所有非支配解构成 Pareto 前沿 $\mathrm{PF}(\hat{\Phi})$。在前沿上定义 Simplest-But-Best：$\mathrm{SBB}(\epsilon) \in \arg\max_{\phi \in \mathrm{PF}(\hat{\Phi})} \{ s(\phi) \mid \ell(\phi) > \max_{\phi'} \ell(\phi') - \epsilon \}$，文中取 $\epsilon = 0.005$。直觉是"在似然几乎不掉的前提下选最简单的那一个"，从而把 Occam's razor 直接焊进选择规则。
-    - 设计动机：进化过程中真正能"读出机制"的不是 best-fit 程序（往往臃肿、堆叠多种启发式），而是 Pareto 前沿上靠近转折点的"最简但够好"程序；这个选择规则把机制解读从主观人工挑选变成了可复现的算法步骤，也让后续不同智能体之间的程序差异可比。
+进化过程中真正能"读出机制"的往往不是 best-fit 程序（它们臃肿、堆叠多种启发式），而是 Pareto 前沿上靠近转折点的"最简但够好"那一个。为此 fitness 同时记录每个程序的 cross-validated likelihood $\ell(\phi)$ 和负 Halstead effort $s(\phi)$，所有非支配解构成 Pareto 前沿 $\mathrm{PF}(\hat{\Phi})$，再在前沿上定义 Simplest-But-Best：$\mathrm{SBB}(\epsilon) \in \arg\max_{\phi \in \mathrm{PF}(\hat{\Phi})} \{ s(\phi) \mid \ell(\phi) > \max_{\phi'} \ell(\phi') - \epsilon \}$，文中取 $\epsilon = 0.005$，直觉就是"在似然几乎不掉的前提下选最简单的那一个"。这条规则把机制解读从主观人工挑选变成可复现的算法步骤，也让不同智能体之间的程序差异具备可比性。
 
-3. **跨智能体行为程序的对齐采集与交叉泛化矩阵**：
+**3. 跨智能体对齐采集与交叉泛化矩阵：量化机制相似度**
 
-    - 功能：在同一 IRPS 环境下采集人类和 LLM 的对齐数据，并用"把 A 的 SBB 程序拿去拟合 B 的数据"的交叉矩阵量化机制相似度。
-    - 核心思路：4 个 LLM 复用人类数据集的 15 个 bot、奖励矩阵、300 轮长度，prompt 直接改写自人类被试的指令，避免环境差异污染对比；构造 5×5 的 cross-generalization 矩阵 $M_{ij}$，第 $i$ 行第 $j$ 列填入"对智能体 $i$ 的数据，用智能体 $j$ 的 SBB 程序（重新拟合参数）后取得的似然"。对角线占优证明 SBB 程序确实抓住了各智能体的特性；非对角线高值（特别是对称高）则暴露智能体之间的行为相似性。
-    - 设计动机：对齐数据集排除"环境不同导致行为不同"的干扰，让差异收敛到"智能体本身的策略机制"；交叉矩阵在统计上证明了"为人类设计的模型预测 LLM 行为系统性变差"，从结构上验证了本文核心论点——LLM 不是廉价的人类替身。
+要让"人 vs LLM 的差异"收敛到策略机制本身、而非环境差异，4 个 LLM 必须复用人类数据集的 15 个 bot、奖励矩阵和 300 轮长度，prompt 也直接改写自人类被试的指令。在此基础上构造一个 5×5 的 cross-generalization 矩阵 $M_{ij}$：第 $i$ 行第 $j$ 列填入"对智能体 $i$ 的数据、用智能体 $j$ 的 SBB 程序（重新拟合参数）后取得的似然"。对角线占优说明 SBB 程序确实抓住了各智能体的特性，非对角线高值（尤其是对称高）则暴露智能体之间的行为相似性。正是这个矩阵在统计上证明了"为人类设计的模型预测 LLM 行为会系统性变差"，从结构上支撑了本文核心论点——LLM 不是廉价的人类替身。
 
 ### 损失函数 / 训练策略
-内层参数优化用 JAX 实现的 SGD 最大化负 NLL；外层程序进化由 AlphaEvolve 在多目标 fitness 上做岛屿式进化，每个数据集上独立运行 3 次取 best-of-3；baseline 包括 Nash equilibrium、Contextual Sophisticated EWA（CS-EWA，本文扩展 Sophisticated EWA 让其按长度 L=2 的联合历史维护独立 attraction 向量）以及一个 GRU-based RNN（含完整超参搜索）。
+内层参数优化用 JAX 实现的 SGD 最大化负 NLL；外层程序进化由 AlphaEvolve 在多目标 fitness 上做岛屿式进化，每个数据集上独立运行 3 次取 best-of-3。baseline 包括 Nash equilibrium、Contextual Sophisticated EWA（CS-EWA，本文扩展 Sophisticated EWA 让其按长度 L=2 的联合历史维护独立 attraction 向量）以及一个 GRU-based RNN（含完整超参搜索）。
 
 ## 实验关键数据
 

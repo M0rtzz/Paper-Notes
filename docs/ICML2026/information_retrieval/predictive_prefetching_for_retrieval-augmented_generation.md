@@ -42,33 +42,21 @@ tags:
 
 ### 整体框架
 
-输入是 LLM 的 decoding 流，输出仍然是原 LLM 生成的 token 序列，但中间插入了一个跑在并行线程上的"预测-预取-缓存"流水线。每生成一个 token，三件套依次工作：
-
-1. **RetrievalPredictor** 从 transformer 中层（深度 30–45%）抽 hidden state（16-token 滑窗）、attention 权重、value 向量，加上输出分布统计量，估计"未来 $\Delta=10$ 个 token 内熵超阈值的概率" $\hat p_t \in [0,1]$；
-2. 若 $\hat p_t$ 高，进入 **ContextMonitor**：先用 ContextScore 在 $k\in\{0,...,5\}$ 中选最佳等待步数 $k^\*$，等到 $t+k^\*$ 时再用 SufficiencyClassifier 判"缓存里是不是已经有了"、用 ClarityScore 判"短语是否完整"；
-3. 若仍需检索，**QueryGenerator**（fine-tuned T5-small）基于积累上下文 $\mathbf{c}_{t+k^\*}$ 生成 query 异步发出，检索结果回到共享 Result Cache；生成线程完全不阻塞，直到下一次熵真的超阈值时直接从缓存取文档拼 context。
-
-整条 stack 在 8B 主干上只多加约 62M 参数（2 层 transformer predictor ~2M + 三个 MLP 评分头 <0.3M + T5-small 60M），三件套用统一多任务 loss 联合预训练，部署后再用 policy gradient with action-specific feedback 在线适配。失败时自动回退同步检索，预取但未用的文档继续保留摊销成本。
+这套系统要解决的是"检索同步阻塞导致生成卡住"这个延迟瓶颈，做法是把检索决策提前到不确定性真正爆发之前，并搬到并行线程上预取。输入仍是 LLM 的 decoding 流、输出仍是原 LLM 生成的 token 序列，只是中间插入了一条"预测—预取—缓存"流水线：每生成一个 token，RetrievalPredictor 先从 transformer 中层信号估计"未来 $\Delta=10$ 个 token 内熵会超阈值的概率" $\hat p_t$；若概率高，ContextMonitor 决定等几步、要不要复用缓存、短语补全了没有；确需检索时 QueryGenerator 用一个面向未来需求的 query 异步发出，结果回到共享 Result Cache，生成线程全程不阻塞，等熵真的超阈值时直接从缓存取文档拼 context。整条 stack 在 8B 主干上只多加约 62M 参数（2 层 transformer predictor ~2M + 三个 MLP 评分头 <0.3M + T5-small 60M），三件套用统一多任务 loss 联合预训练，部署后再用 action-specific feedback 的 policy gradient 在线适配；任何环节失败都自动回退同步检索，把最坏延迟锁死在同步基线，预取但未命中的文档则保留摊销成本。
 
 ### 关键设计
 
-1. **RetrievalPredictor —— 用 transformer 内部信号预测"未来何时需要检索"**：
+**1. RetrievalPredictor：用 transformer 内部信号把检索决策提前到熵爆发之前**
 
-    - 功能：在 token $t$ 输出一个概率 $\hat p_t$，估计未来 $\Delta=10$ 个 token 内熵 $\mathcal{H}_\tau$ 是否会首次超过阈值 $\theta$。
-    - 核心思路：拼接 16-token 滑窗的 hidden state $\mathbf{H}_t$、attention 矩阵 $\mathbf{A}_t$、value 向量 $\mathbf{V}_t$，过一个 2 层 transformer encoder 得到 $\mathbf{z}_t \in \mathbb{R}^{512}$，再拼上输出分布统计 $\mathbf{o}_t$（熵、top-k margin），过 sigmoid 头 $\hat p_t = \sigma(\mathbf{W}_p \cdot [\mathbf{z}_t;\mathbf{o}_t] + b_p)$。中层（如 Llama-3.1-8B 的 10–14 层）被刻意选中，因为可解释性研究表明中层捕获高层语义抽象同时保留不确定性信号，最末层会过拟合到输出分布。
-    - 设计动机：纯熵阈值是"反应式"的——熵涨起来才知道要检索，此时已经晚了；而 transformer 中层信号在熵爆发前 8–16 个 token 就开始有可识别的前兆（10-token offset 处 Pearson 相关 0.42），把检索决策**提前**到这个窗口才能真正异步预取。AUROC 0.81 vs 仅用当前熵的 0.66，验证了这个直觉。
+纯熵阈值是反应式的——熵涨起来才知道该检索，此时已经晚了；作者的关键观察是检索需求会被生成动态中的"语义前兆"预先编码，这些信号在不确定性真正爆发前 8–16 个 token 就开始显现（10-token offset 处 Pearson 相关 0.42）。于是 predictor 在每个 token $t$ 拼接 16-token 滑窗的 hidden state $\mathbf{H}_t$、attention 矩阵 $\mathbf{A}_t$、value 向量 $\mathbf{V}_t$，过一个 2 层 transformer encoder 得到 $\mathbf{z}_t \in \mathbb{R}^{512}$，再拼上输出分布统计 $\mathbf{o}_t$（熵、top-k margin），经 sigmoid 头算出 $\hat p_t = \sigma(\mathbf{W}_p \cdot [\mathbf{z}_t;\mathbf{o}_t] + b_p)$，即未来 $\Delta=10$ 个 token 内熵 $\mathcal{H}_\tau$ 首次超过阈值 $\theta$ 的概率。信号刻意取自中层（深度 30–45%，如 Llama-3.1-8B 的 10–14 层），因为可解释性研究表明中层既捕获高层语义抽象又保留不确定性信号，而最末层会过拟合到输出分布。把决策窗口结构性地提前正是异步预取的前提，AUROC 0.81 对比仅用当前熵的 0.66，验证了这个前兆确实可学。
 
-2. **ContextMonitor —— 决定"等几步再发 query 才最划算"**：
+**2. ContextMonitor：触发后主动等几步，让 query 更准、还顺手去重**
 
-    - 功能：当 predictor 喊"要检索了"时，不立刻发 query，而是用三个轻量评分头判断 (a) 等几步上下文才够、(b) 缓存里是否已有、(c) 当前短语是否完整。
-    - 核心思路：Phase 1 用 ContextScore（建在 T5 上的 head）在 $k\in\{0,...,5\}$ 中挑 $k^\* = \arg\max_k \mathrm{ContextScore}(\mathbf{c}_{t+k})$；Phase 2 用 SufficiencyClassifier 计算当前上下文 Contriever embedding $\mathbf{e}_c$ 与缓存文档 $\mathbf{e}_d$ 的最大余弦相似度 $\sigma(\mathbf{W}_{\text{suff}} \cdot [\mathbf{e}_c; \max_d \cos(\mathbf{e}_c, \mathbf{e}_d)] + b_{\text{suff}})$，>0.8 直接复用缓存；同时 ClarityScore $\sigma(\mathbf{W}_{\text{clarity}} \cdot \mathbf{h}_c + b_{\text{clarity}})$ <0.7 触发再等最多 2 个 token，把"The main cause of the"补成"The main cause of the 2008 financial crisis"。
-    - 设计动机：直接拿"刚触发瞬间的上下文"发 query 经常是半截短语，query 质量很差；多等几步可以补完短语、消歧信息需求、还能让模型自我纠错避免 false positive。实验里"等 3–4 个 token"把 factual query 的 Query Relevance Score 提了 23%（0.65 → 0.86），并避免了 21% 的冗余检索。
+直接拿"刚触发瞬间的上下文"发 query 经常只是半截短语（如"The main cause of the"），query 质量很差，所以 monitor 不立刻发，而是用三个轻量评分头做主动等待。Phase 1 用建在 T5 上的 ContextScore 在 $k\in\{0,...,5\}$ 中挑最佳等待步数 $k^\* = \arg\max_k \mathrm{ContextScore}(\mathbf{c}_{t+k})$；到 $t+k^\*$ 后 Phase 2 用 SufficiencyClassifier 计算当前上下文 Contriever embedding $\mathbf{e}_c$ 与缓存文档 $\mathbf{e}_d$ 的最大余弦相似度 $\sigma(\mathbf{W}_{\text{suff}} \cdot [\mathbf{e}_c; \max_d \cos(\mathbf{e}_c, \mathbf{e}_d)] + b_{\text{suff}})$，>0.8 就直接复用缓存、不发新检索；同时 ClarityScore $\sigma(\mathbf{W}_{\text{clarity}} \cdot \mathbf{h}_c + b_{\text{clarity}})$ 若 <0.7 则再等最多 2 个 token 把短语补成"The main cause of the 2008 financial crisis"。多等这 3–4 个 token 既补完短语、消歧信息需求，又给模型自纠错的窗口避免 false positive——实验里它把 factual query 的 Query Relevance Score 从 0.65 提到 0.86（+23%），并避免了 21% 的冗余检索，主动延迟反成净收益。
 
-3. **QueryGenerator + 多任务联合训练 + 在线 contextual-bandit 适配**：
+**3. QueryGenerator + 多任务联合训练 + 在线 contextual-bandit 适配**
 
-    - 功能：用 T5-small 把"积累后的上下文"翻译成一个面向**未来**信息需求的检索 query；并通过多任务预训练 + 在线 policy gradient 把三件套作为整体持续优化。
-    - 核心思路：query $\mathbf{q} = \mathrm{T5}(\mathbf{c}_{t+k^\*})$，confidence 高时生成聚焦窄 query、confidence 低时生成更广的 exploratory query。预训练 loss 是 $\mathcal{L} = \alpha\mathcal{L}_{\text{pred}} + \beta\mathcal{L}_{\text{timing}} + \gamma\mathcal{L}_{\text{suff}} + \delta\mathcal{L}_{\text{clarity}} + \epsilon\mathcal{L}_{\text{query}}$，标签全部自动生成：对每个候选位置做"有检索/无检索"配对生成，用 $s = \mathrm{EM}_{\text{with}} - \mathrm{EM}_{\text{without}}$ 算 utility，正 utility 的位置当正样本。在线阶段把 4 个动作（Generate/Reuse/Accumulate/Fetch）建成 gated 级联，用 $\nabla_\phi J = \mathbb{E}_{s\sim\rho}[\nabla_\phi \log \pi_\phi(a|s) \cdot R(s,a)]$ 优化，每个动作的奖励只回传给负责该决策的组件（成功不检索 +0.5、成功复用缓存 +1.0、有效检索 +1.0、不必要检索 −0.5、迟到检索 −2.0）。
-    - 设计动机：之前的 PipeRAG 直接用 stale token 当 query，问题是"过去的 token 表达不了未来的信息需求"——比如生成已走到"2008 financial"，但旧 query 还是"main cause"；fine-tuned T5-small 学到的是"从前驱 context 反推将要问什么"，因此能在质量上同时超过 raw context query 和 8B LLM 直生 query（QRS 0.79 vs 0.74）。在线阶段用 contextual bandit 而非 RL 长程信用分配，是因为每个动作都有立即的、明确归属的反馈，结构上就是 bandit，简单稳定且 2000 query 就能收敛（AUROC 0.760 → 0.809，前 500 query 拿到 70% 的提升）。
+PipeRAG 直接拿 stale token 当 query 的毛病在于"过去的 token 表达不了未来的信息需求"——生成已走到"2008 financial"，旧 query 还停在"main cause"。本文改用 fine-tuned T5-small 从积累上下文反推将要问什么，$\mathbf{q} = \mathrm{T5}(\mathbf{c}_{t+k^\*})$，confidence 高时生成聚焦窄 query、低时生成更广的 exploratory query，质量同时超过 raw context query 和 8B LLM 直生 query（QRS 0.79 vs 0.74）。三件套用统一多任务 loss $\mathcal{L} = \alpha\mathcal{L}_{\text{pred}} + \beta\mathcal{L}_{\text{timing}} + \gamma\mathcal{L}_{\text{suff}} + \delta\mathcal{L}_{\text{clarity}} + \epsilon\mathcal{L}_{\text{query}}$ 联合预训练，标签全自动生成：对每个候选位置做"有检索/无检索"配对生成，用 utility $s = \mathrm{EM}_{\text{with}} - \mathrm{EM}_{\text{without}}$ 判正负样本。部署后再做在线适配，把 4 个动作（Generate/Reuse/Accumulate/Fetch）建成 gated 级联，用 policy gradient $\nabla_\phi J = \mathbb{E}_{s\sim\rho}[\nabla_\phi \log \pi_\phi(a|s) \cdot R(s,a)]$ 优化，且每个动作的奖励只回传给负责该决策的组件（成功不检索 +0.5、成功复用缓存 +1.0、有效检索 +1.0、不必要检索 −0.5、迟到检索 −2.0）。之所以用 contextual bandit 而非长程 RL，是因为每个动作都有立即且明确归属的反馈，结构上本就是 bandit，简单稳定且 2000 query 就能收敛（AUROC 0.760 → 0.809，前 500 query 即拿到 70% 的提升）。
 
 ## 实验关键数据
 

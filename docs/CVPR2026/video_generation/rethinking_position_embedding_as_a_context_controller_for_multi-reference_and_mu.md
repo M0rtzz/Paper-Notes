@@ -41,27 +41,27 @@ tags:
 
 ### 整体框架
 
-基于 VACE-Wan2.1-14B 视频生成框架，将参考图像通过 VAE 编码为 tokens 与生成视频 tokens 拼接输入 DiT blocks。每个 block 包含带 SideInfo-RoPE 的 Self-Attention 和 Hierarchical Cross-Attention。训练和推理均在 9s/480p/16fps 视频上进行，支持两参考设置。
+PoCo 要解决的是多参考多镜头视频生成里的"参考混淆"：把多个参考图和多个镜头的 token 一股脑拼进 attention 后，当两个参考长得像，模型分不清哪个镜头该用哪个参考。作者的判断是——这不该靠改 attention 架构来修，而是 RoPE 这条"手动设计的位置编码"通道本就有余地承担额外的上下文路由。
+
+整条 pipeline 建在 VACE-Wan2.1-14B 上：参考图先经 VAE 编码成 token，与待生成的视频 token 拼接后送进 DiT blocks；每个 block 里的 Self-Attention 换上 SideInfo-RoPE，Cross-Attention 换成层次化版本。训练和推理统一在 9s / 480p / 16fps、两参考的设置下进行。真正动刀的只有两处——位置编码加一个轴、文本条件改一张掩码——其余框架原样保留。
 
 ### 关键设计
 
-1. **SideInfo-RoPE**:
+**1. SideInfo-RoPE：给位置编码加一根"参考身份"轴，让相位差天然抑制跨参考干扰。**
 
-    - 功能：在标准 3D-RoPE 基础上增加辅助信息轴，引导 attention 分配以避免参考混淆
-    - 核心思路：将位置坐标从 $\mathbf{p} = (t,h,w)$ 扩展到 $\mathbf{p}^* = (t,h,w,s)$，其中 $s$ 编码参考实体信息。对于每个视觉 token $\mathbf{x}$，定义其 side information $\mathbf{s}(\mathbf{x}) \in \{0,1\}^K$，其中 $s_i(\mathbf{x})=1$ 表示该 token 所在镜头包含参考 $i$。两个 token 的 SideInfo 距离为 $\Delta_{m,n}^s = |\mathbf{s}(\mathbf{x}_m) - \mathbf{s}(\mathbf{x}_n)|$。在 RoPE 的 $D$ 维中分配 $D_s = 2K$ 维给 SideInfo 轴，每个参考 $i$ 对应一个 2×2 旋转块 $\hat{\mathbf{R}}^{(i)}_{\Delta^s_{m,n}}$，旋转相位为 $\phi_i = \frac{2\pi i - \pi}{K}$。当两个 token 共享相同 SideInfo（$\Delta^s = 0$）时不旋转保持相位对齐，不同时旋转相位偏移以衰减跨参考干扰。
-    - 设计动机：SideInfo 值域有限（仅 {0,1}），不同于 $(t,h,w)$ 的大范围，因此将旋转相位离散化为 $2\pi$ 周期的均匀分区。通过低频时间通道分配（T-low），避免干扰高频运动建模。
+混淆的根源在于：相似参考的 token 语义也相似，Q-K 检索这条可学习通道压不住错误关联。作者绕开它，转而在固定的位置编码侧做文章。标准 3D-RoPE 的坐标是 $\mathbf{p}=(t,h,w)$，PoCo 把它扩成 $\mathbf{p}^*=(t,h,w,s)$，新增的 $s$ 专门编码"这个 token 属于哪个参考实体"。具体地，每个视觉 token $\mathbf{x}$ 配一个 side information 向量 $\mathbf{s}(\mathbf{x})\in\{0,1\}^K$，$s_i(\mathbf{x})=1$ 表示该 token 所在镜头包含参考 $i$；两个 token 之间的 SideInfo 距离取按位差
 
-2. **层次化交叉注意力 (Hierarchical Cross-Attention)**:
+$$\Delta_{m,n}^s = |\mathbf{s}(\mathbf{x}_m) - \mathbf{s}(\mathbf{x}_n)|.$$
 
-    - 功能：在全局-局部结构中组织文本条件
-    - 核心思路：构建二值掩码 $\mathbf{M} \in \{0,1\}^{L_v \times L_t}$：参考图像 tokens 对所有文本 tokens 做注意力（$\mathbf{M}[1:L_{ref}, 1:L_t] = 1$），提供跨镜头的全局身份和风格指导；而每个镜头的视频 tokens 仅对该镜头对应的文本段做注意力（$\mathbf{M}[\mathcal{V}_s, \mathcal{T}_s] = 1$，$\mathbf{M}[\mathcal{V}_s, \mathcal{T}_{s'\neq s}] = 0$），确保局部条件控制。
-    - 设计动机：参考 tokens 需要了解全局上下文以提供一致的身份指导，而视频 tokens 只需关注自己镜头的描述以避免跨镜头干扰。
+RoPE 的 $D$ 维里划出 $D_s = 2K$ 维给这根轴，每个参考 $i$ 对应一个 2×2 旋转块 $\hat{\mathbf{R}}^{(i)}_{\Delta^s_{m,n}}$。关键在于旋转相位怎么定：因为 SideInfo 取值只有 {0,1}、值域比 $(t,h,w)$ 小得多，作者干脆把相位按 $2\pi$ 周期均匀离散化，参考 $i$ 用 $\phi_i=\frac{2\pi i-\pi}{K}$。这样一来，两个 token 若共享相同 SideInfo（$\Delta^s=0$）就不旋转、相位对齐、attention 不受抑制；身份不同（$\Delta^s\neq0$）则旋转出一个相位偏移，让它们的内积衰减——错误的镜头-参考关联因此被"物理性"地压下去。举个两参考的例子：镜头 A 标了参考 1、镜头 B 标了参考 2，A 的 token 看向 B 的 token 时 $\Delta^s\neq0$ 触发相位偏移，注意力被削弱；而 A 内部、以及 A 与参考 1 之间 $\Delta^s=0$ 保持满相位，正确关联被保留。整个机制零额外参数、零额外算力，只是改了坐标。
 
-3. **数据流水线 (Data Pipeline)**:
+**2. 层次化交叉注意力：参考看全局、镜头看局部，用一张掩码切开文本条件。**
 
-    - 功能：从原始长视频构建结构化的多镜头训练样本
-    - 核心思路：视频处理阶段做质量过滤（VQA、锐度、曝光）、镜头切割（AutoShot + PySceneDetect）、OCR 裁剪去水印、MLLM 生成 caption、相邻片段合并。参考构建阶段做人脸检测和 ID 聚类，保留出现足够多次的身份，为每个 ID 构建两种参考：原始裁剪和 SeedReam 增强的正面肖像。将聚类 ID 标签传播到对应镜头作为训练用的 side information。
-    - 设计动机：高质量的多参考多镜头训练数据是稀缺的，需要自动化流水线从海量视频中提取。双分支参考（原始+增强）提升了身份条件的鲁棒性。
+文本条件也存在全局与局部的张力——参考需要知道整段叙事才能给出一致的身份与风格，而每个镜头只该听自己那段描述，否则跨镜头串味。PoCo 用一张二值掩码 $\mathbf{M}\in\{0,1\}^{L_v\times L_t}$ 把这两件事分开：参考图像 token 对全部文本 token 开放（$\mathbf{M}[1:L_{ref},1:L_t]=1$），提供跨镜头的全局身份和风格指导；而第 $s$ 个镜头的视频 token 只对该镜头对应的文本段 $\mathcal{T}_s$ 做注意力（$\mathbf{M}[\mathcal{V}_s,\mathcal{T}_s]=1$，$\mathbf{M}[\mathcal{V}_s,\mathcal{T}_{s'\neq s}]=0$），保证局部条件互不污染。一全局一局部，刚好对应"身份要一致、内容要独立"的需求。
+
+**3. 数据流水线：从原始长视频自动榨出带 SideInfo 标注的多镜头样本。**
+
+高质量的多参考多镜头训练数据本就稀缺，SideInfo 这套监督更是现成数据集里没有的，必须自己造。流水线分两段：视频处理段先做质量过滤（VQA、锐度、曝光），再用 AutoShot + PySceneDetect 切镜头、OCR 裁掉水印、MLLM 生 caption、合并相邻片段；参考构建段做人脸检测和 ID 聚类，只保留出现足够多次的身份，并为每个 ID 准备两种参考——原始裁剪和 SeedReam 增强的正面肖像，双分支让身份条件更鲁棒。最后把聚类得到的 ID 标签回传到对应镜头，这正是训练 SideInfo-RoPE 所需的 $\mathbf{s}(\mathbf{x})$ 监督来源，让前面那根轴有据可依。
 
 ### 损失函数 / 训练策略
 

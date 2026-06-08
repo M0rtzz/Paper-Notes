@@ -38,34 +38,28 @@ tags:
 **核心 idea**：用 ACR 直接测量 GRPO batch 中“奖励方差近零”的比例，并在坍塌组里只向归一化统计量注入虚拟奖励，从而把无效 rollout 转化为可更新样本。
 
 ## 方法详解
-论文的方法可以看成一个诊断器加一个轻量干预器。诊断器 ACR 负责回答“当前 batch 里有多少计算白做了”；干预器 AVSPO 负责在这些白做的地方补一个可控的归一化参照，使真实样本获得有方向的 advantage。整个设计的重点是：虚拟样本不是新的文本输出，不参与策略梯度，只改变 reward mean/std 的计算，因此不会引入额外 LLM 前向开销。
 
 ### 整体框架
-训练仍然沿用 GRPO 的基本流程。对每个问题 $q$，旧策略采样 $G$ 条回复，自动验证器给出二值奖励 $r_i \in \{0,1\}$。普通 GRPO 用 $\hat{A}_i=(r_i-\mu_R)/(\sigma_R+\epsilon)$ 得到组内 advantage，再进入 clipped policy objective。
+论文要解决的是 GRPO 在二值奖励下“算了一整 batch 却没有梯度”的浪费，做法是给 GRPO 加一个诊断器再加一个轻量干预器。诊断器 ACR 回答“当前 batch 里有多少计算白做了”，干预器 AVSPO 则在这些白做的组里补一个可控的归一化参照，让真实样本重新拿到有方向的 advantage。关键在于虚拟样本只是几个数值，不是新的文本输出，不参与策略梯度，只改变 reward 的 mean/std，因此不引入任何额外的 LLM 前向开销。
 
-AVSPO 在这个流程中插入三步。第一步，对每个问题组计算 reward 标准差，如果 $\sigma_R<\tau$ 就判定该组发生 advantage collapse。第二步，在 batch 级别统计坍塌组比例，得到 ACR，并用动态阈值决定是否触发干预。第三步，对触发干预的坍塌组构造 $K$ 个虚拟 reward，把真实 reward 和虚拟 reward 合并后重新计算 $\mu_{R'}$ 与 $\sigma_{R'}$，最后只给真实样本计算新的 $\hat{A}'_i$ 并更新模型。
+具体地，训练仍沿用 GRPO 主干：对每个问题 $q$ 旧策略采样 $G$ 条回复，验证器给出二值奖励 $r_i \in \{0,1\}$，普通 GRPO 用 $\hat{A}_i=(r_i-\mu_R)/(\sigma_R+\epsilon)$ 算组内 advantage 后进入 clipped objective。AVSPO 在中间插三步：先对每组算 reward 标准差，$\sigma_R<\tau$ 就判定该组发生 advantage collapse；再在 batch 级统计坍塌组比例得到 ACR，并用动态阈值决定是否介入；最后对触发介入的坍塌组构造 $K$ 个虚拟 reward，把真实和虚拟 reward 合并重算 $\mu_{R'}$、$\sigma_{R'}$，但只给真实样本计算新的 $\hat{A}'_i$ 去更新模型。
 
 ### 关键设计
-1. **Advantage Collapse Rate 诊断指标**:
 
-    - 功能：ACR 衡量一个 batch 中有多少问题组因为 reward 方差过小而无法产生有效梯度。
-    - 核心思路：对 batch 内 $N$ 个问题组逐一检查 $\sigma_{R_j}<\tau$，然后计算 $ACR=\frac{1}{N}\sum_j \mathbb{I}(\sigma_{R_j}<\tau)$。当 ACR 接近 0，说明绝大多数组都有奖励差异；当 ACR 接近 1，说明几乎所有 rollout 都在零梯度状态。
-    - 设计动机：ACR 完全复用 GRPO 已经计算出的 reward 统计量，不需要 critic、不需要额外标注，也不需要额外推理。它把“训练停滞”从一个事后 accuracy 现象变成训练中可观测的实时信号。
+**1. Advantage Collapse Rate：把“训练白干”变成可实时观测的数字。**
 
-2. **自适应虚拟样本策略 AVSPO**:
+GRPO 的痛点是当一组 $G$ 条回复全对或全错时组内 reward 方差为 0，advantage 全归零，昂贵的 rollout 不产生任何梯度，而 loss、平均 reward 乃至 accuracy 都未必及时暴露这种浪费。ACR 的做法是对 batch 内 $N$ 个问题组逐一检查 $\sigma_{R_j}<\tau$，再求坍塌组占比 $ACR=\frac{1}{N}\sum_j \mathbb{I}(\sigma_{R_j}<\tau)$：接近 0 说明绝大多数组都有奖励差异，接近 1 则几乎所有 rollout 都卡在零梯度。它之所以好用，是因为完全复用了 GRPO 已经算出的 reward 统计量，不需要 critic、额外标注或额外推理，就把“训练停滞”从事后才看得到的 accuracy 现象，变成了训练中可监控的实时信号。
 
-    - 功能：在全对或全错的组里恢复 reward 方差，使真实样本重新得到非零 advantage。
-    - 核心思路：当 batch ACR 超过动态阈值且某个组坍塌时，构造 $K=\max(1,\min(G,\lceil G\cdot ACR^\alpha\rceil))$ 个虚拟 reward。若真实组全对，则虚拟 reward 从接近 1 的值分层下降；若真实组全错，则用小的正 anchor reward 构造一组非零虚拟 reward。随后用 $R'=R\cup V$ 计算均值和标准差，但 policy gradient 仍然只作用于原来的 $G$ 条真实回复。
-    - 设计动机：全错组和全对组都不是无信息组。全错说明当前策略需要远离这些失败轨迹，全对说明当前成功轨迹值得强化。虚拟 reward 的作用不是伪造新答案，而是提供一个统计参照，让这些同质组的方向信息不被归一化公式抹掉。
+**2. 自适应虚拟样本 AVSPO：不重采样，只给坍塌组补一个统计参照。**
 
-3. **动态触发与有界偏差控制**:
+诊断出坍塌只是第一步，真正要做的是让这些被浪费的组重新产生学习信号，但又不能重新调用模型采样。AVSPO 的做法是：当 batch 的 ACR 超过动态阈值且某组坍塌时，构造 $K=\max(1,\min(G,\lceil G\cdot ACR^\alpha\rceil))$ 个虚拟 reward——真实组全对就让虚拟 reward 从接近 1 的值分层向下递减，全错就用小的正 anchor reward 拼出一组非零虚拟值，然后用合并集 $R'=R\cup V$ 重算均值和标准差，而 policy gradient 仍只作用在原来 $G$ 条真实回复上。这样做有效，是因为全错组和全对组都不是无信息组：全错意味着当前策略要远离这些失败轨迹，全对意味着成功轨迹值得继续强化。虚拟 reward 不伪造新答案，只是提供一个统计参照，让这些同质组里本该存在的方向信息不被归一化公式抹平。
 
-    - 功能：决定什么时候介入，以及介入强度多大，避免把所有坍塌都粗暴修正。
-    - 核心思路：触发阈值 $\tau_{adapt}$ 初始设为 0.5，并根据训练是否改进动态调整；虚拟样本数量随 $ACR^\alpha$ 缩放，默认 $\alpha=0.5$。理论分析证明，在 $K\leq G$ 时，同质组里 AVSPO 产生的 uniform advantage 幅度有 $|A^c(K)|\leq\sqrt{K/G}\leq 1$，偏差上界也随 ACR 收缩。
-    - 设计动机：如果阈值固定得太低，会过度干预并增加方差；固定得太高，又会错过早期坍塌。动态阈值把“当前训练是否还在进步”纳入触发规则，使 AVSPO 更像一个按需修复器，而不是新的常驻奖励整形项。
+**3. 动态触发与有界偏差控制：让干预按需发生且不会乱带方向。**
+
+虚拟 reward 既然改了 advantage 的归一化，就必须控制“何时介入、介入多强”，否则阈值定太低会过度干预、放大方差，定太高又会错过早期坍塌。AVSPO 把触发阈值 $\tau_{adapt}$ 初始设为 0.5，并按训练是否还在改进来动态调整，使它更像一个“当前没进步才加力”的按需修复器，而不是常驻的奖励整形项；同时虚拟样本数量随 $ACR^\alpha$（默认 $\alpha=0.5$）缩放，坍塌越普遍才补越多。理论上在 $K\leq G$ 时，同质组里 AVSPO 产生的 uniform advantage 幅度满足 $|A^c(K)|\leq\sqrt{K/G}\leq 1$，偏差上界也随 ACR 收缩，这正回应了“虚拟 reward 会不会把策略带偏”的担忧——介入幅度天然有界，且越接近坍塌临界处补得越克制。
 
 ### 损失函数 / 训练策略
-AVSPO 的训练目标仍然是 GRPO 的 clipped surrogate，只是把 advantage 从 $\hat{A}_i$ 换成使用增强 reward 集计算出的 $\hat{A}'_i$。虚拟 reward 只进入 $\mu_{R'}$ 与 $\sigma_{R'}$，不产生 $\nabla_\theta \log \pi_\theta$ 项。实验中 group size 为 8，训练温度为 1.0，评估用 greedy decoding；AVSPO 特有超参包括初始阈值 0.5、$\alpha=0.5$、阈值学习率 0.01、collapse 阈值 $10^{-6}$、anchor reward 0.1。
+AVSPO 的训练目标仍是 GRPO 的 clipped surrogate，只是把 advantage 从 $\hat{A}_i$ 换成用增强 reward 集算出的 $\hat{A}'_i$；虚拟 reward 只进入 $\mu_{R'}$、$\sigma_{R'}$，不产生 $\nabla_\theta \log \pi_\theta$ 项。实验中 group size 为 8，训练温度 1.0，评估用 greedy decoding；AVSPO 特有超参为初始阈值 0.5、$\alpha=0.5$、阈值学习率 0.01、collapse 阈值 $10^{-6}$、anchor reward 0.1。
 
 ## 实验关键数据
 

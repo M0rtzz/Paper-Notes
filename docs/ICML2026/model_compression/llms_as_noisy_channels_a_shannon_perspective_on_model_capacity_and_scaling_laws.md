@@ -45,36 +45,25 @@ tags:
 
 ### 整体框架
 
-把 Shannon-Hartley 的物理量映射到 LLM：
-- **带宽 $B_{\text{LLM}} \propto N^\alpha$**：参数量定义模型可承载的"特征频谱"宽度
-- **信号 $S_{\text{LLM}} \propto D^\beta$**：训练 token 携带的知识，按 power law scale
-- **噪声 $\mathcal{N}$ 三源**：数据噪 $d D^\delta$（typo/歧义随 token 累积）、模型交互噪 $c(DN)^\gamma$（模型与训练数据交互产生的拟合噪）、不可约扰动 $e$
+本文把一次 LLM 训练当成一条 Shannon-Hartley 噪声信道来看：参数量 $N$ 是信道带宽，训练 token $D$ 是注入的信号功率，数据与模型自身的各种噪声合成信道噪声 $\mathcal{N}$，而模型最终能容纳多少知识就是信道容量 $C_{\text{LLM}}$。具体映射是带宽 $B_{\text{LLM}}\propto N^\alpha$、信号 $S_{\text{LLM}}\propto D^\beta$、噪声拆成数据噪 $dD^\delta$ + 模型交互噪 $c(DN)^\gamma$ + 不可约扰动 $e$ 三源，套进 $C=B\log_2(1+S/\mathcal{N})$ 就得到全篇的核心公式：
 
-完整 law：
 $$C_{\text{LLM}} = aN^\alpha \log_2\left(1 + \frac{bD^\beta}{c(DN)^\gamma + dD^\delta + e}\right)$$
+
+它既要在高信噪比区还原出经典单调 scaling，又要在噪声反超信号时自然长出 U 形退化。
 
 ### 关键设计
 
-1. **三源噪声分解**:
+**1. 三源噪声分解：让一个 $\mathcal{N}$ 同时解释过训练和量化两种退化。**
 
-    - 功能：把 noise 拆成数据本身的噪 + 模型-数据交互噪 + 不可约扰动三层，对应实际 LLM 训练中的不同退化机制
-    - 核心思路：
-        - 数据噪 $d D^\delta$：训练数据本身有 typo、歧义、矛盾；token 越多累积越多 → 解释 catastrophic overtraining
-        - 模型交互噪 $c(DN)^\gamma$：训练过程像 denoising，模型与数据相互作用产生噪声；$DN$ 联乘体现"大模型 × 大数据"互动 → 解释 QiD（大模型在大数据上对量化更脆弱）
-        - 不可约扰动 $e$：硬件/算法层固有
-    - 设计动机：单一 noise 项不能区分不同退化来源；三层分解让 fit 出的参数有可解释性（数据 vs 模型贡献各多少）
+经典 scaling law 只有"信号"没有"噪声"，所以一旦出现先降后升的 U 形就束手无策。本文把信道噪声 $\mathcal{N}=c(DN)^\gamma + dD^\delta + e$ 拆成三层，每层对准一种真实的退化机制。数据噪 $dD^\delta$ 来自训练语料本身的 typo、歧义、自相矛盾，token 喂得越多累积越多，正好解释 catastrophic overtraining——过量预训练把这部分噪越堆越高，最终压过信号收益。模型交互噪 $c(DN)^\gamma$ 把训练看成一个 denoising 过程中模型与数据相互作用产生的拟合噪，关键是 $DN$ 用联乘而非相加，刻画"大模型 × 大数据"的耦合，于是大模型在大数据上对量化更脆弱（QiD）这件反直觉的事就有了出处。最后 $e$ 是硬件/算法层不可约的固有扰动。三层拆开的好处是 fit 完之后 $c,d,e$ 各有物理含义，能定量回答某次失败训练究竟是数据噪主导还是模型噪主导，而单一 noise 项做不到这种归因。
 
-2. **U 形与单调统一**:
+**2. U 形与单调统一：单调收益和退化是同一公式在两个 SNR 区的极限。**
 
-    - 功能：用同一公式覆盖两类反直觉行为
-    - 核心思路：$\log_2(1 + S/\mathcal{N})$ 的形状决定行为——当 $S \gg \mathcal{N}$ 时 $\log_2$ 近似 $\log_2(S/\mathcal{N})$，capacity 单调随 $D$ 增；当 $\mathcal{N}$ 增长跟上甚至超过 $S$ 时（如 $D^\delta$ 项主导），capacity 反降——U 形自然涌现
-    - 设计动机：以往 perturbation-aware law 是"基础 law + 退化项加和"，本质是两段拼接；Shannon law 是从同一信息论原理推出，单调和 U 形是同一公式不同 SNR 区的两个 limit——更自然更解释力强
+以往的 perturbation-aware law（Ouyang、Kumar）做法是"基础 law + 退化项加和"，本质是把两段曲线硬拼起来，接缝处缺乏理论依据。本文不打补丁，全靠 $\log_2(1+S/\mathcal{N})$ 这一个函数的形状说话：当信号远大于噪声 $S\gg\mathcal{N}$ 时，它退化成 $\log_2(S/\mathcal{N})$，容量随 $D$ 单调上升，复现经典 power law；而当噪声增长追上甚至反超信号——比如数据噪 $dD^\delta$ 这一项随 token 主导起来——容量转头下降，U 形不是额外加项凑出来的，而是同一公式在低信噪比极限下自己长出来的。单调与退化共用一套参数、同一信息论原理，这种统一正是它外推力更强的根源。
 
-3. **多源扰动的统一编码**:
+**3. 多源扰动的统一编码：所有扰动都落到噪声项上，只换参数不换公式。**
 
-    - 功能：把高斯加噪、量化、SFT 等不同扰动都纳入框架
-    - 核心思路：所有扰动都作用在 $\mathcal{N}$ 项上——加性 Gaussian 噪声直接增大 $e$ 或 $d$；量化降低有效 SNR；SFT 在 OOD 数据上引入新交互噪 $c'(DN)^{\gamma'}$
-    - 设计动机：经典 scaling law 把每种扰动单独建模，参数量级增；Shannon framework 复用同一公式，只需 fit 不同参数
+加性高斯噪声、量化、不同领域的 SFT，看似互不相干，本文把它们一律编码成对噪声项 $\mathcal{N}$ 的影响：高斯噪声直接抬高 $e$ 或 $d$，量化等效于压低有效 SNR，而 SFT 在 OOD 数据上引入一项新的交互噪 $c'(DN)^{\gamma'}$。这样面对一种新扰动不必像经典 scaling law 那样重新设计一套退化建模、让参数量级膨胀，只需在同一公式里重新拟合几个参数即可覆盖，框架的通用性也因此体现在后面六类 perturbation 场景全部能 fit 上。
 
 ## 实验关键数据
 

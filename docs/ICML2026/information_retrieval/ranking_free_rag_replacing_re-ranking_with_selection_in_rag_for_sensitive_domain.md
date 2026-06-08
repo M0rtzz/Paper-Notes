@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 query $q$、文档库 $D$ 以及从中检索出的候选 chunk 集合 $E$；METEORA 的目标是学一个 $f_\theta(q, E) \to (R, E_s)$，同时输出 rationale 集合 $R = \{r_1, \dots, r_k\}$ 和被选证据子集 $E_s \subset E$。pipeline 三段式：(A) DPO-tuned LLM 由 $q$ 生成多条 rationale；(B) Evidence Chunk Selection Engine (ECSE) 用 rationale 在 $E$ 上做两路选证——局部 rationale-evidence 配对 + 全局 pooled-rationale 相似度 + 统计肘部检测自适应截断；(C) Verifier LLM 拿同一份 rationale 当指令，对 $E_s$ 做保守一致性检查，把投毒证据剔掉后再送进生成器。整条路径 $k$ 全程不出现。
+METEORA 要解决的问题是：把 RAG 里那个不可解释、靠 top-$k$ 截断的 re-ranker 整段拿掉，换成一个能同时说清"选哪些、为什么选、哪些是投毒"的统一框架。形式上它学一个 $f_\theta(q, E) \to (R, E_s)$，输入 query $q$ 和检索出的候选 chunk 集合 $E$，同时吐出 rationale 集合 $R = \{r_1, \dots, r_k\}$ 和被选证据子集 $E_s \subset E$。整条链路靠一份 rationale 串起三个阶段——DPO 训出的 LLM 先把 query 翻译成若干条"为什么相关"的解释，ECSE 拿这些 rationale 在 $E$ 上选证并自适应决定选多少，Verifier 再拿同一份 rationale 当指令把投毒 chunk 剔掉——从头到尾都没有出现魔法数字 $k$。
 
 ### 关键设计
 
-1. **DPO 驱动的 Rationale 生成器**:
+**1. DPO 驱动的 Rationale 生成器：把"选证准确率"当偏好信号**
 
-    - 功能：把 query 翻译成多条"为什么相关"的自然语言解释，既可读，又能作为后续选择和验证的输入
-    - 核心思路：不做人工标注，直接从 QA 数据自动构造偏好对——对每个 $(q, e^*)$ 让 LLM 生成多条 rationale，把"最终选到正确 $e^*$"的当 $r_w$，把"选到错误证据"的当 $r_l$，然后用标准 DPO 损失 $\mathcal{L}_{DPO} = -\mathbb{E}\big[\log \sigma(\beta \log \frac{\pi_\theta(r_w | q, e)}{\pi_{\text{ref}}(r_w | q, e)} - \beta \log \frac{\pi_\theta(r_l | q, e)}{\pi_{\text{ref}}(r_l | q, e)})\big]$ 训练；训练时条件是 $\pi_\theta(r | q, e^*)$，推理时退化为 $\pi_\theta(r | q)$
-    - 设计动机：RLHF 要训 reward model 不稳定，DPO 拿到的是直接、稳定、显式可读的偏好——更关键的是，把"rationale 质量"等价于"选证准确率"，绕开了人工标注 rationale 的天花板；对抗鲁棒性方面，DPO 学到的是"细粒度区分对错证据"的能力，让投毒证据想巧合命中 rationale 变得更难
+re-ranker 的相似度分数是个黑盒，回答不了"为什么选这条"，而人工标注 rationale 又不可扩展。作者的办法是直接从已有 QA 数据自动构造偏好对：对每个 $(q, e^*)$ 让 LLM 生成多条 rationale，把最终选到正确证据 $e^*$ 的当作 $r_w$、选到错误证据的当作 $r_l$，再用标准 DPO 损失 $\mathcal{L}_{DPO} = -\mathbb{E}\big[\log \sigma(\beta \log \frac{\pi_\theta(r_w | q, e)}{\pi_{\text{ref}}(r_w | q, e)} - \beta \log \frac{\pi_\theta(r_l | q, e)}{\pi_{\text{ref}}(r_l | q, e)})\big]$ 训练，训练时以 $\pi_\theta(r | q, e^*)$ 为条件、推理时退化成 $\pi_\theta(r | q)$。这等于把"rationale 质量"直接等价于"选证准确率"，绕开了标注天花板，也比 RLHF 训 reward model 更稳定、更可读；同时 DPO 学到的"细粒度区分对错证据"能力，让投毒 chunk 想巧合命中 rationale 变得更难，顺带撑起了后续的对抗鲁棒性。
 
-2. **ECSE：双路证据选择 + 统计肘部自适应截断**:
+**2. ECSE：双路证据选择 + 统计肘部自适应截断**
 
-    - 功能：用生成的 rationale 决定选哪些 chunk，并自动决定选多少，彻底消灭 top-$k$ 超参
-    - 核心思路：两路并行——Local 路径对每条 $r_i$ 找最相似的 chunk，$E_v = \{\arg\max_{e_j \in E} \mathcal{S}(r_i, e_j) | r_i \in \mathcal{R}\}$，多条 rationale 收敛到同一 chunk 反而是"证据有效"的信号；Global 路径算 pooled embedding $\bar{r} = \frac{1}{|\mathcal{R}|} \sum \text{SBERT}(r_i)$，对所有 chunk 按 $\bar{r}$ 排序得到相似度序列 $\{s_1, \dots, s_n\}$，再做肘部检测——一阶差 $\Delta_i = s_i - s_{i+1}$ + z-score 归一化 $z_i = (\Delta_i - \mu_\Delta)/\sigma_\Delta$，第一个显著偏离均值的位置就是 $k^*$；若一阶差不显著，退到二阶差 $\nabla^2_i = \Delta_{i+1} - \Delta_i$ 找最大曲率；最终 $\mathbf{E_s} = E_v \cup E_g \cup E_w$，$E_w$ 是可选的邻居扩展，用于补救分块割裂
-    - 设计动机：top-$k$ 在不同难度 query 上效果差异巨大（FinQA 短文档和 MAUD 35 万 token 的合同根本不该用同一个 $k$），用统计学的"显著相似度断崖"代替魔法数字，既符合"信息密度不均"的直觉，又消除了一个调参维度
+top-$k$ 在不同难度 query 上效果天差地别——FinQA 的短文档和 MAUD 35 万 token 的合同根本不该共用一个 $k$。ECSE 用两路并行选证再加统计截断来消灭这个超参。Local 路径对每条 rationale $r_i$ 找最相似的 chunk，$E_v = \{\arg\max_{e_j \in E} \mathcal{S}(r_i, e_j) \mid r_i \in \mathcal{R}\}$，多条 rationale 收敛到同一 chunk 反而是"证据有效"的信号；Global 路径先算 pooled embedding $\bar{r} = \frac{1}{|\mathcal{R}|} \sum \text{SBERT}(r_i)$，把所有 chunk 按 $\bar{r}$ 排成相似度序列 $\{s_1, \dots, s_n\}$，再做肘部检测——取一阶差 $\Delta_i = s_i - s_{i+1}$ 并 z-score 归一化 $z_i = (\Delta_i - \mu_\Delta)/\sigma_\Delta$，第一个显著偏离均值的位置就是截断点 $k^*$；若一阶差不显著，退到二阶差 $\nabla^2_i = \Delta_{i+1} - \Delta_i$ 找最大曲率。最终 $\mathbf{E_s} = E_v \cup E_g \cup E_w$，其中 $E_w$ 是可选的前后一邻居扩展，用来补救分块割裂。这一招用"显著相似度断崖"代替魔法数字，既贴合"信息密度不均"的直觉，又干掉了一个调参维度。
 
-3. **Verifier LLM：rationale 复用做投毒过滤**:
+**3. Verifier LLM：复用同一份 rationale 做投毒过滤**
 
-    - 功能：在生成前做保守一致性检查，把投毒、矛盾、违反指令的 chunk 剔除
-    - 核心思路：用同一个 Llama-3.1-8b-instruct，把 rationale 当作"flagging instructions"——对每条 chunk 独立判断三类问题：(1) 事实违反（与公认事实矛盾，高置信才标）；(2) 与已验证证据的逻辑矛盾；(3) 指令违反（不满足 rationale 暗含的检索标准）；保守原则是"默认有效，置信度 >90% 才标记"，被标的丢弃，剩余进生成
-    - 设计动机：现有 perplexity-based 防御几乎无效（实验里 F1 仅 0.06–0.15），因为攻击者改的是"语义流畅但事实错"的内容；rationale 是 query-aligned 的，正好用来检查"chunk 是不是真的满足 rationale 描述的检索意图"——实验显示 87% 的投毒命中是"instruction violation"，证明攻击者改的是"怎么搜"而不是"事实是什么"，这与 rationale-based verification 的假设完全契合
+困惑度防御对 LLM 生成的高质量投毒几乎无效（实验里 F1 仅 0.06–0.15），因为攻击者改的是"语义流畅但事实错"的内容。METEORA 转而复用同一个 Llama-3.1-8b-instruct，把 rationale 当作"flagging instructions"，对每条 chunk 独立判三类问题：事实违反（与公认事实矛盾）、与已验证证据的逻辑矛盾、指令违反（不满足 rationale 暗含的检索标准）。它走保守原则——默认有效，置信度 >90% 才标记，被标的丢弃、其余进生成。由于 rationale 本身是 query-aligned 的，正好用来检查"chunk 是不是真满足 rationale 描述的检索意图"；实验里 87% 的投毒命中正是"instruction violation"，说明攻击者动的是"怎么搜"而非"事实是什么"，与这套验证假设完全契合。
 
 ### 损失函数 / 训练策略
-只有 rationale 生成器需要训练，目标就是上面的 DPO 损失；ECSE 和 Verifier 都是零额外训练的推理时模块。偏好数据完全由现有 QA 标注自动构造，无需人工写 rationale。Verifier 与 rationale generator 共用同一个 Llama-3.1-8b-instruct，保持框架一致性同时避免引入额外模型权重。
+整套框架里只有 rationale 生成器需要训练，目标就是上面的 DPO 损失；ECSE 和 Verifier 都是零额外训练的推理时模块。偏好数据完全由现有 QA 标注自动构造，无需人工写 rationale。Verifier 与 rationale generator 共用同一个 Llama-3.1-8b-instruct，既保持框架一致性又避免引入额外模型权重。
 
 ## 实验关键数据
 

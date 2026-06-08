@@ -48,23 +48,18 @@ tags:
 第二层是 DiffuAgent 模块化评估。作者不再让 dLLM 控制整个循环，而是把它们作为可插拔认知模块嵌进自回归 agent 外围。具身侧包含 pre-hoc memory 和 post-hoc early-exit verifier；工具调用侧包含 pre-hoc tool selector 和 post-hoc tool-call editor。这样能区分“模型当主干失败”与“模型某个局部能力不可用”两件事。
 
 ### 关键设计
-1. **主干级失败诊断**:
 
-	- 功能：直接测量 dLLM 作为完整 agent 控制器时的长程规划和工具调用能力。
-	- 核心思路：在 AgentBoard 中，模型每轮生成思考和动作，成功率衡量任务是否完成，progress rate 衡量离目标推进了多少；在 BFCL-v3 中，模型必须从工具描述中选择函数并生成可执行参数，官方评测检查函数名、参数、结构和多轮状态。作者还统计 retry loop，即连续三步以上重复同一动作，用来捕捉 dLLM 反复尝试旧计划的行为。
-	- 设计动机：如果只看平均准确率，很难知道 dLLM 是“能力弱一点”还是“交互机制失效”。把具身任务和工具调用并列起来，能分别暴露非因果规划失败和模糊格式生成失败。
+**1. 主干级现实检查：直接测 dLLM 当完整 agent 控制器时的长程规划与工具调用能力。**
 
-2. **DiffuAgent 的模块化角色拆分**:
+只看平均准确率分不清 dLLM 到底是“能力弱一点”还是“交互机制整个失效”，所以作者把它们直接塞进 ReAct 闭环当 backbone，再用两套互补指标暴露病因。具身侧用 AgentBoard 的 ALFWorld/ScienceWorld/BabyAI，成功率衡量任务是否完成、progress rate 衡量离目标推进了多少；工具侧用 BFCL-v3，官方评测逐项检查函数名、参数、结构和多轮状态。作者还专门统计 retry loop——连续三步以上重复同一动作——用来抓 dLLM 收到新观察却照旧执行的行为。把具身和工具调用并排测，正好分别照出“非因果规划失败”和“模糊格式生成失败”这两类毛病。
 
-	- 功能：把 dLLM 从“全流程决策者”降级为某个辅助模块，观察它们是否在非因果任务上仍有价值。
-	- 核心思路：记忆模块每 $k_{mem}=5$ 步压缩过去轨迹，之后 agent 只读取压缩记忆和最近交互；early-exit verifier 每 $k_{earlyexit}=5$ 步判断轨迹是否陷入死循环；tool selector 在完整工具库中筛出与当前请求相关的子集；tool-call editor 尝试把格式损坏的调用修正为合法结构。
-	- 设计动机：agent 工作流由异质能力组成。dLLM 可能不擅长因果动作选择，但并行全局建模可能适合摘要、筛选、轨迹冗余判断等不需要逐 token 承诺的任务。
+**2. DiffuAgent 的模块化角色拆分：把 dLLM 从全流程决策者降级成辅助模块。**
 
-3. **失败机制的补充验证**:
+既然当主干不行，那是不是某类局部能力还有用？作者不再让 dLLM 控制整个循环，而是把它当可插拔认知模块嵌进自回归 agent 外围。具身侧放两个：pre-hoc memory 每 $k_{mem}=5$ 步压缩一次过去轨迹，之后 agent 只读压缩记忆加最近交互；post-hoc early-exit verifier 每 $k_{earlyexit}=5$ 步判断轨迹是否陷入死循环。工具侧也放两个：pre-hoc tool selector 从完整工具库筛出与当前请求相关的子集，post-hoc tool-call editor 试着把格式损坏的调用修成合法结构。这样能把“当主干失败”和“某个局部能力可用”彻底分开，看 dLLM 的并行全局建模究竟在哪类不需要逐 token 承诺的任务上有价值。
 
-	- 功能：排除“只是解码技巧没调好”或“加个格式修复器就行”的解释。
-	- 核心思路：作者在附录中测试 APD、D2F、DCD 等 dLLM 解码优化，测试 AR self-refine 和周期性 AR feedback，也测试 Tau-Bench mock 与轻量 schema guardrails。所有实验都围绕同一个问题：这些补救手段能否把 dLLM 拉到自回归 agent 水平。
-	- 设计动机：dLLM 是快速发展的方向，如果主结论只基于原始解码，很容易被认为是不公平。补充验证显示优化能缓解局部指标，但没有改变“长程因果和符号精度仍是瓶颈”的判断。
+**3. 失败机制的补充验证：排除“只是解码没调好”或“加个修复器就行”的解释。**
+
+dLLM 是高速迭代的方向，主结论若只基于原始解码，很容易被指为不公平。作者在附录里把能想到的补救都试了一遍：APD、D2F、DCD 等 dLLM 解码优化，AR self-refine 和周期性 AR feedback，以及 Tau-Bench mock 与轻量 schema guardrails。所有实验都围着同一个问题转——这些手段能不能把 dLLM 拉到自回归 agent 的水平。结果是它们能缓解局部指标（比如 D2F 把 Dream-7B 的 BFCL Single-Live 从 1.5 提到 34.3），却没动摇“长程因果和符号精度仍是瓶颈”这个主判断。
 
 ### 损失函数 / 训练策略
 本文没有训练新的 dLLM，也没有提出新的监督损失。实验重点是 inference-only evaluation：自回归模型通过 vLLM 部署，dLLM 使用 Fast-dLLM/FastAPI 复现，统一在单张 NVIDIA A800 80GB 上运行。具身任务采用 ReAct prompt；BFCL 按官方模板构造 OpenAI API 风格输入。这个设置有意避免任务特定微调，让比较集中在当前开源 dLLM 的原生 agent 行为上。

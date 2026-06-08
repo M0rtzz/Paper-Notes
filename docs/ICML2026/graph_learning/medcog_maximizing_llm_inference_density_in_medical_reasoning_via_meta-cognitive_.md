@@ -42,31 +42,27 @@ MedCoG 让 LLM 先对医学问题做"复杂度 / 熟悉度 / 知识密度"三维
 
 ### 整体框架
 
-MedCoG = **Meta-Cognition Regulator + Knowledge Executor**。给定医学题 $\mathcal{Q}$：
-1. Regulator 的 **Monitoring** 输出三维状态向量 $\mathbf{s}=[s_c, s_f, s_k]$（复杂度 / 熟悉度 / 知识密度）；
-2. **Planning** 用非参数门控 $I_j = \mathbb{1}(s_j > \tau_j)$ 路由到策略池 $\mathcal{S}=\{\text{Zero-Shot, SCoT, SCoT+Mem, SCoT+KG, SCoT+KG+Mem}\}$，若 $I_k=1$ 还会生成 KG verification plan；
-3. Executor 按 plan 执行 SCoT（procedural）/ Memory retrieval（episodic）/ KG path search（factual）；
-4. 若用了 KG，**Evaluating** 检查检索证据是否充足，不足则最多再 refine 一次 plan 或回落到 SCoT 收尾。
+MedCoG 要解决的是"逐样本该用哪类知识、用多少"这件事，它把传统 agent 那种固定流水线换成一个会先自评、再按需取知识的两段式系统——前面是 Meta-Cognition Regulator，后面是 Knowledge Executor。拿到一道医学题 $\mathcal{Q}$，Regulator 先对自己的认知状态打三个分（复杂度、熟悉度、知识密度），据此决定是否动用记忆和知识图谱；Executor 再按这个计划去跑结构化推理、检索历史案例或在 KG 上找证据，用了 KG 的话最后还会回头检查证据够不够，不够就再修一次计划或退回纯推理收尾。
 
 ### 关键设计
 
-1. **三维元认知监测 + 非参数门控路由**:
+**1. 三维元认知监测 + 非参数门控路由：把"要不要加知识"变成可计算的阈值判断**
 
-    - 功能：把 LLM 对自身的判断显式量化为三个标量 $s_c, s_f, s_k$，再用阈值 $\tau=[\tau_c, \tau_f, \tau_k]$ 决定要不要激活记忆和 KG。
-    - 核心思路：Complexity 看是否需要多跳推理；Familiarity 看题型是否像教科书案例（决定能否复用历史经验）；Knowledge Density 看是否依赖具体医学事实。策略选择 $\mathcal{M}=\pi(\mathbf{s};\tau) = \text{SCoT} \oplus \sum_{j\in\{f,k\}} I_j \cdot \mathcal{M}_j$，三个分数都低于阈值时直接 Zero-Shot。阈值用 50 个 held-out 样本校准，per-backbone calibration（不同 LLM 用不同 $\tau$）。
-    - 设计动机：作者发现不同 LLM 元认知特征差异极大——o3-mini 过度自信（低估 KG 需求）、Qwen3-8B 在 Knowledge Density 上 F1 只有 0.33 完全崩溃、GPT-4o-mini 几乎不用 Memory；非参数门控 + per-backbone 阈值比训练一个 policy 网络更鲁棒，也避免了为每个 backbone 单独训模型。
+直接堆 KG+Memory+CoT 之所以反伤性能，是因为系统从不判断"这道题到底缺什么"。MedCoG 让 Regulator 在 Monitoring 阶段把 LLM 对自身的判断量化成三个标量 $\mathbf{s}=[s_c, s_f, s_k]$——Complexity 看是否需要多跳推理、Familiarity 看题型是否像教科书案例（决定能否复用历史经验）、Knowledge Density 看是否依赖具体医学事实。Planning 阶段用一个非参数门控 $I_j=\mathbb{1}(s_j>\tau_j)$ 把每个维度卡到阈值上，最终策略写成 $\mathcal{M}=\pi(\mathbf{s};\tau)=\text{SCoT}\oplus\sum_{j\in\{f,k\}}I_j\cdot\mathcal{M}_j$，三个分数都低于阈值时直接 Zero-Shot，从而落进策略池 $\mathcal{S}=\{\text{Zero-Shot, SCoT, SCoT+Mem, SCoT+KG, SCoT+KG+Mem}\}$ 里的某一个。
 
-2. **KG verification plan + 实体三步 grounding**:
+之所以用阈值门控而不是训一个 policy 网络，是因为作者发现不同 LLM 的元认知特征差异极大——o3-mini 过度自信会低估 KG 需求、Qwen3-8B 在 Knowledge Density 上 F1 只有 0.33 完全崩、GPT-4o-mini 几乎不碰 Memory。给每个 backbone 用 50 个 held-out 样本单独校准一套 $\tau=[\tau_c,\tau_f,\tau_k]$（per-backbone calibration），比为每个 backbone 训一个调度模型更省也更鲁棒。
 
-    - 功能：不是用整道题直接去 KG 里检索，而是先把问题分解成"验证对"$\mathcal{V}(\mathcal{Q})=\{(v_i, h_i)\}$（原子查询 + LLM 假设），再去 KG 找最短路径串联，从源头压缩搜索空间。
-    - 核心思路：实体 grounding 走三步——(1) KG-LLM 抽候选实体短语 $\mathcal{E}_v, \mathcal{E}_h$；(2) 对每个候选用 bge-base-en-v1.5 在 PrimeKG（4M+ 关系）里找最相似实体 $\hat{e}=\arg\max_{e^g \in \mathcal{E}} \text{sim}(\text{enc}_\theta(e), \text{enc}_\theta(e^g))$；(3) KG-LLM 再按上下文相关性 refine 一次。然后对所有 $(v_i, h_i)$ 求最短路径 $\mathcal{P}^g = \bigcup \{\text{SP}(e_v, e_h)\}$，最后用 ranker 按与原题 $\mathcal{Q}$ 的相似度取 Top-K=5。
-    - 设计动机：临床题里只有一小撮指标真正决定答案，直接整题检索会把生理指标、家族史等无关上下文一起带进 KG 噪声很大；先用 LLM 自己提"我想验证什么"再去查，本质上是把"先想要什么、再去查"的认知路径硬编码进流水线，避免 KG 检索常见的 hub entity 爆炸问题。
+**2. KG verification plan + 实体三步 grounding：先想清楚要验证什么再去查**
 
-3. **SCoT：结构化路径与推理链解耦的程序性知识**:
+临床题里往往只有一小撮指标真正决定答案，若拿整道题去 KG 里 dense retrieval，生理指标、家族史这些无关上下文会一起被带进来，再加上 hub entity 爆炸，噪声极大——这正是单独加 KG 反而在 MedQA-H 掉 4 分的根源。MedCoG 改成先把问题分解成一组"验证对" $\mathcal{V}(\mathcal{Q})=\{(v_i,h_i)\}$（原子查询 $v_i$ + LLM 自己给的假设 $h_i$），再去 KG 找路径，从源头压缩搜索空间。
 
-    - 功能：把"知道什么事实"和"知道怎么推"显式分开，先输出结构化实体-关系路径 $\mathcal{P}^e$，再基于这些 anchor 出推理链 $\mathcal{C}$，写成 $\text{SCoT}=(\mathcal{P}^e, \mathcal{C})$。
-    - 核心思路：所有"激活了任意一个 $I_j$"的样本都走 SCoT 作为基底；KG 激活时 $\mathcal{P}^e$ 由检索结果填充，否则由 LLM 自己 elicit。Episodic Memory 复用同样的 SCoT 格式——Case Bank $\mathcal{B}=(q_i, (\mathcal{P}^e_i, \mathcal{C}_i), r_i)$ 存历史问题、SCoT 轨迹和正误奖励 $r_i \in \{0,1\}$，检索时按问题相似度取 Top-K=5（MedQA 1402 条 / MedMCQA 1305 条 / 其余三个数据集合并为 2707 条以测 OOD 迁移）。
-    - 设计动机：普通 CoT 把事实和推理混在一起，KG 检索结果塞进 prompt 后 LLM 经常顺着错误的 KG 路径硬编故事；结构化解耦让"事实层"和"推理层"可分别替换、可单独评估，也让 episodic memory 能直接复用——历史 SCoT 轨迹给 LLM 提供"这种题怎么拆"的程序性模板，而不是只给最终答案。
+每个待查实体走三步 grounding：先由 KG-LLM 抽出候选实体短语 $\mathcal{E}_v,\mathcal{E}_h$；再对每个候选用 bge-base-en-v1.5 在 PrimeKG（4M+ 关系）里找最相似的图上实体 $\hat{e}=\arg\max_{e^g\in\mathcal{E}}\text{sim}(\text{enc}_\theta(e),\text{enc}_\theta(e^g))$；最后让 KG-LLM 按上下文相关性 refine 一次。grounding 完成后对所有验证对求最短路径并取并集 $\mathcal{P}^g=\bigcup\{\text{SP}(e_v,e_h)\}$，再用 ranker 按与原题 $\mathcal{Q}$ 的相似度取 Top-K=5。本质上这是把"先提出要验证的假设、再只检索能验证假设的事实"这条认知路径硬编进了检索流水线。
+
+**3. SCoT：把事实层和推理层解耦的程序性知识底座**
+
+普通 CoT 把"知道什么事实"和"知道怎么推"混在一起，KG 检索结果塞进 prompt 后 LLM 经常顺着错误的 KG 路径硬编故事。SCoT 把这两层显式拆开：先输出结构化的实体-关系路径 $\mathcal{P}^e$，再以这些路径为 anchor 生成推理链 $\mathcal{C}$，整体写成 $\text{SCoT}=(\mathcal{P}^e,\mathcal{C})$。只要任一 $I_j$ 被激活，样本都以 SCoT 为基底——KG 激活时 $\mathcal{P}^e$ 由检索结果填充，否则由 LLM 自己 elicit。这样事实层和推理层可以分别替换、单独评估，也避免了 KG 路径直接喂进 prompt 导致的串台。
+
+Episodic Memory 直接复用同一套 SCoT 格式：Case Bank $\mathcal{B}=(q_i,(\mathcal{P}^e_i,\mathcal{C}_i),r_i)$ 存历史问题、SCoT 轨迹和正误奖励 $r_i\in\{0,1\}$，检索时按问题相似度取 Top-K=5。规模上 MedQA 1402 条、MedMCQA 1305 条，其余三个数据集合并为 2707 条专门用来测 OOD 迁移。因为存的是结构化轨迹而非只有最终答案，历史 SCoT 等于给 LLM 提供了"这种题该怎么拆"的程序性模板。
 
 ### 损失函数 / 训练策略
 

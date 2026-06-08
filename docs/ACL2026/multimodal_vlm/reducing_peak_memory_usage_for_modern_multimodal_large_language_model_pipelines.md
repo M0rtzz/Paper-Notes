@@ -46,23 +46,18 @@ tags:
 论文考虑两类在线 eviction。单轮问答中，文本 query 已经可见，可以使用 query-aware 的 SnapKV 风格策略，用 prompt 中的代理 query 和缓存 key 的相似度估计视觉 token 对当前问题的重要性；潜在多轮场景中，后续 query 可能未知，则使用 query-agnostic 的 KeyDiff 风格策略，保留更偏离平均 key 表示的 token，以维护视觉表示多样性。
 
 ### 关键设计
-1. **固定预算的 block-wise prefill**:
 
-    - 功能：把 prefill 阶段的 KV cache 峰值显存限制在预算 $M$ 附近，避免完整视觉上下文带来的瞬时 OOM。
-    - 核心思路：输入被拆成连续块，模型每处理完一块就追加 KV 并立即 eviction。与 post-prefill 压缩不同，这里从不需要先保存完整 cache，因此峰值显存随预算而不是随原始 token 数增长。
-    - 设计动机：MLLM 的长视觉输入在解码前已经制造显存峰值，只优化生成阶段不够。在线压缩直接作用于峰值发生的位置。
+**1. 固定预算的 block-wise prefill：把峰值显存钉在预算 $M$ 附近，而不是随原始视觉 token 数膨胀。**
 
-2. **视觉结构对齐的压缩粒度**:
+MLLM 的长视觉输入在解码还没开始时就已经制造了显存尖峰——模型得先为完整视觉上下文建好 KV cache 才能生成第一个 token，只优化生成阶段根本碰不到这个峰值。这套框架把一次性 prefill 拆成逐块执行：输入序列按块大小 $b$ 切成连续块，处理第 $i$ 块时算出该块的 key/value 追加进缓存 $C$，一旦 $|C|>M$ 就立即算出超额量 $k_{excess}=|C|-M$ 并调用 eviction 把缓存压回预算内。这样完整视觉上下文从不以 full cache 的形态同时驻留显存，峰值由预算 $M$ 决定而非由原始 token 数决定。和那些等 full cache 建好之后再 eviction 的 post-prefill 方法相比，在线压缩直接作用在尖峰真正发生的位置，才能从根上避免 prefill 阶段的 OOM。
 
-    - 功能：让缓存压缩尽量尊重图像 tile、空间网格和视频帧组的结构，减少删错关键视觉信息的风险。
-    - 核心思路：block boundary 尽量与视觉输入的自然结构对齐；论文的块大小分析显示，Qwen2.5-VL-7B 在 block size 784 时表现最好，这正好对应其 $28 \times 28$ 视觉 tokenization。
-    - 设计动机：视觉 token 的冗余不是无结构噪声，而是来自相邻区域和相邻帧的重复。压缩粒度如果打乱这种结构，容易损害定位与细粒度理解。
+**2. 视觉结构对齐的压缩粒度：让块边界尽量踩在 tile、空间网格和帧组上，避免删错关键视觉信息。**
 
-3. **query-aware 与 query-agnostic 双路径 eviction**:
+视觉 token 的冗余不是无结构噪声，而是来自相邻区域和相邻帧的重复；如果压缩粒度横切这种结构，很容易把定位和细粒度理解需要的 token 误删。因此 block boundary 被刻意往视觉输入的自然结构上对齐——块大小分析显示 Qwen2.5-VL-7B 在 block size 784 时表现最好，而这正好对应它 $28 \times 28$ 的视觉 tokenization。换句话说，"结构对齐"不是装饰性说法：让每个块恰好覆盖完整的视觉网格单元，eviction 才能在尊重空间/时序连续性的前提下做取舍，而不是把一个 tile 切两半各删一块。
 
-    - 功能：覆盖单轮任务和潜在多轮任务两种使用场景。
-    - 核心思路：query-aware 路径用文本 prompt 的代理 query 对 cached keys 打分，保留与当前问题更相关的 token；query-agnostic 路径计算 key 到平均表示的差异，保留更有代表性或更稀有的视觉 token。
-    - 设计动机：单轮任务追求任务相关性，多轮任务更需要可复用的视觉 cache。两种策略分别对应“当前问题最有用”和“未来问题也可能有用”的不同假设。
+**3. query-aware 与 query-agnostic 双路径 eviction：分别对应"当前问题最有用"和"未来问题也可能有用"两种假设。**
+
+单轮问答里文本 query 已经可见，这时该追求的是任务相关性；但多轮场景下后续 query 可能还没出现，缓存得为未知的将来保留可复用性，两种需求并不兼容。框架因此给出两条路径：query-aware 路径走 SnapKV 风格，用 prompt 里的代理 query 和 cached keys 算相似度，保留与当前问题更相关的视觉 token；query-agnostic 路径走 KeyDiff 风格，计算每个 key 到平均表示的偏离度，保留更稀有、更有代表性的 token 以维护视觉表示的多样性。前者把算力压到当前问题最需要的证据上，后者赌的是多样化的视觉 cache 在未来任意 query 下都更耐用，让框架能同时覆盖单轮和潜在多轮两类部署。
 
 ### 损失函数 / 训练策略
 本文没有引入新的训练目标，也不需要微调模型；它是 inference-time 的 KV-cache 管理方法。主要超参包括 KV budget、block size 和 eviction 策略。默认 block size 为 256，但作者发现结构对齐的 block size 可以明显改善效果。为降低纯 block-wise 执行带来的延迟，论文还使用 hybrid 策略：尽量先用一次 bulk forward 处理可容纳的部分，只在超出预算时进入分块执行。

@@ -41,31 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DP-KFC 完整流程分两阶段、周期交替：
-1. **预条件子构造**（每 $T_{freq}$ 步）：用合成 batch（pink noise / Zipf 序列）做前后向，用 KFAC 公式估每层 $\hat A_{l-1}=\mathbb{E}[\tilde a_{l-1}\tilde a_{l-1}^\top]$ 和 $\hat G_l=\mathbb{E}[\tilde\delta_l\tilde\delta_l^\top]$，特征分解后得 $U_{A,l}, U_{G,l}$。
-2. **私有训练步**：对每个私有样本 $i$、每层 $l$，先变换梯度 $\tilde g_l^{(i)}=U_{G,l}\cdot g_l^{(i)}\cdot U_{A,l}$，再 clip + 加噪 + 平均 → SGD 更新。
-
-关键的"scale-then-privatize"顺序意味着 $P_t$ 与当前 batch 独立（只依赖架构和过去已发布的模型参数），因此 RDP 保证完全继承标准 DP-SGD 的 accounting。
+DP-KFC 想解决的是：DP-SGD 的各向同性隐私噪声和损失景观的各向异性几何不匹配，要先把梯度变换到各向同性坐标系再加噪，但获取这个变换的曲率信息不能花隐私预算、也不能依赖公共代理数据。它的做法是把训练拆成两个周期交替的阶段。每隔 $T_{freq}$ 步，先用一批合成数据（图像是 pink noise、文本是 Zipf 序列）跑一遍前后向，按 KFAC 公式估出每层的两个协方差因子 $\hat A_{l-1}=\mathbb{E}[\tilde a_{l-1}\tilde a_{l-1}^\top]$ 和 $\hat G_l=\mathbb{E}[\tilde\delta_l\tilde\delta_l^\top]$，特征分解后拿到旋转/缩放矩阵 $U_{A,l}, U_{G,l}$；然后在私有训练步里，对每个私有样本 $i$ 的每层梯度先做线性变换 $\tilde g_l^{(i)}=U_{G,l}\,g_l^{(i)}\,U_{A,l}$，再裁剪、加噪、平均、SGD 更新。这个"先变换后隐私化"的顺序是整篇的关键——预条件子 $P_t$ 只依赖架构和已发布的历史参数、与当前 batch 独立，所以 RDP 的隐私 accounting 完全继承标准 DP-SGD，不多花一分预算。
 
 ### 关键设计
 
-1. **数据无关的 KFAC 因子估计**:
+**1. 数据无关的 KFAC 因子估计：曲率信息从架构里恢复，不碰任何真实数据。**
 
-    - 功能：从合成探针恢复每层 KFAC 协方差 $\hat A_{l-1}, \hat G_l$，而无需访问私有/公共数据。
-    - 核心思路：算法 1——生成 $M$ 个合成 $(\tilde x, \tilde y)$，做前后向得激活和误差，外积聚合 $\hat A_{l-1}=\frac{1}{M}\sum \tilde a_{l-1}\tilde a_{l-1}^\top+\pi I$，$\hat G_l=\frac{1}{M}\sum \tilde\delta_l\tilde\delta_l^\top+\pi I$，特征分解后取 $U_{X,l}=Q_X(\Lambda_X+\gamma I)^{-1/2}Q_X^\top$。预条件子 $F_l^{-1/2}=U_{A,l}\otimes U_{G,l}$ 通过 Kronecker 隐式表示，不需 materialize 完整 FIM。
-    - 设计动机：MFT 告诉我们 $\text{Tr}(F_l)$ 取决于架构而非数据，所以合成探针只需保持架构传播链路一致即可；阻尼 $\pi I$ 和 $\gamma I$ 保证可逆且控制条件数（Theorem 5.4 中 $\lambda_{min}\ge\sqrt\gamma$）。
+二阶 DP 方法的死穴是估曲率要么花隐私预算（从私有数据估）要么有分布偏移（从公共数据估）。这里靠的是 Mean Field Theory 的一个推论——Karakida et al. (2019) 证明 $\text{Tr}(F_l)\propto d\cdot q^{l-1}\cdot \tilde q^l$，即 Fisher 块的迹完全由架构（初始化和非线性决定的激活方差递归）决定、与输入无关。既然曲率的主信息只看架构，合成探针只要保持架构的前后向传播链路一致就够了。算法 1 据此生成 $M$ 个合成对 $(\tilde x, \tilde y)$，跑前后向收集激活和误差，外积聚合成 $\hat A_{l-1}=\frac{1}{M}\sum \tilde a_{l-1}\tilde a_{l-1}^\top+\pi I$ 与 $\hat G_l=\frac{1}{M}\sum \tilde\delta_l\tilde\delta_l^\top+\pi I$，特征分解后取 $U_{X,l}=Q_X(\Lambda_X+\gamma I)^{-1/2}Q_X^\top$。预条件子 $F_l^{-1/2}=U_{A,l}\otimes U_{G,l}$ 用 Kronecker 积隐式表示，不必 materialize 完整的 FIM。阻尼项 $\pi I$ 和 $\gamma I$ 既保证因子可逆又控制条件数，对应 Theorem 5.4 里的下界 $\lambda_{min}\ge\sqrt\gamma$。
 
-2. **模态特定合成探针**:
+**2. 模态特定合成探针：让合成输入既带架构信息、又落在数据的低维流形附近。**
 
-    - 功能：让合成输入既携带架构信息又模拟数据的低维流形结构。
-    - 核心思路：**图像域**用 Pink Noise——在频域上把白噪声 $Z$ 按 $\tilde Z_\mathbf{u}=Z_\mathbf{u}/(\|\mathbf{u}\|_2^{\alpha/2}+\epsilon)$ 加权后 IFFT，$\alpha\approx 1$ 模拟自然图像的 $1/f^\alpha$ 谱（Field 1987）；**NLP 域**用 Zipfian 分布从词表抽 token，按句子语法位置放 [CLS] [SEP] [PAD]，让 attention 和 LayerNorm 走真实路径。
-    - 设计动机：白噪声能量在所有频率均匀分布，但深网络主要传递低频特征；模态级先验把合成探针推到接近真实数据的激活统计，又彻底不携带语义→无隐私泄漏。
+白噪声能量在所有频率均匀分布，可深网络主要传递低频特征，纯白噪声探出来的曲率会偏。解法是给合成探针注入"任务无关但模态有关"的先验。图像域用 pink noise：在频域把白噪声 $Z$ 按 $\tilde Z_\mathbf{u}=Z_\mathbf{u}/(\|\mathbf{u}\|_2^{\alpha/2}+\epsilon)$ 加权再 IFFT，取 $\alpha\approx 1$ 就复现了自然图像的 $1/f^\alpha$ 谱（Field 1987）。NLP 域用 Zipfian 分布从词表抽 token，并按句子语法位置摆放 [CLS] [SEP] [PAD]，让 attention 和 LayerNorm 走真实的传播路径。这样合成探针的激活统计被推到接近真实数据，却完全不携带语义内容，因此没有隐私泄漏。
 
-3. **Scale-then-Privatize 与 DP 集成**:
+**3. Scale-then-Privatize 与 DP 集成：把曲率注入 DP-SGD 而隐私成本为零。**
 
-    - 功能：在不增加 RDP 消耗的情况下把曲率信息注入 DP-SGD。
-    - 核心思路：算法 2——梯度变换 $\tilde g_l=U_{G,l}\,g_l\,U_{A,l}$ 在裁剪之前完成，全局 $L_2$ 范数变成 $\nu_i=\sqrt{\sum_l\|\tilde g_l^{(i)}\|_F^2}$，clip 阈值 $C$ 不变；噪声 $\mathcal{N}(0,\sigma^2 C^2 I)$ 加在 clip 后的求和上。Proposition 5.6 证明：因为 $P_t$ 是 batch-independent 的线性算子，复合机制的 RDP 保证与标准 Gaussian 机制完全一致。
-    - 设计动机：与"Precondition-after-Privatize"（先加噪再乘 $P_t$）相比，scale-then-privatize 让隐私噪声项 $d\sigma^2 C^2/B^2$ **不**被 $\lambda_{max}^2$ 放大（Theorem 5.4），高隐私 regime 下优势最明显。
+要把变换塞进 DP-SGD 又不破坏隐私保证，顺序至关重要。算法 2 把梯度变换 $\tilde g_l=U_{G,l}\,g_l\,U_{A,l}$ 放在裁剪**之前**：变换后每样本的全局 $L_2$ 范数变成 $\nu_i=\sqrt{\sum_l\|\tilde g_l^{(i)}\|_F^2}$，裁剪阈值 $C$ 不变，噪声 $\mathcal{N}(0,\sigma^2 C^2 I)$ 仍加在裁剪后的求和上。因为 $P_t$ 是 batch-independent 的线性算子，Proposition 5.6 证明复合机制的 RDP 保证和标准 Gaussian 机制一模一样。相比"先加噪再乘 $P_t$"的 precondition-after-privatize，scale-then-privatize 让隐私噪声项 $d\sigma^2 C^2/B^2$ **不**被预条件子的 $\lambda_{max}^2$ 放大（见 Theorem 5.4），高隐私（小 $\varepsilon$）regime 下这个差别最明显。
 
 ### 损失函数 / 训练策略
 - 标准 CE/MSE loss + DP-SGD 优化器；KFAC 阻尼 $\pi=\gamma=10^{-2}$；Opacus 做 RDP accounting，A100 GPU。

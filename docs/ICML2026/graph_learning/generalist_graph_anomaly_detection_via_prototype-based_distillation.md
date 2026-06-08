@@ -40,30 +40,24 @@ ProMoS 把一个冻结的自监督 GNN 当成"正态先验老师"，用一束共
 ## 方法详解
 
 ### 整体框架
-ProMoS 的训练对象是一个 frozen 自监督 GNN 老师 $f_T$ 加一个轻量适配器 $g_\phi$，以及一组学生分支 $S^g, S^\ell$。输入 attributed graph $\mathcal{G}=(\mathcal{V},\mathcal{E},\mathbf{X})$，先算邻居残差增强 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + (\mathbf{x}_i - \frac{1}{|\mathcal{N}(v_i)|}\sum_{v_j\in\mathcal{N}(v_i)}\mathbf{x}_j)$，再分两路：(1) 老师路：$\mathbf{Z}_T = g_\phi(f_T(\mathbf{X},\mathbf{A}))$，仅 $g_\phi$ 可训，老师权重始终冻结；(2) 学生路：$\tilde{\mathbf{x}}_i$ 同时喂给一个"共享学生 $S^g$"和一个含 $N$ 个轻量学生的"个性化学生池 $S^\ell$"，后者通过 top-$K$ 路由器稀疏激活。师生预测都被投影到一组可学习原型上得到 soft 分布，再用 KL 距离对齐。同时通过 commitment / refinement 两个目标稳定老师的原型空间并演化原型本身。推理时不再训练，直接把 KL 蒸馏偏差 + 几何量化偏差作为节点异常分数。
+ProMoS 想解决的是"无标签、零样本、跨图"三者同时成立的图异常检测，思路是不再从零学正态，而是把一个冻结的自监督 GNN 老师当成现成的"正态先验"，用轻量学生去蒸馏它，并把师生对齐挪到可迁移的语义原型层级而非容易过拟合的实例层级。具体地，输入 attributed graph $\mathcal{G}=(\mathcal{V},\mathcal{E},\mathbf{X})$ 先做邻居残差增强 $\tilde{\mathbf{x}}_i = \mathbf{x}_i + (\mathbf{x}_i - \frac{1}{|\mathcal{N}(v_i)|}\sum_{v_j\in\mathcal{N}(v_i)}\mathbf{x}_j)$，然后冻结老师 $f_T$ 经可训适配器 $g_\phi$ 给出 $\mathbf{Z}_T = g_\phi(f_T(\mathbf{X},\mathbf{A}))$ 作为蒸馏目标，一束共享 + 稀疏激活学生分支去拟合它；师生都被投影到一组可学习原型上对齐，原型本身在训练中被持续稳定与演化；推理阶段不再训练，节点异常分数直接由师生在原型空间的蒸馏偏差加几何量化偏差给出。
 
 ### 关键设计
 
-1. **Mixture-of-Students 学生模块**：
+**1. Mixture-of-Students 学生模块：用稀疏分支同时建模全局正态与局部多样正态**
 
-    - 功能：在不增加多少参数量的前提下，同时表达"全图通用正态"和"局部多样正态"。
-    - 核心思路：共享分支 $\mathbf{h}_i^g = f_g(\tilde{\mathbf{x}}_i \odot \mathbf{m}_i) + \tilde{\mathbf{x}}_i$ 始终激活，学的是被老师反复确认的全局规律；个性化分支是 $N$ 个轻量 MLP $\{f_p\}$ 的池子，路由器输出 $\mathbf{r}_i = \mathrm{softmax}(\mathbf{W}_r \tilde{\mathbf{x}}_i)$，只对 top-$K$ 个学生赋非零权重 $g_{i,p}$，得到 $\mathbf{h}_i^\ell = \sum_p g_{i,p} f_p(\tilde{\mathbf{x}}_i \odot \mathbf{m}_i) + \tilde{\mathbf{x}}_i$。随机 mask $\mathbf{m}_i$ + identity skip 既起鲁棒化作用，也鼓励学生只去学"老师聚合的增量"。
-    - 设计动机：单学生要么不够表达力（只能挤一团正态原型）、要么太大不够高效。MoS 让"全局共性"和"局部多样性"解耦到不同分支，且作者在附录 A 证明 MoS 的期望预测误差不会比任何单学生更差——理论上稳赚不赔。
+痛点在于单一学生很难两头兼顾——做小了表达力不足，只能挤出一团粗糙的正态原型；做大了又失去蒸馏的轻量优势。ProMoS 把正态拆成两路分支来表达：一个始终激活的共享学生 $\mathbf{h}_i^g = f_g(\tilde{\mathbf{x}}_i \odot \mathbf{m}_i) + \tilde{\mathbf{x}}_i$ 负责学被老师反复确认的全图通用规律；一个含 $N$ 个轻量 MLP $\{f_p\}$ 的个性化学生池负责局部多样模式，由路由器 $\mathbf{r}_i = \mathrm{softmax}(\mathbf{W}_r \tilde{\mathbf{x}}_i)$ 只稀疏激活 top-$K$ 个学生并赋权 $g_{i,p}$，得到 $\mathbf{h}_i^\ell = \sum_p g_{i,p} f_p(\tilde{\mathbf{x}}_i \odot \mathbf{m}_i) + \tilde{\mathbf{x}}_i$。其中随机 mask $\mathbf{m}_i$ 起鲁棒化作用，identity skip 则鼓励学生只去拟合"老师聚合带来的增量"。这种"shared 全局 + sparse 个性化"的解耦让两类正态各归其位；作者在附录 A 进一步证明 MoS 的期望预测误差不会比任意单学生更差，因此叠加这套结构在理论上稳赚不赔。
 
-2. **原型驱动 soft-label 蒸馏（PSD）**：
+**2. 原型驱动 soft-label 蒸馏（PSD）：在可迁移的原型空间对齐师生，而非实例特征**
 
-    - 功能：避免在 instance 或 feature 维度对齐师生（那样会过拟合训练图细节），改为在一组可迁移的语义原型空间对齐。
-    - 核心思路：对每个分支 $b\in\{g,\ell\}$ 维护一个原型码本 $\mathbf{P}^b\in\mathbb{R}^{M_b\times d}$，用训练图特征 k-means 初始化后作为可训参数。师生分别相对原型算 soft 分配 $\mathbf{q}_i^b[m] = \frac{\exp(\mathrm{sim}(\mathbf{z}_i^t,\mathbf{p}_m^b)/\tau)}{\sum_{m'}\exp(\mathrm{sim}(\mathbf{z}_i^t,\mathbf{p}_{m'}^b)/\tau)}$，$\mathbf{s}_i^b$ 同理但用学生输出 $\mathbf{h}_i^b$。相似度取负欧氏平方。蒸馏损失就是跨分支 KL：$\mathcal{L}_{\text{PSD}} = \frac{1}{|\mathcal{V}|}\sum_i\sum_b \mathrm{KL}(\mathbf{q}_i^b \| \mathbf{s}_i^b)$。
-    - 设计动机：原型是"高层抽象概念"，比 instance-level 特征更容易跨图迁移。当 target 图节点语义和训练图不一致时，instance 对齐立刻坏掉，但原型对齐保留的是"这类节点的语义角色"，跨图泛化能力更稳。
+如果直接在 instance 或 feature 维度逼师生输出一致，蒸馏会过拟合训练图的细粒度特征；一旦 target 图节点语义换了一套，对齐立刻失效，跨图就废了。PSD 的做法是给每个分支 $b\in\{g,\ell\}$ 维护一个原型码本 $\mathbf{P}^b\in\mathbb{R}^{M_b\times d}$（用训练图特征 k-means 初始化后作为可训参数），让师生都相对这组原型算 soft 分配——老师为 $\mathbf{q}_i^b[m] = \frac{\exp(\mathrm{sim}(\mathbf{z}_i^t,\mathbf{p}_m^b)/\tau)}{\sum_{m'}\exp(\mathrm{sim}(\mathbf{z}_i^t,\mathbf{p}_{m'}^b)/\tau)}$，学生 $\mathbf{s}_i^b$ 同理但代入学生输出 $\mathbf{h}_i^b$，相似度取负欧氏平方——再用跨分支 KL 做蒸馏：$\mathcal{L}_{\text{PSD}} = \frac{1}{|\mathcal{V}|}\sum_i\sum_b \mathrm{KL}(\mathbf{q}_i^b \| \mathbf{s}_i^b)$。原型表达的是"这类节点的语义角色"这种高层抽象概念，比实例特征天然更跨图稳定，所以即便 target 图特征分布变了，对齐到原型层级仍然成立。
 
-3. **差异感知 commitment + refinement（DCR）**：
+**3. 差异感知 commitment + refinement（DCR）：稳定老师空间，同时挡住异常节点污染原型**
 
-    - 功能：跨图异质性会让冻结老师的特征空间不稳，加上异常节点会注入误导梯度污染原型，DCR 解决这两件事。
-    - 核心思路：先把每个老师表示 $\mathbf{z}_i^t$ 量化到最近原型 $\mathcal{Z}_b(\mathbf{z}_i^t) = \arg\min_m \|\mathbf{z}_i^t - \mathbf{p}_m^b\|^2$；然后用原型间关系矩阵 $\mathbf{Q}^b = \mathrm{softmax}(\mathrm{sim}(\mathbf{P}^b,\mathbf{P}^b)/\tau)$ 的对应行作为"canonical reference"，去比较节点的师生原型分布是否符合全局原型结构，得到可靠度 $w_i^b = \sigma(-\beta(\mathrm{KL}(\mathbf{q}_i^b\|\mathbf{Q}_{m_i^\star}^b) - \mu))$；最终 $\mathcal{L}_\mathrm{DCR} = \sum_i\sum_b w_i^b(\|\mathbf{z}_i^t - \mathrm{sg}[\mathcal{Z}_b]\|^2 + \|\mathrm{sg}[\mathbf{z}_i^t] - \mathcal{Z}_b\|^2)$。第一项 commitment 把老师特征拉向原型，第二项 refinement（stop-gradient 反向）让原型自身去拟合可信节点的语义。
-    - 设计动机：直接做 VQ-VAE 式 commitment 会被异常节点带歪；可靠度加权让 ProMoS 自己识别"不像正常"的节点并降权，等于在无监督下做了一次软异常剔除，保护原型纯净。
+跨图异质性会让冻结老师的特征空间漂移不稳，而无监督下异常节点又会注入误导梯度把原型带歪，DCR 同时处理这两件事。它先把老师表示 $\mathbf{z}_i^t$ 量化到最近原型 $\mathcal{Z}_b(\mathbf{z}_i^t) = \arg\min_m \|\mathbf{z}_i^t - \mathbf{p}_m^b\|^2$，再用原型间关系矩阵 $\mathbf{Q}^b = \mathrm{softmax}(\mathrm{sim}(\mathbf{P}^b,\mathbf{P}^b)/\tau)$ 的对应行作为"canonical reference"，检查某节点的师生原型分布是否符合全局原型结构，从而给出可靠度 $w_i^b = \sigma(-\beta(\mathrm{KL}(\mathbf{q}_i^b\|\mathbf{Q}_{m_i^\star}^b) - \mu))$。最终目标 $\mathcal{L}_\mathrm{DCR} = \sum_i\sum_b w_i^b(\|\mathbf{z}_i^t - \mathrm{sg}[\mathcal{Z}_b]\|^2 + \|\mathrm{sg}[\mathbf{z}_i^t] - \mathcal{Z}_b\|^2)$ 里，第一项 commitment 把老师特征拉向原型以稳定空间，第二项 refinement（stop-gradient 反向）让原型自身去拟合可信节点的语义。关键在于：朴素 VQ-VAE 式 commitment 会被异常节点带歪，而可靠度加权让模型自己识别"不像正常"的节点并降权，等于在无监督下做了一次软异常剔除，把原型保护得更纯净。
 
 ### 损失函数 / 训练策略
-总目标 $\mathcal{L} = \mathcal{L}_\text{PSD} + \lambda \mathcal{L}_\text{DCR}$，$\lambda$ 控制蒸馏与原型对齐的权衡。$\tau$ 是温度，$\beta,\mu$ 控制可靠度灵敏度。推理阶段不需要重训，节点异常分数为 $s_i = \sum_b[\mathrm{KL}(\mathbf{q}_i^b\|\mathbf{s}_i^b) + \lambda(\|\Delta_h\|^2 + \|\Delta_z\|^2)]$，其中 $\Delta_h = \mathbf{h}_i^b - \mathcal{Z}_b(\mathbf{h}_i^b)$、$\Delta_z = \mathbf{z}_i^t - \mathcal{Z}_b(\mathbf{z}_i^t)$。直觉是：异常节点要么师生原型分配差异大（distillation bias），要么表示远离任何原型（geometric deviation）。
+总目标 $\mathcal{L} = \mathcal{L}_\text{PSD} + \lambda \mathcal{L}_\text{DCR}$，$\lambda$ 控制蒸馏与原型对齐的权衡，$\tau$ 是温度，$\beta,\mu$ 控制可靠度灵敏度。推理阶段不需要重训，节点异常分数为 $s_i = \sum_b[\mathrm{KL}(\mathbf{q}_i^b\|\mathbf{s}_i^b) + \lambda(\|\Delta_h\|^2 + \|\Delta_z\|^2)]$，其中 $\Delta_h = \mathbf{h}_i^b - \mathcal{Z}_b(\mathbf{h}_i^b)$、$\Delta_z = \mathbf{z}_i^t - \mathcal{Z}_b(\mathbf{z}_i^t)$。直觉是：异常节点要么师生原型分配差异大（distillation bias），要么表示远离任何原型（geometric deviation）。
 
 ## 实验关键数据
 

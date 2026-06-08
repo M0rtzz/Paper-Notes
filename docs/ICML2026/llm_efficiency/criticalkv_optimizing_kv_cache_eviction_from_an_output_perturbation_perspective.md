@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-单头自注意力输出可以写成 $o = AVW^O$，其中 $A = \mathrm{softmax}(qK^\top/\sqrt{d})$。给定缓存预算 $b$，目标是从 $n$ 个 KV 条目中挑 $b$ 个组成 $\langle \hat K, \hat V \rangle$，使近似输出 $\hat o$ 与原输出 $o$ 的 $L_1$ 距离 $\mathcal{L} = \lVert o - \hat o \rVert_1$ 最小。作者把"丢弃哪些条目"编码成乘法掩码 $\mathcal{N} \in \{0,1\}^n$，并推出一个对 $\mathcal{N}$ 解析的扰动上界 $\theta$，再用两阶段贪心算法在每个 head 内部最小化 $\theta$，把这个选择过程作为现有 SnapKV/AdaKV/HeadKV 流水线中"按权重 Top-K"步骤的直接替换。
+单头自注意力输出可写成 $o = AVW^O$（$A = \mathrm{softmax}(qK^\top/\sqrt{d})$）。CriticalKV 把"在预算 $b$ 下从 $n$ 个 KV 条目里挑哪 $b$ 个保留"重写成一个优化问题：让近似输出 $\hat o$ 与原输出 $o$ 的 $L_1$ 距离 $\mathcal{L} = \lVert o - \hat o \rVert_1$ 最小。它先把"丢弃哪些条目"编码成乘法掩码 $\mathcal{N} \in \{0,1\}^n$、推出一个对 $\mathcal{N}$ 解析的扰动上界 $\theta$，再用两阶段贪心在每个 head 内最小化 $\theta$，最后把这套选择逻辑当成现有 SnapKV/AdaKV/HeadKV 流水线里"按权重 Top-K"那一步的 drop-in 替换。
 
 ### 关键设计
 
-1. **输出扰动的可解析上界 $\theta$**：
+**1. 输出扰动的可解析上界 $\theta$：把"丢谁"翻译成一个能直接优化的标量。**
 
-    - 功能：把"$\hat o$ 离 $o$ 多远"翻译成一个只依赖 $\mathcal{N}$、注意力权重 $A$、投影 value 范数 $\lVert \bm{\mathcal{V}}_{i,:} \rVert_1$ 的标量，绕开矩阵差的范数难以直接优化的困难
-    - 核心思路：先证明剩余 softmax 重归一化后 $A' = (\mathcal{N} \odot A) / \sum_i \mathcal{N}_i A_i$，再借助三角不等式推出 $\mathcal{L} \leq \theta = C - (2 - 1/\sum_i \mathcal{N}_i A_i)\sum_i \mathcal{N}_i A_i \lVert \bm{\mathcal{V}}_{i,:} \rVert_1$，其中 $\bm{\mathcal{V}} = V W^O$，$C$ 是与 $\mathcal{N}$ 无关的常数
-    - 设计动机：这个上界第一次把"注意力权重 + 经 $W^O$ 投影后的 value 范数"同时摆进度量里，从理论上指出仅看 $A_i$ 不够，必须配上 $\lVert (VW^O)_i \rVert_1$ 这一项才能反映真实的输出冲击
+直接优化 $\mathcal{L} = \lVert o - \hat o \rVert_1$ 很难，因为它是两个矩阵乘积之差的范数。作者先注意到：丢掉部分条目后 softmax 要重归一化，剩余权重变成 $A' = (\mathcal{N} \odot A) / \sum_i \mathcal{N}_i A_i$；再借三角不等式把 $\mathcal{L}$ 放大成一个只依赖掩码 $\mathcal{N}$、注意力权重 $A$、以及投影 value 范数 $\lVert \bm{\mathcal{V}}_{i,:} \rVert_1$ 的闭式上界
 
-2. **两阶段贪心选择算法**：
+$$\mathcal{L} \leq \theta = C - \Big(2 - \frac{1}{\sum_i \mathcal{N}_i A_i}\Big)\sum_i \mathcal{N}_i A_i \lVert \bm{\mathcal{V}}_{i,:} \rVert_1,$$
 
-    - 功能：在不做指数搜索的前提下近似最小化 $\theta$，并保证后一阶段的优化是合法的
-    - 核心思路：把预算切成 $b' = \alpha b$ 和 $b'' = (1-\alpha) b$ 两部分。第 1 阶段按纯注意力权重 $A$ 取 Top-$b'$（典型取 $\alpha=0.5$），目的是让被选条目的累计权重 $\sigma > 0.5$；第 2 阶段在剩下条目里按复合分数 $\mathcal{A}_i = (A_i + \epsilon) \cdot \lVert \bm{\mathcal{V}}_{i,:} \rVert_1$ 再取 Top-$b''$。两阶段拼起来直接最小化第二阶段的上界 $\hat\theta$
-    - 设计动机：第 1 阶段保证累积权重过半，从而 $1/\sigma < 2$，让上界中的系数项保持非负、贪心方向合法；第 2 阶段才能把"权重 × 投影范数"作为统一打分使用。$\alpha=0.5$ 这个固定值能在 99% 以上的 head 上满足假设，也避免了搜超参带来的部署复杂度
+其中 $\bm{\mathcal{V}} = V W^O$，$C$ 是与 $\mathcal{N}$ 无关的常数。这个上界关键在于它第一次把"注意力权重"和"经输出投影 $W^O$ 后的 value 范数"同时摆进同一个度量里——理论上直接说明：光看 $A_i$ 不够，必须乘上 $\lVert (VW^O)_i \rVert_1$ 才能反映一个条目被丢弃后对最终输出的真实冲击。
 
-3. **作为通用插件融入现有驱逐流水线**：
+**2. 两阶段贪心选择：先保权重过半，再按"权重×投影范数"打分。**
 
-    - 功能：在 SnapKV/AdaKV/HeadKV 三种代表性驱逐方法里，把它们各自原本的"基于累积注意力权重 Top-K"替换成上面的两阶段选择，其余部分（观察窗、max pooling、跨 head 预算分配）保持不变
-    - 核心思路：作者把 SnapKV/AdaKV/HeadKV 统一抽象成同一个"预算分配 + 观察窗权重累积 + 选择"模板（论文里的 Algorithm 2），整个新方法只动模板的"选择"一行，预算分配策略和权重累积过程都不动
-    - 设计动机：这样一来 (1) 与 AdaKV、HeadKV 这些主打"head 间预算分配"的工作严格正交，可以叠加增益；(2) 额外计算只是把已经存在的 $\lVert VW^O \rVert$ 算一遍，开销可忽略；(3) 推理时直接当 drop-in 替换，不需要重训或离线 profile
+最小化 $\theta$ 若做全局组合搜索是指数级的，作者用贪心近似，但分两阶段是有讲究的。把预算切成 $b' = \alpha b$ 和 $b'' = (1-\alpha)b$（典型 $\alpha = 0.5$）：第 1 阶段先按纯注意力权重 $A$ 取 Top-$b'$，目的不是选最终条目，而是先让被选集合的累积权重 $\sigma = \sum_{\text{selected}} A_i > 0.5$；第 2 阶段才在剩下条目里按复合分数 $\mathcal{A}_i = (A_i + \epsilon)\cdot \lVert \bm{\mathcal{V}}_{i,:} \rVert_1$ 取 Top-$b''$。之所以要第 1 阶段先把权重顶过半，是因为只有 $\sigma > 0.5$ 时上界里的系数 $2 - 1/\sigma$ 才保持非负，第 2 阶段沿复合分数贪心的方向才是真正在降 $\theta$；否则系数变号、贪心会朝错误方向走。$\alpha = 0.5$ 这个固定值在 99% 以上的 head 上都能满足 $\sigma > 0.5$，于是省掉了逐模型搜超参的部署麻烦。
+
+**3. 作为通用插件融入现有驱逐流水线：只换"选择"一行。**
+
+作者把 SnapKV/AdaKV/HeadKV 抽象成同一个"预算分配 + 观察窗权重累积 + 选择"的统一模板（论文 Algorithm 2），CriticalKV 只替换其中"按累积权重 Top-K"那一行选择逻辑，预算分配和权重累积全部原样保留。这样设计带来三重好处：一是与 AdaKV、HeadKV 这些主攻"head 间预算分配"的工作严格正交，增益可叠加；二是额外计算只是把本就要算的 $VW^O$ 各行范数取一遍，开销可忽略；三是推理时即插即用，不需要重训也不需要离线 profile。
 
 ### 损失函数 / 训练策略
 方法完全发生在推理时，对模型本身无需任何训练或微调；唯一新增的运行时计算是 $\bm{\mathcal{V}} = V W^O$ 各行的 $L_1$ 范数。超参 $\alpha$ 固定为 0.5。

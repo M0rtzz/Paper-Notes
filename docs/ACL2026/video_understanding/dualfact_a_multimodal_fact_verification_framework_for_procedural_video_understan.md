@@ -41,32 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DualFact 的 MultiFactScore pipeline 分四阶段：
-
-1. **数据集构建**：把 YouCook2 重切成 atomic clause、补全隐式参数（VIA：把"stir it" 补成"stir the soup with a spoon in the pot"）、人工标注 conceptual facts $\mathcal{F}^{con}$ 和 contextual facts $\mathcal{F}^{ctx}$，并自动生成对比 negative facts $\mathcal{F}_g^-$（替换 tool/object 但保留语法结构）。同时新建 CraftBench 覆盖 furniture / 木工 / 金工。
-2. **Fact Generation**：用 LLaMA-3.3-70B-Instruct 从 model 生成的 caption $\hat{C}$ 抽 predicted facts $\mathcal{F}_p = \text{LLM}_{\text{extract}}(\hat{C}; \Phi)$，并用同一 LLM 把 $\mathcal{F}_g^+$ 转 $\mathcal{F}_g^-$（few-shot prompt 保结构换值）。
-3. **NLI 验证**：训练多模态 NLI 模型 $\mathcal{M}_{nli}(V, f_i) \to \{\text{SUPPORTED}, \text{REFUTED}\}$，positive label support、negative label refute；textual NLI 不训直接 prompt 预训练 LLM。
-4. **错误分解 + Caption-level 打分**：用 PaliGemma2-10B 判断 fact 是否 visually grounded $G(f_i)$，再按 grounding × verifier label 矩阵把 errors 分到 Hallucination / Saliency / Omission；caption-level 分数 $\text{MultiFactScore} = |\{f_i \in F : \hat{y}_i = \text{SUPPORTED}\}| / |F|$。
+DualFact 想解决的是：怎么客观评判一段程序化视频字幕到底"说对了几分"。它把整条评测流水线 MultiFactScore 拆成四步串起来——先做数据集（把 YouCook2 重切成 atomic clause、补全隐式参数、人工标注双层事实、自动生成对比负样本，再新建覆盖木工/金工的 CraftBench）；接着用 LLaMA-3.3-70B-Instruct 从待测 caption $\hat{C}$ 抽出 predicted facts $\mathcal{F}_p = \text{LLM}_{\text{extract}}(\hat{C}; \Phi)$；然后让 NLI 验证器在 role 级别逐条判 SUPPORTED/REFUTED；最后用 PaliGemma2-10B 判断每条 fact 是否在视频里真有视觉依据 $G(f_i)$，按 grounding × verifier 标签把错误分到 Hallucination/Saliency/Omission 三档，并汇成 caption 级分数 $\text{MultiFactScore} = |\{f_i \in F : \hat{y}_i = \text{SUPPORTED}\}| / |F|$。整套设计的核心是"分两层事实 + 用视觉区分错误来源"。
 
 ### 关键设计
 
-1. **Dual-Layer Fact 表示（conceptual + contextual）**：
+**1. Dual-Layer Fact 表示：把"语义"和"执行"拆成两层独立核查。**
 
-    - 功能：把每一步指令的事实拆成两层独立可验证的集合。
-    - 核心思路：**Conceptual facts** $\mathcal{F}^{con}$ 是抽象的 role–value 赋值，如 Action=cut / Ingredient=tomato / Tool=knife / Location=board，无视字面 paraphrase（"cut/slice/chop" 统一成 Action=cut）；**Contextual facts** $\mathcal{F}^{ctx}$ 是带 predicate–argument 的关系，如 cut(tomato, board) 或 stir(mixture, bowl)，要求 entity 在视频里以正确语义角色出现。同一 caption 可能 conceptual 对 / contextual 错（例如 "pour water into flour" vs "pour flour into water" conceptual role 都对但 contextual 颠倒）。
-    - 设计动机：程序化字幕表面变化大（cut/slice）但底层结构稳定；分两层后能精确定位"是 role 类型错"还是"role 内容错"还是"argument 顺序错"，远比 flat fact 提供更细诊断信号。
+已有 fact-based 评测把事实拍平成无类型命题，分不清"漏 ingredient"和"tool 错配"。DualFact 把每一步指令的事实拆成两层：**Conceptual facts** $\mathcal{F}^{con}$ 是抽象的 role–value 赋值，如 Action=cut / Ingredient=tomato / Tool=knife / Location=board，刻意无视字面 paraphrase（"cut/slice/chop" 统一归一成 Action=cut）；**Contextual facts** $\mathcal{F}^{ctx}$ 则保留 predicate–argument 关系，如 cut(tomato, board) 或 stir(mixture, bowl)，要求 entity 在视频里以正确语义角色出现。
 
-2. **隐式参数补全 (VIA) + 对比性 Negative Fact 构造**：
+这样拆开后，同一 caption 完全可能 conceptual 对而 contextual 错——比如 "pour water into flour" vs "pour flour into water"，两者的 role 类型都没错，错的是 argument 顺序。程序化字幕表面变化大但底层结构稳定，正因如此分层才有意义：它能精确定位错误是出在"role 类型"、"role 内容"还是"argument 顺序"，比 flat fact 提供细得多的诊断信号。
 
-    - 功能：把"stir it"这种省略参数补成"stir the soup with a spoon in the pot"；同时为每个 positive fact 自动生成语义相反但句法对齐的 negative variant。
-    - 核心思路：VIA 由标注员根据视频里实际出现的 patient/tool/location 角色填补 caption 中缺失的参数，产出 YouCook3-VIA / CraftBench-VIA 变体（共标 7K+ 个 implicit arguments，见 Tab.2：YouCook3 train 3759、test 2914；CraftBench train 2132、test 1888）。Negative fact 用 few-shot LLM 把 tool / object / location 改成 plausible 替代项（如 "add salt to bowl" → "add pepper to bowl"），保持句法不变，专门挑战 NLI。
-    - 设计动机：程序化指令大量隐式参数，不补全的话评测会把"省略了"和"幻觉了"混在一起；负样本需要"plausible but wrong"才能真正考验 NLI，而不是琐碎反例。Tab.3 显示加 VIA 后 BLEU 从 5.87 → 6.51、ROUGE 从 24.16 → 33.13（YouCook3），证明 VIA 不仅是评测变量也确实让 caption 更完整。
+**2. 隐式参数补全 (VIA) + 对比性 Negative Fact 构造：把省略和幻觉区分开。**
 
-3. **Hallucination / Saliency / Omission 三档错误分解 + 多源 grounding**：
+程序化指令充斥隐式参数——"stir it" 里的 it 视觉上看得见但语言上没说。如果不补全，评测会把"省略了"误判成"幻觉了"。VIA 让标注员根据视频里实际出现的 patient/tool/location 角色，把缺失参数填回去（"stir it" → "stir the soup with a spoon in the pot"），产出 YouCook3-VIA / CraftBench-VIA 变体，共标注 7K+ 个 implicit arguments（Tab.2：YouCook3 train 3759、test 2914；CraftBench train 2132、test 1888）。
 
-    - 功能：把"caption 错了"细分成 3 类，并用视觉 grounding 把"caption-only 看错"和"真的错"分开。
-    - 核心思路：定义 $G(f_i) \in \{0,1\}$ 表示 fact 是否在 video 中 visually grounded（用 PaliGemma2 判断）。则：**Hallucination** = $\neg G(f_i) \land f_i \in \mathcal{F}^R$（视觉里没有 + verifier refute）；**Saliency** = $G(f_i) \land f_i \in \mathcal{F}^R$（视觉里有但不属于 gold fact）；**Omission** = $e_i \in \mathcal{F}_g^+ \land e_i \notin \mathcal{F}_p$（gold 需要但 caption 完全没说）。同时引入三个 eval mode：cap-only（只看 caption）、text-grounded（caption 报错后看视觉）、mm-grounded（多模态 verifier 报错后看视觉）。
-    - 设计动机：单看 caption 会把"模型选了视觉里另一个无关物体"也算 hallucination（事实上是 saliency）；只有把 grounding 加进来才能区分两者，这对 MLLM 失败模式分析是必需的。Tab.7 上 ingredient 的 Hallucination 从 cap-only 的 34.57% 一路降到 cap-grounded 的 16.89% + 17.68% saliency，正是这套分解逻辑的实证。
+负样本则用 few-shot LLM 把 tool/object/location 换成 plausible 替代项（"add salt to bowl" → "add pepper to bowl"），刻意保持句法不变——因为只有"看似合理但其实错"的负例才能真正考验 NLI，琐碎反例没有区分度。值得注意的是，VIA 不只是评测变量：Tab.3 显示加 VIA 后 BLEU 从 5.87 升到 6.51、ROUGE 从 24.16 升到 33.13（YouCook3），说明补全确实让 caption 本身更完整。
+
+**3. Hallucination / Saliency / Omission 三档错误分解 + 视觉 grounding：分清"真错"还是"看到了别的"。**
+
+光看 caption，会把"模型其实指认了视频里另一个无关物体"也一律算成幻觉，掩盖了真实的失败模式。DualFact 引入 $G(f_i) \in \{0,1\}$ 表示一条 fact 是否在视频中 visually grounded（由 PaliGemma2 判断），据此把错误三分：**Hallucination** $= \neg G(f_i) \land f_i \in \mathcal{F}^R$（视觉里根本没有，且 verifier 判 refute）；**Saliency** $= G(f_i) \land f_i \in \mathcal{F}^R$（视觉里确实有，但不属于 gold fact）；**Omission** $= e_i \in \mathcal{F}_g^+ \land e_i \notin \mathcal{F}_p$（gold 需要但 caption 完全没提）。
+
+配套三个 eval mode 逐级加视觉信息：cap-only 只看 caption，text-grounded 在 caption 报错后再看视觉，mm-grounded 在多模态 verifier 报错后看视觉。这套分解的实证就摆在 Tab.7：ingredient 的 Hallucination 从 cap-only 的 34.57% 一路降到 cap-grounded 的 16.89%，被剥离出去的 17.68% 其实是 saliency——证明不引入 grounding 就会系统性高估幻觉。
 
 ### 损失函数 / 训练策略
 - **NLI 训练**：多模态 NLI 用 $(V, f_i)$ pair 训练（positive label SUPPORTED，negative label REFUTED）；textual NLI 直接 prompt 预训练 LLM 不训。

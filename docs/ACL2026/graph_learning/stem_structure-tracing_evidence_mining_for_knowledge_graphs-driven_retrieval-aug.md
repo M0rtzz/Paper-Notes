@@ -38,40 +38,38 @@ STEM 将知识图谱多跳问答从逐步路径搜索改写为“先生成查询
 **核心 idea**：用 KG schema 约束 LLM 的查询分解，并用 Triple-GNN 生成全局 guidance graph，让每一步实体和三元组匹配都带有全局结构先验。
 
 ## 方法详解
-STEM 的核心不是让 LLM 反复做搜索决策，而是先让模型把问题变成可对齐的结构蓝图，然后在 KG 中做结构追踪。整个流程可以看作三层：语言问题先被转成原子关系断言；断言再被落到 KG 的标准三元组 schema；最后检索器用 schema graph 和 guidance graph 在 KG 中找证据子图。
 
 ### 整体框架
-输入是自然语言问题、问题实体和目标知识图谱。输出是一个 query-specific evidence subgraph，随后被线性化为推理链送入 LLM 生成答案。
 
-第一阶段是 Semantic-to-Structural Projection。SGDA 负责把复杂问题拆成若干原子关系断言，并判断问题应采用 Precision 还是 Breadth 检索策略。SAGB 再把这些断言映射成 KG 中真实存在的符号化三元组，形成 schema graph。
-
-第二阶段是 Global Guidance Subgraph 构建。Triple-GNN 以查询三元组表示为条件，在候选子图上为实体赋分，选出高概率节点并连接成 guidance graph，给后续结构匹配提供全局先验。
-
-第三阶段是 Structure-Tracing Subgraph Retrieval。检索从问题实体锚点出发，在 KG 中递归匹配 schema graph 的边；每条候选边的分数由三元组语义相似度和 guidance graph 中的实体、三元组偏置共同决定。
+STEM 把多跳 KGQA 从"让 LLM 一步步猜下一跳"改写成"先画结构蓝图、再按图索骥"：输入是自然语言问题、问题实体和目标 KG，输出是一张 query-specific evidence subgraph，最后被线性化成推理链交给 LLM 生成答案。中间分三层推进——先把问题投影成 KG 可执行的 schema graph，再用一个轻量图模型生成全局 guidance graph 注入结构先验，最后让检索器在真实 KG 上对照这两张图做结构追踪，把"猜下一跳"变成"找结构匹配"。
 
 ### 关键设计
-1. **语义到结构投影**:
 
-    - 功能：把开放的自然语言问题变成 KG 可执行的结构蓝图。
-    - 核心思路：SGDA 生成“原子关系断言”，例如把多跳问题拆成若干共享中间变量的关系句；SAGB 将这些关系句对齐到 KG 的标准关系名和三元组形式。
-    - 设计动机：直接让 LLM 生成关系名容易出现 schema 幻觉，先学习“问题模式”再做符号 grounding，可以减少语义合理但 KG 中不存在的路径。
+**1. 语义到结构投影：先学问题模式、再做符号 grounding，压住 schema 幻觉。**
 
-2. **Triple-GNN 全局引导图**:
+直接让 LLM 生成关系名，常会写出语义合理却在目标 KG 里根本不存在的边——这是局部路径搜索被带偏的源头之一。STEM 把投影拆成两步：SGDA 先把复杂问题分解成若干"原子关系断言"，即共享中间变量的关系句，同时判定该问题该走 Precision 还是 Breadth 检索策略；SAGB 再把这些断言对齐到 KG 的标准关系名和三元组形式，拼成 schema graph。
 
-    - 功能：在局部搜索前给候选实体和边提供全局结构先验。
-    - 核心思路：将 schema triples 编码后汇聚为查询表示，把问题实体初始化为该查询向量，再通过 Triple-GNN 在候选图上传播，得到节点概率并构造 guidance graph。
-    - 设计动机：传统路径搜索只看当前边的局部相似度，容易被 hub 节点和近义关系误导；guidance graph 将“整个问题需要什么结构”提前注入每一步匹配。
+先抽象出"问题需要什么样的关系结构"、再把它落到具体符号，这种"模式优先、grounding 在后"的分工，使语义合理但 KG 中不存在的路径在进入检索前就被过滤掉，schema 幻觉因此显著减少。
 
-3. **结构追踪式子图检索**:
+**2. Triple-GNN 全局引导图：在局部搜索动手前，先把"整题需要什么结构"注进每一步。**
 
-    - 功能：从 KG 中找出与 schema graph 结构和语义都匹配的证据子图。
-    - 核心思路：实体锚定阶段对 question entity 取 Top-50 候选，并用实体级全局偏置放大 guidance graph 中的节点；边匹配阶段用三元组语义相似度加三元组级偏置打分，再递归扩展。
-    - 设计动机：复杂问答常需要多答案或分支证据。Precision 策略贪心选最高分边，Breadth 策略保留超过阈值的多条边，从而兼顾单答案精度和多答案覆盖。
+传统路径搜索只看当前这条边的局部相似度，极易被 hub 节点和近义关系误导。STEM 先把 schema triples 编码后汇聚成一个查询表示，用它初始化问题实体的节点向量，再让 Triple-GNN 在候选子图上传播、为每个实体打出概率分，挑出高分节点连成 guidance graph。
+
+这张引导图本身不回答问题，而是充当全局先验：它提前告诉后续每一步匹配"整道题大概需要哪些实体、哪些三元组"，于是局部决策不再孤立，hub 与伪相关边的干扰被全局结构压制。
+
+**3. 结构追踪式子图检索：实体锚定 + 边匹配双偏置，按 schema 递归长出证据子图。**
+
+检索分两段并都吸收 guidance graph 的偏置。实体锚定阶段对每个 question entity 取 Top-50 候选，并用实体级全局偏置放大 guidance graph 里被看好的节点；边匹配阶段沿 schema graph 的边递归扩展，每条候选边的分数由三元组语义相似度叠加三元组级偏置共同决定。
+
+针对"复杂问答常需多答案或分支证据"这一现实，检索按 SGDA 的判定切换两种策略：Precision 贪心选最高分边，适合单答案、低延迟、高置信；Breadth 保留所有超阈值的边，允许结构分支以覆盖多答案。两种策略共用同一套打分，只是在"取一条还是取多条"上分流，从而兼顾精度与覆盖。
+
+### 一个完整示例
+
+以 CWQ 上一道两跳问题为例：SGDA 先把它拆成两条共享中间变量的原子断言（如"X 导演了电影 m""电影 m 的主演是谁"），并判定它需要 Breadth；SAGB 把断言里的关系词对齐成 KG 真实关系名，拼出一张含中间变量节点的 schema graph。接着 Triple-GNN 以这些查询三元组为条件，在候选子图上为实体打分，把高分的导演、电影、演员节点连成 guidance graph。最后检索器从问题实体锚点出发，先取 Top-50 候选并按实体偏置放大被看好的节点，再沿 schema graph 的边、用"三元组相似度 + 三元组偏置"逐跳匹配并递归扩展，最终长出一张覆盖多个演员答案的 evidence subgraph，DFS 展开成推理链送给 LLM。
 
 ### 损失函数 / 训练策略
-论文为 SGDA、SAGB 和 Triple-GNN 构建了专门训练数据。SGDA/SAGB 使用 Structure-to-Query Reverse Generation 做数据增强：先从 KG 结构生成问题模式，再训练模型把自然语言问题投影回 schema graph。Triple-GNN 则学习在 query-specific subgraph 中预测高价值实体，使生成的 guidance graph 更可能覆盖真实推理路径。
 
-STEM 的最终答案生成并不重新训练一个大模型，而是把检索到的 evidence subgraph 通过 DFS 展开为推理链，配合指令提示送给 LLM。这个设计把主要创新集中在结构化检索侧，便于和 GPT-4o、Llama-3.1 等不同推理模型组合。
+STEM 为 SGDA、SAGB 和 Triple-GNN 各自构建了专门训练数据。SGDA/SAGB 采用 Structure-to-Query Reverse Generation 做数据增强：先从 KG 结构反向生成问题模式，再训练模型把自然语言问题投影回 schema graph；Triple-GNN 则学习在 query-specific subgraph 中预测高价值实体，让 guidance graph 更可能覆盖真实推理路径。最终答案生成不再训练大模型，而是把 evidence subgraph 经 DFS 展开成推理链、配指令提示送入 LLM——把创新集中在结构化检索侧，便于与 GPT-4o、Llama-3.1 等不同推理模型自由组合。
 
 ## 实验关键数据
 

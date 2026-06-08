@@ -38,60 +38,41 @@ tags:
 
 ### 整体框架
 
-采用两阶段策略：
-
-1. **阶段一**——独立训练四个专用单模态模型（场景/人脸/音频/文本），每个模型将视频映射到一个固定维度的嵌入向量。
-2. **阶段二**——将四个嵌入投影到共享 128 维空间，通过 6 层 Transformer 编码器建模模态间交互，最终做视频级 A/H 二分类。
+要解决的是 BAH 视频的犹豫/矛盾（A/H）二分类。难点在于 A/H 信号微妙、常藏在跨模态不一致里，所以管线走两阶段：先各自把视频压成一个嵌入，再把它们放到一起对质。阶段一独立训练四个专用单模态模型（场景、人脸、音频、文本），每个模型把整段视频映射成一个固定维度的嵌入向量；阶段二把四个嵌入投影到共享的 128 维空间，过一个 6 层 Transformer 编码器让模态彼此交互，最后从融合表示里读出视频级的 A/H 判断。
 
 ### 关键设计
 
-#### 1. 场景视觉编码器（VideoMAE）
+**1. 场景视觉编码器（VideoMAE）：补上前人 A/H 工作里没用过的全局上下文。**
 
-- **功能**: 捕捉视频中的全局场景动态和行为上下文信息。
-- **核心思路**: 使用 VideoMAE（基于 ViT，Kinetics-400 预训练）作为视频级场景编码器。从每段视频均匀采样 $T_v=16$ 帧，resize 到 $224 \times 224$，通过 tubelet embedding 将视频划分为 $2 \times 16 \times 16$ 的时空 patch，投影到 $D=768$ 维空间并加位置编码。Transformer 编码器对所有 token 做时空自注意力，最终通过全局平均池化得到场景嵌入 $h_s$。
-- **设计动机**: 场景模态提供被试所处的环境和整体行为模式（如身体姿态、手势运动），是先前 A/H 工作中未利用的互补信号。
-- **训练**: 15 epochs, AdamW, lr=2e-5, weight decay=1e-2, batch size=4, cosine annealing, label smoothing=0.1。
+前人只用人脸+音频+文本，丢掉了被试所处环境和整体行为模式（身体姿态、手势运动）这类互补信号。本文用 VideoMAE（基于 ViT，Kinetics-400 预训练）做视频级场景编码：每段视频均匀采样 $T_v=16$ 帧、resize 到 $224 \times 224$，经 tubelet embedding 切成 $2 \times 16 \times 16$ 的时空 patch，投影到 $D=768$ 维并加位置编码；Transformer 对所有 token 做时空自注意力，全局平均池化得到场景嵌入 $h_s$。训练用 15 epochs、AdamW、lr=2e-5、weight decay=1e-2、batch size=4、cosine annealing、label smoothing=0.1。
 
-#### 2. 人脸情感编码器（EmotionEfficientNetB0）
+**2. 人脸情感编码器（EmotionEfficientNetB0）：用统计池化把表情的时序波动一并抓住。**
 
-- **功能**: 提取面部情绪微表情信息，作为 A/H 状态的视觉线索。
-- **核心思路**: 用 YOLO 人脸检测器逐帧检测人脸（多人取最大框，无检测则用全帧 fallback），crop 后 resize 到 $224 \times 224$，输入 AffectNet+ 微调的 EfficientNetB0 提取逐帧情感嵌入。对 $F$ 帧嵌入 $\{e_f\}_{f=1}^F$ 做**统计池化**——计算均值 $\mu$ 和标准差 $\sigma$ 并拼接 $[\mu; \sigma]$，形成紧凑且保留分布信息的视频级人脸表征。
-- **设计动机**: A/H 可能表现为面部表情的时序波动（如从微笑到皱眉的交替），统计池化中的标准差可以捕捉这种变异性。
-- **超参**: 30 帧均匀采样, 16 hidden states, 256 output features, lr=1e-3, AdamW。
+A/H 在脸上往往不是某一帧的表情，而是表情来回变（如从微笑切到皱眉），单看均值会抹平这种变化。先用 YOLO 逐帧检测人脸（多人取最大框，检不到就退回整帧），crop+resize 到 $224 \times 224$，送 AffectNet+ 微调的 EfficientNetB0 提逐帧情感嵌入 $\{e_f\}_{f=1}^F$。关键是对这 $F$ 帧做**统计池化**——同时算均值 $\mu$ 和标准差 $\sigma$ 再拼成 $[\mu; \sigma]$，标准差这一项正好编码了表情的变异性，得到紧凑又保留分布信息的视频级人脸表征。超参：30 帧均匀采样、16 hidden states、256 output features、lr=1e-3、AdamW。
 
-#### 3. 音频时序编码器（EmotionWav2Vec2.0 + Mamba）
+**3. 音频时序编码器（EmotionWav2Vec2.0 + Mamba）：用线性复杂度的 Mamba 建模可变长韵律序列。**
 
-- **功能**: 从语音韵律中提取犹豫/矛盾的声学线索（语调变化、停顿、语速波动等）。
-- **核心思路**: 从视频中提取音频并重采样到 16 kHz，输入 MSP-Podcast 语料微调的 Wav2Vec2.0（取**第 10 层**输出，维度 $T_a \times 1024$），然后用 **Mamba 编码器**建模时序依赖，最后时间平均池化得音频嵌入 $a$。Mamba 的参数：state size=8, conv kernel=4, expansion factor=2, hidden=256, FFN=512, dropout=0.1。
-- **设计动机**: Mamba 提供线性复杂度的序列建模，优于 Transformer（实验验证），特别适合长度可变的音频序列。选择第 10 层而非最后层是因为中间层更好地保留了情感相关的韵律特征。
-- **损失函数**: 标准交叉熵，Mamba 输出接线性层做分类。
+犹豫/矛盾的声学线索（语调起伏、停顿、语速波动）藏在时序里，而音频长度可变、用 Transformer 建模代价随长度平方上涨。先把音频重采样到 16 kHz，送 MSP-Podcast 微调的 Wav2Vec2.0，取**第 10 层**输出（维度 $T_a \times 1024$）——中间层比最后层更好地保留了情感相关的韵律特征；再用 **Mamba 编码器**（state size=8、conv kernel=4、expansion factor=2、hidden=256、FFN=512、dropout=0.1）以线性复杂度建模时序依赖，时间平均池化得音频嵌入 $a$。Mamba 输出接线性层、用标准交叉熵训练，实验上优于 Transformer。
 
-#### 4. 文本语义编码器（EmotionDistilRoBERTa）
+**4. 文本语义编码器（EmotionDistilRoBERTa）：押注最强的单模态线索。**
 
-- **功能**: 从语言内容中提取语义级 A/H 线索（犹豫用词、自我矛盾的陈述等）。
-- **核心思路**: 使用 BAH 语料提供的自动语音转录文本。主配置为 EmotionDistilRoBERTa（情感预训练的 DistilRoBERTa），直接在 A/H 任务上微调，输出经 MLP 分类头做最终预测。备选方案包括 TF-IDF + Logistic Regression/CatBoost（MF1 达 68-69%）和 EmotionTextClassifier 微调（70.00%）。
-- **设计动机**: 先前研究一致表明文本是 A/H 识别最强的单模态线索。精调情感预训练模型可同时利用情感先验和任务特定知识。
-- **训练**: 部分冻结 backbone, MLP head 1-3 层 hidden=64-128, dropout 0-0.3, AdamW/SGD, lr 1e-5~0.1, batch=16, 3-20 epochs + early stopping。
+先前研究一致显示文本是 A/H 最强的单模态信号（犹豫用词、自相矛盾的陈述都直接落在语言里）。这里用 BAH 自带的自动语音转录文本，主配置选情感预训练的 DistilRoBERTa 直接在 A/H 上微调、过 MLP 头出预测，既吃到情感先验又学到任务特定知识。备选方案包括 TF-IDF + Logistic Regression/CatBoost（MF1 约 68–69%）和 EmotionTextClassifier 微调（70.00%）。训练时部分冻结 backbone，MLP head 1–3 层、hidden=64–128、dropout 0–0.3、AdamW/SGD、lr 1e-5~0.1、batch=16、3–20 epochs + early stopping。
 
-#### 5. Transformer 多模态融合模块
+**5. Transformer 多模态融合模块：在共享空间里让注意力自适应地权衡四个模态。**
 
-- **功能**: 将四个模态嵌入在共享空间中建模交互关系，生成融合表征用于最终分类。
-- **核心思路**: 每个模态嵌入 $x_m \in \mathbb{R}^{d_m}$ 经**模态专用投影器**（Linear + LayerNorm + GELU + Dropout）映射到共享 $d=128$ 维空间得 $u_m$，加可学习模态嵌入 $E_{\text{mod}}$ 后送入 6 层 Transformer 编码器（4 头注意力, FFN 扩展因子 6, dropout=0.45）。输出通过 masked mean pooling 得融合表示 $z_{\text{fused}}$，送入线性分类器输出 logits。
-- **缺失模态处理**: 若某模态不可用，提供二值 mask $\mu_m \in \{0,1\}$ 在自注意力中屏蔽对应 token，增强鲁棒性。
-- **设计动机**: Transformer 编码器能自适应地学习模态间的注意力权重，比手动设计的融合策略更灵活。投影到共享低维空间（128维）减少参数量并促进跨模态对齐。
+四个嵌入维度各异、信号强弱悬殊，手工设计的拼接/blending 难以灵活协调。每个模态嵌入 $x_m \in \mathbb{R}^{d_m}$ 先过**模态专用投影器**（Linear + LayerNorm + GELU + Dropout）映射到共享 $d=128$ 维得 $u_m$——降到低维既减参数又促进跨模态对齐；加上可学习的模态嵌入 $E_{\text{mod}}$ 后送 6 层 Transformer（4 头注意力、FFN 扩展因子 6、dropout=0.45），让模型自己学各模态间的注意力权重，输出经 masked mean pooling 得融合表示 $z_{\text{fused}}$，再过线性分类器出 logits。为应对部分模态缺失，每个模态带一个二值 mask $\mu_m \in \{0,1\}$，在自注意力中屏蔽不可用模态的 token，增强鲁棒性。
 
-#### 6. 原型增强分类头
+**6. 原型增强分类头：训练时当正则用、推理时直接丢掉。**
 
-- **功能**: 通过原型匹配提供训练时的辅助正则信号，使融合表征在类内更紧凑。
-- **核心思路**: 维护每类 $K=16$ 个可学习原型 $p_{c,k}$，融合表示 $z_{\text{fused}}$ 与原型做 $\ell_2$ 归一化后计算余弦相似度（温度 $\tau=0.3$），通过 log-sum-exp 聚合为类别原型得分 $\hat{y}^{\text{proto}}_c$。
-- **损失函数**: 总损失 $\mathcal{L} = \mathcal{L}_{\text{cls}} + 0.2 \cdot \mathcal{L}_{\text{proto}} + 0 \cdot \mathcal{L}_{\text{div}}$。其中 $\mathcal{L}_{\text{cls}}$ 为主分类交叉熵，$\mathcal{L}_{\text{proto}}$ 为原型辅助分类损失。多样性正则 $\mathcal{L}_{\text{div}}$ 实验中被禁用（$\lambda_{\text{div}}=0$）。推理时仅使用主线性分类器头。
-- **设计动机**: 原型匹配提供隐式聚类约束，使类内表示更紧凑、类间更分散，在小数据集上起到正则化作用。
+小数据集上融合表征容易类内松散、类间糊在一起，需要额外约束。为每类维护 $K=16$ 个可学习原型 $p_{c,k}$，把 $z_{\text{fused}}$ 与原型都做 $\ell_2$ 归一化后算余弦相似度（温度 $\tau=0.3$），再经 log-sum-exp 聚合成类别原型得分 $\hat{y}^{\text{proto}}_c$，相当于给表征加了隐式聚类约束、把类内拉紧、类间推开。总损失为
+
+$$\mathcal{L} = \mathcal{L}_{\text{cls}} + 0.2 \cdot \mathcal{L}_{\text{proto}} + 0 \cdot \mathcal{L}_{\text{div}}$$
+
+其中 $\mathcal{L}_{\text{cls}}$ 是主分类交叉熵，$\mathcal{L}_{\text{proto}}$ 是原型辅助分类损失，多样性正则 $\mathcal{L}_{\text{div}}$ 实验中被禁用（$\lambda_{\text{div}}=0$）。注意这个头只在训练时起正则作用，推理时只用主线性分类器，所以是一种零推理成本的训练增强。
 
 ### 训练与集成策略
 
-- **融合模型训练**: RMSprop, lr=9.44e-5, weight decay=5.55e-4, label smoothing=0.02, gradient clipping=0.5, cosine LR scheduler。
-- **稳定性工程**: Optuna 超参搜索 + 5 个固定随机种子（42/2025/7777/12345/31415）训练，每个配置训练 5 次取平均 MF1 做选择。
-- **最终集成**: 5 个种子模型的类概率平均作为最终预测。
+融合模型用 RMSprop（lr=9.44e-5、weight decay=5.55e-4、label smoothing=0.02、gradient clipping=0.5、cosine LR scheduler）训练。稳定性工程是这套竞赛方案的关键：用 Optuna 搜超参，并固定 5 个随机种子（42/2025/7777/12345/31415），每个配置训练 5 次取平均 MF1 做选择，最终把 5 个种子模型的类概率平均作为预测，以此压住初始化敏感性。
 
 ## 实验关键数据
 

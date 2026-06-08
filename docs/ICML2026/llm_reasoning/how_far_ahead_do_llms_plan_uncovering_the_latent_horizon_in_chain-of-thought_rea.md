@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分两块：**第 2 节探针**做诊断，回答 Q1；**第 3 节应用**做利用，回答 Q2。诊断侧的输入是 LLM 在 12 个任务上的完整 CoT 轨迹 $T=\{t_1,\dots,t_n\}$ 及其各层隐状态 $H_i^k\in\mathbb{R}^d$，输出是三类探针在各位置、各层的准确率/相关度曲线，由此读出"近视视野"这一关键现象。应用侧把诊断得到的"sparse pivot 才是真信号"这一直觉，分别落到不确定性 AUROC（topk 选 pivot 算平均不确定度）和 CoT 旁路（初期 5 个 token 的归一化熵 < 阈值就跳过思考模式直接出答案）两个任务上。两个 LLM backbone 同时实验：Qwen3-32B（即开即用，含思考模式）和一个用 GRPO 训出的 In-Domain LLM（基于 Qwen2.5-7B-Instruct，作为"上界"减少混淆变量）。
+全文围绕"先诊断、后利用"的双段结构展开：第 2 节用探针做诊断回答 Q1，第 3 节把诊断结论落到下游任务回答 Q2。诊断侧喂进 LLM 在 12 个任务上的完整 CoT 轨迹 $T=\{t_1,\dots,t_n\}$ 及其各层隐状态 $H_i^k\in\mathbb{R}^d$，输出是三类探针在各位置、各层的准确率/相关度曲线，"近视视野"这一关键现象就是从这些曲线里读出来的；应用侧再把"真正的信号只集中在少数 pivot 位置"这条直觉，分别落到不确定性 AUROC 和 CoT 旁路两个任务上。整套实验在两个 backbone 上并行：即开即用、自带思考模式的 Qwen3-32B，以及一个用 GRPO 在 Qwen2.5-7B-Instruct 上训出的 In-Domain LLM——后者推理更干净，作为减少混淆变量的"上界"参照。
 
 ### 关键设计
 
-1. **Tele-Lens 探针：低秩 adapter + 偏移嵌入 + 三维"目的论"目标**：
+**1. Tele-Lens 探针：用一个低秩 adapter 同时窥探三类"未来"。**
 
-    - 功能：对 CoT 任意位置 $i$、任意层 $k$ 的隐状态 $H_i^k$，预测三类未来信号——后续 $m$ 个 token、最终答案、剩余推理总长度。
-    - 核心思路：沿用 Logit Lens 把中间层直连到 LM head 这一传统，但加一个 bottleneck adapter 抗过拟合：$\widetilde{H}_i^k = \operatorname{GeLU}\big((H_i^k + \operatorname{Emb}^k(\delta))A^k\big)B^k$，其中 $A^k\in\mathbb{R}^{d\times r}$、$B^k\in\mathbb{R}^{r\times d}$ 是 $r=256$ 的低秩矩阵，$\operatorname{Emb}^k(\delta)$ 是一个**偏移嵌入**——给定 $\delta=1,2,\dots,m$ 即可指定要预测的是"下一个 token"还是"下 8 个 token"，从而在同一 adapter 内统一多步预测；输出 $\mathcal{P}_i^k=\operatorname{Softmax}(\widetilde{H}_i^k L)$，LM head $L$ 冻结。对最终答案预测把 $\operatorname{Emb}^k$ 移除，对推理长度则换成单层回归头。
-    - 设计动机：之前的探针要么针对单一目标（如只看 final answer），要么只在最后一层做。Tele-Lens 用一个低秩低成本的统一框架同时覆盖三个语义不同的目的论维度（token-level / answer-level / horizon-level），并且按层分别训练，得以画出"哪一层、哪个位置、哪个维度"的三维全景，从而把之前彼此矛盾的单点结论摆到同一张图上对齐。
+之前的隐状态探针各看各的——有的只盯最终答案、有的只在最后一层做，结论自然彼此打架。Tele-Lens 想用一套统一框架覆盖三个语义不同的"目的论"维度：对 CoT 任意位置 $i$、任意层 $k$ 的隐状态 $H_i^k$，同时预测后续 $m$ 个 token、最终答案、以及剩余推理总长度。它沿用 Logit Lens 把中间层直连冻结 LM head $L$ 的传统，但插一个 bottleneck adapter 抗过拟合：$\widetilde{H}_i^k = \operatorname{GeLU}\big((H_i^k + \operatorname{Emb}^k(\delta))A^k\big)B^k$，其中 $A^k\in\mathbb{R}^{d\times r}$、$B^k\in\mathbb{R}^{r\times d}$ 是秩 $r=256$ 的低秩矩阵，输出 $\mathcal{P}_i^k=\operatorname{Softmax}(\widetilde{H}_i^k L)$。关键在那个**偏移嵌入** $\operatorname{Emb}^k(\delta)$：给定 $\delta=1,2,\dots,m$ 就能指定要预测的是"下一个 token"还是"下 8 个 token"，于是多步预测被收进同一个 adapter；预测最终答案时把 $\operatorname{Emb}^k$ 去掉，预测推理长度时则换成单层回归头。因为是按层分别训练，最后能画出"哪一层、哪个位置、哪个维度"的三维全景图，把之前一个个孤立的单点结论摆到同一张图上对齐——这正是调和矛盾的前提。
 
-2. **12 任务三分类协议：把"组合 vs 知识"摆到同一张比较图**：
+**2. 12 任务三分类协议：把"组合 vs 知识"放进同一张比较图。**
 
-    - 功能：系统采样足够多任务类型，避免结论被某一类任务带偏。
-    - 核心思路：把任务分为**显式组合**（Parity / Cycle / Subsum，需要严格多步算法）、**隐式组合**（GSM8K / MATH / AIME / MuSR / Zebra，语义中藏多步推理）、**知识语义**（CSQA / MMLU / QuALITY / GPQA，靠世界知识与模式匹配）三类，全部转成固定答案空间的多选题（用 GPT-4.1 自动造干扰项），使得 final-answer 探针只需在 20 个标签 token 上预测。每任务 4000/100/500 切分，三个生成式任务直接合成数据完全可控。
-    - 设计动机：之前研究之所以打架，是因为各自任务分布不同——只看 CSQA 容易得出"答案早就被编码了"的结论，只看 Parity 又会得出"必须靠 CoT"。把三类任务在同一探针下放在一张图上，"近视视野 + 简单任务能感知粗略答案"这一统一解释才能浮出水面。
+之前研究之所以打架，根子在任务分布不同——只看 CSQA 容易得出"答案早就被编码了"，只看 Parity 又会得出"必须靠 CoT"。本文索性把任务系统地切成三类一起测：**显式组合**（Parity / Cycle / Subsum，需要严格多步算法）、**隐式组合**（GSM8K / MATH / AIME / MuSR / Zebra，语义里藏着多步推理）、**知识语义**（CSQA / MMLU / QuALITY / GPQA，靠世界知识与模式匹配）。为了让 final-answer 探针只需在固定的 20 个标签 token 上预测，所有任务都用 GPT-4.1 自动造干扰项转成固定答案空间的多选题，每任务按 4000/100/500 切分，三个生成式任务直接合成数据、完全可控。三类任务挤进同一探针后，"近视视野 + 简单任务能感知粗略 gist"这一统一解释才浮得出来。
 
-3. **木桶不确定性原理：用 sparse pivot 替代全局平均**：
+**3. 木桶不确定性原理：用 sparse pivot 取代全局平均。**
 
-    - 功能：把困扰多年的"perplexity / entropy 对长 CoT 不敏感"问题，转化为"选对几个关键位置取平均"的简单策略。
-    - 核心思路：基于诊断里的发现——CoT 中绝大多数 token 是高置信度的"句法填充"（密度分布证实），真正决定推理正确性的是少量"逻辑跨越点"。形式化为：从一条 CoT 中按指标极值挑选 top-$k$ 个 pivot 位置（用 Tele-Lens 的 final-answer entropy 时选最低，用通用 perplexity / entropy / Self-Certainty 时选最不确定的位置），仅对这 $k$ 个位置取平均作为整条路径的不确定度。Self-Certainty 指标公式为 $\operatorname{SC}(X)=-\frac{1}{N|\mathcal{V}|}\sum_{i}\sum_{w\in\mathcal{V}}\log(|\mathcal{V}|\cdot P(w|x_{<i}))$。CoT 旁路则用前 5 个 token 的归一化熵 $\bar{\mathrm{H}}(\mathbf{p})=-\sum_{i=1}^{C}p_i\log p_i / \log C$，只要任一位置低于阈值 0.1 就关掉 thinking 模式直接出答案。
-    - 设计动机：与"近视视野"的诊断结论闭环——既然全局规划薄弱、关键信号只集中在少数位置，那么全局平均自然会被大量"水货 token"稀释。木桶原理直接把"取最短木板"翻译到 CoT 上，把诊断洞察立刻转化为可即插即用的 calibration trick，无需重训模型。
+诊断里有个直接发现：CoT 中绝大多数 token 是高置信度的"句法填充"（token 密度分布印证了这点），真正决定推理对错的只是少量"逻辑跨越点"。既然信号是稀疏的，把它放进全局平均自然会被一堆"水货 token"稀释——这正是 perplexity / entropy 对长 CoT 不敏感的病根。木桶原理把"取最短木板"直接翻译到 CoT 上：从一条路径里按指标极值挑出 top-$k$ 个 pivot 位置（用 Tele-Lens 的 final-answer entropy 时选最低的，用通用 perplexity / entropy / Self-Certainty 时选最不确定的），只对这 $k$ 个位置取平均作为整条路径的不确定度。其中 Self-Certainty 定义为 $\operatorname{SC}(X)=-\frac{1}{N|\mathcal{V}|}\sum_{i}\sum_{w\in\mathcal{V}}\log(|\mathcal{V}|\cdot P(w|x_{<i}))$。CoT 旁路则更激进：对前 5 个 token 算归一化熵 $\bar{\mathrm{H}}(\mathbf{p})=-\sum_{i=1}^{C}p_i\log p_i / \log C$，只要任一位置低于阈值 0.1 就直接关掉 thinking 模式出答案。整套设计与"近视视野"诊断闭环——既然全局规划薄弱、信号只集中在几个点，topk 选 pivot 就是最自然的推论，而且零训练成本、即插即用。
 
 ### 损失函数 / 训练策略
-每个 adapter 训 ~5K 步，dev set 早停，$r=256$；每个探针维度、每层各训一个 adapter。In-Domain LLM 用 GRPO（Shao et al. 2024）在 Qwen2.5-7B-Instruct 上做任务感知 RL，产出的 CoT 平均 ~1K 字符 vs Qwen3 的 10K+，作为"决策更干净"的上界。
+每个探针维度、每一层各训一个独立 adapter，约 5K 步、dev set 早停、秩固定 $r=256$。作为"上界"参照的 In-Domain LLM 用 GRPO（Shao et al. 2024）在 Qwen2.5-7B-Instruct 上做任务感知 RL，产出的 CoT 平均仅 ~1K 字符（对比 Qwen3 的 10K+），决策更干净、混淆更少。
 
 ## 实验关键数据
 

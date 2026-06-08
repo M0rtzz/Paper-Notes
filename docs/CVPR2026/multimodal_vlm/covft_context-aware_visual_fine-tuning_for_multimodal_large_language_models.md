@@ -48,32 +48,33 @@ tags:
 
 ### 整体框架
 
-CoVFT 引入潜在上下文变量 c，将视觉后验从 $p(\mathbf{z}|\mathbf{I})$ 扩展为 $p(\mathbf{z}|\mathbf{I}, \mathbf{c})$。通过两个模块实现：CVE 提取上下文向量，CoMoE 根据上下文调节视觉编码。
+CoVFT 要拆的死结是：标准视觉编码器只看图、不看文本指令，它建模的是"给定图像 $\mathbf{I}$ 的视觉特征" $p(\mathbf{z}|\mathbf{I})$；可同一张图，在 grounding 任务下要盯住物体位置、在 captioning 任务下要把握全图语义，需求的视觉特征截然不同。当这些任务的梯度被硬挤进同一套视觉参数时就会互相拉扯，微调反而比冻结更不稳。CoVFT 的破局思路是引入一个潜在上下文变量 $\mathbf{c}$，把视觉后验从 $p(\mathbf{z}|\mathbf{I})$ 扩展成 $p(\mathbf{z}|\mathbf{I}, \mathbf{c})$，让视觉编码"随任务上下文而变"。整体跑两步：先由 CVE 模块从图文信息里逐层提炼出上下文向量 $\mathbf{c}$，再由 CoMoE 模块拿这个 $\mathbf{c}$ 去调节视觉编码器内部的前馈计算，把本会互相冲突的优化信号按上下文分流到不同专家。
 
 ### 关键设计
 
-1. **上下文向量提取（CVE）**：从多模态信息中提炼上下文信号 → 文本引导的跨模态注意力 → 与视觉编码同步更新
+**1. 上下文向量提取（CVE）：让视觉编码"知道"当前在做哪类任务。**
 
-    - 使用冻结 BERT 编码文本指令得到文本嵌入 $\mathbf{t}$
-    - 在视觉编码器的某些层，将视觉 token $\mathbf{z}$ 和文本嵌入 $\mathbf{t}$ 分别通过轻量残差块（$f_{res}$，包含 GELU 激活的上下投影）
-    - CrossAttention 以文本为 query，拼接的多模态特征为 key/value：$\mathbf{c}_i = \text{CrossAttn}(\hat{\mathbf{t}}_q, [\hat{\mathbf{z}}, \hat{\mathbf{t}}]_{k,v})$
-    - **设计动机**：(1) 与视觉编码器同步逐层更新，无需额外推理阶段；(2) 以文本为主导进行信息聚合，确保上下文向量反映任务偏好而非仅仅是视觉特征
+视觉偏好冲突的根子在于视觉编码器是上下文无关的——它压根不知道这次要定位物体还是描述全图。CVE 要做的就是把这份"任务信号"提炼出来交给后续模块。具体做法是用一个冻结的 BERT 编码文本指令、得到文本嵌入 $\mathbf{t}$，然后在视觉编码器的若干层里，把当前视觉 token $\mathbf{z}$ 与文本嵌入 $\mathbf{t}$ 各自过一个轻量残差块 $f_{res}$（内含 GELU 激活的下投影-上投影结构），再做一次以文本为 query、以拼接后的多模态特征为 key/value 的跨模态注意力：
 
-2. **上下文混合专家（CoMoE）**：将上下文信号注入视觉编码器 → 上下文条件的专家路由 → 分解冲突的优化信号
+$$\mathbf{c}_i = \text{CrossAttn}(\hat{\mathbf{t}}_q, [\hat{\mathbf{z}}, \hat{\mathbf{t}}]_{k,v})$$
 
-    - 在 ViT 后半部分的层中，将 FFN 替换为 N=4 个并行专家网络（从原始 FFN 初始化）
-    - 基于上下文向量计算路由权重：$\mathbf{g}(\mathbf{c}) = \text{softmax}(\mathbf{W}\mathbf{c} + \mathbf{b})$
-    - **密集聚合**（Dense routing）：$\tilde{\mathbf{z}} = \sum_{n=1}^N g^n(\mathbf{c}) \mathcal{E}^n(\mathbf{z})$
-    - **核心机制**：第 n 个专家的梯度被路由权重缩放——$\nabla_{\theta_e^n} \mathcal{L} = g^n(\mathbf{c}) \cdot \frac{\partial\mathcal{L}}{\partial\tilde{\mathbf{z}}} \frac{\partial\mathcal{E}^n(\mathbf{z})}{\partial\theta_e^n}$
-    - 相似上下文的样本给予相似专家权重 → 一致梯度更新；不同上下文的样本通过不同路由分离 → 避免梯度冲突
-    - **设计动机**：密集路由优于稀疏路由，因为数据量有限时稀疏路由导致某些专家训练不足
+这里有两个刻意的选择。一是上下文向量跟着视觉编码器逐层同步更新，而不是另起一个推理阶段单独算一遍，省掉了额外前向开销；二是注意力以文本主导（文本当 query），保证抽出来的 $\mathbf{c}$ 反映的是"任务要什么"，而不是被视觉特征本身带跑。消融也印证了这点：text-only 上下文（60.55）明显好过 image-only（59.77），冲突确实主要由语言上下文驱动。
+
+**2. 上下文混合专家（CoMoE）：把冲突的梯度按上下文分流，而不是硬塞进同一组参数。**
+
+有了 $\mathbf{c}$ 还不够，得让它真正改变视觉编码的行为。CoMoE 在 ViT 后半部分的层里，把单个 FFN 替换成 $N=4$ 个并行专家 $\mathcal{E}^n$（都从原始 FFN 复制初始化），再用上下文向量算一组路由权重 $\mathbf{g}(\mathbf{c}) = \text{softmax}(\mathbf{W}\mathbf{c}+\mathbf{b})$，对所有专家做密集加权聚合：
+
+$$\tilde{\mathbf{z}} = \sum_{n=1}^N g^n(\mathbf{c})\,\mathcal{E}^n(\mathbf{z})$$
+
+它能解冲突的关键全在反向传播：第 $n$ 个专家收到的梯度被自己的路由权重缩放，$\nabla_{\theta_e^n}\mathcal{L} = g^n(\mathbf{c})\cdot\frac{\partial\mathcal{L}}{\partial\tilde{\mathbf{z}}}\frac{\partial\mathcal{E}^n(\mathbf{z})}{\partial\theta_e^n}$。于是上下文相近的样本（比如一批 grounding）会落到相近路由、给同一批专家一致的更新；上下文不同的样本（grounding 与 captioning）则被分到不同专家、各自更新互不打架——本质上是把"同一组参数被多任务拉扯"拆解成"不同上下文走不同专家"。这里特意用密集路由（全专家激活）而非稀疏 top-k，是因为指令微调数据量有限，稀疏路由会让部分专家长期吃不到样本、训练不足；消融里 Dense（61.08）确实优于 Sparse@2（60.10）。
 
 ### 损失函数 / 训练策略
 
-- 标准的 next-token prediction loss：$\mathcal{L}_{inst} = -\sum_{t=1}^T \log p_\theta(a_t | a_{<t}, \mathbf{Q}, \mathbf{I})$
-- 训练中优化：CVE 模块 + CoMoE 模块 + LayerNorm 统计量；**视觉编码器的其他参数冻结**
-- 预训练：558K 图文对，仅训练投影层，lr=1e-3，batch=256
-- 指令微调：665K 图文指令，联合训练 LLM + 投影层 + CoVFT 模块，lr=2e-5，batch=128
+训练目标就是标准的 next-token prediction：
+
+$$\mathcal{L}_{inst} = -\sum_{t=1}^T \log p_\theta(a_t | a_{<t}, \mathbf{Q}, \mathbf{I})$$
+
+实际只解冻一小撮参数——CVE 模块、CoMoE 模块、以及 LayerNorm 统计量，视觉编码器其余权重全部冻结（可训练参数占比不到 5%）。两阶段配置上，预训练用 558K 图文对、只训投影层（lr=1e-3，batch=256）；指令微调用 665K 图文指令、联合训练 LLM + 投影层 + CoVFT 模块（lr=2e-5，batch=128）。
 
 ## 实验关键数据
 

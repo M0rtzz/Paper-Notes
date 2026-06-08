@@ -42,34 +42,22 @@ HyperMem 用"超图（hyperedge 连接 ≥3 个节点）"代替传统 RAG 的 pa
 ## 方法详解
 
 ### 整体框架
-输入是流式对话 $X = \{x_t\}_{t=1}^T$，输出是 agent 对查询 $q$ 的回答。整体三阶段构建 + 三阶段检索：
 
-1. **构建阶段（离线）**：
-    - Stage 1 Episode Detection：LLM-driven 流式边界检测，把对话切成语义完整的 episode 节点 $v^E = (v^E_{\text{dialogue}}, v^E_{\text{title}}, v^E_{\text{episode}})$。
-    - Stage 2 Topic Aggregation：每个新 episode 检索历史相似 episode，三种 case 分别走「初始化主题 / 创建新主题 / 更新已有主题」，并建立 $e^E_t \in \mathcal{E}^E$ 把同 topic 的多个 episode 绑在一个超边里。
-    - Stage 3 Fact Extraction：从每个 episode 抽取原子 fact $v^F = (v^F_{\text{content}}, v^F_{\text{potential}}, v^F_{\text{keywords}})$，其中 `potential` 字段提前预测该 fact 能回答什么类型的 query，`keywords` 用于 BM25 召回；并建立 $e^F$ 把同 episode 的多个 fact 绑在一个超边里。
-2. **索引阶段（离线）**：每个节点同时建 BM25 sparse + Qwen3-Embedding-4B dense 双索引；再做超图嵌入传播 $\bm{h}'_v = \bm{h}_v + \lambda \cdot \text{Agg}_{e \in \mathcal{N}(v)}(\bm{h}_e)$，让同主题的远距离 episode 拿到相似 embedding。
-3. **检索阶段（在线）**：Topic → Episode → Fact 三级粗到细，每级用 RRF 融合 BM25 + dense 排名，再过 Qwen3-Reranker-4B 精排，依次选 top-$k^T=10$、$k^E=10$、$k^F=30$。最终用 fact content + episode summary 拼成 context 喂给 GPT-4.1-mini 生成答案。
+HyperMem 把流式对话 $X = \{x_t\}_{t=1}^T$ 离线组织成一张"主题—情节—事实"三层超图，在线再用粗到细检索为查询 $q$ 拼出上下文交给 LLM 作答。离线构建分三步走：先让 LLM 做流式边界检测，把对话切成语义完整的 episode 节点 $v^E = (v^E_{\text{dialogue}}, v^E_{\text{title}}, v^E_{\text{episode}})$；再让每个新 episode 检索历史相似 episode，按「初始化 / 新建 / 更新主题」三种 case 聚成 topic 并用超边 $e^E_t \in \mathcal{E}^E$ 把同主题的所有 episode 绑成一组；最后从每个 episode 抽出原子 fact $v^F = (v^F_{\text{content}}, v^F_{\text{potential}}, v^F_{\text{keywords}})$（`potential` 预判这条 fact 能回答哪类 query，`keywords` 供 BM25 召回），用超边 $e^F$ 把同 episode 的 fact 绑成一组。构建完每个节点同时建 BM25 sparse + Qwen3-Embedding-4B dense 双索引，并做一次超图嵌入传播让远距离的同主题 episode 在向量空间靠拢。在线检索沿 Topic→Episode→Fact 逐级展开，每级先 RRF 融合 sparse/dense 排名再过 Qwen3-Reranker-4B 精排，依次取 top-$k^T{=}10$、$k^E{=}10$、$k^F{=}30$，最终把 fact 的 content 与 episode 的 summary 拼成 context 喂给 GPT-4.1-mini 生成答案。
 
 ### 关键设计
 
-1. **三层超图结构（Topic / Episode / Fact）**:
+**1. 三层超图结构（Topic / Episode / Fact）：把两两关系升级成多对多的联合关联。**
 
-    - 功能：把"两两关系"扩展到"多对多 joint association"，显式 group 跨时间相关的对话片段。
-    - 核心思路：形式化记忆为 $\mathcal{H} = (\mathcal{V}^T \cup \mathcal{V}^E \cup \mathcal{V}^F, \mathcal{E}^E \cup \mathcal{E}^F)$，其中 hyperedge $\mathcal{E}^E$ 连接同主题所有 episode，$\mathcal{E}^F$ 连接同 episode 所有 fact，每条 hyperedge 上还带 LLM 给的重要性权重 $w_{e,v} \in [0,1]$。Topic 层 = 语义锚点（可跨月跨周），Episode 层 = 时间连续的事件段，Fact 层 = 原子可检索单元。
-    - 设计动机：传统 GraphRAG 的 entity-entity 边在 Multi-hop 上失败的原因是"两个事实属于同一事件"这种 high-order 关系无法编码——你只能让它们各自指向同一个 entity 间接关联，但 entity 不在查询里时这条线断了。Hyperedge 直接 group，一个 topic 就能拉出所有 7 次 tournament 提及（case study Figure 10）。
+传统 GraphRAG 在 Multi-hop 上掉点，根子在于"两个事实同属一个事件"这种高阶关系无法编码——只能让它们各自指向同一个 entity 间接搭线，而 entity 一旦不在查询里这条线就断了。HyperMem 把记忆形式化为 $\mathcal{H} = (\mathcal{V}^T \cup \mathcal{V}^E \cup \mathcal{V}^F, \mathcal{E}^E \cup \mathcal{E}^F)$：超边 $\mathcal{E}^E$ 直接把同主题的所有 episode 圈进一组、$\mathcal{E}^F$ 把同 episode 的所有 fact 圈进一组，每条超边上还挂着 LLM 给的重要性权重 $w_{e,v} \in [0,1]$。三层各司其职——Topic 是可跨周跨月的语义锚点，Episode 是时间连续的事件段，Fact 是原子可检索单元——于是一个 topic 超边就能一次性拉出某个用户在 10 个月里 7 次比赛的全部提及，而不必依赖某个恰好出现在查询中的实体。
 
-2. **超图嵌入传播（Hypergraph Embedding Propagation）**:
+**2. 超图嵌入传播（Hypergraph Embedding Propagation）：让同超边节点在向量空间互相靠拢。**
 
-    - 功能：让同 hyperedge 内节点的 dense embedding 互相靠拢，让语义相关但时间远的 episode 在向量空间也聚拢。
-    - 核心思路：先按权重 softmax 加权聚合得 hyperedge embedding $\bm{h}_e = \sum_v \alpha_{e,v} \bm{h}_v$，其中 $\alpha_{e,v} = \exp(w_{e,v}) / \sum_u \exp(w_{e,u})$；再回写到节点 $\bm{h}'_v = \bm{h}_v + \lambda \cdot \text{Agg}_{e \in \mathcal{N}(v)}(\bm{h}_e)$，$\lambda = 0.5$ 默认。一次传播即可，不需要训练。
-    - 设计动机：灵感来自 HGNN（Feng et al., 2019），但极简、无需 fine-tune。本质是给"hyperedge 上的语义共享"一个软约束——单纯 BM25 + 原始 dense 看不到 topic 级 grouping，传播之后查询 hits 一个 episode 就能顺势把同主题其他 episode 拉近一步。
+单凭 BM25 + 原始 dense 看不到 topic 级的 grouping，语义相关但时间相隔很远的 episode 在向量空间往往各自为政。HyperMem 借鉴 HGNN（Feng et al., 2019）但做成极简的一步前向：先按权重 softmax 聚合出超边嵌入 $\bm{h}_e = \sum_v \alpha_{e,v} \bm{h}_v$（其中 $\alpha_{e,v} = \exp(w_{e,v}) / \sum_u \exp(w_{e,u})$），再回写到节点 $\bm{h}'_v = \bm{h}_v + \lambda \cdot \text{Agg}_{e \in \mathcal{N}(v)}(\bm{h}_e)$，默认 $\lambda = 0.5$。这等于给"同超边语义共享"加了一条软约束，查询命中一个 episode 后能顺势把同主题的其他 episode 也拉近一步，而整个过程无需任何训练参数。
 
-3. **粗到细三级检索 + RRF 融合 + Reranker 精排**:
+**3. 粗到细三级检索 + RRF 融合 + Reranker 精排：层层剪枝，既缩搜索空间又保住主题 coherence。**
 
-    - 功能：层层缩小搜索空间，避免直接在万级 fact 上排序的噪声爆炸。
-    - 核心思路：每一级都走"BM25 + dense → RRF 融合 → reranker"流水线。RRF 公式 $\text{RRF}(d) = \sum_{m=1}^M 1/(k + \text{rank}_m(d))$ 把两个 ranker 的 rank 倒数加和，不依赖原始分数尺度。先 top-$k^T$ topic，从每个 topic 的 hyperedge 拉出 episode 候选，再排 top-$k^E$；从每个 episode 的 hyperedge 拉出 fact，最后排 top-$k^F$。最终 context = top facts 的 `content` + top episodes 的 `summary`。
-    - 设计动机：直接在所有 fact 上检索丢失了主题 coherence，而单层 chunk RAG 又信息密度低。粗到细 + hyperedge 展开等价于"先定位话题再找证据"，符合人类回忆顺序，也是 token 效率的关键——HyperMem 在 7.5× tokens 拿 92.73%，比 GraphRAG 35.3× tokens 拿 67.6% 高效得多。
+直接在上万条 fact 里排序会噪声爆炸、丢失主题连贯性，单层 chunk RAG 又信息密度太低。HyperMem 把检索拆成 Topic→Episode→Fact 三级，每级都走"BM25 + dense → RRF 融合 → reranker"同一条流水线：RRF 用 $\text{RRF}(d) = \sum_{m=1}^M 1/(k + \text{rank}_m(d))$ 把两个 ranker 的 rank 倒数相加，绕开原始分数尺度不一致的问题。先排出 top-$k^T$ 个 topic，顺着它们的超边展开 episode 候选排出 top-$k^E$，再顺着 episode 的超边展开 fact 排出 top-$k^F$，最终 context 由 top facts 的 `content` 与 top episodes 的 `summary` 拼成。这套"先定位话题再找证据"的顺序贴合人类回忆方式，也是 token 效率的关键——HyperMem 仅用 7.5× tokens 就拿到 92.73%，而 GraphRAG 烧到 35.3× tokens 也只有 67.6%。
 
 ### 损失函数 / 训练策略
 本方法**无监督训练**——所有节点构建、hyperedge 权重、boundary 检测均由 LLM zero-shot 完成（GPT-4.1-mini 生成 answer，Qwen3 系列负责 embedding/rerank）。超图嵌入传播是闭式一步前向，无需训练参数。3 次独立运行取平均，超参 $\lambda = 0.5$, $k^T = k^E = 10$, $k^F = 30$。

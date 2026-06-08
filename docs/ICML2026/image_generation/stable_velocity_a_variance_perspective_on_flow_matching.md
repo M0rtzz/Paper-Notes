@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定数据 $q(x_0)$ 与线性插值路径 $x_t = (1-t)x_0 + t\varepsilon$，先在概率层面刻画 CFM 训练目标的方差 $\mathcal{V}_{\text{CFM}}(t)$，识别出分裂点 $\xi$；然后训练侧用 StableVM 替换 CFM 损失（高方差区收益最大）并叠加 VA-REPA（只在 $t<\xi$ 段加权表征对齐），推理侧在 $t<\xi$ 段调用 StableVS 用大步数闭式更新替换原 ODE/SDE 求解器，$t \ge \xi$ 段沿用原模型。三件套共享同一个 $\xi$、彼此正交，可单独或叠加加入已有 REPA/REG/iREPA 流水线。
+本文要解决的是 CFM 把整段 $t \in [0,1]$ 当成同质区间训练和采样、却忽视条件速度方差沿时间剧烈变化的问题。做法是先在概率层面把 CFM 目标的方差 $\mathcal{V}_{\text{CFM}}(t)$ 解析出来，找到那个"前段近 0、后段爆炸"的分裂点 $\xi$，再围绕这条曲线分区施治：高方差区做方差缩减、低方差区强化语义监督并启用闭式大步采样。落地成三个共享同一个 $\xi$、彼此正交的模块——训练损失 StableVM、辅助损失 VA-REPA、采样器 StableVS，可单独或叠加挂进已有 REPA/REG/iREPA 流水线。
 
 ### 关键设计
 
-1. **StableVM：自归一化多样本条件速度目标**：
+**1. StableVM：用多样本无偏估计压低高方差区的目标抖动**
 
-    - 功能：把 CFM 单样本目标换成对 $n$ 个参考样本 $\{x_0^i\}$ 做自归一化加权平均，作为同一个边缘速度场 $v_t(x_t)$ 的多样本无偏估计。
-    - 核心思路：把 $x_t$ 从单条件路径换到混合路径 $p_t^{\text{GMM}}(x_t \mid \{x_0^i\}) = \tfrac{1}{n}\sum_i p_t(x_t \mid x_0^i)$ 中采样，回归目标变成 $\widehat{v}_{\text{StableVM}}(x_t; \{x_0^i\}) = \sum_k p_t(x_t \mid x_0^k) v_t(x_t \mid x_0^k) / \sum_j p_t(x_t \mid x_0^j)$。论文证明该目标保持无偏（Thm 3.1）、与 CFM 拥有相同的全局最优 $v_t(x_t)$，并且方差严格小于 CFM（Thm 3.2），随 $n$ 增大以 $O(1/n)$ 速度衰减（Thm 3.3）。条件生成下额外维护一个 FIFO 类别 memory bank（容量 $K=256$）解决每个 batch 内同类样本稀疏的问题。
-    - 设计动机：直接对 Eq.(4) 的目标方差下手，是真正"修原因"的方差缩减——既不改 CFM 的全局最优点（保持无偏），又通过混合采样自然把 STF 那种"只换目标不换输入"的有偏方案推广到一般随机插值。
+CFM 的训练目标 $v_t(x_t\mid x_0)$ 本质是对真实边缘速度 $v_t(x_t)$ 的单样本 Monte Carlo 估计，在 $t$ 接近 1 时一个含噪 $x_t$ 几乎能解释为任何数据点，回归目标剧烈抖动。StableVM 直接对这个目标方差下手：不再从单条件路径采 $x_t$，而是从混合路径 $p_t^{\text{GMM}}(x_t \mid \{x_0^i\}) = \tfrac{1}{n}\sum_i p_t(x_t \mid x_0^i)$ 采样，回归目标换成对 $n$ 个参考样本的自归一化加权平均 $\widehat{v}_{\text{StableVM}}(x_t; \{x_0^i\}) = \sum_k p_t(x_t \mid x_0^k)\, v_t(x_t \mid x_0^k) / \sum_j p_t(x_t \mid x_0^j)$。论文证明它与 CFM 共享同一个全局最优 $v_t(x_t)$（保持无偏，Thm 3.1），方差严格更小（Thm 3.2），且随 $n$ 增大以 $O(1/n)$ 衰减（Thm 3.3）——因此是"修原因"而非改最优点的方差缩减。相比 STF 那种"只换目标不换输入"的有偏方案（且只适用 VP 扩散），混合采样输入让 StableVM 真正无偏并推广到一般随机插值。条件生成下还维护一个容量 $K=256$ 的 FIFO 类别 memory bank，解决每个 batch 内同类样本太稀疏导致无法凑齐参考集的问题。
 
-2. **VA-REPA：方差感知表征对齐**：
+**2. VA-REPA：让表征对齐只在它有意义的低方差区生效**
 
-    - 功能：让 REPA 类辅助语义对齐损失只在低方差区生效，在高方差区自动关掉。
-    - 核心思路：观察到预训练 REPA 模型在低方差区 $\ell_{\text{RA}}$ 始终很低且可学，在高方差区饱和在很高数值——因为后者从纯噪声做确定性语义恢复本身是 ill-posed 的。于是引入权重 $w(t) \in [0, 1]$，总损失写为 $\mathcal{L} = \mathcal{L}_{\text{StableVM}} + \lambda_{\text{RA}} \, \mathbb{E}_{t,x_t}[w(t) \ell_{\text{RA}}(x_t)] / \mathbb{E}_t[w(t)]$。$w(t)$ 提供三种实现：硬阈 $\mathbb{I}[t<\xi]$、sigmoid 松弛 $\sigma(k(\xi - t))$ 以及 SNR 形式 $\text{SNR}(t)/(\text{SNR}(t) + \text{SNR}(\xi))$，默认 sigmoid。分母 $\mathbb{E}_t[w(t)]$ 的归一化是关键，防止大部分样本落在高方差区时辅助梯度被冲淡。
-    - 设计动机：REPA 之所以有效，本质上是借助语义编码器（DINO 等）补回模型自身在低噪声段难以学到的语义结构，而在 $x_t$ 几乎是纯噪声时强迫模型对齐固定语义会引入错配。把"何时对齐"这个开关交给方差曲线，是"对症下药"。
+社区里 REPA 类语义对齐损失被无差别施加到所有 $t$，但作者观察到预训练 REPA 模型的对齐损失 $\ell_{\text{RA}}$ 在低方差区始终很低且可学、在高方差区饱和在极高值——因为从近乎纯噪声做确定性语义恢复本身是 ill-posed 的，强迫对齐固定语义只会引入错配。VA-REPA 据此给对齐损失加一个时间权重 $w(t)\in[0,1]$，总损失写成 $\mathcal{L} = \mathcal{L}_{\text{StableVM}} + \lambda_{\text{RA}}\, \mathbb{E}_{t,x_t}[w(t)\,\ell_{\text{RA}}(x_t)] / \mathbb{E}_t[w(t)]$。$w(t)$ 有三种实现：硬阈 $\mathbb{I}[t<\xi]$、sigmoid 松弛 $\sigma(k(\xi - t))$、SNR 形式 $\text{SNR}(t)/(\text{SNR}(t)+\text{SNR}(\xi))$，默认用 sigmoid。分母 $\mathbb{E}_t[w(t)]$ 的归一化是关键一笔——当大部分样本落在高方差区被关掉时，它防止有效的辅助梯度被整体均值冲淡。本质上是把"何时该对齐"这个开关交给方差曲线，对症下药。
 
-3. **StableVS：低方差区闭式采样加速器**：
+**3. StableVS：把低方差段当直线，用闭式大步采样换 >2× 加速**
 
-    - 功能：在 $t < \xi$ 段用大步数闭式更新替代标准 ODE/SDE 求解器，实现 finetuning-free 的 >2× 采样加速。
-    - 核心思路：在低方差区 $v_t(x_t) \approx v_t(x_t \mid x_0)$，于是反向 SDE 可写成 DDIM 风格后验 $p_\tau(x_\tau \mid x_t, v_t) = \mathcal{N}(\mu_{\tau \mid t}, \beta_t^2 I)$，其中 $\beta_t = f_\beta \sigma_\tau$，均值 $\mu_{\tau \mid t} = (\rho_t - \lambda_t \sigma'_t/\sigma_t) x_t + \lambda_t v_t(x_t)$。对应的 PF-ODE 也有闭式解 $x_\tau = \sigma_\tau[(1/\sigma_t - \sigma'_t/\sigma_t \cdot \Psi_{t,\tau}) x_t + \Psi_{t,\tau} v_t(x_t)]$。在线性插值 + $\beta_t = 0$ 的特例下两者退化为 $x_\tau = x_t + (\tau - t) v_t(x_t)$，即低方差段轨迹是常速度直线，可取任意大步长精确积分。实测在 SD3.5/Flux/Qwen-Image/Wan2.2 上取 $\xi = 0.85$、低方差区只用 9 步即可保持质量。
-    - 设计动机：传统采样器为了应对全程未知的曲率必须用很小步长；本文用方差分析告诉求解器"前一段实际上是直线"，于是把节省下来的 step quota 都留给真正需要小步的高方差段，这是用结构先验换计算的典型套路。
+传统采样器为应对全程未知的曲率必须用很小步长。但在低方差区 $v_t(x_t)\approx v_t(x_t\mid x_0)$，反向 SDE 可写成 DDIM 风格后验 $p_\tau(x_\tau \mid x_t, v_t) = \mathcal{N}(\mu_{\tau \mid t}, \beta_t^2 I)$，其中 $\beta_t = f_\beta\sigma_\tau$、均值 $\mu_{\tau \mid t} = (\rho_t - \lambda_t \sigma'_t/\sigma_t)x_t + \lambda_t v_t(x_t)$；对应 PF-ODE 也有闭式解 $x_\tau = \sigma_\tau[(1/\sigma_t - \sigma'_t/\sigma_t \cdot \Psi_{t,\tau})x_t + \Psi_{t,\tau} v_t(x_t)]$。在线性插值 + $\beta_t=0$ 的特例下两者一起退化为 $x_\tau = x_t + (\tau - t)v_t(x_t)$——低方差段轨迹就是常速度直线，可取任意大步长精确积分。于是 StableVS 把节省下来的 step quota 都留给真正需要小步的高方差段，整套无需任何微调。实测在 SD3.5/Flux/Qwen-Image/Wan2.2 上取 $\xi=0.85$、低方差区只用 9 步即可保质，等于用结构先验换计算。
 
 ### 损失函数 / 训练策略
 最终训练目标为 StableVM 损失 $\mathcal{L}_{\text{StableVM}}$ 加上方差感知归一化后的 $\lambda_{\text{RA}}$ 倍 VA-REPA 项。默认配置：$\xi = 0.7$（训练）/ $0.85$（采样），bank 容量 $K = 256$，$w_{\text{sigmoid}}$ 加权。骨干 SiT-XL/2，ImageNet 256 latent，参考样本数 $n$ 通过 batch 内组合实现，无需额外网络。

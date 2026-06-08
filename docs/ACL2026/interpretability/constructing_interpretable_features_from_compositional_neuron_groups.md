@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定预训练 LLM 的某一层 MLP，先在大量文本上前向，收集每个 token 在该层的激活向量 $\mathbf{a} \in \mathbb{R}^{d_a}$，堆成矩阵 $A \in \mathbb{R}^{d_a \times n}$。然后用 SNMF 解 $A \approx Z Y$ 得到 $k$ 个 MLP 特征 $\mathbf{z}_i$（每个是 $d_a$ 维的神经元加权方向）。每个 MLP 特征再乘 $W_V$ 投影回残差流得到残差流特征 $\mathbf{f}_i = W_V \mathbf{z}_i$，用于和 SAE / DiffMeans 在同一空间比较。系数矩阵 $Y$ 直接告诉你哪些 token 强激活了哪个特征——这就是 SAE 没有的"激活上下文"自动标注。
+
+核心想法是：MLP 输出本来就是 $\sum_i a_i \mathbf{v}_i$，即一组神经元按激活值加权叠加，那么相似输入应当触发相似的神经元组合，只要把这种共激活模式从激活矩阵里分解出来，特征就天然锚定在模型的真实计算上。具体地，对预训练 LLM 的某一层 MLP，先在大量文本上前向，收集每个 token 在该层的激活向量 $\mathbf{a} \in \mathbb{R}^{d_a}$ 堆成矩阵 $A \in \mathbb{R}^{d_a \times n}$；再用半非负矩阵分解解 $A \approx Z Y$，得到 $k$ 个 MLP 特征 $\mathbf{z}_i$（$d_a$ 维的神经元加权方向）和非负系数矩阵 $Y$。每个特征乘 $W_V$ 投影回残差流得到 $\mathbf{f}_i = W_V \mathbf{z}_i$，从而能和 SAE / DiffMeans 在同一空间公平比较；而 $Y$ 直接给出每个特征被哪些 token 强激活，自带 SAE 缺失的"激活上下文"标注。
 
 ### 关键设计
 
-1. **SNMF 分解 + 神经元稀疏性**:
+**1. SNMF 分解 + 神经元稀疏：让特征是少量神经元的有符号线性组合。**
 
-    - 功能：把 MLP 激活矩阵分成"特征基" $Z$ 和"非负使用系数" $Y$，约束特征是少量神经元的线性组合。
-    - 核心思路：用 Ding 等的 Multiplicative Updates 交替更新 $Z$（闭式：$Z \leftarrow A Y^\top (Y Y^\top + \lambda I)^{-1}$）和 $Y$（带正负部分分解的乘法更新，保持非负性）；每次迭代后对 $Z$ 的每列做硬 winner-take-all，只保留绝对值 top $p\%=1\%$ 的神经元、其余清零，强制神经元级稀疏。
-    - 设计动机：SAE 的非负正则鼓励 parts-based 表示但激活有正负两面——SNMF 正好放松"特征非负"约束保留正负方向，同时保留"系数非负"以保证加性 parts-based 可解释；硬 WTA 是 Peharz & Pernkopf 2012 的 $\ell_0$ 约束方案，实验证明 1% 比 5% / 10% 都更好。
+SAE 用非负正则鼓励 parts-based 表示，但 MLP 激活本身有正有负、对应概念的促进与抑制，强行让特征非负会丢掉一半语义。SNMF 正好放松"特征非负"、只保留"系数非负"：用 Ding 等的 Multiplicative Updates 交替更新 $Z$（闭式 $Z \leftarrow A Y^\top (Y Y^\top + \lambda I)^{-1}$，允许正负）和 $Y$（带正负部分分解的乘法更新，保持非负），既留住激活的双向语义又保证系数侧的加性可解释。每次迭代后对 $Z$ 的每列做硬 winner-take-all，只保留绝对值 top $p\%=1\%$ 的神经元、其余清零——这是 Peharz & Pernkopf 2012 的 $\ell_0$ 约束方案，强制每个特征只由极少数神经元构成；实验证明 1% 显著优于 5% / 10%。
 
-2. **基于 $Y$ 的自动概念标注**:
+**2. 基于 $Y$ 的自动概念标注：把 token-to-feature 归因变成方法的内置闭环。**
 
-    - 功能：每个 MLP 特征直接拿到一组"top 激活上下文"用于打描述标签，不再依赖纯激活值排序的辅助 pipeline。
-    - 核心思路：对特征 $\mathbf{z}_i$ 从 $Y$ 的第 $i$ 行取 top-$m$ token，把上下文喂给 GPT-4o-mini 让它总结共同语义模式；early layer 用"激活输入"描述、later layer 用 logits lens 风格的"输出 token"描述（Gur-Arieh 2025）。
-    - 设计动机：SAE 的描述必须靠 Neuronpedia / autointerp 第三方流水线生成，而 SNMF 自带 token-to-feature 归因——这一步既增加可解释性又解释了为什么 SNMF 在 concept detection 上经常领先（log-ratio $S_{CD} := \log \bar{a}_{\text{act}} / \bar{a}_{\text{neutral}}$ 的均值更高）。
+SAE 的特征描述得靠 Neuronpedia / autointerp 这类第三方流水线、按纯激活值排序硬贴标签，而 SNMF 的系数矩阵 $Y$ 本身就编码了"哪些 token 触发了哪个特征"。对特征 $\mathbf{z}_i$ 直接从 $Y$ 第 $i$ 行取 top-$m$ token，把它们的上下文喂给 GPT-4o-mini 总结共同语义模式：浅层用"激活输入"描述、深层用 logits lens 风格的"输出 token"描述（Gur-Arieh 2025）。这一自带归因既让方法独立闭环，也解释了 SNMF 为何在 concept detection 上常领先——其特征的 log-ratio $S_{CD} := \log \bar{a}_{\text{act}} / \bar{a}_{\text{neutral}}$ 均值更高，即激活在相关上下文上更集中。
 
-3. **递归 SNMF 揭示概念层级**:
+**3. 递归 SNMF：用越来越小的 $k$ 暴露"具体 → 抽象"的概念层级。**
 
-    - 功能：用越来越小的 $k$ 递归分解学到的 MLP 特征，自然得到"具体概念 → 抽象概念"的层级树。
-    - 核心思路：先以 $k=[400,200,100,50]$ 多级 SNMF，再用梯度下降联合微调全部层级以最小化 $\mathcal{L} = \frac{1}{2}\|A - Z_L Y_L \cdots Y_1 Y_0\|_F^2$，得到"周一/周二 → 工作日/周末 → 星期"的合并层级；同时通过对 $Z$ 二值化得到 $M = \bar{Z}\bar{Z}^\top$，可视化同义概念神经元重叠。
-    - 设计动机：这是 SAE feature splitting 现象的"反方向"——SAE 是放大字典时一个特征裂成多个，SNMF 是缩小 $k$ 时多个特征合成一个抽象概念；通过对"工作日 base 神经元" vs "Monday-only 独占神经元"的因果干预，作者证明模型确实用"核心 + 专属"组合搭建概念。
+把学到的 MLP 特征再用更小的 $k$ 反复分解，能自然长出层级树。做法是先以 $k=[400,200,100,50]$ 跑多级 SNMF，再用梯度下降联合微调全部层级以最小化 $\mathcal{L} = \frac{1}{2}\|A - Z_L Y_L \cdots Y_1 Y_0\|_F^2$，得到"周一/周二 → 工作日/周末 → 星期"的合并轨迹；同时对 $Z$ 二值化算 $M = \bar{Z}\bar{Z}^\top$ 可视化同义概念的神经元重叠。这恰是 SAE feature splitting 的反方向——SAE 放大字典时一个特征裂成多个，SNMF 缩小 $k$ 时多个特征合成一个抽象概念。进一步对"工作日 base 神经元"与"Monday-only 独占神经元"分别做因果干预，证明模型确实以"核心 + 专属"的组合方式搭建概念。
 
 ### 损失函数 / 训练策略
-SNMF 最小化 Frobenius 重建误差 $\|A - ZY\|_F^2$ + 非负约束（仅对 $Y$）+ WTA 稀疏（对 $Z$ 列）。初始化：$Y \sim \mathcal{U}(0,1)$、$Z \sim \mathcal{N}(0,1)$ 的随机初始化与 SVD / K-Means 性能相当，但收敛更慢（3325 vs 1484 / 2474 迭代）。所有实验 $k \in \{100, 200, 300, 400\}$，$p=1\%$（GPT-2 用 5\%）。
+
+SNMF 最小化 Frobenius 重建误差 $\|A - ZY\|_F^2$，外加仅对 $Y$ 的非负约束与对 $Z$ 列的 WTA 稀疏。初始化方面，$Y \sim \mathcal{U}(0,1)$、$Z \sim \mathcal{N}(0,1)$ 的随机初始化与 SVD / K-Means 性能相当，只是收敛更慢（3325 vs 1484 / 2474 迭代）。所有实验取 $k \in \{100, 200, 300, 400\}$、$p=1\%$（GPT-2 用 5\%）。
 
 ## 实验关键数据
 

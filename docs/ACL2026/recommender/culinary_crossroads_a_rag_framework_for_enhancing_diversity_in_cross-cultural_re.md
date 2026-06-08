@@ -41,34 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定源菜谱 $q$，CARRIAGE 顺序执行四阶段：
-
-1. **Query Rewriting**：用 LLM 把源菜谱标题改写（一是基于内容重生成新 title、二是改写为目标文化适配的 title），三条 query 并发检索。
-2. **Diversity-aware Re-ranking (Historical-MMR)**：用 BGE-M3 对检索结果做相关性打分，再用扩展 MMR 选 top-$k$。
-3. **Dynamic Context Organization**：对每次 reissue 同一 query 的不同生成轮 $t$，从检索到的 $k$ 条上下文里用 sliding window 取 $w$ 条作为本轮上下文，让"输入"在轮间真正变化。
-4. **Contrastive Context Injection**：把同 source 在前几轮已生成的输出注入 prompt，明确告诉 LLM "别和这些再相似"。
-
-输出：对每个源菜谱产 $K=5$ 个适配候选，可用于 per-input diversity 评测，也可直接展示给用户做选择。整套流程完全 inference-time、无需训练。
+CARRIAGE 要解决的是"标准 RAG 在创意任务上多样性塌缩"，把多样性挤压拆成四个独立失败点（C1 检索遗漏、C2 排序无多样意识、C3 上下文被 LLM 集中利用、C4 生成不感知多样性），每个 C 对应一个轻量组件。给定源菜谱 $q$，它顺序走查询重写→历史感知 MMR 重排→滑窗动态上下文→对比性上下文注入四阶段，对每个源菜谱产 $K=5$ 个适配候选。整套流程完全 inference-time、训练 free，可即插即用到任意 LLM。
 
 ### 关键设计
 
-1. **Query Rewriting + Historical-MMR Re-ranking（联手解决 C1+C2）**：
+**1. Query Rewriting + Historical-MMR Re-ranking：让检索池覆盖更广又跨轮不重复（C1+C2）。**
 
-    - 功能：把"文化差异导致的检索遗漏"和"排序只看相关性"两个问题一起解决，让检索池既覆盖更广又互相不重复。
-    - 核心思路：query rewriting 用 LLM 生成两份变体 title（一份基于内容、一份适配目标文化），加上原 title 共 3 条 query 拉宽召回面；再把经典 MMR 扩展为同时考虑"当前已选 set $S$"和"历史 RAG 输出集合 $H$"，打分函数为 $\text{Score}(D_i) = \max_{D_i \in R \setminus S} [\lambda \cdot \text{Rel}(D_i) - (1-\lambda) \cdot \max_{D_j \in S \cup H} \text{Sim}(D_i, D_j)]$，$\lambda=0.6$。把"历史输出"塞进 MMR 的相似性项是关键创新——它让多次生成之间形成显式的"远离过去"压力。
-    - 设计动机：纯 MMR 只能让一次检索的 top-k 互不重复，但跨多轮生成时仍然倾向于把同一批文档抬到顶部；引入历史项让"已经在前几轮用过的菜谱"也被压分，从而强制后续轮次拉出新的、未被消费的 cultural variation。
+文化差异让单条 query 召回不全，而纯相关性排序又会把同一批菜谱反复抬到顶部。CARRIAGE 先用 LLM 把源标题改写成两份变体（一份基于内容重生成、一份适配目标文化），连同原标题共 3 条 query 并发检索拉宽召回面；再用 BGE-M3 打相关性分，把经典 MMR 扩展为同时惩罚"当前已选集 $S$"和"历史 RAG 输出集合 $H$"的相似度：
 
-2. **Dynamic Context Organization（解决 C3，把"上下文多样性"传导到"输入级多样性"）**：
+$$\text{Score}(D_i) = \max_{D_i \in R \setminus S} \left[\lambda \cdot \text{Rel}(D_i) - (1-\lambda) \cdot \max_{D_j \in S \cup H} \text{Sim}(D_i, D_j)\right], \quad \lambda=0.6$$
 
-    - 功能：解决 LLM "拿到多样上下文却只盯一段抄"这一传导失败问题，方法是直接让每轮看见的上下文真的不同。
-    - 核心思路：对 $k$ 条上下文 $\mathcal{C} = \{D_1, \ldots, D_k\}$，第 $t$ 轮生成时用滑窗只看 $w$ 条：$\mathcal{C}_{\text{reference}}^{(t)} = \{D_{tw+1}, \ldots, D_{(t+1)w}\}$，论文默认 $k=5, w=1$。这样 5 轮分别看到完全不同的 1 条上下文，从输入层就保证了多样性，不再依赖 LLM"自己学会均匀利用上下文"。
-    - 设计动机：作者 probing 实验（Table 2）发现，Vanilla RAG 在 5 次生成里有 ~76% 都只主要依赖 1-2 个上下文菜谱（平均 most-contributing context 只切换 1.78 次），即使配合 CARROT-MMR 把上下文池做多样化也只能涨到 1.90 次。CARRIAGE 这个简单的滑窗把平均切换提到 2.67，相对 RAG 多样性利用率提升 >40%——直接证明"让 LLM 内部决定怎么用上下文"是不可靠的，"在输入端强制分窗"是更有效的工程解法。
+把"历史输出 $H$"塞进相似性项是关键创新：纯 MMR 只能让一次检索的 top-$k$ 互不重复，跨多轮生成时仍倾向重复抬同一批文档；引入历史项后，前几轮已用过的菜谱会被压分，从而强制后续轮次拉出新的、未被消费的 cultural variation。
 
-3. **Contrastive Context Injection（解决 C4，把"多样性偏好"注入生成阶段）**：
+**2. Dynamic Context Organization：在输入端分窗，把上下文多样性传导成输入级多样性（C3）。**
 
-    - 功能：给 LLM 一个显式信号"哪些已经被生成过、不要再像"，从而在生成层主动追求与历史输出的差异化。
-    - 核心思路：每次为同一源菜谱生成新输出时，把同源菜谱前几轮的输出取出来塞进 prompt，并显式要求 LLM "avoid generating similar results"。这一步不修改 LLM、不调温度，只通过 prompt 让模型在自回归生成时有显式的"反样本"参考。
-    - 设计动机：post-trained LLM 输出分布天然变 sharp（Lanchantin et al. 2025），即使温度调高也很难真正多样；contrastive context 提供了"远离已有输出"的明确推力，等价于在 prompt 层做一种轻量化的 diversity-promoting decoding 提示。
+即便检索给了多样上下文，LLM 也常只盯着 1-2 段抄——这是 lost-in-the-middle 的"创意版本"。与其指望模型自己学会均匀利用上下文，CARRIAGE 直接让每轮看见的上下文真的不同：对 $k$ 条上下文 $\mathcal{C} = \{D_1, \ldots, D_k\}$，第 $t$ 轮生成只用滑窗取 $w$ 条 $\mathcal{C}_{\text{reference}}^{(t)} = \{D_{tw+1}, \ldots, D_{(t+1)w}\}$，默认 $k=5, w=1$，于是 5 轮分别看到完全不同的 1 条上下文。
+
+这个简单滑窗效果很硬：作者的 probing 实验（Table 2）显示 Vanilla RAG 在 5 次生成里 ~76% 只主要依赖 1-2 个上下文（平均主导上下文只切换 1.78 次），即使用 CARROT-MMR 把上下文池做多样化也只涨到 1.90；CARRIAGE 把平均切换提到 2.67，相对提升 >40%，直接证明"在输入端强制分窗"比"让 LLM 内部决定怎么用上下文"更可靠。
+
+**3. Contrastive Context Injection：在 prompt 层给生成阶段一个"反样本"信号（C4）。**
+
+post-trained LLM 的输出分布天然变 sharp（Lanchantin et al. 2025），单靠调高温度很难真正多样。CARRIAGE 每次为同一源菜谱生成新输出时，把它前几轮已生成的输出取出塞进 prompt，并显式要求模型 "avoid generating similar results"。这一步不改 LLM、不调温度，只通过 prompt 提供"远离已有输出"的明确推力，等价于在 prompt 层做一种轻量化的 diversity-promoting decoding 提示。
 
 ### 损失函数 / 训练策略
 完全 training-free。关键超参：temperature=0.7、top-K/top-P/min-P 对结果几乎无影响（temperature 是真正主控）、$k=5$（检索条数）、$w=1$（滑窗大小）、$\lambda=0.6$（MMR 多样性权重）、$K=5$（per-input 生成轮数）。检索用 JINA-ES dense vector，re-ranking 用 BGE-M3。基础 LLM 选 LLaMA-3.1-8B 或 Qwen-2.5-7B（都是开源）。整个 pipeline 是 plug-and-play，可以套到任何 LLM。

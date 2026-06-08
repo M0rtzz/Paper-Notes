@@ -42,69 +42,53 @@ tags:
 
 ### 整体框架
 
-FedBPrompt构建在ViT-B/16基础上，包含两个核心组件：
+FedBPrompt要解决的是：在联邦学习里，ViT的全局注意力既容易被背景带偏、又无法对齐跨视角的身体部位，而集中训练又被隐私约束堵死。它的思路是把"修注意力"和"省通信"两件事一起办——在冻结的ViT-B/16上插入一组结构化的视觉prompt，用注意力掩码强行规定每个prompt该看哪块区域，从而把行人身体的空间先验注入进去；同时整个训练只动这些轻量prompt，backbone不参与通信。
 
-1. **BAPM (Body Distribution Aware Visual Prompts Mechanism)**：结构化视觉提示，引导注意力聚焦行人并对齐身体部位
-2. **PFTS (Prompt-based Fine-Tuning Strategy)**：冻结backbone仅训练prompt参数，大幅降低联邦通信开销
+具体地，一张行人图像先切成patch token送进ViT，每一层都额外拼上一组可学习的prompt token。这组prompt被拆成"管部位对齐"和"管整体外观"两类，配合一张注意力掩码控制它们与patch的可见关系。前向走完，prompt和patch一起更新表征、输出ReID特征；反向只对prompt求梯度。客户端训完把prompt（而非整个模型）上传服务器做加权聚合，这就是Body Distribution Aware Visual Prompts Mechanism（BAPM）与Prompt-based Fine-Tuning Strategy（PFTS）两个组件的分工。
 
-### 模块1：BAPM — 身体分布感知视觉提示
+### 关键设计
 
-**核心思路**：将一组可学习的prompt token $\mathbf{P}$（共50个，维度$d$）嵌入ViT的每一层，并将其划分为**两组四个子集**，分别承担不同功能：
+**1. Body Part Alignment Prompts：让prompt各管一块身体区域，对齐跨视角部位。**
 
-**第一组：Body Part Alignment Prompts（15个，解决视角错位）**
+视角变化让同一个人的头、躯干、腿在图像里漂到不同位置，全局注意力对这种空间错位毫无感知。BAPM的对策是在50个prompt里拿出15个，按身体三段各分5个：$\mathbf{P}^{\text{upper}}$ 只看图像上半部分（头/肩）、$\mathbf{P}^{\text{mid}}$ 只看中间（躯干）、$\mathbf{P}^{\text{lower}}$ 只看下半部分（腿/脚）。这样每个部位prompt被绑定到固定的身体语义上，无论行人在画面里如何偏移，对应的prompt都只去那一段找证据，跨视角的特征因此能稳定对齐。
 
-- $\mathbf{P}^{\text{upper}}$（5个）：仅与图像上半部分的patch token交互 → 对应头部/肩部
-- $\mathbf{P}^{\text{mid}}$（5个）：仅与图像中间区域的patch token交互 → 对应躯干
-- $\mathbf{P}^{\text{lower}}$（5个）：仅与图像下半部分的patch token交互 → 对应腿部/脚部
-
-空间区域的定义采用**重叠分区**策略（非刚性分割）：假设图像被划分为$H \times W$个patch，则：
+区域划分刻意用**重叠分区**而不是硬三等分。设图像共 $n$ 个patch，三段定义为
 
 $$I_{\text{upper}} = \{j \mid 1 \leq j \leq n/2\}, \quad I_{\text{mid}} = \{j \mid n/4+1 \leq j \leq 3n/4\}, \quad I_{\text{lower}} = \{j \mid n/2+1 \leq j \leq n\}$$
 
-三个区域之间有25%的重叠，避免刚性切割丢失跨区域信息。
+相邻段之间留约25%重叠，刚好覆盖头肩交界、腰胯交界这些容易被刚性切割切断的过渡带，避免边界信息丢失。
 
-**第二组：Holistic Full Body Prompts（35个，解决背景失焦）**
+**2. Holistic Full Body Prompts：用无约束prompt兜住全身外观、压制背景噪声。**
 
-- $\mathbf{P}^{\text{Full}}$：可以与**所有**图像patch token交互，没有空间约束
-- 功能：捕获行人整体外观特征，抑制跨客户端背景噪声
+光有部位prompt还不够——背景失焦的根子在于注意力被高相似度背景分散，而部位prompt各自只盯一块，谁也没在看"这个人整体长什么样"。所以剩下的35个prompt组成 $\mathbf{P}^{\text{Full}}$，不加任何空间约束，可以和全部patch自由交互，专门捕获行人的整体外观。它们承担"看什么"的判断，把注意力从杂乱背景拉回到人身上，与部位prompt"在哪看"的职责形成互补。
 
-**约束注意力机制**：通过结构化注意力掩码$M$实现空间约束：
+**3. 约束注意力机制：用一张掩码同时实现"部位约束"和"prompt间自由通信"。**
+
+前两组prompt的"该看哪、不该看哪"靠一张结构化注意力掩码 $M$ 落地，直接加在softmax之前的注意力logits上：
 
 $$\text{Attention}(Q, K, V) = \text{Softmax}\left(\frac{QK^T}{\sqrt{d_k}} + M\right)V$$
 
 $$M_{ij} = \begin{cases} -\infty & \text{if } (q_i, k_j) \in \mathcal{C}_{\text{mismatch}} \\ 0 & \text{otherwise} \end{cases}$$
 
-其中$\mathcal{C}_{\text{mismatch}}$表示不匹配对：即某个Body Part Prompt与非对应区域patch的配对。
-
-**关键设计：prompt间自由通信**：所有prompt token之间的注意力掩码恒为0，即$M_{ij} = 0, \forall q_i, k_j \in \mathbf{P}$。这意味着Body Part Prompts和Full Body Prompts可以自由交互——部位prompt提供结构化局部信息，全局prompt将其整合为连贯的全身表征。这种设计区别于PCB等刚性分块方法，保留了全局一致性。
-
-每个ViT层拥有独立的prompt参数$\mathbf{P}_{i-1}$，层间更新规则为：
+其中 $\mathcal{C}_{\text{mismatch}}$ 指"某个部位prompt配上它不该看的区域patch"这类不匹配对，被置为 $-\infty$ 后在softmax里归零，部位约束就这么硬性生效。关键的是另一半规则：所有prompt token彼此之间掩码恒为0（$M_{ij}=0,\ \forall q_i,k_j\in\mathbf{P}$），也就是部位prompt和全局prompt之间完全放开通信。部位prompt提供结构化的局部线索，全局prompt再把这些碎片整合成连贯的全身表征——既拿到了PCB式分块的部位对齐，又不像刚性分块那样割裂全局一致性。这组prompt在每一层都有独立参数 $\mathbf{P}_{i-1}$，逐层更新：
 
 $$[\mathbf{x}_i, \_, \mathbf{E}_i] = L_i([\mathbf{x}_{i-1}, \mathbf{P}_{i-1}, \mathbf{E}_{i-1}])$$
 
-### 模块2：PFTS — 基于Prompt的高效微调策略
+**4. PFTS：只训练、只上传prompt，把联邦通信量压到约0.5%。**
 
-**动机**：ViT-B/16全模型参数约86M，在联邦学习中每轮通信开销巨大，不适合资源受限的部署环境。
-
-**方案**：
-1. 服务器先在集中数据上预训练一个标准ReID模型（不含prompt）
-2. 将预训练模型分发给所有客户端，**冻结backbone参数$\Theta_b$**
-3. 每个客户端"植入"随机初始化的BAPM prompt参数$\Theta_p$（约0.46M）
-4. 客户端仅训练prompt参数，目标函数为：
+ViT-B/16全模型约86M参数，每轮都同步整个backbone在联邦里代价过高，资源受限的边缘端根本扛不住。PFTS的做法是把backbone彻底冻住、只让prompt承载所有可学习信息：服务器先在集中数据上预训练一个标准ReID模型（不含prompt），分发给各客户端后冻结其backbone参数 $\Theta_b$；每个客户端再植入随机初始化的BAPM prompt $\Theta_p$（约0.46M），只对它优化
 
 $$\mathcal{L}_k(\Theta_p) = \sum_{(x,y) \in D_k} \mathcal{L}_{\text{ReID}}(g(x; \Theta_b, \Theta_p), y)$$
 
-5. 训练完成后仅上传prompt参数到服务器，按数据量加权聚合：
+训完只上传prompt参数，服务器按各客户端数据量加权聚合：
 
 $$\Theta_p^{t+1} = \sum_{k=1}^{K} \frac{|D_k|}{\sum_{j=1}^{K}|D_j|} \Theta_{p,k}^{t+1}$$
 
-**通信效率**：每轮仅通信0.46M参数（vs 全模型86M），降至约**0.5%**。几轮聚合即可获得显著性能提升。
+于是每轮通信从86M降到0.46M、约 **0.5%**，且因为backbone保留了集中预训练得到的通用表征，prompt只需补上跨域不变的那部分，几轮聚合就能拿到明显增益。
 
-### 训练策略
+### 损失函数 / 训练策略
 
-- 支持两种模式：**Full-Parameter训练**（整个模型+BAPM）和**PFTS训练**（仅prompt）
-- 损失函数采用标准ReID损失（交叉熵+triplet loss）
-- BAPM可作为即插即用模块集成到任意ViT-based FedDG-ReID框架中
+训练用标准ReID目标（交叉熵 + triplet loss）。框架支持两种模式：Full-Parameter（整模型 + BAPM一起训）和PFTS（仅训prompt）。BAPM本身是即插即用模块，可以挂到任意ViT-based的FedDG-ReID框架上。
 
 ## 实验关键数据
 

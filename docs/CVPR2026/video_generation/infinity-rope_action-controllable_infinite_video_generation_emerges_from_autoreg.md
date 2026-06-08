@@ -41,36 +41,33 @@ tags:
 
 ### 整体框架
 
-∞-RoPE 基于 Self-Forcing 蒸馏得到的 Wan2.1-T2V-1.3B 模型（4步因果生成器），在推理时引入三个互联组件：
-- **Block-Relativistic RoPE**：相对性时间位置编码，突破固定帧数限制
-- **KV Flush**：KV cache 重置机制，实现即时 prompt 响应
-- **RoPE Cut**：时间坐标不连续跳转，实现多镜头场景切换
+∞-RoPE 想解决的问题很具体：一个只在5秒片段上蒸馏出来的自回归视频扩散模型（这里是 Self-Forcing 蒸馏的 Wan2.1-T2V-1.3B，4步因果生成器），凭什么能被"骗"去生成无限长、还能随时换动作、甚至切镜头的视频？作者的答案是——不碰模型权重，只在推理时改写它读取时间位置的方式。整条 pipeline 仍然是逐 block（3帧一组）自回归往后滚，但每滚一步都对 RoPE 的时间坐标和 KV cache 做一次"手术"：Block-Relativistic RoPE 负责把无限延伸的绝对帧号折叠回模型见过的范围，让长度不再是天花板；KV Flush 负责在 prompt 变更时清掉旧语义，让新动作立刻生效；RoPE Cut 负责在时间轴上制造受控断点，让画面能像电影一样硬切到另一个场景。三者共享同一套相对化的坐标系，因此可以叠加使用。
 
 ### 关键设计
 
-1. **Block-Relativistic RoPE（核心）**
+**1. Block-Relativistic RoPE：把绝对帧号折叠成"移动的局部参考系"，让长度不再受 RoPE 训练范围限制。**
 
-   自回归生成以3帧为一个 block 推进：$\mathbf{B}_f = \{f-2, f-1, f\}$。传统绝对 RoPE 中 $i \gg f_{\text{limit}}$ 时进入未见过的位置区域导致失效。Block-Relativistic RoPE 将时间坐标定义为**移动的局部参考系**：
+瓶颈不在模型容量，而在 3D-RoPE 的绝对索引：自回归每 3 帧推进一个 block $\mathbf{B}_f = \{f-2, f-1, f\}$，一旦 $f$ 越过训练时见过的上限 $f_{\text{limit}}$，注意力就落进从未训练过的位置区域，质量急剧崩塌。Block-Relativistic RoPE 的做法是不再让新帧拿到越来越大的绝对编号，而是把当前 block 的时间坐标始终旋转回 $f_{\text{limit}}$ 以内，并把更早 block 的相位反向旋转，使得任意两个 block 之间的*相对*时间几何保持不变。形式上，超过 onset index $f_0$ 之后的 block 坐标都被钉在同一个参考点上：
 
-    $\tilde{\mathbf{B}}_i = \begin{cases} \mathbf{B}_i, & \text{if } i \leq f_0 \\ \mathbf{B}_{f_0} = \{f_0-2, f_0-1, f_0\}, & \text{otherwise} \end{cases}$
+$$\tilde{\mathbf{B}}_i = \begin{cases} \mathbf{B}_i, & \text{if } i \leq f_0 \\ \mathbf{B}_{f_0} = \{f_0-2, f_0-1, f_0\}, & \text{otherwise} \end{cases}$$
 
-   当新 block 生成时，其 RoPE 索引始终被旋转到模型最大帧范围 $f_{\text{limit}}$ 内，而更早的 block 的时间相位被反向旋转以保持相对时间几何不变。设计动机：类似认知神经科学中的"语义化"（semanticization），远期记忆丧失精确时间标记但保留语义信息——最早缓存帧的时间坐标坍缩为共享最小索引 $\mathbf{B}_{\bar{1}} = \{1,1,1\}$。
+这样无论生成到第几帧，模型看到的局部时间结构都和训练时一致。作者用一个认知科学的类比来解释为什么"丢掉绝对时间"反而没坏处：人脑的远期记忆会经历"语义化"（semanticization），精确的时间戳被抹掉、只剩语义内容——这里最早缓存帧的时间坐标干脆坍缩成共享的最小索引 $\mathbf{B}_{\bar 1} = \{1,1,1\}$，它们仍提供语义上下文，但不再争夺精确的时间定位。
 
-2. **KV Flush（动作控制）**
+**2. KV Flush：换 prompt 时清空缓存只留两个锚点，把"动作响应"从滞后变成零延迟。**
 
-   当 prompt 变更时，清空所有 KV cache，仅保留两个锚点：**全局 sink 帧**（稳定注意力归一化）和**最后生成帧**（保持局部时间连续性）。新动作直接在这两个最小锚点上条件化生成，实现零延迟的 prompt 响应。相比 no-cache（突兀变化）、full-cache（语义滞后）、KV re-cache（高延迟），KV Flush 在效率和可控性上均优。
+长 rollout 里 prompt 改了却不生效，根因是 KV cache 里塞满了旧动作的语义，新指令被它们压着、要好几帧才能"挣脱"。KV Flush 的应对很直接：prompt 一变就把中间历史全部清掉，只保留两个最小锚点——一个全局 **sink 帧**（稳住注意力的归一化，避免数值塌陷），一个**最后生成帧**（接住局部的运动连续性）。新动作直接在这两帧上重新条件化，于是"切换"几乎瞬时发生。和三种朴素做法相比它都更好：no-cache 会让画面突兀跳变，full-cache 会让语义迟迟跟不上，KV re-cache 则要重算缓存、延迟很高。
 
-3. **RoPE Cut（场景切换）**
+**3. RoPE Cut：在时间坐标里制造一个受控断点，实现电影级的硬场景切换。**
 
-   通过在时间 RoPE 坐标中引入受控的不连续跳转实现电影级多镜头切换。对当前 block $\mathbf{B}_f = \{f-2, f-1, f\}$，重新映射为：
+前两个设计保证了"连续"，但电影常常需要"不连续"——直接切到另一个镜头。RoPE Cut 利用相对化坐标系里没有绝对位置这一点，对当前 block 的时间坐标人为插入一个跳变 $\Delta$：
 
-    $\mathbf{B}_{f \to f+\Delta} = \{f-2, f+\Delta-1, f+\Delta\}$
+$$\mathbf{B}_{f \to f+\Delta} = \{f-2,\; f+\Delta-1,\; f+\Delta\}$$
 
-   跳转后的帧被视为"过去上下文"，生成从新的原始时间位置重新开始。由于相对性公式中不存在绝对位置，坐标系随每次 cut 自行偏移，即使大跨度时间/语义跳转后仍能保持身份一致性。
+跳变之后的帧被当作"刚刚发生的过去上下文"，生成则从一个全新的原始时间位置重新起步。因为坐标系是相对的、会随每次 cut 自行平移，即便跨度很大的时间或语义跳转，主体身份依然能保持一致，不会因为"换了个场景"就把人物画崩。
 
 ### 损失函数 / 训练策略
 
-∞-RoPE 是**纯推理时方法**，不涉及额外训练。底层 Self-Forcing 模型基于 Rectified Flow 公式训练：$\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\boldsymbol{\epsilon}$，通过神经速度场 $v_\theta$ 参数化的 ODE 求解逆过程。实验固定 KV cache 大小为6，onset index $f_0=21$，CFG scale 3.0，timestep shift 5.0。
+∞-RoPE 是**纯推理时方法**，不引入任何额外训练。底层 Self-Forcing 模型按 Rectified Flow 训练，前向插值为 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\boldsymbol{\epsilon}$，逆过程由神经速度场 $v_\theta$ 参数化的 ODE 求解。推理时的关键设置：KV cache 大小固定为 6，onset index $f_0 = 21$，CFG scale 3.0，timestep shift 5.0。
 
 ## 实验关键数据
 

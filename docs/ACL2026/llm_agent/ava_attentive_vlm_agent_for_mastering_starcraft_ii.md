@@ -40,35 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AVACraft 形式化为 POMDP $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, P, R, \gamma \rangle$，严格遵守 Fog of War（agent 只看到 sight range 内信息）。观测空间 $\mathcal{O}$ 提供四种 mode：RGB（screen 160×120 + minimap 32×32）、SMAC 兼容 scalar、Hybrid、VLM-Optimized（RGB + 自然语言描述 + 结构化 unit 列表）。动作空间分三类：$\mathcal{A} = \mathcal{A}_{\text{atk}} \cup \mathcal{A}_{\text{mov}} \cup \mathcal{A}_{\text{abl}}$（攻击/移动/技能）。奖励稀疏：$R \in \{-1, 0, 1\}$。21 场景覆盖低/中/高/极高四个难度档，每场景配 1 个 built-in AI（VeryHard）+ 3 个 LLM 合成的脚本策略 + 随机选择，避免单一策略被穷举利用。
-
-基线分两边：
-
-- **MARL 侧**：IQL / QMIX / QTRAN / VDN / MAPPO / IPPO 六种算法，统一用 Swin-Tiny（27.5M 参数）做视觉骨干，最多训 5M 步，可选拼 GTE-Base 文本 embedding 做 vision+text 融合。
-- **VLM 侧**：AVA agent（见下面三个关键设计），评测 GPT-4o / GPT-4-Turbo / GPT-4o-mini / Qwen-VL-Plus / Qwen3-VL-30B / Qwen3-VL-8B，全部零样本。
+AVACraft 把 SC2 形式化为一个 POMDP $\langle \mathcal{S}, \mathcal{A}, \mathcal{O}, P, R, \gamma \rangle$，严格遵守 Fog of War（agent 只看到 sight range 内的信息），其设计目标是让 MARL 与 VLM 两类范式在同一观测/动作/奖励空间下公平对决。它的关键在于观测空间 $\mathcal{O}$ 同时提供四种 mode——RGB（screen 160×120 + minimap 32×32）、SMAC 兼容 scalar、Hybrid、以及 VLM-Optimized（RGB + 自然语言描述 + 结构化 unit 列表），而动作空间 $\mathcal{A} = \mathcal{A}_{\text{atk}} \cup \mathcal{A}_{\text{mov}} \cup \mathcal{A}_{\text{abl}}$（攻击/移动/技能）和稀疏奖励 $R \in \{-1, 0, 1\}$ 对所有范式共享。21 个场景覆盖低/中/高/极高四档难度，每个场景都配 1 个 built-in AI（VeryHard）+ 3 个 LLM 合成脚本策略并随机选取，防止单一策略被穷举利用。在这个统一台子上，MARL 侧跑 IQL / QMIX / QTRAN / VDN / MAPPO / IPPO 六种算法（统一 Swin-Tiny 27.5M 视觉骨干、最多 5M 步、可选拼 GTE-Base 文本 embedding），VLM 侧则跑零样本的 AVA agent（GPT-4o / GPT-4-Turbo / GPT-4o-mini / Qwen-VL-Plus / Qwen3-VL-30B / Qwen3-VL-8B），AVA 内部由下述三个组件串成一次决策。
 
 ### 关键设计
 
-1. **多模态优先级推理（Multimodal Priority Inference, MPI）**:
+**1. 多模态优先级推理（MPI）：先想做什么、再看清有谁、最后排该打谁。**
 
-    - 功能：把战场图像 + 文本状态 + 历史动作综合处理，先让 VLM Planner 出主次技能计划 $S = \text{VLM}_{\text{plan}}(I, T, H) = \{s_{\text{primary}}, s_{\text{secondary}}\}$，再做 unit 检测 $A = \text{VLM}_{\text{detect}}(I) = \{a_i = (p_i, c_i, b_i)\}$（位置 + 类别 + bbox），最后由 $U_{\text{priority}} = \text{VLM}_{\text{analyze}}(I, T, H, A, Q, S)$ 用 skill-aware prompt 排出该打谁、保谁。
-    - 核心思路：把 SC2 的战术决策拆成「先想要做什么（skill plan）→ 看清场上有谁（detect）→ 按计划排优先级（analyze）」，每一步都用 VLM 原生的视觉 + 语言能力，不需要任何微调。和让 VLM 一口气直接出动作相比，这种分阶段 prompt 显著降低了「看错单位 / 忘了目标」的错误率。
-    - 设计动机：SC2 micromanagement 的核心是「focus fire on the right target」——一个 step 选错优先级整波团战就崩；把优先级单独抽成一个 VLM 子调用，让模型把注意力压在最关键的 sub-task 上，而不是被全场信息淹没。
+SC2 微操的胜负手是 focus fire on the right target——一个 step 选错优先级整波团战就崩，但让 VLM 一口气直接吐动作很容易看错单位、忘了目标。MPI 的破法是把决策拆成三段链式 VLM 调用：先由 Planner 出主次技能计划 $S = \text{VLM}_{\text{plan}}(I, T, H) = \{s_{\text{primary}}, s_{\text{secondary}}\}$，再做单位检测 $A = \text{VLM}_{\text{detect}}(I) = \{a_i = (p_i, c_i, b_i)\}$（位置 + 类别 + bbox），最后用 skill-aware prompt 排出优先级 $U_{\text{priority}} = \text{VLM}_{\text{analyze}}(I, T, H, A, Q, S)$。
 
-2. **RAG 知识注入**:
+每一步都只调用 VLM 原生的视觉 + 语言能力、无需任何微调，而把「优先级」单独抽成一个子调用的好处，是让模型在每个 step 都把注意力压在最关键的 sub-task 上，而不是被全场信息淹没——这也解释了后面 ablation 里 MPI 是掉点最多的组件。
 
-    - 功能：对 MPI 选出的 priority unit 集合 $U_{\text{priority}}$，每个 unit $u$ 都按 class $c_u$ 检索一个知识 tuple $K(u) = \{s_u, m_u, t_u\}$（unit 规格、matchup 数据、战术建议），然后 $D = \text{VLM}_{\text{synthesize}}(I, T, H, U_{\text{priority}}, \{K(u)\})$ 整合成最终战术指令。
-    - 核心思路：SC2 的战术依赖大量「常识」——Stalker 怕 Marauder 慢护甲、Hydralisk 怕 Colossus AOE 等。这些知识在 VLM 预训练里有，但调用很不稳定；用一个外挂 SC2 知识库做硬注入，把「这单位/对位有什么需要注意」直接喂进 prompt，确保 VLM 不会在战术常识上踩坑。
-    - 设计动机：VLM 的「零样本游戏理解」很大程度上是世界知识 + 视觉的合成，把关键 domain knowledge 显式 ground 进 prompt 比让 VLM「凭记忆」更可靠；ablation 也确认 RAG 单独贡献明显，与 MPI 组合后协同贡献最大。
+**2. RAG 知识注入：把 SC2 战术常识硬 ground 进 prompt。**
 
-3. **动态角色分配（Dynamic Role Assignment）**:
+VLM 的零样本游戏理解很大程度上是世界知识 + 视觉的合成，但 SC2 战术依赖大量易踩坑的常识（Stalker 怕 Marauder 的慢护甲、Hydralisk 怕 Colossus 的 AOE 等），这些知识虽在预训练里却调用得很不稳定。RAG 组件对 MPI 选出的每个 priority unit $u$ 按其类别 $c_u$ 检索一条知识 tuple $K(u) = \{s_u, m_u, t_u\}$（unit 规格、matchup 数据、战术建议），再由 $D = \text{VLM}_{\text{synthesize}}(I, T, H, U_{\text{priority}}, \{K(u)\})$ 把它们整合成最终战术指令。
 
-    - 功能：对 $N$ 个 agent 选自一个角色集合 $\mathcal{Z}$，定义角色映射 $\phi: \mathcal{N} \to \mathcal{Z}$，由效用函数 $U(\phi, s)$ 评估当前状态下的角色配置；具体实现是 $z_i = \text{VLM}_{\text{role}}(I, T, C)$，VLM 看图像 + 文本 + 上下文给每个 unit 分配 tank / DPS / scout 等角色。
-    - 核心思路：SC2 战术常要分工——这几个 stalker 拉怪 kite，那几个集火 boss；统一让所有 unit 用同一个策略会导致协调失败。把 role assignment 做成独立 VLM 调用，让多智能体协调显式建模。
-    - 设计动机：让 VLM 在低层动作之前先「分工」，相当于给后续动作生成做了 skill prior，降低 action 空间的有效维度；ablation 显示去掉 Role 后胜率从 87% 掉到 70%，证明协调比看图更稀缺。
+用一个外挂 SC2 知识库做硬注入，比让 VLM「凭记忆」更可靠，确保它不会在对位常识上犯低级错误；ablation 也确认 RAG 单独贡献明显，与 MPI 组合后协同效果最强。
+
+**3. 动态角色分配：在出手前先给每个单位分好工。**
+
+SC2 团战常要分工——几个 Stalker 拉怪 kite、另几个集火 boss，要是全体单位套同一套策略，协调就会崩。AVA 把角色分配显式建模：从角色集合 $\mathcal{Z}$ 出发定义映射 $\phi: \mathcal{N} \to \mathcal{Z}$，以效用函数 $U(\phi, s)$ 评估当前状态下的角色配置，具体实现为一次独立 VLM 调用 $z_i = \text{VLM}_{\text{role}}(I, T, C)$，看图像 + 文本 + 上下文给每个 unit 分配 tank / DPS / scout 等角色。
+
+在低层动作之前先「分工」，相当于给后续动作生成注入了一个 skill prior，有效降低了动作空间的实际维度；ablation 显示去掉 Role 后胜率从 87% 掉到 70%，说明在这套环境里「协调」比「看图」更稀缺。
 
 ### 损失函数 / 训练策略
-VLM 端零样本，无训练。MARL 端按 SMAC 标准 5M 步，2Hz 决策频率，dual A100 40GB，episode 终止三条件（全灭/全死/300s 超时），稀疏奖励避免引入偏置。
+VLM 端全程零样本、无任何训练。MARL 端则按 SMAC 标准训练 5M 步，2Hz 决策频率，dual A100 40GB，episode 在全灭 / 全死 / 300s 超时三条件下终止，奖励保持稀疏以避免引入偏置。
 
 ## 实验关键数据
 

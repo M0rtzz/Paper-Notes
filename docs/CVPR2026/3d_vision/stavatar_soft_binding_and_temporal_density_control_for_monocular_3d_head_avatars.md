@@ -38,58 +38,21 @@ tags:
 
 ## 方法详解
 
-STAvatar 由两个核心模块组成：UV 自适应软绑定框架 (UV-Adaptive Soft Binding) 和时序自适应密度控制 (Temporal ADC)，整体流程基于 FLAME 参数化网格驱动的 3DGS 管线。
+### 整体框架
 
-### 3.1 基础管线
+STAvatar 想从单目视频重建出能自由驱动、又保得住细节的 3D 头部化身，难点在于既要让高斯随表情做非刚性形变、又不能因此丧失自适应密度控制（ADC）的灵活性。它的整条管线建在 FLAME 参数化网格驱动的 3DGS 之上：在规范 FLAME 网格上初始化一批高斯原语 $g_i$，每个绑到一个三角面片，参数含中心 $\boldsymbol{\mu}$、缩放 $\boldsymbol{S}$、旋转 $\boldsymbol{R}$、不透明度 $\alpha$ 和颜色 $c$；驱动时，先借父三角面片的重心映射把规范参数变成粗估计参数 $\tilde{\boldsymbol{r}} = \boldsymbol{r}\boldsymbol{R}$、$\tilde{\boldsymbol{\mu}} = k\boldsymbol{r}\boldsymbol{\mu} + \boldsymbol{t}$、$\tilde{\boldsymbol{s}} = k\boldsymbol{s}$（$\boldsymbol{r}$、$\boldsymbol{t}$ 为面片相对旋转与重心平移，$k$ 为各向同性缩放）；最后深度排序后做 alpha 合成 $\boldsymbol{C} = \sum_{i=1}^{N} c_i^* \alpha_i' \prod_{j=1}^{i-1}(1 - \alpha_j')$ 渲染出像素。
 
-**初始化**：在规范 FLAME 网格上初始化高斯原语 $g_i$，每个高斯绑定到一个三角面片，参数包括中心位置 $\boldsymbol{\mu}$、缩放 $\boldsymbol{S}$、旋转 $\boldsymbol{R}$、不透明度 $\alpha$ 和颜色 $c$。
+问题恰恰出在这个"粗估计"上：纯 LBS 驱动下不透明度和颜色保持不变（$\tilde{\alpha}=\alpha$、$\tilde{c}=c$），高斯在面片局部坐标系里近乎静止，皱纹、表情这类非刚性细节根本变不出来——这是硬绑定的核心局限。STAvatar 在粗估计之上叠两套机制来补救：用 **UV 自适应软绑定** 给每个高斯预测一个细粒度偏移，把粗参数精修成最终参数；再用 **时序自适应密度控制** 让密度化策略适应动态头部里"短暂可见"和"纹理误差"两类被原始 ADC 忽视的情况。
 
-**驱动**：通过父三角面片的重心映射将规范参数变换为粗估计参数：
+### 关键设计
 
-$$\tilde{\boldsymbol{r}} = \boldsymbol{r}\boldsymbol{R},\quad \tilde{\boldsymbol{\mu}} = k\boldsymbol{r}\boldsymbol{\mu} + \boldsymbol{t},\quad \tilde{\boldsymbol{s}} = k\boldsymbol{s}$$
+**1. UV 自适应软绑定的双分支网络：在 UV 空间里预测高斯偏移，补回硬绑定丢掉的非刚性细节。**
 
-其中 $\boldsymbol{r}$、$\boldsymbol{t}$ 为三角面片的相对旋转和重心平移，$k$ 为各向同性缩放因子。不透明度和颜色在 LBS 下保持不变（$\tilde{\alpha}=\alpha$, $\tilde{c}=c$），这正是硬绑定的核心局限。
+硬绑定让高斯无法独立形变，最直接的补法是给每个高斯学一个偏移量；但若像以往工作那样用固定维度 MLP 逐高斯独立预测，就把高斯数量写死了，和 ADC 互相冲突。STAvatar 改成在 UV 空间里预测一张偏移图。网络吃三样输入：从固定参考帧（默认第一帧）$Img_r$ 提取纹理、把参考帧 UV 坐标光栅化成的位置图 $UV_{pos}$、以及参考网格与控制网格顶点偏移光栅化成的位移图 $UV_{disp}$。它由全局、局部两个分支合作产出一张特征偏移图 $\Delta_{map} \in \mathbb{R}^{256 \times 256 \times 13}$，每个纹素存 13 维高斯偏移。全局分支负责整张脸一致的变形场，输入 U-Net 编码器纹理特征 $T = \mathcal{E}_i(Img_r)$、Fourier 编码的位置图 $UV_{pos}' = \mathcal{E}_f(UV_{pos})$ 和控制码 $\beta$（拼接表情、平移、姿态），输出 $\omega_g = \Phi_g(T, UV_{pos}', \beta)$；局部分支专攻眼、嘴、鼻、额四个关键区，用四张区域遮罩 $M_i \in \{0,1\}^{256 \times 256}$ 配区域专属解码头 $H_i$，输出 $\omega_l = \sum_{i=1}^{4} H_i(M_i \odot \Phi_l(T, UV_{disp}', \beta))$，最后融合成 $\Delta_{map} = \mathcal{F}(\omega_g, \omega_l)$。把偏移放进 UV 图而非逐高斯独立预测，好处是相邻高斯的偏移天然带空间连续性，且偏移图与具体高斯数解耦，为下一步兼容 ADC 留出空间。
 
-**渲染**：通过深度排序的 alpha 合成得到像素颜色：$\boldsymbol{C} = \sum_{i=1}^{N} c_i^* \alpha_i' \prod_{j=1}^{i-1}(1 - \alpha_j')$。
+**2. UV 自适应采样：用一张连续偏移图喂任意数量高斯，让软绑定和 ADC 真正兼容。**
 
-### 3.2 UV 自适应软绑定框架
-
-该模块是方法的第一个核心贡献，解决硬绑定导致的细节缺失问题。
-
-#### 输入准备
-
-- **参考图像** $Img_r$：从视频中选取固定参考帧（默认第一帧），提取纹理信息
-- **UV 位置图** $UV_{pos}$：将参考帧的 UV 坐标光栅化为位置图，提供几何定位
-- **UV 位移图** $UV_{disp}$：将参考网格与控制网格之间的顶点偏移光栅化到 UV 空间，编码形变信息
-
-#### 双分支网络架构
-
-网络由全局分支 $\Phi_g$ 和局部分支 $\Phi_l$ 组成，共同预测 UV 空间中的特征偏移图 $\Delta_{map} \in \mathbb{R}^{256 \times 256 \times 13}$，每个纹素存储 13 维高斯偏移量。
-
-**全局分支** $\Phi_g$：
-- 输入：U-Net 编码器 $\mathcal{E}_i$ 提取的纹理特征 $T = \mathcal{E}_i(Img_r)$，经 Fourier 位置编码的 UV 位置图 $UV_{pos}' = \mathcal{E}_f(UV_{pos})$，以及控制码 $\beta$（拼接表情、平移、姿态编码）
-- 输出：$\omega_g = \Phi_g(T, UV_{pos}', \beta)$
-- 功能：建模全局一致的变形场
-
-**局部分支** $\Phi_l$：
-- 输入：纹理特征 $T$，Fourier 编码的位移图 $UV_{disp}'$，控制码 $\beta$
-- 采用 4 个区域遮罩 $M_i \in \{0,1\}^{256 \times 256}$（眼睛、嘴巴、鼻子、前额），共享解码器配合区域特定解码头 $H_i$
-- 输出：$\omega_l = \sum_{i=1}^{4} H_i(M_i \odot \Phi_l(T, UV_{disp}', \beta))$
-- 功能：针对面部关键区域进行细粒度建模
-
-**融合**：$\Delta_{map} = \mathcal{F}(\omega_g, \omega_l)$
-
-#### UV 自适应采样
-
-关键设计——使软绑定与 ADC 完全兼容。为每个高斯 $g_i$ 在 UV 空间中分配坐标，通过双线性采样从 $\Delta_{map}$ 获取偏移量 $\delta_i = \{\delta_\mu, \delta_s, \delta_r, \delta_\alpha, \delta_c\}$。
-
-采样流程（Algorithm 1）：
-1. 将 UV 顶点和面光栅化，为每个面建立像素池
-2. 对每个绑定面上的高斯点，从该面的像素池中采样对应数量的像素
-3. 提取重心坐标，通过重心加权计算 UV 坐标
-4. **ADC 密度化时自动重采样**，动态适应高斯数量变化
-
-最终参数计算：
+有了偏移图还得把它"分发"给每个高斯，而且高斯数会在 ADC 过程中不断增删，分发机制必须跟着变。STAvatar 给每个高斯 $g_i$ 在 UV 空间分配一个坐标，再双线性采样 $\Delta_{map}$ 取出它那份偏移 $\delta_i = \{\delta_\mu, \delta_s, \delta_r, \delta_\alpha, \delta_c\}$。坐标分配（Algorithm 1）的做法是：先把 UV 顶点和面光栅化、给每个面建一个像素池，再对绑定到该面的高斯从池里采样相应数量的像素，提取重心坐标后加权算出 UV 坐标；一旦 ADC 触发密度化、高斯数量变了，就自动重采样新的 UV 坐标。拿到偏移后，粗参数按各自的几何含义精修成最终参数：
 
 | 参数 | 计算方式 | 操作类型 |
 |------|----------|----------|
@@ -99,51 +62,23 @@ $$\tilde{\boldsymbol{r}} = \boldsymbol{r}\boldsymbol{R},\quad \tilde{\boldsymbol
 | 缩放 $s^*$ | $\tilde{s} \odot \delta_s$ | 逐元素乘法 |
 | 旋转 $r^*$ | $q(\tilde{r}, \delta_r)$ | 四元数 Hamilton 积 |
 
-这种设计的核心优势在于：偏移量在 UV 空间中具有空间连续性，而非像 MLP 那样独立预测每个高斯的偏移；UV 图支持任意分辨率采样，天然兼容 ADC 的增删操作。
+关键在于偏移来自一张连续 UV 图、支持任意分辨率采样，新增高斯只要重采样坐标就能拿到合理偏移，不像 MLP 那样把高斯数钉死——这才让"软绑定"和"动态增删高斯"两件本来打架的事并存。
 
-### 3.3 时序自适应密度控制
+**3. FPE-AP 融合感知误差准则：让密度化看纹理误差，而不只是位置梯度。**
 
-第二个核心贡献，解决原始 ADC 在动态头部重建中的失效问题，包含 FPE-AP 和 FTC 两个子模块。
-
-#### 融合感知误差与均值-峰值准则 (FPE-AP)
-
-**动机**：原始 ADC 用位置梯度作为克隆准则，仅反映几何不一致性，忽略纹理误差。
-
-**融合感知误差图构建**：
+原始 ADC 拿位置梯度当克隆准则，只能反映几何不一致，完全看不见纹理误差，于是有纹理细节却几何对齐的区域得不到加密。STAvatar 改用渲染误差直接驱动密度化。先构造一张融合感知误差图，把逐像素 L1 和结构不相似度合在一起：
 
 $$E = (1 - \lambda_1)|\mathcal{L}_1| + \lambda_1 \mathcal{L}_{d\text{-}ssim}$$
 
-其中 $\lambda_1 = 0.2$，$\mathcal{L}_1$ 为逐像素绝对差，$\mathcal{L}_{d\text{-}ssim}$ 为结构相似性的逐像素不相似度。
+其中 $\lambda_1 = 0.2$。再把误差摊到每个高斯头上：记录它的屏幕中心 $(x_i, y_i)$、覆盖像素数 $C_i$ 和累积 alpha 权重 $A_i$，以中心、半范围 $R_i = \lfloor \sqrt{C_i}/2 \rfloor$ 圈一个正方形影响区，算平均融合感知误差 $\bar{E}_i = \frac{A_i}{C_i} \sum_{p \in \mathcal{P}_i} E(p)$（用二维求和面积表加速窗口求和）。光看均值还不够，短暂出现的高误差会被平均掉，所以再加一条峰值准则：取跨所有迭代的峰值误差 $E_i^{peak} = \max_t(\frac{A_i^{(t)}}{C_i^{(t)}} \sum_{p} E^{(t)}(p))$，挑 top 3% 组成集合 $\mathcal{S}_{peak}$。最终只要 $\bar{E}_i > \tau_{avg}$ **或** $i \in \mathcal{S}_{peak}$（$\tau_{avg} = 1 \times 10^{-3}$）就克隆；分裂操作仍沿用位置梯度，因为分裂主要还是几何不一致驱动的。
 
-**每个高斯的误差估计**：
-- 记录每个高斯 $g_i$ 的屏幕空间中心 $(x_i, y_i)$、覆盖像素数 $C_i$、累积 alpha 混合权重 $A_i$
-- 以 $(x_i, y_i)$ 为中心、半范围 $R_i = \lfloor \sqrt{C_i}/2 \rfloor$ 定义正方形影响区域
-- 平均融合感知误差：$\bar{E}_i = \frac{A_i}{C_i} \sum_{p \in \mathcal{P}_i} E(p)$
-- 使用二维求和面积表加速窗口求和
+**4. FLAME 条件时序聚类（FTC）：让口腔这类只在少数帧可见的区域也能被充分加密。**
 
-**峰值准则**：定义跨所有迭代的峰值误差 $E_i^{peak} = \max_t(\frac{A_i^{(t)}}{C_i^{(t)}} \sum_{p} E^{(t)}(p))$，选取 top 3% 构成集合 $\mathcal{S}_{peak}$。
+口腔内部、眼睑这种频繁遮挡区域，大部分帧里压根不可见，密度化准则在整段视频上一平均就被拉得很低，于是常年加密不足。FTC 的思路是按运动模式把帧分组、在组内算密度化准则。具体先用 FLAME 参数（表情权重 0.3、姿态权重 0.6、平移权重 0.1）对视频帧做 K-means，PCA 降维后再算帧间距离，并在 $[5, 12]$ 范围内用最大平均轮廓系数挑最优 $K$。训练时先按聚类分组、每组各训 $N-M$ 个 epoch（组内做 ADC），再用 $M$ 个 epoch 把全部数据随机洗牌、消除组间不一致（$N=6$、$M=1$）。这样结构相似的帧凑在一起算准则，口腔等区域在它真正可见的那个聚类里就有机会被充分加密——实验里 FTC 让口腔区域高斯数平均涨约 17%（超 400 个原语）。
 
-**克隆判据**：$\bar{E}_i > \tau_{avg}$ **或** $i \in \mathcal{S}_{peak}$，其中 $\tau_{avg} = 1 \times 10^{-3}$。分裂操作仍使用位置梯度，因为分裂主要由几何不一致性驱动。
+### 损失函数 / 训练策略
 
-#### FLAME 条件时序聚类 (FTC)
-
-**动机**：频繁遮挡区域（如口腔内部）在大部分帧中不可见，导致密度化准则的平均值被拉低。
-
-**实现方案**：
-1. 基于 FLAME 参数（表情权重 0.3、姿态权重 0.6、平移权重 0.1）对视频帧进行 K-means 聚类
-2. 先用 PCA 降维，再计算帧间距离
-3. 在 $[5, 12]$ 范围内通过最大化平均轮廓系数选择最优 $K$ 值
-4. 训练时先按聚类分组各训练 $N-M$ 个 epoch（在组内进行 ADC），再用 $M$ 个 epoch 随机洗牌全部数据消除组间不一致（$N=6$, $M=1$）
-
-这样保证结构相似的帧一起计算密度化准则，使口腔等短暂可见区域在其可见的聚类中获得充分密度化。实验表明 FTC 使口腔区域高斯数平均增长约 17%（超 400 个原语）。
-
-### 3.4 训练目标与优化
-
-**RGB 损失**：$\mathcal{L}_{rgb} = (1-\lambda_1)\mathcal{L}_1 + \lambda_1\mathcal{L}_{d\text{-}ssim} + \gamma\lambda_2\mathcal{L}_{vgg}$，感知损失 $\mathcal{L}_{vgg}$ 仅在训练后半段激活（$\gamma=1$），$\lambda_1=0.2, \lambda_2=0.05$。
-
-**正则化损失**：$\mathcal{L}_{offset} = \lambda_3|\delta_s - 1| + \lambda_4\delta_c$，约束缩放偏移接近 1、颜色偏移不过大。还包含从 GaussianAvatars 继承的位置损失和缩放损失。
-
-**优化器**：Adam，UV 软绑定网络学习率 $1 \times 10^{-4}$，其余参数沿用 3DGS 设置。不执行不透明度重置（因为高斯绑定到网格面片，无明显浮动高斯）。
+RGB 损失把 L1、结构不相似度和感知损失合起来：$\mathcal{L}_{rgb} = (1-\lambda_1)\mathcal{L}_1 + \lambda_1\mathcal{L}_{d\text{-}ssim} + \gamma\lambda_2\mathcal{L}_{vgg}$，其中 VGG 感知损失只在训练后半段激活（$\gamma=1$），$\lambda_1=0.2$、$\lambda_2=0.05$。偏移正则 $\mathcal{L}_{offset} = \lambda_3|\delta_s - 1| + \lambda_4\delta_c$ 把缩放偏移拉向 1、压住颜色偏移别太大，另外沿用 GaussianAvatars 的位置损失和缩放损失。优化器为 Adam，UV 软绑定网络学习率 $1 \times 10^{-4}$，其余参数沿用 3DGS 默认；因为高斯都绑在网格面片上、几乎没有浮动高斯，所以不做不透明度重置。
 
 ## 实验关键数据
 

@@ -45,23 +45,22 @@ ASTRA 把复杂 TableQA 拆成两个阶段。第一阶段是 AdaSTR，即 Adapti
 这个流程的重点是“表示先行”：不是直接让 LLM 对 Markdown 表格硬推理，而是先把表格重写成具有显式父子关系、语义路径和可执行结构的树。
 
 ### 关键设计
-1. **AdaSTR 自适应语义树重构**:
 
-	- 功能：把复杂、异构、不规则表格转换成语义树，保留层级和语义依赖。
-	- 核心思路：先用 Header Identification & Normalization 合并垂直依赖，例如把孤立的 Percent 变成 Yukon-Percent；再用 Hierarchy Identification 让 LLM 从规范化 header 中挖掘隐藏语义组，例如 Regional Statistics；最后根据表格类型选择 DSP、SRE 或 PSS 三种构造策略。
-	- 设计动机：复杂表格不能用一种固定序列化策略吃遍天下。中等规模表格可直接 LLM 解析，文本密集表格适合坐标占位再回填，大规模重复表格适合生成程序循环构树。
+**1. AdaSTR 自适应语义树重构：复杂表格不能用一种固定序列化吃遍天下。**
 
-2. **Evaluator-Guided Refinement Loop**:
+复杂表格有层级表头、合并单元格和隐式语义依赖，直接转 Markdown 会把结构压散。AdaSTR 先做 Header Identification & Normalization，把垂直依赖合并进单个 header（如把孤立的 Percent 补全成 Yukon-Percent），再做 Hierarchy Identification，让 LLM 从规范化后的 header 里挖出隐藏语义组（如 Regional Statistics）。关键是构树策略随表格规模和密度自适应切换：中等规模表格直接让 LLM 解析（DSP），文本密集表格用坐标占位再回填（SRE），大规模重复表格生成程序循环构树（PSS）。这样既避开了"所有表都让 LLM 一次吐完整树"的高成本和高幻觉，又能为下游推理提供保留显式父子路径和语义上下文的中间表示 $\tilde{T}$。
 
-	- 功能：降低 LLM 构树时的结构幻觉和信息遗漏。
-	- 核心思路：Evaluator 检查结构完整性和信息覆盖率，包括路径是否与表格坐标一致、多少单元格被正确映射；如果综合分低于阈值，就把反馈交给 LLM 迭代修正，最多若干轮。
-	- 设计动机：语义树一旦构错，后面推理都会在错误结构上进行；因此表示层必须先有质量控制。
+**2. Evaluator-Guided Refinement Loop：语义树一旦构错，后面所有推理都在错误结构上跑。**
 
-3. **DuTR 双模式树推理**:
+表示层必须先有质量控制。Evaluator 检查构出来的树的结构完整性和信息覆盖率——路径是否与原表坐标一致、有多少单元格被正确映射；若综合分低于阈值，就把具体反馈交回 LLM 迭代修正，最多若干轮。这个闭环把"构树幻觉"挡在推理之前，实测只在约 7% 的样本上触发，多数表格单轮即可构好，但对困难样本保留了纠错能力。
 
-	- 功能：结合自然语言语义检索和代码执行的优势。
-	- 核心思路：文本模式根据问题自适应选择 Leaf-to-Root 或 Root-to-Leaf：前者适合聚合型问题，从相关叶节点向上补上下文；后者适合查找型问题，从全局路径指导向下遍历。符号模式把语义树抽象成结构 skeleton，给 LLM 示例代码生成选择、聚合和比较程序，并通过 self-correction loop 修复运行错误。
-	- 设计动机：文本推理擅长语义定位，符号执行擅长数值计算；复杂表格问答往往两者都需要。
+**3. DuTR 双模式树推理：语义定位和数值计算是两种活，复杂表格往往两者都要。**
+
+在同一棵语义树上并行跑两种推理。文本模式按问题类型自适应选遍历方向：聚合型问题用 Leaf-to-Root，从相关叶节点向上补齐上下文；查找型问题用 Root-to-Leaf，从全局路径指导向下定位。符号模式则把语义树抽象成结构 skeleton，配示例代码让 LLM 生成选择、聚合、比较的 Python 程序，并用 self-correction loop 修运行错误。文本路径擅长语义检索、符号执行擅长可验证计算，二者产出两个候选答案，最后交给轻量 LLM 的 answer selector 挑更可信的那个。
+
+### 一个完整示例
+
+以一张带层级表头的区域统计表、问"育空地区的人口占比是多少"为例走一遍：AdaSTR 先做 header 规范化，把表里孤立的列名 `Percent` 补全成语义完整的 `Yukon-Percent`，再识别出隐藏语义组 `Regional Statistics`，因为是中等规模表，走 DSP 策略由 LLM 直接解析成语义树 $\tilde{T}$；Evaluator 检查覆盖率达标（这条样本落在不触发反馈环的 ~93% 里），直接放行。进入 DuTR：这是一个查找型问题，文本模式选 Root-to-Leaf，从根路径 `Regional Statistics → Yukon → Percent` 一路向下定位到目标叶节点取值；符号模式同时把树抽象成 skeleton 生成一段取数的 Python，两边各得一个候选答案；answer selector 比对后选出最终答案。整个过程的结构信息全程显式可追溯，而不是让 LLM 对一坨 Markdown 黑盒硬猜。
 
 ### 损失函数 / 训练策略
 ASTRA 是 training-free 方法，没有模型训练损失。实验为公平比较，AdaSTR、DuTR、E5、EEDP、GraphOTTER 和 ST-Raptor 等训练自由方法都使用 DeepSeek-V3-250324 作为 backbone；评价使用 GPT-5 作为二分类 judge 判断预测答案是否与 gold answer 等价，并计算 Accuracy。

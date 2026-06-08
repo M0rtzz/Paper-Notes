@@ -43,33 +43,37 @@ tags:
 
 ### 整体框架
 
-LLaVA-DyMoE 在 LLaVA 的 LLM backbone 每一层添加 MoE（LoRA 专家）。新任务到来时，增加新专家和路由参数，冻结旧组件，仅训练新添加部分。核心创新是两重正则化：Token Assignment Guidance (TAG) 在训练时识别 token 类型并调整路由分数防止漂移；Routing Score Regularization (RSR) 通过排他性和专化损失进一步强化。
+这篇论文要解决的是动态 MoE 在多模态持续学习里"冻结了旧专家却还是会遗忘"的怪现象。LLaVA-DyMoE 的做法是：在 LLaVA 的 LLM backbone 每一层挂一组 MoE（LoRA 专家），新任务来了就新增一批专家和对应的路由参数，旧专家、旧路由器全部冻结，只训练新增的部分。表面看参数已经隔离，但训练新组件的过程本身仍会把旧任务的 token 拽到新专家上——遗忘正是从这里漏进来的。
+
+整篇方法因此分两步走：先用一组受控实验把"到底是哪些 token 在制造漂移"看清楚，把 token 按路由倾向分成三类；再针对这三类的不同脾气下两道约束——Token Assignment Guidance (TAG) 在训练时直接改写路由分数、把可疑 token 挡在新专家门外，Routing Score Regularization (RSR) 用软损失从梯度上进一步推动"非此即彼"的排他路由。两道约束都只在训练时生效，推理时完全撤掉。
 
 ### 关键设计
 
-1. **Token 类型分析与 Token 困境（Token's Dilemma）**:
+**1. Token 类型分析与 Token 困境：先搞清楚到底是谁在制造遗忘。**
 
-    - 功能：揭示路由漂移的 token 级成因
-    - 核心思路：在受控二任务实验中，将新任务 token 根据其对新/旧专家组的路由分数相对优势分为三类：**new token**（对新组亲和力高）→主要驱动新知识获取，遗忘少；**old token**（对旧组亲和力高）→对新任务贡献小，但残余新组亲和力会污染路由器；**ambiguous token**（新旧组亲和力差异小）→既不帮助新任务学习也不保护旧知识，直接导致遗忘风险。
-    - 设计动机：精确定位遗忘根源。而"token 困境"指的是这些 token 学习价值最小，但不加引导时却会通过路由器训练信号造成最大的遗忘代价
+直接给方法之前，作者先做了一组受控的二任务实验，把"冻结旧参数仍遗忘"这件事拆到 token 粒度去看。对每个新任务 token，比较它对新专家组和旧专家组的路由倾向，据此分成三类：**new token** 明显偏向新组，是真正携带新模式、驱动新知识获取的主力，遗忘代价很小；**old token** 明显偏向旧组，对新任务几乎没贡献，但它残留的那一点新组亲和力会被路由器吸收，慢慢把路由器往旧模式上带偏；**ambiguous token** 对新旧两组的亲和力几乎打平，既不帮新任务学东西、也不保护旧知识，却恰恰是漂移的主要元凶。
 
-2. **Token Assignment Guidance (TAG)**:
+所谓"token 困境"就是这三类 token 的价值和代价错位了：学习价值最低的 ambiguous/old token，一旦不加引导地被放进新专家训练，反而会通过路由器的训练信号造成最大的遗忘。把因果定位到这一层，后面的解法才有的放矢——不是去压制所有 token，而是只拦住该拦的那一批。
 
-    - 功能：在训练时识别 token 类型并引导其路由到合适的专家组
-    - 核心思路：对每个 token，提取新旧专家组的最大路由分数 $c_\text{old} = \max(\mathbf{s}_{t-1}), c_\text{new} = \max(\mathbf{s}_{t,\text{new}})$，计算相对差异 $D_\text{rel} = \frac{|c_\text{new} - c_\text{old}|}{\max(|c_\text{new}|, |c_\text{old}|) + \epsilon}$。仅当 token 非模糊（$D_\text{rel} > \tau$）且新组主导（$c_\text{new} > c_\text{old}$）时才路由到新专家；否则将新组路由分数置为 $-\infty$，强制路由到旧组。这确保了模糊和旧 token 被安全导向旧专家。
-    - 设计动机：直接在 token 分配层面解决困境——让 new token 自然流向新专家学习新知识，同时阻止 ambiguous/old token 污染新路由器
+**2. Token Assignment Guidance：在分配的源头就把可疑 token 挡回旧专家。**
 
-3. **Routing Score Regularization (RSR)**:
+TAG 针对的正是上面那个困境：既然 ambiguous/old token 才是污染源，那就在训练时实时识别它们、不让它们碰新专家。具体做法是对每个 token 取新旧两组的最大路由分数 $c_\text{old} = \max(\mathbf{s}_{t-1})$、$c_\text{new} = \max(\mathbf{s}_{t,\text{new}})$，再算一个相对差异
 
-    - 功能：补充 TAG 的软正则化，强化专家组间的排他路由和新专家使用
-    - 核心思路：两个损失项。**排他性损失** $\mathcal{L}_\text{exc} = g_\text{old} \cdot g_\text{new}$（旧新组门控权重之积），惩罚 token 同时激活两组专家，促进二选一路由。**专化损失** $\mathcal{L}_\text{spe}$：以 $y = 1 - \max\{w_i\}_{i \in \mathcal{S}_{t-1}}$ 为软目标，通过 BCE 鼓励新专家获得更高路由权重 $g_\text{new}$。两者协同平衡稳定性（防遗忘）和可塑性（学新知识）。
-    - 设计动机：TAG 是硬约束（mask），RSR 是软约束（梯度信号），二者互补覆盖了路由分数空间的不同方面
+$$D_\text{rel} = \frac{|c_\text{new} - c_\text{old}|}{\max(|c_\text{new}|, |c_\text{old}|) + \epsilon}$$
+
+只有当这个 token 足够"不模糊"（$D_\text{rel} > \tau$）**且**确实是新组主导（$c_\text{new} > c_\text{old}$）时，才允许它流向新专家；其余情况一律把新组的路由分数置为 $-\infty$，强制它回到旧专家组。这等于在 token 分配的源头加了一道闸门：new token 自然流进新专家去学新知识，ambiguous/old token 被安全地导回旧专家，路由器再也收不到它们的"污染梯度"。举个直观的例子，若某 token 的 $c_\text{new}=0.52$、$c_\text{old}=0.50$，$D_\text{rel}\approx0.04$ 远低于阈值 $\tau=0.2$，它会被判为 ambiguous 直接 mask 回旧组；而一个 $c_\text{new}=0.8$、$c_\text{old}=0.4$ 的 token，$D_\text{rel}=0.5$ 且新组主导，才放行去新专家。
+
+**3. Routing Score Regularization：用软损失把"非此即彼"的路由习惯训出来。**
+
+TAG 是一道硬 mask，管的是"该不该路由到新专家"这个离散决定；RSR 则从梯度层面补一刀，让路由器自己养成排他、专化的倾向。它由两个损失项组成。**排他性损失** $\mathcal{L}_\text{exc} = g_\text{old} \cdot g_\text{new}$ 直接惩罚旧新两组门控权重的乘积——只要一个 token 同时点亮了两组专家，这一项就为正，逼着路由把权重收敛到二选一。**专化损失** $\mathcal{L}_\text{spe}$ 以 $y = 1 - \max\{w_i\}_{i \in \mathcal{S}_{t-1}}$ 为软目标、用 BCE 去鼓励新专家拿到更高的路由权重 $g_\text{new}$：旧专家越不该管的 token，越要推给新专家专门处理。两项一软一稳，正好把稳定性（别遗忘旧知识）和可塑性（学得动新知识）这对矛盾分摊开来。和 TAG 互补的地方在于，TAG 是离散的 mask、RSR 是连续的梯度信号，前者卡住硬边界、后者塑形分数分布，覆盖了路由空间里不同的面。
 
 ### 损失函数 / 训练策略
 
-总目标：$\mathcal{L} = \mathcal{L}_\text{NTP} + \lambda\mathcal{L}_\text{aux} + \alpha(\mathcal{L}_\text{exc} + \mathcal{L}_\text{spe})$
+总目标把三部分加在一起：
 
-其中 $\mathcal{L}_\text{NTP}$ 是标准自回归交叉熵，$\mathcal{L}_\text{aux}$ 是标准负载均衡损失（仅作用于新专家），$\alpha$ 控制正则化强度。TAG 和 RSR 仅在训练时生效，推理时无额外约束，可无缝与其他 MCIT 方法结合。backbone 使用未经指令微调的 LLaVA-v1.5-7B，每个新任务添加新 LoRA 专家。
+$$\mathcal{L} = \mathcal{L}_\text{NTP} + \lambda\mathcal{L}_\text{aux} + \alpha(\mathcal{L}_\text{exc} + \mathcal{L}_\text{spe})$$
+
+其中 $\mathcal{L}_\text{NTP}$ 是标准自回归交叉熵，$\mathcal{L}_\text{aux}$ 是只作用于新专家的标准负载均衡损失，$\alpha$ 控制 RSR 的强度。关键是 TAG 和 RSR 都只在训练时生效，推理时不带任何额外约束，因此可以无缝叠到其他 MCIT 方法上。backbone 用的是未经指令微调的 LLaVA-v1.5-7B，每来一个新任务就新增一批新 LoRA 专家。
 
 ## 实验关键数据
 

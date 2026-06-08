@@ -45,32 +45,21 @@ FREIA 把自由能原理 (FEP) 引入无标签 RL 微调，用「共识 + 探索
 
 ### 整体框架
 
-FREIA 完整 pipeline（基于 GRPO 框架）：
-
-1. **采样**：对每个输入 $x$，rollout $G=8$ 条 reasoning 路径 $Y=\{y_1,...,y_G\}$，提取最终答案 $A$，统计去重后的唯一答案集 $U=\{u_1,...,u_M\}$ 及其频率 $D=\{f_1,...,f_M\}$。
-2. **FER 计算 reward**：通过 belief sharpening + group confidence 调节"共识/探索"权重，得到每条路径的 $R_i$。
-3. **AAS 整形 advantage**：先用 group normalization 得到 $\tilde{A}_i$，再用 reward 分布的偏度计算 $w_{pos}, w_{neg}$ 衰减权重，得到最终 $\hat{A}_i$。
-4. **GRPO 策略更新**：把 $\hat{A}_i$ 塞进标准 GRPO clip-PPO 目标 $\mathcal{L}(\theta)$ 中，加 KL 约束 $\beta D_{KL}(\pi_\theta \| \pi_{ref})$，$\beta=0.001$。
+FREIA 建立在 GRPO 之上，只在「奖励」和「优势」两处做手术，其余 PPO 结构原样保留。对每个输入 $x$，先 rollout $G=8$ 条 reasoning 路径并提取最终答案，统计去重后的唯一答案集 $U=\{u_1,...,u_M\}$ 及其频率 $D=\{f_1,...,f_M\}$；然后 FER 模块根据群体置信度在「跟随共识」和「鼓励探索」之间自适应混合，给每条路径打出连续 reward $R_i$；AAS 模块再用这批 reward 分布的偏度判断当前训练处于早期还是后期，对正、负优势分别衰减，得到整形后的 $\hat{A}_i$；最后把 $\hat{A}_i$ 塞进标准 GRPO 的 clip-PPO 目标（带 $\beta=0.001$ 的 KL 约束）完成策略更新。整条 pipeline 不引入任何额外训练成本。
 
 ### 关键设计
 
-1. **Free Energy-Driven Reward (FER) 共识/探索自适应混合**:
+**1. Free Energy-Driven Reward (FER)：用一个公式同时表达「跟随多数」和「鼓励冒险」，门控权重随训练动态滑动。**
 
-    - 功能：用单一 reward 公式同时表达"跟随多数"和"鼓励冒险"两个目标，门控权重随训练动态调整。
-    - 核心思路：先对答案频率做**非线性 belief sharpening** $w_i = f_i^\alpha / \sum_k f_k^\alpha$（$\alpha=2$），$\alpha$ 越大越强化多数派。然后用归一化 Shannon 熵定义群体置信度 $C_G = 1 - H(W)/\log M$（$M=1$ 时 $C_G=1$）。共识 reward $r_{cons}(y_i) = \mathbb{1}[a_i = \text{Vote}(A)]$，探索 reward $r_{explore}(y_i) = \tanh(-\log w_i)$（罕见答案得分高，$\tanh$ 防止主导信号）。最终 $R_i = C_G \cdot r_{cons}(y_i) + (1 - C_G) \cdot r_{explore}(y_i)$。
-    - 设计动机：训练早期 $C_G$ 低，自动权重偏向探索，避免被错误多数锁死；训练后期 $C_G$ 高，自动倾斜到共识，巩固正确推理路径。这正是 FEP 在无监督 LLM 上的直接落地 — 模型越自信就越要利用，越不自信就越要探索。
+无监督自我提升的两派各有硬伤：纯共识（多数投票）会被错误多数锁死，纯自信度会给「罕见但自信」的错误答案高分；更根本的是，它们都用静态准则面对动态变化的能力——早期该探索、后期该巩固。FER 把这两端融进一条 reward。先对答案频率做非线性 belief sharpening $w_i = f_i^\alpha / \sum_k f_k^\alpha$（$\alpha=2$，越大越强化多数派），再用归一化 Shannon 熵定义群体置信度 $C_G = 1 - H(W)/\log M$（$M=1$ 时 $C_G=1$）。共识项 $r_{cons}(y_i) = \mathbb{1}[a_i = \text{Vote}(A)]$ 奖励跟随多数，探索项 $r_{explore}(y_i) = \tanh(-\log w_i)$ 奖励罕见答案（$\tanh$ 防止该信号爆炸主导）。最终 $R_i = C_G \cdot r_{cons}(y_i) + (1 - C_G) \cdot r_{explore}(y_i)$。这样训练早期 $C_G$ 低、权重自动偏向探索，避免被错误多数锁死；后期 $C_G$ 高、自动倾斜到共识，巩固正确路径——正是 FEP「越自信越利用、越不自信越探索」在无监督 LLM 上的落地。
 
-2. **Adaptive Advantage Shaping (AAS) 基于偏度的双向衰减**:
+**2. Adaptive Advantage Shaping (AAS)：用 reward 分布的偏度当训练阶段探针，对正、负优势分别衰减。**
 
-    - 功能：用 batch 内 reward 分布的**偏度** $\mathcal{S}$ 检测当前训练阶段，分别衰减正 / 负 advantage。
-    - 核心思路：先算标准 group-normalized advantage $\tilde{A}_i = (R_i - \mu_R)/(\sigma_R + \epsilon)$；再算样本偏度 $\mathcal{S} = \frac{1}{G}\sum_i \tilde{A}_i^3$；最后用 sigmoid 把偏度映射成衰减权重 $w_{pos} = \sigma(-\mathcal{S})$, $w_{neg} = \sigma(\mathcal{S})$。最终 $\hat{A}_i = w_{pos}\tilde{A}_i$（若 $\tilde{A}_i > 0$）或 $w_{neg}\tilde{A}_i$（若 $\tilde{A}_i < 0$）。
-    - 设计动机：**正偏 (Case 1)** = 低 reward 主导、稀少高 reward 答案，此时高 advantage 大概率是 stochastic outlier，AAS 把 $w_{pos}\to 0$ 抑制对噪声的过拟合；**负偏 (Case 2)** = 高 reward 主导，低 reward 多半是无害变体，AAS 把 $w_{neg}\to 0$ 防止过度惩罚少数路径而陷入"只求不犯错"。这是把 FER 在 reward 层做的事在 advantage 层再做一次。
+即便 reward 设计好了，标准 group normalization 仍会在两端犯错：早期高 reward 答案稀少，归一化会给个别 outlier 一个巨大正优势，模型过早 overfit 到噪声；后期多数答案统治种群，偶尔的少数路径被打成大负优势，policy 退化成「只求不犯错」。AAS 让 advantage 也随阶段自适应。先算标准 group-normalized 优势 $\tilde{A}_i = (R_i - \mu_R)/(\sigma_R + \epsilon)$，再算样本偏度 $\mathcal{S} = \frac{1}{G}\sum_i \tilde{A}_i^3$ 作为阶段指示器，最后用 sigmoid 把偏度映成衰减权重 $w_{pos} = \sigma(-\mathcal{S})$、$w_{neg} = \sigma(\mathcal{S})$，得到 $\hat{A}_i = w_{pos}\tilde{A}_i$（当 $\tilde{A}_i > 0$）或 $w_{neg}\tilde{A}_i$（当 $\tilde{A}_i < 0$）。正偏意味着低 reward 主导、高 reward 多半是随机 outlier，于是 $w_{pos}\to 0$ 抑制对噪声的过拟合；负偏意味着高 reward 主导、低 reward 多半是无害变体，于是 $w_{neg}\to 0$ 防止过度惩罚少数路径。本质上是把 FER 在 reward 层做的自适应，在 advantage 层再做一次，而且偏度完全 self-contained，单 batch 就能算出来。
 
-3. **与 GRPO 的无缝集成**:
+**3. 与 GRPO 的无缝集成：整套 FER+AAS 是 drop-in plug-in，不动 PPO 的 clip 与 KL 结构。**
 
-    - 功能：把整个 FER+AAS 当作 GRPO 上的 plug-in，不改变 PPO 的 clip + KL 正则化结构。
-    - 核心思路：用 $\hat{A}_i$ 替换 GRPO 原本的 group-normalized advantage，loss 仍为 $\mathcal{L}(\theta) = \mathbb{E}[\frac{1}{G}\sum_i \frac{1}{|o_i|} \sum_t \min(r_{i,t}(\theta)\hat{A}_i, \text{clip}(r_{i,t}, 1\pm\epsilon)\hat{A}_i) - \beta D_{KL}(\pi_\theta \| \pi_{ref})]$。
-    - 设计动机：FREIA 只动 reward 和 advantage 两处，token-level loss、clip 范围、KL 项保持 GRPO 默认，意味着它对任何 GRPO 实现都是 drop-in 替换，迁移成本几乎为零。这也是为什么 wall-clock 时间与 baseline 持平（Figure 6）。
+FREIA 只用 $\hat{A}_i$ 替换 GRPO 原本的 group-normalized 优势，loss 仍是 $\mathcal{L}(\theta) = \mathbb{E}[\frac{1}{G}\sum_i \frac{1}{|o_i|} \sum_t \min(r_{i,t}(\theta)\hat{A}_i, \text{clip}(r_{i,t}, 1\pm\epsilon)\hat{A}_i) - \beta D_{KL}(\pi_\theta \| \pi_{ref})]$，token-level loss、clip 范围、KL 项全保持 GRPO 默认。这意味着它对任何 GRPO 实现都是零成本替换，也是为什么 wall-clock 时间与 baseline 持平（Figure 6）——FER 和 AAS 都只是 batch 内 $O(G)$ 的统计操作。
 
 ### 损失函数 / 训练策略
 

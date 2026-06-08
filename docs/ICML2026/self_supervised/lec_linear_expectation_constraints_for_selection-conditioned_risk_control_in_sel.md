@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **从比值约束到线性期望约束**：
+**1. 从比值约束到线性期望约束：把条件概率目标改写成一条线性不等式。**
 
-    - 功能：把"$\Pr(\mathrm{err}=1 \mid S(\lambda)=1) \le \alpha$"这个本质是条件概率约束的目标，等价改写为期望线性不等式，为后续构造紧的有限样本充分条件铺路。
-    - 核心思路：定义联合指示 $Z(\lambda) = S(\lambda) \cdot \mathrm{err}$（接受且错才为 1），则 $\mathrm{SCER}(\lambda) = \mathbb{E}[Z(\lambda)] / \mathbb{E}[S(\lambda)]$。在 $\mathbb{E}[S(\lambda)] > 0$ 前提下，$\mathrm{SCER}(\lambda) \le \alpha \Leftrightarrow \mathbb{E}[Z(\lambda) - \alpha S(\lambda)] \le 0$。直观上 $Z - \alpha S$ 是"单个样本对接受错误数的边际贡献减去 α 倍的边际接受"，期望非正即"接受错误率不超过 α"。
-    - 设计动机：UCB-CLP / UCB-HFD 都是对 $\mathbb{E}[Z]$ 单独做上界、再除以 $\mathbb{E}[S]$ 的下界，相当于两个保守界叠加；本文改成对单个组合量 $Z - \alpha S$ 做期望非正的判断，只需要一次"差和"修正，从源头消除了双重保守。
+我们真正想控制的是"接受样本里错的比例" $\Pr(\mathrm{err}=1 \mid S(\lambda)=1) \le \alpha$，本质是个条件概率（比值）约束。LEC 第一步把它等价改写：定义联合指示 $Z(\lambda) = S(\lambda) \cdot \mathrm{err}$（接受且错才为 1），则 $\mathrm{SCER}(\lambda) = \mathbb{E}[Z(\lambda)] / \mathbb{E}[S(\lambda)]$，在 $\mathbb{E}[S(\lambda)] > 0$ 时有 $\mathrm{SCER}(\lambda) \le \alpha \Leftrightarrow \mathbb{E}[Z(\lambda) - \alpha S(\lambda)] \le 0$。直观上 $Z - \alpha S$ 是"单样本对接受错误数的边际贡献减去 α 倍的边际接受"，它的期望非正就等价于接受错误率不超过 α。
 
-2. **有限样本充分条件 + 可行阈值集**：
+这一步看似朴素，却是 LEC 比 UCB 紧的根源。UCB-CLP / UCB-HFD 是先对分子 $\mathbb{E}[Z]$ 单独做上界、再除以分母 $\mathbb{E}[S]$ 的下界，相当于两个保守界叠加；LEC 只对一个组合量 $Z - \alpha S$ 判断期望非正，从源头上把"双重保守"压成了"一次判断"。
 
-    - 功能：把"$\mathbb{E}[Z - \alpha S] \le 0$"翻译成只用校准集就能验证的有限样本判据。
-    - 核心思路：按 $u_i$ 升序得到 $u_{(1)} \le \dots \le u_{(n)}$ 及对应的 $\mathrm{err}_{(j)}$。对候选阈值 $\lambda$ 定义 $k(\lambda) = \#\{i: u_i \le \lambda\}$ 即被接受的校准样本数。采用 distribution-free 校准中标准的 leave-one-out 修正，作者证明（Appendix A.1）在 exchangeability 下，下式即为充分条件：$\sum_{j=1}^{k(\lambda)} (\mathrm{err}_{(j)} - \alpha) \le -1$。可行阈值集 $\Lambda_\alpha = \{\lambda: \text{上式成立}\}$，标定阈值取 $\hat{\lambda} = \sup \Lambda_\alpha$ 以最大化接受率。如果 $\Lambda_\alpha = \varnothing$ 就声明该 α 不可行、全拒答。Theorem 3.1 证明：用这样标定的 $\hat{\lambda}$，新样本满足 $\Pr(\mathrm{err}_{n+1}=1 \mid u_{n+1} \le \hat{\lambda}) \le \alpha$（关于校准集和新样本联合随机性的 marginal guarantee）。
-    - 设计动机："$\sum (\mathrm{err}_{(j)} - \alpha) \le -1$"看似简单，但与 UCB 思路有本质区别：它直接利用了校准集上 $Z - \alpha S$ 的求和值，再用 −1 作为 leave-one-out 修正（替代 worst-case tail bound），既保住了有限样本严格性又避免 Hoeffding/Clopper-Pearson 的过度宽留。
+**2. 有限样本充分条件 + 可行阈值集：只用校准集就能验证的"差和 ≤ −1"。**
 
-3. **两模型路由的联合阈值标定**：
+线性约束 $\mathbb{E}[Z - \alpha S] \le 0$ 是期望，需要翻译成校准集上可执行的判据。把校准样本按不确定度 $u_i$ 升序排成 $u_{(1)} \le \dots \le u_{(n)}$ 及对应 $\mathrm{err}_{(j)}$，阈值 $\lambda$ 接受的样本数记 $k(\lambda) = \#\{i: u_i \le \lambda\}$。作者用 distribution-free 校准里标准的 leave-one-out 修正证明（Appendix A.1），在 exchangeability 下充分条件就是一条干净的不等式：
 
-    - 功能：当单模型在某 α 下不可行或接受率太低时，把不确定的输入升级到第二个模型，同时保证**系统级**（而非分别两个模型各自）的 SCER ≤ α。
-    - 核心思路：定义 $S^{(b)}(\lambda^{(a)}, \lambda^{(b)}) = \mathbf{1}\{u^{(a)} > \lambda^{(a)} \land u^{(b)} \le \lambda^{(b)}\}$（只在 primary 拒绝且 secondary 接受时为 1），系统级接受 $S = S^{(a)} + S^{(b)} \in \{0,1\}$，系统级接受错误 $Z = S^{(a)} \mathrm{err}^{(a)} + S^{(b)} \mathrm{err}^{(b)}$。同一线性等价性给出系统约束 $\mathbb{E}[Z - \alpha S] \le 0$，有限样本充分条件为 $\sum_{i=1}^n (Z_i(\lambda^{(a)}, \lambda^{(b)}) - \alpha S_i(\lambda^{(a)}, \lambda^{(b)})) \le -1$，可行集 $\Lambda^{(a,b)}_\alpha$ 上选**使经验接受率 $\frac{1}{n}\sum S_i$ 最大**的 $(\hat{\lambda}^{(a)}, \hat{\lambda}^{(b)})$。Theorem 3.2 证明系统级 SCER ≤ α。该框架可天然推广到 $K$ 模型链（Appendix B）。
-    - 设计动机：如果对两个模型各自独立标定 $\lambda^{(a)}$ 和 $\lambda^{(b)}$（"naive LEC"），由于 secondary 上看到的是 primary 被拒之后的子总体，分布偏离 exchangeability 假设，系统级保证会失效（论文 Figure 6 实证了这点）。联合标定是路由系统**得到 valid 系统级保证的唯一正确路径**。
+$$\sum_{j=1}^{k(\lambda)} (\mathrm{err}_{(j)} - \alpha) \le -1$$
+
+可行阈值集 $\Lambda_\alpha = \{\lambda: \text{上式成立}\}$，标定取其中最大的 $\hat{\lambda} = \sup \Lambda_\alpha$ 以最大化接受率；若 $\Lambda_\alpha = \varnothing$ 就声明该 α 不可行、全拒答。Theorem 3.1 保证用这样的 $\hat{\lambda}$ 新样本满足 $\Pr(\mathrm{err}_{n+1}=1 \mid u_{n+1} \le \hat{\lambda}) \le \alpha$。它和 UCB 的本质区别在于：这里直接用校准集上 $Z - \alpha S$ 的累积和，再用 −1 作 leave-one-out 修正替代 Hoeffding/Clopper-Pearson 的最坏情形尾界，既保住有限样本严格性又不浪费风险预算。
+
+**3. 两模型路由的联合阈值标定：保证系统级而非分头的 SCER。**
+
+当单模型在某 α 下不可行或接受率太低，自然想把不确定输入升级到第二个模型，但难点是要保证整个系统的错误率而不是两个模型各自达标。LEC 定义 $S^{(b)}(\lambda^{(a)}, \lambda^{(b)}) = \mathbf{1}\{u^{(a)} > \lambda^{(a)} \land u^{(b)} \le \lambda^{(b)}\}$（仅 primary 拒、secondary 收时为 1），系统接受 $S = S^{(a)} + S^{(b)}$、系统接受错误 $Z = S^{(a)} \mathrm{err}^{(a)} + S^{(b)} \mathrm{err}^{(b)}$。同一套线性等价性给出系统约束 $\mathbb{E}[Z - \alpha S] \le 0$，有限样本充分条件仍是 $\sum_{i=1}^n (Z_i - \alpha S_i) \le -1$，在可行集上选使经验接受率最大的 $(\hat{\lambda}^{(a)}, \hat{\lambda}^{(b)})$，Theorem 3.2 保证系统级 SCER ≤ α，并可推广到 $K$ 模型链。
+
+为什么必须联合标定？因为若对两个模型各自独立调 $\lambda^{(a)}$、$\lambda^{(b)}$（naive LEC），secondary 看到的是 primary 拒掉之后的子总体，分布已偏离 exchangeability，系统级保证随之失效（Figure 6 实证了越线）。联合标定是路由系统拿到有效系统级保证的唯一正确路径。
 
 ### 损失函数 / 训练策略
 LEC 是**纯校准 / 后处理方法**，不涉及任何梯度训练；只需要：(1) 一个已训练好的模型 $\mathcal{G}$；(2) 一个 scalar 不确定度函数 $\mathcal{U}$（默认闭式 QA/VQA 用 predictive entropy PE，开放式用 black-box semantic entropy SE，也支持 EigV / Deg / Ecc / SELF 等替代）；(3) 一个标注好的校准集；(4) 一个 admission function $A$（默认用 sentence similarity 阈值 0.6，也支持 bi-entailment 和 LLM-as-a-Judge）。计算开销主要是对 $\lambda$ 候选做扫描（每个 candidate $\mathcal{O}(n)$ 即可）。

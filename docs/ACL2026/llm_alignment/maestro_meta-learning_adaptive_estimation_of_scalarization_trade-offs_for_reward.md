@@ -43,27 +43,27 @@ tags:
 
 ### 整体框架
 
-MAESTRO 在标准 GRPO 流程上增加了一个 Conductor 层。给定 prompt $q$，策略模型 $\pi_\theta$ 采样一组候选输出 $\{o_i\}$。Conductor $\pi_\phi$ 处理每个 prompt-response 对的末层隐藏状态，采样一个奖励侧重动作 $a$，诱导权重向量 $\mathbf{w}^{(a)}$。原始奖励向量 $\mathbf{r}$ 和 KL 惩罚通过标量化节点融合为标量奖励 $R$，再经 group 归一化得到 group-relative advantage $\hat{A}$。双层优化中，内层用 GRPO 更新 $\pi_\theta$，外层用 advantage 作为元奖励更新 $\pi_\phi$。
+MAESTRO 在标准 GRPO 之上接了一个轻量 Conductor 层，把「奖励标量化用哪组权重」从固定常数变成依赖语义的决策。给定 prompt $q$，策略模型 $\pi_\theta$ 先采样一组候选输出 $\{o_i\}$；Conductor $\pi_\phi$ 读取每个 prompt-response 对的末层隐藏状态，采样一个奖励侧重动作并诱导出权重向量 $\mathbf{w}^{(a)}$，把原始奖励向量 $\mathbf{r}$ 与 KL 惩罚融合成标量奖励 $R$，再经 group 归一化得到 advantage $\hat{A}$。整个训练是一个双层优化：内层用 GRPO 拿 $\hat{A}$ 更新策略 $\pi_\theta$，外层把同一个 $\hat{A}$ 当作元奖励反过来更新 Conductor $\pi_\phi$，让两者协同进化。
 
 ### 关键设计
 
-1. **Conductor 网络**:
+**1. Conductor 网络：用末层隐藏状态做上下文，按语义动态选奖励权重。**
 
-    - 功能：根据 prompt-response 语义动态选择奖励权重配置
-    - 核心思路：以策略模型处理完整序列后的末层隐藏状态 $h \in \mathbb{R}^{d_{\text{model}}}$ 作为上下文，Conductor 实现为一个轻量线性投影头：$\pi_\phi(\cdot|h) = \text{softmax}((W_\phi h + b_\phi)/\tau)$。训练时从分类分布中采样离散动作 $a$，每个动作诱导特定的奖励侧重模式；推理时直接输出连续分布作为确定性权重。
-    - 设计动机：利用末层隐表示的线性可分性，仅需线性投影就能区分不同任务语义（如推理 vs 创意），无需复杂网络，开销极低。
+开放域对齐本是多目标问题，但固定权重会把高维 Pareto 前沿坍缩成一个点，对数学推理和创意写作施加同样的奖励偏好并不合理。MAESTRO 注意到 Transformer 末层隐藏状态 $h \in \mathbb{R}^{d_{\text{model}}}$ 是个语义瓶颈，已编码任务意图与生成特征，于是把 Conductor 实现成一个线性投影头 $\pi_\phi(\cdot|h) = \text{softmax}((W_\phi h + b_\phi)/\tau)$：训练时从该分类分布采样离散动作 $a$，每个动作对应一种奖励侧重模式；推理时直接输出连续分布作为确定性权重。
 
-2. **Advantage 驱动的双层元优化**:
+之所以只用一个线性头，是因为末层表示本身已经线性可分，仅靠线性投影就能区分推理 vs 创意这类任务语义，无需复杂网络，额外开销极低——这也是后文「效率不降反升」的前提。
 
-    - 功能：稳定地训练 Conductor 使其学习有意义的奖励权衡
-    - 核心思路：元目标 $J(\phi) = \mathbb{E}[\hat{A}(x,y;w(h,a))]$ 最大化 GRPO advantage 在 Conductor 选择的奖励配置下的期望。关键创新是组内异构采样——对同一 prompt 的每个 response 独立采样奖励动作 $a_{i,j}$，打破 group baseline 的对称性，提供有效的元梯度方差。梯度更新为 $\nabla_\phi J(\phi) = \frac{1}{NG}\sum_{i,j}[\hat{A}_{i,j}\nabla_\phi\log\pi_\phi(a_{i,j}|h_{i,j}) + \lambda_{\text{ent}}\nabla_\phi\mathcal{H}(\pi_\phi)]$。
-    - 设计动机：在 group-relative normalization 下，朴素的 prompt 级统一权重会导致元梯度消失（因为 advantage 均值为零）。组内异构采样引入元竞争，暴露信息性方差。
+**2. Advantage 驱动的双层元优化：用组内异构采样喂出有效元梯度。**
 
-3. **异步两时间尺度更新**:
+Conductor 该往哪个方向更新，需要一个稳定的训练信号。MAESTRO 的元目标 $J(\phi) = \mathbb{E}[\hat{A}(x,y;w(h,a))]$ 最大化「在 Conductor 所选奖励配置下的 GRPO advantage 期望」，更新公式为 $\nabla_\phi J(\phi) = \frac{1}{NG}\sum_{i,j}[\hat{A}_{i,j}\nabla_\phi\log\pi_\phi(a_{i,j}|h_{i,j}) + \lambda_{\text{ent}}\nabla_\phi\mathcal{H}(\pi_\phi)]$。
 
-    - 功能：解耦 Conductor 优化与策略模型训练，防止不稳定
-    - 核心思路：在 GRPO 训练期间缓冲 $(h_{i,j}, a_{i,j}, \hat{A}_{i,j})$ 三元组，周期性地用 Policy Gradient Theorem 更新 $\phi$。策略模型在 token 级更新频率高（内层），Conductor 在 episode 级更新频率低（外层），形成两个时间尺度。
-    - 设计动机：将元优化从 token 级策略训练中解耦，避免元梯度与策略梯度的耦合导致训练不稳定或退化。
+这里的关键麻烦是：在 group-relative normalization 下，如果对同一 prompt 的所有 response 用统一权重，advantage 均值恒为零，元梯度会直接消失。解决办法是组内异构采样——对同一 prompt 的每个 response 独立采样奖励动作 $a_{i,j}$，打破 group baseline 的对称性，制造出组内的「元竞争」，从而暴露出有信息量的方差，让元梯度不再退化。
+
+**3. 异步两时间尺度更新：把 Conductor 优化和策略训练解耦。**
+
+元梯度和策略梯度若紧耦合，容易让训练不稳定甚至退化。MAESTRO 在 GRPO 训练时把 $(h_{i,j}, a_{i,j}, \hat{A}_{i,j})$ 三元组缓冲起来，周期性地用 Policy Gradient Theorem 更新 $\phi$，于是策略模型在 token 级高频更新（内层），Conductor 在 episode 级低频更新（外层），形成两个时间尺度。
+
+这种异步设计把元优化从 token 级策略训练里抽离出来，避免两套梯度互相干扰，是保证 Conductor 能稳定学到有意义权衡的工程前提。
 
 ### 损失函数 / 训练策略
 

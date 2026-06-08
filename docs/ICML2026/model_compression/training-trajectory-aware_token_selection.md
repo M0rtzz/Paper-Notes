@@ -42,31 +42,33 @@ tags:
 
 ### 整体框架
 
-T3S 分三步：(1) 跑一次标准 SFT 保存每个 checkpoint，按 train accuracy 找 Imitation Bottleneck $\theta_b$；(2) 用 selector 模型 $M_0$ 在 base $\theta_0$ 和 $\theta_b$ 上分别算每个 token 的 log-prob，取差 $\Delta c_t$；(3) 重启训练，根据 $\Delta c_t$ 构造 token-level mask——AR 模型 mask 掉 $\Delta c_t > 0$ 的 anchor token（让 loss 只在剩下 token 上），dLLM 反过来让 anchor token 进 visible context，repeated 让模型练 yet-to-learn token。这一步可以在线做（每个 checkpoint 监控 train acc，发现 bottleneck 后切换到 mask 模式），不需要预先跑完整轮蒸馏。
+T3S 想解决的是「强 student 继续从强 teacher 蒸馏时 acc 先崩后恢复」这件怪事，做法是先把崩点找出来、再把崩点之前主导优化的那批 token 从 loss 里剔掉。整体三步走：先跑一次标准 SFT、保存每个 checkpoint，按 train accuracy 的最低点定位 Imitation Bottleneck $\theta_b$；再用 selector 模型 $M_0$ 在 base $\theta_0$ 和 $\theta_b$ 上分别算每个 token 的 log-prob、取差值 $\Delta c_t$ 给 token 分组；最后重启训练、根据 $\Delta c_t$ 构造 token-level mask——AR 把 $\Delta c_t > 0$ 的 anchor token 从 CE 里 mask 掉，dLLM 反过来让 anchor 进可见上下文、逼模型反复练剩下的推理 token。这套监控可以在线跑：训练时盯着 train acc，一旦探到 bottleneck 就切到 mask 模式，不必预先跑完整轮蒸馏。
 
 ### 关键设计
 
-1. **Imitation Bottleneck 识别 + Recovering Residual Transfer 作为证据**:
+**1. Imitation Bottleneck 识别 + Recovering Residual Transfer：先找到该开始 mask 的时刻，再证明之前的更新是多余的。**
 
-    - 功能：从训练轨迹找到「应该开始 mask 的时刻」，并用 RRT 实验证明 pre-bottleneck 更新是冗余甚至有害。
-    - 核心思路：定义 $\theta_b = \arg\min_\theta \mathrm{Acc}_{\mathrm{train}}(\theta)$；构造 $\theta_{\mathrm{RRT}} = \theta_0 + (\theta_f - \theta_b)$，即「丢掉 pre-bottleneck 所有更新」。实验显示标准 SFT 让 DeepSeek-R1 蒸馏的 Qwen3-8B 在 BOBA-200 上从 71.46 跌到 63.13（$\downarrow 8.33$），而 RRT 反而涨到 72.61（$\uparrow 1.15$）；QwQ teacher 上同样模式。这是 Section 2 最颠覆的实验，奠定了 T3S 的合法性。
-    - 设计动机：传统观点认为「训练 loss 下降 = 模型变好」，本文证伪——loss 下降可能完全来自 anchor token 的 over-fit，跟 downstream task 无关。RRT 不是要替代 SFT，而是给「pre-bottleneck 不是必要阶段」一个无可辩驳的实验。
+T3S 的第一颗螺丝是把「什么时候模型其实在变差」从黑盒里挖出来。作者定义 bottleneck 为训练轨迹上 train accuracy 最低的那个 checkpoint $\theta_b = \arg\min_\theta \mathrm{Acc}_{\mathrm{train}}(\theta)$，这一点之后才是真正学推理的阶段。为了证明 bottleneck 之前的参数更新不仅冗余、甚至有害，他们做了 Recovering Residual Transfer（RRT）实验：直接丢掉 pre-bottleneck 的所有更新，构造 $\theta_{\mathrm{RRT}} = \theta_0 + (\theta_f - \theta_b)$。结果很反直觉——标准 SFT 让 DeepSeek-R1 蒸馏的 Qwen3-8B 在 BOBA-200 上从 71.46 跌到 63.13（$\downarrow 8.33$），而扔掉前半段更新的 RRT 反而涨到 72.61（$\uparrow 1.15$），换 QwQ teacher 也是同一模式。这直接证伪了「训练 loss 下降 = 模型变好」的朴素认知：loss 的下降可能完全来自 anchor token 的 over-fit，跟 downstream 任务无关。RRT 不是要替代 SFT，而是给「pre-bottleneck 阶段不必要」一个无可辩驳的实验锚点，为后面更精细的 token-level 干预奠定合法性。
 
-2. **基于 confidence 变化的 token 分组 + AR 端 anchor mask**:
+**2. confidence 变化分组 + AR 端 anchor mask：把主导优化的 token 揪出来，直接从 loss 里切掉。**
 
-    - 功能：把「pre-bottleneck 谁在主导优化」从黑盒变成可观测的 token 集合，并直接干预 loss。
-    - 核心思路：用 selector $M_0$ 计算 $c_t(\theta; x, y) = \log p_\theta(y_t | y_{<t}, x)$，对训练轨迹上每个 token 取 $\Delta c_t = c_t(\theta_b) - c_t(\theta_0)$。$\Delta c_t > 0$ 的 token 集合 $\mathcal{A}(x,y) = \{t : \Delta c_t > 0\}$ 就是 Imitation-Anchor Tokens——蒸馏前期就被模型「学会」的 token。AR T3S loss 把它们从 CE 中剔除：$\mathcal{L}_{\mathrm{AR\text{-}T3S}} = \mathbb{E}[\sum_{t \setminus \mathcal{A}} -\log p_\theta(y_t | y_{<t}, x)]$。词云分析（Figure 3）显示 anchor token 多是连接词、标点、思路引导语，而 yet-to-learn token 多是关键算式 token、中间推导步骤——验证 anchor/yet-to-learn 的划分跟人类直觉一致。
-    - 设计动机：与其调超参/数据，不如直接在 loss 层面 surgical 切掉害群之马。论文还用「反 T3S」（只在 anchor token 上训，mask 推理 token）做诊断——性能从 71.46 暴跌到 26.67，说明 T3S 的 token 选择极具区分度。
+知道了该 mask、却还不知道 mask 谁。作者发现 anchor token 有一个统一信号——蒸馏前期 confidence 单调上升。于是用 selector $M_0$ 计算每个 token 的 log-prob $c_t(\theta; x, y) = \log p_\theta(y_t | y_{<t}, x)$，在轨迹两端取差 $\Delta c_t = c_t(\theta_b) - c_t(\theta_0)$，把 $\Delta c_t > 0$ 的 token 归为 Imitation-Anchor Tokens：
 
-3. **梯度交互证据：anchor 和 yet-to-learn 不能共存**:
+$$\mathcal{A}(x,y) = \{t : \Delta c_t > 0\}$$
 
-    - 功能：从梯度层面给出「为什么 mask 是必要的」的机制证据。
-    - 核心思路：Figure 5 干预实验显示，在 anchor 还没学好（large $\mathcal{L}_{\mathrm{anchor}}$）的 checkpoint 上做一步只优化 anchor 的更新，其他 token 的 loss 会暴增（large positive $\Delta \mathcal{L}_{\mathrm{other}}$）——anchor 学习确实在抑制其他 token。Figure 6 显示 anchor token 的梯度范数早期能达到 other token 的 $17 \times$，到 bottleneck 时降到 $2 \times$；同时两组梯度的 cosine similarity 在 crash 阶段降到 $-0.4 \sim -0.5$，是强冲突。Table 6 的 4×4 矩阵则把这个 incompatibility 量化：训 anchor 子集会让 reasoning 子集 loss 大幅上升（反之亦然）。
-    - 设计动机：这三个梯度证据互相印证，把「anchor 压制 yet-to-learn」从假设升级为机制级结论，让 mask 这个粗暴干预有了非常坚实的理论支撑。
+这些就是蒸馏前期就被模型轻松「学会」的 token。AR 端的 T3S loss 直接把它们从 CE 中剔除，让梯度只落在剩下的推理 token 上：
 
-### dLLM 端：unmask 反向操作
+$$\mathcal{L}_{\mathrm{AR\text{-}T3S}} = \mathbb{E}\Big[\sum_{t \setminus \mathcal{A}} -\log p_\theta(y_t | y_{<t}, x)\Big]$$
 
-对扩散 LLM（LLaDA-2.0-Mini），训练目标就是 random masked reconstruction；T3S 反过来——让 trajectory-identified yet-to-learn token **更频繁**被 mask，让模型在「anchor token 都给定」的条件下反复练推理 token。这相当于把 dLLM 的随机 mask 替换成 trajectory-aware mask，符合 dLLM 的训练范式。
+为什么这样有效，词云分析（Figure 3）给了直观佐证：anchor token 多是连接词、标点、思路引导语，而 yet-to-learn token 多是关键算式、中间推导步骤——划分跟人类直觉高度一致。与其调超参或换数据，不如在 loss 层面 surgical 切掉这批「容易模仿但不带推理增益」的害群之马。论文还做了「反 T3S」诊断（只在 anchor 上训、把推理 token mask 掉），性能从 71.46 暴跌到 26.67，反向印证 T3S 的 token 选择极具区分度，不是「随便 mask 一半」能复现的。
+
+**3. 梯度交互证据：anchor 和 yet-to-learn 本就互不相容，mask 才是必要的。**
+
+T3S 还把「为什么必须 mask」追到了梯度层面，让粗暴干预有理论支撑。Figure 5 的干预实验显示，在 anchor 还没学好（large $\mathcal{L}_{\mathrm{anchor}}$）的 checkpoint 上做一步只优化 anchor 的更新，其他 token 的 loss 会暴增（large positive $\Delta \mathcal{L}_{\mathrm{other}}$）——anchor 的学习确实在压制其他 token。Figure 6 进一步量化这种统治：anchor token 的梯度范数早期能达到 other token 的 $17 \times$，到 bottleneck 才降到 $2 \times$，同时两组梯度的 cosine similarity 在 crash 阶段跌到 $-0.4 \sim -0.5$，是方向上的强冲突。Table 6 的 4×4 token-group transfer 矩阵则把这种不相容彻底量化：训 anchor 子集会让 reasoning 子集的 loss 大幅上升，反之亦然。三组证据互相印证，把「anchor 压制 yet-to-learn」从假设升级成机制级结论。
+
+**4. dLLM 端的反向操作：把随机 mask 换成 trajectory-aware mask。**
+
+同样的「轨迹感知 token 选择」框架推广到扩散 LLM（LLaDA-2.0-Mini）时要反着用。dLLM 的训练目标本来就是 random masked reconstruction，所以 T3S 不再剔除 anchor，而是让 trajectory-identified 的 yet-to-learn 推理 token **更频繁**被 mask，使模型在「anchor token 全部给定」的条件下反复重建推理 token。等价于把 dLLM 的随机 mask 替换成 trajectory-aware mask，既贴合扩散范式、又把训练算力集中到真正难学的 token 上。
 
 ## 实验关键数据
 

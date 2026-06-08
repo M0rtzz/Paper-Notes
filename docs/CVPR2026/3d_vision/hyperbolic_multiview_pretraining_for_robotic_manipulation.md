@@ -33,37 +33,47 @@ tags:
 - 欧几里得空间的距离度量线性增长，不适合表示层次结构和嵌套关系
 - 双曲空间距离指数级扩展，天然适合表示树状/嵌套结构，但在机器人操作预训练中**完全未被探索**
 
-核心思路：将视觉自监督预训练从欧几里得空间拓展到双曲空间（Lorentz 模型），利用双曲空间的几何特性学习更具结构性的表征，从而提升操作策略的鲁棒性和泛化能力。
+本文顺着这个缺口，把视觉自监督预训练从欧几里得空间整体搬进双曲空间（Lorentz 模型），借双曲几何学到更有结构的表征，进而提升操作策略在扰动场景下的鲁棒性和泛化能力。
 
 ## 方法详解
 
 ### 整体框架
 
-HyperMVP 采用预训练-微调范式：(1) 在 3D-MOV 数据集上预训练 GeoLink 编码器学习双曲多视角表征；(2) 将预训练编码器与 Robotic View Transformer (RVT) 联合微调学习操作策略。
+HyperMVP 想解决的是：3D 视觉预训练对机器人操作很有用，但现有方法把表征压在平坦的欧几里得空间里，建模不了 patch 之间那种"谁包含谁"的层次关系。它的做法是把整套自监督预训练搬进双曲空间，再迁移到操作策略上。整条流程分两段：先在自建的 3D-MOV 数据集上预训练一个 GeoLink 编码器，把多视角图像编码进 Lorentz 双曲面并学到结构化表征；再把这个编码器接到 Robotic View Transformer (RVT) 上联合微调，学具体的操作策略。
+
+预训练数据用的是自建的 3D-MOV，约 20 万条高质量 3D 点云——18 万个物体来自 Objaverse-XL，6052 个场景片段来自 ScanNet，再加 3999 个普通桌面场景和 10001 个密集桌面场景（TO-Scene），合起来渲染出约 100 万张多视角图像。这套数据组合不是单纯堆量，后面消融会看到，正是其中的真实场景数据撑起了大部分收益。
 
 ### 关键设计
 
-1. **GeoLink 编码器**: 扩展 MAE 范式，将3D点云渲染为5个正交视图图像。编码器包含 $N=8$ 个 ViT blocks（隐藏维度768, 8注意力头），输出 CLS 嵌入 $\mathbf{f}^{\text{cls}} \in \mathbb{R}^{5 \times 1 \times D}$ 和 patch 嵌入 $\mathbf{f}^{\mathrm{p}} \in \mathbb{R}^{5 \times P \times D}$。核心操作是通过指数映射将欧几里得嵌入提升到 Lorentz 双曲面上：
+**1. GeoLink 编码器：把欧几里得多视角嵌入抬进双曲面，让语义层次自然展开。**
+
+它沿用 MAE 范式，先把 3D 点云渲染成 5 个正交视图图像，送进一个 $N=8$ 层的 ViT（隐藏维 768、8 个注意力头），得到 CLS 嵌入 $\mathbf{f}^{\text{cls}} \in \mathbb{R}^{5 \times 1 \times D}$ 和 patch 嵌入 $\mathbf{f}^{\mathrm{p}} \in \mathbb{R}^{5 \times P \times D}$。关键的一步是用指数映射把这些欧几里得嵌入提升到 Lorentz 双曲面上：
+
 $$\mathbf{x}_s^* = \frac{\sinh(\sqrt{c}\|\mathbf{f}^*\|)}{\sqrt{c}\|\mathbf{f}^*\|}\mathbf{f}^*$$
-微调时通过对数映射映回欧几里得空间以兼容下游策略。设计动机：双曲空间的指数距离增长能捕捉 patch 间的语义层次关系。
 
-2. **Patch-aware Top-K 邻居秩相关损失 $L_{\text{corr}}$**: 保持 patch 嵌入在欧几里得和双曲空间中的语义拓扑一致性。对每个 patch 在两个空间中分别找 Top-K 近邻，最小化排序差异。使用序数公式（关注"谁更近"而非"近多少"）避免几何差异导致的收敛问题：
+之所以要绕进双曲空间，是因为双曲空间的距离随半径指数增长，天然适合摊开树状、嵌套的语义结构——平坦的欧氏空间塞不下这种层次。下游策略本身是在欧氏空间里跑的，所以微调时再用对数映射把表征映回欧氏空间，保持和 RVT 的兼容。
+
+**2. Patch-aware Top-K 邻居秩相关损失 $L_{\text{corr}}$：用排序而非距离来对齐两个空间。**
+
+把嵌入抬进双曲空间后会冒出一个新问题：欧氏空间和双曲空间的距离尺度根本不可比，如果直接逼着两边的距离对齐，几何差异会让训练无法收敛。$L_{\text{corr}}$ 绕开了这一点——它对每个 patch 在两个空间里各自取 Top-K 近邻，只要求"谁离得更近"的排序一致，而不管"近多少"：
+
 $$L_{\text{corr}} = 1 - \frac{1}{5}\sum_{i=1}^{5} g\left(|\mathbf{R}_i^{\mathcal{E}}_{\pi_i^K}|_z \odot |\mathbf{R}_i^{\mathcal{L}}_{\pi_i^K}|_z\right)$$
-设计动机：直接对齐距离因几何差异无法收敛，排序对齐是几何无关的。
 
-3. **蕴含损失 $L_{\text{etl}}$ + 多视角重建**: 在双曲 CLS 嵌入周围定义蕴含锥，约束 patch 嵌入落入锥内，建模局部-全局语义对齐。同时设计视内重建（标准MAE解码器恢复本视图）和视间重建（用其他视图特征通过交叉注意力预测锚视图），学习多视角一致性。
+排序是几何无关的量，所以这条损失能在两套不同曲率的几何之间稳定地传递语义拓扑。后面消融里它也确实是贡献最大的一项。
+
+> ⚠️ $L_{\text{corr}}$ 公式中的下标嵌套写法以原文为准。
+
+**3. 蕴含损失 $L_{\text{etl}}$ 配多视角重建：把局部对齐到全局，再逼出多视角一致性。**
+
+光对齐拓扑还不够，模型还需要知道每个 patch 该归属到哪个整体语义。$L_{\text{etl}}$ 在双曲 CLS 嵌入周围画出一个蕴含锥（entailment cone），约束 patch 嵌入落进锥内，从而把局部 patch 和全局 CLS 的语义绑在一起——这正是双曲空间表达"包含"关系的标准手段。在此之上还叠了两路重建任务：视内重建让标准 MAE 解码器从被遮挡的输入恢复本视图；视间重建则用其他视图的特征经交叉注意力去预测锚视图，逼着编码器学到跨视图的一致性，而不只是单视图的纹理。
 
 ### 损失函数 / 训练策略
 
-- 预训练损失: $L_{\text{pretrain}} = L_{\text{hyper}} + L_{\text{recon}}$
-    - $L_{\text{hyper}} = \lambda_c L_{\text{corr}} + \lambda_{e1} L_{\text{etl}}(\mathbf{x}^{\text{cls}}, \mathbf{x}^{\mathrm{p}}) + \lambda_{e2} L_{\text{etl}}(\mathbf{x}^{\text{cls}}, \mathbf{x}^{\mathrm{msk}})$（$\lambda_c=1, \lambda_{e1}=0.5, \lambda_{e2}=0.1$）
-    - $L_{\text{recon}} = \lambda_{\text{ita}} L_{\text{intra}} + \lambda_{\text{ite}} L_{\text{inter}}$（$\lambda_{\text{ita}}=1, \lambda_{\text{ite}}=0.5$）
-- 预训练100 epochs，batch size 64, masking ratio 0.75, AdamW (lr=5.12e-4), 8×4090 GPU
-- 微调50K步(仿真)/4K步(真实), LAMB优化器, lr=2e-3
+预训练总损失拆成双曲项和重建项两块：$L_{\text{pretrain}} = L_{\text{hyper}} + L_{\text{recon}}$。
 
-### 3D-MOV 数据集
+$$L_{\text{hyper}} = \lambda_c L_{\text{corr}} + \lambda_{e1} L_{\text{etl}}(\mathbf{x}^{\text{cls}}, \mathbf{x}^{\mathrm{p}}) + \lambda_{e2} L_{\text{etl}}(\mathbf{x}^{\text{cls}}, \mathbf{x}^{\mathrm{msk}})$$
 
-构建了包含 ~200K 高质量3D点云的大规模数据集：180K objects (Objaverse-XL) + 6052 scene partitions (ScanNet) + 3999 vanilla tabletop + 10001 crowd tabletop (TO-Scene)，共渲染约 1M 多视角图像。
+其中 $\lambda_c=1,\ \lambda_{e1}=0.5,\ \lambda_{e2}=0.1$；重建项 $L_{\text{recon}} = \lambda_{\text{ita}} L_{\text{intra}} + \lambda_{\text{ite}} L_{\text{inter}}$，取 $\lambda_{\text{ita}}=1,\ \lambda_{\text{ite}}=0.5$。预训练跑 100 epochs，batch size 64、masking ratio 0.75，用 AdamW（lr=5.12e-4），8×4090 GPU；微调阶段仿真 50K 步、真实 4K 步，换用 LAMB 优化器、lr=2e-3。
 
 ## 实验关键数据
 

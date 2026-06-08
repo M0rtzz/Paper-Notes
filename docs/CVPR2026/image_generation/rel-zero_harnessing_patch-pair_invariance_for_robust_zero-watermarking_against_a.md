@@ -40,41 +40,29 @@ tags:
 
 ## 方法详解
 
-### 前置发现：Patch对距离的编辑不变性
-
-在提出方法前，作者首先进行了大规模实证研究。从UltraEdit和MagicBrush数据集中随机采样10000张图像，覆盖确定性重生成（2000张）、全局编辑（4000张）和局部编辑（4000张）三类编辑场景。将图像划分为 $N=256$ 个不重叠patch，用RGB均值向量 $\{v_i\}_{i=1}^N$ 表征每个patch，计算所有 $\binom{N}{2}$ 个patch对在编辑前后的L2距离差异。
-
-**关键发现**：距离差异呈近零均值、紧密分布的模式，无明显系统性偏差。进一步做距离-距离相关性分析，发现编辑前后距离满足强线性关系 $d_{ij}^{\text{after}} \approx \alpha \cdot d_{ij}^{\text{before}} + \beta$，其中斜率 $\alpha \approx 1$、截距 $\beta \approx 0$、决定系数 $R^2 > 0.95$、Spearman相关系数 $\rho \approx 1$。这揭示了特征空间中的**近仿射不变性**：patch间相对距离在编辑后仅发生均匀缩放。
-
-**理论解释**有两个层面：（1）扩散编辑模型训练时显式或隐式包含内容/结构保持损失（LPIPS、L1/L2重建损失），惩罚不必要的扰动，使跨patch关系成为模型优化保持的核心不变量；（2）语义编辑对应潜空间中的低维方向，解码后在图像统计量上施加近似均匀的变换。当变换近似仿射 $v_i' \approx Av_i + b$ 时，$v_i' - v_j' \approx A(v_i - v_j)$，距离仅被缩放但关系保持。
-
 ### 整体框架
-Rel-Zero包含三个阶段：（1）稳定patch对识别——通过VAE模拟编辑，找到ground-truth不变patch对作为训练目标；（2）Patch关系学习——训练一个轻量级edge predictor学习从单张图像预测稳定patch对；（3）水印生成与验证——提取top-K预测对作为零水印。关键在于推理时仅需阶段(2)的网络，输入一张图即可输出水印索引集合，无需VAE或编辑操作。
+
+Rel-Zero 的出发点是一个反直觉的实证观察。作者从 UltraEdit 和 MagicBrush 中随机采样 10000 张图像（确定性重生成 2000、全局编辑 4000、局部编辑 4000），把每张图划成 $N=256$ 个不重叠 patch，用 RGB 均值向量 $\{v_i\}_{i=1}^N$ 表征每个 patch，然后计算所有 $\binom{N}{2}$ 个 patch 对在编辑前后的 L2 距离差异。结果是：单个 patch 的像素和绝对特征被 AI 编辑改得面目全非，但 patch 对之间的距离差异却呈近零均值、紧密分布，没有系统性偏差。把编辑前后的距离画成散点做相关性分析，更得到一条近乎完美的直线 $d_{ij}^{\text{after}} \approx \alpha \cdot d_{ij}^{\text{before}} + \beta$，斜率 $\alpha \approx 1$、截距 $\beta \approx 0$、$R^2 > 0.95$、Spearman $\rho \approx 1$。换句话说，编辑只是把 patch 间的相对距离做了一次几乎均匀的缩放——这就是特征空间里的**近仿射不变性**。
+
+为什么会这样？一方面，扩散编辑模型训练时带着内容/结构保持损失（LPIPS、L1/L2 重建损失），会惩罚不必要的扰动，使跨 patch 的相对关系成为模型刻意维持的核心不变量；另一方面，一次语义编辑对应潜空间里的低维方向，解码回图像后施加的是一个近似均匀的变换。当这个变换近似仿射 $v_i' \approx A v_i + b$ 时，$v_i' - v_j' \approx A(v_i - v_j)$，距离被整体缩放而相对关系原封不动。Rel-Zero 正是把这个不变量做成水印：整条 pipeline 分三步——先用 VAE 模拟编辑造出"哪些 patch 对真正稳定"的训练标签，再训一个轻量 edge predictor 学会从单张图直接预测稳定对，最后取置信度最高的 top-K 对作为零水印索引。关键是推理时只用到第二步的网络，喂进一张图就能吐出水印索引集合，不需要 VAE、也不需要真去跑一遍编辑。
 
 ### 关键设计
 
-1. **稳定Patch对识别（训练目标构建）**:
+**1. 稳定 patch 对识别：用 VAE 廉价模拟编辑，造出训练用的「不变对」标签。**
 
-    - 功能：构建训练用的ground-truth稳定patch对集合 $\mathcal{E}_g$
-    - 核心思路：用预训练VAE模拟生成式编辑（受VINE启发），将原始图像和VAE重建图像分别通过ViT提取patch-level特征 $\mathcal{F} = \phi_{\text{vit}}(\mathbf{I})$，计算patch对在编辑前后的L2距离差异 $s_{ij} = \exp(-|d_{ij} - \hat{d}_{ij}|)$，选择稳定性分数最高的top-K对作为ground-truth
-    - 设计动机：VAE重建对patch关系的影响与扩散编辑类似（受VINE工作启发），但计算代价小得多——不需要运行完整的扩散编辑pipeline。使用ViT高维特征而非RGB向量进行距离计算，能捕获更丰富的语义关系。注意发现阶段用RGB均值做分析，但方法阶段升级到ViT特征，这增强了表达能力
+edge predictor 要学的是"哪些 patch 对在编辑后会保持稳定"，可监督信号从哪来是第一个难题——给每张训练图都真跑一遍扩散编辑代价高到不可行。作者（受 VINE 启发）改用预训练 VAE 的重建来近似编辑：把原图 $\mathbf{I}$ 和它的 VAE 重建图分别过 ViT 提取 patch 级特征 $\mathcal{F} = \phi_{\text{vit}}(\mathbf{I})$，对每个 patch 对算编辑前后的距离差，并定义稳定性分数 $s_{ij} = \exp(-|d_{ij} - \hat{d}_{ij}|)$，取分数最高的 top-K 对当作 ground-truth 集合 $\mathcal{E}_g$。这样做的底气在于 VAE 重建对 patch 关系的扰动方式和扩散编辑类似，但便宜了一个数量级；同时注意分析阶段用的是 RGB 均值，到方法阶段已升级成 ViT 高维特征，距离度量因此能捕获更丰富的语义关系。
 
-2. **Patch关系学习（Edge Predictor）**:
+**2. Patch 关系学习：一个轻量 MLP 从单张图预测哪些对稳定，刻意不用注意力。**
 
-    - 功能：训练一个轻量级预测器，从单张图像预测哪些patch对是稳定的
-    - 核心思路：对ViT提取的N个patch特征构建全连接pair集合 $\mathcal{E}$，每个pair $(i,j)$ 的特征为 $\mathbf{f}_i \oplus \mathbf{f}_j \oplus \|\mathbf{f}_i - \mathbf{f}_j\|_2$（拼接+距离），通过MLP $\psi$ 和sigmoid $\sigma$ 输出预测分数 $p_{ij} = \sigma(\psi(\mathbf{f}_i \oplus \mathbf{f}_j \oplus \|\mathbf{f}_i - \mathbf{f}_j\|_2))$
-    - 设计动机：简单的MLP就足够——消融实验证明Transformer或GAT反而会模糊patch间的精细距离差异（Transformer降至92.11%，GAT至94.45%，而MLP达97.43%）。关键信息在于patch对的**局部距离特征**，注意力机制会混合patch表征，反而损害精确的距离判别能力。这是一个"less is more"的设计哲学
+验证时手里只有一张待认证的图，没有编辑前后的配对，所以必须直接从单图判断哪些 patch 对会稳定。作者把 ViT 抽出的 $N$ 个 patch 特征两两配成全连接 pair 集合 $\mathcal{E}$，每个 pair $(i,j)$ 的输入特征是 $\mathbf{f}_i \oplus \mathbf{f}_j \oplus \|\mathbf{f}_i - \mathbf{f}_j\|_2$（两端拼接再附上距离），送进 MLP $\psi$ 加 sigmoid 得到预测分数 $p_{ij} = \sigma(\psi(\mathbf{f}_i \oplus \mathbf{f}_j \oplus \|\mathbf{f}_i - \mathbf{f}_j\|_2))$。这里有个反直觉的取舍：消融显示把 MLP 换成 Transformer 或 GAT 反而更差（97.43% → 92.11% / 94.45%），因为这是个本质上的距离估计任务，关键信息藏在 pair 的局部距离特征里，而注意力会把不同 patch 的表征混在一起，恰好抹掉了需要精确判别的细微距离差。简单结构在这里是优势而非妥协。
 
-3. **水印生成与验证**:
+**3. 水印生成与验证：把水印编成 patch 对索引集合，靠 Jaccard 重叠认证。**
 
-    - 功能：基于预测器输出生成/验证零水印
-    - 核心思路：生成时取top-K最自信的预测对 $\mathcal{E}_p = \text{Top-K}(\Phi(\phi_{\text{vit}}(\mathbf{I})))$ 作为水印索引存储；验证时对嫌疑图像提取同样的top-K对 $\mathcal{E}_p'$，计算Jaccard重叠率 $\eta = |\mathcal{E}_p \cap \mathcal{E}_p'| / K$ 作为认证依据
-    - 设计动机：将水印编码为patch对索引而非数值特征，天然适应仿射变换不变性——因为关系保序性而非绝对数值。索引集合可以哈希加密存储在外部数据库中（论文附录有安全存储方案）。验证阈值基于目标误报率（FPR=0.1%）校准，确保高置信度认证
+有了 predictor，生成水印就是取置信度最高的 top-K 预测对 $\mathcal{E}_p = \text{Top-K}(\Phi(\phi_{\text{vit}}(\mathbf{I})))$，把这组索引（而非任何数值特征）存进外部数据库。验证时对嫌疑图同样抽 top-K 得 $\mathcal{E}_p'$，算两者的 Jaccard 重叠率 $\eta = |\mathcal{E}_p \cap \mathcal{E}_p'| / K$，再和按目标误报率 FPR=0.1% 校准出的阈值比较。比如存下 $K=50$ 个 pair 索引，一张图被编辑后若仍有 46 个对重新出现，$\eta = 0.92$ 远高于阈值，即判为同源。之所以编码成索引集合而不是绝对特征，正是为了承接前面的仿射不变性——索引集合记的是关系和保序性而非具体数值，距离整体缩放也不影响哪些对排在前列；索引还能进一步哈希加密存储（论文附录给了安全存储方案）。
 
 ### 损失函数 / 训练策略
-使用标准二元交叉熵损失训练edge predictor：$\mathcal{L}_{BCE} = -\sum_{i \neq j} [y_{ij} \log(\hat{y}_{ij}) + (1-y_{ij})\log(1-\hat{y}_{ij})] / N(N-1)$，其中 $y_{ij}=1$ 对应top-K不变对（正样本），$y_{ij}=0$ 对应其余pair（负样本）。正负样本比例约为 $K : \binom{N}{2}-K$，极度不平衡（$K=50$ vs $\sim$19000负样本），但BCE在此场景下仍有效工作。
 
-**实现细节**：ViT-B/16作为冻结的特征提取器（不参与训练），Stable Diffusion v1.4的VAE用于生成训练目标，$K=50$ pairs，patch大小 $16 \times 16$（$N=196$ patches for 224×224图像），在COCO数据集上训练，NVIDIA A100 GPU。
+用标准二元交叉熵训练 edge predictor：$\mathcal{L}_{BCE} = -\sum_{i \neq j} [y_{ij} \log(\hat{y}_{ij}) + (1-y_{ij})\log(1-\hat{y}_{ij})] / N(N-1)$，其中 $y_{ij}=1$ 标记 top-K 不变对（正样本），$y_{ij}=0$ 标记其余 pair（负样本）。正负比约为 $K : \binom{N}{2}-K$，极度不平衡（$K=50$ vs $\sim$19000 负样本），但 BCE 在此场景下仍能有效收敛。实现上 ViT-B/16 作为冻结特征提取器（不参与训练），用 Stable Diffusion v1.4 的 VAE 生成训练目标，$K=50$ pairs，patch 大小 $16 \times 16$（224×224 图像对应 $N=196$ patches），在 COCO 上训练，单卡 NVIDIA A100。
 
 ## 实验关键数据
 

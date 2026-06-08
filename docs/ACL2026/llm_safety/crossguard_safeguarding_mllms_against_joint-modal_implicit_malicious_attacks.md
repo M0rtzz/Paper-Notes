@@ -53,23 +53,25 @@ tags:
 
 ### 关键设计
 
-1. **ImpForge 的三 reward 设计（safety / semantic / overlap）**:
+**1. ImpForge 的三 reward 设计：把"理想的隐式恶意样本"拆成三个互补约束，让 PPO 能同时优化。**
 
-    - 功能：把"理想的隐式恶意样本"形式化为三个互补约束，让 PPO 能同时优化。
-    - 核心思路：(a) **safety reward** $R_{\text{safety}}(\hat{x}^T) = \text{softmax}(p(\texttt{safe}|x'_T))$，用预训练 Llama-Guard 类守卫给 rewrite 后的纯文本打"safe 概率"，强制单文本看起来无害；(b) **semantic reward** $R_{\text{sim}}(x^I, x^T, \hat{x}^T) = \cos(g(x^I \oplus \hat{x}^T), g(x^T))$，用 Sentence-BERT 编码"图像描述 + rewrite text"的联合表示，与原始恶意 query 对齐，保证图文合体后仍传达原恶意意图；(c) **overlap reward** $R_{\text{ovlp}} = 1 - \frac{1}{|\text{Tok}(\hat{x}^T)|} \sum_w \max[0, \cos(g(w), g(x^I)) - \tau]$（$\tau=0.2$），惩罚 rewrite text 与 image 的逐 token 互信息代理，越像越扣分，从而最大化隐式性（避免文本直接重述图像内容）。最终 PPO 目标 $\max_\theta \mathbb{E}[R_\psi - \lambda D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})]$。
-    - 设计动机：单一 reward 无法同时满足"个体安全/联合恶意/低显式相关"，三者天然存在 trade-off（提升安全往往会丢失恶意意图，提升隐式往往会让文本变安全）；三 reward 把这三个目标解耦让 PPO 能在帕累托前沿上探索。特别值得注意的是 overlap reward 把"互信息"用 token-level cosine 简化，避免训练 MI estimator 的不稳定性。
+隐式样本难造，难在它得同时满足三个互相打架的条件：单看文本要安全、图文合体后要保留恶意意图、文本又不能直接重述图像内容（否则隐式性丢失、容易被语义对齐识破）。任何单一 reward 都顾此失彼——光提安全往往把恶意意图也磨没了，光提隐式又会让文本退回安全。ImpForge 因此把三个目标解耦成三个 reward。safety reward $R_{\text{safety}}(\hat{x}^T) = \text{softmax}(p(\texttt{safe}|x'_T))$ 用 Llama-Guard 类守卫给改写后的纯文本打"safe 概率"，逼文本单独看无害；semantic reward $R_{\text{sim}}(x^I, x^T, \hat{x}^T) = \cos(g(x^I \oplus \hat{x}^T), g(x^T))$ 用 Sentence-BERT 把"图像描述 + 改写文本"的联合表示对齐到原始恶意 query，保证合体后恶意意图还在；overlap reward 则惩罚文本与图像的逐 token 相似，越像越扣分，把隐式性顶上去：
 
-2. **Stage 1: NER + CLIP 检索的安全图像匹配**:
+$$R_{\text{ovlp}} = 1 - \frac{1}{|\text{Tok}(\hat{x}^T)|} \sum_w \max\!\big[0,\, \cos(g(w), g(x^I)) - \tau\big],\quad \tau=0.2.$$
 
-    - 功能：在没有现成"安全图像"配套的情况下，给每条恶意文本 query 找到一张语义相关但内容无害的图像。
-    - 核心思路：从 BeaverTails 的恶意 query 集中跑 NER 抽出可视化实体（名词、动词），过滤掉抽象词（how/am/can）；对每个 keyword 用 CLIP 在开源图像库（COCO、WIT）里检索相似度最高的安全图像 $\frac{g(k) \cdot g(x^I)}{\|g(k)\| \|g(x^I)\|}$；再用 GPT 二次验证图像本身无恶意。最终为每条 query 输出三元组 (xI, xT, k)。
-    - 设计动机：单独的恶意文本不能直接拿来训 RL（没有图）；纯 random 配图无法做 implicit（图文毫无关联，rewrite 后也凑不出隐式恶意）。CLIP 软匹配是"既相关又不显式"的折中——keyword 提供 anchor，CLIP 检索保证视觉对应，GPT 验证守底线。
+三者汇总后进 PPO 目标 $\max_\theta \mathbb{E}[R_\psi - \lambda D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})]$，让 rewriter 在三个目标的帕累托前沿上探索。这里特别巧的是 overlap reward——它本质要算文本和图像的互信息，但 MI estimator 在 RL loop 里训练极不稳定，作者直接用 token-level cosine 加阈值这个非参数代理替掉，既保住"惩罚冗余"的核心语义又避开了不稳定性。
 
-3. **CrossGuard 的混合训练 dataset 与 LoRA 双 backbone 微调**:
+**2. Stage 1：NER + CLIP 检索的安全图像匹配，给每条恶意文本配一张相关但无害的图。**
 
-    - 功能：把守卫模型同时教会三种判断能力——识别隐式恶意、识别显式恶意、放行良性 query。
-    - 核心思路：训练集成分 = ImpForge 隐式样本（覆盖 14 个领域）+ VLGuard/FigStep 显式样本 + VQAv2 良性样本；底座 LLaVA-1.5-7B 同时在 vision encoder 和 language 部分挂 LoRA adapters；优化 binary cross-entropy $\mathcal{L}_{\text{CE}} = -\mathbb{E}_{(x_I,x_T,y)} \log p_\theta(y | x_I, x_T)$ 做二分类（safe/unsafe），部署时作为前置过滤器拦截，再决定是否送给主 MLLM。
-    - 设计动机：(1) 三类数据混合是为了同时控制 ASR（implicit 攻击靠 ImpForge 数据补、explicit 靠 VLGuard）和 utility（VQAv2 良性数据防止 over-defense）；(2) LoRA 双 backbone 是因为 implicit 检测需要图像 + 文本联合理解，单边 freeze 会损失跨模态推理能力；(3) 用 binary classification 而非 generative refusal 是为了让守卫快、可批量、可解释，便于和已有 MLLM 流水线对接。
+要训 RL rewriter，得先有"恶意文本 + 安全图像"的配对，可现成数据里没有这种组合：恶意文本本身不带图，随便配一张无关图又凑不出隐式恶意（图文毫无关联，改写后也勾连不上）。Stage 1 用一条检索流水线解决配图。先对 BeaverTails 的恶意 query 跑 NER 抽出可视化实体（名词、动词），滤掉 how/am/can 这类抽象词；对每个 keyword $k$ 用 CLIP 在 COCO、WIT 等开源图库里按 $\frac{g(k) \cdot g(x^I)}{\|g(k)\| \|g(x^I)\|}$ 检索相似度最高的安全图像；再用 GPT 二次验证这张图本身无恶意，最终为每条 query 输出三元组 $(x^I, x^T, k)$。CLIP 软匹配在这里是"既相关又不显式"的关键折中——keyword 给出语义 anchor 保证视觉对应，GPT 验证守住"图必须安全"的底线，两者一起把后续改写所需的素材准备好。
+
+**3. CrossGuard 的混合训练 dataset + LoRA 双 backbone 微调：一次教会守卫识别隐式恶意、识别显式恶意、放行良性 query。**
+
+光有隐式数据还不够——只用隐式样本训出来的守卫会"草木皆兵"，把正常 query 也一并拒掉。CrossGuard 因此把训练集配成三份混合：ImpForge 生成的隐式样本（覆盖 14 个领域）补隐式攻击的盲区、VLGuard/FigStep 显式样本守住显式攻击、VQAv2 良性样本兜住 utility 防止过度防御。底座用 LLaVA-1.5-7B，在 vision encoder 和 language 两端都挂 LoRA adapter——因为隐式检测本质需要图文联合理解，单边 freeze 会丢掉跨模态推理能力。训练目标是 binary cross-entropy
+
+$$\mathcal{L}_{\text{CE}} = -\mathbb{E}_{(x_I,x_T,y)} \log p_\theta(y \mid x_I, x_T),$$
+
+输出 safe/unsafe 二分类，部署时当前置过滤器先拦一道、再决定是否把请求送给主 MLLM。选 binary classification 而非 generative refusal，是图它快、可批量、易和现有 MLLM 流水线对接。混合数据 + 双 backbone 这套配方，正是 CrossGuard 能同时压低 ASR 又不牺牲可用性（落在图 3 右上区）的根本原因。
 
 ### 损失函数 / 训练策略
 ImpForge 用 PPO + LoRA adapter 更新 rewriter policy，KL 系数 $\lambda$ 控制偏离 reference policy 的幅度；reward 综合 $R_\psi = R_{\text{safety}} + R_{\text{sim}} + R_{\text{ovlp}}$（论文未给具体权重，附录有）。图像在 PPO 中固定不动只优化文本以省算力。CrossGuard 用标准 supervised LoRA SFT，cross-entropy 二分类目标。

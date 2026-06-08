@@ -40,30 +40,24 @@ Caracal 用 $\mathcal{O}(L \log L)$ 的多头傅立叶（MHF）模块替换 Tran
 ## 方法详解
 
 ### 整体框架
-Caracal 在结构上和 GPT-2 几乎一样，只做两处修改：(1) 把全局 masked multi-head attention 换成 MHF 模块；(2) 删掉位置编码（FFT 的正弦基天然带位置信息）。为保留局部精度，每两个 MHF 层之后插一个 Sliding-Window Attention (SWA) 层（窗口 256），整体复杂度仍是 $\mathcal{O}(L \log L + L \cdot W)$。Feed-forward / LN / 残差不变，能直接复用现有 Transformer 生态。
+Caracal 要解决的是"如何让 $\mathcal{O}(L \log L)$ 的 FFT 混合在自回归生成里保持严格因果"这个老大难。它的做法是把 GPT-2 几乎原样保留（Feed-forward / LN / 残差不动，可直接复用 Transformer 生态），只换两处：把全局 masked multi-head attention 替换为频域混合的 MHF 模块，并彻底删掉位置编码。为补上 FFT 在局部精度上的短板，每两层 MHF 之后插一层窗口 256 的 Sliding-Window Attention，整体复杂度落在 $\mathcal{O}(L \log L + L \cdot W)$。
 
 ### 关键设计
 
-1. **Multi-Head Fourier (MHF) 模块**:
+**1. Multi-Head Fourier 模块：用频域乘法做 $\mathcal{O}(L \log L)$ 的内容自适应混合**
 
-    - 功能：用频域乘法实现 token 之间的 $\mathcal{O}(L \log L)$ 全局信息混合，且支持自回归。
-    - 核心思路：4 步 pipeline。Step 1：用因果 depthwise 1D conv（kernel=3）注入局部归纳偏置，弥补移除位置编码后的局部模式损失。Step 2：LayerNorm 后并行投影出 value 流 $x_v = \text{Linear}_V(x_{norm})$ 与 gate 流 $x_g = \text{Conv1d}_{G2}(\sigma(\text{Linear}_{G1}(x_{norm})))$，gate 流的 group conv（$n_{head}$ 组）实现 intra-head 通道交互。Step 3：把序列 zero-pad 到 $N=2L$，做 FFT 拿 $V_{fft}, G_{fft}$，频域元素乘 $X_{fft} = V_{fft} \odot G_{fft}$，等价于时域因果卷积 $r_t = \sum_{j=0}^{t} v_j g_{t-j}$。Step 4：iFFT 后 truncate 回长度 $L$ 去掉 padding 引入的"未来"伪信号，再过 $\text{Linear}_O$。
-    - 设计动机：把"注意力是 query/key 做的 data-dependent 权重 sum"改写成"gate 流当卷积核做的 data-dependent 权重 sum"，保留 selectivity 的同时避开了 SSM 的串行 scan，全程用标准 FFT 算子。
+注意力的本质是"query/key 算出的 data-dependent 权重对 value 求和"，但 $\mathcal{O}(L^2)$ 且必须配位置编码；MHF 把这套权重和改写成"由 gate 流当卷积核的 data-dependent 权重和"，从而既保留 selectivity 又避开了 SSM 的串行 scan，全程只用标准 FFT 算子。具体是 4 步流水线：先用一个因果 depthwise 1D conv（kernel=3）注入局部归纳偏置，弥补移除位置编码后丢掉的局部模式；接着 LayerNorm 后并行投影出 value 流 $x_v = \text{Linear}_V(x_{norm})$ 和 gate 流 $x_g = \text{Conv1d}_{G2}(\sigma(\text{Linear}_{G1}(x_{norm})))$，其中 gate 流的 group conv 按 $n_{head}$ 分组以实现 intra-head 通道交互；然后把序列 zero-pad 到 $N=2L$ 做 FFT 得到 $V_{fft}, G_{fft}$，在频域元素乘 $X_{fft} = V_{fft} \odot G_{fft}$，这一步在时域上正好等价于因果卷积 $r_t = \sum_{j=0}^{t} v_j g_{t-j}$；最后 iFFT 并 truncate 回长度 $L$，再过 $\text{Linear}_O$ 输出。gate 流由输入动态生成的卷积核，正是它把"静态 Fourier filter"升级成了 content-aware mixing。
 
-2. **频域因果掩码（pad-FFT-multiply-iFFT-truncate）**:
+**2. 频域因果掩码：pad-FFT-multiply-iFFT-truncate 的几何安排**
 
-    - 功能：让 FFT 在保持并行性的同时严格满足"输出 $t$ 只依赖 $\leq t$ 的输入"。
-    - 核心思路：纯 FFT 因果是数学上的硬骨头 —— 不能像 attention 那样掩权重。作者绕开了：把长度 $L$ 序列右侧 zero-pad 到 $2L$，做 FFT、乘 gate、iFFT 后只保留前 $L$ 个元素。由于 $2L$ 长 FFT 对应的圆卷积，在被 truncate 到前 $L$ 维时退化为线性卷积 $r_t = \sum_{j=0}^{t} v_j g_{t-j}$，对未来 token 的依赖被自动截掉。
-    - 设计动机：把"看似无解"的因果性问题转化为对 padding/truncation 的几何安排，本质是用 $2\times$ 序列长度换来 forward 一次完成因果卷积，训练时不需要为每个 $t$ 单独跑 FFT。
+纯 FFT 想做因果是数学硬骨头——它没有像注意力那样的显式权重矩阵可掩，唯一直接的办法是对每个 $t$ 单独跑长度 $t$ 的 FFT，反而比 $\mathcal{O}(L^2)$ 更慢。作者用一个 DSP 老技巧绕过：把长度 $L$ 的序列右侧 zero-pad 到 $2L$，做 FFT、乘 gate、iFFT 之后只保留前 $L$ 个元素。$2L$ 长 FFT 本对应圆卷积，但被 truncate 到前 $L$ 维时恰好退化为线性卷积 $r_t = \sum_{j=0}^{t} v_j g_{t-j}$，对未来 token 的依赖被自动截掉。本质上是用 $2\times$ 序列长度换来"一次并行 forward 就完成因果卷积"，训练时不必为每个位置重跑 FFT，因果性问题被转化成了 padding/truncation 的几何摆放。
 
-3. **去位置编码 + Hybrid SWA 局部回补**:
+**3. 去位置编码 + Hybrid SWA 局部回补：让位置感知内置于架构**
 
-    - 功能：彻底拿掉 RoPE/ALiBi 等显式位置编码，又用 SWA 保住局部分辨率。
-    - 核心思路：FFT 的基 $e^{-i \frac{2\pi}{L} tj}$ 内置序列位置信息，下游的 SWA 层也无需 PE。SWA 用 FlashAttention 实现，窗口 256，控制成本不爆炸。MHF:SWA 比例 2:1，足以兼顾全局长程依赖和局部短语级模式。
-    - 设计动机：现代 PE（RoPE、YaRN）日益复杂仍解决不了外推根本问题；让模型从架构上自带位置感知，理论上更适合任意长上下文。
+现代位置编码（RoPE、YaRN、ALiBi）越做越复杂却始终解决不了外推的根本问题，于是 Caracal 干脆全部删掉——FFT 的基 $e^{-i \frac{2\pi}{L} tj}$ 本身就内置了序列位置信息，下游的 SWA 层同样不需要 PE，理论上更适配任意长上下文。但纯 MHF 在局部分辨率上偏弱（消融里 ARC-c 掉点），所以按 MHF:SWA = 2:1 的比例插入 Sliding-Window Attention：窗口 256、用 FlashAttention 实现以控制成本，专门兜住短语级的局部模式，与 MHF 的全局长程依赖互补。
 
 ### 损失函数 / 训练策略
-沿用标准 next-token prediction CE loss，没有架构外的辅助损失。训练用 GPT-3 风格 hyperparam 设置（Tiny 63M → Large 724M），所有 baseline 都启用硬件优化 kernel（Mamba 用 mamba_ssm、Llama 用 FlashAttention）。
+沿用标准 next-token prediction CE loss，没有任何架构外的辅助损失。训练采用 GPT-3 风格的 hyperparam 设置，规模从 Tiny 63M sweep 到 Large 724M；为公平对比，所有 baseline 都启用各自的硬件优化 kernel（Mamba 用 mamba_ssm、Llama 用 FlashAttention）。
 
 ## 实验关键数据
 

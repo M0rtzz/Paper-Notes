@@ -41,34 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LineageFlow 把生成轨迹 $t \in [0, 1]$ 解释成"从家族祖先到现存叶节点"的进化时间轴：
-
-- **预处理**：对每个 Pfam 家族 $h$（共 8886 个）建 MSA，IQ-TREE 推最大似然树，PAML 在根节点做边缘 ASR，得到位点 $l$ 的氨基酸后验。把它编码成 Dirichlet 浓度参数 $\boldsymbol{\alpha}^{(h,l)} \in \mathbb{R}^K_{>0}$（$K=20$）。
-- **训练**：所有家族共享一个 denoiser $\hat{p}_\theta(\mathbf{X}_1 \mid \mathbf{X}_t, t)$；每条训练序列采样 $t \sim \mathcal{U}[0,1]$，从家族的 Dirichlet 路径 $p_t^{(h,l)}(\mathbf{x} \mid \mathbf{e}_i) = \mathrm{Dir}(\mathbf{x}; \boldsymbol{\alpha}^{(h,l)} + t_{\max} t \cdot \mathbf{e}_i)$ 中抽中间状态，按序列平均交叉熵学终点分类。$t_{\max}=6$。
-- **采样**：①基流（$t \in [0, t_{\mathrm{int}}]$）：从 $q_0^{(h)}$ 抽起点，按学到的矢量场积分；②rerouting（$t = t_{\mathrm{int}}=0.5$）：维护一群粒子，跑若干轮 mutate→select→amplify；③精修（$t \in [t_{\mathrm{int}}, 1]$）：从被选中的粒子继续积分到终点。
+LineageFlow 要解决的是"给定 Pfam 家族、生成既像这个家族又足够新颖的蛋白序列"，而它的关键转换是把流匹配的生成时间轴 $t \in [0, 1]$ 直接当成"从家族祖先到现存叶节点"的进化时间轴：起点不再是通用噪声，而是用祖先序列重建（ASR）算出来的家族脚手架，终点是现存序列，denoiser 学的是"祖先怎么突变成现存"而不是"噪声怎么合成蛋白"。预处理阶段对每个家族建 MSA、用 IQ-TREE 推系统发育树、用 PAML 在根节点做 ASR；训练阶段所有家族共享一个 denoiser，从家族特异的 Dirichlet 路径里抽中间态学终点分类；采样时先跑基流到中点 $t_{\mathrm{int}}=0.5$，在那里插一次粒子级的 mutate–select–amplify 做目标导向选择，再精修积分到终点。
 
 ### 关键设计
 
-1. **ASR 祖先 Dirichlet 先验**:
+**1. ASR 祖先 Dirichlet 先验：把家族进化约束烧进起点**
 
-    - 功能：把家族进化约束直接塞进生成过程的起点 $q_0$。
-    - 核心思路：每个家族 $h$ 在位点 $l$ 维护一组 Dirichlet 浓度 $\boldsymbol{\alpha}^{(h,l)}$，编码 ASR 根节点后验。整条序列的家族先验是位点独立 Dirichlet 的乘积 $q_0^{(h)}(\mathbf{X}) = \prod_l \mathrm{Dir}(\mathbf{x}^{(l)}; \boldsymbol{\alpha}^{(h,l)})$；全局先验是家族混合 $q_0 = \sum_h \pi_h q_0^{(h)}$。条件路径不再是 DFM 的 $\mathrm{Dir}(\mathbf{x}; \mathbf{1} + t_{\max} t \cdot \mathbf{e}_i)$，而是 $\mathrm{Dir}(\mathbf{x}; \boldsymbol{\alpha}^{(h,l)} + t_{\max} t \cdot \mathbf{e}_i)$，于是连续性方程给出的传输速度也变成家族和目标残基特异的 $c_h^{(l)}(z, t)$，其封闭形式涉及正则化不完全 Beta 函数。
-    - 设计动机：相对 MSA 列频，ASR 根后验经过系统发育树校正，能去除采样冗余；相对挑一条现存 MSA 序列做起点，根后验在真正变异的位点保留了不确定性，不会把生成锚死在训练样本附近。论文 §6.3 用一个 Bayes-oracle 实验直接证明：在 $t \le 0.2$ 的"困难区"，ASR 先验下可恢复信号的上限明显高于均匀先验，所以任何 denoiser 的天花板都被抬高了。
+通用离散流匹配（如 DFM）都从单纯形上的均匀 Dirichlet $\mathrm{Dir}(\mathbf{1})$ 起步，先验里没有任何进化信息，去噪器被迫把每个保守残基"从零合成"，越早期压力越大。LineageFlow 的做法是给每个家族 $h$ 的每个位点 $l$ 维护一组 Dirichlet 浓度参数 $\boldsymbol{\alpha}^{(h,l)} \in \mathbb{R}^K_{>0}$（$K=20$），直接编码 ASR 根节点的氨基酸后验——保守位点的浓度接近 one-hot、可变位点保持高熵。整条序列的家族先验是位点独立 Dirichlet 的乘积 $q_0^{(h)}(\mathbf{X}) = \prod_l \mathrm{Dir}(\mathbf{x}^{(l)}; \boldsymbol{\alpha}^{(h,l)})$，全局先验是家族混合 $q_0 = \sum_h \pi_h q_0^{(h)}$。于是条件路径从 DFM 的 $\mathrm{Dir}(\mathbf{x}; \mathbf{1} + t_{\max} t \cdot \mathbf{e}_i)$ 变成家族特异的 $\mathrm{Dir}(\mathbf{x}; \boldsymbol{\alpha}^{(h,l)} + t_{\max} t \cdot \mathbf{e}_i)$，连续性方程给出的传输速度 $c_h^{(l)}(z, t)$ 也随之变成家族和目标残基特异的封闭形式（涉及正则化不完全 Beta 函数）。
 
-2. **classifier 参数化的家族特异矢量场**:
+之所以选 ASR 根后验而不是更简单的替代品：相对直接用 MSA 列频，根后验经过系统发育树校正、去掉了采样冗余；相对挑一条现存 MSA 序列当起点，根后验在真正变异的位点保留了不确定性，不会把生成锚死在训练样本附近。论文 §6.3 用一个 Bayes-oracle 实验把这点量化：在 $t \le 0.2$ 的"困难区"，ASR 先验下可恢复信号的理论上限明显高于均匀先验，等于把任何 denoiser 的天花板都抬高了。
 
-    - 功能：用一个共享去噪分类器，重建出每个家族每个位点专属的连续传输场。
-    - 核心思路：训目标是 $\mathcal{L}(\theta) = \mathbb{E}[-\frac{1}{|\mathcal{V}|}\sum_l \log \hat{p}_\theta(\mathbf{x}_1^{(l)} \mid \mathbf{X}_t, t)]$，只是普通分类交叉熵；推理时按 $\hat{\mathbf{v}}^{(h,l)} = \sum_i \mathbf{u}_t^{(h,l)}(\mathbf{x}^{(l)} \mid \mathbf{e}_i) \cdot \hat{p}_\theta(\mathbf{x}_1^{(l)} = \mathbf{e}_i \mid \mathbf{X}, t)$ 把分类器后验和家族解析速度组合成 drift。MSA 的 gap 列被屏蔽掉（既不进字母表也不算 loss），可变长度由经验 gap 率重采样实现。
-    - 设计动机：把"家族特异"全部交给解析的 $\boldsymbol{\alpha}^{(h,l)}$ 和 $c_h^{(l)}$，denoiser 自身不需要看到家族标签也不需要 family-specific head，单卡能跑全 Pfam（4×4090 训一个 epoch 26 小时）；同时把生成质量瓶颈定位到"分类器在哪个时间段最差"，§6.3 实验确认困难区在 $t \le 0.2$。
+**2. classifier 参数化的家族特异矢量场：一个共享去噪器跑全 Pfam**
 
-3. **rerouting：中间时刻的 mutate–select–amplify**:
+有了家族特异的解析速度 $c_h^{(l)}$，剩下要学的只是终点分布。训练目标就是普通的序列平均交叉熵 $\mathcal{L}(\theta) = \mathbb{E}[-\frac{1}{|\mathcal{V}|}\sum_l \log \hat{p}_\theta(\mathbf{x}_1^{(l)} \mid \mathbf{X}_t, t)]$；推理时按 $\hat{\mathbf{v}}^{(h,l)} = \sum_i \mathbf{u}_t^{(h,l)}(\mathbf{x}^{(l)} \mid \mathbf{e}_i) \cdot \hat{p}_\theta(\mathbf{x}_1^{(l)} = \mathbf{e}_i \mid \mathbf{X}, t)$ 把分类器后验和家族解析速度组合成 drift。MSA 的 gap 列被屏蔽掉（既不进字母表也不计 loss），可变长度交给经验 gap 率重采样实现。
 
-    - 功能：在不动梯度的前提下，把粒子群在 $t_{\mathrm{int}}$ 处一次性推向用户指定的 fitness 目标。
-    - 核心思路：在 $t_{\mathrm{int}}=0.5$ 暂停 ODE，维护一群粒子做几轮（i）mutate：通过 proposal kernel $\mathcal{K}$ 注入多样性，（ii）select：按 $\exp(\beta J)$ 重新加权，（iii）amplify：按权重重采样。目标分布是被指数倾斜过的 $p^{\mathrm{sel}} \propto (p_{t_{\mathrm{int}}} \mathcal{K})(\mathbf{X}) \exp(\beta J(\mathbf{X}))$。命题 5.2 证明它是带 KL 约束的最优化解 $\max_q \mathbb{E}_q[J] - \frac{1}{\beta} \mathrm{KL}(q \| p^{\mathrm{mut}})$，群体粒子近似在 $N \to \infty$ 时一致收敛。选完一个粒子继续积分到 $t=1$。
-    - 设计动机：连续 guidance（classifier guidance、SMC）需要每个 Euler 步都算梯度或重采样，又贵又容易把样本拉出流形；这里只在中间时刻插一次"人工选择"，既保留 ODE 的家族轨迹（因为后段精修仍跑学过的矢量场），又把目标偏置注入完成。$t_{\mathrm{int}}$ 是关键旋钮：太早样本太乱、选择无意义；太晚已接近 one-hot、选择没空间，中间 0.5 给出"有结构可选、有空间可移"的最佳折中。
+这样设计的好处是把"家族特异"全部交给解析的 $\boldsymbol{\alpha}^{(h,l)}$ 和 $c_h^{(l)}$，denoiser 本身既不用看家族标签也不用 family-specific head，单一网络就能覆盖全部 8886 个家族（4×RTX 4090 训一个 epoch 约 26 小时）。同时它把生成质量瓶颈干净地定位到"分类器在哪个时间段预测最差"，§6.3 实验确认这个困难区正落在 $t \le 0.2$，与先验抬高天花板的论述对上。
+
+**3. rerouting：中间时刻插一次 mutate–select–amplify 做目标导向采样**
+
+无条件基流只能生成"像这个家族"的序列，但用户往往想要"像这个家族、且 fitness 高"的序列。连续 guidance（classifier guidance、SMC）要在每个 Euler 步都算梯度或重采样，既贵又容易把样本拉出流形。LineageFlow 改成只在 $t_{\mathrm{int}}=0.5$ 暂停 ODE、维护一群粒子做几轮：（i）mutate——通过 proposal kernel $\mathcal{K}$ 注入多样性；（ii）select——按 $\exp(\beta J)$ 重新加权；（iii）amplify——按权重重采样，目标分布是被指数倾斜过的 $p^{\mathrm{sel}} \propto (p_{t_{\mathrm{int}}} \mathcal{K})(\mathbf{X}) \exp(\beta J(\mathbf{X}))$。命题 5.2 证明这正是带 KL 约束的最优化解 $\max_q \mathbb{E}_q[J] - \frac{1}{\beta} \mathrm{KL}(q \| p^{\mathrm{mut}})$，且群体粒子近似在 $N \to \infty$ 时一致收敛；选中的粒子继续积分到 $t=1$。
+
+把这次"人工选择"放在中点是有讲究的：后段精修仍跑学过的家族矢量场，所以家族轨迹得以保留，只是被注入了一次目标偏置。$t_{\mathrm{int}}$ 是关键旋钮——太早样本还没成型、选择没有意义；太晚已经接近 one-hot、几乎改不动；0.5 恰好给出"有结构可选、有空间可移"的最佳折中。
 
 ### 损失函数 / 训练策略
-单一序列平均交叉熵 $\mathcal{L}(\theta)$（公式 6），$t$ 均匀采，$t_{\max}=6$；Pfam-A RP35 共 8886 个家族、894 万对齐序列，5% within-family hold-out；4×RTX 4090 训 1 epoch（约 26 小时），学习率 $10^{-5}$，等效 batch 128。
+单一序列平均交叉熵 $\mathcal{L}(\theta)$（公式 6），$t \sim \mathcal{U}[0,1]$ 均匀采样、$t_{\max}=6$；数据是 Pfam-A RP35 共 8886 个家族、894 万对齐序列，留 5% within-family 做 hold-out；4×RTX 4090 训 1 epoch（约 26 小时），学习率 $10^{-5}$，等效 batch 128。
 
 ## 实验关键数据
 

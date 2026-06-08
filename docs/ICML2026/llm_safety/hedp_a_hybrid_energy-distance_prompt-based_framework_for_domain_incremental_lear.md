@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-冻结 CLIP ViT-B/16 主干。**训练**：每个领域独立训一组视觉 prompt $P_v^S$ 和文本 prompt $P_t^S$，损失是分类交叉熵 $\mathcal{L}_{ce}$ 加能量正则 $\lambda \mathcal{L}_{reg}$，权重 $\lambda = 0.05$。**推理**：对每个测试样本同时算 (a) 在冻结 CLIP 空间里到各领域聚类中心的距离 $D^i(x)$；(b) 在每个 prompt 模型下的能量 $E^i(x)$。把两者归一化成相对因子 $EF^i, DF^i$ 后相加得到 $F^i(x) = EF^i/\alpha + DF^i/\beta$，softmax 得到权重 $W^i$，混合各领域预测 $P_{mix}(x) = \sum_i W^i P^i(x)$。
+HEDP 冻结 CLIP ViT-B/16 主干，给每个领域单独学一组 prompt，难点全压在"推理时该用哪个领域的 prompt"上。训练阶段每个领域独立训一组视觉 prompt $P_v^S$ 和文本 prompt $P_t^S$，损失是分类交叉熵 $\mathcal{L}_{ce}$ 加能量正则 $\lambda\mathcal{L}_{reg}$（$\lambda=0.05$），关键是把每个领域 prompt 的能量分布约束到统一标尺。推理时对每个测试样本同时算两个信号——在冻结 CLIP 空间里到各领域聚类中心的距离 $D^i(x)$、以及在每个 prompt 模型下的能量 $E^i(x)$——归一化成相对因子后相加得 $F^i(x)=EF^i/\alpha+DF^i/\beta$，softmax 出权重 $W^i$，最后混合各领域预测 $P_{mix}(x)=\sum_i W^i P^i(x)$。
 
 ### 关键设计
 
-1. **能量正则损失（边界 + 中线）**:
+**1. 能量正则损失（边界 + 中线）：把各领域 prompt 的能量分布对齐到同一把尺。**
 
-    - 功能：让每个领域 prompt 训出来的能量分布既不"散得太开"也不"挤得太紧"，跨领域能量能直接比较。
-    - 核心思路：能量定义为 $E(x) = -kT \ln[\sum_{y=1}^U e^{H(x)[y]/kT}]$（Helmholtz 自由能）。正则由两部分组成：边界损失 $\mathcal{L}_{border} = \frac{1}{|\mathcal{D}_t|}\sum \max(0, E(x) - \Theta)$ 只惩罚能量超过 $\Theta = -32$ 的部分，把本领域样本压到低能侧；中线损失 $\mathcal{L}_{midline} = |\Delta - \frac{1}{|\mathcal{D}_t|}\sum E(x)|$ 把均值拉到 $\Delta = -40$。
-    - 设计动机：作者画了四种正则组合 (无 / 只边界 / 只中线 / 完整) 下的能量分布对比图：只用边界，跨域能量可能都被压到 $\Theta$ 以下但相对位置乱；只用中线，分布形状不受约束，仍可能出现 $E^B(x^A) < E^A(x^A)$ 这种倒挂。两者结合后才能稳定满足 $E^s(x^s) < E^i(x^s) (\forall i \neq s)$。
+能量这个信号本身能用——本领域 prompt 给本领域样本打低能、给外域样本打高能——但前提是各领域的能量得"可比"。如果 Domain A 的 prompt 把样本压到 $-50$、Domain B 的压到 $-20$，那推理时直接比能量大小就会乱套。本文用 Helmholtz 自由能给每个样本算一个标量 $E(x) = -kT\ln[\sum_{y=1}^U e^{H(x)[y]/kT}]$，再用两条互补的正则把分布钉到统一坐标：边界损失 $\mathcal{L}_{border}=\frac{1}{|\mathcal{D}_t|}\sum\max(0, E(x)-\Theta)$ 只惩罚能量超过阈值 $\Theta=-32$ 的部分，把本领域样本统统压到低能侧；中线损失 $\mathcal{L}_{midline}=|\Delta-\frac{1}{|\mathcal{D}_t|}\sum E(x)|$ 把整体均值拉到 $\Delta=-40$。两者缺一不可：作者画的四种组合（无 / 只边界 / 只中线 / 完整）对比图显示，只用边界时跨域能量都被压到 $\Theta$ 以下、但相对位置仍乱，只用中线时分布形状不受约束、仍可能出现 $E^B(x^A) < E^A(x^A)$ 的倒挂；只有边界管住"最大值上限"、中线管住"中心位置"，才能稳定满足 $E^s(x^s) < E^i(x^s)\ (\forall i\neq s)$，让能量真正变成可跨域比较的标尺。
 
-2. **能量因子 vs 距离因子的混合**:
+**2. 能量因子与距离因子的混合：两个错误模式正交的信号互相补盲区。**
 
-    - 功能：在推理时给每个领域算一个综合"相似度因子"，决定该领域 prompt 在预测里占多大权重。
-    - 核心思路：能量因子 $EF^i(x) = E_{\min} - E^i(x)$ 取负偏移，范围 $(-\infty, 0]$，值越大表示样本在第 $i$ 个 prompt 下能量越低、置信越高；距离因子 $DF^i(x) = D_{\min} - D^i(x)$ 用 $K$-means 在冻结 CLIP 空间里给每个领域算 $K$ 个聚类中心，再算样本到最近中心的余弦距离。混合因子 $F^i(x) = EF^i(x)/\alpha + DF^i(x)/\beta$，最后 $W^i = \text{softmax}(F^i)$。
-    - 设计动机：作者在附录用一阶 Taylor 展开论证了 $\nabla_x EF$ 沿 prompt 参数方向（捕捉领域统计差异），而 $\nabla_x DF$ 沿冻结 CLIP 语义方向（捕捉全局语义），两者梯度近似正交，错误模式不相关。也就是说，能让单一信号失误的扰动，往往不会同时让另一个失误，混合后误差互相抵消。$\alpha = \beta = 0.6$ 时已知领域偏倚距离、未知领域偏倚两者平衡，符合理论预期。
+光靠能量还不够稳——能量反映的是 prompt 调出来的局部分布敏感性，在领域重叠区容易误判。本文为推理设计一个混合相似度因子，决定每个领域 prompt 占多大权重。能量因子 $EF^i(x)=E_{\min}-E^i(x)$ 取负偏移到 $(-\infty,0]$，值越大说明样本在第 $i$ 个 prompt 下能量越低、越像本领域；距离因子 $DF^i(x)=D_{\min}-D^i(x)$ 则用 $K$-means 在冻结 CLIP 空间给每个领域算 $K$ 个聚类中心，取样本到最近中心的余弦距离。两者相加得 $F^i(x)=EF^i(x)/\alpha+DF^i(x)/\beta$，再 $W^i=\text{softmax}(F^i)$。之所以混合有效，关键在附录的一阶 Taylor 论证：$\nabla_x EF$ 沿 prompt 参数方向（捕捉领域统计差异）、$\nabla_x DF$ 沿冻结 CLIP 语义方向（捕捉全局语义），两者梯度近似正交、错误模式互不相关——能让能量失误的扰动往往不会同时让距离失误，反之亦然，混合后误差互相抵消。实测 $\alpha=\beta=0.6$ 时已知领域偏倚距离、未知领域两者平衡，正好印证理论。
 
-3. **能量正则隐式平滑能量地形**:
+**3. 能量正则的副产物：隐式平滑能量地形、抵抗灾难性遗忘。**
 
-    - 功能：让能量函数对未知领域样本的偏移更稳定。
-    - 核心思路：附录的 Proposition 2 证明：把能量输出约束在 $(-\infty, \Theta]$ 且均值在 $\Delta$，等价于隐式压缩了能量函数在数据流形上的局部 Lipschitz 常数 $K$；对于 OOD 样本 $x_{out} = x_{in} + \Delta_x$，能量偏移满足 $|E(x_{out}) - E(x_{in})| \leq K\|\Delta_x\|$，$K$ 变小意味着 OOD 样本不会突然掉到 known domain 的低能区域，从而抵抗灾难性遗忘。
-    - 设计动机：传统能量训练容易产生"能量崖"，OOD 样本一旦贴近边界就被错误打成低能。把能量分布压缩到紧凑区间相当于"软化地形"，给 OOD 样本留出能量缓冲。
+传统能量训练容易长出"能量崖"——OOD 样本一旦贴近边界就被错误打成低能，结果模型在未知领域上崩。本文发现，把能量约束到紧凑区间这件事本身就在软化地形：附录 Proposition 2 证明，将能量输出约束在 $(-\infty,\Theta]$ 且均值在 $\Delta$，等价于隐式压低了能量函数在数据流形上的局部 Lipschitz 常数 $K$。对 OOD 样本 $x_{out}=x_{in}+\Delta_x$，能量偏移满足 $|E(x_{out})-E(x_{in})|\le K\|\Delta_x\|$，$K$ 越小，未知领域样本就越不会突然掉进已知领域的低能区，从而抵抗灾难性遗忘。换句话说，第 1 点的正则不只让能量"可比"，还顺手给 OOD 样本留出了能量缓冲——这个 trick 可以独立迁移到任何 OOD 检测任务。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L}_{total} = \mathcal{L}_{ce} + \lambda \mathcal{L}_{reg}$，$\mathcal{L}_{reg} = \mathcal{L}_{border} + \mathcal{L}_{midline}$。超参：$\Theta = -32, \Delta = -40, K = 5, \alpha = \beta = 0.6, \lambda = 0.05$。SGD + 余弦退火，初始 lr 0.01。
+总损失 $\mathcal{L}_{total}=\mathcal{L}_{ce}+\lambda\mathcal{L}_{reg}$，其中 $\mathcal{L}_{reg}=\mathcal{L}_{border}+\mathcal{L}_{midline}$。超参 $\Theta=-32,\ \Delta=-40,\ K=5,\ \alpha=\beta=0.6,\ \lambda=0.05$；SGD + 余弦退火，初始 lr 0.01。
 
 ## 实验关键数据
 

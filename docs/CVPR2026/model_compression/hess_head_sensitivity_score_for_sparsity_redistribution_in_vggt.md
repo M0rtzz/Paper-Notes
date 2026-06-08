@@ -43,39 +43,43 @@ HeSS 提出 Head Sensitivity Score 来量化 VGGT 全局注意力层中每个注
 
 ### 整体框架
 
-HeSS 是一个两阶段管线：(1) 校准阶段：在小型校准集上计算所有 GA 层注意力头的 HeSS 分数并固定；(2) 推理阶段：根据预计算的 HeSS 分数重新分配每个头的注意力预算（block 数量），敏感头分配更多、鲁棒头分配更少。总预算与 SparseVGGT 相同，仅改变头间分配。
+VGGT 的全局注意力层让所有帧 token 互相交互，计算量随视图数平方膨胀，是加速的主要瓶颈。前作 SparseVGGT 用一套统一的稀疏阈值压所有注意力头，但 HeSS 的出发点是：不同头对稀疏化的耐受度天差地别，一刀切会把关键头压垮。于是 HeSS 把"该给哪个头留多少注意力"变成一个按敏感度分配预算的问题。
+
+整条管线分两步走。**校准阶段**先在一个小校准集上算出每个 GA 层、每个头的 HeSS 敏感度分数，一次算完就固定下来；**推理阶段**则保持总预算与 SparseVGGT 完全相同，只是把这份固定预算按 HeSS 分数在头之间重新切分——敏感头多拿几个 attention block，鲁棒头少拿。整个过程不碰模型权重、不需要训练，纯粹是推理时的预算调度。下面的关键设计依次回答三个问题：怎么度量一个头的敏感度（误差信号 + Fisher 近似），以及怎么把敏感度落实成预算。
 
 ### 关键设计
 
-1. **相机位姿误差 $e_{\text{cam}}$**:
+**1. 相机位姿误差 $e_{\text{cam}}$：用全局几何一致性当第一个敏感度信号。**
 
-    - 功能：作为 HeSS 的第一个误差信号，评估模型对整体场景几何结构的理解
-    - 核心思路：先用 Umeyama + ICP 算法对齐预测与真实点云得到变换矩阵 $\mathbf{H}$（对 $\mathbf{H}$ 施加 stop-gradient），然后计算预测相机位置 $\hat{\mathbf{t}}_i$ 变换后与真实位置 $\mathbf{t}_i$ 的 MSE：$e_{\text{cam}} = \frac{1}{2N}\sum_{i=1}^N |\text{sg}(\mathbf{H})\hat{\mathbf{t}}_i - \mathbf{t}_i|_2^2$
-    - 设计动机：相机位姿是 3D 视觉的核心——它是所有下游预测的几何支架。对 $\mathbf{H}$ 用 stop-gradient 是为了防止梯度通过辅助对齐步骤
+要衡量一个头有多关键，先得有一个能反映"3D 重建质量"的误差量。相机位姿是整个 3D 预测的几何支架——位姿一歪，所有下游结果都跟着错，所以作者把它选为第一个误差信号。具体做法是先用 Umeyama + ICP 把预测点云对齐到真实点云，得到相似变换矩阵 $\mathbf{H}$，再算预测相机位置经 $\mathbf{H}$ 变换后与真值的 MSE：
 
-2. **点云误差 $e_{\text{pc}}$**:
+$$e_{\text{cam}} = \frac{1}{2N}\sum_{i=1}^N \|\text{sg}(\mathbf{H})\hat{\mathbf{t}}_i - \mathbf{t}_i\|_2^2$$
 
-    - 功能：补充 $e_{\text{cam}}$ 对细粒度局部几何的评估
-    - 核心思路：用置信度阈值 $\epsilon = 0.05$ 筛选内点集 $\mathcal{I}$（与真实点云最近距离 < $\epsilon$ 的预测点），然后计算内点的平均最近点距离：$e_{\text{pc}} = \frac{1}{2|\mathcal{I}|}\sum_{j \in \mathcal{I}} \min_{\mathbf{p} \in P}\|\text{sg}(\mathbf{H})\hat{\mathbf{p}}_j - \mathbf{p}\|_2^2$
-    - 设计动机：$e_{\text{cam}}$ 只反映全局几何一致性，对逐像素的精细结构不敏感。点云误差要求模型精确回归每个像素到 3D 空间的位置，能捕捉局部几何细节
+关键的细节是对 $\mathbf{H}$ 施加 stop-gradient（式中的 $\text{sg}(\cdot)$）：对齐只是为了把两套坐标系摆到一起做比较，它本身是个辅助步骤，不应让梯度顺着它回流而污染敏感度估计。
 
-3. **HeSS 计算**:
+**2. 点云误差 $e_{\text{pc}}$：补上 $e_{\text{cam}}$ 看不到的逐像素细节。**
 
-    - 功能：将两种误差的敏感度合并为每个头的统一分数
-    - 核心思路：对每个头 $h$，计算误差对 Query 投影权重 $W_Q^h$ 的 Fisher 信息矩阵 $\mathbf{F}_{\text{cam}}^h$ 和 $\mathbf{F}_{\text{pc}}^h$，取其 trace 并在同层所有头之间归一化：$\text{HeSS}_{\text{cam}}(h) = \frac{\text{tr}(\mathbf{F}_{\text{cam}}^h)}{\sum_h \text{tr}(\mathbf{F}_{\text{cam}}^h)}$，最终 $\text{HeSS}(h) = \lambda \cdot \text{HeSS}_{\text{cam}}(h) + (1-\lambda) \cdot \text{HeSS}_{\text{pc}}(h)$，默认 $\lambda = 0.5$
-    - 设计动机：FIM 是 Hessian 的可计算近似，用一阶梯度的外积估计二阶信息。选择 $W_Q^h$ 而非 $W_K^h$ 或 $W_V^h$ 是因为实验表明 $W_Q$ 的 Hessian 给出了更可靠的敏感度估计。两种误差互补——$e_{\text{cam}}$ 在低稀疏度更重要，$e_{\text{pc}}$ 在高稀疏度更关键
+相机位姿只刻画整体几何对不对，但对每个像素回归到 3D 空间的精细位置并不敏感——一个头可能位姿估得很准、局部结构却糊成一团。$e_{\text{pc}}$ 就是来补这块的：先用置信度阈值 $\epsilon = 0.05$ 把预测点中真正可信的内点筛出来组成集合 $\mathcal{I}$（与真值点云最近距离小于 $\epsilon$），再对这些内点算它们到真实点云的平均最近点距离：
 
-4. **HeSS 引导的预算重分配**:
+$$e_{\text{pc}} = \frac{1}{2|\mathcal{I}|}\sum_{j \in \mathcal{I}} \min_{\mathbf{p} \in P}\|\text{sg}(\mathbf{H})\hat{\mathbf{p}}_j - \mathbf{p}\|_2^2$$
 
-    - 功能：根据 HeSS 分数将总注意力预算在头之间重新分配
-    - 核心思路：三步流程——(a) 获取总预算 $C_{\text{total}} = \sum_n c_{h_n}$（所有头的基线预算之和）；(b) 按 HeSS 比例计算理想预算 $c_h' = C_{\text{total}} \cdot w_h$，其中 $w_h = \text{HeSS}(h) / \sum_n \text{HeSS}(h_n)$；(c) 迭代 water-filling 算法处理溢出——若某头的理想预算超过其最大容量 $C_{\max}$，将其钳制到 $C_{\max}$ 并将多余预算按 HeSS 比例重新分配给剩余未封顶的头，重复直到无溢出
-    - 设计动机：简单按比例分配可能导致某些高敏感头被分配超过其最大可用 block 数量的预算。迭代 capping 确保预算分配在结构上可行
+它要求模型把每个像素精确投到 3D 空间，因此能捕捉局部几何细节。两个误差一全局一局部，构成互补的双信号，后面合成 HeSS 时正好各管一段稀疏度区间。
 
-### 训练 / 校准策略
+**3. HeSS 分数：用 Fisher 信息近似 Hessian，把误差敏感度落到每个头上。**
 
-- 校准集使用 CO3Dv2 dev split，每场景采样 20 个视图
-- HeSS 一次计算后固定，不随推理数据变化
-- 不需要任何训练——纯粹是推理时的预算重分配策略
+有了两个误差，还要把"压这个头会让误差涨多少"量化出来。真正的敏感度对应误差关于头参数的二阶曲率（Hessian），但 Hessian 太贵，作者用 Fisher 信息矩阵（FIM）来近似——FIM 用一阶梯度的外积估计二阶信息，可算且无偏。对每个头 $h$，分别就相机误差和点云误差对该头的 Query 投影权重 $W_Q^h$ 算出 $\mathbf{F}_{\text{cam}}^h$、$\mathbf{F}_{\text{pc}}^h$，取迹后在同层所有头之间归一化，再加权合成：
+
+$$\text{HeSS}_{\text{cam}}(h) = \frac{\text{tr}(\mathbf{F}_{\text{cam}}^h)}{\sum_h \text{tr}(\mathbf{F}_{\text{cam}}^h)}, \qquad \text{HeSS}(h) = \lambda\,\text{HeSS}_{\text{cam}}(h) + (1-\lambda)\,\text{HeSS}_{\text{pc}}(h)$$
+
+默认 $\lambda = 0.5$。这里有两个有讲究的选择：一是只对 $W_Q^h$ 而非 $W_K^h$、$W_V^h$ 求 Hessian——消融显示 Query 投影给出的敏感度估计最可靠（用 Key/Value 性能都明显变差）；二是 $\lambda$ 把两个误差拼在一起，因为 $e_{\text{cam}}$ 在低稀疏度时更主导、$e_{\text{pc}}$ 在高稀疏度时更关键，单用任一个都会在另一端塌掉。
+
+**4. HeSS 引导的预算重分配：water-filling 把预算搬给敏感头，且保证可行。**
+
+分数算完，最后一步是把总预算按敏感度重切。先把所有头的基线预算加起来得到总量 $C_{\text{total}} = \sum_n c_{h_n}$，再按归一化后的 HeSS 权重 $w_h = \text{HeSS}(h) / \sum_n \text{HeSS}(h_n)$ 给每个头算理想预算 $c_h' = C_{\text{total}} \cdot w_h$。问题在于纯按比例分可能给某个高敏感头分到超过它实际能用的最大 block 数 $C_{\max}$，物理上根本放不下。于是作者套了一个迭代 water-filling：哪个头的理想预算溢出 $C_{\max}$ 就把它钳到 $C_{\max}$，多出来的预算再按 HeSS 比例分给剩下没封顶的头，反复直到不再溢出。这样既把预算尽量倾斜给敏感头，又保证最终分配在结构上始终可行——消融里去掉这步迭代会让未用完的预算被浪费、性能掉下来。
+
+### 损失函数 / 训练策略
+
+HeSS 不引入任何训练损失，也不更新模型权重。校准用 CO3Dv2 dev split、每场景采样 20 个视图，一次性算出所有头的 HeSS 分数后固定，推理时不再随数据变化——整套方法是纯推理时的预算重分配。
 
 ## 实验关键数据
 

@@ -41,27 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Prism 给 dLLM 设计了一个三阶段去噪流水线，用两个超参 $W=[w_{\min},w_{\max}]$ 定义"剪枝窗口"，对应阈值 $T_p=\lceil w_{\max} T\rceil$ 和 $T_r=\lceil w_{\min} T\rceil$。从 $t=T$ 开始往 $t=1$ 去噪：(1) **Exploration**（$T_p<t\le T$）以宽度 $N$ 跑短暂热身、不做剪枝；(2) **Thinning**（$T_r<t\le T_p$）让活跃池按几何衰减 $W_t=\max(\lfloor N\cdot d^{-(T_p-t)}\rfloor, K)$ 收缩，每 $i$ 步做一次"打分→选 top-$S$→对每个 survivor 用部分 remask 生 $b_t=\lceil W_{t-1}/S\rceil$ 个孩子"的循环；(3) **Refinement**（$1\le t\le T_r$）活跃宽度收敛到 $K$，最后用 majority voting 选答案。所有打分都来自同一个 dLLM 在专门构造的 Yes/No 验证 prompt 上的 logits 比，无需任何外部模型。
+Prism 把一条 dLLM 去噪轨迹切成"先广撒网、再狠剪枝、最后精修"的三阶段流水线：从 $t=T$ 全 [MASK] 出发往 $t=1$ 去噪，前期用大宽度 $N$ 随机探索保多样性，中期沿一个"剪枝窗口"按几何速率把活跃轨迹砍到只剩 $K$ 条，后期对这 $K$ 条纯去噪并 majority voting 选答案。窗口由两个超参 $W=[w_{\min},w_{\max}]$ 划定，对应阈值 $T_p=\lceil w_{\max} T\rceil$、$T_r=\lceil w_{\min} T\rceil$：$T_p<t\le T$ 是探索段（宽度 $N$、不剪枝），$T_r<t\le T_p$ 是剪枝段（每 $i$ 步"打分→选 top-$S$→部分 remask 生孩子"循环一次），$1\le t\le T_r$ 是精修段（宽度收敛到 $K$）。整套打分不靠任何外部模型，全部复用 dLLM 自己在 Yes/No 验证 prompt 上的 logits。
 
 ### 关键设计
 
-1. **层级轨迹搜索 HTS（Hierarchical Trajectory Search）**:
+**1. 层级轨迹搜索 HTS：把算力撒在中期 logic skeleton 成形的那段窗口。**
 
-    - 功能：把 best-of-$N$ 的 $O(NT)$ 复杂度压到 $O(N+KT)$，把算力集中在"中期 logic skeleton 形成"这个最关键的窗口。
-    - 核心思路：去噪时间表分三段。Stage I 高噪阶段先用 $N$ 条轨迹做随机探索、不剪枝（因为 $\hat{\mathbf{z}}_0$ 此时高度不稳定、SVF 不可靠，优先保多样性）；Stage II 进入剪枝窗口后，每 $i$ 步一次按 SVF 打分留 top-$S$ 个 seed、对每个 seed 用局部分支生 $b_t$ 个 children，活跃池按 $W_t=\max(\lfloor Nd^{-(T_p-t)}\rfloor, K)$ 几何衰减；Stage III 当宽度收缩到 $K$ 时停止剪枝、做最后纯去噪，并配 $\tau$-置信门槛和"`\boxed{}` 早停"加速。总计算 $C_{\mathrm{HTS}}=N(T-T_p)+\sum_{t=T_r+1}^{T_p}|\mathcal{P}_t|+KT_r\approx O(N+KT)$。
-    - 设计动机：dLLM 的熵随 $t$ 单调下降——早期完全发散，中期 logic 雏形出现，后期高度收敛。所以"早期保宽度、中期猛剪枝、后期精修"才匹配它的动力学；几何衰减比线性更激进地清掉差 trajectory，让 NFE 在 $K$ 一定时随 $N$ 几乎不长。
+best-of-$N$ 把每条轨迹都跑满 $T$ 步再选，复杂度是 $O(NT)$——可 dLLM 的熵随 $t$ 单调下降，早期 $\hat{\mathbf{z}}_0$ 完全发散、中期 logic 雏形刚成形、后期高度收敛，把算力均匀撒在所有时间步等于既在前期对每个看不清的草稿付全价、又在后期对已经定型的轨迹做无谓去噪。HTS 据此让活跃宽度随时间走三段：Stage I 高噪段保持 $N$ 条做随机探索且不剪枝（此时 $\hat{\mathbf{z}}_0$ 不稳定、下面的 SVF 打分不可靠，优先保多样性）；Stage II 进入剪枝窗口后每 $i$ 步做一次"按 SVF 打分留 top-$S$ 个 seed、每个 seed 用局部分支生 $b_t=\lceil W_{t-1}/S\rceil$ 个孩子"，活跃池按几何衰减 $W_t=\max(\lfloor N\cdot d^{-(T_p-t)}\rfloor,\,K)$ 收缩（衰减率 $d>1$ 比线性更激进地清掉差 trajectory）；Stage III 宽度收敛到 $K$ 后停止剪枝做纯去噪，并配 $\tau$-置信门槛和"出现 `\boxed{}` 就早停"两个加速。整段总计算
 
-2. **部分 remask 的局部分支（Local Branching via Partial Remasking）**:
+$$C_{\mathrm{HTS}}=N(T-T_p)+\sum_{t=T_r+1}^{T_p}|\mathcal{P}_t|+KT_r\approx O(N+KT),$$
 
-    - 功能：在 Thinning 阶段制造"差异化但不彻底重启"的子代，避免 top-$S$ 过早 collapse 到同一个局部最优。
-    - 核心思路：对一个 survivor 状态 $\mathbf{z}_t$ 先得到 $\hat{\mathbf{z}}_0=\mathcal{C}_\theta(\mathbf{z}_t,c,t)$，再算 token 级不确定度（如 entropy），把高置信 token 当"逻辑骨架"保留、对低置信子集 $\mathcal{I}_t\subseteq\{1,\dots,L\}$ 用 $\mathbf{z}_t^{\exp}=\mathrm{Remask}(\mathbf{z}_t;\mathcal{I}_t)$ 重新打 mask，再继续去噪。每个 survivor 随机抽不同 $\mathcal{I}_t$ 产生多个 child。
-    - 设计动机：从 $[m]^L$ 重新出发会丢掉所有已经形成的逻辑结构、又把算力浪费在前期高熵阶段；而完全继承 $\mathbf{z}_t$ 不修改又没多样性。部分 remask 把"探索"局限在低置信位置，等于"在已经成形的解法骨架上换一种实现细节"，多样性和重用性都拿到了。
+把 best-of-$N$ 的乘法 $O(NT)$ 拆成加法——只要最终精修宽度 $K\ll N$，NFE 在 $K$ 固定时随 $N$ 几乎不增长。
 
-3. **自验证反馈 SVF（Self-Verified Feedback）**:
+**2. 部分 remask 的局部分支：在已成形的解法骨架上换实现细节，而非从头重启。**
 
-    - 功能：替代外置 PRM/ORM，提供对部分 mask 状态依然有效的 trajectory 排序信号，几乎不增加显存。
-    - 核心思路：对每条轨迹 $\mathbf{z}_t^{(i)}$ 先用 argmax 拿到完整草稿 $\hat{\mathbf{z}}_0^{(i)}$，再把它套进一个 Yes/No 验证 prompt $\pi(c,\hat{\mathbf{z}}_0^{(i)})$，从 dLLM 自己的 logits 取 Yes/No 两个 token 集合的最大 logit $s_{\text{Yes}},s_{\text{No}}$，定义 $\Phi_{\mathrm{SVF}}(\mathbf{z}_t^{(i)};c)=\exp(s_{\text{Yes}})/(\exp(s_{\text{Yes}})+\exp(s_{\text{No}}))$。SVF 只在 thinning 阶段、且按 $i$ 步间隔稀疏触发。
-    - 设计动机：传统 PRM 是在干净 prefix 上训出来的，对 dLLM 中那种"中间还是 [MASK]"的状态根本不 well-calibrated；让 dLLM 自己来打分本质上是用同一份预训练知识来判断完整草稿是否"看起来对"，这套打分对部分 mask 不敏感（因为评估对象是 $\hat{\mathbf{z}}_0$ 这个完整草稿）。复用 dLLM 还省去 PRM 显存，prefill+1 token 解码的代价远小于一次去噪。
+剪枝段只留 top-$S$ 个 seed，若直接复制它们继续去噪，孩子之间毫无差异、很快 collapse 到同一个局部最优；可若像 best-of-$N$ 那样从 $[m]^L$ 重新抽样，又会丢掉已经形成的逻辑结构、还把算力浪费回前期高熵阶段。局部分支取折中：对一个 survivor 状态 $\mathbf{z}_t$ 先算出草稿 $\hat{\mathbf{z}}_0=\mathcal{C}_\theta(\mathbf{z}_t,c,t)$，再按 token 级不确定度（如 entropy）把高置信 token 当"逻辑骨架"保留、只挑低置信子集 $\mathcal{I}_t\subseteq\{1,\dots,L\}$ 用 $\mathbf{z}_t^{\exp}=\mathrm{Remask}(\mathbf{z}_t;\mathcal{I}_t)$ 重新打 mask 后继续去噪。每个 survivor 随机抽不同的 $\mathcal{I}_t$ 就生出多个有差异的 child，等于"在同一个解法 mode 里换一种实现细节"，多样性和已成形结构的重用同时拿到。这也是 dLLM 双向上下文的独有便利——AR 模型没法只挑某几个位置换掉。
+
+**3. 自验证反馈 SVF：让 dLLM 自己当 Yes/No 验证器，对部分 mask 状态依然可信。**
+
+剪枝得有打分信号，但 AR 时代的 PRM/ORM 都是在干净 prefix 上训出来的，对 dLLM"中间还是 [MASK]"的状态根本不 calibrate；外挂一个 7B 级 PRM 又要额外显存和算力。SVF 改让 dLLM 自评：对每条轨迹 $\mathbf{z}_t^{(i)}$ 先用 argmax 拿到完整草稿 $\hat{\mathbf{z}}_0^{(i)}$，把它填进一个 Yes/No 验证 prompt $\pi(c,\hat{\mathbf{z}}_0^{(i)})$，再从 dLLM 自身 logits 取 Yes/No 两个 token 集合的最大 logit $s_{\text{Yes}},s_{\text{No}}$，定义打分
+
+$$\Phi_{\mathrm{SVF}}(\mathbf{z}_t^{(i)};c)=\frac{\exp(s_{\text{Yes}})}{\exp(s_{\text{Yes}})+\exp(s_{\text{No}})}.$$
+
+因为评估对象始终是补全后的完整草稿 $\hat{\mathbf{z}}_0$ 而非带 mask 的中间态，这个分数对部分 mask 不敏感；又因为复用的是同一份预训练知识，省掉了 PRM 的显存，每次只是 prefill + 解一个 token，代价远小于一步去噪。SVF 也只在 thinning 阶段、按 $i$ 步间隔稀疏触发，进一步压低开销。
 
 ### 损失函数 / 训练策略
 Prism 完全是 inference-time 方法，不动 dLLM 权重也不训练任何额外组件，所以没有训练 loss。dLLM 自身的训练目标沿用标准 MDM ELBO $\mathcal{L}(\theta)=\mathbb{E}[w(t)\sum_{i:z_{t,i}=m}(-\log\tilde p_\theta(z_{0,i}\mid\mathbf{z}_t,c,t))]$。

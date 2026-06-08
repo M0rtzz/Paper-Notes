@@ -42,33 +42,29 @@ Sheaf-ADMM 把多智能体协调问题做成端到端可微的 ADMM 展开——
 
 ### 整体框架
 
-输入 $\bm D \in \mathbb{R}^{H \times W \times C_{in}}$ 分成 $N$ 个重叠 patch（agents）；
-1. **编码**：每 patch $\bm d_i$ 经共享 encoder 出 $\bm Q_i, \bm q_i$ 参数化 agent $i$ 的凸子问题
-2. **ADMM 展开 $K$ 步**：
-   - $\bm x$-update：agent $i$ 解 $\arg\min_{\bm x_i} \tfrac{1}{2}\bm x_i^\top \bm Q_i \bm x_i + \bm q_i^\top \bm x_i + \tfrac{\rho}{2}\|\bm x_i - \bm z_i + \bm u_i\|^2$（闭式）
-   - $\bm z$-update：sheaf-Laplacian 扩散 $\bm z^{t+1} = \bm z^t - \eta \bm L_\mathcal{F} \bm z^t$ 投影到 ker($\bm F$)
-   - $\bm u$-update：$\bm u^{k+1} = \bm u^k + \bm x^{k+1} - \bm z^{k+1}$
-3. **解码**：最终 $\bm x$ + 本地 patch 经 decoder 得本地预测，聚合成全局输出
+Sheaf-ADMM 把"一群只看局部的 agent 协同解全局任务"直接做成一层可微的 consensus-form ADMM 展开。输入 $\bm D \in \mathbb{R}^{H \times W \times C_{in}}$ 被切成 $N$ 个重叠 patch，每个 patch 就是一个 agent，只看自己那块视野；共享 encoder 把每个 patch $\bm d_i$ 编成一个凸二次子问题的参数 $\bm Q_i, \bm q_i$。接着展开 $K$ 步 ADMM：每步里 agent 先独立解自己的局部子问题（$\bm x$-update），再通过 cellular sheaf 定义的"边空间投影"把彼此协商成一致（$\bm z$-update），最后用对偶变量累积没对齐的分歧（$\bm u$-update）。$K$ 步迭代后，每个 agent 拿最终的 $\bm x_i$ 配上本地 patch 过 decoder 出本地预测，再聚合成全局输出。整条管线没有任何采样或不可导算子，可以端到端反传。
 
 ### 关键设计
 
-1. **三态分离（primal $\bm x$ / consensus $\bm z$ / dual $\bm u$）**:
+**1. 三态分离：把"我想什么/我们一致什么/我们曾分歧什么"拆成 $\bm x$、$\bm z$、$\bm u$。**
 
-    - 功能：清晰区分 agent 的本地决策、协商目标、历史分歧
-    - 核心思路：$\bm x_i$ 是 agent 的本地最优解（受 augmented Lagrangian 牵引向 $\bm z - \bm u$）、$\bm z_i$ 是当前 consensus 目标（满足 sheaf 约束）、$\bm u_i$ 累积过去分歧；augmented Lagrangian 项 $\|\bm x - \bm z + \bm u\|^2$ 把这三者联系起来
-    - 设计动机：MPNN 等架构混所有信息到单一 hidden state，相当于把"我想什么、我们达成什么、我们曾分歧什么"全压一起；ADMM 分开三态让推理动力学可分析（可单独可视化 $\bm z$ 看 consensus 收敛、看 $\bm u$ 看冲突区）
+MPNN 这类架构每个 agent 只有一个 hidden state，等于把本地决策、对外协商目标和历史冲突全压进同一个向量里，事后没法分辨它到底在表达哪一层意思。ADMM 天生把这三者拆开：$\bm x_i$ 是 agent 的本地最优解，受 augmented Lagrangian 项 $\tfrac{\rho}{2}\|\bm x_i - \bm z_i + \bm u_i\|^2$ 牵引向 $\bm z_i - \bm u_i$；$\bm z_i$ 是当前的 consensus 目标（满足下面的 sheaf 约束）；$\bm u_i$ 则把过去每一轮没对齐的差额累加起来，相当于"分歧的历史账本"。$\bm x$-update 有闭式解 $\bm x_i = (\bm Q_i + \rho \bm I)^{-1}(\rho(\bm z_i - \bm u_i) - \bm q_i)$，$\bm u$-update 就是 $\bm u^{k+1} = \bm u^k + \bm x^{k+1} - \bm z^{k+1}$。三态分开之后推理动力学变得可分析——可以单独可视化 $\bm z$ 看 consensus 怎么收敛、看 $\bm u$ 锁定冲突最大的区域，这正是单 hidden state 架构做不到的。
 
-2. **Cellular Sheaf 定义灵活一致语义**:
+**2. Cellular Sheaf：让 agent 只在"任务真正要求一致"的低维子空间上对齐。**
 
-    - 功能：让 agents 只在低维 edge stalk 上一致，不要求全状态一致
-    - 核心思路：每条边 $e = (i, j)$ 有 edge stalk $\mathbb{R}^{d_e}$（$d_e < d_v$）；restriction maps $\bm F_{i \to e}, \bm F_{j \to e} \in \mathbb{R}^{d_e \times d_v}$ 把 agent 状态投到 edge stalk；全局一致 = $\bm F_{i \to e} \bm x_i = \bm F_{j \to e} \bm x_j$；定义 sheaf Laplacian $\bm L_\mathcal{F} = \bm F^\top \bm F$，$\bm x^\top \bm L_\mathcal{F} \bm x = \sum_e \|\bm F_{i \to e} \bm x_i - \bm F_{j \to e} \bm x_j\|^2$ 度量总分歧
-    - 设计动机：adjacent maze 区只需 boundary 一致，不需内部一致——硬要求全一致浪费容量；sheaf 让一致只发生在"任务真正要求一致的低维子空间"；restriction maps 学到的是"哪些方面我们要同意"
+要求相邻 agent 在整个状态向量上一致太刚性——相邻的迷宫区其实只需要边界处衔接得上，内部各走各的不该被强行拉平。cellular sheaf 把这个直觉形式化：每条边 $e=(i,j)$ 挂一个低维 edge stalk $\mathbb{R}^{d_e}$（$d_e < d_v$），两端各有一个 restriction map $\bm F_{i\to e}, \bm F_{j\to e} \in \mathbb{R}^{d_e \times d_v}$ 把 agent 状态投影到这条边的共享空间上，"一致"就只定义为 $\bm F_{i\to e}\bm x_i = \bm F_{j\to e}\bm x_j$。由此定义 sheaf Laplacian $\bm L_\mathcal{F} = \bm F^\top \bm F$，它度量的总分歧恰好是
 
-3. **Unrolled ADMM + Inexact $\bm z$-update**:
+$$\bm x^\top \bm L_\mathcal{F} \bm x = \sum_{e=(i,j)} \|\bm F_{i\to e}\bm x_i - \bm F_{j\to e}\bm x_j\|^2 .$$
 
-    - 功能：把 ADMM 当做一个可微的递归层，端到端学
-    - 核心思路：固定 $K$ 步 ADMM，每步 $\bm z$-update 用少数几步 sheaf-Laplacian 扩散（inexact），整体反传；扩散的不完全求解相当于 smoother——快速去高频局部分歧、保留低频全局结构
-    - 设计动机：sparse 大型系统中 $\bm L_\mathcal{F}$ 条件数大，完美收敛太贵；少步扩散够把高频对齐；这种"少步消高频"的 inductive bias 是 ADMM 在多智能体的特殊优势
+$\bm z$-update 要做的就是把当前状态投影到 $\ker(\bm F)$（这个总分歧为零的子空间）。restriction maps 是学出来的，等于让模型自己决定"我们到底要在哪些维度上达成一致"——比图 Laplacian 的"全状态一致"灵活得多，也正好对上 Sudoku 行/列/宫这种只约束部分关系的结构。
+
+**3. Unrolled ADMM + inexact $\bm z$-update：把分布式优化器当成可微递归层，且每步只扩散几下。**
+
+固定 $K$ 步 ADMM、整体反传，ADMM 就从一个迭代求解器变成了一层可端到端训练的递归网络。关键的省力点在 $\bm z$-update：精确投影到 $\ker(\bm F)$ 要解一个大型线性系统，而 sparse 场景下 $\bm L_\mathcal{F}$ 条件数很大、完美收敛代价高，所以这里只跑少数几步 sheaf-Laplacian 扩散 $\bm z^{t+1} = \bm z^t - \eta \bm L_\mathcal{F}\bm z^t$（inexact）。少步扩散本质上是个 smoother：先把高频的、局部相邻 agent 之间的分歧快速磨平，低频的全局结构留待后续 ADMM 轮次慢慢对齐。这种"少步消高频"恰好是 ADMM 用在多智能体上的特有红利——不必每步都把 consensus 解到底，几步就够推动全局收敛，省下大量算力。
+
+### 一个完整示例：16×16 迷宫寻路
+
+以一张 16×16 迷宫为例走一遍三态怎么转。每个 patch agent 先在 $\bm x$-update 里独立提议一条穿过自己视野的本地路径——此时各 agent 各说各话，在迷宫拐点和区块交界处提议常常对不上。$\bm z$-update 通过 restriction maps 只在相邻区块的边界 stalk 上拉一致，几轮 ADMM 后这些本地段被缝合成一条全局连贯的路径。$\bm u$ 则在迭代中悄悄标记出那些"反复对不齐"的格子——通常正是迷宫的拐点和死胡同入口，因为那里本地视野最容易做出错误的局部决定。$K$ 步后 decoder 读出最终的 $\bm x$，得到一条完整可行路径；而把 $\bm x/\bm z/\bm u$ 三张图分别画出来，就能直接看到"提议 → 协商 → 冲突定位"的全过程，这是 MPNN 单 hidden state 给不出的可解释性。
 
 ## 实验关键数据
 

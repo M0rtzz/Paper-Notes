@@ -50,23 +50,25 @@ Rex 是一个**配方**而非单一格式：给一个显式 (S)RK 方案 $\bm{\P
 
 ### 关键设计
 
-1. **Princeps：指数加权 (S)RK 子格式**:
+**1. Princeps：把任意显式 (S)RK 和扩散方程的半线性结构融成"指数 (S)RK"。**
 
-    - 功能：把任意显式 (S)RK $\bm{\Phi}$ 与扩散方程的半线性结构融合，得到一个吸收了积分因子的"指数 (S)RK"，作为后续可逆包装的基础。
-    - 核心思路：在重参数化方程 $d\bm{Y}_\varsigma=\bm{f}_\theta(\varsigma,\Xi(\varsigma)\bm{Y}_\varsigma)d\varsigma+d\bm{W}_\varsigma$ 上写 $s$ 段 SRK：$\bm{f}_\theta^i=\bm{f}_\theta(\varsigma_n+c_ih,\Xi(\varsigma_n+c_ih)\bm{Z}_i)$，$\bm{Z}_i=\Xi^{-1}(\varsigma_n)\bm{X}_n+h\sum_{j<i}a_{ij}\bm{f}_\theta^j+a_i^W\bm{W}_n+a_i^H\bm{H}_n$，回代后步进 $\bm{X}_{n+1}=\frac{\Xi(\varsigma_{n+1})}{\Xi(\varsigma_n)}\bm{X}_n+\Xi(\varsigma_{n+1})\bm{\Psi}$。其中 $\bm{H}_n$ 是 Brownian 桥的时空 Lévy area（Foster 2024 体系），让加性噪声 SRK 在简单近似下也能拿到强收敛阶。
-    - 设计动机：指数加权的精确性 + (S)RK 的高阶性 = 既继承显式 (S)RK 的阶数（定理 3.4），又自动复刻一票主流采样器（DDIM/DPM-Solver/SEEDS-1/gDDIM），给"反正可以用主流采样器"的用户提供平滑迁移。
+扩散反向 SDE 的漂移天然是 $a(t)\bm{x}+b(t)\bm{f}_\theta$ 的半线性形式，直接拿显式 (S)RK 去积分会浪费这个结构、精度上不去。Princeps 先用 Lawson 积分因子把方程整形：令 $\Xi(t)=\exp\int_0^t a(\tau)d\tau$、状态换成 $\bm{Y}=\Xi^{-1}\bm{X}$，得到纯漂移 + 单位扩散的等价 SDE $d\bm{Y}_\varsigma=\bm{f}_\theta(\varsigma,\Xi(\varsigma)\bm{Y}_\varsigma)d\varsigma+d\bm{W}_\varsigma$，再在这条"漂亮"方程上写 $s$ 段 SRK：$\bm{Z}_i=\Xi^{-1}(\varsigma_n)\bm{X}_n+h\sum_{j<i}a_{ij}\bm{f}_\theta^j+a_i^W\bm{W}_n+a_i^H\bm{H}_n$，回代后步进
 
-2. **McCallum-Foster 双状态耦合实现代数可逆**:
+$$\bm{X}_{n+1}=\frac{\Xi(\varsigma_{n+1})}{\Xi(\varsigma_n)}\bm{X}_n+\Xi(\varsigma_{n+1})\bm{\Psi},$$
 
-    - 功能：把任意显式格式 $\bm{\Psi}$ 包成代数可逆的 $\bm{\Upsilon}$——前向迭代和反向迭代是闭式互逆等式，与步长、精度无关。
-    - 核心思路：引入耦合参数 $\zeta\in(0,1]$ 和辅助状态 $\hat{\bm{X}}_n$。前向：$\bm{X}_{n+1}=\tfrac{\kappa_{n+1}}{\kappa_n}(\zeta\bm{X}_n+(1-\zeta)\hat{\bm{X}}_n)+\kappa_{n+1}\bm{\Psi}_h(\varsigma_n,\hat{\bm{X}}_n,\bm{W}_n)$，$\hat{\bm{X}}_{n+1}=\tfrac{\kappa_{n+1}}{\kappa_n}\hat{\bm{X}}_n-\kappa_{n+1}\bm{\Psi}_{-h}(\varsigma_{n+1},\bm{X}_{n+1},\bm{W}_n)$；反向把这两个等式按 $\hat{\bm{X}}_n,\bm{X}_n$ 解出来，恰好是闭式（式 13）。$\kappa_n,\varsigma_t$ 根据数据/噪声预测和 ODE/SDE 分四种取法（如数据预测 SDE：$\kappa_n=\sigma_n/\gamma_n,\varsigma_t=\alpha_n^2/\sigma_n^2$）。
-    - 设计动机：MF 是当时唯一"可逆 + 非零线性稳定域"的格式，套上去后 Rex 继承稳定域；$\zeta$ 提供"反演精度 vs 稳定性"的可调旋钮——图像编辑要精确反演取 $\zeta=0.999$，Boltzmann 采样只要可逆不要精确取 $\zeta=0.001$ 换稳定性。
+其中 $\bm{H}_n$ 是 Brownian 桥的时空 Lévy area，让加性噪声 SRK 在简单近似下也拿到强收敛阶。指数加权吃掉半线性部分带来精确性、(S)RK 提供高阶性，二者相乘的结果不仅继承基方案的阶数（定理 3.4），还自动复刻 DDIM、DPM-Solver-1/2/12、DPM-Solver++、SDE-DPM-Solver、SEEDS-1、gDDIM（定理 3.3）——用主流采样器的用户能无缝迁移。
 
-3. **Brownian motion 可重放：用单 seed + splittable PRNG 替代轨迹缓存**:
+**2. McCallum-Foster 双状态耦合：把任意显式格式包成代数可逆。**
 
-    - 功能：让扩散 SDE 的反向迭代和前向用**同一条** Brownian 实现 $\bm{W}_n(\omega)$，同时不需要把整条轨迹存内存——这是支持自适应步长的关键。
-    - 核心思路：采用 Li 2020 / Kidger 2021 / Jelinčič 2024 的方案，用 splittable PRNG（Salmon 2011）从单个种子按二叉树式递归生成任意时间段 $[s,t]$ 上的 Brownian 增量和时空 Lévy area $\bm{H}_{s,t}$，可逆求解器只要存种子就能在反向步精确重建 $\bm{W}_n(\omega)$。
-    - 设计动机：以往 SDE 反演（Nie 2024、Wu & la Torre 2023）的"可逆"是把整条 $\bm{W}$ 存下来——内存爆炸、且天然杀死自适应步长。该设计让 Rex 成为**首个不需要存整条 Brownian 的扩散 SDE 精确反演求解器**，自然支持 Dopri5 这种自适应步长方案（Rex (Dopri5) 是据作者所知首个用于扩散编辑的自适应可逆求解器）。
+光有精度还不够，很多应用（真实图像编辑、Boltzmann 似然）要求前向-反向严格互逆。作者在 Princeps 的 $\bm{\Psi}$ 外套 McCallum-Foster 双状态耦合：引入参数 $\zeta\in(0,1]$ 和辅助状态 $\hat{\bm{X}}_n$，前向走
+
+$$\bm{X}_{n+1}=\tfrac{\kappa_{n+1}}{\kappa_n}\big(\zeta\bm{X}_n+(1-\zeta)\hat{\bm{X}}_n\big)+\kappa_{n+1}\bm{\Psi}_h(\varsigma_n,\hat{\bm{X}}_n,\bm{W}_n),\quad \hat{\bm{X}}_{n+1}=\tfrac{\kappa_{n+1}}{\kappa_n}\hat{\bm{X}}_n-\kappa_{n+1}\bm{\Psi}_{-h}(\varsigma_{n+1},\bm{X}_{n+1},\bm{W}_n),$$
+
+反向把这两式按 $\hat{\bm{X}}_n,\bm{X}_n$ 解出来恰好是闭式（$\kappa_n,\varsigma_t$ 按数据/噪声预测和 ODE/SDE 分四种取法）。选 MF 是因为它是当时唯一"可逆 + 非零线性稳定域"的格式，套上去 Rex 直接继承稳定域；而 $\zeta$ 还顺手给了一个"反演精度 vs 稳定性"的旋钮——图像编辑要精确反演取 $\zeta=0.999$，Boltzmann 采样只要可逆不要精确取 $\zeta=0.001$ 换稳定性。
+
+**3. Brownian motion 可重放：用单 seed + splittable PRNG 替代轨迹缓存。**
+
+扩散 SDE 的反向迭代必须用和前向**同一条** Brownian 实现 $\bm{W}_n(\omega)$，以往做法是把整条轨迹存内存——内存爆炸，还天然杀死自适应步长。Rex 改用 splittable PRNG（Salmon 2011，沿 Li 2020 / Kidger 2021 / Jelinčič 2024 体系），从单个种子按二叉树式递归生成任意区间 $[s,t]$ 上的 Brownian 增量和时空 Lévy area $\bm{H}_{s,t}$，反向步只要存种子就能精确重建 $\bm{W}_n(\omega)$。这一步让 Rex 成为首个不存整条 Brownian 还能精确反演扩散 SDE 的求解器，也因此能配 Dopri5 这种自适应步长方案（Rex (Dopri5) 是据作者所知首个用于扩散编辑的自适应可逆求解器）。
 
 ### 损失函数 / 训练策略
 Rex 是纯**推理期求解器**，不引入新的训练损失，可以直接插入预训练扩散模型（DDPM、Stable Diffusion v1.5、DiT 等）替换原采样器。理论侧给出两条收敛定理：定理 3.4 证明若 $\bm{\Phi}$ 是 $k$ 阶 RK，则 Rex 在方差保持调度下是 $k$ 阶可逆求解器 $\|\bm{x}_n-\bm{x}_{t_n}\|\le Ch^k$；定理 3.5 证明 SRK 强收敛阶 $\xi$ 被 Princeps 完全继承。

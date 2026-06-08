@@ -41,39 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一个文本 prompt 与一个一步生成模型 $\mathcal{M}: \mathbb{R}^N \to \mathbb{F}$（论文用 FLUX-schnell，$N = 65{,}536$），输出是优化后的 latent $\bm{x}^* \in \mathbb{R}^N$ 与对应图像 $\mathcal{M}(\bm{x}^*)$。流程是一个简洁的循环（Algorithm 1）：
-
-```
-repeat:
-    J  ←  r(M(x))
-    g  ←  ∇_x J
-    g' ←  Proj_G(g)              # ← 本文的核心
-    x  ←  Adam(x, g')
-```
-
-与软正则路线 $\max_{\bm{x}} r(\mathcal{M}(\bm{x})) - \lambda \mathcal{L}_{\text{reg}}(\bm{x})$ 相比，这里**没有 $\lambda$**，且**不要求 $\bm{x}$ 本身落在 $\mathcal{G}$ 里**——只要每步的"更新方向"落在 $\mathcal{G}$ 里就够了，这样既能避免 reward hacking，又能把搜索集中在与白噪声兼容的子空间。
-
-整个流水线的难点全部集中在投影算子 $\text{Proj}_{\mathcal{G}}$ 的设计与高效实现，下面三个关键设计就在解决这件事。
+这套方法要解决的是 test-time latent 优化"既要快、又不能 reward hacking"的两难。作者的做法是保留原来的 reward ascent 循环——每步算 reward $J = r(\mathcal{M}(\bm{x}))$、求梯度 $\bm{g} = \nabla_{\bm{x}} J$、用 Adam 更新 latent——但在 Adam 之前插入一个投影算子，把梯度 $\bm{g}$ 投影到一个刻画"白高斯噪声"的可行集 $\mathcal{G}$ 上再去更新（Algorithm 1）。关键的视角转换是：软正则路线 $\max_{\bm{x}} r(\mathcal{M}(\bm{x})) - \lambda \mathcal{L}_{\text{reg}}(\bm{x})$ 把噪声性写进目标函数、还要调 $\lambda$，而本文把它写进**更新方向**——不要求 $\bm{x}$ 本身落在 $\mathcal{G}$ 里，只要求每步走的方向落在 $\mathcal{G}$ 里，这样既无超参，又把搜索锁在与白噪声兼容的子空间内。整个方法的全部技术含量都在投影算子 $\text{Proj}_{\mathcal{G}}$ 怎么设计得既精确又能 $\mathcal{O}(N\log N)$ 算出来，下面三个设计层层递进地解决它。
 
 ### 关键设计
 
-1. **紧凑谱域 bijection $\mathcal{F}: \mathbb{R}^N \to \mathbb{C}^{N/2}$**：
+**1. 紧凑谱域 bijection $\mathcal{F}$：把 Hermitian 冗余剥掉让投影解耦**
 
-    - 功能：把实信号 DFT 中由 Hermitian 对称性带来的冗余完全剥掉，使后续投影问题在结构上解耦。
-    - 核心思路：对偶数维 $N$，DFT 系数 $\hat{\bm{x}}$ 中只有 $x^*_0, x^*_{N/2}$ 是实数，且 $\hat{x}_k = \overline{\hat{x}_{N-k}}$，所以独立自由度只有 $N/2$ 个复数。作者定义 $y_0 = \tfrac{\hat{x}_0}{\sqrt 2} + \tfrac{\hat{x}_{N/2}}{\sqrt 2} i$、$y_k = \hat{x}_k$（$k = 1, \dots, N/2-1$），构成 $\bm{y} = \mathcal{F}(\bm{x})$。Proposition 4.1 证明 $\mathcal{F}$ 是 $\mathbb{R}^N \leftrightarrow \mathbb{C}^{N/2}$ 双射，且 $\bm{z} \sim \mathcal{CN}(\bm 0, \bm I_{N/2})$ 当且仅当 $\mathcal{F}^{-1}(\bm{z}) \sim \mathcal{N}(\bm 0, \bm I_N)$；Proposition 4.2 进一步给出 $\|\mathcal{F}^{-1}(\bm z)\|_2^2 = 2\|\bm z\|_2^2$。这两条把"空间域上的高斯白噪声约束"等价转换为"紧凑谱域上的复高斯约束"。
-    - 设计动机：直接在 $\hat{\bm{x}}$ 上写硬约束会因为 Hermitian 耦合导致不同块之间纠缠、没有闭式投影；剥掉冗余之后，约束自然按块解耦，下一步才能做高效投影。
+直接在 DFT 系数 $\hat{\bm{x}} = \bm{F}\bm{x}$ 上写硬约束行不通——实信号的 DFT 满足 Hermitian 对称性，不同频率块彼此耦合、有的系数实有的复，没有简单闭式投影。作者的破解办法是把冗余一次性剥干净：对偶数维 $N$，$\hat{\bm{x}}$ 里只有 $\hat{x}_0, \hat{x}_{N/2}$ 是实数且满足 $\hat{x}_k = \overline{\hat{x}_{N-k}}$，独立自由度其实只有 $N/2$ 个复数。于是定义 $y_0 = \tfrac{\hat{x}_0}{\sqrt 2} + \tfrac{\hat{x}_{N/2}}{\sqrt 2} i$、$y_k = \hat{x}_k\,(k = 1, \dots, N/2-1)$，得到紧凑谱向量 $\bm{y} = \mathcal{F}(\bm{x}) \in \mathbb{C}^{N/2}$。Proposition 4.1 证明 $\mathcal{F}$ 是 $\mathbb{R}^N \leftrightarrow \mathbb{C}^{N/2}$ 的双射，并且 $\bm{z} \sim \mathcal{CN}(\bm 0, \bm I_{N/2})$ 当且仅当 $\mathcal{F}^{-1}(\bm{z}) \sim \mathcal{N}(\bm 0, \bm I_N)$；Proposition 4.2 再给出等距关系 $\|\mathcal{F}^{-1}(\bm z)\|_2^2 = 2\|\bm z\|_2^2$。这两条把"空间域白高斯噪声约束"无损翻译成"紧凑谱域复高斯约束"，约束从此可以按块解耦，后续高效投影才成为可能。
 
-2. **块状 $\ell_1/\ell_2$ 双范数可行集 $\mathcal{G}_{\mathbb{C}}$**：
+**2. 块状 $\ell_1/\ell_2$ 双范数可行集 $\mathcal{G}$：把白噪声统计性精确卡死**
 
-    - 功能：在紧凑谱域 $\mathbb{C}^{N/2}$ 上定义一个紧致集合，**精确**刻画白高斯噪声的统计特性，且比单一 $\ell_2$ 或 $\ell_1$ 约束更紧。
-    - 核心思路：将 $\bm{y}$ 切成 $P = N/(2B)$ 个 size-$B$ 块（论文取 $B = 16$），对每块同时强制其 $\ell_1$ 与 $\ell_2$ 范数等于 $\mathcal{CN}(0,1)$ 下的理论期望：$\|\bm{y}^{(p)}\|_1 = \tfrac{\sqrt\pi}{2}B$ 且 $\|\bm{y}^{(p)}\|_2^2 = B$。空间域可行集定义为 $\mathcal{G}_{\mathbb{R}} = \mathcal{F}^{-1}(\mathcal{G}_{\mathbb{C}})$。这一来 $\ell_2$ 约束保证整体能量与 $\chi_N$ 分布的众数 $\|\bm{x}\|_2^2 = N$ 完全一致（与 $\ell_2$ norm 正则 $\mathcal{L}_{\text{norm}}$ 的极小点几乎重合），$\ell_1$ 约束则压抑任一单频率分量主导谱（理论上每块内 $|y_j|^2$ 的最大值仅约 $7.18$，而总预算 $N/2 \gg 10^4$），从而对应白噪声的"无主导频率"性质。作者用 1.1M 个高斯样本验证：$\bm{x} \sim \mathcal{N}(\bm 0, \bm I_N)$ 与其在 $\mathcal{G}_{\mathbb{R}}$ 上的投影之间的余弦相似度最低也有 $0.988$，说明真实白噪声本就贴着这个可行集。
-    - 设计动机：比起仅匹配总 $\ell_1$、$\ell_2$（只两个全局等式），按块做 $2P$ 个等式形成的可行集严格更小，是对白噪声分布更紧的刻画；比起 MPGR 仅惩罚 $\ell_1$ 偏差的软正则，硬集合还额外卡住 $\ell_2$ 能量，把"shortcut 解"彻底排除在外。
+有了紧凑谱域，作者在上面定义可行集来刻画"latent 长得像白噪声"这件事。把 $\bm{y}$ 切成 $P = N/(2B)$ 个 size-$B$ 块（取 $B = 16$），对每块**同时**强制 $\ell_1$ 与 $\ell_2$ 范数等于复高斯 $\mathcal{CN}(0,1)$ 下的理论期望：$\|\bm{y}^{(p)}\|_1 = \tfrac{\sqrt\pi}{2}B$ 且 $\|\bm{y}^{(p)}\|_2^2 = B$，空间域可行集即 $\mathcal{G}_{\mathbb{R}} = \mathcal{F}^{-1}(\mathcal{G}_{\mathbb{C}})$。这两个范数各管一件事：$\ell_2$ 约束让整体能量精确对齐 $\chi_N$ 分布的众数 $\|\bm{x}\|_2^2 = N$（与 $\ell_2$ 范数正则 $\mathcal{L}_{\text{norm}}$ 的极小点几乎重合），$\ell_1$ 约束则压制任一单频率分量主导谱（理论上每块内 $|y_j|^2$ 最大约 $7.18$，远小于总预算），对应白噪声"无主导频率"的平坦谱。相比 MPGR 只软惩罚 $\ell_1$ 偏差，这里按块给出 $2P$ 个硬等式、还额外卡住 $\ell_2$ 能量，形成的可行集严格更小，把会导致伪影的 shortcut 解直接排除在集合之外。作者还用 1.1M 个真实高斯样本反向验证：$\bm{x} \sim \mathcal{N}(\bm 0, \bm I_N)$ 与其在 $\mathcal{G}_{\mathbb{R}}$ 上投影的余弦相似度最低也有 $0.988$，说明这个硬约束并没扭曲先验，而是顺着白噪声本来的样子做剪裁。
 
-3. **$\mathcal{O}(N\log N)$ 闭式投影算子 $\text{Proj}_{\mathcal{G}}$**：
+**3. $\mathcal{O}(N\log N)$ 闭式投影 $\text{Proj}_{\mathcal{G}}$：让硬约束在工程上几乎免费**
 
-    - 功能：给定任意 $\bm{x} \in \mathbb{R}^N$（这里其实是 reward 梯度），在每个优化步用接近 FFT 的复杂度找到它在 $\mathcal{G}_{\mathbb{R}}$ 上的最近点。
-    - 核心思路：先用 FFT 算 $\bm{y} = \mathcal{F}(\bm{x})$；由 Proposition 4.2 的等距关系 $\|\mathcal{F}^{-1}(\bm y) - \mathcal{F}^{-1}(\tilde{\bm y})\|_2^2 = 2\|\bm{y} - \tilde{\bm y}\|_2^2$，空间域的最小化问题在紧凑谱域里有相同最优解；进一步因为可行集按块独立，问题分解为 $P$ 个独立的"$\ell_1$ 球与 $\ell_2$ 球交集"上的投影，每个用 Liu et al. (2020) 的算法以 $\mathcal{O}(B\log B)$ 解决。具体地：把块内 $|y_j|$ 降序排成 $\bm{w}$，算前缀和 $S_{d,k} = \sum_{l=0}^k w_l^d$（$d = 1, 2$），找唯一的 $k^*$ 满足 $w_{k^*+1} \le \lambda^{(k^*)} < w_{k^*}$，其中 $\lambda^{(k^*)} = \tfrac{S_{1,k^*}}{k^*+1} - \tfrac{\sqrt\pi}{2}\tfrac{\sqrt B}{k^*+1}\sqrt{\tfrac{(k^*+1)S_{2,k^*} - S_{1,k^*}^2}{k^*+1 - \tfrac{\pi}{4}B}}$，再用一个 ReLU 软阈值表达式 $\dot y_j = \tfrac{\sqrt\pi}{2}B \cdot \tfrac{\text{ReLU}(|y_j| - \lambda^{(k^*)})}{S_{1,k^*} - (k^*+1)\lambda^{(k^*)}} \cdot \tfrac{y_j}{|y_j|}$ 直接给出投影结果，最后逆 FFT 回空间域。整体 $\mathcal{O}(N\log N)$，在 FLUX 上实测仅占整次迭代 wall-clock 的 **0.04%**。
-    - 设计动机：每步都得做投影，速度是底线；FFT + 块内闭式解的组合让"硬约束"在工程上完全免费。相比之下，把 $\mathcal{L}_{\text{power}}$ 的极小集当可行集做投影需要数百步内层梯度下降（MPGR 在 Figure 1 里就是这么做的），既慢又只是近似最优。
+可行集再好，如果每步投影都很慢就失去意义。本文的投影之所以快，正是前两个设计铺垫的结果：先用 FFT 算 $\bm{y} = \mathcal{F}(\bm{x})$，由 Proposition 4.2 的等距关系 $\|\mathcal{F}^{-1}(\bm y) - \mathcal{F}^{-1}(\tilde{\bm y})\|_2^2 = 2\|\bm{y} - \tilde{\bm y}\|_2^2$，空间域的最近点问题在紧凑谱域里有相同最优解；又因为可行集按块独立，整个投影分解成 $P$ 个互不干扰的"$\ell_1$ 球与 $\ell_2$ 球交集"上的投影，每块用 Liu et al. (2020) 的算法以 $\mathcal{O}(B\log B)$ 闭式求解。具体到每块：把块内 $|y_j|$ 降序排成 $\bm{w}$、算前缀和 $S_{d,k} = \sum_{l=0}^k w_l^d\,(d = 1, 2)$，找唯一的 $k^*$ 满足 $w_{k^*+1} \le \lambda^{(k^*)} < w_{k^*}$，其中阈值 $\lambda^{(k^*)} = \tfrac{S_{1,k^*}}{k^*+1} - \tfrac{\sqrt\pi}{2}\tfrac{\sqrt B}{k^*+1}\sqrt{\tfrac{(k^*+1)S_{2,k^*} - S_{1,k^*}^2}{k^*+1 - \tfrac{\pi}{4}B}}$，再用 ReLU 软阈值表达式 $\dot y_j = \tfrac{\sqrt\pi}{2}B \cdot \tfrac{\text{ReLU}(|y_j| - \lambda^{(k^*)})}{S_{1,k^*} - (k^*+1)\lambda^{(k^*)}} \cdot \tfrac{y_j}{|y_j|}$ 直接给出投影值，最后逆 FFT 回空间域。整套流程 $\mathcal{O}(N\log N)$，在 FLUX 上实测仅占单次迭代 wall-clock 的 **0.04%**；作为对照，把 $\mathcal{L}_{\text{power}}$ 的极小集当可行集投影需要数百步内层梯度下降（MPGR 的做法），既慢又只是近似最优。
 
 ### 损失函数 / 训练策略
 没有显式损失项，只有 reward $r$ 与投影约束。优化器是 Adam（学习率 FLUX 0.02 / SDXL-Turbo 0.1），梯度裁剪 0.03；FLUX 跑 200 步、SDXL-Turbo 跑 50 步，整套实验都在单张 A6000 上完成。每步既投影梯度，也投影 latent 本身（论文附录 H 给了拆开二者的消融）。

@@ -37,31 +37,39 @@ tags:
 
 ### 整体框架
 
-给定一组分类器的性能集合 $\Pi = \{P_1, \ldots, P_n\}$，其中每个 $P_i$ 对应一个混淆矩阵。每个评分函数 $X$（如 Precision、Recall、$F_\beta$）诱导一个排名 $\mathbf{x}$。本文研究 $F_\beta$ 族在排名空间中的几何性质，寻找使排名到 Precision 排名和 Recall 排名等距的 $\beta$ 值。
+本文不训练任何模型，而是把"$F_1$ 是不是 Precision 与 Recall 之间最好的折中"这个问题搬到**排名空间**里来回答。给定一组分类器的性能集合 $\Pi = \{P_1, \ldots, P_n\}$，每个 $P_i$ 对应一个混淆矩阵；任何评分函数 $X$（Precision、Recall、$F_\beta$ 等）都会把这 $n$ 个分类器排成一个序，记作排名 $\mathbf{x}$。两个排名之间的差异用 Kendall 距离 $d_\tau$ 度量——它数的是两个排名里"谁排谁前面"意见相反的分类器对数。于是"找最优折中"就变成：在 $F_\beta$ 这一族排名里，找一个到 Precision 排名和 Recall 排名"两边等远"的 $\beta$。整条推理分三步走：先证明 $F_\beta$ 族确实落在两端之间的最短路径上（值得搜），再给出最优 $\beta$ 的闭式解（怎么搜到），最后给一个可报告的指标量化任意 $\beta$ 离最优有多远（怎么评）。
 
 ### 关键设计
 
-1. **$F_\beta$ 排名的测地线性质**:
+**1. $F_\beta$ 排名的测地线性质：先证明这族分数值得搜。**
 
-    - 功能：证明 $F_\beta$ 是寻找 Precision-Recall 排名折中的正确分数族
-    - 核心思路：由于 $F_\beta$ 是 Precision 和 Recall 的加权 $f$-均值（$f(x) = x^{-1}$，即调和均值），对于任意两个性能 $P_A, P_B$，如果 Precision 和 Recall 都同意某个排序，则所有 $F_\beta$ 也同意。由此推导出关键等式 $d_\tau(Pr; Re) = d_\tau(Pr; F_\beta) + d_\tau(F_\beta; Re)$，即 $F_\beta$ 排名位于 Precision 和 Recall 排名之间的最短路径（测地线）上。这保证了在 $F_\beta$ 族内搜索最优折中是有意义的。
-    - 设计动机：不是所有介于 Precision 和 Recall 之间的分数都满足此测地线性质——算术均值和几何均值就不满足性能排名公理
+在 $F_\beta$ 里挑 $\beta$ 之前，得先确认这族分数没"绕路"——否则在里面找等距点毫无意义。关键观察是 $F_\beta$ 本质上是 Precision 与 Recall 的加权 $f$-均值（取 $f(x)=x^{-1}$ 即调和均值）。这种均值有个好性质：对任意两个性能 $P_A, P_B$，只要 Precision 和 Recall **都**认为 $A$ 该排在 $B$ 前面，那么所有 $F_\beta$ 也都这么认为。把这个性质累加到整个性能集合上，就得到核心等式
 
-2. **最优折中的闭式解**:
+$$d_\tau(Pr; Re) = d_\tau(Pr; F_\beta) + d_\tau(F_\beta; Re)$$
 
-    - 功能：给出计算最优 $\beta$ 值的封闭公式
-    - 核心思路：最优折中 $F_*$ 定义为最小化 Fréchet 方差 $\sigma^2(\beta) = d_\tau^2(Pr; F_\beta) + d_\tau^2(F_\beta; Re)$ 的 Karcher 均值，等价于满足 $d_\tau(Pr; F_*) = d_\tau(F_*; Re)$（等距条件）。对于有限个性能，$F_\beta$ 排名随 $\beta$ 增大通过一系列离散跳变（两个性能被 $F_\beta$ 打平），跳变发生在 $\beta^2 = \vartheta(P_1, P_2) = -\frac{PTP(P_1) \cdot PFP(P_2) - PTP(P_2) \cdot PFP(P_1)}{PTP(P_1) \cdot PFN(P_2) - PTP(P_2) \cdot PFN(P_1)}$。最优 $\beta^2$ 就是所有正 $\vartheta$ 值的中位数。
-    - 设计动机：这是一个完全解析的结果，不需要任何数值优化
+即从 Precision 排名走到 Recall 排名，途经任意 $F_\beta$ 排名的"路程"恰好相加不亏——$F_\beta$ 排名严格落在两端之间的**测地线**（最短路径）上。这就保证了在 $F_\beta$ 族内搜索折中点是有意义的几何问题。值得强调的是这不是平凡的：算术均值和几何均值都**不**满足性能排名公理，它们可能诱导出违反直觉的排名，因此并非任何"介于两者之间"的分数都能当折中，唯独 $F_\beta$ 族可以。
 
-3. **最优度评估指标 $\mathcal{O}$**:
+**2. 最优折中的闭式解：把"等距点"直接算出来，不用数值优化。**
 
-    - 功能：量化任意 $\beta$ 选择的排名最优程度
-    - 核心思路：将所有分类器对分为三类：Precision 和 Recall 一致的（无需选择）、需要选择且选择正确的、需要选择但选择错误的。最优度 $\mathcal{O} = 1 - \frac{d_\tau(F_\beta; F_*)}{d_\tau(Pr; Re) - d_\tau(F_\beta; F_*) + d_\tau(F_\beta; F_*)}$，当且仅当 $\beta$ 为最优时 $\mathcal{O}=1$
-    - 设计动机：提供了一个简单可报告的度量，让使用者评估自己的 $\beta$ 选择离最优有多远
+既然 $F_\beta$ 排名在测地线上随 $\beta$ 移动，最优折中 $F_*$ 自然定义为到两端等距的那个点，即最小化 Fréchet 方差 $\sigma^2(\beta) = d_\tau^2(Pr; F_\beta) + d_\tau^2(F_\beta; Re)$ 的 Karcher 均值，等价于满足等距条件 $d_\tau(Pr; F_*) = d_\tau(F_*; Re)$。难点在于 $\beta$ 连续而排名离散：随 $\beta$ 从小增大，$F_\beta$ 排名并非平滑变化，而是在某些临界点上发生**离散跳变**——某两个性能 $P_1, P_2$ 恰好被 $F_\beta$ 打成平手然后交换位序。每个这样的跳变点对应一个临界值
+
+$$\beta^2 = \vartheta(P_1, P_2) = -\frac{PTP(P_1)\cdot PFP(P_2) - PTP(P_2)\cdot PFP(P_1)}{PTP(P_1)\cdot PFN(P_2) - PTP(P_2)\cdot PFN(P_1)}$$
+
+其中 $PTP/PFP/PFN$ 是归一化的真正例/假正例/假负例概率。每个跳变让排名向 Recall 一侧挪一格，那么"两边等距"就等价于让跳变点对半分——**最优 $\beta^2$ 正是所有正 $\vartheta$ 值的中位数**。整个解完全解析，只需枚举性能对、算 $\vartheta$、取中位数，不需要任何迭代优化。
+
+**3. 最优度 $\mathcal{O}$：给任意 $\beta$ 一个"离最优多远"的分数。**
+
+有了 $F_*$，使用者自然想知道自己手头用的 $\beta$（比如默认的 $F_1$）排得有多好。本文把所有分类器对分成三类：Precision 与 Recall 本就一致的（不用选，谁来都对）、需要做折中选择且选对的、需要选择却选错的。最优度定义为
+
+$$\mathcal{O} = 1 - \frac{d_\tau(F_\beta; F_*)}{d_\tau(Pr; Re)}$$
+
+分子是当前 $\beta$ 的排名与最优排名 $F_*$ 的 Kendall 距离，分母是两端总距离作归一化；当且仅当 $\beta$ 取到最优时 $\mathcal{O}=1$，偏离越远 $\mathcal{O}$ 越小。这是一个可以直接写进论文的单一数字，让任何使用 $F_\beta$ 的人都能报告自己的 $\beta$ 选择离最优排名差多少。
+
+> ⚠️ $\mathcal{O}$ 的精确归一化形式以原文为准。
 
 ### 损失函数 / 训练策略
 
-本文为纯理论工作，无训练过程。核心公式为 $\beta^2 = \text{median}(\{\vartheta(P_i, P_j) | i \neq j \wedge \vartheta(P_i, P_j) \geq 0\})$。
+本文为纯理论工作，无训练过程。落地只需一行：$\beta^2 = \text{median}(\{\vartheta(P_i, P_j) \mid i \neq j \wedge \vartheta(P_i, P_j) \geq 0\})$，对所有正的成对临界值取中位数即得最优 $\beta$。
 
 ## 实验关键数据
 

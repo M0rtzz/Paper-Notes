@@ -42,33 +42,23 @@ tags:
 
 ### 整体框架
 
-实验流程分四步：(1) 用同一份 TOFU 双语数据在某 $\mathcal{L}_{FT}$ 上 LoRA 微调，得到 $f_{\text{ft}}$；(2) 用 DPO 风格 unlearning 目标 $J_{UN}$ 在 $\mathcal{L}_{\text{unl}}$ 上抹除 1% forget 作者，得到 $f_{\text{un}}$；(3) 在 $\mathcal{L}_Q$ 上用 NLI 评估 forget/retain 准确性，得到转移矩阵；(4) 抽取每层隐表征做余弦相似度分析 + 构造转向向量做可逆性实验。
+这篇论文不提新遗忘算法，而是搭一套受控实验把「跨语言遗忘转移到底发生在哪一层、能不能逆回去」量化清楚。整条流水线在 Qwen2.5-7B 和 Gemma2-9B 上跑：先用同一份 TOFU 双语数据在某门微调语言 $\mathcal{L}_{FT}$ 上做 LoRA 微调得到 $f_{\text{ft}}$，再用 DPO 风格遗忘目标在某门遗忘语言 $\mathcal{L}_{\text{unl}}$ 上抹掉 1% 的 forget 作者得到 $f_{\text{un}}$，然后换各种查询语言 $\mathcal{L}_Q$ 评测 forget/retain 准确率拼出转移矩阵，最后抽每层隐表征做余弦相似度定位 + 构造一个推理时转向向量验证可逆性。
 
-所有实验在 Qwen2.5-7B 和 Gemma2-9B 上跑，遗忘目标为 $\arg\min_\theta \frac{1}{|\mathcal{L}_{\text{unl}}|} \sum_{\ell} (\mathbb{E}_{D_\ell^{\text{forget}}} J_{\text{forget}} + \lambda \mathbb{E}_{D_\ell^{\text{retain}}} J_{\text{retain}})$，其中 $J_{\text{forget}}$ 用 DPO 偏好「IDK 拒答」胜过「真实答案」。
+遗忘目标本身就是标准的层级化 DPO 偏好优化，$\arg\min_\theta \frac{1}{|\mathcal{L}_{\text{unl}}|} \sum_{\ell} (\mathbb{E}_{D_\ell^{\text{forget}}} J_{\text{forget}} + \lambda \mathbb{E}_{D_\ell^{\text{retain}}} J_{\text{retain}})$，其中 $J_{\text{forget}}$ 让模型偏好「IDK 拒答」胜过「真实答案」、$J_{\text{retain}}$ 用 $\lambda$ 加权护住 retain 集。评测一律不用 lexical overlap（跨语言下词面重合会虚高虚低），而是用多语 NLI 模型 xlm-roberta-large-xnli 判生成答案 $\hat y$ 与 ground truth $y$ 是否互蕴，并请 native speaker 在 50 个样本上校验过 NLI 判分的可靠性。
 
 ### 关键设计
 
-1. **三轴受控的多语言遗忘转移矩阵**:
+**1. 三轴受控的 $5\times 5\times 5$ 遗忘转移矩阵：把「语言关系怎么影响遗忘」拆成可观测维度。**
 
-    - 功能：把「语言关系如何影响遗忘转移」这个开放问题拆成三个可观测维度。
-    - 核心思路：选 5 种语言覆盖「同族 + 同书写」（EN/DE）、「同族 + 异书写」（EN/RU）、「异族 + 同书写」（EN/TU）、「都不共享」（EN/CH）四种组合；对每种 $(\mathcal{L}_{FT}, \mathcal{L}_{\text{unl}}, \mathcal{L}_Q)$ 三元组报告 NLI 分数随 unlearning 的变化（更负代表更强遗忘），并用 5 次随机 forget 集抽样估方差。
-    - 设计动机：以往工作只测英语单点，无法分清「书写系统效应」「语族效应」「预训练覆盖率效应」哪个起作用；这个 $5\times 5\times 5$ 矩阵让所有三类效应独立可观察，是后续机制分析的实验基石。
+以往遗忘评测只在英文单点上做，根本分不清观察到的转移是「书写系统相近」「语族相近」还是「预训练覆盖率高」哪个在起作用——三个因素全纠缠在一起。本文选 5 种语言把这三轴正交开：EN/DE 同族同书写、EN/RU 同族异书写、EN/TU 异族同书写、EN/CH 都不共享。对每个 $(\mathcal{L}_{FT}, \mathcal{L}_{\text{unl}}, \mathcal{L}_Q)$ 三元组报告 NLI 分数相对 fine-tuned base 的降幅（越负=遗忘越强），并用 5 次随机 forget 集抽样估方差。这样每一类效应都能单独读出来，整张矩阵成了后面机制分析的实验地基。
 
-2. **跨语言提示作为「输出端」诊断**:
+**2. 跨语言提示作为「输出端」诊断：分清模型是真不知道、还是知道但解码不出来。**
 
-    - 功能：判断模型究竟是「不知道答案」还是「知道但解码不出来」。
-    - 核心思路：查询用语言 $q$ 但要求模型用微调语言 $\ell$ 回答，记录性能增益 $\Delta_{\ell \leftarrow q}$。若 $\Delta > 0$ 大，说明知识在共享空间里完好，只是解码受语言绑定；论文进一步算出 $\Delta_{\ell \leftarrow q}$ 与遗忘转移矩阵中对应单元的相关系数（Pearson $r=0.50$，Spearman $\rho=0.60$，均显著），把「共享语义空间」和「转移强度」直接挂钩。
-    - 设计动机：解码绑定假说只能间接观测；用「换语言作答」直接打开瓶颈，证明遗忘的损害是经过共享空间传到下游解码层。
+遗忘后性能掉了，可能是知识被抹了，也可能是知识还在共享空间里、只是被绑定到特定语言的解码层卡住了——这两种情况安全含义天差地别。本文用一招直接打开这个瓶颈：查询用语言 $q$ 提问，却强制模型用微调语言 $\ell$ 作答，记录性能增益 $\Delta_{\ell \leftarrow q}$。如果 $\Delta_{\ell \leftarrow q}$ 显著为正，就说明知识在共享语义空间里完好无损，缺的只是语言特化的解码出口。更进一步，论文把 $\Delta_{\ell \leftarrow q}$ 和转移矩阵里对应单元做相关，得到 Pearson $r=0.50$、Spearman $\rho=0.60$（均显著），等于把「共享语义空间完好」和「转移强度」两件事直接焊在一起——遗忘的损害确实是经共享空间传导到下游解码层的。
 
-3. **遗忘方向 = 表征差，推理时 steering 验证可逆性**:
+**3. 遗忘方向 = 表征差，推理时 steering 验证可逆性：把「遗忘只是抑制」从猜测做成机制级反例。**
 
-    - 功能：把「遗忘是抑制」从假设升级为机制级证据，并定量恢复被遗忘的知识。
-    - 核心思路：对同一 forget 问题在 $f_{\text{ft}}$ 和 $f_{\text{un}}$ 上取层 $l$ 的最终 token 隐状态差 $d^{(l)} = h_{\text{ft}}^{(l)} - h_{\text{un}}^{(l)}$，沿这个方向在 $f_{\text{un}}$ 的 forward pass 里 inject 一个加权扰动；若沿单一方向 + 跨语言都能恢复，则遗忘是「语言无关的表面抑制」。逐层余弦相似度分析显示，$f_{\text{un}}$ 在前中段几乎与 $f_{\text{ft}}$ 重合，分歧集中在最后若干解码层。
-    - 设计动机：以往「可逆性」证据要么靠 brief relearning（仍然要数据），要么靠答案前缀诱导（需先知道答案）；本工作给出的 single direction inference-time steering 既无须 forget 数据、也无须答案，并能跨语言迁移，这是对「LLM 遗忘是否真的擦除」最强力的反例。
-
-### 评估指标
-
-用多语 NLI 模型（xlm-roberta-large-xnli）判断生成答案 $\hat y$ 与 ground truth $y$ 是否互蕴，避开 lexical overlap 在多语下的虚高/虚低；native speaker 在 50 样本上校验了 NLI 的可靠性。
+要证明遗忘是「表面抑制」而非真擦除，最硬的证据是不重学、不给答案就能把知识拽回来。做法是对同一个 forget 问题，在 $f_{\text{ft}}$ 和 $f_{\text{un}}$ 上各取第 $l$ 层最终 token 的隐状态，作差得到遗忘方向 $d^{(l)} = h_{\text{ft}}^{(l)} - h_{\text{un}}^{(l)}$，再把这个方向加权 inject 回 $f_{\text{un}}$ 的 forward pass。逐层余弦相似度先给出定位证据：$f_{\text{un}}$ 在前中段几乎与 $f_{\text{ft}}$ 完全重合，分歧只集中在最后若干解码层——所以遗忘动的是「概念→语言特化输出」那一步，前中段的共享概念空间没被碰。正因如此，沿这一个方向做推理时 steering 就能跨语言地把知识恢复出来。和以往证据相比，brief relearning 仍要 forget 数据、答案前缀诱导需要先知道答案，而这套 single-direction inference-time steering 两样都不要、还能跨语言迁移，是对「LLM 遗忘到底有没有真擦除」最直接有力的反例。
 
 ## 实验关键数据
 

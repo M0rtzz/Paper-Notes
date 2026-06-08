@@ -41,45 +41,35 @@ tags:
 
 ### 整体框架
 
-1. 用CLIP计算视觉-语言特征的余弦相似度得到logits
-2. 对logits进行非极大值抑制（NMS）和归一化
-3. 计算归一化logits到退化分布（均匀分布 $\frac{1}{N}\mathbf{1}_N$）的分布差异
-4. 通过联合双边上采样（JBU）恢复到原始分辨率
-5. 取argmax得到最终分割图
+这篇论文要解决的是免训练开放词汇语义分割：给一张图和一组文本类别，不训练、不做模型特定的注意力魔改，就要输出像素级分割。整条流水线的关键转折在于它**不再去优化 logits**。传统范式是先用 CLIP 算出视觉-语言相似度 logits，再把 logits 分布往 GT 分布拉（$\mathcal{Q}^* = \arg\min_\mathcal{Q} \mathbf{D}(\mathcal{P}\|\mathcal{Q})$），最后 argmax 取类别；本文把它翻转成一个解析解 $\mathbf{M} = \arg\max_{N_c} \mathbf{D}(\mathcal{S}\|\mathcal{Q})$，直接拿「logits 到退化分布 $\mathcal{S}$ 的差异」当作分割依据。
 
-将优化公式 $\mathcal{Q}^* = \arg\min_\mathcal{Q} \mathbf{D}(\mathcal{P}\|\mathcal{Q})$ 重新表述为解析解 $\mathbf{M} = \arg\max_{N_c} \mathbf{D}(\mathcal{S}\|\mathcal{Q})$，其中 $\mathcal{S}$ 为替代GT的退化分布。
+具体走法是：CLIP 算出 logits 后，先做非极大值抑制（NMS）和归一化压掉噪声；然后计算归一化 logits 到退化分布（均匀分布 $\frac{1}{N}\mathbf{1}_N$）的差异，这一步有两条等价路线——最优传输路径或最大传输速度；最后用联合双边上采样（JBU）把低分辨率结果恢复到原图尺寸，argmax 得到分割图。整个过程没有任何参数更新。
 
 ### 关键设计
 
-1. **退化分布替代GT分布（§3.3）**：
+**1. 退化分布替代 GT：把推理时拿不到的 GT 端点换成永远可知的均匀分布。**
 
-    - 推理时GT分布不可用，需要替代。作者提出用退化分布（均匀分布）作为替代
-    - 实验验证：KL散度从logits到GT（$\mathbf{D}(\mathcal{P}\|\mathcal{Q})$）和从logits到退化分布（$\mathbf{D}(\mathcal{S}\|\mathcal{Q})$）在5个数据集上的性能高度一致
-    - 可视化显示$\mathcal{S}$和$\mathcal{P}$在特征空间中占据对跖位置——logits优化向GT端点走，本方法计算到退化端点的差异
-    - **设计动机**：退化分布是推理时唯一无需额外信息就能确定的分布
+整套方法的合法性全押在这个替换上。优化范式之所以离不开训练，是因为它需要 GT 分布作为靠拢目标，而推理时根本没有 GT。本文的做法是用退化分布（均匀分布）当替身：作者发现在特征空间里，退化分布 $\mathcal{S}$ 和 GT 分布 $\mathcal{P}$ 恰好占据对跖（antipodal）的两端——logits 优化是朝 GT 端点走，那么反过来「测 logits 到退化端点还有多远」同样能区分类别。实验上，KL 散度从 logits 到 GT（$\mathbf{D}(\mathcal{P}\|\mathcal{Q})$）和从 logits 到退化分布（$\mathbf{D}(\mathcal{S}\|\mathcal{Q})$）在 5 个数据集上性能高度一致，验证了这种端点对调可行。选退化分布而不是别的分布，原因很现实：它是推理时唯一无需任何额外信息就能写出来的分布。
 
-2. **最优传输路径（Optimal Path, §3.4）**：
+**2. 最优传输路径：用同类区域退化路径一致这件事，把「差异」量化成传输代价。**
 
-    - 直觉：同类区域的退化路径应一致，因此路径本身可量化差异
-    - 将问题形式化为Sinkhorn最优传输：
-    $\boldsymbol{\pi}^* = \min_{\boldsymbol{\pi}} \sum_{i,j} \mathbf{C}_{i,j}\boldsymbol{\pi}_{i,j} - \epsilon\sum_{i,j}\boldsymbol{\pi}_{i,j}(\ln\boldsymbol{\pi}_{i,j} - 1)$
-    - 代价矩阵 $\mathbf{C}$ 使用Stable Diffusion v2的层级平均自注意力张量
-    - 通过Lagrange乘子法得到解析解：$\boldsymbol{\pi}^* = \text{diag}(\boldsymbol{\mu})\mathbf{K}\text{diag}(\boldsymbol{\nu})$，其中Gibbs核 $\mathbf{K} = \exp(-\mathbf{C}/\epsilon)$
-    - 用Sinkhorn迭代更新 $\boldsymbol{\mu}$ 和 $\boldsymbol{\nu}$（50次迭代，$\epsilon=0.1$）
+有了替代端点，还需要一把尺子去量「每个 patch 的 logits 到退化分布有多远」。第一把尺子是路径——核心假设是同类区域走向退化的路径应当一致，于是路径本身就编码了语义差异。作者把它写成带熵正则的 Sinkhorn 最优传输：
 
-3. **最大传输速度（Maximum Velocity, §3.5）**：
+$$\boldsymbol{\pi}^* = \min_{\boldsymbol{\pi}} \sum_{i,j} \mathbf{C}_{i,j}\boldsymbol{\pi}_{i,j} - \epsilon\sum_{i,j}\boldsymbol{\pi}_{i,j}(\ln\boldsymbol{\pi}_{i,j} - 1)$$
 
-    - 直觉：传输速度也能量化差异——路径相同时，速度越慢意味着差异越大
-    - 将logits收敛到静止分布的过程建模为马尔可夫过程：$\mathbf{f}^{c(l)} = \mathbf{f}^{c(0)} \cdot \mathbf{T}^l$
-    - 转移矩阵 $\mathbf{T}$ 通过迭代比例拟合（IPF, 15次迭代）将自注意力张量转化为双随机矩阵
-    - 每个patch的最大传输速度定义为收敛步数的倒数：$\mathbf{v}_i^c = \max\{1/l : |\mathbf{f}_i^{c(l)} - \mathbf{f}_i^{c(l-1)}| \leq \tau\}$
-    - $\tau=0.3$ 为收敛阈值
+代价矩阵 $\mathbf{C}$ 取自 Stable Diffusion v2 的层级平均自注意力张量，刻画 patch 之间的相互关系。借 Lagrange 乘子法可得解析解 $\boldsymbol{\pi}^* = \text{diag}(\boldsymbol{\mu})\mathbf{K}\text{diag}(\boldsymbol{\nu})$，其中 Gibbs 核 $\mathbf{K} = \exp(-\mathbf{C}/\epsilon)$，再用 Sinkhorn 迭代（50 次，$\epsilon=0.1$）交替更新 $\boldsymbol{\mu}$、$\boldsymbol{\nu}$ 收敛即可。这条路线对高频纹理更敏感。
 
-4. **自注意力张量来源**：
+**3. 最大传输速度：路径相同时，谁退化得慢谁差异就大。**
 
-    - 使用Stable Diffusion v2的自注意力而非CLIP的自注意力
-    - 无噪声潜在特征直接编码，单步无条件去噪提取自注意力
-    - 组合 $\text{up}_0$ 和 $\text{up}_1$ 块的张量效果最佳
+第二把尺子换了个角度——不看路径走到哪，而看走得多快。作者把 logits 收敛到静止分布的过程建模成马尔可夫链 $\mathbf{f}^{c(l)} = \mathbf{f}^{c(0)} \cdot \mathbf{T}^l$，转移矩阵 $\mathbf{T}$ 由迭代比例拟合（IPF，15 次）把自注意力张量整成双随机矩阵得到。一个 patch 越快被推向退化的均匀态，说明它离退化端点越近、与该类的差异越小；反过来收敛越慢、差异越大。于是把每个 patch 的最大传输速度定义为收敛步数的倒数：
+
+$$\mathbf{v}_i^c = \max\{1/l : |\mathbf{f}_i^{c(l)} - \mathbf{f}_i^{c(l-1)}| \leq \tau\}$$
+
+其中 $\tau=0.3$ 是收敛阈值——阈值太大会让 logits 还没充分退化就被判定收敛。这条路线对类间边界更敏感，和最优路径形成互补（也正因关注点不同，简单融合两者反而互相干扰、掉点）。
+
+**4. 自注意力张量来源：用 SD2 而非 CLIP 的自注意力当 patch 关系图。**
+
+前两把尺子都依赖一张刻画 patch 间关系的张量（代价矩阵 / 转移矩阵），它从哪来直接决定效果。作者没用 CLIP 自己的自注意力，而是改用 Stable Diffusion v2 的自注意力：把无噪声潜在特征直接编码后做单步无条件去噪来提取，避免注入噪声、保证特征确定性。来源块也有讲究——组合 $\text{up}_0$ 与 $\text{up}_1$ 上采样块的张量效果最好。这也是全方法唯一引入的「外部模型」，换来的是不绑定任何特定 CLIP 架构的模型无关性。
 
 ### 损失函数 / 训练策略
 

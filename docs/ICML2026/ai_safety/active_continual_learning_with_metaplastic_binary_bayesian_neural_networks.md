@@ -38,34 +38,26 @@ BiMU 为二值贝叶斯神经网络设计有界记忆和不确定性感知的 me
 **核心 idea**：把二值贝叶斯后验的自然参数更新设计成“数据驱动 + 有界遗忘 + 不确定性感知步长”，让二值 synapse 不会因长期证据累积而彻底冻结。
 
 ## 方法详解
-BiMU 的对象是二值权重 $\omega\in\{-1,+1\}^s$，每个 synapse 用 Bernoulli natural parameter $\lambda^{(i)}$ 参数化。$\lambda=0$ 表示最大不确定性，$|\lambda|$ 很大表示权重几乎确定。普通贝叶斯更新会不断把 $|\lambda|$ 推大，BiMU 则在每次在线 batch 更新时加入受控遗忘和 metaplastic 学习率，维持长期可塑性。
 
 ### 整体框架
-每个时间步只看当前 batch，不保存过去样本，也不需要任务边界。给定上一时刻 $\lambda_{t-1}$，BiMU 先用当前数据损失给出梯度 $\partial\mathcal L/\partial\lambda$，再加入一个把当前 posterior 拉回 prior 的项。这个 prior relaxation 由 memory window $N$ 控制，$N$ 小代表更快忘记，$N$ 大接近累计学习。更新幅度由 $\eta(\lambda,g)$ 控制：当梯度支持当前权重符号时快速巩固；当梯度反对当前符号时步长缩小，需要持续证据才会去巩固。
-
-主动学习阶段，BiMU 对每个未标注样本抽取 $K$ 组二值权重，运行 MC forward 得到多个预测类别。Variation ratio $VR=1-f_{mode}/K$ 衡量样本预测分歧。若 $VR\ge\tau$，系统请求标签并执行 BiMU 更新；否则跳过该样本，不请求标签也不反向传播。
+BiMU 要解决的是二值贝叶斯网络在长程非平稳流上的「后验饱和」问题：每个二值 synapse $\omega\in\{-1,+1\}$ 由 Bernoulli natural parameter $\lambda$ 参数化，$\lambda=0$ 是最大不确定，$|\lambda|$ 越大权重越确定，而普通贝叶斯更新只会把 $|\lambda|$ 越推越大，最终 synapse 冻结、不确定性消失。BiMU 的做法是把后验更新拆成三件事协同：当前 batch 数据驱动巩固、一个由记忆窗口控制的有界遗忘项把后验拉回 prior、一个看梯度与当前符号是否一致的非对称步长；推理时再用多组二值权重采样的预测分歧做一次性主动查询，决定要不要花标签和反向传播。整个过程只看当前 batch，不存 replay buffer，也不需要任务边界。
 
 ### 关键设计
-1. **有界记忆 Bernoulli 变分目标**:
 
-    - 功能：防止二值贝叶斯后验无限累积历史证据。
-    - 核心思路：目标函数同时包含当前数据项、到上一时刻 posterior 的 KL 稳定项、以及到 initialization prior 的 KL 遗忘项。遗忘项权重为 $1/N$，可理解为滑动窗口大小或证据半衰期。推导后得到更新中的 prior relaxation 项 $(\lambda_{t-1}^{(i)}-\lambda_{prior}^{(i)})/(N\cosh^2(\lambda_{t-1}^{(i)}))$。
-    - 设计动机：连续学习的长期僵化本质是证据无限积累。显式遗忘让 posterior 不再只会越来越确定，而是在稳定和可塑之间保持可控平衡。
+**1. 有界记忆 Bernoulli 变分目标：让后验会遗忘，而不是无限累积证据**
 
-2. **不确定性感知的 metaplastic 步长**:
+连续学习长期僵化的根因，是证据被无限积累进 $|\lambda|$，synapse 越来越难翻转符号。BiMU 把变分目标写成三项之和：当前数据项、到上一时刻 posterior 的 KL 稳定项、以及到 initialization prior 的 KL 遗忘项，其中遗忘项权重取 $1/N$，$N$ 就是滑动窗口大小或证据半衰期。对 Bernoulli 后验展开求导后，更新里多出一个 prior relaxation 项 $(\lambda_{t-1}^{(i)}-\lambda_{prior}^{(i)})/(N\cosh^2(\lambda_{t-1}^{(i)}))$，它持续把已经很确定的 synapse 往 prior 拉一点点。$N$ 小代表更快忘记、更可塑，$N$ 大接近累计学习、更容易重新僵化，因此后验不再只会越来越确定，而是在稳定和可塑之间有一个可控旋钮。
 
-    - 功能：让 synapse 在巩固和去巩固时表现出不同更新动力学。
-    - 核心思路：BiMU 不估计昂贵 Hessian，而使用有界 surrogate learning rate。步长与当前 $\lambda$ 和梯度 $g$ 的符号关系有关：若 $\lambda g<0$，梯度强化当前符号，步长接近上界；若 $\lambda g>0$，梯度试图反转当前符号，步长缩小，避免单个噪声样本轻易翻转已巩固权重。
-    - 设计动机：真实连续流里既有稳定结构，也有短期噪声和类不平衡。非对称步长让模型能快速巩固一致证据，同时要求持续反证才改变已有 synapse。
+**2. 不确定性感知的 metaplastic 步长：巩固快、去巩固慢**
 
-3. **基于 MC disagreement 的一次性主动查询**:
+真实数据流里既有稳定结构，也有短期噪声和类不平衡，如果对所有更新一视同仁，单个噪声样本就可能翻掉一个已经巩固好的权重。BiMU 不去估计昂贵的 Hessian，而是用一个有界的 surrogate learning rate $\eta(\lambda,g)$，让步长取决于当前 $\lambda$ 与梯度 $g$ 的符号关系：当 $\lambda g<0$、梯度在强化当前权重符号时，步长接近上界 $\alpha_{max}$，快速巩固一致证据；当 $\lambda g>0$、梯度试图反转当前符号时，步长缩小，必须有持续反证才会真正去巩固。这种非对称动力学正是让二值 synapse 既能学新任务、又不会被噪声轻易抹掉旧记忆的关键。
 
-    - 功能：把保留下来的 epistemic uncertainty 转化为标签和更新预算节省。
-    - 核心思路：对 incoming sample 抽取 $K$ 个二值 posterior 样本，计算预测类别众数比例。Variation ratio 越高，说明 posterior 样本之间越不一致，样本越可能对当前模型有学习价值。阈值规则一次决定是否请求标签和更新。
-    - 设计动机：边缘设备不能缓存未标注池再排序，也不能频繁反向传播。VR 只需 MC forward，而二值网络 forward 可用 bit-level 操作，成本远低于反向传播和权重写入。
+**3. 基于 MC disagreement 的一次性主动查询：把保留下来的不确定性换成标签节省**
+
+前两个设计保住了 epistemic uncertainty，第三个设计把它变现成预算节省。边缘设备没法缓存未标注池再排序，也经不起频繁反向传播，所以 BiMU 对每个进来的样本抽取 $K$ 组二值权重做 MC forward，得到多个预测类别，再算 variation ratio $VR=1-f_{mode}/K$（$f_{mode}$ 是众数类别出现次数）。$VR$ 越高说明这 $K$ 次采样越不一致、样本越可能有学习价值；只要 $VR\ge\tau$ 就一次性请求标签并执行 BiMU 更新，否则直接跳过，既不要标签也不反向传播。由于二值网络 forward 可用 bit-level 操作，$K$ 次采样的成本远低于一次反向传播和权重写入，这让主动查询在边缘上真正划算。
 
 ### 损失函数 / 训练策略
-数据项梯度用 Concrete / Gumbel-softmax 松弛估计，对 relaxed binary weights 反向传播并在 $K$ 个 MC 样本上平均。主要超参数包括 memory window $N$、最大 metaplastic step size $\alpha_{max}$、likelihood/KL 缩放系数，以及主动学习阈值 $\tau$。实验包括 1000-tasks Permuted-MNIST、OpenLORIS-Object 冻结 VGG19 特征上的在线线性头，以及 Animals/OpenLORIS 类不平衡主动学习。
+数据项梯度用 Concrete / Gumbel-softmax 松弛估计，对 relaxed binary weights 反向传播并在 $K$ 个 MC 样本上平均。主要超参数包括 memory window $N$、最大 metaplastic step size $\alpha_{max}$、likelihood/KL 缩放系数，以及主动学习阈值 $\tau$。实验覆盖 1000-tasks Permuted-MNIST、OpenLORIS-Object 冻结 VGG19 特征上的在线线性头，以及 Animals/OpenLORIS 类不平衡主动学习。
 
 ## 实验关键数据
 

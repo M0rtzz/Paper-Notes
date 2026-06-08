@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是被污染的数据矩阵 $\widetilde{\mathbf{X}}_n = \mathbf{X}_n + \mathbf{A}_n \in \mathbb{R}^{d \times n}$，其中 $\mathbf{A}_n = \sum_{i=1}^{k} \mathbf{m}_{(i)} \boldsymbol{\gamma}_{(i)}^\top$ 是 mean-shift 污染（$\boldsymbol{\gamma}_{(i)}$ 是子簇成员的 0/1 指示向量）。输出是真协方差结构对应的主成分子空间。整条 pipeline 只做三件事：(1) 对原始 $\widetilde{\mathbf{X}}_n$ 做一次 PCA 拿到 spike 特征值 $\{\tilde{\lambda}_i\}$；(2) 自己生成一个 knockoff 扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$，加到数据上再做第二次 PCA 拿到 $\{\lambda'_i\}$；(3) 做"不变性检查"：$|\tilde{\lambda}_i - \lambda'_j| < C n^{-1/2}$ 的留下，挪了位的扔掉。整体复杂度仅 $O(nd)$（用 Lanczos 或 randomized SVD 算 top-K），远低于优化型 RPCA。
+方法要解决的是：高维下 mean-shift 污染会把样本协方差的谱里塞进几个假 spike，让真主成分被带偏，而你事先并不知道哪些 spike 是假的。MS-PCA 的破解办法是做一次"对照实验"——先对污染数据 $\widetilde{\mathbf{X}}_n = \mathbf{X}_n + \mathbf{A}_n \in \mathbb{R}^{d \times n}$（其中 $\mathbf{A}_n = \sum_{i=1}^{k} \mathbf{m}_{(i)} \boldsymbol{\gamma}_{(i)}^\top$ 是 mean-shift 污染，$\boldsymbol{\gamma}_{(i)}$ 为子簇成员的 0/1 指示向量）做一次 PCA 记下 spike 特征值 $\{\tilde{\lambda}_i\}$；然后自己往数据里灌一勺人造的 knockoff 扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$ 再做第二次 PCA 得到 $\{\lambda'_i\}$；最后比对两次结果——特征值纹丝不动的判为真协方差信号，被诱饵推走的判为污染剔除掉。整条 pipeline 不解任何优化、不做迭代，只算两次 top-K PCA（Lanczos / randomized SVD），复杂度仅 $O(nd)$，远低于优化型 RPCA。
 
 ### 关键设计
 
-1. **谱分离定理（Theorem 3.5）作为算法基石**：
+**1. 谱分离定理（Theorem 3.5）：先证明"动一个不动另一个"，对照实验才成立。**
 
-    - 功能：在 spiked covariance 模型 $\mathbf{\Sigma} = \mathbf{I}_d + \mathbf{P}$（rank-$r$ 信号 spike）加 mean-shift 污染下，证明样本协方差矩阵 $\widetilde{\mathbf{X}}_n \widetilde{\mathbf{X}}_n^\top / n$ 的 $r+k$ 个 spike 特征值渐近地拆成两个**互不影响**的集合 $\Lambda_{\mathbf{P}}$ 与 $\Lambda_{\mathbf{A}}$。
-    - 核心思路：$\Lambda_{\mathbf{P}} = \{1 + \ell_i + c(1+\ell_i)/\ell_i : \ell_i > \sqrt{c}\}$ 仅由协方差 spike $\ell_i$ 决定；$\Lambda_{\mathbf{A}} = \{1 + \theta_j^2 + c(1+\theta_j^2)/\theta_j^2 : \theta_j^2 > \sqrt{c}\}$ 仅由 mean-shift 强度 $\theta_j = \sqrt{\pi_j}\|\mathbf{m}_{(j)}\|$ 决定，其中 $\sqrt{c}$ 是经典 BBP 相变阈值。证明走 Stieltjes 变换 + Benaych-Georges & Nadakuditi 的低秩加性扰动框架（Lemma 3.8），同时给出"特征空间不变性"（Theorem 3.11，$\mathcal{O}_p(n^{-1/2})$ 残差）。
-    - 设计动机：必须先证明"动一个不动另一个"，第二次注入扰动的算法才有意义；否则两组 spike 互相串扰，无法靠"谁动了"来鉴别污染。这把 mean-shift 与协方差信号的解耦从经验观察提升为渐近定理。
+整个算法的合法性全压在一件事上——只有当真信号 spike 和污染 spike 在谱上互不串扰时，"靠谁动了来鉴别污染"才说得通；否则注入扰动会同时晃动两组 spike，鉴别无从谈起。作者在 spiked covariance 模型 $\mathbf{\Sigma} = \mathbf{I}_d + \mathbf{P}$（rank-$r$ 信号 spike）叠加 mean-shift 污染下证明：样本协方差 $\widetilde{\mathbf{X}}_n \widetilde{\mathbf{X}}_n^\top / n$ 的 $r+k$ 个 spike 特征值在 $d/n \to c$ 下渐近地裂成两个互不影响的集合。协方差那一组 $\Lambda_{\mathbf{P}} = \{1 + \ell_i + c(1+\ell_i)/\ell_i : \ell_i > \sqrt{c}\}$ 只由协方差 spike 强度 $\ell_i$ 决定，污染那一组 $\Lambda_{\mathbf{A}} = \{1 + \theta_j^2 + c(1+\theta_j^2)/\theta_j^2 : \theta_j^2 > \sqrt{c}\}$ 只由 mean-shift 强度 $\theta_j = \sqrt{\pi_j}\|\mathbf{m}_{(j)}\|$ 决定，两边各自越过经典 BBP 相变阈值 $\sqrt{c}$ 才会冒头。证明走 Stieltjes 变换配上 Benaych-Georges & Nadakuditi 的低秩加性扰动框架（Lemma 3.8），并顺带给出特征空间层面的不变性（Theorem 3.11，残差 $\mathcal{O}_p(n^{-1/2})$）。这一步把"mean-shift 和协方差信号可以解耦"从图上的经验观察提升为一条渐近定理，也就给了后面"注入诱饵看谁动"的物理依据。
 
-2. **Knockoff Mean 注入与诱饵参数选择**：
+**2. Knockoff Mean 注入：用一勺已知噪声去钓出未知污染。**
 
-    - 功能：构造扰动矩阵 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$，使得它强到足以推动 $\Lambda_{\mathbf{A}}$ 里的 spike，又不会影响 $\Lambda_{\mathbf{P}}$ 里的 spike。
-    - 核心思路：方向 $\mathbf{m}'$ 从单位球 $\mathbb{S}^{d-1}$ 上均匀抽（或者 i.i.d. Gaussian 后归一化）；权重 $\pi' = 0.5$ 或 $1$ 都行；强度 $\theta'^2 := \pi' \|\mathbf{m}'\|^2 = 2 g^{-1}(\tilde{\lambda}_1)$，这里 $g$ 是 spike-forward 映射（Proposition C.1）的逆——意思是让人造 spike 的"力量"与实际观察到的最大 spike 同量级，确保可检测、且远高于 $1/D_{\mu_\infty}(\lambda^+ + \epsilon)$ 这个 BBP 门槛。即便诱饵方向恰好与已有污染方向共线，由 $\mathbf{A}_n + \mathbf{A}'_n$ 的奇异值分析可知 spike 仍发生 $\mathcal{O}(1)$ 位移，依然能被识别。
-    - 设计动机：用"加一勺已知噪声"的方式去探测"已有未知噪声"，是整篇论文的灵魂——这与 knockoff filter（控 FDR）的精神一致，但搬到了谱域。相比 RPCA 直接去解非凸优化，这里把"求解"变成了"对照实验"，零优化、零调参（除了一个阈值常数）。
+有了解耦定理还需要一个足够"亮"的探针：诱饵得强到能把 $\Lambda_{\mathbf{A}}$ 里的污染 spike 明显推动，又不能强到去碰 $\Lambda_{\mathbf{P}}$ 里的真信号。作者构造扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$，方向 $\mathbf{m}'$ 从单位球 $\mathbb{S}^{d-1}$ 均匀抽（或 i.i.d. Gaussian 归一化），权重 $\pi'$ 取 $0.5$ 或 $1$ 皆可，强度则卡在 $\theta'^2 := \pi'\|\mathbf{m}'\|^2 = 2\,g^{-1}(\tilde{\lambda}_1)$——这里 $g$ 是 spike-forward 映射（Proposition C.1），取它的逆意味着让人造 spike 的"力量"对齐实际观察到的最大 spike $\tilde{\lambda}_1$，既保证可检测、又稳稳压在 BBP 门槛 $1/D_{\mu_\infty}(\lambda^+ + \epsilon)$ 之上。哪怕运气差到诱饵方向恰好与某个已有污染方向共线，对 $\mathbf{A}_n + \mathbf{A}'_n$ 做奇异值分析也能看出 spike 仍发生 $\mathcal{O}(1)$ 量级的位移，照样会暴露。这一招与 knockoff filter 控 FDR 的精神同源——造一个已知的"假变量"来反衬真变量——只是作者把它从变量选择搬进了谱域，从而把 RPCA 那套非凸优化彻底换成了一次零调参的对照实验。
 
-3. **基于涨落量级的不变性判别（Algorithm 1 第 5 步）**：
+**3. 基于涨落量级的不变性判别（Algorithm 1 第 5 步）：用一个有理论根据的硬阈值取代超参搜索。**
 
-    - 功能：判断哪些 spike 是"稳的"（真信号）、哪些被推走了（污染）。
-    - 核心思路：对每个 $\tilde{\lambda}_i$ 在第二次 PCA 的特征值中找是否存在 $\lambda'_j$ 使得 $|\tilde{\lambda}_i - \lambda'_j| < \epsilon$，$\epsilon = C n^{-1/2}$。阈值取 $C n^{-1/2}$ 是因为：稳定 spike 在 LSD 支撑外的涨落是 $\mathcal{O}(n^{-1/2})$（Benaych-Georges & Nadakuditi 2012、Couillet & Hachem 2013），而被诱饵推动的 spike 位移是常数阶 $\mathcal{O}(1)$——两者尺度差异在高维下越拉越大，正好可用一个固定常数 $C$（实验里大 $d$ 取 $C=1$，小 $d$ 取 $C=1/c$ 补偿测度集中较弱的问题）做硬阈值。
-    - 设计动机：把"算谁的"这种需要重优化的难题，化简为"两组特征值之间的简单数值比较"，绕开任何超参搜索；同时阈值有 RMT 给的明确量级理由，不是工程拍脑袋。
+最后要把"谁动了"落成可执行的判据。对每个原始 spike $\tilde{\lambda}_i$，在第二次 PCA 的特征值里找是否存在 $\lambda'_j$ 满足 $|\tilde{\lambda}_i - \lambda'_j| < \epsilon$，匹配上的留作真信号、匹配不上的当污染丢掉。阈值取 $\epsilon = C n^{-1/2}$ 不是拍脑袋：稳定 spike 在极限谱支撑外的随机涨落本就是 $\mathcal{O}(n^{-1/2})$ 量级（Benaych-Georges & Nadakuditi 2012、Couillet & Hachem 2013），而被诱饵撬动的污染 spike 位移是常数阶 $\mathcal{O}(1)$，两个尺度在高维下越拉越开，正好夹出一个固定常数 $C$ 就能切干净。实验中大 $d$ 取 $C=1$、小 $d$ 取 $C=1/c$（补偿低维下测度集中偏弱）。于是"该信谁"这种本来要重优化的难题，被化简成两列特征值之间的一次数值比较，既绕开任何超参搜索，阈值又有 RMT 给出的明确量级依据。
 
 ### 损失函数 / 训练策略
 本方法**完全无优化、无训练**——只调用两次标准 PCA + 一次 $\epsilon$-邻域匹配；唯一超参是常数 $C \in \{1, 1/c\}$。这正是相比 RPCA / MoMPCA / $\ell_1$-PCA / 各类 M-estimator 的差异化卖点。

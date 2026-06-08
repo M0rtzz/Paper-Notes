@@ -40,27 +40,21 @@ M-Hyper 把多模态知识图谱实体编码为双四元数（biquaternion）的
 ## 方法详解
 
 ### 整体框架
-输入：三元组 $(h, r, t)$ 以及实体 $h, t$ 的结构嵌入 $\mathbf{e}^s$、视觉嵌入 $\mathbf{e}^v$（VGG）、文本嵌入 $\mathbf{e}^t$（BERT）。流程分四步：(1) **FERF 模块**把每个独立模态分解为"模态专属 + 任务专属"两个子空间，得到鲁棒的 $\hat{\mathbf{e}}^s, \hat{\mathbf{e}}^v, \hat{\mathbf{e}}^t$；(2) **R2MF 模块**用关系感知门控融合三模态得到融合表示 $\hat{\mathbf{e}}^j$，并引入噪声自蒸馏增强鲁棒性；(3) 四种模态映射到 biquaternion 四个正交基 $Q = \hat{\mathbf{e}}^j + \hat{\mathbf{e}}^s \mathbf{i} + \hat{\mathbf{e}}^v \mathbf{j} + \hat{\mathbf{e}}^t \mathbf{k}$；(4) **双四元数评分函数** $\phi(h,r,t) = \langle (Q_h \oplus Q_r^T) \otimes Q_r^R, Q_t \rangle$ 同时建模平移（加法 $\oplus$）和旋转（Hamilton 乘积 $\otimes$）。
+M-Hyper 想要一个让"独立模态"和"融合模态"同时存在、还能天然支持成对交互的表示空间——既不像 fusion 派融合后丢掉模态独有信息，也不像 ensemble 派保留独立却缺少深度交互。它注意到四元数代数恰好有 4 个线性独立的正交基，于是把结构、视觉、文本三个独立模态加一个融合模态分别放到双四元数（biquaternion）的四个基上：输入三元组 $(h,r,t)$ 与实体的结构嵌入 $\mathbf{e}^s$、视觉嵌入 $\mathbf{e}^v$（VGG）、文本嵌入 $\mathbf{e}^t$（BERT）后，先由 FERF 把每个独立模态分解成更鲁棒的表示，再由 R2MF 做关系感知融合得到融合模态 $\hat{\mathbf{e}}^j$，拼成 $Q = \hat{\mathbf{e}}^j + \hat{\mathbf{e}}^s \mathbf{i} + \hat{\mathbf{e}}^v \mathbf{j} + \hat{\mathbf{e}}^t \mathbf{k}$ 后用同时含平移与旋转的双四元数评分函数打分；正交性保证模态独立、Hamilton 乘积的交叉项保证模态交互。
 
 ### 关键设计
 
-1. **FERF：细粒度实体表示分解**:
+**1. FERF：把每个模态拆成"模态专属 + 任务专属"，在去噪的同时不丢预训练语义。**
 
-    - 功能：解决模态缺失和跨模态语义歧义带来的噪声，得到鲁棒的独立模态表示。
-    - 核心思路：对每个模态 $m$，把表示分解为模态专属 $\mathbf{e}^m_m$（捕捉模态原始信息，由预训练编码器输出经 MLP 得到）和任务专属 $\mathbf{e}^m_t$（可学习嵌入，初始化时对视觉 / 文本做 PCA 提取粗粒度信息）。引入重构损失 $\mathcal{L}_{recon} = \sum_m \|\mathcal{E}^m(\mathbf{e}^m_t; \{\mathbf{e}^{\hat{m}}_m: \hat{m} \neq m\}) - \mathbf{e}^m_m\|^2$，要求"任务嵌入 + 其他模态的原始嵌入"能重建本模态原始信息，从而强制任务嵌入既保留模态特性又能与其他模态协作。最终 $\hat{\mathbf{e}}^m = \mathbf{e}^m_m + \mathbf{e}^m_t$。
-    - 设计动机：纯用预训练 encoder 输出会受模态噪声影响；纯学习嵌入又会丢失预训练语义。两路相加并用重构损失约束，可以在去噪的同时保留语义。
+纯用预训练 encoder 输出会被模态噪声和跨模态语义歧义污染，纯用可学习嵌入又会丢掉预训练里的语义。FERF 对每个模态 $m$ 把表示拆成两路：模态专属 $\mathbf{e}^m_m$（预训练编码器输出经 MLP，承载本模态原始信息）和任务专属 $\mathbf{e}^m_t$（可学习嵌入，对视觉/文本先做 PCA 提粗粒度信息来初始化），最终取 $\hat{\mathbf{e}}^m = \mathbf{e}^m_m + \mathbf{e}^m_t$。关键是用一个重构损失 $\mathcal{L}_{recon} = \sum_m \|\mathcal{E}^m(\mathbf{e}^m_t; \{\mathbf{e}^{\hat{m}}_m: \hat{m} \neq m\}) - \mathbf{e}^m_m\|^2$ 约束："任务嵌入 + 其他模态的原始嵌入"必须能重建出本模态的原始信息——这就逼着任务嵌入既保留本模态特性、又能和别的模态协作，相加之后得到去噪且语义完整的独立模态表示。
 
-2. **R2MF：关系感知门控融合 + 噪声自蒸馏**:
+**2. R2MF：关系感知门控融合 + 噪声自蒸馏，让融合既随关系变又抗噪。**
 
-    - 功能：得到对关系上下文敏感且对噪声鲁棒的融合模态表示 $\hat{\mathbf{e}}^j$。
-    - 核心思路：(a) 关系感知门控——用 1 层 MLP 基于 $[\hat{\mathbf{e}}^m; \mathbf{r}^T; \mathbf{r}^R]$ 计算每个模态的权重 $w^m$，再用关系级可学习温度 $\tau_r$ 做 softmax 得到 $\hat{w}^m(e,r) = \exp(w^m/\tau_r) / \sum_i \exp(w^i/\tau_r)$，加权求和并加上融合专属任务嵌入 $\mathbf{e}^j_t$；(b) 噪声自蒸馏——对原始嵌入加 Gaussian 噪声 $\tilde{\mathbf{e}}^m \sim \mathcal{N}(\bm{\varphi}^m, \bm{\mu}^m)$ 得到学生融合表示 $\hat{\mathbf{e}}^{j'}$，把无噪声的 $\hat{\mathbf{e}}^j$ 当老师，用 $\mathcal{L}_{distill} = \frac{1}{n}\sum \|\hat{\mathbf{e}}^j_i - \hat{\mathbf{e}}^{j'}_i\|^2$ 强制一致性。
-    - 设计动机：固定融合策略无法适应"不同关系需要不同模态"的现实（如 born_in 更依赖文本，has_color 更依赖视觉）；噪声蒸馏让门控对模态缺失 / 扰动更鲁棒，与 AdaMF / MoMoK 的"噪声增强"思路相似但叠加了任务嵌入和蒸馏监督。
+固定融合策略没法适应"不同关系依赖不同模态"的现实（born_in 更靠文本、has_color 更靠视觉）。R2MF 先做关系感知门控：用一层 MLP 基于 $[\hat{\mathbf{e}}^m; \mathbf{r}^T; \mathbf{r}^R]$ 算每个模态的权重 $w^m$，再用关系级可学习温度 $\tau_r$ 做 softmax 得到 $\hat{w}^m(e,r) = \exp(w^m/\tau_r) / \sum_i \exp(w^i/\tau_r)$，加权求和并补上融合专属任务嵌入 $\mathbf{e}^j_t$。再叠一层噪声自蒸馏：对原始嵌入加高斯噪声 $\tilde{\mathbf{e}}^m \sim \mathcal{N}(\bm{\varphi}^m, \bm{\mu}^m)$ 得到学生融合表示 $\hat{\mathbf{e}}^{j'}$，把无噪声的 $\hat{\mathbf{e}}^j$ 当老师，用 $\mathcal{L}_{distill} = \frac{1}{n}\sum \|\hat{\mathbf{e}}^j_i - \hat{\mathbf{e}}^{j'}_i\|^2$ 强制一致。这套思路与 AdaMF/MoMoK 的噪声增强相近，但叠加了任务嵌入和蒸馏监督，对模态缺失/扰动更稳。
 
-3. **双四元数评分函数**:
+**3. 双四元数评分函数：在一个代数结构里同时装下"独立 + 交互 + 平移 + 旋转"。**
 
-    - 功能：在一个统一代数结构里同时实现"独立模态保留 + 成对模态交互 + 关系平移 + 关系旋转"。
-    - 核心思路：把 $\hat{\mathbf{e}}^j, \hat{\mathbf{e}}^s, \hat{\mathbf{e}}^v, \hat{\mathbf{e}}^t$ 分别放到 biquaternion 的 $\mathbf{1}, \mathbf{i}, \mathbf{j}, \mathbf{k}$ 基上（系数还是复数），关系学两组嵌入 $Q_r^T$（平移）和 $Q_r^R$（旋转）。打分时先做 $Q_{h'} = Q_h \oplus Q_r^T$ 完成平移，再做 $Q_{h''} = Q_{h'} \otimes Q_r^R$ 用 Hamilton 乘积实现旋转，最后与 $Q_t$ 取内积。Hamilton 乘积的展开式中天然出现所有 $\hat{\mathbf{e}}^m_h \cdot \hat{\mathbf{e}}^{m'}_t$ 的成对交叉项（Theorem 2 给出完整代数证明），保证模态间充分交互；正交基的线性独立性又保证模态信息不会互相覆盖。
-    - 设计动机：相比 ensemble 方法只做模态内打分、fusion 方法做完全融合后丢失独立性，biquaternion 在数学上提供了"既独立又交互"的天然结构。Theorem 1 用信息瓶颈框架证明该表示比纯融合 $T_f$ 和纯集成 $T_{ens}$ 严格更优：$\mathcal{L}_{IB}(Q) < \min(\mathcal{L}_{IB}(T_f), \mathcal{L}_{IB}(T_{ens}))$。
+ensemble 只做模态内打分、fusion 融合后丢独立性，两者都顾不全。M-Hyper 把 $\hat{\mathbf{e}}^j, \hat{\mathbf{e}}^s, \hat{\mathbf{e}}^v, \hat{\mathbf{e}}^t$ 分别放到 biquaternion 的 $\mathbf{1}, \mathbf{i}, \mathbf{j}, \mathbf{k}$ 基上（系数仍是复数），关系学平移和旋转两组嵌入 $Q_r^T, Q_r^R$。打分时先 $Q_{h'} = Q_h \oplus Q_r^T$ 做平移，再 $Q_{h''} = Q_{h'} \otimes Q_r^R$ 用 Hamilton 乘积做旋转，最后与 $Q_t$ 取内积，即 $\phi(h,r,t) = \langle (Q_h \oplus Q_r^T) \otimes Q_r^R, Q_t \rangle$。Hamilton 乘积展开后天然冒出所有 $\hat{\mathbf{e}}^m_h \cdot \hat{\mathbf{e}}^{m'}_t$ 的成对交叉项（Theorem 2 给了完整代数证明），保证模态充分交互，而正交基的线性独立又保证模态信息互不覆盖。作者还从信息瓶颈视角证明（Theorem 1）这种表示严格优于纯融合 $T_f$ 与纯集成 $T_{ens}$：$\mathcal{L}_{IB}(Q) < \min(\mathcal{L}_{IB}(T_f), \mathcal{L}_{IB}(T_{ens}))$。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_{total} = \mathcal{L}_{recon} + \mathcal{L}_{distill} + \mathcal{L}_{triple} + \mathcal{L}_{reg}$，其中 $\mathcal{L}_{triple}$ 为标准交叉熵（含 1-vs-all 候选实体），$\mathcal{L}_{reg}$ 是 N3 正则化。优化器 Adagrad，batch=1000，关键超参 $d=128$、$\lambda=0.005$、噪声率 $\beta=0.2$、学习率 $\alpha=0.1$。训练时为每个三元组 $(h,r,t)$ 加反向 $(t, r^{-1}, h)$。

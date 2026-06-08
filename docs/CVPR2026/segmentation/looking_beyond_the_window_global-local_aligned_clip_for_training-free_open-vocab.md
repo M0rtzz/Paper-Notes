@@ -43,27 +43,23 @@ tags:
 
 ### 整体框架
 
-输入高分辨率图像被分割为 $L$ 个重叠窗口，分别送入冻结的 VFM（如 DINO）和 CLIP 提取特征。对每个窗口，VFM 特征作为 query，所有窗口的 VFM 特征拼接作为全局 key，所有窗口 CLIP 最后一层 transformer 的 value 拼接作为全局 value。通过交叉注意力聚合后接投影层得到最终视觉特征 $\mathbf{F}_{visual}$，与文本特征计算余弦相似度进行分类。
+GLA-CLIP 想解决的是一个被以往无训练 OVSS 方法忽略的副作用：为了保住 CLIP 224×224 的预训练分辨率，高分辨率图像必须切成滑动窗口逐块推理，而每个窗口各自为政，导致同一个大物体跨在两个窗口里时两边给出不同的类别，边界处出现网格状伪影。
+
+整体流程是这样转的：输入图像先切成 $L$ 个重叠窗口，每个窗口分别过冻结的 VFM（DINO）和 CLIP。对当前窗口而言，它自己的 VFM 特征当 query，但 key 和 value 不再局限于本窗口——所有窗口的 VFM 特征拼起来当全局 key，所有窗口 CLIP 最后一层 transformer 的 value 拼起来当全局 value。交叉注意力把全局信息聚合进每个 query token，再过投影层得到视觉特征 $\mathbf{F}_{visual}$，最后与文本特征算余弦相似度完成像素分类。三个设计依次解决「拿不到全局」「拿到了却偏心本窗口」「全局信息淹没小目标」三个递进的问题。
 
 ### 关键设计
 
-1. **键值扩展 (Key-Value Extension)**:
+**1. 键值扩展（Key-Value Extension）：把注意力的视野从本窗口拉到全图。**
 
-    - 功能：将每个窗口的注意力范围从局部扩展到全图
-    - 核心思路：收集所有 $L$ 个窗口的 VFM 特征拼接为全局 key $\mathbf{K}_{global} \in \mathbb{R}^{(LN)\times D}$，同步收集 CLIP 最终 transformer 层的 value 拼接为 $\mathbf{V}_{global}$。每个窗口的 query $\mathbf{Q}$ 与全局 key 计算注意力 $\mathbf{A}_{ext} = \mathbf{Q}\cdot\mathbf{K}_{global}^\top \in \mathbb{R}^{N\times(LN)}$，然后聚合全局 value 得到最终特征
-    - 设计动机：打破窗口壁垒，让局部 query 能够利用远处的语义相关 token，特别在大物体跨窗口时保持一致性
+滑动窗口最直接的病根是每个窗口看不到窗口之外的语义，所以跨窗口的同一物体得不到一致判断。键值扩展的做法是不动 query、只扩 key/value：收集全部 $L$ 个窗口的 VFM 特征拼成全局 key $\mathbf{K}_{global} \in \mathbb{R}^{(LN)\times D}$，同步收集 CLIP 最终层的 value 拼成 $\mathbf{V}_{global}$。当前窗口的 query $\mathbf{Q}$ 与全局 key 算注意力 $\mathbf{A}_{ext} = \mathbf{Q}\cdot\mathbf{K}_{global}^\top \in \mathbb{R}^{N\times(LN)}$，再据此聚合全局 value。这样一来局部 query 就能直接利用远处、甚至在别的窗口里的语义相关 token，大物体被切开时两侧也能 attend 到对方，跨窗口的一致性由此而来。
 
-2. **代理锚点注意力 (Proxy Anchor)**:
+**2. 代理锚点注意力（Proxy Anchor）：消除「query 偏心本窗口」的局部偏差。**
 
-    - 功能：消除注意力的局部偏差，使内外窗口 token 获得公平的注意力分配
-    - 核心思路：即使扩展了全局 key-value，query token 仍偏向关注内部窗口 token（因为 query 本身由内窗口特征生成）。为解决此问题，对每个 query token，在全局 key 中找到余弦相似度超过阈值 $\rho$ 的高置信 token 集合 $\mathcal{P}_i^{(0)}$，然后迭代聚合（类似 mean-shift）得到代理 $\mathbf{Q}_i^{(T)}$。代理位于高相似嵌入的中心，天然平衡了内外窗口的贡献
-    - 设计动机：原始 query 受限于局部窗口上下文，缺乏全局感知。代理作为稳定的语义锚点，基于语义一致性而非窗口归属分配注意力
+光把 key/value 扩成全局还不够：query token 本身是从本窗口特征生成的，算相似度时天然更亲近内窗口的 token，远处真正相关的 token 反而分不到注意力。代理锚点的思路是给每个 query 找一个更中立的替身——对 query token $i$，先在全局 key 里挑出余弦相似度超过阈值 $\rho$ 的高置信 token 集合 $\mathcal{P}_i^{(0)}$，再像 mean-shift 那样迭代聚合这些高相似嵌入，得到代理 $\mathbf{Q}_i^{(T)}$。代理落在高相似嵌入的中心，依据的是语义一致性而非「在不在本窗口」，于是内外窗口的 token 拿到公平的注意力分配，局部偏心被抹平。
 
-3. **动态归一化 (Dynamic Normalization)**:
+**3. 动态归一化（Dynamic Normalization）：按目标尺度调注意力强度，别让小目标被淹没。**
 
-    - 功能：根据目标尺度自适应调整注意力强度，解决小目标被无关全局 token 淹没的问题
-    - 核心思路：引入两个自适应变量替代固定超参数。偏移变量 $\mathbf{u} = 1 + \lambda_1\log(1+L)$ 随窗口数增加而增大，抑制扩展 token 的噪声影响。缩放变量 $\mathbf{w}_i = 1 + \lambda_2 / |\mathcal{P}_i|$ 与高置信 token 数成反比——小目标对应少量正样本，$\mathbf{w}_i$ 值大，放大相关 token 的权重
-    - 设计动机：全局注意力扩展增加了 attend 到无关 token 的风险，小目标尤其脆弱。动态归一化实现逐 query 的尺度感知注意力调制，避免了传统方法需要数据集特定超参数的问题
+扩成全局后又带来一个反向风险：attend 的候选 token 多了，无关 token 的噪声也随之进来，小目标（对应的正样本本就很少）特别容易被一堆无关全局 token 冲淡。动态归一化用两个自适应变量替掉固定超参：偏移变量 $\mathbf{u} = 1 + \lambda_1\log(1+L)$ 随窗口数 $L$ 增大，窗口越多、扩展进来的噪声越多，就越强地压制；缩放变量 $\mathbf{w}_i = 1 + \lambda_2 / |\mathcal{P}_i|$ 与高置信 token 数成反比——小目标的 $|\mathcal{P}_i|$ 小，$\mathbf{w}_i$ 就大，放大那少数相关 token 的权重。这等于把尺度感知做成逐 query 的注意力调制，既救了小目标，又避免了传统方法那种逐数据集手调超参的麻烦。
 
 ### 损失函数 / 训练策略
 

@@ -40,32 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CoCoReviewBench 的整体流水线分为四步（Figure 4）：(1) 把每条人类审稿和对应作者回复一起拆成"原子意见"并打 23 类标签；(2) 同主题意见聚类后做 inter-reviewer 冲突检测，存在冲突就用 meta-review 仲裁，丢弃错误意见；(3) 对 reviewer-author 冲突同样用 meta-review 裁定；(4) 把上述步骤蒸馏到一个 Qwen3-8B（ReviewSplit + ReviewClassify）用来对**被测的 AI 审稿**做同样的拆分与分类，最后在每个类别上用 GPT-5-Mini 作 judge 算 Correctness / Thoroughness / Grounding / Verifiability / Clarity 五个维度的得分，并叠加一个 Completeness 跨类别覆盖率指标。
+CoCoReviewBench 想解决的核心问题是：把"既不全又偶尔出错"的人类审稿，洗成一份既不会冤枉 AI、又不会奖励 AI 学坏的可信评测参考。整条流水线（Figure 4）顺着"拆 → 过滤 → 蒸馏 → 打分"走：先把每条人类审稿连同对应的作者回复拆成"原子意见"并打上 23 类标签；再把同主题意见聚类，先后做 reviewer-reviewer、reviewer-author 两轮冲突检测，凡有冲突就请 meta-review 仲裁、丢掉被裁定为错的意见；然后把这套拆分+分类的能力蒸馏进一个 Qwen3-8B（ReviewSplit + ReviewClassify），用它给**被测的 AI 审稿**做同样处理；最后在每个类别上用 GPT-5-Mini 当 judge 算 Correctness / Thoroughness / Grounding / Verifiability / Clarity 五维分，再叠一个跨类别的 Completeness 覆盖率。
 
-整个数据集覆盖 NeurIPS 2021-2024 + ICLR 2017-2025，每年分层抽 300 篇共 3,900 篇，强制 ≥3 个独立审稿、≥75% 审稿有作者回复，最终得到 14.1k 条 review、134.8k 条原子意见、115.9k 个意见簇、108.6k 条"正确意见"参考。
+数据规模上，基准覆盖 NeurIPS 2021-2024 + ICLR 2017-2025，每年分层抽 300 篇共 3,900 篇，强制每篇 ≥3 个独立审稿、≥75% 审稿有作者回复，最终得到 14.1k 条 review、134.8k 条原子意见、115.9k 个意见簇、108.6k 条被判定为"正确"的参考意见。
 
 ### 关键设计
 
-1. **类别级子基准（Category-level Benchmark）**:
+**1. 类别级子基准：把"参考没覆盖"从扣分变成跳过。**
 
-    - 功能：把"覆盖不全的人类参考"问题从"扣分"变成"跳过"，避免 AI 提出的合理但人类没说的意见被误罚。
-    - 核心思路：基于 NeurIPS 2025 审稿指南 + ARR 表单建一个两级分类体系——5 大类（Quality / Clarity / Significance / Originality / Policy）含 23 个子类。把所有 reviewer 的意见聚合成 per-paper 标签集，然后为**每个子类别构造一个子基准**，子基准只收录"该类别下人类有意见的论文"。评测时只在 AI 和人类都在该类别下有意见时才打分。本文同时报告 paper-level（喂入所有类别的 AI 和人类意见一起打一个分）和 category-level（每类别独立打分再平均）两种粒度。
-    - 设计动机：作者实测发现，AI 在"人类没覆盖"的类别上系统性地被打低分，但这部分意见未必错，只是不是 reviewer 关注的点；按类别匹配能消除这种"覆盖偏差"，同时把"广度不足"和"单类深度不足"两类问题分开诊断。
+人类审稿天然覆盖不全——单个 reviewer 平均只碰 23 个子类里的 5.10 个，全部合起来也才 9.23 个（40%）。如果直接拿它当 gold reference 整体打分，AI 提出的那些"合理但 reviewer 恰好没说"的意见就会被当成离题而系统性扣分。本文的做法是按 NeurIPS 2025 审稿指南 + ARR 表单建一个两级 taxonomy——5 大类（Quality / Clarity / Significance / Originality / Policy）下含 23 个子类，把每篇论文所有 reviewer 的意见聚成一个 per-paper 标签集，再**为每个子类别单独构造一个子基准**，子基准只收"该类别下人类确实有意见"的论文；评测时只有当 AI 和人类在同一类别都有发言才打分，没人类信号的类别直接跳过而非惩罚。本文同时报两种粒度：paper-level 把一篇里所有类别的 AI 与人类意见混在一起打一个分，category-level 则每类独立打分再平均。这样既消除了"覆盖偏差"，又把"广度不足"（少覆盖几个类别）和"单类深度不足"两种毛病拆开来分别诊断。
 
-2. **基于 meta-review 仲裁的冲突过滤（Conflict-Based Error Verification）**:
+**2. 基于 meta-review 仲裁的冲突过滤：用免费的专家信号删掉错的人类意见。**
 
-    - 功能：找出人类参考里那些**已经被讨论过且确实错误**的意见并剔除，让参考更"干净"。
-    - 核心思路：分两类来源——(a) inter-reviewer：先把同主题意见聚类，组内 ≥2 条时用 LLM 判是否冲突，存在冲突就用 meta-review 决定哪条对、留下最长的那条正确意见；(b) reviewer-author：把 reviewer 意见 + author 回复视作一组，先判作者是否明确反对，若反对再用 meta-review 仲裁。三步都用独立的 LLM 请求完成（aggregate / detect conflict / adjudicate）。所有被裁定为错的意见从参考集中删除，但保留下来作为"反向训练信号"。
-    - 设计动机：直接让"强 LLM 当裁判"在专业领域容易出错，而 OpenReview 上的多方讨论是**天然的专家标注**——冲突 = 至少一方错；meta-review 是 AC 的高层裁定。这条信号虽不完美（强冲突论文 4 维平均分仅 3.24/5，Conflict Coverage 最弱），但作者论证它比"LLM 直接判正确性"或"原始审稿"更可靠，且 22% 论文 / 76% 论文分别在两类冲突中被找到了错误意见，量级足够形成有效过滤。
+光跳过没覆盖的还不够——保留下来的人类参考本身就可能是错的（13% 论文有 ≥4 分分歧、22% 有 reviewer-reviewer 冲突、76% 有 reviewer-author 冲突），AI 若拟合这些错意见反而会被奖励。直接让一个"强 LLM 当裁判"判对错在专业领域并不靠谱，于是本文转而利用 OpenReview 自带的多方讨论结构作为**天然专家标注**：有冲突就意味着至少一方错，而 meta-review 是 AC 给出的高层裁定。具体分两条来源、各走三步独立 LLM 请求（aggregate / detect conflict / adjudicate）——inter-reviewer 这边先把同主题意见聚类，组内 ≥2 条时判是否冲突，有冲突就用 meta-review 决定哪条对、保留其中最长的那条正确意见；reviewer-author 这边把 reviewer 意见与 author 回复视作一组，先判作者是否明确反对，反对才再请 meta-review 裁定。被判错的意见从参考集中删除，但留档当"反向训练信号"。这条信号并不完美（强冲突论文 4 维平均仅 3.24/5，Conflict Coverage 最弱），作者论证它仍比"LLM 直接判正确性"或"原始未洗审稿"更可靠，而且分别在 22% / 76% 的论文上抓出了错误意见，量级足以形成有效过滤。
 
-3. **AI 审稿评测的蒸馏与多维 judge（AI Review Postprocessing & Multi-dim Judge）**:
+**3. 评测流程蒸馏 + 多维 judge：让评测既便宜又能拆出系统性差异。**
 
-    - 功能：把昂贵的人类审稿处理流程压缩到 8B 小模型上，使任何被测 AI 审稿都能被拆+分类，再喂给 LLM-judge 做类别级多维打分。
-    - 核心思路：对 ReviewSplit 用 GRPO 训练 Qwen3-8B——每条样本采 32 个轨迹做 augmentation，用 Omega Index 衡量 clustering 正确性，奖励 $R = \max(0.5, \text{OmegaIndex} + \mathbb{1}(\text{Correct Format}))$；对 ReviewClassify 因奖励稀疏改用 SFT 训 Qwen3-8B 非思考模式（实测连带提升思考模式）。Judge 阶段定义 5 个 1-5 分维度：Correctness（与剩余人类意见对齐度）/ Thoroughness（覆盖完整度）/ Grounding（是否明确指出论文位置）/ Verifiability（可否核实）/ Clarity（行文清晰度），并把 paper-level 与 category-level 两个粒度同时报；外加 Completeness = AI 覆盖类别数 / 该论文所有 reviewer 合集覆盖类别数 × 100。
-    - 设计动机：每篇 AI 审稿都喂强 LLM 做拆分+分类成本太高；8B 蒸馏模型在人工 50 篇验证上达到 87.09% 完全正确分类，已逼近甚至超越部分强 LLM。多维打分则避免"单一总分"掩盖系统性差异（如 AI clarity 普遍 > 人类、但 correctness < 人类）。
+处理人类审稿是一次性成本，但评测 AI 审稿要反复跑，每篇都喂强 LLM 做拆分+分类太贵。本文因此把这套能力蒸馏进 8B 小模型：ReviewSplit 用 GRPO 训 Qwen3-8B，每条样本采 32 个轨迹做 augmentation，用 Omega Index 衡量聚类正确性，奖励为
+
+$$R = \max\!\left(0.5,\ \text{OmegaIndex} + \mathbb{1}(\text{Correct Format})\right)$$
+
+ReviewClassify 因奖励太稀疏改用 SFT 训非思考模式（实测连带提升了思考模式）。蒸馏出的 8B 模型在人工 50 篇验证上达到 87.09% 完全正确分类，已逼近甚至超过部分强 LLM。judge 阶段定义 5 个 1-5 分维度——Correctness（与洗后人类意见的对齐度）、Thoroughness（覆盖完整度）、Grounding（是否点明论文具体位置）、Verifiability（可否核实）、Clarity（行文清晰度），paper-level 与 category-level 两个粒度同时报；再外加一个 $\text{Completeness} = \dfrac{\text{AI 覆盖类别数}}{\text{该论文所有 reviewer 合集覆盖类别数}} \times 100$。用多维分而非单一总分，正是为了暴露那些会被平均掉的系统性差异——比如 AI 的 clarity 普遍高于人类、correctness 却低于人类。
 
 ### 损失函数 / 训练策略
-两阶段独立训练：ReviewSplit 用 GRPO 在二级分割结果上训练，目标是让"两句是否属同一意见"的 0/1 判断对齐 Omega Index；ReviewClassify 用纯 SFT 让模型把每条原子意见映射到 23 子类之一。整个 pipeline 还在每一步用 6 个强 LLM 做 leave-one-out 一致性验证，选一致性最高的模型生成最终标注。
+两个组件独立两阶段训练：ReviewSplit 用 GRPO 在二级分割上训练，让"两句是否属同一意见"的 0/1 判断对齐 Omega Index；ReviewClassify 用纯 SFT 把每条原子意见映射到 23 子类之一。整条 pipeline 的每一步还用 6 个强 LLM 做 leave-one-out 一致性验证，选一致性最高的模型生成最终标注，以压住单步标注噪声。
 
 ## 实验关键数据
 

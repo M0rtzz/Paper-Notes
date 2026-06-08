@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：50 个标定问题 → 目标 SLM 生成原始稀疏解答 $x_\text{neg}$ → GPT-5.1 按 dense-rewriting prompt 改写为 $x_\text{pos}$（保持语义、合并步骤、提升密度） → 对每对在每层 $\ell$ 取最后一个 token 的残差激活之差，平均得到 $v_\ell$ → 推理时在选定层 $\ell^*$ 上对每个解码步 $t$ 做 $\tilde h_{\ell^*, t} = h_{\ell^*, t} + \lambda \cdot v_{\ell^*}$。整个流程不更新任何参数，calibration 只需 50 对样本。
+DenseSteer 想给小模型（≤3B）补上"强模型那种少跳点、每步信息密度高"的推理结构，但全程不动一个参数。它先拿 50 个标定问题让目标 SLM 自己生成稀疏解答作负样本 $x_\text{neg}$，再让 GPT-5.1 把这些解答"原地密化"成语义不变、步骤更紧的正样本 $x_\text{pos}$；这一对密/疏样本在每层残差流的激活之差求平均，就得到一条"指向 dense reasoning"的方向向量；推理时把它按系数 $\lambda$ 持续加到中间某层 $\ell^*$ 的残差流上，引导解码朝密集方向走。整条链路只需 50 对样本做 calibration，没有任何梯度更新。
 
 ### 关键设计
 
-1. **Dense Reasoning 度量与 Dense-Rewriting 正样本构造**：
+**1. Dense-Rewriting：用模型自己的话造同分布正样本。**
 
-    - 功能：把"什么是更好的推理"操作化为可度量、可改写的结构属性，并产出与目标模型同分布的正样本。
-    - 核心思路：定义 Reasoning Density $\rho = N_\text{tokens} / N_\text{steps}$，步数以双换行分隔。然后让 GPT-5.1 在保持语义和正确性的前提下，把目标 SLM 自己的解答合并冗余步骤、提高单步信息量，得到 $x_\text{pos}$；原解答即 $x_\text{neg}$。Figure 3(b) 显示这种 rewrite 的 NLL 接近 self-likelihood baseline，远低于同族 7B teacher trace 的 NLL，证明确实在 in-distribution 内。
-    - 设计动机：直接拿 7B / 8B teacher 的 trace 当正样本会抬 NLL（learnability gap）。"用自己的话重写自己的解答"既保证分布兼容，又把"少而密"这条结构信号注进对比对里——这是 DenseSteer 区别于 InFamilySteer / 经典 CAA 的根本点。
+这是 DenseSteer 区别于一切"拿大模型 trace 当正样本"方法的根本点。作者先把"好推理"操作化成一个可度量、可改写的结构量——Reasoning Density $\rho = N_\text{tokens} / N_\text{steps}$（步数以双换行分隔），强模型恰恰是 $\rho$ 更大、$N_\text{steps}$ 更少。直接借强 teacher 的 trace 当正样本看似省事，却会撞上 learnability gap：7B/8B teacher 的解答在 3B 模型上的 token-level NLL 反而高于模型自身似然，正样本落到了目标模型语言流形之外。DenseSteer 的解法是让 GPT-5.1 在保持语义和正确性的前提下，把目标 SLM **自己**的解答合并冗余步骤、提高单步信息量，得到 $x_\text{pos}$，原解答即 $x_\text{neg}$。Figure 3(b) 证实这种 rewrite 的 NLL 接近 self-likelihood baseline、远低于同族 7B trace——既保证了分布兼容，又把"少而密"这条结构信号干净地注进了对比对里。
 
-2. **均值差分提取 steering vector（last-token aggregation）**：
+**2. 均值差分 + last-token 聚合提取 steering vector。**
 
-    - 功能：把 N=50 对对比样本压缩成每层一条方向向量 $v_\ell$。
-    - 核心思路：对每个样本只取**最后一个 token** 在层 $\ell$ 的残差激活 $h_\ell(x)[-1]$，避免 dense 与 sparse 长度不一造成的 token 对齐问题；然后 $v_\ell = \frac{1}{N}\sum_{i=1}^{N}\bigl(h_\ell(x_\text{pos}^{(i)})[-1] - h_\ell(x_\text{neg}^{(i)})[-1]\bigr)$。
-    - 设计动机：相比逐 token 对齐或全序列池化，last-token 给出 sequence-level 摘要又不引入对齐噪声；均值差分（Mean Difference）则继承 Panickssery 等人 CAA 的简洁性，在数据极度有限（50 对）下也能稳定刻画"dense vs sparse"的主导方向。
+有了 50 对密/疏样本，下一步要把它们压成每层一条可注入的方向向量 $v_\ell$。难点在于 dense 与 sparse 长度不一，逐 token 对齐会引入噪声。DenseSteer 对每个样本只取**最后一个 token** 在层 $\ell$ 的残差激活 $h_\ell(x)[-1]$ 作 sequence-level 摘要，再对全部 $N=50$ 对取均值差分：
 
-3. **中间层 + 适中 $\lambda$ 的残差流注入**：
+$$v_\ell = \frac{1}{N}\sum_{i=1}^{N}\bigl(h_\ell(x_\text{pos}^{(i)})[-1] - h_\ell(x_\text{neg}^{(i)})[-1]\bigr)$$
 
-    - 功能：把 $v_\ell$ 在推理时持续加到目标层 $\ell^*$ 的残差流上，引导解码朝 dense 方向走。
-    - 核心思路：每个解码步执行 $\tilde h_{\ell^*, t} = h_{\ell^*, t} + \lambda \cdot v_{\ell^*}$，$\lambda$ 在 $[-20, 20]$ 的 held-out 集上搜。层敏感性分析（Figure 4）显示：早层（L6）几乎无响应，中间层（L16 / L17）对步数和总 token 数控制最强、最稳定，后层（L27 / L35）容易反向恶化甚至增 token。Figure 5 / 6 进一步显示 L17 在 $\lambda \in [0, 10]$ 内 accuracy 单调升、NLL 单调降。
-    - 设计动机：早层学的是低级特征，对"推理结构"这种高阶属性不敏感；后层离 logits 太近，干预会与已成型的输出轨迹冲突造成补偿性啰嗦；中间层正是 Templeton 等人 Scaling Monosemanticity 报告的高级语义特征聚集区，因此天然适合承载"推理密度"这种结构方向。
+这套 Mean Difference 继承自 Panickssery 等人的 CAA，胜在简洁——在 50 对这种极度有限的数据下，逐 token 对齐或全序列池化都不稳，而 last-token 摘要 + 均值差分仍能稳定刻画"dense vs sparse"的主导方向。
+
+**3. 中间层 + 适中 $\lambda$ 的残差流注入。**
+
+向量提好后，推理时每个解码步执行 $\tilde h_{\ell^*, t} = h_{\ell^*, t} + \lambda \cdot v_{\ell^*}$，$\lambda$ 在 $[-20, 20]$ 的 held-out 集上搜。注入层 $\ell^*$ 的选择是成败关键：层敏感性分析（Figure 4）显示早层（L6）几乎无响应，因为它学的是低级特征、对"推理结构"这种高阶属性不敏感；后层（L27/L35）离 logits 太近，干预会与已成型的输出轨迹冲突，引发补偿性啰嗦甚至增 token；唯有中间层（L16/L17）对步数和总 token 数控制最强、最稳定。这与 Templeton 等人 Scaling Monosemanticity 报告的"高级语义特征聚集在中间层"一致，所以中间层天然适合承载"推理密度"这种结构方向。Figure 5/6 进一步显示 L17 在 $\lambda \in [0,10]$ 内 accuracy 单调升、NLL 单调降。
 
 ### 损失函数 / 训练策略
 **无任何训练**。仅有的"超参搜索"是在 GSM8K 训练子集上为每个目标模型挑 $\ell^*$ 和 $\lambda$。生成端固定贪心解码、max length 2048。Calibration 集 50 题，与评测集不重叠。

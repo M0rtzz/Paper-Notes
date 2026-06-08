@@ -47,23 +47,25 @@ OmniFM 的每个客户端提取两类表示：通过 backbone 获取的空间域
 
 ### 关键设计
 
-1. **Global Spectral Knowledge Retrieval (GSKR)**:
+**1. 全局频谱知识检索 GSKR：让不同模态在低频频谱里找到共同锚点。**
 
-    - 功能：从全局知识库中检索模态不变的频谱先验
-    - 核心思路：对输入图像做 FFT 变换得到幅度谱，经低通滤波保留粗粒度解剖结构，再通过频谱 tokenization 模块（FreqMix + 投影 + 池化）编码为归一化的频谱 token $\mathbf{s}$。服务器维护知识库 $\mathcal{K}^{(r)}$，客户端上传 $\mathbf{s}$ 后，服务器按余弦相似度检索 top-k 个全局频谱原型 $\mathbf{S}_g$。知识库通过频率剪枝保持紧凑且模态平衡。
-    - 设计动机：低频分量跨模态一致性强，能编码解剖结构而非模态特异的纹理，作为稳定的跨客户端锚点
+模态异构的根子在于 MRI、CT、PET 的纹理统计天差地别，直接在空间域聚合会把全局模型拉向互相矛盾的极小值。作者的切入点是：图像幅度谱的低频分量编码的是粗粒度解剖结构，这部分跨模态一致性远高于高频纹理。于是客户端先对输入做 FFT 取幅度谱，低通滤波滤掉模态特异的高频细节，再经一个频谱 tokenization 模块（FreqMix 混频 + 投影 + 池化）压成一个归一化的频谱 token $\mathbf{s}$。服务器侧维护一个全局知识库 $\mathcal{K}^{(r)}$，客户端把 $\mathbf{s}$ 上传后，服务器按余弦相似度检索出 top-k 个全局频谱原型 $\mathbf{S}_g$ 回传。知识库本身按检索频率做剪枝，既保持紧凑又维持各模态的平衡占比。这一步等于在频域建了一个跨客户端共享的「解剖结构字典」，让每个本地表示都能借到模态无关的先验。
 
-2. **Embedding-wise Cross-Attention Fusion (ECA)**:
+**2. 嵌入级交叉注意力融合 ECA：把检索到的全局先验注进本地表示，但不动 backbone。**
 
-    - 功能：将检索到的全局频谱上下文注入 backbone 表示
-    - 核心思路：以 backbone 表示 $\mathbf{r}$ 为 query，全局频谱原型 $\mathbf{S}_g$ 为 key/value，通过标准交叉注意力 $\mathbf{Z} = \text{Softmax}(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_h}})\mathbf{V}$ 融合。这使局部 token 被全局低频先验调制，偏向模态不变的解剖特征。
-    - 设计动机：直接在 embedding 空间注入全局知识，无需修改 backbone 架构，保持任务无关性
+检索回来的 $\mathbf{S}_g$ 是全局知识，但要让它真正影响本地预测，得和 backbone 的空间域表示 $\mathbf{r}$ 融合。作者刻意把融合放在 embedding 空间而非改 backbone 结构——这正是「任务无关」的关键：同一套机制能挂在分类的 ResNet、分割的 U-Net 或 VQA 的 encoder 上。具体以本地表示 $\mathbf{r}$ 为 query、全局原型 $\mathbf{S}_g$ 为 key/value 做一次标准交叉注意力
 
-3. **Prefix–Suffix Spectral Prompting (PSP)**:
+$$\mathbf{Z} = \text{Softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_h}}\right)\mathbf{V}$$
 
-    - 功能：在 token 序列中注入全局和个性化先验
-    - 核心思路：将 ECA 融合后的频谱 token $\mathbf{Z}$ 作为 prefix 前置于 backbone 特征 $\mathbf{r}$ 之前，同时将客户端特有的可学习 CLS token $\mathbf{c}$ 作为 suffix 追加：$\mathbf{r}' = [\mathbf{Z} \| \mathbf{r} \| \mathbf{c}]$。prefix 偏向模态不变结构，suffix 捕获机构特有分布适应。
-    - 设计动机：双重提示兼顾跨客户端一致性（prefix）和局部特化（suffix），平衡联邦学习中全局与个性化的需求
+输出 $\mathbf{Z}$ 就是被全局低频先验调制过的本地 token，自然偏向模态不变的解剖特征而非各家医院特有的成像纹理。因为只在表示层动手，切换任务时整套融合逻辑原样复用，不必为每个任务重新设计 FL pipeline。
+
+**3. 前缀-后缀频谱提示 PSP：一头管跨客户端一致、一头管本地特化。**
+
+联邦学习永远要在「全局共识」和「本地个性化」之间权衡：只追全局会丢掉机构特有分布，只顾本地又退化成各训各的。PSP 用 token 序列的两端分别承接这两个目标——把 ECA 融合后的频谱 token $\mathbf{Z}$ 作为 prefix 前置、把客户端各自的一个可学习 CLS token $\mathbf{c}$ 作为 suffix 后接，拼成
+
+$$\mathbf{r}' = [\,\mathbf{Z}\,\|\,\mathbf{r}\,\|\,\mathbf{c}\,]$$
+
+prefix 携带全局共享的模态不变结构，把本地特征往跨客户端一致的方向拉；suffix 是私有参数、不参与聚合，专门吸收本机构的分布偏移。两端一夹，同一个序列里既保留了联邦共识又留了本地适配的口子，再送进任务头出预测。
 
 ### 损失函数 / 训练策略
 

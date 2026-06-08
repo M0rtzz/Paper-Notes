@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ChronoScope 的构造流水线两阶段、全确定性、无人写无 LLM 生成：(i) 锚定事实表 (Anchored Truth Table) —— 对每个 snapshot 年份和锚定日期，从 Wikidata claims 抽出在该锚点有效的事实（按 start time / end time / point-in-time 过滤），用 QID 去重；(ii) 链生成 —— 用属性专用模板把锚定事实变成自然语言问答，再按 11 种 chain family 模板组合成多轮 chain。评测端用三种上下文设定（Gold Context / Self-Conditioned / Questions Only）跑模型，并用四个指标（Acc@1 / Final@1 / Chain@1 / Drift）衡量。
+
+ChronoScope 想隔离的失败是"事实知道、时间错配"：用户只在第一轮设一次时间框架，模型却在后续轮把作用域悄悄漂回当下。为此本文搭了一条全确定性、无人写无 LLM 生成的两阶段流水线——先构造锚定事实表（对每个 snapshot 年份和锚定日期，从 Wikidata claims 中按 start/end/point-in-time 过滤出该锚点有效的事实并用 QID 去重），再用属性专用模板把锚定事实变成自然语言问答、按 11 种 chain family 组合成多轮 chain。评测端把同一批 chain 放进三种上下文设定下跑模型，并用 Acc@1 / Final@1 / Chain@1 / Drift 四个指标度量，其中 Drift 专门捕捉"漂回现在"这一现象，让 present-day bias 成为一个可独立测量的量。
 
 ### 关键设计
 
-1. **时间作用域 (temporal scope) 的形式化与三态分类**：
+**1. 时间作用域的形式化与三态分类：把"隐式上下文继承"变成可评分的离散状态。** 
 
-    - 功能：把 "implicit context carryover" 这一模糊概念变成可被 grading 的离散状态。
-    - 核心思路：把 chain 定义为 $\{(q_1,a_1),\dots,(q_L,a_L)\}$，第一轮显式给出 anchor year（如 "In 2010"），后续每轮的时间作用域只能取三种演化：Persist（继承）、Override（被新时间覆盖）、Transfer（迁移到相关实体但保留时间）。每个 chain 被标注成 11 family 之一，且每 family 的 "Avg Scope Shift" 与 "Implicit Turns %" 都被定量给出（Table 2）。
-    - 设计动机：以往多轮 QA benchmark（HotpotQA / CoQA / Parrot）都隐式假设事实跨轮稳定；本文显式区分"scope 状态"让 evaluation 能精确归因失败模式——是没继承时间？还是没切换？还是没跨实体迁移？
+"模型有没有维持住时间"原本是个模糊概念，本文先把它形式化。一条 chain 记为 $\{(q_1,a_1),\dots,(q_L,a_L)\}$，第一轮显式给出 anchor year（如 "In 2010"），此后每轮的时间作用域只能取三种演化：Persist（继承）、Override（被新时间覆盖）、Transfer（迁移到相关实体但保留时间）。每条 chain 被标注为 11 个 family 之一，且每 family 的 "Avg Scope Shift" 与 "Implicit Turns %" 都被定量给出。以往多轮 QA（HotpotQA / CoQA / Parrot）默认事实跨轮稳定，无法说清失败到底出在哪一步；显式区分 scope 状态后，evaluation 才能精确归因——是没继承时间、没切换、还是没跨实体迁移。
 
-2. **11 类 chain family 覆盖完整时序模式空间**：
+**2. 11 类 chain family：用最小但完整的模板集合覆盖整个时序模式空间。** 
 
-    - 功能：用最小化但覆盖完整的 chain 模板探出每一类失败模式。
-    - 核心思路：Carryover / Carryover-Then 测最基础的隐式继承；Scope Switch 测显式覆盖；Cross-Entity Then 测时间不变但实体切换；Multi-Turn Chain (3-6 轮) 测长程稳定性；Change Point 测多轮 implicit 后突然 explicit 切换；Interval Reasoning / Interval Change / Distinct Count 测区间型时序；Temporal Narrative 模拟编年史；Bridged Multi-PID 测多属性 + 固定时间。每类的链长、scope shift 次数、时间跨度都不同。
-    - 设计动机：单一模板会被模型"过拟合"，11 类设计让 benchmark 既能压力测试又能做归因分析——例如 Bridged Multi-PID 失败率高就说明模型在多 hop + 时间约束下 worst。
+单一模板容易被模型过拟合，本文用 11 类 chain 把失败模式逐一探出来：Carryover / Carryover-Then 测最基础的隐式继承，Scope Switch 测显式覆盖，Cross-Entity Then 测时间不变而实体切换，Multi-Turn Chain（3–6 轮）测长程稳定性，Change Point 测多轮隐式后突然显式切换，Interval Reasoning / Interval Change / Distinct Count 测区间型时序，Temporal Narrative 模拟编年史，Bridged Multi-PID 测多属性叠固定时间。各类的链长、scope shift 次数、时间跨度都不同，既能做压力测试又能做归因——比如 Bridged Multi-PID 失败率最高，就直接指向模型在多 hop 加时间约束下表现最差。
 
-3. **三种上下文设定 + Drift 指标隔离失败模式**：
+**3. 三种上下文设定 + Drift 指标：把"知识缺失"和"时序漂移"两类失败彻底解耦。** 
 
-    - 功能：把"知识缺失"和"时序漂移"这两个混杂的失败原因解耦。
-    - 核心思路：Gold Context 给模型每一轮的金标答案作为上下文（消除单轮事实错误的影响）；Self-Conditioned 用模型自己上一轮的预测做上下文（叠加错误传播）；Questions Only 完全无上下文（最严苛）。Drift 指标专门测"答错但答的是 present-day (2025) 的正确事实"——这种错误不能用"模型不知道"来解释，只能是 inference-time 的 scope 切换失败。
-    - 设计动机：如果模型在 Gold Context 下仍然 Drift 很高，就证明问题不在于错误累积，而在于模型本身无法维持隐式时间状态——这是本文最有诊断力的实验设计。
+答错可能是不知道，也可能是知道却选错了时间，二者必须分开。本文设三种上下文：Gold Context 每轮注入金标答案以消除单轮事实错误，Self-Conditioned 用模型自己上一轮的预测作上下文以叠加错误传播，Questions Only 完全无上下文作最严苛档。在此之上，Drift 指标专测"答错且答的是 present-day（2025）的正确事实"——这种错误无法用"模型不知道"解释，只能归于 inference-time 的 scope 切换失败。于是若模型在 Gold Context 下 Drift 仍高，就证明问题不在错误累积、而在模型本身维持不住隐式时间状态，这正是全文最有诊断力的实验设计。
 
-### 损失函数 / 训练策略
-本文不训练任何模型，是纯评测论文。所有模型在 zero-shot 下评测，prompting / decoding / sampling / matching 的细节统一放 Appendix A.2.1。Acc@1 / Final@1 / Chain@1 越大越好；Drift 越小越好。
+> 本文不训练任何模型，所有评测在 zero-shot 下进行；prompting / decoding / sampling / matching 细节统一见 Appendix A.2.1。Acc@1 / Final@1 / Chain@1 越大越好，Drift 越小越好。
 
 ## 实验关键数据
 

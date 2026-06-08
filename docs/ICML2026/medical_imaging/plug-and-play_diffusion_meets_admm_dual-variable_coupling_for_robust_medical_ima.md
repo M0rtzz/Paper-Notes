@@ -53,23 +53,17 @@ tags:
 
 ### 关键设计
 
-1. **Dual-Coupled Iteration（对偶耦合迭代）**：
+**1. Dual-Coupled Iteration（对偶耦合迭代）：把对偶变量当"积分记忆"，从源头消除稳态偏差。**
 
-    - 功能：把 ADMM 的对偶变量 $u^{(k)}$ 显式维护进 PnP 扩散循环，作为"积分记忆"驱动 $x\to z$ 收敛到严格一致点
-    - 核心思路：每次迭代后做 $u^{(k+1)}=u^{(k)}+(x^{(k+1)}-z^{(k+1)})$，把历史共识误差累计成一个修正力，等价从 P 控制器升级到 PI 控制器；下次的 $x$ 更新里 $u$ 进入数据保真项的二次项中心，相当于一个"反复施压让两个变量靠拢"的反馈环
-    - 设计动机：现有 HQS/PG 类 PnP 扩散求解器把 $u\equiv 0$ 当默认值，等于砍掉了 ADMM 的积分动作，所以在重度欠采样下必然留下稳态偏差；本文实证 LACT-90 上仅打开对偶就能 +4.55 dB
+现有 HQS/PG 类 PnP 扩散求解器都把对偶 $u\equiv 0$ 当默认值，相当于直接砍掉了 ADMM 的积分动作，所以在重度欠采样下必然停在一个有偏的平衡点。本文反其道而行，每轮迭代后显式更新 $u^{(k+1)}=u^{(k)}+(x^{(k+1)}-z^{(k+1)})$，把历史上 $x$ 与 $z$ 的共识误差一点点累加成一股修正力；下一次解 $x$ 更新时，$u$ 进入数据保真项二次项的中心 $\|x-z^{(k)}+u^{(k)}\|^2$，等于"只要两个变量还没对齐就反复施压让它们靠拢"。这正是从纯 Proportional 控制器升级成 PI 控制器的积分项——P 控制器面对强阻力（强欠采样）消不掉稳态误差，而 I 项靠对残差的积分把它压到零。增益立竿见影：LACT-90 上仅打开对偶就能 +4.55 dB。
 
-2. **Spectral Homogenization（频域同质化）**：
+**2. Spectral Homogenization（频域同质化）：把对偶累积出的有色残差"漂白"成伪 AWGN，给去噪器喂回它认识的输入。**
 
-    - 功能：把对偶移位后的 $v^{(k+1)}=x^{(k+1)}+u^{(k)}$ 中的结构化、有色残差，修整为功率谱近似平坦的伪 AWGN，避免触发扩散去噪器的 OOD 幻觉
-    - 核心思路：三步走——(1) **诊断**：用 $r^{(k+1)}=v^{(k+1)}-z^{(k)}$ 作为残差代理，做带核平滑的 PSD 估计 $\hat S_r(\omega) = (|\mathcal F(r)(\omega)|^2)*K_\delta$；(2) **合成**：定义频谱缺口 $\Delta S(\omega)=\max(\epsilon, \sigma_t^2(HW) - \hat S_r(\omega))$，用白噪声 $n$ 的随机相位 + 缺口幅度构造互补噪声 $\xi^{(k+1)} = \mathcal F^{-1}(\sqrt{\Delta S(\omega)} \odot e^{i\angle\mathcal F(n)})$；(3) **融合**：$\tilde v^{(k+1)} = v^{(k+1)} + \xi^{(k+1)}$。Proposition 4.1 给出二阶谱一致性的理论保证：$\mathbb E_\xi[S_{n_{\text{eff}}}(\omega)] \approx \sigma_t^2(HW)$，等价 $\text{Cov}(n_{\text{eff}}) \approx \sigma_t^2 I$
-    - 设计动机：物理伪影（CT 条纹、MRI 混叠）天然集中在特定频带，是"有色"的；空域加噪会把整张图打花，而频域只在"频谱凹陷"补能量、保留"频谱主峰"携带的语义信息——既漂白噪声又保结构。作者把这一过程类比为"Coherence Breaking"：用随机相位 + 互补幅度淹没结构化伪影的相干性
+对偶虽好，却带来第二个麻烦——$u$ 累积的是结构化残差（CT 的方向条纹、MRI 的相干混叠），频谱是有色的，而扩散去噪器只在 AWGN 上训练过，输入 $v^{(k+1)}=x^{(k+1)}+u^{(k)}$ 立刻 OOD、会把伪影当语义幻觉出来。物理伪影天然集中在特定频带，所以本文不在空域加噪（那会把整张图打花），而是在频域只往"频谱凹陷"里补能量、保留"频谱主峰"携带的语义。具体三步走：先**诊断**，用 $r^{(k+1)}=v^{(k+1)}-z^{(k)}$ 作残差代理，做带核平滑的 PSD 估计 $\hat S_r(\omega) = (|\mathcal F(r)(\omega)|^2)*K_\delta$；再**合成**，定义频谱缺口 $\Delta S(\omega)=\max(\epsilon, \sigma_t^2(HW) - \hat S_r(\omega))$，取白噪声 $n$ 的随机相位配上缺口幅度造出互补噪声 $\xi^{(k+1)} = \mathcal F^{-1}(\sqrt{\Delta S(\omega)} \odot e^{i\angle\mathcal F(n)})$；最后**融合** $\tilde v^{(k+1)} = v^{(k+1)} + \xi^{(k+1)}$。Proposition 4.1 给出二阶谱一致性保证：$\mathbb E_\xi[S_{n_{\text{eff}}}(\omega)] \approx \sigma_t^2(HW)$，即 $\text{Cov}(n_{\text{eff}}) \approx \sigma_t^2 I$。作者把这套操作类比为"Coherence Breaking"——用随机相位加互补幅度淹没结构化伪影的相干性，既漂白了噪声又没伤到结构。
 
-3. **DiffPIR-aligned Data-Consistency（与 baseline 对齐的保真子问题）**：
+**3. DiffPIR-aligned Data-Consistency（与 baseline 对齐的保真子问题）：把求解器选型这个变量锁死，让增益干净归因。**
 
-    - 功能：让 DC-PnPDP 的数据保真步严格等同于 DiffPIR 的实现，保证消融与对比公平
-    - 核心思路：CT 用 torch-radon 模拟前向投影（parallel-beam，SVCT 取 20 视角、LACT 取 [0,90]° 90 视角），MRI 用 1D 等距 Cartesian 欠采样（AF=6/10）；保真子问题用 CG 求解；MRI 在复数域时 Spectral Homogenization 对实部/虚部分别独立做
-    - 设计动机：作者明确想把"对偶 + SH"的增益和 baseline 的求解器选型解耦——只有当数据保真步完全一致，性能增益才能干净地归因到本文新模块
+很多 PnP 论文同时换求解器又换扩散先验，让人分不清增益来自哪。本文刻意把数据保真步做得和 DiffPIR 一模一样：CT 用 torch-radon 模拟 parallel-beam 前向投影（SVCT 取 20 视角、LACT 取 $[0,90]°$ 共 90 视角），MRI 用 1D 等距 Cartesian 欠采样（AF=6/10），保真子问题统一用 CG 求解，MRI 在复数域时 Spectral Homogenization 对实部/虚部各自独立做。只有当数据保真步完全一致，"对偶 + SH"带来的性能增益才能被干净地归因到这两个新模块上，而不是被求解器差异污染——这也让后面的消融能精确切割贡献。
 
 ### 损失函数 / 训练策略
 扩散先验本身按 EDM 框架预训练（CT 在 AbdomenCT-1K 上 from scratch，MRI 直接用 Zheng et al. 2025 公开权重），**推理阶段不更新扩散权重**——所有改动都发生在 PnP 求解器一侧。这是 plug-and-play 设定的标准做法，也意味着 SH 模块对任何预训练扩散先验都即插即用。

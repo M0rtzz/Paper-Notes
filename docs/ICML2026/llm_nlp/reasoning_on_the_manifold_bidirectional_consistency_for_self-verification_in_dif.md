@@ -42,32 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 dLLM 已生成的完整序列 $x_0$，输出是它的几何稳定性分数 $S_{\text{BMC}}(x_0)$。流程三步：(1) **前向扰动**——按比例 $\gamma$ 把 $x_0$ 重新部分掩码成 $\tilde{x}_t$；(2) **后向重构**——用同一个 dLLM 的去噪器 $p_\theta$，从 $\tilde{x}_t$ 跑 $K$ 步（$K{=}16 \ll T{=}1024$）截断式去噪，得到 $\hat{x}_0$；(3) **一致性打分**——用六个相似度指标的加权和给出 $S_{\text{BMC}}$。这个分数随后驱动三个下游任务：错误诊断（直接当 score）、Manifold-Guided Rejection Sampling（MGRS）拒绝采样、以及作为 RL 的稠密奖励。
-
-理论上，作者证明当差异度量 $\mathcal{D}$ 取 KL 散度时，BMC 等价于重加权 ELBO 的估计（Prop. 3.2）；用 Csiszár $f$-divergence 时仍与边缘 ELBO 保持一致（Prop. 3.3）；在连续嵌入空间下，BMC 通过 Lipschitz 连续性可放松到语义近邻（Prop. 3.4）；几何上还给出了"重构残差是流形距离的上界"（Prop. 3.5）：$\|z_0 - z^*\| \le \frac{1}{1-\kappa}\|z_0 - \mathcal{T}_\theta(z_0)\|$。
+方法把"这条推理轨迹对不对"翻译成一个可测的几何问题：输入 dLLM 已生成的完整序列 $x_0$，先按比例 $\gamma$ 重新部分掩码再用同一去噪器跑 $K$ 步截断重构得到 $\hat{x}_0$，用 $x_0$ 与 $\hat{x}_0$ 的复合相似度作为几何稳定性分数 $S_{\text{BMC}}(x_0)$——稳定即在流形上、推理可靠，漂移即大概率错。这同一个分数随后无改动地驱动三件事：错误诊断（直接当 score）、推理时的 Manifold-Guided Rejection Sampling（MGRS）拒绝采样、以及 RL 阶段的稠密奖励。理论侧作者把它锚到 ELBO：$\mathcal{D}$ 取 KL 散度时 BMC 等价于重加权 ELBO 估计（Prop. 3.2），取 Csiszár $f$-divergence 时与边缘 ELBO 一致（Prop. 3.3），连续嵌入下经 Lipschitz 连续放松到语义近邻（Prop. 3.4），并给出重构残差是流形距离上界的硬保证 $\|z_0 - z^*\| \le \frac{1}{1-\kappa}\|z_0 - \mathcal{T}_\theta(z_0)\|$（Prop. 3.5）。
 
 ### 关键设计
 
-1. **BMC 估计器（前向再掩码 + 截断后向重构 + 复合相似度）**:
+**1. BMC 估计器：用一次"扰动—恢复"循环量化流形稳定性**
 
-    - 功能：用一次"扰动—恢复"循环近似 $\mathcal{R}_\mathcal{D}(x_0) := -\mathbb{E}_{t, \tilde{x}_t}[\mathcal{D}(x_0, \hat{x}_0(\tilde{x}_t))]$，把抽象的流形稳定性变成可计算的标量分数。
-    - 核心思路：前向按 Bernoulli 掩码 $\tilde{x}_t^{(i)} = m_i x_0^{(i)} + (1-m_i)\texttt{[MASK]}$（$\gamma{=}0.9$）；后向只跑 $K{=}16$ 步而不是完整 $T$ 步——这是效率关键；分数 $S_{\text{BMC}} = \sum_k \lambda_k s_k$ 由六个互补指标加权：Token Accuracy $s_{\text{tok}}$（局部收敛）、Semantic Similarity $s_{\text{sem}}$（容许同义改写）、Number Retention $s_{\text{num}}$（数学链关键节点）、Final Answer Match $s_{\text{ans}}$（终点收敛）、Character Similarity、Intrinsic Confidence。
-    - 设计动机：单一指标各有盲点——纯似然太严苛把同义改写误判为错，纯答案匹配又忽略推理链稳定性；六指标互补使 BMC 既贴近 ELBO 又对语义鲁棒。"截断 $K$ 步"是把验证开销压到生成开销零头的工程关键，避免变成另一种重采样。
+要测的量是 $\mathcal{R}_\mathcal{D}(x_0) := -\mathbb{E}_{t, \tilde{x}_t}[\mathcal{D}(x_0, \hat{x}_0(\tilde{x}_t))]$，即"扰动后能否被忠实重建"。前向用 Bernoulli 掩码 $\tilde{x}_t^{(i)} = m_i x_0^{(i)} + (1-m_i)\texttt{[MASK]}$（$\gamma{=}0.9$）打散序列，后向只跑 $K{=}16$ 步而非完整 $T{=}1024$ 步去噪——这个截断是把验证开销压到生成开销零头、避免它退化成又一次重采样的工程关键。最终分数 $S_{\text{BMC}} = \sum_k \lambda_k s_k$ 由六个互补指标加权：Token Accuracy $s_{\text{tok}}$（局部收敛）、Semantic Similarity $s_{\text{sem}}$（容许同义改写）、Number Retention $s_{\text{num}}$（数学链关键节点）、Final Answer Match $s_{\text{ans}}$（终点收敛），外加 Character Similarity 与 Intrinsic Confidence。之所以要复合而非单指标：纯似然太严苛会把同义改写误判为错，纯答案匹配又忽略推理链中段的稳定性，六指标互补让 BMC 既贴近 ELBO 又对语义鲁棒。
 
-2. **Manifold-Guided Rejection Sampling（MGRS）自适应推理**:
+**2. MGRS：让算力跟着题目难度走的拒绝采样**
 
-    - 功能：用 BMC 把"固定预算 Best-of-N"升级为"按题难度动态分配算力"的拒绝采样。
-    - 核心思路：每次 $x_0 \sim p_\theta(\cdot|q)$ 后立刻算 $S = S_{\text{BMC}}(x_0)$，若 $S > \tau$（$\tau{=}0.75$）立即返回（"地形稳定，无需再采"），否则继续采，最多 $N_{\max}{=}10$ 次；若都没过阈值，返回历史最高分候选。简单题平均 $\sim$2–3 次就停，难题（如 MATH）会自然多采到 $\sim$5–6 次。
-    - 设计动机：Self-Consistency 不分难易地多数表决，浪费简单题算力又在难题上"齐刷刷错"；Best-of-N(Confidence) 用 token 概率排，但置信度和推理正确性几乎无关。BMC 提供的是**几何**信号而非统计信号，使预算和题难度自然耦合。
+把固定预算的 Best-of-N 升级成按难度动态分配算力。每次 $x_0 \sim p_\theta(\cdot|q)$ 采出后立刻算 $S = S_{\text{BMC}}(x_0)$，若 $S > \tau$（$\tau{=}0.75$）就当"地形稳定、无需再采"立即返回，否则继续采、最多 $N_{\max}{=}10$ 次，全都不过阈值则返回历史最高分候选。效果是简单题平均 $\sim$2–3 次即停、难题（如 MATH）自然多采到 $\sim$5–6 次。对比起来，Self-Consistency 不分难易地多数表决既浪费简单题算力又在难题上"齐刷刷错"，Best-of-N(Confidence) 用 token 概率排序但置信度与推理正确性几乎无关；BMC 给的是几何信号而非统计信号，预算因此与题难度天然耦合。
 
-3. **门控式几何对齐奖励（Geometric Alignment）**:
+**3. 门控式几何对齐奖励：把流形稳定性内化进策略**
 
-    - 功能：把 BMC 注入 RL 训练，让 dLLM 把流形稳定性内化进策略而非仅靠推理时挑样本。
-    - 核心思路：奖励 $r(x_0) = \mathbb{I}(y_{\text{pred}} = y^*) \cdot [r_{\text{base}} + \alpha_t \cdot S_{\text{BMC}}(x_0)]$。乘法门控保证"答错的链一律 0 奖励"，避免奖励黑客；$\alpha_t$ 按 $\alpha_t = \alpha_{\min} + (\alpha_{\max} - \alpha_{\min}) \cdot t/T$ 线性退火，前期重答案、后期重几何；策略优化用 Sandwiched Policy Gradient（SPG），用 sandwiched evidence bounds 替代有偏的 ELBO 近似来估梯度。
-    - 设计动机：标准 outcome RL 把所有"答对"等价处理，会强化"撞对答案"的脆弱链；BMC 把稀疏的 outcome 奖励变成稠密的"几何质量"奖励，但若不加正确性门控，模型可能朝"自洽但错"的方向漂移——所以用乘法门控建立严格层级：先对、再稳。
+要让模型不只在推理时挑样本，而是把几何稳定性训进权重，于是把 BMC 注入 RL 奖励：$r(x_0) = \mathbb{I}(y_{\text{pred}} = y^*) \cdot [r_{\text{base}} + \alpha_t \cdot S_{\text{BMC}}(x_0)]$。乘法门控是关键——它保证答错的链一律 0 奖励，建立"先对、再稳"的严格层级，否则稠密几何奖励会把模型带向"自洽但错"的漂移（即几何版奖励黑客，正是 outcome-only RL 的反面教材）；权重 $\alpha_t = \alpha_{\min} + (\alpha_{\max} - \alpha_{\min}) \cdot t/T$ 线性退火，前期重答案、后期重几何。梯度估计上，因为 dLLM 的似然不可解，标准 ELBO 近似有偏，作者改用 Sandwiched Policy Gradient（SPG）以 sandwiched evidence bounds 替代来估梯度，把稀疏 outcome 奖励变成稠密且无偏可优化的几何质量奖励。
 
 ### 损失函数 / 训练策略
-BMC 本身训练自由，只用预训练 dLLM 推理。RL 阶段用 SPG 框架在 LLaDA-8B 上做对齐，超参 $r_{\text{base}} = 1.5$、$\alpha \in [0.5, 1.0]$、$K{=}16$、$\gamma{=}0.9$、$N_{\text{BMC}}{=}4$ 集成样本。语义相似度用 all-MiniLM-L6-v2。
+BMC 本身训练自由，只用预训练 dLLM 推理。RL 阶段用 SPG 框架在 LLaDA-8B 上做对齐，超参 $r_{\text{base}} = 1.5$、$\alpha \in [0.5, 1.0]$、$K{=}16$、$\gamma{=}0.9$、$N_{\text{BMC}}{=}4$ 集成样本，语义相似度用 all-MiniLM-L6-v2。
 
 ## 实验关键数据
 

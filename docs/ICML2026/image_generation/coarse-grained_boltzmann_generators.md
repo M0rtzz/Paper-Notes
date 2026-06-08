@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为原子级分子动力学模拟轨迹（可以是有偏的增强采样数据），通过粗粒化映射 $\mathbf{R} = \Xi(\mathbf{r})$ 投影到低维 CG 坐标。框架包含两个并行训练的组件：(1) 基于连续归一化流 (CNF) 的提案分布 $q_\theta(\mathbf{R})$；(2) 基于神经网络的 PMF $U_\eta(\mathbf{R})$。推理时流模型生成 CG 构型，PMF 计算重要性权重 $w(\mathbf{R}) \propto e^{-\beta U_\eta(\mathbf{R})} / q_\theta(\mathbf{R})$，通过自归一化重要性采样估计量得到无偏平衡态可观测量。
+CG-BG 要解决的是「BG 能重加权却扩不到大系统、CG Emulator 能扩展却没法纠偏」这对矛盾，做法是把整个 BG 框架搬到低维粗粒化坐标空间里跑。原子级轨迹（甚至是有偏的增强采样数据）先经粗粒化映射 $\mathbf{R} = \Xi(\mathbf{r})$ 降到 CG 坐标，然后并行训练两个部件：一个连续归一化流 $q_\theta(\mathbf{R})$ 负责生成提案构型，一个神经网络 PMF $U_\eta(\mathbf{R})$ 负责给出目标能量。推理时流模型采样、PMF 算重要性权重 $w(\mathbf{R}) \propto e^{-\beta U_\eta(\mathbf{R})} / q_\theta(\mathbf{R})$，再用自归一化重要性采样把有偏提案纠成渐近正确的平衡态估计。
 
 ### 关键设计
 
-1. **增强采样力匹配 (ESFM) 学习 PMF**:
+**1. 增强采样力匹配 (ESFM)：用有偏数据学到正确的 PMF**
 
-    - 功能：从快速收敛的有偏模拟数据中学习粗粒化平均力势，不依赖昂贵的无偏平衡态轨迹
-    - 核心思路：利用纤维分布不变性——在 CG 坐标上施加偏置势 $V(\mathbf{R})$ 时，给定 $\mathbf{R}$ 的原子级条件分布不变，即 $p_V(\mathbf{r}|\mathbf{R}) = p(\mathbf{r}|\mathbf{R})$。因此投影力的条件均值（即平均力）在有偏采样下不变，力匹配回归目标不受偏置影响。训练损失为 $\mathcal{L}_{\mathrm{ESFM}}(\eta) = \mathbb{E}_{\mathbf{r} \sim \mathcal{D}_{\mathrm{bias}}}[\|\nabla_{\mathbf{R}} U_\eta(\Xi(\mathbf{r})) + \mathcal{F}_{\mathrm{proj}}(\mathbf{r})\|^2]$，其中力从无偏原子势重新计算
-    - 设计动机：标准力匹配需要收敛的无偏数据，而增强采样（如 well-tempered metadynamics）可快速覆盖亚稳态间的过渡区域。ESFM 与标准力匹配有相同全局最优解，且 KL 散度受力误差平方上界约束
+PMF 的痛点是标准力匹配要求收敛的无偏平衡态轨迹，而这种轨迹在亚稳态之间过渡缓慢、采集成本极高。ESFM 绕开这点，靠的是纤维分布不变性：在 CG 坐标上施加任意偏置势 $V(\mathbf{R})$ 时，给定 $\mathbf{R}$ 的原子级条件分布不变，即 $p_V(\mathbf{r}|\mathbf{R}) = p(\mathbf{r}|\mathbf{R})$。既然条件分布没变，投影力的条件均值（也就是平均力）在有偏采样下也不变，于是力匹配的回归目标完全不受偏置干扰。训练损失为 $\mathcal{L}_{\mathrm{ESFM}}(\eta) = \mathbb{E}_{\mathbf{r} \sim \mathcal{D}_{\mathrm{bias}}}[\|\nabla_{\mathbf{R}} U_\eta(\Xi(\mathbf{r})) + \mathcal{F}_{\mathrm{proj}}(\mathbf{r})\|^2]$，其中投影力从无偏的原子势重新计算（偏置只用来加速采样、不进损失）。这样就能用 well-tempered metadynamics 这类快速覆盖过渡区域的增强采样数据来训 PMF，而它与标准力匹配享有相同的全局最优解，得到的分布 KL 散度还受力误差平方的上界约束。
 
-2. **CG 空间连续归一化流 (CNF) 提案生成**:
+**2. CG 空间连续归一化流：低维里生成提案分布**
 
-    - 功能：在低维粗粒化坐标空间中学习提案密度 $q_\theta(\mathbf{R})$ 以近似目标边缘分布
-    - 核心思路：使用 Flow Matching 训练神经向量场 $v_\theta(t, \mathbf{x})$，通过线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ 回归目标向量场。流模型在 CG 空间操作维度远小于原子级（如丙氨酸六肽从 72 原子降至 Core Beta 映射的少量珠子），使得 Jacobian 计算和分布重叠度显著改善
-    - 设计动机：在低维空间中，生成模型与目标分布的重叠更好，重要性权重方差更低，ESS 更高；同时推理时 Jacobian 计算成本大幅降低
+提案分布要尽量贴合目标边缘分布，否则重要性权重方差会爆炸。CG-BG 用 Flow Matching 训练神经向量场 $v_\theta(t, \mathbf{x})$，沿线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ 回归目标向量场来学 $q_\theta(\mathbf{R})$。关键在于流模型直接在 CG 空间操作，维度远小于原子级——例如丙氨酸六肽从 72 个原子降到 Core Beta 映射下的少量珠子。维度一降，生成分布与目标分布的重叠度立刻改善，重要性权重方差更低、ESS 更高，同时推理时的 Jacobian 行列式计算成本也大幅下降，正好对症原子级 BG 随维度增长的两大瓶颈。
 
-3. **PMF 引导的重要性重加权**:
+**3. PMF 引导的重要性重加权：把提案纠成渐近正确**
 
-    - 功能：将流模型的有偏提案样本纠正为渐近正确的平衡态分布
-    - 核心思路：对流模型生成的样本 $\mathbf{R}_i \sim q_\theta$ 计算重要性权重 $w(\mathbf{R}_i) \propto e^{-\beta U_\eta(\mathbf{R}_i)} / q_\theta(\mathbf{R}_i)$，用自归一化估计量计算可观测量。通过归一化有效样本量 $\mathrm{ESS} = (\sum w_i)^2 / (B \sum w_i^2)$ 评估重加权质量，并采用权重截断策略提升对 MLP 外推异常和生成伪影的鲁棒性
-    - 设计动机：Boltzmann Emulator 直接用 $q_\theta$ 估计可观测量无法纠偏。引入学到的 PMF 作为目标能量函数恢复了 BG 的重加权能力，且 PMF 可捕获隐式溶剂模型无法表达的溶剂介导效应
+Boltzmann Emulator 直接拿 $q_\theta$ 估可观测量，没有纠偏机制，分布偏差无法修正。CG-BG 把学到的 PMF 当作目标能量函数，对流模型采的每个样本 $\mathbf{R}_i \sim q_\theta$ 计算重要性权重 $w(\mathbf{R}_i) \propto e^{-\beta U_\eta(\mathbf{R}_i)} / q_\theta(\mathbf{R}_i)$，再用自归一化估计量算可观测量，从而恢复了 BG 的重加权能力。重加权质量用归一化有效样本量 $\mathrm{ESS} = (\sum w_i)^2 / (B \sum w_i^2)$ 衡量（$B$ 为批大小），并对权重做截断以抵抗 MLP 外推异常和生成伪影。由于 PMF 是从显式溶剂数据学来的，它还能捕获隐式溶剂模型表达不了的溶剂介导效应——这正是原子级 BG 受限于隐式溶剂精度上限而 CG-BG 能突破的原因。
 
 ### 训练策略
-框架分为两阶段独立训练：(1) PMF 网络通过 ESFM 损失在有偏或无偏原子级轨迹数据上训练；(2) 归一化流通过 Conditional Flow Matching 损失在 CG 坐标数据上训练。两者可并行训练，推理时组合使用。
+两个部件分阶段独立训练、推理时再组合：PMF 网络用 ESFM 损失在有偏或无偏的原子级轨迹上训，归一化流用 Conditional Flow Matching 损失在 CG 坐标数据上训，二者互不依赖可并行进行。
 
 ## 实验关键数据
 

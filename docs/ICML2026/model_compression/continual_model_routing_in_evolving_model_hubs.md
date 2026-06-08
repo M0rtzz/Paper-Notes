@@ -42,30 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-持续路由形式化：经验流 $\{E_t\}_{t=1}^T$，每个 $E_t$ 提供三元组 $(q_i, m_i, d_i)$，候选池累计扩张 $\mathcal{M}_{\leq t} = \bigcup_{k \leq t} \mathcal{M}_k$。CARvE 的核心是一个嵌入打分器：冻结骨干 LLM（默认 LLaMA2-7B + LoRA）对 query 抽 hidden $h(q) \in \mathbb{R}^D$，过可学习投影 $W$ 得 $z(q) = h(q)W / \lVert h(q)W \rVert_2$；每个模型 ID 维护一个可学习的归一化嵌入 $e(m) = v(m)/\lVert v(m) \rVert_2$；候选集 $\mathcal{C}(q)$ 下打分 $s(q,m) = z(q)^\top e(m) / \tau$，预测 $\hat m = \arg\max_{m \in \mathcal{C}(q)} s(q,m)$。每经验到来时，注册表 $\mathcal{R}$ 追加新模型 ID 行，投影 $W$、模型嵌入表 $\{v(m)\}$、LoRA 适配器一起更新，并以上一经验末的快照作为 anchor。
+CARvE 把"该路由到 hub 里哪个模型"做成一个可以持续追加标签的嵌入打分问题。经验是按时间一波波到来的 $\{E_t\}_{t=1}^T$，每个 $E_t$ 给出若干 $(q_i, m_i, d_i)$ 三元组（query、正确模型、所属域），候选池随之累计扩张 $\mathcal{M}_{\leq t} = \bigcup_{k \leq t} \mathcal{M}_k$。打分时，冻结的骨干 LLM（默认 LLaMA2-7B + LoRA）把 query 抽成 hidden $h(q) \in \mathbb{R}^D$，过一个可学习投影 $W$ 归一化后得查询向量 $z(q) = h(q)W / \lVert h(q)W \rVert_2$；每个模型 ID 各自维护一个可学习的归一化嵌入 $e(m) = v(m)/\lVert v(m) \rVert_2$；在候选集 $\mathcal{C}(q)$ 上算余弦打分 $s(q,m) = z(q)^\top e(m) / \tau$，取 $\hat m = \arg\max_{m \in \mathcal{C}(q)} s(q,m)$ 输出。每当新经验到来，注册表 $\mathcal{R}$ 追加新模型 ID 行，投影 $W$、模型嵌入表 $\{v(m)\}$ 和 LoRA 适配器一起更新，并以上一经验末的快照作为 anchor 防止老 ID 的几何被新数据冲乱。
 
 ### 关键设计
 
-1. **Checkpoint-based 非对称 anchoring**：
+**1. Checkpoint-based 非对称 anchoring：经验切换时锁住老模型的几何、放开新模型。**
 
-    - 功能：让老模型 ID 嵌入和查询投影的几何在经验切换时保持稳定，又不约束新加入的模型 ID 的嵌入学习
-    - 核心思路：经验 $t$ 开始时保存上一经验末的参数快照 $\{v_{t-1}(m)\}_{m \in \mathcal{M}_{\leq t-1}}$ 和 $\Theta_{t-1}$。训练 $E_t$ 时在主对比损失外加两项 anchor：嵌入余弦漂移 $\mathcal{L}_{\mathrm{emb}} = \frac{1}{|\mathcal{M}_{\leq t-1}|}\sum_m (1 - \cos(v_t(m), v_{t-1}(m)))$ 和投影均方漂移 $\mathcal{L}_{\mathrm{proj}} = \frac{1}{|\Theta_t|}\sum_\theta \frac{1}{|\theta|}\lVert \theta - \theta_{t-1}\rVert_2^2$，新 ID 的嵌入行不进 $\mathcal{L}_{\mathrm{emb}}$
-    - 设计动机：路由是按嵌入相似度而不是固定分类头做的，所以必须直接锁几何而不是锁分类边界；同时新模型还需要在嵌入空间找到自己的位置，因此 anchor 必须是"非对称"的——只锁老不锁新
+模型 hub 是非平稳的，新一波模型涌入会让路由器顺着新数据漂移、把之前学好的老模型嵌入挤变形，这正是灾难性遗忘在路由场景里的样子。CARvE 的对策是在经验 $t$ 开始时先存下上一经验末的参数快照 $\{v_{t-1}(m)\}_{m \in \mathcal{M}_{\leq t-1}}$ 和 $\Theta_{t-1}$，训练 $E_t$ 时除了主对比损失再加两项 anchor 把几何拉回原位：一项是老模型嵌入的余弦漂移 $\mathcal{L}_{\mathrm{emb}} = \frac{1}{|\mathcal{M}_{\leq t-1}|}\sum_m (1 - \cos(v_t(m), v_{t-1}(m)))$，一项是投影矩阵的均方漂移 $\mathcal{L}_{\mathrm{proj}} = \frac{1}{|\Theta_t|}\sum_\theta \frac{1}{|\theta|}\lVert \theta - \theta_{t-1}\rVert_2^2$。关键在于这个 anchor 是**非对称**的——$\mathcal{L}_{\mathrm{emb}}$ 只对老 ID 的嵌入行生效，新加入模型的嵌入行完全不进这项约束。因为路由靠的是嵌入相似度而不是一个固定的分类头，所以必须直接锁嵌入和投影的几何（而不是像 LwF/EWC 那样去锁分类边界）；又因为新模型还得在嵌入空间里给自己找位置，硬锁就学不进来，所以只锁老、不锁新才能同时扛住遗忘和适应。实验里经验 3 训完回看 Exp1，标准 replay 掉到 60.8 而 CARvE 保住 74.5，正是这个非对称约束在起作用。
 
-2. **固定大小的候选集训练 + 结构化负采样**：
+**2. 固定大小候选集训练 + 结构化负采样：既绕开千类 softmax，又喂出判别力。**
 
-    - 功能：避免在 1000+ 类的全 softmax 上做训练，同时维护跨域/跨族的判别力
-    - 核心思路：对每个 $(q, m^+)$ 构造大小为 $K$ 的候选集 $\mathcal{C}(q)$，必含正样本 $m^+$，混入三类负样本——当前路由器下打分最高的 hard confusers（周期性 mining）、同域/相关域的 semantic negatives、跨域的 far negatives，再随机填充防重复，损失为 $\mathcal{L}_{\mathrm{route}} = -\log \frac{\exp(s(q,m^+))}{\sum_{m \in \mathcal{C}(q)} \exp(s(q,m))}$
-    - 设计动机：(1) 把每例打分成本降到 $O(Kd)$ 而不是 $O(|\mathcal{M}_{\leq t}| d)$，部署时还能用 FAISS 进一步降到 $O(\log |M|)$；(2) hard 负样本撑细粒度判别，semantic 负样本撑模型族内区分（yolov8m/n/s 这种），far 负样本撑跨域宏观结构
+候选模型上千时，每例都在全 $\mathcal{M}_{\leq t}$ 上做 softmax 既贵又稀。CARvE 改成对每个 $(q, m^+)$ 只构造一个大小为 $K$ 的候选集 $\mathcal{C}(q)$，里面必含正样本 $m^+$，再按结构混入三类负样本：当前路由器下打分最高、最容易混淆的 hard confusers（周期性重新 mining）、同域或相关域的 semantic negatives、以及跨域的 far negatives，剩下随机填充防重复；损失就是这个候选集内的对比交叉熵 $\mathcal{L}_{\mathrm{route}} = -\log \frac{\exp(s(q,m^+))}{\sum_{m \in \mathcal{C}(q)} \exp(s(q,m))}$。这样每例打分成本从 $O(|\mathcal{M}_{\leq t}| d)$ 降到 $O(Kd)$，部署时还能用 FAISS 把检索进一步压到 $O(\log |M|)$。三类负样本各管一层判别：hard confusers 撑细粒度区分，semantic negatives 撑同族内的区分（比如 yolov8m/n/s 这种近亲），far negatives 撑跨域的宏观结构——少了哪一类，对应粒度的精度就会塌。
 
-3. **域-模型 coreset 重放 + 随机初始化模型嵌入**：
+**3. 域-模型 coreset 重放 + 随机初始化模型嵌入：在长尾分布下省着用回放预算，且不让 model card 带偏。**
 
-    - 功能：在长尾的 hub 数据分布下挑出最有信息量的旧样本，并避免被 model card 文本几何先入为主带偏
-    - 核心思路：给定回放预算 $B$，按域频率分配各域配额（设最小值和可选上限），同域内对每个模型 ID 再限制最大样本数，并在固定嵌入空间用 farthest-point sampling 选最分散的样本；模型嵌入初始化为随机向量而不是用 model card 编码做 warm start
-    - 设计动机：随机重放在重尾分布下严重浪费预算在常见域；FPS 保覆盖压冗余。至于嵌入随机初始化——作者实测发现 4 种 card-based 初始化方案在 D-Acc 上反而比随机低 3-5pp、遗忘翻倍，因为 card 嵌入编码的是描述的语言相似度而不是路由判别力，对比目标必须先把这种几何"撤掉"才能重新组织空间
+hub 数据是重尾的，常见域样本铺天盖地、长尾域寥寥无几，随机抽样回放会把预算大半浪费在常见域上。CARvE 给定回放预算 $B$ 后先按域频率给各域分配配额（设下限、可选上限），同域内再对每个模型 ID 限制最大样本数，最后在固定嵌入空间用 farthest-point sampling 挑最分散的样本——用覆盖度换冗余度，让稀有域也保住代表样本。另一个反直觉的决定是模型嵌入**随机初始化**而不是用 model card 文本编码做 warm start：作者实测 4 种 card-based 初始化在 D-Acc 上反而比随机低 3–5pp、遗忘翻倍，因为 card 嵌入编码的是描述文本的语言相似度，和路由真正需要的判别几何是冲突的，对比目标得先花力气把这套语义几何"撤掉"才能重新组织空间，不如一开始就给个干净的随机起点。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L} = \mathcal{L}_{\mathrm{route}} + \lambda_{\mathrm{emb}} \mathcal{L}_{\mathrm{emb}} + \lambda_{\mathrm{proj}} \mathcal{L}_{\mathrm{proj}}$。骨干 LLM 全程冻结，只更新 LoRA 适配器、投影 $W$ 和模型嵌入表；新经验到来时按 ID 追加新嵌入行而不重排旧索引，anchor 只施加在路由器参数上、不约束 LoRA。
+总损失把对比项和两项 anchor 加权相加 $\mathcal{L} = \mathcal{L}_{\mathrm{route}} + \lambda_{\mathrm{emb}} \mathcal{L}_{\mathrm{emb}} + \lambda_{\mathrm{proj}} \mathcal{L}_{\mathrm{proj}}$。骨干 LLM 全程冻结，只更新 LoRA 适配器、投影 $W$ 和模型嵌入表；新经验到来时按 ID 追加新嵌入行而不重排旧索引，anchor 只施加在路由器参数（嵌入、投影）上、不约束 LoRA。
 
 ## 实验关键数据
 

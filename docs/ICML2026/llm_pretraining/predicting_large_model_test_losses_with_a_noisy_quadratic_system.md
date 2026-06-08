@@ -38,33 +38,26 @@ tags:
 **核心 idea**：用 "投影 SGD on quadratic + power-law 噪声 + LayerNorm 等价 lr 调度" 三件套构造 mechanistic 损失模型，把 LLM 测试损失表达为 7+1 个超参的封闭形式数值积分，把 Chinchilla 的 "$N, D$ 拟合" 升级为 "$N, B, K$ 全 trajectory 模拟"。
 
 ## 方法详解
-NQS 的精妙之处在于 "mechanistic but tractable" 的平衡——保留 quadratic optimization 的可解释性，但把所有 asymptotic phase 隐式编码进数值参数，并通过 LayerNorm 等价 lr 自适应小 batch。
 
 ### 整体框架
-NQS 假设 LLM 训练等价于在一个无穷维 quadratic loss $\mathcal{Q}^{\mathrm{NQS}}(w) = \mathcal{E}_{\mathrm{irr}} + \tfrac{1}{2}\langle w-w^*, H(w-w^*)\rangle$ 上跑投影 SGD：把 $H$ 的特征向量按特征值降序排列，只在前 $N$ 维更新（对应模型 trainable 参数），噪声方差正比于 $1/B$（mini-batch noise），$N, B, K$ 决定动力学。最终封闭表达 $L_\theta(N, B, K)$ 包含 7 个超参（power 指数 $p, q, r$ + scale 系数 + 学习率 + 不可约误差 + 噪声强度），LayerNorm 引入第 8 个参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$。
+NQS 把 LLM 训练想象成一件很物理的事：在一个无穷维的二次损失面 $\mathcal{Q}^{\mathrm{NQS}}(w) = \mathcal{E}_{\mathrm{irr}} + \tfrac{1}{2}\langle w-w^*, H(w-w^*)\rangle$ 上跑带噪声的投影 SGD。把 Hessian $H$ 的特征向量按特征值从大到小排好，模型只在前 $N$ 个方向上更新（对应它有限的可训练参数），每步注入一个方差正比于 $1/B$ 的 mini-batch 噪声，跑 $K$ 步。整套动力学因此只由 $N, B, K$ 三个变量驱动，最终给出一个可数值计算的封闭损失 $L_\theta(N, B, K)$，其中 $\theta$ 含 7 个超参（三条谱的 power 指数 $p, q, r$、对应 scale 系数、学习率、不可约误差），再为 LayerNorm 补一个第 8 参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$。它的精妙之处在于 "mechanistic but tractable"——保留二次优化的可解释结构，却把所有恼人的 asymptotic phase 隐式塞进数值参数里。
 
 ### 关键设计
 
-1. **Quadratic + Power-Law Spectrum + Mini-Batch Noise（3 个核心假设）**:
+**1. 三条 power-law 谱：让一个系统自动覆盖多个 asymptotic phase。**
 
-    - 功能：用 Assumption 4.1 $\mathbb{E}[\lambda_n (\langle v_n, w^{(0)} - w^*\rangle)^2] = P/n^p$ 刻画初始偏差谱、Assumption 4.2 $\lambda_n = Q/n^q$ 刻画 Hessian 谱、Assumption 4.3 $\xi_n^{(k)} \sim \mathcal{N}(0, R/(n^r B))$ 刻画 mini-batch 噪声谱，三组独立 power law 参数化整个系统。
-    - 核心思路：把 Bordelon 等 linear regression scaling 模型简化（固定 projection 替随机 $P$）、把 NQM 的批噪声假设泛化（允许 $r \neq q$）。这让模型既兼容 Chinchilla 的 $L \sim N^{-(p-1)} + D^{-(p/q - 1/q)}$ 渐近形式，又能自然适应不同 phase。
-    - 设计动机：理论上 mini-batch 噪声会产生多个不同 functional form 的 asymptotic phase（Paquette 2025），NQS 不去 case-by-case 推导，而是用三个 power law 指数让系统自己 "插值" 到正确 phase，避免人工分段。
+Chinchilla 那类纯 functional fitting 扩展不动，根子在于它没有 mechanistic 结构去描述训练里到底发生了什么。NQS 用三个相互独立的 power law 把整个系统参数化：Assumption 4.1 用 $\mathbb{E}[\lambda_n (\langle v_n, w^{(0)} - w^*\rangle)^2] = P/n^p$ 刻画初始偏差沿各特征方向的分布，Assumption 4.2 用 $\lambda_n = Q/n^q$ 刻画 Hessian 谱的衰减，Assumption 4.3 用 $\xi_n^{(k)} \sim \mathcal{N}(0, R/(n^r B))$ 刻画 mini-batch 噪声谱。这相当于把 Bordelon 等 linear-regression scaling 模型简化（固定 projection 替掉随机 $P$），同时把 NQM 的批噪声假设放宽到 $r \neq q$。关键在于：理论上 mini-batch 噪声会让训练经过好几个 functional form 各不相同的 asymptotic phase（Paquette 2025），NQS 不去逐 case 推公式，而是让 $p, q, r$ 三个指数自动 "插值" 到正确的 phase——既能复现 Chinchilla 的渐近形式 $L \sim N^{-(p-1)} + D^{-(p/q - 1/q)}$，又免去人工分段。
 
-2. **Projected SGD on 有限子空间 + 封闭可计算表达式**:
+**2. 投影 SGD + Euler-Maclaurin 积分：把不可预测的理论变成秒级可算的预测器。**
 
-    - 功能：更新规则 $w^{(k)} = w^{(k-1)} - \gamma \mathrm{Proj}_{\mathbb{W}_N}(Hw^{(k-1)} - Hw^*) + \gamma \sum_{n=1}^N \xi_n^{(k)} v_n$，仅在前 $N$ 个 eigen 方向更新和注入噪声。经过 $K$ 步后的期望 loss 有封闭表达，可用 Euler-Maclaurin 公式把 $N$ 上求和近似为积分（成本 $\mathcal{O}(1)$），$K$ 上的几何级数显式求和。
-    - 核心思路：项 "投影到前 $N$ 维" 直接对应模型参数有限的事实——剩余维度是 latent 未训练的，对应 Chinchilla 里的 $\mathcal{E}_{\mathrm{appx}} \sim P/N^{p-1}$。在 $N$ 上做积分而非求和让 evaluation 几乎瞬时（< 1 秒），训练整个 $\theta$ 也只需 ~5 分钟。
-    - 设计动机：theoretical NQM 类模型一般只给 asymptotic bound 不可直接预测；NQS 通过 "数值积分而非显式公式" 让系统可以处理任意 $N, B, K$，不被 asymptotic phase 边界限制。
+NQM 这类训练动力学模型通常只给 asymptotic bound，没法直接拿来预测。NQS 的破局点是把更新规则写成 $w^{(k)} = w^{(k-1)} - \gamma \mathrm{Proj}_{\mathbb{W}_N}(Hw^{(k-1)} - Hw^*) + \gamma \sum_{n=1}^N \xi_n^{(k)} v_n$，只在前 $N$ 个特征方向上更新并注入噪声——"投影到前 $N$ 维" 直接对应模型参数有限这一事实，剩下没训到的维度就是 latent 误差，正好给出 Chinchilla 里的 $\mathcal{E}_{\mathrm{appx}} \sim P/N^{p-1}$ 项。跑 $K$ 步后的期望 loss 有封闭表达：$K$ 上是几何级数可显式求和，$N$ 上的求和则用 Euler-Maclaurin 公式近似成积分，成本压到 $\mathcal{O}(1)$。结果是评估任意 $(N, B, K)$ 配置不到 1 秒、拟合整个 $\theta$ 也只要约 5 分钟，且不再被任何 asymptotic phase 的边界卡住。
 
-3. **LayerNorm Adjustment：动态学习率 $\gamma_k \propto 1/\|w^{(k)}\|^2$**:
+**3. LayerNorm 等价学习率 $\gamma_k \propto 1/\|w^{(k)}\|^2$：补上小 batch 的最后一块拼图。**
 
-    - 功能：受 van Laarhoven 启发，把 LayerNorm 等价为有效学习率随 weight norm 变化的调度。引入第 8 个参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$，并近似 $\|w^{(k)}\|^2 \approx \mathbb{E}[\|w^{(k)}\|^2]$ 用 $s$ 推导，让 NQS 能正确刻画小 batch 训练。
-    - 核心思路：经验发现 vanilla NQS 对大 batch 拟合好，但小 batch 偏差大；LayerNorm 在小 batch 下噪声大时影响最显著，所以把它显式建模。$s$ 的常见取值 $s = N \times 0.02^2$（标准 init），但作者也建议在小 batch 数据子集上做 grid search 确定。
-    - 设计动机：要让模型能预测 "非临界 batch size" 区间的 loss 才能支持 compound resource allocation（如 time + memory 约束下选 $B$），LayerNorm correction 是补全这一块的关键。
+经验上 vanilla NQS 对大 batch 拟合很好，但小 batch 系统性偏差大——而要支持 compound resource allocation（在 time / memory 约束下选 $B$），恰恰需要模型能预测 "非临界 batch size" 区间的 loss。问题出在 normalization：受 van Laarhoven 启发，LayerNorm 等价于让有效学习率随 weight norm 反向变化 $\gamma_k \propto 1/\|w^{(k)}\|^2$，而这个效应在小 batch、噪声大时最显著。NQS 因此显式建模它，引入第 8 参数 $s = \mathbb{E}[\|w^{(0)}\|^2]$，并用 $\|w^{(k)}\|^2 \approx \mathbb{E}[\|w^{(k)}\|^2]$ 的近似把 $s$ 代入推导。$s$ 的常见取值是标准 init 下的 $s = N \times 0.02^2$，作者也建议在小 batch 数据子集上 grid search 确定——这一项正是 NQS 能把预测覆盖到小 batch 区间的关键。
 
 ### 损失函数 / 训练策略
-推断 $\theta = (P, Q, R, p, q, r, \gamma, \mathcal{E}_{\mathrm{irr}})$ 的过程：(1) 收集训练数据 $\{(N_i, B_i, K_i, l_i)\}$；(2) 拟合 $\mathcal{L}_\theta = \tfrac{1}{m}\sum_i (\log L_\theta(N_i, B_i, K_i) - \log l_i)^2$；(3) 用 gradient-based optimizer + 多初始化并行下 loss 表面；(4) 大 batch 数据先确定 $\theta$，再用小 batch 数据 grid search 选 $s$。
+推断 $\theta = (P, Q, R, p, q, r, \gamma, \mathcal{E}_{\mathrm{irr}})$ 分四步：先收集训练数据 $\{(N_i, B_i, K_i, l_i)\}$，再以对数空间 Huber/MSE 目标 $\mathcal{L}_\theta = \tfrac{1}{m}\sum_i (\log L_\theta(N_i, B_i, K_i) - \log l_i)^2$ 拟合，用 gradient-based optimizer 配多初始化并行下探 loss 表面；$s$ 因数值原因不和 $\theta$ 联合优化，而是先用大 batch 数据定好 $\theta$、再用小 batch 数据 grid search 选 $s$。
 
 ## 实验关键数据
 

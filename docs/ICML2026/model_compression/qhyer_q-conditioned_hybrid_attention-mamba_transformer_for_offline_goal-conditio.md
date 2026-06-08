@@ -41,30 +41,26 @@ QHyer 用 Normalizing Flows 估计的状态依赖 Q 值取代 Decision Transform
 ## 方法详解
 
 ### 整体框架
-QHyer 把每个时间步表示成 $(Q_t, [s_t;g], a_t)$ 三元组：$Q_t=\log p_\theta(g\mid s_t,a_t)$ 是 NFs 给的"到达目标"对数概率，$[s_t;g]$ 是状态-目标拼接 token（保证目标信号每步可见且不增加序列长度从 $3T$ 到 $4T$）。这个序列被送入 $L$ 层 Hybrid Attention-Mamba block，每个 block 有两条并行分支（注意力做全局目标规划、Mamba 做时序压缩），输出由一个标量门 $\alpha=\sigma(\mathbf{w}^\top x + b)$ 加权融合。训练端到端联合优化 NFs 似然、Q 期望分位回归与行为克隆。推理时两阶段自回归：先预测最大 Q，再以最大 Q 为条件生成 action。
+QHyer 的思路是把 Decision Transformer 的"序列建模"框架彻底改造成适配稀疏目标奖励的版本：它把每个时间步表示成 $(Q_t, [s_t;g], a_t)$ 三元组，其中 $Q_t=\log p_\theta(g\mid s_t,a_t)$ 是 Normalizing Flows 估计的"从当前状态-动作到达目标"的对数概率（取代原本的 RTG），$[s_t;g]$ 是把状态和目标拼在一起的 token。这条序列送进 $L$ 层 Hybrid Attention-Mamba block，每个 block 让注意力分支负责全局目标规划、Mamba 分支负责内容自适应的历史压缩，再用一个标量门把两条分支的输出加权融合；训练端到端联合优化 NFs 似然、Q 期望分位回归与行为克隆，推理时先预测最大 Q、再以它为条件自回归生成 action。
 
 ### 关键设计
 
-1. **NFs-based Q 值取代 RTG**：
+**1. 用 Normalizing Flows 估计的 Q 值取代 RTG：把"是否成功的二值信号"换成"轨迹无关的状态质量度量"。**
 
-    - 功能：给 DT 提供轨迹无关的状态-动作-目标价值信号，让模型能在失败演示中找到"高 Q 片段"进行 stitching。
-    - 核心思路：用 coupling-layer NFs 建模条件密度 $p_\theta(g\mid s,a)$，由可逆映射 $f_\theta(\cdot;z)$ 与变量替换公式得到精确对数似然 $Q^\beta_\theta(s,a,g)=\log p_0(f_\theta(g;z))+\log\bigl|\det\partial f_\theta(g;z)/\partial g\bigr|$。再用期望分位回归 $L^2_\tau(u)=|\tau-\mathds{1}(u<0)|\cdot u^2$（$\tau\in(0.5,1)$）从 behavior $Q^\beta$ 学一个 transformer 自己的 $\hat Q_\phi(s,g)$，向**分布内最大 Q** 收敛（Theorem 3.1 给出偏差 $\epsilon_\tau$ 随 $\tau$ 提升而下降）。
-    - 设计动机：作者论证了为什么 CVAE（只能给 ELBO 下界）、Contrastive RL（密度比有目标相关偏移）、Diffusion（似然需 ODE+Hutchinson 估计引入方差）都不适合——它们要么不归一化、要么把"跨多目标的 Q-token 序列"扭曲。NFs 的三角 Jacobian 让对数密度**精确且廉价**，正是 transformer 跨目标 conditioning 所需的属性，作者实测 NFs 估计误差最低（Appendix G.4）。RTG 在稀疏奖励下覆盖率仅 25%，而 NFs Q 值条件下达 92%。
+DT 系最致命的痛点是 RTG 在稀疏目标奖励下退化——同一个状态在成功轨迹里得 1、失败轨迹里得 0，根本无法跨轨迹比较状态好坏，于是失败演示里那些"局部有用的片段"再也拼不进新策略，stitching 直接崩塌（实测 RTG 在稀疏奖励下覆盖率仅 25%）。QHyer 的做法是改用目标可达 Q 函数 $Q^\beta(s,a,g)=p^\beta_+(g\mid s,a)$ 作条件，它表示"从 $(s,a)$ 到达目标 $g$ 的概率"、与具体轨迹无关，正是 stitching 需要的度量（NFs Q 条件下覆盖率升到 92%）。具体用 coupling-layer NFs 建模条件密度 $p_\theta(g\mid s,a)$，靠可逆映射 $f_\theta(\cdot;z)$ 与变量替换公式拿到精确对数似然 $Q^\beta_\theta(s,a,g)=\log p_0(f_\theta(g;z))+\log\bigl|\det\partial f_\theta(g;z)/\partial g\bigr|$，再用期望分位回归 $L^2_\tau(u)=|\tau-\mathds{1}(u<0)|\cdot u^2$（$\tau\in(0.5,1)$）从 behavior $Q^\beta$ 学一个 transformer 自己的 $\hat Q_\phi(s,g)$，向**分布内最大 Q** 收敛（Theorem 3.1 表明偏差 $\epsilon_\tau$ 随 $\tau$ 提升而下降）。
 
-2. **Hybrid Attention-Mamba 骨干**：
+为什么非得是 NFs？作者把这一步上升成"在 transformer 跨多目标读 Q-token 这个场景下，密度模型需要什么属性"的结构性论证：CVAE 只给 ELBO 下界、Contrastive RL 的密度比有目标相关偏移、Diffusion 算似然要 ODE+Hutchinson 估计引入方差——它们要么不归一化、要么把"跨多目标的 Q-token 序列"扭曲。NFs 的三角 Jacobian 让对数密度**既精确又廉价**，恰好满足跨目标 conditioning 的要求，实测它的 Q 估计误差也最低（Appendix G.4）。
 
-    - 功能：用一条注意力分支处理全局目标导向推理，用一条 Mamba 分支做内容自适应的历史压缩，二者通过可学门加权融合。
-    - 核心思路：Mamba 分支用因果卷积提取局部特征 $x'_t$，再走选择性 SSM $h_t=\bar A h_{t-1}+\bar B x'_t,\ y_t=Ch_t$，其中 $\bar A_t=\exp(\Delta_t\cdot A)$ 且 $\Delta_t=\mathrm{softplus}(\mathrm{Linear}_\Delta(x'_t))$。当 $\Delta_t$ 小时 $\bar A_t\approx 1$ 保留长历史（适合 play），$\Delta_t$ 大时 $\bar A_t\approx 0$ 只看局部（适合 noisy）。门 $\alpha=\sigma(\mathbf w^\top x+b)$ 在两分支之间动态分配容量。
-    - 设计动机：LSDT/DMixer 把卷积当局部分支时受困于固定核——卷积对 $j<k$ 的影响是固定权重 $w_j$、超出即硬截断；Mamba 提供"输入相关的平滑遗忘"，跨数据集自动调节有效记忆而无需手调感受野，这是固定窗结构根本做不到的。
+**2. Hybrid Attention-Mamba 骨干：用输入相关的"平滑遗忘"替掉固定核卷积，让有效记忆按数据形状自动漂移。**
 
-3. **拼接 State-Goal 分词 + 端到端三损失**：
+第二个痛点和骨干有关：纯注意力对时间结构不敏感，而 LSDT / DMixer 用固定窗因果卷积补"局部分支"时又被感受野卡死——卷积对 $j<k$ 的影响是固定权重 $w_j$、超出即硬截断，可 play 数据需要长记忆、noisy 数据只需短记忆，固定核要么浪费容量、要么截断关键依赖。QHyer 在每个 block 里并排放两条分支：注意力分支管全局目标导向推理，Mamba 分支管内容自适应的历史压缩。Mamba 分支先用因果卷积提局部特征 $x'_t$，再走选择性 SSM $h_t=\bar A h_{t-1}+\bar B x'_t,\ y_t=Ch_t$，关键在离散化步长是输入相关的：$\bar A_t=\exp(\Delta_t\cdot A)$，$\Delta_t=\mathrm{softplus}(\mathrm{Linear}_\Delta(x'_t))$。$\Delta_t$ 小时 $\bar A_t\approx 1$、保留长历史（适合 play），$\Delta_t$ 大时 $\bar A_t\approx 0$、只看局部（适合 noisy）。这种"输入相关的平滑遗忘"能跨数据集自动调节有效记忆而无需手调感受野，正是固定窗结构根本做不到的事。
 
-    - 功能：把目标信息嵌入每个 timestep token，序列长度仍是 $3T$，避免新增 token 带来注意力二次开销。
-    - 核心思路：每步 token 序列为 $(Q_t,[s_t;g],a_t)$ 而非 $(Q_t,s_t,g,a_t)$。训练损失 $\mathcal L_{\text{QHyer}}=\lambda_{\text{critic}}\mathcal L_{\text{NFs}}+\lambda_{\text{BC}}\mathcal L_{\text{BC}}+\lambda_Q \mathcal L_Q$ 分别对应 NFs 极大似然、Q-conditioned 行为克隆与 transformer 端 Q 期望回归。
-    - 设计动机：拼接而非分离 token 既维持目标可见性又压住计算开销，是工程上把 NFs Q 信号无缝接入 DT pipeline 的关键 trick。
+**3. 拼接 State-Goal 分词 + 端到端三损失：把目标塞进每步 token，避免序列变长带来的二次开销。**
+
+如果按 $(Q_t,s_t,g,a_t)$ 四元组组序列，长度会从 $3T$ 涨到 $4T$、注意力二次开销跟着上去。QHyer 改成 $(Q_t,[s_t;g],a_t)$，把状态和目标拼成一个 token——既保证目标信号每步可见，序列长度又仍是 $3T$，是把 NFs Q 信号无缝接进 DT pipeline 的关键工程 trick。整个系统端到端联合优化三个损失 $\mathcal L_{\text{QHyer}}=\lambda_{\text{critic}}\mathcal L_{\text{NFs}}+\lambda_{\text{BC}}\mathcal L_{\text{BC}}+\lambda_Q \mathcal L_Q$，分别对应 NFs 极大似然、Q-conditioned 行为克隆与 transformer 端 Q 期望回归，融合两条分支输出的标量门为 $\alpha=\sigma(\mathbf{w}^\top x + b)$。
 
 ### 损失函数 / 训练策略
-NFs 用 hindsight relabeling 配合 $-\log p_\theta(g\mid s_t,a_t)$ 做极大似然训练；transformer 端 BC 损失 $\mathcal L_{\text{BC}}=-\mathbb E[\log\pi_\theta(a_t\mid Q_t,[s_t;g])]$；期望分位 $\tau=0.9$ 用于低覆盖 play、$\tau=0.95$ 用于高覆盖 noisy 数据。推理两阶段：先生成 $\hat Q(s_t,g)$，再以其为条件生成 $a_t$。
+NFs critic 用 hindsight relabeling 配合 $-\log p_\theta(g\mid s_t,a_t)$ 做极大似然训练；transformer 端 BC 损失为 $\mathcal L_{\text{BC}}=-\mathbb E[\log\pi_\theta(a_t\mid Q_t,[s_t;g])]$；期望分位 $\tau$ 按数据覆盖率选，低覆盖 play 用 $\tau=0.9$、高覆盖 noisy 用 $\tau=0.95$。推理分两阶段自回归：先生成 $\hat Q(s_t,g)$，再以它为条件生成 $a_t$。
 
 ## 实验关键数据
 

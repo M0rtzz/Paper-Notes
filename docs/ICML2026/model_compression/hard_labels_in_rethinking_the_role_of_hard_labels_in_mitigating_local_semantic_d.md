@@ -54,23 +54,17 @@ $T_A=\lfloor n_{\text{soft}}/2 \rfloor,\ T_B = n_{\text{total}}-n_{\text{soft}},
 
 ### 关键设计
 
-1. **LVSD 的形式化定义与 Cantelli 下界**:
+**1. LVSD 的形式化定义与 Cantelli 下界：把"crop 不够导致 student 把猫误判成兔子"写成可算的概率。**
 
-    - 功能：用一个可计算量精确描述"crop 不够导致 student 把猫误判成兔子"的事件概率。
-    - 核心思路：作者定义类反转事件 $\mathcal{E}_{s,c}=\{\hat p_s(c) \ge \hat p_s(y)\}$，并用 Cantelli 不等式给出 distribution-free 上界 $\Pr(\mathcal{E}_{s,c}) \le v_{s,c}/(v_{s,c}+(\bar p_y - \bar p_c)^2)$，其中 $v_{s,c}=(\Sigma_{yy}+\Sigma_{cc}-2\Sigma_{yc})/s$ 随 $s$ 单调下降。这给"少软标签会出错"提供了首个可量化、与 teacher/数据无关的理论保证。
-    - 设计动机：之前工作都是经验观察"crop 少会掉点"，没有解释机制。这套定义让"硬标签到底能修多少漂移"也能在数学上算账：硬标签把 $v_{s,c}$ 在第二阶段强行压向 0，使反转概率随 epoch 单调收敛。
+以往工作都只是经验观察"crop 少会掉点"，没人说清机制。作者把它形式化成一个类反转事件 $\mathcal{E}_{s,c}=\{\hat p_s(c) \ge \hat p_s(y)\}$——即聚合后的预测把错类 $c$ 排到了真类 $y$ 前面——再用 Cantelli 不等式给出 distribution-free 的上界 $\Pr(\mathcal{E}_{s,c}) \le v_{s,c}/(v_{s,c}+(\bar p_y - \bar p_c)^2)$，其中方差项 $v_{s,c}=(\Sigma_{yy}+\Sigma_{cc}-2\Sigma_{yc})/s$ 随 crop 数 $s$ 单调下降。这是首个与 teacher/数据无关、可量化的"少软标签会出错"保证。它的妙处在于把"硬标签能修多少漂移"也变成能算账的事：第二阶段的硬标签监督恰好把 $v_{s,c}$ 强行往 0 压，于是反转概率随 epoch 单调收敛——理论上指明了校准信号该插在哪、能压住什么。
 
-2. **soft→hard→soft 三阶段课程**:
+**2. soft→hard→soft 三阶段课程：在 LPLD 同等存储预算下把训练-测试分布拉回一致。**
 
-    - 功能：在保持 LPLD 同等存储预算的前提下，把训练-测试分布拉回一致。
-    - 核心思路：阶段 A 用池采样 minibatch 跑 $\hat{\mathcal{L}}^{(t)}_{\text{soft}}(\theta)=\frac{1}{B}\sum_b \mathcal{L}(\tilde p_{j_b}, q_\theta(\cdot\mid x_{j_b}^{(\text{crop})}))$，把 student 拉到软标签的局部最优 $\hat\theta_s^A$。阶段 B 初始化 $\theta_0 := \hat\theta_s^A$，每步重采 CutMix 几何 $(x,x',\lambda,m)$ 与平滑标签 $t_{\lambda,\alpha}(y,y')=(1-\lambda)\text{LS}_\alpha(y)+\lambda \text{LS}_\alpha(y')$，最小化 $\ell_{\text{cal}}(\theta;\omega)=\mathcal{L}(t_{\lambda,\alpha}, q_\theta(\cdot\mid \text{CM}_{\lambda,m}(x,x')))$。由于 CutMix 几何每步重抽，minibatch 几乎不重复，等价于"无限多样的局部视图 × 全局真实类别监督"。阶段 C 再用 $\Omega_{\text{soft}}$ 软标签精修，把粗化掉的类间结构补回来。
-    - 设计动机：纯硬标签会丢类间相似性、退回 one-hot 训练；纯软标签会被 LVSD 漂移；只插中间一段硬标签校准，既能压方差又不会丢 teacher 的细粒度知识。三阶段顺序是关键：先 soft 让 student 进入合理初值，硬标签才有意义；最后 soft 让网络恢复对类间结构的敏感。
+这是 HALD 的主干。纯软标签会被 LVSD 漂移，纯硬标签又会丢掉 teacher 的类间相似性退回 one-hot，作者的解法是只在中间插一段硬标签校准。阶段 A 照常用软标签池采 minibatch 训 student，优化 $\hat{\mathcal{L}}^{(t)}_{\text{soft}}(\theta)=\frac{1}{B}\sum_b \mathcal{L}(\tilde p_{j_b}, q_\theta(\cdot\mid x_{j_b}^{(\text{crop})}))$，把它拉到软标签的局部最优 $\hat\theta_s^A$；阶段 B 以 $\theta_0 := \hat\theta_s^A$ 为初值，每步重采 CutMix 几何 $(x,x',\lambda,m)$ 与平滑标签 $t_{\lambda,\alpha}(y,y')=(1-\lambda)\text{LS}_\alpha(y)+\lambda \text{LS}_\alpha(y')$，最小化 $\ell_{\text{cal}}(\theta;\omega)=\mathcal{L}(t_{\lambda,\alpha}, q_\theta(\cdot\mid \text{CM}_{\lambda,m}(x,x')))$——由于几何每步重抽、minibatch 几乎不重复，这一段等价于"无限多样的局部视图 × 全局真实类别监督"，专门压制 LVSD 引入的 crop-内方差；阶段 C 再切回软标签精修，把被粗化掉的类间结构补回来。三阶段的顺序是关键而非随意：先 soft 让 student 进入合理初值，硬标签校准才有意义；末尾 soft 让网络恢复对类间结构的敏感。这样既压住了方差，又没丢 teacher 的细粒度知识。
 
-3. **重度平滑的"假硬标签"+ CutMix 几何**:
+**3. 重度平滑的"假硬标签"+ CutMix 几何：让硬标签足够"软"，别把 student 直接拉成 one-hot。**
 
-    - 功能：让 synthetic 数据的硬标签足够"软"，避免阶段 B 直接把 student 拉到 one-hot 模式。
-    - 核心思路：用 $\text{LS}_\alpha(y)=(1-\alpha)\delta_y + \alpha\,\mathbf{1}/C$ 取代严格 one-hot，并用 CutMix 把两张图按几何 mask $m$ 与比例 $\lambda$ 拼接，目标 $t_{\lambda,\alpha}(y,y')$ 同步混合。Synthetic 图本身语义比真实图弱，作者用较大 $\alpha$ 形成 heavily-flattened 标签来稳定校准。
-    - 设计动机：实验图（Fig. 3）显示软-硬梯度相似度在训练中持续上升，意味着粗化太狠会让两边目标互相抵消；引入 label smoothing + CutMix 让阶段 B 提供 $\bar p$ 附近的扰动，而不是直接强推 $\delta_y$，刚好对应理论中"在 oracle 邻域做方差缩减"的要求。
+直接用严格 one-hot 做阶段 B 会过犹不及——Fig. 3 显示软-硬梯度的余弦相似度在训练中持续上升，若把标签粗化得太狠，两边目标会互相抵消。作者因此不用 $\delta_y$，而是用平滑标签 $\text{LS}_\alpha(y)=(1-\alpha)\delta_y + \alpha\,\mathbf{1}/C$，并用 CutMix 把两张图按几何 mask $m$ 与比例 $\lambda$ 拼接、目标 $t_{\lambda,\alpha}(y,y')$ 同步混合。Synthetic 图本身语义比真实图更弱，所以作者取较大的 $\alpha$ 形成 heavily-flattened 标签来稳定校准。这么做让阶段 B 提供的是 $\bar p$ 附近的扰动，而不是硬推向 $\delta_y$——恰好对应理论里"在 oracle 邻域做方差缩减"的要求，既校准了漂移又不会把 student 撞出软标签学到的解。
 
 ### 损失函数 / 训练策略
 

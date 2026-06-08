@@ -44,23 +44,22 @@ tags:
 框架包含三步。第一步定义 intervention：对每个组件 $c_i$ 设置 mask $m_i$，如果 $m_i=1$ 就用 counterfactual state 替换该组件输出，如果 $m_i=0$ 就保持原计算。第二步定义任务指标，例如 gender bias 中 stereotypical 与 anti-stereotypical continuation 的 likelihood ratio，或 knowledge localization 中目标答案概率的变化。第三步优化 mask，在 sparsity constraint 下找到对指标贡献最大的组件集合。
 
 ### 关键设计
-1. **Mixture Forward 软干预**:
 
-	- 功能：让组件选择从离散变量变成可微连续变量。
-	- 核心思路：将 binary mask $m_i \in \{0,1\}$ 放宽为 $m_i \in [0,1]$，组件输出写成 $\bar{h}_i=(1-m_i)f_i(\bar{g}_i)+m_i h'_i$。当 $m_i$ 介于 0 和 1 时，相当于原状态与 counterfactual 状态线性混合。
-	- 设计动机：离散组合搜索不可扩展，连续松弛可以用梯度下降优化。
+**1. Mixture Forward 软干预：把离散的"选哪些组件"松弛成可微的连续 mask。**
 
-2. **Transformed Reward**:
+多组件 causal tracing 的根本障碍是组合爆炸——在 $N$ 个组件里选至多 $S$ 个，离散子集搜索随模型规模指数级膨胀，greedy 之类的方法慢到几乎不可用。PGB-CT 的破题点是给每个组件 $c_i$ 配一个连续 mask $m_i\in[0,1]$，把它的输出写成原状态与 counterfactual 状态的线性混合 $\bar{h}_i=(1-m_i)f_i(\bar{g}_i)+m_i h'_i$：$m_i=0$ 保持原计算，$m_i=1$ 完全换成 counterfactual hidden state，中间值则按比例混合两者。这样一来，原本只能枚举的二值选择变成了可以对 $m_i$ 求梯度的连续变量，整个子集搜索退化成一次普通的梯度优化，运行时间不再显式依赖组合空间的大小——这正是它能比 greedy 快两个数量级的来源。
 
-	- 功能：避免原始 metric 尺度不稳定导致优化难调。
-	- 核心思路：不是直接最大化 $\ell(\mathcal{D},\mathbf{m})$，而是最小化 $\mathcal{L}=1/(1+\ell(\mathcal{D},\mathbf{m}))+\mathsf{reg}(\mathbf{m})$。这样不同 metric 或训练阶段的数值范围更稳定。
-	- 设计动机：原始 likelihood ratio 等指标可能无界，直接做 reward 会让梯度和正则强度难以校准。
+**2. Transformed Reward：把无界的因果指标压成尺度稳定的优化目标。**
 
-3. **稀疏二值 scheduled penalty**:
+不同任务的目标指标量纲差别很大——gender bias 看 stereotypical 与 anti-stereotypical continuation 的 likelihood ratio，knowledge localization 看目标答案概率的变化，这些 metric 本身可能无界，直接拿来当 reward 最大化会让梯度和正则强度难以校准，换个 metric 就得重调一遍。PGB-CT 不直接最大化 $\ell(\mathcal{D},\mathbf{m})$，而是最小化
 
-	- 功能：把连续 mask 推向少量 0/1 决策。
-	- 核心思路：正则项为 $\lambda_1\|\mathbf{m}\|_1 + \lambda_2\mathbf{m}^{\top}(\mathbf{1}-\mathbf{m})$。第一项鼓励稀疏，第二项惩罚 0.5 附近的非二值值；训练中逐渐增加 $\lambda_1$ 和 $\lambda_2$，等 mask 达到目标 sparsity 后停止。
-	- 设计动机：只用 sparsity penalty 可能得到很多中间值，二值化后性能掉；显式惩罚 binary violation 能让最终子集更可靠。
+$$\mathcal{L}=\frac{1}{1+\ell(\mathcal{D},\mathbf{m})}+\mathsf{reg}(\mathbf{m}).$$
+
+这个变换把任意范围的指标单调地压进一个有界区间，让同一套正则系数能跨 metric、跨训练阶段稳定工作。这看似是个小技巧，却是让解释性工具真正实用的关键——否则每换一个 causal metric 都要重新校准正则强度。
+
+**3. 稀疏二值 scheduled penalty：逼着连续 mask 收敛到少量干净的 0/1 决策。**
+
+软松弛带来一个副作用：优化出来的 mask 容易停在 0.5 附近的中间值，一旦按阈值二值化，性能就掉。PGB-CT 用两项正则联手解决，正则项为 $\lambda_1\|\mathbf{m}\|_1 + \lambda_2\mathbf{m}^{\top}(\mathbf{1}-\mathbf{m})$：第一项 $\ell_1$ 鼓励整体稀疏（只点亮少数组件），第二项 $\mathbf{m}^{\top}(\mathbf{1}-\mathbf{m})$ 专门惩罚 0.5 附近的非二值取值（它在 $m_i\in\{0,1\}$ 时为 0、在 $m_i=0.5$ 时最大）。训练中逐渐抬高 $\lambda_1$ 和 $\lambda_2$，等 mask 达到目标 sparsity 后停止。相比只用 sparsity penalty、最后硬截断的做法，显式惩罚 binary violation 能让最终子集更接近真正离散选择的结果，因此二值化后性能不塌——这也是它在多 metric 设置下比同样用 soft mask 的 DCM 更稳的原因。
 
 ### 损失函数 / 训练策略
 PGB-CT 使用梯度下降更新 mask：$\mathbf{m}_{t+1}=\mathbf{m}_t-\eta_t\nabla \mathcal{L}_t(\mathcal{D},\mathbf{m}_t)$，并把结果截断到 $[0,1]$。每个 epoch 后用阈值 $\tau=0.5$ 得到组件集合 $\mathcal{H}=\{c_i:m_i>\tau\}$，如果 $|\mathcal{H}|\leq S$ 就停止。论文强调，DCM 也用 soft mask，但它直接用原始 reward 且没有显式二值惩罚，因此在本文设置中表现不稳定。

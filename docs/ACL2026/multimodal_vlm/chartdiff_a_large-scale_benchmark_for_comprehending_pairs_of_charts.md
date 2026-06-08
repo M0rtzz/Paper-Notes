@@ -45,23 +45,23 @@ ChartDiff 数据集构建分四阶段：(1) **原始数据收集**——从 Macr
 
 ### 关键设计
 
-1. **"差异仅一维"的配对约束**:
+**1. "差异仅一维"的配对约束：把所有混淆变量都关掉，只留"内容差异"这一个轴。**
 
-    - 功能：让每对图的对比目标明确，避免模型把"任何差异"都堆出来，方便客观评估。
-    - 核心思路：限定两个 CSV 必须仅在 (a) 实体（国家/股票/城市）、(b) 时间跨度、(c) 数据类别 中**只有一种**不同，例如同一国家不同时段、同一时段不同国家。数据点数严格相等（线/柱图 6–12，饼图 3–5），样式（库 + 颜色 + 字体）共享配置——把所有混淆变量都关掉，只留"内容差异"这个轴。
-    - 设计动机：在 multi-chart benchmark 中，混杂差异维度会让评估器无法判断模型究竟"读懂"了哪个维度的对比，pair-wise diff 是干净的研究信号；同时这种 control 还方便后续按维度切片分析（如本文 Table 3 chart type 切片、Table 4 plotting library 切片）。
+multi-chart benchmark 里如果两张图同时在多个维度不同，评估器根本判断不出模型究竟"读懂"了哪个维度的对比。ChartDiff 因此给每对图加了一条硬约束：两个 CSV 必须仅在实体（国家/股票/城市）、时间跨度、数据类别三者中**只有一个**不同，例如同一国家不同时段、或同一时段不同国家；数据点数严格相等（线/柱图 6–12 点，饼图 3–5 类别），样式（绘图库 + 颜色 + 字体）也共享同一套配置。
 
-2. **annotate–judge–verify 三阶段 LLM 流水线**:
+把混淆变量全部关掉后，"差异性"就成了唯一变量，对模型形成可解释的可控压力测试。这种 control 还有一个副产物：因为差异维度是受控的，后续可以干净地按维度切片做诊断（如按图类型、按绘图库分别报告 GPT Score），让评测从混乱多变量退化成可分析的单变量实验。
 
-    - 功能：在规模化（8.5k 对）和高质量（人感知可信）之间取得平衡。
-    - 核心思路：(a) 从模型池 $\mathcal{A}=\{\text{GPT-5.4, Gemini 3.1 Pro}\}$ 随机抽 $L_1$，用专门设计的 prompt 配合**底层 CSV**（不喂图，避免 OCR 噪声）生成候选摘要 $S$；(b) 抽 $L_2 \in \mathcal{A} \setminus \{L_1\}$ 作 judge，给定同一图对 + $S$ 评判是否可接受，"dataset" 自动改写为 "chart"；(c) 人工最终核验事实正确、关键差异完整、表达清晰。GPT-5.4 候选接受率 0.93、Gemini 3.1 Pro 0.967，说明 cross-model judging 已经过滤掉大部分质量问题，人工只做最后一道收口。
-    - 设计动机：纯 LLM 标注会引入 self-bias（同模型偏爱自己输出）；引入第二个 LLM 做 cross-judge 可显著降低同质化偏差；而最后人工核验确保 benchmark 不被 LLM 偏好绑架。**给标注用 CSV 而非图片**也是关键 trick——分离了"测试目标（图像理解）"与"标注准确性（数值正确）"，避免训练数据本身带 perceptual error。
+**2. annotate–judge–verify 三阶段 LLM 流水线：在 8.5k 规模与人感知质量之间找平衡。**
 
-3. **ROUGE + GPT Score 双指标揭示评估失配**:
+纯人工标注 8,541 对太慢，纯单模型 LLM 标注又会引入 self-bias（同一模型偏爱自己的输出）。ChartDiff 用三阶段流水线绕开这个两难：先从模型池 $\mathcal{A}=\{\text{GPT-5.4, Gemini 3.1 Pro}\}$ 随机抽 $L_1$ 配合**底层 CSV**（而非图像）生成候选摘要 $S$；再抽另一个 $L_2\in\mathcal{A}\setminus\{L_1\}$ 作 judge，给定图对 + $S$ 评判是否可接受（提示里把 "dataset" 自动改写为 "chart"）；最后由人工核验事实正确、关键差异完整、表达清晰。
 
-    - 功能：定量揭示 lexical-overlap 指标在长摘要评测中的失效程度。
-    - 核心思路：ROUGE 测 n-gram 重叠（lexical），GPT Score 用 GPT-5.4 按预设 grading prompt 打 0–5 分（quality + correctness），并用 300 条人评样本做 reliability check 得到 $r=0.91$ 的强 Pearson 相关。然后并排报告两类指标。结果出现严重错位：ChartGemma ROUGE-1=51.49 居所有模型之首，但 GPT Score 仅 2.0；MatCha ROUGE-L=28.75 最高，GPT Score 1.45 接近 random（1.17）；GPT-5.4 ROUGE-1 才 46.02 却拿到 GPT Score 4.95 最高分。
-    - 设计动机：这种 1.5× 的 ROUGE 排名 vs GPT Score 排名几乎完全反转，是该 benchmark 最重要的 finding 之一——它把"专用模型靠模板背书+ 复用 reference 句式刷分"这一长期被忽视的隐性问题暴露出来，倒逼后续 chart 论文必须用模型评估指标，不能只报 ROUGE。
+引入第二个 LLM 做 cross-judge 能显著压低同质化偏差——实测 GPT-5.4 候选接受率 0.93、Gemini 3.1 Pro 0.967，说明绝大部分质量问题在跨模型互评阶段就被过滤掉，人工只做最后一道收口。其中**给标注喂 CSV 而非图片**是关键 trick：它把"标注的数值正确性"和"被测的图像理解能力"彻底解耦，避免训练数据本身就带 OCR/perceptual error。
+
+**3. ROUGE + GPT Score 双指标：定量揭示 lexical 指标在长摘要上的失效程度。**
+
+长对比摘要的核心是语义和事实正确性，可大家惯用的 ROUGE 只测 n-gram 重叠，对此几乎不敏感——专用模型只要复用 reference 的句式就能"背模板"刷高分。ChartDiff 因此并排报告两类指标：ROUGE-1/2/L 测 lexical 重叠，GPT Score 用 GPT-5.4 按预设 grading prompt 对 quality + correctness 打 0–5 分，并用 300 条人评样本做 reliability check，得到 Pearson $r=0.91$ 的强相关给这把"尺子"背书。
+
+并排一放，错位极其戏剧化：ChartGemma 的 ROUGE-1=51.49 居全场之首，GPT Score 却只有 2.0；MatCha 的 ROUGE-L=28.75 最高，GPT Score 1.45 已逼近 random 的 1.17；反观 GPT-5.4，ROUGE-1 才 46.02 却拿下 4.95 的最高 GPT Score。这种排名近乎完全反转，把"专用模型靠模板背书刷分"这个长期被忽视的隐性问题摆上台面，倒逼后续 chart 工作必须配 model-based 评估、不能只报 ROUGE。
 
 ## 实验关键数据
 

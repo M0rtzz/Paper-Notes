@@ -41,44 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作为 position paper，"方法"= 一套"诊断 + 处方"的论证链：
-
-1. **统一抽象**：把 SE、图谱、P(true) 三大类 UQ 方法 reduce 成同一种聚类操作。
-2. **三大病理**：参数敏感性危机、内部评估陷阱、缺乏 ground truth。
-3. **五个对立观点**：逐一驳斥"参数敏感是 feature"、"UQ 测信念不测真理"、"一致性已足够代理正确性"、"开放生成无法定义 ground truth"、"scaling 自然解决一切"。
-4. **三支柱路线图**：评估改为"最坏情况鲁棒性"、机制改为"原生不确定性 / Conformal Prediction"、grounding 改为"可验证单元测试 + 原子事实校验"。
+这篇 position paper 主张：当前所有主流 UQ 方法都只是换了壳的无监督聚类，量的是"模型生成之间彼此有多分离"，而非"答案与外部事实有多接近"，因此遇到自信幻觉必然失效。它的论证不是提一个新方法，而是搭一条"诊断 → 处方"的链：先把 Semantic Entropy、图谱、P(true) 三类方法在数学上 reduce 成同一种聚类操作，再顺着这个同构推出参数敏感、内部评估循环、缺乏 ground truth 三大病灶，最后给出 evaluation / mechanism / grounding 三支柱的改造蓝图，把 UQ 从"无监督启发式"推向"有监督保证"。
 
 ### 关键设计
 
-1. **统一聚类化机制证明**:
+**1. 三类主流 UQ 方法在机制上同构于聚类：一次证明，一并反对。**
 
-    - 功能：揭示三种主流 UQ 方法机制层面的等价性，给出反对其代理"真相"的统一证据。
-    - 核心思路：
-        - **Semantic Entropy 是显式聚类**：用 NLI 模型把 $\mathcal{S}=\{s_1,\dots,s_m\}$ 划分到语义类 $C_1,\dots,C_M$，再算 $U_{\text{SE}}(C\mid x)=-\sum_{i=1}^M p(C_i\mid x)\log p(C_i\mid x)$；NLI 模型扮演"聚类准则"，熵是"聚类纯度"。
-        - **图谱方法是隐式谱聚类**：用成对相似度 $W=(w_{j_1,j_2}),\ w_{j_1,j_2}=(a_{j_1,j_2}+a_{j_2,j_1})/2$ 构图，归一化 Laplacian $L=I-D^{-1/2}WD^{-1/2}$，再用 $U_{\text{EigV}}=\sum_{k=1}^m\max(0,1-\lambda_k)$ 数"有效语义模数"。这是不显式分配标签的谱聚类，等价于谱聚类的"内部有效性指数"。
-        - **P(true) 是潜在置信聚类**：把 $U_{\text{P(true)}}(x,\hat{y})=1-P(\text{``True''}\mid x,\hat{y})$ 视作对模型内部"高置信区域"的隶属度测试；论文用 Qwen2.5-32B 在 QASC 上的 PCA 可视化（Fig.2）证明 high-P(true) 与 low-P(true) 样本在隐层空间几何分离，几何上等同于一个 soft cluster assignment。
-    - 设计动机：一旦确认三者本质相同，就只需一次性反对"无监督聚类无法保证语义正确"，无需逐一拆解。论文同时声明 token-level perplexity、Deep Ensembles、监督式分类器（Azaria & Mitchell 2023）不在该框架内——前两者性能不佳被边缘化，后者恰恰是作者推崇的方向。
+这是整篇论证的地基——只要确认 SE、图谱、P(true) 三者本质是同一件事，就不必逐一拆解，反对"无监督聚类无法保证语义正确"一次即可。**Semantic Entropy 是显式聚类**：用 NLI 模型把采样出的回答集合 $\mathcal{S}=\{s_1,\dots,s_m\}$ 划进语义等价类 $C_1,\dots,C_M$，再算类分布的熵 $U_{\text{SE}}(C\mid x)=-\sum_{i=1}^M p(C_i\mid x)\log p(C_i\mid x)$，其中 NLI 模型扮演"聚类准则"、熵扮演"聚类纯度"。**图谱方法是隐式谱聚类**：用成对相似度 $w_{j_1,j_2}=(a_{j_1,j_2}+a_{j_2,j_1})/2$ 构权重图 $W$，做归一化 Laplacian $L=I-D^{-1/2}WD^{-1/2}$，再用 $U_{\text{EigV}}=\sum_{k=1}^m\max(0,1-\lambda_k)$ 数"有效语义模数"——这是不显式分配标签的谱聚类，等价于谱聚类的"内部有效性指数"。**P(true) 是潜在置信聚类**：把 $U_{\text{P(true)}}(x,\hat{y})=1-P(\text{``True''}\mid x,\hat{y})$ 当作对模型内部"高置信区域"的隶属度测试，论文用 Qwen2.5-32B 在 QASC 上的 PCA 可视化（Fig.2）证明 high-P(true) 与 low-P(true) 样本在隐层空间几何分离成两簇，几何上就是一次 soft cluster assignment。论文同时明确把 token-level perplexity、Deep Ensembles、监督式分类器（Azaria & Mitchell 2023）划在框架之外——前两者因性能不佳被边缘化，后者恰恰是作者推崇的"有监督"方向。
 
-2. **三大病理诊断**:
+**2. 三大病理诊断：把"聚类同构"翻译成部署中的安全隐患。**
 
-    - 功能：把"聚类同构"翻译成实际部署中的安全隐患。
-    - 核心思路：
-        - **参数敏感性危机**：UQ 方法分数受温度、NLI 阈值、采样数 $n$、prompt 等超参剧烈影响；Tab.1 给出 Jaccard 实证——在 QASC + Qwen2.5-32B 上，SE vs EigV 的 Top-10% 高不确定样本重叠仅 0.134，SE vs P(true) 只有 0.080，意味着不同方法连"谁不确定"都达不成共识。
-        - **内部评估陷阱**：评估指标（AUROC）默认"内部稳定 = 真实正确"，但 confident hallucination 完全打破该假设——错误答案稳定时反而被打高分。这与聚类的 Silhouette 系数同病：内部紧致 ≠ 外部有意义。
-        - **缺乏 ground truth ("judge problem")**：UQ 用 AUROC 与 correctness 相关性来评，但 correctness 本身在开放任务上要靠 RougeL > 0.3 或另一个 LLM judge 来打分，judge 自己又是有噪、易偏的；Fig.3 直接展示：当 correctness 阈值 $\tau$ 漂移时，方法排名整体抖动，说明评估管线建在不稳的尺子上。
-    - 设计动机：把抽象的"聚类同构"落地为可观测的工程后果，让 UQ 研究者无法回避"漂亮的 AUROC ≠ 安全"的结论。
+确认了同构之后，作者把这个抽象判断落成三个可观测的工程后果，逼 UQ 研究者直面"漂亮的 AUROC ≠ 安全"。第一是**参数敏感性危机**：UQ 分数受温度、NLI 阈值、采样数 $n$、prompt 等超参剧烈影响，Tab.1 的 Jaccard 实证显示在 QASC + Qwen2.5-32B 上，SE 与 EigV 的 Top-10% 高不确定样本只有 0.134 重叠、SE 与 P(true) 只有 0.080——不同方法连"谁不确定"都达不成共识。第二是**内部评估陷阱**：AUROC 默认"内部稳定 = 真实正确"，但自信幻觉彻底打破这个假设，错误答案越稳定反而被打越高的置信分，这与聚类里 Silhouette 系数"内部紧致 ≠ 外部有意义"是同一个病。第三是**缺乏 ground truth（judge problem）**：UQ 靠 AUROC 与 correctness 的相关性来评，而开放任务上的 correctness 本身要靠 RougeL > 0.3 或另一个 LLM judge 来打分，judge 自己又有噪、易偏；Fig.3 直接展示当 correctness 阈值 $\tau$ 漂移时方法排名整体抖动——评估管线建在一把不稳的尺子上。
 
-3. **三支柱路线图：evaluation → mechanism → grounding**:
+**3. 三支柱路线图：evaluation → mechanism → grounding，逐环切除对内部一致性的依赖。**
 
-    - 功能：给社区一份可执行的"去聚类化"改造蓝图。
-    - 核心思路：
-        - **评估支柱**：(a) 把 UQ 当作二元告警系统（accept / reject），借鉴 Carlini et al. 2022 的 MIA 评估范式——固定 FPR < 0.1% 度量 TPR，专门捕获"高置信幻觉"这一关键样本；(b) 提出 **AUSC（Area Under the Stability Curve）**：跨超参（如温度 $T\in[0,1]$）扫一遍 AUROC，要求方法在整个合理参数区间稳定，而不是 cherry-pick 最优点。
-        - **机制支柱**：(a) **Conformal Prediction** 作为下游评估框架——固定覆盖率（如 90%）下，比较各 UQ 方法作为 nonconformity score 时的 set size，自信幻觉会被强制以"集合爆炸"暴露；(b) 在 Post-training（RLHF）阶段做 **Uncertainty Alignment**，奖励模型显式输出"I am confident that …" vs "It is possible that …" 等粒度化置信标记，把不确定性从隐式几何特征变成显式语言信号。
-        - **Grounding 支柱**：(a) **强制 Unit Testing**——UQ 方法必须先在 code（HumanEval 等执行可判）、math（最终答案是常量）这类可程序判定的场景跑过 AUROC 与 TPR@low-FPR，再谈开放任务；(b) **Atomic Fact Verification**——把开放生成拆成原子声明，用搜索引擎、KB、Lean4 等形式化定理证明器、多跳 deep search agent 等"非 LLM 判官"逐条核验，打破"LLM 判 LLM"的循环。
-    - 设计动机：三个支柱分别对应"如何评、如何造、用什么真值评"，从工程链路三个环节同时切除对内部一致性的依赖。
-
-### 损失函数 / 训练策略
-position paper 不涉及训练 loss；但给出两个量化设计：(a) 推荐 metric：**TPR@FPR<0.1%** 与 **AUSC**；(b) Conformal Prediction 中的 set size at fixed coverage 作为"truth-aware"代理。
+三个支柱分别回答"如何评、如何造、用什么真值评"。**评估支柱**把 UQ 当成二元告警系统（accept / reject），借鉴 Carlini et al. 2022 的 MIA 范式——固定 FPR < 0.1% 度量 TPR，专门盯"高置信幻觉"这一小撮关键样本；同时提出 **AUSC（Area Under the Stability Curve）**，跨超参（如温度 $T\in[0,1]$）扫一遍 AUROC，要求方法在整个合理参数区间都稳定，而不是 cherry-pick 最优点。**机制支柱**一方面把 **Conformal Prediction** 重新定位成下游评估框架——固定覆盖率（如 90%）下比较各方法作为 nonconformity score 时的 set size，自信幻觉会被强制以"集合爆炸"暴露；另一方面在 Post-training（RLHF）阶段做 **Uncertainty Alignment**，奖励模型显式输出"I am confident that …"对"It is possible that …"这类粒度化置信标记，把不确定性从隐式几何特征变成显式语言信号。**Grounding 支柱**则强制先做 **Unit Testing**——UQ 方法要先在 code（HumanEval 这类执行可判）、math（最终答案是常量）等可程序判定的场景跑过 AUROC 与 TPR@low-FPR，再谈开放任务——并辅以 **Atomic Fact Verification**：把开放生成拆成原子声明，用搜索引擎、KB、Lean4 等形式化定理证明器、多跳 deep search agent 这些"非 LLM 判官"逐条核验，打破"LLM 判 LLM"的循环。配套地，论文把推荐指标收敛到 **TPR@FPR<0.1%** 与 **AUSC**，并把 Conformal Prediction 固定覆盖率下的 set size 作为"truth-aware"代理。
 
 ## 实验关键数据
 

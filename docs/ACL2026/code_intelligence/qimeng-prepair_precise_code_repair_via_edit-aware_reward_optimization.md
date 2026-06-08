@@ -43,31 +43,25 @@ tags:
 
 ### 整体框架
 
-PRepair 分两阶段：(1) Self-Breaking——让模型自己向正确代码注入多样化 bug，通过 min-max 采样策略最大化 bug 多样性；(2) Self-Repairing——在生成的 bug 代码上用 EA-GRPO 训练模型，编辑感知奖励动态平衡正确性和编辑代价。评估使用新提出的 $\text{fix}_p@k$ 指标。
+PRepair 把"精确修复"拆成一条数据自造、奖励自洽的闭环流水线。先让模型自己向正确代码注入多样化 bug（Self-Breaking），凭空造出大量"逻辑大体正确、仅局部出错"的训练样本；再在这些 bug 代码上用编辑感知的 GRPO（Self-Repairing）训练模型，让奖励在正确性达标后才追加编辑惩罚。从输入的 bug 代码到输出的修复补丁，整条链路都不依赖人工标注，最终统一用新提出的 $\text{fix}_p@k$ 指标衡量"既改对又改得少"。
 
 ### 关键设计
 
-1. **$\text{fix}_p@k$ 精确修复指标**:
+**1. $\text{fix}_p@k$ 精确修复指标：让评测同时盯住正确性和编辑量。**
 
-    - 功能：联合评估修复正确性和编辑程度
-    - 核心思路：在 pass@k 的基础上增加编辑约束——只有当生成代码通过所有测试且编辑代价不超过理论最小编辑的 p 倍时才算成功。编辑代价 $\mathbf{D}_{\text{EC}}(X,Y) = \mathbf{D}(X,Y)/|X|$ 用行级 Levenshtein 距离归一化
-    - 设计动机：pass@k 只看正确性，无法反映修复质量——重写全部代码也可能通过测试，但不是好的修复
+pass@k 只问"改没改对"，却放过了"把整段代码重写一遍碰巧通过测试"这种坏修复，因此无法反映真实修复质量。$\text{fix}_p@k$ 在 pass@k 之上加一道编辑闸门：只有当生成代码通过全部测试、且编辑代价不超过理论最小编辑的 $p$ 倍时才算成功。这里编辑代价用行级 Levenshtein 距离归一化，$\mathbf{D}_{\text{EC}}(X,Y) = \mathbf{D}(X,Y)/|X|$，把"改了多少行"折算成与原代码规模相称的比例，使不同长度的样本可比。
 
-2. **Self-Breaking（多样化 bug 注入）**:
+**2. Self-Breaking：用 min-max 采样自造多样化 bug 数据。**
 
-    - 功能：无需人工标注即可生成大规模精确修复训练数据
-    - 核心思路：给模型正确代码和描述，提示它注入 bug。从 m 个候选中通过 min-max 采样选 k 个最多样的：$\mathcal{X}_s = \min_{\mathcal{X}' \subset \mathcal{X}, |\mathcal{X}'|=k} \max_{X_i,X_j \in \mathcal{X}', i \neq j} (1 - \mathbf{D}_{\text{EC}}(X_i, X_j))$
-    - 设计动机：精确修复需要含大量正确逻辑且仅有局部错误的训练数据，这种数据在现实中极度稀缺。Min-max 采样避免了 bug 模式过度集中
+精确修复真正需要的训练数据是"含大量正确逻辑、仅有局部错误"的代码，而这类样本在现实中极度稀缺。PRepair 反其道而行，给模型正确代码与描述、提示它主动注入 bug，再从 $m$ 个候选里挑出最分散的 $k$ 个：$\mathcal{X}_s = \min_{\mathcal{X}' \subset \mathcal{X}, |\mathcal{X}'|=k} \max_{X_i,X_j \in \mathcal{X}', i \neq j} (1 - \mathbf{D}_{\text{EC}}(X_i, X_j))$。这个 min-max 准则刻意压低被选集合内部的最大相似度，避免 bug 模式扎堆，从而让模型见过的错误类型足够丰富。
 
-3. **EA-GRPO（编辑感知组相对策略优化）**:
+**3. EA-GRPO：编辑感知奖励，先学对再学精。**
 
-    - 功能：在 RL 训练中鼓励最小且正确的修复
-    - 核心思路：对每个 rollout 组计算准确率 $\text{Acc}_{\mathcal{G}^t}$，仅当超过阈值 $\alpha$ 时才激活编辑惩罚。对组内正确样本计算标准化编辑惩罚 $\mathcal{P}_i^{\mathcal{G}} = \sigma(\frac{\mathbf{D}_{\text{EC}}(X_t, o_i) - \text{mean}}{\text{std}})$。最终奖励：$\mathcal{R}_i = 1 - \mathcal{T}(\mathcal{G}) \cdot \beta \cdot \mathcal{P}_i^{\mathcal{G}}$（正确时）或 0（错误时）
-    - 设计动机：过早惩罚编辑会损害正确性学习——只有当组级正确性足够高时才引入编辑约束，实现"先学对再学精"
+直接在 RL 里惩罚编辑量会适得其反——正确性还没学稳就被编辑约束拽住，反而学不会修对。EA-GRPO 因此给惩罚加了一个"开关"：先算每个 rollout 组的准确率 $\text{Acc}_{\mathcal{G}^t}$，只有当它超过阈值 $\alpha$ 时才激活编辑惩罚。激活后，对组内正确样本算标准化编辑惩罚 $\mathcal{P}_i^{\mathcal{G}} = \sigma(\frac{\mathbf{D}_{\text{EC}}(X_t, o_i) - \text{mean}}{\text{std}})$，最终奖励为正确时 $\mathcal{R}_i = 1 - \mathcal{T}(\mathcal{G}) \cdot \beta \cdot \mathcal{P}_i^{\mathcal{G}}$、错误时为 $0$。这样模型先在组级正确率上站稳，再被引导去压缩编辑量，正确性与精确性不再硬碰硬。
 
 ### 损失函数 / 训练策略
 
-EA-GRPO 使用 PPO 风格的截断目标 + KL 正则化。奖励计算不需要金标准代码，仅用 bug 输入和生成输出的编辑代价。在 Python（HumanEvalFix）和 Verilog（自建基准）上评估。
+EA-GRPO 沿用 PPO 风格的截断目标加 KL 正则化，奖励计算全程不需要金标准代码，只靠 bug 输入与生成输出之间的编辑代价。训练后的模型在 Python（HumanEvalFix）和 Verilog（自建基准）两套基准上评估。
 
 ## 实验关键数据
 

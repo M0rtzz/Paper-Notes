@@ -38,36 +38,26 @@ tags:
 **核心 idea**：用“候选间共识”补足“源文档一致性”，通过 MBR 分数和 reference-free factuality 分数的加权组合来选择更可靠的摘要。
 
 ## 方法详解
-ConSUM 不是重新训练一个摘要模型，而是在解码之后做候选选择。它把摘要生成看成三步：先生成候选摘要和伪参考摘要，再分别计算 consensus score 与 consistency score，最后把两个分数归一化后加权融合，选出最终摘要。
 
 ### 整体框架
-输入是一篇源文档 $s$ 和一个已有的摘要生成模型。系统首先从模型中采样两组文本：候选集合 $\mathcal{Y}$ 用作可被选择的最终输出，伪参考集合 $\mathcal{R}$ 用作近似 gold reference 的内部参照。两组文本可以来自不同采样策略，因此候选池负责提供多样输出，伪参考池负责估计模型对事实内容的共识。
-
-随后，每个候选 $y_i$ 会得到两个分数。第一个是 consistency score，即候选和源文档之间的事实一致性，本文用 FENICE 或 FIZZ 这样的 reference-free factuality metric 计算。第二个是 consensus score，即候选和伪参考集合之间的平均效用，本文用 MENLI 作为 utility function，衡量候选与每个伪参考之间的 NLI 式事实一致性。
-
-最后，ConSUM 对两个分数做 z-score 标准化，并用权重 $w$ 融合：$S_{fin}=wZ(S_{sen})+(1-w)Z(S_{sis})$。当 $w=0$ 时退化为只看源文档一致性，当 $w=1$ 时退化为只看 MBR 共识。实验中作者选择 $w=0.75$ 作为统一默认设置，因为它在 CNN/DM 上最优，并且在 XSum 上仍具竞争力。
+ConSUM 不重新训练摘要模型，而是在解码之后做候选选择。输入是一篇源文档 $s$ 和一个现成的摘要生成模型，输出是被判定为最可靠的那条摘要。系统先从模型采样出两组文本——候选集合 $\mathcal{Y}$ 提供可被选中的多样输出，伪参考集合 $\mathcal{R}$ 用作近似 gold reference 的内部参照；再为每个候选 $y_i$ 算两个分数：一是候选对源文档的事实一致性（consistency，用 FENICE/FIZZ 等 reference-free factuality metric），二是候选对伪参考集合的平均效用（consensus，用 MENLI 做 MBR utility）。最后两个分数各自做 z-score 标准化后加权融合 $S_{fin}=wZ(S_{sen})+(1-w)Z(S_{sis})$，选出 $\arg\max_y S_{fin}$，从而把“看起来流畅但偏离事实”的候选过滤掉。
 
 ### 关键设计
-1. **候选集合与伪参考集合分离**:
 
-    - 功能：把可被选中的摘要候选 $\mathcal{Y}$ 和用于估计共识的伪参考 $\mathcal{R}$ 区分开。
-    - 核心思路：两者都由同一摘要模型在源文档条件下采样，但可以采用不同 decoding 策略。候选集合强调多样性，伪参考集合强调对模型真实分布的覆盖。
-    - 设计动机：如果简单令 $\mathcal{Y}=\mathcal{R}$，MBR 容易被候选池自身的采样偏差影响；分离后可以独立调候选生成和共识估计，降低把异常候选当作共识的风险。
+**1. 候选集合与伪参考集合分离：把“被选对象”和“评判尺子”拆开。**
 
-2. **用 MENLI 做事实共识型 MBR**:
+测试时没有人工 gold summary，于是 ConSUM 用同一模型采样的伪参考来当近似参照。但如果直接令 $\mathcal{Y}=\mathcal{R}$，MBR 共识就会被候选池自身的采样偏差污染，一条恰好被多次采到的异常候选会被当成“共识”。本文因此把两组分开：候选集合 $\mathcal{Y}$ 用强调多样性的 decoding（PLM 用 epsilon sampling / diverse beam search，LLM 用 nucleus sampling），伪参考集合 $\mathcal{R}$ 固定为 64 个 epsilon sampling 样本以覆盖模型真实分布。这样候选生成和共识估计可以各自独立调，降低把异常候选误判为共识的风险。
 
-    - 功能：衡量候选摘要与伪参考摘要之间是否在事实层面一致。
-    - 核心思路：对每个候选 $y_i$，计算它与所有伪参考 $r_j$ 的 MENLI utility，然后取平均：$S_{sen}(y_i,\mathcal{R})=\frac{1}{|\mathcal{R}|}\sum_j u(y_i,r_j)$。
-    - 设计动机：ROUGE 或 BERTScore 更偏词面/语义相似，而本文关注 factual agreement。用 NLI-based MENLI 做 MBR utility，可以让“共识”更接近事实一致性，而不是只选择最常见措辞。
+**2. 用 MENLI 做事实共识型 MBR：让“共识”指向事实一致而非措辞最常见。**
 
-3. **MBR 与 source consistency 的加权融合**:
+对每个候选 $y_i$，计算它与全部伪参考 $r_j$ 的 MENLI utility 再取平均，$S_{sen}(y_i,\mathcal{R})=\frac{1}{|\mathcal{R}|}\sum_j u(y_i,r_j)$。之所以不沿用机器翻译里常见的 ROUGE / BERTScore，是因为它们偏词面或语义相似，会把“共识”引向最常见的表达方式；而摘要幻觉问题真正关心的是 factual agreement。换成 NLI-based 的 MENLI 后，一个候选只有在事实层面与多个伪参考都站得住，才能拿到高共识分，相当于用模型自采样的多数事实给候选投票。
 
-    - 功能：同时利用模型内部分布信号和源文档事实信号。
-    - 核心思路：用 FENICE/FIZZ 得到 $S_{sis}$，用 MBR 得到 $S_{sen}$，分别标准化后加权组合，再选择 $\arg\max_y S_{fin}(y,s,\mathcal{R})$。
-    - 设计动机：MBR 可能偏好更长或更容易被 MENLI 认可的摘要，reference-free 指标又可能漏掉细粒度错误。二者组合可以降低单一指标 reward hacking，把候选推向既代表共识又忠实源文档的位置。
+**3. MBR 与 source consistency 的加权融合：共识信号与源文档约束互相兜底。**
 
-### 损失函数 / 训练策略
-本文没有训练新的生成模型，也没有学习一个监督 reranker。关键“训练策略”体现在推理期的候选采样和超参数选择上。PLM 使用 epsilon sampling 或 diverse beam search，LLM 使用 nucleus sampling；伪参考固定为 64 个 epsilon sampling 样本。作者在 $w\in\{0,0.25,0.5,0.75,1.0\}$ 上做权重敏感性实验，并将 $w=0.75$ 作为最终系统默认值。统计显著性用 paired-bootstrap resampling，迭代 10,000 次，并做 Bonferroni correction。
+单看 MBR 会偏好更长、或更容易被 MENLI 认可的摘要；单看 reference-free 指标又可能漏掉细粒度事实错误。ConSUM 把 FENICE/FIZZ 给出的 $S_{sis}$ 和 MBR 给出的 $S_{sen}$ 分别标准化后按 $w$ 融合：$w=0$ 退化为只看源文档一致性，$w=1$ 退化为只看 MBR 共识。作者在 $w\in\{0,0.25,0.5,0.75,1.0\}$ 上做敏感性实验，最终取 $w=0.75$ 作统一默认值——它在 CNN/DM 上最优、在 XSum 上仍有竞争力，说明共识信号占主导但仍需源文档一致性兜底，从而压住单一指标的 reward hacking。
+
+### 训练策略
+本文不训练新生成模型也不学监督 reranker，全部增强都发生在推理期：候选与伪参考的采样策略、权重 $w$ 的选择构成了它的“配置”。统计显著性用 paired-bootstrap resampling 迭代 10,000 次并做 Bonferroni correction，以确保 reranking 收益不是采样噪声。
 
 ## 实验关键数据
 

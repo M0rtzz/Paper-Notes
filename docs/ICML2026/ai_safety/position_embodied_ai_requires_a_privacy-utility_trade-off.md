@@ -38,33 +38,20 @@ tags:
 **核心 idea**：把隐私从 "局部补丁" 升级为 "动态控制信号"，用四级隐私分类矩阵 + 跨阶段编排实现 "context-aware" 隐私架构。
 
 ## 方法详解
-本文虽是 position paper，但提出了一个完整的概念框架 SPINE，并配两个 case study，可视为方法学。
+本文是 position paper，核心交付物是一个名为 SPINE 的概念框架——它不是一套训练算法，而是一张告诉工程师"在什么场景、什么阶段、该激活什么隐私原语"的设计蓝图，再用两个导航 case study 把抽象的 trade-off 落成可量化的曲线。
 
 ### 整体框架
-SPINE 包含三部分：(1) L1-L4 四级隐私分类矩阵，把任意场景映射到一种隐私等级；(2) 概念架构图，把 4 阶段（Instruction / Perception / Planning / Interaction）× 4 级别（L1-L4）排成 4×4 矩阵，规定每个 cell 应该激活的技术原语；(3) 跨阶段编排策略，定义 "highest-triggering-criterion" 规则——一旦某阶段触达更高级别约束，整个 pipeline 立刻升级，并提供 utility 退化的量化分析。
+SPINE 由三块拼成。第一块是 L1-L4 四级隐私分类矩阵，负责把任意一个真实场景映射到一个隐私等级。第二块是一张 4×4 概念架构图，纵轴是具身 AI 的四个阶段（Instruction / Perception / Planning / Interaction），横轴是 L1-L4 四个级别，每个 cell 写明该格子里应该激活的技术原语，等于把"哪个阶段在哪个级别该做什么"全部列表化。第三块是跨阶段编排策略，它靠一条 "highest-triggering-criterion" 规则把四个阶段串成一条整体流水线，并配上 utility 随隐私强度退化的量化分析。三块合起来，隐私就从散落在各阶段的补丁，变成贯穿整条 pipeline 的一个动态控制信号。
 
 ### 关键设计
 
-1. **多准则隐私分类矩阵（L1-L4）**:
+**1. 多准则隐私分类矩阵（L1-L4）：把"敏感/不敏感"二分升级成可形式化的隐私状态机。** 传统做法只有 public 和 private 两档，粒度粗到无法区分"卧室"和"私人办公室"这种 sensitivity 完全不同的场景。SPINE 改用一个统一四元组 $PL = \{S, I, C, \Phi\}$ 来描述每一级隐私状态：$S$ 是场景上下文，$I$ 是允许的信息流，$C$ 是被 enforced 的 control primitive，$\Phi$ 是该级别下主导的效用目标。四个级别由低到高依次是：L1（Public，如公园）允许云端推理加完整传感，$\Phi$ 直接取 max utility；L2（Internal，如办公走廊）走混合信息流，去掉生物特征但保留几何信息；L3（Confidential，如私人办公室）切到本地处理加语义脱敏加隐私绕路；L4（Restricted，如卧室浴室）只留最小可用安全功能，用 LiDAR 顶替 RGB、用 TEE 容器做隔离。之所以要这样一个共同的"隐私状态机"，是因为跨阶段一致性需要每个阶段都能依据当前 level 去选匹配的技术原语；而那些高代价原语（FHE / ZKP）被明确限定只在 L4 必要时才触发，避免在低敏感场景里白白吞掉性能。
 
-    - 功能：用统一 tuple $PL = \{S, I, C, \Phi\}$ 描述每一级隐私状态，其中 $S$ 是场景上下文，$I$ 是允许的信息流，$C$ 是 enforced control primitive，$\Phi$ 是主导效用目标。L1（Public，如公园）允许云端推理 + 完整传感，$\Phi$ = max utility；L2（Internal，如办公走廊）混合信息流，去除生物特征但保留几何；L3（Confidential，如私人办公室）本地处理 + 语义脱敏 + 隐私绕路；L4（Restricted，如卧室浴室）只保留最小可用安全功能，用 LiDAR 替代 RGB，TEE 容器隔离。
-    - 核心思路：替代传统 "public vs private" 二分法，用四级 + 四元组同时编码场景、信息流、控制原语、效用目标，并明确高代价隐私原语（FHE / ZKP）只在 L4 必要时触发，避免不必要的性能损失。
-    - 设计动机：跨阶段一致性需要一个共同的 "隐私状态机"，每个阶段才能根据当前 level 选择匹配的技术原语；二元分类粒度太粗，无法区分卧室和私人办公室这种不同 sensitivity。
+**2. 跨阶段动态编排（Adaptive Privacy Orchestration）：让隐私约束端到端贯通、杜绝下游"打回原形"。** 这条设计把 instruction / perception / planning / interaction 在每个级别下该做什么逐一定死。以感知阶段为例：L1 用全 FoV RGB-D，L2 对人脸/车牌做实时匿名化，L3 动态 mask 掉非任务区域并限制视场，L4 干脆切断 RGB 改用 LiDAR。Planning 阶段同理：L1 走最短路径，L2 在去身份化的语义地图上规划，L3 引入一张"隐私 cost map"给私人区域叠加高 traversal penalty，L4 退化到只保留 minimum viable navigation。把这些纵向打通的是 "highest-triggering-criterion" 规则——只要任何一个阶段触发了更高的 level 约束，整条 pipeline 立刻整体升级，直到触发条件解除或人工 audit 介入。这样设计的意义在于彻底打破 stage-local 补丁的老毛病：以前感知层匿名了人脸，planning 日志却照样记录精确动作模式、被下游还原出身份；现在一旦机器人感知到进了卧室，不是只让感知模块打码，而是连 planning 和 logging 一起切到 L4，任何下游环节都没机会泄露。
 
-2. **跨阶段动态编排（Adaptive Privacy Orchestration）**:
+**3. 威胁模型与隐私-效用边界量化：给"trade-off"一个可调旋钮和明确的失效临界点。** 光喊"隐私和效用要平衡"没法指导工程，所以 SPINE 先把对手讲清楚——三类威胁分别是 honest-but-curious 的云服务方、被攻陷的存储或内部人、以及外部/越权限观察者；再把 trade-off 落成效用降幅关于隐私强度的函数。在导航 case study 里，作者拿像素化强度 $K$ 当 trade-off knob：$K=1$ 对应 L1 原图，$K>1$ 逐渐逼近 L3，由此测出任务成功率随 $K$ 单调下降的曲线。关键是这条曲线上存在一个 "operational boundary"——$K$ 一旦越过某个临界值任务就彻底失败，这个边界正是该场景下隐私可以 enforce 的上界。有了它，产品经理和工程师才能在不同部署上下文里做出有依据的选择，而不是凭口号拍脑袋。
 
-    - 功能：定义 instruction / perception / planning / interaction 在 L1-L4 下分别该做什么。例如感知阶段：L1 用全 FoV RGB-D，L2 实时人脸 / 车牌匿名化，L3 动态 mask 非任务区域、限制视场，L4 切断 RGB 改用 LiDAR。Planning 阶段：L1 最短路径，L2 在去身份化语义地图上规划，L3 引入 "隐私 cost map" 在私人区域加高 traversal penalty，L4 只保留 minimum viable navigation。
-    - 核心思路：用 "highest-triggering-criterion" 规则——任何阶段触发更高 level 约束，整个 pipeline 升级直到触发条件解除或人工 audit。这样防止下游 "打回原形"，确保隐私约束端到端贯通。
-    - 设计动机：彻底打破 stage-local 补丁的局限——一旦感知到敏感场景（如进入卧室），不是只让感知模块打码，而是连 planning 和 logging 全部切换到 L4 模式，避免任何下游环节泄露。
-
-3. **威胁模型 + 隐私-效用边界量化**:
-
-    - 功能：明确三类对手——honest-but-curious 云服务方、被攻陷的存储 / 内部人、外部 / 过权限观察者；同时把 trade-off 量化为效用降幅与隐私强度的函数。case study 中用导航任务的 $K$（像素化强度）作 trade-off knob：$K=1$ 对应 L1，$K>1$ 渐进对应 L3，可测出任务成功率随 $K$ 的下降曲线。
-    - 核心思路：把抽象的 "trade-off" 落到一个具体可调参数上，定义 "operational boundary"——超过某个 $K$ 后任务彻底失败，这个边界就是该场景下隐私的 enforceable upper bound。
-    - 设计动机：单靠口号 "隐私和效用要平衡" 不能指导工程实现，必须给出量化关系才能让产品经理和工程师在不同部署上下文里做选择。
-
-### 损失函数 / 训练策略
-本文是 position + framework，无端到端训练目标。case study 用现成 EAI 模拟器 + 真实机器人，把不同 $K$ 下的导航成功率、路径长度等指标记录下来形成 trade-off 曲线。
+SPINE 本身是 position 加 framework，没有端到端的训练目标；两个 case study 都跑在现成 EAI 模拟器加真实机器人上，把不同 $K$ 下的导航成功率、路径长度等指标记录下来，最终汇成上面那条 trade-off 曲线。
 
 ## 实验关键数据
 本文是 position paper，提供的是 conceptual validation 而非完整实验对比。

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把 FFN 输出投影的编辑统一成带正则的 OLS：保留集 $(\mathbf{K}_0,\mathbf{V}_0)$ + 当前编辑集 $(\mathbf{K}_t,\mathbf{V}_t)$，在 $\mathbf{W}+\boldsymbol{\Delta}$ 上做闭式解。给定第 $t$ 步前的累积更新 $\boldsymbol{\Delta}^*_{\text{total},t-1}$，把每一步真正要执行的增量定义为两次 OTE 闭式解之差 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$。这一个简洁定义同时给出三件事：(1) 解释 AlphaEdit 为什么稳；(2) 揭示 Memorize-the-Latest 这种"丢弃历史 + 加零空间"配方为什么必然崩；(3) 推导出修复 PRUNE/RECT 的 Algorithm 1。流程：先定义 OTE 目标 → 解出累积闭式 → 取差分作为本步更新 → 必要时叠加可解析补偿项消除后处理误差。
+作者把所有 locate-and-edit 方法都改写成同一个带正则的最小二乘问题——同时拟合保留集 $(\mathbf{K}_0,\mathbf{V}_0)$ 和当前编辑集 $(\mathbf{K}_t,\mathbf{V}_t)$，在 $\mathbf{W}+\boldsymbol{\Delta}$ 上求闭式解。关键转换是：与其每步"拍脑袋加一套正则"，不如先写出一次性编辑（OTE）想要的目标，再把第 $t$ 步真正要执行的增量定义成相邻两步 OTE 闭式解之差 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$。这一个差分定义把"稳定"从"用了哪种正则"中解耦出来，重新表述为"序列累积是否严格重建 OTE 解"，并由此连出三个结论：解释 AlphaEdit 为什么稳、揭示"丢历史 + 加零空间"为什么必崩、修复 PRUNE/RECT 的误差补偿算法。
 
 ### 关键设计
 
-1. **零空间证伪 + OTE-SE 等价定理**:
+**1. 零空间证伪 + OTE-SE 等价定理：先打掉"机制崇拜"，再立统一判据**
 
-    - 功能：用反例和定理同时回答"AlphaEdit 为什么稳"。反例是新提出的 Memorize-the-Latest 任务——每步只要求记住当前一条事实、丢掉对历史保留集的约束，再加上零空间投影 $\mathbf{P}$；在 LLaMA-3 + CounterFact 上模型语言能力立刻归零（GLUE 全 0.000），证明 $\mathbf{P}$ 单独不能撑起稳定性。
-    - 核心思路：原 AlphaEdit 的法方程含 $\mathbf{K}_0\mathbf{K}_0^\top\mathbf{P}$ 和 $(\mathbf{V}_0-\mathbf{W}_{t-1}\mathbf{K}_0)\mathbf{K}_0^\top\mathbf{P}$ 两项，被作者展开后发现累积偏差等于 $-\sum_{\tau=1}^{t}\boldsymbol{\Delta}_\tau^* \mathbf{K}_0\mathbf{K}_0^\top\mathbf{P}$，随步数线性放大；只有当历史约束被显式吸收时，这一偏差恰好抵消。在此基础上证 Lemma 3.1（AlphaEdit 严格满足 $\sum_{\tau=1}^t \boldsymbol{\Delta}_\tau^* = \boldsymbol{\Delta}^*_{\text{total},t}$）和 Proposition 3.2（对任意 $\mathbf{P}$、$\lambda\geq 0$ 的广义形式同样成立，MEMIT 是 $\mathbf{P}=\mathbf{I},\lambda=0$ 的特例），把"稳定"重新定义为"累积重建 OTE"。
-    - 设计动机：用一个最小可证伪场景把"机制崇拜"打掉，然后给出一条具有物理意义的、独立于正则形式的统一稳定性判据。
+为了正面回答"AlphaEdit 凭什么稳"，作者设计了一个最小可证伪场景 Memorize-the-Latest：每步只要求记住当前这一条事实、丢掉对历史保留集的约束，但仍保留零空间投影 $\mathbf{P}$（满足 $\mathbf{K}_0^\top\mathbf{P}=\mathbf{0}$）。在 LLaMA-3 + CounterFact 上模型语言能力立刻归零（GLUE 全 0.000），直接证明 $\mathbf{P}$ 单独撑不起稳定性。深挖原因：原 AlphaEdit 法方程含 $\mathbf{K}_0\mathbf{K}_0^\top\mathbf{P}$ 和 $(\mathbf{V}_0-\mathbf{W}_{t-1}\mathbf{K}_0)\mathbf{K}_0^\top\mathbf{P}$ 两项，展开后累积偏差恰好等于 $-\sum_{\tau=1}^{t}\boldsymbol{\Delta}_\tau^*\mathbf{K}_0\mathbf{K}_0^\top\mathbf{P}$，随编辑步数线性放大，只有当历史约束被显式吸收时这项才抵消。在此基础上 Lemma 3.1 证明 AlphaEdit 严格满足 $\sum_{\tau=1}^t \boldsymbol{\Delta}_\tau^* = \boldsymbol{\Delta}^*_{\text{total},t}$，Proposition 3.2 进一步说明对任意 $\mathbf{P}$、$\lambda\geq 0$ 的广义形式都成立（MEMIT 是 $\mathbf{P}=\mathbf{I},\lambda=0$ 的特例）。于是"稳定性"被重新定义为一条独立于正则形式的物理判据——累积更新重建 OTE，而非依附某个特定机制。
 
-2. **OTE→SE 构造性映射（差分式更新）**:
+**2. OTE→SE 构造性映射：把"加正则"换成"求差分"**
 
-    - 功能：给一条带任意凸正则 $\mathcal{R}$ 的 OTE 目标，机械化构造对应的稳定 SE 算法。
-    - 核心思路：定义 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$；Proposition 3.4 证明只要损失 $\mathcal{L}_t$ 满足"shifted quadratic representability"（最小二乘损失即满足），$\tilde{\boldsymbol{\Delta}}_t$ 就是一个良定义凸子问题 $\arg\min_{\boldsymbol{\Delta}} \ell_t(\boldsymbol{\Delta}) + \langle \nabla\mathcal{L}_t(\boldsymbol{\Delta}^*_{\text{total},t-1}),\boldsymbol{\Delta}\rangle + \mathcal{R}(\boldsymbol{\Delta}^*_{\text{total},t-1}+\boldsymbol{\Delta})$ 的唯一解。
-    - 设计动机：把 SE 算法的设计从"拍脑袋加正则"变成"先选 OTE 目标、再机械求差"，从根上避免累积漂移；任何已有 OTE 编辑器都能升级出对齐版本。
+有了等价判据，作者给出从任意带凸正则 $\mathcal{R}$ 的 OTE 目标机械化构造稳定 SE 算法的流水线。核心仍是差分式更新 $\tilde{\boldsymbol{\Delta}}_t := \boldsymbol{\Delta}^*_{\text{total},t} - \boldsymbol{\Delta}^*_{\text{total},t-1}$：Proposition 3.4 证明，只要损失 $\mathcal{L}_t$ 满足"平移二次可表示性"（shifted quadratic representability，最小二乘损失天然满足），这个差分就是凸子问题 $\arg\min_{\boldsymbol{\Delta}} \ell_t(\boldsymbol{\Delta}) + \langle \nabla\mathcal{L}_t(\boldsymbol{\Delta}^*_{\text{total},t-1}),\boldsymbol{\Delta}\rangle + \mathcal{R}(\boldsymbol{\Delta}^*_{\text{total},t-1}+\boldsymbol{\Delta})$ 的唯一解。这样一来，SE 算法设计就从"拍脑袋叠约束"变成"先选 OTE 目标、再机械求差"，从根上杜绝累积漂移；任何现成 OTE 编辑器都能照此升级出对齐版本。
 
-3. **后处理正则的可解析误差补偿 (Algorithm 1)**:
+**3. 后处理正则的可解析误差补偿（Algorithm 1）：把每步偏差记账扣回**
 
-    - 功能：让 PRUNE、RECT 这类"先解 $\boldsymbol{\Delta}_t$ 再施加 $\mathcal{R}_p(\boldsymbol{\Delta}_t)$"的算法仍能保持 OTE 等价。
-    - 核心思路：维护累积误差 $\mathbf{E}_t \leftarrow (\mathcal{R}_p(\boldsymbol{\Delta}_t)-\boldsymbol{\Delta}_t)\mathbf{C}_t$，下一步把它从残差中扣回去 $\boldsymbol{\Delta}_t = (\mathbf{R}_t\mathbf{K}_t^\top - \mathbf{E}_{t-1})\mathbf{C}_t^{-1}$，其中 $\mathbf{C}_t = \mathbf{C}_{t-1} + \mathbf{K}_t\mathbf{K}_t^\top$。这样 $\sum_\tau \mathcal{R}_p(\boldsymbol{\Delta}_\tau)$ 仍累积重建对应的 OTE 解。
-    - 设计动机：后处理正则每步引入的偏差会沿编辑步累积，正是 PRUNE/RECT 在长序列上表现下滑的真凶；显式记账即可一次性修复。
+PRUNE、RECT 这类算法的麻烦在于"先解出 $\boldsymbol{\Delta}_t$、再施加后处理正则 $\mathcal{R}_p(\boldsymbol{\Delta}_t)$"，每步引入的偏差会沿编辑步累积，正是它们长序列上掉点的真凶。作者的修法是显式维护累积误差 $\mathbf{E}_t \leftarrow (\mathcal{R}_p(\boldsymbol{\Delta}_t)-\boldsymbol{\Delta}_t)\mathbf{C}_t$，下一步把它从残差里扣回去 $\boldsymbol{\Delta}_t = (\mathbf{R}_t\mathbf{K}_t^\top - \mathbf{E}_{t-1})\mathbf{C}_t^{-1}$，其中 $\mathbf{C}_t = \mathbf{C}_{t-1} + \mathbf{K}_t\mathbf{K}_t^\top$。这一项纯解析、无需重训，就能保证 $\sum_\tau \mathcal{R}_p(\boldsymbol{\Delta}_\tau)$ 仍累积重建对应的 OTE 解，把 PRUNE/RECT 一次性拉回 OTE 等价。
 
 ### 损失函数 / 训练策略
-所有方法的损失都是 Frobenius 范数最小二乘 $\|(\mathbf{W}+\boldsymbol{\Delta})[\mathbf{K}_0\mid\mathbf{K}_\cdot] - [\mathbf{V}_0\mid\mathbf{V}_\cdot]\|_F^2$，配合 $\lambda \mathbf{I}$ 的 ridge 正则；$(\mathbf{K}_0,\mathbf{V}_0)$ 从 Wikitext 抽 100,000 条三元组估计。处理冲突编辑时按 Proposition 3.5 在重叠键集 $\mathcal{K}_o$ 上引入 Resolve 函数解析合并 $\mathbf{V}$，对应闭式 $\boldsymbol{\Delta}_t^* = (\mathbf{R}_t\mathbf{K}_t^\top - (\mathbf{V}_{\mathcal{B}_o^{(t)}}-\mathbf{W}_{t-1}\mathbf{K}_{\mathcal{B}_o^{(t)}})\mathbf{K}_{\mathcal{B}_o^{(t)}}^\top)(\mathbf{K}_{\mathcal{P}_{t-1}}\mathbf{K}_{\mathcal{P}_{t-1}}^\top + \mathbf{K}_t\mathbf{K}_t^\top - \mathbf{K}_{\mathcal{B}_o^{(t)}}\mathbf{K}_{\mathcal{B}_o^{(t)}}^\top)^{-1}$。
+所有方法的损失都是 Frobenius 范数最小二乘 $\|(\mathbf{W}+\boldsymbol{\Delta})[\mathbf{K}_0\mid\mathbf{K}_\cdot] - [\mathbf{V}_0\mid\mathbf{V}_\cdot]\|_F^2$，配合 $\lambda \mathbf{I}$ 的 ridge 正则；保留集 $(\mathbf{K}_0,\mathbf{V}_0)$ 从 Wikitext 抽 100,000 条三元组估计。处理冲突编辑时按 Proposition 3.5 在重叠键集 $\mathcal{K}_o$ 上引入 Resolve 函数解析合并 $\mathbf{V}$，对应闭式 $\boldsymbol{\Delta}_t^* = (\mathbf{R}_t\mathbf{K}_t^\top - (\mathbf{V}_{\mathcal{B}_o^{(t)}}-\mathbf{W}_{t-1}\mathbf{K}_{\mathcal{B}_o^{(t)}})\mathbf{K}_{\mathcal{B}_o^{(t)}}^\top)(\mathbf{K}_{\mathcal{P}_{t-1}}\mathbf{K}_{\mathcal{P}_{t-1}}^\top + \mathbf{K}_t\mathbf{K}_t^\top - \mathbf{K}_{\mathcal{B}_o^{(t)}}\mathbf{K}_{\mathcal{B}_o^{(t)}}^\top)^{-1}$。
 
 ## 实验关键数据
 

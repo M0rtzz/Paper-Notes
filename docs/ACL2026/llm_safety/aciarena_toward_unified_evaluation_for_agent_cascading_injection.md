@@ -43,26 +43,24 @@ tags:
 ACIArena 由四个模块组成：**Benign Tasks**（从 GSM8K、MATH500、HumanEval、MBPP、GPQA、MedMCQA 中用 LLM judge 按难度/可分解性/低歧义筛选）；**Attacks**（28 种 ACI 攻击，覆盖 3 攻击面 × 3 攻击目标，通过 generate-mutate-select 循环自动优化生成）；**MAS Library**（重构 6 个 MAS 到统一接口）；**Evaluation Suites**（1356 测试用例 + BU/ASR/UA/PVI 四类指标）。攻击执行时由攻击者把恶意 prompt 注入到指定攻击面，观察恶意信息在 MAS 内的级联传播与最终输出。
 
 ### 关键设计
-1. **三轴威胁模型与攻击生成器**:
+**1. 三轴威胁模型与攻击生成器：把所有 ACI 攻击形式化为"攻击面 × 攻击目标 × MAS"，并让 LLM 自动写攻击。**
 
-    - 功能：把所有 ACI 攻击形式化为"攻击面 × 攻击目标 × MAS"的三轴组合，并用 LLM 自动生成攻击 prompt。
-    - 核心思路：三个攻击面对应三种数学形式——**Adversarial Input** 注入 $\mathcal{I}/\mathcal{M}/\mathcal{T}$ 任一输入组件；**Malicious Agent** 篡改 profile $\mathcal{P}$ 使 agent 自主输出恶意消息；**Message Poison** 在通信边 $(\mathcal{A}_i, \mathcal{A}_j) \in \mathcal{E}$ 上拦截并替换消息。三个目标是 Hijacking（劫持执行）、Disruption（降低任务成功率）、Exfiltration（窃取敏感信息）。攻击 prompt 由 generate-mutate-select 循环优化——从手工种子 $a_0$ 出发，每轮采样变异算子 $\omega \in \Omega$ 生成变体 $a' = \omega(a_t)$，在 $N$ 个 MAS 上执行得到响应，再用 LLM judge 按 stealthiness（与该攻击面 benign prompt 的相似度）+ harmfulness（响应与原始目标的对齐度）打分选最优。
-    - 设计动机：手工写攻击 prompt 既慢又难穷举攻击模式；自动循环让框架可以快速适配新出现的 MAS 和模型，保持长期可用。
+手工写攻击 prompt 既慢又难穷举，更没法在新 MAS 出现时快速跟上。本文先从 agent 形式化定义 $\mathcal{A}=(\pi,\mathcal{P},\mathcal{M},\mathcal{T})$ 出发，把可注入组件归到三个攻击面：**Adversarial Input** 注入指令/记忆/工具描述任一输入组件（$\mathcal{I}/\mathcal{M}/\mathcal{T}$）；**Malicious Agent** 篡改 profile $\mathcal{P}$ 让 agent 自主输出恶意消息；**Message Poison** 在通信边 $(\mathcal{A}_i,\mathcal{A}_j)\in\mathcal{E}$ 上拦截并替换消息。再交叉三个攻击目标——Hijacking（劫持执行）、Disruption（拉低任务成功率）、Exfiltration（窃取敏感信息）。攻击 prompt 由 generate-mutate-select 循环优化：从手工种子 $a_0$ 出发，每轮采样变异算子 $\omega\in\Omega$ 生成变体 $a'=\omega(a_t)$，在 $N$ 个 MAS 上执行得到响应，再用 LLM judge 按 stealthiness（与该攻击面 benign prompt 的相似度）加 harmfulness（响应与原始目标的对齐度）打分选最优。这样框架就能随新 MAS、新模型自动扩展攻击库，保持长期可用。
 
-2. **Propagation Vulnerability Index (PVI) 与 fine-grained agent-level 分析**:
+**2. Propagation Vulnerability Index (PVI)：把评测从"输出层"下沉到"过程层"，量化恶意信息的穿透力。**
 
-    - 功能：除了最终响应的 ASR，还要量化"恶意信息在系统内部的级联传播强度"。
-    - 核心思路：定义 $\mathrm{PVI} = \sum_{a_i \in \mathcal{A}} \frac{L_{a_i}}{\sum_{a_j \in \mathcal{A}} L_{a_j}} \mathrm{ASR}_{a_i}$，其中 $L_{a_i}$ 是 agent $a_i$ 到最终响应的最小拓扑距离，$\mathrm{ASR}_{a_i}$ 是该 agent 作为入侵起点时的攻击成功率。距离越远但仍能成功，说明恶意信息穿透系统的能力越强；PVI 越高，MAS 的"传染性"越强。
-    - 设计动机：仅看终态 ASR 会忽略"局部成功但被下游纠正"或"穿透多层依然成功"的差异，PVI 让评测从"输出层"扩展到"过程层"，揭示拓扑与角色设计对级联传播的真实影响。
+只看最终响应的 ASR 会抹掉两种关键差异——"局部成功但被下游纠正"和"穿透多层依旧成功"在终态上可能一样，但安全含义天差地别。PVI 定义为
 
-3. **ACI-Sentinel：面向任务对齐信息的最小化防御**:
+$$\mathrm{PVI}=\sum_{a_i\in\mathcal{A}}\frac{L_{a_i}}{\sum_{a_j\in\mathcal{A}}L_{a_j}}\,\mathrm{ASR}_{a_i},$$
 
-    - 功能：在现有防御普遍失效甚至放大攻击的背景下，提出一种简单但稳定的防御。
-    - 核心思路：现有防御（BERT detector、Delimiter、Sandwich、AGrail、G-Safeguard）大都试图识别"可疑消息"再过滤，但 ACI 攻击常伪装成正常 agent 输出，识别困难；某些防御过度过滤反而压垮系统效用甚至放大 ASR（实验中 G-Safeguard 在 AutoGen Hijacking 上把 ASR 从 92.78 拉到 67.22 但同时 UA 跌到 15.56）。ACI-Sentinel 反其道而行——**不识别坏的，而是强制保留好的**：枚举与当前任务对齐的最小必要信息（task-aligned semantic minimality），剔除一切超出该集合的指令和元信息。
-    - 设计动机：作者从 benchmark 大规模观测发现，攻击的共同模式是"在合法消息中嵌入额外指令"——只要把消息压缩到"完成当前任务所必需的语义最小集"，附加注入自动消失。这种"以语义最小性而非可疑性为锚"的思路在 AutoGen 上把 Hijacking ASR 从 92.78% 压到 8.06%，Exfiltration ASR 从 54.00% 压到 0.22%，同时 UA 仅小幅下降。
+其中 $L_{a_i}$ 是 agent $a_i$ 到最终响应的最小拓扑距离，$\mathrm{ASR}_{a_i}$ 是以该 agent 为入侵起点时的攻击成功率。入侵点离终点越远却仍能得手，权重越大；PVI 越高，说明这套 MAS 的"传染性"越强。它让评测能看出拓扑与角色设计对级联传播的真实影响，而不只是终态成败。
+
+**3. ACI-Sentinel：不识别"坏的"，而是强制保留"任务必需的好的"。**
+
+现有防御（BERT detector、Delimiter、Sandwich、AGrail、G-Safeguard）大多想先识别"可疑消息"再过滤，但 ACI 攻击常伪装成正常 agent 输出，识别极难，过度过滤还会压垮系统效用甚至放大攻击——实验里 G-Safeguard 在 AutoGen Hijacking 上把 ASR 从 92.78 拉到 67.22，UA 却跌到 15.56。作者从 benchmark 的大规模观测发现，攻击的共同套路是"在合法消息里嵌入额外指令"，于是把防御思路彻底翻转：不去判断哪条消息坏，而是枚举完成当前任务所必需的语义最小集（task-aligned semantic minimality），把超出这个集合的一切指令和元信息全部剔除，附加注入便自动消失。这种"以语义最小性而非可疑性为锚"的做法在 AutoGen 上把 Hijacking ASR 从 92.78% 压到 8.06%、Exfiltration ASR 从 54.00% 压到 0.22%，而 UA 只小幅下降。
 
 ### 损失函数 / 训练策略
-攻击生成的优化目标是 $J(a') = J_{\text{stealth}}(a' | c) + \frac{1}{N}\sum_{j=1}^N J_{\text{harm}}(\mathcal{S}^{(j)}(a'), a_0)$，两项分别由 LLM judge 打分，无需梯度访问（黑盒优化）。MAS 与防御本身无新训练。
+攻击生成是黑盒优化，无需梯度访问，目标为 $J(a') = J_{\text{stealth}}(a' | c) + \frac{1}{N}\sum_{j=1}^N J_{\text{harm}}(\mathcal{S}^{(j)}(a'), a_0)$，两项分别由 LLM judge 打分。MAS 与防御本身不引入新训练。
 
 ## 实验关键数据
 

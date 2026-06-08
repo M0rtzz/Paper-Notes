@@ -40,34 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-全文不训练新模型，只对 12 个公开 MoE / dense 模型（OLMoE-1B-7B、Mixtral-8x7B、Qwen3-30B-A3B、ERNIE-4.5-21B-A3B、OLMo-7B 等）做三阶段分析：
-
-1. **神经元级 probing**：对 58 个概念（POS、LaTeX、代码、自然语言）做 $k$-sparse 探针，比较 MoE 专家中间激活 $\mathbf{h}=\mathrm{Swish}(W_{\text{gate}}x)\odot W_{\text{up}}x$ 与 dense FFN 同位置的可分性；按 active-parameter 数对齐配对，并在 OLMo 家族内做"同总参不同稀疏度"对照。
-2. **专家级自动标注**：用残差流贡献模在 The Pile (uncopyrighted) 上挑出每个专家的 20 条 top-activating 序列 + Logit Lens 给出的 top-3 被推高 token，让 explainer LLM (Gemini 3 Flash Preview) 写一句话描述；再用 scorer LLM 在 10 正 10 负样本上算 F1。
-3. **专家特化定量度量**：用对 unembedding 矩阵的 $k$-means 聚类（$k\in\{10,50,100,1000,5000\}$）划"模型原生领域"，再用 Jensen-Shannon Divergence 衡量每个专家相对层平均的偏离，分别报告 Routing Specialization（路由进来的 token 分布）和 Functional Specialization（被 Logit Lens 推高的 token 分布）。
+本文要解决的是"MoE 大模型能不能不靠 SAE、直接在专家这一级被读懂"。思路是把可解释性分析从神经元逐级抬升到整个专家：先用 $k$-sparse probing 量出 MoE 专家神经元确实比 dense FFN 神经元更单义，再借这股稀疏红利让 LLM 给每个专家自动写自然语言标签并做因果验证，最后用一个客观度量去仲裁"专家到底专在什么颗粒度"。全程不训练任何 LLM，只对 12 个公开的 MoE / dense checkpoint（OLMoE-1B-7B、Mixtral-8x7B、Qwen3-30B-A3B、ERNIE-4.5-21B-A3B、OLMo-7B 等）做前向分析，配一个外部 explainer/scorer LLM (Gemini 3 Flash Preview)。
 
 ### 关键设计
 
-1. **$k$-sparse probing + best-layer 协议**：
+**1. $k$-sparse probing + best-layer 协议：把"是否单义"做成可比指标。**
 
-    - 功能：在 MoE 专家激活向量 $\mathbf{h}$ 和 dense FFN 激活向量上分别训 $L_2$ 正则的逻辑回归，只用 top-$k$ 个维度做特征，看能否把概念二分类分开。
-    - 核心思路：对每个概念，按 $a_j=|\mathbb{E}[h_j\mid y=1]-\mathbb{E}[h_j\mid y=0]|$ 选 top-$k$ 神经元，$k\in\{1,2,4,8,16,32,64\}$；在 MoE 上特别**只保留被路由到目标专家的 token**，承认 router 已经做了一次粗筛；为每个概念在所有层 / 所有专家上找最好的那层比 F1，避免"挑错层"的偏差；并按 active-param 把 MoE 与 dense 配对比较。
-    - 设计动机：$k=1$ 上的高 F1 是"概念被钉在一个神经元"的直接证据，可以把"是否单义"从定性变成可比指标；同时排除了"MoE 只是参数多"这种潜在 confounder（OLMoE-1B-7B 用 1B active 就打败了 OLMo-7B dense 7B active）。
+痛点在于"神经元到底单不单义"过去只能定性聊，没法横向比 MoE 和 dense。作者对每个概念在激活向量上训一个 $L_2$ 正则的逻辑回归，但只允许它用 top-$k$ 个维度：先按类间均值差 $a_j=|\mathbb{E}[h_j\mid y=1]-\mathbb{E}[h_j\mid y=0]|$ 选出 top-$k$ 神经元，$k\in\{1,2,4,8,16,32,64\}$，对 MoE 用的是专家中间激活 $\mathbf{h}=\mathrm{Swish}(W_{\text{gate}}x)\odot W_{\text{up}}x$，对 dense 用 FFN 同位置激活。MoE 一侧只保留被路由到目标专家的 token（承认 router 已做了一次粗筛），并为每个概念在所有层/所有专家里挑最好的那层比 $F_1$，避免"挑错层"压低分数。$k=1$ 上的高 $F_1$ 直接等于"一个概念被钉死在单个神经元"，于是单义性从形容词变成数字。为排除"MoE 只是参数更多"这个 confounder，比较按 active-parameter 配对，并在 OLMo 家族内做同总参对照——结果 OLMoE-1B-7B 用 1B active 就打过了 OLMo-7B 的 7B active，说明红利来自稀疏路由本身。
 
-2. **基于残差流贡献的专家自动标注流水线**：
+**2. 残差流贡献模驱动的专家自动标注流水线：用因果活跃度挑样本，再让 LLM 写标签。**
 
-    - 功能：用一个 explainer LLM 给每个 MoE 专家写一句自然语言标签，再用 scorer LLM 在 held-out 样本上验证标签的判别力（F1）。
-    - 核心思路：高激活样本的挑选不能只看 router 权重 $g_i(x)$（"被选中"不代表"真的算出有用东西"），也不能只看专家内部神经元绝对值；作者直接量"专家给残差流写入了多大向量"，对序列 $s$ 打分 $\mathrm{score}(s,E_i)=\max_{x\in s}\;g_i(x)\,\|E_i(x)\|_2$，取 top-20 + Logit Lens 给出的 top-3 推高 token 喂给 explainer；scorer 用 10 正 10 负样本算 F1；最终在 OLMoE/ERNIE/Qwen3 的 14 层上几乎所有专家 F1 > 0.8，最稀疏的 Qwen3-30B-A3B 频繁 > 0.9。
-    - 设计动机：transformer 里组件影响输出的唯一通道就是残差流上的更新向量，因此用 $\|E_i(x)\|_2$ 才是"因果上真的有贡献"的活跃度；这一步打通了"从神经元到专家"的方法论瓶颈，让自动可解释性可以不依赖训 SAE 而直接套用。
+要给专家写标签，第一步是挑出"真正激活这个专家"的序列，而 router 权重 $g_i(x)$ 只说明专家被选中、不说明它算出了有用东西，专家内部神经元绝对值也未必传到输出。作者改用专家写进残差流的更新向量的模长作为活跃度，对序列 $s$ 打分 $\mathrm{score}(s,E_i)=\max_{x\in s}\,g_i(x)\,\|E_i(x)\|_2$——因为在 transformer 里组件影响输出的唯一通道就是残差流，$\|E_i(x)\|_2$ 才是因果上真有贡献的那一项。每个专家取 top-20 高分序列，配上 Logit Lens 给出的 top-3 被推高 token，喂给 explainer LLM 写一句话描述；再让 scorer LLM 在 10 正 10 负的 held-out 样本上算 $F_1$ 验证标签判别力。OLMoE / ERNIE / Qwen3 的 14 层上几乎所有专家 $F_1>0.8$，最稀疏的 Qwen3-30B-A3B 频繁 $>0.9$，证明标签不是 LLM 凭空编的。这一步把"从神经元到专家"的方法论瓶颈打通，让自动可解释性不必再为每层训 SAE。
 
-3. **Trigger-Target 因果归因 + JSD 特化度量**：
+**3. Trigger-Target 因果归因 + JSD 特化度量：验证标签的因果性，并仲裁特化之争。**
 
-    - 功能：(a) 验证 LLM 写出的专家标签是不是真的对应该专家的因果作用；(b) 量化每个专家相对层平均到底"专"在哪一档颗粒度上。
-    - 核心思路：(a) 给定专家标签，让 Gemini 3 Flash Preview 合成 trigger 词（触发该专家）和 target 词（该专家应推高的输出 token）的句子，用 DLA $A_{v\to t}=\mathrm{LN}_{\text{linear}}(v)^\top W_U[:,t]$ 在层内对所有专家排序——绝大多数 matched prompt 上该专家排 Top-1 或 Top-8，而 80% control prompt 上该专家根本没被路由。(b) 用 unembedding $k$-means 聚类定义模型原生领域，对 $10^6$ token 算 Routing/Functional 两侧 JSD，再用 Random Expert Baseline 校正小样本噪声；扫 $k\in\{10,...,5000\}$ 区分宽域 vs 任务专家。
-    - 设计动机：高 F1 只能说明标签描述性强、不能证明因果；trigger-target 把"它确实被这个上下文激活并真的把目标词推上去"做成可验证假设。JSD + $k$ sweep 则是仲裁"宽域 vs 任务专家"之争的客观判据——若是宽域专家，$k=10$ 上 JSD 就应该最高；实验上反而是 $k=5000$ 远拉开身位，强力支持"细粒度任务专家"的解释。
+高 $F_1$ 只说明标签描述得准，不等于因果。作者让 Gemini 3 Flash Preview 按专家标签合成句子，里面埋 trigger 词（应触发该专家）和 target 词（该专家应推高的输出 token），再用 DLA $A_{v\to t}=\mathrm{LN}_{\text{linear}}(v)^\top W_U[:,t]$ 在层内给所有专家排序：matched prompt 上该专家几乎都进 Top-1 或 Top-8，而 80% 为别人设计的 control prompt 上该专家根本没被路由——这是一个很硬的反例，标签不是"什么都对"的废话。第二条线回答"专家专在哪档颗粒度"：用对 unembedding 矩阵的 $k$-means 聚类（$k\in\{10,50,100,1000,5000\}$）让模型自己的输出空间结构定义"原生领域"，对 $10^6$ 个 token 用 Jensen-Shannon Divergence 衡量每个专家相对层平均的偏离，分别报告 Routing Specialization（路由进来的 token 分布）和 Functional Specialization（被 Logit Lens 推高的 token 分布），再用 Random Expert Baseline 校正小样本噪声。若专家是宽域分工，$k=10$ 上 JSD 就该最高；实测却是 $k=5000$ 远远拉开，强力支持"细粒度任务专家"的结论。
 
-### 损失函数 / 训练策略
-本文**不训练任何 LLM**。唯一被训练的是逻辑回归 probe（$L_2$ 正则，75/25 train-test，按概念/层/专家逐一拟合）。所有解释流程都基于现成 checkpoint 的前向传播 + 一个外部 explainer/scorer LLM (Gemini 3 Flash Preview)。
+唯一被训练的部件是上面这些逻辑回归 probe（$L_2$ 正则，75/25 train-test，按概念/层/专家逐一拟合）；所有解释流程都只是现成 checkpoint 的前向传播加一个外部 LLM。
 
 ## 实验关键数据
 

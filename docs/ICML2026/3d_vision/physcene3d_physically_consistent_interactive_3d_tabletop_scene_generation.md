@@ -41,27 +41,35 @@ PhyScene3D 把 3D 桌面场景生成重塑成"人类构造式"的层次化序列
 ## 方法详解
 
 ### 整体框架
-输入是自然语言指令 $\mathcal{I}$，输出是桌面场景 $\mathcal{S}=\{e_i\}_{i=1}^N$，每个实体 $e_i=(c_i,\mathbf{p}_i,\mathbf{s}_i,\theta_i)$ 重参数化成 3D AABB $\mathbf{b}_i=[x_{\min},x_{\max},\dots,z_{\max}]\in\mathbb{R}^6$，把位置和尺寸统一编码以便直接度量空间占用与相对关系。骨干用 Qwen-3 VL 8B，训练分两阶段：(i) SFT 在含层次场景图标注的 MesaTask-CTRC 数据上做全参微调，让模型学会 CTRC 序列；(ii) PADA 阶段用 LoRA (r=16) + GRPO，在每条训练 prompt 上先用 SFT 推理出 $\mathcal{S}_{sft}$，再用 TTO 投影到物理流形得到锚点 $\mathcal{S}^*_{anchor}$，与 RL exploration 项联合优化。推理时只需 VLM 自回归生成 AABB 序列，无需外部求解器或后处理。
+PhyScene3D 要解决的是：给一句自然语言指令，生成一桌没有穿插、不悬浮、能直接丢进物理仿真器的桌面场景，而且物理质量要超过本身就很脏的人工标注训练集。它把这件事拆成"先让 VLM 学会像人一样有顺序地摆，再用可微物理引擎反过来纠正 VLM"两层。具体地，输入指令 $\mathcal{I}$，输出场景 $\mathcal{S}=\{e_i\}_{i=1}^N$，每个实体 $e_i=(c_i,\mathbf{p}_i,\mathbf{s}_i,\theta_i)$ 被重参数化成一个 6 维的 3D AABB $\mathbf{b}_i=[x_{\min},x_{\max},\dots,z_{\max}]\in\mathbb{R}^6$，让位置、尺寸和相对关系都落在同一种可直接度量空间占用的表示里。骨干是 Qwen-3 VL 8B，训练走两阶段：先在带层次场景图标注的 MesaTask-CTRC 数据上做全参 SFT，让模型学会按 CTRC 的锚点序列自回归生成；再进入 PADA 阶段，用 LoRA(r=16)+GRPO，每条训练 prompt 先用 SFT 推理出 $\mathcal{S}_{sft}$，再用测试时优化(TTO)把它投影到物理可行流形得到伪标签锚点 $\mathcal{S}^*_{anchor}$，与 RL 探索项联合训练。推理时只剩 VLM 自回归吐出 AABB 序列，不再需要外部求解器或后处理。
 
 ### 关键设计
 
-1. **Cognitive Topological Reasoning Chain (CTRC) — 把场景生成线性化为基于 AABB 的锚点序列**:
+**1. Cognitive Topological Reasoning Chain (CTRC)：把"先放容器再放内容"的顺序硬编码进生成过程**
 
-    - 功能：用层次化场景图 + 相对 AABB 表示，把扁平的 set generation 重构成自底向上的有序自回归过程 $P(\mathcal{S}|\mathcal{I})=\prod_{t=1}^{N}P(e_t|e_{<t},\mathcal{I})$，强制 "容器 → 内容物" 的因果顺序。
-    - 核心思路：先用几何启发式（容纳由体积比 $V_B/V_A\geq 1.5$ 与 $IoU_{xy}\geq 0.9$ 判定；支撑由 $z_{min}^A \approx z_{max}^B$ 判定；邻近由分离主轴判定）抽出场景图 $G=(V,E)$，边的优先级为 $\text{in} \succ \text{on} \succ \text{near}$。再把每个子物体的位姿表示为父物体局部坐标系下的相对 AABB，关键是把竖直维度按关系类型解耦：$z^{rel}_{\{min,max\}} = z^{abs}_{\{min,max\}}(e_{ch}) - z^{abs}_{min}(e_{pa})$ 若关系为 $\text{in}$；$z^{rel}_{\{min,max\}} = z^{abs}_{\{min,max\}}(e_{ch}) - z^{abs}_{max}(e_{pa})$ 若关系为 $\text{on}$。生成顺序由 Anchor-Expansion 策略决定：先放离桌心最近的 base anchor，再横向扩展同层物体，遇到容器或支撑后**立即**自底向上递归填充其子物体。
-    - 设计动机：相对 AABB 让 "inside" 和 "on" 在数学上变成不同形式的偏移量，搜索空间被锚定到几何不变量上（即使父物体移动，子物体相对参数化保持不变），从源头上消除悬浮/穿插的因果幻觉。AABB 作为宏观拓扑归纳偏置，把高精度物理留给 PADA 的 SDF 引擎。
+桌面生成最大的痛点是因果幻觉——VLM 经常先放笔再放笔筒，或让物体悬空堆叠，因为扁平的 set generation 没有任何顺序约束。CTRC 把这个问题重构成一个有序的自底向上自回归过程 $P(\mathcal{S}|\mathcal{I})=\prod_{t=1}^{N}P(e_t|e_{<t},\mathcal{I})$，强制"容器 → 内容物"的因果链。它先用几何启发式抽出场景图 $G=(V,E)$：容纳关系由体积比 $V_B/V_A\geq 1.5$ 且 $IoU_{xy}\geq 0.9$ 判定，支撑关系由 $z_{min}^A \approx z_{max}^B$ 判定，邻近关系由分离主轴判定，边的优先级排成 $\text{in} \succ \text{on} \succ \text{near}$。生成顺序由 Anchor-Expansion 策略决定：先放离桌心最近的 base anchor，再横向扩展同层物体，一旦遇到容器或支撑就**立即**自底向上递归填满它的子物体，这其实是一条结构性的 Chain-of-Thought，而非 prompt 工程。
 
-2. **可微分 SDF 物理引擎 + Hierarchy-Constrained TTO — 把语义计划投影到物理流形**:
+关键还在于子物体的位姿不是用绝对坐标、而是表示为父物体局部坐标系下的相对 AABB，并且把竖直维度按关系类型解耦：关系为 $\text{in}$ 时 $z^{rel}_{\{min,max\}} = z^{abs}_{\{min,max\}}(e_{ch}) - z^{abs}_{min}(e_{pa})$，关系为 $\text{on}$ 时 $z^{rel}_{\{min,max\}} = z^{abs}_{\{min,max\}}(e_{ch}) - z^{abs}_{max}(e_{pa})$。这样"inside"和"on"在数学上就变成两种不同形式的偏移量，搜索空间被锚定到几何不变量上——即便父物体被移动，子物体的相对参数化也保持不变，从源头消除悬浮/穿插的幻觉。AABB 在这里只负责宏观拓扑这个粗粒度归纳偏置，高精度的物理细节留给后面的 SDF 引擎。
 
-    - 功能：用 GPU 常驻的向量化 SDF 表示所有资产，对任意布局计算可微的穿插能量并通过梯度"推开"穿插对象，同时通过相对坐标约束防止 TTO 破坏 CTRC 建立的语义结构。
-    - 核心思路：对两两物体 $A,B$ 计算碰撞能量 $\mathcal{L}_{sdf}(A,B) = \sum_{\mathbf{p}\in P_A} \text{ReLU}(-\phi_B(\mathbf{R}_B^\top(\mathbf{R}_A \mathbf{p} + \mathbf{t}_A - \mathbf{t}_B)))$，其中 $P_A$ 是在 $A$ 标准坐标系下采样的表面点，$\phi_B$ 是 $B$ 的 SDF 场。TTO 优化目标为 $\min_\xi (\mathcal{L}_{sdf} + \lambda_{rel}\mathcal{L}_{rel}(\mathcal{G}) + \lambda_{reg}\|\xi - \xi_{init}\|^2)$，其中 $\mathcal{L}_{rel}$ 对 $\text{in}$ 边冻结相对位置（父子视作刚体），对 $\text{on}$ 边强制 $z^{rel}$ 对齐约束，$\xi_{init}$ 是 VLM 的初始输出。
-    - 设计动机：直接对绝对坐标做 TTO 会 drift（把物体推到远处就没碰撞），但在相对坐标系里加约束后，TTO 只能要么把整组刚体平移，要么在合法 affordance 区域里做微调，从而 collision-free 的同时保持语义意图——这是 PADA 能用 TTO 生成高质量伪标签的前提。
+**2. 可微分 SDF 物理引擎 + Hierarchy-Constrained TTO：把语义计划投影到物理流形**
 
-3. **Physically-Projected Semantic Anchoring — 把 TTO 的解析能力蒸馏回 VLM**:
+CTRC 给的是拓扑对、但坐标仍可能穿插的草稿，这一步负责把它"推"成物理可行的。所有资产用 GPU 常驻的向量化 SDF 表示，对任意一对物体 $A,B$ 计算可微的碰撞能量
 
-    - 功能：用 SFT 模型 + TTO 自动产生物理上正确、语义上忠实的伪标签 $\mathcal{S}^*_{anchor}$，再把它作为 GRPO 训练里的稠密监督项，绕过对人工密集语义奖励的需求。
-    - 核心思路：每轮 RL 训练，对训练指令先用 SFT 推理得 $\mathcal{S}_{sft}$（捕获语义流形 $\mathcal{M}_{sem}$ 但带物理噪声），再用 Hierarchy-Constrained TTO 投影得 $\mathcal{S}^*_{anchor}=\text{TTO}(\mathcal{S}_{sft})$（投影到物理流形 $\mathcal{M}_{phys}$ 且因为 CTRC 约束保留语义）。最终的双目标 GRPO 损失为 $\mathcal{J}(\theta) = \mathbb{E}_{\mathcal{L}\sim\pi_\theta}\left[\frac{1}{K}\sum_{k=1}^K A_k \frac{\pi_\theta(\mathcal{S}_k)}{\pi_{old}(\mathcal{S}_k)}\right] + \alpha \cdot \mathcal{L}_{CE}(\pi_\theta, \mathcal{S}^*_{anchor})$，前者由碰撞分数派生 advantage $A_k$ 驱动探索，后者用 cross-entropy 把锚点作为"修正向量"稳定语义。
-    - 设计动机：纯 GRPO 会 reward-hacking（GPT-Score 从 8.96 掉到 8.47），纯 TTO 又是部署期昂贵且受初始化质量限制的局部修正。把 TTO 当 teacher 蒸馏进 policy 既加速收敛（模型不用再从头探索"杯子装笔"这种语义结构，只需学微调到无碰撞），又把"老师的能力"内化到生成分布里——这是为什么 PADA 最终 QPR (46.5%) 超越 inference-only TTO (38.0%)。
+$$\mathcal{L}_{sdf}(A,B) = \sum_{\mathbf{p}\in P_A} \text{ReLU}\big(-\phi_B(\mathbf{R}_B^\top(\mathbf{R}_A \mathbf{p} + \mathbf{t}_A - \mathbf{t}_B))\big),$$
+
+其中 $P_A$ 是在 $A$ 标准坐标系下采样的表面点，$\phi_B$ 是 $B$ 的 SDF 场，$\text{ReLU}$ 只在点穿进 $B$ 内部（SDF 为负）时产生惩罚，梯度自然把穿插对象"推开"。但单纯最小化碰撞会 drift——只要把物体推到远处碰撞就没了，语义也就毁了。所以 TTO 的目标里加了相对坐标约束：
+
+$$\min_\xi \big(\mathcal{L}_{sdf} + \lambda_{rel}\mathcal{L}_{rel}(\mathcal{G}) + \lambda_{reg}\|\xi - \xi_{init}\|^2\big),$$
+
+其中 $\mathcal{L}_{rel}$ 对 $\text{in}$ 边冻结父子相对位置（整组当刚体），对 $\text{on}$ 边强制 $z^{rel}$ 对齐，$\xi_{init}$ 是 VLM 的初始输出、由正则项拉住不让它跑偏。这样 TTO 只能要么把整组刚体平移、要么在合法 affordance 区域里微调，做到 collision-free 的同时保持语义意图——这正是它能稳定产出高质量伪标签的前提。
+
+**3. Physically-Projected Semantic Anchoring：把 TTO 的解析能力蒸馏回 VLM**
+
+TTO 虽好但只是部署期的局部修正，昂贵且受初始化质量限制；而纯靠物理奖励去 fine-tune VLM 又会 reward-hacking（把物体散开来骗碰撞分，GPT-Score 从 8.96 掉到 8.47）。PADA 的做法是把 TTO 当 teacher 蒸馏进 policy：每轮 RL，对训练指令先用 SFT 推理得 $\mathcal{S}_{sft}$（它落在语义流形 $\mathcal{M}_{sem}$ 上但带物理噪声），再用前面的 Hierarchy-Constrained TTO 投影得 $\mathcal{S}^*_{anchor}=\text{TTO}(\mathcal{S}_{sft})$（被拉到物理流形 $\mathcal{M}_{phys}$ 上、又因 CTRC 约束保住语义）。这个锚点同时具备物理正确和语义忠实，于是被当作 GRPO 的稠密监督，构成双目标损失
+
+$$\mathcal{J}(\theta) = \mathbb{E}_{\mathcal{L}\sim\pi_\theta}\Big[\frac{1}{K}\sum_{k=1}^K A_k \frac{\pi_\theta(\mathcal{S}_k)}{\pi_{old}(\mathcal{S}_k)}\Big] + \alpha \cdot \mathcal{L}_{CE}(\pi_\theta, \mathcal{S}^*_{anchor}),$$
+
+前一项由碰撞分数派生的 advantage $A_k$ 驱动探索，后一项用 cross-entropy 把锚点当"修正向量"稳住语义。这么做既加速收敛（模型不必从头重新探索"杯子装笔"这种语义结构，只需学会把它微调到无碰撞），又把老师的能力内化进生成分布本身——这就是为什么最终 PADA 的 QPR(46.5%) 能反超 inference-only TTO(38.0%)：模型初始生成就比 TTO 从噪声起点修出来的更好。
 
 ### 损失函数 / 训练策略
 两阶段训练：(i) SFT 用全参微调 Qwen-3 VL 8B 在 9,429 个带 CTRC 序列标注的样本上学习 AABB 序列生成；(ii) PADA 用 LoRA r=16 跑 GRPO，每条 prompt 在线生成 $K$ 个 rollouts，advantage $A_k$ 由 SCR/ACR 派生，锚点项权重 $\alpha$ 控制语义稳定性 vs 物理探索的权衡。训练在 640GB VRAM 集群上完成。

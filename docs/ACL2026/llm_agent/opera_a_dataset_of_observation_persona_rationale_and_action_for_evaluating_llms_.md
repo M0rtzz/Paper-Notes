@@ -43,45 +43,25 @@ OPeRA 是一个从真实 Amazon 购物过程中采集的用户行为数据集，
 
 ### 整体框架
 
-OPeRA 的整体流程可以分成三层。
-
-第一层是用户侧采集。参与者先完成一份 persona 问卷，并可选择参加半结构化访谈；随后在四周内安装 ShoppingFlow Chrome 插件，像平时一样在 Amazon 上购物。
-
-第二层是轨迹侧采集。插件在用户浏览、搜索、点击、输入、滚动、切换页面时记录动作、时间戳、目标元素、网页 HTML、截图和页面元数据，并以一定概率弹出问题收集用户对当前动作的即时解释。
-
-第三层是基准构造。作者对原始连续日志做隐私清洗、session 分割、动作过滤和动作空间抽象，得到 OPeRA-full 与更适合模型评测的 OPeRA-filtered；再从过滤版本中抽取 OPeRA-test，用于下一步动作预测。
-
-最终每个购物 session 可以看成一个时间序列：给定用户 persona、历史动作、历史 rationale 和当前网页 observation，模型需要预测用户接下来会做什么。
+OPeRA 的构建可以看成“采集—清洗—评测”一条流水线。参与者先填一份 persona 问卷（可选半结构化访谈），随后在四周内装上 ShoppingFlow Chrome 插件，像平时一样在 Amazon 上购物，插件在后台同步记录每一步的动作、时间戳、目标元素、完整与简化 HTML、截图、商品元数据，并以约 8% 的概率弹窗追问用户“为什么这么做”。原始连续日志再经隐私清洗、session 分割、动作过滤和动作空间抽象，得到完整版 OPeRA-full 与更适合建模的 OPeRA-filtered，并从中抽出 OPeRA-test。最终每个购物 session 被组织成一条时间序列，模型要解决的任务是 $a_t = F_{action}(a_{1\ldots t-1}, r_{1\ldots t-1}, o_{1\ldots t}, P_i)$——给定用户 persona $P_i$、历史动作 $a$、历史 rationale $r$ 和当前网页观察 $o$，预测用户接下来会做什么。
 
 ### 关键设计
 
-1. **OPeRA 四元组数据结构**:
+**1. OPeRA 四元组数据结构：把“看到什么”和“为什么做”一起喂给模型。**
 
-    - 功能：把行为模拟所需的四类信号统一到同一条用户轨迹中。
-    - 核心思路：每个用户有 persona，包括人口统计信息、购物习惯、消费者风格、Big Five 和 MBTI 等；每个 session 有按时间排序的 action trace；部分动作带有用户自述 rationale；每一步还配有网页 observation，包括完整 HTML、简化 HTML、截图和商品元数据。
-    - 设计动机：以往数据集常常只记录点击或购买结果，缺少“页面上看到了什么”和“用户为什么这样做”。OPeRA 的四元组设计让模型既能看到外部环境，也能看到用户长期偏好和局部决策理由。
+以往电商数据集大多只留下点击或购买这类聚合结果，丢掉了动作发生时的页面上下文和用户的内心理由，模型只能去拟合点击序列。OPeRA 把行为模拟需要的四类信号统一到同一条用户轨迹里：每个用户带一份 persona（人口统计、购物习惯、消费者风格、Big Five、MBTI 等长期偏好），每个 session 是按时间排序的 action trace，部分动作附有用户自述 rationale，而每一步又配上网页 observation（完整 HTML、简化 HTML、截图、商品元数据）。这样 Observation 对应外部环境、Persona 对应用户长期状态、Rationale 对应当下意图、Action 对应可验证输出，四者刚好覆盖个性化行为模拟的主要变量。
 
-2. **ShoppingFlow 浏览器插件采集**:
+**2. ShoppingFlow 浏览器插件采集：在真实购物中低干扰地抓细粒度信号。**
 
-    - 功能：在真实购物过程中低干扰地记录细粒度动作和上下文。
-    - 核心思路：Content Script 在 Amazon 页面内捕捉 click、input、scroll 等交互，记录时间戳、目标元素和 HTML；Background Script 负责页面级事件、导航与上传；rationale pop-up 以约 8% 概率在关键交互后触发，询问用户为什么执行该动作。
-    - 设计动机：如果让标注员事后补理由，容易产生回忆偏差；如果让用户每一步都解释，又会破坏真实购物流程。随机即时弹窗是在数据密度和自然行为之间做折中。
+让标注员事后补理由会带来回忆偏差，让用户每步都解释又会破坏自然购物流程，OPeRA 用插件在真实交互现场做折中采集。Content Script 在 Amazon 页面内捕捉 click、input、scroll 等交互并记录时间戳、目标元素与 HTML，Background Script 负责页面级事件、导航与上传，rationale 弹窗则以约 8% 的概率在关键交互后触发、即时询问动作背后的原因。随机即时弹窗既保证了 rationale 贴近用户当下的真实心智，又把对自然行为的扰动控制在可接受范围内。
 
-3. **隐私清洗、session 分割与动作抽象**:
+**3. 隐私清洗、session 分割与动作抽象：把原始浏览日志变成可公开评测的基准。**
 
-    - 功能：把真实浏览日志转成可公开、可建模、可评测的数据。
-    - 核心思路：系统不记录登录、账户、结账等敏感页面，并用规则脚本遮蔽用户名、邮编、地址、工作单位和支付信息；连续行为流先按时间间隔切分，再结合购买意图事件细分 session；少于 5 步、非交互区域点击、罕见页面和 Amazon Rufus 相关动作会被过滤。评测时进一步把动作空间压缩为 input、click、terminate，并将 click 细分为 review、search、product_option、product_link、purchase 等语义类型。
-    - 设计动机：真实网页日志噪声高且隐私风险大，直接发布既不可行也难以评测。后处理把数据从“原始浏览记录”变成“可复现的行为模拟基准”。
+真实网页日志噪声高、隐私风险大，直接发布既不可行也难评测，所以原始数据要经过一层后处理。系统从不记录登录、账户、结账等敏感页面，并用规则脚本遮蔽用户名、邮编、地址、单位与支付信息；连续行为流先按时间间隔切分、再结合购买意图事件细分 session，少于 5 步、点在非交互区域、罕见页面以及 Amazon Rufus 相关的动作会被过滤。评测时还把动作空间压缩成 input、click、terminate 三类，并把 click 进一步细分为 review、search、product_option、product_link、purchase 等语义类型，让“原始浏览记录”转成“可复现的行为模拟基准”。
 
 ### 损失函数 / 训练策略
 
-本文不训练新模型，而是建立 zero-shot prompt-based 评测。
-
-下一步动作预测任务可写成 $a_t = F_{action}(a_{1...t-1}, r_{1...t-1}, o_{1...t}, P_i)$，其中 $P_i$ 是用户 persona，$o$ 是网页观察，$r$ 是稀疏 rationale，$a$ 是历史动作。
-
-模型输出必须是严格 JSON 格式的下一步动作；对于 click 需要给出点击目标，对于 input 需要给出输入框和文本，对于 terminate 则表示用户决定结束购物 session。
-
-评测采用 exact match 和多层 F1：完整动作生成看 exact match，高层动作类型看 macro/weighted F1，click 子类型看 weighted F1，session outcome 评估模型能否预测购买或终止。
+本文不训练新模型，而是建立 zero-shot、prompt-based 的评测协议。模型必须以严格 JSON 输出下一步动作：click 要给出点击目标，input 要给出输入框与文本，terminate 表示用户决定结束 session。评分采用 exact match 与多层 F1——完整动作生成看 exact match，高层动作类型看 macro / weighted F1，click 子类型看 weighted F1，session outcome 则评估模型能否预测购买或终止，从而把“像不像某个真实用户”这件事拆到动作、类型、子类型和结果四个粒度上分别量化。
 
 ## 实验关键数据
 

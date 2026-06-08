@@ -41,31 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Buffer-and-Reinforce 框架由三个 LoRA 模块组合而成：BufferLoRA（事先训好的"诱导越狱"模块）、ReinforceLoRA（事先训好的"恢复拒答"模块）、UserLoRA（用户上传数据时实际优化的模块）。
+Buffer-and-Reinforce 要解决的是 FaaS 这个硬约束下的防御问题：不向用户接口加任何安全数据、几乎不加运行时开销，却要在用户数据分布未知时同时挡住有害梯度、保住任务梯度。它把整件事拆给三个 LoRA：事先训好的 BufferLoRA（"诱导越狱"）、事先训好的 ReinforceLoRA（"恢复拒答"），以及用户上传数据时真正被优化的 UserLoRA。
 
-整条流水线分为三段：(1) 部署前——服务商一次性训好 BufferLoRA 与 ReinforceLoRA，之后所有用户共享；(2) 用户微调期——把 BufferLoRA 挂上去并冻结，只让 UserLoRA 学用户数据，由 BufferLoRA 负责让有害更新方向自然收敛、动不起来；(3) 微调后——卸掉 BufferLoRA 恢复原始对齐，把 ReinforceLoRA 通过 QR 分解投影到 UserLoRA 子空间的正交补，再与 UserLoRA 平均加回基座模型。整套流程不需要用户提交任何安全标签，用户接口与普通 LoRA 微调一致。
+整条流水线按时间分三段。部署前，服务商一次性训好 BufferLoRA 与 ReinforceLoRA，之后所有用户共享。用户微调期，把 BufferLoRA 挂上并冻结，只让 UserLoRA 学用户数据——此时基座已被推到有害损失谷底，有害方向上几乎没有梯度可走，用户的有害更新自然动不起来。微调后，卸掉 BufferLoRA 让基座对齐完整复原，再把 ReinforceLoRA 通过 QR 分解投影到 UserLoRA 子空间的正交补、与 UserLoRA 平均后加回基座。全程用户提交的只有自己的数据，接口与普通 LoRA 微调毫无差别。
 
-支撑这套设计的关键观察是新定义的 Safety Gradient Score $S^{l}=\tfrac{1}{N}\sum_{i}\mathbf{g}_{i}^{l}\cdot\mathbf{v}^{l}/(\lVert\mathbf{v}^{l}\rVert_{2}+\epsilon)$，它度量当前梯度在"安全方向" $\mathbf{v}^{l}$（由安全对齐 LoRA 权重导出）上的投影。在 LLaMA3-8B-Instruct 的 0–15 层上，安全模型对有害/无害数据都给出明显负值（说明任何标准微调都会侵蚀安全），而越狱模型的得分几乎贴近零；与此同时在 15 层以上越狱模型的无害梯度范数与安全模型相当，且其方向投影到安全模型梯度上的分量几乎不衰减，说明用户任务相关方向被保留下来。这一对照直接为"越狱即缓冲"提供了梯度层面的证据。
+支撑整套设计的是一个新定义的可观察量——Safety Gradient Score $S^{l}=\tfrac{1}{N}\sum_{i}\mathbf{g}_{i}^{l}\cdot\mathbf{v}^{l}/(\lVert\mathbf{v}^{l}\rVert_{2}+\epsilon)$，度量第 $l$ 层的梯度在"安全方向" $\mathbf{v}^{l}$（由安全对齐 LoRA 权重导出）上的投影。在 LLaMA3-8B-Instruct 的 0–15 层，安全模型对有害与无害数据都给出明显负值，说明任何标准微调都会顺手侵蚀安全；而越狱模型的得分几乎贴零，有害方向已无梯度可流。与此同时在 15 层以上，越狱模型的无害梯度范数与安全模型相当、方向投影几乎不衰减，意味着任务相关方向被完整保留。这张对照图就是"越狱即缓冲"的梯度级证据。
 
 ### 关键设计
 
-1. **BufferLoRA：把有害方向喂饱**:
+**1. BufferLoRA：把有害方向预先喂饱，让有害梯度自然趋零。**
 
-    - 功能：在用户微调期间作为一个挂载式、可拆卸的 LoRA 模块，把基座模型推到"已越狱"的有害损失谷底，从而让后续梯度在有害方向上自然趋零。
-    - 核心思路：仅用服务商持有的有害查询-有害回答配对 $\mathcal{D}_{H}$ 训练 BufferLoRA 参数 $\theta_{B}$，目标函数为 $\mathcal{L}_{B}(\theta_{B})=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{H}}\sum_{t}\log P(y_{t}\mid x,y_{<t};\theta,\theta_{B})$，让带 BufferLoRA 的模型尽可能生成有害回应。训练只做一次，之后所有用户微调会话复用。
-    - 设计动机：相比 Zhou 等人 2024 年的 Security Vector 仍然需要额外的 KL 项来保住无害任务表现，本文用 Safety Gradient Score 与无害梯度范数实证证明无需 KL，省下一项损失。"挂载–拆卸"的设计保证了基座对齐永远不会被永久污染：用户训完后把 BufferLoRA 一卸，原模型行为完整恢复。
+有害微调之所以好使，是因为安全对齐模型在有害数据上还留着大片下行空间，用户只要往那个方向推几步就能把模型带坏。BufferLoRA 干脆抢先替"坏人"把这条路走到头：仅用服务商持有的有害查询-有害回答配对 $\mathcal{D}_{H}$ 训练参数 $\theta_{B}$，目标 $\mathcal{L}_{B}(\theta_{B})=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{H}}\sum_{t}\log P(y_{t}\mid x,y_{<t};\theta,\theta_{B})$，让挂上它的模型尽可能生成有害回应、收敛到有害损失谷底。等用户来微调时有害方向已经饱和，UserLoRA 再怎么学也压不出多少有害梯度。它被设计成"挂载–拆卸"形态，因此污染只是临时的：用户训完一卸，基座对齐原样复原。相比 Zhou 等人 2024 年的 Security Vector 还得靠额外 KL 项来保住无害任务表现，本文用 Safety Gradient Score 和无害梯度范数实证了无需 KL，省下一整项损失，而且只训一次便可全用户复用。
 
-2. **ReinforceLoRA：在越狱态下学拒答**:
+**2. ReinforceLoRA：在越狱态下学拒答，把安全性再抬一档。**
 
-    - 功能：在事后阶段把安全性从"原始对齐水平"再向上推一档，弥补 BufferLoRA 只能"维持"而不能"加强"的局限。
-    - 核心思路：训练时把基座 LLM 与 BufferLoRA 同时挂上并冻结，仅优化 ReinforceLoRA 参数 $\theta_{R}$，损失为 $\mathcal{L}_{R}(\theta_{R})=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{S}\cup\mathcal{D}_{B}}\sum_{t}\log P(y_{t}\mid x,y_{<t};\theta,\theta_{B},\theta_{R})$，其中 $\mathcal{D}_{S}$ 是有害查询配拒答、$\mathcal{D}_{B}$ 是无害查询配良性回答。这样 ReinforceLoRA 学到的是"在越狱模型上恢复拒答"的方向，而不是 Panacea 那种"放大有害损失"的扰动。
-    - 设计动机：联合 $\mathcal{D}_{S}$ 与 $\mathcal{D}_{B}$ 训练避免模型坍塌到"对所有输入都拒答"，与 BufferLoRA 一样只训一次即可全用户复用，把额外开销留在部署期而非用户期。
+BufferLoRA 只能"维持"原始对齐水平，补不回基座本身那点安全缺口，ReinforceLoRA 负责事后把安全性再往上推。它的训练姿势很特别：把基座与 BufferLoRA 同时挂上并冻结，只优化 $\theta_{R}$，损失 $\mathcal{L}_{R}(\theta_{R})=-\mathbb{E}_{(x,y)\sim\mathcal{D}_{S}\cup\mathcal{D}_{B}}\sum_{t}\log P(y_{t}\mid x,y_{<t};\theta,\theta_{B},\theta_{R})$，其中 $\mathcal{D}_{S}$ 是有害查询配拒答、$\mathcal{D}_{B}$ 是无害查询配良性回答。因为它是在"已越狱"的模型上学，学到的方向正好是"如何从越狱态恢复拒答"，而不是 Panacea 那种放大有害损失的扰动。联合 $\mathcal{D}_{S}$ 与 $\mathcal{D}_{B}$ 一起训，还能避免模型坍缩成"对任何输入都拒答"。同样只训一次、全用户复用，把开销留在部署期。
 
-3. **QR 正交合并：让安全更新避开任务子空间**:
+**3. QR 正交合并：让安全更新避开用户的任务子空间。**
 
-    - 功能：在用户微调结束后把 ReinforceLoRA 叠加进 UserLoRA，同时避免破坏用户学到的任务方向。
-    - 核心思路：把 UserLoRA 写为 $W_{U}=B_{U}A_{U}$，文中证明 $\mathrm{span}(W_{U})\approx\mathrm{span}(B_{U})$，因此只需对 $B_{U}$ 做 QR 分解 $\hat{B}_{U}=Q_{B}R$，再用 $\tilde{W}_{R}=(I-\alpha Q_{B}Q_{B}^{\top})W_{R}$ 把 ReinforceLoRA 投影到任务子空间的正交补，最后以 $W_{\text{final}}=W_{\text{base}}+\tfrac{1}{2}(W_{U}+\tilde{W}_{R})$ 合并。$\alpha$ 控制软正交化强度。
-    - 设计动机：硬投影在 UserLoRA 出现秩塌缩时会过度删除 ReinforceLoRA 分量，因此作者通过 Gram 矩阵 $G=A_{U}A_{U}^{\top}$ 的特征值阈值 $\lambda_{i}>\tau\max_{j}\lambda_{j}$ 取出有效子空间 $V_{\text{eff}}$，仅在检测到秩塌缩时启用；常规情况下直接用 $B_{U}$ 即可，避免了 SafeLoRA 类方法在合并阶段对任务性能的破坏。
+事后要把 ReinforceLoRA 叠回去，但直接加会撞坏用户辛苦学到的任务方向。作者的做法是把安全更新投影到任务子空间的正交补里。把 UserLoRA 写成 $W_{U}=B_{U}A_{U}$，文中证明 $\mathrm{span}(W_{U})\approx\mathrm{span}(B_{U})$，于是只需对 $B_{U}$ 做 QR 分解 $\hat{B}_{U}=Q_{B}R$，用 $\tilde{W}_{R}=(I-\alpha Q_{B}Q_{B}^{\top})W_{R}$ 把 ReinforceLoRA 推到任务方向的正交补，最后按 $W_{\text{final}}=W_{\text{base}}+\tfrac{1}{2}(W_{U}+\tilde{W}_{R})$ 合并，$\alpha$ 控制软正交化强度。之所以要"软"而不是硬投影：当 UserLoRA 出现秩塌缩时硬投影会过度删掉 ReinforceLoRA 分量，反让有害评分反弹，因此作者用 Gram 矩阵 $G=A_{U}A_{U}^{\top}$ 的特征值阈值 $\lambda_{i}>\tau\max_{j}\lambda_{j}$ 取出有效子空间 $V_{\text{eff}}$，只在检测到秩塌缩时才启用，常规情况直接用 $B_{U}$。这正好绕开了 SafeLoRA 类方法在合并阶段牺牲任务性能的毛病。
 
 ### 损失函数 / 训练策略
 三个 LoRA 各自独立优化：BufferLoRA 只用 $\mathcal{D}_{H}$（5,000 条有害对），ReinforceLoRA 用 $\mathcal{D}_{S}\cup\mathcal{D}_{B}$（5,000 条有害-拒答 + 5,000 条良性对），UserLoRA 仅用用户数据 $\mathcal{D}_{U}$。前两个 LoRA 由服务商一次性训练；用户微调期只跑 UserLoRA 的常规交叉熵，无任何额外正则化项。

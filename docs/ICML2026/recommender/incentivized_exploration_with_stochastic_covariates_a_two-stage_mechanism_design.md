@@ -51,23 +51,17 @@ DBIC 约束要求："给定历史 $\Gamma_{t-1}$，被推荐臂 $i$ 相对任意
 
 ### 关键设计
 
-1. **Cold Start：MPASC + RASC 双相位 + 不计入"有机"推荐**:
+**1. Cold Start 双相位（MPASC + RASC），且"有机"推荐不计入训练集。**
 
-    - 功能：在严格 $\epsilon$-DBIC 下为每个臂收满 $N(\epsilon)$ 样本，但不污染后续 oracle 用的训练集。
-    - 核心思路：MPASC 推先验均值最高的臂 $\arg\max_i \mathbb{E}[\mu(x_t,i)]$ 直到首个臂"饱和"（$N_i(t)=N$）进入 $B_t$。之后进入 RASC：以 promoted 概率 $1/L$ 推欠采样臂中先验均值最高的 $\tilde{a}_t = \arg\max_{i \in [K] \setminus B_t} \mathbb{E}[\mu(x_t,i)]$ 进行 exploration，并把样本计入 $S_{\tilde{a}_t}$；以 $1-1/L$ 概率走 organic 推荐 $a_t^* = \arg\max_i \mathbb{E}[\mu(x_t,i) \mid S_{B_t}]$，**生成 reward 但不增加 $N$ 也不更新 $S$**。
-    - 设计动机：organic 轮的高 utility 用来"补贴"exploration 轮可能的 utility 亏损，从而把 $\epsilon$-DBIC 转化成一个关于 $L$ 的可解条件 $L \geq 1 + \frac{1-\epsilon}{\tau_{\mathcal{P}_0} \rho_{\mathcal{P}_0} + \epsilon}$；不计入 organic 样本是为了防止 confidence set 被过度自信地收紧、过早触发 epoch 切换。
+冷启动要解决的是：在严格 $\epsilon$-DBIC 约束下为每个臂攒满 $N(\epsilon)$ 样本，但又不能污染后续 oracle 用的训练集。MPASC 阶段先推先验均值最高的"安全臂" $\arg\max_i \mathbb{E}[\mu(x_t,i)]$，直到首个臂饱和（$N_i(t)=N$）进入集合 $B_t$。之后转入 RASC：以 promoted 概率 $1/L$ 推欠采样臂中先验均值最高的 $\tilde{a}_t=\arg\max_{i\in[K]\setminus B_t}\mathbb{E}[\mu(x_t,i)]$ 做探索、并把样本计入 $S_{\tilde{a}_t}$；以 $1-1/L$ 概率走 organic 推荐 $a_t^*=\arg\max_i\mathbb{E}[\mu(x_t,i)\mid S_{B_t}]$——organic 轮照常产生 reward，但**不增加 $N$、也不更新 $S$**。这步的巧妙在于：organic 轮的高 utility 正好用来"补贴"exploration 轮可能的 utility 亏损，从而把 $\epsilon$-DBIC 转化成一个关于 $L$ 的可解条件 $L\geq 1+\frac{1-\epsilon}{\tau_{\mathcal{P}_0}\rho_{\mathcal{P}_0}+\epsilon}$；而不把 organic 样本计入训练集，是为了防止 confidence set 被这些重复的安全臂样本过度收紧、过早触发 epoch 切换。
 
-2. **IPGS（Inverse Proportional Gap Sampling）+ 自适应 spread**:
+**2. IPGS（反比 gap 采样）+ 自适应 spread：维持 DBIC 又与 oracle 解耦。**
 
-    - 功能：在 Exploitation 阶段无需指定后验形态就能维持 DBIC，并把 regret 收敛速率 $\tilde{O}(\sqrt{KdT})$ 与 oracle 选择解耦。
-    - 核心思路：设当前 epoch oracle 预测的最优臂为 $b_t = \arg\max_i \widehat{\mu}_t(x_t,i)$，采样概率为 $p_t(i) = \frac{1}{K + \gamma_m (\widehat{\mu}_t(x_t,b_t) - \widehat{\mu}_t(x_t,i))}$ 对 $i \neq b_t$、$p_t(b_t) = 1 - \sum_{j \neq b_t} p_t(j)$。spread 参数 $\gamma_m = 4\sqrt{K/\mathcal{E}_{\mathcal{F},\delta}(|\mathcal{T}_{m-1}|)}$ 随 oracle 的 MSPE $\mathcal{E}_{\mathcal{F},\delta}(n)$ 反向缩放——MSPE 下降时 $\gamma_m$ 上升，分布自动向 $b_t$ 集中。
-    - 设计动机：替代 Thompson Sampling 类方法对 Gaussian/Beta 后验的特定假设，使任何 offline regression oracle（Ridge、Lasso、kernel、神经网络）都能即插即用；同时 $1/(K + \gamma_m \Delta)$ 的反比形式让推荐分布形状直接由 oracle 学习速率驱动，使 DBIC 约束在每个 epoch 自动满足。
+进入 Exploitation 阶段后，想在不指定任何后验形态的前提下维持 DBIC，并把 $\tilde{O}(\sqrt{KdT})$ 的 regret 速率和 oracle 选择解耦。设当前 epoch oracle 预测的最优臂为 $b_t=\arg\max_i\widehat{\mu}_t(x_t,i)$，IPGS 对 $i\neq b_t$ 取采样概率 $p_t(i)=\frac{1}{K+\gamma_m(\widehat{\mu}_t(x_t,b_t)-\widehat{\mu}_t(x_t,i))}$、$p_t(b_t)=1-\sum_{j\neq b_t}p_t(j)$——某臂的预测得分离最优臂越远，被采样的概率越低。spread 参数 $\gamma_m=4\sqrt{K/\mathcal{E}_{\mathcal{F},\delta}(|\mathcal{T}_{m-1}|)}$ 随 oracle 的 MSPE 反向缩放：MSPE 一降，$\gamma_m$ 就升、分布自动向 $b_t$ 集中。这个 $1/(K+\gamma_m\Delta)$ 的反比形式让推荐分布的形状直接由 oracle 的学习速率驱动，从而 DBIC 在每个 epoch 自动满足；更重要的是它替代了 Thompson Sampling 对 Gaussian/Beta 后验的特定假设，使 Ridge、Lasso、kernel、神经网络等任意 offline regression oracle 都能即插即用。
 
-3. **激励价格 $N(\epsilon)$ 的闭式刻画**:
+**3. 激励价格 $N(\epsilon)$ 的闭式刻画：把"激励成本"变成一个可设计的旋钮。**
 
-    - 功能：给出冷启动样本量与激励预算 $\epsilon$、维度 $d$、臂数 $K$ 的精确依赖关系，让平台运营者可定量规划"激励预算 ↔ 学习冷启动周期"权衡。
-    - 核心思路：Theorem 1 在 Assumptions 1–3 下证明，为保证 $\epsilon$-DBIC 以概率 $\geq \rho_{\mathcal{P}_0} \rho_{\mathcal{P}_*}$ 满足，需 $N(\epsilon) \geq \frac{(\sigma^2 d + 1) K^3}{\phi_0 (\tau_{\mathcal{P}_*} + \epsilon)^2}$，对应 exploitation 阶段从 epoch $m_0(\epsilon) = \lceil 2 + \log_2 N(\epsilon) \rceil$ 起步。$\phi_0$ 是协变量协方差矩阵最小特征值，刻画用户特征多样性。
-    - 设计动机：把"激励兼容成本"从此前文献中的 black-box 常数变成显式可设计量，让算法工程师可以用 $\epsilon$ 这一个旋钮换取冷启动周期；并且后续 regret 项与 $\epsilon$ 解耦，进一步说明"激励 ↔ 学习"在 RCB 中是良态解耦的。
+为了让平台运营者能定量规划"激励预算 ↔ 冷启动周期"的权衡，作者给出冷启动样本量与 $\epsilon,d,K$ 的精确依赖。Theorem 1 在 Assumptions 1–3 下证明：要让 $\epsilon$-DBIC 以概率 $\geq\rho_{\mathcal{P}_0}\rho_{\mathcal{P}_*}$ 满足，需 $N(\epsilon)\geq\frac{(\sigma^2 d+1)K^3}{\phi_0(\tau_{\mathcal{P}_*}+\epsilon)^2}$，对应 exploitation 阶段从 epoch $m_0(\epsilon)=\lceil 2+\log_2 N(\epsilon)\rceil$ 起步，其中 $\phi_0$ 是协变量协方差矩阵的最小特征值、刻画用户特征的多样性。这把以往文献里那个 black-box 的"激励兼容成本"变成了显式可设计量——工程师可以用 $\epsilon$ 这一个旋钮去换冷启动周期；而后续 regret 项又与 $\epsilon$ 解耦，进一步说明"激励 ↔ 学习"在 RCB 里是良态解耦的。
 
 ### 损失函数 / 训练策略
 RCB 不是端到端可微的神经网络，没有损失函数；但有两个核心理论保证：(i) **Regret Decomposition**（Theorem 2）：$\mathcal{R}(T) \leq T_{\text{cold}}(\epsilon) + \tilde{O}(\sqrt{Kd(T - T_{\text{cold}})})$，把总 regret 显式拆成"激励价格"（cold start 期不可避免的次优）+ "学习 regret"（exploitation 期的标准 $\sqrt{T}$ 速率）。(ii) Exploitation 期 spread 参数 $\gamma_m$ 仅由 oracle 的 $\mathcal{E}_{\mathcal{F},\delta}$ 和 epoch 长度决定，与 $\epsilon$ 无关——这正是"激励 ↔ 学习解耦"的形式化表述。

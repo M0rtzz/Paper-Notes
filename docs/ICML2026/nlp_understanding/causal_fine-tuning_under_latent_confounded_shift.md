@@ -44,23 +44,23 @@ tags:
 
 ### 关键设计
 
-1. **基于 SCM 的因果识别 scaffold**：
+**1. 基于 SCM 的因果识别 scaffold：把"哪些特征稳、哪些会变"画成一张可识别的图。**
 
-    - 功能：把"高级稳定语义 $C$ + 低级混杂特征 $\Phi$ + 不可观测混杂 $U_S,U_\Phi$ + 环境 $\sigma$"组合成一张图（Fig.2(b)），论证 $p(y\mid \mathrm{do}(x))$ 在单域数据下可被 $p(y\mid\Phi,C)$ + 边际 $p(x)$ 写出来。
-    - 核心思路：假设 $\sigma$ 只通过 $S_1$ 影响 $R_1$，$\Phi$ 对 $Y$ 的影响完全经过 $C$（front-door 结构），并借 Von Kügelgen 的可识别性定理把 $C$ 写成 $p(C\mid R_0)\approx p(C\mid R_1)$ 的不变投影。
-    - 设计动机：用因果图明确说明"训练-测试分布差异等价于 $p(u\mid x;\sigma)$ 的变化"，这才把"对所有 $\sigma$ 鲁棒"的问题转化成"按 $\mathrm{do}(x)$ 的最大熵默认环境训练"，避免了 minimax 的过度保守和不可识别。
+单域数据既识别不出隐变量 $u$、也没有环境标签，minimax 鲁棒优化要么不可识别要么过度保守。作者先用一张 SCM 图（Fig.2(b)）把问题结构化：高级稳定语义 $C$ + 低级混杂特征 $\Phi$ + 不可观测混杂 $U_S,U_\Phi$ + 环境 $\sigma$。图上假设 $\sigma$ 只通过 $S_1$ 影响 $R_1$、$\Phi$ 对 $Y$ 的影响完全经过 $C$（front-door 结构），再借 Von Kügelgen 的可识别性定理把 $C$ 写成不变投影 $p(C\mid R_0)\approx p(C\mid R_1)$。
 
-2. **双视图因果表示对齐 $\mathcal{L}_C$**：
+这张图的价值在于把"训练-测试分布差异"精确等价于"$p(u\mid x;\sigma)$ 的变化"，从而论证 $p(y\mid\mathrm{do}(x))$ 在单域下能被 $p(y\mid\Phi,C)$ 加边际 $p(x)$ 写出来。问题于是从"对所有 $\sigma$ 都鲁棒"（minimax，过保守）转成"按 $\mathrm{do}(x)$ 的最大熵默认环境训练"，既可识别又不过度悲观。
 
-    - 功能：把冻结模型的句向量 $R_0$ 和微调模型的 $R_1$ 投影到同一个稳定因果空间 $C$。
-    - 核心思路：最小化 $\mathcal{L}_C=\mathbb{E}\,\|p(c\mid r_0)-p(c\mid r_1)\|_2^2 - H(p(c\mid r_0)) - H(p(c\mid r_1))$，第一项强制跨视图不变性，两个负熵项防止表示坍缩到常数。
-    - 设计动机：把"预训练 vs 微调"这对天然形成的"伪环境对"当作 IRM 多域信号的替代品，只用单域数据就能逼出跨域稳定分量；如果用 $(R_1,R_1)$ 同视图替换（failure mode 实验），方法立刻退化成 SFT。
+**2. 双视图因果表示对齐 $\mathcal{L}_C$：把预训练模型当"免费的第二个环境"。**
 
-3. **局部 patch 特征 $\Phi$ + Front-door batch shuffle**：
+IRM 类不变性方法要多个真实环境，可 NLP 里环境标签几乎无从定义。作者的巧思是：冻结预训练模型给出 $R_0$、微调模型给出 $R_1$，这对"预训练 vs 微调"天然就是一对伪环境，它们的差异恰好暴露了哪些维度对训练域敏感、哪些跨域稳定。于是把两个视图都投到同一稳定因果空间 $C$，最小化 $\mathcal{L}_C=\mathbb{E}\,\|p(c\mid r_0)-p(c\mid r_1)\|_2^2 - H(p(c\mid r_0)) - H(p(c\mid r_1))$：第一项强制跨视图不变性，两个负熵项防止表示址缩到常数。
 
-    - 功能：从微调模型的 embedding 层抽局部低层特征作为伪相关的"代理"，并通过 do-calculus 调整把 $\Phi$ 的因果路径切断。
-    - 核心思路：把 token 序列切成 10 个不重叠 patch，做均值池化后过 MLP 得到 $\Phi=\mathrm{MLP}(\frac{1}{10}\sum_i p_i)$；预测时用 mini-batch 内随机 shuffle $\Phi$ 得到 $\Phi'\sim \hat{p}_B(\Phi)$，求 $\mathbb{E}_{\Phi'}[p(y\mid C,\Phi')]$，$K=20$ 次蒙特卡洛平均。
-    - 设计动机：embedding 层最接近"原始词形/数据源"等低级伪相关线索（LeCun 等的低层特征观察），shuffle $\Phi$ 等价于断掉 $\sigma\to S_1\to R_1\leftrightarrow\Phi\leftrightarrow Y$ 这条 active collider 路径，把预测从 $p(y\mid x)$ 拽回到 $p(y\mid \mathrm{do}(x))$。
+只用单域数据就逼出跨域稳定分量，正是靠这对伪环境替代了 IRM 的多域信号。这个设计的脆弱点也很明确——若把 $(R_1,R_1)$ 同视图替换进去（failure mode 实验），双视图信号消失，方法立刻退化成普通 SFT。
+
+**3. 局部 patch 特征 $\Phi$ + front-door batch shuffle：用一行 shuffle 实现 do-calculus。**
+
+光分出 $C$ 还不够，得真的把伪相关那条因果路径切断。作者从微调模型的 embedding 层抽局部低层特征当伪相关代理：把 token 序列切成 10 个不重叠 patch，均值池化后过 MLP 得 $\Phi=\mathrm{MLP}(\frac{1}{10}\sum_i p_i)$——embedding 层最接近原始词形 / 数据源等低级线索。预测时在 mini-batch 内随机 shuffle $\Phi$ 得 $\Phi'\sim\hat{p}_B(\Phi)$，求 $\mathbb{E}_{\Phi'}[p(y\mid C,\Phi')]$，做 $K=20$ 次蒙特卡罗平均。
+
+shuffle $\Phi$ 等价于断掉 $\sigma\to S_1\to R_1\leftrightarrow\Phi\leftrightarrow Y$ 这条 active collider 路径，把预测从 $p(y\mid x)$ 拽回 $p(y\mid\mathrm{do}(x))$。抽象的 do-calculus 就这样落成"对 batch 内 $\Phi$ 洗牌再平均"的一行代码，几乎不增训练成本——这是全文最实用的一招。
 
 ### 损失函数 / 训练策略
 总目标 $\mathcal{L}=\mathcal{L}_{\text{SFT}}+\mathcal{L}_C+\mathcal{L}_{\text{adjust}}$，其中 $\mathcal{L}_{\text{adjust}}$ 是基于 shuffled $\Phi'$ 的交叉熵。优化器 AdamW，lr $5\times 10^{-5}$，10 个 epoch，BERT-base 初始化；保留一份冻结副本只用于 $R_0$ 抽取，训练完成后丢弃。

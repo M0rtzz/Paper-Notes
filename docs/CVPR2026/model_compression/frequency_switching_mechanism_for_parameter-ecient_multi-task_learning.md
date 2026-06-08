@@ -36,30 +36,36 @@ Free Sinewich 提出基于频率切换的参数高效多任务学习框架，通
 ## 方法详解
 
 ### 整体框架
-基于Swin Transformer Tiny编码器。图像patch tokens前添加可学习的任务tokens。编码器的每个阶段前N-1个block使用Task-Agnostic Module(标准LoRA)提取通用特征；最后一个block使用Task-Specific Module(含频率切换机制)提取任务特定特征。轻量Clock Net从任务token生成任务频率，Sine-AWB用该频率调制共享基矩阵产生任务特化权重。解码器也可用频率切换实现共享。
+这篇论文想做的是让同一组共享权重在面对不同任务时表现出不同行为，从而摆脱以往 PEFT-MTL 里"每个任务一套独立适配器"的伪共享。整体管线建在 Swin Transformer Tiny 编码器上：图像 patch tokens 前面拼上一组可学习的任务 tokens，编码器每个阶段前 N-1 个 block 走 Task-Agnostic Module（标准 LoRA）提取所有任务通用的特征，最后一个 block 换成带频率切换的 Task-Specific Module 抽任务特定特征。转换的关键发生在这个特定模块里——一个轻量 Clock Net 先从任务 token 算出一个任务专属频率 $\omega_t$，再由 Sine-AWB 用这个频率去调制一份**所有任务共享**的基矩阵，调制出来的权重才是该任务专用的。解码端同理，也用频率切换让多任务共用一份解码器基矩阵。
 
 ### 关键设计
 
-1. **Sine-AWB (正弦-低秩卷积融合)**:
+**1. Sine-AWB：用任务频率给共享基矩阵"调相"，让一份权重变出多份。**
 
-    - 功能：构建低秩矩阵的增强版本，通过正弦变换提升有效秩并实现任务特化
-    - 核心思路：首先将LoRA因子 $A, B$ 和中间卷积核 $W$ 融合为单一等效卷积核 $M_{AWB} = AWB^\top$。然后对融合后的矩阵施加正弦变换：$M_t = \sin(\omega_t \cdot M_{AWB})$，其中 $\omega_t$ 是任务特定频率。Sine-LoRA已证明正弦映射可显著提升低秩矩阵的有效秩。最后用高斯低通滤波器($K=7, \sigma=1$)平滑 $M_t$ 以抑制高频噪声。关键是"先融合再正弦"——因为 $\sin(AWB) \neq \sin(A)\sin(W)\sin(B)$，正弦函数不满足乘法同态，必须在融合后的单一矩阵上施加才能保证有效秩扩展。
-    - 设计动机：不同频率 $\omega_t$ 对应不同的正弦波，产生不同的非线性映射 $\mathcal{F}_{\omega_t}$。这自然地将同一基矩阵映射到不同的任务特定矩阵空间中，实现真正的参数复用。中间卷积核 $W$ 引入空间先验，对密集预测任务至关重要。
+PEFT-MTL 的老问题是想省参数就只能让任务共用一条路径、想特化就得各自加适配器，两者难兼得。Sine-AWB 的做法是先把 LoRA 的两个因子 $A,B$ 和中间卷积核 $W$ 融合成单一等效卷积核 $M_{AWB} = AWB^\top$，再对这份融合后的矩阵施加任务特定频率的正弦变换：
 
-2. **Lightweight Clock Net (LCN, 轻量时钟网络)**:
+$$M_t = \sin(\omega_t \cdot M_{AWB})$$
 
-    - 功能：从任务token生成有界的任务特定频率 $\omega_t$
-    - 核心思路：单层MLP将任务token $\boldsymbol{p}_t \in \mathbb{R}^C$ 映射为标量频率：$\omega_t = s \cdot (\tanh(W_q \text{ReLU}(\boldsymbol{p}_t)) + c)$，其中 $s$ 和 $c$ 是可学习的缩放和偏移参数。$\tanh$ 产生有界输出以稳定训练。LCN跨任务共享参数。
-    - 设计动机：LCN本身不是性能增益的主要驱动力，其核心作用是生成有界频率以稳定正弦调制的训练过程。不同任务token的学习差异驱动频率分化。
+由于 Sine-LoRA 已证明正弦映射能显著抬高低秩矩阵的有效秩，不同的 $\omega_t$ 对应不同的正弦波、给出不同的非线性映射 $\mathcal{F}_{\omega_t}$，于是同一份 $M_{AWB}$ 被映射到各任务各自的权重空间里，真正实现了参数复用而非复制。这里有个容易踩坑的数学细节决定了"先融合再正弦"的顺序：因为 $\sin(AWB) \neq \sin(A)\sin(W)\sin(B)$，正弦并不满足乘法同态，只有在融合成单一矩阵后再施加，才能保住有效秩的扩展。最后再用一个高斯低通滤波器（$K=7,\ \sigma=1$）平滑 $M_t$，压掉正弦引入的高频噪声；中间那层卷积核 $W$ 则为密集预测任务注入了必要的空间先验。
 
-3. **Shared Decoder Group (共享解码器组)**:
+**2. Lightweight Clock Net：把任务 token 翻译成一个有界的调制频率。**
 
-    - 功能：用频率切换替代独立任务解码器，减少解码器参数
-    - 核心思路：传统方法为每个任务 $t$ 使用独立解码器 $\phi_t$，参数随任务数线性增长。本文用共享 $M_{AWB}$ 通过频率切换产生任务特化卷积：$\boldsymbol{h}_t = \widetilde{M}_t * \boldsymbol{x}_t + \boldsymbol{b}_t$，仅保留任务特定的偏置 $\boldsymbol{b}_t$ 和后续BN-ReLU-Conv。
-    - 设计动机：原始HRNet解码器中第一层卷积就超过百万参数，T个任务需T倍开销。共享后仅需一组基矩阵+T个频率标量。
+正弦调制要稳，频率就不能乱飘，所以需要一个专门生成 $\omega_t$ 的小模块。LCN 就是一层 MLP，把任务 token $\boldsymbol{p}_t \in \mathbb{R}^C$ 映射成一个标量频率：
+
+$$\omega_t = s \cdot \big(\tanh(W_q\,\text{ReLU}(\boldsymbol{p}_t)) + c\big)$$
+
+其中 $s,c$ 是可学习的缩放与偏移。$\tanh$ 把输出限制在有界区间，正是为了稳住正弦调制的训练，避免频率过大导致映射剧烈震荡。LCN 的参数跨任务共享，真正驱动频率分化的是各任务 token 在训练中学到的差异——LCN 本身并不是性能增益的主力，它的价值在于"管住频率"这件稳定训练的脏活。
+
+**3. Shared Decoder Group：把频率切换搬到解码端，省掉成倍增长的解码器。**
+
+传统多任务做法给每个任务 $t$ 配一个独立解码器 $\phi_t$，参数量随任务数线性膨胀——光 HRNet 解码器的第一层卷积就超过百万参数，T 个任务就是 T 倍开销。这里把同一套频率切换搬过来：共享一份 $M_{AWB}$，靠任务频率调制出各自的卷积核去做解码，
+
+$$\boldsymbol{h}_t = \widetilde{M}_t * \boldsymbol{x}_t + \boldsymbol{b}_t$$
+
+只为每个任务保留一个特定偏置 $\boldsymbol{b}_t$ 和后续的 BN-ReLU-Conv。这样多任务解码器从"T 套完整卷积"压成"一组基矩阵 + T 个频率标量 + T 个偏置"，开销几乎与任务数无关。
 
 ### 损失函数 / 训练策略
-标准多任务训练：$\mathcal{L}_{MTL} = \sum_t w_t \mathcal{L}_t$，任务权重和损失函数沿用先前工作设定。仅TA-Module(LoRA)和TS-Module(Sine-AWB + LCN)可训练，编码器主体冻结。任务tokens仅在第一个Transformer阶段引入(VPT-shallow策略)。
+训练用标准多任务加权目标 $\mathcal{L}_{MTL} = \sum_t w_t \mathcal{L}_t$，任务权重和各任务损失沿用先前工作的设定。只有 TA-Module（LoRA）和 TS-Module（Sine-AWB + LCN）可训练，编码器主体保持冻结；任务 tokens 只在第一个 Transformer 阶段引入（VPT-shallow 策略）。
 
 ## 实验关键数据
 

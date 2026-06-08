@@ -48,23 +48,21 @@ tags:
 
 ### 关键设计
 
-1. **Glimpse：1-token "Probe-then-Dispatch"**:
+**1. Glimpse：用 1 个 token 的代价做 Probe-then-Dispatch。**
 
-    - 功能：以一次 single-token decode 的代价拿到 step-level 难度信号，彻底消灭"draft 整步又被废弃"的 sunk cost。
-    - 核心思路：在 step $k$ 起点，仅让 $M_S$ 算一次 $P_\theta(t_1|\mathbf{c}_k)$，计算 $\mathbf{H}_{\text{init}}(s_k)=\mathbf{H}(P_\theta(t_1|\mathbf{c}_k))$，与阈值 $\tau$ 比较决定路由。即便后续 routing 到 $M_L$ 而丢弃这一 token，开销也只相当于一个 token，比 SpecReason 丢一整步小 1–2 个数量级。
-    - 设计动机：作者用 BLEU-4 与 SBERT 测出 $\mathbf{H}_{\text{init}}$ 与"小模型输出和大模型输出的对齐度"是 *严格单调负相关*——低熵区两者几乎一致，高熵区急剧发散，证明这是一个 reliable difficulty proxy。
+所有 step 级方法的通病是"Generate-then-Measure"——必须先把整步 draft 出来才能判断好坏，一旦被拒，那一整步的算力就成了 sunk cost，省时间的初衷反被开销吞掉。GlimpRouter 把这一步压缩到极致：在 step $k$ 起点只让小模型 $M_S$ 算一次首 token 分布 $P_\theta(t_1|\mathbf{c}_k)$，取其熵 $\mathbf{H}_{\text{init}}(s_k)=\mathbf{H}(P_\theta(t_1|\mathbf{c}_k))$ 与阈值 $\tau$ 比较即决定路由。即便随后切到 $M_L$、这一个 token 被丢弃，损失也只是单 token 级别，比 SpecReason 丢一整步小 1–2 个数量级。
 
-2. **大模型在高熵步的隐式自纠错（Intervene）**:
+之所以"只看第一个 token"就够，是因为作者用 BLEU-4 与 SBERT 量化了"小模型续写与大模型续写的对齐度"，发现它与 $\mathbf{H}_{\text{init}}$ *严格单调负相关*：低熵区两者输出几乎一致（小模型完全够用），高熵区急剧发散（必须换大模型）。这条单调曲线让 $\mathbf{H}_{\text{init}}$ 成为一个在生成前就能拿到的、可靠的难度代理。
 
-    - 功能：在路由切换瞬间，让大模型不只是"续写"，而是回看已有上下文修正之前由小模型产生的逻辑漂移。
-    - 核心思路：当 $\mathbf{H}_{\text{init}}>\tau$ 时把整段历史 $\mathbf{c}_k$ 交大模型自回归续写。LRM 本身有 self-correction 能力（DeepSeek-R1 强调过），它在生成新 step 时会隐式 re-evaluate 之前的步骤，重写错误前提（Appendix F.2 给出 grid-path 例子：小模型把"四次方向变化"等同于"四段直线"，大模型在 Step 4 触发 intervene 后改写为"5 段直线"并回到正确轨迹）。
-    - 设计动机：正是这种 implicit self-correction 解释了为什么 GlimpRouter 在 AIME25 上 *准确率超过独立大模型*（51.67% vs 46.67%）——高熵 step 是历史逻辑不一致的浮标，大模型介入正好捡起来纠错。
+**2. Intervene：高熵步交给大模型，顺带隐式纠错。**
 
-3. **Efficient Switching + 层级加速（与 Speculative Decoding 正交叠加）**:
+当 $\mathbf{H}_{\text{init}}>\tau$ 时，整段历史 $\mathbf{c}_k$ 被交给大模型自回归续写——而 LRM 本身具备 self-correction 能力，它在生成新 step 时会隐式 re-evaluate 前文、重写错误前提，而不只是机械地"接着写"。Appendix F.2 的 grid-path 例子很直观：小模型一路把"四次方向变化"误当成"四段直线"，大模型在 Step 4 被触发 intervene 后改写为"5 段直线"，把整条推理拉回正轨。
 
-    - 功能：把 step 级路由与 token 级 SD 同时叠加，达到 "Global Planner + Local Executor" 的复合加速。
-    - 核心思路：模型切换时复用 vLLM/SGLang 的 prefix-cache，把上下文重算变成可并行的 prefill 阶段，切换延迟≈几 token 的解码；当大模型被调度时，再以小模型作为 SD 的 drafter（draft length $n=3$）并行猜测后续 token，由大模型一次性 verify。
-    - 设计动机：step-level routing 减少 *调用大模型的次数*，token-level SD 降低 *大模型每次调用的 per-token 成本*，二者瓶颈不同，因此能复合而不冲突。实验显示 GlimpRouter + SD 在 AIME25 上把延迟压到 130s（独立 LLM+SD=149s，SpecReason+SD=140s），是所有配置中最低。
+正是这种 implicit self-correction，解释了一个反直觉的结果——协同推理竟能超过独立大模型（AIME25 上 51.67% vs 46.67%）。高熵 step 恰好是历史逻辑出现漂移的"浮标"，大模型介入的时机正好赶上去把前文的错捡回来。
+
+**3. Efficient Switching：与 Speculative Decoding 正交叠加。**
+
+step 级路由和 token 级 SD 的瓶颈本不相同——前者减少的是*调用大模型的次数*，后者降低的是*大模型每次调用的 per-token 成本*——因此二者可以复合而非互斥。切换模型时，GlimpRouter 复用 vLLM/SGLang 的 prefix-cache，把上下文重算变成可并行的 prefill 阶段，切换延迟≈几个 token 的解码；当大模型被调度时，再把小模型当作 SD 的 drafter（draft length $n=3$）并行猜测后续 token，由大模型一次性 verify。这套"Global Planner（GlimpRouter）+ Local Executor（SD）"的复合方案把 AIME25 延迟压到 130s，低于独立 LLM+SD 的 149s 和 SpecReason+SD 的 140s，是所有配置中最快的。
 
 ### 损失函数 / 训练策略
 完全 training-free，无监督、无微调，仅有 1 个超参 $\tau$（推荐对应 intervention rate 20–30%）。所有推理在 vLLM、A100-80G 上做，max thinking budget 8192 tokens，temperature 0.6，top-p 0.95，结果 4-run 平均。

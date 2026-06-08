@@ -41,24 +41,25 @@ tags:
 
 ### 整体框架
 
-共享ViT-Small/16编码器处理三组token序列：$[\text{CLS}(1), \mathbf{F}(N), \mathbf{C}(N), \mathbf{M}(N)]$，其中 $\mathbf{F}$ 是融合token，$\mathbf{C}$ 是RGB token，$\mathbf{M}$ 是伴随模态token，总计 $1 + 3N = 589$ 个token。LiDAR深度通过投影到相机坐标系得到对齐的2D深度图，各模态通过独立的patch stem进行分词。训练目标为LeJEPA的不变性损失 + SIGReg正则化，作用于联合多模态CLS嵌入。
+这篇论文想解决的是：自动驾驶里相机和 LiDAR 提供互补信号，但单模态自监督学不到跨模态信息，而把两种模态的 token 全部塞进 Transformer 做 all-to-all 注意力又因为 token 翻倍带来约 4 倍的计算开销。它的做法是在一个共享的 ViT-Small/16 编码器里，额外引入一组「融合 token」当作跨模态信息的中转站，让信息先压缩进去、再把原始模态 token 剪掉。
+
+整条 pipeline 这样转：先把 LiDAR 深度投影到相机坐标系、和 RGB 对齐成 2D 深度图，再让每种模态各走一个独立 patch stem 分词；编码器输入是 $[\text{CLS}(1), \mathbf{F}(N), \mathbf{C}(N), \mathbf{M}(N)]$ 这一串 token——$\mathbf{F}$ 是融合 token，$\mathbf{C}$ 是 RGB token，$\mathbf{M}$ 是伴随模态（LiDAR 深度或热红外）token，三组加 CLS 共 $1+3N=589$ 个。第一层注意力让融合 token 吸收两种模态后，模型把 $2N$ 个模态 token 全部剪掉，后续层只在 $1+N$ 个 token 上跑。训练目标是 LeJEPA 的不变性损失加 SIGReg 正则，作用在联合多模态 CLS 嵌入上。
 
 ### 关键设计
 
-1. **可学习融合Token + 剪枝策略（Pruned Fusion Tokens）**:
-    - 功能：在共享Transformer内进行跨模态信息融合，同时控制计算成本
-    - 核心思路：创建 $N$ 个可学习融合token（与patch数相同），在第一层中每个融合token $\mathbf{f}_i$ 注意对应空间位置的RGB patch $\mathbf{c}_i$ 和伴随模态patch $\mathbf{m}_i$；第一层之后剪枝所有 $2N$ 个模态token，后续层仅处理 $1 + N$ 个token
-    - 设计动机：剪枝后注意力开销从 $\mathcal{O}((1+3N)^2)$ 降至 $\mathcal{O}((1+N)^2)$，约9倍减少；迫使模型在第一层就将跨模态信息压缩到融合token中，形成显式信息瓶颈；梯度仍可通过第一层的交叉注意力路径回传更新两个模态的patch stem
+**1. 可学习融合 Token + 剪枝：用一层注意力换信息瓶颈。**
 
-2. **SIGReg联合多模态正则化**:
-    - 功能：防止表示坍缩，提供模态无关的共享学习目标
-    - 核心思路：将联合多模态CLS嵌入通过投影头后，用SIGReg将经验嵌入分布匹配到 $\mathcal{N}(0, \mathbf{I})$，通过随机投影的特征函数匹配实现，复杂度 $\mathcal{O}(BK(T+d))$
-    - 设计动机：相比VICReg仅匹配方差和协方差，SIGReg更直接地抑制模态特定的各向异性；无需stop-gradient或教师-学生网络，简化多模态训练框架
+直接做全 token 的跨模态注意力，开销是 $\mathcal{O}((1+3N)^2)$，token 翻倍会把成本顶上去；但弱后融合又表达不够。这里的折中是创建 $N$ 个可学习融合 token（数量和 patch 数相同），在第一层里让每个融合 token $\mathbf{f}_i$ 只注意它对应空间位置的 RGB patch $\mathbf{c}_i$ 和伴随模态 patch $\mathbf{m}_i$，把这一处的跨模态证据收进来。第一层之后，所有 $2N$ 个模态 token 被直接剪掉，后续层只处理 $1+N$ 个 token，注意力开销从 $\mathcal{O}((1+3N)^2)$ 降到 $\mathcal{O}((1+N)^2)$，约 9 倍减少（以本文 $N=196$ 算，589 个 token 在第一层后收缩到 197 个）。
 
-3. **统一2D空间的多模态分词**:
-    - 功能：将异构传感器数据统一到共享2D token空间
-    - 核心思路：LiDAR点云投影到相机坐标系渲染为aligned depth map（深度排序，近处覆盖远处，最大范围80m归一化）；热红外图直接resize到相同spatial grid；各模态通过独立patch stem + 模态嵌入 $\mathbf{e}_{cam}, \mathbf{e}_{mod}$
-    - 设计动机：避免引入单独的3D稀疏骨干网络，保持统一的dense ViT架构，同一框架可覆盖RGB-LiDAR和RGB-Thermal设置
+这一剪不只是省算力，更关键的是它强制模型在第一层就把跨模态信息压进融合 token——后面层再也拿不到原始模态 token，融合 token 成了唯一的跨模态载体，形成一个显式的信息瓶颈，逼模型学到压缩得更狠、更互补的表示。而被剪掉的模态 token 并不会让梯度断流：第一层的交叉注意力路径仍然能把梯度回传给两个模态的 patch stem，所以分词器照样在更新。
+
+**2. SIGReg 联合多模态正则化：把两种模态拉向同一个高斯。**
+
+多模态自监督最怕表示坍缩，而对比学习要挖负样本、蒸馏要维护教师-学生网络，在多模态下都偏重。SIGReg 换了个思路：把联合多模态 CLS 嵌入过一个投影头后，用随机投影的特征函数匹配，把经验嵌入分布直接拉向各向同性高斯 $\mathcal{N}(0, \mathbf{I})$，复杂度只有 $\mathcal{O}(BK(T+d))$。相比 VICReg 只匹配方差和协方差，对各向同性高斯的匹配能更直接地压掉模态特定的各向异性——也就是消除题里那个「RGB 和 LiDAR 各自结块」的倾向。而且整个过程不需要 stop-gradient、不需要教师网络，把多模态训练框架简化成单一共享目标，这也是它能当「模态粘合剂」的原因。
+
+**3. 统一 2D 空间的多模态分词：不引入单独的 3D 骨干。**
+
+异构传感器数据格式不一，LiDAR 是稀疏点云、热红外是另一种 2D 图，如果各配一套骨干会让架构复杂、难复用。这里统一把它们渲染回共享的 2D token 网格：LiDAR 点云投影到相机坐标系后做深度排序（近处覆盖远处）、按最大 80m 归一化成对齐深度图；热红外直接 resize 到同一 spatial grid。各模态再走独立 patch stem，并加上模态嵌入 $\mathbf{e}_{cam}, \mathbf{e}_{mod}$ 区分来源。这样做的代价是丢掉了点云的原生 3D 结构，但换来一套统一的 dense ViT 架构——同一个框架只要换 patch stem 就能从 RGB-LiDAR 切到 RGB-Thermal，不必为每种传感器单独搭 3D 稀疏网络。
 
 ### 损失函数 / 训练策略
 

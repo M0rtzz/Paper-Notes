@@ -41,31 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两层：**理论层**给出 ATE 全人群可识别的充要条件 Theorem 3.1（核心是 Condition 1），并实例化到 deterministic / nondeterministic 两类选择机制下的常见分布族 (Proposition 3.3 / 3.5)；**算法层**用三阶段 pipeline 估计 ATE：先估倾向得分定位"有 overlap"的子区域 $\mathcal{B}$，再在 $\mathcal{B}$ 上用 MLE 或 Score Matching 联合估计条件结局密度 $\hat{P}(y\mid x,t)$ 与选择函数 $\hat{\beta}(x,y,t)$，最后通过 $1/\hat{\beta}$ 重加权外推到全人群再计算 $\hat{\tau}_P$。
+论文要解决的是：选择偏差扭曲了观测分布 $P(V\mid S=1)$，何时还能从中恢复出全人群的 ATE，又该怎么把它算出来。作者把这件事拆成理论和算法两层。理论层把"可识别性"从依赖 DAG 结构改写成只依赖三元组 $(\mathbb{P}_{t\mid x}, \mathbb{P}_{xy(t)}, \mathbb{S})$ 的一条分布类可分性条件（Condition 1），并实例化到 deterministic / nondeterministic 两类选择机制下的常见分布族。算法层则把这条理论落成一个可跑的估计器：先用倾向得分圈出有 overlap 的子区域 $\mathcal{B}$，在其中联合估计条件结局密度与一个未知的选择函数 $\beta$，最后用 $1/\hat{\beta}$ 重加权外推回全人群算 ATE。
 
 ### 关键设计
 
-1. **基于 distribution-class 的可识别性条件 (Condition 1 + Theorem 3.1)**:
+**1. distribution-class 可分性条件：把识别性从图结构搬到分布族上**
 
-    - 功能：用一条"全局可分性"条件刻画 ATE 全人群可识别的充要条件，**完全不依赖 DAG 中 selection 节点的位置**。
-    - 核心思路：对三元组 $(\mathbb{P}_{t\mid x}, \mathbb{P}_{xy(t)}, \mathbb{S})$ 中任意两组兼容分布 $(P, Q)$，若它们的 ATE 不等 ($\tau_{P_{xy(t)}} \neq \tau_{Q_{xy(t)}}$)，则必存在某点 $(x,y,t)$ 使观测密度 $\alpha_P(x,y,t) P_{t\mid x} P_{xy(t)} \neq \alpha_Q(\cdot) Q_{t\mid x} Q_{xy(t)}$，其中 $\alpha_P = P_{s\mid xyt} / P(s)$。Theorem 3.1 证明这一条件就是"ATE 从 $P(V\mid S=1)$ 可识别"的充要条件。
-    - 设计动机：传统图判据把"识别性"绑死在 DAG 拓扑上，本条件直接打到分布类上，**既能覆盖图判据（Corollary 3.9-3.14 把 selection-backdoor、selection-backdoor-ext、outcome-dependent selection、S-id 全部装进来），又能突破图判据无法处理的非典型情形**。
+既有结果的痛点是"识别性"被绑死在 DAG 拓扑上——要么得知道 selection 节点 $S$ 落在图的哪个位置（图模型路线），要么得假设可加噪声且噪声非高斯（SEM 路线）。本文换一个语言：直接在三元组 $(\mathbb{P}_{t\mid x}, \mathbb{P}_{xy(t)}, \mathbb{S})$ 上提条件。Condition 1 要求对其中任意两组兼容分布 $(P, Q)$，只要它们的 ATE 不相等（$\tau_{P_{xy(t)}} \neq \tau_{Q_{xy(t)}}$），就必然存在某点 $(x,y,t)$ 让两者的观测密度也不相等，即 $\alpha_P(x,y,t)\, P_{t\mid x}\, P_{xy(t)} \neq \alpha_Q(\cdot)\, Q_{t\mid x}\, Q_{xy(t)}$，其中 $\alpha_P = P_{s\mid xyt} / P(s)$。直观说就是"ATE 不同 $\Rightarrow$ 观测得到的东西必不同"，这正好排除了"两个 ATE 不同的世界却长出同一份观测分布"的混淆情形。Theorem 3.1 证明这条可分性恰好是 ATE 从 $P(V\mid S=1)$ 可识别的充要条件。它的好处是同时往两个方向覆盖：Corollary 3.9-3.14 把 selection-backdoor、selection-backdoor-ext、outcome-dependent selection、S-id 这些图判据全部翻译成它的特例，又能纳入图判据处理不了的非典型情形。
 
-2. **常见分布族下的可识别实例化 (Proposition 3.3 + 3.5)**:
+**2. 常见分布族下的实例化：告诉实验者"我的数据到底识别不识别"**
 
-    - 功能：把抽象的 Condition 1 落到能直接拿来用的分布族，告诉实验者"在我的数据下到底识别不识别"。
-    - 核心思路：(i) **Deterministic selection**（某些 $(x,y,t)$ 处 $P_{s\mid xyt}=0$ 完全屏蔽）下，只要 $\mathbb{P}_{t\mid x}$ 满足 c-overlap ($c < p(t,x) < 1-c$)，且条件结局密度形如 $P_{y(t)\mid x} \propto e^{f(x,y)}$ 与边际 $P_x \propto e^{g(x)}$ ($f, g$ 多项式，记为 $\mathbb{P}_{xy(t)}^{C^\infty}$)，Condition 1 即满足 —— 用截断统计 (Daskalakis et al. 2021) 从截断样本外推出原分布。(ii) **Nondeterministic selection** ($P_{s\mid xyt} > d > 0$) 下，只要 $\mathbb{P}_{xy(t)}$ 属于 Gaussian / Laplace / Pareto / Log-normal 四大常见分布族就足够。
-    - 设计动机：(ii) 直接打脸 Zhang et al. 2016 的"必须非高斯"假设 —— 在本框架里**高斯也可识别**；(i) 把多项式指数族这一类涵盖大多数实际分布的家族纳入可识别范围，且**与轻尾/重尾分布都兼容**。
+Condition 1 抽象，单看没法判断手头数据满不满足，所以作者把它落到能直接对号入座的分布族上。对 **deterministic selection**（某些 $(x,y,t)$ 处 $P_{s\mid xyt}=0$，观测被完全屏蔽），Proposition 3.3 给出：只要倾向得分满足 c-overlap（$c < p(t,x) < 1-c$），且条件结局密度形如 $P_{y(t)\mid x} \propto e^{f(x,y)}$、协变量边际 $P_x \propto e^{g(x)}$ 且 $f,g$ 为多项式（记作 $\mathbb{P}_{xy(t)}^{C^\infty}$），Condition 1 就成立——背后正是截断统计（Daskalakis et al. 2021）能从被截断的样本外推回原分布。对 **nondeterministic selection**（$P_{s\mid xyt} > d > 0$，处处有非零观测概率），Proposition 3.5 给出更轻的条件：$\mathbb{P}_{xy(t)}$ 只要属于 Gaussian / Laplace / Pareto / Log-normal 四族之一即可。这一步的意义在于直接推翻 Zhang et al. 2016 "噪声必须非高斯"的限制——在本框架里高斯也照样可识别；而多项式指数族这一家又涵盖了大多数实际分布并兼容轻尾/重尾。
 
-3. **带选择函数 $\beta$ 的 MLE / Score Matching 估计器 (Algorithm 1)**:
+**3. 带选择函数 $\beta$ 的 MLE / Score Matching 估计器：把未知选择机制学出来**
 
-    - 功能：在估计阶段把"选择机制未知"这件事编码成一个待学函数 $\beta_\phi(x,y,t)$，与结局密度 $P_\theta(y\mid x,t)$ 联合学习。
-    - 核心思路：观测到的条件密度满足 $\tilde{p}(y\mid x) \propto p(y\mid x) \cdot \beta(x,y,t)$。**MLE 路线**：在 $\mathcal{B}$ 内最小化负对数似然 $L(\theta) = -\sum_i (\log \hat{P}(y_i\mid x_i, t_i) + \log \hat{\beta}(\cdot) + \log \hat{P}(x_i) + \log \hat{e}(x_i))$，并加正则 $\lambda \sum_i \log\|\hat{\beta}\|_2^2$ 让 $\log\hat{\beta} \to 0$ 解决不确定性。**Score Matching 路线**：对 $y$ 求梯度得 $\psi(x,y,t) = s_\theta(x,y) + \nabla_y \log\beta_\phi(x,y,t)$（因为难算的 partition function 仅依赖 $x,t$，对 $y$ 求导即消失），用 Hyvärinen 目标 $\frac{1}{2}\|\psi\|^2 + \mathrm{tr}(\nabla_y \psi)$ 加 $-\lambda_1 \log\beta_\phi + \lambda_2 \|\beta_\phi\|^2$ 联合优化。最后用 $1/\hat{\beta}$ 重加权得 $\hat{P}_{pop}(x)$，按 $\hat{\tau}_P = \mathbb{E}_{x \sim \hat{P}_{pop}}[\mathbb{E}[Y\mid x, 1] - \mathbb{E}[Y\mid x, 0]]$ 输出 ATE。
-    - 设计动机：传统 IPW 完全忽略 selection，只对 deterministic 部分有效的"polynomial 外推"也搞不定 nondeterministic 偏差；而 +$\beta$ 校正版**同时处理两类选择**，且 Score Matching 路线借助 $\nabla_y$ 抹掉 partition function，规避了高维归一化常数难算的痛点。
+理论说可识别，落到算法上还得处理"选择机制本身未知"。本文的做法是把它显式编码成一个待学函数 $\beta_\phi(x,y,t)$，与结局密度 $P_\theta(y\mid x,t)$ 联合学习——观测到的条件密度满足 $\tilde{p}(y\mid x) \propto p(y\mid x)\cdot \beta(x,y,t)$，于是只要把 $\beta$ 估出来再除掉，就能还原全人群密度。具体给两条路线。MLE 路线在 $\mathcal{B}$ 内最小化负对数似然 $L(\theta) = -\sum_i \big(\log \hat{P}(y_i\mid x_i, t_i) + \log \hat{\beta}(\cdot) + \log \hat{P}(x_i) + \log \hat{e}(x_i)\big)$，再加正则 $\lambda \sum_i \log\|\hat{\beta}\|_2^2$ 把 $\log\hat{\beta}$ 往 0 拉以消除不确定性。Score Matching 路线则绕开高维密度难算的归一化常数：对 $y$ 求梯度得 $\psi(x,y,t) = s_\theta(x,y) + \nabla_y \log\beta_\phi(x,y,t)$，由于 partition function 只依赖 $x,t$，对 $y$ 求导后自动消失，再用 Hyvärinen 目标 $\tfrac{1}{2}\|\psi\|^2 + \mathrm{tr}(\nabla_y \psi)$ 配上 $-\lambda_1 \log\beta_\phi + \lambda_2 \|\beta_\phi\|^2$ 联合优化。两条路线都在最后用 $1/\hat{\beta}$ 重加权得到 $\hat{P}_{pop}(x)$，按 $\hat{\tau}_P = \mathbb{E}_{x \sim \hat{P}_{pop}}[\mathbb{E}[Y\mid x, 1] - \mathbb{E}[Y\mid x, 0]]$ 输出 ATE。相比之下 IPW 完全忽略 selection、只做 polynomial 外推又搞不定 nondeterministic 偏差，而 $+\beta$ 校正版能同时吃下两类选择，Score Matching 借 $\nabla_y$ 抹掉 partition function 这一步尤其让高维条件密度估计变得可行。
 
 ### 损失函数 / 训练策略
-MLE 最终目标：$L(\theta) + \lambda \sum_i \log\|\hat{\beta}(x_i, y_i, t_i)\|_2^2$；
-Score Matching 最终目标：$\mathcal{L}(\theta, \phi) = \mathbb{E}_{\mathcal{D}_{obs}} [\frac{1}{2}\|\psi\|^2 + \mathrm{tr}(\nabla_y \psi) - \lambda_1 \log\beta_\phi + \lambda_2 \|\beta_\phi\|^2]$。 $\beta$ 通常 $\to 1$（最大化"观测样本被选中"的似然），$\lambda_1, \lambda_2$ 是正则超参。
+MLE 最终目标为 $L(\theta) + \lambda \sum_i \log\|\hat{\beta}(x_i, y_i, t_i)\|_2^2$；Score Matching 最终目标为 $\mathcal{L}(\theta, \phi) = \mathbb{E}_{\mathcal{D}_{obs}} \big[\tfrac{1}{2}\|\psi\|^2 + \mathrm{tr}(\nabla_y \psi) - \lambda_1 \log\beta_\phi + \lambda_2 \|\beta_\phi\|^2\big]$。其中 $\beta$ 通常收敛到 $\to 1$（最大化"观测样本确实被选中"的似然），$\lambda_1, \lambda_2$ 为正则超参。
 
 ## 实验关键数据
 

@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段流水线。Stage I（自监督先验）：用像素差伪标签训 dual ResNet-50 编码器 ($E_{\text{sub}},E_{\text{content}}$) + 4 层 UNet decoder 得到先验掩码 $\mathcal{M}^{prior}$，输入只用 ImageNet 预训练，靠正交损失 + 对抗判别器把字幕特征和内容特征解耦。Stage II（自适应加权）：冻结 Wan2.1-Fun-V1.1-1.3B DiT，注入 rank=64 的 LoRA 到所有 attention + FFN，加一个 2.1M 参数的 occlusion head $\mathcal{H}$ 从 DiT 中间层算出 $\mathcal{M}^{pred}$，用 spatial emphasis × focal difficulty 权重 $w_{i,j,t}$ 调制扩散损失，三损失（distillation + context-aware adaptation + sparsity）联合优化。推理：单输入视频 → DiT + LoRA + 内部 $\mathcal{M}^{pred}$ → DDIM 5 步 → VAE 解码出 clean 视频，无任何外部模块。
+CLEAR 要解决的是"视频字幕擦除必须依赖外部 mask"这个老问题，办法是把"识别字幕在哪"的能力在训练阶段就内化进一个视频扩散模型，推理时只塞进字幕视频本身、不挂任何文本检测器。整个流程拆成两阶段：第一阶段用"带字幕帧 - 干净帧"的像素差当便宜的弱监督，自监督学出一个字幕先验掩码 $\mathcal{M}^{prior}$；第二阶段冻结 Wan2.1-Fun-V1.1-1.3B 这个视频 DiT，只加一小撮 LoRA 和一个轻量 occlusion head，让模型边生成边在中间层隐式预测字幕掩码 $\mathcal{M}^{pred}$ 并据此自适应加权扩散损失。训练完字幕擦除的知识被吸进 LoRA 改造过的 attention，推理就是单次前向出干净视频。
 
 ### 关键设计
 
-1. **Stage I 自监督字幕先验（dual encoder + 正交解耦 + 对抗判别）**：
+**1. Stage I 自监督字幕先验：用像素差伪标签 + 正交解耦换掉人工 mask 标注**
 
-    - 功能：在不需要人工 mask 的前提下从 500 对视频 pair 里学到一个能预测字幕区域的二值掩码 $\mathcal{M}^{prior}$。
-    - 核心思路：(a) 用像素差 $\Delta_t=\|\mathbf{X}^{sub}_t-\mathbf{X}^{clean}_t\|_2$ 加 per-frame mean+std 阈值生成伪标签；(b) dual encoder 在 1/8 分辨率分别抽 $F^{sub}, F^{content}$；(c) 正交损失 $\mathcal{L}_{\text{ortho}}=\frac{1}{T H' W'}\sum\langle F^{sub}, F^{content}\rangle^2$ 强制无关；(d) 判别器对抗 $\mathcal{L}_{\text{adv}}$ 防止 leakage；(e) 解码器仅从 $F^{sub}$ 出 $\mathcal{M}^{prior}$，并要求 $F^{content}$ 单独能重建干净帧。
-    - 设计动机：像素差伪标签噪声大（光照、半透明字幕、运动模糊），单看 BCE 学不出好掩码；正交 + 对抗 + 重建三重约束相当于"逼字幕特征单独承载所有差异信息"，这样掩码 head 才能学到 generalize 到未见字体/语言的字幕模式，而非记住特定 token 形状。
+痛点是逐帧 mask 标注既贵又脆，但"带字幕视频 / 干净视频"成对数据相对好拿。于是这里用像素差 $\Delta_t=\|\mathbf{X}^{sub}_t-\mathbf{X}^{clean}_t\|_2$ 配上 per-frame 的 mean+std 阈值生成伪标签——便宜，但被光照、半透明字幕、运动模糊污染得很厉害，单跑一个 BCE 根本学不出干净掩码。CLEAR 的对策是上双编码器加三重约束：dual ResNet-50（$E_{\text{sub}},E_{\text{content}}$，只用 ImageNet 预训练）在 1/8 分辨率分别抽字幕特征 $F^{sub}$ 和内容特征 $F^{content}$，正交损失 $\mathcal{L}_{\text{ortho}}=\frac{1}{T H' W'}\sum\langle F^{sub}, F^{content}\rangle^2$ 强制两路无关，判别器再用 $\mathcal{L}_{\text{adv}}$ 防止内容信息泄漏到字幕路；最后只允许解码器从 $F^{sub}$ 出 $\mathcal{M}^{prior}$，同时要求 $F^{content}$ 单独就能重建干净帧。这套"正交 + 对抗 + 重建"本质上是在逼字幕特征独自承载所有帧间差异，掩码 head 因此学的是抽象的"遮挡模式"而非某种字体的笔画形状，这正是后面只用中文训练却能零样本擦掉 6 种语言字幕的根源。
 
-2. **Stage II 上下文相关 occlusion head + 自适应加权 $w_{i,j,t}$**：
+**2. Stage II 上下文相关 occlusion head：让扩散模型边生成边判断字幕难度并自适应加权**
 
-    - 功能：在 DiT 中间层动态计算每个 patch 的字幕概率，并据此调整该位置在扩散损失里的权重，实现"训练时显式 attend 字幕、生成时隐式擦除"。
-    - 核心思路：occlusion head $\mathcal{H}(\mathbf{h}_{enc})=\mathrm{Conv}^1_{1\times 1}(\mathrm{SiLU}(\mathrm{Conv}^{64}_{3\times 3}(\mathbf{h}_{enc})))$ 从 DiT encoder 中间层激活算 $\mathcal{M}^{pred}=\sigma(\mathcal{H}(\mathbf{h}_{enc}))$；最终权重 $w_{i,j,t}=(1+\alpha(k)\cdot\mathcal{M}^{pred}_{i,j,t})\cdot(\epsilon^{gen}_{i,j,t}+\delta)^\gamma$，前半段是 spatial emphasis（在预测字幕区域加权），后半段是 focal-style difficulty weighting（高重建误差区域加权）；$\alpha(k)$ 在 $\alpha_{\min}=5,\alpha_{\max}=15$ 间按三角调度振荡防止陷入局部最优。
-    - 设计动机：朴素方案是把先验直接当 mask 条件，但 Stage I 先验有噪声；让 head 同时看 latent 噪声、DiT 高级语义、扩散时间步 $t$ 三种信号，把"先验校准"变成"边生成边判断难度";focal weighting 借鉴 RetinaNet，让简单背景区域少占梯度、字幕硬区域多占。重要的是 $\mathcal{M}^{pred}$ 不 detach，梯度可以从 $\mathcal{L}_{\text{gen}}$ 直接流回，形成自校正闭环。
+朴素做法是把 Stage I 先验直接当 mask 条件塞给 DiT，但那个先验本身带噪、且对不同帧不同区域的可靠性是不一样的，硬条件会把噪声放大。CLEAR 改成在 DiT encoder 中间层挂一个 2.1M 参数的 occlusion head $\mathcal{H}(\mathbf{h}_{enc})=\mathrm{Conv}^1_{1\times 1}(\mathrm{SiLU}(\mathrm{Conv}^{64}_{3\times 3}(\mathbf{h}_{enc})))$，从激活里算出 $\mathcal{M}^{pred}=\sigma(\mathcal{H}(\mathbf{h}_{enc}))$，相当于让模型同时看 latent 噪声、DiT 高级语义和扩散时间步三种信号去现场校准先验。预测出的掩码不直接当条件，而是去调制扩散损失的逐位置权重 $w_{i,j,t}=(1+\alpha(k)\cdot\mathcal{M}^{pred}_{i,j,t})\cdot(\epsilon^{gen}_{i,j,t}+\delta)^\gamma$：前半段是 spatial emphasis，在预测的字幕区域抬权重；后半段借了 RetinaNet 的 focal 思路，按重建误差给难区加权，让平坦背景少占梯度、字幕硬区多占。系数 $\alpha(k)$ 在 $\alpha_{\min}=5,\alpha_{\max}=15$ 间按三角调度来回振荡以避开局部最优。关键一笔是 $\mathcal{M}^{pred}$ 不做 detach——扩散损失 $\mathcal{L}_{\text{gen}}$ 的梯度能直接回流到 head，高重建误差区会被推高权重、低误差区被压低，形成一个无需 GT mask 的自校正闭环。
 
-3. **三损失联合优化 + 内化的 mask-free 推理**：
+**3. 三损失联合优化：把"该擦哪里"的知识吸进 LoRA，实现 mask-free 推理**
 
-    - 功能：用 distillation（来自 Stage I 先验）+ generation feedback（生成质量）+ sparsity/KL（防退化）三种信号同时优化 LoRA 和 occlusion head，使 $\mathcal{M}^{pred}$ 既保留先验结构又能修正局部错误，最终被吸收进 LoRA-augmented attention，推理时不再需要外部 mask。
-    - 核心思路：$\mathcal{L}_{stage2}=\mathcal{L}_{distill}+\mathcal{L}_{gen}+0.1\cdot\mathcal{L}_{sparse}$；$\mathcal{L}_{distill}$ 用 SmoothL1 让 $\mathcal{M}^{pred}\approx\mathcal{M}^{prior}$ 但允许 1 单位偏差；$\mathcal{L}_{gen}$ 是被 $w$ 加权的标准扩散 $\epsilon$ 损失；$\mathcal{L}_{sparse}$ 由 L1 sparsity + $D_{KL}(\mathcal{M}^{pred}\|\mathcal{M}^{prior})$ 组成，前者防 uniform 退化、后者防漂离先验分布。
-    - 设计动机：单纯蒸馏先验会把 Stage I 噪声放大；纯靠 generation feedback 又会让 head 输出 trivial（如全 0 或 uniform）。三损失各管一头：distill 给结构、gen 给质量、sparse 给可控性。最终训练完 LoRA + head 把"哪些区域要被擦"的知识吸进 attention 模式，推理时算法（Alg.1）里 $\mathcal{M}^{pred}$ 是 internal 量、never output，单次 forward 直接出干净视频。
+只蒸馏先验会把 Stage I 的噪声继承下来；只靠生成反馈又容易让 head 输出 trivial（全 0 或 uniform）。所以 Stage II 用三股信号互相牵制：$\mathcal{L}_{stage2}=\mathcal{L}_{distill}+\mathcal{L}_{gen}+0.1\cdot\mathcal{L}_{sparse}$，其中 $\mathcal{L}_{distill}$ 用 SmoothL1 让 $\mathcal{M}^{pred}\approx\mathcal{M}^{prior}$ 但容忍 1 单位偏差（给结构、又留出修正空间），$\mathcal{L}_{gen}$ 是上面被 $w$ 加权的标准扩散 $\epsilon$ 损失（管生成质量），$\mathcal{L}_{sparse}$ 由 L1 sparsity 加 $D_{KL}(\mathcal{M}^{pred}\|\mathcal{M}^{prior})$ 组成，前者防掩码退化成 uniform、后者防它漂离先验分布。三损失各管一头，最终把 LoRA（rank=64，注入到 q,k,v,o 与 ffn.0/2）和 head 训到"哪些区域该被擦"已经写进 attention 模式里。这样推理时（Alg.1）$\mathcal{M}^{pred}$ 只是个内部量、从不输出，单输入字幕视频经 DiT+LoRA 一次前向、DDIM 5 步、VAE 解码就直接出干净视频，全程没有任何外部文本检测/分割模块，cascading error 也随之消失。
 
 ### 损失函数 / 训练策略
-Stage I：$\mathcal{L}_{stage1}=\mathcal{L}_{ortho}+0.5\mathcal{L}_{adv}+\mathcal{L}_{region}+0.1\mathcal{L}_{recon}$，AdamW lr=$2\times 10^{-5}$，1 epoch (~70 min)。Stage II：上式 $\mathcal{L}_{stage2}$，AdamW lr=$1\times 10^{-4}$，gradient clipping=1.0，1 epoch ≈ 1 天（8×A800）。LoRA rank=64，应用到 q,k,v,o 与 ffn.0/2；$\gamma=0.8,\delta=10^{-6}$；Stage II 数据 500 视频 × 81 连续帧。
+Stage I：$\mathcal{L}_{stage1}=\mathcal{L}_{ortho}+0.5\mathcal{L}_{adv}+\mathcal{L}_{region}+0.1\mathcal{L}_{recon}$，AdamW lr=$2\times 10^{-5}$，1 epoch（约 70 min）。Stage II：上式 $\mathcal{L}_{stage2}$，AdamW lr=$1\times 10^{-4}$，gradient clipping=1.0，1 epoch ≈ 1 天（8×A800）。LoRA rank=64，应用到 q,k,v,o 与 ffn.0/2；$\gamma=0.8,\delta=10^{-6}$；Stage II 数据 500 视频 × 81 连续帧。
 
 ## 实验关键数据
 

@@ -43,31 +43,23 @@ tags:
 
 ### 整体框架
 
-StructKV 的推理分三个阶段：(1) **Phase 1（全上下文处理）**——前 $L^*$ 层处理完整上下文，同时累积全局中心性分数 $\mathcal{C}_{global}$；(2) **Phase 2（结构性相变）**——自动检测器在最优层 $L^*$ 触发，用 $\mathcal{C}_{global}$ 过滤上下文，解耦计算预算 $R_{struct}$ 和存储预算 $R_{KV}$；(3) **Phase 3（压缩推理）**——深层仅在精简的"结构骨架"上运算。
+StructKV 想同时拆掉长上下文推理的两个瓶颈：prefill 阶段 $O(N^2)$ 的注意力计算和 decoding 阶段线性增长的 KV cache。它的做法是先让前 $L^*$ 层照常处理完整上下文，并在这一过程中跨层累积每个 token 的「全局入度中心性」；当一个自动检测器判定注意力分布发生「相变」时，就在最优层 $L^*$ 用这份中心性把上下文裁成一副紧凑的「结构骨架」，并把计算预算和存储预算解耦成两个独立旋钮；此后的深层只在这副骨架上运算，从而在不丢失全局枢纽 token 的前提下同时省下计算和显存。
 
 ### 关键设计
 
-1. **全局入度中心性累积（Global In-Degree Centrality）**:
+**1. 全局入度中心性累积：用跨层贡献而非单层快照判断 token 是否重要。**
 
-    - 功能：识别跨层具有全局结构重要性的 token
-    - 核心思路：在每层 $l$ 计算局部显著性 $\mathcal{S}_j^{(l)} = \sum_{g=1}^{G} \left( \frac{1}{w} \sum_{t=N-w}^{N} \sum_{h \in \mathcal{H}_g} a_{t,j}^{(l,h)} \right)$，然后用指数衰减递归累积：$\mathcal{C}_j = \sum_{l=0}^{L^*} \lambda^{(L^*-l)} \cdot \mathcal{S}_j^{(l)}$。衰减因子 $\lambda=0.9$ 使深层语义层获得更高权重
-    - 设计动机：不同于直接用单层 $\mathcal{S}_j^{(l)}$ 做截断，全局累积确保一个在多个早期层中充当信息"枢纽"的 token 即使在某一层暂时休眠也会获得高中心性分数
+现有 prefill-aware 方法（如 GemFilter、FastKV）只看某一层的注意力快照来挑 token，问题是有些 token 在被检查的那一层恰好「休眠」，却在整个网络深度里承担着信息枢纽的角色，一旦在这一层被丢弃就永久消失。StructKV 把这件事形式化为图论里的入度中心性：在每层 $l$ 先算局部显著性 $\mathcal{S}_j^{(l)} = \sum_{g=1}^{G}\left(\frac{1}{w}\sum_{t=N-w}^{N}\sum_{h\in\mathcal{H}_g} a_{t,j}^{(l,h)}\right)$（窗口内多头注意力对 token $j$ 的累计指向），再沿层做指数衰减累积 $\mathcal{C}_j = \sum_{l=0}^{L^*}\lambda^{(L^*-l)}\cdot\mathcal{S}_j^{(l)}$。衰减因子 $\lambda=0.9$ 让靠近 $L^*$ 的语义层权重更高，于是一个在多个早期层反复被指向的 token，即便在某层暂时沉默，也能凭累积分数稳稳留在骨架里。
 
-2. **动态枢纽层检测（Dynamic Pivot Detection）**:
+**2. 动态枢纽层检测：让模型自己决定在哪一层压缩。**
 
-    - 功能：自适应定位最优压缩层，消除对固定超参数的依赖
-    - 核心思路：追踪三个指标——注意力熵 $\mathcal{H}_l$（分布不确定性）、稀疏度 $\rho_l$（top-k 累积概率质量）、方差 $\mathcal{V}_l$（可区分性）。计算归一化梯度后组合为转换分数 $\mathcal{T}_l = w_1 \cdot \bar{\nabla}(-\mathcal{H}_l) + w_2 \cdot \bar{\nabla}(\rho_l) + w_3 \cdot \bar{\nabla}(\mathcal{V}_l)$，最优层为 $L^* = \arg\max_l \mathcal{T}_l + 1$
-    - 设计动机：实验证明最优层随模型深度变化（Qwen-2.5-7B 在 Layer 12，32B 在 Layer 28），固定层方法（如 FastKV 的 Layer 15）无法泛化。自动检测在注意力从"广泛探索"转向"聚焦提取"的相变点进行压缩
+固定压缩层是个不通用的超参数——FastKV 把它钉死在 Layer 15，但实验显示最优层会随模型深度漂移（Qwen-2.5-7B 在 Layer 12，32B 在 Layer 28）。StructKV 改成在线追踪三个反映注意力「从广泛探索转向聚焦提取」的信号：注意力熵 $\mathcal{H}_l$（分布不确定性）、稀疏度 $\rho_l$（top-k 累积概率质量）、方差 $\mathcal{V}_l$（可区分性）。把它们的归一化梯度加权成转换分数 $\mathcal{T}_l = w_1\cdot\bar{\nabla}(-\mathcal{H}_l) + w_2\cdot\bar{\nabla}(\rho_l) + w_3\cdot\bar{\nabla}(\mathcal{V}_l)$，相变最剧烈处即压缩点 $L^* = \arg\max_l \mathcal{T}_l + 1$。这样压缩时机变成一次自动发现，而非手工调参，跨架构直接迁移。
 
-3. **结构传播与解耦（Structural Propagation & Decoupling）**:
+**3. 结构传播与解耦：把「算得快」和「存得少」拆成两个旋钮。**
 
-    - 功能：分离计算效率优化和存储效率优化
-    - 核心思路：在 $L^*$ 层基于全局中心性选择 top-K token 组成结构骨架 $\mathcal{I}_{struct} = \text{top-k}(\mathcal{C}, N \cdot R_{struct}) \cup \mathcal{I}_{win}$，深层仅在此精简集上计算。KV cache 则独立使用局部显著性选择：$\mathcal{I}_{KV}^{(l)} = \text{top-k}(\mathcal{S}^{(l)}, N \cdot R_{KV}) \cup \mathcal{I}_{win}$。结构保留率 $R_{struct}$ 可以远大于存储保留率 $R_{KV}$
-    - 设计动机：耦合设置下激进压缩导致精度崩溃（10% 保留率仅得 45.3）；解耦后 $R_{struct}=20\%, R_{KV}=10\%$ 就能恢复 +13.8 分，进入安全高保真区域
+耦合设置下用同一个保留率同时控制计算和存储，激进压缩会让精度直接崩塌（10% 保留率只剩 45.3 分）。StructKV 的关键观察是这两件事本不该共享预算：决定深层只在哪些 token 上运算的是计算保留率 $R_{struct}$，决定 KV cache 存哪些 token 的是存储保留率 $R_{KV}$。于是它在 $L^*$ 层用全局中心性选出结构骨架 $\mathcal{I}_{struct} = \text{top-k}(\mathcal{C}, N\cdot R_{struct})\cup\mathcal{I}_{win}$ 供深层计算，而 KV cache 独立地按各层局部显著性选 $\mathcal{I}_{KV}^{(l)} = \text{top-k}(\mathcal{S}^{(l)}, N\cdot R_{KV})\cup\mathcal{I}_{win}$。把 $R_{struct}$ 放宽到远大于 $R_{KV}$（如 $20\%$ vs $10\%$），就能在几乎不增加显存的情况下回收 +13.8 分，落进高保真的安全区。
 
-### 损失函数 / 训练策略
-
-StructKV 是免训练（training-free）的推理时压缩方法。默认参数：窗口 $w=8$，衰减 $\lambda=0.9$，转换权重 $\{w_1, w_2, w_3\}=\{0.2, 0.3, 0.5\}$，$R_{struct}=20\%$，$R_{KV}=10\%$。
+整个流程免训练（training-free），只在推理时生效。默认参数：窗口 $w=8$，衰减 $\lambda=0.9$，转换权重 $\{w_1, w_2, w_3\}=\{0.2, 0.3, 0.5\}$，$R_{struct}=20\%$，$R_{KV}=10\%$。
 
 ## 实验关键数据
 

@@ -41,32 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：预训练 MoE 模型 $M$（含 $L$ 个 MoE 层、原始 Top-K $K_{\text{orig}}$）、校准数据 $D_{\text{calib}}$、全局激活预算 $B$。
-离线阶段（Alloc-L）：① 对每个层 $i$ 跑"隔离式敏感度 profiling"，构建敏感度矩阵 $\mathbf{S}\in\mathbb{R}^{L\times K_{\text{orig}}}$；② 把"层间预算分配"建成分组背包，用 DP 求出最优 $\mathbf{K}^{\ast}$。
-在线阶段（Alloc-T）：在每一层 $l$ 内部，按 $K_l^{\ast}$ 重新分配 token 之间的激活——先给每个 token 保底 $K_{\text{base}}$ 个专家，剩下的 $(K_l-K_{\text{base}})\cdot T$ 个名额在所有 token 的候选 (token, expert) 对中按路由分数全局 top-K 抢占。
+
+Alloc-MoE 把"激活多少个专家"显式建模成一份固定的全局预算 $B$，再分两个正交维度去最优调度它。输入是一个预训练 MoE 模型 $M$（含 $L$ 个 MoE 层、原始 Top-$K$ 为 $K_{\text{orig}}$）、校准数据 $D_{\text{calib}}$ 和预算 $B$。离线阶段先量化每一层对稀疏化的敏感度、用动态规划把预算切成层级分配 $\mathbf{K}^{\ast}=[K_0,\dots,K_{L-1}]$（Alloc-L）；在线阶段在每层内部、按该层配额把激活机会在 token 之间重新抢占（Alloc-T）。两个阶段一个动层、一个动 token，互不重叠，叠起来就是完整框架，输出是一个激活预算砍半却几乎不掉点的推理流程。
 
 ### 关键设计
 
-1. **Alloc-L：隔离式敏感度 profiling + 背包 DP**:
+**1. Alloc-L：隔离式敏感度 profiling 配背包 DP，把预算最优地切到各层。**
 
-    - 功能：在不重训的前提下，为每一层算出"该层每种 Top-K 取值下的相对损失"，并求出预算约束下的最优层级分配。
-    - 核心思路：profiling 时按层从深到浅扫描，第 $i$ 层取 $k\in\{K_{\text{orig}},\dots,1\}$ 时，强制所有 $j>i$ 的深层都用 Top-1（剥离它们的补偿），所有 $j<i$ 的浅层保持原配置，记 $\mathbf{S}[i,k]=\mathrm{PPL}$。求解 $\arg\min_{\mathbf{K}}\sum_i\mathbf{S}[i,K_i]\ \text{s.t.}\ \sum_i K_i\le B$ 时套分组背包 DP：$\mathrm{DP}[i,b]=\min_{k\le b}(\mathrm{DP}[i-1,b-k]+\mathbf{S}[i,k])$，时间复杂度 $O(L\cdot B\cdot K_{\text{orig}})$，因 $B\le L K_{\text{orig}}$ 实际很快。
-    - 设计动机：直接 grid-search 所有 $\mathbf{K}$ 组合是 $K_{\text{orig}}^L$ 量级；不剥离深层补偿则浅层敏感度被掩盖（深层会用更多专家"擦屁股"）。隔离 profiling + DP 同时解决"测得准"与"算得快"两个问题。
+层级分配的难点有二：测不准和算不快。直接独立量化某层敏感度时，后面的深层会偷偷"补偿"它的稀疏化，让浅层看起来无所谓——本设计在 profile 第 $i$ 层、取 $k\in\{K_{\text{orig}},\dots,1\}$ 时，强制所有 $j>i$ 的深层都退到 Top-1 以剥离补偿、所有 $j<i$ 的浅层保持原配置，记下 $\mathbf{S}[i,k]=\mathrm{PPL}$，得到敏感度矩阵 $\mathbf{S}\in\mathbb{R}^{L\times K_{\text{orig}}}$。求最优分配 $\arg\min_{\mathbf{K}}\sum_i\mathbf{S}[i,K_i]\ \text{s.t.}\ \sum_i K_i\le B$ 本是 $K_{\text{orig}}^L$ 量级的组合爆炸，这里套分组背包 DP $\mathrm{DP}[i,b]=\min_{k\le b}\big(\mathrm{DP}[i-1,b-k]+\mathbf{S}[i,k]\big)$，复杂度降到 $O(L\cdot B\cdot K_{\text{orig}})$，又因 $B\le L K_{\text{orig}}$ 实际很快。隔离 profiling 解决"测得准"、DP 解决"算得快"，两件事一次办完。
 
-2. **Alloc-T：保底 + 全局 top-selection 的 token 级再分配**:
+**2. Alloc-T：保底加全局 top-selection，把层级预算在 token 间按疏密重排。**
 
-    - 功能：在不增加任何推理开销的前提下，把固定的层级预算 $T\cdot K_l$ 个激活机会，按路由分数的疏密重新分配到 token 上——分布越平（高熵）就多给几个专家，分布越尖（高置信）就少给。
-    - 核心思路：把每层 token-expert 选择写成 0-1 整数规划 $\max\sum z_{t,e}w_{t,e}$，约束 $\sum z_{t,e}\le T\cdot K_l$ 且每个 token 至少分 $K_{\text{base}}$ 个专家。实操等价于：① 先对每个 token 保住 Top-$K_{\text{base}}$ 个专家，② 把剩下的 $K_{\text{orig}}-K_{\text{base}}$ 列分数拍平到一个 $T\cdot(K_{\text{orig}}-K_{\text{base}})$ 的池里，③ 全局选 top $(K_l-K_{\text{base}})\cdot T$ 个。整套操作就是两次 mask + 一次 top-K，几乎零开销。
-    - 设计动机：标准 Top-K routing 对每个 token 切一刀，完全忽视了"有些 token 第一个专家分数 0.9、有些 token 前四个分数都 0.25"的客观差异；本设计把激活作为可调度资源，让"路由不自信"的 token 多用配额。当 $K_{\text{base}}=K_l$ 时退化为标准 Top-K，构成严格的泛化。
+标准 Top-$K$ routing 对每个 token 一刀切，完全无视"有的 token 第一个专家分数 0.9、有的前四个都才 0.25"的客观差异。Alloc-T 把每层的 token-expert 选择写成 0-1 整数规划 $\max\sum z_{t,e}w_{t,e}$，约束 $\sum z_{t,e}\le T\cdot K_l$ 且每个 token 至少分到 $K_{\text{base}}$ 个专家；它在实操上等价于三步——先给每个 token 保住 Top-$K_{\text{base}}$、再把剩下 $K_{\text{orig}}-K_{\text{base}}$ 列分数拍平进一个 $T\cdot(K_{\text{orig}}-K_{\text{base}})$ 的候选池、最后全局选出 top $(K_l-K_{\text{base}})\cdot T$ 个名额。整套就是两次 mask 加一次 top-K，零额外内核、零额外参数，却让路由不自信（高熵）的 token 多拿配额、自信的 token 少拿。当 $K_{\text{base}}=K_l$ 时它退化为标准 Top-K，因而是后者的严格泛化。
 
-3. **Alloc-MoE：层级与 token 级正交叠加**:
+**3. Alloc-MoE：层级与 token 级正交叠加成统一框架。**
 
-    - 功能：把 Alloc-L 和 Alloc-T 拼成一个统一框架——Alloc-L 决定每层的平均预算 $K_l^{\ast}$，Alloc-T 在该 $K_l^{\ast}$ 下再做 token 级重排。
-    - 核心思路：两者作用的资源维度互不重叠（层维 vs token 维），可以乘法组合；论文消融显示在 DeepSeek-V2-Lite 全预算区间叠加均最优或近最优。
-    - 设计动机：单独跑 Alloc-L 在 4 个预算上平均 +0.4%，单独跑 Alloc-T 平均 +0.93%；说明 token 级再分配在激进稀疏化场景下增益更大，但两者并不冲突，组合后取得最高均值 45.19% vs Uniform 的 44.19%。
+Alloc-L 和 Alloc-T 作用在互不重叠的资源维度上——前者决定每层平均预算 $K_l^{\ast}$，后者在这个 $K_l^{\ast}$ 之下再做 token 级重排，因此可以乘法组合。这种正交性是有数据支撑的：单跑 Alloc-L 在四个预算上平均 +0.4%、单跑 Alloc-T 平均 +0.93%，说明 token 级再分配在激进稀疏化下增益更大，但两者并不打架，组合后取得最高均值 45.19%（对比 Uniform 的 44.19%），在全预算区间都最优或近最优。
 
 ### 损失函数 / 训练策略
-完全无需重训：Alloc-L 一次性离线 profile $L\cdot K_{\text{orig}}$ 次 PPL 即可拿到 $\mathbf{S}$；Alloc-T 是纯推理期 mask + top-K，无任何额外参数。默认 $K_{\text{base}}=1$（在所有模型预算上都接近最优）。
+
+完全无需重训。Alloc-L 只需离线跑 $L\cdot K_{\text{orig}}$ 次 PPL 拿到敏感度矩阵 $\mathbf{S}$；Alloc-T 是纯推理期的 mask 加 top-K，不引入任何额外参数。默认 $K_{\text{base}}=1$，在所有模型和预算上都接近最优。
 
 ## 实验关键数据
 

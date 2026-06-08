@@ -53,23 +53,25 @@ tags:
 
 ### 关键设计
 
-1. **Prior Guidance (PG)——用退化 prior 制造质量差**:
+**1. Prior Guidance (PG)：用退化后的 prior 制造一个质量更差的 denoising。**
 
-    - 功能：把 CFG/AG 的"造差→外推"范式迁移到 bridge，但差的来源换成"prior 被破坏后的结果"。
-    - 核心思路：选一个训练免费的退化算子 $\mathcal{H}$（默认是加额外高斯噪声 $\bm{\epsilon}\sim\mathcal{N}(\bm{0},\bm{I})$），对干净 prior 和每个中间潜变量 $\bm{x}_t$ 都施加得到 $\mathcal{H}(\bm{x}_t)$；因为 bridge 在预训练时**从未见过**这种退化后的 prior，模型给出的 $D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T)$ 一定比 $D_{\bm{\theta}}(\bm{x}_t,t,\bm{x}_T)$ 更差，两者外推 $D_{\text{PG}} = D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T) + w_{\text{PG}}\,(D_{\bm{\theta}}(\bm{x}_t,t,\bm{x}_T) - D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T))$ 的方向就是"prior 用得更透"。条件信号 $\bm{x}_T$ 在弱项里保持干净，确保差异**只来自 prior 退化**而不是条件改变。
-    - 设计动机：与 AG 必须再训一个 under-trained 网络相比，PG 完全免训练；与 CFG 强化"条件对齐"相比，PG 直接对应 bridge 区别于 diffusion 的本质优势——prior exploitation。实验里发现噪声、模糊、JPEG 压缩都能 work，说明这个范式对退化方式相当鲁棒。
+PG 解决的是"bridge 没有对应自己核心优势的 guidance"这个空白。它沿用 CFG/AG 的"造差→外推"思路，但把"差"的来源换成 prior 被破坏后的结果。具体做法是选一个训练免费的退化算子 $\mathcal{H}$（默认加一份额外高斯噪声 $\bm{\epsilon}\sim\mathcal{N}(\bm{0},\bm{I})$，模糊、JPEG 压缩也都可用），对每个中间潜变量 $\bm{x}_t$ 施加得到弱版本 $\mathcal{H}(\bm{x}_t)$，而条件信号 $\bm{x}_T$ 始终保持干净。因为 bridge 在预训练时**从未见过**被退化的 prior，$D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T)$ 必然比 $D_{\bm{\theta}}(\bm{x}_t,t,\bm{x}_T)$ 更差，于是两者的外推
 
-2. **Frequency-modulated PG (FMPG)——按 U 形 SNR 拆频带调度**:
+$$D_{\text{PG}} = D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T) + w_{\text{PG}}\,\big(D_{\bm{\theta}}(\bm{x}_t,t,\bm{x}_T) - D_{\bm{\theta}}(\mathcal{H}(\bm{x}_t),t,\bm{x}_T)\big)$$
 
-    - 功能：让 guidance scale 沿采样轨迹和频率维度都"对症下药"，而不是恒定一个 $w_{\text{PG}}$。
-    - 核心思路：作者通过追踪 $\Delta\bm{x}_t \to \Delta\bm{x}_0$ 的频域能量分布发现：bridge 的 SNR 是 U 形（两端干净、中间最低），所以在中间时间步上 **HF（高频）prior 已经被噪声严重淹没**——这里强行加 guidance 反而会放大噪声；而 **LF（低频）prior 在整条轨迹上都还可读**——中间时间步反而是强化 LF 的好机会。基于这个观察，把 PG 外推拆成两路：低频用低通滤波器 $I^{\text{LF}}$ 取出，配**倒 U 形**的 $w^{\text{LF}}_{\text{PG}}$（中间时间步放大）；高频用 $I^{\text{HF}}$ 取出，配 **U 形**的 $w^{\text{HF}}_{\text{PG}}$（中间时间步压缩、两端放大），形如 $D^{\text{LF}}_{\text{FMPG}} = I^{\text{LF}}[D_{\text{weak}}] + w^{\text{LF}}_{\text{PG}}\,(I^{\text{LF}}[D_{\text{strong}}] - I^{\text{LF}}[D_{\text{weak}}])$，$D^{\text{HF}}_{\text{FMPG}}$ 同理。
-    - 设计动机：bridge 的 U 形 SNR 是 data-to-data 范式的几何特征，diffusion 的单调 SNR 上没有对应概念；FMPG 把这个几何直接编码进 guidance schedule，让 guidance 与 bridge 生成动力学对齐。作者强调 U 形/倒 U 形是**经验上的粗调度**——不需要精确对齐预训练 bridge 的 SNR 表，调度形状对就够了，这让 FMPG 仍然算 training-free 的轻量插件。
+天然指向"把 prior 用得更透"的方向。把 $\bm{x}_T$ 留在弱项里保持干净，是为了让强弱两个结果的差异**只来自 prior 退化**而非条件改变。相比 AG 必须额外训一个 under-trained 网络作差源，PG 完全免训练；相比 CFG 只强化"条件对齐"，PG 直接对应到 bridge 区别于 diffusion 的本质优势——prior exploitation。退化算子无论换成噪声、模糊还是 JPEG 都能 work，说明这个范式对"怎么造差"相当鲁棒。
 
-3. **CFG-FMPG 级联——救场弱 prior 任务**:
+**2. Frequency-modulated PG (FMPG)：按 U 形 SNR 在频带上分别调度 guidance。**
 
-    - 功能：当 prior 本身就难用（如 inpainting 中 mask 掉的中心 128×128 区域，根本没有像素信息可让 PG 退化）时，借 CFG 先把粗结构画出来，再让 FMPG 接手做细节精修。
-    - 核心思路：把采样轨迹切成两段——早期 $t\in[T,t_s)$ 用 CFG 在类别标签 $\bm{l}$ 上做条件对齐，给 mask 区域填进语义粗结构，得到一个已经含目标大致轮廓的中间潜变量；之后 $t\in[t_s,0)$ 直接切到 FMPG，把这个 CFG 产物当作"已经够强的 prior"来 exploit。两段 guidance 共享同一个 bridge 网络与同一条采样轨迹，**不增 NFE**，只是分时段切换 guidance 公式。
-    - 设计动机：单用 PG 在 inpainting 上没差异可造（弱 prior 与强 prior 都很差），单用 CFG 又只能强化语义、不能拉高频细节；CFG 与 FMPG 在"语义对齐"和"prior 利用"上正好互补，时序级联是最低成本的整合方式。
+恒定一个 $w_{\text{PG}}$ 对所有时间步、所有频率一视同仁，浪费了 bridge 自身的几何结构，FMPG 就是来解决这点。作者追踪 $\Delta\bm{x}_t \to \Delta\bm{x}_0$ 的频域能量传递后发现：bridge 的 SNR 沿轨迹是 U 形（两端干净、中间最噪），因此在中间时间步上**高频（HF）prior 已被噪声严重淹没**，这里硬加 guidance 只会放大噪声；而**低频（LF）prior 在整条轨迹上都还可读**，中间时间步反而是强化 LF 的好时机。基于这个诊断，FMPG 把 PG 外推拆成两路：用低通滤波器 $I^{\text{LF}}$ 取出低频分量，配**倒 U 形**的 $w^{\text{LF}}_{\text{PG}}$（中间时间步放大）；用 $I^{\text{HF}}$ 取出高频分量，配 **U 形**的 $w^{\text{HF}}_{\text{PG}}$（中间时间步压缩、两端放大），低频路写作
+
+$$D^{\text{LF}}_{\text{FMPG}} = I^{\text{LF}}[D_{\text{weak}}] + w^{\text{LF}}_{\text{PG}}\,\big(I^{\text{LF}}[D_{\text{strong}}] - I^{\text{LF}}[D_{\text{weak}}]\big),$$
+
+高频路 $D^{\text{HF}}_{\text{FMPG}}$ 同理。这等于把 bridge 的 U 形 SNR 这个 data-to-data 几何特征直接编码进了 guidance schedule，让 guidance 强度与生成动力学对齐——而 diffusion 单调上升的 SNR 上根本没有对应概念。作者特意强调 U 形/倒 U 形只是**经验上的粗调度**，不需要精确对齐预训练 bridge 的 SNR 表，形状对就够了，所以 FMPG 仍是 training-free 的轻量插件。
+
+**3. CFG-FMPG 级联：救场 prior 本身就很弱的任务。**
+
+当 prior 难用到 PG 造不出差异时——典型是 inpainting 把中心 128×128 区域整块 mask 掉，那里压根没有像素可供退化——就需要先借别的 guidance 把粗结构立起来。CFG-FMPG 把采样轨迹切成两段：早期 $t\in[T,t_s)$ 用 CFG 在类别标签 $\bm{l}$ 上做条件对齐，给 mask 区域填进语义粗结构，得到一个已含目标大致轮廓的中间潜变量；之后 $t\in[t_s,0)$ 切到 FMPG，把这份 CFG 产物当作"已经够强的 prior"去 exploit、把高频纹理拉回来。两段共享同一个 bridge 网络和同一条采样轨迹，只是分时段切换 guidance 公式，因此**不增 NFE**。这样安排是因为单用 PG 在 inpainting 上无差可造、单用 CFG 又只能强化语义拉不出高频细节，而 CFG 管"语义对齐"、FMPG 管"prior 利用"恰好互补，时序级联是把两者拼起来最省成本的方式。
 
 ### 损失函数 / 训练策略
 完全 training-free。所有 bridge 检查点都直接用官方原版（DDBM 用推荐的 hybrid SDE-ODE 采样器，DBIM 用 $\eta=0.0$ 的纯 ODE 模式）。实践调参用两步：先在 {加噪、模糊、JPEG、pooling} 里搜一个退化算子 $\mathcal{H}$，再调 $w_{\text{PG}}$（包括 FMPG 的频带分量），整体调参成本与 CFG/AG 同量级。

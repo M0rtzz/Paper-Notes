@@ -43,37 +43,31 @@ tags:
 
 ### 整体框架
 
-Multi-Crit 将传统的 pairwise preference 评估扩展为多准则形式。传统基准的数据格式为 $(q, l_a, l_b, y)$，即一个 prompt 对应一个整体偏好标签 $y$。Multi-Crit 将其扩展为 $(q, l_a, l_b, \{(c_i, y_i)\}_{i=1}^{K_q})$，其中每个 $c_i$ 是一个评估准则，$y_i$ 是该准则下的偏好标签。这使得同一对回复可以在不同准则下有不同的偏好方向，从而捕捉准则间的冲突。
+Multi-Crit 想回答一个被现有 Judge 基准回避的问题：当两个回复在不同评估维度上各有胜负时，Judge 能不能逐条准则做出和人类一致的判断。为此它把传统的 pairwise preference 评估从"一个整体标签"拆细到"每条准则一个标签"。传统基准的数据格式是 $(q, l_a, l_b, y)$，一个 prompt 配一个整体偏好标签 $y$；Multi-Crit 扩展为 $(q, l_a, l_b, \{(c_i, y_i)\}_{i=1}^{K_q})$，每个 $c_i$ 是一条评估准则，$y_i$ 是这条准则下哪个回复更好。这样同一对回复在不同准则下可以指向不同的胜者，准则间的冲突就被显式地保留了下来，而不是被一个总分抹平。
 
-基准构建流程：多来源 prompt 收集 → 多模型响应生成与配对 → 三阶段过滤保留挑战性样本 → 准则级人工标注（9 名 CS PhD，289 小时） → 偏好聚合与质量验证 → 最终数据集。
+整条构建链路从多来源收集 prompt 开始，用多个 LMM 生成并配对候选回复，再经三阶段过滤把"一眼能分高下"的简单样本剔掉，剩下的交给 9 名 CS PhD 按准则逐条人工标注，最后做偏好聚合与质量验证产出最终数据集。下面四个设计分别对应"数据从哪来、怎么筛、按什么维度评、用什么指标量"。
 
 ### 关键设计
 
-1. **数据构建管线（Data Curation Pipeline）**：
+**1. 数据构建管线：让评估覆盖两类截然不同的多模态任务。**
 
-    - 功能：从多来源构建高质量、具有挑战性的多准则评估数据
-    - 核心思路：Prompt 来自 8 个数据集覆盖开放生成（ImageInWords、DOCCI、WildVision-Bench/-Battle）和可验证推理（MathVerse、MM-K12、EMMA-mini、VisualPuzzles）两大场景；用 11 个高性能 LMM（含 GPT-4o、Gemini-2.5-Flash 等闭源和 Qwen2.5-VL、InternVL3 等开源）生成候选回复；构建跨模型对（两个不同模型）和同模型对（同一模型温度采样 5 次，选余弦距离最大的对）两种配对方式，共产生 3,538 个回复对
-    - 设计动机：跨模型对捕捉模型间系统性差异，同模型对捕捉同一模型内的质量波动，两者互补保证评估全面性
+单一来源的数据撑不起对 Judge 通用能力的考察，所以 prompt 横跨两大场景：开放生成（ImageInWords、DOCCI、WildVision-Bench/-Battle）和可验证推理（MathVerse、MM-K12、EMMA-mini、VisualPuzzles），共 8 个数据集。候选回复由 11 个高性能 LMM 生成，闭源（GPT-4o、Gemini-2.5-Flash 等）和开源（Qwen2.5-VL、InternVL3 等）混合，避免基准的偏好分布被某一家模型的风格带偏。配对则刻意做两种：跨模型对取两个不同模型的回复，捕捉模型之间的系统性差异；同模型对让同一模型在温度采样下生成 5 个回复、挑余弦距离最大的两个，捕捉同一模型内部的质量波动。两者互补，最终得到 3,538 个回复对。
 
-2. **三阶段挑战性过滤（Three-Stage Filtering）**：
+**2. 三阶段挑战性过滤：把"答案显而易见"的样本全部滤掉。**
 
-    - 功能：从 3,538 对中筛选出 707 对真正具有细粒度准则差异的挑战性样本
-    - 核心思路：(1) **长度归一化**——排除长度比超出 [0.7, 1.4] 的回复对，避免长度偏见；(2) **推理正确性过滤**——对推理任务用 GPT-4o-mini 验证，仅保留双对或双错的样本（答案正确性本身是 trivial 信号）；(3) **集成难度过滤**——用三个强 Judge（GPT-4o、Gemini-2.5-Flash、Claude-3.7-Sonnet）做初始整体评估，三者一致的丢弃，仅保留存在分歧的挑战性样本
-    - 设计动机：每一步都有针对性地去除"简单"样本——长度差异过大会导致 Judge 走捷径，答案本身就分对错的无需 Judge 评质量，强模型一致同意的说明差异太明显
+3,538 对里大量样本对 Judge 来说是 trivial 的——差距太大，谁都能选对，留着只会稀释基准的区分度。过滤分三步逐层收紧：先做长度归一化，排除长度比落在 $[0.7, 1.4]$ 之外的回复对，否则 Judge 容易直接按"谁长选谁"走捷径；再做推理正确性过滤，对推理任务用 GPT-4o-mini 校验答案，只保留两个回复同时答对或同时答错的样本，因为答案本身的对错是一个 trivial 信号、会盖过对回复质量的考察；最后做集成难度过滤，用 GPT-4o、Gemini-2.5-Flash、Claude-3.7-Sonnet 三个强 Judge 先做整体判断，三者意见一致的丢掉，只留下它们都拿不准、产生分歧的样本。三步走下来，3,538 对收缩到 707 对真正存在细粒度准则差异的挑战性样本。
 
-3. **准则设计（Criteria Design）**：
+**3. 准则设计：用互不重叠的能力维度来分解"哪个回复更好"。**
 
-    - 功能：定义评估的多个维度，覆盖多模态判断的核心能力
-    - 核心思路：遵循三条原则——实用性（反映 Judge 常见使用场景）、特异性（准则间不重叠）、通用性（评估基本能力维度而非内容特定）。开放生成 5 准则：Completeness & Coverage、Visual Grounding & Details、Factuality / No Hallucination、Creativity & Expressiveness、Clarity & Coherence。可验证推理 5 准则：Visual Grounding、Logic Coherence & Consistency、Factuality / No Hallucination、Reflection & Exploration、Conciseness & Efficiency
-    - 设计动机：多轮迭代精炼自现有 MLLM-as-a-Judge 基准的准则总结，确保准则间互补不冗余
+准则不是随手列的，而是按三条原则筛出来的：实用性（贴合 Judge 实际被用到的场景）、特异性（准则之间不重叠，避免一个差异被重复计分）、通用性（评的是基础能力维度而非具体内容）。开放生成定了 5 条——Completeness & Coverage、Visual Grounding & Details、Factuality / No Hallucination、Creativity & Expressiveness、Clarity & Coherence；可验证推理另定 5 条——Visual Grounding、Logic Coherence & Consistency、Factuality / No Hallucination、Reflection & Exploration、Conciseness & Efficiency。这套准则是从现有 MLLM-as-a-Judge 基准的评估维度多轮迭代精炼而来，保证彼此互补、合起来又能覆盖一次多模态判断的核心。
 
-4. **三个新评估指标（PAcc/TOS/CMR）**：
+**4. PAcc / TOS / CMR：用三个从宽到严的指标刻画多准则遵循能力。**
 
-    - 功能：从不同维度度量 Judge 的多准则遵循能力
-    - **PAcc (Pluralistic Adherence Accuracy)**：$\text{PAcc} = \frac{1}{|X|} \sum_{x \in X} \mathbb{I}[\bigwedge_{c \in C_x} \hat{y}_{x,c} = y_{x,c}]$——所有准则都判断正确才算该 prompt 通过，衡量多准则一致遵循能力
-    - **TOS (Trade-Off Sensitivity)**：在存在准则冲突的样本上，Judge 是否至少能感知到不同准则应有不同偏好方向（只需存在一对冲突准则的预测方向不同即可），衡量灵活性而非精确度
-    - **CMR (Conflict Matching Rate)**：在冲突准则对上，Judge 是否不仅检测到冲突而且解析方向与人类一致，是最严格的指标
-    - 设计动机：PAcc 是整体性要求，TOS 检测 Judge 是否 criterion-agnostic（所有准则输出相同方向），CMR 细粒度检验冲突解析能力，三者从宽到严逐步刻画能力层次
+有了准则级标注，就能问三个层层递进的问题。第一个是 PAcc（Pluralistic Adherence Accuracy），要求一个 prompt 下**所有**准则都判断正确才算通过，是最整体性的要求：
+
+$$\text{PAcc} = \frac{1}{|X|} \sum_{x \in X} \mathbb{I}\Big[\bigwedge_{c \in C_x} \hat{y}_{x,c} = y_{x,c}\Big]$$
+
+第二个是 TOS（Trade-Off Sensitivity），只在存在准则冲突的样本上看 Judge 有没有"意识到"不同准则该指向不同的胜者——只要它对某一对冲突准则给出了方向相反的预测就算过，衡量的是灵活性而非精确度，专门用来揭穿那种对所有准则都输出同一方向的 criterion-agnostic 行为。第三个是 CMR（Conflict Matching Rate），最严格，要求 Judge 在冲突准则对上不仅察觉到冲突、解析出的方向还要和人类一致。三个指标从"全对"到"察觉冲突"再到"正确解析冲突"，正好刻画出 Judge 能力的不同层次，也让"单一准则准确率看着不低、多准则一致性却很差"的系统性缺陷暴露出来。
 
 ### 标注流程与质量保证
 

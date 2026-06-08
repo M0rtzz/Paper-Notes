@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SiameseNorm 维护两条耦合的残差流。设输入经过 Embedding 后初始化两条流 $X_0=Y_0=h$。对每一层 $i=0,\dots,N-1$，前向流程为（见论文 Algorithm 1）：
-
-1. 把两条流在归一化空间对齐后求和，作为共享残差块的输入：$O = F_i(X_i + \mathrm{LN}_i^Y(Y_i))$
-2. 更新 Post-Norm 流（归一化主路径）：$X_{i+1} = \mathrm{LN}_i^X(X_i + O)$
-3. 更新 Pre-Norm 流（恒等主路径）：$Y_{i+1} = Y_i + O$
-
-最终输出为 $X_N + \mathrm{LN}_{\mathrm{final}}(Y_N)$。两条流共享同一个 $F_i$（即 Attention/MLP），只新增了 $\mathrm{LN}_i^X$ 和 $\mathrm{LN}_i^Y$ 两个轻量归一化算子，参数和 FLOPs 增加均 $<0.1\%$。在 15B MoE 上实测训练速度仅下降 0.5%、激活内存仅增加 2%。
+SiameseNorm 不再纠结"LN 放残差前还是残差后"，而是让网络同时维护两条独立演化的残差流：一条 Post-Norm 化的归一化主路径 $X$，一条 Pre-Norm 化的恒等高速路 $Y$。输入经 Embedding 后两条流初始化为同一值 $X_0=Y_0=h$，此后每层只共享同一个残差块 $F_i$（即 Attention 或 MLP），各自按自己的归一化语义更新。具体到第 $i$ 层（见论文 Algorithm 1）：先把两条流在归一化空间对齐相加，作为共享块的输入算出 $O = F_i(X_i + \mathrm{LN}_i^Y(Y_i))$；再用 $O$ 分别更新归一化流 $X_{i+1} = \mathrm{LN}_i^X(X_i + O)$ 和恒等流 $Y_{i+1} = Y_i + O$。网络末端把两条流汇总输出 $X_N + \mathrm{LN}_{\mathrm{final}}(Y_N)$。整套结构只比 Pre-Norm 多了 $\mathrm{LN}_i^X$、$\mathrm{LN}_i^Y$ 两个轻量归一化算子，参数与 FLOPs 增加均 $<0.1\%$，在 15B MoE 上实测训练速度仅降 0.5%、激活内存仅增 2%。
 
 ### 关键设计
 
-1. **双流耦合残差拓扑（核心创新）**:
+**1. 双流耦合残差拓扑：把"归一化位置之争"拆成两条物理路径。**
 
-    - 功能：把 Pre-Norm 的恒等梯度路径与 Post-Norm 的归一化主路径**物理分离**为两条流 $X$ 与 $Y$，再通过共享残差块 $F_i$ 耦合。
-    - 核心思路：令 $S_i=[X_i,Y_i]^\top$，则双流转移 Jacobian 为 $\partial S_{j+1}/\partial S_j$，其对角块分别恰好等于纯 Pre-Norm 的转移 $\mathbf{I}+\mathbf{J}_{F_j}\mathbf{J}_{\mathrm{LN}_j^Y}$ 与纯 Post-Norm 的转移 $\mathbf{J}_{\mathrm{LN}_j^X}(\mathbf{I}+\mathbf{J}_{F_j})$。这意味着 $F_i$ 同时收到来自 $Y$ 流的"恒等高速路"梯度和 $X$ 流的"归一化主路径"梯度，两套优化信号在 $F_i$ 的参数处汇合。
-    - 设计动机：解决"两种归一化语义在单条主路径上互相冲突"的根本矛盾——既然不能在一条流上同时满足，那就让两条流各管一摊，再通过共享 $F_i$ 让它们在参数空间相遇。这一拓扑还能通过简单参数配置回退到 Pre-Norm（$\mathrm{LN}^X=0$）、Post-Norm（$\mathrm{LN}^Y=0$）或层级混合（Mix-LN），覆盖更广的设计空间。
+Pre-Norm 与 Post-Norm 之所以不可调和，是因为它们对**同一条主路径**提出了互斥要求——一个要未归一化的恒等路径来稳梯度，一个要归一化的主路径来控表征。SiameseNorm 干脆把这两种语义分到两条流 $X$、$Y$ 上各管一摊，再用一个共享的 $F_i$ 把它们重新缝起来。妙处在梯度：把两条流叠成状态 $S_i=[X_i,Y_i]^\top$，写出双流转移 Jacobian $\partial S_{j+1}/\partial S_j$ 后会发现它的两个对角块**恰好**就是纯 Pre-Norm 的转移 $\mathbf{I}+\mathbf{J}_{F_j}\mathbf{J}_{\mathrm{LN}_j^Y}$ 和纯 Post-Norm 的转移 $\mathbf{J}_{\mathrm{LN}_j^X}(\mathbf{I}+\mathbf{J}_{F_j})$。也就是说，$F_i$ 在反传时同时收到 $Y$ 流送来的"恒等高速路"梯度和 $X$ 流送来的"归一化主路径"梯度，两套优化信号在 $F_i$ 的参数处汇合——既保住了 Pre-Norm 那条不被反复相乘的稳定梯度通道，又拿到了 Post-Norm 对表征尺度的周期性约束。这个拓扑还自带退化能力：令 $\mathrm{LN}^X=0$ 就回到 Pre-Norm，令 $\mathrm{LN}^Y=0$ 就回到 Post-Norm，介于其间则覆盖 Mix-LN 式的层级混合，等于把整个混合归一化设计空间收进一个参数化框架。
 
-2. **深度依赖的更新缩放（Depth-wise Scaling）**:
+**2. 深度依赖的更新缩放（Depth-wise Scaling）：让深层两条流的尺度不打架。**
 
-    - 功能：仅给注入 Post-Norm 流（$X$ 流）的更新乘上 $1/\sqrt{l+1}$（$l$ 为层索引），平衡两条流的相对贡献。
-    - 核心思路：受 DeepNorm 启发，深层时 Pre-Norm 流 $\|Y_i\|_2$ 自然增长、Post-Norm 流 $\|X_i\|_2$ 受 LN 约束保持有界，导致同一份共享更新 $O$ 对 $Y$ 流太小、对 $X$ 流太大。按 $1/\sqrt{l+1}$ 衰减进入 $X$ 流的更新幅度，使深层 Post-Norm 流的优化敏感度降低，从而与 Pre-Norm 训练 recipe 的学习率/warm-up 设置完全兼容，可以直接套用 $\eta=2\times 10^{-3}$ 这种激进设置而不发散。
-    - 设计动机：让 SiameseNorm "drop-in" 替换 Pre-Norm，避免引入新的超参调优负担——这是本方法实用价值的关键，所有实验都直接套用 Pre-Norm recipe。
+两条流各跑各的，深层会出现尺度失衡：Pre-Norm 流 $\|Y_i\|_2$ 随层数自然增长，Post-Norm 流 $\|X_i\|_2$ 被 LN 约束始终有界，于是同一份共享更新 $O$ 对 $Y$ 流显得太小、对 $X$ 流显得太大，深层的 $X$ 流会过度敏感。借鉴 DeepNorm 的思路，作者只给注入 $X$ 流的那份更新乘上 $1/\sqrt{l+1}$（$l$ 为层索引）的衰减，越深衰减越多，把深层 Post-Norm 流的优化敏感度压下来。这样做的直接收益是与现有 Pre-Norm recipe 的学习率/warm-up 完全兼容——可以原封不动套用 $\eta=2\times 10^{-3}$ 这种激进设置而不发散，真正做到 drop-in 替换 Pre-Norm、不引入任何新的超参调优负担，这也是所有实验都能直接复用 Pre-Norm recipe 的原因。
 
-3. **聚合表示的归一化输入（Normalized Input）**:
+**3. 聚合表示的归一化输入（Normalized Input）：保证共享块永远收到分布稳定的输入。**
 
-    - 功能：在送入共享残差块 $F_i$ 之前，对聚合表示 $X_i + \mathrm{LN}_i^Y(Y_i)$ 整体再做一次 LN（即将 $X_i$ 流本身也是 Post-Norm 后的归一化结果，与 $\mathrm{LN}_i^Y(Y_i)$ 在归一化空间相加）。
-    - 核心思路：保证 Attention/MLP 模块永远接收到分布稳定的归一化输入，与标准 Transformer 的训练习惯对齐。消融表（Table 3 行 4 vs 5、行 6 vs 7）显示去掉这一步 PPL 从 10.43 涨到 10.51~10.88。
-    - 设计动机：虽然每条子流都各自归一化过，但融合后的表征若不再归一化，模块输入分布会漂移；这一步本身不是创新点，而是让方法兼容现代 Transformer 训练习惯的必要"粘合剂"。
+虽然 $X_i$（已是 Post-Norm 后的结果）和 $\mathrm{LN}_i^Y(Y_i)$ 各自都归一化过，但两者相加后的融合表征会重新漂移，若直接喂给 $F_i$，Attention/MLP 收到的输入分布就不稳定。因此送入共享块前，对聚合表示 $X_i + \mathrm{LN}_i^Y(Y_i)$ 整体在归一化空间相加（$X_i$ 本身即归一化态），让模块输入始终对齐标准 Transformer 的训练习惯。这一步不是创新点，而是兼容现代 Transformer 的必要"粘合剂"，但去掉它代价不小：消融表（Table 3 行 4 vs 5、行 6 vs 7）显示移除后 PPL 从 10.43 涨到 10.51~10.88。
 
 ### 损失函数 / 训练策略
-完全沿用 Pre-Norm 训练 recipe：标准 AdamW、cosine 学习率、2K-step warm-up，无任何额外超参。所有 $\mathrm{LN}$ 的 scale 初始化为 1.0（不像 Hyper-Connections 用 Pre-Norm 偏置的初始化），直接测试架构本身的内在稳定性。语言建模基于 OLMo + FineWeb-Edu 从零训练，MoE 实验基于 OLMoE，总算力 60,000+ A100 小时。
+完全沿用 Pre-Norm 训练 recipe：标准 AdamW、cosine 学习率、2K-step warm-up，无任何额外超参。所有 $\mathrm{LN}$ 的 scale 初始化为 1.0（不像 Hyper-Connections 依赖 Pre-Norm 偏置的初始化），直接测试架构本身的内在稳定性。语言建模基于 OLMo + FineWeb-Edu 从零训练，MoE 实验基于 OLMoE，总算力 60,000+ A100 小时。
 
 ## 实验关键数据
 

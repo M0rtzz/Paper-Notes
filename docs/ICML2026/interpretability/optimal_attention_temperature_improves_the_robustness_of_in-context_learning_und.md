@@ -41,34 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-模型设定：线性回归 ICL 任务，$(\mathbf x_i, y_i)$ i.i.d. 服从 $\mathbf x \sim \mathcal{N}(\boldsymbol\mu_x, \boldsymbol\Sigma_x)$，$y = \mathbf w^\top \mathbf x + \epsilon$，$\mathbf w \sim \mathcal{N}(\boldsymbol\mu_w, \boldsymbol\Sigma_w)$。Token 嵌入为 $\mathbf Z = [\mathbf x_1\cdots\mathbf x_l; y_1\cdots y_{l-1}\,0]\in\mathbb R^{(d+1)\times l}$（最后一列是 query，对应 label 缺失）。一层 approximate softmax attention $\mathbf E = \mathbf Z + \mathbf V \mathbf Z\cdot\widehat{\text{softmax}}\big(\frac{(\mathbf K\mathbf Z)^\top(\mathbf Q\mathbf Z)}{\tau}\big)$，预测 $\hat y = E_{d+1,l}$。把 $\mathbf V, \mathbf M:=\mathbf K^\top\mathbf Q$ 按角色重参数化（只有 $\mathbf v_{21}, v_{22}, \mathbf m_{21}, \mathbf M_{11}$ 影响预测），即可解析推导。三步走：(1) 在 well-behaved 数据假设和高维极限下推泛化误差闭式；(2) 对 $\tau$ 求极小得到 $\tau_{\text{opt}}$；(3) 用 Bayes-optimal ridge 对应的参数配置（Proposition 4.4）解释为什么 unadjusted $\tau$ 在 shift 下变次优。
+论文要回答的是"推理时调一调注意力温度 $\tau$，能不能把分布偏移下退化的 ICL 拉回近 Bayes 最优"，做法是把这个问题搬进一个高维线性回归 ICL 的可解析玩具里：示例 $(\mathbf x_i, y_i)$ i.i.d. 服从 $\mathbf x \sim \mathcal{N}(\boldsymbol\mu_x, \boldsymbol\Sigma_x)$、$y = \mathbf w^\top \mathbf x + \epsilon$、$\mathbf w \sim \mathcal{N}(\boldsymbol\mu_w, \boldsymbol\Sigma_w)$，拼成 token 嵌入 $\mathbf Z = [\mathbf x_1\cdots\mathbf x_l; y_1\cdots y_{l-1}\,0]\in\mathbb R^{(d+1)\times l}$（末列是 label 缺失的 query），过一层 approximate softmax attention $\mathbf E = \mathbf Z + \mathbf V \mathbf Z\cdot\widehat{\text{softmax}}\big(\frac{(\mathbf K\mathbf Z)^\top(\mathbf Q\mathbf Z)}{\tau}\big)$，读出 $\hat y = E_{d+1,l}$。把 $\mathbf V$、$\mathbf M:=\mathbf K^\top\mathbf Q$ 按角色重参数化（只有 $\mathbf v_{21}, v_{22}, \mathbf m_{21}, \mathbf M_{11}$ 真正影响预测）后，整条分析就化成三步：先在高维极限下把泛化误差写成 $\tau$ 的闭式，再对 $\tau$ 求极小得到 $\tau_{\text{opt}}$，最后用一个模拟 Bayes-optimal ridge 的预训练参数配置来解释为什么不调温度会在 shift 下变次优。
 
 ### 关键设计
 
-1. **Approximate softmax 注意力**:
+**1. Approximate softmax 注意力：为闭式分析造一个 softmax 替身**
 
-    - 功能：保留 softmax 的归一化与温度依赖，但变成解析可处理。
-    - 核心思路：用 $\widehat{\text{softmax}}$ 替代标准 softmax——它行向归一（$\sum_j \widehat{\text{softmax}}_{ij}=1$），输入除以 $\tau$ 的依赖关系几乎与 softmax 一致（见 Figure 1 的直方图对比），但其代数形式让作者能用高斯输入下的 Isserlis 公式算高阶 moment。Remark 3.4 强调：行归一化让模型对 input mean shift 天然鲁棒（线性 attention 没有这个性质），是模型选择的关键依据。
-    - 设计动机：线性 attention 太弱（没温度），标准 softmax 太硬（没闭式）；approximate softmax 是把两端的优点接起来——这种"为分析而设计的替身模型"是高维统计 ML 理论文献的常用范式。
+纯线性 attention 把 softmax 整个去掉、连温度这个变量都没了，标准 softmax 又难在高维下写出闭式，两端都不能用。本文借用 Han et al. (2024) 的 $\widehat{\text{softmax}}$ 作为折中：它依旧行向归一（$\sum_j \widehat{\text{softmax}}_{ij}=1$），对输入除以 $\tau$ 的温度依赖几乎和真 softmax 重合（Figure 1 的直方图对比可见），但代数形式足够简单，让作者能在高斯输入下用 Isserlis 公式逐项算高阶 moment。这一步之所以关键，还因为 Remark 3.4 指出的副产物——行归一化天然吸收 input mean shift（线性 attention 没有这个性质），这同时是选这个替身模型的依据，也预示了后文"mean shift 无害、covariance shift 才是杀手"的结论。这种"为分析而设计的替身模型"正是高维统计 ML 理论里反复出现的范式。
 
-2. **泛化误差闭式与最优温度公式**:
+**2. 泛化误差闭式与最优温度公式：把调温度变成可解的最优控制**
 
-    - 功能：给出 $\tau$ 与 ICL 误差的解析关系，并由此读出最优温度。
-    - 核心思路：在 Assumptions 3.1（数据有界且 well-conditioned）、3.2（$l, d \to \infty$）、4.1（参数范数约束）下，Theorem 4.2 给出
-      $\mathcal G(\mathbf V, \mathbf M) = \frac{1}{\tau^2}\text{Tr}(\mathbf A\mathbf M_{11}^\top \mathbf F_1\mathbf M_{11}) - \frac{1}{\tau}\text{Tr}(\mathbf A(\mathbf F_2\mathbf M_{11} + \mathbf M_{11}^\top \mathbf F_2^\top)) + \text{Tr}(\mathbf{AB}) + \sigma^2$，
-      其中 $\mathbf A = \boldsymbol\Sigma_x + \boldsymbol\mu_x\boldsymbol\mu_x^\top$、$\mathbf B = \boldsymbol\Sigma_w + \boldsymbol\mu_w\boldsymbol\mu_w^\top$，$\mathbf F_1, \mathbf F_2$ 是只依赖测试分布与参数的矩阵。这是 $\tau$ 的二次有理式，对 $\tau$ 求导即得 Theorem 4.3 的
-      $\tau_{\text{opt}} = \frac{2\,\text{Tr}(\mathbf A\mathbf M_{11}^\top \mathbf F_1\mathbf M_{11})}{\text{Tr}(\mathbf A(\mathbf F_2\mathbf M_{11} + \mathbf M_{11}^\top \mathbf F_2^\top))}$。
-      闭式的好处：(a) 可解释——分子对应"selectivity 太弱时的过拟合"，分母对应"signal alignment"；(b) 等距 shift 下可化简：若训练用 $\mathcal N(0, I)$、测试加 input 方差倍率 $a$、task 方差倍率 $b$、噪声 $\sigma$，$\tau_{\text{opt}}$ 退化为只含 $a, b, \sigma, l/d$ 的简洁公式，便于从 data shift 的 moments 直接读出。
-    - 设计动机：把"调温度提点"从工程黑魔法升级为可证明的最优控制；同时给出"何时温度调节真的能恢复 Bayes 最优"的判据（Corollary 类结论），避免盲目用 temperature scaling。
+在 Assumptions 3.1（数据有界且 well-conditioned）、3.2（$l, d \to \infty$）、4.1（参数范数约束）下，Theorem 4.2 把泛化误差算成 $\mathcal G(\mathbf V, \mathbf M) = \frac{1}{\tau^2}\text{Tr}(\mathbf A\mathbf M_{11}^\top \mathbf F_1\mathbf M_{11}) - \frac{1}{\tau}\text{Tr}(\mathbf A(\mathbf F_2\mathbf M_{11} + \mathbf M_{11}^\top \mathbf F_2^\top)) + \text{Tr}(\mathbf{AB}) + \sigma^2$，其中 $\mathbf A = \boldsymbol\Sigma_x + \boldsymbol\mu_x\boldsymbol\mu_x^\top$、$\mathbf B = \boldsymbol\Sigma_w + \boldsymbol\mu_w\boldsymbol\mu_w^\top$，$\mathbf F_1, \mathbf F_2$ 是只依赖测试分布与参数的矩阵。这是一条关于 $\tau$ 的二次有理式，对 $\tau$ 求导置零就直接得到 Theorem 4.3 的 $\tau_{\text{opt}} = \frac{2\,\text{Tr}(\mathbf A\mathbf M_{11}^\top \mathbf F_1\mathbf M_{11})}{\text{Tr}(\mathbf A(\mathbf F_2\mathbf M_{11} + \mathbf M_{11}^\top \mathbf F_2^\top))}$。
 
-3. **Bayes-optimal pretraining 参数对照 (Proposition 4.4)**:
+闭式带来两个好处。一是可解释：分子对应"selectivity 太弱时的过拟合项"，分母对应"signal alignment 项"，最优温度就是两者的平衡点。二是可落地：在等距 shift 下公式还能进一步化简——训练用 $\mathcal N(0, I)$、测试给 input 方差乘 $a$、task 方差乘 $b$、噪声 $\sigma$，$\tau_{\text{opt}}$ 退化成只含 $a, b, \sigma, l/d$ 的简洁式子，可以直接从 data shift 的 moments 读出最优值。这一步把工程界"调温度有时能提点"的黑魔法，升级成可证明的最优控制，同时给出"何时温度调节真的能恢复 Bayes 最优"的判据，避免盲目套用 temperature scaling。
 
-    - 功能：解释为什么在分布偏移下"原生温度 $\tau=1$"会次优，从而 $\tau_{\text{opt}} \ne 1$ 不仅成立而且有意义。
-    - 核心思路：当 $\tau$ 在预训练时设为 1 时，作者显式构造 $(\mathbf M_{11}, \mathbf v_{21}, v_{22}, \mathbf m_{21})$ 使其模拟 Bayes-optimal ridge 估计 $\hat{\mathbf w}_{\text{Bayes}} = (\frac{\bar{\mathbf X}^\top\bar{\mathbf X}}{\sigma^2} + \boldsymbol\Sigma_w^{-1})^{-1}(\frac{\bar{\mathbf X}^\top\bar{\mathbf y}}{\sigma^2} + \boldsymbol\Sigma_w^{-1}\boldsymbol\mu_w)$；这把预训练模型钉在一个干净 baseline 上。然后分别分析三类 shift——input mean shift（被中心化吸收）、input covariance shift（$\mathbf M_{11}$ 已用训练协方差拟，因此被破坏）、task / noise shift（随 $l\to\infty$ 影响衰减）——表明只有协方差类 shift 真正破坏 ICL，恰好这种 shift 可被温度调节缓解。
-    - 设计动机：把"理论框架内的最优温度"与"实际预训练模型的 ICL 行为"链接起来，让 $\tau_{\text{opt}}$ 不只是数学练习而是部署指南。
+**3. Bayes-optimal 预训练参数对照：说明为什么 $\tau_{\text{opt}}\neq 1$ 有意义**
+
+光有最优温度公式还不够，得说清在真实预训练模型里调温度为什么有用。Proposition 4.4 把预训练时温度设为 1 的模型显式构造成模拟 Bayes-optimal ridge 估计 $\hat{\mathbf w}_{\text{Bayes}} = (\frac{\bar{\mathbf X}^\top\bar{\mathbf X}}{\sigma^2} + \boldsymbol\Sigma_w^{-1})^{-1}(\frac{\bar{\mathbf X}^\top\bar{\mathbf y}}{\sigma^2} + \boldsymbol\Sigma_w^{-1}\boldsymbol\mu_w)$，把模型钉死在一个干净 baseline 上，再逐类拆解 shift 的影响：input mean shift 被行归一化的中心化吸收、几乎无害；input covariance shift 因为 $\mathbf M_{11}$ 是用训练协方差拟出来的而被直接破坏；task / noise shift 的影响则随 $l\to\infty$ 衰减。结论是只有协方差类 shift 真正破坏 ICL，而恰好这一类 shift 能被温度调节缓解——这就把"理论框架里的最优温度"和"部署时该不该调温度"接到了一起。
 
 ### 损失函数 / 训练策略
-理论部分不涉及训练 loss；实证部分对 GPT-2、Llama2-7B 在 noisy in-context demonstrations 引起的分布偏移 QA 任务上，对 attention temperature 做 inference-time scaling（不重训），用 Theorem 4.3 形式估计 $\tau_{\text{opt}}$ 或近邻 grid search。
+理论部分不涉及训练 loss。实证部分在 GPT-2、Llama2-7B 上针对 noisy in-context demonstrations 引起的分布偏移 QA 任务，只对 attention temperature 做 inference-time scaling（不重训），用 Theorem 4.3 的形式估计 $\tau_{\text{opt}}$ 或在其近邻做 grid search。
 
 ## 实验关键数据
 

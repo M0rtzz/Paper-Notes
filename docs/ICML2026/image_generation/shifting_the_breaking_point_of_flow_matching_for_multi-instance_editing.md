@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：参考图 $I^{\mathrm{ref}}$、$N$ 个 bbox $b_n$、$N$ 条文本指令 $s_n$，以及一个全局/空 prompt $s_g$。骨干是 FLUX.1 Kontext（MMDiT + Rectified Flow Matching），保持 backbone 冻结。流程上：
-
-1. **多 prompt 独立编码**：把 $s_g$ 和每个 $s_n$ 单独喂文本编码器得到变长嵌入，拼成最终的 text token 序列 $Z^{\text{text}}$，避免在编码阶段就发生概念串扰。
-2. **Token 空间分区**：按"模态 × 实例归属"把 joint token 序列 $Z = Z^{\text{text}} \| Z^{\text{latent}} \| Z^{\text{context}}$ 划分成全局 prompt $\mathbb{T}_g$、实例 prompt $\mathbb{T}_n$、背景 latent $\mathbb{L}_u$、实例 latent $\mathbb{L}_n$、背景 context $\mathbb{C}_u$、实例 context $\mathbb{C}_n$（bbox 重叠时一个 token 可同属多个 $n$）。
-3. **分层注意力掩码调度**：MMDiT 早期层 $L_{\text{early}}$ 与晚期层 $L_{\text{late}}$ 用和谐掩码 $M^{\mathrm{har}}$，中段层 $L_{\text{mid}}$ 用解耦掩码 $M^{\mathrm{dis}}$，得到的 velocity field 同时满足 instance 隔离与全局相干。
-4. **单次 ODE 积分**：用上述受约束的 $v_\theta$ 从 $t=0$ 一次积到 $t=1$，得到一次性完成 $N$ 条编辑的 $I^{\text{edit}}$。
-5. **可选 LoRA 微调**：在 Crello Edit 训练子集上以 $r=32$ 的 LoRA 适配 MMDiT，用同一掩码策略最小化 $\mathcal{L}_{\mathrm{FM}}$，缓解原模型对小区域/短指令的"懒得改"问题。
+方法要解决的是"多实例同时编辑时 N 条指令在共享注意力里相互串味"，而把这件事整体转成"在冻结的 FLUX.1 Kontext（MMDiT + Rectified Flow Matching）骨干上，给 joint attention 套一层按实例分块的结构化掩码，让一次前向积分就完成 N 条互不干扰的编辑"。具体而言，先把全局/空 prompt $s_g$ 和每条带 bbox 的指令 $s_n$ 各自独立编码再拼成 text token，再按"模态 × 实例归属"把整条 joint token 序列 $Z = Z^{\text{text}} \| Z^{\text{latent}} \| Z^{\text{context}}$ 划成全局 prompt $\mathbb{T}_g$、实例 prompt $\mathbb{T}_n$、背景/实例 latent $\mathbb{L}_u/\mathbb{L}_n$、背景/实例 context $\mathbb{C}_u/\mathbb{C}_n$（bbox 重叠时一个 token 可同属多个 $n$）；最后让 MMDiT 不同深度的层用不同掩码约束 velocity field，从 $t=0$ 一次 ODE 积到 $t=1$ 得到成图。
 
 ### 关键设计
 
-1. **Instance-Disentangled Attention（IDAttn）核心算子**：
+**1. Instance-Disentangled Attention（IDAttn）：用加性掩码把跨实例的注意力通路从架构上掐断**
 
-    - 功能：把标准 joint attention $\mathrm{Attn}(Q,K,V) = \mathrm{softmax}(QK^\top/\sqrt{d})V$ 改写为 $\mathrm{IDAttn}(Q,K,V,M) = \mathrm{softmax}(QK^\top/\sqrt{d} + M)V$，用加性 $\{0, -\infty\}$ 掩码裁断不应连通的 token 对。
-    - 核心思路：定义两套互补掩码。**$M^{\mathrm{dis}}$（解耦）**只允许三类连通——同一实例 $n$ 内部 $\mathbb{T}_n \cup \mathbb{L}_n \cup \mathbb{C}_n$ 互通、全局 prompt $\mathbb{T}_g$ 单向 attend 所有 latent/context、背景 latent/context 只看全局 prompt 与非实例 prompt 的 token；任何跨实例的 $\mathbb{T}_n \leftrightarrow \mathbb{T}_m$（$n \neq m$）都被 $-\infty$ 屏蔽。**$M^{\mathrm{har}}$（和谐）**放宽到允许各实例的 latent/context 互相 attend 以及看到全部图像 token，仅保留 prompt 之间的隔离。
-    - 设计动机：把"属性串味"这件事从 loss/优化层面挪到架构层面，硬性禁止跨实例 prompt-prompt、prompt-latent 的耦合；之所以保留 prompt→latent 的全局单向通道，是为了让全局风格 token 仍能影响所有区域，不至于把背景割碎。
+作者把"属性串味"的根因诊断为结构性的——joint attention 默认允许任意两个 token 互相 attend，instance 之间的隔离从未被强制。针对这一点，IDAttn 不在推理时迭代优化 attention map，而是直接改注意力的连通图：把标准算子 $\mathrm{Attn}(Q,K,V) = \mathrm{softmax}(QK^\top/\sqrt{d})V$ 改写为 $\mathrm{IDAttn}(Q,K,V,M) = \mathrm{softmax}(QK^\top/\sqrt{d} + M)V$，用一个 $\{0, -\infty\}$ 的加性掩码 $M$ 裁断不该连通的 token 对。它定义两套互补掩码：解耦掩码 $M^{\mathrm{dis}}$ 只放行三类连通——同一实例内部 $\mathbb{T}_n \cup \mathbb{L}_n \cup \mathbb{C}_n$ 互通、全局 prompt $\mathbb{T}_g$ 单向 attend 所有 latent/context、背景 latent/context 只看全局与非实例 prompt，任何跨实例的 $\mathbb{T}_n \leftrightarrow \mathbb{T}_m$（$n \neq m$）都被 $-\infty$ 屏蔽；和谐掩码 $M^{\mathrm{har}}$ 则放宽到允许各实例 latent/context 互相 attend 并看到全部图像 token，仅保留 prompt 之间的隔离。之所以即便在解耦时也保留 prompt→latent 的全局单向通道，是为了让全局风格 token 仍能影响所有区域，不至于把背景割成补丁。这样一来，跨实例的 prompt-prompt、prompt-latent 耦合被硬性禁止，部署时无需任何 per-sample 优化迭代，可即插即用到任何 MMDiT。
 
-2. **分层 Mask 调度（early/mid/late layer scheduling）**：
+**2. 分层 Mask 调度：把解耦塞进"语义绑定"最敏感的中段层**
 
-    - 功能：决定 MMDiT 每一层用 $M^{\mathrm{har}}$ 还是 $M^{\mathrm{dis}}$，平衡"实例分离"和"全局连贯"。
-    - 核心思路：作者基于"Transformer 早层抽粗特征、中层做语义绑定、晚层全局协调"的经验/理论观察，把 schedule 取为 $(L_{\text{early}}, L_{\text{mid}}, L_{\text{late}}) = (M^{\mathrm{har}}, M^{\mathrm{dis}}, M^{\mathrm{har}})$；表 1 的 8 种组合消融显示这个三段式在 Tgt CLIP / Bg LPIPS / Loc CLIP / AR 上同时最优，全程 $M^{\mathrm{dis}}$ 会牺牲背景一致性，全程 $M^{\mathrm{har}}$ 则掉到和 vanilla FLUX 一档（AR 仅 80%）。
-    - 设计动机：纯解耦会让背景碎成补丁，纯和谐又把多实例语义糊成一锅；把解耦塞进"语义绑定"最敏感的中段、用和谐层在早晚做"开局打底"和"收尾拼合"。
+只有掩码还不够，关键是每一层该用哪套掩码。作者依据"Transformer 早层抽粗特征、中层做语义绑定、晚层全局协调"的经验观察，把调度定为 $(L_{\text{early}}, L_{\text{mid}}, L_{\text{late}}) = (M^{\mathrm{har}}, M^{\mathrm{dis}}, M^{\mathrm{har}})$：早晚层用和谐掩码做"开局打底"和"收尾拼合"，只在中段最容易串味的语义绑定阶段插入解耦掩码。这样既避免了纯解耦把背景碎成补丁，又避免纯和谐把多实例语义糊成一锅。8 种组合的消融印证了这个三段式在 Tgt CLIP / Bg LPIPS / Loc CLIP / AR 上同时最优——全程 $M^{\mathrm{dis}}$ 牺牲背景一致性，全程 $M^{\mathrm{har}}$ 则掉到和 vanilla FLUX 同档（AR 仅 80%），而把解耦放进早层粗特征阶段会让多实例编辑严重退化。
 
-3. **高效多 prompt 独立编码**：
+**3. 高效多 prompt 独立编码：让文本注意力成本按"语义量"而非按 $N$ 计费**
 
-    - 功能：在保证实例文本表征互不污染的前提下，把 text token 总长压缩到与"实际语义体量"线性相关，而不是与 $N \times L_{\text{pad}}$ 成正比。
-    - 核心思路：先把原始指令拆成 $s_g$（实操中取空 prompt）和 $\{s_n\}_{n=1}^N$，每条**单独**过文本编码器得到变长嵌入，再 concat 成最终 $Z^{\text{text}}$；相比 (i) 单 prompt 后端掩码（语义已在编码阶段污染）和 (ii) 等长 pad 的多 prompt（计算量随 $N$ 线性炸）两条主流路线，本设计同时拿到"按构造隔离"和"按内容计费"两个好处。
-    - 设计动机：在 InfoEdit 这种 $N$ 可达 285 的极端场景下，pad 到 77 token × 285 条会让 attention $O((NL)^2)$ 直接爆显存；图 3 的推理时间曲线证实本策略让 wall-clock 随 $N$ 增长几乎线性而非二次。
+在 InfoEdit 这种单图 $N$ 可达 285 的极端场景下，文本侧的编码方式直接决定能否跑得动。两条主流路线都不理想：单 prompt 后端掩码会在编码阶段就让语义互相污染；等长 pad 的多 prompt 又让 attention 成本随 $N$ 二次膨胀，pad 到 77 token × 285 条会让 $O((NL)^2)$ 直接爆显存。本文改为先把指令拆成 $s_g$（实操取空 prompt）和 $\{s_n\}_{n=1}^N$，每条**单独**过文本编码器得到变长嵌入，再 concat 成最终 $Z^{\text{text}}$。这样同时拿到"按构造隔离"（编码阶段就不串扰）和"按内容计费"（总长正比于实际语义体量而非 $N \times L_{\text{pad}}$）两个好处，推理 wall-clock 随 $N$ 增长几乎线性而非二次。
 
 ### 损失函数 / 训练策略
-推理阶段无需任何额外训练。可选的 domain-specific 微调直接复用 conditional rectified flow matching 损失 $\mathcal{L}_{\mathrm{FM}} = \mathbb{E}_{t, x_1, x_0}[\|v_\theta(x_t, t \mid c) - (x_1 - x_0)\|^2]$，其中 $x_t = (1-t)x_0 + t x_1$；在挂载 IDAttn 与多 prompt 编码后，对 MMDiT 全层挂 LoRA（$r=32$）在 Crello Edit 训练集 1512 样本上微调，专门弥补原模型对小区域、短指令的欠拟合。
+推理阶段无需任何额外训练，IDAttn 与分层调度都是即插即用的。可选的 domain-specific 微调直接复用 conditional rectified flow matching 损失 $\mathcal{L}_{\mathrm{FM}} = \mathbb{E}_{t, x_1, x_0}[\|v_\theta(x_t, t \mid c) - (x_1 - x_0)\|^2]$，其中 $x_t = (1-t)x_0 + t x_1$；在挂载 IDAttn 与多 prompt 编码后，对 MMDiT 全层挂 LoRA（$r=32$），在 Crello Edit 训练集 1512 样本上以同一掩码策略微调，专门弥补原模型对小区域、短指令"懒得改"的欠拟合。
 
 ## 实验关键数据
 

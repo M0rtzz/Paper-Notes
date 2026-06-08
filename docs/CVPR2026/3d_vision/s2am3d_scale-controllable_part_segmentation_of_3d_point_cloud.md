@@ -37,86 +37,53 @@ tags:
 
 ### 整体框架
 
-S2AM3D采用**解耦训练**策略，分为两个阶段：
+S2AM3D 要解决的核心矛盾是：纯 3D 部件分割数据太少、泛化差，而借 SAM 等 2D 模型给 3D 渲染图打标再回投，又会在遮挡和复杂拓扑下跨视图打架。它的思路是把两条路拧成一股——2D 先验负责泛化，3D 对比监督负责全局一致——并把分割粒度做成一个能连续旋的"旋钮"。
 
-- **阶段一**：训练点一致性部件编码器（Point-Consistent Part Encoder），融合2D分割先验与3D对比监督，产生全局一致的逐点特征
-- **阶段二**：冻结编码器，训练尺度感知提示解码器（Scale-Aware Prompt Decoder），以点提示索引 $p$ 和可选尺度提示 $s \in [0,1]$ 为条件，实现灵活的部件分割
+整体走两段解耦训练。第一段训练**点一致性部件编码器**：输入点云 $\mathbf{P} \in \mathbb{R}^{N \times 3}$，输出每个点一个特征 $\mathbf{F} \in \mathbb{R}^{N \times D}$，训练信号同时来自多视角 SAM 蒸馏和原生 3D 标签的对比损失。第二段冻结编码器、训练**尺度感知提示解码器**：给定一个点提示索引 $p$ 和一个可选尺度提示 $s \in [0,1]$，解码器输出该提示对应部件的概率掩码 $\hat{\mathbf{m}} \in [0,1]^N$。把粒度交给 $s$，同一个点提示就能在不重新聚类的前提下返回"一条桌腿"或"整套桌腿加桌面"。
 
-输入点云 $\mathbf{P} \in \mathbb{R}^{N \times 3}$，编码器输出逐点特征 $\mathbf{F} \in \mathbb{R}^{N \times D}$，解码器根据提示生成概率掩码 $\hat{\mathbf{m}} \in [0,1]^N$。
+### 关键设计
 
-### 点一致性部件编码器
+**1. 点一致性部件编码器：在 2D 蒸馏之上叠 3D 对比监督，治跨视图不一致。**
 
-编码器的核心思想是**在2D蒸馏的基础上叠加3D对比监督**，解决仅靠多视图2D蒸馏带来的跨视图不一致问题。
-
-**基础架构**：采用PVCNN体素编码器提取点特征，转换为三平面（tri-plane）表示 $\mathbf{T} \in \mathbb{R}^{3 \times D \times H \times W}$（$xy$、$yz$、$zx$ 三个正交平面），再通过Transformer块聚合特征。三平面特征从随机视角渲染为2D潜变量，用SAM蒸馏进行监督。
-
-**三平面特征提取**：给定3D坐标 $(x,y,z)$，将点反投影到三个特征平面并求和：
+单靠多视角 2D 蒸馏的毛病在于各视角各分各的，遮挡、细长结构、复杂拓扑下不同视角对同一部件的判断会冲突，融合回 3D 就出现边界模糊、内部割裂。编码器用 PVCNN 体素骨干提特征，转成三平面（tri-plane）表示 $\mathbf{T} \in \mathbb{R}^{3 \times D \times H \times W}$（$xy$、$yz$、$zx$ 三个正交面），再经 Transformer 聚合；三平面从随机视角渲染成 2D 潜变量交给 SAM 蒸馏。取某点 $(x,y,z)$ 的特征时，把它投到三个面上求和：
 
 $$\mathbf{F} = \Big[\mathbf{T}_{xy}(x_n, y_n) + \mathbf{T}_{yz}(y_n, z_n) + \mathbf{T}_{zx}(z_n, x_n)\Big]_{n=1}^{N}$$
 
-**3D对比监督**：关键创新在于引入原生3D标签数据的对比学习。约束对比在实例内部（intra-instance）进行，每个mini-batch仅包含一个物体，避免跨实例语义不匹配。对于锚点 $i$ 及其标签 $y_i$，正样本集为：
-
-$$\hat{P}(i) = \{j \in \hat{P} \setminus \{i\} \mid y_j = y_i\}$$
-
-使用带温度 $\tau$ 的余弦相似度 $s_{ij} = \mathbf{f}_i^\top \mathbf{f}_j / \tau$，对比损失为：
+真正治"跨视图打架"的是叠进来的 3D 对比监督。它直接在原生 3D 部件标签上做对比，且把对比限制在单个物体内部（intra-instance，每个 mini-batch 只放一个物体），避免跨物体的语义错配。对锚点 $i$（标签 $y_i$），同部件的点构成正样本集 $\hat{P}(i) = \{j \in \hat{P} \setminus \{i\} \mid y_j = y_i\}$，用带温度 $\tau$ 的余弦相似度 $s_{ij} = \mathbf{f}_i^\top \mathbf{f}_j / \tau$ 拉近正样本、推远负样本：
 
 $$\mathcal{L}_{\text{contr}} = \frac{1}{|\hat{P}|} \sum_{i \in \hat{P}} -\log \frac{\sum_{j \in \hat{P}(i)} e^{s_{ij}}}{\sum_{j \in \hat{P} \setminus \{i\}} e^{s_{ij}}}$$
 
-该目标使同一部件的点特征紧凑聚合，不同部件的点特征远离，产生全局一致的嵌入和清晰的边界。
+这一项把同部件的点在特征空间里压成一团、不同部件推开，得到全局一致、边界清晰的逐点嵌入——消融里它正是最大的性能来源。
 
-### 尺度感知提示解码器
+**2. 尺度感知提示解码器：把分割粒度做成一个连续可调的旋钮。**
 
-解码器接收编码器输出的点特征 $\mathbf{F}$ 和3D坐标 $\mathbf{P}$，加入3D正弦位置编码得到基础表示：
+PartField 那类靠后处理聚类调粒度，控制不连续也不直观；Point-SAM 那类点提示又没有显式的粒度档位。这里把粒度直接编码成连续标量 $s \in [0,1]$（定义为目标部件点数占总点数的比例），喂给解码器调制特征。解码器先给编码器特征 $\mathbf{F}$ 叠上 3D 正弦位置编码得到基础表示 $\mathbf{X}^{(0)} = \mathbf{F} + \mathrm{PE}(\mathbf{P})$，随后做两件事。
 
-$$\mathbf{X}^{(0)} = \mathbf{F} + \mathrm{PE}(\mathbf{P})$$
+一是**尺度调制**。把连续的 $s$ 过一组可学习正弦嵌入 $\mathbf{e}(s) = \big[\sin(\omega_k s + \phi_k),\ \cos(\omega_k s + \phi_k)\big]_{k=1}^{M}$（$\{\omega_k,\phi_k\}$ 可学，$M$ 为频率对数），再用 FiLM 在通道维上对全局特征做仿射调制：
 
-#### 尺度调制器（Scale Modulator）
+$$[\boldsymbol{\gamma}, \boldsymbol{\beta}] = \text{Linear}(\mathrm{LN}(\mathbf{e}(s))), \qquad \mathrm{FiLM}(\mathbf{X}; s) = \mathbf{X} \odot (1 + \alpha \boldsymbol{\gamma}) + \alpha \boldsymbol{\beta}$$
 
-尺度 $s$ 定义为部件的相对大小（该部件点数占总点数的比例）。对连续尺度 $s \in [0,1]$，构建**可学习正弦嵌入**：
+其中 $\alpha$ 是可学习标量门控。FiLM 与 Transformer 块交替堆 $L_m$ 层 $\mathbf{X}^{(\ell+1)} = T_\ell\big(\mathrm{FiLM}(\mathbf{X}^{(\ell)}; s)\big)$，得到尺度条件下的增强表示 $\tilde{\mathbf{F}} = \mathbf{X}^{(L_m)}$。训练时还以 0.1 的概率把 $\mathbf{e}(s)$ 整个置零（尺度 Dropout），此时 FiLM 退化成恒等映射，于是推理阶段即使不给 $s$ 也能正常出结果。直观地说，旋小 $s$ 让同一个点提示收敛到更细的子部件，旋大 $s$ 则吸纳更多邻接点扩成大部件：比如点在椅子腿上，小 $s$ 出"单条腿"，调大就逐步并入"四条腿底座"乃至"整把椅子"。
 
-$$\mathbf{e}(s) = \big[\sin(\omega_k s + \phi_k), \ \cos(\omega_k s + \phi_k)\big]_{k=1}^{M}$$
-
-其中 $\{\omega_k, \phi_k\}$ 为可学习参数，$M$ 为频率对数。然后通过**FiLM（Feature-wise Linear Modulation）**在通道维度调制全局特征：
-
-$$[\boldsymbol{\gamma}, \boldsymbol{\beta}] = \text{Linear}(\mathrm{LN}(\mathbf{e}(s)))$$
-
-$$\mathrm{FiLM}(\mathbf{X}; s) = \mathbf{X} \odot (1 + \alpha \boldsymbol{\gamma}) + \alpha \boldsymbol{\beta}$$
-
-其中 $\alpha$ 为可学习标量门控。FiLM与Transformer块交替堆叠 $L_m$ 层：
-
-$$\mathbf{X}^{(\ell+1)} = T_\ell\big(\mathrm{FiLM}(\mathbf{X}^{(\ell)}; s)\big), \quad \ell = 0, \dots, L_m - 1$$
-
-最终得到尺度条件增强表示 $\tilde{\mathbf{F}} = \mathbf{X}^{(L_m)}$。
-
-**尺度Dropout**：训练时以概率0.1随机将 $\mathbf{e}(s)$ 置零，此时FiLM退化为恒等映射，保证推理时无需尺度输入也能工作。
-
-#### 双向交叉注意力（Bi-directional Cross-Attention）
-
-单向交叉注意力难以在一次前向传播中同时完成上下文聚合和细粒度细化。双向交叉注意力让提示点特征 $\tilde{\mathbf{F}}_p \in \mathbb{R}^{1 \times D}$ 与全局特征 $\tilde{\mathbf{F}} \in \mathbb{R}^{N \times D}$ 双向交互：
+二是**双向交叉注意力**。单向交叉注意力很难在一次前向里既聚上下文又做细化，所以这里让提示点特征 $\tilde{\mathbf{F}}_p \in \mathbb{R}^{1 \times D}$ 和全局特征 $\tilde{\mathbf{F}} \in \mathbb{R}^{N \times D}$ 来回各更新一遍：
 
 $$\mathbf{q}^{(\ell+1)} = \mathbf{q}^{(\ell)} + \mathrm{CAttn}(\mathbf{q}^{(\ell)}; \mathbf{Y}^{(\ell)})$$
 
 $$\mathbf{Y}^{(\ell+1)} = \mathrm{FFN}\Big(\mathbf{Y}^{(\ell)} + \mathrm{CAttn}(\mathbf{Y}^{(\ell)}; \mathbf{q}^{(\ell+1)})\Big)$$
 
-堆叠 $L_d$ 层后，经MLP和Sigmoid输出逐点概率掩码：
+提示 query 先从全局特征吸上下文，全局特征再回头被更新后的 query 细化。堆 $L_d$ 层后过 MLP + Sigmoid 出逐点概率掩码 $\hat{\mathbf{m}} = \sigma(\mathrm{MLP}(\mathbf{H})) \in [0,1]^N$。
 
-$$\hat{\mathbf{m}} = \sigma(\mathrm{MLP}(\mathbf{H})) \in [0,1]^N$$
+**3. 大规模部件数据集与自动化构建流水线：给 3D 对比监督喂足干净数据。**
+
+3D 对比监督要奏效，前提是有足够多、足够干净的原生部件标签，而现有 3D 部件数据集类别和规模都吃紧。作者从 Objaverse 出发自建了一套覆盖 400+ 类别、含 10 万+ 点云实例、约 120 万部件标注的数据集，靠三步自动化流水线把噪声压下去：先按表面积比例采样并分配部件标签；再训练一个二分类 PointNet 验证器，自动剔除标注不合理的样本；最后对同一标签下空间不连通的区域用 DBSCAN 拆成独立标签，修掉"一个标签横跨两块不相连几何"的脏标注。消融显示把它换成 PartNet 训练数据后性能明显掉，说明这批数据和已有数据在分布上互补。
 
 ### 损失函数
 
-分割损失采用**动态加权BCE + Dice**的混合目标：
+分割端用**动态加权 BCE + Dice** 的混合目标：
 
 $$\mathcal{L}_{\text{seg}} = \lambda_{\text{bce}} \mathrm{BCE}_{\text{dyn}}(\hat{\mathbf{m}}, \mathbf{m}) + \lambda_{\text{dice}} \left(1 - \frac{2\hat{\mathbf{m}}^\top \mathbf{m}}{\|\hat{\mathbf{m}}\|_1 + \|\mathbf{m}\|_1}\right)$$
 
-动态BCE根据每个样本的正样本比例 $\pi$ 自适应计算权重 $\beta = (1-\pi)/(\pi + \varepsilon)$，缓解类别不平衡。Dice项直接优化集合级别的重叠度，对小部件和长尾分布更鲁棒。
-
-### 数据集构建
-
-构建了包含**10万+点云实例、约120万部件标注**的大规模数据集，数据来源于Objaverse，覆盖400+类别。自动化流水线包括三个步骤：
-
-1. **部件标注**：基于表面积比例采样并分配部件标签
-2. **质量过滤**：训练二分类PointNet验证器，自动筛选标注不合理的样本
-3. **连通性细化**：对同一标签下空间不连通的区域，用DBSCAN聚类拆分为独立标签
+动态 BCE 按每个样本的正样本比例 $\pi$ 自适应给权重 $\beta = (1-\pi)/(\pi + \varepsilon)$，缓解部件占比悬殊带来的类别不平衡；Dice 项直接优化集合级重叠，对小部件和长尾分布更稳。编码器阶段则由 SAM 蒸馏损失与上面的对比损失 $\mathcal{L}_{\text{contr}}$ 共同监督。
 
 ## 实验
 

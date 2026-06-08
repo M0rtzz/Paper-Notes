@@ -42,42 +42,31 @@ tags:
 
 ### 整体框架
 
-输入是一个 MOMDP $\langle\mathcal{S},\mathcal{A},T,\mu_0,r,\gamma\rangle$，其中奖励 $r:\mathcal{S}\times\mathcal{A}\to\mathbb{R}^{K+L}$ 的前 $K$ 维是"要做 max-min 公平"的目标，后 $L$ 维是"必须满足 $J\ge C$"的约束。算法输出一个 softmax 策略 $\pi(\cdot|s)=\mathrm{softmax}\{Q(s,\cdot)/\beta\}$ 在最大化最小目标回报的同时满足所有约束。
+要解决的问题是：在一个 MOMDP $\langle\mathcal{S},\mathcal{A},T,\mu_0,r,\gamma\rangle$ 里，奖励 $r:\mathcal{S}\times\mathcal{A}\to\mathbb{R}^{K+L}$ 的前 $K$ 维要做"最差目标最优"的 max-min 公平、后 $L$ 维必须满足硬约束 $J\ge C$，最终输出一个 softmax 策略 $\pi(\cdot|s)=\mathrm{softmax}\{Q(s,\cdot)/\beta\}$。本文的转法是：先把策略空间里非凸非可微的原问题搬到占用测度空间凸化，再取它的熵正则对偶，把一切都浓缩成一个只关于"约束乘子 $u\in\mathbb{R}_+^L$ + 目标权重 $w\in\Delta^K$"的有限维凸优化。
 
-整个流程是**双层迭代**：
-
-- **内层**：固定权重 $(u,w)$，用 soft Bellman 迭代把 $Q$ 函数训到 $Q^*_{u,w}$（这对应一个熵正则化的"标量化 RL 子问题"，标量奖励是 $\sum_l u_l c^{(l)}+\sum_k w_k r^{(k)}$）。
-- **外层**：根据内层得到的 $\pi^*_{u,w}$ 估计 $\nabla_{(u,w)}\mathcal{L}(u,w)$，对 $(u,w)$ 做一步投影梯度下降，投影到约束乘子空间 $\mathbb{R}_+^L$ 和目标权重单纯形 $\Delta^K$ 上。
-
-数学上原问题 (式 2-3) 经占用测度化后变成凸规划 (式 4-6)，作者进一步证明其对偶可写成
+落到算法上是一个内外双层迭代。内层固定 $(u,w)$，用 soft Bellman 迭代把 $Q$ 训到 $Q^*_{u,w}$，这等价于一个标量奖励为 $\sum_l u_l c^{(l)}+\sum_k w_k r^{(k)}$ 的熵正则单目标 RL 子问题；外层拿内层得到的 $\pi^*_{u,w}$ 估出梯度，对 $(u,w)$ 做一步投影梯度下降。两层共同求解的对偶损失是
 
 $$\min_{u\in\mathbb{R}_+^L,\,w\in\Delta^K} \mathcal{L}(u,w) = \sum_s \mu_0(s)\,v^*_{u,w}(s) - \sum_{l=1}^L u_l C^{(l)}$$
 
-这里 $v^*_{u,w}$ 是熵正则 Bellman 算子 $\mathcal{T}_{u,w}$ 的不动点。
+其中 $v^*_{u,w}$ 是熵正则 Bellman 算子 $\mathcal{T}_{u,w}$ 的不动点。
 
 ### 关键设计
 
-1. **占用测度凸化 + 对偶凸化（双层凸结构）**：
+**1. 占用测度凸化 + 对偶凸化：把非可微 max-min 变成有限维凸优化**
 
-    - 功能：把策略空间里的非凸非可微 max-min MORL 转成 $(u,w)$ 上的有限维凸优化。
-    - 核心思路：首先用占用测度 $\rho(s,a)$ 替换策略 $\pi$，原 max-min 问题成为关于 $\rho$ 的凸规划——目标是 $\max_\rho \min_k \sum_{s,a} r^{(k)}(s,a)\rho(s,a)$，约束是 Bellman flow 等式 (式 5) 和线性回报约束 (式 6)；再写出其对偶，得到关于约束乘子 $u\in\mathbb{R}_+^L$ 和目标权重 $w\in\Delta^K$ 的凸损失 $\mathcal{L}(u,w)$。妙处在于：**$f=\min$ 的非可微性在对偶里自动消失**——max-min 等价于在单纯形 $\Delta^K$ 上对线性函数求 max，而单纯形约束的对偶恰好就是"学权重 $w$"。
-    - 设计动机：避免直接在策略参数上处理 $\min$ 的次梯度。Lagrangian 对偶在原 max-min 形式下会因非可微性失效，而占用测度的双重凸化让 max-min 和不等式约束被统一编码到同一个凸损失里，从此既可以用统一的梯度方法又有标准凸优化收敛理论可用。
+痛点是 max-min 目标 $\min_k J_k(\pi)$ 在策略参数上既非凸又非可微，标准 Lagrangian 对偶分析直接失效，没法把约束干净地塞进来。本文的关键一步是不在策略 $\pi$ 上动手，而是换成占用测度 $\rho(s,a)$：此时原问题变成关于 $\rho$ 的凸规划——目标 $\max_\rho \min_k \sum_{s,a} r^{(k)}(s,a)\rho(s,a)$，约束是 Bellman flow 等式 (式 5) 加线性回报约束 (式 6)。再对这个凸规划取对偶，就得到只关于 $u$ 和 $w$ 的凸损失 $\mathcal{L}(u,w)$。之所以有效，是因为 $f=\min$ 的非可微性在对偶里自动被吸收掉了：max-min 等价于在单纯形 $\Delta^K$ 上对一族线性函数求 max，而单纯形约束的对偶恰好就是"学一组权重 $w$"。于是 max-min 公平和不等式约束被编码进同一个凸损失，既能用统一的梯度方法，又能直接套标准凸优化的收敛理论。
 
-2. **统一梯度公式（Theorem 3.3）**：
+**2. 统一梯度公式（Theorem 3.3）：一次值函数评估同时给出 $\nabla_u$ 和 $\nabla_w$**
 
-    - 功能：用同一个熵正则策略 $\pi^*_{u,w}$ 同时算出 $\nabla_u \mathcal{L}$ 和 $\nabla_w \mathcal{L}$。
-    - 核心思路：作者证明 $\nabla_u v^*_{u,w}(s) = v_c^{\pi^*_{u,w}}(s)$，$\nabla_w v^*_{u,w}(s) = v_r^{\pi^*_{u,w}}(s)$，其中 $v_c, v_r$ 分别是用 $\pi^*_{u,w}$ 评估约束奖励 $\{c^{(l)}\}$ 和无约束奖励 $\{r^{(k)}\}$ 得到的值函数。直观上：在第 $m$ 轮迭代里，先用当前 $(u^m, w^m)$ 拼出一个标量化奖励 $[u^m;w^m]^\top [c;r]$ 训出 Q 函数，再从 softmax 取出 $\pi^m$，最后只要拿 $\pi^m$ 分别评估约束侧和目标侧的多维值函数，就同时得到 $u$ 和 $w$ 的梯度方向。
-    - 设计动机：这把"约束更新"和"max-min 权重更新"压成了一次值函数评估，避免了两套梯度估计器、两套网络副本（对比 Park 等 2024 的高斯平滑需要多份网络）。同时 $w$ 上的梯度有清晰直觉——小回报维度梯度小、$w$ 更新后相对变大，自动放大短板，正好对应 max-min 原理；$u$ 上的梯度则把违反约束的维度乘子推大，强制可行。
+有了凸损失还需要能高效求梯度。作者证明 $\nabla_u v^*_{u,w}(s) = v_c^{\pi^*_{u,w}}(s)$、$\nabla_w v^*_{u,w}(s) = v_r^{\pi^*_{u,w}}(s)$，其中 $v_c,v_r$ 分别是用同一个熵正则策略 $\pi^*_{u,w}$ 评估约束奖励 $\{c^{(l)}\}$ 和目标奖励 $\{r^{(k)}\}$ 得到的多维值函数。也就是说在第 $m$ 轮里，先用当前 $(u^m,w^m)$ 拼出标量奖励 $[u^m;w^m]^\top[c;r]$ 训出 $Q$、取 softmax 得到 $\pi^m$，再拿 $\pi^m$ 分别评估约束侧和目标侧的值函数，$u$ 和 $w$ 的梯度方向就同时拿到了。这把"约束更新"和"max-min 权重更新"压成一次评估，省掉了两套梯度估计器和多份网络副本（对比 Park 等 2024 的高斯平滑需要维护多个网络）。两组梯度还各有清晰直觉：回报小的目标维度梯度也小、$w$ 更新后相对变大，自动放大短板，正好对应 max-min；违反约束的维度则把乘子 $u$ 推大，强制可行。
 
-3. **熵正则化 + 投影梯度下降（含光滑性保证）**：
+**3. 熵正则化 + 投影梯度下降：换来几何收敛速率**
 
-    - 功能：把对偶问题的可解性和数值稳定性都钉死，让算法有几何收敛速率。
-    - 核心思路：在原始问题加上熵项 $\beta \sum_s \mathcal{H}_\rho(s)\rho(s)$，作者证 (Prop 3.1) 这只引入 $O(\beta\log|\mathcal{A}|/(1-\gamma))$ 的近似误差；同时熵正则让 $\pi^*_{u,w}(a|s)>0$ 处处严格为正，进而 Hessian $H[\mathcal{L}]$ 在 Slater 可行下正定，对偶变成 $\alpha$-光滑 + 强凸（$\alpha = \frac{1}{\beta(1-\gamma)}\sum_m (r_{\max}^{(m)}/(1-\gamma))^2$，Theorem 3.4）。配 $l_w = 1/\alpha$ 的投影梯度下降，Theorem 3.6 给出 $\|[u^m;w^m] - [u^*;w^*]\|_2 \le (1-\lambda/\alpha)^m \|[u^0;w^0]-[u^*;w^*]\|_2 + O(\epsilon)$，其中 $\epsilon$ 是 Q 函数估计误差。投影到 $\Delta^K$ 用 Wang & Carreira-Perpiñán 2013 的确定性 $O(K\log K)$ 算法，投影到 $\mathbb{R}_+^L$ 就是非负截断。
-    - 设计动机：熵正则的两个角色——既是"理论拐杖"（保证 $\pi$ 严格正、Hessian 正定、对偶光滑）又是"算法拐杖"（让内层 Q 更新走 soft Bellman 形式，不用 argmax 离散化）。投影梯度下降比 Lagrangian 拉氏方法更稳：$u$ 不会发散到无穷大，$w$ 始终在单纯形上无需归一化技巧。
+要让上面的对偶问题既可解又稳定，作者在原始问题上加熵项 $\beta\sum_s\mathcal{H}_\rho(s)\rho(s)$。这一项身兼两职：理论上它让 $\pi^*_{u,w}(a|s)>0$ 处处严格为正，从而 Hessian $H[\mathcal{L}]$ 在 Slater 可行下正定、对偶变成强凸且 $\alpha$-光滑（$\alpha=\frac{1}{\beta(1-\gamma)}\sum_m (r_{\max}^{(m)}/(1-\gamma))^2$，Theorem 3.4），代价只是 $O(\beta\log|\mathcal{A}|/(1-\gamma))$ 的近似误差（Prop 3.1）；算法上它让内层 $Q$ 更新走闭式 soft Bellman 形式，免去 argmax 离散化。配 $l_w=1/\alpha$ 的步长，外层投影梯度下降给出几何收敛 $\|[u^m;w^m]-[u^*;w^*]\|_2 \le (1-\lambda/\alpha)^m \|[u^0;w^0]-[u^*;w^*]\|_2 + O(\epsilon)$（Theorem 3.6，$\epsilon$ 是 $Q$ 估计误差）。投影本身也简单：到 $\Delta^K$ 用 Wang & Carreira-Perpiñán 2013 的确定性 $O(K\log K)$ 算法，到 $\mathbb{R}_+^L$ 就是非负截断。相比 Lagrangian 拉氏法，投影梯度下降更稳——$u$ 不会发散到无穷，$w$ 始终落在单纯形上无需额外归一化。
 
 ### 损失函数 / 训练策略
 
-外层目标是凸损失 $\mathcal{L}(u,w) = \sum_s \mu_0(s) v^*_{u,w}(s) - \sum_l u_l C^{(l)}$；内层是熵正则 soft Bellman 更新 (式 13)：$Q(s,a) \leftarrow [u;w]^\top [c;r] + \gamma \sum_{s'} T(s'|s,a)\beta\log\sum_{a'}\exp(Q(s',a')/\beta)$。在连续状态空间扩展中（Building / MoAnt / Traffic 三个真实场景），作者用一个梯度网络 $g_\theta(s)\in\mathbb{R}^{L+K}$ 参数化估计 $\nabla v^*_{u,w}(s)$，配合 SAC 风格的 Q-网络做 deep 实现。关键超参 $\beta$ 在表 2 中扫了 $\{0.1, 0.03, 0.01, 0.003, 0.001\}$，$\beta=0.03$ 误差最低。
+外层目标是上面的凸损失 $\mathcal{L}(u,w) = \sum_s \mu_0(s) v^*_{u,w}(s) - \sum_l u_l C^{(l)}$；内层是熵正则 soft Bellman 更新 (式 13)：$Q(s,a) \leftarrow [u;w]^\top [c;r] + \gamma \sum_{s'} T(s'|s,a)\beta\log\sum_{a'}\exp(Q(s',a')/\beta)$。在连续状态空间扩展中（Building / MoAnt / Traffic 三个真实场景），作者用一个梯度网络 $g_\theta(s)\in\mathbb{R}^{L+K}$ 参数化估计 $\nabla v^*_{u,w}(s)$，配合 SAC 风格的 Q-网络做 deep 实现。关键超参 $\beta$ 在表 2 中扫了 $\{0.1, 0.03, 0.01, 0.003, 0.001\}$，$\beta=0.03$ 误差最低。
 
 ## 实验关键数据
 

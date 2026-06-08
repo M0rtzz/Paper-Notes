@@ -46,23 +46,21 @@ tags:
 
 ### 关键设计
 
-1. **Min-Max 能量优化建模 $p(\tilde{\mathbf{x}}|\mathbf{x})$**
+**1. Min-Max 能量优化建模 $p(\tilde{\mathbf{x}}|\mathbf{x})$：不预知对抗分布，靠能量景观把对抗样本拉回低密度区。**
 
-    - **功能**：在不需要预先知道对抗分布的情况下，通过能量最大化-最小化学习将对抗样本拉回低能量区域
-    - **核心思路**：关键观察——对抗扰动几乎总是将样本推离高密度数据流形到低密度（高能量）区域。**Inner max**: 反向 SGLD 沿能量上升方向采样对抗样本，将其推向高能量区域；**Outer min**: 最小化 clean-adv 能量差 $\min_\theta \mathbb{E}[\max_{\|\tilde{\mathbf{x}}-\mathbf{x}\| \in \Omega}(E_\theta(\tilde{\mathbf{x}}|\mathbf{x}) - E_\theta(\mathbf{x}))]$，将对抗样本拉回低能量区。梯度近似为 $h_2 \approx \frac{\partial}{\partial\theta}[\frac{1}{L_1}\sum E_\theta(\mathbf{x}_i^+) - \frac{1}{L_2}\sum E_\theta(\tilde{\mathbf{x}}_i|\mathbf{x}_i^+)]$
-    - **设计动机**：区别于传统 AT 的 max-CE（找最误导的样本），这里是 max-energy gap（找能量最高的样本）后 min-energy gap（拉回），直接操作能量景观而非交叉熵损失
+传统 AT 要在交叉熵空间里找"最误导"的样本，本文换了一个更本质的视角：作者观察到对抗扰动几乎总是把样本从高密度的数据流形推到低密度（也就是高能量）区域，于是直接在能量景观上做文章。具体分成内外两层。内层 max 用一次反向 SGLD——沿能量**上升**方向采样，把样本主动推到能量最高处，相当于构造出最"危险"的对抗样本；外层 min 再把这批高能量样本往回压，最小化 clean 与对抗之间的能量差
 
-2. **三项梯度联合优化**
+$$\min_\theta \mathbb{E}\Big[\max_{\|\tilde{\mathbf{x}}-\mathbf{x}\| \in \Omega}\big(E_\theta(\tilde{\mathbf{x}}|\mathbf{x}) - E_\theta(\mathbf{x})\big)\Big]$$
 
-    - **功能**：统一驱动生成、能量对齐和鲁棒分类三个目标
-    - **核心思路**：$h_1 = \partial \log p(\mathbf{x})/\partial\theta$（SGLD 正负样本能量差驱动生成），$h_2 = \partial \log p(\tilde{\mathbf{x}}|\mathbf{x})/\partial\theta$（clean-adv 能量对齐），$h_3 = \partial \log p(y|\mathbf{x}, \tilde{\mathbf{x}})/\partial\theta$（标准 CE 鲁棒分类）。默认权重 $w_1=w_2=w_3=1$
-    - **设计动机**：消融表明 $h_2$（能量对齐）是防止训练崩溃的关键——去掉 $h_2$ 后第 41 轮即崩溃（ECO=41），保留则稳定到终点。$h_1$ 提供生成能力和额外分类精度
+落到梯度上就是 clean 正样本与对抗样本两组能量均值之差 $h_2 \approx \frac{\partial}{\partial\theta}\big[\frac{1}{L_1}\sum E_\theta(\mathbf{x}_i^+) - \frac{1}{L_2}\sum E_\theta(\tilde{\mathbf{x}}_i|\mathbf{x}_i^+)\big]$。和传统 AT 的 max-CE 相比，这里是 max-energy gap 再 min-energy gap：找到能量最高的样本，再把整片高能量区压回数据流形。好处是不必事先知道对抗分布长什么样，能量本身就是"离流形多远"的天然度量，对齐它等价于让模型把对抗扰动看成数据内部的小波动而非异常点。
 
-3. **即插即用兼容性**
+**2. 三项梯度联合优化：一套能量目标同时管生成、对齐和鲁棒分类。**
 
-    - **功能**：EB-JDAT 作为通用框架直接嫁接到已有 JEM 变体上
-    - **核心思路**：可与 JEM++（更快 SGLD 采样）或 SADAJEM（更稳定训练）无缝集成，利用其改进的采样策略，无需修改主框架。EB-JDAT-SADAJEM 在 CIFAR-10 上达到最佳鲁棒性 68.76%/66.12%（PGD-20/AA），EB-JDAT-JEM++ 训练更快（31.66h vs 66.64h）
-    - **设计动机**：模块化设计提升实用性，让已有社区积累的 JEM 改进直接受益
+把三体联合分布按贝叶斯拆开后，三项各自贡献一股梯度，加起来就是总更新方向。$h_1 = \partial \log p(\mathbf{x})/\partial\theta$ 来自 SGLD 正负样本的能量差，负责拉高真实数据、压低模型幻想的样本，提供生成能力；$h_2 = \partial \log p(\tilde{\mathbf{x}}|\mathbf{x})/\partial\theta$ 就是上面那项 clean-adv 能量对齐；$h_3 = \partial \log p(y|\mathbf{x}, \tilde{\mathbf{x}})/\partial\theta$ 是标准交叉熵，负责鲁棒分类。默认三股权重都取 $w_1=w_2=w_3=1$。三项里 $h_2$ 是稳定训练的命门：消融显示一旦去掉它（$w_2=0$），EBM 在第 41 轮就崩溃（FID 飙到 173），因为缺了能量对齐这根锚，对抗样本的能量会越推越远把整个能量面拽歪；保留 $h_2$ 则能稳到训练终点。$h_1$ 则像额外红利，既给出采样生成能力，又顺带抬了几个点分类精度。
+
+**3. 即插即用兼容性：直接嫁接到已有 JEM 变体，复用社区积累的采样改进。**
+
+EB-JDAT 的三项分解不绑定具体的 SGLD 实现，因此可以当作一层通用外壳套在现成的 JEM 改进版上，主框架一行不改。套在 JEM++ 上能直接吃到它更快的采样策略，训练只要 31.66h；套在 SADAJEM 上则借它更稳的训练动力学，在 CIFAR-10 上把鲁棒性推到最高的 68.76%/66.12%（PGD-20/AA）。这种模块化让方法不必和某一代 JEM 绑死——社区后续在采样效率或稳定性上的任何进步，都能被 EB-JDAT 顺势继承。
 
 ### 损失函数 / 训练策略
 

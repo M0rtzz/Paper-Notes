@@ -41,36 +41,30 @@ GOAT 通过从 API 文档自动构建"依赖图 + call-first 合成数据"的流
 ## 方法详解
 
 ### 整体框架
-GOAT 由两个阶段串起来：
-1. **API 依赖图构建**（Sec 3.1.1）：解析 API 文档 → 初始化全连接多重有向图 → 三级过滤（embedding 相似度 → LLM 语义判断 → 真实执行验证）→ 得到只保留可行依赖的图 $G=(\mathcal{V}, \mathcal{E})$，其中边 $(n_i, n_j, k)$ 表示 $n_i$ 的输出可填入 $n_j$ 的第 $k$ 个参数。
-2. **Goal-oriented 数据合成**（Sec 3.1.2）：从 $G$ 采样 $\le 4$ 节点的连通子图 → 拓扑排序 → 沿序列依次"填参数 → 执行 → 生成 sub-query" → 用所有 sub-query 总结出 user query $u$ 和 final response $r$。
-3. **训练**（Sec 3.2）：在合成数据上用 LoRA 指令微调 LLM；同时在 (query, API doc) 对上用 InfoNCE 微调一个 SBERT retriever。训练时 mask 掉具体参数值，强迫模型学结构而非记忆。
+
+GOAT 要解决的是「想用开源小模型做 goal-oriented agent 却没有标注数据」这个困境：用户只给一句高层目标，agent 得自己拆任务、决定调哪些 API、还要把前一个 API 的输出当后一个的参数。整条流水线分两段，输入是一组固定 API 的文档，输出是一个学会了 API 间依赖推理的微调模型。第一段从 API 文档自动构建依赖图——初始化成全连接多重有向图后过三级过滤，留下只含可执行依赖的 $G=(\mathcal{V}, \mathcal{E})$，边 $(n_i, n_j, k)$ 表示 $n_i$ 的输出能填进 $n_j$ 的第 $k$ 个参数；第二段从图里采连通子图，拓扑排序后「先执行 API 再生成 query」（call-first）合成训练数据，最后用 LoRA 指令微调 LLM、用 InfoNCE 微调一个 SBERT retriever。
 
 ### 关键设计
 
-1. **三级依赖图过滤**:
+**1. 三级依赖图过滤：用漏斗式预算控制从组合爆炸里筛出可执行依赖。**
 
-    - 功能：从 $|\mathcal{V}|^2 \times K$ 量级的候选边里筛出真正可执行的依赖，同时控制 LLM 调用成本。
-    - 核心思路：先做廉价的 SBERT 余弦相似度过滤（阈值 $\tau$ 保守取低以提 recall），再用单次 LLM 调用判断语义兼容性并生成"为什么这条边合理"的 justification，最后通过**三次真实 API 调用**做执行级验证——LLM 先给 $n_i$ 编参数执行得到 $o_i$，再从 $o_i$ 抽内容填进 $n_j$ 的第 $k$ 个参数执行 $c_j$，只有 $c_j$ 真的能跑通才保留这条边。各阶段精度/召回为 0.25/0.92 → 0.59/0.42 → 0.90/0.36，呈典型"漏斗"形态。
-    - 设计动机：纯 embedding 召回高但精度差，纯 LLM 太贵，纯执行检查更贵；漏斗式过滤把昂贵检查留给少量幸存边。**真实执行验证**是关键——只看描述会把"语义看起来匹配但实际格式/单位不对"的边漏掉。
+候选边的量级是 $|\mathcal{V}|^2 \times K$，全靠 LLM 或真实执行去验证会贵到不可行，所以作者按「便宜→贵、召回高→精度高」串了三级漏斗。第一级是廉价的 SBERT 余弦相似度过滤，阈值 $\tau$ 故意取低以保召回；第二级用单次 LLM 调用判断语义兼容性，并顺手生成「这条边为什么合理」的 justification；第三级做最贵但最硬的执行级验证——LLM 先给 $n_i$ 编参数执行得到输出 $o_i$，再从 $o_i$ 抽内容填进 $n_j$ 的第 $k$ 个参数执行 $c_j$，只有 $c_j$ 真能跑通才保留这条边。三级的精度/召回依次为 0.25/0.92 → 0.59/0.42 → 0.90/0.36，呈典型漏斗形态。这一步把昂贵检查只留给少量幸存边，而真实执行验证是关键——纯看描述会漏掉「语义看着匹配但格式/单位实际不对」的假依赖。
 
-2. **Call-first 数据生成**:
+**2. Call-first 数据生成：把数据合成从「难方向」翻成「易方向」。**
 
-    - 功能：把"先 query 后 call"翻转为"先 call 后 query"，规避 instruction-first 的自我强化偏差。
-    - 核心思路：拿到拓扑排序后的 API 序列 $(n_{k_1}, \dots, n_{k_L})$ 后逐个实例化——对第 $\ell$ 个 API，若某参数与前序 $m < \ell$ 存在依赖边，就从 $o_{k_m}$ 抽值；否则由 LLM 按文档造一个合理值。执行得到 $o_{k_\ell}$ 后同时生成自然语言 sub-query $s_{k_\ell}$。所有调用走完后，把所有 sub-query 总结成 user query $u$，再喂全部 triplet $\{(s, c, o)\}$ 让 LLM 写出 final response $r$。
-    - 设计动机：从 query 到 call 是"复杂规划"，从 (call, output) 到 query 是"总结抽象"——后者难度低很多。表 5 直接证伪：同 Llama2-13B 同 prompting 下 call-first 在 TMDB 7.0% vs instruction-first 5.0%，Spotify 28.1% vs 17.5%。
+传统 instruction-first 流水线是先让 LLM 生成 query 再推 API 调用序列，可这恰恰就是我们想训练的能力，于是只能合成模型已经会做的简单 case，陷入自我强化偏差。GOAT 把方向反过来：拿到拓扑排序后的序列 $(n_{k_1}, \dots, n_{k_L})$，逐个实例化——对第 $\ell$ 个 API，若某参数与前序 $m < \ell$ 有依赖边就从 $o_{k_m}$ 抽值，否则由 LLM 按文档造一个合理值，执行得到 $o_{k_\ell}$ 的同时生成自然语言 sub-query $s_{k_\ell}$；所有调用走完后把全部 sub-query 总结成 user query $u$，再喂全部 triplet $\{(s, c, o)\}$ 让 LLM 写出 final response $r$。从 query 到 call 是复杂规划，从 (call, output) 到 query 是总结抽象，后者对 LLM 友好得多。表 5 直接证伪了 instruction-first：同 Llama2-13B 同 prompting 下，call-first 在 TMDB 7.0% vs 5.0%、Spotify 28.1% vs 17.5%。
 
-3. **依赖驱动的参数生成 + 推理引导**:
+**3. 依赖驱动的参数生成 + justification 复用：让模型知道该从哪个字段抽值。**
 
-    - 功能：让 LLM 在填参数时知道"该从前一个调用的输出里抽哪个字段"。
-    - 核心思路：依赖图构建第二阶段产出的 justification 文本（"为什么 $n_i$ 的输出能填 $n_j$ 的第 $k$ 个参数"）被复用到数据合成阶段，作为参数填充 prompt 的引导。API 输出通常是嵌套 JSON，没有这个引导，LLM 经常抽错字段或抽不到。
-    - 设计动机：API 间依赖 = 数据结构匹配 + 语义匹配，纯语义 prompt 很难覆盖"取这个 list 的第几个元素的 id 字段"这种细节，复用已经生成好的 justification 是零成本的强先验。
+API 输出常是嵌套 JSON，LLM 填参数时很容易抽错字段或抽不到——因为 API 间依赖既是语义匹配也是数据结构匹配，纯语义 prompt 覆盖不了「取这个 list 第几个元素的 id 字段」这种细节。GOAT 的巧处在于零成本复用：依赖图构建第二级为了过滤而生成的 justification 文本（「为什么 $n_i$ 的输出能填 $n_j$ 的第 $k$ 个参数」）被原样搬到数据合成阶段，作为参数填充 prompt 的引导先验。一份 LLM 调用产出了两次价值，既省了成本，又给了模型一个强结构先验。
+
+### 一个完整示例
+
+以「找出 The Dark Knight 主演演员还演过的高分电影并加入播放列表」为例：从依赖图里采到一条 4 节点连通子图（search_movie → get_cast → discover_movies → add_to_playlist），拓扑排序后开始 call-first 合成。先执行 search_movie 拿到电影 id，把 id 按依赖边填进 get_cast 取演员 id，再填进 discover_movies 取高分电影，最后填进 add_to_playlist。每一步执行后顺手写出一句 sub-query，全部走完再把这些 sub-query 总结成上面那句完整 user query，并基于全部 (sub-query, call, output) triplet 生成 final response。训练时具体参数值被 mask，逼模型学「该调哪些 API、怎么在调用间传数据」的结构，而非死记某个电影 id。
 
 ### 损失函数 / 训练策略
-- LLM：标准指令微调（next-token CE），目标序列覆盖 plan、API call、final response；LoRA $r=8$, $\alpha=16$, dropout 0.05，单卡 H100 训 3 epoch。
-- Retriever：SBERT (all-MiniLM-L6-v2) + InfoNCE，正样本是 (query, 正确 API doc) 对。
-- 参数值在训练时被 mask，逼模型学"应该调哪些 API 以及怎么取数据"而不是死记参数。
-- 合成实例规模：RestGPT-TMDB 8570 条，API-Bank 仅 108 条（依然有大提升）。
+
+LLM 端用标准指令微调（next-token CE），目标序列覆盖 plan、API call 与 final response；LoRA 配置 $r=8$、$\alpha=16$、dropout 0.05，单卡 H100 训 3 epoch。Retriever 端用 SBERT（all-MiniLM-L6-v2）+ InfoNCE，正样本是 (query, 正确 API doc) 对。训练时 mask 掉参数值，逼模型学结构而非记忆。合成实例规模上，RestGPT-TMDB 有 8570 条，API-Bank 仅 108 条却依然带来大幅提升。
 
 ## 实验关键数据
 

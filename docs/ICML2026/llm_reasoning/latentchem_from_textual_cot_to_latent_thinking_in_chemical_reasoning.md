@@ -41,30 +41,24 @@ LatentChem 在化学 LLM 上把"显式 CoT 文本链"换成"连续 latent 思考
 ## 方法详解
 
 ### 整体框架
-LatentChem 在通用 LLM backbone (默认 Qwen-3-8B) 上挂三个化学专用模块：(1) Chemical Adapter 把 SMI-TED 编码器抽出的变长分子特征压成定长 "ChemTokens" 软提示；(2) latent thinking loop 在 ChemTokens 与文本指令之后插入若干步连续 hidden state，不解码成文本就直接喂回模型；(3) ChemUpdater 用最新 thought 向量去 cross-attend 历史推理序列、刷新 ChemTokens，让模型在推理过程中"再看一眼分子"。整个流程在 4 阶段渐进训练（对齐 → SFT CoT → 激活 latent → GRPO 结果奖励）下完成，最后阶段冻结 latent 模块、放开 backbone，把学到的 latent 动力学当成"内部模拟器"去优化决策策略。
+LatentChem 想验证一个假说：化学的连续物理直觉被强行翻译成离散文本 token 是"模态错配"，连续 latent 才是更原生的推理介质。为此它在通用 LLM backbone（默认 Qwen-3-8B）上把自然语言降级为纯输入/输出接口，中间推理改走"感知-思考"双通路——SMI-TED 编码器抽出的分子特征先被 Chemical Adapter 压成定长 ChemTokens 软提示注入 LLM，然后模型在文本指令之后连续吐出若干步 hidden state（不解码成文本，直接经 latent projector 喂回自己），每吐一步 ChemUpdater 就拿最新 thought 去 cross-attend 历史、刷新 ChemTokens 让模型"再看一眼分子"，直到吐出 `<end_latent>` 或耗尽预算才解码答案。整个系统在 4 阶段渐进训练下成型，最关键的是末阶段只用结果奖励、不奖励 brevity，却观察到模型自发抛弃文本 CoT。
 
 ### 关键设计
 
-1. **Chemical Adapter (Perceiver Resampler 风格的分子-语言对齐)**:
+**1. Chemical Adapter：让分子表征定长且可被反复再查询。**
 
-    - 功能：把 SMI-TED 输出的变长稠密分子特征 $\mathbf{H}_{mol}\in\mathbb{R}^{L\times d_{enc}}$ 压缩成定长 $N$ 个 "ChemTokens"，作为软提示前缀注入 LLM。
-    - 核心思路：用 $N$ 个可学习 latent query $\mathbf{Q}$ 对分子特征做 cross-attention，$\mathbf{H}_{chem}=W(\text{LN}(\mathbf{Q}+\text{MHA}(\mathbf{Q},\mathbf{H}_{mol},\mathbf{H}_{mol})))$，每个 query 像一个"语义锚点"自动萃取某类化学属性；再用线性层 $W$ 投影到 $d_{llm}$。Stage 1 用 "answer-only" 监督 + 反事实对齐损失 $\mathcal{L}_{CF}$（hinge loss，最大化"干净分子 vs. 扰动分子"下答案似然差），强制 adapter 把答案所需化学性质真的压进 ChemTokens 而不是靠文本先验。
-    - 设计动机：传统的 prefix tuning 只是"塞个 embedding"，作者要的是一个**可被后续 latent 思考动态再查询**的分子表征容器 —— 必须定长、必须忠实反映分子结构，否则后面 ChemUpdater 没办法基于推理状态去 refocus。
+普通的 prefix tuning 只是"塞个 embedding"进去，但 LatentChem 后续要让 ChemUpdater 在推理过程中不断回头查询分子，这就要求分子表征既定长又忠实反映结构。Adapter 借 Perceiver Resampler 思路，用 $N$ 个可学习 latent query $\mathbf{Q}$ 对 SMI-TED 输出的变长稠密特征 $\mathbf{H}_{mol}\in\mathbb{R}^{L\times d_{enc}}$ 做 cross-attention，$\mathbf{H}_{chem}=W(\text{LN}(\mathbf{Q}+\text{MHA}(\mathbf{Q},\mathbf{H}_{mol},\mathbf{H}_{mol})))$，每个 query 像一个"语义锚点"自动萃取某类化学属性，再用线性层 $W$ 投影到 $d_{llm}$ 维得到定长 ChemTokens。为防止 adapter 偷懒靠文本先验蒙答案，Stage 1 在 answer-only 监督外加一个反事实对齐损失 $\mathcal{L}_{CF}$（hinge loss，最大化"干净分子 vs. 扰动分子"下的答案似然差），逼它把答案真正需要的化学性质压进 ChemTokens——否则后面 ChemUpdater 拿到的就是空壳，根本无从 refocus。
 
-2. **ChemUpdater (动态感知再刷新)**:
+**2. ChemUpdater：把静态编码器升级成被推理状态调度的可微感知器。**
 
-    - 功能：在每一步 latent 推理之后，根据当前累积的 thought 历史，重新查询并刷新 ChemTokens，让模型对分子的关注焦点随推理推进而动态迁移。
-    - 核心思路：以当前 ChemTokens $\mathbf{H}_{chem}^{(t)}$ 为 query、以全部历史 thought $\mathbf{Z}_{1:t}$ 为 key/value 做 cross-attention，$\mathbf{H}_{chem}^{(t+1)}=\text{LN}(\mathbf{H}_{chem}^{(t)}+\text{CrossAttn}(\mathbf{H}_{chem}^{(t)},\mathbf{Z}_{1:t},\mathbf{Z}_{1:t}))$。等于把 encoder 从"一次性静态特征提取器"升级成"被推理状态调度的可微感知器"。
-    - 设计动机：与 Coconut 的核心区别 —— Coconut 把分子嵌入当成不变上下文，因此 latent 思考链越长，离原始结构越远；ChemUpdater 让模型在每步推理"再看一眼分子，但是看不同的地方"，在分子优化这类需要反复定位不同子结构的任务上至关重要（消融显示去掉它 SR 掉 12%）。
+这是 LatentChem 与 Coconut 拉开差距的核心。Coconut 把分子嵌入当成一成不变的上下文，于是 latent 思考链越长就漂得离原始结构越远；ChemUpdater 则让模型每推理一步都"再看一眼分子，但是看不同的地方"。具体做法是以当前 ChemTokens $\mathbf{H}_{chem}^{(t)}$ 为 query、以全部历史 thought $\mathbf{Z}_{1:t}$ 为 key/value 做 cross-attention 后残差刷新，$\mathbf{H}_{chem}^{(t+1)}=\text{LN}(\mathbf{H}_{chem}^{(t)}+\text{CrossAttn}(\mathbf{H}_{chem}^{(t)},\mathbf{Z}_{1:t},\mathbf{Z}_{1:t}))$，等于把分子编码器从"一次性静态特征提取器"变成"随推理状态动态调度焦点的感知器"。在分子优化这类需要反复定位不同子结构（先看结合位点、再看价键、再看官能团）的任务上这一点至关重要——消融里去掉它 SR 直接掉 12%。
 
-3. **Latent Projector + GRPO 纯结果奖励 (自发内化的触发器)**:
+**3. Latent Projector + GRPO 纯结果奖励：自发内化的闭环与触发器。**
 
-    - 功能：把 LLM 输出的 raw hidden state $\mathbf{z}_t$ 映回输入 embedding 空间形成下一步输入 $\mathbf{h}_{t+1}=\mathbf{z}_t+\text{FFN}(\text{LN}(\mathbf{z}_t))$，绕开 tokenization 瓶颈；推理直到模型自己吐 `<end_latent>` 或达预算 $T_{max}$ 才解码答案。Stage 4 用 GRPO 只奖励 format / validity / correctness 三项。
-    - 核心思路：projector 是个轻量残差 FFN，把"输出空间的 thought 向量"对齐回"输入空间"才能闭环。关键是 **奖励里完全不含 brevity 或 CoT 省略项** —— 但 LatentChem 仍自发抛弃了文本 CoT，转入纯 latent 推理（仅吐一个 "." 或 ":" 当过渡 token 后直接生成 XML 答案）。Stage 4 冻结 latent 模块、放开 backbone，把学到的 latent 动力学当作稳定"内部模拟器"，让 backbone 学会消费这些 latent thought 去决策。
-    - 设计动机：作者要把 latent reasoning 当成**可被观测的实验仪器**：只要给模型自由选择推理模态、并只用结果奖励驱动，就能验证"modality mismatch"假说 —— 如果连续 latent 真的更适配化学逻辑，模型会自己选它。结果确实如此，且 causal ablation（前 $k$ 个 latent 用高斯噪声替换会显著掉点）证明这些"沉默步"在做实质计算而非走过场。
+要让推理在连续空间闭环，必须把 LLM 输出空间的 thought 向量对齐回输入空间。Latent projector 是个轻量残差 FFN，$\mathbf{h}_{t+1}=\mathbf{z}_t+\text{FFN}(\text{LN}(\mathbf{z}_t))$，把 raw hidden state $\mathbf{z}_t$ 映回输入 embedding 当下一步输入，绕开 tokenization 瓶颈。真正的"实验仪器"设计在 Stage 4：奖励只含 format / validity / correctness 三项，**完全不含 brevity 也不含 CoT 省略项**，并冻结 latent 模块、放开 backbone，把学到的 latent 动力学当作稳定"内部模拟器"让 backbone 去消费决策。在这种纯结果驱动下，模型仍自发抛弃了文本 CoT、只吐一个 "." 或 ":" 当过渡 token 后直接生成 XML 答案——这正好验证了 modality mismatch 假说：给模型自由选模态、只用结果奖励，它若选连续 latent 就说明 latent 真的更适配化学逻辑。配套的 causal ablation（把前 $k$ 个 latent 步替换成高斯噪声会显著掉点）进一步证明这些"沉默步"在做实质计算而非走过场。
 
 ### 损失函数 / 训练策略
-四阶段渐进训练：Stage 1 (adapter+LLM 训练，禁用 latent，answer-only + 反事实对齐 $\mathcal{L}_{total}^{(1)}=\mathcal{L}_{clean}+\lambda\mathcal{L}_{CF}$)；Stage 2 (同样模块训练，加显式 CoT $\mathbf{y}_{full}=[\mathbf{y}_{cot},\mathbf{y}_{ans}]$，反事实对齐扩到全序列)；Stage 3 (冻结 adapter+LLM，只训 ChemUpdater + projector，让 latent 模块去适应已固化的语义空间，生成"可被解码器接住"的 thought 向量)；Stage 4 (反过来冻结 latent 模块、放开 backbone，GRPO 优化复合奖励 = format + validity + correctness)。训练数据为 ChemCoTDataset 2025-11 snapshot 约 14k CoT 样本，覆盖分子理解/编辑/优化/反应预测。
+四阶段渐进训练逐步把推理从文本搬进 latent。Stage 1 训 adapter+LLM、禁用 latent，用 answer-only 监督加反事实对齐 $\mathcal{L}_{total}^{(1)}=\mathcal{L}_{clean}+\lambda\mathcal{L}_{CF}$ 先把分子语义压进 ChemTokens；Stage 2 仍训这两个模块，但加上显式 CoT 监督 $\mathbf{y}_{full}=[\mathbf{y}_{cot},\mathbf{y}_{ans}]$、把反事实对齐扩到全序列，让模型先学会用文本链推理；Stage 3 反过来冻结 adapter+LLM、只训 ChemUpdater + latent projector，让 latent 模块去适应已经固化的语义空间、学会生成"能被解码器接住"的 thought 向量；Stage 4 再冻结 latent 模块、放开 backbone，用 GRPO 优化复合奖励（format + validity + correctness），让 backbone 学会把 latent thought 当内部模拟器去决策。训练数据为 ChemCoTDataset 2025-11 snapshot 约 14k CoT 样本，覆盖分子理解 / 编辑 / 优化 / 反应预测。
 
 ## 实验关键数据
 

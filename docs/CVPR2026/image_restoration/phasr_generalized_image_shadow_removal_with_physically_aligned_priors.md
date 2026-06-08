@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PhaSR分为两阶段：Stage 1是PAN——无模型参数的预处理模块，执行Gray-world颜色归一化→对数域Retinex分解→动态范围重组合，输出光照一致的图像。Stage 2是多尺度Transformer编码器-解码器，在编码器阶段注入冻结的DINO-v2语义嵌入，在瓶颈层注入DepthAnything-v2几何先验（深度+法线），通过GSRA的跨模态差分注意力对齐两种先验。整个流程不需要阴影mask。
+PhaSR把"泛化阴影去除"拆成两层物理对齐，分两阶段串起来。Stage 1是PAN，一个**完全无训练参数**的预处理模块：原图先做Gray-world颜色归一化压掉全局色偏，再到对数域做一次闭式Retinex分解把光照和反射率分开，最后重组归一化，吐出一张光照一致的图。Stage 2是多尺度Transformer编码器-解码器，吃这张干净图，并在不同深度注入两种冻结的外部先验——编码器阶段注入DINO-v2语义嵌入，瓶颈层注入DepthAnything-v2的深度/法线几何先验——再由GSRA在瓶颈层用差分注意力把这两种先验对齐后融合。整条流水线不依赖任何阴影mask，全局色偏由PAN管、局部跨模态冲突由GSRA管，对应"全局对齐+局部对齐"的双层设计。
 
 ### 关键设计
 
-1. **物理对齐归一化 (PAN)**:
+**1. 物理对齐归一化（PAN）：用闭式Retinex在输入端就掐掉全局色偏。**
 
-    - 功能：无参数预处理，抑制全局色彩偏差，提供光照一致的输入
-    - 核心思路：三步流程——(a) **Gray-world颜色归一化**：$\mathbf{I}_{\text{norm}} = \mathbf{I} \cdot \frac{\mathbb{E}[\mathbf{I}]}{\mathbb{E}_c[\mathbf{I}]+\varepsilon}$，平衡通道光照去除色偏；(b) **对数域Retinex分解**：在对数域将图像分解为反射率和光照分量——$\log\hat{\mathbf{S}} = \mathbb{E}_{H,W}[\log(\mathbf{I}_{\text{norm}}+\varepsilon)]$，$\log\hat{\mathbf{R}} = \log(\mathbf{I}_{\text{norm}}+\varepsilon) - \log\hat{\mathbf{S}}$——利用对数域的加法可分性实现闭式求解；(c) **重组合归一化**：$\hat{\mathbf{I}} = \frac{\hat{\mathbf{R}} \otimes \hat{\mathbf{S}} - \min}{\max - \min + \varepsilon}$
-    - 设计动机：与学习型Retinex分解不同，PAN是闭式运算无需训练参数，可作为即插即用模块嵌入任何框架。实验证明作为插件可为OmniSR/DenseSR等方法提升0.15-0.34dB
+直接拿RGB喂网络的方法会把阴影和材料固有暗色混在一起，间接光照下还会整体偏色。PAN不学参数，纯靠三步闭式运算解决这个输入端的退化：先做Gray-world颜色归一化 $\mathbf{I}_{\text{norm}} = \mathbf{I} \cdot \frac{\mathbb{E}[\mathbf{I}]}{\mathbb{E}_c[\mathbf{I}]+\varepsilon}$ 把各通道光照拉平去掉色偏；再到对数域利用加法可分性做Retinex分解，光照分量取空间均值 $\log\hat{\mathbf{S}} = \mathbb{E}_{H,W}[\log(\mathbf{I}_{\text{norm}}+\varepsilon)]$、反射率为残差 $\log\hat{\mathbf{R}} = \log(\mathbf{I}_{\text{norm}}+\varepsilon) - \log\hat{\mathbf{S}}$，对数域让这一步有闭式解、不用迭代优化；最后重组并归一化动态范围 $\hat{\mathbf{I}} = \frac{\hat{\mathbf{R}} \otimes \hat{\mathbf{S}} - \min}{\max - \min + \varepsilon}$。和学习型Retinex最大的不同是它零参数、零训练，可以当即插即用模块塞进任何框架——实验里把它接到OmniSR/DenseSR前面就能白捡0.15–0.34dB，说明很多方法的瓶颈其实在没处理好的输入色偏。
 
-2. **几何-语义校正注意力 (GSRA)**:
+**2. 几何-语义校正注意力（GSRA）：用跨模态减法让稳定的语义和敏感的几何各取所长。**
 
-    - 功能：对齐深度几何先验和DINO-v2语义嵌入，解决跨模态冲突
-    - 核心思路：(a) **多模态先验注入**：将共享查询特征分别与几何和语义先验相加（带可学习缩放因子 $\alpha$），生成模态特定的键值对；(b) **差分校正**：用共享查询计算两个注意力图 $\mathbf{A}_{\text{geo}}$ 和 $\mathbf{A}_{\text{sem}}$，然后执行校正 $\mathbf{A}_{\text{rect}} = \mathbf{A}_{\text{sem}} - \lambda \cdot \mathbf{A}_{\text{geo}}$，其中可学习的 $\lambda$ 平衡光照变化敏感度和几何正则化强度；(c) 最终输出 $\mathbf{F}_{\text{output}} = \text{Concat}(\mathbf{A}_{\text{rect}}\mathbf{V}_{\text{geo}}, \mathbf{A}_{\text{rect}}\mathbf{V}_{\text{sem}})$
-    - 设计动机：几何特征在阴影边缘精确但在均匀光照区域有噪声，语义特征稳定但空间粗糙。差分注意力的减法结构天然实现了物理可解释的门控——在真实光照边界保留几何精度，在均匀区域抑制几何噪声。与原始DiffTransformer（同一自注意力头内减法）不同，GSRA是跨模态减法
+几何先验（深度/法线）在阴影边缘很准、但在均匀光照区噪声大；语义先验跨光照稳定、但空间太糊。直接均匀融合会让几何噪声污染语义、或语义过平滑抹掉光照边界。GSRA先做多模态先验注入：用一份共享查询特征，分别加上几何和语义先验（各带可学习缩放因子 $\alpha$）生成模态专属的键值对；再用这份共享查询算出两张注意力图 $\mathbf{A}_{\text{geo}}$ 和 $\mathbf{A}_{\text{sem}}$，做一次差分校正
 
-3. **多尺度Transformer骨干**:
+$$\mathbf{A}_{\text{rect}} = \mathbf{A}_{\text{sem}} - \lambda \cdot \mathbf{A}_{\text{geo}}$$
 
-    - 功能：无mask阴影去除的主干编码器-解码器
-    - 核心思路：层次化架构，基础通道维度 $C=32$，每个Transformer块2层。编码器阶段通过冻结DINO-v2注入语义先验，瓶颈层通过DepthAnything-v2注入几何先验。使用GSRA在瓶颈层对齐两种先验
-    - 设计动机：将物理先验注入到网络的不同阶段（语义在编码、几何在瓶颈），匹配其各自最适合的抽象层次
+把语义当"全局稳定基底"、几何当"局部光照敏感扰动"减掉，可学习的 $\lambda$ 调节对光照变化的敏感度和几何正则强度的平衡；最后拼接两路输出 $\mathbf{F}_{\text{output}} = \text{Concat}(\mathbf{A}_{\text{rect}}\mathbf{V}_{\text{geo}}, \mathbf{A}_{\text{rect}}\mathbf{V}_{\text{sem}})$。这个减法结构天然就是一个物理可解释的门控：真实光照边界处几何精度被保留，均匀区域里几何噪声被压住。和原始DiffTransformer在同一自注意力头内部做减法不同，GSRA的减法是**跨模态**的——减的是两种异质先验之间的冲突。
+
+**3. 多尺度Transformer骨干：按抽象层次把两种先验注到对的深度。**
+
+无mask阴影去除需要一个能在不同阶段承接物理先验的主干。骨干是层次化编码器-解码器，基础通道维度 $C=32$、每个Transformer块2层。关键不是堆层数，而是注入位置的安排：语义先验稳定、适合放在抽象的编码器阶段引导高层理解，所以冻结的DINO-v2嵌入注在编码器；几何先验精细、信息密度高，放在最压缩的瓶颈层，所以DepthAnything-v2的深度/法线注在瓶颈，并由GSRA在瓶颈层完成两者的对齐。让每种先验落在它最适合的抽象层次，是这个骨干能稳定传播物理先验、而不是均匀糊在一起的原因。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L}_{\text{total}} = 0.95\mathcal{L}_{\text{Charb}} + 0.05\mathcal{L}_{\text{SSIM}}$，即Charbonnier损失保真度+SSIM损失结构一致性。使用AdamW优化器，batch size 9，训练1400 epochs，学习率 $2\times10^{-4}$ 余弦退火。
+总损失 $\mathcal{L}_{\text{total}} = 0.95\mathcal{L}_{\text{Charb}} + 0.05\mathcal{L}_{\text{SSIM}}$，以Charbonnier损失保像素保真度、少量SSIM损失约束结构一致性。优化器用AdamW，batch size 9，训练1400 epochs，学习率 $2\times10^{-4}$ 余弦退火。
 
 ## 实验关键数据
 

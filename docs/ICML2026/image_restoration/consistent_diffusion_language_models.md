@@ -41,37 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基础设定：离散扩散有 forward Markov chain $q(x_t\mid x_0) = \prod_i \mathrm{Cat}(x_t^i; x_0^i Q_{1:t})$，其中 $Q_t$ 为 row-stochastic 转移矩阵；masked diffusion 的 stationary distribution 集中在 `[MASK]` token 上。
-
-**关键引理 (3.1)**：对任意 $0\le s<t$，单 token 位置的解析 posterior bridge 是 $q(x_s\mid x_t, x_0)$，给出 closed-form 形式（masked 与 uniform 都适用）。
-
-CDLM 训练一个时间条件 denoiser $f_\theta(x_t, t)$，强制要求其在 $(x_t, t)$ 处的预测和在 $(x_s, s)$ 处的预测一致，其中 $x_s\sim q(x_s\mid x_t, x_0)$ 是通过 closed-form bridge 采样得到的"中间跳一步"状态。这等价于：从 $x_t$ 直接预测 $x_0$ ≡ 先经 bridge 跳到 $x_s$，再从 $x_s$ 预测 $x_0$——通过长短路径同时训练，模型学到可靠的 long-range transitions。
+CDLM 要解决的是"离散扩散没有连续域 PF-ODE，因此 consistency model 无从下手"的根本难题。它的转法是放弃在 sample space 找唯一确定性路径，转而利用离散扩散框架自带的一族解析随机路径——posterior bridge $q(x_s\mid x_t, x_0)$，把 consistency 重新定义为"denoiser 在所有 valid bridge 上的期望预测一致"，于是单阶段、teacher-free 训出来的 denoiser 就能 2-3 步生成。基础设定上，离散扩散有 forward Markov chain $q(x_t\mid x_0) = \prod_i \mathrm{Cat}(x_t^i; x_0^i Q_{1:t})$，$Q_t$ 为 row-stochastic 转移矩阵，masked diffusion 的 stationary distribution 集中在 `[MASK]` token 上；关键引理 (3.1) 指出对任意 $0\le s<t$，单 token 位置的 posterior bridge $q(x_s\mid x_t, x_0)$ 有 closed-form 解（masked 与 uniform 都适用），这正是替代 PF-ODE 的核心对象。
 
 ### 关键设计
 
-1. **Multi-Path Discrete Consistency (MPDC，核心原则)**:
+**1. Multi-Path Discrete Consistency：在路径族上分布一致，而非沿单条 ODE 点对点一致**
 
-    - 功能：替代连续 consistency 中"沿 PF-ODE 一致"的失败假设，定义离散域的可执行 consistency 目标。
-    - 核心思路：从一个 $(x_0, t, s)$ 三元组出发——$x_0\sim p_{\text{data}}$，$x_t\sim q(x_t\mid x_0)$，$x_s\sim q(x_s\mid x_t, x_0)$。MPDC 损失要求 $f_\theta(x_t, t)$ 与 $f_\theta(x_s, s)$ 在期望上一致（在分布意义下匹配，而非点对点）。这种 distributional consistency 对应"贝叶斯角度的 path equivalence"——任何 valid bridge 都是目标的合法 sufficient statistic，所以 denoiser 在 bridge 起点和终点的预测分布必须相等。
-    - 设计动机：在没有唯一路径的世界里，"在路径上点对点一致"是 ill-defined 的；改用"在所有路径上分布一致"既是数学上正确的弱化，也充分利用了离散扩散自带的解析 bridge 族。**Few-step generation 自然涌现**——因为长路径 (multi-step) 和短路径 (一步 jump) 都在训练中被覆盖，模型不需要 multi-stage distillation 单独学短路径。
+连续 consistency 的成立依赖 PF-ODE 给出从 $x_t$ 到 $x_0$ 的唯一确定性轨迹，但离散 categorical 空间根本不存在这种路径，直接把"在路径上点对点一致"搬过来是 ill-defined 的。MPDC 改成从一个三元组出发——$x_0\sim p_{\text{data}}$、$x_t\sim q(x_t\mid x_0)$、$x_s\sim q(x_s\mid x_t, x_0)$，要求 $f_\theta(x_t, t)$ 与 $f_\theta(x_s, s)$ 在期望上一致（即在分布意义下匹配，而非逐点匹配）。这种 distributional consistency 对应贝叶斯视角下的 path equivalence：任何 valid bridge 都是目标 $x_0$ 的合法 sufficient statistic，所以 denoiser 在 bridge 起点和终点的预测分布本就该相等。它既是数学上正确的弱化，又充分利用了离散扩散自带的解析 bridge 族；更重要的是 few-step generation 在此自然涌现——长路径 (multi-step) 与短路径 (一步 jump) 都在训练中被覆盖，模型不必靠 multi-stage distillation 单独去学短路径。
 
-2. **Teacher-free 单阶段训练 + Closed-form Bridge 采样**:
+**2. Teacher-free 单阶段训练：closed-form bridge 直接提供无偏目标**
 
-    - 功能：完全无需教师模型，从头训练即可获得 few-step 生成能力。
-    - 核心思路：每个 batch 采 $x_0\sim p_{\text{data}}$，随机抽 $0\le s<t\le 1$，按 closed-form bridge $q(x_s\mid x_t, x_0)$ 直接采样 $x_s, x_t$，然后用 MPDC 损失更新 $f_\theta$。由于 bridge 是解析的，**采样代价仅是几次 categorical 抽样**，没有任何额外神经网络前向。这区别于 SDTT / DUO+DCD 等两阶段方法——他们必须先训好 base 再用 base 作 teacher 蒸馏，CDLM 完全跳过了 teacher 训练。
-    - 设计动机：consistency model 在连续域常用 EMA self-teacher 或独立 teacher 引导稳定性；这些 trick 在离散域也能加，但 CDLM 证明在 MPDC 框架下 **even 单纯 self-prediction loss 就能稳定收敛**，因为 closed-form bridge 提供了无偏的目标方向，不需要外部蒙特卡洛估计。
+SDTT、DUO+DCD 这类离散加速方法必须先训好一个 base 再拿它当 teacher 蒸馏，两阶段流程笨重。CDLM 完全跳过 teacher：每个 batch 采 $x_0\sim p_{\text{data}}$，随机抽 $0\le s<t\le 1$，按 closed-form bridge $q(x_s\mid x_t, x_0)$ 直接采样出 $x_s, x_t$，再用 MPDC 损失更新 $f_\theta$。由于 bridge 是解析的，采样代价只是几次 categorical 抽样，没有任何额外神经网络前向。连续域 consistency 常靠 EMA self-teacher 或独立 teacher 维持稳定，CDLM 证明在 MPDC 框架下单纯的 self-prediction loss 就能稳定收敛——因为 closed-form bridge 直接给出无偏的目标方向，不需要外部蒙特卡洛估计去近似。
 
-3. **统一现有方法的视角 + 通用 corruption support**:
+**3. 统一现有方法的视角：CDLM 是一个跨 corruption 的"母框架"**
 
-    - 功能：CDLM 框架在不同 corruption 与超参极限下退化为各类现有方法，证明这是一个"母模型"。
-    - 核心思路：作者形式化论证以下方法都是 CDLM 的特例或近似——(i) 标准 masked diffusion 是 $t=s+\Delta t$ 极限；(ii) continuous consistency 是 PF-ODE 极限（连续放松）；(iii) progressive distillation / shortcut models 是 bridge 的某种粗略 coupling；(iv) 两阶段离散 distillation（SDTT、DUO+DCD）是用 learned teacher 替代 closed-form bridge。同时 CDLM 不局限于 masked diffusion——任何 corruption family（uniform、edit-based 等）只要其 posterior bridge 有 closed-form 都适用。
-    - 设计动机：用一个 unifying lens 把分散的 baselines 串起来，既是理论贡献也是实践指导——告诉社区"不需要再为 mask 设计专用 distillation 流程，所有方法都是同一原则的不同投影"。
+作者进一步把分散的加速方法形式化地收归到 MPDC 的不同极限或近似下：标准 masked diffusion 是 $t=s+\Delta t$ 极限，continuous consistency 是 PF-ODE 极限（连续放松），progressive distillation / shortcut models 是 bridge 的某种粗略 coupling，而两阶段离散 distillation（SDTT、DUO+DCD）则是用 learned teacher 替代了 closed-form bridge。同时 CDLM 不绑定 masked diffusion——任何 corruption family（uniform、edit-based 等）只要 posterior bridge 有 closed-form 就能套用。这个 unifying lens 既是理论清洗也是实践路标：告诉社区不必再为 mask 单独设计专用 distillation 流程，各种方法只是同一原则的不同投影。
 
-### 损失函数 / 训练策略
-- 主损失：MPDC consistency loss，要求 $f_\theta(x_t, t) \approx f_\theta(x_s, s)$ in expectation；具体实现是 cross-entropy 或 KL 形式（论文未在 method section 展开，但属标准 consistency 形式）；
-- 训练数据：standard 文本语料（OpenWebText、LM1B 量级）；
-- 关键：**单阶段、teacher-free**，无 EMA、无 teacher checkpoint、无 multi-stage curriculum；
-- 同时支持 Masked CDLM (MCDLM) 与 Uniform CDLM (UCDLM)；MCDLM-PPLOptimized 变体在 perplexity 上进一步优化。
+训练目标即 MPDC consistency loss，要求 $f_\theta(x_t, t) \approx f_\theta(x_s, s)$ in expectation（实现为标准 consistency 的 cross-entropy 或 KL 形式），数据用 OpenWebText、LM1B 量级的文本语料；整个流程单阶段、teacher-free，无 EMA、无 teacher checkpoint、无 multi-stage curriculum，并同时实例化为 Masked CDLM (MCDLM) 与 Uniform CDLM (UCDLM)，其中 MCDLM-PPLOptimized 变体在 perplexity 上进一步优化。
 
 ## 实验关键数据
 

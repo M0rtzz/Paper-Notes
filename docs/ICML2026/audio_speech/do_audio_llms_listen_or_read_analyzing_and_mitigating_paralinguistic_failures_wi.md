@@ -42,31 +42,25 @@ tags:
 
 ### 整体框架
 
-工作分两段。前半段是**诊断**：构造 VoxParadox → 跑一圈现有 Audio LLM → 做 layer-wise probing 定位瓶颈。后半段是**治疗**：在 Audio Flamingo 3 等模型上插入 PCLM 模块替换原来的"取最后一层送 LLM"接口，再用一轮 DPO 把"声学接地的回答"作为 chosen、把"文字暗示的回答"作为 rejected 来对齐偏好。整体方法不重训音频编码器，也不动 LLM 主体权重，所以很轻量。
+整个工作是一条"诊断—定位—治疗"的闭环。诊断段先造出 VoxParadox 这个让文字和声音故意打架的对抗基准，把现有 Audio LLM 跑一遍并用 layer-wise probing 把病灶定位到两个互补瓶颈：副语言特征在编码器深层被丢、以及就算特征还在 LLM 也懒得用。治疗段不动音频编码器和 LLM 主体权重，只在两者接口处插入 PCLM 模块按 prompt 自适应取层来救特征，再跑一轮 DPO 把"跟随声音"训成偏好来救利用率，因此整体非常轻量。
 
 ### 关键设计
 
-1. **VoxParadox：linguistic–acoustic contradiction 对抗基准**:
+**1. VoxParadox：用"语言–声学矛盾"逼出听 vs 读的差距**
 
-    - 功能：10 个副语言任务 × 每任务 200 条 = 2000 条经验证的 MCQ，每条都把文字陈述的属性 $y_{\text{adv}}$ 和声音真实属性 $y_{\text{true}}$ 钉成相反，且 $y_{\text{true}}$ 和 $y_{\text{adv}}$ 都出现在选项里。
-    - 核心思路：用 GPT-4o 生成"明确断言 $y_{\text{adv}}$、刻意排除 $y_{\text{true}}$"的脚本；声学一侧用确定性机制保证 $y_{\text{true}}$ —— 年龄/性别用 ElevenLabs 固定 speaker 元数据、低层声学特征用显式信号处理变换、语调用 Microsoft Azure SSML pitch-contour、说话人计数/身份用按 turn 拼接已知 speaker 的片段。再用 Whisper large-v3 强制 WER = 0 校验转录保真度，情绪类用 SpeechBrain Wav2Vec2 SER 做 referee 过滤，最后人工抽样 10% 复核。评测用两个互补指标：$\mathrm{Acc}_{\mathrm{GT}} = \frac{1}{N}\sum_i \mathbb{I}[\hat{y}_i = y_{\text{true}}^{(i)}]$ 和 $\mathrm{ALA} = \frac{1}{N}\sum_i \mathbb{I}[\hat{y}_i = y_{\text{adv}}^{(i)}]$，因为构造上 $y_{\text{adv}} \neq y_{\text{true}}$，所以 ALA 高就是被文字带跑了。
-    - 设计动机：让"答对"必须依赖非语言声学证据，从而把"模型有没有真的在听"从混杂的相关性里隔离出来；这是先前 MMSU、CP-Bench 等基准做不到的。
+这个基准的核心痛点是先前的 MMSU、CP-Bench 等基准里语言线索和声学线索是耦合的，模型顺着 ASR 转录的字面意思猜就能拿分，根本看不出它有没有真在听。VoxParadox 的破局点是把每条样本的文字陈述属性 $y_{\text{adv}}$ 和声音真实属性 $y_{\text{true}}$ 钉成系统性相反（老人说"我是个小孩"、多人说"只有一个人在讲话"），且 $y_{\text{true}}$ 和 $y_{\text{adv}}$ 同时出现在选项里——这样"答对"就必须依赖非语言声学证据，模态捷径被堵死。具体造法是双侧可控：文字侧用 GPT-4o 生成"明确断言 $y_{\text{adv}}$、刻意排除 $y_{\text{true}}$"的脚本；声学侧用确定性机制锚定 $y_{\text{true}}$——年龄/性别取 ElevenLabs 固定 speaker 元数据、低层声学属性用显式信号处理变换、语调用 Microsoft Azure SSML pitch-contour、说话人计数/身份用按 turn 拼接已知 speaker 的片段。质控上用 Whisper large-v3 强制 WER = 0 保证转录保真、情绪类用 SpeechBrain Wav2Vec2 SER 做 referee 过滤、最后人工抽检 10%，最终落成 10 个副语言任务 × 每任务 200 条 = 2000 条经验证 MCQ。评测的巧思在于两个互补指标：$\mathrm{Acc}_{\mathrm{GT}} = \frac{1}{N}\sum_i \mathbb{I}[\hat{y}_i = y_{\text{true}}^{(i)}]$ 衡量"听对了多少"，$\mathrm{ALA} = \frac{1}{N}\sum_i \mathbb{I}[\hat{y}_i = y_{\text{adv}}^{(i)}]$ 衡量"被文字带跑了多少"——因为构造上 $y_{\text{adv}} \neq y_{\text{true}}$，ALA 越高就越是"在读不在听"，模态依赖第一次被压成一个可比的标量。
 
-2. **PCLM（Prompt-Conditioned Layer Mixer）：按提示自适应取层**:
+**2. PCLM：按 prompt 自适应混合编码器中间层，补"特征丢失"**
 
-    - 功能：替换"只把编码器最后一层投给 LLM"的标准接口，改为根据用户 prompt 自适应地把音频编码器多层中间表征加权混合后再送进 LLM。
-    - 核心思路：作者的 layer-wise probing 发现副语言线索在 ASR 预训练编码器的中间层最强、在深层会被逐渐压制（与 Pasad 2022 的观察一致），而原架构默认只用最深层 → 副语言线索一开始就被丢了一大半。PCLM 因此对编码器每层输出 $h^{(\ell)}$ 计算一个由 prompt embedding 条件化的权重 $\alpha_\ell(\text{prompt})$，输出 $\tilde{h} = \sum_\ell \alpha_\ell(\text{prompt}) \cdot h^{(\ell)}$ 作为送入 LLM 的音频 token。模块本身参数量很小，可以挂在现有 Audio LLM 上微调。
-    - 设计动机：和 PaM（跨多个 encoder 做 prompt-aware 混合）、VARAN（input-dependent layer aggregation）不同，PCLM 强调"同一个编码器内、按当前问题需要取层"——问情绪和问年龄需要的层是不同的，prompt 条件化让模块能按任务路由。
+第一个瓶颈来自 layer-wise probing 的发现——副语言线索在 ASR 预训练编码器的中间层最强、到深层被逐渐压制（与 Pasad 2022 一致），而标准架构默认"只把最后一层投给 LLM"，等于在入口就把大半副语言信息扔了。PCLM 直接替换这个接口：对编码器每层输出 $h^{(\ell)}$ 算一个由 prompt embedding 条件化的权重 $\alpha_\ell(\text{prompt})$，再加权求和 $\tilde{h} = \sum_\ell \alpha_\ell(\text{prompt}) \cdot h^{(\ell)}$ 作为送进 LLM 的音频 token。之所以要让权重吃 prompt，是因为问情绪和问年龄需要的层并不相同，prompt 条件化让模块能按当前问题去路由该取哪几层——这也是它和 PaM（跨多个 encoder 混合）、VARAN（input-dependent 但不看 prompt）的关键区别：同一编码器内、按问题取层，更便宜也更贴合"副语言信息在中间层最强"这一实证。模块参数量很小，挂在现有 Audio LLM 上微调即可。
 
-3. **DPO 声学偏好对齐：补"利用率缺口"**:
+**3. DPO 声学偏好对齐：补"利用率缺口"**
 
-    - 功能：在 PCLM 微调之后再跑一轮 Direct Preference Optimization，把"声学接地的正确答案"作为 chosen response、把"文字暗示的错误答案"作为 rejected response 来对齐模型偏好。
-    - 核心思路：probing 揭示的第二个瓶颈是即便声学线索已经在音频 token 里可读，LLM 仍然系统性地忽略它们（utilization gap，与 VLM 里报告的现象类似）。常规 SFT 的 token-level loss 难以惩罚这种"读字面优先"的捷径，而 DPO 直接在配对偏好上优化 $\log \pi(y_w | x) - \log \pi(y_l | x)$，配上 VoxParadox 风格的对抗样本就能显式奖励"在文字和声音冲突时跟随声音"的行为。
-    - 设计动机：把数据集的对抗结构反过来用作训练信号——同一组 contradiction 样本，评测时用来暴露问题，训练时用来纠正偏好，闭环。
+第二个瓶颈是 probing 揭示的另一面——即便声学线索已经可读地躺在音频 token 里，LLM 仍系统性地无视它们（utilization gap，和 VLM 里"hidden in plain sight"同构）。常规 SFT 的 token-level loss 很难惩罚这种"读字面优先"的捷径，所以这里改用 DPO：把"声学接地的正确答案"作为 chosen $y_w$、"文字暗示的错误答案"作为 rejected $y_l$，直接在配对偏好上优化 $\log \pi(y_w \mid x) - \log \pi(y_l \mid x)$，等于显式奖励"文字和声音冲突时跟随声音"。最妙的是偏好数据不用另造——VoxParadox 每条样本天然带着一对 $(y_{\text{true}}, y_{\text{adv}})$，评测时用来暴露问题、训练时反过来用作纠偏信号，同一份对抗结构既诊断又治疗，闭环。
 
 ### 损失函数 / 训练策略
 
-两阶段：先在常规副语言数据上 SFT，更新 PCLM 模块；再在配对的"acoustically grounded vs language-implied"数据上跑 DPO，更新少量参数即可。
+两阶段训练，全程冻结音频编码器和 LLM 主体、只更新少量参数：先在常规副语言数据上做 SFT 更新 PCLM 模块（让"取对层"的能力成型），再在配对的"acoustically grounded vs language-implied"数据上跑 DPO 对齐偏好（让 LLM"愿意用"已经取到的声学特征）。
 
 ## 实验关键数据
 

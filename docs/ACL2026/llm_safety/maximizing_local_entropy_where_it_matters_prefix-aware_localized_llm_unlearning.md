@@ -43,31 +43,33 @@ tags:
 
 ### 整体框架
 
-PALU 分两层优化：(1) Token 级——通过语义感知过滤识别敏感 span，从中仅选取每个 span 前 N 个"起始 token"作为遗忘目标，其余 token 用 KL 散度保持不变或直接跳过；(2) 词表级——对选中的起始 token，使用局部熵最大化目标（top-K logit 平坦化）代替负 CE。
+PALU 想解决的是"遗忘要精准、别误伤"。它把遗忘干预同时压缩到两个维度的最小子集上：时间维度（token 序列）只盯敏感前缀，词表维度只动 top-K logits。具体分两层——Token 级先通过语义感知过滤识别出敏感 span，从每个 span 里只取前 N 个"起始 token"作为遗忘目标，其余 token 要么用 KL 散度钉住不变、要么干脆跳过；词表级则对这些起始 token 用局部熵最大化目标（只平坦化 top-K logits）来替换传统的负 CE。两层叠加，把遗忘复杂度从 $O(T|V|)$ 压到 $O(TK)$。
 
 ### 关键设计
 
-1. **稀疏起始 Token 选择（Temporal Sparsity）**:
+**1. 稀疏起始 Token 选择（时间维度稀疏）：只干预每个敏感 span 的前几个 token，就能偏转整条生成轨迹。**
 
-    - 功能：在 response 序列中精确定位需要遗忘的最小 token 子集
-    - 核心思路：使用 DistilBERT 或 GPT-4 识别敏感 span，得到二值 mask $m_t$。从每个敏感 span 中仅取前 N 个 token 作为"起始目标" $\mathcal{I}_{\text{init}}$。token 分为三类：起始目标（施加遗忘损失）、普通 token（KL 散度保持）、冗余敏感 token（跳过计算）
-    - 设计动机：即使在敏感 span 内，通常只有前几个 token 决定了语义走向，后续 token 仅在已确定的路径上展开——干预起始 token 即可偏转整条生成轨迹
+现有方法对所有 response token 无差别施加遗忘梯度，连 "is""for" 这种功能词也一起压，白白损害语言能力。PALU 的依据是：即便在敏感 span 内部，通常也只有前几个 token 决定语义走向，后续 token 只是在已定的路径上展开——所以掐住起点就够偏转整条轨迹。实现上先用 DistilBERT 或 GPT-4 识别敏感 span 得到二值 mask $m_t$，再从每个 span 里只取前 N 个 token 组成起始目标集 $\mathcal{I}_{\text{init}}$。于是 token 被分成三类各司其职：起始目标（施加遗忘损失）、普通 token（用 KL 散度保持原分布）、冗余敏感 token（直接跳过、不算梯度）。
 
-2. **局部熵最大化（Vocabulary Sparsity）**:
+**2. 局部熵最大化（词表维度稀疏）：只在 top-K 这个解码关键子空间里制造不确定性，避开全词表的天价计算。**
 
-    - 功能：在词表的关键子空间内最大化预测不确定性
-    - 核心思路：对起始 token 位置 $t \in \mathcal{I}_{\text{init}}$，从冻结参考模型中提取 top-K logit 索引 $V_{\text{top}}$，然后最小化 top-K logits 与目标值 $c$ 的方差：$\mathcal{L}_{\text{local}}(z_t) = \frac{1}{K}\sum_{i \in V_{\text{top}}}(z_{t,i} - c)^2$。这既平坦化了 top-K logits（提高局部熵），又通过选择较小的 $c$ 值整体压低 top-K 的概率质量
-    - 设计动机：负 CE 只抑制 top-1 但概率可能转移到同义词；全词表熵最大化计算量 $O(T|V|)$ 太大；局部熵最大化仅需 $O(TK)$，在解码关键子空间内实现结构化不确定性
+负 CE 只压 top-1，被挤掉的概率质量往往溜到高度相关的同义词上，分布还是尖的，模型并没真正"忘"；而理论上更优的全词表熵最大化又要在 $|V|$ 维上算梯度，代价高到不可接受。PALU 取其中间：对每个起始 token $t \in \mathcal{I}_{\text{init}}$，先从冻结参考模型里取出 top-K logit 索引 $V_{\text{top}}$，再把这些 logits 往目标值 $c$ 上拉平，最小化它们与 $c$ 的方差
 
-3. **统一遗忘损失**:
+$$\mathcal{L}_{\text{local}}(z_t) = \frac{1}{K}\sum_{i \in V_{\text{top}}}(z_{t,i} - c)^2$$
 
-    - 功能：整合 token 级和词表级的稀疏化
-    - 核心思路：$\mathcal{L}_f = \mathbb{E}_{t \in \mathcal{I}_{\text{init}}}[\mathcal{L}_{\text{local}}(z_t)] + \lambda \mathbb{E}_{t \notin \mathcal{I}_{\text{sens}}}[\text{KL}(P_{\theta_{\text{ref}}} \| P_\theta)]$。梯度仅在起始 token 和普通 token 上非零，冗余敏感 token 梯度为零
-    - 设计动机：严格遵循最小干预原则——遗忘和保持分别作用于不同的 token 子集
+这一步既把 top-K 拍平（抬高局部熵），又因为 $c$ 取得较小而整体压低了 top-K 的概率质量。计算量只要 $O(TK)$，却在真正主导解码的那一小撮候选上注入了结构化不确定性。
+
+**3. 统一遗忘损失：把 token 级和词表级两种稀疏拼成一个目标，遗忘与保持各管各的 token。**
+
+两个维度的稀疏化要合到一处才能一起优化。PALU 的遗忘损失写成
+
+$$\mathcal{L}_f = \mathbb{E}_{t \in \mathcal{I}_{\text{init}}}[\mathcal{L}_{\text{local}}(z_t)] + \lambda \mathbb{E}_{t \notin \mathcal{I}_{\text{sens}}}[\text{KL}(P_{\theta_{\text{ref}}} \| P_\theta)]$$
+
+梯度只在起始 token（拉平 top-K）和普通 token（KL 保持）上非零，冗余敏感 token 梯度恒为零。这等于把"遗忘"和"保持"分派到互不重叠的 token 子集上，严格落实最小干预原则。
 
 ### 损失函数 / 训练策略
 
-总损失 $\mathcal{L}_{\text{all}} = \mathcal{L}_f + \lambda \mathcal{L}_r$，其中 $\mathcal{L}_r$ 是保留集上的标准 CE 损失。基座模型为 Llama-2-7B 和 Llama-3.1-8B。Top-K 索引从冻结参考模型提取并在遗忘过程中固定。
+总损失 $\mathcal{L}_{\text{all}} = \mathcal{L}_f + \lambda \mathcal{L}_r$，其中 $\mathcal{L}_r$ 是保留集上的标准 CE。基座模型用 Llama-2-7B 和 Llama-3.1-8B；top-K 索引从冻结参考模型一次性提取，并在整个遗忘过程中固定不变。
 
 ## 实验关键数据
 

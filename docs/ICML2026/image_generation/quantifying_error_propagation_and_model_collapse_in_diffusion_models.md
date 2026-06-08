@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-理论框架围绕递归训练 $\hat p^i \xrightarrow{\text{mix}} q_i \xrightarrow{\text{train}} \hat p^{i+1}$ 展开，分两层：(1) 单代分析——给定当代 score 误差能量 $\varepsilon_{\star,i}^2$，用 Girsanov + 一个新的"可观测性"系数把单代散度 $I_i$ 上下双向夹住；(2) 多代累加——把单代结果代入刷新步的 $\chi^2$ 收缩关系，得到 $D_N$ 的几何折扣分解。两层都在"小 score 误差摄动"区域 $\varepsilon_{\star,i}^2\le 1$ 内严格成立。
+本文要解决的问题是：递归训练管道 $\hat p^i \to q_i = \alpha p_{\text{data}} + (1-\alpha)\hat p^i \to \hat p^{i+1}$ 中，新鲜数据的稀释与不完美 score 学习的误差注入彼此拉扯，到底会不会、以多快的速度走向 model collapse。作者把它拆成两层处理：先在单代尺度上，用 Girsanov 测度变换把反向 SDE 的 drift 误差打到边际似然比上，再配一个新的"可观测性"系数，把单代散度 $I_i=\chi^2(\hat p^{i+1}\|q_i)$ 上下双向夹住；然后在多代尺度上，把这个单代估计代入刷新步的 $\chi^2$ 精确收缩关系做递推，得到累积散度 $D_N$ 的几何折扣分解。两层结论都限定在"小 score 误差摄动"区域 $\varepsilon_{\star,i}^2\le 1$ 内严格成立。
 
 ### 关键设计
 
-1. **可观测性系数 $\eta_i$**：
+**1. 可观测性系数 $\eta_i$：把路径误差翻译成边际散度**
 
-    - 功能：度量路径上的 score 误差有多少会"现身"到反向扩散终止时刻 $t_0$ 的边际分布上，是把路径能量翻译成终止散度的桥梁。
-    - 核心思路：定义随机变量 $M_T^i = -\int_{t_0}^T \mathbf e_{i,s}\cdot \mathrm d\bar{\mathbf B}_s$ （路径上 score 误差与反向 Brownian 的随机积分），由 Itô isometry 知 $\mathrm{Var}_{\mathbb P^\star_i}(M_T^i)=\varepsilon_{\star,i}^2$；令 $\eta_i = \mathrm{Var}_{\mathbb P^\star_i}(\mathbb E[M_T^i\mid \mathbf Y_{t_0}]) / \varepsilon_{\star,i}^2 \in [0,1]$。直觉：与样本状态耦合的扰动（如 $\mathbf e_{i,t}(\mathbf x)=\mathbf w\mathbf x+\xi(t)$）会在终止状态留下印记，$\eta_i>0$；纯时间相关或路径正交的扰动则会被条件期望平均掉，$\eta_i=0$。
-    - 设计动机：路径 score 误差不为零并不必然导致边际散度不为零（这是扩散模型分析里的本质难点），过去只能靠上界绕过；引入 $\eta_i$ 后，下界 $I_i\ge \tfrac14\eta_i\varepsilon_{\star,i}^2 - C\varepsilon_{\star,i}^4$ 第一次把"路径误差"和"边际散度"直接连起来，并能在 CIFAR-10 等真实数据上数值验证 $\eta_i>0$ 几乎总成立。
+扩散模型分析里最本质的难点是，路径上的 score 误差不为零并不必然让反向扩散终止时刻 $t_0$ 的边际分布偏移——误差可能在边际化时被平均掉，所以过去只能靠上界绕过下界这一侧。作者用一个标量 $\eta_i\in[0,1]$ 直接量化"路径误差有多少会现身到终止状态上"。具体地，定义随机积分 $M_T^i = -\int_{t_0}^T \mathbf e_{i,s}\cdot \mathrm d\bar{\mathbf B}_s$（路径 score 误差 $\mathbf e_{i,s}$ 与反向 Brownian 的耦合），由 Itô isometry 有 $\mathrm{Var}_{\mathbb P^\star_i}(M_T^i)=\varepsilon_{\star,i}^2$，于是把"被终止状态保留下来的那部分方差占比"定义为 $\eta_i = \mathrm{Var}_{\mathbb P^\star_i}(\mathbb E[M_T^i\mid \mathbf Y_{t_0}]) / \varepsilon_{\star,i}^2$。直觉很清楚：与样本状态耦合的扰动（如 $\mathbf e_{i,t}(\mathbf x)=\mathbf w\mathbf x+\xi(t)$）会在终止状态留下印记，$\eta_i>0$；纯时间相关或路径正交的扰动则被条件期望平均掉，$\eta_i=0$。有了它，下界第一次能写成 $I_i\ge \tfrac14\eta_i\varepsilon_{\star,i}^2 - C\varepsilon_{\star,i}^4$，把"路径误差"和"边际散度"直接连起来，而且 $\eta_i$ 在 CIFAR-10 等真实数据上可被数值估出且几乎总大于 0。
 
-2. **Girsanov 双向夹的单代等价 $I_i\asymp \varepsilon_{\star,i}^2$ (Theorem 3.5)**：
+**2. Girsanov 双向夹的单代等价 $I_i\asymp \varepsilon_{\star,i}^2$（Theorem 3.5）：给出可直接监控的代理量**
 
-    - 功能：在小 score 误差区域内把 $I_i = \chi^2(\hat p^{i+1}\|q_i)$ 用 ideal-path 上的 score matching loss $\varepsilon_{\star,i}^2$ 双侧夹住，给出工程上可直接监控的代理量。
-    - 核心思路：上界沿用 Girsanov + data processing 得到 $\mathrm{KL}(\hat p^{i+1}\|q_i)\le \tfrac12\hat\varepsilon_i^2$；下界来自上述可观测性论证 $\chi^2(\hat p^{i+1}\|q_i)\ge \tfrac14\eta_i\varepsilon_{\star,i}^2-C\varepsilon_{\star,i}^4$。关键技术是证明 ideal-path 能量 $\varepsilon_{\star,i}^2$ 与 learned-path 能量 $\hat\varepsilon_i^2$ 在 Girsanov 密度 $L^{1+\delta}$-可积假设 A3、二次变差矩条件 A4 下相互等价，同时 $\chi^2$ 与 KL 在摄动区也只差常数。合起来得到 $\tfrac14\eta_i\varepsilon_{\star,i}^2 - C\varepsilon_{\star,i}^4 \le \chi^2(\hat p^{i+1}\|q_i)\le 4\varepsilon_{\star,i}^2 + c\varepsilon_{\star,i}^4$。
-    - 设计动机：以往结果要么只有 KL 上界，要么用 learned-path 能量（实践中拿不到），现在双向都用 ideal-path 能量表达，正好对应训练目标，使理论可被实验直接验证（Figure 4 中 10D GMM 上 $\chi^2$ 和 KL 两个散度都被 $\varepsilon_{\star,i}^2$ 上下夹住）。
+以往结果要么只有 KL 上界，要么用 learned-path 能量 $\hat\varepsilon_i^2$（实践中拿不到），都没法和训练目标对齐。本文在小误差区把单代散度用 ideal-path 上的 score matching loss $\varepsilon_{\star,i}^2$ 双侧夹住：上界沿用 Girsanov + data processing 得到 $\mathrm{KL}(\hat p^{i+1}\|q_i)\le \tfrac12\hat\varepsilon_i^2$，下界来自上面的可观测性论证 $\chi^2(\hat p^{i+1}\|q_i)\ge \tfrac14\eta_i\varepsilon_{\star,i}^2-C\varepsilon_{\star,i}^4$。要把两侧统一到 ideal-path 能量上，关键技术是证明 $\varepsilon_{\star,i}^2$ 与 $\hat\varepsilon_i^2$ 在 Girsanov 密度 $L^{1+\delta}$-可积假设 A3、二次变差矩条件 A4 下相互等价，同时 $\chi^2$ 与 KL 在摄动区只差常数。合起来即 $\tfrac14\eta_i\varepsilon_{\star,i}^2 - C\varepsilon_{\star,i}^4 \le \chi^2(\hat p^{i+1}\|q_i)\le 4\varepsilon_{\star,i}^2 + c\varepsilon_{\star,i}^4$。由于两侧都用对应训练目标的 ideal-path 能量表达，理论可被实验直接验证——Figure 4 在 10D GMM 上就看到 $\chi^2$ 和 KL 两个散度同时被 $\varepsilon_{\star,i}^2$ 上下夹住。
 
-3. **多代几何折扣分解 $D_N \asymp \sum (1-\alpha)^{2(N-i)}\varepsilon_{\star,i}^2$ (Theorem 4.2)**：
+**3. 多代几何折扣分解 $D_N \asymp \sum (1-\alpha)^{2(N-i)}\varepsilon_{\star,i}^2$（Theorem 4.2）：解释为什么加新鲜数据能阻止坍塌**
 
-    - 功能：把 $N$ 代之后累积散度精确拆成各代 score 误差能量按几何系数衰减的加权和，给"为什么加新鲜数据能阻止坍塌"一个定量答案。
-    - 核心思路：刷新步的 $\chi^2$ 散度满足精确等式 $\chi^2(q_i\|p_{\text{data}})=(1-\alpha)^2\chi^2(\hat p^i\|p_{\text{data}})$ (Lemma F.1)——这是 $\chi^2$ 选择 $\chi^2$ 而非 KL 的关键代数优势；与单代等价 $\chi^2(\hat p^{i+1}\|q_i)\asymp \varepsilon_{\star,i}^2$ 一起做递推，再加一个自适应"良好集" $\mathcal G_i$ 上的尾部假设 A5（防止合成模型在 $p_{\text{data}}$ 极小的区域放大量质量），即可得 $D_{N+1}+C_{\text{bias}}\asymp \sum_{i=i_0}^N (1-\alpha)^{2(N-i)}\varepsilon_{\star,i}^2 + (1-\alpha)^{2(N+1-i_0)}D_{i_0}$。同时 Proposition 4.1 给出反向二分：若 $\sum_i \varepsilon_{\star,i}^2=\infty$ 或存在 score-error 下界，则 $\limsup D_i$ 不会消失，模型必坍塌。
-    - 设计动机：把"$\alpha$ 越大 → 抑制越强"的经验事实化成显式 $(1-\alpha)^{2m}$ 衰减律——$m$ 代以前的误差被压缩 $(1-\alpha)^{2m}$ 倍，等价于一个 effective memory $\sim 1/\alpha$；这同时给出工程指导：要让 $D_N$ 稳定，只需 $\sum \varepsilon_{\star,i}^2<\infty$ 且 $\alpha>0$，无需每代误差都收敛到 0。
+经验上"$\alpha$ 越大、抑制越强"一直缺定量刻画。本文把单代等价沿代数累加得到精确衰减律。核心代数优势在于刷新步的 $\chi^2$ 散度满足精确等式 $\chi^2(q_i\|p_{\text{data}})=(1-\alpha)^2\chi^2(\hat p^i\|p_{\text{data}})$（Lemma F.1）——这正是选 $\chi^2$ 而非 KL 的原因，KL 没有这种干净的二次收缩。把它与单代等价 $\chi^2(\hat p^{i+1}\|q_i)\asymp \varepsilon_{\star,i}^2$ 一起递推，再加一个自适应"良好集" $\mathcal G_i$ 上的尾部假设 A5（防止合成模型在 $p_{\text{data}}$ 极小的区域堆质量），即得 $D_{N+1}+C_{\text{bias}}\asymp \sum_{i=i_0}^N (1-\alpha)^{2(N-i)}\varepsilon_{\star,i}^2 + (1-\alpha)^{2(N+1-i_0)}D_{i_0}$。Proposition 4.1 还给出反向二分：若 $\sum_i \varepsilon_{\star,i}^2=\infty$ 或存在 score-error 下界，则 $\limsup D_i$ 不会消失，模型必坍塌。这套结论把经验事实化成显式的 $(1-\alpha)^{2m}$ 衰减——$m$ 代以前的误差被压缩 $(1-\alpha)^{2m}$ 倍，等价于一个 $\sim 1/\alpha$ 的 effective memory，同时给出工程指导：只要 $\sum \varepsilon_{\star,i}^2<\infty$ 且 $\alpha>0$，$D_N$ 就稳定，无需每代误差都收敛到 0。
 
 ### 损失函数 / 训练策略
 没有提出新的训练损失。理论建立在标准 variance-preserving OU 前向 SDE $\mathrm d\mathbf X_t = -\tfrac12\mathbf X_t\mathrm dt + \mathrm d\mathbf B_t$ 和反向 SDE 之上，使用 score matching loss $\varepsilon_{\star,i}^2 = \mathbb E_{\mathbb P^\star_i}[\int_{t_0}^T \|\mathbf e_{i,s}(\mathbf Y_s)\|_2^2 \mathrm ds]$。Minimax-optimal score 估计误差满足 $\varepsilon_{\star,i}^2 \lesssim \mathrm{polylog}(n_i)\,n_i^{-1}(1/t_0)^{d/2}$，即样本量在环境维 $d$ 中指数增长才能保证摄动区成立；但在低维流形假设下只需依赖内在维 $d^\star\ll d$。

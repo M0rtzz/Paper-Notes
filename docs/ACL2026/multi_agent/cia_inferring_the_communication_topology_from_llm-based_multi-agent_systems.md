@@ -41,35 +41,39 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CIA 是一个两阶段黑盒攻击 pipeline：
-
-- **输入**：目标 MAS $\mathcal{S}$ 的查询接口（只能 query、看最终输出）。
-- **阶段一 Reasoning Output Induction**：构造对抗查询 $q^*$，让 $\mathcal{S}(q^*)$ 这一最终输出里"夹带"所有中间 agent 的 reasoning，后处理为列表 $\mathcal{R}^* = [r_1^*, \ldots, r_n^*]$。
-- **阶段二 Semantic Correlations Modeling**：用 GBD（Global Bias Disentanglement）学去偏表征 $\mathbf{z}_i^d$，用 LWS（LLM-guided Weak Supervision）从 teacher LLM 蒸馏拓扑结构信号，最后用相似度 + $\mathcal{R}^*$ 中的相对顺序判定有向连边。
-- **输出**：推断出的通信拓扑 $\hat{\mathcal{G}}$（DAG）。
+CIA 想干的事：在最严格的黑盒设定下——攻击者只能往目标 MAS $\mathcal{S}$ 发查询、看一眼最终输出 $\mathcal{S}(q)$，拿不到任何 agent 的 reasoning trace 或 profile——把整张通信拓扑 $\hat{\mathcal{G}}$（一个 DAG）反演出来。它分两阶段：阶段一 Reasoning Output Induction 用一条精心设计的对抗查询 $q^*$，逼 MAS 把内部所有中间 agent 的 reasoning 顺着拓扑"夹带"进最终输出，再后处理还原成有序列表 $\mathcal{R}^*=[r_1^*,\ldots,r_n^*]$；阶段二 Semantic Correlations Modeling 在这堆 reasoning 文本上学一个去偏表征，配合 teacher LLM 的弱监督，最终靠两两语义相似度 + 在 $\mathcal{R}^*$ 中的相对顺序判定每条有向连边。整套攻击零修改 MAS 配置、不破坏任务正确率。
 
 ### 关键设计
 
-1. **Reasoning Output Induction（三约束对抗查询）**:
+**1. Reasoning Output Induction：用三条对抗约束把内部 reasoning"挤"出 decision agent。**
 
-    - 功能：让最终输出能完整复现所有中间 agent 的 reasoning，否则黑盒下根本拿不到 $\mathcal{R}^*$。
-    - 核心思路：在原始任务 prompt 上叠加三条对每个 agent 都生效的硬约束——❶ **Cumulative-Propagation**：要求每个 agent 把前驱的 reasoning history 原样 copy 进自己的输出再 append 自己的，使 reasoning 沿 $\mathcal{G}$ 累积传播到最终 decision agent；❷ **Task-Focused**：要求 agent 只关注输入中显式标记的 task-relevant 字段，避免被对抗 prompt 自身的额外文本带偏；❸ **Predecessor-Review**：要求 agent 在生成自己的输出前先 review 前驱内容，强化相邻 agent 间的语义耦合，让后续阶段的相关性信号更显著。最终 $\mathcal{S}(q^*)$ 用 `|||` 分隔符切分 + backward deduplication 还原为有序列表 $\mathcal{R}^*$。
-    - 设计动机：MAS 的隐蔽性使得即便能 query 也只看得到 decision agent 的最终结果，而拓扑推断必须依赖中间节点的输出。这三条约束既保证了信息能被泄露出来（实验 Recall 0.87–0.96、ROUGE-L 0.87–0.95），又能在不破坏任务功能的前提下保持攻击隐蔽（Std.Query 与 Adv.Query 任务准确率几乎一致）。
+黑盒下你只看得到 decision agent 的最终结论，可拓扑推断偏偏要靠中间节点的输出——没有 $\mathcal{R}^*$ 一切免谈。CIA 的解法是在原始任务 prompt 上叠加三条对每个 agent 都生效的硬约束：❶ **Cumulative-Propagation** 要求每个 agent 把前驱的 reasoning history 原样 copy 进自己输出再 append 自己的，使 reasoning 沿 $\mathcal{G}$ 一路累积传播到最终的 decision agent；❷ **Task-Focused** 要求 agent 只关注输入里显式标记的 task-relevant 字段，免得被对抗 prompt 自带的额外文本带偏；❸ **Predecessor-Review** 要求 agent 生成前先 review 前驱内容，强化相邻 agent 的语义耦合，让后续阶段的相关性信号更显著。最终 $\mathcal{S}(q^*)$ 用 `|||` 分隔符切分 + backward deduplication 还原成有序列表 $\mathcal{R}^*$。
 
-2. **Global Bias Disentanglement（GBD）**:
+巧妙之处在于这三条约束既能把信息泄露出来（实验 Recall 0.87–0.96、ROUGE-L 0.87–0.95，reasoning 几乎被完整诱导出来），又不破坏任务功能、保持隐蔽——对抗查询下 MAS 的任务准确率和标准查询几乎一致，靠"任务性能下降"的检测器根本察觉不到。
 
-    - 功能：去掉所有 agent reasoning 中"非通信引起的"虚假语义相关，避免大量非连边 agent 对被误判为连边。
-    - 核心思路：作者观察到即便没有任何通信，agents 也常因共享 base LLM、处理同一任务、表征各向异性等原因输出高度相似的文本，这种全局共享的虚假信号被命名为 **Global Bias**。GBD 用预训练 all-MiniLM-L6-v2 编码 $r_i^*$ 得到 $\mathbf{h}_i$，再用两个可训练编码器 $E^d, E^b$ 投影到去偏子空间 $\mathbf{z}_i^d$ 和偏置子空间 $\mathbf{z}_i^b$。然后通过信息论目标 $\mathcal{L}_{\mathrm{bias}} = -\mathcal{I}(\mathbf{z}_1^b;\ldots;\mathbf{z}_n^b) + \sum_i \mathcal{I}(\mathbf{z}_i^d; \mathbf{z}_i^b)$ —— **最大化所有 agent 偏置表征间的多元互信息**（让 $E^b$ 抓住全局共享的虚假信息），同时**最小化每个 agent 自己 debiased 和 biased 表征的互信息**（不让虚假信息泄漏进 $\mathbf{z}_i^d$）。其中多元 MI 通过 Total Correlation 的递归分解 $\mathcal{TC}(\mathbf{Z}^b) = \sum_{i=1}^{n-1} \mathcal{I}(\mathbf{Z}^b_{1:i}; \mathbf{z}^b_{i+1})$ + InfoNCE 估计。还加了一项重建损失 $\mathcal{L}_{\mathrm{rec}} = \sum_i \|\mathbf{h}_i - D(\mathbf{z}_i^d \oplus \mathbf{z}_i^b)\|_2^2$ 防止 disentanglement 把信息全丢了。
-    - 设计动机：消融显示去掉 GBD 后 AUC 从 0.83 直接掉到 0.53，FPR 至少减半，说明 global bias 是导致黑盒推断方法失败的主要瓶颈。相比简单的 "subtract" 变体（CIA-Sub：$\mathbf{z}_i^d = \mathbf{h}_i - \mathbf{z}_i^b$），双编码器结构能让 debiased 表征被显式 refine 去捕获通信相关信息，AUC 高 5–14 个点。
+**2. Global Bias Disentanglement（GBD）：剥掉"非通信引起"的虚假语义相关。**
 
-3. **LLM-guided Weak Supervision（LWS）+ Link Identification**:
+直接拿 reasoning 两两算相似度会翻车：哪怕两个 agent 之间根本没连边，它们也常因共享同一个 base LLM、处理同一任务、表征各向异性而输出高度相似的文本——这种全局共享的虚假信号被作者命名为 **Global Bias**，会把大量非连边的 agent 对误判成连边。GBD 先用预训练 all-MiniLM-L6-v2 把 $r_i^*$ 编码成 $\mathbf{h}_i$，再用两个可训练编码器 $E^d,E^b$ 分别投影到去偏子空间 $\mathbf{z}_i^d$ 和偏置子空间 $\mathbf{z}_i^b$。核心是一个信息论目标：
 
-    - 功能：只靠文本相似度学不到 $\mathcal{G}$ 的结构信息，所以引入 teacher LLM 当弱监督把"结构知识"蒸馏进 $\mathbf{z}_i^d$。
-    - 核心思路：把 $\mathcal{R}^*$ 喂给 teacher LLM（GPT-5），让它返回 top-$k$ 置信度最高的边作为正样本集 $\mathcal{E}_{\mathrm{pos}}$，其余 agent 对采样为负样本集 $\mathcal{E}_{\mathrm{neg}}$。由于 teacher LLM 整体推全图很烂（见 Table 1 中所有 LLM baselines），但 top-$k$（尤其 $k\le 3$）的精度很高，所以只用其 top-$k$ 作为弱信号。损失采用 label-smoothed BCE：$\mathcal{L}_{\mathrm{pos}}(a_i, a_j) = (1-\alpha)\log(\mathrm{Sim}(\mathbf{z}_i^d, \mathbf{z}_j^d)) + \alpha\log(1 - \mathrm{Sim}(\cdot))$，$\alpha = 0.1$ 用来吸收 teacher 的噪声。最终联合优化 $\mathcal{L}_{\mathrm{CIA}} = \mathcal{L}_{\mathrm{GBD}} + \mathcal{L}_{\mathrm{LWS}}$。推断时连边判定为 $\mathbb{I}[\mathrm{Sim}(\mathbf{z}_i^d, \mathbf{z}_j^d) \ge \tau \land \pi(a_i) < \pi(a_j)]$，$\tau = 0.5$，方向由 agent 在 $\mathcal{R}^*$ 中的相对索引决定。
-    - 设计动机：teacher LLM 单独做全图推断 AUC 才 0.5–0.7（输不过 CIA），但它对"最显然的几条边"判断很准——LWS 利用这种"局部强、全局弱"的特性，把可靠局部信号蒸馏进 debiased 表征。消融显示加 LWS 后 AUC 提升 3–10 个点，hyperparameter 分析 $k=3$ 最优。
+$$\mathcal{L}_{\mathrm{bias}} = -\mathcal{I}(\mathbf{z}_1^b;\ldots;\mathbf{z}_n^b) + \sum_i \mathcal{I}(\mathbf{z}_i^d; \mathbf{z}_i^b)$$
+
+前一项**最大化所有 agent 偏置表征间的多元互信息**（逼 $E^b$ 去抓那个全局共享的虚假信息），后一项**最小化每个 agent 自身去偏与偏置表征的互信息**（不让虚假信息漏进 $\mathbf{z}_i^d$）。其中多元 MI 通过 Total Correlation 的递归分解 $\mathcal{TC}(\mathbf{Z}^b)=\sum_{i=1}^{n-1}\mathcal{I}(\mathbf{Z}^b_{1:i};\mathbf{z}^b_{i+1})$ 配 InfoNCE 估计，另加一项重建损失 $\mathcal{L}_{\mathrm{rec}}=\sum_i\|\mathbf{h}_i - D(\mathbf{z}_i^d\oplus\mathbf{z}_i^b)\|_2^2$ 防止解纠缠把信息全丢光。
+
+GBD 是整个方法的命脉：消融里去掉它 AUC 从 0.83 直接掉到 0.53（接近随机）、FPR 至少减半，证明 global bias 确实是黑盒推断失败的最大噪声源。相比简单的 subtract 变体（CIA-Sub：$\mathbf{z}_i^d=\mathbf{h}_i-\mathbf{z}_i^b$），双编码器能让去偏表征被显式 refine 去捕获通信相关信息，AUC 高出 5–14 点。
+
+**3. LLM-guided Weak Supervision（LWS）+ 连边判定：把"局部强、全局弱"的 teacher 信号蒸进去偏表征。**
+
+只靠文本相似度学不到 $\mathcal{G}$ 的结构信息，于是引入一个 teacher LLM（GPT-5）当弱监督。把 $\mathcal{R}^*$ 喂给它，让它返回 top-$k$ 置信度最高的边作正样本集 $\mathcal{E}_{\mathrm{pos}}$，其余 agent 对采样为负样本集 $\mathcal{E}_{\mathrm{neg}}$。关键观察是：teacher LLM 单独推全图很烂（AUC 才 0.5–0.7，输不过 CIA），但它对"最显然那几条边"判得很准——所以只取它的 top-$k$（尤其 $k\le 3$）当可靠局部信号。损失用 label-smoothed BCE 吸收 teacher 噪声：
+
+$$\mathcal{L}_{\mathrm{pos}}(a_i,a_j) = (1-\alpha)\log\big(\mathrm{Sim}(\mathbf{z}_i^d,\mathbf{z}_j^d)\big) + \alpha\log\big(1-\mathrm{Sim}(\cdot)\big),\quad \alpha=0.1$$
+
+推断时连边判定为 $\mathbb{I}\big[\mathrm{Sim}(\mathbf{z}_i^d,\mathbf{z}_j^d)\ge\tau \ \land\ \pi(a_i)<\pi(a_j)\big]$，阈值 $\tau=0.5$，连边方向由两个 agent 在 $\mathcal{R}^*$ 中的相对索引决定。这种"弱专家强用"——expert 整体不行但局部可靠时，用其 top-$k$ 高置信子集做监督、配 label smoothing 抑噪——让 AUC 再涨 3–10 点，超参分析显示 $k=3$ 最优。
+
+### 一个完整示例：反演一个 3 节点 MAS
+设目标是 ARG-Designer 在 GSM8K 上的一个真实拓扑 $a_1\to a_2\to a_3$（3 节点 ~3 边）。攻击者发出对抗查询 $q^*$，decision agent $a_3$ 的最终输出里因 Cumulative-Propagation 约束夹带了全部三段 reasoning，按 `|||` 切分 + backward dedup 还原出 $\mathcal{R}^*=[r_1^*,r_2^*,r_3^*]$（Recall ~0.9）。把三段文本编码、过 GBD 去掉它们共享的 GSM8K 解题腔调（global bias），得到 $\mathbf{z}_1^d,\mathbf{z}_2^d,\mathbf{z}_3^d$；GPT-5 给出 top-3 边作弱监督微调表征。推断时 $\mathrm{Sim}(\mathbf{z}_1^d,\mathbf{z}_2^d)$ 和 $\mathrm{Sim}(\mathbf{z}_2^d,\mathbf{z}_3^d)$ 都 $>0.5$、且索引顺序 $1<2<3$，判定出 $a_1\to a_2\to a_3$，这种精简拓扑下 AUC 接近 1.0。
 
 ### 损失函数 / 训练策略
-最终目标 $\mathcal{L}_{\mathrm{CIA}} = \mathcal{L}_{\mathrm{rec}} + \mathcal{L}_{\mathrm{bias}} + \mathcal{L}_{\mathrm{LWS}}$，仅训练 $E^d, E^b$（base encoder 冻结）。学习率 $1\mathrm{e}{-3}$、$k=3$、$\alpha=0.1$、表征维度 768、阈值 $\tau=0.5$。
+最终联合目标 $\mathcal{L}_{\mathrm{CIA}}=\mathcal{L}_{\mathrm{rec}}+\mathcal{L}_{\mathrm{bias}}+\mathcal{L}_{\mathrm{LWS}}$，只训练 $E^d,E^b$ 两个编码器（base encoder 冻结）。超参：学习率 $1\mathrm{e}{-3}$、$k=3$、$\alpha=0.1$、表征维度 768、阈值 $\tau=0.5$。
 
 ## 实验关键数据
 

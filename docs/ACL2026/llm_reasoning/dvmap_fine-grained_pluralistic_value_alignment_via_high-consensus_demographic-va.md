@@ -45,23 +45,21 @@ DVMap 把 LLM 的"多元价值对齐"从粗粒度的国家标签下沉到 11 维
 
 ### 关键设计
 
-1. **Demographic Archetype 抽取（熵 = 0 严过滤）**:
+**1. Demographic Archetype 抽取：用熵 = 0 严过滤把"人口原型 → 稳定价值"的子集挑出来。**
 
-    - 功能：把 WVS 个体回答聚合成"具有一致价值偏好的人口原型"，作为对齐目标分布。
-    - 核心思路：先按 Bourdieu 社会分层把每个被访者用 11 维属性（Country / Gender / Age / Marital / Parenthood / Income / Occupation / Work Nature / Education / Religion / Language）编码成 profile $P$；约 32.8% 的 profile 出现多人重叠；对每个 $(P, Q)$ 计算回答的 Shannon 熵 $H$，**只有 $H=0$（完全一致）的 profile-value 对才保留**，约 9.2% 的"分歧档案"被剔除。
-    - 设计动机：以往多文化微调把"同一国家所有人回答"直接拿来训练，等于在监督信号里塞进了内部异质性噪声；用 $H=0$ 严过滤等于先把"人口原型 → 稳定价值"的子集挑出来，再让模型去拟合，从源头消除标签噪声。
+以往多文化微调把"同一国家所有人的回答"直接拿来训练，等于在监督信号里塞进了 intra-country 的异质性噪声——这正是背景里实证出的痛点。DVMap 换一种聚合方式：先按 Bourdieu 社会分层，把每个 WVS 被访者用 11 维属性（Country / Gender / Age / Marital / Parenthood / Income / Occupation / Work Nature / Education / Religion / Language）编码成一个 profile $P$，约 32.8% 的 profile 会出现多人重叠。对每个 $(P, Q)$ 对计算这组人回答的 Shannon 熵 $H$，**只保留 $H=0$（组内完全一致）的 profile-value 对**，把约 9.2% 的"分歧档案"整组剔除。这样留下的不是"某国平均意见"，而是"某类人口原型的稳定众数回答"，相当于在拟合前就把标签噪声从源头清掉——消融里它比 majority voting 还多涨 1.4% Acc，说明这步过滤本身就是数据侧最大的杠杆。
 
-2. **Structured CoT 三步推理模板**:
+**2. Structured CoT 三步模板：把"人口属性 → 价值"的隐式社会学关联显式化成可监督的推理链。**
 
-    - 功能：把"人口属性 → 价值偏好"的隐式社会学关联显式化为可被监督的推理链。
-    - 核心思路：指令模板 $I_{cot}$ 强制模型按三步走——(i) Demographic-Value Correlation Analysis：逐属性分析问题是否触及该身份的核心利益/信念冲突；(ii) Option Trade-off：逐选项评估与人口画像的兼容性；(iii) Decision Output：把最终选项放进 `<answer></answer>`。该思维链与 GRPO 训练绑定，使中间推理获得隐式监督。
-    - 设计动机：自由式 RL 推理容易产生"逻辑幻觉"（消融里 Base+CoT 反而掉 0.8% ACC）；显式三步走相当于把"角色扮演 + 选项权衡"这套社会学推理模式硬编码，给模型一个安全的思维支架。
+光有干净数据还不够，模型需要学会"为什么这类人会这样选"，否则容易退化成按字段查表。但放开让它自由推理又会产生"逻辑幻觉"——消融里 Base 在推理期临时加 CoT 反而掉了 0.8% ACC。DVMap 的做法是用指令模板 $I_{cot}$ 把推理硬编码成固定三步：(i) Demographic-Value Correlation Analysis，逐属性分析问题是否触及该身份的核心利益或信念冲突；(ii) Option Trade-off，逐个选项评估与人口画像的兼容性；(iii) Decision Output，把最终选项放进 `<answer></answer>`。关键在于这条思维链不是推理期临时挂上去的，而是和下面的 GRPO 训练绑定，让中间推理在 RL 信号下获得隐式监督、被逐步塑形成稳定的"角色扮演 + 选项权衡"模式，相当于给模型一个安全的思维支架。
 
-3. **GRPO + 极简二值奖励（"Simplicity Wins"）**:
+**3. GRPO + 极简二值奖励：用最干净的命中信号把输出分布峰值锚到 archetype 众数上。**
 
-    - 功能：用最简单的命中/不命中信号把 LLM 的输出分布峰值"锚"到目标 archetype 的众数 $y_i$ 上。
-    - 核心思路：奖励 $r=\mathbb{I}(\hat y=y_i)+\beta r_{format}$，相对位置由 GRPO 在组内基线下计算 Relative Advantage；作者假设 LLM 预训练已经有"Agree ↔ Strongly Agree"这种自然语义拓扑，无需 Likert 加权的连续奖励就能学到光滑分布。消融对比 Likert-adjusted 软奖励 $r=\alpha(1-|\hat y-y|/(L-1))+\beta r_{format}$，结果二值奖励反而 ACC 高 1.6%、WD 低 0.013。
-    - 设计动机：连续奖励看似"信息更多"，但会和 LLM 已有的语义拓扑产生干扰；二值信号最干净，让模型自己用 token 嵌入空间的距离去插值出有序分布。
+按直觉，价值是有序的 Likert 量表（Strongly Disagree ↔ Strongly Agree），奖励似乎应该按距离连续加权才"信息更多"。DVMap 反其道而行，只用最简单的二值奖励
+
+$$r=\mathbb{I}(\hat y=y_i)+\beta r_{format}$$
+
+命中目标众数 $y_i$ 给 1、否则给 0，再加一个格式项；选项之间的相对优劣交给 GRPO 在组内基线下算 Relative Advantage。背后的假设是：LLM 预训练时早已编码了"Agree ↔ Strongly Agree"这类自然语义拓扑，token 嵌入空间本身就能插值出有序分布，连续奖励不但没必要，反而会和这套既有拓扑互相干扰。消融把它和 Likert-adjusted 软奖励 $r=\alpha(1-|\hat y-y|/(L-1))+\beta r_{format}$ 对比，结果二值奖励 ACC 高 1.6%、WD 低 0.013——"以简胜繁"在这里是实打实的。
 
 ### 损失函数 / 训练策略
 GRPO 学习率 $5\times 10^{-6}$，温度 $T=0.7$，每条样本 8 次 rollout，全局 batch=64，仅训 1 epoch 防止过拟合；硬件 8×A100 80GB；用 VeRL + FSDP2 + Flash-Attention + bfloat16。基础模型覆盖 Qwen3 0.6B/1.7B/4B/8B 与 Llama-3.2-3B-Instruct。评测三指标：精确匹配 Acc、Likert Consistency $\text{LC}=1-\frac{1}{N}\sum\frac{|\hat y-y|}{K-1}$、Wasserstein Distance $\text{WD}=\sum_k|\text{CDF}_{pred}(k)-\text{CDF}_{real}(k)|$。

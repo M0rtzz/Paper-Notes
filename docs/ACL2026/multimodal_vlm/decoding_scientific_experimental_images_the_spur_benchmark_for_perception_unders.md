@@ -44,23 +44,23 @@ SPUR 不是模型而是 benchmark + 评测框架。Pipeline：① **图像采集
 
 ### 关键设计
 
-1. **三阶段七任务分层评测**:
+**1. 三阶段七任务分层评测：把"读懂多面板实验图"拆成可独立诊断的能力链。**
 
-    - 功能：把"读懂多面板实验图"的能力链显式拆成 Perception (NP/MP/IL)、Understanding (TA/HI)、Reasoning (Qual./Quant.) 三阶段、七子任务，每个子任务有独立 accuracy。
-    - 核心思路：感知阶段 panel-level——NP 估计动力学曲线数值、MP 识别细胞形态、IL 把面板映射到实验条件；理解阶段 cross-panel——TA 分析同构面板的趋势方向，HI 在异构面板间做跨模态信息整合；推理阶段 expert-level——Qual. 给方向性结论，Quant. 给比率/显著性这类量化结论。指标空间能直接定位"是看不见数值还是不会综合趋势"。
-    - 设计动机：传统 VQA-style benchmark 只给一个 overall accuracy，错了不知道错在哪。分层设计让作者能定量论证"NP 是瓶颈、TA 随关系数 1→4 从 60.7% 跌到 34.0%、Quant. 系统性比 Qual. 低 12.76%–31.41%"这种诊断性结论。
+传统 VQA-style benchmark 只给一个 overall accuracy，模型错了也不知道错在哪一环。SPUR 把"读懂一张实验图"显式拆成三阶段七子任务，每个子任务单独算 accuracy：感知阶段是 panel 级的——NP 估计动力学曲线的数值、MP 识别细胞形态、IL 把面板映射回实验条件；理解阶段跨 panel——TA 分析同构面板的趋势方向、HI 在异构面板间做跨模态信息整合；推理阶段是专家级——Qual. 给方向性结论、Quant. 给比率/显著性这类量化结论。
 
-2. **多面板高复杂度图像 + 六类细粒度面板**:
+有了这套指标空间，作者才能把瓶颈定位到具体环节，而不是泛泛地说"模型不行"：NP 是系统性最低项、TA 随跨面板关系数从 1 增到 4 时 accuracy 从 60.7% 跌到 34.0%、Quant. 全程比 Qual. 低 12.76%–31.41%——这些诊断结论都依赖于"错在哪一段链路"能被分层读出来。
 
-    - 功能：构造**平均 14.3 panel/图**、最多含 6 种细粒度面板（4 类染色 + 统计图 + Western blot）的极端复杂图，远超 MMSci (7.4)、SFE (2.3)、MicroVQA (1.9)。
-    - 核心思路：先用 YOLO 检测器对 5632 张候选图数面板，强制 $\geq 6$ panel 才进入下一轮；同时把染色图细分为 Cell / Tissue / Microorganism / Subcellular 四类，让 MP 任务可以按 panel category 拆开做细粒度分析（结果发现 Ministral 3 14B 在 Subcellular 上 70.52% 但 Microorganism 只有 42.80%，暴露训练数据偏置）。
-    - 设计动机：低复杂度图（1–3 panel）无法考"跨面板关系"，且 MLLM 抄 caption 就能蒙对；高 panel 数 + 多类型混排才能真正模拟"读 Nature 一张 figure"的科研场景。
+**2. 多面板高复杂度图像 + 六类细粒度面板：把图像复杂度推到真实顶刊 figure 的密度。**
 
-3. **双重 shortcut elimination + 专家分级审核**:
+低复杂度图（1–3 panel）既考不了跨面板关系，MLLM 抄一句 caption 就能蒙对。SPUR 反其道而行，强制图像平均含 14.3 个 panel（远超 MMSci 的 7.4、SFE 的 2.3、MicroVQA 的 1.9），且最多混排 6 种细粒度面板类型（4 类染色 + 统计图 + Western blot）。实现上先用 YOLO 检测器对 5632 张候选图数面板，$\geq 6$ panel 才放行；同时把染色图细分为 Cell / Tissue / Microorganism / Subcellular 四类，让 MP 任务能按 panel category 拆开做细粒度分析。
 
-    - 功能：保证每道题"必须看图才能答对"，不能靠 caption 关键词、常识或预训练记忆抄近路。
-    - 核心思路：(a) Textual shortcut filter——把题目 + 选项喂给 GPT-4o **不附图**重复答 10 次，若 ≥5 次正确就判为"文字可解"丢掉，共淘汰 21.2%（1612 题）；(b) 双专家审 —— 4 位领域专家（>40 篇 paper）+ 2 位高级专家（>100 篇 paper），三维度打分（Scientific Validity / Task Alignment / Visual Reasoning Necessity），分歧由高级专家仲裁，淘汰 28.9%（1732 题）；(c) Question Generation 阶段就禁止从 caption 直接派生题目，强制基于面板视觉信息出题。
-    - 设计动机：科学图像 QA 的最大陷阱是"答案泄露到 caption 或常识"，导致 benchmark 测的是 LLM 知识而非视觉能力。两道过滤器后，benchmark 上 GPT-4o text-only 设置答不出超过 50%，证明视觉信息确实是必需的。
+这种细分立刻暴露了训练数据偏置——Ministral 3 14B 在 Subcellular 面板上能到 70.52%，在 Microorganism 上却只有 42.80%，同一个感知任务因图像子类型不同而判若两模型。高 panel 数 + 多类型混排，才真正模拟了"读 Nature 一张 figure"的科研场景。
+
+**3. 双重 shortcut elimination + 专家分级审核：逼模型必须看图，堵死从 caption 和常识抄答案的近路。**
+
+科学图像 QA 最大的陷阱是答案泄漏到 caption 或预训练常识里，导致 benchmark 测的其实是 LLM 的知识而非视觉能力。SPUR 用三道闸门封死这条近路：(a) textual shortcut filter——把题目 + 选项不附图喂给 GPT-4o 重复答 10 次，凡 ≥5 次答对就判为"文字可解"丢掉，淘汰 21.2%（1612 题）；(b) 双专家盲审——4 位 >40 篇 paper 的领域专家 + 2 位 >100 篇 paper 的高级专家，按 Scientific Validity / Task Alignment / Visual Reasoning Necessity 三维度打分，分歧由高级专家仲裁，再淘汰 28.9%（1732 题）；(c) 出题阶段就禁止从 caption 直接派生题目，强制基于面板视觉信息命题。
+
+两道过滤器之后，GPT-4o 在 text-only 设置下答不出超过 50% 的题，这本身就证明了视觉信息确实是答题的必需品，而非可有可无的装饰。
 
 ### 损失函数 / 训练策略
 SPUR 是评测 benchmark，无训练。评测协议：直接 prompting + accuracy on MCQ；MCoT 评测时分别套用 DDCoT/VoT (prompt-based)、VIC/Cantor (plan-based) 四种 inference-time 推理增强方式，公平比对。

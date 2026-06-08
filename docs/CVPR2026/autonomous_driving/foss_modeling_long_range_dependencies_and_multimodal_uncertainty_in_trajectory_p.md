@@ -39,26 +39,26 @@ Transformer 架构通过自注意力实现高精度，但计算复杂度为 $\ma
 FoSS 采用双分支架构：(1) **频域分支（FD-Mamba）**——对历史轨迹进行 DFT 分解为振幅和相位，经 HelixSort 重排后输入两个并行的 SSM 子模块（Coarse2Fine-SSM 处理空间交互，SpecEvolve-SSM 处理通道演化）；(2) **时域分支（TD-Mamba）**——通过输入依赖的动态 SSM 直接在时序序列上建模长程依赖。两分支通过交叉注意力层融合，再由可学习查询向量解码出 $K$ 条候选轨迹，经加权融合输出最终预测。
 
 ### 关键设计
-1. **渐进螺旋重排序（HelixSort）**:
 
-    - 功能：将 DFT 输出的无序频谱系数重排为按频率单调递增的序列
-    - 核心思路：(a) 将 1D DFT 系数 $F^{(k)} \in \mathbb{C}^T$ reshape 为 2D 网格 $\mathcal{F}^{(k)} \in \mathbb{C}^{\sqrt{T} \times \sqrt{T}}$；(b) 从频谱中心 $(u_0, v_0)$ 开始，按螺旋方向向外遍历，按频谱半径 $r = \sqrt{(u-u_0)^2 + (v-v_0)^2}$ 升序排列；(c) 生成重排索引 $\pi^{(k)}$，得到满足 $\forall i < j, r_i \leq r_j$ 的有序序列 $\widehat{F}^{(k)}$
-    - 设计动机：标准 DFT 的低/高频系数交错排列，迫使 SSM 在全局和局部推理间反复切换，破坏状态演化。HelixSort 将低频集中在序列起始、高频移至末尾，使 SSM 先积累全局趋势再精调局部细节，符合粗到细推理策略。开销极小：仅 0.08% FLOPs 增加、<0.25MB 内存
+**1. 渐进螺旋重排序（HelixSort）：给频谱排个序，让 SSM 能从粗到细地读。**
 
-2. **频域双子模块（Coarse2Fine-SSM + SpecEvolve-SSM）**:
+频域分支的麻烦事在于，DFT 直接吐出来的系数是「无序」的——因为 $\omega$ 和 $T-\omega$ 对应同一物理频率，低频和高频系数在序列里交错排列。把这样的序列喂给 SSM，模型就被迫在「全局趋势」和「局部细节」两种推理模式间反复横跳，状态演化被打断，学不出连贯的频谱语义。HelixSort 的做法是把 1D DFT 系数 $F^{(k)} \in \mathbb{C}^T$ 先 reshape 成 2D 网格 $\mathcal{F}^{(k)} \in \mathbb{C}^{\sqrt{T} \times \sqrt{T}}$，再从频谱中心 $(u_0, v_0)$ 出发沿螺旋方向往外走，按频谱半径 $r = \sqrt{(u-u_0)^2 + (v-v_0)^2}$ 升序排列，生成重排索引 $\pi^{(k)}$，最终得到满足 $\forall i < j,\, r_i \leq r_j$ 的单调有序序列 $\widehat{F}^{(k)}$。
 
-    - 功能：分别从空间和通道维度深度建模频域特征
-    - 核心思路：
-        - **Coarse2Fine-SSM**：对输入特征做 FFT → HelixSort 重排振幅和相位 → 深度可分离卷积 + SiLU + 选择性 SSM + LayerNorm → iFFT 恢复时域 → 与原始特征逐元素相乘：$F_f = \text{iFFT}(A'(F_l), P'(F_l)) \odot \text{SiLU}(F_l)$
-        - **SpecEvolve-SSM**：全局平均池化提取通道特征 $F_g \in \mathbb{R}^{1 \times 1 \times C}$ → 通道维度 FFT → 按频谱幅度升序排列 → iFFT → 逐元素门控融合：$F_a = \text{iFFT}(A(F_g)', P(F_g)') \odot \text{SiLU}(F_g)$，增强表示 $F_{\text{enhance}} = F_a \odot F_{in}$
-        - 两子模块输出沿通道拼接后线性投影，得到最终频域表示 $F_{\text{freq}}$
-    - 设计动机：空间维度的粗到细建模捕获运动轨迹的空间交互，通道维度的频谱演化捕获不同特征维度间的相关性，二者互补
+排好序之后，低频集中在序列开头、高频堆到末尾，SSM 就能先积累全局运动趋势、再逐步精调局部细节，天然契合粗到细的推理节奏——这正是它的灵感来源 JPEG zigzag 编码想做的事。代价几乎可以忽略：仅增加 0.08% FLOPs、<0.25MB 内存。
 
-3. **时域动态选择性 SSM（TD-Mamba）**:
+**2. 频域双子模块（Coarse2Fine-SSM + SpecEvolve-SSM）：空间和通道两个维度分头建模频谱。**
 
-    - 功能：在时域以线性复杂度模拟自注意力行为，捕获长程时序依赖
-    - 核心思路：状态转移矩阵 $A_t, B_t, C_t, D_t$ 均由当前输入 $X(t)$ 及其局部卷积特征 $\tilde{X}(t) = \text{Conv1D}(X(t))$ 动态生成：$A_t = f_A(X(t), \tilde{X}(t))$ 等，其中 $f_A$ 等为轻量 MLP。状态更新：$h(t+1) = A_t h(t) + B_t X(t)$，输出 $Y_{\text{time}}(t) = C_t h(t) + D_t X(t)$。隐状态经 SiLU + LayerNorm 保证数值稳定
-    - 设计动机：输入依赖的参数化使状态更新能根据不同时间步自动放大关键运动模式、抑制噪声，Conv1D 预处理增强对局部动态变化的敏感度
+光有有序频谱还不够，论文进一步让两个子模块从不同维度去吃这份频谱信息。Coarse2Fine-SSM 负责空间维度的交互：对输入特征做 FFT、用 HelixSort 重排振幅与相位、过深度可分离卷积加 SiLU 加选择性 SSM 加 LayerNorm，再 iFFT 回时域，最后与原始特征逐元素相乘做门控，即 $F_f = \text{iFFT}(A'(F_l), P'(F_l)) \odot \text{SiLU}(F_l)$——粗到细地捕获运动轨迹的空间交互。SpecEvolve-SSM 则换到通道维度：先全局平均池化得到通道描述子 $F_g \in \mathbb{R}^{1 \times 1 \times C}$，沿通道维做 FFT 并按幅度升序排列，iFFT 后门控融合 $F_a = \text{iFFT}(A(F_g)', P(F_g)') \odot \text{SiLU}(F_g)$，再回乘原特征得到增强表示 $F_{\text{enhance}} = F_a \odot F_{in}$，刻画不同特征通道之间的频谱相关性。
+
+$$F_{\text{freq}} = \text{Linear}\big(\text{Concat}(F_f,\, F_{\text{enhance}})\big)$$
+
+两路输出沿通道拼接后线性投影，得到最终频域表示。一个管空间交互、一个管通道演化，二者互补，才把频谱里全局模式与局部变化的分离表征都吃下来。
+
+**3. 时域动态选择性 SSM（TD-Mamba）：用输入依赖的状态机在时域逼近注意力。**
+
+频域分支抓全局频率结构，但原始时序上下文也不能丢，TD-Mamba 这一支直接在时间序列上以线性复杂度建模长程依赖。关键在于状态转移参数不是固定的，而是随输入动态生成：每个时刻的 $A_t, B_t, C_t, D_t$ 都由当前输入 $X(t)$ 及其局部卷积特征 $\tilde{X}(t) = \text{Conv1D}(X(t))$ 通过轻量 MLP 算出（$A_t = f_A(X(t), \tilde{X}(t))$，其余同理），状态按 $h(t+1) = A_t h(t) + B_t X(t)$ 更新，输出 $Y_{\text{time}}(t) = C_t h(t) + D_t X(t)$，隐状态再经 SiLU 与 LayerNorm 保证数值稳定。
+
+之所以把参数做成输入依赖，是为了让状态机能因时制宜——在关键运动时刻放大有用模式、在平稳段抑制噪声，而 Conv1D 预处理则提升了对局部动态突变的敏感度。这样它就以远低于自注意力 $\mathcal{O}(N^2)$ 的代价，逼近了注意力对长程依赖的捕获能力。两支特征最后经交叉注意力融合，再由可学习查询解码出 $K$ 条候选轨迹。
 
 ### 损失函数 / 训练策略
 - 联合约束时域和频域：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{time}} + \lambda \mathcal{L}_{\text{freq}}$

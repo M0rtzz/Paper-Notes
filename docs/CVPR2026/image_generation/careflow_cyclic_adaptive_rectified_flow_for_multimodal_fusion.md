@@ -44,32 +44,29 @@ tags:
 
 ### 关键设计
 
-1. **One-to-Many Mapping（一对多映射）**:
+**1. One-to-Many Mapping：让源模态看到目标分布的全貌，而不是单点。**
 
-    - 功能：让源模态每个数据点在训练时能观测到目标模态的多个数据点，而非只看到同一样本内的那一个
-    - 核心思路：Rectified flow 训练时随机从两个分布采样数据对来训练速度场 $\mathbf{V}_{m_1,m_2}$。在实现中，每个 mini-batch 内先构造同一样本内的模态对，再随机采样不同样本间的模态对（数量比为 $\beta$ 倍），这样每个源模态数据点就能感知目标模态的整体分布
-    - 设计动机：缓解每个样本内配对数据不足的问题，使分布映射更鲁棒。实验证明去掉此模块性能下降约 3 个百分点（Acc2），是所有模块中影响最大的
+传统对齐方法每个源点只盯着同一样本里的那一个目标点，配对太稀疏、学到的对齐不鲁棒。CaReFlow 借力 rectified flow 训练时本就要随机采样分布对这一特性：每个 mini-batch 内先构造同一样本内的模态对，再额外随机采样不同样本之间的模态对来训练速度场 $\mathbf{V}_{m_1,m_2}$，跨样本对与同样本对的数量比由超参 $\beta$ 控制（取 3–7 之间都稳定）。这样一来，源模态的每个数据点在训练过程中会被推向目标模态的许多不同点，自然就"看见"了目标分布的整体形状，而非局限于一个孤立锚点。这也是消融里影响最大的模块——去掉它 MOSI Acc2 掉 2.8 个点、CH-SIMS-v2 Acc2 掉 3.1 个点。
 
-2. **Adaptive Relaxed Alignment（自适应松弛对齐）**:
+**2. Adaptive Relaxed Alignment：用标签距离决定该对齐多紧。**
 
-    - 功能：对不同关联度的模态对施加不同的对齐严格程度
-    - 核心思路：修改 rectified flow 的目标函数，引入 margin $\eta_{m_1,m_2}$：
-    $\mathcal{L}^f_{m_1,m_2} = \mathbb{E}\left[\max\left(\|\mathbf{V}_{m_1,m_2}(\mathbf{X}^t_{m_1,m_2}, t) - (\mathbf{X}_{m_2} - \mathbf{X}_{m_1})\|_2 - \eta_{m_1,m_2}, 0\right)\right]$
-      其中 $\eta_{m_1,m_2} = 0$（同一样本）或 $\eta_{m_1,m_2} = \epsilon + \|y_i - y_j\|_2$（不同样本，由标签距离自适应决定）
-    - 设计动机：同一样本的模态对应当严格对齐（$\eta=0$ 退化为标准 rectified flow），不同样本的对施加松弛以允许差异。标签越相似的松弛越少，越不同的松弛越大。这同时解决了 one-to-many 中的歧义问题，并避免了递归训练 rectified flow 的需要
+直接做 one-to-many 会引出歧义：一个源点被要求同时匹配多个目标点，流方向相互打架，原始 rectified flow 还得递归训练好几轮才能把轨迹拉直。CaReFlow 的解法是给对齐目标加一个自适应 margin $\eta_{m_1,m_2}$，只要误差落进 margin 以内就不再惩罚：
 
-3. **Cyclic Rectified Flow（循环信息流）**:
+$$\mathcal{L}^f_{m_1,m_2} = \mathbb{E}\left[\max\left(\|\mathbf{V}_{m_1,m_2}(\mathbf{X}^t_{m_1,m_2}, t) - (\mathbf{X}_{m_2} - \mathbf{X}_{m_1})\|_2 - \eta_{m_1,m_2}, 0\right)\right]$$
 
-    - 功能：构造反向 rectified flow，确保前向映射输出的特征 $\mathbf{X}_{m_1,m_2}$ 能映射回原始特征 $\mathbf{X}_{m_1}$
-    - 核心思路：训练一个反向速度场 $\hat{\mathbf{V}}_{m_1,m_2}$，使其能将前向输出还原：
-    $\mathcal{L}^b_{m_1,m_2} = \mathbb{E}\left[\|\hat{\mathbf{V}}_{m_1,m_2}(\hat{\mathbf{X}}^t_{m_1,m_2}, t) - (\mathbf{X}_{m_1} - \mathbf{X}_{m_1,m_2})\|_2\right]$
-      关键细节：反向 loss 对 $\mathbf{X}_{m_1}$ 做 detach 但不对 $\mathbf{X}_{m_1,m_2}$ 做 detach，让反向 loss 能反向传播影响前向 rectified flow
-    - 设计动机：防止分布映射过程中源模态的判别性信息丢失，让融合后的多模态表示能保留充分的模态特异性信息
+同一样本的模态对取 $\eta=0$，退化回标准 rectified flow，要求严格对齐；不同样本的对取 $\eta_{m_1,m_2} = \epsilon + \|y_i - y_j\|_2$，由两者的情感标签距离自适应放松——标签越接近放松越小、越远放松越大。直觉上"该靠拢的紧紧贴上、该有差异的留出余地"，既保住了 one-to-many 的全局视野，又一并消化了歧义问题和递归训练的开销。
 
-4. **速度场网络 $\mathbf{V}_{m_1,m_2}$ 的实现**:
+**3. Cyclic Rectified Flow：用一条反向流把源模态信息锁住，不让映射丢东西。**
 
-    - 使用正弦/余弦位置编码注入时间信息 $\mathbf{TE}^t$，然后将输入特征和时间编码拼接后送入 MLP
-    - 对输入特征做 detach 操作，使前向 loss $\mathcal{L}^f$ 只训练速度场而不更新 unimodal 网络，实现分布对齐任务和主任务的解耦
+把分布往语言模态搬的过程中，源模态自己的判别性信息容易在对齐时被磨平。CaReFlow 额外训练一条反向速度场 $\hat{\mathbf{V}}_{m_1,m_2}$，要求它能把前向映射的输出 $\mathbf{X}_{m_1,m_2}$ 再还原回原始的 $\mathbf{X}_{m_1}$：
+
+$$\mathcal{L}^b_{m_1,m_2} = \mathbb{E}\left[\|\hat{\mathbf{V}}_{m_1,m_2}(\hat{\mathbf{X}}^t_{m_1,m_2}, t) - (\mathbf{X}_{m_1} - \mathbf{X}_{m_1,m_2})\|_2\right]$$
+
+关键的梯度细节是：反向 loss 对目标 $\mathbf{X}_{m_1}$ 做 detach，但**不**对前向输出 $\mathbf{X}_{m_1,m_2}$ detach——于是"还原得好不好"的梯度能顺着 $\mathbf{X}_{m_1,m_2}$ 回传去影响前向 rectified flow，逼着前向映射在搬运分布时就主动保留可还原的源信息。只要源能被还原，就说明融合表示里没把模态特异性信息丢掉。
+
+**4. 速度场网络与 detach 解耦：让对齐任务和主任务各管各的。**
+
+速度场 $\mathbf{V}_{m_1,m_2}$ 本身实现得很轻：先用正弦/余弦位置编码把时间步 $t$ 编成 $\mathbf{TE}^t$，与输入特征拼接后过一个 MLP 即可。更要紧的是前向 loss $\mathcal{L}^f$ 对输入特征做了 detach——梯度只更新速度场、不回流到 unimodal 网络。这样分布对齐任务（训速度场）和情感预测主任务（训 unimodal 表示）就被切开，互不抢梯度，各自朝最优方向走。
 
 ### 损失函数 / 训练策略
 $$\mathcal{L}_{total} = \mathcal{L} + \sum_{m \in \{a,v\}} (\alpha_f \times \mathcal{L}^f_{m,l} + \alpha_b \times \mathcal{L}^b_{m,l})$$

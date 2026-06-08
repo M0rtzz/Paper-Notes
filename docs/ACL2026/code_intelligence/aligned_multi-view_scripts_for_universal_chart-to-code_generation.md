@@ -42,33 +42,29 @@ tags:
 
 ### 整体框架
 
-(1) Chart2NCode 数据构建：先收 Python / LaTeX / R 单语言脚本，执行/解析提取统一的"figure / axis / object"三级元数据，再按 object 级模式匹配人工模板池（202 个模板 × 20+ 图表子类型），实例化得到三语言脚本；模板未命中或执行失败的样本走 GPT-4o LLM-assisted debugging 兜底，渲染失败则丢弃；最终 176K 四元组，其中 14.7% 由 LLM 校正。
-
-(2) CharLuMA 模型：SigLIP 视觉编码器 + DeepSeek-Coder LLM 后端 + LLaVA 风格两层 MLP 投影器，在 MLP 之外并联一个"低秩子空间适配器"——该适配器由低秩降维矩阵 $\mathbf{A}$、子空间池 $\{b_i\}_{i=1}^N$、语言专属路由器 $\mathbf{W}^l$ 三部分组成，按输入图像 + 目标语言动态选 top-$r$ 个子空间组合，输出与基础 MLP 相加得到最终视觉 token。训练分两阶段：先 align 预训练只训 MLP，再 instruction tuning 阶段 warm-up 路由器和子空间池、然后联合微调 LLM。
+本文要解决的是"一个模型同时把图表图像还原成 Python / R / LaTeX 三种语言的可执行脚本"，难点在于这三件事既共享同一份图表语义理解、又各自需要走不同语法的专门通道。方法分两条主线：数据侧用"元数据-模板"管线把单语言脚本批量合成跨语言视觉等价的三语言脚本，得到 176K 四元组数据集 Chart2NCode；模型侧在 LLaVA 风格的"SigLIP 视觉编码器 + 两层 MLP 投影器 + DeepSeek-Coder 后端"上并联一个语言条件的低秩子空间适配器 CharLuMA，让视觉 token 在共享 MLP 之外按目标语言动态选取子空间组合。整体流程是：图表图像经视觉编码后，由"共享 MLP + 语言路由的子空间适配器"产生语言自适应视觉 token，再交给 LLM 自回归解码出对应语言脚本；训练则分"模态对齐预训练"和"指令微调"两阶段渐进进行。
 
 ### 关键设计
 
-1. **元数据-模板对齐管线（Chart2NCode 数据构建）**:
+**1. 元数据-模板对齐管线：把单语言脚本批量翻译成跨语言视觉等价的三语言脚本。**
 
-    - 功能：把单语言绘图脚本批量"翻译"成跨 Python/R/LaTeX 视觉等价的三语言脚本。
-    - 核心思路：用语言原生 API 提取三层元数据（figure 级全局属性、axis 级坐标系、object 级几何 + 样式），通过 object 模式（如矩形等高变宽 → 横向柱状图）匹配人工策划的模板池；模板含跨语言属性映射字典（Python "upper right" ↔ R "right" ↔ LaTeX "north east"；Python bold 字重 ↔ LaTeX bfseries），保证语义在三种语法间统一。失败样本由 GPT-4o 翻译/修复，再次渲染验证。1000 个样本人工 1-5 评分四个维度均 95%+ 通过率（α=0.81）。
-    - 设计动机：完全 LLM 翻译成本高且语义易漂移；纯规则模板覆盖率有限。两者结合既保证规模又保证保真度。
+要利用"同一图表可由不同语言等价表达"这一多视图监督信号，前提是得有大规模对齐数据，而纯 LLM 翻译成本高、语义易漂移，纯规则模板又覆盖率有限，因此本文把两者结合。先用各语言原生 API 从单语言脚本中提取三层元数据——figure 级全局属性、axis 级坐标系、object 级几何与样式；再通过 object 模式（如"一组等高变宽的矩形"对应横向柱状图）匹配人工策划的模板池（202 个模板 × 20+ 图表子类型），模板内置跨语言属性映射字典（Python "upper right" ↔ R "right" ↔ LaTeX "north east"，Python bold 字重 ↔ LaTeX bfseries），保证语义在三种语法间统一对齐。模板未命中或渲染失败的样本交给 GPT-4o 做 LLM-assisted debugging 兜底，再次渲染验证，仍失败则丢弃。最终 176K 四元组中 14.7% 经 LLM 校正，1000 样本的人工四维度 1-5 评分均达 95%+ 通过率（α=0.81），兼顾了规模与保真度。
 
-2. **语言条件的低秩子空间适配器（Language-conditioned Subspace Adapter）**:
+**2. 语言条件的低秩子空间适配器：在共享 MLP 之外用子空间池 + 语言路由注入语言专项能力。**
 
-    - 功能：在共享视觉 MLP 基础上注入语言专门化能力，避免独立语言专家的参数冗余和 Mixture-of-MLP 的容量浪费。
-    - 核心思路：给 $\mathbf{Z}_v$ 先过共享 MLP 得到 $\mathbf{H}_{\text{base}} = \mathbf{W}\mathbf{Z}_v$；并行地用低秩矩阵 $\mathbf{A}$ 压到 rank-$r$ 表示，再经语言路由 $y^l = \mathrm{top}_r(\mathrm{softmax}(\mathbf{W}^l \overline{\mathbf{Z}}_v))$ 从 $N=32$ 个子空间池里选 $r=16$ 个，拼成 $\mathbf{B}$；语言自适应视觉 token 为 $\mathbf{H}_v = \mathbf{W}\mathbf{Z}_v + \mathbf{A}\mathbf{B}\mathbf{Z}_v$。
-    - 设计动机：低秩 + 子空间池让"共享核心 + 语言专项"以参数最经济的方式共存；激活分析显示 1.3B 模型有大约 5/27 个子空间被三语言共享，其余各语言独占，验证了"compact shared core + language-specific capacity"的设计预期。
+如果为每种语言训独立专家会参数翻倍且不共享图表知识，而 Mixture-of-MLP 又容量浪费，本文用低秩子空间适配器以最经济的参数实现"共享核心 + 语言专项"。视觉特征 $\mathbf{Z}_v$ 先过共享投影器得到基础表示 $\mathbf{H}_{\text{base}} = \mathbf{W}\mathbf{Z}_v$；并行地用低秩矩阵 $\mathbf{A}$ 把它压到 rank-$r$ 表示，再由语言专属路由器从 $N=32$ 个子空间池里按 $y^l = \mathrm{top}_r(\mathrm{softmax}(\mathbf{W}^l \overline{\mathbf{Z}}_v))$ 选出 $r=16$ 个子空间拼成 $\mathbf{B}$，最终语言自适应视觉 token 为
 
-3. **两阶段渐进训练策略（Alignment Pretrain + Instruction Tuning）**:
+$$\mathbf{H}_v = \mathbf{W}\mathbf{Z}_v + \mathbf{A}\mathbf{B}\mathbf{Z}_v$$
 
-    - 功能：先稳定模态对齐，再稳定语言路由，最后让 LLM 学会用语言自适应 token。
-    - 核心思路：阶段 1 在 900K Chart-JSON 对上单训 MLP $\mathbf{W}$，冻视觉和 LLM；阶段 2 加入子空间适配器，先 274 步只 warm-up 路由器 $\mathbf{W}^l$ 和子空间池 $\{b_i\}$（MLP / 视觉 / LLM 全冻、$\mathbf{A}$ 随机初始化后全程冻），再解冻 LLM 联合训练（MLP 和 $\mathbf{A}$ 仍冻）。每个 batch 强制包含全部三种语言。
-    - 设计动机：$\mathbf{A}$ 全程冻是为了把适配容量逼向"语言差异"而非重复学视觉共性；warm-up 路由器避免路由还没收敛就被 LLM 反向梯度搅乱。
+即共享 MLP 负责图表语义共性、子空间组合负责语言语法差异。激活分析显示 1.3B 模型只有约 5/27 个子空间被三语言共享、其余各语言独占，正好印证了"compact shared core + language-specific capacity"的设计意图。
+
+**3. 两阶段渐进训练策略：先稳模态对齐，再稳语言路由，最后让 LLM 学会用语言自适应 token。**
+
+为避免模态对齐、路由收敛、LLM 适配三件事互相干扰，训练被拆成渐进的两阶段。阶段 1 在 900K Chart-JSON 对上只训共享投影器 $\mathbf{W}$，冻结视觉编码器和 LLM，先把模态对齐打稳。阶段 2 接入子空间适配器，先用 274 步只 warm-up 路由器 $\mathbf{W}^l$ 和子空间池 $\{b_i\}$（MLP / 视觉 / LLM 全冻，$\mathbf{A}$ 随机初始化后全程保持冻结），等路由初步收敛后再解冻 LLM 联合训练（$\mathbf{W}$ 与 $\mathbf{A}$ 仍冻）。每个 batch 强制包含全部三种语言，以持续给路由提供区分信号。$\mathbf{A}$ 全程冻结是为了把有限的适配容量逼向"语言差异"而非重复学视觉共性，warm-up 路由器则避免它还没收敛就被 LLM 的反向梯度搅乱。
 
 ### 损失函数 / 训练策略
 
-标准 next-token cross-entropy，无额外辅助 loss。两阶段学习率：预训练 2e-4、warm-up 2e-4、联合微调 2e-5。CharLuMA-1.3B 训练共 82 GPU 小时（8×L40S），6.7B 约 321 GPU 小时。
+训练目标是标准的 next-token cross-entropy，无额外辅助损失。两阶段学习率为：预训练 2e-4、路由 warm-up 2e-4、联合微调 2e-5。训练开销上，CharLuMA-1.3B 共 82 GPU 小时（8×L40S），6.7B 约 321 GPU 小时。
 
 ## 实验关键数据
 

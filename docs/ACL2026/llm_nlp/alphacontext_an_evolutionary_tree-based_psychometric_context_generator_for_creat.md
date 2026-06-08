@@ -41,30 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定一个标题和主题查询 $Q$，AlphaContext 经过四个模块：(1) HyperTree Outline Planner 生成结构化大纲；(2) MCTS-based Context Generator 在大纲约束下逐句搜索生成种子情境；(3) Evolutionary Context Optimizer 用 MAP-Elites 在风格空间中迭代进化提升多样性和质量；(4) Assessment-Guided Evolution Refiner 模拟虚拟被试并将低效情境回炉进一步优化。
+
+AlphaContext 把"专家写一篇心理测量情境"这件事拆成规划、生成、进化三个递进阶段，对应四个串联模块。输入是一个标题与主题查询 $Q$，先由 HyperTree Outline Planner 搜出一份层次化大纲，再交给 MCTS-based Context Generator 在大纲约束下逐句搜索出一篇种子情境，随后 Evolutionary Context Optimizer 用 MAP-Elites 在风格行为空间里反复变异进化，最后 Assessment-Guided Evolution Refiner 用虚拟被试模拟答题、把测不出创造力的低效情境打回前一阶段重练，最终输出既连贯、又能隐性激发创造力、且风格多样的长文本情境。
 
 ### 关键设计
 
-1. **HyperTree Outline Planner (HOP)**:
+**1. HyperTree Outline Planner（HOP）：把专家"先谋全局再逐层细化"的设计习惯形式化成超树搜索。**
 
-    - 功能：将专家大纲设计过程形式化为规则引导的超树搜索
-    - 核心思路：定义超树 $\mathcal{H} = (N, Q, \mathcal{R})$，其中超边连接一个父节点到多个子节点集合，支持层次化分治。搜索过程分四步：HT-Select（评估并剪枝超链，选择最优叶节点）→ HT-Expand（应用扩展规则生成候选子组）→ HT-Construct（迭代构建到终止条件）→ HT-Decide（全局评估选出最终大纲）
-    - 设计动机：专家设计情境时先整体规划再逐层细化，超树结构比普通树更好地捕捉这种层次化分治的设计过程。消融实验显示去掉 HOP 后 Relevance 从 79.06% 降至 70.20%
+专家不会一上来就写句子，而是先搭骨架、再逐层填血肉，普通树结构难以表达这种"一个父节点同时展开成多组子主题"的分治过程。HOP 因此定义超树 $\mathcal{H} = (N, Q, \mathcal{R})$，让超边把一个父节点连到多个子节点集合，并按四步循环搜索：HT-Select 评估并剪枝超链、选出最优叶节点，HT-Expand 套用扩展规则生成候选子组，HT-Construct 迭代构建直到满足终止条件，HT-Decide 做一次全局评估选出最终大纲。这一步直接决定情境是否切题——消融实验里去掉 HOP，Relevance 从 79.06% 掉到 70.20%。
 
-2. **MCTS-based Context Generator (MCG)**:
+**2. MCTS-based Context Generator（MCG）：把长文本写作变成句子级搜索，用前瞻换长程一致性。**
 
-    - 功能：在大纲约束下通过句子级搜索生成高质量种子情境
-    - 核心思路：将文本生成视为句子级决策过程，每步用 LLM 提出候选句子。采用双时域评估机制——高分节点直接用即时评估（线索对齐 $S_{sc}$、意象生动性 $S_{im}$、话语连贯性 $S_{co}$ 的加权均值，乘以 $1-S_{ha}$ 幻觉风险），低分节点触发短续写前瞻重新评估。UCT 公式平衡探索与利用
-    - 设计动机：逐句搜索比一次性生成能更好地维持长程结构一致性。去掉 MCG 后 Coherence 从 81.28% 降至 74.38%
+一次性让 LLM 写完整篇情境，容易跑题、丢失大纲约束，长程结构很难维持。MCG 转而把生成看成逐句决策：每步用 LLM 提出若干候选句子，再用双时域评估打分——高分节点直接采纳即时评估，把线索对齐 $S_{sc}$、意象生动性 $S_{im}$、话语连贯性 $S_{co}$ 的加权均值再乘以幻觉惩罚 $(1-S_{ha})$；低分节点则触发一段短续写做前瞻，看后续走向再重新评估，并用 UCT 公式平衡探索与利用。逐句搜索换来的正是连贯性，去掉 MCG 后 Coherence 从 81.28% 跌到 74.38%。
 
-3. **Evolutionary Context Optimizer (ECO) + Assessment-Guided Refiner**:
+**3. Evolutionary Context Optimizer（ECO）+ Assessment-Guided Refiner：在风格空间里做"多样性 × 质量"双优化，并用虚拟被试闭环验证效度。**
 
-    - 功能：MAP-Elites 进化搜索提升风格多样性，虚拟被试验证评估有效性
-    - 核心思路：定义 3 维行为空间（接近性范围 $\phi_1$、知识密度 $\phi_2$、观点多样性 $\phi_3$），离散化为网格，每个格存储当前最优情境。通过插入/删除/替换变异操作编辑种子情境，按适应度函数（连贯性+相关性+参与度均值）更新精英。虚拟被试模拟器（分 talkative/normal/quiet 三种风格）生成响应，创造力评分低于阈值的情境回炉再进化
-    - 设计动机：同一主题需要多种风格的情境以适应不同评估群体。MAP-Elites 天然支持"多样性+质量"双优化。去掉 ECO 后所有指标下降，尤其 Uncertainty 降幅最大
+同一主题需要面向不同评估群体的多种风格情境，单条最优解远远不够。ECO 定义 3 维行为空间——接近性范围 $\phi_1$、知识密度 $\phi_2$、观点多样性 $\phi_3$，离散化成网格，每格只保留当前最优情境；通过插入/删除/替换三种变异编辑种子情境，按适应度函数（连贯性、相关性、参与度三者均值）更新精英，MAP-Elites 天然把"覆盖多样风格"和"保证质量"同时纳入优化。Assessment-Guided Refiner 再补上效度闭环：用 talkative/normal/quiet 三种风格的虚拟被试模拟答题，创造力评分低于阈值的情境被打回再进化。去掉 ECO 后所有指标下降，其中 Uncertainty 降幅最大。
+
+### 一个完整示例
+
+以"未来城市水资源危机"为主题：HOP 先搭出"背景设定 → 利益冲突 → 隐性挑战点"的超树大纲；MCG 在该大纲下逐句搜索，写到关键转折句时触发前瞻，比较几种续写后选中一句既连贯又埋下挑战线索的句子；ECO 把这篇种子情境投进风格网格，变异出"知识密度高/观点对立强"等不同格点的变体；Refiner 让三类虚拟被试答题，发现某个偏说教的变体测不出创造力，于是把它打回 ECO 再进化，直到落在创造力评分阈值之上才输出。
 
 ### 损失函数 / 训练策略
-AlphaContext 是无监督搜索框架，不涉及传统意义的损失函数。质量评估通过 LLM 评分器（DeepSeek-V3.1）实现，适应度函数 $F(C) = \text{Avg}(S_{coh}(C) + S_{rel}(C) + S_{eng}(C))$。
+
+AlphaContext 是无监督搜索框架，不涉及传统意义的损失函数。质量评估由 LLM 评分器（DeepSeek-V3.1）给出，进化阶段以适应度函数 $F(C) = \text{Avg}(S_{coh}(C) + S_{rel}(C) + S_{eng}(C))$ 驱动精英更新。
 
 ## 实验关键数据
 

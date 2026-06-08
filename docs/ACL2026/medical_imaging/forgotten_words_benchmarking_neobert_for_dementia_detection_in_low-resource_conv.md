@@ -38,33 +38,25 @@ tags:
 **核心 idea**：在域和任务都受控的平行双语数据上，如果单语训练仍跨语言失败，就说明瓶颈是表示空间的语言对齐；如果双语微调能消除差距，则训练语言覆盖比模型架构更新更关键。
 
 ## 方法详解
-论文构建了一个 balanced bilingual binary classification 设置。每种语言 2000 条样本，其中 dementia-positive 和 healthy control 各 1000 条，总计 4000 条。英文样本来自 DementiaBank，Filipino 样本由完整 2000 条英文转写人工翻译而来，翻译时要求保留重复、犹豫、false starts 和句法退化等 discourse-level cognitive decline markers。
 
 ### 整体框架
-所有转写都经过相同预处理：Unicode normalization、空白归一化、小写化；保留 filled pauses、repetitions、hesitation markers；不做 stemming、lemmatization 或 parsing，避免抹掉诊断信号。输入最大长度截断到 128 tokens。
+这篇论文不提新模型，而是搭一个受控的双语评测台，去回答一个具体问题：痴呆检测的跨语言鲁棒性，到底来自更现代的编码器架构，还是来自训练阶段的语言覆盖。为此作者构建了一个 balanced bilingual binary classification 设置——每种语言 2000 条、dementia-positive 与 healthy control 各 1000 条，共 4000 条；英文样本取自 DementiaBank，Filipino 样本则由完整 2000 条英文转写人工翻译而来，翻译时刻意保留重复、犹豫、false starts 和句法退化这些 discourse-level 的认知衰退标记。
 
-模型覆盖五类：TF-IDF + Logistic Regression 作为可解释 lexical baseline；BERT-base-uncased 和 NeoBERT 代表英语预训练，其中 NeoBERT 包含 RoPE、Pre-LayerNorm、RMSNorm、SwiGLU 等现代化设计；XLM-RoBERTa 代表 100 语言 multilingual baseline；RoBERTa-Tagalog 代表 Filipino language-matched pretraining。
-
-训练设置有三种：English-only、Filipino-only 和 English+Filipino bilingual。评估包括同语言 in-domain、跨语言 zero-shot 和 bilingual mixed-language。主要指标是 Accuracy 和 Macro-F1，同时报告 class-wise F1 与 dementia recall，避免平均指标掩盖临床敏感性问题。
+所有转写走同一条预处理流水线：Unicode normalization、空白归一化、小写化，但保留 filled pauses、repetitions、hesitation markers，不做 stemming/lemmatization/parsing，输入截断到 128 tokens。在这之上铺开五类模型——TF-IDF + Logistic Regression 作为可解释的 lexical baseline，BERT-base 与 NeoBERT 代表英语预训练（NeoBERT 带 RoPE、Pre-LayerNorm、RMSNorm、SwiGLU 等现代化设计），XLM-RoBERTa 代表 100 语言的 multilingual baseline，RoBERTa-Tagalog 代表 Filipino 的 language-matched 预训练。每类模型再跑三种训练设置：English-only、Filipino-only、English+Filipino bilingual，分别在同语言 in-domain、跨语言 zero-shot 和 bilingual mixed-language 下评估，主指标是 Accuracy 和 Macro-F1，并额外报告 class-wise F1 与 dementia recall，避免平均指标掩盖临床敏感性。
 
 ### 关键设计
-1. **平行双语数据构造**:
 
-	- 功能：把语言迁移作为主要变量，减少任务内容和临床域差异的干扰。
-	- 核心思路：Filipino 数据不是另找不同语料，而是对完整 DementiaBank 转写做人工翻译，保持 class distribution、discourse structure、elicitation task 和 clinical content 与英文一致。
-	- 设计动机：如果直接比较不同语言的独立临床语料，性能差异可能来自患者群体、任务设计或录音协议。平行翻译让论文能更明确地说，失败主要来自 language shift。
+**1. 平行双语数据构造：把“语言迁移”单独拎出来当唯一变量。**
 
-2. **保留 disfluency 的统一预处理**:
+如果直接拿两种语言各自独立的临床语料来比，性能差异会被患者群体、任务设计、录音协议这些混杂因素污染，根本说不清掉分是不是语言造成的。这篇论文的做法是不另找语料，而是对完整的 DementiaBank 转写做人工翻译，强制让 Filipino 侧与英文侧在 class distribution、discourse structure、elicitation task 和 clinical content 上全部对齐。这样一来，英菲两侧唯一系统性变动的就是语言本身，跨语言掉分才能被干净地归因到 language shift，而不是数据采集差异。
 
-	- 功能：保留痴呆检测最依赖的语言退化信号。
-	- 核心思路：保留重复、犹豫、停顿标记和句法碎片，不用机器翻译，因为机器翻译可能把不流畅语音“润色”成流畅文本。
-	- 设计动机：痴呆语言信号往往就藏在不流畅和组织失败里。过度规范化会把任务变成普通文本分类，削弱临床意义。
+**2. 保留 disfluency 的统一预处理：别把诊断信号“润色”掉。**
 
-3. **架构与语言覆盖的对照实验**:
+痴呆的语言信号恰恰藏在不流畅和组织失败里——重复、犹豫、停顿标记和句法碎片本身就是认知衰退的证据。所以预处理刻意保留这些标记，也刻意不用机器翻译来生成 Filipino 侧（机器翻译会把不流畅语音顺成流畅文本，等于抹掉诊断线索）。如果像普通文本分类那样做过度规范化，任务会退化成识别语义内容、削弱临床意义；保留 disfluency 才让模型有机会真正学到退化模式，而不是表面词汇。
 
-	- 功能：判断性能来自模型现代化，还是来自预训练和微调中的语言覆盖。
-	- 核心思路：BERT 与 NeoBERT 都是 English-only，但架构不同；XLM-R 有显式多语言预训练；RoBERTa-Tagalog 有语言匹配预训练。所有 transformer 都用 masked mean pooling、dropout 0.1 和 linear head。
-	- 设计动机：如果 NeoBERT 优于 BERT 但仍跨语言不稳，说明现代架构提高单语拟合不等于跨语言临床鲁棒；如果双语训练让所有模型收敛，则说明监督覆盖是核心。
+**3. 架构与语言覆盖的对照实验：用一组模型矩阵把两个假设拆开。**
+
+要判断鲁棒性来自架构还是语言覆盖，就得让这两个因素在模型选择上可分离。BERT 与 NeoBERT 都是 English-only、但架构一旧一新，对比它们能单独读出“架构现代化”的贡献；XLM-R 带显式多语言预训练、RoBERTa-Tagalog 带语言匹配预训练，对比它们能读出“语言覆盖”的贡献。为排除其他干扰，所有 transformer 统一用 masked mean pooling、dropout 0.1 和 linear head。逻辑很干净：如果 NeoBERT 比 BERT 强、却仍跨语言不稳，说明现代架构只是把英语侧拟合得更紧、并不等于跨语言临床鲁棒；如果双语训练让所有模型收敛到一起，那核心就是监督的语言覆盖，而非架构更新。
 
 ### 损失函数 / 训练策略
 TF-IDF 使用 unigram + bigram，sublinear TF scaling，min document frequency 2，max document frequency 0.95，max vocabulary 20,000，并用 $l_2$ 正则 Logistic Regression 和 liblinear solver，最多 2000 iterations。

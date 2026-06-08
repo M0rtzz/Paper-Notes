@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的"方法"分两个层面：一层是理论分解（解释为什么 hybrid 必赢），一层是 4 种实操算法（解释 $\lambda$ 怎么定）。理论层先把推理 imitation error 写成训练 error + exposure bias 残差，再对 exposure bias 做"单步覆盖策略 + 风险灵敏度 $\kappa$ + Bridge/Garden 二分"的上界拆解；算法层把这套理论落成 4 种 hybrid 损失：confidence 加权、entropy 加权、curriculum 调度，以及一个把 risk 嵌入 hard 项的 Risk-Guided Hybrid。整个 pipeline 不引入新模块，只改训练损失的形态，因此与任意 divergence 选择正交。
+这篇论文要回答的核心问题是"软硬标签线性混合为什么几乎总赢纯软标签"，并据此设计能跑赢 SOTA 的自适应混合算法。它分两层推进：理论层先把学生推理误差拆成"训练拟合误差 + exposure bias 残差"，再对残差做"单步覆盖策略 + 风险灵敏度 $\kappa$ + Bridge/Garden 二分"的上界分解，证明硬标签压的正是 exposure bias 那段；算法层把这套理论落成混合损失 $\ell_{\text{hyb}} = \lambda\,\ell_{\text{soft}} + (1-\lambda)\,\ell_{\text{hard}}$，让混合系数 $\lambda$ 随上下文风险动态变化，给出 4 种近似 $\kappa$ 的实现。整个 pipeline 不引入新模块，只改训练损失的形态，因此与任意 divergence 选择正交。
 
 ### 关键设计
 
-1. **Exposure-bias 分解与硬标签的真正贡献**:
+**1. Exposure-bias 分解：把"混合好在哪"上升为可证等式。**
 
-    - 功能：把"混合好在哪"从经验观察上升为一句可证的等式。
-    - 核心思路：记教师前缀分布 $d_T$、学生前缀分布 $d_\theta$，则学生推理总误差 $\mathcal{L}_{d_\theta}(\pi_\theta) = \mathcal{L}_{d_T}(\pi_\theta) + (\mathcal{L}_{d_\theta}(\pi_\theta) - \mathcal{L}_{d_T}(\pi_\theta))$，第二项正是 exposure bias。实验 Fig.2(b,c) 显示加入硬标签会让训练项 $\mathcal{L}_{d_T}$ 上升，但 exposure bias 下降幅度更大，净效果是推理误差下降——彻底否决"硬标签 = 优化更易"的旧解释。
-    - 设计动机：把"加 hard 有用"从 trick 提升为可计量的因果机制。一旦认定真正在受惠的是 exposure bias，后续就有动力去找一个能区分"哪些位置 exposure bias 敏感"的局部量，引出 Bridge/Garden 分解。
+直觉上软标签信息量严格更大、应该压倒硬标签，可社区一直在用 `λ·KL + (1-λ)·CE` 并报告混合更强，却讲不清好在哪。作者记教师前缀分布 $d_T$、学生前缀分布 $d_\theta$，把学生推理总误差写成 $\mathcal{L}_{d_\theta}(\pi_\theta) = \mathcal{L}_{d_T}(\pi_\theta) + (\mathcal{L}_{d_\theta}(\pi_\theta) - \mathcal{L}_{d_T}(\pi_\theta))$，第一项是在教师 prefix 上的训练拟合误差，第二项正是 exposure bias。Fig.2(b,c) 显示加入硬标签会让训练项 $\mathcal{L}_{d_T}$ 反而上升，但 exposure bias 下降幅度更大，净效果是推理误差下降。这一等式直接否决了"硬标签 = 信息少但优化更易"的旧解释，把"加 hard 有用"从经验 trick 提升为可计量的因果机制——真正受惠的是被多年忽视的 exposure bias 那一段。一旦锁定这个对象，下一步就有动力去找一个能区分"哪些位置 exposure bias 敏感"的局部量。
 
-2. **Bridge-Garden 分解与风险灵敏度 $\kappa$**:
+**2. Bridge-Garden 分解与风险灵敏度 $\kappa$：给每一步标上"偏离一格有多惨"。**
 
-    - 功能：把序列里的每一步标上一个"偏离一格会有多惨"的局部风险标签。
-    - 核心思路：构造单步覆盖策略 $\pi^{(s,a)}$（在 prefix $s$ 强制输出 $a$，其余处与教师相同），定义 $\kappa(a\mid s) = (\mathcal{L}_{d^{(s,a)}}(\pi_\theta) - \mathcal{L}_{d_T}(\pi_\theta))/d_T(s)$，即"一次性把当前 token 改成 $a$ 给整段序列带来的损失增量"。聚合 $\kappa(s) = \sum_{a\in\mathcal{V}}\kappa(a\mid s)$ 后，把 $\kappa(s)$ 大的位置叫 Bridge（一动就崩，如数学推导里的 + / −）、小的位置叫 Garden（如开放对话里替换近义词）。论文证明 exposure bias 上界可写成 Bridge 段 $F_\mathcal{B}$ 与 Garden 段 $F_\mathcal{G}$ 之和，且 $F_\mathcal{B}$ 由高风险 token 上的 $\lvert\Delta\pi_\theta(a\mid s)\rvert$ 主导，$F_\mathcal{G}$ 退化为普通分布距离。
-    - 设计动机：这一步把"硬标签好在哪 / 软标签好在哪"形式化——Thm.4.4 证明 $\pi_{\text{hard}}$ 在 $F_\mathcal{B}$ 上更小但 $F_\mathcal{G}$ 上更大，$\pi_{\text{soft}}$ 反之，因此存在严格优于二者的 hybrid 解。Bridge/Garden 不只是个比喻，它是写在 $\kappa$ 上的硬阈值。
+要把上面的全局观察落到 token 级，作者构造单步覆盖策略 $\pi^{(s,a)}$（在 prefix $s$ 处强制输出 $a$、其余位置与教师相同），并定义风险灵敏度 $\kappa(a\mid s) = (\mathcal{L}_{d^{(s,a)}}(\pi_\theta) - \mathcal{L}_{d_T}(\pi_\theta))/d_T(s)$，含义是"一次性把当前 token 改成 $a$ 给整段序列带来的损失增量"。聚合 $\kappa(s) = \sum_{a\in\mathcal{V}}\kappa(a\mid s)$ 后，$\kappa(s)$ 大的位置叫 Bridge（一动就崩，如数学推导里的 $+$ / $-$ 号），小的位置叫 Garden（如开放对话里替换近义词）。论文进而证明 exposure bias 上界可写成 Bridge 段 $F_\mathcal{B}$ 与 Garden 段 $F_\mathcal{G}$ 之和，其中 $F_\mathcal{B}$ 由高风险 token 上的概率偏移 $\lvert\Delta\pi_\theta(a\mid s)\rvert$ 主导、$F_\mathcal{G}$ 退化成普通分布距离。这一步把"硬标签好在哪 / 软标签好在哪"彻底形式化：Thm.4.4 证明 $\pi_{\text{hard}}$ 在 $F_\mathcal{B}$ 上更小（把概率压到桥上唯一安全 token）但 $F_\mathcal{G}$ 上更大，$\pi_{\text{soft}}$ 反之（保住花园里的多样性），因此存在严格优于二者的 hybrid 解。Bridge/Garden 不是比喻，而是写在 $\kappa$ 阈值上的硬划分。
 
-3. **四种 Bridge-Garden 自适应混合损失**:
+**3. 四种 Bridge-Garden 自适应混合损失：把"$\kappa$ 大就多用 hard"落成可跑的 loss。**
 
-    - 功能：把理论里的"$\kappa$ 大就多用 hard"翻译成训练循环里能跑的损失。
-    - 核心思路：基础形式仍是 $\ell_{\text{hyb}}(s;\theta) = \lambda\,\ell_{\text{soft}}(s;\theta) + (1-\lambda)\,\ell_{\text{hard}}(s;\theta)$，但 $\lambda$ 不再是常数。(a) Confidence 加权：用教师 top-1 概率近似 $\kappa$，$\lambda_{\text{conf}}(s) = 1 - \max_a \pi_T(a\mid s)$，教师越自信越当作 Bridge；(b) Entropy 加权：$\lambda_{\text{ent}}(s) = H_T(s)/\log|\mathcal{V}|$，把全局不确定性映成 Garden 权重；(c) Curriculum 调度：$\lambda(t) = \min(t/T,1)\cdot\lambda_{\max}$，先压 Bridges 后放 Gardens；(d) Risk-Guided Hybrid：把硬损失改写成 $\ell'_{\text{hard}} = \ell_{\text{hard}} + (\alpha/4)\Delta_\theta(s,a^\*)^2$，其中 $\Delta_\theta(s,a^\*) = \log\sum_{a'} \exp(f_\theta(a'\mid[s,a^\*]) - f_\theta(a^\*\mid s))$，相当于把 $\kappa$ 解释成 reward，让学生在 Bridges 处自动锐化。
-    - 设计动机：四个变种从不同角度近似 $\kappa$，互为消融。Confidence/Entropy 是 token 级局部信号，几乎零开销；Curriculum 是时间级，绕开 token 级估计噪声；Risk-Guided 把理论里"override 策略"映成 reward 项，只需 1 个 log-sum-exp，与标准 soft KD 同阶成本，但首次把 Bridge/Garden 的 $\kappa$ 写进 loss。
+理论说最优 $\lambda$ 应随风险变化，但 $\kappa$ 在 LLM 上无法精确算，于是作者给出 4 种从不同角度近似 $\kappa$ 的实现，基础形式都是 $\ell_{\text{hyb}}(s;\theta) = \lambda\,\ell_{\text{soft}}(s;\theta) + (1-\lambda)\,\ell_{\text{hard}}(s;\theta)$、只是 $\lambda$ 不再是常数。**Confidence 加权**用教师 top-1 概率近似 $\kappa$，$\lambda_{\text{conf}}(s) = 1 - \max_a \pi_T(a\mid s)$，教师越自信就越当作 Bridge 多压硬标签；**Entropy 加权**$\lambda_{\text{ent}}(s) = H_T(s)/\log|\mathcal{V}|$ 把归一化的全局不确定性映成 Garden 权重；**Curriculum 调度**$\lambda(t) = \min(t/T,1)\cdot\lambda_{\max}$ 在时间维上先压 Bridges 后放 Gardens，绕开 token 级估计噪声；**Risk-Guided Hybrid** 则把硬损失改写成 $\ell'_{\text{hard}} = \ell_{\text{hard}} + (\alpha/4)\Delta_\theta(s,a^\*)^2$，其中 $\Delta_\theta(s,a^\*) = \log\sum_{a'} \exp(f_\theta(a'\mid[s,a^\*]) - f_\theta(a^\*\mid s))$，相当于把 $\kappa$ 解释成 reward、让学生在 Bridges 处自动锐化分布。这四个变种互为消融：Confidence/Entropy 是几乎零开销的 token 级局部信号，Curriculum 是时间级调度，Risk-Guided 把理论里的 override 策略映成一个 log-sum-exp reward 项，与标准 soft KD 同阶成本却首次把 $\kappa$ 真正写进了 loss。
 
 ### 损失函数 / 训练策略
-全部基于教师 prefix（off-policy）训练，主 divergence 默认 forward KL，但实验中也跑了 reverse KL/JS/Total Variation 等 7 种 divergence，证明 hybrid 收益与 divergence 选择正交。Risk-Guided 用 $\alpha = 0.1$，全程不调；其余无新超参。和 GKD/MiniLLM 等 on-policy 方法相比，本文完全不在学生分布上采样，所以训练成本从 on-policy 的多次 rollout 降到一次教师 forward，作者实测端到端便宜 9.7×。
+全部基于教师 prefix（off-policy）训练，主 divergence 默认 forward KL，但实验同时跑了 reverse KL / JS / Total Variation 等 7 种 divergence，证明 hybrid 收益与 divergence 选择正交。Risk-Guided 固定 $\alpha = 0.1$、全程不调，其余无新超参。和 GKD / MiniLLM 等 on-policy 方法相比，本文完全不在学生分布上采样，训练成本从多次 rollout 降到一次教师 forward，作者实测端到端便宜 9.7×。
 
 ## 实验关键数据
 

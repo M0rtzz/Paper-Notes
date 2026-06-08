@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **BaseCal-ReEval（直接路线）**:
+**1. BaseCal-ReEval：把 PoLLM 的回答拿去 base LLM 上"复读"，用 base 的概率当置信度。**
 
-    - 功能：用 base LLM 给 PoLLM 的回答打概率，作为置信度。
-    - 核心思路：对生成的回答 $y^p$，置信度定义为 $c_b(x,y^p)=\frac{1}{T}\sum_{t=1}^T P_{\mathcal{M}_b}(y_t^p\mid x,y_{<t}^p)$，即把 PoLLM 的输出 token 序列拿到 base LLM 上做 teacher-forcing，平均 base 视角下每个目标 token 的概率。
-    - 设计动机：base LLM 的概率分布更接近 token 真实分布，所以它对一段错答的整体概率会偏低，对一段正确答会偏高——这本身就是"有校准的置信度"。简单、强 baseline，但代价是 inference 时多一次 base 的整次前向。
+所有从 PoLLM 自身概率取信号的方法都被那层"过自信油漆"污染，最直接的破局是换一个没被污染的打分者。BaseCal-ReEval 不动 PoLLM 的生成，只把生成好的回答 $y^p$ 喂回同源 base LLM 做 teacher-forcing，置信度取 base 视角下每个目标 token 的平均概率 $c_b(x,y^p)=\frac{1}{T}\sum_{t=1}^T P_{\mathcal{M}_b}(y_t^p\mid x,y_{<t}^p)$。因为 base 的概率分布更贴近 token 真实分布，它对一段错答的整体概率自然偏低、对正确答偏高，平均下来就是一条"天生有校准"的置信度。代价是推理时多一次 base 的整次前向——这正是下一个设计要消掉的开销。
 
-2. **BaseCal-Proj（轻量投影路线）**:
+**2. BaseCal-Proj：用一层 $d\times d$ 线性映射"借" base 的输出头，跳过它的 transformer 前向。**
 
-    - 功能：用一个 $d\times d$ 的线性层近似 base LLM 的输出，消掉 base 整次 transformer 前向的开销。
-    - 核心思路：对训练问题集中的每条 $(x, y^p)$ 同时抽取 $\mathcal{M}_p$ 和 $\mathcal{M}_b$ 在每个位置的末层隐状态 $(h^p_{t-1}, h^b_{t-1})$，用 MSE 训练 $\phi_\theta(h^p)=Wh^p+b$ 去拟合 $h^b$。推理时仅做 $\text{softmax}(W_b^o\,\phi_\theta(h^p_{t-1}))[y_t^p]$ 取目标 token 概率再做平均，等价于"借了 base 的 head 但跳过了它的 transformer 块"。
-    - 设计动机：BaseCal-ReEval 虽好但增加显著延迟。隐状态比概率含更丰富信息，又恰好和输出层正交可分离，一层线性映射就足以把 PoLLM 末态搬到 base 表示空间——TSNE 可视化显示投影后的隐状态与 base 的高度重合。
+ReEval 简单有效但延迟翻倍。BaseCal-Proj 的观察是：隐状态比概率含更丰富的信息，而校准信息恰好与输出层正交可分离，因此不必真的跑一遍 base，只需把 PoLLM 的末层隐状态"搬"到 base 的表示空间。具体地，对训练集中每条 $(x, y^p)$ 同时抽取 $\mathcal{M}_p$ 和 $\mathcal{M}_b$ 在每个位置的末层隐状态 $(h^p_{t-1}, h^b_{t-1})$，用 MSE 训练线性映射 $\phi_\theta(h^p)=Wh^p+b$ 去拟合 $h^b$；推理时只做 $\text{softmax}(W_b^o\,\phi_\theta(h^p_{t-1}))[y_t^p]$ 取目标 token 概率再平均，相当于借了 base 的 head 却跳过了它所有的 transformer 块。TSNE 可视化显示投影后的隐状态与 base 高度重合，说明这层平移确实把 PoLLM 末态对齐到了 base 空间。
 
-3. **训练即"问题集"——彻底无监督**:
+**3. 训练只用"问题集"：监督信号是 base 的隐状态，不碰任何答案标签。**
 
-    - 功能：BaseCal-Proj 只用问题（不用答案标签）就能完成训练。
-    - 核心思路：训练集就是从 TriviaQA / NQ / SQuAD / WebQ 等抽 10k 个**问题**，配 PoLLM 自己生成的回答；监督信号是同输入下 base LLM 的隐状态。早停由 2k 问题的验证集 MSE 触发，整套流程不需要 ground-truth answer 也不需要 correctness 标签。
-    - 设计动机：把"校准"从 supervised post-hoc fitting（如 temperature scaling 需要 correctness 标签）转化为"表示空间对齐"，避免过拟合特定数据集的 accuracy 分布，从而在跨数据集 OOD 评测时几乎无掉点（见 RQ2）。
+如果投影训练还需要 ground-truth answer 或 correctness 标签，就退回到了有监督校准、失去 plug-and-play 价值。BaseCal-Proj 把校准重新表述为"表示空间对齐"——训练集是从 TriviaQA / NQ / SQuAD / WebQ 等抽出的 10k 个**问题**，配 PoLLM 自己生成的回答，监督信号则是同输入下 base LLM 的隐状态，早停由 2k 问题的验证集 MSE 触发，全程不需要任何正确性标注。这一表述上的转变带来了关键好处：它对齐的是表示而非特定数据集的 accuracy 分布，因此跨数据集 OOD 评测时几乎无掉点（见 RQ2），而 temperature scaling 这类拟合 correctness 的方法在换数据集时会严重过拟合。
 
 ### 损失函数 / 训练策略
 默认 $\phi_\theta$ 为单层线性映射，损失 $\mathcal{L}_{\text{MSE}}=\frac{1}{T}\sum_t \|\phi_\theta(h^p_{t-1})-h^b_{t-1}\|_2^2$。同时探索 MAE / Cosine / 三层 MLP，结论是 MSE 与 MAE 接近且都稳；Cosine 在 TriviaQA 上崩盘（ECE 0.5+），说明仅对齐角度不足以恢复校准。$\mathcal{M}_p,\mathcal{M}_b$ 在训练全程冻结，只更新 $W,b$。

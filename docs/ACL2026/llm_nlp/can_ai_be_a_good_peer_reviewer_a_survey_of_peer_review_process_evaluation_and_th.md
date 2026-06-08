@@ -41,39 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-综述按 4 个章节组织：
-1. **Peer Review Generation**（§2）：5 范式 —— foundation approaches → fine-tuning → agent-based (task decomposition + process simulation) → RL → review generation enhancement (RAG / iterative refinement / structure & style control)。
-2. **After Peer Review**（§3）：rebuttal generation / meta-review / paper revision from reviews。
-3. **Benchmark Perspective**（§4）：4 类评测方法 + 数据集年代对比。
-4. **Discussion & Future Directions**（§5）：6 个开放问题。
-
-每章配 1 张大表（Table 1 方法对比，Table 2 评测 pros/cons，Table 7 数据集年代）。
+这篇综述用"流程纵轴 × 方法横轴"两条线索把 AI 辅助 peer review 的散乱文献织成一张可检索的图谱（图 1）。纵轴是任务阶段——从 review generation 走到 after-review（rebuttal / meta-review / paper revision）；横轴是方法范式——foundation → fine-tuning → agent → RL → enhancement 的演进谱系。在此之上再叠一条评测轴，沿"是否用 reference / 是否调用 LLM judge"把 30+ 个 system、20+ 个 dataset 的评价方法切成四象限，最后落到 6 个明确的未来方向。读者由此能快速定位"我做的是哪一类、该跟谁对比、用什么指标评"。
 
 ### 关键设计
 
-1. **Review Generation 的 5 范式分类**:
+**1. Review Generation 的 5 范式分类：把"模型直接写 review"收敛成一条有内在演进逻辑的谱系。**
 
-    - 功能：把所有"模型直接写 review"的方法收敛到一个有内在演进逻辑的谱系。
-    - 核心思路：(a) Foundation approaches（pre-2023）只做子任务（accept 预测、score 回归、multi-doc summary），代表数据集 PeerRead/NLPeer/MOPRD；(b) Fine-tuning（OpenReviewer-Llama8B、REVIEWER2 两阶段、LimGen）解决"zero-shot 太正面"和格式不符问题；(c) Agent-based 又分两支：task decomposition (MARG leader-worker / SWIF²T 四 agent / DeepReview 三阶段 / MAMORX 多模态 / DIAGPaper 弱点诊断) 和 process simulation (AgentReview / ReviewMT 把 review 当多轮对话)；(d) RL (Remor 用 GRPO + Human-aligned Peer Review Reward 解决"shallow critique"，CycleResearcher 让 review-as-reward 构成 research-review-refine 闭环，ReviewRL 用 composite reward 同时优化质量和一致性，REM-CTX 用辅助上下文做 correspondence-aware reward)；(e) Enhancement 又分 RAG (ReviewRobot 三个 KG、Novelty 检索 + 重排序)、iterative refinement (ReviewEval 自/外双循环、RbtAct/GoodPoint/ActReview 用 rebuttal 当监督)、structure control (TreeReview 动态问题树、AutoRev 文档图、RevGAN style 控制)。
-    - 设计动机：之前文献交叉引用混乱，常把"agent"和"RL"混为一谈；本文显式分开后，研究者一眼能看出"我想做 agent → 选 task decomposition 或 simulation，我想做 RL → 选 reward 类型"。
+以往文献交叉引用混乱，常把"agent"和"RL"混为一谈，作者显式拆出五个范式并让每一步都解决前一步的痛点。Foundation approaches（pre-2023，PeerRead/NLPeer/MOPRD）只做 accept 预测、score 回归、multi-doc summary 等子任务；Fine-tuning（OpenReviewer-Llama8B、REVIEWER2 两阶段、LimGen）针对"zero-shot 太正面"和格式不符问题。Agent-based 进一步分两支——task decomposition（MARG leader-worker / SWIF²T 四 agent / DeepReview 三阶段 / MAMORX 多模态 / DIAGPaper 弱点诊断）是工具化地写更好的 review，process simulation（AgentReview / ReviewMT 把 review 当多轮对话）则是研究 panel 动态本身。RL 范式按 reward 设计细分（Remor 用 GRPO + Human-aligned Peer Review Reward 解决 shallow critique、CycleResearcher 让 review-as-reward 构成 research-review-refine 闭环、ReviewRL 用 composite reward 同时优化质量与一致性、REM-CTX 用辅助上下文做 correspondence-aware reward）。Enhancement 再分 RAG（ReviewRobot 三 KG、novelty 检索 + 重排序）、iterative refinement（ReviewEval 自/外双循环、RbtAct/GoodPoint/ActReview 用 rebuttal 当监督）与 structure control（TreeReview 动态问题树、AutoRev 文档图、RevGAN style 控制）。拆开后，"想做 agent 选哪支、想做 RL 选哪类 reward"一目了然。
 
-2. **4 类评测方法 + pros/cons 矩阵**:
+**2. 四类评测方法 + pros/cons 矩阵：解决"评测 review 系统该用什么指标"的长期混乱。**
 
-    - 功能：解决"评测 review 系统应该用什么指标"的长期混乱。
-    - 核心思路：(a) Human-centric（Robertson 2023 GPT-4 pilot，Liang 2023 N=308 user study，Reviewer Arena pairwise）——最直接但 expensive、subjective；(b) Reference-based（ROUGE / BERTScore / hit rate / MCQ accuracy）——scalable 但 shallow，惩罚有效但措辞不同的反馈；(c) LLM-based（多 judge ensemble、unsupervised judge）——可扩展、灵活但有 position/verbosity bias，依赖 prompt；(d) Aspect-oriented（ReviewCritique 23 类细粒度错误标注、STRICTA 把 review 拆成 reasoning step graph、focus-level 评估、adversarial review injection）——细粒度可诊断但 annotation cost 高，多维 profile 难直接比较。Table 2 给出 4×2 pros/cons 矩阵让用户根据预算/目标选。
-    - 设计动机：之前的工作要么只跑一种评测（被另一类否掉），要么跑全套但没说为什么；这张矩阵让后续研究者能明确"如果想发现具体失败模式 → aspect-oriented，如果要快跑 ablation → reference-based"。
+过去的工作要么只跑一种评测（被另一类方法否掉），要么跑全套却不交代为什么，作者用一张 4×2 的 pros/cons 矩阵（Table 2）让选择有据可依。Human-centric（Robertson 2023 GPT-4 pilot、Liang 2023 N=308 user study、Reviewer Arena pairwise）最直接但 expensive 且 subjective；Reference-based（ROUGE / BERTScore / hit rate / MCQ accuracy）scalable 但 shallow，会惩罚措辞不同却有效的反馈；LLM-based（多 judge ensemble、unsupervised judge）可扩展灵活，却带 position/verbosity bias 且依赖 prompt；Aspect-oriented（ReviewCritique 23 类细粒度错误标注、STRICTA 把 review 拆成 reasoning step graph、focus-level 评估、adversarial review injection）细粒度可诊断但 annotation 成本高、多维 profile 难直接横比。矩阵的价值在于把"想发现具体失败模式就用 aspect-oriented、想快跑 ablation 就用 reference-based"这类决策显式化。
 
-3. **跨年代数据集对比 + 三类增强机制（after-review）**:
+**3. 跨年代数据集对比 + after-review 三类增强机制：把"review 之外"的任务和数据 mapped 到具体子任务。**
 
-    - 功能：把"review 之外"的任务和数据 mapped 到具体子任务。
-    - 核心思路：(a) Rebuttal generation 从单轮（Cheng 2020 APE 抽 argument pair，Purkayastha JITSUPEER 当 attitude-root）演进到多轮（ReviewMT、Re2 把 rebuttal 当对话）再到"verify-then-write"evidence 框架（DRPG、Paper2Rebuttal），最近还加 author-in-the-loop 信号（DEFEND）。(b) Meta-review 从 MetaGen extract-then-write，到 MReD 加 sentence functional label，到 PeerSum 引入 RAMMER 处理 review-rebuttal 层级，到 ORSUM 跨 venue 多阶段 introspection，最近 Purkayastha 2026 把它当 document-grounded dialogue。(c) Paper revision from reviews 由 ARIES 数据集 + CASIMIR + arXivEdits 三项工作奠定，目前是最 underexplored 的子方向。
-    - 设计动机：作者明确指出 "after-review" 任务比 review generation 更 challenging（要处理 argument/response 动态），但 dataset 和 benchmark 远不足；这一节本身就是给后续工作"做哪个 sub-task"的导航。
+作者明确指出 after-review 比 review generation 更 challenging（要处理 argument/response 的动态博弈），但数据集和 benchmark 远不充足，于是这一节本身就充当"做哪个 sub-task"的导航。Rebuttal generation 从单轮（Cheng 2020 APE 抽 argument pair、Purkayastha JITSUPEER 当 attitude-root）演进到多轮（ReviewMT、Re2 把 rebuttal 当对话），再到"verify-then-write"的 evidence 框架（DRPG、Paper2Rebuttal），近期还加入 author-in-the-loop 信号（DEFEND）。Meta-review 从 MetaGen 的 extract-then-write，到 MReD 加 sentence functional label，到 PeerSum 引入 RAMMER 处理 review-rebuttal 层级，到 ORSUM 跨 venue 多阶段 introspection，最近 Purkayastha 2026 把它当 document-grounded dialogue。Paper revision from reviews 则由 ARIES + CASIMIR + arXivEdits 三项工作奠基，是目前最 underexplored 的子方向。配合跨年代数据集对比（pre-2023 vs post-2023，Table 7），这一节把"任务—数据"的空白点清晰标注出来。
 
 ### 损失函数 / 训练策略
-（综述无训练，整理论文中提到的代表性训练范式）
-- SFT: OpenReviewer 79k expert reviews on Llama-8B；REVIEWER2 两阶段（aspect prompt → review text）。
-- RL: Remor 用 GRPO + 多目标奖励（criticism + relevance + actionable suggestion）；CycleResearcher 用 SimPO + dual-agent；ReviewRL 用 rule-based composite reward + retrieval augmentation。
-- Iterative refinement: RbtAct 用 rebuttal 当 implicit supervision；ActReview 用 rubric-guided RL formulate "review-to-revision"。
+综述本身不做训练，此处整理文中代表性的训练范式以便横向参照。SFT 路线以 OpenReviewer（79k expert reviews 微调 Llama-8B）和 REVIEWER2（两阶段：aspect prompt → review text）为代表；RL 路线包括 Remor（GRPO + 多目标奖励：criticism / relevance / actionable suggestion）、CycleResearcher（SimPO + dual-agent）、ReviewRL（rule-based composite reward + retrieval augmentation）；iterative refinement 则有 RbtAct（用 rebuttal 当 implicit supervision）和 ActReview（rubric-guided RL 把"review-to-revision"形式化）。
 
 ## 实验关键数据
 

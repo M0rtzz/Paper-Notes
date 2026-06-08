@@ -41,35 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是从 Pushshift 抓的 Reddit 真实帖子 $x$（含 subreddit 名、标题、原帖、评论）。Pipeline 分两步：
 
-1. **Persona 合成**：用 LLM $\mathcal{M}_{in}$（GPT-4o）在种子帖 + 用户类型 + 兴趣 subreddit 上生成内在 persona $a_{in}$；同时从 ELF-HP（6 种 trolling 策略）/CADD（4 种 abusive 类别）里采样外在 persona $a_{ex}=(h,d,e)$。
-2. **Agent 模拟**：把 $(a_{in},a_{ex})$ 拼入 backbone LLM $\mathcal{M}$，实例化出有害 agent $A_H \leftarrow \mathcal{M}(a_{in},a_{ex})$，让它读完原帖 $x$ 后产出有害评论 $h=A_H(x)$，作为最终评测样本。
-
-输出是 3,000 条/模型的合成有害评论集合，会被喂给 4 个安全分类器测准确率。
+方法从 Pushshift 抓来的真实 Reddit 帖子 $x$（含 subreddit 名、标题、原帖、已有评论）出发，要解决的核心问题是"如何让 LLM 写出既高度有害又风格多样、还能锚定真实语境的评论"。整条 pipeline 分两段：先由 LLM $\mathcal{M}_{in}$（GPT-4o）在种子帖、用户类型、兴趣 subreddit 上合成出一份"内在 persona" $a_{in}$，再从 ELF-HP / CADD 等策略库里采样一份"外在 persona" $a_{ex}$，二者拼进 backbone LLM 实例化出有害 agent，让它读完原帖后写出评论。最终每个 backbone 模型产出 3,000 条合成有害评论，统一喂给 4 个主流安全分类器测检出率，从而把静态 benchmark 已被刷穿的事实暴露出来。
 
 ### 关键设计
 
-1. **二维 persona（内在 + 外在）**:
+**1. 二维 persona：把"用户是谁"和"用户怎么攻击"解耦。**
 
-    - 功能：把"用户是谁"和"用户怎么攻击"解耦，通过组合爆炸式产生多样化 agent。
-    - 核心思路：内在 persona $a_{in}=\mathcal{M}_{in}(th,u,s_{top},s_{recent})$ 包含 username/account age/bio/兴趣类目/常逛 subreddit/知识背景/typical comment length 等"个人档案"；外在 persona $a_{ex}=(h,d,e)$ 包含策略类型 $h$（如 "Antipathy: subtly introduces provocative topics"）、自然语言描述 $d$、示例 $e$。论文里把 30,472 个 subreddit 名 + 6 种 trolling 策略 + 3 种 user type（newcomer / regular / longtime）随机组合，每个 agent 都是独一无二的画像。
-    - 设计动机：单一维度（只有 demographic 或只有策略）会让生成的内容要么"千篇一律的同一类身份"，要么"千篇一律的同一种攻击模式"。两维度正交后，**同一种 trolling 策略可以由军事爱好者、玩具收藏者、青少年游戏玩家用截然不同的口吻表达**，这是和 ToxiGen / Shin et al. 2023 等单维度合成最大的区别。
+单一维度的合成（只控 demographic 或只控攻击策略）天生会塌缩成"千篇一律的同一类身份"或"千篇一律的同一种攻击模式"，分类器只要记住几个模板就能识破。本文借社会心理学对真实 troll 的观察——身份恒定、行为随情境而变——把 persona 拆成两个正交维度：内在 persona $a_{in}=\mathcal{M}_{in}(th,u,s_{top},s_{recent})$ 是一份"个人档案"（username、account age、bio、兴趣类目、常逛 subreddit、知识背景、typical comment length），外在 persona $a_{ex}=(h,d,e)$ 则给出攻击的策略类型 $h$（如 "Antipathy: subtly introduces provocative topics"）、自然语言描述 $d$ 与示例 $e$。
 
-2. **基于真实社区帖的情境锚定 (contextual grounding)**:
+论文把 30,472 个 subreddit 名 × 6 种 trolling 策略 × 3 种 user type（newcomer / regular / longtime）随机配对，每个 agent 都是独一无二的画像。两维度正交带来的组合爆炸是多样性的根源：**同一种 trolling 策略，能由军事爱好者、玩具收藏者、青少年游戏玩家用截然不同的口吻说出来**——这正是它与 ToxiGen、Shin et al. 2023 等单维度合成拉开差距的地方。
 
-    - 功能：让生成的有害评论"嵌入"真实 Reddit 对话上下文，而不是凭空产生。
-    - 核心思路：每条 $h$ 都基于具体 $x$（含 subreddit 元数据、原帖、已有评论）生成。生成时 agent "看到"原帖大致是什么话题，然后用 persona 的兴趣去"借题发挥"。这就解释了为何论文 Table 6 里同一个 KPop 帖子，玩具收藏者会嘲讽 "K-pop idol 名字像他们的整容手术一样花哨"，军事爱好者会说 "这种命名像北朝鲜黑客"——同一帖产出风格迥异且高度上下文化的攻击。
-    - 设计动机：现有 prompt 式合成是"无根之水"，攻击话题集中、和真实对话脱钩，分类器只要记住几个模式就能识别；情境锚定让攻击 **隐藏在合理对话里**，正是分类器的盲区。
+**2. 情境锚定：让恶意评论嵌进真实对话而非凭空生成。**
 
-3. **多维度评测协议（harmfulness + challenge level + diversity）**:
+现有 prompt 式合成是"无根之水"，攻击话题集中、与真实对话脱钩，分类器记住几个模式就能识别。本文要求每条评论 $h=A_H(x)$ 都基于具体的真实帖 $x$（携带 subreddit 元数据、原帖、已有评论）生成：agent 先"看到"原帖在聊什么，再用自己 persona 的兴趣去借题发挥。
 
-    - 功能：不仅生成数据，还提供一套配套的 3 维评测，让"合成 benchmark"自身可被验证。
-    - 核心思路：(a) **Harmfulness**：用 GPT-4o + Claude-3.5 双盲判 + 5 人人工标 100 条（Fleiss $\kappa$=0.70）；(b) **Challenge**：用 4 个分类器在 threshold=0.2 的更严苛设定下测准确率，越低说明 benchmark 越难；(c) **Diversity**：用 Sentence-BERT 嵌入算 convex hull area + pairwise cosine distance；用 Self-BLEU / TTR / Vocab Size 测语言多样性；用 GPT-4o 分类后的 Shannon entropy 测话题多样性。
-    - 设计动机：合成数据最常被诟病的就是"看起来对，其实没那么有害 / 没那么难 / 没那么多样"。三维评测把每一条质疑都对上一个量化指标，这套范式对其他合成 benchmark 工作也有迁移价值。
+这解释了论文 Table 6 里的现象——面对同一个 K-pop 帖子，玩具收藏者会嘲讽 "idol 名字像他们的整容手术一样花哨"，军事爱好者会说 "这种命名像北朝鲜黑客"，同一帖产出风格迥异且高度上下文化的攻击。情境锚定的价值在于把恶意**藏进了一段合理的对话里**，而这恰恰是分类器的盲区。
+
+**3. 多维度评测协议：让合成 benchmark 自身可被验证。**
+
+合成数据最常被诟病"看起来对，其实没那么有害 / 没那么难 / 没那么多样"，本文索性给出一套三维评测把每条质疑都对上量化指标。有害性（Harmfulness）用 GPT-4o + Claude-3.5 双盲判，再叠加 5 人人工标注 100 条、Fleiss $\kappa=0.70$ 校验；难度（Challenge）用 4 个分类器在更严苛的 threshold $=0.2$ 设定下测准确率，越低说明 benchmark 越难；多样性（Diversity）则三管齐下——Sentence-BERT 嵌入算 convex hull area 与 pairwise cosine distance 看语义铺开程度，Self-BLEU / TTR / Vocab Size 看语言层面，GPT-4o 分类后的 Shannon entropy 看话题层面。这套协议不只服务本文，对其他合成 benchmark 工作同样有迁移价值。
 
 ### 损失函数 / 训练策略
-本文**不训练**任何模型，全程 prompt + 采样。Backbone agent 用 Llama-3.1 70B / DeepSeek-Llama 70B / GPT-4o，temperature=0.7，top-p=1.0，max_tokens=1024。每个 agent 模型生成 3,000 条有害评论。
+
+本文**不训练**任何模型，全程 prompt + 采样。Backbone agent 用 Llama-3.1 70B / DeepSeek-Llama 70B / GPT-4o，temperature=0.7，top-p=1.0，max_tokens=1024，每个 agent 模型生成 3,000 条有害评论。
 
 ## 实验关键数据
 

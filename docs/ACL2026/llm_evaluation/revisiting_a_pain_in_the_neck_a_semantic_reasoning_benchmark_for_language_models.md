@@ -40,31 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SEMANTICQA 覆盖四类 semantic phrases：idiomatic expressions (IE)、lexical collocations (LC)、noun compounds (NC) 和 verbal multiword expressions (VMWE)。对 IE、LC、NC，benchmark 分别构造分类、抽取和解释任务；对 VMWE，重点做抽取，并进一步引入 Oracle Schema 提示目标类型及定义。每个样本由固定 prompt template、上下文句子和目标输出组成。分类任务用 accuracy，抽取任务用 sequence-level exact match accuracy，解释任务用 METEOR 为主，同时报告 ROUGE-L 和 BERTScore。
-
-整体评测不是把所有任务简单平均成一个 leaderboard，而是观察模型在不同 semantic operations 上的行为模式：同一模型是否在分类、抽取、解释上都稳定；few-shot 是否真正改善语义 grounding；上游抽取错误是否会在下游解释或分类中被放大。
+SEMANTICQA 的核心思路是用"拆操作"取代"加数据集"：把 idiomatic expressions (IE)、lexical collocations (LC)、noun compounds (NC) 和 verbal multiword expressions (VMWE) 四类短语，重组到分类、抽取、解释这几种统一的语义操作上，每个样本都由固定 prompt 模板、上下文句子和目标输出组成，从而把格式差异控住。评测不是把所有任务简单平均成一个 leaderboard，而是观察同一模型能否在分类、抽取、解释三种操作上保持短语语义一致，以及 few-shot 是否真能改善 grounding、上游抽取错误是否会在下游被放大。分类用 accuracy，抽取用 sequence-level exact match，解释以 METEOR 为主并补报 ROUGE-L 和 BERTScore。
 
 ### 关键设计
-1. **Operation-aligned benchmark construction**:
+**1. Operation-aligned benchmark 构建：把分散资源对齐到同一组语义操作。**
 
-    - 功能：把分散的 MWE 数据资源对齐到同一组语义操作，支持跨短语类型、跨任务格式比较。
-    - 核心思路：IE 包含 detection、extraction、interpretation；LC 包含 semantic relation categorization、extraction、interpretation；NC 包含 compositionality classification、extraction、interpretation；VMWE 做 verbal construction extraction。每个任务都用统一的 prompt 结构和明确输出约束。
-    - 设计动机：如果只评一个开放式解释任务，模型可能靠流畅 paraphrase 得高分；加入严格抽取和多类分类后，才能看到它是否真的 grounding 到短语结构和语义关系。
+现有 MWE 资源往往各自只盯一种短语类型、一种任务格式，模型在某任务上得高分可能只是学会了某种格式模板。本文把四类短语重映射到受控操作：IE 做 detection / extraction / interpretation，LC 做 semantic relation categorization / extraction / interpretation，NC 做 compositionality classification / extraction / interpretation，VMWE 专注 verbal construction extraction，每个任务都用统一的 prompt 结构和明确的输出约束。这样一来，如果只评一个开放解释任务，模型可能靠流畅 paraphrase 蒙分；加上严格抽取和多类分类后，才能看到它是否真正 grounding 到短语结构和语义关系上。
 
-2. **Sequential task composition**:
+**2. Sequential task composition：把原子能力和 workflow 鲁棒性分开看。**
 
-    - 功能：模拟真实短语语义处理流程中“先识别、再理解”的级联场景。
-    - 核心思路：论文设计 extraction-interpretation 和 extraction-classification 组合任务，分别报告 conditional score 和 overall score。conditional score 只看上游抽取正确时的下游表现，overall score 则体现端到端性能。
-    - 设计动机：很多模型在原子任务上得分尚可，但一旦中间输出需要被下游步骤消费，错误会传播；这个设计能把 atomic capability 和 workflow robustness 分开看。
+现实短语处理往往是"先识别、再理解"的级联场景，一旦中间输出需要被下游步骤消费，错误就会传播。论文为此设计 extraction-interpretation 和 extraction-classification 两个组合任务，并分别报告 conditional score（只看上游抽取正确时的下游表现）和 overall score（端到端性能）。两个分数一对比，就能把"模型原子能力尚可"和"一进入 workflow 就崩"这两件事拆开诊断。
 
-3. **Oracle Schema 与类别规模分析**:
+**3. Oracle Schema 与类别规模分析：探测显式语义定义和类别粒度的影响。**
 
-    - 功能：测试显式语义定义和类别规模对模型短语语义推理的影响。
-    - 核心思路：Oracle Schema 在 VMWE 抽取中把目标类型和定义加入 prompt，例如说明 verb-particle construction 的非组合性；类别规模分析则在 LC 分类中把语义类别数从 1、2、4、8 扩展到 16，观察 accuracy 随类别细化如何下降。
-    - 设计动机：如果模型缺少明确语义 schema，可能不知道要抽取哪类表达；如果类别变细，in-context semantic reasoning 能否替代监督学习也会被更清楚地暴露。
+Oracle Schema 在 VMWE 抽取中把目标类型和定义加进 prompt（如说明 verb-particle construction 的非组合性），用来检验模型是否因缺明确 schema 而"不知道该抽哪类表达"；类别规模分析则在 LC 分类中把语义类别数从 1、2、4、8 扩到 16，观察 accuracy 随类别细化如何下降。如果类别变细后性能崩坏，就说明 in-context semantic reasoning 还不能替代监督学习。
 
 ### 损失函数 / 训练策略
-SEMANTICQA 本身是评测基准，不训练新主模型。API 模型和开源 LLM 在 zero-shot、three-shot、five-shot 下评测，采样温度设为 0，top-p 为 1.0；非 API 模型包括 BERT/T5 等监督微调 baseline。作者还让三名语言学研究生为每个任务随机标注 100 个样本，用作任务难度的参考，而不是绝对上界。由于不同模型生成格式不同，实验前会做 pre-run，并用任务相关启发式解析模型输出。
+SEMANTICQA 本身是评测基准，不训练新主模型。API 模型和开源 LLM 在 zero-shot、three-shot、five-shot 下评测，采样温度 0、top-p 1.0；非 API 模型包括 BERT/T5 等监督微调 baseline。作者让三名语言学研究生为每个任务随机标注 100 个样本，用作任务难度参考（而非绝对上界）。因不同模型生成格式不同，实验前会做 pre-run，并用任务相关启发式解析模型输出。
 
 ## 实验关键数据
 

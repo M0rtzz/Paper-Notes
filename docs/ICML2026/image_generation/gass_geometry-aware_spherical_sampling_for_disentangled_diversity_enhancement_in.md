@@ -41,33 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GASS 是一个完全在推理时工作的"插件式"采样引导：冻结 T2I backbone（UNet 或 DiT，扩散或 rectified flow 都行）+ 冻结 CLIP image encoder $\mathcal{E}_I$。给定 prompt $c$ 和 batch size $B$，每个 GASS 步骤干三件事：
-
-1. **解耦基识别**：从当前 batch 估计的 $\hat{x}_{0|t}$ 编码出嵌入 $\{\mathbf{e}_i\}_{i=1}^B$，以 $\mathbf{e}_t$ 为第一基，在其正交补内随机生成 $N=10$ 个 Gram-Schmidt 互正交方向，挑出 batch 平均绝对投影最大的那个作为主残差方向 $\mathbf{u}_{\text{ind}}$。
-2. **球面展度扩张**：把每个嵌入沿 $\mathbf{e}_t$ 与 $\mathbf{u}_{\text{ind}}$ 加一个均匀采样的扰动 $\delta_i^{\text{dep}}, \delta_i^{\text{ind}} \sim \mathcal{U}[-r, r]$，重组成新的目标嵌入 $\tilde{\mathbf{e}}_i$，并重新归一化回单位球。
-3. **梯度回写**：以 $\mathcal{L}_{\text{SPP}} = \sum_i (1 - \mathcal{E}_I(\hat{x}_{i,0|t})^\top \tilde{\mathbf{e}}_i)$ 为目标，用 Adam 对 $\hat{x}_{0|t}$ 直接做梯度下降（不动 backbone），把优化后的 $\hat{x}^*_{0|t}$ 塞回 solver 的下一步预测，从而把生成轨迹推向几何上更分散的方向。
-
-整套流程是稀疏的：只在 10–20 个采样步上开启，A100 上一个 batch 多花 2.93–3.68 秒。
+GASS 想解决的是"同一个 prompt 反复采样却总出雷同图"的问题，而它的思路是把"多样性"这件事搬到 CLIP 单位超球面上来重新定义和操作。冻结的 T2I backbone（UNet 或 DiT，扩散或 rectified flow 都行）正常采样，每隔几步插入一次 GASS 引导：先用冻结的 CLIP image encoder $\mathcal{E}_I$ 把当前预测的干净图编码成球面嵌入，找出一条文本方向和一条主残差方向作为两根解耦坐标轴，沿这两根轴把 batch 内的嵌入人为推开，再通过对预测干净图 $\hat{x}_{0|t}$ 求梯度，把"想象中更分散的嵌入"反传回像素空间。整套引导是稀疏的，只在 10–20 个采样步上开启，A100 上一个 batch 仅多花 2.93–3.68 秒。
 
 ### 关键设计
 
-1. **球面解耦度量 SPP（Spherical Spread Score）**：
+**1. 球面解耦度量 SPP：把多样性拆成 prompt 相关与无关两根轴**
 
-    - 功能：把同 prompt 下 batch 多样性拆成"prompt 相关 + prompt 无关"两个可分别度量的标量。
-    - 核心思路：以归一化文本嵌入为第一基 $\mathbf{u}_1 = \mathbf{e}_t$，每个图像嵌入展成 $\mathbf{e}_i = (\mathbf{e}_i^\top \mathbf{e}_t)\mathbf{e}_t + \sum_{k\ge 2} (\mathbf{e}_i^\top \mathbf{u}_k)\mathbf{u}_k$。其中第一项正好是 CLIPScore。残差用 Algo. 1 的随机 Gram-Schmidt 搜索找最强响应方向 $\mathbf{u}_{\text{ind}} = \arg\max_{\mathbf{r}} \tfrac{1}{B}\sum_i |\mathbf{e}_i^\top \mathbf{r}|$。多样性度量为两轴投影极差之和 $\mathcal{D}_{\text{dep}} = \max_i(\mathbf{e}_i^\top \mathbf{e}_t) - \min_i(\mathbf{e}_i^\top \mathbf{e}_t)$、$\mathcal{D}_{\text{ind}}$ 同构，$SPP = \mathcal{D}_{\text{dep}} + \mathcal{D}_{\text{ind}}$。
-    - 设计动机：避免 Scendi 那种需要多 prompt 协方差才能解耦的限制——这里只要单 prompt batch 就能给出两个独立标量，可用作评估也可作为干预目标；ImageNet 上验证 real 图的 $SPP \approx 0.220$ 比 SD2.1/SD3-M 的 $0.126$–$0.146$ 高约 50%，说明该度量对"真实多样性 vs 生成多样性"敏感。
+现有指标（Vendi Score、嵌入熵）只给一个标量，无法区分"语义层面的变化（视角、姿态）"和"prompt 没约束的变化（背景、光照）"，于是放大多样性时常常只让前景抖动、背景却被磨成统一色块。GASS 的解法是借 CLIP 嵌入天然归一化在单位球、且文本图像共享流形这一点，以归一化文本嵌入 $\mathbf{e}_t$ 为第一基把每个图像嵌入展开成 $\mathbf{e}_i = (\mathbf{e}_i^\top \mathbf{e}_t)\mathbf{e}_t + \sum_{k\ge 2} (\mathbf{e}_i^\top \mathbf{u}_k)\mathbf{u}_k$——第一项正好就是 CLIPScore（prompt 相关），剩下的正交补就是 prompt 无关变化。由于深网络表征集中在低维流形，作者用 Algo. 1 的随机 Gram-Schmidt 搜索在正交补里找一条响应最强的主残差方向 $\mathbf{u}_{\text{ind}} = \arg\max_{\mathbf{r}} \tfrac{1}{B}\sum_i |\mathbf{e}_i^\top \mathbf{r}|$ 来近似它。多样性即两轴投影极差之和 $SPP = \mathcal{D}_{\text{dep}} + \mathcal{D}_{\text{ind}}$，其中 $\mathcal{D}_{\text{dep}} = \max_i(\mathbf{e}_i^\top \mathbf{e}_t) - \min_i(\mathbf{e}_i^\top \mathbf{e}_t)$、$\mathcal{D}_{\text{ind}}$ 同构。这样单 prompt batch 就能给出两个独立标量，绕开了 Scendi 那种必须多 prompt 协方差才能解耦的限制；ImageNet 上真实图的 $SPP \approx 0.220$ 比 SD2.1/SD3-M 的 $0.126$–$0.146$ 高约 50%，说明它确实能区分"真实多样性 vs 生成多样性"，既可当评估指标也可当干预目标。
 
-2. **球面投影扩张 + 重归一化（Latent Dynamic Spherical Guidance）**：
+**2. 球面投影扩张 + 重归一化：定向把 batch 推得更散而不打乱主语义**
 
-    - 功能：在 CLIP 球面上构造一个"几何上更分散"的目标嵌入集合 $\tilde{\mathcal{P}}$，作为后续梯度引导的目标。
-    - 核心思路：对每张图沿两个解耦轴注入有界均匀噪声，目标嵌入 $\tilde{\mathbf{e}}_i = (\mathbf{e}_i^\top \mathbf{e}_t + \delta_i^{\text{dep}})\mathbf{e}_t + (\mathbf{e}_i^\top \mathbf{u}_{\text{ind}} + \delta_i^{\text{ind}})\mathbf{u}_{\text{ind}} + \mathbf{r}_i$，其中 $\mathbf{r}_i$ 是除掉两主分量后的初始残差，保留后保证不破坏图像其它细节方向；最后 $\tilde{\mathbf{e}}_i \leftarrow \tilde{\mathbf{e}}_i / \|\tilde{\mathbf{e}}_i\|_2$ 投回单位球。作者还给出 Prop. 4.1：在期望意义下 batch 点集的 Gram 行列式（即超体积）严格增大，给"几何展度真的扩了"提供理论背书。
-    - 设计动机：相比 PG / SPELL 在高维各向同性扰动，这里把扰动局限在两个被语义解释过的方向上，因此能在不打乱主语义的前提下定向放大背景或姿态变化；重归一化把目标拉回 CLIP 训练分布的高密度区，消融显示去掉它 ImageReward 从 0.778 掉到 0.732。
+有了两根解耦轴，GASS 就沿它们对每张图注入有界均匀扰动 $\delta_i^{\text{dep}}, \delta_i^{\text{ind}} \sim \mathcal{U}[-r, r]$，构造一个几何上更分散的目标嵌入 $\tilde{\mathbf{e}}_i = (\mathbf{e}_i^\top \mathbf{e}_t + \delta_i^{\text{dep}})\mathbf{e}_t + (\mathbf{e}_i^\top \mathbf{u}_{\text{ind}} + \delta_i^{\text{ind}})\mathbf{u}_{\text{ind}} + \mathbf{r}_i$，其中 $\mathbf{r}_i$ 是除掉两主分量后的初始残差，原样保留以免破坏图像其它细节方向，最后再 $\tilde{\mathbf{e}}_i \leftarrow \tilde{\mathbf{e}}_i / \|\tilde{\mathbf{e}}_i\|_2$ 投回单位球。相比 PG / SPELL 在高维做各向同性扰动（被语义先验稀释后留给背景的"预算"几乎为零），把扰动局限在两个有语义解释的方向上，就能在不打乱主语义的前提下定向放大背景或姿态变化。重归一化这步是质量护栏——它把目标拉回 CLIP 训练分布的高密度区，消融显示去掉它 ImageReward 会从 0.778 掉到 0.732（嵌入飞出单位球图像就开始走样）。作者还给出 Prop. 4.1：在期望意义下 batch 点集的 Gram 行列式（即超体积）严格增大，把"几何展度真的扩了"从经验观察升级成可证命题。
 
-3. **SPP 梯度对预测干净图的优化（不穿过 backbone）**：
+**3. 对预测干净图求梯度：把球面目标翻译回像素而不穿过 backbone**
 
-    - 功能：把 CLIP 球面上的几何目标"翻译"回像素空间，从而真正改变下一步采样结果。
-    - 核心思路：因为 CLIP 没有解码器、且不想为大 T2I backbone 反传，直接对每步预测的 $\hat{x}_{i,0|t}$ 求导：$\mathcal{L}_{\text{SPP}} = \sum_i (1 - \mathcal{E}_I(\hat{x}_{i,0|t})^\top \tilde{\mathbf{e}}_i)$，用 Adam（lr $1\times 10^{-4}$，最多 60 步，早停 patience 4、容差 $5\times 10^{-4}$）做 $\hat{x}^*_{i,0|t} \leftarrow \hat{x}_{i,0|t} - \eta \nabla \mathcal{L}_{\text{SPP}}$，再把 $\hat{x}^*_{0|t}$ 塞回 solver 的状态转移方程（DDIM/flow ODE 都适用），从而扭转后续轨迹。
-    - 设计动机：避开了对生成网络的梯度回传，使得方法对 backbone 完全黑盒，UNet/DiT、diffusion/flow 都即插即用；同时通过早停 + 稀疏调度（只在 10–20 步开启）把单次额外开销压到 3 秒级别，是 SOTA 推理时方法里少有的"既稳又便宜"的设计。
+球面上的目标嵌入要真正改变采样结果，得回到像素空间，但 CLIP 没有解码器、又不想为大 T2I backbone 反传。GASS 的做法是直接对每步预测的干净图 $\hat{x}_{i,0|t}$ 求导：以 $\mathcal{L}_{\text{SPP}} = \sum_i (1 - \mathcal{E}_I(\hat{x}_{i,0|t})^\top \tilde{\mathbf{e}}_i)$ 为目标，用 Adam（lr $1\times 10^{-4}$，最多 60 步，早停 patience 4、容差 $5\times 10^{-4}$）做 $\hat{x}^*_{i,0|t} \leftarrow \hat{x}_{i,0|t} - \eta \nabla \mathcal{L}_{\text{SPP}}$，再把优化后的 $\hat{x}^*_{0|t}$ 塞回 solver 的状态转移方程（DDIM 或 flow ODE 都适用）扭转后续轨迹。因为梯度完全不经过生成网络，方法对 backbone 是黑盒，UNet/DiT、diffusion/flow 即插即用；配合早停 + 稀疏调度（只在 10–20 步开启），单次额外开销压到 3 秒级别，是 SOTA 推理时方法里少有的"既稳又便宜"的设计。
 
 ### 损失函数 / 训练策略
 无训练，纯推理时。引导损失即上面的 $\mathcal{L}_{\text{SPP}}$；超参 $r_{\text{dep}} = r_{\text{ind}} = 0.02$，SD2.1 用 50 步、SD3-M 用 28 步采样，GASS 默认 20 步均匀开启，候选方向数 $N = 10$。

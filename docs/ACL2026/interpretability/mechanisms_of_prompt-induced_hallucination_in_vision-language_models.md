@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整个 pipeline 分三步：(1) **现象刻画** —— 在 CountBench 上构造 baseline prompt "How many [X] are in the image?" 和 misaligned prompt "Describe the N+k [X] in the image" ($k \in \{1,...,5\}$，外加 $k \in \{10, 20, 50\}$ 测极端)，看模型何时被 prompt 带偏；(2) **机制定位** —— 对每个 head $h$ 在 layer $l$ 计算 $\mu^{(l,h)} = \frac{1}{T}\sum_t H_t^{(l,h)}$，把所有 token 位置的 head 输出替换为 $\tilde H_t^{(l,h)} = \mu^{(l,h)}$，单 head 测干预下"从 N+k 切换到 N"的成功率，排序取 top-m (Qwen-VL m=3，其余 m=10) 做联合消融；(3) **功能分析** —— 在 4 种 copying form (no copy / format copy / soft copy / exact copy) 下统计各模型行为变化，并测 attention mass 从 text 转向 image 的层级分布。
+本文是一项 inference-only 的机制可解释研究，目标是把"模型听 prompt 不看图"的 PIH 行为定位到具体的 attention head 并刻画其功能。流程上分三步：先做**现象刻画**，在 CountBench 上对每张图配一对 prompt——baseline "How many [X] are in the image?" 与 misaligned "Describe the N+k [X] in the image"（$k \in \{1,...,5\}$，再加 $k \in \{10, 20, 50\}$ 测极端），观察模型何时被 prompt 带偏；再做**机制定位**，对每个 head 用 mean ablation 单独消融、按"把回答从 N+k 拉回真实计数 N"的成功率排序，取 top-m（Qwen-VL m=3，其余 m=10）联合消融；最后做**功能分析**，在四类 copying form 下统计各模型行为变化、并测 attention mass 从文本转向图像的层级分布，从而判断同一行为表象背后是否是同一机制。
 
 ### 关键设计
 
-1. **Mean ablation 替代 zero ablation**：
+**1. Mean ablation 替代 zero ablation：剥掉 head 的 token 信息但保住它的激活预算。**
 
-    - 功能：移除目标 head 携带的 token-specific 信息，同时保留其在 residual stream 上的"激活预算"，避免引入 distribution shift。
-    - 核心思路：$\tilde H^{(l,h)}_t = \mu^{(l,h)} = \frac{1}{T}\sum_{t'} H^{(l,h)}_{t'}$，即用该 head 在所有 token 上的平均输出替换每个位置，相当于该 head 失去了"看 token 内容"的能力但仍贡献固定 bias。Knockout 成功率 = "PIH 样本中切换到正确计数 N 的比例"。Top-m 通过两阶段筛选：先单 head 排，再按 m∈{1,3,5,10} 做分组消融选最佳 m。
-    - 设计动机：直接置零会破坏 layer norm 后的激活分布，造成不可控副作用；mean ablation 是 mechanistic interpretability 社区在 IOI circuit / induction head 研究里验证过的标准探针。
+直接把 head 输出置零会破坏 layer norm 之后的激活分布、引入不可控的 distribution shift，让"消融效果"和"分布扰动副作用"纠缠不清。Mean ablation 改用该 head 在全数据所有 token 上的平均输出去替换每个位置——$\tilde H^{(l,h)}_t = \mu^{(l,h)} = \frac{1}{T}\sum_{t'} H^{(l,h)}_{t'}$——相当于让这个 head 失去"看 token 内容"的能力、却仍贡献一个固定 bias，于是干预只移除 token-specific 信息而不改激活幅度。knockout 成功率定义为"PIH 样本中被纠正回正确计数 N 的比例"，最小 head 集合通过两阶段筛选确定：先按单 head 成功率排序，再对 m∈{1,3,5,10} 做分组消融挑最佳 m。这一招正是 mechanistic interpretability 社区在 IOI circuit、induction head 研究里反复验证过的标准探针。
 
-2. **跨模型 head 重叠 + 跨任务迁移**：
+**2. 跨模型 head 重叠 + 跨任务迁移：把"哪个组件负责 PIH"变成可观测的重叠率。**
 
-    - 功能：用 head 重叠分布判断 PIH 是 LM 内部机制还是视觉组件机制；用 counting→color 迁移验证 head 集合是否任务无关。
-    - 核心思路：LLaVA-OV 和 Qwen-VL 共享 Qwen2 LM 但视觉 backbone 不同，top-1/top-2 PIH-head 完全重合 (都是 L0H3, L0H6)，top-10 里一半重合；而用 DeepSeek-LLM 的 Janus-Pro 重合度低 (top head 是 L0H20)，强烈说明 PIH 源自 LM 而非 cross-modal fusion 层。然后把同一 PIH-head 集合搬到 Visual CounterFact 颜色任务 ("Describe the C+k [object]" 用色轮距离 k∈{1,2,3} 替代数字 offset)，看是否泛化。
-    - 设计动机：通过控制变量 (共享 LM / 不同视觉) 把"哪个组件负责 PIH"这个问题转化为可观测的 head 重叠率，避开了直接 probe 数百亿参数的不可能任务。
+要直接 probe 数百亿参数判断 PIH 来自 LM 还是视觉组件几乎不可能，作者改用一组控制变量实验把问题转化为可量化的 head 重叠率。LLaVA-OV 与 Qwen-VL 共享 Qwen2 LM 但视觉 backbone 不同，二者 top-1/top-2 的 PIH-head 完全重合（都是 L0H3、L0H6）、top-10 里一半重合；而用 DeepSeek-LLM 的 Janus-Pro 重合度很低（top head 是 L0H20），这一对照强烈指向 PIH 源自 LM 而非 cross-modal fusion 层。随后把同一组 PIH-head 直接搬到 Visual CounterFact 的颜色任务（"Describe the C+k [object]"，用色轮距离 $k\in\{1,2,3\}$ 替代数字 offset），检验该 head 集合是否任务无关。
 
-3. **Copying form 四类细粒度分类**：
+**3. Copying form 四类细粒度分类：区分"不再 copy"和"copy 形式变了"。**
 
-    - 功能：区分"prompt-following 的减少"到底是因为模型不再 copy 还是 copy 形式变了；揭示三个模型采用截然不同的内部机制。
-    - 核心思路：把响应分为 (a) **exact copy**：内容+格式都跟 prompt 一致 ("There are 3 cats" 给 N=2)；(b) **soft copy**：内容跟 prompt 但格式不同 ("There are three cats")；(c) **format copy**：内容对但格式仿 prompt ("There are 2 cats")；(d) **no copy**：内容对且自由格式 ("There are two cats")。再分别看消融前后的 $P(N_{digit}|N_{digit})$ 和 $P(N_{word}|N_{digit})$ 概率变化，从而判断是否是 attention mass 重分配到 image 还是 copying 抑制。
-    - 设计动机：聚合 metric 看不出"为什么 hallucination 减少"。四类划分让 Qwen-VL (PIH 消融反而**增加** format copying) 和 LLaVA-OV (全面抑制 + 大幅 image attention) 的机制差异显形。
+聚合 metric 只能看到 prompt-following 整体下降，却看不出"为什么幻觉减少"，更看不出三个模型其实走了不同机制。作者把响应细分成四类——exact copy（内容+格式都跟 prompt，如给 N=2 答 "There are 3 cats"）、soft copy（内容跟 prompt 但换格式，"There are three cats"）、format copy（内容对但格式仿 prompt，"There are 2 cats"）、no copy（内容对且自由格式，"There are two cats"），再分别看消融前后 $P(N_{digit}\mid N_{digit})$ 与 $P(N_{word}\mid N_{digit})$ 的概率变化，判断 prompt-following 的下降到底来自 attention mass 重分配到图像还是来自 copying 被抑制。正是这层划分让 LLaVA-OV（全面抑制 copying + 大幅转向 image attention）与 Qwen-VL（消融后 format copying 反而**增加**）的机制差异显形。
 
 ### 损失函数 / 训练策略
 **无训练**。本文是 inference-only mechanistic study：所有干预通过 hook 注入 mean activation 实现，单张 RTX 3090 即可完成所有实验 (总计 200–300 GPU 小时，含探索性实验)。

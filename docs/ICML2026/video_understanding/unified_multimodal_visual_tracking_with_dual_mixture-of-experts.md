@@ -44,23 +44,17 @@ OneTrackerV2 把 RGB / RGB+D / RGB+T / RGB+E / RGB+N 五种跟踪任务统一在
 
 ### 关键设计
 
-1. **Meta Merger：模态无关中央枢纽**：
+**1. Meta Merger：用一个可学习的 meta embedding 当"模态翻译官"，把异质模态压进统一空间。**
 
-    - 功能：把异质的 RGB 与 X 模态特征压缩到统一空间，同时提供对模态缺失的天然鲁棒性。
-    - 核心思路：先对 $F_{rgb}$ 与 $F_x$ 各自计算 $W^{spatial}=\sigma(\mathrm{Conv}(F^{avg})+\mathrm{Conv}(F^{max}))$ 与 $W^{channel}=\sigma(\mathrm{Linear}(F^{avg})+\mathrm{Linear}(F^{max}))$ 增强；再引入可学习 $F_{meta}$，通过 $F_{meta}'=\mathrm{Conv}(\mathrm{Conv}(F_{meta}+F'_{rgb})+\mathrm{Conv}(F_{meta}+F'_x)+F_{meta})$ 让 meta embedding 充当跨模态中介，最终输出全局对齐的 token；当 X 缺失时退化为只与 RGB 交互，融合管道无需修改。
-    - 设计动机：相比 SUTrack 直接 token 拼接，meta embedding 既避免多分支带来的双倍计算，又用一个全局变量做"模态翻译官"，自然适配任意模态组合。
+简单地把 RGB 与 X 模态 token 拼起来（SUTrack 的做法）既要双倍计算，又会在某一模态缺失时直接崩。Meta Merger 先对 $F_{rgb}$ 与 $F_x$ 各自做空间 + 通道注意力增强（$W^{spatial}=\sigma(\mathrm{Conv}(F^{avg})+\mathrm{Conv}(F^{max}))$、$W^{channel}=\sigma(\mathrm{Linear}(F^{avg})+\mathrm{Linear}(F^{max}))$），再引入一个全局可学习变量 $F_{meta}$ 充当跨模态中介：$F_{meta}'=\mathrm{Conv}(\mathrm{Conv}(F_{meta}+F'_{rgb})+\mathrm{Conv}(F_{meta}+F'_x)+F_{meta})$，输出全局对齐的模态无关 token。这样设计的好处是当 X 缺失时，meta embedding 自然退化为只与 RGB 交互，整条融合管道一行都不用改——模态鲁棒性是结构自带的，而不是额外训练出来的。
 
-2. **Dual MoE：T-MoE 与 M-MoE 显式解耦**：
+**2. Dual MoE：把"时空匹配"和"模态融合"两类异质能力拆到两组专家，再用正交损失逼它们分家。**
 
-    - 功能：把时空匹配与模态融合分到两组独立专家，避免同一参数空间承担异质目标。
-    - 核心思路：对每个 token $x$，DMoE 输出 $y=E_{shared}(x)+\sum_{i\in S^T_k}\hat g_i^T(x)E_i^T(x)+\sum_{i\in S^M_k}\hat g_i^M(x)E_i^M(x)$，其中 $S^T_k,S^M_k$ 为 top-$k$ 专家集合，$\hat g$ 是 renormalize 后的 softmax 权重；每个 expert 实现为"投影到秩 $r$ → 非线性 → 投影回 $d$"，capacity 高但成本可控。再加上 expert decoupling loss $\mathcal L_{dis}=(\cos(y^T,y^M))^2$ 强制两路输出正交。
-    - 设计动机：跟踪需要 temporal consistency，因此 T-MoE 一旦被 push away 出 M-MoE 的子空间，就会自然吸引到 motion 特征；M-MoE 则吸收模态特异信号。表 4 显示 D-MoE 显著优于单 MoE，证明拆解必要。
+跟踪同时要做 template↔search 的跨帧运动匹配和 RGB↔X 的互补线索融合，这两件事塞进同一参数空间会形成 zero-sum 的竞争。DMoE 对每个 token 输出 $y=E_{shared}(x)+\sum_{i\in S^T_k}\hat g_i^T(x)E_i^T(x)+\sum_{i\in S^M_k}\hat g_i^M(x)E_i^M(x)$，其中 T-MoE 与 M-MoE 各自 top-$k$ 选专家、$\hat g$ 是重归一化的 softmax 权重，每个 expert 走"降到秩 $r$ → 非线性 → 升回 $d$"，容量大但成本可控。再加一个 expert decoupling loss $\mathcal L_{dis}=(\cos(y^T,y^M))^2$ 强制两路输出正交。一旦 T-MoE 被推离 M-MoE 的子空间，它就自然被运动特征吸引、M-MoE 则去吸收模态特异信号——两组专家各司其职，消融里 D-MoE 明显优于单 MoE，正说明这种拆解是必要的。
 
-3. **Multimodal Router Cluster：让 M-MoE 真按模态分工**：
+**3. Multimodal Router Cluster：让 M-MoE 的路由真按模态分簇，而不只是泛泛地正交。**
 
-    - 功能：让 M-MoE 的路由 logits 在同模态样本间保持高相似度、跨模态低相似度，从而真正学到模态特异的 expert 选择策略。
-    - 核心思路：用 batch 内路由相似度矩阵 $S_{ij}=\langle g^M(x_i),g^M(x_j)\rangle$ 配合 margin $\delta$，构造 $\mathcal L_{same}=\frac{1}{|M_{same}|}\sum_{(i,j)\in M_{same}}\max(0,(1/K+\delta)-S_{ij})$ 与 $\mathcal L_{diff}=\frac{1}{|M_{diff}|}\sum_{(i,j)\in M_{diff}}\max(0,S_{ij}-(\delta-1/K))$，合成 $\mathcal L_{cluster}=\mathcal L_{same}+\mathcal L_{diff}$。
-    - 设计动机：仅靠 $\mathcal L_{dis}$ 能让 T/M 输出正交但不保证 M-MoE 内部按模态分簇；router cluster 损失提供模态级别的层次化偏好，使得某些 expert 专责 Depth、某些专责 Thermal 等。
+只有 $\mathcal L_{dis}$ 能保证 T/M 两路输出正交，却不保证 M-MoE 内部真的"某些专家专管 Depth、某些专管 Thermal"。Router cluster 因此直接对路由行为下手：用 batch 内路由相似度 $S_{ij}=\langle g^M(x_i),g^M(x_j)\rangle$ 配 margin $\delta$，构造同模态样本要相似的 $\mathcal L_{same}=\frac{1}{|M_{same}|}\sum_{(i,j)\in M_{same}}\max(0,(1/K+\delta)-S_{ij})$ 和跨模态样本要相异的 $\mathcal L_{diff}=\frac{1}{|M_{diff}|}\sum_{(i,j)\in M_{diff}}\max(0,S_{ij}-(\delta-1/K))$，合成 $\mathcal L_{cluster}=\mathcal L_{same}+\mathcal L_{diff}$。它给 M-MoE 提供了模态层级的层次化偏好，让专家选择策略真正落到具体模态上，这也是跨模态泛化能力的来源。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal L=\mathcal L_{class}+\lambda_G\mathcal L_{IoU}+\lambda_{L_1}\mathcal L_{L_1}+\mathcal L_{task}+\lambda_{dis}\mathcal L_{dis}+\lambda_{cluster}\mathcal L_{cluster}+\lambda_{balance}\mathcal L_{balance}$，默认 $\lambda_G\!=\!2,\lambda_{L_1}\!=\!5,\lambda_{dis}\!=\!0.1,\lambda_{cluster}\!=\!1$；$\mathcal L_{balance}$ 用于约束 MoE 负载均衡。整网一次端到端训练，无 pretrain → finetune 多阶段。

@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FedHPro 在标准 FedAvg 流程外增加两条信号通路：(1) 上行多传输一份每客户端每类的平均梯度 $\mathbf{g}_k^c$；(2) 服务器维护一组可学习的超原型张量 $\mathcal{S}_M \in \mathbb{R}^{\mathbb{C}\times|\mathcal{I}|\times d}$（每类 $|\mathcal{I}|=5$ 个向量），通过梯度匹配损失 $\mathcal{L}_{GM}$ 优化 $M=30$ 轮；(3) 下行除了全局模型，还把 $\mathcal{S}_M$ 一并广播给客户端，客户端用它构造 HPCL + HPAL 两个额外损失。
+FedHPro 想解决的是"全局原型继承客户端偏差"这个死循环：既然不能传原始样本去训出一份干净的集中式原型，那就退而求其次，让服务器用可学习的超原型去"逼近"集中式原型该有的样子。具体做法是在标准 FedAvg 之外让客户端多上传一份按类聚合的梯度，服务器据此通过梯度匹配反复打磨一组超原型张量，再把它连同全局模型一起广播下去，供客户端构造对比与对齐两个额外目标。
 
 ### 关键设计
 
-1. **超原型与梯度匹配 (Hyper-Prototypes via Gradient Matching)**:
+**1. 超原型与梯度匹配：用梯度当"看不见的样本"的代理**
 
-    - 功能：在服务器侧用一组可学习向量近似"集中式训练时才能算出的 prototype"。
-    - 核心思路：每个类 $c$ 在每客户端 $k$ 上的真实梯度 $\mathbf{g}_k^c = \tfrac{1}{n_k^c}\sum \nabla_{z_i}\mathcal{L}_k(x_i,y_i)$ 聚合后得 $\mathbf{g}^c$；服务器初始化 $\{\mathbf{s}_i^c\}_{i=1}^{|\mathcal{I}|}$，在一个虚拟交叉熵损失 $\mathcal{L}_{vir}$ 下生成超原型梯度 $\mathbf{g}_{HP}^c$，然后最小化 $\mathcal{L}_{GM}=1-\cos(\mathbf{g}^c,\mathbf{g}_{HP}^c)$。这本质上是让超原型沿着"真实样本会推动 prototype 走的方向"演化，从而绕过了"看不到原始数据"的限制。
-    - 设计动机：之前的方法是 prototype-level 聚合，得到的全局原型必然继承客户端的统计偏差；梯度匹配是 *sample-level* 信号的代理，能更忠实地刻画类语义。文章在 Digits 上验证：超原型到集中式 prototype 的 L2 距离显著小于 FedAvg/FedProto 的全局原型。
+直接平均局部原型必然把客户端的统计偏差搬到全局信号上，难域 (SVHN/SYN) 上类簇因此严重重叠。本文换了个思路：虽然服务器拿不到真实样本，却能拿到每个类 $c$ 在每客户端 $k$ 上 prototype 相对真实样本的梯度 $\mathbf{g}_k^c = \tfrac{1}{n_k^c}\sum \nabla_{z_i}\mathcal{L}_k(x_i,y_i)$，聚合后得到 $\mathbf{g}^c$。服务器为每类初始化一组可学习向量 $\{\mathbf{s}_i^c\}_{i=1}^{|\mathcal{I}|}$，在一个虚拟交叉熵损失 $\mathcal{L}_{vir}$ 下算出它们自己的梯度 $\mathbf{g}_{HP}^c$，然后最小化 $\mathcal{L}_{GM}=1-\cos(\mathbf{g}^c,\mathbf{g}_{HP}^c)$，让超原型沿着"真实样本本会推动 prototype 走的方向"演化。这相当于把 prototype-level 的统计平均替换成 sample-level 的梯度代理，能更忠实地刻画类语义——作者在 Digits 上验证，超原型到集中式 prototype 的 L2 距离显著小于 FedAvg/FedProto 的全局原型。
 
-2. **超原型对比学习 HPCL + 客户端自适应 margin**:
+**2. 超原型对比学习 HPCL：用客户端自适应 margin 锐化类间边界**
 
-    - 功能：在客户端用超原型构造"拉正样本到同类超原型、推远到异类超原型"的对比目标，强化类间分离度。
-    - 核心思路：先在客户端算所有局部 prototype 两两之间的平均欧氏距离 $d_k=\tfrac{1}{(\mathbb{C}-1)^2}\sum D_{L_2}(\mathbf{p}_k^{c_1},\mathbf{p}_k^{c_2})$ 作为客户端特定 margin；再定义样本 embedding $z_i$ 与一类超原型集 $\mathcal{S}_M^c$ 的相似度 $s(z_i,\mathcal{S}_M^c)$ 为对所有 $|\mathcal{I}|$ 个向量的平均余弦；最后用 $\mathcal{L}_{HPCL}=\log(1+\sum_{\mathcal{S}_M^j\in\mathcal{N}_M^c}\exp((s(z_i,\mathcal{S}_M^j)+d_k)/\tau)/\exp(s(z_i,\mathcal{S}_M^c)/\tau))$，把每个 embedding 拉向其正类的多个超原型、推开所有负类。
-    - 设计动机：固定 margin 对所有客户端不公平——数据均匀的客户端类间天然分开，长尾客户端类簇本来就挤在一起。$d_k$ 自适应客户端表征空间的尺度，使决策边界锐化的力度与该客户端数据"难易"匹配。
+有了超原型，客户端就能拉每个 embedding 到同类超原型、推开异类超原型来强化类间分离。难点是 margin 该取多大——固定 margin 对数据均匀的客户端嫌大、对长尾客户端嫌小。本文让 margin 随客户端表征尺度走：先算该客户端所有局部 prototype 两两的平均欧氏距离 $d_k=\tfrac{1}{(\mathbb{C}-1)^2}\sum D_{L_2}(\mathbf{p}_k^{c_1},\mathbf{p}_k^{c_2})$ 当作专属 margin；样本 $z_i$ 与一类超原型集 $\mathcal{S}_M^c$ 的相似度 $s(z_i,\mathcal{S}_M^c)$ 取对全部 $|\mathcal{I}|$ 个向量的平均余弦；最终损失为 $\mathcal{L}_{HPCL}=\log\big(1+\sum_{\mathcal{S}_M^j\in\mathcal{N}_M^c}\exp((s(z_i,\mathcal{S}_M^j)+d_k)/\tau)/\exp(s(z_i,\mathcal{S}_M^c)/\tau)\big)$，把 embedding 拉向正类的多个超原型、推开所有负类。这样边界锐化的力度就跟该客户端数据"难易"对上了号。
 
-3. **超原型对齐学习 HPAL (Huber-style penalty)**:
+**3. 超原型对齐学习 HPAL：用 Huber 惩罚兼顾鲁棒与精细**
 
-    - 功能：在 embedding-feature level 平滑地拉近样本与对应类的平均超原型 $\mathcal{H}_M^c$，提升类内紧致度与跨客户端一致性。
-    - 核心思路：对 embedding 每一维做 Huber loss，绝对差 $\le 1$ 时用 $\tfrac12(z_{i(q)}-\mathcal{H}_{M(q)}^c)^2$，否则用 $|z_{i(q)}-\mathcal{H}_{M(q)}^c|-\tfrac12$；总训练损失 $\mathcal{L}=\mathcal{L}_{CE}+\mathcal{L}_{HPCL}+\mathcal{L}_{HPAL}$。
-    - 设计动机：纯 L2 对齐对离群点过于敏感，会让客户端在早期表征不稳定时被拉飞；Huber 对小残差像 L2 平滑、对大残差像 L1 鲁棒，正好契合"前期粗对齐、后期精细收敛"的需求。
+光分离还不够，还得让类内更紧致、跨客户端更一致，于是在 embedding 维度上把样本拉向对应类的平均超原型 $\mathcal{H}_M^c$。这里没用纯 L2，因为它对离群点太敏感，会在早期表征不稳时把客户端拉飞。本文逐维做 Huber loss：绝对差 $\le 1$ 时用 $\tfrac12(z_{i(q)}-\mathcal{H}_{M(q)}^c)^2$ 像 L2 一样平滑，否则用 $|z_{i(q)}-\mathcal{H}_{M(q)}^c|-\tfrac12$ 像 L1 一样鲁棒，正好契合"前期粗对齐、后期精细收敛"的节奏。
 
 ### 损失函数 / 训练策略
 服务器侧用 $\mathcal{L}_{GM}$ 优化超原型 ($M=30$ 内轮)；客户端侧总目标为 $\mathcal{L}=\mathcal{L}_{CE}+\mathcal{L}_{HPCL}+\mathcal{L}_{HPAL}$。温度 $\tau=0.05$，超原型集大小 $|\mathcal{I}|=5$，每轮 100 通信轮、10 本地 epoch、SGD lr=0.01。论文还证明了非凸下的收敛率 $R>\Theta\big(\tfrac{\mathcal{L}_0-\min\mathcal{L}^*}{E\eta\,\boldsymbol{\varepsilon}}\big)$。

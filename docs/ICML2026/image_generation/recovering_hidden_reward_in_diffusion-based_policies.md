@@ -42,33 +42,25 @@ EnergyFlow 把 diffusion policy 的 score field 显式参数化为一个标量 e
 
 ### 整体框架
 
-输入：expert demos $\mathcal{D} = \{(s_i, a_i)\}$。
-训练：标量网络 $E_\phi: \mathcal{A} \times \mathcal{S} \times [0, T] \to \mathbb{R}$，用 variance-exploding 噪声 $\sigma(t) = \sigma_{\min}^{1-t/T} \sigma_{\max}^{t/T}$ 给动作加噪，DSM 目标 $\mathcal{L}(\phi) = \mathbb{E}[\sigma^2(t) \| -\nabla_{a_t} E_\phi(a_t, s, t) + \varepsilon/\sigma(t) \|^2]$。
-推理两用：（生成）从 $a_T \sim \mathcal{N}(0, \sigma^2(T) I)$ 出发跑 probability-flow ODE $da/dt = -\frac{1}{2} \frac{d[\sigma^2(t)]}{dt} \nabla_a E_\phi$；（reward）在 $\gamma = 10^{-3}$ 时刻取 $E_\phi(a, s, \gamma)$ 减去 state-dependent baseline 作为 shaping reward 喂给 SAC。
+EnergyFlow 要解决的是：diffusion policy 已经在 score field 里隐含了专家偏好，却被当成纯 sampler 用、扔掉了可作 reward 的标量信号。它的转法很简单——不再让网络直接输出向量 score，而是输出一个标量 energy $E_\phi(s,a)$，把 score 定义成它对动作的负梯度 $\mathcal{S}_\phi = -\nabla_a E_\phi$。这样同一个网络既能跑 probability-flow ODE 生成动作，又能在某个小噪声时刻读出 $E_\phi$ 当 reward 喂给下游 SAC，而训练仍只用一条 denoising score matching 损失。
 
 ### 关键设计
 
-1. **Score = Reward Gradient 等价性（Theorem 3.3）**:
+**1. Score = Reward Gradient 等价性：把 diffusion 的 score 重新读成 soft Q 梯度**
 
-    - 功能：从数学上证明 score matching 训出的 $E_\phi$ 自动恢复了 expert 的 soft Q-function（差一个 state-dependent 常数）。
-    - 核心思路：在 max-ent 最优假设下，$\pi_E(a|s) = \exp(Q^*(s,a)/\alpha) / Z(s)$。对动作求梯度可消掉 partition function $Z(s)$：$\nabla_a \log \pi_E = \nabla_a Q^* / \alpha$。所以如果 $-\nabla_a E_\phi \approx \nabla_a \log \pi_E$，那 $E_\phi(a, s) = -Q^*(s,a)/\alpha + c(s)$。Corollary 3.4 进一步指出 $E_\phi$ 实际恢复的是 soft advantage $A^{\text{soft}}(s,a) = Q^*(s,a) - V^*(s)$（再差一个 state-only 常数）。
-    - 设计动机：这是整个框架的理论 anchor——它告诉我们不需要 GAIL/AIRL 的对抗判别器、不需要 EBM 的 MCMC，仅仅训一个 diffusion policy 就能"白送"一个 reward 信号。区别于把 diffusion 当 sampler 用的 Diffusion Policy，这里把同一个网络重 interpret 成 energy。
+这是整个框架的理论 anchor，回答的痛点是"凭什么训一个 diffusion policy 就能白送 reward"。在 max-entropy 最优假设下，专家策略是 Boltzmann 形式 $\pi_E(a|s) = \exp(Q^*(s,a)/\alpha) / Z(s)$；关键观察是对动作求梯度时 partition function $Z(s)$ 与 $a$ 无关、直接被消掉：$\nabla_a \log \pi_E = \nabla_a Q^* / \alpha$。于是只要 score matching 训到 $-\nabla_a E_\phi \approx \nabla_a \log \pi_E$，就有 $E_\phi(a, s) = -Q^*(s,a)/\alpha + c(s)$（Theorem 3.3），即 $E_\phi$ 自动恢复了专家的 soft Q-function，只差一个 state-only 常数。Corollary 3.4 进一步指出实际恢复的是 soft advantage $A^{\text{soft}}(s,a) = Q^*(s,a) - V^*(s)$。这一步把"diffusion policy"和"max-ent IRL"两条独立 stream 接到一起——不需要 GAIL/AIRL 的对抗判别器，也不需要 EBM 的 MCMC，区别于把 diffusion 纯当 sampler 的 Diffusion Policy，这里把同一个网络重 interpret 成 energy 就拿到了 reward。
 
-2. **保守场约束（标量参数化 + autodiff score）**:
+**2. 保守场约束：标量参数化让 score 是某势函数的梯度，顺带收紧泛化 bound**
 
-    - 功能：硬保证 score field 是某 scalar potential 的梯度（$\nabla \times \mathcal{S}_\phi = 0$），消除 cyclic preference，并收紧泛化 bound。
-    - 核心思路：不直接回归向量 score $\mathcal{S}_\phi: \mathbb{R}^{|s|+|a|} \to \mathbb{R}^{|a|}$，而是把网络输出设为 scalar $E_\phi$，通过 autodiff 拿 $\mathcal{S}_\phi = -\nabla_a E_\phi$。Theorem 3.6 给出 Rademacher 复杂度对比：$\hat{\mathfrak{R}}_S(\mathcal{F}_{\text{unc}}) \leq \Lambda B \sqrt{d}/\sqrt{n}$（无约束）vs $\hat{\mathfrak{R}}_S(\mathcal{F}_{\text{cons}}) \leq \Lambda L/\sqrt{n}$（保守），高维 action space 下保守版本严格更紧。Lemma 3.8 进一步给 OOD bound：保守版本的复杂度项是 $\mathcal{O}(M \Lambda L / \sqrt{n})$ 而非 $\mathcal{O}(M \Lambda B \sqrt{d}/\sqrt{n})$。
-    - 设计动机：常规 diffusion policy 直接输出向量 score 不保证保守性，意味着学到的 implicit "energy"可能在 $a_1 \to a_2 \to a_3 \to a_1$ 形成 cyclic preference，违反 rational decision 的传递性公理（Jiang 2011），rewards 没法良定义。保守约束既是数学正确性（让 reward extraction 合法），也是有用的 inductive bias（高维动作空间下显著降复杂度）。Remark 3.7 还指出深度网络可通过 spectral normalization 满足 Lipschitz 约束让 $L$ 可控。
+常规 diffusion policy 直接回归向量 score $\mathcal{S}_\phi: \mathbb{R}^{|s|+|a|} \to \mathbb{R}^{|a|}$，不保证这个场是保守的——学到的 implicit energy 可能在 $a_1, a_2, a_3$ 之间形成 cyclic preference（$a_1$ 优于 $a_2$、$a_2$ 优于 $a_3$、$a_3$ 又优于 $a_1$），违反 rational decision 的传递性公理（Jiang 2011），reward 根本没法良定义。EnergyFlow 的做法是把网络输出直接设成标量 $E_\phi$，再用 autodiff 取 $\mathcal{S}_\phi = -\nabla_a E_\phi$，从构造上硬保证 $\nabla \times \mathcal{S}_\phi = 0$。这个约束不只是数学正确性，还是高维动作空间下有用的 inductive bias：Theorem 3.6 给出 Rademacher 复杂度对比，无约束版本是 $\hat{\mathfrak{R}}_S(\mathcal{F}_{\text{unc}}) \leq \Lambda B \sqrt{d}/\sqrt{n}$、保守版本是 $\hat{\mathfrak{R}}_S(\mathcal{F}_{\text{cons}}) \leq \Lambda L/\sqrt{n}$，action 维度 $d$ 越大保守版越紧；Lemma 3.8 把这一点传到 OOD bound，复杂度项从 $\mathcal{O}(M \Lambda B \sqrt{d}/\sqrt{n})$ 降到 $\mathcal{O}(M \Lambda L / \sqrt{n})$。Remark 3.7 补充深网络可用 spectral normalization 控住 Lipschitz 常数 $L$ 让 bound 真正成立。
 
-3. **Centered Shaping Reward（去 state-dependent 偏置）**:
+**3. Centered Shaping Reward：减 state baseline 把 likelihood 高 ≠ progress 的陷阱消掉**
 
-    - 功能：把 raw $E_\phi$ 当 reward 用会有 state-dependent 偏置 $c(s)$ 引入高方差；定义 $\tilde{r}_\phi(a, s) = -(E_\phi(a, s, \gamma) - \mathbb{E}_{a' \sim \mathcal{N}(0, I)}[E_\phi(a', s, \gamma)])$ 把偏置 cancel。
-    - 核心思路：Proposition 3.9 证 raw $E_\phi$ 保证 within-state action ranking 正确（$\arg\min_a E_\phi = \arg\max_a Q^*$）但 cross-state 比较不可靠。Remark 3.10 指出 state-only 偏置不满足 potential-based reward shaping (PBRS, Ng 1999) 形式，可能改变 sequential 最优策略；但对 within-state action selection 偏置无影响。所以减一个 state-dependent baseline（Monte Carlo 采 $M = 16$ 个 $a' \sim \mathcal{N}(0, I)$ 求均值）就把偏置干掉。
-    - 设计动机：实验图 4 直接验证——raw $E_\phi$ 作为 SAC reward 会让 agent 卡在常见 state 上（因为高 likelihood = 低 energy = 高 reward，但 likelihood 高不等于 progress），early plateau；centered 版让 reward 反映"在当前 state 下选哪个 action"而非"哪个 state 常被访问"，训练曲线追到 oracle dense reward 水平。Centered Energy + Sparse 组合最好——稠密 shaping 引导早期 exploration，sparse 保证最终任务对齐。
+直接把 raw $E_\phi$ 当 reward 会踩坑：它带着 state-only 偏置 $c(s)$，high likelihood = low energy = high reward，但 likelihood 高的常见 state 不等于任务有进展。Proposition 3.9 证明 raw $E_\phi$ 只保证 within-state 的 action ranking 正确（$\arg\min_a E_\phi = \arg\max_a Q^*$），cross-state 比较不可靠；Remark 3.10 进一步指出这个 state-only 偏置不满足 potential-based reward shaping（PBRS, Ng 1999）形式、在 sequential MDP 上可能改变最优策略，但对 within-state 的 action selection 无影响。解法是定义 centered reward $\tilde{r}_\phi(a, s) = -(E_\phi(a, s, \gamma) - \mathbb{E}_{a' \sim \mathcal{N}(0, I)}[E_\phi(a', s, \gamma)])$，用 Monte Carlo 采 $M = 16$ 个 $a' \sim \mathcal{N}(0, I)$ 估那个 state-dependent 均值并减掉，把偏置 cancel。这样 reward 就从"哪个 state 常被访问"变成"在当前 state 下选哪个 action 更好"，下游 SAC 训练曲线能追到 oracle dense reward；实践中 centered energy 叠加 sparse task signal 最好——稠密 shaping 引导早期 exploration，sparse 锚定最终任务对齐。
 
 ### 损失函数 / 训练策略
 
-DSM 损失 $\mathcal{L}(\phi) = \mathbb{E}_{t, a_0, \varepsilon}[\sigma^2(t) \| -\nabla_{a_t} E_\phi(a_t, s, t) + \varepsilon/\sigma(t) \|^2]$，其中 $a_t = a_0 + \sigma(t) \varepsilon$，$\varepsilon \sim \mathcal{N}(0, I)$，$t \sim \mathcal{U}[0, T]$，$\sigma_{\min} = 0.01$，$\sigma_{\max} = 10$，$T = 1$。$\lambda(t) = \sigma^2(t)$ 确保各噪声尺度均衡贡献。Theorem 3.11 给 score 误差 $\eta$ 到 action preference 的传播 bound：$|\Delta E_\phi(a, a') - \Delta E^*(a, a')| \leq \eta \cdot \|a - a'\|_2$，linear graceful degradation。下游 RL 用 SAC + centered shaping reward，可选叠加 sparse task signal。
+训练只有一条 denoising score matching 损失 $\mathcal{L}(\phi) = \mathbb{E}_{t, a_0, \varepsilon}[\sigma^2(t) \| -\nabla_{a_t} E_\phi(a_t, s, t) + \varepsilon/\sigma(t) \|^2]$，其中 $a_t = a_0 + \sigma(t) \varepsilon$，$\varepsilon \sim \mathcal{N}(0, I)$，$t \sim \mathcal{U}[0, T]$，噪声用 variance-exploding 调度 $\sigma(t) = \sigma_{\min}^{1-t/T} \sigma_{\max}^{t/T}$（$\sigma_{\min} = 0.01$，$\sigma_{\max} = 10$，$T = 1$），权重 $\lambda(t) = \sigma^2(t)$ 让各噪声尺度均衡贡献。生成时从 $a_T \sim \mathcal{N}(0, \sigma^2(T) I)$ 出发跑 probability-flow ODE $da/dt = -\frac{1}{2} \frac{d[\sigma^2(t)]}{dt} \nabla_a E_\phi$；reward extraction 在 $\gamma = 10^{-3}$ 这个小噪声时刻读 $E_\phi(a, s, \gamma)$ 再做上面的 centering。Theorem 3.11 还给了 score 误差 $\eta$ 到 action preference 的传播 bound：$|\Delta E_\phi(a, a') - \Delta E^*(a, a')| \leq \eta \cdot \|a - a'\|_2$，是 linear graceful degradation。下游 RL 用 SAC + centered shaping reward，可选叠加 sparse task signal。
 
 ## 实验关键数据
 

@@ -41,36 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整个 pipeline 分为**数据构造**与**模型训练**两条主线，外加一个独立的 Checklist Generator。
-
-1. **输入侧**：从真实场景收集 55k 条复杂指令（按 CritiqueLLM 的 10 类任务分类，并用一个小分类器打"约束复杂度"分），每条指令随机挑 2 个模型（共 15 个）生成回答，得到 110k 条 (instruction, response) 评测样本。
-2. **Checklist Generator**：用 DeepSeek-R1 自动给指令做约束分解作为监督信号，微调一个基模型，使其能在部署时高效输出约束清单 $\{c_k\}_{k=1}^n$。人工抽检 1k 样本：单约束正确率 99.29%、整 checklist 正确率 97.50%。
-3. **Critique 数据构造**：用 DeepSeek-R1 为每条 (x,y,checklist) 生成 $N=5$ 份"expert critique"，再过四级过滤（见下），最终留下高质量的 $C=\bigcup_{k=1}^n (e_k^*, j_k^*)$。
-4. **IF-Critic 训练**：基于 Qwen2.5-14B-Instruct，先 SFT 再做"约束级 DPO"，得到 IF-Critic-14B。
-5. **下游使用**：把 critic 给出的 $r_i = \frac{1}{n}\sum_k j_{ik}$ 当作 reward，套到 DPO 或 GRPO 上去训策略模型（Qwen2.5-7B / Llama-3.1-8B）。
+本文的核心是用一个 14B 的 checklist-aware critic 替代"对每条约束分别调一次大模型 judge"的昂贵做法：给定一条复杂指令和某模型的回答，先由 Checklist Generator 把指令拆成约束清单 $\{c_k\}_{k=1}^n$，再让 critic 在一次 CoT 推理里顺着清单逐条产出"解释 $e_k$ + 0/1 判定 $j_k$"，聚合即得整条 critique，下游把通过约束比例 $r_i=\frac{1}{n}\sum_k j_{ik}$ 当作 reward 喂给 DPO/GRPO 训练 7B/8B 策略模型。系统训练数据来自 55k 条真实复杂指令（按 CritiqueLLM 的 10 类任务分类、并用小分类器打约束复杂度分），每条随机挑 2 个模型（共 15 个）生成回答得到 110k 条评测样本；Checklist Generator 由 DeepSeek-R1 的约束分解结果蒸馏微调而来，人工抽检 1k 样本达单约束 99.29% / 整清单 97.50% 正确率，critic 则基于 Qwen2.5-14B-Instruct 经 SFT + 约束级 DPO 得到。
 
 ### 关键设计
 
-1. **Checklist-Guided Critique Generation（一次推理批量评所有约束）**：
+**1. Checklist-Guided Critique Generation：一次前向批量评完所有约束。**
 
-    - 功能：把"按约束逐条调 judge"的 $O(n)$ 次推理压缩成一次前向。
-    - 核心思路：给 critic 喂 (instruction, response, checklist)，让它顺着 checklist 顺序在 CoT 里逐项产出 $(e_k, j_k)$ 段，最后聚合为一条完整 critique。这种"clue 已经给出"的设计让 critic 不必再自己推断"指令里有哪些约束"，也让自我一致性可以基于 $j_k$ 投票而不是整段文本对比。
-    - 设计动机：作者发现 reasoning model（o4-mini、QwQ-32B）在 Checklist-Level Prompt 下反而比 Constraint-Level Prompt 强，说明长链推理本身就能利用 checklist 的全局视野感知"约束之间的关系"；这也是 IF-Critic 训练目标的合理性来源。
+主流 judge 对 5~20 条约束逐条调用一次大模型，同一样本要推理十几次，算力开销随约束数线性增长。IF-Critic 把 (instruction, response, checklist) 一起喂给 critic，让它沿 checklist 顺序在单条 CoT 里产出每个 $(e_k, j_k)$ 段后聚合成完整 critique，把 $O(n)$ 次推理压成一次前向；由于"有哪些约束"这条线索已经显式给出，critic 不必再自己从指令里推断隐藏约束，自我一致性也能直接基于 $j_k$ 投票而非整段文本比对。作者还观察到 reasoning model（o4-mini、QwQ-32B）在 Checklist-Level Prompt 下反而强于 Constraint-Level Prompt，说明长链推理能利用 checklist 的全局视野感知约束间关系，这正是该训练目标成立的依据。
 
-2. **多阶段 Critique Filtering（四级过滤拿高质量监督）**:
+**2. 多阶段 Critique Filtering：四级流水线榨出高质量监督。**
 
-    - 功能：从 5 份 expert critique 中为**每条约束**选出最干净的 $(e_k^*, j_k^*)$ 作为训练标签。
-    - 核心思路：四级流水线——(i) **Cross-Model Verification**：用 GLM-4-Plus 与 Qwen2.5-72B 双盲核验"解释是否正确"和"解释与判定是否一致"，任一不过即丢，剔除约 11.3% 数据；(ii) **Rule-Augmented Verification**：先用 Qwen2.5-72B 抽取受长度约束的回答片段，再用 Python 真值数数，最后让 DeepSeek-R1 据此修订 critique，专门压制 LLM 数数的硬伤；(iii) **Final Judgement Selection**：对每条约束在 5 份 critique 上做多数投票，并丢弃投票置信度 $<0.75$ 的样本（self-consistency 思想）；(iv) **Final Explanation Selection**：在与最终判定一致的解释集合 $\mathcal{H}_k$ 上做 MBR 式选择，$e_k^* = \arg\max_{e \in \mathcal{H}_k} \frac{1}{|\mathcal{H}_k|} \sum_{\tilde e \in \mathcal{H}_k} u(\tilde e, e)$，相似度 $u$ 由 difflib 实现。最终 70 条样本 353 约束的人工复核：96.03% 判定 + 92.35% 解释完全正确。
-    - 设计动机：cross-model 治"偏见"，rule-augmented 治"数数"，self-consistency 投票治"幻觉"，MBR 选解释治"措辞噪声"，四级正好对应 LLM-as-a-Judge 的四类典型失败模式。
+用 DeepSeek-R1 为每条 (x, y, checklist) 采 $N=5$ 份 expert critique，但 LLM judge 自带偏见、幻觉和"不会数数"等硬伤，直接拿来训会污染 critic。于是为每条约束设计四级过滤选出最干净的 $(e_k^*, j_k^*)$：(i) Cross-Model Verification 用 GLM-4-Plus 与 Qwen2.5-72B 双盲核验"解释是否正确""解释与判定是否一致"，任一不过即丢、剔除约 11.3%（治偏见）；(ii) Rule-Augmented Verification 先用 Qwen2.5-72B 抽出受长度约束的片段、再用 Python 真值数数、最后让 DeepSeek-R1 据此修订 critique（治数数）；(iii) Final Judgement Selection 对每条约束在 5 份 critique 上多数投票、丢弃置信度 $<0.75$ 者（治幻觉）；(iv) Final Explanation Selection 在与最终判定一致的解释集合 $\mathcal{H}_k$ 上做 MBR 选择 $e_k^* = \arg\max_{e \in \mathcal{H}_k} \frac{1}{|\mathcal{H}_k|} \sum_{\tilde e \in \mathcal{H}_k} u(\tilde e, e)$（相似度 $u$ 由 difflib 实现，治措辞噪声）。四级恰好对应 LLM-as-a-Judge 的四类典型失败模式，70 条样本 353 约束的人工复核达 96.03% 判定 + 92.35% 解释完全正确。
 
-3. **Constraint-Level Preference Optimization（约束级 DPO）**:
+**3. Constraint-Level Preference Optimization：把偏好对局部化到判定冲突的段。**
 
-    - 功能：让 DPO 只在"判定不同"的那几个约束段上做对比，避免无关 token 稀释梯度。
-    - 核心思路：先把数据切成 $D_\text{sft} \cup D_\text{ref}$（6:4），SFT 阶段标准 $\mathcal{L}_\text{SFT} = -\sum_i \log P_\theta(C_i \mid p_i)$；偏好阶段对 $D_\text{ref}$ 里每条样本从 SFT critic 采 $M=10$ 份 critique，挑出"至少一条判定与专家不符"者作为 $C_l$；构造 $C_w$ 时**保留与专家一致的段不动**，仅把不一致的段替换为"自采池中和专家判定一致且 MBR 最优的解释 $\hat e_k$ + 专家判定 $j_k^*$"——这样 $C_w$ 与 $C_l$ 的 token 差异**只发生在判定冲突的段**。之后跑标准 DPO 损失 $\mathcal{L}_\text{DPO}(\pi_\theta;\pi_\text{ref}) = -\mathbb{E}\big[\log \sigma\big(\beta\log \frac{\pi_\theta(C_w|p)}{\pi_\text{ref}(C_w|p)} - \beta\log \frac{\pi_\theta(C_l|p)}{\pi_\text{ref}(C_l|p)}\big)\big]$。
-    - 设计动机：传统"响应级 DPO"会把"两段都对"的描述也算入对比，反而稀释了真正想强化的判定差异；同时用"自采解释"而不是"专家解释"作为替换源，可保证 $C_w$ 仍处于 SFT critic 的解码空间，优化更稳。
+传统响应级 DPO 会把"两段都对"的描述也算进对比，真正想强化的判定差异被无关 token 稀释。本文先把数据按 6:4 切成 $D_\text{sft} \cup D_\text{ref}$，SFT 阶段最小化 $\mathcal{L}_\text{SFT} = -\sum_i \log P_\theta(C_i \mid p_i)$；偏好阶段对 $D_\text{ref}$ 每条样本从 SFT critic 采 $M=10$ 份 critique，挑出"至少一条判定与专家不符"者作 $C_l$，构造 $C_w$ 时保留与专家一致的段不动、仅把不一致段替换为"自采池中与专家判定一致且 MBR 最优的解释 $\hat e_k$ + 专家判定 $j_k^*$"，使 $C_w$ 与 $C_l$ 的 token 差异只落在判定冲突段。随后跑标准 DPO 损失 $\mathcal{L}_\text{DPO}(\pi_\theta;\pi_\text{ref}) = -\mathbb{E}\big[\log \sigma\big(\beta\log \frac{\pi_\theta(C_w|p)}{\pi_\text{ref}(C_w|p)} - \beta\log \frac{\pi_\theta(C_l|p)}{\pi_\text{ref}(C_l|p)}\big)\big]$。用"自采解释"而非"专家解释"作替换源，是为了保证 $C_w$ 仍处在 SFT critic 的解码空间内，让优化更稳。
 
 ### 损失函数 / 训练策略
-两阶段：SFT（公式 3）+ 约束级 DPO（公式 5），$\beta$ 按 DPO 标配；下游策略训练同时给出 DPO 与 GRPO 两种用法，GRPO 时每条指令采 32 rollouts，每个 rollout 的奖励 $r_i = \frac{1}{n}\sum_k j_{ik}$ 即"通过约束比例"。基模型为 Qwen2.5-14B-Instruct，policy 端为 Qwen2.5-7B-Instruct 与 Llama-3.1-8B-Instruct。
+critic 端两阶段：SFT（公式 3）+ 约束级 DPO（公式 5），$\beta$ 取 DPO 标配，基模型为 Qwen2.5-14B-Instruct。下游策略训练给出 DPO 与 GRPO 两种用法，GRPO 时每条指令采 32 rollouts、每个 rollout 的奖励即通过约束比例 $r_i = \frac{1}{n}\sum_k j_{ik}$，policy 端为 Qwen2.5-7B-Instruct 与 Llama-3.1-8B-Instruct。
 
 ## 实验关键数据
 

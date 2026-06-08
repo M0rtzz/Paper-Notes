@@ -41,30 +41,24 @@ JET 把多通道 EEG 生成重新定义为"在神经流形上的连续轨迹"，
 ## 方法详解
 
 ### 整体框架
-JET 处理形如 $\mathbf{X}\in\mathbb{R}^{C\times T}$ 的多通道 EEG 段。训练时从数据采 $\mathbf{x}_1$、从 $\mathcal{N}(\mathbf 0,\mathbf I)$ 采 $\mathbf{x}_0$，定义线性插值路径 $\mathbf{x}_t = t\mathbf{x}_1 + (1-t)\mathbf{x}_0$，目标向量场即 $\mathbf{u}_t = \mathbf{x}_1 - \mathbf{x}_0$；Transformer $f_\theta$ 输入 $(\mathbf{x}_t, t, c)$ 输出预测向量场 $\mathbf{v}_\theta$，配三条结构化约束一起训练。推理时从高斯噪声出发，求解 ODE $\mathrm{d}\mathbf{x}_t/\mathrm{d}t = \mathbf{v}_\theta(\mathbf{x}_t,t,c)$ 直到 $t=1$ 得到一段合成 EEG。下游用于数据增强或填补稀缺类别。
+JET 要解决的问题是：怎么直接在原始多通道 EEG（$\mathbf{X}\in\mathbb{R}^{C\times T}$）上生成既保频谱又不漂移的高保真波形。它的做法是把生成看成"在神经流形上从噪声运到数据的一条连续轨迹"——训练时学一个时变向量场，推理时从高斯噪声出发积一次 ODE 就得到一段合成 EEG，整条管线不再有 diffusion 那种几十步的离散去噪，而把"懂 EEG"的物理约束直接写进训练目标里。
 
 ### 关键设计
 
-1. **原始波形 + 条件流匹配的生成范式**:
+**1. 原始波形上的条件流匹配：把离散去噪换成连续轨迹**
 
-    - 功能：把 EEG 合成定义成"从噪声分布到数据分布的连续向量场"，绕开离散去噪步。
-    - 核心思路：采用 Lipman 等人的 Conditional Flow Matching，在线性插值路径上做向量场回归，损失退化成 $\ell_{\text{CFM}} = \mathbb{E}_t \|\mathbf{v}_\theta(\mathbf{x}_t,t,c) - (\mathbf{x}_1 - \mathbf{x}_0)\|$ 的形式；推理是一次 ODE 积分，没有 diffusion 那种几十步的离散去噪。同时引入自适应类别均衡采样 $p_i \propto 1/N_c^\alpha$，缓解 TUH 里正常背景 vs 罕见癫痫事件的严重失衡。
-    - 设计动机：脑活动是平滑演化的连续过程，离散噪声日程会和神经动力学错位；连续流场在"全局轨迹"层面更自然，也比 token 自回归速度更快（同等条件下 4.78s vs Diffusion 7.01s）。
+EEG 本质是平滑演化的连续生物过程，离散噪声日程会和神经动力学系统性错位，长序列里小误差还会沿采样步累积。JET 因此用 Lipman 等人的 Conditional Flow Matching：训练时从数据采 $\mathbf{x}_1$、从 $\mathcal{N}(\mathbf 0,\mathbf I)$ 采 $\mathbf{x}_0$，沿线性插值路径 $\mathbf{x}_t = t\mathbf{x}_1 + (1-t)\mathbf{x}_0$ 回归目标向量场 $\mathbf{u}_t = \mathbf{x}_1 - \mathbf{x}_0$，损失退化成简洁的 $\ell_{\text{CFM}} = \mathbb{E}_t \|\mathbf{v}_\theta(\mathbf{x}_t,t,c) - (\mathbf{x}_1 - \mathbf{x}_0)\|$；推理只需求解 ODE $\mathrm{d}\mathbf{x}_t/\mathrm{d}t = \mathbf{v}_\theta(\mathbf{x}_t,t,c)$ 直到 $t=1$。这样建模在"全局轨迹"层面更贴合脑活动的连续性，速度也比 token 自回归更快（同等条件 4.78s vs Diffusion 7.01s）。为了对付 TUH 里正常背景 vs 罕见癫痫事件的严重失衡，训练还按类别频率倒数 $p_i \propto 1/N_c^\alpha$ 做自适应均衡采样，保证罕见病理事件被覆盖到。
 
-2. **保留通道身份的 Transformer 主干（JET）**:
+**2. 保留通道身份的 Transformer 主干（JET）：在原始波形上建长程时空依赖**
 
-    - 功能：在不做时频变换、不预设邻接图的前提下，直接从原始多通道波形学到长程时序依赖和跨通道交互。
-    - 核心思路：沿时间轴把 $\mathbf{X}$ 切成长度 $P$ 的非重叠 patch 得到 $\mathbf{X}_p\in\mathbb{R}^{C\times N\times P}$；和 ViT 不同的是，patch 投影到 $D$ 维 token 时保留通道维度，得到长度 $C\cdot N$ 的 token 序列，再叠 DiT/JiT 风格 Transformer block，时间 $t$ 与类别 $c$ 的嵌入相加后通过 adaLN 注入到每个 block 的 scale/shift。消融显示 $P=200$ 是效率/保真的最佳折中（$P=400$ 全局/局部都掉，$P=50$ 略好但 token 翻 4 倍）。
-    - 设计动机：EEG 受容积传导和功能连接影响，电极间存在长程同步又随时间漂移，违背了 CNN 的局部假设和静态图模型的固定拓扑；自注意力的全局感受野配上"保留通道身份"的 tokenize 方式才能同时建模时间和空间结构。
+EEG 受容积传导和功能连接影响，电极间既有长程同步又随时间漂移，这违背了 CNN 的局部假设、也不符合静态图模型的固定拓扑，所以 JET 干脆不做时频变换、不预设邻接图，直接用自注意力的全局感受野去学。具体是沿时间轴把 $\mathbf{X}$ 切成长度 $P$ 的非重叠 patch 得到 $\mathbf{X}_p\in\mathbb{R}^{C\times N\times P}$；与 ViT 不同的关键一步是把 patch 投影到 $D$ 维 token 时保留通道维度，得到长度 $C\cdot N$ 的 token 序列，再叠 DiT/JiT 风格的 Transformer block，时间 $t$ 与类别 $c$ 的嵌入相加后通过 adaLN 注入每个 block 的 scale/shift。这种"保留通道身份"的 tokenize 让模型能同时建模时间依赖和跨通道交互；消融显示 $P=200$ 是效率/保真的最佳折中（$P=400$ 全局局部都掉，$P=50$ 略好但 token 数翻 4 倍）。
 
-3. **三条"懂 EEG"的结构化约束**:
+**3. 三条"懂 EEG"的结构化约束：把物理不变量写进流场**
 
-    - 功能：让向量场学到的动力学在频域、统计、时空三个维度都符合真实 EEG 不变量，而不是只对齐欧氏均值。
-    - 核心思路：先用 $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)\,\mathbf{v}_\theta$ 把当前状态外推到终点估计，然后叠加：(i) 拉普拉斯先验重建 $\mathcal{L}_{\text{recon}} = \mathbb{E}_t \|\mathbf{x}_1 - \hat{\mathbf{x}}_1\|_1$ 抗肌电/电极伪迹；(ii) 一阶/二阶矩一致性 $\mathcal{L}_{\text{cons}} = \lambda_{\text{cons}} (\|\mu(\mathbf{x}_1) - \mu(\hat{\mathbf{x}}_1)\|_1 + \|\sigma(\mathbf{x}_1) - \sigma(\hat{\mathbf{x}}_1)\|_1)$ 防止幅度漂移；(iii) 时空结构项 $\mathcal{L}_{\text{geo}} = \lambda_{\text{tv}}\frac{1}{T}\sum_t \|\nabla_t \hat{\mathbf{x}}_1\|_1 + \lambda_{\text{corr}} (1 - \rho(\mathbf{x}_1, \hat{\mathbf{x}}_1))$，TV 压制虚假高频抖动、皮尔逊相关 $\rho$ 保住波形形态。三者相加构成总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{cons}} + \mathcal{L}_{\text{geo}}$。
-    - 设计动机：标准流匹配里的欧氏回归对应高斯似然，会被 EEG 里的尖峰伪迹拉偏、对幂律频谱欠拟合，且对长序列的均值/方差漂移没有约束。这三条约束分别对应"鲁棒性—统计流形—时频结构"三个失败模式，文章在 Table 7 还专门和 BrainOmni 的 tokenizer-style 损失对比，证明收益来自约束设计本身而不是堆 loss。
+标准流匹配的欧氏回归对应高斯似然，会被 EEG 的尖峰伪迹拉偏、对 $1/f^\chi$ 幂律谱欠拟合，又对长序列的均值/方差漂移毫无约束。JET 针对这三个失败模式各加一条约束：先用 $\hat{\mathbf{x}}_1 = \mathbf{x}_t + (1-t)\,\mathbf{v}_\theta$ 把当前状态外推到终点估计，再叠加 (i) 拉普拉斯先验重建 $\mathcal{L}_{\text{recon}} = \mathbb{E}_t \|\mathbf{x}_1 - \hat{\mathbf{x}}_1\|_1$ 抗肌电/电极伪迹；(ii) 一阶/二阶矩一致性 $\mathcal{L}_{\text{cons}} = \lambda_{\text{cons}} (\|\mu(\mathbf{x}_1) - \mu(\hat{\mathbf{x}}_1)\|_1 + \|\sigma(\mathbf{x}_1) - \sigma(\hat{\mathbf{x}}_1)\|_1)$ 防幅度漂移；(iii) 时空结构项 $\mathcal{L}_{\text{geo}} = \lambda_{\text{tv}}\frac{1}{T}\sum_t \|\nabla_t \hat{\mathbf{x}}_1\|_1 + \lambda_{\text{corr}} (1 - \rho(\mathbf{x}_1, \hat{\mathbf{x}}_1))$，其中 TV 项压制虚假高频抖动、皮尔逊相关 $\rho$ 保住波形形态。三条恰好对应"鲁棒性—统计流形—时频结构"三个维度，互补缺一不可；Table 7 还特意把 BrainOmni 的 tokenizer-style 损失套进同一主干做对照，证明收益来自约束与 EEG 不变量的结构性对齐，而非单纯堆 loss。
 
 ### 损失函数 / 训练策略
-总目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{cons}} + \mathcal{L}_{\text{geo}}$，其中重建用 $\ell_1$、统计用 $\ell_1$ 矩匹配、几何用 TV+Pearson；采样基分布固定为 $\mathcal{N}(\mathbf 0, \mathbf I)$（消融显示退化成 $\delta(\mathbf 0)$ 会让 TS-FID 飙升一个量级）；样本权重按类别频率倒数 $1/N_c^\alpha$ 重加权以覆盖罕见病理事件。
+总目标是三条约束之和 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{cons}} + \mathcal{L}_{\text{geo}}$（重建用 $\ell_1$、统计用 $\ell_1$ 矩匹配、几何用 TV+Pearson）。采样基分布固定为 $\mathcal{N}(\mathbf 0, \mathbf I)$——消融显示一旦退化成单点 $\delta(\mathbf 0)$，流场会变成 ill-posed 的一对多映射，TS-FID 飙升一个量级；样本权重则按类别频率倒数 $1/N_c^\alpha$ 重加权，以覆盖罕见病理事件。
 
 ## 实验关键数据
 

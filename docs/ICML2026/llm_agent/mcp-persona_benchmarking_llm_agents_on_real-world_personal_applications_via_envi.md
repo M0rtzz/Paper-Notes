@@ -42,27 +42,21 @@ MCP-Persona 是首个针对真实个人化 MCP 工具（Slack/Rednote/Instagram/
 
 ### 整体框架
 
-三组件交互：Tools + Contexts + Tasks。每个 MCP server 通过 Tool-Traverse 得 simulator kernel；Context-Tree 得 user profile；Persona-Gen 得 173 人工校验任务。Agent 在 simulated environment 执行 task，用 Acc / SR / Exec-Acc 评估。
+MCP-Persona 要解决的核心矛盾是：评测个人化工具既要真实账号行为、又不能碰真实用户隐私数据。它的破局方式是 traverse-then-simulate——先在 sandbox 账号上真实遍历每个 MCP server 的成功与失败调用、把行为记录下来，再让 LLM 把这些行为"写成"一份可执行的 Python simulator 来替代真实 server。整条流水线由三个组件串成：Tool-Traverse 产出每个 server 的 simulator kernel，Context-Tree 产出一棵以 User 为根的个人化数据树作为 simulator 的状态，Persona-Gen 在这棵树上采样工具链、生成并人工校验出 173 个任务。Agent 最终在这个模拟环境里执行任务，用 Acc / SR-0.8 / Exec-Acc 三个指标评分。
 
 ### 关键设计
 
-1. **Tool-Traverse：traverse-then-simulate 复刻真实 MCP 服务**:
+**1. Tool-Traverse：把真实 server 的行为"遍历"出来再让 LLM 写成代码。**
 
-    - 功能：不依赖真实账号情况下让 simulator 行为跟真实 server 一致（含 error handling）。
-    - 核心思路：(a) Bootstrapping — 人工写 valid seed call $x_{\text{seed}}$ 在 live server 执行记录 $(t, x_{\text{seed}}, y_{\text{seed}}, \tau)$；(b) Adversarial Failure Induction — LLM perturb seed input 覆盖 Type Mismatch / Schema Violation / Boundary / Semantic Conflict 四类错误，跑真服务器记录失败响应；(c) Code-Based Simulation — LLM 基于 (tool schema, behavioral traces, context handler APIs) autonomously synthesize Python file $K_t$ 实现 transition $f_t: (\mathcal{C}_{\text{current}}, x) \to (\mathcal{C}_{\text{new}}, y)$，含 input validation、entity check、error response 完整逻辑。
-    - 设计动机：手工 mock 易漏 error handling，scale 不到 12 服务器。Adversarial 系统覆盖错误模式；LLM-as-coder 把人工成本从写完整 simulator 降到写 seed FC。
+手工 mock 一个 MCP server 很难——既漏掉各种 error handling，又 scale 不到 12 个服务器。Tool-Traverse 的思路是不去手写 simulator，而是先在真实 server 上把行为采全。它分三步：先做 Bootstrapping，人工写一条合法的 seed call $x_{\text{seed}}$ 在 live server 上执行，记录下 $(t, x_{\text{seed}}, y_{\text{seed}}, \tau)$ 这条成功轨迹；再做 Adversarial Failure Induction，让 LLM 系统性地扰动 seed 输入，覆盖 Type Mismatch / Schema Violation / Boundary / Semantic Conflict 四类错误，逐个打到真服务器上、记录它返回的失败响应；最后是 Code-Based Simulation，LLM 拿着 (tool schema, 行为轨迹, context handler API) 自动 synthesize 出一份 Python 文件 $K_t$，实现状态转移 $f_t: (\mathcal{C}_{\text{current}}, x) \to (\mathcal{C}_{\text{new}}, y)$，里面带齐 input validation、entity check、error response 的完整逻辑。这样做之所以有效，是因为 adversarial 那一步把错误模式系统性采全了、simulator 能准确复刻 server 的报错行为，而 LLM-as-coder 把人工成本从"写一整套 simulator"压到只需"写几条 seed FC"，12 个 server 才得以铺开。
 
-2. **Context-Tree：用户上下文的树形 hierarchy 化**:
+**2. Context-Tree：用一棵以 User 为根的树承载个人化状态。**
 
-    - 功能：让 simulator 支持 stateful multi-turn 操作 + 个人化任务合成。
-    - 核心思路：(a) Hierarchy Identification — 从 tool call pool 聚合 entity types/fields/relations，人工校验得 root-at-User 层级（Lark: User→Calendar→Event）；(b) Tree Construction — parent entity 的同类 child 存 identifier-indexed map，跨类型用 foreign key；(c) Content Generation — LLM 给每 field 分配生成方式：Enumerate（`iplocation`）/ Free-Form（`channel_name`）/ Random（`chat_id`）/ Authentic（采真实 Rednote post）；(d) Cross-Entity Linking — 引用类 field 从已生成内容 sample identifier。
-    - 设计动机：tree 匹配真实 MCP server 数据结构，支持高效 lookup/update；四种 generation 覆盖不同 field 性质；authentic content 提升真实度但敏感字段替换为 fake。
+simulator 光有工具行为还不够，个人化任务要求它支持有状态的多轮操作（发了 10 条帖子之后还能查回来）。Context-Tree 把用户上下文建成一棵层级树来匹配真实 MCP server 的数据结构。先做 Hierarchy Identification，从工具调用池里聚合出 entity 类型、字段和关系，人工校验后得到一棵 root-at-User 的层级（如 Lark 是 User→Calendar→Event）；Tree Construction 阶段，父实体下同类子节点用 identifier 索引的 map 存、跨类型实体之间用 foreign key 关联，从而支持高效的 lookup/update；Content Generation 阶段，LLM 按字段性质分配四种生成方式——Enumerate（如 `iplocation` 这类枚举值）、Free-Form（如 `channel_name`）、Random（如 `chat_id`）、Authentic（直接采真实 Rednote post 文本）；最后 Cross-Entity Linking 让引用类字段从已生成内容里 sample 出 identifier，保证树内引用自洽。这套"树结构 + 四种内容生成"的组合，既让数据贴近真实分布（authentic 真文本提升真实度），又把敏感字段替换成 fake 守住隐私。
 
-3. **Persona-Gen：两阶段任务生成 + 人工校验**:
+**3. Persona-Gen：两阶段生成 + fuzzification + 人工校验造出 173 个任务。**
 
-    - 功能：得 173 高质量个人化任务，覆盖 single-server 和 cross-server，模糊化指令模拟真实用户。
-    - 核心思路：(a) Tool Chain Sampling — topological sampling 满足 5 原则（Dependency/Personalization/Deduplication/Coherence/Realism）；(b) Instruction Prototyping — LLM 用 typed placeholder $P$ 抽象 instruction template $S_{\text{proto}}$；(c) Context Enrichment — 从 context-tree sample entity value 替换 placeholder 得 $S_{\text{inst}}$；(d) Fuzzification — 移除 implicit context（如同事 user_id 可通过 shared group 推断）得 fuzzy instruction $S_{\text{fuzz}} = \mathcal{F}(S_{\text{inst}} \setminus \mathcal{C}_{\text{imp}})$；(e) Human Verification — 校验 consistency + 增加难度（1 post → 10 posts、pruning 不必要 context）。
-    - 设计动机：纯自动任务往往不真实或过简单；4 步流水线 + 人工校验既 scale 又保质量。Implicit context 模拟"用户说话不完整，agent 要从环境补全"的现实难点。
+纯自动生成的任务往往要么不真实、要么太简单，Persona-Gen 用一条五步流水线在 scale 和质量之间找平衡。先做 Tool Chain Sampling，用 topological sampling 采出满足五条原则（Dependency / Personalization / Deduplication / Coherence / Realism）的工具链；Instruction Prototyping 让 LLM 用带类型的 placeholder $P$ 把指令抽象成模板 $S_{\text{proto}}$；Context Enrichment 从 context-tree 里 sample 真实 entity 值替换 placeholder 得到具体指令 $S_{\text{inst}}$；关键一步是 Fuzzification——移除那些 implicit context（比如同事的 user_id 其实能通过共享群组推断出来）得到模糊指令 $S_{\text{fuzz}} = \mathcal{F}(S_{\text{inst}} \setminus \mathcal{C}_{\text{imp}})$，这一步专门模拟"用户说话不完整、agent 要从环境里自己补全信息"这个现实难点，也是 benchmark 难度的主要来源；最后 Human Verification 校验一致性并刻意加难（把 1 个 post 扩到 10 个、剪掉不必要的 context），最终得到覆盖 single-server 与 cross-server 的 173 个高质量任务。
 
 ## 实验关键数据
 

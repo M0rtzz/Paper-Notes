@@ -38,31 +38,23 @@ LANG 用同语种推理 hint 启动多语言数学推理 RL，再通过余弦衰
 **核心 idea**：用“语言条件 hint + 渐进式 hint 衰减 + 按语言组自适应开关”替代固定 hint 或纯语言一致性奖励，缓解多语言 RL 的稀疏奖励和语言漂移问题。
 
 ## 方法详解
-LANG 的方法可以理解为一个面向多语言推理的 RL 课程学习框架。它先把 teacher 产生的同语种推理轨迹切成 prefix，在训练初期作为 hint 拼到问题后面；随后按训练步数逐渐缩短 hint，最后完全移除。与此同时，系统根据每个语言资源组的有效更新率判断该组是否已经能稳定采到正 advantage 轨迹，从而决定何时关停 hint。
 
 ### 整体框架
-输入是一道语言为 $l$ 的数学问题 $q$，以及 teacher 生成的同语种推理轨迹 $h=(h_1,\ldots,h_L)$。训练第 $t$ 步时，LANG 根据 hint ratio $p_t^l$ 取前 $k_t^l=\lfloor p_t^lL\rfloor$ 个 hint token/片段，构造 hint-conditioned prompt；策略模型基于这个 prompt 采样一组输出，并用 GRPO 根据答案正确性、格式和语言一致性更新。
-
-训练早期，prompt 中含有较长同语种推理 hint，主要解决低资源语言采不到正样本的问题。随着训练推进，hint ratio 下降，模型从“跟着同语种推理轨迹走”逐渐转向“自己生成同语种推理”。当某个语言资源组的有效更新率超过阈值后，该组进入 zero-hint regime，后续训练直接使用原问题。
+LANG 是一个面向多语言推理的 RL 课程学习框架，核心是把同语种推理 hint 当成训练早期的"脚手架"，再逐步撤掉。给定一道语言为 $l$ 的数学问题 $q$ 和 teacher 生成的同语种推理轨迹 $h=(h_1,\ldots,h_L)$，训练第 $t$ 步时 LANG 按 hint ratio $p_t^l$ 取前 $k_t^l=\lfloor p_t^lL\rfloor$ 个片段拼到问题后构成 hint-conditioned prompt，策略模型基于它采一组输出，再用 GRPO 按答案正确、格式、语言一致三项联合奖励更新。训练早期靠长 hint 解决低资源语言采不到正样本的问题，随训练推进 hint 逐渐缩短直至完全移除，模型也从"跟着同语种轨迹走"过渡到"自己生成同语种推理"；当某语言资源组已能稳定采到正样本时，该组提前进入 zero-hint regime。
 
 ### 关键设计
-1. **Scheduled Multilingual Hint Decay**:
 
-	- 功能：在 RL 训练早期提供同语种推理脚手架，随后逐步撤掉，避免模型在推理时依赖不存在的 hint。
-	- 核心思路：给定 hint 长度 $L$，第 $t$ 步注入长度 $k_t^l=\lfloor p_t^lL\rfloor$ 的 prefix；论文采用余弦衰减 $p_t^l=\frac{1}{2}(1+\cos(\pi t/T))$，从完整 hint 平滑降到 0。
-	- 设计动机：pilot study 发现 QUESTA 式固定 hint 虽然能保持更高训练 reward 和 entropy，但测试时反而更差，并伴随 response length 和 repeat score 上升，说明模型学到了 hint-conditioned shortcut。
+**1. Scheduled Multilingual Hint Decay：早期给脚手架，再平滑撤掉以防 hint 依赖。**
 
-2. **Language-adaptive Switch**:
+低资源语言里模型本来就很难采到"答对 + 格式对 + 语言一致"的轨迹，所以训练初期需要同语种推理 hint 来启动探索；但如果一直给完整 hint，模型会学到一个推理时根本不存在的 hint-conditioned shortcut。LANG 的做法是给定 hint 长度 $L$，第 $t$ 步只注入前 $k_t^l=\lfloor p_t^lL\rfloor$ 个片段，并用余弦衰减 $p_t^l=\frac{1}{2}(1+\cos(\pi t/T))$ 让 hint 比例从完整平滑降到 0。这个节奏不是凭空选的——pilot study 发现 QUESTA 式固定 hint 虽然训练 reward 和 entropy 更高，测试却更差，还伴随 response length 和 repeat score 上升，正是 shortcut 的典型症状；余弦衰减相比线性、指数衰减更稳，因为它在早期保留足够探索、又不至于太晚移除而养成依赖。
 
-	- 功能：让不同资源水平的语言在不同时间脱离 hint，而不是共享一个全局开关。
-	- 核心思路：把语言分成 high/mid/low resource 组，计算某组 batch 中“至少有一个 rollout 产生正 advantage”的比例 $u_R(t)$，再用 $\bar{u}_R(t)=\alpha\bar{u}_R(t-1)+(1-\alpha)u_R(t)$ 做 EMA；当 $\bar{u}_R(t)\geq\tau$ 时，把该语言组切换到 zero-hint。
-	- 设计动机：高资源语言更容易独立采到正确轨迹，过长 hint 会诱导依赖；低资源语言如果太早移除 hint，则会回到 reward sparsity。
+**2. Language-adaptive Switch：按语言资源难度决定各自何时脱离 hint。**
 
-3. **Conjunctive Reward GRPO**:
+不同语言的学习难度天差地别，用一个全局 schedule 撤 hint 必然顾此失彼——高资源语言早就能独立采到正轨迹，过长 hint 反而诱导依赖；低资源语言太早撤 hint 又会跌回 reward sparsity。LANG 把语言分成 high/mid/low resource 三组，对每组统计 batch 中"至少有一个 rollout 产生正 advantage"的比例 $u_R(t)$，再做 EMA 平滑 $\bar{u}_R(t)=\alpha\bar{u}_R(t-1)+(1-\alpha)u_R(t)$；当 $\bar{u}_R(t)\geq\tau$、说明该组已能稳定自采正样本时，就把它切到 zero-hint，后续直接用原问题训练。这样高资源组早退、低资源组晚退，比固定 schedule 更贴合多语言训练的真实难度差异。
 
-	- 功能：把答案正确、格式规范、语言一致三个条件合成一个严格的可验证奖励。
-	- 核心思路：模型输出包括 reasoning trace $o_t$ 和 final answer $o_a$；只有当 $R_{lc}=1$、$R_{format}=1$、$R_{acc}=1$ 同时成立时，总奖励 $R(o)=1$，否则为 0。GRPO 采样 $G$ 个输出并用组内标准化 advantage 更新策略。
-	- 设计动机：多语言推理不能只看最终答案，否则模型会用英语思考再翻译；也不能只看语言一致性，否则会牺牲推理正确性。合取奖励把“同语种且答对”作为唯一优化目标。
+**3. Conjunctive Reward GRPO：用合取奖励堵住"英语思考再翻译"的投机空间。**
+
+多语言推理只看最终答案，模型会偷偷用英语想再翻译过去；只看语言一致性，又会牺牲推理正确性。LANG 把答案正确、格式规范、语言一致三个可验证条件做成一个严格的合取奖励：模型输出含 reasoning trace $o_t$ 和 final answer $o_a$，只有 $R_{lc}=1$、$R_{format}=1$、$R_{acc}=1$ 同时成立时总奖励 $R(o)=1$，否则为 0；GRPO 采样 $G$ 个输出后用组内标准化 advantage 更新策略。把"同语种且答对"定为唯一优化目标，消融里去掉 $R_{lc}$ 后 MMATH LC&Acc 从 28.6 暴跌到 3.1，可见这条约束对压住语言漂移的分量。
 
 ### 损失函数 / 训练策略
 训练分为 cold-start 和 RL 两步。作者从 DeepMath-103K 构造多语言训练数据，先为每个 in-domain 语言采样 0.3K 条做 cold-start，再采样 3K 条做 GRPO。RL 使用 8 个 rollouts、temperature 1.0、学习率 $1\times10^{-6}$、batch size 128、PPO mini-batch 64、最大序列长度 16,384，并把 KL 系数设为 0。

@@ -48,23 +48,18 @@ tags:
 分析阶段分三路进行：第一路是独立样本 t-test 并用 FDR 控制多重比较，观察组间特征差异；第二路是 XGBoost 分类器，用于捕捉非线性组合；第三路是 SHAP、LIME 和特征重要性，用于解释模型依赖的语音与语言线索。最后，作者用特征组消融检查单一特征组的独立贡献。
 
 ### 关键设计
-1. **感知可解释的多组特征体系**:
 
-	- 功能：把语音心理健康分析拆成医生和研究者能理解的行为维度，而不是直接依赖不可解释 embedding。
-	- 核心思路：声学侧提取 pitch、intensity、jitter、shimmer、HNR、ZCR、pause、phonation/articulation rate、rhythm、entropy，并用 HuBERT emotion model 产生情绪相关特征；文本侧提取 TTR、MATTR、Brunet、Honore、词性/形态多样性、句法深度、依存图指标、Sentence-BERT 连贯性、VADER 情感、讽刺概率等。
-	- 设计动机：心理健康相关表达可能同时体现在“怎么说”和“说什么”。单看文本会漏掉停顿、音质和韵律；单看音频又会漏掉语义连贯性、自我指称、负性词和句法复杂度。
+**1. 感知可解释的多组特征体系：把“怎么说”和“说什么”都拆成医生能读懂的行为维度。**
 
-2. **统计检验与 XGBoost 的双层分析**:
+心理健康相关的表达可能同时藏在韵律停顿和语义内容里——只看文本会漏掉停顿、音质和语调，只看音频又会漏掉语义连贯、自我指称、负性词和句法复杂度。所以本文不直接用不可解释的 embedding，而是把每段语音和转写抽成 82 个可命名的标量特征。声学侧有 pitch、intensity、jitter、shimmer、HNR、ZCR、pause、phonation/articulation rate、rhythm、entropy，外加 HuBERT 情绪模型给出的情绪相关特征；文本侧有 TTR、MATTR、Brunet、Honore、词性/形态多样性、句法深度、依存图指标、Sentence-BERT 连贯性、VADER 情感极性、讽刺概率。每个特征都对应一个具体的说话行为，医生看到“shimmer 偏高、停顿变多”远比看到“第 37 维激活”更有临床意义。
 
-	- 功能：同时回答“哪些特征在组间显著不同”和“哪些特征在非线性分类中有预测作用”。
-	- 核心思路：先用 t-test 比较临床阈值定义的两组，并用 Benjamini-Hochberg FDR 修正；再训练 XGBoost，将其作为特征级分析模型而非不可解释诊断器。
-	- 设计动机：单纯显著性检验容易漏掉交互关系，单纯分类指标又可能掩盖模型依据。两者结合后，既能保留统计可读性，也能捕捉更复杂的组合模式。
+**2. 统计检验与 XGBoost 的双层分析：同时回答“哪些特征组间显著”和“哪些特征非线性可预测”。**
 
-3. **SHAP/LIME 与特征组消融**:
+只做显著性检验会漏掉特征之间的交互，只看分类准确率又说不清模型到底依据什么，本文把两者叠起来用。第一层先按临床阈值把样本分成两组（STRESSID 的 stress/non-stress、DAIC-WOZ 的 PHQ-8、REAL 的 PHQ-9/GAD-7/ASRS cutoff），做独立样本 t-test 并用 Benjamini-Hochberg FDR 修正多重比较；第二层训练 XGBoost 捕捉非线性组合，但始终把它当作“特征级分析工具”而非黑盒诊断器。这样既保留了 p 值的统计可读性，又能看到单一检验抓不到的组合模式。
 
-	- 功能：验证模型判断是否落在临床上合理的语音行为上，并估计不同特征组的贡献。
-	- 核心思路：XGBoost gain、SHAP summary 和聚合 LIME 解释被共同用于排序特征；消融实验则一次只保留一个特征组，比较跨数据集的 AUC-ROC 趋势。
-	- 设计动机：医疗场景中，“模型为什么这样判”与“模型判得准不准”同样重要。不同解释方法若指向相近的 jitter、shimmer、pause、负面情感、图结构重复等特征，可信度更高。
+**3. SHAP/LIME 与特征组消融：让多种解释方法互相印证候选指标。**
+
+在医疗场景里，“模型为什么这样判”与“判得准不准”同样重要。本文用 XGBoost gain、SHAP summary 和聚合后的 LIME 三套解释共同给特征排序，再做特征组消融——一次只保留 prosodic/fluency、voice quality、lexical、syntactic、semantic、psycholinguistic 其中一个组，比较跨数据集的 AUC-ROC 趋势。如果几种相互独立的解释方法都指向相近的 jitter、shimmer、pause、负性情感、重复图结构，这些线索作为候选临床指标的可信度就更高，也更经得起后续审计。
 
 ### 损失函数 / 训练策略
 本文不是端到端深度训练论文，核心训练对象是 XGBoost 分类器。训练策略包括：按数据集构造二分类任务；对 subject-level 特征做聚合，REAL 数据集中按参与者对音频文件取 median；REAL 使用 4-fold subject-independent cross-validation 避免同一说话人泄漏；STRESSID 依据原论文设置进行 10 次随机运行。讽刺检测作为辅助模型在 MUStARD 上训练，cache 中报告准确率约 70%，随后只把 sarcasm probability 当作额外特征使用。

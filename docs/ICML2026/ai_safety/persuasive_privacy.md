@@ -41,37 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架是一个三层结构：
-
-**第 1 层（博弈语义）**：Stackelberg 博弈 Sender→Receiver。Sender 持真值 $x\in\mathsf{X}$ 并预先公开承诺机制 $M:(\mathsf{X},\mathcal{T})\to[0,1]$（Markov kernel）和它所属的隐私类 $\mathfrak{C}$（Assumption 1：透明性，$M$ 与 $\mathfrak{C}$ 不依赖数据）。Receiver 持先验 $Q\in\mathcal{P}$，观察 $T\sim M(x,\cdot)$ 后做 Bayes-rational 决策（Assumption 2）。
-
-**第 2 层（评分规则化）**：Sender 用"隐私函数" $\rho:(\mathcal{D},\mathsf{X})\to\mathbb{R}$ 表示对 Receiver 不同决策的偏好；Proposition 1 证明若令 Receiver 损失函数 $\ell=\rho$（Assumption 3），则 Sender 同时拿到 worst-case data-averaged 损失，这是最 robust 的对手模型。在该假设下 Receiver 最优决策为 $d^P\in\arg\inf_d \mathbb{E}_{X\sim P}[\rho(d,X)]$，由此诱导的 $S(P,x)=\rho(d^P,x)$ 是 negatively-oriented **proper scoring rule**（Proposition 2，本质上是 Grünwald–Dawid 2004 的结论），称为 privacy score。
-
-**第 3 层（PP 定义）**：用相对评分 $\Delta_S(Q,T,x)=S(Q,x)-S(Q_T,x)$ 度量"发布 $T$ 后 Receiver 对 $x$ 预测能力的提升"。机制 $M$ 称为 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$-Persuasive Private 当且仅当
-
-$$\inf_{S\in\mathcal{S}}\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x[\Delta_S(Q,T,x)\le\kappa]\ge 1-\delta$$
-
-四元组 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$ 分别对应：要保护的语义集合、考虑的对手先验类、最大允许隐私损失、容错概率。
+本文要解决的是"隐私缺一个能解释、能裁剪、还能覆盖确定性算法的统一定义"，做法是把数据发布重写成一个 Sender–Receiver 的 Stackelberg 博弈。Sender 持真值 $x$ 并预先公开承诺一个机制 $M$（Markov kernel）及其所属隐私类，Receiver 持先验 $Q$、观察输出 $T\sim M(x,\cdot)$ 后做贝叶斯决策；借 Grünwald–Dawid 的经典等价，Receiver 最优决策诱导的损失自动是一个 proper scoring rule，于是"隐私"就被表述成"发布前后 Receiver 对真值预测能力的相对提升"在最坏情形下的上界。整个框架因此分三步落地：先定下博弈语义与透明性假设，再把 Sender 偏好转成评分规则，最后用相对评分写出统一的 PP 不等式。
 
 ### 关键设计
 
-1. **隐私 = 相对评分 + 最坏先验类（Definition 3）**:
+**1. 博弈语义与评分规则化：把"Sender 偏好"翻译成 proper scoring rule**
 
-    - 功能：把所有"隐私"统一为 Receiver 后验对真值预测变好程度的 worst-case 上界。
-    - 核心思路：相对值 $\Delta_S$ 而非绝对 $S(Q_T,x)$ 是关键——若用绝对值，Receiver 若先验已经 $Q=\delta_x$（完全知情）则所有机制都"等隐私"，定义退化。改用差分后机制只需"不让 Receiver 信念向真值显著靠拢"。worst case 跨三重：$x$ 跨全数据空间（Assumption 5，保证 $\mathfrak{C}$ 不依赖数据）、$Q$ 跨 Sender 限定的对手强度类 $\mathcal{Q}_x$、$T$ 跨机制随机性（Assumption 4，$\kappa$-$\delta$ 尾概率条件）。
-    - 设计动机：三重 worst case 既保留 DP 风格的代数 robustness，又通过显式 $\mathcal{Q}_x$ 把"Sender 愿意假设对手有多强"做成可调旋钮，避免 DP 隐式假设"对手知一切"导致确定性算法被一棒打死。
+要让隐私可以面向"具体怕泄露什么"裁剪，第一步是把 Sender 的偏好显式建模进博弈。Sender 持真值 $x\in\mathsf{X}$ 并预先公开承诺机制 $M:(\mathsf{X},\mathcal{T})\to[0,1]$ 和它所属的隐私类 $\mathfrak{C}$（Assumption 1 透明性：$M$ 与 $\mathfrak{C}$ 不依赖数据）；Receiver 持先验 $Q\in\mathcal{P}$、观察 $T\sim M(x,\cdot)$ 后做 Bayes-rational 决策（Assumption 2）。Sender 用一个"隐私函数" $\rho:(\mathcal{D},\mathsf{X})\to\mathbb{R}$ 表示自己对 Receiver 不同决策的偏好。关键一步是 Proposition 1：若令 Receiver 的损失函数 $\ell=\rho$（Assumption 3），Sender 拿到的就是最 robust 的 worst-case data-averaged 损失对手模型。此时 Receiver 最优决策为 $d^P\in\arg\inf_d \mathbb{E}_{X\sim P}[\rho(d,X)]$，由它诱导的 $S(P,x)=\rho(d^P,x)$ 恰好是一个 negatively-oriented proper scoring rule（Proposition 2，本质是 Grünwald–Dawid 2004 的结论），称为 privacy score。这一步之所以有效，是因为它把"隐私评估"和"概率预测"放进了同一套数学语言——任何 proper SR 都对应某个贝叶斯决策问题，反之亦然。
 
-2. **DP 是 PP 的特例（Proposition 6）**:
+**2. 隐私 = 相对评分 + 最坏先验类：让对手强度变成可调旋钮（Definition 3）**
 
-    - 功能：把 PP 反过来当作"DP 的语义解释器"，解释 DP 究竟在防什么。
-    - 核心思路：取 $L$ 为离散负对数评分，取对手类 $\mathcal{H}=\{Q\in\mathcal{P}_2:\exists(x,x')\in\mathfrak{N},Q(\{x,x'\})=1\}$（两点 alternative-hypothesis 先验，对应 DP 的相邻对），则 $M$ 是 $(\varepsilon,\delta)$-PDP 当且仅当 $M$ 是 $(L,\mathcal{H},\varepsilon,\delta)$-PP；$\delta=0$ 即 pure $\varepsilon$-DP。证明揭示极小值在 Receiver 对真值的先验概率 $Q(\{x\})\to 0$ 处达到——这给出 DP 的新解读："$(\varepsilon,\delta)$-DP 防护的是 Receiver 几乎不相信真值时仍能从输出获取信息"。把 Assumption 4 的尾概率换成期望，可类似地恢复 Rényi DP 和更广的 $f$-divergence privacy（Appendix C）。
-    - 设计动机：以前 DP 的语义都是事后构造（如 Kasiviswanathan–Smith 假设性检验视角），PP 把 DP 直接放进博弈式 first-principles 推导，让每条假设都可对照现实场景测试和松弛。
+针对 DP 隐式假设"对手知一切"导致确定性算法被一棒打死的痛点，本文把隐私定义成相对评分而非绝对评分。用 $\Delta_S(Q,T,x)=S(Q,x)-S(Q_T,x)$ 度量"发布 $T$ 后 Receiver 对 $x$ 预测能力的提升"，机制 $M$ 称为 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$-Persuasive Private 当且仅当
 
-3. **Receiver vs Sender post-processing 的拆分（Definition 5–6, Prop 4–5）**:
+$$\inf_{S\in\mathcal{S}}\inf_{x\in\mathsf{X}}\inf_{Q\in\mathcal{Q}_x}\mathbb{P}_x[\Delta_S(Q,T,x)\le\kappa]\ge 1-\delta$$
 
-    - 功能：澄清 PDP "不满足 post-processing inequality" 究竟是不是个问题。
-    - 核心思路：传统 post-processing inequality（"$M\in\mathfrak{C}\Rightarrow MK\in\mathfrak{C}$"）实际上混淆了两件事：Receiver 拿到输出后任意后处理（receiver post-processing：$M\otimes K$）vs Sender 在发布前对输出再加变换（sender post-processing：$MK$，只发布边缘）。所有 PP 保证都满足前者（Proposition 4，这是真正的"对手鲁棒性"）；但存在 PP 保证不满足后者（Proposition 5）。补救方法很简单：Sender 同时发布 $M$ 的原始输出和 $K$ 的变换结果（即发 $M\otimes K$ 而非 $MK$ 的边缘），就退化为 receiver 情形。
-    - 设计动机：这条澄清把 PDP 长期被批评的"缺 post-processing inequality"重新定性——它丢的只是"用复杂机制证简单机制隐私"的代数工具，而非真正的对手鲁棒性。同时为 conjugate prior family 下的 composition rule（$\kappa_1+\kappa_2$, $\delta_1+\delta_2$，Proposition 3）打好基础。
+四元组分别对应要保护的语义集合 $\mathcal{S}$、考虑的对手先验类 $\mathcal{Q}_x$、最大允许隐私损失 $\kappa$、容错概率 $\delta$。用相对值 $\Delta_S$ 而非绝对 $S(Q_T,x)$ 是关键：若用绝对值，当 Receiver 先验已是 $Q=\delta_x$（完全知情）时所有机制都"等隐私"，定义会退化；改用差分后机制只需保证"不让 Receiver 信念向真值显著靠拢"。worst case 跨三重——$x$ 跨全数据空间（Assumption 5，保证 $\mathfrak{C}$ 不依赖数据）、$Q$ 跨 Sender 限定的对手强度类 $\mathcal{Q}_x$、$T$ 跨机制随机性（Assumption 4 的 $\kappa$-$\delta$ 尾概率条件）。这样既保留了 DP 风格的代数 robustness，又通过显式的 $\mathcal{Q}_x$ 把"Sender 愿意假设对手有多强"做成可调旋钮。
+
+**3. DP 是 PP 的特例：用博弈语义解释 DP 究竟在防什么（Proposition 6）**
+
+框架的自洽性体现在它能反过来当作"DP 的语义解释器"。取 $L$ 为离散负对数评分、取对手类 $\mathcal{H}=\{Q\in\mathcal{P}_2:\exists(x,x')\in\mathfrak{N},Q(\{x,x'\})=1\}$（两点 alternative-hypothesis 先验，对应 DP 的相邻对），则 $M$ 是 $(\varepsilon,\delta)$-PDP 当且仅当 $M$ 是 $(L,\mathcal{H},\varepsilon,\delta)$-PP，$\delta=0$ 即 pure $\varepsilon$-DP。证明揭示极小值在 Receiver 对真值的先验概率 $Q(\{x\})\to 0$ 处达到，由此给出 DP 的新解读——"$(\varepsilon,\delta)$-DP 防护的是 Receiver 几乎不相信真值时仍能从输出获取信息"，这也解释了 DP 实操中 $\varepsilon$ 难调难解释的根源。把 Assumption 4 的尾概率换成期望，还能类似地恢复 Rényi DP 和更广的 $f$-divergence privacy（Appendix C）。相比以往把 DP 语义当作事后构造（如 Kasiviswanathan–Smith 的假设性检验视角），PP 把 DP 直接放进 first-principles 推导，让每条假设都可对照现实场景测试和松弛。
+
+**4. Receiver vs Sender post-processing 的拆分：澄清 PDP "缺 post-processing" 不是缺陷（Def 5–6, Prop 4–5）**
+
+PDP 长期被批评"不满足 post-processing inequality"，本文指出这条批评混淆了两件事。传统的 $M\in\mathfrak{C}\Rightarrow MK\in\mathfrak{C}$ 实际上把 Receiver 拿到输出后任意后处理（receiver post-processing：$M\otimes K$）和 Sender 在发布前对输出再加变换（sender post-processing：$MK$，只发布边缘）混为一谈。所有 PP 保证都满足前者（Proposition 4，这才是真正的对手鲁棒性），但确实存在 PP 保证不满足后者（Proposition 5）；补救也很简单：Sender 同时发布 $M$ 的原始输出和 $K$ 的变换结果（发 $M\otimes K$ 而非 $MK$ 的边缘）即退化为 receiver 情形。这条拆分把 PDP"差一点"的定性重新校准——它丢的只是"用复杂机制证简单机制隐私"的代数工具，而非对手鲁棒性，同时也为 conjugate prior family 下的 composition rule（$\kappa_1+\kappa_2$、$\delta_1+\delta_2$，Proposition 3）打好基础。
 
 ### 损失函数 / 训练策略
 框架本身是**定义性的而非训练性的**：没有要学的参数；"训练"对应 Sender 选机制 $M$ 来满足 PP 不等式。理论分析借助 proper scoring rule（Dawid–Sebastiani score、负对数评分、interval score 等）做替换以恢复不同 DP 变体；composition rule 需要 $\mathcal{Q}_x$ 对所考虑机制 conjugate（Definition 4），高斯先验族下自动成立。

@@ -41,30 +41,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为源3D场景 $S_0$ 和自然语言指令 $I$，输出为编辑后场景 $S_T$。三步流程：(1) LLM将指令转为EditLang符号目标谓词 $G_T$；(2) Planner-Validator循环逆向规划——Planner提出满足当前目标的动作，Validator验证四重标准（目标导向性、单调性、上下文一致性、形式合法性），通过后用源感知回归更新目标集；(3) 反转动作序列，用Python DSL执行几何变换。
+方法要解决的核心问题是：用户只想改场景里该改的部分，却又得保证物理合理。Edit-As-Act 的做法是不把编辑当成"生成一整个新场景"，而是当成一段从期望状态倒推回来的动作序列。给定源场景 $S_0$ 和自然语言指令 $I$，系统先让 LLM 把指令翻译成 EditLang 符号目标谓词集 $G_T$（"用户想要的世界长什么样"），再进入 Planner-Validator 循环：Planner 不断提出一个能逼近当前目标的动作，Validator 用四条标准把关，通过后用源感知回归把目标集往源场景方向收缩一步。当目标全部归约到 $S_0$ 已满足时停止，把这串逆推出来的动作反转过来，交给 Python 几何 DSL 真正执行变换，得到 $S_T$。整条链路里 LLM 只负责"提议"，是否采纳由形式化规则决定。
 
 ### 关键设计
 
-1. **EditLang符号编辑语言**
+**1. EditLang 符号编辑语言：把自由文本编辑落到可验证的符号空间**
 
-    - 功能：定义PDDL风格的场景编辑领域，包含谓词和动作
-    - 核心思路：谓词描述几何/拓扑/物理关系（如 `supported(x,y)`, `contact(x,y)`, `collision(x,y)`, `stable(x)`, `facing(x,y)`），每个动作定义为三元组 $\langle \text{pre}(a), \text{add}(a), \text{del}(a) \rangle$，状态转移 $s' = (s \setminus \text{del}(a)) \cup \text{add}(a)$。支持几何重排、物体添加（Add）和外观修改（Stylize）三类操作
-    - 设计动机：将自由文本映射到结构化符号空间，使编辑过程可验证、可解释、可组合。与传统PDDL不同，EditLang动态绑定场景中的具体物体，支持开放词汇
+前向生成方法之所以难保证"只动该动的"，根子在于它们直接在像素或布局上操作，没有一个能被检查的中间表示。EditLang 借 PDDL 的思路给场景编辑建了一套领域：谓词刻画几何/拓扑/物理关系，如 `supported(x,y)`、`contact(x,y)`、`collision(x,y)`、`stable(x)`、`facing(x,y)`；每个动作写成三元组 $\langle \text{pre}(a), \text{add}(a), \text{del}(a) \rangle$，前置条件、新增事实、删除事实一目了然，状态按 $s' = (s \setminus \text{del}(a)) \cup \text{add}(a)$ 转移。动作覆盖几何重排、物体添加（Add）、外观修改（Stylize）三类。
 
-2. **源感知目标回归（Source-Aware Goal Regression）**
+与传统 PDDL 把符号写死不同，EditLang 在解析时把谓词动态绑定到场景里的具体物体，因此能处理开放词汇的指令而不需预定义实体表。一旦编辑被表达成这种符号动作，它就天然可验证、可解释、可组合——后面 Validator 的所有检查都建立在这层表示之上。
 
-    - 功能：从目标状态逆向推导必要的动作序列
-    - 核心思路：经典STRIPS回归会重复推理已满足的条件，改进的源感知回归公式为 $G_{t-1} = (G_t \setminus \text{add}(a_t)) \cup (\text{pre}(a_t) \setminus S_0)$——只传播在源场景中未满足的前置条件，已满足的自动跳过
-    - 设计动机：避免不必要的"重建"已正确的场景部分，确保编辑最小化——这是前向生成方法无法保证的
+**2. 源感知目标回归：只为没满足的条件付出编辑代价**
 
-3. **Planner-Validator双模块验证**
+经典 STRIPS 回归会从目标一路往回展开所有前置条件，哪怕这些条件在当前场景里早已成立，于是规划器会"重建"本来就对的部分，这正是过度编辑的来源。本文把回归式改成源感知版本：
 
-    - 功能：Planner提出动作，Validator四重检查后决定接受或拒绝
-    - 核心思路：Validator检查——(1) 目标导向性：$\text{add}(a_t)$ 必须满足 $G_t$ 中至少一个目标；(2) 单调性：$\text{del}(a_t) \cap G^{\text{sat}}_{\leq t} = \emptyset$，不撤销已达成目标；(3) 上下文一致性：编辑结果符合房间特定约束；(4) 形式合法性：符合EditLang schema。维护领域不变量（无碰撞、单一支撑面等）
-    - 设计动机：LLM生成的规划不一定正确，Validator提供了形式化的安全网。单调性约束+有限状态空间保证规划循环必然终止
+$$G_{t-1} = (G_t \setminus \text{add}(a_t)) \cup (\text{pre}(a_t) \setminus S_0)$$
+
+关键在 $\text{pre}(a_t) \setminus S_0$ 这一项——只有在源场景 $S_0$ 中尚未满足的前置条件才会被回传到上一层目标继续规划，已经成立的条件直接跳过、不再产生动作。这一个小改动让目标集随每步真正在收缩，编辑序列因此被压到最小，从机制上拿到了前向生成给不了的"最小性"保证。
+
+**3. Planner-Validator 双模块：LLM 提议，形式规则兜底**
+
+LLM 提出的动作不一定正确，也可能撤销已经达成的目标，所以单靠 Planner 不可靠。Validator 在每一步对 Planner 的提议做四重检查：目标导向性要求 $\text{add}(a_t)$ 至少满足 $G_t$ 里的一个目标，杜绝无关动作；单调性要求 $\text{del}(a_t) \cap G^{\text{sat}}_{\leq t} = \emptyset$，即不能删掉此前已经满足的目标，防止规划反复横跳；上下文一致性确保编辑结果符合房间特定约束；形式合法性确保动作符合 EditLang schema。Validator 同时维护领域不变量（无碰撞、单一支撑面等）。
+
+这种"LLM 提议 + 形式验证"的分工不仅挡住了错误动作，还顺带给了终止性保证：单调性意味着已满足目标只增不减，加上状态空间有限，规划循环必然在有限步内收敛，不会陷入死循环。
+
+### 一个完整示例：把椅子搬到桌子旁
+以指令"把椅子移到餐桌边"为例。LLM 先把它翻成目标谓词 $G_T = \{\,\text{contact(chair, table)},\ \text{facing(chair, table)},\ \neg\text{collision(chair, *)}\,\}$。Planner 提议动作 `Move(chair → beside table)`，其 $\text{pre}$ 包含 `stable(chair)`、`clear(target_region)`。源感知回归一查：`stable(chair)` 在 $S_0$ 里已成立，于是被 $\setminus S_0$ 滤掉、不再生成额外动作；只有 `clear(target_region)` 没满足（桌边有个挡路的垃圾桶），被回传成上一层目标，触发第二个动作 `Move(bin → corner)`。两个动作回归到 $S_0$ 全满足后停止。Validator 逐一放行：移椅子满足 `contact`/`facing`（目标导向），不删除任何已达成目标（单调），无碰撞（一致）。最后把逆推出的序列反转执行——先挪垃圾桶、再挪椅子——餐桌区域和其余家具完全没被动过。对比前向生成方法可能顺手重排整个房间，这里只落下两个动作。
 
 ### 损失函数 / 训练策略
-本方法完全基于LLM推理，无需训练。Planner和Validator都用LLM（如GPT-4）通过prompting驱动。每步执行后重新从几何计算谓词，确保符号状态与3D场景同步。
+本方法完全基于 LLM 推理，无需训练。Planner 和 Validator 都由 LLM（如 GPT-4）通过 prompting 驱动；每步执行后都重新从几何重新计算谓词，确保符号状态与真实 3D 场景始终同步，避免符号层与几何层漂移。
 
 ## 实验关键数据
 

@@ -41,26 +41,29 @@ TLPO 将多语言 LLM 的语言混淆视为可定位的局部 token 错误，只
 TLPO 的流程非常局部：先让当前模型生成回答，若没有语言混淆就跳过该样本；若出现混淆，就定位第一个混淆 token，然后只围绕这个位置构造候选、奖励和损失。它的目标不是让模型重新学习整个多语言任务，而是把原模型已经具备的能力保留下来，只压低导致语言切换的概率质量。
 
 ### 整体框架
-给定 prompt $x$ 和模型生成的序列 $y$，TLPO 检测第一个语言混淆位置 $c$。在前缀 $y_{<c}$ 固定的条件下，取当前策略 $pi_{theta}$ 的 top-N 下一个 token 形成候选集合。对每个候选 token，模型再向前生成很短的 lookahead 序列并 detokenize，用字符集规则判断该候选是否引发目标语言之外的输出。最后，TLPO 用候选 token 的 reward 和旧策略概率构造 advantage，通过带 clipping 和 KL 约束的 PPO 目标更新模型。
+TLPO 的流程非常局部：先用当前模型对 prompt $x$ 生成回答 $y$，若整段没有语言混淆就直接跳过该样本；一旦出现混淆，就定位第一个混淆位置 $c$，并把所有训练信号都收束到这一个 token 上。在前缀 $y_{<c}$ 固定的条件下，取当前策略 $\pi_\theta$ 的 top-N 下一个 token 作为候选集合；对每个候选，模型再往前生成很短的 lookahead 序列并 detokenize，用字符集规则判断这个候选到底会不会引发目标语言之外的输出；最后用候选 token 的 reward 和旧策略概率构造 advantage，通过带 clipping 和 KL 约束的 PPO 目标更新模型。它的目标不是重学整个多语言任务，而是把原模型的能力原样保住、只压低导致语言切换的那一点概率质量。
 
 ### 关键设计
-1. **概率排序的候选 token 探索**:
 
-	- 功能：只关注模型最可能在混淆点生成的 token，而不是对整个词表或整段序列采样。
-	- 核心思路：在混淆位置 $c$，从 $pi_{theta}(\cdot | x, y_{<c})$ 中选出概率最高的 top-N token，构成候选集合 $T$。实验中主结果使用 $N=16$，消融还考察了 ranked selection 与 multinomial sampling。
-	- 设计动机：语言混淆通常由少数高概率 token 触发。优化这些 token 可以直接改变最可能的错误路径，同时大幅减少训练信号的范围，避免对不相关 token 施加强约束。
+**1. 概率排序的候选 token 探索：只盯混淆点上最可能生成的几个 token，而不是整段序列或整个词表。**
 
-2. **token级 reward 与概率加权 advantage**:
+语言混淆通常只由少数高概率 token 触发，SFT 和序列级偏好优化却把整段回答都当训练对象，连带扰动了无关位置。TLPO 反其道而行：在混淆位置 $c$，从 $\pi_\theta(\cdot \mid x, y_{<c})$ 里选出概率最高的 top-N 个 token 组成候选集合 $T$（主结果用 $N=16$，消融另外比较了 ranked selection 与 multinomial sampling）。优化这些最可能的候选，等于直接改写最容易走偏的那条错误路径，同时把训练信号的作用范围压到极小，避免对不相关 token 施加强约束。
 
-	- 功能：为每个候选 token 单独判断“会不会导致语言混淆”，并把这个局部判断转成稳定的策略梯度信号。
-	- 核心思路：候选 token 可能只是一个子词，单看 token 字符未必能判断语言类别。因此 TLPO 生成 $k=3$ 个 lookahead token，与候选拼接后 detokenize，再根据目标语言字符集给出 reward。advantage 采用 $A_i = p_{old}(t_i)(R(t_i)-mu)/Z$，其中 $mu$ 是概率加权平均 reward，$Z$ 是绝对 advantage 的归一化常数。
-	- 设计动机：乘以旧策略概率能保持有效 token 内部的相对概率结构，归一化则让每个混淆点产生的训练信号尺度更稳定。相比 GRPO 风格的标准差归一化，论文消融显示这种 formulation 对准确率更友好。
+**2. token 级 reward 与概率加权 advantage：为每个候选单独判混淆，再把局部判断转成稳定的策略梯度。**
 
-3. **只在混淆点做 PPO 式局部更新**:
+麻烦在于一个候选 token 往往只是子词，光看它本身的字符未必判得出语言类别。TLPO 因此对每个候选再生成 $k=3$ 个 lookahead token，拼接后 detokenize，再按目标语言字符集给出 reward。advantage 写成
 
-	- 功能：把序列级偏好优化压缩成一个 token 位置上的局部 policy optimization。
-	- 核心思路：TLPO 的目标对候选集合 $T$ 求平均，使用新旧策略概率比、clipping 和对 reference policy 的 KL 惩罚。reference policy 是应用 TLPO 前的初始模型，KL 约束用于限制偏移范围。
-	- 设计动机：SFT / DPO / ORPO 对完整回复做更新，容易把“语言约束”扩散到语义和推理能力；TLPO 只改错误边界点，因而更像精细纠错而不是全局重塑模型。
+$$A_i = \frac{p_{\text{old}}(t_i)\,\big(R(t_i)-\mu\big)}{Z},$$
+
+其中 $\mu$ 是概率加权的平均 reward，$Z$ 是对绝对 advantage 做归一化的常数。乘上旧策略概率 $p_{\text{old}}(t_i)$ 能保住有效 token 之间原有的相对概率结构，归一化则让不同混淆点产生的信号尺度对齐。消融显示，相比 GRPO 风格的标准差归一化 $(R-\mu)/\sigma$，这种 formulation 对准确率更友好——在只有十几个候选的局部集合里，标准差缩放反而会放大噪声。
+
+**3. 只在混淆点做 PPO 式局部更新：把序列级偏好优化压成单个 token 位置上的微创纠错。**
+
+SFT / DPO / ORPO 都对完整回复做更新，很容易把"语言约束"扩散进语义和推理能力，伤到准确率。TLPO 的目标只对候选集合 $T$ 求平均，沿用新旧策略概率比、clipping，以及对 reference policy 的 KL 惩罚；reference policy 取应用 TLPO 之前的初始模型，KL 约束把偏移范围牢牢框住。这样模型只动"第一个跑偏 token"附近的边界，更像精细纠错而不是全局重塑，也正好解释了为什么它能在拉高语言一致性的同时几乎不掉原有能力。
+
+### 一个完整示例
+
+设目标语言是韩语，prompt 要求用韩语回答。模型先正常生成，前面几句都是韩语，到某一步在 top-1 位置吐出一个英文起手的子词——这就是第一个混淆位置 $c$。TLPO 锁定 $c$，固定其前缀，从 $\pi_\theta$ 取出该位置概率最高的 $N=16$ 个候选 token：其中一部分是韩语续写，一部分是英文起手。逐个候选向前补 $k=3$ 个 lookahead token、detokenize 后用字符集判定——英文起手那几个被判为混淆（reward 低），韩语续写被判为合规（reward 高）。把这些 reward 代入概率加权 advantage，合规候选拿到正 advantage、混淆候选拿到负 advantage，再走一遍带 clipping 和 KL 的 PPO 更新。结果是这一个位置上混淆候选的概率被压低、韩语候选被抬高，而回答里其余所有 token 的分布几乎原封不动。值得注意的是，论文观察到即便没进 top-N 的同类混淆 token，其累计概率也会跟着下降，说明这种局部更新会顺着语言相关的内部表示产生一定泛化。
 
 ### 损失函数 / 训练策略
 训练数据来自 Bactrian-X 的多语言 instruction-following split。目标语言包括中文、阿拉伯语、韩语和日语，基座模型包括 Llama-3.1-8B-Instruct、Qwen3-8B、Ministral-8B-Instruct 和 Gemma-3-4B-IT。评价分两类：语言混淆用 Response Pass Rate (RPR) 和 Word Pass Rate (WPR)，通用能力用 MIF、MMLU、MMMLU、GPQA、ARC-Challenge、BBH、MATH、GSM8K 等准确率。实验还区分两种英语处理方式：英语作为中立类别，以及英语也算语言混淆。

@@ -42,27 +42,25 @@ MAGMA 把 LLM agent 的记忆拆成语义 / 时间 / 因果 / 实体四张正交
 
 ### 整体框架
 
-系统分三层：(1) **Query Process** —— Intent-Aware Router → Adaptive Topological Retrieval → Context Synthesizer；(2) **Data Structure** —— 时变有向多重图 $\mathcal{G}_t=(\mathcal{N}_t,\mathcal{E}_t)$，节点存事件、边按语义子空间分成四类，并配合 Vector DB 做混合检索；(3) **Write/Update** —— Fast Path 同步入库（事件分割 + vector index + 更新时间骨干）、Slow Path 异步用 LLM 推理出因果与实体边。每个事件节点 $n_i = \langle c_i, \tau_i, \mathbf{v}_i, \mathcal{A}_i\rangle$，分别记录内容、时间戳、稠密向量和结构化属性。
+MAGMA 要同时满足两件互相打架的事：记忆既要能「快回忆」不阻塞用户，又要能「深推理」回答 why。它的做法是把整套系统分成读、存、写三层协同。存储层不再是单一向量库，而是一张时变有向多重图 $\mathcal{G}_t=(\mathcal{N}_t,\mathcal{E}_t)$，节点 $n_i = \langle c_i, \tau_i, \mathbf{v}_i, \mathcal{A}_i\rangle$ 存事件的内容、时间戳、稠密向量与结构化属性，边按语义维度切成四张正交关系图，并配一个向量库做粗筛入口。读路径先由意图路由判断 query 想问什么，再在对应关系图上做自适应拓扑检索，最后由 Context Synthesizer 合成答案；写路径拆成快慢两条流，Fast Path 同步入库只做轻量编码，Slow Path 异步用 LLM 把隐含的因果与实体关系补进图里。
 
 ### 关键设计
 
-1. **四张正交关系图作 Data Structure**:
+**1. 四张正交关系图作 Data Structure：把单一记忆库拆成可独立访问的四种关系视图。**
 
-    - 功能：把过去 monolithic 的 memory 拆成可独立访问的四种关系视图。
-    - 核心思路：边集 $\mathcal{E}$ 切成四个语义子空间：(i) **Temporal Graph** —— 严格按 $\tau_i < \tau_j$ 形成不可变时间链，提供时序基线；(ii) **Causal Graph** —— 当条件得分 $S(n_j\mid n_i, q) > \delta$ 时由 consolidation 模块推出方向边，支持"why" 查询；(iii) **Semantic Graph** —— 无向边，由 $\cos(\mathbf{v}_i, \mathbf{v}_j) > \theta_{\mathrm{sim}}$ 触发；(iv) **Entity Graph** —— 把事件连到抽象实体节点，解决跨时段"同一对象"识别问题。Vector DB 仍保留做粗筛 anchor 入口。
-    - 设计动机：纯语义图 retrieve 出来的"相似事件"未必是"原因事件"，时间链能保证 chronological 正确性，因果链能回答 why，实体链能保 object permanence——四者互为补集而非冗余（消融见后）。
+过去的 memory 系统不论是向量库还是单一 KG，都把时间、因果、实体关系全纠缠在 cosine 相似度里，于是「相似事件」常被误当成「原因事件」。MAGMA 把边集 $\mathcal{E}$ 切成四个语义子空间：Temporal Graph 严格按 $\tau_i < \tau_j$ 连成不可变时间链，提供时序基线；Causal Graph 在条件得分 $S(n_j\mid n_i, q) > \delta$ 时由巩固模块推出方向边，专门支撑 why 查询；Semantic Graph 用无向边连接 $\cos(\mathbf{v}_i, \mathbf{v}_j) > \theta_{\mathrm{sim}}$ 的事件；Entity Graph 把事件挂到抽象实体节点，解决跨时段「同一对象」的识别。向量库仍保留作粗筛 anchor 入口。四张图互为补集而非冗余——时间链保证时序正确、因果链回答 why、实体链维持 object permanence，消融里任意去掉一张都会掉点。
 
-2. **Intent-Aware Adaptive Traversal Policy**:
+**2. Intent-Aware Adaptive Traversal：先判断 query 想问什么，再到对应的图上做受策略引导的 beam search。**
 
-    - 功能：根据 query 类型在合适的关系图上做 policy-guided beam search 而非死板遍历。
-    - 核心思路：先用轻量分类器把 query 映射到 intent $T_q \in \{\mathrm{Why}, \mathrm{When}, \mathrm{Entity}\}$，时间解析器把 "last Friday" 之类解析成绝对时间窗口；用 Reciprocal Rank Fusion $S_{\mathrm{anchor}} = \mathrm{TopK}\!\sum_{m\in\{vec,key,time\}}\frac{1}{k+r_m(n)}$ 找入口锚点；随后做 heuristic beam search，每步转移分 $S(n_j\mid n_i, q) = \exp\big(\lambda_1\phi(\mathrm{type}(e_{ij}), T_q) + \lambda_2 \mathrm{sim}(\vec n_j, \vec q)\big)$，其中 $\phi(r, T_q) = \mathbf{w}_{T_q}^\top \mathbf{1}_r$ 是 intent 对应的边类型权重（why query 给 causal 边权 3–5、entity query 给 entity 权 2.5–6 等）。每层取 top-$k$，配合衰减因子 $\gamma$ 抑制深度爆炸。
-    - 设计动机：单一 cosine 相似度天然偏好"近似话题"，对抗性 query 会被语义相似但因果无关的 distractor 误导（即论文中 adversarial 类 LUQ/A-MEM 掉到 0.2–0.6）；intent 路由先选图、再 beam，等于把"先确定要找什么再去找"这条人类直觉显式编码。
+单一 cosine 检索天然偏好「话题相近」，遇到语义相似但因果无关的 distractor 就会被带偏（论文中对抗类 query 让 A-MEM 等掉到 0.2–0.6）。MAGMA 先用轻量分类器把 query 映射到意图 $T_q \in \{\mathrm{Why}, \mathrm{When}, \mathrm{Entity}\}$，并由时间解析器把「last Friday」这类表述折算成绝对时间窗口；再用 Reciprocal Rank Fusion $S_{\mathrm{anchor}} = \mathrm{TopK}\sum_{m\in\{vec,key,time\}}\frac{1}{k+r_m(n)}$ 融合向量 / 关键词 / 时间三路信号定位入口锚点。随后做启发式 beam search，每步转移分 $S(n_j\mid n_i, q) = \exp\big(\lambda_1\phi(\mathrm{type}(e_{ij}), T_q) + \lambda_2 \mathrm{sim}(\vec n_j, \vec q)\big)$，其中 $\phi(r, T_q) = \mathbf{w}_{T_q}^\top \mathbf{1}_r$ 给意图对应的边类型加权（why 给 causal 边权 3–5、entity 给 entity 权 2.5–6），每层取 top-$k$ 并以衰减因子 $\gamma$ 抑制深度爆炸。这相当于把「先确定要找什么、再去找」这条人类直觉显式编码成路径控制。
 
-3. **Dual-Stream 写入 (Fast Path + Slow Path)**:
+**3. Dual-Stream 写入：用快慢两条流把「低延迟响应」和「深结构推理」解耦。**
 
-    - 功能：让 agent 响应不被结构化推理阻塞，又能持续深化记忆结构。
-    - 核心思路：**Fast Path**（Algo 2）走同步路径，只做事件分割、Encoder 编向量、追加时间骨干边 $n_{t-1}\to n_t$、入 vector DB、把节点 id 入 queue；全程无 LLM 推理。**Slow Path**（Algo 3）异步 worker 从 queue 取节点，拉 2-hop 邻域 $\mathcal{N}_{\mathrm{local}}$，用 LLM $\Phi$ 推理隐含的因果与实体边 $\mathcal{E}_{\mathrm{new}} = \Phi_{\mathrm{reason}}(\mathcal{N}(n_t), \mathcal{H}_{\mathrm{history}})$，再写回图。
-    - 设计动机：实际部署时用户体验的瓶颈是同步延迟，而因果推理一次要花数秒；解耦后 user-facing latency 只承担向量编码（~ms 级），结构性推理在后台慢慢补；这也类比 CLS 理论里海马（快）与新皮层（慢）的互补关系。
+实际部署里用户体验的瓶颈是同步延迟，而一次因果推理要花数秒，若写入和结构推理耦合在同步路径上就会卡住 agent。MAGMA 因此把写入拆成两条流：Fast Path（Algo 2）走同步，只做事件分割、编码向量、追加时间骨干边 $n_{t-1}\to n_t$、写入向量库并把节点 id 推进队列，全程不调 LLM，user-facing 延迟只剩毫秒级的向量编码；Slow Path（Algo 3）由异步 worker 从队列取节点，拉出 2-hop 邻域 $\mathcal{N}_{\mathrm{local}}$，用 LLM $\Phi$ 推理隐含的因果与实体边 $\mathcal{E}_{\mathrm{new}} = \Phi_{\mathrm{reason}}(\mathcal{N}(n_t), \mathcal{H}_{\mathrm{history}})$ 再写回图。这正对应认知科学 CLS 理论里海马（快）与新皮层（慢）的互补分工。
+
+### 一个完整示例
+
+假设来一条对抗性 why 查询「为什么 Alice 取消了周五的旅行」：意图路由先判定 $T_q=\mathrm{Why}$、时间解析器锁定上周五的时间窗口；RRF 融合向量 / 关键词 / 时间三路信号，把「Alice 提到旅行」的事件节点选作锚点；beam search 因 why 意图给 causal 边高权，于是不沿语义相近的「Alice 喜欢旅行」滑走，而是顺着因果边走到原因链；Context Synthesizer 再用 salience 预算把链路上的关键节点保留全文、低分节点压成「…3 个中间事件…」，最终交给 LLM 生成因果完整又简洁的回答。这条路径上，Fast Path 早已把事件入库保证了 Alice 当时的发言可被即时检索，而 causal 边则是 Slow Path 事后异步补出来的。
 
 ### 损失函数 / 训练策略
 - 整个 MAGMA 是**训练-free** 的 retrieval + 检索 + LLM 调用架构，没有自学参数；所有 LLM 调用使用 gpt-4o-mini（T=0）；embedding 用 all-MiniLM-L6-v2（384 维）或 OpenAI text-embedding-3-small（1536 维）；超参 $\lambda_1=1.0, \lambda_2=0.3$–$0.7$，beam width 与 $\mathrm{MaxDepth}=5$、$\mathrm{Budget}=200$ 由 LoCoMo 上经验调出。

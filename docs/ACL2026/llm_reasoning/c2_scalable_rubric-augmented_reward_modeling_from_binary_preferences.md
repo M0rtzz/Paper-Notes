@@ -50,23 +50,17 @@ Rubric 结构是 reasoning 段 + 一系列 (criterion, yes/no question) 对。
 
 ### 关键设计
 
-1. **margin-based 对比对合成（Synthesizing Helpful/Misleading Rubrics）**:
+**1. margin-based 对比对合成：用 verifier 自己的似然 margin 给每条 rubric 自动贴 helpful/misleading 标签。**
 
-    - 功能：用 binary preference 自动给每条 rubric 打"实际效果"标签，不需要人工 rubric。
-    - 核心思路：定义 $m(r) = \log p_{M_v}(l|c,r) - \log p_{M_v}(\bar l|c,r)$ 表示加上 rubric 后 verifier 对正确答案的偏好；helpful 的硬阈值是"必须让 verifier 走向正确"——即 $m_\emptyset>0$ 时 rubric 要把 margin 推得更高，$m_\emptyset<0$ 时要把 margin 翻成正。misleading 反之。从合格集合里取效果最极端的 $r^+, r^-$，过滤掉两边都空的样本（约 95~98% 数据保留）。
-    - 设计动机：之前 rubric 监督要么靠 GPT-5 打 1~5 分（昂贵）、要么靠人写（不可规模化）；margin-based 标签把"rubric 是否真的帮助"内化为 verifier 自身的统计量，免标注、抗 noise。
+以往造 rubric 监督要么靠 GPT-5 打 1~5 分（昂贵）、要么靠人手写（没法规模化），还跟现成的二元偏好语料不兼容。C2 索性把"这条 rubric 到底有没有用"内化成 verifier 自身的统计量：定义 $m(r) = \log p_{M_v}(l|c,r) - \log p_{M_v}(\bar l|c,r)$，衡量加上 rubric 后 verifier 对正确答案的偏好强度。helpful 的硬门槛是"必须把判断推向正确"——$m_\emptyset>0$ 时 rubric 要让 margin 更高，$m_\emptyset<0$ 时要把 margin 翻成正；misleading 则反向。对每个样本采 16 条 rubric，从合格的 $\mathcal{R}^+$ 里取效果最猛的当 $r^+$、从 $\mathcal{R}^-$ 里取最坏的当 $r^-$，两边都空就整条丢掉（最终约 95~98% 数据保留）。这样得到的标签免人工、抗噪声，还能无缝复用任何二元偏好数据集。
 
-2. **DPO 训 cooperative generator**:
+**2. DPO 训 cooperative generator：让生成器多产对 verifier 真有用的 rubric，而不是表面合理实则无用甚至有害的。**
 
-    - 功能：让 generator 倾向于生成被 verifier 真的能用的好 rubric，而不是表面合理但实际无用/有害的。
-    - 核心思路：用合成的 $\{(c, r^+, r^-)\}$ 做 DPO，chosen = $r^+$，rejected = $r^-$；保持原 rubric prompt 模板不变。训完后 GPT-5 评测 rubric 质量平均分从 2.11 → 2.66 (Tulu3-8B)、3.15 → 3.52 (Qwen3-8B)，逼近大模型 Tulu3-70B (2.85)、Qwen3-32B (3.62) 的水平。
-    - 设计动机：直接 SFT 只能学会"模仿合格 rubric"但学不到"避开坏的"；DPO 的对比信号同时鼓励好、惩罚坏，更适合双面性问题。Ablation 显示去掉 negative rubric (改成只 SFT 好 rubric) 是最伤的变体（最多掉 3.6 个点）。
+如果只拿合格 rubric 做 SFT，模型学到的是"模仿一份像样的 rubric"，却学不会"躲开坏的那种"——而 rubric 恰恰是双刃剑，坏的比好的伤害更大。所以这里用上一步合成的 $\{(c, r^+, r^-)\}$ 做 DPO，chosen 是 $r^+$、rejected 是 $r^-$，prompt 模板不变，靠对比信号同时奖励好、惩罚坏。训完后 GPT-5 给 rubric 质量打分从 2.11 → 2.66（Tulu3-8B）、3.15 → 3.52（Qwen3-8B），已经逼近 Tulu3-70B（2.85）、Qwen3-32B（3.62）这些大模型的水平。消融也印证了这一点：去掉 negative rubric、退回只 SFT 好 rubric 是最伤的变体，最多掉 3.6 个点。
 
-3. **critical verifier + selective inference（GRPO）**:
+**3. critical verifier + selective inference（GRPO）：给 verifier "拒绝权"，判断 rubric 不可信就丢掉重问。**
 
-    - 功能：让 verifier 既能给出 $\hat l$ 又能预判 rubric 是否值得信，避免被低质 rubric 拖下水。
-    - 核心思路：GRPO 训练时混入 rubric-free 任务（仅 format + preference reward）和 rubric-augmented 任务（再加 rubric reward $R_r$：$q=q^*$ 才 +1），让模型既保留 rubric-free 基础能力又学会区分 helpful/misleading。最终 verifier prompt 要求按 `<analyze> → <rubric>helpful|misleading</rubric> → <answer>A|B</answer>` 输出。推理时如果 $q=$ misleading，丢掉 rubric 重新查一次 rubric-free 的判断。
-    - 设计动机：现有 rubric 方法默认 verifier 必须 follow rubric，本文给 verifier 加上"拒绝权"——一旦学会拒绝，对 rubric 分布的鲁棒性大幅提升：Fig 5 在 9:1 → 1:9 (好 rubric 占比下降) 下，Reasoning RM 准确率从 73% 暴跌到 52%，C2 只从 76% 降到 70%。
+现有 rubric 方法默认 verifier 必须照着 rubric 走，一旦碰上坏 rubric 就被牵着跌进坑里。C2 给 verifier 加了一道自我评估：GRPO 训练时混入两类任务——rubric-free 任务只给 format + preference 奖励，rubric-augmented 任务额外加 rubric 奖励 $R_r$（判对 $q=q^*$ 才 +1），逼模型既保住无 rubric 的基础判断力、又学会分辨 helpful/misleading。最终 verifier 按 `<analyze> → <rubric>helpful|misleading</rubric> → <answer>A|B</answer>` 输出；推理时若判 misleading，就把 rubric 丢掉、退回 rubric-free 模式重问一次。学会拒绝之后对 rubric 分布的鲁棒性立竿见影：当好 rubric 占比从 9:1 滑到 1:9，Reasoning RM 准确率从 73% 暴跌到 52%，C2 只从 76% 软着陆到 70%。
 
 ### 损失函数 / 训练策略
 - 数据：UltraFeedback 5k 样本合成对比对（Tulu3-8B 保留 4,903、Qwen3-8B 保留 4,648），合并 rubric-free + rubric-augmented 共 14k+ 训练样本。

@@ -44,23 +44,23 @@ PartCo 通过显式利用 Vision Transformer 的补丁令牌中蕴含的**部分
 
 ### 关键设计
 
-1. **双阶 PCA 投影 + 部分标签构造**:
+**1. 双阶 PCA 投影 + 部分标签构造：从冻结 ViT 里自动挖出物体部分。**
 
-    - 功能：从 ViT 补丁令牌中自动发现物体部分并生成对应关系标签。
-    - 核心思路：第一阶 PCA 对所有补丁特征 $\mathbf{F} \in \mathbb{R}^{M \times N \times d}$ 应用 PCA 获得最大方差方向 $\mathbf{w}_{\text{obj}}$，计算物体度分数 $\mathbf{F}_{\text{obj}} = \mathbf{F} \cdot \mathbf{w}_{\text{obj}}$，通过阈值 $\tau_{\text{obj}} = 0.6$ 生成前景掩码 $\mathbf{M}$。第二阶 PCA 对掩码特征 $\mathbf{F} \odot \mathbf{M}$ 再应用 PCA 提取前三主成分得 $\mathbf{F}_{\text{fg}}$。自适应 k-means 通过最大化簇中心距离与簇大小均衡性乘积自动选择最优簇数。
-    - 设计动机：避免手工标注部分，通过冻结基础模型的先天结构自动获取监督信号；细粒度数据集用一阶（已足够），通用数据集用二阶（需更多细节）。
+GCD 难在区分高度相似的类，而 [CLS] 这种全局表示把细粒度部分信息抽象掉了。补丁令牌里其实藏着丰富的部分级语义，但直接用有三个拦路虎：没有部分级标签、前背景噪声混淆、跨样本尺度方向变化。PartCo 用两步 PCA 把这些部分自动提取成标签。第一阶 PCA 对所有补丁特征 $\mathbf{F} \in \mathbb{R}^{M \times N \times d}$ 求最大方差方向 $\mathbf{w}_{\text{obj}}$，算物体度分数 $\mathbf{F}_{\text{obj}} = \mathbf{F} \cdot \mathbf{w}_{\text{obj}}$，再用阈值 $\tau_{\text{obj}} = 0.6$ 生成前景掩码 $\mathbf{M}$，先把背景噪声滤掉；第二阶 PCA 只对掩码后的特征 $\mathbf{F} \odot \mathbf{M}$ 提前三主成分得 $\mathbf{F}_{\text{fg}}$，刻画前景内部的细粒度结构。最后自适应 k-means 通过最大化"簇中心距离 × 簇大小均衡性"自动选簇数。
 
-2. **部分级特征聚合 + 对应损失**:
+这一步的关键是借冻结基础模型（尤其 DINOv2）补丁特征里天然的部分级对应，不用任何人工标注。粒度还能按数据集自适应——细粒度数据集用一阶就够，通用数据集才上二阶补更多细节。
 
-    - 功能：将补丁特征按部分分组聚合，设计部分级对比损失促进相同部分类内紧聚、不同部分类间分离。
-    - 核心思路：对每个部分类别 $c \in \mathcal{C}$ 求平均得聚合特征 $\mathbf{f}_c$；通过部分投影头 $\psi_p$ 投影到对比学习空间 $\mathbf{h}_c = \psi_p(\mathbf{f}_c)$。监督部分对比损失：$\mathcal{L}_{\text{pc}}^{\text{sup}} = \frac{1}{|B_l|} \sum_i \frac{1}{|\mathcal{C}|} \sum_c \frac{1}{|\mathbb{N}_i^c|} \sum_q -\log \frac{\exp(\mathbf{h}_c \cdot \mathbf{h}_q / \tau_r)}{\sum_{j \notin \mathbb{N}_i^c} \exp(\mathbf{h}_c \cdot \mathbf{h}_j / \tau_r)}$。无监督版本用伪标签替代真标签。
-    - 设计动机：通过显式的部分级约束让模型学习跨样本的部分对应关系；相比仅依赖全局特征能捕捉细微的视觉结构差异。
+**2. 部分级特征聚合 + 对应损失：让相同部分跨样本对齐。**
 
-3. **即插即用集成策略**:
+有了部分标签，就把补丁特征按部分分组聚合：对每个部分类别 $c$ 求平均得 $\mathbf{f}_c$，过部分投影头 $\psi_p$ 投到对比空间 $\mathbf{h}_c = \psi_p(\mathbf{f}_c)$。监督部分对比损失为
 
-    - 功能：将 PartCo 框架无缝集成到任意现有 GCD 方法，仅需添加部分级损失。
-    - 核心思路：总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{gcd}} + \mathcal{L}_{\text{pc}}$；平衡因子 $\lambda_b = 0.35$ 通过实验验证为最优。
-    - 设计动机：不修改原方法管道，仅在损失函数层面叠加新约束；任何 GCD 基线都可受益。
+$$\mathcal{L}_{\text{pc}}^{\text{sup}} = \frac{1}{|B_l|} \sum_i \frac{1}{|\mathcal{C}|} \sum_c \frac{1}{|\mathbb{N}_i^c|} \sum_q -\log \frac{\exp(\mathbf{h}_c \cdot \mathbf{h}_q / \tau_r)}{\sum_{j \notin \mathbb{N}_i^c} \exp(\mathbf{h}_c \cdot \mathbf{h}_j / \tau_r)}$$
+
+让同一部分类内紧聚、不同部分类间分离；无标注数据用伪标签替代真标签走同样的损失。这个显式的部分级约束迫使模型学到跨样本的部分对应关系，从而捕捉到仅靠全局特征看不见的细微视觉结构差异——这正是区分相似类所缺的信号。
+
+**3. 即插即用集成：只在损失层叠一项，任何 GCD 基线都能用。**
+
+PartCo 不改原方法的任何管道，只在损失函数上加一项：总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{gcd}} + \mathcal{L}_{\text{pc}}$，平衡因子 $\lambda_b = 0.35$（实验验证为最优且鲁棒）。因为部分级约束是作为额外监督叠加的，SimGCD、SPTNet、FlipClass、SelEx 等不同范式的基线都能直接受益，无需为每个方法重新设计。
 
 ## 实验关键数据
 

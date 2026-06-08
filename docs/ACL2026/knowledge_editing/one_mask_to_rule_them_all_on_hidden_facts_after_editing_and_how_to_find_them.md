@@ -52,23 +52,17 @@ tags:
 
 ### 关键设计
 
-1. **跨编辑共享二值 mask**:
+**1. 跨编辑共享二值 mask：用同一个 mask 检验不同编辑是不是依赖同一组权重位置。**
 
-	- 功能：检验不同事实编辑是否依赖同一组功能权重位置。
-	- 核心思路：mask 值为 1 表示保留编辑权重，0 表示移除其贡献。训练时同一个 $K$ 同时作用于多种 facts 的编辑矩阵，只允许 $K$ 更新。
-	- 设计动机：如果编辑是事实特异的，一个共享 mask 不应泛化；如果共享 mask 能反转未见编辑，就说明 ROME / MEMIT 使用了共同机制。
+如果知识编辑真是事实特异的，每个 fact 应该写在不同的权重上，一个共享 mask 就不该泛化。论文反过来用这点做判据：训练一个二值 mask，值为 1 表示保留编辑权重、0 表示移除它的贡献，并让同一个 $K$ 同时作用到一批不同 facts 的编辑矩阵上，训练中只有 $K$ 接收梯度、原模型和编辑权重全部冻结。这样 mask 没法死记某一个 fact，只能去捕捉多种编辑共同依赖的权重结构——一旦它能反转甚至阻断没见过的编辑，就说明 ROME / MEMIT 走的是一条共享机制，而非各写各的新事实。
 
-2. **三重约束训练目标**:
+**2. 三重约束训练目标：让 mask 恢复旧事实的同时别把模型剪坏。**
 
-	- 功能：让 mask 既能恢复旧事实，又不会粗暴破坏模型。
-	- 核心思路：restoration loss 要求 pruned model 对原 object 的概率高于 edited object；sparsity loss 限制剪掉的权重比例；KL preservation loss 让 pruned model 的输出分布接近原模型。综合目标包含 $\mathcal{L}_{KL}$、$\max(0,\mathcal{L}_{sparsity}-S_{max})$ 和 $\max(0,\mathcal{L}_{restoration}+\delta)$。
-	- 设计动机：只追求反转编辑可能通过破坏模型实现，加入稀疏和 KL 约束后，mask 更可能定位真正维持编辑的关键通路。
+只追求“反转编辑”很容易退化成直接把模型剪崩，靠破坏语言建模来“恢复”旧答案。论文给训练目标加了三股力：restoration loss 要求 pruned model 给原 object 的概率高于 edited object；sparsity loss 限制被剪权重的比例；KL preservation loss 把 pruned model 的输出分布拉回原模型附近。综合目标写成 $\mathcal{L}_{KL}+\max(0,\mathcal{L}_{sparsity}-S_{max})+\max(0,\mathcal{L}_{restoration}+\delta)$，稀疏和 KL 两个约束逼着 mask 去定位真正维持编辑的少量关键通路，而不是为了把概率掰回来牺牲整体能力。
 
-3. **残差流分解与编辑阻断实验**:
+**3. 残差流分解与编辑阻断实验：证明 mask 消除的 overattention 既能解释反转、又是编辑成功的必要条件。**
 
-	- 功能：解释 mask 反转编辑时到底消除了什么机制，并验证该机制是否必要。
-	- 核心思路：作者用 Logit Lens 分解 residual stream 中 MLP 与 attention 对目标 token logit 的贡献，比较 original、edited、pruned 三种模型。随后在编辑过程中预先注入 mask，看 ROME 是否还能绕过该子空间完成新编辑。
-	- 设计动机：高 RSR 只能说明 mask 有效，不能说明为什么有效；残差分解和 blocking experiment 共同证明 overattention 既足以解释反转，也对编辑成功是必要的。
+高 RSR 只能说明 mask 管用，说不清它为什么管用。论文用 Logit Lens 把 residual stream 中 MLP 与 attention 对目标 token logit 的贡献拆开，对照 original、edited、pruned 三种模型，发现编辑后 MLP 路径仍大体保留旧知识轨迹，真正被异常放大的是后续 attention，mask 的作用正是抹掉这些 attention spikes。为了进一步证明这条子空间不是旁观者，作者还在编辑过程中预先注入 mask，看 ROME 能不能绕开它完成新编辑——结果编辑成功率从 98% 掉到 38%，说明这个 overattention 子空间对编辑成功本身就是必要的。
 
 ### 损失函数 / 训练策略
 

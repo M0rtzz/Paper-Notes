@@ -41,30 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 Chiu et al. 2025 的 LitmusValues 框架：(1) 16 个 "Shared AI Values"（Truthfulness / Privacy / Justice / Protection 等，从 Anthropic Claude Constitution + OpenAI Model Spec 抽取）；(2) AIRiskDilemmas 3000 条 second-person 情境化二选一道德困境；(3) Stated rank = 每对价值 pairwise 比较的胜率排名，Revealed rank = 在 dilemma 中"为某个 value 做选择 = win"的 Elo 评分换算成 1–16 名次。本文在 stated 和 revealed 两侧分别把 "{A 选 v1, B 选 v2}" 扩展为 "{A, B, C=Equal Preference, D=Depends/Cannot Decide}" 四选一，用 GPT-4o-mini 当 LM judge 解析响应类别。计算 SvR 时排除 Equal/Depends 响应只保留二值偏好，再算 Spearman ρ。所有生成都用 deterministic decoding (temperature=0, top_p=0.01) 确保可复现。
+
+这是一篇「评测协议本身就是研究对象」的方法学论文，底座沿用 Chiu et al. 2025 的 LitmusValues 框架：16 个从 Anthropic Claude Constitution 与 OpenAI Model Spec 抽取的 "Shared AI Values"（Truthfulness、Privacy、Justice、Protection 等），加上 AIRiskDilemmas 里 3000 条第二人称情境化二选一道德困境。Stated rank 来自对每对价值做 pairwise 比较的胜率排名，Revealed rank 则把困境中「为某个 value 做选择即 win」的结果折成 Elo、再换算成 1–16 名次。本文的核心改动只有一处却贯穿始终：在 stated 和 revealed 两侧，都把原来的 "{A 选 v1, B 选 v2}" 二选一扩展为 "{A, B, C=Equal Preference, D=Depends/Cannot Decide}" 四选一，用 GPT-4o-mini 当 LM judge 解析响应落入哪一类；算 SvR 时再把 Equal/Depends 剔除、只用二值偏好算 Spearman ρ。整条流水线在 deterministic decoding（temperature=0, top_p=0.01）下跑，保证可复现，最终输出是不同协议组合下的一组 ρ 与 neutrality rate，用来对比「允许中立」这一个开关被放在管线不同位置时的相反效应。
 
 ### 关键设计
 
-1. **Expanded-Choice Elicitation 的双侧独立切换**:
+**1. Expanded-Choice 的双侧独立切换：把「是否允许中立」做成可单独开关的归因轴。**
 
-    - 功能：把传统 forced 协议拆成 stated/revealed 两个独立维度，每维度可选 forced 或 expanded，构成 2×2 配置矩阵。
-    - 核心思路：作者实际只评测了三个有意义的配置——forced-forced（baseline）、expanded-stated + forced-revealed、expanded-expanded。对 stated 侧，用 5 个 symmetric prompt template（"When v1 and v2 are in tension..."）并 permute 所有 $P_2^{16}$ 对，每对跑 5 次 elicitation；template 是控制 phrasing artifact 的关键。对 revealed 侧，在 AIRiskDilemmas 的每条 prompt 前 prepend 一段 instruction block 显式给出 A/B/C/D 四个选项，强制模型在第一句就表态。
-    - 设计动机：把 elicitation 改动局部化到"是否允许中立"这一个轴上，可以排除 framing / wording 等其他混淆变量；分别在两侧打开开关又可以归因——若 ρ 在 (expanded-stated, forced-revealed) 涨而在 (expanded-expanded) 崩，那说明 revealed 侧的高 neutrality rate 才是 noise 源，而不是 stated 侧的中立选项有问题。
+作者把传统 forced 协议拆成 stated 与 revealed 两个独立维度，每维度都能选 forced 或 expanded，理论上构成 2×2 矩阵，实际评测三个有意义的格子——forced-forced（baseline）、expanded-stated + forced-revealed、expanded-expanded。stated 侧用 5 个对称 prompt template（"When v1 and v2 are in tension..."）并 permute 全部 $P_2^{16}$ 对价值、每对跑 5 次，template 是压住 phrasing artifact 的关键；revealed 侧则在 AIRiskDilemmas 每条 prompt 前 prepend 一段 instruction block 显式列出 A/B/C/D，逼模型第一句就表态。之所以把改动严格局限在「允不允许中立」这一个轴上，是为了排除 framing、wording 等混淆变量，从而能干净地归因：如果 ρ 在 (expanded-stated, forced-revealed) 上涨、却在 (expanded-expanded) 上崩，那噪声源就锁定在 revealed 侧过高的 neutrality rate，而不是 stated 侧的中立选项本身有问题。
 
-2. **Neutrality-Aware Rank 计算 + Capability Correlation**:
+**2. Neutrality-Aware Rank 计算与能力相关性：中立留作诊断、不进排名。**
 
-    - 功能：在保留中立响应（用于诊断模型"无定见率"）的同时，按 survey methodology 标准把它们从 ranking 中排除，保证 dense ordinal rank 可计算。
-    - 核心思路：对 stated，对每对 (v1, v2) 5 次 elicitation 投票，胜次只算 binary win；对 revealed，3000 dilemma 上每条只算 binary action 的 Elo 调整，跳过 C/D 响应。最后用 Spearman ρ 比较 1–16 排名。同时单独报告 neutrality rate 作为辅助指标——比如 Mistral-3-8B 变体在 revealed 端 neutrality 接近 100%（被剔除出实验），而 Qwen-3-8B 在 stated 端 100% Depends。把 ρ 与 Epoch Capabilities Index 关联，回答"模型越强 SvR 越一致吗"。
-    - 设计动机：survey 文献（Krosnick 1991）证明强制处理 indeterminate response 会破坏 rank 密度，作者沿用这个传统但加了一个新观察：把中立"留作 diagnostic 不进 rank"，比"硬塞进 binary"更能反映模型真实偏好分布。
+这一设计要同时满足两个看似冲突的需求——既要保留中立响应来度量模型的「无定见率」，又要让 1–16 的 dense ordinal rank 仍可计算。做法是：stated 侧对每对 (v1, v2) 的 5 次 elicitation 投票，只把 binary win 计入胜次；revealed 侧在 3000 条困境上只对二值 action 做 Elo 调整，跳过所有 C/D 响应；最后用 Spearman ρ 比较两套 1–16 排名，并把 neutrality rate 单列为辅助指标——例如 Qwen-3-8B 在 stated 端几乎 100% Depends，Mistral-3-8B 变体在 revealed 端 neutrality 接近 100%（直接被剔出实验）。再把 ρ 与 Epoch Capabilities Index 关联，回答「模型越强、SvR 是否越一致」。设计依据来自调查方法学：Krosnick 1991 早已指出强行处理 indeterminate response 会破坏 rank 密度，作者沿用这一传统，又补了一个新观察——把中立「留作 diagnostic 而不硬塞进 binary」，更能反映模型真实的偏好分布。
 
-3. **System Prompt Steering 反事实**:
+**3. System Prompt Steering 反事实：用模型自报的排序去拉它自己的行为。**
 
-    - 功能：检验"把模型自己的 stated value ranking 当系统提示注入"能否缩小 SvR gap。
-    - 核心思路：对每个模型，先用 expanded-stated 协议拿到它自报的 16-value 排序；用一个固定模板把这个排序写成系统提示（包含"严格按以下优先级"和"高级别 value 永远压倒低级别"的 conflict resolution 规则），prepend 到 revealed elicitation 的每条 prompt 上。然后比较 steered 与 unsteered 的 Spearman ρ 变化。
-    - 设计动机：Liu et al. 2025 在 3-value 和 6-value 集合上证明 steering 有效，但作者怀疑 16 个 value 太多 LLM 在 context window 里"接不住"。把 stated rank 当 stress-test 工具——如果 steering 有效，那 SvR gap 主要是"模型不知道自己的 value 优先级"导致；如果无效，那 gap 是 deeper alignment 问题，需要更强干预。
+最后一块是反事实检验：把模型自己的 stated value ranking 当系统提示注入，看能否缩小 SvR gap。具体是先用 expanded-stated 协议拿到该模型自报的 16-value 排序，再用固定模板把它写成系统提示（含「严格按以下优先级」和「高级别 value 永远压倒低级别」的冲突消解规则），prepend 到 revealed elicitation 的每条 prompt，最后比较 steered 与 unsteered 的 Spearman ρ 变化。这一步借 stated rank 当压力测试工具：Liu et al. 2025 在 3-value、6-value 小集合上证明 steering 有效，但作者怀疑 16 个 value 已超出 LLM 在 context window 里能稳定执行的容量——若 steering 有效，说明 SvR gap 主要源于「模型不清楚自己的优先级」；若无效，则 gap 是更深层的对齐问题，简单 prompt injection 救不了。
 
 ### 损失函数 / 训练策略
-本文是评测论文，无训练。关键超参：5 个 stated prompt template、permute $P_2^{16}=240$ 对 value × 5 template = 1200 次 stated elicitation/模型；3000 dilemma × （forced + expanded） = 6000 次 revealed elicitation/模型；24 个 LLM × 3 协议 + steering 实验。
+
+本文为评测论文，不涉及训练。规模上的关键超参：stated 侧 5 个 prompt template，permute $P_2^{16}=240$ 对价值 × 5 template = 1200 次 stated elicitation/模型；revealed 侧 3000 条困境 ×（forced + expanded）= 6000 次 elicitation/模型；整体覆盖 24 个 LLM × 3 协议，外加 steering 反事实实验。
 
 ## 实验关键数据
 

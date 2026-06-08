@@ -41,34 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文把现有所有"重建误差派"MIA 归纳成一个通用范式（公式 6）：
-$$\mathcal{A}(x_i,\theta)=\mathbb{1}[\|x_{i,t}-x_{i,t}^{target}\|_q \le \tau]$$
-具体方法之间的差别只在于"如何拿到 $x_{i,t}$ 和 $x_{i,t}^{target}$"——Naive 用一步加噪 + 一步去噪损失；SecMI 用 DDIM 多步逆向；PIA 用近端初始化得到确定性噪声预测。本文不动 attack 主体，只对范式里的两张图做一个**对称的频域低通滤波** $\mathcal{F}(\cdot)$，把范式升级成（公式 11）：
-$$\mathcal{A}'(x_i,\theta)=\mathbb{1}[\|\mathcal{F}(x_{i,t})-\mathcal{F}(x_{i,t}^{target})\|_q \le \tau]$$
-整条 pipeline 仍然是 **输入图 → attack 流程拿到两张图 → 频域滤波 → 距离 → 阈值**，只在倒数第二步加了一次 FFT/IFFT，没有任何可学习参数。
+本文要解决的是"重建误差派 MIA 在高频丰富的样本上系统性失灵"这一问题，做法是不碰攻击主体、只在误差计算前插一道对称低通滤波。作者先把 Naive/SecMI/PIA 等攻击统一成一个通用范式（公式 6）：$\mathcal{A}(x_i,\theta)=\mathbb{1}[\|x_{i,t}-x_{i,t}^{target}\|_q \le \tau]$，它们的差别仅在于如何拿到模型预测图 $x_{i,t}$ 与目标图 $x_{i,t}^{target}$（Naive 用一步加噪去噪损失、SecMI 用 DDIM 多步逆向、PIA 用近端初始化得确定性噪声预测）。在这个统一接口上，FreMIA 对两张图施加同一个频域低通滤波 $\mathcal{F}(\cdot)$，把判别量升级为（公式 11）$\mathcal{A}'(x_i,\theta)=\mathbb{1}[\|\mathcal{F}(x_{i,t})-\mathcal{F}(x_{i,t}^{target})\|_q \le \tau]$，整条流程只在距离计算前多了一次 FFT/IFFT，没有任何可学习参数。
 
 ### 关键设计
 
-1. **MIA 通用范式形式化（General Paradigm）**：
+**1. MIA 通用范式形式化：让一层滤波改造对所有攻击同时生效**
 
-    - 功能：把 Naive/SecMI/PIA 等表面上做法不同的 attack 统一到 $\|x_{i,t}-x_{i,t}^{target}\|_q$ 这一个表达式下，作为后续频域改造的统一接口
-    - 核心思路：附录 B 证明这些 attack 的判别量都可改写成"模型预测图 vs 目标图"的 $\ell_q$ 距离，只是 $x_{i,t}^{target}$ 的构造不同（如 SecMI 用 DDIM 逆过程中间结果，PIA 用确定性初始噪声）。这一统一让"在距离前插一层滤波"成为一个对所有方法同时生效的修改点
-    - 设计动机：避免对每种 attack 各打一个补丁，确保模块的**即插即用**性质；同时让理论分析（基于成员分数标准差）可以一次性覆盖所有该范式下的攻击
+不同攻击表面上做法各异，若逐个打补丁既繁琐又难以统一分析。作者在附录 B 证明，Naive/SecMI/PIA 等的判别量都能改写成"模型预测图 vs 目标图"的 $\ell_q$ 距离 $\|x_{i,t}-x_{i,t}^{target}\|_q$，区别仅在 $x_{i,t}^{target}$ 的构造（如 SecMI 取 DDIM 逆过程中间结果、PIA 取确定性初始噪声）。把所有攻击收敛到这一个表达式后，"在距离前插一层滤波"就成了对全体方法同时生效的单点修改，既保证了模块的即插即用性，也让后续基于成员分数标准差的理论分析能一次性覆盖该范式下的所有攻击。
 
-2. **高频滤波器 $\mathcal{F}$ 与对称作用机制**：
+**2. 对称高频滤波器 $\mathcal{F}$：把模型在高频上的随机性从误差里减掉**
 
-    - 功能：在送进距离函数前，去掉两张图中频率半径 $r>r_t$ 的高频分量，从而消除"模型在高频上的随机性"对成员分数的扰动
-    - 核心思路：对 $x_{i,t}$ 做 DFT 得 $\mathbf{X}=FFT(x_{i,t})$，乘上掩码 $\beta_{i,t}(r)=s\ (r>r_t)\ \text{else}\ 1$（实验中 $s=0$，即硬截止低通），再 IFFT，得到滤波后的 $\mathcal{F}(x_{i,t})=IFFT(FFT(x_{i,t})\odot\beta_{i,t}(r))$。关键是**对 $x_{i,t}$ 和 $x_{i,t}^{target}$ 用同一个 mask**，所以两张图被减掉的高频信号是同分布的，距离里只剩下"低频部分对训练数据的拟合差异"，正好对应模型最稳定、最能反映 memorization 的频段
-    - 设计动机：作者从两个角度找到这种"对称低通"的依据——（a）频谱观察：扩散模型先学低频再学高频，高频本身就更不稳定；（b）失败案例统计（表 1）：误判样本中 member 的高频含量显著高于 hold-out，说明高频是"假信号"的主要来源。把这部分抹掉之后，attack 拿到的是更纯净的 memorization 信号
+针对"高频是假信号主要来源"这一痛点，$\mathcal{F}$ 在送进距离函数前抹掉两张图中频率半径 $r>r_t$ 的高频分量。具体做法是先对 $x_{i,t}$ 做 DFT 得 $\mathbf{X}=FFT(x_{i,t})$，乘上掩码 $\beta_{i,t}(r)=s$（当 $r>r_t$）否则 $1$，再 IFFT，得到 $\mathcal{F}(x_{i,t})=IFFT(FFT(x_{i,t})\odot\beta_{i,t}(r))$，实验中 $s=0$ 即硬截止低通。关键在于对 $x_{i,t}$ 和 $x_{i,t}^{target}$ 用同一个 mask，所以两张图被减掉的高频信号同分布、在相减时相消，距离里只剩"低频部分对训练数据的拟合差异"——正好是模型最稳定、最能反映 memorization 的频段。这种"对称低通"有两重依据：频谱上扩散模型先学低频再学高频、高频天然更不稳定；统计上失败样本里 member 的高频含量显著高于 hold-out（表 1），说明高频正是把 member 误判成非成员的噪声来源。
 
-3. **成员优势的频域分解与理论保证（Proposition 4.2）**：
+**3. 成员优势的频域分解与理论保证（Proposition 4.2）：证明去高频必然涨**
 
-    - 功能：给出"为什么去掉高频会让 attack 更强"的可证明依据，并刻画该改造起作用的充分条件
-    - 核心思路：把 member/hold-out 的总分数标准差分解为低频和高频部分 $\sigma_M^2=\sigma_M^{low\,2}+\sigma_M^{high\,2}$、$\sigma_H^2=\sigma_H^{low\,2}+\sigma_H^{high\,2}$。设 $\sigma_H^{low}-\sigma_M^{low}=\Delta$（低频部分 hold-out 比 member 更分散，这是 attack 能赢的本钱），且 $\sigma_M^{high}=k\cdot\sigma_H^{high}$。论文证明当 $k\ge 1$（即高频部分 member 的方差不小于 hold-out）时，必然有 $\sigma_H'/\sigma_M' > \sigma_H/\sigma_M$，亦即按 $Adv^M(\mathcal{A})\propto \sigma_H/\sigma_M$（公式 8），成员优势严格上升。直观解释：高频对 member 和 hold-out 都加同一份"噪声方差"，但分母（member）被加上去的比例更高，所以减掉后比值变好
-    - 设计动机：把"我做了个工程 trick"上升为"在常见条件下必然提升成员优势"的可证明结论，并解释了为何在所有数据集/所有 baseline 上都能稳赢——作者还在附录 D.2 实测 $k\ge 1$ 这一条件在标准设置下几乎总是成立
+为给"去高频为何更强"一个可证明依据，作者把 member/hold-out 的总分数标准差按频段分解为 $\sigma_M^2=\sigma_M^{low\,2}+\sigma_M^{high\,2}$、$\sigma_H^2=\sigma_H^{low\,2}+\sigma_H^{high\,2}$。设低频部分 $\sigma_H^{low}-\sigma_M^{low}=\Delta$（hold-out 比 member 更分散，这是攻击能赢的本钱），高频部分 $\sigma_M^{high}=k\cdot\sigma_H^{high}$。论文证明当 $k\ge 1$（高频部分 member 方差不小于 hold-out）时必有 $\sigma_H'/\sigma_M' > \sigma_H/\sigma_M$；按成员优势公式 $Adv^M(\mathcal{A})\propto \sigma_H/\sigma_M$（公式 8），优势严格上升。直觉是高频对 member 和 hold-out 加同一份噪声方差，但分母（member）被加上去的相对比例更高，减掉后比值变好。这把一个工程 trick 升级为"常见条件下必然提升"的结论，也解释了为何跨数据集、跨 baseline 都稳赢——附录 D.2 实测 $k\ge 1$ 在标准设置下几乎总成立。
 
 ### 损失函数 / 训练策略
-**无任何训练**。该模块只在 inference 时给已有 MIA 的距离计算加一道 FFT→mask→IFFT，复杂度 $O(N\log N)$，相对扩散模型的多步采样几乎可忽略，作者强调"negligible additional time overhead"。唯一超参是高频半径 $r_t$（不同分辨率不同：CIFAR-100/TINY-IN 用 $r_t=2$，MS-COCO/Flickr 用 $r_t=5$），$s$ 默认取 0。
+**无任何训练**。该模块只在 inference 时给已有 MIA 的距离计算加一道 FFT→mask→IFFT，复杂度 $O(N\log N)$，相对扩散模型的多步采样几乎可忽略，作者强调"negligible additional time overhead"。唯一超参是高频半径 $r_t$（随分辨率而定：CIFAR-100/TINY-IN 用 $r_t=2$，MS-COCO/Flickr 用 $r_t=5$），衰减因子 $s$ 默认取 0。
 
 ## 实验关键数据
 

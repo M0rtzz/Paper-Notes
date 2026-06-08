@@ -43,30 +43,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在分块自回归视频扩散中，当前块查询同时关注两组键——当前块的键（高精度 BF16）和前序块的键（低比特量化缓存）。标准 softmax 注意力对这两组键分别计算 partition sum 然后归一化。量化导致缓存键侧的 partition sum 被系统性夸大，进而窃取本应分配给当前块的注意力质量。本文推导出**逐令牌的纠正项**，在 softmax 之前从缓存键分数中减去，恢复原始注意力平衡。
+在分块自回归视频扩散里，当前块的查询要同时关注两组键：当前块的高精度 BF16 键，以及前序块那份被压成低比特的量化缓存键。标准 softmax 会分别给两组键算 partition sum 再归一化。本文发现量化让缓存键侧的 partition sum 被系统性夸大，于是缓存键"偷走"了本该分给当前块的注意力质量。整套方法的逻辑是一条链：先从 Jensen 不等式说清这个偏差为什么必然发生，再解析推导出一个逐令牌的纠正项 $b_i$，在 softmax 之前从缓存键分数里减掉，最后证明它几乎不增加推理开销——全程不需要重训练。
 
 ### 关键设计
 
-1. **Jensen 偏差的理论推导**:
+**1. Jensen 偏差的理论推导：零均值噪声为何还能系统性跑偏。**
 
-    - 功能：精确描述量化如何通过 softmax 的凸性破坏注意力权重平衡。
-    - 核心思路：设缓存键 $i$ 的量化分数为 $\hat{s}_i = s_i + \delta_i$，$\delta_i = \frac{q^\top \epsilon_i}{\sqrt{d}}$ 是量化噪声投影，$\epsilon_i \sim \mathcal{U}(-\Delta_i/2, +\Delta_i/2)$。在期望层面，缓存侧 partition sum $\mathbb{E}[\hat{Z}_\mathcal{S}] = \sum_{i \in \mathcal{S}} e^{s_i} \cdot \mathbb{E}[e^{\delta_i}]$。由 Jensen 不等式 $\mathbb{E}[e^{\delta_i}] \geq e^{\mathbb{E}[\delta_i]} = 1$（$\delta_i$ 零均值），所以 $\mathbb{E}[\hat{Z}_\mathcal{S}] \geq Z_\mathcal{S}$。这个不等号的缝隙就是 Jensen 偏差——导致缓存键窃取注意力质量。
-    - 设计动机：这是量化降质的根本原因；与其改进量化方案，不如直接纠正偏差引发的后果。
+直觉上，整数量化在注意力分数上引入的是零均值噪声，期望上不该改变注意力行为。但 softmax 里的指数函数是凸的，对称性就被打破了。设缓存键 $i$ 的量化分数为 $\hat{s}_i = s_i + \delta_i$，其中 $\delta_i = \frac{q^\top \epsilon_i}{\sqrt{d}}$ 是量化噪声的投影、$\epsilon_i \sim \mathcal{U}(-\Delta_i/2, +\Delta_i/2)$。缓存侧 partition sum 的期望是 $\mathbb{E}[\hat{Z}_\mathcal{S}] = \sum_{i \in \mathcal{S}} e^{s_i} \cdot \mathbb{E}[e^{\delta_i}]$，而由 Jensen 不等式 $\mathbb{E}[e^{\delta_i}] \geq e^{\mathbb{E}[\delta_i]} = 1$，于是 $\mathbb{E}[\hat{Z}_\mathcal{S}] \geq Z_\mathcal{S}$。正偏差被指数放大的幅度大于负偏差被压低的幅度，这道不等号的缝隙就是 Jensen 偏差——缓存键由此窃取注意力。看清这点后，思路就从"努力减小量化噪声"转向"直接纠正噪声造成的后果"。
 
-2. **逐分数纠正项推导**:
+**2. 逐分数纠正项推导：要求纠正后的期望贡献回到原值。**
 
-    - 功能：为每个缓存令牌计算纠正值 $b_i$，使纠正后的贡献期望恢复原值。
-    - 核心思路：要求 $e^{s_i - b_i} \cdot \mathbb{E}[e^{\delta_i}] = e^{s_i}$，得 $b_i = \log \mathbb{E}[e^{\delta_i}]$。由于量化噪声分量独立跨通道，该期望可按通道分解。对均匀量化噪声，精确形式 $b_i = \sum_{c=1}^d \log\left(\frac{\sinh(q_c \Delta_{i, c} / (2 \sqrt{d}))}{q_c \Delta_{i, c} / (2 \sqrt{d})}\right)$。用二阶 Taylor 展开 $\log(\sinh(\alpha) / \alpha) \approx \alpha^2 / 6$ 得简洁近似 $b_i \approx \frac{1}{24 d} \sum_{c=1}^d q_c^2 \Delta_{i, c}^2$。
-    - 设计动机：理论上从无偏性推导，实践中采用 Taylor 近似大幅简化计算；该近似还可扩展到其他量化格式（FP、MXFP 等）。
+既然知道缓存键的贡献被膨胀了 $\mathbb{E}[e^{\delta_i}]$ 倍，就给每个缓存令牌减一个 $b_i$ 把它抵消。约束条件直白：$e^{s_i - b_i} \cdot \mathbb{E}[e^{\delta_i}] = e^{s_i}$，解得 $b_i = \log \mathbb{E}[e^{\delta_i}]$。因为量化噪声在各通道独立，这个期望可按通道分解，对均匀量化噪声有精确形式 $b_i = \sum_{c=1}^d \log\left(\frac{\sinh(q_c \Delta_{i, c} / (2 \sqrt{d}))}{q_c \Delta_{i, c} / (2 \sqrt{d})}\right)$。实践中再用二阶 Taylor 展开 $\log(\sinh(\alpha)/\alpha) \approx \alpha^2/6$，化简成一个干净的近似 $b_i \approx \frac{1}{24 d} \sum_{c=1}^d q_c^2 \Delta_{i, c}^2$。它只依赖查询和量化步长，理论上从无偏性出发、实践中又足够简洁，还能推广到 FP、MXFP 等其它量化格式。
 
-3. **推理时应用 + 复杂度控制**:
+**3. 推理时应用 + 复杂度控制：让纠正几乎白送。**
 
-    - 功能：在推理时以极低开销应用纠正。
-    - 核心思路：纠正项仅依赖已有的量化参数（步长 $\Delta_{i, c}$）和查询范数 $\|q\|$，无需额外存储。对分组量化（组大小 $g = 32$），额外计算复杂度 $O(QK \cdot d / g)$，与标准 $QK^\top$ 的 $O(QK \cdot d)$ 相比只有 $1/g$ 的额外负担。
-    - 设计动机：使纠正成为实用方案；在 FlexAttention 实现中仅增加约 5% 端到端延迟。
+纠正项 $b_i$ 只用到已经存在的量化参数（步长 $\Delta_{i, c}$）和查询范数 $\|q\|$，不需要额外存任何东西。对分组量化（组大小 $g = 32$），它带来的额外计算是 $O(QK \cdot d / g)$，相对标准 $QK^\top$ 的 $O(QK \cdot d)$ 只多了 $1/g$。落到 FlexAttention 实现上，端到端延迟仅增加约 5%。正是这个"几乎免费"让它从一个理论结论变成可直接挂在任何量化方案后面的即插即用纠正。
 
 ### 训练策略
-本方法是**无需训练的推理阶段纠正**。原模型参数和训练目标不改变，仅在 softmax 前应用分数校准。
+本方法是**无需训练的推理阶段纠正**：原模型参数和训练目标都不变，只在 softmax 前对缓存键分数做一次校准。
 
 ## 实验关键数据
 

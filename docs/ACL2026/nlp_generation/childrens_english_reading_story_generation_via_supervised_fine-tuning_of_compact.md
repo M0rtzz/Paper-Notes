@@ -41,27 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基础设施：3 个 8B 模型（Llama-3-8B / Apertus-8B-instruct-2509 / Granite-3.3-8B-instruct）；QLoRA（NF4 4-bit + LoRA r=32, α=64, dropout=0.1, lr=1e-4, batch=4, epochs=5）；训练数据 = UFLI K–2 课程 129 课 × 20 故事（GPT-4o 10 + Llama-3.3 10）= 2,580 篇；评估 5 指标（Spache 可读性 / GPT-2 LM-PPL / coherence 即相邻句共享 NER 数 / 句法复杂度 = avg MDD + avg NSC / Detoxify toxicity）+ 两种 Self-BLEU 重复率；推理时 nucleus sampling top-p=0.9, T=0.8；每个 (实验, 模型) 组合生成 1,290 篇（129 lesson × 10），人工挑掉非故事输出后做指标分析。每个 SFT 实验设计共四类，下文为三个关键设计点。
+
+这篇论文想回答一个很实际的问题：在严格的 K-2 阅读课程约束下，到底哪种 SFT 策略能让 sub-10B 的小模型把故事写好。它不去比拼参数量，而是把同一批数据喂给三个 8B 模型（Llama-3-8B / Apertus-8B-instruct-2509 / Granite-3.3-8B-instruct），用四种不同的 SFT 设计各训一遍，再放到同一套指标下横评。训练数据来自前作：UFLI K–2 课程 129 课、每课 20 篇（GPT-4o 10 篇 + Llama-3.3-70B 10 篇），共 2,580 篇故事。评估侧固定 5 个指标——Spache 可读性、GPT-2 LM-PPL、coherence（相邻句共享 NER 数）、句法复杂度（avg MDD + avg NSC）、Detoxify toxicity，外加两种 Self-BLEU 看重复率。四种 SFT 设计里，baseline 就是标准 SFT，剩下三个是本文的关键改动。
 
 ### 关键设计
 
-1. **Rewarded SFT——用多指标 scalar reward 重新加权 SFT loss**:
+**1. Rewarded SFT：把已经算好的多指标平均分当 sample weight，绕过训不起的 RLHF。**
 
-    - 功能：在缺乏足够 RLHF 样本时，将 RL 化简为带权重的监督学习，使 8B 模型在训练中就感知"哪些故事是好故事"。
-    - 核心思路：对每条训练样本 $i$，先用 5 个评估指标算原始分；对"低值好"的指标（如 Spache、PPL）用 inverted min-max 归一化 $\tilde{m}_i = \max(0, \min(1, (b_m - m_i)/b_m))$，对"高值好"的用标准 min-max；然后用 5 个归一化指标的**无权平均**得到 scalar reward $r_i = \frac{1}{5}\sum_k \tilde{m}_i^{(k)}$。SFT Trainer 的 cross-entropy loss 按 $r_i$ 重加权，让模型在"高 reward 故事"上学得更彻底。这一套与 reward-weighted regression（Peters 2006）和 offline alignment（Mukherjee et al. 2025）一脉相承，但不需要训练 reward model。
-    - 设计动机：(a) 团队只有 2,580 条故事样本，远不够训练稳定的 RLHF reward model；(b) 紧凑模型在严格约束下需要"哪些样本更值得学"的明确信号，否则 mode collapse；(c) 把已经计算好的 5 个自动指标当 cheap reward，工程实现只是改 loss 权重而已，不增加推理成本。
+这套设计针对的是"样本太少训不出 reward model"这个硬约束——团队手里只有 2,580 篇故事，远不够支撑稳定的 RLHF，而紧凑模型一旦没有"哪些样本更值得学"的明确信号，在严格约束下就容易 mode collapse。作者的做法是把 RL 直接化简成带权重的监督学习：对每条训练样本 $i$，先用 5 个评估指标各算一个原始分，对"越低越好"的指标（如 Spache、PPL）用 inverted min-max 归一化 $\tilde{m}_i = \max(0, \min(1, (b_m - m_i)/b_m))$，对"越高越好"的用标准 min-max，再把 5 个归一化分**无权平均**成一个 scalar reward $r_i = \frac{1}{5}\sum_k \tilde{m}_i^{(k)}$。SFT Trainer 的 cross-entropy loss 按这个 $r_i$ 重加权，模型自然在"高 reward 故事"上学得更彻底。
 
-2. **Good Stories——质量过滤子集 SFT**:
+它和 reward-weighted regression（Peters 2006）、offline alignment（Mukherjee et al. 2025）一脉相承，但完全不需要单独训一个 reward model——5 个自动指标本来就为评估算好了，当成 cheap reward 几乎零成本，工程上只是改了 loss 权重，推理时一点开销都不加。
 
-    - 功能：检验"more data vs better data"在 K-2 故事任务上的相对价值。
-    - 核心思路：用 5 个指标的语料均值作阈值，保留**所有 5 个指标都不低于均值**的故事，得到 996 篇（约 38% 数据），再用这个子集做标准 SFT。
-    - 设计动机：与 AlpaGasus / LIMA 等"少而精胜过多而粗"研究方向一致，同时验证质量过滤是否比 reward weighting 更简单有效。
+**2. Good Stories：只留全指标达标的子集，验证"少而精"是否真的更强。**
 
-3. **SFT with simulated children's reading errors——把儿童错读 phoneme 作 input augmentation**:
+这一支是冲着"more data vs better data"这个老问题去的。做法很直接：以 5 个指标的语料均值为阈值，只保留**5 个指标全部不低于均值**的故事，筛出 996 篇（约 38% 数据），再在这个精选子集上做标准 SFT。
 
-    - 功能：让模型在训练时就"看到"真实早读者会犯的错音，输出端学会针对性强化目标 phoneme。
-    - 核心思路：用 GPT-OSS-120B 配合少量真实儿童错读样本做 few-shot prompt，为每篇故事生成 3–8 个"模拟错读 phoneme"；训练时把"原课程 phoneme + 模拟错读 phoneme"拼起来作为输入，故事仍为目标。这套与 Self-Instruct + LaMP 个性化 + STaR bootstrapping 思路一致。
-    - 设计动机：真实儿童阅读错误数据稀缺且受 IRB 限制，但能 explicitly 教模型"针对哪些音去出题"是显著的应用价值；同时 input 侧 augmentation 不改变 target，对 lexical/syntax 控制几乎零负担。
+它对标的是 AlpaGasus / LIMA 这类"少而精胜过多而粗"的主张，同时也是给 Rewarded SFT 做对照——如果简单的质量过滤就能打平甚至超过 reward 加权，那后者的复杂度就不值得。实验结果（见下）恰恰说明这条"less is more"在 K-2 任务上并不绝对成立。
+
+**3. 模拟儿童错读 phoneme 作 input 端增强：让模型训练时就"看到"早读者会犯的错音。**
+
+真实的儿童阅读错误数据既稀缺又受 IRB 限制，但"针对哪些音去出题"恰恰是这个应用最有价值的地方。作者用 GPT-OSS-120B 配上少量真实错读样本做 few-shot，为每篇故事生成 3–8 个"模拟错读 phoneme"；训练时把"原课程 phoneme + 模拟错读 phoneme"拼成输入，目标仍是原故事。
+
+这套思路与 Self-Instruct、LaMP 个性化、STaR bootstrapping 同源，关键巧处在于增强只发生在输入端、不动 target，所以对 lexical / syntax 控制几乎零负担，却能显式教会模型"该强化哪些音"。
+
+### 损失函数 / 训练策略
+
+所有实验统一用 QLoRA（NF4 4-bit + LoRA r=32, α=64, dropout=0.1, lr=1e-4, batch=4, epochs=5）。推理时用 nucleus sampling，top-p=0.9、T=0.8；每个 (实验设计, 模型) 组合生成 1,290 篇（129 lesson × 10），人工挑掉非故事输出后再做指标分析。除 Rewarded SFT 把 loss 按 $r_i$ 重加权外，其余三种设计都是标准 cross-entropy SFT，差异只在训练数据（全量 / Good Stories 子集 / 错读增强输入）。
 
 ## 实验关键数据
 

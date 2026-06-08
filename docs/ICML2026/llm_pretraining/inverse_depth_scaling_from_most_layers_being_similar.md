@@ -40,32 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法分成"测 LLM"和"训 toy"两条并行管线，最后做信号对比：
-
-- **LLM 侧**：在 Pythia-410m 等 Pythia 系列模型上跑 FineWeb，逐 token 逐层算 $\theta(h_l, h_{l+1})$，再 PCA 聚类区分"中间均匀更新" vs "早停"两类轨迹；同时在 Chinchilla 公开的 ~200 个模型点上拟合带 $\ell$ 项的分解形式（公式 3）以读出 $\alpha_\ell$。
-- **Toy 侧**：构造一个深度为 $\ell^* = 128$ 的"老师"残差网络生成 KL 目标，让深度 $\ell \in [6, 48]$ 的"学生"去学。老师权重可选 **tied**（跨层共享）或 **independent**（i.i.d. 抽样），分别对应光滑动力学（procedural ground truth）和随机游走式动力学（ensemble ground truth），再加 softmax temperature 控制目标分布尖锐度。
-
-最后把 toy 实验产出的 $\alpha_\ell$、隐藏态步长曲线、邻层增量相关性三类签名拿来和 LLM 测出的对应签名做匹配，谁的签名都吻合谁就是 LLM 的真实机制。
+全文要回答一个问题：LLM 的 loss 到底怎么随深度 $\ell$ 走、又是为什么。为此作者开了"测真实 LLM"和"训可控 toy"两条并行管线，最后让两边的隐藏态签名互相对账。LLM 侧在 Pythia 系列（主要是 Pythia-410m）上跑 FineWeb，逐 token 逐层算相邻隐藏态夹角 $\theta(h_l, h_{l+1})$ 并用 PCA 把轨迹聚成"中间均匀更新" vs "早停"两类，同时在 Chinchilla 公开的约 200 个模型点上拟合一个把深度单列出来的 loss 形式，直接读出指数 $\alpha_\ell$。Toy 侧造一个深度 $\ell^* = 128$ 的"老师"残差网络生成 KL 目标，让深度 $\ell \in [6, 48]$ 的"学生"去拟合，靠两个旋钮——老师权重 **tied/independent**、目标分布 temperature——把学生稳定推进 procedural 或 ensemble 区，得到每种机制下 $\alpha_\ell$ 和隐藏态签名的 ground truth。最后拿 toy 产出的三类签名（步长曲线、$1/\ell$ scaling、邻层增量相关性）当模板去 match LLM 实测，谁全对上谁就是 LLM 的真实机制——结论是 ensemble averaging。
 
 ### 关键设计
 
-1. **深度-宽度分解的 loss 拟合形式**：
+**1. 把深度从 $N$ 里拆出来的 loss 分解：让 $\alpha_\ell$ 第一次可被单独读出。**
 
-    - 功能：把传统 Chinchilla 形式中的 $c_N/N^{\alpha_N}$ 项进一步拆成宽度项和深度项，得到 $L = c_m/m^{\alpha_m} + c_\ell/\ell^{\alpha_\ell} + c_D/D^{\alpha_D} + L_0$，使深度指数 $\alpha_\ell$ 可被独立识别。
-    - 核心思路：宽度项捕捉"表征能力受限"的误差，深度项捕捉"变换能力受限"的误差，两者本质独立；跨项被假设为高阶可忽略。用约 200 个 Chinchilla 重建点最小化 $\log L$ 的 MSE 来同时拟合 7 个自由参数，最终量到 $\alpha_m = 0.98 \pm 0.08$、$\alpha_\ell = 1.2 \pm 0.3$、$\alpha_D = 0.30 \pm 0.01$，平均相对误差 0.4%。
-    - 设计动机：之前理论或只给出 $\log \ell$ 修正、或给出纯幂律但拟合不上真实数据；本文用一个最少假设的分解直接读出 $\alpha_\ell$，并顺手验证 $m \propto \ell$ 的最优宽深关系——刚好让 $N^{-1/3}$ 对上 Chinchilla 实测的 0.34。
+痛点在于以往 scaling laws 把参数量 $N$ 当黑盒，深度的贡献被宽度淹没，根本测不出 $\alpha_\ell$。作者把 Chinchilla 形式里的 $c_N/N^{\alpha_N}$ 进一步拆成宽度项和深度项，写成 $L = c_m/m^{\alpha_m} + c_\ell/\ell^{\alpha_\ell} + c_D/D^{\alpha_D} + L_0$：宽度项捕捉"表征能力受限"的误差，深度项捕捉"变换能力受限"的误差，两者被当成本质独立、跨项 $L_{m\ell}$ 高阶可忽略。在约 200 个 Chinchilla 重建点上最小化 $\log L$ 的 MSE、同时拟合 7 个自由参数，量到 $\alpha_m = 0.98 \pm 0.08$、$\alpha_\ell = 1.2 \pm 0.3$、$\alpha_D = 0.30 \pm 0.01$，平均相对误差仅 0.4%。这个最少假设的分解之所以管用，是因为它既不像旧理论那样硬塞 $\log \ell$ 修正、也不像纯幂律那样拟合不上真实数据，而是直接读出 $\alpha_\ell \approx 1$；顺带还推出最优宽深关系 $m \propto \ell$，让组合参数量 scaling 落到 $N^{-1/3}$，刚好对上 Chinchilla 实测的 0.34。
 
-2. **隐藏态轨迹的双重探针**：
+**2. 隐藏态轨迹的双重探针：用两个角度量同时区分三种机制。**
 
-    - 功能：用两个量同时区分三种机制——$\theta(h_l, h_{l+1})$（步长，区分"早停 vs 均匀"），以及 $\theta(\Delta h_l, \Delta h_{l+1})$（增量方向相关性，区分光滑动力学 vs 随机游走）。
-    - 核心思路：对每个 token 把 $\ell$ 维的角度向量做 PCA，发现 99.6% 的 token 聚成"中间层均匀更新"一类（与"evenly in the middle" 理想轨迹对齐），只有 0.4%（文档首 token）属于"早停"——直接排除 compositional assembly 主导。再把平均步长 $\langle \theta \rangle_{\mathcal{D}, l}$ 对深度作图，发现 $\langle \theta \rangle \propto 1/\ell$，符合 procedural / ensemble 的预期。而邻层增量夹角 $\theta(\Delta h_l, \Delta h_{l+1})$ 接近 $\pi/2$，表示邻层更新几乎正交、不存在一阶导数，与光滑动力学（procedural）不符。
-    - 设计动机：单一签名（如步长）无法区分 procedural 和 ensemble，因为两者都能给出 $1/\ell$ 步长；加上"邻层相关性"这个二阶签名才能闭环判定，并且这两个量都从 forward pass 直接读出，没有额外训练成本。
+光有指数还不够——三个候选机制都能产生幂律，必须从隐藏态本身找到能区分它们的指纹。作者用两个量当探针：相邻隐藏态夹角 $\theta(h_l, h_{l+1})$ 衡量每层步长（区分"早停 vs 均匀更新"），相邻增量夹角 $\theta(\Delta h_l, \Delta h_{l+1})$ 衡量更新方向相关性（区分光滑动力学 vs 随机游走）。具体做法是把每个 token 的 $\ell$ 维角度向量做 PCA，结果 99.6% 的 token 聚成"中间层均匀更新"一类、只有 0.4%（基本是文档首 token）属于"早停"——这一步直接排除 compositional assembly 主导。再把平均步长 $\langle \theta \rangle_{\mathcal{D}, l}$ 对深度作图，发现 $\langle \theta \rangle \propto 1/\ell$，符合 procedural 和 ensemble 共同的预期；但关键的二阶签名 $\theta(\Delta h_l, \Delta h_{l+1})$ 接近 $\pi/2$，说明邻层更新几乎正交、不存在一阶导数，这就和需要光滑轨迹的 procedural 对不上了。单看步长无法分开 procedural 和 ensemble（两者都给 $1/\ell$），正是补上"邻层相关性"这个二阶量才闭环判定出 ensemble，而且两个量都从一次 forward pass 直接读出，零额外训练成本。
 
-3. **Teacher-student toy 的双旋钮校准**：
+**3. Teacher-student toy 的双旋钮校准：把三种机制翻译成可证伪的隐藏态指纹。**
 
-    - 功能：在一个可解析的最小残差网络中，通过"老师权重绑定 vs 独立"和"目标分布 temperature"两个旋钮，分别把学生稳定推入 procedural 或 ensemble 区，给三种机制建立可对照的 ground-truth 签名库。
-    - 核心思路：架构是标准残差 + RMSNorm + ReLU² MLP，老师深度 $\ell^* = 128$ 远大于学生 $\ell$。tied 权重让累积变换 $h_0^* \to h_{\ell^*}^*$ 趋于光滑动力学；independent 权重让其变成随机游走。理论推导（式 10-12）显示：tied + 训练收敛后离散化误差主导，典型 loss $\propto 1/\ell^3$（即 $\alpha_\ell = 3$）；independent 下任何层都只能用 $f^\circ(l/\ell)$ 去拟合**整段积分** $\int_0^1 f^*(s)\,\mathrm{d}s$，每层误差 $O(1/\ell)$，求和后由 CLT 给出 $\|\cdot\| \sim 1/\sqrt{\ell}$，loss 平方后正好 $\propto 1/\ell$。实验里 tied 权重的 $\alpha_\ell$ 随训练步从 1 升到 3，independent 权重则稳定在 1 附近——并且独立权重的学生隐藏态在步长曲线、$1/\ell$ scaling、邻层正交三方面都和 LLM 完全对得上。
-    - 设计动机：直接在 LLM 上做控制实验代价太高、混杂因素太多；toy 模型把"什么机制对应什么签名"先用闭式实验钉死，再把签名当模板去 match LLM，是一种把"理论候选"翻译成"可证伪经验指纹"的桥梁。
+直接在 LLM 上做机制级控制实验代价太高、混杂太多，于是作者在一个可解析的最小残差网络（标准残差 + RMSNorm + ReLU² MLP）里先把"什么机制对应什么签名"钉死。老师深度 $\ell^* = 128$ 远大于学生 $\ell$，两个旋钮决定老师的动力学性质：**tied** 权重（跨层共享）让累积变换 $h_0^* \to h_{\ell^*}^*$ 趋于光滑动力学，**independent** 权重（i.i.d. 抽样）让它变成随机游走，外加 softmax temperature 调目标分布尖锐度。理论推导（式 10-12）给出两种极限：tied 且训练收敛后由离散化误差主导，典型 loss $\propto 1/\ell^3$（即 $\alpha_\ell = 3$）；independent 下任何层都只能用 $f^\circ(l/\ell)$ 去拟合整段积分 $\int_0^1 f^*(s)\,\mathrm{d}s$，每层误差 $O(1/\ell)$，求和后由中心极限定理给出 $\|\cdot\| \sim 1/\sqrt{\ell}$，平方进 loss 正好 $\propto 1/\ell$。实验里 tied 权重的 $\alpha_\ell$ 随训练步从 1 一路升到 3，independent 权重则稳定在 1 附近，而且独立权重学生的隐藏态在步长曲线、$1/\ell$ scaling、邻层正交三个签名上和 LLM 完全对得上——这就把抽象的"理论候选"变成了一组可拿去 match 真实模型的经验指纹。
 
 ### 损失函数 / 训练策略
 Toy 学生用 Adam 训练 40000 步（图 4 中扩到 80000 步），损失是学生与老师输出分布的 KL 散度（等价于 cross-entropy 减常数项，scaling 行为不变）。老师 MLP 权重按标准方案初始化并整体乘 $1/\sqrt{\ell}$，保证 $h_0^* \to h_{\ell^*}^*$ 的累积变换为 $O(1)$；softmax 前对 logits 除以 temperature 控制目标分布尖锐度。LLM 侧不做训练，只在 Pythia 系列预训练 checkpoint 上跑 forward pass 测隐藏态、在 Chinchilla 公开点上做曲线拟合。

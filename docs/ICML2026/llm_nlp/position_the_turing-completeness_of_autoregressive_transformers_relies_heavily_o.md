@@ -40,34 +40,25 @@ tags:
 
 ## 方法详解
 
-整篇论文是 position paper，没有实验，"方法"对应的是**一个形式化模型 + 一组定性归类 + 两条主定理**。下面按形式化、归类和定理三块展开。
+整篇论文是 position paper，没有实验，"方法"是一个形式化模型加一组定性归类，再由两条主定理把它落到复杂度阶梯上。
 
 ### 整体框架
 
-固定系统 $(T,D,C)$ 的执行过程：给定输入 $x=x_1\cdots x_n$，置 $r^{(1)}=x$；在第 $t$ 步，$C$ 用 $w^{(t)}=C_w(r^{(t)})\in\Sigma^N$ 拼出送进上下文窗口的字符串，Transformer 给出下一 token 分布，$D$ 取 $\hat{x}_{t+1}=D(T(w^{(t)}))$，$C$ 再用 $r^{(t+1)}=C_r(\hat{x}_{t+1}, r^{(t)})$ 更新自己维护的历史串，直到触发停机条件。为了避免"$C$ 内部偷偷塞图灵机"导致结论平凡，作者把分析对象限定为 **simple manager**：只用 $N$ 个 token 单元 + $O(1)$ 状态、对历史串只能做 push/pop/常数偏移、不能跑通用算法。在这个框架下重新审视 21 篇代表性工作（见 Table 1），按是否假设 scaling window / scaling precision 分组——绝大多数 Turing-completeness 证明同时落在 Group A（窗口至少要 $n+t$）和 Group B（精度至少 $O(\log n)$），从而其结论应当被理解成 scaling-family 而非固定系统。
+作者把一个能处理任意长输入的 LLM 抽象成固定系统 $(T,D,C)$：给定输入 $x=x_1\cdots x_n$，置 $r^{(1)}=x$，第 $t$ 步由上下文管理器 $C$ 用 $w^{(t)}=C_w(r^{(t)})\in\Sigma^N$ 拼出送进窗口的字符串，Transformer 给出下一 token 分布，解码规则取 $\hat{x}_{t+1}=D(T(w^{(t)}))$，$C$ 再用 $r^{(t+1)}=C_r(\hat{x}_{t+1}, r^{(t)})$ 更新自己维护的历史串，直到触发停机。论文的核心主张就是：在 $T$、$D$、精度全部固定的前提下，**$C$ 才是决定系统计算能力的自由变量**。论证分三步——先把固定系统与 scaling-family 的语义剥开，再分别证明两种"简单到能工程部署"的 $C$ 把系统钉死在哪一复杂度类。
 
 ### 关键设计
 
-1. **固定系统形式化 $(T,D,C)$ 与 scaling/fixed 二分**：
+**1. 固定系统形式化 $(T,D,C)$ 与 fixed/scaling 二分：先把"什么固定、什么可增长"写进定义**
 
-    - 功能：把"哪些量是常量、哪些量可以随输入增长"显式写进可计算模型的定义，区分 fixed-system regime（单一固定 Transformer + 固定 $N$、固定精度）与 scaling-family regime（一族 Transformer，按输入长度选模型）。
-    - 核心思路：作者把 Transformer 抽象成 $T:\Sigma^N\to\Delta(\Sigma)$ 的常数函数，把解码与历史维护从 $T$ 中分离出来交给 $D$ 和 $C$；进而指出 scaling-family 与电路族（circuit family）同构，给出的是 $O((T(n))^2)$ 类型的资源界，不是图灵完备性。
-    - 设计动机：解释为什么 Pérez 2019、Merrill & Sabharwal 2024 等一系列"$O(\log n)$ 精度即可模拟 TM"的结论，被实践者直接当作"GPT 是图灵完备的"用是误读——这些证明的"机器"会随 $n$ 改变，对应的不是一台部署中的 LLM。
+作者把 Transformer 抽象成常数函数 $T:\Sigma^N\to\Delta(\Sigma)$，并把解码与历史维护从 $T$ 中分离出来交给 $D$ 和 $C$，于是可以显式区分两个 regime：fixed-system regime 是单一固定 Transformer 配固定窗口 $N$、固定精度；scaling-family regime 则是一族 Transformer、按输入长度挑模型。关键观察是 scaling-family 与电路族（circuit family）同构，给出的是 $O((T(n))^2)$ 量级的资源界，而非图灵完备性。这就解释了为什么 Pérez 2019、Merrill & Sabharwal 2024 等"$O(\log n)$ 精度即可模拟 TM"的结论被实践者读成"GPT 是图灵完备"是误读——那些证明的"机器"会随 $n$ 改变，对应的根本不是一台部署中的 LLM。为避免 $C$ 内部偷偷塞进图灵机使结论平凡，分析对象被限定为 **simple manager**：只用 $N$ 个 token 单元加 $O(1)$ 状态、对历史串只能 push/pop/常数偏移、不能跑通用算法。在这个框架下重审 Table 1 的代表性工作，绝大多数 Turing-completeness 证明同时落在 Group A（窗口至少 $n+t$）和 Group B（精度至少 $O(\log n)$），因而本质上是 scaling-family 论证。
 
-2. **总结式管理 ⇒ 常数空间上界（Proposition 5.1）**：
+**2. 总结式管理 ⇒ 常数空间上界（Proposition 5.1）：`/compact` 救不出正则语言**
 
-    - 功能：证明无论 $T$ 多强，只要 $C$ 是把过去历史压成单 token 摘要（类似 `/compact`、AutoCompressor、ICAE）的总结式管理器，整个 $(T,D,C)$ 都不超过 $\textsf{FDSPACE}(1)$。
-    - 核心思路：构造一台一向读、三带的转录机来模拟系统。工作带前 $N$ 格模拟上下文窗口、第 $N+1$ 格放分隔符、之后是模拟单步 Transformer 解码的工作区；每次要么把输入指针处的新 token 拼到 $r^{(t)}$ 末尾、要么触发摘要——所需总空间始终是常数 $O(N)$。结合 $\textsf{REG}=\textsf{DSPACE}(1)$ 这一标准事实，得出总结式系统只能识别正则语言，无法识别等串 $\{x\#x\}$、回文 $\{x\#x^R\}$、二进制加法等典型非正则语言。
-    - 设计动机：直接打脸"只要给 LLM 加个 `/compact` 它就还能跑任意长任务"——压缩历史本质上是把记忆压到 $O(1)$ bit，不管 $T$ 内部多 fancy，都无法绕过有限状态自动机这一外层封顶；同时也解释了 Kaplan scaling law 的另一个侧面：状态数随 $N$ 指数增长，所以系统在工程上仍能变强，理论类别却不变。
+只要 $C$ 把过去历史压成单 token 摘要（类似 `/compact`、AutoCompressor、ICAE），那么无论 $T$ 多强，整个 $(T,D,C)$ 都不超过 $\textsf{FDSPACE}(1)$。证明构造一台一向读、三带的转录机来模拟系统：工作带前 $N$ 格模拟上下文窗口、第 $N+1$ 格放分隔符、之后是模拟单步 Transformer 解码的工作区；每步要么把输入指针处的新 token 拼到 $r^{(t)}$ 末尾、要么触发摘要，所需总空间始终是常数 $O(N)$。结合 $\textsf{REG}=\textsf{DSPACE}(1)$ 这一标准事实，总结式系统只能识别正则语言，识别不了等串 $\{x\#x\}$、回文 $\{x\#x^R\}$、二进制加法这类典型非正则语言。这直接打脸"加个 `/compact` 就能跑任意长任务"的工程信念——压缩历史本质是把记忆压到 $O(1)$ bit，不管 $T$ 内部多 fancy，都被有限状态自动机这一外层封顶；它也照见了 scaling law 的另一面：状态数随 $N$ 指数增长，所以系统工程上仍能变强，理论类别却纹丝不动。
 
-3. **追加式管理 ⇔ 线性空间图灵机（Proposition 5.2 + 5.4）**：
+**3. 追加式管理 ⇔ 线性空间图灵机（Proposition 5.2 + 5.4）：换个 manager 就跳到 DCSL**
 
-    - 功能：证明 $C$ 采用 sliding-window + 追加（每生成一个 token 就追加到末尾、窗口左移一格）的方式时，整个系统在能力上**等价于** $\textsf{DSPACE}(n)$，即恰好识别确定性上下文相关语言 DCSL。
-    - 核心思路：正向（Prop. 5.2）用图灵机把整段历史搬到工作带、每步把前 $N$ 个 token 拷到工作区做单步解码、写回再左移；总空间 $O(n)$。反向（Prop. 5.4）借助 Schuurmans et al. 2024 的 $(N,K)$-restricted system 框架——$(2,1)$-restricted system 已被证可模拟任意线性空间 TM；再用 Lemma 5.3 证明任何 $f:\Sigma^2\to\Sigma$ 都能由一个上下文窗口为 2 的 Transformer + 贪心解码精确实现，从而 $(2,1)$ 系统能由固定 $(T,D,C)$ 实例化。
-    - 设计动机：得到"换 manager 就能从正则跃到 DCSL，再到图灵完备（$K=2$ 或加外部内存）"的清晰能力阶梯，从而支撑核心立场——同一个 $T$ 在不同 $C$ 下能力差距巨大，**$C$ 才是真正决定 real-world LLM 能力的部件**。
-
-### 损失函数 / 训练策略
-position paper，无训练过程。所有结论都来自对预训练模型 + 解码系统的**形式语言/复杂性分析**，与具体训练目标无关。
+当 $C$ 改用 sliding-window 加追加（每生成一个 token 就追加到末尾、窗口左移一格）时，整个系统的能力恰好等价于 $\textsf{DSPACE}(n)$，即确定性上下文相关语言 DCSL。正向（Prop. 5.2）用图灵机把整段历史搬到工作带、每步把前 $N$ 个 token 拷到工作区做单步解码再写回左移，总空间 $O(n)$；反向（Prop. 5.4）借助 Schuurmans et al. 2024 的 $(N,K)$-restricted system 框架——$(2,1)$-restricted system 已被证可模拟任意线性空间 TM，再用 Lemma 5.3 证明任何 $f:\Sigma^2\to\Sigma$ 都能由一个窗口为 2 的 Transformer 加贪心解码精确实现，于是 $(2,1)$ 系统能由固定 $(T,D,C)$ 实例化。把三块拼起来就得到一条清晰的能力阶梯：同一个 $T$ 配总结式管理停在正则语言，配追加式管理跃到 DCSL，再放开到多 token 解码（$K=2$）或外部内存读写才真正达到图灵完备——这正是"$C$ 才是决定 real-world LLM 能力的部件"这一立场的硬支撑。整套论证不涉及任何训练目标，所有结论都来自对预训练模型加解码系统的形式语言与复杂性分析。
 
 ## 实验关键数据
 

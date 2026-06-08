@@ -53,23 +53,21 @@ Hermite-NGP 的训练流水线是：
 
 ### 关键设计
 
-1. **Hermite 哈希编码（梯度增强表征）**:
+**1. Hermite 哈希编码：把哈希表从"只存值"升级成"值 + 全部混合偏导"。**
 
-    - 功能：把哈希表从"只存函数值"升级为"存函数值 + 全部混合偏导"，从根上保证 $C^1$ 连续与非平凡二阶导。
-    - 核心思路：每个哈希格点存 $2^d$ 个系数 $\{f^{(\alpha)}\}_{\alpha\in\{0,1\}^d}$——2D 是 $(f, f_x, f_y, f_{xy})$，3D 是 $(f, f_x, f_y, f_z, f_{xy}, f_{xz}, f_{yz}, f_{xyz})$；按导数阶分桶存到 $2^d$ 个独立哈希表里（2D 有三张：$T_1\times F$ 给 $f$、$T_2\times 2F$ 给一阶、$T_3\times F$ 给混合二阶）。重建按 $\gamma^l(\mathbf{x}) = \sum_{g}\sum_{\alpha}\theta_{l,h(g)}^{(\alpha)}H^{(\alpha)}((\mathbf{x}-\mathbf{x}_g)/\Delta x_l)\Delta x_l^{|\alpha|}$ 做，1D Hermite 基用 $h^{(0)}(t)=-2t^3+3t^2$（值基）和 $h^{(1)}(t)=t^3-t^2$（导基），$d$ 维由张量积 $H^{(\alpha)}=\Pi_i h^{(\alpha_i)}(x_i)$ 构造。
-    - 设计动机：传统 $d$-线性插值只用 $2^d$ 个值系数构造 $2^d$ 维基，自由度刚好用完只能拿到 $C^0$；要做 $C^1$ Hermite 必须把自由度扩张到 $2 \cdot 2^d$（每个顶点带导数），正好让 $\nabla^2 u$ 在 cell 内不为零。分类型存储 + 不同表大小给出"精度—显存"细粒度旋钮，消融里把一阶导表设大（$2^{14}$）能多降 56% 误差，因为一阶导对哈希碰撞最敏感。
+PINN 跑不动 I-NGP 的根因，是 $d$-线性插值只有 $C^0$ 连续——一阶导在 cell 内是分段常数、边界跳变，二阶导几乎处处为零，PDE 残差里的 Laplacian 根本拿不出可信值。作者的破局点是让每个哈希格点不只存函数值，还存 $2^d$ 个混合偏导系数 $\{f^{(\alpha)}\}_{\alpha\in\{0,1\}^d}$——2D 是 $(f, f_x, f_y, f_{xy})$，3D 是 $(f, f_x, \dots, f_{xyz})$，并按导数阶分桶进 $2^d$ 张独立哈希表（2D 三张：$T_1\times F$ 存 $f$、$T_2\times 2F$ 存一阶、$T_3\times F$ 存混合二阶）。重建时用张量积 Hermite 基把系数 blend 成局部场：
 
-2. **SIREN 链式法则下的解析微分**:
+$$\gamma^l(\mathbf{x}) = \sum_{g}\sum_{\alpha}\theta_{l,h(g)}^{(\alpha)}\,H^{(\alpha)}\!\Big(\tfrac{\mathbf{x}-\mathbf{x}_g}{\Delta x_l}\Big)\,\Delta x_l^{|\alpha|},$$
 
-    - 功能：把哈希表层面拿到的 $\nabla\gamma, \nabla^2\gamma$ 一路传到 MLP 输出 $u$，得到全网络范围内可解析的 $\nabla u, \nabla^2 u$，单次 forward 同时给出 PDE 残差所需的全部微分量。
-    - 核心思路：Hermite 基函数的一阶导是 $\partial h^{(0)}/\partial t=-6t^2+6t$（cell 内），二阶导是 $-12t+6$，可解析写出；$d$ 维通过因式分解 $\partial_{x_i}H^{(\alpha)}=\partial h^{(\alpha_i)}(y_i)/\partial x_i\cdot\Pi_{k\neq i}h^{(\alpha_k)}(y_k)$，向量化高效计算。MLP 用 SIREN $\sigma(x)=\sin(\omega x)$，单层 Laplacian 是 $\nabla^2 u = W_2[-\omega^2 a\odot\sum_i(W_1\gamma_{x_i})^2 + \omega\cos(\omega z)\odot W_1\nabla^2\gamma]$；多层递推同形。整个二阶链式法则在 $\sim 17$M 参数模型上单 epoch 只要 $3.5\,\mathrm{ms}$。
-    - 设计动机：INGP-FD 需要 $2d+1$ 次 forward 算中心差分 Laplacian，3D 要 7 张 activation 图占满显存，且截断误差封死精度；Hermite-NGP 单次 forward 单张计算图，反而比 INGP-FD 用的显存少（论文 Table 17 验证 3D 上 Hermite-NGP 显存全程低于 INGP-FD）。SIREN 选型是因为 $\sigma''=-\omega^2\sigma$ 让二阶链式法则极简且能复用 forward 的中间量；用其他激活也行（Swish/GELU），只是失去这层 algebraic 简化。
+其中 1D 基由值基 $h^{(0)}(t)=-2t^3+3t^2$ 与导基 $h^{(1)}(t)=t^3-t^2$ 组成，$d$ 维由 $H^{(\alpha)}=\prod_i h^{(\alpha_i)}(x_i)$ 张成。为什么必须这么扩张？传统 $d$-线性只有 $2^d$ 个值系数、自由度刚好用完只能到 $C^0$；要做 $C^1$ Hermite 必须把自由度翻倍到 $2\cdot 2^d$（每顶点带导数），$\nabla^2u$ 在 cell 内才不为零。把导数当独立通道存还有个意外好处：哈希碰撞注入的高频噪声被多通道分摊吸收，消融里给一阶导表更大容量（$2^{14}$）能多降 56% 误差，正因一阶导对碰撞最敏感。
 
-3. **多分辨率从粗到细课程训练**:
+**2. SIREN 链式法则下的解析微分：一次 forward 同时拿到 $\nabla u$ 和 $\nabla^2 u$。**
 
-    - 功能：模仿 multigrid V-cycle，分阶段激活哈希分辨率层，避免初期就让所有频段一起 fit。
-    - 核心思路：三阶段训练——(1) 只训练粗层 $l=0,\dots,L_0$ 学全局结构；(2) 按 $L_{\text{active}}(t)=\min(L, L_0+\lfloor t/\tau\rfloor)$ 渐进激活更细层；(3) 全层联合微调。$\tau$ 是激活间隔。在 Helmholtz 2D 上消融比较 V-cycle、W-cycle 与朴素同时训练，C2F 相比无调度降低 79.2% 误差，也优于 V/W-cycle。
-    - 设计动机：PINN 训练里"频率从低到高"是缓解 spectral bias 的经典技巧（Krishnapriyan 2021）。多分辨率哈希天然带层次结构，C2F 把这种"先抓低频再抓高频"的训练动力学和哈希层级显式对齐，避免高频细节被随机初始化的粗层干扰。
+光在哈希表层面拿到 $\nabla\gamma,\nabla^2\gamma$ 还不够，得把它们一路传到 MLP 输出 $u$，才能算出整张 PDE 残差。Hermite 基的导数本身可解析写出（cell 内一阶导 $\partial h^{(0)}/\partial t=-6t^2+6t$、二阶导 $-12t+6$），$d$ 维通过因式分解 $\partial_{x_i}H^{(\alpha)}=\partial_{x_i}h^{(\alpha_i)}(y_i)\prod_{k\neq i}h^{(\alpha_k)}(y_k)$ 向量化算出。MLP 选 SIREN（$\sigma(x)=\sin(\omega x)$），是因为它的二阶导恒等式 $\sigma''=-\omega^2\sigma$ 让链式法则极简，单层 Laplacian 写成 $\nabla^2u=W_2[-\omega^2a\odot\sum_i(W_1\gamma_{x_i})^2+\omega\cos(\omega z)\odot W_1\nabla^2\gamma]$，且能复用 forward 的中间量。对比之下 INGP-FD 算一次中心差分 Laplacian 要 $2d+1$ 次 forward（3D 要 7 张 activation 图），既占满显存又被 $O(\epsilon^2)$ 截断误差封死精度；Hermite-NGP 单次 forward 单张计算图，$\sim 17$M 参数模型单 epoch 只要 $3.5\,\mathrm{ms}$，且显存反而比 INGP-FD 更低。换别的激活（Swish/GELU）也能跑，只是丢掉这层 algebraic 简化。
+
+**3. 多分辨率从粗到细课程训练：把"先低频后高频"和哈希层级显式对齐。**
+
+PINN 有 spectral bias，一上来让所有频段一起 fit 容易被高频细节带偏。作者借多分辨率哈希天然的层次结构，模仿 multigrid V-cycle 分三阶段激活：先只训粗层 $l=0,\dots,L_0$ 学全局结构，再按 $L_{\text{active}}(t)=\min(L,\,L_0+\lfloor t/\tau\rfloor)$ 渐进激活更细层（$\tau$ 为激活间隔），最后全层联合微调。它之所以有效，是把"频率从低到高"这条缓解 spectral bias 的经典训练动力学和哈希分辨率层一一对应，避免高频细节被随机初始化的粗层干扰。Helmholtz 2D 消融里 C2F 相比无调度降低 79.2% 误差，也优于 V/W-cycle。
 
 ### 损失函数 / 训练策略
 标准 PINN 损失 $\mathcal{L} = \lambda_{\text{res}}\mathcal{L}_{\text{res}} + \lambda_{\text{ic}}\mathcal{L}_{\text{ic}} + \lambda_{\text{bc}}\mathcal{L}_{\text{bc}} + \lambda_{\text{data}}\mathcal{L}_{\text{data}}$，PDE 残差和边界条件（含 Neumann）都靠解析 $\nabla u, \nabla^2 u$ 算出。优化器 Adam + GradNorm 平衡。SIREN 初始化 $\omega_0=30$，哈希系数零附近初始化。

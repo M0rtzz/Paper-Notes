@@ -40,36 +40,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EPT替换Transformer中线性层的LoRA模块。输入token经过router选择top-k个expert，每个expert从共享的低维meta-knowledge子空间 $\mathbf{Z}_{meta}$ 出发，通过不同kernel size的反卷积投影出不同尺度的权重增量 $\mathbf{W}_i$，加权求和后叠加到原始预训练权重 $\mathbf{W}_0$ 上。整体架构形如一个"参数金字塔"：底部是共享的紧凑meta-knowledge，顶部展开为多尺度expert权重。
+EPT 要解决的是 MoE-LoRA「所有 expert 长得一模一样」的问题：既然不同任务需要不同粒度的适配，那 expert 本身就该有不同的容量。它替换 Transformer 线性层里的 LoRA 模块，但不再为每个 expert 各养一套独立的低秩矩阵，而是让所有 expert 共享同一个低维的 meta-knowledge 子空间 $\mathbf{Z}_{meta}$，再用不同 kernel size 的反卷积把这个子空间「放大」成不同尺度的权重增量。一个 token 进来，router 选出 top-k 个 expert，每个被选中的 expert 各自从 $\mathbf{Z}_{meta}$ 投影出权重增量 $\mathbf{W}_i$，按门控分数加权求和后叠加到预训练权重 $\mathbf{W}_0$ 上。整体形如一座「参数金字塔」：底座是共享的紧凑 meta-knowledge，往上则展开成多尺度的 expert 权重。
 
 ### 关键设计
 
-1. **共享Meta-Knowledge子空间**:
+**1. 共享 Meta-Knowledge 子空间：用一个低维基底喂饱所有 expert。**
 
-    - 功能：编码跨任务通用的语言模式，作为所有expert的共同知识基础
-    - 核心思路：定义 $\mathbf{Z}_{meta} = \mathbf{B} \cdot \mathbf{A}$，其中 $\mathbf{A} \in \mathbb{R}^{R \times W_{max}}$，$\mathbf{B} \in \mathbb{R}^{H_{max} \times R}$，$h, w \ll d_{model}$。关键点是 $\mathbf{A}$ 和 $\mathbf{B}$ 都用随机高斯分布初始化（而非标准LoRA的零初始化），确保训练伊始 $\mathbf{Z}_{meta}$ 就包含非退化的、丰富的隐表示
-    - 设计动机：传统MoE-LoRA每个expert各自维护独立的LoRA矩阵，参数冗余且缺乏知识共享。EPT让所有expert共享同一个低维基础，不同expert只是从不同角度"解读"这个基础——类似于多个观察者从不同分辨率观察同一张图
+传统 MoE-LoRA 给每个 expert 各配一套独立的 LoRA 矩阵，参数互相不通气，既冗余又学不到跨任务的共性。EPT 的做法是只维护一个共享基底 $\mathbf{Z}_{meta} = \mathbf{B} \cdot \mathbf{A}$（$\mathbf{A} \in \mathbb{R}^{R \times W_{max}}$，$\mathbf{B} \in \mathbb{R}^{H_{max} \times R}$，且 $h, w \ll d_{model}$），所有 expert 都从这块基底出发，区别只在于各自用什么方式去「解读」它——就像多个观察者从不同分辨率看同一张图。一个容易被忽略但关键的细节是 $\mathbf{A}$、$\mathbf{B}$ 都用随机高斯初始化，而非标准 LoRA 的零初始化：这样训练一开始 $\mathbf{Z}_{meta}$ 就携带非退化、信息丰富的隐表示，给后续的反卷积投影一个有内容的起点，而不是从零慢慢长。
 
-2. **Pyramid Projection Mechanism（金字塔投影）**:
+**2. 金字塔投影机制：让 expert 真正拥有不同的尺度。**
 
-    - 功能：将低维的 $\mathbf{Z}_{meta}$ 投影为不同尺度的高维权重矩阵
-    - 核心思路：定义 $N$ 个反卷积expert，第 $i$ 个expert的kernel tensor $\mathcal{K}_i$ 具有不同的kernel size $s_i$（stride也设为 $s_i$）。投影过程为 $\mathbf{W}_i = \text{Deconv}(\mathbf{Z}_{meta}; \mathcal{K}_i)$。kernel size小的expert捕获局部细粒度模式，kernel size大的expert捕获全局长程语义依赖。实现中使用8个expert，配置为 $\{2,2,4,4,6,6,8,8\}$
-    - 设计动机：这是核心创新。标准MoE-LoRA的所有expert具有相同rank，相当于同一分辨率的多个副本。EPT通过不同kernel size的反卷积创造出真正的"多尺度"——小kernel expert参数少但聚焦局部模式，大kernel expert参数多但覆盖全局语义。kernel $\mathcal{K}_i$ 零初始化确保训练初期不扰动预训练权重
-    - 与FPN的类比：FPN用不同层的特征图捕获不同尺度目标；EPT用不同kernel size的反卷积从同一meta-knowledge中提取不同粒度的参数适配
+这是全文的核心创新，直接针对「均匀 rank 抓不住多样化粒度」的痛点。EPT 定义 $N$ 个反卷积 expert，第 $i$ 个 expert 的 kernel tensor $\mathcal{K}_i$ 配一个不同的 kernel size $s_i$（stride 同样设为 $s_i$），投影过程 $\mathbf{W}_i = \text{Deconv}(\mathbf{Z}_{meta}; \mathcal{K}_i)$ 把同一个低维基底放大成不同尺寸的权重矩阵。kernel 小的 expert 参数少、聚焦局部细粒度模式，kernel 大的 expert 参数多、覆盖全局长程语义——这才是「真·多尺度」，而标准 MoE-LoRA 的同 rank expert 不过是同一分辨率的若干副本。实现里用 8 个 expert，尺度配为 $\{2,2,4,4,6,6,8,8\}$。这个设计与 CV 里的 FPN 同源：FPN 用不同层的特征图对应不同尺度的目标，EPT 则用不同 kernel size 的反卷积从同一 meta-knowledge 里抽出不同粒度的参数适配。每个 kernel $\mathcal{K}_i$ 采用零初始化，保证训练初期不扰动预训练权重。
 
-3. **Adaptive LoRA Pruner（自适应裁剪器）**:
+**3. 自适应 LoRA 裁剪器：把任意尺度的输出对齐到目标层维度。**
 
-    - 功能：确保不同尺度expert输出的权重矩阵维度与目标层的预训练权重严格一致
-    - 核心思路：对于目标粒度 $(h_t, w_t)$，从完整的 $\mathbf{B}$ 和 $\mathbf{A}$ 中切片取前 $h_t$ 行和前 $w_t$ 列：$\mathbf{Z}_{meta}^{(t)} = \mathbf{B}_{:h_t,:} \cdot \mathbf{A}_{:,:w_t}$，得到 $h_t \times w_t$ 的scale-specific meta-seed
-    - 频率补偿：均匀任务采样下，shared参数每一步都更新（频率=1），task-specific参数仅在对应任务被采样时更新（频率=1/T）。引入维度感知缩放因子 $d_t / T$，最终前向传播为 $\mathbf{L} = \mathbf{W}_0 \mathbf{x} + \sum_{i \in \mathcal{P}} G(x)_i \cdot \frac{d_t}{T} \cdot (\mathbf{W}_i \mathbf{x})$，平衡梯度能量防止shared维度被高频振荡覆盖
-    - 设计动机：不同Transformer层的维度不同（如attention投影和FFN维度差异大），pruner确保meta-knowledge能灵活适配到任意目标维度，同时频率补偿解决了多任务采样不均衡带来的优化不稳定
+反卷积投影出来的权重尺寸由 kernel 决定，但 Transformer 不同层的目标维度并不统一（attention 投影和 FFN 的维度差异就很大），直接套上去会对不齐。裁剪器的处理很直接：对目标粒度 $(h_t, w_t)$，从完整的 $\mathbf{B}$、$\mathbf{A}$ 里切前 $h_t$ 行、前 $w_t$ 列，得到 $\mathbf{Z}_{meta}^{(t)} = \mathbf{B}_{:h_t,:} \cdot \mathbf{A}_{:,:w_t}$ 这个 $h_t \times w_t$ 的 scale-specific meta-seed，让同一块 meta-knowledge 能灵活适配到任意目标维度。更微妙的是它顺带解决了多任务优化的不均衡：均匀采样下 shared 参数每步都更新（频率为 1），而 task-specific 参数只有对应任务被采样时才更新（频率 1/T），两者梯度能量严重失衡。EPT 引入一个维度感知缩放因子 $d_t/T$，把前向写成
 
-4. **Top-k路由 + 对比学习Task Embedding**:
+$$\mathbf{L} = \mathbf{W}_0 \mathbf{x} + \sum_{i \in \mathcal{P}} G(x)_i \cdot \frac{d_t}{T} \cdot (\mathbf{W}_i \mathbf{x})$$
 
-    - 功能：为每个token动态选择最合适的expert组合，同时通过task embedding增强路由判别力
-    - 核心思路：门控分数 $G(x)_i = \text{softmax}(\mathbf{W}_r \cdot x / \tau)$，选top-k（k=2）个expert。同时为每个任务学习embedding $\mathbf{e}_t$，用对比损失 $\mathcal{L}_{con} = -\frac{1}{M}\sum_i \log \frac{e^{s_{i,t_i}}}{\sum_k e^{s_{i,k}}}$ 拉近同任务样本与其task embedding、推远不同任务embedding
-    - 总损失：$\mathcal{L}_{total} = \mathcal{L}_{gen} + \lambda \mathcal{L}_{con}$，$\lambda = 0.1$
-    - 设计动机：标准MoE路由仅依赖token特征，对任务间关系建模不足。task embedding通过对比学习显式编码任务间相关性和差异性——实验中PCA可视化显示QNLI和MNLI（同为NLI任务）embedding聚集在一起，而CoLA和STS-B（任务性质迥异）的embedding明显分开
+用这个系数把两类参数的更新能量拉平，避免 shared 维度被高频更新的振荡淹没。
+
+**4. Top-k 路由 + 对比学习 Task Embedding：让路由听得懂任务。**
+
+标准 MoE 路由只看 token 特征 $G(x)_i = \text{softmax}(\mathbf{W}_r \cdot x / \tau)$，选出 top-k（这里 $k=2$）个 expert，但它对「这个 token 属于哪个任务、任务间是什么关系」几乎不建模，容易把不同任务的 token 混着路由。EPT 额外为每个任务学一个 embedding $\mathbf{e}_t$，用对比损失 $\mathcal{L}_{con} = -\frac{1}{M}\sum_i \log \frac{e^{s_{i,t_i}}}{\sum_k e^{s_{i,k}}}$ 把同任务样本拉向自己的 task embedding、推开其它任务的 embedding，显式地把任务间的相关性和差异性编码进路由信号。效果在 PCA 可视化里很直观：QNLI 和 MNLI（同属 NLI）的 embedding 聚成一团，而 CoLA 和 STS-B（任务性质迥异）则明显分开。这一项以 $\lambda = 0.1$ 的权重并入总损失 $\mathcal{L}_{total} = \mathcal{L}_{gen} + \lambda \mathcal{L}_{con}$。
 
 ### 损失函数 / 训练策略
 - 总损失 $\mathcal{L}_{total} = \mathcal{L}_{gen} + \lambda \mathcal{L}_{con}$，其中 $\mathcal{L}_{gen}$ 为标准自回归生成损失，$\mathcal{L}_{con}$ 为对比学习损失，$\lambda = 0.1$

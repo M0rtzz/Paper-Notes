@@ -43,27 +43,27 @@ tags:
 
 ### 整体框架
 
-SPECTRA 以 SVLM（Qwen2.5-VL）为基础，冻结视觉编码器，用 LoRA 适配语言解码器。对每个多模态输入 $(I, q)$，采样 $G$ 个结构化 rollout 轨迹，通过多目标奖励计算组相对优势，用 GRPO 目标优化策略参数。动作空间是自然语言 token + 4 个工具原语（Image Captioning、Object Detection、OCR、Visual Perception）。
+SPECTRA 想让小型视觉语言模型在没有任何监督轨迹的冷启动条件下，仅靠环境反馈自行学会"先用工具取证、再据证推理"的策略。它以 Qwen2.5-VL 为底座，冻结视觉编码器、用 LoRA 适配语言解码器；对每个多模态输入 $(I, q)$ 采样 $G$ 条结构化 rollout 轨迹，用一个多目标奖励（正确性+结构完整性+工具效用+终止）打分，算出组相对优势后用 GRPO 更新策略。动作空间是自然语言 token 加上四个视觉工具原语（Image Captioning、Object Detection、OCR、Visual Perception），而软结构化的拓扑约束则像一根"训练轮"，把模型从盲目直接推理引导到工具驱动的推理路径上。
 
 ### 关键设计
 
-1. **软结构化多轮 Rollout（SSMR）**:
+**1. 软结构化多轮 Rollout（SSMR）：用拓扑先验把推理锚定到视觉证据。**
 
-    - 功能：强制模型遵循"先获取证据再推理"的拓扑序列
-    - 核心思路：最优轨迹必须遵循拓扑序列 $\tau = \langle reason \to tool \to obs \to percep \to reason \to ans \rangle$——先推理选择工具，获取工具输出（Observation），将输出与视觉特征综合（Perception），再次推理后给出答案。这个约束是"软"的——不完全符合也不会完全禁止，而是通过结构完整性奖励 $R_{struct} = \alpha \cdot \gamma^{\phi(\tau)}$ 渐进惩罚偏离（$\alpha=2.0$, $\gamma=0.75$, $\phi(\tau)$ 映射偏离程度）
-    - 设计动机：SVLM 直接推理容易产生视觉幻觉，强制工具-观察-感知的序列让模型将推理锚定在工具提供的视觉证据上——消融实验显示去掉结构约束导致 ScienceQA 上性能下降超过 5%
+SVLM 直接看图推理容易产生视觉幻觉，根因是它跳过了取证环节、凭印象作答。SSMR 规定最优轨迹应遵循拓扑序列 $\tau = \langle reason \to tool \to obs \to percep \to reason \to ans \rangle$——先推理选工具、拿到工具输出（Observation）、把输出与视觉特征综合（Perception），再推理后作答，从而强迫模型把结论建立在工具提供的证据之上。
 
-2. **多目标 Agent 奖励**:
+这个约束是"软"的：偏离不会被一刀切禁止，而是通过结构完整性奖励 $R_{struct} = \alpha \cdot \gamma^{\phi(\tau)}$ 渐进惩罚（$\alpha=2.0$，$\gamma=0.75$，$\phi(\tau)$ 衡量偏离程度），偏得越远奖励指数级衰减。软约束既给了足够的归纳偏置让冷启动学习能起步，又保留了探索空间——消融显示去掉它在 ScienceQA 上掉超过 5%。
 
-    - 功能：同时优化正确性、结构和工具使用
-    - 核心思路：总奖励 $R_{total} = \lambda_1 R_{corr} + \lambda_2 R_{struct} + \lambda_3 R_{tool} + \lambda_4 R_{term}$，包含四个组件：(a) 任务正确性 $R_{corr} = C_1 \cdot \mathbb{1}(y_{pred} = y_{gt})$——答案是否正确；(b) 结构完整性 $R_{struct}$——轨迹是否符合 SSMR 拓扑；(c) 工具效用 $R_{tool} = \mathbb{1}_{syntax} + \mathbb{1}_{success} + R_{div}$——工具调用是否合法、是否成功执行、是否使用了多样化工具（$R_{div}$ 有 per-tool 饱和上限 $\kappa$ 和全局上限 $\eta$ 防止 reward hacking）；(d) 终止标记 $R_{term}$——确保推理收敛到明确答案。最终归一化：$R_{Total} = S \times R_{total} / N_{norm}$
-    - 设计动机：仅用正确性奖励会导致模型走捷径（如不调工具直接猜答案），多目标奖励确保模型学到的不仅是"答对"还包括"过程正确"——特别是 $R_{div}$ 的饱和设计防止了模式坍缩（如只用 OCR）
+**2. 多目标 Agent 奖励：让模型学会"答对"也学会"过程对"。**
 
-3. **Tool Instrumental Utility（TIU）评估指标**:
+只用正确性奖励会让模型走捷径，比如不调工具直接猜答案，或反复只用 OCR 一种工具。SPECTRA 把奖励拆成四块：$R_{total} = \lambda_1 R_{corr} + \lambda_2 R_{struct} + \lambda_3 R_{tool} + \lambda_4 R_{term}$。其中任务正确性 $R_{corr} = C_1 \cdot \mathbb{1}(y_{pred} = y_{gt})$ 管答案对错，$R_{struct}$ 管轨迹是否合拓扑，终止标记 $R_{term}$ 确保推理收敛到明确答案。
 
-    - 功能：在无 ground truth 轨迹时量化工具效能
-    - 核心思路：$TIU = TER \times \frac{1+TTAC}{2} \times \tanh(TSS)$，由三个分量组成：(a) Tool Execution Reliability（TER）——工具调用的成功执行率；(b) Task-Tool Alignment Coefficient（TTAC）——工具使用与任务成功的 point-biserial 相关，正值表示工具使用有助于成功；(c) Tool Selectivity Score（TSS）——工具使用分布与均匀分布的 KL 散度，高值表示有策略性选择而非随机调用。$\tanh$ 对 TSS 做有界映射，$(1+TTAC)/2$ 归一化 TTAC 到 [0,1]
-    - 设计动机：现有 Tool Accuracy 需要标注的正确工具序列，在无监督设置下无法使用。TIU 从可靠性、相关性和选择性三个维度综合评估，不需要任何 ground truth 轨迹
+工具效用项最见巧思：$R_{tool} = \mathbb{1}_{syntax} + \mathbb{1}_{success} + R_{div}$ 同时奖励调用合法、执行成功、以及工具使用的多样性，而多样性项 $R_{div}$ 配了 per-tool 饱和上限 $\kappa$ 和全局上限 $\eta$，既鼓励用多种工具又防止刷工具次数的 reward hacking。所有项最终归一化为 $R_{Total} = S \times R_{total} / N_{norm}$，让多目标信号在同一尺度上协同。
+
+**3. Tool Instrumental Utility（TIU）：无 ground truth 也能量化工具效能。**
+
+现有 Tool Accuracy 依赖标注好的正确工具序列，在无监督设置下根本用不了。TIU 改从三个不需要标注的维度合成度量：$TIU = TER \times \frac{1+TTAC}{2} \times \tanh(TSS)$。其中 Tool Execution Reliability（TER）是工具调用的成功执行率，反映可靠性；Task-Tool Alignment Coefficient（TTAC）是工具使用与任务成功之间的 point-biserial 相关，正值意味着用工具确实有助于答对；Tool Selectivity Score（TSS）是工具使用分布与均匀分布的 KL 散度，高值表示有策略地挑工具而非乱调。
+
+三者相乘时各做了有界处理——$(1+TTAC)/2$ 把相关系数归一到 $[0,1]$，$\tanh(TSS)$ 把选择性压到有界区间，使得任一维度塌陷都会拖低总分。这样 TIU 不依赖任何 ground truth 轨迹，就能从可靠、相关、选择三个角度综合判断工具到底用得好不好。
 
 ### 损失函数 / 训练策略
 

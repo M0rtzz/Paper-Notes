@@ -41,30 +41,24 @@ OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血
 ## 方法详解
 
 ### 整体框架
-管线分三段：(a) 从编辑规范构造二值掩码 $\mathbf{M}$、保护区 $\bar{\mathbf{M}}=\mathbf{1}-\mathbf{M}$、目标几何 $\mathbf{S}^\star=\mathcal{S}(\cdot)$，并在"血管-结构复合域"（原图边缘 + 血管 mask）里设定起点 $S^\ast$；(b) 把编辑写成端点 $\mu_0=\delta_{\mathbf{x}_0}$、$\mu_1$ 受几何可行集约束的熵 OT，用 Diffusion SB 求解得到桥过程；(c) 每 $K$ 步对桥状态做几何投影 $\Pi_\mathcal{F}$ —— 既把编辑区往目标几何拉，又把非编辑区往原图拉，最后输出像素级精确的合成造影。
+这套管线要解决的是"在一张已有冠脉造影上局部改一处狭窄、其余解剖一丝不动"，所以它不从噪声重画整图，而是把编辑当成从原图到目标图的一次"最小运输"。先从编辑规范造出二值掩码 $\mathbf{M}$、保护区 $\bar{\mathbf{M}}=\mathbf{1}-\mathbf{M}$ 和目标几何 $\mathbf{S}^\star=\mathcal{S}(\cdot)$，并在"血管-结构复合域"（原图边缘 + 血管 mask）里设定起点；再把编辑写成一端固定在原图 $\mu_0=\delta_{\mathbf{x}_0}$、另一端 $\mu_1$ 受几何可行集约束的熵正则化 OT，用 Diffusion Schrödinger Bridge 解出一条桥过程；最后在桥前进的每 $K$ 步插入几何投影 $\Pi_\mathcal{F}$，一边把编辑区拉向目标几何、一边把非编辑区拽回原图，滚到 $T$ 步即得像素级精确的合成造影。
 
 ### 关键设计
 
-1. **几何约束写成可行集 + mask-aware 传输代价**:
+**1. 可行集 + mask-aware 传输代价：把"哪能动、哪不能动"写进 OT 而非靠软引导。**
 
-    - 功能：把"非编辑区严格保持 + 编辑区匹配目标几何"两条强约束塞进 OT 公式。
-    - 核心思路：定义 $\mathcal{F}=\{\mathbf{x}\mid \mathbf{x}\odot\bar{\mathbf{M}}=\mathbf{x}_0\odot\bar{\mathbf{M}},\ \mathcal{S}(\mathbf{x}\odot\mathbf{M})=\mathbf{S}^\star\}$ 作为硬可行集；同时把传输代价写成 mask-aware 形式 $c(\mathbf{x},\mathbf{y})=\|(\mathbf{x}-\mathbf{y})\odot\bar{\mathbf{M}}\|_2^2+\lambda_M\|(\mathbf{x}-\mathbf{y})\odot\mathbf{M}\|_2^2$；最终目标是 $\min_\pi\langle\mathbf{C},\pi\rangle+\varepsilon\,\mathrm{KL}(\pi\|\mathbf{K})$ s.t. $\pi\in\mathcal{Q}$。
-    - 设计动机：经典扩散编辑通过 ControlNet/SDEdit 等软引导施加约束，没法保证非编辑区一丝不变；显式可行集 + mask-aware cost 把"哪里能动、哪里不能动"写进数学定义，从源头消灭"画串"。
+ControlNet、SDEdit 这类做法用 cross-attention 或加噪重建施加条件，本质是"软指挥"，没法保证非编辑区一像素不变——差一根分支就污染后续检测。本文索性把约束硬编码进运输问题：先定义硬可行集 $\mathcal{F}=\{\mathbf{x}\mid \mathbf{x}\odot\bar{\mathbf{M}}=\mathbf{x}_0\odot\bar{\mathbf{M}},\ \mathcal{S}(\mathbf{x}\odot\mathbf{M})=\mathbf{S}^\star\}$，明文要求非编辑区逐像素等于原图、编辑区几何描述子等于目标；再把代价写成 mask 感知的形式 $c(\mathbf{x},\mathbf{y})=\|(\mathbf{x}-\mathbf{y})\odot\bar{\mathbf{M}}\|_2^2+\lambda_M\|(\mathbf{x}-\mathbf{y})\odot\mathbf{M}\|_2^2$，区分对待保护区和编辑区的位移代价。整体优化目标是熵正则化的运输 $\min_\pi\langle\mathbf{C},\pi\rangle+\varepsilon\,\mathrm{KL}(\pi\|\mathbf{K})$ s.t. $\pi\in\mathcal{Q}$。约束从"建议"升级成"数学定义"，"画串"在源头就被堵死。
 
-2. **Schrödinger Bridge 作动态求解器**:
+**2. Schrödinger Bridge 作动态求解器：把脆弱的高维 OT 化成可分步采样的桥过程。**
 
-    - 功能：把高维像素空间里很脆弱的 OT 转成可由扩散链分步采样的桥过程。
-    - 核心思路：在轨迹空间最小化 $P^\star=\arg\min_{P:P_0=\mu_0,P_1=\mu_1}\mathrm{KL}(P\|R)$，其中 $R$ 是参考扩散；从 $\mathbf{s}_0=\mathbf{x}_0$ 开始，按 $\tilde{\mathbf{s}}_{k+1}\sim p^\star(\mathbf{s}_{k+1}\mid\mathbf{s}_k)$ 滚动 $T=50$ 步，把生成路径完全暴露出来供后续监督。
-    - 设计动机：直接在像素空间解 entropic OT 不仅计算贵，而且数值不稳；SB 的优点是"把端点匹配化作路径密度匹配"，可以用神经网络逐步学，也方便沿路径插监督信号。
+直接在像素空间解 entropic OT 又贵又数值不稳，没法落地。SB 的好处是把"两端分布匹配"等价转成"轨迹密度匹配"：在轨迹空间求 $P^\star=\arg\min_{P:P_0=\mu_0,P_1=\mu_1}\mathrm{KL}(P\|R)$，其中 $R$ 是参考扩散链。于是采样从 $\mathbf{s}_0=\mathbf{x}_0$ 起步，按 $\tilde{\mathbf{s}}_{k+1}\sim p^\star(\mathbf{s}_{k+1}\mid\mathbf{s}_k)$ 滚动 $T=50$ 步即可。这一步不只是为了能算——它把整条生成路径"摊开"暴露出来，让后面 GPG 可以在每一步插监督，这是软引导扩散给不了的接口。
 
-3. **GPG：路径级几何投影监督**:
+**3. GPG 路径级几何投影监督：每一步把状态推回几何可行集，而非只在终点纠偏。**
 
-    - 功能：在桥过程的每一步都把状态"推回"几何可行集，避免轨迹漂移到错误形状。
-    - 核心思路：每步先采样 $\tilde{\mathbf{x}}_{k+1}\sim p^\star$，然后做投影 $\mathbf{x}_{k+1}\leftarrow\Pi_\mathcal{F}(\tilde{\mathbf{x}}_{k+1})$，其中 $\Pi_\mathcal{F}(\mathbf{x})=\arg\min_\mathbf{y}\mathcal{L}_{\text{geo}}(\mathbf{y})+\lambda_{\text{out}}\mathcal{L}_{\text{out}}(\mathbf{y})$。几何项 $\mathcal{L}_{\text{geo}}=\mathcal{D}_{\text{geo}}(\mathcal{S}(\mathbf{y}\odot\mathbf{M}),\mathbf{S}^\star)$ 用基于符号距离变换（SDT）的边界距离 $\mathcal{D}_{\text{geo}}=\frac{1}{|B_M|}\sum_\mathbf{u}|\phi^\star(\mathbf{u})|$；外部项 $\mathcal{L}_{\text{out}}=\|(\mathbf{y}-\mathbf{x}_0)\odot\bar{\mathbf{M}}\|_2^2$ 抑制非编辑区漂移。代码中每 5 步做一次投影，$\lambda_{\text{out}}=10,\lambda_{\text{geo}}=1$。
-    - 设计动机：只在终点加几何约束属于"软指挥"，桥过程中段已经偏离时再拉回来要付高昂代价；像素级精度要求每一步都待在几何通道里，SDT 提供平滑可微的几何距离，避免硬边界带来的梯度爆炸。
+只在终点加几何约束等于"软指挥"，桥过程中段一旦漂歪，到终点再硬拉代价极高，像素级精度根本守不住。GPG 的做法是每步先采样 $\tilde{\mathbf{x}}_{k+1}\sim p^\star$，再立刻投影 $\mathbf{x}_{k+1}\leftarrow\Pi_\mathcal{F}(\tilde{\mathbf{x}}_{k+1})$，让轨迹始终待在几何通道里。投影本身解一个小优化 $\Pi_\mathcal{F}(\mathbf{x})=\arg\min_\mathbf{y}\mathcal{L}_{\text{geo}}(\mathbf{y})+\lambda_{\text{out}}\mathcal{L}_{\text{out}}(\mathbf{y})$：几何项 $\mathcal{L}_{\text{geo}}=\mathcal{D}_{\text{geo}}(\mathcal{S}(\mathbf{y}\odot\mathbf{M}),\mathbf{S}^\star)$ 用符号距离变换（SDT）算边界距离 $\mathcal{D}_{\text{geo}}=\frac{1}{|B_M|}\sum_\mathbf{u}|\phi^\star(\mathbf{u})|$，给出平滑可微的几何梯度、避开硬边界的梯度爆炸；外部项 $\mathcal{L}_{\text{out}}=\|(\mathbf{y}-\mathbf{x}_0)\odot\bar{\mathbf{M}}\|_2^2$ 则压住非编辑区的漂移。实现上每 5 步投影一次，$\lambda_{\text{out}}=10,\lambda_{\text{geo}}=1$。这正是论文最关键的贡献——消融里去掉它，bDice 从 0.895 直接掉到 0.765。
 
 ### 损失函数 / 训练策略
-SB 参考过程 $R$ 用标准离散扩散链；$\varepsilon=10^{-2}$ 控传输平滑度。GPG 投影通过梯度优化解，作为 logits-processor 风格在采样路径上插入，无需重训扩散主干，且与编辑空间（像素或 latent）解耦。
+SB 参考过程 $R$ 用标准离散扩散链，$\varepsilon=10^{-2}$ 控传输平滑度。GPG 投影靠梯度优化求解，以 logits-processor 的风格插在采样路径上，因此无需重训扩散主干，也与编辑空间（像素或 latent）解耦。
 
 ## 实验关键数据
 

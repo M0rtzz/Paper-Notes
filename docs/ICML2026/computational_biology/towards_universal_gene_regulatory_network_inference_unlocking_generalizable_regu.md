@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-UGRN 把 GRN 推断重写为两阶段：(1) **特征抽取**——冻结 scFM $\mathcal{M}$，对任意基因对 $(g_i, g_j)$ 抽一个固定维度的成对特征 $\mathbf{e}_{ij}$；(2) **翻译器训练**——在某个源数据集 $\mathcal{D}_b$ (例如 hESC) 上用 BCE 损失训练一个浅层 MLP $f_\phi$，把 $\mathbf{e}_{ij}$ 映射到调控概率 $s_{ij}=f_\phi(\mathbf{e}_{ij})$，然后零样本迁移到包含未见基因和未见细胞类型的目标数据集 (mDC, mESC, mHSC-E/G/L, hHEP 等)。关键在于第一步如何让 $\mathbf{e}_{ij}$ 跨数据集可比——传统 perturbation 由于绑定细胞数 $N$ 而无法跨数据集，本文用"虚拟表达向量"破除这种依赖。作者先以两个朴素策略作 baseline：**Pert** (用真实平均表达 $\bar{\mathbf{x}}$ 做 zero-out，$e_{ij}=\mathcal{M}(\bar{\mathbf{x}})_j-\mathcal{M}(\bar{\mathbf{x}}_{\neg i})_j$) 和 **Emb** (直接拿 scFM 词表 embedding $\mathbf{E}_{\mathcal{M},i}+\mathbf{E}_{\mathcal{M},j}$)，然后引出两个真正的探针 VVP 与 GDT，并把二者 logit 平均得到 Ensemble。
+UGRN 把"判断 $g_i$ 是否调控 $g_j$"拆成两步来做：先冻结 scFM $\mathcal{M}$，把它当成一台反事实推理引擎，对任意基因对 $(g_i,g_j)$ 抽出一个固定维度、跨数据集可比的成对特征 $\mathbf{e}_{ij}$；再在某个源数据集 $\mathcal{D}_b$（例如 hESC）上用一个浅层 MLP 翻译器 $f_\phi$ 把 $\mathbf{e}_{ij}$ 映射成调控概率 $s_{ij}=f_\phi(\mathbf{e}_{ij})$，然后零样本迁移到含未见基因、未见细胞类型的目标数据集（mDC、mESC、mHSC-E/G/L、hHEP 等）。整套设计的关键全压在第一步：怎样让特征摆脱"绑定具体细胞数 $N$ 和真实表达量级"的桎梏，从而能在数据集之间对齐。作者先放两个朴素策略垫底——**Pert** 用真实平均表达 $\bar{\mathbf{x}}$ 做 zero-out 取差值 $e_{ij}=\mathcal{M}(\bar{\mathbf{x}})_j-\mathcal{M}(\bar{\mathbf{x}}_{\neg i})_j$，**Emb** 直接相加 scFM 词表 embedding $\mathbf{E}_{\mathcal{M},i}+\mathbf{E}_{\mathcal{M},j}$——再引出两个真正的探针 VVP 与 GDT，并把它们的 logit 平均成 Ensemble。
 
 ### 关键设计
 
-1. **Virtual Value Perturbation (VVP)**:
+**1. Virtual Value Perturbation：用统一虚拟基线把扰动响应变成可跨数据集对齐的曲线**
 
-    - 功能：把 zero-out 扰动从"单点 on/off"升级为"多目标值响应曲线"，并通过统一虚拟基线消除不同基因表达量级的不可比性。
-    - 核心思路：先选一个虚拟基线值 $v_b$ (作者用零均值附近的固定标量)，构造虚拟细胞向量 $\mathbf{v}_{g_i\leftarrow v}$——把 $g_i$ 那一位赋为 $v$，其余基因全置 $v_b$；再定义一组扰动目标值 $\{v_{p,1},\dots,v_{p,M}\}$ 覆盖动态范围。对每个目标值算响应 $e_{ij}^{v_p}=\mathcal{M}(\mathbf{v}_{g_i\leftarrow v_p})_j-\mathcal{M}(\mathbf{v}_{g_i\leftarrow v_b})_j$，拼成 $\mathbf{e}_{ij}=[e_{ij}^{v_{p,1}};\dots;e_{ij}^{v_{p,M}}]$。本质上把"$g_i$ 改变多少 → $g_j$ 怎么动"画成一条离散响应曲线。
-    - 设计动机：传统 zero-out 的扰动幅度等于 $g_i$ 原始表达 $\mathbf{x}_{c,i}$，高表达基因被"扰动得更狠"，低表达基因被"扰动得更轻"，跨数据集量纲完全错位。引入统一参考 $v_b$ + 多个 $v_p$ 后，所有基因对都在同一坐标系下被询问，特征向量天然可跨数据集对齐；额外的 $M$ 个目标值还能刻画非线性响应。
+传统 zero-out 探针之所以几乎等于随机，根子在于"扰动幅度不可比"：把 $g_i$ 置零，实际扰动量等于它的原始表达 $\mathbf{x}_{c,i}$，于是高表达基因被扰得很狠、低表达基因被扰得很轻，不同数据集之间量纲彻底错位。VVP 的做法是抛开真实细胞，先选一个虚拟基线值 $v_b$（取零均值附近的固定标量），把所有基因都置成 $v_b$ 构成统一背景，只在 $g_i$ 那一位填入要询问的值，得到虚拟细胞向量 $\mathbf{v}_{g_i\leftarrow v}$。然后不再只问"开/关"，而是给一组覆盖动态范围的目标值 $\{v_{p,1},\dots,v_{p,M}\}$，逐个算响应 $e_{ij}^{v_p}=\mathcal{M}(\mathbf{v}_{g_i\leftarrow v_p})_j-\mathcal{M}(\mathbf{v}_{g_i\leftarrow v_b})_j$，拼成 $\mathbf{e}_{ij}=[e_{ij}^{v_{p,1}};\dots;e_{ij}^{v_{p,M}}]$。这等于把"$g_i$ 升高多少 → $g_j$ 跟着动多少"画成一条离散响应曲线。由于所有基因对都在同一个 $v_b$ 坐标系下、用同一组 $v_p$ 被询问，特征天然跨数据集对齐，额外的 $M$ 个目标值还能刻画非线性响应。
 
-2. **Gradient Trajectory (GDT)**:
+**2. Gradient Trajectory：用反向传播读出随表达水平演变的瞬时调控强度**
 
-    - 功能：用 scFM 的可微性提取调控强度的"瞬时"信号——某个表达水平上 $\partial \mathcal{M}(\cdot)_j/\partial v_i$ 的大小，再沿着一串虚拟基线值串成一条梯度轨迹。
-    - 核心思路：定义有序基线集合 $\{v_{b,1},\dots,v_{b,T}\}$，每个 $v_{b,t}$ 对应一个虚拟输入 $\mathbf{v}_{g_i\leftarrow v_{b,t}}$ (其他基因仍固定在背景值)，反向传播得到 $\nabla_{ij}^{(t)}=\partial \mathcal{M}(\mathbf{v}_{g_i\leftarrow v_{b,t}})_j / \partial v_i$，拼接成 $\mathbf{e}_{ij}=[\nabla_{ij}^{(1)};\dots;\nabla_{ij}^{(T)}]$。这相当于把 VVP 的"区间响应"换成"局部斜率随表达水平的演变"。
-    - 设计动机：VVP 反映的是"$v_b\to v_p$ 这段区间内的累计响应"，对响应曲线在某个具体表达水平上的瞬时陡峭程度刻画不够。梯度轨迹则能告诉翻译器"在低表达区 $g_i$ 已经强烈影响 $g_j$，但到高表达区饱和"这种细节，给出与 VVP 互补的视角。
+VVP 给的是"从 $v_b$ 到 $v_p$ 这段区间的累计响应"，但对曲线在某个具体表达水平上到底有多陡刻画不足。GDT 利用 scFM 本身可微，直接读取瞬时斜率：定义一组有序基线值 $\{v_{b,1},\dots,v_{b,T}\}$，每个 $v_{b,t}$ 对应一个虚拟输入 $\mathbf{v}_{g_i\leftarrow v_{b,t}}$（其余基因仍固定在背景值），反向传播得到 $\nabla_{ij}^{(t)}=\partial \mathcal{M}(\mathbf{v}_{g_i\leftarrow v_{b,t}})_j / \partial v_i$，再沿表达水平串成轨迹 $\mathbf{e}_{ij}=[\nabla_{ij}^{(1)};\dots;\nabla_{ij}^{(T)}]$。它能告诉翻译器"$g_i$ 在低表达区就强烈影响 $g_j$、到高表达区却饱和"这类细节，正好补上 VVP 看不到的局部敏感度，与之形成互补视角。
 
-3. **Ensemble + 翻译器训练**:
+**3. Ensemble + 翻译器训练：融合区间响应与瞬时敏感度**
 
-    - 功能：融合 VVP (区间响应) 与 GDT (瞬时敏感度) 两个互补视角，得到对调控关系最综合的描述。
-    - 核心思路：分别用 VVP 特征和 GDT 特征训练两个轻量 MLP $f_\phi^{\text{VVP}}, f_\phi^{\text{GDT}}$ (输入维度分别为 $M$ 和 $T$，输出 sigmoid 概率)，最终预测取 logit 平均 $s_{ij}=\sigma(\tfrac{1}{2}(\text{logit}_{\text{VVP}}+\text{logit}_{\text{GDT}}))$。训练时固定 scFM 参数，只用源数据集 $\mathcal{D}_b$ 上的 GRN 标注通过 BCE 优化 $\phi$。
-    - 设计动机：从 Table 1 可以看到 VVP 和 GDT 在不同数据集上各擅胜场 (例如 mDC 上 GDT 更强，mH-G 上 VVP 更强)，简单 logit 平均就能稳稳超过单个探针，说明两个视角确实捕获了不同的调控线索。
+VVP 和 GDT 抓的是同一条响应曲线的两个侧面——前者是区间累积、后者是逐点斜率——实验里它们在不同数据集各擅胜场（mDC 上 GDT 更强、mH-G 上 VVP 更强）。作者因此分别用 VVP 特征（维度 $M$）和 GDT 特征（维度 $T$）训练两个轻量 MLP $f_\phi^{\text{VVP}},f_\phi^{\text{GDT}}$ 输出 sigmoid 概率，最终预测取 logit 平均 $s_{ij}=\sigma\big(\tfrac{1}{2}(\text{logit}_{\text{VVP}}+\text{logit}_{\text{GDT}})\big)$。简单的 logit 平均就能稳稳压过单探针，说明两个视角确实各自捕到了不同的调控线索。
 
 ### 损失函数 / 训练策略
-唯一可学参数是翻译器 $f_\phi$，损失是标准二分类 BCE: $\mathcal{L}_\phi = -\sum_{(i,j)\in\Omega_{tr}}[y_{ij}\log s_{ij}+(1-y_{ij})\log(1-s_{ij})]$。scFM 全程冻结。评测采用 Leave-One/Some-Dataset-Out 协议：在某个数据集 (如 hESC + STRING 网络) 上训 $f_\phi$，然后零样本评估在所有其他数据集上的 AUPRC。源数据集与目标数据集既不共享基因集，也不共享细胞表达矩阵，强制翻译器学到"真泛化"的映射。VVP 用 $M=8$ 个目标值，GDT 用 $T=8$ 个基线值 (论文附录给出消融)。
+全流程唯一可学的参数就是翻译器 $f_\phi$，scFM 始终冻结，损失是标准二分类 BCE：$\mathcal{L}_\phi = -\sum_{(i,j)\in\Omega_{tr}}[y_{ij}\log s_{ij}+(1-y_{ij})\log(1-s_{ij})]$。评测刻意采用 Leave-One/Some-Dataset-Out 协议：在某个数据集（如 hESC + STRING 网络）上训 $f_\phi$，再零样本评估到所有其他数据集的 AUPRC；源数据集和目标数据集既不共享基因集也不共享细胞表达矩阵，强制翻译器学到真正可泛化的映射。VVP 用 $M=8$ 个目标值、GDT 用 $T=8$ 个基线值（消融见论文附录）。
 
 ## 实验关键数据
 

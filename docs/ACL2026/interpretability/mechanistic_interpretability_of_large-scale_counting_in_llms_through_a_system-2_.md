@@ -40,32 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-"测试时 System-2 计数" pipeline：(1) 输入端用 `|` 把 N 个物体列表分成若干 partition（开源模型 partition size ~6-9，闭源模型 ~15-25）；(2) Prompt 要求模型遵循固定输出格式：`part1: x1\npart2: x2\n... Final answer: x`；(3) 模型先 implicit 数 partition (System-1)，再显式聚合 (System-2)。无需微调、无外部工具。
-
-机制分析侧使用四类工具：(a) **CountScope probing** —— 把目标 token activation patch 到一个空白计数 context 上解码 implied count，定位"latent count 在哪些 token 上"；(b) **Token 零消融** —— 把 partition 末尾 item + comma 的所有 layer activation 置零，看 intermediate count probability 掉多少；(c) **Layer-wise mask / unmask** —— 找出哪一层在写入 count；(d) **Attention knockout** —— 单独 block 某 head 的 attention 看哪个 head 是分段/聚合关键；(e) **Cross-context patching** —— 在两个不同 context 间交换中间 token embedding，看最终答案是否随之改变（验证因果方向）。
+方法把一个超出单 forward 计数能力的「数列表里有几个物体」任务，外化成一段可在 token 流上展开的多步运算：输入端用 `|` 把 N 个物体切成若干 partition（开源模型每段 ~6-9、闭源模型 ~15-25，都落在模型可靠计数 range 内），prompt 强制模型按固定格式先逐段输出局部计数 `part1: x1\npart2: x2\n...` 再给 `Final answer: x`。这样每个分段交给 System-1 的 implicit counter 去数（它在小数量上很可靠），跨段求和交给显式写出的 token 序列即 System-2 去做，全程无需微调、无外部工具。机制分析侧则围绕这条 pipeline 叠了一套因果探针——CountScope probing 定位 latent count 落在哪些 token、token 零消融与 layer-wise mask 找出写入 count 的层、attention knockout 找出关键 head、cross-context patching 验证因果方向——把行为效果一路追到具体电路。
 
 ### 关键设计
 
-1. **显式 partition + 强制中间步骤的双重组合**：
+**1. 显式 partition × 强制中间步骤：缺一不可的双重组合。**
 
-    - 功能：把单 forward 不可能完成的大数任务拆为多个"模型可靠 range 内"的子任务，并强制模型把子结果具现化为 token 以参与后续聚合。
-    - 核心思路：单独加 `|` 而无 CoT 反而**有害**（Qwen2.5-7B 在 N=11-20 的 acc 从 unstructured 0.38 跌到 structured w/o steps 0.20），因为 partition 重置了 implicit counter 但模型不知道汇总；单独 CoT 而无 partition 也帮助不大；只有两者**组合**才能从 0.38 跳到 0.95。Final-step accuracy（求和阶段正确率）几乎所有模型都 ≥86%，证明 bottleneck 完全在 intermediate count 步骤——也就是 System-1 在每个分段内还能正常工作。
-    - 设计动机：这个组合是 System-2 的最小可行实现，partition 提供"可控制的 System-1 子任务空间"，CoT 把子结果具现为 token 才能让后续 attention 访问。
+大数计数的痛点在于 transformer 单 forward 的 latent counter 受 layer 深度限制会饱和，所以核心是把任务拆成模型「数得动」的子段、再把子结果具现成 token 让后续 attention 能访问。关键发现是这两步必须同时存在：单独加 `|` 而不给 CoT 反而**有害**——Qwen2.5-7B 在 N=11-20 的 acc 从 unstructured 的 0.38 跌到 structured-w/o-steps 的 0.20，因为 partition 重置了 implicit counter 却没让模型知道要汇总；单独加 CoT 而不切分也帮助寥寥；只有两者组合才能把 0.38 拉到 0.95。
 
-2. **CountScope 定位 latent count 在 partition 边界**：
+之所以说瓶颈完全在分段计数而非求和，是因为几乎所有模型的 final-step accuracy（求和阶段正确率）都 ≥86%——求和这步 System-2 做得很好，错全错在 intermediate count 上，也就是 System-1 在每个分段内仍正常工作。partition 提供了一个可控的 System-1 子任务空间，CoT 把子结果落成 token 才让 System-2 有东西可聚合，这正是 System-2 计数的最小可行实现。
 
-    - 功能：找出"每个 partition 的 count 信息存储在哪个 token 的 hidden state 里"，从而为后续因果干预提供精准 target。
-    - 核心思路：CountScope (Hasani 2025b) 是一种 patching-based probing：把目标 token 的 activation 注入一个独立的空白计数 context，让 LM 在该 context 下生成 number，这个 number 就是该 token 隐含的 count。实验显示：每个 partition 的 count 信号高置信地存在**该 partition 的最后一个 item token + 最后一个 comma token**上，且 partition 之间 counter 会重置（即第 2 partition 末尾存储的是 partition 2 的局部 count 而非累积）。
-    - 设计动机：传统 logit-lens / tuned-lens 对数字解码不可靠 (作者实测)，需要 CountScope 这种 task-conditioned probe；定位到 partition 边界 token 也直接验证了"分段后每个子段独立计数"的机制假设。
+**2. CountScope：把 latent count 定位到 partition 边界 token。**
 
-3. **三阶段电路 + 单 head 因果归因**：
+要做因果干预，先得知道「每段的 count 存在哪个 token 的 hidden state 里」。作者实测 logit-lens / tuned-lens 对数字解码并不可靠，于是改用 CountScope (Hasani 2025b) 这种 task-conditioned 的 patching probe：把目标 token 的 activation 注入一个独立的空白计数 context，让 LM 在该 context 下吐出一个数，这个数就是该 token 隐含的 count。
 
-    - 功能：拆出"信息存储 (partition 末尾 token) → 信息传递 (中间步骤 token) → 信息聚合 (最终答案 token)"三阶段的具体 attention pathway。
-    - 核心思路：(a) Attention 分析显示 Layer 19-23 的注意力从中间步骤 token 强烈指向对应 partition 的末尾 item+comma；(b) Attention knockout 进一步发现 Layer 22 是关键，**Head 22-13** 负责 "partition 末尾 → 中间步骤" 的传递，**Head 22-1** 负责 "中间步骤 → 最终答案" 的聚合；(c) Cross-context patching 终极验证：把 context A 的某个中间步骤 token embedding 换成 context B 的，A 的最终答案随之变化（19→21、14→12），确认 token embedding 是因果中介而非伴随现象。
-    - 设计动机：纯 attention 分析只能给"相关"证据，需要 activation patching 的因果干预才能得"调控"结论；不同 task stage 用不同 head 的发现意味着 LLM 内部至少在该任务上有 division of labor。
+探测结果把机制假设坐实了——每段的 count 信号高置信地落在**该 partition 的最后一个 item token + 最后一个 comma token**上，且 partition 之间 counter 会重置：第 2 段末尾存的是本段局部 count 而非累积值。这既给后续零消融、attention knockout 提供了精准的干预 target，也直接验证了「切分后每个子段独立计数」这一核心机制。
+
+**3. 三阶段电路与单 head 因果归因。**
+
+最后把 System-2 计数还原成「信息存储（partition 末尾 token）→ 信息传递（中间步骤 token）→ 信息聚合（最终答案 token）」三阶段，并逐级定位到具体 attention pathway。先用 attention 分析看到 Layer 19-23 的注意力从中间步骤 token 强烈指向对应 partition 的末尾 item+comma；再用 attention knockout 锁定 Layer 22 为关键层——**Head 22-13** 负责「partition 末尾 → 中间步骤」的传递，**Head 22-1** 负责「中间步骤 → 最终答案」的聚合。
+
+纯 attention 分析只能给「相关」证据，所以作者用 cross-context patching 做终极因果验证：把 context A 某个中间步骤 token 的 embedding 换成 context B 的，A 的最终答案随之改变（19→21、14→12），确认这些 token embedding 是因果中介而非伴随现象。不同 task stage 用不同 head 也意味着 LLM 在该任务上存在明确的 division of labor。
 
 ### 损失函数 / 训练策略
-**纯 inference-time**，无任何训练。所有干预 (CountScope probe / 零消融 / attention knockout / cross-context patching) 都通过 forward hook 实现。
+**纯 inference-time**，无任何训练。所有干预（CountScope probe / 零消融 / attention knockout / cross-context patching）都通过 forward hook 实现。
 
 ## 实验关键数据
 

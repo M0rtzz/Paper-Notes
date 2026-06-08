@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **Latent Multi-Rank (MR) 调制**:
+**1. Latent Multi-Rank (MR) 调制：给每层权重加一个由 latent code 生成的低秩修正。**
 
-    - 功能：对 MLP 每层的权重 $\bm{W}^{(\ell)}$ 加一个秩 $r$ 的实例化修正 $\bm{U}^{(\ell,k)} \bm{V}^{(\ell,k)\top}$ 以及一个偏置修正 $\bm{s}^{(\ell,k)}$，全都由 hyper-network 从 $\bm{z}^{(k)}$ 生成。
-    - 核心思路：每层更新为 $\bm{h} \mapsto \sigma\left((\bm{W}^{(\ell)} + \bm{U}^{(\ell,k)} \bm{V}^{(\ell,k)\top}) \bm{h} + \bm{b}^{(\ell)} + \bm{s}^{(\ell,k)}\right)$，其中 $\bm{U}, \bm{V} \in \mathbb{R}^{w_\ell \times r}$。当 $r=1$ 时退化为 RO（rank-one），等价于一种极简的 LoRA-like 调制；$r=5$ 给出 MR(5)。$\bm{U}, \bm{V}$ 都是 instance-specific 的，意味着 hyper-network 每次都重生成一对秩 $r$ 因子。
-    - 设计动机：Proposition 3.1 表明，如果 $\partial_{\bm\mu} \bm{f}$ 局部秩 $\le r$，则只需 $r$ 维调制即可捕捉所有局部参数变化——MR 直接利用这一事实，把表达力放在「LoRA-style 低秩矩阵」里。
+HNN 类模型只学一个标量势就给出整套动力学，权重对参数 $\bm{\mu}$ 的依赖天然低维，可现有元学习却用 full gradient 更新所有 $\Theta$，浪费了这个结构。MR 的做法是给 MLP 每层权重 $\bm{W}^{(\ell)}$ 加一个秩 $r$ 的实例化修正 $\bm{U}^{(\ell,k)} \bm{V}^{(\ell,k)\top}$ 和一个偏置修正 $\bm{s}^{(\ell,k)}$，全由 hyper-network 从 latent code $\bm{z}^{(k)}$ 生成，于是每层更新为 $\bm{h} \mapsto \sigma\left((\bm{W}^{(\ell)} + \bm{U}^{(\ell,k)} \bm{V}^{(\ell,k)\top}) \bm{h} + \bm{b}^{(\ell)} + \bm{s}^{(\ell,k)}\right)$，其中 $\bm{U}, \bm{V} \in \mathbb{R}^{w_\ell \times r}$。$r=1$ 退化为 rank-one（RO，一种极简 LoRA-like 调制），$r=5$ 给出 MR(5)。
 
-2. **Latent SVD-like 调制（论文最优方案）**:
+为什么低秩够用？Proposition 3.1 给了干净的理由：若 $\partial_{\bm\mu} \bm{f}$ 局部秩 $\le r$，则只需 $r$ 维调制就能捕捉所有局部参数变化。MR 直接吃下这个事实，把表达力放进 LoRA 式低秩矩阵里，参数量远小于改整个权重。
 
-    - 功能：把低秩调制进一步因式分解成「共享基底 + 实例奇异值」，使 hyper-network 只需输出几个标量。
-    - 核心思路：每层写成 $\bm{h} \mapsto \sigma\left((\bm{W}^{(\ell)} + \sum_{i=1}^r d_i^{(\ell,k)} \bm{u}_i^{(\ell)} \bm{v}_i^{(\ell)\top}) \bm{h} + \bm{b}^{(\ell)} + \bm{s}^{(\ell,k)}\right)$，其中 $\bm{u}_i^{(\ell)}, \bm{v}_i^{(\ell)}$ 是 base 参数（meta-gradient 更新），只有奇异值 $d_i^{(\ell,k)}$ 和偏置 $\bm{s}^{(\ell,k)}$ 由 hyper-network 从 $\bm{z}^{(k)}$ 给出；并通过 $\|\bm{U}^\top \bm{U} - \bm{I}\|_F$ 和 $\|\bm{V}^\top \bm{V} - \bm{I}\|_F$ 软正交惩罚 + ReLU 激活 hyper-network 保证奇异值非负。
-    - 设计动机：base 阶段就把「跨系统不变的调制方向」学进 $\bm{u}_i, \bm{v}_i$；测试期只需要拟合几个奇异值就能适配新参数实例——hyper-network 极小、test-time gradient 极少，正好对应 INR 里「先学共享基再拟合个体系数」的成功模式。
+**2. Latent SVD-like 调制（论文最优方案）：把低秩修正拆成共享基底 + 实例奇异值。**
 
-3. **Locality 正则 + 演化 latent code 训练协议**:
+MR 每次都要 hyper-network 重生成一对秩 $r$ 因子 $\bm{U}, \bm{V}$，hyper-network 仍不小。SVD-like 更进一步因式分解：每层写成 $\bm{h} \mapsto \sigma\left((\bm{W}^{(\ell)} + \sum_{i=1}^r d_i^{(\ell,k)} \bm{u}_i^{(\ell)} \bm{v}_i^{(\ell)\top}) \bm{h} + \bm{b}^{(\ell)} + \bm{s}^{(\ell,k)}\right)$，其中 $\bm{u}_i^{(\ell)}, \bm{v}_i^{(\ell)}$ 是 base 参数（meta-gradient 更新），只有奇异值 $d_i^{(\ell,k)}$ 和偏置 $\bm{s}^{(\ell,k)}$ 由 hyper-network 从 $\bm{z}^{(k)}$ 给出；并用 $\|\bm{U}^\top \bm{U} - \bm{I}\|_F$、$\|\bm{V}^\top \bm{V} - \bm{I}\|_F$ 软正交惩罚 + ReLU 激活保证奇异值非负。
 
-    - 功能：(a) 限制实例参数与共享 base 的偏离；(b) 不在每个 epoch 把 latent 清零，而是让 $\bm{z}^{(k)}$ 在整个训练过程中持续演化。
-    - 核心思路：在 loss 中加 $\lambda_z \|\bm{z}\|_2 + \lambda_\phi \|\bm\phi\|_2$ 把实例化更新约束在共享 base 附近；测试期 latent 初始化为训练 latent 的 Euclidean 均值 $\bm{z}_\text{avg} = \tfrac{1}{n_\mu^\text{train}} \sum_k \bm{z}_\text{train}^{(k)}$，再做 few-shot auto-decoding 更新。
-    - 设计动机：清零式初始化（Dupont 2022 原版）会让 base 反复被推向「能对任意 latent 微调」的位置，丧失训练信号；持续演化让 base 与平均 latent 共同进化，测试初始化也直接落在「已经学过的参数邻域」，明显更稳定。
+这样 base 阶段就把"跨系统不变的调制方向"学进 $\bm{u}_i, \bm{v}_i$，测试期只需拟合几个奇异值标量就能适配新参数实例——hyper-network 极小、test-time gradient 极少，正好对应 INR 里"先学共享基再拟合个体系数"的成功模式。
+
+**3. Locality 正则 + 演化 latent code 训练协议：把实例调制拴在 base 附近且让 latent 持续进化。**
+
+要让调制稳定，得防两件事：实例参数偏离共享 base 太远，以及训练初期 latent 乱跳。作者在 loss 里加 $\lambda_z \|\bm{z}\|_2 + \lambda_\phi \|\bm\phi\|_2$ 把实例化更新拴在 base 附近；测试期 latent 初始化为训练 latent 的 Euclidean 均值 $\bm{z}_\text{avg} = \tfrac{1}{n_\mu^\text{train}} \sum_k \bm{z}_\text{train}^{(k)}$，再做 few-shot auto-decoding。
+
+更关键的是不在每个 epoch 把 latent 清零，而让 $\bm{z}^{(k)}$ 在整个训练过程持续演化。Dupont 2022 的清零式初始化会让 base 反复被推向"能对任意 latent 微调"的位置、丧失训练信号；持续演化让 base 与平均 latent 共同进化，测试初始化也直接落在"已经学过的参数邻域"，明显更稳。
 
 ### 损失函数 / 训练策略
 Hamiltonian 系统用 symplecticity loss $\mathcal{L}_\text{symp} = \|\dot{\bm q} - \partial_{\bm p} \tilde{\mathcal H}_\Theta\|_2^2 + \|\dot{\bm p} + \partial_{\bm q} \tilde{\mathcal H}_\Theta\|_2^2$；GENERIC 系统用对应的 metriplectic loss。外循环 $N_\text{out}$ 次更新 base $\Theta_\text{base}$，内循环 $N_\text{in}$ 次更新当前 batch 的 latent；测试用 Algorithm 2 做 $N_\text{test}$-shot latent fit（base 冻结）。

@@ -45,23 +45,18 @@ tags:
 作者进一步做了两个补充分析。第一，用Nvidia domain classifier把文本分到26个领域，查看不同领域的分数偏移是否一致。第二，让3名人类标注者按照FineWeb-Edu原始educational prompt给100个文档打分，检查偏差是否来自student分类器，还是teacher LLM标注本身。
 
 ### 关键设计
-1. **Wikipedia-style rephrasing intervention**:
 
-	- 功能：构造一个只改变文本呈现风格、尽量不改变事实内容的反事实样本。
-	- 核心思路：使用Qwen2.5-72B-Instruct，把网页改写成类似Wikipedia条目的格式，要求不加入新事实，保留日期、地点、实体，并把token数量控制在原文的10%范围内。
-	- 设计动机：这个干预能隔离“内容本身”和“百科式写作风格”的影响。如果分数大幅上升，说明CQF至少部分依赖风格捷径。
+**1. Wikipedia 式改写干预：构造一个只换写法、不换事实的反事实样本。**
 
-2. **Multi-model CQF comparison**:
+要回答“CQF 究竟在评内容还是评风格”，最干净的办法是把同一篇网页的内容固定住，只改变它的呈现方式。作者用 Qwen2.5-72B-Instruct 把 FineWeb 网页改写成类似 Wikipedia 条目的格式，prompt 明确要求不引入任何新事实，保留原文的日期、地点和实体，并把 token 数量控制在原文 ±10% 的范围内。这样改写前后唯一系统性变化的就是“百科口吻”这一文体维度。如果 CQF 分数因此大幅上升，就说明分类器至少部分依赖了风格捷径，而非真正的内容质量。
 
-	- 功能：避免结论只针对单个FineWeb-Edu分类器。
-	- 核心思路：比较FineWeb-Edu、NemoCurator Mixtral和NemoCurator Nemotron三个CQF模型。三者都基于Snowflake-Arctic-Embed-M这类BERT-sized embedding模型，适合大规模过滤。
-	- 设计动机：如果多个CQF模型都出现类似偏差，那么问题更可能来自“教育性过滤范式”或teacher标注偏好，而不是某个模型偶然失效。
+**2. 多模型横向对照：让结论不只针对某一个 FineWeb-Edu 分类器。**
 
-3. **Domain and human annotation diagnosis**:
+单一模型上的偏差可能只是偶然，所以作者同时比较了三个主流 CQF 模型——FineWeb-Edu、NemoCurator Mixtral 和 NemoCurator Nemotron。三者都建立在 Snowflake-Arctic-Embed-M 这类 BERT 量级的 embedding 模型之上，正是为大规模过滤而设计的轻量分类器。如果三个独立训练的模型在同一个改写干预下都出现一致的抬分，那么问题就更可能根植于“教育性过滤范式”本身或它们共享的 teacher 标注偏好，而不是某个模型的偶发失效。
 
-	- 功能：判断偏差是否跨领域存在，以及是否源于LLM teacher标注。
-	- 核心思路：领域分析中，每个领域采样20,000个样本，比较原始和Wikipedia式文本的分数分布；人工分析中，选取100个分数差异较大的文档，每个由3名标注者按同一educational rubric打分。
-	- 设计动机：如果所有领域都被改写抬分，说明风格偏差不是少数领域特例；如果人类分数低于LLM teacher，说明CQF的上游监督本身就偏乐观。
+**3. 领域与人工标注双重诊断：定位偏差是否跨领域，以及是否来自 teacher。**
+
+为了把偏差的来源刨清楚，作者做了两层诊断。领域层面，用 Nvidia domain classifier 把文本分到 26 个领域，每个领域采样 20,000 个样本，比较原始与改写文本的分数分布；只要所有领域都被改写抬分，就说明风格偏好不是个别领域的特例，而是范式级的系统偏差。监督层面，选取 100 个改写前后分差较大的文档，每篇请 3 名标注者按 FineWeb-Edu 原始 educational rubric 重新打分。如果人类打分系统性低于 LLM teacher，就指向一个更上游的病灶：CQF 继承的偏差其实来自 teacher 标注本身偏乐观，student 分类器只是把它放大了。
 
 ### 损失函数 / 训练策略
 本文不训练新模型，主要是评测协议。CQF分数通常在0到5之间，常用阈值为3或4。Wikipedia改写prompt强调“只改形式，不加事实”，教育性打分prompt沿用FineWeb-Edu的5分累加式标准。人工标注也使用同一prompt，以便对比LLM teacher和人类判断。

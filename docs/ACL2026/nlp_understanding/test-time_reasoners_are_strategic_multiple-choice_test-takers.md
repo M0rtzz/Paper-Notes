@@ -38,34 +38,26 @@ tags:
 **核心 idea**：把推理轨迹当作 soft evidence，用它区分有害的多选题 artifact 和不那么有害的策略性部分信息推理，而不是用 choices-only accuracy 一个数字直接判定 benchmark 失效。
 
 ## 方法详解
-论文设计很克制：它没有训练新模型，而是在三个多选题 benchmark 上对现有推理 LLM 做受控评测。每道题有题干 $q$、选项集合 $C$ 和正确答案 $a$。作者构造两种输入条件：full 条件给模型 $q$ 和 $C$；choices-only 条件只给 $C$，要求模型“使用任何必要策略”猜出正确选项。每种条件又分成 base 和 reason 两个提示：base 要求直接选答案，reason 要求先生成逐步推理再选答案。
 
 ### 整体框架
-评测覆盖 ARC、MMLU 和 Super GPQA 三个难度层级不同的 benchmark。模型包括 Gemini 2.5 Lite / Flash / Pro、GPT-5 Mini / GPT-4.1 / GPT-5、Claude Haiku / Sonnet、Cohere Command R / R+、DeepSeek-V3 和 Qwen3-235B-Instruct。对支持 API reasoning effort 的模型，base 设置为 none，reason 设置为 medium；对不支持 API reasoning 的模型，则通过显式 CoT prompt 开关推理。所有设置都用准确率衡量最终选项是否等于金标。
-
-实验分三层推进。第一层比较 full 与 choices-only 中 TTR 对准确率的提升幅度；第二层改变 GPT-5 Mini 等模型的 reasoning effort，观察更长推理是否进一步提高 choices-only accuracy；第三层对 choices-only 推理轨迹做定性编码，并用回归分析哪些策略与答对或答错相关。
+论文不训练任何新模型，而是在 ARC、MMLU、Super GPQA 三个难度递增的多选题 benchmark 上对 12 个现有推理 LLM 做受控评测。每道题有题干 $q$、选项集合 $C$ 和正确答案 $a$，作者把它拆成两个正交的轴：输入条件 full（给 $q$ 和 $C$）vs choices-only（只给 $C$，要求模型“用任何必要策略”猜出正确项），以及提示模式 base（直接选答案）vs reason（先生成逐步推理再选）。四种组合下跑同一批题，再对 choices-only 的推理轨迹做人工策略编码，从而把“只看选项也能答对”这件事拆成浅层作弊和合理的部分信息推理两类机制。
 
 ### 关键设计
-1. **Full / Choices-only × Base / Reason 的二维控制**:
 
-	- 功能：把正常多选题能力、只看选项的 partial-input 能力、测试时推理带来的增益分开观察。
-	- 核心思路：同一模型、同一题目在四种条件下运行。如果 reason 只提升 full 而不提升 choices-only，说明推理主要在利用题干；如果 choices-only reason 也显著提升，则说明推理可能在增强选项级策略。
-	- 设计动机：单测 choices-only accuracy 无法回答“推理模型是否更会作弊”。二维对照能判断 TTR 是普遍提升 MCQA，还是特别放大 partial-input shortcut。
+**1. Full / Choices-only × Base / Reason 的二维对照：把三种能力拆开测。**
 
-2. **推理轨迹可信性检查**:
+只测 choices-only accuracy 这一个数字，无法回答“推理模型是不是更会作弊”——因为它把正常答题能力、只看选项的 partial-input 能力、以及测试时推理（TTR）带来的增益全混在了一起。作者让同一模型、同一题目在四个格子里各跑一遍：如果 reason 只抬高 full、不抬高 choices-only，说明推理主要靠题干 $q$；如果 choices-only 的 reason 也显著上涨，才说明推理在增强选项级策略。这样就能判断 TTR 究竟是普遍提升 MCQA，还是专门放大了 partial-input shortcut。模型覆盖 Gemini 2.5 Lite/Flash/Pro、GPT-5 Mini/GPT-4.1/GPT-5、Claude Haiku/Sonnet、Cohere Command R/R+、DeepSeek-V3、Qwen3-235B-Instruct；支持 API reasoning effort 的模型 base 设 none、reason 设 medium，不支持的则用显式 CoT prompt 开关推理。
 
-	- 功能：在分析推理策略前，先确认轨迹至少与模型答案有可用关联。
-	- 核心思路：作者做了三类 faithfulness sanity check：加入 TTR 后模型多数时候保持原答案；GPT-5 只看轨迹就能以超过 90% 的准确率预测模型最终选择；当作者人为加入重复选项、同义选项、无意义选项或事实错误选项时，模型会改答案或在轨迹中显式提到扰动。
-	- 设计动机：CoT 不一定是真实因果解释，但如果轨迹连答案都支持不了，就不能拿来做策略分析。通过这些检查，作者把轨迹定位为“有信息量的软证据”，而不是强因果解释。
+**2. 推理轨迹可信性检查：先证明轨迹值得分析，再用它。**
 
-3. **Choices-only 策略编码与回归分析**:
+CoT 不一定是真实的因果解释，如果轨迹连模型自己的答案都支持不了，拿它做策略分析就没意义。所以在编码之前，作者先做三类 faithfulness sanity check：一是加入 TTR 后模型多数时候保持原答案，说明推理没有随意翻供；二是让 GPT-5 只看轨迹去预测模型最终选了哪项，准确率超过 90%，说明轨迹和答案高度耦合；三是人为往选项里塞重复项、同义项、无意义项或事实错误项，模型会随之改答案或在轨迹里显式提到这些扰动。三关都过，作者才把轨迹定位为“有信息量的软证据”（soft evidence），而非强因果解释——这比“CoT 一定可靠 / 一定不可靠”的二分更可操作。
 
-	- 功能：区分哪些 choices-only 成功更像 benchmark flaw，哪些更像合理的部分信息推理。
-	- 核心思路：作者从 ARC 中抽取 Gemini Pro、Claude Sonnet、Qwen-Instruct 的 180 条正确/错误 choices-only 轨迹做 qualitative coding，得到 FACT、ELIM、PATTERNS、INFER Q、SHALLOW、INCONS 六类标签。随后用逻辑回归看某类策略是否预测答对或答错，并对 INFER Q 判断模型猜测的问题是否与原题语义接近。
-	- 设计动机：partial-input 成功的含义取决于策略本身。若模型只因为“1.5 看起来最乱”而答对，这是题目缺陷；若模型能从选项反推“可能在问可再生资源”再选择 trees，则更接近一种 abductive reasoning。
+**3. Choices-only 策略编码与回归分析：区分 benchmark 缺陷和 abductive 推理。**
+
+partial-input 答对的含义取决于模型用了什么策略：若它只因为“1.5 这个数字看起来最乱”而蒙对，那是题目缺陷；若它能从选项反推“题目可能在问可再生资源”再选 trees，那更接近一种合理的溯因推理（abductive reasoning）。为此作者从 ARC 抽取 Gemini Pro、Claude Sonnet、Qwen-Instruct 的 180 条正确/错误 choices-only 轨迹做 qualitative coding，归出六类标签——FACT（回忆事实）、ELIM（排除错误项）、PATTERNS（识别选项类别/模式）、INFER Q（反推原题）、SHALLOW（利用表面线索）、INCONS（轨迹自相矛盾）。再用逻辑回归看每类策略是否预测答对/答错，并对 INFER Q 单独判断模型猜出的问题是否与原题语义接近。这套编码把“答对”从一个准确率审判，升级成了策略层面的诊断。
 
 ### 损失函数 / 训练策略
-本文没有训练新模型。所有实验都是零样本提示评测，温度设为 1.0，最大输出 token 设为 81920。附录还用 Qwen-2.5 Instruct 3B 对 SFT 和 GRPO 做补充比较：SFT 直接优化答案，GRPO 奖励产生能导向正确答案的推理轨迹；结果同样支持“推理训练不会大幅放大 choices-only 成功”的结论。
+本文没有训练新模型，所有实验都是零样本提示评测，温度 $1.0$、最大输出 $81920$ token。附录另用 Qwen-2.5 Instruct 3B 补充比较两种训练方式：SFT 直接优化答案，GRPO 奖励那些能导向正确答案的推理轨迹；两者都让 choices-only 超过随机，但 GRPO 并未像在 full 上那样带来大幅优势，同样支持“推理训练不会显著放大 choices-only 成功”的结论。
 
 ## 实验关键数据
 

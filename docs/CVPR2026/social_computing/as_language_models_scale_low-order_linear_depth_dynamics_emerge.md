@@ -56,85 +56,50 @@ tags:
 作者的回答是肯定的，而且第三点是全文最有价值的结论：模型变大以后，局部低阶线性代理不仅没有失效，反而变得更准。
 
 ## 方法详解
-这篇文章的方法主线非常清楚，本质上是把 activation steering 重新表述成一个局部系统辨识与最优控制问题。
 
 ### 整体框架
-完整流程可以概括为五步：
+这篇工作的本质是把 activation steering 从一堆经验技巧改写成一个局部系统辨识与最优控制问题。它不去拟合 Transformer 的全部行为，只拟合一个很局部但很关键的对象：在某个固定 prompt 下，最后一个 token 的隐状态受到小扰动以后，这个扰动经过后续所有 block 传播，会怎样改变最终的概念读出。
 
-1. 对给定 prompt 跑一次原模型，拿到沿深度的最后 token 隐状态轨迹 $x_\ell(p)$。
-2. 固定 prompt 中其它 token 的隐藏状态，只允许最后 token 在下一层 block 前被小幅变化，从而得到一个 prompt-conditioned 的 frozen-context 映射 $x_{\ell+1}=f_\ell(x_\ell;p)$。
-3. 在这条运行轨迹附近对 $f_\ell$ 做局部线性化，得到每层 Jacobian $A_\ell(p)$。
-4. 结合概念方向 $v_\ell$ 与 Krylov 风格的可达子空间构造一个低维基底 $P_\ell$，把高维动力学投影成低阶线性层变模型 LLV。
-5. 用这个 LLV 代理去预测单层注入的增益曲线，并进一步求出满足目标输出变化时最省能量的多层注入策略。
-
-这套方法不是去拟合模型的全部行为，而是只拟合一个很局部但很关键的对象：在当前上下文下，最后 token 受到小扰动以后，后续深度传播会怎样改变最终概念读出。
+整条流水线围绕这一目标展开：先对给定 prompt 跑一遍原模型，拿到最后 token 沿深度的隐状态轨迹 $x_\ell(p)$；再固定上下文里其它 token、只让最后 token 在进入下一层 block 前被小幅扰动，得到一个 prompt-conditioned 的映射 $x_{\ell+1}=f_\ell(x_\ell;p)$；在这条运行轨迹附近把 $f_\ell$ 局部线性化，得到每层 Jacobian $A_\ell(p)$；结合概念方向 $v_\ell$ 与可达子空间构造一个 32 维基底 $P_\ell$，把高维动力学投影成低阶线性层变代理（LLV）；最后用 LLV 预测单层注入的增益曲线，并求出达到目标输出变化时最省能量的多层注入策略。关键在于，这个代理不是事后解释，而是要能回到原始非线性 Transformer 上被实证验证——它必须既能预测整条 layerwise gain 曲线，又能导出比启发式更优的 multi-layer actuation schedule。
 
 ### 关键设计
 
-1. **把深度当作时间，把最后 token 当作系统状态**
+**1. 把深度当时间、把最后 token 当系统状态：先把问题压成一个可辨识的对象**
 
-    - 功能：定义 $x_\ell(p)=h_\ell(p)[t(p),:]$，其中 $t(p)$ 是最后一个非 padding token 的位置。
-    - 核心思路：作者不试图建模整段序列的全部隐状态，而是聚焦最直接影响最终 readout 的最后 token 表征，把 Transformer block 序列看作时间推进。
-    - 设计动机：如果目标是理解 activation steering 对最终输出的作用，那么最后 token 是最贴近决策端的状态；这样既把问题压缩了，也让“层深传播”可以直接用状态空间语言来描述。
+要理解 steering 对最终输出的作用，最贴近决策端的状态就是最后一个 token 的表征，所以作者定义 $x_\ell(p)=h_\ell(p)[t(p),:]$（$t(p)$ 是最后一个非 padding token 的位置），而不去建模整段序列的全部隐状态。把 Transformer 的 block 序列看作离散时间推进之后，"一个概念方向在第 $k$ 层被注入、再沿深度传播"这件事就可以直接用状态空间的语言来写。这一步看似只是换了个记号，实际是把"解释整个 LLM"这个无从下手的问题，压缩成了"刻画当前语境下最后 token 的层间传播"这个有限可控的对象。
 
-2. **冻结上下文，只建模局部 last-token 响应**
+**2. 冻结上下文，只建模 last-token 的局部响应：把跨 token 交互吸收掉**
 
-    - 功能：对某个固定 prompt，保持非最后 token 的隐藏状态不变，只扰动最后 token，然后看下一层 block 如何映射它。
-    - 核心思路：这样得到的是条件在 prompt 上下文之下的映射 $x_{\ell+1}=f_\ell(x_\ell;p)$，它把跨 token 复杂交互吸收到“冻结上下文”里，保留 steering 最相关的局部动力学。
-    - 设计动机：如果不冻结上下文，整个系统状态会大到难以辨识；冻结上下文后，问题从“全局解释 Transformer”变成“局部解释当前语境下的深度传播”，难度立刻可控。
+如果让整个序列的隐状态都自由变化，系统维度会大到根本无法辨识。作者的做法是：对一个固定 prompt，保持非最后 token 的隐藏状态不动，只扰动最后 token，再看下一层 block 怎样映射它，由此得到条件在上下文之下的映射 $x_{\ell+1}=f_\ell(x_\ell;p)$。这等于把复杂的跨 token 交互统统吸收进"冻结上下文"这个常量里，只保留与 steering 最相关的那部分局部动力学。问题于是从"全局解释 Transformer"变成"局部解释这一条运行轨迹"，线性化也因此有了正当性——近似的对象本来就只是邻域响应，而非全局计算。
 
-3. **沿概念方向建模外部驱动项**
+**3. 沿概念方向定义外部驱动项：把输入端也数据驱动地钉死**
 
-    - 功能：在每一层估计概念方向 $v_\ell$，主实验只考虑沿这个方向的加性注入 $u_\ell v_\ell$。
-    - 核心思路：概念方向由独立 concept split 上的类别均值差归一化得到，因此 steering 的“输入端”也是数据驱动地定义出来的。
-    - 设计动机：很多 activation steering 工作默认方向存在，但不建模它如何传播。这里作者把方向估计和动力学传播合在一起，使输入、状态、输出三者在同一框架中闭环。
+很多 activation steering 工作默认存在一个可用的方向，却不去建模它如何传播。这里作者把方向估计和动力学传播合到一个框架里：每层的概念方向 $v_\ell$ 由独立 concept split 上两类样本最后 token 表征的类别均值差归一化得到，主实验只考虑沿这个方向的加性注入 $u_\ell v_\ell$。这样一来，输入（注入方向）、状态（last-token 轨迹）、输出（概念读出）三者都被数据驱动地定义出来并在同一系统里闭环，steering 的"往哪加"不再是手工拍板，而是和后续的传播分析共用同一套基底。
 
-4. **构造 concept-anchored 的低维基底 $P_\ell$**
+**4. concept-anchored 的低维基底 $P_\ell$：把维度预算花在真正被激发的子空间上**
 
-    - 功能：每层的降维基底第一列固定为概念方向 $v_\ell$，其余列由 reachability-informed Krylov complement 构造。
-    - 核心思路：这不是随便做 PCA，也不是纯随机补空间，而是从平均 Jacobian 作用下真实会被 steering 激发的方向出发，递推地构建一组更“可达”的基。
-    - 设计动机：如果低维基底没有覆盖真正会被控制输入激发的子空间，再小的 surrogate 都会丢掉关键传播模式。作者用 Krylov 风格补空间，就是为了把有限维度预算优先花在“被 steering 用得到”的方向上。
+降维的风险在于：如果低维基底没覆盖到控制输入真正会激发的子空间，再精巧的代理也会丢掉关键传播模式。作者因此不做普通 PCA、也不用随机补空间，而是让每层基底的第一列强行固定为概念方向 $v_\ell$，其余列由 reachability-informed Krylov complement 构造——从平均 Jacobian 反复作用下真实会被 steering 激发的方向出发，递推地展开一组更"可达"的基（complement 大小为 31，对应总 reduced dimension 32）。这相当于先问"控制输入沿深度走会点亮哪些方向"，再把有限的维度预算优先分配给这些方向，从而在很低的阶数下仍保住对 steering 敏感的那部分动力学。
 
-5. **得到层变线性代理 LLV**
+**5. 层变线性代理 LLV：用随层变化的线性矩阵贴合"每层功能不同"**
 
-    - 功能：投影后得到
-      $r_{\ell+1}\approx \bar{A}_\ell(p) r_\ell + \bar{B}_\ell(p) u_\ell$，其中 $r_\ell=P_\ell^\top \delta x_\ell$。
-    - 核心思路：原模型虽然非线性，但在运行轨迹附近的响应可被一组随层变化的线性矩阵近似；这比单个全局线性模型更贴合 Transformer 每层功能不同的事实。
-    - 设计动机：作者不是宣称“Transformer 本质上线性”，而是强调“局部线性、且随层变化”的近似足够准确。这种表述更克制，也更符合实际网络结构。
+把扰动投影到上述基底后，深度传播被写成一个低阶线性递推
 
-6. **用 predicted gain 连接分析与控制**
+$$r_{\ell+1}\approx \bar{A}_\ell(p)\, r_\ell + \bar{B}_\ell(p)\, u_\ell,\qquad r_\ell = P_\ell^\top \delta x_\ell$$
 
-    - 功能：对单层第 $k$ 层注入，最终概念增益预测为 $g_k^{pred}\approx C\Phi(k+1,L)\bar{B}_k$。
-    - 核心思路：一旦有了 reduced transition product $\Phi$，每层的灵敏度就不需要靠逐层实测了，而能直接从代理模型里推出。
-    - 设计动机：这一步把“解释模型”变成“可操作模型”。它不是事后解释哪层好，而是先预测哪层好。
+注意这里的 $\bar{A}_\ell$、$\bar{B}_\ell$ 是**随层变化**的，而不是一个全局线性模型。这点很关键：Transformer 各层功能本就不同，用一套层变矩阵去近似，比强行套一个统一线性算子更贴合实际结构。作者也刻意把话说得克制——他们主张的不是"Transformer 本质上线性"，而是"在运行轨迹附近、局部、且逐层变化的线性近似足够准"，这正是后面缩放结论能站住的前提。
+
+**6. 用 predicted gain 把分析变成控制：先预测哪层好，再算最省能量的注入**
+
+有了 LLV，每层的灵敏度就不必再逐层实测。对单层第 $k$ 层注入，最终概念增益可直接从代理预测：
+
+$$g_k^{pred}\approx C\,\Phi(k+1,L)\,\bar{B}_k$$
+
+其中 $\Phi$ 是 reduced transition product（降维空间里从 $k+1$ 层到末层 $L$ 的传递乘积）。这一步把"解释模型"升级成"可操作模型"：它不再是事后告诉你哪层好，而是事先预测整条 gain 曲线，并据此求解一个最优控制问题——在达到目标概念偏移的前提下，把注入能量在多层之间最省地分配，得到的 schedule 显著优于"全层均匀注入""只注最后一层"这类启发式。
 
 ### 损失函数 / 训练策略
-严格说这篇工作不是训练一个新模型，而是在 frozen pretrained GPT-2 家族上做局部辨识，因此没有传统意义上的训练损失。它的“学习”过程主要体现在三个地方：
+严格说这篇工作没有传统意义上的训练损失：它在 frozen pretrained GPT-2 家族上做局部辨识，不更新任何模型权重。所谓"学习"集中在三处——用 concept split 算每层两类样本最后 token 表征的均值差并归一化得到概念方向 $v_\ell$；估计局部 Jacobian 时优先用 JVP 计算雅可比作用，必要时退回 central finite difference；最后在降维基底上辨识出 $\bar{A}_\ell(p)$、$\bar{B}_\ell(p)$，主实验固定 reduced order $d=32$。
 
-1. **概念方向估计**：用 concept split 计算每层两类样本最后 token 表征的均值差，并归一化为 $v_\ell$。
-2. **局部 Jacobian 估计**：优先使用 JVP 计算局部雅可比作用，必要时退回 central finite difference。
-3. **低维系统辨识**：在降维基底上得到 $\bar{A}_\ell(p)$ 和 $\bar{B}_\ell(p)$，主实验固定 reduced order 为 $d=32$。
-
-一些关键实验设置值得记录：
-
-1. GPT-2-large 主结果中 concept batch size 为 32，held-out batch size 为 64。
-2. operating split 用于局部动力学辨识，evaluation split 仅用于评估增益和控制效果，二者严格分离。
-3. Krylov complement 大小为 31，对应总 reduced dimension 为 32。
-4. 主图的 gain evaluation magnitude 主要使用 $\epsilon=0.1$，并在更宽范围内检查鲁棒性。
-
-### 为什么这个方法成立
-我觉得这篇论文最强的地方，不是提出了一个复杂算法，而是把问题拆得非常合理。
-
-首先，作者只关心局部响应，而不是妄图解释 LLM 全部计算过程，因此线性化是有正当性的。
-
-其次，作者不是随便降维，而是围绕概念方向和可达子空间降维，所以 reduced model 对 steering 特别敏感的那部分动力学保留得更好。
-
-最后，论文把 surrogate 的价值放在两个可验证目标上：
-
-1. 能否预测整条 layerwise gain 曲线。
-2. 能否导出更优的 multi-layer actuation schedule。
-
-也就是说，它不是用一个抽象的“线性化解释”自说自话，而是要求这个解释必须能回到原始非线性 Transformer 上被实证验证。
+几个关键设置值得记下：GPT-2-large 主结果用 concept batch size 32、held-out batch size 64；operating split 只用于辨识局部动力学，evaluation split 只用于评估增益和控制效果，二者严格分离，从而保证"预测有效"不是同批 prompt 上的自证；主图的 gain evaluation magnitude 主要取 $\epsilon=0.1$，并在更宽范围内验证鲁棒性。
 
 ## 实验关键数据
 论文在 10 个二分类 NLP 任务上评估，包括 Amazon Polarity、Yelp Polarity、SST-2、IMDB、BoolQ、二分类版 MNLI、Civil Comments Toxicity、TweetEval-Irony、TweetEval-Hate、TweetEval-Offensive。

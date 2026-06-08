@@ -44,23 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **有限时 Wasserstein 稳定界 (Prop. 3.1)**：
+**1. 有限时 Wasserstein 稳定界（Prop. 3.1）：先给一个 model-agnostic 的安全保证。**
 
-    - 功能：把 LoRA 扰动 $(\Delta A,\Delta V)$ 的算子范数翻译成下游表示分布的偏移上界。
-    - 核心思路：对连续性方程 $\partial_t\mu_t+\nabla\cdot(\mathcal X[\mu_t]\mu_t)=0$ 做扰动分析，证明 $W_2(\mu_t,\nu_t)^2\le L_t(\Delta A,\Delta V)\exp(2C_t e^{3D_t})$；当 $\max(\|\Delta V\|_{\mathrm{op}},\|\Delta A\|_{\mathrm{op}})\le\varepsilon$ 时退化为 $W_2\le c\varepsilon e^{ce^{ct}}$。
-    - 设计动机：短时间内提供 model-agnostic 的保证，告诉我们"小扰动 + 短深度"必然安全；但双指数增长意味着深网络下界几乎平凡，必须引入更强的几何结构。
+要回答"LoRA 扰动多大会触发遗忘"，第一步得把抽象的"扰动算子范数"翻译成看得见的"下游表示分布偏移"。作者对描述粒子流的连续性方程 $\partial_t\mu_t+\nabla\cdot(\mathcal X[\mu_t]\mu_t)=0$ 做扰动分析，比较 base 模型测度 $\mu_t$ 与 LoRA 模型测度 $\nu_t$ 随深度的分叉，得到一个只依赖扰动范数的 Wasserstein 上界：
 
-2. **谱主导的长时稳定 (Prop. 3.3)**：
+$$W_2(\mu_t,\nu_t)^2\le L_t(\Delta A,\Delta V)\,\exp(2C_t e^{3D_t}),$$
 
-    - 功能：在 $A=K^\top Q=V\succeq 0$ 且初始 token 与 $u_1$ 内积下界为 $\gamma>0$ 的条件下，给出 LoRA 后 cluster 仍能收敛到 $\tilde u_1$ 的判据，并量化漂移。
-    - 核心思路：把 $\Delta V$ 在 $u_1$ 方向分解为 $a:=u_1^\top\Delta V u_1$、$b:=P_\perp\Delta V u_1$、$E:=P_\perp\Delta V P_\perp$；若 $\mathrm{gap}+a>2\|b\|+\|E\|_{\mathrm{op}}$，则 $X(t)\to(u_1,\dots,u_1)$、$\widetilde X(t)\to(\tilde u_1,\dots,\tilde u_1)$ 且 $\|u_1-\tilde u_1\|\lesssim (2\|b\|+\|E\|_{\mathrm{op}})/(\mathrm{gap}+a)$。Remark 3.4 给出更精细的逐特征值刻画 $\|X-\widetilde X\|^2\simeq\sum_j(\alpha_j/(\lambda_1-\lambda_j-e_j))^2$。
-    - 设计动机：这一判据直接告诉实践者——若 LoRA 更新落入 $u_1$ 的正交补且对齐到 gap 较小的特征空间，就更容易触发遗忘，从而为"正交化 LoRA"（Xiong & Xie 2025、Wang 等 2023）提供谱学解释。
+当 $\max(\|\Delta V\|_{\mathrm{op}},\|\Delta A\|_{\mathrm{op}})\le\varepsilon$ 时进一步退化成 $W_2\le c\varepsilon\,e^{ce^{ct}}$。它的价值在于不挑模型：只要扰动小、深度浅，遗忘就被严格控制住。但右端那个**双指数**增长也暴露了它的软肋——深网络下界几乎平凡（指数爆炸把界撑到无意义），所以单靠"小扰动"的论证撑不到现代深度，必须引入更强的几何结构，这正是下一个设计的出发点。
 
-3. **范数与深度的双相变 (Thm. 4.2 & 4.6)**：
+**2. 谱主导的长时稳定（Prop. 3.3）：用注意力矩阵的谱 gap 给出可判定的安全条件。**
 
-    - 功能：分别刻画"随机 LoRA 扰动量级 $\eta_L$"和"网络深度 $L$"如何把动力学从"困在原 basin"切换到"漂移到新 cluster"。
-    - 核心思路：在 $\Delta V^\ell=\eta_L\sum_a s_a u_a^\ell(v_a^\ell)^\top$、$u_a^\ell,v_a^\ell\sim\mathcal N(0,I_d/d)$ 的随机 adapter 假设下，由于增量是中心化独立的，$L$ 层累积漂移量级约 $\sqrt{L\,\mathrm{Var}(\Delta V)}/L$，因此 $\eta_L\ll\sqrt L$ 时与基模型几乎无差别，$\eta_L\gg\sqrt L$ 时漂移占主导；深度版本则在固定扰动量级下识别一个临界 $T^\ast$，token 在 $t<T^\ast$ 跟随 base，$t>T^\ast$ 后跳到新 cluster。
-    - 设计动机：把"LoRA 安全区"从模糊经验变成可计算的临界曲线，并指出 LoRA 训练时应同时观察 $\|\Delta V\|/\sqrt L$ 这个无量纲量。
+为了越过双指数界的限制，作者转而利用 self-attention 自身的收敛几何：在 $A=K^\top Q=V\succeq 0$、且初始 token 与主特征向量 $u_1$ 的内积有下界 $\gamma>0$ 的条件下，token 会沿球面聚成单一 cluster。把 LoRA 的 $\Delta V$ 按 $u_1$ 方向分解成三块——沿轴分量 $a:=u_1^\top\Delta V u_1$、横向耦合 $b:=P_\perp\Delta V u_1$、正交块内部 $E:=P_\perp\Delta V P_\perp$，就能把"扰动会不会把 cluster 推走"写成一行可验证的不等式。只要
+
+$$\mathrm{gap}+a>2\|b\|+\|E\|_{\mathrm{op}},$$
+
+base 与 LoRA 的轨迹仍各自收敛到 $(u_1,\dots,u_1)$ 与 $(\tilde u_1,\dots,\tilde u_1)$，且最终方向漂移被钳在 $\|u_1-\tilde u_1\|\lesssim (2\|b\|+\|E\|_{\mathrm{op}})/(\mathrm{gap}+a)$。Remark 3.4 进一步给出逐特征值的精细刻画 $\|X-\widetilde X\|^2\simeq\sum_j(\alpha_j/(\lambda_1-\lambda_j-e_j))^2$。这条判据之所以有用，是因为它把"何时遗忘"落到了谱上：当 LoRA 更新落进 $u_1$ 的正交补、又对齐到 gap 很小的特征空间时，分母 $\lambda_1-\lambda_j$ 趋零、漂移被放大，遗忘随之发生——这恰好为"正交化 LoRA"（Xiong & Xie 2025、Wang 等 2023）提供了谱学层面的解释，也暗示按特征值 gap 排序去挑投影子空间会比一刀切正交化更优。
+
+**3. 范数与深度的双相变（Thm. 4.2 & 4.6）：把模糊的"安全区"变成可计算的临界曲线。**
+
+前两条给的是确定性最坏情形，但真实 LoRA 更接近一批随机低秩增量的叠加。在 $\Delta V^\ell=\eta_L\sum_a s_a u_a^\ell(v_a^\ell)^\top$、$u_a^\ell,v_a^\ell\sim\mathcal N(0,I_d/d)$ 的随机 adapter 假设下，由于各层增量中心化且独立，$L$ 层累积漂移的量级约为 $\sqrt{L\,\mathrm{Var}(\Delta V)}/L$，于是出现一个干净的标度律：当 $\eta_L\ll\sqrt L$ 时 LoRA 轨迹与基模型几乎重合，当 $\eta_L\gg\sqrt L$ 时漂移占主导——遗忘相变发生在 $\eta_L\sim\sqrt L$。Thm. 4.6 则换一个轴：固定扰动量级、沿深度看，存在临界层 $T^\ast$，token 在 $t<T^\ast$ 仍跟随 base cluster，越过 $T^\ast$ 后突然跳到新 cluster。这两个相变把"LoRA 安全区"从纯经验变成可画出的曲线，并提炼出一个可直接监控的无量纲量 $\|\Delta V\|/\sqrt L$：它一旦逼近临界值，就该触发 spectral 投影或正交化干预。
 
 ### 损失函数 / 训练策略
 本文不引入新的损失或训练算法，所有公式都用于解析 forward dynamics；实验部分用 LLaMA-2 / Mistral 等真实模型作 LoRA 微调并测 base 任务困惑度，作为对相变曲线的经验验证。

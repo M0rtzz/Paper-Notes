@@ -41,65 +41,47 @@ tags:
 
 ### 整体框架
 
-NESTOR 采用自回归预测框架：输入最近 $T$ 帧 PDE 状态 $u_{t-T+1:t}$，预测下一帧 $u_{t+1}$。整体流程：
+NESTOR 想解决的是「一个网络吃下十几种 PDE」时的两难：不同方程之间动力学差异巨大，同一方程内部又有复杂的空间局部相关性，单一架构很难两头都顾上。它的解法是把任务框成自回归预测——输入最近 $T$ 帧 PDE 状态 $u_{t-T+1:t}$，预测下一帧 $u_{t+1}$——并在中间塞进一个两层嵌套的专家系统。
 
-1. **Patch 嵌入 + 时空编码**：将输入划分为 patch 并映射到隐空间
-2. **嵌套 MoE 模块**（核心）：image-level MoE 选择全局专家 → 每个专家内部包含 token-level Sub-MoE
-3. **输出头**：预测下一帧 PDE 状态
+数据流是这样转的：输入先被切成 patch 做时空编码，压成统一维度的隐表示；接着进入核心的嵌套 MoE，外层 image-level MoE 按整张图的全局特征挑出适合当前 PDE 类型的几个专家，每个被选中的专家内部再用 token-level Sub-MoE 逐个空间位置挑局部专家；最后由输出头还原成下一帧物理场。外层负责「这是哪类方程」，内层负责「这块区域该用谁」。
 
 ### 关键设计
 
-#### 1. 时空编码（Spatio-Temporal Encoding）
+**1. 时空编码：把帧数不一的多帧输入压成统一维度。**
 
-**功能**：将多帧 PDE 输入编码为统一的隐表示。
-
-**核心思路**：输入 $x \in \mathbb{R}^{B \times C \times H \times W}$ 先划分为不重叠的 patch $X_p \in \mathbb{R}^{B \times N \times C \times P_H \times P_W}$，经线性映射和位置编码后得到 $X \in \mathbb{R}^{B \times N \times D}$。然后重排为 $X \in \mathbb{R}^{B \times X \times Y \times T \times C}$，通过可学习权重矩阵在时间维度压缩：
+不同 PDE 数据集喂进来的历史帧数 $T$ 并不一致，但后续模块要求固定维度的输入，所以第一步先把时间轴抹平。输入 $x \in \mathbb{R}^{B \times C \times H \times W}$ 划成不重叠的 patch $X_p \in \mathbb{R}^{B \times N \times C \times P_H \times P_W}$，经线性映射加位置编码得到 $X \in \mathbb{R}^{B \times N \times D}$，再重排为 $X \in \mathbb{R}^{B \times X \times Y \times T \times C}$，最后用一组可学习权重在时间维上做加权求和，把 $T$ 帧坍缩成一帧表示：
 
 $$Y = \sum_{t=1}^{T} W_t X_t, \quad Y \in \mathbb{R}^{B \times X \times Y \times C_{\text{out}}}$$
 
-**设计动机**：不同 PDE 的输入帧数可能不同，时间维度压缩保证统一维度输入后续模块。
+这样无论输入几帧，出来的都是同一规格，后面的专家系统就能统一处理多个数据集。
 
-#### 2. Image-level MoE（全局专家选择）
+**2. Image-level MoE：按整张图的全局特征判断「这是哪类方程」并路由专家。**
 
-**功能**：基于输入样本的全局特征，动态选择最适合当前 PDE 类型的专家网络。
-
-**核心思路**：采用 Top-$k$ 路由策略。对输入特征做全局平均池化得到 $\bar{x}_b \in \mathbb{R}^C$，经线性层生成专家分数，softmax 归一化后选取概率最高的 $k$ 个专家：
+PDE 之间的宏观差异需要不同专家专门化处理，外层 MoE 就承担这个「分类-路由」的角色。它对输入特征做全局平均池化得到样本级表示 $\bar{x}_b \in \mathbb{R}^C$，过线性层打分再 softmax，按 Top-$k$ 选出得分最高的专家，并把它们的概率归一化成融合权重：
 
 $$s_b = \bar{x}_b W^\top + b, \quad p_b = \text{softmax}(s_b)$$
 
 $$w_{b,i} = \frac{p_{b,i}}{\sum_{j \in \mathcal{I}_b} p_{b,j}}, \quad i \in \mathcal{I}_b$$
 
-架构配置：6 个非共享专家 + 1 个共享专家，门控网络每次激活 2 个非共享专家。
+专家池配置为 6 个非共享专家 + 1 个共享专家，门控每次激活 2 个非共享专家。两类专家刻意做成异构互补：共享专家是 AFNO（自适应傅里叶神经算子），走 FFT → 频域复数卷积 → IFFT，专门抓全局低频的空间结构；非共享专家是 Flash Attention，抓细粒度时空特征，其注意力之后再接下面的 Sub-MoE。实验里能看到专家确实自发分工——Expert 0+1 偏好 NS 方程、Expert 2+3 偏好浅水波方程，说明这层路由不是摆设，而是真的按方程类型把样本分流了。
 
-**专家设计**：
-- **共享专家**：AFNO（自适应傅里叶神经算子），在频域捕获全局低频空间特征。对输入做 FFT → 频域复数卷积 → IFFT
-- **非共享专家**：Flash Attention，捕获细粒度时空特征。Q/K/V 注意力后接 Sub-MoE
+**3. Token-level Sub-MoE：在选中的专家内部，逐个空间位置挑局部专家。**
 
-**设计动机**：实验验证表明不同专家对不同 PDE 类型有显著偏好（例如 Expert 0+1 偏好 NS 方程，Expert 2+3 偏好浅水波方程），说明 image-level 路由有效实现了功能分工。
-
-#### 3. Token-level Sub-MoE（局部专家选择）
-
-**功能**：在每个 image-level 专家内部，对每个 token（空间位置）选择最适合的局部专家。
-
-**核心思路**：替代 Flash Attention 中的 FFN 层。同样采用 Top-$k$ 路由，但路由粒度为 token 级别而非 image 级别。每个专家是标准 MLP：
+只靠外层 MoE 只能区分方程类型，没法处理同一方程内部不同区域的异质性，于是把路由再下沉一层。Sub-MoE 替换掉 Flash Attention 里原本的 FFN，路由粒度从整张图细到单个 token（空间位置），同样走 Top-$k$。每个局部专家是标准 MLP：
 
 $$\text{ExpertMLP}(x) = W_2 \sigma(W_1 x + b_1) + b_2$$
 
-其中 $W_1 \in \mathbb{R}^{C \times (rC)}$，$W_2 \in \mathbb{R}^{(rC) \times C}$，$r$ 为 MLP ratio，激活函数为 GELU。
+其中 $W_1 \in \mathbb{R}^{C \times (rC)}$、$W_2 \in \mathbb{R}^{(rC) \times C}$，$r$ 为 MLP ratio，激活用 GELU；配置同样是 6 非共享 + 1 共享、Top-2 激活。可视化显示不同局部专家在空间上呈区域特异的激活模式，正好对应物理场里不同区域（如涡旋区 vs 平稳区）的局部相关性差异。
 
-配置同样为 6 非共享 + 1 共享专家，Top-2 激活。
+**4. 嵌套协作：宏观分类套微观分区，大容量却低激活。**
 
-**设计动机**：可视化分析表明，不同 token-level 专家在空间上呈现区域特异性的激活模式，验证了其捕获物理场内局部相关性的能力。
+前两层不是各干各的，而是「外层定大类、内层分小区」的层级协作：image-level 先按 PDE 类型选定专家组合（NS 激活 Expert 0+1、SWE 激活 Expert 2+3），被选中的专家内部再由 token-level Sub-MoE 进一步识别空间区域特征。这种嵌套让总参数堆到 83M（容量足够覆盖多样的方程），但每次前向只激活 13M（激活率 16.67%），用稀疏激活换来了「大模型容量 + 小模型算力」的折中。
 
-#### 4. 嵌套架构的"宏观分类-微观分区"机制
+### 一个完整示例：一帧 NS 湍流如何被两层路由处理
 
-**功能**：image-level MoE 和 token-level Sub-MoE 形成层级协作。
+以一个 Navier-Stokes 湍流样本走一遍：输入若干帧涡量场，先被时空编码压成单帧隐表示 $Y$。进入 image-level MoE 后，全局平均池化得到的样本特征打分时，门控判定它属于「NS 类」，于是激活 Expert 0 和 Expert 1 这两个非共享专家（外加常驻的 AFNO 共享专家提供频域全局特征）。
 
-**核心思路**：
-- **宏观层**：image-level MoE 根据 PDE 类型自适应选择专家组合（如 NS 方程激活 Expert 0+1，SWE 激活 Expert 2+3）
-- **微观层**：token-level Sub-MoE 在选定的专家内部，进一步识别物理场的空间区域特征
-
-这种嵌套设计使模型总参数量达 83M，但激活参数仅 13M（激活率 16.67%），实现了大容量与低计算成本的平衡。
+被选中的 Expert 0 内部，Flash Attention 算完注意力后进入 Sub-MoE：此时不再是整张图统一处理，而是每个空间位置各自路由——涡旋剧烈的 token 走向擅长高频局部结构的那批 MLP 专家，背景平稳区的 token 走向另一批。两个 image 专家各自完成「注意力 + token 级 Sub-MoE」后，按外层归一化权重 $w_{b,i}$ 加权融合，再过输出头还原成预测的下一帧涡量场。整条链路里只有 13M / 83M 参数真正参与了这次前向。
 
 ### 损失函数 / 训练策略
 

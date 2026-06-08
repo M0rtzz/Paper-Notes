@@ -41,30 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：种子模型 $\mathcal{M}_0$、公开数据 $\mathcal{D}_0$、$K$ 个客户端及其私有数据 $\{\mathcal{D}_p\}_{p=1}^K$。每个客户端先用本地数据微调种子模型得到专家 $\mathcal{M}_p$。统一阶段三步走：(1) 用 relevance-weighted DPP 从 $\mathcal{D}_0$ 选客户端专属代理集 $\hat{\mathcal{D}}_p$；(2) 在 $\mathcal{D}_p \cup \hat{\mathcal{D}}_p$ 上 finetune 各专家的 FFN sublayer，其他参数冻结，并对每层算 routing vector $e_p^{(\ell)}$ 作为该专家的「域均值表征」；(3) 把所有专家的 FFN 合并成 MoE 层，用 context-aware router 在 $\bigcup_p \hat{\mathcal{D}}_p$ 上 joint finetune，得到最终统一 MoE 模型 $\mathcal{M}_\text{MoE}$。
+方法要解决的是：$K$ 个客户端各自在私有数据 $\{\mathcal{D}_p\}$ 上微调出一个领域专家，现在想在不交出任何私有数据的前提下，把它们合并成一个单一可部署的 MoE 模型。MetaMoE 的关键转换是用「公开数据里的代理样本」替代私有数据来训练 router——但代理必须既贴合客户域又彼此多样，否则 router 学不会正确路由。整个统一阶段分三步：先用 relevance-weighted DPP 从公开池为每个客户端选一批代理，再让专家在「私有数据 + 自己的代理」上一起微调 FFN（顺便算出每个专家的域均值表征），最后把所有专家的 FFN 拼成 MoE 层、用一个 context-aware router 在全部代理上联合微调得到 $\mathcal{M}_\text{MoE}$。
 
 ### 关键设计
 
-1. **Relevance-Weighted DPP 代理选择**:
+**1. Relevance-Weighted DPP 代理选择：让代理「既相关又多样」**
 
-    - 功能：为每个客户端从公开池里挑出「与该客户域相关且彼此多样」的 $m$ 个代理样本，提供 router 的代理监督。
-    - 核心思路：在公开池上训一个二分类器 $g(x, \mathcal{D}_p)$ 区分 $\mathcal{D}_0$ 与 $\mathcal{D}_p$（其得分即 relevance）；构造核 $\tilde{L} = \text{Diag}(r) L \text{Diag}(r)$，其中 $L_{ij} = \kappa(x_i, x_j)$。子集选择目标为 $\hat{\mathcal{D}}_p = \arg\max_{|S|=m} \log \det(\tilde{L}_S)$，可展开为 $2 \sum_{i \in S} \log r_i + \log \det(L_S)$——第一项偏向高 relevance，第二项偏向多样。先按 $r$ 取 top-$n$ 候选池，再用 greedy MAP + Cholesky 增量更新把复杂度从 $O(nm^3)$ 降到 $O(nm)$。
-    - 设计动机：相比 FlexOlmo 仅按 $r$ 排序「相关而冗余」的代理（t-SNE 图上挤成一团），DPP 的 $\det$ 项会主动惩罚相似样本共现，让代理在私域流形上铺开，覆盖更广的 routing 决策边界。
+router 要学会把输入路由到正确专家，就必须见到能代表各客户域的数据，可私有数据不能离开本地，于是只能从公开池 $\mathcal{D}_0$ 里挑代理。FlexOlmo 的做法是纯按相似度排序选 top-$m$，结果挑出的全是长得像的几条样本，t-SNE 图上挤成一团、覆盖面很窄。MetaMoE 的修法是把相关性嵌进 DPP 核：先在公开池上训一个二分类器 $g(x,\mathcal{D}_p)$ 区分 $\mathcal{D}_0$ 与 $\mathcal{D}_p$，其得分即 relevance $r$；再构造核 $\tilde{L}=\text{Diag}(r)\,L\,\text{Diag}(r)$，其中 $L_{ij}=\kappa(x_i,x_j)$ 是样本相似度。选子集的目标是
 
-2. **Proxy-Aligned 专家训练**:
+$$\hat{\mathcal{D}}_p = \arg\max_{|S|=m} \log\det(\tilde{L}_S) = 2\sum_{i\in S}\log r_i + \log\det(L_S),$$
 
-    - 功能：在专家阶段就让模型同时见到私有数据与对应代理，使专家的输出分布与未来 router 训练时的代理分布对齐。
-    - 核心思路：每个客户端只 finetune 自己专家的 FFN sublayer，输入是 $\mathcal{D}_p \cup \hat{\mathcal{D}}_p$（不是只用 $\mathcal{D}_p$）；其余层冻结以保持与种子模型 $\mathcal{M}_0$ 的兼容性，方便后续直接拼成 MoE。训练完后对每层计算 routing 表征 $e_p^{(\ell)} = \tfrac{1}{|\mathcal{D}_p \cup \hat{\mathcal{D}}_p|} \sum_x \mathcal{M}_p^{(1:\ell)}(x)$。
-    - 设计动机：FlexOlmo 只在私有数据上训专家、然后用代理训 router，导致「专家行为分布」与「router 看到的输入分布」错配——尤其在客户端域之间分布差异大时 routing decision 经常错；让专家直接见过代理可以从源头消掉这种错配，同时不破坏专家本身的隐私（代理来自公开数据）。
+第一项把代理拉向高 relevance、第二项的 $\det$ 天然惩罚相似样本共选从而强制多样。实现上先按 $r$ 取 top-$n$ 候选池，再用 greedy MAP + Cholesky 增量更新把复杂度从 $O(nm^3)$ 压到 $O(nm)$。这样选出的代理会在私域流形上铺开，覆盖更广的 routing 决策边界。
 
-3. **Context-Aware Router + 域感知初始化**:
+**2. Proxy-Aligned 专家训练：从源头消除 router 与专家的行为错配**
 
-    - 功能：路由不仅看 token 表征，还看整句的 sequence-level 表征，避免「表面相似 token 属于不同域」造成的路由碰撞。
-    - 核心思路：每个 token 表征 $z_t^{(\ell)}$ 与序列均值 $z_x^{(\ell)} = \tfrac{1}{T} \sum_t z_t^{(\ell)}$ 做凸组合 $\tilde{z}_t^{(\ell)} = (1 - \lambda) z_t^{(\ell)} + \lambda z_x^{(\ell)}$，$\lambda$ 可学；routing 分布 $\pi^{(\ell)}(z_t^{(\ell)}) = \text{softmax}[\tilde{z}_t^{(\ell) \top} e_1^{(\ell)}, \dots, \tilde{z}_t^{(\ell) \top} e_K^{(\ell)}]$。路由向量 $e_p^{(\ell)}$ 用第 (2) 步算出的「专家域均值」初始化，把领域先验直接注入。
-    - 设计动机：纯 token-level routing 容易被字面相似度欺骗（如「bank」可能是金融也可能是河岸）；加入整句上下文 + 用专家域均值初始化 routing 向量，让 router 一开始就拿到「每个专家擅长什么」的强先验。
+FlexOlmo 把专家和 router 的训练数据彻底割裂——专家只见私有数据、router 只见代理，于是「专家学到的输出分布」和「router 实际看到的输入分布」对不上，客户域差异越大路由错得越多。MetaMoE 的做法是让专家在微调阶段就同时见到私有数据与对应代理：每个客户端只 finetune 自己专家的 FFN sublayer，输入是 $\mathcal{D}_p \cup \hat{\mathcal{D}}_p$ 而非只有 $\mathcal{D}_p$，其余层全部冻结以保持和种子模型 $\mathcal{M}_0$ 的兼容、方便后续直接拼成 MoE。因为代理本就来自公开数据，这一步不引入额外隐私风险。训练完后对每层算一个 routing 表征作为该专家的「域均值」：
+
+$$e_p^{(\ell)} = \frac{1}{|\mathcal{D}_p \cup \hat{\mathcal{D}}_p|} \sum_x \mathcal{M}_p^{(1:\ell)}(x).$$
+
+让专家先见过代理，等于把 router 未来要面对的输入分布提前注入专家，从根上消掉这种错配。
+
+**3. Context-Aware Router + 域感知初始化：避免表面相似 token 被错分**
+
+纯 token-level 路由容易被字面相似度欺骗——比如「bank」可能指金融也可能指河岸，单看这个 token 无法判断该送给哪个专家。MetaMoE 让路由同时参考整句的 sequence-level 信息：每个 token 表征 $z_t^{(\ell)}$ 与序列均值 $z_x^{(\ell)}=\tfrac{1}{T}\sum_t z_t^{(\ell)}$ 做可学凸组合 $\tilde{z}_t^{(\ell)}=(1-\lambda)z_t^{(\ell)}+\lambda z_x^{(\ell)}$，再算路由分布
+
+$$\pi^{(\ell)}(z_t^{(\ell)}) = \text{softmax}\big[\tilde{z}_t^{(\ell)\top} e_1^{(\ell)},\dots,\tilde{z}_t^{(\ell)\top} e_K^{(\ell)}\big].$$
+
+其中路由向量 $e_p^{(\ell)}$ 直接用第 2 步算出的专家域均值初始化，相当于一开始就把「每个专家擅长什么」的强先验告诉 router，不必靠纯梯度从零摸索方向，对代理监督有限的场景尤其友好。
 
 ### 损失函数 / 训练策略
-专家阶段为标准下一 token / 分类损失；router 阶段在 $\bigcup_p \hat{\mathcal{D}}_p$ 上 jointly finetune 整个 MoE。所有客户端只一次性向服务器上传：(i) 代理样本下标（公开数据上的索引）；(ii) 专家最终权重（FFN 子层）；(iii) 路由向量 $e_p^{(\ell)}$。论文随后给出形式化分析证明这三类 artifact 都不泄露私有信息（核心是路由向量是 $N \to \infty$ 平均嵌入，私有泄露随 $N$ 衰减）。
+专家阶段用标准的下一 token / 分类损失；router 阶段在 $\bigcup_p \hat{\mathcal{D}}_p$ 上联合微调整个 MoE。隐私侧，所有客户端只一次性向服务器上传三类 artifact：(i) 代理样本在公开数据上的下标索引；(ii) 专家最终的 FFN 子层权重；(iii) 路由向量 $e_p^{(\ell)}$。论文随后形式化证明这三类都不泄露私有信息——核心在于路由向量是 $N$ 个样本的平均嵌入，私有泄露随 $N$ 增大按 $O(1/N)$ 衰减。
 
 ## 实验关键数据
 

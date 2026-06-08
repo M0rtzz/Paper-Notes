@@ -44,23 +44,18 @@ tags:
 第 $k$ 轮输入当前规范 $G_k$ 和开发集 $D$。LLM annotator 生成预测注释 $A_k$，评估器把 $A_k$ 与 gold $A_g$ 比较，计算严格 F1。若 $IAA_k$ 未达阈值且还有提升空间，就收集所有 discrepancy。系统用 soft overlap 把错误分成 label mismatch、boundary mismatch、false negative、false positive 四类，并按 predicted/gold label pair 聚类，选择频率最高的组进入 moderation。LLM moderator 依次做 pattern explanation、principle generation 和 guideline refinement，得到 $G_{k+1}$。
 
 ### 关键设计
-1. **Guideline-driven annotation**:
 
-	- 功能：把人类标注项目已有规范显式注入 LLM prompt，使模型输出更接近 gold convention。
-	- 核心思路：除最简单 prompt-only baseline 外，作者把原始 human guideline 轻量格式化后提供给 LLM，并要求输出 PubAnnotation JSON 格式，评估使用 exact boundary + type。
-	- 设计动机：标注错误常来自规则对齐失败，而不是概念知识缺失；guideline 是最直接的对齐载体。
+**1. Guideline-driven annotation：把人工项目已有的标注规范显式喂给 LLM。**
 
-2. **Discrepancy-driven moderation**:
+LLM 的标注错误常常不是因为“不懂实体”，而是因为它的世界知识没和某个数据集的标注约定对齐——最小 span、实体类型边界、复合实体这些细节，模型未必会按 gold standard 来。针对这点，除了最简单的 prompt-only baseline，作者把原始的 human guideline 做轻量格式化后直接注入 LLM prompt，并要求模型以 PubAnnotation JSON 格式输出，评估时采用 exact boundary + type 的严格匹配。guideline 在这里充当了对齐载体——它比 few-shot examples 更直接地告诉模型“这套项目的规则长什么样”。
 
-	- 功能：用少量 gold examples 找出当前 guidelines 对 LLM 不够清楚的地方。
-	- 核心思路：系统先对错误做软匹配和类型归类，选出主导错误模式。LLM moderator 先解释这个错误模式出现的语言环境，再生成一条通用原则，最后把原则插入或改写到 guidelines 中。例如 NCBI Disease 中，模型漏标 feature-list 里的 DiseaseClass，moderator 生成“临床条件作为依存特征列表项时也应标注 DiseaseClass”的规则。
-	- 设计动机：直接让 LLM 自由改规范容易发散；用具体错误证据约束修改，可以让 refinement 更针对当前模型失败模式。
+**2. Discrepancy-driven moderation：用少量 gold 错误证据来驱动规范细化，而不是放任 LLM 自由改。**
 
-3. **最小监督设置**:
+让 LLM 直接自由改规范容易发散，改出一堆和真实失败无关的东西。这里的做法是先用具体错误证据把修改框死：系统对 annotator 的预测与 gold 做软匹配，按类型归类出主导错误模式，再交给 LLM moderator 走三步——先解释这个错误模式出现的语言环境，再从中归纳出一条通用原则，最后把原则插入或改写进 guidelines。例如在 NCBI Disease 上，模型漏标了 feature-list 里的 DiseaseClass，moderator 据此生成“临床条件作为依存特征列表项时也应标注 DiseaseClass”这样一条规则。这样每轮 refinement 都精准对着当前模型的失败模式，产物还是人类可读、可审阅、可复用的规则文本。
 
-	- 功能：模拟真实标注项目早期，专家只提供很少 gold 文档的条件。
-	- 核心思路：每个数据集只从原训练集随机采样 10 篇文档做 development refinement，最终在独立 100 篇 evaluation set 上评测。NCBI Disease 和 BioRED 使用完整 dev split 的 100 篇，BC5CDR 从 500 篇 dev split 中采样 100 篇。
-	- 设计动机：本文不追求通过大量统计学习刷 SOTA，而是检验 LLM 能否从少量 disagreement 中归纳高层标注规则。
+**3. 最小监督设置：模拟标注项目早期，专家只给极少 gold 文档。**
+
+本文要检验的不是靠大量统计学习去刷 SOTA，而是 LLM 能否从少量 disagreement 里归纳出高层标注规则，因此刻意把监督压到最小。每个数据集只从原训练集随机采样 10 篇文档做 development refinement，最终在独立的 100 篇 evaluation set 上评测：NCBI Disease 和 BioRED 用完整 dev split 的 100 篇，BC5CDR 则从 500 篇 dev split 中采样 100 篇。整个流程构成第 $k$ 轮的闭环——输入当前规范 $G_k$ 和开发集 $D$，annotator 产出预测 $A_k$，评估器与 gold $A_g$ 算严格 F1，若 $IAA_k$ 未达阈值且仍有提升空间就收集 discrepancy 进入 moderation，得到 $G_{k+1}$；一旦达标或新一轮没有提升，就停止并丢弃无效修改。
 
 ### 损失函数 / 训练策略
 方法不训练模型，也不微调参数。实验比较三种 prompting / moderation 策略：Prompt-only、Original-guidelines、Guideline-refinement。模型覆盖 GPT、Gemini、DeepSeek 三个家族，并区分 reasoning 与 non-reasoning 版本：GPT-5 的 low/high reasoning effort，Gemini 2.5 Pro 的 min/max thinking budget，以及 deepseek-chat vs deepseek-reasoner。所有主实验使用默认超参。

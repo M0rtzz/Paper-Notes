@@ -42,38 +42,29 @@ tags:
 
 ### 整体框架
 
-SAEmnesia 的 pipeline 接在冻结的 Stable Diffusion v1.5 的 cross-attention block `up.1.1` 后面：
-
-1. **激活收集**：对每个目标概念 $c$，用 80 条 anchor prompt（如 `An image of Bears`）让 SD 跑完 50 步 denoising，从 `up.1.1` 抽出 cross-attention 特征图 $\mathbf{F}_t \in \mathbb{R}^{h\times w\times d}$；把每个空间位置的 $d$ 维向量当作一个 SAE 训练样本，并直接打上该 prompt 对应的 object/style 标签。
-2. **两阶段训练**：(i) 先按常规无监督 TopK SAE 训练（重建损失 + 防 dead latent 的辅助损失）建立稀疏分解；(ii) 再用 SAEmnesia 复合损失 finetune，强化"概念—潜变量"绑定。
-3. **概念—潜变量指派 $\Phi$**：训练前用 score function（公式见下方关键设计）扫一遍，给每个概念 $c$ 指派得分最高的 latent 索引 $i_c = \Phi(c)$，作为后续监督的目标。
-4. **推理阶段擦除**：要删掉概念 $c$，只对 latent $i_c$ 的激活乘一个负标量 $\gamma_c < 0$；后续 SAE 解码回原激活空间，再丢回扩散主干继续 denoising。
-
-整个过程对扩散主干无任何改动，SAE 可热插拔，"忘记—恢复"一行代码切换。
+SAEmnesia 把一个稀疏自编码器挂在冻结的 Stable Diffusion v1.5 的 cross-attention block `up.1.1` 之后，要拆掉的痛点是"无监督 SAE 会把一个概念摊在多个 latent 上、擦除时不得不做组合搜索"。它的转法是在 SAE 训练阶段就用 anchor prompt 自带的概念标签做监督，把每个待擦概念硬绑到唯一一个 latent，于是推理时的擦除退化成"对那一个 latent 的激活乘个负标量"。整个 SAE 可热插拔、扩散主干一字不改，"忘记—恢复"一行代码切换。
 
 ### 关键设计
 
-1. **监督的概念—latent 指派与 Concept Assignment 损失**:
+**1. 监督的概念—latent 指派与 Concept Assignment 损失：把事后归因前移成训练时硬约束**
 
-    - 功能：把"哪个 latent 编码哪个概念"这件事从事后归因变成训练时硬约束。
-    - 核心思路：先用 SAeUron 的 score function $\text{score}(i,t,c,D) = \frac{\mu(i,t,D_c)}{\sum_j \mu(j,t,D_c)+\delta} - \frac{\mu(i,t,D_{\neg c})}{\sum_j \mu(j,t,D_{\neg c})+\delta}$ 度量 latent $i$ 在概念 $c$ 上的"专属性"（在 $D_c$ 中相对激活高、在 $D_{\neg c}$ 中相对激活低）。选 score 最大的 latent 作为该概念的指定槽位 $i_c$。训练时对每个含概念 $c$ 的样本施加 $\mathcal{L}_{\text{CA}} = -\frac{1}{B}\sum_b \frac{1}{|\mathcal{T}^{(b)}|}\sum_{c \in \mathcal{T}^{(b)}} \log \sigma(v^{(b)}_{i_c})$，即对指派 latent 的预激活值 $v_{i_c}$ 做 BCE，逼它在该概念出现时强烈激活。
-    - 设计动机：CA 损失只在"概念出现的样本 × 该概念对应的 latent"上施压，是一种局部稀疏监督，不会破坏其他 latent 的无监督表征学习，所以可以叠加在标准 SAE 损失之上而不损害重建质量。
+无监督 SAE 的 feature splitting 来自训练时根本没人告诉模型"哪个 latent 该编码哪个概念"，只能等训练完用 score function 去事后归因。SAEmnesia 把这个 score function 直接搬进训练：先用 SAeUron 的 $\text{score}(i,t,c,D) = \frac{\mu(i,t,D_c)}{\sum_j \mu(j,t,D_c)+\delta} - \frac{\mu(i,t,D_{\neg c})}{\sum_j \mu(j,t,D_{\neg c})+\delta}$ 度量 latent $i$ 对概念 $c$ 的"专属性"（在概念样本集 $D_c$ 里相对激活高、在补集 $D_{\neg c}$ 里相对激活低），取 score 最大者作为该概念的指定槽位 $i_c$；训练时对每个含概念 $c$ 的样本加 $\mathcal{L}_{\text{CA}} = -\frac{1}{B}\sum_b \frac{1}{|\mathcal{T}^{(b)}|}\sum_{c \in \mathcal{T}^{(b)}} \log \sigma(v^{(b)}_{i_c})$，本质是对指派 latent 的预激活值 $v_{i_c}$ 做 BCE，逼它在该概念出现时强烈点亮。妙处在于这股压力只施加在"概念出现的样本 × 该概念对应的 latent"这一极小集合上，是一种局部稀疏监督，不会扰动其余 latent 的无监督表征，所以能叠在标准 SAE 损失之上而不伤重建质量——消融里它带来的 score 峰值 2.43× 提升，正是后续顺序、对抗、效率三条收益的源头。
 
-2. **跨宏类去相关约束（Decorrelation Constraint）**:
+**2. 跨宏类去相关约束（Decorrelation Constraint）：只在用户语义粒度上拆开"共振"**
 
-    - 功能：防止不同宏类（object vs. style）的指派 latent 在同一 batch 内"共振"——例如 Bears 的 latent 总是和 Cubism 的 latent 一起亮，干预时会互相牵连。
-    - 核心思路：把概念集合划分成不相交的宏类 $\mathcal{C} = \bigcup_m \mathcal{C}_m$（论文里就两组：objects 和 styles），对每个 latent 在 mini-batch 内的激活向量 $\mathbf{a}_c = [v_{i_c}^{(1)}, \dots, v_{i_c}^{(B)}]^\top$ 算 Pearson 相关系数 $\rho$，约束 $\mathcal{L}_{\text{DC}} = \frac{\sum_{m<m'} \sum_{i\in\mathcal{I}_m, j\in\mathcal{I}_{m'}} \rho(\mathbf{a}_i, \mathbf{a}_j)}{\sum_{m<m'}|\mathcal{I}_m||\mathcal{I}_{m'}|}$，只对**跨组**的 latent 对惩罚相关性。最终 $\mathcal{L}_{\text{SAEmnesia}} = \mathcal{L}_{\text{unsupSAE}} + \beta \mathcal{L}_{\text{supSAE}} + \lambda \mathcal{L}_{L_1}$，其中 $\mathcal{L}_{\text{supSAE}} = \mathcal{L}_{\text{CA}} + \eta \mathcal{L}_{\text{DC}}$。
-    - 设计动机：完全去相关会破坏自然语义相关性（"Cats" 和 "Dogs" 本就应该相关），所以只在宏类粒度去相关，保留组内自然相似度，同时把"擦物体不要影响风格"这种实际诉求直接编进 loss。这也解释了为什么论文坦承 within-group interference 仍是未解问题。
+光把概念绑到单个 latent 还不够，不同宏类的指派 latent 仍可能在同一 batch 内一起亮——比如 Bears 的 latent 总和 Cubism 的 latent 同步激活，擦物体时就会牵连风格。为此把概念集划成不相交宏类 $\mathcal{C} = \bigcup_m \mathcal{C}_m$（论文就两组：objects 与 styles），对每个 latent 在 mini-batch 内的激活向量 $\mathbf{a}_c = [v_{i_c}^{(1)}, \dots, v_{i_c}^{(B)}]^\top$ 算 Pearson 相关系数 $\rho$，用 $\mathcal{L}_{\text{DC}} = \frac{\sum_{m<m'} \sum_{i\in\mathcal{I}_m, j\in\mathcal{I}_{m'}} \rho(\mathbf{a}_i, \mathbf{a}_j)}{\sum_{m<m'}|\mathcal{I}_m||\mathcal{I}_{m'}|}$ 只惩罚**跨组** latent 对的相关性。之所以不做全 pairwise 去相关，是因为 "Cats" 和 "Dogs" 本就该相关，强行打散会破坏自然语义；只在宏类粒度去相关既保留组内相似度，又把"擦物体别动风格"这种实际诉求直接写进 loss——代价是同宏类内的干扰（within-group interference）被刻意放过，这也是论文坦承的未解遗留。两项监督汇成 $\mathcal{L}_{\text{supSAE}} = \mathcal{L}_{\text{CA}} + \eta \mathcal{L}_{\text{DC}}$。
 
-3. **单 latent 阈值化擦除（Inference-time steering）**:
+**3. 单 latent 阈值化擦除：把删除压成一次"只在真激活时生效"的标量乘法**
 
-    - 功能：把"擦除"操作压缩到一次标量乘法，且只在该 latent 真的被激活时才生效，避免把无关样本里本就微弱的激活随机乱抹一气。
-    - 核心思路：对指派 latent $i_c$ 的激活按公式 $z_{i_c} = \gamma_c \mu(i_c, t, D_c) z_{i_c}$ 当且仅当 $z_{i_c} > \mu(i_c, t, D)$（即超过全体样本的平均激活）时执行，否则保持不变。这里 $\gamma_c < 0$ 是唯一的可调超参，$\mu(i_c,t,D_c)$ 是验证集上该概念样本的平均激活，起归一化作用。还可选择只在后 25 步 denoising 启用 SAEmnesia，前期保留预训练先验以减少 artifact。
-    - 设计动机：阈值化是关键护栏——score 高未必意味着"现在这一步这一空间位置确实在表达该概念"，加阈值后只在"确实在画 Bears"时干预，把误伤降到最低。$\mu(i_c,t,D_c)$ 的归一化让 $\gamma_c$ 在不同概念间可用统一量纲调，论文里用 $\gamma_c=-1$ 在所有 20 类物体上都能稳定工作（见 Figure 3）。
+绑定完成后，推理阶段对指派 latent $i_c$ 执行 $z_{i_c} = \gamma_c\, \mu(i_c, t, D_c)\, z_{i_c}$，但**当且仅当** $z_{i_c} > \mu(i_c, t, D)$（当前激活超过全体样本的平均激活）时才触发，否则原样放过。其中 $\gamma_c < 0$ 是全流程唯一的可调超参，$\mu(i_c,t,D_c)$ 是验证集上该概念样本的平均激活、起归一化作用。这个阈值是精准度的隐藏护栏：score 静态偏高并不代表"此刻这一去噪步、这一空间位置确实在画 Bears"，加上阈值后只在概念真的在被表达时才动手，把误伤降到最低；而 $\mu(i_c,t,D_c)$ 的归一化让 $\gamma_c$ 在不同概念间共用统一量纲，论文里 $\gamma_c=-1$ 一个值就能稳定覆盖全部 20 类物体（Figure 3）。还可选择只在后 25 步 denoising 开启干预，前期保留预训练先验以减少 artifact。
 
 ### 损失函数 / 训练策略
 
-完整目标为 $\mathcal{L}_{\text{SAEmnesia}} = \mathcal{L}_{\text{unsupSAE}} + \beta(\mathcal{L}_{\text{CA}} + \eta \mathcal{L}_{\text{DC}}) + \lambda \mathcal{L}_{L_1}$。训练分两段：先纯无监督预训练 SAE 稳定重建，再开启监督项 finetune。activation 来自 SD v1.5 的 `up.1.1` cross-attention，每个 timestep 都参与训练；UnlearnCanvas 上指派 70 个概念（20 objects + 50 styles）。
+完整目标为 $\mathcal{L}_{\text{SAEmnesia}} = \mathcal{L}_{\text{unsupSAE}} + \beta(\mathcal{L}_{\text{CA}} + \eta \mathcal{L}_{\text{DC}}) + \lambda \mathcal{L}_{L_1}$，分两段训练：先纯无监督 TopK SAE 预训练（重建损失 + 防 dead latent 的辅助损失）稳住稀疏分解，再开启监督项 finetune 强化绑定。激活取自 SD v1.5 的 `up.1.1` cross-attention，每个 timestep 都参与训练；UnlearnCanvas 上指派 70 个概念（20 objects + 50 styles）。
+
+### 一个完整示例
+
+以擦除 "Bears" 为例走一遍：用 80 条 anchor prompt（`An image of Bears`）让 SD 跑完 50 步 denoising，从 `up.1.1` 抽出 cross-attention 特征图 $\mathbf{F}_t \in \mathbb{R}^{h\times w\times d}$，把每个空间位置的 $d$ 维向量当作一个 SAE 样本并打上 object 标签；先无监督预训练得到稀疏分解后，用 score function 扫出 Bears 专属性最高的 latent $i_{\text{Bears}}$，CA 损失在每张含 Bears 的样本上把 $i_{\text{Bears}}$ 的激活往高推，DC 损失同时压低它与 Cubism 等 style latent 的跨组相关；部署时只需对 $i_{\text{Bears}}$ 设 $\gamma=-1$，推理中凡 $z_{i_{\text{Bears}}}>\mu$ 的激活就乘 $-\mu$ 翻成抑制、再经 SAE 解码丢回扩散主干——模型从此画不出熊，却对 Cats、Dogs 乃至所有风格毫发无伤，拔掉 SAE 即完全复原。
 
 ## 实验关键数据
 

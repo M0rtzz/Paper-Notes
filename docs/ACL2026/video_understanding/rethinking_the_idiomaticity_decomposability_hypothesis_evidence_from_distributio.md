@@ -43,23 +43,24 @@ tags:
 论文的 pipeline 可以分成四步。第一步，对每个含习语的句子 $s$ 和对应 gloss-replaced sentence $s_g$，从 BERT/ModernBERT 等双向 transformer 中提取上下文化表征。第二步，计算完整习语句子与 gloss 的相似度，再逐个 mask 习语 token，观察相似度变化，用 token contribution 聚合出 expression-level decomposability。第三步，从 enTenTen 语料中统计习语在不同 constructional frames 中的出现频率，用 Shannon entropy 衡量 syntactic flexibility，并计算频率和 predictability。第四步，在 BERT/ModernBERT 的静态表征分析之外，追踪 OLMo-2 7B 和 OLMo-3 7B 的 100 个预训练 checkpoint，分析 idiom 表征和 gloss 表征的相似度如何随训练推进而变化。
 
 ### 关键设计
-1. **模型内部 decomposability 指标**:
 
-    - 功能：不用人类二分类或评分，直接从模型 hidden-state geometry 中估计习语组成词对整体隐喻意义的贡献。
-    - 核心思路：先计算完整句子 $s$ 与 gloss 句子 $s_g$ 的相似度 $S_{fig}$；对习语 span 中每个 token $j$ 构造 mask 版本 $s^{(-j)}$，计算 $S_{mask}^{(j)}$；token 贡献定义为 $\Delta_j=|S_{fig}-S_{mask}^{(j)}|$。最后用 mean、maximum、Gini dispersion、entropy 或 sum 等聚合函数得到习语级 decomposability。
-    - 设计动机：如果某个组成词确实承载隐喻意义，mask 它应显著扰动句子与 gloss 的对齐；这种扰动比直接问模型“它是否可分解”更接近表征机制。
+**1. 模型内部 decomposability 指标：用表征扰动替代人类评分。**
 
-2. **语料化 syntactic flexibility 与 usage factors**:
+传统检验依赖人类对习语"可分解性"的离线评分，而这些评分混入了熟悉度、世界知识和说话人差异。作者改从模型 hidden-state geometry 直接估计每个组成词对整体隐喻意义的贡献：先算完整句子 $s$ 与其 gloss 句子 $s_g$ 的表征相似度 $S_{fig}$，再对习语 span 中每个 token $j$ 构造 mask 版本 $s^{(-j)}$、算出 $S_{mask}^{(j)}$，把 token 贡献定义为对齐被破坏的幅度 $\Delta_j=|S_{fig}-S_{mask}^{(j)}|$，最后用 mean、maximum、Gini dispersion、entropy 或 sum 等聚合函数把这些 token 贡献汇成习语级 decomposability 分数。
 
-    - 功能：把“句法灵活性”从主观可接受性判断转成语料中实际使用分布。
-    - 核心思路：作者把习语出现归到 base form、adverb insertion、adjective insertion、passivization、action nominalization 等 constructional types，用各类型概率的 Shannon entropy $H(i)=-\sum_c p_{i,c}\log_2 p_{i,c}$ 表示灵活性；同时用 enTenTen 频率和 masked final-word probability 表示 frequency 与 predictability。
-    - 设计动机：IDH 声称 decomposability 约束真实句法行为，因此应当用实际用法分布来检验，而不仅是人类对句子的离线评分。
+这样设计的直觉是：如果某个组成词真的承载隐喻意义，mask 掉它就该显著拉远句子与 gloss 的对齐；这种"扰动测量"比直接问模型"它是否可分解"更贴近表征机制本身，也让指标可计算、可跨模型复现。
 
-3. **预训练动态分析**:
+**2. 语料化 syntactic flexibility 与 usage factors：用真实用法分布检验 IDH。**
 
-    - 功能：观察习语意义表征是在训练早期还是后期稳定，以及哪些习语属性影响这个过程。
-    - 核心思路：作者在 OLMo-2 7B 与 OLMo-3 7B 的 100 个 checkpoint 上，计算习语句子与 gloss 句子的 cosine similarity；再用线性回归建模训练步数与 log frequency、surprisal、decomposability 的交互项。
-    - 设计动机：静态相关性只能说明最终模型表征是什么样；训练动态能揭示 distributional learner 在形成习语表征时更依赖频率、predictability 还是 decomposability。
+IDH 声称 decomposability 约束习语能否被动化、插入修饰语等句法变形，所以应当拿语料中的实际用法来检验，而不是再问人类的离线可接受性判断。作者把习语在语料中的出现归到 base form、adverb insertion、adjective insertion、passivization、action nominalization 等 constructional types，用各类型概率的 Shannon entropy $H(i)=-\sum_c p_{i,c}\log_2 p_{i,c}$ 度量句法灵活性——entropy 越高说明习语越能接受多样的句法构式。
+
+为了把灵活性和"纯使用经验"区分开，作者还从 enTenTen 语料统计习语频率、用 masked final-word probability 衡量 predictability，把 frequency 与 predictability 作为独立的 usage factor 一并纳入分析，这样才能判断到底是语义结构还是分布经验在决定句法行为。
+
+**3. 预训练动态分析：看习语表征在训练中何时稳定、被谁驱动。**
+
+静态相关性只能说明最终模型的表征长什么样，无法回答 distributional learner 在形成习语表征时更依赖什么。作者在 OLMo-2 7B 与 OLMo-3 7B 的 100 个预训练 checkpoint 上逐步追踪习语句子与 gloss 句子的 cosine similarity，再用线性回归把训练步数和 log frequency、surprisal、decomposability 的交互项建模出来。
+
+通过观察这些交互项的符号与强度，就能看出习语意义表征是在训练早期还是后期稳定、以及频率、predictability、decomposability 三者中哪个对表征稳定过程影响最大——这把传统的静态 probing 往前推进成了"学习轨迹"层面的诊断。
 
 ### 损失函数 / 训练策略
 本文不训练新的模型，核心是诊断评估。使用的双向模型包括 BERT-base/large 的 cased/uncased 版本、ModernBERT-base/large；预训练动态分析使用 OLMo-2-1124-7B 和 OLMo-3-1025-7B 的 100 个 checkpoint。主要统计工具包括 Spearman rank correlation、回归分析、bootstrap confidence interval、partial correlation、Pearson correlation 和 VIF。作者还比较多种相似度函数，包括 cosine、CKA 和 Wasserstein distance，并报告最贴近人类评分的配置。

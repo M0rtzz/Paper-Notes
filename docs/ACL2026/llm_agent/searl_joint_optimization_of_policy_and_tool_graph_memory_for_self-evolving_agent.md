@@ -38,34 +38,25 @@ SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工
 **核心 idea**：用 Tool Graph Memory 把工具和执行依赖变成外部结构化状态，再用 memory-anchored advantage 给工具创建、复用和执行分配细粒度信用，实现策略与记忆的共同自进化。
 
 ## 方法详解
-SEARL 的核心是把 agent 训练分成两条互相促进的线：策略模型通过 RL 学会规划、检索、思考和行动；Tool Graph Memory 在轨迹中持续增长、合并和连边，为后续任务提供可复用工具，也为 advantage estimation 提供分组锚点。
 
 ### 整体框架
-给定任务，agent 先生成全局 plan，把任务拆成多个 subtask。每个 subtask 内部包含四类 XML 风格步骤：Planning、Retrieve、Think、Action。Retrieve 会从 Tool Graph Memory 中选择相关 MCP 工具；Action 可以直接回答，也可以调用已有工具或创建新 MCP 工具。
-
-训练时，SEARL 使用 outcome reward 判断最终答案是否正确，同时加入 planning、tool creation、tool execution 和 format 等过程奖励。策略优化不是只看整条轨迹，而是同时使用 episode-level relative advantage 和 tool-memory-anchored step advantage。Tool Graph Memory 则作为有向图保存工具节点和工具依赖边，并在训练迭代中执行注册、检索、合并和更新。
+SEARL 把自进化拆成相互促进的两条线：策略模型通过 RL 学会规划、检索、思考与行动，外部 Tool Graph Memory 则在轨迹中持续增长、合并、连边，既为后续任务提供可复用工具，也为优势估计提供稳定的分组锚点。给定一个任务，agent 先生成全局 plan 把任务拆成若干 subtask，每个 subtask 内部展开为 Planning、Retrieve、Think、Action 四类 XML 风格步骤：Retrieve 从 Tool Graph Memory 选取相关 MCP 工具，Action 既可直接作答，也可调用已有工具或创建新工具。训练端用 outcome reward 判定最终答案正确性，叠加规划、工具创建、工具执行、格式等过程奖励，并以 episode 级相对优势与 tool-anchored step 级优势共同更新策略，使工具知识从分散候选逐步沉淀成结构化记忆图。
 
 ### 关键设计
-1. **结构化轨迹与复合奖励**:
+**1. 结构化轨迹与复合奖励：把开放式行为拆成可奖励的步骤。**
 
-    - 功能：把开放式 agent 行为拆成可解析、可奖励、可审计的步骤。
-    - 核心思路：每个任务先生成 high-level plan，再在 subtask 中显式标注 Retrieve、Think、Action。奖励由稀疏 outcome reward 和密集 behavioral reward 组成；最终正确给 $r_s=11$，局部行为奖励包括 planning reward、tool creation reward、tool execution reward 和 format reward。
-    - 设计动机：如果只用最终答案奖励，多步工具调用中的哪个动作有用很难判断。显式步骤让训练信号能落到规划、工具创建和工具执行这些关键行为上。
+如果只用最终答案奖励，多步工具调用里到底哪个动作有用几乎无从判断，信号过于稀疏。SEARL 让每个任务先产出 high-level plan，再在 subtask 中显式标注 Retrieve、Think、Action，使轨迹变得可解析、可审计。奖励由稀疏的 outcome reward 与密集的 behavioral reward 组成：最终答案正确时取 $r_s=1$，局部再叠加 planning reward、tool creation reward、tool execution reward 和 format reward。这样训练信号能精确落到规划、工具创建、工具执行这些关键行为上，而不是被整条轨迹的成败一笔带过。
 
-2. **Tool-Memory-Aware Advantage Estimation**:
+**2. Tool-Memory-Aware Advantage Estimation：用工具锚点替代状态分组。**
 
-    - 功能：在长轨迹开放环境中提供稳定的 step-level credit assignment。
-    - 核心思路：episode-level advantage 在同一任务的多条 rollout 上按总回报归一化；step-level advantage 不按原始 state 分组，而按 MCP tool anchor 分组。所有与同一工具或合并后等价工具相关的动作被放入同一个 group，用 return-to-go 计算相对优势。
-    - 设计动机：开放环境中几乎不会重复同一状态，但工具是一种更稳定的子任务抽象。按工具分组能跨轨迹比较“这个工具相关动作是否真正带来收益”，减少由上下文差异引起的噪声。
+开放语言环境的状态空间巨大且连续，几乎不会出现两条完全相同的 state，传统按 state grouping 的 step-level advantage 因此难以工作。SEARL 保留 episode-level advantage（在同一任务的多条 rollout 上按总回报归一化），但 step-level advantage 不按原始 state 分组，而是按 MCP tool anchor 分组：所有与同一工具、或合并后等价工具相关的动作被放入同一 group，用 return-to-go 计算相对优势。其根据在于工具是一种比文本状态更稳定的子任务抽象，按工具分组能跨轨迹比较「这个工具相关动作是否真正带来收益」，从而压住由上下文差异引入的噪声。
 
-3. **Tool Graph Memory 生命周期**:
+**3. Tool Graph Memory 生命周期：让工具记忆持续增长并连边。**
 
-    - 功能：把工具知识和工具依赖组织成可持续增长的外部记忆。
-    - 核心思路：plan 生成的 subtask dependency graph 会被投影到工具空间形成任务子图。成功创建的 MCP 工具进入候选池，每轮训练根据累计 reward 选择高价值工具注册。新工具与已有工具按 name/description embedding cosine similarity 合并，边则记录 subtask 执行先后依赖；合并时边会重定向到统一节点。
-    - 设计动机：非结构化工具仓库会膨胀、重复且难复用。图结构不仅保存工具本身，还保存“哪些工具通常先后出现”，为后续规划和检索提供组合知识。
+非结构化的工具仓库会随训练膨胀、重复且难以复用。SEARL 把 plan 生成的 subtask dependency graph 投影到工具空间形成任务子图：成功创建的 MCP 工具进入候选池，每轮训练根据累计 reward 选择高价值工具注册；新工具与已有工具按 name/description embedding 的 cosine similarity 合并，边则记录 subtask 的执行先后依赖，合并时边会重定向到统一节点。由此图结构不仅保存工具本身，还保存「哪些工具通常先后出现」这类组合知识，为后续的规划与检索提供可复用的操作经验。
 
 ### 损失函数 / 训练策略
-训练目标是在带 Tool Graph Memory 的策略下最大化期望奖励，并用 KL 约束相对 reference policy 的偏移：$\max_{\pi_\theta}\mathbb{E}[r_\phi(x,y)]-\beta D_{KL}[\pi_\theta(y\mid x;\mathcal{T}_G)\|\pi_{ref}(y\mid x;\mathcal{T}_G)]$。具体 advantage 包含两级：episode-level advantage 用轨迹总回报归一化；step-level advantage 用同一 tool anchor 下的 return-to-go 归一化。实验用 Tool-star 的 10,000 条 RL 训练样本，agent 配备 Python interpreter 和本地 Wikipedia search server，评价指标为 pass@1 accuracy，judge 为 Qwen3-32B。
+训练目标是在带 Tool Graph Memory 的策略下最大化期望奖励，并用 KL 约束相对 reference policy 的偏移：$\max_{\pi_\theta}\mathbb{E}[r_\phi(x,y)]-\beta D_{KL}[\pi_\theta(y\mid x;\mathcal{T}_G)\|\pi_{ref}(y\mid x;\mathcal{T}_G)]$。优势估计分两级：episode-level advantage 用轨迹总回报归一化，step-level advantage 用同一 tool anchor 下的 return-to-go 归一化。实验使用 Tool-star 的 10,000 条 RL 训练样本，agent 配备 Python interpreter 和本地 Wikipedia search server，评价指标为 pass@1 accuracy，judge 为 Qwen3-32B。
 
 ## 实验关键数据
 

@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文分两半。前半 §2 是**诊断**：用三个互补的频谱/几何工具刻画 ViT 末层 token feature matrix $\mathbf{X} \in \mathbb{R}^{N \times D}$ 的内在结构，对比 sample-wise SVD vs dataset-level PCA vs token-level SEP，得到"encoding mismatch"诊断。后半 §3 是**修复**：基于诊断结论提出 Lift 和 WideLast 两个极简补丁，前者用一个固定线性 projector 在推理时把学生宽度抬到 teacher 宽度，后者把学生最后一个 Transformer block 加宽到 teacher 宽度。
+论文是一条"先诊断、再开药"的链：前半（§2）拿三个互补的频谱/几何探针去刻画 ViT 末层 token 特征矩阵 $\mathbf{X} \in \mathbb{R}^{N \times D}$ 的真实结构，把"每张图低秩却蒸不动"这个悖论拆成可量化的 encoding mismatch；后半（§3）顺着诊断结论开出 Lift 和 WideLast 两味极简补丁——前者在推理时保留一个固定线性 projector 把学生宽度抬到 teacher 宽度，后者干脆把学生最后一个 Transformer block 原生加宽到 teacher 宽度。
 
 ### 关键设计
 
-1. **三视角表征几何诊断**:
+**1. 三视角表征几何诊断：把"redundancy"拆成互不重叠的三层，找出真正卡住蒸馏的那一层。**
 
-    - 功能：揭示"低秩可压缩"与"窄学生匹配失败"之间的真实矛盾在哪里。
-    - 核心思路：(i) **Sample-wise SVD**：对每张图算 $\mathbf{X}_i = \mathbf{U}_i \boldsymbol{\Sigma}_i \mathbf{V}_i^\top$，统计达到 95%/99% 能量所需的最小秩 $d_i^\text{SVD}$，CaiT-S24 上 99 分位只要 61/121 维。(ii) **Dataset-level PCA**：累积全 dataset 的 channel 第二动量 $\mathbf{C} = \frac{1}{T}\sum_i \mathbf{X}_i^\top \mathbf{X}_i$ 做特征分解，得到一个**所有图共享**的 PCA 基 $\mathbf{V}_d$，然后看共享基对每张图的能量保留率 $E_i(d) = \|\mathbf{X}_i \mathbf{V}_d\|_F^2 / \|\mathbf{X}_i\|_F^2$，发现要让 99% 图保 95% 能量需要 302/384 维（CaiT-S24）——和 sample-wise SVD 的 61 形成 5 倍鸿沟。(iii) **Token-level SEP**：对每个 token $\mathbf{x}_t \in \mathbb{R}^D$ 沿 channel 维做 1D DFT，算累积频谱能量 $\text{SEP}(d)$ 和归一化带宽 $b_\alpha$，发现 14 个不同 ViT/DeiT/Swin/CLIP/MAE/DINO/DINOv2 backbone 的 SEP 曲线几乎都落在 45°对角线上，捕 90% 能量需要 ~90% 频谱通道。
-    - 设计动机：单看 SVD 会得出"窄学生 + 线性 projector 就够"的错误结论；只有结合 PCA（揭示子空间随输入旋转）和 SEP（揭示单 token 带宽利用高）才能完整解释为什么固定窄接口失败。这三个视角是互补而非冗余的，缺一不可。
+如果只盯着单张图看，ViT 的特征确实极其可压缩，这正是"理论上窄学生 + 线性 projector 就够"这个错误直觉的来源。作者的做法是同时换三个视角观察同一个 $\mathbf{X}$，让矛盾自己浮出来。**Sample-wise SVD** 对每张图做 $\mathbf{X}_i = \mathbf{U}_i \boldsymbol{\Sigma}_i \mathbf{V}_i^\top$，统计达到 95%/99% 能量所需的最小秩 $d_i^\text{SVD}$，CaiT-S24 上 99 分位只要 61/121 维——单图确实低秩。**Dataset-level PCA** 则换成全局视角：累积整个数据集的 channel 第二动量 $\mathbf{C} = \frac{1}{T}\sum_i \mathbf{X}_i^\top \mathbf{X}_i$ 做特征分解，得到一组**所有图共享**的 PCA 基 $\mathbf{V}_d$，再看这组共享基对每张图的能量保留率 $E_i(d) = \|\mathbf{X}_i \mathbf{V}_d\|_F^2 / \|\mathbf{X}_i\|_F^2$；结果要让 99% 的图保住 95% 能量竟需要 302/384 维，和 sample-wise 的 61 形成近 5 倍鸿沟——这说明每张图的低维子空间方向各不相同，**子空间随输入旋转**。**Token-level SEP** 再降一个粒度：对每个 token $\mathbf{x}_t \in \mathbb{R}^D$ 沿 channel 维做 1D DFT，算累积频谱能量 $\text{SEP}(d)$ 和归一化带宽 $b_\alpha$，发现 14 个 ViT/DeiT/Swin/CLIP/MAE/DINO/DINOv2 backbone 的 SEP 曲线几乎都贴着 45° 对角线，捕 90% 能量要占 ~90% 的频谱通道——**单 token 的带宽利用率本就接近满**。三者缺一不可：只看 SVD 会误判"窄接口够用"，加上 PCA 才看到子空间旋转、加上 SEP 才看到带宽吃紧，合起来才解释了固定窄接口为什么必然失败。
 
-2. **Lift：推理时保留的 lifting projector**:
+**2. Lift：推理时不丢的 lifting projector，先把"端点带宽"补到 teacher 宽度。**
 
-    - 功能：在不改 backbone 架构的前提下，给学生末端补上 teacher 宽度的"端点容量"。
-    - 核心思路：学生最后一层输出 $\mathbf{X}_S \in \mathbb{R}^{N \times D_S}$（窄宽 $D_S < D_T$），加一个 token-wise 线性 projector $\mathbf{P} \in \mathbb{R}^{D_S \times D_T}$ 得到 $\widehat{\mathbf{X}}_S = \mathbf{X}_S \mathbf{P}$。关键是**这个 projector 在推理时也保留**（不像传统 KD 把 projector 只用于训练后丢弃），让分类头 $\mathbf{W}_\text{head} \in \mathbb{R}^{D_T \times C}$ 直接作用在被抬升的表征上。
-    - 设计动机：消融显示一旦 projector 提供了 teacher 宽度的接口，连最朴素的 MSE 特征对齐都能从 0.21% gain 变成 +1.75% gain。这印证了 SEP 诊断——失败主因之一就是端点带宽不够，把宽度补上后特征匹配立刻奏效。但 Lift 是个**固定线性映射**，没法处理 PCA 揭示的子空间旋转问题，所以效果不如 WideLast。
+既然 SEP 诊断指向"末端带宽不够"，最直接的修法就是在不动 backbone 的前提下给学生末端补容量。学生最后一层输出 $\mathbf{X}_S \in \mathbb{R}^{N \times D_S}$（窄宽 $D_S < D_T$），加一个 token-wise 线性 projector $\mathbf{P} \in \mathbb{R}^{D_S \times D_T}$ 抬成 $\widehat{\mathbf{X}}_S = \mathbf{X}_S \mathbf{P}$。和传统 KD 的关键差别是：**这个 projector 推理时也留着**，让分类头 $\mathbf{W}_\text{head} \in \mathbb{R}^{D_T \times C}$ 直接作用在被抬升的表征上，而不是训练完就丢。效果立竿见影——一旦接口被抬到 teacher 宽度，连最朴素的 MSE 特征对齐都能从 +0.21% 变成 +1.75%，正面印证了 SEP 的"带宽不足"诊断。但 Lift 终究是个**固定线性映射**，对所有图像只能给同一个旋转，没法应付 PCA 揭示的输入相关子空间旋转，所以它解决了带宽却解决不了旋转，天花板低于 WideLast。
 
-3. **WideLast：原生宽度对齐（最后一个 block 加宽）**:
+**3. WideLast：把最后一个 block 原生加宽，带宽和子空间旋转一并解决。**
 
-    - 功能：同时解决端点带宽和子空间旋转两个问题。
-    - 核心思路：把学生的最后一个 Transformer block 直接换成 teacher 宽度 $D_T$ 的版本（前面所有 block 保持窄 $D_S$）。这样末 block 的 attention + MLP 都在 $D_T$ 维度工作，输出 $\widetilde{\mathbf{X}}_S \in \mathbb{R}^{N \times D_T}$，分类头同样在 $D_T$ 上。
-    - 设计动机：和 Lift 的关键区别——加宽 block 是个**输入相关的非线性映射**，可以对不同图像实现不同的 effective subspace 方向，刚好对应 PCA 揭示的"子空间随输入旋转"现象；而固定 projector 只能给所有图像同一个旋转。消融上 WideLast (78.23%) 比 Lift (77.53%) 高 0.7 个点，验证子空间自适应的额外收益。
+Lift 留下的缺口在于线性、输入无关。WideLast 把学生的最后一个 Transformer block 直接换成 teacher 宽度 $D_T$ 的版本（前面所有 block 仍保持窄 $D_S$），于是末 block 的 attention 与 MLP 都在 $D_T$ 维上运算，输出 $\widetilde{\mathbf{X}}_S \in \mathbb{R}^{N \times D_T}$，分类头同样在 $D_T$ 上。和 Lift 的本质区别是：加宽 block 是个**输入相关的非线性映射**，能对不同图像生成不同的 effective subspace 方向，恰好对上 PCA 观察到的"子空间随输入旋转"——固定 projector 给所有图一个旋转，加宽 block 给每张图各自的旋转。消融里 WideLast 的 78.23% 比 Lift 的 77.53% 再高 0.7 个点，这 0.7 点就是"子空间自适应"额外买到的收益。
 
 ### 损失函数 / 训练策略
 总目标 $\mathcal{L} = (1-\lambda_\text{logit}) \mathcal{L}_\text{CE}(\mathbf{y}, \mathbf{p}_S) + \lambda_\text{logit} \mathcal{L}_\text{KD}(\mathbf{p}_S, \mathbf{p}_T; \tau) + \lambda_\text{feat} \mathcal{L}_\text{feat}$，其中 $\mathcal{L}_\text{feat}$ 可以是简单 MSE 也可以是 SpectralKD。训练 recipe 完全沿用 DeiT 默认（AdamW、5e-4 lr、cosine、5 epoch warmup、300 epoch、batch 2048）。

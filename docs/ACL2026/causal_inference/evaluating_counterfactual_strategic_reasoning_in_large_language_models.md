@@ -38,36 +38,25 @@ tags:
 **核心 idea**：用重复博弈中的反事实标签/收益干预，把 LLM 的“会说策略”与“能按新激励执行策略”区分开。
 
 ## 方法详解
-本文方法本质上是一个行为评测框架。它不训练模型，而是把 LLM 放到多轮交互游戏中，让它与另一个 LLM 或算法型对手重复博弈，并记录动作、收益、对手理解速度、合作率和 token 效率。
 
 ### 整体框架
-输入是一组 LLM、prompting 策略、对手类型和游戏定义。每个实验把一个 LLM 作为玩家，与同模型实例或算法型玩家对战。囚徒困境重复 16 轮，石头剪刀布重复 24 轮；每个非 self-consistency 玩家重复 5 次，self-consistency 玩家重复 2 次。
-
-框架包含四类游戏设置：默认游戏、label-based counterfactual、payoff-based counterfactual 和 joint counterfactual。label-based 设置只改变动作名称或支配关系描述，收益不变；payoff-based 设置改变 payoff matrix，让原本的 equilibrium 不再适用；joint 设置同时改变标签和收益，形成最高压力测试。
-
-模型侧包含 zero-shot、Chain-of-Thought、Solo Performance Prompt 以及 self-consistency 等提示形式。对手侧既有 LLM，也有 SREP、PP、MF/TFT、AP 等算法策略。这样可以同时考察模型在 LLM-LLM 协调、可预测对手利用和自适应对手对抗中的表现。
+本文不训练任何模型，而是搭建一个行为评测框架：把待测 LLM 当作玩家，让它与同模型实例或算法型对手在多轮博弈中重复对弈，全程记录动作、收益、对手理解速度、合作率与 token 消耗。每个实验沿着「指定游戏与扰动类型 → 用某种 prompting 形式让 LLM 逐轮决策 → 累积收益与行为统计」的流水线展开，囚徒困境（PD）重复 16 轮、石头剪刀布（RPS）重复 24 轮，非 self-consistency 玩家重复 5 次、self-consistency 玩家重复 2 次。其精髓是用四档游戏设置——默认游戏、label-based、payoff-based 与 joint counterfactual——把「模型会不会复述策略」和「模型能不能按新激励执行策略」逐层拆开：label-based 只改动作名称、收益不变，payoff-based 改写 payoff matrix 让原均衡失效，joint 则同时改标签和收益形成最高压力测试。对手侧既包含其他 LLM，也包含 SREP、PP、MF/TFT、AP 等算法策略，从而同时覆盖 LLM-LLM 协调、可预测对手利用与自适应对手对抗三种情境。
 
 ### 关键设计
-1. **反事实博弈构造**:
 
-    - 功能：把默认游戏拆成表面标签变化和深层收益变化两类压力源。
-    - 核心思路：在 PD 中，用 Stag Hunt 作为 payoff-based counterfactual，把严格背叛优势改成协调问题；同时也只把 C/D 改名为 Stag/Hare，测试模型是否被动作名称影响。在 RPS 中，把某些胜负收益放大，使均匀混合策略不再是均衡。
-    - 设计动机：只看默认 PD/RPS 很难知道模型是否真的读取 payoff。反事实版本能让“标签锚定”和“激励刚性”暴露出来。
+**1. 反事实博弈构造：把表面标签和深层收益拆成两类正交压力源。**
 
-2. **Opponent Comprehension 指标**:
+只看默认 PD/RPS 无法判断模型是真的在读取 payoff matrix，还是在套用预训练里见过的 canonical pattern，因此作者对同一个游戏施加两种相互独立的扰动。标签维度上，仅把 PD 的 C/D 改名为 Stag/Hare、收益结构保持不变，用来检验模型是否被动作名称锚定；收益维度上，把 PD 换成 Stag Hunt 形式的 payoff-based counterfactual，将「严格背叛占优」改写成需要协调的结构，在 RPS 中则放大特定胜负组合的幅度，使原本的均匀混合策略不再是均衡。两类扰动正交组合后，标签锚定与激励刚性这两种失败模式就能被分别诊断出来。
 
-    - 功能：衡量模型第几轮开始稳定理解并利用对手策略。
-    - 核心思路：定义 $m$ 为最早轮次，使得从该轮到游戏结束，LLM 在至少 $t_p=90\%$ 的后续轮次中获得不低于对手的 payoff。$m$ 越小，说明模型越早完成对手建模；超过游戏长度则表示没有稳定理解。
-    - 设计动机：总分只能说明最终赚了多少，不能说明模型是早早理解对手，还是靠后期偶然恢复。$m$ 把动态适应速度单独拉出来。
+**2. Opponent Comprehension 指标：用最早稳定占优的轮次量化对手建模速度。**
 
-3. **性能与效率联合评估**:
+总分只能反映最终赚了多少，却分不清模型是一开始就理解对手，还是靠后期偶然翻盘。为此作者定义 $m$ 为最早的轮次，使得从该轮到游戏结束，LLM 在至少 $t_p=90\%$ 的后续轮次中拿到不低于对手的 payoff。$m$ 越小说明对手建模完成得越早，一旦超过游戏长度则判定为始终没有稳定理解。这个指标把「动态适应速度」从累计收益里单独剥离出来，使早期就洞悉对手的模型和侥幸回血的模型不再混为一谈。
 
-    - 功能：区分“更会玩”和“更会花 token 解释”。
-    - 核心思路：除了 total points、cooperation/action distribution、failure rate，作者还定义 efficiency 为 $\textit{points}/\textit{tokens}\times c$，默认 $c=1000$。
-    - 设计动机：推理型模型可能输出更多 chain-of-thought，但额外 deliberation 不一定带来更快适应。效率指标能识别 reasoning-overhead mismatch。
+**3. 性能与效率联合评估：区分「更会玩」和「更会花 token 解释」。**
 
-### 损失函数 / 训练策略
-本文没有训练模型，重点是评测设计。囚徒困境默认 payoff 为 $(C,C)=(4,4)$、$(C,D)=(1,6)$、$(D,C)=(6,1)$、$(D,D)=(2,2)$，16 轮累计分数范围为 16 到 96；RPS 每轮胜/负/平为 $1/-1/0$，24 轮累计分数范围为 -24 到 24。RPS payoff-based counterfactual 中，Rock-Paper 组合的胜负幅度放大为 3，理论均衡从均匀分布变为 $\pi^*(R)=0.2,\pi^*(P)=0.2,\pi^*(S)=0.6$。
+推理型模型往往输出更长的 chain-of-thought，但额外的 deliberation 未必换来更快的适应。除了 total points、cooperation/action distribution 和 failure rate，作者额外定义效率为 $\textit{points}/\textit{tokens}\times c$（默认 $c=1000$），把每千 token 兑换的收益显式算出来。配合上面两个指标，它能识别出「分数尚可但 token 开销巨大」的 reasoning-overhead mismatch，避免把冗长解释误读为更强的策略能力。
+
+具体收益设定上，PD 默认 payoff 为 $(C,C)=(4,4)$、$(C,D)=(1,6)$、$(D,C)=(6,1)$、$(D,D)=(2,2)$，16 轮累计分数落在 16 到 96 之间；RPS 每轮胜/负/平为 $1/-1/0$，24 轮累计分数落在 -24 到 24 之间。RPS 的 payoff-based counterfactual 把 Rock-Paper 组合的胜负幅度放大为 3，理论均衡随之从均匀分布变为 $\pi^*(R)=0.2,\pi^*(P)=0.2,\pi^*(S)=0.6$——模型若仍坚持均匀随机化，恰好暴露其在套用 canonical equilibrium。
 
 ## 实验关键数据
 

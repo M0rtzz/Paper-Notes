@@ -42,35 +42,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段训练：(1) 单目深度先验迁移学习——从预训练单目深度模型蒸馏知识到立体匹配编码器；(2) 渐进裁剪微调——逐步减半迭代次数，仅微调 GRU 模块。推理时配合 FlashGRU 进一步加速。
+论文要解决的核心矛盾是：迭代精炼带来高精度，但 GRU 的递归循环在边缘硬件上又慢又难量化。整套方法分两阶段训练再加一套推理算子。第一阶段做单目深度先验迁移，让立体匹配的特征编码器在训练时吸收一个单目深度大模型的知识，但推理时不必背着这个大模型。第二阶段做渐进裁剪微调，把原本 32 次的迭代逐步减半压到 1 次，只动 GRU 模块、冻结其余部分。最后推理时再换上专门设计的 FlashGRU 稀疏算子，把这唯一一次迭代也跑得更快。三块各自针对一个瓶颈：迭代次数太多、单目编码器太重、GRU 算子在 GPU 上访存太碎。
 
 ### 关键设计
 
-1. **渐进迭代裁剪（Progressive Iteration Pruner, PIP）**
+**1. 渐进迭代裁剪（PIP）：用蒸馏把 32 步递归压成 1 步，又不掉精度。**
 
-    - 功能：将迭代次数从 $T$ 逐步减半到 $T/2 \to T/4 \to \cdots \to 1$
-    - 核心思路：将多迭代 RNN (Mi-RNN) 视为离散动力系统 $\mathbf{z}_{t+1} = \mathcal{F}_\theta(\mathbf{z}_t)$，训练少迭代 RNN (Fi-RNN) $\mathbf{z}_{s+1} = \mathcal{G}_\phi(\mathbf{z}_s)$ 来近似 $r$ 步组合 $\mathcal{F}^{(r)}$。强制跳步等价性通过三个损失实现：
-        - 累积输出对齐：$\mathcal{L}_{\text{cum}} = \sum_s \|\sum_{k=1}^s \mathbf{d}_k^{\text{Fi}} - \sum_{k=1}^s \bar{\mathbf{d}}_k^{\text{Mi}}\|_2^2$
-        - 最终视差匹配：$\mathcal{L}_{\text{final}} = \|\mathbf{d}_S^{\text{Fi}} - \Psi(\mathbf{z}_T^{\text{Mi}})\|_2^2$
-        - 隐状态对齐：$\mathcal{L}_{\text{hid}} = \sum_s \|\mathbf{z}_s^{\text{Fi}} - \mathbf{z}_{rs}^{\text{Mi}}\|_2^2$
-    - 设计动机：每次裁剪只减半，温和压缩避免精度悬崖。从动力系统视角，学习一个粗粒度算子近似多步组合，同时保持轨迹的积分特性。可递归应用
+直接把迭代从 32 次砍到 1 次会撞上精度悬崖，因为单步 GRU 学不会原本 32 步累积出来的更新。PIP 的做法是温和地、逐级减半——$T \to T/2 \to T/4 \to \cdots \to 1$，每一级都让"少迭代"的学生去逼近"多迭代"的老师。形式上，把多迭代 RNN（Mi-RNN）看成一个离散动力系统 $\mathbf{z}_{t+1} = \mathcal{F}_\theta(\mathbf{z}_t)$，要训练的少迭代 RNN（Fi-RNN）$\mathbf{z}_{s+1} = \mathcal{G}_\phi(\mathbf{z}_s)$ 则去近似它的 $r$ 步组合 $\mathcal{F}^{(r)}$——也就是让学生一步顶老师 $r$ 步。
 
-2. **协同单目深度先验迁移**
+跳步要等价，光对齐最终结果不够，论文用三个损失同时约束轨迹的累积量、终点和隐状态：
 
-    - 功能：在不引入独立单目编码器的情况下，将单目深度基础模型的知识迁移到立体匹配
-    - 核心思路：Teacher-Student 框架，教师是 Depth-AnythingV2-L。学生使用 RepViT 块作为骨干，通过超网搜索（遗传算法）在四个分辨率层上优化块分配，寻找最佳的高频细节与抽象语义的平衡。特征对齐通过 MSE 损失在多分辨率上下文特征和代价体积嵌入层面进行
-    - 设计动机：MonSter、DEFOM-Stereo 等方法虽然用了单目先验但需要嵌入完整的深度基础模型作为独立编码器，计算代价巨大。协同学习让轻量学生网络吸收教师知识后丢弃教师
+$$\mathcal{L}_{\text{cum}} = \sum_s \Big\|\sum_{k=1}^s \mathbf{d}_k^{\text{Fi}} - \sum_{k=1}^s \bar{\mathbf{d}}_k^{\text{Mi}}\Big\|_2^2,\quad \mathcal{L}_{\text{final}} = \|\mathbf{d}_S^{\text{Fi}} - \Psi(\mathbf{z}_T^{\text{Mi}})\|_2^2,\quad \mathcal{L}_{\text{hid}} = \sum_s \|\mathbf{z}_s^{\text{Fi}} - \mathbf{z}_{rs}^{\text{Mi}}\|_2^2$$
 
-3. **FlashGRU——硬件感知稀疏 GRU 算子**
+$\mathcal{L}_{\text{cum}}$ 对齐每一步累积的视差更新，保住"积分"轨迹的形状；$\mathcal{L}_{\text{final}}$ 直接钉住终点视差；$\mathcal{L}_{\text{hid}}$ 让学生第 $s$ 步的隐状态对上老师第 $rs$ 步。从动力系统的角度看，这相当于学一个粗粒度算子去近似细粒度算子的多步组合，又保留轨迹的积分特性，所以每减半一级只掉一点点精度。整个过程可以递归套用，一路裁到 1 次。
 
-    - 功能：在不显著牺牲精度的情况下加速 GRU 推理
-    - 核心思路：三个核心设计——(a) 多分辨率规则簿：用重要性图选择需要更新的候选区域，构建跨分辨率的静态双向索引映射表，将稀疏像素紧凑打包到连续 GPU buffer 减少内存碎片；(b) 循环算子融合：展开递归计算将序列卷积实现为时序融合内核，利用索引映射表最小化内存写回次数；(c) 70% 稀疏度约束，仅对 top-k 重要像素执行更新
-    - 性能：相比原生 ConvGRU 在 2K 分辨率下实现 **7.28× 加速**、**76.6% 内存峰值降低**、**80.9% 全局内存请求减少**
+**2. 协同单目深度先验迁移：训练时借大模型的力，推理时把它丢掉。**
+
+MonSter、DEFOM-Stereo 这类方法确实用上了单目深度先验，但代价是把一个完整的深度基础模型当独立编码器嵌进推理管线，开销极大。这里换成 Teacher-Student 的协同学习：教师是 Depth-AnythingV2-L，学生用 RepViT 块搭骨干，特征对齐用 MSE 损失同时作用在多分辨率上下文特征和代价体积嵌入两个层面。关键是学生的结构不是拍脑袋定的——用遗传算法做超网搜索，在四个分辨率层上优化 RepViT 块的分配，找高频细节和抽象语义之间的最佳配比。训练完学生吸收了教师的知识，推理时教师整个丢掉，于是先验迁过来了、推理却依旧轻量。
+
+**3. FlashGRU：从 GPU 访存模式下手，把唯一一次 GRU 跑快。**
+
+这一步不是减计算量，而是 I/O 感知地重排稀疏 GRU 在 GPU 上的访存。它由三部分配合：其一是多分辨率规则簿，先用重要性图挑出真正需要更新的候选像素，建一张跨分辨率的静态双向索引映射表，把这些稀疏像素紧凑打包进连续的 GPU buffer，避免内存碎片；其二是循环算子融合，把展开后的递归计算实现成一个时序融合内核，借索引表把序列卷积的内存写回次数压到最小；其三是 70% 的稀疏度约束，只对 top-k 重要像素执行更新。三者叠起来，相比原生 ConvGRU，在 2K 分辨率下做到 **7.28× 加速**、**76.6% 内存峰值降低**、**80.9% 全局内存请求减少**。
 
 ### 损失函数 / 训练策略
-- PIP 损失：$\mathcal{L} = \mathcal{L}_{\text{cum}} + \mathcal{L}_{\text{final}} + \mathcal{L}_{\text{hid}}$
-- 仅微调 GRU 模块，冻结其他部分
-- 训练集：SceneFlow + CREStereo + TartanAir + SintelStereo + FallingThings + InStereo2K
+PIP 阶段总损失是三项相加 $\mathcal{L} = \mathcal{L}_{\text{cum}} + \mathcal{L}_{\text{final}} + \mathcal{L}_{\text{hid}}$，且只微调 GRU 模块、冻结其余部分。训练集为 SceneFlow + CREStereo + TartanAir + SintelStereo + FallingThings + InStereo2K。
 
 ## 实验关键数据
 

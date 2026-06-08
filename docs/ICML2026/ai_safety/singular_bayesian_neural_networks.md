@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-每个权重矩阵 $W \in \mathbb{R}^{m \times n}$ 参数化为 $W = AB^\top$，其中 $A \in \mathbb{R}^{m \times r}, B \in \mathbb{R}^{n \times r}$。在因子上放尺度混合高斯先验 $p_A(A) = \prod_j [\pi \mathcal{N}(0, \sigma_1^2) + (1-\pi)\mathcal{N}(0, \sigma_2^2)]$（重尾促进稀疏）。变分后验 $q_A, q_B$ 都是平均场高斯，用重参数化技巧 $A = \mu_A + \log(1+\exp(\rho_A)) \circ \epsilon_A$ 让采样可微。ELBO 分解成数据拟合项 $\mathbb{E}_{q_A q_B}[\log p(\mathcal{D}|AB^\top)]$ 与正则项 $\beta(\text{KL}(q_A \| p_A) + \text{KL}(q_B \| p_B))$。三种架构的实例化：MLP 直接因子化全连接层；Transformer 因子化 Q/K/V 投影和 FFN，embedding 用 batch 稀疏只采样当前 token 对应的行；LSTM 因子化 $W_{ih}, W_{hh}$，每个 batch 采样一次 $A, B$ 然后缓存 $W$ 跨时间步。
+这篇论文要解决的是 BNN 在 MFVI 下参数翻倍、又强行假设权重独立的老问题。它的做法是不再对权重矩阵 $W \in \mathbb{R}^{m \times n}$ 本身做平均场分布，而是先把它分解成两个低秩因子 $W = AB^\top$（$A \in \mathbb{R}^{m \times r}, B \in \mathbb{R}^{n \times r}$），然后把贝叶斯不确定性放到因子 $A, B$ 上。这样一来变分参数从 $O(mn)$ 降到 $O(r(m+n))$，而 $W$ 的分布则通过 $A, B$ 的 pushforward 自动落在秩-$r$ 流形上。具体地，因子上放重尾的尺度混合高斯先验 $p_A(A) = \prod_j [\pi \mathcal{N}(0, \sigma_1^2) + (1-\pi)\mathcal{N}(0, \sigma_2^2)]$ 来促进稀疏，变分后验 $q_A, q_B$ 仍是平均场高斯并用重参数化 $A = \mu_A + \log(1+\exp(\rho_A)) \circ \epsilon_A$ 保证采样可微；训练目标是把 ELBO 拆成数据拟合项 $\mathbb{E}_{q_A q_B}[\log p(\mathcal{D}|AB^\top)]$ 加正则项 $\beta(\text{KL}(q_A \| p_A) + \text{KL}(q_B \| p_B))$。这个低秩变分层在三种架构上是 drop-in 替换：MLP 直接因子化全连接层；Transformer 因子化 Q/K/V 投影和 FFN，embedding 用 batch 稀疏只采样当前 token 对应的行；LSTM 因子化 $W_{ih}, W_{hh}$，每个 batch 采样一次 $A, B$ 再缓存 $W$ 跨时间步复用。
 
 ### 关键设计
 
-1. **诱导奇异后验与几何归纳偏置**:
+**1. 诱导奇异后验：把不确定性约束到低秩流形上。**
 
-    - 功能：把贝叶斯不确定性直接放在低秩流形上，避免 MFVI 全空间扩散。
-    - 核心思路：对因子 $(A, B)$ 做变分推断，权重 $W = AB^\top$ 的分布通过 pushforward 得到。**Lemma 3.2** 证明 $q_W(\mathcal{R}_r) = 1$（支撑在秩-$r$ 矩阵集合上）；**Lemma 3.3** 证明当 $r < \min(m, n)$ 时 $\mathcal{R}_r$ 的 Lebesgue 测度为零；**Theorem 3.4** 直接得出 $q_W$ 奇异于 Lebesgue 测度。这意味着 $q_W$ 没有 Lebesgue 密度——这与 MFVI 的"处处正密度"形成根本性的几何对比。
-    - 设计动机：Wilson & Izmailov (2020) 指出贝叶斯泛化取决于后验**支撑**和**归纳偏置**。MFVI 偏向"权重独立可自由调"，本文偏向"权重通过共享因子耦合"，更符合现代深度网络的低秩本质，并提供隐式正则化——更新 $W_{ij} = \sum_k A_{ik} B_{jk}$ 必须修改影响整行整列的共享因子，阻止局部记忆。
+MFVI 的后验在整个权重空间处处有正密度，权重可以各自自由游走，这既浪费参数又和现代网络"低内在维度"的事实相悖。本文换成对因子 $(A, B)$ 做变分推断、再 pushforward 得到 $W = AB^\top$ 的分布，于是这个分布天然被钉在低秩流形上。论文用三步把这件事讲严密：**Lemma 3.2** 证 $q_W(\mathcal{R}_r) = 1$，即后验质量全部落在秩-$r$ 矩阵集合 $\mathcal{R}_r$ 上；**Lemma 3.3** 证当 $r < \min(m, n)$ 时 $\mathcal{R}_r$ 的 Lebesgue 测度为零；**Theorem 3.4** 由此直接得出 $q_W$ 奇异于 Lebesgue 测度——也就是说 $q_W$ 根本没有 Lebesgue 密度，这与 MFVI"处处正密度"形成根本性的几何对比。之所以有效，是因为 Wilson & Izmailov (2020) 指出贝叶斯泛化取决于后验的**支撑**和**归纳偏置**：把支撑限制在低秩流形等于给了一个强先验信念，而且自带隐式正则化——要更新某个 $W_{ij} = \sum_k A_{ik} B_{jk}$ 就必须改动影响整行整列的共享因子，模型没法靠局部权重去死记单个样本。
 
-2. **结构化权重相关性（Lemma 3.5）**:
+**2. 结构化权重相关性：用共享因子重新找回 MFVI 抹掉的相关。**
 
-    - 功能：在低参数预算下捕获权重间的全局相关，弥补 MFVI 独立性假设的损失。
-    - 核心思路：尽管 $A, B$ 自身平均场，但 $W$ 的元素**不独立**——$\text{Cov}(W_{ij}, W_{i'j'}) = \sum_k \text{Cov}(A_{ik}B_{jk}, A_{i'k}B_{j'k})$，只要两个权重共享潜在因子 $k$ 就有相关性。秩 $r$ 控制相关结构的丰富程度：高秩允许更复杂的块相关，参数仍是 $O(r(m+n))$。论文 Figure 1 实验对比显示 full-rank BBB 是对角相关、低秩则呈现块状结构。
-    - 设计动机：过滤掉与主导低秩结构不一致的高频噪声，捕获 MFVI 看不到的"共享子空间"不确定性传播。
+MFVI 完全因子化的代价是把权重间的结构相关性全抹掉了。低秩参数化反而在极低参数预算下把这种相关找回来：虽然 $A, B$ 各自是平均场、彼此独立，但 $W$ 的元素并不独立，**Lemma 3.5** 给出 $\text{Cov}(W_{ij}, W_{i'j'}) = \sum_k \text{Cov}(A_{ik}B_{jk}, A_{i'k}B_{j'k})$——只要两个权重共享某个潜在因子 $k$ 就会产生相关。秩 $r$ 正好控制这种相关结构的丰富程度，$r$ 越高允许越复杂的块状相关，而参数量始终是 $O(r(m+n))$。论文 Figure 1 的对比可以直观看到：full-rank BBB 的相关矩阵基本是对角的，低秩版则呈现块状结构。其结果是过滤掉与主导低秩结构不一致的高频噪声，同时让不确定性能沿"共享子空间"传播——这正是 MFVI 看不到的那部分认知不确定性。
 
-3. **理论保证：EYM 损失分解 + PAC-Bayes 收紧**:
+**3. 理论保证：用 EYM 把"低秩 ≠ 退化"和 PAC-Bayes 收益量化出来。**
 
-    - 功能：把"低秩 ≠ 退化"用定理化语言写清楚，并量化复杂度收益。
-    - 核心思路：**Theorem 3.6**（EYM 损失界）：在 $L$-Lipschitz 损失下，最优秩-$r$ 截断 SVD 与全秩最优的损失差被尾部奇异值控制 $|\mathbb{E}\ell(W^*x,y) - \mathbb{E}\ell(W^*_r x, y)| \le LR \sqrt{\sum_{i>r} \sigma_i^2(W^*)}$。**Theorem 3.7** 把学到的 $W = AB^\top$ 与全秩最优的误差分解为**学习误差** $\|W - W^*_r\|_F$ + **秩偏差** $\sigma_{>r}$。**Theorem 3.8** 给 PAC-Bayes 复杂度比 $\sqrt{r(m+n)/mn} \ll 1$；当 $r \ll \min(m, n)$ 时显著收紧。**Theorem 3.9** 用 Pinto 等 (2025) 的低秩 Gaussian complexity 给出补充非空泛化界。
-    - 设计动机：让模型选择 $r$ 这件事有理论指导——可以用奇异值衰减分析或消融实验定 $r$，并能预测损失上界。
+低秩自然会让人担心表达力被砍，本文用一组定理把"低秩 ≠ 退化"写清楚并量化复杂度收益。**Theorem 3.6**（EYM 损失界）说明在 $L$-Lipschitz 损失下，最优秩-$r$ 截断与全秩最优的损失差被尾部奇异值严格控制：
+
+$$|\mathbb{E}\ell(W^*x,y) - \mathbb{E}\ell(W^*_r x, y)| \le LR \sqrt{\sum_{i>r} \sigma_i^2(W^*)}.$$
+
+**Theorem 3.7** 进一步把学到的 $W = AB^\top$ 与全秩最优的误差分解成两块——可优化的**学习误差** $\|W - W^*_r\|_F$ 和不可避免的**秩偏差** $\sigma_{>r}$。**Theorem 3.8** 给出 PAC-Bayes 复杂度比 $\sqrt{r(m+n)/mn} \ll 1$，当 $r \ll \min(m, n)$ 时泛化界显著收紧；**Theorem 3.9** 再用 Pinto 等 (2025) 的低秩 Gaussian complexity 给出一个补充的非空泛化界。这套刻画的实用价值是让"选 $r$"这件事有据可依：既能用奇异值衰减分析或消融实验定 $r$，又能据此预测损失上界。
 
 ### 损失函数 / 训练策略
-ELBO 三项全部 Monte Carlo 估计（尺度混合先验没有闭式 KL）；用 Adam 优化器；$\sigma = \log(1+\exp(\rho))$ 保正性；$\beta$ KL 温度调节。每层秩 $r_\ell$ 独立可调。预测时 Monte Carlo 平均多个权重样本。
+ELBO 三项全部用 Monte Carlo 估计（尺度混合先验没有闭式 KL）；优化器用 Adam；$\sigma = \log(1+\exp(\rho))$ 保证方差为正；$\beta$ 作为 KL 温度调节正则强度。每层的秩 $r_\ell$ 可以独立调，预测时对多个权重样本做 Monte Carlo 平均。
 
 ## 实验关键数据
 

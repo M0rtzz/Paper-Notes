@@ -41,27 +41,29 @@ SURGE 给每个二值化层并联一个"全精度辅助分支"，前向输出不
 ## 方法详解
 
 ### 整体框架
-对每个二值化线性算子（conv、linear、attention projection），SURGE 并行挂一个尺寸完全相同的全精度副本（auxiliary branch）。前向时利用 $\text{detach}$ 技巧让辅助分支的两次出现互相抵消，保证输出严格等于纯 BNN；反向时辅助分支正常回传，main branch 走 STE 回传，二者在输入处汇合。AGS 动态算缩放因子 $\lambda_{\text{AGS}}$ 平衡两路贡献。训练完毕后辅助分支被丢弃，推理就是标准 BNN。
+SURGE 想在不碰前向输出的前提下，给每个二值化层补一份"比 STE 更接近真梯度"的反向信号。具体做法是：对每个二值化线性算子（conv、linear、attention projection）并行挂一个尺寸完全相同的全精度副本（auxiliary branch），用一个 detach 自抵消的写法让这个副本**前向不出力、反向才开门**——前向输出严格等于纯 BNN，反向时全精度副本把 STE 剪掉的高阶梯度补回输入处，再由 AGS 按两路梯度的范数比动态缩放、保证补偿量级不压垮主分支。训练完毕后辅助分支整体丢弃，推理就是一个标准 BNN，零额外开销。
 
 ### 关键设计
 
-1. **Dual-Path Gradient Compensator（DPGC）**:
+**1. Dual-Path Gradient Compensator（DPGC）：让前向走二值、反向走全精度，用 detach 让这对矛盾共存。**
 
-    - 功能：在不动前向输出的情况下，让每一个二值化层都额外获得一份"非 STE 截断"的高阶梯度信息。
-    - 核心思路：定义二值前向 $f_b(x;W_b)=Q_W(W_b)^\top Q_x(x)$、全精度前向 $f_a(x;W_a)=W_a^\top x$，缩放 $f_{ao}(x)=\lambda f_a(x)$。输出写作 $\text{output}=f_b(x;W_b)-f_{ao}(x;W_a)\downarrow+f_{ao}(x;W_a)$，其中 $\downarrow$ 是 stop-gradient。前向时第二、三项数值相等正负抵消，输出 = $f_b$；反向时 detached 那一项的梯度被截断，剩下 $f_b$ 走 STE、$f_{ao}$ 走全精度，于是 $\frac{\partial\mathcal{L}}{\partial x}=g_b+\lambda g_a$，其中 $g_b$ 是 STE 一阶近似、$g_a$ 是辅助分支的真实梯度提供的高阶补偿。
-    - 设计动机：传统改进 STE 的工作（piecewise polynomial、SignSwish 等）都是"换个函数继续骗"，没解决根本问题。DPGC 的 detach 技巧让"输出严格二值"和"反向能拿到全精度信号"这对矛盾共存，是非常巧妙的工程构造，而且推理时辅助分支可丢，零额外开销。
+BNN 训练的死结是"前向必须严格 sign（保推理加速）"和"反向需要丰富梯度（保能学）"互斥，过去的改进（piecewise polynomial、SignSwish 等）都只是"换个更光滑的函数继续骗 STE"，没真正绕开。DPGC 的做法是给每层并联一个全精度副本，再用一个自抵消的输出公式把两件事拆开。记二值前向 $f_b(x;W_b)=Q_W(W_b)^\top Q_x(x)$、全精度前向 $f_a(x;W_a)=W_a^\top x$、缩放后的辅助项 $f_{ao}(x)=\lambda f_a(x)$，输出写成
 
-2. **Adaptive Gradient Scaler（AGS）**:
+$$\text{output}=f_b(x;W_b)-f_{ao}(x;W_a)\!\downarrow+\,f_{ao}(x;W_a)$$
 
-    - 功能：动态平衡 $g_b$ 和 $g_a$ 的量级，防止辅助路梯度过大冲垮主分支训练。
-    - 核心思路：直接把 $\lambda$ 写成 $\lambda_{\text{AGS}}=\eta\frac{\|g_b\|_2}{\|g_a\|_2+\epsilon}$，其中 $\eta$ 是基础缩放系数、$\epsilon=10^{-8}$ 防除零。论文从二阶矩模型出发证明最优 $\lambda^*=\frac{\langle\delta_b,\mu_a\rangle}{\|\mu_a\|_2^2+\text{tr}(\text{Var}(g_a))}$（$\delta_b$ 是 STE 的偏差向量），并在 alignment $\cos\theta$、relative bias ratio $\beta=\|\delta_b\|_2/\|\mu_b\|_2$、noise ratio $\rho$ 近似稳定的假设下，推得 $\lambda^*\approx\eta\frac{\|\mu_b\|_2}{\|\mu_a\|_2}$，再用 mini-batch 估计就得到上面的实用公式。
-    - 设计动机：固定 $\lambda$ 不是太大就是太小：太大辅助路炸主分支、太小补偿失效。AGS 让两路始终量级相当，保证 STE 仍主导优化方向、辅助路只作"高阶修正"，理论上等价于在均方误差意义下的最优凸组合。
+其中 $\downarrow$ 表示 stop-gradient。前向时后两项数值相等、正负抵消，输出严格等于 $f_b$；反向时被 detach 那一项的梯度被截断，只剩 $f_b$ 走 STE、$f_{ao}$ 走全精度，于是输入处的梯度变成 $\frac{\partial\mathcal{L}}{\partial x}=g_b+\lambda g_a$——$g_b$ 是 STE 给的一阶近似，$g_a$ 则是全精度副本提供的高阶补偿。这样"输出严格二值"和"反向拿到全精度信号"同时成立，而且推理阶段辅助分支可直接丢弃，不留任何开销。
 
-3. **训练-推理对称的双路架构**:
+**2. Adaptive Gradient Scaler（AGS）：按梯度范数比动态定 $\lambda$，让补偿路只做修正不夺权。**
 
-    - 功能：让 SURGE 成为通用插件，可用于 CNN（conv block）和 Transformer（attention projection / FFN 的 linear）。
-    - 核心思路：DPGC 是 architecture-agnostic 的，凡是有一个二值化线性算子的地方都可以挂；图 2 同时给出 conv block 和 transformer block 的接入示意。训练时整网三种状态共存（main forward、main backward、auxiliary backward），推理时辅助 $W_a$ 全部丢掉。
-    - 设计动机：以前的 BNN 训练 trick 多是任务/架构特定（如 ReActNet 的 RPReLU），SURGE 把"补偿梯度"做成层级插件，迁移成本极低。
+DPGC 补进来的 $g_a$ 量级未知：固定 $\lambda$ 取大了辅助路会炸掉主分支、取小了补偿又形同虚设。AGS 干脆把缩放因子写成两路梯度的范数比
+
+$$\lambda_{\text{AGS}}=\eta\,\frac{\|g_b\|_2}{\|g_a\|_2+\epsilon}$$
+
+$\eta$ 是基础缩放系数、$\epsilon=10^{-8}$ 防除零。这个形式不是拍脑袋来的：论文从二阶矩模型出发证明最优缩放为 $\lambda^*=\frac{\langle\delta_b,\mu_a\rangle}{\|\mu_a\|_2^2+\text{tr}(\text{Var}(g_a))}$（$\delta_b$ 是 STE 的偏差向量），再在 alignment $\cos\theta$、相对偏差比 $\beta=\|\delta_b\|_2/\|\mu_b\|_2$、噪声比 $\rho$ 都近似稳定的假设下退化为 $\lambda^*\approx\eta\frac{\|\mu_b\|_2}{\|\mu_a\|_2}$，最后用 mini-batch 的梯度范数估计 $\|\mu\|_2$，就得到上面的实用公式。效果上它让两路始终量级相当，STE 仍主导优化方向、辅助路只作高阶修正，相当于在均方误差意义下取了两路梯度的最优凸组合。
+
+**3. 训练-推理对称的双路架构：把"补偿梯度"做成 architecture-agnostic 的层级插件。**
+
+以前的 BNN 训练 trick 多是任务/架构特定的（如 ReActNet 的 RPReLU），迁移起来要重新设计。SURGE 因为只依赖"一个二值化线性算子 + 一个全精度副本"这个最小结构，所以哪里有二值化线性层就能挂哪里——图 2 同时给出了 conv block 和 transformer block（attention projection / FFN 的 linear）的接入示意。训练时整网三种计算状态共存（main forward、main backward、auxiliary backward），推理时把所有辅助权重 $W_a$ 丢掉即可，因此同一套机制能无缝覆盖 CNN 和 Transformer，迁移成本极低。
 
 ### 损失函数 / 训练策略
 端到端 cross-entropy（分类）/ detection loss（VOC）/ NLU loss（GLUE），不引入额外训练损失。$\eta$ 是少数需调的超参；推理零额外开销。

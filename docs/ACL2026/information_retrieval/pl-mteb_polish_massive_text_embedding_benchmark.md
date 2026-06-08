@@ -48,23 +48,18 @@ PL-MTEB 的方法重点在基准构建和评测协议，而不是提出新 embed
 评测模型包括 30 个公开 dense embedding 模型，覆盖小模型、base、large 和 1B 以上模型；既有 multilingual E5、SBERT、Arctic-Embed、Qwen3-Embedding、BGE-Multilingual-Gemma2，也有 MMLW、Stella-PL、Silver Retriever 等波兰语相关模型。每个模型都尽量按开发者推荐配置运行，并记录它在多少比例任务上可视为 zero-shot。
 
 ### 关键设计
-1. **五类任务的统一协议**:
 
-	- 功能：让同一个 embedding 模型在分类、聚类、句对分类、检索和 STS 上用统一接口评测。
-	- 核心思路：分类用每类 8 个训练样本训练 logistic regression，重复 10 次取平均；聚类用 mini-batch k-means，`k` 等于标签数，重复 10 次；检索用 nDCG@10 作为主指标；STS 用 cosine Spearman；句对分类用 cosine average precision。
-	- 设计动机：embedding 模型常在某一任务上强、在另一任务上弱。按任务类型拆分结果，比只看单一平均分更能指导实际选型。
+**1. 五类任务的统一协议：把分类、聚类、句对、检索、STS 收进同一套评测接口。**
 
-2. **PLSC 与 Wikinews-PL 聚类补强**:
+embedding 模型常常在一类任务上很强、换一类就拉胯，只看一个总平均分会掩盖这种偏科。PL-MTEB 因此对五类任务各配一个轻量、可复现的评测器：分类任务对每个类别只取 8 个样本训练 logistic regression、重复 10 次取平均，看 embedding 是否线性可分；聚类用 mini-batch k-means、令簇数 $k$ 等于标签数、同样重复 10 次，用 v-measure 打分；检索以 nDCG@10 为主指标；STS 用 cosine 相似度下的 Spearman 相关；句对分类用 cosine 相似度阈值下的 average precision。五个协议共用同一份 embedding 输出，因此结果之间可以横向对照——读者既能看 30 任务总均值 Avg(30)，也能看按任务类型先平均再汇总的 Avg(by type)，从而按"我要做检索还是聚类"来选模型，而不是被单一榜单误导。
 
-	- 功能：补上波兰语 benchmark 中聚类任务不足的问题。
-	- 核心思路：PLSC 来自 Polish Library of Science 元数据，包含约 160K 条波兰语论文记录，按 8 个科学领域和 44 个学科形成层级标签；Wikinews-PL 来自波兰语 Wikinews，文章按政治、经济、灾害、文化娱乐、科学、法律犯罪、体育、社会与技术等类别标注。两者分别构造 S2S 和 P2P 聚类任务，每个任务限制到 2,048 条以符合 MMTEB 的效率假设。
-	- 设计动机：聚类更依赖 embedding 的全局结构，而不是监督分类器或检索训练数据。新增聚类任务能更好地区分通用语义表示能力。
+**2. PLSC 与 Wikinews-PL 聚类补强：用两套新数据填上波兰语最缺的聚类维度。**
 
-3. **数据质量与 zero-shot 标注**:
+已有波兰语评测大多围着分类、检索、STS 转，聚类任务几乎是空白，而聚类恰恰最依赖 embedding 的全局语义结构、最不吃监督分类器或检索训练数据的便宜，是检验"表示空间是否稳"的好探针。作者为此新建两套数据：PLSC 取自 Polish Library of Science 元数据，约 160K 条波兰语论文记录，按 8 个科学领域和 44 个学科形成层级标签；Wikinews-PL 取自波兰语 Wikinews，按政治、经济、灾害、文化娱乐、科学、法律犯罪、体育、社会、技术等类别标注。两套数据各自构造 S2S（标题级）和 P2P（段落级）聚类任务，每个任务截到 2,048 条以符合 MMTEB 的效率假设。补上聚类后，benchmark 才能把"监督任务刷得高但语义空间松散"的模型暴露出来。
 
-	- 功能：减少重复、泄漏和训练数据相似性对结果的干扰。
-	- 核心思路：清洗空文本和少于 3 个词的样本；检查标签和分数；删除标签冲突或分数差异超过 0.5 的近重复；在 split 层面去重和近重复；验证 test-train leakage。评测表还记录每个模型对 benchmark 的 zero-shot 比例，即模型训练数据中没有相似任务的比例。
-	- 设计动机：embedding benchmark 很容易被训练数据污染，尤其是检索任务和常用 STS 数据。zero-shot 列让读者知道高分是否可能受相似训练数据影响。
+**3. 数据质量与 zero-shot 标注：先清洗去泄漏，再把"训练数据相似性"摊到明面上。**
+
+embedding benchmark 极易被训练数据污染——检索任务和常用 STS 数据尤其容易在模型训练语料里见过，高分未必是真泛化。作者一方面做硬清洗：删掉空文本和少于 3 个词的样本、核对标签与分数、删除标签冲突或分数差超过 0.5 的近重复、在 split 层面去重并验证 test-train leakage；另一方面在评测表里给每个模型标一列 zero-shot 比例，即该模型训练数据中不含相似任务的任务占比。这一列让读者读榜单时多一道防线：同样一个高检索分，zero-shot 比例只有 80 的模型就要怀疑它是否吃了相似训练数据的红利，而不是直接当成泛化能力。
 
 ### 损失函数 / 训练策略
 PL-MTEB 本身不训练新模型，没有统一训练损失。评测时只训练轻量下游评估器：分类任务训练 logistic regression；聚类任务训练 k-means；其余任务直接使用 embedding 相似度或检索排序。所有模型按原始发布方式加载，评测代码基于 MTEB 框架，结果和数据公开在 GitHub 与 Hugging Face。

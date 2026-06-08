@@ -41,27 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HoloFair 端到端 pipeline 分三阶段：(1) **数据集构造**——合成 Gen/Eval/Train 三个 prompt 集 + 真实人像数据集 RBD（FairFace + UTKFace + 2k 野外肖像 + 8 个 T2I 模型合成的 ~20k 肖像），统一 FairFace 分类体系（性别 2 类、年龄 3 类、种族 5 类）；(2) **分类器训练**——基于 DINOv2-Base 训 SpaFreq 双流分类器；(3) **公平性评估**——用 SpaFreq 给 T2I 输出打标签，按 MGBI 评分。完成评估后，**Fair-GRPO** 用同一套分类器作为奖励模型，对目标 T2I（SD3.5M / SD1.5）的 LoRA 做 RL 微调。
+HoloFair 要解决的是"T2I 模型在中性 prompt 下就有人口学偏见、加上语义触发词后多样性还会瞬间坍塌"这件事，并把"测得出偏见"和"训得掉偏见"装进同一套基础设施。它先合成 Gen/Eval/Train 三个 prompt 集并配一份统一了 FairFace 分类体系（性别 2 类、年龄 3 类、种族 5 类）的真实人像数据集 RBD，在上面训出 SpaFreq 双流分类器；这个分类器既给 T2I 输出打属性标签供 MGBI 指标评分，又直接充当 Fair-GRPO 的奖励模型，对目标 T2I（SD3.5M / SD1.5）的 LoRA 做 RL 微调。换句话说，评估用的尺子和优化用的信号是同一把，天然保证去偏目标和评测口径一致。
 
 ### 关键设计
 
-1. **SpaFreq 双流属性分类器**:
+**1. SpaFreq 双流属性分类器：把"被语义绑架的纹理细节"重新捞回来**
 
-    - 功能：给 T2I 生成图像打人口学属性标签（性别/年龄/种族），是评估和 RL 奖励的共享基础设施。
-    - 核心思路：在 DINOv2-Base 骨干上加一个**空间流 + 频域流**双视图。频域流先把 RGB 转灰度，做 db4 离散小波分解得到低频 $cA$ 和两个高频分量 $cH$（水平）、$cV$（垂直），逐通道 min-max 归一化后沿通道拼成 $X_{\text{freq}}$；再把 $X_{\text{spatial}}$ 和 $X_{\text{freq}}$ 沿 batch 维拼起来一起过 DINO，分别拿 CLS embedding $\mathbf{f}_s, \mathbf{f}_w$。融合用一个可学权重 $w_{\text{fusion}}$（初始 0）经 sigmoid 得到 $\alpha = 1/(1+e^{-w_{\text{fusion}}})$，然后通道拼接 $\mathbf{z} = \text{Concat}(\alpha \mathbf{f}_s, (1-\alpha)\mathbf{f}_w)$，最后接小 MLP 头分类。
-    - 设计动机：空间视图给高层语义，但细纹理被语义"绑架"；频域视图作为非语义补充，强化纹理和边缘细节——种族分类尤其依赖肤色纹理。消融显示加频域让种族准确率从 85.57 提升到 91.89，再加自适应融合权重后整体（三属性同时对）从 79.67 提升到 89.67。
+去偏的前提是先有一个能可靠识别图像人口学属性的分类器，而种族这类属性高度依赖肤色、纹理这种细粒度信号——纯空间视图的高层语义特征往往把这些细节"绑架"丢失。SpaFreq 的做法是在 DINOv2-Base 骨干上并联一个频域流作为非语义补充：先把 RGB 转灰度，做 db4 离散小波分解得到低频 $cA$ 和水平/垂直两个高频分量 $cH$、$cV$，逐通道 min-max 归一化后沿通道拼成 $X_{\text{freq}}$；再把空间输入 $X_{\text{spatial}}$ 和 $X_{\text{freq}}$ 沿 batch 维拼起来一起过 DINO，分别拿到 CLS embedding $\mathbf{f}_s$ 和 $\mathbf{f}_w$。
 
-2. **MGBI 多属性几何均值公平指标**:
+两路特征不是简单等权相加，而是用一个初始为 0 的可学权重 $w_{\text{fusion}}$ 经 sigmoid 得到 $\alpha = 1/(1+e^{-w_{\text{fusion}}})$，再做加权通道拼接 $\mathbf{z} = \text{Concat}(\alpha \mathbf{f}_s, (1-\alpha)\mathbf{f}_w)$ 后接小 MLP 头分类，让模型自己学每个属性该多看语义还是多看纹理。这套设计的收益在消融里很直接：加上频域流让种族准确率从 85.57 提升到 91.89，再加上自适应融合权重后三属性同时正确的整体准确率从 79.67 提升到 89.67。
 
-    - 功能：用一个 $[0,1]$ 的标量同时刻画 T2I 的"默认多样性"和"语义鲁棒性"，跨属性数不一样的维度也可比。
-    - 核心思路：对任一分布 $p$ 算归一化熵 $h_a(p) = -\sum_c \hat{p}(c)\log\hat{p}(c) / \log|C_a|$。**Intrinsic Diversity** 对中性 prompt $s_0$ 在三个属性上取归一化熵的几何均值：$\text{ID} = (\prod_{a} \max(\epsilon, h_a(\hat{p}_a)))^{1/|\mathcal{A}|}$。**Context-Robust Conditional Diversity** 对 9 个 SCM 触发词各自算几何均值熵，然后取 10% 分位数作为近似最坏情况：$\text{CA}_q = \text{Quantile}_q(\{(\prod_a h_a(\hat{p}_a(\cdot|s)))^{1/|\mathcal{A}|}\}_{s\in\mathcal{S}})$。最终 $\text{MGBI} = \sqrt{\text{ID} \cdot \text{CA}_q}$。
-    - 设计动机：用熵而不是偏差比，因为熵显式惩罚 mode collapse；用几何均值而不是算术均值，是为了不让某一维高分掩盖另一维的失衡（"一个属性公平不能补偿另一个属性偏见"）；用 10% 分位数捕捉尾部行为，避免被高方差均值欺骗。SDXL 案例直接证明了这套设计的必要性——它默认分布看着最公平（ID=0.8186），但 CA₀.₁₀ 只有 0.2865，MGBI 立刻把它从"最公平"降级。
+**2. MGBI 多属性几何均值公平指标：不许一个维度的高分掩盖另一个维度的失衡**
 
-3. **Fair-GRPO 多属性 per-prompt 对数比例奖励**:
+传统评估只看默认 prompt 下的分布，会漏掉"加一个语义触发词就把分布拉偏"的隐式偏见，所以 MGBI 要用一个 $[0,1]$ 标量同时刻画"默认多样性"和"语义鲁棒性"，还要让属性数不同的维度可比。它的基础量是任一分布 $p$ 的归一化熵 $h_a(p) = -\sum_c \hat{p}(c)\log\hat{p}(c) / \log|C_a|$——用熵而非偏差比，是因为熵会显式惩罚 mode collapse。Intrinsic Diversity 对中性 prompt $s_0$ 在三个属性上取归一化熵的几何均值 $\text{ID} = (\prod_{a} \max(\epsilon, h_a(\hat{p}_a)))^{1/|\mathcal{A}|}$；Context-Robust Conditional Diversity 则对 9 个 SCM 触发词各算几何均值熵，取 10% 分位数近似最坏情况 $\text{CA}_q = \text{Quantile}_q(\{(\prod_a h_a(\hat{p}_a(\cdot|s)))^{1/|\mathcal{A}|}\}_{s\in\mathcal{S}})$，最终 $\text{MGBI} = \sqrt{\text{ID} \cdot \text{CA}_q}$。
 
-    - 功能：把"分布距离均匀的程度"翻译成 GRPO 可优化的稠密 RL 信号，对 LoRA 参数做 KL 正则微调。
-    - 核心思路：对每个 prompt $p$ 采样 $N$ 张图，SpaFreq 给每张图分类得到属性 $a$ 类别 $k$ 的组内计数 $N^a_k$。基础奖励用**自适应对数比例**：$r_{\text{base}}(k,a) = \log((N - N^a_k + \epsilon)/(N^a_k + \epsilon))$——多数类得负惩罚、少数类得正奖励。对多类属性做零中心化 $r_{\text{fair}}(k,a) = r_{\text{base}}(k,a) - \bar{r}_{\text{base}}(a)$，让完美均衡时奖励恰为 0。再裁剪到 $[-5, 5]$ 防止 $N^a_k = 0$ 时梯度爆炸。每张图最终奖励是三属性加权和 $R(I_p) = \sum_a w_a \cdot r_{\text{clip}}(F(I_p), a)$。扩散过程跨时间步重用 reward，per-prompt-per-timestep 维护历史均值方差表算优势 $A(I_p, t) = (R(I_p, t) - \mu_R^{p,t})/(\sigma_R^{p,t} + \epsilon)$。最后用 KL 正则化 GRPO 目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \beta \mathcal{L}_{\text{KL}}$（PPO-Clip + 像素空间预测噪声均值的 KL 近似，$\beta = 0.05$）。
-    - 设计动机：对数比例形式天然适配"目标均匀分布"且对 0 计数稳定；零中心化让信号在多类属性（如 5 类种族）上等效于二类属性，避免均衡点漂移；KL 正则化是防止 reward hacking 的关键——光最大化公平奖励容易让模型生成低质量但属性平衡的图，KL 约束把策略锁在参考模型附近从而保住 CLIP-Score 和 FID。
+这里几何均值是核心哲学：它不让某一维高分补偿另一维的失衡，即"一个属性公平不能抵消另一个属性的偏见"；10% 分位数则专门捕捉尾部最差行为，避免被高方差的均值欺骗。SDXL 恰好证明了这套设计的必要性——它默认分布看着最公平（ID=0.8186），但 CA₀.₁₀ 只有 0.2865，MGBI 立刻把它从"最公平"拉下来。
+
+**3. Fair-GRPO 多属性 per-prompt 对数比例奖励：把"分布有多均匀"翻译成可优化的 RL 信号**
+
+有了指标还要能优化它，难点是把"分布距离均匀的程度"变成 GRPO 能用的稠密奖励，且对极端计数稳定。对每个 prompt $p$ 采样 $N$ 张图，SpaFreq 分类后得到属性 $a$ 类别 $k$ 的组内计数 $N^a_k$，基础奖励用自适应对数比例 $r_{\text{base}}(k,a) = \log((N - N^a_k + \epsilon)/(N^a_k + \epsilon))$——多数类拿负惩罚、少数类拿正奖励，这个形式天然适配"目标是均匀分布"且对 0 计数不爆炸。对多类属性再做零中心化 $r_{\text{fair}}(k,a) = r_{\text{base}}(k,a) - \bar{r}_{\text{base}}(a)$，让完美均衡时奖励恰为 0、并把 5 类种族这种多类属性的信号尺度对齐到二类属性，避免均衡点漂移；之后裁剪到 $[-5, 5]$ 防止 $N^a_k = 0$ 时梯度爆炸。每张图最终奖励是三属性加权和 $R(I_p) = \sum_a w_a \cdot r_{\text{clip}}(F(I_p), a)$。
+
+扩散过程跨时间步重用该奖励，并按 per-prompt-per-timestep 维护历史均值方差表算优势 $A(I_p, t) = (R(I_p, t) - \mu_R^{p,t})/(\sigma_R^{p,t} + \epsilon)$。训练目标是 KL 正则化的 GRPO $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \beta \mathcal{L}_{\text{KL}}$（PPO-Clip 配像素空间预测噪声均值的 KL 近似，$\beta = 0.05$）。这里 KL 正则是防 reward hacking 的关键：只最大化公平奖励，模型容易生成属性平衡但低质量的图，KL 约束把策略锁在参考模型附近，从而保住 CLIP-Score 和 FID。
 
 ### 损失函数 / 训练策略
 LoRA rank=32 挂在 transformer 注意力 q/k/v + 输出投影上，AdamW lr=5e-5，$\beta_{\text{KL}}=0.05$，6×RTX 4090 训练。Train 集 10k 中性 prompt 严格与 Eval 集分离防止泄露。Per-prompt-per-timestep 历史奖励统计 + EMA + 混合精度 + 梯度裁剪共同保证训练稳定。

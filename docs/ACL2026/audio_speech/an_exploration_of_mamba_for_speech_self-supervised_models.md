@@ -43,31 +43,25 @@ tags:
 
 ### 整体框架
 
-用Mamba block替换HuBERT的Transformer block，保留CNN特征编码器和位置编码器。训练流程遵循HuBERT的两轮迭代：第一轮以MFCC为目标训练250k步，第二轮用第一轮第6层输出作为目标训练400k步。在LibriSpeech 960h上预训练。
+本文不发明新架构，而是做一项受控替换实验：把 HuBERT 中的 Transformer block 原样换成 Mamba block，CNN 特征编码器与位置编码器保持不变，训练流程也完全沿用 HuBERT 的两轮迭代（第一轮以 MFCC 为目标训练 250k 步，第二轮以第一轮第 6 层输出为伪标签训练 400k 步），在 LibriSpeech 960h 上预训练。这样唯一变量就是 backbone，输入语音 → Mamba 编码 → SSL 表示 → 下游 ASR/SUPERB 探针的全链路里，任何性能差异都可干净地归因到 Mamba 与 Transformer 的本质区别上。
 
 ### 关键设计
 
-1. **多种Mamba变体的系统对比**:
+**1. 多种 Mamba 变体的系统对比：厘清因果性到底是 Mamba 的优势还是包袱。**
 
-    - 功能：全面评估不同Mamba配置的语音表示能力
-    - 核心思路：测试因果设置（Mamba, Mamba+MLP）和双向设置（ExtBiMamba, InnBiMamba），并与对应的Transformer变体公平对比
-    - 设计动机：Mamba的因果性质可能在某些任务中是优势（流式ASR），在另一些中可能是劣势（需要全局信息的任务）
+Mamba 天生因果，这一性质在不同任务里方向相反——流式 ASR 只能看过去信息，因果是优势；而需要全局上下文的任务里，单向又可能是劣势。为把这条边界测清楚，本文同时评估因果设置（Mamba、Mamba+MLP）和双向设置（ExtBiMamba、InnBiMamba），并逐一与参数量相当的 Transformer 变体公平对照。这种成对设计让"因果 vs 双向"和"Mamba vs Transformer"两个维度可以解耦分析，而不是只给一个笼统的好坏结论。
 
-2. **长上下文和流式ASR评估**:
+**2. 长上下文和流式 ASR 评估：把 Mamba 线性复杂度的理论优势落到可测场景。**
 
-    - 功能：验证Mamba的线性复杂度在实际场景中的价值
-    - 核心思路：在不做句子分割的情况下处理整段语音进行长上下文ASR；在仅使用过去信息的约束下进行流式ASR。量化MACs/秒和RTF随序列长度的变化
-    - 设计动机：这是Mamba相对Transformer最大的理论优势所在——Transformer在80秒以上即OOM，Mamba可处理5分钟以上
+Mamba 相对 Transformer 最大的卖点是 $O(n)$ 而非 $O(n^2)$，但这个优势只有在长序列下才显形。为此设计两个针对性场景：长上下文 ASR 直接处理整段未切分语音，流式 ASR 则约束模型只能用过去信息逐帧解码；同时量化 MACs/秒与 RTF 随序列长度的变化曲线。结果正是在这里拉开差距——Transformer 在 80 秒以上即 OOM 无法运行，而 Mamba 计算量近乎恒定，可处理 5 分钟以上的语音。
 
-3. **表示质量分析**:
+**3. 表示质量分析：不止问"好不好"，还要拆开看"好在哪、为什么好"。**
 
-    - 功能：深入理解Mamba学到的语音表示的特性
-    - 核心思路：使用phone purity评估量化表示的语音质量，CCA分析音素和说话人特征的编码方式
-    - 设计动机：不仅要知道"好不好"，还要理解"为什么好"以及"好在哪里"
+仅靠下游 WER 无法解释 Mamba 表示的内在特性，本文进一步做表示层面的剖析：用 phone purity 量化表示的语音学纯度，用 CCA（典型相关分析）刻画音素与说话人特征各自被编码的方式。借此发现 Mamba 的量化表示 phone purity 更高、对说话人信息编码更清晰，这对以 SSL units 为输入的 spoken language models 有直接价值，把单纯的性能数字升级成了可解释的表示学特性。
 
 ### 损失函数 / 训练策略
 
-遵循HuBERT标准训练：masked prediction loss。使用Adam优化器，线性warm-up（前8%）后线性decay。因计算资源限制，在单块V100上训练，batch size为原始的1/4。
+遵循 HuBERT 标准训练目标：masked prediction loss。使用 Adam 优化器，学习率先线性 warm-up（前 8%）再线性 decay。受计算资源限制，仅在单块 V100 上训练，batch size 取原始配置的 1/4。
 
 ## 实验关键数据
 

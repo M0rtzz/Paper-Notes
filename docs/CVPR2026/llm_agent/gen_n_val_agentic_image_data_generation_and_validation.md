@@ -36,27 +36,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段管线：(1) 开放词汇 Prompt 生成——LLM 智能体经 TextGrad 优化系统 prompt，生成详细的 LD prompt；(2) 前景图像生成——LD 根据优化 prompt 生成带 alpha 通道的透明单物体图像；(3) 图像过滤——VLLM 验证智能体检查生成图像质量，过滤不合格样本。最后将验证通过的前景实例随机粘贴到背景图像上。
+Gen-n-Val 要解决的是"合成数据虽多但一半是废品"的问题：直接拿标准 prompt 喂 Layer Diffusion，约 44% 的图像因为画面里多了无关物体、单调重复而不可用。它的思路是把"怎么写出好 prompt"和"什么样的图能用"这两件本来靠人工试错的事，分别交给两个 LLM 智能体自动完成。整条管线分三步：先由一个 LLM Prompt 智能体写出详细具体的 LD prompt，再由 Layer Diffusion 据此生成带 alpha 通道的透明单物体图像，最后由一个 VLLM 验证智能体逐张检查、淘汰不合格样本；通过验证的前景实例被随机粘贴到背景图上，得到可直接训练检测/分割模型的合成数据。两个智能体的系统 prompt 都不是手写的，而是用 TextGrad 自动迭代优化出来的。
 
 ### 关键设计
 
-1. **TextGrad 优化的 LD Prompt 智能体**:
-    - 功能：生成能引导 Layer Diffusion 产出高质量单物体图像的详细 prompt
-    - 核心思路：三个 LLM 协作：LD Prompt 智能体 $A_{p_{LD}}$ 从系统 prompt $p_{\text{sys}}$ 生成 LD prompt $p_{LD}$；Prompt 评估器 $E_{\text{prompt}}$ 评估生成 prompt 的质量并输出文本损失 $L$；通过 TextGrad 的文本梯度下降优化 $p_{\text{sys}}^*$。Prompt 验证器 $V_{\text{prompt}}$ 比较优化前后的 prompt 质量决定是否采纳。迭代直至验证器接受或达到最大迭代次数。优化后的 prompt 包含物体类别、动作、环境、风格、颜色、纹理、光照、视角等详细属性。
-    - 设计动机：标准 prompt（"a photo of a single <object>"）太模糊，导致多余物体和低多样性。TextGrad 自动发现什么样的 prompt 描述能让 LD 生成最好的单物体图像
+**1. TextGrad 优化的 LD Prompt 智能体：让 LLM 自己学会写"能生成单物体图"的 prompt**
 
-2. **Layer Diffusion 前景生成**:
-    - 功能：生成带精确 alpha 掩码的透明前景物体图像
-    - 核心思路：Layer Diffusion 将 alpha 透明通道编码到 Stable Diffusion 的潜在分布中，直接输出 RGBA 图像。alpha 通道天然提供精确的分割掩码，无需 SAM 等额外分割模型。生成后对 alpha 通道应用中值滤波去除孤立噪声像素、平滑掩码边缘。
-    - 设计动机：使用交叉注意力图（MosaicFusion）或额外分割模型（X-Paste）获取掩码质量不稳定且耗时。alpha 通道是"免费"的精确掩码
+标准 prompt 如 `"a photo of a single <object>"` 太模糊，Layer Diffusion 看到这种描述往往画出多余物体、构图也高度雷同，是 44% 无效率的主因。作者没有人工去猜"加哪些词描述更好"，而是搭了一个三角色的优化回路让 LLM 自己迭代：Prompt 智能体 $A_{p_{LD}}$ 从当前系统 prompt $p_{\text{sys}}$ 生成具体的 LD prompt $p_{LD}$，Prompt 评估器 $E_{\text{prompt}}$ 给这条 prompt 打分并产出一段**文本形式的损失** $L$（指出哪里不够好），TextGrad 再把这段文本反馈当作"梯度"反传去更新系统 prompt，得到 $p_{\text{sys}}^*$。一个 Prompt 验证器 $V_{\text{prompt}}$ 比较优化前后两版 prompt 的质量、决定是否采纳新版，如此循环直到验证器满意或到达最大迭代次数。优化后的系统 prompt 会引导 $A_{p_{LD}}$ 在每条 prompt 里写全物体类别、动作、环境、风格、颜色、纹理、光照、视角等属性——正是这些细节同时压住了"多余物体"和"低多样性"两个毛病。
 
-3. **VLLM 数据验证智能体**:
-    - 功能：自动过滤不合格的合成图像
-    - 核心思路：VLLM（Meta-LLaMA-3.2-11B-Vision-Instruct）作为验证智能体，其系统 prompt 同样经 TextGrad 优化。验证标准编码到系统 prompt 中：(1) 单物体——图像只含一个目标类别物体；(2) 单视角——从单一角度展示；(3) 完整性——物体完整可见；(4) 纯净背景——背景空白无干扰。验证不通过的图像被丢弃。
-    - 设计动机：即使优化 prompt 后仍有约 7% 无效样本，VLLM 验证作为最后一道防线确保数据质量
+**2. Layer Diffusion 前景生成：用 alpha 通道拿到"免费"的精确掩码**
+
+合成数据要训实例分割，每个物体都得配一张精确掩码。MosaicFusion 靠交叉注意力图反推掩码、X-Paste 再挂一个额外分割模型，前者质量不稳、后者 GPU 开销大（X-Paste 的 GPU 时间是 MosaicFusion 的 4.3 倍）。Gen-n-Val 改用 Layer Diffusion——它把 alpha 透明通道直接编码进 Stable Diffusion 的潜在分布里，生成时一步输出 RGBA 图像，那条 alpha 通道本身就是一张和物体像素级对齐的分割掩码，不需要任何额外分割模型。生成后只对 alpha 通道做一次中值滤波，去掉孤立的噪声像素、把掩码边缘抹平。掩码"免费"且天然对齐，这是整套方法掩码质量更高的根因。
+
+**3. VLLM 数据验证智能体：给漏网的废品兜最后一道底**
+
+prompt 优化把无效率压到约 7% 之后，仍有少量图像不合格（比如偶尔多出一个物体、物体被截断），靠人工规则去筛既慢又漏。作者让一个 VLLM（Meta-LLaMA-3.2-11B-Vision-Instruct）当验证智能体，它的系统 prompt 同样由 TextGrad 优化得到，把四条验收标准写进去逐张判图：单物体（只含一个目标类别物体）、单视角（从单一角度展示）、完整性（物体完整可见）、纯净背景（背景空白无干扰）。任何一条不满足就丢弃。这一步把无效率从约 7% 进一步压到 <1%，相当于在自动生成之后再加一个自动质检员。
+
+### 一个完整示例：以一个稀有类（比如 `pickaxe` 鹤嘴锄）走一遍
+
+假设要给 LVIS 里某个稀有类补数据。第一步，Prompt 智能体拿到的系统 prompt 已被 TextGrad 调好，于是它不会只写 `"a photo of a pickaxe"`，而是生成一条带细节的 LD prompt——指明单把鹤嘴锄、木柄金属头、侧 45° 视角、自然光、纯色背景等；评估器若觉得描述还不够区分性，会写一段文字反馈，系统 prompt 据此再优化一轮。第二步，Layer Diffusion 按这条 prompt 输出一张 RGBA 图，alpha 通道里就是这把锄子的精确轮廓，中值滤波抹平边缘毛刺。第三步，VLLM 验证智能体看这张图：如果画面干净、只有一把完整的锄子，通过；如果背景里混进了第二把工具或锄头被裁掉，直接丢弃。通过的前景被抠出来贴到随机背景上，连同 alpha 掩码一起进训练集。把这个流程跑满整个稀有类列表，无效样本占比从标准 prompt 的约 44% → prompt 优化后约 7% → VLLM 验证后 <1%，最终注入的有效实例可从 1,874 一路扩到 727,393。
 
 ### 损失函数 / 训练策略
-TextGrad 优化：使用文本梯度（LLM 生成的反馈文本）替代数值梯度来优化系统 prompt。LLM 使用 Meta-LLaMA-3.1-8B-Instruct，VLLM 使用 Meta-LLaMA-3.2-11B-Vision-Instruct。
+这里的"损失"不是数值而是文本：TextGrad 用 LLM 生成的反馈文本充当梯度来优化两个智能体的系统 prompt，没有任何反向传播的数值梯度参与。Prompt 智能体的 LLM 用 Meta-LLaMA-3.1-8B-Instruct，验证智能体的 VLLM 用 Meta-LLaMA-3.2-11B-Vision-Instruct。
 
 ## 实验关键数据
 

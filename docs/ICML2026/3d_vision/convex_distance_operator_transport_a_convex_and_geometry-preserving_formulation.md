@@ -42,37 +42,37 @@ tags:
 
 ### 整体框架
 
-输入是两个 attributed compact mm 空间 $\mathfrak{X} = (\mathcal{X}, d_\mathcal{X}, \mathbb{P}_X, f_\mathcal{X})$、$\mathfrak{Y} = (\mathcal{Y}, d_\mathcal{Y}, \mathbb{P}_Y, f_\mathcal{Y})$，输出是一个传输方案 $\pi \in \Pi(\mathbb{P}_X, \mathbb{P}_Y)$（必要时再投影到一个置换矩阵 $\hat P$）。整条 pipeline：
+CDOT 要解决的核心问题是：怎样在不破坏凸性的前提下，衡量两个异构度量空间的结构错位。FGW 的做法是逐对地比较距离差 $|d_\mathcal{X}-d_\mathcal{Y}|^2$，几何含义清楚却把非凸的 $\pi\otimes\pi$ 焊死在目标里；CDOT 换了一个视角——先把"距离"和"耦合"都升格成算子，再让"结构对齐"变成两个算子是否交换的问题。
 
-1. **算子化几何**：把两个空间的距离写成两侧的距离算子 $D_{\mathbb{P}_X}$、$D_{\mathbb{P}_Y}$，把待求耦合写成条件期望算子 $T_\pi$。
-2. **凸 CDOT 目标**：$\mathcal{L}_\alpha(\pi) = (1-\alpha)\,\mathbb{E}_\pi[c_f(X,Y)] + \tfrac{\alpha}{2}\|D_{\mathbb{P}_X} T_\pi - T_\pi D_{\mathbb{P}_Y}\|_{\mathrm{HS}}^2$，其中 $c_f(x,y)=\|f_\mathcal{X}(x)-f_\mathcal{Y}(y)\|_2^2$。
-3. **离散化**：$D_{\hat{\mathbb{P}}_X}$ 用归一化距离矩阵 $d_\mathcal{X}(X_i,X_j)/n_X$，$T_\pi$ 用 $n\pi$，结构项变成 $\|D_{\hat{\mathbb{P}}_X}\pi - \pi D_{\hat{\mathbb{P}}_Y}\|_F^2$，整体是传输多面体上的**凸 QP**。
-4. **求解**：Frank–Wolfe（FW）算法，projection-free，每步解一个线性最小化（标准 LP，可用 OT solver）。论文还给出"lazy gradient FW"利用二次结构把梯度增量化更新，把常数因子压下来。
-5. **可选硬匹配**：用 Hungarian 算法解 LAP $\hat P = \arg\max_{P\in\mathcal{P}_n} \mathrm{Tr}(P^\top \hat\pi)$，把软耦合投影到置换。
+具体来说，输入是两个 attributed compact mm 空间 $\mathfrak{X} = (\mathcal{X}, d_\mathcal{X}, \mathbb{P}_X, f_\mathcal{X})$、$\mathfrak{Y} = (\mathcal{Y}, d_\mathcal{Y}, \mathbb{P}_Y, f_\mathcal{Y})$，要输出一个传输方案 $\pi \in \Pi(\mathbb{P}_X, \mathbb{P}_Y)$。第一步把两侧的距离写成距离算子 $D_{\mathbb{P}_X}$、$D_{\mathbb{P}_Y}$，把待求耦合写成条件期望算子 $T_\pi$；于是 CDOT 目标可以写成特征对齐项加上一个"算子交换误差"的结构项 $\mathcal{L}_\alpha(\pi) = (1-\alpha)\,\mathbb{E}_\pi[c_f(X,Y)] + \tfrac{\alpha}{2}\|D_{\mathbb{P}_X} T_\pi - T_\pi D_{\mathbb{P}_Y}\|_{\mathrm{HS}}^2$，其中 $c_f(x,y)=\|f_\mathcal{X}(x)-f_\mathcal{Y}(y)\|_2^2$。落到有限样本时，距离算子用归一化距离矩阵 $d_\mathcal{X}(X_i,X_j)/n_X$ 离散化、耦合用 $n\pi$，结构项变成 $\|D_{\hat{\mathbb{P}}_X}\pi - \pi D_{\hat{\mathbb{P}}_Y}\|_F^2$，整个问题就是传输多面体上的一个凸二次规划（QP）。求解时用 projection-free 的 Frank–Wolfe，每步只解一个线性最小化（标准 LP，可直接调 OT solver）；若下游需要硬匹配，再用 Hungarian 算法把软耦合投影到置换矩阵 $\hat P = \arg\max_{P\in\mathcal{P}_n} \mathrm{Tr}(P^\top \hat\pi)$。
 
 ### 关键设计
 
-1. **算子层结构正则项 $\mathcal{R}(\pi) = \|D_{\mathbb{P}_X} T_\pi - T_\pi D_{\mathbb{P}_Y}\|_{\mathrm{HS}}^2$**：
+**1. 算子层结构正则项：用对 $\pi$ 凸的"算子交换误差"替代 FGW 非凸的逐对距离差**
 
-    - 功能：用一个对 $\pi$ 凸的算子交换误差，替代 FGW 中对 $\pi$ 双线性、非凸的成对距离差。
-    - 核心思路：通过积分变换可证 $\mathcal{R}(\pi) = \iint \Gamma_\pi(x,y)^2\,\mathbb{P}_X(dx)\mathbb{P}_Y(dy)$，其中 $\Gamma_\pi(x,y) = \mathbb{E}_\pi[d_\mathcal{X}(x,X)|Y=y] - \mathbb{E}_\pi[d_\mathcal{Y}(y,Y)|X=x]$。也就是说，CDOT 比较的是"$x$ 在 $\mathcal{X}$ 中的条件平均距离剖面"与"$y$ 在 $\mathcal{Y}$ 中的条件平均距离剖面"之差，而非逐对距离。由 HS 范数平方对 $T_\pi$（再对 $\pi$）的凸性，加上特征项的线性，整体 $\mathcal{L}_\alpha$ 严格凸（Theorem 3.4）。同时这一目标的平方根 $d_{\mathrm{CT}}^{(\alpha)}$ 在 attributed compact mm 空间上构成伪度量（Theorem 3.5）。
-    - 设计动机：GW 的"逐对距离" $|d-d'|^2$ 形式自带 $\pi\otimes\pi$，是非凸性的根源；把"逐对"换成"聚合期望"，既保留了几何含义（节点与其周围结构的关系），又把目标从双线性降到了一阶线性 + 二次半正定，是凸化的关键。它也天然对节点基数差异鲁棒：相似几何结构、不同节点数的两个空间在 CDOT 下可被识别为等价。
+FGW 结构项里 $\pi\otimes\pi$ 的双线性形式是非凸性的根源，CDOT 把它换成正则项 $\mathcal{R}(\pi) = \|D_{\mathbb{P}_X} T_\pi - T_\pi D_{\mathbb{P}_Y}\|_{\mathrm{HS}}^2$。关键观察是：通过积分变换可证 $\mathcal{R}(\pi) = \iint \Gamma_\pi(x,y)^2\,\mathbb{P}_X(dx)\mathbb{P}_Y(dy)$，其中 $\Gamma_\pi(x,y) = \mathbb{E}_\pi[d_\mathcal{X}(x,X)\mid Y=y] - \mathbb{E}_\pi[d_\mathcal{Y}(y,Y)\mid X=x]$。换句话说，CDOT 比较的不是逐对距离，而是"$x$ 在 $\mathcal{X}$ 中的条件平均距离剖面"与"$y$ 在 $\mathcal{Y}$ 中的条件平均距离剖面"之差——把"逐对距离"聚合成了"期望距离"。
 
-2. **Dispersion gap 分解：$\mathcal{R}_{\mathrm{GW},2}(\pi) - \mathcal{R}(\pi) = \mathcal{V}(\pi)$**：
+这一改写之所以有效，是因为 $T_\pi$ 对 $\pi$ 是线性算子，HS 范数的平方对 $T_\pi$（进而对 $\pi$）就是二次半正定，叠加线性的特征项后整体 $\mathcal{L}_\alpha$ 严格凸（Theorem 3.4）；与此同时它仍保留几何含义——刻画的是节点与其周围结构的关系，因此目标的平方根 $d_{\mathrm{CT}}^{(\alpha)}$ 在 attributed compact mm 空间上仍构成合法伪度量（Theorem 3.5）。聚合期望相比逐对距离还天然对节点基数差异鲁棒：相似几何、不同节点数的两个空间在 CDOT 下可被识别为等价（图 1）。
 
-    - 功能：在同一坐标系下精确量化"CDOT 相对 GW 丢掉了什么"，从理论上解释 GW 为什么非凸。
-    - 核心思路：定义 dispersion $\mathcal{V}(\pi) = \iint (\mathrm{Var}_\pi[d_\mathcal{X}(x,X)|Y=y] + \mathrm{Var}_\pi[d_\mathcal{Y}(y,Y)|X=x])\,\mathbb{P}_X(dx)\mathbb{P}_Y(dy)$，捕捉耦合诱导的"距离的条件方差"。Theorem 3.7 严格证明 GW 结构代价 = CDOT 结构代价 + dispersion，等价于把 GW 拆成"凸结构项 + 凹 dispersion 惩罚"。
-    - 设计动机：这一拆解给非凸性一个非常干净的几何解释——GW 的等高线在 $(\mathcal{R},\mathcal{V})$ 平面是 $x+y=c$ 的斜线，会和非凸的"飞镖型"可行域相切于局部最优；CDOT 的等高线是 $x=c$ 的竖线，沿水平方向直奔全局最优（图 2）。这也解释了为什么 GW 偏好近乎确定性的耦合（dispersion 拉小），而 CDOT 倾向更扩散的软耦合（需要 LAP 后处理拿硬匹配）。
+**2. Dispersion gap 分解：精确量化 CDOT 相对 GW 丢掉了什么**
 
-3. **Frank–Wolfe + glued measure 风险分解**：
+为了解释 GW 为什么非凸、CDOT 又凸在哪里，本文在同一坐标系下做了一个干净的拆解。定义 dispersion $\mathcal{V}(\pi) = \iint \big(\mathrm{Var}_\pi[d_\mathcal{X}(x,X)\mid Y=y] + \mathrm{Var}_\pi[d_\mathcal{Y}(y,Y)\mid X=x]\big)\,\mathbb{P}_X(dx)\mathbb{P}_Y(dy)$，它捕捉的是耦合诱导出的"距离的条件方差"。Theorem 3.7 严格证明 GW 的结构代价正好等于 CDOT 结构代价加上这个 dispersion：
 
-    - 功能：把"算法在有限样本上输出的耦合 $\hat\pi$"和"总体最优 $\pi^*$"之间的差距分解成可控的两项。
-    - 核心思路：(i) 因为离散 CDOT 是传输多面体上的凸 QP，标准 FW（步长 $\gamma_t=2/(t+2)$）以 $O(1/T)$ 全局收敛；(ii) 通过 glued measure $\Phi_n(\hat\pi)(dx,dy) = \int Q_X(dx|\hat x) Q_Y(dy|\hat y) \hat\pi(d\hat x, d\hat y)$（$Q_X,Q_Y$ 分别是 $\mathbb{P}_X$↔$\hat{\mathbb{P}}_X$、$\mathbb{P}_Y$↔$\hat{\mathbb{P}}_Y$ 的最优耦合）把离散解抬升回总体空间，Theorem 5.6 给出 $|\mathcal{L}_\alpha(\Phi_n(\hat\pi)) - \min \mathcal{L}_\alpha| \le \tfrac{32\alpha n_{\min}}{T+3} + C\,(W_1^{d_\mathcal{X}}(\mathbb{P}_X,\hat{\mathbb{P}}_X) + W_1^{d_\mathcal{Y}}(\mathbb{P}_Y,\hat{\mathbb{P}}_Y))$。Corollary 5.7 在 $n_{\min}/T_n\to 0$ 下得到几乎必然的风险一致性。
-    - 设计动机：以往 GW 类方法即便能证经验风险和总体风险接近，也无法保证"算法返回的 $\hat\pi$ 本身"逼近总体最优；CDOT 的凸性让"全局收敛 + 经验↔总体连接"两步分别可控，从而首次在 mm 空间上拿到针对算法输出的有限样本界。
+$$\mathcal{R}_{\mathrm{GW},2}(\pi) - \mathcal{R}(\pi) = \mathcal{V}(\pi).$$
+
+也就是说，GW 等于"凸结构项 + 凹 dispersion 惩罚"。这给非凸性一个几何解释：在 $(\mathcal{R},\mathcal{V})$ 平面上，GW 的等高线是斜线 $x+y=c$，会和非凸的"飞镖型"可行域相切于局部最优；CDOT 的等高线则是竖线 $x=c$，沿水平方向直奔全局最优（图 2）。这同时解释了一个经验现象——GW 偏好近乎确定性的耦合（为了压小 dispersion），而 CDOT 不惩罚 dispersion，倾向于更扩散的软耦合，所以需要后接 LAP 才能拿到硬匹配。
+
+**3. Frank–Wolfe + glued measure：把算法实际输出的耦合接到总体最优上**
+
+以往 GW 类方法即便能证经验风险逼近总体风险，也无法保证"算法返回的那个 $\hat\pi$ 本身"逼近总体最优；CDOT 的凸性让这件事可以分两步控制。第一步，离散 CDOT 是凸 QP，标准 FW（步长 $\gamma_t=2/(t+2)$）以 $O(1/T)$ 全局收敛，把优化误差压住。第二步，用 glued measure $\Phi_n(\hat\pi)(dx,dy) = \int Q_X(dx\mid \hat x) Q_Y(dy\mid \hat y) \hat\pi(d\hat x, d\hat y)$（$Q_X,Q_Y$ 分别是 $\mathbb{P}_X\leftrightarrow\hat{\mathbb{P}}_X$、$\mathbb{P}_Y\leftrightarrow\hat{\mathbb{P}}_Y$ 的最优耦合）把离散解抬升回总体空间，从而把统计误差用 $W_1$ 控住。两步合起来，Theorem 5.6 给出针对算法输出的有限样本界
+
+$$\big|\mathcal{L}_\alpha(\Phi_n(\hat\pi)) - \min \mathcal{L}_\alpha\big| \le \tfrac{32\alpha n_{\min}}{T+3} + C\,\big(W_1^{d_\mathcal{X}}(\mathbb{P}_X,\hat{\mathbb{P}}_X) + W_1^{d_\mathcal{Y}}(\mathbb{P}_Y,\hat{\mathbb{P}}_Y)\big),$$
+
+其中第一项是优化误差、第二项是统计误差。Corollary 5.7 进一步在 $n_{\min}/T_n\to 0$ 下给出几乎必然的风险一致性——这是 GW 家族此前在 mm 空间上拿不到的针对算法输出的保证。
 
 ### 损失函数 / 训练策略
 
-经验目标 $\hat{\mathcal{L}}_\alpha(\pi) = (1-\alpha)\langle C_f, \pi\rangle_F + \tfrac{\alpha}{2}\, n_X n_Y \|D_{\hat{\mathbb{P}}_X}\pi - \pi D_{\hat{\mathbb{P}}_Y}\|_F^2$，融合权重 $\alpha=0.5$ 是合成/真实数据上的默认值。迭代数 $T \in \{50,100,200\}$ 在实验里足够把优化误差压到可忽略。每步复杂度 $\mathcal{O}(n^3)$（与 FGW 同阶），lazy gradient 变体把常数压低；总体上比 $\mathcal{O}(n^6)$ 的 GW-SDP 低三个量级。需要硬匹配的应用再叠 Hungarian。
+经验目标为 $\hat{\mathcal{L}}_\alpha(\pi) = (1-\alpha)\langle C_f, \pi\rangle_F + \tfrac{\alpha}{2}\, n_X n_Y \|D_{\hat{\mathbb{P}}_X}\pi - \pi D_{\hat{\mathbb{P}}_Y}\|_F^2$，融合权重默认取 $\alpha=0.5$（合成与真实数据通用），迭代数 $T \in \{50,100,200\}$ 已足够把优化误差压到可忽略。每步复杂度 $\mathcal{O}(n^3)$（与 FGW 同阶），论文给出的 lazy gradient FW 变体利用二次结构把梯度做增量化更新、压低常数因子；相比 $\mathcal{O}(n^6)$ 的 GW-SDP 整整低三个量级。需要硬匹配的应用在收敛后再叠一层 Hungarian。
 
 ## 实验关键数据
 

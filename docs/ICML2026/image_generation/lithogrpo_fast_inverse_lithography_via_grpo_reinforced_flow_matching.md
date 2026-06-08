@@ -41,39 +41,26 @@ LithoGRPO 把光刻掩模生成建模为以目标版图为条件的 rectified fl
 ## 方法详解
 
 ### 整体框架
-LithoGRPO 是一个三阶段训练 + 单步 rectified flow 推理的 ILT 生成框架：
+LithoGRPO 把"给定目标版图、生成最优掩模"这个像素级反问题，转化成一个以目标版图 $\mathbf{T}$ 为条件的 rectified flow 生成任务：一个 87M 参数的 U-Net 参数化时间相关速度场 $\mathbf{v}_\theta(\mathbf{x}_t, t; \mathbf{T})$（噪声 $\mathbf{x}_t$ 与 $\mathbf{T}$ 沿通道拼接），推理时从高斯噪声出发用 Euler 法走一步 $\mathbf{x}_1 = \mathbf{x}_0 + \mathbf{v}_\theta(\mathbf{x}_0, 0; \mathbf{T})$ 即出掩模，512×512 整张图 0.1 s。真正的难点不在生成而在指标——四个光刻指标里 L2/PVB 可微、EPE/Shot 不可微且彼此打架，所以训练被拆成 Pretrain（学版图→掩模的条件分布）、SFT（接入可微指标把 L2/PVB 推到饱和）、RLFT（用 GRPO 让不可微的 EPE/Shot 也能反向影响参数）三阶段，逐步把不同性质的指标喂进同一个流模型。
 
-- **输入**：目标版图 $\mathbf{T}$（与噪声 $\mathbf{x}_t$ 沿通道拼接作为条件）。
-- **模型**：一个 87M 参数的 U-Net，参数化时间相关速度场 $\mathbf{v}_\theta(\mathbf{x}_t, t; \mathbf{T})$。
-- **训练三阶段**：(1) **Pretraining** —— 用数据集里的 (T, mask) 对训 rectified flow MSE 损失，学会 mask-target 基本对齐；(2) **SFT** —— 在 flow 损失外加可微指标 $\mathrm{L2}(\mathbf{x}_1, \mathbf{T}) + \mathrm{PVB}(\mathbf{x}_1)$，把流模型推到可微指标饱和（代价是 Shot 飙升）；(3) **RLFT** —— GRPO 微调，用全部四个指标的归一化负和作为 reward，反过来把 Shot 拉下来又不掉 L2/PVB/EPE。
-- **推理**：从高斯噪声出发，用 Euler 法走一步 $\mathbf{x}_1 = \mathbf{x}_0 + \mathbf{v}_\theta(\mathbf{x}_0, 0; \mathbf{T})$，输出掩模。整张 512×512 掩模 0.1 s 出图。
-
-光刻物理学侧，掩模 $\mathbf{x}$ 经 Hopkins 衍射模型 $\mathbf{I} = \sum_k \mu_k |h_k \otimes \mathbf{x}|^2$ 得到空中像，再经 sigmoid 软化的阈值 $\mathbf{Z} = 1/(1+\exp[-\alpha(\mathbf{I}-I_\mathrm{th})])$ 得到光刻胶图像，整条 $g(\mathbf{x}) = f(h(\mathbf{x}))$ 对 $\mathbf{x}$ 可微，作为 L2 与 PVB 的反传通道。
+物理建模侧，掩模 $\mathbf{x}$ 经 Hopkins 衍射模型 $\mathbf{I} = \sum_k \mu_k |h_k \otimes \mathbf{x}|^2$ 得到空中像，再经 sigmoid 软化阈值 $\mathbf{Z} = 1/(1+\exp[-\alpha(\mathbf{I}-I_\mathrm{th})])$ 得到光刻胶图像；整条 $g(\mathbf{x}) = f(h(\mathbf{x}))$ 对 $\mathbf{x}$ 可微，正是 L2 与 PVB 能走梯度的反传通道。
 
 ### 关键设计
 
-1. **三阶段 Pretrain → SFT → RLFT 的流匹配训练**：
+**1. 三阶段 Pretrain → SFT → RLFT 流匹配训练：把生成与冲突指标逐层解耦**
 
-    - 功能：把生成与指标优化解耦，分阶段把不同性质的指标喂进去，避免一上来就被 Shot 这种离散目标卡死。
-    - 核心思路：Pretrain 用标准 rectified flow loss $\mathcal{L}_\mathrm{flow} = \mathbb{E}[\|\mathbf{v}_\theta(\mathbf{x}_t, t) - (\mathbf{x}_1 - \mathbf{x}_0)\|^2]$ 学版图→掩模的条件分布；SFT 阶段在任意中间时刻 $t$ 把当前速度投影到终点 $\mathbf{x}_1 = \mathbf{x}_t + (1-t)\mathbf{v}_\theta$，在 $\mathbf{x}_1$ 上计算可微指标，损失为 $\mathcal{L}_\mathrm{sft} = \lambda_\mathrm{flow}\mathcal{L}_\mathrm{flow} + \lambda_{\mathrm{L2}}\mathrm{L2} + \lambda_\mathrm{PVB}\mathrm{PVB}$；RLFT 阶段冻结这套初始化后，用 GRPO 让 EPE/Shot 也能反向影响参数。
-    - 设计动机：作者画的训练动力学图（Fig. 4）显示 L2/EPE 在 Pretrain+SFT 单调下降但 Shot 单调上升——这正是"追 fidelity 把掩模做碎"的物理 trade-off。把三个阶段拆开能让 RLFT 在"可微指标已饱和"的初始化上专门修 Shot，避免一上来梯度同时被四个相互冲突的方向拉扯。
+如果一上来就把四个相互冲突的指标全塞进损失，梯度会被四个方向同时拉扯而卡死，尤其 Shot 这种离散目标根本没有梯度。作者画的训练动力学图（Fig. 4）揭示了这个冲突的物理根源：L2/EPE 在 Pretrain+SFT 阶段单调下降，但 Shot 反而单调上升——这正是"追 fidelity 会把掩模做碎、shot 数飙升"的固有 trade-off。于是三阶段分工：Pretrain 用标准 rectified flow loss $\mathcal{L}_\mathrm{flow} = \mathbb{E}[\|\mathbf{v}_\theta(\mathbf{x}_t, t) - (\mathbf{x}_1 - \mathbf{x}_0)\|^2]$ 学条件分布；SFT 在任意中间时刻 $t$ 把当前速度投影到终点 $\mathbf{x}_1 = \mathbf{x}_t + (1-t)\mathbf{v}_\theta$，在 $\mathbf{x}_1$ 上算可微指标，损失为 $\mathcal{L}_\mathrm{sft} = \lambda_\mathrm{flow}\mathcal{L}_\mathrm{flow} + \lambda_{\mathrm{L2}}\mathrm{L2} + \lambda_\mathrm{PVB}\mathrm{PVB}$；RLFT 则在"可微指标已饱和"的初始化上专门用 GRPO 修 Shot。这样 RLFT 不必同时管四个目标，只需在一个已经很好的起点上把飙起来的 Shot 擦回去而不掉其余三项，结果才稳定。
 
-2. **GRPO + 颜色噪声 SDE 采样**：
+**2. GRPO + 颜色噪声 SDE 采样：给确定性流模型注入"可制造"的随机探索**
 
-    - 功能：在保持流模型边缘分布不变的前提下，引入随机性以生成 $G=6$ 个候选掩模，从而能在不可微指标上做组内优势归一化。
-    - 核心思路：把确定性 ODE 重写为等价的 SDE，离散化用 Euler–Maruyama：$\mathbf{x}_{t+\Delta t} = \mathbf{x}_t + [\mathbf{v}_\theta + \frac{\sigma_t^2}{2t}(\mathbf{x}_t + (1-t)\mathbf{v}_\theta)]\Delta t + \sigma_t\sqrt{\Delta t}\boldsymbol{\varepsilon}$，其中 $\sigma_t = a\sqrt{(1-t)/t}$。reward 取四指标负归一化和 $R = -\sum_{k \in \{\mathrm{L2,PVB,EPE,Shot}\}} k/k_0$（$k_0$ 是 SFT 末态基线），优势 $A_i = (R_i - \mathrm{mean}) / (\mathrm{std} + \varepsilon)$，按标准 PPO/GRPO clip 损失更新。关键细节：噪声 $\boldsymbol{\varepsilon}$ 不用白噪声而用**低频颜色噪声**（在傅里叶域低通滤波白噪声得到），因为白噪声会在掩模上产生高频碎片，直接把 shot count 顶飞；颜色噪声保留空间相关性，掩模拓扑不被打破。$a$ 取 0.1 最佳：太小（0.01）探索慢，太大（0.5）初始 reward 就崩。
-    - 设计动机：Flow 模型本身是确定性 ODE，没法 sample 多条轨迹做 GRPO；而 ILT 又要求掩模几何"成片成块"而不能像 GAN 那样像素级抖。颜色噪声是把"我要 RL 探索"和"我要保留掩模可制造性"这两个矛盾需求拼合的关键工程选择。
+Rectified flow 本身是确定性 ODE，采不出多条轨迹，没法做 GRPO 的组内优势归一化；而 ILT 又要求掩模几何"成片成块"，不能像 GAN 那样像素级抖动。作者把确定性 ODE 重写为等价 SDE 并用 Euler–Maruyama 离散化 $\mathbf{x}_{t+\Delta t} = \mathbf{x}_t + [\mathbf{v}_\theta + \frac{\sigma_t^2}{2t}(\mathbf{x}_t + (1-t)\mathbf{v}_\theta)]\Delta t + \sigma_t\sqrt{\Delta t}\boldsymbol{\varepsilon}$（$\sigma_t = a\sqrt{(1-t)/t}$），在保持边缘分布不变的前提下生成 $G=6$ 个候选掩模；reward 取四指标负归一化和 $R = -\sum_{k \in \{\mathrm{L2,PVB,EPE,Shot}\}} k/k_0$（$k_0$ 为 SFT 末态基线），优势 $A_i = (R_i - \mathrm{mean}) / (\mathrm{std} + \varepsilon)$。其中最关键的工程选择是：噪声 $\boldsymbol{\varepsilon}$ 不用白噪声，而用**低频颜色噪声**（在傅里叶域对白噪声低通滤波得到）——白噪声会在掩模上撒高频碎片，直接把 shot count 顶飞，而颜色噪声保留空间相关性、不打破掩模拓扑，恰好把"RL 要探索"和"掩模要可制造"这对矛盾需求拼到一起。幅度 $a=0.1$ 最佳：太小（0.01）探索过慢，太大（0.5）初始 reward 就崩。
 
-3. **基于最小重叠矩形覆盖 ILP 的 Fast Shot Count（130×–490× 加速）**：
+**3. 最小重叠矩形覆盖 ILP 的 Fast Shot Count：把 NP-hard 指标压进 RL 循环**
 
-    - 功能：把传统 shot count 的"NP-hard 最小不重叠矩形分割"近似成一个"可解的最小集合覆盖 ILP"，从每张掩模 60 s 左右压到 0.2 s，让 Shot 能进 RL 循环。
-    - 核心思路：三步流水线——(i) 用基于直方图的扫描在 $O(N^2)$ 内枚举所有局部最大矩形作为候选；(ii) 在 $O(K^2)$ 内剪掉被其他矩形完全包含的冗余候选；(iii) 剩下的候选构成集合覆盖 ILP，用行扫描在 $O(NK^2)$ 内生成覆盖约束，PuLP 求解。允许 shot 之间重叠正好契合现代多电子束（multi-beam）写片实践。理论上"重叠覆盖"的绝对数比"非重叠分割"略大，但作者证明：GRPO 的组内归一化（Eq. 12）会自动消掉常数偏移，**只要组内排序保持，policy gradient 就不受影响**。实测 fast 与传统 shot count 的相关系数 $R^2 = 0.994$。
-    - 设计动机：传统 shot count 每张 mask 要算 30–150 s，GRPO 一次迭代要算 $G \times \text{batch}$ 张掩模，完全跑不动。把不可微指标 NP-hard 这一段用 ILP 近似 + GRPO 排序不变性证明这套"算法-训练目标共同设计"是这篇工作真正把 RL 跑通的关键工程贡献。
+传统 shot count 是"最小不重叠矩形分割"，NP-hard，每张 mask 要算 30–150 s；而 GRPO 一次迭代要算 $G \times \text{batch}$ 张掩模，完全跑不动，这一段才是把 RL 跑通的真正瓶颈。作者把它近似成一个可解的"最小集合覆盖 ILP"，三步流水线完成：先用基于直方图的扫描在 $O(N^2)$ 内枚举所有局部最大矩形作候选，再在 $O(K^2)$ 内剪掉被完全包含的冗余候选，最后让剩余候选构成集合覆盖 ILP、用行扫描在 $O(NK^2)$ 内生成约束并交 PuLP 求解——允许 shot 之间重叠，正好契合现代多电子束（multi-beam）写片实践。代价是"重叠覆盖"的绝对计数会比"非重叠分割"略大，但作者证明 GRPO 的组内归一化（Eq. 12）会自动消掉这个常数偏移，**只要组内排序保持，policy gradient 就不受影响**，因此放任绝对值、只保排序即可。这套"算法-训练目标共同设计"实测把单张掩模从 60 s 量级压到 0.2 s，与传统实现相关系数 $R^2 = 0.994$。
 
 ### 损失函数 / 训练策略
-- 总训练 = 50 epoch Pretrain + 25 epoch SFT + 1000 step RLFT（Metal 设置；Via 设置略减）。
-- GRPO 损失为标准 clipped 形式 $\mathcal{L}_\mathrm{grpo} = -\mathbb{E}_\mathbf{T}[\sum_i \min(r_i A_i, \mathrm{clip}(r_i, 1-\varepsilon, 1+\varepsilon) A_i)]$，其中 $r_i = \pi_\theta(\mathbf{x}_1^{(i)}|\mathbf{T}) / \pi_{\theta_\mathrm{old}}(\mathbf{x}_1^{(i)}|\mathbf{T})$，每步过渡 log-prob 用 $\mathcal{N}(\boldsymbol{\mu}_t, \sigma_t^2 \Delta t \mathbf{I})$ 近似。
-- 硬件：4 × RTX 3090，每个阶段 < 8 小时；推理默认 1 步采样。
+总训练 = 50 epoch Pretrain + 25 epoch SFT + 1000 step RLFT（Metal 设置，Via 设置略减）。GRPO 用标准 clipped 形式 $\mathcal{L}_\mathrm{grpo} = -\mathbb{E}_\mathbf{T}[\sum_i \min(r_i A_i, \mathrm{clip}(r_i, 1-\varepsilon, 1+\varepsilon) A_i)]$，其中 $r_i = \pi_\theta(\mathbf{x}_1^{(i)}|\mathbf{T}) / \pi_{\theta_\mathrm{old}}(\mathbf{x}_1^{(i)}|\mathbf{T})$，每步过渡 log-prob 用 $\mathcal{N}(\boldsymbol{\mu}_t, \sigma_t^2 \Delta t \mathbf{I})$ 近似。硬件为 4 × RTX 3090，每阶段 < 8 小时，推理默认 1 步采样。
 
 ## 实验关键数据
 

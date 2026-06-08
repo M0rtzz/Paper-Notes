@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GTCA 是一条挂在 decoder-only transformer 上的 forward wrapper 侧支路。对每个输入：① 离线用 Berkeley Neural Parser 算 constituency 树并缓存（hash 索引）；② parse-tree encoder 把树按 height 切，mean-pool 各 chunk 的 span token embedding 再过 height-specific 投影 + LayerNorm 得到 chunk memory $C^\ell$；③ 在 transformer 第 $\ell$ 层，pre-update 隐状态 $H_{\text{pre}}^\ell$ 作 query 通过 head-wise gated cross-attention 读 $C^\ell$，输出残差 $\Delta H^\ell$；④ 用 token update mask 把 $\Delta H^\ell$ 仅施加到 question + answer field（option token 强制 mask=0），得到 $H_{\text{post}}^\ell$ 送下一层。所有 backbone 参数可保持冻结或低秩微调，GTCA 分支随时可关。
+GTCA 的整体思路是给一个已经训好的 decoder-only LLM 挂一条"可装可卸"的句法侧支路，而完全不去改写 backbone 本身。输入文本先在离线阶段被 Berkeley Neural Parser 解析成 constituency 树并按 hash 缓存，训练时不再付出 parser 开销；这棵树被按高度切成多层 chunk memory，逐层喂给对应的 transformer 层。在第 $\ell$ 层，当前 token 的隐状态作 query、通过一条头级门控的 cross-attention 去读这一层的 chunk memory，得到一个残差更新 $\Delta H^\ell$，再经一道 token update mask 过滤后才叠加回隐状态、送入下一层。整条路径从输入端的离线解析、到中间的逐层门控读取、到输出端的受控残差注入，backbone 参数始终可冻结，GTCA 分支随时可旁路关闭。
 
 ### 关键设计
 
-1. **Height-aligned Chunk Memory（高度对齐的 chunk 缓存）**:
+**1. Height-aligned Chunk Memory：让树的高度对齐 transformer 的层。**
 
-    - 功能：把 constituency 树按高度切成多层 chunk，与 transformer 层数一一对应，让低层喂局部、高层喂全句结构。
-    - 核心思路：定义 chunk 高度 $h(u)=D-\text{depth}(u)$，叶 token 高度为 0、根节点高度最大；对每个 chunk 用 span mean-pool $p_u=\text{MeanPool}(E^i, i\in S(u))$，再过 height-specific 投影矩阵 $W_{h(u)}\in\mathbb{R}^{d\times d}$ 加 LayerNorm 得到 $c_u$。第 $\ell$ 层的 chunk memory $C^\ell$ 只包含 $h(u)=\min(\ell, D)$ 的 chunk，按左到右 BFS 顺序最多保留 $K=64$ 个。
-    - 设计动机：transformer 已有"低层抓局部句法、高层抓全句语义"的归纳偏置（多篇 probing 工作的共识），让 chunk memory 沿同样的层级对齐能让模型最容易把外部树信息接进去，也避免高层 token 反复被低层 chunk 噪声打扰。
+朴素地把整棵 parse 树一股脑塞给每一层，会让高层 token 反复被叶级噪声打扰，也违背了 transformer "低层抓局部句法、高层抓全句语义"这一被 probing 工作反复证实的分层规律。GTCA 顺着这个规律来切树：定义 chunk 高度 $h(u)=D-\text{depth}(u)$，叶 token 高度为 0、根节点最高；每个 chunk 先对其 span 内 token 做 mean-pool 得 $p_u=\text{MeanPool}(E^i, i\in S(u))$，再过一个 height-specific 投影矩阵 $W_{h(u)}\in\mathbb{R}^{d\times d}$ 加 LayerNorm 得到 $c_u$。第 $\ell$ 层只取 $h(u)=\min(\ell, D)$ 的 chunk，按左到右 BFS 顺序最多保留 $K=64$ 个。这样低层喂局部短语、高层喂全句结构，外部树信息进入的"接口"与 backbone 自身的句法分层天然吻合，模型最容易把它接住。height-specific 投影而非共享投影也是有意为之——消融显示一次性投影会让 BLiMP 略降，层级耦合是必要的。
 
-2. **Head-wise Gated Cross-Attention（头级门控的旁路注意力）**:
+**2. Head-wise Gated Cross-Attention：把"用不用句法"交给每个 head 自己学。**
 
-    - 功能：用 cross-attention 让 token 状态读 chunk memory，但门控决定每个 head 该信任多少。
-    - 核心思路：标准 cross-attention $Q=H_{\text{pre}}^\ell W_Q^\ell$, $K=C^\ell W_K^\ell$, $V=C^\ell W_V^\ell$，外加一个 head-wise 门 logit $G^\ell = H_{\text{pre}}^\ell W_G^\ell$；attention 输出乘上 sigmoid 门 $\text{Gated\_Attn}^\ell = \text{Attn}^\ell \odot \sigma(G^\ell)$，每个 head 一个标量门（不是 element-wise），参数更少、训练更稳。再加 causal mask 屏蔽右边界超过当前 token 的 chunk，保证自回归性。最后 $\Delta H^\ell = \text{Merge}(\text{Gated\_Attn}^\ell)W_O^{ca,\ell}$ 作为残差注入。
-    - 设计动机：硬注入（无门控）等于强制 backbone 在每层都吸收 chunk 信号，容易破坏 pretrained 表征；head-wise gate 让每个 head 学到"我现在的查询需要句法吗"，等价于让模型自学一个 sparse routing —— 这把"显式树是 hard constraint"变成了"显式树是可选 prior"。
+句法注入最怕硬来：无门控地强制 backbone 在每层都吸收 chunk 信号，会直接污染 pretrained 表征。GTCA 在标准 cross-attention（$Q=H_{\text{pre}}^\ell W_Q^\ell$，$K=C^\ell W_K^\ell$，$V=C^\ell W_V^\ell$）之上额外学一个头级门 logit $G^\ell = H_{\text{pre}}^\ell W_G^\ell$，attention 输出再乘上 sigmoid 门 $\text{Gated\_Attn}^\ell = \text{Attn}^\ell \odot \sigma(G^\ell)$——注意这是每个 head 一个标量门、而非 element-wise，参数更少、训练更稳。同时加一道 causal mask 屏蔽右边界超过当前 token 的 chunk，保证自回归性不被破坏，最终残差为 $\Delta H^\ell = \text{Merge}(\text{Gated\_Attn}^\ell)W_O^{ca,\ell}$。门控的意义在于把"显式树是 hard constraint"变成"显式树是可选 prior"：每个 head 自己学会"我现在这个查询到底需不需要句法"，等价于一套自学习的 sparse routing，既能在需要时选择性引入结构、又能在不需要时保留原表征。消融里去掉门控（硬注入）会显著掉点，正印证了这一点。
 
-3. **Token Update Mask + 三阶段训练（双安全机制）**:
+**3. Token Update Mask + 三阶段训练：从空间和时间两条轴守住 pretrained 能力。**
 
-    - 功能：限制干扰范围（空间）+ 控制干扰时机（时间），共同防止 catastrophic forgetting。
-    - 核心思路：① 空间维度：定义二值 mask $m_{\text{tok}}\in\{0,1\}^n$，让 $H_{\text{post}}^\ell \leftarrow H_{\text{pre}}^\ell + \alpha_{\text{struct}}(m_{\text{tok}} \odot \Delta H^\ell)$；MCQA 输入里 option token 强制 $m_{\text{tok}}=0$，因为 likelihood-based 评分依赖 option token 的 logprob，改动它们等于直接改答案概率分布。② 时间维度：三阶段训练 schedule 先训 GTCA 分支自身、再联合微调 backbone 中受影响的子模块、最后逐步开放，避免冷启动时大 $\Delta H$ 把已学好的 token 状态推飞。
-    - 设计动机：解决"checkpoint-compatible"这个核心约束 —— 任何对 hidden state 的改动都可能毁掉 pretrained 能力；mask 锁住空间作用域，stage schedule 锁住时间作用域，两者结合让"加了 GTCA 后 MCQA 不退步"成为可能。
+"checkpoint-compatible"这一核心约束意味着任何对 hidden state 的改动都可能毁掉已学好的能力，GTCA 为此设了两道互补的安全闸。空间维度上，用一个二值 mask $m_{\text{tok}}\in\{0,1\}^n$ 控制残差作用范围，$H_{\text{post}}^\ell \leftarrow H_{\text{pre}}^\ell + \alpha_{\text{struct}}(m_{\text{tok}} \odot \Delta H^\ell)$；其中 MCQA 输入里的 option token 被强制 $m_{\text{tok}}=0$，因为 likelihood-based 评分依赖 option token 的 logprob，一旦改动这些 token 的隐状态就等于直接篡改答案的概率分布。时间维度上，训练走三阶段 schedule：先冻结 backbone 只训 GTCA 投影与 gate，再联合开放与 GTCA 直接交互的受影响子模块，最后全量但以低学习率收敛——这样避免冷启动时一个过大的 $\Delta H$ 把已学好的 token 状态一次推飞。mask 锁住空间作用域、schedule 锁住时间作用域，两者叠加才让"加了 GTCA 后 MCQA 不退步"成为可能；消融里任意去掉一道，要么 MCQA 退步、要么训练失稳。
 
 ### 损失函数 / 训练策略
-继续训练用语言建模 loss + MCQA-friendly 格式；三阶段 schedule 第一阶段冻结 backbone 只训 GTCA 投影与 gate，第二阶段开放与 GTCA 直接交互的子模块，第三阶段全量但用低学习率收敛。chunk 数量上限 $K=64$；scaling factor $\alpha_{\text{struct}}$ 控制残差幅值；offline parse 用 Berkeley Neural Parser，按 token ID hash 缓存，训练时零 parser 开销。
+继续训练采用语言建模 loss + MCQA-friendly 格式。三阶段 schedule 第一阶段冻结 backbone 只训 GTCA 投影与 gate，第二阶段开放与 GTCA 直接交互的子模块，第三阶段全量但用低学习率收敛。chunk 数量上限 $K=64$，scaling factor $\alpha_{\text{struct}}$ 控制残差幅值；offline parse 用 Berkeley Neural Parser 并按 token ID hash 缓存，训练时零 parser 开销。
 
 ## 实验关键数据
 

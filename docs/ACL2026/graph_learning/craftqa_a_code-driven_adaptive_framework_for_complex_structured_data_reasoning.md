@@ -38,29 +38,27 @@ CRAFTQA 用 CodeSTEP 生成可执行的逐步 Python 推理代码，并在预定
 **核心 idea**：让 LLM 不只是调用固定工具，而是在需要新工具时现场写一个可执行、可验证的函数，再继续结构化推理。
 
 ## 方法详解
-CRAFTQA 以统一的 Condition Graph 表示不同结构化数据，把自然语言问题转成可执行代码序列。代码序列中的常规操作调用预定义函数；如果某一步无法由预定义函数表达，则调用 $f_{craft}$ 接口，让 CRAFT 根据当前问题、完整代码、当前任务描述、历史中间结果和期望函数签名生成自定义函数。
+CRAFTQA 想解决的是「统一结构化数据问答被固定函数集卡死」的问题：表格、知识图谱、时序知识图谱都能用一套框架访问，但只要某一步推理超出预定义算子（自定义排序、组合条件、特殊格式转换……），系统就无能为力。它的办法是把推理彻底落到可执行代码上，并在代码写不出来的那一步现场生成一个新函数。
 
 ### 整体框架
-输入是数据源 $\mathcal{D}$ 和问题 $\mathcal{Q}$。系统先把数据源转成 schema $\mathcal{D}_{schema}$ 和 Condition Graph $\mathcal{D}_{cg}$。LLM 在 few-shot prompt 下生成代码序列 $\mathcal{C}=\{c_i\}_{i=1}^n$，执行器顺序执行这些代码并得到最终答案 $\mathcal{A}$。整体过程可概括为 $\mathcal{M}_{\theta}(\mathcal{D}_{schema}, \mathcal{Q}, \mathcal{P}) \rightarrow \mathcal{C}$，再由 $\textsc{Exec}(\mathcal{C}, \mathcal{D}_{cg}) \rightarrow \mathcal{A}$。
+输入是数据源 $\mathcal{D}$ 和问题 $\mathcal{Q}$。系统先把异构数据统一成 schema $\mathcal{D}_{schema}$ 和 Condition Graph $\mathcal{D}_{cg}$，让表格、KG、TKG 都能用同一套图查询接口访问。随后 LLM 在 few-shot prompt 下把问题翻译成一段逐步的 Python 代码序列 $\mathcal{C}=\{c_i\}_{i=1}^n$，执行器顺序跑这些代码、累积中间结果，最后得到答案 $\mathcal{A}$。形式化地写就是 $\mathcal{M}_{\theta}(\mathcal{D}_{schema}, \mathcal{Q}, \mathcal{P}) \rightarrow \mathcal{C}$ 再 $\textsc{Exec}(\mathcal{C}, \mathcal{D}_{cg}) \rightarrow \mathcal{A}$。关键在于这段代码不必全用预定义函数：常规步骤调函数库，遇到库里没有的操作就调一个「请帮我写个函数」的接口，由 CRAFT 模块补上。
 
 ### 关键设计
-1. **CodeSTEP 逐步代码推理**:
 
-	- 功能：把自然语言推理过程显式变成 Python 可执行代码序列。
-	- 核心思路：CodeSTEP 先生成自然语言 reasoning path，再为每一步生成对应代码。基础查询函数 $get$ 从 Condition Graph 中按 relation、head/tail entity、比较符和属性条件检索实体；集合运算和数值运算处理 union、intersection、difference、min、max、mean、count 和 sum。
-	- 设计动机：代码能把推理和计算解耦，让答案可执行、可检查，也减少 LLM 在复杂数值和多跳操作中的自由发挥。
+**1. CodeSTEP 逐步代码推理：把推理和计算解耦成可执行、可检查的代码。**
 
-2. **CRAFT 动态函数生成**:
+直接让 LLM 自由生成文本答案，在多跳数值、复杂条件这类问题上很容易算错又无法验证。CodeSTEP 的做法是先让模型写出自然语言 reasoning path，再逐步把每一步翻译成对应代码：基础查询函数 $get$ 从 Condition Graph 中按 relation、head/tail entity、比较符和属性条件检索实体，集合与数值算子则覆盖 union、intersection、difference、min、max、mean、count、sum 这些常规操作。把推理过程外化成代码后，每一步的计算都可执行、可复查，模型在数值和多跳操作上的自由发挥被代码语义约束住，错误率自然下降。
 
-	- 功能：处理预定义函数集无法表达的 out-of-predefined 操作。
-	- 核心思路：当代码步骤不能用 $\mathcal{F}_{pred}$ 实现时，CodeSTEP 生成 $f_{craft}(\mathcal{T}_i, W_i, F_{exp,i})$ 调用。CRAFT 再根据原问题、完整代码序列、当前任务说明、前序结果和期望函数签名生成自包含函数 $\hat{f}_i$，执行后返回结果 $w_i$。
-	- 设计动机：复杂问题常需要临时函数，例如自定义排序、组合条件判断或数据格式转换。动态生成函数比扩充固定函数库更灵活。
+**2. CRAFT 动态函数生成：在预定义函数集表达不了的那一步，现场写一个新函数。**
 
-3. **代码验证与顺序执行**:
+固定函数集的天花板很明显——一旦问题需要 out-of-predefined 操作，CodeSTEP 就写不出合法代码。CRAFT 的处理方式是：当某步无法用 $\mathcal{F}_{pred}$ 实现时，CodeSTEP 不会硬凑，而是生成一个占位调用 $f_{craft}(\mathcal{T}_i, W_i, F_{exp,i})$，把当前任务描述 $\mathcal{T}_i$、历史中间结果 $W_i$、期望函数签名 $F_{exp,i}$ 一起交给 CRAFT；CRAFT 再结合原问题和完整代码序列，生成一个自包含函数 $\hat{f}_i$，执行后把结果 $w_i$ 返回主执行流。这等于把「扩充工具库」这件离线的事变成了在线、按需的代码生成，比预先穷举所有可能算子灵活得多，也正是 CRAFTQA 在复杂场景上拉开差距的来源。
 
-	- 功能：提高生成代码的可执行性和稳定性。
-	- 核心思路：无论是 CodeSTEP 主代码还是 CRAFT 生成的自定义函数，都先通过 Python interpreter 做 executability verification。验证失败时用相同输入重试，最大重试次数 $T=3$。验证后的代码按顺序执行，每步结果加入中间结果集合 $W_{i+1}=W_i \cup \{w_i\}$。
-	- 设计动机：代码驱动方法的核心风险是语法或运行错误。执行前验证和有限重试能把一部分错误挡在答案生成之前。
+**3. 代码验证与顺序执行：用执行前验证 + 有限重试挡住语法/运行错误。**
+
+代码驱动方法最大的风险是生成的代码根本跑不起来。所以无论是 CodeSTEP 的主代码还是 CRAFT 临时生成的自定义函数，都先送进 Python interpreter 做一次 executability verification，验证失败就用相同输入重试，最多重试 $T=3$ 次。通过验证的代码再按顺序执行，每步产物并入中间结果集合 $W_{i+1}=W_i \cup \{w_i\}$，供后续步骤引用。这道关卡把一部分语法和运行错误挡在答案生成之前，让整条代码链更稳。
+
+### 一个完整示例
+以一个 WikiSQL-E 上需要自定义计算的问题为例：CodeSTEP 先写出 reasoning path，前几步用 $get$ 从 Condition Graph 取出候选行、再用 count/sum 做常规聚合，这些都落在预定义函数里、直接执行并把结果存进 $W$。走到「按某种自定义规则排序再取条件值」这一步时，函数库里没有现成算子，CodeSTEP 于是生成 $f_{craft}$ 调用，把任务描述「按 X 规则排序后返回满足 Y 的项」、当前中间结果和期望签名交给 CRAFT；CRAFT 写出一个自包含排序函数，先过 interpreter 验证（若报错则在 3 次内重试），验证通过后执行、结果回填 $W$。主执行流拿到这个值继续后续步骤，最终输出可验证答案。整条链里只有真正卡住的那一步走了动态生成，其余仍是统一、可控的库函数执行。
 
 ### 损失函数 / 训练策略
 CRAFTQA 不是训练模型，而是一个推理框架。实验中使用不同 LLM 作为推理引擎，包括 GPT、LLaMA、DeepSeek、Gemini 和 Qwen 系列。推理策略包括 5-sample self-consistency、最大重试 $T=3$、以及 Sentence-BERT 语义实体对齐，用于把代码中的实体名映射到 Condition Graph 中的候选实体。

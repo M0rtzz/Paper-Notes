@@ -45,23 +45,17 @@ NaviEdit 把 diffusion/flow 编辑器中"模型尺度坐标 = 编辑进度时钟
 
 ### 关键设计
 
-1. **Progress-Granularity 解耦的受控积分形式化**:
+**1. Progress-Granularity 解耦的受控积分形式化：把"算力放在哪个尺度"变成可优化问题**
 
-    - 功能：把编辑显式建模为 $\frac{dx}{ds}=\frac{du}{ds}\Delta V_{\text{eff}}(x(s);u(s),\epsilon(s))$，并定义 rollout 级语义粒度泛函 $\mathcal{G}[x(\cdot),u(\cdot)]=\int_0^1 \phi(x(s),u(s))\,ds$ 作为质量评价对象。
-    - 核心思路：把 scale $u$ 当作受控输入而非 progress 本身。$\phi(x,u)$ 是一个非负 local risk density，假设其随 leakage pressure $\rho(u)$ 与方向震荡 $\omega(u)$ 增大而增大；这两个 probe 通过对 source latent 加新鲜噪声得到 $z^{\text{src}}=(1-u)x_{\text{src}}+u\epsilon$，再用残差移位构造目标 anchor $z^{\text{tar}}=x+(z^{\text{src}}-x_{\text{src}})$，差分速度 $\Delta V(u)=v_\theta(z^{\text{tar}},\tau(u),c_{\text{tar}})-v_\theta(z^{\text{src}},\tau(u),c_{\text{src}})$ 给出局部 differential field，$\rho(u)=\|(1-M(u))\odot\Delta V(u)\|_2/\|\Delta V(u)\|_2$ 衡量泄漏到非编辑区的能量比。
-    - 设计动机：现有方法在评价编辑质量时只看终态，看不到"算力被花在了哪些 scale 上"；rollout 泛函让"该把 budget 放在哪个 $u$"变成一个可分析、可优化的 compute allocation 问题，也直接给出 Theorem 4.2（耦合调度必然有不可消除的 outside-window 进度质量 $m_{\text{bad}}$，导致 $\mathcal{G}$ 有一个 irreducible 下界）。
+痛点是现有方法评价编辑质量时只盯终态，看不见算力到底花在了哪些 scale 上，于是 scale 一旦被当成 progress 用就只能靠扩范围加强编辑。NaviEdit 先把编辑显式写成一条沿 progress 轴 $s\in[0,1]$ 的受控积分 $\frac{dx}{ds}=\frac{du}{ds}\,\Delta V_{\text{eff}}\big(x(s);u(s),\epsilon(s)\big)$，scale $u$ 退化成受控输入而非进度本身，再定义 rollout 级的语义粒度泛函 $\mathcal{G}[x(\cdot),u(\cdot)]=\int_0^1 \phi\big(x(s),u(s)\big)\,ds$ 当作整条轨迹的质量评价对象。这里 $\phi(x,u)$ 是非负的 local risk density，假设它随 leakage pressure $\rho(u)$ 与方向震荡 $\omega(u)$ 增大而增大——这两个 probe 是这样测出来的：对 source latent 加新鲜噪声得到 $z^{\text{src}}=(1-u)x_{\text{src}}+u\epsilon$，用残差移位构造目标 anchor $z^{\text{tar}}=x+(z^{\text{src}}-x_{\text{src}})$，差分速度 $\Delta V(u)=v_\theta(z^{\text{tar}},\tau(u),c_{\text{tar}})-v_\theta(z^{\text{src}},\tau(u),c_{\text{src}})$ 给出局部 differential field，而 $\rho(u)=\|(1-M(u))\odot\Delta V(u)\|_2/\|\Delta V(u)\|_2$ 正是泄漏到非编辑区的能量占比。把质量写成 rollout 泛函之后，"该把 budget 放在哪个 $u$"就从经验试错变成可分析、可优化的 compute allocation 问题，也才能直接证出 Theorem 4.2：耦合调度必然带有不可消除的 outside-window 进度质量 $m_{\text{bad}}$，使 $\mathcal{G}$ 有一个 irreducible 下界。
 
-2. **Density-over-range 的有效窗口算力再分配**:
+**2. Density-over-range 的有效窗口算力再分配：冻住范围、只调密度**
 
-    - 功能：在 scheduler path 上固定一段尾窗 $\mathcal{U}_{\text{eff}}$，把额外 step budget 全部用于窗口内增密，而不是向高噪声端扩范围。
-    - 核心思路：用 $p\in[0,1]$ 参数化 $\mathcal{U}_{\text{eff}}$ 上的单调遍历，$\{p_k\}$ 决定 $\{u_k\}$ 和 $\{\Delta u_k\}$；可选地用编辑过程中已经算出来的 per-step 信号（$\rho$、$\omega$ 的离散代理）做在线密度调整，不需要任何额外 model call。Theorem 4.3 说明：当 $K>L_\phi C_E/\gamma$ 时，窗口内增密比向 $\mathcal{U}_{\text{bad}}$ 扩范围更优——前者只付一阶 Euler 离散误差 $C_E/K$，后者要付一个常数级 risk floor $c_{\text{bad}}\delta_K-c_{\text{good}}\geq\gamma$。
-    - 设计动机：实验观察到耦合调度把 step 数加大反而背景质量下降（CLIP 上去了但 PSNR/SSIM 掉了），就是因为 budget 增大被自动翻译成了范围扩张；把"范围"冻住、把"密度"作为唯一可调维度，就把 budget→quality 的方向纠正回来。
+实验里能看到耦合调度有个反直觉现象——把 step 数加大，CLIP 反而上去、PSNR/SSIM 却掉了，因为 budget 一变大就被自动翻译成了向高噪声端扩范围。NaviEdit 的对策是在 scheduler path 上固定一段尾窗 $\mathcal{U}_{\text{eff}}$（由参考深度 $t_{\text{ref}}$ 锚定，排除极端高噪声尾部），把额外 step budget 全部投到窗口内增密。具体用单调坐标 $p\in[0,1]$ 参数化 $\mathcal{U}_{\text{eff}}$ 上的遍历，$\{p_k\}$ 决定 $K$ 个采样点 $\{u_k\}$ 与对应增量 $\{\Delta u_k\}$，还可以拿编辑过程中已经算出来的 per-step 信号（$\rho$、$\omega$ 的离散代理）做在线密度微调，不需要任何额外 model call。Theorem 4.3 给了为什么有效：当 $K>L_\phi C_E/\gamma$ 时窗口内增密严格优于向 $\mathcal{U}_{\text{bad}}$ 扩范围——前者只付一阶 Euler 离散误差 $C_E/K$，随 $K$ 增大就消失；后者要付一个常数级 risk floor $c_{\text{bad}}\delta_K-c_{\text{good}}\geq\gamma$，怎么加 step 都压不掉。这等于把 budget→quality 这条被耦合调度扭歪的方向重新掰正。
 
-3. **Self-consistency contract 的一阶一致离散化**:
+**3. Self-consistency contract 的一阶一致离散化：mix/query/update 必须共用同一坐标**
 
-    - 功能：强制每一步的 mixing（构造 anchor）、querying（送入模型的 $\tau(u_k)$）、update（步长 $\Delta u_k$）三个操作使用**同一个** $u_k$。
-    - 核心思路：Theorem 4.4 给出，若这三处用了不一致的 scale，差分速度测量的对象就不再是被作动的同一系统，rollout 会累计一个系统性 bias，外显为飘移和伪影；反之 $x_{k+1}=x_k+\Delta u_k\,\Delta V_{\text{eff}}(x_k;u_k,\epsilon_k)$ 是 Def. 4.1 在有效窗口内的一阶一致离散。
-    - 设计动机：很多 rescheduling 工作（如 SYE、Dual-Schedule Inversion）只调"形状"而不去保证 axis 一致，作者通过 axis-mismatch ablation（独立扰动 query/step/mix 的 scale）实测一旦失配，drift 与 compliance 两个指标都随 $|\delta|$ 单调劣化——这说明前面两个解耦设计不是单独成立的，必须用 contract 把它们落到合法的离散方案上才有理论与经验保障。
+前两个解耦设计要落到离散步骤上才有意义，而很多 rescheduling 工作（SYE、Dual-Schedule Inversion）只调 schedule 形状、不保证 axis 一致，提升因此不稳定。NaviEdit 强制每一步的 mixing（构造 anchor）、querying（送进模型的 $\tau(u_k)$）、update（步长 $\Delta u_k$）三处用**同一个** $u_k$，更新写成 $x_{k+1}=x_k+\Delta u_k\,\Delta V_{\text{eff}}(x_k;u_k,\epsilon_k)$，这正是 Def. 4.1 在有效窗口内的一阶一致离散。Theorem 4.4 解释了为什么必须如此：三处若用了不一致的 scale，差分速度测量的对象就不再是被作动的那同一个系统，rollout 会累计一个系统性 bias，外显成飘移和伪影。作者用 axis-mismatch ablation 独立扰动 query/step/mix 的 scale，实测一旦失配，drift 与 compliance 两个指标都随偏移量 $|\delta|$ 单调劣化——这说明 self-consistency 不是锦上添花，而是让前两个设计合法成立的必要前提。
 
 ### 损失函数 / 训练策略
 完全 training-free，没有任何参数更新；推理时仅需固定 $K=50$（PIE-Bench）或 $K=28$（跨 backbone ablation）、$t_{\text{ref}}=42$ 等少量超参；可选 feasible-region gate $M(u)$ 由 base editor 已暴露的内部信号生成，不引入额外 model evaluation。单卡 RTX 3090 即可跑通。

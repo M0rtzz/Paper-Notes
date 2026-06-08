@@ -43,53 +43,41 @@ FAAR 的解决思路：
 
 ### 整体框架
 
-FAAR 基于冻结的 Swin Transformer 骨干，在注意力和 MLP 层放置 DoRA 适配器。每个 Transformer 阶段的最后一个块使用任务特定适配器，前面的块共享适配器。骨干之后接 Task-Spectral Pyramidal Decoder (TS-PD) 进行频率增强和跨任务对齐。整个训练过程由 PDRS 控制，动态减少适配器秩。
+FAAR 要解决的是密集视觉多任务微调里两件互相纠缠的事：一是怎么不靠人工调参就给每层每个任务挑到合适的秩，二是怎么给低秩适配补上它天生缺失的空间感知和跨任务一致性。整体流程是这样转的：输入图像先过一个**冻结**的 Swin Transformer 骨干，骨干的注意力层和 MLP 层上挂着 DoRA 适配器——每个阶段最后一个块用任务特定适配器、前面的块共享一套适配器；骨干吐出的多任务特征再送进 Task-Spectral Pyramidal Decoder (TS-PD) 做频率增强和跨任务对齐，最后由 HRNet 解码头出各任务的稠密预测。贯穿整个训练的是 PDRS，它一边训练一边把适配器的秩从 64 逐步压到个位数。
 
 ### 关键设计
 
-1. **Performance-Driven Rank Shrinking (PDRS)**：
+**1. Performance-Driven Rank Shrinking（PDRS）：让损失自己决定每层每任务该留多少秩。**
 
-    - **秩掩码（Rank Masking）**：每次前向传播随机采样前缀大小 $b \in \{1, ..., r_{curr}\}$，构建二进制掩码 $m$，只让前 $b$ 个秩分量参与计算
-        - $A^{eff} = \text{diag}(m) A$, $B^{eff} = B \text{diag}(m)$
-        - 这迫使重要的秩-1 更新向低维方向集中
-    - **覆盖策略（Coverage Strategy）**：
-        - 每次反向传播计算每个活跃秩 $i$ 的重要性分数：$s_i = \frac{1}{2}(|\langle A_{:,i}^{eff}, \frac{\partial \mathcal{L}}{\partial A_{:,i}^{eff}} \rangle| + |\langle B_{i,:}^{eff}, \frac{\partial \mathcal{L}}{\partial B_{i,:}^{eff}} \rangle|)$
-        - 通过 EMA 累积跨批次的分数：$\hat{s}_i \leftarrow \beta \hat{s}_{i-1} + (1-\beta) s_i$
-        - 每个 epoch 末尾，按分数降序排列，选择满足覆盖率 $\rho$ 的最少秩数 $K$：$K = \min\{k : c(k) \geq \rho\}$
-        - 未覆盖的秩从优化中永久删除
-    - 设计动机：基于 MTL 损失的方向导数反映每个秩-1 分量的实际贡献，以性能为导向的收缩确保不损失关键更新
+固定秩的毛病在于它假设所有层、所有任务的适应强度一样，可现实是深层和任务特定层需要更强的微调能力、浅层和共享层只要轻微调整。PDRS 不预设这个分配，而是在训练中"边用边删"。它分两步走：前向时做**秩掩码**——每次随机采一个前缀长度 $b \in \{1, ..., r_{curr}\}$，构造二进制掩码只放行前 $b$ 个秩分量，即 $A^{eff} = \text{diag}(m) A$、$B^{eff} = B \text{diag}(m)$；这种随机截断会逼着重要的秩-1 更新往低维方向集中，而不是均匀摊在所有秩上。反向时做**覆盖筛选**——给每个活跃秩 $i$ 算一个重要性分数，用的是 MTL 损失对该秩分量的方向导数（梯度和参数的内积），这直接反映"这个秩-1 更新对降损失贡献多大"：
 
-2. **DoRA 适配器（而非 LoRA）**：
+$$s_i = \frac{1}{2}\left(\left|\left\langle A_{:,i}^{eff}, \frac{\partial \mathcal{L}}{\partial A_{:,i}^{eff}} \right\rangle\right| + \left|\left\langle B_{i,:}^{eff}, \frac{\partial \mathcal{L}}{\partial B_{i,:}^{eff}} \right\rangle\right|\right)$$
 
-    - DoRA 将低秩适应解耦为幅度和方向：$\text{Out}_i^{DoRA} = m_i \frac{W_i + \alpha B_i A_i}{\|W_i + \alpha B_i A_i\|_2} x + b_i$
-    - 在极低秩下比 LoRA 更稳定，与 PDRS 的秩收缩配合更好
-    - 实验验证：高秩时 DoRA 不一定优于 LoRA，但低秩时 DoRA 明显更好
+分数用 EMA 跨批次平滑 $\hat{s}_i \leftarrow \beta \hat{s}_{i-1} + (1-\beta) s_i$；每个 epoch 末把秩按分数降序排，取满足覆盖率 $\rho$ 的最少秩数 $K = \min\{k : c(k) \geq \rho\}$，没被覆盖的秩**永久删除**、不再参与后续优化。这就是它和 AdaLoRA（按奇异值大小裁）的根本区别——PDRS 的裁剪准则直接挂在优化目标上，所以收缩出来的秩分布天然符合"深层/任务层留得多、浅层/共享层删得狠"的直觉。
 
-3. **Task-Spectral Pyramidal Decoder (TS-PD)**：
+**2. DoRA 适配器：把低秩适应拆成幅度和方向，专为极低秩服务。**
 
-    - **Channel-wise Spectral Filter (CW-SP)**：
-        - 对每个任务特定特征进行 FFT，学习任务/分辨率特定的 2D 频率滤波矩阵 $W_t^{res}$
-        - 通过逐元素乘法 $Y = W \odot FFT(I)$ 选择性增强/抑制不同频率
-        - 逆 FFT 变换回特征空间后，用可学习的 scale/shift 参数调制
-        - 设计动机：不同任务需要不同的频率信息——边缘检测依赖高频，深度估计利用高低频
+PDRS 会把秩压到极低（全局约 5），而普通 LoRA 在这种极低秩下表现并不稳。FAAR 改用 DoRA，它把权重更新解耦成一个标量幅度 $m_i$ 和一个归一化方向：
 
-    - **Cross-Task Consensus Alignment (XT-Cons)**：
-        - 对于主任务，计算辅助任务频谱的平均表示 $F_{avg}$
-        - 从主任务频谱提取高频和低频掩码 $M_{low}$, $M_{high}$
-        - 计算对齐差异：$\Delta_{low,high} = M_{low,high} * (F_{avg} - FFT(X_i^{main}))$
-        - 用可学习标量 $\alpha_{low,high}$ 缩放贡献
-        - 设计动机：通过频域中辅助任务的"共识"来推动主任务表示的几何一致性，比直接在空间域交互更廉价
+$$\text{Out}_i^{DoRA} = m_i \frac{W_i + \alpha B_i A_i}{\|W_i + \alpha B_i A_i\|_2} x + b_i$$
+
+幅度和方向分开学，意味着即便方向子空间被压得很窄，幅度仍能独立调节，更新的稳定性就保住了。值得注意的是这个好处只在低秩区间兑现——消融里高秩时 DoRA 反而不如 LoRA（+1.36 vs +2.55），但经 PDRS 收缩到低秩后 DoRA 的优势才显出来（+4.92）。换句话说，DoRA 和 PDRS 是一对：单独上 DoRA 没用，配上秩收缩才有协同。
+
+**3. Task-Spectral Pyramidal Decoder（TS-PD）：用 FFT 给低秩适配补上空间感知和跨任务一致性。**
+
+低秩适配本身缺空间归纳偏置，而语义分割、深度、法线这类稠密任务恰恰吃强空间感知和跨任务几何一致性。TS-PD 的思路是把这两件事都搬到频域去做，因为频域天然能把边缘（高频）和语义（低频）分开，且操作比空间域便宜。它由两个模块组成。**Channel-wise Spectral Filter（CW-SP）** 对每个任务特征做 FFT，学一组任务/分辨率特定的 2D 频率滤波矩阵 $W_t^{res}$，通过逐元素乘 $Y = W \odot FFT(I)$ 选择性放大或压制不同频段，再逆 FFT 回特征空间、配可学习的 scale/shift 调制——这样边缘检测能保住它依赖的高频、深度估计能同时取用高低频。**Cross-Task Consensus Alignment（XT-Cons）** 则负责跨任务对齐：对某个主任务，先算出所有辅助任务频谱的平均表示 $F_{avg}$ 作为"共识"，再从主任务频谱提高/低频掩码 $M_{low}, M_{high}$，算出主任务与共识的频域差异并用可学习标量 $\alpha$ 缩放：
+
+$$\Delta_{low,high} = M_{low,high} * (F_{avg} - FFT(X_i^{main}))$$
+
+把这个差异回注主任务，相当于让辅助任务的"共识"在频域里轻推主任务的几何表示，比在空间域里直接做跨任务交互省得多。
+
+### 一个完整示例
+
+拿 PASCAL-Context 的某一层适配器走一遍秩怎么收缩：训练起点初始秩 $r_{init}=64$，前向时每个 batch 随机放行一个前缀（比如这次 $b=23$、下次 $b=51$），逼着模型把有效更新挤进低维；反向时按方向导数给这 64 个秩打分并 EMA 累积。第一个 epoch 结束，按覆盖率 $\rho=0.95$ 一卡，发现前 30 个秩就吃下了 95% 的累积重要性，于是后 34 个秩被永久删除，秩降到 30。后续 epoch 继续这个"随机截断 → 打分 → 按覆盖率裁"的循环，秩一路收缩，到收敛时一个共享浅层可能只剩 3、4 个秩，而一个任务特定深层会保住十几个秩——全局平均落在约 5。整个过程没有人工指定每层的秩，分配是损失自己挑出来的。
 
 ### 损失函数 / 训练策略
 
-- MTL 损失：$L_{MTL} = \sum_{i=1}^T w \times L_i$
-    - 语义分割、人体部件分割：像素交叉熵
-    - 深度估计、法线估计：L1 损失
-    - 显著性检测：平衡交叉熵
-- 覆盖率参数：$\rho_{shared} = \rho_{task} = 0.95$
-- 骨干：Swin-Tiny (ImageNet-1k 预训练)，解码器：HRNet
-- 初始秩 $r_{init} = 64$，训练过程中动态收缩到约 $r_{global} \approx 5$
-- 单张 NVIDIA A40，学习率 $5 \times 10^{-4}$，batch size 32
+总目标是各任务加权和 $L_{MTL} = \sum_{i=1}^T w \times L_i$：语义分割和人体部件分割用像素交叉熵，深度估计和法线估计用 L1 损失，显著性检测用平衡交叉熵。覆盖率统一设 $\rho_{shared} = \rho_{task} = 0.95$（验证集上选的），骨干为 ImageNet-1k 预训练的 Swin-Tiny、解码器为 HRNet，初始秩 64 在训练中动态收缩到全局约 5。单张 NVIDIA A40 训练，学习率 $5 \times 10^{-4}$，batch size 32。
 
 ## 实验关键数据
 

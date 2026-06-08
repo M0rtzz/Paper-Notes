@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VMoER 包含两条互补推断路径——（1）**Logit 空间推断**：对路由 logits $\mathbf{l}$ 应用变分高斯分布 $q_\phi(\mathbf{l}|\mathbf{u})$，显式建模专家间相关性；（2）**选择空间推断**：学习输入相关的温度参数 $T_\phi(\mathbf{u})$ 动态调节决策边界，通过 Sample-K 而非 Top-K 实现随机化专家选择。
+VMoER 把"给 MoE 注入不确定性"这件事从权重空间挪到了决策空间：不再对万亿参数的权重后验做近似，而是只对每个 token 进入 MoE 层时的**路由决策**做变分推断。它给出两条互补路径——一条在 logit 空间对路由打分 $\mathbf{l}$ 套一个变分高斯分布 $q_\phi(\mathbf{l}|\mathbf{u})$，显式建模专家之间的相关性；另一条在选择空间只学一个输入相关的温度 $T_\phi(\mathbf{u})$，靠它动态调节 softmax 锐度并用 Sample-K 替代 Top-K 做随机化选择。前者校准最好但要多次采样，后者几乎零额外开销，两条路径覆盖了"精度优先"和"延迟优先"两种部署诉求。
 
 ### 关键设计
 
-1. **变分高斯 Logit 路由（VGLR）**:
+**1. 变分高斯 Logit 路由（VGLR）：给路由打分套一个带相关性的高斯后验。**
 
-    - 功能：对路由 logits 进行 amortised 变分推断，通过全协方差建模显式捕捉专家相关性。
-    - 核心思路：采用居中先验 $p(\mathbf{l}|\mathbf{u})=\mathcal{N}(\mathbf{l}_{det}, \mathbf{I})$，其中 $\mathbf{l}_{det}=\mathbf{u}\mathbf{W}_r$。后验均值 $\boldsymbol{\mu}_{post}(\mathbf{u})=\mathbf{l}_{det}+\Delta\boldsymbol{\mu}_\phi(\mathbf{u})$，推断网络学习残差校正而非从零开始。Cholesky 因子化 $\boldsymbol{\Sigma}_{post}=\mathbf{LL}^\top$ 参数化协方差（复杂度 $O(N^2)$，N≤64 可接受）。推断时 MC 采样平均化。
-    - 设计动机：权重空间推断间接通过线性投影传播参数噪声；直接建模路由决策变量（logits→概率）效率更高。全协方差超越 mean-field 假设捕捉专家间相关性。
+确定性 Top-K 的脆性根源在于它把 logits→概率→选择这条链当成了无噪声的，输入稍有扰动专家选择就翻车。VGLR 直接对路由 logits 做 amortised 变分推断：先验取居中高斯 $p(\mathbf{l}|\mathbf{u})=\mathcal{N}(\mathbf{l}_{det}, \mathbf{I})$，其中 $\mathbf{l}_{det}=\mathbf{u}\mathbf{W}_r$ 就是原本的确定性打分；后验均值写成残差形式 $\boldsymbol{\mu}_{post}(\mathbf{u})=\mathbf{l}_{det}+\Delta\boldsymbol{\mu}_\phi(\mathbf{u})$，推断网络只学一个校正项 $\Delta\boldsymbol{\mu}_\phi(\mathbf{u})$ 而非从零重学路由。协方差用 Cholesky 因子化 $\boldsymbol{\Sigma}_{post}=\mathbf{LL}^\top$ 参数化，复杂度 $O(N^2)$，因为专家数 $N\le 64$ 所以完全可接受；推断时对 $q_\phi$ 做 MC 采样再平均。它之所以比权重空间方法（MCDropout/SWAG）有效，是因为后者得把参数噪声经线性投影间接传到决策上、绕了一大圈，而 VGLR 直接在决策变量上建模；同时**全协方差**突破了 mean-field 的对角假设，能捕捉"选了专家 A 就倾向避开专家 B"这类专家间相关性——消融里全协方差正是把 ECE 从 0.252 压到 0.015 的关键。
 
-2. **变分温度缩放路由（VTSR）**:
+**2. 变分温度缩放路由（VTSR）：把变分族压到一维温度流形上。**
 
-    - 功能：学习输入相关温度参数 $T_\phi(\mathbf{u})$ 动态调节 softmax 锐度，实现高效的单维度变分推断。
-    - 核心思路：约束变分族到 1D 流形——沿着由确定性 logits 与输入相关温度定义的轨迹 $q_\phi(\mathbf{p}|\mathbf{u})=\text{Softmax}(\mathbf{l}_{det}/T_\phi(\mathbf{u}))$ 移动。通过 Gumbel-Softmax 进行 Sample-K 采样。KL 正则化简化为 Shannon 熵。
-    - 设计动机：VGLR 需多次采样导致推断延迟；VTSR 限制在标度参数空间，计算开销仅为 $O(D_H)$（<0.67% FLOPs）。
+VGLR 校准虽好，但多次采样会拖慢推理延迟。VTSR 干脆把整个变分族约束到一条 1D 流形上——所有后验都沿着"确定性 logits 除以输入相关温度"这条轨迹移动：$q_\phi(\mathbf{p}|\mathbf{u})=\text{Softmax}(\mathbf{l}_{det}/T_\phi(\mathbf{u}))$，唯一要学的就是标量温度网络 $T_\phi(\mathbf{u})$，温度高则分布更平、专家选择更保守，温度低则更锐。采样用 Gumbel-Softmax 做 Sample-K，KL 正则项在这条流形上恰好退化成 Shannon 熵，形式干净。代价是只在标度参数空间动，计算开销仅 $O(D_H)$、不到 0.67% FLOPs，单次前向就能给出校准好的选择，无需像 VGLR 那样反复采样——这正是它牺牲一点精度换来的零额外采样成本。
 
-3. **居中先验与残差学习**:
+**3. 居中先验与残差学习：让微调不丢预训练路由。**
 
-    - 功能：通过约束后验在确定性解附近进行，保证微调时预训练路由性能不丧失。
-    - 核心思路：后验不从零开始学习，而是学习残差 $\Delta\boldsymbol{\mu}_\phi(\mathbf{u})$ 加到原 logits 上，使 KL 项自动围绕零进行 regularization。
-    - 设计动机：微调时路由往往陷入困境；居中先验提供稳定性。
+前两个设计能稳住，靠的是同一个共享技巧：后验不从零学，而是围着确定性解打转。先验居中在 $\mathbf{l}_{det}$、后验只学加在原 logits 上的残差 $\Delta\boldsymbol{\mu}_\phi(\mathbf{u})$，于是 KL 项天然以"零残差"为中心做 regularization。微调阶段路由本来很容易陷入困境、把预训练学到的专家分工搅乱，而这个居中先验等于给优化一个稳定锚点：不确定性是在已经很好的确定性路由上叠的一层修正，而不是推倒重来。
 
 ### 训练策略
-**VGLR**：$\mathcal{L}_{ELBO}=\mathbb{E}_{q_\phi(\mathbf{l}|\mathbf{u})}[\log p(\mathbf{y}|\mathbf{l},\mathbf{u})]-\beta D_{KL}(q_\phi(\mathbf{l}|\mathbf{u})\|\mathcal{N}(\mathbf{0},\mathbf{I}))$。**VTSR**：主要优化重构，通过代理损失 $\mathcal{L}_{reg}=-\log T_\phi(\mathbf{u})$ 隐含推动温度朝向先验。
+**VGLR** 直接最大化 ELBO：$\mathcal{L}_{ELBO}=\mathbb{E}_{q_\phi(\mathbf{l}|\mathbf{u})}[\log p(\mathbf{y}|\mathbf{l},\mathbf{u})]-\beta D_{KL}(q_\phi(\mathbf{l}|\mathbf{u})\|\mathcal{N}(\mathbf{0},\mathbf{I}))$，第一项管重构、第二项把后验拉回居中先验，$\beta$ 调两者权衡。**VTSR** 以重构为主，再加一个代理损失 $\mathcal{L}_{reg}=-\log T_\phi(\mathbf{u})$ 隐式把温度推向先验。
 
 ## 实验关键数据
 

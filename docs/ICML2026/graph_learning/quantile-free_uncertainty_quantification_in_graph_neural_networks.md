@@ -41,30 +41,28 @@ QpiGNN 提出"无需分位输入、无需后处理"的 GNN 节点级预测区间
 ## 方法详解
 
 ### 整体框架
-给定图 $G=(\mathcal V,\mathcal E)$ 和节点特征 $\mathbf X$，QpiGNN 用一个共享 GNN 编码器算节点嵌入 $\mathbf H=\text{GNN}(\mathbf X,\mathcal E)$，再分接两个线性头：预测头 $\hat{\mathbf y}=\mathbf W_{\text{pred}}\mathbf H+\mathbf b_{\text{pred}}$，半宽头 $\hat{\mathbf d}=\text{Softplus}(\mathbf W_{\text{diff}}\mathbf H+\mathbf b_{\text{diff}})$。最终预测区间是 $[\hat y_v-\hat d_v,\ \hat y_v+\hat d_v]$。训练用一个三项联合损失：覆盖率平方误差 + 违规罚 + 宽度罚，直接以标签 $y_v$ 监督。推理时端到端一次前向即得到校准的节点级区间，不需 calibration set、不需 conformal 后处理。
+QpiGNN 要解决的是 GNN 节点回归既要给点估计、又要给一个紧致且校准的预测区间，而且不能依赖分位输入或事后 conformal 校准。它的做法是把"预测"和"不确定性"在架构和监督两端同时拆开：一个共享 GNN 编码器先算节点嵌入 $\mathbf H=\text{GNN}(\mathbf X,\mathcal E)$，再分接两个线性头——预测头出区间中心 $\hat y$、半宽头出半宽 $\hat d$，区间即 $[\hat y_v-\hat d_v,\ \hat y_v+\hat d_v]$；训练时直接用标签去优化"覆盖率贴近目标 + 区间尽量窄"的联合损失。推理一次前向就拿到校准区间，不需要 calibration set，也不需要后处理。
 
 ### 关键设计
 
-1. **Dual-head GNN 解耦预测与不确定性**：
+**1. 双头 GNN：把预测和不确定性从表征层就拆开**
 
-    - 功能：让 $\hat y$ 和 $\hat d$ 各自学到针对性的表征（一个为准确性、一个为覆盖率），避免共享表征下 oversmoothing 与梯度冲突。
-    - 核心思路：共享 GNN 编码 $\mathbf H$，两条线性头各算各的。半宽头用 Softplus 保证 $\hat d>0$，区间天然 well-ordered（不会再出现 quantile crossing）。设计上呼应 Kendall&Gal、Lakshminarayanan 等异方差/贝叶斯回归中"分头学不同信号"的成功经验，但更轻量。
-    - 设计动机：在图上，节点表征通过 message passing 反复平均，单头模型必然把 center 和 spread 都压向局部均值，破坏节点级自适应性。结构性解耦让 spread head 可以学到与 center 完全不同的函数类——比如在 hub 节点上自然给出更宽区间。
+QR 系列搬到 GNN 上全部塌掉的根因是单头共享表征——message passing 反复对邻域取平均，单头模型会把区间中心和半宽都压向局部均值，节点级的自适应性被抹平。QpiGNN 在共享编码 $\mathbf H$ 之上分出两条独立线性头：预测头 $\hat{\mathbf y}=\mathbf W_{\text{pred}}\mathbf H+\mathbf b_{\text{pred}}$ 专注准确性，半宽头 $\hat{\mathbf d}=\text{Softplus}(\mathbf W_{\text{diff}}\mathbf H+\mathbf b_{\text{diff}})$ 专注覆盖率。Softplus 保证 $\hat d>0$，区间天然 well-ordered，不会再出现下界超过上界的 quantile crossing。这种结构性解耦让半宽头能学到与中心完全不同的函数类——比如在 hub 节点上自然给出更宽的区间，而不被中心头的平滑趋势带跑。思路上呼应 Kendall&Gal、Lakshminarayanan 等异方差/贝叶斯回归"分头学不同信号"的经验，但这里目的不是估方差，而是专门阻断 oversmoothing 对半宽头的污染，且只多一条线性头、更轻量。
 
-2. **Quantile-free joint loss 直接监督覆盖率与宽度**：
+**2. Quantile-free 联合损失：用标签一步同时校准覆盖率与压窄区间**
 
-    - 功能：去掉"分位输入"和"post-hoc calibration"，用标签 $y_v$ 一步训练就同时校准覆盖率和压缩宽度。
-    - 核心思路：$\mathcal L_{\text{total}}=\underbrace{(\hat c-(1-\alpha))^2 + \hat\ell_{\text{viol}}}_{\mathcal L_{\text{coverage}}} + \underbrace{\lambda_{\text{width}}\cdot\mathbb E_v[\hat y_v^{\text{up}}-\hat y_v^{\text{low}}]}_{\mathcal L_{\text{width}}}$。其中 $\hat c=\mathbb P(\hat y_v^{\text{low}}\le y_v\le \hat y_v^{\text{up}})$ 是经验覆盖率；$\hat\ell_{\text{viol}}=\mathbb E[|y_v-\hat y_v^{\text{low}}|\cdot\mathds 1[y_v<\hat y_v^{\text{low}}]+|y_v-\hat y_v^{\text{up}}|\cdot\mathds 1[y_v>\hat y_v^{\text{up}}]]$ 给违规节点提供细粒度梯度；宽度罚用 L1 形式，避免 L2 在 outlier 下不稳。$\lambda_{\text{width}}\in [0.2,0.5]$ 由贝叶斯优化选。
-    - 设计动机：RQR-W 把 coverage 和 width 揉成单一条件损失，在 GNN 上会被 oversmoothing 推成全局过宽区间。QpiGNN 把两者解耦成可加项：先把 $\hat c$ 拉到目标 $1-\alpha$，再在保持覆盖的前提下压缩宽度。这种 "Lagrangian relaxation" 的视角让超参 $\lambda_{\text{width}}$ 有明确含义。
+标准 QR 必须把分位水平 $\tau$ 作为输入或为每个 $\tau$ 训一个模型，RQR-W 则把 coverage 和 width 揉进单一条件损失，在 GNN 上会被 oversmoothing 推成全局过宽的区间。QpiGNN 干脆把分位输入拿掉，用一个可加的三项标签级损失直接监督：
 
-3. **覆盖率的渐近 + 有限样本保证**：
+$$\mathcal L_{\text{total}}=\underbrace{(\hat c-(1-\alpha))^2 + \hat\ell_{\text{viol}}}_{\mathcal L_{\text{coverage}}} + \underbrace{\lambda_{\text{width}}\cdot\mathbb E_v[\hat y_v^{\text{up}}-\hat y_v^{\text{low}}]}_{\mathcal L_{\text{width}}}$$
 
-    - 功能：在违反 i.i.d. / exchangeability 的图数据上仍给出可证明的覆盖率收敛性。
-    - 核心思路：Proposition 4.1 假设噪声 $\varepsilon_v$ 有界弱相关、$\hat y_v$ 与 $\hat d_v$ 概率收敛到目标、节点嵌入足够多样，则 $\hat c\xrightarrow{P}1-\alpha$（WLLN）。有限样本下用 McDiarmid/Hoeffding 不等式：单节点扰动对覆盖率估计影响 $\le 1/N+\delta_G$，因此 $|\hat c-(1-\alpha)|=\mathcal O(1/\sqrt N)$。同时在 $P(y\mid x_v)$ 对称的假设下，最小宽度满足 $d_v^*=F_v^{-1}(1-\alpha/2)$，本文损失被解释为该约束优化的 Lagrangian 松弛。
-    - 设计动机：CP 的覆盖保证依赖 exchangeability，QpiGNN 把保证建立在"邻域平滑下的近似 bounded-difference"上，更适合图数据。
+其中 $\hat c=\mathbb P(\hat y_v^{\text{low}}\le y_v\le \hat y_v^{\text{up}})$ 是经验覆盖率，平方项把它往目标 $1-\alpha$ 拉；违规罚 $\hat\ell_{\text{viol}}=\mathbb E[|y_v-\hat y_v^{\text{low}}|\cdot\mathds 1[y_v<\hat y_v^{\text{low}}]+|y_v-\hat y_v^{\text{up}}|\cdot\mathds 1[y_v>\hat y_v^{\text{up}}]]$ 只对落在区间外的节点按越界距离给细粒度梯度；宽度罚用 L1 而非 L2，避免 outlier 把宽度项放大。把 coverage 和 width 解耦成可加项的好处是训练有明确次序——先把 $\hat c$ 拉到目标、再在保持覆盖的前提下压缩宽度，正好对应一个约束优化的 Lagrangian 松弛，超参 $\lambda_{\text{width}}\in[0.2,0.5]$（由贝叶斯优化选）就是那个有明确含义的乘子。整个过程只用标签 $y_v$ 监督，既无分位输入也无 post-hoc 校准。
+
+**3. 图依赖下的覆盖率保证：绕开 exchangeability**
+
+CP 的覆盖保证依赖可交换性，而图数据带结构依赖天然不满足，所以 QpiGNN 把保证重建在"邻域平滑下的近似 bounded-difference"上。Proposition 4.1 在噪声 $\varepsilon_v$ 有界弱相关、$\hat y_v$ 与 $\hat d_v$ 概率收敛到目标、节点嵌入足够多样这几个假设下，用弱大数律给出渐近收敛 $\hat c\xrightarrow{P}1-\alpha$。有限样本侧则用 McDiarmid/Hoeffding 不等式：单节点扰动对覆盖率估计的影响被界在 $1/N+\delta_G$，于是 $|\hat c-(1-\alpha)|=\mathcal O(1/\sqrt N)$，给出一条实用的频率派界。此外在 $P(y\mid x_v)$ 对称的假设下，最小宽度满足 $d_v^*=F_v^{-1}(1-\alpha/2)$，正好印证上面的联合损失就是该约束最优化的 Lagrangian 松弛。
 
 ### 损失函数 / 训练策略
-端到端 SGD 训练，损失即上面那个三项加权和，diminishing learning rate 保证非凸下收敛到 stationary point。$\alpha$ 通常取 0.1（90% 目标覆盖），$\lambda_{\text{width}}\in[0.2,0.5]$ 由 BO 选；为了对比也实现了 RQR 的 GNN 变体并加上 ordering 罚 $\gamma_{\text{order}}\cdot\text{ReLU}(\hat y^{\text{low}}-\hat y^{\text{up}})$ 缓解 quantile crossing。
+端到端 SGD 训练上面那个三项加权和，配 diminishing learning rate 保证非凸下收敛到 stationary point。$\alpha$ 通常取 $0.1$（即 90% 目标覆盖），$\lambda_{\text{width}}\in[0.2,0.5]$ 由 BO 选。为做对比，作者还实现了 RQR 的 GNN 变体，并额外加 ordering 罚 $\gamma_{\text{order}}\cdot\text{ReLU}(\hat y^{\text{low}}-\hat y^{\text{up}})$ 来缓解它的 quantile crossing。
 
 ## 实验关键数据
 

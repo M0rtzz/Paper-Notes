@@ -41,37 +41,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：时刻 $t$ 的 3D 非结构网格 $\mathcal{G}=(\mathcal{V},\mathcal{E})$ 及节点物理场 $\bm{u}^t$（位移/速度/位置）。
-输出：下一步增量 $\bm{u}^{t+1}=\bm{u}^t+\Phi_\theta(\bm{u}^t,\mathcal{G})$，残差式时间推进，便于长时 rollout。
 
-主干为 Encoder–Processor–Decoder。Encoder 用逐点 MLP 把节点特征升到隐维度 $h$；Decoder 把最终隐特征映回 $\mathbb{R}^3$。Processor 在隐空间交替执行三种算子：
-（i）GraphNet 块 $\mathrm{GN}$ 做细网格消息传递（MeshGraphNet 标准更新规则，先更新边再聚合到节点）；
-（ii）Downsampling 块 $\mathrm{DN}$ 把细图压成 $n_s=0.5n$ 的粗图；
-（iii）Upsampling 块 $\mathrm{UP}$ 用 KNN 把粗图特征插值回细图，与细层特征融合后再过若干 GraphNet 块。整体形成 $\mathcal{G}\to\tilde{\mathcal{G}}\to\mathcal{G}_c\to\tilde{\mathcal{G}}$ 的 U-Net 式调度，粗层负责扩大有效感受野、传播全局信息。
-
-关键 twist 在 $\mathrm{DN}$ 内部：它不是按几何选节点，而是借用主 Decoder $\phi_{\mathrm{dec}}$ 临时把当前隐特征解码成物理量，算出每个节点的"动量守恒残差"$\bm{r}_i^t$，再按 $s_i^t=\|\bm{r}_i^t\|_2$ 排序 TopK。
+要解决的问题是：固体力学仿真里应力集中、接触界面、大变形都是空间上局部、动力学上关键的区域，但多重网格 GNN 在粗化时若按几何启发式（FPS）均匀铺节点，这些区域分到的粗层算力不够，长时 rollout 会先在这里发散。本文的做法是把"粗层保留哪些节点"从几何准则改成物理准则——给每个节点算一个动量守恒方程的离散残差范数作为重要性得分，再 TopK 选出残差最大的节点构成粗图。整体主干仍是 MeshGraphNet 系的 Encoder–Processor–Decoder：Encoder 用逐点 MLP 把节点特征升到隐维度 $h$，Decoder 把隐特征映回 $\mathbb{R}^3$，Processor 在隐空间交替做细网格消息传递、物理引导下采样、KNN 上采样融合，形成 U-Net 式的分层调度，所有创新都压在下采样块内部。
 
 ### 关键设计
 
-1. **基于动量守恒残差的节点物理打分**：
+**1. 基于动量守恒残差的节点物理打分：把"选谁进粗层"从几何准则换成物理准则**
 
-    - 功能：给每个节点算一个标量得分 $s_i^t$，刻画"该节点附近预测出的物理场对动量守恒方程的违背程度"，作为节点重要性的 a posteriori 指标。
-    - 核心思路：先用主 Decoder $\hat{\bm{u}}^t=\phi_{\mathrm{dec}}(\tilde{\mathcal{G}})$ 把当前隐图解码到物理空间（这一步是"借用"，不参与最终预测），用预测场 $\hat{\bm{u}}^t$ 算应力 $\hat{\bm{\sigma}}^t$；瞬态情形下残差为 $\bm{r}_i^t=\rho_i\ddot{\hat{\bm{u}}}_i^t-(\nabla_h\cdot\hat{\bm{\sigma}}^t)_i-\rho_i\mathbf{b}_i^t$，准静态情形丢掉惯性项变为平衡残差 $\bm{r}_i^t=-(\nabla_h\cdot\hat{\bm{\sigma}}^t)_i-\rho_i\mathbf{b}_i^t$；散度 $\nabla_h\cdot$ 用固定的 mesh-based 离散算子重构，得分取 $s_i^t=\|\bm{r}_i^t\|_2$。残差每个时刻自回归重算一次。
-    - 设计动机：FEM 里残差大的地方就是物理上"算不准/动得猛"的地方，把这个准则平移到 GNN 粗化，等价于让多重网格层级自动捕捉应力集中、接触界面、边界过渡这些"哪怕几何上稀疏但物理上关键"的区域；而且这是个无监督信号，不需要额外标签。一个值得注意的工程选择是**复用主 Decoder** 来算物理量（而不是独立训一个 scoring decoder），消融显示独立 decoder 反而掉点，说明共享 decoder 强迫主分支学到"物理上自洽"的表征。
+针对的痛点是 FPS 之类几何启发式完全不看物理、把算力均匀浪费在安静区域。本文借经典 FEM 里 residual-based adaptive mesh refinement 的直觉——残差大的地方就是物理上"算不准/动得猛"的地方——给每个节点算一个标量得分 $s_i^t$，刻画该节点附近预测物理场对动量守恒方程的违背程度，作为节点重要性的 a posteriori 指标。具体地，下采样块先借用主 Decoder $\hat{\bm{u}}^t=\phi_{\mathrm{dec}}(\tilde{\mathcal{G}})$ 把当前隐图临时解码到物理空间（这一步只为打分、不参与最终预测），用预测场算应力 $\hat{\bm{\sigma}}^t$；瞬态情形下残差为 $\bm{r}_i^t=\rho_i\ddot{\hat{\bm{u}}}_i^t-(\nabla_h\cdot\hat{\bm{\sigma}}^t)_i-\rho_i\mathbf{b}_i^t$，准静态情形丢掉惯性项变成平衡残差 $\bm{r}_i^t=-(\nabla_h\cdot\hat{\bm{\sigma}}^t)_i-\rho_i\mathbf{b}_i^t$，散度 $\nabla_h\cdot$ 用固定的 mesh-based 离散算子重构，得分取 $s_i^t=\|\bm{r}_i^t\|_2$，每个时刻自回归重算一次。
 
-2. **TopK 物理引导节点选择 + KNN 重网格化**：
+这套准则等价于让多重网格层级自动捕捉应力集中、接触界面、边界过渡这些几何上稀疏但物理上关键的区域，而且是无监督信号、不需要额外标签。一个值得注意的工程选择是**复用主 Decoder** 来算物理量、而不是独立训一个 scoring decoder——消融显示独立 decoder 反而掉点，说明共享 decoder 强迫主分支同时支持"预测下一步"和"算残差"，反而促进物理自洽。
 
-    - 功能：把得分向量 $\bm{s}\in\mathbb{R}^n$ 转成 $n_s$ 个粗节点的下标集合 $\mathcal{V}_c$，并重建粗图边集 $\mathcal{E}_c$。
-    - 核心思路：节点选择有两种 —— 确定性 TopK $\mathcal{I}=\mathrm{TopK}(\bm{s}^t,n_s)$（保留得分最高的 $n_s$ 个），或者按 $p_i=s_i/\sum_j s_j$ 做 categorical 采样的概率式选择。边集构建也有两种 —— 继承细网格的诱导子图 $\mathcal{E}_c=\{(i,j)\in\mathcal{E}\mid i,j\in\mathcal{V}_c\}$，或在被选节点上用欧氏 KNN 重新拉一张图（"remeshing"）。实验最佳组合是 **TopK + remeshing**：TopK 比概率采样在 rollout RMSE 上从 $13.1\times 10^{-3}$ 一路降到 $6.5\times 10^{-3}$，remeshing 比继承连通性更稳定。
-    - 设计动机：TopK 在物理引导下比随机采样更激进，所有粗层算力都给最关键的几个区域；KNN 重网格化避免了"残差大的节点恰好被原始边断开"的拓扑碎片化，对长程信息传播至关重要——这点和 BSMS（拓扑 bi-stride 池化）形成鲜明对比，BSMS 一定要保连通性，但作者发现纯按物理选+重连反而更好。
+**2. TopK 物理引导节点选择 + KNN 重网格化：把得分转成粗图，且不被原始拓扑拖累**
 
-3. **Encoder-Processor-Decoder + KNN 上采样融合**：
+针对的问题是有了得分还得决定怎么选节点、怎么连边，而残差大的节点很可能恰好被原始边断开造成拓扑碎片化。节点选择上，本文对比了确定性 TopK $\mathcal{I}=\mathrm{TopK}(\bm{s}^t,n_s)$（保留得分最高的 $n_s$ 个）和按 $p_i=s_i/\sum_j s_j$ 做 categorical 采样的概率式选择；边集构建上对比了继承细网格的诱导子图 $\mathcal{E}_c=\{(i,j)\in\mathcal{E}\mid i,j\in\mathcal{V}_c\}$ 和在被选节点上用欧氏 KNN 重新拉一张图（remeshing）。最佳组合是 **TopK + remeshing**：TopK 比概率采样把 rollout RMSE 从 $13.1\times 10^{-3}$ 降到 $6.5\times 10^{-3}$，因为 50% 这种高粗化率下随机性引入的方差损害大于探索收益。
 
-    - 功能：把粗图处理后的全局信息送回细图，同时保留细层局部精度。
-    - 核心思路：粗层经过若干 GraphNet 块得到 $\tilde{\mathcal{G}}_c^{n_s\times h}$ 后，用 $k$-NN（在物理空间欧氏距离意义下）把每个细节点的特征插值成它最近 $k$ 个粗节点特征的加权和，再和细层原始特征拼接/融合，最后再过若干细层 GraphNet 块做局部精修。时间推进采用残差式 $\bm{u}^{t+1}=\bm{u}^t+\Phi_\theta(\bm{u}^t,\mathcal{G})$，对应经典数值积分格式，对长时 rollout 稳定性帮助很大。
-    - 设计动机：传统单尺度 GNN 受限于消息传递的 $k$-hop 半径，捕捉不到全局耦合；多重网格的粗层一跳跨越远距离，但只有粗层是不够的（会丢失局部应力梯度）。Encoder-Processor-Decoder + 残差时间步是 MeshGraphNet 沿用下来的成熟设计，本文的新颖度全压在 Processor 内部的"物理引导粗化"上，证明换粗化策略就能在不改主干的情况下打过 7 个强 baseline。
+KNN 重网格化的意义在于绕开"残差大的节点被原始边断开"的碎片化，对长程信息传播至关重要——这点和 BSMS（拓扑 bi-stride 池化）形成鲜明对比：BSMS 一定要保连通性，但本文发现纯按物理选节点再重连边反而更好，提示在多重网格 GNN 里"语义相关性"可能比"拓扑保真度"更重要。
+
+**3. Encoder-Processor-Decoder 主干 + KNN 上采样融合：把粗层全局信息送回细层而不丢局部精度**
+
+针对的是单尺度 GNN 受限于消息传递的 $k$-hop 半径、捕捉不到全局耦合，但只用粗层又会丢失局部应力梯度。粗层经过若干 GraphNet 块得到 $\tilde{\mathcal{G}}_c^{n_s\times h}$ 后，用 $k$-NN（物理空间欧氏距离意义下）把每个细节点的特征插值成它最近 $k$ 个粗节点特征的加权和，再与细层原始特征融合，最后过若干细层 GraphNet 块做局部精修。时间推进采用残差式 $\bm{u}^{t+1}=\bm{u}^t+\Phi_\theta(\bm{u}^t,\mathcal{G})$，对应经典数值积分格式，对长时 rollout 稳定性帮助很大。
+
+这套 Encoder-Processor-Decoder + 残差时间步本身是 MeshGraphNet 沿用下来的成熟设计，本文的新颖度全压在 Processor 内部的物理引导粗化上——证明只换粗化策略、不改主干就能打过 7 个强 baseline。
 
 ### 损失函数 / 训练策略
+
 直接监督下一步状态预测，逐节点 MSE 损失。AdamW 优化器，所有 baseline 训 30 个 epoch（约 $10^6$ 步）、同一 protocol，每个配置跑 3-5 个 seed 取均值；所有多重网格模型固定粗化比例为 50%（粗图节点数 = 细图的一半），controlling for capacity，把变量隔离到"粗化策略"本身。NVIDIA A100。
 
 ## 实验关键数据

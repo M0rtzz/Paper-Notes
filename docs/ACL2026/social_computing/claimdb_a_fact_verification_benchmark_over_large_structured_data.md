@@ -55,23 +55,23 @@ ClaimDB 构建 pipeline 是 5 步流水线：
 
 ### 关键设计
 
-1. **AST-based Pre-Filtering（强制组合推理）**:
+**1. AST-based Pre-Filtering：用机械可验证的语法规则强制每条 claim 都需要组合推理。**
 
-    - 功能：从 BIRD 的 11k pairs 里筛出"答案必须聚合大量数据"的子集，避免基准退化成"查一行就能答"的简单 lookup。
-    - 核心思路：把 SQL 解析成 AST，按 4 条规则保留——(a) 含 ORDER BY/superlative（如 MAX、TOP-K，意味着比较全表）；(b) 含 aggregate function（AVG/SUM/COUNT 等大集合操作）；(c) 含 window function（跨 partition 的复杂信息流）；(d) 三表以上 join。再额外规定 answer 行数 $\le 10$，让 GPT-5 在 claim 生成阶段能稳定追踪 column/value 结构。
-    - 设计动机：这一步是 "ClaimDB 难度" 的根源。仅靠 LLM 提示生成 claim 无法保证 evidence 真的大、推理真的需要组合——AST 规则是机械且可验证的"组合推理证明"，确保任何方法只要不能跨表聚合就一定答不对。这是 ClaimDB 区别于 TabFact / SCITAB 等小表基准的核心机制。
+如果只靠 LLM 提示去生成 claim，没法保证背后的 evidence 真的大、推理真的需要跨表聚合，基准很容易退化成"查一行就能答"的简单 lookup。ClaimDB 的做法是把 BIRD 的每条 SQL 解析成 AST，只保留满足以下任一条件的 query：(a) 含 ORDER BY / superlative（如 MAX、TOP-K，意味着要比较全表）；(b) 含 aggregate function（AVG / SUM / COUNT 等大集合操作）；(c) 含 window function（跨 partition 的复杂信息流）；(d) 三表以上 join。再额外规定答案行数 $\le 10$，让 GPT-5 在后续 claim 生成阶段能稳定追踪 column/value 结构，从 11k pairs 筛到约 6.5k。
 
-2. **三类 + 三子类 NEI Claim Generation**:
+这套 AST 规则是 ClaimDB 难度的根源：它是机械且可复核的"组合推理证明"，确保任何方法只要不能跨表聚合就必然答不对，而不依赖人去主观判断"这题够不够难"。这正是它区别于 TabFact / SCITAB 等小表基准的核心机制。
 
-    - 功能：把"无法判定"（NEI, Not-Enough-Info）从一个粗类细化为可控的三种现实失败模式，并防止 NEI 退化成"明显胡说一眼识破"的简单类。
-    - 核心思路：借鉴 Kirichenko 等的弃权 taxonomy，定义三个 NEI 子类——**Out-of-Schema**：claim 提到的概念不在 schema 中（如向"加州学校"DB 问"家庭是否更倾向 homeschool"）；**Counterfactual**：what-if 假设（如"如果 Pinecrest 2020 年开新校区..."）；**Subjective**：主观价值判断（如"哪个城市最适合 K-12 学习"）。生成策略上：E/C 用 1-shot + medium reasoning（结构受答案约束，需要例子）；NEI 用 zero-shot + medium reasoning（自由度大，shot 反而限制多样性）。生成时把 schema metadata 喂给 GPT-5 以保证 out-of-schema claim 在"概念上是越界但与 DB 主题相关"。
-    - 设计动机：传统基准要么没有 NEI，要么 NEI 只是"完全无关"的简单负样本——但真实 fact-checking 中 "证据不足" 才是最常见也最危险的判定。三子类划分让 NEI 评测变成可分析的（如发现封闭模型完全不敢预测 NEI、开源模型又过度预测），把模型的弃权能力从一个 binary 变成可诊断的多维度问题。
+**2. 三类 + 三子类 NEI Claim Generation：把"证据不足"从一个粗类拆成可诊断的失败模式。**
 
-3. **LLM Judge Panel（recall-oriented quality control）+ STS Grounding**:
+传统基准要么没有 NEI（Not-Enough-Info），要么 NEI 只是"完全无关"的简单负样本，一眼就能识破；但真实 fact-checking 里"证据不足"才是最常见也最危险的判定。ClaimDB 对每个 Q/A pair 用 GPT-5 生成 entailed / contradicted / NEI 三类 claim，并借鉴 Kirichenko 等的弃权 taxonomy 把 NEI 进一步分成三个子类——**Out-of-Schema**（概念不在 schema 中，如向"加州学校"DB 问"家庭是否更倾向 homeschool"）、**Counterfactual**（what-if 假设，如"如果 Pinecrest 2020 年开新校区…"）、**Subjective**（主观价值判断，如"哪个城市最适合 K-12 学习"）。生成策略也按类型分化：E/C 结构受答案约束，用 1-shot + medium reasoning；NEI 自由度大、shot 反而限制多样性，用 zero-shot + medium reasoning；同时把 schema metadata 喂给 GPT-5，保证 out-of-schema claim "概念上越界但与 DB 主题相关"。
 
-    - 功能：在 64k claim 规模下用低成本方式做高质量过滤，并把 NEI 难度按"与 DB 概念的接近度"分层。
-    - 核心思路：(a) **Panel 设计**：选 3 个不同家族的小模型（Microsoft Phi-4 + xAI grok-3-mini + Mistral mistral-small），排除 OpenAI 模型避免 self-enhancement bias（因为 claim 由 GPT-5 生）；rubric 是 binary yes/no（label 对吗？self-contained 吗？NEI 子类对吗？schema 泄漏吗？），单否决制；prompt 显式写"If you are unsure, answer no"——优化目标不是 agreement with human，而是 **maximize recall on bad claims**。在 150 人工标注样本上测得 100% recall。(b) **STS Grounding**：对 NEI claim 用 gemini-embedding 算与 Q/A 的相似度，例如同一 Chicago Crime DB 下，"指挥官有法学学位"（远，0.798）vs "案件多涉及游客"（近，0.869），test split 只从 top quartile 采样难 NEI，逼模型真正去查 DB 而非靠常识 reject。
-    - 设计动机：人工标 64k 不现实；单 large judge 有 bias；多家族小 judge panel + recall-first prompt 是这类大规模 quality control 的工程化最优解。STS-based grounding 则解决了 "NEI 过于明显" 的退化，让基准在 NEI 维度上也有挑战性，是 ClaimDB test set 5.6% label-flag + 14% 总过滤率的关键。
+这种细分让 NEI 评测从一个 binary 标签变成可分析的多维度问题——后续正是靠它发现封闭模型几乎不敢预测 NEI、开源模型又过度预测，把模型的弃权能力变成能被诊断的现象，而不是一个笼统的 abstention rate。
+
+**3. LLM Judge Panel + STS Grounding：在 64k 规模上做低成本高召回的质量控制，并把 NEI 难度分层。**
+
+人工标注 64k claim 不现实，单个 large judge 又会带 bias，而且自动生成的 NEI 容易"过于明显"导致退化。质量控制因此分两步走。其一是 judge panel：选三个不同家族的小模型（Microsoft Phi-4 + xAI grok-3-mini + Mistral mistral-small），刻意排除 OpenAI 模型以避免 self-enhancement bias（claim 本身由 GPT-5 生成）；rubric 是 binary yes/no（label 对吗？self-contained 吗？NEI 子类对吗？schema 泄漏吗？），采用单否决制——任一 judge 不通过就 drop；prompt 显式写 "If you are unsure, answer no"，优化目标不是 agreement with human，而是 maximize recall on bad claims，在 150 个人工标注样本上测得 100% recall。其二是 STS grounding：对 NEI claim 用 gemini-embedding-001 算它与 Q/A 的相似度，例如同一 Chicago Crime DB 下，"指挥官有法学学位"（远，$0.798$）vs "案件多涉及游客"（近，$0.869$），test split 只从 top quartile 采样难 NEI。
+
+这两步合在一起，让大规模合成数据既能被廉价过滤、又不至于在 NEI 维度上退化成常识就能 reject 的简单题：recall-first 的小模型 panel 是工程化最优解，STS grounding 则逼模型真正去查 DB。它们共同支撑了 ClaimDB test set 5.6% 的 label-flag 率与 14% 的总过滤率。
 
 ## 实验关键数据
 

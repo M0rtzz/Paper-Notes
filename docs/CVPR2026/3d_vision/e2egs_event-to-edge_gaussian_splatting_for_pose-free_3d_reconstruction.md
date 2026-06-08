@@ -47,35 +47,39 @@ NeRF 和 3D Gaussian Splatting (3DGS) 推动了新视角合成的巨大进步，
 
 ### 整体框架
 
-E2EGS 采用 3DGS 作为场景表示，沿用 IncEventGS 的 tracking-mapping 交替优化框架。输入是纯事件流，输出是 3D 高斯场景表示和相机轨迹。事件流被分成时间块处理，每块关联一段连续轨迹。事件监督通过最小化测量事件图 $E_t(\mathbf{x})$ 与合成事件图 $\hat{E}_t(\mathbf{x}) = \log \hat{I}_{t+\Delta t}(\mathbf{x}) - \log \hat{I}_t(\mathbf{x})$ 之间的差异来实现。
+E2EGS 要解决的是一个纯事件流、无位姿的 3D 重建问题：输入只有事件相机吐出的异步事件流，输出是 3D 高斯场景和一整条相机轨迹，中间不借助任何 RGB 图像和深度模型。它沿用 3DGS 作场景表示、沿用 IncEventGS 的 tracking-mapping 交替优化骨架，把事件流切成时间块、每块绑定一段连续轨迹，监督信号来自最小化测量事件图 $E_t(\mathbf{x})$ 与合成事件图 $\hat{E}_t(\mathbf{x}) = \log \hat{I}_{t+\Delta t}(\mathbf{x}) - \log \hat{I}_t(\mathbf{x})$ 的差异。
 
-E2EGS 的核心创新是三层边缘引导管线：(1) 从连续事件图中提取鲁棒边缘 → (2) 沿边缘初始化 3D 高斯 → (3) 在 tracking 和 bundle adjustment 全程应用边缘加权损失。
+真正把它和 IncEventGS 区分开的是一条「边缘」主线，贯穿三步：先从连续事件图里提取一张抗噪边缘图，再沿这些边缘把 3D 高斯撒下去，最后在 tracking 和 bundle adjustment 的全程都按边缘给重建损失加权。原本 IncEventGS 靠深度模型 Marigold 提供的几何先验，在这里被「事件流自带的边缘」整条替换掉。
 
 ### 关键设计
 
-1. **Patch-based 时间一致性分析（边缘检测）**
+**1. Patch-based 时间一致性分析：从噪声事件流里免训练地抠出边缘。**
 
-    - 功能：从噪声事件流中提取抗噪边缘图，无需任何训练
-    - 核心思路：给定 $T$ 帧连续事件图 $\{E_t\}_{t=1}^T$，将其划分为 $p \times p$ 的重叠 patch。对每个 patch 位置 $P_{x,y}$，计算相邻帧之间的时间差分信号 $D_t(P_{x,y}) = |G_\sigma * E_t(P_{x,y}) - G_\sigma * E_{t-1}(P_{x,y})|$（高斯窗口平滑处理尖锐变化）。然后取所有相邻帧对的方差最大值 $C(P_{x,y}) = \max_{t} \text{Var}(D_t(P_{x,y}))$，方差高于阈值 $\tau$ 的 patch 被判定为包含边缘
-    - 设计动机：相机运动时，边缘区域在连续帧间产生空间一致的结构化事件模式（高方差），而非边缘区域只产生稀疏随机噪声（低方差）。这种方差差异是天然的边缘/非边缘判别器。灵感来源于对比度最大化框架，但避免了其代价昂贵的轨迹估计步骤
-    - 自校正机制：时间差分同时捕捉前一帧 $E_{t-1}$ 和当前帧 $E_t$ 的边缘，深度估计错误的边缘会因与当前观测不一致而被自动移除
+IncEventGS 之所以会在相机走到未见区域时崩溃，根子在于它的几何先验来自一个外部深度模型，而 E2EGS 想要的是一个不依赖任何学习、纯靠事件统计就能算出来的先验。它的观察很物理：相机一动，真实边缘处在连续几帧里都会激发空间上结构一致的密集事件（方差大），而非边缘的平坦区域只有零散随机噪声（方差小）——这个方差差异本身就是一个天然的边缘判别器。具体做法是把 $T$ 帧连续事件图 $\{E_t\}_{t=1}^T$ 切成 $p \times p$ 的重叠 patch，对每个 patch 位置 $P_{x,y}$ 先算相邻帧的时间差分 $D_t(P_{x,y}) = |G_\sigma * E_t(P_{x,y}) - G_\sigma * E_{t-1}(P_{x,y})|$（高斯窗口 $G_\sigma$ 平滑掉过尖的跳变），再取所有相邻帧对里方差的最大值
 
-2. **Edge-aware Gaussian 初始化**
+$$C(P_{x,y}) = \max_{t} \text{Var}\big(D_t(P_{x,y})\big),$$
 
-    - 功能：沿检测到的边缘放置 3D 高斯点，替代深度模型初始化
-    - 核心思路：从边缘图提取 2D 边缘点 $\mathcal{P}$，用 KNN + PCA 获取每个点的边缘法线方向。通过递归网格细分（按法线方向一致性判断是否需要细分）生成 2D 边缘高斯集合 $\mathcal{G}_\text{edge}$。然后沿每个边缘高斯的视线方向用 inverse depth sampling 放置 3D 点：$d = \frac{1}{\frac{1}{d_\max} + u(\frac{1}{d_\min} - \frac{1}{d_\max})}$，$u \sim \mathcal{U}(0,1)$
-    - 深度采样 vs 表面采样互补：引入边缘比率 $r_\text{edge} \in [0,1]$ 控制边缘高斯和随机高斯的比例。$N_\text{edge} = \lfloor r_\text{edge} \cdot N_\text{total} \rfloor$ 个高斯沿边缘初始化，其余 $N_\text{random}$ 个随机放置以覆盖无纹理区域
-    - 设计动机：inverse depth sampling 在远处放更多采样点——远处点在相机旋转时产生更大的像素位移，更有利于旋转运动的可观测性，从而提升位姿估计精度。这比均匀深度采样更符合几何直觉
+方差超过阈值 $\tau$ 的 patch 就判为边缘。这个思路脱胎于对比度最大化框架，但绕开了它那一步昂贵的轨迹估计。它还自带一个纠错性质：时间差分会同时吃进前一帧 $E_{t-1}$ 和当前帧 $E_t$，所以一条「估错位置」的边缘会因为和当前观测对不上而在下一步被自然淘汰，不会一直留着拖累优化。
 
-3. **Edge-weighted 损失函数**
+**2. Edge-aware Gaussian 初始化：沿边缘撒点，把深度模型的活儿接过来。**
 
-    - 功能：在初始化、tracking、bundle adjustment 全程应用边缘加权重建损失
-    - 核心思路：边缘加权损失 $\mathcal{L}_\text{edge} = \frac{1}{|\Omega|} \sum_{\mathbf{x} \in \Omega} w(\mathbf{x}) \cdot \|\hat{E}(\mathbf{x}) - E(\mathbf{x})\|^2$，其中权重 $w(\mathbf{x}) = 1 + \beta \cdot M(\mathbf{x})$，$\beta$ 控制边缘强调程度。总损失 $\mathcal{L}_\text{total} = (1-\lambda) \mathcal{L}_\text{edge} + \lambda \mathcal{L}_\text{dssim}$
-    - 设计动机：事件相机在非边缘区域产生稀疏噪声，如果用均匀像素级损失，这些噪声事件会等权地影响优化过程，产生不可靠的梯度信号。边缘加权使优化聚焦于几何显著的边界区域——那里的几何约束更鲁棒，即使存在事件噪声也不易退化
+边缘图算好之后，它直接顶替深度模型来决定高斯初始位置。先从边缘图里取出 2D 边缘点集 $\mathcal{P}$，用 KNN + PCA 估出每个点的边缘法线方向，再按法线一致性做递归网格细分，得到一组 2D 边缘高斯 $\mathcal{G}_\text{edge}$；接着沿每个边缘高斯的视线方向，用 inverse depth sampling 把它推到 3D：
+
+$$d = \frac{1}{\tfrac{1}{d_\max} + u\big(\tfrac{1}{d_\min} - \tfrac{1}{d_\max}\big)},\quad u \sim \mathcal{U}(0,1).$$
+
+选 inverse depth 而不是均匀采样是有几何道理的：它在远处放更多采样点，而远处的点在相机旋转时会产生更大的像素位移，对旋转运动更「可观测」，从而帮到位姿估计。光有边缘点还不够覆盖无纹理区域，所以又引入一个边缘比率 $r_\text{edge} \in [0,1]$ 来调配比例——$N_\text{edge} = \lfloor r_\text{edge} \cdot N_\text{total} \rfloor$ 个高斯沿边缘初始化，剩下的 $N_\text{random}$ 个随机撒开补上平坦区域，边缘的几何约束和随机点的覆盖度因此互补。
+
+**3. Edge-weighted 损失函数：让优化盯住信息量最大的边界，别被噪声带偏。**
+
+最后这条边缘信息还要管到优化阶段。事件相机在非边缘区域只产生稀疏噪声，如果用逐像素均权的损失，这些噪声事件会和真正的边缘事件等权地参与，喂给优化一堆不可靠的梯度。E2EGS 因此给重建损失按边缘加权
+
+$$\mathcal{L}_\text{edge} = \frac{1}{|\Omega|} \sum_{\mathbf{x} \in \Omega} w(\mathbf{x}) \cdot \|\hat{E}(\mathbf{x}) - E(\mathbf{x})\|^2,\quad w(\mathbf{x}) = 1 + \beta \cdot M(\mathbf{x}),$$
+
+其中 $M(\mathbf{x})$ 是边缘掩码、$\beta$ 控制对边缘的强调程度，再和一项 D-SSIM 结构损失组合成 $\mathcal{L}_\text{total} = (1-\lambda)\,\mathcal{L}_\text{edge} + \lambda\,\mathcal{L}_\text{dssim}$。这相当于一种轻量的注意力：把优化的力气压在几何显著、约束更鲁棒的边界上，即便事件有噪声也不容易退化。这套加权在初始化、tracking、bundle adjustment 三个阶段一路用到底。
 
 ### 损失函数 / 训练策略
 
-总损失结合边缘加权重建损失和结构相似性损失。整个系统在 tracking 和 mapping 阶段交替优化：tracking 阶段固定高斯参数优化新 chunk 的位姿；mapping 阶段在滑窗内联合优化高斯参数和轨迹。
+整个系统在 tracking 和 mapping 之间交替：tracking 阶段冻住高斯参数、只优化新 chunk 的位姿；mapping 阶段在一个滑动窗口内联合优化高斯参数和轨迹。总损失就是上面的 $\mathcal{L}_\text{total}$（边缘加权重建损失 + D-SSIM）。
 
 ## 实验关键数据
 

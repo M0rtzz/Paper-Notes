@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NFM 是一个两阶段蒸馏：第一阶段训练一个 TarFlow 老师 $f_{\text{NF}}$，按最大似然学一个 $x\mapsto z$ 的可逆映射；第二阶段冻结老师，训练一个 FM 学生 $g$（任意架构，不必可逆）。学生看到的训练对是 $(x, z_{\epsilon'})$ 而不是 $(x, \epsilon)$，其中 $z_{\epsilon'}=f_{\text{NF}}(x+\eta\epsilon',c)/\sigma_f$，$\eta$ 是老师训练时用的输入扰动幅度，$\sigma_f$ 是用来把老师输出归一化为单位方差的标量。学生用普通 FM loss $\mathcal{L}_{\text{FM}}=\|g((1-t)x+tz_{\epsilon'},c,t)-(z_{\epsilon'}-x)\|_2^2$ 训练，推理与标准 FM 完全一致。
+NFM 想解决的是 Flow Matching 里"噪声-数据配对太粗糙"这件事，做法是把随机噪声端换成一个预训练 Normalizing Flow（NF）老师对 data 的编码。整套流程分两阶段：先按最大似然训一个 TarFlow 老师 $f_{\text{NF}}$，学一个 $x\mapsto z$ 的近确定可逆映射；再冻结老师，训一个普通 FM 学生 $g$（架构任意、不必可逆），让它看到的训练对从 $(x,\epsilon)$ 变成 $(x,z_{\epsilon'})$。学生的训练公式、采样器、guidance、时间调度全部沿用标准 FM，唯一改动就是把噪声端的 $\epsilon$ 替换成老师给的 $z_{\epsilon'}$，所以可以零成本接进任何现成的 FM 代码栈。
 
 ### 关键设计
 
-1. **用 NF 老师产生的 $z$ 取代随机噪声**:
+**1. 用 NF 老师产生的 $z$ 取代随机噪声：把多对多映射收紧成近确定配对**
 
-    - 功能：把每个 data $x$ 与一个由 NF 老师确定的、近 Gaussian 的 $z_{\epsilon'}$ 绑定成训练对，让 FM 学生学习的不再是"任意 noise 到任意 data"的多对多映射，而是"特定 $z$ 到特定 $x$"的近确定映射。
-    - 核心思路：训练时按 $z_{\epsilon'}=f_{\text{NF}}(x+\eta\epsilon',c)/\sigma_f$ 采样，其中 $\sigma_f^2=\mathbb{E}[f_{\text{NF}}(x+\eta\epsilon',c)^2]$ 保证 $z$ 的方差大致为 1，因此整体分布仍近似 $\mathcal{N}(0,I)$，FM 学生采样时直接从标准高斯起步就可用。值得注意的是，把变分爆炸记号转到方差守恒记号下，TarFlow 的扰动幅度 $\eta=0.05$ 对应 FM 的最大噪声水平 $t=\eta/(1+\eta)\approx0.0476$，远小于标准 FM 的 $t=1$。
-    - 设计动机：FM 的核心难点是 $x_t$ 在大 $t$ 处条件方差很大，速度目标 $v_t=\epsilon-x$ 几乎只有"端点差"的方差信息可用；用 NF 给的 $z_{\epsilon'}$ 替换 $\epsilon$ 后，$\text{Var}(v_t|x_t,t)$ 显著降低，梯度更稳、轨迹更直，能直接转化为更少 NFE 下的 FID 提升。
+FM 真正难学的地方在大 $t$：插值点 $x_t=(1-t)x+t\epsilon$ 的条件方差很大，速度目标 $v_t=\epsilon-x$ 几乎只剩"两端点之差"这点信息，导致同一个 $x_t$ 可能对应五花八门的目标方向，梯度噪声大、学到的 ODE 轨迹弯曲。NFM 的解法是不再让 data 配随机 noise，而是配一个由老师锁定的、近 Gaussian 的编码 $z_{\epsilon'}=f_{\text{NF}}(x+\eta\epsilon',c)/\sigma_f$，其中 $\sigma_f^2=\mathbb{E}[f_{\text{NF}}(x+\eta\epsilon',c)^2]$ 把老师输出归一化到单位方差，保证 $z$ 整体仍近似 $\mathcal{N}(0,I)$、学生采样时照样能从标准高斯起步。这样每个 $x$ 都被绑到一个几乎确定的 $z$ 上，"特定 $z\to$ 特定 $x$"的映射让 $\text{Var}(v_t\mid x_t,t)$ 明显降低，直接表现为路径更直（实验里曲率 $\kappa$ 从 FM 的 0.0386 降到 0.0181）、少步采样的 FID 提升。一个值得注意的细节是：把老师的扰动幅度换算到 FM 的方差守恒坐标下，$\eta=0.05$ 只对应 FM 的最大噪声水平 $t=\eta/(1+\eta)\approx0.0476$，远小于标准 FM 的 $t=1$，等于学生从一开始就活在一个"噪声很温和"的区间里。
 
-2. **TarFlow 老师 + 输入扰动 $\eta$**:
+**2. TarFlow 老师配输入扰动 $\eta$：既保平滑又控噪声水平**
 
-    - 功能：选 TarFlow 作为老师是因为它在图像生成上已能与扩散模型抗衡；老师训练时给 $x$ 加小量 $\eta\epsilon'$ 扰动是为了让映射对 data 邻域有平滑性。
-    - 核心思路：TarFlow 是用 Transformer 实现的 auto-regressive flow，每个 meta-block 内自回归生成 patch，因此采样慢但可逆性强；它在训练时用 $x'=x+\eta\epsilon'$ 输入网络，再以 NLL 最小化学习。NFM 完整保留这个 $\eta$，因为它既保证了 $z$ 在小邻域内的平滑性，又自然把 FM 的有效噪声水平压低到 $\sim\eta/(1+\eta)$。
-    - 设计动机：老师的扰动 $\eta$ 在 NFM 中起两个作用：让 $z$ 不至于退化成纯确定映射（保留一定 stochasticity），并隐式控制 FM 学生看到的最大噪声水平 —— 实验中 $\eta$ 取得越大，最佳 FID 出现在更高 NFE 处，反之 $\eta$ 小则少步采样下表现更好。
+老师选 TarFlow，是因为它是用 Transformer 实现的自回归流，每个 meta-block 内逐 patch 自回归生成，可逆性强、图像质量已能与扩散模型抗衡——代价是采样极慢，而这正是 NFM 要靠学生绕过的短板。训练老师时输入不是干净的 $x$ 而是 $x'=x+\eta\epsilon'$，再最小化 NLL，NFM 把这个 $\eta$ 原封不动保留下来，因为它一身两职：一方面让 $z$ 对 data 的小邻域保持平滑、不退化成纯确定的硬映射（保留一点 stochasticity），另一方面又隐式地把 FM 学生看到的最大噪声水平压到 $\sim\eta/(1+\eta)$。$\eta$ 因此成了调节"配对确定性强弱"的旋钮：$\eta$ 取大，不同图像的 $z$ 互相靠近、配对更"软"，最佳 FID 出现在更高 NFE 处；$\eta$ 取小，配对更"硬"，少步采样下表现更好。
 
-3. **学生架构自由 + 与 FM 等价的训练目标**:
+**3. 学生架构自由 + 与 FM 完全等价的训练目标：解锁比老师快几个量级的推理**
 
-    - 功能：学生 $g$ 只需是普通 ViT/CNN，不必可逆，因此可以做得比 TarFlow 小、推理可调步数。
-    - 核心思路：把 $\epsilon$ 换成 $z_{\epsilon'}$ 后，FM 的"沿线性插值回归速度"的形式保持不变，时间权重也不变，所以可以无缝接入任何 FM 训练 pipeline（实验用 SiT-XL）；推理用 Euler（NFE ≤ 5）或 Heun（NFE ≥ 5），步长按 $t^2=\{1, (1-\delta t)^2,\ldots\}$ 平方调度。
-    - 设计动机：保留 FM 训练形式意味着 NFM 不引入新超参、不破坏现有代码栈；学生不必可逆又解锁了任意架构选择，从而让推理速度比可逆的 TarFlow 老师快若干个量级。
+把 $\epsilon$ 换成 $z_{\epsilon'}$ 之后，FM"沿线性插值回归速度"的形式和时间权重都没变，于是学生 $g$ 不需要任何可逆约束，可以是普通 ViT/CNN（实验用 SiT-XL），做得比 TarFlow 更小、推理步数随意调。学生就用一条标准 FM loss
+
+$$\mathcal{L}_{\text{FM}}=\big\|g\big((1-t)x+tz_{\epsilon'},\,c,\,t\big)-(z_{\epsilon'}-x)\big\|_2^2$$
+
+训练，推理时 NFE ≤ 5 用 Euler、NFE ≥ 5 用 Heun，步长按 $t^2=\{1,(1-\delta t)^2,\ldots\}$ 的平方调度走。正因为没引入新超参、没破坏现有 pipeline，又卸掉了可逆性这副枷锁，学生的采样速度才能比自回归的 TarFlow 老师快若干个数量级——这也是 NFM 能做到"学生比老师又快又好"的结构性原因。
 
 ### 损失函数 / 训练策略
-学生用 $\mathcal{L}_{\text{FM}}=\|g((1-t)x+tz_{\epsilon'},c,t)-(z_{\epsilon'}-x)\|_2^2$ 训练，类标签按概率 $p=0.1$ 随机置空以支持 classifier-free guidance；时间 $t$ 服从 $\text{lognorm}(-0.2,1)$。老师训 512 MiB 样本（约 420 epoch），学生只训 256 MiB（约 210 epoch）。
+学生就用上面那条 $\mathcal{L}_{\text{FM}}$ 训练，类标签按概率 $p=0.1$ 随机置空以支持 classifier-free guidance，时间 $t$ 服从 $\text{lognorm}(-0.2,1)$。规模上老师训 512 MiB 样本（约 420 epoch），学生只训 256 MiB（约 210 epoch），即学生用一半的训练预算反超老师。
 
 ## 实验关键数据
 

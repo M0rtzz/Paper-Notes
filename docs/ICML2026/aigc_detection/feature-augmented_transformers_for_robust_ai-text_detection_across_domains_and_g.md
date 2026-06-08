@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两条支路并行：(i) **文本支路** 把输入 $x$ 喂给 BERT/RoBERTa/DeBERTa-v3，取 [CLS] 表示 $h_{[CLS]}(x)\in\mathbb{R}^d$；(ii) **特征支路** 抽取 62 维手工语言特征 $f(x)\in\mathbb{R}^{62}$（lexical diversity / POS / 可读性 / 标点 / LM-perplexity / burstiness 等），通过源域上一次性选定的 top-30 selection 得到 $f_k(x)$，再经 feature-attention 模块得到 128 维特征嵌入 $z_f(x)$。拼接 $h(x)=[h_{[CLS]}(x);z_f(x)]$ 后经 MLP 输出 AI 概率 $p_\theta(x)$。在 HC3 PLUS 训练后，按 validation 上 balanced accuracy 最大化选一次性的 $\tau^*$，在 M4/AI-Text-Detection-Pile 等所有目标分布上保持不变。
+要解决的是「检测器在跨域、跨生成器、改写后骤降」的鲁棒性问题，核心做法是让两条互补的支路并行后再融合：文本支路把输入 $x$ 喂给 transformer 编码器（BERT/RoBERTa/DeBERTa-v3），取 [CLS] 表示 $h_{[CLS]}(x)\in\mathbb{R}^d$；特征支路抽取 62 维手工语言特征（词汇多样性、POS、可读性、标点、LM-perplexity、burstiness 等），在源域上一次性选出 top-30 得到 $f_k(x)$，再经 dynamic feature attention 压成 128 维嵌入 $z_f(x)$。两路拼成 $h(x)=[h_{[CLS]}(x);z_f(x)]$ 后送 MLP 输出 AI 概率 $p_\theta(x)$。整套流程的关键约束是部署导向的评估协议：训练完只在验证集上锁死一个全局阈值 $\tau^*$，之后所有目标分布都不再重校。
 
 ### 关键设计
 
-1. **Dynamic Feature Attention 模块**:
+**1. Dynamic Feature Attention：样本级动态加权手工特征**
 
-    - 功能：为每个样本动态学习哪些手工特征更重要，避免静态 top-k 选择丢掉对当前样本最关键的信号。
-    - 核心思路：先用小型重要性网络 $u(x)=W_2 \phi(\text{LN}(W_1 f_k(x)))$ 把 30 维特征映到 importance logits，过 softmax 得到 attention $a(x)=\text{softmax}(u(x))$，再做 element-wise 加权 $\bar{f}_k(x)=a(x)\odot f_k(x)$ 后投影到 128 维：$z_f(x)=W_3 \bar{f}_k(x)$。区别于在源域 once-for-all 选定的静态 top-30（用于喂入这一模块）静态选择决定了候选池，动态注意力在样本级精调。
-    - 设计动机：不同样本对特征敏感度不同——长篇 academic 文本可能依赖 burstiness/perplexity，社交媒体短文可能依赖 punctuation/POS；让模型自动选权重，比 hand-tune 更鲁棒。
+静态 top-k 选特征有个硬伤——它对所有样本用同一套权重，而不同文本对特征的敏感度天差地别：长篇 academic 文本可能更依赖 burstiness/perplexity，社交媒体短文则更依赖标点和 POS 模式。这里的做法是先用源域上一次性选定的 top-30 决定候选池 $f_k(x)$，再让一个小型重要性网络在样本级精调权重：$u(x)=W_2\,\phi(\text{LN}(W_1 f_k(x)))$ 把 30 维特征映到 importance logits，过 softmax 得到注意力 $a(x)=\text{softmax}(u(x))$，做 element-wise 加权 $\bar{f}_k(x)=a(x)\odot f_k(x)$，最后投影到 128 维 $z_f(x)=W_3\bar{f}_k(x)$。这样模型能针对每个样本自动决定该信哪些 cue，比人工 hand-tune 的固定权重在分布偏移下更稳。
 
-2. **DeBERTa-v3 backbone（RTD 预训练）**:
+**2. DeBERTa-v3 backbone：用 RTD 预训练对齐检测任务**
 
-    - 功能：用 ELECTRA-style replaced-token detection 训练的编码器替换 BERT/RoBERTa，提升跨分布稳健性。
-    - 核心思路：DeBERTa-v3 在预训练中需要判断每个 token 是否为另一模型生成的「替换 token」，这种目标本质上和 AI-text detection 高度同构，相当于「天生就训过」相似任务；外加 disentangled attention 把 content 与 position 解耦，对句法变换鲁棒。
-    - 设计动机：作者实验观察到 BERT/RoBERTa 一旦遇到 rewriting 或新生成器就漂移，但 DeBERTa-v3 由于预训练目标对「真实 vs 替换」更敏感，能减少对表面词汇/句式 cue 的依赖，是 backbone 选择上的关键一步。
+作者观察到 BERT/RoBERTa 一旦遇到改写或新生成器就漂移，根因是它们过度依赖表面词汇/句式 cue。换成 DeBERTa-v3 的动机非常直接——它用 ELECTRA-style replaced-token detection 预训练，需要逐 token 判断是否为另一模型生成的「替换 token」，这个 pretext task 本质上和 AI-text detection 高度同构，相当于「天生就训过」相似任务；再加上 disentangled attention 把 content 与 position 解耦，对句法变换更鲁棒。因此 DeBERTa-v3 对「真实 vs 替换」的敏感度更高，能减少对表面 cue 的依赖，是 backbone 选择上的关键一步。
 
-3. **Validation-Calibrated Single Threshold $\tau^*$**:
+**3. Validation-Calibrated Single Threshold $\tau^*$：把部署约束写进评估协议**
 
-    - 功能：模拟真实部署——目标域无标签、不可重校准——把单一阈值锁死后再去评估鲁棒性。
-    - 核心思路：训练完毕后只在 HC3 PLUS 的合并验证集 $\mathcal{D}_\text{val}=\texttt{val\_qa}\cup\texttt{val\_si}$ 上做 grid search $\tau^*=\arg\max_\tau \text{BA}_{\mathcal{D}_\text{val}}(\tau)$，从此 M4 五个域、八个生成器、AI-Text-Detection-Pile 都共用这个 $\tau^*$，不再重新调。
-    - 设计动机：暴露过去研究中「每个 test set 都微调阈值」的虚高现象，让评测更贴近真实需求；这一协议本身就是论文的方法学贡献。
+过去很多研究「每个 test set 单独调阈值」拿到虚高的数字，掩盖了真实部署中目标域无标签、无法重新校准的事实。这里把这个约束显式锁进协议：训练完毕后只在 HC3 PLUS 的合并验证集 $\mathcal{D}_\text{val}=\texttt{val\_qa}\cup\texttt{val\_si}$ 上做 grid search，$\tau^*=\arg\max_\tau \text{BA}_{\mathcal{D}_\text{val}}(\tau)$，从此 M4 的五个域、八个生成器以及 AI-Text-Detection-Pile 都共用这个 $\tau^*$，再也不在目标域上重调。这个协议本身就是论文的方法学贡献——它让评测贴近真实需求，也成为暴露传统报数虚高的工具。
 
 ### 损失函数 / 训练策略
-标准二分类交叉熵在 HC3 PLUS 训练；feature attention 与文本编码端到端联合训练；特征 top-30 选择在源域上用 mutual information + |point-biserial correlation| 综合排序一次性选定，保证零 target-domain leakage。5 个随机 seed 做稳定性分析；zero-shot baseline（Fast-DetectGPT/RADAR/Log-Rank）在同一固定阈值协议下重跑。
+标准二分类交叉熵在 HC3 PLUS 上训练，feature attention 与文本编码端到端联合优化。特征 top-30 选择在源域上用 mutual information + |point-biserial correlation| 综合排序一次性选定，保证零 target-domain leakage。稳定性用 5 个随机 seed 评估；zero-shot baseline（Fast-DetectGPT/RADAR/Log-Rank）在同一固定阈值协议下重跑以保证公平对比。
 
 ## 实验关键数据
 

@@ -36,36 +36,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段：(1) CDRL 训练阶段——用 GRPO 在原始-噪声图像对上训练，增强感知敏感性并校准置信度；(2) CA-TTS 推理阶段——利用校准后的置信度信号自适应调度三个解耦的推理模块（Self-Consistency、Self-Reflection、Self-Check），由 Expert Model 作为 Planner/Voter/Critic 协调。
+这篇论文要解决的是 MLLM「看不清也照样自信」的失校准问题，并把校准后的置信度变成推理时的调度信号。整体分两阶段：训练时用 CDRL 把模型练得「对视觉退化敏感、答对时才高置信」；推理时用 CA-TTS 把这套校准好的置信度当路由信号，自适应调度三个解耦的验证模块。具体地，CDRL 先用 GRPO 在「原始图—噪声图」配对上训练，让置信度随视觉证据的好坏而升降；推理阶段，基座模型先采样多个回答，再由 Self-Consistency、Self-Reflection、Self-Check 三个模块各自产出一份投票，最后汇总成答案，全程由一个 Expert Model 分别扮演 Planner / Voter / Critic 来协调。
 
 ### 关键设计
 
-1. **Confidence-Driven Reinforcement Learning (CDRL)**:
+**1. Confidence-Driven Reinforcement Learning（CDRL）：用图像对教模型「看不清就别自信」。**
 
-    - 功能：增强 MLLM 的感知敏感性（对视觉退化要有反应）并校准置信度（正确时高置信，错误时低置信）
-    - 核心思路：用 CLIP attention map 对关键视觉区域添加噪声生成图像对 $(i, i')$。置信度定义为 Negative Mean Log-Probability：$C = \frac{1}{T}\sum_{t=1}^T \text{Conf}_{\text{token}_t}$, $\text{Conf}_{\text{token}} = -\frac{1}{k}\sum_{i=1}^k \log p_{(i)}$。置信度校准奖励：$R_{\text{Conf},j} = \underbrace{\alpha \tanh(\beta \cdot \Delta C)}_{\text{Perception Term}} + \underbrace{(2 \cdot R_{\text{Output},j} - 1) \cdot C_j^{norm}}_{\text{Calibration Term}}$
-    - 设计动机：Perception Term 奖励原始图和噪声图之间的置信度差异（$\Delta C = C_j - C_j'$），鼓励模型对视觉退化敏感。Calibration Term 在正确时奖励高置信（+$C_j$），错误时惩罚高置信（-$C_j$），实现 accuracy-confidence 对齐
+探测实验暴露的痛点是模型对视觉退化「钝感」——证据被破坏了置信度却纹丝不动，于是先得让置信度对视觉证据敏感起来。CDRL 的做法是用 CLIP 的 attention map 找到关键视觉区域，对其加噪生成配对图 $(i, i')$，让同一个问题在「清晰图」和「关键证据被毁的图」上各跑一遍。置信度用全序列的 Negative Mean Log-Probability 度量：$C = \frac{1}{T}\sum_{t=1}^T \text{Conf}_{\text{token}_t}$，其中 $\text{Conf}_{\text{token}} = -\frac{1}{k}\sum_{i=1}^k \log p_{(i)}$，值越低代表越确定。奖励则拆成两项：
 
-2. **Self-Consistency（自洽性模块）**:
+$$R_{\text{Conf},j} = \underbrace{\alpha \tanh(\beta \cdot \Delta C)}_{\text{Perception Term}} + \underbrace{(2 \cdot R_{\text{Output},j} - 1) \cdot C_j^{norm}}_{\text{Calibration Term}}$$
 
-    - 功能：采样多个响应，用置信度加权投票 + Expert Model 外部校准得到稳健答案
-    - 核心思路：$V_{internal}[k] = \sum_{i=1}^n C_i \cdot \mathbb{I}(A_i = k)$ 为内部置信度加权投票。Expert Model (Voter) 对候选选项给出外部置信度 $C_{expert}$，综合投票 $V_{final}[k] = V_{internal}^{norm}[k] + \tau_1 \cdot c_k$
-    - 设计动机：相比普通多数投票，置信度加权投票能让"确信的正确回答"贡献更大权重，Expert Model 提供独立的外部验证
+Perception Term 奖励原始图与噪声图之间的置信度落差 $\Delta C = C_j - C_j'$，落差越大说明模型越「看得出图被毁了」，逼它对视觉退化敏感；Calibration Term 则把置信度和对错挂钩——答对时奖励高置信（$+C_j$）、答错时惩罚高置信（$-C_j$），从而把 accuracy 和 confidence 对齐。两项一起，模型既学会「看不清就降置信」，又学会「只有真答对才敢高置信」。
 
-3. **Self-Reflection（自反思模块）**:
+**2. Self-Consistency：让「确信的正确回答」投出更重的票。**
 
-    - 功能：Expert Model 作为 Critic 生成对问题的批评，引导基座模型重新思考
-    - 核心思路：$Crit = M_{expert}^{Critic}(i, q, P_{critique})$，$(CoT_{reflect}, A_{reflect}) = M_{base}(i, q, Crit)$，反思答案加权 $\tau_2$ 加入最终投票
-    - 设计动机：低置信度的预测可以通过外部引导的反思来纠正
+校准好置信度后，最直接的用法是把它当投票权重。采样 $n$ 个回答后，内部投票按各自置信度加权累加：$V_{internal}[k] = \sum_{i=1}^n C_i \cdot \mathbb{I}(A_i = k)$，于是高置信的回答天然贡献更大权重，这是普通多数投票做不到的。在此之上再引入 Expert Model 当 Voter，对候选选项给出一份独立的外部置信度 $C_{expert}$，与内部投票归一化后相加：$V_{final}[k] = V_{internal}^{norm}[k] + \tau_1 \cdot c_k$。一内一外两个来源互相印证，比单纯数票更稳。
 
-4. **Self-Check（自检模块）**:
+**3. Self-Reflection：用外部批评把低置信的预测掰回来。**
 
-    - 功能：在视觉层面进行自检，用 Visual Contrastive Decoding (VCD) 对比原始和噪声图像的输出
-    - 核心思路：$\log P_{VCD}(y|i,q) = (1+\alpha) \cdot \log P_\theta(y|i,q) - \alpha \cdot \log P_\theta(y|i',q)$，对比解码的答案加权 $\tau_3$ 加入投票
-    - 设计动机：从视觉层面验证推理，噪声图像上的"虚假自信"和原始图像的"真实信号"之间的差异能凸显可靠的视觉推理
+如果某个预测置信度偏低，往往意味着模型自己也没把握，这种情况靠它反复采样意义不大，更该引入外部视角。这里让 Expert Model 扮演 Critic，针对问题生成一段批评 $Crit = M_{expert}^{Critic}(i, q, P_{critique})$，再把批评喂回基座模型重新作答 $(CoT_{reflect}, A_{reflect}) = M_{base}(i, q, Crit)$。反思出的答案以权重 $\tau_2$ 加入最终投票，相当于给低置信场景配了一条「被点醒后再想一遍」的纠错通道。
+
+**4. Self-Check：从视觉层面拆穿「虚假自信」。**
+
+前三步都在文本/答案层面验证，这一步补上视觉层面的核验。它复用 CDRL 里的噪声图，用 Visual Contrastive Decoding（VCD）把原始图和噪声图的输出对比解码：$\log P_{VCD}(y|i,q) = (1+\alpha) \cdot \log P_\theta(y|i,q) - \alpha \cdot \log P_\theta(y|i',q)$。直觉是：真正依赖图像证据的推理在清晰图上 logit 高、在噪声图上会塌掉，两者之差能放大「真实视觉信号」、压掉那些在噪声图上依然出现的「虚假自信」。对比解码出的答案以权重 $\tau_3$ 汇入投票，成为第三份独立证据。
+
+值得一提的是，后三个模块完全解耦、顺序无关，各自只贡献一份带权投票，因此可以任意增删或重排而不破坏框架。
+
+### 一个完整示例
+
+> ⚠️ 以下数字为示意，用于说明投票如何汇总，非原文给定。
+
+给一道几何题配一张图，基座模型采样 5 个回答，其中 3 个选 A（置信度分别 0.9 / 0.8 / 0.7）、2 个选 B（0.4 / 0.3）。**Self-Consistency** 先算内部加权票：A 得 $0.9+0.8+0.7=2.4$，B 得 $0.4+0.3=0.7$；Expert Voter 独立判断后给 A 加一份外部票，A 进一步领先。**Self-Reflection** 注意到 B 那两个回答置信度低，触发 Critic 生成批评、让基座重答，结果倒向 A，又给 A 添一份 $\tau_2$ 权重的票。**Self-Check** 把图加噪后跑 VCD，发现选 A 的 logit 在清晰图上高、噪声图上塌掉（说明 A 真的看了图），而 B 在两张图上差不多（说明 B 是「闭眼蒙」），于是再投 A 一份 $\tau_3$ 票。三路证据叠加，最终稳稳输出 A——关键在于：如果模型没经过 CDRL 校准，B 的两个回答可能也是 0.9 高置信，上述每一步都会被带偏。
 
 ### 损失函数 / 训练策略
-GRPO 训练，总奖励 $r_j = R_{\text{Conf},j} + R_{\text{Output},j} + R_{\text{Format},j}$。基座模型 Qwen2.5-VL-7B-Instruct，8×H100 全参数微调，训练集 1936 样本。Expert Model 为 Gemini-2.5-Pro。
+GRPO 训练，总奖励 $r_j = R_{\text{Conf},j} + R_{\text{Output},j} + R_{\text{Format},j}$（置信度 + 答案正确性 + 格式）。基座模型 Qwen2.5-VL-7B-Instruct，8×H100 全参数微调，训练集 1936 样本；Expert Model 为 Gemini-2.5-Pro，推理时三个权重取 $\tau_1=\tau_2=\tau_3=0.5$。
 
 ## 实验关键数据
 

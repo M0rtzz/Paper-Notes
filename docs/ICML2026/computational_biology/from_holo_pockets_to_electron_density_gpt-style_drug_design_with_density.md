@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两类电子云：CalED 从原子坐标经 FFT 算得（用于约 2M 分子的大规模预训练）；ExpED 从 cryo-EM / X-ray 实验数据直接得到（用于 PDBbind 40k 复合物微调）。任一来源最终被截断分辨率 $d_{\min}=3.5\text{Å}$ 后采样为固定 $N_p=199$ 点的点云，每点贴 pharmacophore 标签（HBD / HBA / HBD-HBA / Other），按 $(x,y,z)$ 排序后与分子 token 序列拼接进 GPT。
+EDMolGPT 要解决的是"用什么 condition、用什么模型"两件事：condition 从被移除的 empty pocket 换成保留下来的 filler（配体 + 周围溶剂）电子云，模型则用一个 decoder-only GPT 把这团点云和分子序列接起来一路自回归吐出原子。两类电子云被统一成同一种格式——CalED 从原子坐标经 FFT 算得，喂约 2M 分子做大规模预训练；ExpED 从 cryo-EM / X-ray 实验数据直接读出，在 PDBbind 40k 复合物上微调。无论哪种来源，都先截断到分辨率 $d_{\min}=3.5\text{Å}$，再采样成固定 $N_p=199$ 点的点云，每点贴 pharmacophore 标签后按 $(x,y,z)$ 排序，与分子 token 拼成一条序列送进 GPT。
 
 ### 关键设计
 
-1. **Filler ED 作为 condition**:
+**1. Filler 电子云作为 condition：把"拿走的信息"重新留住**
 
-    - 功能：用一个连续、物理 grounded 的标量场表示动态结合环境，避免 rigid pocket 假设。
-    - 核心思路：filler 包含 ligand 与 4.5 Å 内 solvent。CalED 走结构因子 $F(h) = \sum_i f_i(h) e^{2\pi i h\cdot v_f^i}$ 再截断逆 FFT $\rho(v_f) = V^{-1} \sum_{|h|\le 1/d_{\min}} F(h) e^{-2\pi i h\cdot v_f}$ 得到密度图；ExpED 直接来自实验测量、跳过 FFT。然后从 $\rho$ 中随机采 $N_p$ 个点，每点根据最近原子赋 pharmacophore 类型 $c_p^i$，得到带语义的点云 $\mathcal{P}_f = \{(c_p^i, v_p^i)\}$。
-    - 设计动机：empty pocket 是"拿走信息"；filler ED 是"留住所有相互作用的痕迹"。ExpED 自带柔性 + 噪声更真实但量少；CalED 数据充足。两者统一成同一点云格式，预训练 + 微调天然衔接。
+传统 SBDD 把 holo 复合物里的 filler 移掉、拿空 pocket 当 condition，等于丢掉了配体到底落在哪、周围哪些 H-bond 网络在工作的痕迹；本文反其道而行，直接拿 filler（ligand 加 4.5 Å 内 solvent）的低分辨率电子云做 condition。CalED 走结构因子 $F(h) = \sum_i f_i(h) e^{2\pi i h\cdot v_f^i}$ 再做截断逆 FFT $\rho(v_f) = V^{-1} \sum_{|h|\le 1/d_{\min}} F(h) e^{-2\pi i h\cdot v_f}$ 得到密度图，ExpED 则跳过 FFT 直接来自实验测量。拿到密度场 $\rho$ 后随机采 $N_p$ 个点，每点按最近原子赋一个 pharmacophore 类型 $c_p^i$（HBD / HBA / HBD-HBA / Other），得到带语义的点云 $\mathcal{P}_f = \{(c_p^i, v_p^i)\}$。这样做的好处是 filler 电子云是被实验直接验证过的"实"信号，天然编码 ensemble-averaged 的柔性结合环境；同时 CalED 数据量大、ExpED 真实带噪，两者统一成同一点云格式后，预训练与微调能无缝衔接。
 
-2. **GPT-style autoregressive 分子生成**:
+**2. GPT-style 自回归生成：离散化几何让 decoder-only 直接吐原子**
 
-    - 功能：用 decoder-only 架构一次性预测原子类型 + 3D 坐标 + 化学键几何，避免 encoder-decoder 或 diffusion 的复杂性。
-    - 核心思路：分子用 FSMILES（fragment-level SMILES，避免环内键被切碎）+ 离散化 3D 坐标 $\hat v_m^i = \lfloor (v_m^i - \mu_m)/\sigma \rfloor$，$\sigma=0.1$ 把 $\pm 15\text{Å}$ 映射到 $[-150,150]$；附加键长 $l_m^i = \|v_m^i - v_m^{i-1}\|$、键角 $\theta_m^i$、二面角 $\phi_m^i$ 的离散值。点云 token 与分子 token 共用坐标 embedding。GPT-2 medium 风格 24 层 Transformer，交叉熵优化所有离散输出。
-    - 设计动机：encoder-decoder 把生成切成两段会丢上下文；diffusion 推理慢且需 SE(3) 等变设计。GPT 路线简单、容易 scale，推理时还能用 $(l,\theta,\phi)$ 把下一个原子坐标约束到球面上提稳定性。
+为了避开 encoder-decoder 切两段丢上下文、diffusion 推理慢又要 SE(3) 等变的工程负担，本文用一个 GPT-2 medium 风格的 24 层 Transformer，一次性自回归预测原子类型、3D 坐标和成键几何。分子先写成 FSMILES（fragment-level SMILES，避免环内键被切碎），坐标做离散化 $\hat v_m^i = \lfloor (v_m^i - \mu_m)/\sigma \rfloor$，取 $\sigma=0.1$ 把 $\pm 15\text{Å}$ 映射到整数区间 $[-150,150]$；同时附上键长 $l_m^i = \|v_m^i - v_m^{i-1}\|$、键角 $\theta_m^i$、二面角 $\phi_m^i$ 的离散值。点云 token 与分子 token 共用同一套坐标 embedding，整条序列用交叉熵统一优化所有离散输出。这条路线足够简单、容易 scale，而且把几何也离散进序列后，推理时就能用 $(l,\theta,\phi)$ 反过来约束下一个原子的落点，提升稳定性。
 
-3. **几何约束的推理采样**:
+**3. 几何约束的推理采样：用键长键角参数化球面而非直接采坐标**
 
-    - 功能：让 autoregressive 生成不至于产出物理不合理的扭曲构象。
-    - 核心思路：推理时不直接对 $v_m^i$ 三个独立坐标做温度采样，而是先采 $(l_m^i, \theta_m^i, \phi_m^i)$，再用前三步原子位置定义 local frame，把可行 $v_m^i$ 约束在以 $l_m^i$ 为半径、由 $\theta, \phi$ 参数化的球面上采样。
-    - 设计动机：直接采坐标会让自回归累积误差；用键长 / 键角 / 二面角参数化是化学合理性更优的搜索空间，同时大幅缩小搜索空间提升稳定性。
+如果推理时对 $v_m^i$ 的三个坐标分量各自独立做温度采样，自回归误差会沿链累积、长出扭曲的不合理构象。本文改成先采 $(l_m^i, \theta_m^i, \phi_m^i)$，再用前三步原子位置定义一个 local frame，把可行的 $v_m^i$ 约束在以 $l_m^i$ 为半径、由 $\theta, \phi$ 参数化的球面上采样。键长 / 键角 / 二面角本就是化学上更合理的自由度，在这个空间里采样既贴合真实分子几何，又大幅缩小了搜索范围、稳住了生成质量。
 
 ### 损失函数 / 训练策略
-交叉熵：$\mathcal{L} = -\frac{1}{N_m}\sum_t \log p((\hat a_m^t, \hat v_m^t, \hat l_m^t, \hat\theta_m^t, \hat\phi_m^t) \mid h_p^{1:N_p}, h_m^{1:t-1})$。AdamW lr $1\times 10^{-5}$，warmup 1000 step + cosine decay；batch 96，100 epoch；2× A40。推理温度 $T=0.7$。
+整条序列用交叉熵：$\mathcal{L} = -\frac{1}{N_m}\sum_t \log p((\hat a_m^t, \hat v_m^t, \hat l_m^t, \hat\theta_m^t, \hat\phi_m^t) \mid h_p^{1:N_p}, h_m^{1:t-1})$。AdamW lr $1\times 10^{-5}$，warmup 1000 step + cosine decay；batch 96，100 epoch；2× A40。推理温度 $T=0.7$。
 
 ## 实验关键数据
 

@@ -43,27 +43,33 @@ tags:
 
 ### 整体框架
 
-分三步：(1) 基于 logit 分解生成逐 token 的显著性图（零额外计算）；(2) 通过注意力回溯将视觉信息经思维 token 瓶颈传播到答案 token，生成整体显著性图；(3) 计算与 bounding box 标注的对齐分数，作为 GRPO 训练的显著性奖励。
+整篇要解决的核心问题是：VLM 给出正确答案时，到底是"看对了地方"还是"靠文本捷径蒙对的"？Saliency-R1 把这个问题转化为一个可优化的奖励。它先用一种零额外计算的方式，从模型推理过程本身读出"每个生成 token 在看图像的哪块区域"，再沿着思维链把视觉注意力一路传播到最终答案 token，得到一张整体显著性图；最后拿这张图和人工标注的 bounding box 比对，对齐得越好奖励越高，并把这个奖励塞进 GRPO 强化学习循环里训练模型。三个环节——读显著性、传播显著性、用显著性当奖励——首尾相接，构成"看对地方才算对"的训练范式。
 
 ### 关键设计
 
-1. **基于 Logit 分解的显著性图生成**:
+**1. 基于 logit 分解的显著性图：从 KV cache 里"白嫖"出注意力归因。**
 
-    - 功能：高效定位每个生成 token 依赖的图像区域
-    - 核心思路：Transformer 的残差连接使最终输出可以分解为各位置 token 的直接贡献之和。对于预测 $t_{i+1}$ 时，token $t_p$ 的直接贡献为 $c_p = \sum_{l=1}^{L} \sum_{j=1}^{H} \alpha_{i,j,p}^l \mathbf{W}_{o,j}^l \mathbf{W}_{v,j}^l \mathbf{h}_p^{l-1} \mathbf{E}_u$，其中 $\alpha$ 是注意力权重，$\mathbf{W}_o, \mathbf{W}_v$ 是输出和 value 矩阵，$\mathbf{E}_u$ 是 unembedding 矩阵。选取视觉 token 对应的贡献值，按 patch 位置重排，经 ReLU 过滤负贡献即得显著性图。
-    - 设计动机：注意力权重在大多数 attention 实现中天然可获取，$\mathbf{W}_v^l \mathbf{h}_p^{l-1}$ 在 KV cache 中已计算好。因此该方法**零额外前向/反向传播**，计算成本可忽略，适合嵌入训练流水线。虽然只考虑直接贡献（忽略间接贡献），但文献表明间接贡献占比较小，对齐直接贡献已足够。
+痛点在于，传统显著性方法（Grad-CAM 要反传、TAM 要解优化问题）每生成一个 token 就得额外算一遍，根本没法塞进每步采样 8 个回滚的 RL 训练。本文的做法是利用 Transformer 残差连接的线性性：最终输出 logit 可以拆成各位置 token 的直接贡献之和。预测 $t_{i+1}$ 时，上下文 token $t_p$ 的直接贡献为
 
-2. **思维链瓶颈注意力回溯**:
+$$c_p = \sum_{l=1}^{L} \sum_{j=1}^{H} \alpha_{i,j,p}^l\, \mathbf{W}_{o,j}^l \mathbf{W}_{v,j}^l \mathbf{h}_p^{l-1}\, \mathbf{E}_u$$
 
-    - 功能：追踪视觉信息如何通过思维 token 流向答案 token
-    - 核心思路：定义视觉→思维 token 的注意力矩阵 $\mathcal{A}_{vt}^{l,h}$ 和思维→答案 token 的注意力矩阵 $\mathcal{A}_{ta}^{l,h}$，两者相乘得到视觉→答案的过渡注意力 $\tilde{\mathcal{A}}_{va}^{l,h} = \mathcal{A}_{vt}^{l,h} \mathcal{A}_{ta}^{l,h}$，以思维 token 为信息传递瓶颈。不对注意力矩阵做列归一化，因为某些 token（如介词）本身从思维/视觉 token 获得很少的贡献，它们在整体显著性图中应有较小影响。
-    - 设计动机：忠实的推理过程应该是"视觉信息→思维过程→最终答案"的流动路径。如果答案 token 绕过思维 token 直接从视觉 token 获取信息，说明 CoT 不忠实。通过瓶颈回溯可以检测和惩罚这种捷径行为。
+其中 $\alpha$ 是注意力权重，$\mathbf{W}_o, \mathbf{W}_v$ 是输出与 value 投影，$\mathbf{E}_u$ 是 unembedding 矩阵。只取视觉 token 对应的 $c_p$，按 patch 位置重排成二维网格，再用 ReLU 滤掉负贡献，就得到一张显著性图。关键在于这个式子里的每一项都是现成的——注意力权重 $\alpha$ 在大多数 attention 实现里本就可读，$\mathbf{W}_v^l \mathbf{h}_p^{l-1}$ 早已存在 KV cache 中，所以**整套显著性图无需任何额外前向或反向传播**，计算开销可忽略。代价是只算了一阶直接贡献、忽略了跨层的间接贡献，但已有文献表明间接贡献占比很小，对齐直接贡献就足以反映 patch 的相对重要性。
 
-3. **基于 GRPO 的显著性对齐训练**:
+**2. 思维链瓶颈注意力回溯：逼信息"过思维 token 这道闸"。**
 
-    - 功能：通过强化学习鼓励模型推理时关注正确的图像区域
-    - 核心思路：对齐分数 $= \frac{\sum_{i \in \text{BBox}} \text{Saliency}(i)}{\sum_{i \in \text{Image}} \text{Saliency}(i)}$，即 bounding box 内显著性质量占总显著性质量的比例。总奖励函数 $\mathcal{R} = \mathcal{R}_{\text{accuracy}} + \mathcal{R}_{\text{format}} + \mathcal{R}_{\text{saliency}}$，其中 $\mathcal{R}_{\text{accuracy}}$ 通过 LLM-as-judge (GPT-4o-mini) 判断答案正确性（0/1），$\mathcal{R}_{\text{format}}$ 检查 `<think></think>` 格式（0/1），$\mathcal{R}_{\text{saliency}}$ 为对齐分数。使用 GRPO 算法采样 8 个回滚，用标准化奖励作为优势函数。
-    - 设计动机：仅靠准确性奖励无法区分"看对了答对了"和"没看对但蒙对了"。显著性奖励直接鼓励模型关注与问题相关的图像区域，从而产生更忠实、可解释的推理过程。
+单 token 的显著性还不够，真正要判断的是答案是否"经过思考"得来。本文把思维 token 设为视觉到答案之间唯一的信息瓶颈：先取视觉→思维 token 的注意力矩阵 $\mathcal{A}_{vt}^{l,h}$ 和思维→答案 token 的注意力矩阵 $\mathcal{A}_{ta}^{l,h}$，两者相乘得到视觉经思维流向答案的过渡注意力
+
+$$\tilde{\mathcal{A}}_{va}^{l,h} = \mathcal{A}_{vt}^{l,h}\, \mathcal{A}_{ta}^{l,h}$$
+
+这样若答案 token 绕过思维 token、直接从视觉 token 取信息（即文本捷径），这条乘积路径上的权重就会很低，CoT 不忠实的行为便暴露出来。这里刻意**不对注意力矩阵做列归一化**：像介词这类 token 本身从思维/视觉 token 拿到的贡献就很少，强行归一化会把它们的影响抬高，保留原始量级才能让它们在整体显著性图里维持应有的小权重。
+
+**3. 基于 GRPO 的显著性对齐奖励：把"看对地方"变成可优化信号。**
+
+有了整体显著性图，对齐分数定义为 bounding box 内显著性质量占全图总质量的比例：
+
+$$\text{Align} = \frac{\sum_{i \in \text{BBox}} \text{Saliency}(i)}{\sum_{i \in \text{Image}} \text{Saliency}(i)}$$
+
+它直接回答"模型的注意力有多少落在了问题相关区域"。总奖励由三部分相加，$\mathcal{R} = \mathcal{R}_{\text{accuracy}} + \mathcal{R}_{\text{format}} + \mathcal{R}_{\text{saliency}}$：$\mathcal{R}_{\text{accuracy}}$ 用 LLM-as-judge（GPT-4o-mini）判答案对错（0/1），$\mathcal{R}_{\text{format}}$ 检查 `<think></think>` 标签是否齐全（0/1），$\mathcal{R}_{\text{saliency}}$ 即上面的对齐分数。训练用 GRPO，每条样本采 8 个回滚，以组内标准化奖励作为优势函数。之所以要单加显著性这一项，是因为纯准确性奖励分不清"看对答对"和"没看对但蒙对"——前者奖励一致、后者奖励互相矛盾，显著性项把"注意力落在正确区域"明确拎出来奖励，模型才被迫学会忠实地用图。
 
 ### 损失函数 / 训练策略
 

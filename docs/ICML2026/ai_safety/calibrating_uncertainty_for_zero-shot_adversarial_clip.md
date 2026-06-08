@@ -43,31 +43,25 @@ tags:
 
 ### 整体框架
 
-UCAT 基于 CLIP 的对抗微调流程：冻结文本编码器，只训练图像编码器。输入干净图像 $x$ 和对应的 PGD 对抗样本 $x^a$，经图像编码器得到嵌入后与文本原型计算相似度 logits。核心创新在于将这些 logits 映射为 Dirichlet 分布的浓度参数 $\alpha$ 和 $\alpha_{\text{adv}}$，然后通过反向 KL 散度 $\text{KL}(\text{Dir}(\alpha_{\text{adv}}) \| \text{Dir}(\alpha))$ 对齐两个分布，配合交叉熵损失联合训练。
+UCAT 想解决的是 CLIP 对抗微调里"只盯准确率、不管置信度"的问题：模型被攻击后既会答错，又会虚高自信。它沿用标准的 CLIP 对抗微调骨架——冻结文本编码器、只训图像编码器，输入一对干净图像 $x$ 和对应的 PGD 对抗样本 $x^a$，各自算出与文本原型的相似度 logits。关键转换是把这些 logits 重新解释成 Dirichlet 分布的浓度参数，再让对抗样本的分布去对齐干净样本的分布，从而在保持鲁棒性的同时把不确定性校准回来。
 
 ### 关键设计
 
-1. **Dirichlet 重参数化**:
+**1. Dirichlet 重参数化：让 CLIP logits 自带不确定性**
 
-    - 功能：将 CLIP logits 无缝转换为 Dirichlet 浓度参数，使零样本预测具备闭式不确定性分解能力
-    - 核心思路：定义 $\alpha_k(x) = \exp(h(\ell_k^{v \to t}(x)))$，其中 $h(\ell) = (\tau \ell + 1) / \tau'$。由于余弦相似度 $\tau \ell_k \in [-1, 1]$，加 1 后映射到 $[0, 2]$，再除以校准系数 $\tau'$ 并取指数确保正性。当 $\tau' = \tau$ 时，Dirichlet 期望严格等价于 CLIP 的 softmax 预测（$p_k^{\text{Dir}} = p_k^{\text{CLIP}}$），且对任意 $\tau' > 0$ 都保持 argmax 不变
-    - 设计动机：这一重参数化使得 $\alpha_k \geq 1$ 始终成立，避免了 $\alpha_k < 1$ 时 Dirichlet 分布的角集中效应和 digamma 数值不稳定问题，同时通过校准系数 $\tau'$ 提供了可调的锐度控制
+现有方法对齐 softmax 概率时会丢掉绝对 logit 尺度，而尺度正是开放词汇下判断"证据够不够"的关键信息。UCAT 的出发点是一个数学巧合：CLIP 零样本分类的 softmax 和 Dirichlet 分布的期望都是对 logits 做 softmax，二者结构对应。于是定义浓度参数 $\alpha_k(x) = \exp(h(\ell_k^{v \to t}(x)))$，其中 $h(\ell) = (\tau \ell + 1) / \tau'$。余弦相似度让 $\tau \ell_k \in [-1, 1]$，加 1 后落到 $[0, 2]$，除以校准系数 $\tau'$ 再取指数保证为正。这样构造的好处是 $\alpha_k \geq 1$ 恒成立，绕开了 $\alpha_k < 1$ 时 Dirichlet 的角集中效应和 digamma 数值不稳定。更妙的是当 $\tau' = \tau$ 时 Dirichlet 期望严格等于 CLIP 的 softmax 预测（$p_k^{\text{Dir}} = p_k^{\text{CLIP}}$），且任意 $\tau' > 0$ 都不改变 argmax——也就是说不动 CLIP 架构、不损原始预测，就凭空多出了一套闭式不确定性参数。
 
-2. **不确定性校准正则化（UCR）**:
+**2. 不确定性校准正则化（UCR）：用反向 KL 对齐两个 Dirichlet**
 
-    - 功能：对齐对抗样本与干净样本的 Dirichlet 分布，同时校准类间相对语义和总体证据强度
-    - 核心思路：定义正则化损失为反向 KL 散度 $\mathcal{L}_{\text{ucr}} = \text{KL}(\text{Dir}(\alpha_{\text{adv}}) \| \text{Dir}(\alpha))$，最终目标 $\mathcal{L} = \mathcal{L}_{\text{ce}} + \lambda \mathcal{L}_{\text{ucr}}$。反向 KL 是 mode-seeking 的，允许在不相关类别上保持低证据，同时精确追踪干净分布的主模式
-    - 设计动机：前向 KL 会覆盖所有模式导致证据被平铺，而概率层面的 KL（softmax 分布对齐）会丢弃绝对 logit 尺度信息。Dirichlet 层面的反向 KL 同时保留相对类结构（形状/认知不确定性）和绝对证据强度（偶然不确定性），是实验验证的最优组合
+光有 Dirichlet 参数还不够，得让对抗样本的证据分布逼近干净样本。UCR 把正则化损失定义为 Dirichlet 层面的反向 KL 散度 $\mathcal{L}_{\text{ucr}} = \text{KL}(\text{Dir}(\alpha_{\text{adv}}) \| \text{Dir}(\alpha))$，与交叉熵合成最终目标 $\mathcal{L} = \mathcal{L}_{\text{ce}} + \lambda \mathcal{L}_{\text{ucr}}$。这里有两个刻意的选择：一是在 Dirichlet 层面而非概率层面对齐，因为概率级 KL 会抹掉绝对证据强度，Dirichlet 级则同时保住相对类结构（形状，对应认知不确定性）和总证据量（对应偶然不确定性）；二是用反向 KL 而非前向 KL，反向 KL 是 mode-seeking 的，只追踪干净分布的主模式、允许在无关类别上保持低证据，而前向 KL 会覆盖所有模式把证据平铺开。消融里这两个选择各自带来明显增益，验证了它们不是随意拍板。
 
-3. **闭式不确定性分解**:
+**3. 闭式不确定性分解：一次前向同时给出 AU 和 EU**
 
-    - 功能：在单次前向传播中分别量化认知不确定性（AU）和偶然不确定性（EU）
-    - 核心思路：AU 通过 Dirichlet 下分类分布的期望 Shannon 熵计算 $\text{AU}(x) = -\sum_k \frac{\alpha_k}{\alpha_0}(\psi(\alpha_k+1) - \psi(\alpha_0+1))$，EU 通过总证据的倒数 $\text{EU}(x) = C / (\alpha_0 + C)$ 计算，其中 $\alpha_0 = \sum_k \alpha_k$
-    - 设计动机：传统方法需要多次前向传播（如 MC Dropout）或额外模块估计不确定性，而 Dirichlet 参数化提供了解析解，计算效率高且理论上能分离数据固有模糊性与证据不足两类不确定性来源
+有了 Dirichlet 参数，认知不确定性（AU）和偶然不确定性（EU）就能解析地分开算，不必像 MC Dropout 那样多次前向或挂额外模块。AU 取 Dirichlet 下分类分布的期望 Shannon 熵 $\text{AU}(x) = -\sum_k \frac{\alpha_k}{\alpha_0}(\psi(\alpha_k+1) - \psi(\alpha_0+1))$，刻画数据固有的类间模糊；EU 取总证据的倒数 $\text{EU}(x) = C / (\alpha_0 + C)$（$\alpha_0 = \sum_k \alpha_k$ 为总浓度，$C$ 为类别数），刻画证据不足的程度。证据越多 $\alpha_0$ 越大、EU 越小，符合"看得越清越笃定"的直觉，也让校准评估有了现成的标量出口。
 
-### 训练策略
+### 损失函数 / 训练策略
 
-采用 $\ell_\infty$ PGD 生成对抗样本，默认设置 $\tau' = 0.07$（对比学习中的标准温度），$\lambda = 10^5 / \beta$，其中 $\beta = 2/e^{\tau'}$。训练只微调图像编码器，文本编码器完全冻结。
+总损失为交叉熵加 UCR 正则 $\mathcal{L} = \mathcal{L}_{\text{ce}} + \lambda \mathcal{L}_{\text{ucr}}$。对抗样本由 $\ell_\infty$ PGD 生成，校准系数取对比学习标准温度 $\tau' = 0.07$，正则权重 $\lambda = 10^5 / \beta$（其中 $\beta = 2/e^{\tau'}$）。训练全程只微调图像编码器，文本编码器保持冻结。
 
 ## 实验关键数据
 

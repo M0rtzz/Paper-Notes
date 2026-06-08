@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把协调问题写成 Hidden-Utility Markov Game（HU-MG）$(\mathcal{S},\mathcal{A},\mathcal{T},R_t,\mathcal{R}_w)$：环境奖励 $R_t$ 共享，但每个伙伴 $\pi^p_i$ 私有一个"隐效用"$r^w_i\sim\mathcal{R}_w$（按事件特征的线性组合定义），不同 $r^w_i$ 在同一环境里诱导出截然不同的行为偏好。训练阶段为每一对 $(r^w_i, \pi^p_i, \pi^{br}_i)$ 收集轨迹形成 dataset $\mathcal{D}$；transformer 在 query state $s_h$ 加上 context $C$（过去若干 episode 的 $(s,a,r)$ 序列）下输出动作分布 $\hat{p}_h(\cdot)=M_\theta(\cdot\mid s_h, C)$，监督目标是匹配该状态下的 best-response 动作 $\hat{a}=\pi^{br}_i(s_h)$。部署时不动参数，每 episode 结束把新轨迹追加进 context buffer 顶掉最老的，达到"边玩边适应"的效果。
+CoOT 想解决的是"如何不更新参数就能和陌生伙伴配合"。它把协调问题写成 Hidden-Utility Markov Game（HU-MG）$(\mathcal{S},\mathcal{A},\mathcal{T},R_t,\mathcal{R}_w)$：环境奖励 $R_t$ 共享，但每个伙伴 $\pi^p_i$ 私有一个"隐效用" $r^w_i\sim\mathcal{R}_w$，不同 $r^w_i$ 在同一环境里诱导出截然不同的行为偏好。整体流程是：训练阶段为大量行为各异的伙伴各自跑出对应的最佳响应轨迹，喂给一个 Decision Transformer 学"看过去几局交互就能预测该如何最佳响应"；部署阶段冻结参数，靠不断追加的交互历史在 forward pass 里完成 partner 适应。
 
 ### 关键设计
 
-1. **HU-MG + Behavior-Preferring 数据生成**:
+**1. HU-MG + Behavior-Preferring 数据生成：让训练池里的伙伴既行为多样、又自带最佳响应标签。**
 
-    - 功能：构造一个"伙伴行为足够多样、且每个伙伴都有显式 best-response 可对照"的训练 dataset。
-    - 核心思路：先定义一组离散环境事件，用事件特征的线性组合写出 reward space $\mathcal{R}_w$；对每个采样到的 $r^w_i$ 用 MAPPO 联合训练 behavior-preferring partner $\pi^p_i$ 和它的最佳响应 $\pi^{br}_i$；对所有 $\pi^{br}_i$ 计算事件级 diversity score $d_i$，挑出 top-N 多样 pair 形成训练池 $\Pi_{train}$；对每个 pair 采 $T$ 条轨迹拼成定长 context $C$，再独立采 query state $s_h$ 构成 $(s_h, C, \hat{a})$ 三元组。
-    - 设计动机：query state 必须**独立**于 context 轨迹采样，否则模型会退化成简单的轨迹续写而不是真的"从 context 推断 partner"；diversity 筛选保证训练时见过的 partner 行为光谱足够宽，否则 test-time ICL 没有泛化基础。
+ICL 要泛化到陌生伙伴，前提是训练时见过的伙伴行为光谱足够宽，而且每个伙伴都得有一个干净的监督信号可以对照。作者先定义一组离散环境事件，用事件特征的线性组合写出 reward space $\mathcal{R}_w$；对每个采样到的隐效用 $r^w_i$ 用 MAPPO 联合训练一个 behavior-preferring partner $\pi^p_i$ 和它的最佳响应 $\pi^{br}_i$，这样最佳响应天然就是 partner-specific 的 oracle，监督信号比 RL 稀疏奖励干净得多。为保证多样性，对所有 $\pi^{br}_i$ 计算事件级 diversity score $d_i$，挑 top-N 多样 pair 组成训练池 $\Pi_{train}$。关键的一个细节是：每个 pair 采 $T$ 条轨迹拼成定长 context $C$ 之后，query state $s_h$ 要**独立**重采，构成三元组 $(s_h, C, \hat{a})$——否则模型会退化成简单的轨迹续写，而不是真的从 context 推断 partner。
 
-2. **Coordination Transformer 训练**:
+**2. Coordination Transformer：让 GPT-2 直接读原始 $(s,a,r)$ token 序列，而不是压成 latent。**
 
-    - 功能：让 GPT-2 backbone 学会从 cross-episode 交互历史里读出 partner style，并预测对应的 best-response 动作。
-    - 核心思路：把上下文展平为 token 序列 $[\tau_1, \tau_2, \ldots, \tau_T, s_{query}]$（每个 $\tau$ 是一整段 episode 的 $(s,a,r)$ 序列），在最后位置预测动作分布；训练目标是交叉熵 $\mathcal{L} = -\log \hat{p}_h(\hat{a})$，其中 $\hat{a}=\pi^{br}_i(s_h)$。context window 设为 5 episodes，训练时做 context masking 鼓励模型依赖近端轨迹。
-    - 设计动机：相比 PEARL/PACE 那种把轨迹压成 fixed latent 再喂给 policy，直接让 transformer 看原始 $(s,a,r)$ token 序列保留了完整时序结构，避免"reconstruction loss 给所有 feature 等权"导致的 coordination-irrelevant 噪声主导 latent。
+context-based meta-RL 的通病是把交互压成 fixed latent，丢掉协调最关键的时序结构。CoOT 反其道而行：把上下文展平成 token 序列 $[\tau_1, \tau_2, \ldots, \tau_T, s_{query}]$（每个 $\tau$ 是一整段 episode 的 $(s,a,r)$ 序列），在最后位置预测动作分布 $\hat{p}_h(\cdot)=M_\theta(\cdot\mid s_h, C)$，训练目标就是匹配最佳响应动作的交叉熵 $\mathcal{L} = -\log \hat{p}_h(\hat{a})$，其中 $\hat{a}=\pi^{br}_i(s_h)$。context window 设为 5 个 episode，训练时做 context masking 鼓励模型依赖近端轨迹。让 transformer 直接 attention 原始 token，保留了 PEARL/PACE 那种 reconstruction loss 会抹平的细节——后者给所有 feature 等权，coordination-irrelevant 的噪声反而主导了 latent。
 
-3. **No-Prior Online Deployment**:
+**3. No-Prior Online Deployment：冷启动 + ring buffer，逼模型只靠"当下"的交互适应。**
 
-    - 功能：让模型在 test time 完全靠累积 context 适应未见伙伴，绝不允许任何先验提示。
-    - 核心思路：部署开始时把 context $C$ 初始化为 $T$ 条空轨迹（strict cold start）；每步 $t$ 用 $\hat{p}_t=M_\theta(\cdot\mid s_h, C)$ 采样动作 $a_t\sim\hat{p}_t$，执行后把 $(s_t, a_t, r_t)$ 记录下来；episode 结束时把完整轨迹 $\tau=(s_t, a_t, r_t)_{t=1}^Z$ 追加进 context buffer 并顶掉最老的；跨 episode 反复执行，CoOT 用最近交互不断刷新策略。
-    - 设计动机：no-prior cold start 是协调能力的"硬考试"——任何能用 retrieval / 预填 context 的方案都会让数字好看但掩盖真实泛化能力；用 ring buffer 而非 append 保证 context 始终反映 partner **当前**行为（partner 可能中途换 style，老 episode 反而误导）。
+部署是协调能力的硬考试，任何 retrieval 或预填 context 都会让数字虚高、掩盖真实泛化。CoOT 把 context $C$ 初始化为 $T$ 条空轨迹（strict cold start），每步用 $\hat{p}_t=M_\theta(\cdot\mid s_h, C)$ 采样动作 $a_t\sim\hat{p}_t$，执行后记录 $(s_t, a_t, r_t)$；episode 结束时把完整轨迹 $\tau=(s_t, a_t, r_t)_{t=1}^Z$ 追加进 context buffer 并**顶掉最老的一条**。用 ring buffer 而非无限 append，是因为 partner 可能中途换 style，老 episode 反而误导——只有让 context 始终反映 partner 的**当前**行为，模型才能"忘旧学新"。
 
 ### 训练与评测策略
-CoOT 用 GPT-2 backbone，36 个 best-response 策略（每个对应一个 behavior-preferring HSP 训练分布的 partner）产出轨迹做监督训练，仅用 best-response 轨迹（partner 轨迹不直接监督）。评测协议沿用 Wang et al. 2024：每个 layout 用 10 个评测 partner（Coord. Ring Multi-recipe 用 15 个），用 Best-Response Diversity (BR-div, best-response 相似矩阵的行列式) 选 diverse 子集；每个 partner 跑 50 episode，CoOT 跨 episode 不断追加 context。
+CoOT 用 GPT-2 backbone，36 个 best-response 策略（每个对应一个 behavior-preferring HSP 训练分布的 partner）产出轨迹做监督训练，仅用 best-response 轨迹（partner 轨迹不直接监督）。评测协议沿用 Wang et al. 2024：每个 layout 用 10 个评测 partner（Coord. Ring Multi-recipe 用 15 个），用 Best-Response Diversity（BR-div，best-response 相似矩阵的行列式）选 diverse 子集；每个 partner 跑 50 episode，CoOT 跨 episode 不断追加 context。
 
 ## 实验关键数据
 

@@ -46,23 +46,23 @@ tags:
 
 ### 关键设计
 
-1. **MoE 参数化（Table 1：router/expert/bias 的 init 与 LR 缩放规则）**:
+**1. MoE 参数化（Table 1）：给 router / expert 上下投影 / expert bias 各自定 init 与 LR 缩放规则。**
 
-    - 功能：把 μP 的"每步 entry-wise 更新 $\Theta(1)$"原则细化到 MoE 每个新参数组，给出 router 矩阵、expert up/down 投影、expert bias 的 init std 和 Adam LR 应如何随 $n_{\text{embd}}$ 与 $\alpha_{\text{ffn}}$ 缩放。
-    - 核心思路：作者要求"对每个 expert 的混合系数 $g_i$、expert 输出 $E_i$、hidden 激活 $h_{\text{up}}$ *分别* 满足 $\eta_W\overline{\nabla W}\partial z/\partial W=\Theta(1)$"，这是比 dense μP 更强的逐组件条件。借 SignGD 近似 Adam（$\Delta w\approx\eta\,\text{sgn}(\partial\mathcal{L}/\partial w)$）并对 $h$ 与 $\Delta W$ 做 LLN 对齐假设 $\cos(v,w)\in\Theta(1)$，逐组推出：router 的 $\eta\in\Theta(1/n_{\text{embd}})$、init $\Theta(n_{\text{embd}}^{-\gamma})$（实验取 $\gamma=1$）；expert up 的 $\sigma_{\text{init}}=n_{\text{embd}}^{-1/2}$、$\eta=n_{\text{embd}}^{-1}$；expert down 因为还要承担 $h_{\text{up}}$ 到 $E$ 的二次缩放而带额外 $\alpha_{\text{ffn}}^{-1}$，即 $\sigma_{\text{init}}=\alpha_{\text{ffn}}^{-1}n_{\text{embd}}^{-1/2}$、$\eta=\alpha_{\text{ffn}}^{-1}n_{\text{embd}}^{-1}$；expert bias 用 $\Theta(1)$ LR、零初始化以同时满足激活集每步变化 $\Theta(n_{\text{act}})$ 与 step-0 负载均衡。
-    - 设计动机：标准 fan-in init 会让 $W_{\text{down}}$ 对 $\alpha_{\text{ffn}}$ 的依赖错配，导致 $\alpha_{\text{ffn}}$ 一变最优 LR 就漂；这里把 $W_{\text{down}}$ 当作 mean-field 两层 MLP 的"中间宽度"层来定 init，正好让 $\alpha_{\text{ffn}}$ 在最优 HP 上消失（Figure 2 第四列的零迁移现象的根源）。把 router LR 单独压成 $1/n_{\text{embd}}$ 而不是 $\Theta(1)$ 也是因为 $h^\top\Delta W_{\text{router}}^{(i)}$ 在 LLN 对齐下天然带 $\sqrt{n_{\text{embd}}}\cdot\sqrt{n_{\text{embd}}}$ 因子。
+dense μP 的逐参数组启发式答不出 MoE 新参数组该怎么缩放，于是作者把"每步 entry-wise 更新 $\Theta(1)$"这条原则细化成一个更强的逐组件条件：要求对每个 expert 的混合系数 $g_i$、expert 输出 $E_i$、hidden 激活 $h_{\text{up}}$ *分别* 满足 $\eta_W\overline{\nabla W}\,\partial z/\partial W=\Theta(1)$。具体推导借 SignGD 近似 Adam（$\Delta w\approx\eta\,\text{sgn}(\partial\mathcal{L}/\partial w)$），再对 $h$ 与 $\Delta W$ 做 LLN 对齐假设 $\cos(v,w)\in\Theta(1)$，于是逐组算出：router 用 $\eta\in\Theta(1/n_{\text{embd}})$、init $\Theta(n_{\text{embd}}^{-\gamma})$（实验取 $\gamma=1$）；expert up 用 $\sigma_{\text{init}}=n_{\text{embd}}^{-1/2}$、$\eta=n_{\text{embd}}^{-1}$；expert down 因为还要承担 $h_{\text{up}}$ 到 $E$ 的二次缩放而多带一个 $\alpha_{\text{ffn}}^{-1}$，即 $\sigma_{\text{init}}=\alpha_{\text{ffn}}^{-1}n_{\text{embd}}^{-1/2}$、$\eta=\alpha_{\text{ffn}}^{-1}n_{\text{embd}}^{-1}$；expert bias 用 $\Theta(1)$ LR、零初始化，以同时满足激活集每步变化 $\Theta(n_{\text{act}})$ 和 step-0 的负载均衡。
 
-2. **三层 mean-field 的 DMFT 极限（理论根基）**:
+这套规则里最反直觉的两条恰恰是关键。$W_{\text{down}}$ 那个额外的 $\alpha_{\text{ffn}}^{-1}$ 因子标准 fan-in init 写不出来——若按 fan-in 定 init，$\alpha_{\text{ffn}}$ 一变最优 LR 就漂；作者把 $W_{\text{down}}$ 当作 mean-field 两层 MLP 的"中间宽度"层来定 init，正好让 $\alpha_{\text{ffn}}$ 在最优 HP 上消失，这就是 Figure 2 第四列零迁移现象的根源。router LR 被单独压成 $1/n_{\text{embd}}$ 而不是 $\Theta(1)$，则是因为 $h^\top\Delta W_{\text{router}}^{(i)}$ 在 LLN 对齐下天然带一个 $\sqrt{n_{\text{embd}}}\cdot\sqrt{n_{\text{embd}}}$ 的因子，必须抵消掉。
 
-    - 功能：把 Bordelon & Pehlevan 的 DMFT 框架推广到带稀疏 MoE 的 deep residual 网络，给出 $n_{\text{embd}},n_{\text{exp}},n_{\text{hid}},L\to\infty$（固定 $\kappa$ 且 $n_{\text{embd}}/(n_{\text{exp}}n_{\text{hid}}L)$ 有界）下的封闭训练动力学方程。
-    - 核心思路：分析对象是只含 MoE 模块的残差网络 $h^{(\ell+1)}=h^{(\ell)}+L^{-1}f_{\text{MoE}}^{\ell}(h^{(\ell)})$。结论是动力学按三层 mean-field 嵌套展开：最外层是残差流神经元间的 mean-field，第二层是同一 MoE 层内 expert 之间的 mean-field，第三层是 expert 内部 hidden neuron 之间的 mean-field。硬路由通过分位阈值 $q_\star(\kappa)$（满足 $\mathbb{E}[\mathbf{1}_{q\ge q_\star}]=\kappa$）出现，这正是为什么要固定 $\kappa$。结论里能直接读出几件事：极限动力学 *不依赖* $\alpha_{\text{ffn}}$（与 dense 大深度结论一致，解释了 Figure 2 的 $\alpha_{\text{ffn}}$ 迁移）；同时发散 $n_{\text{embd}},n_{\text{exp}}$ 时只要 $\alpha_\star=\lim n_{\text{embd}}/(n_{\text{hid}}n_{\text{exp}}L)=0$，所有 joint scaling 给出同一极限；深度极限在 $\alpha_\star=0$ 下退化为 neural ODE，$\alpha_\star>0$ 下变成 neural SDE。
-    - 设计动机：纯 μP 启发式只能在每个 scale 轴上"看起来 $\Theta(1)$"，但无法回答"$n_{\text{exp}}$ 真的可以无限大吗、$n_{\text{hid}}$ 真的可以不发散吗"。DMFT 给的不是新公式，而是 *证明* 这些参数化确实对应同一组确定性的演化方程，从而把"HP 迁移到底为何成立"从经验观察升格为理论保证。
+**2. 三层 mean-field 的 DMFT 极限：把这套参数化升格为理论保证。**
 
-3. **固定稀疏度 $\kappa$ 而非固定 $n_{\text{act}}$ 的扩展策略**:
+纯 μP 启发式只能让每条 scale 轴"看起来 $\Theta(1)$"，但答不出"$n_{\text{exp}}$ 真的能无限大吗、$n_{\text{hid}}$ 真的能不发散吗"。作者把 Bordelon & Pehlevan 的 DMFT 框架推广到只含 MoE 模块的残差网络 $h^{(\ell+1)}=h^{(\ell)}+L^{-1}f_{\text{MoE}}^{\ell}(h^{(\ell)})$，证明在 $n_{\text{embd}},n_{\text{exp}},n_{\text{hid}},L\to\infty$（固定 $\kappa$ 且 $n_{\text{embd}}/(n_{\text{exp}}n_{\text{hid}}L)$ 有界）下训练动力学有封闭方程，并按三层 mean-field 嵌套展开：最外层是残差流神经元间的 mean-field，第二层是同一 MoE 层内 expert 之间的 mean-field，第三层是 expert 内部 hidden neuron 之间的 mean-field。硬路由通过分位阈值 $q_\star(\kappa)$（满足 $\mathbb{E}[\mathbf{1}_{q\ge q_\star}]=\kappa$）进入方程，这也是为什么稀疏度必须固定。
 
-    - 功能：在扩 $n_{\text{exp}}$ 时同步等比扩 $n_{\text{act}}$，让每个 expert 看到的 token 比例 $\kappa$ 保持常数，而不是 Switch Transformer 那种 $n_{\text{act}}=1$ 不变、$\kappa\to 0$ 的扩展观。
-    - 核心思路：完美均衡下每个 expert 每 batch 看到 $\kappa B$ 个 token，self-attention 与 router 看到全部 $B$ 个；若 $\kappa$ 跟着 scale 变，expert 与其它模块的有效"数据效率"会失配，最优 HP 自然不会迁移（论文 Figure 11 给了部分验证）。固定 $\kappa$ 也对应 mean-field 测度上的常概率切片，DMFT 极限里 $q_\star(\kappa)$ 的存在与稳定性都依赖这一点。
-    - 设计动机：这一条既是工程考量（大集群里 $n_{\text{act}}$ 受通信带宽下界约束，反正也不能取太小）也是理论必需（否则 mean-field 测度退化）。配合本规则，当 $n_{\text{act}}$ 受限时仍可走"先扩 granularity 再扩 width/depth 或 distill"的折中路线。
+之所以说它是"理论保证而非新公式"，是因为从极限方程能直接读出几件经验上看不透的事：动力学 *不依赖* $\alpha_{\text{ffn}}$（与 dense 大深度结论一致，解释了 Figure 2 的 $\alpha_{\text{ffn}}$ 零迁移）；同时发散 $n_{\text{embd}},n_{\text{exp}}$ 时只要 $\alpha_\star=\lim n_{\text{embd}}/(n_{\text{hid}}n_{\text{exp}}L)=0$，所有 joint scaling 都给出同一极限；深度极限在 $\alpha_\star=0$ 下退化成 neural ODE，$\alpha_\star>0$ 下则变成 neural SDE。这就把"HP 迁移凭什么成立"从经验观察升格成了对确定性演化方程的证明。
+
+**3. 固定稀疏度 $\kappa$ 而非固定 $n_{\text{act}}$ 的扩展策略：让扩专家数时最优 HP 不漂。**
+
+扩 $n_{\text{exp}}$ 有两种扩展观：Switch Transformer 那种 $n_{\text{act}}=1$ 不变、$\kappa=n_{\text{act}}/n_{\text{exp}}\to 0$，和本文这种同步等比扩 $n_{\text{act}}$、让稀疏度 $\kappa$ 保持常数。作者选后者，因为完美均衡下每个 expert 每 batch 看到 $\kappa B$ 个 token，而 self-attention 与 router 看到全部 $B$ 个；若 $\kappa$ 跟着 scale 变，expert 与其它模块的有效"数据效率"就会失配，最优 HP 自然迁移不过去（Figure 11 给了部分验证）。
+
+固定 $\kappa$ 同时也是理论必需：它对应 mean-field 测度上的一个常概率切片，DMFT 极限里 $q_\star(\kappa)$ 的存在与稳定性都依赖于此，$\kappa$ 一变测度就退化。这一条因此既是工程考量（大集群里 $n_{\text{act}}$ 受通信带宽下界约束，本来也不能取太小）也是理论刚需。配合该规则，当 $n_{\text{act}}$ 受限时仍可走"先扩 granularity，再扩 width/depth 或 distill"的折中路线。
 
 ### 损失函数 / 训练策略
 基础是标准 Adam + AdamW；router 不用 softmax+aux loss，而走 sigmoid + auxiliary-loss-free 的 bias 更新 $b_i\leftarrow b_i-\eta_{\text{bias}}(\text{Load}_i-\kappa)$。LR scheduler 在固定 token budget 实验里用前 1000 步 linear warmup + 后 1000 步恒定 LR（共 2000 步 / 1B tokens / batch 500K / seq 1024）；放大到长 horizon 时叠加 cosine 衰减到 0。除了 $n_{\text{embd}},\alpha_{\text{ffn}}$ 的指数缩放，每组参数还要 *单独* 调一个 $\Theta(1)$ 常数倍率（论文 D.1：不调常数倍率，训练动力学如负载均衡损失会在最优 HP 附近不稳定）。两个稀疏度配置：FineWeb 上 $\kappa=1/4$、C4 上 $\kappa=1/12$。

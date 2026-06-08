@@ -40,36 +40,23 @@ tags:
 
 ## 方法详解
 
-整篇方法由两块组成：第 3 节的理论推导（SAE = CTM 的 MAP 估计器），以及第 4 节把这一观点落地为可评测主题模型的 SAE-TM 框架。
-
 ### 整体框架
 
-SAE-TM 工作流：
-（a）**预训练 SAE**：在大规模文本或视觉嵌入上用标准 $L_1$ 目标训练一个 SAE（扩展因子 4，字典大小 $\gg 1000$），得到一组"主题原子" $\mu_k$（即 SAE 解码器的列向量）；
-（b）**主题解释**：在下游数据集上冻结 SAE，再额外学习一个词发射矩阵 $\mathbf{B}\in\mathbb{R}^{K\times V}$，把每个 SAE 特征映射到一个词分布，从而能与传统 NTM 用同一套连贯性/多样性指标比较；
-（c）**主题合并**：把每个 SAE 特征的 top-$p$ 词分布用 word embedding 加权求和得到主题向量，再用 $k$-means 聚成目标主题数 $K'$，对应的词分布按特征先验加权合并。整个过程不需要重训 SAE，主题数 $K'$ 可任意切换。
-
-输入：一个领域内的嵌入数据集 $\{D_i\}$（来自 Granite-R2 对文本、SigLIP 对图像）+ 配套的词袋表示（图像端用 InternVL3.5 生成长 caption）。输出：$K'$ 个主题，每个主题是一个词分布以及对应的"原子集合"。
+本文先在理论上证明 SAE 就是一类主题模型——$L_1$-SAE 的损失等价于一个 LDA 风格"连续主题模型"（CTM）的 MAP 目标，再顺着这个结论把 SAE 落地成可与神经主题模型（NTM）正面比拼的 SAE-TM 框架。SAE-TM 把"学表示"和"做解释"彻底解耦：先在大规模嵌入上用标准 $L_1$ 目标预训练一个 SAE，得到一组可复用的"主题原子"（即解码器列向量 $\mu_k$，扩展因子 4、字典 $\gg 1000$）；下游用任意小数据集时只冻结 SAE，额外学一个词发射矩阵把每个特征翻译成词分布，再用 $k$-means 把过细的原子合并到任意目标主题数 $K'$。整条流水线输入是领域嵌入集 $\{D_i\}$（文本用 Granite-R2、图像用 SigLIP，图像端再用 InternVL3.5 生成长 caption 当词袋），输出是 $K'$ 个主题，每个主题既是一个词分布也对应一簇原子。
 
 ### 关键设计
 
-1. **CTM 生成模型与 $L_1$-SAE 的 MAP 等价性**：
+**1. CTM 生成模型与 $L_1$-SAE 的 MAP 等价性：把经验损失推回到生成模型先验**
 
-    - 功能：给 SAE 一个生成模型层面的概率解释，把"为什么用 $L_1$ 稀疏 + 平方重建损失"从经验启发上升为 MAP 推断。
-    - 核心思路：CTM 假设文档嵌入 $D = \epsilon + \sum_{i=1}^N \lambda_i c_i$，其中每个贡献先按 $z_n\sim\mathrm{Cat}(\theta)$ 选主题、再按 $w_n\sim\mathcal{N}(\mu_{z_n},\Sigma_{z_n})$ 出方向、最后按 $\lambda_n\sim\mathrm{Ga}_{z_n}$ 出强度；文档级混合 $\theta\sim\mathrm{Dir}(\alpha)$。在"高活动度、小贡献"极限（$\rho_d\to\infty,\alpha_0\to 0,\rho_d\alpha_0\to\kappa$）和 $\Sigma_k\to 0$（贡献对齐主题方向）下，可证明每主题聚合强度 $S_k\Rightarrow\mathrm{Ga}(\kappa\theta_k,\beta)$，把强度参数化为 $a_k=s\theta_k$ 后观测模型化简为 $D\mid a\sim\mathcal{N}(Wa,\sigma^2 I)$，负 log 后验在 $\kappa=1,\alpha_k=1$ 时正好等于 $\mathcal{L}(a)=\frac{1}{2\sigma^2}\lVert D-Wa\rVert_2^2+\beta\lVert a\rVert_1$，即 Bricken 等人的 $L_1$-SAE 损失。TopK / BatchTopK 这类硬稀疏 SAE 也可以走相同框架，只是把 (A1) 换成硬支撑约束。
-    - 设计动机：让"为什么 steering 总失败"有了明确的理论解释——SAE 特征是"主题成分"而非"可独立操控的因果方向"，单个特征只编码 $\theta$ 的一个分量，必须组合起来才能解释一个嵌入；同时为后续把 SAE 拿来做主题建模提供了合法性依据。
+SAE 长期被当成黑盒——大家知道"$L_1$ 稀疏 + 平方重建"管用却说不清它在估计什么。本文构造一个 LDA 在嵌入空间的连续推广 CTM：文档嵌入 $D=\epsilon+\sum_{i=1}^N\lambda_i c_i$ 由若干贡献线性叠加而成，每个贡献先按 $z_n\sim\mathrm{Cat}(\theta)$ 选主题、再按 $w_n\sim\mathcal{N}(\mu_{z_n},\Sigma_{z_n})$ 出方向、最后按 $\lambda_n\sim\mathrm{Ga}_{z_n}$ 出强度，文档级混合 $\theta\sim\mathrm{Dir}(\alpha)$。在"高活动度、小贡献"的渐近极限（$\rho_d\to\infty,\alpha_0\to 0,\rho_d\alpha_0\to\kappa$）以及 $\Sigma_k\to 0$（贡献对齐主题方向）下，每主题聚合强度收敛为 $S_k\Rightarrow\mathrm{Ga}(\kappa\theta_k,\beta)$；把强度重参数化为 $a_k=s\theta_k$ 后，观测模型化简成 $D\mid a\sim\mathcal{N}(Wa,\sigma^2 I)$，其负 log 后验在 $\kappa=1,\alpha_k=1$ 时正好就是 Bricken 等人的 $L_1$-SAE 损失 $\mathcal{L}(a)=\frac{1}{2\sigma^2}\lVert D-Wa\rVert_2^2+\beta\lVert a\rVert_1$（TopK / BatchTopK 这类硬稀疏 SAE 只需把假设 (A1) 换成硬支撑约束即可纳入同一框架）。这条推导既给 SAE 一个原则性的概率解释，也直接解释了"为什么单特征 steering 总失败"——SAE 特征只是 $\theta$ 的一个分量、是"主题成分"而非可独立操控的因果方向，必须组合起来才能解释一个嵌入。
 
-2. **SAE 特征 → 词分布的事后解释（word emission matrix）**：
+**2. SAE 特征 → 词分布的事后解释：用一层薄的词发射矩阵嫁接到 NTM 的评测约定**
 
-    - 功能：把 SAE 这种"嵌入端模型"嫁接到 NTM 习惯的"主题=词分布"约定上，从而能直接套用 intruder detection、coherence rating 等标准指标做公平对比。
-    - 核心思路：冻结 SAE，定义文档生成的 bag-of-words 似然 $P(D)=\prod_{w_i\in D}\pi P_0(w_i)+(1-\pi)\sum_k B_{k,i}\cdot \theta_k$，其中 $\theta_k$ 是 SAE 第 $k$ 个特征在文档嵌入 $\mathbf{D}$ 上的归一化激活（来自 $a_k=s\theta_k$ 的同一分解），$P_0$ 是无条件 unigram 先验（吸收高频但无主题信息的词，$\pi=0.3$），$\mathbf{B}$ 是要学的 $K\times V$ 词发射矩阵。训练时还按 $\log(N/\mathrm{df}(w_i))$ 的归一化 IDF 给词加权，避免常见词主导损失。优化目标是 $-\log P(D)$ 在整个语料上的和。
-    - 设计动机：完全不动 SAE 本体（保持第 3 节的生成模型语义），只在"解释层"做一层薄的对齐；这让同一个预训练好的"基础 SAE"可以被复用到任何下游小数据集（甚至小到不足以重训 SAE），只需要在新数据上学一次轻量的 $\mathbf{B}$，对应"foundational SAE topic model"的实用场景。
+SAE 活在嵌入端，NTM 习惯把"主题"看成词分布，两边没法直接用 intruder detection、coherence rating 这些标准指标对比。本文冻结 SAE，只在解释层学一个 $K\times V$ 词发射矩阵 $\mathbf{B}$，定义 bag-of-words 似然 $P(D)=\prod_{w_i\in D}\pi P_0(w_i)+(1-\pi)\sum_k B_{k,i}\cdot\theta_k$：其中 $\theta_k$ 是 SAE 第 $k$ 个特征在文档嵌入 $\mathbf{D}$ 上的归一化激活（沿用 $a_k=s\theta_k$ 的同一分解），$P_0$ 是无条件 unigram 先验、负责吸收高频但无主题信息的词（$\pi=0.3$），训练时再按归一化 IDF $\log(N/\mathrm{df}(w_i))$ 给词加权，避免常见词主导损失，优化目标是全语料上的 $-\log P(D)$。关键在于完全不动 SAE 本体、只做一层轻量对齐，于是同一个预训练好的"基础 SAE"能复用到任何下游小数据集（哪怕小到不足以重训 SAE），每换一个领域只要重学一次 $\mathbf{B}$，对应实用的"foundational SAE topic model"场景。
 
-3. **基于 $k$-means 的主题原子合并**：
+**3. 基于 $k$-means 的主题原子合并：事后自由切换主题数**
 
-    - 功能：把 SAE 通常 $\gg 1000$ 个原子级特征收敛到 NTM 习惯的 50–500 个主题粒度，并且支持事后自由切换主题数。
-    - 核心思路：先用学到的词发射矩阵给每个 SAE 特征算一个主题向量 $\mathbf{T}_k=\sum_{w_i\in\mathcal{V}}B_{k,i}\mathbf{w}_i$（$\mathbf{w}_i$ 是 word2vec/GloVe 词向量；若没词向量，SAE 解码器列也可替代），并用 top-$p=0.9$ 截断和重归一化做去噪；再对 $\{\mathbf{T}_k\}$ 跑 $k$-means 聚成 $K'$ 类；最后按特征先验 $P(k)=\bar{\theta}_k$ 加权合并同簇特征的词分布 $P_{k'}(w_i)=\sum_{k:c_k=k'}P(w_i\mid\theta_k)P(k)/\sum_{k:c_k=k'}P(k)$。
-    - 设计动机：主题数 $K'$ 可在不重训 SAE 的情况下任意调，验证集上扫一遍即可；同时聚类边界也给出了主题间相似性的可视化信号；和"基础 SAE"思路天然兼容——同一份预训练 SAE 在不同下游、不同 $K'$ 上都能复用。
+SAE 通常有 $\gg 1000$ 个原子级特征，比 NTM 习惯的 50–500 主题粒度细太多。本文先用学到的 $\mathbf{B}$ 给每个特征算主题向量 $\mathbf{T}_k=\sum_{w_i\in\mathcal{V}}B_{k,i}\mathbf{w}_i$（$\mathbf{w}_i$ 取 word2vec/GloVe 词向量，没有时用 SAE 解码器列替代），并用 top-$p=0.9$ 截断重归一化去噪；再对 $\{\mathbf{T}_k\}$ 跑 $k$-means 聚成 $K'$ 类；最后按特征先验 $P(k)=\bar{\theta}_k$ 加权合并同簇特征的词分布 $P_{k'}(w_i)=\sum_{k:c_k=k'}P(w_i\mid\theta_k)P(k)/\sum_{k:c_k=k'}P(k)$。这样主题数 $K'$ 可以在不重训 SAE 的前提下随意调（验证集上扫一遍即可），聚类边界顺带给出主题间相似性的可视化信号，也和"一份基础 SAE、多下游多 $K'$ 复用"的思路天然兼容。
 
 ### 损失函数 / 训练策略
 SAE 训练用 $L_1$ 惩罚（系数 2）、扩展因子 4（即 $K\approx 3072$）、batch 1000、5 万步、lr=0.001；词发射矩阵 $\mathbf{B}$ 训练 50–200 epoch、lr=0.01；50M Twitter 嵌入上训练一次 SAE 约 10 分钟、解释约 15 分钟，单卡即可。

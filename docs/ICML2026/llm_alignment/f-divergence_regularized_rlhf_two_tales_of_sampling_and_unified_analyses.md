@@ -41,41 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个算法都基于 Bradley-Terry 偏好模型 + 通用目标 $J_f(\pi)=\mathbb{E}[r^*(x,a)-\eta^{-1}D_f(\pi,\pi_0|x)]$。每轮 $t$：
-
-1. 采两个 action $a_t^1,a_t^2$；
-2. 收到偏好 $y_t$；
-3. 用 MLE 估计奖励 $r_{\theta_t}$（最大化 sigmoid likelihood）；
-4. 根据 $r_{\theta_t}$ 构造新策略 $\pi_{t+1}$。
-
-两个算法的差别只在第 1 步（采样）和第 4 步（策略构造方式）。
+全文把在线 RLHF 建模成一个 Bradley-Terry 偏好驱动的 contextual bandit，目标从只针对 KL 的特例换成通用 $f$-divergence 正则 $J_f(\pi)=\mathbb{E}[r^*(x,a)-\eta^{-1}D_f(\pi,\pi_0|x)]$。每一轮 $t$ 的骨架都一样：先采两个 action $a_t^1,a_t^2$，拿到人类偏好 $y_t$，用 MLE 更新奖励估计 $r_{\theta_t}$，再据此构造下一轮策略 $\pi_{t+1}$。作者给出的两套算法只在「怎么采样」和「怎么从 $r_{\theta_t}$ 反推策略」两步上分岔——一条走经典 optimism，一条走他们新提出的 derivative-as-uncertainty。
 
 ### 关键设计
 
-1. **闭式最优策略 + 通用条件**（Proposition 2.3）：
+**1. 闭式最优策略 + 通用可逆条件：把所有 $f$ 的最优解写成同一个模板（Proposition 2.3）。**
 
-    - 功能：把通用 $f$-divergence 目标的最优解写成显式形式，是后续两个算法的基础。
-    - 核心思路：在 $\pi_0(a|x)>0$ 且 $f'$ 可逆且 $0\notin\text{dom}(f')$ 的条件下，$\pi_f^*(a|x)=\pi_0(a|x)\cdot f'^{-1}(\eta(r^*(x,a)-\lambda_f^*(x)))$，其中 $\lambda_f^*(x)$ 是归一化拉格朗日乘子。reverse KL 时 $f'^{-1}(z)=\exp(z-1)$ 回到熟悉的 softmax 形式。
-    - 设计动机：闭式解让我们能直接分析 $\partial J_f/\partial r$、把 regret 表达成 reward 误差的二次型；可逆条件排除了 Total Variation、chi-squared 等边界情况，但保留 reverse/forward KL、JS、chi-squared-KL 等主流选择。
+后面两套算法都得在每轮从奖励估计反推出策略，如果每种 $f$ 都要单独推导，统一分析就无从谈起。作者证明，只要 $\pi_0(a|x)>0$、$f'$ 可逆且 $0\notin\text{dom}(f')$，通用目标的最优解就有统一闭式 $\pi_f^*(a|x)=\pi_0(a|x)\cdot f'^{-1}(\eta(r^*(x,a)-\lambda_f^*(x)))$，其中 $\lambda_f^*(x)$ 是负责归一化的拉格朗日乘子；记 $h=(f')^{-1}$，reverse KL 下 $h(z)=\exp(z-1)$ 就退回大家熟悉的 softmax。这个统一形式之所以关键，是因为它让 regret 能被写成奖励误差的二次型、$\partial J_f/\partial r$ 可直接分析；代价是可逆条件把 Total Variation、纯 chi-squared 这类边界情形排除在外，但 reverse/forward KL、JS、chi-squared-KL 等主流选择都保住了。
 
-2. **Optimism 算法（Algorithm 1）**：
+**2. Optimism 算法：用「面对不确定性时乐观」把 $O(\log T)$ regret 推广到通用 $f$（Algorithm 1）。**
 
-    - 功能：用经典的 "optimism in face of uncertainty" 在通用 $f$ 上拿 $O(\log T)$ regret。
-    - 核心思路：每轮做 MLE 得 $\theta_t$，构造乐观奖励 $\hat r_t(\cdot,\cdot)=r_{\theta_t}+\mathbb{E}_{a\sim\pi_t}b_t$，其中 bonus $b_t(x,a^1,a^2)=\min\{1,\beta_T U(\xi,x,a^1,a^2;\mathcal{R}_t,\mathcal{D}_t)\}$，$U$ 是基于 Eluder dimension 的不确定性度量。然后用 $\hat r_t$ 走 Proposition 2.3 拿新 $\pi_{t+1}$。
-    - 设计动机：直接套 optimism 框架，但 regret bound 多了一个 $\mathcal{C}(f,\mathcal{R}_\Theta,\eta)=\max h'/h$ 项——这是 $f$ 引入的代价，量化"$h$ 越扁的 $f$，regret 越紧"。这条 bound 是首次对通用 $f$ 给出。
+第一条痛点是怎么在通用 $f$ 上拿到对数 regret。作者沿用经典的 optimism 框架：每轮先 MLE 得 $\theta_t$，再给奖励加一个乐观 bonus $\hat r_t=r_{\theta_t}+\mathbb{E}_{a\sim\pi_t}b_t$，其中 $b_t(x,a^1,a^2)=\min\{1,\beta_T\,U(\xi,x,a^1,a^2;\mathcal{R}_t,\mathcal{D}_t)\}$，$U$ 是建立在 Eluder dimension 上的不确定性度量，最后把 $\hat r_t$ 代回 Proposition 2.3 得到 $\pi_{t+1}$。和只做 KL 的前作相比，这里的 regret bound 多出一个 $\mathcal{C}(f,\mathcal{R}_\Theta,\eta)=\max h'/h$ 项——它正是引入通用 $f$ 的代价，量化了「$h$ 越扁、regret 越紧」这件事，也是首次对任意满足条件的 $f$ 给出的 regret 上界。
 
-3. **Derivative-as-uncertainty 算法（Algorithm 2）**：
+**3. Derivative-as-uncertainty 算法：拿 $h'$ 的几何直接当探索信号，免去每轮解 confidence ball（Algorithm 2）。**
 
-    - 功能：避开每轮显式解优化 confidence ball，用 $h'$ 的几何直接驱动 exploration。
-    - 核心思路：定义采样分布 $\pi'_\theta(a|x)\propto\pi_0(a|x)\cdot h'(\eta(r_\theta(x,a)-\lambda_\theta(x)))$——$h'$ 大的 action 被多采（因为对它的策略最敏感）。但 $h'$ 在 reward 估计严重错时可能接近 0，导致探索停滞；为此再加 $\pi_\theta^+\propto\pi'_\theta\exp(r_\theta)$ 和 $\pi_\theta^-\propto\pi'_\theta\exp(-r_\theta)$ 两个互补分布，分别覆盖 reward 高估和低估的情形。每轮以 $1-p(x)$ 用 $\pi'_\theta$ 采 $(a^1,a^2)$、以 $p(x)$ 用 $(\pi^+,\pi^-)$ 各采一个，$p(x)=\frac{Z^+Z^-}{1+Z^+Z^-}$ 自适应混合权。
-    - 设计动机：optimism 算法需要在每轮解 $\sup_{R_1,R_2}$ 来算 $U$，对 LLM 这种参数空间巨大的场景不现实；derivative 方法把"探索强度"内嵌到 $h'$ 这一已知函数里，只需 MLE + 加权采样，工程友好。理论上能拿 $O(1/T)$ suboptimality gap。
+optimism 算法每轮都要解一个 $\sup_{R_1,R_2}$ 去算 $U$，在 LLM 这种参数空间巨大的场景里几乎不可行，这是第二条痛点。作者的核心观察是 $h'=((f')^{-1})'$ 本身就编码了不确定性：因为 $\pi_\theta-\pi_{\theta'}\approx\pi_0\cdot h'(\eta(r_\theta-\lambda))\cdot\eta\cdot\Delta r$，$h'$ 大的地方正是策略对奖励估计最敏感、最该多探的地方。于是他们直接把采样分布定为 $\pi'_\theta(a|x)\propto\pi_0(a|x)\cdot h'(\eta(r_\theta(x,a)-\lambda_\theta(x)))$。麻烦在于奖励估计严重出错时 $h'$ 会接近 0、探索就停摆，所以再补两个互补分布 $\pi_\theta^+\propto\pi'_\theta\exp(r_\theta)$ 与 $\pi_\theta^-\propto\pi'_\theta\exp(-r_\theta)$ 分别兜住奖励被高估和低估的区域；每轮以概率 $1-p(x)$ 用 $\pi'_\theta$ 采出 $(a^1,a^2)$、以 $p(x)$ 用 $(\pi^+,\pi^-)$ 各采一个，混合权 $p(x)=\frac{Z^+Z^-}{1+Z^+Z^-}$ 自适应。整套方法只需要 MLE 加加权采样、不必每轮解优化，工程友好的同时仍能拿到 $O(1/T)$ 的 suboptimality gap。
 
 ### 损失函数 / 训练策略
-Algorithm 1 用标准 BT-MLE：
-$\theta_t=\arg\max_\theta\sum_i\big(y_i\log\sigma(r_\theta(x,a_i^1)-r_\theta(x,a_i^2))+(1-y_i)\log\sigma(r_\theta(x,a_i^2)-r_\theta(x,a_i^1))\big)$。
-
-Algorithm 2 用加权 BT-MLE：
-$\mathcal{L}(\theta)=-\frac{1}{t}\sum_i\omega(x_i)\log\sigma(r_\theta(x_i,a_i^\omega)-r_\theta(x_i,a_i^l))$，其中 $\omega(x)=(\overline T_\theta(x)+Z^+Z^-\overline T_\theta(x))/\overline Z_\theta$ 是 importance weight，校正混合采样带来的偏差。$\overline T_\theta(x)=\sum_a\pi_0(a|x)h'(\eta(r_\theta-\lambda_\theta))$。
+Algorithm 1 用标准 BT-MLE：$\theta_t=\arg\max_\theta\sum_i\big(y_i\log\sigma(r_\theta(x,a_i^1)-r_\theta(x,a_i^2))+(1-y_i)\log\sigma(r_\theta(x,a_i^2)-r_\theta(x,a_i^1))\big)$。Algorithm 2 因为是混合采样，必须用加权 BT-MLE 校正偏差：$\mathcal{L}(\theta)=-\frac{1}{t}\sum_i\omega(x_i)\log\sigma(r_\theta(x_i,a_i^\omega)-r_\theta(x_i,a_i^l))$，其中 importance weight $\omega(x)=(\overline T_\theta(x)+Z^+Z^-\overline T_\theta(x))/\overline Z_\theta$、$\overline T_\theta(x)=\sum_a\pi_0(a|x)h'(\eta(r_\theta-\lambda_\theta))$。
 
 ## 实验关键数据
 

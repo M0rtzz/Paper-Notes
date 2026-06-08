@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PNAPO 是离线、off-policy 的 RL-free 对齐管线，三步走：（1）**数据构造**——用 RF 基础模型对每个 prompt 采两个先验噪声 → 生成图像对 → 用 HPSv2.1 奖励模型打分 → 得到六元组 + 连续奖励差 $\delta r$；（2）**轨迹估计**——利用 RF 直线性质，从存储的 $(\boldsymbol{x}_0^*, \boldsymbol{x}_T^*)$ 端点对用 $\boldsymbol{x}_t = (1-t)\boldsymbol{x}_0 + t\boldsymbol{x}_T$ 直接插值出中间态，跳过任何重采样；（3）**优化**——用 RF 一致的 PNAPO 目标 + 动态 $\beta(\delta r, n)$ 调度做 LoRA 风格更新，参考模型 $v_{\text{ref}}$ 冻结。
+PNAPO 要解决的是 Diffusion-DPO 在 RF 上"丢掉先验噪声、只能拿独立采样的噪声近似反向轨迹"这一方差源头。它把这件事拆成一条离线、off-policy 的 RL-free 管线：先用 RF 基础模型给每个 prompt 采两个先验噪声、各生成一张图、再用奖励模型打分，存成保留噪声的六元组；训练时不再重采样，而是借 RF 的直线轨迹性质从存好的端点对插值出中间态，喂进一个与 RF 几何一致的 DPO 风格目标，并配上随奖励差和训练进度自动调节的动态 $\beta$。
 
 ### 关键设计
 
-1. **先验噪声追踪的偏好六元组**:
+**1. 先验噪声追踪的偏好六元组：把噪声一起存下来**
 
-    - 功能：把传统三元组 $(\boldsymbol{c}, \boldsymbol{x}_0^w, \boldsymbol{x}_0^l)$ 扩展为六元组，附带 $\boldsymbol{x}_T^w, \boldsymbol{x}_T^l$ 和奖励差 $\delta r$，让 DPO 损失的轨迹估计能从端点条件出发。
-    - 核心思路：用 DiffusionDB 选 20k 高质量 prompt（NSFW 过滤 → Jaccard/CLIP 去重 → 100 KNN 聚类重采样），每个 prompt 用 RF 基础模型采两次噪声 → 两张图，HPSv2.1 评分给出 $\delta r = r_\theta(\boldsymbol{x}_0^w) - r_\theta(\boldsymbol{x}_0^l)$。注意这里用模型自己采的图（off-policy 但同模型族），保证 noise 和模型策略一致。
-    - 设计动机：传统数据集丢弃噪声，导致 DPO 必须从独立 $\boldsymbol{x}_T^* \sim \mathcal{N}(0, I)$ 重采样去估反向过程，引入与训练实际不匹配的方差源。保留噪声后，$p_\theta(\boldsymbol{x}_T^* | \boldsymbol{x}_0^*)$ 被显式保留，等价于把决策空间从"所有可能轨迹"缩小到"实际产生这张图的那条轨迹"。
+现有偏好数据集（Pick-a-Pic、HPDv2 等）只留最终图像，逼着 DPO 从独立的 $\boldsymbol{x}_T^* \sim \mathcal{N}(0, I)$ 重采样去估反向过程，引入了与训练实际不匹配的方差。PNAPO 把传统三元组 $(\boldsymbol{c}, \boldsymbol{x}_0^w, \boldsymbol{x}_0^l)$ 扩展为六元组 $(\boldsymbol{c}, \boldsymbol{x}_0^w, \boldsymbol{x}_0^l, \boldsymbol{x}_T^w, \boldsymbol{x}_T^l)$，外加连续奖励差 $\delta r$。数据构造上用 DiffusionDB 选 20k 高质量 prompt（NSFW 过滤 → Jaccard/CLIP 去重 → 100 KNN 聚类重采样），每个 prompt 用 RF 基础模型自己采两次噪声生成两张图（off-policy 但同模型族，保证噪声和策略一致），再用 HPSv2.1 评分得到 $\delta r = r_\theta(\boldsymbol{x}_0^w) - r_\theta(\boldsymbol{x}_0^l)$。把噪声存下来等价于显式保留了 $p_\theta(\boldsymbol{x}_T^* | \boldsymbol{x}_0^*)$，从而把决策空间从"所有可能轨迹"缩小到"实际产生这张图的那条轨迹"，方差骤减——这正是后面理论保证和 12× 提速的来源。
 
-2. **RF 一致的轨迹估计与目标函数**:
+**2. RF 一致的轨迹估计与目标函数：用直线插值替代反向采样**
 
-    - 功能：把不可解的 $p_\theta(\boldsymbol{x}_{1:T-1} | \boldsymbol{x}_0)$ 用 $p_\theta(\boldsymbol{x}_T | \boldsymbol{x}_0) q(\boldsymbol{x}_{1:T-1} | \boldsymbol{x}_0, \boldsymbol{x}_T)$ 近似，证明这个近似在 RF 上是更紧的 surrogate。
-    - 核心思路：经过 Jensen 不等式和 KL 分解后，损失简化为 $\mathcal{L}_{\text{PNAPO}}(\theta) = -\mathbb{E}_{(\boldsymbol{c}, \boldsymbol{x}_0^w, \boldsymbol{x}_0^l, \boldsymbol{x}_T^w, \boldsymbol{x}_T^l), t} \log \sigma(-\beta(\boldsymbol{s}_\theta^t(\boldsymbol{x}_0^w, \boldsymbol{x}_T^w, \boldsymbol{c}) - \boldsymbol{s}_\theta^t(\boldsymbol{x}_0^l, \boldsymbol{x}_T^l, \boldsymbol{c})))$，其中 $\boldsymbol{s}_\theta^t(\boldsymbol{x}_0^*, \boldsymbol{x}_T^*, \boldsymbol{c}) = \|(\boldsymbol{x}_T^* - \boldsymbol{x}_0^*) - v_\theta(\boldsymbol{x}_t^*, t, \boldsymbol{c})\|^2_2 - \|(\boldsymbol{x}_T^* - \boldsymbol{x}_0^*) - v_{\text{ref}}(\boldsymbol{x}_t^*, t, \boldsymbol{c})\|^2_2$，其中 $\boldsymbol{x}_t^* = (1-t)\boldsymbol{x}_0^* + t\boldsymbol{x}_T^*$。目标本质是让 $v_\theta$ 在赢者轨迹上比 ref 更准、在输者轨迹上比 ref 更差。
-    - 设计动机：作者形式化证明 $D_{KL}(p_\theta(\boldsymbol{x}_T|\boldsymbol{x}_0) q(\boldsymbol{x}_{1:T-1}|\boldsymbol{x}_0, \boldsymbol{x}_T) \| p_\theta(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0)) \leq D_{KL}(q(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0) \| p_\theta(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0))$，说明 PNAPO 的轨迹近似严格优于 Diffusion-DPO 的前向加噪近似。类比 RL 里的稀疏奖励问题，决策空间缩小直接降低梯度方差、加速训练。
+直接对反向轨迹 $p_\theta(\boldsymbol{x}_{1:T-1} | \boldsymbol{x}_0)$ 建模是不可解的，PNAPO 改用 $p_\theta(\boldsymbol{x}_T | \boldsymbol{x}_0) q(\boldsymbol{x}_{1:T-1} | \boldsymbol{x}_0, \boldsymbol{x}_T)$ 近似，并形式化证明 $D_{KL}(p_\theta(\boldsymbol{x}_T|\boldsymbol{x}_0) q(\boldsymbol{x}_{1:T-1}|\boldsymbol{x}_0, \boldsymbol{x}_T) \| p_\theta(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0)) \leq D_{KL}(q(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0) \| p_\theta(\boldsymbol{x}_{1:T}|\boldsymbol{x}_0))$，即这个近似在 RF 上严格紧于 Diffusion-DPO 的前向加噪近似。关键之所以成立，是因为 RF 的中间态本就是端点的直线插值 $\boldsymbol{x}_t^* = (1-t)\boldsymbol{x}_0^* + t\boldsymbol{x}_T^*$，存好端点对后中间态一次插值即得，无需任何重采样。经 Jensen 不等式和 KL 分解，损失落成 $\mathcal{L}_{\text{PNAPO}}(\theta) = -\mathbb{E}_{(\boldsymbol{c}, \boldsymbol{x}_0^w, \boldsymbol{x}_0^l, \boldsymbol{x}_T^w, \boldsymbol{x}_T^l), t} \log \sigma(-\beta(\boldsymbol{s}_\theta^t(\boldsymbol{x}_0^w, \boldsymbol{x}_T^w, \boldsymbol{c}) - \boldsymbol{s}_\theta^t(\boldsymbol{x}_0^l, \boldsymbol{x}_T^l, \boldsymbol{c})))$，其中 $\boldsymbol{s}_\theta^t(\boldsymbol{x}_0^*, \boldsymbol{x}_T^*, \boldsymbol{c}) = \|(\boldsymbol{x}_T^* - \boldsymbol{x}_0^*) - v_\theta(\boldsymbol{x}_t^*, t, \boldsymbol{c})\|^2_2 - \|(\boldsymbol{x}_T^* - \boldsymbol{x}_0^*) - v_{\text{ref}}(\boldsymbol{x}_t^*, t, \boldsymbol{c})\|^2_2$。直观上它就是让速度场 $v_\theta$ 在赢者轨迹上比冻结的参考模型 $v_{\text{ref}}$ 更准、在输者轨迹上比 ref 更差；类比 RL 里的稀疏奖励，决策空间一旦收窄，梯度方差随之下降、训练随之加速。
 
-3. **基于奖励差和训练进度的动态 $\beta$ 调度**:
+**3. 基于奖励差和训练进度的动态 $\beta$ 调度：让正则强度随样本和阶段自适应**
 
-    - 功能：让正则强度 $\beta$ 自动响应"样本难度"（赢/输奖励差）和"训练阶段"，缓解固定 $\beta$ 后期把模型拉回参考模型的问题。
-    - 核心思路：$\beta(\delta r, n) = \beta \cdot f(\delta r) \cdot g(n)$，其中 $f(\delta r) = 2\sigma(\delta r) - 1$ 是单调递增到 1 的样本控制器；$g(n)$ 是退火因子——前 $n_1$ 步保持 1，$n_1$ 到 $n_2$ 间按余弦下降到 $1/2$，之后保持 $1/2$。当 margin 为负时增大 $\delta r$ 抬高 $\beta$ 加速对齐；margin 转正后效果反转给出更柔和的更新。
-    - 设计动机：通过对 $\nabla_\theta \mathcal{L}_{\text{PNAPO}}$ 的梯度分解，作者发现固定 $\beta$ 有两个问题——对所有图对无差别加权（忽略难度），训练后期强正则把模型拉回 ref。动态 $\beta$ 让奖励差大的对子（"明显更好"）权重更大，又让训练后期允许更多偏离 ref。
+对 $\nabla_\theta \mathcal{L}_{\text{PNAPO}}$ 做梯度分解后会发现固定 $\beta$ 有两个老毛病：对所有图对无差别加权（忽略难度），且训练后期强正则又把模型硬拉回 ref。PNAPO 把 $\beta$ 改成 $\beta(\delta r, n) = \beta \cdot f(\delta r) \cdot g(n)$ 两个解耦因子。其中样本控制器 $f(\delta r) = 2\sigma(\delta r) - 1$ 单调递增到 1，让奖励差大的对子（"明显更好"）权重更大；退火因子 $g(n)$ 管训练进度——前 $n_1$ 步保持 1，$n_1$ 到 $n_2$ 之间按余弦下降到 $1/2$，之后保持 $1/2$，让后期允许更多偏离 ref。两者配合的效果是：margin 为负时抬高 $\beta$ 加速对齐，margin 转正后给出更柔和的更新。
 
 ### 损失函数 / 训练策略
-核心损失就是 PNAPO 目标函数。优化器 AdamW，学习率 $1\mathrm{e}{-6}$；FLUX 的 $\beta=2000$，SD3-M 的 $\beta=5000$。20k prompt × 每 prompt 2 图，Euler 离散调度器、50 步、guidance scale=1。8× NVIDIA H800 GPU。
+核心损失就是上面的 PNAPO 目标函数。优化器 AdamW，学习率 $1\mathrm{e}{-6}$；FLUX 的 $\beta=2000$，SD3-M 的 $\beta=5000$。数据为 20k prompt × 每 prompt 2 图，采样用 Euler 离散调度器、50 步、guidance scale=1，训练在 8× NVIDIA H800 GPU 上完成。
 
 ## 实验关键数据
 

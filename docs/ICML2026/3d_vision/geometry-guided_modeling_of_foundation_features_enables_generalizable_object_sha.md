@@ -41,31 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：目标物体的单张 RGB $I_{\mathcal{T}}$ + 一个类别级 3D 模板点云 $\mathcal{S} \in \mathbb{R}^{N\times 3}$ + 模板的 16 个预渲染视角图 $\{I_{\mathcal{S}}^k\}$ 及外参 $\{\mathbf{E}_{\mathcal{S}}^k\}$。输出：逐点形变场 $\mathcal{D} \in \mathbb{R}^{N\times 3}$，重建结果 $\hat{\mathcal{T}} = \mathcal{S} + \mathcal{D}$，同时天然给出模板↔目标的稠密对应。
+GODeform 要解决的是：只给一张目标 RGB，就能在大形变、任意视角、未见类别下恢复 3D 形状。它的整体思路是把"形变"重写成"以几何感知的基础特征为条件的逐点流动"——输入端是目标物体单张 RGB $I_{\mathcal{T}}$、一个类别级 3D 模板点云 $\mathcal{S} \in \mathbb{R}^{N\times 3}$，以及该模板的 16 个预渲染视角图 $\{I_{\mathcal{S}}^k\}$ 及其外参 $\{\mathbf{E}_{\mathcal{S}}^k\}$；输出端是逐点形变场 $\mathcal{D} \in \mathbb{R}^{N\times 3}$，重建结果 $\hat{\mathcal{T}} = \mathcal{S} + \mathcal{D}$，同时天然附带模板↔目标的稠密对应。
 
-Pipeline 三段：(1) 视点自适应融合——从 16 个模板视角中选与目标语义最相似的为主视角（DINOv3 余弦相似度），其余视角通过相对位姿嵌入做跨视融合，得到视点不变的可见点特征 $\tilde{\mathbf{F}}_{\text{partial}}$；(2) 几何引导特征建模——把这些可见点特征通过 3D 几何亲和度扩散到所有 $N$ 个模板点，再用 cross-attention 与目标图像特征对齐；(3) Flow Matching 形变——以对齐特征为条件 $\mathbf{c}$，单步预测形变场。
-
-形变本身建成连续 ODE：$d\phi_t/dt = \mathbf{v}_t(\phi_t \mid \mathbf{c})$，沿线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ 训练速度场 $v_\theta$，推理时直接取 $t=0$ 一次出结果：$\mathcal{D} = v_\theta(\mathcal{S}, 0, \mathbf{c})$，约 0.67 s。
+中间的转换分三步走。先在模板的 16 个视角里挑一个与目标语义最像的当主视角，再借相对相机位姿把其余视角的信息融进来，得到一份"视点不变"的可见点特征——这样网络后面看到的特征差才不会被相机角度污染。接着把这些只覆盖可见面的特征，通过 3D 几何亲和度扩散到模板全部 $N$ 个点（包括背面、遮挡区），并用 cross-attention 与目标图像特征对齐，凝成形变所需的条件 $\mathbf{c}$。最后以 $\mathbf{c}$ 为条件用 Flow Matching 学一个速度场，把模板点"流"到目标位置。形变被建成连续 ODE $d\phi_t/dt = \mathbf{v}_t(\phi_t \mid \mathbf{c})$，训练沿线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{x}_0 + t\mathbf{x}_1$ 监督速度场 $v_\theta$；因为线性轨迹是常速度，推理时直接取 $t=0$ 一步出结果 $\mathcal{D} = v_\theta(\mathcal{S}, 0, \mathbf{c})$，约 0.67 s。
 
 ### 关键设计
 
-1. **几何引导特征传播 (Geometry-Guided Feature Propagation)**:
+**1. 几何引导特征传播：让只看得见正面的语义贯穿整个 3D 表面**
 
-    - 功能：把只在可见表面（$M$ 个点）上的 2D 基础特征 $\mathbf{F}_{\text{vis}}$ 扩散到完整模板的 $N$ 个点（含遮挡区域），得到 $\mathbf{F}_{\text{complete}} \in \mathbb{R}^{N\times D}$。
-    - 核心思路：另用一个 3D 编码器对完整模板算几何嵌入 $\mathbf{G} \in \mathbb{R}^{N\times d}$，构造可见点 $i$ 与全点 $j$ 之间的几何亲和度 $S_{ji} = \mathbf{g}_j \cdot \mathbf{g}_i / (\|\mathbf{g}_j\|\|\mathbf{g}_i\|)$，再用温度 $\tau$ 的 softmax 加权聚合：$\mathbf{f}_j^{\text{complete}} = \sum_i \frac{\exp(S_{ji}/\tau)}{\sum_k \exp(S_{jk}/\tau)} \mathbf{f}_i^{\text{vis}}$。本质是"几何近似的点共享语义"——椅腿背面没看到，就借相似几何的椅腿正面的语义。
-    - 设计动机：直接把可见点喂给形变网络等于把遮挡区当"无信号区"，模板拓扑反而成了拖累；用几何相似度作桥让 2D 语义贯穿整个 3D 表面，遮挡区也能有方向性的形变指引。然后再用 cross-attention 把这套模板特征作为 query 去检索目标图像特征 $\mathbf{F}_{\mathcal{T}}$（key/value），输出对齐特征 $\mathbf{F}_{\text{aligned}}$ 作为 Flow Matching 的条件。
+2D 基础模型只在图像可见面上有特征，模板背面、自遮挡区一片空白。如果直接把这种"半张脸"的特征喂给形变网络，遮挡区就成了无信号区，模板拓扑非但帮不上忙反而成了拖累。这一步把可见表面（$M$ 个点）上的基础特征 $\mathbf{F}_{\text{vis}}$ 扩散到完整模板的 $N$ 个点，得到 $\mathbf{F}_{\text{complete}} \in \mathbb{R}^{N\times D}$。做法是另用一个轻量 3D 编码器对完整模板算几何嵌入 $\mathbf{G} \in \mathbb{R}^{N\times d}$，以此衡量可见点 $i$ 与任意点 $j$ 的几何相似度 $S_{ji} = \mathbf{g}_j \cdot \mathbf{g}_i / (\|\mathbf{g}_j\|\|\mathbf{g}_i\|)$，再用温度 $\tau$ 的 softmax 把语义按几何相似度加权摊过去：
 
-2. **视点自适应特征聚合 (View-Adaptive Feature Aggregation)**:
+$$\mathbf{f}_j^{\text{complete}} = \sum_i \frac{\exp(S_{ji}/\tau)}{\sum_k \exp(S_{jk}/\tau)}\, \mathbf{f}_i^{\text{vis}}$$
 
-    - 功能：解决固定模板视角与任意目标视角之间的"视点漂移"——同一 3D 结构从不同相机看，基础特征会不一样，直接喂会让模型把视角差当成形变。
-    - 核心思路：先从 $K=16$ 个模板视角里选与目标 $I_{\mathcal{T}}$ 在 DINOv3 特征空间余弦相似度最高的为主视角 $I_{\mathcal{S}}^*$；计算其它视角相对于主视角的相机变换 $\mathbf{P}_{\text{rel}}^k = (\mathbf{E}_{\mathcal{S}}^*)^{-1} \mathbf{E}_{\mathcal{S}}^k$，把旋转+平移展平成 $\mathbb{R}^{12}$ 向量后线性投影成位姿嵌入 $\mathbf{e}^k$。每个视角的可见点特征加上对应位姿嵌入做"几何调制"，再用 cross-attention：主视角特征当 query，所有视角特征拼接当 key/value，得 $\mathbf{F}_{\text{fused}}$，残差回到 $\tilde{\mathbf{F}}_{\text{partial}} = \mathbf{F}_{\text{fused}} + \tilde{\mathbf{F}}_{\text{primary}}$。
-    - 设计动机：让网络看到"这块特征是从哪个相机角度拍的"，从而把位姿引起的特征差从形状形变中显式剥离。消融里"无 PrimSel"和"无 PoseAware"两种朴素多视角融合反而比单视角还差，说明乱融多视角会污染信号，主视角锚定+位姿感知才是关键。
+直觉就是"几何近似的点共享语义"——椅腿背面没看到，就借几何相似的正面椅腿的语义，于是遮挡区也拿到了有方向性的形变指引。值得强调的是，这套机制不依赖任何 3D 基础模型预训练，只靠一个小 3D encoder 算亲和度即可。得到完整模板特征后，再用 cross-attention 把它当 query 去检索目标图像特征 $\mathbf{F}_{\mathcal{T}}$（作 key/value），输出对齐特征 $\mathbf{F}_{\text{aligned}}$ 充当 Flow Matching 的条件。
 
-3. **Flow Matching 形变学习 (Flow-Matching Deformation)**:
+**2. 视点自适应特征聚合：把"视角伪差"从"真实形变"里显式剥离**
 
-    - 功能：把形变学习当成"在条件 $\mathbf{c}$ 下从模板分布到目标分布的连续轨迹"，而不是一次性回归 offset。
-    - 核心思路：训练时在 $\mathbf{x}_0 = \mathcal{S}, \mathbf{x}_1 = \mathcal{T}$ 之间线性插值，监督网络速度场对齐 $\mathbf{u}_t = \mathbf{x}_1 - \mathbf{x}_0$（即 Flow Matching 损失 $\mathcal{L}_{\text{FM}}$）；推理时利用线性轨迹的常速度性质，直接 $t=0$ 一步出形变。理论上等价单步采样的 rectified flow。
-    - 设计动机：直接回归 offset 在复杂大形变下不稳（消融中 w/o FM 在 Random Template 上 CD 从 2.46 升到 2.74），把形变视作连续流给优化提供了更平滑的几何插值假设，处理拓扑差异更有韧性。
+同一 3D 结构从不同相机看，基础特征本就会变；模板视角固定、目标视角任意，这种"视点漂移"会被形变网络误当成形状变化。这一步先从 $K=16$ 个模板视角里选出与目标 $I_{\mathcal{T}}$ 在 DINOv3 特征空间余弦相似度最高的主视角 $I_{\mathcal{S}}^*$，作为锚点。再计算其余各视角相对主视角的相机变换 $\mathbf{P}_{\text{rel}}^k = (\mathbf{E}_{\mathcal{S}}^*)^{-1} \mathbf{E}_{\mathcal{S}}^k$，把旋转加平移展平成 $\mathbb{R}^{12}$ 向量后线性投影成位姿嵌入 $\mathbf{e}^k$，加到对应视角的可见点特征上做"几何调制"，等于明确告诉网络"这块特征是从哪个相机角度拍的"。最后用 cross-attention 融合：主视角特征作 query、所有视角特征拼接作 key/value，得 $\mathbf{F}_{\text{fused}}$，残差回主视角 $\tilde{\mathbf{F}}_{\text{partial}} = \mathbf{F}_{\text{fused}} + \tilde{\mathbf{F}}_{\text{primary}}$。这样位姿引起的特征差就被显式编码出来、与形状形变分开。消融里去掉主视角选择或位姿感知后，这两种"朴素多视角融合"反而比单视角还差，说明乱融多视角只会污染信号，主视角锚定加位姿调制才是赚到多视角红利的前提。
+
+**3. Flow Matching 形变学习：用连续流替代一次性回归 offset**
+
+复杂大形变下直接回归一个 offset 容易不稳。这一步把形变看成"在条件 $\mathbf{c}$ 下从模板分布到目标分布的连续轨迹"：训练时在 $\mathbf{x}_0 = \mathcal{S}$ 与 $\mathbf{x}_1 = \mathcal{T}$ 之间线性插值，监督速度场对齐 $\mathbf{u}_t = \mathbf{x}_1 - \mathbf{x}_0$（即 Flow Matching 损失 $\mathcal{L}_{\text{FM}}$）。由于线性轨迹常速度，推理可直接在 $t=0$ 一步采样出形变，理论上等价单步 rectified flow，既快又省去迭代 ODE 求解。把形变视作连续流相当于给优化引入了更平滑的几何插值假设，处理拓扑差异更有韧性——消融里换成直接回归（w/o FM），Random Template 上 CD 从 2.46 升到 2.74，印证了这一选择的必要性。
 
 ### 损失函数 / 训练策略
 总损失把多种几何正则一并加进来：$\mathcal{L} = \lambda_{\text{FM}}\mathcal{L}_{\text{FM}} + \lambda_{\text{CD}}\mathcal{L}_{\text{CD}} + \lambda_{\text{Lap}}\mathcal{L}_{\text{Lap}} + \lambda_{\text{ARAP}}\mathcal{L}_{\text{ARAP}} + \lambda_{\text{reg}}\mathcal{L}_{\text{reg}} + \lambda_{\text{sil}}\mathcal{L}_{\text{sil}}$，其中 Chamfer 管全局对齐、Laplacian 管局部连续、ARAP 管局部刚性、reg 限制形变幅值、silhouette 管多视角剪影一致性。训练用 ShapeNetv2 七类（chair/table/airplane/car/cabinet/bowl/bottle），每类抽 500 个 shape，其中 50 个当模板池；目标视角对每个目标只随机采一个角度，自然带自遮挡难度。统一一个模型跨所有类别，与按类别训的 baseline 形成对比。

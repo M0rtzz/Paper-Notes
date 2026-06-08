@@ -48,23 +48,23 @@ ME-DLM 给 masked diffusion 语言模型（如 LLaDA）加一个"解码完再编
 
 ### 关键设计
 
-1. **Token 级 (c, n) 编辑动作 + 确定性应用操作**：
+**1. Token 级 $(c_i,n_i)$ 编辑动作 + 确定性应用：并行预测、串行耦合。**
 
-    - 功能：用一对 token 级输出 $(c_i,n_i)$ 同时表达 replace、delete、insert 三种操作，使得编辑动作可以**并行预测**但**串行应用**。
-    - 核心思路：transition $p_\theta(x^{(t+1)}|x^{(t)})\equiv\prod_{i=1}^{L_t}p_\theta(c_i,n_i|x^{(t)})$ 在预测层独立，但 application operator $A$ 是从左到右扫一遍：if $c_i=\text{[DEL]}$ 删除 $x_i^{(t)}$；否则 $c_i$ 替换 $x_i^{(t)}$；接着如果 $n_i\neq c_{i+1}$ 就在位置 $i$ 后插入 $n_i$。边界情况：连续重复插入用 canonical 表示（"a a a b" 用 "a b 中间插 a" 表达），prompt 与 generated 边界算可插入位置。
-    - 设计动机：MDLM 的并行优势必须保留，所以预测端必须是 factorized；但解决联合一致性又要求位置间能耦合——作者把"耦合"放到**确定性 application** 这一步，绕过了"显式联合建模"的难题。这是整篇文章最巧妙的工程切口。
+要保留 MDLM 的并行优势，预测端就必须 factorized；可解决"边际优≠联合优"又要求位置间能互相牵制——这是个看似两难的矛盾。作者的切口是把"耦合"从预测端移到应用端。每个位置并行输出一对动作：$c_i \in \mathcal{V}\cup\{\text{[DEL]}\}$ 决定当前 token 是替换 / 删除 / 保留，$n_i \in \mathcal{V}$ 决定在它后面插什么；transition 在预测层完全独立 $p_\theta(x^{(t+1)}|x^{(t)}) \equiv \prod_{i=1}^{L_t} p_\theta(c_i,n_i|x^{(t)})$。
 
-2. **Edit distance 监督 + canonical 映射**：
+真正让位置间耦合的是确定性 operator $A$：它从左到右扫一遍，遇 $c_i=\text{[DEL]}$ 就删 $x_i^{(t)}$，否则用 $c_i$ 替换；接着若 $n_i \neq c_{i+1}$ 就在位置 $i$ 后插入 $n_i$。连续重复插入用 canonical 表示（"a a a b" 写成"a b 中间插 a"），prompt 与 generated 的边界也算可插入位置。这样并行性留在 prediction、联合一致性放进 deterministic application，绕过了"并行 + 显式联合建模"的根本冲突——这是全文最巧的工程设计。
 
-    - 功能：给训练提供确定性的 token 级编辑监督信号 $(c_i^\star,n_i^\star)$，让模型学"最小修正"而不是"大改重写"。
-    - 核心思路：训练时先用当前模型自己生成中间状态 $x^{(m)}$（mask diffusion n 步 + edit diffusion m 步），然后用经典 edit distance 算法计算从 $x^{(m)}$ 到 ground-truth $x^\star$ 的最短编辑脚本（replace/delete/insert 操作序列），再用一个 canonical 规则把脚本映射成每个位置的 $(c_i^\star,n_i^\star)$。如果同一位置要插多个 token，本步只监督插第一个，其余推迟到后面的步骤。
-    - 设计动机：edit distance 是**确定性、可微之外的最优解**——给定 $(x^{(m)},x^\star)$，最短编辑脚本（在 canonical 下）唯一，这给训练信号去歧义。同时"只学最小修改"会让模型倾向保守编辑，自然在序列稳定后输出空编辑而终止，符合扩散过程的收敛语义。这比 RL / RLHF 训 edit policy 简单太多。
+**2. Edit distance 监督 + canonical 映射：让模型学"最小修正"而非"重写"。**
 
-3. **三阶段课程式训练 + 推理时 mask/edit 步数分配**：
+有了动作空间还得给监督信号，且这个信号要明确指向"只改该改的"。作者训练时先用当前模型自己生成中间状态 $x^{(m)}$（mask diffusion $n$ 步 + edit diffusion $m$ 步），再用经典 edit distance 算法求从 $x^{(m)}$ 到 ground-truth $x^\star$ 的最短编辑脚本，最后用 canonical 规则把脚本映射成每个位置的目标 $(c_i^\star,n_i^\star)$；若同一位置要插多个 token，本步只监督第一个，其余推迟到后续步骤。
 
-    - 功能：让模型逐渐从"只会 mask diffusion"过渡到"会做 edit 修补"，避免训练初期累积误差炸掉。
-    - 核心思路：(i) Stage 1 在 Nemotron-Pretraining-SFT 上学预测当前 + 下一个 token，给 $(c_i,n_i)$ 的下一 token 预测能力打基础；(ii) Stage 2 在 R1-Distilled 数据上只跑标准 masked diffusion fine-tune，得到一个强 baseline；(iii) Stage 3 在同样数据上交错 mask + edit 训练，$m$ 从 0 起步逐渐拉大。推理时步数分配：默认 1/4 总预算给 edit，但 edit 步上限 32；如 1/8 budget（64 步）→ 48 mask + 16 edit。
-    - 设计动机：直接训 edit 会导致初始粗稿质量太差、编辑负担太重；用 curriculum 让模型先学好"粗稿"再慢慢学"修补"，是 diffusion 训练的常见 trick 在这里的应用。推理时把大头给 mask 是因为粗稿质量越好需要的 edit 越少，论文 Table 3 也证实：1/1 budget 时实际平均只用 6-9 步 edit 就收敛。
+用 edit distance 当监督的好处是去歧义：给定 $(x^{(m)},x^\star)$，canonical 下的最短脚本唯一，训练信号不会自相矛盾。而"只学最小修改"会让模型天然倾向保守编辑，序列稳定后就输出空编辑自行终止，正好契合扩散过程的收敛语义。比起用 RL / RLHF 训一个 edit policy，这套确定性监督简单且稳得多。
+
+**3. 三阶段课程式训练 + 推理步数分配：先学好粗稿，再学修补。**
+
+直接上来就训 edit 会因初始粗稿太差、编辑负担过重而崩。作者用 curriculum 让能力逐层叠加：Stage 1 在 Nemotron-Pretraining-SFT 上学预测当前 + 下一个 token，给 $(c_i,n_i)$ 的下一 token 预测打底；Stage 2 在 R1-Distilled 数据上只跑标准 masked diffusion fine-tune，先拿到一个强 baseline；Stage 3 在同样数据上交错 mask + edit 训练，$m$ 从 0 起步逐渐拉大。
+
+推理时步数分配的原则是"大头给 mask"：默认 1/4 总预算给 edit、edit 步上限 32，例如 1/8 budget（64 步）切成 48 mask + 16 edit。这是因为粗稿越好需要的修补越少——Table 3 证实 1/1 budget 时实际平均只用 6-9 步 edit 就收敛，说明 edit diffusion 是真正的收敛过程而非开放式重写。
 
 ### 损失函数 / 训练策略
 - 三阶段累进 fine-tune 同一组 LLaDA-8B 参数；Stage 1 lr=5e-5 batch=2048；Stage 2 lr=5e-5 batch=128；Stage 3 lr=1e-5 batch=128；总 64×H800 GPU 训练 ~213 小时。

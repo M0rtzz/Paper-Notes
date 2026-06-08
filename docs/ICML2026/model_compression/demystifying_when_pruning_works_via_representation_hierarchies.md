@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不提新的剪枝算法，而是建立一个**分析框架**：(1) 把 LLM 推理沿 $e \to h^{(l)} \to z \to p$ 分成三个表征空间；(2) 对每层独立施加剪枝得到 $\Delta h$、$\Delta z$、$\Delta p$，用余弦相似度和 KL 散度量化各空间的扰动幅度；(3) 用二阶 Taylor 展开导出每个空间的扰动闭式表达；(4) 把单步分析扩展到多步生成，分析误差累积；(5) 把多选任务进一步切到"候选 token 子空间"看局部稳定性。代表性剪枝方法用 Wanda / SparseGPT（intra-layer）与 ShortGPT / Attn-Drop / MLP-Drop（inter-layer），代表模型用 Qwen-2.5-7B-Instruct 和 Mistral-7B。
+论文不提新的剪枝算法，而是搭一个**诊断框架**来回答"剪枝为什么挑任务"。它把 LLM 推理沿信息流拆成三段表征空间——嵌入 $h^{(l)}$、logit $z$、概率 $p$，对每一层单独施加剪枝，然后追踪同一个扰动是怎么从 $\Delta h$ 一路传到 $\Delta z$ 再到 $\Delta p$、在哪一步被放大的。整条链路先用实证测量（余弦相似度 + KL 散度）暴露现象，再用二阶 Taylor 展开给出闭式公式钉死成因，最后把单步分析延伸到多步自回归生成、并把多选任务切到"候选 token 子空间"，从而把生成崩溃和非生成鲁棒统一到同一套数学里。代表性剪枝方法取 Wanda / SparseGPT（intra-layer）与 ShortGPT / Attn-Drop / MLP-Drop（inter-layer），代表模型用 Qwen-2.5-7B-Instruct 和 Mistral-7B。
 
 ### 关键设计
 
-1. **三空间扰动测量协议**：
+**1. 三空间扰动测量协议：把"扰动在哪一步被放大"用对照实验钉死。**
 
-    - 功能：分离剪枝对"嵌入 / logit / 概率"三种内部表征的影响，避免把不同空间的扰动混在一起算。
-    - 核心思路：在 baseline 模型 forward 过程中，对当前层用其剪枝后版本替换（其它层保持原状）得到扰动 $\Delta h_l$，用 angular deviation $1-\mathrm{CosineSim}(h_l, h_l+\Delta h_l)$ 量化嵌入空间偏移；通过 LM head 把它投影到 logit 空间 $z^{(l)}=W h^{(l)}$ 测 $1-\mathrm{CosineSim}(z, z+\Delta z)$；再经 $p^{(l)}=\mathrm{softmax}(z^{(l)}/T)$ 得到概率空间偏移。每层 × 每解码步重复，画出 Figure 4 的三条曲线。实证发现：embedding 和 logit 空间的余弦相似度都几乎是 1（只在第一、最后一层略掉），概率空间却剧烈震荡；这就把"问题在哪个阶段被放大"用一个对照实验直接钉死。
-    - 设计动机：以往工作要么只看权重稀疏度、要么只看最终 perplexity，掩盖了内部传播规律。论文这种"每层只换它一层、其它保持原样"的隔离设计相当于一个 controlled probe，能干净地把"层级局部扰动"和"端到端累积"分开。
+以往工作要么只盯权重稀疏度、要么只看端到端 perplexity，扰动在网络内部怎么传播被整个掩盖了。这里的做法是搭一个 controlled probe：在 baseline 模型正常 forward 的过程中，只把当前层换成它的剪枝版本、其它层保持原样，由此拿到纯属"这一层"的扰动 $\Delta h_l$。然后沿表征链逐级量化它的去向——嵌入空间用 angular deviation $1-\mathrm{CosineSim}(h_l, h_l+\Delta h_l)$，经 LM head 投到 logit 空间 $z^{(l)}=W h^{(l)}$ 测 $1-\mathrm{CosineSim}(z, z+\Delta z)$，再过 $p^{(l)}=\mathrm{softmax}(z^{(l)}/T)$ 落到概率空间。每层 × 每解码步都重复一遍，画出 Figure 4 的三条曲线。结果一目了然：嵌入和 logit 空间的余弦相似度几乎贴着 1（只在第一、最后一层略掉一点），概率空间却剧烈震荡。"每次只换一层"这个隔离设计的价值就在于它能把"单层局部扰动"和"端到端累积"干净地分开，让放大究竟发生在哪一段无所遁形。
 
-2. **Taylor 局部理论 (Theorem 1-3)**：
+**2. Taylor 局部理论（Theorem 1-3）：用闭式公式证明 softmax 才是放大器。**
 
-    - 功能：把上述实证现象用闭式公式解释，回答"为什么 logit 空间稳但概率空间不稳"。
-    - 核心思路：嵌入/logit 空间余弦相似度可用二阶 Taylor 展开近似为 $1-\mathrm{CosineSim}(h, h+\Delta h) \approx \|\Delta h_\perp\|^2 / (2\|h\|^2)$，只取决于"正交分量与原向量模长的平方比"；由于单层剪枝引入的 $\|\Delta h\|$ 本来就远小于 $\|h\|$，所以这个比值很小，加上 LM head 投影后还会进一步缩小相对正交分量（Fig. 5 实测确认）。**关键放大点在 softmax**：概率空间 $1-\mathrm{CosineSim}(p, p+\Delta p) \approx \mathrm{Var}_r(\Delta z)/(2T^2)$，其中 $r_i = p_i^2/\|p\|^2$；分布偏移用 KL 散度则有 $\mathrm{KL}(p\|q) \approx \mathrm{Var}_{i\sim p}(\Delta z_i)/(2T^2)$。注意这里关键的是 **$\Delta z$ 的方差**而不是它的模长——即使 $\Delta z$ 整体不大，只要它在 vocab 维度上分布不均匀（方差大），softmax 就会把这种"扁平 vs 尖峰"差异指数级放大。温度 $T$ 是直接的分母——温度越小放大越猛。
-    - 设计动机：这套理论第一次给"softmax 放大剪枝误差"提供了可计算、可对比的标尺；Fig. 6 验证理论估计的 angular deviation 和 KL 散度都和 ground truth 高度吻合。这意味着可以在不实际生成的情况下，从单层扰动统计直接预测某次剪枝会不会让生成任务崩——具备工程指导价值。
+上一步暴露了现象，这一步要回答"为什么 logit 稳、概率不稳"。线性段的稳定性可以直接算出来：嵌入/logit 空间的偏移经二阶 Taylor 展开近似为 $1-\mathrm{CosineSim}(h, h+\Delta h) \approx \|\Delta h_\perp\|^2 / (2\|h\|^2)$，只取决于正交分量与原向量模长的平方比——而单层剪枝引入的 $\|\Delta h\|$ 本就远小于 $\|h\|$，这个比值自然很小，再经 LM head 投影后相对正交分量被进一步压缩（Fig. 5 实测确认）。真正的放大发生在 softmax 这一非线性步：概率空间偏移 $1-\mathrm{CosineSim}(p, p+\Delta p) \approx \mathrm{Var}_r(\Delta z)/(2T^2)$，其中 $r_i = p_i^2/\|p\|^2$；若用 KL 散度衡量分布偏移则有 $\mathrm{KL}(p\|q) \approx \mathrm{Var}_{i\sim p}(\Delta z_i)/(2T^2)$。这里的关键不是 $\Delta z$ 的模长而是它的**方差**——哪怕 $\Delta z$ 整体不大，只要它在 vocab 维度上分布不均匀，softmax 就会把这种"扁平 vs 尖峰"的差异指数级放大；温度 $T$ 又恰好压在分母上，温度越低放大越猛。这套理论第一次给"softmax 放大剪枝误差"提供了可计算、可对比的标尺，Fig. 6 显示理论估计的 angular deviation 和 KL 散度都和 ground truth 高度吻合——意味着不必真去生成，光凭单层扰动统计就能预判某次剪枝会不会把生成任务搞崩。
 
-3. **生成 vs 非生成的子空间机制 (Multi-Scale Analysis)**：
+**3. 生成 vs 非生成的子空间机制（Multi-Scale Analysis）：同一个概率震荡为何只砸生成任务。**
 
-    - 功能：解释为什么概率空间剧烈震荡但多选/检索任务仍然鲁棒。
-    - 核心思路：生成任务每步从完整 vocab $|\mathcal{V}|$ 采样 + 自回归，单步小偏差通过 KV cache 不断喂回历史，导致 baseline 和 pruned 模型从第二步开始就 condition 在不同 token 历史上，偏差爆炸式累积（Fig. 7：第一步余弦相似度 ~1，第十步掉到接近 0）。非生成任务则只在第一步 + 仅看 logit 排序 / 候选 token 子集 $\mathcal{C}\subset\{1,\dots,|\mathcal{V}|\}$（如 A/B/C/D 四个选项）。Fig. 8 显示候选 token 通常在概率分布的**尾部**，那里相对扰动比 top-token 小得多，argmax 几乎不变；检索任务直接在 embedding 空间算 cosine，本来就稳。这就把"任务鲁棒性"机械地映射到"用哪个表征空间 + 用多大子空间 + 几步"三个维度。
-    - 设计动机：这一步把"宏观任务表现"和"微观表征几何"打通，提出三个实用 takeaway：表征空间选哪一层、任务相关子空间是否低维、是否有时间依赖——这三条直接是剪枝可行性的预测变量。
+概率空间既然剧烈震荡，为什么多选和检索还是稳的？区别在于它们用了表征链的不同位置、不同大小的子空间、不同的步数。生成任务每步从完整 vocab $|\mathcal{V}|$ 采样并自回归，单步小偏差经 KV cache 喂回历史，使 baseline 和 pruned 模型从第二步起就 condition 在不同 token 历史上，偏差爆炸式累积（Fig. 7：第一步余弦相似度约 1，第十步掉到接近 0）。非生成任务则只走第一步、且只看 logit 排序或候选 token 子集 $\mathcal{C}\subset\{1,\dots,|\mathcal{V}|\}$（如 A/B/C/D 四个选项）；Fig. 8 显示这些候选 token 通常落在概率分布的**尾部**，那里相对扰动远小于 top-token，argmax 几乎不动，而检索任务干脆直接在嵌入空间算 cosine，本就处在最稳的那一段。于是"任务鲁棒不鲁棒"被机械地分解成三个可观测变量——用哪个表征空间、任务相关子空间有多低维、是否有时间依赖——这三条直接成了剪枝可行性的预测因子。
 
 ### 损失函数 / 训练策略
 本文是 training-free 分析，不涉及训练损失。所有剪枝方法（Wanda, SparseGPT, ShortGPT, Attn-Drop, MLP-Drop）按各自原始协议运行；实验主要做 forward 测量而非 fine-tune。

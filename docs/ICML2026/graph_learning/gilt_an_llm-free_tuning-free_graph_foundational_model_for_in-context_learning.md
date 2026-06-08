@@ -41,32 +41,25 @@ GILT 把节点/边/图三类少样本图分类统一改写成基于 token 的 in
 ## 方法详解
 
 ### 整体框架
-GILT 是一个两阶段流水线，输入是一个 N-way K-shot 任务：support 集合 $\mathcal{S} = \{(x_i, y_i)\}_{i=1}^{N \times K}$（带标签）+ query 集合 $\mathcal{Q} = \{x_j\}_{j=1}^{Q}$（待预测），其中 $x_i$ 可以是节点、边或整图。输出是 query 上的类别概率分布。
-
-- **Phase 1：图原生 tokenization（句法统一）**：用结构编码器把异质图转成结构感知 embedding，再按任务类型聚成 item 表示，最后和类别原型拼接成统一维度的 support/query token 集合。
-- **Phase 2：In-Context 推理（语义统一）**：ICL Transformer 用两段式注意力——支持集内部自注意力先精炼任务上下文，query 通过交叉注意力从精炼后的 support 中"取经"——产出 context-aware 的 query 表示，再交给非参数化的 prototypical head 算 cosine 相似度做最终分类。
-
-整套模型通过在 22 个跨域图数据集上做"元任务"训练，学到的不是某个图的标签，而是"如何从 support 推断任务规则"这个 meta-skill。
+GILT 要解决的是"同一个模型不经任何微调就能处理任意图的少样本分类"。它把输入的 N-way K-shot 任务——带标签的 support 集合 $\mathcal{S} = \{(x_i, y_i)\}_{i=1}^{N \times K}$ 加待预测的 query 集合 $\mathcal{Q} = \{x_j\}_{j=1}^{Q}$，其中 $x_i$ 可以是节点、边或整图——统一翻译成一组维度固定的 token。先用一个不带可学习权重的结构编码器把异质图压成结构感知 embedding，并和类别原型拼成 support/query token；再让一个两段式注意力的 ICL Transformer 从 support token 里"读懂"任务语义、注入到每个 query，最后由非参数的原型头算 cosine 相似度出类别分布。整套模型在 22 个跨域图上做元任务训练，学到的不是某张图的标签，而是"如何从 support 推断任务规则"这一能力。
 
 ### 关键设计
 
-1. **图原生 tokenization：线性 GCN + 非对称原型 token**：
+**1. 图原生 tokenization：线性 GCN + 非对称原型 token，解决异质图无法统一喂进 Transformer 的痛点**
 
-    - 功能：把任意异质图的局部拓扑和原始特征转成 ICL Transformer 能消化的统一维度 token 集合，是整套 LLM-free 设计的入口。
-    - 核心思路：结构编码器用一个 4–6 层、**剥掉可学习权重和非线性激活**的线性 GCN（类 SGC/APPNP 思路），每层做 $H^{(l+1)} = \mathrm{LayerNorm}(\tilde{A} H^{(l)})$，只负责把多跳邻域信息汇聚到节点上；之后按任务类型形成 item 表示 $h$（节点任务取节点 emb，边任务取两端 emb 的逐元素积，图任务取 pooling）。再用 mean-pool + L2 归一化算每类原型 $p_c$，**非对称地**构造 support token $t_s = [h_i \,\|\, p_{y_i}]$ 和 query token $t_q = [h_j \,\|\, \mathbf{0}]$。
-    - 设计动机：之所以禁用可学习权重，是因为预训练阶段的"语义投影"会过拟合到训练图的特征分布，破坏跨图泛化；把语义推理全部推迟到 Transformer。非对称 token 设计巧妙解决了"既要 token 维度固定，又要让模型同时看到所有类别概念"的张力——比 one-hot（维度随类别数变化）和"拆成多个二分类"（看不到类间关系）都更优。
+图的特征维度、标签集合、拓扑各不相同，要让一个 Transformer 处理所有图，第一步是把它们都压成同一维度的 token。GILT 的结构编码器刻意用一个 4–6 层、**剥掉可学习权重和非线性激活**的线性 GCN（类 SGC/APPNP），每层只做 $H^{(l+1)} = \mathrm{LayerNorm}(\tilde{A} H^{(l)})$，把多跳邻域信息汇聚到节点上而不做任何语义投影；之后按任务类型聚成 item 表示 $h$（节点任务取节点 emb，边任务取两端 emb 的逐元素积，图任务取 pooling）。之所以禁用可学习权重，是因为预训练阶段的"语义投影"会过拟合到训练图的特征分布、破坏跨图泛化，所以作者把语义推理全部推迟到后面的 Transformer——消融里把它换回标准非线性 GCN 反而掉点正印证了这一点。
 
-2. **两段式 ICL Transformer + 原型分类头**：
+token 化的另一半是把类别信息也塞进固定维度。GILT 用 mean-pool + L2 归一化算出每类原型 $p_c$，然后**非对称地**构造 support token $t_s = [h_i \,\|\, p_{y_i}]$ 和 query token $t_q = [h_j \,\|\, \mathbf{0}]$：support 拼上自己标签对应的原型，query 拼一段零向量等着被填。这种非对称拼接巧妙化解了"既要 token 维度固定、又要让模型同时看见所有类别概念"的张力——比 one-hot（维度随类别数变化）和"拆成多个二分类"（看不到类间关系）都更优，也是后面 N-way 解耦的伏笔。
 
-    - 功能：在保持 support→query 单向信息流（受 TabPFN causal mask 启发）的前提下，把任务语义注入每个 query 表示，并完成 N-way 分类，整个过程无需任何参数更新。
-    - 核心思路：每一层分两步——**Stage 1 上下文精炼**：只在 support token 之间做多头自注意力 $T_\mathcal{S}' = \mathrm{SelfAttention}(T_\mathcal{S})$，让支持样本互相交互形成任务语义；**Stage 2 信息汇聚**：query 通过多头交叉注意力 $T_\mathcal{Q}' = \mathrm{CrossAttention}(Q{=}T_\mathcal{Q}, K{=}T_\mathcal{S}', V{=}T_\mathcal{S}')$ 从精炼后的 support 抽取自己需要的上下文。最终预测时只用 token embedding 中"类别空间"那一段算 prototype（对 support 同类样本做 mean），query 走 softmax over cosine similarity 得到类别分布；item space 和 class space 的角色分离让模型天然支持任意 N。
-    - 设计动机：自注意力 + 交叉注意力的两段式严格保证"query 之间不互相影响、query 不污染 support"，这是 ICL 在结构化数据上稳定 work 的关键（消融里把 Transformer 去掉直接掉到 ~13%）。原型头则是 tuning-free 的另一关键——它非参数、和 N 解耦，使得同一个预训练模型能直接面对从 2-way 到任意 N-way 的下游任务。
+**2. 两段式 ICL Transformer + 原型分类头，解决 tuning-free 下如何把任务语义注入 query 并支持任意 N-way**
 
-3. **推理时增强：TTA + 链接预测专用节点标注**：
+要做到推理时零参数更新，任务语义只能靠 attention 在 token 之间流动。受 TabPFN 的 causal mask 启发，GILT 每一层都拆成两步走，严格保证 support→query 的单向信息流。Stage 1 是上下文精炼，只在 support token 之间做多头自注意力 $T_\mathcal{S}' = \mathrm{SelfAttention}(T_\mathcal{S})$，让带标签的支持样本互相交互、凝出任务语义；Stage 2 是信息汇聚，query 通过多头交叉注意力 $T_\mathcal{Q}' = \mathrm{CrossAttention}(Q{=}T_\mathcal{Q},\, K{=}T_\mathcal{S}',\, V{=}T_\mathcal{S}')$ 从精炼后的 support 里抽取自己需要的上下文。这种"先自注意力再交叉注意力"的设计确保 query 之间互不影响、也不会污染 support，是 ICL 在结构化数据上稳定 work 的关键——消融里去掉整个 Transformer，性能直接崩到 ~13%。
 
-    - 功能：在不改动共享 backbone 的前提下，进一步压低预测方差并补强 1-WL 表达瓶颈，主要服务于链路预测这类对 pairwise 结构敏感的任务。
-    - 核心思路：节点/边/图三类任务统一加 **test-time augmentation**——对原始特征做随机旋转产生多个视图，预测取平均；链路预测额外引入 MPLP-启发的节点标注估计策略，给目标边对补充结构线索（因为标准 MPNN 受限于 1-WL，无法很好区分同构子图中的不同边对）。
-    - 设计动机：TabPFN 已经证明 ensemble 对 ICL 模型非常有效，作者把这一经验迁移到图上，并对链路预测做点特异性补强，让一套统一 backbone 在最难的 link-level 任务上也能站稳脚跟（消融显示 TTA 让节点分类四个数据集普遍涨 2–6 个点）。
+最终分类交给一个非参数原型头。它只取 token embedding 中"类别空间"那一段，对 support 里同类样本做 mean 得到原型，query 走 softmax over cosine similarity 得到类别分布。把 item space 和 class space 的角色分离开来，使得同一个预训练模型不必改任何结构就能从 2-way 直接面对任意 N-way 任务——这正是 tuning-free 的另一根支柱。
+
+**3. 推理时增强：TTA + 链路预测专用节点标注，解决预测方差大与 1-WL 表达瓶颈**
+
+在不动共享 backbone 的前提下，GILT 在推理阶段做两件补强。一是对节点/边/图三类任务统一加 **test-time augmentation**——对原始特征做随机旋转产生多个视图、预测取平均，借鉴 TabPFN 已验证的 ensemble 对 ICL 模型很有效这一经验（消融显示 TTA 让四个节点数据集普遍涨 2–6 个点）。二是针对链路预测额外引入 MPLP-启发的节点标注估计：标准 MPNN 受限于 1-WL，无法区分同构子图中的不同边对，于是给目标边对补充结构线索。把表达力缺口的修复只放在推理时、而不是塞进 backbone，让一套统一模型在最难的 link-level 任务上也能站稳，同时保住"一套模型多任务"的简洁。
 
 ### 损失函数 / 训练策略
 预训练语料覆盖 22 个跨域图（citation/social/molecule），共 45 万+ 节点、400 万+ 边，单图规模从几十到 17 万节点，特征维从个位数到 8000+。每步随机采一个 few-shot 任务，按 GILT 架构出预测，用标准 cross-entropy 监督：

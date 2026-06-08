@@ -41,30 +41,32 @@ T$^2$PO 把多轮 agentic RL 的训练崩溃归因为"hesitation（犹豫）"—
 ## 方法详解
 
 ### 整体框架
-T$^2$PO 在标准多轮 RL pipeline（base LLM + RFT 冷启动 + SOTA policy update）之上插入两个 uncertainty-guided 干预模块：**TTI（Token-level Thinking Intervention）** 在 rollout 时动态截断思考段；**TDS（Turn-level Dynamical Sampling）** 在 rollout 时识别并重采样无效 turn。两个干预的共同基础是 $M_t$。最后用 memory context window（只看最近 $P$ turn）+ turn-level discounted return $R(\tau^k)=\sum_{j=k}^K\beta^{j-k}r^j$ + 严格格式惩罚 + GRPO 类策略更新做训练。
+T$^2$PO 的核心主张是：多轮 agentic RL 的训练崩溃不是 trade-off，而是 hesitation（犹豫）造成的探索效率低下——token 层过思考、turn 层重复无效。于是它在标准多轮 RL pipeline（base LLM + RFT 冷启动 + GRPO 类策略更新）之上，不动 reward、只在 rollout 阶段插两个干预：**TTI（Token-level Thinking Intervention）** 在思考链饱和时硬截断 think 段，**TDS（Turn-level Dynamical Sampling）** 在某个 turn 没带来信息增益时重采它。两个干预共享同一个底层量——自校准不确定性信号 $M_t$，token 层看它的逐步变化、turn 层看它聚合后的逐轮变化。
 
 ### 关键设计
 
-1. **自校准不确定性信号 $M_t$**:
+**1. 自校准不确定性信号 $M_t$：给 token/turn 干预一个在大词表下也靠谱的标量。**
 
-    - 功能：在大词表（如 Qwen3 的 152K）下提供一个**既能分辨"几乎均匀"与"高度尖锐"分布，又对尾部概率敏感**的标量信号，作为 TTI/TDS 的统一驱动量。
-    - 核心思路：单独用 Shannon entropy $H_t=-\sum_i p_t^{(i)}\log p_t^{(i)}$ 在极端处区分度差（"(1,0,0,...)" 与 "(0.5,0.5,0,...)" 在 152K 词表下 entropy 差距仅 $\log 2$，相对总量级几乎不可见）；单独用 top-$j$ confidence $C_t=-\frac{1}{j}\sum_{i=1}^j\log p_t^{(i)}$ 又只看 arg-max 忽略尾部。先做轨迹归一化 $\tilde H_t=(H_t-H_{\min})/(H_{\max}-H_{\min})$、$\tilde C_t=(C_t-C_{\min})/(C_{\max}-C_{\min})$，再融合 $M_t=\alpha\tilde H_t+(1-\alpha)(1-\tilde C_t)$。论文用 contour 图说明 $M_t$ 在等高线几何上同时保留 entropy 的尾部敏感性和 confidence 的 top-1 分层。
-    - 设计动机：单一指标各有盲区；融合后的 $M_t$ 是"局部分布稳定性"的可靠 scalar，能让阈值规则在不同 token / turn 上有一致语义。
+两个干预都要回答"模型此刻到底确不确定"，但单一指标在 Qwen3 这种 152K 大词表下都有盲区。Shannon entropy $H_t=-\sum_i p_t^{(i)}\log p_t^{(i)}$ 在极端分布处几乎分不出层次——分布 $(1,0,0,\dots)$ 与 $(0.5,0.5,0,\dots)$ 的 entropy 差距只有 $\log 2$，相对 152K 项的总量级几乎不可见；而 top-$j$ confidence $C_t=-\frac{1}{j}\sum_{i=1}^j\log p_t^{(i)}$ 又只盯 arg-max、完全忽略尾部概率。T$^2$PO 先对两者做轨迹内归一化 $\tilde H_t=(H_t-H_{\min})/(H_{\max}-H_{\min})$、$\tilde C_t=(C_t-C_{\min})/(C_{\max}-C_{\min})$，再融合成
 
-2. **TTI（Token-level Thinking Intervention）—— 在 think 段停得恰到好处**:
+$$M_t=\alpha\tilde H_t+(1-\alpha)(1-\tilde C_t).$$
 
-    - 功能：动态判断"思考已经饱和"的时刻，强制把 reasoning 终止符 `</think>` 注入到 logits 里，停止过思考。
-    - 核心思路：从最小前缀长度 $L_{\min}$ 之后开始监控相邻变化 $\Delta_t^k=|M_t^k-M_{t-1}^k|$。当窗口大小 $N$ 内的平均变化低于阈值 $\varepsilon$（$\frac{1}{N+1}\sum_{i=0}^N\Delta_{t-i}^k<\varepsilon$），认为非犹豫事件触发，在 $t^*+1$ 步把 `</think>` 的 token 153668 的 logit 设 $+\infty$、其余 $-\infty$，让 $p_\theta(y_{t^*+1}=\texttt{</think>}\mid y_{\le t^*})=1$。随后按固定 queue $\mathcal{Q}=[\texttt{</think>},\backslash n,\texttt{<action>}]$ 注入，保证结构化输出。**关键 trick** 是不在 $M_t$ 峰值处截断（那里恰是 task-specific token，截了反伤性能），而在峰值之后的"收敛区"截。还附加 one-time activation（每条生成最多触发一次）和全局 $L_{\max}$ 兜底。
-    - 设计动机：过去工作要么不截、要么按固定长度截（粗暴）、要么按 reward 隐式控制（间接）；TTI 是**直接的、自适应的、token-level 的硬截断**，且通过 sliding window 平滑掉单点 spike，避免在关键 task token 处误截。
+论文用 contour 图论证 $M_t$ 在等高线几何上同时继承了 entropy 的尾部敏感性和 confidence 的 top-1 分层，成为"局部分布稳定性"的可靠 scalar——这样同一套阈值规则在不同 token、不同 turn 上才有一致的语义，TTI/TDS 才能共用一个信号。
 
-3. **TDS（Turn-level Dynamical Sampling）—— 重采样无效 turn**:
+**2. TTI（Token-level Thinking Intervention）：在 think 段停得恰到好处。**
 
-    - 功能：在 turn 层检测"和上一个 turn 几乎没区别"的无效交互，丢弃当前 turn 的生成并重采，避免浪费 rollout 预算。
-    - 核心思路：先把 turn 内所有 token 的 $M_t$ 几何平均得到 turn-level 信号 $\Phi^k=(\prod_{t=1}^T M_t)^{1/T}$，然后看相邻 turn 的变化 $\Gamma^k=|\Phi^k-\Phi^{k-1}|$。当 $\Gamma^k<\eta$（agent 内部 belief 几乎没改变）时触发 regeneration：把 $\mathbf{a}^k$ 抛弃，在同样的 state 下重新 rollout，直到 $\Gamma^k\ge\eta$ 或达到重采上限 $B_{\max}$。**关键设计**是不能直接把单轮 RL 的 DAPO-style filter 搬过来——多轮 RL 缺乏 dense per-turn reward，所以 TDS 用 turn-level 的内部不确定性变化作为"代理 accuracy"。
-    - 设计动机：agent 在错误轨迹上反复试很多无效 turn 是 multi-turn RL 训练崩溃的另一主因；TDS 直接在 rollout 阶段切掉它们，既省算力又稳定梯度信号。
+token-level 的过思考表现为思考链拖很长但信息增益早已饱和。TTI 的做法是从最小前缀长度 $L_{\min}$ 之后开始监控 $M_t$ 的相邻变化 $\Delta_t^k=|M_t^k-M_{t-1}^k|$，一旦窗口 $N$ 内的平均变化跌破阈值 $\varepsilon$（即 $\frac{1}{N+1}\sum_{i=0}^N\Delta_{t-i}^k<\varepsilon$，认为"非犹豫"已经收敛），就在 $t^*+1$ 步把终止符 `</think>`（token 153668）的 logit 设为 $+\infty$、其余设为 $-\infty$，强制 $p_\theta(y_{t^*+1}=\texttt{</think>}\mid y_{\le t^*})=1$，随后按固定 queue $\mathcal{Q}=[\texttt{</think>},\backslash n,\texttt{<action>}]$ 注入以保证结构化输出。
+
+这里最反直觉、也最关键的一点是：**不在 $M_t$ 峰值处截断**。$M_t$ 沿响应呈"先升后降"的 hump，峰值附近恰好是 task-specific token（如 WebShop 的商品名），那是高信息密度而非过思考，截了反伤性能；TTI 只在峰值之后的"收敛区"动手。配合 sliding window 平滑掉单点 spike、one-time activation（每条生成最多触发一次）和全局 $L_{\max}$ 兜底，它就成了一个直接、自适应、token 级的硬截断——比"不截 / 固定长度截 / 用 length penalty 间接控制"这几种旧做法都更精准。
+
+**3. TDS（Turn-level Dynamical Sampling）：重采掉没改变 belief 的无效 turn。**
+
+崩溃的另一主因是 agent 在错误动作空间里反复试同样的 turn，白白消耗 rollout 预算还污染梯度。TDS 先把一个 turn 内所有 token 的 $M_t$ 做几何平均，得到 turn 级信号 $\Phi^k=(\prod_{t=1}^T M_t)^{1/T}$（用几何平均而非算术平均，是因为内部不确定性常被极少数高 entropy token 拉偏，几何平均更稳地反映整体 belief），再看相邻 turn 的变化 $\Gamma^k=|\Phi^k-\Phi^{k-1}|$。当 $\Gamma^k<\eta$——即这一 turn 几乎没改变 agent 的内部 belief——就丢弃动作 $\mathbf{a}^k$、在同一 state 下重新 rollout，直到 $\Gamma^k\ge\eta$ 或触达重采上限 $B_{\max}$。
+
+它不能照搬单轮 RL 的 DAPO-style filter：单轮可以用 dense per-turn reward 判断 turn 好坏，而多轮 RL 缺这种 reward，所以 TDS 改用 turn-level 的内部不确定性变化当"代理 accuracy"。相比 SimpleTIR 那种事后过滤整条含 void turn 的轨迹，TDS 在 rollout 阶段就只重采单个无效 turn，粒度更细、还不丢有效数据。
 
 ### 损失函数 / 训练策略
-RFT 冷启动 + memory context window（只看最近 $P$ turn 节省显存）+ turn-level discounted return $R(\tau^k)=\sum_{j=k}^K\beta^{j-k}r^j$ + 严格格式惩罚（强制 think/action 标签）+ GRPO 类 critic-free 策略更新。TTI / TDS 在 rollout 阶段干预，不改 policy update。
+RFT 冷启动 + memory context window（只看最近 $P$ turn 以省显存）+ turn-level discounted return $R(\tau^k)=\sum_{j=k}^K\beta^{j-k}r^j$ + 严格格式惩罚（强制 think/action 标签）+ GRPO 类 critic-free 策略更新。TTI / TDS 只在 rollout 阶段干预，不改 policy update，因此与各种 advantage 估计方法正交可叠加。
 
 ## 实验关键数据
 

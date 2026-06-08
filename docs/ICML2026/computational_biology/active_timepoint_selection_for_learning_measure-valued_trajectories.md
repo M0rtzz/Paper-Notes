@@ -38,33 +38,25 @@ tags:
 **核心 idea**：把测度轨迹先投到 LOT 切空间，再在低维 latent coefficient 上建 warped GP，用 posterior variance 选择下一个测量时间。
 
 ## 方法详解
-本文方法可以理解为一个“几何线性化 + 概率 surrogate + 主动采样”的循环。每轮先用已有快照估计一个 Wasserstein barycenter 作为参考测度，把所有快照转成相对于该参考的 displacement field；再把这些高维 displacement 压缩成低维系数；最后在时间到系数的映射上放 GP，并根据 GP 不确定性挑选下一次实验时间。
 
 ### 整体框架
-输入是已有快照集合 $\mathcal{D}=\{(t_i,\hat{\mu}_{t_i})\}_{i=1}^N$、候选时间池 $\mathcal{T}_{pool}$ 和剩余采样预算 $B$。每一轮算法会更新参考测度 $\sigma$，将每个快照 $\hat{\mu}_{t_i}$ 通过 OT coupling 映射到 $T_\sigma\mathcal{P}_2(\mathcal{X})$，得到 displacement matrix $\mathbf{V}_i$；随后用带权 PCA 得到低维系数 $\mathbf{c}_i$。这些 $\{(t_i,\mathbf{c}_i)\}$ 构成 GP 训练集。
+方法要解决的问题是：在测量预算有限、每个快照都很贵的前提下，决定下一次该在哪个时间点采样一个分布快照，使最终重建出的概率路径误差最小。难点在于输出是 Wasserstein 空间里的概率测度而非欧氏向量，普通 active learning 的 posterior variance 没法直接用。作者的办法是把每个测度快照通过 Linearized Optimal Transport 映射到参考测度的切空间，从而把测度回归变成一个可以放高斯过程的低维向量回归；每一轮先更新参考测度并重建这个概率 surrogate，再用 GP 的不确定性挑下一个测量时间，循环往复直到耗尽预算。
 
-为了处理非平稳动态，作者不直接在物理时间 $t$ 上放 stationary kernel，而是估计 intrinsic time $\tau=\Phi(t)$。$\Phi(t)$ 近似累计 Wasserstein arc length，即相邻快照之间的 transport distance 累积，再用单调 cubic spline 延拓到候选时间。GP kernel 写成 $\mathbf{K}(t,t')=\mathbf{K}_{base}(\Phi(t),\Phi(t'))$，因此在变化快的区域自动变成更短有效 lengthscale。
-
-主动采样时，论文主用 point-wise uncertainty：$\alpha_{unc}(t;\mathcal{D})=\mathrm{Tr}(\mathbf{S}(\Phi(t)))$，也给出 expected integrated risk reduction 版本。选中 $t^*$ 后执行真实测量，把新快照加入数据集，继续下一轮。
+输入是已有快照集合 $\mathcal{D}=\{(t_i,\hat{\mu}_{t_i})\}_{i=1}^N$、候选时间池 $\mathcal{T}_{pool}$ 和剩余采样预算 $B$。每一轮算法会更新参考测度 $\sigma$，将每个快照 $\hat{\mu}_{t_i}$ 通过 OT coupling 映射到切空间 $T_\sigma\mathcal{P}_2(\mathcal{X})$，得到 displacement matrix $\mathbf{V}_i$；随后用带权 PCA 把它压成低维系数 $\mathbf{c}_i$，这些 $\{(t_i,\mathbf{c}_i)\}$ 就构成 GP 的训练集；最后在时间到系数的映射上拟合 GP，按其不确定性选出 $t^*$ 去做真实测量并加入数据集。
 
 ### 关键设计
-1. **LOT 切空间表示**:
 
-    - 功能：把非欧氏的概率测度输出变成可回归的向量对象。
-    - 核心思路：以参考测度 $\sigma$ 为锚，求从 $\sigma$ 到目标快照 $\hat{\mu}_{t_i}$ 的 OT coupling，并用 barycentric projection 得到近似 transport map。displacement field $\mathbf{V}_i=\hat{\mathbf{Z}}_i-\mathbf{Z}_\sigma$ 就是快照在切空间里的表示。
-    - 设计动机：直接对密度做 GP 会把质量“平均”到错误位置；LOT 用 transport displacement 表示变化，更接近 Wasserstein 几何。
+**1. LOT 切空间表示：把非欧氏的测度输出变成可回归的向量**
 
-2. **低维 GP surrogate 与分布重建**:
+主动采样需要一个能回归、能估不确定性的输出表示，但概率测度生活在 Wasserstein 空间，直接对密度向量做 GP 会把质量"平均"到错误位置、违背 transport 几何。作者以参考测度 $\sigma$ 为锚，求从 $\sigma$ 到目标快照 $\hat{\mu}_{t_i}$ 的 OT coupling，再用 barycentric projection 得到近似 transport map，把快照在切空间里表示成 displacement field $\mathbf{V}_i=\hat{\mathbf{Z}}_i-\mathbf{Z}_\sigma$。这样表示的是"从参考测度出发要把质量往哪儿搬"，是 Wasserstein 几何的一阶线性化，比直接对密度建模更贴近问题结构。
 
-    - 功能：给连续时间上的概率路径提供 posterior mean 和 epistemic uncertainty。
-    - 核心思路：对加权 flatten 后的 displacement 做 PCA，得到 latent coefficient $\mathbf{c}_i$；对 $t\mapsto\mathbf{c}(t)$ 建多输出 GP。预测时从 GP posterior mean 或 sample 反投影回 displacement，再加到参考 landmark 上得到预测测度。
-    - 设计动机：直接在高维 displacement field 上做 GP 计算昂贵且样本少。PCA 把主要变化方向提出来，使 uncertainty estimation 更稳定。
+**2. 低维 GP surrogate 与分布重建：给连续时间提供 mean 和 epistemic uncertainty**
 
-3. **intrinsic time warping 与 acquisition**:
+displacement field 本身高维、快照又少，直接在上面建 GP 计算昂贵且不稳。作者先对加权 flatten 后的 displacement 做 PCA 提出主要变化方向，得到 latent coefficient $\mathbf{c}_i$，再对映射 $t\mapsto\mathbf{c}(t)$ 建多输出 GP。预测某个时间的概率分布时，从 GP posterior mean 或采样得到 latent 系数，反投影回 displacement，加到参考 landmark 上就得到预测测度。这条路径既给出 posterior mean 用于重建，又借 GP posterior covariance 提供了主动采样真正需要的 epistemic uncertainty。
 
-    - 功能：让采样策略对非平稳轨迹敏感，优先覆盖高速变化窗口。
-    - 核心思路：用相邻快照的 Wasserstein 距离估计累计弧长 $\Phi(t)$，再让 GP kernel 在 $\Phi(t)$ 上计算相关性。采样函数选 posterior covariance trace 最大的时间点。
-    - 设计动机：如果在物理时间上假设 stationary，模型会低估短促分叉或突变阶段的不确定性；用 intrinsic time 后，快速变化区在模型里被“拉长”，更容易被主动采样捕获。
+**3. intrinsic time warping 与 acquisition：让采样优先盯住高速变化窗口**
+
+生物分化这类过程强烈非平稳——大部分时间变化缓慢，少数窗口快速分叉，若在物理时间 $t$ 上假设 stationary kernel，模型会低估短促分叉阶段的不确定性而错过关键瞬间。作者改为估计 intrinsic time $\tau=\Phi(t)$，其中 $\Phi(t)$ 近似累计 Wasserstein arc length（相邻快照间 transport distance 的累积），再用单调 cubic spline 延拓到候选时间，kernel 写成 $\mathbf{K}(t,t')=\mathbf{K}_{base}(\Phi(t),\Phi(t'))$，于是变化快的区域被自动"拉长"、有效 lengthscale 变短。主动采样主用 point-wise uncertainty $\alpha_{unc}(t;\mathcal{D})=\mathrm{Tr}(\mathbf{S}(\Phi(t)))$（也给出 expected integrated risk reduction 版本），选 posterior covariance trace 最大的时间点，从而把预算自然投向高 velocity 区域。
 
 ### 损失函数 / 训练策略
 方法本身不是端到端神经网络训练，而是每轮重建一个概率 surrogate。核心优化包括 OT coupling、Wasserstein barycenter、PCA 和 GP hyperparameter 的 marginal log-likelihood 最大化。默认实验中，多输出 GP 简化为每个 latent dimension 一个独立 GP，kernel 使用 Matérn 5/2。候选 acquisition 在固定 candidate pool 上计算，选出最大 posterior uncertainty 的时间点。

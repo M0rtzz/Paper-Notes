@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分两阶段。**Diagnose**：在 FLUX.1-Dev 的 GenEval two-object 子集上跑生成，对每张图用 Mask2Former + BLIP-VQA 双标注得到每个 concept token 是否成功生成 ($y\in\{0,1\}$)；收集中间 timesteps 的 text token key 向量 $\mathbf{k}_c^{(t,l,h)}$ 组成数据集 $\mathcal{D}_{l,h}^{\text{train}}$，对每个 $(l, h)$ 训一个线性 probe 判别 absent/present。**Correct (OSI)**：从每个 head 的训练集里算 mass mean shift 方向 $\boldsymbol{\delta}^{(l,h)} = \mathbb{E}[\mathbf{k}|y=0]-\mathbb{E}[\mathbf{k}|y=1]$，归一化得 $\boldsymbol{\theta}^{(l,h)}$；inference 时只对 top-K 准确率最高的头、只在 $t\in[t_{\text{stop}}, 1]$ 的早期 denoising 阶段，把 concept token 的 key 向量按 $\mathbf{k}_c \leftarrow \mathbf{k}_c + \alpha\sigma^{(l,h)}\boldsymbol{\theta}^{(l,h)}$ 偏移。注意这里加的是"absent - present"方向，等价于让模型在内部"更觉得自己漏了"，由此触发其内置的补救机制。
+论文要解决的是 MM-DiT 的概念遗漏，但它不直接改生成流程，而是先把"模型内部是否已经知道某个概念会缺席"这个隐信号探出来、再在 inference 时把它放大去逼模型补救。整套流程分两阶段：**Diagnose** 阶段在 FLUX.1-Dev 上跑 GenEval two-object 生成，对每张图用 Mask2Former + BLIP-VQA 双标注得到每个 concept token 是否成功生成的二元标签 $y\in\{0,1\}$，再收集中间 timesteps 的 text token key 向量 $\mathbf{k}_c^{(t,l,h)}$，对每个 $(l,h)$ 训一个线性 probe 来判别 absent/present，从而定位到底哪些头编码了这个信号；**Correct (OSI)** 阶段则从这些头算出"缺席方向"，在生成早期只对最可靠的 top-K 头、只在概念尚未定型的时间窗里，把 concept token 的 key 向量沿该方向推一下，等价于让模型"误以为自己漏得更严重"，由此触发它内置的补救机制把缺失概念画出来。
 
 ### 关键设计
 
-1. **Concept-aware Probing Dataset Construction with Noise Filtering**：
+**1. 带噪声过滤的概念感知探针数据集：让 probe 学的是"此刻这个 token 知不知道自己会出现"。**
 
-    - 功能：从 FLUX 生成流程里采集干净的 (key vector, present-label) 配对，专门用来训能识别 omission 信号的线性探针。
-    - 核心思路：以 "a photo of {obj1} and {obj2}" 为模板批量生成，记录每步、每层、每头的 text token key 向量 $\mathbf{k}^{(t,l,h)}$。label 来自最终图像——用 Mask2Former (mmdetection) + BLIP-VQA 双标注，两者一致才采纳，避免单一标注器噪声。两类陷阱要清理：(a) **早期 timestep 标签错位**——目标在第 1-3 步压根没出现，但因为最后成功了，被打 $y=1$（实际此时 key 向量编码的是"还没生成"，label 却说"会生成"，造成训练矛盾）；(b) **晚期 timestep 信号薄弱**——扩散后期主要刷细节，omission 信号已经几乎消失。Table 1 给出量化证据：early step 与最终标签 agreement 仅 0.409，intermediate 跃升到 0.965，late 达 1.000。因此论文只保留中间区间 $\mathcal{T}$ 的样本进入 probe 训练集，4:1 切 train/val。
-    - 设计动机：probe 本质是个 sanity check，必须先保证数据真实反映"this token, at this moment, knows whether its concept will appear"——否则后面找出来的"重要头"全是噪声。这种"按 generation dynamics 过滤数据"的做法是把扩散模型的时间结构嵌进 probe 设计里。
+probe 想成立的前提是数据真实反映 token 在当下时刻的"觉知状态"，否则后面找到的"重要头"全是噪声。论文以 "a photo of {obj1} and {obj2}" 为模板批量生成，逐步、逐层、逐头记录 text token key 向量 $\mathbf{k}^{(t,l,h)}$，label 取自最终图像并用 Mask2Former (mmdetection) 与 BLIP-VQA 双标注、两者一致才采纳以压掉单标注器噪声。关键是清掉两类时间错位的脏样本：早期 timestep 里目标在第 1-3 步根本还没出现，却因为最终成功而被打成 $y=1$，此时 key 编码的是"还没生成"、label 却说"会生成"，直接制造训练矛盾；晚期 timestep 扩散主要在刷细节，omission 信号已几乎消失。Table 1 把这点量化得很干净——early/intermediate/late 三段与最终标签的 agreement 分别是 0.409、0.965、1.000，于是只保留中间区间 $\mathcal{T}$ 的样本进 probe 训练集、按 4:1 切 train/val。这种"按 generation dynamics 过滤数据"本质是把扩散模型的时间结构直接嵌进了 probe 设计。
 
-2. **Head-Localization via Linear Probing**：
+**2. 用线性探针做逐头定位：在 1368 个头里只挑出编码遗漏信号的专家头。**
 
-    - 功能：在 1368 个 attention head × 多个 timestep 的巨大搜索空间里精确定位编码 omission 信号的"专家头"，避免对所有头无脑干预。
-    - 核心思路：对每个 $(l, h)$ 训一个线性分类器，输入是该头的 text token key 向量，输出预测 absent vs present。Fig. 2(a) 显示 probe 准确率在中间 timestep 达到峰值（与 Table 1 对齐）。Fig. 2(b) 的 head-wise 热图揭示一个反直觉模式：**早期 layer 接近 chance**（因为此时 text token 还没充分吸收 image token 的视觉反馈），**中间 layer 大幅上升**（最高 91.0% 准确率），**后期 layer 又掉下来**。因此选 top-300 头（占总 1368 头的 22%，全部超过 80% 准确率）作为"omission 信号头"。Fig. 3、Fig. 4 用 box plot 展示这些 probe 输出随 timestep 演化：第一行预测 $\hat{x}_0$ 的视觉对象逐渐出现，第二行 probe 输出的"present"概率同步上升——这是非常漂亮的"模型自我感知"动态可视化。
-    - 设计动机：信号是稀疏的——不是所有头都编码 omission，逐头探针保证只在真有用的头上动手，避免广撒网破坏其他能力。"每个 (l, h) 独立训 probe"的工程量大但换来精确定位，避免后续 OSI 的负面副作用。
+承接上一步，信号是稀疏的——不是每个头都编码 omission，所以必须精确定位、避免对全部头无脑干预破坏其他能力。论文对每个 $(l,h)$ 单独训一个线性分类器，输入该头的 text token key 向量、输出 absent vs present 的预测。Fig. 2(a) 显示 probe 准确率在中间 timestep 达到峰值（与 Table 1 一致），Fig. 2(b) 的 head-wise 热图则揭示一个反直觉的层分布：早期 layer 接近随机猜（此时 text token 还没充分吸收 image token 的视觉反馈），中间 layer 大幅抬升（最高 91.0% 准确率），后期 layer 又掉下来。据此选出 top-300 头（占 1368 头的 22%，全部超过 80% 准确率）作为"omission 信号头"。Fig. 3-4 进一步用 box plot 把这些 probe 输出随 timestep 的演化画出来：上排预测 $\hat{x}_0$ 里的视觉对象逐渐显形，下排 probe 的"present"概率同步爬升——这是对"模型自我感知"非常直观的动态可视化。逐头独训 probe 工程量大，但换来的精确定位正是后续 OSI 不产生负面副作用的前提。
 
-3. **Mass Mean Shift Intervention (OSI)**：
+**3. 质心均值平移干预 OSI：朝"缺席方向"推 key 向量，激发模型补全。**
 
-    - 功能：在 inference 时用最小代价、训练免费的方式把"absent → present"的方向注入 key 向量，激发模型补全缺失概念。
-    - 核心思路：对每个 top-K 头计算 mass mean shift 方向 $\boldsymbol{\delta}^{(l,h)} = \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=0] - \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=1]$（注意方向是"absent 减 present"），归一化得 $\boldsymbol{\theta}^{(l,h)}$。inference 时按 $\mathbf{k}_c \leftarrow \mathbf{k}_c + \alpha\sigma^{(l,h)}\boldsymbol{\theta}^{(l,h)}$ 修改，$\sigma^{(l,h)}$ 是 probe 数据在该方向上的标准差（自适应尺度归一化），$\alpha$ 是单一标量（FLUX 用 5.0、SD3.5 用 7.5）。只在前 15 步（共 30 步）的 $t\in[0.78, 1]$ 区间生效，因为 concept 形成主要在 early phase。注意这里加的是"omission 方向"（不是"present 方向"），论文解释为"让模型以为自己漏得更严重 → 触发更强的补救冲动"——一种 intentional hallucination of severity。
-    - 设计动机：传统做法要么改 attention map 加约束、要么 fine-tune，OSI 用 mass mean shift + steering vector 的范式（Li et al. 2023a）实现完全 training-free 的 surgical 干预。"放大缺席信号"而非"灌入存在信号"这一反直觉选择由 Table 4 的方向消融验证——反向（$-\boldsymbol{\theta}$）反而让性能崩溃（two object 0.81 → 0.72，six object 0.18 → 0.02），说明方向对了才是补救，方向反了变成压制。
+定位到信号头后，OSI 用训练免费、近零开销的方式做手术式干预。对每个 top-K 头先算质心均值平移方向 $\boldsymbol{\delta}^{(l,h)} = \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=0] - \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=1]$（注意是"absent 减 present"），归一化得 $\boldsymbol{\theta}^{(l,h)}$；inference 时按
+
+$$\mathbf{k}_c \leftarrow \mathbf{k}_c + \alpha\,\sigma^{(l,h)}\,\boldsymbol{\theta}^{(l,h)}$$
+
+修改 concept token 的 key，其中 $\sigma^{(l,h)}$ 是 probe 数据在该方向上的标准差、起自适应尺度归一化的作用，$\alpha$ 是单一标量（FLUX 取 5.0、SD3.5 取 7.5）。干预只在前 15 步（共 30 步）、即 $t\in[0.78,1]$ 的早期区间生效，因为概念形成主要发生在这一阶段。最反直觉的一点是它加的是"缺席方向"而非"存在方向"——相当于让模型"以为自己漏得更严重"，从而触发更强的补救冲动，是一种刻意夸大严重度的干预。它之所以比传统做法（改 attention map 加约束、或 fine-tune）更轻，是因为沿用了 ITI 的 mass mean shift + steering vector 范式（Li et al. 2023a），全程不动模型权重；而方向选对的重要性由 Table 4 的方向消融坐实——反向 $-\boldsymbol{\theta}$ 反而让性能崩盘（two-object 0.81 → 0.72，six-object 0.18 → 0.02），说明方向对了是补救、方向反了就成了压制。
 
 ### 损失函数 / 训练策略
-OSI 是 training-free：模型本身不动，只在 inference 时按上述公式改 key 向量。唯一需要训练的是 1368 个轻量线性 probe（≪ 主模型），用 BCE 损失。30 步总采样、CFG=3.5(FLUX)/7.0(SD3.5)、top-K=300(FLUX)/100(SD3.5)、$\alpha=5.0/7.5$、$t_{\text{stop}}=0.78/0.76$、前 15 步生效。Token 选择：GenEval 用模板规则解析、T2I-CompBench 用 Llama-3.1-8B 抽取目标 span。
+OSI 本身 training-free，主模型完全不动，只在 inference 时按上式改 key。唯一需要训练的是 1368 个轻量线性 probe（参数量远小于主模型），用 BCE 损失。其余关键设置：总采样 30 步、CFG=3.5 (FLUX) / 7.0 (SD3.5)、top-K=300 (FLUX) / 100 (SD3.5)、$\alpha=5.0/7.5$、$t_{\text{stop}}=0.78/0.76$、前 15 步生效。Token 选择上，GenEval 用模板规则解析、T2I-CompBench 用 Llama-3.1-8B 抽取目标 span。
 
 ## 实验关键数据
 

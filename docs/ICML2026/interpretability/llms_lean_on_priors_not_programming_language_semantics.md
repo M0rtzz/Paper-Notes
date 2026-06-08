@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PLSemanticsBench 的 pipeline 分四步：(1) 用 EBNF 定义 $\text{C}^{\star}$ 的语法，并用 $\mathbb{S}$ 与 $\mathbb{K}$ 两套体系各自给出一份完整的规则文本；(2) 从 LeetCode / HumanEval / MBPP / CodeContests 改写 162 段 Human-Written 程序，用 Qwen2.5-Inst 32B 翻译 165 段 LLM-Translated 程序，再用语义感知的 grammar-based fuzzer 生成 165 段 Fuzzer-Generated 程序，三档结构复杂度（cyclomatic 复杂度从 3 涨到 100，trace 长度从 20 涨到 190）；(3) 把标准语义机械替换为 KeywordSwap（互换 `+`/`-`、`<`/`>`、`&&`/`||` 等同类运算符）和 KeywordObf（把 `=`、`+`、`if-else`、`while` 全部换成 Caucasian-Albanian 字母表里的稀有符号）；(4) 把"程序 + 规则文本"喂给模型，跑三类任务并对照 ANTLR4 / K-framework 跑出来的 ground-truth。
+PLSemanticsBench 要解决的是"如何把 LLM 的规则推理能力和预训练词法先验拆开测"，办法是把一个 featherweight C 语言 $\text{C}^{\star}$ 配上完整的形式语义规则，再机械性地改写这些规则、看模型是否跟着改答案。整条 pipeline 分四步：先用 EBNF 定义 $\text{C}^{\star}$ 语法，并用 small-step 操作语义 $\mathbb{S}$ 与 K 语义 $\mathbb{K}$ 两套体系各给一份完整规则文本；再造三档结构复杂度的程序——从 LeetCode / HumanEval / MBPP / CodeContests 改写 162 段 Human-Written、用 Qwen2.5-Inst 32B 翻译 165 段 LLM-Translated、用语义感知的 grammar-based fuzzer 生成 165 段 Fuzzer-Generated（cyclomatic 复杂度从 3 涨到 100，trace 长度从 20 涨到 190）；然后把标准语义机械替换为两种扰动；最后把"程序 + 规则文本"喂给模型跑三类任务，对照 ANTLR4 / K-framework 跑出的 ground-truth 打分。
 
 ### 关键设计
 
-1. **形式语义双轨制 ($\mathbb{S}$ vs $\mathbb{K}$) 作为粒度对照**:
+**1. 形式语义双轨制：用 $\mathbb{S}$ 和 $\mathbb{K}$ 两种规则粒度做对照**
 
-    - 功能：用同一套程序在两种规则粒度下分别测，把"模型分不清细粒度规则"和"模型真的不会执行"区分开。
-    - 核心思路：$\mathbb{S}$ 用 Gentzen 风格推理规则把每个原子计算写成一条 transition，例如 `E-Add` 只负责 $\langle v_1+v_2,\sigma\rangle \to_E v_3$，`E-AddLeftStep` 单独管左操作数归约；$\mathbb{K}$ 则用 rewriting 风格把多个 step 合并成一条粗规则。一段程序的执行被形式化为 $\llbracket s\rrbracket_\Psi(\sigma_0) = (\sigma_n, \bigoplus_{i,j}[(\sigma_i, r_{i,j})])$，其中状态序列 $\sigma_i$ 与规则名序列 $r_{i,j}$ 同时被记录，构成可机检的 ground-truth。
-    - 设计动机：notation 预热实验显示，模型在 $\mathbb{S}$ 上混淆"step vs compute"的近义规则更严重（confusion 集中在 Arithmetic Expression rules 7–23、Relational 28–51），而 $\mathbb{K}$ 因规则更少混淆更少；这样下游失败可以归因到"粒度判别"还是"全局推理"，而不是"看不懂记号"。
+为了把"模型分不清细粒度规则"和"模型真的不会执行"区分开，作者让同一套程序在两种规则粒度下各跑一遍。$\mathbb{S}$ 走 Gentzen 风格的推理规则，把每个原子计算写成一条 transition——例如 `E-Add` 只负责 $\langle v_1+v_2,\sigma\rangle \to_E v_3$，左操作数的归约由 `E-AddLeftStep` 单独管；$\mathbb{K}$ 则用 rewriting 风格把多个 step 合并成一条粗规则。无论哪套体系，一段程序的执行都被形式化为 $\llbracket s\rrbracket_\Psi(\sigma_0) = (\sigma_n, \bigoplus_{i,j}[(\sigma_i, r_{i,j})])$，状态序列 $\sigma_i$ 与规则名序列 $r_{i,j}$ 被同时记录，构成可机检的 ground-truth。这么设计的好处在 notation 预热实验里就显出来了：模型在 $\mathbb{S}$ 上混淆"step vs compute"这类近义规则更严重（confusion 集中在 Arithmetic Expression rules 7–23、Relational 28–51），而 $\mathbb{K}$ 因规则更少混淆更少——于是下游失败能归因到"粒度判别"还是"全局推理"，而不会被"看不懂记号"这个无关变量污染。
 
-2. **KeywordSwap / KeywordObf 双轴语义扰动**:
+**2. KeywordSwap / KeywordObf：双轴语义扰动制造先验冲突**
 
-    - 功能：把"语义条件化"从"语法熟悉度"中剥离出来——前者保留语法表象但改写运算符语义，制造与先验直接冲突；后者用陌生符号彻底抹掉语法先验，只能靠提供的规则。
-    - 核心思路：KeywordSwap 把同一族运算符两两互换（`+`↔`-`，`*`↔`/`，`<`↔`>`，`&&`↔`||`），所以源码里写 `x+y` 在 swap 语义下应按减法规则执行；KeywordObf 把 `=`、`+`、`-`、`if-else`、`while` 等全部替换为 Caucasian-Albanian 字母，使得 `x ⷠ y` 等价于标准下的 `x + y`。两种扰动都保留 inference rule 的结构、只动符号到规则的映射。
-    - 设计动机：单独 swap 测的是"先验是否能被新规则覆盖"，单独 obf 测的是"完全没有先验时能否按规则执行"，两者交叉就能定位失败模式——若 swap 掉点远大于 obf，证明模型在被熟悉符号"绑架"；若 obf 也大幅掉点，则规则跟踪本身就有问题。
+这是把"语义条件化"从"语法熟悉度"里剥离出来的核心探针。KeywordSwap 保留语法表象但把同族运算符两两互换（`+`↔`-`，`*`↔`/`，`<`↔`>`，`&&`↔`||`），于是源码里写的 `x+y` 在 swap 语义下应按减法规则执行，直接与预训练先验撞车；KeywordObf 则把 `=`、`+`、`-`、`if-else`、`while` 等全部替换成 Caucasian-Albanian 字母表里的稀有符号，使 `x ⷠ y` 等价于标准下的 `x + y`，彻底抹掉语法先验、只剩下提供的规则可依。两种扰动都只动"符号到规则的映射"、保留 inference rule 的结构。之所以要两轴交叉，是因为单独 swap 测的是"先验能否被新规则覆盖"，单独 obf 测的是"完全没有先验时能否按规则执行"：若 swap 掉点远大于 obf，说明模型被熟悉符号"绑架"；若连 obf 也大幅掉点，则规则跟踪本身就有问题。
 
-3. **PredState / PredRule / PredTrace 三任务对齐 H1–H3**:
+**3. PredState / PredRule / PredTrace：三任务分别锚定 H1–H3 能力**
 
-    - 功能：把"按规则推理"拆成三个可单独打分的子能力——组合规则得到终态、在不改状态时单步挑规则、长 trace 上一致地选规则。
-    - 核心思路：PredState 直接要 $\llbracket\mathcal{P}\rrbracket_\Psi^\sigma(\sigma_0)$（最终变量表），考察全局组合；PredRule 给出一个具体的 expression-step（执行过程中状态未变化的窗口），让模型从 5 个候选规则里挑对应那一条，distractor 按 family→construct→semantic role 分层采样以避免靠词法启发；PredTrace 要求模型逐步输出整条 $(\sigma_i, r_{i,j})$ 序列，考察长程一致性。两个量化指标 $\Delta_{\text{cnd}} = \mathrm{Acc}_{\text{std}}^{\square} - \mathrm{Acc}_{\text{na}}$（提供 vs 不提供形式规则）和 $\Delta_{\text{is}} = \mathrm{Acc}_{\square'}^{\square} - \mathrm{Acc}_{\text{std}}^{\square}$（扰动 vs 标准）让对比可量化。
-    - 设计动机：单测 final state 会把"规则使用"和"凭直觉猜"混在一起；PredRule 在不改变状态的窗口里测，剔除"用最终值反推规则"的捷径；PredTrace 强制模型把 trace 写满才能拿满分，长程上预训练先验和真规则的偏差会累积放大。
+作者把笼统的"按规则推理"拆成三个能单独打分的子能力。PredState 直接要最终变量表 $\llbracket\mathcal{P}\rrbracket_\Psi^\sigma(\sigma_0)$，考察全局组合（H1）；PredRule 给出一个执行中状态未变化的 expression-step 窗口，让模型从 5 个候选规则里挑对应那条，distractor 按 family→construct→semantic role 分层采样以堵住靠词法启发猜答案的捷径（H2）；PredTrace 要求逐步输出整条 $(\sigma_i, r_{i,j})$ 序列，考察长程一致性（H3）。这种拆法是有讲究的：单测 final state 会把"真用规则"和"凭直觉猜"混在一起，而 PredRule 在状态不变的窗口里测，剔除了"用最终值反推规则"的捷径，PredTrace 则强制把 trace 写满才给满分，长程上先验和真规则的偏差会累积放大。为了让对比可量化，作者还定义了两个 delta 指标：$\Delta_{\text{cnd}} = \mathrm{Acc}_{\text{std}}^{\square} - \mathrm{Acc}_{\text{na}}$ 衡量提供 vs 不提供形式规则的增益，$\Delta_{\text{is}} = \mathrm{Acc}_{\square'}^{\square} - \mathrm{Acc}_{\text{std}}^{\square}$ 衡量扰动 vs 标准的掉点。
 
-### 损失函数 / 训练策略
-本文不训练模型，统一 zero-shot / one-shot prompting；non-reasoning 模型（除 GPT-4o-mini）温度设为 0，reasoning 模型与 GPT-4o-mini 跑 3 次取平均。CoT 是显式提示的 prompt 变体，作为单独配置出现而非新方法。
+### 训练策略
+本文不训练模型，统一走 zero-shot / one-shot prompting；non-reasoning 模型（除 GPT-4o-mini）温度设为 0，reasoning 模型与 GPT-4o-mini 跑 3 次取平均。CoT 是显式提示的 prompt 变体，作为单独配置出现而非新方法。
 
 ## 实验关键数据
 

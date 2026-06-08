@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ShaplEIG 是一个 greedy Bayesian Adaptive Design（BAD）循环。**输入**：玩家集 $P=\{1,\dots,p\}$、待估的价值函数 $\nu:2^P\to\mathbb{R}$、初始 coalition 子集 $\mathcal{C}_0$（按 leverage score 采 $T_0=p+1$ 个）、候选池 $\mathcal{C}$、预算 $T$（论文里 $\le 512$）。**输出**：所有 $p$ 个 SV 的一致估计 $\hat\phi$。每一轮 $t$ 做四件事：(1) 在候选池 $\mathcal{C}$ 中**穷举**或在最多 1024 个候选上算出 $\mathrm{EIG}^{(t)}_\phi(z^{(i)})$，挑最大的；(2) 真去调用 $\nu$ 评估该 coalition；(3) 把新 $(z,\nu(z))$ 加入数据集 $\mathcal{D}_{t+1}$；(4) 重新极大似然/MAP 拟 GP 超参 $\xi$（这一步是让流程"真正自适应"的唯一渠道——只有它能让历史观测值 $y$ 影响下一轮选择）。终止后从 GP 后验均值通过 $\hat\phi = A\mu_{\nu\mid\mathcal{D}_{T+1}}$ 直接读出 SV。
+ShaplEIG 把"精确算 Shapley 值要枚举 $2^p$ 个 coalition"的难题，重铸成一个贪婪的贝叶斯自适应设计（BAD）循环：用一个概率化代理拟合昂贵的价值函数 $\nu$，每一轮只问"评估哪个 coalition 最能减少对 SV 的不确定性"，把有限预算精确地花在刀刃上。给定玩家集 $P=\{1,\dots,p\}$、价值函数 $\nu:2^P\to\mathbb{R}$、按 leverage score 采的初始集合 $\mathcal{C}_0$（$T_0=p+1$ 个）和预算 $T$（论文 $\le 512$），每轮先在候选池里挑出期望信息增益 $\mathrm{EIG}^{(t)}_\phi$ 最大的 coalition，真去调一次 $\nu$、把 $(z,\nu(z))$ 并入数据集、再重训代理超参；终止后用一个线性算子 $\hat\phi = A\mu_{\nu\mid\mathcal{D}_{T+1}}$ 从后验均值直接读出全部 $p$ 个 SV。整套方法的三块拼图——代理选什么、准则对准谁、复杂度怎么压下来——正好对应下面三个关键设计。
 
 ### 关键设计
 
-1. **Hamming 核 GP 作为价值函数代理**:
+**1. Hamming 核 GP 代理：让设计真正随观测自适应**
 
-    - 功能：在 $\{0,1\}^p$ 的二元 coalition 空间上为 $\nu$ 提供一个完全概率化的、低数据机制下也能给出良校准不确定性的 surrogate。
-    - 核心思路：把 coalition 表示为指示向量 $z\in\{0,1\}^p$，用加权 Hamming 距离核 $k_\xi(z,z')=\prod_{j=1}^p \xi_j^{\mathbb{1}[z_j\ne z'_j]}$（每个 player 一个可学权重 $\xi_j$）。在固定 $\xi$ 下，$\nu(Z)\mid\mathcal{D}_t,\xi$ 是一个 $2^p$ 维 MVN，**有闭式后验均值与协方差**。
-    - 设计动机：传统 Kernel SHAP 用线性 surrogate + 固定权重，其后验不确定性仅依赖已选 coalition 集合而**与观测值无关**，导致设计天然非自适应；GP + 可学 $\xi$ 把观测值的信息通过 kernel 超参注入后续 EIG，使 design 真正 outcome-adaptive。同时 Hamming 核的乘性结构正好让 ESP 展开成立，是后面 $O(p^4)$ 计算的前提。
+痛点在于经典的 Kernel SHAP 用线性 surrogate 加固定权重，它的后验不确定性只取决于"已经选了哪些 coalition"、和实际观测到的 $\nu$ 值无关，于是设计天生非自适应——观测结果再奇怪也改不了下一步选谁。ShaplEIG 改用定义在二元 coalition 空间 $\{0,1\}^p$ 上的高斯过程：把 coalition 写成指示向量 $z$，核取加权 Hamming 形式 $k_\xi(z,z')=\prod_{j=1}^p \xi_j^{\mathbb{1}[z_j\ne z'_j]}$，每个 player 配一个可学权重 $\xi_j$。固定 $\xi$ 时 $\nu(Z)\mid\mathcal{D}_t,\xi$ 是一个 $2^p$ 维多元高斯，后验均值与协方差都有闭式，低数据下仍能给出良校准的不确定性。关键是 $\xi$ 会随每轮观测重训，于是历史 $\nu$ 值经由核超参渗进后续的 EIG，设计才真正 outcome-adaptive；而 Hamming 核的乘性结构又恰好是后面 ESP 展开能成立、复杂度能压到 $O(p^4)$ 的前提，一举两得。
 
-2. **把 SV 当 GOODE 的线性 end-goal，写出 EIG 闭式**:
+**2. 把 SV 当 GOODE 的线性 end-goal，写出 EIG 闭式**
 
-    - 功能：把"对 $p$ 维 SV 向量 $\phi$ 的 EIG"从原本需要嵌套 MC 估的难题，化成一行 log-det。
-    - 核心思路：Shapley 公理保证 $\phi=A\nu$ 其中 $A\in\mathbb{R}^{p\times 2^p}$ 元素是 $\frac{\mathbb{1}_S}{p}\binom{p-1}{|S|-1}^{-1} - \frac{1-\mathbb{1}_S}{p}\binom{p-1}{|S|}^{-1}$。在 GP 先验下这是一个 Bayesian linear inverse problem 中"参数 → end-goal"的线性投影，EIG 可写成 $\mathrm{EIG}_\phi(z^{(i)}) \propto C' + \log[e_i^\top(\Sigma_{\nu\mid\mathcal{D}_t}+\sigma_\epsilon^2 I)e_i] - \log[e_i^\top(\Sigma_{\nu\mid\mathcal{D}_t}+\sigma_\epsilon^2 I - Q)e_i]$，其中 $Q_{i,i}=(A\Sigma_{\nu\mid\mathcal{D}_t}e_i)^\top (A\Sigma_{\nu\mid\mathcal{D}_t}A^\top)^{-1}(A\Sigma_{\nu\mid\mathcal{D}_t}e_i)$。这是 Attia 2018 的 GOODE 结果在 SV 设定下的具体化。
-    - 设计动机：直接对未变换的 $\nu$ 用 EIG（信息论里叫 ITL）在 GP 上会退化成纯 US，只挑"对 surrogate 本身最不确定"的 coalition，完全忽略"这个评估对 $\phi$ 的下游不确定性减少多少"。论文还显示 EPIG 在 $2^p$ 目标分布上算不动。直接把 $A$ 嵌进 log-det 才是对准 SV 这个真正关心的下游量。
+如果直接对未变换的 $\nu$ 算 EIG（信息论里的 ITL），在 GP 上会退化成纯 uncertainty sampling——只挑"代理自己最没把握"的 coalition，完全不管这次评估对真正关心的 $\phi$ 减了多少不确定性；而 EPIG 又因要对 $2^p$ 个目标分布积分而算不动。ShaplEIG 抓住 Shapley 公理里的线性性 $\phi=A\nu$（$A\in\mathbb{R}^{p\times 2^p}$，元素为 $\frac{\mathbb{1}_S}{p}\binom{p-1}{|S|-1}^{-1} - \frac{1-\mathbb{1}_S}{p}\binom{p-1}{|S|}^{-1}$），把"挑 coalition + 关心 SV"装进贝叶斯线性逆问题的目标导向最优设计（GOODE）框架里：SV 只是参数 $\nu$ 的一个线性投影 end-goal。这样 EIG 就只依赖 GP 后验协方差、与具体观测值无关，得到一行闭式 $\mathrm{EIG}_\phi(z^{(i)}) \propto C' + \log[e_i^\top(\Sigma_{\nu\mid\mathcal{D}_t}+\sigma_\epsilon^2 I)e_i] - \log[e_i^\top(\Sigma_{\nu\mid\mathcal{D}_t}+\sigma_\epsilon^2 I - Q)e_i]$，其中 $Q_{i,i}=(A\Sigma_{\nu\mid\mathcal{D}_t}e_i)^\top (A\Sigma_{\nu\mid\mathcal{D}_t}A^\top)^{-1}(A\Sigma_{\nu\mid\mathcal{D}_t}e_i)$。这是 Attia 2018 的 GOODE 结果在 SV 设定下的具体化，把原本需要嵌套 MC 估计的 EIG 化成一个 log-det，也正是把 $A$ 嵌进去、让准则对准 SV 而非 surrogate 的核心一步。
 
-3. **用初等对称多项式把 EIG 从 $O(4^p t)$ 压到 $O(p^4 + t^3)$**:
+**3. 用初等对称多项式把 EIG 从 $O(4^p t)$ 压到 $O(p^4 + t^3)$**
 
-    - 功能：让闭式 EIG 在 $p\le 100$ 量级的游戏上可算，整批候选 vectorize 后是 $O(p^4+t^3+|W|t^2)$。
-    - 核心思路：naive 算法需要先构造 $2^p\times 2^p$ 的 $\Sigma_{\nu\mid\mathcal{D}_t}$，再做 $A\cdot, \cdot e_i$ 投影，dominant 项 $O(4^p t)$。论文的 Theorem B.1/B.2 把线性项 $AK_\xi(Z,z^{(i)})\in\mathbb{R}^p$ 和二次项 $AK_\xi(Z,Z)A^\top\in\mathbb{R}^{p\times p}$ 都重写成"跨 coalition 的加权核值求和"，再注意到大量 kernel evaluation 共享权重，最后把同权重的求和与**一元/二元 ESP** 一一对应，整体分别落到 $O(p^2)$ 和 $O(p^4)$。这正是 Hamming 核乘性结构 $k(z,z')=\prod_j \xi_j^{\mathbb{1}[\cdot]}$ 给的便利。
-    - 设计动机：没有这一刀，闭式 EIG 也只是"理论上好看"——$p=10$ 就已经 $4^{10}\approx 10^6$ 维矩阵；这一刀把方法推到了 $p=101$（LE on Crime）也能跑的实际尺度。SV 估计本身可顺带 $O(t^3)$，SV 后验协方差 $\Sigma_\phi$ 可 $O(p^4+t^2 p)$。
+闭式 EIG 看着漂亮，但 naive 算法要先构出 $2^p\times 2^p$ 的协方差 $\Sigma_{\nu\mid\mathcal{D}_t}$ 再做 $A$、$e_i$ 投影，主项是 $O(4^p t)$——$p=10$ 就已是 $4^{10}\approx10^6$ 维矩阵，根本算不动。论文的 Theorem B.1/B.2 把线性项 $AK_\xi(Z,z^{(i)})\in\mathbb{R}^p$ 和二次项 $AK_\xi(Z,Z)A^\top\in\mathbb{R}^{p\times p}$ 都改写成"跨 coalition 的加权核值求和"，注意到大量 kernel evaluation 共享权重，再把同权重的求和与一元/二元的初等对称多项式（ESP）一一对应，两项分别落到 $O(p^2)$ 和 $O(p^4)$，整批候选 vectorize 后总复杂度是 $O(p^4+t^3+|W|t^2)$（SV 估计顺带 $O(t^3)$，SV 后验协方差 $\Sigma_\phi$ 为 $O(p^4+t^2 p)$）。这一刀把方法从"理论上好看"推到 $p=101$（LE on Crime）也能实跑的尺度，而它能成立完全靠 Hamming 核 $k(z,z')=\prod_j\xi_j^{\mathbb{1}[\cdot]}$ 的乘性结构——换成 categorical RBF 之类的核就拿不到这个红利。
 
 ### 损失函数 / 训练策略
-GP 超参 $\xi$ 在每一轮（大 $p$ 改为按 refit schedule）由后验 $p(\xi\mid\mathcal{D}_{t+1})$ 的 MAP 重训；价值函数评估假设是带高斯噪声 $\epsilon\sim\mathcal{N}(0,\sigma_\epsilon^2)$ 的，但论文也讨论了 noiseless GP 下的一致性：当所有 $2^p$ 个 coalition 都被评估时，由 GP 插值性 $\mu_{\nu(z)\mid\mathcal{D}_{2^p+1}}=\nu(z)$ 自动得到 $\mu_\phi=\phi(\nu)$，即估计**构造上一致**——这一性质优于 Regression MSR（树代理默认不一致，要额外残差校正）。
+GP 超参 $\xi$ 每一轮（大 $p$ 时改按 refit schedule）用后验 $p(\xi\mid\mathcal{D}_{t+1})$ 的 MAP 重训，这是唯一让历史观测值反馈进设计的渠道。价值函数评估默认带高斯噪声 $\epsilon\sim\mathcal{N}(0,\sigma_\epsilon^2)$，但论文也讨论了 noiseless GP 下的一致性：当全部 $2^p$ 个 coalition 都被评估时，GP 的插值性 $\mu_{\nu(z)\mid\mathcal{D}_{2^p+1}}=\nu(z)$ 自动给出 $\mu_\phi=\phi(\nu)$，即估计**构造上一致**——这点优于 Regression MSR（树代理默认不一致，要额外做残差校正）。
 
 ## 实验关键数据
 

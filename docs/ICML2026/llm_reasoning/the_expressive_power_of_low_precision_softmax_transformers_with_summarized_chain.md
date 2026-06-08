@@ -40,41 +40,28 @@ tags:
 
 ## 方法详解
 
-整篇论文是个两段式构造证明 + 一组小型实证。理论部分先给出 hardmax 构造（第 3 节），再用一个统一的"重缩放 + MLP 去噪"机制把它转成带精度量化的 softmax 构造（第 4 节）；实证部分（第 5 节）训小 Transformer 解 Sudoku，对照不同建模选择对应的可学习性。
+整篇论文是个两段式构造证明加一组小型实证：先给出一个激活全为三值的 hardmax Transformer（第 3 节），再用统一的"重缩放 + MLP 去噪"机制把它无损转成带精度量化的 softmax 版本（第 4 节），最后训小 Transformer 解 Sudoku 来验证理论对建模选择的预测（第 5 节）。
 
 ### 整体框架
 
-理论侧 pipeline：
-
-1. **输入**：一台多带图灵机 $M$ 和一个时间界 $\hat{t}$（或空间界 $\hat{s}$）；
-2. **第一阶段（Section 3）**：构造 hardmax Transformer $T$，激活全部三值，深宽 $\mathcal{O}(\log \hat{t})$，能用 CoT/SCoT 在 $\mathcal{O}(t_M(w)+|w|)$ 步内输出 $f_M(w)$；
-3. **第二阶段（Section 4）**：把 $T$ 的 query/key 投影乘上 $c$，将 hardmax 替换为 softmax，再插入"去噪 MLP"消除 attention 权重舍入引入的偏差，得到 softmax 版 $\tilde T_c$，对所有合法输入与 $T$ 输出完全一致；
-4. **精度账**：$c = \mathcal{O}((\log \hat{l})^{3/4})$、激活指数位 $\mathcal{O}(\log\log\log \hat{l})$、注意力权重指数位 $\mathcal{O}(\log\log \hat{l})$，这意味着 bfloat16 在 $\hat{l} \approx 10^{38}$ 之前都够用。
-
-CoT 与 SCoT 的关键区别在第二阶段输入的 bound：CoT 全靠时间界 $\hat{t}$，整个解码序列都在同一上下文里；SCoT 允许写入 `<summ>...</summ>` 块作为"中断点"，每段非汇总区长度 $\mathcal{O}(s_M(w))$，所以模型尺寸只随空间界对数增长，对像 Sudoku 这种"空间小但时间大"的任务收益巨大。
+给定一台多带图灵机 $M$ 和一个时间界 $\hat{t}$（或空间界 $\hat{s}$），第一阶段构造 hardmax Transformer $T$：激活全限制在 $\{-1,0,1\}$，深宽随 $\mathcal{O}(\log \hat{t})$ 增长，能用 CoT/SCoT 在 $\mathcal{O}(t_M(w)+|w|)$ 步内输出 $f_M(w)$；第二阶段把 $T$ 的 query/key 投影乘上常数 $c$、将 hardmax 换成 softmax，再插入去噪 MLP 抹掉注意力权重舍入引入的偏差，得到对所有合法输入都与 $T$ 输出完全一致的 softmax 版 $\tilde T_c$。最终的精度账是 $c = \mathcal{O}((\log \hat{l})^{3/4})$、激活指数位 $\mathcal{O}(\log\log\log \hat{l})$、注意力权重指数位 $\mathcal{O}(\log\log \hat{l})$，意味着 bfloat16 在 $\hat{l} \approx 10^{38}$ 之前都够用。CoT 与 SCoT 的差别只在第二阶段喂的 bound：CoT 全靠时间界 $\hat{t}$、整条解码序列都挤在同一上下文里；SCoT 允许写 `<summ>...</summ>` 块作"中断点"，每段非汇总区长度只 $\mathcal{O}(s_M(w))$，所以模型尺寸随空间界对数增长，对 Sudoku 这种"空间小但时间大"的任务收益巨大。
 
 ### 关键设计
 
-1. **三值激活 + 二进制寄存器表示**：
+**1. 三值激活 + 二进制寄存器：让 attention score 间隔不随上下文衰减**
 
-    - 功能：把图灵机配置（状态、磁头位、磁带符号）编码进 $\{-1,0,1\}^d$ 维残差流。
-    - 核心思路：每个隐藏维度承担一个明确语义——若干位用于位置寄存器（绝对 token 位置 + 各带磁头位的二进制表示），若干位用于状态/符号 one-hot，若干位用作 flag 区分 token 类型。MLP 在 ternary 域内做拷贝、清零、加一减一等位运算；attention 用来从历史 token 抽寄存器。位置编码也改成二进制（与原始正弦类似，每一位频率几何递减），避免传统位置编码对精度的依赖。
-    - 设计动机：ternary 是关键。一旦激活只能取 $\{-1,0,1\}$，无论上下文多长，attention scores 的初始间隔 $\beta \geq 1/\sqrt{d_k}$ 不会被序列长度稀释，这正是后面 softmax 化只需 $c = \mathcal{O}((\log \hat{l})^{3/4})$ 而非多项式的根本原因。同时，去噪 MLP（见关键设计 3）能在 ternary 三个点上做"硬吸附"，对任意激活集都不可行。
+构造的第一步是把图灵机配置（状态、磁头位、磁带符号）全编码进 $\{-1,0,1\}^d$ 的残差流：每个隐藏维度承担明确语义——若干位是位置寄存器（绝对 token 位置加各带磁头位的二进制表示），若干位是状态/符号 one-hot，若干位是区分 token 类型的 flag；MLP 在 ternary 域内做拷贝、清零、加一减一等位运算，attention 负责从历史 token 抽寄存器，位置编码也换成二进制（每位频率几何递减，类似正弦但摆脱了对精度的依赖）。把激活锁死在三个点是整条路线的命门：一旦激活只能取 $\{-1,0,1\}$，无论上下文多长，attention scores 的初始间隔 $\beta \geq 1/\sqrt{d_k}$ 都不会被序列长度稀释，这正是后面 softmax 化只需温和的 $c = \mathcal{O}((\log \hat{l})^{3/4})$ 而非多项式增长的根本原因；同时去噪 MLP（设计 3）只有在 ternary 三个离散点上才能做"硬吸附"，换成任意连续激活集就不可行。
 
-2. **二分查找读取磁头符号 + 顺序累加磁头位**：
+**2. 二分查找读符号 + 顺序累加磁头位：把"全局求和"换成"对数次定位"**
 
-    - 功能：在 hardmax 模式下，每生成一个 run token 都要回答"当前磁头位上写过的最近一个符号是什么"。
-    - 核心思路：磁头位的恢复用"对每 $r$ 个 run token 后插入一个 `<p>...</p>` 块"显式写出磁头当前坐标，token 内部用顺序层逐位相加磁头移动 $\{L,S,R\}$；读符号则在 $r = \mathcal{O}(\log \hat{t})$ 层里做二分查找，每层裁掉一半候选历史 token，最终锁定"最近一次写入该坐标"的那个 token，把符号通过 attention 拉回。
-    - 设计动机：对比 Merrill & Sabharwal 2024 用"对历史 token 做均匀 attention 求和再除以 $n$"的做法——这正需要 $\mathcal{O}(\log n)$ 精度去存表示 $1/n$。二分查找把"全局求和"换成"对数次定位"，每次定位只需 hardmax 选一个 token，attention scores 间隔不衰减，这就是 ternary 路线能跑通的微观原因。
+hardmax 模式下每生成一个 run token 都要回答"当前磁头位上最近一次写的符号是什么"。本文的做法是每隔 $r$ 个 run token 插入一个 `<p>...</p>` 块显式写出磁头当前坐标，token 内部用顺序层逐位累加磁头移动 $\{L,S,R\}$；读符号则在 $r=\mathcal{O}(\log \hat{t})$ 层里做二分查找，每层用 hardmax 裁掉一半候选历史 token，最终锁定"最近一次写入该坐标"的那个 token 并把符号 attention 回来。这与 Merrill & Sabharwal 2024 用"对历史 token 做均匀 attention 求和再除以 $n$"的思路形成鲜明对比——后者要 $\mathcal{O}(\log n)$ 精度才能存住 $1/n$；二分查找每次定位只 hardmax 选一个 token，attention scores 间隔始终不衰减，这正是 ternary 路线在微观层面跑得通的原因。
 
-3. **重缩放 + 去噪 MLP（hardmax→softmax 的桥梁）**：
+**3. 重缩放 + 去噪 MLP：hardmax→softmax 的无损桥梁**
 
-    - 功能：把 hardmax 构造无损转成 softmax + 激活/注意力权重双量化版本。
-    - 核心思路：先把所有 query/key 投影乘 $c$，使 softmax 与 hardmax 输出的 $\ell_1$ 误差被 $2n e^{-\beta c^2}$ 控制。仅做激活舍入时（Theorem 4.1），ternary 值在浮点格式中可精确表示，扰动后再舍入最多翻倍，端到端可控。但实际 attention 权重 $\alpha_{ij}$ 形如 $1/k$（多 token 命中时的均分），无论 $c$ 多大都不可能精确浮点表示——所以在每层注意力后插入一个**坐标级去噪 MLP**：实现一个分段函数 $f$，把 $(-\frac{5}{4},-\frac{3}{4}),(-\frac{1}{4},\frac{1}{4}),(\frac{3}{4},\frac{5}{4})$ 内的任意值经 $x \mapsto x+f(x)$ 后吸附回 $-1, 0, 1$。只要 attention 引入的误差被压在 $\pm 1/4$ 内，下一层看到的激活就跟 hardmax 完全相同。
-    - 设计动机：去噪 MLP 是把 attention 权重精度需求从"线性增长"压到 $\mathcal{O}(\log\log \hat{l})$ 的关键。它的存在恰好依赖关键设计 1 的 ternary 约束——若激活值域大小线性增长，去噪 MLP 自身规模就线性增长，整条路线坍塌（这正是 Merrill & Sabharwal 2024 / Yang et al. 2025 没法走这条路的原因）。
+把 hardmax 构造转成 softmax 加双量化版本时，先给所有 query/key 投影乘 $c$，使 softmax 与 hardmax 输出的 $\ell_1$ 误差被 $2n e^{-\beta c^2}$ 控制；仅做激活舍入时（Theorem 4.1），ternary 值在浮点格式里可精确表示、扰动后再舍入最多翻倍，端到端可控。麻烦在于真实 attention 权重 $\alpha_{ij}$ 形如 $1/k$（多 token 命中时的均分），无论 $c$ 多大都没法精确浮点表示——本文于是在每层注意力后插入一个坐标级去噪 MLP：它实现一个分段函数 $f$，把落在 $(-\tfrac{5}{4},-\tfrac{3}{4}),(-\tfrac{1}{4},\tfrac{1}{4}),(\tfrac{3}{4},\tfrac{5}{4})$ 内的任意值经 $x \mapsto x+f(x)$ 吸附回 $-1,0,1$，只要 attention 引入的误差压在 $\pm 1/4$ 内，下一层看到的激活就跟 hardmax 完全一致。正是这个 MLP 把注意力权重的精度需求从线性增长压到 $\mathcal{O}(\log\log \hat{l})$，而它能成立又恰好依赖设计 1 的 ternary 约束——若激活值域线性增长，去噪 MLP 自身规模也线性增长、整条路线坍塌（这就是 Merrill & Sabharwal 2024 / Yang et al. 2025 走不通这条路的原因）。
 
-### 损失函数 / 训练策略
-理论部分无训练。实证部分（Section 5）训练小 Transformer 模仿一个确定性 MRV 深度优先搜索 Sudoku 求解器：使用 sudoku-extreme 数据集（约 400 万题），SCoT 每段 512 个非汇总 token，汇总块编码求解器完整配置；20B token 训练，bfloat16 混合精度，温度 0 贪心解码，输出正确解才算对。
+### 训练策略
+理论部分无训练。实证部分（Section 5）训练小 Transformer 模仿一个确定性 MRV 深度优先搜索 Sudoku 求解器：用 sudoku-extreme 数据集（约 400 万题），SCoT 每段 512 个非汇总 token、汇总块编码求解器完整配置；20B token 训练，bfloat16 混合精度，温度 0 贪心解码，输出正确解才算对。
 
 ## 实验关键数据
 

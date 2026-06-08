@@ -43,27 +43,27 @@ tags:
 
 ### 整体框架
 
-给定输入图像（或视频）和问题 $\boldsymbol{x}$，rollout 模块 $g_\text{old}$ 从 gating network 采样 $G$ 组专家路由策略 $\{\boldsymbol{E}^i\}_{i=1}^G$。每组路由策略 $\boldsymbol{E}^i$ 对应一个跨所有层的专家选择序列，模型在该路由下生成输出 token 序列 $\boldsymbol{y}^i$ 并计算准确率奖励 $R^i$。通过组内相对奖励计算优势值 $\hat{A}^i$，引导策略更新朝高奖励专家组合方向优化。
+这篇论文要解决的是 MoE 路由器"不会探索"的问题：标准做法在每层用确定性 top-K 贪心选专家，路由器一旦定型就只会反复激活那几个专家。MoE-GRPO 的思路是把"选哪些专家"当成一个可以被强化学习优化的策略，让路由器通过试错学会更好的专家组合。
+
+整条流程是这样转的：给定输入图像（或视频）和问题 $\boldsymbol{x}$，rollout 模块 $g_\text{old}$ 先从 gating network 采样出 $G$ 组不同的专家路由策略 $\{\boldsymbol{E}^i\}_{i=1}^G$，每一组 $\boldsymbol{E}^i$ 就是一整条跨所有层的专家选择序列。模型分别在这 $G$ 条路由下各生成一个输出 token 序列 $\boldsymbol{y}^i$，按答案对错算出准确率奖励 $R^i$。再用组内相对奖励算优势值 $\hat{A}^i$，把策略往高奖励的那几组专家组合方向推。换句话说，同一个问题被并行试了 8 种"专家搭配"，谁答对了就强化谁。
 
 ### 关键设计
 
-1. **Token-GRPO（token 级生成优化）**:
+**1. Token-GRPO：让任务奖励反向驱动专家选择。**
 
-    - 功能：从输出 token 级别优化专家选择策略
-    - 核心思路：在标准 GRPO 基础上引入专家路由条件。对每个 rollout 采样的专家策略 $\boldsymbol{E}^i$，模型生成对应的 token 序列 $\boldsymbol{y}^i$，通过 PPO 风格的 clipped ratio 目标函数，基于组内相对奖励优化 token 级生成概率。ratio $r_t^i = \pi_\theta(y_t^i | \boldsymbol{x}, \boldsymbol{y}_{<t}^i; \boldsymbol{E}_{<t}^i) / \pi_\text{old}(y_t^i | \boldsymbol{x}, \boldsymbol{y}_{<t}^i; \boldsymbol{E}_{<t}^i)$
-    - 设计动机：Token 级优化直接关联任务奖励，是提升性能的核心驱动力。消融实验表明单独去掉 Token-GRPO 会导致平均准确率从 55.7% 骤降至 50.9%
+光让路由器随机试不够，还得有信号告诉它哪条路由更好。Token-GRPO 把这个信号接到了输出 token 上：对每个 rollout 采样到的专家策略 $\boldsymbol{E}^i$，模型生成对应的 token 序列 $\boldsymbol{y}^i$，然后用 PPO 风格的 clipped ratio 目标，基于组内相对奖励优化每个 token 的生成概率。关键在于这里的概率是**以专家路由为条件**的——
 
-2. **Gate-GRPO（层级路由策略优化）**:
+$$r_t^i = \frac{\pi_\theta(y_t^i \mid \boldsymbol{x}, \boldsymbol{y}_{<t}^i; \boldsymbol{E}_{<t}^i)}{\pi_\text{old}(y_t^i \mid \boldsymbol{x}, \boldsymbol{y}_{<t}^i; \boldsymbol{E}_{<t}^i)}$$
 
-    - 功能：直接优化每层 gating network 的专家选择策略
-    - 核心思路：在每层每个 token 位置计算路由 ratio $\hat{r}_{t,l}^i = g_\theta^l(E_{t,l}^i) / g_\text{old}^l(E_{t,l}^i)$，对所有层和 token 位置取平均，同样用 clipped 目标函数优化。与 Token-GRPO 不同，Gate-GRPO 提供层级的密集监督信号，直接作用于 gating function
-    - 设计动机：Token-GRPO 只从输出级别间接影响路由，Gate-GRPO 则对每层路由提供细粒度、密集的监督。二者互补：去掉 Gate-GRPO 平均准确率下降 1.8%
+也就是说，路由 $\boldsymbol{E}$ 出现在了条件里，答对题的奖励会顺着这条概率链回流到当初选出这套专家的决策上。这一项直接挂钩任务准确率，是整个方法的性能主引擎：消融里单独去掉它，平均准确率从 55.7% 直接掉到 50.9%。
 
-3. **模态感知路由引导（Modality-Aware Router Guidance）**:
+**2. Gate-GRPO：给每一层路由补上密集监督。**
 
-    - 功能：约束路由探索空间，避免在不相关专家上浪费探索
-    - 核心思路：先统计每个专家被视觉 token 和文本 token 选中的次数 $N_v(e_i)$ 和 $N_t(e_i)$，计算归一化的模态感知分数 $\hat{s}_v(e_i)$ 和 $\hat{s}_t(e_i)$。处理视觉 token 时，按分数排序并将底部 P% 的专家 gating score 设为 $-\infty$ 以屏蔽，然后在剩余专家上进行多项式采样。实验中 P=25%
-    - 设计动机：RL 训练需要探索的搜索空间很大（每层 $N$ 选 $K$ 专家，所有层所有 token 的组合），无引导的探索效率低。模态感知引导利用专家的模态偏好先验，减少无效探索，加速收敛。消融显示比无引导的噪声/多项式采样分别高 1.5% 和 0.9%
+Token-GRPO 的问题是它只从最终输出端间接影响路由，中间那么多层的专家选择拿到的信号很稀疏。Gate-GRPO 把监督直接打到每层的 gating network 上：在每层 $l$、每个 token 位置 $t$ 单独算一个路由比值 $\hat{r}_{t,l}^i = g_\theta^l(E_{t,l}^i) / g_\text{old}^l(E_{t,l}^i)$，对所有层和所有 token 位置取平均后照样套 clipped 目标优化。这样每一层的路由决策都拿到了细粒度、密集的梯度，而不用等输出端的奖励一路传回来。它和 Token-GRPO 是互补的——一个负责粗粒度的目标对齐，一个负责层级的细粒度路由校正，去掉 Gate-GRPO 平均准确率会掉 1.8%。
+
+**3. 模态感知路由引导：用模态先验砍掉无效探索。**
+
+RL 训练绕不开探索效率问题：每层 $N$ 选 $K$、再乘上所有层所有 token，组合空间大得离谱，纯靠随机采样很难收敛。这里用上了一条朴素但有效的先验——视觉 token 和文本 token 偏好的专家并不一样。具体做法是先统计每个专家分别被视觉 token、文本 token 选中的次数 $N_v(e_i)$ 和 $N_t(e_i)$，归一化成模态感知分数 $\hat{s}_v(e_i)$ 和 $\hat{s}_t(e_i)$。处理视觉 token 时，按 $\hat{s}_v$ 排序，把得分最低的底部 P%（实验取 P=25%）专家的 gating score 直接置为 $-\infty$ 屏蔽掉，再在剩下的专家里做多项式采样。这等于把探索预算集中在"这类 token 本来就常用"的专家上，不在明显不相关的专家身上浪费试错。消融显示，它比无引导的加噪采样、多项式采样分别高 1.5% 和 0.9%，且收敛更快、奖励方差更低。
 
 ### 损失函数 / 训练策略
 

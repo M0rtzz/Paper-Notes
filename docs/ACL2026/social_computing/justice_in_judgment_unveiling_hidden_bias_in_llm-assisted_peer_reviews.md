@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **反事实元数据干预（4 个独立维度）**:
+**1. 反事实元数据干预（4 个独立维度）：把"作者身份"拆成可单独消融的变量。**
 
-    - 功能：把"作者身份对评分的影响"分解到 4 个可控变量上，剔除论文质量本身的影响。
-    - 核心思路：构造 4 组干预实验。（a）**Affiliation**：8 所 Ranked-Stronger (RS, 如 MIT、CMU) vs. 8 所 Ranked-Weaker (RW, 如 University of Lagos / Gondar)，每个机构都和 country-matched 男女名字配对，对每篇论文做 16×16 pairwise 比较；（b）**Gender**：4 个 Anglo 男名、4 个 Anglo 女名，每个名字在 RS 和 RW 两种机构下都跑一次；（c）**Seniority**：构造 Senior PI vs. Undergraduate Student 两种 profile，其余固定；（d）**Publication History**：对每个 profile 给出"100 top-tier publications (TTP)" vs. "0 TTP"两个版本。每篇论文只改一个变量，其他全部固定，从而可做因果解读。
-    - 设计动机：早期工作（如 Pataranutaporn 2025）只对比"有元数据 vs. 匿名"，无法定位偏见来自哪个维度；本工作把维度拆开后才能定量回答"是机构权重最大、还是资历最大"等核心问题，也为 future debiasing 提供了可干预的 lever。
+早期工作（如 Pataranutaporn 2025）只对比"有元数据 vs. 匿名"，能看到偏见存在却无法定位它来自机构、性别、资历还是发表数哪一维。本文为此构造 4 组单变量干预，每篇论文每次只改一个维度、其余全部固定，从而把评分差异因果地归到该维度上：（a）**Affiliation**——8 所 Ranked-Stronger (RS, 如 MIT、CMU) vs. 8 所 Ranked-Weaker (RW, 如 University of Lagos / Gondar)，每个机构都和 country-matched 男女名字配对，对每篇论文做 16×16 pairwise 比较；（b）**Gender**——4 个 Anglo 男名、4 个 Anglo 女名，每名字在 RS 和 RW 两种机构下各跑一次；（c）**Seniority**——Senior PI vs. Undergraduate Student 两种 profile；（d）**Publication History**——"100 top-tier publications (TTP)" vs. "0 TTP"两个版本。把维度拆开后，论文才能定量回答"机构权重最大还是资历最大"，也为后续 debiasing 留下了可干预的 lever。
 
-2. **Hard vs. Soft Rating 的双重评分**:
+**2. Hard vs. Soft Rating 的双重评分：把被对齐压在水面下的偏见量化出来。**
 
-    - 功能：暴露被对齐"压在水面下"的隐式偏见。
-    - 核心思路：Hard rating 用 $\arg\max_{\hat{\bm{r}}, \hat{\bm{c}}} P_{\text{LLM}}(\bm{r}, \bm{c} \mid \texttt{prompt})$ 做 greedy 解码，得到一个整数评分；Soft rating 则在 greedy comments $\hat{\bm{c}}$ 固定后，对评分 token 位置上 $\{r_1, \ldots, r_{10}\}$ 的概率分布求加权期望 $\sum_i r_i \cdot P_{\text{LLM}}(r_i, \hat{\bm{c}} \mid \texttt{prompt})$。两个评分的差就是"模型嘴上说一回事、心里想另一回事"的程度。
-    - 设计动机：RLHF / instruction tuning 主要作用在最终生成分布的 mode 上，但其他高概率位置仍然保留着预训练偏置；只要 sampling temperature 不为 0，或者多次 review 平均，偏见就会被加权出来。Soft rating 把这种 hidden bias 量化为可比较的数字，是这篇论文最有冲击力的设计。Ministral 8B 的 affiliation 实验是个完美例子：hard rating RS 胜率仅 4.3%，但 soft rating RS 胜率飙到 68.6%，"表面公平、内里偏斜" 14× 倍率。
+RLHF / instruction tuning 主要把最终生成分布的 mode 调成"看起来中立"，但其他高概率位置仍保留预训练偏置——只要 sampling 温度不为 0 或多次 review 平均，偏见就会重新被加权出来。为此本文同时报两种分数：hard rating 用 $\arg\max_{\hat{\bm{r}}, \hat{\bm{c}}} P_{\text{LLM}}(\bm{r}, \bm{c} \mid \texttt{prompt})$ 做 greedy 解码得到一个整数评分；soft rating 则在 greedy comments $\hat{\bm{c}}$ 固定后，对评分 token 位置上 $\{r_1, \ldots, r_{10}\}$ 的概率分布求加权期望
 
-3. **Accept/Reject 翻盘率分析**:
+$$\text{soft} = \sum_i r_i \cdot P_{\text{LLM}}(r_i, \hat{\bm{c}} \mid \texttt{prompt})$$
 
-    - 功能：把"评分微差"翻译成"决策后果"，量化偏见对真实学术体系的危害。
-    - 核心思路：把同一论文在 RS 元数据下和 RW 元数据下的 hard rating 与 ICLR 实际 accept 阈值比较，看"原本会被拒的 RW 论文换成 RS 后变 accept 的比例"以及"原本会被接收的 RS 论文换成 RW 后变 reject 的比例"。例如 QwQ-32B 在 RS 下把 21.4% 的原拒论文翻成接收，在 RW 下把 7.9% 的原接收论文翻成拒收。
-    - 设计动机：rating 上的几个百分点差距听起来无关痛痒，但只要 borderline 论文一翻盘就直接决定职业生涯；翻盘率把统计性偏差转换成可与"录取率"直接挂钩的可解释指标，是面向 policy 的有力论据。
+取两位小数。两者之差就是"模型嘴上说一回事、心里想另一回事"的程度。Ministral 8B 的 affiliation 实验是个完美注脚：hard rating 下 RS 胜率仅 4.3%，soft rating 下却飙到 68.6%，"表面公平、内里偏斜"放大了约 14 倍。这把隐式偏见变成可横向比较的数字，是全文最有冲击力的设计。
+
+**3. Accept/Reject 翻盘率分析：把"评分微差"翻译成"决策后果"。**
+
+rating 上几个百分点的差距听起来无关痛痒，但只要 borderline 论文一翻盘就直接决定职业生涯。作者把同一论文在 RS 与 RW 元数据下的 hard rating 分别与 ICLR 实际 accept 阈值比较，统计"原本会被拒的 RW 论文换成 RS 后变 accept 的比例"以及反方向的比例。例如 QwQ-32B 在 RS 下把 21.4% 的原拒论文翻成接收、在 RW 下把 7.9% 的原接收论文翻成拒收。翻盘率把统计性偏差转换成可与"录取率"直接挂钩的可解释指标，是面向 policy 的有力论据。
 
 ### 损失函数 / 训练策略
 本文为评测论文，不涉及模型训练。关键评估设置：252 篇论文 × 9 个 LLM × 4 个维度 × N 个 profile 配置，所有模型都在 ICLR 2025 投稿截止前发布，包含 Ministral 8B、DeepSeek-R1-Distill-Llama 8B、Llama 3.1 8B/70B、Mistral Small 22B、DeepSeek-R1-Distill-Qwen 32B、QwQ 32B、Gemini 2.0 Flash Lite、GPT-4o Mini。Prompt 用 ICLR 官方 reviewer guidelines 改造，确保所有模型用同一模板。

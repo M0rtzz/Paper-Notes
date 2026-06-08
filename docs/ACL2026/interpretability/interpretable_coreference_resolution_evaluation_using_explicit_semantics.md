@@ -46,23 +46,23 @@ tags:
 
 ### 关键设计
 
-1. **两步标注 + 簇级多数投票**：
+**1. 两步标注 + 簇级多数投票：把代词也拉进语义诊断。**
 
-    - 功能：把语义标签从"只能标 nominal/named span"升级到"整个 cluster 都有一致标签"，把代词等无法直标的 mention 也纳入诊断。
-    - 核心思路：重叠函数 $\Omega(m_i, c_j) = |\text{span}(m_i) \cap \text{span}(c_j)| / |\text{span}(m_i) \cup \text{span}(c_j)|$，对每个 mention 选 $\hat{c}_j = \arg\max \Omega$；如果重叠 < 0.5 留空，等 cluster 级多数投票后再传播；多数投票打平时用平均 $\Omega$ 最高的标签破纪录。Mention 直标覆盖 37.5-71.4%，传播后升到 ~90%，剩下的几乎是纯代词 cluster。
-    - 设计动机：传统 NER-based 评估在 PreCo 上只能标 22.8% mention，没法做 per-class 分析；簇级传播利用了"同一 cluster 内的 mention 必然语义同类"这一硬约束，能用低算力把"密度问题"几乎彻底解决。
+传统 NER-based 评估在 PreCo 上只能标 22.8% 的 mention，代词、模糊指称根本无标签，per-class 分析无从谈起。本文先用重叠函数 $\Omega(m_i, c_j) = |\text{span}(m_i) \cap \text{span}(c_j)| / |\text{span}(m_i) \cup \text{span}(c_j)|$ 衡量 mention 与 CNER span 的 token 级 Jaccard 重叠，给每个 mention 选 $\hat{c}_j = \arg\max \Omega$，重叠 < 0.5 的暂时留空。直标这一步能覆盖 37.5–71.4% 的 mention，再借助"同一 cluster 内的 mention 必然语义同类"这条硬约束，在簇级别做多数投票把标签传播给剩下的空位（含纯代词），打平时用平均 $\Omega$ 最高的标签破纪录。
 
-2. **Typed Mention F1 + Link F1 解耦评测**：
+这样覆盖率从 NER 的两成多一路升到 ~90%，剩下的几乎都是没有任何 nominal 锚点的纯代词 cluster。整套传播只是查表 + 投票，用近乎零算力就把困扰语义评测多年的"密度问题"基本填平，让后续按类别切分的诊断真正成为可能。
 
-    - 功能：把共指评测分解成"识别得对不对"和"链接得对不对"两个互相独立的诊断维度。
-    - 核心思路：Mention F1 计算特定类 $t$ 的 mention 抽取精度和召回，独立于聚类；Link F1 在 gold mention 输入下评估同一 cluster 内 mention 对 $(m_1^G, m_2^G)$ 是否正确，专门刻画聚类结构质量，与 mention 检测解耦。两类指标都按语义类别分层报告，能定位"模型在 PER 上链接好但在 EVENT 上 mention 检测就崩了"这种细节。
-    - 设计动机：CoNLL-F1 混合了边界、链接、聚类三种误差源，看到分数掉了 10 个点也不知道该改什么；解耦成 mention/link + per-class 让"失败 → 改进"的因果链可被追踪。
+**2. Typed Mention F1 + Link F1：把"识别"和"链接"两种能力拆开看。**
 
-3. **诊断驱动的定向数据增强**：
+CoNLL-F1 把边界、链接、聚类三种误差源揉成一个数，掉了 10 分也不知道该改哪里。本文把评测拆成两个互相独立的维度：Mention F1 只算特定类 $t$ 的 mention 抽取精度与召回，完全不看聚类对错；Link F1 则在 gold mention 输入下，评估同一 cluster 内 mention 对 $(m_1^G, m_2^G)$ 是否被正确连到一起，专门刻画聚类结构质量，与 mention 检测解耦。
 
-    - 功能：把诊断结果（"LitBank 模型对 PLANT/EVENT/MEDIA 等类崩溃"）转成可执行的 augmentation 配方。
-    - 核心思路：用 GPT-5.1 生成 3 篇 ~2000 字的 LitBank 风格虚构叙事，每篇含被诊断为弱势的 CNER 类提及；按两种规范人工标注——Restricted (仅 LitBank 6 类) 和 Unrestricted (覆盖所有 nominal/代词 mention)；分别加进 LitBank 训练集训练 augmented vs augmented-NR 模型，对比对 OntoNotes/PreCo 的提升。这个流程几乎零成本却能直接验证"诊断 → 改动 → 效果"闭环。
-    - 设计动机：传统评测发现问题但给不出干预手段；本文用最小可证伪规模（3 篇文档）证明 typed F1 诊断真的能指导数据策略——这是把"可解释评测"做成"可操作评测"的最有力证据。
+两类指标都按 29 个语义类别分层报告，于是能精确定位"模型在 PER 上链接很好、但在 EVENT 上连 mention 都抽不准"这种细节。把单一聚合分数换成 mention/link × per-class 的诊断面板后，"在哪类失败 → 该补什么"的因果链第一次变得可追踪。
+
+**3. 诊断驱动的定向数据增强：让评测能开出"补什么数据"的药方。**
+
+传统评测只能发现问题，给不出干预手段。本文把诊断结论（"LitBank 模型在 PLANT/EVENT/MEDIA 等类上崩溃"）直接翻译成 augmentation 配方：用 GPT-5.1 生成 3 篇约 2000 字的 LitBank 风格虚构叙事，每篇刻意塞入被判为弱势的 CNER 类提及；再按两种规范人工标注——Restricted 只标 LitBank 原有 6 类，Unrestricted 覆盖所有 nominal 与代词 mention——分别并入训练集得到 augmented 与 augmented-NR 两个模型。
+
+之所以只用 3 篇文档，是要把规模压到最小可证伪：如果这点数据就能让 typed F1 诊断指向的弱类显著回升，就证明诊断真的可操作。结果 Unrestricted 版让 CoNLL-F1 平均 +2.5、Mention F1 +9.5，而 Restricted 版反而更差，闭环地说明"问题不在数据量，而在标注规范限定了类范围"，把"可解释评测"坐实成了"可执行评测"。
 
 ### 损失函数 / 训练策略
 

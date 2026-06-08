@@ -41,28 +41,42 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 WAN 2.1 VACE 1.3B 架构。主去噪分支 + 稀疏分支（VACE 块）+ 密集分支（DiT 副本 + 跨注意力）。训练时仅新增跨注意力模块可训练。
+NOVA 要解决的是无配对视频编辑：用户只在少数几个关键帧上画出想要的改动，模型就得把这个改动平滑地铺满整段视频，同时保住原视频的运动轨迹和未编辑区域。它把这件事拆成两条互不打架的信息流——一条「稀疏控制」流告诉模型要变成什么样，一条「密集合成」流告诉模型要保住什么。整个网络建在 WAN 2.1 VACE 1.3B 之上：一个主去噪分支负责实际出图，旁边挂一个稀疏分支（VACE 块）注入用户编辑过的关键帧，再挂一个密集分支（DiT 副本）从原始视频里抽运动与纹理，两路在每一层加回主分支。训练时基座全部冻结，只放开新加的跨注意力模块，所以代价很小。
 
 ### 关键设计
 
-1. **双分支解耦架构**:
+**1. 双分支解耦架构：把「变什么」和「保什么」拆到两条独立路径。**
 
-    - 功能：将编辑控制和源视频保真解耦到两条路径
-    - 核心思路：在第 $l$ 层，$\boldsymbol{z}_m^{(l)} \leftarrow \boldsymbol{z}_m^{(l)} + \underbrace{\mathcal{S}^{(l)}(\boldsymbol{z}_m^{(l)}, \boldsymbol{r})}_{\text{稀疏控制}} + \underbrace{\mathcal{D}^{(l)}(\boldsymbol{z}_m^{(l)}, \boldsymbol{z}_d^{(l)})}_{\text{密集合成}}$。稀疏分支用 VACE 块注入退化关键帧序列，密集分支通过可训练跨注意力（主分支做 Q，密集分支做 K/V）注入原始视频信息
-    - 设计动机：直接融合密集特征会干扰编辑；跨注意力让主分支主动查询需要的运动/纹理信息
+以往方法（如 VACE）的痛点在于控制信号和合成信号挤在同一条路上，模型分不清哪些信息是该改的、哪些是该留的，局部编辑时经常背景跟着一起乱。NOVA 的做法是在主分支的每一层 $l$ 同时叠加两路修正项：
 
-2. **退化模拟训练（无配对学习）**:
+$$\boldsymbol{z}_m^{(l)} \leftarrow \boldsymbol{z}_m^{(l)} + \underbrace{\mathcal{S}^{(l)}(\boldsymbol{z}_m^{(l)}, \boldsymbol{r})}_{\text{稀疏控制}} + \underbrace{\mathcal{D}^{(l)}(\boldsymbol{z}_m^{(l)}, \boldsymbol{z}_d^{(l)})}_{\text{密集合成}}$$
 
-    - **锚定控制管线（Anchored Control Pipeline）**：从目标视频稀疏采样关键帧，施加随机退化（高斯模糊、仿射变换等）模拟编辑伪影：$\hat{\boldsymbol{x}}_{k_i} = (\boldsymbol{1}-\boldsymbol{b}_{k_i})\odot\boldsymbol{x}_{k_i} + \boldsymbol{b}_{k_i}\odot\mathcal{D}_{aug}(\boldsymbol{x}_{k_i})$。然后线性插值重建完整序列作为稀疏分支输入
-    - **源保真管线（Source Fidelity Pipeline）**：对目标视频随机 Cut-and-Paste 生成伪源视频 $\tilde{\boldsymbol{x}}_t = \boldsymbol{m}_t\odot\boldsymbol{y}_t + (1-\boldsymbol{m}_t)\odot\boldsymbol{x}_t$ 作为密集分支输入
-    - 训练目标：标准去噪损失 $\mathcal{L} = \mathbb{E}[\|\epsilon - \epsilon_\theta(\boldsymbol{z}_t, t, \tilde{\mathcal{X}}, \hat{\mathcal{X}})\|_2^2]$
-    - 设计动机：退化模拟让模型学习时序恢复和纹理传播；Cut-and-Paste 让模型学习从密集分支恢复运动和背景
+稀疏分支 $\mathcal{S}$ 用 VACE 块把退化后的关键帧序列 $\boldsymbol{r}$ 编码进来，提供「目标长什么样」的语义引导；密集分支 $\mathcal{D}$ 则不是简单地把原视频特征加进去，而是用一个可训练的跨注意力——主分支当 Query，密集分支特征 $\boldsymbol{z}_d^{(l)}$ 当 Key/Value。这个 Query/KV 的安排是关键：直接相加会让密集特征硬生生盖住编辑结果，而跨注意力让主分支「按需查询」，只去取它当下需要的那部分运动和纹理，编辑区域不受干扰。
 
-3. **一致性感知关键帧编辑（推理时）**:
+**2. 退化模拟训练：没有配对数据，就自己造出「编辑前后」的伪配对。**
 
-    - 功能：确保多关键帧编辑间的视觉一致性
-    - 核心思路：用 FLUX Kontext 编辑，第一帧标准编辑，后续关键帧以第一帧编辑结果为参考：$\boldsymbol{x}_{k_i}^{edit} = \text{FLUX}(\boldsymbol{x}_{k_i}, \boldsymbol{x}_{k_0}^{edit}, \boldsymbol{m}_{k_i}, \mathcal{P})$
-    - 设计动机：独立编辑各帧会产生风格不一致、闪烁
+配对视频数据几乎拿不到，合成的又带伪影。NOVA 干脆只用单段干净视频，靠两条人为退化管线把监督信号造出来，让模型在「修复退化」的过程中学会真正的编辑能力。
+
+锚定控制管线（Anchored Control Pipeline）负责喂稀疏分支：从目标视频里稀疏采几个关键帧，对它们随机施加退化（高斯模糊、仿射变换等）来模拟真实编辑会带来的伪影，
+
+$$\hat{\boldsymbol{x}}_{k_i} = (\boldsymbol{1}-\boldsymbol{b}_{k_i})\odot\boldsymbol{x}_{k_i} + \boldsymbol{b}_{k_i}\odot\mathcal{D}_{aug}(\boldsymbol{x}_{k_i})$$
+
+其中 $\boldsymbol{b}_{k_i}$ 是退化区域的掩码，退化后再对关键帧做线性插值重建出完整序列，作为稀疏分支的输入。这样模型被迫学会从带伪影的稀疏锚点里恢复出干净、时序连贯的结果。源保真管线（Source Fidelity Pipeline）则负责喂密集分支：对目标视频随机做 Cut-and-Paste，贴进无关内容 $\boldsymbol{y}_t$ 造出一个「伪源视频」，
+
+$$\tilde{\boldsymbol{x}}_t = \boldsymbol{m}_t\odot\boldsymbol{y}_t + (1-\boldsymbol{m}_t)\odot\boldsymbol{x}_t$$
+
+逼着模型学会从密集分支里把真正的运动和背景恢复出来，而不是无脑复制。两条管线共同支撑一个标准去噪目标 $\mathcal{L} = \mathbb{E}[\|\epsilon - \epsilon_\theta(\boldsymbol{z}_t, t, \tilde{\mathcal{X}}, \hat{\mathcal{X}})\|_2^2]$，整套训练完全自监督。
+
+**3. 一致性感知关键帧编辑：让多关键帧之间不打架。**
+
+推理时用户要编辑的关键帧不止一张，如果每张独立去编辑，风格、色调、细节都会各走各的，铺回视频后就是闪烁。NOVA 用 FLUX Kontext 来编辑关键帧，但只让第一帧做标准编辑，之后每一张关键帧都把第一帧的编辑结果 $\boldsymbol{x}_{k_0}^{edit}$ 一并喂进去当参考：
+
+$$\boldsymbol{x}_{k_i}^{edit} = \text{FLUX}(\boldsymbol{x}_{k_i}, \boldsymbol{x}_{k_0}^{edit}, \boldsymbol{m}_{k_i}, \mathcal{P})$$
+
+这样所有关键帧都向同一个「样板」对齐，编辑风格在帧间保持一致，喂给稀疏分支的锚点本身就是协调的，最终视频自然不闪。
+
+### 一个完整示例
+拿一段「人物走过街道、要把红色外套换成蓝色」的视频走一遍：模型先按间隔 10 帧抽出若干关键帧，用 FLUX Kontext 编辑第一帧把外套改成蓝色，后续关键帧都参考这张第一帧结果来改，保证蓝色的色调一致——这些编辑后的关键帧线性插值成完整序列，进稀疏分支。与此同时，原始视频（人物的走路姿态、街道背景）进密集分支。去噪时主分支每层一边从稀疏分支「问」外套该是什么颜色、什么轮廓，一边从密集分支「问」人物当前帧的姿态和背景纹理——前者保证编辑落地、后者保证运动和背景不变。即便密集分支拿到的输入被模糊过，跨注意力仍能引导出比模糊输入更清晰的背景（消融里 BG-SSIM 仍达 0.910），说明它做的是带理解的合成而非贴图。
 
 ### 损失函数 / 训练策略
 - 仅训练新增的跨注意力模块，基座冻结

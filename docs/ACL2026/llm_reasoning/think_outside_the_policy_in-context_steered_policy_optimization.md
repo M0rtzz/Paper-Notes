@@ -47,23 +47,21 @@ ICPO 在标准 GRPO 基础上引入三个组件：(1) 混合策略 GRPO + 隐式
 
 ### 关键设计
 
-1. **混合策略 GRPO + 隐式专家强制(Mixed-Policy GRPO with IEF)**:
+**1. 混合策略 GRPO + 隐式专家强制（IEF）：用模型自己的 ICL 能力造出 off-policy 轨迹，无需外部更强模型。**
 
-    - 功能：在 GRPO 的 rollout 组中混合 on-policy 和 ICL 引导的 off-policy 轨迹，扩展探索空间
-    - 核心思路：对每个 prompt $q$，将从 MATH 数据集随机采样的示例 $\mathcal{D}$ 拼接为 $x_{\mathrm{exp}}=[\mathcal{D};q]$，从模型生成 ICL 引导轨迹 $\tau_{\mathrm{exp}} \sim \pi_\theta(\tau|x_{\mathrm{exp}})$。基于 ICL 的假设类视角，Transformer 内部将示例映射为任务向量 $\vartheta = A(\mathcal{D})$，相当于隐式引入了专家先验。在混合 rollout 组上重新计算 group-relative advantage
-    - 设计动机：虽然所有轨迹都来自同一模型 $\pi_\theta$，但 ICL 条件化改变了输入分布，使轨迹偏向专家对齐的区域——这是一种输入条件化的 off-policy 方法，无需额外模型
+GRPO 的探索瓶颈在于所有轨迹都从当前策略分布里采，多样性天然受限、容易困在局部最优；而 LUFFY 那种引外部强模型轨迹的做法又贵又不一定拿得到。ICPO 的巧思是：对每个 prompt $q$，从 MATH 数据集随机采样几个示例 $\mathcal{D}$ 拼成 $x_{\mathrm{exp}}=[\mathcal{D};q]$，再让同一个模型生成 ICL 引导轨迹 $\tau_{\mathrm{exp}} \sim \pi_\theta(\tau|x_{\mathrm{exp}})$。从 ICL 的假设类视角看，Transformer 内部会把这些示例编码成一个任务向量 $\vartheta = A(\mathcal{D})$，相当于在不动参数的前提下隐式注入了一份专家先验，把推理分布往专家对齐的区域偏移。每个 prompt 最终凑成 8 条轨迹（7 条 on-policy + 1 条 ICL 引导），在混合 rollout 组上重新计算 group-relative advantage。虽然轨迹全来自同一个 $\pi_\theta$，但 ICL 条件化改变了输入分布，等于做了一次"输入条件化的 off-policy"，省掉了额外模型。
 
-2. **专家区域拒绝采样(Expert Region Reject Sampling, ERRS)**:
+**2. 专家区域拒绝采样（ERRS）：只让答对的 ICL 轨迹进训练，挡住噪声梯度。**
 
-    - 功能：过滤低质量的 ICL 引导轨迹，防止噪声污染策略更新
-    - 核心思路：定义专家区域 $\mathcal{E}_{\mathrm{exp}} = \{(x_{\mathrm{exp}}, \tau_j) | R(\tau_j) \geq \delta\}$，仅当 ICL 引导轨迹的奖励超过阈值 $\delta=1.0$（即答案正确）时才纳入训练。通过拒绝采样算子 $\rho$ 确保只有高奖励轨迹参与策略更新
-    - 设计动机：ICL 引导并非总能产生正确答案，直接使用所有 off-policy 轨迹会引入误导性梯度，ERRS 保证了训练信号的可靠性
+ICL 引导并不保证答案正确，要是把所有 off-policy 轨迹照单全收，错误轨迹会带来误导性梯度、污染策略更新。ERRS 因此定义一个专家区域 $\mathcal{E}_{\mathrm{exp}} = \{(x_{\mathrm{exp}}, \tau_j) \mid R(\tau_j) \geq \delta\}$，只有当 ICL 轨迹的奖励越过阈值 $\delta=1.0$（即答案正确）时才纳入训练，靠拒绝采样算子 $\rho$ 保证参与更新的都是高奖励轨迹。这一步是混合策略能稳住的关键——它把"扩展探索"和"保证信号可靠"解耦开。
 
-3. **退火专家奖励塑形(Annealed Expert Bonus Reward Shaping)**:
+**3. 退火专家奖励塑形：早期多模仿专家、后期放手自主探索。**
 
-    - 功能：在训练早期加强专家引导，后期逐步放松以促进自主优化
-    - 核心思路：对专家区域内的正确轨迹增加一个线性衰减的奖励加成 $R_{\mathrm{shaped}}(\tau) = R(\tau) + \alpha \cdot \gamma(t)$，其中 $\gamma(t) = 1 - t/T$ 是线性衰减调度器。这使得早期训练更多模仿专家行为，后期过渡到自主探索
-    - 设计动机：固定的专家奖励加成可能导致对专家行为的过度依赖，退火设计实现了从"跟随专家"到"自主推理"的平滑过渡
+固定的专家奖励加成会让模型一直黏着专家行为、过度依赖。ICPO 给专家区域内的正确轨迹加一个随时间线性衰减的奖励：
+
+$$R_{\mathrm{shaped}}(\tau) = R(\tau) + \alpha \cdot \gamma(t), \quad \gamma(t) = 1 - t/T$$
+
+训练早期 $\gamma(t)$ 接近 1，专家引导强、帮模型快速进入更好的策略区域；越往后 $\gamma(t)$ 越小，专家加成淡出，模型平滑过渡到自主推理。这种"先跟随、后放手"的退火安排，既吃到了专家引导的早期红利，又避免了对专家风格的长期路径依赖。
 
 ### 损失函数 / 训练策略
 

@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者构造了一个 162 题 × 4 模板 = 648 条的小型受控数据集 $\mathcal D=\{(P_+,P_-,y_+,y_-)\}$，正例形如 "An animal that is an amphibian is a frog"、反例只插入 "not"（答 "mammal"）；要求 $y_+,y_-$ 都是单 token 候选词。在 Llama-3.1-8B、Mistral-7B-v0.1、Qwen2.5/3、Gemma-2、OLMo-2 上跑一遍后，分析按两阶段递进：(1) §4 先用准确率 vs. logit 差敏感度 $\Pr[\Delta(P_-;y_-,y_+)>\Delta(P_+;y_-,y_+)]$ 证明模型内部已"听懂"了否定，再用 Cumulative Attention Sink 把所有晚层注意力头敲成"只看首/末 token"以验证晚层是错误来源；(2) §5 在 Llama-3.1-8B / Mistral-7B 上用 window Attention Sink + 修改版 path patching 定位中层（约 layer 14）的因果重要注意力模块，再用 LogitLens 解读其输出语义，最后用对比归因 + 预训练 SAE 把信号一路追到晚层 MLP 的具体潜变量。
+作者要回答的核心问题是"模型到底会不会做否定、算否定的电路长什么样、错在哪一段"，而把它转化成一个可被机制工具切开的受控实验：自建 162 题 × 4 模板 = 648 条数据集 $\mathcal D=\{(P_+,P_-,y_+,y_-)\}$，正例如 "An animal that is an amphibian is a frog"、反例只插入 "not"（答 "mammal"），且 $y_+,y_-$ 都是单 token。然后分两阶段递进：先在 6 个开源模型上用"准确率 vs. logit 差敏感度"的背离证明否定信号其实已经算出来、再用 Cumulative Attention Sink 把晚层注意力敲掉以确认晚层是错误来源；随后在 Llama-3.1-8B / Mistral-7B 上用 window Attention Sink + path patching 把中层的因果电路定位出来、用 LogitLens 读出它构造的是什么语义，最后用对比归因 + 预训练 SAE 把信号一路追到晚层 MLP 的具体潜变量。
 
 ### 关键设计
 
-1. **Attention Sinking 消融**：
+**1. Attention Sinking 消融：用模型自带的"偷懒"现象温柔地关掉一个注意力头**
 
-    - 功能：以最小副作用"关掉"指定的注意力模块，用于发现"哪些头是因果重要的"和"哪些头在作恶"。
-    - 核心思路：受 Xiao et al. 2024 attention sink 现象启发——发现末位 token 在大模型里平均把 64%–80% 的注意力质量都压在首 token + 当前 token 上（Table 1），说明这是注意力的"默认空闲态"。作者强行把目标头的 attention pattern 改写为"只能看首 token 和自己"，从而切断该头的跨位信息搬运，但保留 value/MLP 等本地计算。配合 §4.2 的"Cumulative"变体（从层 $i$ 一直 sink 到 $L$）和 §5.2 的"window"变体（只 sink 一段窗口），既能扫描出错误来源也能定位因果电路。
-    - 设计动机：相比 Attention Knockout 直接把某个 token 在注意力里抹零，sink 不引入"换源激活"的噪声，也不需要对照 prompt，自然回答了"是 $\mathcal{AO}(P_-)$ 失去因果，还是 $\mathcal{AP}(P_+)$ 被强行带入"的二义性；同时由于 sink 后注意力质量仍归一化在两个"无信息" token 上，几乎不破坏后续层的数值稳定性，所以可作即插即用的推理时修复——在 Llama-3.1-8B 上把否定准确率从 50.5% 拉到 67.8%，在 Mistral-7B 上 45.2% → 65.9%（Table 3）。
+机制定位通常用 Attention Knockout 把某个 token 在注意力里抹零，但这会引入"换源激活"的噪声、还得依赖对照 prompt，容易把"是 $\mathcal{AO}(P_-)$ 失去因果"和"是 $\mathcal{AP}(P_+)$ 被强行带入"混为一谈。本文受 Xiao et al. 2024 的 attention sink 现象启发——他们观察到末位 token 在大模型里平均把 64%–80% 的注意力质量压在首 token + 当前 token 上（Table 1），说明这是注意力的"默认空闲态"。于是作者直接把目标头的 attention pattern 改写成"只能看首 token 和自己"，切断它的跨位信息搬运而保留 value/MLP 等本地计算；由于注意力质量仍归一化在两个"无信息" token 上，几乎不破坏后续层的数值稳定。这一手法配两种扫描粒度——从层 $i$ 一直 sink 到 $L$ 的 "Cumulative" 变体用来找错误来源，只 sink 一段窗口的 "window" 变体用来精确定位因果电路。因为副作用极小，它还能直接当成训练免费的推理期修复：在 Llama-3.1-8B 上把否定准确率从 50.5% 拉到 67.8%，在 Mistral-7B 上 45.2% → 65.9%（Table 3）。
 
-2. **Path Patching + LogitLens 协同定位中层"构造电路"**：
+**2. Path Patching × LogitLens：指认中层"构造电路"并读出它的语义**
 
-    - 功能：在确认晚层是"捷径"之后，进一步指认哪个中层注意力模块真正在执行 "not Y" 的组合，并解读它输出向量的语义。
-    - 核心思路：采用修改版 path patching——把 sender 设为某层注意力输出 $\mathcal{AO}_\ell$、receiver 设为末位输出嵌入，对负例 $P_-$ 跑一遍正向，把目标层 $\ell\in\mathcal L_t$ 的 $\mathcal{AO}_\ell(P_-^{pp})$ 替换为正例 $\mathcal{AO}_\ell(P_+)$，其余层固定注意力 pattern 但重新算 MLP；若 $\Delta(P_-;y_-,y_+)>0$ 翻成 $\Delta(P_-^{pp};y_+,y_-)>0$，则该层因果重要。然后用 window Attention Sink 做交叉验证（两条曲线在 Llama-3.1-8B layer 14 同时出现尖峰、layer 17 出现峰）。最后对这些层的 $\mathcal{AO}_\ell$ 在末位用 LogitLens 投影到词表，记录 top-10 promoted token，由 gpt-oss-120B 标注是否与 "not Y" 概念相关；对 >80% 的样本能在至少一层找到 $\bar Y$ 相关 token（"not gas" → solid、"not in Asia" → America、"not located near the ocean" → inland）。
-    - 设计动机：单独看 path patching 容易和"$\mathcal{AP}(P_+)$ 引入新因果"混淆，单独看 LogitLens 又只能描述方向不能验证因果，两者交叉才能同时给出"哪层因果重要"+"它输出什么语义"。LLM 标注则把分析从"几个挑出来的例子"扩展到 648 题级别，使"构造为主"成为可统计的结论而非轶事——同方法测抑制只命中 ~30% 样本，因此判定 construction > suppression。
+确认晚层是"捷径"之后，还要回答中层到底哪个注意力模块在执行 "not Y" 的组合、它输出的向量是什么意思。作者用修改版 path patching：sender 取某层注意力输出 $\mathcal{AO}_\ell$、receiver 取末位输出嵌入，对负例 $P_-$ 跑正向时把目标层的 $\mathcal{AO}_\ell(P_-^{pp})$ 替换成正例 $\mathcal{AO}_\ell(P_+)$、其余层固定注意力 pattern 但重算 MLP，若 $\Delta(P_-;y_-,y_+)>0$ 翻成 $\Delta(P_-^{pp};y_+,y_-)>0$ 就判该层因果重要，并用 window Attention Sink 交叉验证（两条曲线在 Llama-3.1-8B 的 layer 14 同时出尖峰、layer 17 出峰）。但 path patching 单看容易和"$\mathcal{AP}(P_+)$ 引入新因果"混淆，所以再对这些层的 $\mathcal{AO}_\ell$ 在末位用 LogitLens 投影回词表、取 top-10 promoted token 交给 gpt-oss-120B 标注是否与 "not Y" 相关——两者交叉才能同时给出"哪层因果重要"和"它输出什么语义"。结果 >80% 的样本能在至少一层找到 $\bar Y$ 相关 token（"not gas" → solid、"not in Asia" → America、"not located near the ocean" → inland）；用 LLM 标注把分析从挑出来的几个例子扩展到 648 题级别，"构造为主"才成为可统计的结论而非轶事——同方法测抑制只命中 ~30% 样本，由此判定 construction > suppression。
 
-3. **对比归因 + SAE 追踪到 MLP 潜变量**：
+**3. 对比归因 × SAE：把信号追到具体 MLP 潜变量**
 
-    - 功能：将"中层注意力构造 $\bar Y$ → 后层把它放大成 $y_-$"这条剩下的最后一段电路也补齐，找出真正在 promote 否定答案的具体 MLP 单元。
-    - 核心思路：取 unembedding 行差 $d=W_U(y_-)-W_U(y_+)$ 作为"负正答案差异方向"，对任意成分 $x$ 定义贡献 $\mathcal C(x,P)=\langle W_U^\top \mathcal{LN}_{L+1}(x),d\rangle$，再做两套对比——$\mathcal C(\mathcal{MO}_i,P_-)-\mathcal C(\mathcal{MO}_i,P_+)$ 和 $\mathcal C(\mathcal{MO}_i,P_-)-\mathcal C(\mathcal{MO}_i,P_-^{as})$。取两套各自 top-10 MLP 的交集，得到大约 layer 17–25 的关键 MLP；对每个 MLP 套上 He et al. 2024 的预训练 SAE 把输出展成稀疏潜变量 $\mathcal{MO}_i\approx\sum_j\beta_j f_j$，对每个潜变量再做同样的对比归因，挑出 top 潜变量后用 LogitLens 看它们 promote/demote 哪些 token（如 "not biodegradable" → 'plastic','trash','litter'；"not open source" → 'Win','Windows','.exe'，Table 4）。
-    - 设计动机："contrastive" 设计直接消去任何与"答案差异方向"无关的稳定背景信号，使得真正在 $P_-$ 上"额外贡献"$y_-$ 的成分才会得分高；用 SAE 把 MLP 内 >10k 维稠密激活压到 <100 个稀疏潜变量，是当前能"人工肉眼判读潜变量功能"的几乎唯一可扩展手段；同时观察到潜变量的 top demoted token 普遍不可解释，从另一侧再次印证"construction > suppression"。
+最后一段电路是"中层注意力构造 $\bar Y$ → 后层 MLP 把它放大成 $y_-$"，需要找出真正在 promote 否定答案的具体 MLP 单元。作者取 unembedding 行差 $d=W_U(y_-)-W_U(y_+)$ 作为"负正答案差异方向"，对任意成分 $x$ 定义贡献 $\mathcal C(x,P)=\langle W_U^\top \mathcal{LN}_{L+1}(x),d\rangle$，再做两套对比 $\mathcal C(\mathcal{MO}_i,P_-)-\mathcal C(\mathcal{MO}_i,P_+)$ 与 $\mathcal C(\mathcal{MO}_i,P_-)-\mathcal C(\mathcal{MO}_i,P_-^{as})$——这种 contrastive 设计直接消去任何与"答案差异方向"无关的稳定背景，只让真正在 $P_-$ 上额外贡献 $y_-$ 的成分得高分。取两套各自 top-10 MLP 的交集得到约 layer 17–25 的关键 MLP，再套上 He et al. 2024 的预训练 SAE 把输出展成稀疏潜变量 $\mathcal{MO}_i\approx\sum_j\beta_j f_j$——把 >10k 维稠密激活压到 <100 个稀疏潜变量，是当前几乎唯一能让人肉眼判读潜变量功能的可扩展手段。对每个潜变量再做同样的对比归因、挑出 top 潜变量后用 LogitLens 看它们 promote/demote 哪些 token（"not biodegradable" → 'plastic','trash','litter'；"not open source" → 'Win','Windows','.exe'，Table 4）；其中 top demoted token 普遍不可解释，又从另一侧印证 construction > suppression。
 
-### 损失函数 / 训练策略
-本工作纯属推理期机制分析，无新增训练损失；所用的 SAE 直接复用 He et al. 2024 在 Llama-3.1-8B 上预训练好的整套 SAE；LLM 标注用 openai/gpt-oss-120b；评估全部在 last-token 位置读 logit。
+### 训练策略
+本工作纯属推理期机制分析，无新增训练损失：SAE 直接复用 He et al. 2024 在 Llama-3.1-8B 上预训练好的整套套件，LLM 标注用 openai/gpt-oss-120b，评估全部在 last-token 位置读 logit。
 
 ## 实验关键数据
 

@@ -40,31 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FedVPA-GP 沿用 FedBiscuit 的两阶段范式，但把核心选择器替换成一个变分模块。基座 LLM (Qwen-2 0.5B / Gemma-2B) 全程冻结，可训部分极小（约 0.18% 参数）：
-
-**Stage 1（联邦选择器训练）**：每个客户端 $i$ 持有偏好对数据集 $\mathcal{D}_i=\{(s_A, s_B, y)\}$。本地流程是「LLM 抽特征 → 取响应差 $\Delta h = h_{\text{chosen}} - h_{\text{rejected}}$ → 特征提取 MLP → 变分编码器输出 $(\mu_i, \sigma_i^2)$ → 重参数化采样 $z_i$ → 把 $f_\theta(z_i)$ 作为 logit 残差加到基座的 $\{A,B\}$ logits 上 → 计算 BTL 偏好似然」。本地损失是 ELBO 加正交正则，其中 KL 项把 $q_i$ 推向"联邦混合先验"。服务端聚合 LoRA/编码器参数，并把上一轮所有参与客户端的 $(\bar\mu_j, \bar\sigma_j^2)$ 打包广播给下一轮——这就是混合先验的载体。一个并行的服务端 balanced $k$-means 在客户端均值上做聚类，给每个客户端分配一个正交原型索引 $y_i^*$。
-
-**Stage 2（条件化 RLHF）**：选择器训完后冻住，作为条件奖励模型 $\text{logits}(s_A, s_B \mid z)$。在服务器侧用 DPO 训一个以 $z$ 为条件的策略：把 $z$ 通过 z-to-embedding 注入 input embedding，on-policy 生成两条回答，由 selector 在给定 $z$ 下打分，得到 (chosen, rejected) 用于 DPO 更新。这步只用 prompt，不再触碰任何用户偏好标签，因此把"昂贵的联邦生成"完全甩到服务端单机完成。
+FedVPA-GP 沿用 FedBiscuit 的两阶段范式（先联邦训一个轻量选择器，再在服务端做条件化 RLHF），但把核心选择器换成一个变分模块：基座 LLM (Qwen-2 0.5B / Gemma-2B) 全程冻结，可训部分仅约 0.18% 参数，把每个客户端的偏好编码成连续隐变量 $z$。整套方法的命门是后验崩溃，靠三个相互咬合的设计——联邦混合先验、正交原型损失、双保险防崩溃——在稀疏又异质的联邦数据上同时稳住训练并分开冲突偏好。
 
 ### 关键设计
 
-1. **联邦混合先验 + Gumbel-Softmax 可学习权重**：
+**1. 联邦混合先验 + Gumbel-Softmax 可学习权重：让"别人的后验"当我的先验**
 
-    - 功能：取代 VPL 里的固定标准高斯先验 $\mathcal{N}(0, I)$，让每个客户端的先验由其他客户端的后验加权组合而成，注入群体级先验信息以稳住稀疏数据下的本地推断。
-    - 核心思路：先验写成 $p_{\text{mixture}}^{(i)}(z) = \sum_{j \in \mathcal{S}} w_j \mathcal{N}_j(z)$，其中 $\mathcal{N}_j$ 是同伴 $j$ 在上一轮上传的后验。权重 $w_j$ 不是简单平均，而是用 Gumbel-Softmax 重参数化 $w_j = \mathrm{softmax}((\log\pi_j + g_j)/\tau)$ 让 $\pi_j$ 跟 KL 一起端到端学；每个客户端独自维护一份 $\{\pi_j\}$，不参与联邦平均，从而保留"我应该信哪几个同伴"这一本地策略。KL $\mathbb{D}_{KL}(q_i \,\|\, p_{\text{mixture}}^{(i)})$ 通过 log-sum-exp 稳定求值。
-    - 设计动机：固定高斯先验在 FL 里相当于"没有任何全局指引"，KL 项会把后验直接拍回原点；而盲目均匀混合所有同伴又会把冲突偏好的客户端拉到一起。可学习的 Gumbel-Softmax 让相同偏好模式的客户端互相提供先验、不同模式之间互相屏蔽，自动实现"邻居筛选"。同时只传 $(\bar\mu_j, \bar\sigma_j^2)$ 共 256 字节，远比 LoRA 适配器小，几乎不增加通信。
+VPL 的固定标准高斯先验 $\mathcal{N}(0,I)$ 搬到 FL 里相当于"没有任何全局指引"，本地数据一稀疏，KL 项就把后验直接拍回原点。FedVPA-GP 把先验改写成同伴后验的加权混合 $p_{\text{mixture}}^{(i)}(z) = \sum_{j \in \mathcal{S}} w_j \mathcal{N}_j(z)$，其中每个 $\mathcal{N}_j$ 是同伴 $j$ 上一轮上传的后验——只交换 $(\bar\mu_j, \bar\sigma_j^2)$ 共 256 字节，远比 LoRA 适配器小。权重不能简单平均，否则冲突偏好的客户端会被混到一起互相拖累；于是用 Gumbel-Softmax 重参数化 $w_j = \mathrm{softmax}((\log\pi_j + g_j)/\tau)$，让 $\pi_j$ 跟 KL 一起端到端学，并且每个客户端独自维护一份 $\{\pi_j\}$、不参与联邦平均，从而保留"我该信哪几个同伴"这一本地策略。这样相同偏好模式的客户端互相提供先验、不同模式之间互相屏蔽，自动实现"邻居筛选"；KL 项 $\mathbb{D}_{KL}(q_i \,\|\, p_{\text{mixture}}^{(i)})$ 通过 log-sum-exp 稳定求值。
 
-2. **正交原型损失（Orthogonal Loss）**：
+**2. 正交原型损失：给连续隐空间钉一副离散骨架**
 
-    - 功能：在隐空间显式划分多个互相正交的偏好子空间，强制 encoder 把冲突偏好放到不同方向上，从几何上根治后验崩溃。
-    - 核心思路：维护 $M$ 个可学习原型 $\{\mathbf{p}_m\}_{m=1}^M$，初始化用 QR 分解保证一开始就严格正交且远离原点。服务端在每轮聚合后用 balanced $k$-means 给每个客户端打一个原型标签 $y_i^*$（HH-RLHF 实验里 $M=2$，对应 helpful/harmless 两轴）。本地损失是 $\mathcal{L}_{\text{ortho}}(z) = \|z - \mathbf{p}_{y_i^*}\|_2^2 + \gamma\|\mathbf{P}\mathbf{P}^T - \mathbf{I}_M\|_F^2$，第一项把当前样本的 $z$ 拉向被指派的原型，第二项防止原型互相塌缩。
-    - 设计动机：单靠 KL 正则没法保证不同模式分得开（FedVPL 的 t-SNE 显示所有 $z$ 都缠在一起）。引入"有标签的几何吸引子"实际上是把"偏好模式离散结构"先验注入到原本连续的隐空间里，既给 encoder 一个明确的训练目标，也给 Stage 2 的条件策略提供了清晰可寻址的 $z$。$M$ 这个超参后续可以放大，对应更细粒度的偏好谱。
+单靠 KL 正则没法保证冲突模式分得开——FedVPL 的 t-SNE 显示所有 $z$ 缠成一团。本文维护 $M$ 个可学习原型 $\{\mathbf{p}_m\}_{m=1}^M$，用 QR 分解初始化保证一开始就严格正交且远离原点；服务端每轮聚合后用 balanced $k$-means 在客户端均值上聚类，给每个客户端打一个原型标签 $y_i^*$（HH-RLHF 里 $M=2$，对应 helpful/harmless 两轴）。本地多加一项 $\mathcal{L}_{\text{ortho}}(z) = \|z - \mathbf{p}_{y_i^*}\|_2^2 + \gamma\|\mathbf{P}\mathbf{P}^T - \mathbf{I}_M\|_F^2$，第一项把当前样本的 $z$ 拉向被指派的原型，第二项防止原型互相塌缩。这等于把"偏好模式是有限离散结构"的先验显式注入原本连续的隐空间：既给 encoder 一个明确的几何吸引子来对抗后验崩溃，又给 Stage 2 的条件策略提供了清晰可寻址的 $z$；$M$ 后续放大即对应更细粒度的偏好谱。
 
-3. **方差上限 + Base-logit Dropout 的双保险**：
+**3. 方差上限 + Base-logit Dropout：堵死后验崩溃的两条逃逸路径**
 
-    - 功能：在公式之外，从工程层面再堵两条"后验崩溃"的逃逸路径。
-    - 核心思路：(a) 对编码器输出的 log-variance 做硬截断 $\log\sigma_i^2 \leftarrow \min(\log\sigma_i^2, \log\sigma_{\max}^2)$，禁止 encoder 通过简单把 $\sigma$ 吹大来"廉价匹配先验"；(b) 当基座 LLM 已经对 $\{A,B\}$ 有较强先验信号时（Qwen-2 0.5B 这类小模型），对基座 choice-logit 做伯努利 dropout（$p_{\text{logit}}=0.5$），逼着 $f_\theta(z)$ 在那些步上独自承担预测责任，让梯度真正流回 $z$。Gemma-2B 因为基座信号本身较弱，置 $p_{\text{logit}}=0$。
-    - 设计动机：变分自编码器领域早就观察到，KL 项是个"最容易找捷径"的目标——只要 $q$ 等于 $p$，KL 就为 0，对应 $z$ 完全不携带信息。本文用截断 $\sigma$ 堵住"加大方差"这条捷径，再用 logit dropout 堵住"反正基座就能猜对"这条捷径，与第 1、2 个设计形成层层防御。
+变分自编码器社区早就观察到 KL 是个"最容易找捷径"的目标——只要 $q$ 等于 $p$，KL 就为 0，对应 $z$ 完全不携带信息。本文在公式之外从工程上再加双保险：一是对编码器输出的 log-variance 做硬截断 $\log\sigma_i^2 \leftarrow \min(\log\sigma_i^2, \log\sigma_{\max}^2)$，禁止 encoder 靠简单把 $\sigma$ 吹大来"廉价匹配先验"；二是当基座 LLM 已经对 $\{A,B\}$ 有较强先验信号时（Qwen-2 0.5B 这类小模型），对基座 choice-logit 做伯努利 dropout（$p_{\text{logit}}=0.5$），逼着 $f_\theta(z)$ 在那些步上独自承担预测责任、把梯度真正逼回 $z$；Gemma-2B 因为基座信号本身较弱，故置 $p_{\text{logit}}=0$。这两招分别堵住"加大方差"和"反正基座就能猜对"两条捷径，与前两个设计层层叠成完整的防崩溃体系。
+
+### 一个完整示例
+以 HH-RLHF 的 Non-IID 场景（一半客户端只见 helpful、一半只见 harmless）走一遍数据流。**Stage 1（联邦选择器训练）**：客户端 $i$ 持有偏好对 $\mathcal{D}_i=\{(s_A, s_B, y)\}$，本地流程是冻结 LLM 抽特征 → 取响应差 $\Delta h = h_{\text{chosen}} - h_{\text{rejected}}$ → 特征提取 MLP → 变分编码器输出 $(\mu_i, \sigma_i^2)$ → 重参数化采样 $z_i$ → 把 $f_\theta(z_i)$ 作为 logit 残差加到基座 $\{A,B\}$ logits 上 → 算 BTL 偏好似然得重建项；本地总损失是 ELBO 加正交正则，KL 把 $q_i$ 推向上面那个联邦混合先验。一轮结束后服务端聚合 LoRA/编码器参数，把所有参与客户端的 $(\bar\mu_j, \bar\sigma_j^2)$ 打包广播给下一轮（混合先验的载体），并用并行的 balanced $k$-means 给每个客户端分配正交原型索引 $y_i^*$。**Stage 2（条件化 RLHF）**：选择器训完后冻住，当作条件奖励模型 $\text{logits}(s_A, s_B \mid z)$；服务器单机用 DPO 训一个以 $z$ 为条件的策略——$z$ 经 z-to-embedding 注入 input embedding，on-policy 生成两条回答，由 selector 在给定 $z$ 下打分得到 (chosen, rejected) 做 DPO 更新。这步只用 prompt、不再触碰任何用户偏好标签，因此把"昂贵的联邦生成"完全甩到服务端单机完成。
 
 ### 损失函数 / 训练策略
 本地总损失见 Eq. (10)：

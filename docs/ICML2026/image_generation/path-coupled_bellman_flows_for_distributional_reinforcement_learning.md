@@ -41,30 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PCBF 整体是一个"流式分布 critic + 离线策略提取"的两段式框架。核心组件是一个时间相关的速度场 $v_\theta(t, Z_t \mid s, a)$，它解 ODE $dZ_t/dt = v_\theta(t, Z_t)$，把 $t=0$ 的高斯噪声 $X_0$ 搬运到 $t=1$ 的回报样本。训练时同时维护一个 Polyak 慢更新的目标网络 $v_{\theta^-}$，对每个 minibatch transition $(s,a,r,s',a')$：(1) 采样共享基础噪声 $X_0\sim\mathcal{N}(0,I)$ 和时间 $t\sim\text{Unif}[0,1]$；(2) 用目标网络把 $X_0$ 在 $(s',a')$ 上积出后继终端 $X' = \psi_{\theta^-}^1(X_0 \mid s', a')$；(3) 用相同 $X_0$ 构造共时间的后继插值 $Z_t^{s'} = (1-t)X_0 + tX'$ 和当前插值 $Z_t^s = (1-t)X_0 + t(R+\gamma X')$；(4) 计算 $\lambda$ 控制变量目标 $u_t^\lambda$ 并最小化 $\|v_\theta(t, Z_t^s \mid s, a) - u_t^\lambda\|_2^2$。推理时用显式 Euler 把 $X_0$ 积分到 $t=1$ 得回报样本，再据样本均值做候选动作排序完成离线策略提取。
+PCBF 是一个"流式分布 critic + 离线策略提取"的两段式框架，要解决的是怎么把 Bellman 算子塞进 flow matching 的路径里却不破坏它的源边界。核心组件是一个时间相关的速度场 $v_\theta(t, Z_t \mid s, a)$，它解 ODE $dZ_t/dt = v_\theta(t, Z_t)$，把 $t=0$ 的高斯噪声搬运到 $t=1$ 的回报样本；训练时再配一个 Polyak 慢更新的目标网络 $v_{\theta^-}$ 来提供后继路径。整套方法的本质，是把"中间时刻强行满足 Bellman 不动点"换成"只在端点上严格匹配、在路径上用共享噪声做轨迹层面耦合"，再用一个标量 $\lambda$ 在偏差与方差之间换挡。
 
 ### 关键设计
 
-1. **源相容 Bellman 耦合路径 (Source-Consistent Bellman-Coupled Path)**:
+**1. 源相容 Bellman 耦合路径：用一项残差锚同时焊住两端边界**
 
-    - 功能：在保持 flow matching 源边界 $Z_0=X_0$ 的同时，让 $t=1$ 严格落在 Bellman 端点 $R+\gamma X'$。
-    - 核心思路：直接套用 pointwise Bellman 路径 $Z_t^D = R + \gamma Z_t'$ 会使 $Z_0^D = R+\gamma U \neq U$，违反源边界。作者把当前路径改写为 $Z_t^s = (1-t)X_0 + t(R+\gamma X')$，等价形式 $Z_t^s = tR + \gamma Z_t^{s'} + (1-t)(1-\gamma)X_0$。最后那个"残差锚 $(1-t)(1-\gamma)X_0$"就是修补层——它在 $t=0$ 时让 $\gamma X_0$ 项被准确回填成 $X_0$，在 $t=1$ 时自动消失，从而同时满足两端边界且与 Bellman 几何一一对应。
-    - 设计动机：把 flow matching 的几何约束（源 = 噪声）和 Bellman 引导的随机性彻底解耦。这样 critic 可以放心用标准 flow matching 训练目标，又能把 Bellman 算子原原本本保留下来。
+痛点出在 Bellman 算子天然要平移分布，而 flow matching 又硬性要求路径必须从指定高斯先验出发。如果像 Value Flows 那样直接把 pointwise Bellman 路径 $Z_t^D = R + \gamma Z_t'$ 套到每个中间时刻，$t=0$ 时起点就变成 $Z_0^D = R+\gamma U \neq U$，跟源边界正面冲突。作者的做法是把当前路径改写成 $Z_t^s = (1-t)X_0 + t(R+\gamma X')$，它有一个等价形式 $Z_t^s = tR + \gamma Z_t^{s'} + (1-t)(1-\gamma)X_0$——最后那项"残差锚 $(1-t)(1-\gamma)X_0$"就是修补层：$t=0$ 时它恰好把 $\gamma X_0$ 回填成完整的 $X_0$ 保住源边界，$t=1$ 时自动消失让端点精确落在 Bellman 目标 $R+\gamma X'$。这一项的作用是把 flow matching 的几何约束（源 = 噪声）和 Bellman 引导的随机性彻底解耦，于是 critic 既能放心套用标准 flow matching 训练目标，又能把 Bellman 算子原封不动地保留在路径几何里。
 
-2. **共享噪声路径耦合 (Shared-Noise Path Coupling)**:
+**2. 共享噪声路径耦合：把分布级比较降成轨迹级逐点比较**
 
-    - 功能：让 $(s,a)$ 与 $(s',a')$ 的两条 flow 路径用同一份 $X_0$ 驱动，从而在每个 $t$ 上保持轨迹层面对齐，而不是只在 $t=1$ 端点上匹配。
-    - 核心思路：传统做法对当前与后继分别独立采噪声，导致 per-sample 目标 $Y = R + \gamma X' - X_0$ 方差爆炸。共享噪声后 $X' = \psi_{\theta^-}^1(X_0 \mid s', a')$ 与当前路径同源，作者证明这是一个"潜变量同步耦合"，能让收缩率从 $\gamma$ 维持不变，且对 PCBF 插值有额外的 $t\gamma$ 收缩 $\sup_{s,a} (\mathbb{E}|X_t^G - X_t^H|^p)^{1/p} \le t\gamma D_p(G,H)$，意味着两条轨迹的差异在 $t \to 0$ 时趋于 0、在 flow 时间内缓慢增长。
-    - 设计动机：把"分布层面的 Bellman 比较"转化为"轨迹层面的逐点比较"，自然降低 critic 训练的方差，并提升 Euler 离散化在小 NFE 下的鲁棒性。
+传统做法对当前态和后继态各自独立采噪声，Bellman 一致性只能在 $t=1$ 端点上判定，per-sample 目标 $Y = R + \gamma X' - X_0$ 方差极大、critic 学得不稳。PCBF 让 $(s,a)$ 与 $(s',a')$ 的两条路径共用同一份基础噪声 $X_0$，后继终端 $X' = \psi_{\theta^-}^1(X_0 \mid s', a')$ 因此与当前路径同源。作者把它分析成一种"潜变量同步耦合"：它既保持原本 $\gamma$ 的收缩率不变，又对 PCBF 插值额外给出 $t\gamma$ 的轨迹收缩 $\sup_{s,a} (\mathbb{E}|X_t^G - X_t^H|^p)^{1/p} \le t\gamma D_p(G,H)$，意味着两条轨迹的差异在 $t\to 0$ 时趋于 0、整段 flow 时间内只缓慢增长。这样一来"分布层面的 Bellman 比较"就被转化成"轨迹层面的逐点比较"，方差自然下降，Euler 离散化在小 NFE 下也更鲁棒。
 
-3. **$\lambda$ 控制变量目标 ($\lambda$-Parameterized Control-Variate Target)**:
+**3. $\lambda$ 控制变量目标：把端点正确与方差控制拆成正交的两件事**
 
-    - 功能：在共享噪声耦合之上，把 BCFM 的无偏高方差目标和"用模型预测后继速度"的低方差有偏目标统一成一族可调目标。
-    - 核心思路：定义控制变量 $C_t = v_{\theta^-}(t, Z_t^{s'} \mid s', a') - (X' - X_0)$，对线性插值来说真实后继路径速度恒等于 $X'-X_0$，所以 $C_t$ 衡量的是目标网络速度预测与采样速度之差。训练目标为 $u_t^\lambda := (R + \gamma X' - X_0) + \lambda [v_{\theta^-}(t, Z_t^{s'}) - (X' - X_0)]$；$\lambda=0$ 是无偏的 BCFM，$\lambda=\gamma$ 时目标里 $X'$ 项被完全替换为速度预测，对早期目标网络尚未稳定时尤其有效。作者还给出在线性高斯情况下的偏差闭式 $\kappa(t,\gamma,\sigma,\rho)$，证明共享噪声 ($\rho=1$) 下偏差以 $\mathcal{O}((1-\gamma)(1-t))$ 衰减，并推出方差最小 $\lambda^\star(t) = \gamma(1-t) + \rho t$。
-    - 设计动机：彻底把"Bellman 端点正确"和"方差控制"两件事分开。$\lambda$ 仅是控制变量的强度，几何上不影响端点或源分布；当目标网络足够好时，它就成了一个高效的 baseline 估计器。
+共享噪声解决了对齐，但 BCFM 的无偏目标方差仍偏高，而纯用模型预测后继速度又会有偏；作者用控制变量把两者统一成一族可调目标。注意线性插值下真实后继路径速度恒等于 $X'-X_0$，于是定义控制变量 $C_t = v_{\theta^-}(t, Z_t^{s'} \mid s', a') - (X' - X_0)$ 衡量的正是目标网络速度预测与采样速度之差，训练目标写成 $u_t^\lambda := (R + \gamma X' - X_0) + \lambda [v_{\theta^-}(t, Z_t^{s'}) - (X' - X_0)]$。$\lambda=0$ 退化为无偏的 BCFM；$\lambda=\gamma$ 时目标里的 $X'$ 项被完全替换为速度预测，对早期目标网络尚不稳定的阶段尤其有效。作者在线性高斯设定下给出偏差闭式 $\kappa(t,\gamma,\sigma,\rho)$，证明共享噪声（$\rho=1$）下偏差以 $\mathcal{O}((1-\gamma)(1-t))$ 衰减，并推出方差最小的 $\lambda^\star(t) = \gamma(1-t) + \rho t$。关键在于 $\lambda$ 只是控制变量的强度，几何上不碰端点也不碰源分布，因此它把"Bellman 端点正确"和"方差控制"彻底正交化——目标网络越准，它就越像一个高效的 baseline 估计器。
+
+### 一个完整示例
+拿一个 minibatch transition $(s,a,r,s',a')$ 走一遍训练就能看清三个设计怎么咬合。先采一份共享基础噪声 $X_0\sim\mathcal{N}(0,I)$ 和时间 $t\sim\text{Unif}[0,1]$；用目标网络把这份 $X_0$ 在 $(s',a')$ 上积分出后继终端 $X' = \psi_{\theta^-}^1(X_0 \mid s', a')$；再用同一份 $X_0$ 同时构造共时间的后继插值 $Z_t^{s'} = (1-t)X_0 + tX'$ 和当前插值 $Z_t^s = (1-t)X_0 + t(R+\gamma X')$——后者就是带残差锚的源相容路径，前者用于算控制变量。最后按 $u_t^\lambda$ 给出目标，最小化 $\|v_\theta(t, Z_t^s \mid s, a) - u_t^\lambda\|_2^2$ 更新 $v_\theta$。推理阶段则把 $X_0$ 用显式 Euler 积分到 $t=1$ 得到一批回报样本，据样本均值给候选动作排序，完成离线策略提取。
 
 ### 损失函数 / 训练策略
-最终训练目标是 $\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s',a'),X_0,t}[\|v_\theta(t, Z_t^s \mid s, a) - u_t^\lambda\|_2^2]$，配以 $v_{\theta^-}$ 的 Polyak 平均、$X' = \psi_{\theta^-}^1(X_0 \mid s', a')$ 的目标流积分；推理 Euler 步数 $N \in \{4, 8, 16, 32\}$ 即可。论文给出 Bellman 插值边缘的连续性方程及种群最优速度场 $v^\star_{s,a}(x,t) = \mathbb{E}[(R+\gamma X_1') - U \mid X_t = x]$，并证明 PCBF 目标是该条件期望的 Monte Carlo 回归估计；总偏差有不依赖高斯假设的 $L_2$ 界 $|\mathcal{B}_{s,a}[C_{\bar v}](x,t)| \le \|\bar v - \bar v^\star\|_{L_2(\mu_{x,t})} + \sigma_x$。
+最终训练目标是 $\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s',a'),X_0,t}[\|v_\theta(t, Z_t^s \mid s, a) - u_t^\lambda\|_2^2]$，配以 $v_{\theta^-}$ 的 Polyak 平均与 $X' = \psi_{\theta^-}^1(X_0 \mid s', a')$ 的目标流积分，推理 Euler 步数取 $N \in \{4, 8, 16, 32\}$ 即可。论文进一步给出 Bellman 插值边缘的连续性方程及种群最优速度场 $v^\star_{s,a}(x,t) = \mathbb{E}[(R+\gamma X_1') - U \mid X_t = x]$，证明 PCBF 目标本质是对该条件期望的 Monte Carlo 回归估计，并给出不依赖高斯假设的 $L_2$ 总偏差界 $|\mathcal{B}_{s,a}[C_{\bar v}](x,t)| \le \|\bar v - \bar v^\star\|_{L_2(\mu_{x,t})} + \sigma_x$。
 
 ## 实验关键数据
 

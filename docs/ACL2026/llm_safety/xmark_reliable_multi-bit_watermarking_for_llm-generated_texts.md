@@ -43,31 +43,33 @@ tags:
 
 ### 整体框架
 
-XMark 遵循分块编解码范式：将 $b$ 比特消息分为 $r$ 个块，每个块 $d$ 比特。编码时每生成一个 token 嵌入一个消息块的信息，解码时从嫌疑文本中恢复各块消息。核心创新在编码器的 LoSo + evergreen list 设计和解码器的 cTMM 设计。
+XMark 想一口气治好多比特水印的两个老毛病：绿色列表太小导致文本质量塌、信号太弱导致有限 token 下解码不准。它仍然沿用分块编解码范式——把 $b$ 比特消息切成 $r$ 个块、每块 $d$ 比特，生成时每个 token 嵌入一个块的信息，检测时再从嫌疑文本里逐块恢复。真正的新意集中在三处：编码端先用 Leave-one-Shard-out 反转绿色列表的选法来保住质量，再用多排列的 evergreen list 把被削弱的水印信号补回来，解码端则用约束映射矩阵 cTMM 堵住多排列引入的计数偏差。三者环环相扣，缺一个都不成立。
 
 ### 关键设计
 
-1. **Leave-one-Shard-out (LoSo) 编码**:
+**1. Leave-one-Shard-out（LoSo）编码：反转绿色列表的选法，把分布失真压到最低。**
 
-    - 功能：通过反转绿色列表选择策略大幅提升文本质量
-    - 核心思路：MPAC 把消息值 $[\mathbf{m}_i]_{10}$ 对应的 shard 作为绿色列表（$\gamma = 2^{-d} \leq 0.25$），而 LoSo 把该 shard 排除，其余所有 shard 组成绿色列表（$\gamma = 1 - 2^{-d} \geq 0.75$）。解码时反向寻找 token 数最少的 shard 来恢复消息。例如 $d=2, \mathbf{m}_i=11$ 时，排除 $\mathcal{S}_3$，加扰 $\mathcal{S}_0, \mathcal{S}_1, \mathcal{S}_2$
-    - 设计动机：绿色列表比例从 0.25 提升到 0.75 意味着大部分词表的 logit 分布保持原样，文本质量接近未水印文本
+质量塌的根源在于绿色列表太小。MPAC 那一类方法把消息值 $[\mathbf{m}_i]_{10}$ 对应的那个 shard 当绿色列表去加扰，绿色列表占比 $\gamma = 2^{-d} \leq 0.25$——只有四分之一词表保持原样，logit 分布被严重扭曲。LoSo 干脆把这个选择反过来：不是「选中」消息 shard，而是「排除」它，把剩下所有 shard 一起当绿色列表，于是 $\gamma = 1 - 2^{-d} \geq 0.75$，四分之三以上词表的分布原封不动，生成文本几乎贴近未加水印的版本。检测时再反向操作——找 token 数最少的那个 shard，它就是被排除的、对应嵌入的消息。举个例子，$d=2$、$\mathbf{m}_i = 11$ 时排除 $\mathcal{S}_3$，加扰 $\mathcal{S}_0,\mathcal{S}_1,\mathcal{S}_2$，解码时 $\mathcal{S}_3$ 计数最低就还原出 11。
 
-2. **Evergreen List（多排列交集）**:
+**2. Evergreen list（多排列交集）：在大绿色列表不变的前提下，把每个 token 的信息贡献放大 $k$ 倍。**
 
-    - 功能：在保持大绿色列表的同时增加每个 token 对解码的信息贡献，弥补 LoSo 信号弱的问题
-    - 核心思路：使用 $k$ 个不同的哈希密钥生成 $k$ 个词表排列，每个排列各有一个 LoSo 绿色列表 $\mathcal{G}_j$，取所有绿色列表的交集作为 evergreen list $\mathcal{E} = \bigcap_{j=0}^{k-1} \mathcal{G}_j$。只加扰 $\mathcal{E}$ 中 token 的 logit。期望绿色列表比例为 $\mathbb{E}[\gamma] \approx (1-2^{-d})^k$。解码时每个 token 可以在 $k$ 个排列中各贡献一次观测，从 $T$ 个 token 最多获得 $kT$ 次观测
-    - 设计动机：单一 LoSo 的信号太弱（比特准确率低于 MPAC），但通过多排列的 evergreen list，既维持了较大的绿色列表比例，又将观测次数放大了 $k$ 倍，显著提升了有限 token 条件下的解码可靠性
+LoSo 单用有个硬伤：绿色列表太大，水印信号被稀释，单排列下的比特准确率反而低于 MPAC。XMark 的补救是用 $k$ 个不同哈希密钥生成 $k$ 套词表排列，每套都按 LoSo 得到一个绿色列表 $\mathcal{G}_j$，再取它们的交集作为真正要加扰的 evergreen list：
 
-3. **约束 Token-Shard 映射矩阵（cTMM）**:
+$$\mathcal{E} = \bigcap_{j=0}^{k-1} \mathcal{G}_j, \qquad \mathbb{E}[\gamma] \approx (1-2^{-d})^k$$
 
-    - 功能：防止解码时未加扰 shard 的计数爆炸，提升解码鲁棒性
-    - 核心思路：标准 TMM 中，一个 token 可能在 $k$ 个排列中都被映射到同一个未加扰 shard，导致该 shard 计数被放大 $k$ 倍，淹没加扰 shard 和未加扰 shard 之间的区别。cTMM 约束每个 token 对每个 shard 最多贡献 1 次计数：$\mathbf{A}^t[i,:] - \mathbf{A}^{t-1}[i,:] \in \{0,1\}^{2^d}$
-    - 设计动机：没有此约束时，不属于任何绿色列表的 token 会被计数 $k$ 次到未加扰 shard，使其计数可能超过加扰 shard，导致解码失败
+只对落在 $\mathcal{E}$ 里的 token 加 logit 偏置。这样期望绿色列表比例仍然可控（随 $k$ 收缩但不会塌到 MPAC 那么小），而解码时同一个 token 能在 $k$ 个排列里各被观测一次，$T$ 个 token 最多提供 $kT$ 次观测——观测数翻 $k$ 倍，正好补上 LoSo 损失掉的信号，有限 token 下的可靠性随之回升。超参 $k$ 就成了质量与准确率之间那个旋钮。
+
+**3. 约束 Token-Shard 映射矩阵（cTMM）：堵住多排列把未加扰 shard 计数吹爆的漏洞。**
+
+evergreen list 带来一个副作用：标准 TMM 统计时，一个 token 可能在 $k$ 个排列里都被映射到同一个未加扰 shard，于是这个 shard 被重复计数最多 $k$ 次，把「加扰 vs 未加扰」本该有的差距整个淹没，解码就会指错 shard。cTMM 的修法很直接——约束每个 token 对每个 shard 至多贡献 1 次计数：
+
+$$\mathbf{A}^t[i,:] - \mathbf{A}^{t-1}[i,:] \in \{0,1\}^{2^d}$$
+
+加上这条约束后，不属于任何绿色列表的 token 无论横跨多少个排列都只往未加扰 shard 记一笔，加扰 shard 的相对优势得以保留，LoSo + evergreen 攒下的信号才真正能被读出来。
 
 ### 损失函数 / 训练策略
 
-XMark 是无需训练的推理时水印方法。编码通过在 LLM 生成每个 token 时向 evergreen list token 的 logit 加正偏置 $\delta$ 实现。默认设置 $d=2$（每块 2 比特），超参数 $k$ 控制质量-准确率权衡。
+XMark 是无需训练的推理时水印方法。编码就是在 LLM 逐 token 生成时，给 evergreen list 中 token 的 logit 加一个正偏置 $\delta$；默认 $d=2$（每块 2 比特），$k$ 作为质量-准确率权衡的超参。
 
 ## 实验关键数据
 

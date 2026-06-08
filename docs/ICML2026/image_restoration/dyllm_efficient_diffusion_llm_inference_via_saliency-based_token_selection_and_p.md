@@ -41,36 +41,24 @@ DyLLM 是一种 training-free 的扩散 LLM 推理加速框架，利用相邻去
 ## 方法详解
 
 ### 整体框架
-DyLLM 在标准 MDLM 解码循环外面包了一层"显著性调度器"，每一步 $t$、每一层 $l$ 都做三件事：
-
-1. **算显著性**：对每个 token $i$ 算 $s_{t,l}^{(i)} = \cos(C_{t,l}^{(i)}, C_{t-1,l}^{(i)})$，门限 $\tau$（LLaDA 取 0.99 / Dream 取 0.995）以下的进入显著集 $\mathcal{A}_{t,l}$；
-2. **稀疏前向**：FFN 只对 $\mathcal{A}_{t,l}$ 内的 token 重算，其余直接读 FFN 输出 cache；注意力按"双路径"算（Sec 3.3）；
-3. **冷启动 & response-only 步**：前 $T_{full}=4$ 步全量计算暖 cache；之后大多数步只把 response token 喂入模型，每 4 步才补一次包含 prompt 的完整序列。
-
-整体看就是把"prefill → decode"两阶段思想搬到 diffusion 解码：先 full step 把 cache 灌满，再进入"Salient only"阶段。
+DyLLM 要解决的是 MDLM 每步把整段序列重算一遍的"重复前缀"瓶颈，做法是在标准解码循环外套一层"显著性调度器"：先用前 $T_{full}=4$ 个 full step 把各层的 attention / FFN 输出 cache 灌满，之后进入 "Salient only" 阶段——每一步 $t$、每一层 $l$ 先用相邻步上下文的余弦相似度算出一小撮"真的在动"的显著 token 子集 $\mathcal{A}_{t,l}$，FFN 与注意力都只对这个子集精确重算，其余 token 直接命中 cache。整体上等价于把 AR 推理的 "prefill → decode" 两阶段思想搬到了 diffusion 解码上，但 decode 阶段的 active set 是层自适应、步自适应的。
 
 ### 关键设计
 
-1. **层自适应显著 token 选择 (Saliency Selection)**:
+**1. 层自适应显著 token 选择：用上下文方向漂移当 proxy**
 
-    - 功能：在每一层 $l$、每一步 $t$ 用相邻步注意力上下文的方向漂移当 proxy，挑出真正需要更新的 token 子集 $\mathcal{A}_{t,l} = \{i \mid s_{t,l}^{(i)} < \tau\}$。
-    - 核心思路：把 $C_{t,l}^{(i)}$（softmax(QK^T)·V 的结果）的方向余弦相似度作为度量；非显著 token 直接复用上一步的 FFN 输出 cache，省掉 FFN 与对应 attention 行的重算。理论上由 Prop 3.1（RMSNorm 对线性投影下尺度不敏感）和 Prop 3.2（FFN 输入扰动上界 $\delta \le \kappa(W_o)\sqrt{2(1-s_{t,l})}$）保证：当 $s\to 1$ 时跳过 FFN 引入误差近 0。
-    - 设计动机：层间稀疏度差异显著（早期层近 1、深层 tail 更胖），固定阈值的 dLLM-Cache / Fast-dLLM 要么浪费要么误剪，per-layer 阈值化天然让早期层激进剪枝、深层自动保守，把"误差预算"按层分摊。
+针对"固定阈值挑 token 浪费或误剪"的痛点，DyLLM 在每层每步把 token 的注意力上下文 $C_{t,l}^{(i)}$（即 $\mathrm{softmax}(QK^T)V$ 的结果）与上一步做余弦相似度 $s_{t,l}^{(i)}=\cos(C_{t,l}^{(i)},C_{t-1,l}^{(i)})$，凡是 $s_{t,l}^{(i)}<\tau$ 的进入显著集 $\mathcal{A}_{t,l}=\{i\mid s_{t,l}^{(i)}<\tau\}$，门限 $\tau$ 取 0.99（LLaDA）/ 0.995（Dream）；非显著 token 不算 FFN、直接复用上一步的 FFN 输出 cache，连带省掉对应的注意力行重算。之所以"方向没怎么变就敢跳 FFN"，由两条命题托底：Prop 3.1 说明 RMSNorm 在线性投影下对尺度不敏感，Prop 3.2 进一步给出 FFN 输入扰动上界 $\delta\le\kappa(W_o)\sqrt{2(1-s_{t,l})}$——当 $s\to 1$ 时跳过 FFN 引入的误差趋近于 0。用 per-layer 门限而非全局阈值，正是因为作者在 Fig. 2 里观察到层间稀疏度差异显著（早期层 $s$ 普遍近 1、深层分布尾部更胖），层内阈值化天然让早期层激进剪枝、深层自动保守，把"误差预算"按层摊开。
 
-2. **显著感知近似注意力 (Saliency-aware Approximate Attention)**:
+**2. 显著感知近似注意力：行稀疏 + 列稀疏的双路径**
 
-    - 功能：把注意力的更新拆成"显著行精确算 + 非显著行用显著列近似"，把复杂度从 $O(N^2 d)$ 压到 $O(N \cdot |\mathcal{A}_{t,l-1}| d)$。
-    - 核心思路：把上下文增量展开为 $\Delta C_{t,l} = S_{t,l}\Delta V_{t,l} + (\Delta S) V_{t-1,l}$。对显著 query $i\in\mathcal{A}_{t,l-1}$，老老实实重算第 $i$ 行整行注意力（行稀疏路径）；对非显著 query，$\Delta S^{(i,\cdot)}\approx 0$，更新退化为 $\Delta C_{t,l}^{(i)} \approx S_{t,l}^{(i,\cdot)} \Delta V_{t,l}$，而 $\Delta V_{t,l}$ 又只在显著列非零，所以只需 gather 显著列上的注意力分数（列稀疏路径）。
-    - 设计动机：单纯跳 FFN 还不够，attention 的二次开销是另一座大山；这一拆解让显著集既决定"哪些 query 重算"，又决定"哪些 KV 列要被聚合"，attention 与 FFN 共享同一稀疏掩码，从而落到一个 FlashAttention-like 的融合 kernel 上。
+只跳 FFN 不够，注意力的二次开销 $O(N^2 d)$ 是另一座大山，DyLLM 把上下文增量展开成 $\Delta C_{t,l}=S_{t,l}\Delta V_{t,l}+(\Delta S)V_{t-1,l}$ 后做两条路径处理。对显著 query $i\in\mathcal{A}_{t,l-1}$，老老实实重算整行注意力（行稀疏路径）；对非显著 query，其注意力分数几乎没变（$\Delta S^{(i,\cdot)}\approx 0$），更新退化为 $\Delta C_{t,l}^{(i)}\approx S_{t,l}^{(i,\cdot)}\Delta V_{t,l}$，而 $\Delta V_{t,l}$ 又只在显著列上非零，于是只需 gather 显著列上的注意力分数即可（列稀疏路径）。这样整体复杂度压到 $O(N\cdot|\mathcal{A}_{t,l-1}|d)$，更妙的是同一个显著集既决定"哪些 query 行重算"又决定"哪些 KV 列要被聚合"，注意力与 FFN 共享同一张稀疏掩码，从而能落到一个 FlashAttention-like 的融合 kernel 上。
 
-3. **Response-only Step 调度**:
+**3. Response-only Step 调度：彻底取消周期性全量刷新**
 
-    - 功能：利用 RoPE 的相对距离衰减带来的 locality bias，让显著 token 倾向集中在 response 区段；大多数步只把 response 喂入模型，每隔固定步数（本文每 4 步）才把 prompt 一并送进去。
-    - 核心思路：注意已有 cache 工作（dKV-Cache / Fast-dLLM / dLLM-Cache）都有一个"全 token refresh"的硬性周期，refresh 步会一脚把吞吐拖回原始水准；DyLLM 不做这种 full refresh —— 即便包含 prompt 的步骤，也仍按显著集稀疏算，prompt 的稳定上下文几乎全部命中 cache。
-    - 设计动机：直接吃掉了 prior work 的最大瓶颈"周期性全量刷新"，让 DyLLM 在 $n_u$（每步并行解出的 token 数）增加时仍保持线性增益，而 Fast-dLLM 的 full refresh 频率随 $n_u$ 增大反而急剧吞噬吞吐。
+已有 cache 工作（dKV-Cache / Fast-dLLM / dLLM-Cache）都带一个"全 token refresh"的硬性周期，refresh 步会一脚把吞吐打回原始水准。DyLLM 借助 RoPE 相对距离衰减带来的 locality bias——显著 token 本就倾向集中在 response 区段——让大多数步只把 response token 喂入模型，每隔 4 步才把 prompt 一并送进去；而且即便是含 prompt 的步骤也仍按显著集稀疏算，prompt 那段稳定上下文几乎全命中 cache，所以根本不存在传统意义上的 full refresh 步。这直接吃掉了 prior work 的最大瓶颈：当每步并行解出的 token 数 $n_u$ 增大时，Fast-dLLM 的 full refresh 频率随之上升、急剧吞噬吞吐，而 DyLLM 仍能保持近线性的加速增益。
 
 ### 损失函数 / 训练策略
-完全 training-free，无任何 fine-tune 或额外 loss；超参只有显著门限 $\tau$（model-dependent，task-agnostic）和暖启 full step 数 $T_{full}=4$。CUDA 端写了自定义稀疏 attention / cache kernel（FlashAttention-like fused 设计），因为 PyTorch 原生稀疏算子在这种细粒度 token 稀疏下开销过大。
+完全 training-free，无任何 fine-tune 或额外 loss；超参只有显著门限 $\tau$（model-dependent、task-agnostic）和暖启 full step 数 $T_{full}=4$。工程上在 CUDA 端写了自定义稀疏 attention / cache kernel（FlashAttention-like fused 设计），因为 PyTorch 原生稀疏算子在这种细粒度 token 稀疏下开销过大。
 
 ## 实验关键数据
 

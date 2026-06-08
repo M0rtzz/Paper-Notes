@@ -40,32 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FLAIR 改造的是全双工 SDLM 在 listening phase 的输入。常规做法是在用户讲话时往文本流写入 `<SIL>` token；FLAIR 用一段**隐式推理嵌入** $Z$ 替换这些 `<SIL>` 的输入嵌入。具体流程：
-
-- **训练时**：除因果 LLM $P_\theta$ 外，再引入一个非因果"全局专家" $Q_\phi$，它能看到整段对话（用户音频 $X$ + 助手文本嵌入 $H^{txt}$），输出每个时间步的理想隐式推理嵌入 $Z_t$ 作为"软标签"。同时引入一个时序指示标签 $G_t \in \{0,1\}$ 标记当前步是助手说话（1）还是用户说话（0）。
-- **推理时**：丢弃专家，只保留因果 LLM + 一个时序预测头 $\hat{G}_t$。当预测为说话步时，正常输出文本 token；当预测为听取步时，把当前步文本 logits 做 softmax 加权 vocab embedding 矩阵，得到下一步输入嵌入 $Z_t$，同时往语音侧吐 `<SIL>`。
-
-整套机制完全步对齐，无 chunk、无推理时额外计算。
+FLAIR 只动全双工 SDLM 在 listening phase 的输入：常规做法是用户讲话时往文本流反复写 `<SIL>` 把两条流凑齐，FLAIR 改成往这些位置喂一段随用户输入持续演化的**隐式推理嵌入** $Z$，让本来空转的 token slot 真正在"想"。训练时额外挂一个非因果"全局专家"$Q_\phi$，它能看完整段对话（用户音频 $X$ + 助手文本嵌入 $H^{txt}$）给出每步理想隐式嵌入当软标签，因果 LLM $P_\theta$ 通过 KL 把这套全局后验内化掉；推理时专家被丢弃，只剩因果 LLM 加一个时序头自主切换"想"与"说"，整套机制逐步对齐、无 chunk、无推理时额外计算。
 
 ### 关键设计
 
-1. **vocab-weighted 递归隐式嵌入**:
+**1. vocab-weighted 递归隐式嵌入：让"软思想"留在词表语义流形上**
 
-    - 功能：把"隐式思考"实现成 listening phase 里逐步演化的连续嵌入序列，作为 LLM 下一步的输入。
-    - 核心思路：不像 Coconut 那样直接把上一步 hidden state $h^l_{t-1}$ 回灌输入，而是先经过 LM head 得到文本 logits $y^{txt}_{t-1}$，再用 $Z_{t-1} = \text{Softmax}(y^{txt}_{t-1}) E$ 在词表嵌入矩阵 $E \in \mathbb{R}^{|V|\times d}$ 上做加权平均。也就是说"隐式思想"始终活在词表 embedding 张成的语义流形上，等价于一个"软词"。
-    - 设计动机：隐藏态空间和输入嵌入空间分布不一致直接回灌会引入 train/test mismatch；用 softmax-over-vocab 既保持可解释性（任意时刻都能 argmax 看"软词"在想什么），又把搜索约束在已学过的语义空间里。
+隐式步要用什么向量喂回 LLM 下一步的输入，是这条路线最容易踩坑的地方。Coconut 类做法直接把上一步隐藏态 $h^l_{t-1}$ 回灌，但隐藏态空间和输入嵌入空间分布并不一致，回灌会引入 train/test mismatch。FLAIR 改成先过 LM head 得到文本 logits $y^{txt}_{t-1}$，再在词表嵌入矩阵 $E \in \mathbb{R}^{|V|\times d}$ 上做 softmax 加权平均 $Z_{t-1} = \text{Softmax}(y^{txt}_{t-1}) E$，于是"隐式思想"始终是一个活在词表 embedding 张成空间里的"软词"。这样既把搜索约束在模型已学过的语义空间里规避错配，又附带可解释性——任意时刻都能对 $Z_{t-1}$ 做 argmax 看模型此刻"软词"在想什么。
 
-2. **ELBO + Global-aware Expert 的 SFT**:
+**2. ELBO + 非因果专家的 SFT：给没有真值的隐式步造监督信号**
 
-    - 功能：在没有 CoT 真值标注的前提下，给 listening phase 的每个隐式步提供监督。
-    - 核心思路：把目标改成 $\log P_\theta(Y^{txt}|X)$ 的条件 ELBO：$\log P_\theta(Y^{txt}|X) \geq \mathbb{E}_{q_\phi(Z|X,Y^{txt})}[\log P_\theta(Y^{txt}|Z,X)] - \text{KL}[q_\phi(Z|X,Y^{txt}) \| P_\theta(Z|X)]$。第一项是**条件重建损失** $\mathcal{L}_{reco}$（只在助手说话步用 teacher forcing 计算下一文本 token 的 NLL），第二项是**变分正则** $\mathcal{L}_{regu}$（只在用户说话步把因果 LLM 预测的 vocab 分布拉向专家用 stop-gradient 的分布 $W^e_t$）。专家 $Q_\phi$ 是非因果 encoder，能用未来信息把后验估到位；因果 LLM 通过 KL 把这套全局后验内化成可流式生成的 prior。
-    - 设计动机：teacher forcing 是 SFT 高效的关键，但隐式 token 没有真值。ELBO 优雅地把"理想隐式标签"建模成由专家估的近似后验，绕开了构造 CoT 数据集，也避开了 RL/重采样的不稳定性；ELBO 不阻碍后续 RL post-training，正交可叠加。
+隐式步没有 CoT 真值标注，没法像普通 SFT 那样用 teacher forcing。FLAIR 把目标改写成条件 ELBO：
 
-3. **隐式推理时序预测器**:
+$$\log P_\theta(Y^{txt}|X) \geq \mathbb{E}_{q_\phi(Z|X,Y^{txt})}[\log P_\theta(Y^{txt}|Z,X)] - \text{KL}[q_\phi(Z|X,Y^{txt}) \,\|\, P_\theta(Z|X)]$$
 
-    - 功能：推理阶段决定每个时间步该"想"还是该"说"。
-    - 核心思路：把最后隐藏态 $h^l$ 过一个 MLP 得到 $\hat{G}_t \in [0,1]$，用 BCE 损失 $\mathcal{L}_{time} = -\sum_t [G_t \log \hat{G}_t + (1-G_t)\log(1-\hat{G}_t)]$ 监督。推理时 $\hat{G}_t=1$ 走文本 token，$\hat{G}_t=0$ 走 vocab-weighted 嵌入回灌。
-    - 设计动机：全双工系统必须自主决定何时起停发声（turn-taking / barge-in）。把这件事直接绑到隐式步上，让"想完了就开始说"成为模型内生行为，而不是外部 VAD/规则触发，从而保证 latency 不被显式 CoT 锁死。
+第一项落地成**条件重建损失** $\mathcal{L}_{reco}$，只在助手说话步用 teacher forcing 算下一文本 token 的 NLL；第二项落地成**变分正则** $\mathcal{L}_{regu}$，只在用户说话步把因果 LLM 预测的 vocab 分布拉向专家给出的 stop-gradient 分布 $W^e_t$。这里专家 $Q_\phi$ 是非因果 encoder，能用未来信息把后验估到位，相当于把"理想隐式标签"建模成由它估的近似后验——这一步绕开了构造 CoT 数据集，也避开了 RL/重采样的不稳定性，同时保住了 teacher forcing 的训练效率；而且 ELBO 与后续 RL post-training 正交，可叠加而不冲突。
+
+**3. 隐式推理时序预测器：把"何时开口"做成模型内生行为**
+
+全双工系统必须自主决定何时起停发声（turn-taking / barge-in），FLAIR 没用外部 VAD 或规则，而是把这件事直接绑到隐式步上。它把最后隐藏态 $h^l$ 过一个 MLP 得到 $\hat{G}_t \in [0,1]$，用 BCE 损失 $\mathcal{L}_{time} = -\sum_t [G_t \log \hat{G}_t + (1-G_t)\log(1-\hat{G}_t)]$ 监督（$G_t \in \{0,1\}$ 标记当前步是助手说话还是用户说话）。推理时 $\hat{G}_t=1$ 就正常吐文本 token，$\hat{G}_t=0$ 就走 vocab-weighted 嵌入回灌并往语音侧吐 `<SIL>`。这样"想完了就开始说"成了模型自己学出来的行为，latency 不会被一条预定的显式 CoT 链锁死。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_{elbo} = \mathcal{L}_{reco} + \alpha \cdot \mathcal{L}_{regu} + \beta \cdot \mathcal{L}_{time}$。训练分三段：(i) Pre-training：常规 full-duplex 形式（仍输出 `<SIL>`）做 speech continuation 预训；(ii) Latent Reasoning SFT 两子阶段：先只用 $\mathcal{L}_{reco}$ 让专家学会产出像样的隐式标签，再用完整 $\mathcal{L}_{elbo}$ 联合训因果 LLM + 专家；(iii) Speech Synthesizing SFT：冻结主干，单独训流式 TTS 模块（CosyVoice 2 flow-matching）。数据是合成的 530k 小时语音延续 + 70k 小时指令 QA + 20k 小时 ASR-QA。

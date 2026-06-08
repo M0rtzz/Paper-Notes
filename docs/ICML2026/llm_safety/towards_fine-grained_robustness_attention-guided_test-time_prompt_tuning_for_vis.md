@@ -40,30 +40,28 @@ A-TPT 用一种针对对抗扰动加固的 Gradient Attention Rollout 提取 CLI
 ## 方法详解
 
 ### 整体框架
-A-TPT 完全建在冻结的 CLIP（ViT-B/16、ViT-B/32、RN50）上。对单张测试样本 $x_0$，pipeline 是：(1) **Attention Refinement**：用改良版 GAR 从视觉编码器算一张 CLS-to-patch 的注意力图 $\mathbf{A}(x)\in\mathbb{R}^{H\times W}$，要求该图对 PGD 扰动稳定；(2) **Attention-Guided Multi-View Augmentation**：先用 Random-Flip + Center-Crop 生成基础视图集 $\{b_i\}$，再用 AugMix 生成激进视图集 $\{\tilde{x}_i\}$，按注意力图把空间分成高/低注意力区域，给两个区域不同的混合强度——高注意力区保护原图、低注意力区放开扰动多样性；(3) **TV-Based Ensemble**：先按熵筛掉差视图，再用注意力图的各向异性 Total Variation 算每个剩余视图的可靠性权重 $w_i$，加权后既用于 prompt tuning 的损失，也用于最终预测的 logits 聚合。文本端只对可学 prompt $P$ 跑 1 步 Adam (lr=0.005)，视觉编码器/文本编码器全程冻结。
+A-TPT 想解决的是"零样本 CLIP 在对抗扰动下崩盘，而现有测试时方法又会把细粒度判别区揉烂"的两难。它的破局点是：不去对抗被污染的特征空间，而是先在图像空间拿稳一张"哪里是判别区"的注意力图，再让增强、集成、prompt 优化三步全部围着它转。整套流程建在冻结的 CLIP（ViT-B/16、ViT-B/32、RN50）上，对单张测试样本 $x_0$ 依次走三步：先用一版对扰动加固的 Gradient Attention Rollout 从视觉编码器算出 CLS-to-patch 注意力图 $\mathbf{A}(x)\in\mathbb{R}^{H\times W}$ 作为"语义锚点"；再以这张图为引导生成空间非均匀的多视图集合——判别区保护原图、背景区放开 AugMix 多样性；最后按各视图注意力的 Total Variation 算可靠性权重 $w_i$，加权后既喂给 prompt tuning 的熵损失、也喂给最终预测的 logits 聚合。文本端只对可学 prompt $P$ 跑 1 步 Adam（lr=0.005），两个编码器全程冻结。
 
 ### 关键设计
 
-1. **Token-gradient 加固的注意力 rollout (Attention Refinement)**:
+**1. Token-gradient 加固的注意力 rollout：把锚点本身做得对扰动不敏感。**
 
-    - 功能：把 GAR 的对抗脆弱性堵上，输出对 PGD 扰动相对稳定的 CLS-to-patch 注意力图，作为后续两个模块的"语义锚点"。
-    - 核心思路：原 GAR 在第 $b$ 层用 $\hat{\mathbf{A}}^{(b)}=\mathbf{I}+E_h(\nabla_{\mathbf{A}^{(b)}}S\odot\mathbf{A}^{(b)})^+$，这里 $\nabla_{\mathbf{A}^{(b)}}S$ 是逐边（per-attention-edge）的二阶敏感量，扰动一来就被打成散点。作者把这一项换成 token 维度的内积权重 $\mathbf{W}^{(b)}(x)=\mathcal{N}([\langle\mathbf{T}^{(b)}(x),\nabla_{\mathbf{T}^{(b)}(x)}S(x)\rangle_d]_+)$（沿 embedding 维取内积、ReLU、$\ell_1$ 归一），然后做按 source-token 的列缩放：$\hat{\mathbf{A}}^{(b)}=\mathbf{I}+E_h(\mathbf{A}^{(b)}\,\mathrm{diag}(\mathbf{W}^{(b)}))^+$。再加一个"只保留最后两层并做平均稳定化"的 trick——$\hat{\mathbf{A}}_\text{avg}=(\hat{\mathbf{A}}^{(B-1)}+\hat{\mathbf{A}}^{(B)})/2$，$\hat{\mathbf{A}}=\hat{\mathbf{A}}^{(B)}\hat{\mathbf{A}}_\text{avg}$，去掉浅层噪声。
-    - 设计动机：token-level 梯度是沿 embedding 维 aggregate 的一阶量，扰动注入到 token 上时在内积聚合中被平均掉很多；而原 GAR 的 attention-level 梯度是和注意力本身相乘后的二阶量，对扰动指数敏感。这一步是整个方法成立的前提——锚点不稳，后两步都站不住。
+整个方法的地基是一张"哪里是判别区"的注意力图，但原版 GAR 在对抗扰动下会被打成散点，地基一塌后两步全垮。问题出在它的梯度项：原 GAR 在第 $b$ 层用 $\hat{\mathbf{A}}^{(b)}=\mathbf{I}+E_h(\nabla_{\mathbf{A}^{(b)}}S\odot\mathbf{A}^{(b)})^+$，其中 $\nabla_{\mathbf{A}^{(b)}}S$ 是逐注意力边的量，再和注意力本身相乘成了二阶敏感量，扰动一来就指数级放大。作者把这一项整体换成 token 维度的内积权重 $\mathbf{W}^{(b)}(x)=\mathcal{N}([\langle\mathbf{T}^{(b)}(x),\nabla_{\mathbf{T}^{(b)}(x)}S(x)\rangle_d]_+)$——沿 embedding 维取内积、ReLU、再 $\ell_1$ 归一，然后按 source-token 做列缩放 $\hat{\mathbf{A}}^{(b)}=\mathbf{I}+E_h(\mathbf{A}^{(b)}\,\mathrm{diag}(\mathbf{W}^{(b)}))^+$。token-level 梯度是沿 embedding 维聚合的一阶量，扰动注入到 token 上时会在内积里被平均掉大半，所以比"梯度×注意力"的二阶量稳得多。最后再加一个稳定化 trick：只取最后两层做平均 $\hat{\mathbf{A}}_\text{avg}=(\hat{\mathbf{A}}^{(B-1)}+\hat{\mathbf{A}}^{(B)})/2$，$\hat{\mathbf{A}}=\hat{\mathbf{A}}^{(B)}\hat{\mathbf{A}}_\text{avg}$，把浅层噪声挡在 rollout 末端之外。
 
-2. **空间非均匀的注意力引导多视图增强 (Attention-Guided Multi-View Augmentation)**:
+**2. 空间非均匀的注意力引导多视图增强：判别区保护、背景区放飞。**
 
-    - 功能：在保留判别性细粒度部件的同时仍然制造足够的视图多样性，给 prompt tuning 提供"干净但多样"的输入。
-    - 核心思路：取一个比例 $r$，把基础视图 $b_i$ 上注意力前 $\lceil rHW\rceil$ 大的位置标成高注意力 mask $M_\text{high}$，剩下为 $M_\text{low}=1-M_\text{high}$。混合强度 $\lambda(r)=M_\text{high}\,m_\text{high}+M_\text{low}\,m_\text{low}$（取 $m_\text{high}<m_\text{low}$），按 $x_i=(1-\lambda)\odot b_i+\lambda\odot\tilde{x}_i$ 把基础视图和 AugMix 激进视图做空间逐像素混合：判别区基本保留 $b_i$，背景区随便揉。
-    - 设计动机：之前 R-TPT/TAPT 直接全图上 AugMix，等价于对所有像素一视同仁，细粒度任务一旦把鸟头打模糊就完蛋；而真正能贡献"对抗下信息量"的恰恰是判别区，必须给它优先级。
+之前 R-TPT/TAPT 直接全图 AugMix，对所有像素一视同仁，细粒度任务一旦把鸟头、车标、机翼打模糊就丢掉了本就脆弱的类别信号——而真正贡献"对抗下信息量"的恰恰是这些判别区。A-TPT 用锚点图把空间切成两块区别对待：取比例 $r$，把基础视图 $b_i$ 上注意力前 $\lceil rHW\rceil$ 大的位置标成高注意力 mask $M_\text{high}$，剩下 $M_\text{low}=1-M_\text{high}$；再设两档混合强度 $\lambda(r)=M_\text{high}\,m_\text{high}+M_\text{low}\,m_\text{low}$（取 $m_\text{high}<m_\text{low}$），按 $x_i=(1-\lambda)\odot b_i+\lambda\odot\tilde{x}_i$ 把 Random-Flip+Center-Crop 的基础视图 $b_i$ 和 AugMix 激进视图 $\tilde{x}_i$ 做逐像素混合。结果是判别区基本保留原图、背景区随便揉——既守住了细粒度信号，又制造出足够的视图多样性供 prompt tuning 使用。
 
-3. **基于各向异性 Total Variation 的可靠性集成 (TV-Based Ensemble)**:
+**3. 基于各向异性 Total Variation 的可靠性集成：用注意力空间一致性识别伪好视图。**
 
-    - 功能：给每个低熵候选视图打一个"语义可信度"的标量权重 $w_i$，过滤掉那些注意力散乱、被对抗噪声或背景主导的伪好视图。
-    - 核心思路：对每个视图的注意力 $\mathbf{A}(x_i)$ 算各向异性 TV：$\mathrm{TV}(\mathbf{A}(x_i))=\sum_{u,v}|A_{u+1,v}-A_{u,v}|+\sum_{u,v}|A_{u,v+1}-A_{u,v}|$，再做 softmax 反指数：$w_i=\exp(-\mathrm{TV}(\mathbf{A}(x_i)))/\sum_{j\in\mathcal{B}}\exp(-\mathrm{TV}(\mathbf{A}(x_j)))$，最终 $\hat{c}=\arg\max_c\sum_{i\in\mathcal{B}}w_i p_c(x_i)$。
-    - 设计动机：作者的经验观察是——一张"好"的视图，其 CLS-to-patch 注意力应该在判别区是连片高响应，TV 小；而被对抗高频伪影或背景主导的视图，注意力就会变得碎片化或者出现孤立尖峰，TV 大。比起单看预测熵，TV 直接刻画"注意力空间一致性"，能识别那种"熵很低但其实在看错地方"的视图。
+光靠预测熵筛视图会漏掉一种坑：有的视图熵很低、但其实在看错地方（背景或对抗高频伪影主导）。作者的观察是，一张"好"视图的 CLS-to-patch 注意力应在判别区连片高响应、空间平滑（TV 小），而被噪声或背景带偏的视图注意力会碎片化、出现孤立尖峰（TV 大）。于是对每个低熵候选视图算各向异性 Total Variation：
+
+$$\mathrm{TV}(\mathbf{A}(x_i))=\sum_{u,v}|A_{u+1,v}-A_{u,v}|+\sum_{u,v}|A_{u,v+1}-A_{u,v}|$$
+
+再做 softmax 反指数得到可靠性权重 $w_i=\exp(-\mathrm{TV}(\mathbf{A}(x_i)))/\sum_{j\in\mathcal{B}}\exp(-\mathrm{TV}(\mathbf{A}(x_j)))$，最终预测 $\hat{c}=\arg\max_c\sum_{i\in\mathcal{B}}w_i p_c(x_i)$。TV 直接刻画注意力的空间结构而非预测分布，所以能在熵之外补上"这张视图到底有没有看对地方"这一维过滤。
 
 ### 损失函数 / 训练策略
-Prompt tuning 沿用 TPT 的熵最小化框架：$\mathcal{L}_H(P)=-\frac{1}{|\mathcal{B}|}\sum_{i\in\mathcal{B}}\sum_c p_c(x_i)\log p_c(x_i)$，但 $\mathcal{B}$ 是按 A-TPT 增强 + 低熵筛选后的视图。优化器 Adam + weight decay，只跑 $T=1$ 步、lr $=0.005$。对抗样本用 PGD 生成：ViT 用 $\varepsilon=4/255$、100 步；ResNet50 用 $\varepsilon=1/255$、1 步。8 卡 RTX-4090 数据并行。整套流程不动 CLIP 主干，也不学增强网络。
+Prompt tuning 沿用 TPT 的熵最小化目标 $\mathcal{L}_H(P)=-\frac{1}{|\mathcal{B}|}\sum_{i\in\mathcal{B}}\sum_c p_c(x_i)\log p_c(x_i)$，区别是 $\mathcal{B}$ 是按 A-TPT 增强 + 低熵筛选后的视图集合。优化器 Adam + weight decay，只跑 $T=1$ 步、lr $=0.005$。对抗样本用 PGD 生成：ViT 用 $\varepsilon=4/255$、100 步；ResNet50 用 $\varepsilon=1/255$、1 步。8 卡 RTX-4090 数据并行。整套流程不动 CLIP 主干，也不学任何增强网络。
 
 ## 实验关键数据
 

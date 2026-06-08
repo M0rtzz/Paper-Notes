@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FedHD 跑「local distillation + curriculum federation」两段：(i) 在每个客户端 $c$，对每张真实 slide $x_i^{(c)}$（含 $K$ 个 patch embedding $b_k^{i,c}\in\mathbb{R}^d$）通过 GMM 建模真实分布 $P_\text{real}^{(c,i)}\approx \sum_m \pi_m \mathcal{N}(\mu_m^{(c,i)},\Sigma_m^{(c,i)})$，并优化一张同尺寸的合成 slide $h_i^{(c)}$（含 $T$ 个可学 patch embedding）使其 GMM 与真实 GMM 在均值与协方差上 Frobenius 对齐；(ii) 客户端把 $\{h_i^{(c)}\}$ 上传服务器，服务器把除自身外的所有合成切片聚合成 $\mathcal{H}_\text{global}^{(c)}$ 下发；(iii) 客户端先用真实数据训本地 MIL 模型，到第 $t_0$ 轮后逐步加入 $\mathcal{H}_\text{global}^{(c)}$，用 GCE 抗噪 loss 联合训练；可选的 FastGAN 生成器把合成 embedding 反解为伪 patch 提供可视化。
+FedHD 把协作拆成「本地蒸馏 + 课程联邦」两段，全程不交换原始切片也不交换模型参数。第一段在每个客户端 $c$ 内部进行：把每张真实 slide $x_i^{(c)}$（含 $K$ 个 patch embedding $b_k^{i,c}\in\mathbb{R}^d$）的特征分布拟合成一个 GMM，再优化一张同尺寸的合成 slide $h_i^{(c)}$（含 $T$ 个可学 patch embedding），让它的 GMM 在均值和协方差上逼近真实 GMM，于是合成切片就成了真实切片在特征空间的「浓缩替身」。第二段做跨机构整合：客户端把合成切片 $\{h_i^{(c)}\}$ 上传，服务器把除本机外所有客户端的合成切片聚成 $\mathcal{H}_\text{global}^{(c)}$ 回传；本地模型先在真实数据上训出底子，到第 $t_0$ 轮后才按课程逐步引入这批外来合成特征，用抗噪 loss 联合训练。最后一个可选的 FastGAN 生成器能把合成 embedding 反解成伪 patch，供医生肉眼核查。
 
 ### 关键设计
 
-1. **Gaussian-Mixture Feature Alignment (代替单均值匹配)**:
+**1. 高斯混合特征对齐：用 16 个组分而非单一均值刻画 WSI 内部分布。**
 
-    - 功能：捕捉 WSI 内部多形态组分（肿瘤区/正常区/边界区等）的复杂分布，避免单均值匹配把异质 patch 压成「灰色平均值」。
-    - 核心思路：用 GMM 在每张真实 slide 的 patch 特征 $\{b_k^{i,c}\}_{k=1}^K$ 上估出 $M=16$ 个组分的 $\{\mu_m,\Sigma_m,\pi_m\}$；合成 slide 的 patch $\{p_j^{i,c}\}_{j=1}^T$ 也按同 GMM 分配组分，得到 $\{\hat{\mu}_m,\hat{\Sigma}_m\}$；损失 $\mathcal{L}_\text{align}^{(c)}=\sum_m(\|\mu_m-\hat{\mu}_m\|_2^2+\|\Sigma_m-\hat{\Sigma}_m\|_F^2)$ 同时对齐均值与协方差。
-    - 设计动机：先前 DD 通用做法 $\sum_y \|\Phi_{T_y}-\Phi_{S_y}\|^2$ 假设单 Gaussian/单中心；WSI patch 实证呈现多峰，单中心匹配会把诊断关键的少数组分（如肿瘤 patch）抹平，导致下游 MIL 分类掉点。
+WSI 一张切片里同时有肿瘤区、正常区、边界区等多种形态学组分，patch 特征天然呈多峰。先前的数据蒸馏通用做法 $\sum_y \|\Phi_{T_y}-\Phi_{S_y}\|^2$ 只匹配类内单一中心，等于默认特征是单 Gaussian，套到 WSI 上会把诊断最关键、却数量稀少的组分（比如肿瘤 patch）平均成「灰色中值」，下游 MIL 直接掉点。FedHD 改成在每张真实 slide 的 patch 特征 $\{b_k^{i,c}\}_{k=1}^K$ 上估一个 $M=16$ 组分的 GMM $P_\text{real}^{(c,i)}\approx\sum_m \pi_m\,\mathcal{N}(\mu_m^{(c,i)},\Sigma_m^{(c,i)})$，合成 slide 的 patch $\{p_j^{i,c}\}_{j=1}^T$ 也按同一 GMM 分配到各组分得到 $\{\hat\mu_m,\hat\Sigma_m\}$，然后用 $\mathcal{L}_\text{align}^{(c)}=\sum_m\big(\|\mu_m-\hat\mu_m\|_2^2+\|\Sigma_m-\hat\Sigma_m\|_F^2\big)$ 同时对齐每个组分的均值和协方差。因为协方差也进了 loss，组分的形状和扩散范围都被保住，少数关键组分不会被多数组分淹没——这正是它把领域里的「形态学多组分」先验硬编码进蒸馏目标的地方。
 
-2. **一对一 Slide 级蒸馏**:
+**2. 一对一 slide 级蒸馏：每张真实切片配一张合成切片，故意不做极致压缩。**
 
-    - 功能：每张真实 slide 对应一张合成 slide，避免「多 slide 压成几张」的过压，保留诊断多样性。
-    - 核心思路：客户端 $c$ 维持 $N$ 张合成 slide $h_i^{(c)}$（$N$=本地真实 slide 数）；每张合成 slide 持有 $T=1000$ 个 patch embedding，与真实 slide 对齐对齐学习。上传时 payload 是 $O(NTd)$ 浮点，与传输完整 patch 特征量级一致但不需要客户端真正分享 patch。
-    - 设计动机：自然图像 DD 追求 IPC=1/10/50 的极致压缩可行，是因为类内样本相对同质；WSI 数据集本身小（几百例）+ slide 间高度异质，再压缩等于全员失真。
+自然图像蒸馏追求 IPC=1/10/50 的极致压缩，是因为类内样本相对同质、压几张代表图够用；但 WSI 数据集本身就小（几百例）、slide 之间又高度异质，再把多张 slide 压成几张就是全员失真。FedHD 反其道而行，客户端 $c$ 维持 $N$ 张合成 slide（$N$ 等于本地真实 slide 数），真实与合成严格一对一，每张合成 slide 各持 $T=1000$ 个 patch embedding 单独对齐。这样 slide-level 的多样性被原样保留，上传的 payload 是 $O(NTd)$ 浮点，量级和直接传完整 patch 特征相当，但客户端从头到尾没真正交出过任何真实 patch，隐私边界没破。
 
-3. **课程联邦集成 (Curriculum-based Federation)**:
+**3. 课程联邦集成：本地先收敛再吸外援，并用 GCE 抗噪。**
 
-    - 功能：让本地模型先稳健收敛，再逐步引入外来合成数据，防止训练早期被噪声拉偏。
-    - 核心思路：本地总 loss $\mathcal{L}_\text{local}^{(c)} = \mathcal{L}_\text{real}^{(c)} + \mathcal{L}_\text{GCE}^{(c)}\cdot \mathbb{I}(t\geq t_0)$，前 $t_0=30$ epoch 只看真实数据；之后加入合成数据并用 Generalized Cross-Entropy $\mathcal{L}_\text{GCE}=\frac{1-p_y^q}{q}$（$q=0.7$）替代普通 CE 以抑制潜在 label noise。
-    - 设计动机：直接 mix 跨机构合成数据会引入分布漂移；课程让模型先有「好底子」再吸收外部知识，类似教育中的 prerequisites；GCE 在 $q\to 0$ 退化为 MAE，对噪声更稳健。
+把跨机构合成数据从第 0 轮就直接混进训练会引入 domain shift，模型还没站稳就被外部噪声带偏。FedHD 用课程学习给本地训练分阶段：总目标 $\mathcal{L}_\text{local}^{(c)}=\mathcal{L}_\text{real}^{(c)}+\mathcal{L}_\text{GCE}^{(c)}\cdot\mathbb{I}(t\ge t_0)$，前 $t_0=30$ 个 epoch 只看真实数据把底子打牢，之后才放外来合成特征进来当辅助监督——相当于先修完「先修课」再学进阶内容。引入的合成数据可能带 label noise，所以这一段不用普通 CE 而用 Generalized Cross-Entropy $\mathcal{L}_\text{GCE}=\frac{1-p_y^q}{q}$（$q=0.7$），它在 $q\to 0$ 时退化为对噪声更稳健的 MAE，从而压住合成标签的潜在错误。
 
 ### 损失函数 / 训练策略
-本地蒸馏 1000 iter；联邦单轮通信；本地 MIL 训练 50 epoch；GMM 组分 $M=16$（按 Song 2024 经验选）；synthetic patch 数 $T=1000$；GCE 参数 $q=0.7$；课程阈值 $t_0=30$；可选 FastGAN 生成器联合 $\mathcal{L}_\text{GAN}^{(c)}+\lambda_\text{rec}\mathcal{L}_\text{rec}^{(c)}$ 做可视化。
+本地蒸馏 1000 iter，本地 MIL 训练 50 epoch，联邦只需单轮通信；GMM 组分 $M=16$（按 Song 2024 经验选）、合成 patch 数 $T=1000$、GCE 参数 $q=0.7$、课程阈值 $t_0=30$。可视化分支用 FastGAN 生成器，联合 $\mathcal{L}_\text{GAN}^{(c)}+\lambda_\text{rec}\mathcal{L}_\text{rec}^{(c)}$ 把合成 embedding 反解成伪 patch。
 
 ## 实验关键数据
 

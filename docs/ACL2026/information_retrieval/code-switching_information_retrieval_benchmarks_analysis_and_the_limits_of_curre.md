@@ -41,34 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的"方法"是三阶段评测+干预流水线，不是新模型：
 
-1. **CSR-L 基准构造**：选 4 个代表性英文 IR 数据集（Touché 2020 / HumanEval / TRECCOVID / FollowIR），由 3 位中-英-日多语作者两步法人工把 query 改写成中文/日文混用版（一人重写、一人校验），覆盖 4 个 task 类型。
-2. **CS-MTEB 大规模扩展**：用 MiMo-V2-Flash 把 MTEB 的 11 个任务（covering 7 类：instruction reranking, retrieval, clustering, classification, STS, reranking, pair classification）的 query 改写为 9 种语言 × 英文的混用版本，prompt 模板用 CSR-L 的人写样例 ground truth 化迭代调优，附录还做了 50 条人工 spot-check。
-3. **Vocabulary expansion 干预**：对 all-MiniLM-L12-v2 和 e5-large-v2 这类英文中心模型，用 Conneau 2018 的双语 lexicon 将目标语 word $w_t$ 映射到源语 $w_s$ 的 subword 嵌入平均：$v_{w_s}=\frac{1}{|T(w_s)|}\sum_{k\in T(w_s)} e_k$，再聚合到 target token embedding $e_{w_t}=\frac{1}{|N(w_t)|}\sum_{w_s\in N(w_t)} v_{w_s}$，无映射的 token 用 $\mathcal{N}(0,\sigma^2)$ 初始化，得到 adapted model 后再在 CSR-L 上重测。
+这篇论文的"方法"不是一个新模型，而是一条"测—诊断—干预"的三段式流水线，目的是把代码混用对 IR 系统的冲击量化清楚并解释成因。先用人工标注的 CSR-L 在 4 个英文 IR 数据集上把 query 改写成中/日混用版，保证语言学自然度；再用 LLM 把这套标注规范放大成覆盖 11 任务 × 9 语种的 CS-MTEB，换取任务与语言广度；最后对英文中心模型做一次零训练的词表扩展干预，看代码混用的失败到底是 tokenizer 覆盖问题还是更深的表征对齐问题。
 
 ### 关键设计
 
-1. **人工 + LLM 双轨基准 (CSR-L + CS-MTEB)**:
+**1. 人工 + LLM 双轨基准（CSR-L + CS-MTEB）：用两套数据在自然度和规模之间互补。**
 
-    - 功能：在"自然度"与"规模"之间用两套基准互补 —— CSR-L 保证语言学上自然，CS-MTEB 保证 task 与语言广度。
-    - 核心思路：CSR-L 严格控制 ±20% 长度变化、保留实体名 / 代码 token 不翻译、要求两语都贡献内容；CS-MTEB 把这套规范作为 prompt 模板的 ground truth，用 MiMo-V2-Flash 大规模复制，再做人工 spot check。
-    - 设计动机：CS 数据没有自动指标可信地评估"自然度"（Poplack/Myers-Scotton 等理论也只给定性定义），所以小规模必须人工；但 11 任务 × 9 语言完全人工不可行，必须借 LLM 复制。两者结合后既能量化现象（CSR-L），又能在任务维度做泛化检验（CS-MTEB）。
+代码混用数据没有可信的自动指标来评估"自然度"，社会语言学（Poplack、Myers-Scotton）也只给定性定义，所以小规模必须人工、大规模必须借 LLM。CSR-L 由三位中-英-日多语作者两步法（一人重写、一人校验）改写 Touché 2020 / HumanEval / TRECCOVID / FollowIR 的 query，严格控制 ±20% 长度变化、保留实体名与代码 token 不翻译、要求两种语言都贡献内容；CS-MTEB 则把这套规范固化成 prompt 模板的 ground truth，用 MiMo-V2-Flash 把 MTEB 的 11 个任务（涵盖 instruction reranking、retrieval、clustering、classification、STS、reranking、pair classification 共 7 类）批量改写成 9 语种 × 英文的混用版，再补 50 条人工 spot-check 兜底质量。两者结合既能在小规模上把现象量化得无可辩驳，又能在任务与语言维度上做泛化检验。
 
-2. **多家族 retriever 横向评测 + embedding 空间诊断**:
+**2. 多家族 retriever 横向评测 + embedding 空间几何诊断：既定位损伤的共性，又解释失败机制。**
 
-    - 功能：在不同 IR 范式下定位 code-switching 损伤的共同性，并通过几何诊断解释失败机制。
-    - 核心思路：评测覆盖 4 类范式 —— 统计 (BM25)、bi-encoder (e5/mE5/bge-m3/Arctic-Embed/Qwen3-Embedding 0.6/4/8B)、cross-encoder (jina-reranker-v3, bge-reranker-v2-m3, Qwen3-Reranker)、late-interaction (ColBERT v2)。然后在 Touché 2020 和 TRECCOVID 上用 PCA 把 e5-large-v2 与 Qwen3-Embedding-0.6B 的原始 vs 混用 query 嵌入投到 3 维，量化 centroid distance。
-    - 设计动机：单看分数下降只能说"性能掉了"，但论文的关键贡献之一是回答"为什么"。可视化显示英文中心模型让原始与混用 query 完全裂成两团（centroid 距离 0.25），多语模型重合更多（0.20），与性能差距高度对应 —— 说明 robustness gap 的物理形式就是 embedding manifold 的偏移。
+只报性能下降只能说明"掉了"，回答不了"为什么掉"。评测覆盖四类 IR 范式——统计（BM25）、bi-encoder（e5 / mE5 / bge-m3 / Arctic-Embed / Qwen3-Embedding 0.6/4/8B）、cross-encoder reranker（jina-reranker-v3、bge-reranker-v2-m3、Qwen3-Reranker）、late-interaction（ColBERT v2）——确认代码混用是跨范式的共性短板。在此之上，作者在 Touché 2020 和 TRECCOVID 上用 PCA 把 e5-large-v2 与 Qwen3-Embedding-0.6B 的"原始 vs 混用"query 嵌入投到 3 维并量化 centroid distance：英文中心模型让两类 query 完全裂成两团（centroid 距离约 0.25），多语模型重合更多（约 0.20），几何上的偏移与性能差距高度对应，等于把 robustness gap 的物理形式坐实为 embedding manifold 的位移。
 
-3. **Vocabulary expansion 作为机制探针而非解药**:
+**3. 词表扩展作为机制探针而非解药：用一个零训练干预区分"覆盖问题"和"对齐问题"。**
 
-    - 功能：用一个低成本干预 reveal "code-switching 失败到底是 tokenizer 覆盖问题还是更深的表征对齐问题"。
-    - 核心思路：用 word-level 双语 lexicon 把目标语 token 的 embedding 用源语 subword 平均值初始化，主体模型不动，只改 tokenizer + embedding layer，零额外训练。
-    - 设计动机：如果 vocabulary expansion 能补齐 monolingual 性能 → 问题在 tokenizer；如果只能部分缓解 → 问题更深。实验结果是部分缓解（all-MiniLM 在 CSR-L-Chinese 平均从 30.09 升到 37.73；e5-large-v2 从 35.32 升到 43.50），既证明 tokenizer 是 part of story，也证明 code-switching 是个无法靠 surface-level patch 闭合的语义难题。这种"用 negative result 做诊断"的写法非常清醒。
+如果一个只改 tokenizer 的低成本干预就能补齐单语性能，说明问题在词表覆盖；如果只能部分缓解，说明问题更深。具体做法是用 Conneau 2018 的双语 lexicon，把目标语 word $w_t$ 的嵌入用源语 subword 嵌入的平均来初始化：先对源语词 $w_s$ 求其子词嵌入均值 $v_{w_s}=\frac{1}{|T(w_s)|}\sum_{k\in T(w_s)} e_k$，再把映射到 $w_t$ 的各源语词聚合成 $e_{w_t}=\frac{1}{|N(w_t)|}\sum_{w_s\in N(w_t)} v_{w_s}$，无映射的 token 用 $\mathcal{N}(0,\sigma^2)$ 初始化；主体模型不动，只换 tokenizer 与 embedding layer，零额外训练后在 CSR-L 上重测。结果是"部分缓解"（all-MiniLM 在 CSR-L-Chinese 从 30.09 升到 37.73，e5-large-v2 从 35.32 升到 43.50，但都仍距单语基线约 4 分），既证明 tokenizer 确实是失败的一部分，也证明代码混用是一个无法靠 surface-level patch 闭合的语义对齐难题——这种"用 negative result 做诊断"的写法格外清醒。
 
-### 损失函数 / 训练策略
-论文不训练新模型；评测用 nDCG@10（IR）、p-MRR（FollowIR）、V-measure（clustering）、Accuracy（cls）、Cosine Spearman（STS）、MAP@1000（reranking）、mean AP（pair cls）。Vocabulary expansion 阶段也无 gradient update，只改 embedding init。
+### 评测指标
+
+论文不训练新模型，全靠现成指标量化：IR 用 nDCG@10、FollowIR 用 p-MRR、clustering 用 V-measure、classification 用 Accuracy、STS 用 Cosine Spearman、reranking 用 MAP@1000、pair classification 用 mean AP；词表扩展阶段同样没有 gradient update，只改 embedding 初始化。
 
 ## 实验关键数据
 

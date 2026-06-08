@@ -40,32 +40,26 @@ OmniAID 用一个"语义专家 + 通用伪影专家"的解耦 MoE 架构，在 C
 ## 方法详解
 
 ### 整体框架
-输入为 RGB 图像，主干是冻结的 CLIP-ViT-L/14@336px。对每个注意力层权重 $\mathbf{W}\in\mathbb{R}^{d_{out}\times d_{in}}$ 做 SVD：$\mathbf{W}=\mathbf{W}_M+\mathbf{W}_R$，其中 $\mathbf{W}_M=\mathbf{U}_{:d-r}\mathbf{\Sigma}_{:d-r}\mathbf{V}_{:d-r}^{T}$ 是冻结的"主子空间"，保住 CLIP 的预训练知识；$\mathbf{W}_R=\mathbf{U}_{d-r:}\mathbf{\Sigma}_{d-r:}\mathbf{V}_{d-r:}^{T}$ 是用来塞专家的"残差子空间"。在这块残差里挂两类专家：$N_S$ 个语义专家 $\mathcal{E}_S=\{e_1,\dots,e_{N_S}\}$（如 Human / Animal / Object / Scene / Anime），以及一个通用伪影专家 $\mathcal{E}_U$。一个独立冻结 CLIP 编码器输出的特征喂给轻量 MLP 路由器 $\mathcal{R}$，选出 top-$k_S$ 个语义专家；最终层权重 $\mathbf{W}_F=\mathbf{W}_M+\mathbf{W}_{R,U}+\sum_{i\in S}g_i\cdot\mathbf{W}_{R,i}$，其中 $g_i=\mathrm{Softmax}(\mathbf{z}_\mathbf{x})_i$，注意通用伪影专家 $\mathbf{W}_{R,U}$ 不参与路由竞争、**每次前向都激活**。训练分两阶段：先逐个专家专精化，再冻结专家训路由。
+OmniAID 要解决的是"伪造证据被压进同一个特征空间、跨域就崩"的问题，做法是把"画了什么会露馅"和"怎么画都会露馅"两类线索拆到不同的低秩子空间里学。主干用冻结的 CLIP-ViT-L/14@336px，对每个注意力层权重 $\mathbf{W}\in\mathbb{R}^{d_{out}\times d_{in}}$ 先做 SVD 切成两块——$\mathbf{W}_M=\mathbf{U}_{:d-r}\mathbf{\Sigma}_{:d-r}\mathbf{V}_{:d-r}^{T}$ 是冻结的"主子空间"，保住 CLIP 的预训练语义先验；$\mathbf{W}_R=\mathbf{U}_{d-r:}\mathbf{\Sigma}_{d-r:}\mathbf{V}_{d-r:}^{T}$ 是用来塞专家的"残差子空间"。残差里挂两类专家：$N_S$ 个可路由的语义专家 $\mathcal{E}_S=\{e_1,\dots,e_{N_S}\}$（Human / Animal / Object / Scene / Anime）和一个固定常驻的通用伪影专家 $\mathcal{E}_U$。前向时，一个独立冻结的 CLIP 编码器把图像特征喂给轻量 MLP 路由器 $\mathcal{R}$，选出 top-$k_S$ 个语义专家，最终层权重组合成 $\mathbf{W}_F=\mathbf{W}_M+\mathbf{W}_{R,U}+\sum_{i\in S}g_i\cdot\mathbf{W}_{R,i}$，门控权重 $g_i=\mathrm{Softmax}(\mathbf{z}_\mathbf{x})_i$，其中伪影专家 $\mathbf{W}_{R,U}$ 不参与路由竞争、每次前向都激活。整体训练分两阶段：先逐个专家专精化、再冻结专家单训路由。
 
 ### 关键设计
 
-1. **正交残差子空间的混合 MoE（Hybrid Orthogonal MoE）**:
+**1. 正交残差子空间的混合 MoE：用一个固定专家管伪影、多个可路由专家管语义。**
 
-    - 功能：在不破坏 CLIP 主成分先验的前提下，把多种伪造证据塞进低秩残差里互不干扰地学。
-    - 核心思路：所有专家都只占据 $\mathbf{W}_R$ 这个由 SVD 最小若干奇异成分张成的子空间；语义专家可路由，通用伪影专家固定常驻。语义专家用领域专属数据（如全 Human 图像）训出"这类内容长歪了什么样"，通用伪影专家则用语义对齐的真/重建图像对（COCO 配多种 VAE 如 SDv1.x–SD3.5、TAESD、TAESDXL 的重建版）训出"任何 VAE 都会留下的低层痕迹"。
-    - 设计动机：解决"单一纠缠表征"——固定专家保证伪影信号永远有人接，可路由专家保证不同语义域不会被一个特征空间一锅炖；正交残差保证专家之间和与主子空间的更新方向不会塌缩。
+这一设计直接针对"单一纠缠表征"的痛点——SOTA 把内容相关的语义瑕疵和内容无关的通用伪影压进同一空间，导致 Animal 上训的检测器到 Scene 上就掉。OmniAID 让所有专家都只占据 $\mathbf{W}_R$ 这块由 SVD 最小若干奇异成分张成的残差子空间，既不破坏 $\mathbf{W}_M$ 里的 CLIP 先验，又能塞下多路证据。其中语义专家用领域专属数据训练（如全 Human 图像），学的是"这类内容长歪了会是什么样"；通用伪影专家则用语义对齐的真/重建图像对训练（COCO 真图配 SDv1.x–SD3.5、TAESD、TAESDXL 等多种 VAE 的重建版），学的是"任何 VAE 都会留下的低层痕迹"。把伪影专家固定常驻、语义专家按需路由，结构上就承认了两类证据本质不同——伪影信号永远有人接，而不同语义域不会被一个空间一锅炖。
 
-2. **两阶段解耦训练 + 跨专家正交约束**:
+**2. 两阶段解耦训练 + 跨专家正交约束：逼每个专家学到互补、不重叠的证据。**
 
-    - 功能：让每个专家学到互补的、不重叠的伪造证据。
-    - 核心思路：Stage 1 一次只激活一个专家 $e_a$，其余冻结，目标为 $\mathcal{L}_{\text{Stage1}}=\mathcal{L}_{\text{cls}}+\lambda_1\mathcal{L}_{\text{orth}}$；其中正交损失 $\mathcal{L}_{\text{orth}}=\sum_{j\in\mathcal{I}_{\text{prev}}}(\|\mathbf{U}_i^T\mathbf{U}_j\|_F^2+\|\mathbf{V}_i^T\mathbf{V}_j\|_F^2)$，$\mathcal{I}_{\text{prev}}=\{M\}\cup\{0,\dots,i-1\}$，即同时约束新专家与主子空间**和所有此前训过的专家**正交。每训完一个专家都重置分类头，避免头部记忆污染下一个专家。Stage 2 冻结全部专家，训路由器和新分类头，目标为 $\mathcal{L}_{\text{Stage2}}=\mathcal{L}_{\text{cls}}+\lambda_2\mathcal{L}_{\text{gating}}+\lambda_3\mathcal{L}_{\text{balance}}$；其中 $\mathcal{L}_{\text{gating}}$ 是用真实领域标签 $y_e$ 监督路由器输出尖锐分布，$\mathcal{L}_{\text{balance}}=N_S\sum_i \mathcal{F}_i\cdot \mathbf{P}_i$ 是 Switch Transformer 风格的负载均衡，鼓励路由分布多样。
-    - 设计动机：相比 Effort 只对主子空间正交，本文把正交边界一路推到"所有此前的语义专家"，这正是"语义解耦"的硬约束；两阶段分离也让"专家专精"和"路由学习"两个目标不会互相干扰——共同训练时路由很容易把所有样本都丢给学得最快的专家，而专家又会被路由倾斜过来的样本污染。
+光把专家塞进同一残差还不够，还得保证它们不学到同一套东西，这就靠两阶段训练里的正交约束。Stage 1 一次只激活一个专家 $e_a$、其余冻结，目标是 $\mathcal{L}_{\text{Stage1}}=\mathcal{L}_{\text{cls}}+\lambda_1\mathcal{L}_{\text{orth}}$，其中正交损失 $\mathcal{L}_{\text{orth}}=\sum_{j\in\mathcal{I}_{\text{prev}}}(\|\mathbf{U}_i^T\mathbf{U}_j\|_F^2+\|\mathbf{V}_i^T\mathbf{V}_j\|_F^2)$，索引集 $\mathcal{I}_{\text{prev}}=\{M\}\cup\{0,\dots,i-1\}$——也就是同时约束新专家与主子空间**以及所有此前训过的专家**都正交；每训完一个专家就重置分类头，避免头部记忆污染下一个。相比 Effort 只让适配器对主子空间正交，这里把正交边界一路推到"所有此前的语义专家"，正是"语义解耦"的硬约束。Stage 2 则冻结全部专家、只训路由器和新分类头，目标 $\mathcal{L}_{\text{Stage2}}=\mathcal{L}_{\text{cls}}+\lambda_2\mathcal{L}_{\text{gating}}+\lambda_3\mathcal{L}_{\text{balance}}$，其中 $\mathcal{L}_{\text{gating}}$ 用真实领域标签 $y_e$ 监督路由器输出尖锐分布，$\mathcal{L}_{\text{balance}}=N_S\sum_i \mathcal{F}_i\cdot \mathbf{P}_i$ 是 Switch Transformer 风格的负载均衡。之所以把"专家专精"和"路由学习"拆成两阶段，是因为联合训练时路由很容易把所有样本丢给学得最快的专家，而那个专家又会被倾斜过来的样本污染，两者互相败坏。
 
-3. **现代化 Mirage 数据集 + 锚定式合成管线**:
+**3. 现代化 Mirage 数据集 + 锚定式合成管线：用数据构造补上模型做不到的语义不变性。**
 
-    - 功能：给检测器提供 2025 年量级、可反映 in-the-wild 分布的训练 / 测试基础。
-    - 核心思路：Mirage-Train 含 933K 真 / 1674K 假，覆盖 Human / Animal / Object / Scene / Anime 五类；假图用 SD3.5 / Flux.1 / 商业闭源 API 等 SOTA T2I 生成。关键的合成管线是"real-image-anchored prompting"——对每张真图先用 LMM 标注内容描述和粗粒度标签，再用这段描述去喂多个 T2I 生成器，从而**强制真假图在语义上对齐**，避免模型走"靠内容差异判断真假"的捷径。Mirage-Test 22K 真 / 28K 假，用 held-out 的、为真实感专门微调（LoRA / 私有数据）的 SOTA 生成器，刻意拉高难度。
-    - 设计动机：旧基准（GenImage 用 2022 年模型，DRCT-2M 用 2023 年）已无法反映 2025 年生成器水平；anchored prompting 配合通用伪影专家所需的"语义对齐真假对"是同一思路——只有把语义变量控制住，才能逼模型真正学伪影。
+旧基准（GenImage 用 2022 年模型、DRCT-2M 用 2023 年）已经反映不了 2025 年生成器的水平，于是作者重做了 Mirage。Mirage-Train 含 933K 真 / 1674K 假、覆盖 Human / Animal / Object / Scene / Anime 五类，假图由 SD3.5 / Flux.1 / 商业闭源 API 等 SOTA T2I 生成；Mirage-Test 则用 22K 真 / 28K 假，假图来自 held-out 且为真实感专门微调（LoRA / 私有数据）的生成器，刻意把难度拉高。最关键的是合成管线用了"real-image-anchored prompting"——先用 LMM 给每张真图标注内容描述和粗粒度标签，再拿这段描述去喂多个 T2I 生成器，强制真假图在语义上对齐，从而堵死"靠内容差异判真假"的捷径。这和通用伪影专家所需的"语义对齐真假对"是同一思路：只有把语义变量控制住，才能逼模型真正去学低层伪影而不是抄语义答案。
 
 ### 损失函数 / 训练策略
-- Stage 1：$\mathcal{L}_{\text{cls}}$ + $\lambda_1\mathcal{L}_{\text{orth}}$，逐专家训练，每次只解冻当前专家的 $\mathbf{U}_{d-r:}, \mathbf{\Sigma}_{d-r:}, \mathbf{V}_{d-r:}$ 和分类头。
-- Stage 2：$\mathcal{L}_{\text{cls}}$ + $\lambda_2\mathcal{L}_{\text{gating}}$ + $\lambda_3\mathcal{L}_{\text{balance}}$，冻结所有专家。
-- 训练配置：AdamW，$lr=2\times 10^{-4}$，batch 32，每阶段 1 epoch，4× H200；GenImage-SDv1.4 训 3 小时，Mirage 训 18 小时；GenImage 上专家被合并成 Human/Animal + Object/Scene 两组以应对类目稀疏。
+- Stage 1：$\mathcal{L}_{\text{cls}}+\lambda_1\mathcal{L}_{\text{orth}}$，逐专家训练，每次只解冻当前专家的 $\mathbf{U}_{d-r:},\mathbf{\Sigma}_{d-r:},\mathbf{V}_{d-r:}$ 和分类头。
+- Stage 2：$\mathcal{L}_{\text{cls}}+\lambda_2\mathcal{L}_{\text{gating}}+\lambda_3\mathcal{L}_{\text{balance}}$，冻结所有专家、只训路由器与新分类头。
+- 训练配置：AdamW，$lr=2\times 10^{-4}$，batch 32，每阶段 1 epoch，4× H200；GenImage-SDv1.4 训 3 小时、Mirage 训 18 小时；GenImage 上因类目稀疏把专家合并成 Human/Animal + Object/Scene 两组。
 
 ## 实验关键数据
 

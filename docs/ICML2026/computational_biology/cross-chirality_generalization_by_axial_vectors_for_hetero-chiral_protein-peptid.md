@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-PepMirror 沿用 UniMoMo 的两阶段 latent diffusion 架构：**编码端** EPT（Equivariant Pretrained Transformer，含 $L$ 层 self-attention + GVP-FFN）把蛋白靶标 / 多肽点云图 $\mathcal{G}$ 映射为 $(H,V)$，其中 $H\in\mathbb{R}^{N\times K}$ 是 $E(3)$-不变标量、$V\in\mathbb{R}^{N\times 3\times K}$ 是 $E(3)$-等变向量；**扩散端**在潜空间对 binder 的潜码做条件去噪，条件为靶标 pocket 的潜码 $c$；**解码端**把生成的 binder 潜码解回 3D 结构。本文唯一动到的就是 EPT 主干——在每层 GVP-FFN 之前对 $V$ 注入轴向量得到 AFI-EPT，记号上原 $V_j'(X)$ 被 $\widetilde V_j(X)$ 替换。整体推理流程为：先把 L-靶标 $\mathcal{G}_t$ 通过 $P=-I_3$ 反演到 $\mathcal{G}_t'$，让模型针对 D-靶标生成 L-binder $f_\theta(\mathcal{G}_t')$，再把输出反演回 $\mathcal{G}_b=P(f_\theta(P(\mathcal{G}_t)))$，得到对原 L-靶标的 D-肽 binder。
+要让一个只会做 L-L 同手性界面的等变模型零样本生成 D-肽 binder，核心矛盾在于：$E(3)$-等变骨干对镜像反演 $P=-I_3$ 严格不变，于是镜像靶标会被无差别地映成同一潜码，模型既区分不了手性、输出又是混合手性。PepMirror 的解法是给标量化等变主干加一个**轴向量注入插件**，让它从 $E(3)$ 降到 $SE(3)$-等变——保留旋转平移不变性，却对空间反演敏感，从而把"手性"这一维度重新装回模型。整套系统沿用 UniMoMo 的两阶段 latent diffusion 架构：编码端 EPT（Equivariant Pretrained Transformer，$L$ 层 self-attention + GVP-FFN）把点云图 $\mathcal{G}$ 映射为不变标量 $H\in\mathbb{R}^{N\times K}$ 与等变向量 $V\in\mathbb{R}^{N\times 3\times K}$，扩散端以靶标 pocket 潜码 $c$ 为条件在潜空间去噪 binder 潜码，解码端再解回 3D 结构。本文唯一改动的是把每层 GVP-FFN 前的 $V$ 替换为注入轴向量后的 $\widetilde V$，得到 AFI-EPT。推理时借用 mirror-image display 的思路两次反演：先把 L-靶标 $\mathcal{G}_t$ 反演到 D-靶标，让模型生成 L-binder，再把输出反演回去，即 $\mathcal{G}_b=P(f_\theta(P(\mathcal{G}_t)))$，得到对原 L-靶标的 D-肽 binder。
 
 ### 关键设计
 
-1. **AFI（Axial Feature Injection）轴向量注入**:
+**1. 轴向量注入（AFI）：用极/轴向量分解给等变模型装上手性开关**
 
-    - 功能：把 $E(3)$-等变标量化主干降级为 $SE(3)$-等变，使每个残基的潜码对镜像 $-X$ 产生可区分但有限的偏移。
-    - 核心思路：轴向量定义为 $a(Rx)=\det(R)\,Ra(x)$，在空间反演 $P=-I_3$ 下不变号；极向量则变号 $v(-X)=-v(X)$。在每层 FFN 前做通道线性混合 $\tilde v_{i,k}(X)=A_k^\top v_{i,:}(X)+B_k^\top a_{i,:}(X)$，其中 $A_k,B_k\in\mathbb{R}^K$ 为可学习系数。本文给出三种由 $V'$ 相邻通道 $u,v,w\in\mathbb{R}^3$ 构造轴向量的方式：(a) 叉积 $u\times v$；(b) 标量三重积投影 $(w\cdot(u\times v))\,w$；(c) 对易子 $(u\cdot v)(u\times v)$，对易子能捕获 $u,v$ 夹角的更高频信息。
-    - 设计动机：相比 Tensor Field Networks 用高阶球谐 / 张量积来编码手性（计算重、易过拟合高频噪声），AFI 只动二阶以下张量，参数与计算开销近乎可忽略；且对原模型代码改动极小（只插一行混合层）。理论上还要避免退化——文中提醒若 $A=B=I$ 且 $v\cdot a=0$，则 $\|\tilde v(X)\|=\|\tilde v(-X)\|$ 不再有判别力，所以保证手性区分需"通用参数概率"（见 Theorem 3.1）。
+经典物理把 3D 向量分两类——极向量 polar vector（位置、速度，在 $P$ 下变号 $v(-X)=-v(X)$）与轴向量 axial vector（角动量、磁场，变换为 $a(Rx)=\det(R)\,Ra(x)$，在 $P$ 下**不**变号）。原版标量化模型只用极向量，所以镜像对它透明；AFI 的做法是在每层 FFN 前做一次通道-wise 线性混合 $\tilde v_{i,k}(X)=A_k^\top v_{i,:}(X)+B_k^\top a_{i,:}(X)$（$A_k,B_k\in\mathbb{R}^K$ 可学习）。由于 $a$ 在反演下不变而 $v$ 变号，混合后的 $\widetilde V$ 对 $X$ 与 $-X$ 必然不同，模型瞬间从 $E(3)$ 降到 $SE(3)$-等变，手性区分自然涌现。轴向量本身由 $V'$ 的相邻通道 $u,v,w\in\mathbb{R}^3$ 构造，文中给出三种：叉积 $u\times v$（cross）、标量三重积投影 $(w\cdot(u\times v))\,w$（triple）、对易子 $(u\cdot v)(u\times v)$（commu.，能捕获 $u,v$ 夹角的更高频信息）。相比 Tensor Field Networks 靠高阶球谐 / 张量积编码手性（算力重、易在高频噪声上过拟合），AFI 只动二阶以下张量，参数和计算开销近乎可忽略，对原模型也只是插一行混合层。唯一要小心的退化情形是：若 $A=B=I$ 且 $v\cdot a=0$，则 $\|\tilde v(X)\|=\|\tilde v(-X)\|$ 重新失去判别力——所以"能区分手性"严格说成立于"通用参数概率"之下（见下一点的 Theorem 3.1）。
 
-2. **Chirality awareness 定理与潜码稳定性论证**:
+**2. 零样本异手性泛化的理论闭环：差异 + 稳定 + 扩散连续**
 
-    - 功能：理论上同时保证"$X$ 与 $-X$ 潜码有不可忽略的差异"和"$X$ 与 $-X$ 比 $X$ 与异种 $X'$ 更近"，即潜空间出现 20 个紧致的氨基酸-类别簇、每簇内部 L/D 子簇相邻。
-    - 核心思路：Theorem 3.1（informal）：对随机采样的混合系数，在向量特征有界等温和条件下，$\|c(X)-c(-X)\|\ge c_W\varepsilon$ 以概率 $1-\delta_W(\varepsilon)$ 成立；Proposition 3.2 证明没有 AFI 时由 $V(-X)=-V(X)$ 立刻得 $c(-X)=c(X)$（因为标量端只取范数）。稳定性侧用 $d(X_1,X_2)=\|H(X_1)-H(X_2)\|+\|\widetilde V(X_1)-\widetilde V(X_2)\|$ 量度，因 $H(-X)=H(X)$、$a(-X)=a(X)$、$v(-X)=-v(X)$，所以 $d(X,-X)=\|2Av(X)\|$ 受系数 $A$ 控制；再用氨基酸 Tanimoto 形状相似度作几何旁证支持 $d(X,X')>d(X,-X)$。最后给条件扩散一个 Lipschitz 假设，证 Theorem 3.4：$W_2(\mu_c,\mu_{c'})\le K_{\text{diff}}\|c-c'\|$，于是镜像靶标给出的潜码相近 ⇒ 解码出的 binder 分布相近 ⇒ 模型即便没见过 D-L 训练对也能泛化。
-    - 设计动机：单纯实验做出来易被质疑"凑参数"，加上这套"差异 + 稳定 + 扩散连续"三步证明，把"零样本异手性泛化为何能 work"从经验观察提升到了有保证的机制解释；也回应了为何选轴向量而非直接砸张量积——正是因为后者无法给出这种简单的极/轴分解。
+异手性泛化要 work，潜码必须同时满足两个互相拉扯的条件：既要让 $X$ 与镜像 $-X$ 可分（手性感知），又不能让 $-X$ 漂到别的氨基酸类去（潜码稳定）。本文用三步证明把这件事锁死。**差异性**由 Theorem 3.1 给出：对随机采样的混合系数、在向量特征有界等温和条件下，$\|c(X)-c(-X)\|\ge c_W\varepsilon$ 以概率 $1-\delta_W(\varepsilon)$ 成立；而 Proposition 3.2 反证没有 AFI 时由 $V(-X)=-V(X)$、标量端只取范数立刻得 $c(-X)=c(X)$，镜像彻底不可分。**稳定性**用 $d(X_1,X_2)=\|H(X_1)-H(X_2)\|+\|\widetilde V(X_1)-\widetilde V(X_2)\|$ 度量，因为 $H(-X)=H(X)$、$a(-X)=a(X)$、$v(-X)=-v(X)$，所以镜像距离 $d(X,-X)=\|2Av(X)\|$ 受系数 $A$ 显式控制（可学得很小），再用氨基酸 Tanimoto 形状相似度作几何旁证，支撑 $d(X,X')>d(X,-X)$——即镜像比异种更近。**扩散连续性**由 Theorem 3.4 收尾：给条件扩散一个 Lipschitz 假设后 $W_2(\mu_c,\mu_{c'})\le K_{\text{diff}}\|c-c'\|$，于是镜像靶标给出的相近潜码 ⇒ 解码出的 binder 分布相近 ⇒ 即便从没见过 D-L 训练对也能泛化。这套论证恰好回答了"为何选轴向量而非张量积"：正是极/轴分解才给出这种可解析控制的简单结构，把零样本泛化从经验观察提升为有保证的机制。
 
-3. **AFI-EPT 嵌入 UniMoMo 的 D-肽设计 pipeline**:
+**3. AFI-EPT 嵌入 UniMoMo：端到端的 D-肽 de novo 设计 pipeline**
 
-    - 功能：把 AFI 落到工程实现，得到端到端的 D-肽 binder de novo 设计模型 PepMirror。
-    - 核心思路：以 UniMoMo（VAE + latent diffusion）为底座，把 VAE 编/解码器和扩散网络的 EPT 主干都替换为 AFI-EPT；按构造方式得三个变体 PepMirror(cross/triple/commu.)。推理时按 mirror-image display 思路两次反演（输入 $\to$ 反演到 D-靶 $\to$ 模型生成 L-肽 $\to$ 反演回 D-肽 binder）。下游 5,000 候选再走物理 + 几何过滤，挑 12 条化学合成做 BLI 测亲和力。
-    - 设计动机：选 UniMoMo 是因为它本身就不嵌入刚体 / 局部右手坐标系，是少数能与 AFI 干净叠加的骨干（RFDiffusion 之类 frame-based 模型一旦写死刚体就没法直接接 AFI）；latent diffusion 又比 atom-level diffusion（PocketXMol）节省算力并享受 Theorem 3.4 的稳定性保证。
+把 AFI 落地，就是用 UniMoMo（VAE + latent diffusion）作底座，把 VAE 编/解码器和扩散网络里的 EPT 主干全替换成 AFI-EPT，按三种轴向量构造得到 PepMirror(cross/triple/commu.) 三个变体。之所以选 UniMoMo，是因为它本身不嵌入刚体 / 局部右手坐标系——RFDiffusion 这类 frame-based 模型一旦把右手性写死进刚体就没法直接接 AFI；而 latent diffusion 又比 atom-level diffusion（PocketXMol）省算力，且天然吃到 Theorem 3.4 的稳定性保证。推理时按上文两次反演的 mirror-image display 流程生成 D-肽，下游再对 5,000 条候选做物理 + 几何过滤，挑 12 条化学合成、用 BLI 测亲和力。
 
 ### 损失函数 / 训练策略
-训练数据只用 L-L 同手性蛋白-肽复合物（与 UniMoMo 一致），损失为 VAE 重建 + latent diffusion 去噪标准目标，无任何 D-肽数据或手性显式监督——异手性能力完全由 AFI + 反演推理框架"零样本"涌现。
+训练数据只用 L-L 同手性蛋白-肽复合物（与 UniMoMo 一致），损失为 VAE 重建 + latent diffusion 去噪的标准目标，没有任何 D-肽数据或手性显式监督——异手性能力完全由 AFI + 反演推理框架"零样本"涌现。
 
 ## 实验关键数据
 

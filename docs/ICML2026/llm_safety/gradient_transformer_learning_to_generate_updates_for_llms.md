@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-框架分三个阶段：(1) **Update vector curation**——服务商在公开 shadow 数据集 $D_p$ 上 fine-tune TinyLM 和 LLM，凑 $K$ 个 $(\Delta\tilde\theta_{S,k}, \Delta\tilde\theta_{T,k})$ pair；(2) **Train Grad-Transformer**——在这些 pair 上学一个 seq2seq 模型；(3) **Deploy**——客户本地 fine-tune TinyLM 得到 $\Delta\theta_{S,i}$，发给服务商；服务商 average 多个客户的 update 后送入 Grad-Transformer，得到 $\Delta\hat\theta_T$，加到初始 LLM 上 $\hat\theta_T=\theta_T^0+\Delta\hat\theta_T$ 返回给客户推理。
+本文要让服务商在完全不碰私有数据的前提下，把客户在私有数据上微调小模型攒下的"梯度知识"搬到大模型上。整套机制分三步串起来：先在**公开 shadow 数据集** $D_p$ 上分别微调 TinyLM 和 LLM，凑出 $K$ 个 $(\Delta\tilde\theta_{S,k}, \Delta\tilde\theta_{T,k})$ 配对（curation）；用这些配对训一个 seq2seq 的 Grad-Transformer，学会"TinyLM update → LLM update"的翻译关系（train）；部署时客户本地微调 TinyLM 得到 $\Delta\theta_{S,i}$ 上传，服务商把多客户的 update pool 起来送进 Grad-Transformer 得到 $\Delta\hat\theta_T$，叠回初始权重 $\hat\theta_T=\theta_T^0+\Delta\hat\theta_T$ 返还客户推理（deploy）。映射只在 shadow 数据上训一次，对所有客户复用。
 
 ### 关键设计
 
-1. **Update Vector 作为蒸馏载体**:
+**1. Update vector 作为蒸馏载体：把"参数增量"当成不泄密的知识介质。**
 
-    - 功能：用"参数增量"代替"logits / 合成样本"作为跨模型知识传递的中间介质。
-    - 核心思路：客户只上传 $\Delta\theta_S=\theta_S^*-\theta_S^0$（相对于公开初始权重的差），服务商在这个增量上做映射；原始私有样本永远留在客户本地。配合 LoRA $r=2$ adapter 进一步压缩维度。理论上 (Lemma 5.1, Theorem 5.2) 证明泛化与效用 bound 同时受 $I(w;D_p)$ 控制，所以可以用 DP-SGD 等带噪算法降低 $\Delta\theta_S$ 对样本的依赖，进一步降隐私风险。
-    - 设计动机：update vector 是低方差、数值稳定的"语义压缩"，比合成数据少一个泄漏渠道，且天然兼容 LoRA、DP 等隐私机制；shadow 数据集只用来学"两个参数空间的相关性"，与具体客户数据无关，所以一个 Grad-Transformer 可服务所有客户。
+传统蒸馏要么传 logits、要么传合成样本，前者要求 teacher/student 见同一批数据，后者会把私有信息以记忆形式泄漏——两条路都和"私有数据不出本地"矛盾。本文换一个载体：客户只上传相对公开初始权重的增量 $\Delta\theta_S=\theta_S^*-\theta_S^0$，服务商在这个增量上做映射，原始样本永远留在本地，并配合 LoRA $r=2$ adapter 把维度进一步压下来。之所以可行，是因为 update vector 是低方差、数值稳定的"语义压缩"，它把私有数据的影响封装成参数空间增量，不直接对应任何具体样本，比合成数据少一个泄漏渠道；理论上 (Lemma 5.1, Theorem 5.2) 证明泛化与效用 bound 同时受 $I(w;D_p)$ 控制，于是可以叠加 DP-SGD 等带噪算法削弱 $\Delta\theta_S$ 对单个样本的依赖、再降隐私风险。更关键的是，shadow 数据集只用来学"两个参数空间之间的相关性"，与任何具体客户数据无关，所以同一个 Grad-Transformer 能服务所有同任务客户。
 
-2. **Block-wise Tokenization 解决维度爆炸**:
+**2. Block-wise tokenization：把万亿维参数映射拆成 token 序列翻译。**
 
-    - 功能：把数十亿维的参数空间映射，化简为长度为 $L_T$、维度统一的 token 序列翻译任务。
-    - 核心思路：对每个 attention block，把 Q/K/V/output projection 的权重增量 concat 成一个 block-wise vector $\delta_{S,k}^j\in\mathbb{R}^{d_S}$，类比 Transformer 里的 token。embedding 层 $W_S^{emb},W_T^{emb}$ 把不同维度的 source/target block 投影到同一 hidden size；encoder-decoder $\varphi$ 处理整序列，最后 $W_{out}$ 投回 $d_T$ 维 LLM block 空间。Naive 做法（concat 全部参数后投影）需要万亿级参数，本方法把代价降到一个 Flan-T5-Large。
-    - 设计动机：直接对全参数建模不可行；按 attention block 切分既保留了"层级对应关系"这一强先验，又把序列长度控制在几十到上百，正好落在 Transformer 擅长的尺度。
+如果直接把全部参数 concat 起来投影到大模型空间，投影矩阵会膨胀到万亿级、根本训不起来。本文借 Transformer "处理 token 序列"的本行，把参数映射重写成序列翻译：对每个 attention block，把 Q/K/V/output projection 的权重增量拼成一个 block 向量 $\delta_{S,k}^j\in\mathbb{R}^{d_S}$，当作一个 token；embedding 层 $W_S^{emb}, W_T^{emb}$ 把维度不同的 source/target block 投到同一 hidden size，encoder-decoder $\varphi$ 处理整条序列，再用 $W_{out}$ 投回 $d_T$ 维的 LLM block 空间。这样切分既保留了"层级对应关系"这个强先验，又把序列长度压在几十到上百、正好落在 Transformer 擅长的尺度，整套映射的代价从万亿参数降到一个 Flan-T5-Large。
 
-3. **Teacher-forcing 训练 + 自回归推理**:
+**3. Teacher-forcing 训练 + 自回归推理：让 decoder 捕捉 block 间耦合。**
 
-    - 功能：让 decoder 在生成第 $j$ 个 LLM block update 时既参考全部 TinyLM blocks，也参考已生成的前 $j-1$ 个 LLM blocks，从而捕捉 LLM 内部 block 间的耦合。
-    - 核心思路：训练用 teacher forcing $h_{T,k}^{<j}=W_T^{emb}(\delta_{T,k}^{<j})$，目标是 MSE $\arg\min_w \tfrac{1}{KL_T}\sum_k\sum_j\|\hat\delta_{T,k}^j-\delta_{T,k}^j\|_2^2$；推理时切换成 $h_{T,k}^{<j}$ 用 decoder 自己上一步的预测 $\hat h_{T,k}^{<j}$ 喂回（Eq. 11），完全 autoregressive。多客户场景下先对 $\{\Delta\theta_{S,i}\}$ 做 pool（均值或求和）再送入 $\mathcal{M}$，天然支持联合训练。
-    - 设计动机：LLM 不同层的参数更新存在强相关性（深层 attention 依赖浅层语义），纯独立预测每个 block 会丢掉这种结构；自回归正是 Transformer 处理结构化输出的标准范式。
+LLM 不同层的参数更新彼此强相关（深层 attention 依赖浅层语义），如果独立预测每个 block 就会丢掉这层结构。本文让 decoder 生成第 $j$ 个 LLM block update 时既看全部 TinyLM blocks、也看已生成的前 $j-1$ 个 LLM blocks。训练用 teacher forcing 把真值喂回 $h_{T,k}^{<j}=W_T^{emb}(\delta_{T,k}^{<j})$，目标是 block-wise MSE：
+
+$$\arg\min_w \frac{1}{KL_T}\sum_k\sum_j\big\|\hat\delta_{T,k}^j-\delta_{T,k}^j\big\|_2^2$$
+
+推理时切换成把 decoder 自己上一步的预测 $\hat h_{T,k}^{<j}$ 喂回（Eq. 11），完全 autoregressive。多客户场景下先对 $\{\Delta\theta_{S,i}\}$ 做 pool（均值或求和）再送进 $\mathcal{M}$，天然支持联合更新——自回归正是 Transformer 处理这种结构化输出的标准范式。
 
 ### 损失函数 / 训练策略
 - 训练目标：block-wise MSE (Eq. 10)，用 Adam 优化 30 epoch，batch=32，lr 2e-5～8e-5。

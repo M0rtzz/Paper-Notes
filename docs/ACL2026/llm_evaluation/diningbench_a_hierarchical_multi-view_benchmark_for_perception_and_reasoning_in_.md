@@ -40,39 +40,27 @@ tags:
 
 ## 方法详解
 
-DiningBench 是一个 benchmark 数据集，「方法」就是数据构造 pipeline + 任务定义 + 评测协议。
+DiningBench 是一个 benchmark 数据集,「方法」就是数据构造 pipeline + 任务定义 + 评测协议。
 
 ### 整体框架
-
-整套 pipeline 分两阶段：
-
-1. **Base Data 构建**：从美团 20M UGC 图出发，依次经过 ① 图像质量评估（Qwen-2.5-VL-7B 蒸馏自 GPT-4 的判别器）→ 685k 图；② 参考图匹配（验证用户拍照与商家参考图一致）→ 90k 菜；③ 商家参考图质量验证 → 41k 菜；④ 详细成分列表筛选 → 15k 菜；⑤ 按菜系去重/平衡 + 人工质检 → 6,057 道菜。
-2. **Task Generation**：用 Gemini-3-Pro-Preview 做 hard-negative 挖掘、营养推理、VQA 生成，每步都接两轮 LLM 过滤（一轮去除「太难无法判断」的样本，一轮去除「太简单 distractor 一眼就错」的样本），最后人工复核。
-
-最终得到 3 个子集：Fine-Grained Classification (2,884) + Nutrition Estimation (1,650) + VQA (804)。
+整套 pipeline 要解决的是「如何从噪声海量 UGC 里榨出能暴露 VLM 短板的高质量评测题」。它分两阶段:先做 Base Data 构建,从美团 20M UGC 图依次过图像质量评估(Qwen-2.5-VL-7B 蒸馏自 GPT-4 的判别器)→ 685k 图、参考图匹配(验证用户拍照与商家参考图一致)→ 90k 菜、商家参考图质量验证 → 41k 菜、详细成分列表筛选 → 15k 菜,最后按菜系去重平衡 + 人工质检收敛到 6,057 道菜;再做 Task Generation,用 Gemini-3-Pro-Preview 生成 hard-negative、营养推理与 VQA 题目,每一步都接两轮 LLM 过滤(一轮去掉「太难无法判断」、一轮去掉「太简单一眼可辨」)并以人工复核收尾。最终落成三个认知层级递增的子集:Fine-Grained Classification (2,884)、Nutrition Estimation (1,650)、VQA (804)。
 
 ### 关键设计
 
-1. **同店硬负样本挖掘（Fine-Grained Classification）**:
+**1. 同店硬负样本挖掘:把 fine-grained 这个老问题翻新。** 传统 benchmark 的 distractor 从全类目随机抽,模型靠「这是沙拉不是面条」的类别级先验就能排除大半,SOTA 模型早已饱和。DiningBench 借美团的菜单结构,对每道目标菜用 Gemini-3-Pro-Preview 从**同一家商家的同一菜单类目**下选 7 个视觉/语义最相似的菜当 distractor(目标是 Smoked Salmon Salad,干扰项就是 Salmon Avocado Salad、Tuna Tartare Salad 等),凑成 8 选 1 多项选择。
 
-    - 功能：构造视觉极相似的 8-选-1 多项选择题，让模型不能靠类别级先验猜对。
-    - 核心思路：对每道目标菜，用 Gemini-3-Pro-Preview 从**同一家商家的同一菜单类目**下选 7 个视觉/语义最相似的菜作为 distractor（例如目标是 Smoked Salmon Salad，distractor 就是 Salmon Avocado Salad、Tuna Tartare Salad 等），然后用 Gemini-3-Pro-Preview + Gemini-2.5-Pro 两轮筛选——第一轮剔除「过于模糊以致无法唯一识别 GT」的样本，第二轮剔除「distractor 太容易区分」的简单样本，最终人工复核每个样本。
-    - 设计动机：传统 benchmark 的 distractor 是从全类目随机抽，模型靠「这是沙拉不是面条」就能排除大部分。同店同类目的 distractor 共享成分/颜色/摆盘，强迫模型关注 cutting style、texture、配料比例等真正的细粒度视觉线索。这种构造让 GPT-4o 准确率只有 65.26%（远低于其它任务），证明确实把 fine-grained discriminability 这个瓶颈暴露出来了。
+这些干扰项共享成分、颜色、摆盘,强迫模型放弃 bag-of-features 而去看 cutting style、texture、配料比例这些真正的细粒度线索。构造时再用 Gemini-3-Pro-Preview + Gemini-2.5-Pro 两轮筛选——第一轮剔除「模糊到无法唯一识别 GT」的样本,第二轮剔除「distractor 太容易区分」的简单样本,最后逐样本人工复核。效果上这把 GPT-4o 的准确率压到只有 65.26%(远低于它在其它任务上的表现),证明 fine-grained discriminability 这个瓶颈确实被暴露出来。
 
-2. **高保真营养标注（Nutrition Estimation）**:
+**2. 高保真营养标注:商家元数据 + LLM 估算 + USDA 对照三重校验。** Nutrition5K 只覆盖 Google 食堂、FastFood 只覆盖快餐连锁,都难泛化到真实多样化菜品,所以营养这一维要自己重做。每道菜给出 4 维营养向量 $\mathbf{v} = (\text{Cal}, \text{Carb}, \text{Prot}, \text{Fat}) \in \mathbb{R}^4$ 作回归 GT,走双路标注:商家明确给营养信息的菜直接抄(Direct Extraction);缺标但有详细成分加份量的菜,用 Gemini-3-Pro-Preview 对「图 + 成分 + 份量」生成估值(LLM-Assisted Estimation)。
 
-    - 功能：为每道菜提供 4 维营养向量 $\mathbf{v} = (\text{Cal}, \text{Carb}, \text{Prot}, \text{Fat}) \in \mathbb{R}^4$ 作为回归 GT。
-    - 核心思路：双路标注——(a) **Direct Extraction**：商家明确提供营养信息的菜直接抄；(b) **LLM-Assisted Estimation**：缺标但有详细成分+份量的菜，用 Gemini-3-Pro-Preview 给「图 + 成分 + 份量」生成估值。然后 **所有** 估值都交叉对照 USDA FoodData Central 数据库，并人工系统化校验。Prompt 里特别强调用 Atwater 系统 $E \approx 4P + 4C + 9F$ 做一致性检查，且明确告诉模型「商家常少报热量/油脂、多报蛋白质，发现欺诈就丢弃描述自行估算」。
-    - 设计动机：Nutrition5K 只覆盖食堂标准餐，FastFood 只覆盖快餐连锁，都难以泛化到真实多样化菜品。本文通过「商家元数据 + LLM 估算 + USDA 对照 + 人工三重校验」，把营养标注做到 1,650 道菜的多样化覆盖，热量从 light meal 到 calorie-dense（均值 670.5 kcal）跨度大。
+关键在于**所有**估值都要交叉对照 USDA FoodData Central 数据库并经人工系统化校验,prompt 里还特意用 Atwater 系统 $E \approx 4P + 4C + 9F$ 做一致性检查,并明确提示模型「商家常少报热量/油脂、多报蛋白质,发现欺诈就丢弃描述自行估算」。靠这套三重校验,营养标注做到 1,650 道菜的多样化覆盖,热量从 light meal 一直拉到 calorie-dense(均值 670.5 kcal),跨度远大于既有数据集。
 
-3. **层级化任务设计 + LLM-as-a-Judge 评估**:
+**3. 层级化任务 + LLM-as-a-Judge:把认知复杂度拆成可单独诊断的三层。** 三个子集按「识别 → 量化 → 推理」递增,各配匹配的指标,这样研究者能分别定位 VLM 在三个层次上的不同瓶颈。Fine-Grained Classification 用 Accuracy;Nutrition Estimation 用 MAE / RMSE / MAPE,其中 $\mathrm{MAPE}_k = \frac{1}{N}\sum_i |v_{i,k} - \hat{v}_{i,k}| / v_{i,k}$ 在 4 个营养组分上分别算后取平均,比纯 MAE 更直观地反映相对误差。
 
-    - 功能：把「认知复杂度」从识别 → 量化 → 推理三层递增，分别用 Accuracy / MAPE / LLM-Judge ACC 评估。
-    - 核心思路：(i) Fine-Grained Classification 用 Acc；(ii) Nutrition Estimation 用 MAE / RMSE / **MAPE**，其中 $\mathrm{MAPE}_k = \frac{1}{N}\sum_i |v_{i,k} - \hat{v}_{i,k}| / v_{i,k}$ 在 4 个营养组分上分别算后取平均；(iii) VQA 由于答案是自然语言，用 LLM-as-a-Judge（评估器 LLM 对预测 vs gold 做语义一致性二元判定）输出 Acc，避免 exact-string-match 的局限。VQA 子集覆盖 Cuisine Technique (532)、Dietary Suggestion (219)、Multi-Image Analysis (35)、Counterfactual Reasoning (18) 四类。
-    - 设计动机：层级化让研究者可以单独诊断 VLM 在「看见 → 量化 → 推理」三个层次上的不同瓶颈。比如发现 Gemini-3-Pro-Preview 在 VQA 上 90.42% 但营养估计 MAPE 仍 24.45%，说明它「推理对、量化错」，这是粗粒度评测看不出的。
+VQA 因为答案是自然语言,exact-string-match 会误杀语义正确的表述,故改用 LLM-as-a-Judge——让评估器 LLM 对预测与 gold 做语义一致性的二元判定再输出 Acc;该子集覆盖 Cuisine Technique (532)、Dietary Suggestion (219)、Multi-Image Analysis (35)、Counterfactual Reasoning (18) 四类。层级化的价值在于能拆出「推理对、量化错」这种单一 Acc 看不见的现象——例如 Gemini-3-Pro-Preview 在 VQA 上拿 90.42%,但营养估计 MAPE 仍高达 24.45%。
 
 ### 损失函数 / 训练策略
-不训练模型，只做评测。所有商业模型走官方 API（temperature=0, max_tokens=16,384），开源模型用 vLLM 部署（<8B 单卡 A100，30–38B 两卡，72B 四卡）。Base Data 构造阶段用到知识蒸馏：用 GPT-4 标的小批数据训练 Qwen-2.5-VL-7B 的图像质量评估器和参考匹配器，再用它们做大规模过滤。
+不训练模型,只做评测。所有商业模型走官方 API(temperature=0, max_tokens=16,384),开源模型用 vLLM 部署(<8B 单卡 A100,30–38B 两卡,72B 四卡)。Base Data 构造阶段用到知识蒸馏:用 GPT-4 标的小批数据训练 Qwen-2.5-VL-7B 的图像质量评估器和参考匹配器,再用它们做大规模过滤。
 
 ## 实验关键数据
 

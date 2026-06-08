@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DUDE 形式化：给定网页截图 $I$、任务说明 $P$、agent 提议的点击坐标 $C=(x,y)$，evaluator $\mathcal{E}:(I,P,C)\mapsto(\hat L, \gamma)$ 输出三值标签 $\hat L \in \{-1, 0, 1\}$（-1 欺骗 / 0 无效区 / 1 合法）与置信度 $\gamma \in (0,1)$。Ground truth 由 click 是否落入标注的合法框 $\mathcal{B}_c$、欺骗框 $\mathcal{B}_d$ 或 null 区域 $\mathcal{B}_0$ 决定。pipeline 分两阶段：Stage-1 用 hybrid-reward RL 训练 evaluator 参数，同时收集 negative-reward 样本到 failure pool $\mathcal{F}$；Stage-2 用外部 multimodal summarizer 把 $\mathcal{F}$ 中的失败模式迭代蒸馏成 experience context $\mathcal{X}$，每轮在 anchor success 集上验证以防退化。推理时 evaluator 装上 $\mathcal{X}$ 作为门控：只有 $\hat L = 1$ 的 click 才执行，否则 agent 重新探索。
+DUDE 要解决的是 web agent 面对欺骗性 UI 时的两难：既要敢点合法按钮，又要敢拒欺骗按钮，简单"全部拒绝"会陷入 over-conservation。它把这件事形式化为一个"点击前审核"问题——给定网页截图 $I$、任务说明 $P$ 和 agent 提议的点击坐标 $C=(x,y)$，训练一个 evaluator $\mathcal{E}:(I,P,C)\mapsto(\hat L, \gamma)$，输出三值标签 $\hat L \in \{-1, 0, 1\}$（-1 欺骗 / 0 无效区 / 1 合法）和置信度 $\gamma \in (0,1)$，ground truth 由点击是否落入标注的合法框 $\mathcal{B}_c$、欺骗框 $\mathcal{B}_d$ 还是 null 区域 $\mathcal{B}_0$ 决定。整条 pipeline 分两步走：Stage-1 用 hybrid-reward RL 训练 evaluator 的参数，并把拿到负奖励的样本收进 failure pool $\mathcal{F}$；Stage-2 不再动参数，而是用一个外部 multimodal summarizer 把 $\mathcal{F}$ 里的失败模式迭代蒸馏成压缩的 experience context $\mathcal{X}$，每轮还在 anchor success 集上验证以防退化。部署推理时，evaluator 装上 $\mathcal{X}$ 充当门控：只有判为 $\hat L=1$ 的点击才放行，否则让 agent 退回重新探索。
 
 ### 关键设计
 
-1. **Hybrid-Reward Learning（不对称惩罚 + 置信度 + 注意力标量）**:
+**1. Hybrid-Reward Learning：把"放行欺骗远比误拒严重"的代价不对称直接写进 reward。**
 
-    - 功能：训练一个既不会 over-conservation 又对欺骗高度敏感的 evaluator。
-    - 核心思路：reward 形式为 $R=\gamma$ 若 $\hat L = L$；否则 $R=-\alpha \cdot \omega(L, \hat L) \cdot \gamma$。其中 $\omega$ 编码 4 种错误的不对称代价：C1 合法误判为欺骗/无效 $\omega=1$（保守但不致命）；C2/C3 无效区误判 $\omega=1+\beta$；C4 **欺骗放行（漏报）$\omega=10$**（灾难性，权重十倍）。注意力标量 $\beta=S_{\hat L}/S_\mathcal{I}$ 把"预测区域占图比例"作为惩罚加权——越大的预测区域意味着越显著，错判代价越高。置信度调整 $\alpha=\text{clip}(1/((d(C,\mathcal{B}_{\hat L})+\epsilon)\cdot(S_L/S_\mathcal{I})), \alpha_{\min}, \alpha_{\max})$ 在 click 离边界很近或 ground-truth 区域很小时降低惩罚，避免"模糊样本被狠惩罚"。用 GRPO 训练（Shao et al. 2024）。
-    - 设计动机：把"假阳/假阴成本不对称"明确写入 reward——这是工业部署最关心的属性。如果只优化准确率，evaluator 会均匀降低两类错误，但实际场景里"放行欺骗"是合规事故，"误拒合法按钮"只是体验问题，必须区别对待。
+如果只优化准确率，evaluator 会均匀压低两类错误，但现实里"放行欺骗"是合规事故、"误拒合法按钮"只是体验问题，必须区别对待。DUDE 的 reward 形式为：判对（$\hat L = L$）时 $R=\gamma$，判错时 $R=-\alpha \cdot \omega(L, \hat L) \cdot \gamma$。其中 $\omega$ 编码了四种错误的不对称代价——C1 把合法误判为欺骗/无效，$\omega=1$（保守但不致命）；C2/C3 无效区误判，$\omega=1+\beta$；C4 **把欺骗放行（漏报），$\omega=10$**，灾难性，权重直接十倍。注意力标量 $\beta=S_{\hat L}/S_\mathcal{I}$ 用"预测区域占整图的比例"给惩罚加权，区域越大越显著、错判代价越高；置信度调整 $\alpha=\text{clip}(1/((d(C,\mathcal{B}_{\hat L})+\epsilon)\cdot(S_L/S_\mathcal{I})), \alpha_{\min}, \alpha_{\max})$ 则在点击离边界很近或 ground-truth 区域很小时主动降低惩罚，避免那些本就模糊的样本被狠罚。整个 evaluator 用 GRPO（Shao et al. 2024）训练。
 
-2. **Iterative Experience Summarization（不更新参数的部署期持续学习）**:
+**2. Iterative Experience Summarization：不改一个参数，靠经验摘要在部署期持续进化。**
 
-    - 功能：用一个外部 multimodal summarizer 把 Stage-1 收集的 failure pool 蒸馏成紧凑的 experience context $\mathcal{X}$，部署时拼到 evaluator 的 prompt 前。
-    - 核心思路：维护 failure pool $\mathcal{F}$ 和 success pool $\mathcal{S}$，每个失败样本带 persistence counter $\kappa(x)$（初始 1，每次抗修正递增）。每轮 $t$ 采样 $\mathcal{B}_f\subset\mathcal{F}$ + anchor $\mathcal{B}_s\subset\mathcal{S}$，summarizer 接收上一轮 $\mathcal{X}^{(t-1)}$ + structured failure description + screenshot，输出新 $\mathcal{X}^{(t)}$。在 $\mathcal{B}_f\cup\mathcal{B}_s$ 上验证：通过则移入 $\mathcal{S}$，否则 $\kappa$ +1 留在 $\mathcal{F}$。直到 $\mathcal{F}$ 清空或达到 $T$ 轮上限（Algorithm 1）。anchor success 集是关键约束，防止 summarizer 写入的新规则把之前对的样本也搞错。
-    - 设计动机：闭源模型无法 fine-tune、网页样式频繁更新、夜里没标注员——只能靠 prompt 层面的"经验累积"。persistence counter 让 summarizer 优先关注反复失败的顽固模式；anchor success 是 regularizer 防止 "for fixing one bug introduce another"。
+闭源模型无法 fine-tune、网页样式频繁更新、上线后也没有标注员盯着——所以 DUDE 把"持续学习"放到 prompt 层面。它维护一个 failure pool $\mathcal{F}$ 和 success pool $\mathcal{S}$，每个失败样本带一个 persistence counter $\kappa(x)$（初始为 1，每抗住一次修正就 +1）。每一轮 $t$ 采样 $\mathcal{B}_f\subset\mathcal{F}$ 加上 anchor $\mathcal{B}_s\subset\mathcal{S}$，summarizer 接收上一轮的 $\mathcal{X}^{(t-1)}$、结构化失败描述和截图，产出新的 $\mathcal{X}^{(t)}$；随后在 $\mathcal{B}_f\cup\mathcal{B}_s$ 上验证：通过的失败样本移入 $\mathcal{S}$，没通过的把 $\kappa$ +1 留在 $\mathcal{F}$，如此循环直到 $\mathcal{F}$ 清空或达到 $T$ 轮上限（Algorithm 1）。persistence counter 让 summarizer 把注意力集中在反复失败的顽固模式上；anchor success 集则是关键的正则化约束，防止新写入的规则在修一个 bug 的同时把原本判对的样本带歪。
 
-3. **Evaluator-as-Gate 推理时架构（Reject & Rethink 闭环）**:
+**3. Evaluator-as-Gate 推理架构：把 calibrated evaluator 接进 agent 主循环做 Reject & Rethink。**
 
-    - 功能：把 calibrated evaluator 嵌入到 agent 主循环里做 click 前审核。
-    - 核心思路：base agent 提议 click $C$ → evaluator 用 $\mathcal{X}\oplus\mathcal{T}$（experience context + 模板）评判 → $\hat L = 1$ 才执行；否则 trigger "abandon-and-rethink"，agent 继续探索。Episode 在成功完成任务或检测到欺骗 trigger 时提前结束，最大步数 $T_{\max}=3$。
-    - 设计动机：detection 单独存在没用，必须直接接到 action loop 才能产生防御价值。同时 evaluator 的反馈不仅过滤欺骗，对 null-region 错误点击（占失败的 86.5%）也给纠正信号，意外带来 **deception-aware 评测对一般任务定位也有增益** 的 dual benefit。
+检测器单独存在没有防御价值，必须直接接到 action loop 上才管用。DUDE 的推理闭环是：base agent 提议点击 $C$ → evaluator 用 $\mathcal{X}\oplus\mathcal{T}$（experience context 拼模板）做评判 → 只有 $\hat L=1$ 才执行，否则触发 "abandon-and-rethink"，让 agent 继续探索；episode 在成功完成任务或检测到欺骗时提前结束，最大步数 $T_{\max}=3$。一个意外收益是，evaluator 的反馈不只过滤欺骗，对占失败 86.5% 的 null-region 误点也给出纠正信号——于是这套 deception-aware 的门控同时改善了一般任务的定位能力，形成 dual benefit。
 
 ### 损失函数 / 训练策略
-Stage-1 用 GRPO + hybrid reward；训练样本通过对每个 RUC 标注样本生成三类 click 构造（中心点 benign + 欺骗框中心 + $n$ 个 null 随机点）。Stage-2 用外部 multimodal summarizer（如 GPT-4V 或 UI-TARS）做迭代摘要，每轮 batch size $b$ + anchor size $a$，最大轮数 $T$。
+Stage-1 用 GRPO 配 hybrid reward，训练样本通过对每个 RUC 标注样本构造三类点击得到（合法框中心点 benign + 欺骗框中心 + $n$ 个 null 随机点）。Stage-2 用外部 multimodal summarizer（如 GPT-4V 或 UI-TARS）做迭代摘要，每轮 batch size $b$、anchor size $a$，最大轮数 $T$。
 
 ## 实验关键数据
 

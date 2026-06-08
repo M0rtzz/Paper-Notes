@@ -50,20 +50,29 @@ EagleNet 以 CLIP 为骨干网络，包含两个核心模块：(1) **Fine-Graine
 
 ### 关键设计
 
-1. **Fine-Grained Relationship Learning (FRL)**:
-    - 功能：生成融合帧上下文信息的增强文本嵌入
-    - 核心思路：首先通过随机文本建模策略采样 $S=20$ 个文本候选 $\{\mathbf{t}_i^{sto}\}$，连同原始文本嵌入和 $M$ 个帧嵌入（加时序位置编码）一起构成节点矩阵 $\mathbf{X} \in \mathbb{R}^{n \times d}$，其中 $n = 1 + S + M$。然后通过设计的 Relational Graph Attention Network (RGAT) 学习三种关系类型（text-text、frame-frame、text-frame）的注意力权重。RGAT 对每种关系 $r$ 和每对节点 $(i,j)$ 计算边权重 $e_{ij}^{r,h} = \psi^r([\mathbf{W}^{r,h}\mathbf{h}_i \| \mathbf{W}^{r,h}\mathbf{h}_j])$，经 LeakyReLU 和 softmax 得到注意力分数。最终提取文本-帧边权重，平均后对文本节点加权聚合得到增强文本 $\mathbf{t}^{gen} = \sum_i w_i \mathbf{X}_i$
-    - 设计动机：与仅考虑文本-帧交互的 TMASS 等方法不同，FRL 通过引入 frame-frame 关系使文本嵌入能感知帧间的上下文依赖，有效抑制冗余信息和噪声
+**1. Fine-Grained Relationship Learning（FRL）：让扩展后的文本嵌入"看见"帧与帧之间的关系。**
 
-2. **Energy-Aware Matching (EAM)**:
-    - 功能：从细粒度角度增强文本-帧关系学习，精确建模真实文本-视频对的分布
-    - 核心思路：用 Boltzmann 分布 $p_\theta(\mathbf{t}, \mathbf{F}) = \frac{\exp(-E_\theta(\mathbf{t}, \mathbf{F}))}{Z_\theta}$ 对文本-视频对的联合分布建模。文本-视频能量定义为文本-帧能量的平均值 $E_\theta(\mathbf{t}, \mathbf{F}) = \frac{1}{M}\sum_i^M E_\theta(\mathbf{t}, \mathbf{f}_i)$，从而充分利用细粒度交互。能量函数可选择负余弦相似度、双线性评分或 MLP。通过负对数似然损失训练，使用 $K=20$ 步 MCMC Langevin 采样生成假文本-视频对。EAM 仅在训练时使用，不增加推理成本
-    - 设计动机：全局的对比损失只对齐文本与视频整体，EAM 通过能量模型在细粒度层面精确捕获文本-帧的详细交互模式
+TMASS 这类方法扩展文本语义时只问"文本和每帧像不像"，却把视频内部帧与帧的上下文关系丢在一边，扩出来的文本嵌入自然抓不住视频的全局和时序语义。FRL 的做法是把所有东西都摆进一张图里一起学：先用随机文本建模策略采样 $S=20$ 个文本候选 $\{\mathbf{t}_i^{sto}\}$，连同 1 个原始文本嵌入和 $M$ 个带时序位置编码的帧嵌入，拼成节点矩阵 $\mathbf{X}\in\mathbb{R}^{n\times d}$（$n=1+S+M$）。比如一段 12 帧的视频，节点矩阵就有 $1+20+12=33$ 个节点。关系图注意力网络 RGAT 在这张图上同时学三种边——text-text、frame-frame、text-frame，对关系 $r$、节点对 $(i,j)$ 算边权重
 
-3. **Sigmoid Loss 替代 Softmax Loss**:
-    - 功能：提供更有效的跨模态对齐和更稳定的训练
-    - 核心思路：$\mathcal{L}_{sig} = -\frac{1}{B}\sum_i\sum_j \log\frac{1}{1 + e^{\mathbb{I}_{ij}(\tau \cdot s(\mathbf{t}_i, \mathbf{v}_j) + b)}}$，其中 $\mathbb{I}_{ij}$ 为正负对指示符，$\tau$ 和 $b$ 为可学习参数
-    - 设计动机：softmax loss 在 batch 相似度矩阵的两个维度上做归一化，对负样本和 batch size 敏感；sigmoid loss 独立处理每对样本，天然适合 TVR 中"一个文本可能语义匹配多个视频"的多匹配场景
+$$e_{ij}^{r,h} = \psi^r\big([\mathbf{W}^{r,h}\mathbf{h}_i \,\|\, \mathbf{W}^{r,h}\mathbf{h}_j]\big)$$
+
+再经 LeakyReLU 和 softmax 归一化成注意力分数。最后只取文本-帧那部分边权重做平均，对文本节点加权聚合，得到增强文本 $\mathbf{t}^{gen}=\sum_i w_i \mathbf{X}_i$。关键就在那条 frame-frame 边：有了它，文本嵌入在被聚合出来之前就已经"知道"帧之间怎么关联，从而过滤掉冗余和噪声，而不是平均地吃下每一帧。
+
+**2. Energy-Aware Matching（EAM）：用能量模型在帧粒度上对齐真实的文本-视频对分布。**
+
+全局对比损失只把文本和整段视频拉到一起，看不见文本到底和哪几帧对得上。EAM 改用基于能量的模型来刻画文本-视频对的联合分布，写成 Boltzmann 形式 $p_\theta(\mathbf{t},\mathbf{F})=\frac{\exp(-E_\theta(\mathbf{t},\mathbf{F}))}{Z_\theta}$，真实对能量低、假对能量高。要害是把文本-视频能量定义为逐帧能量的平均
+
+$$E_\theta(\mathbf{t},\mathbf{F}) = \frac{1}{M}\sum_{i}^{M} E_\theta(\mathbf{t},\mathbf{f}_i)$$
+
+这样梯度落到每一帧上，匹配是细粒度的而非整段一锅端。其中 $E_\theta$ 可选负余弦相似度、双线性评分或 MLP（实验里双线性和 MLP 更好，说明可学习参数有用）。训练用负对数似然，靠 $K=20$ 步 MCMC Langevin 采样造出"假文本-视频对"来推高它们的能量。EAM 只在训练时生效，推理时整块拿掉，不增加任何检索开销。
+
+**3. Sigmoid Loss 替代 Softmax Loss：让每对样本独立打分，契合 TVR 的多匹配本质。**
+
+softmax 对比损失要在 batch 相似度矩阵的行和列两个方向上做归一化，结果对负样本和 batch size 都很敏感；而 TVR 里"一个文本可能同时语义匹配好几个视频"，强行归一化反而会把这些合理的正匹配互相压低。EagleNet 改用 sigmoid loss
+
+$$\mathcal{L}_{sig} = -\frac{1}{B}\sum_i\sum_j \log\frac{1}{1 + e^{\mathbb{I}_{ij}(\tau \cdot s(\mathbf{t}_i, \mathbf{v}_j) + b)}}$$
+
+其中 $\mathbb{I}_{ij}$ 是正负对指示符，$\tau$、$b$ 为可学习的温度与偏置。它把每一对样本当成独立的二分类来判"匹配/不匹配"，不再受 batch 内其他样本牵连，因此训练更稳，也天然容得下一对多的匹配关系。
 
 ### 损失函数 / 训练策略
 总训练目标：$\mathcal{L}_{total} = \mathcal{L}_{sig}(\mathbf{t}^{gen}, \mathbf{v}) + \lambda_{sup}\mathcal{L}_{sig}(\mathbf{t}^{sup}, \mathbf{v}) + \lambda_{eam}\mathcal{L}_{eam}$

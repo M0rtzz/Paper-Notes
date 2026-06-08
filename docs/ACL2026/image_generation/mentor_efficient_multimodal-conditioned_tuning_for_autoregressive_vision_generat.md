@@ -44,23 +44,18 @@ MENTOR 的方法可以理解为一个多模态条件的图像 token 语言模型
 输入可以是图像、文本或它们的组合。多模态 encoder 产生条件序列 $H=(h_1,\dots,h_M)$，自回归 decoder 在 teacher forcing 下学习 $p(y_i|y_{<i},H)$，其中 $y$ 是离散图像 token 序列。训练分为两阶段：第一阶段强调像素和语义对齐；第二阶段通过多任务指令调优，让模型在参考图像和文本指令之间取得平衡。
 
 ### 关键设计
-1. **统一自回归生成架构**:
 
-	- 功能：把多模态条件和图像输出统一到 token 序列建模问题中。
-	- 核心思路：视觉 encoder 使用 CLIP-Large-Patch14，文本 encoder 使用 FlanT5-XL，MLP 将视觉 token 投影到 decoder 可消费的 latent space；decoder 继承 LlamaGen-XL，并使用 VQGAN 词表逐 token 生成图像。
-	- 设计动机：扩散模型的随机采样和 cross-attention 控制不够直接，自回归 token 生成可以把条件与输出的对应关系压到同一个 next-token objective 里，便于低成本训练和后续 RL。
+**1. 统一自回归生成架构：把多模态条件和图像输出压进同一个 next-token 目标。**
 
-2. **Stage 1 多模态对齐训练**:
+扩散模型的随机采样和 cross-attention 控制不够直接，条件和输出的对应关系散在多个模块里。MENTOR 改走 token 路线：视觉用 CLIP-Large-Patch14、文本用 FlanT5-XL 抽特征，一个轻量 MLP connector 把视觉 token 投影到 decoder 能消费的共享 latent space；decoder 继承 LlamaGen-XL，按 VQGAN 词表像写句子一样逐 token 生成图像，最后 VQGAN decoder 还原像素。好处是条件与输出的对应被收进同一个 next-token objective，既便于低成本训练，也为后续 token-level RL 留好接口。
 
-	- 功能：建立参考图像与输出图像 token 之间的像素级和语义级对齐。
-	- 核心思路：第一阶段包含图像重建、目标分割和文本到图像三类任务。重建强化像素保真，分割迫使模型关注空间结构和语义对象，T2I 保持基础生成能力。
-	- 设计动机：只做图像重建容易导致 copy-paste，模型不一定理解对象语义；加入分割任务后，模型必须把“看见的视觉细节”和“文本指定的对象”绑定起来。
+**2. Stage 1 多模态对齐训练：先逼模型真的看懂图像细节，而不是学会照抄。**
 
-3. **Stage 2 多模态指令调优**:
+只做图像重建很容易退化成 copy-paste，模型不一定理解对象语义。第一阶段因此混三类任务：图像重建强化像素保真，目标分割迫使模型关注空间结构和语义对象，文本到图像维持基础生成能力。分割是这里的关键——它要求模型把“看见的视觉细节”和“文本指定的对象”绑在一起，从源头上压住“只会复制参考图”的倾向。
 
-	- 功能：提升模型对复杂多模态指令的遵循能力，并缓解单一模态主导。
-	- 核心思路：第二阶段保留 T2I 和分割任务，并加入图像恢复、subject-driven generation。图像恢复要求模型从旋转、缩放、拼接到随机背景等扰动中恢复原图，subject-driven 任务要求同时保留主体身份和执行文本指令。
-	- 设计动机：图像恢复像一个正则项，逼迫模型既看图又读文字；subject-driven generation 则直接对应实际多模态生成需求。
+**3. Stage 2 多模态指令调优：在概念保持和文本跟随之间找平衡，别被任一模态绑架。**
+
+第一阶段建立了对齐，但真实多模态控制还要求模型同时保住主体身份和执行文本指令。第二阶段保留 T2I 和分割，再加入图像恢复和 subject-driven generation：图像恢复要求模型从旋转、缩放、拼接、随机背景等扰动中复原原图，像一个“既要看图又要读文字”的正则项；subject-driven 任务则直接对应真实需求——保留主体身份的同时按文本改场景。两者一起把模型从“高级复制器”推向真正的可控生成。
 
 ### 损失函数 / 训练策略
 训练目标是图像 token 的交叉熵损失：在 teacher forcing 下最大化每个输出 token 的条件概率。作者还使用 classifier-free guidance：训练时以概率 $p$ 将条件 $H$ 替换为无条件 embedding，推理时用 $\ell_g=\ell_u+(\ell_c-\ell_u)\times\lambda$ 调节条件强度。

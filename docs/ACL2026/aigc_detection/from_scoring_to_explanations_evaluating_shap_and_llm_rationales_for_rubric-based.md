@@ -44,23 +44,18 @@ tags:
 数据来自 NCTE elementary mathematics classroom transcripts，共 1,600 多节课，切成 6,005 个 15 分钟片段，并由专家按 CLASS 框架标注。本文只研究 Instructional Support 下的 Quality of Feedback 维度，分数为 1-7。训练集 4,775 段，测试集 1,230 段，同一班级不会跨 split。对于每个转录片段，模型先输出 QoF 分数；解释方法再给出最重要的句子排名；系统逐个删除 top-10 句子并重新评分，用平均连续预测变化 $\overline{\Delta}$ 衡量解释是否真的命中模型依赖的证据。
 
 ### 关键设计
-1. **PLM 与 LLM 双评分器设置**:
 
-	- 功能：比较任务专门微调模型和通用 instruction LLM 在 rubric scoring 上的差异。
-	- 核心思路：PLM 侧微调 BERT、ALBERT、RoBERTa、DeBERTaV3 的 base/large 版本。每个 transcript segment 先按句子编码，每句取 `[CLS]` 表示，再通过可训练 attention 得到文档表示，最后用线性回归头预测 QoF 标量。LLM 侧使用 Llama 3.1、Mixtral、Qwen3、Mistral 等开源 instruction 模型，以 few-shot prompt 直接打分。
-	- 设计动机：PLM 代表传统监督式 rubric scoring，LLM 代表无需训练但可直接部署的方案；两者并列后，才能判断解释方法是不是只适用于某一类模型。
+**1. PLM 与 LLM 双评分器设置：先把两条技术路线摆在同一张桌子上，才能看清解释方法到底依附于谁。**
 
-2. **句子级解释与删除检验**:
+rubric scoring 既可以走任务专门微调的老路，也可以走通用 instruction LLM 直接打分的新路，但单看任何一边，都无法判断后续的解释评估结论是普适的、还是只对某类模型成立。所以作者把两条路并列搭建：PLM 侧微调 BERT、ALBERT、RoBERTa、DeBERTaV3 的 base/large 版本，对一个 transcript segment 先逐句编码、每句取 `[CLS]` 表示，再经一层可训练 attention 聚合成文档向量，最后接线性回归头预测 1-7 的 QoF 标量；LLM 侧则直接调用 Llama 3.1、Mixtral、Qwen3、Mistral 等开源 instruction 模型，用 few-shot prompt 让它们读完片段后给分。前者代表有标注、需训练的监督式 rubric scoring，后者代表零训练、可即插即用的方案，两者并列之后，“解释方法是不是只在某一类模型上才忠实”这个问题才有了可比的实验基础。
 
-	- 功能：把“解释是否忠实”转成可测的预测变化。
-	- 核心思路：对 PLM，作者在文档级回归输出上运行 SHAP，把每个句子 embedding 视作一个 feature，得到句子 Shapley value。对 LLM，作者让模型在 zero-shot prompt 下返回最有影响力的 10 个句子编号。随后按排名顺序逐个删除句子，计算 $\Delta_i=f(x_{-r_{i-1}})-f(x_{-r_i})$，并报告 top-10 平均变化 $\overline{\Delta}$。变化越大，说明解释选出的句子越可能是模型真正依赖的依据。
-	- 设计动机：自由文本解释很难直接评估真假，而句子删除让解释与模型预测之间建立可观测联系。随机删除 baseline 也能排除“删句子本身就会扰动模型”的混淆。
+**2. 句子级解释与删除检验：把“解释是否忠实”这种说不清的判断，变成一个能量出来的预测变化。**
 
-3. **跨模型一致性评估**:
+自由文本 rationale 读起来头头是道，却无法直接验证真假，这正是高风险评分场景最危险的地方。作者的破解办法是把 explanation 统一定义成句子级的 evidence ranking，再用删除检验把它和模型预测绑在一起。对 PLM，他们在文档级回归输出上跑 SHAP，把每个句子 embedding 当作一个 feature，得到该句的 Shapley value；对 LLM，则在 zero-shot prompt 下让模型直接返回最有影响力的 10 个句子编号。拿到排名后按顺序逐句删除，记第 $i$ 步删除后的预测变化为 $\Delta_i=f(x_{-r_{i-1}})-f(x_{-r_i})$，并以 top-10 的平均变化 $\overline{\Delta}$ 作为忠实度度量——$\overline{\Delta}$ 越大，说明被选中的句子越接近模型真正依赖的证据。为排除“删任何句子都会扰动模型”这一混淆，作者同时跑随机删除 baseline 作对照，只有 ranked deletion 明显大于随机删除时，才能把变化归功于解释方法本身。
 
-	- 功能：检查一种模型/解释方法找到的证据是否对另一类模型也重要。
-	- 核心思路：作者选择 3 个 PLM（BERT large、DeBERTaV3 large、ALBERT base）和 3 个 LLM（Qwen3 235B、Mistral Small、Llama 3.1 8B）。一方面，用 LLM 选出的句子去扰动 PLM；另一方面，用 PLM 的 SHAP 句子去扰动 LLM。然后比较预测变化轨迹。
-	- 设计动机：如果解释只对源模型有影响，说明它更像模型私有行为；如果能跨架构产生稳定扰动，说明它捕捉到更一般的 rubric-relevant evidence。
+**3. 跨模型一致性评估：检验一种模型找到的证据，对另一类架构是否也算数。**
+
+如果某个解释只能扰动它自己的源模型，那它更像是模型私有的行为癖好，而非真正的 rubric 相关证据。为此作者挑出 3 个 PLM（BERT large、DeBERTaV3 large、ALBERT base）和 3 个 LLM（Qwen3 235B、Mistral Small、Llama 3.1 8B）做交叉扰动：一边拿 LLM 选出的句子去删 PLM 的输入，另一边拿 PLM 的 SHAP 句子去删 LLM 的输入，再比较两条预测变化轨迹。能跨架构稳定改变预测的句子，说明它捕捉到的是更一般的 rubric-relevant evidence；只对源模型有效的句子，则暴露出该解释的“局部性”。
 
 ### 损失函数 / 训练策略
 PLM 微调使用均方误差优化 1-7 QoF 回归目标。输入层面，每个句子截断到 128 tokens，每篇最多 263 个句子，覆盖 98% 句长和 90% 文档长度。LLM 不做任务微调，只用 deterministic decoding 进行 few-shot scoring 和 zero-shot sentence ranking，本地推理使用 4-bit nf4 quantization。解释评估统一使用同一句子切分、同样的删除规则和同样的 top-10 设置；少于 10 句或删空文本的情况在 1,230 个测试片段中只出现 17 个，占 1.3%。

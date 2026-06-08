@@ -40,40 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-fSGLD 几乎和 SGLD 一模一样，唯一区别在于"在哪里算梯度"。算法每一步：
-
-1. 采一个高斯扰动 $\epsilon_{k+1}\sim\mathcal{N}(0,\sigma^2 I_d)$ 和一个 Langevin 噪声 $\xi_{k+1}\sim\mathcal{N}(0,I_d)$；
-2. 在**扰动点** $\theta_k+\epsilon_{k+1}$ 处对一个小批量样本 $X_{k+1}$ 求梯度 $\nabla_\theta U(\theta_k+\epsilon_{k+1},X_{k+1})$；
-3. 标准 SGLD 形式的更新：
-
-    $\theta_{k+1}=\theta_k-\lambda\,\nabla_\theta U(\theta_k+\epsilon_{k+1},X_{k+1})+\sqrt{2\lambda\beta^{-1}}\,\xi_{k+1}$
-
-4. 关键约束：$\sigma$ 不是独立超参，而是由 $\beta$ 通过 $\sigma=\beta^{-(1+\eta)/4}$、$\eta=0.1$ 决定，所以**对用户暴露的超参数与 SGLD 完全相同**（只需调 $\beta$ 和 $\lambda$）。
-
-输入是模型参数 $\theta_0$ 和数据分布；输出是参数链 $\{\theta_k\}$，可以像 SGLD 一样做后验平均得到贝叶斯预测器，也可以当成普通优化器取末态参数用。
+fSGLD 想解决的是"既要全局探索、又要偏向平坦盆地、还不能比 SGD 更贵"这个三难。它的做法出奇地小：和标准 SGLD 唯一的差别只是"在哪个点上算梯度"——把梯度从当前参数 $\theta_k$ 挪到一个被高斯扰动过的点 $\theta_k+\epsilon_{k+1}$，再配一条把扰动尺度 $\sigma$ 绑死到采样温度 $\beta$ 上的解析公式。输入是初始参数 $\theta_0$ 和数据分布，输出是参数链 $\{\theta_k\}$，既能像 SGLD 一样做后验平均得贝叶斯预测器，也能当普通优化器取末态参数。
 
 ### 关键设计
 
-1. **扰动梯度作为 Hessian-trace 的隐式估计器**:
+**1. 扰动梯度：在零额外开销下注入二阶曲率信息**
 
-    - 功能：用 $\nabla_\theta U(\theta+\epsilon,X)$ 替换 SGLD 里的 $\nabla_\theta U(\theta,X)$，在 0 额外梯度的代价下注入二阶曲率信息。
-    - 核心思路：扰动梯度的期望 $\mathbb{E}_{\epsilon,X}[\nabla_\theta U(\theta+\epsilon,X)]=\nabla g_\epsilon(\theta)$，而高斯期望下 Taylor 展开给出 $g_\epsilon(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))+\mathbb{E}[\mathcal{R}(\theta,\epsilon)]$。所以一步看似只是"加点权重噪声"，实际上把 Hessian-trace 偷偷塞进了优化目标里。
-    - 设计动机：SAM 用一次额外的"上升梯度"显式求曲率，Hessian-penalty 方法要近似 Hessian-vector product；fSGLD 借助高斯随机化把这两件事都省掉，使算法保持 SGLD 的 O(d) 内存与单次梯度成本。
+针对的痛点是 SAM 要算两次梯度、Hessian-penalty 要近似 Hessian-vector product，二阶信息向来很贵。fSGLD 把 SGLD 更新里的 $\nabla_\theta U(\theta_k,X_{k+1})$ 直接换成扰动点处的 $\nabla_\theta U(\theta_k+\epsilon_{k+1},X_{k+1})$，其中 $\epsilon_{k+1}\sim\mathcal{N}(0,\sigma^2 I_d)$，配上标准 Langevin 噪声 $\xi_{k+1}\sim\mathcal{N}(0,I_d)$，整步写作 $\theta_{k+1}=\theta_k-\lambda\,\nabla_\theta U(\theta_k+\epsilon_{k+1},X_{k+1})+\sqrt{2\lambda\beta^{-1}}\,\xi_{k+1}$。
 
-2. **$\sigma$–$\beta$ 耦合公式 $\sigma=\beta^{-(1+\eta)/4}$**:
+这一步看着只是"给权重加点噪声"，但它的期望藏着曲率：扰动梯度的期望恰是随机化平滑代理的梯度 $\mathbb{E}_{\epsilon,X}[\nabla_\theta U(\theta+\epsilon,X)]=\nabla g_\epsilon(\theta)$，而 $g_\epsilon$ 在高斯期望下的二阶 Taylor 展开正好是 $g_\epsilon(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))+\mathbb{E}[\mathcal{R}(\theta,\epsilon)]$。也就是说，一次高斯扰动就把 Hessian-trace 偷偷塞进了优化目标，省掉了显式上升梯度和 Hessian 近似，算法仍保持 SGLD 的单次梯度与 $O(d)$ 内存。
 
-    - 功能：用一条解析关系把"扰动尺度"绑死到"采样温度"上，使 Taylor 残差 $\mathbb{E}[\mathcal{R}(\theta,\epsilon)]=O(\sigma^4 d^2)$ 与 Gibbs 测度的"温度灵敏度" $\beta$ 之间达到精确平衡。
-    - 核心思路：在 Proposition 3.4 中作者证明，当 $\eta\in(0,1)$ 时 $W_2(\pi^{\text{fSGLD}}_\beta,\pi^\star_{\beta,\sigma})=O(\beta^{-\eta/4}\sqrt d+\beta^{-\eta/2}d+\beta^{-(1+\eta)/2}d^2)$，可以靠增大 $\beta$ 任意收敛到 0；同时 $\sigma=\beta^{-(1+\eta)/4}$ 又保证平坦偏置强度不会随 $\beta\to\infty$ 太快消失，从而存在有限 $\beta$ 的"甜区"。
-    - 设计动机：如果 $\sigma$ 是独立超参，Taylor 残差与 $\beta$ 互不相关，要么残差炸（破坏 Hessian-trace 偏置），要么扰动太小（退化成普通 SGLD），不存在统一可控的非渐近界；耦合公式让两件事同步衰减，把"近似精度 vs 平坦偏置强度"的 trade-off 缩成一条曲线，且把暴露给用户的超参数压回到 SGLD 同等数量。
+**2. $\sigma$–$\beta$ 耦合公式：让近似误差和平坦偏置同步衰减**
 
-3. **平坦偏置 Gibbs 分布作为唯一理论目标**:
+设计 1 留了个隐患：Taylor 展开有个残差 $\mathbb{E}[\mathcal{R}(\theta,\epsilon)]=O(\sigma^4 d^2)$，要是扰动尺度 $\sigma$ 当成独立超参乱设，要么残差炸掉、破坏 Hessian-trace 偏置，要么扰动太小、退化回普通 SGLD，两头不讨好且写不出统一的非渐近界。fSGLD 的解法是不让 $\sigma$ 自由，而用一条解析关系把它绑到采样温度上：$\sigma=\beta^{-(1+\eta)/4}$，$\eta$ 固定在 $0.1$。
 
-    - 功能：把"找平坦极小"从一个启发式目标升级成 $\pi^\star_{\beta,\sigma}\propto\exp(-\beta v(\theta))$ 这一明确的概率测度，并给出 Wasserstein-1 与超额风险的非渐近界。
-    - 核心思路：在标准 SGLD 假设（四阶可微 + 数据相关的 Lipschitz + 耗散性）下，Theorem 3.5 证明 $W_1(\mathcal{L}(\theta_k^{\text{fSGLD}}),\pi^\star_{\beta,\sigma})\le D_1 e^{-\dot c\lambda k/2}+(D_2+D_3)\sqrt\lambda+\underline{D}$，三项分别对应过阻尼 Langevin 的指数混合、Euler–Maruyama 离散误差 $O(\lambda^{1/2})$ 以及不变测度偏差；Theorem 3.8 进一步给出 $\mathbb{E}[v(\theta_k)]-\inf v\le D_1^\diamond e^{-\dot c\lambda k/4}+D_2^\diamond\lambda^{1/4}+D_3^\diamond$ 的超额风险界。
-    - 设计动机：以前的 Langevin 全局收敛理论都瞄准原目标 $u$ 的极小，第一次把目标换成 $v$，论证算法的偏置不是"经验上跑出来的平坦"，而是被理论刻画的"平坦最小值的全局采样"；离散化误差速率与最优的标准 SGLD 分析（Zhang et al., 2023）一致，说明加入平坦偏置没有损失收敛速率。
+这条公式不是调出来的而是反推出来的。Proposition 3.4 证明在 $\eta\in(0,1)$ 时 $W_2(\pi^{\text{fSGLD}}_\beta,\pi^\star_{\beta,\sigma})=O(\beta^{-\eta/4}\sqrt d+\beta^{-\eta/2}d+\beta^{-(1+\eta)/2}d^2)$，靠增大 $\beta$ 就能把近似误差压到任意小；而同一条 $\sigma=\beta^{-(1+\eta)/4}$ 又保证 $\beta\to\infty$ 时平坦偏置不会太快消失，于是存在一个有限 $\beta$ 的"甜区"。换句话说，耦合把"近似精度 vs 平坦偏置强度"的 trade-off 压成了一条单参数曲线——对用户暴露的超参数因此和 SGLD 完全一样，只需调 $\beta$ 和步长 $\lambda$。
+
+**3. 平坦偏置 Gibbs 分布：把"找平坦极小"升级成可证明的采样目标**
+
+前两个设计回答了"怎么做"，这一点回答"做到了什么"。fSGLD 把启发式的"找平坦盆地"明确成一个概率测度 $\pi^\star_{\beta,\sigma}\propto\exp(-\beta v(\theta))$，其中 $v(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))$ 就是 Hessian-trace 正则化目标，并围绕它给出非渐近保证。
+
+在标准 SGLD 假设（四阶可微 + 数据相关 Lipschitz + 耗散性）下，Theorem 3.5 给出 $W_1(\mathcal{L}(\theta_k^{\text{fSGLD}}),\pi^\star_{\beta,\sigma})\le D_1 e^{-\dot c\lambda k/2}+(D_2+D_3)\sqrt\lambda+\underline{D}$，三项分别是过阻尼 Langevin 的指数混合、Euler–Maruyama 的离散误差 $O(\lambda^{1/2})$、以及不变测度偏差；Theorem 3.8 进一步把这翻译成超额风险界 $\mathbb{E}[v(\theta_k)]-\inf v\le D_1^\diamond e^{-\dot c\lambda k/4}+D_2^\diamond\lambda^{1/4}+D_3^\diamond$。它的意义在于：以往 Langevin 全局收敛理论都瞄准原目标 $u$ 的极小，这是第一次把目标换成平坦目标 $v$，证明算法偏置不是"跑出来的"而是被刻画出来的"平坦极小的全局采样"，且离散化速率与最优的标准 SGLD 分析（Zhang et al., 2023）持平——加平坦偏置没有牺牲收敛速率。
 
 ### 损失函数 / 训练策略
-作者没有显式改损失函数——优化的"有效目标"由算法动力学隐式定义为 $v(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))$。训练时只需把 SGLD 实现里"梯度处的参数"加一次高斯扰动即可；$\eta=0.1$ 全程固定，$\beta$ 与步长 $\lambda$ 按各 benchmark 标准 SGLD 调度。理论上要求 $\beta$、$\lambda$、迭代数 $k$ 满足 (63)–(65) 给出的下/上界以保证 $W_1$ 误差 $\le\bar\delta$。
+作者没有显式改损失函数——优化的"有效目标" $v(\theta)=u(\theta)+\tfrac{\sigma^2}{2}\mathrm{tr}(H(\theta))$ 是由算法动力学隐式定义的。实现上只需把 SGLD 里"梯度处的参数"加一次高斯扰动即可；$\eta=0.1$ 全程固定，$\beta$ 与步长 $\lambda$ 按各 benchmark 的标准 SGLD 调度。理论上还要求 $\beta$、$\lambda$、迭代数 $k$ 满足公式 (63)–(65) 的下/上界，以保证 $W_1$ 误差 $\le\bar\delta$。
 
 ## 实验关键数据
 

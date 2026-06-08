@@ -53,23 +53,17 @@ Tatar 和 Ukrainian 是低资源语言，通过把 Russian 数据用 Yandex Tran
 
 ### 关键设计
 
-1. **维度情感标注协议**:
+**1. 维度情感标注协议：把 polarity 三分类换成连续的 valence–arousal 坐标。**
 
-    - 功能：把每个 aspect tuple 从 polarity ∈ {pos, neg, neu} 升级为 (V, A) ∈ $[1,9]^2$。
-    - 核心思路：valence 衡量正负（1 = 极负, 9 = 极正, 5 = 中立），arousal 衡量激活度（1 = 平静, 9 = 兴奋）。标注界面用 SAM pictorial scale + emoji 锚定，每个 tuple 由 5 人独立评分；最终分数 $\hat{r} = \mathrm{mean}(\{r_i : |r_i - \mu| \le 1.5\sigma\})$ 自动剔除离群者。
-    - 设计动机：arousal 比 valence 难标，前人（Buechel2017, mohammad2018obtaining）已证实——通过多标注 + 离群剔除可以把 arousal RMSE 压到 0.76–2.29 区间（见 dataset overview 表）。同时数据呈典型「U 形分布」：arousal 在 valence 极端处偏高，中立时偏低，符合情感学规律，验证了标注有效性。
+粗粒度的 pos/neg/neu 标签丢掉了所有强度信息——"good"和"excellent"同样是正、"a little slow"和"extremely slow"同样是负。DimABSA 把每个 aspect tuple 的极性升级成一对连续分数 $(V, A) \in [1,9]^2$：valence 衡量正负（1 = 极负、5 = 中立、9 = 极正），arousal 衡量激活度（1 = 平静、9 = 兴奋）。标注界面借用心理学的 SAM pictorial scale 加 emoji 来锚定刻度，每个 tuple 由 5 人独立打分，最终取去离群后的均值 $\hat{r} = \mathrm{mean}(\{r_i : |r_i - \mu| \le 1.5\sigma\})$，自动剔除偏离 ±1.5σ 的标注者。arousal 历来比 valence 难标（Buechel2017、mohammad2018obtaining 都证实过），多标注 + 离群剔除把 arousal RMSE 压到 0.76–2.29 区间；而且最终数据呈典型的"U 形分布"——arousal 在 valence 两极偏高、中立处偏低，恰好符合情感学规律，反过来佐证了标注质量。
 
-2. **三个递进子任务（DimASR → DimASTE → DimASQP）**:
+**2. 三个递进子任务（DimASR → DimASTE → DimASQP）：把"纯回归"一路加码到"抽取+分类+回归"。**
 
-    - 功能：从纯回归一路加复杂度到「抽取 + 分类 + 回归」混合任务。
-    - 核心思路：(i) DimASR：给定 text + aspect，预测 V#A（纯回归，RMSE 评估）；(ii) DimASTE：给 text，抽 (A, O) 并预测 VA（抽取 + 回归，cF1 评估）；(iii) DimASQP：在 DimASTE 基础上再加 aspect category C 分类（抽取 + 分类 + 回归，cF1 评估）。
-    - 设计动机：分层设计让研究者可以单独攻克某个能力——比如想专门研究 LLM 的数值回归能力就用 DimASR；想测 structural induction 就用 DimASTE/DimASQP。同时 DimASR 的发现（one-shot 就能显著校准 VA 分布）和 DimASTE/DimASQP 的发现（需要 ≥70B + fine-tuning 才能掌握结构模式）能形成对照，揭示 LLM 对回归 vs 抽取的不同学习曲线。
+为了让不同能力可以被分别考察，三个子任务按复杂度递进：DimASR 给定 text + aspect 直接预测 V#A（纯回归，用 RMSE 评），DimASTE 要从 text 里抽出 (A, O) 再预测 VA（抽取 + 回归，用 cF1 评），DimASQP 在此之上再补一个 aspect category $C$ 的分类（抽取 + 分类 + 回归，用 cF1 评）。这种分层让想专攻 LLM 数值回归能力的人用 DimASR、想测结构归纳的人用 DimASTE/DimASQP；更关键的是它把两类发现摆到了一起对照——DimASR 上 one-shot 就能显著校准 VA 分布，而 DimASTE/DimASQP 要 ≥70B + fine-tuning 才能掌握结构模式，揭示了 LLM 对回归和抽取截然不同的学习曲线。
 
-3. **连续 F1（cF1）统一指标**:
+**3. 连续 F1（cF1）：在 F1 框架里同时算清"类别对不对"和"VA 偏多少"。**
 
-    - 功能：在标准 F1 框架内同时评估「类别精确匹配」和「VA 数值误差」。
-    - 核心思路：对预测 tuple $t$，先判 categorical TP（(A, O) 或 (A, C, O) 必须 exact match），然后把 categorical TP 软化为 continuous TP：$\mathrm{cTP}^{(t)} = 1 - \mathrm{dist}(\mathrm{VA}_p, \mathrm{VA}_g)$ 当 $t \in P_{cat}$，否则 0。其中归一化欧氏距离 $\mathrm{dist} = \sqrt{(V_p-V_g)^2 + (A_p-A_g)^2} / \sqrt{128}$，$\sqrt{128}$ 是 [1,9] 平方空间内最大距离，保证 $\mathrm{dist} \in [0,1]$。cPrecision = $\sum \mathrm{cTP} / |P|$，cRecall = $\sum \mathrm{cTP} / |G|$，cF1 是两者调和均值。
-    - 设计动机：传统 F1 强行二值化会浪费 VA 的连续信息；而单独报 F1 + RMSE 又无法 single-number 比较模型。cF1 的巧妙在于当 VA 完美时（dist = 0）退化为标准 F1，VA 越差则 cTP 越小，平滑过渡。Appendix F 给的算例：4 个预测中 2 个类别对（cTP 分别 0.875 和 0.5）+ 2 个类别错（cTP = 0），cF1 = 0.393，比纯 F1 = 0.5 更严格地反映 VA 偏差。
+混合任务最棘手的是评测：传统 F1 强行二值化会浪费 VA 的连续信息，而单独报 F1 + RMSE 又没法用一个数比较模型。cF1 的做法是先判 categorical TP——(A, O) 或 (A, C, O) 必须 exact match——再把命中的 TP 按 VA 误差软化为 continuous TP：当 $t \in P_{cat}$ 时 $\mathrm{cTP}^{(t)} = 1 - \mathrm{dist}(\mathrm{VA}_p, \mathrm{VA}_g)$，否则为 0；其中归一化欧氏距离 $\mathrm{dist} = \sqrt{(V_p-V_g)^2 + (A_p-A_g)^2} / \sqrt{128}$，分母 $\sqrt{128}$ 是 $[1,9]$ 平方空间内的最大距离，保证 $\mathrm{dist} \in [0,1]$。于是 cPrecision = $\sum \mathrm{cTP} / |P|$、cRecall = $\sum \mathrm{cTP} / |G|$，cF1 取两者调和均值。它的巧妙在于 VA 完美时（dist = 0）退化为标准 F1、向后兼容，VA 越差则 cTP 越小、平滑衰减。Appendix F 的算例可印证：4 个预测里 2 个类别对（cTP 分别 0.875、0.5）+ 2 个类别错（cTP = 0），cF1 = 0.393，比纯 F1 = 0.5 更严格地反映了 VA 偏差。
 
 ### 损失函数 / 训练策略
 不训练自己的模型，而是 benchmark：

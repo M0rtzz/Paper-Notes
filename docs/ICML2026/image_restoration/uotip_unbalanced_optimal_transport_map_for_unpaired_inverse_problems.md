@@ -41,27 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段——（1）**问题重表述**：将无须配对反演问题 $\mathbf{y} = \mathcal{A}(\mathbf{x}) + \mathbf{n}$ 改写为学习 UOT 映射 $T: \mathcal{Y} \to \mathcal{X}$ 使得 $T_\# \mu \approx \nu$；（2）**成本函数设计**：组合似然成本 $c_l(\mathbf{y},\mathbf{x})=\|\mathcal{A}(\mathbf{x})-\mathbf{y}\|_2^2$ 与二次成本 $c_q(\mathbf{y},\mathbf{x})=\|\mathbf{y}-\mathbf{x}\|_2^2$；（3）**神经网络求解**：用半对偶 UOT 公式与势函数参数化，通过对抗优化学习最优映射。
+
+UOTIP 要解的是无须配对的图像反演：只有一堆有噪声测量 $\mathbf{y} = \mathcal{A}(\mathbf{x}) + \mathbf{n}$ 和一堆与之不对应的干净信号，目标是恢复 $\mathbf{x}$。它把这件事重写成学一个映射 $T: \mathcal{Y} \to \mathcal{X}$，让传过去的测量分布对齐干净分布（$T_\# \mu \approx \nu$），并用非平衡最优传输（UOT）放松这个对齐约束。关键是成本函数的设计——似然项负责"贴合这次测量"、二次项负责"理论上映射存在唯一"，二者叠在一起后再用半对偶对抗优化求解。
 
 ### 关键设计
 
-1. **似然成本函数**:
+**1. 似然成本函数：把 MAP 估计塞进 OT 成本**
 
-    - 功能：编码高斯测量噪声假设下的数据保真项，使 OT 映射隐含最大化观测似然。
-    - 核心思路：利用 MAP 估计 $\mathbf{x}_{MAP}(\mathbf{y}_0) = \arg\min_{\mathbf{x}}[-\log p(\mathbf{y}_0|\mathbf{x})-\log p(\mathbf{x})]$ 的结构，将 $-\log p(\mathbf{y}|\mathbf{x})$ 作为 OT 成本。最小化 OT 传输成本等价于最小化负对数后验 $-\log p(\mathbf{x}|\mathbf{y})$，从而 OT 约束 $T_\#\mu=\nu$ 自动引入先验 $p(\mathbf{x})$。
-    - 设计动机：相比标准二次成本，似然成本直接建模反演问题的数据项，对问题结构更敏感。
+标准 OT 的二次成本只看像素距离，对反演问题的物理结构（退化算子 $\mathcal{A}$、噪声模型）一无所知。UOTIP 的切入点是借 MAP 估计 $\mathbf{x}_{MAP}(\mathbf{y}_0) = \arg\min_{\mathbf{x}}[-\log p(\mathbf{y}_0|\mathbf{x})-\log p(\mathbf{x})]$ 的结构：在高斯噪声假设下负对数似然 $-\log p(\mathbf{y}|\mathbf{x})$ 正好是 $\|\mathcal{A}(\mathbf{x})-\mathbf{y}\|_2^2$，于是直接拿它当 OT 成本 $c_l(\mathbf{y},\mathbf{x})=\|\mathcal{A}(\mathbf{x})-\mathbf{y}\|_2^2$。这样一来，最小化 OT 传输成本就等价于最小化负对数后验 $-\log p(\mathbf{x}|\mathbf{y})$，而 OT 的边际约束 $T_\#\mu=\nu$ 又自动把干净信号先验 $p(\mathbf{x})$ 灌了进来——数据项由似然成本管，先验项由分布对齐管，整个 MAP 估计被严格地搬到了 OT 框架里。
 
-2. **二次成本 + 非平衡松弛**:
+**2. 二次成本 + 非平衡松弛：补存在性、扛不平衡**
 
-    - 功能：（a）通过满足扭转条件保证映射存在唯一性；（b）通过 UOT 的边际松弛处理多级噪声与类别不平衡。
-    - 核心思路：最终成本 $c(\mathbf{y},\mathbf{x}) = \tau(c_l + c_q)$。二次项补充似然项使合成成本满足扭转条件（Prop. 3.1）。UOT 目标中的 f-散度项 $D_{\Psi_i}(\pi_0\|\mu) + D_{\Psi_i}(\pi_1\|\nu)$ 允许边际分布软匹配，自动通过缩放因子 $\Psi^*_i'$ 对源样本重加权。
-    - 设计动机：标准 OT 在 ill-posed 问题上存在不可解性；混合成本既保证存在性又实现多级噪声鲁棒性。
+光有似然成本会出问题：线性反演本身 ill-posed，$\mathcal{A}$ 不可逆时合成成本可能不满足扭转条件（twist condition），最优传输映射既不保证存在也不保证唯一。UOTIP 补一个二次项 $c_q(\mathbf{y},\mathbf{x})=\|\mathbf{y}-\mathbf{x}\|_2^2$，合成出最终成本 $c(\mathbf{y},\mathbf{x}) = \tau(c_l + c_q)$，论文 Prop. 3.1 证明这个二次项足以让合成成本满足扭转条件，从而恢复映射的存在唯一性。另一半好处来自 UOT 把硬边际换成 f-散度软约束 $D_{\Psi_i}(\pi_0\|\mu) + D_{\Psi_i}(\pi_1\|\nu)$：边际不必严格匹配，模型可以通过缩放因子 $\Psi^*_i'$ 对源样本自动重加权，于是多级噪声、类别不平衡、分布异质这些标准 OT 会卡死的场景都能软着陆。
 
-3. **半对偶 UOT 求解器**:
+**3. 半对偶 UOT 求解器：用对抗迭代逼近最优映射**
 
-    - 功能：用神经网络参数化势函数 $v_\phi$ 与映射 $T_\theta$，通过对抗迭代学习最优 UOT 映射。
-    - 核心思路：UOT 的 Kantorovich 对偶形式展开为半对偶公式，引入 c-变换 $v^c(\mathbf{y})=\inf_{\mathbf{x}}[c(\mathbf{y},\mathbf{x})-v(\mathbf{x})]$，允许 $T_\theta(\mathbf{y}) \in \arg\inf_{\mathbf{x}}[c(\mathbf{y},\mathbf{x})-v_\phi(\mathbf{x})]$。
-    - 设计动机：半对偶形式相比原始 Monge 问题凸化求解；c-变换参数化确保最优性条件满足。
+直接解 Monge 形式是非凸的，难优化。UOTIP 把 UOT 的 Kantorovich 对偶展成半对偶形式，引入 c-变换 $v^c(\mathbf{y})=\inf_{\mathbf{x}}[c(\mathbf{y},\mathbf{x})-v(\mathbf{x})]$ 做凸化，然后用两个网络参数化：势函数 $v_\phi$ 当判别侧，映射 $T_\theta$ 当生成侧，且让 $T_\theta(\mathbf{y}) \in \arg\inf_{\mathbf{x}}[c(\mathbf{y},\mathbf{x})-v_\phi(\mathbf{x})]$ 显式满足 c-变换的最优性条件。两者对抗迭代，最终 $T_\theta$ 收敛到最优 UOT 映射。
 
 ## 实验关键数据
 

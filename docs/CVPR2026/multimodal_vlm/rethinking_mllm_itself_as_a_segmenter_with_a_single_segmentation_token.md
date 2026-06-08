@@ -43,33 +43,48 @@ tags:
 ## 方法详解
 
 ### 整体框架
-图像 → Vision Encoder → 分支1: pixel-shuffle+MLP 压缩 → LLM → [SEG] token + 压缩图像特征；分支2: 自复制保留未压缩特征 → RFR 融合残差 → RFA 进一步放大 → 点积生成高分辨率 mask。
+SELF1E 想回答一个反直觉的问题：MLLM 做分割，到底是缺 token，还是缺分辨率？现有无解码器方案（UFO）认为单个 [SEG] token 表达力不够，于是堆到 16 个；本文则把矛头指向 MLLM 内部的 pixel-shuffle 下采样——它把视觉特征压到原来的 $1/\alpha$（InternVL 系列 $\alpha$ 通常为 4），细粒度空间信息在送进 LLM 前就已丢失，再多 token 也补不回这个分辨率。
+
+于是整条管线走两条并行的支线。主线照常：图像过 Vision Encoder，经 pixel-shuffle + MLP 压缩成低分辨率视觉 token，连同文本一起喂给 LLM，最后吐出一个 [SEG] token 和一组被 LLM 重新编码过的图像特征 $F_{IMG}$。旁线则在压缩发生之前，把编码器的高分辨率特征原样截留下来。两条线在 LLM 之后汇合：先用 **RFR** 把 LLM 学到的语义增量"回填"到高分辨率特征上，再用 **RFA** 借 Pixel-Unshuffle 把分辨率进一步放大，最后让放大后的图像特征与同样处理过的 [SEG] token 做点积，直接生成高分辨率 mask——全程不碰任何外部分割模型。
 
 ### 关键设计
 
-1. **Residual Features Refilling (RFR)**:
+**1. Residual Features Refilling（RFR）：把语义增量回填进未压缩特征。**
 
-    - 保留编码器输出的未压缩特征 $F_{V_1}^{HQ} \in \mathbb{R}^{N_0 \times d}$（通过将每个 pixel 自复制 $\alpha$ 次后过同一 MLP 实现）
-    - 收集 LLM 处理前后的残差：$F_R = F_{IMG} - F_{V_1}$
-    - 上采样残差并融合：$F_{IMG}' = F_{V_1}^{HQ} + \mathcal{I}(F_R)$
-    - 效果：将 LLM 学到的细粒度语义区分度注入到高分辨率特征中
+分辨率瓶颈的根子在 pixel-shuffle，那最干净的办法就是绕过它——直接保留压缩前那份高分辨率特征。但编码器的原始特征虽然清晰，却没经过 LLM 的语言对齐，缺少"这块像素属不属于指代对象"的语义判别力；而 LLM 输出的 $F_{IMG}$ 语义判别力强，分辨率却已经塌了。RFR 的思路是把两者的长板拼起来：以高分辨率特征为底座，只把 LLM 带来的那部分**语义增量**叠加上去。
 
-2. **Residual Features Amplifier (RFA)**:
+具体地，先构造一份未压缩的高分辨率特征 $F_{V_1}^{HQ}\in\mathbb{R}^{N_0\times d}$——做法是把编码器每个像素特征自复制 $\alpha$ 次后过同一个 MLP，模拟出 pixel-shuffle 之前邻近像素的排布。再取 LLM 前后之差作为残差，它恰好刻画了"LLM 改了什么"：
 
-    - 对 $F_{V_1}$（LLM前）和 $F_{IMG}$（LLM后）分别施加 MLP + Pixel-Unshuffle 操作
-    - 放大后残差 $F_{RFA} = f_{PUS}'(F_{IMG}) - f_{PUS}(F_{V_1})$
-    - 最终融合 $F_{IMG}' = f_{PUS}(F_{V_1}^{HQ}) + \mathcal{I}(F_{RFA})$，分辨率达到 $\alpha N_0 \times d$
-    - 设计动机：压缩特征的每个 embedding 隐含了 $\alpha$ 个像素的信息，Pixel-Unshuffle 可以恢复这些隐含信息
-    - [SEG] token 也同样过 Pixel-Unshuffle 后取平均：$F_{SEG}' = \text{mean}(f_{PUS}'(F_{SEG}))$
+$$F_R = F_{IMG} - F_{V_1}$$
 
-3. **分割专用注意力掩码**:
+把这份低分辨率残差上采样回高分辨率后叠加到底座上：
 
-    - 设计双感知路径：image-to-image（图像 token 间双向注意力）+ image-to-segmentation（图像 token 与 [SEG] token 双向交互）
-    - 比标准因果注意力提供更丰富的像素间和像素-语义交互
-    - 确保 [SEG] token 能充分感知所有图像位置的信息
+$$F_{IMG}' = F_{V_1}^{HQ} + \mathcal{I}(F_R)$$
+
+其中 $\mathcal{I}(\cdot)$ 是插值上采样。这样得到的特征既保住了编码器的空间细节，又注入了 LLM 的细粒度语义区分度——消融里它是贡献最大的一项，直接把"用 token 数量换分辨率"的逻辑证伪。
+
+**2. Residual Features Amplifier（RFA）：用 Pixel-Unshuffle 把隐含像素挖回来。**
+
+RFR 靠插值上采样回填，插值本身并不创造新的高频信息。RFA 想更进一步：压缩后的每个 embedding 其实**隐含了 $\alpha$ 个像素的信息**，只是被打包进了通道维，Pixel-Unshuffle（pixel-shuffle 的逆操作）正好能把通道维的信息摊回到空间维，等于"无损解包"出被折叠的分辨率。
+
+它对 LLM 前的 $F_{V_1}$ 和 LLM 后的 $F_{IMG}$ 各过一支 MLP + Pixel-Unshuffle，再在放大后的空间里取残差：
+
+$$F_{RFA} = f_{PUS}'(F_{IMG}) - f_{PUS}(F_{V_1})$$
+
+最终融合到自复制底座经同样解包后的高分辨率特征上，分辨率提到 $\alpha N_0\times d$：
+
+$$F_{IMG}' = f_{PUS}(F_{V_1}^{HQ}) + \mathcal{I}(F_{RFA})$$
+
+为了让 mask 的两个点积操作数处在同一表征空间，[SEG] token 也走同一支 Pixel-Unshuffle 并取平均 $F_{SEG}' = \text{mean}(f_{PUS}'(F_{SEG}))$。相比纯插值，RFA 恢复的是真正被折叠进通道的高频细节，消融里在 RFR 基础上还能再涨 2–3%。
+
+**3. 分割专用注意力掩码：给 [SEG] token 一条看全图的双向通路。**
+
+LLM 默认的因果注意力是单向的——靠后的 token 只能看前面的。这对生成文本没问题，但对分割是硬伤：[SEG] token 需要感知**所有**图像位置才能判断每个像素归不归它管，单向注意力让它看不到排在它后面的图像 token。
+
+为此本文把注意力掩码改成两条双感知路径：image-to-image 让图像 token 之间双向注意，补足像素间的空间关系；image-to-segmentation 让图像 token 与 [SEG] token 双向交互，使语义查询能落到每个像素、每个像素也能回应查询。这比标准因果注意力提供了更充分的像素—像素、像素—语义交互，消融里额外贡献约 1–2%。代价是要改 LLM 的注意力计算，不再是纯 plug-and-play。
 
 ### 损失函数 / 训练策略
-基于 InternVL 系列训练。RFA 中的两个 Pixel-Unshuffle MLP 需要训练。
+基于 InternVL 系列训练，RFA 中的两支 Pixel-Unshuffle MLP 是新增的可训练参数。
 
 ## 实验关键数据
 

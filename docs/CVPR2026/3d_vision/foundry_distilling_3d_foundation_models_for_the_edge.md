@@ -43,27 +43,31 @@ tags:
 
 ### 整体框架
 
-Foundry 的蒸馏过程分三步：(1) **教师前向传播**——冻结的预训练教师处理输入点云，产出目标表征 $\mathbf{Y} \in \mathbb{R}^{c \times d}$；(2) **学生压缩与重建**——DSO 模块将 $c$ 个 token 压缩为 $s \ll c$ 个 SuperToken，轻量学生编码器处理后，CAU 模块从中重建教师的完整表征 $\hat{\mathbf{Y}} \in \mathbb{R}^{c \times d}$；(3) **蒸馏优化**——最小化 $\mathcal{L}_{distillation} = \text{SmoothL1}(\hat{\mathbf{Y}}, \mathbf{Y})$。
+Foundry 想解决的事很具体：把一个动辄数亿参数的 3D 自监督教师，压成能塞进边缘设备的学生，同时**不丢掉教师那套"什么任务都能接"的通用表征**。它的做法不是去模仿教师在某个任务上的输出，而是逼学生学会用一组很窄的 SuperToken 把教师的整个潜空间"装下"再"还原"出来。
+
+一次前向分三步走。先让冻结的教师吃进点云，吐出目标表征 $\mathbf{Y} \in \mathbb{R}^{c \times d}$（$c$ 个 token）。接着 DSO 模块把这 $c$ 个 token 压成 $s \ll c$ 个可学习的 SuperToken，由轻量学生编码器处理，CAU 模块再从这几个 SuperToken 把完整的 token 级表征 $\hat{\mathbf{Y}} \in \mathbb{R}^{c \times d}$ 重建回来。最后只用一个目标对齐两者：$\mathcal{L}_{distillation} = \text{SmoothL1}(\hat{\mathbf{Y}}, \mathbf{Y})$。具象一点：教师给出 $c$ 个 token，DSO 把它们硬分配进 $s=16$ 个桶并各取均值得到 16 个 SuperToken，学生只在这 16 维的瓶颈上算，CAU 再把它"撑回" $c$ 个 token——瓶颈越窄，学生被迫学到的就越是教师潜空间的"主成分"。
 
 ### 关键设计
 
-1. **动态 SuperToken 优化模块（Dynamic Supertoken Optimization, DSO）**:
+**1. 动态 SuperToken 优化（DSO）：把 $c$ 个 token 压成一组可学习的潜空间基向量。**
 
-    - 功能：将输入的 $c$ 个 token 压缩为 $s$ 个可学习的 SuperToken
-    - 核心思路：维护一组随机初始化的可学习 SuperToken $\mathbf{S} \in \mathbb{R}^{s \times d}$，作为潜空间的基向量集合。通过交叉注意力机制（SuperToken 为 query，输入 token 为 key/value）计算硬分配矩阵 $\text{CAM}_{j,i} = 1$ 当 $i = \arg\max_k \frac{\mathbf{q}_k \cdot \mathbf{k}_j}{\sqrt{d}}$。然后对每个 SuperToken，聚合所有被分配到它的 token 的 value 向量的均值来更新自身：$\mathbf{S}_{updated} = \frac{\text{CAM}^T \mathbf{V}}{\text{sum}(\text{CAM}^T, \text{axis}=1)}$。使用 Gumbel-Softmax 保证可微性
-    - 设计动机：与静态 K-Means 聚类不同，可学习的 SuperToken 通过端到端训练能适应蒸馏目标，学到真正信息密集的潜空间基。语义分组在位置编码加入前进行，确保 SuperToken 基于内容而非位置进行特征压缩
+直接对教师特征做 L2 模仿，学生只会照抄表面，学不到表征空间的结构。DSO 换了个思路：维护一组随机初始化、可端到端学习的 SuperToken $\mathbf{S} \in \mathbb{R}^{s \times d}$，把它们当作潜空间的基向量。压缩时用交叉注意力（SuperToken 当 query，输入 token 当 key/value）算一个硬分配矩阵——token $j$ 归到与它最匹配的那个 SuperToken：$\text{CAM}_{j,i} = 1$ 当 $i = \arg\max_k \frac{\mathbf{q}_k \cdot \mathbf{k}_j}{\sqrt{d}}$；再把分到同一个 SuperToken 的所有 value 取均值来更新它：
 
-2. **交叉注意力上采样模块（Cross-Attention Upsampling, CAU）**:
+$$\mathbf{S}_{updated} = \frac{\text{CAM}^T \mathbf{V}}{\text{sum}(\text{CAM}^T, \text{axis}=1)}$$
 
-    - 功能：从压缩的 SuperToken 重建教师的完整 token 级表征
-    - 核心思路：复用 DSO 阶段计算的分配矩阵 CAM 作为路由机制。每个原始 token 位置通过 CAM 查找对应的 SuperToken 的更新表征，然后与原始输入 token 做残差连接，最后通过 MLP 映射到教师的表征维度：$\hat{\mathbf{Y}} = \text{MLP}(\mathbf{T} + \text{CAM} \cdot \mathbf{S}_{encoder\_out})$
-    - 设计动机：残差连接至关重要——它重新注入了压缩过程中可能丢失的局部高频细节信息，确保高保真重建。CAM 的复用避免了额外的计算开销
+硬 $\arg\max$ 不可导，所以用 Gumbel-Softmax 让它可微。和静态 K-Means 聚类的关键差别就在"可学习"：K-Means 的簇心只反映几何分布，而 SuperToken 随蒸馏目标一起优化，最终落在真正信息密集的方向上（消融里这一点带来 13.6% 的差距）。另外语义分组特意安排在加位置编码之前，让压缩依据内容而非坐标。
 
-3. **门控压缩机制（Gated Compression, 可选）**:
+**2. 交叉注意力上采样（CAU）：从几个 SuperToken 把完整 token 表征高保真还原回去。**
 
-    - 功能：在推理时实现动态、按需的计算预算控制
-    - 核心思路：添加一个 2 层 MLP 门控网络，对每个输入 token 预测融合概率 $\pi_i$。只有 $\pi_i > r$（用户定义阈值）的 token 才通过 DSO 压缩，其余 token 绕过压缩直接与 SuperToken 一起送入学生编码器。训练时加入正则项 $\mathcal{L}_{gate} = -\lambda_{gate} \sum_i \pi_i$ 鼓励更多压缩
-    - 设计动机：不同场景对精度和速度的需求不同。门控机制允许部署时通过调整阈值 $r$ 在精度和计算量之间灵活权衡，无需重新训练
+压缩只是手段，蒸馏目标要求逐 token 对齐教师，所以必须把 $s$ 个 SuperToken 重新"撑"回 $c$ 个 token。CAU 不另起炉灶，而是复用 DSO 那张分配矩阵 CAM 当路由：每个原始 token 位置顺着 CAM 找回它对应的 SuperToken（已被学生编码器更新过），与原始输入 token 做残差相加，再过 MLP 映射到教师维度：
+
+$$\hat{\mathbf{Y}} = \text{MLP}(\mathbf{T} + \text{CAM} \cdot \mathbf{S}_{encoder\_out})$$
+
+这里的残差是关键——SuperToken 瓶颈天然会丢掉局部高频细节，把原始 token $\mathbf{T}$ 残差注回来，正好补回这部分信息，重建才能做到高保真；而复用 CAM 让上采样几乎不增加额外开销。
+
+**3. 门控压缩（Gated Compression，可选）：让同一个模型在部署时按需调精度/速度。**
+
+不同场景对精度和延迟的取舍不一样，但重训一遍代价太高。门控机制加一个 2 层 MLP，对每个 token 预测一个融合概率 $\pi_i$：只有 $\pi_i > r$（用户设定阈值）的 token 才走 DSO 被压缩，其余 token 绕过压缩、和 SuperToken 一起直接进学生编码器。训练时加正则项 $\mathcal{L}_{gate} = -\lambda_{gate} \sum_i \pi_i$ 鼓励多压一些。部署时只要拨动阈值 $r$，就能在精度和计算量之间滑动，无需重新训练。
 
 ### 损失函数 / 训练策略
 

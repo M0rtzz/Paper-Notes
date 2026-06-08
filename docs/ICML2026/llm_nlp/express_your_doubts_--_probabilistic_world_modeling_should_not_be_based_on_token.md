@@ -41,40 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不提算法，而是建一个**任务-训练-推理-用例**四层映射的概念框架：
-
-- **任务层**：source distribution estimation / target distribution estimation / response prediction。
-- **训练层**：T1 pretrain（distribution estimation on $p_{LM}$）、T2a SFT（指令-回应配对，目标分布 $p_{\text{res}}$）、T2b RLHF（最大化奖励，分布往众数靠）。
-- **推理层**：I1 softmax probabilities（细分为 naïve description $p_{\text{ND}}$、zero-shot $p_{\text{ZS}}$、few-shot $p_{\text{FS}}$）；I2 二阶预测（让模型显式输出概率）。
-- **用例层**：word completion（要 source distribution）、world responses（要 prediction）、world modeling（要 target distribution = 事件分布）。
-
-主要论证靠"用 Bayesian agent 推三个 case"。
+这篇 position paper 不提算法，而是搭一个**任务—训练—推理—用例**的四层映射，把"LLM 的 logprob 到底是什么"这件事彻底说清楚。任务层把语言建模拆成三件不同的事：source distribution estimation（估计数据里字符串的真实分布）、response prediction（给出单一最优回答）、target distribution estimation（估计一个与数据分布不同的目标分布，比如世界事件分布）。训练层把 pretrain 映到 distribution estimation（学 $p_{LM}$）、SFT 映到目标响应分布 $p_{\text{res}}$、RLHF 映到 mode-seeking 的奖励最大化；推理层把 naïve description $p_{\text{ND}}$ / zero-shot $p_{\text{ZS}}$ / few-shot $p_{\text{FS}}$ 这些 softmax 用法归为 I1，把"让模型显式写出概率"归为 I2（二阶预测）。论证的主干是用一个 Bayesian agent 框架推三个 case，说明同一个 LLM 在不同 prompt 下其实在干不同的任务。
 
 ### 关键设计
 
-1. **三任务的形式化区分**：
+**1. 三任务的形式化区分：把"估分布"和"做预测"拆开，堵住文献里的混用。**
 
-    - 功能：用统一符号把"估计分布"和"预测响应"分开，避免文献里互换使用。
-    - 核心思路：distribution estimator $p_\theta:\mathcal{X}\to\Delta^{|\mathcal{Y}|-1}$ 学习 $p_S(y|x)$；predictor $f_\theta:\mathcal{X}\to\mathcal{Y}$ 学习单一最优响应；target distribution estimation 是估计另一个分布 $p_T\ne p_S$（带 transfer learning 性质）。当输出空间是 $\Delta^{|\mathcal{Y}|-1}$（即"概率分布本身"）时，target estimation 退化成在"分布空间"上的预测——作者称之为 **second-order prediction**。
-    - 设计动机：很多文献的混淆根源就是没区分 $p_\theta$ 和 $f_\theta$，比如把 SFT 后的 LLM 当 distribution estimator 用其 token logprob，但它已经被训成 predictor（mode-seeking）了。
+很多 calibration 论文之所以得出"LLM 不诚实/没校准"的结论，根子在于它们把两种数学对象当成一回事。本文用统一符号把它们分开：distribution estimator $p_\theta:\mathcal{X}\to\Delta^{|\mathcal{Y}|-1}$ 学的是 source 分布 $p_S(y|x)$，predictor $f_\theta:\mathcal{X}\to\mathcal{Y}$ 学的是单一最优响应，而 target distribution estimation 估计的是另一个分布 $p_T\ne p_S$（带 transfer learning 的味道）。关键的洞察是：当目标输出空间本身就是概率单纯形 $\Delta^{|\mathcal{Y}|-1}$（也就是要输出"一个分布"）时，target estimation 退化成在"分布空间"里做预测——作者把这种情形命名为 **second-order prediction（二阶预测）**。这样一区分就能看清，把 SFT 后的 LLM 当 distribution estimator、直接读它的 token logprob，是用错了对象——它早已被训成 mode-seeking 的 predictor $f_\theta$，logprob 不再对应任何数据分布。
 
-2. **BDI 三案例分析**：
+**2. BDI 三案例分析：用 belief-desire 框架解释为什么换 prompt 就换分布。**
 
-    - 功能：解释相同事件 $y$ 在不同 prompt 下的 ideal LM 概率为何不同。
-    - 核心思路：
-        - **Case 1（多种表达同一结果）**：prompt 无指令、agent 可任意措辞，输出概率反映**语言使用频率**，与事件分布的关系取决于 reporting bias。
-        - **Case 2（agent 观察到结果）**：prompt 含指令、agent 看到事件，理想下 $p_{LM}(\mathbf{w^y}|\mathbf{w^x})=p_E(y|x)$，但前提是 agent always 如实报告——实际不一定（如默认色 "banana is yellow"）。
-        - **Case 3（agent 未观察、需预测）**：写为 $p(\mathbf{w^y}|\mathbf{w^x})=\sum_{f\in D^y}p(f|\mathbf{w^x})\cdot p(f(b^y)=y)$；要让它等于 $p(y|x)$ 必须同时满足"信念正确" + "如实报告"，但 prediction 任务下 agent 应把质量全压在 mode，所以正确 belief + accuracy-optimizing 不能共存。
-    - 设计动机：用 agent 抽象统一不同推理设置——pretrain 对应 Case 1（数据频率）、SFT/RLHF 对应 Case 3（预测最优响应），同一 LLM 在不同 prompt 下扮演不同 agent，自然给出不同分布。
+要说清"同一个事件 $y$ 在不同 prompt 下理想 LM 概率为何不同"，作者把文本看成一个持有信念 $b$、带欲望 $d$（一个从 belief 映到字符串的函数）的 agent 生成的，prompt $\mathbf{w^x}$ 设定 ground、也就设定了 agent 的 belief/desire 分布。在此框架下推三个 case：Case 1 是"多种措辞表达同一结果"，prompt 不含指令、agent 可随意措辞，于是输出概率反映的是**语言使用频率**，它和事件分布之间隔着 reporting bias；Case 2 是"agent 已观察到结果"，prompt 含指令、agent 看见了事件，理想下 $p_{LM}(\mathbf{w^y}|\mathbf{w^x})=p_E(y|x)$，但这要求 agent 始终如实报告，实际未必（如默认不提"banana is yellow"的颜色）；Case 3 是"agent 未观察、需预测"，可写成 $p(\mathbf{w^y}|\mathbf{w^x})=\sum_{f\in D^y}p(f|\mathbf{w^x})\cdot p(f(b^y)=y)$，要让它等于真实 $p(y|x)$ 必须同时满足"信念正确 + 如实报告"，可一旦把任务当成 prediction，agent 就应该把概率质量全压到 mode 上——于是"正确 belief"和"accuracy 最优"在数学上无法共存。这套抽象的价值在于统一了不同推理设置：pretrain 对应 Case 1（数据频率）、SFT/RLHF 对应 Case 3（预测最优响应），同一个 LLM 换了 prompt 就换了 agent，自然吐出不同分布，这并不是模型缺陷。
 
-3. **二阶预测作为 escape hatch**：
+**3. 二阶预测作为出路：把"事件概率"直接搬进输出，绕开 softmax 的死锁。**
 
-    - 功能：在 Case 3 下打破 "prediction vs 概率" 的死锁。
-    - 核心思路：当 prompt 明确要求 agent **报告概率本身**（而非选项），agent 的"理性选择"恰好就是把 belief 中的概率写出来——因为"输出 belief 中的概率值"既是 truthful 也最大化 brier-like 评分；所以输出分布与世界分布对齐变得可能。具体做法：在 prompt 里说 "输出格式：A: 概率p, B: 概率q, ..." 或允许 verbal hedging（"likely a but maybe b"），由外部 parser 验证或读语义。
-    - 设计动机：softmax logprob 受 surface-form competition（"heads" vs "the coin landed on heads" 抢概率）和 tokenizer artefact 影响；二阶预测把"事件"直接搬到输出空间，绕开词面竞争，且天然支持任意粒度（数字 / 模糊词 / 区间）。
+Case 3 揭示的死锁是"想要正确概率却被 prediction 逼着坍缩到 mode"，二阶预测正是为打破它而设。当 prompt 明确要求 agent **报告概率本身**（而不是从选项里挑一个），agent 的理性选择恰好就是把 belief 里的概率值如实写出来——因为这么做既 truthful 又能最大化 Brier 式评分，于是输出分布与世界分布对齐才重新变得可能。具体做法是在 prompt 里规定输出格式（"A: 概率 p, B: 概率 q, …"）或允许语言修饰（verbal hedging，如 "likely a but maybe b"），再由外部 parser 验证或读取语义。它之所以比 softmax logprob 更可靠，是因为后者受 surface-form competition（"heads" 和 "the coin landed on heads" 互抢概率）与 tokenizer artefact 干扰，而二阶预测把"事件"直接放进输出空间，绕开了词面竞争，还天然支持任意粒度的概率表达（数字 / 模糊词 / 区间）。
 
 ### 损失函数 / 训练策略
-本文是 position paper，**不提任何新训练目标**。但给出方向建议：未来如果要让二阶预测真正可靠，需要 (a) 训练数据里包含"事件 + 显式概率标注"的语料；(b) 用 calibration-aware 评分（Brier / log score）做 fine-tune，而不是 cross-entropy on token；(c) 区分 "what to say" 和 "how confident"，可能要双 head 结构。
+本文是 position paper，**不提任何新训练目标**，只给出方向性建议：要让二阶预测真正可靠，未来需要 (a) 训练语料里包含"事件 + 显式概率标注"；(b) 用 calibration-aware 评分（Brier / log score）做 fine-tune，而不是 token 上的 cross-entropy；(c) 把 "说什么（what to say）" 和 "多确定（how confident）" 分开，可能需要双 head 结构。
 
 ## 实验关键数据
 

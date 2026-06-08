@@ -41,31 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：图像 $x$、基线 $x'$、分类器 $f$、预训练 VAE 编码器 $E$、解码器 $D$、步数 $K$、选择比例 $q$、步长 $\eta$。  
-流程：(a) 编码 $z = E(x), z' = E(x')$，初始化 $z^{(0)} = z'$；(b) 对每步 $k=0,\ldots,K-2$，先解码 $\hat x^{(k)} = D(z^{(k)})$，再算潜梯度 $g^{(k)} = J_D(z^{(k)})^\top \nabla_x f(\hat x^{(k)})$，取 $|g^{(k)}|$ 的 $q$ 分位数 $\tau^{(k)}$ 作阈值，把低梯度子集 $S^{(k)} = \{j: |g^{(k)}_j| \leq \tau^{(k)}\}$ 内的潜维度按 $\eta$ 朝 $z$ 推进；(c) 最后用相邻解码点 $\tilde x^{(k)} = D(z^{(k)})$ 之间的像素差和像素梯度做路径积分 $\mathcal{A}_i = \sum_k \frac{\partial f(\tilde x^{(k)})}{\partial x_i}(\tilde x^{(k+1)}_i - \tilde x^{(k)}_i)$。
+MA-GIG 要解决的是“积分路径既贴流形又避梯度噪声”这对在像素空间无法兼得的矛盾，做法是把整个 Guided IG 过程搬进预训练 VAE 的潜空间走。先把输入 $x$ 和基线 $x'$ 编码成 $z = E(x)$、$z' = E(x')$，从 $z' $ 出发逐步朝 $z$ 推进：每步在潜空间里挑梯度幅值低的那批潜维度更新，再用 decoder Jacobian 把这种潜空间的轴对齐更新自动推成数据流形切空间内的更新；最后把路径上各潜点解码回像素，用相邻解码点之间的像素差和像素梯度做离散 IG 积分，得到像素级归因。
 
 ### 关键设计
 
-1. **形式化“输入空间引导 ⇒ 必然偏离流形”的几何不可能性**:
+**1. 形式化“像素空间引导必然偏离流形”：把印象升级成几何不可能性**
 
-    - 功能：从理论上证明 GIG 在像素空间走 greedy 更新一定离开流形，激励切换到潜空间。
-    - 核心思路：GIG 在 step $k$ 的更新 $\Delta x^{(k)}$ 是**轴对齐稀疏向量**（只在选中的像素维度上有 $\delta_i$），按切–法分解 $\Delta x^{(k)} = \Delta x^{(k)}_\| + \Delta x^{(k)}_\perp$，正交分量 $\Delta x^{(k)}_\perp$ 就是 off-manifold drift。作者证明 Proposition 3.1：当流形 reach 为 $\tau$，若 $\|\Delta x^{(k)}_\perp\| > \frac{1}{\tau}\|\Delta x^{(k)}\|^2$ 且 $\|\Delta x^{(k)}\| \leq \tau/2$，则 $x^{(k+1)}\notin \mathcal{M}$ 严格成立。关键观察是：轴对齐位移的正交分量是**一阶**的 $\mathcal{O}(\|\Delta x\|)$，但流形的曲率容忍只是**二阶**的 $\mathcal{O}(\|\Delta x\|^2)$，所以小步长下一阶项主导，几乎必然飞出。叠加 $K$ 步，总偏离 $d(x^{(K)}, \mathcal{M}) \leq \sum_k \|\Delta x^{(k)}_\perp\| + \mathcal{O}(\kappa)$。
-    - 设计动机：以往工作只是经验地观察“GIG 中间图像看起来不自然”，本文把它升级成一个几何 statement：自然图像的 tangent space 与像素轴对齐基本错位，所以稀疏像素更新结构性地偏离流形——不是 hyperparameter 调得不好，是机制本身就错了。
+GIG 在像素空间逐步走 greedy 更新时，中间图像看起来越来越不自然，但以往只是经验观察，没人说清为什么必然如此。本文给出 Proposition 3.1 把它变成严格结论：GIG 在第 $k$ 步的更新 $\Delta x^{(k)}$ 是**轴对齐稀疏向量**（只在被选中的像素维度上有非零 $\delta_i$），按切–法分解成 $\Delta x^{(k)} = \Delta x^{(k)}_\| + \Delta x^{(k)}_\perp$，其中正交分量 $\Delta x^{(k)}_\perp$ 正是 off-manifold drift。当流形 reach 为 $\tau$、且 $\|\Delta x^{(k)}_\perp\| > \frac{1}{\tau}\|\Delta x^{(k)}\|^2$ 同时 $\|\Delta x^{(k)}\| \leq \tau/2$ 时，$x^{(k+1)}\notin \mathcal{M}$ 严格成立。要害在于一个量级错配：轴对齐位移的正交分量是**一阶**的 $\mathcal{O}(\|\Delta x\|)$，而流形的曲率容忍只有**二阶**的 $\mathcal{O}(\|\Delta x\|^2)$，所以步长越小一阶项越主导，几乎注定飞出流形；$K$ 步累积后总偏离也被 bound 为 $d(x^{(K)}, \mathcal{M}) \leq \sum_k \|\Delta x^{(k)}_\perp\| + \mathcal{O}(\kappa)$。这条命题说明问题不出在超参没调好，而是“自然图像切空间与像素轴对齐天然错位”这一机制层面的硬约束，从而给“必须换坐标基”提供了硬动机。
 
-2. **潜空间 GIG：把同一套 greedy 策略搬进 $\mathcal{Z}$**:
+**2. 潜空间 GIG：同一套 greedy 策略换坐标系即自动对齐流形**
 
-    - 功能：在 $\mathcal{Z}$ 内做 GIG 风格的低梯度选择和稀疏推进，让 decoder 把它转成流形上的更新。
-    - 核心思路：潜梯度通过 chain rule + decoder Jacobian 算：$\nabla_z f(D(z^{(k)})) = J_D(z^{(k)})^\top \nabla_x f(D(z^{(k)}))$。在 $\mathcal{Z}$ 里选低梯度子集 $S_z^{(k)} = \{j: |\partial f / \partial z_j| \leq \tau_z^{(k)}\}$，只更新这些潜维度 $\Delta z^{(k)} = \sum_{j \in S_z^{(k)}} \delta_j u_j$，其中 $u_j$ 是 $\mathcal{Z}$ 的标准基。虽然 $\Delta z^{(k)}$ 在 $\mathcal{Z}$ 里是轴对齐的，但其在像素空间的推前 $\Delta x^{(k)} \approx J_D(z^{(k)}) \Delta z^{(k)} = \delta_j \cdot \partial D / \partial z_j$ **就是 Jacobian 第 $j$ 列**，即 decoder 在该点的切向量。
-    - 设计动机：Assumption 3.2（Perfect Autoencoder）下 $\mathrm{Im}(J_D(z)) = T_{D(z)}\mathcal{M}$，所以任何潜空间方向经 Jacobian 推前**都落在切空间**。GIG 在像素空间失败的核心是 $\{e_i\}$ 与切空间错位；MA-GIG 把基换成 $\{\partial D / \partial z_j\}$，几何上天然对齐。这种“换坐标基让稀疏更新自动满足约束”的做法把流形对齐从“硬约束”变成“免费副产品”，不需要任何投影或修正项。
+既然像素轴是错的，就把同一套低梯度选择策略原封不动搬进潜空间 $\mathcal{Z}$。潜梯度由链式法则加 decoder Jacobian 给出 $\nabla_z f(D(z^{(k)})) = J_D(z^{(k)})^\top \nabla_x f(D(z^{(k)}))$，在 $\mathcal{Z}$ 里挑出低梯度子集 $S_z^{(k)} = \{j: |\partial f / \partial z_j| \leq \tau_z^{(k)}\}$，只更新这些潜维度 $\Delta z^{(k)} = \sum_{j \in S_z^{(k)}} \delta_j u_j$（$u_j$ 是 $\mathcal{Z}$ 的标准基）。妙处在于：$\Delta z^{(k)}$ 在 $\mathcal{Z}$ 里仍是轴对齐稀疏的，但推前到像素空间 $\Delta x^{(k)} \approx J_D(z^{(k)}) \Delta z^{(k)} = \delta_j \cdot \partial D / \partial z_j$ 恰好**是 Jacobian 的第 $j$ 列**——也就是 decoder 在该点的一个切向量。在 Assumption 3.2（Perfect Autoencoder）下 $\mathrm{Im}(J_D(z)) = T_{D(z)}\mathcal{M}$，所以任何潜空间方向经 Jacobian 推前都落在切空间内。设计 1 揭示 GIG 失败的根源是基 $\{e_i\}$ 与切空间错位，这里就把基换成 $\{\partial D / \partial z_j\}$ 让它天然对齐，把流形对齐从需要投影/修正的硬约束变成 decoder 几何免费提供的副产品，算法骨架与 GIG 几乎一一对应。
 
-3. **基线编码 + 解码点路径积分公式**:
+**3. 真实端点锚定 + 解码点路径积分：转回像素空间且保住 completeness**
 
-    - 功能：把潜空间生成的路径转回像素空间做最终归因，保持 IG 的 completeness 形式。
-    - 核心思路：基线在潜空间初始化为 $z^{(0)} = z' = E(x')$，最终 $z^{(K)} = z$（直接锚定到真实 $z$）；像素空间端点强制为 $\tilde x^{(0)} = x'$、$\tilde x^{(K)} = x$（避免编码-解码重建误差污染归因端点），中间点按 $\tilde x^{(k)} = D(z^{(k)})$ 解码。归因为离散版 IG：$\mathcal{A}_i = \sum_{k=0}^{K-1}\frac{\partial f(\tilde x^{(k)})}{\partial x_i}(\tilde x^{(k+1)}_i - \tilde x^{(k)}_i)$。
-    - 设计动机：直接在潜空间求 $\mathcal{A}_z$ 不可解释——用户要知道哪个**像素**重要，不是哪个潜变量重要。强制端点为真实 $x', x$ 而非 $D(z'), D(z)$ 解决 imperfect VAE 时端点错位带来的 completeness 缺口；中间点用 decoder 输出，保证路径仍在流形附近。
+潜空间里走出来的路径不能直接当归因，因为用户要知道哪个**像素**重要而非哪个潜变量重要，所以要转回像素空间做积分。基线在潜空间初始化为 $z^{(0)} = z' = E(x')$、终点 $z^{(K)} = z$ 直接锚到真实 $z$；像素端点则强制为 $\tilde x^{(0)} = x'$、$\tilde x^{(K)} = x$，中间点按 $\tilde x^{(k)} = D(z^{(k)})$ 解码，最终归因是离散版 IG：$\mathcal{A}_i = \sum_{k=0}^{K-1}\frac{\partial f(\tilde x^{(k)})}{\partial x_i}(\tilde x^{(k+1)}_i - \tilde x^{(k)}_i)$。强制端点用真实 $x', x$ 而不是 $D(z'), D(z)$，是为了避开 imperfect VAE 重建误差在端点处撕开的 completeness 缺口；中间点仍用 decoder 输出，保证整条路径贴着流形附近走。
 
 ### 损失函数 / 训练策略
-MA-GIG 是**纯推断时**算法，不引入新的训练损失。它要求一个预训练好的 VAE（论文用 MAR backbone，附录还测了 Stable Diffusion 的 VAE 等）。超参主要是 $K$（步数）、$q$（选择比例，类似 GIG 的 fraction）、$\eta$（步长），细节在 Appendix F。
+MA-GIG 是**纯推断时**算法，不引入任何新训练损失，只要一个预训练好的 VAE（论文用 MAR backbone，附录还测了 Stable Diffusion 的 VAE 等）。可调超参主要是步数 $K$、选择比例 $q$（类似 GIG 的 fraction）、步长 $\eta$，细节见 Appendix F。
 
 ## 实验关键数据
 

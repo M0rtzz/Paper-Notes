@@ -42,40 +42,29 @@ tags:
 
 ### 整体框架
 
-输入是一组沙箱化 Docker 镜像（仅含源码与依赖，**不假设**已有测试、测试运行命令、测试解析器或语言/框架先验）。同一个 LLM 策略通过不同 prompt 实例化为两个角色，共享参数、联合 RL 更新：
-
-1. **Bug-injection agent** 在沙箱里用 Bash + editor 工具探索仓库 → 自学如何跑测试 → 产出 5 文件 bug artifact → 经一致性校验。
-2. **Bug-solving agent** 拿到 bug artifact 中"反向的 test-weakening patch"作为唯一规范（**没有自然语言 issue**），在被注入 bug 的代码上产出修复 patch。
-3. Solver 修复失败的轨迹会被回收成"二阶 bug"，扩充训练分布。
-4. Proposer 的奖励 = 一致性校验 + solver 的 solve-rate（鼓励"难但可解"），solver 的奖励 = 测试是否全过的二值信号。
-
-工具脚手架直接复用 Code World Model (CWM) 的实现，base model 用 CWM-sft（32B，CWM 的 RL 前 checkpoint），保证比较公平。
+SSR 想解决的是"软件 agent 被人类标注数据锁死天花板"的问题，做法是把整个训练分布交给 agent 自己生成：输入只是一组沙箱化 Docker 镜像（仅含源码与依赖，**不假设**已有测试、测试运行命令、测试解析器或语言/框架先验）。同一个 LLM 策略通过不同 prompt 实例化为两个角色并共享参数——**bug-injection agent** 在沙箱里用 Bash + editor 工具探索仓库、自学如何跑测试、最终产出一个经过一致性校验的 bug；**bug-solving agent** 则拿这个 bug 去修。proposer 的奖励来自"一致性校验 + solver 在该 bug 上的 solve-rate"（鼓励造出"难但可解"的 bug），solver 的奖励是测试是否全过的二值信号，两者联合做 on-policy RL。solver 修不掉的失败轨迹还会被回收成"二阶 bug"扩充分布。工具脚手架直接复用 Code World Model (CWM) 的实现，base model 用 CWM-sft（32B，CWM 的 RL 前 checkpoint），以保证和 baseline 公平对比。
 
 ### 关键设计
 
-1. **Bug Artifact 五件套 + 一致性校验**:
+**1. Bug Artifact 五件套 + 一致性校验：把"什么是合法 bug"从人工判断变成可执行验证。**
 
-    - 功能：用 5 个文件把"一个 bug 是什么、怎么判定修没修好"完全形式化——`test_script.sh`（跑测试）、`test_files.txt`（评测前重置的 oracle 测试文件白名单）、`test_parser.py`（任意语言写的测试输出→JSON 解析器）、`bug_inject.diff`（注入 bug 的 patch）、`test_weaken.diff`（弱化/删除现有测试以隐藏 bug）。
-    - 核心思路：每个 artifact 必须通过一整套自动校验才算合法——测试文件存在且覆盖弱化补丁触及范围、parser 能可靠输出 pass/fail JSON、原始码上 `test_script.sh` 至少跑出 `min_passing_tests` 个通过、`bug_inject.diff` 至少触及 `min_changed_files` 个文件、注入后至少 `min_failing_tests` 个原本通过的测试转为失败、弱化补丁能让某些失败测试恢复通过；最关键的是**反向 mutation testing**：对 bug patch 中每个文件，单独回滚到 fixed 版本，若至少一个失败测试恢复通过则该文件"贡献于 bug"，否则整套 artifact 被拒。`test_files.txt` 的存在保证评测时 oracle 测试永远会被重置回原版，防止 solver 通过改测试来 hack。
-    - 设计动机：把"什么是合法 bug"从"人工判断"变成"可执行验证"，奖励 $r_{\text{inject}}$ 才能在没有任何人类标注的情况下保持有意义；反向 mutation 进一步阻止 proposer 通过塞无关改动来骗过校验。
+自然语言 issue 既贵又无法自动判分，SSR 干脆用 5 个文件把"一个 bug 是什么、怎么判定修没修好"彻底形式化：`test_script.sh`（跑测试）、`test_files.txt`（评测前会被重置的 oracle 测试文件白名单）、`test_parser.py`（任意语言写的测试输出 → JSON 解析器）、`bug_inject.diff`（注入 bug 的 patch）、`test_weaken.diff`（弱化或删除现有测试以隐藏 bug）。每个 artifact 必须通过一整套自动校验才算合法——测试文件存在且覆盖弱化补丁触及范围、parser 能可靠输出 pass/fail JSON、原始码上 `test_script.sh` 至少跑出 `min_passing_tests` 个通过、`bug_inject.diff` 至少触及 `min_changed_files` 个文件、注入后至少 `min_failing_tests` 个原本通过的测试转为失败、弱化补丁能让某些失败测试恢复通过。其中最关键的是**反向 mutation testing**：对 bug patch 中每个文件单独回滚到 fixed 版本，若至少一个失败测试恢复通过则判定该文件"贡献于 bug"，否则整套 artifact 直接被拒——这道过滤专门防 proposer 塞一堆无关 diff 来骗过校验。而 `test_files.txt` 保证评测时 oracle 测试永远被重置回原版，堵死 solver"改测试而非改代码"的 hack 路径。正因为合法性完全可执行验证，奖励 $r_{\text{inject}}$ 才能在零人类标注下保持有意义。
 
-2. **难度自适应奖励 + 高阶 bug 课程演化**:
+**2. 难度自适应奖励 + 高阶 bug 课程演化：让训练分布跟着当前策略一起变难。**
 
-    - 功能：让 proposer 产出"难度刚好"的 bug，并把 solver 修不掉的失败状态升级为新 bug，使训练分布随当前策略持续滚动更新。
-    - 核心思路：设 solver 在该 bug 上的 solve-rate 为 $s\in[0,1]$，奖励定义为 $r_{\text{inject}} = -1.0$（一致性失败）/ $-\alpha$（合法但 $s=0$ 或 $s=1$）/ $1-(1+\alpha)s$（$0<s<1$，理想难度），其中 $\alpha=0.8$；这相当于在"既非过易也非过难"区间最大化奖励，且对极端 solve-rate 只给小负值以保留梯度信息。Solver 端用极简二值奖励 $r_{\text{solve}}=+1$（全测通过）/ $-1$（其他）。高阶 bug 的构造：从原仓出发先应用 `bug_inject.diff` + `test_weaken.diff` 得到 buggy 仓库，再应用 solver 之前失败的 `pred_patch.diff` 形成新的 buggy 状态，去掉 `.git` 重新初始化以防泄漏，作为新一轮 solver 的输入；只到二阶，避免与已有 bug 重叠率过高。
-    - 设计动机：静态合成数据集（如 SWE-smith、BugPilot）无法跟着 agent 能力涨而变难；solve-rate 形式的奖励把"难度调度"内生到策略本身，而高阶 bug 正好模拟真实开发中"改 A 又顺手写出 B"的层叠错误，让 agent 学到 multi-step 编辑模式。
+静态合成数据集（如 SWE-smith、BugPilot）的难度是固定的，agent 能力涨上去后就提供不了有效梯度。SSR 把"难度调度"内生到奖励里：设 solver 在某 bug 上的 solve-rate 为 $s\in[0,1]$，proposer 奖励为
 
-3. **Bug-injection 策略：Removal + 历史回退（无自然语言 issue）**:
+$$r_{\text{inject}} = \begin{cases} -1.0 & \text{一致性校验失败} \\ -\alpha & \text{合法但 } s=0 \text{ 或 } s=1 \\ 1-(1+\alpha)s & 0<s<1 \end{cases}$$
 
-    - 功能：保证生成的 bug 既多样又"非平凡"，避免退化为一行字面修改（如 `var=0 → var=1`）。
-    - 核心思路：用两个简单 prompt 随机采样——(a) **Removal-only**：要求 agent 删除整个文件或代码块，并做必要的兼容性修复以保证仓库仍可构建，强迫 solver 重建缺失功能；(b) **历史回退**：让 agent 读 git log，挑选有意义的历史变更进行反向应用，使 bug 模式贴近真实演化历史。给 solver 的 prompt 中**不合成任何自然语言 issue**，只把 "test_weaken.diff 的反向"作为形式化规范——这等价于告诉 solver"请实现让这些被弱化的测试通过的行为"，回避了"评估自然语言 issue 质量"这个无解问题；下游在 SWE-bench Verified（用自然语言 issue）上的提升就只能来自"学会写让测试通过的代码"，而非 in-domain 泄漏。
-    - 设计动机：作者实验发现 direct-injection 会迅速塌缩到 one-line 改动、奖励信号微弱；removal 强迫"从无到有"重建代码、学到仓库结构理解；history-aware 则注入真实开发中的复杂改动模式。两者随机混合在 ablation 中获得最优表现。
+其中 $\alpha=0.8$。这条曲线在"既非过易也非过难"的区间最大化奖励，同时对极端 solve-rate 只给小负值以保留梯度。solver 端则用极简二值奖励 $r_{\text{solve}}=+1$（全测通过）/ $-1$（其他）。课程演化靠**高阶 bug**实现：从原仓先应用 `bug_inject.diff` + `test_weaken.diff` 得到 buggy 仓库，再叠加 solver 之前失败的 `pred_patch.diff` 形成新的 buggy 状态，去掉 `.git` 重新初始化防泄漏，作为新一轮 solver 的输入；只做到二阶，再深就和已有 bug 重叠率太高。这恰好模拟真实开发里"改 A 又顺手写出 B"的层叠错误，逼 agent 学会 multi-step 编辑。
+
+**3. Bug-injection 策略：Removal + 历史回退，且不给 solver 任何自然语言 issue。**
+
+作者发现若直接让 agent "随便注入 bug"，它会迅速塌缩到 `var=0 → var=1` 这种一行字面修改，奖励信号几乎为零。于是用两个简单 prompt 随机采样来保证 bug 既多样又非平凡：(a) **Removal-only** 要求 agent 删掉整个文件或代码块、并做必要兼容性修复保证仓库仍可构建，强迫 solver"从无到有"重建缺失功能、学到仓库结构理解；(b) **历史回退**让 agent 读 git log 挑有意义的历史变更反向应用，使 bug 模式贴近真实演化历史。给 solver 的 prompt 里**完全不合成自然语言 issue**，只把"`test_weaken.diff` 的反向"作为唯一的形式化规范——等价于告诉 solver"请实现让这些被弱化的测试重新通过的行为"，从根上回避了"如何自动评估自然语言 issue 质量"这个无解问题。这样一来，下游在 SWE-bench Verified（用真实自然语言 issue）上的提升只可能来自"学会写让测试通过的代码"这一根本能力，而非 in-domain 泄漏。ablation 里 removal 与 history-aware 随机混合取得最优表现。
 
 ### 损失函数 / 训练策略
 
-- 两个角色共享同一组 LLM 参数，奖励 $r_{\text{inject}}$ 与 $r_{\text{solve}}$ 分别作用于对应轨迹，联合做 on-policy RL 更新。
-- 评估时 temperature=1.0, top-p=0.95，每题只跑一次（无 best-of-N、无 reranker），以排除 test-time scaling 干扰。
-- Baseline 与 SSR 训练用**完全相同**的环境镜像和超参，唯一差异在 baseline 额外能看到人类 issue 描述与 pass-to-pass / fail-to-pass 测试，从而隔离"自博弈"本身的贡献。
+两个角色共享同一组 LLM 参数，奖励 $r_{\text{inject}}$ 与 $r_{\text{solve}}$ 分别作用于各自轨迹，联合做 on-policy RL 更新。评估时 temperature=1.0、top-p=0.95，每题只跑一次（无 best-of-N、无 reranker），以排除 test-time scaling 的干扰。Baseline 与 SSR 用**完全相同**的环境镜像和超参，唯一差异是 baseline 额外能看到人类 issue 描述与 pass-to-pass / fail-to-pass 测试，从而干净地隔离"自博弈"本身的贡献。
 
 ## 实验关键数据
 

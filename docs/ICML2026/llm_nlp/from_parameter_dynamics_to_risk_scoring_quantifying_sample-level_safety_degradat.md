@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分两部分。**Part 1 (机制分析)**：构造两条语义锚向量 → 沿 fine-tuning 步追踪累积漂移 → 观察"危险方向投影单调上升 + 安全方向投影几乎为 0"伴随 Safety Score 从 5.0 崩到 1.0 以下的现象。**Part 2 (样本评分 SQSD)**：对每条候选样本 $z$ 算一步 LoRA 梯度 → 估计该样本会引起的等效权重更新 $\Delta W(z)$ → 在每个 LoRA 模块上算 $\Delta W(z)$ 与 $V_\text{danger}$ 和 $V_\text{safety}$ 的归一化投影差 → 在所有模块求和得到最终 $\text{SQSD}(z)$。
+全文围绕一个核心动作：把"安全降级"投影到参数空间里两条事先标定好的方向上看个究竟。前半部分是机制分析——构造"安全"和"危险"两条语义锚向量，沿 fine-tuning 的每一步追踪参数累积漂移在这两条方向上的投影，借此回答"善意微调为什么会破对齐"。后半部分是样本评分 SQSD——对每条候选样本只算一步 LoRA 梯度，估出它会引起的等效权重更新，再看这个更新更偏向"危险"还是"安全"方向，把投影差当成该样本的连续风险分。
 
 ### 关键设计
 
-1. **参数空间的"安全 / 危险"方向构造与验证**:
+**1. 参数空间的"安全 / 危险"方向构造与验证：把抽象的安全性变成可投影的向量。**
 
-    - 功能：在参数空间里定义两条可解释的、可投影的语义锚向量。
-    - 核心思路：$V_\text{safety} = \arg\min_\theta \mathcal{L}_\text{dpo}(\theta_0, D_\text{aligned}) - \theta_0$（用 PKU-SafeRLHF 做 DPO），$V_\text{danger} = \arg\min_\theta \mathcal{L}_\text{sft}(\theta_0, D_\text{harmful}) - \theta_0$（在 Aegis-unsafe 和 BeaverTails-unsafe 上做 SFT，分别构造 Aegis / Beaver 两条危险方向）。然后做 steering 实验 $\theta(\alpha) = \theta_0 + \alpha V$ 扫 $\alpha$，确认沿 $V_\text{danger}$ 走 Safety Score 单调下降、沿 $V_\text{safety}$ 走单调上升，验证这两条向量真的编码了安全相关的参数位移。
-    - 设计动机：之前文献的 Task Vector 主要用于 task arithmetic 而非安全分析。这里用同样的"方向 = 训练终点 − 起点"思路，把抽象的"安全"和"危险"具体化为可计算的方向向量，是后续所有投影分析的基础。
+要想"测量"安全降级，先得有一把能投影的尺子。作者借 Task Vector 的"方向 = 训练终点 − 起点"思路，造了两条语义锚向量：安全方向 $V_\text{safety} = \arg\min_\theta \mathcal{L}_\text{dpo}(\theta_0, D_\text{aligned}) - \theta_0$（在 PKU-SafeRLHF 上做 DPO 得到），危险方向 $V_\text{danger} = \arg\min_\theta \mathcal{L}_\text{sft}(\theta_0, D_\text{harmful}) - \theta_0$（在 Aegis-unsafe 和 BeaverTails-unsafe 上分别做 SFT，得到 Aegis / Beaver 两条危险方向）。光定义还不够，得证明这两条向量真的编码了安全语义，于是作者做了一个 steering 实验：沿向量走 $\theta(\alpha) = \theta_0 + \alpha V$ 扫不同 $\alpha$，结果沿 $V_\text{danger}$ 走 Safety Score 单调下降、沿 $V_\text{safety}$ 走单调上升——两条方向确实分别对应"变危险"和"变安全"的参数位移。Task Vector 此前主要用于 task arithmetic（加减能力），把它搬到安全分析上、并配 steering 验证有效性，是后续所有投影分析的地基。
 
-2. **累积参数漂移追踪揭示两阶段降级**:
+**2. 累积参数漂移追踪揭示两阶段降级：用一条轨迹回答"为何崩"。**
 
-    - 功能：把"为何崩"这个机制问题用一张可解读的轨迹图回答。
-    - 核心思路：在 fine-tuning 每个 checkpoint 计算 $p_\text{safety}(t) = \langle\Delta\theta_t, \hat{V}_\text{safety}\rangle$ 和 $p_\text{danger}(t) = \langle\Delta\theta_t, \hat{V}_\text{danger}\rangle$，发现一个**鲜明的非线性两阶段模式**：早期参数沿危险方向快速漂移（投影从 0 到约 6.0）但 Safety Score 只从 5.0 缓降到 4.0；后期方向漂移变缓但 Safety Score 突然崩到 1.0 以下。
-    - 设计动机：这个两阶段曲线既支持"safety basin"的几何直觉（局部对扰动鲁棒、出了 basin 就崩），也给后续 SQSD 选 initialization 的指导——必须在"对方向敏感"的参数态计算梯度，否则同样的扰动信号在不敏感区毫无意义。
+有了方向尺子，就能把"为什么崩"这个机制问题画成一张轨迹图。作者在 fine-tuning 的每个 checkpoint 计算累积漂移在两方向上的投影 $p_\text{safety}(t) = \langle\Delta\theta_t, \hat{V}_\text{safety}\rangle$ 和 $p_\text{danger}(t) = \langle\Delta\theta_t, \hat{V}_\text{danger}\rangle$，发现一个鲜明的非线性两阶段模式：早期参数沿危险方向快速漂移（投影从 0 冲到约 6.0），但 Safety Score 只从 5.0 缓降到 4.0；后期方向漂移反而变缓，Safety Score 却突然崩到 1.0 以下。这条曲线一方面印证了"safety basin"的几何直觉——在基地内对扰动鲁棒、一旦出了基地就崩；另一方面它直接指导了 SQSD 该在哪里算梯度：必须在"对方向敏感"的参数态上算，否则同样的扰动信号落在不敏感区里就毫无分辨力。
 
-3. **SQSD：单步梯度沿两方向投影差作为样本风险分**:
+**3. SQSD：单步梯度沿两方向投影差作为样本风险分。**
 
-    - 功能：给每条样本一个连续的风险评分，覆盖整个 risk spectrum 而非只挑极端子集。
-    - 核心思路：对样本 $z$ 算 LoRA 参数的一步梯度，导出等效权重更新 $\Delta W(z) \approx -\eta(B_0 \nabla_A + \nabla_B A_0)$（忽略 $\mathcal{O}(\eta^2)$ 二阶项）。然后对每个 LoRA 模块 $m$ 做模块级归一化后计算 $\text{SQSD}_m(z) = \langle\frac{\Delta W_m(z)}{\|\Delta W_m(z)\|_2}, \hat{V}_{\text{danger},m}\rangle - \langle\frac{\Delta W_m(z)}{\|\Delta W_m(z)\|_2}, \hat{V}_{\text{safety},m}\rangle$，最后 $\text{SQSD}(z) = \sum_m \text{SQSD}_m(z)$。作者用一阶 Taylor 展开证明这个投影差对应于该样本会把模型推向 $\theta_\text{danger}$ vs $\theta_\text{safety}$ 的相对程度，因此可解释。
-    - 设计动机：模块级归一化是为了消除"response 长度偏差"——梯度幅度天然和回答长度正相关，不做归一化的话短回答样本会被错误地排到高风险。作者还讨论了 initialization 必须选在"方向敏感参数态"（即上面发现的非线性敏感区）才能保证 SQSD 排名有效，否则投影信号无法分辨样本风险。
+机制清楚之后，把同一把尺子用到单条样本上就得到 SQSD。对样本 $z$ 算一步 LoRA 梯度，导出它的等效权重更新 $\Delta W(z) \approx -\eta(B_0 \nabla_A + \nabla_B A_0)$（忽略 $\mathcal{O}(\eta^2)$ 二阶项），再看这个更新更靠近危险方向还是安全方向。具体地，对每个 LoRA 模块 $m$ 先做模块级归一化、再算两方向的投影差：
+
+$$\text{SQSD}_m(z) = \left\langle\frac{\Delta W_m(z)}{\|\Delta W_m(z)\|_2}, \hat{V}_{\text{danger},m}\right\rangle - \left\langle\frac{\Delta W_m(z)}{\|\Delta W_m(z)\|_2}, \hat{V}_{\text{safety},m}\right\rangle$$
+
+最终在所有模块上求和 $\text{SQSD}(z) = \sum_m \text{SQSD}_m(z)$。作者用一阶 Taylor 展开证明这个投影差对应该样本把模型推向 $\theta_\text{danger}$ vs $\theta_\text{safety}$ 的相对程度，所以分数可解释。两个细节决定了它管不管用：其一，模块级归一化是为了消掉"response 长度偏差"——梯度幅度天然和回答长度正相关，不归一化的话短回答样本会被错误地排成高风险；其二，初始化必须落在设计 2 发现的那个"方向敏感参数态"（fine-tuning 中段的高敏感 checkpoint）上，否则投影信号分辨不出样本风险。也正因为给的是连续分数而非"极端 top-k 选择"，SQSD 能覆盖整个 risk spectrum，包括以往方法完全失效的中间风险样本。
 
 ### 损失函数 / 训练策略
-本身不是训练目标。但所有 LoRA fine-tuning 用 $r=8, \alpha=16$，方向构造时 lr=5e-6，SQSD 评估时 lr=5e-5 以产生更明显的安全降级。一阶 Taylor 推导：$\eta[\mathcal{L}(z, \theta_\text{ref}) - \mathcal{L}(z, \theta_\text{target})] \approx (\theta' - \theta_\text{ref})^\top (\theta_\text{target} - \theta_\text{ref})$，把"梯度更新方向 vs 目标方向"的内积关联到损失变化，为 SQSD 提供 preference-based 解释。
+SQSD 本身不引入新的训练目标，但有一组关键配置：所有 LoRA fine-tuning 用 $r=8, \alpha=16$；构造方向向量时 lr=5e-6，评估 SQSD 时刻意把 lr 调到 5e-5 以诱发更明显的安全降级。可解释性的根基是一阶 Taylor 推导 $\eta[\mathcal{L}(z, \theta_\text{ref}) - \mathcal{L}(z, \theta_\text{target})] \approx (\theta' - \theta_\text{ref})^\top (\theta_\text{target} - \theta_\text{ref})$，它把"梯度更新方向 vs 目标方向"的内积和损失变化挂上钩，给 SQSD 提供了 preference-based 的解读。
 
 ## 实验关键数据
 

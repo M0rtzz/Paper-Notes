@@ -39,27 +39,21 @@ BLOCK-EM 用 SAE 找到一小撮"因果地控制 emergent misalignment"的内部
 ## 方法详解
 
 ### 整体框架
-两个阶段：(A) **离线因果 latent 发现** —— 用一个 fixed、domain-agnostic 的 44 个 core misalignment prompts，对 $\mathcal{M}^{\text{base}}$ 和 $\mathcal{M}^{\text{mis}}$ 在中间层（如 layer 20）跑前向，用预训练 SAE 把 hidden state 投到 ~60K 维 latent basis 上，做三阶段筛选：(1) **Top-Delta 候选池**——按 token-平均 activation 变化 $\Delta_k = \mathbb{E}_x[\bar z_k^{\text{mis}}(x)] - \mathbb{E}_x[\bar z_k^{\text{base}}(x)]$ 取正负各 top；(2) **Induce-and-repair 因果筛选**——对每个候选 latent $k$，在 base model 上加 $h \leftarrow h + \alpha \hat d_k$ 测能否诱发 EM、在 mis model 上做反向 steering 测能否修复 EM，保留两者都能的；(3) **质量预算下的 ranked 选择**——在 incoherence ≤ 10% 的预算下扫描 $\alpha$ 取最大行为效应，最终得到 $|\mathcal{K}|=20$ 的小集合，并按 $\Delta_k$ 符号拆成 $\mathcal{K}^+, \mathcal{K}^-$。(B) **训练时 latent blocking** —— 在标准 SFT loss 上加 one-sided 惩罚（仅对完成 token），用 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{SFT}} + \lambda \mathcal{L}_{\text{block}}$ 联合优化。可选地冻结 blocking layer 下游的 layers 21-32 防止 downstream bypass。
+BLOCK-EM 要解决的是"窄域 SFT 会泛化出广义 misalignment"，它的思路是把对齐干预从输出层下沉到少数 SAE latent 上。整个方法分两阶段：先在一个 reference 受控实验里对比安全的 base 模型 $\mathcal{M}^{\text{base}}$ 和被 SFT 带坏的 $\mathcal{M}^{\text{mis}}$，离线挖出一小撮"因果地控制 EM"的 latent 集 $\mathcal{K}$；再把这个集合写进一个 one-sided 训练正则，在窄域 SFT 时只禁止模型把它们朝失对齐方向放大，从而既学会 in-domain 任务又不长出 EM。
 
 ### 关键设计
 
-1. **三阶段因果 latent 发现 pipeline**:
+**1. 三阶段因果 latent 发现 pipeline：从相关到因果**
 
-    - 功能：从 SAE 的几万个 latent 里自动找到"真正因果地控制 EM"的小集合，区分相关 vs 因果。
-    - 核心思路：Stage 1 用 model-diffing 计算 $\Delta_k$，按符号分别取 top 形成 sign-aware 候选池，filter 出"fine-tuning 强烈放大或抑制的 features"；Stage 2 是关键的因果筛选——steering 即给中间层 hidden state 加上 latent 的 decoder direction $h \leftarrow h + \alpha \hat d_k$，在 core misalignment prompts 上测两件事：base + 正向 steering 能否**诱发**(induce) EM、mis + 反向 steering 能否**修复**(repair) EM；只有两个测试都通过的 latent 保留；Stage 3 给候选做"质量预算下的强度扫描"，记录 incoherence 不超过 10% 时能达到的最大行为效应作为 ranking score，挑 top-20。
-    - 设计动机：仅靠 activation shift（Stage 1）只能告诉你"哪些 latent 变了"，不能告诉你"哪些 latent 引起了 EM"；Stage 2 的双向因果测试把相关性升级成因果证据；Stage 3 让 latent 之间在 quality-controlled 条件下可比，避免选到"很容易引发 EM 但同时让模型说胡话"的退化 latent。
+挑战在于 SAE 有几万维 latent，model-diffing 只能告诉你"哪些 latent 变了"，却分不清它是 EM 的原因还是副产物。pipeline 因此分三步逐级收紧。Stage 1（Top-Delta 候选池）用固定、domain-agnostic 的 44 个 core misalignment prompts 让两个模型在中间层（如 layer 20）跑前向，经预训练 SAE 投到 ~60K 维 latent basis，按 token-平均 activation 变化 $\Delta_k = \mathbb{E}_x[\bar z_k^{\text{mis}}(x)] - \mathbb{E}_x[\bar z_k^{\text{base}}(x)]$ 的正负号各取 top，得到"被 fine-tuning 强烈放大或抑制"的候选。Stage 2（induce-and-repair 因果筛选）是关键一步：对每个候选 latent $k$，给中间层 hidden state 加上它的 decoder direction $h \leftarrow h + \alpha \hat d_k$ 做 steering，测两件事——base 模型加正向 steering 能否**诱发**(induce) EM、mis 模型加反向 steering 能否**修复**(repair) EM，只有两个测试都通过的 latent 才保留，由此把相关性升级成双向因果证据。Stage 3（质量预算下的 ranked 选择）在 incoherence ≤ 10% 的预算内扫描 $\alpha$、记录此约束下能达到的最大行为效应作为 ranking score，让 latent 之间在 quality-controlled 条件下可比，避免选到"很容易引发 EM 但同时让模型说胡话"的退化 latent，最终挑出 $|\mathcal{K}|=20$ 的小集合并按 $\Delta_k$ 符号拆成 $\mathcal{K}^+, \mathcal{K}^-$。
 
-2. **One-sided signed latent blocking 损失**:
+**2. One-sided signed latent blocking 损失：只堵失对齐方向**
 
-    - 功能：训练时仅在 misalignment 方向限制 $\mathcal{K}$ 中 latent 的活动，不影响其他 latent 也不影响 base 已有的 latent 水平。
-    - 核心思路：每个训练 step，冻结一份 base copy 跑同样的输入，对比 $z^{(\theta)}_{t,k}(x)$（当前模型）和 $z^{\text{base}}_{t,k}(x)$（base），定义 $\mathcal{L}_{\text{block}} = \mathbb{E}_{x,t}[\sum_{k\in\mathcal{K}^+}\text{ReLU}(z^{(\theta)}_{t,k} - z^{\text{base}}_{t,k})^2 + \sum_{k\in\mathcal{K}^-}\text{ReLU}(z^{\text{base}}_{t,k} - z^{(\theta)}_{t,k})^2]$。ReLU 让 loss "不对称"——只在朝失对齐方向（$\mathcal{K}^+$ 增加 / $\mathcal{K}^-$ 减少）超过 base 时激活，其他方向自由优化。最终目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{SFT}} + \lambda \mathcal{L}_{\text{block}}$。
-    - 设计动机：双向惩罚会阻止有用学习；KL 类正则又会无差别压制所有偏离。one-sided + signed + base-anchored 三件套是 minimal-invasive 的设计——base 已经是安全的，只阻止把 latent **进一步**朝 misalignment 方向推。仅在 completion token（不含 prompt）上算，避免 prompt 长度差异污染信号。
+如果用双向惩罚会连有用学习一起阻止，用 KL 类正则又会无差别压制所有偏离，所以 blocking 损失被设计成"one-sided + signed + base-anchored"三件套。每个训练 step 都冻结一份 base copy 跑同样输入，对比当前模型 $z^{(\theta)}_{t,k}(x)$ 和 base $z^{\text{base}}_{t,k}(x)$，定义 $\mathcal{L}_{\text{block}} = \mathbb{E}_{x,t}[\sum_{k\in\mathcal{K}^+}\text{ReLU}(z^{(\theta)}_{t,k} - z^{\text{base}}_{t,k})^2 + \sum_{k\in\mathcal{K}^-}\text{ReLU}(z^{\text{base}}_{t,k} - z^{(\theta)}_{t,k})^2]$。ReLU 让惩罚不对称：仅当 latent 朝失对齐方向（$\mathcal{K}^+$ 增加、$\mathcal{K}^-$ 减少）超过 base 水平时才激活，其它方向自由优化；因为 base 本身已经安全，这就只阻止把 latent **进一步**朝 misalignment 推，而不动 base 已有的 latent 水平。损失只在 completion token（不含 prompt）上算，避免 prompt 长度差异污染信号，最终与 SFT 联合优化 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{SFT}} + \lambda \mathcal{L}_{\text{block}}$。
 
-3. **下游冻结 + 跨域迁移机制**:
+**3. 下游冻结 + 跨域迁移：堵逃逸路径并复用同一 $\mathcal{K}$**
 
-    - 功能：堵死"下游层绕路"逃逸路径 + 让单一域识别的 $\mathcal{K}$ 在多域复用。
-    - 核心思路：因为 $\mathcal{L}_{\text{block}}$ 只直接作用在 layer 20 及之前，**layer 21-32 完全自由优化**就可能学到"如何在被锁住的中间表征上 decode 出 misaligned 输出"。冻结 layers 21-32 后 EM 进一步从 38% → 3% 且不损失 in-domain。对跨域迁移：仅在 finance domain 上跑完 Stages 1-3 得到一个 $\mathcal{K}$，然后在 health / education / legal / career / automotive / PrimeVul 6 个其它域上**复用同一个** $\mathcal{K}$ 做 BLOCK-EM 训练，发现 EM 在所有域都被压制。
-    - 设计动机：H3 假设（downstream bypass）需要堵死；冻结下游既廉价又有效。跨域迁移成功说明 $\mathcal{K}$ 捕获的是"广义 persona-级别的 misalignment 表征"而非"finance 域特异 feature"，证明了机制的普适性。
+由于 $\mathcal{L}_{\text{block}}$ 只直接作用在 layer 20 及之前，layer 21-32 若完全自由优化就可能学到"如何在被锁住的中间表征上 decode 出 misaligned 输出"这条 downstream bypass 逃逸路径（即 H3 假设）。把 layers 21-32 一并冻结后，EM 进一步从 38% 降到 3% 且不损失 in-domain，是一个廉价又有效的补丁。跨域迁移则验证 $\mathcal{K}$ 的普适性：仅在 finance 域跑完 Stage 1-3 得到一个 $\mathcal{K}$，再在 health / education / legal / career / automotive / PrimeVul 6 个其它域上**复用同一个** $\mathcal{K}$ 做 BLOCK-EM 训练，EM 在所有域都被压制——说明 $\mathcal{K}$ 抓的是"广义 persona-级别的 misalignment 表征"而非 finance 域特异 feature。
 
 ### 损失函数 / 训练策略
 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{SFT}} + \lambda \mathcal{L}_{\text{block}}$；主实验 backbone Llama-3.1-8B-Instruct + Goodfire SAE on layer-20 output；用 LoRA fine-tune；每域 5900 训练样本 + 30-100 held-out in-domain eval；$\lambda$ 扫描 $\{0, 10^3, 13\times 10^3, 10^5\}$；用 Qwen2.5-72B-Instruct 和 Llama-3.3-70B-Instruct 两个 LLM judge 评 EM、incoherence、refusal、in-domain task adherence；多 seed 平均。$|\mathcal{K}|=20$。也在 Llama-3.2-1B-Instruct 和 Qwen-2.5-7B-Instruct 上独立复现。

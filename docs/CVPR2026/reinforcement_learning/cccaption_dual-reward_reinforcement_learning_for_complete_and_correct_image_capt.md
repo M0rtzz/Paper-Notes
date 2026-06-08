@@ -33,30 +33,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CCCaption 基于 GRPO 强化学习算法，核心包含三个部分：(1) Completeness Reward 用于奖励覆盖更多视觉事实的 caption；(2) Correctness Reward 用于惩罚包含幻觉的 caption；(3) Dynamic Query Sampling 策略提升训练效率。同时构建了 CCaption-44k 训练数据集。
+CCCaption 的目标是在没有可靠人工参考的情况下，让模型自己学会写出既"全"又"对"的图像描述。它把描述质量拆成两个可计算的客观属性——完整性和正确性——各自设计成一个奖励，再用 GRPO 在 Qwen3-VL-2B 上做强化学习。整体流程是：对一张图，先用多个 MLLM 离线生成一组覆盖图像事实的视觉 query 作为"该图应该被描述到什么"的代理；训练时模型 rollout 出若干 caption，completeness reward 看 caption 能答对多少图像 query（覆盖率），correctness reward 把 caption 拆成原子 query 再回查原图看有多少是真实的（幻觉率），两者加权成总奖励喂给 GRPO。为提升效率，还用 dynamic query sampling 砍掉那些几乎不产生梯度的"太简单"query。这套 query 数据最终沉淀为 CCaption-44k 训练集。
 
 ### 关键设计
 
-1. **Completeness Reward（完整性奖励）**:
+**1. Completeness Reward：用多 MLLM 的 query 覆盖率近似"描述全不全"**
 
-    - 功能：用视觉 query 集合近似图像的基本信息集 $\mathcal{B}_\mathbf{x}$，奖励能回答更多 query 的 caption
-    - 核心思路：$\mathcal{R}_\text{comp}(\mathbf{x}, \hat{\mathbf{y}}) = \frac{1}{|\mathcal{Q}_\mathbf{x}|}\sum_{\mathbf{q} \in \mathcal{Q}_\mathbf{x}} \mathbb{I}(M_J(\hat{\mathbf{y}}, \mathbf{q}))$，其中 $M_J$ 是冻结的第三方 judge 模型，判断 caption 能否回答 query
-    - 设计动机：为解决单 MLLM query 覆盖不足的问题，引入多 MLLM query 生成算法。定义 query 集合的多样性 $\mathcal{V}(\mathcal{Q}_\mathbf{x})$ 为 embedding 余弦相似度的方差，通过迭代生成、过滤低贡献 query 来确保多样性和完整性，最终构建 CCaption-44k（44k 样本，每张图平均 10 个 query）
+完整性的难点在于无法直接度量"图里所有显著事实是否都被写到"。作者把图像的基本信息集 $\mathcal{B}_\mathbf{x}$ 用一组视觉 query $\mathcal{Q}_\mathbf{x}$ 来近似，奖励就定义为 caption 能回答的 query 比例：
 
-2. **Correctness Reward（正确性奖励）**:
+$$\mathcal{R}_\text{comp}(\mathbf{x}, \hat{\mathbf{y}}) = \frac{1}{|\mathcal{Q}_\mathbf{x}|}\sum_{\mathbf{q} \in \mathcal{Q}_\mathbf{x}} \mathbb{I}(M_J(\hat{\mathbf{y}}, \mathbf{q}))$$
 
-    - 功能：将生成的 caption 分解为子 query 集合 $\mathcal{Q}_{\hat{\mathbf{y}}}$，检测其中的幻觉并给予惩罚
-    - 核心思路：$\mathcal{R}_\text{corr}(\mathbf{x}, \hat{\mathbf{y}}) = \frac{1}{|\mathcal{Q}_{\hat{\mathbf{y}}}|}\sum_{\mathbf{q} \in \mathcal{Q}_{\hat{\mathbf{y}}}} M_J(\mathbf{x}, \mathbf{q})$，将 caption 分解为原子 query，再用 judge 模型根据原图评分每个 query 的真实性
-    - 设计动机：completeness 和 correctness 形成对称结构——前者是 image query 对 caption 的覆盖（recall），后者是 caption query 在 image 中的 grounding（precision）。两者联合约束避免模型"回答更多 query 但引入更多幻觉"
+其中 $M_J$ 是一个冻结的第三方 judge 模型，只读 caption 文本判断能否答出某个 query，本质上是在算 caption 对图像事实的 recall。这里和只用单个 MLLM 生成 query 的 CapRL 拉开差距：单模型生成的 query 有自己的偏好盲区，覆盖不全，模型就算答满分也漏掉一大块事实。CCCaption 改用多个 MLLM 协同生成 query，并显式约束 query 集的多样性——把多样性 $\mathcal{V}(\mathcal{Q}_\mathbf{x})$ 定义为 query embedding 之间余弦相似度的方差，通过迭代生成、过滤掉贡献低（与已有 query 太相似）的 query，让最终 query 集既不冗余又尽量覆盖全图。这套生成过程产出的就是 CCaption-44k（44k 样本、每图平均 10 个 query）。
 
-3. **Dynamic Query Sampling（动态查询采样）**:
+**2. Correctness Reward：把 caption 拆成原子 query 回查原图，专治"为了答更多 query 而编"**
 
-    - 功能：训练过程中动态调整 query 的采样概率，减少对梯度贡献小的"简单"query 的采样
-    - 核心思路：$\tilde{\mathcal{Q}} = \{\mathbf{q} \in \mathcal{Q}_c \mid u_\mathbf{q} \sim \text{Bernoulli}(c(\mathbf{q}))\}$，$c(\mathbf{q})$ 是归一化贡献度，初始为 $1 - \frac{1}{m}\sum \mathbb{I}(M_J(\mathbf{x}, \mathbf{q}))$，按 rollout 准确率方差逐 epoch 更新
-    - 设计动机：在 GRPO 框架下，被几乎所有 rollout caption 都能正确回答的 query 产生极小的 advantage 和梯度，浪费计算资源
+只奖励 completeness 会有一个隐患：模型发现写越多细节、答对越多 query 奖励就越高，于是开始堆砌图里根本没有的内容——实验里能看到训练后期 reward 一直涨但 correctness 直线下降的 reward hacking。Correctness reward 正是为堵这个口子。它把生成的 caption 反过来拆成一组子 query $\mathcal{Q}_{\hat{\mathbf{y}}}$（每个对应 caption 里的一条原子事实），再让 judge 模型对照原图逐条打分：
+
+$$\mathcal{R}_\text{corr}(\mathbf{x}, \hat{\mathbf{y}}) = \frac{1}{|\mathcal{Q}_{\hat{\mathbf{y}}}|}\sum_{\mathbf{q} \in \mathcal{Q}_{\hat{\mathbf{y}}}} M_J(\mathbf{x}, \mathbf{q})$$
+
+注意它和 completeness 的 $M_J$ 输入正好反过来：completeness 是"图的 query 去对 caption"（recall），correctness 是"caption 的 query 回查图"（precision）。这种对称结构让两个奖励天然互补——一个逼模型多写真东西，一个逼它别写假东西，联合约束下"答更多 query"和"少编幻觉"被同时强制，避免任一方向被单独刷分。
+
+**3. Dynamic Query Sampling：把不产生梯度的"简单"query 采样掉，省算力**
+
+在 GRPO 里，advantage 来自一组 rollout caption 之间的相对差异。如果某个 query 几乎所有 rollout 都能答对（或都答不对），它在组内没有区分度，advantage 趋近于零、贡献的梯度极小，却照样要消耗一次 judge 调用——纯属浪费。Dynamic query sampling 按贡献度 $c(\mathbf{q})$ 对 query 做伯努利采样，只保留有信息量的：
+
+$$\tilde{\mathcal{Q}} = \{\mathbf{q} \in \mathcal{Q}_c \mid u_\mathbf{q} \sim \text{Bernoulli}(c(\mathbf{q}))\}$$
+
+$c(\mathbf{q})$ 是归一化后的贡献度，初值取 $1 - \frac{1}{m}\sum \mathbb{I}(M_J(\mathbf{x}, \mathbf{q}))$（即一开始就被普遍答对的 query 起点低），之后按每个 query 在 rollout 上的准确率方差逐 epoch 更新——方差大说明这个 query 还在"分化"模型行为，值得多采；方差小说明已经被学会或学废，降低采样概率。这样把算力集中到真正推动学习的 query 上。
 
 ### 损失函数 / 训练策略
-总奖励为两个奖励的加权和：$\mathcal{R}(\mathbf{x}, \hat{\mathbf{y}}) = \alpha \mathcal{R}_\text{comp} + (1-\alpha) \mathcal{R}_\text{corr}$，代入 GRPO 的 RL 目标进行优化。基座模型为 Qwen3-VL-2B，训练数据为 CCaption-44k。
+总奖励是两个奖励的凸组合 $\mathcal{R}(\mathbf{x}, \hat{\mathbf{y}}) = \alpha \mathcal{R}_\text{comp} + (1-\alpha) \mathcal{R}_\text{corr}$，超参 $\alpha$ 控制"全"与"对"的权衡，代入标准 GRPO 目标优化。基座为 Qwen3-VL-2B，训练数据为前述 CCaption-44k。
 
 ## 实验关键数据
 

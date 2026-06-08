@@ -38,31 +38,31 @@ TagRAG 用“对象标签 + 领域标签链”替代 GraphRAG 中昂贵的实体
 **核心 idea**：用预定义根领域引导对象标签生成层级 domain tag chain，再把链上知识和邻接对象知识预先融合成 domain-centric summaries，使推理时只需检索相关标签和标签链就能获得全局上下文。
 
 ## 方法详解
-TagRAG 可以理解为把 GraphRAG 的“先抽实体再聚社区”改成“先抽标签再挂到领域链”。它不是让图算法事后发现社区，而是在构建阶段就用根领域和 LLM 生成的层级标签链把知识放到一个 DAG 中。查询时，模型不必遍历整个实体图，只需检索最相关的领域标签，再沿链拿到上层和下层摘要。
+TagRAG 可以理解为把 GraphRAG 的「先抽实体再聚社区」改成「先抽标签再挂到领域链」。它不靠图算法事后发现社区，而是在构建阶段就用一个预定义根领域和 LLM 生成的层级标签链，把知识放进一个 DAG；查询时模型不必遍历整个实体图，只需检索最相关的领域标签，再沿链拿到上层和下层摘要。这样既保住了 GraphRAG 想要的全局视角，又避开了它最贵的社区检测和全图摘要。
 
 ### 整体框架
-输入是一组领域文档和一个预定义根领域标签，例如 Agriculture、Computer Science、Legal 或 All disciplines。输出是一个层级标签知识图谱，其中包含 object tags、domain tags、domain-domain 边以及 object-domain 连接。
-
-构建阶段分为四步：先把文档切 chunk 并抽取对象标签和关系；再把对象标签和根领域一起交给 LLM，生成从根领域到细分领域的标签链；之后把多条链合并成 DAG；最后为每个 domain tag 融合链上信息和相邻对象标签信息，生成可向量检索的 domain-centric summary。推理阶段先检索相关 domain tag summary，再收集对应标签链上的 summary，最后把这些摘要喂给 LLM 生成答案。
+输入是一组领域文档和一个预定义根领域标签（如 Agriculture、Computer Science、Legal 或 All disciplines），输出是一个层级标签知识图谱，包含 object tags、domain tags、domain-domain 边和 object-domain 连接。构建分四步：先把文档切 chunk 并抽对象标签和关系；再把对象标签连同根领域一起交给 LLM，生成从根领域到细分子领域的标签链；接着把多条链合并成 DAG；最后为每个 domain tag 融合链上信息和相邻对象标签信息，生成可向量检索的 domain-centric summary。推理时先检索相关 domain tag summary，再沿对应标签链收集上下层 summary，最后把这些摘要喂给 LLM 生成答案。
 
 ### 关键设计
-1. **对象标签抽取与领域标签链组织**:
 
-	- 功能：把原始文档知识从无结构 chunk 变成可管理的标签图。
-	- 核心思路：文档集合 $D$ 被切成带 overlap 的 chunks $T$，LLM 从每个 chunk 中抽取 domain-specific keywords、描述和关系，形成 object tag graph $G_o$。随后把 object tags 与根领域 $\hat{v}$ 一起输入 LLM，让模型生成多级 domain tag chain，每条链从通用领域逐步指向细分子领域，边语义为 has subdomain。
-	- 设计动机：实体抽取容易碎片化，社区检测又昂贵。标签链用领域概念直接组织知识，既比实体更抽象，又比社区摘要更可控，适合全局问答。
+**1. 对象标签抽取与领域标签链组织：用领域概念而非实体来组织知识。**
 
-2. **DAG 合并与 domain-centric knowledge fusion**:
+实体抽取容易把知识打得很碎，社区检测又昂贵——这正是 GraphRAG 的两个痛点。TagRAG 改用标签作为基本单位：文档集合 $D$ 被切成带 overlap 的 chunks $T$，LLM 从每个 chunk 抽出 domain-specific keywords、描述和关系，形成 object tag graph $G_o$；随后把这些 object tags 连同根领域 $\hat{v}$ 一起送进 LLM，让它生成多级 domain tag chain，每条链从通用领域逐步指向细分子领域，边的语义是 has subdomain。标签比实体更抽象、不易碎片化，又比社区摘要更可控（领域概念是显式给定的而非算法聚出来的），天然适合全局问答的导航。
 
-	- 功能：把多条标签链合成层级知识图，并提前为检索准备全局摘要。
-	- 核心思路：算法从根节点开始遍历每条 tag chain，已有节点复用，不存在则创建新节点，并把父子关系挂进 DAG，避免冗余和环。对每个 domain tag $v_d$，作者用 LLM 融合两类信息：其所在链 $\text{Chain}(v_d)$ 提供高层领域视角，相邻 object tags $\text{Nei}(v_d)$ 提供具体知识，得到 summary $s=\text{LLM}(\text{Chain}(v_d),\text{Nei}(v_d))$，再存入向量检索库 $K=\{v_i,s_i,\text{Emb}(s_i)\}$。
-	- 设计动机：传统 RAG 到查询时才临时拼上下文，GraphRAG 到查询时还可能需要聚合社区。TagRAG 把领域级知识融合提前到构建阶段，让推理时可以直接检索“已经综合过”的知识单元。
+**2. DAG 合并与 domain-centric knowledge fusion：把全局知识融合提前到构建阶段。**
 
-3. **标签引导检索生成与增量插入**:
+传统 RAG 到查询时才临时拼上下文，GraphRAG 到查询时甚至还要现聚合社区，都把重活压在了在线推理。TagRAG 反其道而行：先把多条标签链合成层级图——算法从根节点起遍历每条 tag chain，已有节点复用、没有的新建并挂上父子关系，从而避免冗余和环；再对每个 domain tag $v_d$ 用 LLM 融合两类信息，其所在链 $\text{Chain}(v_d)$ 给高层领域视角、相邻 object tags $\text{Nei}(v_d)$ 给具体知识，得到摘要
 
-	- 功能：让查询既能定位相关子领域，又能拿到层级全局上下文，同时支持新文档加入。
-	- 核心思路：给定问题 $q$，TagRAG 先用 cosine similarity 在 domain-centric library 中检索 top-k 标签和摘要，实验中 top-k 为 3。然后沿相关标签链取回上级和同链 summary，按优先级先放直接相关标签摘要，再放链摘要，直到上下文长度上限。增量时，新对象标签或新领域标签直接插入已有 DAG，同名标签追加描述，旧 summary 与新 summary 重新融合。
-	- 设计动机：图 RAG 在动态知识库中最痛苦的是重新建图。标签链天然有挂载位置，新知识可以沿领域层级并入，比重新社区划分更稳定。
+$$s=\text{LLM}(\text{Chain}(v_d),\text{Nei}(v_d))$$
+
+并存进向量库 $K=\{v_i,s_i,\text{Emb}(s_i)\}$。这样推理时检索到的每个标签摘要都是「已经综合过」的知识单元，省掉了查询时的全图遍历和多轮聚合。
+
+**3. 标签引导检索生成与增量插入：检索沿层级走，新知识沿层级挂。**
+
+查询既要定位到相关子领域，又要拿到层级全局上下文，还得能容纳新文档。给定问题 $q$，TagRAG 先用 cosine similarity 在 domain-centric library 里检索 top-k 标签和摘要（实验中 top-k 取 3），再沿相关标签链取回上级和同链 summary，按优先级先放直接相关标签摘要、再放链摘要，直到触及上下文长度上限——既保证子领域的针对性，又补上跨领域的高层视角。增量时更省事：新对象标签或新领域标签直接插进已有 DAG，同名标签追加描述，受影响的旧 summary 与新 summary 重新融合。标签链天然带挂载位置，新知识能沿领域层级并入，比每次重新做社区划分稳定得多。
+
+### 一个完整示例
+以一个跨子领域的 global question 为例：查询 $q$ 进来后，TagRAG 先在 domain-centric library 里按 cosine similarity 取 top-3 领域标签摘要（比如命中某根领域下的两三个细分子领域），这些摘要本身已经在构建阶段把链信息和对象知识融合过；接着沿这几条标签链向上收集父领域 summary、向同链收集相邻 summary，按「直接相关标签摘要 → 链摘要」的优先级逐条填进上下文，直到长度上限；最后把这组分层摘要交给小模型（Qwen3-4B）生成答案。整个过程没有遍历底层实体图，也没有现场聚合社区——全局视角来自构建期就压好的领域层级摘要。若此时有新文档进来，只需把新抽到的对象/领域标签挂到 DAG 对应位置、重融受影响的 summary，下次同样的查询就能用上新知识，不必重建全库。
 
 ### 损失函数 / 训练策略
 本文不训练新模型，主要是构建和检索框架。实验 backbone 使用 Qwen3-4B 且关闭 thinking，embedding 使用 bge-large-en-v1.5，chunk size 为 1200、overlap 为 100，domain-centric retrieval 的 top-k 为 3，向量库使用 nano-vectordb。评测由 GPT-4o-mini、Gemini-2.5-Pro 和 Claude Sonnet 4.5 三个 judge 对成对答案做胜负判断，并交换答案顺序以降低位置偏差。

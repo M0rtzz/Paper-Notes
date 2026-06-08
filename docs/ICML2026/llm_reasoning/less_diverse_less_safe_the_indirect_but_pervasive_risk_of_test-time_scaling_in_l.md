@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RefDiv 是一个种群规模 $m$ 的遗传算法 (GA)。每次迭代 $t$：(1) 对当前种群每个候选 prompt $x_i$ 在目标 LLM + TTS 下采样得到候选回复集 $C_{x_i}$；(2) 计算两个熵——纯候选熵 $\text{DFS}(x_i) = H(C_{x_i})$ 与混入参考 affirmative 集合后的熵 $\text{DFS}^\ast(x_i) = H(C_{x_i} \cup \mathcal{C}^\ast)$；(3) 按 fitness 排序选出 top-$q$ 做 crossover + mutation；(4) 用动态权重 $\alpha_t = \exp(\frac{\ln 2}{T-1}(t-1)) - 1$ 在 "靠近参考" 和 "纯压熵" 之间平滑切换。总迭代 $T$ 轮后返回 fitness 最高的 $x'$。
+RefDiv 的目标是炼出一条对抗 prompt，让目标 LLM 在 TTS 下生成的候选回复集既高度雷同又集体有害，从而骗过 reward model 的筛选。它用一个种群规模为 $m$ 的遗传算法（GA）来搜索这条 prompt：每轮迭代里，先把当前种群的每个候选 prompt $x_i$ 喂给目标 LLM + TTS、采样出它的候选回复集 $C_{x_i}$，再用一个动态加权的适应度给每个候选打分，挑出最优的几个做交叉变异繁衍下一代。整套搜索全程只读两个标量熵信号、不碰梯度，所以纯黑盒就能跑；迭代 $T$ 轮后返回适应度最高的 prompt。
 
 ### 关键设计
 
-1. **双信号 Diversity-Guided Fitness**:
+**1. 双信号 Diversity-Guided Fitness：把「低多样」和「有害」编进同一个标量。**
 
-    - 功能：把 "低多样" 与 "语义有害" 两个目标编进一个标量适应度，使遗传算法能同时朝两个方向演化。
-    - 核心思路：fitness 写成 $\mathcal{F}(x,t) = (\alpha_t - 1) \cdot \text{norm}(\Delta\text{DFS}(x)) - \alpha_t \cdot \text{norm}(\text{DFS}(x))$，其中 $\Delta\text{DFS}(x) = |\text{DFS}(x) - \text{DFS}^\ast(x)|$。$\Delta\text{DFS}$ 小意味着候选已经吸收了 affirmative tokens；$\text{DFS}$ 小意味着候选高度集中。两项做 z-score 标准化，由 $\alpha_t$ 决定权重。
-    - 设计动机：纯压熵会让 GA 收敛到无意义文本，被 reward model 直接打分为 0；纯朝 affirmative 走又容易触发 guardrail。两者的乘法/相反方向耦合相当于给 GA 一个 "既要有害又要一致" 的双约束。
+攻击 TTS 的核心矛盾是：单纯把候选压到高度一致（低熵）会让 GA 收敛到无意义文本，被 reward model 直接打 0 分；可单纯朝有害方向走又容易触发 guardrail。RefDiv 的解法是同时度量两件事。对种群里每个 prompt $x_i$，它先算纯候选熵 $\text{DFS}(x_i) = H(C_{x_i})$ 衡量回复集有多集中，再算混入参考 affirmative 集合 $\mathcal{C}^\ast = \{\text{"Sure, I can help"}\ldots\}$ 之后的熵 $\text{DFS}^\ast(x_i) = H(C_{x_i} \cup \mathcal{C}^\ast)$，两者之差 $\Delta\text{DFS}(x) = |\text{DFS}(x) - \text{DFS}^\ast(x)|$ 越小，说明候选已经吸收了 affirmative token、和「听话」的回复越像。适应度把这两个 z-score 标准化后的信号写成
 
-2. **指数动态权重 $\alpha_t$ 的 curriculum**:
+$$\mathcal{F}(x,t) = (\alpha_t - 1) \cdot \text{norm}(\Delta\text{DFS}(x)) - \alpha_t \cdot \text{norm}(\text{DFS}(x)),$$
 
-    - 功能：在 GA 早期靠 reference 项做引导，避免 "先收敛再后悔"；后期靠纯熵项收紧。
-    - 核心思路：$\alpha_t$ 在 $t=1$ 时几乎为 0，在 $t=T$ 时趋近 1。早期 fitness 主要由 $(\alpha_t - 1) \cdot \Delta\text{DFS}$ 主导（系数为负，所以最小化 $\Delta\text{DFS}$ 等价于 fitness 升高），把种群拉进 "听话" 的区域；后期切换到 $-\alpha_t \cdot \text{DFS}$ 主导，逼着种群收敛到低熵簇。
-    - 设计动机：这等价于课程学习——先教方向再施压。文中实验显示 Shannon 熵随迭代单调下降，而其他攻击的熵几乎不动，说明 RefDiv 的低熵收敛是 $\alpha_t$ schedule 直接驱动的。
+相当于给 GA 一个「既要有害（$\Delta\text{DFS}$ 小）又要一致（$\text{DFS}$ 小）」的双约束。两个目标方向相反地耦合，逼着种群往「低多样且有害」这个 TTS 最防不住的区域演化。
 
-3. **遗传算法的 crossover + mutation 操作**:
+**2. 指数动态权重 $\alpha_t$：先教方向、再压塌的 curriculum。**
 
-    - 功能：在 prompt 字符层面做演化搜索，避免梯度优化对白盒的依赖，使方法可以纯黑盒跑。
-    - 核心思路：每代选 top-$q$ 父代，做交叉拼接和局部 token 替换生成 $m$ 个子代；fitness 评估全部用 forward inference 完成，不需要梯度。这使得 RefDiv 天然支持闭源 API 目标（虽然需要白盒 surrogate 训练对抗样本）。
-    - 设计动机：作者明确不想假设 reward 可见——如果优化目标直接是 reward 那就退化成 trivial 攻击。GA 让方法只接触 $\text{DFS}$ 和 $\text{DFS}^\ast$ 两个标量信号即可演化。
+如果一开始就死命压熵，GA 很容易在还没学会「往哪个方向有害」时就提前收敛到一团无意义的低熵文本，再也走不出来。RefDiv 用一个随迭代单调上升的权重 $\alpha_t = \exp\!\big(\tfrac{\ln 2}{T-1}(t-1)\big) - 1$ 来安排两个信号的话语权：$t=1$ 时 $\alpha_t \approx 0$，适应度由 $(\alpha_t - 1)\cdot\Delta\text{DFS}$ 主导（系数为负，最小化 $\Delta\text{DFS}$ 即提升适应度），把种群先拉进「听话」的有害区域；$t=T$ 时 $\alpha_t \to 1$，适应度切换成 $-\alpha_t\cdot\text{DFS}$ 主导，再逼着这群已经有害的候选收敛到低熵簇。这是一种典型的课程学习——先教方向再施压。实验里 RefDiv 的 Shannon 熵随迭代单调下降，而其他攻击的熵几乎不动，正说明这种低熵收敛是 $\alpha_t$ schedule 直接驱动出来的。
+
+**3. 纯标量信号驱动的遗传搜索：让攻击天然黑盒。**
+
+作者刻意不让优化目标直接接触 reward——如果直接把 reward 当目标，攻击就退化成一个 trivial 的白盒优化、也脱离真实威胁模型。RefDiv 改在 prompt 字符层面做演化：每代按适应度选出 top-$q$ 个父代，做交叉拼接和局部 token 替换，繁衍出 $m$ 个子代，而适应度评估全靠 forward inference 拿到 $\text{DFS}$ 和 $\text{DFS}^\ast$ 两个标量即可完成，整个过程不需要任何梯度。这让方法天然适配闭源 API 目标，也是它能跨模型、跨 guardrail 黑盒迁移的根本原因。
 
 ### 损失函数 / 训练策略
-RefDiv 是 inference-time 攻击，没有训练阶段。超参：种群大小 $m$、父代数 $q$、迭代数 $T$、affirmative token 集合 $\mathcal{C}^\ast$（沿用 GCG / AutoDAN 风格）。MCTS 用默认 3 children × 3 iterations；BoN 主实验用 $N=8$ + PairRM 作为 reward。
+RefDiv 是 inference-time 攻击，没有训练阶段。关键超参为种群大小 $m$、父代数 $q$、迭代数 $T$ 和 affirmative token 集合 $\mathcal{C}^\ast$（沿用 GCG / AutoDAN 风格）。TTS 侧，MCTS 用默认 3 children × 3 iterations；BoN 主实验用 $N=8$ + PairRM 作为 reward。
 
 ## 实验关键数据
 

@@ -44,26 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **186 语种 UD 上的三性质量化指标**:
+**1. 186 语种 UD 上的三性质量化指标：把"高频 / 句法可预测 / 边界对齐"三句定性描述各自变成一个能跨语种比较的数字。**
 
-    - 功能词高频度量：定义 type ratio $\frac{|V_c|}{|V|}$ 与 token frequency ratio $\frac{\sum_{w\in V_c}\text{count}(w)}{\sum_{w\in V}\text{count}(w)}$；若类别均匀分布则两者相等（点落在对角线），实测功能词点位远在对角线上方（小词表 / 大 token 份额）。
-    - 句法可预测性度量：把依存树视为无向图，计算每个 POS 节点的邻居 POS 条件熵 $H(X\mid Y=y)=-\sum_{x\in T} p(x\mid y)\log_2 p(x\mid y)$；功能词集 $\mathcal{F}$ 的加权平均熵 $H_F=\sum_{f\in \mathcal{F}}\text{Freq}(f)H(X\mid Y=f) / \sum \text{Freq}(f)$ 显著低于 $H_C$，几乎在所有语种里都成立。
-    - 边界对齐率：用依存子树的左右端近似 constituent 边界，对 ADP/DET/SCONJ/CCONJ 这些可靠 marker 计算"出现在子树两端"的比例；186 语种里中位数 **0.95**（韩语最低 0.55），内容词中位数仅 0.58。
-    - 设计动机：以前的 typology 是定性描述，这里把三性质都转成可比较的数字，让"普适性"可以在百量级语种上被一锤定音。
+以前 typology 只能定性地说功能词"频繁、可预测、落在边界上"，无法在百量级语种上一锤定音。本文把三条性质各自做成可计算的指标。**高频**用 type ratio $\frac{|V_c|}{|V|}$ 和 token frequency ratio $\frac{\sum_{w\in V_c}\text{count}(w)}{\sum_{w\in V}\text{count}(w)}$ 一起刻画：若某类词均匀分布，两者相等（点落在对角线上），而实测功能词的点远在对角线上方——词表很小却吃掉很大一块 token 份额。**句法可预测性**把依存树当无向图，对每个 POS 节点 $y$ 算其邻居 POS 的条件熵 $H(X\mid Y=y)=-\sum_{x\in T} p(x\mid y)\log_2 p(x\mid y)$，再对功能词集 $\mathcal{F}$ 取频率加权平均 $H_F=\sum_{f\in \mathcal{F}}\text{Freq}(f)H(X\mid Y=f) / \sum \text{Freq}(f)$，结果 $H_F$ 几乎在所有语种里都显著低于内容词的 $H_C$。
 
-2. **七种反事实英语 + 同步改造的 BLiMP**:
+**边界对齐**用依存子树的左右端近似 constituent 边界，对 ADP/DET/SCONJ/CCONJ 这些可靠 marker 统计"出现在子树两端"的比例；186 语种里这个比例的中位数高达 **0.95**（韩语最低也有 0.55），而内容词中位数只有 0.58。三个指标一起把"普适性"从描述性断言变成了可在大规模语料上被验证的数字。
 
-    - 频率维度三档：**STANDARDFUNCTION**（116 类自然英语功能词）/ **FIVEFUNCTION**（每个句法类压成 1 个 type，共 5 个 type，频率拉到极高）/ **MOREFUNCTION**（每个功能词用 Wuggy 扩成 10 个伪词，inventory 涨到 1.2k）/ **NOFUNCTION**（全删）。
-    - 结构维度三档：**PHRASEDEPENDENCY**（自然基线）/ **BIGRAMDEP**（功能词改由下一个词决定）/ **RANDOMDEP**（保持位置，shuffle 身份）。
-    - 边界维度二档：**ATBOUNDARY**（自然基线）/ **WITHINBOUNDARY**（把功能词从短语边界挪到紧贴其句法 head 的位置，破坏 55% 的功能词位置，覆盖 99% 句子）。
-    - 评测端：BLiMP 也按同样规则改写；去除关键词是功能词的 categories（如 Det-N agreement）；去除变换后变同句的最小对；做交集过滤——只要一个条件下被移除就在所有条件中移除，保证所有模型在完全相同的最小对集合上评测。
-    - 设计动机：这套设计把"语料修改"做成了一组干净的析因实验，让"频率 vs 结构 vs 边界"可以被单独和联合 ablation；并通过同步改 BLiMP 解决了"变体语料训练的模型该如何被公平打分"的根本困难。
+**2. 七种反事实英语 + 同步改造的 BLiMP：把"语料修改"做成一组干净的析因实验，让频率、结构、边界能被单独和联合 ablation。**
 
-3. **attention probing + function-word ablation 的双轨诊断**:
+人造语言里这三条性质只能被分别检验，没人在真实自然语言尺度上比过"破坏哪一条伤害最大"。本文沿三个维度受控改写英语维基百科。**频率维度**三档：STANDARDFUNCTION（116 类自然英语功能词）、FIVEFUNCTION（每个句法类压成 1 个 type、共 5 个 type，把频率拉到极高）、MOREFUNCTION（每个功能词用 Wuggy 扩成 10 个伪词，inventory 涨到 1.2k）、外加 NOFUNCTION（全删）。**结构维度**三档：PHRASEDEPENDENCY（自然基线）、BIGRAMDEP（功能词改由下一个词决定）、RANDOMDEP（保持位置但 shuffle 身份）。**边界维度**两档：ATBOUNDARY（自然基线）和 WITHINBOUNDARY（把功能词从短语边界挪到紧贴其句法 head 的位置，破坏 55% 功能词位置、覆盖 99% 句子）。
 
-    - probing：沿用 Aoyama & Wilcox 2025 的方法，对每个 head $(h,l)$ 定义函数 $f_{h,l}(x_i)=\arg\max_{j\neq i} a_{ij}^{(h,l)}$（最大注意力指向哪个词），统计该 head 把注意力指向功能词的频率 $S_F(h,l)$，找出对每个 BLiMP 子类贡献最高的"function head"。
-    - ablation：分两式 —— function-word **masking**（评测时阻塞功能词 token 的双向注意力，把它们变成 content-free 占位符）和 function-word **deletion**（直接评测在 NoFunction 改造过的 BLiMP 上）。
-    - 设计动机：单看 BLiMP 分只能证明"语料修改影响学习"；加上 probing 可以看出三性质完整时是否真的形成了**集中的、专门的** function-word head；加上 ablation 可以看出模型在推理时是否真的**依赖**功能词。这套设计把"学习"和"使用"的链路打通。
+光改训练语料还不够——变体语料训练出的模型该怎么公平打分是个根本难题，本文的解法是让评测端的 BLiMP 跟着同样规则改写：去掉关键词本身是功能词的 categories（如 Det-N agreement），去掉变换后塌成同句的最小对，再做交集过滤——一个最小对只要在任一条件下被移除，就在所有条件里都移除，保证每个模型都在**完全相同**的最小对集合上受测。这套同步改造让"频率 vs 结构 vs 边界"成了三个可独立拨动的开关。
+
+**3. attention probing + function-word ablation 的双轨诊断：把"语料修改影响了学习"延伸到"模型推理时是否真的在用功能词"。**
+
+只看 BLiMP 分数，最多证明改语料会改学习效果，看不出模型内部到底发生了什么。本文加两组诊断把"学习"和"使用"的链路打通。**probing** 沿用 Aoyama & Wilcox 2025 的做法，对每个 head $(h,l)$ 定义 $f_{h,l}(x_i)=\arg\max_{j\neq i} a_{ij}^{(h,l)}$（这个词的最大注意力指向谁），统计该 head 把注意力指向功能词的频率 $S_F(h,l)$，从而找出对每个 BLiMP 子类贡献最大的"function head"，用来看三性质完整时是否真的长出了集中、专门的 function-word head。**ablation** 则分两式：function-word masking 在评测时阻断功能词 token 的双向注意力，把它们变成 content-free 占位符；function-word deletion 直接在 NoFunction 改造过的 BLiMP 上评测。两式都是问同一个问题——模型在推理时到底有多依赖功能词。有了这两轨，结论就从"语料级因果"落到了"模型级机制"。
 
 ### 损失函数 / 训练策略
 每个变体训练 GPT-2 small（BPE 词表 32,768、context 128、batch 128、10 epoch、lr 5e-4、linear warmup 10%、AdamW、weight decay 0.1、Tesla V100），3 个随机 seeds（42/53/67）取平均。每种变体配一个独立训练的 tokenizer 以适配词表变化；5-gram baseline 用 KenLM + Kneser-Ney smoothing。不使用 perplexity 评测（变体改变了熵），统一用 BLiMP accuracy + linear mixed-effects 显著性检验（`acc ~ condition + (1|category:phenomenon) + (1|seed)`）。

@@ -49,23 +49,20 @@ tags:
 第四步做因果干预和视觉归因。作者选出最支持 factual / counterfactual 的 top-20 heads，对最终 token 位置的注意力权重做乘性缩放：增强 factual heads 对文本 token 的注意，或削弱 counterfactual heads 对图像 token 的注意，反向也可以。随后用注意力和梯度两种方式找出驱动 counterfactual 输出的图像 patch，并通过 patch ablation 验证这些区域是否真的导致视觉覆盖常识。
 
 ### 关键设计
-1. **WHOOPS-AHA! 可控反事实补全数据集**:
 
-    - 功能：提供一种可验证、token-level 的多模态知识冲突测试床。
-    - 核心思路：每个样本由反事实图像、引用该图像的句子、常识补全集 $S_{fact}$ 和视觉反事实补全集 $S_{cofa}$ 组成。例如文本 “The wolf is howling at the” 在无图时应补 “moon”，但配上狼对太阳嚎叫的图后，视觉证据会推动 “sun”。
-    - 设计动机：机制解释需要可控冲突和明确目标 token。开放问答很难确定模型偏向的是哪类知识，而 WHOOPS-AHA! 让作者能逐 token 比较 factual 与 counterfactual logits，并对中间组件做精确归因。
+**1. WHOOPS-AHA! 可控反事实补全数据集：把开放式多模态冲突压成 token 级可验证的测试床。**
 
-2. **Logit Lens 定位 factual 与 counterfactual heads**:
+机制解释最怕开放问答——你根本看不清模型偏向的到底是常识还是图像。为此每个样本都被设计成一个反事实图像、一句引用该图的句子，再配两组明确的目标 token：符合常识的补全集 $S_{fact}$ 和符合视觉反事实的补全集 $S_{cofa}$。比如句子 “The wolf is howling at the” 在无图时常识会补 “moon”，但配上一张狼对太阳嚎叫的图后，视觉证据会把模型推向 “sun”。这种设计的好处是把复杂的多模态问答压缩成一对可控候选 token，作者就能用 Logit Lens 逐 token 比较 $t_{fact}$ 与 $t_{cofa}$ 的 logit，对中间组件做干净的归因，而不必在自由生成里模糊地猜模型信了哪一边。
 
-    - 功能：找出模型内部哪些层和 attention heads 促进内部知识，哪些促进视觉反事实证据。
-    - 核心思路：对输入最后一个 token 的中间 hidden states 做 vocabulary projection，比较 $t_{fact}$ 与 $t_{cofa}$ 的 logit。block 级别报告 factual prevalence，head 级别报告 factual accuracy。若一个 head 经常让 factual token logit 更高，就归为 factual head；反之则归为 counterfactual head。
-    - 设计动机：相比只看最终输出，Logit Lens 能看到冲突在前向传播中的位置。结果显示 conflict resolution 集中在上层少数 heads，而不是均匀分散在全模型，这为后续干预提供了小而明确的靶点。
+**2. Logit Lens 定位 factual 与 counterfactual heads：在前向传播里看冲突究竟在哪一层、被谁解决。**
 
-3. **定向注意力干预与视觉 patch 归因**:
+只看最终输出无法回答"模型内部如何在知道与看到之间做选择"。作者对输入最后一个 token 的中间 hidden states 做 vocabulary projection，比较它对 $t_{fact}$ 和 $t_{cofa}$ 的 logit：在 block 级别统计 factual prevalence，在 head 级别统计 factual accuracy。一个 head 若经常把 factual token 的 logit 顶得更高，就归为 factual head；反之则是 counterfactual head。关键结论是冲突解决并非全模型平均分担，而是集中在上层少数 heads——MLP 整体更偏向参数常识，attention 尤其是晚层个别 heads 更偏向视觉反事实信号。这把一个看似弥散的"模型为何被图像带偏"问题，收敛成一小撮可定位、可下手的靶点。
 
-    - 功能：验证这些 heads 是否因果影响模态偏好，并检查 counterfactual heads 是否真的指向反常图像区域。
-    - 核心思路：作者在最终 token 位置修改注意力矩阵最后一行。对 counterfactual heads，可按 $(1-\lambda)$ 缩放其图像 token 注意力；对 factual heads，可按 $(1+\lambda)$ 增强其文本 token 注意力。视觉归因则比较 counterfactual heads 注意力、梯度归因和随机 heads，选择高分 patch 后进行 ablation。
-    - 设计动机：如果只是相关性，heads 可能只是伴随输出变化。定向干预能把模型从视觉反事实推回常识，或反向推向视觉证据；patch ablation 又证明这些 heads 不仅改变 token，还定位到了导致冲突的具体图像区域。
+**3. 定向注意力干预与视觉 patch 归因：从相关性升级到因果，并验证这些 head 真的指向反常区域。**
+
+光定位还不够，因为高排名的 heads 可能只是伴随输出变化的相关项。作者选出最支持 factual / counterfactual 的 top-20 heads，在最终 token 位置改写注意力矩阵的最后一行：对 counterfactual heads 按 $(1-\lambda)$ 缩小它们对图像 token 的注意，或对 factual heads 按 $(1+\lambda)$ 放大它们对文本 token 的注意，反向亦可。如果这组 heads 真有因果作用，定向干预就能把模型从视觉反事实推回常识、或反过来更相信图像——实验也确实如此。
+
+随后作者再追问 counterfactual heads 到底在看图像的哪里：把它们的注意力、梯度归因和随机 heads 三种方式选出的高分 patch 拿去做 ablation。结果是这些 heads 关注的 patch 往往正是反常物体或属性所在区域，遮掉后 factual accuracy 回升，说明它们不只是改变了输出 token，还充当了指向冲突来源的视觉指针。
 
 ### 损失函数 / 训练策略
 本文不训练新模型，主要是数据构建、前向分析和推理时干预。模型包括 LLaVA-NeXT-7B（32 层、每层 32 个 heads）和 Gemma3-12B（48 层、每层 16 个 heads）。干预强度 $\lambda$ 被限制在 $[-3,3]$，因为附录显示 $|\lambda|>3$ 后生成分布明显偏离，$|\lambda|>10$ 时常出现不合语法或重复输出。

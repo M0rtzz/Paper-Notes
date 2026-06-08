@@ -44,23 +44,20 @@ tags:
 从摘要可确定的整体流程是：先构建 ANCHOR 数据集，收集 5 家主要新闻媒体组织的 70K+ 抽象 caption；再用该数据分析现有 T2I 模型和图文编码器在复杂 caption 下的缺陷；最后提出 SAFE，即 Subject-Aware Fine-tuning，通过 LLM 提取 caption 中的关键主体，并在 embedding 层增强这些主体的表示，进而提升图像-caption 一致性和人类偏好对齐。
 
 ### 关键设计
-1. **ANCHOR 复杂 caption 数据集**:
 
-	- 功能：提供比简单 prompt 更接近真实场景的 T2I 评测/训练语料。
-	- 核心思路：从 5 家主要新闻媒体组织收集 70K+ 抽象 caption，这些 caption 包含多主体交互、上下文引用和抽象措辞。
-	- 设计动机：简单 prompt 无法暴露模型对真实 caption 的理解问题；新闻 caption 更容易包含事件、人物关系和语境依赖。
+**1. ANCHOR 复杂 caption 数据集：用真实新闻文本逼出模型在简单 prompt 上藏起来的短板。**
 
-2. **复杂 caption 缺陷分析**:
+常见 T2I benchmark 的 prompt 大多是短句、自包含、主体关系简单，模型在上面“好看”并不代表真懂复杂文本。ANCHOR 从 5 家主要新闻媒体组织收集 70K+ 抽象 caption，这些 caption 天然带着多主体交互、上下文指代和抽象措辞——新闻文本往往一句话就牵涉事件、人物关系和语境依赖。用它当评测/训练语料，等于给模型换上一套贴近真实用户描述的压力测试。
 
-	- 功能：系统性识别当前 image-text encoder 和 T2I 模型在复杂 caption 上的短板。
-	- 核心思路：摘要列出的主要失败模式包括 multi-subject understanding、context reasoning 和 nuanced grounding。也就是说，模型可能能画出某些关键词，却不能正确处理多个主体之间的关系和细粒度语义。
-	- 设计动机：没有针对性诊断，就很难知道 T2I 失败来自生成器、文本编码器，还是 prompt 本身的复杂结构。
+**2. 复杂 caption 缺陷分析：把“T2I 画不对”定位到具体的失败模式上。**
 
-3. **SAFE 主体感知微调**:
+没有针对性诊断，就分不清失败到底来自生成器、文本编码器，还是 prompt 本身的复杂结构。作者用 ANCHOR 系统检查现有 image-text encoder 和 T2I 模型，把短板归到三类：multi-subject understanding、context reasoning 和 nuanced grounding。也就是说，模型可能能画出 caption 里的某些关键词，却处理不好多个主体之间的关系和细粒度语义——CLIP 这类提供全局相似度的编码器尤其容易把主体关系平均掉。
 
-	- 功能：利用 LLM 解析 caption 主体，并增强关键主体在条件 embedding 中的影响。
-	- 核心思路：LLM 先抽取 key subjects，随后方法在 embedding-level 强化这些主体表示。摘要没有给出具体公式，因此不能确定是额外 token、embedding reweighting、adapter 还是其他实现。
-	- 设计动机：复杂 caption 的关键问题不是词不够多，而是主体和关系被整体编码淹没；主体感知条件可以让生成过程更关注必须落图的对象。
+**3. SAFE 主体感知微调：让 LLM 先找出“谁必须落到图里”，再在条件空间放大它。**
+
+复杂 caption 的真正问题不是词不够多，而是关键主体和关系被整句的整体 embedding 淹没。SAFE（Subject-Aware Fine-tuning）先用 LLM 从 caption 中抽取 key subjects，再在 embedding-level 强化这些主体的表示，让生成过程更关注必须被视觉化的对象。这个接口很实用：不要求 T2I 模型自己学会所有语言解析，而是把 LLM 已经擅长的实体/角色/关系结构化能力，转成条件控制信号喂给生成器。
+
+> ⚠️ 摘要没有给出具体公式，无法确定 embedding-level 增强是额外 token、embedding reweighting、adapter 还是其他实现；此处只按摘要可确认的信息描述，以原文为准。
 
 ### 损失函数 / 训练策略
 摘要只说明 SAFE 是 fine-tuning 方法，并使用 LLM 提取 key subjects、在 embedding-level 增强主体表示；没有披露具体损失函数、训练数据划分、模型 backbone、学习率或评价协议。因此本笔记不补写任何未在缓存中出现的损失公式或超参。

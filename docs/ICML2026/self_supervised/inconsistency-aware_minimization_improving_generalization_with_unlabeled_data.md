@@ -45,26 +45,26 @@ tags:
 
 ### 关键设计
 
-1. **局部不一致性 $S_\rho(\theta)$ 与 FIM 联系**:
+**1. 局部不一致性 $S_\rho(\theta)$ 与 FIM 的联系：把锐度搬到输出空间。**
 
-    - 功能：用一个单模型、单 batch 的量预测泛化差，并提供可微的正则信号。
-    - 核心思路：定义 $S_\rho(\theta)=\max_{\|\delta\|\le\rho}\mathbb{E}_x[\mathrm{KL}(f(x;\theta)\|f(x;\theta+\delta))]$，对 $\delta$ 做二阶 Taylor 展开后变为 $\max\tfrac12\delta^\top F(\theta)\delta=\tfrac12\rho^2\lambda_{\max}(F(\theta))$。因为 $F$ 的计算只用到 $\nabla_\theta z$ 与 softmax 输出 $f$，整个过程不出现真实标签 $y$。在交叉熵设置下又有 $H\approx G=F$，所以 $S_\rho$ 在解的邻域里几何上等同于"无标签版的最大特征值锐度"。
-    - 设计动机：要破"锐度需要标签 + inconsistency 要训多模型"的二选一困境，需要在输出空间而非 loss 空间做几何，KL 的二阶展开恰好把"输出敏感度"翻译回 FIM 主轴，从而获得理论可解释性。论文还给出 Theorem 4.1 把 $\lambda_{\max}(F_S)$ 嵌入到 Luo 等的泛化界里，论证近插值情形下用 $S_\rho$ 替换 $\lambda_{\max}(H)$ 不掉精度。
+锐度类度量要标签、inconsistency 类要训多模型，作者要破的就是这个"二选一"。办法是在输出空间而非 loss 空间做几何：定义
 
-2. **Power Iteration 估计 + IAM-S/D 两种注入方式**:
+$$S_\rho(\theta)=\max_{\|\delta\|\le\rho}\mathbb{E}_x[\mathrm{KL}(f(x;\theta)\|f(x;\theta+\delta))]$$
 
-    - 功能：把不可解的 $\max$ 问题降为 $K=1$ 步可执行算法，并提供两种把 $S_\rho$ 注入训练目标的接口。
-    - 核心思路：用 $\delta_{k+1}=\rho\,g_k/\|g_k\|$，其中 $g_k=\nabla_\delta \mathbb{E}_x \mathrm{KL}(f(x;\theta)\|f(x;\theta+\delta))$，等价于对 $F$ 做归一化 Power Iteration，$K=1$ 即可逼近主特征方向。注入层面 IAM-D 直接最小化 $L(\theta)+\beta S_\rho(\theta)$；IAM-S 最小化 $L(\theta+\delta^*)$，跟 SAM 同形但扰动方向来自 KL 而非训练梯度。作者论证因为 $\pm\delta$ 等概率出现，一阶项 $\delta^\top\nabla_\theta L$ 在期望下被抵消，IAM-S 隐式地在压制 $G(\theta)=F(\theta)$ 的主特征值。
-    - 设计动机：单步归一化梯度上升的计算量恰好与 SAM 的一步对抗扰动等价，使 IAM 在"每步成本"维度上与 SAM 公平可比；同时 D/S 两种接口让它既能做 plug-in 正则（D 易拼到 FixMatch/SimCLR）也能做 SAM 风格的 worst-case minimization（S 在监督任务上效果更稳）。
+对 $\delta$ 做二阶 Taylor 展开后它变成 $\max\tfrac12\delta^\top F(\theta)\delta=\tfrac12\rho^2\lambda_{\max}(F(\theta))$，即 Fisher 信息矩阵主特征值乘上半径。关键是 $F$ 只用到 $\nabla_\theta z$ 和 softmax 输出 $f$，整个过程不出现真实标签 $y$；而交叉熵下又有 $H\approx G=F$，所以 $S_\rho$ 在解的邻域里几何上等同于"无标签版的最大特征值锐度"。这一步用 KL 的二阶展开把"输出敏感度"翻译回 FIM 主轴，既继承了锐度的 Hessian 含义又摆脱了对标签的依赖；论文还用 Theorem 4.1 把 $\lambda_{\max}(F_S)$ 嵌进 Luo 等的泛化界，论证近插值时用 $S_\rho$ 替换 $\lambda_{\max}(H)$ 不掉精度。
 
-3. **无标签数据的天然适配**:
+**2. Power Iteration 估计 + IAM-S/D 两种注入方式。**
 
-    - 功能：让正则项可在半监督、自监督训练中吃下所有无标签样本，缓解"锐度只能在小标签子集上估"的偏差。
-    - 核心思路：$S_\rho$ 的估计只需要前向跑模型拿 $f(x;\theta)$ 和反向求 $\nabla_\delta \mathrm{KL}$，过程中没有 $y$。在 FixMatch 中，作者把 $\beta S_\rho(\theta)$ 直接加在原 FixMatch 目标上，KL 期望在整个 batch（labeled+unlabeled）上取；在 SimCLR 中，KL 期望在投影头输出上取，仍然不需要标签。
-    - 设计动机：论文指出，"在稀疏标签集上度量平坦度"并不能反映整个数据流形上的真实平坦度——把 SAM 直接套到 FixMatch 的 labeled loss 上反而无提升（见 Appx. E.4）。IAM 借助 KL 的标签无关性把二阶几何信号扩展到无标签分布上，这是它在半/自监督上能超 SAM 的关键。
+$S_\rho$ 里有个 $\max$，看上去不可解，但它正好能用 Power Iteration 一步搞定。迭代 $\delta_{k+1}=\rho\,g_k/\|g_k\|$，其中 $g_k=\nabla_\delta \mathbb{E}_x \mathrm{KL}(f(x;\theta)\|f(x;\theta+\delta))$，因为 KL 对 $\delta$ 的二阶近似是 $F\delta$，归一化梯度上升一步就等价于对 $F$ 做一次归一化 Power Iteration，$K=1$ 即逼近主特征方向——计算量恰好和 SAM 的一步对抗扰动相同，使两者在"每步成本"上公平可比。
+
+注入训练目标有两个接口：IAM-D 直接最小化 $L(\theta)+\beta S_\rho(\theta)$ 做软正则；IAM-S 仿 SAM 在扰动点 $\theta+\delta^*$ 处求训练 loss 梯度，但扰动方向来自 KL 而非训练梯度。由于 $\pm\delta$ 等概率出现，一阶项 $\delta^\top\nabla_\theta L$ 在期望下被抵消，IAM-S 实际隐式压制的就是 $G(\theta)=F(\theta)$ 的主特征值。D 易拼到 FixMatch/SimCLR，S 在监督任务上更稳。
+
+**3. 无标签数据的天然适配。**
+
+$S_\rho$ 的估计只要前向拿 $f(x;\theta)$、反向求 $\nabla_\delta \mathrm{KL}$，全程不碰 $y$，于是半监督、自监督里的所有无标签样本都能喂进来。FixMatch 中把 $\beta S_\rho(\theta)$ 直接加到原目标上，KL 期望在整个 batch（labeled+unlabeled）上取；SimCLR 中 KL 期望在投影头输出上取，同样无需标签。这一点之所以关键，是因为"在稀疏标签集上量平坦度"根本反映不出整个数据流形的真实平坦度——把 SAM 直接套到 FixMatch 的 labeled loss 上反而无提升（Appx. E.4）。IAM 借 KL 的标签无关性把二阶几何信号铺到无标签分布上，这正是它在半/自监督上能超过 SAM 的来源。
 
 ### 损失函数 / 训练策略
-监督训练目标为 $L_{\text{IAM-D}}=L(\theta)+\beta S_\rho(\theta)$ 或 $L_{\text{IAM-S}}=L(\theta+\delta^*)$，每步用 Algorithm 1 取 $K=1$ 估扰动。CIFAR-10 用 $\beta=1.0,\rho=0.1$，CIFAR-100 取 $\beta=10.0,\rho=0.1$（IAM-D）或 $\rho=0.5$（IAM-S）；ImageNet 用 $\rho=0.2$ (S) / $0.1$ (D)。半监督场景里 KL 在 labeled+unlabeled 整个 batch 上取期望；自监督里 KL 在投影头输出分布上算。
+监督目标为 $L_{\text{IAM-D}}=L(\theta)+\beta S_\rho(\theta)$ 或 $L_{\text{IAM-S}}=L(\theta+\delta^*)$，每步用 Algorithm 1 取 $K=1$ 估扰动。CIFAR-10 用 $\beta=1.0,\rho=0.1$，CIFAR-100 取 $\beta=10.0,\rho=0.1$（IAM-D）或 $\rho=0.5$（IAM-S）；ImageNet 用 $\rho=0.2$ (S) / $0.1$ (D)。半监督里 KL 在 labeled+unlabeled 整个 batch 上取期望，自监督里 KL 在投影头输出分布上算。
 
 ## 实验关键数据
 

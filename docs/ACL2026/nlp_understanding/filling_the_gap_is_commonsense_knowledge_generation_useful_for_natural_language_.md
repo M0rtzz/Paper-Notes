@@ -44,23 +44,27 @@ tags:
 
 ### 关键设计
 
-1. **LLM 自生成自然语言 axiom（不是 KG 三元组）**:
+**1. LLM 自生成自然语言 axiom：用一句话桥接 premise 和 hypothesis，而非 KG 三元组。**
 
-    - 功能：让 LLM 用一句自然语言写出能把 premise 桥接到 hypothesis 的常识规则（如"big grin 通常意味着 happy/safe，与 shot 不兼容"）。
-    - 核心思路：直接 prompt LLM 描述"能让 hypothesis 从 premise 推出的常识桥梁"，避开 ConceptNet 这类离散 KG 的稀疏性问题；同一模型既懂语言又有大量常识储备，理论上能产出和 (P, H) 高度相关的 axiom。
-    - 设计动机：作者认为 NLI 失败的根因是 (P, H) 之间的"知识 gap" — 让模型自己说出这个 gap，比从外部 KG 检索更有针对性，也更可控（自然语言比 triples 更具表达力）。
+作者把 NLI 的失败根因归到 (P, H) 之间的"知识 gap"：当 premise 和 hypothesis 之间隔着一条隐式常识链（如 "a woman with a big grin" → "she is not shot"），模型常因缺这块常识而判错。现有从 ConceptNet/Aristo 抽三元组的做法既稀疏又难保证和当前 P-H pair 相关，于是作者干脆让 LLM 自己用一句自然语言写出这条桥梁规则——比如"big grin 通常意味着 happy/safe，与 shot 不兼容"。
 
-2. **Factuality-aware Selective Injection（hybrid 策略的核心）**:
+这么做的好处是双重的：同一个模型既懂语言又有大量常识储备，能产出和 (P, H) 高度相关的 axiom，避开了离散 KG 的覆盖稀疏问题；而且自然语言比 triples 表达力强得多，能把"为什么能推出"讲清楚。本质上是让模型自己说出它推理时缺的那一环，比从外部检索更有针对性。
 
-    - 功能：不是所有 axiom 都注入，而是先让 LLM 充当 judge 对 axiom 的事实性打分，只把"高 factual" 的 axiom 注入到推理 prompt。
-    - 核心思路：用同一个 LLM 跑一遍 axiom evaluation，对 axiom 标"helpful / factual / consistent" 几个标签；只有同时通过 factuality 阈值的 axiom 才进入第三阶段推理。形式上 $\hat{y} = \text{LLM}(P, H, A) \text{ if } \text{score}(A) \geq \tau \text{ else } \text{LLM}(P, H)$。
-    - 设计动机：纯 inject 实验发现质量参差 — LLM 生成的 axiom 经常带 hallucination 或与 hypothesis 直接重复，强注入反而把模型带歪；筛过之后注入只在"模型自己也信"的时候发生，最大化信号噪声比。
+**2. Factuality-aware Selective Injection：只在模型自己也信的时候才注入。**
 
-3. **缓解 Neutral 偏好**:
+纯注入实验暴露了一个问题——LLM 生成的 axiom 质量参差，经常带 hallucination 或干脆和 hypothesis 直接重复，强行注入反而把模型带歪。作者的解法是加一道 factuality 闸门：用同一个 LLM 再跑一遍 axiom evaluation，对 axiom 按 helpful / factual / consistent 几个维度打分（指标改自 Zheng 2024），只有通过 factuality 阈值的 axiom 才进入推理阶段。
 
-    - 功能：通过提供具体世界知识打破 LLM 在不确定时倾向选 Neutral 的安全模式。
-    - 核心思路：当 premise 和 hypothesis 看似无明显矛盾或蕴含时，模型默认选 Neutral 兜底；高质量 axiom 能把"看似无关"变成"有 commonsense bridge 因此 entail/contradict"，把模型从 Neutral 兜底拉到正确类别。
-    - 设计动机：作者观察到 baseline 在 ANLI 这种 adversarial dataset 上 Neutral 召回过高 — 这是模型自我保护机制，并非真的判断"既不蕴含也不矛盾"。axiom 注入相当于显式给模型一个理由去站队。
+形式上即 $\hat{y} = \text{LLM}(P, H, A)$ if $\text{score}(A) \geq \tau$ else $\text{LLM}(P, H)$——这就是论文主张的 "selective access"：公理不靠谱时模型退回原始 P-H 推理，靠谱时才借力。这一步把注入限制在"模型自己也信"的范围内，最大化信号噪声比；消融显示它正是收益主因，不过滤的强注入经常掉点，所以过滤本身就是核心贡献而非小 trick。
+
+**3. 缓解 Neutral 偏好：给模型一个敢站队的理由。**
+
+作者观察到 baseline 在 ANLI 这类 adversarial dataset 上 Neutral 召回过高——这其实是模型在不确定时的自我保护兜底，并非真判断出"既不蕴含也不矛盾"。当 premise 和 hypothesis 看似无明显蕴含/矛盾时，模型默认选 Neutral 最安全。
+
+高质量 axiom 恰好能打破这个安全模式：它把"看似无关"显式变成"有 commonsense bridge，因此 entail/contradict"，相当于给模型一个明确的理由去站队，把它从 Neutral 兜底拉回正确类别。这也解释了为什么提升在越难的 ANLI 上越明显——越是难 case，常识桥越关键。
+
+### 一个完整示例
+
+以 premise "a woman with a big grin"、hypothesis "she is not shot" 走一遍三段 pipeline：第一段 Axiom Generation 让模型针对这对 (P, H) 生成 axiom $A$="露出大大笑容的人通常处于安全、愉快的状态，与中枪受伤不兼容"；第二段 Axiom Evaluation 把 $(P, H, A)$ 喂回同一模型打分，判定它 factual、helpful、与 hypothesis 一致，分数过 $\tau$；于是第三段 Inference 走 injection 路径 $(P, H, A) \to \text{label}$，模型借这条常识桥从原本可能选的 Neutral 改判为 Entail。反之，若第二段判定生成的 axiom 是幻觉或与 hypothesis 重复（分数不过阈值），pipeline 就退回 baseline 的 $(P, H) \to \text{label}$，避免被噪声带偏。
 
 ### 损失函数 / 训练策略
 全程无训练。Llama-3.1-70B-Instruct 和 gpt-oss-120b 在 zero-shot 下被分别用三种 prompt（生成 / 评估 / 推理）调用。SNLI 和 ANLI 各采样 2000 条平衡样本（见数据集统计表）。

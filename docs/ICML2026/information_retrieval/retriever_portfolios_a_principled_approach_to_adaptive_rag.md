@@ -50,23 +50,17 @@ tags:
 
 ### 关键设计
 
-1. **Best-of-$k$ 组合目标 + 子模性近似保证**:
+**1. Best-of-$k$ 组合目标：把"选哪个 retriever"重写成可证明的组合优化问题**
 
-    - 功能：把"选哪个 retriever"重写成一个可证明的组合优化问题。
-    - 核心思路：定义 portfolio $S\subseteq\mathcal{R}$ 的得分为 $\mathrm{score}(q,S)=\max_{r\in S} s(q,r)$，整体目标 $F(S)=\mathbb{E}_{q\sim\mathcal{D}}[\max_{r\in S} s(q,r)]$。这个 $\max$ 形式天然奖励"覆盖不同 query 子群"的成员（行为相似的冗余 retriever 对最大值几乎没贡献）。Algorithm 1 是采样 $N$ 个 query 后跑贪心：每步加一个边际增益 $\frac{1}{N}\sum_{q\in Q}\max(0,s(q,r)-V[q])$ 最大的 $r$，并把 $V[q]$ 维护成"当前 $S$ 在 $q$ 上的最优得分"，于是每步 $\mathcal{O}(|\mathcal{R}|N)$。理论侧给出 Theorem 3.1：取 $N=\mathcal{O}((k\log|\mathcal{R}|+\log(1/\delta))/\epsilon^2)$ 样本，以 $1-\delta$ 概率有 $F(S)\ge (1-1/e)\mathrm{OPT}-\epsilon$。
-    - 设计动机：之前的 Adaptive-RAG / Vendi-RAG 都是启发式，没有形式化"覆盖异质 query 分布"这件事。把目标设成 best-of-$k$ + 子模 + Hoeffding 联合界后，可以**理论保证**贪心选出来的 portfolio 接近最优、且样本复杂度只跟 $\log|\mathcal{R}|$ 走（独立于 query 分布的支撑大小），这是工程上把候选池开到 360 还跑得动的根本原因。
+之前的 Adaptive-RAG / Vendi-RAG 都是启发式，没有把"覆盖异质 query 分布"这件事形式化。本文给 portfolio $S\subseteq\mathcal{R}$ 定义得分 $\mathrm{score}(q,S)=\max_{r\in S} s(q,r)$，整体目标 $F(S)=\mathbb{E}_{q\sim\mathcal{D}}[\max_{r\in S} s(q,r)]$。这个 $\max$ 形式天然奖励"覆盖不同 query 子群"的成员——行为相似的冗余 retriever 对最大值几乎没贡献，所以目标自动逼着 portfolio 互补。求解上 Algorithm 1 采样 $N$ 个 query 后跑贪心：每步加入边际增益 $\frac{1}{N}\sum_{q\in Q}\max(0,s(q,r)-V[q])$ 最大的 $r$，并把 $V[q]$ 维护成"当前 $S$ 在 $q$ 上的最优得分"，于是每步只花 $\mathcal{O}(|\mathcal{R}|N)$。由于 $F$ 非负、单调、子模，贪心自带经典 $(1-1/e)$ 近似；Theorem 3.1 进一步给出样本复杂度：取 $N=\mathcal{O}((k\log|\mathcal{R}|+\log(1/\delta))/\epsilon^2)$ 个 query，就能以 $1-\delta$ 概率保证 $F(S)\ge (1-1/e)\mathrm{OPT}-\epsilon$。关键是样本量只随 $\log|\mathcal{R}|$ 增长、独立于 query 分布的支撑大小，这正是工程上敢把候选池开到 360 还跑得动的根本原因。
 
-2. **跨家族 + 双 backbone 的 360 维候选池**:
+**2. 跨家族 + 双 backbone 的 360 维候选池：让 $\max$ 算子有真正互补的对象可挑**
 
-    - 功能：给 portfolio 选择算法准备一个**真正异质**的候选集，让 $\max$ 算子有可挑的对象。
-    - 核心思路：候选池由三个 retriever 家族 × 两个 embedding backbone（MPNet 与 E5）拼接而成。① **DiscountedSimilarity (DS)**：在 FAISS top-$M=1000$ 候选里贪心选 $n=4$ chunk，参数 $(\gamma, r)$ 控制对已选 chunk 的相似度惩罚，每个 backbone 140 + 1 个 dense baseline = 141 个配置。② **Vendi**：用 Vendi-score 在相关性和集合内多样性之间权衡，diversity 参数 $s\in[0,1]$ 步长 0.05 共 21 配置。③ **GraphDense**：先用 query 实体在"实体-chunk 二部图"上做 BFS 扩展，再用 MPNet/E5 重排，扫 hop 数、实体最大文档频次等共 36 配置。最终全池 $|\mathcal{R}|=360$。打分矩阵在两个 backbone 上分别缓存 candidate 集合，batched 评估，使得 $360\times|Q|$ 规模的 score table 离线可计算。
-    - 设计动机：portfolio 思想的实际收益完全取决于"候选成员是否真互补"。如果候选池里只有 DS 的不同 $\gamma$，那 best-of-$k$ 就和单 retriever 没区别。论文实测 size-5 portfolio 里同时出现了 GraphDense/E5、Vendi/E5 多个不同参数和 GraphDense/MPNet（见 Table 2），印证只有跨家族 + 跨 backbone 才能让 greedy 在前几步就显著拉开和"top-$k$ by average score" baseline 的差距。
+portfolio 思想的实际收益完全取决于候选成员是否真互补——如果池子里只有 DS 的不同 $\gamma$，那 best-of-$k$ 和单 retriever 没区别。为此候选池由三个 retriever 家族 × 两个 embedding backbone（MPNet 与 E5）拼成。**DiscountedSimilarity (DS)** 在 FAISS top-$M=1000$ 候选里贪心选 $n=4$ chunk，用参数 $(\gamma, r)$ 控制对已选 chunk 的相似度惩罚，每个 backbone 给出 140 个配置加 1 个 dense baseline 共 141 个；**Vendi** 用 Vendi-score 在相关性和集合内多样性之间权衡，diversity 参数 $s\in[0,1]$ 步长 0.05 扫出 21 个配置；**GraphDense** 先用 query 实体在"实体-chunk 二部图"上做 BFS 扩展，再用 MPNet/E5 重排，扫 hop 数、实体最大文档频次等得到 36 个配置。三家拼起来全池 $|\mathcal{R}|=360$，打分矩阵在两个 backbone 上分别缓存 candidate 集合后 batched 评估，使 $360\times|Q|$ 规模的 score table 离线可算完。论文实测 size-5 portfolio 里同时挑进了 GraphDense/E5、多个不同参数的 Vendi/E5 和 GraphDense/MPNet（Table 2），印证只有跨家族 + 跨 backbone 才能让 greedy 在前几步就显著拉开和"top-$k$ by average score" baseline 的差距。
 
-3. **离线 portfolio + 在线 contrastive router 的两段式 pipeline**:
+**3. 离线 portfolio + 在线 contrastive router：把自适应开销摊销到离线**
 
-    - 功能：避免在线 per-query 超参搜索的高延迟，把"挑哪个 retriever 给当前 query"压成一次轻量前向。
-    - 核心思路：router 输入 query 原文 + cached MPNet 与 E5 query embedding，过一个 frozen Flan-T5-Large encoder 得到文本表示，再 fuse 两个 backbone-specific dense embedding，输出对每个 portfolio 成员的相似度分。训练目标沿用 Chen et al. 2024 的 multi-positive contrastive loss——把"在该 query 上取得最高 Recall@$k$ 的 retriever"作为正样本。推理时取 top-$\ell$（论文主表用 $\ell\in\{2,3\}$）个成员**并行**跑检索 + LLM 答案生成，最后用同一个 LLM 作 selector 聚合。
-    - 设计动机：相比 Vendi-RAG 那种"retrieve → generate → LLM judge → 调 $s$ → 再 retrieve"的串行循环，本文的 router 一次前向就决定 routing，所有 $\ell$ 个分支可以并行执行；token 开销和 wall-clock 都对 $\ell$ 线性、对 $k$ 无关，因此 $(k=4,\ell=2)$ 这种配置既保住准确率又拿到可预测的服务成本——这正是 Figure 4 里 portfolio 在 cost-accuracy 平面上压过 Vendi-RAG 的原因。
+为了避开 Vendi-RAG 那种"retrieve → generate → LLM judge → 调 $s$ → 再 retrieve"的串行在线搜索，本文把"挑哪个 retriever 给当前 query"压成 router 的一次轻量前向。router 输入 query 原文加 cached MPNet 与 E5 query embedding，过一个 frozen Flan-T5-Large encoder 得到文本表示后再 fuse 两个 backbone-specific dense embedding，输出对每个 portfolio 成员的相似度分；训练目标沿用 Chen et al. 2024 的 multi-positive contrastive loss，把"在该 query 上取得最高 Recall@$k$ 的 retriever"当正样本。推理时取 top-$\ell$（主表用 $\ell\in\{2,3\}$）个成员**并行**跑检索 + LLM 答案生成，最后用同一个 LLM 作 selector 聚合。因为 router 一次前向就定下 routing、$\ell$ 个分支彼此无依赖可并行，token 开销和 wall-clock 都对 $\ell$ 线性、对 $k$ 无关——$(k=4,\ell=2)$ 这类配置既保住准确率又拿到可预测的服务成本，这也是 Figure 4 里 portfolio 在 cost-accuracy 平面上压过 Vendi-RAG 的直接原因。
 
 ### 损失函数 / 训练策略
 

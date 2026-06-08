@@ -41,30 +41,28 @@ NSPI 让 LLM 提出近似的多项式平方和 (SOS) 结构猜想，再用 Gauss
 ## 方法详解
 
 ### 整体框架
-NSPI 是三阶段流水线：(1) 神经猜想 (Neural Conjecture)：LLM 接收非负多项式 $f(x)$，吐出近似 SOS 表示 $\hat f(x) = \sum_i \hat f_i(x)^2$，按数值误差排序；(2) 符号修正 (Symbolic Correction)：取 Top-K 猜想做 Gauss–Newton 数值精化，再走有理恢复得到精确有理 Gram 矩阵；(3) 形式验证 (Formal Verification)：用预定义 Lean 模板把 SOS 证书拼成完整证明，调用 `linear_combination` 验等式、`positivity` 验非负。整条管线相比纯 SOS-SDP 的好处是 LLM 提供了结构先验，跳过了 SDP 在高维上的组合爆炸；相比纯 LLM 证明，符号端给出了精确性保障。
+NSPI 要证明 $f(x) \ge 0$，做法是把任务拆成"神经猜结构、符号修系数、Lean 验真"三段接力。先让 LLM 看一眼非负多项式 $f(x)$，吐出一个**近似**的 SOS 表示 $\hat f(x) = \sum_i \hat f_i(x)^2$（带浮点误差，按数值误差排序）；再取 Top-K 猜想做 Gauss–Newton 数值精化、有理恢复，得到**精确**的有理 Gram 矩阵；最后用预定义 Lean 模板把这张证书拼成完整证明，`linear_combination` 验等式、`positivity` 验非负。这样既借 LLM 的结构先验跳过了 SDP 在高维上的组合爆炸，又靠符号端兜住了精确性——LLM 猜得粗没关系，最后是机器内核说了算。
 
 ### 关键设计
 
-1. **双轨 SOS 数据合成 + 两阶段训练**:
+**1. 双轨 SOS 数据合成 + 两阶段训练：让 LLM 学会"看到 $f$ 就吐合理 SOS 骨架"。**
 
-    - 功能：给 SOS 结构猜想器准备百万级训练对，并通过 SFT 冷启动 + GRPO 课程式 RL 让 LLM 学会"看到 $f$ 就吐合理 SOS 骨架"。
-    - 核心思路：直接随机采样 $f_i(x)$ 然后平方求和会产生非整数系数和系数膨胀，所以从 PSD Gram 矩阵 $\widetilde G$ 反推。**计算驱动**：要么对随机对称整数矩阵 $G$ 做谱平移 $\widetilde G = G - \lfloor \lambda_{\min} \rfloor I \succeq 0$，要么写成 $\widetilde G = L^\top D L$ 的因子形式，要么用 LMI 优化 $\max \lambda$ s.t. $G - \lambda I \succeq 0$ 再整数化。**结构驱动**：用对角占优 (dd) 或 scaled dd 矩阵，按 Gershgorin 圆盘定理它们天然 PSD，可参数化为 $\widetilde G = \sum_i \eta_i u_i u_i^\top$ 其中 $u_i$ 至多两个非零 $\pm 1$。训练第一阶段 SFT 在 100 万合成对上冷启动；第二阶段把冷启动模型没解决的样本编成由易到难的课程，跑 GRPO，奖励 = 精度奖励 $R_{\text{Accuracy}} = 1/(1 + \alpha \|f - \hat f\|_2)$ + 格式奖励 + 代数结构一致性惩罚（鼓励非零单项式集合匹配原多项式）。
-    - 设计动机：LLM 直接写有理 SOS 是不可控的，但写出"包含哪些平方项"的近似结构相对容易；用结构驱动数据保证整数系数和单项式集合可控，避免了"系数太大模型记不住"的退化。
+要训练一个 SOS 结构猜想器，得先有百万级 $(f, \text{SOS})$ 训练对，可这数据天然难造——直接随机采样 $f_i(x)$ 再平方求和，会产生非整数系数和系数膨胀，模型根本记不住。作者反着来：从一个 PSD 的 Gram 矩阵 $\widetilde G$ 反推 $f$，这样单项式集合和系数范围全程可控。具体有两条轨。**计算驱动**走数值：对随机对称整数矩阵 $G$ 做谱平移 $\widetilde G = G - \lfloor \lambda_{\min} \rfloor I \succeq 0$，或写成因子形式 $\widetilde G = L^\top D L$，或解一个 LMI（$\max \lambda$ s.t. $G - \lambda I \succeq 0$）再整数化。**结构驱动**走代数：直接用对角占优 (dd) 或 scaled-dd 矩阵，按 Gershgorin 圆盘定理它们天然 PSD，可参数化为 $\widetilde G = \sum_i \eta_i u_i u_i^\top$，其中每个 $u_i$ 至多两个非零的 $\pm 1$，整数系数与稀疏单项式集合都被钉死。
 
-2. **Gauss–Newton 精化 + 有理恢复双制度**:
+有了数据，训练分两段。第一段 SFT 在 100 万合成对上冷启动，让模型先学会 SOS 的基本输出格式；第二段把冷启动模型**还解不出来的难样本**编成由易到难的课程，跑 GRPO 强化。这一步抓的是"近似结构相对好学、但精确系数不可控"这个观察——LLM 直接写有理 SOS 几乎不可能，但写出"该含哪些平方项"的骨架是可学的，所以奖励的重心也放在结构而非系数上（见下）。
 
-    - 功能：把 LLM 给出的近似 SOS 修成精确有理 Gram 矩阵，让 Lean 能接收。
-    - 核心思路：先从 $\hat f(x)$ 抽出单项式基 $\mathbf v(x)$ 和初始浮点 Gram 矩阵 $\mathbf G$，做 Cholesky $\mathbf G \approx L L^\top$ 把 $\hat f(\mathbf x) \approx \sum_i (\sum_\alpha c_{i,\alpha} \mathbf x^\alpha)^2$；然后 Gauss–Newton 迭代求扰动 $\Delta c_{i,\alpha}$ 使得后向误差 $\theta = \|\hat f(\mathbf x) - \mathbf v(x)^\top \mathbf G \mathbf v(x)\|$ 降到阈值 $\tau$ 以下。**有理恢复分两种制度**：内点情形（Gram 矩阵严格在 PSD 锥内部）按 Peyrl–Parrilo 把矩阵正交投影到 SOS 等式约束的仿射子空间再有理化；边界情形（数值秩亏）做截断 $LDL^\top$ 分解 + 同时丢番图逼近，按秩结构恢复有理向量而不直接整体有理化。
-    - 设计动机：SDP 求解器只能给数值解，直接舍入会破坏 PSD；GN 让数值解先收敛到机器精度附近，再用有定理保证的有理恢复一步到位，避免了反复 SDP+舍入的脆弱过程。
+**2. Gauss–Newton 精化 + 有理恢复双制度：把近似 SOS 修成 Lean 能接收的精确有理证书。**
 
-3. **Lean 形式化模板 + `llm_ineq` 战术**:
+LLM 给的 SOS 带浮点误差，而 Lean 内核只认精确有理数，中间这道坎正是纯 LLM-prover 在高维翻车的地方。NSPI 先从 $\hat f(x)$ 抽出单项式基 $\mathbf v(x)$ 和初始浮点 Gram 矩阵 $\mathbf G$，做 Cholesky $\mathbf G \approx L L^\top$ 把它写成 $\hat f(\mathbf x) \approx \sum_i (\sum_\alpha c_{i,\alpha}\mathbf x^\alpha)^2$，再用 Gauss–Newton 迭代求系数扰动 $\Delta c_{i,\alpha}$，把后向误差 $\theta = \|\hat f(\mathbf x) - \mathbf v(x)^\top \mathbf G \mathbf v(x)\|$ 压到阈值 $\tau$ 以下——让数值解先收敛到机器精度附近，而不是拿粗糙的 SDP 解直接舍入。
 
-    - 功能：把精确 SOS 证书直接编译成 Lean 4 证明，机器内核检查。
-    - 核心思路：作者写了一个可调用的 Lean 战术 `llm_ineq`，给定目标多项式和有理 SOS 证书，自动拆成两个义务：(a) 多项式等式 $p = \sum_i k_i q_i^2$ 由 `linear_combination` 战术展开规范形后验证；(b) SOS 表达式非负由 `positivity` 战术递归套用 `sq_nonneg`、`mul_nonneg`、`add_nonneg` 等规则证明。整个模板对所有不等式通用，所以只要符号端给出正确 SOS，Lean 端就能闭环。
-    - 设计动机：把 Lean 端的复杂度限制在两条标准战术上，避免依赖 LLM 写策略——这样 LLM 失败的高维场景里，只要 SOS 算对了 Lean 一定通得过，可靠性瓶颈从"LLM 会不会写 Lean"转移到"SOS 结构猜得准不准"。
+收敛之后再有理化，且分两种制度处理，因为高维多项式经常落在 PSD 锥的边界上。**内点情形**（Gram 矩阵严格在锥内部）按 Peyrl–Parrilo 的有理恢复定理，把矩阵正交投影到 SOS 等式约束的仿射子空间再有理化，定理保证产物仍 PSD；**边界情形**（数值秩亏）则做截断 $LDL^\top$ 分解 + 同时丢番图逼近，顺着秩结构去恢复有理向量，而不是对整个矩阵硬有理化——后者会把丢失的秩结构一并破坏掉。两步合起来，把"数值解→精确证书"这道脆弱的环节挤进了有定理背书的子模块。
+
+**3. Lean 形式化模板 + `llm_ineq` 战术：把精确 SOS 证书一键编译成机器可检验的 Lean 4 证明。**
+
+最后一关是把有理 SOS 证书变成 Lean 真正认可的证明，而 NSPI 刻意不让 LLM 来写 Lean 策略。作者实现了一个通用战术 `llm_ineq`：给定目标多项式和有理 SOS 证书，它自动把证明拆成两个义务——(a) 多项式等式 $p = \sum_i k_i q_i^2$ 交给 `linear_combination` 展开到规范形后逐项核对；(b) SOS 表达式非负交给 `positivity`，递归套用 `sq_nonneg`、`mul_nonneg`、`add_nonneg` 等规则证明。这个模板对所有不等式通用，所以只要符号端算出正确的 SOS，Lean 端必定闭环。它的意义在于把可靠性瓶颈整个搬了家：从"LLM 在高维能不能写出对的 Lean tactic"（这是 LLM-prover 归零的根因），转移到"SOS 结构猜得准不准"——而后者由数据规模 + RL 推动、有定理兜底。
 
 ### 损失函数 / 训练策略
-SFT 阶段是标准的 next-token；GRPO 阶段奖励为 $R = R_{\text{Accuracy}} + R_{\text{Format}} - R_{\text{Struct-Penalty}}$，其中结构惩罚包含软惩罚（非零单项式集合的对称差）和硬惩罚（出现训练时未见过的高阶项时直接惩罚）。课程把数据按符号求解器需要的迭代数分桶，由易到难依次喂入。
+SFT 阶段是标准 next-token。GRPO 阶段奖励为 $R = R_{\text{Accuracy}} + R_{\text{Format}} - R_{\text{Struct-Penalty}}$：精度奖励 $R_{\text{Accuracy}} = 1/(1 + \alpha\|f - \hat f\|_2)$ 衡量近似 SOS 的数值贴合度，格式奖励约束输出规范，结构惩罚是核心——它鼓励近似 SOS 的非零单项式集合匹配原多项式，含软惩罚（非零单项式集合的对称差）和硬惩罚（一旦冒出训练时未见过的高阶项就直接扣分）。课程则按符号求解器精化所需的迭代数把数据分桶，由易到难依次喂入。
 
 ## 实验关键数据
 

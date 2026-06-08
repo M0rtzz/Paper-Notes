@@ -40,33 +40,28 @@ L3-PPI 把生物学里的 "L3 规则"（蛋白质对之间的 length-3 路径越
 ## 方法详解
 
 ### 整体框架
-L3-PPI 是 plug-and-play 分类头，挂在任何已有的 PPI 表征模型（PIPR / SemiGNN-PPI / DPPI / DNN-PPI / S2F 等）后面，原模型保持 frozen。三阶段 pipeline：(1) **L3 模式预训练**：用原 PPI 网络抽取真实的 positive / negative L3 路径作为图级二分类数据，预训一个 GIN-based 模型 $\text{GNN}_{\text{pre}}$；(2) **prompt 构造 + 门控过滤**：对每对查询蛋白 $u, v$ 插入 $K{+}1$ 个可学习虚拟节点构成 $K$ 条候选 L3 路径，门控网络逐路径决定激活/丢弃；(3) **结果预测**：把激活路径组装成最终 prompt 模式图，丢回 frozen $\text{GNN}_{\text{pre}}$ 输出 PPI 概率。BCE + 路径数正则联合优化。
+L3-PPI 想解决的核心难题是：现有 PPI 分类头都是从链路预测照搬的通用聚合，没有任何交互特有的先验，而想直接拿"#L3 路径数"当特征又会因为严格 split 下测试对在原图里断连而失效。它的破局思路是把蛋白对二分类**重构成模式图级别的二分类**——既然测试对在原图里没有 L3 路径，就让模型自己生成虚拟 L3 路径，再用一个预训练好的 frozen GNN 当评估器去判断这些虚拟模式像不像真实交互。整套东西做成挂在任意 PPI 表征模型（PIPR / SemiGNN-PPI / DPPI / DNN-PPI / S2F 等）后面的 plug-and-play 分类头，原模型保持 frozen。
 
 ### 关键设计
 
-1. **L3 Pattern Recognition Pre-training**:
+**1. L3 模式预训练：先训一把"什么样的 L3 像真交互"的固定标尺**
 
-    - 功能：训一个"知道什么样的 L3 模式对应真实交互"的 surrogate model，作为下游 prompt 评估的固定标尺。
-    - 核心思路：从原 PPI 网络 $G=(V,E)$ 用 PIPR 拿节点 embedding；正例 $\mathcal{D}_{\text{pre}}^+$ 是所有交互对 $(u,v) \in E$ 之间的 L3 路径（DFS 找到的），负例从非交互对 $(u,v) \notin E$ 拿对应 L3 路径。GNN 用 GIN backbone + readout + MLP head，做图级二分类 $\tilde y_{\text{pre}} = \text{GNN}_{\text{pre}}(\mathcal{G}_{\text{pre}}; \theta, \phi) \approx y_{\text{pre}}$，BCE 优化。
-    - 设计动机：把"L3 是否真的对应 interaction"这件事直接学进一个 model 里，避免下游虚拟 prompt 的分布和真实 L3 分布脱节；预训练完成后 freeze，保证下游 prompt 调到接近 surrogate 评估高分时确实意味着像真实的交互模式。
+下游要靠虚拟 L3 路径打分，就得先有个知道真实 L3 长什么样的评估器，否则生成的 prompt 分布会和真实 L3 分布脱节。作者从原 PPI 网络 $G=(V,E)$ 出发，用 PIPR 拿节点 embedding，把所有交互对 $(u,v)\in E$ 之间 DFS 找到的 L3 路径作为正例 $\mathcal{D}_{\text{pre}}^+$、非交互对 $(u,v)\notin E$ 的对应 L3 路径作为负例，构成一个图级二分类数据集。在上面预训一个 GIN backbone + readout + MLP head 的模型，学 $\tilde y_{\text{pre}} = \text{GNN}_{\text{pre}}(\mathcal{G}_{\text{pre}}; \theta, \phi) \approx y_{\text{pre}}$，用 BCE 优化。训完就 freeze——这样下游 prompt 一旦被调到接近 surrogate 高分，就真的意味着它长得像交互模式，而不是迎合一个会被一起带跑的评估器。
 
-2. **Graph Prompt Design + Gating-based L3 Path Filter**:
+**2. Graph prompt + 门控路径过滤：为每对查询蛋白生成可控数量的虚拟 L3**
 
-    - 功能：为每对查询蛋白生成可控数量的虚拟 L3 路径，使模式图能区分阴阳样本。
-    - 核心思路：固定 prompt 结构：1 个中心虚拟节点 $v_0^P$ 加 $K$ 个外围虚拟节点 $\{v_1^P, \ldots, v_K^P\}$，每个外围节点带 learnable embedding $x_i^P \in \mathbb{R}^d$ 且全 query 共享；中心节点连向 $v$、外围节点连向 $u$，形成 $K$ 条独立的 L3 路径 $\{path_k\}$。门控网络对每条路径输出激活概率 $p_i = \text{GNN}_{\text{gpt}}(path_i)$，用 Gumbel-Softmax 重参数化保证可微：$g(path_i) = \text{Sigmoid}\Big(\frac{\log p_i + \epsilon - \log(1-p_i) - \epsilon'}{\tau}\Big)$；推理时阈值 0.5 二值化。被丢弃的路径对应边权置 0，剩下的边权赋为 $g(path_i)$，组装成最终 $\mathcal{G}_F$ 输入 frozen $\text{GNN}_{\text{pre}}$。
-    - 设计动机：把 PPI 二分类**reformulate** 为模式图级别二分类，与预训练任务空间对齐；可学习的虚拟节点 + 共享 prompt 让模型既能 query-specific 又不会参数爆炸。
+预训好的 surrogate 需要被喂进"针对当前蛋白对、数量可控"的 L3 模式图，门控就是干这件事的。prompt 结构固定为 1 个中心虚拟节点 $v_0^P$ 加 $K$ 个外围虚拟节点 $\{v_1^P,\ldots,v_K^P\}$，每个外围节点带一份可学习 embedding $x_i^P \in \mathbb{R}^d$ 且全 query 共享（这样既能 query-specific 又不至于参数爆炸）；中心节点连向 $v$、外围节点连向 $u$，于是自然形成 $K$ 条独立的 L3 路径 $\{path_k\}$。门控网络对每条路径打一个激活概率 $p_i = \text{GNN}_{\text{gpt}}(path_i)$，再用 Gumbel-Softmax 重参数化让"留还是丢"这个离散决策可微：
 
-3. **Path Number Regularization $\mathcal{L}_{PN}$（核心创新）**:
+$$g(path_i) = \text{Sigmoid}\Big(\frac{\log p_i + \epsilon - \log(1-p_i) - \epsilon'}{\tau}\Big)$$
 
-    - 功能：用一个 hinge-style 正则把"正例多 L3、负例少 L3"的先验注入到 gating 概率上。
-    - 核心思路：根据 PPI 标签施加不同方向的硬约束：
-        - 当 $y_{gpt}=1$（正例）：$\mathcal{L}_{PN} = \max(0, K(1 - 1/\gamma) - \sum_i p_i)$，迫使激活路径数 $\geq K(1-1/\gamma)$；
-        - 当 $y_{gpt}=0$（负例）：$\mathcal{L}_{PN} = \max(0, \sum_i p_i - K/\gamma)$，迫使激活路径数 $\leq K/\gamma$。
-        - 通过超参 $\gamma$ 控制正负例期望路径数的间距。
-    - 设计动机：直接对应 L3 规则的核心定性陈述"#L3 越多越像交互"；通过 hinge 软约束避免过度惩罚导致退化为全开 / 全关。
+推理时按阈值 0.5 二值化，被丢弃路径的边权置 0、留下的边权赋为 $g(path_i)$，组装成最终模式图 $\mathcal{G}_F$ 输入 frozen $\text{GNN}_{\text{pre}}$ 出概率。整个过程把 PPI 二分类对齐到了预训练的模式图任务空间，绕开了原图断连的问题。
+
+**3. 路径数正则 $\mathcal{L}_{PN}$：把"正例多 L3、负例少 L3"硬约束进门控**
+
+这是核心创新。光有门控还不够——必须把 L3 规则的定性陈述"#L3 越多越像交互"显式注入，模型才会学着给正例多开路径、给负例少开路径。作者按 PPI 标签对激活路径数 $\sum_i p_i$ 施加方向相反的 hinge 约束：正例 $y_{gpt}=1$ 时 $\mathcal{L}_{PN} = \max(0,\, K(1 - 1/\gamma) - \sum_i p_i)$，逼激活路径数 $\geq K(1-1/\gamma)$；负例 $y_{gpt}=0$ 时 $\mathcal{L}_{PN} = \max(0,\, \sum_i p_i - K/\gamma)$，逼激活路径数 $\leq K/\gamma$。超参 $\gamma$ 控制正负例期望路径数之间的间距。用 hinge 而非硬等式是为了软约束——只在越界时惩罚，避免门控退化成全开或全关。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L} = \mathcal{L}_{BCE} + \mathcal{L}_{PN}$。两阶段训练：阶段一只用 $\mathcal{L}_{BCE}$ 更新虚拟节点 embedding $X^P$，阶段二联合优化 $X^P$ 与门控网络参数（损失加入 $\mathcal{L}_{PN}$）。Gumbel 温度 $\tau$ 训练过程中退火。base predictor 全程 frozen，保证 plug-and-play 性质。
+总损失 $\mathcal{L} = \mathcal{L}_{BCE} + \mathcal{L}_{PN}$。两阶段训练：阶段一只用 $\mathcal{L}_{BCE}$ 更新虚拟节点 embedding $X^P$，阶段二联合优化 $X^P$ 与门控网络参数（加入 $\mathcal{L}_{PN}$）。Gumbel 温度 $\tau$ 训练中退火。base predictor 全程 frozen，保证 plug-and-play 性质。
 
 ## 实验关键数据
 

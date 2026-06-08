@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基线沿用 GRPO：query $q$ + 候选 $y_A, y_B$ + 偏好标签 $l\in\{A,B\}$ → GRM $\pi_\theta$ 生成 CoT + critique + 预测 $\hat l$；对每条 prompt rollout $N$ 次得到 outcome 奖励 $R_{\text{outcome}}^i$ 并按组内归一化得 advantage $\hat A_i$。RM-NLHF 在此基础上加一路 process 奖励：(1) 数据上有人工 critique $h$ 时直接算 GRM critique $\hat c$ 与 $h$ 的核心论点相似度；(2) 数据上没有 $h$ 时用 MetaRM 预测；(3) 训练全程在线更新 MetaRM 以匹配当前 policy 输出分布。最终 advantage = outcome reward + process reward 共同决定。
+RM-NLHF 想给二元偏好任务上的 GRM 补一份"critique 到底对不对"的过程奖励，又不想被人工 critique 数据稀缺卡死。基线仍是 GRPO：query $q$ 配一对候选 $y_A, y_B$ 和偏好标签 $l\in\{A,B\}$，GRM $\pi_\theta$ 生成 CoT + critique + 预测 $\hat l$，每条 prompt rollout $N$ 次得到 outcome 奖励 $R_{\text{outcome}}^i$ 后组内归一化成 advantage $\hat A_i$。在此之上接一路 process 奖励：带人工 critique $h$ 的数据直接算模型 critique $\hat c$ 与 $h$ 的核心论点相似度，没有 $h$ 的数据交给一个辅助模型 MetaRM 预测，而 MetaRM 又在训练全程随 policy 在线更新，使最终 advantage 由 outcome 与 process 两路奖励共同决定。
 
 ### 关键设计
 
-1. **核心论点相似度（Similarity w/ Core HC）作为过程奖励**：
+**1. 核心论点相似度（Similarity w/ Core HC）：把"critique 合不合理"压成一个能机算的数值奖励。**
 
-    - 功能：把"GRM critique 是否合理"压缩为一个可机算的数值奖励，并避免被 nitpicky critique 干扰。
-    - 核心思路：用一个外部强 LLM（gemini-2.5-pro）从人工 critique $h$ 与 GRM critique $\hat c$ 中分别抽出 core arguments（剔除细枝末节的挑刺式 critique），然后算 F1/Recall/Precision 三种相似度变体。在 49 样本人工标注子集上做了对照：直接让 LLM-as-Meta-Judge 判 $\hat c$ 是否正确不够稳；用 All HC 相似度容易被 nitpicky critique 拉低；只用 Core HC 相似度最接近人工 label。最终的过程奖励 $R_{\text{process}}=\text{sim}(\text{core}(h), \text{core}(\hat c))$，与 $R_{\text{outcome}}$ 加权后进入 GRPO 的 advantage 归一化。
-    - 设计动机：直接让 LLM 判 critique 正确性会受到 judge bias 与表达风格影响；而"核心论点重合"既保留语义级判断，又把 nitpicky 噪声筛掉，定量上是三种 proxy 里最优。同时这种 reward 兼容 RLVR 的 verifier 框架（一个数值奖励），不需要改动 GRPO loss。
+outcome-only 监督在二元任务上根本不可靠（瞎猜也有 50% 命中），所以必须显式衡量 critique 质量，但最直白的"让 LLM 直接判 $\hat c$ 对不对"会受 judge bias 和表达风格干扰，"逐条比对全部论点"又容易被 nitpicky 的挑刺式 critique 拉低分数。作者的做法是先用一个外部强 LLM（gemini-2.5-pro）从人工 critique $h$ 和模型 critique $\hat c$ 里分别抽出 core arguments（剔掉细枝末节），再算两者核心论点的相似度作为过程奖励 $R_{\text{process}}=\text{sim}(\text{core}(h), \text{core}(\hat c))$，并尝试 F1/Recall/Precision 三种变体。在 49 样本人工标注子集上对照，只用 Core HC 相似度最贴近人工 label——它既保留了语义级判断，又把 nitpicky 噪声筛掉；而且它输出的是单个数值，天然兼容 RLVR 的 verifier 框架，可以直接和 $R_{\text{outcome}}$ 加权进入 GRPO 的 advantage 归一化，不用改 loss。
 
-2. **MetaRM：从人工 critique 数据预测过程奖励**：
+**2. MetaRM：用少量人工 critique 把过程监督外推到全量数据。**
 
-    - 功能：解决人工 critique 数据稀缺的可扩展性瓶颈——大多数 preference 数据集（UltraFeedback、HelpSteer 系列）只有 outcome label，没有 critique。
-    - 核心思路：训练一个辅助模型 MetaRM，输入 $(q, y_A, y_B, \hat c)$，输出对该 critique 的过程奖励估计。MetaRM 用有人工 critique 的子集训练，目标是拟合"$\hat c$ 与人工 $h$ 的 core similarity"；推理时对无人工 critique 的数据直接预测奖励。这样作者用少量人工标注换来了在全量数据上的过程监督。
-    - 设计动机：人工 critique 标注成本极高（HelpSteer3 都只有部分样本带 critique），如果只能在 50k 带 critique 数据上训，规模上根本干不过 outcome-only RL；MetaRM 等于把"critique 评估能力"蒸馏到一个轻量模型里，让其泛化到只有 outcome label 的大盘数据。
+人工 critique 标注极贵（连 HelpSteer3 也只有部分样本带 critique），而 UltraFeedback、HelpSteer 系列等主流 preference 数据集大多只有 outcome label，光靠几万条带 critique 的数据训，规模上根本干不过 outcome-only RL。为此作者训一个辅助模型 MetaRM，输入 $(q, y_A, y_B, \hat c)$，输出对该 critique 的过程奖励估计；它在带人工 critique 的子集上训练，拟合"$\hat c$ 与 $h$ 的 core similarity"，推理时直接给无 critique 的数据打分。等于把"critique 评估能力"蒸馏进一个轻量模型，让仅有 outcome label 的大盘数据也能获得过程监督。
 
-3. **Online MetaRM：随 GRM 同步演化的奖励模型**：
+**3. Online MetaRM：让奖励模型随 GRM 同步演化，堵住 reward hacking。**
 
-    - 功能：缓解 RL 训练中 policy 漂移导致 MetaRM 评估分布不匹配的问题。
-    - 核心思路：训练循环交替更新 GRM 与 MetaRM。GRM 走 GRPO 更新一步 → 当前 policy 在新一批 prompt 上 rollout 得到一批 $\hat c$ → 把这些 $\hat c$ 与 ground-truth $h$（在带 critique 子集上）形成监督对，对 MetaRM 做一步更新 → 再回到 GRM。这样 MetaRM 始终对当前 policy 输出有正确判断，避免 reward model 静态时的 reward hacking。
-    - 设计动机：经典 RLHF 之痛是奖励模型在 rollout 分布漂移后失效；online 更新让 MetaRM 跟上 policy，规避 Goodhart 问题。最终作者发现 online MetaRM 训练能逼近"全人工 critique 监督"的效果，同时大幅降低标注需求。
+经典 RLHF 的老毛病是奖励模型一旦遇上 policy 漂移后的新分布就失效，static MetaRM 同样会被 reward hacking。作者把训练改成 GRM 与 MetaRM 交替更新：GRM 走一步 GRPO → 当前 policy 在新一批 prompt 上 rollout 出一批 $\hat c$ → 在带 critique 子集上用这些 $\hat c$ 与 ground-truth $h$ 组成监督对、给 MetaRM 更新一步 → 再回到 GRM。这样 MetaRM 始终盯着当前 policy 的真实输出分布，规避 Goodhart 问题；实验里 online MetaRM 能逼近"全人工 critique 监督"的上限，同时把标注需求压到很低。
 
 ### 损失函数 / 训练策略
 基础是 GRPO（公式 1-3）：组内归一化的 advantage $\hat A_i=(R_i-\bar R)/\sigma$，policy 用 clipped policy gradient + KL 正则更新。RM-NLHF 把奖励替换为 $R = R_{\text{outcome}} + \lambda \cdot R_{\text{process}}$，process 奖励来自 Core HC similarity 或 MetaRM 预测。Online MetaRM 用 MSE 或排序 loss 监督，每 $k$ 个 GRPO 步骤更新一次。MetaRM 与 GRM 共享 backbone 但加独立 head（论文给出对比，全独立模型也可行但更贵）。

@@ -44,23 +44,19 @@ tags:
 
 ### 关键设计
 
-1. **深度线性网络中的精确等价理论**:
+**1. 深度线性网络中的精确等价理论：局部即全局。**
 
-    - 功能：证明 local-SSL 逐层梯度更新与 global BP-SSL 全局梯度更新完全一致
-    - 核心思路：在 $L$ 层线性网络中，假设所有权重矩阵 $W^l$ 正交归一，$B^l$ 可训练且达到最优 $B_*^l$，则有 $\frac{\partial \mathcal{L}_*^l}{\partial W_{ij}^l} = \frac{\partial \mathbf{L}_*}{\partial W_{ij}^l}$。直觉上，正交归一的权重矩阵使得从顶层反向传播到第 $l$ 层的梯度 $(W^L \cdots W^{l+1})^\top B_*^L c^L$ 恰好等于局部最优投影 $B_*^l c^l$，因为正交矩阵的乘积自行抵消
-    - 设计动机：为 local-SSL 提供理论基础——在满足条件时局部优化等价于全局优化，打破了"局部学习必然损失信息"的直觉
+local-SSL 一直被怀疑"每层独立优化、梯度不跨层传，浅层根本没在优化深层目标"，性能差距被默认是结构性的。本文先在 $L$ 层线性网络里把这个怀疑证伪：假设所有权重矩阵 $W^l$ 正交归一、$B^l$ 可训练且取到最优 $B_*^l$，则逐层局部梯度与全局 BP 梯度逐元素相等，$\frac{\partial \mathcal{L}_*^l}{\partial W_{ij}^l} = \frac{\partial \mathbf{L}_*}{\partial W_{ij}^l}$。
 
-2. **直接反馈机制（DFB）**:
+直觉是：从顶层反传到第 $l$ 层的梯度带着一长串权重乘积 $(W^L \cdots W^{l+1})^\top B_*^L c^L$，而当这些权重正交时乘积自行抵消，剩下的恰好等于该层的局部最优投影 $B_*^l c^l$。这条定理把"局部学习必然损失信息"的直觉打破，给后面所有改进提供了理论锚点——只要想办法逼近这些等价条件，local-SSL 就能逼近 BP。
 
-    - 功能：当网络层宽度递减时，改善 local-SSL 对 BP-SSL 梯度的近似质量
-    - 核心思路：将参考向量从同层活动 $c^l = z'^l$ 替换为顶层活动 $c^l = z'^L$（Theorem 3.3）。在半正交权重矩阵（行正交但维度递减）的线性网络中，可证明 $\|\frac{\partial \mathcal{L}_*^l}{\partial W^l} - \frac{\partial \mathbf{L}_*}{\partial W^l}\|_F^2 \geq \|\frac{\partial \mathcal{L}_{*,\text{fb}}^l}{\partial W^l} - \frac{\partial \mathbf{L}_*}{\partial W^l}\|_F^2$，即 DFB 版本与 BP-SSL 的差距更小
-    - 设计动机：实际网络层宽度通常递减，等宽正交条件被打破。DFB 通过直接使用顶层信号补偿了维度缩减导致的信息丢失，同时在生物学上对应大脑皮层中顶树突整合远距离高级脑区输入来调节突触可塑性的机制
+**2. 直接反馈机制（DFB）：用顶层信号补偿层宽递减。**
 
-3. **2D 空间依赖投影**:
+精确等价要求各层等宽且权重正交，但真实网络层宽通常递减，等宽条件被打破，近似随之变差。DFB 的修法是把局部损失里的参考向量从同层活动 $c^l = z'^l$ 换成顶层活动 $c^l = z'^L$。在行正交但维度递减的半正交线性网络里可以证明 $\|\frac{\partial \mathcal{L}_*^l}{\partial W^l} - \frac{\partial \mathbf{L}_*}{\partial W^l}\|_F^2 \geq \|\frac{\partial \mathcal{L}_{*,\text{fb}}^l}{\partial W^l} - \frac{\partial \mathbf{L}_*}{\partial W^l}\|_F^2$，即 DFB 版本离 BP 梯度更近。它本质上是用顶层的高级信号补回维度缩减丢掉的信息，而且这个"远距离反馈调节局部可塑性"在生物上正好对应皮层顶树突整合远端高级脑区输入来调控突触的机制。
 
-    - 功能：在卷积网络中让投影矩阵 $B^l$ 具有空间位置相关性，大幅提升 local-SSL 的 BP 近似质量
-    - 核心思路：原始 CLAPP 对特征图全局平均池化后计算损失 $\mathcal{L}^l = f(\text{pool}(z^l)^\top B^l \text{pool}(c^l))$，导致梯度在空间维度上共享。改进后使用分块池化 $\mathcal{L}^l = f(\text{flatten}(\text{pool}_{k_1}(z^l))^\top B^l \text{flatten}(\text{pool}_{k_2}(c^l)))$，使 $B^l$ 能学习不同空间位置之间的交叉依赖，梯度仅在 $k_1$ 大小的局部 patch 内共享
-    - 设计动机：BP-SSL 的梯度 $\partial \mathbf{L}/\partial z^l$ 在空间维度上是不共享的，全局平均池化丢失了这一空间结构信息。理论上（Proposition 3.5），当 $k_1 = k_2 = 1$ 时，2D 空间依赖的 local-SSL 可以精确计算 BP 梯度
+**3. 2D 空间依赖投影：还原 BP 梯度的空间结构。**
+
+原始 CLAPP 对特征图全局平均池化再算损失 $\mathcal{L}^l = f(\text{pool}(z^l)^\top B^l \text{pool}(c^l))$，结果梯度在整个空间维度上被强行共享；可 BP-SSL 的梯度 $\partial \mathbf{L}/\partial z^l$ 在空间上本就不共享，这一步丢掉了空间结构。改进改用分块池化 $\mathcal{L}^l = f(\text{flatten}(\text{pool}_{k_1}(z^l))^\top B^l \text{flatten}(\text{pool}_{k_2}(c^l)))$，让 $B^l$ 去学不同空间位置之间的交叉依赖，梯度只在 $k_1$ 大小的局部 patch 内共享。理论上（Proposition 3.5）当 $k_1 = k_2 = 1$ 时，2D 空间依赖的 local-SSL 能精确算出 BP 梯度——这也是实验里贡献最大的一项改进。
 
 ## 实验关键数据
 

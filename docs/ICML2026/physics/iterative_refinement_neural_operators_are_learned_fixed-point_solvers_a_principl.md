@@ -55,23 +55,21 @@ $\Phi_\theta$ 实例化为一个轻量 U-Net，但框架是 architecture-agnosti
 
 ### 关键设计
 
-1. **函数空间不动点迭代 + 跨算子可转移**:
+**1. 函数空间不动点迭代 + 跨算子可转移：把"重训才能更准"换成"多迭代就更准"。**
 
-    - 功能：把单次前向预测重新表述为一个收敛到唯一不动点的迭代过程，并允许同一个 $\Phi_\theta$ 修正不同 base operator 的输出。
-    - 核心思路：每一步迭代是 $h_{k+1}=T(h_k)=h_k+\alpha\Phi_\theta(x,h_k)$，参考 Banach 不动点定理。论文在解 $y$ 附近做一阶 Taylor 展开 $\Phi(x,h)=b(x)+A(x,h)e+R(x,h)$，其中 $e=y-h$ 是残差。若线性化 $A(x,y)$ 强单调（存在 $m,M$ 使 $\langle Ae,e\rangle\geq m\|e\|^2$ 且 $\|A\|_\text{op}\leq M$），那么选 $0<\alpha<2m/M^2$ 可以保证 $q=\|I-\alpha A\|_\text{op}<1$，于是 Theorem 3.1 给出误差递推 $\|e_{k+1}\|\leq q\|e_k\|+c\|e_k\|^2+\alpha\|b\|$，进而 Corollary 3.2 给出几何收敛 $\|e_k\|\lesssim q^k\|e_0\|$，Corollary 3.3 给出有偏情形下的极限误差下界 $\|e^*\|\leq \alpha\|b\|/(1-q)$。
-    - 设计动机：传统神经算子的"重训才能更准"被打破——精度提升和重训彻底解耦，推理时多跑几步就能进一步降误差，并且因为修正算子只学局部残差几何而非完整解映射，它可以无缝迁移到别的 base operator（甚至比 same-operator 配置更好，因为弱 base 训出来的 $\Phi$ 见过更大、更多样的残差结构）。
+传统神经算子要提精度只能加宽模型、堆数据、重训，本质是把整张解一次性回归出来的单体前向被逼到极限。IRNO 把预测重写成一个收敛到唯一不动点的迭代 $h_{k+1}=T(h_k)=h_k+\alpha\Phi_\theta(x,h_k)$，并用 Banach 不动点定理给出严格保证：在解 $y$ 附近做一阶 Taylor 展开 $\Phi(x,h)=b(x)+A(x,h)e+R(x,h)$（$e=y-h$ 是残差），只要线性化 $A(x,y)$ 强单调（存在 $m,M$ 使 $\langle Ae,e\rangle\ge m\|e\|^2$、$\|A\|_{\text{op}}\le M$），取 $0<\alpha<2m/M^2$ 就能保证压缩因子 $q=\|I-\alpha A\|_{\text{op}}<1$，于是误差按
 
-2. **多步轨迹监督 + 渐进式谱损失**:
+$$\|e_{k+1}\|\le q\|e_k\|+c\|e_k\|^2+\alpha\|b\|$$
 
-    - 功能：让 $\Phi_\theta$ 在每一步迭代都被显式监督，并强制它在不同迭代阶段聚焦不同频段的修正。
-    - 核心思路：训练时把整个 $K$ 步轨迹都端到端展开，加 trajectory supervision $\mathcal{L}_{\text{spatial}}=\frac{1}{K}\sum_k\|h_k-y\|^2$，防止网络中途偏离解流形又靠后几步硬拉回来。谱损失上，把目标和预测的 FFT 幅值差按频率加权 $\rho(\omega,\lambda_k)=1+(|\omega|/|\omega|_{\text{nyq}})^{\lambda_k}$，关键是指数 $\lambda_k$ 沿迭代步线性从 $\lambda_\text{start}$ 增大到 $\lambda_\text{end}$（实验里是 $1.0\to 2.0$），早期步专注粗结构，后期步在高频上加大惩罚——和经典 multigrid 的 V-cycle "从粗到细"思想一致。
-    - 设计动机：单纯空间 L2 loss 对高频完全不敏感（因为高频能量占总能量比例很小），固定权重的谱损失又会让早期迭代被高频噪声带偏；渐进式调度正好把训练动力学和推理时不动点动力学对齐——前几步动力大、修粗，后几步动力小、修细。
+递推（Thm. 3.1），几何收敛 $\|e_k\|\lesssim q^k\|e_0\|$（Cor. 3.2），极限误差下界 $\|e^*\|\le\alpha\|b\|/(1-q)$（Cor. 3.3）。这样精度提升和重训彻底解耦——推理时多跑几步即可降误差；更妙的是 $\Phi_\theta$ 学的只是局部残差几何而非完整解映射，能无缝迁移到别的 base operator，甚至比同算子配置更好（弱 base 训出来的 $\Phi$ 见过更大更杂的残差结构）。
 
-3. **不动点正则化压缩偏置误差**:
+**2. 多步轨迹监督 + 渐进式谱损失：让每一步迭代显式对准不同频段。**
 
-    - 功能：直接最小化 Theorem 3.1 里的 bias 项 $\|b\|=\|\Phi_\theta(x,y)\|$，从而压低 Corollary 3.3 给出的极限误差下界。
-    - 核心思路：加一项 $\mathcal{L}_{\text{fp}}=\|\Phi_\theta(x,y)\|^2$，要求当输入已经是真解 $y$ 时修正量必须为零。这显式把 $y$ 钉成学习动力系统的不动点，避免网络在已经收敛时反过来把状态推离真解。总损失是 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{spatial}}+\beta_{\text{spectral}}\mathcal{L}_{\text{spectral}}+\beta_{\text{fp}}\mathcal{L}_{\text{fp}}$。Figure 3 给出 Active Matter 和 TR-2D 上 $\min_k\|e_k\|$ 与 $\|b\|$ 的散点图，Pearson 相关系数都超过 0.93（$p\ll 10^{-10}$），实测验证 bias 越小、误差地板越低。
-    - 设计动机：经典固定点求解器需要保证"解就是不动点"，否则即便收敛也会停在错的地方；神经版本如果不加这一约束，$\Phi_\theta$ 会学到一个在 $y$ 处仍输出非零修正的退化解，导致即便初值完美，迭代也会先把状态推开。
+纯空间 L2 loss 对高频几乎无感（高频能量占比太小），固定权重的谱损失又会让早期迭代被高频噪声带偏，于是谱偏差迟迟修不掉。IRNO 训练时把整条 $K$ 步轨迹端到端展开，加轨迹监督 $\mathcal{L}_{\text{spatial}}=\frac1K\sum_k\|h_k-y\|^2$ 防止网络中途跑偏再硬拉回；谱损失则把目标与预测的 FFT 幅值差按频率加权 $\rho(\omega,\lambda_k)=1+(|\omega|/|\omega|_{\text{nyq}})^{\lambda_k}$，关键是指数 $\lambda_k$ 沿迭代步从 $\lambda_{\text{start}}$ 线性增到 $\lambda_{\text{end}}$（实验 $1.0\to2.0$）——早期步专注粗结构，后期步在高频上加大惩罚。这条调度把训练动力学和推理时的不动点动力学对齐（前几步动力大修粗、后几步动力小修细），和 multigrid V-cycle 的"从粗到细"同构；消融里固定 $\lambda$ 的各档高频比都明显更差。
+
+**3. 不动点正则化压缩偏置误差：把真解显式钉成动力系统的不动点。**
+
+Cor. 3.3 的极限误差下界正比于 bias 项 $\|b\|=\|\Phi_\theta(x,y)\|$，若不管它，$\Phi_\theta$ 会学到一个在真解 $y$ 处仍输出非零修正的退化解——即便初值完美，迭代也会先把状态推开。作者加一项 $\mathcal{L}_{\text{fp}}=\|\Phi_\theta(x,y)\|^2$，要求输入已是真解时修正量必须为零，把 $y$ 显式钉成不动点，从而直接压低误差地板。这个约束不是凭空加的：经典固定点求解器本就要求"解即不动点"，否则收敛了也停在错地方。Figure 3 在 Active Matter 和 TR-2D 上画 $\min_k\|e_k\|$ 与 $\|b\|$ 的散点，Pearson 相关系数都超 0.93（$p\ll10^{-10}$），实测验证 bias 越小、误差地板越低。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{spatial}}+\beta_{\text{spectral}}\mathcal{L}_{\text{spectral}}+\beta_{\text{fp}}\mathcal{L}_{\text{fp}}$。FNO base 用 $K=6$ 步轨迹训练，TFNO/WDSR base 用 $K=4$ 步；推理时分别评估到 $k=12$ 和 $k=8$（外推到 2× 训练步）。步长 $\alpha\in\{0.2, 0.25\}$ 实验最稳。Base operator 在所有训练里都冻结。

@@ -42,29 +42,27 @@ tags:
 
 ### 整体框架
 
-整个 pipeline 由三个阶段串成：(a) **MCLP 续写模型预训练**——以 Step-Audio-2 作初始化，在 300 万小时带转录语音上做"会话级"自回归训练，损失只算在 audio token 上，学到给定文本+前文语音去续写当前句子的能力；(b) **SFT 阶段**——基于 Step-Audio-2-mini-Base，在自建的 WenetSpeech-RP-TTS 上做多轮对话的有监督微调，让模型学会按场景描述 $\mathcal{S}$、角色档案 $\mathcal{P}$ 和历史 $\mathcal{H}_{<j}$ 生成第 $j$ 轮的 interleaved TA4 token 序列；(c) **GRPO 强化学习阶段**——只对最后一轮做 rollout，用一个 MCLP 风格奖励 + CER 内容惩罚 + 门控聚合的复合奖励驱动策略更新。
+本文要解决的是"角色扮演 TTS 只控风格不控音色、却没有客观风格度量"的困境，做法是先训一个会续写语音的大音频语言模型（LALM），把它对真值语音 token 的平均对数似然 MCLP 当成风格一致性的标尺，再把这把标尺接进 RL 当奖励。整条 pipeline 分三阶段：先以 Step-Audio-2 为初始化在 300 万小时带转录语音上做会话级自回归预训练得到 MCLP 续写模型（损失只算在 audio token 上，学会"给定文本+前文语音续写当前句"）；再基于 Step-Audio-2-mini-Base 在自建的 WenetSpeech-RP-TTS 上做多轮对话 SFT，让模型按场景描述 $\mathcal{S}$、角色档案 $\mathcal{P}$、历史 $\mathcal{H}_{<j}$ 生成第 $j$ 轮的 interleaved TA4 token 序列；最后用 GRPO 只对每段对话的最后一轮做强化学习，奖励由 MCLP 风格分、CER 内容惩罚和一道清晰度门控聚合而成。
 
-整个数据闭环建在 WenetSpeech 上：先按 "YouTube + drama" 标签筛出 17k 视频，下载到 8556 个，用 Demucs 去伴奏、pyannote 做说话人分离；再用 DeepSeek-R1 反推剧名/集数并基于全脚本生成角色档案 $\mathcal{P}$，用 Qwen-VL-7B 给每段场景生成环境描述 $\mathcal{S}$，5 秒静音切分场景、30 秒上限，最终留下 311k 场景 / 1435 小时，平均每场 7.3 句、涉及 2.33 位说话人；测试集严格做视频级 hold-out，留 200 视频 900 场景，按 2–10 轮分层抽样保证每个轮次 100 例。
+数据闭环全建在 WenetSpeech 上：先按 "YouTube + drama" 标签筛出 17k 视频、实际下载 8556 个，用 Demucs 去伴奏、pyannote 做说话人分离；再用 DeepSeek-R1 反推剧名/集数并基于全脚本生成角色档案 $\mathcal{P}$、用 Qwen-VL-7B 给每段场景生成环境描述 $\mathcal{S}$，按 5 秒静音切场景、30 秒封顶，最终留下 311k 场景 / 1435 小时，平均每场 7.3 句、涉及 2.33 位说话人；测试集做严格的视频级 hold-out，留 200 视频 900 场景，按 2–10 轮分层抽样保证每个轮次各 100 例。
 
 ### 关键设计
 
-1. **MCLP 度量的"双 transcript + 反向续写"上下文设计**:
+**1. MCLP 度量：用"双 transcript + 反向续写"把风格一致性变成一个似然标量**
 
-    - 功能：用预训练 LALM 的续写似然量化候选音频 $\mathbf{z}^{eval}$ 和真值音频 $\mathbf{z}^{gt}$ 之间的风格一致性。
-    - 核心思路：把上下文构造成 $\mathcal{H}=[\mathbf{w},\mathbf{z}^{eval},\mathbf{w}]$——同一段转录文本 $\mathbf{w}$ 出现两次，中间夹着候选音频；然后让 LALM 在这个 $\mathcal{H}$ 之后续写 $\mathbf{z}^{gt}$，定义 $\text{MCLP}=\frac{1}{|\mathbf{z}^{gt}_A|}\sum_{k\in \mathbf{z}^{gt}_A}\log P_\theta(z_k^{gt}\mid \mathcal{H},z_{<k}^{gt})$，只在 audio token 子集上取平均。
-    - 设计动机：重复 $\mathbf{w}$ 是为了在 teacher-forcing 下"钉住"文本内容，让续写似然的变化**只能来自风格信号**而非文本影响；选 Step-Audio-2 是因为它的 semantic speech tokenizer 主要保留语义和风格而非音色细节，这进一步把度量从"音色相似"偏置到"风格相似"；选用真值长度做归一化分母而不是反过来，是为了多个候选评估同一参考时长度对齐、公平可比；和情感分类奖励比，MCLP 给出一个**连续、密集、可解释**的标量，覆盖了情感、韵律、节奏等所有被预训练 LALM 编码的风格维度。
+痛点是风格连续、语境依赖、混杂韵律情绪，离散情感标签必然丢信息。作者押的假设是预训练 LALM 隐式学到了连续的语音风格隐空间，于是把上下文构造成 $\mathcal{H}=[\mathbf{w},\mathbf{z}^{eval},\mathbf{w}]$——同一段转录文本 $\mathbf{w}$ 出现两次、中间夹着候选音频 $\mathbf{z}^{eval}$，再让 LALM 在 $\mathcal{H}$ 之后去续写真值音频 $\mathbf{z}^{gt}$，把续写的平均对数似然定义为度量 $\text{MCLP}=\frac{1}{|\mathbf{z}^{gt}_A|}\sum_{k\in \mathbf{z}^{gt}_A}\log P_\theta(z_k^{gt}\mid \mathcal{H},z_{<k}^{gt})$，只在 audio token 子集 $\mathbf{z}^{gt}_A$ 上取平均。
 
-2. **门控 MCLP + CER 复合奖励防 Reward Hacking**:
+这套设计的每个细节都服务于"让似然变化只反映风格"：重复 $\mathbf{w}$ 是为了在 teacher-forcing 下钉死文本内容，使候选音频导致的似然变化只能来自风格而非文本；用 Step-Audio-2 是因为它的 semantic speech tokenizer 主要保留语义和风格、丢弃音色细节，进一步把度量从"音色相似"偏到"风格相似"；故意反过来"用候选当上下文续写真值"而非正向，是因为真值长度固定，多个候选评估同一参考时分母对齐、可公平比较。最终 MCLP 比情感分类奖励多给出一个连续、密集、可解释的标量，覆盖了情感、韵律、节奏等所有被 LALM 编码进似然的风格维度。
 
-    - 功能：在 GRPO 训练阶段同时优化表现力（MCLP）和清晰度（CER），用门控机制保证模型先学会"说人话"再去追求风格。
-    - 核心思路：风格分支 $R_{style}=\text{MCLP}(\mathbf{z}^{roll},\mathbf{z}^{gt})+C$，加偏置 $C=15$ 把 MCLP 平移到正区间；内容分支 $R_{content}=\lambda\cdot\text{CER}(\hat{\mathbf{w}},\mathbf{w})$，$\lambda=10$，用 Step-Audio Token2Wav 把 rollout 解成波形再过 ASR 得到 $\hat{\mathbf{w}}$；最终奖励是 $R(\mathbf{z})=R_{style}-R_{content}$ 当 $\text{CER}\le\tau=0.2$，否则直接置 0。
-    - 设计动机：作者通过消融观察到——只用 MCLP 奖励时 CER 会爆炸到 60%+（模型靠生成重复声学 pattern 刷分），只用 CER 时 MOS 跌到 2.33（平淡播报音）；门控等价于构造了一条**课程曲线**——必须先翻过清晰度门槛才能拿到风格分，自然避免了"表现力 gibberish"的退化路径，又让风格优化在清晰度满足之后还能持续生效。
+**2. 门控 MCLP + CER 复合奖励：先逼模型"说人话"再追风格，封死 reward hacking**
 
-3. **基于 GRPO 的最后一轮 RL 对齐**:
+单一奖励极易被 hack——只奖励风格会刷出听不懂的"鬼话"，只奖励清晰度会退化成平淡播报音。本文把奖励拆成两支并用硬门控聚合：风格分支 $R_{style}=\text{MCLP}(\mathbf{z}^{roll},\mathbf{z}^{gt})+C$ 加偏置 $C=15$ 把 MCLP 平移到正区间；内容分支 $R_{content}=\lambda\cdot\text{CER}(\hat{\mathbf{w}},\mathbf{w})$（$\lambda=10$），其中 $\hat{\mathbf{w}}$ 是把 rollout 用 Step-Audio Token2Wav 解码成波形、再过 ASR 转回的文本。最终奖励只在 $\text{CER}\le\tau=0.2$ 时取 $R(\mathbf{z})=R_{style}-R_{content}$，否则直接置 0。
 
-    - 功能：在 SFT 之后只对每个对话的最后一轮 token 做策略优化，利用相对优势归一化稳定训练。
-    - 核心思路：对每个 query $\mathbf{q}=(\mathcal{S},\mathcal{P},\mathcal{H})$ 采样 $G=8$ 个 rollout，用 group 内的均值方差归一化得到 $\hat{A}_i=(R_i-\text{mean})/\text{std}$；目标函数是带 clip 的 importance ratio $\rho_{i,t}$ 与 $\hat{A}_i$ 的乘积加上 token 级 KL 约束 $\beta\mathbb{D}_{KL}$（$\beta=0.001$）；从 16,186 个高质量场景（2–6 轮、末句 >10 中文字符、非 Neutral 风格）里采样，迭代 1000 步，32 张 H800。
-    - 设计动机：只对最后一轮做 RL 而历史保持真值，是为了避免误差累积污染上下文；GRPO 相比 PPO 不需要 critic 网络更省显存；KL 约束防止策略在风格奖励的诱惑下漂离 SFT 锚点；前面三条筛选规则共同保证 RL 批次里都是表现力提升空间大的样本，避免在情感平淡的句子上浪费 rollout 预算。
+这道门控本质是一条课程曲线：必须先翻过清晰度门槛才能拿到任何风格分，模型被迫先学会清晰发音再去优化表现力。消融正好印证——只给 MCLP 奖励 CER 会爆到 60%+（模型靠重复声学 pattern 刷分），只给 CER 奖励 MOS 跌到 2.33；唯有门控同时挡住"gibberish"退化路径、又让风格优化在清晰度达标后持续生效。
+
+**3. GRPO 末轮对齐：只优化最后一轮、用组内相对优势稳训练**
+
+为避免误差累积污染上下文，RL 阶段历史轮全部保持真值，只对每段对话的最后一轮 token 做策略优化。对每个 query $\mathbf{q}=(\mathcal{S},\mathcal{P},\mathcal{H})$ 采样 $G=8$ 个 rollout，用组内均值方差归一化得到相对优势 $\hat{A}_i=(R_i-\text{mean})/\text{std}$；目标函数是带 clip 的 importance ratio $\rho_{i,t}$ 乘 $\hat{A}_i$，再叠一项 token 级 KL 约束 $\beta\mathbb{D}_{KL}$（$\beta=0.001$）把策略锚在 SFT 附近、防止被风格奖励诱拐漂离。训练样本从 16,186 个高质量场景（2–6 轮、末句 >10 中文字符、非 Neutral 风格）采样——这三条筛选保证每个批次都是表现力提升空间大的句子，不在情感平淡的样本上浪费 rollout。相比 PPO，GRPO 不需要 critic 网络，在 32 张 H800 上迭代 1000 步更省显存。
 
 ### 损失函数 / 训练策略
 

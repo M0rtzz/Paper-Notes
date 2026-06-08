@@ -43,47 +43,25 @@ tags:
 
 ### 整体框架
 
-两阶段框架：
-1. **阶段一**：训练高斯去噪网络 $\mathcal{D}(\cdot; \boldsymbol{\theta})$，专门处理高斯噪声
-2. **阶段二**：冻结去噪网络，训练噪声翻译网络 $\mathcal{T}(\cdot; \boldsymbol{\phi})$，将任意真实噪声转换为高斯噪声
-
-推理流程：$\hat{I}_\mathcal{T} = \mathcal{D}(\mathcal{T}(I; \boldsymbol{\phi}); \boldsymbol{\theta}^*)$
+这篇论文的目标是让去噪器面对没见过的真实噪声也不掉链子，但它没有去训练一个"什么噪声都能去"的万能去噪器，而是反过来——先把陌生噪声"翻译"成一种早就擅长处理的噪声（高斯），再交给一个固定的高斯去噪器收尾。整个系统分两阶段串起来：先单独训练一个只懂高斯噪声的去噪网络 $\mathcal{D}(\cdot; \boldsymbol{\theta})$，然后把它冻住，再训练一个轻量的噪声翻译网络 $\mathcal{T}(\cdot; \boldsymbol{\phi})$，专门负责把任意真实噪声重塑成高斯噪声。推理时一张真实噪声图 $I$ 先过翻译网络、再过去噪网络，即 $\hat{I}_\mathcal{T} = \mathcal{D}(\mathcal{T}(I; \boldsymbol{\phi}); \boldsymbol{\theta}^*)$。这样分而治之的好处是：去噪器只需面对它训练时见过的高斯分布，泛化压力全部转移到了那个只有 0.29M 参数的翻译网络上。
 
 ### 关键设计
 
-1. **隐式噪声翻译损失 $\mathcal{L}_{\text{implicit}}$**：
+**1. 隐式翻译损失：用冻结去噪器的最终效果反推翻译目标。**
 
-    - 功能：端到端优化翻译 + 去噪的整体效果
-    - 核心思路：$\|\mathcal{D}(\mathcal{T}(I; \boldsymbol{\phi}); \boldsymbol{\theta}^*) - I_{\text{GT}}\|_1$
-    - 设计动机：不直接约束翻译后噪声的形态，而是通过冻结去噪器的性能反向要求翻译网络输出适合高斯去噪器的输入
+难点在于"翻译成高斯"这件事没有现成的监督信号——我们并不知道某张真实噪声图"应该"被翻译成什么样。作者的办法是绕开对中间噪声形态的直接约束，转而用最终去噪质量来间接逼它：把翻译输出送进冻结的去噪器，要求重建结果逼近干净图，即 $\mathcal{L}_{\text{implicit}} = \|\mathcal{D}(\mathcal{T}(I; \boldsymbol{\phi}); \boldsymbol{\theta}^*) - I_{\text{GT}}\|_1$。由于去噪器 $\boldsymbol{\theta}^*$ 只对高斯噪声拿手，这个损失变低就等价于翻译网络的输出越来越"像高斯"——监督信号是从下游性能里反向流出来的，不需要人为定义翻译目标。
 
-2. **显式噪声翻译损失 $\mathcal{L}_{\text{explicit}}$（两部分）**：
+**2. 显式翻译损失：从空间和频率两个维度把翻译噪声逼成真高斯。**
 
-    - **空间域匹配 $\mathcal{L}_{\text{spatial}}$**：用 1-Wasserstein 距离匹配翻译噪声 $n_\mathcal{T}$ 与高斯参考噪声 $n_\mathcal{G}$ 的一维分布
-        - 做法：将两者按通道展平排序，计算排序后元素的 L1 距离
-        - 确保翻译噪声在元素级别服从高斯分布
-    - **频域匹配 $\mathcal{L}_{\text{freq}}$**：用 1-Wasserstein 距离匹配两者傅里叶系数幅度的分布
-        - 数学基础：空间不相关的高斯噪声，其傅里叶系数幅度服从 Rayleigh 分布
-        - 做法：对翻译噪声和参考噪声分别做 FFT，匹配幅度分布
-        - 确保翻译噪声是空间不相关的（消除结构化噪声模式）
-    - 合并：$\mathcal{L}_{\text{explicit}} = \mathcal{L}_{\text{spatial}} + \beta \cdot \mathcal{L}_{\text{freq}}$
+光靠隐式损失，翻译网络可能找到一些"碰巧让去噪器满意"但并非真高斯的捷径，所以还得直接在分布层面约束。作者把翻译后的噪声 $n_\mathcal{T}$ 和一个高斯参考噪声 $n_\mathcal{G}$ 做两路 1-Wasserstein 距离匹配。空间域项 $\mathcal{L}_{\text{spatial}}$ 把两者按通道展平、排序后算排序元素的 L1 距离，这等价于一维 Wasserstein 距离，逼的是噪声在**元素级别**服从高斯分布。但元素级高斯还不够——真高斯噪声还得是空间不相关的，否则残留的结构化条纹（如拉链纹理）依然会骗过元素级检验。频域项 $\mathcal{L}_{\text{freq}}$ 正是补这一刀：它利用一条数学性质——空间不相关的高斯噪声，其傅里叶系数幅度服从 Rayleigh 分布——对 $n_\mathcal{T}$ 和 $n_\mathcal{G}$ 分别做 FFT 后匹配幅度分布，从而把空间相关性也压成高斯该有的样子。两项合成 $\mathcal{L}_{\text{explicit}} = \mathcal{L}_{\text{spatial}} + \beta \cdot \mathcal{L}_{\text{freq}}$，一个管"逐点像不像"，一个管"空间结构散不散"。
 
-3. **高斯注入块（Gaussian Injection Block, GIBlock）**：
+**3. 高斯注入块（GIBlock）：把高斯先验从网络内部一层层灌进去。**
 
-    - 功能：在 U-Net 的每层内部注入高斯噪声
-    - 核心思路：不在输入端添加（会扭曲信号），而在网络子模块内部逐步施加高斯先验
-    - 组成：NAFBlock + 高斯噪声注入 + 残差连接
-    - 消融验证：GIBlock 是翻译网络在推理时可靠地将未见噪声映射到高斯分布的关键
+一个自然的想法是直接在输入端给图加高斯噪声，但这会扭曲信号本身、把干净细节也淹掉。GIBlock 改成在翻译网络 U-Net 的**每一层内部**逐步施加高斯先验：每个块由 NAFBlock + 高斯噪声注入 + 残差连接组成，让网络在多个尺度上反复被"提醒"输出应当趋向高斯，而不是在入口处一次性破坏信号。消融显示，正是这个逐层注入的结构，让翻译网络在推理时面对从未见过的噪声仍能稳定地把它映射到高斯分布——去掉它，翻译的可靠性明显下降。
 
 ### 损失函数 / 训练策略
 
-总损失：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{implicit}} + \alpha \cdot \mathcal{L}_{\text{explicit}}$
-
-- $\alpha = 5 \times 10^{-2}$，$\beta = 2 \times 10^{-3}$
-- 高斯注入噪声水平 $\tilde{\sigma} = 100$
-- 去噪网络训练数据：BSD400 + WED（加高斯噪声 σ=15）+ SIDD
-- 翻译网络训练数据：仅 SIDD 真实 noisy-clean 对 + 随机高斯噪声 [0,15] 增强
-- 翻译网络基于轻量级 U-Net 架构
+总损失把上面三项串起来：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{implicit}} + \alpha \cdot \mathcal{L}_{\text{explicit}}$，权重取 $\alpha = 5 \times 10^{-2}$、显式损失内部 $\beta = 2 \times 10^{-3}$，GIBlock 注入的高斯噪声水平 $\tilde{\sigma} = 100$。两个网络分开训练：去噪网络用 BSD400 + WED（统一加 σ=15 的高斯噪声）外加 SIDD 训练，专攻高斯去噪；翻译网络只用 SIDD 的真实 noisy-clean 对、配合 [0,15] 随机高斯噪声增强来训练，骨干是轻量级 U-Net。值得注意的是翻译网络的训练数据只来自单一真实数据集 SIDD，却能泛化到 9 个 OOD 基准，说明它学到的是"如何把噪声塑成高斯"这件通用的事，而非记住某种特定噪声。
 
 ## 实验关键数据
 

@@ -41,30 +41,27 @@ SuperMeshNet 用两个互补 MPNN——主模型预测 LR→HR，辅助模型预
 ## 方法详解
 
 ### 整体框架
-数据集分两块：paired LR–HR 集 $\mathcal{D}_a=\{(u_l^q, u_h^q)\}_{q=1}^{N_h}$（小，$N_h \ll N$）+ unpaired LR 集 $\mathcal{D}_b=\{u_l^q\}_{q=N_h+1}^{N}$。每个 batch 取两个 paired LR 样本 $\alpha, \beta$ 与一个 unpaired LR 样本 $\gamma$。primary $F_\theta(u_l^q)=\hat{u}_h^q$ 仅用于 inference；auxiliary $G_\phi(u_l^r, u_l^s)=\hat{u}_h^{rs}$ 仅训练时用、预测的是 HR 差分。supervised 部分用 $\alpha,\beta$ 的真 HR 标签训练；unsupervised 部分把任意一个模型的预测加减 known HR 得伪标签，去训另一个模型。两模型共享 LR encoder 以节省成本，主模型基于 SRGNN，加 kNN-upsampler 与 latent-space upsampler 双路径融合。
+SuperMeshNet 要解决的是「HR 数据稀缺却又非要靠它监督」这个自相矛盾的局面，做法是把数据切成一小块 paired LR–HR 集 $\mathcal{D}_a=\{(u_l^q, u_h^q)\}_{q=1}^{N_h}$（$N_h \ll N$）和一大块 unpaired LR 集 $\mathcal{D}_b=\{u_l^q\}_{q=N_h+1}^{N}$，再让两个预测目标互不相同的 MPNN 在 unpaired 样本上互相造伪标签。其中 primary 模型 $F_\theta(u_l^q)=\hat{u}_h^q$ 学的是 LR→HR 这条 inter-resolution map、最终用于推理；auxiliary 模型 $G_\phi(u_l^r, u_l^s)=\hat{u}_h^{rs}$ 学的是「两个 LR 样本对应的 HR 解之差」、只在训练时充当互补监督源。两模型共享同一个 LR encoder 以省算力，主模型骨架是 SRGNN，并用 kNN-upsampler 与 latent-space upsampler 两条上采样路径融合。
 
 ### 关键设计
 
-1. **互补双模型 + 互监督（Complementary Learning）**:
+**1. 互补双模型互监督：让伪标签去相关而非塌缩**
 
-    - 功能：让两模型预测「不同但物理相关」的目标，彻底打破伪标签塌缩。
-    - 核心思路：监督 loss 为 $\mathcal{L}_{F,sup} = \ell(\hat{u}_h^\alpha, u_h^\alpha) + \ell(\hat{u}_h^\beta, u_h^\beta)$ 与 $\mathcal{L}_{G,sup} = \ell(\hat{u}_h^{\alpha\beta}, u_h^\alpha - \text{kNN}(u_h^\beta;P_h^\beta\to P_h^\alpha))$。无监督部分：$\mathcal{L}_{F,unsup}$ 把 $\hat{u}_h^{\gamma\alpha} + u_h^\alpha$ 作伪标签督导 $F_\theta(u_l^\gamma)$；$\mathcal{L}_{G,unsup}$ 把 $\hat{u}_h^\gamma - u_h^\alpha$ 作伪标签督导 $G_\phi(u_l^\gamma, u_l^\alpha)$。
-    - 设计动机：Mean Teacher / UCVME 用两个同构网络预测同一目标，伪标签收敛到相同 mode 后误差互相强化（confirmation bias）；而本文两模型的预测空间不同（HR 解 vs HR 差分），误差天然去相关，从物理上还提供了对参数敏感性的先验。
+经典半监督回归（Mean Teacher、UCVME）的痛点是两个同构网络预测同一目标，伪标签很快收敛到同一个 mode 后误差互相强化，即 confirmation bias。本文从物理上拆开这个耦合：两个 HR 解都受同一 PDE 支配、只是参数 $\mu$ 不同，于是它们的差分刻画了「系统对参数扰动的响应」，与「直接预测 HR」是正交的学习维度。监督端分别用 $\alpha,\beta$ 两个 paired 样本训练 $\mathcal{L}_{F,sup} = \ell(\hat{u}_h^\alpha, u_h^\alpha) + \ell(\hat{u}_h^\beta, u_h^\beta)$ 与 $\mathcal{L}_{G,sup} = \ell(\hat{u}_h^{\alpha\beta}, u_h^\alpha - \text{kNN}(u_h^\beta;P_h^\beta\to P_h^\alpha))$；无监督端则在 unpaired 样本 $\gamma$ 上让两模型互造伪标签——$\mathcal{L}_{F,unsup}$ 拿 $\hat{u}_h^{\gamma\alpha} + u_h^\alpha$（辅助模型的差分预测加上已知 HR）当伪标签督导 $F_\theta(u_l^\gamma)$，$\mathcal{L}_{G,unsup}$ 拿 $\hat{u}_h^\gamma - u_h^\alpha$（主模型预测减去已知 HR）当伪标签督导 $G_\phi(u_l^\gamma, u_l^\alpha)$。因为两条预测落在不同的空间（HR 解 vs HR 差分），误差天然去相关，还顺带注入了对参数敏感性的物理先验。
 
-2. **kNN 插值处理 mesh 不匹配**:
+**2. kNN 投影：让 HR 差分在两套不规则 mesh 上有定义**
 
-    - 功能：让「HR 差分」在两套不同 HR mesh 上仍有定义。
-    - 核心思路：不同 $\mu$ 对应的几何不同，$u_h^r$ 与 $u_h^s$ 节点位置 $P_h^r \ne P_h^s$，无法直接相减；用 kNN 距离加权把一方投到另一方的节点位置上 $\text{kNN}(u_h^s; P_h^s \to P_h^r)$，再做减法。所有 unsupervised loss 里出现的差分项都必须按方向做对应的 kNN 投影。
-    - 设计动机：mesh-based 仿真和 CNN/规则网格的最大差别就是结构不规则；kNN 插值是 PointNet 风格的轻量化、可微解决方案，避免学习额外的对齐网络。
+辅助模型要算 $u_h^r - u_h^s$，但不同参数 $\mu$ 对应的几何不同，两者的节点位置 $P_h^r \ne P_h^s$，根本无法逐点相减。本文用 kNN 距离加权把一方投到另一方的节点坐标上，写作 $\text{kNN}(u_h^s; P_h^s \to P_h^r)$ 后再做减法；上面所有 unsupervised loss 里的差分项都要按对应方向先做这步投影。之所以选 kNN 而非学一个对齐网络，是因为 mesh-based 仿真与 CNN/规则网格最大的区别就是结构天生不规则，kNN 插值是 PointNet 风格的可微、轻量方案，零额外参数。
 
-3. **MPNN 通用归纳偏置：node-level / message-level centering**:
+**3. node-level / message-level centering：一行代码的 MPNN 通用归纳偏置**
 
-    - 功能：MPNN-agnostic 的训练技巧，跨架构稳定提升超分性能。
-    - 核心思路：每个 MPNN 层在更新完 node embedding 后做 $x_i \leftarrow x_i - \frac{1}{n}\sum_i x_i$；对显式聚合 message 的架构（如 MGN）再做 $agg_i \leftarrow agg_i - \frac{1}{n}\sum_i agg_i$，相当于在中间表示里去除全局均值。
-    - 设计动机：作者认为超分主要依赖局部相对结构而非绝对均值；centering 可以平滑 loss landscape（类比 BN），但只在「不依赖全局均值」的任务里有益。消融显示，对 GCN/SAGE/GAT/GTR/GIN/MGN 六种架构 RMSE 均一致下降（如 MGN 0.0269→0.0226）。
+作者观察到超分主要依赖局部相对结构而非绝对均值，于是在每个 MPNN 层更新完 node embedding 后做一次去均值 $x_i \leftarrow x_i - \frac{1}{n}\sum_i x_i$；对显式聚合 message 的架构（如 MGN）再额外对聚合量做 $agg_i \leftarrow agg_i - \frac{1}{n}\sum_i agg_i$，相当于在中间表示里抹掉全局均值。这类似 BatchNorm 平滑 loss landscape，但只对「不依赖全局均值」的任务有益。它是 MPNN-agnostic 的：消融显示 GCN/SAGE/GAT/GTR/GIN/MGN 六种架构 RMSE 全部一致下降（MGN 从 0.0269 降到 0.0226）。
+
+### 一个完整示例
+取一个训练 batch，含两个 paired LR 样本 $\alpha,\beta$（HR 已知）和一个 unpaired LR 样本 $\gamma$（HR 未知）。第一步走监督：$F_\theta$ 分别预测 $\hat{u}_h^\alpha,\hat{u}_h^\beta$ 直接和真 HR 比；$G_\phi$ 预测 $\hat{u}_h^{\alpha\beta}$ 去拟合 $u_h^\alpha$ 与（kNN 投影后的）$u_h^\beta$ 之差。第二步走互监督：在 $\gamma$ 上，$G_\phi(u_l^\gamma,u_l^\alpha)$ 给出差分预测 $\hat{u}_h^{\gamma\alpha}$，加上已知的 $u_h^\alpha$ 就合成了 $\gamma$ 的 HR 伪标签去督导 $F_\theta(u_l^\gamma)$；反过来 $F_\theta(u_l^\gamma)$ 给出 $\hat{u}_h^\gamma$，减去 $u_h^\alpha$ 就合成了差分伪标签去督导 $G_\phi(u_l^\gamma,u_l^\alpha)$。一个 batch 内两模型各被真标签和对方造的伪标签同时拉一把，unpaired 样本因此被「免费」用上。
 
 ### 损失函数 / 训练策略
-总损失 $\mathcal{L}_F = \mathcal{L}_{F,sup} + \mathcal{L}_{F,unsup}$ 与 $\mathcal{L}_G = \mathcal{L}_{G,sup} + \mathcal{L}_{G,unsup}$，权重均为 1，未做调度。同时输出多个物理量（velocity + pressure）时换用加权 MSE：时间依赖 PDE 数据集 1 用 99:1，真实几何数据集用 $10^{-8}:1$，应对量级差异。Adam ($\text{lr}=10^{-3}$)，PyTorch AMP；硬件 i9-10920X + RTX A6000。
+总损失为 $\mathcal{L}_F = \mathcal{L}_{F,sup} + \mathcal{L}_{F,unsup}$ 与 $\mathcal{L}_G = \mathcal{L}_{G,sup} + \mathcal{L}_{G,unsup}$，两组权重均取 1、未做任何调度。当同时输出多个物理量（velocity + pressure）时改用加权 MSE 来抵消量级差异：时间依赖 PDE 数据集用 99:1，真实几何数据集用 $10^{-8}:1$。优化器 Adam（$\text{lr}=10^{-3}$）配 PyTorch AMP，硬件为 i9-10920X + RTX A6000。
 
 ## 实验关键数据
 

@@ -41,31 +41,35 @@ SPDMark 提出了一种基于选择性参数位移（SPD）的视频扩散模型
 ## 方法详解
 
 ### 整体框架
-SPDMark 的 pipeline：(1) 给定视频级密钥 $K_{base}$，通过密码学哈希函数为每帧生成唯一水印消息 $\kappa_t$；(2) 每个 $\kappa_t$ 映射为二进制 mask $\mathbf{b}(\kappa_t)$，选择解码器每层的一个 LoRA 基 shift；(3) 用位移后的解码器生成水印视频 $\tilde{\mathbf{x}}$；(4) 逐帧提取水印后，用最大二部图匹配和假设检验验证水印有效性并定位时序篡改。
+SPDMark 想做的事是：在视频扩散模型"生成"的那一刻就把水印写进去，而且让每一帧带不同的水印，从而既不损画质又能查出谁动过哪一帧。它的做法不是改像素、也不是改噪声，而是改解码器的参数——给定一个视频级密钥 $K_{base}$，先用密码学哈希为每帧派生一个唯一的水印消息 $\kappa_t$；每个 $\kappa_t$ 翻译成一个二进制 mask，决定解码器每一层从字典里挑哪个"基位移"；被挑中的基位移叠加到原参数上，用这个被微调过的解码器生成出来的视频 $\tilde{\mathbf{x}}$ 就自带逐帧水印。提取端用一个 ResNet-50 逐帧读出消息，再把读出的消息序列和参考序列做二部图匹配 + 假设检验，既验证水印是否成立，又能指出哪几帧被删/换/插。
 
 ### 关键设计
 
-1. **选择性参数位移框架（Selective Parameter Displacement）**:
+**1. 选择性参数位移：把"嵌哪个水印"变成"每层挑哪个基位移"。**
 
-    - 功能：将水印密钥编码为生成模型的参数位移
-    - 核心思路：将生成模型参数分为不修改部分 $\Phi_U$ 和待修改部分 $\Phi_M$（仅解码器）。$\Phi_M$ 跨 $L$ 层，每层有 $P$ 个基 shift $\zeta_{\ell,p}$，位移为 $\Delta\phi_\ell = \sum_{p=1}^P b_{\ell,p} \zeta_{\ell,p}$。密钥到 mask 的映射：将 $M = L\log_2 P$ 位密钥分为 $L$ 个 chunk，每个 chunk 的十进制值决定选择该层哪个基 shift。实际上每层只选一个基 shift，位移 $\Delta\Phi_M(\kappa) = [\zeta_{1,i_1+1}, \ldots, \zeta_{L,i_L+1}]^T$。
-    - 设计动机：全参数位移空间太大不可学习，通过分解为层级基 shift 的选择问题大幅降低搜索空间。用固定字典支持任意密钥而无需逐密钥重训。
+直接学一个"密钥→参数位移"的映射不现实——解码器参数动辄上亿维，位移空间太大根本学不动，而且每换一个密钥就要重训一遍。SPDMark 把这个问题拆小：先把参数分成不动的 $\Phi_U$ 和可动的 $\Phi_M$（只动解码器），让 $\Phi_M$ 横跨 $L$ 层、每层预先准备好 $P$ 个候选基位移 $\zeta_{\ell,p}$。这样某层的实际位移就是 $\Delta\phi_\ell = \sum_{p=1}^P b_{\ell,p}\,\zeta_{\ell,p}$，而 mask $b_{\ell,p}$ 由密钥决定。具体地，把 $M = L\log_2 P$ 位的密钥切成 $L$ 个 chunk，第 $\ell$ 个 chunk 的十进制值就是该层选第几个基位移——实际每层只选一个，于是整个位移塌缩成一次纯选择：
 
-2. **基于 LoRA 的参数高效实现**:
+$$\Delta\Phi_M(\kappa) = [\zeta_{1,i_1+1},\ \ldots,\ \zeta_{L,i_L+1}]^{T}$$
 
-    - 功能：参数高效地实现基 shift
-    - 核心思路：每个基 shift $\zeta_{\ell,p} = A_{\ell,p} B_{\ell,p}$，其中 $A \in \mathbb{R}^{d \times r}, B \in \mathbb{R}^{r \times d}, r \ll d$（论文中 $r=32$）。位移后的层输出为 $\mathbf{h}_\ell = \mathcal{F}_{\phi_\ell}(\mathbf{h}_{\ell-1}) + \alpha \mathcal{F}_{\Delta\phi_\ell}(\mathbf{h}_{\ell-1})$。具体应用于解码器的 $L=14$ 个空间 ResNet 块，每块 $P=4$ 个 LoRA，共 $\log_2 4 = 2$ bit/层，每帧 payload 为 28 bit。
-    - 设计动机：直接学习全秩 shift 参数量太大，LoRA 低秩分解既保证表达力又极大降低参数，使方案可部署在大模型上。
+这样做的好处是字典 $\{\zeta_{\ell,p}\}$ 训练一次就固定，之后任意新密钥都只是从字典里换一种组合，完全不用重训；同时把"学一个连续高维位移"降成了"在每层 $P$ 个离散候选里挑一个"，搜索空间小得多也好学得多。
 
-3. **逐帧水印与时序篡改检测**:
+**2. 用 LoRA 实现基位移：让字典轻到能挂在大模型上。**
 
-    - 功能：嵌入帧级唯一水印消息，支持帧级篡改定位
-    - 核心思路：用 HMAC-SHA256 从基密钥和帧号生成帧级消息 $\kappa_t = \text{Trunc}_M(\mathcal{H}(K_{base}, t))$。提取时用 ResNet-50 逐帧提取 28 维 logits。验证时构建参考消息 $\mathbf{K}$ 和提取消息 $\hat{\mathbf{K}}$ 的二部图，边权重为 Hamming 相似度 $\bar{S}_{m,n} = 1 - \psi(\kappa_m, \hat{\kappa}_n)/M$，用 Hungarian 算法做最大权重匹配。然后通过二项分布假设检验（帧级阈值 $\tau_f$ 和视频级阈值 $\tau_v$）判断水印有效性。未匹配帧就是被篡改的帧。
-    - 设计动机：逐帧唯一消息使得帧级别的删除、交换、插入都能通过匹配失败被检测到，这是此前仅嵌入单一签名的方法做不到的。
+上一步假设每层有 $P$ 个候选位移可选，但如果每个 $\zeta_{\ell,p}$ 都是全秩矩阵，光字典本身就比原模型还大，根本部署不了。SPDMark 把每个基位移写成低秩分解 $\zeta_{\ell,p} = A_{\ell,p} B_{\ell,p}$，其中 $A \in \mathbb{R}^{d\times r}$、$B \in \mathbb{R}^{r\times d}$、$r \ll d$（论文取 $r=32$），也就是给每个候选位移配一对 LoRA 矩阵。被选中的层这样前向：
+
+$$\mathbf{h}_\ell = \mathcal{F}_{\phi_\ell}(\mathbf{h}_{\ell-1}) + \alpha\,\mathcal{F}_{\Delta\phi_\ell}(\mathbf{h}_{\ell-1})$$
+
+落到实现上，水印只挂在解码器的 $L=14$ 个空间 ResNet 块、每块备 $P=4$ 个 LoRA，于是每层携带 $\log_2 4 = 2$ bit、整帧 payload 是 $14\times 2 = 28$ bit。低秩分解既保住了位移的表达力，又把字典体积压到可以忽略，这是整套方案"零额外推理开销"的关键——生成时只是多算一个低秩旁路。
+
+**3. 逐帧水印 + 二部图匹配：让时序篡改无处可藏。**
+
+此前的内嵌水印（如 VidSig）整段视频只埋一个固定签名，攻击者删几帧、换帧序、插入伪造帧，签名依旧能被读出来，时序层面的篡改完全测不到。SPDMark 让每帧的消息都不同：用 HMAC-SHA256 从基密钥和帧号派生 $\kappa_t = \text{Trunc}_M(\mathcal{H}(K_{base}, t))$，帧号一变消息就变，且无密钥不可预测。验证时把参考消息序列 $\mathbf{K}$ 和逐帧提取出的消息 $\hat{\mathbf{K}}$ 摆成一张二部图，边权用 Hamming 相似度 $\bar{S}_{m,n} = 1 - \psi(\kappa_m, \hat{\kappa}_n)/M$ 衡量"第 $m$ 帧参考"和"第 $n$ 帧提取"有多像，再用 Hungarian 算法求最大权匹配，最后用二项分布假设检验（帧级阈值 $\tau_f$、视频级阈值 $\tau_v$）判断匹配是否够强。匹配上的帧确认水印有效，匹配不上的帧就是被改动的帧——删除、交换、插入都会让对应位置匹配失败，于是篡改既被检测又被定位。
+
+### 一个完整示例
+拿一段 25 帧的生成视频走一遍：从视频密钥 $K_{base}$ 出发，第 0 帧得到 $\kappa_0 = \text{HMAC}(K_{base}, 0)$ 截断成 28 bit，比如切成 14 个 chunk、每个 chunk 2 bit；第 5 个 chunk 若是 `10`（十进制 2），就让解码器第 5 层选用第 3 个 LoRA 基位移 $\zeta_{5,3}$。14 层各自按自己的 chunk 选好基位移，叠到解码器上生成第 0 帧；第 1 帧换 $\kappa_1$、重选一组基位移……25 帧各带一份 28 bit 的独立水印。提取时 ResNet-50 逐帧读出 28 维 logits 还原消息，得到 25 条提取序列，和 25 条参考序列做二部图匹配。若攻击者把第 10 帧删掉，参考里的第 10 条消息在提取侧找不到高相似度对象，Hungarian 匹配在这一位留空，假设检验判定该帧丢失——这就完成了"第 10 帧被删"的定位。
 
 ### 损失函数 / 训练策略
-
-总损失 $\min_{\zeta,\eta} \mathcal{L}_{imp}(\mathbf{x}, \tilde{\mathbf{x}}) + \mathcal{L}_{rec}(\mathcal{V}_\eta(\tilde{\mathbf{x}}), \kappa)$。消息恢复损失用 BCElogits；不可感知性损失 $\mathcal{L}_{imp} = \lambda_{ps} \mathbb{E}_t[\text{LPIPS}(x_t, \tilde{x}_t)] + \lambda_{tc} \mathbb{E}_t[\|\delta y_t - \delta \tilde{y}_t\|_1]$，其中 LPIPS 保证感知相似度，时序一致性损失（亮度差的 L1）防止闪烁。训练在 OpenVid-1M 的 10000 个视频上进行，对 $\kappa, \mathbf{c}, \mathbf{z}$ 取期望优化。提取器用 ResNet-50（ImageNet 预训练），推理时对测试视频的所有帧做 batch normalization 以稳定预测。
+总目标同时压不可感知损失和消息恢复损失：$\min_{\zeta,\eta}\ \mathcal{L}_{imp}(\mathbf{x}, \tilde{\mathbf{x}}) + \mathcal{L}_{rec}(\mathcal{V}_\eta(\tilde{\mathbf{x}}), \kappa)$。消息恢复用 BCElogits 督促提取器读对每一 bit；不可感知损失 $\mathcal{L}_{imp} = \lambda_{ps}\,\mathbb{E}_t[\text{LPIPS}(x_t, \tilde{x}_t)] + \lambda_{tc}\,\mathbb{E}_t[\|\delta y_t - \delta \tilde{y}_t\|_1]$ 由两项组成——LPIPS 保证每帧和无水印版本在感知上几乎一致，时序一致性项（相邻帧亮度差的 L1）压住逐帧水印可能引入的闪烁。训练在 OpenVid-1M 的 1 万段视频上，对密钥 $\kappa$、条件 $\mathbf{c}$、噪声 $\mathbf{z}$ 取期望优化。提取器用 ImageNet 预训练的 ResNet-50，推理时对测试视频全部帧做一次 batch normalization 以稳住预测。
 
 ## 实验关键数据
 

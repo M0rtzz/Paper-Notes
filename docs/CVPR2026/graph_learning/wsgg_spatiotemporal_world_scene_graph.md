@@ -43,31 +43,29 @@ tags:
 
 ### 整体框架
 
-输入单目视频 $V_1^T = \{I^t\}_{t=1}^T$，输出每时刻的世界场景图 $\mathcal{G}_{\mathcal{W}}^t$。世界状态 $\mathcal{W}^t = \mathcal{O}^t \cup \mathcal{U}^t$ 分为可见集和不可见集。所有物体用 3D OBB $\mathbf{b}_k^t \in \mathbb{R}^{8 \times 3}$ 定位，关系覆盖 attention（3类）、spatial（6类）、contacting（17类）三轴。方法共享 Global Structural Encoder + Spatial GNN + Relationship Predictor，区别在于如何处理不可见物体的特征。
+这篇论文要把视频场景图从"只画当前帧里看得见的物体"升级到"在统一世界坐标系下追踪所有物体（含被遮挡/离开画面的）"。输入单目视频 $V_1^T = \{I^t\}_{t=1}^T$，逐时刻输出世界场景图 $\mathcal{G}_{\mathcal{W}}^t$；世界状态 $\mathcal{W}^t = \mathcal{O}^t \cup \mathcal{U}^t$ 显式拆成可见集 $\mathcal{O}^t$ 与不可见集 $\mathcal{U}^t$，每个物体都用 3D OBB $\mathbf{b}_k^t \in \mathbb{R}^{8 \times 3}$ 锚定位置，关系则横跨 attention（3 类）、spatial（6 类）、contacting（17 类）三个轴。三种方法共用同一套 Global Structural Encoder + Spatial GNN + Relationship Predictor，真正的分歧只在一处——**不可见物体的特征怎么来**，论文借此把"如何实现物体恒存"切成三种递进的归纳偏置来对比。
 
 ### 关键设计
 
-1. **PWG (Persistent World Graph)**:
+**1. PWG：用最后已知状态缓冲，实现最朴素的物体恒存**
 
-    - 功能：通过 Last-Known-State 缓冲区实现最简物体恒存性
-    - 核心思路：维护非可微缓冲区，可见时更新 DINO 特征 $\mathbf{f}_n^{(t)}$，不可见时冻结为最后可见帧的特征。记录"过期度" $\Delta_n^{(t)} = |t - \tau^*|$，拼接后送入 Spatial GNN。Token 为 $\mathbf{x}_n^{(t)} = \text{Proj}([\mathbf{g}_n \| \mathbf{m}_n \| \mathbf{c}_n \| \log(\Delta_n + 1)])$
-    - 设计动机：最直接实现物体不消失的方案，但缓冲区不可微且特征随时间退化
+针对帧级方法"物体一旦离开画面就从图里凭空消失"的痛点，PWG 维护一个非可微的 Last-Known-State 缓冲区：物体可见时实时刷新它的 DINO 特征 $\mathbf{f}_n^{(t)}$，一旦不可见就把特征冻结在最后一次可见帧的状态。为了让下游意识到这份特征已经有多"过期"，缓冲区同步记录过期度 $\Delta_n^{(t)} = |t - \tau^*|$（$\tau^*$ 是最后可见时刻），并把几何、运动、上下文连同过期度一起拼成 token 送进 Spatial GNN：
 
-2. **MWAE (Masked World Auto-Encoder)**:
+$$\mathbf{x}_n^{(t)} = \text{Proj}([\mathbf{g}_n \,\|\, \mathbf{m}_n \,\|\, \mathbf{c}_n \,\|\, \log(\Delta_n + 1)])$$
 
-    - 功能：将遮挡/不可见视为自然掩码，通过关联检索重建不可见物体表征
-    - 核心思路：对不可见物体的视觉流做掩码，使用非对称交叉注意力（所有 token 查询仅可见 token）的 Associative Retriever 重建缺失特征。训练通过模拟遮挡 + 跨视图重建学习
-    - 设计动机：受 MAE 启发，遮挡推理本质是掩码补全问题，3D 几何先验提供完整结构支撑
+这是让物体"不消失"的最直接路线，代价也很明确：缓冲区不可微无法端到端优化，且冻结特征随时间只会越用越失真。
 
-3. **4DST (4D Scene Transformer)**:
+**2. MWAE：把遮挡当成天然掩码，用关联检索补回缺失表征**
 
-    - 功能：用可微分时序 Transformer 替代静态缓冲区做端到端时空推理
-    - 核心思路：多模态 token（视觉、结构、运动、相机）融合到 Fusion Node，无掩码双向时序自注意力处理所有物体 token，再接 Spatial GNN 输出全局感知表征 $\mathbf{H}^{(t)}$
-    - 设计动机：PWG 缓冲区不可微且信息退化，4DST 通过全视频联合注意力自动学会利用历史信息推理不可见物体
+PWG 只是冻结旧特征，并没有真正"推断"物体此刻被挡住时的样子。MWAE 借鉴 MAE 的视角，把遮挡/不可见直接当作一种自然掩码：对不可见物体的视觉流打掩码，再用一个 Associative Retriever 通过非对称交叉注意力（所有 token 只能去查询可见 token）重建缺失特征；训练时人为模拟遮挡并配合跨视图重建，逼模型学会从可见上下文与 3D 几何先验里把被挡住的物体"补"出来。如此一来遮挡推理被显式建模成掩码补全问题，而完整的 3D 结构恰好为补全提供了骨架支撑。
+
+**3. 4DST：用可微时序 Transformer 取代静态缓冲，端到端学会调用历史**
+
+前两者要么靠不可微缓冲、要么靠人工模拟掩码，信息始终在退化。4DST 干脆用一个可微的时序 Transformer 接管整个推理：视觉、结构、运动、相机四路多模态 token 先汇聚到一个 Fusion Node，再经无掩码的双向时序自注意力在整段视频范围内联合处理所有物体 token（不区分可见与否），最后接 Spatial GNN 输出全局感知表征 $\mathbf{H}^{(t)}$。由于注意力跨越全视频且端到端可训，模型能自动学会调取某物体过去可见时的信息去推断它当前不可见状态下的关系——这也是它在不可见物体上比 PWG 高出近 6 个点 R@20 的根源。
 
 ### 损失函数 / 训练策略
 
-三方法共享损失：attention 用交叉熵，spatial/contacting 用二元交叉熵（多标签），节点分类用交叉熵。数据集 ActionGenome4D 通过 π³ 重建 + GDINO 检测 + SAM2 分割 + VLM 伪标注 + 人工修正构建。
+三种方法共享同一组损失：attention 轴用交叉熵，spatial 与 contacting 轴因是多标签用二元交叉熵，节点分类用交叉熵。配套的 ActionGenome4D 数据集由 π³ 重建 + GDINO 检测 + SAM2 分割 + VLM 伪标注 + 人工修正这条流水线构建。
 
 ## 实验关键数据
 
@@ -116,100 +114,6 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 数据集 + 方法对比 + 消融完整
 - 写作质量: ⭐⭐⭐⭐ 形式化严谨，结构清晰
 - 价值: ⭐⭐⭐⭐ 为具身智能场景理解提供新范式
----
-title: >-
-  [论文解读] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos
-description: >-
-  [CVPR 2026][3D视觉][world scene graph] 提出世界场景图生成(WSGG)任务——从单目视频构建包含被遮挡物体的时空场景图，构建ActionGenome4D数据集，设计PWG/MWAE/4DST三种方法，4DST以时间Transformer取得最佳R@10 66.40%。
-tags:
-  - CVPR 2026
-  - 3D视觉
-  - world scene graph
-  - spatio-temporal
-  - object permanence
-  - 4D reconstruction
-  - 视频理解
----
-
-# Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos
-
-**会议**: CVPR 2026  
-**arXiv**: [2603.13185](https://arxiv.org/abs/2603.13185)  
-**代码**: [https://github.com/rohithpeddi/WorldSGG](https://github.com/rohithpeddi/WorldSGG)  
-**领域**: 3D视觉 / 场景理解  
-**关键词**: world scene graph, spatio-temporal, object permanence, 4D reconstruction, video understanding
-
-## 一句话总结
-提出世界场景图生成（WSGG）任务——从单目视频生成以世界坐标系为锚定的时空场景图（包含被遮挡/不可见物体），构建 ActionGenome4D 数据集，并设计 PWG/MWAE/4DST 三种互补方法探索不同归纳偏置，4DST 用时间 Transformer 取得最佳 R@10 66.40%。
-
-## 研究背景与动机
-现有视频场景图生成范式是"帧中心"的：仅推理当前可见物体，物体离开视野即从图中消失，无法在 3D 世界坐标系中维持持久性。这与具身智能的需求根本矛盾——机器人必须理解物体即使暂时不可见仍然存在（物体持久性）。实现世界级场景理解需要三个能力：(1) 所有对象在共同世界坐标系中的 3D 定位；(2) 跨帧的时间一致性物体跟踪；(3) 包括不可见物体在内的稠密语义标注。现有数据集和基准均不同时具备这三项。
-
-## 方法详解
-
-### 整体框架
-系统包含数据集构建和方法设计两部分。数据集通过 π³ 3D 重建 + GDINO 检测 + SAM2 分割 + VLM 伪标注管线将 Action Genome 升级为 4D 场景表示。方法部分在共享的全局结构编码器（空间 GNN + 时间边注意力 + 相机位姿编码）基础上，探索三种不同的不可见物体推理策略。
-
-### 关键设计
-1. **ActionGenome4D 数据集**：从 Action Genome 视频出发，(a) 用 π³ 做逐帧 3D 重建获取点云和相机位姿；(b) 用 GDINO 检测 + 双模式 SAM2 分割 + 地面对齐 OBB 拟合得到世界坐标系 3D 有向边界框；(c) 用 RAG-based VLM 管线 + 判别性验证 + 人工修正为不可见物体生成稠密关系伪标注
-2. **PWG（Persistent World Graph）**：实现物体持久性的零阶方案——维护一个记忆缓冲区，保留每个物体最后被观察时的视觉特征，当物体离开视野后仍能用缓冲特征预测关系。简单但有效的基线
-3. **4DST（4D Scene Transformer）**：用可微分的逐物体时间注意力替代静态缓冲，跨整个视频联合注意已观察和未观察物体 token，并融入 3D 运动和相机位姿特征。在三种方法中性能最优
-
-### 损失函数 / 训练策略
-关系预测使用标准交叉熵损失；3D 边界框回归使用 L1 损失 + 3D IoU 损失。训练在 PredCls（已知标签和框）和 SGDet（完全检测）两个设定下评估。视觉特征使用 DINOv2-Large 提取。
-
-## 实验关键数据
-
-### 主实验
-
-ActionGenome4D 上的关系预测（PredCls, DINOv2-L）：
-
-| 方法 | R@10 | R@20 | R@50 | 推理策略 |
-|------|------|------|------|---------|
-| PWG | 65.07% | 67.99% | 68.00% | 零阶特征缓冲 |
-| MWAE | 65.33% | 68.30% | 68.31% | 掩码补全 + 关联检索 |
-| **4DST** | **66.40%** | **69.15%** | **69.16%** | 时间 Transformer |
-
-### 消融实验
-
-| 组件消融 | R@10 | 变化 |
-|---------|------|------|
-| 4DST (完整) | 66.40% | - |
-| 去除 3D 运动特征 | 64.82% | -1.58% |
-| 去除相机位姿编码 | 65.11% | -1.29% |
-| 去除时间注意力（退化为 PWG） | 65.07% | -1.33% |
-| 仅用可见物体（无 WSGG） | 58.23% | -8.17% |
-
-不可见物体的纳入（WSGG vs 传统 SGG）贡献了最大的性能提升（+8.17%），证实了任务定义的价值。
-
-### 关键发现
-- 三种方法差距不大（R@10: 65-66%），说明当前瓶颈可能在特征表示而非推理策略
-- 时间 Transformer（4DST）优于静态缓冲（PWG）和掩码补全（MWAE），可微分时序建模更有效
-- VLM 在无定位 WSGG 上的 Graph RAG 评估表明，当前 VLM 难以推理不可见物体关系
-
-## 亮点与洞察
-- **物体持久性是场景理解的新范式**：不是帧级检测，而是维护世界中所有对象的持续状态
-- 3D 几何脚手架的价值：即使暂时看不到，世界坐标系中的 3D 重建让模型知道对象在哪里
-- 三种方法提供不同视角的消融：缓冲 vs 补全 vs 注意力，为后续研究提供清晰的设计空间
-
-## 局限与展望
-- 数据集构建依赖 3D 重建质量（π³），重建失败会影响标注准确性
-- 评估指标沿用 2D 场景图的 R@K，可能不完全适合 3D 世界场景图
-- 仅处理静态场景中的动态对象，未考虑场景本身的变化（如门打开/关闭）
-- VLM 伪标签可能引入系统性偏差，人工修正覆盖范围有限
-- 三种方法差距不大说明任务本身还有很大提升空间
-
-## 相关工作与启发
-- **vs ActionGenome**：帧级场景图不维护世界坐标和物体持久性，WSGG 是其世界级扩展
-- **vs 3D Scene Graph (3DSSG 等)**：静态 3D 场景图不处理时间维度，WSGG 加入了时序和不可见物体推理
-- **vs 4D SGG (SceneSayer 等)**：4D SGG 仅处理可见物体的时序关系，WSGG 扩展到不可见物体
-- 对具身智能（导航、操作、规划）有重要参考价值——世界模型的结构化表示
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐⭐ 世界场景图是全新的任务定义，填补了视频理解的重要空白
-- 实验充分度: ⭐⭐⭐⭐ 三种方法对比 + 消融 + VLM 评估，但仅一个数据集
-- 写作质量: ⭐⭐⭐⭐ 任务定义清晰，三种方法的对比设计合理
-- 价值: ⭐⭐⭐⭐⭐ 对具身智能有重要意义，数据集和任务定义将推动后续研究
 
 <!-- RELATED:START -->
 

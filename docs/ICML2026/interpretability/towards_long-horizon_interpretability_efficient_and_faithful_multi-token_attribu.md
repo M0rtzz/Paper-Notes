@@ -43,39 +43,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一段完整 context $\mathbf{S}=\mathbf{I}\circ\mathbf{T}\circ\mathbf{O}$（用户输入 + 模型生成的推理 + 模型最终输出），要解释的目标是输出 span $\mathbf{O}$。
-
-输出：每个 context token 对 $\mathbf{O}$ 的重要性分数 $\mathbf{w}_{final}$，按预期能精准定位回原始输入 $\mathbf{I}$ 里真正决定答案的几个 token。
-
-中间流程：
-1. **Hop 0**：把 $\mathbf{O}$ 作为目标 span，用 span-wise 聚合一次过算出 context 上的归因分布 $\mathbf{w}^{(0)}$，得到落在输入的部分 $\mathbf{w}_{\mathbf{I}}^{(0)}$ 和落在推理 token 的部分 $\mathbf{w}_{\mathbf{T}}^{(0)}$。
-2. **Hop $k\ge 1$**：把 $\mathbf{w}_{\mathbf{T}}^{(k-1)}$ 当作推理 token 的权重，构造加权目标 span，再做一次 span-wise 聚合，得到新的 $\mathbf{w}^{(k)}$。
-3. **聚合**：按"信息流"语义把所有 hop 的输入部分按"剩余 mass"折算后相加，得到最终 $\mathbf{w}_{final}$。实验里 $K=1$ 已经够用。
-
-底层度量复用 ALTI 的 L1 proximity：$\text{Proximity}(\mathbf{z},\mathbf{y}) = \max(0, -\|\mathbf{y}-\mathbf{z}\|_1 + \|\mathbf{y}\|_1)$，衡量"去掉贡献 $\mathbf{z}$ 后目标向量 $\mathbf{y}$ 的范数会缩多少"。这个度量在 Transformer 高维各向异性空间里比 cosine 稳。
+FlashTrace 要解释的目标是模型最终输出 span $\mathbf{O}$，输入是一段完整 context $\mathbf{S}=\mathbf{I}\circ\mathbf{T}\circ\mathbf{O}$（用户输入 + 推理链 + 输出），最终给出每个 context token 对 $\mathbf{O}$ 的重要性分数 $\mathbf{w}_{final}$，理想情况下能把分数精准聚回原始输入 $\mathbf{I}$ 里真正决定答案的那几个 token。它把这件事拆成两层：先用 span-wise 聚合在一次前向里算完整段 $\mathbf{O}$ 的归因（Hop 0），拿到落在输入的 $\mathbf{w}_{\mathbf{I}}^{(0)}$ 和被推理 token 吸走的 $\mathbf{w}_{\mathbf{T}}^{(0)}$；再把 $\mathbf{w}_{\mathbf{T}}^{(k-1)}$ 当成下一跳的加权目标递归地重做归因（Hop $k\ge 1$），让 mass 沿 $\mathbf{O}\to\mathbf{T}\to\mathbf{I}$ 继续往输入流；最后按"剩余 mass"折算把各跳的输入分量合成单一分布。所有归因共用 ALTI 的 L1 proximity 度量 $\text{Proximity}(\mathbf{z},\mathbf{y}) = \max(0, -\|\mathbf{y}-\mathbf{z}\|_1 + \|\mathbf{y}\|_1)$（衡量"去掉贡献 $\mathbf{z}$ 后目标向量 $\mathbf{y}$ 的范数会缩多少"，在 Transformer 高维各向异性空间里比 cosine 稳），实验里 $K=1$ 一跳即够用。
 
 ### 关键设计
 
-1. **Span-wise Aggregation（一次过算整段 span 的归因）**:
+**1. Span-wise Aggregation：把整段 span 的归因压成一次前向**
 
-    - 功能：把"$M$ 个目标 token 各跑一次归因"压成"对整段 span 跑一次"，复杂度 $\mathcal{O}(M\cdot N)\to\mathcal{O}(N)$。
-    - 核心思路：先把整段目标的层级表示求和为 $\mathbf{Y}_S=\sum_{i\in S}\mathbf{y}_i$，再把源 token $j$ 对整段的贡献定义为 $\mathbf{Z}_S=\sum_{i\in S}\mathbf{z}_{j\to i}$，套同一个 L1 proximity 算分。关键是利用 attention 的线性性把 attention head 贡献 $\alpha_{i,j}^h \cdot \mathbf{v}_j$ 中的 $\mathbf{v}_j = \mathbf{x}_j W_V^h W_O^h$ 提出来，得到 $\mathbf{F}_{j\to S}=\mathbf{v}_j \cdot (\sum_{i\in S}\alpha_{i,j}^h)$；昂贵的 V/O 投影只算一次，每个 target 位置只多一次标量乘加。residual 流也一并按 span 求和，整个 pipeline 内存不再随 $M$ 涨。
-    - 设计动机：直接解决"5k token 输出要跑 5k 遍"的效率瓶颈。同时因为只是代数重排、没有近似，理论上保留了 ALTI/IFR 的所有忠实度性质，为后续多跳传播留出预算。
+效率瓶颈来自"输出 span 有 $M$ 个 token、每个都要单独跑一遍归因"，复杂度 $\mathcal{O}(M\cdot N)$，5k 输出连最快的 IFR 都要 38 分钟。FlashTrace 的做法是把整段目标的层级表示先求和为 $\mathbf{Y}_S=\sum_{i\in S}\mathbf{y}_i$，把源 token $j$ 对整段的贡献定义为 $\mathbf{Z}_S=\sum_{i\in S}\mathbf{z}_{j\to i}$，再套同一个 L1 proximity 算分。关键杠杆是 attention 的线性性：attention head 贡献 $\alpha_{i,j}^h \cdot \mathbf{v}_j$ 里的 $\mathbf{v}_j = \mathbf{x}_j W_V^h W_O^h$ 只跟源 token 有关、与目标位置 $i$ 解耦，于是可以提出来写成 $\mathbf{F}_{j\to S}=\mathbf{v}_j \cdot (\sum_{i\in S}\alpha_{i,j}^h)$——昂贵的 V/O 投影只算一次，每多一个 target 位置只多一次标量乘加，residual 流也一并按 span 求和，内存不再随 $M$ 涨。这是纯代数重排、不引入任何近似，因此 ALTI/IFR 原有的忠实度性质全部保留，复杂度从 $\mathcal{O}(M\cdot N)$ 降到 $\mathcal{O}(N)$，也为后面的多跳传播腾出了预算。
 
-2. **Recursive Attribution（沿推理链反向回溯）**:
+**2. Recursive Attribution：沿推理链把 mass 反向回溯**
 
-    - 功能：把上一跳分给推理 token 的重要性 $\mathbf{w}_{\mathbf{T}}^{(k-1)}$ 转化成下一跳的"加权目标"，从而让 mass 不停留在 $\mathbf{T}$、继续向 $\mathbf{I}$ 传播。
-    - 核心思路：把 span-wise 聚合从"01 mask"自然推广到加权 span，新目标 $\mathbf{Y}^{(k)}=\sum_{j\in \mathbf{T}} w_j^{(k-1)} \cdot \mathbf{y}_j$，对应贡献 $\mathbf{Z}^{(k)}=\sum_{j\in \mathbf{T}} w_j^{(k-1)} \cdot \mathbf{z}_{k\to j}$。因式分解仍然成立——$\mathbf{v}_k$ 只算一次、外面再点乘标量 $\sum_j w_j^{(k-1)}\alpha_{j,k}^h$，所以每跳成本基本等于一次前向。重要性等价为"信息流概率"：每跳剩余 mass $\rho_k=\sum_{t\in\mathbf{T}}w_t^{(k)}$ 沿链传播。
-    - 设计动机：直接对症 information absorption——单跳归因只能解释"答案被上一句推理决定"，多跳才能回答"那句推理又是被 prompt 里哪段决定的"。设计成"加权 span 上的同一个 span-wise op"既避免了 sentence-level 切分（vs CAGE），也保住了 $\mathcal{O}(N)$ 复杂度。
+单跳归因只能告诉你"答案是被上一句推理决定的"，因为自回归下推理 token $\mathbf{T}$ 会吸掉绝大部分 attribution mass（information absorption）。FlashTrace 把上一跳分给推理 token 的重要性 $\mathbf{w}_{\mathbf{T}}^{(k-1)}$ 转化成下一跳的"加权目标"，让 mass 不停留在 $\mathbf{T}$、继续往 $\mathbf{I}$ 传。具体是把 span-wise 聚合从 0/1 mask 自然推广到加权 span，新目标 $\mathbf{Y}^{(k)}=\sum_{j\in \mathbf{T}} w_j^{(k-1)} \cdot \mathbf{y}_j$、对应贡献 $\mathbf{Z}^{(k)}=\sum_{j\in \mathbf{T}} w_j^{(k-1)} \cdot \mathbf{z}_{k\to j}$；同样的因式分解仍然成立，$\mathbf{v}_k$ 只算一次、外面点乘标量 $\sum_j w_j^{(k-1)}\alpha_{j,k}^h$，所以每跳成本基本等于一次前向。它把重要性等价成"信息流概率"，每跳剩余 mass $\rho_k=\sum_{t\in\mathbf{T}}w_t^{(k)}$ 沿链传播。设计成"加权 span 上的同一个 span-wise op"既能回答"那句推理又是被 prompt 里哪段决定的"，又避免了 CAGE 那种 sentence-level 切分，把多跳传播也压在 $\mathcal{O}(N)$ 之内。
 
-3. **跨跳概率流聚合（Probability-mass Aggregation across hops）**:
+**3. 跨跳概率流聚合：把多跳结果折算成单一分布**
 
-    - 功能：把 $K$ 跳里每跳分给输入的分量 $\mathbf{w}_{\mathbf{I}}^{(k)}$ 合成单一最终分布 $\mathbf{w}_{final}$，让多跳结果可比、可可视化。
-    - 核心思路：把整个递归过程当成 mass 的逐跳分流——每跳要么"沉降"到输入、要么"剩在推理链上等下一跳解释"。聚合公式为 $\mathbf{w}_{final}=\mathbf{w}_{\mathbf{I}}^{(0)}+\sum_{k=1}^{K}(\prod_{j=0}^{k-1}\rho_j)\cdot \mathbf{w}_{\mathbf{I}}^{(k)}$，其中 $\rho_j$ 是第 $j$ 跳还留在 $\mathbf{T}$ 上的剩余 mass。实验里 $K=1$ 即可解掉绝大部分推理链依赖。
-    - 设计动机：用"剩余 mass 折算"保证各跳分布在同一概率尺度上合并，不会因为某跳推理链短就把它的输入贡献放大；这也提供了一个天然的早停条件——$\rho_k$ 很小时再迭代意义不大。
+多跳跑完会有 $K$ 份分给输入的分量 $\mathbf{w}_{\mathbf{I}}^{(k)}$，直接相加会让推理链短的那跳被不公平放大。FlashTrace 把整个递归过程看成 mass 的逐跳分流——每跳要么"沉降"到输入、要么"剩在推理链上等下一跳解释"——按剩余 mass 折算后再合并：$\mathbf{w}_{final}=\mathbf{w}_{\mathbf{I}}^{(0)}+\sum_{k=1}^{K}(\prod_{j=0}^{k-1}\rho_j)\cdot \mathbf{w}_{\mathbf{I}}^{(k)}$，其中 $\rho_j$ 是第 $j$ 跳还留在 $\mathbf{T}$ 上的剩余 mass。这样各跳分布都落在同一概率尺度上合并，结果可比、可可视化；$\rho_k$ 很小时也天然提供了早停信号，实验里 $K=1$ 即可解掉绝大部分推理链依赖。
 
 ### 损失函数 / 训练策略
-本方法是 training-free 的事后可解释性算法，没有训练损失。唯一超参是递归跳数 $K$（实验默认 $K=1$），不修改模型权重，对底层 Transformer 也无侵入式假设——只用前向 attention 权重 + value/output 投影即可计算。
+FlashTrace 是 training-free 的事后可解释性算法，没有训练损失，不改模型权重，对底层 Transformer 也无侵入式假设——只用前向 attention 权重 + value/output 投影即可计算。唯一超参是递归跳数 $K$，实验默认 $K=1$。
 
 ## 实验关键数据
 

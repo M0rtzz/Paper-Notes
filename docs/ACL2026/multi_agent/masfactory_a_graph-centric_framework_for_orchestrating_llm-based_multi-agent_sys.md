@@ -46,23 +46,35 @@ MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "V
 
 ### 关键设计
 
-1. **Vibe Graphing 三阶段编译流水线**:
+**1. Vibe Graphing 三阶段编译流水线：把自然语言意图编译成可执行图，而不是直接吐代码。**
 
-    - 功能：把用户的自然语言意图转成可执行 MAS 工作流，并在每阶段允许用户 review/修改。
-    - 核心思路：编译分三步——(i) **Role Assignment**：LLM 把 task intent 映射成一组带边界的候选 agent 角色；(ii) **Structure Design**：根据角色间信息依赖和控制约束生成有向图拓扑骨架（决定连通性 + message/control 传播方向）；(iii) **Semantic Completion**：在骨架上做参数化实例化，为每个节点配置 prompt 与 tools，产出可直接 compile/execute 的 workflow。三阶段都保留 structured IR（可读可编辑），允许通过 Visualizer 做 human-in-the-loop 介入。底层用 gpt-5.2 做 workflow 构造，执行时切到 gpt-4o-mini。
-    - 设计动机：直接让 LLM 写代码（Vibe Coding）经常出现逻辑错误的图、API 成本高；分阶段、用结构化中间表示，把"图结构正确性"从 LLM 自由生成中剥离出来，让 LLM 只填语义、框架保证可执行性。
+直接让 LLM 写代码（Vibe Coding）经常生成逻辑错误、根本跑不起来的图，而且 API 成本高。MASFactory 的破法是把"意图 → 可执行 workflow"拆成三步编译，每步都产出可读可编辑的结构化中间表示（IR）：(i) Role Assignment 把 task intent 映射成一组带边界的候选 agent 角色；(ii) Structure Design 根据角色间的信息依赖和控制约束生成有向图拓扑骨架，定下连通性与 message/control 的传播方向；(iii) Semantic Completion 在骨架上做参数化实例化，给每个节点配 prompt 和 tools，产出可直接 compile/execute 的 workflow。
 
-2. **Context Adapter / Message Adapter 双适配层**:
+这样分阶段的本质，是把"图结构正确性"从 LLM 的自由生成里剥离出来——LLM 只负责填语义（角色、连法、prompt），框架负责保证可执行性，于是 LLM 面对的是一个空间受限得多、更不容易出错的任务。每个阶段的 structured IR 都能在 VS Code Visualizer 里被 human-in-the-loop 介入修改。工程上构造阶段用 gpt-5.2 生成 IR，执行时切到便宜的 gpt-4o-mini。
 
-    - 功能：把异构外部依赖（memory / RAG / MCP / 通信协议）从 collaboration graph 中解耦。
-    - 核心思路：Context Adapter 把不同 context 源（Mem0 长期记忆、LlamaIndex RAG、Anthropic MCP）切成标准化单元，对图节点暴露统一接口；Message Adapter 把 agent IO 按指定协议格式化（JSON Schema / Markdown 段 / 纯文本），并暴露用户自定义协议接口。结果是同一个 collaboration graph 可以无缝换 memory 后端或通信协议而不改拓扑。
-    - 设计动机：现实 MAS 高度依赖外部 context source，但每个源有自己的 API/数据格式；过去要写 glue code 把 mem0 / llamaindex 缝进每个 agent 里，导致 workflow 强耦合于具体框架，可移植性差。
+> ⚠️ gpt-5.2 等模型名以原文为准。
 
-3. **ComposedGraph + NodeTemplate 复用机制**:
+**2. Context Adapter / Message Adapter 双适配层：把异构外部依赖从协作图里解耦。**
 
-    - 功能：让重复出现的子图结构以"模板"形式被声明、复用、版本管理。
-    - 核心思路：NodeTemplate 让用户先声明结构模板再实例化，支持 clone 出多个全局相同但局部参数不同的图；ComposedGraph 是一类预定义结构的特化 Graph，可由用户参数填 node 配置或激活特定分支来 instantiate。框架自带常用协作子图（如 DyLan-style 动态调度模式），用户也可以把自己的设计打包为 reusable 组件。
-    - 设计动机：MAS 里"review-critique-revise"、"propose-vote-merge"这类协作 pattern 反复出现，每次重写既费时又难统一；模板化后既减代码量，也方便版本管理与团队协作。
+现实 MAS 高度依赖外部 context 源，但 Mem0 长期记忆、LlamaIndex RAG、Anthropic MCP 各有各的 API 和数据格式；过去要写一堆 workflow-specific 的胶水代码把它们缝进每个 agent，结果是拓扑强耦合于具体框架、几乎没法移植。本文用两层适配器把这件事抽象掉：Context Adapter 把不同 context 源切成标准化单元，对图节点暴露统一接口；Message Adapter 把 agent 的 IO 按指定协议（JSON Schema / Markdown 段 / 纯文本）格式化，并开放用户自定义协议接口。
+
+解耦的直接收益是同一张 collaboration graph 可以无缝换 memory 后端或通信协议而不动拓扑——想把 Mem0 换成 LlamaIndex、或把 JSON 通信换成 Markdown，只改适配器配置，图结构原封不动。
+
+**3. ComposedGraph + NodeTemplate 复用机制：让重复子图以模板形式被声明、复用、版本化。**
+
+MAS 里"review-critique-revise"、"propose-vote-merge"这类协作 pattern 反复出现，每次手写既费时又难统一风格。本文提供两级复用：NodeTemplate 让用户先声明结构模板再实例化，可以 clone 出多个全局相同、局部参数不同的图；ComposedGraph 则是一类预定义结构的特化 Graph，用户只需填 node 配置或激活特定分支就能 instantiate。框架自带常用协作子图（如 DyLan-style 动态调度模式），用户也能把自己的设计打包成 reusable 组件。
+
+模板化既砍掉了重复代码量，也让子图能像软件库一样做版本管理与团队协作。一个有力的旁证是：把 ChatDev 用 ComposedGraph 复用后反而修掉了原版里的 routing bug，复现版在 HumanEval 上比原版高 22 个点——脏的工程实现被解耦进模板，方法论本身的效果才显露出来。
+
+### 一个完整示例：把 ChatDev 编进 45 行
+
+以"我要一个写代码的 MAS：先 PM 拆需求，再 dev 写，QA 审"这句自然语言意图为例，走一遍 Vibe Graphing：
+
+- **Role Assignment** 把意图解析成三个带边界的角色——Product Manager（拆需求）、Developer（写代码）、QA（审查），并圈定各自职责边界。
+- **Structure Design** 根据"需求 → 实现 → 审查"的信息依赖生成拓扑骨架：PM → Dev → QA 的有向链，并在 QA 不通过时连一条回 Dev 的 message/control 反馈边，形成 review-revise 循环。
+- **Semantic Completion** 给三个节点分别填上 prompt（PM 的需求拆解模板、Dev 的编码指令、QA 的审查准则）与 tools，编译成可执行 workflow。
+
+最终这条端到端的 Vibe Graphing 描述只用 **45 行**就替代了原版 **1511 行** Python 的 ChatDev，构造成本约 \$0.26（同等任务下 Vibe Coding 要 \$3 以上），性能与手工原版持平甚至更好。整个过程中用户可以在 VS Code Visualizer 里随时 review 三个阶段的 IR——比如手动改掉某个角色边界或调整反馈边，再继续编译。
 
 ### 损失函数 / 训练策略
 - 框架无训练目标，所有 agent 用 LLM 推理（默认 gpt-4o-mini，T 默认）；Vibe Graphing 构造阶段用 gpt-5.2 做 IR 生成；评测时 5 个复现 MAS + 2 个 Vibe Graphing 变种（ChatDev 拆阶段版 + Task-Specific 端到端版）。

@@ -41,27 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Conf-Gen 的输入是一个三元组 $\mathbf{G} = (X, \mathbf{Y}, Y_{\text{GT}})$，其中 $X$ 是条件输入（如问题），$\mathbf{Y} = (Y_1, \dots, Y_T)$ 是生成模型产出的一系列输出（如多个回答），$Y_{\text{GT}}$ 是可选的 ground truth。框架包含三个核心组件：选择函数族 $\mathbf{C}_\lambda$、可容许性函数 $A$ 和校准数据集 $\mathbf{D}_{:n}$。校准阶段在标注数据上找到最小的 $\hat{\lambda}$ 使平均可容许性超过阈值 $\frac{n+1}{n}\gamma$；推理阶段用 $\mathbf{C}_{\hat{\lambda}}$ 处理新输入，输出的结构（集合或序列）可以获得形式化的可容许性下界保证 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \geq \gamma$。
+Conf-Gen 要解决的问题是：如何为 LLM、扩散模型、Agent 这类无监督生成模型，提供和保形预测一样的分布无关形式化保证。它把任务抽象成对三元组 $\mathbf{G} = (X, \mathbf{Y}, Y_{\text{GT}})$ 的处理——$X$ 是条件输入（如问题），$\mathbf{Y} = (Y_1, \dots, Y_T)$ 是生成模型产出的一串候选输出（如多个回答），$Y_{\text{GT}}$ 是可选的 ground truth。整个流程分两步：先在标注好的校准集上找到最小的参数 $\hat{\lambda}$，让经过选择函数 $\mathbf{C}_{\hat{\lambda}}$ 处理后的输出平均"够好"（可容许性达标）；推理时再用同一个 $\hat{\lambda}$ 处理新输入，得到的输出结构（集合或序列）就自带形式化的可容许性下界 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \geq \gamma$。下面三个设计分别回答"输出怎么选""质量怎么评""保证为什么成立"。
 
 ### 关键设计
 
-1. **参数化选择函数族 $\mathbf{C}_\lambda$**:
+**1. 参数化选择函数族 $\mathbf{C}_\lambda$：让保形机制吐得出序列而不只是集合**
 
-    - 功能：将输入 $X$ 和生成序列 $\mathbf{Y}$ 映射到输出空间 $\mathcal{S}$（可以是集合、序列或单个元素），$\lambda$ 越大输出越保守
-    - 核心思路：定义基于分数的选择策略，例如 $\mathbf{C}_\lambda(x, \mathbf{y}) = \mathbf{y}_{:\tau(x,\mathbf{y},\lambda)}$，其中 $\tau(x,\mathbf{y},\lambda) = \inf\{t : \texttt{accum}(S_1^\uparrow, \dots, S_t^\uparrow) > \lambda\} \wedge |\mathbf{y}|$ 是基于累积分数的停止时刻。由于选择函数作为 $\lambda$ 的函数仅有有限个像，即使 $\Lambda$ 是无穷集合也可以高效校准
-    - 设计动机：与 CRC 中 $\mathcal{C}_\lambda$ 只能输出集合不同，$\mathbf{C}_\lambda$ 允许输出序列或单元素，且以生成序列 $\mathbf{Y}$ 作为额外输入，天然适配生成任务。有限像性质使得即使可容许性由人工评估（不可调用）定义，校准仍然可行
+CRC 原版的选择函数 $\mathcal{C}_\lambda$ 只能输出集合，但生成任务里答案天然是序列（比如多轮回答、Agent 的动作轨迹），集合表示既丢了顺序信息也不好截断。Conf-Gen 把选择函数重定义成 $\mathbf{C}_\lambda(x, \mathbf{y})$，额外吃进生成序列 $\mathbf{y}$，并允许输出是集合、序列或单个元素，$\lambda$ 越大输出越保守。一个典型实例是基于累积分数的截断：$\mathbf{C}_\lambda(x, \mathbf{y}) = \mathbf{y}_{:\tau(x,\mathbf{y},\lambda)}$，其中停止时刻 $\tau(x,\mathbf{y},\lambda) = \inf\{t : \texttt{accum}(S_1^\uparrow, \dots, S_t^\uparrow) > \lambda\} \wedge |\mathbf{y}|$ 表示沿着排序后的分数累积，一旦超过 $\lambda$ 就停。这个设计的关键性质是：选择函数作为 $\lambda$ 的函数只有**有限个像**（因为候选序列长度有限，截断点也有限），所以即使 $\Lambda$ 是连续无穷集合，校准时也只需枚举有限种输出，从而能高效搜索 $\hat{\lambda}$——这也为下一个设计中"用人工评估当可容许性"埋下伏笔。
 
-2. **可容许性函数与实例级分解**:
+**2. 可容许性函数与实例级分解：换选择函数不用重新标注**
 
-    - 功能：度量选择函数输出的质量，$A(x, \mathbf{C}_\lambda(x, \mathbf{y}), y_{\text{GT}}) \in [0, \infty]$，值越大越好
-    - 核心思路：将全局可容许性分解为 $A(x, \mathbf{y}, y_{\text{GT}}) = \texttt{agg}(A_1', \dots, A_T')$，其中 $A_t' = A'(x, y_t, y_{\text{GT}})$ 是单个生成元素的实例级可容许性，$\texttt{agg}$ 可以是 max（至少一个好答案）或 min（所有答案都好）。这样只需评估 $\sum_{i=1}^n T_i$ 次 $A'$，而非为每种 $\mathbf{C}_\lambda$ 重新评估
-    - 设计动机：将可容许性评估与选择函数解耦，更换选择函数不需要重新收集标注，大幅降低校准成本
+可容许性函数 $A(x, \mathbf{C}_\lambda(x, \mathbf{y}), y_{\text{GT}}) \in [0, \infty]$ 度量输出质量、越大越好，但它常常由人工评估或 LLM judge 定义，调用一次成本高。如果对每一种 $\mathbf{C}_\lambda$ 都重新评估整个输出，校准代价会爆炸。Conf-Gen 的做法是把全局可容许性分解到实例级：$A(x, \mathbf{y}, y_{\text{GT}}) = \texttt{agg}(A_1', \dots, A_T')$，其中 $A_t' = A'(x, y_t, y_{\text{GT}})$ 只评估单个生成元素 $y_t$ 的好坏，聚合算子 $\texttt{agg}$ 取 max 表示"至少有一个好答案"、取 min 表示"所有答案都好"。这样整个校准集只需评估 $\sum_{i=1}^n T_i$ 次 $A'$，且评估结果与具体选什么 $\mathbf{C}_\lambda$ 无关——换一个选择函数（比如从截断改成过滤）不必重新收集标注，可容许性评估和选择策略被彻底解耦，校准成本大幅下降。
 
-3. **$\gamma$-sensible 条件与放松的单调性假设**:
+**3. $\gamma$-sensible 条件：把 CRC 的"几乎处处单调"放松到"条件期望单调"**
 
-    - 功能：为保形保证 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \geq \gamma$ 提供充分条件
-    - 核心思路：CRC 要求效用函数 $U^{(i)}(\lambda)$ 几乎处处关于 $\lambda$ 单调递增，Conf-Gen 将其放松为条件期望单调，即 $\lambda \mapsto \mathbb{E}[A^{(n+1)}(\lambda) \mid \lambda', \lambda'']$ 单调递增即可。此外还放松了右连续性假设，并给出了更一般的上界 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \leq \gamma + \frac{a_{\max}}{n+1} + \mathbb{E}[H]$
-    - 设计动机：在图像去记忆化等任务中，更多修改提示词的图像偶尔反而更"记忆化"，导致几乎处处单调性不成立，但条件期望单调性仍然合理
+要让 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \geq \gamma$ 这个保证成立，CRC 需要效用函数 $U^{(i)}(\lambda)$ 关于 $\lambda$ 几乎处处单调递增——可这在生成任务里经常不成立。一个反例是图像去记忆化：理论上越大幅度地改写提示词应该越不"记忆"训练数据，但实践中更多改动偶尔反而更记忆，单条样本的 $\lambda \mapsto A(\lambda)$ 并非处处单调。Conf-Gen 把假设放松成 **$\gamma$-sensible**，只要求条件期望单调，即 $\lambda \mapsto \mathbb{E}[A^{(n+1)}(\lambda) \mid \lambda', \lambda'']$ 单调递增即可，同时也放松了右连续性假设。代价是上界从精确变成更一般的形式 $\mathbb{E}[A^{(n+1)}(\hat{\lambda})] \leq \gamma + \frac{a_{\max}}{n+1} + \mathbb{E}[H]$，但下界保证依然成立。正是这个放松，让 Conf-Gen 能覆盖那些个例不单调、但整体趋势仍然合理的生成任务。
 
 ## 实验关键数据
 

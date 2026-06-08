@@ -41,33 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法可视为 "MDP + Dual RL Agent" 三阶段：
-
-1. **MDP 形式化**：把每轮 justice utterance $u_j^t$ 当 action $a^t$、attorney response $u_a^{t+1}$ 当 observation；augment transition 为 $\mathcal{D} \sim (s^t, p^t, a^t, r^t, s^{t+1})$，其中 $p^t = f(u_j^{t-1}, u_a^t, u_j^t)$ 是 Appraisal Agent 推断的法官对律师上一答的态度（如重复同样问题 → "Dissatisfied"）。
-2. **双 Agent 协作**：(i) **Appraisal Agent** 用 DDQN 选 $p(s) = \arg\max_p Q_{\text{App}}(s, p; \theta)$；(ii) **Dialogue Agent** 把 $p^t$ 拼到 state 得到 $s_{\text{aug}}^t = \text{concat}(s^t, p^t)$，在 3-level 动作空间上 sequentially 选 $\{a_0, a_1, a_2\}$ 共三个 transition。
-3. **Verbalization**：把选定的三级动作连同 augmented state 一起 prompt LLaMA-3-8B-Instruct 生成最终自然语言 utterance。
+方法把"法官审律师"建模成一个增广 MDP：每轮 justice utterance $u_j^t$ 是 action $a^t$、attorney response $u_a^{t+1}$ 是 observation，transition 被扩成 $\mathcal{D} \sim (s^t, p^t, a^t, r^t, s^{t+1})$，其中 $p^t = f(u_j^{t-1}, u_a^t, u_j^t)$ 是法官对律师上一答的态度。在这个 MDP 上跑两个互相耦合的 RL 智能体——Appraisal Agent 先把对话历史读成一个离散 appraisal $p^t$，Dialogue Agent 再把 $p^t$ 拼进 state 后在 act/subtype/utterance 三层动作空间上序列决策；选定的三级动作连同增广 state 一起 prompt LLaMA-3-8B-Instruct，verbalize 成最终自然语言提问。整条链路从"评估对方"到"决定怎么问"再到"说出来"，对应法官庭审时的两步思维。
 
 ### 关键设计
 
-1. **Dual-Agent 架构（Appraisal + Hierarchical Dialogue）**：
+**1. Dual-Agent 架构：把"怎么看你上一答"和"我下一步怎么问"解耦成两个 RL agent。**
 
-    - 功能：把"我对你上一答怎么看"和"我下一步怎么问"显式解耦成两个 RL agent。
-    - 核心思路：Appraisal Agent 接收对话历史，输出 9 类离散 appraisal（如 evasive / incomplete / satisfactory / contradictory 等），转 one-hot 拼进 Dialogue Agent state；Dialogue Agent 拿到 augmented state 后才决定 act/subtype/utterance。两者都用 DDQN，独立训练但耦合于 state augmentation。
-    - 设计动机：作者明确说"why two agents?"——Modular + interpretable。如果合成一个，模型既要判 "evasive" 又要决定 "probe more"，state 信号被两件事拉扯；分开后 Appraisal 专注 evaluation、Dialogue 专注 policy，experimentally PES 从去 Appraisal Agent 的 4.30 涨到 full model 的 4.47，PES 是 Appraisal Agent 贡献最大的指标。
+如果用单个 agent 端到端做，它既要判断律师在回避还是答得完整、又要决定下一步该 probe 还是 challenge，state 信号被两件事来回拉扯。DRCR 把评估单独交给 Appraisal Agent：它接收对话历史，用 DDQN 选出 $p(s) = \arg\max_p Q_{\text{App}}(s, p; \theta)$，输出 9 类离散 appraisal（evasive / incomplete / satisfactory / contradictory 等），转 one-hot 后拼成增广 state $s_{\text{aug}}^t = \text{concat}(s^t, p^t)$ 喂给 Dialogue Agent。两个 agent 各用 DDQN、独立训练，只在 state augmentation 处耦合——Appraisal 专注 evaluation、Dialogue 专注 policy，模块化且可解释。消融里去掉 Appraisal Agent 后 PES 从 4.47 掉到 4.30，是单组件里掉得最多的，说明"先评估再决定"确实是探查有效性的主要来源。
 
-2. **三层 Poincaré 动作空间（act → subtype → utterance）**：
+**2. 三层 Poincaré 动作空间：把"问什么"分解成 act→subtype→utterance 三级树并用双曲嵌入表示。**
 
-    - 功能：把"问什么"分解成 act/subtype/utterance 三级离散动作，并用双曲 Poincaré 嵌入表示这棵动作树。
-    - 核心思路：Level 1 是高级 act（Questioning / Hypothesis Testing / Declaration）；Level 2 是 subtype（Probing / Clarification / Comparison）；Level 3 是具体子类（Probe the Assumption / Probe the Premise 等）。在 Poincaré 双曲空间训练嵌入 $\mathcal{L} = \sum_{(u,v) \in D} \log \frac{e^{-d(u,v)}}{\sum_{v' \in \mathcal{N}(u)} e^{-d(u, v')}}$，让 parent 靠近原点、child 指数远离，sibling 之间天然相似。Q-network 序列化预测三个动作，每个 full action 产生 3 个 transition tuple；并强制层级一致 $Q(s, a_0) = \max_{a_1} Q(s, a_1)$，对应一个新损失 $\mathcal{L}_{\text{Dia}}^{\text{hier}} = \sum_i (Q(s, a_i) - \max_{a_{i+1}} Q(s, a_{i+1}))^2$。
-    - 设计动机：扁平动作空间下"Probe assumption" 和 "Challenge premise" 是两个无关 token；分层后它们共享 Level-1 父节点 "Questioning"，泛化好；双曲嵌入比欧氏更适合 tree-like 结构，能让 sibling 之间共享 Q value 信号。
+扁平动作空间下"Probe assumption"和"Challenge premise"只是两个互不相干的 token，学不出泛化。DRCR 把动作拆成三级：Level 1 是高级 act（Questioning / Hypothesis Testing / Declaration），Level 2 是 subtype（Probing / Clarification / Comparison），Level 3 是具体子类（Probe the Assumption / Probe the Premise 等）。这棵树用双曲 Poincaré 嵌入训练，目标 $\mathcal{L} = \sum_{(u,v) \in D} \log \frac{e^{-d(u,v)}}{\sum_{v' \in \mathcal{N}(u)} e^{-d(u, v')}}$ 让 parent 靠近原点、child 指数远离、sibling 天然相似，比欧氏空间更契合 tree-like 结构。Q-network 序列化预测三个动作，每个完整动作产生 3 个 transition tuple，并用层级一致损失 $\mathcal{L}_{\text{Dia}}^{\text{hier}} = \sum_i (Q(s, a_i) - \max_{a_{i+1}} Q(s, a_{i+1}))^2$ 强制 $Q(s, a_0) = \max_{a_1} Q(s, a_1)$，让父节点的 Q 值与最优子节点对齐。这样同父的兄弟动作能共享信号，泛化好、参数省。
 
-3. **三重 reward + 保守 Q 正则项**：
+**3. 三重 reward + 保守 Q 正则：把"问得好"拆成三个可计算目标，再压住 offline RL 的 Q 高估。**
 
-    - 功能：把"问得好"分解成三个互补量化目标，再用一个轻量正则避免 offline RL Q-overestimation。
-    - 核心思路：(i) **Goal-Relevance** $R_{\text{rel}}^{t+1} = \max_i \text{sim}(C[i], u_a^{t+1})$，用 LLaMA-3-8B 算律师回答与案件子结论 $C[i]$ 的最大相似度，奖励"问出有用信息"；(ii) **Novelty** $R_{\text{nov}}^{t+1} = N_{\text{attorney}}^{t+1} / (V(1 - ((V-1)/V)^{|u_a^{t+1}|}))$，用 EAD 度量新引入 token 比例，奖励"问出之前没出现过的信息"；(iii) **Clarity** $R_{\text{clarity}}^{t+1} = -\log|u_a^{t+1}|$，律师答得越简短奖励越高（法官偏好 yes/no，便于控对话）。三者加权后给 Q-learning。再加 conservative 正则 $\mathcal{L}^{\text{Reg}} = R_1(s) - R_2(s)$，其中 $R_1 = \max_a Q(s,a)$ 是潜在 overestimate 的最大值、$R_2 = Q(s, a)$ 在数据集 $(s,a) \in \mathcal{D}$ 上回采，把 OOD Q 值拉回 dataset policy 附近，降低 offline RL 方差。
-    - 设计动机：单一 task-success reward 在"判 task done"模糊的对话场景里没有信号；分解出 relevance/novelty/clarity 三个可计算量后，agent 既能学"问出干货"又能学"不让律师啰嗦"。Conservative 正则是 CQL (Kumar 2020) 思路的轻量版，针对 Supreme Court 这种"dataset policy 已经接近最优"的场景特别合适——把 Q 往数据集分布拉就够了。
+单一 task-success reward 在"task 是否完成"本就模糊的对话里几乎没有信号，DRCR 把"问得好"分解成三路互补奖励：Goal-Relevance $R_{\text{rel}}^{t+1} = \max_i \text{sim}(C[i], u_a^{t+1})$ 用 LLaMA-3-8B 算律师回答与案件子结论 $C[i]$ 的最大相似度，奖励"问出有用信息"；Novelty $R_{\text{nov}}^{t+1} = N_{\text{attorney}}^{t+1} / (V(1 - ((V-1)/V)^{|u_a^{t+1}|}))$ 用 EAD 度量新引入 token 比例（对长度做了归一化），奖励"问出之前没出现的信息"；Clarity $R_{\text{clarity}}^{t+1} = -\log|u_a^{t+1}|$ 偏好律师答得简短，便于法官控对话。三者加权后给 Q-learning。由于是 offline RL，再加一个 conservative 正则 $\mathcal{L}^{\text{Reg}} = R_1(s) - R_2(s)$，其中 $R_1 = \max_a Q(s,a)$ 是可能被高估的最大值、$R_2 = Q(s, a)$ 在数据集 $(s,a) \in \mathcal{D}$ 上回采，把 OOD 的 Q 值往 dataset policy 拉回。这是 CQL 思路的轻量版，针对 Supreme Court 这种"数据集策略已近最优"的场景，只要把 Q 往数据分布拉就够了，实现仅几行减法。
 
 ### 损失函数 / 训练策略
+- **Backbone**：双 agent 都用 Double DQN (DDQN)。
+- **Appraisal**：$\mathcal{L}_{\text{App}} = \mathcal{L}_{\text{App}}^{\text{DDQN}} + \alpha \mathcal{L}_{\text{App}}^{\text{Reg}}$，其中 $Y_{\text{App}} = r + \gamma Q(s, \arg\max_{p'} Q(s', p'; \theta_{App}); \theta_{App}^-)$。
+- **Dialogue**：$\mathcal{L}_{\text{Dia}} = \mathcal{L}_{\text{Dia}}^{\text{DDQN}} + \beta \mathcal{L}_{\text{Dia}}^{\text{Reg}} + \lambda \mathcal{L}_{\text{Dia}}^{\text{hier}}$，层级一致 loss 强制 $Q(s, a_0) = \max_{a_1} Q(s, a_1)$ 等。
+- **数据**：U.S. Supreme Court Oral Argument Transcript（Oyez，1955–2023），按年划分 train/test。
+- **Verbalization**：选好 act/subtype/utterance 后 prompt LLaMA-3-8B-Instruct + 模板生成自然语言；method 本身 fine-tuning-free。
+
+## 实验关键数据
 - **Backbone**：双 agent 都用 Double DQN (DDQN)。
 - **Appraisal**：$\mathcal{L}_{\text{App}} = \mathcal{L}_{\text{App}}^{\text{DDQN}} + \alpha \mathcal{L}_{\text{App}}^{\text{Reg}}$，其中 $Y_{\text{App}} = r + \gamma Q(s, \arg\max_{p'} Q(s', p'; \theta_{App}); \theta_{App}^-)$。
 - **Dialogue**：$\mathcal{L}_{\text{Dia}} = \mathcal{L}_{\text{Dia}}^{\text{DDQN}} + \beta \mathcal{L}_{\text{Dia}}^{\text{Reg}} + \lambda \mathcal{L}_{\text{Dia}}^{\text{hier}}$，层级一致 loss 强制 $Q(s, a_0) = \max_{a_1} Q(s, a_1)$ 等。

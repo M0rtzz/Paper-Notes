@@ -40,27 +40,21 @@ MOOSE-Star 把"训练一个能直接生成科学假设的 LLM"这个原本要在
 ## 方法详解
 
 ### 整体框架
-训练侧分三层：(1) 数据侧用 R1 / R1-distill-Qwen 解构 108,717 篇 2020-2025 年开放论文，得到 (research background $b$, hypothesis $h$, inspirations $\{i_j\}$) 三元组，再把 $h$ 分成 $\Delta h_1,\ldots,\Delta h_k$，每个 $\Delta h$ 写成（Motivation, Mechanism, Methodology）三层结构；(2) 模型侧把 $P(h\mid b)$ 拆成"Inspiration Retrieval (IR)"和"Hypothesis Composition (HC)"两个 RFT 任务，IR 用 1 正 + 14 负的硬负例 pool，HC 用 rubric-based 评估器做 rejection sampling；(3) 推理侧把全文献组织成语义检索树，借 motivation 变量动态修剪无关子树，并在 bounded tolerance 半径 $M$ 内训练 HC，让组合对检索误差鲁棒。
+MOOSE-Star 的目标是直接训练 $P(h\mid b)$——给定研究背景 $b$ 就生成科学假设 $h$，难点在于这隐含着要在 $N\approx10^7$ 篇文献里找出 $k$ 条灵感序列，搜索空间 $\mathcal{O}(N^k)$ 大到没法端到端学。整条 pipeline 就是把这个不可训的问题层层降复杂度：先用 R1 / R1-distill-Qwen 把 108,717 篇 2020–2025 开放论文解构成 $(b,h,\{i_j\})$ 三元组、并把 $h$ 拆成若干增量 $\Delta h_j$（每个写成 Motivation/Mechanism/Methodology 三层），再把 $P(h\mid b)$ 按 chain rule 拆成"灵感检索 (IR) + 假设合成 (HC)"两个可训子任务循环 $k$ 次，最后在推理侧用语义检索树 + motivation 剪枝把检索那一段从线性压到对数级。
 
 ### 关键设计
 
-1. **分解式序列训练（IR + HC）**:
+**1. 分解式序列训练（IR + HC）：把指数级的端到端学习换成 $k$ 步线性子任务。**
 
-    - 功能：把"端到端学 $P(h\mid b)$"换成"先学一步检索、再学一步增量合成"，并循环 $k$ 次。
-    - 核心思路：按 chain rule 把 $P(h\mid b)\approx \prod_{j=1}^{k} P(i_j\mid b,h_{j-1},\mathcal{I})\cdot P(h_j\mid b,h_{j-1},i_j)$ 拆开，IR 任务是"从 15 个候选论文中生成式选出最相关那 1 篇"（输入是 title+abstract，输出 CoT 推理 + 选择），HC 任务是"在拿到 ground-truth $i_j$ 后写出增量假设 $\Delta h_j$"；两者都用 teacher-based RFT。整体复杂度变成 $\mathcal{O}(k\cdot(N+1))$ 而非 $\mathcal{O}(N^k)$。
-    - 设计动机：把指数级笛卡尔积换成 $k$ 个线性求和，是把不可训问题搬进可训范畴的关键一步；同时 IR/HC 是两个清晰、可监督、可评测的任务，比对 $h$ 整体打分稳得多。
+直接学 $P(h\mid b)$ 之所以训不动，是因为它隐式要求在 $\mathcal{O}(N^k)$ 的灵感组合里搜索。本文借 MOOSE-Chem 的概率分解定理把它按 chain rule 拆开：$P(h\mid b)\approx \prod_{j=1}^{k} P(i_j\mid b,h_{j-1},\mathcal{I})\cdot P(h_j\mid b,h_{j-1},i_j)$，于是一个组合问题变成 $k$ 次"先检索一条灵感、再增量合成一步假设"的循环。IR 任务是从 15 个候选论文（1 正 + 14 负的硬负例 pool，输入 title+abstract）里生成式地选出最相关那 1 篇，输出带 CoT 推理；HC 任务是在拿到 ground-truth $i_j$ 后写出增量假设 $\Delta h_j$。两者都用 teacher-based RFT 训练，整体复杂度从 $\mathcal{O}(N^k)$ 落到 $\mathcal{O}(k\cdot(N+1))$。这一步把指数级笛卡尔积换成 $k$ 个线性求和，是把问题搬进可训范畴的关键；同时 IR/HC 各自都是清晰、可监督、可评测的任务，远比对整条 $h$ 打分来得稳。
 
-2. **Bounded Composition**:
+**2. Bounded Composition：让合成模型容忍检索误差。**
 
-    - 功能：让 HC 模型对"检索到的不完全是 ground-truth $i^*$"也鲁棒。
-    - 核心思路：定义一个以 $i^*$ 为中心、大小为 $M$ 的语义容忍邻域 $\mathcal{I}_{i^*}\subset\mathcal{I}$，训练时随机从这个邻域采"近似灵感"喂给 HC，让模型学会用相邻概念也能合成出有效 $\Delta h_j$。这等价于把检索精度要求从"1/N 精确匹配"放宽到"1/(N/M) 模糊匹配"，把 IR 的有效搜索空间再压一档。
-    - 设计动机：哪怕分层树检索做到 $\mathcal{O}(\log N)$，最末一层也未必精准；bounded composition 把"检索误差"显式建模成训练分布，类似 noise-aware training，使 pipeline 在真实噪声下不崩。
+就算检索做到对数级，最末一层选出的灵感也未必正好是 ground-truth $i^*$，HC 若只见过完美灵感就会在真实噪声下崩掉。做法是定义一个以 $i^*$ 为中心、大小为 $M$ 的语义容忍邻域 $\mathcal{I}_{i^*}\subset\mathcal{I}$，训练时随机从这个邻域采"近似灵感"喂给 HC，逼它学会用相邻概念也能合成出有效的 $\Delta h_j$。这等价于把检索的精度要求从"$1/N$ 精确匹配"放宽到"$1/(N/M)$ 模糊匹配"，又把 IR 的有效搜索空间压了一档。本质上它把"检索误差"显式建模成训练分布，类似 noise-aware training，让整条 pipeline 在不完美检索下仍然鲁棒。
 
-3. **Motivation-Guided Hierarchical Search**:
+**3. Motivation-Guided Hierarchical Search：用语义树 + 方向变量把检索从 $\mathcal{O}(N)$ 压到 $\mathcal{O}(\log N)$。**
 
-    - 功能：把"线性扫 $N$ 篇文献"换成"自顶向下沿语义树走 log N 步"，并用 motivation 变量做剪枝。
-    - 核心思路：把全文献按语义聚成检索树，每一步在当前节点的孩子里选最相关分支，理想情况下检索深度 $\mathcal{O}(\log N)$；同时给 background 附加一个显式的 motivation 变量 $m$（来自 $\Delta h$ 的 Motivation 层），它充当树的"生成根"动态裁掉与当前目标无关的子树，把可搜空间从 $N$ 缩到 $N_m\ll N$。
-    - 设计动机：单独的语义树只能省检索步骤数，但"在哪棵子树里搜"仍是开放问题；motivation 变量给定了一个生成性的方向控制信号，让模型在 inference time 真正能 scale。
+IR 把复杂度降到了线性，但逐篇扫 $N$ 仍嫌慢。这里把全文献按语义聚成一棵检索树，每一步只在当前节点的孩子里选最相关分支，理想情况下检索深度只要 $\mathcal{O}(\log N)$。但"该往哪棵子树走"本身仍是开放问题，所以再给 background 附加一个显式的 motivation 变量 $m$（取自 $\Delta h$ 的 Motivation 层），它充当树的"生成根"动态裁掉与当前目标无关的子树，把可搜空间从 $N$ 缩到 $N_m\ll N$。语义树省的是检索步数，motivation 变量给的是生成性的方向控制信号——两者合起来才让模型在 inference time 真正能随预算 scale。
 
 ### 损失函数 / 训练策略
 IR 与 HC 都用 Rejection Sampling Fine-Tuning（RFT）+ CoT 监督：每个样本先采 N 条 CoT，按"是否选对/合成质量"用 rubric 评估器筛掉低质，留高质再做 SFT。HC 的 rubric 同时检查 Motivation/Mechanism/Methodology 三层。数据集 TOMATO-Star 用四项自动质检（必要性、充分性、互斥性、非冗余）才入库。

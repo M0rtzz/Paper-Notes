@@ -46,23 +46,25 @@ AttnPO 在 GRPO/RLOO 框架基础上，利用 KFH 的注意力分数对结果级
 
 ### 关键设计
 
-1. **Key-Focus Heads (KFH) 发现与验证**:
+**1. Key-Focus Heads (KFH) 发现与验证：从模型自己的注意力里读出哪些步骤是关键的。**
 
-    - 功能：识别能区分关键/冗余推理步骤的注意力头
-    - 核心思路：定义步骤得分 $\mathcal{S}_{s_k}^{l,h} = \frac{1}{|s_k|}\sum_{m \in \mathcal{F}}\sum_{n \in s_k} a_{m \to n}^{l,h}$（最终答案对推理步骤的注意力），用 Step Ranking Accuracy (SRA) 衡量区分能力——最佳头 SRA 达 95-96%
-    - 设计动机：LRM 在生成最终答案时必须从冗长推理中选择关键信息，注意力机制是天然的信息选择工具
+要做步级监督，最大的障碍是「怎么不花额外算力就知道哪一步关键、哪一步冗余」。AttnPO 的观察是：LRM 在生成最终答案时，必须从冗长推理里挑出关键信息，注意力机制本身就是一个天然的信息选择器。于是定义最终答案对某个推理步骤 $s_k$ 的注意力得分
 
-2. **正 Advantage 冗余步骤衰减**:
+$$\mathcal{S}_{s_k}^{l,h} = \frac{1}{|s_k|}\sum_{m \in \mathcal{F}}\sum_{n \in s_k} a_{m \to n}^{l,h}$$
 
-    - 功能：减少对冗余步骤的过度鼓励，缓解过度思考
-    - 核心思路：当 $A^i > 0$ 且 $\mathcal{S}_{s_k}^i < \mathcal{S}_{\text{base}}^i$ 时，用缩放因子 $\gamma_{s_k}^i = (1-\delta) \cdot p_i^\lambda \cdot (\mathcal{S}_{s_k}^i / \mathcal{S}_{\text{base}}^i) + \delta$ 衰减 advantage；基线分数 $\mathcal{S}_{\text{base}}^i = p_i^\beta \cdot \frac{|\mathcal{F}_i|}{|o_i|}$ 具有难度感知性
-    - 设计动机：正 advantage 会强化所有步骤的生成概率，需要选择性削弱冗余步骤
+其中 $\mathcal{F}$ 是最终答案的 token 集合。用 Step Ranking Accuracy（SRA，衡量该头按注意力给步骤排序与真实关键性的一致度）筛头，发现一小撮注意力头的 SRA 高达 95–96%——这些就是 Key-Focus Heads，它们生成最终答案时自然地把高注意力给关键步骤、低注意力给冗余步骤，可直接拿来做步级信用分配。
 
-3. **负 Advantage 关键步骤保护**:
+**2. 正 Advantage 冗余步骤衰减：正确但拖沓的回复，别再奖励它的废话步骤。**
 
-    - 功能：避免过度惩罚正确推理中的关键步骤
-    - 核心思路：当 $A^i < 0$ 且 $\mathcal{S}_{s_k}^i > \mathcal{S}_{\text{base}}^i$ 时，直接将 $\gamma_{s_k}^i = 0$（完全免除惩罚），惩罚集中在冗余步骤上
-    - 设计动机：负 advantage 的正确回复中，关键步骤不应被惩罚，否则会损害模型推理能力
+GRPO/RLOO 的结果级 advantage 是均匀作用在所有步骤上的，正 advantage 会无差别强化整条轨迹，连冗余步骤一起鼓励，这正是过度思考的根源。AttnPO 的做法是：当回复的 $A^i > 0$ 且某步骤的 KFH 注意力低于基线（$\mathcal{S}_{s_k}^i < \mathcal{S}_{\text{base}}^i$，判定为冗余）时，用缩放因子
+
+$$\gamma_{s_k}^i = (1-\delta) \cdot p_i^\lambda \cdot (\mathcal{S}_{s_k}^i / \mathcal{S}_{\text{base}}^i) + \delta$$
+
+把这一步的正 advantage 削下去。基线分数 $\mathcal{S}_{\text{base}}^i = p_i^\beta \cdot \frac{|\mathcal{F}_i|}{|o_i|}$ 带难度感知（$p_i$ 越难、阈值越宽松），保证对难题不会误删探索步骤。这样模型只会被鼓励保留真正有贡献的步骤，而不是把整条长链一起强化。
+
+**3. 负 Advantage 关键步骤保护：错误回复里也别误伤正确推理的关键步骤。**
+
+负 advantage 会无差别打压整条轨迹的生成概率，但一条「最终答错」的回复里往往仍有正确的关键步骤，若把它们一起惩罚就会损伤模型的推理能力。AttnPO 反向操作：当 $A^i < 0$ 且某步骤的注意力高于基线（$\mathcal{S}_{s_k}^i > \mathcal{S}_{\text{base}}^i$，判定为关键）时，直接令 $\gamma_{s_k}^i = 0$ 完全免除惩罚，把负向梯度集中到冗余步骤上。设计 2 和 3 一正一负互补：前者压住「正确但啰嗦」的冗余、后者护住「错误但有价值」的关键步骤，合起来才能同时缩长度又提精度。
 
 ### 损失函数 / 训练策略
 

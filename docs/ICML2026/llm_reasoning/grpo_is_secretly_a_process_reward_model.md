@@ -40,30 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两步走：
-
-1. **理论侧**（Section 3）：在 $\mu=1$、DAPO 风格 token-level objective、忽略 clip 的两个温和假设下，构造前缀树 $\mathcal B(\mathbb G)$，每个节点 $\lambda$ 表示一组共享前缀的 trajectory，对应一段 process step；用其内部轨迹的均值 reward 定义 step-level reward。证明这个 MC-PRM-aware loss $L_{\text{PRM}}(\mathbb G)$ 数值上恒等于 $L_{\text{GRPO}}(\mathbb G)$。
-2. **算法侧**（Section 4–5）：用前缀树视角找到 vanilla GRPO 中 advantage 与归一化分母错配的缺陷，提出 $\lambda$-GRPO——在 loss 中插入一个 PRM-aware normalization 因子，使每个 process step 的 effective weight 与其在 group 中实际出现频次相协调。该修改一行代码即可加入 TRL。
+全文是一条"先证等价、再借等价诊断 bug、最后修 bug"的理论链。第一步在两个温和假设下，把同一 prompt 抽出的一组 trajectory 按共享前缀组织成一棵前缀树，证明 vanilla GRPO 的 loss 恒等于一个建立在这棵树上的 Monte-Carlo PRM 目标——也就是说 GRPO 暗地里一直在做 process-level credit assignment。第二步用这个 PRM 视角找出 vanilla GRPO 归一化里的不对称，第三步加一个 $\lambda$ 因子修复它，得到 $\lambda$-GRPO，一行代码即可落地。
 
 ### 关键设计
 
-1. **前缀树 $\mathcal B(\mathbb G)$ 与 process step 的构造**:
+**1. 前缀树 $\mathcal B(\mathbb G)$：把 GRPO 翻译成一个 MC-PRM 目标。**
 
-    - 功能：把"哪些 token 属于同一个 process step"形式化——同一前缀下的所有 trajectory 共享一个 step，step 的 reward 就是这组 trajectory 的均值 outcome reward。
-    - 核心思路：对组 $\mathbb G=\{y^{(1)},\dots,y^{(|\mathbb G|)}\}$ 定义 process set $\mathcal B(\mathbb G)=\{\lambda\subseteq\mathbb G\mid \exists n\geq 0,\forall y^{(i)},y^{(k)}\in\lambda: y_{:n}^{(i)}=y_{:n}^{(k)}\}$，按 $\supseteq$ 关系形成树。每个节点 $\lambda$ 对应一段 step，跨度 $[s(\lambda), e(\lambda))$；step-level reward $r_\lambda = \frac{1}{|\lambda|}\sum_{y^{(i)}\in\lambda} r^{(i)}$，advantage 仍按组均值归一化。在 $\mu=1$ 且 token-level loss 假设下证 $L_{\text{PRM}}(\mathbb G)=L_{\text{GRPO}}(\mathbb G)$。
-    - 设计动机：让"GRPO 在干什么"第一次有了 PRM 语义。该等价性意味着想得到 process reward 不必再训神经 PRM 或改算法，**只要 rollout 时让 trajectory 共享前缀**，免费就能拿到 MC-PRM 信号。作者还实证（Section 3.2）这种前缀共享在现实 GRPO 训练里非常普遍——所以这个"隐含 PRM"几乎总是非平凡的。
+要说清 GRPO 隐含的 process reward，先得把"哪些 token 属于同一个 process step"形式化。作者对组 $\mathbb G=\{y^{(1)},\dots,y^{(|\mathbb G|)}\}$ 定义 process set $\mathcal B(\mathbb G)=\{\lambda\subseteq\mathbb G\mid \exists n\geq 0,\forall y^{(i)},y^{(k)}\in\lambda: y_{:n}^{(i)}=y_{:n}^{(k)}\}$：每个 $\lambda$ 是一组共享同一段前缀的 trajectory，按 $\supseteq$ 关系它们自然形成一棵树，节点 $\lambda$ 对应一段 step、跨度 $[s(\lambda), e(\lambda))$。这段 step 的奖励就取组内这些轨迹的均值 outcome reward $r_\lambda = \frac{1}{|\lambda|}\sum_{y^{(i)}\in\lambda} r^{(i)}$，advantage 仍按组均值归一化。关键结论是：在 $\mu=1$（每批只更新一次）、DAPO 风格 token-level objective、忽略 clip 这三个温和假设下，这个 MC-PRM-aware loss $L_{\text{PRM}}(\mathbb G)$ 数值上恒等于 $L_{\text{GRPO}}(\mathbb G)$。这条等价性第一次给"GRPO 到底在干什么"赋予了 PRM 语义——想要 process reward 不必再训神经 PRM 或改算法，**只要 rollout 时让 trajectory 共享前缀**，MC-PRM 信号就免费送上门。作者还在 Section 3.2 实证这种前缀共享在真实 GRPO 训练里非常普遍，所以这个"隐含 PRM"几乎总是非平凡的。
 
-2. **缺陷诊断：advantage 与 step 频次的错配**:
+**2. 缺陷诊断：advantage 与 step 频次错配，会把好轨迹的前缀打成负分。**
 
-    - 功能：用前缀树视角揭示 vanilla GRPO 的一个具体反例——高 reward 轨迹的多数 token 反而被分配负 advantage，从而被 RL **降低** 概率。
-    - 核心思路：考虑图 1 中的 trajectory JKLNQU，假设它整体 reward 高于组均值，但它的前缀 JKL 与多条低分轨迹共享。在 PRM-aware 视角下，JKL 这段 step 的 step-reward 等于"JKL 之下所有轨迹的均值 reward"——这个均值被低分轨迹拉低，导致 JKL 三个 token 拿到**负** advantage；只有独属于 JKLNQU 的最后一个 token U 拿到正 advantage。但 vanilla GRPO 的 token-level loss 把整条 trajectory 视作一体，所有 token 共享同一个 sample-level $a_i$，这与 PRM 视角的"分段 advantage 应按 step 频次加权"不一致——具体地，loss 的分母 $\sum_{y^{(i)}}\text{len}(y^{(i)})$ 在 token 数与 step 出现频次失配时会引入系统性 bias。
-    - 设计动机：这条诊断把"GRPO 偶尔会把好轨迹搞砸"的直觉转化为一条可形式化的 bug。
+有了 PRM 视角，vanilla GRPO 的一个系统性 bug 就显形了。考虑图 1 的 trajectory JKLNQU，假设它整体 reward 高于组均值，但它的前缀 JKL 又和多条低分轨迹共享。在 PRM-aware 视角下，JKL 这段 step 的 step-reward 等于"JKL 之下所有轨迹的均值 reward"，被那些低分轨迹拉低，于是 JKL 三个 token 拿到的是**负** advantage，只有 JKLNQU 独占的最后一个 token U 拿到正 advantage。可 vanilla GRPO 的 token-level loss 把整条轨迹当一体，所有 token 共享同一个 sample-level $a_i$，这恰恰违背了 PRM 视角"分段 advantage 应按 step 出现频次加权"的要求——具体地，loss 的分母 $\sum_{y^{(i)}}\text{len}(y^{(i)})$ 在 token 数与 step 频次失配时会注入系统性 bias。这条诊断把"GRPO 偶尔会把好轨迹搞砸、甚至反而降低正确推理链概率"的模糊直觉，转化成了一条能在白板上画出来、能形式化的 bug。
 
-3. **$\lambda$-GRPO：PRM-aware 归一化**:
+**3. $\lambda$-GRPO：一个 PRM-aware 归一化因子。**
 
-    - 功能：在 GRPO 的 token-level loss 上加一个 process-step-频次感知的 normalization 因子 $\lambda$，恢复"高频共享 step 不应被反复 penalize / 反复 reward"的对称性。
-    - 核心思路：保持原 GRPO 的 sample-level advantage 不变，但把 token 累加时的分母从"全组 token 数"替换为按前缀树节点频次重加权的归一化项；可视作给每个 token 乘上 $\lambda_t = 1/n_t$（$n_t$ 是该 token 所属 process step 在组里出现的次数）。这样高频共享 step 的 token 不会因为出现多次而被反复推动。一行 patch 即可加入 TRL 的 GRPO trainer。
-    - 设计动机：保留 GRPO 不需要 critic / GAE 的轻量优势，又利用了已经免费拿到的 MC-PRM 信号。作者实测这个修改对训练时间几乎零开销，但在多个推理 benchmark 上稳定优于 vanilla GRPO，且**收敛快约 2 倍**——说明 bug 修复后梯度信号更干净。
+修法很轻：保持原 GRPO 的 sample-level advantage 不动，只把 token 累加时的分母从"全组 token 数"换成按前缀树节点频次重加权的归一化项，等价于给每个 token 乘上 $\lambda_t = 1/n_t$，其中 $n_t$ 是该 token 所属 process step 在组里出现的次数。这样高频共享的 step token 不会因为反复出现而被反复推动，恢复了"共享 step 不该被重复 penalize / 重复 reward"的对称性。它既保住了 GRPO 不需要 critic / GAE 的轻量优势，又用上了那份已经免费拿到的 MC-PRM 信号，一行 patch 即可塞进 TRL 的 GRPO trainer。作者实测它对每步训练时间几乎零开销，却能在多个推理 benchmark 上稳定优于 vanilla GRPO，且**收敛快约 2 倍**——说明把 bug 修掉后梯度信号确实更干净。
 
 ### 损失函数 / 训练策略
 - Vanilla GRPO（在 $\mu=1$、DAPO token-level 假设下）：

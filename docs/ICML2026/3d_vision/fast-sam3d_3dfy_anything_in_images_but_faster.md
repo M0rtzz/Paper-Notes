@@ -41,36 +41,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一张场景图 $I$ 与目标物体的 mask $M$，输出是该物体的 3D shape $S$、texture $T$ 和布局参数 $(R,t,s)$。Fast-SAM3D 不修改 SAM3D 权重，而是在三个原生阶段各插入一个加速模块：
+要解决的是 SAM3D 这条「SS generator → SLaT generator → Mesh decoder」三段式扩散重建跑得太慢的问题。Fast-SAM3D 的核心思路是：不动 SAM3D 的任何权重，而是在这三个原生阶段各塞进一个即插即用的加速模块，让算力按「阶段难度 + 实例复杂度」非均匀地花出去。
 
-1. **SS Generator**：在 25 步扩散去噪过程中，把 shape token 与 layout token 解耦使用不同的缓存策略；
-2. **SLaT Generator**：同样 25 步去噪，但在空间维度只对 top-K 高显著 token 重算，在时间维度按曲率自适应决定何时跳步；
-3. **Mesh Decoder**：用 mask 与粗 voxel 的频谱能量为该实例选一个下采样因子 $\mathcal{S}\in\{1.25, 1.5, 2.0\}$，对 sparse 3D token 做坐标量化 + max-pool 聚合。
-
-三者协同把对象级时间从 31.04 s 压到 11.60 s（2.67×），并把场景级时间从 462.3 s 压到 229.7 s（2.01×）。
+整条 pipeline 接收一张场景图 $I$ 和目标物体 mask $M$，输出该物体的 3D shape $S$、texture $T$ 与布局参数 $(R,t,s)$。第一阶段 SS generator 跑 25 步扩散，这里 shape token 与 layout token 被解耦成两套缓存规则，避免跳步把 pose 带偏；第二阶段 SLaT generator 同样 25 步，但在空间上只重算少数高显著 token、在时间上按轨迹曲率自适应决定何时跳步；最后一阶段 Mesh decoder 先用 mask 与粗 voxel 的频谱能量给当前实例挑一个下采样力度，再对 sparse 3D token 做坐标量化加 max-pool 聚合。三个模块叠在一起，把对象级时间从 31.04 s 压到 11.60 s（2.67×），场景级从 462.3 s 压到 229.7 s（2.01×）。
 
 ### 关键设计
 
-1. **Modality-Aware Step Caching for SS Generator**:
+**1. 模态感知步缓存（SS Generator）：让 shape 大步跳、layout 保守走，避免 pose drift**
 
-    - 功能：解耦 SS 阶段 shape token 与 layout token 的更新规则，让 shape 大步外推、layout 保守平滑，缓解 pose drift。
-    - 核心思路：对平滑演化的 shape token，做一阶有限差分 $\nabla \mathbf{v}^{\text{shape}}_t = (\mathbf{v}^{\text{shape}}_t - \mathbf{v}^{\text{shape}}_{t+k})/k$，跳步时直接 Taylor 外推 $\hat{\mathbf{v}}^{\text{shape}}_{t-i} = \mathbf{v}^{\text{shape}}_t + (-i)\nabla \mathbf{v}^{\text{shape}}_t$；对高频抖动的 layout token，先做相同的线性外推得到 $\mathbf{v}^{\text{layout}}_{\text{lin}}(t-i)$，再用最近一次全量评估得到的 anchor 做动量平滑 $\hat{\mathbf{v}}^{\text{layout}}_{t-i} = \beta \cdot \mathbf{v}^{\text{layout}}_{\text{lin}}(t-i) + (1-\beta) \cdot \mathbf{v}^{\text{layout}}_{\text{anchor}}$，$\beta \in [0,1)$。消融选 cache stride $k=3$、动量 $\beta=0.5$~$0.7$。
-    - 设计动机：作者通过画 update trajectory 发现 shape 是 short-range 近线性的，但 layout 是高频跳动的；若对 layout 也用纯外推，全局坐标系会被小误差放大成 pose drift。anchor 项提供了一个「拽回去」的力，把外推的发散风险压下去。
+SS 阶段的痛点是 shape token 和 layout token 的去噪动力学完全不同——作者画 update trajectory 发现 shape token 在轨迹上是 short-range 近线性的，而控制 $(R,t,s)$ 的 layout token 却高频抖动；如果对两者用同一套缓存策略，小误差会在全局坐标系上被放大成系统性的 pose drift。所以这里把二者拆开处理。对平滑的 shape token，做一阶有限差分 $\nabla \mathbf{v}^{\text{shape}}_t = (\mathbf{v}^{\text{shape}}_t - \mathbf{v}^{\text{shape}}_{t+k})/k$，跳步时直接 Taylor 外推 $\hat{\mathbf{v}}^{\text{shape}}_{t-i} = \mathbf{v}^{\text{shape}}_t + (-i)\nabla \mathbf{v}^{\text{shape}}_t$，敢大步跨。对高频的 layout token，先做同样的线性外推得到 $\mathbf{v}^{\text{layout}}_{\text{lin}}(t-i)$，再拿最近一次全量评估的 anchor 做动量平滑：
 
-2. **Joint Spatiotemporal Token Carving + Adaptive Step Caching for SLaT Generator**:
+$$\hat{\mathbf{v}}^{\text{layout}}_{t-i} = \beta \cdot \mathbf{v}^{\text{layout}}_{\text{lin}}(t-i) + (1-\beta) \cdot \mathbf{v}^{\text{layout}}_{\text{anchor}},\quad \beta \in [0,1)$$
 
-    - 功能：在 SLaT 的细化阶段同时砍空间冗余（哪些 token 要算）与时间冗余（哪些步要全量评估）。
-    - 核心思路：空间维度上构造统一显著度 $\mathcal{J}_i(t) = \tfrac{1}{2}(\mathcal{M}_i(t)+\gamma \mathcal{A}_i(t))+\tfrac{1}{2}\mathcal{S}_{\text{freq}}(i)$，其中 $\mathcal{M}_i(t) = \|\mathbf{v}_{t,i}\|_2$ 衡量更新幅度、$\mathcal{A}_i(t) = \|\mathbf{v}_{t,i}-\mathbf{v}_{t+1,i}\|_2$ 衡量突变量、$\mathcal{S}_{\text{freq}}(i)$ 是基于 FFT 的高频结构强度；每步只保留 top-K（消融选 top-10%）token 进入 backbone。时间维度上用曲率代理 $\kappa_t = \|\mathbf{v}_t-\mathbf{v}_{t-1}\|_2 / \|\mathbf{x}_t-\mathbf{x}_{t-1}\|_2$ 估计轨迹非线性，缓存切线增量 $\Delta_i := \mathbf{v}_i - \mathbf{x}_i$，跳步时 $\hat{\mathbf{v}}_t = \mathbf{x}_t + \Delta_i$；同时累计相对变化 $E_t = \sum \varepsilon_n$，一旦超过阈值 $\mathcal{E}$ 就触发全量评估刷新 anchor。
-    - 设计动机：作者把 SLaT 的 token-wise 真实更新画成 heatmap 发现是稀疏的——大量低熵区域已收敛、只剩高熵边缘还在改。纯空间剪枝忽略时间冗余，纯时间缓存又会在高曲率突变处累积漂移。两条机制并联起来才能把「无效计算」清干净，同时用 error-bounded switching 抑制误差爆炸。
+anchor 项相当于给外推套了根「橡皮筋」，把发散的风险拽回来。消融定下 cache stride $k=3$、动量 $\beta$ 取 0.5～0.7；这也是「token 角色感知 > 步级感知」这条思路最直接的体现。
 
-3. **Spectral-Aware Dynamic Token Aggregation for Mesh Decoder**:
+**2. 时空 Token 雕刻 + 自适应步缓存（SLaT Generator）：空间和时间冗余一起砍**
 
-    - 功能：按实例几何复杂度自适应决定 mesh decoder 输入 token 的下采样力度，简单物体激进压缩、复杂物体保留细节。
-    - 核心思路：对 mask $\mathbf{M}_{2D}$ 和粗 voxel $\mathbf{V}_{3D}$ 分别做 FFT，定义高频能量比 $\mathcal{H}(\mathbf{X}) = \sum_{\omega \in \Omega_{\text{high}}} \|\mathcal{F}(\mathbf{X})[\omega]\|_2^2 / \sum_{\omega \in \Omega_{\text{total}}} \|\mathcal{F}(\mathbf{X})[\omega]\|_2^2$，再融合成 $\mathcal{H}_{\text{joint}} = w\mathcal{H}(\mathbf{M}_{2D}) + (1-w)\mathcal{H}(\mathbf{V}_{3D})$。根据阈值 $\tau_{\text{low}}, \tau_{\text{high}}$ 选下采样因子 $\mathcal{S} \in \{1.25, 1.5, 2.0\}$。聚合方式是坐标量化 $\hat{\mathbf{p}}_i = \lfloor \mathbf{p}_i / \mathcal{S} \rfloor$ 加 bin 内 max-pool，token 数大约缩到 $1/\mathcal{S}^3$。
-    - 设计动机：可视化显示简单物体的频谱能量集中在低频边缘，复杂物体的高频能量散布到整个表面；instance-agnostic 的均匀下采样会把复杂物体的细节抹平。HFER 是个轻量、闭式可算的复杂度代理，正好做实例级路由信号。
+SLaT 做的是细化，作者把 token-wise 的真实更新画成 heatmap 后发现它极其稀疏——大片低熵区域早就收敛了，只剩边缘、接缝、薄结构这些高熵 token 还在改。纯空间剪枝会漏掉时间冗余，纯时间缓存又会在轨迹高曲率突变处累积漂移，所以这里把两条机制并联。空间维度上构造一个统一显著度
+
+$$\mathcal{J}_i(t) = \tfrac{1}{2}\big(\mathcal{M}_i(t)+\gamma \mathcal{A}_i(t)\big)+\tfrac{1}{2}\mathcal{S}_{\text{freq}}(i)$$
+
+其中 $\mathcal{M}_i(t) = \|\mathbf{v}_{t,i}\|_2$ 衡量更新幅度、$\mathcal{A}_i(t) = \|\mathbf{v}_{t,i}-\mathbf{v}_{t+1,i}\|_2$ 衡量突变量、$\mathcal{S}_{\text{freq}}(i)$ 是基于 FFT 的高频结构强度；每步只放 top-K（消融选 top-10%）token 进 backbone，相当于顺手当了个空间滤波器。时间维度上用曲率代理 $\kappa_t = \|\mathbf{v}_t-\mathbf{v}_{t-1}\|_2 / \|\mathbf{x}_t-\mathbf{x}_{t-1}\|_2$ 估计轨迹非线性，缓存切线增量 $\Delta_i := \mathbf{v}_i - \mathbf{x}_i$，跳步时直接 $\hat{\mathbf{v}}_t = \mathbf{x}_t + \Delta_i$。为了防止跳步误差爆炸，这里还累计相对变化 $E_t = \sum \varepsilon_n$，一旦越过阈值 $\mathcal{E}$ 就强制做一次全量评估刷新 anchor——这种 error-bounded switching 让方法在「敢跳」与「不爆」之间有了明确护栏。
+
+**3. 谱感知动态 Token 聚合（Mesh Decoder）：按实例复杂度决定压多狠**
+
+Mesh decoder 是 SAM3D 的真正瓶颈，但不同物体对 token 下采样的容忍度天差地别——可视化显示简单物体的频谱能量集中在低频边缘，复杂物体的高频能量散布到整个表面；用 instance-agnostic 的均匀下采样会把复杂物体的细节抹平。这里改成按实例自适应路由：对 mask $\mathbf{M}_{2D}$ 和粗 voxel $\mathbf{V}_{3D}$ 分别做 FFT，定义高频能量比（HFER）
+
+$$\mathcal{H}(\mathbf{X}) = \frac{\sum_{\omega \in \Omega_{\text{high}}} \|\mathcal{F}(\mathbf{X})[\omega]\|_2^2}{\sum_{\omega \in \Omega_{\text{total}}} \|\mathcal{F}(\mathbf{X})[\omega]\|_2^2}$$
+
+再融合成 $\mathcal{H}_{\text{joint}} = w\mathcal{H}(\mathbf{M}_{2D}) + (1-w)\mathcal{H}(\mathbf{V}_{3D})$，按阈值 $\tau_{\text{low}}, \tau_{\text{high}}$ 选下采样因子 $\mathcal{S} \in \{1.25, 1.5, 2.0\}$：简单物体激进压、复杂物体保细节。聚合本身是坐标量化 $\hat{\mathbf{p}}_i = \lfloor \mathbf{p}_i / \mathcal{S} \rfloor$ 加 bin 内 max-pool，token 数大约缩到 $1/\mathcal{S}^3$。HFER 计算几乎零成本又闭式可算，正好做轻量的实例级复杂度代理。
 
 ### 训练策略
-全套方法**训练无关**，不改 SAM3D 权重、不做任何蒸馏/量化。所有模块均为推理时插入，超参靠 grid search 在小验证集上挑：SS 阶段 cache stride $k=3$、momentum $\beta=0.7$ 附近；SLaT 阶段 carving 比例 top-10%、误差阈值 $\mathcal{E}$ 控制 anchor 刷新频率；Mesh 阶段 $w$ 与 $\tau$ 按数据集校准。
+全套方法**训练无关**——不改 SAM3D 权重，不做蒸馏也不做量化，所有模块都是推理时插入。超参靠在小验证集上 grid search 挑出来：SS 阶段 cache stride $k=3$、momentum $\beta$ 取 0.7 附近；SLaT 阶段 carving 比例 top-10%、误差阈值 $\mathcal{E}$ 控制 anchor 刷新频率；Mesh 阶段 $w$ 与 $\tau$ 按数据集校准。因为不碰权重，它还能和蒸馏/量化方案叠加使用。
 
 ## 实验关键数据
 

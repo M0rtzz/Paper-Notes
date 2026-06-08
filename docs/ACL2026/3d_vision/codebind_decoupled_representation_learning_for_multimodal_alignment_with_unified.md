@@ -43,23 +43,18 @@ CodeBind 用 shared-specific 表征解耦和组合式 VQ codebook 改造 ImageBi
 CodeBind 以冻结的视觉-语言基础模型作为桥接空间，把目标模态逐步对齐到 text/image 语义空间。每个模态 encoder 的输出先被投影成两个分量：$z^{\mathcal{M}}_{shared}$ 负责跨模态共享语义，$z^{\mathcal{M}}_{spec}$ 负责模态特有信息。shared 分量进入所有模态共用的 codebook，specific 分量进入各自模态的 specific codebook。量化后的 shared 与 specific embedding 拼接后交给 Transformer decoder 做重建，以约束信息不丢失；推理时如果只做跨模态对齐，可以只保留 shared embedding，并丢弃重建模块以降低成本。
 
 ### 关键设计
-1. **shared-specific 表征解耦**:
 
-	- 功能：把跨模态语义和模态私有细节拆开建模。
-	- 核心思路：传统对齐直接最大化不同模态完整 embedding 的互信息，容易把噪声和私有特征也强行对齐。CodeBind 只让 shared 分量参与跨模态对齐，并通过正交约束、uniform 约束和重建损失让 specific 分量保留非冗余细节。
-	- 设计动机：分类、跨模态检索需要“猫”这样的共享概念，但 fine-grained retrieval 还需要毛色、纹理、热模式或触觉压力等细节。解耦让两类需求不互相伤害。
+**1. shared-specific 表征解耦：让跨模态语义和模态私有细节各走各路。**
 
-2. **modality-shared-specific codebook**:
+传统对齐直接最大化两个模态完整 embedding 的互信息，会把颜色、纹理、热模式这些私有特征连同噪声一起硬塞进同一个空间，于是“猫”的共享概念有了，毛色和触觉压力却被抹平。CodeBind 把每个模态 encoder 的输出拆成两路：$z^{\mathcal{M}}_{shared}$ 只参与跨模态对齐，$z^{\mathcal{M}}_{spec}$ 专门兜住模态特有信息。两路之间用正交约束 $\mathcal{L}_{orth}$ 和 uniform 约束 $\mathcal{L}_{uni}$ 拉开、再用重建损失 $\mathcal{L}_{recon}$ 逼 specific 分量保留非冗余细节。这样分类、跨模态检索拿 shared 分量去找“猫”这种共享概念，fine-grained retrieval 又能回头取毛色、热模式或压力细节，两类需求不再互相伤害。
 
-	- 功能：用离散 codevector 作为统一语义基底，同时为不同模态保留专用表达空间。
-	- 核心思路：shared embedding 使用通用 codebook $\mathcal{C}_{shared}$；specific embedding 使用模态专属 codebook $\mathcal{C}^{\mathcal{M}}_{spec}$。例如 “striking” 在 shared space 中表示一般击打语义，在 audio/video/tactile 的 specific space 中分别对应声音、运动或压力模式。
-	- 设计动机：共享 codebook 让低资源模态不被主导模态拖偏，specific codebook 则防止所有细节被压缩成同一套抽象语义。
+**2. modality-shared-specific codebook：用离散 codevector 当统一语义基底，又给每个模态留专属表达空间。**
 
-3. **组合式向量量化**:
+如果所有模态都挤进一个连续空间，强势的图文模态会主导坐标系，低资源模态（深度、热成像、EEG）只能被拖着走。CodeBind 把 VQ codebook 当成分布无关的离散语义中心：shared embedding 全部量化到通用 codebook $\mathcal{C}_{shared}$，保证不同模态的语义锚点对齐；每个模态另配一套 specific codebook $\mathcal{C}^{\mathcal{M}}_{spec}$。举例来说，“striking” 在 shared space 里是一般的“击打”语义，到了 audio/video/tactile 的 specific space 就分别落成声音、运动和压力模式。共享 codebook 让低资源模态不被主导模态带偏，specific codebook 又挡住“所有细节被压成同一套抽象语义”的塌缩。
 
-	- 功能：在不扩大 codebook 参数量的前提下提高表达容量。
-	- 核心思路：把 $d$ 维 embedding 切成 $m$ 个子向量，每个子向量独立选择低维 codevector；若每个子 codebook 有 $K$ 个 codevector，则组合空间可达到 $K^m$。
-	- 设计动机：传统大 codebook 容易带来计算开销、codebook collapse 和低利用率；组合式 VQ 用小 codebook 拼出大容量，更适合多模态扩展。
+**3. 组合式向量量化：用小 codebook 拼出大容量。**
+
+提表达力最直接的办法是把 codebook 做大，但大 codebook 带来计算开销、codebook collapse 和低利用率。CodeBind 改成组合式量化：把 $d$ 维 embedding 切成 $m$ 个子向量，每个子向量独立到自己的低维子 codebook 里选一个 codevector；若每个子 codebook 有 $K$ 个 codevector，整个组合空间就能达到 $K^m$。于是参数量几乎没涨，可表达的离散组合却指数级放大，更适合不断往上加新模态的多模态场景。
 
 ### 损失函数或训练策略
 训练目标由多类损失组成。跨模态语义对齐使用 InfoNCE $\mathcal{L}_{align}$；表征解耦使用正交损失 $\mathcal{L}_{orth}$、uniform 损失 $\mathcal{L}_{uni}$ 和重建损失 $\mathcal{L}_{recon}$；codebook 稳定性通过 EMA 更新、commitment loss、动态重初始化，以及 codevector regularization $\mathcal{L}_{cctr}$、$\mathcal{L}_{cuni}$ 维护；shared codebook 的跨模态匹配由 Cross-Modal Code Matching loss $\mathcal{L}_{cm}$ 约束。为了减少手动调参，作者还设计了自适应 loss balancing，用 EMA 估计各损失量级，并相对 $\mathcal{L}_{align}$ 动态缩放权重。

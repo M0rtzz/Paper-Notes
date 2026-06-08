@@ -44,23 +44,18 @@ tags:
 给定点集 $P\subset\mathbb{R}^d$ 和近似因子 $c>1$，算法预处理时建立 $k$ 个独立 base data structures。每个 base structure 由 $N\approx \tilde{\Theta}(n^{1/c^2})$ 个高斯随机投影组成，并保存每个投影方向上最大的若干候选点。查询时，算法随机抽取 $m=\Theta(\log n)$ 个 base structures，收集它们返回的候选最远点集合，再用自适应鲁棒的距离估计结构估计候选到查询点的距离，返回估计最远的候选。
 
 ### 关键设计
-1. **带 slack 的 good query 定义**:
 
-    - 功能：把单个随机投影结构的成功条件从“这个查询能找到远点”强化成“附近查询也能继承成功”。
-    - 核心思路：若查询 $q$ 的真实最远邻 $p^*$ 在某个投影方向上足够突出，并且错误候选的 outlier projections 数量不超过 $8N$，则称 $q$ 对该投影矩阵是 $(c,\delta)$-good。作者证明用 $N=\tilde{\Theta}(n^{1/c^2})$ 个高斯投影，固定查询以至少 $3/4$ 概率满足该性质。
-    - 设计动机：自适应对手可能把下一次查询放在当前结构的边界附近。带 slack 的定义保证如果 $q'$ 距离 $q$ 小到 $\Delta/n^3$，那么 $q$ 的 good property 可以转移到 $q'$，为后面的空间覆盖打基础。
+**1. 带 slack 的 good query 定义：让单个查询的成功性质能"传染"给附近查询。**
 
-2. **查询空间覆盖 + 多副本 union bound**:
+自适应对手最爱把下一次查询放在当前结构的随机盲点边界附近，所以光证明"这个固定查询能找到远点"不够。作者把成功条件强化成带 slack 的版本：若查询 $q$ 的真实最远邻 $p^*$ 在某个投影方向上足够突出，且错误候选的 outlier projections 数量不超过 $8N$，就称 $q$ 对该投影矩阵是 $(c,\delta)$-good，并证明用 $N=\tilde{\Theta}(n^{1/c^2})$ 个高斯投影时，固定查询以至少 $3/4$ 概率满足该性质。slack 的意义在于：只要 $q'$ 距 $q$ 小到 $\Delta/n^3$，$q$ 的 good property 就能转移给 $q'$——这把离散的"固定查询成功事件"变成了可被网格覆盖的局部稳定事件，为下一步的空间覆盖铺好路。
 
-    - 功能：把“任意固定查询高概率成功”提升为“所有可能查询同时成功”。
-    - 核心思路：先证明离点集中心足够远的查询可以被 trivial answer 近似解决；剩下只需要覆盖一个有界球。作者在该球上建立网格，选择 $k=\tilde{\Theta}(d)$ 个独立 base structures，并用 Chernoff + union bound 证明每个网格点至少对 $k/2$ 个结构是 good。借助 smoothness，球内任意查询也至少对 $k/2$ 个结构 good。
-    - 设计动机：自适应查询序列长度可以无限延伸，因此不能依赖“每次查询失败概率很小”再对查询次数 union bound；必须一次性证明对整个连续查询空间成立。
+**2. 查询空间覆盖 + 多副本 union bound：从"任意固定查询"升级到"所有查询同时成立"。**
 
-3. **少量抽样候选 + 鲁棒距离估计**:
+自适应查询序列可以无限延伸，所以不能靠"每次失败概率很小"再对查询次数 union bound——必须一次性证明对整个连续查询空间成立。作者先说明离点集中心足够远的查询可以用 trivial answer 近似解决，于是只剩一个有界球需要覆盖；在该球上建网格，选 $k=\tilde{\Theta}(d)$ 个独立 base structures，用 Chernoff + union bound 证明每个网格点至少对 $k/2$ 个结构 good，再借上一条的 smoothness 把结论从网格点推广到球内任意查询，使任意自适应查询都至少对一半结构是 good query。这正是抵抗无限长 adaptive sequence 的关键。
 
-    - 功能：避免每次查询所有 $k$ 个结构，同时降低距离计算中的维度依赖。
-    - 核心思路：因为任意查询至少对一半 base structures good，从 $k$ 个结构中随机抽 $m=\Theta(\log n)$ 个，至少命中一个 good structure 的概率很高。候选集合大小约为 $\tilde{O}(n^{1/c^2})$ 或 $\tilde{O}(n^{2/c^2})$，可以直接算距离得到 $\tilde{O}(d n^{1/c^2})$ 查询时间，也可以对候选子集使用 Cherapanamjeri-Nelson 鲁棒距离估计，把查询时间改成 $\tilde{O}(\min\{n^{2/c^2},n\}+d)$，代价是近似因子变为 $(1+\epsilon)c$。
-    - 设计动机：随机抽样的 fresh randomness 不被过去查询污染；鲁棒距离估计作为黑盒嵌入 search algorithm，是论文里比较关键的组合技巧。
+**3. 少量抽样候选 + 鲁棒距离估计：既避免遍历全部结构，又压低维度依赖。**
+
+既然任意查询都至少对一半 base structures good，查询时就不必碰全部 $k$ 个，只需随机抽 $m=\Theta(\log n)$ 个，命中至少一个 good structure 的概率就很高；随机抽样的 fresh randomness 也不会被过去查询污染。收集到的候选集合大小约 $\tilde{O}(n^{1/c^2})$ 或 $\tilde{O}(n^{2/c^2})$：直接算距离可得 $\tilde{O}(d n^{1/c^2})$ 查询时间；也可以把 Cherapanamjeri-Nelson 鲁棒距离估计当黑盒套在候选子集上，把查询时间改成 $\tilde{O}(\min\{n^{2/c^2},n\}+d)$，代价是近似因子退化为 $(1+\epsilon)c$。把鲁棒距离估计嵌进 search algorithm 是全文比较关键的组合技巧——候选生成和候选距离比较各自鲁棒化，而不是试图对返回点做一次性全局稳定性证明。
 
 ### 损失函数 / 训练策略
 本文是理论算法论文，没有训练损失。预处理复杂度为 $\tilde{O}(d^2 n^{1+1/c})$；一个版本返回 $c$-approximate AFN，查询时间 $\tilde{O}(d n^{1/c^2})$；另一个版本返回 $(1+\epsilon)c$-approximate AFN，查询时间 $\tilde{O}(\min\{n^{2/c^2},n\}+d)$。空间复杂度分别包含 $\tilde{O}(d\cdot\min\{n,d n^{2/c^2}\})$ 或额外 $\tilde{O}(d^2)$ 项。
