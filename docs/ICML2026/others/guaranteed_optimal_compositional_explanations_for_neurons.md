@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **IoU 的精确分解 (dIoU) + 基本量**:
+**1. IoU 的精确分解 (dIoU) + 基本量：把全局指标改写成可在 prefix 上剪枝的局部项。**
 
-    - 功能：把全局指标 $IoU(L,N,M)=|^1N\cap{}^1M_L|/|^1N\cup{}^1M_L|$ 改写成**每个样本可独立累加、可由子公式量递推**的形式，使得最优搜索能在公式 prefix 上做剪枝。
-    - 核心思路：核心区分点是位置 $(x,j)$ 属于 $U$（恰被一个概念标注）还是 $C$（被 $\geq 2$ 个概念同时标注）。对 0-preserving 的逻辑算子（OR / AND / AND NOT 都满足），unique 元素的行为可由算子 truth table 精确推出（Observation 1）：OR 把两边 unique 加起来、AND 把 unique 全清零、AND NOT 等于左侧 unique。common 元素则需要看左右子公式在标注上是否 disjoint：disjoint 时可类比 unique 精确算，overlap 时只能给出区间。最终的等价性由 Lemma 3.6 严格保证：$dIoU=IoU$ 当且仅当算子皆 0-preserving，这恰好覆盖文献中所有常用算子。
-    - 设计动机：原始 IoU 只能在公式**完整组装完**之后计算，没法对 prefix 剪枝。引入 $U/C$ 切分后，"unique 部分"可精确推 + "common 部分"可估计上下界，启发式才可能是 admissible（必要条件是上界 $\geq$ 真值），这是整个最优算法的理论基石。
+原始 IoU $|^1N\cap{}^1M_L|/|^1N\cup{}^1M_L|$ 只能在公式完整组装好之后算，根本没法对未完成的 prefix 剪枝，而最优搜索恰恰需要"看一眼半截公式就能估上界"。本文的分解关键是按位置 $(x,j)$ 被几个概念同时标注，切成 unique $U$（恰一个概念）与 common $C$（$\ge2$ 个概念），再把神经元激活、与概念的交集、剩余项都按 $U/C$ 拆成 $N^U,N^C,I^U,I^C,E^U,E^C$ 六个基本量。对 0-preserving 的算子（OR、AND、AND NOT 都满足），unique 元素的行为可由 truth table 精确推出（Observation 1）：OR 把两边 unique 相加、AND 把 unique 清零、AND NOT 等于左侧 unique；common 元素则要看左右子公式在标注上是否 disjoint——disjoint 时可类比 unique 精确算、overlap 时只能给区间。最终等价性由 Lemma 3.6 保证：$dIoU=IoU$ 当且仅当算子皆 0-preserving，恰好覆盖文献里所有常用算子。"unique 可精确推 + common 可上下界"这一分离，正是后面启发式能做到 admissible（上界 $\ge$ 真值）的理论基石。
 
-2. **min/max 启发式 + 多步路径估计**:
+**2. min/max 启发式 + 多步路径估计：给任意 prefix 一个 admissible 的 $[dIoU_{\min},dIoU_{\max}]$。**
 
-    - 功能：对任意当前 prefix $L\in L^i$（$i\leq n$），给出未来沿 OR/AND/AND NOT 三类"独占路径"再拼最多 $n-i$ 个原子概念后能达到的 $[dIoU_{\min},dIoU_{\max}]$。
-    - 核心思路：分两层。**层一（单步估计）**：对当前 prefix 拼一个新概念 $k$，套 Disjoint Matrix $D$ 区分 disjoint/overlap 两种情形，按公式 (7)–(10) 算 $I^C/E^C$ 的 min/max；unique 部分按 Observation 1 精确算。**层二（多步路径估计）**：对每个量预先算 $\mathrm{Top}_k$ 和 $\mathrm{Bott}_k$（每样本上前/后 $k$ 大的概念量累加），用公式 (11)–(14) 对三种独占路径分别给出最终 $|I_{\min}|,|I_{\max}|,|\mathrm{Union}_{\min}|,|\mathrm{Union}_{\max}|$。算子之间的非独占路径取各路径的 max/min 即可（admissibility 仍保留）。最后 $dIoU_{\max}=\frac{\sum_x|I_{\max}(L)_x|}{\sum_x|\mathrm{Union}_{\min}(L)_x|}$，$dIoU_{\min}$ 对称。
-    - 设计动机：经典 A* 要 admissible 启发式才能保证最优——这里 $dIoU_{\max}$ 永远不低于真值就足够。同时作者还给了一个"aggregated computation"省钱版：把 per-sample 量先按样本求和再做 min/max，精度略降但每个 prefix 只算一次，远便宜于 sample-wise；frontier 入队用 aggregated 估计粗筛，pop 出来时再升级到 sample-wise 精算，最后才算真值。这种"分层精化"是把"启发式可负担"与"搜索可终止"同时拿下的关键。
+经典 A* 要 admissible 启发式才能保证最优，这里只需 $dIoU_{\max}$ 永远不低于真值。本文分两层算它。层一是单步估计：对当前 prefix 拼一个新概念 $k$，用 Disjoint Matrix $D$ 区分 disjoint/overlap，按公式 (7)–(10) 算 $I^C/E^C$ 的 min/max，unique 部分按 Observation 1 精确算。层二是多步路径估计：对每个量预先算 $\mathrm{Top}_k$ 和 $\mathrm{Bott}_k$（每样本前/后 $k$ 大概念量累加），用公式 (11)–(14) 对 OR/AND/AND NOT 三种独占路径分别给出 $|I_{\min}|,|I_{\max}|,|\mathrm{Union}_{\min}|,|\mathrm{Union}_{\max}|$，非独占路径取各路径 max/min（admissibility 仍保留），最后
 
-3. **best-first 最优搜索 + sub-label 反向传播**:
+$$dIoU_{\max}=\frac{\sum_x|I_{\max}(L)_x|}{\sum_x|\mathrm{Union}_{\min}(L)_x|}$$
 
-    - 功能：用 max-heap frontier 维护候选 prefix，每次 pop 当前 $dIoU_{\max}$ 最高的节点；若仍是 aggregated 估计就升级精度后回放入堆，若是 sample-wise 精算就展开（拼下一个 atomic concept × 算子）或评估真值；维护全局 $dIoU_{\min}^*$ 并剪掉所有 $dIoU_{\max}<dIoU_{\min}^*$ 的节点。
-    - 核心思路：四个关键 trick 让搜索可行：(a) **frontier 初始化**只放 $dIoU_{\max}>$ 全局 $dIoU_{\min}^*$ 的种子，避免一上来就爆炸；(b) **aggregated → sample-wise → exact 分级精化**，把昂贵的精算只用在确实有希望的节点上；(c) **sub-label backpropagation**：评估某条完整路径时顺手把途中产生的子公式精确量存下来，frontier 中所有共享相同子公式的节点都能用这些精确量替换估计，连锁收紧上界；(d) **逻辑等价剪枝 + 缓冲池**，去掉 `cat AND NOT cat`、`A OR A` 这类退化或重复表达。理论上由于 $dIoU_{\max}$ 是 admissible 上界且算法穷尽所有"上界高于当前最优下界"的节点，返回解必然全局最优（证明见 Appendix F）。
-    - 设计动机：束搜索的根本毛病是"不能回溯早期决定"，可能为补救早期错误而堆出依赖未验证场景的解释（论文中给出 `(ball_pit OR flower) AND NOT dining_room` 的反例：`ball_pit` 和 `dining_room` 实际上从不共现，等价于无效约束）。best-first + admissible 启发式从根本上修复这点：只要存在真值更高的解，它的某个 prefix 必然 $dIoU_{\max}$ 也高，绝不会被错误剪枝。
+$dIoU_{\min}$ 对称。为了让启发式本身可负担，作者还给了一个 aggregated 省钱版：先按样本求和再做 min/max，精度略降但每个 prefix 只算一次，远便宜于 sample-wise——frontier 入队用 aggregated 粗筛、pop 出来再升级到 sample-wise 精算、最后才算真值。这种"分层精化"是把"启发式可负担"和"搜索可终止"同时拿下的关键。
+
+**3. best-first 最优搜索 + sub-label 反向传播：把"探整个空间"压成"探一棵稀疏 A* 树"。**
+
+最优算法用 max-heap frontier 维护候选 prefix，每次 pop 当前 $dIoU_{\max}$ 最高的节点：若还是 aggregated 估计就升级精度后回堆，若已是 sample-wise 精算就展开（拼下一个 atomic concept × 算子）或评估真值，同时维护全局 $dIoU_{\min}^*$ 并剪掉所有 $dIoU_{\max}<dIoU_{\min}^*$ 的节点。四个 trick 让它真的能跑：frontier 初始化只放 $dIoU_{\max}>$ 全局下界的种子，避免一上来爆炸；aggregated → sample-wise → exact 分级精化把昂贵精算只用在有希望的节点；sub-label backpropagation 在评估完整路径时顺手把途中子公式的精确量存下来，frontier 里所有共享该子公式的节点都能用精确量替换估计、连锁收紧上界；逻辑等价剪枝 + 缓冲池去掉 `cat AND NOT cat`、`A OR A` 这类退化表达。由于 $dIoU_{\max}$ 是 admissible 上界且算法穷尽所有"上界高于当前最优下界"的节点，返回解必然全局最优（Appendix F）。这从根本上修复了束搜索"不能回溯早期决定"的毛病——反例 `(ball_pit OR flower) AND NOT dining_room` 里 `ball_pit` 和 `dining_room` 从不共现、约束实为无效，束搜索却会保留它，而 best-first 只要存在真值更高的解、它的某个 prefix 必然上界也高，绝不会被错误剪掉。
 
 ### 损失函数 / 训练策略
 无训练——这是个分析/解释算法，输入是已训好的 CNN、概念标注数据集和神经元的激活范围 $[\tau_1,\tau_2]$，输出是与神经元最对齐的逻辑公式。

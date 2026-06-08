@@ -50,23 +50,17 @@ tags:
 
 ### 关键设计
 
-1. **三分式数据划分 + "调参阈值即弃"**:
+**1. 三分式数据划分 +"调参阈值即弃"：把效率搜索和覆盖认证物理隔离。**
 
-    - 功能：把效率搜索和覆盖认证物理隔离，使标准分裂 CP 的可交换性论证在贝叶斯保形优化里复活。
-    - 核心思路：训练拟模型、调参选结构、校准定阈值各管一份数据；约束优化 $\min \widehat{\mathcal S}_{\text{tune}}$ s.t. $\widehat R_{\text{tune}}\le\alpha$ 同时吐出 $\hat\phi_{\text{tune}}$ 和 $\hat\lambda_{\text{tune}}$，但后者只用于在 $\Phi$ 内排序候选结构，**部署时弃用**；真正生效的阈值是后续在 $D_{\text{cal}}$ 上算出的 $\hat q_{1-\alpha}$。
-    - 设计动机：让 $\hat\phi_{\text{tune}}$ 关于 $D_{\text{cal}}$ 可测性显式成立，从而拿到无需 $\delta$、无需多重测试修正的有限样本边际覆盖。对比 BCP-CRC 把 $\min_\lambda \mathbb E|C(X;\lambda)|$ s.t. $\mathbb P(\mathbb P(Y\notin C)\le\alpha)\ge 1-\delta$ 全部塞进同一份 $D_{\text{cal}}$，DCO 把这两件事拆到不同 split 上。
+贝叶斯保形优化失保证的根源，是它把"找最优阈值"和"认证覆盖率"塞进同一份 $D_{\text{cal}}$——一旦分位数算在被搜索污染过的数据上，可交换性就破了，只能退而求其次给 $\delta$ 风险的 PAC 弱保证。本文的做法是把这两件事拆到不同数据上：训练用 $D_{\text{train}}$ 拟模型、调参用 $D_{\text{tune}}$ 选结构、校准用 $D_{\text{cal}}$ 定阈值，三份互不相交。调参阶段解约束优化 $\min \widehat{\mathcal S}_{\text{tune}}(\phi,\lambda)$ s.t. $\widehat R_{\text{tune}}(\phi,\lambda)\le\alpha$，同时吐出结构 $\hat\phi_{\text{tune}}$ 和阈值 $\hat\lambda_{\text{tune}}$，但**后者只用来在候选里排序，部署时直接丢掉**；真正生效的阈值是事后在那份从未被搜索碰过的 $D_{\text{cal}}$ 上重算的 $\hat q_{1-\alpha}$。这一弃一算之间，$\hat\phi_{\text{tune}}$ 对 $D_{\text{cal}}$ 的可测性就显式成立，经典分裂 CP 的可交换性论证原封不动复活，拿回无需 $\delta$、无需多重测试修正的有限样本边际覆盖 $\mathbb P\{Y_{m+1}\in C(X_{m+1})\}\ge 1-\alpha$。对比 BCP-CRC 把 $\min_\lambda \mathbb E|C(X;\lambda)|$ s.t. $\mathbb P(\mathbb P(Y\notin C)\le\alpha)\ge 1-\delta$ 全压在一份 $D_{\text{cal}}$ 上，DCO 只是"再切一刀数据"，换来的却是更强、更简洁的保证。
 
-2. **候选类规模与最终阈值脱钩**:
+**2. 候选类规模与最终阈值脱钩：可以无痛上更丰富的搜索空间。**
 
-    - 功能：让保形阈值不再随候选结构数 $K=|\Phi|$ 膨胀，可以无痛上更丰富的搜索空间。
-    - 核心思路：CRC/BQ-style 方法要在 $D_{\text{cal}}$ 上同时认证多个候选的风险，必须为多重测试加一项随 $K$ 增长的惩罚项；而 DCO 把候选筛选完全留在 $D_{\text{tune}}$ 内做，校准只针对一个已固定的 $\hat\phi_{\text{tune}}$ 跑一次分位数。
-    - 设计动机：Theorem 3.1 显式声明覆盖率保证对"任意 finite or infinite $\Phi$"都成立。代价仅由 Proposition 3.2 的调参样本复杂度承担：$m_{\text{tune}}\ge \max\{\log(4|\mathcal A|/\eta)/(2\varepsilon_R^2),\,B^2\log(4|\mathcal A|/\eta)/(2\varepsilon_S^2)\}$；候选数只影响"调参挑得好不好"，不影响"最终阈值合不合法"。
+CRC/BQ-style 方法要在 $D_{\text{cal}}$ 上同时认证一堆候选的风险，多重测试逼着它加一项随候选数 $K=|\Phi|$ 增长的惩罚，候选越多阈值被推得越高、预测集越大。DCO 把候选筛选整个关在 $D_{\text{tune}}$ 里完成，校准只针对已经固定下来的单个 $\hat\phi_{\text{tune}}$ 跑一次分位数，于是 Theorem 3.1 能直接声明覆盖保证对"任意有限或无限的 $\Phi$"都成立——神经网络结构、连续超参都能当候选，不必离散化也不付多重测试代价。候选规模付出的代价只落在 Proposition 3.2 的调参样本复杂度上：$m_{\text{tune}}\ge \max\{\log(4|\mathcal A|/\eta)/(2\varepsilon_R^2),\,B^2\log(4|\mathcal A|/\eta)/(2\varepsilon_S^2)\}$，也就是说候选多只影响"调参挑得好不好"，不影响"最终阈值合不合法"。
 
-3. **与 PAC 风格方法的渐进等价 + DirectTune 诊断基线**:
+**3. 与 PAC 风格方法渐进等价 + DirectTune 反面诊断：把定位讲清楚。**
 
-    - 功能：把 DCO 与 CRC/BQ-style 的关系刻画清楚——有限样本下保证类型不同（marginal coverage vs. high-probability risk control），大样本下却收敛到同一个总体阈值 $\lambda^\star=\inf\{\lambda:R(\lambda)\le\alpha\}$；同时给出 DirectTune（只调不校）作为反面教材，量化"省掉校准 split"的代价。
-    - 核心思路：在 $R(\lambda)$ 在 $\lambda^\star$ 邻域连续严格单调、分裂保形阈值一致 $\hat\lambda_{\text{DCO}}\xrightarrow{p}\lambda^\star$、且 CRC 的偏差项 $b_m(\lambda,\delta_m)$ 一致收敛到 $0$ 三条件下，Proposition 3.3 证明 $\hat\lambda_{\text{CRC}}-\hat\lambda_{\text{DCO}}\xrightarrow{p}0$。DirectTune 则把 $D_{\text{cal}}$ 也并入 $D_{\text{tune}}$ 直接部署 $\hat\lambda_{\text{tune}}$，没有可交换性保证，仅作覆盖–效率诊断。
-    - 设计动机：明确告诉用户 "DCO 不是来取代 CRC/BQ 的"——目标不同就保证不同；同时 DirectTune 在实验里通常预测集更小但覆盖不达标，反向证明最后那步 calibration 的必要性。
+DCO 不是来取代 CRC/BQ 的，所以本文特意刻画了两者的关系：有限样本下保证类型不同（边际覆盖 vs 高概率风险控制），但大样本下二者收敛到同一个总体阈值 $\lambda^\star=\inf\{\lambda:R(\lambda)\le\alpha\}$。在 $R(\lambda)$ 于 $\lambda^\star$ 邻域连续严格单调、$\hat\lambda_{\text{DCO}}\xrightarrow{p}\lambda^\star$、且 CRC 偏差项 $b_m(\lambda,\delta_m)$ 一致收敛到 0 三条件下，Proposition 3.3 证 $\hat\lambda_{\text{CRC}}-\hat\lambda_{\text{DCO}}\xrightarrow{p}0$——目标不同所以保证不同，但极限处殊途同归。为了让"省掉校准 split 的代价"看得见，作者还设了 DirectTune 当反面教材：它把 $D_{\text{cal}}$ 并进 $D_{\text{tune}}$ 直接部署 $\hat\lambda_{\text{tune}}$，没有可交换性，实验里预测集通常最小但覆盖不达标，反向坐实了最后那步 calibration 的必要性。
 
 ### 损失函数 / 训练策略
 调参阶段的目标即 (9) 式：$\min_{(\phi,\lambda)} \widehat{\mathcal S}_{\text{tune}}(\phi,\lambda)$ s.t. $\widehat R_{\text{tune}}(\phi,\lambda)\le\alpha$；实践中用 $\Phi\times\Lambda$ 网格搜索 + 单调线搜索求解。若无候选满足约束，则取经验失覆最小者并以平均集大小破并列。总计算复杂度 $O(K|\Lambda|m_{\text{tune}})$（调参）+ $O(m_{\text{cal}}\log m_{\text{cal}})$（校准排序）。

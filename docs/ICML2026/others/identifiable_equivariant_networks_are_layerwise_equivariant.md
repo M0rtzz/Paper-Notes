@@ -48,23 +48,17 @@ tags:
 
 ### 关键设计
 
-1. **子模型 (Submodel) 与冗余/失活神经元的统一形式化**:
+**1. 子模型（Submodel）：把冗余/失活神经元这类退化情形提升到架构无关的统一形式。**
 
-    - 功能：把 MLP 里"某些神经元参与不进前向计算"或"两个神经元功能完全相同"这类退化情形，提升到与具体架构无关的范畴论层面。
-    - 核心思路：子模型由 $(\widetilde V_i, \widetilde\Theta_i, \widetilde f_i)$ 加上一组联系映射 $\alpha_i: \widetilde V_i \to V_i$、$\alpha_i^*: V_i\to\widetilde V_i$（满足 $\alpha_i^*\circ\alpha_i = \mathrm{Id}$）、$\beta_i: \widetilde\Theta_i\to\Theta_i$ 构成，并要求一个交换图成立；对 MLP 而言取线性 $\alpha_i$，则子模型恰好对应"删掉若干失活神经元 / 把若干冗余神经元合并"得到的小网络。
-    - 设计动机：直接谈"参数唯一性"会被退化情形破坏（同一函数可对应无穷多个等价参数），但把退化全都解释成"来自更小的子模型"之后，就可以对"非退化"的部分单独要求可辨识性，从而绕过 ReLU 等病态激活带来的麻烦。
+谈"参数唯一性"绕不开一个麻烦：MLP 里某些神经元可能根本不参与前向计算，或两个神经元功能完全相同，于是同一函数对应无穷多个等价参数，可辨识性直接被破坏。本文的对策是把所有退化都解释成"来自一个更小的子模型"。子模型由 $(\widetilde V_i,\widetilde\Theta_i,\widetilde f_i)$ 加一组联系映射 $\alpha_i:\widetilde V_i\to V_i$、$\alpha_i^*:V_i\to\widetilde V_i$（满足 $\alpha_i^*\circ\alpha_i=\mathrm{Id}$）和 $\beta_i:\widetilde\Theta_i\to\Theta_i$ 构成，并要求一个交换图成立；对 MLP 取线性 $\alpha_i$ 时，子模型恰好就是"删掉失活神经元、合并冗余神经元"后得到的小网络。这样一来，退化的部分被子模型吃干净，剩下的非退化部分就可以单独要求可辨识性，从而绕开 ReLU 等病态激活带来的麻烦——这是整个证明能架构无关的地基。
 
-2. **弱可辨识性 (Weak Identifiability)**:
+**2. 弱可辨识性（Weak Identifiability）：把各家针对具体激活的辨识结果统一成一个最小假设。**
 
-    - 功能：把 Sussmann (1992)、Fefferman (1994)、Vlačić & Bölcskei (2022) 等针对具体激活的可辨识性结果，统一成本框架可用的最小假设。
-    - 核心思路：参数 $\theta$ 弱可辨识，是指存在某个子模型上的可辨识参数 $\widetilde\theta$ 使得 $\theta_i = \beta_i(\widetilde\theta_i)$；其中"可辨识"指：若 $f(\bullet;\theta) = f(\bullet;\theta')$，则存在唯一的 $k_i\in K_i$ 序列满足 $f_i(x;\theta_i') = k_i\cdot f_i(k_{i-1}^{-1}\cdot x;\theta_i)$。
-    - 设计动机：很多激活函数（Tanh、polynomial、sigmoidal 家族）已经被证明在去掉退化情形后参数是可辨识的，本框架直接把这些已有结果作为"输入"使用；ReLU 虽然仍是开放问题，但作者明确指出只要将来证明了 ReLU 的弱可辨识性，本文结论立刻自动适用。
+Sussmann、Fefferman、Vlačić & Bölcskei 等人对 Tanh、polynomial、sigmoidal 等具体激活各自证过可辨识性，本文要的是一把能直接复用这些结论的万能钥匙。定义是：参数 $\theta$ 弱可辨识，指存在某个子模型上的可辨识参数 $\widetilde\theta$ 使 $\theta_i=\beta_i(\widetilde\theta_i)$；而"可辨识"指若 $f(\bullet;\theta)=f(\bullet;\theta')$，则存在唯一的 $k_i\in K_i$ 序列满足 $f_i(x;\theta_i')=k_i\cdot f_i(k_{i-1}^{-1}\cdot x;\theta_i)$。这个假设的妙处在于它把"证明"和"具体激活"解耦：很多激活在去掉退化后已被证可辨识，本框架直接拿来当输入；ReLU 虽仍是开放问题，但作者明确指出一旦将来证明了 ReLU 的弱可辨识性，本文结论立刻自动适用。
 
-3. **伴随性质 (Adjunction Property) 与对称性的逐层渗透**:
+**3. 伴随性质（Adjunction Property）：把端到端等变的全局约束翻译成可逐层推导的局部条件。**
 
-    - 功能：把端到端等变性的"全局约束"翻译成可以一层一层推导的局部条件。
-    - 核心思路：要求 $G$ 也作用在第一层和最后一层的参数上，并满足 $f_1(g\cdot x_0; \theta_1) = f_1(x_0; g^{-1}\cdot\theta_1)$ 与 $g\cdot f_L(x_{L-1}; \theta_L) = f_L(x_{L-1}; g\cdot\theta_L)$；据此可以把输入端的 $g$ 作用"搬运"到第一层参数上，再借助弱可辨识性把它强行转化为某个 $k_1\in K_1$ 在 $V_1$ 上的作用，然后归纳推进到下一层。
-    - 设计动机：这个伴随条件不是凭空假设——MLP（$G$ 线性作用在输入/输出空间时）、加位置编码的注意力网络都自然满足；对于无位置编码的注意力或 CNN（这类层会"吸收"特定群作用），作者给出广义伴随性质 $g^{-1}\cdot f_i(g\cdot x, \theta) = f_i(x, g^{-1}\cdot\theta)$，证明同样适用。Deep Sets 和 equivariant GNN 这类"层本身就是等变线性算子"的情况会破坏伴随条件，作者诚实地指出此时定理不适用。
+主定理要做的是把"整张网络端到端等变"这个全局事实，一层层地传导成"每层各自等变"。关键支点是伴随性质：要求 $G$ 也作用在首末两层的参数上，并满足 $f_1(g\cdot x_0;\theta_1)=f_1(x_0;g^{-1}\cdot\theta_1)$ 与 $g\cdot f_L(x_{L-1};\theta_L)=f_L(x_{L-1};g\cdot\theta_L)$。有了它，就能把输入端的 $g$ 作用"搬"到第一层参数上，再借弱可辨识性把它强行转成某个 $k_1\in K_1$ 在 $V_1$ 上的作用，然后归纳推进到下一层。这个条件并非凭空假设——MLP（$G$ 线性作用于输入/输出时）、加位置编码的注意力网络都天然满足；对于无位置编码的注意力或会"吸收"群作用的 CNN，作者给出广义伴随性质 $g^{-1}\cdot f_i(g\cdot x,\theta)=f_i(x,g^{-1}\cdot\theta)$ 使证明照样成立；而 Deep Sets、equivariant GNN 这类"层本身就是等变线性算子"的架构会破坏伴随条件，作者诚实地指出定理在此不适用。
 
 ### 主定理与证明梗概
 

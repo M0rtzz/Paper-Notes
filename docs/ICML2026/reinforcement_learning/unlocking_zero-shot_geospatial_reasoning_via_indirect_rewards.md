@@ -44,23 +44,17 @@ Geo-R1 用 Qwen2.5-VL-7B 作 base，分两阶段后训练：阶段 1 是 Geospat
 
 ### 关键设计
 
-1. **Cross-View Pairing + Hard-Negative Bottleneck**：
+**1. Cross-View Pairing + Hard-Negative Bottleneck：用可验证的代理任务逼出 view-invariant 特征。**
 
-    - 功能：构造一个"可验证、可大规模生成、强制学到 view-invariant 特征"的代理任务。
-    - 核心思路：把图像信息分解为 view-invariant 几何语义 $\Phi(I)$ 与模态特异 nuisance 因素 $N(I)$。从同一时空邻域采样 hard negatives，使得 $\mathcal I(Y;N(\mathcal S))=0$，因此任何只依赖 nuisance 的策略都会得到 $\mathcal H(Y|\pi_{shortcut})=\log K$ 的最大熵（Theorem 3.1）。Geo-R1 的 binary reward $r_{acc}\in\{-1,+1\}$ 就足以最大化 $\mathcal I(C;Y|\mathcal S)\Leftrightarrow\mathcal I(C;\Phi(I_s^*))$，即推理链 $C$ 必须编码 $\Phi$。
-    - 设计动机：把"间接奖励能否激发推理"的可疑点固化为可证伪定理，并提供"难度差距 $\Delta\mathcal H=\log K$"作为 RL 必须跨越的 reasoning margin。
+间接奖励能不能激发推理是本文最被质疑的点，第一项设计就把这个疑点固化成可证伪定理。作者把图像信息拆成 view-invariant 几何语义 $\Phi(I)$ 和模态特异的 nuisance 因素 $N(I)$，再从同一时空邻域采样 hard negatives，使得 $\mathcal I(Y;N(\mathcal S))=0$——也就是说任何只依赖 nuisance 作弊的策略都只能拿到最大熵 $\mathcal H(Y|\pi_{shortcut})=\log K$（Theorem 3.1），等于瞎猜。于是哪怕只用二值奖励 $r_{acc}\in\{-1,+1\}$，模型要想拿分就必须最大化 $\mathcal I(C;Y|\mathcal S)\Leftrightarrow\mathcal I(C;\Phi(I_s^*))$，即推理链 $C$ 被迫去编码可迁移的几何语义 $\Phi$（物体几何、阴影方向、建筑布局）。hard negatives 在这里不是普通的难例，而是把"靠 nuisance 抄近路"这条路彻底堵死的瓶颈，难度差距 $\Delta\mathcal H=\log K$ 正是 RL 必须跨越的 reasoning margin。
 
-2. **CoT Scaffolding：单一模板的 Paradigm Injection**：
+**2. CoT Scaffolding：只注入一种推理范式，避免 RL cold-start 又不引入遗忘。**
 
-    - 功能：避免 RL cold-start 崩塌，但又不引入 SFT 任务多样性带来的灾难性遗忘。
-    - 核心思路：用 CV-Cities 合成 12.6K 个推理 trace，统一遵循"分析视觉线索 → 跨视图证据印证 → 关联地理常识 → 输出答案"的模板；引入 Fact-Check Engine 用 metadata 验证坐标 / 城市名等关键实体，保证 scaffold 不学到错事实。
-    - 设计动机：传统 SFT cold start 倾向覆盖大量任务以保证多样性，但会破坏后续 RL；本文反其道而行 — 只注入一种推理范式，让 RL 阶段自己探索具体能力。
+直接从 base 模型上 RL 容易 cold-start 崩塌，但传统 SFT 为保证多样性会灌大量任务、反而破坏后续 RL。Geo-R1 反其道而行——只用 CV-Cities 合成的 12.6K 推理 trace 注入**单一**模板："分析视觉线索 → 跨视图证据印证 → 关联地理常识 → 输出答案"，并引入 Fact-Check Engine 用 metadata 校验坐标 / 城市名等关键实体，保证 scaffold 不学到错事实。这样设计的逻辑是：SFT 阶段只负责把"怎么组织一段地理推理"这个范式灌进去，具体能力让 RL 阶段自己探索，既拿到了 RL warm-up，又把灾难性遗忘降到最低。
 
-3. **GRPO + 复合可验证奖励**：
+**3. GRPO + 复合可验证奖励：纯 outcome 信号下产出结构合规、长度适中的推理链。**
 
-    - 功能：在 outcome-only 奖励下产出结构合规、长度适中、不重复且高准确率的推理链。
-    - 核心思路：以 verifiable $r_{\mathrm{acc}}$ 为主信号，再加格式正则 $r_{\mathrm{fmt}}$、长度正则 $r_{\mathrm{len}}$、重复惩罚 $r_{\mathrm{rep}}$；用 GRPO 做 group-relative advantage 归一化以稳住长 horizon 更新；不在中间步骤引入 process reward，保持"过程自由、结果可验证"的纯 outcome 性。
-    - 设计动机：纯 outcome 奖励既廉价（无需 process annotation），又把所有自由度让给模型自己探索；正则项防止模型为骗 reward 而生成异常长 / 重复 / 无格式的输出。
+阶段 2 把训练目标切到 Cross-View Pairing，以 verifiable $r_{acc}$ 为主信号，再叠格式正则 $r_{fmt}$、长度正则 $r_{len}$、重复惩罚 $r_{rep}$，复合 reward $r=\lambda_{acc}r_{acc}+\lambda_{fmt}r_{fmt}+\lambda_{len}r_{len}+\lambda_{rep}r_{rep}$，用 GRPO 做 group-relative advantage 归一化稳住长 horizon 更新。关键是全程不在中间步骤引入 process reward，保持"过程自由、结果可验证"的纯 outcome 性——这既廉价（无需 process annotation），又把所有自由度让给模型自己探索；正则项只是防止模型为骗 reward 而生成异常长、重复或无格式的输出。仅靠 binary $\{-1,+1\}$ 的最简奖励就能驱动复杂推理，正说明 process reward 并非必须。
 
 ### 损失函数 / 训练策略
 阶段 1 标准 SFT 交叉熵 + Fact-Check 后过滤；阶段 2 用 GRPO，从 base 直接 RL 得到 Geo-R1-Zero，从 Geo-SFT 接续 RL 得到 Geo-R1；全参数微调，8×H100；推理用 vLLM 加速；hard negatives 在同一时空邻域采样以确保 nuisance 不可分。

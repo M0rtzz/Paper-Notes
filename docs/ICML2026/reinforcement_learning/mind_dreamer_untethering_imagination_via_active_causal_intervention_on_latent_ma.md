@@ -50,23 +50,17 @@ Mind Dreamer（MD）在 DreamerV3 的 RSSM 之上插入两组新模块：
 
 ### 关键设计
 
-1. **Active Causal Intervention（ACI）—— 把 EFE 抬升为全局曲线**:
+**1. Active Causal Intervention（ACI）：把 EFE 从路径上的标量抬成全局曲线，决定生成器往哪儿投放锚点。**
 
-    - 功能：决定生成器 $\mathcal{G}$ 该往哪儿"投放"锚点。
-    - 核心思路：对单个锚点 $s'$，先按 Active Inference 写出局部 EFE $G(s') = -\beta\,\mathcal{I}(s_\tau;o_\tau|\pi) - \eta\,\mathbb{E}_q[\ln p(o_\tau)]$，前一项是认知价值（不确定性消除），后一项是 pragmatic 价值（贴合任务先验）。再把它沿 $H$ 步想象轨迹折扣求和得到 Relay-EFE：$\Psi(s,s') = \mathbb{E}_q\big[\sum_{k=1}^{H}\gamma^k G(s_k) \mid s_0=s, s'\in\xi\big]$。直接对 $\Psi$ 做梯度上升不稳定，作者把它转写成 InfoNCE 对比损失 $\mathcal{L}_{contrast}=\max(0, m-(\Psi(s')-\max\Psi(s_{neg})))$，让生成的锚点"势能"严格高于一批历史/精英基线。
-    - 设计动机：让生成器同时考虑"我到了这儿能学到多少"与"我到了这儿离任务奖励有多近"，避免单纯好奇心带来的无目的漂移。
+世界模型靠密集自监督很快学到流形全局结构，策略却只靠稀疏奖励慢慢爬，于是想象始终被 buffer 起点困住——生成器要解的就是"该往哪个锚点跳"。对单个锚点 $s'$，先按 Active Inference 写出局部 EFE $G(s') = -\beta\,\mathcal{I}(s_\tau;o_\tau|\pi) - \eta\,\mathbb{E}_q[\ln p(o_\tau)]$，前一项是认知价值（不确定性消除）、后一项是 pragmatic 价值（贴合任务先验）；再沿 $H$ 步想象轨迹折扣求和得到 Relay-EFE $\Psi(s,s') = \mathbb{E}_q\big[\sum_{k=1}^{H}\gamma^k G(s_k) \mid s_0=s, s'\in\xi\big]$。直接对 $\Psi$ 梯度上升不稳，作者转写成 InfoNCE 对比损失 $\mathcal{L}_{contrast}=\max(0, m-(\Psi(s')-\max\Psi(s_{neg})))$，让生成锚点的势能严格高于一批历史/精英基线。这样生成器同时考虑"到了这儿能学到多少"和"到了这儿离任务奖励有多近"，避免单纯好奇心带来的无目的漂移。
 
-2. **Relay Value / Uncertainty Function—— 跨断点的信用分配**:
+**2. Relay Value / Uncertainty Function：跨断点的信用分配。**
 
-    - 功能：把"先跳到 $s'$ 再展开"的多步收益和信息增益沿 Bellman 递推回到出发点 $s$，从而能对 $s'$ 做反向梯度。
-    - 核心思路：把 $s'$ 当 *intermediary* 而非 *terminal*。定义首次命中时间 $\tau_{s'}=\inf\{t\ge 0: s_t=s'\}$，则 Pragmatic Relay 算子写成 $(\mathcal{T}_V V)(s,s')=\mathbb{E}_\pi\big[\sum_{t=0}^{\tau_{s'}-1}\gamma^t r_t + \gamma^{\tau_{s'}} V_\phi(s')\big]$；Epistemic Relay 算子结构类似，但信息增益 $\mathcal{I}_{t+1}$ 用 $\gamma^{2t}$ 折扣，即 $(\mathcal{T}_U U)(s,s')=\mathbb{E}_\pi\big[\sum_{t=0}^{\tau_{s'}-1}\gamma^{2t}\mathcal{I}_{t+1} + \gamma^{2\tau_{s'}} U_{\phi_u}(s')\big]$。两者都是 $\ell_\infty$ 范数下的压缩映射（一个 $\gamma$ 因子、一个 $\gamma^2$ 因子），保证唯一不动点。
-    - 设计动机：$\gamma^2$ 不是经验调参——按方差算子性质 $\mathrm{Var}(\sum\gamma^t\epsilon_t)=\sum\gamma^{2t}\mathrm{Var}(\epsilon_t)$，认知冲击天然以二次速率衰减；用线性 $\gamma$ 会让远端的模型方差越滚越大形成幻觉，作者称之为 *Epistemic Horizon*——给认知好奇心一个内生的截断半径。
+想象路径一旦"teleport"到合成锚点 $s'$，就出现空间断裂，标准 Bellman 没法把 $s'$ 之后的回报和信息增益传回出发点 $s$，也就没法对 $s'$ 做反向梯度。MD 把 $s'$ 当中间过渡态而非终止目标：定义首次命中时间 $\tau_{s'}=\inf\{t\ge 0: s_t=s'\}$，Pragmatic Relay 算子写成 $(\mathcal{T}_V V)(s,s')=\mathbb{E}_\pi\big[\sum_{t=0}^{\tau_{s'}-1}\gamma^t r_t + \gamma^{\tau_{s'}} V_\phi(s')\big]$；Epistemic Relay 算子结构类似，但信息增益 $\mathcal{I}_{t+1}$ 用 $\gamma^{2t}$ 折扣 $(\mathcal{T}_U U)(s,s')=\mathbb{E}_\pi\big[\sum_{t=0}^{\tau_{s'}-1}\gamma^{2t}\mathcal{I}_{t+1} + \gamma^{2\tau_{s'}} U_{\phi_u}(s')\big]$，两者都是 $\ell_\infty$ 范数下的压缩映射（一个 $\gamma$、一个 $\gamma^2$）保证唯一不动点。$\gamma^2$ 不是经验调参——按方差算子性质 $\mathrm{Var}(\sum\gamma^t\epsilon_t)=\sum\gamma^{2t}\mathrm{Var}(\epsilon_t)$，认知冲击天然以二次速率衰减；用线性 $\gamma$ 会让远端的模型方差越滚越大形成幻觉，作者称之为 *Epistemic Horizon*——给认知好奇心一个内生的截断半径。
 
-3. **流形锚定 $\mathcal{L}_{mf}$ 与对抗联合训练**:
+**3. 流形锚定 $\mathcal{L}_{mf}$ 与对抗联合训练：把生成器关进世界模型可信的信赖域。**
 
-    - 功能：约束生成器只能在世界模型可信的隐流形上活动，防止把策略带到模型自身都说不准的"裂缝"。
-    - 核心思路：$\mathcal{L}_{mf} = \mathcal{H}\big(p_\psi(\cdot|s',a)\big) + D_{KL}\big[\mathrm{Enc}(\mathrm{Dec}(s'))\,\|\,s'\big]$。前一项惩罚转移分布的熵（模型对自身后继状态越不确定，越说明此处不可信），后一项是 cycle-consistency——重编码后能否回到自己，作为"是否落在重建流形上"的代理。生成器最终最大化 $\eta V_{RVF} + \beta V_{RUF} - \lambda \mathcal{L}_{mf}$。
-    - 设计动机：作者证明跳跃误差 $\delta=\|s'-\mathrm{Proj}_\mathcal{M}(s')\|$ 在 $L$-Lipschitz 值场下满足 $\epsilon_V \le L\delta/(1-\gamma^n)$。把 $\delta$ 压住，就把对抗生成器关进"悲观信赖域"，从理论上保证想象不会催生策略崩溃。
+生成器可以造出 buffer 凸包外的状态，但必须保证它们落在世界模型可信的流形上，否则会把策略带到模型自己都说不准的"裂缝"里催生幻觉。约束写成 $\mathcal{L}_{mf} = \mathcal{H}\big(p_\psi(\cdot|s',a)\big) + D_{KL}\big[\mathrm{Enc}(\mathrm{Dec}(s'))\,\|\,s'\big]$：前一项惩罚转移分布的熵（模型对后继越不确定越说明此处不可信），后一项是 cycle-consistency（重编码后能否回到自己，作为"是否落在重建流形上"的代理）；生成器最终最大化 $\eta V_{RVF} + \beta V_{RUF} - \lambda \mathcal{L}_{mf}$。作者证明跳跃误差 $\delta=\|s'-\mathrm{Proj}_\mathcal{M}(s')\|$ 在 $L$-Lipschitz 值场下满足 $\epsilon_V \le L\delta/(1-\gamma^n)$——只要把 $\delta$ 压住，就把对抗生成器关进悲观信赖域，从理论上保证想象不会催生策略崩溃。消融里去掉 $\mathcal{L}_{mf}$ 直接让 MD 输给 DreamerV3，说明这条底线比 Relay 设计本身还关键。
 
 ### 损失函数 / 训练策略
 按 Algorithm 1：一步内先用 buffer 的真实数据按 RSSM 损失更新世界模型；然后采 $s_0 \sim \mathcal{D}$、$s' \leftarrow \mathcal{G}_\theta(s_0,\epsilon)$、负例池 $s_{neg}$，按 $\mathcal{L}_{contrast}+\lambda\mathcal{L}_{mf}$ 更新 $\theta$；再从 $s'$ 的后验特征 $z_{s'}$ 开始想象 rollout，TD 学习更新策略、$V_\phi$、$U_{\phi_u}$，Relay 势场用 $k$-步 HER 配合非递归 bootstrap 目标更新；最后在真实环境里执行 $\pi_\omega$ 回收数据。Relay 势场使用 quasi-static target network，世界模型更新频率显著低于生成器，避免对抗的非平稳性传染到策略训练。

@@ -45,23 +45,21 @@ GRPO 框架不变：对每个输入 $x_i$ 采样 $K$ 条生成轨迹得到数值
 
 ### 关键设计
 
-1. **批次级相对比较向量构造**：
+**1. 批次级相对比较向量：把每个预测放进「群体」里评价，引入跨样本关系。**
 
-    - 功能：让每个采样预测在"minibatch 群体"语境下被评价，引入跨样本关系。
-    - 核心思路：对 minibatch $\{x_1,\ldots,x_B\}$，每个 $x_i$ 采 $K$ 条轨迹；评估 $q_k(x_i)$ 时，把它和"其他 B-1 个样本的均值预测"拼成长度 B 的向量 $\mathbf{q}_{i,k}$；真值侧也按同样下标顺序拼成 $\mathbf{y}_i$；这两个向量送进 CCC 算分。用 $\mu(x_j)$ 作为他人锚点而不是单条采样，是为了降低交叉样本随机性带来的奖励噪声。
-    - 设计动机：传统 GRPO reward 是 $r_k = \text{MAE}(q_k, y_i)$，永远只看单点；只要每个样本独立"贴近自己的真值"模型就被奖励，但这恰好鼓励它统统向高密度区域塌缩。把"和其他人比"嵌入到 reward 向量里，就把"群体分布形状"信号传进了梯度。
+传统 GRPO 的 reward 是 $r_k=\text{MAE}(q_k, y_i)$，永远只盯单点——只要每个样本各自「贴近自己的真值」就给奖励，可这恰恰鼓励模型把所有样本都往高密度区域塌缩。要打破这点，就得让 reward 看到「群体分布形状」。具体做法是：对 minibatch $\{x_1,\ldots,x_B\}$ 每个样本采 $K$ 条轨迹，评估某条预测 $q_k(x_i)$ 时不再孤立地看它和 $y_i$ 的距离，而是把它和「其他 $B-1$ 个样本的均值预测」拼成一个长度 $B$ 的向量 $\mathbf{q}_{i,k}=[q_k(x_i),\{\mu(x_j)\}_{j\neq i}]$，真值侧按同样下标顺序拼成 $\mathbf{y}_i=[y_i,\{y_j\}_{j\neq i}]$，再把这两个向量送去算分。用其他样本的均值 $\mu(x_j)$ 当锚点、而不是随手抓一条采样，是为了压低交叉样本随机性带来的奖励噪声。这样一来，「你不能把所有人都预测成同一个值」这条信号就被嵌进了 reward 向量、进而传进梯度。
 
-2. **CCC 奖励：同时管相关、方差、均值**：
+**2. CCC 奖励：一个标量同时管相关、方差、均值三件事。**
 
-    - 功能：给一个标量奖励，同时编码三件事——相关性、规模一致、均值对齐。
-    - 核心思路：$\text{CCC}(\mathbf{q}, \mathbf{y}) = \frac{2\,\text{Cov}(\mathbf{q}, \mathbf{y})}{\text{Var}(\mathbf{q}) + \text{Var}(\mathbf{y}) + (\mu_{\mathbf{q}} - \mu_{\mathbf{y}})^2}$。分子是协方差（奖排序一致），分母里 $\text{Var}(\mathbf{q})$ 太小（塌缩）会被惩罚，$(\mu_{\mathbf{q}} - \mu_{\mathbf{y}})^2$ 太大（系统偏置）也会被惩罚；纯 Pearson 只奖相关不管尺度均值，纯 ranking 只管顺序不管数值，CCC 三件齐管。
-    - 设计动机：长尾回归塌缩的两个典型病灶——方差变小（统统预测一个值）和均值漂移（系统性偏向 head 中心）——刚好被 CCC 分母两项各打一棒；在 sparse 区域，CCC 比 pure Pearson 更不易出"看似相关其实压缩"的伪好结果。
+把比较向量送进谁来打分？本文选了一致相关系数（Concordance Correlation Coefficient）：
 
-3. **配套数据基准：DIR-for-MLLM 统一评测协议**：
+$$\text{CCC}(\mathbf{q}, \mathbf{y}) = \frac{2\,\text{Cov}(\mathbf{q}, \mathbf{y})}{\text{Var}(\mathbf{q}) + \text{Var}(\mathbf{y}) + (\mu_{\mathbf{q}} - \mu_{\mathbf{y}})^2}$$
 
-    - 功能：建一个公平评测 MLLM 长尾回归的 benchmark，避免不同方法用不同 split 没法比。
-    - 核心思路：把 AgeDB-DIR、IMDB-WIKI-DIR、IMDB-Movie-DIR（电影海报评分，作者新构）、BoneAge-DIR 四个长尾回归任务统一为 dialogue 格式 MLLM 输入；训练集保持自然长尾分布，测试集按 shot 区域（many >100, medium 20-100, few <20）切分以平衡评估；共 129k+ 样本；评价用 MAE + GM（几何均值，对均匀性更敏感）。
-    - 设计动机：传统 DIR 方法都在 CNN + 回归头上发展，没有 token-decoder 设定；作者把 DIR 移植到 MLLM 上需要先把数据 / 评测协议跑通，否则后续比较都是无源之水。
+它的几何结构刚好对准长尾塌缩的两大病灶。分子是协方差，奖励排序一致；分母里 $\text{Var}(\mathbf{q})$ 一旦太小（预测全挤成一个值）就会把整体分数压下去，$(\mu_{\mathbf{q}}-\mu_{\mathbf{y}})^2$ 一旦太大（系统性偏向 head 中心）也会被惩罚。换句话说，「方差塌缩」和「均值漂移」这两个长尾回归最典型的失败模式，被 CCC 分母的两项各打一棒。相比之下，纯 Pearson 只奖相关、不管尺度和均值，纯 ranking 只管顺序、不管具体数值，都治不住塌缩；在样本稀疏的 few-shot 区域，CCC 也比 Pearson 更不容易给出「看着相关、实则压缩」的伪好结果。
+
+**3. DIR-for-MLLM 评测协议：先把长尾回归的公平 benchmark 搭起来。**
+
+经典的深度不平衡回归（DIR）方法全都长在 CNN + 回归头上，没有 token-decoder 这种生成式设定，方法之间各用各的 split，根本没法横向比。所以本文先把评测地基打平：把 AgeDB-DIR、IMDB-WIKI-DIR、作者新构的 IMDB-Movie-DIR（电影海报评分）、BoneAge-DIR 四个长尾任务统一改写成 dialogue 格式的 MLLM 输入，训练集保留自然长尾分布、测试集按 shot 区域切分（many >100、medium 20–100、few <20）以平衡评估，合计 129k+ 样本，并用 MAE 加 GM（几何均值，对各区域均匀性更敏感）作指标。有了这套统一协议，后面 CCC-GRPO 和各种 baseline 的比较才站得住，否则都是无源之水。
 
 ### 损失函数 / 训练策略
 完全沿用 GRPO 优化器，不改算法本身，只换 reward；reward = CCC + 轻量格式奖励；group 内 z-score 归一得相对 advantage；backbone 用 Qwen2.5-VL-3B 和 7B；测试集 shot-aware 评估保证 head/tail 对比公平。

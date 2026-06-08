@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **凸盆存在性 (Assumption 2.1 + 定理 3.1)**:
+**1. 凸盆存在性（Assumption 2.1 + 定理 3.1）：把"高维凸盆是否存在"塌缩成纯一维高斯积分条件。**
 
-    - 功能：刻画哪些链接函数让平方损失 $\mathcal L(\beta)=\frac12\mathbb E[(f(X^\top\beta)-Y)^2]$ 在 $\beta^\star$ 周围有维度无关常半径凸盆。
-    - 核心思路：在 $\beta^\star$ 处用高斯对称性把 Hessian 化简成 $\mathbb E[(f'(Z))^2]\mathbf I_d+(\mathbb E[Z^2(f'(Z))^2]-\mathbb E[(f'(Z))^2])\beta^\star\beta^{\star\top}$，于是 $\lambda_{\min}(H(\beta^\star))=\mu:=\min\{\mathbb E[f'(Z)^2],\mathbb E[Z^2 f'(Z)^2]\}$；再用 Mean-Value-Theorem 把 $H(\beta)-H(\beta^\star)$ 的算子范数上界拆解成 $C_{\text{lip}}(R):=\sup_{\|\beta-\beta^\star\|\le R}\sqrt{\mathbb E_{z\sim\mathcal N(0,\|\beta\|^2)}[18f'(z)^2 f''(z)^2+2f'''(z)^2 f(z)^2]}\cdot\|\beta-\beta^\star\|$，关键观察是 $C_{\text{lip}}(R)$ 只涉及 $f$ 与其前三阶导数的一维高斯积分，与维度 $d$ 无关。选 $R\le\mu/(2(315)^{1/4}C_{\text{lip}}(R))$ 即可保证 $\|\Delta(\beta)\|_{\text{op}}\le\mu/2$，从而整个球 $\mathcal B(\beta^\star,R)$ 上 $\frac{\mu}{2}\mathbf I_d\preceq H(\beta)\preceq(\frac{\mu}{2}+\mu_1)\mathbf I_d$。
-    - 设计动机：把"凸盆是否存在"的高维问题塌缩成一维高斯积分条件，使得只要 $f$ 及其三阶导数有有限四阶矩 (满足多项式增长) 就自动通过，从而把 GeLU、Swish、Tanh、Probit、Logistic、phase retrieval 统一进同一框架。
+鲁棒恢复要能跑二阶收敛证明，前提是平方损失 $\mathcal L(\beta)=\frac12\mathbb E[(f(X^\top\beta)-Y)^2]$ 在 $\beta^\star$ 附近有一个维度无关的常半径凸盆，可这件事在非单调链接上没人证过。作者的处理是把整套高维结构压回一维：先在 $\beta^\star$ 处用高斯对称性把 Hessian 化简成
 
-2. **ESC 条件 + LRSI 谱初始化 (Assumption 2.2 + 定理 4.2)**:
+$$H(\beta^\star)=\mathbb E[(f'(Z))^2]\,\mathbf I_d+\big(\mathbb E[Z^2(f'(Z))^2]-\mathbb E[(f'(Z))^2]\big)\beta^\star\beta^{\star\top},$$
 
-    - 功能：用二阶矩谱方法把随机初始化推进到凸盆内，且在强对抗污染下仍有保证。
-    - 核心思路：定义 $\tilde Y:=Y X$。由 Stein 二阶恒等式可证 $\beta^\star$ 是 $\mathbb E[\tilde Y\tilde Y^\top]$ 的最大特征向量当且仅当 $\mathrm{ESC}(\beta^\star;f)>0$（这是更高阶的"单调性"，因为 $\mathrm{ESC}(\beta,f)=\mathbb E[(f^2(X^\top\beta))'']$）。再证明 $\tilde Y$ 是 $(4,C_4)$ 超收缩的，其中 $C_4=3(\mathbb E[f(X^\top\beta^\star)^8]^{1/8}+K_4)/\sigma$，因此可直接套用 Jambulapati 等 (2024) 的近线性时间鲁棒 1-ePCA 子程序提取主特征向量 $\hat u$，得到 $\beta_0:=\hat u$。理论保证 $\text{dist}(\beta_0,\beta^\star)=O(C_4\epsilon^{1/4}\sqrt{\sigma^2+\mathbb E[f^2]+c}/\sqrt c)$，其中 $c=\mathrm{ESC}(\beta^\star;f)$，并保证 $\beta_0$ 以高概率落入凸盆。
-    - 设计动机：以前的相位恢复初始化依赖 $f$ 的对称性，无法推广到非对称的 GeLU/Swish；ESC 把"信号方向可被二阶矩谱方法识别"刻画成一个纯链接函数侧的条件，配合超收缩性把鲁棒 PCA 的复杂度收紧到 $O(nd)$，同时保证在污染下的可达性。
+于是最小特征值 $\lambda_{\min}(H(\beta^\star))=\mu:=\min\{\mathbb E[f'(Z)^2],\mathbb E[Z^2 f'(Z)^2]\}$。再用中值定理把 $H(\beta)-H(\beta^\star)$ 的算子范数上界拆成 $C_{\text{lip}}(R)\cdot\|\beta-\beta^\star\|$，其中 $C_{\text{lip}}(R)=\sup_{\|\beta-\beta^\star\|\le R}\sqrt{\mathbb E_{z\sim\mathcal N(0,\|\beta\|^2)}[18f'(z)^2 f''(z)^2+2f'''(z)^2 f(z)^2]}$——关键就在这里：$C_{\text{lip}}(R)$ 只涉及 $f$ 及其前三阶导数的一维高斯积分，跟维度 $d$ 毫无关系。取 $R\le\mu/(2(315)^{1/4}C_{\text{lip}}(R))$ 就能保证整个球 $\mathcal B(\beta^\star,R)$ 上 $\frac{\mu}{2}\mathbf I_d\preceq H(\beta)\preceq(\frac{\mu}{2}+\mu_1)\mathbf I_d$。这样一来"凸盆是否存在"只剩一个判据：$f$ 及其三阶导数有有限四阶矩（多项式增长即可），于是 GeLU、Swish、Tanh、Probit、Logistic、相位恢复被一口气收进同一框架。
 
-3. **LRGD 鲁棒梯度下降 (定理 4.1)**:
+**2. ESC 条件 + LRSI 谱初始化（Assumption 2.2 + 定理 4.2）：用二阶矩谱方法在污染下走进凸盆。**
 
-    - 功能：把谱初始化得到的 $O(\epsilon^{1/4})$ 误差打磨到 $O(\sigma\sqrt\epsilon)$ 的最优率。
-    - 核心思路：在凸盆内 $\mathcal L$ 是 $\gamma=\mu/2$ 强凸 + $\alpha=\mu/2+\mu_1$ 光滑，故标准 GD 在 $\eta=2/(\alpha+\gamma)$ 下线性收敛；但真实算法只能拿到污染样本，因此把 $\nabla\mathcal L(\beta)=\mathbb E[(f(X^\top\beta)-Y)f'(X^\top\beta)X]$ 写成期望形式，再用 Diakonikolas 等 (2022) 的鲁棒均值估计 (Lemma 2.2) 替换期望，得到鲁棒梯度估计 $\hat g$ 满足 $\|\hat g-\nabla\mathcal L(\beta)\|=O(\sigma'\sqrt\epsilon)$。每一步用一个独立桶 (sample splitting) 来避免与轨迹相关的串扰，迭代 $P=O(1)$ 步后即可压到目标精度。
-    - 设计动机：单靠谱估计会卡在 $\epsilon^{1/4}$ 的统计下界 (类似相位恢复的 Wirtinger Flow 也需要 GD 细化)；用鲁棒均值估计代替原期望保持了 $\tilde O(nd)$ 的近线性时间，同时把误差打到信息论意义上的最优 $\sigma\sqrt\epsilon$ 量级。
+凸盆存在还不够，得能从随机初始化高效到达它，而以前的相位恢复初始化依赖 $f$ 的对称性，搬不到非对称的 GeLU/Swish 上。作者定义 $\tilde Y:=YX$，由 Stein 二阶恒等式证明：$\beta^\star$ 是 $\mathbb E[\tilde Y\tilde Y^\top]$ 的最大特征向量，当且仅当判别量 $\mathrm{ESC}(\beta;f):=\mathbb E[(f'(X^\top\beta))^2+f(X^\top\beta)f''(X^\top\beta)]>0$。注意 $\mathrm{ESC}(\beta,f)=\mathbb E[(f^2(X^\top\beta))'']$，本质是一种"高阶单调性"——即便 $f$ 自身不单调，只要 $f^2$ 有足够凸度，信号方向就能被二阶矩谱方法识别。接着证明 $\tilde Y$ 是 $(4,C_4)$ 超收缩的（$C_4=3(\mathbb E[f(X^\top\beta^\star)^8]^{1/8}+K_4)/\sigma$），从而能直接套用 Jambulapati 等（2024）的近线性时间鲁棒 1-ePCA 子程序提主特征向量，得到 $\beta_0=\hat u$，理论保证 $\text{dist}(\beta_0,\beta^\star)=O(C_4\epsilon^{1/4}\sqrt{\sigma^2+\mathbb E[f^2]+c}/\sqrt c)$（$c=\mathrm{ESC}(\beta^\star;f)$）且以高概率落入凸盆。这一步的价值在于把"可达性"也翻译成纯链接函数侧的条件（ESC），并借超收缩性把鲁棒 PCA 的复杂度收紧到 $\tilde O(nd)$。
+
+**3. LRGD 鲁棒梯度下降（定理 4.1）：把 $\epsilon^{1/4}$ 的初始误差打磨到信息论最优的 $\sigma\sqrt\epsilon$。**
+
+谱初始化天然卡在 $\epsilon^{1/4}$ 的统计下界（相位恢复里的 Wirtinger Flow 也是如此），必须再上一段梯度下降细化。好在凸盆内 $\mathcal L$ 是 $\gamma=\mu/2$ 强凸、$\alpha=\mu/2+\mu_1$ 光滑，标准 GD 在 $\eta=2/(\alpha+\gamma)$ 下线性收敛；问题是真实算法只能拿到被污染的样本。作者把梯度写成期望形式 $\nabla\mathcal L(\beta)=\mathbb E[(f(X^\top\beta)-Y)f'(X^\top\beta)X]$，再用 Diakonikolas 等（2022）的鲁棒均值估计替换这个期望，得到满足 $\|\hat g-\nabla\mathcal L(\beta)\|=O(\sigma'\sqrt\epsilon)$ 的鲁棒梯度 $\hat g$；每步用一个独立样本桶（sample splitting）避免与轨迹相关的串扰，迭代 $P=O(1)$ 步即可压到目标精度。这样既保住了 $\tilde O(nd)$ 的近线性总时间，又把最终误差打到信息论意义上的最优 $\sigma\sqrt\epsilon$ 量级。
 
 ### 损失函数 / 训练策略
 目标是平方损失 $\mathcal L(\beta)=\frac12\mathbb E[(f(X^\top\beta)-Y)^2]$；总样本量 $n=\tilde O(m+P\tilde m)$，其中 $m=\Theta(C_4^2(d\log d+\log(1/\delta))/\epsilon^{3/2})$ 用于谱初始化，$\tilde m=\tilde O(d/\epsilon)$ 用于每一轮鲁棒梯度估计，$P=O(1)$；总时间 $\tilde O(md/C_4^4+P\tilde m d)=\tilde O(nd)$。容忍污染比例 $\epsilon=O(\min\{1/C_4^4,\,c^2\min\{R^4,1\}/(C_4^4(\sigma^2+\mathbb E[f^2]+c)^2),\,\gamma^2/\phi_1,\,\gamma^2 R^2/(\sigma^2\phi_2)\})$。

@@ -56,26 +56,21 @@ $\theta \leftarrow \theta - \eta\Big(\frac{\partial \mathcal{L}}{\partial \theta
 
 ### 关键设计
 
-1. **Shapley Neuron Value 公理化定义**:
+**1. Shapley Neuron Value 公理化定义：给每个 Neuron 一个连续实值的"公平"重要度。**
 
-    - 功能：把模型精度 $V(\mathcal{M})$ 在 $N$ 个 Neuron 之间做唯一公平分配，给每个 Neuron 一个连续实值重要度 $\phi_i \in \mathbb{R}$，满足 $\sum_i \phi_i = V(\mathcal{M})$。
-    - 核心思路：mask 一个 Neuron 时**不**置零而是把它的输出替换为**均值响应**——这样既阻断了信息流又保留了下游层输入的统计量，避免置零导致的级联崩溃。设 $V(\mathcal{S})$ 为只保留子集 $\mathcal{S}$、其余替换为均值后的精度，则 Shapley 值 $\phi_i = \sum_{\mathcal{S}\subseteq \mathcal{M}\setminus\{i\}} \frac{|\mathcal{S}|!(|\mathcal{M}|-|\mathcal{S}|-1)!}{|\mathcal{M}|!}\bigl[V(\mathcal{S}\cup\{i\}) - V(\mathcal{S})\bigr]$ 是同时满足 Efficiency / Null Contribution / Symmetry / Linearity 四公理的唯一形式。
-    - 设计动机：以往二值方法（如 WSN）只回答"在不在 Top-$k$"，在小预算 $c$（如 $c=0.03$）下根本无法做精细排序；连续值排名能在多个 $c$ 下都自然给出可解释的 Top-$k$，并能与 axioms 对齐——例如 Null Contribution 自动剔除恒不贡献的死 Neuron，Symmetry 保证对称 Neuron 同等对待。
+以往的 buffer-free 方法不知道哪些 Neuron 真正重要——WSN 这类只给 $\{0,1\}$ 二值打分，在小预算 $c$（如 $c=0.03$）下根本分不清"边缘 Top-$k$"和"绝对 Top-$k$"。作者注意到合作博弈里的 Shapley 值是唯一同时满足 Efficiency / Null Contribution / Symmetry / Linearity 四公理的分配方案，于是把"Neuron 当 player、模型精度当 payoff"映射过去，继承全部公平性保证。一个关键实现细节是 mask 一个 Neuron 时不置零、而是把它的输出替换成均值响应——这样既阻断了信息流又保留了下游层输入的统计量，避免置零引发的级联崩溃。设 $V(\mathcal S)$ 为只保留子集 $\mathcal S$、其余替换为均值后的精度，则
 
-2. **三重近似估计算法（MC + 截断 + MAB）**:
+$$\phi_i = \sum_{\mathcal{S}\subseteq \mathcal{M}\setminus\{i\}} \frac{|\mathcal{S}|!(|\mathcal{M}|-|\mathcal{S}|-1)!}{|\mathcal{M}|!}\bigl[V(\mathcal{S}\cup\{i\}) - V(\mathcal{S})\bigr]$$
 
-    - 功能：把 $O(N!)$ 的精确 Shapley 计算压到可在 ResNet-18 上跑通的复杂度。
-    - 核心思路：
-        (i) **Monte Carlo**：将 $\phi_i$ 改写为 $\phi_i = \mathbb{E}_{\pi\sim\Pi}\bigl[V(\mathcal{S}_i^{\pi}\cup\{i\}) - V(\mathcal{S}_i^{\pi})\bigr]$，对随机排列采样估计边际贡献；
-        (ii) **截断**：当排列前缀 $\mathcal{S}_i^{\pi}$ 太小、$V(\mathcal{S}_i^{\pi}) \le \tau$ 时跳过该 Neuron 的边际计算（模型基本失能时边际无意义），实测节省接近一个数量级；
-        (iii) **多臂老虎机**：目标只是可靠区分 Top-$k$，因此只对"置信区间仍跨越当前第 $k$ 大值"的 Neuron 继续采样，对已经能稳定排进/排出 Top-$k$ 的 Neuron 不再浪费样本——形式上 $\delta_i = z_\alpha \cdot \sigma_i/\sqrt{n_i}$，集合 $\mathcal{A} \leftarrow \{i : |\hat{\phi}_i - \phi^{(k)}| < \delta_i\}$ 为空时算法收敛。
-    - 设计动机：纯 MC 在 ResNet-18（$N$ 上千）量级仍太慢；截断利用了"信号衰减"的物理直觉；MAB 把"估全部 $\phi_i$"换成"找 Top-$k$"，与下游"按预算选 Top-$k$"的真实需求严丝合缝，是把估计目标和决策目标对齐的工程巧思。
+就是那个唯一满足四公理的分配。连续值排名能在多个 $c$ 下都给出可解释的 Top-$k$，还能和公理对齐——Null Contribution 自动剔除恒不贡献的死 Neuron，Symmetry 保证对称 Neuron 同等对待。
 
-3. **累积冻结掩码与 Stable–Plastic 解耦**:
+**2. 三重近似估计算法（MC + 截断 + MAB）：把 $O(N!)$ 压到 ResNet-18 上能跑。**
 
-    - 功能：把"已被前序任务认领的 Neuron"硬性冻结，留下其余 Neuron 学习新任务，从而显式分离 Stable Neuron（旧知识）和 Plastic Neuron（新任务）。
-    - 核心思路：在 Neuron 级累积二值掩码 $\mathbf{B}_{t-1} \in \{0,1\}^N$，再展开到参数级 $\mathbf{M}_{t-1}$（凡属于已冻结 Neuron 的权重 $\theta_j$ 都置 $0$），训练时梯度直接 $\odot\,\mathbf{M}_{t-1}$。每个任务的 sparsity 预算 $c \in (0,1)$ 通常设为 $1/T$ 或更小（论文还消融了 $c \in \{0.03, 0.05, 0.1, 0.3, 0.5\}$）。
-    - 设计动机：相比 WSN 的"软 mask + 重训"或正则化方法的"软约束"，硬冻结提供了零 backward transfer（论文实测 BWT $\approx 0.00$）的强保证，把灾难性遗忘从"尽量小"压到"严格 0"。
+精确 Shapley 是指数复杂度，在 ResNet-18（$N$ 上千）上根本算不动，作者叠了三层近似。第一层 Monte Carlo：把 $\phi_i$ 改写成排列期望 $\phi_i=\mathbb{E}_{\pi\sim\Pi}[V(\mathcal S_i^\pi\cup\{i\})-V(\mathcal S_i^\pi)]$，对随机排列采样估计边际贡献。第二层截断：当排列前缀太小、$V(\mathcal S_i^\pi)\le\tau$ 时跳过该 Neuron 的边际计算（模型基本失能时边际无意义），实测省了接近一个数量级。第三层多臂老虎机：注意到下游真正要的只是"可靠区分 Top-$k$"，所以只对置信区间仍跨越当前第 $k$ 大值的 Neuron 继续采样——形式上 $\delta_i=z_\alpha\cdot\sigma_i/\sqrt{n_i}$，当集合 $\mathcal A\leftarrow\{i:|\hat\phi_i-\phi^{(k)}|<\delta_i\}$ 为空时收敛。这一层最巧——它把"估准所有 $\phi_i$"换成"找 Top-$k$"，与下游"按预算选 Top-$k$"的真实需求严丝合缝，本质是把估计目标和决策目标对齐的 best-arm identification，这种思路可直接迁移到任何只用 Top-$k$ 结果的归因场景（SHAP/LIME 等）。
+
+**3. 累积冻结掩码与 Stable–Plastic 解耦：把灾难性遗忘从"尽量小"压到"严格 0"。**
+
+有了可靠的重要度排名，剩下的就是怎么在固定容量里分配多任务子网。作者在 Neuron 级维护一个累积二值掩码 $\mathbf B_{t-1}\in\{0,1\}^N$，再展开到参数级 $\mathbf M_{t-1}$（凡属于已冻结 Neuron 的权重都置 0），训练时梯度直接 $\theta\leftarrow\theta-\eta(\frac{\partial\mathcal L}{\partial\theta}\odot\mathbf M_{t-1})$。每个任务选 Top-$\lfloor c\cdot N\rfloor$ 个 Neuron 认领、并入冻结集，$c$ 通常设为 $1/T$ 或更小。相比 WSN 的"软 mask + 重训"或正则化方法的软约束，这种硬冻结提供了零 backward transfer 的强保证（实测 BWT $\approx 0.00$）——因为被前序任务认领的 Neuron 权重根本不动，旧知识从结构上就保住了，灾难性遗忘被压到严格 0。
 
 ### 损失函数 / 训练策略
 使用标准交叉熵 + Adam，He 初始化的 ResNet-18，CIFAR-100/Tiny-ImageNet 训练 200 epoch、ImageNet-1k 训练 100 epoch，均用 early stopping；超参在第 1 个任务的验证集上 grid search 后**冻结**，后续任务从不重调（GTEP 协议）。

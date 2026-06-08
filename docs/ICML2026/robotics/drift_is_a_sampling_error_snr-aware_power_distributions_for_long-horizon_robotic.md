@@ -54,23 +54,25 @@ CAPS 在每个决策步运行如下流程：
 
 ### 关键设计
 
-1. **幂分布采样（全局轨迹概率锐化）**:
+**1. 幂分布采样：把全局轨迹概率锐化，等价于隐式 lookahead。**
 
-    - 功能：把目标分布从原始 $p_\theta(\tau|I,H_t)$ 替换为 $\pi(\tau)\propto p_\theta(\tau|I,H_t)^\alpha$（$\alpha\ge 1$），等价于隐式 lookahead 规划。
-    - 核心思路：$\alpha>1$ 让概率峰更尖（rich get richer），抑制 Negative Pivotal Window；MCMC 在 $\pi$ 上采样时不需要直接计算 $\pi$，只需计算似然比 $(p_\theta(\tau_{new})/p_\theta(\tau_{old}))^\alpha$。
-    - 设计动机：Theorem 3.1 证明理想 lookahead 下有效 horizon 满足 $T_{eff}(\text{CAPS})/T_{eff}(\text{Base})\approx \epsilon^{1-\alpha}$（$\epsilon$ 是单步漂移率），$\alpha=2,\epsilon=0.1$ 时给出 10× horizon 提升；Theorem 3.2 给出有限 MCMC 步数下的渐近下界，承认了 sampling bias $O(\rho^N)$。
+单步贪心采样的毛病是容易掉进 Negative Pivotal Window——局部概率高、却不可逆地切断了通往全局成功的路。CAPS 的解法是不再从原始分布 $p_\theta(\tau|I,H_t)$ 采样，而是从锐化后的幂分布 $\pi(\tau)\propto p_\theta(\tau|I,H_t)^\alpha$（$\alpha\ge 1$）采样。$\alpha>1$ 让概率峰更尖（rich get richer），把那些"局部还行但全局会崩"的轨迹压下去。妙处在于 MCMC 在 $\pi$ 上采样根本不用直接算 $\pi$，只需要似然比 $(p_\theta(\tau_{new})/p_\theta(\tau_{old}))^\alpha$。理论上 Theorem 3.1 证明理想 lookahead 下有效 horizon 满足 $T_{eff}(\text{CAPS})/T_{eff}(\text{Base})\approx \epsilon^{1-\alpha}$（$\epsilon$ 是单步漂移率），$\alpha=2,\epsilon=0.1$ 时给出 10× horizon 提升；Theorem 3.2 进一步给出有限 MCMC 步数下的渐近下界，诚实承认了 $O(\rho^N)$ 的 sampling bias。这正是把"漂移"从建模问题重新框定为采样问题的核心。
 
-2. **SNR-based 元认知门控**:
+**2. SNR-based 元认知门控：只在该精修的时刻投入算力。**
 
-    - 功能：把"何时启动 System 2"建模为资源约束下的最优控制问题，自动平衡精度与算力。
-    - 核心思路：定义 contextual SNR 为策略相对均匀分布的 KL，$\text{SNR}_t=D_{KL}(\pi_\theta\|\mathcal{U}_{\text{unif}})=\log|\mathcal{A}|-\mathcal{H}(\pi_\theta(\cdot|H_t))$。SNR 与策略 Shannon 熵严格线性负相关，所以可以用 $\mathcal{H}>\gamma$ 作为高效代理判据。求解最小化 $\mathcal{L}(\pi)=\mathbb{E}[\text{Error}]+\lambda\cdot\mathcal{C}(\pi)$ 得到 hard-threshold switching：高熵触发 CAPS，低熵走 greedy。
-    - 设计动机：避免对每一步都做昂贵的全局搜索；从信息几何看，高熵时刻对应概率流形上的"分岔点"，正是漂移最易发生的窗口。
+对每一步都跑昂贵的全局搜索既不实时也没必要——漂移只在特定窗口高发。CAPS 把"何时启动 System 2"建模成资源约束下的最优控制。它定义 contextual SNR 为策略相对均匀分布的 KL：
 
-3. **Block-based Autoregressive MCMC**:
+$$\text{SNR}_t=D_{KL}(\pi_\theta\|\mathcal{U}_{\text{unif}})=\log|\mathcal{A}|-\mathcal{H}(\pi_\theta(\cdot|H_t))$$
 
-    - 功能：在 receding-horizon 思想下用局部 chunk-level MH 迭代逼近全局轨迹级目标分布。
-    - 核心思路：Proposal $q(\tau_{new}|\tau_{old})$ 显式定义为"保留 prefix，重采样 suffix 用温度 $1/\alpha$"；Acceptance 率 $A=\min(1, (p_\theta(\tau_{new})/p_\theta(\tau_{old}))^\alpha \cdot q(\tau_{old}|\tau_{new})/q(\tau_{new}|\tau_{old}))$。每个 chunk 内部跑 $N_{MCMC}$ 轮 propose+accept，仅在 chunk 边界输出动作。
-    - 设计动机：直接在全轨迹上跑 MCMC 计算上不可行；chunk-based 提供了"局部接受+全局打分"的折衷，acceptance 评估时基础模型已隐式编码长程先验，所以局部修正仍能保持全局一致性。
+由于 SNR 与策略 Shannon 熵严格线性负相关，直接用 $\mathcal{H}>\gamma$ 当高效代理判据就行。求解 $\mathcal{L}(\pi)=\mathbb{E}[\text{Error}]+\lambda\cdot\mathcal{C}(\pi)$ 得到 hard-threshold switching：高熵触发 CAPS 的迭代精修、低熵走 greedy。从信息几何看，高熵时刻正对应概率流形上的"分岔点"，也就是漂移最易发生的 Pivotal Window，把算力精准砸在这里。
+
+**3. Block-based Autoregressive MCMC：用局部 chunk 接受逼近全局轨迹目标。**
+
+直接在整条轨迹上跑 MCMC 计算不可行，CAPS 退到 chunk 级别做 Metropolis-Hastings。Proposal $q(\tau_{new}|\tau_{old})$ 显式定义为"保留当前 action chunk 的 prefix，用温度 $1/\alpha$ 重采样 suffix"，接受率为
+
+$$A=\min\Big(1,\ \big(p_\theta(\tau_{new})/p_\theta(\tau_{old})\big)^\alpha \cdot \frac{q(\tau_{old}|\tau_{new})}{q(\tau_{new}|\tau_{old})}\Big)$$
+
+每个 chunk 内部跑 $N_{MCMC}$ 轮 propose+accept，只在 chunk 边界真正输出动作。为什么局部修正还能保持全局一致？因为做接受判断时基础模型 $p_\theta$ 已经隐式编码了长程先验，所以"局部接受 + 全局打分"的折衷既绕开了全轨迹 MCMC 的计算墙，又借到了底座模型的长程一致性。整套流程纯推理时进行、不更新任何参数，对任何底座 VLA 都即插即用。
 
 ### 损失函数 / 训练策略
 - 无训练，完全推理时 plug-in；底座 VLA 用 $\pi_0$ / $\pi_{0.5}$ / OpenVLA。

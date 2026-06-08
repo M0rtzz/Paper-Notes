@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **正交投影提纯视觉向量**:
+**1. 正交投影提纯视觉向量：从原始视觉方向里剔掉语言先验，得到一个「放大也不崩」的引导方向。**
 
-    - 功能：剔除原始视觉方向中与语言先验共线的成分，得到一个"放大也不会崩"的纯视觉引导方向。
-    - 核心思路：先按反事实状态定义 $\mathbf{v}_{\text{raw}}^{(\ell)} = \mathbb{E}[\mathbf{h}_{\text{gt}}^{(\ell)} - \mathbf{h}_{\emptyset\_\text{gt}}^{(\ell)}]$ 与 $\mathbf{v}_{\text{prior}}^{(\ell)} = \mathbb{E}[\mathbf{h}_{\emptyset\_\text{hall}}^{(\ell)} - \mathbf{h}_{\emptyset\_\text{unk}}^{(\ell)}]$，再做 Gram-Schmidt：$\mathbf{v}_{\text{vis}}^{\perp(\ell)} = \mathbf{v}_{\text{raw}}^{(\ell)} - \frac{\mathbf{v}_{\text{raw}}^{(\ell)}\cdot\mathbf{v}_{\text{prior}}^{(\ell)}}{\|\mathbf{v}_{\text{prior}}^{(\ell)}\|^2}\mathbf{v}_{\text{prior}}^{(\ell)}$。
-    - 设计动机：因果探针实验显示，纯视觉向量即便把强度 $\alpha$ 推到极大也保持生成稳定，而原始向量在 $\alpha\approx 0.7$ 即出现"无限重复 / 空输出"的模型崩溃；正交化把"加视觉"与"加先验"在算子层面解耦。
+VTI 之所以一加强度就把通用能力打废，根因是它用的「事实-幻觉差分向量」里其实混着语言先验——模型没图时倾向胡猜的方向；强度 $\alpha$ 一放大，视觉和先验被一起放大，$\alpha\approx0.7$ 时模型就 collapse 成重复或空输出。Revis 的解法是把这两股力量在算子层面解耦：先按反事实状态定义原始视觉向量 $\mathbf{v}_{\text{raw}}^{(\ell)}=\mathbb{E}[\mathbf{h}_{\text{gt}}^{(\ell)}-\mathbf{h}_{\emptyset\_\text{gt}}^{(\ell)}]$ 和语言先验向量 $\mathbf{v}_{\text{prior}}^{(\ell)}=\mathbb{E}[\mathbf{h}_{\emptyset\_\text{hall}}^{(\ell)}-\mathbf{h}_{\emptyset\_\text{unk}}^{(\ell)}]$，再做 Gram-Schmidt 把前者投到后者的正交补：
 
-2. **基于校准的稀疏单层选择**:
+$$\mathbf{v}_{\text{vis}}^{\perp(\ell)}=\mathbf{v}_{\text{raw}}^{(\ell)}-\frac{\mathbf{v}_{\text{raw}}^{(\ell)}\cdot\mathbf{v}_{\text{prior}}^{(\ell)}}{\|\mathbf{v}_{\text{prior}}^{(\ell)}\|^2}\mathbf{v}_{\text{prior}}^{(\ell)}$$
 
-    - 功能：在所有层里挑出唯一一层做干预，避免多层注入的累积偏差和算力浪费。
-    - 核心思路：构造校准集 $\mathcal{D}_{\text{cal}}$（COCO + POPE 式存在性问题）抽出每层的 $\mathcal{H}_{\text{fact}}, \mathcal{H}_{\text{hall}}$，定义风险 $R(\mathbf{h}) = -\cos(\mathbf{h}, \mathbf{v}_{\text{vis}}^{\perp(\ell)})$，自 $L$ 向 $1$ 反向搜索，取首个满足 $R(\mathcal{H}_{\text{hall}}) - R(\mathcal{H}_{\text{fact}}) > 0$ 的 $\ell$ 作为 $L^\*$；再在该层的事实集合上按 $k$ 分位数定阈值 $\tau$。
-    - 设计动机：t-SNE 分析显示事实/幻觉在浅层混叠、深层才分离；同时只有当 $\mathbf{v}_{\text{vis}}^{\perp}$ 与事实/幻觉状态有正确几何对齐时干预才有意义，反向搜索保证选到"最深 + 仍可分"的最优外科切入点。
+因果探针实验证明，这个纯视觉向量即便把 $\alpha$ 推到极大也保持生成稳定——正交化等于把「加视觉」和「加先验」彻底分开，于是激进强化视觉也不会触发崩溃。
 
-3. **风险门控的动态注入**:
+**2. 基于校准的稀疏单层选择：只在一层动手，挑「最深 + 仍可分」的外科切入点。**
 
-    - 功能：使干预只在"模型确实开始漂"时才发生，避免对正常 token 的破坏。
-    - 核心思路：每步生成时计算 $R_t = R(\mathbf{h}_t^{(L^\*)})$，得 $\lambda(t) = \alpha\cdot\mathbb{1}(R_t>\tau)$，并执行 $\tilde{\mathbf{h}}_t^{(L^\*)} = \mathbf{h}_t^{(L^\*)} + \lambda(t)\,\mathbf{v}_{\text{vis}}^{\perp(L^\*)}$；其余 token 不动。
-    - 设计动机：以往激活引导默认"全程注入"，会污染本就正确的生成；门控让 Revis 在大部分时间是"零成本旁路"，仅在少量风险时刻产生一次激活加法，计算几乎不增。
+t-SNE 分析显示事实和幻觉状态在浅层是混叠的、到深层才线性可分，所以干预层选错了等于白干，而全层注入又会累积偏差、拖垮通用能力。Revis 用一个校准集 $\mathcal{D}_{\text{cal}}$（COCO + POPE 式存在性问题）抽出每层的事实集 $\mathcal{H}_{\text{fact}}$ 和幻觉集 $\mathcal{H}_{\text{hall}}$，定义风险 $R(\mathbf{h})=-\cos(\mathbf{h},\mathbf{v}_{\text{vis}}^{\perp(\ell)})$，从最深层 $L$ 反向往 $1$ 搜，取首个满足 $R(\mathcal{H}_{\text{hall}})-R(\mathcal{H}_{\text{fact}})>0$ 的层作为 $L^\*$，再在该层事实集合上按 $k$ 分位定阈值 $\tau$。反向搜索保证选到的是「还能分清事实与幻觉的最深一层」，既有足够的几何可分性、又只动一层、零算力浪费。
+
+**3. 风险门控的动态注入：只在模型「确实开始漂」时才修，平时是零成本旁路。**
+
+以往激活引导默认全程注入，连本来就对的 token 也一起污染。Revis 给注入加了个门：每步生成时算当前 token 的风险 $R_t=R(\mathbf{h}_t^{(L^\*)})$，得 $\lambda(t)=\alpha\cdot\mathbb{1}(R_t>\tau)$，只有风险超阈值才执行 $\tilde{\mathbf{h}}_t^{(L^\*)}=\mathbf{h}_t^{(L^\*)}+\lambda(t)\,\mathbf{v}_{\text{vis}}^{\perp(L^\*)}$，其余 token 原样不动。这样大部分时间 Revis 都是「零成本旁路」，只在少量高风险时刻加一次激活向量，计算几乎不增；门控思路和 mixture-of-experts 类似，但用在 hidden state 干预上，把「修幻觉」做成了潜空间里的稀疏外科手术。
 
 ### 损失函数 / 训练策略
 完全免训练；唯二超参 $\alpha$（注入强度）与 $k$（事实分位阈值）按模型设置，主结果中 Qwen2.5-VL-7B 用 $\alpha=1.6,k=0.8$。

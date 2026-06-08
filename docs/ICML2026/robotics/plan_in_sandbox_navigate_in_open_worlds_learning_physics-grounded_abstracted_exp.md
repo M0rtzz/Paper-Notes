@@ -45,23 +45,25 @@ SAGE 含三阶段：(1) **Genesis** 在沙盒环境 $\mathcal E_S=(\mathcal S,\m
 
 ### 关键设计
 
-1. **物理沙盒经验生成 (Genesis)**:
+**1. 物理沙盒经验生成（Genesis）：用抽象沙盒当 VLM 的"经验工厂"。**
 
-    - 功能：用 VLM + 物理约束自动合成导航任务、最优轨迹、决策理由，构造结构化经验库。
-    - 核心思路：把 HM3D / InteriorGS 解析为「语义状态图」——每个房间分解为离散 navigable 节点，状态转移严格遵守可通行性约束。任务合成走 A* + 关键点视角渲染 + VLM caption 流水线，前向视角 $v_{t,0°}$ 作为 $a^*$。规则合成把每步「为什么选这个视角」让 VLM 解释成 IF-THEN，编码后入 $\mathcal D_{exp}$。
-    - 设计动机：抛弃 photorealistic 模拟器主要是因为渲染开销大且 Sim2Real 退化严重——物理约束 + 语义抽象更便宜，并且与真实部署时的「3D 场景图 + buffer」表示天然对齐，减小测试时分布偏移。
+抛弃 photorealistic 模拟器，主要是因为渲染开销大、Sim2Real 退化严重，而且逼真渲染对 VLM 的导航决策并不必要。SAGE 把 HM3D / InteriorGS 解析成"语义状态图"——每个房间拆成离散 navigable 节点，状态转移严格遵守可通行性约束。任务合成走 A* + 关键点三视角渲染 + VLM caption 的流水线，前向视角 $v_{t,0°}$ 作为最优答案 $a^*$；同时让 VLM 把每步"为什么选这个视角"解释成"IF 任务 X AND 观察 Y THEN 优先路径 Z"的 IF-THEN 规则，编码后存进向量库 $\mathcal D_{exp}$。物理约束 + 语义抽象不仅便宜，还和真实部署时的"3D 场景图 + buffer"表示天然对齐，从源头减小了测试时的分布偏移。
 
-2. **混合提示采样的同质分组优势估计**:
+**2. 混合提示采样的同质分组优势估计：别让带经验提示的样本污染基线。**
 
-    - 功能：在 GRPO 训练中区分「带经验提示的增强样本」和「不带提示的标准样本」，避免后者基线被前者污染。
-    - 核心思路：动态注入概率 $\eta_t=\max(\eta_{\min},\eta_{init}\cdot(1-\min(R_{val}^{(t)},R_{target})/R_{target}))$，验证奖励越高、$\eta_t$ 越小，逐步从「模仿检索」过渡到「自主探索」。每条输入 $x_i$ 采 $G$ 个 rollout 但强制同组内 mask $m_i$ 一致（同质分组）：$x_t=[I_t,v_t,\mathcal K_{ret}]$ 当 $m=1$，否则 $[I_t,v_t]$。优势 $A_{i,j}=(r_\phi(x_i,a_{i,j})-\mu)/(\sigma+\epsilon)$ 在同组归一化。
-    - 设计动机：增强样本天然有更高 reward（检索到的好经验直接抄答案），如果与标准样本混在一起算 $\mu,\sigma$，会把标准样本的优势压低甚至变负，把好行为误判为差行为；同质分组从根上隔离两种分布。
+GRPO 训练里如果把"带检索经验提示的增强样本"和"不带提示的标准样本"混在一起算优势，会出大问题：增强样本天然 reward 更高（检索到好经验近乎抄答案），混着算 $\mu,\sigma$ 会把标准样本的优势压低甚至变负，把好行为误判成差行为。SAGE 用同质分组隔离两种分布——每条输入 $x_i$ 采 $G$ 个 rollout，但强制同组内 mask $m_i$ 一致：$x_t=[I_t,v_t,\mathcal K_{ret}]$（$m=1$）或 $[I_t,v_t]$（$m=0$），优势 $A_{i,j}=(r_\phi(x_i,a_{i,j})-\mu)/(\sigma+\epsilon)$ 在同组内归一化。注入概率本身也是动态的：
 
-3. **非对称自适应裁剪 (AAC)**:
+$$\eta_t=\max\Big(\eta_{\min},\ \eta_{init}\cdot\big(1-\min(R_{val}^{(t)},R_{target})/R_{target}\big)\Big)$$
 
-    - 功能：让策略在「学习高 reward 增强样本时大胆更新」，在「学习标准样本时保守稳健」，同时避免增强样本因 noise 误判为低 reward 时被过度惩罚。
-    - 核心思路：定义 $\rho_{i,t}(\theta)=\pi_\theta(a_{i,t}\mid x_{i,t})/\pi_{\theta_{old}}(a_{i,t}\mid x_{i,t})$，上界依 mask 决定 $\epsilon_{up}(m_i)=\epsilon_{exp}$（增强）或 $\epsilon_{std}$（标准），$\epsilon_{exp}\gg\epsilon_{std}$；但下界对所有样本统一为保守的 $1-\epsilon_{std}$。clip 后的损失 $L_{i,t}^{CLIP}=\min(\rho_{i,t}A_{i,t},\text{clip}(\rho_{i,t},1-\epsilon_{std},1+\epsilon_{up}(m_i))A_{i,t})$，全目标加 KL 约束 $J_\phi(\theta)=\mathbb E[L^{CLIP}-\beta\mathbb D_{KL}(\pi_\theta\|\pi_{ref})]$。
-    - 设计动机：经典 PPO/GRPO 对称裁剪意味着「好行为不能更新太多」，这与「我们就是想快速吸收高质量经验」的需求矛盾；非对称给上方更大空间。但下方必须保守，否则一个被 reward variance 误标的 golden 样本就会被大幅压低概率，导致策略 collapse。
+验证奖励越高、$\eta_t$ 越小，策略就从"模仿检索"逐步过渡到"自主探索"，形成一条先模仿后探索的课程。
+
+**3. 非对称自适应裁剪（AAC）：上界放开吸收好经验，下界保守防崩溃。**
+
+经典 PPO/GRPO 的对称裁剪意味着"好行为也不能更新太多"，这跟"我们就是想快速吸收高质量经验"的需求直接矛盾。AAC 的做法是上界依 mask 自适应、下界统一保守。定义重要性比 $\rho_{i,t}(\theta)=\pi_\theta(a_{i,t}\mid x_{i,t})/\pi_{\theta_{old}}(a_{i,t}\mid x_{i,t})$，上界 $\epsilon_{up}(m_i)=\epsilon_{exp}$（增强样本）或 $\epsilon_{std}$（标准样本），且 $\epsilon_{exp}\gg\epsilon_{std}$，但下界对所有样本统一为保守的 $1-\epsilon_{std}$：
+
+$$L_{i,t}^{CLIP}=\min\big(\rho_{i,t}A_{i,t},\ \text{clip}(\rho_{i,t},1-\epsilon_{std},1+\epsilon_{up}(m_i))A_{i,t}\big)$$
+
+全目标再加 KL 约束 $J_\phi(\theta)=\mathbb E[L^{CLIP}-\beta\mathbb D_{KL}(\pi_\theta\|\pi_{ref})]$。上界放大让策略大胆吸收高 reward 的增强样本；下界必须保守，否则一个被 reward variance 误标为低 reward 的 golden 样本会被大幅压低概率、导致策略 collapse——消融里 $\epsilon_{exp}=1.0$ 是甜区，1.2 时 100 步后训练就崩盘。
 
 ### 损失函数 / 训练策略
 Reward $r_\phi(s_t,a_t)=w_f\mathbb I_f+w_{acc}(\mathbb I_m(1+\text{sim}(a_t,a_t^*))-\mathcal P_{err})$，含格式合规指示、图像选择正确指示、文本相似度奖励、错误惩罚。优化器为带 KL 正则的 GRPO 变体（AAC）。训练数据：合成 14,526 条有效轨迹（HM3D 7,988 + InteriorGS 6,538），$\eta_{init}=0.8,\eta_{min}=0,R_{target}=1.5$，$\epsilon_{exp}=1.0$（最优），训 150 步收敛。

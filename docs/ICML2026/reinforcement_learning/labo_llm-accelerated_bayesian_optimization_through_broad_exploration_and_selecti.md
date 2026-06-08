@@ -45,23 +45,21 @@ LABO 分 warm-start 和优化循环两阶段。Warm-start：让 LLM 基于任务
 
 ### 关键设计
 
-1. **基于 KOH 的双保真度联合 GP surrogate**:
+**1. 基于 KOH 的双保真度联合 GP surrogate：把 LLM 当一台便宜的实验仪器接进概率框架。**
 
-    - 功能：把 LLM 当独立低保真度评估源，与真实实验在同一概率框架下融合，预测均值与方差分别为 $\mu_R(x) = \rho\mu_L(x) + \mu_\delta(x)$，$\sigma_R^2(x) = \rho^2\sigma_L^2(x) + \sigma_\delta^2(x)$。
-    - 核心思路：假设 $f_L(x) \sim \mathcal{GP}(0, k_L)$ 训练于所有 LLM 评估、$\delta(x) \sim \mathcal{GP}(0, k_\delta)$ 训练于配对 $(x, y_R)$ 与 LLM 预测之间的残差；$\rho$ 用最小二乘解 $\rho = \arg\min_\rho \sum_{(x, y_R) \in \mathcal{D}_R}(y_R - \rho y_L)^2$ 简单标定。两个 GP 独立但通过 $\rho$ 联系，所以增加 LLM 查询（即使没有新实验）也会更新 $(\mu_L, \sigma_L^2)$ 进而改善 $(\mu_R, \sigma_R^2)$。
-    - 设计动机：把 LLM 与真实实验当两路独立 GP 而非简单加权平均，可以**自适应识别系统性偏差**——LLM 准时残差 GP 方差小，LLM 不准时残差 GP 自然吸收偏差。比起把 LLM 当 prior mean（很难调）或当 kernel（CAKE 路线，不稳定），KOH 更可解释、调参更少。
+以往 LLM+BO 把 LLM 当"建议提供者"，没利用它评估成本远低于真实实验这一事实。LABO 的概念转换是把 LLM 当独立的低保真度评估源，套用多保真度仿真里成熟的 Kennedy–O'Hagan 框架：假设 $f_L(x)\sim\mathcal{GP}(0,k_L)$ 训在所有 LLM 评估上、残差 $\delta(x)\sim\mathcal{GP}(0,k_\delta)$ 训在真实实验与 LLM 预测的差上，真实目标分解为 $f_R(x)=\rho f_L(x)+\delta(x)$，预测均值方差分别是 $\mu_R=\rho\mu_L+\mu_\delta$、$\sigma_R^2=\rho^2\sigma_L^2+\sigma_\delta^2$，$\rho$ 用最小二乘 $\rho=\arg\min_\rho\sum_{\mathcal{D}_R}(y_R-\rho y_L)^2$ 简单标定。两个 GP 独立但经 $\rho$ 相连，所以哪怕只增加 LLM 查询、没有新实验，也会更新 $(\mu_L,\sigma_L^2)$ 进而改善 $(\mu_R,\sigma_R^2)$。这样建模的好处是能**自适应识别系统性偏差**——LLM 准时残差 GP 方差小，LLM 不准时残差 GP 自然吸收偏差；比起把 LLM 当难调的 prior mean 或当不稳定的 kernel（CAKE 路线），KOH 更可解释、调参更少。
 
-2. **差异主导率门控准则**:
+**2. 差异主导率门控准则：让概率模型自己决定哪个候选值得花真实实验。**
 
-    - 功能：给定候选 $x$，计算 $p_\Delta(x) = \sigma_\delta^2(x)/(\rho^2\sigma_L^2(x) + \sigma_\delta^2(x))$ 作为"残差 GP 在总不确定性里占的比例"；$p_\Delta(x) \le \tau$ 时只查 LLM 更新 $\mathcal{D}_L$，否则触发真实实验更新 $\mathcal{D}_R$。
-    - 核心思路：直觉是——如果不确定性主要由 LLM 与真实之间的差异 $\delta$ 贡献，说明 LLM 信号在 $x$ 处不可靠，必须做实验把残差降下来；如果不确定性主要由 LLM 自身方差 $\sigma_L^2$ 贡献，说明只是 LLM 还没在该点附近预测过，多查几次 LLM 就够了（几乎免费）。理论上作者证明这个门控会让"真实实验区域"在有限步后收敛到稳定子集 $\mathcal{X}_R^*$，并给出累积 regret 上界 $R_T \le C_1\sqrt{T_R^*\beta_T \Psi_T(\mathcal{X}_R^*)} + C_2\sqrt{T^\alpha \beta_T \Psi_T(\mathcal{X})} + C_3\sqrt{T_L\beta_T\Psi_T(\mathcal{X})}$，关键项是 $\Psi_T(\mathcal{X}_R^*) \ll \Psi_T(\mathcal{X})$。
-    - 设计动机：传统多保真度 BO 的查询决策依赖人工设的成本/收益比，门控参数难调；$p_\Delta$ 用 GP 内部不确定性分解给出**信息论性质的判据**——直接量化"再多查 LLM 能不能降不确定性"，把决策权交给概率模型自己。
+有了联合 surrogate，核心问题是每一步要不要为某候选 $x$ 烧一次昂贵实验。LABO 不用人工设的成本/收益比，而是算"残差 GP 在总不确定性里占的比例"
 
-3. **Prior-guided warm-start 与 LHS 广覆盖**:
+$$p_\Delta(x) = \frac{\sigma_\delta^2(x)}{\rho^2\sigma_L^2(x) + \sigma_\delta^2(x)},$$
 
-    - 功能：开局让 LLM 同时做两件事：基于科学先验（文献、可行性约束、目标语义）推荐 $\mathcal{X}_R$（少量高潜力点跑真实实验），再用 LHS 撒一批空间覆盖点 $\mathcal{X}_L = \mathcal{X}_R \cup \mathcal{X}_{\text{LHS}}$（论文用 50 个）让 LLM 全部预测。
-    - 核心思路：第一类点解决冷启动——LLM 用 in-context reasoning 把先验知识翻译成"看起来可行的配方"，开局就有几个真实数据点；第二类点解决高维探索——LHS 提供空间均匀覆盖、LLM 给每个点的预测让 $f_L$ 一开始就能拟合全局结构，避免传统 BO 早期完全瞎走。$\mathcal{X}_R \subset \mathcal{X}_L$ 保证配对数据让 $\rho$ 与 $\delta$ 能立刻训起来。
-    - 设计动机：BO 的冷启动和高维探索是两个相互独立的痛点，传统方法要么用 LHS 解决覆盖、要么用专家点解决冷启动；LABO 用 LLM 同时充当"专家"和"廉价仿真器"，一次性把两个问题解决。
+$p_\Delta(x)\le\tau$ 时只查 LLM 更新 $\mathcal{D}_L$，否则触发真实实验更新 $\mathcal{D}_R$。直觉很清晰：如果不确定性主要由 LLM 与真实之差 $\delta$ 贡献，说明 LLM 在 $x$ 处不可靠、必须做实验把残差降下来；如果主要由 LLM 自身方差 $\sigma_L^2$ 贡献，说明只是 LLM 还没在该点附近预测过，多查几次几乎免费的 LLM 就够了。作者还证明这个门控会让"真实实验区域"在有限步后收敛到稳定子集 $\mathcal{X}_R^*$，并给出累积 regret 上界，关键项 $\Psi_T(\mathcal{X}_R^*)\ll\Psi_T(\mathcal{X})$。相比传统多保真度 BO 难调的查询阈值，$p_\Delta$ 给出的是信息论性质的判据——直接量化"再多查 LLM 能不能降不确定性"，把决策权交给 GP 自己。
+
+**3. Prior-guided warm-start + LHS 广覆盖：用一个 LLM 同时治冷启动和高维探索两个老病。**
+
+BO 的冷启动（开局没数据）和高维探索是两个独立痛点，传统方法要么用 LHS 解决覆盖、要么用专家点解决冷启动。LABO 让 LLM 一次性扮演两个角色：一是基于科学先验（文献、可行性约束、目标语义）用 in-context reasoning 推荐少量高潜力点 $\mathcal{X}_R$ 跑真实实验，开局就有几个真实数据点；二是用 Latin Hypercube Sampling 撒一批空间覆盖点，组成 $\mathcal{X}_L=\mathcal{X}_R\cup\mathcal{X}_{\text{LHS}}$（论文用 50 个）让 LLM 全部预测，使 $f_L$ 一开始就能拟合全局结构、避免传统 BO 早期完全瞎走。约束 $\mathcal{X}_R\subset\mathcal{X}_L$ 保证有配对数据让 $\rho$ 和 $\delta$ 立刻训起来。LLM 在这里既是"专家"又是"廉价仿真器"，一次把两个问题都接住。
 
 ### 损失函数 / 训练策略
 全部主实验固定 $\tau = 0.75$、batch=2、初始真实点 3、warm-up LLM 评估 50、采集函数 q-UCB、kernel 是 RBF，不针对每个任务或 LLM backbone 单独调参。LLM 后端主用 Intern S1 241B，消融也试了 Intern-S1-mini 7B、Qwen3-235B（Instruct/Thinking）、DeepSeek V3.1 685B。

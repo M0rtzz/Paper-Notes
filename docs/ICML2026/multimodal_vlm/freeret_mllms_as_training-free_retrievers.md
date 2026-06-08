@@ -44,23 +44,17 @@ FreeRet 把检索拆成两阶段，全部由同一个未训练 MLLM 承担。**S
 
 ### 关键设计
 
-1. **绕过最后一层 MLP 缓解词汇化压力（§3.2）**:
+**1. 绕过最后一层 MLP 缓解词汇化压力（§3.2）：把 embedding 抽取点前移一层。**
 
-    - 功能：在不动任何参数的前提下，把 embedding 抽取位置从语义被「拽向词表方向」的最后一层 MLP 前移到 attention 层之后。
-    - 核心思路：作者用 Qwen2.5-VL（3B/7B/32B）做 probing：定义 $\alpha_\ell^{\text{Attn}}=\cos(h^{\text{MLP}}_{\ell-1},h^{\text{Attn}}_{\ell})$、$\beta_\ell^{\text{MLP}}=\cos(h^{\text{MLP}}_{\ell},\mathbf{w}_{y^*})$ 等指标，发现 $\alpha$ 在最后一个 MLP 之后骤降到 < 0.3、$\beta$ 在同一处跃升到约 0.5，说明「lexicalization」几乎完全集中在最后一层 MLP；同时 250 对同义词的层间余弦在最后一层 MLP 之后从 ~94% 掉到 ~87%。结论：直接取 $h_L^{\text{Attn}}$ 作为 embedding，把这层 MLP 跳掉。
-    - 设计动机：embedding 的本质是抓语义，而 MLLM 的最后一层 MLP 服务于生成。这一步「跳一层」就在 3B / 7B 上分别带来 5.33% / 5.71% 的稳定增益（Tab. 3a），是后续所有改进的基础。
+MLLM 的最后一层 MLP 是为 next-token 预测服务的，它会把语义向量硬拽向词表方向（lexicalization pressure），恰好毁掉 retrieval 需要的细粒度语义。作者用 Qwen2.5-VL（3B/7B/32B）做 probing 把这件事坐实：定义 $\alpha_\ell^{\text{Attn}}=\cos(h^{\text{MLP}}_{\ell-1},h^{\text{Attn}}_{\ell})$、$\beta_\ell^{\text{MLP}}=\cos(h^{\text{MLP}}_{\ell},\mathbf{w}_{y^*})$ 等指标，发现 $\alpha$ 在最后一个 MLP 之后骤降到 <0.3、$\beta$ 同处跃升到约 0.5，250 对同义词的层间余弦也在这一层从 ~94% 掉到 ~87%——说明 lexicalization 几乎全集中在最后一层 MLP。于是直接取 attention 之后、MLP 之前的隐状态 $h_L^{\text{Attn}}$ 作为 embedding，这层一跳就在 3B / 7B 上分别带来 5.33% / 5.71% 的稳定增益，是后续所有改进的地基。
 
-2. **受控生成 prompt 注入三类先验（§3.3）**:
+**2. 受控生成 prompt 注入三类先验（§3.3）：让"总结成一个词"语义聚焦。**
 
-    - 功能：把 E5-V 那种「Summary above content in one word」的 free-form 单词概括改成带三种约束的受控生成，从而保证生成出的「一个词」语义聚焦、不被功能词污染、且与下游任务对齐。
-    - 核心思路：三类轻量约束依次叠加——（i）Task alignment：「You are required to assess if &lt;A&gt; is related to &lt;B&gt;」；（ii）Semantic grounding：「Capture the semantics of &lt;X&gt;」；（iii）Noise suppression：「Do not use function words, prepositions, or symbols」。Tab. 3b 显示这三步在 3B 上分别加 4.29、1.49、2.47 个百分点，7B 上分别加 5.07、0.9、2.17。整个改动只改 prompt，不改任何权重。
-    - 设计动机：单词生成方式如果不约束，模型经常吐出「Self」「Searching」「Growing」之类的语义漂移词或纯功能词，把 embedding 空间稀释掉；用「任务先验」让 query 与 target 的总结词系统性对齐，使二者天然更容易 cosine 接近。
+E5-V 那种"Summary above content in one word"的自由概括经常吐出"Self""Searching"这类语义漂移词或纯功能词，把 embedding 空间稀释掉。这里改成带三类约束的受控生成，依次叠加：（i）Task alignment——"You are required to assess if &lt;A&gt; is related to &lt;B&gt;"，用任务先验让 query 与 target 的总结词系统性对齐、天然更容易 cosine 接近；（ii）Semantic grounding——"Capture the semantics of &lt;X&gt;"；（iii）Noise suppression——"Do not use function words, prepositions, or symbols"。Tab. 3b 显示三步在 3B 上分别加 4.29、1.49、2.47 个百分点，7B 上分别加 5.07、0.9、2.17，而整个改动只动 prompt、不碰任何权重。
 
-3. **多项选择重排化解 LLM framing effect（§3.4）**:
+**3. 多项选择重排化解 LLM framing effect（§3.4）：用 MCQ 抹掉标签词本身的偏置。**
 
-    - 功能：在 reranking 阶段消除「标签词本身的非对称偏置」，使模型对相同含义但不同措辞的二选一不再表现出系统性偏差。
-    - 核心思路：作者发现「Right/Wrong」「Yes/No」「True/False」虽然逻辑等价，但在同一基准上精度差最多 5%。在 context-free instruction 下让模型自由选这些标签，输出 logits 也明显偏斜，且偏斜越大下游精度越低——这与 Zhao 等 2021 的 LLM bias 一致，作者称为「LLM framing effect」。缓解办法是把 reranking 改成 MCQ 形式：「A. 匹配，B. 不匹配」，从 LM head 取 $p(\text{`A'})$ 做 SoftMax。MCQ 既中和了语义/感情色彩偏置，也利用了 LLM 预训练数据中「A/B 题型」的大量分布。
-    - 设计动机：人们直觉认为 reranking 只是问一个二值问题，但「问法」本身就是一个混杂变量；MCQ 把问题统一映射到题型空间，比直接 yes/no 高出 8.4%，且这种改动同样不需要任何训练（Fig. 4）。
+reranking 看似只是问一个二值问题，但"问法"本身就是混杂变量：作者发现"Right/Wrong""Yes/No""True/False"逻辑等价，但在同一基准上精度差最多 5%，且 context-free 下输出 logits 明显偏斜、偏斜越大下游精度越低（即 Zhao 等 2021 所述的 LLM bias，作者称 LLM framing effect）。缓解办法是把 reranking 写成 MCQ——"A. 匹配，B. 不匹配"，从 LM head 取 $p(\text{`A'})$ 做 softmax 当相关性分数。MCQ 既中和了标签的语义/感情色彩偏置，又利用了 LLM 预训练数据里大量"A/B 题型"的分布，比直接 yes/no 高 8.4%，同样无需任何训练。
 
 ### 损失函数 / 训练策略
 完全无需训练。所有改动只涉及（i）抽取位置、（ii）prompt 模板、（iii）reranking 输出格式。也不存在新参数，因而具备「换 MLLM 即插即用」的模型无关特性，包括 Qwen2-VL、Qwen2.5-VL、Qwen2.5-Omni、InternVL3、LLaVA-OV 系列等。

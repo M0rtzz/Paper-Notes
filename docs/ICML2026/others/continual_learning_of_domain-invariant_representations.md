@@ -44,28 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **Replay-augmented ERM + 域分区 buffer**:
+**1. Replay-augmented ERM + 域分区 buffer：让"多域同时存在"成为每一步训练的真实条件。**
 
-    - 功能：让"多域同时存在"成为每一步训练的真实条件，而不是事后近似。
-    - 核心思路：buffer 按域切成 $M=\bigcup_{s'<s}M_{s'}$；每条样本存为 $(x,y,z)$，$z$ 是插入时刻的辅助信息（如 logits $h(x;\theta_{s'},\omega_{s'})$ 或特征 $f_{\theta_{s'}}(x)$）。ERM 项扩为 $L^{\text{replay}}_{\text{ERM}}=\mathbb{E}_{(x,y)\sim B}[L(h(x),y)]$，$B=\bigcup_{e\le s}B_e$ 同时含当前域 batch $B_s$ 与所有 replay batch $B_{s'}$。
-    - 设计动机：传统 CL replay 只为防遗忘；这里 replay 同时承担"提供多域不变性证据"和"防遗忘"双重任务，从而把 DIRL 的 joint-access 假设近似复活。
+DIRL 假设能同时拿到多个域来联合优化不变性，可 CL 是 sequential，过去域的数据不再可见。作者注意到 replay buffer 天然就是个"多域同时存在"的载体，于是把它从单纯防遗忘的工具升级成不变性证据的来源。buffer 按域切成 $M=\bigcup_{s'<s}M_{s'}$，每条样本存为 $(x,y,z)$，$z$ 是插入时刻的辅助信息（如 logits $h(x;\theta_{s'},\omega_{s'})$ 或特征 $f_{\theta_{s'}}(x)$）；ERM 项扩为 $L^{\text{replay}}_{\text{ERM}}=\mathbb{E}_{(x,y)\sim B}[L(h(x),y)]$，$B=\bigcup_{e\le s}B_e$ 同时含当前域 batch $B_s$ 与所有 replay batch $B_{s'}$。这样 replay 一肩挑起"提供多域不变性证据"和"防遗忘"两个任务，把 DIRL 的 joint-access 假设近似复活。
 
-2. **Multi-domain 不变性计算（Preplay）**:
+**2. Multi-domain 不变性计算（Preplay）：把 5 个 DIRL 方法统一搬进 CL。**
 
-    - 功能：对每个候选不变量定义"在 replay+current batch 上的"统一惩罚算子，把 5 个 DIRL 方法搬进 CL。
-    - 核心思路：每个域用一份统计量 $\widehat\phi_{s'}=\phi(\theta,\omega;B_{s'})$，惩罚 $P^{\text{replay}}_s=\textsc{InvPenalty}(\{\widehat\phi_{s'}\}_{s'\le s})$。具体五种实例：
-        - ⋆-CL-VREX：$\phi_{s'}=\widehat r_{s'}=\mathbb{E}_{B_{s'}}[L(h(x),y)]$，惩罚 $\frac{1}{s}\sum_{s'\le s}(\widehat r_{s'}-\bar r)^2$，即跨域风险方差。
-        - ⋆-CL-Fishr：$\phi_{s'}=\widehat v_{s'}=\mathrm{Var}_{B_{s'}}(\nabla_\omega L)$，惩罚 $\frac{1}{s}\sum\|\widehat v_{s'}-\bar v\|_2^2$，匹配分类头梯度方差。
-        - ⋆-CL-CORAL：$\phi_{s'}=(\widehat\mu_{s'},\widehat\Sigma_{s'})$ 特征一阶/二阶矩，惩罚均值差 + Frobenius 协方差差。
-        - ⋆-CL-MMD：$\phi_{s'}=\widehat\mu^z_{s'}=\mathbb{E}_{B_{s'}}[z(f_\theta(x))]$，$z$ 是 RBF 核的 random Fourier features，惩罚 mean embedding 距离。
-        - ⋆-CL-ANDMask：取域级梯度 $g_{s'}=\nabla_{\theta,\omega}L^{\text{ERM}}(B_{s'})$，构造符号一致掩码 $m=\mathbb{I}(\frac{1}{s}|\sum_{s'}\mathrm{sgn}(g_{s'})|\ge\tau)$，更新 $\nabla\leftarrow m\odot\frac{1}{s}\sum_{s'}g_{s'}$。
-    - 设计动机：把 invariance 计算放到"同步可见的多域 batch"上，本质是恢复原始 DIRL 的多域联合语义；只要 buffer 能采到代表性 batch，就比"只用静态先验"准得多。
+光有多域 batch 还不够，得给每个候选不变量定义"在 replay+current batch 上的"统一惩罚算子。每个域用一份统计量 $\widehat\phi_{s'}=\phi(\theta,\omega;B_{s'})$，惩罚 $P^{\text{replay}}_s=\textsc{InvPenalty}(\{\widehat\phi_{s'}\}_{s'\le s})$。五种实例分别是：
 
-3. **Domain-conditioned invariance alignment（Lalign）**:
+- ⋆-CL-VREX：$\phi_{s'}=\widehat r_{s'}=\mathbb{E}_{B_{s'}}[L(h(x),y)]$，惩罚 $\frac{1}{s}\sum_{s'\le s}(\widehat r_{s'}-\bar r)^2$，即跨域风险方差。
+- ⋆-CL-Fishr：$\phi_{s'}=\widehat v_{s'}=\mathrm{Var}_{B_{s'}}(\nabla_\omega L)$，惩罚 $\frac{1}{s}\sum\|\widehat v_{s'}-\bar v\|_2^2$，匹配分类头梯度方差。
+- ⋆-CL-CORAL：$\phi_{s'}=(\widehat\mu_{s'},\widehat\Sigma_{s'})$ 特征一阶/二阶矩，惩罚均值差 + Frobenius 协方差差。
+- ⋆-CL-MMD：$\phi_{s'}=\widehat\mu^z_{s'}=\mathbb{E}_{B_{s'}}[z(f_\theta(x))]$，$z$ 是 RBF 核的 random Fourier features，惩罚 mean embedding 距离。
+- ⋆-CL-ANDMask：取域级梯度 $g_{s'}=\nabla_{\theta,\omega}L^{\text{ERM}}(B_{s'})$，构造符号一致掩码 $m=\mathbb{I}(\frac{1}{s}|\sum_{s'}\mathrm{sgn}(g_{s'})|\ge\tau)$，更新 $\nabla\leftarrow m\odot\frac{1}{s}\sum_{s'}g_{s'}$。
 
-    - 功能：抵消"随着模型继续训练，过去域的 replay 表示会漂移"的退化。
-    - 核心思路：调用插入时刻的先验 $\Phi_{s'}$（用 Welford 在线均值在域 $s'$ 末尾算好），把当前模型在 $B_{s'}$ 上的"同款统计量"对齐回去：$L^{\text{align}}=\sum_{s'<s}d(\widehat\phi_{s'}(\theta,\omega;B_{s'}),\Phi_{s'})$。这一项跟 naïve 法 (Eq. 4) 的关键区别是：naïve 把"当前域 batch"匹配到"过去域先验"，会强行抹平真正的跨域差异；本文是把"replay 出来的过去域 batch"匹配回"它自己当年的统计量"，更像知识蒸馏。
-    - 设计动机：作者发现仅有 Preplay 时，replay 样本的表示会被新域优化拽偏，过去几步学到的不变性被"悄悄遗忘"；Lalign 用 distillation 风格的锚点保留 invariance 的历史身份。
+把 invariance 计算放到"同步可见的多域 batch"上，本质就是恢复原始 DIRL 的多域联合语义——只要 buffer 能采到代表性 batch，就比"只用静态先验"准得多。
+
+**3. Domain-conditioned invariance alignment（Lalign）：抵消 replay 表示的漂移。**
+
+仅有 Preplay 时，replay 样本的表示会被新域优化拽偏，过去几步学到的不变性被"悄悄遗忘"。Lalign 用知识蒸馏风格的锚点把它拉回来：调用插入时刻的先验 $\Phi_{s'}$（用 Welford 在线均值在域 $s'$ 末尾算好），让当前模型在 $B_{s'}$ 上的同款统计量对齐回去，$L^{\text{align}}=\sum_{s'<s}d(\widehat\phi_{s'}(\theta,\omega;B_{s'}),\Phi_{s'})$。这里和 naïve 法（Eq. 4）有个关键差别：naïve 把"当前域 batch"匹配到"过去域先验"，会强行抹平真正的跨域差异；本文是把"replay 出来的过去域 batch"匹配回"它自己当年的统计量"，保的是 invariance 的历史身份而非抹平差异。
 
 ### 损失函数 / 训练策略
 总目标 $L^{\text{replay}}_{\text{ERM}}+\lambda P^{\text{replay}}_s+\beta L^{\text{align}}$。所有大图像数据集用 ImageNet 预训练 ResNet18，RotatedMNIST 用 4 层 CNN，Covertype 用 4 层 MLP；buffer 大小 1000（小数据集）或 5000（其它），$\lambda,\beta$ 经数据集级 HP 搜索。upper bound 用 URM（同时拿到全部源域的 offline DIRL），baselines 涵盖 13 个 SOTA CL 方法 + 3 个 CDA/CTTA（TENT、SHOT++、CoTTA）。

@@ -52,23 +52,29 @@ FAN 是一个 behavior-regularized actor-critic 框架，含四个网络：
 
 ### 关键设计
 
-1. **Flow Anchoring：单步 flow 替代 ODE 行为正则**：
+**1. Flow Anchoring：用单步 flow 替代 ODE 行为正则。**
 
-    - 功能：把"策略输出贴近 behavior flow 终态"的约束改成"策略的位移贴近 behavior flow 的速度场"，省掉解 ODE 的成本。
-    - 核心思路：行为 flow $v_\theta$ 用标准 CFM 损失 $\mathcal{L}_F(\theta)=\mathbb{E}[\|v_\theta(s,t,a_t)-(a-\epsilon)\|^2]$（$a_t=(1-t)\epsilon+ta$）训练。Actor 端的 Flow Anchoring 损失 $\mathcal{L}_B(\omega)=\mathbb{E}[\|(\pi_\omega(s,\epsilon)-\epsilon)-v_\theta(s,t,a_{t,\omega})\|^2]$，其中 $a_{t,\omega}=(1-t)\epsilon+t\pi_\omega(s,\epsilon)$；critic 端把同样的 anchoring 项 $-\alpha_2\mathbb{E}_t[\|\cdot\|^2]$ 也加进 target $q_\psi^{\pi_\omega,v_\theta}$。理论上（定理 B.3）这个损失是策略与行为分布间 Wasserstein-2 距离的上界，最小化它就是在最小化分布距离。
-    - 设计动机：FQL 的 $\mathcal{L}_P=-Q+\alpha\|a_\omega-a_\theta\|^2$ 需要解 ODE 拿 $a_\theta$，每次梯度更新都要 N 步 forward；Flow Anchoring 只评估一次 $v_\theta$ 在 $(s,t,a_{t,\omega})$ 处的值，把训练成本从 $O(N_\text{flow})$ 降到 $O(1)$，且理论保证依然成立。这是 "用积分上界替代积分本身" 的经典 trick。
+FQL 做行为正则要先解 ODE 拿到 behavior flow 的终态 $a_\theta$，再算 $\|a_\omega-a_\theta\|^2$，每次梯度更新都得跑 N 步 forward，把 flow 步数乘进训练成本。FAN 的关键观察是：约束策略贴近行为分布，不一定要 sample 真实 action，等价目标是约束策略的"位移"落在 behavior flow 的速度场轨迹上——这只需一次 flow 评估。行为 flow $v_\theta$ 用标准 CFM 损失 $\mathcal{L}_F(\theta)=\mathbb{E}[\|v_\theta(s,t,a_t)-(a-\epsilon)\|^2]$（$a_t=(1-t)\epsilon+ta$）训练，Actor 端的 Flow Anchoring 损失为
 
-2. **Noise-conditioned Critic + 算子 $\mathcal{T}_n^\pi$**：
+$$\mathcal{L}_B(\omega)=\mathbb{E}\big[\|(\pi_\omega(s,\epsilon)-\epsilon)-v_\theta(s,t,a_{t,\omega})\|^2\big],\quad a_{t,\omega}=(1-t)\epsilon+t\pi_\omega(s,\epsilon)$$
 
-    - 功能：把分布信息编码到 noise variable $\epsilon$ 里，使得分布式 critic 单噪声样本可训，且支持类 Q-learning 的 greedy max 选择。
-    - 核心思路：定义新算子 $\mathcal{T}_n^\pi Q(s,a,\epsilon'):\overset{d}{=} r+\gamma\,\mathrm{ess\,sup}_{\epsilon\sim\mathcal{N}(0,I_d)}Q(s',\pi(s',\epsilon'),\epsilon)$。定理 4.1 证明它在 $d_\infty$ 度量下是 $\gamma$-contraction，因此 Banach 不动点存在唯一。critic 用 TD 学：$\mathcal{L}_Q(\phi)=\mathbb{E}[(Q_\phi(s,a,\epsilon')-(r+\gamma q_\psi^{\pi_\omega,v_\theta}(s',\epsilon')))^2]$，其中 target $q$ 用 $Z_\psi$ 估计 ess sup 部分。
-    - 设计动机：标准分布式 critic（IQN/CODAC）需要在 16-32 个 quantile 上同时算损失，且 ess sup 需要 max-over-samples 进一步推高方差；用 $\epsilon$ 替代 quantile 索引后，$\mathcal{T}_n^\pi$ 在数学上等价编码了完整分布信息（因为 $\epsilon$ 是连续变量），单样本训练在期望意义下无偏。保留 ess sup 而非 mean 是为了延续 Q-learning 的 greedy 哲学，避免 expected SARSA 这类方法在 OOD 上的低估问题。
+critic 端把同样的 anchoring 项 $-\alpha_2\mathbb{E}_t[\|\cdot\|^2]$ 也加进 target。定理 B.3 证明这个损失是策略与行为分布间 Wasserstein-2 距离的上界，所以最小化它就是在最小化分布距离。这是"用积分上界替代积分本身"的经典 trick——绕过 ODE 解算这个中间产物，把训练成本从 $O(N_\text{flow})$ 降到 $O(1)$，理论保证还在。
 
-3. **Upper Expectile Regression for ess sup 估计**：
+**2. Noise-conditioned Critic + 算子 $\mathcal{T}_n^\pi$：用连续噪声替代离散 quantile。**
 
-    - 功能：用 $\kappa\approx 1$ 的非对称 expectile loss 估计 $Z_\psi\approx\mathrm{ess\,sup}_\epsilon Q_\phi$，避免显式 max-over-samples。
-    - 核心思路：expectile loss $\mathcal{L}_2^\kappa(\hat x-x)=|\kappa-\mathbb{1}((\hat x-x)<0)|(\hat x-x)^2$ 在 $\kappa\to 1^-$ 时其最小元收敛到 ess sup（定理 4.2）；$Z_\psi(s,a)$ 用 $\mathcal{L}_Z(\psi)=\mathbb{E}_{(s,a)\sim\mathcal{D},\epsilon}[\mathcal{L}_2^\kappa(Q_{\hat\phi}(s,a,\epsilon)-Z_\psi(s,a))]$ 训练，固定 $\kappa=0.9$。值最大化的 actor loss $\mathcal{L}_P(\omega)=\mathbb{E}[-Q_\phi(s,a_\omega,\epsilon')-Z_\psi(s,a_\omega)]$ 同时利用 noise-conditioned Q 和 upper expectile。
-    - 设计动机：直接 Monte Carlo 估计 ess sup 需要采多个 $\epsilon$ 取最大值，会推高 overestimation；expectile regression 用单样本拟合分位数等价值，方差和 bias 都更可控；这里把 IQL 的 in-sample max（用于值函数）思想从"对 action 取最大"扩展到"对 noise 取最大"。
+标准分布式 critic（IQN/CODAC）要在 16-32 个 quantile 上同时算 loss，ess sup 还得 max-over-samples，计算和方差都堆上去。FAN 把分布信息编码进一个连续噪声变量 $\epsilon$，critic 写成 $Q(s,a,\epsilon)$，再定义新算子
+
+$$\mathcal{T}_n^\pi Q(s,a,\epsilon')\overset{d}{=} r+\gamma\,\mathrm{ess\,sup}_{\epsilon\sim\mathcal{N}(0,I_d)}Q(s',\pi(s',\epsilon'),\epsilon)$$
+
+定理 4.1 证明它在 $d_\infty$ 度量下是 $\gamma$-contraction，Banach 不动点存在唯一，所以 critic 可以用 TD 稳定地学。因为 $\epsilon$ 是连续变量，它在数学上等价编码了完整分布信息，单噪声样本训练在期望意义下无偏，省掉了 quantile 多样本的开销。这里保留 ess sup 而非取 mean，是为了延续 Q-learning 的 greedy 哲学，避免 expected SARSA 这类方法在 OOD 上的低估。
+
+**3. Upper Expectile Regression：用单样本估 ess sup，不显式取 max。**
+
+$\mathcal{T}_n^\pi$ 里那个 $\mathrm{ess\,sup}_\epsilon Q$ 若用 Monte Carlo 直接采多个 $\epsilon$ 取最大值，会推高 overestimation。FAN 改用 $\kappa\approx 1$ 的非对称 expectile 回归来估它：
+
+$$\mathcal{L}_2^\kappa(\hat x-x)=|\kappa-\mathbb{1}((\hat x-x)<0)|(\hat x-x)^2$$
+
+定理 4.2 证明 $\kappa\to 1^-$ 时其最小元收敛到 ess sup，于是 $Z_\psi(s,a)$ 用 $\mathcal{L}_Z(\psi)=\mathbb{E}_{(s,a),\epsilon}[\mathcal{L}_2^\kappa(Q_{\hat\phi}(s,a,\epsilon)-Z_\psi(s,a))]$ 训练（固定 $\kappa=0.9$），actor 的值最大化损失 $\mathcal{L}_P(\omega)=\mathbb{E}[-Q_\phi(s,a_\omega,\epsilon')-Z_\psi(s,a_\omega)]$ 同时吃 noise-conditioned Q 和 upper expectile。本质是把 IQL 的 in-sample max 思想从"对 action 取最大"扩展到"对 noise 取最大"——单样本拟合分位数等价值，bias 和方差都比直接取 max 更可控。
 
 ### 损失函数 / 训练策略
 - $\mathcal{L}_F(\theta)+\alpha_1\mathcal{L}_B(\omega)+\mathcal{L}_P(\omega)+\mathcal{L}_Q(\phi)+\mathcal{L}_Z(\psi)$ 五项联合优化，actor/value 交替更新。

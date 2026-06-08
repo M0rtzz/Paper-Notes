@@ -45,34 +45,26 @@ SGMD 通过引入**稳定的 teacher stop-gradient Fisher 目标**和**双重势
 ## 方法详解
 
 ### 整体框架
-两阶段交替（见算法 1）：
-1. **生成器更新阶段**（detach fake score）：优化 $\mathcal{L}_{\text{Fisher}}(\theta) + \lambda \mathcal{L}_{\text{NR}}(\theta)$——Fisher 提供分布匹配主梯度，NR（negative residual）修正外层优化方向。
-2. **Fake-score 更新阶段**（detach 生成器）：优化 $\lambda \mathcal{L}_{\text{RC}}(\psi)$——RC（residual contraction）收缩追踪残差，保持 fake score 与生成分布的兼容性。
-
-整体形成**轻量级两步双层更新**，每轮仅 1 次 fake score 反向传播。
+SGMD 要解决 DMD 风格 few-step 视频蒸馏里两个互相牵制的难题：fake score 追踪不断演变的生成器、追踪一致性要靠多次更新（DMD2 每轮 5 次），代价很高；而 reverse-KL 风格的匹配是模式寻求且保守的，会避开目标分布的低密度区，导致视频运动不足。它的破局点是一次角色翻转——不再把 fake score 当跟踪工具，而把它当主优化目标、应朝教师方向移动，同时让生成器充当追踪器去维护分数一致性，从而打破循环依赖。落到训练上是两阶段交替：生成器更新阶段（detach fake score）优化 $\mathcal{L}_{\text{Fisher}}(\theta) + \lambda \mathcal{L}_{\text{NR}}(\theta)$，fake-score 更新阶段（detach 生成器）优化 $\lambda \mathcal{L}_{\text{RC}}(\psi)$，每轮只需 1 次 fake score 反向传播。
 
 ### 关键设计
 
-1. **Teacher Stop-Gradient Fisher 目标**:
+**1. Teacher Stop-Gradient Fisher 目标：换掉保守的 reverse-KL，给出更平滑的匹配梯度。**
 
-    - 功能：提供稳定的分布匹配信号，避免 reverse-KL 的保守性。
-    - 核心思路：标准分数匹配会让教师梯度通过生成样本（OOD 状态）反传导致训练不稳定。SGMD 冻结教师输入梯度（stop-gradient），只让 fake score 跟踪教师分数差 $\mathcal{L}_{\text{Fisher}}(\theta, \psi) := \frac{1}{2} \|s_{\text{fake}}(x_t, t) - s_{\text{real}}(\text{sg}[x_t], t)\|^2 = \frac{1}{2} c(t) \|\Delta_t\|^2$，$\Delta_t = \mu_\psi(x_t, t) - \mu_{\text{base}}(x_t, t)$，$c(t) = \alpha_t^2 / \sigma_t^4$。理想追踪下（Proposition 3.1）该目标与 reverse-KL 分布匹配方向一致。
-    - 设计动机：Fisher 提供更平滑匹配信号（不像 reverse-KL 那么避免低密度区）；停止梯度操作杜绝 OOD 梯度的无效反传。
+标准分数匹配会让教师梯度通过生成样本（往往是 OOD 状态）反传，训练就不稳了；而 reverse-KL 又太保守、躲着低密度区走，把运动细节也躲没了。SGMD 冻结教师输入梯度（stop-gradient），只让 fake score 去追教师的分数差 $\mathcal{L}_{\text{Fisher}}(\theta, \psi) := \frac{1}{2} \|s_{\text{fake}}(x_t, t) - s_{\text{real}}(\text{sg}[x_t], t)\|^2 = \frac{1}{2} c(t) \|\Delta_t\|^2$，其中 $\Delta_t = \mu_\psi(x_t, t) - \mu_{\text{base}}(x_t, t)$、$c(t) = \alpha_t^2 / \sigma_t^4$。Proposition 3.1 保证在理想追踪下这个 Fisher 目标与 reverse-KL 的分布匹配方向一致，但它的梯度信号更平滑、不像 reverse-KL 那样回避低密度区，于是低密度区里的运动细节被保留下来。停梯度则杜绝了 OOD 梯度的无效反传。
 
-2. **双重势（NR / RC）机制**:
+**2. 双重势（NR / RC）机制：用一推一拉把耦合的追踪问题解开。**
 
-    - 功能：把耦合的追踪问题解耦为生成器和 fake score 的协作对齐。
-    - 核心思路：定义追踪残差 $r(x_0, x_t) := \text{sg}[x_0] - x_{\text{fake}}$ 衡量生成器输出与 fake score 预测的差距。构造相反符号的双重势 $\mathcal{L}_{\text{NR}}(\theta) := -\frac{1}{2} \|r\|^2$（外层负残差）和 $\mathcal{L}_{\text{RC}}(\psi) := +\frac{1}{2} \|r\|^2$（内层残差收缩）。在 $x_{\text{fake}}$ 空间，它们诱导相反梯度 $\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{NR}} = r$ 和 $\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{RC}} = -r$。通过依赖链 $x_0 \to x_t \to x_{\text{fake}}$，NR 推动生成器输出朝向 fake score 预测（保持得分一致），RC 拉动 fake score 朝向生成器输出（缩小预测差）。
-    - 设计动机：SIM 等方法用隐梯度精确处理追踪但计算复杂且参数固定；SGMD 用显式双重势简化——外层用 NR 修正生成器梯度方向（消除追踪滞后的弯曲），内层用 RC 稳定 fake score 更新。
+追踪问题之所以贵，是因为生成器和 fake score 互相依赖、纠缠在一起。SGMD 先定义追踪残差 $r(x_0, x_t) := \text{sg}[x_0] - x_{\text{fake}}$ 来量化生成器输出与 fake score 预测的差距，再构造一对符号相反的势：外层负残差 $\mathcal{L}_{\text{NR}}(\theta) := -\frac{1}{2} \|r\|^2$ 和内层残差收缩 $\mathcal{L}_{\text{RC}}(\psi) := +\frac{1}{2} \|r\|^2$。它们在 $x_{\text{fake}}$ 空间诱导相反梯度 $\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{NR}} = r$、$\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{RC}} = -r$：沿依赖链 $x_0 \to x_t \to x_{\text{fake}}$，NR 把生成器输出推向 fake score 预测（保住分数一致），RC 把 fake score 拉向生成器输出（缩小预测差）。相比 SIM 用隐梯度精确处理追踪（计算复杂、强度固定），这套"推-拉"显式势把外层校正和内层收缩分开，几何直观、好实现也好调。
 
-3. **轻量级两步双层更新**:
+**3. 轻量级两步双层更新：把每轮 fake score 更新从 5 次压到 1 次。**
 
-    - 功能：用最少的计算代价实现稳定的两时间尺度优化。
-    - 核心思路：每次迭代两次反向传播——先更新生成器 $\theta \leftarrow \theta - \eta_\theta \nabla_\theta(\mathcal{L}_{\text{Fisher}} + \lambda \mathcal{L}_{\text{NR}})$（期间 $\psi$ detach），再更新 fake score $\psi \leftarrow \psi - \eta_\psi \nabla_\psi(\lambda \mathcal{L}_{\text{RC}})$（期间 $\theta$ detach）。形成显式单步双层迭代，避免计算二阶隐梯度。
-    - 设计动机：相比 DMD2 每轮 5 次 fake score 更新，SGMD 仅 1 次，32 卡 H100 上达 ~3× 训练加速；显式设计比 SIM 的隐梯度更易调试理解。$\lambda = 0.1$ 实验最优。
+要在两时间尺度优化里既稳又省，SGMD 每次迭代只做两次反向传播：先更新生成器 $\theta \leftarrow \theta - \eta_\theta \nabla_\theta(\mathcal{L}_{\text{Fisher}} + \lambda \mathcal{L}_{\text{NR}})$（其间 $\psi$ detach），再更新 fake score $\psi \leftarrow \psi - \eta_\psi \nabla_\psi(\lambda \mathcal{L}_{\text{RC}})$（其间 $\theta$ detach），构成显式的单步双层迭代，绕开了二阶隐梯度的计算。正因为 fake score 从每轮 5 次降到 1 次、每次反传省下约 80% 梯度计算，32 卡 H100 上实测约 3× 训练加速，$\lambda = 0.1$ 时效果最优。
 
 ### 训练策略
-PPO 算法把多轮轨迹视为单一 token 序列；轮间折扣 $\gamma_{\text{turn}} = 0.95$、轮内 $\gamma_{\text{token}} = 1.0$。AdamW $\beta_1 = 0, \beta_2 = 0.999$，学习率 $1 \times 10^{-6}$；4 步固定时间步 $\{1000, 960, 889, 727\}$，Euler 求解器。
+追踪权重 $\lambda = 0.1$；优化器 AdamW（$\beta_1 = 0, \beta_2 = 0.999$），学习率 $1 \times 10^{-6}$；4 步蒸馏固定时间步 $\{1000, 960, 889, 727\}$，Euler 求解器。
+
+> ⚠️ 部分超参细节以原文为准。
 
 ## 实验关键数据
 

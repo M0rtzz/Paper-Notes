@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **FSD 形式的反向目标 $\mathcal{L}_{\text{FSD}}$**：
+**1. FSD 形式的反向目标：把"专家优于学习者"从期望升级到全分布。**
 
-    - 功能：把"专家优于学习者"从期望升级到全分布，使奖励学习能感知高阶矩。
-    - 核心思路：定义违反量 $\mathcal{L}_{\text{FSD}}=\int [F_{Z^E}(z)-F_{Z^\pi}(z)]_+\,dz$；用变量代换转写到分位空间 $\int_0^1 [F_{Z^\pi}^{-1}(v)-F_{Z^E}^{-1}(v)]_+\,dv$，再用 Monte Carlo + 排序统计量 $z_{(k)}$ 近似经验分位 $F_{Z^\pi}^{-1}(k/N)\approx z_{(k)}$，全程不需要显式 CDF。
-    - 设计动机：直接用 Wasserstein 等对称距离会丢掉"占优"序；FSD 既给出可微违反量又自动蕴含均值占优（推论 4.3），是把 MaxEntIRL 推广到分布级别的最小改动。
+经典 IRL 只在期望层面约束"专家更优"，于是两个均值相同、方差/偏度不同的奖励分布被判等价，高阶矩对目标不可见。本文改用一阶随机占优（FSD）表达这个约束：定义违反量 $\mathcal{L}_{\text{FSD}}=\int [F_{Z^E}(z)-F_{Z^\pi}(z)]_+\,dz$，再用变量代换转写到分位空间 $\int_0^1 [F_{Z^\pi}^{-1}(v)-F_{Z^E}^{-1}(v)]_+\,dv$，并用 Monte Carlo + 排序统计量 $z_{(k)}$ 近似经验分位 $F_{Z^\pi}^{-1}(k/N)\approx z_{(k)}$，全程不需要显式 CDF。之所以选 FSD 而不是 Wasserstein 这类对称距离，是因为对称距离只能比"像不像"、丢掉了"谁占优"的序关系，而 FSD 既给出可微违反量、又自动蕴含均值占优（推论 4.3），是把 MaxEntIRL 推广到分布级别的最小改动。
 
-2. **能量基 + 变分推断学奖励分布**：
+**2. 能量基 + 变分推断学奖励分布：给 FSD 配一个完整的 Bayesian 学习接口。**
 
-    - 功能：把 FSD 违反量解读为对数似然，进而能在贝叶斯框架下学完整的 $q_\phi(r\mid s,a)$ 而不是点估计。
-    - 核心思路：以 $p(\mathcal{D}\mid r)\propto\exp(-\mathcal{L}_{\text{FSD}}(\pi,r))$ 构造能量基似然，引入变分后验 $q_\phi$ 并最大化 ELBO，得到 $\mathcal{L}_r(\phi)=\mathbb{E}_{q_\phi}[\mathcal{L}_{\text{FSD}}]+\mathrm{KL}(q_\phi\Vert p_0)$；实例化 $q_\phi$ 为 Azzalini skew-normal（神经科学场景）或分位函数（机器人场景）以同时支持高效采样、KL 闭式和可微梯度。
-    - 设计动机：FSD 本身只是个能量函数没有显式概率模型；EBM + 变分推断给奖励分布提供了完整的 Bayesian 学习接口，并且天然把 MaxEntIRL 里的凸正则 $\psi(r)$ 与 KL 项对应起来。
+FSD 违反量本身只是个能量函数、没有显式概率模型，没法直接学出"奖励的条件分布"。本文把它解读为对数似然 $p(\mathcal{D}\mid r)\propto\exp(-\mathcal{L}_{\text{FSD}}(\pi,r))$ 构造能量基模型，引入变分后验 $q_\phi$ 并最大化 ELBO，得到 $\mathcal{L}_r(\phi)=\mathbb{E}_{q_\phi}[\mathcal{L}_{\text{FSD}}]+\mathrm{KL}(q_\phi\Vert p_0)$。$q_\phi$ 按场景实例化：神经科学场景用 Azzalini skew-normal（刻画非对称尾部），机器人场景用分位函数，二者都能同时支持高效采样、KL 闭式和可微梯度。这一步把奖励的点估计升级成完整后验，并且天然把 MaxEntIRL 里的凸正则 $\psi(r)$ 与 KL 项对应起来，让"学奖励分布"落进标准变分推断的工具链。
 
-3. **DRM 松弛把 FSD 指示函数变可解**：
+**3. DRM 松弛：把 FSD 策略目标里不可观测的指示函数变成可优化的风险目标。**
 
-    - 功能：解决 FSD 策略目标里指示函数 $\mathcal{I}(v)=\mathbb{1}_{F_{Z^\pi}^{-1}(v)\ge F_{Z^E}^{-1}(v)}$ 不可观测的问题，让策略侧也变成可微的风险敏感目标。
-    - 核心思路：用一个非降的失真函数 $\tilde\xi(v)\ge 0$ 替代 $\mathcal{I}(v)$，策略目标退化为 $\mathcal{L}_\pi(\varphi)=\int_0^1 F_{Z^\pi}^{-1}(v)\,d\tilde\xi(v)+\mathcal{H}(\pi_\varphi)$，即一个 DRM 期望加最大熵；命题 4.6 进一步证明"对所有 $\xi$ 都 DRM 占优"等价于 FSD 占优，从而保证这一松弛在理论上能达到原 FSD 目标的最优解。
-    - 设计动机：直接优化 $\mathcal{I}(v)$ 因为不可观测而 intractable；DRM 松弛既保留了"专家轨迹偏好哪一段分位"的风险信号（如 CVaR$_{0.05}$ 强调下尾），又把策略学习自动嵌入分位回归 critic 的现成工具链。
+把 FSD 用到策略侧时会卡在指示函数 $\mathcal{I}(v)=\mathbb{1}\{F_{Z^\pi}^{-1}(v)\ge F_{Z^E}^{-1}(v)\}$ 上——它不可观测、无法直接优化。本文用一个非降失真函数 $\tilde\xi(v)\ge 0$ 替代 $\mathcal{I}(v)$，策略目标退化为 $\mathcal{L}_\pi(\varphi)=\int_0^1 F_{Z^\pi}^{-1}(v)\,d\tilde\xi(v)+\mathcal{H}(\pi_\varphi)$，即一个失真风险度量（DRM）期望加最大熵。这个松弛不是随便取的：命题 4.6 证明"对所有 $\xi$ 都 DRM 占优"等价于 FSD 占优，所以松弛后的最优解仍能回到原 FSD 目标。更妙的是 $\tilde\xi$ 一身两用——它既是让指示函数可解的工程手段，又是控制策略风险偏好的旋钮（取 CVaR$_{0.05}$ 就强调下尾），同时把策略学习自动嵌进分位回归 critic 的现成工具链。
 
 ### 损失函数 / 训练策略
 外层交替优化：reward 网络以 $\phi_{k+1}\leftarrow\phi_k-\eta^\phi\nabla\mathcal{L}_r(\phi_k)$（Eq. 3）更新，critic 用 quantile Huber 损失 $\mathcal{L}_{QR}$ 做 off-policy evaluation，策略以 $\varphi_{k+1}\leftarrow\varphi_k+\eta^\varphi\nabla\mathcal{L}_\pi(\varphi_k)$ + KKT 形式的 KL 约束 $\min_\pi \mathrm{KL}(\pi\,\Vert\,\tfrac{1}{Z}\exp\{M_\xi(Z^\pi)\})$（Ziebart et al.）更新。理论上选步长 $\eta_k=\eta_0 k^{-1/2}$ 时算法达到 $\mathcal{O}(\varepsilon^{-2})$ 迭代复杂度（定理 5.6）。整个流程纯离线，不需要环境模型或在线 rollout。

@@ -52,23 +52,17 @@ H-TDBU 由三段流水线组成。**输入**是真实数据 $\mathcal{D}_{\text{
 
 ### 关键设计
 
-1. **LLM 作为 rule provider 而不是 data provider**：
+**1. 把 LLM 从"逐行生成器"降级为"一次性规则提供者"。**
 
-    - 功能：用 LLM 一次性产出结构模板 $\mathcal{S}$（JSON 形式的字段对齐与逻辑约束），后续 12,000 行合成数据由 tree-based 模型生成，与 LLM 无关。
-    - 核心思路：作者把 Bank Marketing 的 target 分布和 FinancialPhraseBank 的情感标签分布压成一段紧凑摘要喂给 Gemini 3.1 Pro，让它直接吐 rule-provider JSON；这份 JSON 把 `target=1` 严格映射到正面文本，`target=0` 映射到中性或负面文本。与之对比，人工写的 JSON 允许 `target=1` 同时配正面或中性文本，是个更宽松的规则。整套框架的 bottom-up 模块和评估流水线对两种规则保持完全相同，只换 $\mathcal{S}$，从而把 LLM 的贡献和生成器的贡献清晰分离。
-    - 设计动机：直面 Davidson et al. (2026) 那类"全 LLM 推理"方案的痛点——LLM 调用昂贵且对推理质量极其敏感。把 LLM 的角色压缩到只输出元数据级别的规则，每次实验只需要一次或几次 LLM 调用，把生成成本降到 $O(1)$ 而非 $O(N_{\text{rows}})$。
+LLM 整行生成表格的方案痛点很明确——调用昂贵、又对推理质量极度敏感。本文的观察是：LLM 真正擅长的不是批量吐 12,000 行数据，而是读完 schema 后写一份关于字段对齐的 JSON。于是它把 LLM 的角色压到只产出结构模板 $\mathcal{S}$，后续所有行交给便宜的 tree-based 模型。具体做法是把 Bank Marketing 的 target 分布和 FinancialPhraseBank 的情感标签分布压成一段紧凑摘要喂给 Gemini 3.1 Pro，让它直接吐 rule-provider JSON，把 `target=1` 严格映射到正面文本、`target=0` 映射到中性或负面文本；与之对照的人工 JSON 更宽松，允许 `target=1` 同时配正面或中性文本。整套框架的 bottom-up 模块和评估流水线对两种规则完全相同、只换 $\mathcal{S}$，于是 LLM 的贡献和生成器的贡献被干净地分开。这么一压缩，每次实验只需一两次 LLM 调用，生成成本从 $O(N_{\text{rows}})$ 降到 $O(1)$。
 
-2. **Top-down 骨架 + bottom-up 纹理 的条件解耦**：
+**2. top-down 骨架 + bottom-up 纹理的条件解耦。**
 
-    - 功能：用条件生成器 $G(z\in\mathcal{Z}\mid\mathcal{S})$ 把"逻辑可控"和"统计真实"两个原本互相打架的目标拆成两块独立可优化的模块。
-    - 核心思路：先用真实数据训 bottom-up 生成器学到无约束的潜表示 $z$（例如 XGBoost 条件采样：固定若干 conditioning columns 后递归预测剩余列），再以 $\mathcal{S}$ 作为硬性 / 软性约束在采样阶段裁剪 $z$，使输出 $X_{\text{Syn}}$ 既保留 $z$ 学到的列间相关性又服从 $\mathcal{S}$ 的对齐规则。这种"先无约束建模分布、后约束采样"的解耦避免了把规则直接编进 GAN/Diffusion 损失带来的优化困难。
-    - 设计动机：把统计建模和规则注入解耦，一来允许复用现成的轻量表格生成器（不需要为每套规则重训神经网络），二来允许换规则不换模型（实验里 manual rule 和 Gemini rule 共用同一套 XGBoost），可控性实验因此变得干净。
+逻辑可控和统计真实这两个目标压进同一个端到端模型往往两头不讨好，本文用一个条件生成器 $G(z\in\mathcal{Z}\mid\mathcal{S})$ 把它们拆成两块独立可优化的模块。先用真实数据训 bottom-up 生成器学到无约束的潜表示 $z$（比如 XGBoost 条件采样：固定若干 conditioning columns 后递归预测剩余列），把列与列之间的复杂相关结构记下来；再以 $\mathcal{S}$ 作为硬/软约束在采样阶段裁剪 $z$，让输出 $X_{\text{Syn}}$ 既保留 $z$ 学到的列间相关性、又服从 $\mathcal{S}$ 的对齐规则。这种"先无约束建模分布、后约束采样"的顺序，避开了把规则直接编进 GAN/Diffusion 损失里带来的优化困难。解耦的好处很实际——可以复用现成的轻量表格生成器而不必为每套规则重训神经网络，也能换规则不换模型（实验里 manual rule 和 Gemini rule 共用同一套 XGBoost），可控性实验因此变得干净。
 
-3. **TSTR + XModal 双指标反馈环路**：
+**3. TSTR + XModal 双指标反馈环路：分清失败是"模型学不到"还是"规则写错了"。**
 
-    - 功能：自动判断合成数据失败是"统计纹理学不到位"还是"逻辑约束写错了"，分别触发 *Retrain Model* 或 *Adjust Constraints*。
-    - 核心思路：训练一个 logistic regression 在 $\mathcal{D}_{\text{syn}}$ 上、在真实测试集上评估，得到 TSTR Acc/F1/AUROC；同时计算 XModal — 真实与合成数据在"表格 target × 文本情感"联合分布上的差异（用 TVD 等度量）。当 XModal 高、TSTR 还行时说明 bottom-up 没学到跨模态联合分布，触发重训；当 TSTR 很差或约束违法率高时说明 $\mathcal{S}$ 本身定得不合理，回到 top-down 调规则。
-    - 设计动机：传统合成数据评估只看 TSTR，无法区分"模型不会学"和"规则没写对"两类失败模式。加入跨模态指标后，作者能在 manual benchmark vs Gemini benchmark 之间看到清晰的解耦现象——更严的规则反而让所有生成器的 TSTR 都上升（因为决策边界更清晰），与此同时 XModal 出现不同方向的变化，证明两条路径确实独立可调。
+传统合成数据只看 TSTR，分不清两类失败。本文加一个跨模态指标把它们拆开：TSTR 由一个 logistic regression 在 $\mathcal{D}_{\text{syn}}$ 上训、在真实测试集上评，给出 Acc/F1/AUROC；XModal 则度量真实与合成数据在"表格 target × 文本情感"联合分布上的差异（用 TVD 等）。当 XModal 高但 TSTR 还行，说明 bottom-up 没学到跨模态联合分布，触发 *Retrain Model* 重训生成器；当 TSTR 很差或约束违法率高，说明 $\mathcal{S}$ 本身定得不合理，回到 top-down 走 *Adjust Constraints* 改规则。靠这对指标，作者能在 manual 与 Gemini 两个 benchmark 之间看到清晰的解耦——更严的规则让所有生成器的 TSTR 一起上升（决策边界更清楚），同时 XModal 朝不同方向变化，证明两条路径确实独立可调。
 
 ### 损失函数 / 训练策略
 

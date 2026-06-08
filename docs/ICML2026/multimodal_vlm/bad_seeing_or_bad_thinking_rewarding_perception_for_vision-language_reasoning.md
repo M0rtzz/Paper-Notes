@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **Perception Verification via "Blindfolded Reasoner"（PV）**:
+**1. Perception Verification via "Blindfolded Reasoner"（PV）：在没有 caption 标注的情况下给感知块一个二值奖励。**
 
-    - 功能：在没有感知 ground truth 的前提下，给 VLM 的 `<recognition>` 块发一个二值"是否充分"的奖励。
-    - 核心思路：把 VLM 自己写出的所有感知文本 $\{a_p\}$ 与原题 $Q$ 一起送给纯文本 reasoner（蒙眼，即 image withheld），如果代理能答对则 $R_P=1$，否则 $R_P=0$。理论上这等价于 Information Bottleneck 的实现 $\min_{p(A_p|V)} I(V;A_p)-\beta I(A_p;Y)$——奖励"对答案最有信息、对图像最少冗余"的感知表达；为了强制 minimalism，还对超过 800 token 的感知块加显式惩罚。
-    - 设计动机：感知的本质是为下游推理供给"离散前提"，所以"代理能否独立完成推理"就是感知充分性的天然功能指标。这种 functional proxy 一来不需要人工标注，二来对"幻觉式 caption"零容忍——caption 再漂亮、信息不对就拿不到奖励。作者通过 979 个样本的人工标注实验把 PV 与人类多数表决的一致率打到 86.31%、Cohen's κ=0.707，且失败模式以"过于保守的 False Negative"为主（9.19% vs 4.49% FP）——FN 会被 MoCA 的 protect 机制缓冲，安全。
+感知最大的麻烦是它没有 ground truth——你没法告诉模型"这张图你应该看到什么"。作者的破局点在于一个观察：感知的产物本质上是给下游推理供给的"离散前提"，所以"一个看不到图的代理，光靠 VLM 写下的感知文字能不能把题答对"就是感知是否充分的天然功能指标。具体做法是把 VLM 自己写出的所有感知文本 $\{a_p\}$ 连同原题 $Q$ 一起喂给一个纯文本 reasoner（蒙眼，即 image withheld），代理答对则 $R_P=1$，答错则 $R_P=0$。这个 functional proxy 理论上等价于一个 Information Bottleneck 目标
 
-2. **Structured Verbal Verification（SVV）**:
+$$\min_{p(A_p|V)} I(V;A_p)-\beta I(A_p;Y),$$
 
-    - 功能：在自由形式答案场景下取代"刚性 regex"和"主观 LLM judge"，给 $R_O$ 提供低方差、高准确率的奖励。
-    - 核心思路：不让 LLM judge 给"等价吗？"这种主观判断，而是给它一个通用"语言版验证算法"，要求它**逐步执行**：(1) 识别答案类型（数字 / 集合 / 表达式 / 多选 / 自由文本），(2) 抽内容，(3) 重建参考形态，(4) 按类型做语义比对。执行型而非估计型让随机性大幅下降。
-    - 设计动机：刚性规则在语义改写上 recall 暴跌；主观 LLM judge 在 $T=0.7$ 五次重复下一致率才 78.6%，会被 RL 训练 reward hacking 利用。把判断分解成执行步骤后，一致率升到 92.3%，accuracy 91.9%，F1 92.7%（VP-Challenge-Set，N=273）。
+即奖励"对答案最有信息、对原图最少冗余"的感知表达；为强制 minimalism，还对超过 800 token 的感知块加显式惩罚。它的好处一是完全不需要人工标注，二是对"幻觉式 caption"零容忍——caption 写得再漂亮，只要信息不对、代理答不对，就拿不到奖励。作者用 979 个样本做人工标注，把 PV 与人类多数表决的一致率打到 86.31%、Cohen's κ=0.707，且失败模式偏向"过于保守的 False Negative"（9.19% FN vs 4.49% FP）——这种偏保守的噪声会被下面 MoCA 的 protect 机制缓冲掉，所以安全。
 
-3. **MoCA：Modality-Aware Credit Assignment**:
+**2. Structured Verbal Verification（SVV）：把"答案对不对"从主观判断改成逐步执行的验证算法。**
 
-    - 功能：在 trajectory 失败 ($R_O=0$) 时根据 $R_P$ 把惩罚/保护分配到"该背锅的"模块。
-    - 核心思路：对失败 trajectory 中的感知 token $\tau_P$ 做两种修正——**Case 1（bad thinking）**：$R_O=0$ 但 $R_P=1$（感知对、推理错），把感知 token 的 advantage 加一个正向"保护"项 $A_{\tau,t}+\alpha_{\text{protect}}\cdot|A_{\tau,t}|$，避免梯度毁掉正确的视觉 grounding；**Case 2（bad seeing）**：$R_O=0$ 且 $R_P=0$（感知也错），把感知 token 惩罚 amplify 为 $A_{\tau,t}-\alpha_{\text{punish}}\cdot|A_{\tau,t}|$。推理 token 走标准 GRPO 流程不变。
-    - 设计动机：标准 GRPO 在失败 trajectory 上把负 advantage 均匀施加到所有 token，这正是 seesaw 的根源——感知对 + 推理错时，会同时 unlearn 正确感知。MoCA 的 gate 机制把模态错误源对应到模块梯度，并且 protect 项天然对 PV oracle 的 False Negative 噪声有缓冲（即使 oracle 误判成 $R_P=0$，protect 不触发只是少了好处，不会反向毁掉感知能力）。
+自由形式答案（数字、集合、表达式、自由文本）很难判对错：刚性 regex 在语义改写上 recall 暴跌，而让 LLM judge 直接回答"这两个答案等价吗"又太主观——在 $T=0.7$ 重复五次下它的一致率只有 78.6%，这种高方差 reward 正好会被 RL 训练拿去 reward hacking。SVV 的做法是不让 judge 做"估计"，而是给它一套通用的语言版验证算法，要求它**逐步执行**：先识别答案类型（数字 / 集合 / 表达式 / 多选 / 自由文本），再抽取内容，重建参考形态，最后按类型做语义比对。把一个主观判断分解成确定性的执行步骤后，随机性大幅下降——一致率升到 92.3%，accuracy 91.9%，F1 92.7%（VP-Challenge-Set，N=273），由此产出低方差的结果奖励 $R_O$。
+
+**3. MoCA：把失败 trajectory 的惩罚精准送到"该背锅"的模块。**
+
+前面两个奖励解决了"信号准不准"，MoCA 解决"梯度落在谁身上"。标准 GRPO 在一条失败 trajectory 上会把负 advantage 均匀施加到所有 token，这正是 seesaw 的根源——当模型其实"看对了、只是想错了"时，均匀的负梯度会连带把正确的视觉 grounding 一起 unlearn。MoCA 用 $R_P$ 当门控，只在结果失败（$R_O=0$）时对感知 token $\tau_P$ 做两种重路由：**Case 1（bad thinking）** 是 $R_O=0$ 但 $R_P=1$，即感知对、推理错，此时给感知 token 加一个正向保护项 $A_{\tau,t}+\alpha_{\text{protect}}\cdot|A_{\tau,t}|$，避免毁掉正确感知；**Case 2（bad seeing）** 是 $R_O=0$ 且 $R_P=0$，感知也错，就把感知 token 的惩罚放大成 $A_{\tau,t}-\alpha_{\text{punish}}\cdot|A_{\tau,t}|$。推理 token 始终走标准 GRPO 不变。这个 gate 把 trajectory 级的粗信号降维到 token 段级的精准信号，从机制上消除 seesaw；而且 protect 项天然对 PV oracle 的 False Negative 有缓冲——即使 oracle 把好感知误判成 $R_P=0$，最多是 protect 不触发、少拿一点好处，不会反向把感知能力毁掉。
 
 ### 损失函数 / 训练策略
 基础是 GRPO with group baseline，advantage 走上述模态感知修改。Qwen2.5-VL-Instruct-7B 是 base；PV reasoner 和 SVV judge 都用 Qwen2.5-Instruct-14B（同一模型双用，节省部署）。训练数据混合：ViRL39K（STEM 推理）+ VisualWebInstruct-Verified（通用视觉指令）+ Pixel Reasoner 数据（感知密集）+ 作者从 arXiv/报纸/infographic 爬取的 rich-modality 数据。

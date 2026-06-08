@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **Stackelberg-Littlestone (SL) 维度**（在线设置）：
+**1. Stackelberg-Littlestone（SL）维度：把效用结构烧进 shattered tree 的节点权重里。**
 
-    - 功能：刻画在线悔界的实例最优值，证明它可以严格小于多类 Littlestone 维度，从而对那些"分类难但博弈策略简单"的实例给出非平凡保证。
-    - 核心思路：定义 SL tree——每个内部节点带 context $\mathbf z_s$、每条边带 type label $j\in[K]$，并为节点赋递归权重 $\rho_s=\inf_{\mathbf x\in\Delta(\mathcal A)}\max_{j:sj\in S_d}\bigl(r(\mathbf z_s,\mathbf x,f^{(j)})+\rho_{sj}\bigr)$，叶节点 $\rho_s=0$。一棵树被 $\mathcal H$ shattered 是指任一根到叶路径上存在 $h\in\mathcal H$ 使每条边的 label 都等于 $h$ 的预测；SL 维度即所有被 shattered 的 SL tree 的根权重上确界 $\mathrm{SLdim}_{\mathcal G}(\mathcal H):=\sup\{\kappa:\exists\text{shattered SL tree with root weight }\kappa\}$。关键差异：节点权重内嵌了 $r(\cdot)$ 这一与 $\mathcal G$ 的效用空间相关的量，所以"标签等价但 leader 策略相同"会让权重退化成 0。
-    - 设计动机：经典多类 Littlestone 维度对效用空间完全失明——它只关心能否区分类别。但 Stackelberg 真实代价是 leader 的效用差，而不是分类错误数；只有把 $r(\cdot)$ 烧进树的权重里才能让维度真正度量"学不到会让 leader 多丢多少效用"。
+经典多类 Littlestone 维度对效用空间是失明的——它只关心能不能区分类别，可 Stackelberg 真正的代价是 leader 的效用差，不是分类错误数。很多时候即便分类器一直预测错，leader 的策略仍然最优。SL 维度的做法是保留博弈的效用结构，把 shattered tree 这个老工具改造一下：每个内部节点带 context $\mathbf z_s$、每条边带 type label $j\in[K]$，节点递归权重定义为 $\rho_s=\inf_{\mathbf x\in\Delta(\mathcal A)}\max_{j:sj\in S_d}\bigl(r(\mathbf z_s,\mathbf x,f^{(j)})+\rho_{sj}\bigr)$（叶节点 $\rho_s=0$）。一棵树被 $\mathcal H$ shattered，是指任一根到叶路径上存在 $h\in\mathcal H$ 让每条边 label 都等于 $h$ 的预测；SL 维度即所有被 shattered 的 SL tree 的根权重上确界。关键差异就在权重里嵌了 Stackelberg regret $r(\cdot)$ 这个与效用空间相关的量——于是"标签不同但 leader 最优策略相同"的分歧会让权重退化成 0。这样维度度量的就不再是"能不能分对类别"，而是"学不到会让 leader 多丢多少效用"。
 
-2. **SSOA：实例最优在线算法**：
+**2. SSOA：把 Standard Optimal Algorithm 的损失从分类错误换成 Stackelberg regret。**
 
-    - 功能：构造性证明 SL 维度同时上下界匹配地刻画在线悔界。
-    - 核心思路：维护与历史一致的版本空间 $V_t\subseteq\mathcal H$；每轮看到 $\mathbf z_t$ 后，对每个 *可能的* type $j\in V_t(\mathbf z_t)$ 算出"如果是这种 follower，leader 的最优效用"$u_*^{(j)}=\sup_{\mathbf x}u(\mathbf z_t,\mathbf x,b_{f^{(j)}}(\mathbf z_t,\mathbf x))$，然后选 $\mathbf x_t\in\arg\inf_{\mathbf x}\max_{j\in V_t(\mathbf z_t)}\bigl(u_*^{(j)}-u(\mathbf z_t,\mathbf x,b_{f^{(j)}}(\mathbf z_t,\mathbf x))+\mathrm{SLdim}_{\mathcal G}(V_t^{(\mathbf z_t\to j)})\bigr)$。直觉是把"当前瞬时悔" + "若真是 $j$ 则剩余学习任务难度"一起最小化的最大值，即 *最坏未来对手* 的极小化。
-    - 设计动机：精神上类似在线多类分类里的 Standard Optimal Algorithm（SOA），但损失从"是否分错"换成了 Stackelberg regret，从而让算法把决策对齐到"哪个动作让 worst-case 剩余悔界最小"，而不是"哪个动作最像在分对一个 label"。
+有了 SL 维度，还要一个算法把上下界匹配地实现出来。SSOA 维护与历史一致的版本空间 $V_t\subseteq\mathcal H$，每轮看到 $\mathbf z_t$ 后，对每个可能 type $j\in V_t(\mathbf z_t)$ 先算"若 follower 真是 $j$，leader 的最优效用"$u_*^{(j)}=\sup_{\mathbf x}u(\mathbf z_t,\mathbf x,b_{f^{(j)}}(\mathbf z_t,\mathbf x))$，再选
 
-3. **$\gamma$-SN / $\gamma$-SG 维度**（分布式 PAC 设置）：
+$$\mathbf x_t\in\arg\inf_{\mathbf x}\max_{j\in V_t(\mathbf z_t)}\bigl(u_*^{(j)}-u(\mathbf z_t,\mathbf x,b_{f^{(j)}}(\mathbf z_t,\mathbf x))+\mathrm{SLdim}_{\mathcal G}(V_t^{(\mathbf z_t\to j)})\bigr).$$
 
-    - 功能：分别给出 PAC cut-off 样本复杂度的下界与上界，让"分布式可学性"也有量化刻画。
-    - 核心思路：$\gamma$-SN-shatter 一个 $n$ 元集合 $\{\mathbf z_i\}$ 要求存在两个函数 $g_0,g_1$ 使得 (i) 对每个 $\mathbf z_i$，leader 不可能找到一个混合策略让 $g_0,g_1$ 两种 follower 同时承受 $\le\gamma$ 的悔，以及 (ii) 任意 bit pattern $b\in\{0,1\}^n$ 都能被 $\mathcal H$ 实现；$\mathrm{SNdim}^{(\gamma)}$ 即被 shattered 的最大集合大小。$\gamma$-SG-shatter 类似但只要求一个基准 $g$，bit=1 处的差异要 $\ge\gamma$。算法 $\mathfrak L^*$ 给定 $n$ 个样本只保留 *完美一致* 的子类 $\mathcal H|_S$，在新 context 上对预测候选集 $F=\mathcal H|_S(\mathbf z)$ 做极小极大 $\mathbf x^*=\inf_{\mathbf x}\max_{i\in F}r(\mathbf z,\mathbf x,f^{(i)})$。
-    - 设计动机：在效用空间里直接套用 Natarajan/Graph 维度无法捕捉"两个 hypothesis 虽然预测不同但 leader 策略相同"这种"无害分歧"——加入 $\gamma$ 阈值后只在"分歧确实贵"的地方才计入维度，使得下界 $\Omega\bigl(\frac{\mathrm{SNdim}^{(\gamma)}_{\mathcal G}(\mathcal H)+\log(1/\delta)}{\epsilon}\bigr)$ 与上界（由 $\gamma$-SG 维度控制）能在 Stackelberg 效用语义下闭环。
+直觉是把"当前瞬时悔"加上"若真是 $j$ 则剩余学习任务的难度"一起取最小化的最大值，即对最坏未来对手做极小化。精神上它就是在线多类分类里的 SOA，但损失从"是否分错"换成了 Stackelberg regret——这一换就让算法对齐到"哪个动作让 worst-case 剩余悔界最小"，而不是"哪个动作最像在分对一个 label"。算法上它只比 SOA 多算一项 $\mathrm{SLdim}_{\mathcal G}(V_t^{(\mathbf z_t\to j)})$，结构对偶清晰、便于在已有 SOA 实现上做最小扩展。
+
+**3. $\gamma$-SN / $\gamma$-SG 维度：给分布式 PAC 设置加一道"分歧贵不贵"的 $\gamma$ 阈值。**
+
+在线之外，分布式 PAC 设置也得有量化刻画，但直接套 Natarajan/Graph 维度同样会高估难度——它捕捉不到"两个 hypothesis 预测不同但 leader 策略相同"这种无害分歧。本文的解法是在 shattered set 里加 $\gamma$ 阈值，只在"分歧确实贵"的地方才计入维度。$\gamma$-SN-shatter 一个 $n$ 元集合要求存在两个函数 $g_0,g_1$ 使得：(i) 对每个 $\mathbf z_i$，leader 找不到一个混合策略让两种 follower 同时承受 $\le\gamma$ 的悔；(ii) 任意 bit pattern $b\in\{0,1\}^n$ 都能被 $\mathcal H$ 实现。$\gamma$-SG-shatter 类似但只要求一个基准 $g$、bit=1 处差异 $\ge\gamma$。配套算法 $\mathfrak L^*$ 只保留与 $n$ 个样本完美一致的子类 $\mathcal H|_S$，在新 context 上对预测候选集做极小极大 $\mathbf x^*=\inf_{\mathbf x}\max_{i\in F}r(\mathbf z,\mathbf x,f^{(i)})$。加了 $\gamma$ 之后，下界 $\Omega\bigl(\frac{\mathrm{SNdim}^{(\gamma)}_{\mathcal G}(\mathcal H)+\log(1/\delta)}{\epsilon}\bigr)$ 与由 $\gamma$-SG 维度控制的上界就能在 Stackelberg 效用语义下闭环。
 
 ## 实验关键数据
 

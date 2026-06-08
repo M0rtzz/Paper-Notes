@@ -50,23 +50,17 @@ tags:
 
 ### 关键设计
 
-1. **$(t,\log W_t)$ 平面相图与三条充分条件**:
+**1. $(t,\log W_t)$ 平面相图与三条充分条件：把"按进度调节下注"的模糊直觉变成可证伪的命题。**
 
-    - 功能：在最优控制层面刻画"什么时候该偏离 Kelly、偏向哪边"，把模糊的"按进度调节"直觉变成可证伪的命题。
-    - 核心思路：定义 $T=N-t$、$\Delta=TL_{\max}-(b-y)$（其中 $L_{\max}=L(\lambda_m^{\text{Kelly}})=\mathbb E[h_m(\lambda_m^{\text{Kelly}},X)]$）作为"按 Kelly 走能富余多少漂移"。**定理 3.1（中心带）**：若 $\Delta\ge B\sqrt{8T\log T}$，纯 Kelly 以 $\ge 1-1/T$ 概率撞线；反之若有 $\rho$ 比例时间偏离 Kelly $\ge\delta$、且 $\Delta\le\rho\epsilon T-B\sqrt{8T\log 2}$，则拒绝概率 $\le 1/2$。**命题 3.4（落后激进）**：当 $r=(b-y)/T>\max\{L_{\max},B_K/2\}$（Kelly 漂移不够、且 Kelly 还撞不进 $T/2$ 步）时，若存在 $\lambda^{\text{agg}}>\lambda^{\text{Kelly}}$ 满足 $I^+(\lambda^{\text{agg}},r)<\frac12 I^+(\lambda^{\text{Kelly}},r)-c_T^+$（KL rate 比 Kelly 小一半），则激进策略的拒绝概率严格大于 Kelly。**命题 3.6（超前保守）**：当 $B_K/2<r<L_{\max}$ 时，存在 $\lambda^{\text{def}}<\lambda^{\text{Kelly}}$ 使失败概率指数小于 Kelly。
-    - 设计动机：在 Bellman 递归整体不可解的情况下，给出三块区域的可证明结构——中心 Kelly 带 + 落后激进区 + 超前保守区——既给出最优策略的"形状"，也给 DQN 的动作集设计（半 Kelly / Kelly / 全压三档）提供合法性依据：相图说"最优动作就在这三档附近"。
+Bellman 递归整体没有解析解，但作者证明在状态平面上它呈现出可刻画的区域结构。定义 $T=N-t$、$\Delta=TL_{\max}-(b-y)$（其中 $L_{\max}=L(\lambda_m^{\text{Kelly}})=\mathbb E[h_m(\lambda_m^{\text{Kelly}},X)]$）表示"照 Kelly 走还能富余多少漂移"，三条定理切出三块区域。**定理 3.1（中心带）**说：若 $\Delta\ge B\sqrt{8T\log T}$，纯 Kelly 以 $\ge 1-1/T$ 概率撞线；反过来若有 $\rho$ 比例时间偏离 Kelly $\ge\delta$ 且 $\Delta\le\rho\epsilon T-B\sqrt{8T\log 2}$，拒绝概率 $\le 1/2$——也就是按时进度时偏离 Kelly 只会变差。**命题 3.4（落后激进）**说：当 $r=(b-y)/T>\max\{L_{\max},B_K/2\}$（Kelly 漂移不够、且 Kelly 撞不进 $T/2$ 步）时，若存在 $\lambda^{\text{agg}}>\lambda^{\text{Kelly}}$ 使 $I^+(\lambda^{\text{agg}},r)<\frac12 I^+(\lambda^{\text{Kelly}},r)-c_T^+$（KL rate 比 Kelly 小一半），激进下注严格优于 Kelly。**命题 3.6（超前保守）**说：当 $B_K/2<r<L_{\max}$ 时，存在 $\lambda^{\text{def}}<\lambda^{\text{Kelly}}$ 使失败概率指数小于 Kelly。这三块"中心 Kelly 带 + 落后激进区 + 超前保守区"不仅给出最优策略的形状，更直接给后面 DQN 的三档动作集（半 Kelly / Kelly / 全压）提供了合法性——相图说最优动作就落在这三档附近。
 
-2. **Oracle 相图（DP backward induction）作为参照**:
+**2. Oracle 相图（DP backward induction）：在已知分布上把理论最优动作算成 ground truth。**
 
-    - 功能：在已知 $P_X$ 的合成分布上把"理论上的最优动作"算出来当 ground truth，验证理论相图、并给 DQN 提供视觉化对照。
-    - 核心思路：把 $(t,\log W_t)$ 平面离散化，从 $t=N-1$ 出发做 Bellman 反推 $V_t(y)$ 与 $\arg\max_\lambda$，动作集固定为 $\{\lambda_{\max},\lambda^{\text{Kelly}},\lambda^{\text{Kelly}}/2\}$；这是 oracle 版本，需要真分布。结果：在 Beta-mixture 上 oracle 确实呈现"中心 Kelly 带 + 上方半 Kelly 带 + 下方 All-in 带"的三段结构；当问题难度上升（$m$ 离 $\mu_X$ 更近），保守带消失、Kelly 带变窄、激进带扩张——和命题 3.4 的"r 更大就更激进"完全一致。
-    - 设计动机：理论相图只给出区域之间的相对关系，不给具体边界；oracle DP 提供数值化的最优动作图，可以直接和 DQN 的"modal action map"做视觉对比，验证学到的策略真的复现了相图结构而不是退化为常数动作。
+理论相图只给区域之间的相对关系，不给具体边界，所以作者在已知 $P_X$ 的合成分布上做一个 oracle 版求解当参照。把 $(t,\log W_t)$ 平面离散化，从 $t=N-1$ 起做 Bellman 反推 $V_t(y)$ 和 $\arg\max_\lambda$，动作集固定为 $\{\lambda_{\max},\lambda^{\text{Kelly}},\lambda^{\text{Kelly}}/2\}$。结果在 Beta-mixture 上 oracle 确实长成"中心 Kelly 带 + 上方半 Kelly 带 + 下方 All-in 带"的三段结构；当问题变难（$m$ 离 $\mu_X$ 更近）时，保守带消失、Kelly 带收窄、激进带扩张，和命题 3.4"r 更大就更该激进"完全对得上。这张数值化的最优动作图后面可以直接和 DQN 学出来的"modal action map"做视觉对比，用来确认学到的策略真的复现了相图，而不是退化成一个常数 Kelly。
 
-3. **跨分布通用的 DQN 下注 agent**:
+**3. 跨分布通用的 DQN 下注 agent：把"何时切档"交给网络从特征里读，validity 由 Ville 不等式独立保证。**
 
-    - 功能：在 $P_X$、$m$、$N$ 都未知/变化的实战场景下，用单一策略产出 schedule-aware + distribution-sensitive 的下注。
-    - 核心思路：把每次检验当成一个长度 $\le N$ 的 episode，用稀疏终端奖励 $R=\mathbb I\{\max_t \log W_t\ge b\}$ 让 $\mathbb E[R]$ 直接等于 power；状态特征是 $\mathcal F_{t-1}$-可测的紧凑向量（经验矩、剩余时间 $N-t$、距阈值 $b-\log W_t$、$m$、经验 Kelly 估计 $\widehat\lambda_t(m)$ 等），动作只 3 档：$\{\widehat\lambda_t/2,\widehat\lambda_t,\lambda_{\max}\}$；用 Q-learning 学 $Q(s,a)$，greedy 选最高拒绝概率的动作；只训练一次、跑 500,000 个合成 episode（Beta 与 Beta-mixture，随机化 $\mu_X,m,N$），无需对每个新问题重训。
-    - 设计动机：相图位置依赖未知 $P_X$，无法用解析公式表达；又因为 $\widehat\lambda_t(m)$ 在 $t$ 小时本身极不稳定，硬性"$\epsilon$-greedy 调度"只能在某个分布上调好。把"何时切档"交给 DQN 从特征里读出，相当于把分布敏感性内化进策略；动作集刻意小，对应理论给出的三个区域，既好学也保持可解释。Validity 由 Ville 不等式自动给出，对策略来源完全 agnostic——这是把"DRL 用在统计上"能成立的核心理由。
+相图的边界位置依赖未知 $P_X$，写不出解析公式；加上经验 Kelly 估计 $\widehat\lambda_t(m)$ 在 $t$ 小时方差极大，硬调一个 $\epsilon$-greedy 调度只能在单一分布上调好。作者干脆把每次检验当成一个长度 $\le N$ 的 episode，用稀疏终端奖励 $R=\mathbb I\{\max_t \log W_t\ge b\}$，于是 $\mathbb E[R]$ 直接等于 deadline-内拒绝率（power）。状态是 $\mathcal F_{t-1}$-可测的紧凑特征（经验矩、剩余时间 $N-t$、距阈值 $b-\log W_t$、$m$、经验 Kelly $\widehat\lambda_t(m)$ 等），动作只 3 档 $\{\widehat\lambda_t/2,\widehat\lambda_t,\lambda_{\max}\}$ 对应理论的三个区域，用 Q-learning 学 $Q(s,a)$ 后 greedy 选拒绝概率最高的档。整个策略只训一次、跑 500,000 个合成 episode（Beta 与 Beta-mixture，随机化 $\mu_X,m,N$），不用对每个新问题重训。最关键的是这套学习对统计保证是透明的：anytime-validity 只要求 $\lambda_t\in\Lambda_m$ 且可预测，和策略怎么得到无关，所以 DQN 再黑盒，Ville 不等式 $\mathbb P(\exists n: W_n\ge 1/\alpha)\le \alpha$ 仍然成立——这正是"把 DRL 用在统计检验上"能站住脚的核心理由。
 
 ### 损失函数 / 训练策略
 DQN 用标准 Q-learning（mnih2015human），sparse 终端奖励 $R\in\{0,1\}$，500k 个 episode 覆盖随机化 $(N,m,P_X)$；$N$ 从有限集采样、$P_X$ 从 Beta / Beta-mixture 家族采参；DQN-EB（reward $=1+(1-t/N)$）与 DQN-U（$=1-t/N$）作为两个 reward shaping 变体探索"早期拒绝"目标。

@@ -52,23 +52,17 @@ tags:
 
 ### 关键设计
 
-1. **单轮最优贪心分配**:
+**1. 单轮最优贪心分配：把随机约束的轮内问题化成离散凹优化。**
 
-    - 功能：对固定轮预算与前沿，精确求解最优分配。
-    - 核心思路：边际分解 $\mathbb E[\sum_i\min\{k_i,X_i\}]=\sum_i\sum_{\ell=1}^{k_i}p_i(\ell)$ 把目标写成生存概率之和——离散凹，边际递减。贪心：按每单位的最高边际收益排序分配（定理 4.2 证明最优性）。
-    - 设计动机：利用离散凹结构避免组合爆炸；边际分解直观且只需生存概率即可计算。
+对固定轮预算与前沿，本来要在组合空间里搜最优分配。作者用生存概率边际分解把它拆开：$\mathbb E[\sum_i\min\{k_i,X_i\}]=\sum_i\sum_{\ell=1}^{k_i}p_i(\ell)$，目标被写成一堆生存概率之和——离散凹、边际递减。于是贪心就最优：按每单位的最高边际收益排序逐份分配（定理 4.2 证明最优性）。这一步利用离散凹结构彻底避开了组合爆炸，而且边际分解只需生存概率即可计算，直观又便宜。
 
-2. **人口水平代理值函数**:
+**2. 人口水平代理值函数：把高维个体状态降维成一维人口统计。**
 
-    - 功能：把高维个体状态降维为一维人口统计，使多轮 DP 可计算。
-    - 核心思路：定义 $U_{\mathcal P}(r,n)$ 为剩余预算 $r$、规模 $n$（个体 i.i.d. 来自 $\mathcal P$）下的最优期望招募，相比 $V_{\mathcal P}(r,\mathcal D_{1:n})$ 大幅降低状态空间。递推 $U_{\mathcal P}(r,n)=\max_{0\leq s\leq r}\mathbb E[N_s^e+\gamma U_{\mathcal P}(r-s,N_s^e)]$，其中 $N_s^e$ 是均匀分配 $s$ 到 $n$ 个体的期望招募。命题 6.1 证明人口模型下均匀分配最优（交换性 + 边际递减）。
-    - 设计动机：未来新个体 ex ante 不可区分（都来自同一分布 $\mathcal P$），一致对待是最优的；这种抽象抓住规划本质又扔掉无关细节。
+多轮规划的精确值函数 $V_{\mathcal P}(r,\mathcal D_{1:n})$ 必须跟踪整个前沿分布，状态空间无限维、DP 算不动。关键观察是：未来新个体 ex ante 不可区分——都来自同一种群分布 $\mathcal P$，一致对待才是最优的。据此定义代理值函数 $U_{\mathcal P}(r,n)$ 为剩余预算 $r$、规模 $n$（个体 i.i.d. 来自 $\mathcal P$）下的最优期望招募，把状态从"整个前沿"压成"预算 + 规模"两维。递推 $U_{\mathcal P}(r,n)=\max_{0\leq s\leq r}\mathbb E[N_s^e+\gamma U_{\mathcal P}(r-s,N_s^e)]$，其中 $N_s^e$ 是均匀分配 $s$ 到 $n$ 个体的期望招募；命题 6.1 由交换性 + 边际递减证明人口模型下均匀分配最优。这个抽象既抓住了规划本质、又扔掉了无关的个体细节。
 
-3. **生成函数计算 + 改进 Bellman 算子**:
+**3. 生成函数计算 + 改进 Bellman 算子：精确算递推并插回原问题。**
 
-    - 功能：精确计算 $U_{\mathcal P}(r,n)$ 递推，把代理值函数插回原 Bellman 方程同时保持轮内最优。
-    - 核心思路：用人口生存概率 $\bar p(\ell)$ 的截断概率生成函数描述 $N_s^e$ 的分布，避免离散卷积枚举，复杂度 $O(b^2)$ 空间、$O(b^5\log b)$ 时间（定理 6.2）。在每个实际前沿 $\mathcal D_{1:n}$ 上用贪心分配 $\mathbf k^{\text{greedy}}$ 得到本轮 $N_s^g$，未来期望用 $U_{\mathcal P}(r-s,N_s^g)$ 替代精确 $V$，形成修改的 Bellman 算子 $\widetilde V_{\mathcal P;U_{\mathcal P}}$。
-    - 设计动机：生成函数利用多项式算术快速计算；代理插入是 value function approximation 的原则化形式，同时保留轮级最优与多轮可计算。
+代理值函数的递推还得能精确、快速地算出来，且插回原 Bellman 方程时不能破坏轮内最优。作者用人口生存概率 $\bar p(\ell)$ 的截断概率生成函数描述 $N_s^e$ 的分布，借多项式算术避免离散卷积枚举，复杂度做到 $O(b^2)$ 空间、$O(b^5\log b)$ 时间（定理 6.2）。在每个实际前沿 $\mathcal D_{1:n}$ 上用贪心分配 $\mathbf k^{\text{greedy}}$ 得本轮 $N_s^g$，未来期望则用 $U_{\mathcal P}(r-s,N_s^g)$ 替代精确 $V$，形成修改的 Bellman 算子 $\widetilde V_{\mathcal P;U_{\mathcal P}}$。代理插入是 value function approximation 的原则化形式，既保留轮级最优又让多轮可计算。
 
 ### 损失函数与训练策略
 目标 $\sum_{t\geq 1}\gamma^{t-1} N_t$。多轮误差分解（定理 7.2）：估计噪声下 suboptimality $\leq 2(1+\gamma)r\sum_i\|\mathcal D_i-\hat{\mathcal D}_i\|_{\text{TV}}+c_{r,\gamma}\|\mathcal P-\hat{\mathcal P}\|_{\text{TV}}+c_{r,\gamma}r\mathbb E\|\mathcal D-\bar{\mathcal D}\|_{\text{TV}}$，$c_{r,\gamma}=2\gamma r/(1-\gamma)$。分别对应前沿误差、人口分布误差、代理逼近误差。

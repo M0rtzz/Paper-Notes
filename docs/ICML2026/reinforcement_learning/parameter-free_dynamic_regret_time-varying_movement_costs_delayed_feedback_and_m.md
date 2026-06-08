@@ -51,23 +51,25 @@ tags:
 
 ### 关键设计
 
-1. **时变移动代价编码进正则器**：
+**1. 把时变移动代价编码进正则器：让 mirror descent 在未来要付高代价时自动谨慎。**
 
-    - 功能：让单实例 mirror descent 在面对未来高额移动代价时自动谨慎。
-    - 核心思路：定义 $\beta_t \triangleq \|g_t\| + \lambda_{t+1}$ 与修正项 $\varphi_t(w) = (\eta\beta_t^2 + \gamma)\|w\|$，更新规则为 $w_{t+1} = \arg\min_w \langle g_t, w\rangle + D_\psi(w \mid w_t) + \varphi_t(w)$。$\varphi_t$ 就像一根"弹回原点的皮筋"，皮筋的劲度随当前梯度与下一步移动代价共同放大；当 $\lambda_{t+1}$ 大时算法被强制保守，当 $\lambda_{t+1}\to 0$ 时算法回退到标准 parameter-free OCO。
-    - 设计动机：Jacobsen & Cutkosky (2022) 早就指出无约束域里 log-linear $\psi$ 不强凸，必须靠一个 linear-norm 修正项才能稳定 iterate；本文的扩展是关键观察——这个修正项的系数本来就可以"任意放大"，因此可以无痛地嵌入额外的 $\lambda_{t+1}^2$ 项，证明就能继承过来。
+无约束域里 log-linear 正则 $\psi$ 不强凸，Jacobsen & Cutkosky (2022) 早就指出必须靠一个 linear-norm 修正项 $\varphi_t$ 才能稳住 iterate。本文的关键观察是这个修正项的系数本来就可以任意放大，于是把它改写成 $\varphi_t(w) = (\eta\beta_t^2 + \gamma)\|w\|$，其中 $\beta_t \triangleq \|g_t\| + \lambda_{t+1}$，更新规则
 
-2. **自适应 first-order 批处理（Algorithm 3）**：
+$$w_{t+1} = \arg\min_w\ \langle g_t, w\rangle + D_\psi(w \mid w_t) + \varphi_t(w).$$
 
-    - 功能：把 regret 的 leading term 从 $\sqrt{\sum_t (\|g_t\|^2 + \lambda_t^2)\|u_t\|}$ 改进为 $\sqrt{\sum_t (\|g_t\|^2 + \lambda_t\|g_t\|)\|u_t\|}$。
-    - 核心思路：维护一个累积缓冲 $H_\tau \in \mathbb{R}^n$ 与 epoch 索引 $\tau$；每一轮直接重复使用 $w_t = \tilde{w}_\tau$ 不动，同时把 $g_t$ 累加进 $H_\tau$。仅当 $\|H_\tau\| > \lambda_{t+1}$ 时才把 $(\tilde{g}_\tau = H_\tau, \tilde{\lambda}_{\tau+1} = \lambda_{t+1})$ 喂给底层 Algorithm 2，触发一次真正的更新并开启新 epoch。直觉：只有"当前累积证据足以盖过下一步移动成本"时移动才划算，否则就忍住别动、继续观察。
-    - 设计动机：固定移动代价的 Zhang et al. (2022b) 也用过类似批处理，但他们的 $\lambda$ 是常数；本文要处理时变 $\lambda_t$，关键是把触发阈值随时变 $\lambda_{t+1}$ 一起更新，并在分析里仔细处理"epoch 边界对 path-length 的影响"。Remark 4.3 进一步证明这个一阶界**永远不差**于二阶界（差一个 AM-GM 常数），但在 $\|g_t\| \ll \lambda_t$ 的温和环境下能严格收紧。
+$\varphi_t$ 就像一根"弹回原点的皮筋"，劲度随当前梯度与下一步移动代价共同放大：$\lambda_{t+1}$ 大时算法被强制保守、不敢乱动，$\lambda_{t+1}\to 0$ 时它平滑退回标准 parameter-free OCO。这一步之所以几乎"白嫖"成功，是因为只往修正项系数里塞了个 $\lambda_{t+1}^2$，原 Jacobsen–Cutkosky 的分析骨架原样继承，全部 parameter-free 性质（对 $M$、$P_T$、$\|g_t\|$ 自适应）自动保留。
 
-3. **两个杀手级归约：delays/memory → movement costs**：
+**2. 自适应一阶批处理（Algorithm 3）：把二阶 $\lambda_t^2$ 依赖压成一阶 $\lambda_t\|g_t\|$。**
 
-    - 功能：把"延迟反馈"和"时变记忆长度"两类看起来与移动代价无关的问题，机械地翻译成 Algorithm 3 的输入格式。
-    - 核心思路（延迟反馈）：Lemma 5.1 给出 $R_T^{\mathrm{del}}(u_{1:T}) \le \sum_t \langle \sum_{\tau\in o_{t+1}\setminus o_t} g_\tau, w_t - u_t\rangle + G\sum_t |m_t|\|w_t - w_{t-1}\| + GP_T \sigma_{\max}$，其中 $m_t$ 是 round $t$ 时"还没到的梯度"集合。把当前轮已到达的累积梯度作为伪梯度 $h_t$、把 $\lambda_t = G|m_t|$ 作为伪移动代价喂给 Algorithm 3 就直接得到 $\widetilde{\mathcal{O}}(\sqrt{(M^2 + MP_T)(T + d_{\mathrm{tot}})})$ 的动态遗憾。核心思路（时变记忆）：Lemma 5.6 用类似的 unary 损失 $\hat{f}_t(w) = f_t(w,\dots,w)$ 加 Lipschitz 假设导出 $R_T^{\mathrm{mem}} \le \sum_t \langle h_t, w_t - u_t\rangle + G\sum_t \xi_t \|w_t - w_{t-1}\| + GP_T B^2$，其中 $\xi_t$ 是与未来记忆长度相关的可计算量。
-    - 设计动机：作者要论证"无约束 + 时变移动代价"不是孤立设定，而是一个**原语**——只要其它问题可以归约成它，全套工具自动迁移。延迟反馈的归约尤其漂亮：之前 Wan et al. (2024) 必须靠"按序到达"假设才能得到 $d_{\mathrm{tot}}$ 依赖，本文用"missing 梯度数 → 移动代价"的归约直接绕开这个假设，第一次在无界域 + 任意到达顺序下拿到 $d_{\mathrm{tot}}$。
+直接用上面的正则器会得到 leading term 含 $\lambda_t^2$ 的界，在小梯度温和环境里这等于"白白罚分"。批处理层的做法是维护一个累积梯度缓冲 $H_\tau$ 与 epoch 索引 $\tau$：每一轮决策直接复用 $w_t=\tilde w_\tau$ 不动、把 $g_t$ 累加进 $H_\tau$，**只有当** $\|H_\tau\| > \lambda_{t+1}$ 时才把 $(\tilde g_\tau=H_\tau,\ \tilde\lambda_{\tau+1}=\lambda_{t+1})$ 喂给底层 Algorithm 2、触发一次真正更新并开启新 epoch。直觉很直白——只有当前累积的证据足以盖过下一步移动成本时，移动才划算，否则就忍住别动、继续观察。它把 leading term 从 $\sqrt{\sum_t(\|g_t\|^2+\lambda_t^2)\|u_t\|}$ 改进成 $\sqrt{\sum_t(\|g_t\|^2+\lambda_t\|g_t\|)\|u_t\|}$；Remark 4.3 证明这个一阶界永远不差于二阶界（差一个 AM-GM 常数），并在 $\|g_t\|\ll\lambda_t$ 时严格收紧。相比固定移动代价的 Zhang et al. (2022b)，难点在于触发阈值要随时变 $\lambda_{t+1}$ 一起动，分析里还得仔细处理 epoch 边界对 path-length 的影响。
+
+**3. 两个归约：把延迟反馈与时变记忆翻译成移动代价。**
+
+这一步是全文最漂亮的地方——论证"无约束 + 时变移动代价"不是孤立设定而是一个**原语**，别的问题只要能归约进来就自动继承整套工具。延迟反馈方向，Lemma 5.1 给出
+
+$$R_T^{\mathrm{del}}(u_{1:T}) \le \sum_t \Big\langle \textstyle\sum_{\tau\in o_{t+1}\setminus o_t} g_\tau,\ w_t - u_t\Big\rangle + G\sum_t |m_t|\,\|w_t - w_{t-1}\| + GP_T\,\sigma_{\max},$$
+
+其中 $m_t$ 是 round $t$ 还没到的梯度集合；把已到达的累积梯度当伪梯度 $h_t$、把 $\lambda_t=G|m_t|$ 当伪移动代价喂给 Algorithm 3，就直接拿到 $\widetilde{\mathcal{O}}(\sqrt{(M^2+MP_T)(T+d_{\mathrm{tot}})})$。这个归约的精髓在于揭示移动代价的物理含义其实是"信息缺失的惩罚"——缺的梯度越多越不该动；正因如此它绕开了 Wan et al. (2024) 必须的"按序到达"假设，第一次在无界域 + 任意到达顺序下拿到 $d_{\mathrm{tot}}$ 依赖。时变记忆方向同理，Lemma 5.6 用 unary 损失 $\hat f_t(w)=f_t(w,\dots,w)$ 加 Lipschitz 假设导出 $R_T^{\mathrm{mem}} \le \sum_t\langle h_t, w_t-u_t\rangle + G\sum_t\xi_t\|w_t-w_{t-1}\| + GP_T B^2$，把与未来记忆长度相关的可计算量 $\xi_t$ 当成移动代价，同样套进 Algorithm 3。
 
 ### 损失函数 / 训练策略
 本文不涉及神经网络训练，所有结果都是 worst-case regret 上界。算法的实现复杂度是 $\mathcal{O}(d\log T)$ per round（$d$ 为决策维度），与标准 parameter-free OCO 持平。需要事先知道 $L \ge G + 2\lambda_{\max}$（或在延迟反馈下 $L \ge G(1 + 3\sigma_{\max})$），$G$ 是损失 Lipschitz 常数；Remark 4.2 给出标准 doubling trick 把 $\lambda_{\max}$ 与 $\sigma_{\max}$ 的先验依赖也去掉。

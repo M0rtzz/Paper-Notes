@@ -46,23 +46,17 @@ Pair2Scene 由三大模块协同工作：(1) **数据构造管线**——从 3D-
 
 ### 关键设计
 
-1. **支撑/功能两类关系 + Mixture-of-Logistics 多模态分布**:
+**1. 支撑/功能两类关系 + Mixture-of-Logistics 多模态分布。**
 
-    - 功能：把场景生成的核心条件密度形式化为「给定锚信息，预测依赖物体 OBB」的多模态分布，避免单峰回归无法表达「椅子可以放桌子四面」这种自然多解。
-    - 核心思路：支撑关系 $R_s$ 由重力主导（桌-上的电脑），功能关系 $R_f$ 由语义近邻主导（键盘-鼠标）。模型对 $B_{dep}\in\mathbb{R}^{12}$（中心 + 尺寸 + 6D 旋转）预测 $K$ 个 Logistic 分量：$P(B_{dep}\mid\Theta) = \sum_{k=1}^K \pi_k\prod_{d=1}^{12} L(B_{dep,d}\mid\mu_{k,d}, s_{k,d})$。训练目标为 NLL 加熵正则：$\mathcal{L}_{total} = \mathcal{L}_{nll} + \lambda\mathcal{L}_{ent}$，其中 $\mathcal{L}_{ent} = \sum_k \hat\pi_k\log\hat\pi_k$ 鼓励混合系数熵高、防模型坍缩到单峰。
-    - 设计动机：把支撑（物理）和功能（语义）显式拆开符合人对「家具排布」的直觉；MoL 而非高斯混合是因为 Logistic 分布的 CDF 闭式、采样高效，且在像 PixelRNN/PixelCNN++ 中早已证明能很好表达多模态结构化分布。
+场景生成的核心被本文形式化为一个条件密度：给定锚物体的信息，预测依赖物体的 OBB。这里有个细节必须照顾——"椅子可以放桌子四面"这种自然多解，单峰回归根本表达不了。所以模型把关系先分成两类（支撑关系 $R_s$ 由重力主导，比如桌上的电脑；功能关系 $R_f$ 由语义近邻主导，比如键盘配鼠标），再对依赖物体的 12 维 OBB（中心 + 尺寸 + 6D 旋转）预测 $K$ 个 Logistic 分量的混合 $P(B_{dep}\mid\Theta) = \sum_{k=1}^K \pi_k\prod_{d=1}^{12} L(B_{dep,d}\mid\mu_{k,d}, s_{k,d})$。训练用 NLL 加熵正则 $\mathcal{L}_{total} = \mathcal{L}_{nll} + \lambda\mathcal{L}_{ent}$，其中 $\mathcal{L}_{ent} = \sum_k \hat\pi_k\log\hat\pi_k$ 鼓励混合系数熵高、防止坍缩到单峰。选 MoL 而非高斯混合，是因为 Logistic 的 CDF 有闭式、采样高效，且在 PixelCNN++ 等工作里早证明能很好刻画多模态结构化分布；把支撑和功能显式拆开，则贴合人对家具排布"先稳住再讲功能"的直觉。
 
-2. **几何 + 关系双注意力 Layout Predictor**:
+**2. 几何 + 关系双注意力 Layout Predictor。**
 
-    - 功能：让模型同时感知物体几何（非平面支撑面、非规整朝向）和关系拓扑（哪个是锚、哪个是依赖）。
-    - 核心思路：每个角色 $m\in\{dep, sup, fnc\}$ 用一个 learnable query token $x_m$ 代表，锚物体的位置嵌入 $e_m^{bbox} = \mathrm{MLP}_{pos}(B_m)$ 仅加到 self-attention 的 key/value（依赖物体只查询自己的几何，不查询自己的 bbox 因为未知）。Relational Self-Attention 写作 $X = \mathrm{SelfAttn}(X, X+E^{bbox}, X+E^{bbox})$，让 dep 能 attend 到 sup/fnc 的空间存在感；Geometry-Aware Cross-Attention 写作 $x_m = \mathrm{CrossAttn}(x_m, z_m^{geo}, z_m^{geo})$，每个角色 token 只跟自己的点云特征交互，避免几何信息串台。最后 $x_{dep}$ 过 MLP 头出 $\Theta$。
-    - 设计动机：仅靠语义类别（如「桌子」）做支撑面判断完全失败——很多桌子顶面非平、椅子背面有曲面；用点云 + Point-MAE 预训练让模型「看到」物体真实形状。锚 token 加位置嵌入而 dep token 不加，是结构性地保证「我要预测的就是 dep 的位置，不能泄漏 ground-truth」。
+仅靠语义类别判断支撑面是会翻车的——很多桌子顶面不平、椅子背面带曲面，光知道"这是桌子"没用。所以模型要同时感知物体真实几何和关系拓扑。每个角色 $m\in\{dep, sup, fnc\}$ 用一个 learnable query token $x_m$ 表示，锚物体的位置嵌入 $e_m^{bbox} = \mathrm{MLP}_{pos}(B_m)$ 只加到 self-attention 的 key/value。Relational Self-Attention 写成 $X = \mathrm{SelfAttn}(X, X+E^{bbox}, X+E^{bbox})$，让 dep token 能 attend 到 sup/fnc 的空间存在感；Geometry-Aware Cross-Attention 写成 $x_m = \mathrm{CrossAttn}(x_m, z_m^{geo}, z_m^{geo})$，每个角色 token 只跟自己的 Point-MAE 点云特征交互，避免几何信息串台；最后 $x_{dep}$ 过 MLP 头吐出分布参数 $\Theta$。这里有个结构性巧思——锚 token 加位置嵌入而 dep token 不加，因为 dep 的位置正是要预测的目标，加了就会泄漏 ground-truth。
 
-3. **层级树装配 + 拒绝采样把局部规则升级到全局**:
+**3. 层级树装配 + 拒绝采样：把局部规则升级成全局一致场景。**
 
-    - 功能：在没学全局分布的情况下，仍能装配出全局一致、无碰撞、物理合理的场景。
-    - 核心思路：把场景表示成支撑树 $\mathbb{T}_s$（根为地板）+ 每个非叶节点上挂一个功能树 $\mathbb{T}_f$（共享支撑面的物体间的语义依赖）。生成时按 BFS 走 $\mathbb{T}_s$（保证支撑面先放）再对每个节点 DFS 走 $\mathbb{T}_f$，得到关系序列 $\mathcal{S} = \{\mathcal{T}_1, \ldots, \mathcal{T}_N\}$。每步从局部分布 $p_{\text{local}}(x)$ 采样候选位置，定义可行集 $\mathcal{F}$ 为「不与已放置物体或场景边界碰撞」，目标全局分布是 $p_{\text{global}}(x) = p_{\text{local}}(x)/Z$ 当 $x\in\mathcal{F}$、否则为 0，用拒绝采样近似。采样成功后做一次短重力仿真贴合。树构造支持「统计合成」（用频率/共现概率程序展开）和「LLM 引导」（用 LLM 把文本描述转层级树）两种模式。
-    - 设计动机：拒绝采样让「局部条件密度」自然升级为「全局碰撞约束分布」，无需重新训练；BFS+DFS 遍历强制因果序——任何 dep 在被预测时其锚都已存在，避免「鸡生蛋」问题。LLM 只用来生成树结构（自然语言强项）而不直接预测坐标（其弱项），实现了 LLM 与几何模型的能力分工。
+学的是局部条件密度，怎么保证拼出来的全局场景无碰撞、物理合理？答案是程序化装配。场景被表示成一棵支撑树 $\mathbb{T}_s$（根是地板），每个非叶节点上再挂一棵功能树 $\mathbb{T}_f$（共享支撑面的物体间的语义依赖）。生成时按 BFS 走 $\mathbb{T}_s$ 保证支撑面先放、再对每个节点 DFS 走 $\mathbb{T}_f$，得到关系序列 $\mathcal{S} = \{\mathcal{T}_1, \ldots, \mathcal{T}_N\}$。每一步从局部分布 $p_{\text{local}}(x)$ 采样候选位置，把可行集 $\mathcal{F}$ 定义为"不与已放置物体或边界碰撞"，于是全局分布就是 $p_{\text{global}}(x) = p_{\text{local}}(x)/Z$（$x\in\mathcal{F}$，否则为 0），用拒绝采样近似，采样成功后再做一次短重力仿真贴合。拒绝采样让局部条件密度自然升级为带全局碰撞约束的分布，不必重训；BFS+DFS 的遍历顺序强制了因果序——任何 dep 被预测时它的锚都已经存在，避开了鸡生蛋问题。树本身支持两种构造：统计合成（按频率/共现概率程序展开）和 LLM 引导（用 LLM 把文本描述转成层级树）。LLM 只负责造树结构这个它擅长的活、不直接预测坐标这个它的弱项，几何模型与 LLM 的能力分工得很干净。
 
 ### 损失函数 / 训练策略
 训练目标 $\mathcal{L}_{total} = \mathcal{L}_{nll} + \lambda\mathcal{L}_{ent}$，NLL 拟合 MoL 分布，熵正则防 mode collapse；Point-MAE 在论文聚合的 3D 资产库上预训练后作为几何编码器；数据来自 3D-Pairs 共约 140k 关系四元组，分别从 3D-Front（家具）、MesaTask（桌面）、InternScenes Real-to-Sim 子集（开放场景）抽取。

@@ -42,40 +42,31 @@ VEENA 用 steering-vector 因果归因框架定位 LVLM 的情感电路——发
 
 ### 整体框架
 
-两阶段：
-- **Stage I**：从 paired emotional/neutral 输入对提取情感方向 $S_l$（按 hit rate 阈值过滤有效样本）
-- **Stage II**：用 $S_l$ 做探针——先识别关键情感层（注入 $S_l$ 看 hit rate 变化）、再找关键 attention heads（backward activation patching）、再回溯 MLP neurons
-
-VEENA 推理时干预：
-- **VEE (Visual Emotion Enhancement)**：调节情感信息 routing，强化关键 attention heads 的注意力流
-- **ENA (Emotional Neuron Augmentation)**：放大 explicit state neurons 的语义激活
+VEENA 分两阶段，先把情感电路解析出来，再据此做推理时干预。Stage I 从成对的情感/中性输入里提取每一层的情感方向向量 $S_l$（按 hit rate 阈值过滤掉无效样本）；Stage II 拿 $S_l$ 当探针，coarse-to-fine 地逐级定位——先找关键层（注入 $S_l$ 看 hit rate 怎么变），再回溯关键 attention heads（backward activation patching），最后落到关键 MLP neurons，勾勒出 LVLM 情感处理的"Adapt→Aggregate→Execute"三段式电路。有了这张电路图，VEENA 再用两个训练无关的推理时手术——VEE 强化关键 attention heads 的情感注意力流，ENA 放大 explicit state neurons 的语义激活——直接缓解情感幻觉。
 
 ### 关键设计
 
-1. **Steering Vector + Latent Restoration Metric**:
+**1. Steering Vector + Latent Restoration Metric：让 LVLM 的情感因果分析在连续潜空间可行。**
 
-    - 功能：替代 LLM-style logit difference，让 LVLM 的情感因果分析在连续潜空间可行
-    - 核心思路：构 paired 输入 $X^+ = \text{Concat}(I_{emo}, T_{neu})$（情感图 + 中性 query）vs $X^- = \text{Concat}(I_{neu}, T_{neu})$（中性图 + 中性 query），取最后 token 在每层的 residual 差 $s_{i,l} = h^+_{i,l,N} - h^-_{i,l,N}$；按 hit rate $\mathcal{H}(X_i^+, y_i) > \tau$ 过滤有效样本，全局 steering vector $S_l = \tfrac{1}{|\mathcal{U}|}\sum_{i \in \mathcal{U}} s_{i,l}$；评估改用 hit rate 比 logit 更鲁棒
-    - 设计动机：descriptive emotional reasoning 不能用单 token logit；steering vector 把"情感"变成可加可减的连续向量，可注入测因果效应
+LLM 上做情感机制分析靠的是词汇替换（happy ↔ sad）反事实 + logit difference，但这套搬不到 LVLM：一是 LVLM 的情感是 diffusive 的——它弥散在整段叙述的语气里，Next-Token-Prediction 的单 token logit 根本抓不到；二是视觉反事实很难"只改情感不改叙事"。VEENA 改用 steering vector 当探针：构造成对输入 $X^+ = \text{Concat}(I_{emo}, T_{neu})$（情感图 + 中性 query）和 $X^- = \text{Concat}(I_{neu}, T_{neu})$（中性图 + 同一中性 query），取最后 token 在每层的 residual 差 $s_{i,l} = h^+_{i,l,N} - h^-_{i,l,N}$，再按 hit rate $\mathcal{H}(X_i^+, y_i) > \tau$（命中标准化情感词的 token 比例）过滤出有效样本，平均成全局方向 $S_l = \tfrac{1}{|\mathcal{U}|}\sum_{i \in \mathcal{U}} s_{i,l}$。
 
-2. **分层因果定位（Layer → Head → Neuron）**:
+这一步的价值在于把"情感"变成一个可加可减的连续向量：注入 $+\alpha S_l$ 就能测它对输出的因果效应，评估用 hit rate 也比脆弱的 logit difference 鲁棒得多，从而为后面所有因果干预提供了统一的"探针 + 度量"。
 
-    - 功能：从粗到细识别构成情感电路的关键组件
-    - 核心思路：
-        - 关键层：注入 $\tilde h^-_{j,l,t} = h^-_{j,l,t} + \alpha S_l$，看 hit rate 相对变化 $\mathcal{C}$
-        - 关键 heads：emotional intention $\mathcal{I}(A_c) = \text{sim}(A_c, S_l)$ + backward activation patching
-        - 关键 neurons：回溯 MLP 神经元激活与 $S_l$ 的对齐
-    - 设计动机：直接看 head 或 neuron 噪声大；coarse-to-fine 让搜索高效且每层结果可独立解释
+**2. 分层因果定位（Layer → Head → Neuron）：从粗到细勾出情感电路。**
 
-3. **"Adapt-Aggregate-Execute" 机制发现 + VEENA 干预**:
+直接在几千个 head 或上万个 neuron 里大海捞针，信噪比太差。VEENA 用 coarse-to-fine 三级搜索：先定位关键层——把 $S_l$ 注入中性样本 $\tilde h^-_{j,l,t} = h^-_{j,l,t} + \alpha S_l$，看 hit rate 的相对变化 $\mathcal{C}$ 在哪些层最大；再在关键层内找关键 heads——用 emotional intention $\mathcal{I}(A_c) = \text{sim}(A_c, S_l)$ 衡量每个 head 的注意力与情感方向的对齐度，并配合 backward activation patching 验证因果；最后回溯到 MLP neurons，看哪些神经元的激活与 $S_l$ 高度对齐。
 
-    - 功能：发现 LVLM 情感处理的三段式机制，并据此设计推理时干预
-    - 核心思路：
-        - **Shallow Layers (Adapt)**：视觉特征做模态对齐
-        - **Middle Layers (Aggregate)**：Contextual Trigger Neurons 编码情境线索 → emotion-specific heads 把信号聚合到 Query token（视觉摘要器），不同情感激活不同 heads
-        - **Deep Layers (Execute)**：Query token 激活 Explicit State Neurons（编码情感本身）→ emotion-general heads 驱动 narrative 生成
-        - VEENA = VEE（强化 emotion-specific heads 注意力）+ ENA（放大 Explicit State Neurons 激活）
-    - 设计动机：functional decoupling（中层 emotion-specific 路由 vs 深层 emotion-general 执行）是关键发现——它意味着可以分开干预"情感识别"和"情感表达"两个环节；VEENA 训练无关、即插即用
+层层收窄的好处是每一级的结果都能独立解释、互相印证，既高效又避免了在 head/neuron 粒度上直接搜索带来的噪声。
+
+**3. "Adapt-Aggregate-Execute" 机制发现 + VEENA 干预：把"情感识别"和"情感表达"分开做手术。**
+
+分层定位最终拼出一条清晰的三段式回路：浅层（Adapt）做视觉特征的模态对齐；中层（Aggregate）里 Contextual Trigger Neurons 先编码情境线索，emotion-specific heads 再把信号聚合到 Query token（相当于一个视觉摘要器），且不同情感会点亮不同的 heads；深层（Execute）则由 Query token 激活 Explicit State Neurons（编码情感本身）、再驱动 emotion-general heads 生成叙述。
+
+最关键的发现是中层与深层的 functional decoupling——中层 heads 对情感类别敏感（emotion-specific，负责"是什么情感"的路由），深层 heads 不挑情感只管表达强度（emotion-general，负责"怎么表达"）。正因为识别和执行分居两层、机制不同，VEENA 才能分两路精准干预：VEE (Visual Emotion Enhancement) 强化中层 emotion-specific heads 的注意力流以校正情感路由，ENA (Emotional Neuron Augmentation) 放大深层 Explicit State Neurons 的激活以稳住情感表达。两者都训练无关、即插即用，可直接打在已经 SFT 完的模型上。
+
+### 损失函数 / 训练策略
+
+VEENA 是纯推理时干预，不更新任何参数、不需要训练数据；只在前向时对选定 heads 的注意力流和选定 neurons 的激活施加可调系数 $\alpha$。
 
 ## 实验关键数据
 

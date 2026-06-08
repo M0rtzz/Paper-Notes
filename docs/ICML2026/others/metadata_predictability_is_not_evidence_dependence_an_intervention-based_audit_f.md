@@ -46,23 +46,17 @@ tags:
 
 ### 关键设计
 
-1. **配对证据干预统计量 ΔEvi**:
+**1. 配对证据干预统计量 ΔEvi：直接检验协议对证据 identity 是否不变。**
 
-    - 功能：直接检验 protocol 对证据 identity 是否不变，绕开「能否从 metadata 预测」这种相关性话题。
-    - 核心思路：保持 $(q_i,y_i)$ 不动，把 evidence $e_i$ 按一个排列 $\pi$ 替换成 $e_{\pi(i)}$，再让 reader 跑一遍，记准确率为 $\mathrm{Acc}_\text{shuf}$，定义 $\Delta\mathrm{Evi}=\mathrm{Acc}_\text{full}-\mathrm{Acc}_\text{shuf}$。重复 $K$ 次独立排列估计均值和 SD（论文 $K=8$，建议 production 用 $K\ge 20$）。「near-zero」是个操作性概念：在报告精度下点估计可忽略、跨洗牌稳定、并在更换 reader 后仍不变才算。
-    - 设计动机：跨 item 洗牌是「paired intervention」——和原 evidence 共享同一 query/label，因此 accuracy 差只能由 evidence identity 解释。这把「protocol 是否用证据」转化成了一个可计算、可重复的检验。
+MPDS 测的是"输出能否从先验恢复"，绕不开相关性话题；而审计真正想问的是"输出是否依赖给定证据"，这是另一个 hypothesis。ΔEvi 用一个干净的配对干预把后者变成可计算的检验：保持 $(q_i,y_i)$ 不动，只把 evidence $e_i$ 按排列 $\pi$ 替换成 $e_{\pi(i)}$，让 reader 重跑一遍得 $\mathrm{Acc}_\text{shuf}$，定义 $\Delta\mathrm{Evi}=\mathrm{Acc}_\text{full}-\mathrm{Acc}_\text{shuf}$，对应 null $H_0:\mathrm{Acc}_\text{full}=\mathrm{Acc}_\text{shuf}$。重复 $K$ 次独立排列估均值和 SD（论文 $K=8$，建议 production 用 $K\ge 20$）。因为洗牌后的样本和原 evidence 共享同一 query/label，accuracy 差只能由 evidence identity 解释，这正是 paired 设计的妙处——统计上方差也比独立比较低很多。"near-zero"是个操作性概念：点估计可忽略、跨洗牌稳定、且换 reader 后仍不变，三条都满足才算。
 
-2. **MPDS 作为分层 screening 而非终审**:
+**2. MPDS 只做分层 screening 而非终审。**
 
-    - 功能：在审计入口快速找出 metadata-only 就能干掉大半的「直接耦合」案例，但只承担 screening 角色。
-    - 核心思路：$\mathrm{MPDS}=\mathrm{Acc}_\text{meta}/\mathrm{Acc}_\text{full}$，越接近 1 说明 protocol 越像 metadata-only 预测器。但作者承认这个比值会把「metadata 强度」和「任务难度」搅在一起——比如 $(0.5,0.5)$ 和 $(0.8,0.8)$ 都给 MPDS=1.0；存在「chance-corrected」变体能解耦，但需要明确的随机率，二者方向一致所以保留更简单的 ratio。MPDS 单看不足以下结论，必须与 ΔEvi 联合形成二维诊断地图。
-    - 设计动机：作者用 synthetic HotpotQA 给出**关键反例**——MPDS=0.643（看起来中等温和），但 ΔEvi=0（证据完全无关）。这种「latent coupling」案例如果只用 metadata 筛查就会漏掉，必须靠 ΔEvi 揭穿，证明双统计量缺一不可。
+$\mathrm{MPDS}=\mathrm{Acc}_\text{meta}/\mathrm{Acc}_\text{full}$ 越接近 1，protocol 越像一个 metadata-only 预测器，因此适合在审计入口快速找出"metadata 一招就能干掉大半"的直接耦合案例。但它单看不足以下结论：这个比值会把"metadata 强度"和"任务难度"搅在一起——$(0.5,0.5)$ 和 $(0.8,0.8)$ 都给 MPDS=1.0；存在 chance-corrected 变体能解耦，但需要明确随机率，且方向一致，所以作者保留更简单的 ratio。最关键的反例是 synthetic HotpotQA：MPDS=0.643 看着中等温和，ΔEvi 却为 0（证据完全无关）。这种"latent coupling"只靠 metadata 筛查必然漏掉，必须靠 ΔEvi 揭穿，正说明双统计量缺一不可。
 
-3. **Reader-calibration 层防假阴性**:
+**3. Reader-calibration 层：把"弱 reader 学不动"从"协议不依赖证据"里拆出来。**
 
-    - 功能：把「弱 reader 学不动 → ΔEvi 假装为 0」从「protocol 真的不依赖证据 → ΔEvi 为 0」中分离出来。
-    - 核心思路：lightweight reader (TF-IDF+LR) 上 ΔEvi 近 0 不直接结论，而是触发 calibration——换 4 类 transformer reader (BERT/DistilBERT/ELECTRA-small/SciBERT) 用 multishuffle 重测；若 ΔEvi 在 stronger reader 下显著抬升，原结论「证据无关」是 reader-limited 假阴性；若仍接近 0，则进入「警告区」需要查 question-only baseline 是否塌缩。配套做输入消融（如 SciBERT 上 hypothesis-only、premise-only）区分残余的非证据信号。
-    - 设计动机：这一层把「评测协议的统计可信度」和「reader 容量」解耦，避免把 reader 弱当成 benchmark 干净。SNLI 就是教科书反例——LR 上 ΔEvi=0、四类 transformer 上 ΔEvi=0.26–0.37，结论从「证据无关」翻成「证据敏感但带 hypothesis-side 残余信号」。
+lightweight reader（TF-IDF+LR）上 ΔEvi 近 0 有两种完全不同的成因：可能是 protocol 真的不用证据，也可能是 reader 容量太小学不动而假装为 0。作者不让这种结果直接下结论，而是触发 calibration——换 4 类 transformer reader（BERT/DistilBERT/ELECTRA-small/SciBERT）用 multishuffle 重测。若 ΔEvi 在 stronger reader 下显著抬升，原结论"证据无关"就是 reader-limited 假阴性；若仍接近 0，则进入"警告区"，再查 question-only baseline 是否塌缩。配套的输入消融（如 SciBERT 上 hypothesis-only、premise-only）用来区分残余的非证据信号。SNLI 是教科书反例：LR 上 ΔEvi=0、四类 transformer 上 ΔEvi=0.26–0.37，结论从"证据无关"翻成"证据敏感但带 hypothesis-side 残余信号"——这一层直接修掉了一类长期被忽视的审计 bug：把 reader 弱当成 benchmark 干净。
 
 ### 损失函数 / 训练策略
 本文不训练新模型，而是把 audit 当成「针对既有 reader 家族的统计检验」。所有 transformer reader 都用各自标准微调（fine-tune on the benchmark），每个家族跑 8 次独立证据排列、估 mean + population SD（不是 SE，避免低估变异）。reconstructed HotpotQA 用 HuggingFace fullwiki（train=2000, eval=600），label 用「question type + answer type + supporting-fact count」启发式生成，正是典型 weak-label 设定。
@@ -124,12 +118,6 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成 + 4 个真实 benchmark + 4 个 transformer reader + 8 次洗牌覆盖了主要 case，但 $K=8$ 和 reader 数量都偏小，作者自承 production 应放大。
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、定义严格，给出 4-step 检测包和 decision-view 表，对从业者直接可用。
 - 价值: ⭐⭐⭐⭐ 提供了一套可立即采纳的 benchmark audit 规范，对 NLP/QA/NLI 整个评测生态都有方法论意义；尤其是把「弱 reader 假阴性」「latent coupling」这两个常被忽视的陷阱标准化检测出来，值得纳入 benchmark 发布的默认 checklist。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

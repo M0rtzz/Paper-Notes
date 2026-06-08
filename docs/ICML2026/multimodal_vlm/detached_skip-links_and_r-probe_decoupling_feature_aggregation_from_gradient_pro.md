@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Detached Skip-Links（梯度解耦的多层融合）**:
+**1. Detached Skip-Links：浅层只贡献前向特征，不接收语义回传。**
 
-    - 功能：把 ViT 不同深度的中间特征拼到主分支，但只让"深层组"承担反向梯度，"浅层组"前向参与、反向被截断。
-    - 核心思路：选定一组中间 block $\{\ell_1,\dots,\ell_K\}$ 后按深度划成 $\mathbf{h}_{\text{shallow}}$（如 block 6、12）和 $\mathbf{h}_{\text{deep}}$（如 block 18、23）；adapter 输入为 $\mathbf{z}=\text{MLP}([\mathbf{h}_{\text{main}};\mathbf{h}_{\text{deep}};\text{sg}(\mathbf{h}_{\text{shallow}})])$。理论分析把 full estimator 的梯度二阶矩写成 $\mathbb{E}[\|\mathbf{g}_{\text{full}}\|^2]=\|\mathbf{m}+\mathbf{s}\|^2+\text{tr}(\Sigma_m+\Sigma_s+\Sigma_{ms}+\Sigma_{ms}^\top)$，并证明早期训练阶段 skip 路径满足 variance dominance（$\text{tr}(\Sigma_s)\ge c\cdot\text{tr}(\Sigma_m)$, $c\gg 1$）、与 main 路径接近正交（$\cos(\mathbf{g}^{\text{main}},\mathbf{g}^{\text{skip}})\approx 0$）且均值贡献微弱，因而切掉 skip 梯度反而能提高有效 SNR $\eta(\mathbf{g})=\|\mathbb{E}[\mathbf{g}]\|^2/\mathbb{E}[\|\mathbf{g}\|^2]$。
-    - 设计动机：可视化第 4 个 ViT block 的 [CLS] 注意力图发现，全梯度回传会把原本结构化的注意力打"散"，而 detach 后能保持预训练的空间一致性；这从经验上对应"浅层不该被语义损失改写"。整套机制不引入任何可学习参数，是纯训练侧改动。
+多层融合在前向上很对——浅层特征确实带着 OCR 想要的笔画级细节；但反向上 LLM next-token 损失的语义梯度会沿 skip 分支直接打到浅层 ViT block，把原本编码低层结构的注意力图打散，导致训练不稳、空间先验被破坏。作者的对策是把"特征聚合"和"梯度传播"拆开：选定一组中间 block 后按深度分成 $\mathbf{h}_{\text{shallow}}$（如 block 6、12）和 $\mathbf{h}_{\text{deep}}$（如 block 18、23），adapter 输入写成 $\mathbf{z}=\text{MLP}([\mathbf{h}_{\text{main}};\mathbf{h}_{\text{deep}};\text{sg}(\mathbf{h}_{\text{shallow}})])$，浅层那一组前向照常拼接、反向被 $\text{sg}(\cdot)$ 截断。理论上把 full estimator 的梯度二阶矩写成 $\mathbb{E}[\|\mathbf{g}_{\text{full}}\|^2]=\|\mathbf{m}+\mathbf{s}\|^2+\text{tr}(\Sigma_m+\Sigma_s+\Sigma_{ms}+\Sigma_{ms}^\top)$，并证明早期训练阶段 skip 路径满足方差主导（$\text{tr}(\Sigma_s)\ge c\cdot\text{tr}(\Sigma_m)$，$c\gg 1$）、与 main 路径近乎正交（$\cos(\mathbf{g}^{\text{main}},\mathbf{g}^{\text{skip}})\approx 0$）且均值贡献微弱——所以切掉 skip 梯度反而提高有效信噪比 $\eta(\mathbf{g})=\|\mathbb{E}[\mathbf{g}]\|^2/\mathbb{E}[\|\mathbf{g}\|^2]$。可视化第 4 个 block 的 [CLS] 注意力也印证：全梯度回传会把结构化注意力打散，detach 后能保住预训练的空间一致性。整套机制不引入任何可学习参数，纯训练侧改动。
 
-2. **$R$-Probe（LLM 对齐的重建探针）**:
+**2. $R$-Probe：用 LLM 前几层初始化的重建探针，量"视觉 token 到底有没有把细节送到 LLM"。**
 
-    - 功能：给定一个已训练好的 MLLM，量化它的视觉 token 是否真的保留了细节、并且对 LLM 解码风格是友好的。
-    - 核心思路：冻结 ViT 和 adapter，挂一个浅层 Transformer decoder + MLP，把 adapter 后的视觉 token 重建回像素；关键是这个 decoder 用目标 LLM（如 LLaMA-3.1-8B）的前 1/4 层权重做初始化——既限制容量，又保证它和 LLM "看世界的方式" 一致。如果重建得好，说明视觉 token 既有信息、又落在 LLM 容易消费的子空间里。和 linear probe 不同，它直接检查 pixel-level 的 recoverability，而不是抽象的可分性。
-    - 设计动机：传统 benchmark 把"视觉编码失败"和"语言端推理失败"混在一起报数。$R$-Probe 通过强制让"LLM 风格"的解码器去重建像素，把诊断信号锁在视觉-语言接口上；后续实验证明它对特征质量敏感（detached 配置 2158 步降到 1689 步达到 MSE<0.75）、且重建误差和下游 OCR 表现的排序基本一致。
+传统 benchmark 把"视觉编码失败"和"语言端推理失败"混在一起报数，看不出问题出在接口哪一侧。$R$-Probe 冻结 ViT 和 adapter，挂一个浅层 Transformer decoder + MLP 把 adapter 后的视觉 token 重建回像素——关键在这个 decoder 用目标 LLM（如 LLaMA-3.1-8B）的前 1/4 层权重初始化，既限制容量，又保证它和 LLM "看世界的方式" 一致。重建得好，就说明视觉 token 既有信息、又落在 LLM 容易消费的子空间里。它检查的是 pixel-level 可恢复性而非 linear probe 那种抽象可分性，相当于让"评估者"和"消费者"共享同一套 inductive bias。实验也证明它对特征质量敏感（detached 配置从 2158 步缩到 1689 步就达到 MSE<0.75），且重建误差排序和下游 OCR 排名基本一致，可当作不跑完整 SFT 就能比较视觉表征的便宜诊断。
 
-3. **Context-Aware 重建序列与可选辅助损失**:
+**3. Context-Aware 重建序列与可选辅助损失：让 probe 模拟真实 OCR 推理，而非无条件自编码。**
 
-    - 功能：让 $R$-Probe 模拟真实 OCR 推理（看一张大图 + 一段提示 → 重建里面带文字的那一小块），而不是无条件自编码。
-    - 核心思路：把图像切成 $448\times 448$ tile，ViT $14\times 14$ patch 经 $2\times 2$ pooling 压成一个视觉 token；输入序列构造为 $\mathcal{S}=[\mathbf{E}_{\text{context\_img}},\mathbf{E}_{\text{text}},\mathbf{E}_{\text{target\_img}}]$，并在重排前先施加全局 2D RoPE 以保留空间关系。同一个重建头也可以挂回完整模型做辅助损失，给 OCR 任务额外注入"视觉忠实度"约束。
-    - 设计动机：纯无条件重建相当于训一个 autoencoder，会模糊"视觉信息能不能被 LLM 用"这个关键问题；条件重建强制 probe 必须同时利用文本提示和上下文像素，恰好对齐 OCR 推理时"看上下文 → 解码目标区域"的过程。模态消融显示，给文字描述能把重建 MSE 从 1.980 降到 1.103，验证了 probe 确实捕捉了跨模态对齐而不只是图像统计。
+纯无条件重建相当于训一个 autoencoder，会把"视觉信息能不能被 LLM 用"这个关键问题糊掉。作者改成条件重建——看一张大图加一段提示，去重建里面带文字的那一小块：把图像切成 $448\times 448$ tile，ViT $14\times 14$ patch 经 $2\times 2$ pooling 压成一个视觉 token，输入序列构造为 $\mathcal{S}=[\mathbf{E}_{\text{context\_img}},\mathbf{E}_{\text{text}},\mathbf{E}_{\text{target\_img}}]$，重排前先施加全局 2D RoPE 保留空间关系；同一个重建头也能挂回完整模型当辅助损失，给 OCR 额外注入"视觉忠实度"约束。强制 probe 同时利用文本提示和上下文像素，恰好对齐 OCR 推理时"看上下文 → 解码目标区域"的过程。模态消融显示给文字描述能把重建 MSE 从 1.980 降到 1.103，说明 probe 捕捉的确实是跨模态对齐而不只是图像统计。
 
 ### 损失函数 / 训练策略
 两阶段训练：adapter pre-training（5M 多模态样本，冻 ViT+LLM）→ FFT+SFT（2M 任务样本，全模型微调）。骨干默认 LLaMA-3.1-8B + 300M–400M ViT。Detached Skip-Links 只是改前向中拼接位置加一个 $\text{sg}(\cdot)$，没有任何额外参数和超参；$R$-Probe 作为辅助损失时只多了一个浅层解码器。
@@ -118,12 +112,6 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 22 benchmark、4 个 ViT backbone、5M+2M 数据规模，证据链完整
 - 写作质量: ⭐⭐⭐⭐ 动机—理论—诊断—消融—对比五段式清晰，公式标注规范
 - 价值: ⭐⭐⭐⭐ 工程改动极小、和现有方法正交、诊断工具可独立使用，社区采纳门槛低
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

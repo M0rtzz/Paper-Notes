@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **两个几何描述子：密度 + 有效秩**：
+**1. 两个几何描述子：用密度 + 有效秩刻画参考集的"形状"。**
 
-    - 功能：用最小数量的标量刻画"参考集在特征空间里的形状"。
-    - 核心思路：分布密度用 $k$-NN 估计的对数版本 $\langle -\log d_k\rangle = \frac{1}{n}\sum_i -\log d_k(x_i)$，其中 $d_k(x_i)$ 是第 $i$ 个样本到第 $k$ 个最近邻的欧氏距离（取 $k=80$）。直接用 Loftsgaarden-Quesenberry 的 $\hat p(x) \propto d_k(x)^{-D}$ 在 $D=2048$ 维下数值跨好几十个数量级不可用，所以取 log 再平均。有效秩 $\mathrm{erank}(A) = \exp(H(\bm\sigma/\|\bm\sigma\|_1))$ 取奇异值归一化后的 Shannon 熵的指数，$A$ 是中心化的特征矩阵；它在所有非零奇异值相等时退化为真正的 rank，其它情况给一个"加权维度"的连续推广。
-    - 设计动机：要让"几何"可解释，必须用一两个数就能区分 CelebA-HQ（密度 $-2.36$、有效秩 $1220$）和 COCO（密度 $-2.67$、有效秩 $1337$）这种本质不同的分布；同时这两个量要在特征空间里直接可算，不需要预先知道数据集的语义类别。
+要把"参考集在塑形 FID"这件事说清楚，先得有办法把一个数据集在特征空间里的形态压成一两个可比的标量，否则只能停在举反例的层面。本文选了互补的两个：分布密度用 $k$-NN 的对数版本
 
-2. **分层线性模型 + 跨层交互**：
+$$\langle -\log d_k\rangle = \frac{1}{n}\sum_i -\log d_k(x_i)$$
 
-    - 功能：把"在数据集 $d$ 内，质量 $X$ 一变 FID $Y$ 变多少（斜率 $\beta_d$）"这种数据集内回归量，再回归到数据集级几何描述子 $Z$ 上。
-    - 核心思路：模型分两层——level-1 每个数据集内拟合 $Y = \alpha_d + \beta_d X + \epsilon$；level-2 把 $\beta_d$ 建成 $\gamma_{00} + \gamma_{11} Z_d + u_d$。Omnibus test 用 likelihood ratio 检验 $H_0: \beta_d$ 全相等（统计量 $D$ 服从混合 $\chi^2$）；moderation test 用 Wald 检验 $H_0: \gamma_{11} = 0$，并报告 $R^2_{\mathrm{slope}}$（$Z$ 解释了多少斜率方差）。$X$ 取去噪步数 $N$ 或 ImageReward 两种，$Y$ 取 FID（也试 KID 和 $\mathrm{FD_{DINOv2}}$）。
-    - 设计动机：直接对每个数据集分别画 $X$–$Y$ 散点既不严谨也不能量化"差异有多大、能不能被几何预测"，分层模型把"斜率跨数据集差异"和"几何能否解释这种差异"分成两道可独立报告 $p$ 值的检验，结论更可信。
+其中 $d_k(x_i)$ 是第 $i$ 个样本到第 $k$ 个最近邻的欧氏距离（取 $k=80$）。之所以取 log 再平均，是因为 Loftsgaarden-Quesenberry 估计 $\hat p(x)\propto d_k(x)^{-D}$ 在 $D=2048$ 维下会横跨几十个数量级、直接用根本没法比。有效秩则用奇异值归一化后 Shannon 熵的指数 $\mathrm{erank}(A)=\exp(H(\bm\sigma/\|\bm\sigma\|_1))$（$A$ 为中心化特征矩阵），在所有非零奇异值相等时退化成真正的 rank、其余情况给出"加权维度"的连续推广。两个数加起来就能把本质不同的分布拉开——CelebA-HQ 是（密度 $-2.36$、有效秩 $1220$）的紧致单模态，COCO 是（密度 $-2.67$、有效秩 $1337$）的铺开开放域，而且全程只用特征空间可算量，不需要预先知道语义类别。
 
-3. **Precision / Recall 归因 + 两类 ablation**：
+**2. 分层线性模型 + 跨层交互：把"几何能否解释斜率差异"做成可报 $p$ 值的检验。**
 
-    - 功能：进一步定位 FID 在不同参考集上具体偏向"保真"还是"覆盖"。
-    - 核心思路：把 FID 分解成 precision（生成样本落在真实流形附近的比例）和 recall（真实样本被生成分布覆盖的比例），对每个数据集分别用 OLS 算 $R^2(\text{Precision}, \text{FID})$ 与 $R^2(\text{Recall}, \text{FID})$，看哪一侧主导 FID 变化。然后做两组 ablation：把 Inception-v3 换成 DINOv2、把 Fréchet 距离换成 MMD（即 KID），重复整套 omnibus + moderation 检验，看几何效应是不是 Inception-v3/Fréchet 特有的伪迹。
-    - 设计动机：单看 FID 只能说"它变好或变坏"，分解到 precision/recall 才能解释为什么——比如 COCO 上 FID 反向是因为 recall 主导且 recall 随质量提升反而下降；ablation 则排除掉"这是某个旧 backbone 的锅"的反驳。
+直接对每个数据集画质量–FID 散点既不严谨、也答不出"差异有多大、能不能被几何预测"这两个量化问题。本文用两层结构把它拆开：level-1 在每个数据集 $d$ 内拟合 $Y=\alpha_d+\beta_d X+\epsilon$，得到"质量一变 FID 变多少"的数据集内斜率 $\beta_d$；level-2 再把这些斜率回归到数据集级几何描述子上 $\beta_d=\gamma_{00}+\gamma_{11}Z_d+u_d$。于是两个独立的科学问题对应两道独立的检验：Omnibus test 用似然比检验 $H_0:\beta_d$ 全相等（统计量 $D$ 服从混合 $\chi^2$），回答"斜率到底有没有跨数据集差异"；Moderation test 用 Wald 检验 $H_0:\gamma_{11}=0$ 并报告 $R^2_{\mathrm{slope}}$，回答"几何描述子能解释多少斜率方差"。$X$ 取去噪步数 $N$ 或 ImageReward、$Y$ 取 FID（也换 KID 与 $\mathrm{FD_{DINOv2}}$），让结论可以分层、可复核地报出来。
+
+**3. Precision / Recall 归因 + 两类 ablation：定位 FID 偏向并排除 backbone 嫌疑。**
+
+单看 FID 升降只能说它"变好或变坏"，说不清为什么；本文把 FID 分解成 precision（生成样本落在真实流形附近的比例）与 recall（真实样本被生成分布覆盖的比例），对每个数据集分别用 OLS 算 $R^2(\text{Precision},\text{FID})$ 与 $R^2(\text{Recall},\text{FID})$，看哪一侧主导 FID 的变化——这才能解释"COCO 上步数越多样本越精细但 mode 收窄、recall 下降、FID 反而变差"这种反常机制。为了堵住"这只是 Inception-v3 或 Fréchet 的锅"这条最自然的反驳，作者再做两组替换 ablation：把 backbone 换成 DINOv2、把 Fréchet 距离换成 MMD（即 KID），各自重跑整套 omnibus + moderation 检验，若几何效应在换件后依然显著，就说明它是"参考集上的分布度量"这一类指标的共性问题，而非某个旧组件的伪迹。
 
 ### 损失函数 / 训练策略
 本文是评估而非训练，不涉及损失函数。生成端固定 SD 1.5 + DDIM、CFG=7.5、512×512、每 prompt 固定随机种子，唯一变量是去噪步数 $N$；对每个 (数据集, $N$) 生成与参考集等大的样本，再算 FID/KID/FD$_{\text{DINOv2}}$/precision/recall/ImageReward。

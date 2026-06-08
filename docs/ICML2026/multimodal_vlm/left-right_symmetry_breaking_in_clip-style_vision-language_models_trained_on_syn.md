@@ -50,26 +50,25 @@ tags:
 
 ### 关键设计
 
-1. **可控 1D 合成数据集 + 标签/布局双轴扫描**：
+**1. 可控 1D 合成数据集 + 标签/布局双轴扫描：把"什么驱动空间泛化"变成可干涉变量。**
 
-    - 功能：在保持 CLIP 训练流程不变的前提下，把"什么因素驱动空间关系泛化"做成可干涉变量。
-    - 核心思路：把图像降到 1D 10-pixel，单 token 一物体，让"左/右"成为唯一的空间自由度；训练时分别扫两条轴——标签多样性 $N_{\rm pair}\in\{5,...,15\}$ 和布局多样性 $n_2$（每对物体的位置组合数）。三种泛化（单物体位置 / seen-pair 新布局 / unseen-pair）分别对应三个 disjoint 验证集。关键观察：把 $N_{\rm pair}$ 增大显著提升全部三种泛化准确率，把 $n_2$ 增大几乎没用——**标签多样性而非布局多样性**是泛化主驱动力。这与 Uselis 2025 中"数据多样性驱动组合泛化"观察吻合，但本文进一步指出关系任务里"多样性"必须沿"label"轴扫，沿"position"轴扫不够。
-    - 设计动机：要做机制研究就要先有"可泛化的模型"和"不可泛化的模型"两类样本，才能对照看哪一项注意力分解项有差异。1D 设计让 vision encoder 只剩 10 个 key 位置，使后续四项 logit 分解的热图能直接被人眼读懂。
+机制研究的前提是手里同时有"会泛化"和"不会泛化"两类模型，才能对照看哪一项注意力分解有差异——而真实图文数据混杂太多变量做不到这一点。本文把图像降到 1D 10-pixel，单 token 一物体，让"左/右"成为唯一的空间自由度，CLIP 训练流程其余部分照旧不动。训练时分别扫两条轴：标签多样性 $N_{\rm pair}\in\{5,...,15\}$ 和布局多样性 $n_2$（每对物体的位置组合数），并用三个 disjoint 验证集分别测三种泛化（单物体位置 / seen-pair 新布局 / unseen-pair）。
 
-2. **简化 Transformer + 注意力 logit 的 weight-bias-token-position 四项分解**：
+关键观察是：增大 $N_{\rm pair}$ 能显著抬高全部三种泛化准确率，增大 $n_2$ 几乎没用——**驱动泛化的是标签多样性而非布局多样性**。这与 Uselis 2025"数据多样性驱动组合泛化"吻合，但本文进一步指出关系任务的"多样性"必须沿 label 轴扫、沿 position 轴扫不够。1D 设计还有个工程红利：vision encoder 只剩 10 个 key 位置，后续四项 logit 分解的热图能直接被人眼读懂。
 
-    - 功能：把 vision encoder 的 attention logit 拆成可解释组件，找出哪一项编码"左/右"信号。
-    - 核心思路：沿用 Elhage 2021 思路把 LayerNorm 与 MLP 砍掉，只留 1 个 Transformer block 4 头；把 query/key 写成 $Q=XW_Q^T+B_Q^T$、$K=XW_K^T+B_K^T$，则 $QK^T=XW_{QK}X^T+XW_Q^TB_K+B_Q^TW_KX^T+B_Q^TB_K$，其中 $W_{QK}=W_Q^TW_K$。Softmax 对常数项不敏感（按行减常数不变），所以只有列方向变化的 $XW_{QK}X^T$ 与 $B_Q^TW_KX^T$ 对 CLS 行的注意力分布有效；前者贡献 logit 标准差的 76%-91%（按头算）。把 $X=E+P$（token 嵌入 + 位置嵌入）代入再展开：$XW_{QK}X^T = EW_{QK}E^T + EW_{QK}P^T + PW_{QK}E^T + PW_{QK}P^T$，分别记为 EE / EP / PE / PP。可视化发现**只有 EP 项 $EW_{QK}P^T$ 在 CLS 行上出现明显的左→右单调梯度**，给右侧物体加 logit 偏置；EE 项是 label-specific（取决于物体身份），PP 项与位置对的几何对称基本不打破左右，PE 项贡献小。在不泛化的模型里 EP 项的水平梯度则完全缺失（App. G）——这是机制性的"信号 vs 噪声"对照。
-    - 设计动机：用纯加性分解把 attention 看成"内容-内容（EE）+ 内容-位置（EP）+ 位置-内容（PE）+ 位置-位置（PP）"四条信道，能直接定位"左右不对称"是从哪条信道流出的。这种解法天然兼容多头：每头有独立的 $W_{QK}$，可逐头算 $\Delta_{\rm label}$ vs $\Delta_{\rm p.e.}$ 决定该头是 relational 还是 label-specific。
+**2. 简化 Transformer + 注意力 logit 的四项分解：定位"左/右"信号从哪条信道流出。**
 
-3. **EP 项消融实验把相关性升级为因果**：
+要看清是哪个组件编码左右，就得把 attention logit 拆成可解释的几块。作者沿用 Elhage 2021 把 LayerNorm 与 MLP 砍掉，只留 1 个 block、4 头，再把 query/key 写成 $Q=XW_Q^T+B_Q^T$、$K=XW_K^T+B_K^T$，于是 $QK^T=XW_{QK}X^T+XW_Q^TB_K+B_Q^TW_KX^T+B_Q^TB_K$（$W_{QK}=W_Q^TW_K$）。Softmax 对按行的常数偏移不敏感，所以只有列方向变化的 $XW_{QK}X^T$ 和 $B_Q^TW_KX^T$ 真正影响 CLS 行的注意力分布，前者占 logit 标准差的 76%–91%。
 
-    - 功能：在推理阶段把 EP 项手动清零，看 unseen-pair 准确率是否塌掉。
-    - 核心思路：对所有 4 个头同时把 pre-softmax logit 里的 EP 项强行置 0（用 baseline 已训好的权重，不重新训练），再算 unseen-pair 准确率；同时对照消融 PP / PE / BP（$B_Q^TW_KP^T$）等其他位置依赖项作为 negative control。结果：**EP 消融让准确率从 baseline 的 ≈0.9 掉到 ≈0.5（随机）**，而 PP/PE 消融下降幅度小得多。同时 App. H 显示，被消融的模型仍能识别"图里有 X 和 Y"（即 label-set 识别准确率仍高），只是无法判断谁在左谁在右——这把"识别"与"空间编码"两个能力清晰解耦。作者还消融了 value 通道里的位置依赖项 $PW_V^T$（VP 项），发现进一步消融 VP 也会让准确率降到 0.5，说明注意力与 value 协同放大了泛化效果。
-    - 设计动机：仅靠"看到 EP 项有梯度"只能给相关性证据；硬消融提供了"无此项则无能力"的因果证据，符合机制可解释性领域反复强调的 ablation-as-causation 原则（Elhage 2021, Olsson 2022）。
+把 $X=E+P$（token 嵌入 + 位置嵌入）代入主项再展开，就得到四条信道：$XW_{QK}X^T = \underbrace{EW_{QK}E^T}_{\rm EE} + \underbrace{EW_{QK}P^T}_{\rm EP} + \underbrace{PW_{QK}E^T}_{\rm PE} + \underbrace{PW_{QK}P^T}_{\rm PP}$，对应"内容-内容 / 内容-位置 / 位置-内容 / 位置-位置"。可视化发现**只有 EP 项 $EW_{QK}P^T$ 在 CLS 行上出现一条明显的左→右单调梯度**，给右侧物体加 logit 偏置；EE 项是 label-specific（看物体身份），PP 项几何对称基本不破缺左右，PE 项贡献很小。更关键的是在不泛化的模型里 EP 项的水平梯度**完全缺失**（App. G）——这构成机制性的"信号 vs 噪声"对照。分解还天然兼容多头：每头有独立 $W_{QK}$，可逐头比 $\Delta_{\rm label}$ 与 $\Delta_{\rm p.e.}$ 判断它是 relational 头还是 label-specific 头。
 
-### 文本侧与对齐
-text encoder 的因果掩码本身就把序列顺序写进了表征——4 头里至少 1 头把 EOT→word 注意力强偏向句中首个被提及的实体，独立于 label，构成与 vision 侧对称的"语言侧左右破缺"。作者还发现图像/文本同 label 的 token 嵌入在原空间余弦相似度并不高，但若在 1-15 号标签上拟合一个旋转矩阵，就能在 16-20 号未见标签上把两侧 token 嵌入对齐——这暗示 CLIP 的图文对齐其实活在一个旋转商空间里。
+**3. EP 项消融：把相关性升级为因果。**
+
+光看到"EP 项有梯度"只是相关性证据。作者在推理阶段对全部 4 个头同时把 pre-softmax logit 里的 EP 项强行置 0（用已训好的 baseline 权重、不重新训练），再算 unseen-pair 准确率；同时消融 PP / PE / BP（$B_Q^TW_KP^T$）作为 negative control。结果干净利落：**EP 消融让准确率从 ≈0.9 掉到 ≈0.5（随机）**，而 PP/PE 消融几乎不动。App. H 进一步显示被消融的模型仍能识别"图里有 X 和 Y"（label-set 识别仍高），只是判不出谁左谁右——"识别"与"空间编码"两种能力被精确解耦。作者还消融了 value 通道里的位置依赖项 $PW_V^T$（VP 项），发现叠加消融 VP 也会拉到 0.5，说明注意力与 value 协同放大了泛化。这种"无此项则无能力"的硬消融，正是机制可解释性反复强调的 ablation-as-causation。
+
+**4. 文本侧与图文对齐：语言侧也有对称的左右破缺。**
+
+vision 侧的故事在文本侧有个镜像。text encoder 的因果掩码本身就把序列顺序写进了表征——4 头里至少 1 头把 EOT→word 注意力强偏向句中首个被提及的实体，独立于 label，构成与 vision 侧对称的"语言侧左右破缺"。另一个副发现是：图像/文本同 label 的 token 嵌入在原空间里余弦相似度并不高，但只要在 1-15 号标签上拟合一个旋转矩阵，就能在 16-20 号未见标签上把两侧嵌入对齐——这暗示 CLIP 的图文对齐其实活在一个旋转商空间里，cosine 相似度看到的几何远比真实结构贫瘠。
 
 ## 实验关键数据
 

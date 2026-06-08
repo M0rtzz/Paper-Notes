@@ -47,23 +47,21 @@ SOLAR 的编码侧由五个组件构成：vision encoder $\mathcal{E}_V$（如 D
 
 ### 关键设计
 
-1. **Distillation-Guided 局部对齐 + QDA 自适应阈值的交集 mask 生成（Stage 1 的核心）**:
+**1. 交集 mask 生成：用全局-局部对齐 + QDA 自适应阈值，自动标出图文共享的部分（Stage 1 核心）。**
 
-    - 功能：对任意图文对，输出一个 0/1 mask 标识"哪些 patch / token 属于两模态共享的交集"。
-    - 核心思路：首先用 Global-to-Local Alignment 学到一个度量信号——对于一个正样本，其局部特征与"伙伴模态"的全局表征的平均相似度应高于任何 batch 内负样本的平均相似度，写成 hinge 形式 $\mathcal{L}_{L2V} = [\mathrm{mean}(\mathbb{S}_{L2V}^-) + \delta - \mathrm{mean}(\mathbb{S}_{L2V}^+)]_+$，对称地有 $\mathcal{L}_{V2L}$；同时用 Local Distillation 强迫学生模型的局部特征与强单模态教师（DINOv2、BGE-m3）的同模态相似度排序保持一致（Pearson 相关），损失 $\mathcal{L}_\mathrm{LD}^L = 1 - \frac{1}{N}\sum_k \mathrm{corr}(\mathbf{S}_k^{\mathcal{T}}, \mathbf{S}_k)$，确保 GLA 信号有干净的局部基底。然后 MaskGen 把每个 patch/token 对伙伴模态全局向量的相似度分数收集起来，正样本（属于同图文对的）和负样本（in-batch 不同对）各形成一个高斯分布，用一维 QDA 求两高斯密度相等的交点 $\tau$（解 $\mathcal{N}(\tau; \mu^+, (\sigma^+)^2) = \mathcal{N}(\tau; \mu^-, (\sigma^-)^2)$），把相似度高于该阈值的位置标为 1。最后用"进化掩码"$\mathbf{M} = \rho \mathbf{1} + (1-\rho) \hat{\mathbf{M}}$，让 $\rho$ 从 1 退火到 0，避免训练早期硬 mask 的噪声让模型崩塌。
-    - 设计动机：监督式标注 sym-MM2MM 的高昂成本逼迫作者必须用自监督，而要让 mask 自动出现，就必须有一个"图文之间到底哪里对齐"的可量化信号——GLA 是构造这个信号的最小代价方式；LD 解决"如果学生自己的局部特征都不靠谱，GLA 信号也跟着不靠谱"的循环依赖；QDA 取代固定阈值是因为不同模型、不同训练阶段相似度分布差异巨大，固定阈值无法跨配置自适应；进化掩码则解决"早期 mask 噪声大、晚期 mask 可信"的训练阶段差异。
+整套方法的枢纽是一个能区分图文「交集 vs 差集」的 mask，但既然没有 sym-MM2MM 标注，就得让这个 mask 自己长出来——前提是先有一个「图文之间哪里对齐」的可量化信号。SOLAR 用 Global-to-Local Alignment 构造它：对一个正样本，其局部特征与「伙伴模态全局表征」的平均相似度应高于任何 batch 内负样本，写成 hinge 形式 $\mathcal{L}_{L2V}=[\mathrm{mean}(\mathbb{S}_{L2V}^-)+\delta-\mathrm{mean}(\mathbb{S}_{L2V}^+)]_+$（对称地有 $\mathcal{L}_{V2L}$）。但 GLA 信号的可靠性依赖局部特征本身靠谱，于是再加 Local Distillation 强迫学生局部特征与强单模态教师（DINOv2、BGE-m3）的相似度排序一致 $\mathcal{L}_\mathrm{LD}^L=1-\frac{1}{N}\sum_k\mathrm{corr}(\mathbf{S}_k^{\mathcal{T}},\mathbf{S}_k)$，打破「学生不靠谱 → 信号不靠谱」的循环依赖。拿到信号后，MaskGen 把每个 patch/token 对伙伴模态全局向量的相似度收集起来，正负样本各形成一个高斯分布，用一维 QDA 求两高斯密度相等的交点 $\tau$（解 $\mathcal{N}(\tau;\mu^+,(\sigma^+)^2)=\mathcal{N}(\tau;\mu^-,(\sigma^-)^2)$）当阈值——之所以不用固定阈值，是因为不同模型、不同训练阶段相似度分布差异巨大。最后用进化掩码 $\mathbf{M}=\rho\mathbf{1}+(1-\rho)\hat{\mathbf{M}}$ 让 $\rho$ 从 1 退火到 0，避免训练早期 mask 噪声把模型带崩。
 
-2. **Masked ITC + Global Distillation 的协同训练目标（Stage 1 的训练机理）**:
+**2. Masked ITC + Global Distillation：一边逼 mask 越来越准、一边防止差集信息被抹掉（Stage 1 训练机理）。**
 
-    - 功能：在生成 mask 的同时驱动 mask 越来越准，并防止模型遗忘掉差集的模态独有信息。
-    - 核心思路：把 stage-1 学到的进化掩码 $\mathbf{M}_V, \mathbf{M}_L$ 施加在 $\mathcal{E}_{VL}$ 的 self-attention 上——只让 `[CLS]` 注意到交集部分，得到投影后的 global 嵌入 $\mathbf{f}_V, \mathbf{f}_L$，再施加双向 InfoNCE 形式的 Masked ITC 损失 $\mathcal{L}_\mathrm{ITC}$；同时为了避免模型把差集信息彻底抛弃，引入 Global Distillation，要求学生的"未 mask 的"全局嵌入与教师模型在 batch 内的相似度结构对齐（同样用 Pearson 相关），损失 $\mathcal{L}_\mathrm{GD}^L = 1 - \mathrm{corr}(\mathbf{S}^\mathcal{T}, \mathbf{S})$。Stage 1 总目标是 $\mathcal{L} = \mathcal{L}_\mathrm{ITC} + \lambda_1 \mathcal{L}_\mathrm{GLA} + \lambda_2 \mathcal{L}_\mathrm{GD} + \lambda_3 \mathcal{L}_\mathrm{LD}$。
-    - 设计动机：Masked ITC 本质上是 mask 自己的监督信号——"如果掩掉的位置真的是交集，那么剩下的内容（也是交集）应能让两模态对齐"——它形成闭环：mask 准则准 → 对齐损失低 → 鼓励 MaskGen 继续按"对齐有效性"调整 mask。GD 是 ITC 的反作用力，避免模型为了让 ITC 收敛而把所有差集信息抹掉，让最终的联合嵌入仍保留模态独有的判别细节（例如颜色、品牌），这对 sym-MM2MM 检索区分硬负样本至关重要。
+光有 MaskGen 还不够，得有训练目标驱动 mask 真正变准。SOLAR 把进化掩码 $\mathbf{M}_V,\mathbf{M}_L$ 施加到 $\mathcal{E}_{VL}$ 的 self-attention 上，只让 `[CLS]` 注意到交集部分得到 $\mathbf{f}_V,\mathbf{f}_L$，再加双向 InfoNCE 的 Masked ITC 损失 $\mathcal{L}_\mathrm{ITC}$。这本质上是 mask 自己的监督信号——「若掩掉的真是交集，那剩下的内容仍能让两模态对齐」——形成闭环：mask 越准、对齐损失越低、越鼓励 MaskGen 继续按「对齐有效性」调 mask。但只优化 ITC 有个副作用：模型可能为了让对齐收敛而把差集（模态独有信息）彻底抛弃。于是再引入 Global Distillation 作反作用力，要求学生「未 mask 的」全局嵌入与教师在 batch 内的相似度结构对齐 $\mathcal{L}_\mathrm{GD}^L=1-\mathrm{corr}(\mathbf{S}^\mathcal{T},\mathbf{S})$，保住颜色、品牌这类独有判别细节——这对后面区分硬负样本至关重要。Stage 1 总目标是 $\mathcal{L}=\mathcal{L}_\mathrm{ITC}+\lambda_1\mathcal{L}_\mathrm{GLA}+\lambda_2\mathcal{L}_\mathrm{GD}+\lambda_3\mathcal{L}_\mathrm{LD}$。
 
-3. **基于分割的自动正/硬负样本构造（Stage 2 的核心）**:
+**3. 基于分割的自动正/硬负样本构造：同一个 mask 既造正样本又造硬负样本（Stage 2 核心）。**
 
-    - 功能：对每张图文对 $\mathbf{X}^i$ 自动产出一个语义等价但内容部分被遮的正样本，以及一个看起来很像但语义已被破坏的硬负样本。
-    - 核心思路：文本侧直接对相似度高于 $\tau_L$（交集）的 token 随机部分掩码得到正样本 $\mathbf{M}_L^+$，对低于 $\tau_L$（差集）的 token 随机掩码得到负样本 $\mathbf{M}_L^-$。图像侧因为单 patch 信息冗余，先对局部视觉特征 $\mathbf{V}'$ 做层次聚类得到 coarse 语义片段 $\mathbf{R}_k$，每个片段对文本的相关度由 $s_k = \sum_{p \in \mathbf{R}_k} \mathbf{S}_{L2V}(p) / |\mathbf{R}_k|$ 评分；得分高于 $\tau_V$ 的片段进交集集合用于构造正样本 $\mathbf{M}_V^+$，得分低的进差集集合用于构造负样本 $\mathbf{M}_V^-$。把 anchor + 正样本 + 三类负样本（构造的差集掩码负样本 + in-batch 负样本 + 离线挖掘的硬负样本）一起喂进对比损失 $\mathcal{L} = \frac{1}{N}\sum_i \log\frac{\sum_{j \in \mathbb{D}^{+i}} \exp(\langle \mathbf{f}^i, \mathbf{f}^j \rangle / \eta)}{\sum_{k \in \mathbb{D}^{+i} \cup \mathbb{D}^{-i}} \exp(\langle \mathbf{f}^i, \mathbf{f}^k \rangle / \eta)}$。
-    - 设计动机：掩掉交集 = "我把共享部分挖了，但只要伙伴模态还在，整体语义可以重建" → 这就是正样本的本质；掩掉差集 = "我把唯一标识独有细节的那部分挖了，造成不可恢复的信息损失" → 自然就是硬负样本。这种构造方式比起合成图像生成更稳——既不依赖生成模型的能力上限，也不需要任何额外标注；图像端用分割而不是单 patch 掩码，是因为 MAE 类工作早已证明单 patch 掩在 ViT 上常常被周边 patch 补回来，达不到"破坏语义"的效果。
+有了可靠的交集 mask，Stage 2 就能程序化造对比样本，关键洞察是：掩掉交集 = 「共享部分挖了，但伙伴模态还在、整体语义可重建」→ 天然是正样本；掩掉差集 = 「唯一标识独有细节的部分挖了、信息不可恢复」→ 天然是硬负样本。文本侧直接对相似度高于 $\tau_L$（交集）的 token 随机掩码造正样本、对低于 $\tau_L$（差集）的造负样本。图像侧因为单 patch 信息冗余（MAE 类工作早证明单 patch 掩掉会被周边补回、破坏不了语义），改先对局部视觉特征 $\mathbf{V}'$ 做层次聚类得到 coarse 语义片段 $\mathbf{R}_k$，每片段对文本的相关度由 $s_k=\sum_{p\in\mathbf{R}_k}\mathbf{S}_{L2V}(p)/|\mathbf{R}_k|$ 评分，高于 $\tau_V$ 的进交集造正样本、低的进差集造负样本。最后把 anchor + 正样本 + 三类负样本（构造的差集掩码负样本 + in-batch 负样本 + 离线挖掘的硬负样本）一起送进 InfoNCE：
+
+$$\mathcal{L}=\frac{1}{N}\sum_i\log\frac{\sum_{j\in\mathbb{D}^{+i}}\exp(\langle\mathbf{f}^i,\mathbf{f}^j\rangle/\eta)}{\sum_{k\in\mathbb{D}^{+i}\cup\mathbb{D}^{-i}}\exp(\langle\mathbf{f}^i,\mathbf{f}^k\rangle/\eta)}$$
+
+这种「同一个 mask 既造正又造负」的对偶式合成，绕开了对生成模型的依赖，把对比学习里「如何造硬负样本」这一老难题直接解决。
 
 ### 损失函数 / 训练策略
 Stage 1 总损失 $\mathcal{L} = \mathcal{L}_\mathrm{ITC} + \lambda_1 \mathcal{L}_\mathrm{GLA} + \lambda_2 \mathcal{L}_\mathrm{GD} + \lambda_3 \mathcal{L}_\mathrm{LD}$ 同时跑掩码对齐 + 全局-局部对齐 + 双层蒸馏，并通过进化退火 $\rho$ 平滑过渡到硬 mask。Stage 2 用 InfoNCE 形式的对比损失加 3 类负样本进行端到端训练。所有训练在 80 万 LAION-5B 图文对上进行，主体编码器用 LoRA 微调，VL-encoder 与 adapter 从 0 训练，不使用任何 sym-MM2MM 标签。

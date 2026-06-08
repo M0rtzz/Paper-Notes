@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **BLCE-G：near G-optimal design + uncertainty + greedy 三段分配**:
+**1. BLCE-G：near G-optimal design + uncertainty + greedy 三段分配，首次双 regime 同时 optimal。**
 
-    - 功能：在 $\mathcal O(\log\log T)$ 参数更新下首次同时达到 small-$K$ 与 large-$K$ regime 的 minimax-optimal regret
-    - 核心思路：第一个区间按比例 $c:(1-c)$ 拆成两段，前段按 *near G-optimal design* 分布 $\pi_{G'}(\mathcal A_t)$ 采 arm（near G-optimal 把 bound 放宽至多 2 倍以换 $\mathcal O(Kd^3)$ 可计算复杂度），后段按 $\arg\max_x\|x\|_{H_{t-1}^{-1}}$ 选最大不确定方向；$\ell\ge 2$ 的区间按 $c^2:c(1-c):(1-c)$ 三段分配，分别是 near G-optimal design over $\mathcal A_t^{(\ell-1)}$、最大不确定方向、按 $\hat\theta_{\ell-1}$ 贪心；elimination 阈值 $\varepsilon_{t,k}=\max_{y\in\mathcal A_t^{(k-1)}}\|y\|_{V_k^{-1}}\big(\sqrt{2\log(|\mathcal A_t^{(k-1)}|(B-1)T^2)}+\sqrt\lambda \wedge 2\sqrt{\log(2^{6d-5}\pi d(B-1)^2T^2/15^{d-1})}+2\sqrt\lambda\big)$ 取两个 confidence bound 的较小值，自然地 cover 两个 regime
-    - 设计动机：取 $\min$ 的 elimination 阈值是 small-$K$/large-$K$ 两个 regime 同时 optimal 的核心——前者 $\sqrt{\log K}$ 主导，后者 $\sqrt d$ 主导；near G-optimal 而非精确 G-optimal 是工程上对 NP-hard 计算复杂度的必要松弛；三段分配里 greedy 段是为了对 elimination 收紧后的 feasible set 进行 exploitation，把 regret 中的 constant 进一步压低
+已有 static-grid 算法只能在 small-$K$ 或 large-$K$ 单一 regime 里 optimal，BLCE-G 要在 $\mathcal O(\log\log T)$ 参数更新下两边同时打满。它把第一个区间按比例 $c:(1-c)$ 切两段：前段按 near G-optimal design 分布 $\pi_{G'}(\mathcal A_t)$ 采 arm（精确 G-optimal 是 NP-hard，near 版把 bound 放宽至多 2 倍换来 $\mathcal O(Kd^3)$ 可计算），后段按 $\arg\max_x\|x\|_{H_{t-1}^{-1}}$ 走最大不确定方向；$\ell\ge 2$ 的区间则按 $c^2:c(1-c):(1-c)$ 三段，分别是 near G-optimal design over $\mathcal A_t^{(\ell-1)}$、最大不确定方向、按 $\hat\theta_{\ell-1}$ 贪心利用。双 regime optimality 的关键藏在 elimination 阈值里——它取两个 confidence bound 的较小值
 
-2. **BLCE：彻底去掉 G-optimal design，仍 minimax-optimal**:
+$$\varepsilon_{t,k}=\max_{y\in\mathcal A_t^{(k-1)}}\|y\|_{V_k^{-1}}\Big(\sqrt{2\log(|\mathcal A_t^{(k-1)}|(B-1)T^2)}+\sqrt\lambda \;\wedge\; 2\sqrt{\log(2^{6d-5}\pi d(B-1)^2T^2/15^{d-1})}+2\sqrt\lambda\Big),$$
 
-    - 功能：在保持 $\mathcal O(\log\log T)$ 参数更新与 minimax-optimal regret 的前提下，把 G-optimal design 拿掉，runtime 降到 $\mathcal O(Kd^2T\log\log T)$，是所有 optimal 算法中最低
-    - 核心思路：第一个区间整段都用 $\arg\max_x\|x\|_{H_{t-1}^{-1}}$（最大不确定方向探索），区间内 Sherman-Morrison 维护 $H_t^{-1}$ 每步 $\mathcal O(d^2)$；$\ell\ge 2$ 的区间按 $c:(1-c)$ 两段分配，前段继续 uncertainty-driven 探索（其实是把 BLCE-G 的"G-optimal 段 + uncertainty 段"合并成一个更长的 uncertainty 段），后段按 $\hat\theta_{\ell-1}$ 贪心；Theorem 2 证明仍达到 $\mathcal R(T)=\widetilde{\mathcal O}(\sqrt{dT\log K}\wedge d\sqrt T)$，只在 polylog 因子里多一个 $\sqrt{\log T}$
-    - 设计动机：strict batching 之所以"必须"用 G-optimal design，是因为不能依赖 within-interval context；一旦允许 reward-free 的 Gram-matrix 演化，$\arg\max_x\|x\|_{H_{t-1}^{-1}}$ 这个完全 reward-free 的规则就能达到与 G-optimal design 同阶的 information gain（论文的 elimination + Gram 累积分析证明这一点）；省掉 design 不仅减算力，还消除了 $1$-approx 不可达带来的近似误差
+取 $\min$ 让 small-$K$ 时 $\sqrt{\log K}$ 主导、large-$K$ 时 $\sqrt d$ 主导，自然 cover 两个 regime；三段里的 greedy 段则负责对 elimination 收紧后的 feasible set 做 exploitation，把 regret 常数进一步压低。
 
-3. **BGLE：把 BLCE 的设计原则扩到 generalized linear bandit 并去掉 $\kappa$ 依赖**:
+**2. BLCE：彻底去掉 G-optimal design，仍 minimax-optimal，runtime 全场最低。**
 
-    - 功能：在 generalized linear contextual bandit（reward 由 link function $\mu$ 通过 $\mathbb E[r_t]=\mu(\langle x_{t,a_t},\theta^*\rangle)$ 生成）下，仍只用 $\mathcal O(\log\log T)$ 参数更新，且 leading term 与 transient term 都不依赖最坏曲率 $\kappa$
-    - 核心思路：基础结构沿用 BLCE（探索-利用两段分配 + uncertainty-driven Gram），区别在区间 $\ell\ge 2$ 把 Gram 加权为 $\alpha_{t,\ell-1}(\lambda)\dot\mu(\langle x_{t,a_t},\hat\theta_{\ell-1}\rangle)$，其中 $\alpha_{t,k}(\lambda)$ 在第一区间是 $\exp(-2RS)$、后续区间随 $\|x_{t,a_t}\|_{V_k^{-1}}\beta(\lambda)$ 自适应；区间边界用 MLE 替代 ridge regression：$\hat\theta_\ell=\arg\min_\theta\sum_t[m(\langle x_{t,a_t},\theta\rangle)-r_t\langle x_{t,a_t},\theta\rangle]$；elimination 从 $\ell\ge 3$ 才启动（第一次 MLE 估计质量不足以做 elimination），阈值 $\varepsilon'_{t,k}(\lambda)$ 在 $\lambda=R^2(d+\log T)$ 时简化为 $\max_y\|y\|_{V_k^{-1}}(50RS\sqrt{d+\log T})$
-    - 设计动机：经典 generalized linear bandit 的 regret 都含 $1/\kappa$ 因子（$\kappa=\max\dot\mu^{-1}$，在饱和区可任意大），让 bound 在 logistic 等饱和型 link 上变得 vacuous；用 link function 的局部曲率 $\dot\mu(\langle x_{t,a_t},\hat\theta_{\ell-1}\rangle)$ 给 Gram 加权能让分析只依赖 *平均* 曲率 $\hat\kappa=1/\mathbb E_{\mathcal A\sim\mathcal D}[\dot\mu(\langle x^*,\theta^*\rangle)]$ 而非最坏曲率
+之前所有 $\mathcal O(\log\log T)$ optimal 算法都把 G-optimal design 当必需品，BLCE 的核心论点是它只是 strict batching 强加的、并非 optimality 的内在需求。strict batching 之所以"必须"用 design，是因为区间内不能依赖 within-interval context；可一旦允许 reward-free 的 Gram 矩阵随到达 context 演化，那个完全 reward-free 的规则 $\arg\max_x\|x\|_{H_{t-1}^{-1}}$ 就能拿到和 G-optimal design 同阶的 information gain（论文用 elimination + Gram 累积分析证明）。于是 BLCE 第一个区间整段都走最大不确定方向探索，用 Sherman-Morrison 每步 $\mathcal O(d^2)$ 维护 $H_t^{-1}$；$\ell\ge 2$ 的区间按 $c:(1-c)$ 两段，前段是更长的 uncertainty 探索段（等于把 BLCE-G 的"design 段 + uncertainty 段"合并），后段按 $\hat\theta_{\ell-1}$ 贪心。Theorem 2 证明它仍达 $\mathcal R(T)=\widetilde{\mathcal O}(\sqrt{dT\log K}\wedge d\sqrt T)$，只在 polylog 因子里多一个 $\sqrt{\log T}$；省掉 design 不仅把 runtime 砍到 $\mathcal O(Kd^2T\log\log T)$（所有 optimal 算法最低），还顺带消除了 1-approx 不可达带来的近似误差。
+
+**3. BGLE：把同一原则扩到 generalized linear bandit，并去掉对最坏曲率 $\kappa$ 的依赖。**
+
+广义线性 bandit 里 reward 经 link function $\mu$ 生成（$\mathbb E[r_t]=\mu(\langle x_{t,a_t},\theta^*\rangle)$），经典结果的 regret 都含 $1/\kappa$ 因子（$\kappa=\max\dot\mu^{-1}$，在 logistic 等饱和区可任意大），让 bound 变得 vacuous。BGLE 沿用 BLCE 的两段探索-利用 + uncertainty-driven Gram 骨架，关键改动是给 Gram 按局部曲率加权——$\ell\ge 2$ 区间用 $\alpha_{t,\ell-1}(\lambda)\dot\mu(\langle x_{t,a_t},\hat\theta_{\ell-1}\rangle)$ 加权（$\alpha_{t,k}(\lambda)$ 首区间是 $\exp(-2RS)$、后续随 $\|x_{t,a_t}\|_{V_k^{-1}}\beta(\lambda)$ 自适应），区间边界用 MLE $\hat\theta_\ell=\arg\min_\theta\sum_t[m(\langle x_{t,a_t},\theta\rangle)-r_t\langle x_{t,a_t},\theta\rangle]$ 替代 ridge regression，elimination 从 $\ell\ge 3$ 才启动（首次 MLE 估计质量不够），阈值在 $\lambda=R^2(d+\log T)$ 时简化为 $\max_y\|y\|_{V_k^{-1}}(50RS\sqrt{d+\log T})$。用 $\dot\mu$ 给 Gram 加权后，分析只依赖平均曲率 $\hat\kappa=1/\mathbb E_{\mathcal A\sim\mathcal D}[\dot\mu(\langle x^*,\theta^*\rangle)]$ 而非最坏曲率——前者有限、后者可发散，这对饱和型 link 是质的改进。
 
 ### 损失函数 / 训练策略
 两条算法都不学神经网络参数，只有最小二乘/最大似然估计：BLCE-G 和 BLCE 在区间边界跑 ridge regression $\hat\theta_\ell=V_\ell^{-1}\sum_t r_t x_{t,a_t}$，$\lambda$ 在 BLCE-G 中取 $\log(dT)$、BLCE 中取 1；BGLE 在区间边界跑 MLE，$\lambda=R^2(d+\log T)$。区间长度严格按 $\mathcal T_\ell=\mathcal T_{\ell-1}+\lceil T^{1-2^{-\ell}}/\log_2\log_2 T\rceil$ 这种 doubling-trick 风格的 static grid 设定。

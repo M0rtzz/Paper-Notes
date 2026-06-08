@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **从"impurity 最大化"重构为"在线模型对比"**:
+**1. 从"impurity 最大化"重构为"在线模型对比"：换掉一个在漂移下站不住的目标。**
 
-    - 功能：把分裂判据从"找最大不纯度下降"换成"判断 challenger 是否预测损失更低"。
-    - 核心思路：原本要估计种群不纯度差 $\Delta^{v,c}=\mathcal{I}(p(v))-P_L\mathcal{I}(p(v_c^L))-P_R\mathcal{I}(p(v_c^R))$，但在非平稳流里这个目标本身随时间漂移、不再有"全局最优"。作者改测一个清晰的零假设：strong null $H_0^{v,c}:\forall t,\;\delta_t^{v,c}=\mathbb{E}[\Delta_t^{v,c}\mid\mathcal{F}_{t-1}]\le 0$，即 challenger 在任何时刻都不优于 incumbent。损失用 log loss（对应 entropy）或 Brier score（对应 Gini），统一裁到 $[0,1]$。
-    - 设计动机：直接用 prequential 损失差作证据，绕开了不纯度的非线性问题，也不需要"种群最优分裂"这一在漂移场景下站不住的概念。
+HT 原本要估计种群不纯度差 $\Delta^{v,c}=\mathcal{I}(p(v))-P_L\mathcal{I}(p(v_c^L))-P_R\mathcal{I}(p(v_c^R))$，但在非平稳流里这个目标本身随时间漂移、根本没有"全局最优分裂"可言。本文索性换一个清晰、可检验的零假设：strong null $H_0^{v,c}:\forall t,\;\delta_t^{v,c}=\mathbb{E}[\Delta_t^{v,c}\mid\mathcal{F}_{t-1}]\le 0$，即 challenger 在任何时刻都不优于 incumbent。证据来自 prequential 预测损失差 $\Delta_t^{v,c}=\ell(m^v_{t-1}(X_t),Y_t)-\ell(m^{v_c}_{t-1}(X_t),Y_t)\in[-1,1]$，损失用 log loss（对应 entropy）或 Brier score（对应 Gini），统一裁到 $[0,1]$。直接拿损失差当证据既绕开了不纯度的非线性问题，也不再依赖"种群最优分裂"这个漂移场景下的空概念。
 
-2. **Testing-by-betting + Universal Portfolio 押注**:
+**2. Testing-by-betting + Universal Portfolio：把"是否分裂"变成一场对 optional stopping 天然鲁棒的赌局。**
 
-    - 功能：把"是否拒绝 $H_0$"变成一个"赌局"，赌赢的速度直接决定何时分裂。
-    - 核心思路：以单位财富 $W_s=1$ 起步，每步选一个 $\mathcal{F}_{t-1}$ 可测的下注比例 $\beta_t\in[0,1]$，财富更新 $W_t=W_{t-1}(1+\beta_t\Delta_t)$。在 $H_0$ 下 $(W_t)$ 是非负超鞅，由 Ville 不等式 $\mathbb{P}_{H_0}(\sup_t W_t\ge 1/\alpha)\le\alpha$，所以"财富越线"就是合法的 anytime-valid 拒绝规则。$\beta_t$ 不手调，而采用 parameter-free 的 Universal Portfolio：以 $\mathrm{Beta}(1/2,1/2)$ Jeffreys 先验对所有常数再平衡组合做混合，$\beta_t=\frac{\int_0^1 \beta\prod_{u}(1+\beta\Delta_u)\,dF_+(\beta)}{\int_0^1 \prod_u(1+\beta\Delta_u)\,dF_+(\beta)}$。提交时刻 $\tau^{v,c}=\inf\{t:W_t^{v,c}\ge 1/\alpha^{v,c}\}$，多个候选同时越线时取财富最大的那个。
-    - 设计动机：testing-by-betting 是目前 SAVI 框架里最强且不依赖独立性假设的工具；UP 在 i.i.d. 情形下的增长率达到最优常数组合的最优值，又完全不需要调参，避免了"调 $\beta_t$ 调到偷看测试统计量"。
+固定样本量不等式扛不住 HT"看到证据就停"的数据相关停止，所以判据换成 anytime-valid 的财富过程。从单位财富 $W_s=1$ 起步，每步选一个 $\mathcal{F}_{t-1}$ 可测的下注比例 $\beta_t\in[0,1]$，财富更新 $W_t=W_{t-1}(1+\beta_t\Delta_t)$。在 $H_0$ 下 $(W_t)$ 是非负超鞅，Ville 不等式 $\mathbb{P}_{H_0}(\sup_t W_t\ge 1/\alpha)\le\alpha$ 保证"财富越线"就是任意时刻都合法的拒绝规则，提交时刻取 $\tau^{v,c}=\inf\{t:W_t^{v,c}\ge 1/\alpha^{v,c}\}$。下注比例不手调——这点很关键，手调 $\beta_t$ 等于偷看测试统计量——而采用 parameter-free 的 Universal Portfolio，用 $\mathrm{Beta}(1/2,1/2)$ Jeffreys 先验对所有常数再平衡组合做混合：
 
-3. **置信序列变体 + 全局 $\alpha$-分配**:
+$$\beta_t=\frac{\int_0^1 \beta\prod_{u}(1+\beta\Delta_u)\,dF_+(\beta)}{\int_0^1 \prod_u(1+\beta\Delta_u)\,dF_+(\beta)}.$$
 
-    - 功能：（i）给"平均优势" weak null 提供一个等价测试；（ii）保证整棵树终身只有不超过 $\alpha$ 概率出错。
-    - 核心思路：weak null $H_{w,0}^{v,c}:\bar\delta_t^{v,c}=\frac{1}{t-s^v}\sum_u \delta_u^{v,c}\le 0$ 用 empirical Bernstein 置信序列 $(L_t,U_t)$ 构造，停止时刻 $\tau_w^{v,c}=\inf\{t:L_t>0\}$。全局控制部分把预算 $\alpha$ 拆给所有 $(v,c)$：只要 $\sum_{v,c}\alpha^{v,c}\le\alpha$，由 union bound 加 anytime-valid 性质即得 $\mathbb{P}(\exists\text{false split ever})\le\alpha$；要测严格正优势 $\varepsilon>0$ 只需把财富换成 $\varepsilon$-shifted 版本 $W_{\varepsilon,t}=\prod_u(1+\beta_u(\Delta_u-\varepsilon))$ 并把 $\beta$ 收缩到 $[0,1/(1+\varepsilon)]$。
-    - 设计动机：作者发现 strong null 在实践中分裂更早、性能更好，但理论上若要在 commit 时刻还保证模型损失单调下降，需要 weak null 的"平均优势"语义——两套并提，让用户按场景选；全局 $\alpha$-分配让"一棵树跑一辈子"的 family-wise error 也守得住。
+UP 在 i.i.d. 情形下增长率达到最优常数组合的最优值，又完全不需要调参，是目前 SAVI 框架里最强且不依赖独立性假设的工具。
+
+**3. 置信序列变体 + 全局 $\alpha$-分配：补上"平均优势"语义和整棵树的终身错误控制。**
+
+strong null 实践中分裂更早、性能更好，但若想在 commit 时刻还保证模型损失单调下降，理论上需要"平均优势"语义，所以本文并提一个 weak null $H_{w,0}^{v,c}:\bar\delta_t^{v,c}=\frac{1}{t-s^v}\sum_u \delta_u^{v,c}\le 0$，用 empirical Bernstein 置信序列 $(L_t,U_t)$ 构造、停在 $\tau_w^{v,c}=\inf\{t:L_t>0\}$，让用户按场景二选一。全局控制部分则把预算 $\alpha$ 拆给所有候选 $(v,c)$：只要 $\sum_{v,c}\alpha^{v,c}\le\alpha$，由 union bound 加 anytime-valid 性质即得 $\mathbb{P}(\exists\text{false split ever})\le\alpha$，于是"一棵树跑一辈子"的 family-wise error 也守得住；要测严格正优势 $\varepsilon>0$，只需把财富换成 $\varepsilon$-shifted 版本 $W_{\varepsilon,t}=\prod_u(1+\beta_u(\Delta_u-\varepsilon))$ 并把 $\beta$ 收缩到 $[0,1/(1+\varepsilon)]$。
 
 ### 损失函数 / 训练策略
 分类用 log loss、回归用 squared loss（在线维护最大观测损失自适应缩放到 $[0,1]$）。默认超参 $n_{\min}=20$、$\varepsilon=0$、$\alpha$ 即 family-wise 显著水平。理论保证有三条：(i) Thm 4.1，全局 anytime validity；(ii) Thm 4.2，当存在持续优势 $\Delta>0$ 时，提交时刻有限且高概率达到 $\tilde{\mathcal{O}}(\log(1/\alpha^{v,c})/\Delta^2)$；(iii) Thm 4.3，i.i.d.+convex loss 下，deployed 模型的期望损失在两次 commit 之间和 commit 时刻都单调不增。

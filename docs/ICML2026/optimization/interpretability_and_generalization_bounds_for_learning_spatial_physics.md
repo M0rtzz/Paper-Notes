@@ -51,23 +51,28 @@ tags:
 
 ### 关键设计
 
-1. **有限差分参数学习的 a priori 估计（Theorem 3.1）**:
+**1. 有限差分参数学习的 a priori 估计（Theorem 3.1）：揭穿"数据越丰富越好"的直觉。**
 
-    - 功能：刻画"用已知 PDE 结构 + finite-difference stencil 拟合参数 $w$"在多项式训练数据下的误差上界。
-    - 核心思路：用 $q$ 阶 stencil（如三点 FD-2，$d^2 u / dx^2 \approx (u_{i-1} - 2u_i + u_{i+1}) / \Delta x^2 + \mathcal{O}(\Delta x^q)$）解 MSE 最小化，证明：当训练多项式阶 $p < q$ 时 $w = k$ 精确；当 $p \geq q$ 时存在不可约偏置 $|w - k| / |k| = \mu_q \Delta x^q + \sum_{m=q+1}^p \mu_m \Delta x^m \approx \mu_q \Delta x^q$，其中 $\mu_m$ 是 stencil 的截断误差系数。
-    - 设计动机：揭穿"数据越丰富越好"的 ML 直觉。每加一阶多项式数据，就**再加一项 $\mathcal{O}(\Delta x^m)$ 的偏置**——因为高阶多项式让 stencil 的截断误差有机会被"吸进"$w$ 里。这与无限数据假设无关，是离散化阶导致的硬天花板，并在 PINN 的 inverse problem 上也观察到同样趋势。
+第一个有解析解的设置是已知 PDE 结构、只学一个标量参数 $w\approx k$。用 $q$ 阶 stencil（如三点 FD-2，$d^2 u/dx^2 \approx (u_{i-1}-2u_i+u_{i+1})/\Delta x^2 + \mathcal{O}(\Delta x^q)$）去解 MSE 最小化，论文证明：当训练多项式阶 $p<q$ 时 $w=k$ 精确；一旦 $p\geq q$ 就出现不可约偏置
 
-2. **线性算子的子空间投影定理（Theorem 3.2）**:
+$$\frac{|w-k|}{|k|} = \mu_q \Delta x^q + \sum_{m=q+1}^p \mu_m \Delta x^m \approx \mu_q \Delta x^q$$
 
-    - 功能：精确写出黑盒线性模型 $\mathbf{W}$ 在 GD 下的收敛点，把"训练函数空间"显式纳入泛化界。
-    - 核心思路：设训练 forcing 由 $\mathbf{f}^{(n)} = \mathbf{B} \mathbf{c}^{(n)}$ 采样（$\mathbf{B}$ 形如 Vandermonde，秩 $p+1$），各坐标 $\mathbb{E}[\mathbf{c}_i] = 0$ 独立。则在零均值初始化 $\mathbf{W}^0$ 下，GD 极限为 $\mathbf{W}^* = \mathbf{A} \mathbf{U} \mathbf{U}^\top + \mathbf{W}^0 (\mathbf{I} - \mathbf{U} \mathbf{U}^\top)$，其中 $\mathbf{U}$ 是 $\mathbf{B}$ 的左正交基（$N_{\mathrm{grid}} \times (p+1)$）。
-    - 设计动机：这是一个**异常悲观**的结果——和数据量、网格细度都无关，只跟训练空间的秩有关。当且仅当 $\dim \mathcal{F}_{\mathrm{train}} \geq \mathrm{rank}(\mathbf{A})$ 才有机会学到真算子；否则 $\mathbf{W}$ 永远只是 $\mathbf{A}$ 在训练空间上的投影，正交方向上残留任意初始噪声。这也直接解释了 Fig. 1 里"训练误差到机器精度，但矩阵和真 $\mathbf{A}$ 差得很远"的反直觉现象。预测的 MSE 下界就是 $\|\mathbf{A} - \mathbf{A} \mathbf{U} \mathbf{U}^\top\|_F^2$，可由 $\mathbf{B}$ 的 SVD 直接算出。
+其中 $\mu_m$ 是 stencil 的截断误差系数。这个结论直接打脸 ML 直觉——每加一阶高于 stencil 阶的多项式数据，就再叠一项 $\mathcal{O}(\Delta x^m)$ 的偏置，因为高阶多项式让 stencil 的截断误差有机会被"吸进" $w$ 里。这与有没有无限数据无关，是离散化阶导致的硬天花板，而且在 PINN 的 inverse problem 上观察到同样趋势。
 
-3. **Green 函数机械可解释探针**:
+**2. 线性算子的子空间投影定理（Theorem 3.2）：把"训练函数空间"写进泛化界。**
 
-    - 功能：不看 loss，只在训练后的模型上喂 one-hot $\mathbf{f} = \mathbf{e}_j$，肉眼判断"是否学到了 PDE 解算子"。
-    - 核心思路：$\mathbf{A}_{ij} \leftrightarrow \mathrm{Model}(\mathbf{f} = \mathbf{e}_j)_i$ 对任何把 forcing 映成 solution 的模型都成立。对线性模型，直接看权重矩阵的列；对 MLP/DeepONet/FNO 这种非线性算子，喂 25 个 one-hot 把"扫描出来的矩阵"画出来。如果学得对，列向量长得像 Green 函数 impulse response，整体矩阵呈现接触状的"分段线性"结构；学得不对就是噪声。还能进一步求逆 $\hat{\mathbf{L}} = \mathbf{W}^{-1}$ 看是否恢复出三对角的局部 stencil。
-    - 设计动机：传统训练/测试 MSE 没法区分"过拟合到一个特定函数空间"和"真的学到了算子"——因为这两种情况在训练集上 loss 都可以一样低。Green 函数探针提供了一种**正交于 loss** 的诊断信号，类似 DINO 看 attention map：训得动 ≠ 学得对，能不能在 impulse response 上看出 PDE 结构是更高的 bar。
+第二个设置是黑盒线性模型 $\mathbf{u}=\mathbf{W}\mathbf{f}$。设训练 forcing 由 $\mathbf{f}^{(n)}=\mathbf{B}\mathbf{c}^{(n)}$ 采样（$\mathbf{B}$ 形如 Vandermonde，秩 $p+1$），各坐标零均值独立，则零均值初始化下 GD 的极限是
+
+$$\mathbf{W}^* = \mathbf{A}\,\mathbf{U}\mathbf{U}^\top + \mathbf{W}^0(\mathbf{I}-\mathbf{U}\mathbf{U}^\top)$$
+
+其中 $\mathbf{U}$ 是 $\mathbf{B}$ 的左正交基。这是一个异常悲观的结果：收敛点与数据量、网格细度都无关，只取决于训练空间的秩——当且仅当 $\dim\mathcal{F}_{\mathrm{train}}\geq\mathrm{rank}(\mathbf{A})$ 才有机会学到真算子，否则 $\mathbf{W}$ 永远只是 $\mathbf{A}$ 在训练空间上的投影、正交方向上残留任意初始噪声。它干净地解释了 Fig. 1 的反直觉现象（训练误差到机器精度、但矩阵和真 $\mathbf{A}$ 差很远），而且预测 MSE 下界就是 $\|\mathbf{A}-\mathbf{A}\mathbf{U}\mathbf{U}^\top\|_F^2$，可由 $\mathbf{B}$ 的 SVD 直接算出来验证。
+
+**3. Green 函数机械可解释探针：不看 loss，喂 one-hot 看响应。**
+
+训练/测试 MSE 没法区分"过拟合到某个函数空间"和"真学到了算子"——两种情况在训练集上 loss 都能一样低。这里给出一个正交于 loss 的诊断：因为对任何把 forcing 映成 solution 的模型都有 $\mathbf{A}_{ij}\leftrightarrow\mathrm{Model}(\mathbf{f}=\mathbf{e}_j)_i$，所以只要喂 one-hot $\mathbf{f}=\mathbf{e}_j$ 就能把模型"扫描"成一个矩阵：线性模型直接看权重列，MLP/DeepONet/FNO 这类非线性算子就喂 25 个 one-hot 把响应画出来。学得对的话，列向量长得像 Green 函数的 impulse response，整体呈现接触状的分段线性结构；学不对就是噪声。还能进一步求逆 $\hat{\mathbf{L}}=\mathbf{W}^{-1}$ 看是否恢复出三对角的局部 stencil。这套思路类似在 DINO 里看 attention map——训得动不等于学得对，能不能在 impulse response 上看出 PDE 结构是更高的 bar。
+
+### 实验与交叉验证协议
+作者引入**function-space cross-evaluation**：用 25 个数据集分别训练同一模型，再在另外 24 个上测试，形成 25×25 MSE 热图。差异既来自网格 $\Delta x$ 也来自函数类 $\mathcal{F}(\mathrm{type}, p)$。这构成新的 SciML benchmark，"OOD" 的定义从"换分布"严格化为"换函数子空间"。模型覆盖 5 大类共 8 种：有限差分 + PINN（参数拟合）；线性 / deep linear / MLP（黑盒）；DeepONet / FNO（SciML 黑盒）；PI-DeepONet（物理感知）。
 
 ### 实验与交叉验证协议
 作者引入**function-space cross-evaluation**：用 25 个数据集分别训练同一模型，再在另外 24 个上测试，形成 25×25 MSE 热图。差异既来自网格 $\Delta x$ 也来自函数类 $\mathcal{F}(\mathrm{type}, p)$。这构成新的 SciML benchmark，"OOD" 的定义从"换分布"严格化为"换函数子空间"。模型覆盖 5 大类共 8 种：有限差分 + PINN（参数拟合）；线性 / deep linear / MLP（黑盒）；DeepONet / FNO（SciML 黑盒）；PI-DeepONet（物理感知）。

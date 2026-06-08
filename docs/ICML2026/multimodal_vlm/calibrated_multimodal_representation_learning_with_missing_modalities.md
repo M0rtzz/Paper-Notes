@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Anchor Shift 的理论刻画 (Theorem 1)**:
+**1. Anchor Shift 的理论刻画（Theorem 1）：给"缺模态对齐有多坏"一个可计算的上下界。**
 
-    - 功能：第一次给"缺模态对齐有多坏"一个可计算的上下界，让"为什么要插补"从直觉变成数学事实。
-    - 核心思路：令 $\mathbf{u}_1, \mathbf{u}_1^\Omega$ 分别是完整模态矩阵 $\mathbf{Z}$ 和观测子矩阵 $\mathbf{Z}^\Omega$ 的最大左奇异向量；定义 $\eta=\sqrt{\sum_{m\in\bar\Omega}\langle\mathbf{u}_1^\Omega,\mathbf{z}^m\rangle^2}$。则 anchor shift $\|\mathbf{\Delta}\|=\|\mathbf{u}_1-\mathbf{u}_1^\Omega\|$ 同时被夹在下界 $\sqrt{2(1-(\sigma_1^\Omega+\eta^2)/\sigma_1)}$ 和上界 $\sqrt{2}\|\mathbf{Z}^{\bar\Omega}\|_2/(\sigma_1-\sigma_2)$ 之间。Corollary 3 进一步给出"插补后 shift 严格变小"的充分条件：每个 imputation 误差 $\|\widehat{\mathbf{z}}^{m'}-\mathbf{z}^{m'}\|_2\le\varepsilon$ 时只需 $\varepsilon<(\sigma_1-\sigma_2)/\sqrt{|\bar\Omega|}\cdot\sqrt{1-(\sigma_1^\Omega+\eta^2)/\sigma_1}$。
-    - 设计动机：把"缺模态有害"的工程直觉抬到 SVD 扰动理论的水平，并给出"插补只要不太烂就一定有用"的明确阈值，为整个方法的合理性背书。
+要论证"为什么非补缺不可"，得先把"缺模态有害"从工程直觉抬到数学事实。作者用 SVD 扰动理论做到这点：令 $\mathbf{u}_1, \mathbf{u}_1^\Omega$ 分别是完整模态矩阵 $\mathbf{Z}$ 和观测子矩阵 $\mathbf{Z}^\Omega$ 的最大左奇异向量，定义 $\eta=\sqrt{\sum_{m\in\bar\Omega}\langle\mathbf{u}_1^\Omega,\mathbf{z}^m\rangle^2}$，则 anchor shift $\|\mathbf{\Delta}\|=\|\mathbf{u}_1-\mathbf{u}_1^\Omega\|$ 被同时夹在下界 $\sqrt{2(1-(\sigma_1^\Omega+\eta^2)/\sigma_1)}$ 和上界 $\sqrt{2}\|\mathbf{Z}^{\bar\Omega}\|_2/(\sigma_1-\sigma_2)$ 之间。更关键的是 Corollary 3 给出"插补后 shift 一定变小"的充分条件：只要每个 imputation 误差 $\|\widehat{\mathbf{z}}^{m'}-\mathbf{z}^{m'}\|_2\le\varepsilon$ 且 $\varepsilon<(\sigma_1-\sigma_2)/\sqrt{|\bar\Omega|}\cdot\sqrt{1-(\sigma_1^\Omega+\eta^2)/\sigma_1}$ 即可。这条阈值给整个方法背了书——"插补只要不太烂就一定有用"不再是赌博，而是有明确边界的保证。
 
-2. **概率 PCA 风格的共享潜变量生成模型**:
+**2. 概率 PCA 风格的共享潜变量生成模型：用最简单的高斯模型在表示层补缺。**
 
-    - 功能：用一个轻量级生成模型把"模态间共性"压成 $\bm{\beta}$，"模态独有偏置"压成 $\bm{\mu}^m$，使得任意一个模态缺了都能从其他模态恢复。
-    - 核心思路：$\mathbf{z}^m=\mathbf{W}^m\bm{\beta}+\bm{\mu}^m+\bm{\epsilon}^m$ 加上独立性假设 $\mathbf{x}^m\perp\mathbf{x}^{m'}|\bm{\beta}$。模型容量只是 $\{\mathbf{W}^m, \bm{\mu}^m, \sigma^m\}$，相对编码器几乎为零，可以和 encoder 一起训练。
-    - 设计动机：传统多模态生成 (扩散 / 流模型) 想插补缺失模态都要重训一个大模型；本文只想在**表示层**补缺，所以用最简单可分析的高斯潜变量模型即可——既能写出闭式 E/M-step，又能写出闭式 imputation 公式 $\widehat{\mathbf{z}}^{m'}=\mathbf{W}^{m'}\mathbf{m}+\bm{\mu}^{m'}$。
+补缺最直接的想法是训一个扩散或流模型去合成缺失模态，但那要重训一个大模型、成本高得离谱。作者只想在表示层补缺，于是选了最朴素也最可分析的形式：对每个模态假设 $\mathbf{z}^m=\mathbf{W}^m\bm{\beta}+\bm{\mu}^m+\bm{\epsilon}^m$（$\bm{\beta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\bm{\epsilon}^m\sim\mathcal{N}(\mathbf{0},(\sigma^m)^2\mathbf{I})$），所有模态共享潜变量 $\bm{\beta}$ 装"模态间共性"、$\bm{\mu}^m$ 装"模态独有偏置"，并加独立性假设 $\mathbf{x}^m\perp\mathbf{x}^{m'}|\bm{\beta}$。模型容量只有 $\{\mathbf{W}^m, \bm{\mu}^m, \sigma^m\}$，相对编码器几乎为零，能和 encoder 一起训。正因为它够简单，既写得出闭式 E/M-step，又写得出闭式插补公式 $\widehat{\mathbf{z}}^{m'}=\mathbf{W}^{m'}\mathbf{m}+\bm{\mu}^{m'}$——任意一个模态缺了，都能从其他模态的后验里恢复出来。
 
-3. **Bi-step (EM) 闭式优化 + 仅用观测模态更新**:
+**3. Bi-step（EM）闭式优化 + 仅用观测模态更新：在参数耦合下仍能逐步闭式求解。**
 
-    - 功能：在共享潜变量 $\bm{\beta}$ 把所有模态参数耦合的前提下，仍能闭式求解每一步，并且参数更新只用到 observed modalities (符合现实数据约束)。
-    - 核心思路：**E-step** 固定 $\widehat{\bm\theta}$，求后验 $p(\bm{\beta}\mid\mathbf{z},\widehat{\bm\theta})=\mathcal{N}(\mathbf{m},\mathbf{V})$，其中 $\mathbf{V}=[\mathbf{I}+\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}\mathbf{W}^m]^{-1}$，$\mathbf{m}=\mathbf{V}\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}(\mathbf{z}^m-\bm{\mu}^m)$——只对观测模态求和。**M-step** 给定后验，闭式更新 $\bm{\mu}^m, \mathbf{W}^m, (\sigma^m)^2$ (论文 Eq. 6)。Corollary 4 用 EM 单调性证明 $L(\widehat{\bm{\theta}}^{(t+1)})\ge L(\widehat{\bm{\theta}}^{(t)})$，整套迭代收敛。
-    - 设计动机：朴素概率 PCA 没法应付"不同模态共享 $\bm{\beta}$"导致的参数耦合，作者引入变分下界 + EM 风格的双步优化绕开这个困难，并且每步都有闭式解 → 训练成本几乎可以忽略。
+共享潜变量 $\bm{\beta}$ 把所有模态的参数耦在一起，朴素概率 PCA 处理不了，作者用变分下界 + EM 风格双步优化绕开。**E-step** 固定 $\widehat{\bm\theta}$ 求后验 $p(\bm{\beta}\mid\mathbf{z},\widehat{\bm\theta})=\mathcal{N}(\mathbf{m},\mathbf{V})$，其中 $\mathbf{V}=[\mathbf{I}+\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}\mathbf{W}^m]^{-1}$、$\mathbf{m}=\mathbf{V}\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}(\mathbf{z}^m-\bm{\mu}^m)$，求和**只遍历观测模态**——这恰好契合"训练数据本来就缺模态"的现实约束；**M-step** 给定后验闭式更新 $\bm{\mu}^m, \mathbf{W}^m, (\sigma^m)^2$。Corollary 4 用 EM 单调性证明 $L(\widehat{\bm{\theta}}^{(t+1)})\ge L(\widehat{\bm{\theta}}^{(t)})$，整套迭代收敛。每步都有闭式解，意味着补缺这件事几乎不带来额外训练开销。
 
 ### 损失函数 / 训练策略
 最终对编码器的损失 (Eq. 9)：$\mathcal{L}_{\text{rep}}=-\frac{1}{N}\sum_i[\text{exp}(\lambda_1/\tau)/\sum_j\text{exp}(\lambda_j/\tau)+\text{instance-uniformity}] +\alpha\cdot \text{BCE matching loss}$，第一项最大化 GRAM 矩阵的最大奇异值实现"全对齐"，第二项是 $\mathbf{u}_1$ 的 instance-level 正则，$\alpha=0.1$ matching loss 仅在观测模态上算。骨干 = VAST (vision+caption+audio+subtitle 4 模态)；训练流程：先 VAST-150K 全模态 warm-up，再在 MSR-VTT (V-T) 和 AudioCaps (A-T) 这两个**缺模态**数据集上继续训练。

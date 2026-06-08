@@ -45,23 +45,17 @@ SHIFT 用一次贪心解码下的"开始 token → 结束 token"隐状态差 $\D
 
 ### 关键设计
 
-1. **多层平均的 RIRS 表征**:
+**1. 多层平均的 RIRS 表征：用一个向量浓缩"这条样本让模型内部走了多远"。**
 
-    - 功能：用一个 $\mathbb{R}^D$ 向量浓缩"这条样本让模型在 CoT 期间内部状态改变了多少"。
-    - 核心思路：对每层 $\ell$ 取 anchor token 隐状态 $\mathbf{h}^{(\ell)}_{t_s}(x), \mathbf{h}^{(\ell)}_{t_e}(x)$，沿层求均值得到 $\mathbf{s}(x), \mathbf{e}(x)$；定义 $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$ 为"推理诱导的表征漂移"。理论侧借 Dherin et al. 的秩-1 隐式权重视角，把 $\|\Delta(x)\|_2$ 解释为对一条 rollout 上累积 context-induced 变化的轨迹级、层聚合的可观测代理——但作者明确说明这是动机而非严格推导。
-    - 设计动机：只需一次推理就能拿到，远比"R=32 次随机采样算自一致熵"或"跑 RL 看奖励"便宜；同时比单层 anchor 更稳定，避免某一层异常带偏。
+选样阶段既没有奖励也没有标签，需要一个不训练就能拿到的效用代理。SHIFT 对每层 $\ell$ 取 anchor token 的隐状态 $\mathbf{h}^{(\ell)}_{t_s}(x)$、$\mathbf{h}^{(\ell)}_{t_e}(x)$，沿层求均值得到 $\mathbf{s}(x)$、$\mathbf{e}(x)$，再定义 $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$ 为"推理诱导的表征漂移"。理论上借 Dherin et al. 的秩-1 隐式权重视角，把 $\|\Delta(x)\|_2$ 解释为一条 rollout 上累积 context-induced 变化的轨迹级、层聚合的可观测代理（作者明确说这是动机而非严格推导）。它的好处是只需一次推理就能拿到，远比"R=32 次随机采样算自一致熵"或"跑 RL 看奖励"便宜；多层平均也比单层 anchor 稳定，避免某一层异常带偏。
 
-2. **对数稳定化的效用分数**:
+**2. 对数稳定化的效用分数：把 RIRS 范数压成尺度可比的代理。**
 
-    - 功能：把 RIRS 范数转成数值稳定的样本效用代理。
-    - 核心思路：先算 $q(x)=\|\Delta(x)\|_2$，再做单调对数压缩 $\tilde q(x)=\log(1+q(x))$；高 $\tilde q$ 意味着这条样本让模型内部走得更远，被假设为对 RLVR 更有学习价值。
-    - 设计动机：不同长度、不同领域样本的 $\|\Delta\|_2$ 量级差异大，直接用会被极端值主导；对数变换在保持排序的同时压住尺度，让后续与多样性距离 $d(x,S)$ 的乘法尺度可比。
+不同长度、不同领域样本的 $\|\Delta\|_2$ 量级差异很大，直接拿来用会被极端值主导。SHIFT 先算 $q(x)=\|\Delta(x)\|_2$，再做单调对数压缩 $\tilde q(x)=\log(1+q(x))$——保持排序的同时把尺度压住，让它后面能和多样性距离 $d(x,S)$ 在乘法里量纲可比。高 $\tilde q$ 意味着这条样本让模型内部走得更远，被假设为对 RLVR 更有学习价值。
 
-3. **质量加权 farthest-first CoreSet**:
+**3. 质量加权 farthest-first CoreSet：单次贪心里同时兼顾效用和覆盖。**
 
-    - 功能：在效用与覆盖之间做单次贪心权衡，避免只选高效用但同质化的样本。
-    - 核心思路：构造 $\ell_2$ 归一化的覆盖特征 $\phi(x)=[\mathbf{s}(x);\Delta(x)]/\|[\mathbf{s}(x);\Delta(x)]\|_2 \in \mathbb{R}^{2D}$，既包含 CoT 起点上下文又包含推理动力学；初始化 $S\leftarrow\{\arg\max_x \tilde q(x)\}$，随后每步用 $x^\star=\arg\max_{x\in\mathcal{U}\setminus S}\, \tilde q(x)\cdot d(x,S)$，其中 $d(x,S)=\min_{x'\in S}\|\phi(x)-\phi(x')\|_2$，反复直至 $|S|=B$。
-    - 设计动机：高 $\tilde q$ 样本往往扎堆（例如某一类难题），单纯 top-K 会浪费预算；farthest-first 单独用又会拣到无意义的离群点。乘法形式让两者必须同时成立才会被选中，且只需一次 $O(NB)$ 贪心扫描，复杂度可扩展到上万规模的池子。
+高 $\tilde q$ 的样本常常扎堆（比如某一类难题），纯 top-K 会浪费预算选一堆同质样本；纯 farthest-first 又会拣到无意义的离群点。SHIFT 把两者乘起来：先构造 $\ell_2$ 归一化的覆盖特征 $\phi(x)=[\mathbf{s}(x);\Delta(x)]/\|[\mathbf{s}(x);\Delta(x)]\|_2 \in \mathbb{R}^{2D}$（既含 CoT 起点上下文、又含推理动力学），初始化 $S\leftarrow\{\arg\max_x \tilde q(x)\}$，随后每步取 $x^\star=\arg\max_{x\in\mathcal{U}\setminus S}\, \tilde q(x)\cdot d(x,S)$，其中 $d(x,S)=\min_{x'\in S}\|\phi(x)-\phi(x')\|_2$，反复直到 $|S|=B$。乘法形式强制效用和覆盖必须同时成立才会被选中，且只需一次 $O(NB)$ 贪心扫描，能扩展到上万规模的池子。
 
 ### 损失函数 / 训练策略
 SHIFT 本身不训练任何参数——选样阶段只有一次贪心推理 + CoreSet 贪心。RLVR 阶段对所有方法用同一套训练预算与超参，只换"选哪些样本"的规则；MedQA 用 Qwen3-1.7B，MATH-500 用 Qwen2.5-Math-1.5B，均从公开 checkpoint 起步。

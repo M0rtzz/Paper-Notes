@@ -45,23 +45,23 @@ tags:
 
 ### 关键设计
 
-1. **SLS / SLSR / WSLS 形式化（为 LLM 信息搜索提供博弈论框架）**:
+**1. SLS / SLSR / WSLS 形式化：把"LLM 该问哪个问题"写成可严格分析的两人零和 EFG。**
 
-    - 功能：把含糊的“LLM 该问哪个问题”问题，转换成可严格分析的两人零和 EFG，使 NE 求解和 worst-case 上界都成为可定义对象。
-    - 核心思路：定义 SLS = (S, Q, f)：item chooser 私选 $s^*$，questioner 序贯提问 $q_t$ 并观测 $a_t=f(q_t,s^*)$，历史 $H_t=(Q_t,A_t)$，一致集合 $S(H)=\{s:f(Q(\tau),s)=A(\tau)\forall \tau\}$，游戏在 $|S(H)|=1$ 时结束，questioner cost = $|H|$。SLSR 把候选问题限制为 $g(S(H))$ 输出的 $m$ 个（更贴近现实，LLM 一次只能列出有限个候选）；WSLS 给每个 item 加权 $w(s)$，cost = $w(s^*)|H|$，刻画“漏掉危险目标的代价更大”。理论侧：Theorem 3.7 证明当 $\mathcal{Q}=\mathcal{Q}_\infty$ 时 even-split 是 NE，验证了 UoT 的近似策略只在均匀分布的限制下最优。
-    - 设计动机：UoT 等启发式没有可对照的“最优”，无法回答“目前的方法离最优还有多远”；EFG 形式化提供了 NE 作为对最坏情况优化的金标准，并把可解性证明（如 Theorem 3.6 给出 best-response 的 NP-complete 性）和近似算法分离开。
+UoT 这类启发式没有可对照的"最优"，无法回答"现在离最优还差多远"。GoT 先把问题写干净：SLS = (S, Q, f)，item chooser 私选 $s^*$、questioner 序贯提问 $q_t$ 并观测 $a_t=f(q_t,s^*)$，历史 $H_t=(Q_t,A_t)$，一致集合 $S(H)=\{s:f(Q(\tau),s)=A(\tau)\,\forall\tau\}$，游戏在 $|S(H)|=1$ 时结束、questioner 代价 = $|H|$。在此之上 SLSR 把候选问题限制为 $g(S(H))$ 输出的 $m$ 个（贴近现实——LLM 一次只能列有限个候选），WSLS 给每个 item 加权 $w(s)$、代价 = $w(s^*)|H|$，刻画"漏掉危险目标代价更大"。理论上 Theorem 3.7 证明当 $\mathcal{Q}=\mathcal{Q}_\infty$ 时 even-split 是 NE——这正好说明 UoT 的近似策略只在均匀分布限制下才最优。EFG 形式化把 NE 当成"对最坏情况优化"的金标准，又把可解性证明（Theorem 3.6 的 best-response NP-complete 性）和近似算法干净地分开。
 
-2. **Subgame Search：on-demand 构造 + CFR 求局部 NE**:
+**2. Subgame Search：on-demand 构造 + CFR 求局部 NE，避开指数级完整博弈树。**
 
-    - 功能：避免显式构造完整博弈树（25 个 item 已要 5–6 小时），只在到达当前 infoset 时按需展开一个固定深度的子博弈。
-    - 核心思路：在当前 infoset $I(H_t)$ 上用 LLM 生成 $g(S(H_t))$ 个候选问题；对每个候选 $c_i$ 用 LLM 充当 $f$ 把 $S(H_t)$ 切成 $Y(S(H_t),c_i)=\{s:f(c_i,s)=1\}$ 和补集 $\bar Y$；递归 $d$ 步得到 simulation tree；翻译成 EFG 时，让 item chooser 在子博弈根重新选一个 $S(H_t)$ 上的分布（safe subgame search 的标准做法）；叶子节点 $l$ 的支付为 $d(l)-1+h(l)$，启发式 $h(l):=\log_2(|S(l)|)$ 给一个乐观下界；用 LiteEFG 的 CFR 求近似 NE，从提问者策略采样下一题。Theorem 5.1 证明该 subgame search 是 safe 的（值估计只依赖 $S(H_t)$）。
-    - 设计动机：完整博弈树构造成本与 $|\mathcal{S}|$ 指数相关，但人类玩 20Q 也只看几步——subgame search 在 poker bot 上已证可行；safe subgame 的关键是让对手在子博弈根“重新选”，相当于给对手更多权力，由此得到的策略放回原博弈仍能保证最坏情况界。
+显式构造完整博弈树成本与 $|\mathcal{S}|$ 指数相关（25 个 item 已要 5–6 小时），但人玩 20Q 也只看几步。GoT 借 poker bot 的做法，只在到达当前 infoset $I(H_t)$ 时按需展开一个固定深度 $d$ 的子博弈：用 LLM 生成 $g(S(H_t))$ 个候选问题，对每个候选 $c_i$ 让 LLM 充当 $f$ 把 $S(H_t)$ 切成 $Y=\{s:f(c_i,s)=1\}$ 和补集 $\bar Y$，递归 $d$ 步得 simulation tree；翻译成 EFG 时让 item chooser 在子博弈根重新选一个 $S(H_t)$ 上的分布（safe subgame search 的标准做法），叶子 $l$ 支付为 $d(l)-1+h(l)$、启发式 $h(l):=\log_2(|S(l)|)$ 给乐观下界；最后用 LiteEFG 的 CFR 求近似 NE，从提问者策略采样下一题。Theorem 5.1 证明这套 subgame search 是 safe 的——让对手在子博弈根"重新选"相当于给对手更多权力，由此得到的策略放回原博弈仍能保证最坏情况界。
 
-3. **Weighted variant + 加权启发式（处理 item 重要性不均的现实场景）**:
+**3. Weighted variant + 加权启发式：让 NE 自动把"危险目标"优先识别出来。**
 
-    - 功能：在 WSLSR 中让 GoT 把“危险目标”优先识别，避免“总轮数少但漏了关键 item”的灾难。
-    - 核心思路：在 EFG 的支付上替换为 $w(s^*)\cdot|H|$，启发式相应改为 $h(l)=\max_{s\in S(l)} w(s)\cdot(d(l)+\log_2(|S(l)|))$；提问者的提问 prompt 也加入权重信息，使 LLM 倾向于先排除高权 item。这样 NE 求解会自动把概率质量分给“先问出高权 item”的策略。
-    - 设计动机：UoT 的信息增益对权重是不可知的，所以它在加权场景下退化为均匀；GoT 通过支付函数显式传入权重，加上 NE 的极小化最大值结构，自然得到“高权时下大注”的策略，例如人为构造 weight=100 vs 1 时 GoT 总是会先直接问“是否为该重权 item”。
+UoT 的信息增益对权重不可知，加权场景下退化成均匀，可能"总轮数少但漏了关键 item"。GoT 在 WSLSR 里把 EFG 支付换成 $w(s^*)\cdot|H|$，启发式相应改为 $h(l)=\max_{s\in S(l)} w(s)\cdot(d(l)+\log_2(|S(l)|))$，提问 prompt 也注入权重信息，让 LLM 倾向先排除高权 item。这样 NE 的极小化最大值结构会自动把概率质量分给"先问出高权 item"的策略——比如人为构造 weight=100 vs 1 时，GoT 总会先直接问"是否为该重权 item"。本质是把权重通过支付函数显式传进博弈，让"高权时下大注"成为均衡的自然产物。
+
+### 一个完整示例：20 Questions 里一轮提问怎么走
+
+假设当前一致集合 $S(H_t)$ 还剩 8 个候选动物。GoT 先让 LLM 提出 $m=3$ 个候选问题，比如「它会飞吗」「它体型比猫大吗」「它生活在水里吗」。对每个候选，LLM 充当 oracle $f$ 把这 8 个切成"是/否"两堆：「会飞吗」切成 3 是 / 5 否，「比猫大吗」切成 4 / 4，「生活在水里吗」切成 1 / 7。如果只看信息增益（UoT 思路），「比猫大吗」的 4:4 均分最优、会被选中。但 GoT 把这棵深度 $d=3$ 的模拟树翻成 EFG 子博弈、让对手在根节点重新挑最难猜的分布，再用 CFR 求 NE——NE 给出的是一个随机化提问策略，可能以 0.7 概率问「比猫大吗」、0.3 概率问「会飞吗」，因为对手若总赌 UoT 的确定性选择就会被针对。提问者按这个分布采样、问出问题、收到答案后候选集从 8 缩到 4（或 3/5），进入下一轮重新展开子博弈，直到只剩 1 个。正是这种"随机化 + 按最坏分布优化"让 GoT 的 worst-case 轮数稳定低于 UoT。
+
+
 
 ### 损失函数 / 训练策略
 本文不训练 LLM，直接用 GPT-4.1 / Qwen-2.5-72B 当 $f,g$ 提供问题和答案，所有“训练”都发生在 EFG 求解层（CFR 迭代）。CFR 每轮只在 subgame 内做几百次迭代即可收敛到近似 NE，相比 LLM 调用成本忽略不计；GoT 的主要计算瓶颈是 LLM 的多秒延迟。

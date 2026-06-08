@@ -49,23 +49,29 @@ SGD：$\theta_{t+1} = \theta_t - \gamma_t \nabla g(\theta_t, X_{t+1})$。
 
 ### 关键设计
 
-1. **2D Lyapunov + 跟踪误差三项分解（上界）**:
+**1. 2D Lyapunov + 跟踪误差三项分解（上界）：把动量的放大因子显式逼出来。**
 
-    - 功能：给出 SGD 和 SGDM 在非平稳强凸光滑设定下的显式跟踪误差上界。
-    - 核心思路：对 SGD，$\mathbb{E}\|\theta_t - \theta_t^*\|^2 \lesssim (1 - \gamma \mu / 2)^t \|\theta_0 - \theta_0^*\|^2 + \frac{\Delta^2}{\gamma^2 \mu^2} + \frac{\sigma^2 \gamma}{\mu}$，三项分别是初始化遗忘、漂移滞后、噪声底线。对 SGDM，需要联合追踪参数 $\theta_t$ 和动量缓冲，三项各乘 $(1 - \beta)^{-2}$ / $(1 - \beta)^{-2}$ / $(1 - \beta)^{-2}$ 放大因子。
-    - 设计动机：把 SGDM 的两个相互耦合的递推（参数 + 动量）统一成 2D Lyapunov，避免拆成 1D 递推丢失耦合信息——这是 $(1 - \beta)^{-2}$ 因子显式化的关键技巧。
+要刻画动量何时帮忙何时伤害，先得给出 SGD 和 SGDM 的显式跟踪误差上界。对 SGD，
 
-2. **时间分辨高概率界 + 加权历史漂移**:
+$$\mathbb{E}\|\theta_t - \theta_t^*\|^2 \lesssim (1 - \gamma\mu/2)^t \|\theta_0 - \theta_0^*\|^2 + \frac{\Delta^2}{\gamma^2 \mu^2} + \frac{\sigma^2 \gamma}{\mu}$$
 
-    - 功能：提供任意 $t$ 时刻的高概率跟踪误差，且不需要均匀漂移上界。
-    - 核心思路：用鞅差分的可选停时论证替代 MGF 递推。在概率 $1 - \delta$ 下，$\|\theta_t - \theta_t^*\|^2 \lesssim (1 - \gamma \mu / 2)^t \|\theta_0 - \theta_0^*\|^2 + \frac{\mathfrak{D}_t}{\gamma \mu} + O(d \sigma^2 \gamma / \mu)$，其中 $\mathfrak{D}_t = \sum_{\ell = 0}^{t-1} (1 - \gamma \mu / 2)^{t - \ell - 1} \|\Delta_\ell\|^2$ 是**加权历史漂移**而非固定上界。
-    - 设计动机：实际漂移往往是间歇性 / 局部性的（季节性、突变），用加权历史能自适应捕捉这种局部性，直接启发重启和窗口化策略。
+三项分别是初始化遗忘、漂移滞后、噪声底线。对 SGDM，参数 $\theta_t$ 和动量缓冲两个递推相互耦合，如果拆成 1D 递推会丢掉耦合信息；本文把它们统一成 2D Lyapunov 函数联合追踪，于是三项各乘上 $(1-\beta)^{-2}$ 的放大因子——这正是 $(1-\beta)^{-2}$ 因子能被显式写出来的关键技巧。结论很直白：动量在静态噪声场景下靠平均历史梯度降方差，但在分布漂移下平均的是"过时梯度"，惯性滞后让算法系统性落后于移动的目标。
 
-3. **信息论下界 + 惯性窗口**:
+**2. 时间分辨高概率界 + 加权历史漂移：不需要均匀漂移上界。**
 
-    - 功能：证明动量恶化不是分析的产物而是信息论必然。
-    - 核心思路：在变差预算 $\mathrm{GVar}_{p, q}(g) \leq \mathbb{V}_T$ 约束下，构造最坏漂移序列。对 SGDM，动态遗憾下界 $\mathfrak{M}_T(\Pi_\beta, \mathbb{V}_T) \gtrsim \max\{(1 - \beta)^{-2/(\alpha q + 2)} \cdot \mathbb{V}_T^{2q/(\alpha q + 2)} T^{\alpha q/(\alpha q + 2)}, \ldots\}$，显式包含 $(1 - \beta)^{-1}$ 到 $(1 - \beta)^{-2}$ 因子，与上界匹配。下界经"分块漂移"构造证明任何 SGDM 都必须在变化后花费 $\Omega(\kappa / (1 - \beta))$ 步的"惯性窗口"做瞬态调整。
-    - 设计动机：紧匹配的上下界证明"惯性滞后"是动量在非平稳下的根本宿命，而非次优分析的结果。
+均匀漂移上界 $\Delta$ 假设漂移处处一样大，但实际漂移往往是间歇性、局部性的（季节性、突变）。这一步用鞅差分的可选停时论证替代 MGF 递推，给出任意 $t$ 时刻、概率 $1-\delta$ 下的界
+
+$$\|\theta_t - \theta_t^*\|^2 \lesssim (1 - \gamma\mu/2)^t \|\theta_0 - \theta_0^*\|^2 + \frac{\mathfrak{D}_t}{\gamma\mu} + O(d\sigma^2\gamma/\mu)$$
+
+其中 $\mathfrak{D}_t = \sum_{\ell=0}^{t-1}(1-\gamma\mu/2)^{t-\ell-1}\|\Delta_\ell\|^2$ 是加权历史漂移而非固定上界。它能自适应捕捉漂移的局部性——近期漂移权重大、久远漂移权重衰减，从而直接启发重启和窗口化策略。
+
+**3. 信息论下界 + 惯性窗口：证明动量的恶化是宿命而非分析松弛。**
+
+上界说明动量会变差，但这是动量内在代价还是分析不够紧？本文在变差预算 $\mathrm{GVar}_{p,q}(g)\leq\mathbb{V}_T$ 约束下构造最坏漂移序列，给出 SGDM 的动态遗憾下界 $\mathfrak{M}_T(\Pi_\beta,\mathbb{V}_T)\gtrsim\max\{(1-\beta)^{-2/(\alpha q+2)}\cdot\mathbb{V}_T^{2q/(\alpha q+2)}T^{\alpha q/(\alpha q+2)},\ldots\}$，显式包含 $(1-\beta)^{-1}$ 到 $(1-\beta)^{-2}$ 的因子，与上界紧匹配。下界经"分块漂移"构造进一步证明：任何 SGDM 在分布变化后都必须花 $\Omega(\kappa/(1-\beta))$ 步的"惯性窗口"做瞬态调整。紧匹配的上下界一起说明"惯性滞后"是动量在非平稳下的根本宿命，不是次优分析的产物。
+
+### 训练策略
+- 恒定步长：$\gamma^* = \arg\min_\gamma \left[ \frac{192 (2 + \beta)^2}{\mu^2 \gamma^2} \Delta^2 + \frac{96}{\mu (1 - \beta)} \sigma^2 \gamma \right]$。
+- 时期衰减 + 动量重启：按对数时间增加步长，时期边界处把动量缓冲重置为 0，打破过时梯度的累积。
 
 ### 训练策略
 - 恒定步长：$\gamma^* = \arg\min_\gamma \left[ \frac{192 (2 + \beta)^2}{\mu^2 \gamma^2} \Delta^2 + \frac{96}{\mu (1 - \beta)} \sigma^2 \gamma \right]$。

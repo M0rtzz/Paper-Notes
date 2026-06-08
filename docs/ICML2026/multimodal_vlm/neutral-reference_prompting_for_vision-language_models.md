@@ -45,23 +45,21 @@ NeRP 是一个即插即用的事后纠偏模块，不修改任何 VLM 参数。P
 
 ### 关键设计
 
-1. **中性参考 Prompt 与类别先验估计**:
+**1. 中性参考 Prompt 与类别先验估计：从"语义为空的输入"里测出 VLM 的隐含类别偏好。**
 
-    - 功能：在不修改模型的前提下，从"语义为空的输入"里测出每个类被 VLM 隐含偏好的强度，作为先验 logit。
-    - 核心思路：文本侧用 class-agnostic 提示 $\tau(D)$（如 "a photo of an object."）过 zero-shot 文本编码器得到中性向量 $u_{\mathrm{txt}}^0(D)$，再与每类的（微调后）原型 $t(c)$ 做内积得到 $\pi_{\mathrm{txt}}(c;D)=\langle t(c),u_{\mathrm{txt}}^0(D)\rangle$；图像侧用训练集像素均值 $\bar{x}^D$ 过图像编码器得到 $u_{\mathrm{img}}(D)$，与 zero-shot 类原型内积得 $\pi_{\mathrm{img}}(c;D)$。两者形成的类对差 $\Delta\pi_{\mathrm{txt}}(i,j)$、$\Delta\pi_{\mathrm{img}}(i,j)$ 作为一对"测量同一条预训练 inter-class 方向 $\Delta_{ij}^0=t^0(i)-t^0(j)$"的标尺。
-    - 设计动机：作者用低秩形变模型把微调写成 $g=g^0+Ub$，证明微调主要重塑由 base 原型张成的低维子空间 $S$，而 novel 类之间的 zero-shot 几何基本稳定（Assumption 3.1 + 3.2）；因此 novel 类对上 $t(i)-t(j)\approx \Delta_{ij}^0$，先验差 $\Delta\pi$ 与期望 logits 差 $\mu_{ij}(D)$ 有同号性（Prop. 3.5）。base 类上由于 $\Delta_{ij}^0\in S$ 而 anchor 在 $S$ 上能量小，先验自然变小（Lemma 3.4），不会干扰已经训好的 base 决策。
+NeRP 的出发点是一个反问：丢一张语义完全为空的图进 VLM，它会偏向哪个类？这个偏向就是预训练留下的类别先验。文本侧用 class-agnostic 提示 $\tau(D)$（如 "a photo of an object."）过 zero-shot 编码器得中性向量 $u_{\mathrm{txt}}^0(D)$，与每类（微调后）原型 $t(c)$ 内积得 $\pi_{\mathrm{txt}}(c;D)=\langle t(c),u_{\mathrm{txt}}^0(D)\rangle$；图像侧用训练集像素均值 $\bar{x}^D$ 过图像编码器得 $u_{\mathrm{img}}(D)$，与 zero-shot 类原型内积得 $\pi_{\mathrm{img}}(c;D)$。两者形成的类对差 $\Delta\pi_{\mathrm{txt}}(i,j)$、$\Delta\pi_{\mathrm{img}}(i,j)$ 相当于两把测量同一条预训练 inter-class 方向 $\Delta_{ij}^0=t^0(i)-t^0(j)$ 的标尺。
 
-2. **残差先验 + 全局截距，应对语义多样数据**:
+这套估计能成立，靠的是一个低秩形变观察：作者把微调写成 $g=g^0+Ub$，证明微调主要重塑由 base 原型张成的低维子空间 $S$，而 novel 类之间的 zero-shot 几何基本不动（Assumption 3.1+3.2），所以 novel 类对上 $t(i)-t(j)\approx \Delta_{ij}^0$，先验差 $\Delta\pi$ 与期望 logits 差 $\mu_{ij}(D)$ 同号（Prop. 3.5）。而 base 类对的方向 $\Delta_{ij}^0$ 落在 $S$ 内、anchor 在 $S$ 上能量很小，先验天然变小（Lemma 3.4），所以纠偏几乎不碰已训好的 base 决策——这正是 NeRP"保 base、涨 novel"的根。
 
-    - 功能：在 ImageNet 这种类间语义差异极大的数据集上，原始先验跨类对方差过大，作者引入残差形式并用 base 对学一个全局偏置 $\hat{\beta}(D)$ 来吸收公共漂移。
-    - 核心思路：定义文本残差先验 $\tilde{\pi}_{\mathrm{txt}}(c;D)=\langle t(c),u_{\mathrm{txt}}^0(D)\rangle-\langle t(c),u_{\mathrm{txt}}(D)\rangle$（用微调后的中性 anchor 减 zero-shot 中性 anchor，剩下的是 anchor 的位移），图像侧类似定义 $\tilde{\pi}_{\mathrm{img}}$；类对残差先验 $\Delta\tilde{\pi}\approx\langle\Delta_{ij}^0,u_{\mathrm{txt}}^0-u_{\mathrm{txt}}\rangle$ 直接度量"预训练 inter-class 方向"在 anchor 位移上的投影。再在 base 对上以最小二乘 $\hat{\beta}(D)=\arg\min_\beta\sum_{\mathcal{B}\times\mathcal{B}}(\hat{\mu}_{ij}-\Sigma_{i,j}-\beta)^2$ 拟合截距，实际使用时合并到阈值 $\tau$ 里。
-    - 设计动机：直接先验在类间分布尖锐的数据集上有公共的、与类无关的偏置，残差化把"两个 anchor 投影在每类上的共同部分"消掉，只留与类相关的位移分量，从而显著缩小跨类对方差、稳定贝叶斯纠偏；理论上保持 Prop. 3.5 的同号性，且常数项通常更紧。
+**2. 残差先验 + 全局截距：应对语义高度多样的数据集。**
 
-3. **贝叶斯风格代理分数 + 局部翻转门控**:
+在 ImageNet 这种类间语义差异极大的数据上，原始先验跨类对方差太大，因为不同 anchor 在每类上有一个共同的、与类无关的偏置。本文把先验残差化：文本残差先验 $\tilde{\pi}_{\mathrm{txt}}(c;D)=\langle t(c),u_{\mathrm{txt}}^0(D)\rangle-\langle t(c),u_{\mathrm{txt}}(D)\rangle$（微调后中性 anchor 减 zero-shot 中性 anchor，剩下的是 anchor 的位移），图像侧同理。类对残差 $\Delta\tilde{\pi}\approx\langle\Delta_{ij}^0,u_{\mathrm{txt}}^0-u_{\mathrm{txt}}\rangle$ 直接度量"预训练 inter-class 方向"在 anchor 位移上的投影，把两个 anchor 的共同部分消掉、只留与类相关的分量，方差就显著缩小。再在 base 对上以最小二乘 $\hat{\beta}(D)=\arg\min_\beta\sum_{\mathcal{B}\times\mathcal{B}}(\hat{\mu}_{ij}-\Sigma_{i,j}-\beta)^2$ 拟合一个全局截距吸收公共漂移，实际使用时合并进阈值 $\tau$。残差化既保住了 Prop. 3.5 的同号性，常数项也通常更紧。
 
-    - 功能：把先验融入决策但只在"先验主导"的区域翻转预测，避免误伤本来正确的样本。
-    - 核心思路：对样本 $x$、top-1 类 $i$ 与邻居 $j\in\mathcal{A}(i)$，定义代理分数 $s_{ij}(x)\approx m_{ij}(x)+\Sigma_{i,j}(D)+\hat{\beta}(D)$，其中 $m_{ij}(x)=\ell_i(x)-\ell_j(x)$ 是观测 logits 差（L2 归一化下可解释为 vMF 似然比的对数近似）。在 vMF 模型下这等价于 log-posterior odds。再定义"先验主导区域" $\mathcal{R}_{i\to j}=\{\Sigma_{i,j}(D)\ge\tau-\hat{\beta}(D)\wedge m_{ij}(x)\le\delta\}$：先验强（gate $\tau$）但样本证据弱（gate $\delta$），且邻居图 $G$ 是对称的、仅在易混淆类对上比较，触发后把预测从 $i$ 翻成 $j$。
-    - 设计动机：单纯 add prior 会污染本来强证据的样本，作者用 Corollary 3.6 给出 sample-level 同号一致性的高概率界 $\Pr[\text{sign mismatch}]\le \sigma_m^2/(|\mu|-\gamma)^2$——只有当 $|\mu|$ 远大于噪声 $\sigma_m$ 时才能信先验。门控 $(\tau,\delta)$ 把这条理论保证落地成两个阈值；邻居图 $\mathcal{A}(i)$ 约束翻转只发生在"语义近、易混"的类对内，进一步降低误翻概率。
+**3. 贝叶斯风格代理分数 + 局部翻转门控：只在"先验强、证据弱"处翻转。**
+
+把先验融进决策最危险的是误伤本来正确的强证据样本，所以 NeRP 只在先验主导的区域才动手。对样本 $x$、top-1 类 $i$ 与易混邻居 $j\in\mathcal{A}(i)$，定义代理分数 $s_{ij}(x)\approx m_{ij}(x)+\Sigma_{i,j}(D)+\hat{\beta}(D)$，其中 $m_{ij}(x)=\ell_i(x)-\ell_j(x)$ 是观测 logits 差（L2 归一化下可解释为 vMF 似然比的对数近似），整体等价于 log-posterior odds。翻转只在"先验主导区域" $\mathcal{R}_{i\to j}=\{\Sigma_{i,j}(D)\ge\tau-\hat{\beta}(D)\wedge m_{ij}(x)\le\delta\}$ 内触发——先验够强（gate $\tau$）但样本证据够弱（gate $\delta$），且邻居图 $G$ 对称、只在易混类对内比较，命中才把 $i$ 翻成 $j$。
+
+两个门控不是拍脑袋来的：Corollary 3.6 给出 sample-level 同号一致性的高概率界 $\Pr[\text{sign mismatch}]\le \sigma_m^2/(|\mu|-\gamma)^2$，只有当 $|\mu|$ 远大于噪声 $\sigma_m$ 时才该信先验；门控 $(\tau,\delta)$ 正是把这条理论保证落地成两个阈值，邻居图 $\mathcal{A}(i)$ 再把翻转锁在"语义近、易混"的类对内，进一步压低误翻概率。
 
 ### 损失函数 / 训练策略
 NeRP **完全无训练**：所有量都用现成的预训练 + 微调后的 VLM 在域 $D$ 上一次性算好（包括类原型、中性 anchor、$\hat{\beta}(D)$、邻居图）。推理时多两次 anchor 编码、若干次内积与 top-1 邻居枚举，开销可忽略。

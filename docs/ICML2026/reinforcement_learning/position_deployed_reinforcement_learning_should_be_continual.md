@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Measurable Deployment 的形式化定义**:
+**1. Measurable Deployment 的形式化定义：把"该不该继续学"变成一个可判定条件。**
 
-    - 功能：把"部署后该不该继续学"这个模糊问题变成一个可判定的形式化条件。
-    - 核心思路：环境用 history process $e:\mathcal{H}\times\mathcal{A}\to\Delta(\mathcal{O})$ 描述，其中 $\mathcal{H}=\bigcup_{n=0}^\infty(\mathcal{A}\times\mathcal{O})^n$ 是所有有限历史。Agent 是策略 $\pi:\mathcal{S}\to\Delta(\mathcal{A})$ 加 learning rule $\sigma:\mathcal{H}\to\Delta(\Pi)$。称部署是 measurable 的，当且仅当 (i) 部署环境处于 big world regime，optimal policy $\pi^\star$ 在可达策略集 $\Pi$ 之外或计算上不可达；(ii) 部署后仍能持续接收 evaluative reward 信号。一旦同时满足，best agent 必然不能终止搜索，问题就落入 CRL。
-    - 设计动机：MDP 自带"存在不动点 $\pi^\star$"的暗示，把研究者诱导到"训练完就结束"的思维定势；history process 不假设可重置、不假设 Markov、不假设可重访状态，更贴合真实部署，是论证"必须持续学"的合适数学语言。
+MDP 这套语言自带"存在不动点 $\pi^\star$"的暗示，把研究者诱导进"训练完就结束"的思维定势。作者改用 history process 来描述环境——$e:\mathcal H\times\mathcal A\to\Delta(\mathcal O)$，其中 $\mathcal H=\bigcup_{n=0}^\infty(\mathcal A\times\mathcal O)^n$ 是所有有限历史，agent 是策略 $\pi:\mathcal S\to\Delta(\mathcal A)$ 加 learning rule $\sigma:\mathcal H\to\Delta(\Pi)$。这套语言不假设可重置、不假设 Markov、不假设可重访状态，因此更贴合真实部署。在此之上，一个部署被称为 measurable 当且仅当：(i) 它处于 big world regime，最优策略 $\pi^\star$ 落在可达策略集 $\Pi$ 之外或计算上不可达；(ii) 部署后仍能持续收到 evaluative reward。一旦两条同时满足，best agent 就不可能终止搜索，问题必然落入 CRL。这一步把"部署后该不该继续学"从一场哲学辩论变成了一个可勾选的形式化判据。
 
-2. **四类部署后非平稳源**:
+**2. 四类部署后非平稳源：把"为什么必须 CRL"拆成可对照自查的四个维度。**
 
-    - 功能：把"为什么必须 CRL"拆成四个可识别、可检测的环境特性，便于工程师对照自家系统判断。
-    - 核心思路：(i) Action-induced non-stationarity——agent 自身的动作会改变未来 history 分布，如推荐系统改变用户偏好、自动交易策略改变市场；与 performative prediction 文献紧密相关。(ii) Changes in environment dynamics——外因变化，如季节、硬件老化、市场结构、监管。(iii) Evolving goals——根据 reward hypothesis，目标本身可演化，多目标场景中目标权重也会随时间漂移。(iv) Emergent novelty——Big World Hypothesis 保证任何有限容量的 agent 必然会遇到训练时未见过的 action-observation 序列，黑天鹅事件是其极端形态。论文用 Cursor Tab、Lyft、Sim-to-Real 案例对照说明每类源在哪些系统中是 Primary / Present / Implicit。
-    - 设计动机：把抽象的"非平稳"具体化成四个可识别维度，让"我的系统是不是 CRL"成为一道可勾选的检查题，而不是哲学辩论。
+光说"环境非平稳"太抽象，工程师没法判断自家系统算不算。作者把非平稳拆成四个可识别的来源：(i) Action-induced——agent 自己的动作改变未来 history 分布，如推荐系统重塑用户偏好、交易策略改变市场，和 performative prediction 文献紧密相关；(ii) 环境动态变化——季节、硬件老化、市场结构、监管这类外因；(iii) 目标演化——按 reward hypothesis，目标本身会变，多目标场景里权重也会随时间漂移；(iv) Emergent novelty——Big World Hypothesis 保证任何有限容量 agent 必然撞上训练时没见过的 action-observation 序列，黑天鹅是其极端形态。论文再用 Cursor Tab、Lyft、Sim-to-Real 三个案例对照，标出每类源在哪些系统里是 Primary / Present / Implicit，让"我的系统是不是 CRL"成为一道可勾选的检查题。
 
-3. **Continual vs Non-Continual Learner 的二分**:
+**3. Continual vs Non-Continual Learner 的二分：把"是否持续"进一步还原到 learning rule。**
 
-    - 功能：把"是否持续学习"从问题属性进一步分解到 learning rule 属性，澄清 CRL 是 problem 还是 algorithm 的常见混淆。
-    - 核心思路：在 history process 视角下，learning 是对策略集 $\Pi$ 的搜索——agent 要么在某个 history 停止搜索锁定一个策略（non-continual learner），要么持续搜索永不终止（continual learner）。论文给了一个最小例子：64 参数小网络 + SGD，若 step-size 退火到 0 就是 non-continual；若用 IDBD 这类 meta-gradient 让 step-size 永不归零，则是 continual。一个问题是 CRL 当且仅当其 best agent 不能终止搜索。这一定义可同时切问题侧和算法侧：换 $\Pi$ 或换 $\sigma$ 都可能把同一物理环境从 CRL 翻成 non-CRL 或反之。
-    - 设计动机：很多人把"catastrophic forgetting"或"plasticity loss"误当作 CRL 的定义性特征，但那是算法在 CRL 上的副作用；本文严格区分 problem-side characterization 和 solution-side challenges，避免错配研究目标。
+很多人把 catastrophic forgetting 或 plasticity loss 误当作 CRL 的定义性特征，但那其实是算法在 CRL 上的副作用，不是问题本身的特征。作者在 history process 视角下把 learning 看成对策略集 $\Pi$ 的搜索：agent 要么在某个 history 停止搜索、锁定一个策略（non-continual learner），要么永不终止搜索（continual learner）。一个最小例子说得很清楚——64 参数小网络 + SGD，若 step-size 退火到 0 就是 non-continual；若用 IDBD 这类 meta-gradient 让 step-size 永不归零，就是 continual。于是 CRL 的定义可以精确表述为"其 best agent 不能终止搜索的问题"，而且这个定义同时能切问题侧和算法侧——换 $\Pi$ 或换 $\sigma$ 都可能把同一物理环境从 CRL 翻成 non-CRL 或反过来。严格区分 problem-side characterization 和 solution-side challenges，正是为了避免社区把"我们解决了 forgetting"误当成"我们解决了 CRL"。
 
 ### 论证策略
 论文用三个真实部署案例（Cursor Tab、Lyft 出行调度、Sim-to-Real 机器人）做存在性证明：在已经成功的工业 CRL 系统中，每一类非平稳源都至少在一处是 primary driver，且采用持续学习确实带来量化收益（Cursor Tab：建议减少 21%、接受率提升 28%；Lyft：年增 \$30M 收入、数百万次额外完单）。同时论文给出 Rusting Pendulum 这一极简实验，证明 joint friction 累积下 train-then-fix 策略失效而持续学习者维持性能。

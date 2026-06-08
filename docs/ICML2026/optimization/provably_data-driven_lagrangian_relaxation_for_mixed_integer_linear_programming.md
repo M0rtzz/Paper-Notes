@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **几何性质 + ERM 泛化上界 $\mathcal{O}(s^{1.5}/\sqrt{N})$**:
+**1. 几何性质 + ERM 泛化上界 $\mathcal{O}(s^{1.5}/\sqrt{N})$：用对偶视角绕开 piecewise-linear 爆炸。**
 
-    - 功能：把"含内嵌 MILP 的函数类复杂度"变成可处理的覆盖问题。
-    - 核心思路：先证 $u(\cdot, P)$ 对 $\pi$ 凹（Lagrangian 是无数线性函数的逐点 min/max），子梯度 $g(\pi, P) = b - A x^*(\pi, P)$ 在 Assumption 4.1 下 $\|g\|_2 \leq 2B\sqrt{s}$，因此 $u(\cdot, P)$ 是 $L=2B\sqrt{s}$-Lipschitz；再用 Lipschitz 把函数类的 $\delta$-覆盖归约为参数空间 $\Pi$ 的覆盖：$\log \mathcal{N}(\delta, \mathcal{U}, \|\cdot\|_{2,N}) \leq s \log(1 + 2B\pi_{\max} s / \delta)$；最后 Dudley 熵积分给出 $\mathscr{R}_N(\mathcal{U}) = \mathcal{O}(s^{1.5}/\sqrt{N})$（其中一个 $\sqrt{s}$ 来自 $L$、一个 $\sqrt{s}$ 来自 $\Pi$ 的直径 $\pi_{\max}\sqrt{s}$）。
-    - 设计动机：直接做 $u_\pi(P)$ 的 piecewise-linear 段数分析会爆炸；走"固定 $P$、用 $\pi$ 上的几何性质"是 data-driven algorithm design 里的对偶视角，让标准 OCO/经验过程工具能直接用上。
+学的函数 $u_\pi(P)$ 固定 $\pi$ 对 $P$ 是分段线性、段数随 $s$ 指数增长，直接做段数分析会爆。作者改走 data-driven algorithm design 的对偶视角：固定 $P$、把 $u(\cdot,P)$ 当作 $\pi$ 上的凹函数处理。先证它凹（Lagrangian 是一堆线性函数的逐点 min/max），子梯度 $g(\pi,P)=b-Ax^*(\pi,P)$ 在 Assumption 4.1 下满足 $\|g\|_2\le 2B\sqrt s$，于是 $u(\cdot,P)$ 是 $L=2B\sqrt s$-Lipschitz；用 Lipschitz 把函数类覆盖归约为参数空间覆盖 $\log\mathcal{N}(\delta,\mathcal{U},\|\cdot\|_{2,N})\le s\log(1+2B\pi_{\max}s/\delta)$，最后 Dudley 熵积分给出 Rademacher 复杂度 $\mathscr{R}_N(\mathcal{U})=\mathcal{O}(s^{1.5}/\sqrt N)$——一个 $\sqrt s$ 来自 Lipschitz 常数、一个来自参数空间直径 $\pi_{\max}\sqrt s$。这样标准经验过程工具就能直接套用，不必去碰那个会爆的段数。
 
-2. **Minimax 下界 $\Omega(s/\sqrt{N})$ 的硬实例构造**:
+**2. Minimax 下界 $\Omega(s/\sqrt{N})$ 的硬实例构造：把 $\sqrt s$ gap 定性为上界松。**
 
-    - 功能：证明 $s$ 的线性依赖是任何算法都越不过去的，从而把 $\sqrt{s}$ gap 定性为"上界松"而不是"下界弱"。
-    - 核心思路：用 Fano 方法 + Varshamov-Gilbert 把估计问题归约为多假设检验。把 $P$ 限制为 $(c, \mathbf{I}_s, \frac{1}{2}\mathbf{1}_s, 0, 0)$，则对偶值分解成 $u(\pi, P) = \sum_k \min(\pi_k/2, c_k - \pi_k/2)$；再给每个坐标 $c_k$ 设计一对二值 Bernoulli 分布，由 $v \in \{0,1\}^s$ 索引，使得 $\pi^*(\mathcal{D}_v) = \mu \mathbf{1}_s + \sigma v$。VG 给一个 $2^{s/8}$ 大、Hamming 距离 $\geq s/8$ 的 packing，几何分离 $\|\pi^*(\mathcal{D}_v) - \pi^*(\mathcal{D}_{v'})\|_1 \geq \Omega(\sigma s)$；KL 用 $\chi^2$ 上界得 $\mathrm{KL}(\mathcal{D}_v^N \| \mathcal{D}_{v'}^N) \leq 4 N s \epsilon^2$；选 $\epsilon = \Theta(1/\sqrt{N})$ 让 Fano 项有常数下界，再配 Lemma 5.9 的"$\ell_1$ 误差 → 风险下界 $\frac{\epsilon}{2}\|\pi - \pi^*\|_1$"，得到 $\Omega(s/\sqrt{N})$。
-    - 设计动机：把内嵌优化函数变成坐标可分的简单形式后，问题立即退化为"$s$ 个独立 biased coin 的方向估计"，恰好是 Fano 的标准舞台；这给出了与算法无关的下界，是论文最硬核的贡献。
+要判断上界多出的 $\sqrt s$ 到底是问题本身的难度还是分析不够紧，得有一个与算法无关的下界。作者用 Fano + Varshamov-Gilbert 构造硬分布族：把 $P$ 限制成 $A=\mathbf{I}_s$ 让对偶值坐标可分 $u(\pi,P)=\sum_k\min(\pi_k/2,c_k-\pi_k/2)$，再给每个坐标设计一对 Bernoulli 分布、由 $v\in\{0,1\}^s$ 索引，使 $\pi^*(\mathcal{D}_v)=\mu\mathbf{1}_s+\sigma v$。VG 给一个 $2^{s/8}$ 大、Hamming 距离 $\ge s/8$ 的 packing 保证几何分离 $\|\pi^*(\mathcal{D}_v)-\pi^*(\mathcal{D}_{v'})\|_1\ge\Omega(\sigma s)$；KL 用 $\chi^2$ 上界得 $\mathrm{KL}\le 4Ns\epsilon^2$，取 $\epsilon=\Theta(1/\sqrt N)$ 让 Fano 项有常数下界，配 Lemma 5.9 的 $\ell_1$ 误差转风险下界，得到 $\Omega(s/\sqrt N)$。关键技巧是用 $A=\mathbf{I}_s$ 把 $s$ 维 hard 问题主动构造成 $s$ 个独立 1 维 hard 问题，恰好是 Fano 的标准舞台——于是 $\sqrt s$ gap 被坐实为上界松，而非下界弱。
 
-3. **SGA + averaging 关掉 $\sqrt{s}$ gap，并平移到 warm-start 拿到 $\Theta(s/N)$**:
+**3. SGA + averaging 关掉 $\sqrt s$ gap，warm-start 再提一阶到 $\Theta(s/N)$：瓶颈在算法侧。**
 
-    - 功能：构造性地证明 ERM 不是最优的，但简单的 online-to-batch 算法是。
-    - 核心思路：放弃静态 ERM，改用 Algorithm 1 的 Stochastic Subgradient Ascent：每来一个实例 $P_t$ 解一次 Lagrangian 子问题得 $x_t^*$，取无偏次梯度 $g_t = b_t - A_t x_t^*$，按 $\pi_{t+1} = \mathrm{Proj}_\Pi(\pi_t + \eta g_t)$ 更新，最终输出平均 $\bar{\pi}_N = \frac{1}{N}\sum_t \pi_t$。OCO 标准 regret 配 $\|g_t\|_2 \leq 2B\sqrt{s}$、$\eta = \frac{\pi_{\max}}{2B\sqrt{N}}$ 给 $\mathbb{E}[\mathcal{E}(\bar{\pi}_N)] \leq 2B\pi_{\max} s / \sqrt{N} = \mathcal{O}(s/\sqrt{N})$，正好匹配下界。再把目标从"max 对偶值"换成"min 与最优乘子的 $\ell_2$ 距离"$\ell(\phi, P) = \|\phi - \pi^*(P)\|_2^2$，问题从非光滑凹 max 变成强凸均值估计，经验均值 $\hat\phi(S) = \frac{1}{N}\sum_i \pi^*(P_i)$ 就是 ERM，配 Popoviciu 不等式给上界 $\mathcal{O}(s/N)$；类似 Fano 构造给同阶下界，得到 $\Theta(s/N)$ 的快速率。
-    - 设计动机：ERM 上界与下界差的 $\sqrt{s}$ 提示瓶颈在算法侧而非问题侧；OCO 视角的 SGA 天然能匹配 $1/\sqrt{N}$ 凹 max 的最优率。warm-start 的几何转换则把整套问题搬到平方损失的强凸地盘，那里"维度只贡献 $s$、样本贡献 $1/N$"是经典结论——这就是 warm-start 比直接预测在样本效率上根本性更优的理论根源。
+既然下界已摸到天花板，差距就在 ERM 这个算法本身。作者改用 online-to-batch 的 Stochastic Subgradient Ascent：每来一个实例 $P_t$ 解一次 Lagrangian 子问题得 $x_t^*$，取无偏次梯度 $g_t=b_t-A_tx_t^*$，按 $\pi_{t+1}=\mathrm{Proj}_\Pi(\pi_t+\eta g_t)$ 更新，输出平均 $\bar\pi_N$。OCO 标准 regret 配 $\|g_t\|_2\le 2B\sqrt s$、$\eta=\pi_{\max}/(2B\sqrt N)$ 给 $\mathbb{E}[\mathcal{E}(\bar\pi_N)]\le 2B\pi_{\max}s/\sqrt N=\mathcal{O}(s/\sqrt N)$，正好匹配下界——而且 SGA 每步本就要解一次子问题，这恰是 LR 部署阶段本来就做的事，等于零额外成本拿到 $\sqrt s$ 倍提升。更进一步，把目标从"max 对偶值"换成"min 与最优乘子的 $\ell_2$ 距离" $\ell(\phi,P)=\|\phi-\pi^*(P)\|_2^2$，问题从非光滑凹 max 变成强凸均值估计，经验均值 $\hat\phi(S)=\frac1N\sum_i\pi^*(P_i)$ 即 ERM，配 Popoviciu 不等式得 $\mathcal{O}(s/N)$、Fano 给同阶下界，最终 $\Theta(s/N)$。"换 loss 不换问题"把整个范式搬到强凸地盘，这就是 warm-start 在样本效率上根本性更优的理论根源。
 
 ### 损失函数 / 训练策略
 两套目标：直接学乘子用 $\mathbb{E}_{P}[u(\pi, P)]$（非光滑凹 max，需 SGA + averaging 才能达最优率）；学暖启动初值用 $\mathbb{E}_P\|\phi - \pi^*(P)\|_2^2$（强凸 min，经验均值即最优）。两套对应的最优样本复杂度差一阶——这是论文核心的实践指导。

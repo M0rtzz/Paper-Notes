@@ -46,23 +46,23 @@ StableVLA 在结构上沿用 VLA-Adapter 的「冻结 SigLIP/DINOv2 + 适配器 
 
 ### 关键设计
 
-1. **通道维度的协方差注意力（IB-Adapter 主体）**:
+**1. 通道维度的协方差注意力（IB-Adapter 主体）：在通道而非空间维度做信息瓶颈，识别语义子空间。**
 
-    - 功能：在通道而非空间维度建模 inter-channel 协方差，识别"语义子空间"并抑制与之无关的噪声通道
-    - 核心思路：把输入 $\mathbf{X}' \in \mathbb{R}^{N \times D}$ 按头数 $H$ 切成 $\mathbf{X}'_h \in \mathbb{R}^{N \times d}$（$d=D/H$）。每头里查询 $\mathbf{Q}_h = \mathbf{X}'_h \mathbf{W}_q$ 走可学线性变换，但键 $\mathbf{K}_h = \mathbf{X}'_h$ **直接用恒等映射**——这是个反直觉的设计，目的是把协方差计算锚定在视觉 token 的原始几何流形上，避免被冗余投影抹掉高频空间线索。然后沿序列维度求 Gram 矩阵 $\mathbf{G}_h = \mathbf{Q}_h^\top \mathbf{K}_h \in \mathbb{R}^{d \times d}$，每个元素 $\mathbf{G}_h[i,j]$ 表示通道 $i,j$ 在所有空间 token 上的协方差
-    - 设计动机：作者论证 VLM 输出的语义和噪声在通道维度上是异质分布的——某些通道承载稳定语义，某些通道是无关传感器噪声；把每个通道当作 IB 的信息单元做选择，比传统 ViT 的空间维度 IB 更契合"投影器"这个特定位置的作用
+诊断指向 MLP 投影器是个"全通滤波器"，把噪声原样灌进 LLM。IB-Adapter 把它换成通道维度的协方差选择：把输入 $\mathbf{X}' \in \mathbb{R}^{N \times D}$ 按头数 $H$ 切成 $\mathbf{X}'_h \in \mathbb{R}^{N \times d}$，每头里查询 $\mathbf{Q}_h = \mathbf{X}'_h \mathbf{W}_q$ 走可学线性变换，但键 $\mathbf{K}_h = \mathbf{X}'_h$ **直接用恒等映射**——这是个反直觉但关键的设计，目的是把协方差锚定在视觉 token 的原始几何流形上，不让冗余投影抹掉高频空间线索。然后沿序列维度求 Gram 矩阵 $\mathbf{G}_h = \mathbf{Q}_h^\top \mathbf{K}_h \in \mathbb{R}^{d \times d}$，每个元素表示通道 $i,j$ 在所有空间 token 上的协方差。
 
-2. **Sigmoid 门控的通道独立选择**:
+为什么选通道维度而非 ViT 那种空间维度？因为 VLM 输出的语义和噪声在通道维度上是异质分布的——某些通道承载稳定语义，某些通道是无关传感器噪声。把每个通道当作 IB 的信息单元做选择，比空间维度 IB 更契合"投影器"这个特定位置该干的活。
 
-    - 功能：把 Gram 矩阵转成 $[0,1]$ 区间的门控权重 $\mathbf{A}_h = \sigma(\mathbf{G}_h \cdot \boldsymbol{\tau}_h)$，对每个通道独立打开/关闭，再用 $\mathbf{Z}_h = \mathbf{V}_h \mathbf{A}_h$ 重建特征（其中 $\mathbf{V}_h$ 由两层 GELU MLP 生成）
-    - 核心思路：温度 $\boldsymbol{\tau}_h$ 可学；噪声通道与语义通道协方差低 → 门值趋近 0 → 被独立抑制
-    - 设计动机：刻意**不**用 Softmax。Softmax 强制通道间竞争（一个分布归一化），这在通道选择场景里反而会扯掉本该并存的多个语义通道；Sigmoid 对应"独立 Bernoulli 隐结构"假设，允许"很多通道同时开 + 噪声通道单独关"，与现实里通道语义不互斥的事实匹配
+**2. Sigmoid 门控的通道独立选择：用独立 Bernoulli 假设代替 Softmax 的强制竞争。**
 
-3. **双路径融合架构（Fused IB-Adapter）**:
+有了 Gram 矩阵，把它转成门控权重 $\mathbf{A}_h = \sigma(\mathbf{G}_h \cdot \boldsymbol{\tau}_h)$（温度 $\boldsymbol{\tau}_h$ 可学），再用 $\mathbf{Z}_h = \mathbf{V}_h \mathbf{A}_h$ 重建特征（$\mathbf{V}_h$ 由两层 GELU MLP 生成）。噪声通道与语义通道协方差低，门值就趋近 0、被独立抑制。
 
-    - 功能：把 IB-Adapter 与原 MLP 并联：$\mathbf{Z} = \text{MLP}(\mathbf{X}) + \tanh(\lambda) \cdot \text{IB-Adapter}(\mathbf{X})$
-    - 核心思路：MLP 旁路是"高保真路径"，保留精细操作必须的高频细节；IB-Adapter 是"去噪路径"，提供协方差过滤后的鲁棒语义。$\lambda$ 可学，控制鲁棒信号注入强度。训练期再叠一个 Stochastic Pathway Dropout：对要求空间精度的 pick-and-place 任务（LIBERO-Long）几乎不 dropout（$p_{\text{drop}}\!\approx\!0$），让 IB-Adapter 当"残差稳定器"；对要求长程语义规划的任务（CALVIN、LIBERO-Object）用中等 dropout（$\approx 0.3$），强迫策略内化 IB 路径的鲁棒特征
-    - 设计动机：纯 IB-Adapter 会衰减高频细节，导致精细抓放任务（尤其是 long-horizon）轨迹精度下降——单一路径无法同时兼顾"语义鲁棒"和"动作精确"，必须解耦
+这里刻意**不**用 Softmax。Softmax 会强制通道间竞争（一个分布归一化），在通道选择场景里反而会扯掉本该并存的多个语义通道；Sigmoid 对应 IB 推导中的"独立 Bernoulli 隐结构"假设，允许"很多通道同时开 + 噪声通道单独关"，与现实里通道语义不互斥的事实匹配。这也是把 IB 的理论最优解 $\mathbf{Z} = \mathbf{V} \cdot \sigma(\beta \mathbf{Q}^\top \mathbf{K})$ 直接落成可学模块的那一步。
+
+**3. 双路径融合架构（Fused IB-Adapter）：用 MLP 旁路保高频细节、IB 路径供鲁棒语义。**
+
+纯 IB-Adapter 会衰减高频细节，让精细抓放任务（尤其 long-horizon）轨迹精度下降——单一路径没法同时兼顾"语义鲁棒"和"动作精确"。StableVLA 把两者并联：$\mathbf{Z} = \text{MLP}(\mathbf{X}) + \tanh(\lambda) \cdot \text{IB-Adapter}(\mathbf{X})$，MLP 旁路是高保真路径保留精细操作必需的高频，IB-Adapter 是去噪路径提供协方差过滤后的鲁棒语义，$\lambda$ 可学控制鲁棒信号注入强度。
+
+训练期再叠一个 Stochastic Pathway Dropout，并按任务调强度：对要求空间精度的 pick-and-place（LIBERO-Long）几乎不 dropout（$p_{\text{drop}}\!\approx\!0$），让 IB-Adapter 当残差稳定器；对要求长程语义规划的任务（CALVIN、LIBERO-Object）用中等 dropout（$\approx 0.3$），强迫策略内化 IB 路径的鲁棒特征。统一一档反而两边都不优。
 
 ### 损失函数 / 训练策略
 完全继承 VLA-Adapter 的训练配方：从头训，只用 LIBERO/CALVIN 自带的轻度几何（裁剪）与色彩抖动增强防过拟合，**不接触任何评测时使用的扰动类型**，也不上任何专门的鲁棒训练技术。这是论文最关键的对照设置——把扰动鲁棒性的提升完全归因于架构本身。

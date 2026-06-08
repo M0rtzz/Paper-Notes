@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **单层 Transformer 的 cFKA 训练动力学定理**:
+**1. 单层 Transformer 的 cFKA 训练动力学定理：把事实存储拆到 token 级。**
 
-    - 功能：把 $\mathbf{Y}$ 和 $\mathbf{Z}$ 的演化写成可解析的 Taylor 形式，给出收敛点、收敛速度、震荡幅度的明确表达式。
-    - 核心思路：在 $\eta_Y \gg \eta_Z$ 假设下，$\mathbf{Y}$ 对损失凸，其参考最优解为 $\mathbf{U}=\sum_{o,s}\frac{1}{a_s}[\ln \Pr(s\mid o) + \frac{1}{L}\ln \Pr(o)]\,\mathbf{x}_o\mathbf{x}_s^\top$（即 Bayes 最优预测）。误差 $\mathbf{e}_s(T) = \mathbf{y}_s(T)-\mathbf{u}_s$ 满足 $\mathbf{e}_s(T) \approx [\prod_{t=1}^T (\mathbf{I}-\eta_Y z_s \delta_s(t)\tilde{\mathbf{H}}(t))]\mathbf{e}_s(0) + \sum_t \eta_Y z_s \delta_s(t) [\prod (\cdot)]\bm{\xi}(t)$，第一项指数衰减决定收敛速度（由 $\tilde{\mathbf{H}}$ 的最大特征值控制），第二项是固定幅度震荡（由 $\tilde{\mathbf{H}}$ 的最小正特征值控制）。同时 $\mathbf{Z}$ 满足守恒律 $\frac{d}{dt}[(\frac{z_s}{\eta_Z})^2 - \sum_o(\frac{y_{o,s}}{\eta_Y})^2] = 0$，导出 token $s$ 的注意力由其 Diversity Index $\mathrm{DI}(\overline{\mathbf{x}}_s) \propto -\sqrt{\eta_Z/\eta_Y}\sqrt[4]{\sum_o[\ln\Pr(s\mid o)+L^{-1}\ln\Pr(o)]^2}+C$ 决定——分布越窄、信息越独占的 token 注意力越高。
-    - 设计动机：之前的 transformer 优化理论要么聚焦 ICL，要么忽略多 token 知识结构；本文专门面向"事实如何被各 token 分摊存储"这个问题，把训练动力学拆到 token 级，才能进一步在 CPT 改动里只动需要动的那个量。
+之前的 transformer 优化理论要么只盯 ICL、要么忽略多 token 的知识结构，没法回答"事实如何被各 token 分摊存储"。作者把模型重参数化为知识存储 $\mathbf{Y}$ 和注意力 $\mathbf{Z}$ 两块，在 $\eta_Y\gg\eta_Z$（把 $\mathbf{Z}$ 视为缓变）的假设下，$\mathbf{Y}$ 对损失凸，其参考最优解就是 Bayes 最优预测 $\mathbf{U}=\sum_{o,s}\frac{1}{a_s}[\ln\Pr(s\mid o)+\frac{1}{L}\ln\Pr(o)]\,\mathbf{x}_o\mathbf{x}_s^\top$。误差演化写成 Taylor 形式
 
-2. **正则化 / 数据回放的机制对比**:
+$$\mathbf{e}_s(T)\approx\Big[\prod_{t=1}^T(\mathbf{I}-\eta_Y z_s\delta_s(t)\tilde{\mathbf{H}}(t))\Big]\mathbf{e}_s(0)+\sum_t\eta_Y z_s\delta_s(t)\Big[\prod(\cdot)\Big]\bm{\xi}(t),$$
 
-    - 功能：把两类 CPT 方法分别代入上述动力学，得出"正则化只能改速度、replay 能改收敛点 + 放大震荡"的可证明结论。
-    - 核心思路：对 EWC 风格目标 $\mathcal{L}=\mathcal{L}_{\text{new}}+\frac{k}{2}\sum_i w_i (\theta_i-\theta_i^*)^2$，$\mathbf{e}_s(T)$ 多出一项 $-\sum_t k\eta_Y[\prod(\cdot)]\,\tilde{\mathbf{u}}$，但它被 $\lambda^+_{\min}(\mathrm{diag}(\mathbf{w}_s))=\min_o w_{o,s}$ 卡住——在事实知识只由 token-中的少数维度承担时，这个最小特征值小到几乎为零，于是收敛点几乎不变，只是速度变慢。对 replay，频率分布变成 $\Pr(\mathbf{x}_s)=\frac{1-\alpha}{|\mathcal{O}_s^{\mathrm{old}}|}\sum_{o\in\mathcal{O}_s^{\mathrm{old}}}\mathbf{x}_o + \frac{\alpha}{|\mathcal{O}_s^{\mathrm{new}}|}\sum_{o\in\mathcal{O}_s^{\mathrm{new}}}\mathbf{x}_o$，第一项直接把旧知识写回收敛点；同时震荡项 $\lambda^+_{\min}(\tilde{\mathbf{H}})$ 在新旧混合后被放大，给旧知识"提醒"作用。
-    - 设计动机：实证早就知道"正则化没什么用、replay 哪怕 10% 也好用"，但缺一个解释。这条理论把两类方法各自影响动力学的哪一项写得清清楚楚，从而预言：要彻底解决遗忘必须挪收敛点 → 必须走 replay 路线。
+第一项指数衰减决定收敛速度（由 $\tilde{\mathbf{H}}$ 最大特征值控制），第二项是固定幅度的震荡（由最小正特征值控制）。同时 $\mathbf{Z}$ 满足守恒律 $\frac{d}{dt}[(\tfrac{z_s}{\eta_Z})^2-\sum_o(\tfrac{y_{o,s}}{\eta_Y})^2]=0$，由此推出 token $s$ 的注意力由其 Diversity Index $\mathrm{DI}(\overline{\mathbf{x}}_s)\propto-\sqrt{\eta_Z/\eta_Y}\sqrt[4]{\sum_o[\ln\Pr(s\mid o)+L^{-1}\ln\Pr(o)]^2}+C$ 决定——分布越窄、信息越独占的 token 注意力越高。把动力学拆到 token 级是后续两步的根基：只有看清每个量的演化，才能在 CPT 里精准地只动该动的那一项。
 
-3. **STOC: Selecting Tokens via attentiOn Contribution**:
+**2. 正则化 / 数据回放的机制对比：证明谁能挪收敛点、谁只能改速度。**
 
-    - 功能：在不存原始 PT 数据的前提下，从 CPT 样本里自动挑出"信息量最高、最可能触发旧知识"的 snippet，让预训练 LM 自己生成 replay。
-    - 核心思路：（i）对每条 CPT 样本做一次 forward，取所有 layer × head 的注意力分数求均值得到 token-level 重要性 $a_t$；（ii）以滑动窗口找连续段内 $\sum_t a_t$ 最高的固定长度 snippet（典型 16–32 token）；（iii）把该 snippet 当 prompt 喂给"预训练原模型"生成续写——根据动力学，注意力高的 token 是 Diversity Index 低、最能锁定一组旧事实的 token，于是续写出的内容大概率覆盖旧知识；（iv）MinHash 去重保证 replay 多样性；（v）以比例 $\alpha\in\{0.5, 0.67, 0.8, 0.9\}$ 与 CPT 语料混合训练。
-    - 设计动机：LAMOL 等用特殊 token 作 prompt 启动生成，没有利用 transformer 的注意力结构，生成内容容易远离原模型实际"会的"知识；STOC 用注意力把"模型实际在意的 token"直接当种子，等价于让模型沿着自己最熟悉的方向回忆，replay 质量明显更高。
+社区早就知道"正则化没什么用、replay 哪怕 10% 也好用"，但缺一个解释。作者把两类方法各自代入上面的动力学。对 EWC 风格目标 $\mathcal{L}=\mathcal{L}_{\text{new}}+\frac{k}{2}\sum_i w_i(\theta_i-\theta_i^*)^2$，误差多出一项 $-\sum_t k\eta_Y[\prod(\cdot)]\,\tilde{\mathbf{u}}$，但它被 $\lambda^+_{\min}(\mathrm{diag}(\mathbf{w}_s))=\min_o w_{o,s}$ 卡住——事实知识只由 token 中少数维度承担时，这个最小特征值小到几乎为零，于是收敛点几乎不动，只是速度变慢。对 replay，频率分布变成 $\Pr(\mathbf{x}_s)=\frac{1-\alpha}{|\mathcal{O}_s^{\mathrm{old}}|}\sum_{o\in\mathcal{O}_s^{\mathrm{old}}}\mathbf{x}_o+\frac{\alpha}{|\mathcal{O}_s^{\mathrm{new}}|}\sum_{o\in\mathcal{O}_s^{\mathrm{new}}}\mathbf{x}_o$，第一项直接把旧知识写回收敛点，同时震荡项 $\lambda^+_{\min}(\tilde{\mathbf{H}})$ 在新旧混合后被放大，对旧知识起"提醒"作用。结论很硬：要彻底抑制遗忘必须挪收敛点，正则化做不到，只有 replay 能做到——这就把算法设计逼向了 replay 路线。
+
+**3. STOC：用注意力贡献挑回放种子，让原模型沿熟悉方向回忆。**
+
+LAMOL 等用特殊 token 当 prompt 启动生成，没利用 transformer 的注意力结构，生成内容容易跑偏到模型并不真正"会"的地方。STOC 改用动力学给出的信号选种子：对每条 CPT 样本做一次 forward，取所有 layer×head 的注意力分数求均得 token 级重要性 $a_t$；用滑动窗口找连续段内 $\sum_t a_t$ 最高的固定长度 snippet（典型 16–32 token）；把它当 prompt 喂给预训练原模型续写。根据动力学，注意力高的 token 恰是 Diversity Index 低、最能锁定一组旧事实的 token，所以续写大概率覆盖旧知识；再用 MinHash 去重保多样性，最后以比例 $\alpha\in\{0.5,0.67,0.8,0.9\}$ 与 CPT 语料混合。等价于让模型沿自己最熟悉的方向回忆，replay 质量自然比随机 prompt 高，而且只在原 forward 上多采一次 attention、零额外训练成本。
 
 ### 损失函数 / 训练策略
 基础 CPT 用 cross-entropy $\mathcal{L} = -\mathrm{logit}(x_{T+2}\mid \mathbf{X}) + \log\sum_o \exp(\mathrm{logit}(x_o\mid \mathbf{X}))$。在合成 Biography 实验里假设 $\eta_Y \gg \eta_Z$ 做 SGD；在真实 LLM 实验中用 Pythia-160M / Qwen2.5-0.5B-1.7B，分别尝试全参数、rank-128 LoRA、冻结前 6 层三种更新策略。EWC 用 Fisher Information 估计参数重要性；STOC 与 LAMOL 都把新旧数据按 $\alpha$ 混合后送 next-token loss。

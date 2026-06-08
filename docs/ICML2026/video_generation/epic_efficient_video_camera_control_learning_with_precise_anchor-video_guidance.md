@@ -44,23 +44,17 @@ EPiC 基于 CogVideoX-5B-I2V（DiT 风格、3D 全自注意力）。训练管线
 
 ### 关键设计
 
-1. **可见性掩码 anchor 构造（Visibility-Based Masking）**:
+**1. 可见性掩码 anchor 构造：用光流可见性伪造一段与源视频逐像素对齐的 anchor。**
 
-    - 功能：从任意源视频直接合成与源视频像素级对齐的训练 anchor，且无需相机位姿或点云。
-    - 核心思路：用 RAFT 估计稠密光流，把第 $t$ 帧每个像素回溯到第 1 帧；只保留能稳定追回第一帧的像素，其余设为黑色，得到二值可见性 mask $M_t$。这样得到的 anchor 在可见区域和源视频逐像素一致（anchor-source PSNR 从点云法的 16.01 dB 跳到 40.12 dB），同时"新出现的区域全黑"这一关键几何性质与点云重渲染的 anchor 等价。当大幅视角变化使可见区域过小时，把 mask 冻结在当前帧防止退化崩盘。此外训练阶段做"飞像素伪造"——在可见区域内随机画淡色虚线射线，颜色从第一帧采，用来模拟点云法在物体边缘渲出的 flying-pixel 伪影，缩小训练-推理 gap。
-    - 设计动机：直接砍掉错位这一最大学习负担，把"修补错位 + 补不可见"两个纠缠任务拆开；同时绕开"必须有相机标注"这一数据瓶颈，让训练集可以扩到 Panda-70M 这种野外动态视频。
+anchor 视频路线的最大痛点是：anchor 由估计的点云加估计的相机轨迹重渲染而来，估计误差直接体现为 anchor 和源视频在可见区的像素错位（实测 PSNR 只有 16 dB），模型既要修错位又要补遮挡，学习目标被搅成一锅粥。EPiC 的破法是发现 anchor 真正需要的几何信息只有一条——"哪些像素相对第一帧仍可见、哪些已被遮挡或移出视野"，根本不必做 3D 重建。于是用 RAFT 估稠密光流，把第 $t$ 帧每个像素回溯到第 1 帧，只保留能稳定追回的、其余涂黑，得到二值可见性 mask $M_t$。这样合成的 anchor 在可见区与源视频逐像素一致（PSNR 从 16.01 跳到 40.12 dB），而"新出现区域全黑"这一关键性质又与点云重渲染等价。视角大幅变化导致可见区过小时，把 mask 冻结在当前帧防退化；训练时还做"飞像素伪造"——在可见区随机画淡色虚线射线、颜色从第一帧采，模拟点云在物体边缘渲出的 flying-pixel 伪影，缩小训练-推理 gap。这一步直接砍掉了错位这个最大学习负担，还顺手绕开"必须有相机标注"的数据瓶颈，让训练集能扩到 Panda-70M 这种野外动态视频。
 
-2. **Anchor-ControlNet（轻量 DiT-based 适配器）**:
+**2. Anchor-ControlNet：anchor 越对齐，适配器越能瘦身。**
 
-    - 功能：把 anchor 视频的引导信号注入冻结的 VDM，参数量 <1% backbone。
-    - 核心思路：单个 DiT block，hidden dim 从 backbone 的 3072 砍到 256（约 8%），只接到 backbone 前 25% 的层上，总参数 26M。Anchor 视频 $\mathbf{A}$ 经主干的 3D-VAE 编码得 $\mathbf{z}_{\text{anchor}}$，与噪声潜变量 $\mathbf{z}_t$ 沿通道拼接、patchify 后送入 DiT-ctrl，输出做零初始化投影回 3072 维：$\tilde{\mathbf{z}} = \text{Proj}(\text{DiT}_{\text{ctrl}}([\mathbf{z}_t, \mathbf{z}_{\text{anchor}}]))$。训练只更新这 26M 参数，主干完全冻结。
-    - 设计动机：参考 DreamBooth 的经验——做下游适配时用尽量少的可学习参数能最大程度保留基模型的生成能力。比起 ViewCrafter / Gen3C / TrajectoryCrafter 动辄全量微调主干的做法，这种"轻 + 浅 + 窄"的 ControlNet 配置正是上面 anchor 对齐工作做到位之后才负担得起的——anchor 越对齐，ControlNet 要做的事越简单，所需容量越小。
+把 anchor 信号注入冻结主干，EPiC 只用一个 26M（<1% backbone）的轻量 DiT 适配器：单个 DiT block，hidden dim 从主干的 3072 砍到 256（约 8%），只接到前 25% 的层上。anchor 视频 $\mathbf{A}$ 经主干的 3D-VAE 编码得 $\mathbf{z}_{\text{anchor}}$，与噪声潜变量 $\mathbf{z}_t$ 沿通道拼接、patchify 后送进 DiT-ctrl，输出再零初始化投影回 3072 维 $\tilde{\mathbf{z}} = \text{Proj}(\text{DiT}_{\text{ctrl}}([\mathbf{z}_t, \mathbf{z}_{\text{anchor}}]))$，训练只更新这 26M 参数、主干全程冻结。相比 ViewCrafter / Gen3C / TrajectoryCrafter 动辄全量微调主干，这种"轻+浅+窄"的配置之所以负担得起，正是因为前一步把 anchor 对齐做到位了——anchor 越对齐，ControlNet 要做的事越少、所需容量越小，这是个"上游对齐换下游容量"的联动。
 
-3. **可见性感知输出门控（Visibility-Aware Output Masking）**:
+**3. 可见性感知输出门控：ControlNet 只拷可见区，不可见区整个交回冻结主干。**
 
-    - 功能：把 ControlNet 的影响范围严格限制在可见区域，让不可见区域的合成完全由冻结的 base model 负责。
-    - 核心思路：把可见性 mask $M \in \{0,1\}^{T'\times h\times w}$ 下采到 latent 分辨率，做潜变量级的硬门控融合：$\hat{\mathbf{z}} = \text{DiT}_{\text{base}}(\mathbf{z}_t) + M \odot \tilde{\mathbf{z}}$。训练和推理都用同一个公式。对比之下，ViewCrafter 直接喂整段 anchor 不带可见性、TrajectoryCrafter 把 mask 也编码进 latent 让模型自己学三者关系，两者都把"修错位 + 补遮挡"压在 ControlNet 一身。
-    - 设计动机：这是把"职责分离"思想推到极致——ControlNet 拷可见、base model 补不可见，互不串扰。好处有三：(a) 不可见区域的点云飞像素/撕裂伪影被门控直接掐掉，不会污染输出；(b) 训练目标变成纯"复制"，收敛快且数据效率高；(c) 推理时只要把 anchor 上某些前景区域额外 mask 掉（用 GroundedSAM 分割人/动物），就能让那些区域不受相机轨迹约束、自由运动，从而免训练支持"相机移动 + 前景动作"的动态场景。
+为了把职责分离推到极致，EPiC 把可见性 mask $M \in \{0,1\}^{T'\times h\times w}$ 下采到 latent 分辨率，做潜变量级硬门控融合 $\hat{\mathbf{z}} = \text{DiT}_{\text{base}}(\mathbf{z}_t) + M \odot \tilde{\mathbf{z}}$，训练推理同一公式。对比之下，ViewCrafter 直接喂整段 anchor 不带可见性、TrajectoryCrafter 把 mask 也编码进 latent 让模型自己学三者关系，都把"修错位+补遮挡"压在 ControlNet 一身。EPiC 让 ControlNet 拷可见、base model 补不可见，互不串扰，好处有三：不可见区的点云飞像素/撕裂伪影被门控直接掐掉、不污染输出；训练目标变成纯"复制"、收敛快又省数据；推理时只要把 anchor 上的某些前景区域额外 mask 掉（用 GroundedSAM 分割人/动物），那些区域就不受相机轨迹约束、能自由运动，从而免训练支持"相机移动+前景动作"——一个为对齐而生的 mask，到推理端顺手长出了可控性红利。
 
 ### 损失函数 / 训练策略
 标准 latent diffusion 去噪损失 $\mathcal{L}_{\text{denoise}} = \mathbb{E}_{\mathbf{z}_0, t, \boldsymbol{\epsilon}, c}[\|\boldsymbol{\epsilon}_\theta(\mathbf{z}_t, t, c) - \boldsymbol{\epsilon}\|_2^2]$，条件 $c$ 包含文本和 anchor。只更新 26M 的 Anchor-ControlNet，主干冻结。Panda-70M 取 5,000 段视频，batch=16，8×A100-40G，500 步，约 3 小时（合 15 GPU 小时）；AdamW，lr=$2\times 10^{-4}$。推理 CFG 文本尺度 6.0；I2V 推理用 DAv2 估深度构点云，可选用 GroundedSAM 抠掉动态前景；V2V 推理换成 DepthCrafter 在每帧相机系下估动态点云、把用户轨迹解释为相对变换。

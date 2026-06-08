@@ -52,23 +52,21 @@ AlignG 在这之上加两个串联模块：
 
 ### 关键设计
 
-1. **上下文条件化的原型更新（Stage 1）**:
+**1. 上下文条件化的原型更新（Stage 1）：把"这张图有哪些关系候选"注入原型。**
 
-    - 功能：把"图像里有哪些关系候选"这条 image-specific 信号注入到本来全局共享的谓词原型里。
-    - 核心思路：对每个原型 $r$，先用 compatibility-weighted cross-attention 拿到上下文向量 $\mathbf{u}_r = \sum_j \alpha_{rj} \mathbf{W}_v \mathbf{e}_j$，其中 $\alpha_{rj} \propto \exp((\mathbf{W}_q \bar{\mathbf{p}}_r)^\top (\mathbf{W}_k \mathbf{e}_j) / \sqrt{d})$；然后用 GRUCell 把它写回原型：$\mathbf{p}_r^{(I)} = \mathrm{GRUCell}(\mathbf{u}_r, \mathrm{LayerNorm}(\bar{\mathbf{p}}_r))$。
-    - 设计动机：直接把 $\bar{\mathbf{p}}_r$ 用 $\mathbf{u}_r$ 覆盖会破坏全局语义拓扑；GRU 的 reset/update gate 提供了"选择性吸收"机制，让漂移幅度被门控限制，既能在场景证据强烈一致时大幅调整，也能在证据微弱时保持原状。这一步把"原型"从训练完就冻结的常量变成了 per-image variable。
+痛点是原型一旦训练完就冻结，模型没法用 image-specific 证据去重新组织谓词语义。AlignG 注意到一张图里的 $N$ 个关系候选本身就是天然的上下文，于是反过来用它们去更新原型。对每个原型 $r$，先用 compatibility-weighted cross-attention（query 是原型、key/value 是关系候选）聚合出上下文向量 $\mathbf{u}_r = \sum_j \alpha_{rj} \mathbf{W}_v \mathbf{e}_j$，注意力权重 $\alpha_{rj} \propto \exp((\mathbf{W}_q \bar{\mathbf{p}}_r)^\top (\mathbf{W}_k \mathbf{e}_j) / \sqrt{d})$。但更新不能粗暴地拿 $\mathbf{u}_r$ 覆盖 $\bar{\mathbf{p}}_r$——那会冲掉全局语义拓扑。这里换成 GRUCell 做门控增量：$\mathbf{p}_r^{(I)} = \mathrm{GRUCell}(\mathbf{u}_r, \mathrm{LayerNorm}(\bar{\mathbf{p}}_r))$，reset/update gate 提供了"选择性吸收"——场景证据强烈一致时大幅调整，证据微弱时保持原状。这一步的本质是把原型从"训练完冻结的常量"变成"per-image 变量"，但漂移幅度始终被门控约束着。
 
-2. **基于反向 cross-attention 的关系再校准（Stage 2）**:
+**2. 反向 cross-attention 的关系再校准（Stage 2）：让 adapted 原型回头 reshape 关系特征。**
 
-    - 功能：让 adapted 原型反过来 reshape 关系特征，使关系嵌入吸收当前图的全局语义结构。
-    - 核心思路：对每个关系 $j$，用反向 cross-attention 计算 prototype-informed 反馈 $\mathbf{u}_j = \sum_r \beta_{jr} \mathbf{W}_v' \mathbf{p}_r^{(I)}$，其中 $\beta_{jr} \propto \exp((\mathbf{W}_q' \mathbf{e}_j)^\top (\mathbf{W}_k' \mathbf{p}_r^{(I)}) / \sqrt{d})$；最终 $\tilde{\mathbf{e}}_j = f_{\mathrm{proj}}([\mathrm{LayerNorm}(\mathbf{e}_j); \mathbf{u}_j])$，单步 concat-projection 而不是迭代。
-    - 设计动机：关系嵌入是 transient 的——只在当前图里存在、跨样本不持续，所以适合用"一次成型"的强校准，而不是像原型那样的"门控增量"。复杂度方面，因为只对固定的 $R$ 个原型与 $P$ 个候选做 cross-attention，得到 $R \times P$ 注意力图，把传统 self-attention 的 $\mathcal{O}(P^2)$ 降到 $\mathcal{O}(RP)$，在 dense scene 下尤其受益。
+原型动起来之后，还得让它反过来作用到关系嵌入上，否则分类用的还是没吸收全局语义的旧特征。对每个关系 $j$，用反向 cross-attention（query 换成关系、key/value 换成 adapted 原型）算出 prototype-informed 反馈 $\mathbf{u}_j = \sum_r \beta_{jr} \mathbf{W}_v' \mathbf{p}_r^{(I)}$，权重 $\beta_{jr} \propto \exp((\mathbf{W}_q' \mathbf{e}_j)^\top (\mathbf{W}_k' \mathbf{p}_r^{(I)}) / \sqrt{d})$，最终 $\tilde{\mathbf{e}}_j = f_{\mathrm{proj}}([\mathrm{LayerNorm}(\mathbf{e}_j); \mathbf{u}_j])$。这里刻意用单步 concat-projection 而不是迭代更新——因为关系嵌入是 transient 的，只在当前图里存在、跨样本不持续，适合"一次成型"的强校准，不像原型那样需要门控保稳态。复杂度上也讨了便宜：只对固定的 $R$ 个原型与 $P$ 个候选做 cross-attention，注意力图是 $R \times P$，把传统 self-attention 的 $\mathcal{O}(P^2)$ 降到 $\mathcal{O}(RP)$，dense scene 下尤其划算。
 
-3. **静态原型锚定的对齐损失**:
+**3. 静态原型锚定的对齐损失：给"原型可以变"装一个防共谋的稳态约束。**
 
-    - 功能：给"原型可以变"装一个稳态约束，防止 representation 和 prototype 在同一张图里互相迁就而退化。
-    - 核心思路：对齐损失采用 triplet-margin 形式 $\mathcal{L}_{\mathrm{align}} = \max\{0, \|\tilde{\mathbf{e}}_j - \bar{\mathbf{p}}^+\|_2^2 - \|\tilde{\mathbf{e}}_j - \bar{\mathbf{p}}^-\|_2^2 + \gamma\}$，**关键是 $\bar{\mathbf{p}}^+, \bar{\mathbf{p}}^-$ 都取静态全局原型**而非 adapted 原型；再叠加原型正则 $\mathcal{L}_{\mathrm{reg}}$（相似度惩罚 + 多样性 margin $\gamma_{\mathrm{div}}$）和分类损失 $\mathcal{L}_{\mathrm{cls}}$，总目标 $\mathcal{L} = \mathcal{L}_{\mathrm{cls}} + \mathcal{L}_{\mathrm{reg}} + \mathcal{L}_{\mathrm{align}}$。
-    - 设计动机：如果对齐目标用 $\mathbf{p}_r^{(I)}$，relation 和 prototype 会"共谋"——双方都被推到一个图像内的局部解，分类器就会过拟合到 image-specific 偏置；用 $\bar{\mathbf{p}}_r$ 锚定，相当于强制 image-conditioned adaptation 只能往全局原型的"邻域"里调，既保稳定又允许局部偏移。梯度仍能通过 $\tilde{\mathbf{e}}_j$ 反传到 adaptation 模块。
+原型能动了，新风险随之而来——如果对齐目标也用 adapted 原型 $\mathbf{p}_r^{(I)}$，那么 relation 和 prototype 会在同一张图里互相迁就、双双被推到一个 image-specific 的局部解，分类器就过拟合到这张图的偏置上。AlignG 的关键选择是把对齐损失锚回静态全局原型：
+
+$$\mathcal{L}_{\mathrm{align}} = \max\{0, \|\tilde{\mathbf{e}}_j - \bar{\mathbf{p}}^+\|_2^2 - \|\tilde{\mathbf{e}}_j - \bar{\mathbf{p}}^-\|_2^2 + \gamma\}$$
+
+triplet-margin 里的 $\bar{\mathbf{p}}^+, \bar{\mathbf{p}}^-$ 都取静态原型而非 adapted 原型，再叠加原型正则 $\mathcal{L}_{\mathrm{reg}}$（相似度惩罚 + 多样性 margin $\gamma_{\mathrm{div}}$）和分类损失，总目标 $\mathcal{L} = \mathcal{L}_{\mathrm{cls}} + \mathcal{L}_{\mathrm{reg}} + \mathcal{L}_{\mathrm{align}}$。这相当于强制 image-conditioned adaptation 只能在全局原型的"邻域"里调——既保住数据集层面的稳定性，又允许单张图级别的局部偏移；梯度仍能通过 $\tilde{\mathbf{e}}_j$ 反传回 adaptation 模块。它的作用很像自蒸馏里的 EMA teacher，只是用在了 prototype 上。
 
 ### 训练策略
 继承 PE-Net 的损失结构，不引入额外的频率/共现先验；可选的 long-tail 加权用 † 标注。优化器 SGD（lr $1\times 10^{-3}$、momentum 0.9、weight decay $1\times 10^{-4}$），batch size 8，60k iters，RTX 4090。原型维度 $d$ 来自 GloVe 300-d 投影，diversity margin $\gamma_{\mathrm{div}}=3.0$、alignment margin $\gamma=20.0$。

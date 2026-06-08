@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **Vision Representation Expansion (VRE) + 单次推理融合**：
+**1. Vision Representation Expansion (VRE) + 单次推理融合：参数隔离但不需要路由。**
 
-    - 功能：为每个新场景扩出独立的视觉表征子空间，但在推理时不需要选路由也不增加 forward 次数。
-    - 核心思路：CSR 模块由 $K$ 个 down-up 分支 $\varphi_l^k = \phi_{up}(o(\phi_{down}(\cdot)))$ 和一个共享投影器 $\mathcal P_l \in \mathbb R^{K\times d_1 \to d_1}$ 组成；输出 $p_l = \mathcal P_l(\varphi_l^1(a_l) \oplus \cdots \oplus \varphi_l^K(a_l))$。每个分支负责一个场景的视觉特征，下采样维 $d_2 \ll d_1$，所以总参数量增长温和。训练第 $t$ 个场景时只更新 $\varphi_l^t$ + $\mathcal P_l$，其他 $\varphi_l^{k\neq t}$ 冻结。推理时所有分支并行计算一次，concat 后过同一个投影器，单次 forward 完成。
-    - 设计动机：纯 LoRA 单分支会遗忘；多分支但需 routing 又会让 router 自己遗忘且增加推理次数；用一个共享投影器把多分支输出"组合成统一表征"，等于做了隐式的注意力路由，既不需要训练 router，也不需要在推理时多次 forward。
+跨场景持续学习的两难是：纯 LoRA 单分支会被新场景覆盖旧场景（遗忘）；改成多分支虽能隔离，却要训一个 router，而 router 自己也会遗忘、还要多跑几次 forward。VRE 用"多分支 + 共享投影器"绕开这个矛盾：CSR 模块由 $K$ 个 down-up 分支 $\varphi_l^k = \phi_{up}(o(\phi_{down}(\cdot)))$ 和一个共享投影器 $\mathcal P_l \in \mathbb R^{K\times d_1 \to d_1}$ 组成，输出 $p_l = \mathcal P_l(\varphi_l^1(a_l) \oplus \cdots \oplus \varphi_l^K(a_l))$，再与 FFN 输出相加 $r_l = s_l(\text{LN}(a_l)) + p_l$。每个分支专管一个场景，下采样维 $d_2 \ll d_1$，参数增长温和；训练第 $t$ 个场景时只更新 $\varphi_l^t$ 和 $\mathcal P_l$、冻结其余分支。
 
-2. **Vision Consistency Constraint (VCC) 双通道软约束**：
+关键在于这个共享投影器把多分支输出"组合成统一表征"，相当于做了隐式的注意力路由——推理时所有分支并行算一次、concat 后过同一投影器，一次 forward 就完成，延迟和单分支模型完全等价，既不用训 router、也不用多次前向。
 
-    - 功能：防止学习新场景时其他分支表征被"间接污染"，同时不像 $\ell_2$ 距离那样把塑性卡死。
-    - 核心思路：对每个 batch 计算场景原型 $\mu_l = \frac{1}{K}\sum_k \varphi_l^k(a_l)$，然后沿 feature 通道和 embedding 通道分别对每个分支表征求均值 $\bar\varphi_l^{k,\text{fe}} \in \mathbb R^{d_1}$、$\bar\varphi_l^{k,\text{em}} \in \mathbb R^{\text{seq}}$，并用相对熵约束 $\mathcal{L}_c^{l,k} = \text{KL}(\bar\varphi_l^{k,\text{fe}}/\tau \mid \bar\mu_l^{\text{fe}}/\tau) + \text{KL}(\bar\varphi_l^{k,\text{em}}/\tau \mid \bar\mu_l^{\text{em}}/\tau)$。投影器输出 $p_l$ 用类似 KL 对齐新旧模型 $\mathcal L_p^l$。汇总 $\mathcal L_{vcc} = \frac{1}{L}\sum_l (\mathcal L_p^l + \sum_k \mathcal L_c^{l,k})$。
-    - 设计动机：$\ell_2$ 强约束会让模型在新场景下完全没法学到新的局部细节（塑性被压垮）；相对熵 + 在通道维度求均值相当于"只惩罚全局分布漂移、允许局部细节自由重组"，这是从知识蒸馏借鉴并适配到 CL 的关键转换。
+**2. Vision Consistency Constraint (VCC) 双通道软约束：稳住旧分支又不卡死塑性。**
 
-3. **CSR 仅插入视觉编码器**：
+学新场景时，反传梯度会间接污染其他分支的表征，导致旧场景漂移；但若用 $\ell_2$ 硬约束去锁住表征，又会把新场景的塑性彻底压垮、学不到任何新细节。VCC 改用相对熵软约束在两者间取平衡。先对每个 batch 算场景原型 $\mu_l = \frac{1}{K}\sum_k \varphi_l^k(a_l)$，再沿 feature 通道和 embedding 通道分别求各分支表征的均值 $\bar\varphi_l^{k,\text{fe}} \in \mathbb R^{d_1}$、$\bar\varphi_l^{k,\text{em}} \in \mathbb R^{\text{seq}}$，用 KL 对齐到原型：
 
-    - 功能：把容量花在最容易漂移的视觉部分，不动 LLM 主干，控制额外参数与训练成本。
-    - 核心思路：MLLM 一般由视觉编码器 + 投影对齐 + LLM 组成。论文实验表明，跨场景遗忘的主要发生地是视觉编码器（特征提取受场景影响最大），LLM 部分的语义解码对场景切换相对鲁棒。因此 CSR 只插入 vision block，每个新场景增加的可训参数仅为 $K \cdot L \cdot 2d_1 d_2$ 量级。
-    - 设计动机：在 MLLM 上做 CL，如果在 LLM 主干上扩 LoRA 既贵又危险（容易冲击通用语言能力）；把注意力放到视觉编码器一是问题对症，二是参数开销可控。
+$$\mathcal{L}_c^{l,k} = \text{KL}(\bar\varphi_l^{k,\text{fe}}/\tau \mid \bar\mu_l^{\text{fe}}/\tau) + \text{KL}(\bar\varphi_l^{k,\text{em}}/\tau \mid \bar\mu_l^{\text{em}}/\tau)$$
+
+投影器输出 $p_l$ 也用类似 KL 对齐新旧模型 $\mathcal L_p^l$，汇总成 $\mathcal L_{vcc} = \frac{1}{L}\sum_l (\mathcal L_p^l + \sum_k \mathcal L_c^{l,k})$。"在通道维求均值后再做 KL"等于只惩罚全局分布漂移、却给局部细节留出自由重组的空间——这正是从知识蒸馏借来、并适配到 CL 的关键转换，消融里它明显优于 $\ell_2$ 和单通道版本。
+
+**3. CSR 仅插入视觉编码器：把容量花在最容易漂移的地方。**
+
+作者从图 1 的可视化锁定了遗忘的"震中"——新模型学完新场景后，旧场景出现严重的小目标漏检/误检，说明跨场景漂移主要发生在视觉编码器，而 LLM 一侧的语义解码对场景切换相对鲁棒。所以 CSR 只插进 vision block，每个新场景新增的可训参数仅 $K \cdot L \cdot 2d_1 d_2$ 量级。
+
+这既是对症下药，也是工程上的安全选择：在 LLM 主干上扩 LoRA 又贵又危险，容易冲击通用语言能力；把容量集中到视觉编码器，问题命中了、开销也压住了。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal L = \mathcal L_{\text{task}} + \lambda \mathcal L_{vcc}$；蒸馏温度 $\tau$ 控制软约束强度；训练新场景时其他分支参数冻结，投影器 $\mathcal P_l$ 共同更新；对比设置上和 QUAD 一样不存储图像，但可以保留文本问题作为 exemplar。

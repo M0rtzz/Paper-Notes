@@ -44,23 +44,17 @@ KLENT 同时参数化策略 $\pi_\theta(a|s)$ 和动作值函数 $Q_\theta(s,a)$
 
 ### 关键设计
 
-1. **反向KL + 熵双正则的封闭式策略更新**:
+**1. 反向 KL + 熵双正则的封闭式策略更新：用两个正则项分别治住"非平稳"和"分布偏移"，并直接给出 closed-form $\pi'$。**
 
-    - 功能：把"非平稳 + 分布偏移"两个自博弈核心痛点分别用两个正则项治住，并直接给出 closed-form $\pi'$，省掉迭代求解。
-    - 核心思路：在每个状态 $s$ 解 $\max_{\pi'} \mathbb{E}_{A\sim\pi'}[Q^\pi(s,A)] - \beta D_{\text{KL}}(\pi'(\cdot|s)\|\pi(\cdot|s)) + \alpha H(\pi'(\cdot|s))$。reverse-KL 把 $\pi'$ 钉在当前 $\pi$ 附近（gradual update，对抗"对手在变"），熵正则把概率质量铺开（对抗"test-time 没见过的对手"）。利用棋类动作空间有限的事实，解析解为 $\pi'(a|s)=\frac{1}{Z(s)}\exp\big(\frac{Q^\pi(s,a)+\beta\log\pi(a|s)}{\alpha+\beta}\big)$，其中 $Z(s)$ 是归一化常数。策略网络通过最小化交叉熵 $-\sum_a \pi'(a|s)\log\pi_\theta(a|s)$ 蒸馏向这个 $\pi'$。
-    - 设计动机：reverse-KL 是 mode-seeking 的（相比 forward-KL 的 mean-seeking），更适合"找到当前对手的最佳应对"；熵正则确保 $\pi'$ 不塌成 deterministic，避免自博弈陷入循环 / 过拟合。
+自博弈不稳的两个核心痛点是对手在变（非平稳）和测试期对手分布偏移，KLENT 用两个正则项各管一个。它在每个状态 $s$ 解 $\max_{\pi'} \mathbb{E}_{A\sim\pi'}[Q^\pi(s,A)] - \beta D_{\text{KL}}(\pi'(\cdot|s)\|\pi(\cdot|s)) + \alpha H(\pi'(\cdot|s))$：reverse-KL 把 $\pi'$ 钉在当前 $\pi$ 附近做 gradual update（对抗"对手在变"），熵正则把概率质量铺开（对抗"test-time 没见过的对手"）。靠棋类动作空间有限，解析解为 $\pi'(a|s)=\frac{1}{Z(s)}\exp\big(\frac{Q^\pi(s,a)+\beta\log\pi(a|s)}{\alpha+\beta}\big)$（$Z(s)$ 是归一化常数），策略网络通过最小化交叉熵 $-\sum_a \pi'(a|s)\log\pi_\theta(a|s)$ 蒸馏向它。选 reverse-KL 是因为它 mode-seeking（相比 forward-KL 的 mean-seeking），更适合"找到当前对手的最佳应对"；熵正则确保 $\pi'$ 不塌成 deterministic，避免自博弈陷入循环或过拟合到自己。
 
-2. **λ-return 作为 $Q$ 学习目标**:
+**2. λ-return 作为 $Q$ 学习目标：在稀疏 ±1 终局奖励下平衡值估计的偏差与方差。**
 
-    - 功能：在 self-play 的稀疏 ±1 终局奖励下，平衡值估计的偏差与方差。
-    - 核心思路：放弃 AlphaZero 系常用的 Monte Carlo return（$\lambda=1$，方差大），也不退回 TD(0)（$\lambda=0$，偏差大），改用 $G^\lambda$ 形式的 λ-return 做 $Q_\theta$ 的拟合目标；作者在 9x9 Go 上专门做了 bias-variance 实验，确认存在一个中间 $\lambda$ 同时压低平方偏差和方差之和。最终损失 $L(\theta)=\mathbb{E}_{\mathcal{D}}\big[-\sum_a \pi'(a|S)\log\pi_\theta(a|S) + (Q_\theta(S,A)-G^\lambda)^2\big]$，跨 5 个棋全部用 $\lambda=e^{-1/8}$。
-    - 设计动机：自博弈里轨迹长、奖励只在终局给，蒙特卡洛回报方差爆炸；TD(0) 又因为 bootstrap 加上自博弈策略漂移而偏差大；λ-return 是几十年前 Sutton 给出的标准解法，但在 AlphaZero 范式下被边缘化，作者把它拉回来作为效率关键。
+自博弈里轨迹长、奖励只在终局给，AlphaZero 系常用的 Monte Carlo return（$\lambda=1$）方差爆炸，TD(0)（$\lambda=0$）又因 bootstrap 加策略漂移而偏差大。KLENT 改用 $G^\lambda$ 形式的 λ-return 当 $Q_\theta$ 的拟合目标，作者还在 9x9 Go 上专门做 bias-variance 实验，确认存在一个中间 $\lambda$ 同时压低平方偏差和方差之和。最终损失 $L(\theta)=\mathbb{E}_{\mathcal{D}}\big[-\sum_a \pi'(a|S)\log\pi_\theta(a|S) + (Q_\theta(S,A)-G^\lambda)^2\big]$，跨 5 个棋全部用 $\lambda=e^{-1/8}$。λ-return 是几十年前 Sutton 给的标准解法，但在 AlphaZero 范式下被边缘化，作者把它拉回来当效率关键——消融里 $\lambda=0$ 和 $\lambda=1$ 两端都掉点，说明它是必需配件而非可有可无的 trick。
 
-3. **双场景的收敛性证明**:
+**3. 双场景的收敛性证明：从理论上回答"为什么这套组合能稳"。**
 
-    - 功能：从理论上回答"为什么这套组合能稳"——这是把"已有零件"上升为贡献的关键。
-    - 核心思路：(a) 在 normal-form 两人零和博弈下，证明上述更新规则在 $\alpha(\alpha+2\beta) > \|R\|_2^2/4$ 时**局部线性收敛**到唯一不动点，证法是分析 update operator 在不动点处的 Jacobian 谱半径 < 1；这比 Sokota et al. (2022) 的条件 $\alpha\beta > \|R\|_2^2$ 覆盖更广的 $(\alpha,\beta)$ 区域。(b) 在有限长度博弈下（存在 $T_{\max}$ 使每局必终），证明 KLENT 的策略**收敛到熵正则化最优策略** $\pi(a|s)=\frac{1}{Z(s)}\exp(Q^\pi(s,a)/\alpha)$，证法是从终态向后归纳：终局值固定，沿反向 DAG 传播稳定性回根节点；当 $\alpha\to 0$ 这个熵正则化均衡就逼近原博弈的 Nash 均衡。
-    - 设计动机：作者明确说"我们的贡献不在算法新组件，而在这套组合在两人零和博弈下的新理论/实证刻画"——理论证明是把"老药新用"提升到 ICML 贡献的关键。
+作者明说贡献不在新组件，而在这套组合在两人零和博弈下的新理论刻画，所以收敛证明是把"老药新用"提升为 ICML 贡献的关键。一是 normal-form 两人零和博弈下，证明上述更新在 $\alpha(\alpha+2\beta) > \|R\|_2^2/4$ 时局部线性收敛到唯一不动点（证法是分析 update operator 在不动点处 Jacobian 谱半径 < 1），这比 Sokota et al. 2022 的条件 $\alpha\beta > \|R\|_2^2$ 覆盖更广的 $(\alpha,\beta)$ 区域。二是有限长度博弈下（存在 $T_{\max}$ 使每局必终），证明 KLENT 收敛到熵正则化最优策略 $\pi(a|s)=\frac{1}{Z(s)}\exp(Q^\pi(s,a)/\alpha)$（证法是从终态向后归纳、沿反向 DAG 传播稳定性回根节点），当 $\alpha\to 0$ 这个均衡就逼近原博弈的 Nash 均衡。
 
 ### 损失函数 / 训练策略
 跨 5 棋共用超参 $(\alpha,\beta,\lambda)=(0.03, 0.1, e^{-1/8})$；6-block ResNet（19×19 Go 用 20-block）；横坐标统一采用"simulator evaluations"以公平比较模型与基线在同等仿真预算下的效率；test-time 评估用 reactive policy（不开 MCTS）以排除搜索带来的混淆。
@@ -118,12 +112,6 @@ KLENT 同时参数化策略 $\pi_\theta(a|s)$ 和动作值函数 $Q_\theta(s,a)$
 - 实验充分度: ⭐⭐⭐⭐⭐ 5 棋 + 19x19 Go + 三件套各自消融 + test-time MCTS 公平对比 + 理论与数值实验联动验证。
 - 写作质量: ⭐⭐⭐⭐⭐ 自觉地把"贡献不在新组件"写明白，把理论和实证分轨呈现，正则项与失效模式一一对应，读者很容易抓主线。
 - 价值: ⭐⭐⭐⭐ 给"棋类自博弈必须 MCTS"这个共识祛魅，对算力受限实验室是直接可用的方法。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

@@ -46,23 +46,17 @@ MFPO 用 MeanFlow models（学 average velocity 而非 instantaneous velocity）
 
 ### 关键设计
 
-1. **MeanFlow Policy + Average Divergence Network 解决 likelihood**:
+**1. MeanFlow policy + average divergence network：让 2 步采样也能精确算 action likelihood。**
 
-    - 功能：让 2-step MeanFlow policy 的 action likelihood 在 5% 额外成本下精确估计。
-    - 核心思路：MeanFlow policy 学 average velocity，sampling $\boldsymbol{a}_r = \boldsymbol{a}_t - (t-r) \boldsymbol{u}_\theta$。Action likelihood 用 change-of-variable $\log \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s}) = \log p_1(\boldsymbol{a}_1) + \int_0^1 \nabla \cdot \boldsymbol{v}_\theta dt$，但 naive Jacobian + 数值积分太贵。模仿 MeanFlow 造 average divergence network $\delta_\omega(\boldsymbol{s}, \boldsymbol{a}_t, r, t) \approx \frac{1}{t-r} \int_r^t \nabla \cdot \boldsymbol{v}_\theta d\tau$，训练目标含 Skilling-Hutchinson trace estimator $\widehat{\text{div}} = \frac{1}{N} \sum \boldsymbol{\epsilon}_i^\top \frac{\partial \boldsymbol{v}_\theta}{\partial \boldsymbol{a}_t} \boldsymbol{\epsilon}_i$。Inference 时 $\log \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s}) = \log p_1(\boldsymbol{a}_1) + \frac{1}{T} \sum_i \delta_\omega(\boldsymbol{s}, \boldsymbol{a}_{t_i}, t_{i-1}, t_i)$ 复用 sampling trajectory。
-    - 设计动机：MaxEnt entropy 需要 likelihood 但 ODE divergence 积分 intractable。ADN 是 MeanFlow 思路的 divergence 类比——既精确（trained to match）又便宜（5% overhead）。Skilling-Hutchinson 让 trace 不需 $d$ 个 backward pass。
+MaxEnt RL 要把熵塞进目标，就必须能算策略给某个动作的 log-likelihood，可扩散策略的 likelihood 要对瞬时速度场的散度沿时间积分，本身就 intractable，few-step 离散化又把误差放大。MFPO 的策略是 MeanFlow model，学的是平均速度 $\boldsymbol{u}(\boldsymbol{x}_t, r, t) = \frac{1}{t-r} \int_r^t \boldsymbol{v}\,d\tau$，采样写成 $\boldsymbol{a}_r = \boldsymbol{a}_t - (t-r)\boldsymbol{u}_\theta$，2 步就能从噪声走到动作且几乎无离散化误差。likelihood 这边作者照搬同一个"学平均量"的思路：再训一个 average divergence network $\delta_\omega(\boldsymbol{s}, \boldsymbol{a}_t, r, t) \approx \frac{1}{t-r} \int_r^t \nabla \cdot \boldsymbol{v}_\theta\,d\tau$，训练目标里用 Skilling-Hutchinson trace estimator $\widehat{\text{div}} = \frac{1}{N} \sum_i \boldsymbol{\epsilon}_i^\top \frac{\partial \boldsymbol{v}_\theta}{\partial \boldsymbol{a}_t} \boldsymbol{\epsilon}_i$ 避免对每一维都跑一次反向。推理时直接复用采样轨迹上的几个点把散度累起来 $\log \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s}) = \log p_1(\boldsymbol{a}_1) + \frac{1}{T} \sum_i \delta_\omega(\boldsymbol{s}, \boldsymbol{a}_{t_i}, t_{i-1}, t_i)$，额外开销只有约 5%。ADN 之所以成立，正是因为它和 MeanFlow 同构——MeanFlow 学速度的时间平均，ADN 学散度的时间平均，既精确（trained to match）又便宜。
 
-2. **ESS-weighted SNIS 解决 soft policy improvement**:
+**2. ESS-weighted SNIS：没有 Boltzmann 样本也能做 soft policy improvement。**
 
-    - 功能：在没有 Boltzmann 样本时精确估计 marginal velocity field 用于 policy update。
-    - 核心思路：Boltzmann $\pi(\boldsymbol{a}_0|\boldsymbol{s}) \propto \exp(\frac{1}{\alpha} Q)$。Marginal velocity field $\boldsymbol{v}_t(\boldsymbol{a}_t|\boldsymbol{s}) = \mathbb{E}_{\pi(\boldsymbol{a}_0|\boldsymbol{a}_t, \boldsymbol{s})}[\frac{\boldsymbol{a}_t - \boldsymbol{a}_0}{t}]$。MaxEntDP/SDAC 用 Gaussian proposal $q^2(\boldsymbol{a}_0) = \mathcal{N}(\boldsymbol{a}_0|\frac{\boldsymbol{a}_t}{1-t}, (\frac{t}{1-t})^2 I)$ 做 SNIS，但 $t \to 1$ 时 ESS 急剧下降。本文加 policy proposal $q^1(\boldsymbol{a}_0) = \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s})$（用 ADN 算 likelihood），ESS 在 $t \to 1$ 仍高。最终估计 $\hat{\boldsymbol{v}}_t = \sum_k \frac{\text{ESS}_k}{\sum_l \text{ESS}_l} \hat{\boldsymbol{v}}_t^k$ 用 ESS 加权组合。
-    - 设计动机：单 proposal 在不同 $t$ 表现不一——Gaussian 在 $t$ 小时好（target 集中、Gaussian 匹配），Policy 在 $t$ 大时好（target 由 Q 主导）。ESS 自适应加权让 high-effective-sample 的 estimator 主导，variance 比单 proposal 小。
+soft policy improvement 要让策略去 match Boltzmann 分布 $\pi(\boldsymbol{a}_0|\boldsymbol{s}) \propto \exp(\frac{1}{\alpha} Q)$，但手里根本没有 Boltzmann 的样本，只能去估它的 marginal velocity field $\boldsymbol{v}_t(\boldsymbol{a}_t|\boldsymbol{s}) = \mathbb{E}_{\pi(\boldsymbol{a}_0|\boldsymbol{a}_t, \boldsymbol{s})}[\frac{\boldsymbol{a}_t - \boldsymbol{a}_0}{t}]$。已有方法（MaxEntDP/SDAC）用一个 Gaussian proposal $q^2(\boldsymbol{a}_0) = \mathcal{N}(\boldsymbol{a}_0|\frac{\boldsymbol{a}_t}{1-t}, (\frac{t}{1-t})^2 I)$ 做 self-normalized importance sampling，问题是 $t \to 1$ 时 target 由 $Q$ 主导、Gaussian 离它越来越远，有效样本数 ESS 急剧塌掉。MFPO 再加一个 policy proposal $q^1(\boldsymbol{a}_0) = \pi_\theta(\boldsymbol{a}_0|\boldsymbol{s})$（likelihood 正好由 ADN 给出），它在 $t$ 大时反而贴得紧；最后按各 proposal 的有效样本数加权组合 $\hat{\boldsymbol{v}}_t = \sum_k \frac{\text{ESS}_k}{\sum_l \text{ESS}_l} \hat{\boldsymbol{v}}_t^k$。这样 Gaussian 负责 $t$ 小的区间、policy 负责 $t$ 大的区间，谁的有效样本多谁说话，组合估计的方差比任何单一 proposal 都低——这不是手调，而是 ESS 自带的 variance reduction。
 
-3. **Distributional Critic + Auto Temperature + Action Selection**:
+**3. distributional critic + auto temperature + 评估期动作选择：把训练和部署各自的稳定性补齐。**
 
-    - 功能：提升训练稳定性和评估表现的工程技巧组合。
-    - 核心思路：(a) Distributional critic 用 C51 把 Q-function 当 categorical 分布，policy update 用均值；(b) Auto-tune temperature 让 $\alpha$ match target entropy $\mathcal{H}_{\text{target}} = -\rho \cdot \dim(\mathcal{A})$，$\rho = 0.5$ 普适最佳；(c) Action selection 在 evaluation 时从 policy sample 多个候选 action，选 Q 最高的 deterministic action。
-    - 设计动机：MaxEnt random policy 在 training 帮 explore 但 test 时 deterministic 更好；distributional Q-learning 已被 diffusion RL 证有效；auto temperature 让方法对 reward scale 鲁棒。
+剩下三件配置让整套方法真正跑稳，针对的是"训练要探索、部署要确定"这对矛盾。critic 用 C51 把 Q 当 categorical 分布学、策略更新只取均值，沿用 diffusion RL 里已被验证有效的 distributional Q-learning 来压低值估计方差；温度 $\alpha$ 不写死，而是自动调到 match 目标熵 $\mathcal{H}_{\text{target}} = -\rho \cdot \dim(\mathcal{A})$（$\rho = 0.5$ 跨任务普适最佳），让方法对 reward scale 鲁棒；评估时不再随机采样，而是从策略采若干候选动作、挑 $Q$ 最高的那个确定性动作输出——训练期的随机性帮探索，部署期的确定性保表现。
 
 ### 算法
 

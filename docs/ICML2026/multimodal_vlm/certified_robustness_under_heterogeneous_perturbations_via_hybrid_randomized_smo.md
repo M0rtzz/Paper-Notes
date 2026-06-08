@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **联合似然比的一维 CDF $F(t;r)$**：
+**1. 联合似然比的一维 CDF $F(t;r)$：把混合 NP 的容量约束塌成单变量连续函数。**
 
-    - 功能：把"离散原子似然比 + 连续 Gaussian 似然比"的混合 NP 容量约束写成单变量、连续、严格单增的函数。
-    - 核心思路：定义 $F(t;r)=\sum_{z_1} p_1(z_1\mid x_1)\,\Phi\!\big(\tfrac{r^2/2+\sigma^2(\log t-\log\gamma_1(z_1))}{\sigma r}\big)$，其中 $\Phi$ 是标准 Gaussian CDF，$r$ 是连续扰动半径。利用 $\log\gamma(z_1,z_2)=\log\gamma_1(z_1)+rz_2-r^2/2$ 这一可加分解，对 $z_2$ 取 Gaussian 期望就得到上式；对每个 $r>0$ 存在唯一 $t^\star(r)$ 使 $F(t^\star;r)=p_A$（NP 容量约束）。
-    - 设计动机：纯离散 NP 因似然比原子化无法用阈值规则刚好匹配 $p_A$（需要 fractional 分配），引入连续维度后 Gaussian 把 $\log t$ 拉成连续标量，原本"组合搜索 + fractional knapsack"塌缩成"对 $u=\log t$ 做 bisection"，可在 CPU 上 < 1 秒解出。
+纯离散 NP 的麻烦在于似然比是原子化的，阈值规则没法刚好匹配 $p_A$，需要 fractional 分配，本质是个组合搜索 + fractional knapsack。这里的关键观察是联合 $\log\gamma(z_1,z_2)=\log\gamma_1(z_1)+rz_2-r^2/2$ 可加分解，对连续维度 $z_2$ 取 Gaussian 期望，离散的原子结构就被连续噪声"抹平"成连续标量。于是容量约束写成 $F(t;r)=\sum_{z_1} p_1(z_1\mid x_1)\,\Phi\!\big(\tfrac{r^2/2+\sigma^2(\log t-\log\gamma_1(z_1))}{\sigma r}\big)$（$\Phi$ 是标准 Gaussian CDF，$r$ 是连续扰动半径），它关于 $t$ 严格单增，因此对每个 $r>0$ 存在唯一 $t^\star(r)$ 使 $F(t^\star;r)=p_A$。原本的"组合搜索 + fractional knapsack"就塌成"对 $u=\log t$ 做 bisection"，CPU 上一秒内解出。
 
-2. **闭式最坏概率 $V(x_{1,\mathrm{adv}};r)$ 与 $r=\epsilon$ 单调性**：
+**2. 闭式最坏概率 $V$ + $r=\epsilon$ 单调性：把双层 inf 折叠成"枚举离散 + 解一维方程"。**
 
-    - 功能：在给定离散对手 $x_{1,\mathrm{adv}}$ 与连续半径 $r$ 下直接算出 worst-case smoothed value。
-    - 核心思路：$V(x_{1,\mathrm{adv}};r)=\sum_{z_1} p_1(z_1\mid x_{1,\mathrm{adv}})\,\Phi\!\big(\tfrac{r^2/2+\sigma^2(\log t^\star(r)-\log\gamma_1(z_1))}{\sigma r}-\tfrac{r}{\sigma}\big)$，并证明 $V$ 关于 $r$ 单调不增，所以连续 worst-case 自动取在 $r=\epsilon$；最终 $p_{\mathrm{adv}}(d,\epsilon)=\min_{D_1(x_1,x_{1,\mathrm{adv}})\le d}V(x_{1,\mathrm{adv}};\epsilon)$。
-    - 设计动机：把"对所有 $(x_{1,\mathrm{adv}},x_{2,\mathrm{adv}})$ 取最小"的双层 inf 用单调性折叠成"只对离散攻击枚举 + 解一维方程"，避免对 $\mathbb{R}^D$ 连续空间做实际搜索；同时单调性给出 monotone in $d$ 的认证不变量，方便制图。
+给定离散对手 $x_{1,\mathrm{adv}}$ 和连续半径 $r$，worst-case smoothed value 有闭式 $V(x_{1,\mathrm{adv}};r)=\sum_{z_1} p_1(z_1\mid x_{1,\mathrm{adv}})\,\Phi\!\big(\tfrac{r^2/2+\sigma^2(\log t^\star(r)-\log\gamma_1(z_1))}{\sigma r}-\tfrac{r}{\sigma}\big)$，并可证 $V$ 关于 $r$ 单调不增，所以连续 worst-case 自动取在 $r=\epsilon$，最终 $p_{\mathrm{adv}}(d,\epsilon)=\min_{D_1(x_1,x_{1,\mathrm{adv}})\le d}V(x_{1,\mathrm{adv}};\epsilon)$。这一步把"对所有 $(x_{1,\mathrm{adv}},x_{2,\mathrm{adv}})$ 取最小"的双层 inf，用单调性折叠成"只对离散攻击枚举 + 解一维方程"，完全不用在 $\mathbb{R}^D$ 连续空间里真搜索；单调性同时给出 monotone in $d$ 的认证不变量，方便制图。
 
-3. **结构对称的离散 kernel + 一维根求解的保守化实现**：
+**3. 结构对称的离散 kernel + 一维根求解的保守化实现：让整套算法只比图像-only RS 多约 3 倍时间。**
 
-    - 功能：让"对所有离散对手取最坏"在常用 text smoothing（uniform/absorbing）下不需要组合枚举，整套算法只比图像-only RS 多约 3 倍时间。
-    - 核心思路：suffix attack 或 $\ell_0$ attack 下，uniform/absorbing kernel 的 $p_1(\cdot\mid x_{1,\mathrm{adv}})$ 只依赖编辑预算 $d$ 而非具体 token 身份（kernel symmetry），可用一个 canonical adversarial input 代表整个攻击集合；NP 阈值用 monotone bisection 在 $u=\log t$ 上解；clean $p_A$ 用单边 Clopper-Pearson 取保守下界；浮点误差被 Appendix A.7 的数值精度策略压住。
-    - 设计动机：原始 NP 公式涉及 $O(|\mathcal{V}|^d)$ 离散组合空间，是这个方法能否实用的关键瓶颈；作者主动选用 uniform kernel 而非 absorbing kernel（后者在 suffix attack 下退化为两点分布、$\beta^d$ 指数衰减），保证证书既保守又非平凡。
+原始 NP 公式涉及 $O(|\mathcal{V}|^d)$ 的离散组合空间，是能否实用的关键瓶颈。这里靠 kernel symmetry 绕开：suffix attack 或 $\ell_0$ attack 下，uniform/absorbing kernel 的 $p_1(\cdot\mid x_{1,\mathrm{adv}})$ 只依赖编辑预算 $d$ 而非具体 token 身份，于是可以用一个 canonical adversarial input 代表整个攻击集合，"对所有离散对手取最坏"就不需要组合枚举。NP 阈值用 monotone bisection 在 $u=\log t$ 上解，clean $p_A$ 用单边 Clopper-Pearson 取保守下界，浮点误差由 Appendix A.7 的数值精度策略压住。作者还特意选 uniform kernel 而非 absorbing——后者在 suffix attack 下退化为两点分布、$\beta^d$ 指数衰减——保证证书既保守又非平凡。
 
 ### 损失函数 / 训练策略
 这是一个**纯认证算法**，不训练 base classifier，直接套在已有的 LLaVA-Guard、linear SVM 等 frozen 模型上。超参 $\alpha=0.01$（CP 风险）、$n=10^4$（MC 样本数）、$\beta=0.25$（token 替换概率）、$\sigma\in\{0.5,1.0\}$（Gaussian 方差），认证阈值 $\tau=4.6\times 10^{-5}$ 沿用 Chen 2025a。

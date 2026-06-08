@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **RTG-to-Behavior 对齐损失（相对排序约束）**:
+**1. RTG-to-Behavior 对齐损失：只约束相对排序，不碰绝对 Q 值。**
 
-    - 功能：强制策略学到偏序关系——更高 RTG 必须映射到 Q 函数评估下更高回报的行为。
-    - 核心思路：用约束优化形式 $\min_\theta L_{SL}(\theta)$ s.t. $\frac{\partial Q_\psi(s, \pi_\theta(s, \text{RTG}))}{\partial \text{RTG}} \geq 0$ 表述 RTG 单调性。避免直接计算梯度的开销，采用零阶估计 $\frac{\partial Q}{\partial \text{RTG}} \approx \frac{Q(s, \hat{a}^\delta) - Q(s, \hat{a})}{\delta}$（$\hat{a}^\delta$ 是 RTG 加扰动 $\delta$ 的预测动作）。再转换为方向性排序约束 $\text{sgn}(\delta) (Q(s, \hat{a}^\delta) - Q(s, \hat{a})) \geq 0$。损失定义 $L_{\text{Align}} = \sum_{i=t-k+1}^t I_\mathcal{C} \cdot |Q_\psi(s_i, \hat{a}_i^\delta) - Q_\psi^\perp(s_i, \hat{a}_i)|$，指示函数 $I_\mathcal{C}$ 仅在约束违反时激活，$Q_\psi^\perp$ 是带停止梯度的 Q 值作为参考。
-    - 设计动机：相比直接优化绝对 Q 值，只约束相对顺序更保守，避免把策略推向分布外的高价值动作（离线 RL 常见问题）；用 RTG 扰动而非逐点 Q 梯度，计算高效且更稳定。
+CSM 对 RTG 不敏感，根子在于没人逼着"更高的 RTG 必须对应更高回报的行为"。本文用一个约束优化把这个偏序关系写死：$\min_\theta L_{SL}(\theta)$ s.t. $\frac{\partial Q_\psi(s,\pi_\theta(s,\text{RTG}))}{\partial \text{RTG}}\ge 0$。直接算这个梯度太贵，于是改用零阶估计 $\frac{\partial Q}{\partial \text{RTG}}\approx \frac{Q(s,\hat{a}^\delta)-Q(s,\hat{a})}{\delta}$（$\hat{a}^\delta$ 是把 RTG 加扰动 $\delta$ 后预测的动作），再转成方向性排序约束 $\text{sgn}(\delta)\,(Q(s,\hat{a}^\delta)-Q(s,\hat{a}))\ge 0$，落到损失上是
 
-2. **RTG 扰动 + 双 Q 共训练**:
+$$L_{\text{Align}}=\sum_{i=t-k+1}^{t} I_\mathcal{C}\cdot \big|Q_\psi(s_i,\hat{a}_i^\delta)-Q_\psi^\perp(s_i,\hat{a}_i)\big|,$$
 
-    - 功能：改进 Q 函数学习，使其能正确评估策略在整个 RTG 频谱上的行为。
-    - 核心思路：若 Q 函数仅在数据集静态分布上训练，会被限制在数据覆盖的回报范围内，无法为更高 RTG 条件下的策略提供有效指导。本文采用 Bellman 一致性约束 + RTG 扰动：Q 函数学 $y_i' = r_i + \gamma \min_{m=1, 2} Q_{\psi_m'}^\perp(s_{i+1}, \hat{a}_{i+1}^{', \Delta\text{RTG}})$，$\hat{a}_{i+1}^{', \Delta\text{RTG}}$ 是目标策略在 RTG 加固定偏移 $\Delta\text{RTG}$ 后预测的动作。通过把策略条件到更高 RTG 生成更高回报动作候选，为 Q 函数学习提供高质量 Bellman 目标。
-    - 设计动机：形成正反馈——更好 Q 函数 → 对齐损失改进策略 → 改进策略通过 RTG 扰动生成更高质量演示 → Q 函数学到更准确值估计 → 继续反馈给策略。
+指示函数 $I_\mathcal{C}$ 只在约束被违反时才激活，$Q_\psi^\perp$ 是带停止梯度的参考 Q 值。关键拿捏在于"只管相对顺序、不管绝对大小"：离线 RL 里直接优化绝对 Q 值会把策略推向数据分布外的高价值动作（over-optimization 的老毛病），而单调性约束更保守，既建立了 RTG 与行为的对应又不越界。
 
-3. **总体训练目标 + 稳定性设计**:
+**2. RTG 扰动 + 双 Q 共训练：让 Q 函数能评估整个 RTG 频谱上的行为。**
 
-    - 功能：把对齐损失与监督学习损失结合，同时通过双 Q、停止梯度等保证训练稳定。
-    - 核心思路：总损失 $\mathcal{L}_{\text{total}}(\theta) = L_{SL}(\theta) + \lambda_e L_{\text{Align}}(\theta)$，$L_{SL}(\theta) = \sum_i \|s_i - \hat{s}_i\|^2 + \|a_i - \hat{a}_i\|^2$ 是标准 CSM 监督损失（联合预测状态和动作）。Q 函数侧采用 Double Q-learning 标准做法（两个 Q 函数 + min 操作防过估计），停止梯度操作使参考 Q 值保持稳定。
-    - 设计动机：从标准离线 RL 借用的稳定技巧；确保训练不因 RTG 扰动和联合优化而不稳定。
+对齐损失依赖 Q 函数给出靠谱的回报排序，但若 Q 只在数据集静态分布上训练，它的视野会被锁死在数据覆盖的回报范围内，没法为"更高 RTG 条件下的策略"提供指导，对齐也就无从谈起。本文的解法是在 Bellman 一致性里注入 RTG 扰动：Q 函数学的目标是 $y_i'=r_i+\gamma\min_{m=1,2}Q_{\psi_m'}^\perp(s_{i+1},\hat{a}_{i+1}^{',\Delta\text{RTG}})$，其中 $\hat{a}_{i+1}^{',\Delta\text{RTG}}$ 是目标策略在 RTG 加固定偏移 $\Delta\text{RTG}$ 后预测的动作。也就是说，把策略条件到更高 RTG 去生成更高回报的动作候选，反过来给 Q 函数喂高质量的 Bellman 目标。这样就接成了一个 actor-critic 正反馈环：Q 更准 → 对齐损失把策略改好 → 更好的策略经 RTG 扰动生成更高质量演示 → Q 学到更准的值估计 → 再回馈策略。
+
+**3. 总体训练目标 + 稳定性设计：把对齐和监督学习拧在一起还不炸。**
+
+最后要把对齐损失安全地并进标准 CSM 训练。总损失是 $\mathcal{L}_{\text{total}}(\theta)=L_{SL}(\theta)+\lambda_e L_{\text{Align}}(\theta)$，其中 $L_{SL}(\theta)=\sum_i \|s_i-\hat{s}_i\|^2+\|a_i-\hat{a}_i\|^2$ 是联合预测状态和动作的标准监督损失。Q 函数侧沿用 Double Q-learning 的成熟做法——两个 Q 函数加 min 操作压过估计——再配合前面提到的停止梯度让参考 Q 值保持稳定。这些都是从标准离线 RL 借来的稳定技巧，目的只有一个：保证训练不因为 RTG 扰动和对齐-监督联合优化而失稳。
 
 ## 实验关键数据
 

@@ -45,23 +45,27 @@ TC-JEPA 在结构上沿用 I-JEPA：图像被切成 context patch $x$ 与 target
 
 ### 关键设计
 
-1. **多层细粒度文本条件器（cross-attention over word sequence）**:
+**1. 多层细粒度文本条件器：让每个 patch 按需挑相关词来辅助预测。**
 
-    - 功能：在预测器的每一层把 patch 特征 $q\in\{\hat z_x^{(l)}, \hat z_y^{(l)}\}$ 与 caption 词序列 $t$ 做轻量跨注意力，使得每个 patch 都能"按需"挑选最相关的若干词来辅助自己的特征预测。
-    - 核心思路：每层定义 $q^{(l)}=W_Q^{(l)}q$，$K^{(l)}=W_K^{(l)}t$，$V^{(l)}=W_V^{(l)}t$，然后 $q\leftarrow q+\sum_s\text{softmax}(q^{(l)\top}K_{:,s}^{(l)})V_{:,s}^{(l)}$，残差更新后接一个 MLP+LayerNorm。相比"把 caption 当成额外 token 拼到预测器输入"的 sequence conditioning，这种方式不延长 ViT 序列、不只在底层生效、且能在所有层持续注入文本信号。
-    - 设计动机：作者的核心论点是要让 patch 表示变成"在文本提示下可预测的"，所以条件必须深入到每一层，并且必须能在 patch 与 word 之间形成稀疏对应（类似自监督 visual grounding），才能反过来约束 patch 表示与语言对齐。
+I-JEPA 的病根在于"给上下文 patch 去预测 mask 位置特征"本身是高度多解的——狗的图里被 mask 的地方既可能是书架也可能是干净墙面，歧义大到训练对 masking 策略极敏感、甚至坍缩。caption 恰好告诉模型那块"应该是什么"，所以本文把文本喂进**预测器**而非编码器。具体做法是在预测器的每一层都让 patch 特征 $q\in\{\hat z_x^{(l)}, \hat z_y^{(l)}\}$ 与 caption 词序列 $t$ 做一次轻量跨注意力：$q^{(l)}=W_Q^{(l)}q$、$K^{(l)}=W_K^{(l)}t$、$V^{(l)}=W_V^{(l)}t$，然后残差更新 $q\leftarrow q+\sum_s\text{softmax}(q^{(l)\top}K_{:,s}^{(l)})V_{:,s}^{(l)}$，再接一个 MLP + LayerNorm。
 
-2. **稀疏 + 跨层一致性正则**:
+相比"把 caption 当额外 token 拼到预测器输入"的 sequence conditioning，逐层跨注意力既不延长 ViT 序列、又能在所有层持续注入文本信号，而不是只在底层生效。作者的核心论点是要让 patch 表示变成"在文本提示下可预测的"，所以条件必须深入每一层，才能在 patch 与 word 之间长出稀疏对应、反过来约束 patch 表示与语言对齐。
 
-    - 功能：把 patch-word 余弦相似度 $O_i^{(l)}=\max(\cos(q^{(l)},K^{(l)}),0)$ 约束为稀疏的、跨层一致的分布，避免文本条件退化成"对所有词都平均关注"的无意义平均。
-    - 核心思路：对每个 patch 在每层都计算 $O_i^{(l)}$，加上 $\ell_1$ 稀疏惩罚 $\mathcal{L}_{\text{sparse}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}\|_1$ 让每个 patch 只挑少数关键词；再用 $\mathcal{L}_{\text{consistency}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}-\bar O_i\|_1$ 约束每个 patch 在不同层选词保持一致，其中 $\bar O_i=\frac{1}{L}\sum_l O_i^{(l)}$。
-    - 设计动机：没有显式 grounding 监督时，跨注意力可能形成无意义的对齐；稀疏 + 一致两个约束让训练自发收敛到"每个 patch 对应几个稳定的相关词"，相当于隐式构造出无监督 visual grounding，让文本条件真正帮上预测任务。
+**2. 稀疏 + 跨层一致性正则：把跨注意力逼成隐式 visual grounding。**
 
-3. **多 caption 独立条件 + 特征级 max-pool 融合**:
+没有显式 grounding 监督时，跨注意力很容易退化成"对所有词都平均关注"的无意义平均，文本条件就白给了。本文对每个 patch 在每层算出 patch-word 余弦相似度 $O_i^{(l)}=\max(\cos(q^{(l)},K^{(l)}),0)$，再加两道约束：一是 $\ell_1$ 稀疏惩罚 $\mathcal{L}_{\text{sparse}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}\|_1$，逼每个 patch 只挑少数关键词；二是跨层一致性 $\mathcal{L}_{\text{consistency}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}-\bar O_i\|_1$（$\bar O_i=\frac{1}{L}\sum_l O_i^{(l)}$），逼同一 patch 在不同层选词保持稳定。
 
-    - 功能：当一张图配有 $N$ 条 caption 时，不简单拼接，而是让每条 caption 独立条件化预测器，再在特征维度做 max-pool 融合，从而保留每条 caption 各自的视角并放大最有用的那条信号。
-    - 核心思路：第 $l$ 层先用第 $n$ 条 caption $t^n$ 得到 $\hat z_{y_{j,n}}^{(l)}$ 与 $\hat z_{x_{i,n}}^{(l)}$，再沿 $n$ 维做 max-pool 得到 $\hat z_{y_j}^{(l)}$、$\hat z_{x_i}^{(l)}$ 喂下一层；最终 loss $\mathcal{L}=\mathcal{L}_{\text{predict}}+\frac{\lambda}{N}\sum_n\mathcal{L}_{\text{sparse}}^n+\frac{\beta}{N}\sum_n\mathcal{L}_{\text{consistency}}^n$，$\lambda=0.1$、$\beta=0.5$。
-    - 设计动机：直接把多条 caption 拼成长句让同一个 patch 同时关注所有 caption，会使条件信号互相干扰；按 caption 分别条件化保留了不同 caption 的差异化信息，max-pool 又自然选出"对该 patch 最有用"的那条 caption，相当于一种 caption 级别的稀疏选择。
+两个约束一起把训练自发推向"每个 patch 对应几个稳定相关词"，相当于在零标注下隐式构造出 visual grounding，让文本条件真正帮到预测任务。消融里去掉这两项后注意力立刻退化为均匀、文本调制失效。
+
+**3. 多 caption 独立条件 + 特征级 max-pool 融合：保留每条视角再选最有用的那条。**
+
+一张图常配有多条 caption。如果把它们拼成一个长句让同一 patch 同时关注，不同 caption 的条件信号会互相干扰。本文改成每条 caption 独立条件化预测器：第 $l$ 层先用第 $n$ 条 caption $t^n$ 各自算出 $\hat z_{y_{j,n}}^{(l)}$ 和 $\hat z_{x_{i,n}}^{(l)}$，再沿 caption 维 $n$ 做 max-pool 得到该层输出喂下一层。这样既保留了每条 caption 的差异化视角，max-pool 又自然选出"对该 patch 最有用"的那条，相当于 caption 级别的稀疏选择。
+
+最终训练目标把三项合到一起（$N$ 为 caption 数，$\lambda=0.1$、$\beta=0.5$）：
+
+$$\mathcal{L}=\mathcal{L}_{\text{predict}}+\frac{\lambda}{N}\sum_n\mathcal{L}_{\text{sparse}}^n+\frac{\beta}{N}\sum_n\mathcal{L}_{\text{consistency}}^n$$
+
+消融显示多 caption max-pool 明显优于单 caption（$N=1$），因为单条 caption 很难覆盖一张图里的所有视觉细节。
 
 ### 损失函数 / 训练策略
 总 loss 包含特征预测项、稀疏项与一致性项，target encoder 沿用 EMA + stop-gradient 防坍缩。预训练数据集为 IN-1k / IN-21k（用 ShareGPT4V 合成 8.3–8.7 条/图 caption）以及 CC12M+YFCC15M 图文对（同样补合成 caption）。骨干尝试 ViT-B/16、ViT-L/16、ViT-H/14，IN-21k 训 600–300 epoch，超参对 $\lambda,\beta$ 不敏感。

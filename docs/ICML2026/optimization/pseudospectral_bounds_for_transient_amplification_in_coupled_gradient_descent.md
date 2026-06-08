@@ -49,23 +49,25 @@ tags:
 
 ### 关键设计
 
-1. **Block-triangular Kreiss 上下界（Theorem 4 & 5）**:
+**1. Block-triangular Kreiss 上下界（Theorem 4 & 5）：把瞬态放大量化成 $\gamma$ 和 $\|C\|$ 的函数。**
 
-    - 功能：把瞬态放大严格量化为 $\gamma$ 和 $\|C\|$ 的函数
-    - 核心思路：block resolvent $(zI - J)^{-1} = \begin{bmatrix}(zI-A)^{-1} & 0 \\ (zI-D)^{-1} C (zI-A)^{-1} & (zI-D)^{-1}\end{bmatrix}$；对称 $A, D$ 给 $\|(zI-A)^{-1}\| \leq 1/(r-\gamma)$；off-diagonal 项 $\|(zI-D)^{-1} C (zI-A)^{-1}\| \leq \|C\|/(r-\gamma)^2$；优化 $r > 1$ 得 $K(J) \leq \sup_r [2(r-1)/(r-\gamma) + (r-1)\|C\|/(r-\gamma)^2]$
-    - 设计动机：分块 resolvent 让对称/非正规分量分离分析；优化 $r$ 给闭式可解；上下界匹配（除 factor-of-2 gap）说明 bound 是 sharp 的
+非正规矩阵的麻烦在于谱半径 $<1$ 也压不住 $\|J^t\|$，需要 Kreiss 常数才能刻画瞬态。block-triangular 结构让 resolvent 能整块拆开：
 
-2. **Minimax 下界 + 临界耦合阈值（Theorem 7 & 10）**:
+$$(zI-J)^{-1}=\begin{bmatrix}(zI-A)^{-1} & 0 \\ (zI-D)^{-1}C(zI-A)^{-1} & (zI-D)^{-1}\end{bmatrix}.$$
 
-    - 功能：证明任何只用 $(\rho(A), \rho(D), \|C\|)$ 的估计器最差距离真 $K(J)$ 至少 $c/(8(1-\gamma)^2)$；刻画 spectral instability 发生的临界耦合
-    - 核心思路：构造一族 worst-case Jacobian 让任意 estimator 在该族上至少有 $\Omega(c/(1-\gamma)^2)$ 误差；critical coupling threshold 把 $\|C\|$ 与 $(1-\gamma)^2$ 比较，超阈值会从 transient amplification 滑到 spectral instability
-    - 设计动机：minimax 下界证明本文的 bound 不能本质改进；threshold 给从业者直接的 design guideline（多大的耦合开始危险）
+对称的对角块给 $\|(zI-A)^{-1}\|\le 1/(r-\gamma)$，off-diagonal 项给 $\|(zI-D)^{-1}C(zI-A)^{-1}\|\le\|C\|/(r-\gamma)^2$，再对 $r>1$ 取优得 $K(J)\le\sup_r[2(r-1)/(r-\gamma)+(r-1)\|C\|/(r-\gamma)^2]$。这样分块的好处是把对称分量和非正规分量分开处理、各自有干净的界，且上下界除一个 factor-of-2 gap 外相互匹配，说明这个 bound 本身是 sharp 的，而不是随手放大的上界。
 
-3. **Neumann 扰动扩展到 $B \neq 0$（Theorem 9）**:
+**2. Minimax 下界 + 临界耦合阈值（Theorem 7 & 10）：证明本文的界不能本质改进，并给出危险线。**
 
-    - 功能：把 block-triangular 结果推广到 nearly self-referential 系统
-    - 核心思路：$J_\varepsilon = J_0 + \varepsilon B_0$，$J_0$ 是 block-triangular；若 $\varepsilon \|B_0\| K_0 < (1-\gamma)$，Neumann 级数 $(zI - J_\varepsilon)^{-1} = (zI - J_0)^{-1} \sum_k (\varepsilon B_0 (zI - J_0)^{-1})^k$ 在 $|z| > 1$ 一致收敛；$K(J_\varepsilon) \leq K_0 / (1 - \varepsilon\|B_0\|K_0/(1-\gamma))$
-    - 设计动机：实际系统多是 weak self-reference（如 GAN 的 generator 也间接看自己）；扰动框架让 block-triangular 结果在小耦合下仍有效
+光有上界还不够，得说清"只看 $(\rho(A),\rho(D),\|C\|)$ 这几个量到底够不够"。作者构造一族 worst-case Jacobian，使任何只用这几个量的估计器在该族上都至少有 $\Omega(c/(1-\gamma)^2)$ 的误差，即与真 $K(J)$ 的距离下界为 $c/(8(1-\gamma)^2)$——这条 minimax 下界等于宣告本文的 bound 已经吃干榨净了这些信息，无法本质收紧。与此同时，临界耦合阈值把 $\|C\|$ 和 $(1-\gamma)^2$ 直接比较，超过阈值系统就从"瞬态放大"滑向"谱不稳定"，给从业者一条可读的设计红线：耦合多大开始危险。
+
+**3. Neumann 扰动扩展到 $B\neq 0$（Theorem 9）：把结论推广到近自指系统。**
+
+实际系统多是弱自指（如 GAN 的 generator 也间接看到自己），严格 block-triangular 是理想化。作者把 Jacobian 写成 $J_\varepsilon=J_0+\varepsilon B_0$，$J_0$ 为 block-triangular；只要 $\varepsilon\|B_0\|K_0<(1-\gamma)$，Neumann 级数 $(zI-J_\varepsilon)^{-1}=(zI-J_0)^{-1}\sum_k(\varepsilon B_0(zI-J_0)^{-1})^k$ 在 $|z|>1$ 上一致收敛，于是
+
+$$K(J_\varepsilon)\le \frac{K_0}{1-\varepsilon\|B_0\|K_0/(1-\gamma)}.$$
+
+这让 block-triangular 的全部结论在小耦合下平滑延续到真实的近自指场景，而不是只能用在严格三角的理想情形。
 
 ### Sample-complexity scaling law（Theorem 11）
 

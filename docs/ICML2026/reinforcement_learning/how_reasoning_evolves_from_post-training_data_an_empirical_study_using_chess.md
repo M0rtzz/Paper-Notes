@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **6 类理论驱动的 SFT 数据集**:
+**1. 6 类理论驱动的 SFT 数据集：从不同角度灌入棋盘理解、决策与推理格式，让 ablation 能逐一隔离贡献。**
 
-    - 功能：从不同角度灌入"棋盘理解 + 决策 + 推理格式"，让 ablation 能逐一隔离贡献。
-    - 核心思路：① General Instruction Following（Magpie Llama 3.3 70B）做 regularization；② Rejection Sampling 用 Llama 4 Maverick 在四个评估任务上生成、保留正确样本，注入"教师风格"推理；③ Guided Synthetic 给教师一个 5-ply 局面线 + 起止盘面，让它写"verbal $n$-step bootstrapping"（含转移函数 $\mathcal{T}(s_t,a_t)$ 和价值 $V(s_t)$ 的口头表达）；④ Verbalized Alpha-Beta Pruning 完全程序化——基于 Stockfish 做 softmax 采样、递归构 minimax 树并把搜索过程口头化；⑤ Best Move：给盘面，直接输出最佳 UCI 走法；⑥ Best Line：输出 4-6 ply 最优走法序列并附最终 centipawn delta。
-    - 设计动机：每个数据集对应 MDP 中不同结构——Best Move 近似 behavior cloning $\pi_\theta(a_t|s_t)$；Best Line 近似 $n$-step bootstrapping（含 $V$ + $\mathcal{T}$）；Verbalized Alpha-Beta 显式注入搜索算法；Guided Synthetic 显式注入对未来的口头展开。这样 ablation 不只是"哪个数据集分高"，而是在比"哪种归纳偏置最有效"。
+整个研究是冲着"哪种 SFT 数据让 RL 更稳更强"去的，所以六个数据集不是随便凑的，每个都对应 MDP 里一种不同结构。① General Instruction Following（Magpie Llama 3.3 70B）做 regularization；② Rejection Sampling 用 Llama 4 Maverick 在四个评估任务上生成、保留正确样本，注入"教师风格"推理；③ Guided Synthetic 给教师一个 5-ply 局面线 + 起止盘面，让它写含转移函数 $\mathcal{T}(s_t,a_t)$ 和价值 $V(s_t)$ 的口头 $n$-step bootstrapping；④ Verbalized Alpha-Beta Pruning 完全程序化——基于 Stockfish 做 softmax 采样、递归构 minimax 树并把搜索过程口头化；⑤ Best Move：给盘面直接输出最佳 UCI 走法，近似 behavior cloning $\pi_\theta(a_t|s_t)$；⑥ Best Line：输出 4-6 ply 最优走法序列并附最终 centipawn delta，近似含 $V$ 与 $\mathcal{T}$ 的 $n$-step bootstrapping。这样 ablation 比的不只是"哪个数据集分高"，而是"哪种归纳偏置最有效"。
 
-2. **可验证 RL 环境与 Dr. GRPO 设置**:
+**2. 可验证 RL 环境与 Dr. GRPO 设置：在四种任务上同时跑 multitask RL，避免单任务的 reward hacking。**
 
-    - 功能：在四种任务上同时跑 multitask RL，避免单任务的 reward hacking。
-    - 核心思路：reward 全部可程序化算出——Predict Move 的 reward 是 normalized rank（$r \in [0,1]$，最佳为 1）；Best/Worst Move 看是否选对；Legal Moves 用 IoU。算法用 Dr. GRPO（移除 GRPO 的长度归一化）+ Clip-Higher（扩大 PPO clip 上界鼓励探索）+ 去掉 KL penalty。8k samples 平均分给四个任务做 multitask；scale 阶段再放大。
-    - 设计动机：作者发现单任务 Predict Move 上的 RL 容易 reward hack，而 multitask 同时强迫"知道哪些 move 合法 / 哪些好 / 哪些差"，结果不仅 move quality 高且模型更鲁棒；这是个反直觉但有用的结论——任务多样性比单点强训更值。
+reward 全部可程序化算出——Predict Move 是 normalized rank（$r\in[0,1]$，最佳为 1）、Best/Worst Move 看是否选对、Legal Moves 用 IoU。算法用 Dr. GRPO（移除 GRPO 的长度归一化）+ Clip-Higher（扩大 PPO clip 上界鼓励探索）+ 去掉 KL penalty，8k samples 平均分给四个任务，scale 阶段再放大。关键发现是作者本来在单任务 Predict Move 上跑 RL，结果容易 reward hack，而 multitask 同时强迫"知道哪些 move 合法/哪些好/哪些差"，move quality 反而更高、模型更鲁棒——任务多样性比单点强训更值，这是个反直觉但实用的结论。
 
-3. **"忠实推理"的判定与 Best Line 的优势**:
+**3. "忠实推理"的判定与 Best Line 的优势：把"推理 trace 和最终 move 是否一致"做成可比较的标量。**
 
-    - 功能：把"推理 trace 和最终 move 是否一致"做成可比较的标量，进而推断 RL 是否在学习推理本身。
-    - 核心思路：用 gpt-oss-120b 当 judge，逐条评分 reasoning trace 与最终答案的对齐度。结果显示，Best Move 数据 SFT 后的 checkpoint 经 RL 后 reasoning 与 move 严重不一致（典型"先决定再编理由"），而 Best Line 训出来的 checkpoint 经 RL 后保持忠实。作者归因为：Best Line 强迫模型在 token 序列里学到了 $V$ 和 $\mathcal{T}$，相当于内化一个 mini world model；Best Move 只学到了 policy $\pi_\theta$，于是 RL 提升的是潜在能力但表面推理与答案脱节（呼应 Turpin et al. 2023 的 unfaithful CoT）。
-    - 设计动机：单看终局分数会得出"两类数据效果相近"的错误结论；引入忠实性维度后，研究人员才能据此选择"性能差不多但推理可信"的训练路径，这对安全和可解释性意义重大。
+只看终局分数会得出"Best Move 和 Best Line 效果相近"的错误结论，引入忠实性维度后才能区分两条训练路径。作者用 gpt-oss-120b 当 judge 逐条评分 reasoning trace 与最终答案的对齐度，结果 Best Move 数据 SFT 后的 checkpoint 经 RL 后 reasoning 与 move 严重不一致（典型的"先决定再编理由"），Best Line 训出来的经 RL 后却保持忠实。归因是：Best Line 强迫模型在 token 序列里学到 $V$ 和 $\mathcal{T}$，相当于内化一个 mini world model；Best Move 只学到 policy $\pi_\theta$，于是 RL 提升的是潜在能力但表面推理与答案脱节（呼应 Turpin et al. 2023 的 unfaithful CoT）。有了忠实性这把尺子，研究者才能选"性能差不多但推理可信"的路径，这对安全和可解释性意义重大。
 
 ### 损失函数 / 训练策略
 - SFT 用 LlamaFactory，RL 用 veRL；Dr. GRPO + Clip-Higher + no KL；scale 阶段先 60M token Best Move-All 再 60M token Best Line-All 的两段式 curriculum。

@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **介入显著性分数 ISS**:
+**1. 介入显著性分数 ISS：用因果干预而非被动观察量化每个 token 对动作的影响。**
 
-    - 功能：量化第 $i$ 个 token 对动作分布的因果影响。
-    - 核心思路：把 token $i$ 替换成其模态条件下的均值嵌入 $\boldsymbol{\mu}_i$（视觉 / 语言分别取 $\mathcal{D}_{vis}$ 与 $\mathcal{D}_{text}$ 上的均值），构造反事实输入 $\tilde{X}^{(i)}_t$；ISS 定义为 $\sum_t D_{KL}(\pi_\theta(\cdot | X_t) \| \pi_\theta(\cdot | \tilde X^{(i)}_t))$。在 VLA 常用的各向同性高斯策略下，Fisher 信息矩阵退化为标量恒等，KL 散度与动作均值的平方差闭式等价，因此实现里直接用 Action MSE 当代理。具体计算用 Monte Carlo：抽 $N$ 个 Bernoulli 掩码 $m_k \sim \text{Bernoulli}(p)$，被 mask 掉的区域换成高斯模糊版 $V_t^{blur}$，把每次扰动后的动作差 $\delta_k = \|\hat a_{t,k} - a^*_t\|^2$ 按 $(1 - m_k)$ 累加进显著图，再除以 $N(1-p)$ 归一化。
-    - 设计动机：传统 zero-ablation 会把 token 推到 OOD 区域，引入伪影；用模态均值替换可以保证替换后的序列仍在合法语义子空间内。同时用模糊代替整张涂黑可以保留低频结构、突出高频信息缺失。
+注意力和探针的根本问题是它们只是相关性测度——告诉你"哪里出现"而非"哪里被实际用到"。ISS 直接做干预：把 token $i$ 替换成它模态条件下的均值嵌入 $\boldsymbol{\mu}_i$（视觉/语言分别取 $\mathcal{D}_{vis}$、$\mathcal{D}_{text}$ 上的均值）构造反事实输入 $\tilde{X}^{(i)}_t$，再量化动作分布的变化 $\text{ISS}_i=\sum_t D_{KL}(\pi_\theta(\cdot | X_t) \| \pi_\theta(\cdot | \tilde X^{(i)}_t))$。在 VLA 常用的各向同性高斯策略下，Fisher 信息矩阵退化为标量恒等，KL 散度与动作均值的平方差闭式等价，所以实现里直接用 Action MSE 当代理（附录给出闭式推导）。
 
-2. **因果空间分割 + Markov 毯**:
+具体计算走 Monte Carlo：抽 $N$ 个 Bernoulli 掩码 $m_k \sim \text{Bernoulli}(p)$，被 mask 的区域换成高斯模糊版 $V_t^{blur}$，把每次扰动后的动作差 $\delta_k = \|\hat a_{t,k} - a^*_t\|^2$ 按 $(1 - m_k)$ 累加进显著图，再除以 $N(1-p)$ 归一化。两个实现细节是有讲究的：用模态均值替换而非 zero-ablation，是因为涂零会把 token 推到 OOD 区域引入伪影，均值替换能保证序列仍在合法语义子空间内；用模糊而非整张涂黑，则能保留低频结构、只突出高频信息的缺失。
 
-    - 功能：把 token 空间 $\Omega$ 显式划分为动作关键区 $\Omega_{act}$（机械臂、末端执行器）、环境支撑区 $\Omega_{sup}$（待操作物体、支撑桌面）和视觉干扰区 $\Omega_{nuis}$（墙面、阴影、纹理）。
-    - 核心思路：作者证明 $\mathcal{M}(a) = \Omega_{act} \cup \Omega_{sup}$ 是动作变量的因果 Markov 毯，即理想策略对 $\Omega_{nuis}$ 条件独立。这种分割发生在 token 空间而非像素空间——后者因纠缠（一个光照变化影响所有像素）无法清晰拆分，前者已经具备语义抽象。
-    - 设计动机：把「因果错位」从模糊概念定义为可量化的几何对象——只要 ISS 显著质量泄漏到 $\Omega_{nuis}$，就说明策略在偷偷依赖伪相关。
+**2. 因果空间分割 + Markov 毯：把"因果错位"从模糊概念变成可量化的几何对象。**
 
-3. **干扰物质量比 NMR@k**:
+要判断策略是否在偷偷依赖伪相关，先得有一个"什么才算伪相关"的明确标准。作者借 Pearl 的 Markov 毯把 token 空间 $\Omega$ 显式三分：动作关键区 $\Omega_{act}$（机械臂、末端执行器）、环境支撑区 $\Omega_{sup}$（待操作物体、支撑桌面）、视觉干扰区 $\Omega_{nuis}$（墙面、阴影、纹理），并证明 $\mathcal{M}(a) = \Omega_{act} \cup \Omega_{sup}$ 正是动作变量的因果 Markov 毯——理想策略对 $\Omega_{nuis}$ 应条件独立。
 
-    - 功能：用一个标量概括「因果错位严重程度」。
-    - 核心思路：取 ISS 显著图上累积质量前 $k\%$ 的 token 集合 $\mathcal{H}_{ISS}^{(k)}(X)$，计算 $\rho_{ISS}^{(k)}(\Omega_{nuis}) = \mathbb{E}_X [|\mathcal{H}^{(k)} \cap \Omega_{nuis}| / |\mathcal{H}^{(k)}|]$，即「重要 token 落在干扰物里的比例」。理想策略应有 $\text{NMR@k} \approx 0$。
-    - 设计动机：把「显著图 + 分割掩码」压成单一标量后，可以直接与任务成功率做相关分析，使可解释性指标第一次具备了「预测泛化」的能力。
+这个分割刻意发生在 token 空间而非像素空间：像素层面一个光照变化会牵动所有像素、纠缠无法拆分，而 token 已经具备语义抽象，能干净地归类。一旦有了这个分割，"因果错位"就有了几何定义——只要 ISS 显著质量泄漏进 $\Omega_{nuis}$，就说明策略在依赖伪相关证据。
+
+**3. 干扰物质量比 NMR@k：把显著图压成一个能预测泛化的标量。**
+
+有了 ISS 显著图和三分割掩码，还需要一个标量才能跟成功率做相关分析。NMR@k 取显著图上累积质量前 $k\%$ 的 token 集合 $\mathcal{H}_{ISS}^{(k)}(X)$，算"重要 token 落进干扰物的比例"
+
+$$\rho_{ISS}^{(k)}(\Omega_{nuis}) = \mathbb{E}_X \big[|\mathcal{H}^{(k)} \cap \Omega_{nuis}| / |\mathcal{H}^{(k)}|\big].$$
+
+理想策略应有 NMR@k $\approx 0$。把"显著图 + 分割掩码"压成单一标量后，可解释性指标第一次具备了"预测泛化"的能力——实测 NMR@10 与 OOD 成功率呈 $r=-0.77$ 的强负相关，意味着不跑仿真器、不要标签，就能提前预判某个 VLA 会不会在 OOD 场景翻车。
 
 ### 损失函数 / 训练策略
 本工作不训练新模型，只在已 fine-tune 好的 $\pi_{0.5}$ 上做离线干预分析；3600 条 seen 任务 episode 用于 SFT，575 条 unseen episode 用于评测。理论上作者还证明：基于 Bernoulli 掩码的 Monte Carlo 估计是连带因果效应（coalitional causal effect）的一致估计；并在附录 A 给出 KL ↔ Action MSE 等价性的闭式推导，是该指标可解释性的关键支撑。

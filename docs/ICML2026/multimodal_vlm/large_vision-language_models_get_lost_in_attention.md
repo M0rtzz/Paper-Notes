@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **表示信息的 SVD 几何刻画 (RQ1)**：
+**1. 用 SVD 几何刻画"一个表示矩阵里有什么信息"。**
 
-    - 功能：把"$\mathbf{X}$ 里有什么信息"严格化。
-    - 核心思路：在矩阵流形 $\mathcal{M}_r = \{\mathbf{X} : \mathrm{rank}(\mathbf{X}) = r\}$ 上用 SVD $\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$ 参数化，得到三类几何对象：左奇异子空间 $\mathcal{C}(\mathbf{X}) \in \mathrm{Gr}(r, S)$（token 关联）、右奇异子空间 $\mathcal{R}(\mathbf{X}) \in \mathrm{Gr}(r, H)$（语义方向）、奇异谱 $\mathbf{\Sigma}$（能量分布）。把复杂度归结为 effective rank $\mathcal{S}_\mathbf{X} = \exp(-\sum_i p_i \log p_i)$（$p_i = \sigma_i / \sum \sigma$），把支持归结为投影算子对。
-    - 设计动机：直接看 $\|\mathbf{X}\|_F$ 看不到结构；用 SVD 把"多少有效维度"和"覆盖什么方向"解耦，才能区分"改了能量"和"改了方向"。
+要回答 attention 和 FFN 谁干了什么，第一步得把"信息"说清楚——直接看 $\|\mathbf{X}\|_F$ 这种范数只看到能量大小，看不到结构。本文把表示矩阵放到固定秩流形 $\mathcal{M}_r = \{\mathbf{X} : \mathrm{rank}(\mathbf{X}) = r\}$ 上，用 SVD $\mathbf{X} = \mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top$ 拆出三类几何对象：左奇异子空间 $\mathcal{C}(\mathbf{X})$ 刻画 token 之间的关联、右奇异子空间 $\mathcal{R}(\mathbf{X})$ 刻画语义方向、奇异谱 $\mathbf{\Sigma}$ 刻画能量分布。在此基础上把复杂度归结为 effective rank $\mathcal{S}_\mathbf{X} = \exp(-\sum_i p_i \log p_i)$（$p_i = \sigma_i / \sum \sigma$），把语义支持归结为列/行子空间的投影算子对 $\mathcal{D}_\mathbf{X} = (\mathbf{P}_{\mathcal{C}(\mathbf{X})}, \mathbf{P}_{\mathcal{R}(\mathbf{X})})$。这样一来，"改了多少有效维度"和"覆盖了哪些方向"被解耦开，后面才有可能区分一次更新到底是改了能量还是改了方向。
 
-2. **RID = 谱变化 + 子空间创新 (RQ2)**：
+**2. RID：量化更新是否注入了"既不在原谱、也不在原子空间"的外部新信息。**
 
-    - 功能：量化 $\Delta\mathbf{X}$ 是否注入了**外部新信息**（既不在原谱内、也不在原子空间里）。
-    - 核心思路：谱变化 $\Delta\mathcal{S} = |\mathrm{eRank}(\mathbf{X}') - \mathrm{eRank}(\mathbf{X})| / \min(S, H)$；子空间创新 $\Delta\mathcal{D} = \frac{\|(\mathbf{I} - \mathbf{P}_{\mathcal{C}(\mathbf{X})})\mathbf{X}'\|_F + \|\mathbf{X}'(\mathbf{I} - \mathbf{P}_{\mathcal{R}(\mathbf{X})})\|_F}{2\|\mathbf{X}'\|_F}$ 借鉴最小二乘 innovation。最终 $\mathrm{RID} = \Delta\mathcal{S} + \Delta\mathcal{D} \in [0, 2]$。考虑到 RoPE 这种位置编码本身就让 RID 不为零，引入容差 $\epsilon_{\text{RoPE}} = \mathrm{RID}(\mathbf{X}^{(\text{RoPE})} \mid \mathbf{X}^{(\text{no-RoPE})})$ 作为基线。
-    - 设计动机：单看谱变化会漏掉"换方向不换维度"的更新；单看子空间会漏掉"维度坍缩"。两个合在一起才能完整刻画外部信息注入。
+有了表示信息的定义，就能问 $\Delta\mathbf{X}$ 究竟带来了什么。RID 把它拆成两块互补的量：谱变化 $\Delta\mathcal{S} = |\mathrm{eRank}(\mathbf{X}') - \mathrm{eRank}(\mathbf{X})| / \min(S, H)$ 抓"维度数变了没"，子空间创新 $\Delta\mathcal{D} = \frac{\|(\mathbf{I} - \mathbf{P}_{\mathcal{C}(\mathbf{X})})\mathbf{X}'\|_F + \|\mathbf{X}'(\mathbf{I} - \mathbf{P}_{\mathcal{R}(\mathbf{X})})\|_F}{2\|\mathbf{X}'\|_F}$ 借最小二乘的 innovation 概念抓"有多少能量落在原子空间之外"，合起来 $\mathrm{RID} = \Delta\mathcal{S} + \Delta\mathcal{D} \in [0, 2]$。两块缺一不可：只看谱变化会漏掉"换方向不换维度"的更新，只看子空间会漏掉"维度坍缩"。还有个务实的细节——RoPE 这类位置编码本身就让 RID 不为零，所以引入容差 $\epsilon_{\text{RoPE}} = \mathrm{RID}(\mathbf{X}^{(\text{RoPE})} \mid \mathbf{X}^{(\text{no-RoPE})})$ 当基线，把位置编码带来的"虚假创新"扣掉，避免误判。
 
-3. **MixIG = token 混合熵变化 + 替换 attention 实验 (RQ3)**：
+**3. MixIG + 噪声替换：量化"子空间内的 token 重排"，并把度量挂到真实性能上。**
 
-    - 功能：量化 $\Delta\mathbf{X}$ 在**已有子空间内**做了多少 token 重配置；并用受控替换实验把功能分工映射到性能影响。
-    - 核心思路：把每行 token 归一化后构造 token-to-token 混合分布 $P_{t,j} \propto \frac{\tilde{\mathbf{x}}_t^\top \tilde{\mathbf{x}}_j + 1}{2}$，取平均 Shannon 熵得 TME；$\mathrm{MixIG} = \mathrm{TME}(\mathbf{X}') - \mathrm{TME}(\mathbf{X})$，正值表示更新让 token 互相混合更广。然后在 15 个开源 LVLM 上做诊断实验：把 attention 更新换成两种噪声——Noise $\mathbf{\Delta}$（直接用高斯噪声替换 $\Delta\mathbf{X}_{\text{attn}}$）和 Noise $\mathbf{QKV}$（用高斯权重替换 Q/K/V 矩阵），看性能与几何信号怎么变。
-    - 设计动机：MixIG 弥补 RID 看不见的"子空间内重排"；噪声替换实验则是把理论度量与实际下游表现挂钩——如果 attention 真的重要，噪声替换就应该崩。
+RID 看不见的是另一类更新——不引入新方向，只在已有子空间里把 token 重新搅匀。MixIG 补这个洞：把每行 token 归一化后构造 token-to-token 混合分布 $P_{t,j} \propto \frac{\tilde{\mathbf{x}}_t^\top \tilde{\mathbf{x}}_j + 1}{2}$，取平均 Shannon 熵得 TME，$\mathrm{MixIG} = \mathrm{TME}(\mathbf{X}') - \mathrm{TME}(\mathbf{X})$，正值意味着更新让 token 互相混合得更广。但光有几何度量还不够说服力，作者再设计了一个受控替换实验把它和下游表现挂钩：在 15 个开源 LVLM 上把 attention 更新换成两种噪声——Noise $\mathbf{\Delta}$ 直接用高斯噪声替掉 $\Delta\mathbf{X}_{\text{attn}}$，Noise $\mathbf{QKV}$ 用高斯权重替掉 Q/K/V 矩阵——看性能和几何信号怎么动。逻辑很直接：如果 attention 真的在做有意义的工作，把它换成随机就应该崩；结果多数视觉任务不降反升，正好印证了 MixIG/RID 给出的"attention 几乎只做子空间内重排、不注入新信息"的判断。
 
 ### 损失函数 / 训练策略
 本文是诊断框架，不训练新模型。所有度量都是 forward-pass 上的几何量。实验在 Qwen2.5-VL / LLaVA-1.5 / LLaVA-NeXT 三个家族共 15 个变体上跑 POPE、3DSRBench、RealWorldQA、MMMU、VMCBench、MathVista、HallusionBench 等 7 个 benchmark，每类 1000 个样本统计。

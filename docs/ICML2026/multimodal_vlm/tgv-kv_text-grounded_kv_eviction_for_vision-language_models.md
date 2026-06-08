@@ -45,23 +45,17 @@ TGV-KV 是一个 plug-in 的 KV cache 控制器，部署位置在 prefill 结束
 
 ### 关键设计
 
-1. **Text-Vision Budgeting (TVB) — 用跨模态注意力当层间预算的"晴雨表"**:
+**1. Text-Vision Budgeting（TVB）：用跨模态注意力强度当层间预算的"晴雨表"。**
 
-    - 功能：把全局预算 $B$ 在 $L$ 层之间做动态分配，告诉每一层应保留多少 KV。
-    - 核心思路：先从第 $l$ 层的注意力矩阵中切出 text 对 vision 的子块 $\mathbf{A}_l^{(TV)} = \mathrm{softmax}(\mathbf{Q}_l^{(T)} [\mathbf{K}_l^{(V)}]^{\mathsf T}) \in \mathbb{R}^{N_t \times N_v}$，对其求和得到"该层 text 向 vision 索取信息的总强度"；按层归一化得到预算比例 $b_l^{(TV)} = \sum_{i,j} [\mathbf{A}_l^{(TV)}]_{ij} / \sum_{l'} \sum_{i,j} [\mathbf{A}_{l'}^{(TV)}]_{ij}$，再乘上 $B$ 得到层预算。
-    - 设计动机：作者对照实验显示，用 VV、TT 或均匀分配作为层预算指标在 5% 保留率下性能都明显落后于 TV；TV 强度直接对应"跨模态信息融合的剧烈程度"，融合越剧烈的层越值得多保留一些 KV。
+KV eviction 第一步要决定每层留多少。作者发现层与层之间"跨模态信息融合"的剧烈程度差别很大，融合越剧烈的层越值得多留 KV。于是 TVB 从第 $l$ 层注意力里切出 text 对 vision 的子块 $\mathbf{A}_l^{(TV)} = \mathrm{softmax}(\mathbf{Q}_l^{(T)} [\mathbf{K}_l^{(V)}]^{\mathsf T}) \in \mathbb{R}^{N_t \times N_v}$，求和得到"该层 text 向 vision 索取信息的总强度"，再按层归一化成预算比例 $b_l^{(TV)} = \sum_{i,j} [\mathbf{A}_l^{(TV)}]_{ij} / \sum_{l'} \sum_{i,j} [\mathbf{A}_{l'}^{(TV)}]_{ij}$，乘上全局预算 $B$ 就是这一层的 KV 名额。对照实验里，换成 VV、TT 或均匀分配在 5% 保留率下都明显落后于 TV——只有 TV 强度直接对应"跨模态融合有多激烈"，预算才自然向中间那些融合最重的层倾斜，比 PyramidKV 的规则化金字塔更鲁棒。
 
-2. **Text-Weighted Ranking (TWR) — 用主导文本 token 给视觉 KV 加权重排**:
+**2. Text-Weighted Ranking（TWR）：让"主导文本 token"来给视觉 KV 加权重排。**
 
-    - 功能：在每层内为每个 KV 算一个重要性分数 $s_{l,j}$，用于后续 TopK。
-    - 核心思路：对文本侧，先按 TT 子块算每个 text token 的"被关注程度"，并除以其右下三角下被关注的次数 $N_t - j + 1$ 得到平均值 $w_{l,j} = \sum_{i \ge j} [\mathbf{A}_l^{(TT)}]_{ij} / (N_t - j + 1)$，从而把那些跨整段后续文本都被持续关注的"主导文本 token"（attention map 中的纵向亮线）凸显出来；归一化为 $\tilde w_{l,i}$ 后，再去重新加权 $\mathbf{A}_l^{(TV)}$ 的每一行，得到视觉 token 的最终分数 $s_{l,j}^{(V)} = \sum_i \tilde w_{l,i} [\mathbf{A}_l^{(TV)}]_{ij}$。文本侧则直接取自身列和 $s_{l,j}^{(T)} = \sum_{i \ge j} [\mathbf{A}_l^{(TT)}]_{ij}$。
-    - 设计动机：作者的对照实验显示纯 self-attention 或 VV+TT 作为重要性指标几乎崩溃（ChartQA 5% 时只有 4 分多），TV+TT 显著更稳；而"主导 text token"的存在意味着不同的指令（"describe the image"和"is there a taxi near the streetlight"）会让视觉重要性分布出现根本性差异，加权之后视觉 KV 的保留方向才能真正贴合用户当前提问。
+层内每个 KV 要算重要性分数，难点是视觉重要性必须随用户指令变化——"描述这张图"和"路灯旁是否有出租车"该保留的视觉区域完全不同。TWR 先在文本侧识别那些贯穿后文、被持续关注的"主导 text token"（attention map 里的纵向亮线）：按 TT 子块算每个 text token 的被关注程度，再除以它右下三角被关注的次数 $N_t - j + 1$ 取平均 $w_{l,j} = \sum_{i \ge j} [\mathbf{A}_l^{(TT)}]_{ij} / (N_t - j + 1)$，归一化成 $\tilde w_{l,i}$。然后用这些权重去重新加权 $\mathbf{A}_l^{(TV)}$ 的每一行，得到视觉 token 的最终分数 $s_{l,j}^{(V)} = \sum_i \tilde w_{l,i} [\mathbf{A}_l^{(TV)}]_{ij}$；文本侧则直接取自身列和 $s_{l,j}^{(T)} = \sum_{i \ge j} [\mathbf{A}_l^{(TT)}]_{ij}$。消融显示纯 self-attention 或 VV+TT 当重要性指标几乎崩溃（ChartQA 5% 只有 4 分多），换成 TV+TT 加权后视觉 KV 的保留方向才真正贴合当前提问。
 
-3. **Text-Prioritised Retention (TPR) — 让预算先填满文本再去管视觉**:
+**3. Text-Prioritised Retention（TPR）：预算先填满文本，剩下的才轮到视觉。**
 
-    - 功能：在预算 $b_l$ 给定、重要性分数已算好的前提下，决定哪些 KV 进入保留集合 $\mathcal{I}_l$。
-    - 核心思路：用一个分段策略：若 $b_l > N_t$，全部 text KV 直接保留，剩下 $b_l - N_t$ 个名额按 $s_{l,j}^{(V)}$ 在视觉集合上做 TopK；若 $b_l \le N_t$，则连视觉都不要了，仅在文本内部按 $s_{l,j}^{(T)}$ 选 TopK。
-    - 设计动机：作者的随机 eviction 实验直接揭示"text 极敏感、vision 极冗余"——5% 保留率下随机优先驱逐视觉还能维持 10–46 分，随机优先驱逐文本则直接降到 0.2 分。这条非对称性意味着，对 text KV 任何形式的"按分数公平排序"都是不安全的；只要预算允许就必须无条件保住所有 text KV。
+最后按预算和分数选保留集合。作者用一组极简的随机驱逐实验把约束钉死了——5% 保留率下随机优先驱逐视觉还能维持 10–46 分，随机优先驱逐文本则直接掉到 0.2 分，说明 text KV 极敏感、vision KV 极冗余，对 text 做任何"按分数公平排序"都不安全。TPR 因此用一条分段规则：若层预算 $b_l > N_t$，所有 text KV 无条件保留，剩下 $b_l - N_t$ 个名额按 $s_{l,j}^{(V)}$ 在视觉里做 TopK；若 $b_l \le N_t$，干脆连视觉都不要，只在文本内部按 $s_{l,j}^{(T)}$ 选 TopK。这条非对称策略把"文本不能丢"的硬约束直接写进了算法。
 
 ### 损失函数 / 训练策略
 TGV-KV 是纯推理时的算法，不引入任何额外训练或微调，也不需要校准数据集；所有的预算和重要性计算都基于 prefill 一次产出的注意力矩阵，因此可以即插即用部署到任意基于标准 self-attention 的 VLM 上。

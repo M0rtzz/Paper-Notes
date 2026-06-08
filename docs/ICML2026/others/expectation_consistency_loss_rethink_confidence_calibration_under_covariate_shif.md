@@ -46,23 +46,17 @@ ECL 的 pipeline 是：在源域上正常训练分类器 $f$ 和一个估计 $P(
 
 ### 关键设计
 
-1. **期望一致性条件（Expectation Consistency Condition）**:
+**1. 期望一致性条件：把"全局对齐输入分布"这个过强假设，换成"每个置信度桶里平均后的真后验跨域一致"的真正充要条件。**
 
-    - 功能：替换"全局协变量对齐 $P_s(X) = P_t(X)$"这一过强假设，给出协变量漂移下置信度校准的真正充要条件。
-    - 核心思路：定理 3.1 证明 $\forall k$, $P_s(Y_k=1|S) = P_t(Y_k=1|S)$ 当且仅当 $\mathbb{E}_{X \sim P_s(X|S)}[P(Y_k=1|X)] = \mathbb{E}_{X \sim P_t(X|S)}[P(Y_k=1|X)]$，其中由协变量漂移定义 $P(Y_k=1|X) = P_s(Y_k=1|X) = P_t(Y_k=1|X)$。证明思路是把 $P_d(Y_k|S)$ 用条件期望式 $\int P(Y_k|X) P_d(X|S)\,dX$ 展开。文中给出一个二分类反例（$P_s(X)$, $P_t(X)$ 分别是均值 $\pm 0.5$ 的高斯且 $S_1 = -0.25 X^2 + 1$、$P(Y_1|X) = -0.5|X| + 1$）：协变量分布差异显著但因为关于 y 轴对称导致条件期望两域恒等，校准误差恒为零。
-    - 设计动机：之前所有重要性加权类方法本质上都在隐式追求 $P_s(X) = P_t(X)$，这是一个比校准本身更难的目标。该定理给出严格弱的必要条件，把校准从"输入空间对齐"挪到"置信度水平集上的局部期望对齐"，统计上更省、工程上更稳。定理还能直接推广到 top-label 校准（把 $S$ 换成 $\hat{S}$）和 class-wise 校准（把 $S$ 换成单分量 $S_k$）。
+之前所有重要性加权类方法本质上都在隐式追求 $P_s(X) = P_t(X)$，这是一个比校准本身更难的目标。定理 3.1 给出真正需要的充要条件：$\forall k$，$P_s(Y_k=1|S) = P_t(Y_k=1|S)$ 当且仅当 $\mathbb{E}_{X \sim P_s(X|S)}[P(Y_k=1|X)] = \mathbb{E}_{X \sim P_t(X|S)}[P(Y_k=1|X)]$，其中协变量漂移定义保证 $P(Y_k=1|X)$ 跨域不变。证明思路是把 $P_d(Y_k|S)$ 用条件期望式 $\int P(Y_k|X) P_d(X|S)\,dX$ 展开。论文还给了一个简洁的二分类反例（$P_s(X)$、$P_t(X)$ 分别是均值 $\pm 0.5$ 的高斯，$S_1 = -0.25 X^2 + 1$、$P(Y_1|X) = -0.5|X| + 1$）：协变量分布差异显著，但因为关于 y 轴对称导致两域条件期望恒等，校准误差恒为零——直接打破"必须对齐 $P(X)$"的直觉。这个判据把校准从"输入空间对齐"挪到"置信度水平集上的局部期望对齐"，统计上更省、工程上更稳，而且能直接推广到 top-label（把 $S$ 换成 $\hat{S}$）和 class-wise（换成单分量 $S_k$）校准。
 
-2. **可微的 ECL 损失与 soft binning**:
+**2. 可微的 ECL 损失与 soft binning：把期望一致性条件从理论判据变成可端到端反传的损失，并同时支持三种主流校准范式。**
 
-    - 功能：把期望一致性条件从理论判据变成可端到端反传的训练损失，并支持三种主流校准范式。
-    - 核心思路：理论上 $L_{ecl} = \mathbb{E}_{P_t(S)} \|\mathbb{E}_{P_s(X|S)} P(Y|X) - \mathbb{E}_{P_t(X|S)} P(Y|X)\|$，但硬 binning 不可微。改用 soft binning：在 $\Delta_{K-1}$ 单纯形上放 $B$ 个锚点 $a_j$，软权重 $\omega_{ij} = \exp(-\|S^{(i)}-a_j\|_2^2/\tau) / \sum_r \exp(-\|S^{(i)}-a_r\|_2^2/\tau)$；每个 bin 的条件期望由分类头输出 $p^{(i)} = P(Y|X_i)$ 加权得到 $\hat{\mathbb{E}}_{d,j}$；最终 $\hat{L}_{ecl} = \sum_j w_j \|\hat{\mathbb{E}}_{s,j} - \hat{\mathbb{E}}_{t,j}\|$。该框架天然兼容 canonical（向量 $S$）、class-wise（单分量 $S_k$）、top-label（$\hat{S} = \max_k S_k$）三种范式，只需替换软分配里用的置信度变量。
-    - 设计动机：之前 covariate shift 校准只覆盖最简单的 top-label，是因为它们用 IW 在边际分布上做事；ECL 因为做的是"水平集上的条件期望对齐"，可以直接复用同一框架处理更严格的 canonical 校准。Theorem 3.2 给出样本复杂度 $\mathcal{O}(B/\varepsilon^2)$ 与 ECE 的 histogram binning 同阶，权重 $w_j$ 显式约束稀疏 bin 的影响，理论上和实际可行性都站得住。
+理论上的目标是 $L_{ecl} = \mathbb{E}_{P_t(S)} \|\mathbb{E}_{P_s(X|S)} P(Y|X) - \mathbb{E}_{P_t(X|S)} P(Y|X)\|$，但硬 binning 不可微。本文改用 soft binning：在单纯形 $\Delta_{K-1}$ 上放 $B$ 个锚点 $a_j$，软权重 $\omega_{ij} = \exp(-\|S^{(i)}-a_j\|_2^2/\tau) / \sum_r \exp(-\|S^{(i)}-a_r\|_2^2/\tau)$；每个 bin 的条件期望由一个额外分类头输出的 $p^{(i)} = P(Y|X_i)$ 加权得到 $\hat{\mathbb{E}}_{d,j}$；最终 $\hat{L}_{ecl} = \sum_j w_j \|\hat{\mathbb{E}}_{s,j} - \hat{\mathbb{E}}_{t,j}\|$。这里之所以能多养一个分类头估 $P(Y|X)$，是因为协变量漂移下 $P(Y|X)$ 本身是跨域不变量，在源域上就能学到。之前 covariate shift 校准只覆盖最简单的 top-label，是因为它们用 IW 在边际分布上做事；ECL 因为做的是"水平集上的条件期望对齐"，只需替换软分配里用的置信度变量（向量 $S$ / 单分量 $S_k$ / $\hat{S}=\max_k S_k$）就能直接复用同一框架处理更严格的 canonical 校准。Theorem 3.2 还给出样本复杂度 $\mathcal{O}(B/\varepsilon^2)$，与 ECE 的 histogram binning 同阶，权重 $w_j$ 又显式约束了稀疏 bin 的影响。
 
-3. **辅助变量 + Proximal 更新实现 mini-batch 无偏训练**:
+**3. 辅助变量 + Proximal 更新：把外层范数所需的两域期望显式参数化，让 ECL 在 mini-batch 上的梯度变成无偏估计。**
 
-    - 功能：在小批量训练里让 ECL 的梯度成为全数据集梯度的无偏估计，避免范数与期望不交换带来的偏置。
-    - 核心思路：直接把式 (8) 套到 mini-batch 会因 $\|\cdot\|$ 与 $\mathbb{E}$ 不交换而引入梯度偏置（这正是 Soft-ECE 之类的训练损失在小 batch 下经常崩的原因）。Theorem 3.3 给出等价表达式 $L_{ecl}(\theta, u_j^s, u_j^t) = \sum_j w_j \|u_j^s - u_j^t\| + \sum_j \sum_{i \in D_s} \omega^s_{i,j} \|u_j^s - p^{(i)}(\theta)\|^2 + \sum_j \sum_{i \in D_t} \omega^t_{i,j} \|u_j^t - p^{(i)}(\theta)\|^2$，引入辅助变量 $u_j^s, u_j^t$ 跟踪全数据集上的期望；该形式下小批量梯度无偏。算法 1 用交替 proximal 步骤更新 $u_j^s, u_j^t$（带 shrink 算子和阈值 $\tau_s = w_j/(2 n_{s,j})$、$\tau_t = w_j/(2 n_{t,j})$），并用 EMA 平滑 $u_j \leftarrow (1-\alpha_{ema}) u_j + \alpha_{ema} \tilde{u}_j$ 抑制噪声，再把 detached 的 $\tilde{u}_j$ 回填到 $\|u_j - p^{(i)}(\theta)\|^2$ 项反传梯度。
-    - 设计动机：mini-batch 训练是深度学习的事实标准，但校准损失天然带"先期望后非线性"的结构，几乎所有相关工作都在小 batch 下不稳；通过把外层范数所需的"两域期望"显式参数化为 $u_j$，整个损失变成对每个样本的二次型，梯度天然分解，从而获得无偏性。这是把校准训练真正打通到现代 SGD pipeline 的关键工程一击。
+直接把损失套到 mini-batch 会因为 $\|\cdot\|$ 与 $\mathbb{E}$ 不交换而引入梯度偏置——这正是 Soft-ECE 这类训练损失在小 batch 下经常崩的原因。Theorem 3.3 给出一个等价表达式 $L_{ecl}(\theta, u_j^s, u_j^t) = \sum_j w_j \|u_j^s - u_j^t\| + \sum_j \sum_{i \in D_s} \omega^s_{i,j} \|u_j^s - p^{(i)}(\theta)\|^2 + \sum_j \sum_{i \in D_t} \omega^t_{i,j} \|u_j^t - p^{(i)}(\theta)\|^2$，引入辅助变量 $u_j^s, u_j^t$ 去跟踪全数据集上的期望；在这个形式下整个损失变成对每个样本的二次型，梯度天然分解、小批量梯度无偏。算法 1 用交替 proximal 步骤更新 $u_j^s, u_j^t$（带 shrink 算子和阈值 $\tau_s = w_j/(2 n_{s,j})$、$\tau_t = w_j/(2 n_{t,j})$），并用 EMA 平滑 $u_j \leftarrow (1-\alpha_{ema}) u_j + \alpha_{ema} \tilde{u}_j$ 抑制噪声，再把 detached 的 $\tilde{u}_j$ 回填到 $\|u_j - p^{(i)}(\theta)\|^2$ 项反传。这一招把校准训练真正打通到了现代 SGD pipeline 里——几乎所有相关工作都在小 batch 下不稳，就是卡在这个"先期望、后非线性"的结构上。
 
 ### 损失函数 / 训练策略
 总目标 $L = L_{ce} + \lambda L_{ecl}$，权重 $\lambda$ 用自适应策略 $\lambda = \beta^\gamma$ 其中 $\beta = (\sum_i L_{ce}^{(i)}) / (\sum_i L_{ecl}^{(i)})$、$\gamma = 1$ 给出线性比例，消融显示这个量级合适。辅助分类头训练 $P(Y|X)$ 时冻结 backbone，可选择再在源域上用 Soft-ECE 做一次后校准。

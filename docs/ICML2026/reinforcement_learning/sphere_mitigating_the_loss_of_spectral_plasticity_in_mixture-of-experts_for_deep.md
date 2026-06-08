@@ -46,23 +46,25 @@ tags:
 
 ### 关键设计
 
-1. **从 eNTK 到 Gauss-Newton + 块对角近似**：
+**1. 从 eNTK 到 Gauss-Newton + 块对角近似：把"不可形成的全局矩阵"降成"逐层 expert 块"。**
 
-    - 功能：把 $\mathbf{K} \in \mathbb{R}^{N \times N}$ 的有效秩等价转换为参数空间 GN 矩阵 $G^{\mathrm{GN}} = \tfrac{1}{N}\mathbf{J}^\top \mathbf{J} \in \mathbb{R}^{P \times P}$ 的有效秩，并按"门控 + 各 expert 各层"切成块对角。
-    - 核心思路：先用 $\mathbf{J}\mathbf{J}^\top$ 与 $\mathbf{J}^\top \mathbf{J}$ 共享非零谱的事实得到 $r_e(\mathbf{K}) = r_e(G^{\mathrm{GN}})$；再借 K-FAC 标准的块对角近似（忽略跨层、跨门控-专家的交叉块）得到 $G^{\mathrm{GN}} \approx \bigoplus_\ell \mathbf{G}^{\mathrm{GN},\mathrm{g}}_\ell \oplus \bigoplus_\ell \mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell$。然后用 Lemma 4.1 给出块对角矩阵的有效秩可分解为 $r_e(M) = \exp(H(\alpha) + \sum \alpha_b \log r_e(M_b))$，其中 $\alpha_b = \|M_b\|_*/\sum_m \|M_m\|_*$。由于门控参数远少于专家参数（$P^g \ll P^{\mathrm{exp}}$），把门控块当固定项处理，只对 expert 块下手。
-    - 设计动机：原始 $\mathbf{K}$ 不可形成；这一步把"全局秩"问题降到"每层 expert 块的秩"问题，且分解是严格不等式而非启发式，给后面优化提供理论依据。
+痛点在前面已经讲清楚——直接监控 $\mathbf{K} \in \mathbb{R}^{N \times N}$ 要 $O(N^2 P)$ 算力，根本没法当 loss。第一步先把战场从 $N \times N$ 的样本空间搬到参数空间：利用 $\mathbf{J}\mathbf{J}^\top$ 与 $\mathbf{J}^\top \mathbf{J}$ 共享非零谱这一事实，得到 $r_e(\mathbf{K}) = r_e(G^{\mathrm{GN}})$，其中 $G^{\mathrm{GN}} = \tfrac{1}{N}\mathbf{J}^\top \mathbf{J} \in \mathbb{R}^{P \times P}$。接着借 K-FAC 标准的块对角近似（忽略跨层、跨门控-专家的交叉块），把它拆成
 
-2. **Kronecker proxy + 条件数下界**：
+$$G^{\mathrm{GN}} \approx \bigoplus_\ell \mathbf{G}^{\mathrm{GN},\mathrm{g}}_\ell \oplus \bigoplus_\ell \mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell.$$
 
-    - 功能：把每个 expert 层块 $\mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell$ 进一步因子化为"加权专家特征 Gram $\mathbf{A}^{\mathrm{exp}}_{\ell-1}$ ⊗ 反传梯度 Gram $\mathbf{G}^{\mathrm{exp}}_\ell$"，并给出 $r_e(\mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell) \ge k_\ell / \kappa(\mathbf{A} \otimes \mathbf{G})$ 的可优化下界。
-    - 核心思路：在层内独立性近似下用 K-FAC 思路，把每个 expert 在每个样本上的输入 $a^{\mathrm{exp}}_{e,\ell-1}(x_i)$ 用 Top-$K$ 门控权重 $h^{(K)}_{i,e}$ 加权后跨 expert 拼接成 $a_{\ell-1}(x_i) = [h^{(K)}_{i,1} a^{\mathrm{exp}}_{1,\ell-1}^\top | \dots | h^{(K)}_{i,E} a^{\mathrm{exp}}_{E,\ell-1}^\top]^\top$，stack 后形成 $\mathbf{A}^{\mathrm{exp}}_{\ell-1} = \tfrac{1}{N}\Phi_{\ell-1}^\top \Phi_{\ell-1}$。同样的方式做出梯度 Gram $\mathbf{G}^{\mathrm{exp}}_\ell$。Kronecker 矩阵的特征值是因子矩阵特征值的乘积，所以条件数也乘起来，给出 $r_e \ge k_\ell / \kappa$ 的下界。
-    - 设计动机：$\mathbf{A}^{\mathrm{exp}}_{\ell-1}$ 是 forward pass 就能拿到的低维矩阵（维度 $\sum_e d^{\mathrm{exp}}_{e,\ell-1}$，几百量级），不用反向传播构造；同时它的条件数下界就是 proxy 目标，可以直接当 loss 优化。"跨 expert 拼接而非分 expert"是关键——拼接后 Gram 的 off-diagonal 块直接捕获跨专家相关，相当于隐式抑制 expert 之间的特征塌陷到同一方向。
+关键的一步是 Lemma 4.1：块对角矩阵的有效秩可以精确分解为 $r_e(M) = \exp\big(H(\alpha) + \sum_b \alpha_b \log r_e(M_b)\big)$，权重 $\alpha_b = \|M_b\|_*/\sum_m \|M_m\|_*$。由于门控参数远少于专家参数（$P^g \ll P^{\mathrm{exp}}$），门控块的权重可忽略、当固定项处理，于是问题彻底收敛到"每层 expert 块的秩"。这一步用的全是严格等式/不等式而非启发式，正是后面能写成定理的地基。
 
-3. **SPHERE Parseval 罚 + 谱收缩证明**：
+**2. Kronecker proxy + 条件数下界：把秩问题落到 forward 就能拿到的低维 Gram 矩阵。**
 
-    - 功能：定义 $\mathcal{L}_{\mathrm{SPHERE}}(\mathbf{A}) = \|\mathbf{A} - \tfrac{\mathrm{Tr}(\mathbf{A})}{m}\mathbf{I}_m\|_F^2$，证明它是 spectrally contractive（特征值朝均值收缩），从而 $\kappa(\mathbf{A})$ 单调下降，进而 $r_e(\mathbf{K})$ 单调上升。
-    - 核心思路：把 $\mathcal{L}_{\mathrm{SPHERE}}$ 展开等于 $\|\mathbf{A}\|_F^2 - \tfrac{\mathrm{Tr}(\mathbf{A})^2}{m}$，对 $\mathbf{A}$ 求梯度后做一步 SGD，证明在 $\eta \le \tfrac{1}{2}$ 时每个特征值都按 $\lambda_i \to (1-\beta)\lambda_i + \beta \bar\lambda$ 朝均值缩。然后用 Kronecker 单调性引理（$\kappa(A_{t+1} \otimes B) \le \kappa(A_t \otimes B)$）传到 Kronecker proxy，最后通过块对角分解传到 $r_e(\mathbf{K})$。实际操作只对 actor 的最后一层专家做这个 penalty（深层的 representation 最容易塌陷），不动梯度 Gram，因为后者需要额外反传。
-    - 设计动机：作者要的不是"经验上好像有用的正则"而是"可证明严格提升 plasticity 量的正则"。Parseval 这种 push-to-identity 罚刚好满足 spectral contraction 的定义，配合一整套不等式链让"加这一项 → $r_e(\mathbf{K})$ 单增"成定理而非启发式。
+每个 expert 层块 $\mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell$ 还是太大，第二步在层内独立性近似下沿 K-FAC 思路把它因子化成两个小 Gram 的 Kronecker 积。具体做法是把每个 expert 在样本 $x_i$ 上的输入 $a^{\mathrm{exp}}_{e,\ell-1}(x_i)$ 用 Top-$K$ 门控权重 $h^{(K)}_{i,e}$ 加权，再**跨 expert 拼接**成一条长向量
+
+$$a_{\ell-1}(x_i) = \big[h^{(K)}_{i,1}\, a^{\mathrm{exp}}_{1,\ell-1}{}^\top \,\big|\, \dots \,\big|\, h^{(K)}_{i,E}\, a^{\mathrm{exp}}_{E,\ell-1}{}^\top\big]^\top,$$
+
+堆叠后得到加权专家特征 Gram $\mathbf{A}^{\mathrm{exp}}_{\ell-1} = \tfrac{1}{N}\Phi_{\ell-1}^\top \Phi_{\ell-1}$，反传梯度 Gram $\mathbf{G}^{\mathrm{exp}}_\ell$ 同理构造。因为 Kronecker 积的特征值是两个因子特征值的乘积、条件数也相乘，于是有可优化下界 $r_e(\mathbf{G}^{\mathrm{GN},\mathrm{exp}}_\ell) \ge k_\ell / \kappa(\mathbf{A}^{\mathrm{exp}}_{\ell-1} \otimes \mathbf{G}^{\mathrm{exp}}_\ell)$。这步之所以有效，是因为 $\mathbf{A}^{\mathrm{exp}}_{\ell-1}$ 维度只有几百（$\sum_e d^{\mathrm{exp}}_{e,\ell-1}$），forward pass 顺手就能算出来、不必反传。而"跨 expert 拼接而非分 expert 单算"是 MoE 特定的精巧之处：拼接后 Gram 的 off-diagonal 块直接编码了专家之间的相关，相当于隐式阻止多个 expert 的特征塌陷到同一方向。
+
+**3. SPHERE Parseval 罚 + 谱收缩证明：一项可证明把 $r_e(\mathbf{K})$ 单调推高的正则。**
+
+有了可微的 proxy，最后只差一项能让它的条件数往下走的 loss。作者定义 $\mathcal{L}_{\mathrm{SPHERE}}(\mathbf{A}) = \|\mathbf{A} - \tfrac{\mathrm{Tr}(\mathbf{A})}{m}\mathbf{I}_m\|_F^2$，把它展开等于 $\|\mathbf{A}\|_F^2 - \tfrac{\mathrm{Tr}(\mathbf{A})^2}{m}$，对 $\mathbf{A}$ 求梯度做一步 SGD 后可证：当 $\eta \le \tfrac{1}{2}$ 时每个特征值都按 $\lambda_i \to (1-\beta)\lambda_i + \beta \bar\lambda$ 朝均值收缩——这正是 spectral contraction 的定义，于是 $\kappa(\mathbf{A})$ 单调下降。再借 Kronecker 单调性引理（$\kappa(A_{t+1} \otimes B) \le \kappa(A_t \otimes B)$）传到 Kronecker proxy，最后通过块对角分解一路传回 $r_e(\mathbf{K})$，让"加这一项 → 有效秩单增"成为定理而不是经验观察。实操上只对 actor 最后一层专家施加这个罚（深层 representation 最易塌陷），不碰需要额外反传的梯度 Gram。选 Parseval 这种 push-to-identity 形式，正因为它恰好满足谱收缩的充分条件，让整条不等式链闭合。
 
 ### 损失函数 / 训练策略
 

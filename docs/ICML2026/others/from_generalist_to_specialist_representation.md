@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **Collider 建模 + Band CI Test**:
+**1. Collider 建模 + Band CI Test：把"任务"看成 collider，让条件独立检验能在任意交错的序列里认出任务结构。**
 
-    - 功能：在任意任务结构（interleaving、重复、断连）下可证明地识别"哪个时间步属于哪个任务"。
-    - 核心思路：把序列切成长度 $L\ge 2$ 的等长 segment $S_k$。定义 band conditioning set $Z_{\text{band}}(k,v,i) = \{s_{kL-1}, s_{kL+1}, s_{vL-1}, s_{vL+1}\} \cup \{g_i\}$。Theorem 1 证明：在 Markov + Faithfulness 下，任务 $g_i$ 与 $S_k, S_v$ 同时相关 iff $s_{kL}$ 与 $s_{vL}$ 在 $Z_{\text{band}}(k,v,i)$ 条件下不独立。证明关键是用 collider 性质阻断所有非 $g_i$ 的路径：条件在 boundary state 上挡掉时序通道；其它任务作为闭合 collider 自动 block。Corollary 1 进一步说明 representative state 可自由替换。
-    - 设计动机：confounder / mediator 会推出"同一任务两步条件独立"的反直觉结论；collider 才能保留"协调一致的 plan"语义。Band conditioning set 是为了精确隔离 single task 的依赖通道。
+第一层要解决的痛点是：现实序列里任务会 interleaving、重复、断连，没法假设"前 10 步是任务 A、后 10 步是任务 B"这种规整切分。本文的做法是把序列切成长度 $L\ge 2$ 的等长 segment $S_k$，再围绕每个 segment 的代表状态构造一个 band conditioning set $Z_{\text{band}}(k,v,i) = \{s_{kL-1}, s_{kL+1}, s_{vL-1}, s_{vL+1}\} \cup \{g_i\}$。Theorem 1 证明：在 Markov + Faithfulness 假设下，任务 $g_i$ 同时与 $S_k, S_v$ 相关，当且仅当 $s_{kL}$ 与 $s_{vL}$ 在 $Z_{\text{band}}$ 条件下不独立——于是一组 CI test 就能把"哪些时间步属于同一个任务"读出来，Corollary 1 还说明代表状态可以自由替换。证明之所以成立，全靠把任务建模成 collider（$s_t \to a_t \to g_i$）：条件在 boundary state 上挡掉时序通道，其它任务作为闭合 collider 自动被 block，最后只剩下 $g_i$ 这条依赖路径暴露出来。这正是为什么不能用 confounder 或 mediator 视角——后两者会推出"同一任务的两步条件独立"这种反直觉结论，只有 collider 能保留"一个协调一致的 plan 内多步互相依赖"的真实语义。
 
-2. **Generalist Bound + Sparsity Tightening**:
+**2. Generalist Bound + Sparsity Tightening：先证明"光靠大模型恢复不全"，再证明"加一个 $\ell_1$ 正则就刚好够"。**
 
-    - 功能：先证明 generalist 模型只能保证"task-relevant latent 是真值的超集"，再证明加 sparsity 正则可收紧到真值同集。
-    - 核心思路：Proposition 2 在 sufficient nonlinearity 假设下证明 $\|\mathcal{I}((J_{\hat u})_{i,\cdot})\| \ge \|\mathcal{I}((J_u)_{i,\cdot})\|$——估计的 task-relevant latent 数目至少是真值。Theorem 2 加上 sparsity 约束 $\|\mathcal{I}(J_{\hat u})\| \le \|\mathcal{I}(J_u)\|$ 后把不等式收紧为等号，进而通过列置换 $\pi$ 推出 $\hat s_{t, \pi(I_k)} = h_k(s_{t, I_K})$（可逆函数对应），实现 task-relevant 与 irrelevant latent 的 disentanglement。
-    - 设计动机：先用 generalist 结果告诉读者"光大模型不够"，再用 sparsity 给出"加什么、就能拿到什么"的明确指引，从动机到方案逻辑严密。结论意义重大：i.i.d. 设定下不需要 functional 约束就能拿 group-wise identifiability。
+第二层要回答"任务相关 latent 能不能从 generalist 表示里分离出来"。本文分两步把答案夹出来。Proposition 2 在 sufficient nonlinearity 假设下证明 $\|\mathcal{I}((J_{\hat u})_{i,\cdot})\| \ge \|\mathcal{I}((J_u)_{i,\cdot})\|$，即一个只追求重建的 generalist 模型最多只能保证估计出的 task-relevant latent 是真值的**超集**——它会把无关维度也混进来。Theorem 2 接着加上 sparsity 约束 $\|\mathcal{I}(J_{\hat u})\| \le \|\mathcal{I}(J_u)\|$，把这个不等式从两边夹成等号，再通过列置换 $\pi$ 推出 $\hat s_{t, \pi(I_k)} = h_k(s_{t, I_K})$（每个任务子组对应一个可逆函数），task-relevant 与 irrelevant latent 就此 disentangle。这种"先说大模型不够、再说 sparsity 给出确切答案"的两段式论证逻辑很紧：它把 sparsity 从一个经验技巧提升成了理论上的必要增益，而且结论本身很硬——i.i.d. 设定下竟然不需要任何 functional 约束就能拿到 group-wise identifiability。
 
-3. **从理论到实践的桥**:
+**3. 从理论到实践的桥：把渐近的非参数证明落成一个能在真实视频和图像上跑的标准估计器。**
 
-    - 功能：让纯非参数证明可以在真实视频 / 图像上落地。
-    - 核心思路：CI test 在观测空间上做（用 conditional mutual information 作 proxy 避免高维统计问题）；任务未知时把任务表示作为 latent 一并学。latent 估计用 VAE + $\ell_1$ 正则；图像生成上用 GAN + 任务特定 mask 操作 latent。
-    - 设计动机：identifiability 是渐近性质，但不给一个能跑的算法社区会觉得只是理论；CMI 代理 + 标准 VAE 让任何 ML researcher 都能复现。
+identifiability 是个渐近性质，如果不给一个能跑的算法，社区会把它当纯理论搁置。本文于是把每个理论步骤都配上可实现的代理：CI test 直接在观测空间上做，用 conditional mutual information 当 proxy 来回避高维统计的麻烦；任务未知时就把任务表示作为额外 latent 一起学；latent 估计用标准 VAE 加 $\ell_1$ 正则；图像生成场景则换成 GAN，并用任务特定 mask 去操作 latent。这套"CMI 代理 + 标准 VAE/GAN"的组合让任何 ML researcher 都能直接复现，而不必先攒一套专用工具。
 
 ### 损失函数 / 训练策略
 没有新损失。任务结构发现阶段用 Fisher's z-test（线性高斯）或 CMI（深度模型）做 CI test，阈值 $p=0.05$；表示学习阶段用标准 VAE 重建 loss 加 $\ell_1$ 正则 $\lambda \|M\|_1$ 在 task-latent mask 上。CMI 用 MINE 估计。

@@ -54,23 +54,25 @@ tags:
 
 ### 关键设计
 
-1. **指出经典 SDE 的失败：诊断式抛物 + 四次 sanity check**：
+**1. 指出经典 SDE 的失败：用抛物 + 四次两个一维例子戳穿失效模式。**
 
-    - 功能：用最简单的一维例子戳穿经典一阶 / 二阶 SDE 在 $(L_0,L_1)$-光滑下的失效模式，把"修正 SDE 不可少"这件事讲得非常直观。
-    - 核心思路：在 $f(x)=\lambda x^2/2$ 上，经典一阶 ODE $dX_t=-\lambda X_t dt$ 给出 $f(X_t)=f(X_0)e^{-2\lambda t}$，跟 $\eta$ 无关；经典二阶 ODE $dX_t=-\nabla f(X_t)dt-\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)dt$ 反而预测 $f(X_t)=f(X_0)e^{-2\lambda(1+\lambda\eta/2)t}$ 即步长越大收敛越快。在 $f(x)=x^4/4$（典型 $(L_0,L_1)$）上，GD 一步是 $x_{k+1}=x_k(1-\eta x_k^2)$，要求 $\eta<2/x_k^2$（依赖当前迭代），所以**根本不存在**对所有初始化都稳的常数步长；但经典一阶 / 二阶 ODE 仍预测"全局收敛、$\eta$ 越大越快"。结论：在 $(L_0,L_1)$ 下经典 SDE 不只是不准，而是**质上错误**——即便取无穷小步长也不对。
-    - 设计动机：以往工作（包括 Li et al. 2017）把高阶 SDE 当作"更精细"的代理，本文用反例证明"更高阶"不等于"更忠实"，从而把焦点从"阶数"切换到"稳定性匹配"。
+文章先把"为什么非要修正 SDE"讲到无可辩驳。在 $f(x)=\lambda x^2/2$ 上，经典一阶 ODE $dX_t=-\lambda X_t dt$ 给出 $f(X_t)=f(X_0)e^{-2\lambda t}$，跟步长 $\eta$ 完全无关；经典二阶 ODE $dX_t=-\nabla f(X_t)dt-\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)dt$ 更离谱，预测 $f(X_t)=f(X_0)e^{-2\lambda(1+\lambda\eta/2)t}$——步长越大收敛越快。可离散 GD 明明要求 $\eta<2/\lambda$ 才稳。换到四次 $f(x)=x^4/4$（典型 $(L_0,L_1)$-光滑），GD 一步是 $x_{k+1}=x_k(1-\eta x_k^2)$，要求 $\eta<2/x_k^2$ 依赖当前迭代，所以根本不存在对所有初始化都稳的常数步长；但经典一阶/二阶 ODE 仍预言"全局收敛、$\eta$ 越大越快"。结论很重：在 $(L_0,L_1)$ 下经典 SDE 不是不准，而是质上错误，连无穷小步长都救不回来。这把研究焦点从过去追求的"SDE 阶数更高"切换到"稳定性是否匹配"。
 
-2. **符号翻正的修正一阶 SDE（ansatz + 漂移匹配）**：
+**2. 符号翻正的修正一阶 SDE（ansatz + 漂移匹配）：把曲率项符号从 − 改成 +。**
 
-    - 功能：构造一族在 $(L_0,L_1)$-光滑下能正确预言学习率约束的连续时间模型，作为后续所有理论的基础。
-    - 核心思路：先写下 GD 一步的离散二阶 Taylor 展开 $\frac{f(x_{k+1})-f(x_k)}{\eta}=-\|\nabla f(x_k)\|^2+\frac{\eta}{2}\nabla f(x_k)^\top\nabla^2 f(x_k)\nabla f(x_k)+O_{x_k}(\eta^2)$（注意紫色二阶项是 **+** 号），再写经典二阶 ODE 诱导的 $df(X_t)=-\|\nabla f(X_t)\|^2 dt - \frac{\eta}{2}\nabla f(X_t)^\top\nabla^2 f(X_t)\nabla f(X_t)dt$，二者**符号相反**——这正是经典 ODE 在大 $\eta$ 处预言"额外阻尼"而非"额外发散"的根本原因。作者据此猜测带可调系数的 ansatz $dX_t=-\nabla f(X_t)dt+\alpha\eta\nabla^2 f(X_t)\nabla f(X_t)dt$，让其诱导的损失漂移与离散展开到 $O(\eta)$ 阶完全匹配，唯一解为 $\alpha=1/2$；得到新 SDE $dX_t=-\nabla f(X_t)dt\;\bm{+}\;\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)dt+\sqrt{\eta}\sqrt{\Sigma(X_t)}dW_t$。Theorem C.5 形式化证明它是 SGD 的一阶弱近似。在抛物上立刻给出 $f(X_t)=f(X_0)e^{-2\lambda(1-\lambda\eta/2)t}$，**仅当 $\eta<2/\lambda$ 时收敛**——与 GD 完全吻合；在四次上诱导的损失漂移 $df(X_t)=(-X_t^6+\frac{3\eta}{2}X_t^8)dt$ 与离散展开 $-x_k^6+\frac{3}{2}\eta x_k^8+O(\eta^2)$ 一致，并在 $\eta X_t^2\gtrsim 1$ 时正确预言 drift 变为排斥、损失上升——精确捕捉 $(L_0,L_1)$ 下"可行步长必须随局部梯度尺度收缩"的事实。
-    - 设计动机：作者的判断是"模型阶数不重要，模型与所研究性质的匹配度才重要"；既然要研究稳定性阈值，那就应当让 SDE 的损失动力学与 GD 的损失动力学一致到 $O(\eta)$ 阶。比把二阶项加得更细要管用得多。
+为什么经典 SDE 错？作者把 GD 一步的离散二阶 Taylor 展开写出来：
 
-3. **统一收敛定理：DCSGD（仿射方差 + 压缩）与 DSignSGD（重尾）**：
+$$\frac{f(x_{k+1})-f(x_k)}{\eta}=-\|\nabla f(x_k)\|^2+\frac{\eta}{2}\nabla f(x_k)^\top\nabla^2 f(x_k)\nabla f(x_k)+O_{x_k}(\eta^2),$$
 
-    - 功能：把修正 SDE 套到两个分布式优化器上，给出第一份同时覆盖 $(L_0,L_1)$ + 压缩 + 仿射方差 / 重尾的收敛保证。
-    - 核心思路：**Thm 4.2（DCSGD）**：在 $f$ 是 $(L_0,L_1)$-光滑、每客户端有 $(\sigma_{0,i}^2,\sigma_{1,i}^2)$-仿射方差、压缩率 $\omega_i$ 条件下，要求学习率满足 $\eta\eta_t<\frac{2\epsilon}{G(1+\frac{\bar\omega+d(\overline{\sigma_1^2\omega}+\overline{\sigma_1^2})}{N})+\frac{L_1 d(\overline{\sigma_0^2}+\overline{\sigma_0^2\omega})}{N}}$，其中 $G=L_0+L_1\mathbb{E}\|\nabla f(X_t)\|_2$，则 $\mathbb{E}\|\nabla f(X_{\hat t})\|_2^2\to 0$。比经典 SDE 多出来的 **+1** 是关键——它在无噪无压缩 $(L_0,L_1)\to L$ 极限下恢复出经典 $\eta\eta_t<2/L_0$，弥补了 Thm 4.1（旧 SDE）在该退化下完全没限制的硬伤。**Thm 4.3（DSignSGD）**：在 student-$t_\nu$ 重尾 + $(L_0,L_1)$ 光滑下，要求 $\eta\eta_t<\ell_\nu/K$，其中 $K=\frac{L_1 d\sigma_{\mathcal{H},1}}{2N}+\sqrt{d}(L_0+L_1)M_\nu$。橙色项 $\sqrt{d}(L_0+L_1)M_\nu$ 同样是修正 SDE 才产生的，没有它的话即便 $\sigma_{\max,i}=0$ 也会错预言"无步长约束"。新结果蕴含一条朴素观察：DSignSGD 由于 sign 自带 elementwise 归一化，标准 Robbins-Monro 调度 $\eta_k=1/\sqrt{k+1}$ 即可在 $\nu=1$（期望都无界）下收敛，而 DCSGD 必须根据噪声 / 压缩动态归一化才能稳。
-    - 设计动机：把分散在 Khirirat (2024)、Faw et al. (2023)、Chen et al. (2023)、Crawshaw et al. (2022) 等多篇的部分结论统一进一个 SDE 框架，让"何时该归一化、归一化到什么程度"成为可由 $(L_0,L_1,\bar\omega,\overline{\sigma_1^2},N,d)$ 几个常数读出来的事。
+二阶项是 **+** 号；而经典二阶 ODE 诱导的损失漂移里这一项却是 **−** 号——符号反了，这正是它在大 $\eta$ 处预言"额外阻尼"而非"额外发散"的根源。于是作者用物理学常用的 ansatz 思路，直接猜一族带可调系数的修正方程 $dX_t=-\nabla f(X_t)dt+\alpha\eta\nabla^2 f(X_t)\nabla f(X_t)dt$，要求它诱导的损失漂移与上面的离散展开匹配到 $O(\eta)$ 阶，唯一解是 $\alpha=1/2$，得到
+
+$$dX_t=-\nabla f(X_t)\,dt+\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)\,dt+\sqrt{\eta}\sqrt{\Sigma(X_t)}\,dW_t,$$
+
+Theorem C.5 证明它是 SGD 的一阶弱近似。验证立竿见影：抛物上它给出 $f(X_t)=f(X_0)e^{-2\lambda(1-\lambda\eta/2)t}$，仅当 $\eta<2/\lambda$ 收敛，与 GD 严丝合缝；四次上诱导漂移 $df(X_t)=(-X_t^6+\frac{3\eta}{2}X_t^8)dt$ 与离散展开一致，并在 $\eta X_t^2\gtrsim1$ 时正确翻成排斥、损失上升，精确捕捉"可行步长必须随局部梯度尺度收缩"。这背后的方法论是：模型阶数不重要，模型与所研究性质（这里是损失动力学）的匹配度才重要。
+
+**3. 统一收敛定理：DCSGD（仿射方差 + 压缩）与 DSignSGD（重尾）。**
+
+有了忠实的 SDE，作者把它套到两个分布式优化器上，给出第一份同时覆盖 $(L_0,L_1)$ + 压缩 + 仿射方差/重尾的收敛保证。Thm 4.2（DCSGD）在 $(L_0,L_1)$-光滑、每客户端 $(\sigma_{0,i}^2,\sigma_{1,i}^2)$-仿射方差、压缩率 $\omega_i$ 下，要求 $\eta\eta_t<\frac{2\epsilon}{G(1+\frac{\bar\omega+d(\overline{\sigma_1^2\omega}+\overline{\sigma_1^2})}{N})+\frac{L_1 d(\overline{\sigma_0^2}+\overline{\sigma_0^2\omega})}{N}}$（$G=L_0+L_1\mathbb{E}\|\nabla f(X_t)\|_2$）即可保证 $\mathbb{E}\|\nabla f(X_{\hat t})\|_2^2\to0$。比经典 SDE 多出来的那个 **+1** 是关键——它在无噪无压缩 $(L_0,L_1)\to L$ 的退化极限下恢复出经典 $\eta\eta_t<2/L_0$，补上了旧 SDE 在该极限下"完全没限制"的硬伤。Thm 4.3（DSignSGD）在 student-$t_\nu$ 重尾下要求 $\eta\eta_t<\ell_\nu/K$、$K=\frac{L_1 d\sigma_{\mathcal{H},1}}{2N}+\sqrt{d}(L_0+L_1)M_\nu$，那个多出来的 $\sqrt{d}(L_0+L_1)M_\nu$ 同样是修正 SDE 才产生的，没有它即便 $\sigma_{\max,i}=0$ 也会错预言"无步长约束"。两条定理一对照就读出一个朴素结论：DSignSGD 因 sign 自带 elementwise 归一化，标准 Robbins–Monro 调度 $\eta_k=1/\sqrt{k+1}$ 就能在 $\nu=1$（期望都无界）下收敛，而 DCSGD 必须按噪声/压缩动态归一化才稳。它把 Khirirat、Faw、Chen、Crawshaw 等多篇的零散结论统一成"何时该归一化、归一化多强"可由 $(L_0,L_1,\bar\omega,\overline{\sigma_1^2},N,d)$ 几个常数读出来的事。
 
 ### 损失函数 / 训练策略
 不涉及训练 / 损失设计；理论结果建立在连续时间 SDE 上，离散优化器通过弱近似 Def 3.4 与之关联。文献中已有多项实验验证（Compagnoni et al. 2025a/b, Marshall et al. 2025）表明这类 SDE 在真实 DNN / 数据集上能跟踪对应优化器。

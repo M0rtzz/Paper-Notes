@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **DP-TTA 隐私分析（流式 + change-one 邻接）**:
+**1. DP-TTA 隐私分析：用流式 + change-one 邻接省掉跨步组合损耗。**
 
-    - 功能：给每个 DP-TTA 方法一个紧的 $(\epsilon,\delta)$ 保证，而不必走 DP-SGD 的多 epoch 子采样组合。
-    - 核心思路：因为 TTA 是单 epoch、每样本只见一次，所以一旦单步保证了 $\mu$-GDP，后续所有步骤都是 DP 结果的 post-processing，跨步无需 composition。采用 "change-one"（替换一个样本）而非 "leave-one-out" 邻接（流式批大小固定，删一个样本不自然），代价是敏感度从 $C$ 翻倍到 $2C$，因此 DP-Tent 满足 $\mu$-GDP with $\mu = 2/\sigma$，进而 $\delta(\epsilon) = \Phi(-\sigma\epsilon/2 + 1/\sigma) - e^\epsilon \Phi(-\sigma\epsilon/2 - 1/\sigma)$。
-    - 设计动机：让分析跟着 TTA 的真实使用方式走，而不是硬套 DP-SGD 的训练假设；同时把"流式+无重采样"从劣势翻成优势——省掉了昂贵的组合损耗。
+直接把 DP-SGD 的核算搬过来会很亏——它建立在多 epoch、子采样、leave-one-out 邻接的训练假设上，组合损耗很重。本文抓住 TTA 的一个结构性事实：它是单 epoch、流式的，每个样本只在一步里被处理一次。于是一旦单步保证了 $\mu$-GDP，后续所有步骤都只是 DP 结果的 post-processing，跨步根本不需要 composition。邻接关系改用 "change-one"（替换一个样本）而非 "leave-one-out"——流式批大小固定，删一个样本不自然——代价是敏感度从 $C$ 翻倍到 $2C$，因此 DP-Tent 满足 $\mu=2/\sigma$ 的 $\mu$-GDP，进而
 
-2. **去过滤 / 后处理化 (DP-EATA / DP-SAR / DP-DeYO / DP-COME)**:
+$$\delta(\epsilon)=\Phi(-\sigma\epsilon/2+1/\sigma)-e^\epsilon\Phi(-\sigma\epsilon/2-1/\sigma)$$
 
-    - 功能：让五个非平凡 TTA 方法各自的"数据相关算子"都满足 DP，要么内化进裁剪，要么挪出隐私边界。
-    - 核心思路：EATA 的熵阈值过滤和与历史预测的多样性过滤会让有效 batch size 漂移、需要私有统计量，作者直接删掉两个 filter，但保留 Fisher 正则 $\mathcal{R}(\theta_t,\theta_0)$（只依赖参数和源参数，是 DP post-processing），更新写为 $g_t(x_i) = \nabla_\theta(e^{H_0 - H(x_i,\theta)} H(x_i,\theta_t))$ 后照常裁剪+加噪。SAR 的两点梯度 sharpness 更新会双倍消耗隐私预算，改用 Park 等的私有 SAM：用上一轮的私有梯度 $\tilde g_{t-1}$ 构造扰动方向 $\tilde \epsilon_t = \rho \tilde g_{t-1}/\|\tilde g_{t-1}\|_2$，只评一次梯度。DeYO 把 PLPD 项 $e^{\text{PLPD}_\theta(x_i,x_i')}$ 塞进损失，让它走 per-sample 裁剪通道。COME 用 Dirichlet 不确定度 $\ell_\text{COME} = -\sum_k b_k\log b_k - u\log u$ 替换熵，本身无须改造。
-    - 设计动机：每个 TTA 方法都有一两个"擅自查询测试集"的算子，必须辨认出哪些可以挪到 DP 结果之后（免费）、哪些必须吞进裁剪（涨噪声）、哪些代价太大干脆删掉；这也直接回答了"哪些 TTA 设计天然亲 DP"。
+这套分析让核算跟着 TTA 的真实使用方式走，并把"流式 + 无重采样"从劣势翻成优势——省掉了昂贵的组合损耗，这也是后面 $\epsilon=10$ 几乎免费的根源。
 
-3. **Per-sample clipping 作为 TTA 的免费稳定器**:
+**2. 去过滤 / 后处理化：把五个 TTA 方法的"数据相关算子"逐一搬出隐私边界。**
 
-    - 功能：在不加噪声 ($\sigma=0$) 的情况下，单独使用逐样本梯度裁剪本身也能稳定并提升 TTA 精度。
-    - 核心思路：传统认知是 per-batch clipping 对 TTA 无效（Niu et al., 2023），但作者把粒度细化到 per-sample——保留每个样本各自方向，只压它的范数。在 EATA / SAR / DeYO / COME 上保留原始过滤器、不加 DP 噪声、只加 per-sample clip，平均自适应增益从 $0.1\%$ 提升到 $4.1\%$，ImageNet-R 上甚至有 14% 的提升。
-    - 设计动机：TTA 的伪标签梯度本身就是高方差、易被异常样本主导的；逐样本裁剪相当于一种"硬性"的方向稀疏化与异常压制，让坏样本不至于在持续 (continual) 流里诱发模型坍缩，这一发现独立于 DP 也有价值。
+每个非平凡 TTA 方法都有一两个"擅自查询测试集"的算子，DP 化的核心就是辨认哪些可以挪到 DP 结果之后（免费）、哪些必须吞进裁剪（涨噪声）、哪些代价太大干脆删掉。EATA 的熵阈值过滤和多样性过滤会让有效 batch size 漂移、需要私有统计量，作者直接删掉两个 filter，但保留只依赖参数和源参数的 Fisher 正则 $\mathcal{R}(\theta_t,\theta_0)$（它是 DP post-processing），更新写成 $g_t(x_i)=\nabla_\theta(e^{H_0-H(x_i,\theta)}H(x_i,\theta_t))$ 后照常裁剪加噪。SAR 的两点 sharpness 更新会双倍消耗隐私预算，改用 Park 等的私有 SAM：用上一轮私有梯度 $\tilde g_{t-1}$ 构造扰动方向 $\tilde\epsilon_t=\rho\tilde g_{t-1}/\|\tilde g_{t-1}\|_2$，只评一次梯度。DeYO 把 PLPD 项 $e^{\text{PLPD}_\theta(x_i,x_i')}$ 塞进损失、走 per-sample 裁剪通道；COME 用 Dirichlet 不确定度 $\ell_\text{COME}=-\sum_k b_k\log b_k-u\log u$ 替换熵，本身就无须改造。这套"删过滤、保正则、内化加权"的三档处理，恰好也回答了"哪些 TTA 设计天然亲 DP"。
+
+**3. Per-sample clipping 作为 TTA 的免费稳定器：裁剪本身就能涨点。**
+
+过去的认知是 per-batch clipping 对 TTA 无效（Niu et al., 2023），所以裁剪一直被当成纯粹的隐私成本。本文把粒度细化到 per-sample——保留每个样本各自的梯度方向、只压它的范数——发现即便在零噪声（$\sigma=0$）下单独加裁剪，平均自适应增益就从 $0.1\%$ 提到 $4.1\%$、ImageNet-R 上甚至 14%。背后的道理是 TTA 的伪标签梯度本就高方差、易被异常样本主导，逐样本裁剪相当于一种硬性的方向稀疏化与异常压制，让坏样本不至于在持续（continual）流里诱发模型坍缩。这一发现独立于 DP 也有价值，可以被非隐私 TTA 工作直接当成一个近乎零代价的稳定 trick 采用。
 
 ### 损失函数 / 训练策略
 

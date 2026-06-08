@@ -44,23 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **One-step learning dynamics 与 eNTK 等价形式**:
+**1. One-step learning dynamics 与 eNTK 等价形式：把 ZO 与 FO 的差异收成一个投影矩阵。**
 
-    - 功能：把 ZO-SGD 的一步参数更新对模型在另一个数据点 $\mathbf{x}_o$ 上的 log-prob 影响显式写出。
-    - 核心思路：对 $\Delta \log \pi_t(y \mid \mathbf{x}_o)$ 做一阶 Taylor 展开后代入 ZO-SGD 更新规则，得到 $\Delta \log \pi \approx -\eta \mathcal{A}_t(\mathbf{x}_o) \mathcal{K}_t(\mathbf{x}_o, \mathbf{x}_u; U_{t,P}) \mathcal{G}_t(\mathbf{x}_u, \mathbf{y}_u)$，其中投影核 $\mathcal{K}_t(\mathbf{x}_o, \mathbf{x}_u; U_{t,P}) = \nabla_\theta z(\mathbf{x}_o)^\top U_{t,P} U_{t,P}^\top \nabla_\theta z(\mathbf{x}_u)$，对应 FO 版本则把 $U_{t,P} U_{t,P}^\top$ 换成单位矩阵。区别一眼可见：ZO 比 FO 多了一个由微扰拼成的随机投影矩阵 $U_{t,P} \in \mathbb{R}^{d \times P}$。
-    - 设计动机：这种"差只差一个投影矩阵"的等价形式直接打通了 JL 引理，让"维度无关性"的证明变成几行 JL 推论。
+理论与实验对不上的根源是损失这个 scalar 视角看不见 ZO 真正影响什么。作者把视角搬到 function space，对模型在另一数据点 $\mathbf{x}_o$ 上的 log-prob 变化做一阶 Taylor 展开后代入 ZO-SGD 更新，得到
 
-2. **Johnson-Lindenstrauss 投影界**:
+$$\Delta\log\pi\approx-\eta\,\mathcal{A}_t(\mathbf{x}_o)\,\mathcal{K}_t(\mathbf{x}_o,\mathbf{x}_u;U_{t,P})\,\mathcal{G}_t(\mathbf{x}_u,\mathbf{y}_u),$$
 
-    - 功能：把 ZO 与 FO 核差异 $\|\Delta \mathcal{K}\|_F$ 控制成 $\epsilon$ 的函数，并显式给出维度无关界。
-    - 核心思路：把 $\Delta\mathcal{K}[i,j]$ 写成原内积 $\langle \nabla_\theta z_i(\mathbf{x}_o), \nabla_\theta z_j(\mathbf{x}_u)\rangle$ 与投影内积 $\langle U_{t,P}^\top \nabla_\theta z_i, U_{t,P}^\top \nabla_\theta z_j\rangle$ 之差；JL 引理保证只要 $P \geq (2\ln n + \ln(1/\delta))/(c(\mathcal{Q})\epsilon^2)$，投影后所有内积同时被保持到 $1 \pm \epsilon$，其中 $c(\mathcal{Q})$ 是分布的集中常数。带回核差异的 Frobenius 范数得到 $\|\Delta\mathcal{K}\|_F^2 \leq \frac{\epsilon^2 V}{2}(\|\nabla_\theta z(\mathbf{x}_o)\|_F^2 + \|\nabla_\theta z(\mathbf{x}_u)\|_F^2)^2$，**右端没有 $d$**。
-    - 设计动机：这正是论文要的"dimension-free"结论——只要 $V$（vocabulary / 类别数）不爆炸，模型从 LeNet 缩放到 LLaMA 都不会让 ZO 与 FO 的学习轨迹拉开太大。
+其中投影核 $\mathcal{K}_t=\nabla_\theta z(\mathbf{x}_o)^\top U_{t,P}U_{t,P}^\top\nabla_\theta z(\mathbf{x}_u)$，FO 版本只是把 $U_{t,P}U_{t,P}^\top$ 换成单位阵。差异一眼可见：ZO 比 FO 多了一个由微扰拼成的随机投影 $U_{t,P}\in\mathbb{R}^{d\times P}$。正是这个"只差一个投影矩阵"的等价形式，把维度无关性的证明直接接到 JL 引理上，后面只剩几行推论。
 
-3. **Gaussian vs Rademacher 微扰对比**:
+**2. Johnson-Lindenstrauss 投影界：把核差异控成不含 $d$ 的函数。**
 
-    - 功能：解释"为何工程实践里二值 Rademacher 经常和 Gaussian 表现一样好"。
-    - 核心思路：从最优化视角，单微扰估计器的二阶矩 Gaussian 给出 $(d+2)\|\nabla\ell\|^2$，Rademacher 给出 $d\|\nabla\ell\|^2$，两者**都正比于 $d$**，与传统"高维下都低效"一致；但从 eNTK 视角，两者的 JL 集中常数都 $\approx 1/4$，**且界不依赖于 $d$**。也就是说，二者在"投影质量"上几乎无差，论文称之为 "distribution robustness"——决定 ZO fidelity 的是 $P$ 不是分布。
-    - 设计动机：弥合工程经验（Rademacher 与 Gaussian 都好用）与理论直觉（差距应该正比于 $d$）；同时为以后用更激进的二值/三值微扰提供理论支撑。
+有了投影形式，就把 $\Delta\mathcal{K}[i,j]$ 写成原内积与投影内积之差。JL 引理保证只要 $P\ge(2\ln n+\ln(1/\delta))/(c(\mathcal{Q})\epsilon^2)$，投影后所有内积同时被保持到 $1\pm\epsilon$，其中 $c(\mathcal{Q})$ 是微扰分布的集中常数。带回核差异得
+
+$$\|\Delta\mathcal{K}\|_F^2\le\frac{\epsilon^2 V}{2}\big(\|\nabla_\theta z(\mathbf{x}_o)\|_F^2+\|\nabla_\theta z(\mathbf{x}_u)\|_F^2\big)^2,$$
+
+右端只含输出维 $V$、彻底没有模型维 $d$。这就是论文要的 dimension-free：只要词表/类别数 $V$ 不爆，模型从 LeNet 缩放到 LLaMA 都不会让 ZO 与 FO 的学习轨迹拉开太大——MeZO 在 OPT-13B 上仍 work 的谜题就此有了 kernel 级解释。
+
+**3. Gaussian vs Rademacher 微扰对比：决定保真度的是 $P$ 不是分布。**
+
+工程上二值 Rademacher 常和 Gaussian 一样好用，但传统方差分析说差距应正比于 $d$。作者从两个视角拆开看：最优化视角下单微扰估计器的二阶矩，Gaussian 是 $(d+2)\|\nabla\ell\|^2$、Rademacher 是 $d\|\nabla\ell\|^2$，两者都正比于 $d$，符合"高维都低效"的旧直觉；但 eNTK 视角下两者的 JL 集中常数都约 $1/4$、界都不依赖 $d$。也就是说它们在投影质量上几乎无差，作者称之为 distribution robustness——真正决定 ZO 保真度的是微扰数 $P$，而不是微扰分布。这既弥合了经验与理论的裂缝，也为以后用更激进的二值/三值微扰提供了理论支撑。
 
 ### 损失函数 / 训练策略
 无新训练策略；理论部分给出当学习率 $\eta = \mathcal{O}(\sqrt{P/(dLT)})$ 时 ZO-SGD 的优化视角收敛率 $\mathcal{O}(\sqrt{dL/(PT)})$（仍含 $d$），与 eNTK 视角的维度无关界形成对比，提醒读者"收敛率 vs 学习轨迹相似度"是两件事。

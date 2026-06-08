@@ -47,23 +47,21 @@ tags:
 
 ### 关键设计
 
-1. **梯度结构分解 + 频率瓶颈刻画**:
+**1. 梯度结构分解 + 频率瓶颈刻画：定位 GD 慢在低频长尾。**
 
-    - 功能：把 softmax 模型的梯度写成 $\nabla\mathcal{L}(\mathbf{W})=\sum_{i,j} p_j\,(\hat p_{i\mid j}-p_{i\mid j})\,\widetilde{\mathbf{E}}_i \mathbf{E}_j^\top$，三因子分别是"查询频率 × 预测残差 × 嵌入关联"，这是后续所有定理的基础。
-    - 核心思路：在 noiseless 情形下证明 $\mathcal{L}_j^{\mathrm{GD}}(t)\eqsim 1/(p_j t)$、总损失 $\mathcal{L}^{\mathrm{GD}}(t)\eqsim K/t$（Theorem 4.1）；同时 $\mathcal{L}_j^{\mathrm{Muon}}(t)\eqsim K e^{-(1+o_K(1))t}$（Theorem 4.2），所有子任务以同一指数速率收敛。要把损失从 $\epsilon$ 降到目标精度，GD 需 $\mathcal{O}(1/\epsilon)$ 步，Muon 只需 $\mathcal{O}(\log(1/\epsilon))$ 步。
-    - 设计动机：直接定位 GD 慢在哪 —— 有效步长沿第 $j$ 个分量正比于 $p_j$，长尾类被锁死；Muon 通过 $\mathrm{msgn}$ 把谱归一化，等价于剥离了这个 $p_j$ 因子。
+要解释 Muon 为什么快，先得看清 GD 慢在哪。softmax 模型的梯度可写成三因子相乘
 
-2. **三阶段动力学 + Muon 缩放律 $\tilde{\mathcal{O}}(T^{-2})$**:
+$$\nabla\mathcal{L}(\mathbf{W})=\sum_{i,j} p_j\,(\hat p_{i\mid j}-p_{i\mid j})\,\widetilde{\mathbf{E}}_i\mathbf{E}_j^\top,$$
 
-    - 功能：在 label-noise 情形给出 Muon 子任务损失的两阶段闭式（下降阶段 $\sim Ke^{-\eta t}+\eta t$，振荡阶段 $\sim \eta^2+\mathcal{L}_j^\ast$，临界时间 $T_j^\ast=\Theta(\log K/\eta)$，Theorem 5.1），并把这放进幂律频谱 $\tilde p_i\propto i^{-\beta}$（$\beta>1$）下推出缩放律。
-    - 核心思路：选学习率 $\eta=\Theta(\log K/T)$ 让下降阶段的 $Ke^{-\eta T}$ 与振荡阶段的 $\eta^2$ 取得最优平衡，得到 $\mathcal{L}^{\mathrm{Muon}}(T)-\mathcal{L}^\ast\lesssim (\log K/T)^2$（Theorem 5.8）；同样的频谱下，GD 的逐子任务有 $\mathcal{L}_j^{\mathrm{GD}}(T)-\mathcal{L}_j^\ast\gtrsim e^{-\eta p_j T}\log K$，对 $j$ 求和并用积分近似 $\int_1^M z^{-\beta} e^{-z^{-\beta}T}dz\approx T^{-(1-1/\beta)}$ 得到 GD 下界 $\tilde{\Omega}(T^{-(1-1/\beta)})$（Theorem 5.7）。把总损失到 $\mathcal{O}(M^2\log K/K)$ 所需步数比较，Muon 相对 GD 有 $\Omega(C)$ 倍（组大小）加速。
-    - 设计动机：这是 Muon 自己的第一条 neural scaling law，并解释了为什么在大规模预训练（$K,M,T$ 同时趋于无穷）下 Muon 的损失-算力曲线更陡。
+即"查询频率 $p_j$ × 预测残差 × 嵌入关联"，这是后续所有定理的基础。沿第 $j$ 个分量 GD 的有效步长正比于 $p_j$，于是无噪声下逐子任务损失 $\mathcal{L}_j^{\mathrm{GD}}(t)\eqsim 1/(p_j t)$、总损失 $\eqsim K/t$（Theorem 4.1），长尾类被这个 $p_j$ 因子锁死。Muon 的 $\mathrm{msgn}$ 做谱归一化恰好把 $p_j$ 剥掉，所有子任务以同一指数速率收敛 $\mathcal{L}_j^{\mathrm{Muon}}(t)\eqsim Ke^{-(1+o_K(1))t}$（Theorem 4.2）；要把损失降到目标精度，GD 需 $\mathcal{O}(1/\epsilon)$ 步，Muon 只需 $\mathcal{O}(\log(1/\epsilon))$ 步。
 
-3. **预条件视角：$\mathrm{msgn}$ 等价于隐式任务对齐**:
+**2. 三阶段动力学 + Muon 缩放律 $\tilde{\mathcal{O}}(T^{-2})$：写出 Muon 自己的 neural scaling law。**
 
-    - 功能：揭示 Muon 加速的机制 —— 在任务表征空间里 $\mathrm{msgn}(\mathbf{G}_t)\approx \mathbf{I}_K$，即 Muon 实际上在做 $\widehat{\mathbf{W}}_t\approx t\mathbf{I}_K$ 的对齐更新。
-    - 核心思路：归纳证明 Muon 从 $\mathbf{W}_0=\mathbf{0}$ 出发保留频率组诱导的块对称结构（Proposition 6.1），残差矩阵分解为 $\mathbf{P}-\widehat{\mathbf{P}}_t=\mathbf{R}_t^+-\mathbf{R}_t^-$（块对角项 + 块常数项），在 $M(C-1)$ 维组内对比子空间上 $\mathrm{msgn}$ 退化为单位阵，剩下 $M$ 维块均值方向上贡献最多 $M/C$ 的偏离，因此 $\|\mathrm{msgn}(\mathbf{P}-\widehat{\mathbf{P}}_t)-\mathbf{I}_K\|_{\max}\le 1/C+M/C=o_K(1)$。进一步对照"任务表征对齐的 SignGD"（TRA-SignGD）的更新 $\widehat{\mathbf{W}}_{t+1}=\widehat{\mathbf{W}}_t-\eta\,\mathrm{sgn}(\mathbf{G}_t)$，Theorem 6.3 证明它能用 $\eta$ 学习率匹配 Muon 用 $2\eta$ 的所有结论。
-    - 设计动机：把"为什么 Muon 比 SignGD 强"讲清楚 —— SignGD 要在原坐标里做坐标符号，必须 oracle 知道未知的 $\mathbf{E},\widetilde{\mathbf{E}}$ 才能对齐；Muon 借助 SVD 自动找到这组任务表征基，无需 oracle，因此实践可行。
+有了无噪声的指数收敛，再加 label noise 才能对上真实预训练。Muon 子任务损失呈两阶段：下降阶段 $\sim Ke^{-\eta t}+\eta t$、振荡阶段 $\sim\eta^2+\mathcal{L}_j^\ast$，临界时间 $T_j^\ast=\Theta(\log K/\eta)$（Theorem 5.1）。选 $\eta=\Theta(\log K/T)$ 让下降项 $Ke^{-\eta T}$ 与振荡项 $\eta^2$ 取最优平衡，得 $\mathcal{L}^{\mathrm{Muon}}(T)-\mathcal{L}^\ast\lesssim(\log K/T)^2$（Theorem 5.8）。同一幂律频谱 $\tilde p_i\propto i^{-\beta}$（$\beta>1$）下，GD 逐子任务 $\gtrsim e^{-\eta p_j T}\log K$，对 $j$ 求和并用积分近似 $\int_1^M z^{-\beta}e^{-z^{-\beta}T}\mathrm{d}z\approx T^{-(1-1/\beta)}$ 给下界 $\tilde\Omega(T^{-(1-1/\beta)})$（Theorem 5.7）。两者相比，Muon 的缩放指数 $-2$ 不依赖 $\beta$，而 GD 的 $-(1-1/\beta)$ 在 $\beta\to 1$ 时退化到 0，把总损失降到同一精度 Muon 比 GD 快 $\Omega(C)$ 倍（组大小）——这正是大规模预训练里 Muon 损失-算力曲线更陡的形式化解释。
+
+**3. 预条件视角：$\mathrm{msgn}\approx\mathbf{I}_K$ 是自动找到任务表征基的隐式对齐。**
+
+加速的机制可以讲得更透：在任务表征空间里 $\mathrm{msgn}(\mathbf{G}_t)\approx\mathbf{I}_K$，即 Muon 实际在做 $\widehat{\mathbf{W}}_t\approx t\mathbf{I}_K$ 的各向同性对齐更新。归纳证明 Muon 从 $\mathbf{W}_0=\mathbf{0}$ 出发保留频率组诱导的块对称结构（Proposition 6.1），残差分解为 $\mathbf{P}-\widehat{\mathbf{P}}_t=\mathbf{R}_t^+-\mathbf{R}_t^-$，在 $M(C-1)$ 维组内对比子空间上 $\mathrm{msgn}$ 退化为单位阵，仅 $M$ 维块均值方向贡献至多 $M/C$ 偏离，故 $\|\mathrm{msgn}(\mathbf{P}-\widehat{\mathbf{P}}_t)-\mathbf{I}_K\|_{\max}\le 1/C+M/C=o_K(1)$。再对照理想化的 TRA-SignGD（更新 $\widehat{\mathbf{W}}_{t+1}=\widehat{\mathbf{W}}_t-\eta\,\mathrm{sgn}(\mathbf{G}_t)$），Theorem 6.3 证明它用 $\eta$ 能匹配 Muon 用 $2\eta$ 的所有结论。区别就此清楚：SignGD 要在原坐标做符号、必须 oracle 知道未知的 $\mathbf{E},\widetilde{\mathbf{E}}$ 才能对齐，而 Muon 借 SVD 自动找到这组任务表征基、无需 oracle——优势精确归因到 SVD 的自动对齐能力，而非笼统的"矩阵优化更强"。
 
 ### 损失函数 / 训练策略
 所有理论结果都基于零初始化 $\mathbf{W}_0=\mathbf{0}_{K\times K}$、constant learning rate $\eta$；scaling law 章节取 $\eta=\Theta(\log K/T)$；GD 的稳定性条件 $\eta p_1\lesssim 1$ 由不动点 Jacobian 的 linear stability 给出（Proposition 5.4）。

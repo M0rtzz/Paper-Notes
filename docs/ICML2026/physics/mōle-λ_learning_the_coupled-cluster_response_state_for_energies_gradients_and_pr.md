@@ -46,23 +46,21 @@ MōLe-Λ 把分子轨道学习从只预测耦合簇右态 $T$ 振幅扩展到同
 
 ### 关键设计
 
-1. **共享等变 backbone + 四头镜像读出**:
+**1. 共享等变 backbone + 四头镜像读出：一个网络一次产出 $T$ 与 $\Lambda$ 四个振幅。**
 
-    - 功能：用一个 backbone 一次性产出 $T$ 与 $\Lambda$ 四个振幅张量，避免训练四个独立模型。
-    - 核心思路：每个局域 MO 嵌成等变隐表示，经 Odd-MACE 消息传递与 MO 间注意力得到对偶/四元不变特征 $\mathbf{y}_{ia}$ 与 $\mathbf{y}_{ijab}$；singles 由 $t_i^a = \mathrm{OddReadout}_{T_1}(\mathbf{y}_{ia})$、$\lambda_a^i = \mathrm{OddReadout}_{\Lambda_1}(\mathbf{y}_{ia})$ 给出；doubles 由 $t_{ij}^{ab} = \mathrm{OddReadout}_{T_2}(\mathbf{y}_{ijab})$、$\lambda_{ab}^{ij} = \mathrm{OddReadout}_{\Lambda_2}(\mathbf{y}_{ijab})$ 给出。"奇读出"指对轨道相位翻转 sign-equivariant，保证预测振幅在 MO 相位规范下行为正确。
-    - 设计动机：四个张量满足同一组对称性与同样的反对称指标结构，强制共享 backbone 既减少参数又把它们绑定在同一隐空间，从而保留下游 CC 后处理所要求的代数一致性；四头镜像同时令 $\Lambda$ 的归纳偏置与 $T$ 完全对齐。
+依赖完整响应态的偶极/四极/极化率/密度都必须经由左态 $\Lambda$ 振幅，而 $\Lambda_1,\Lambda_2$ 的张量结构与 $T_1,T_2$ 完全对称——都是占据/虚轨道指标上的反对称张量、满足同样的轨道相位翻转奇等变性和片段间局域性。所以作者无需重设计架构，直接复用 MōLe 的共享等变 backbone：每个局域 MO 嵌成等变隐表示，经 Odd-MACE 消息传递与 MO 间注意力得到不变特征 $\mathbf{y}_{ia},\mathbf{y}_{ijab}$，再镜像出四个"奇读出头"——$t_i^a=\mathrm{OddReadout}_{T_1}(\mathbf{y}_{ia})$、$\lambda_a^i=\mathrm{OddReadout}_{\Lambda_1}(\mathbf{y}_{ia})$、$t_{ij}^{ab}=\mathrm{OddReadout}_{T_2}(\mathbf{y}_{ijab})$、$\lambda_{ab}^{ij}=\mathrm{OddReadout}_{\Lambda_2}(\mathbf{y}_{ijab})$（"奇读出"指对轨道相位翻转 sign-equivariant，保证振幅在 MO 相位规范下行为正确）。共享 backbone 既省参数，又把四个张量绑进同一隐空间，保留下游 CC 后处理所需的代数一致性，同时让 $\Lambda$ 的归纳偏置与 $T$ 完全对齐。
 
-2. **MP2 残差目标**:
+**2. MP2 残差目标：把"学整张量"换成"学相对 MP2 的修正"。**
 
-    - 功能：在低数据区把"学整张量"改成"学相对 MP2 的修正"，让网络只学物理上小但化学上关键的高阶相关。
-    - 核心思路：闭壳实振幅情形下 MP2 给出零阶基线 $t_{ij,\mathrm{MP2}}^{ab} = \langle ij||ab\rangle / (\varepsilon_i+\varepsilon_j-\varepsilon_a-\varepsilon_b)$，$T_1^{\mathrm{MP2}}=0$，且 $\Lambda_2^{\mathrm{MP2}} = T_2^{\mathrm{MP2}}$、$\Lambda_1^{\mathrm{MP2}}=0$。把 canonical 基下的 MP2 振幅用同一组局域化矩阵转到局域规范后，残差模式让网络拟合 $\Delta t_{ij}^{ab} = t_{ij,\mathrm{CCSD}}^{ab} - t_{ij,\mathrm{MP2}}^{ab}$ 与 $\Delta \lambda_{ab}^{ij} = \lambda_{ab,\mathrm{CCSD}}^{ij} - t_{ij,\mathrm{MP2}}^{ab}$；直接模式则不减基线。
-    - 设计动机：CCSD 标签极贵（QM7 重算一次都要专门的 GPU 集群），低数据下网络很难把全部相关结构都学出来；用 MP2 把已知的主阶动力学相关搬掉，让 NN 只补"差值"，等价于把物理先验注入到目标里，显著降低样本复杂度。
+CCSD 标签极贵（QM7 重算一次都要专门的 GPU 集群），低数据下网络很难把全部相关结构学出来。作者在闭壳实振幅情形下用 MP2 当零阶基线——$t_{ij,\mathrm{MP2}}^{ab}=\langle ij||ab\rangle/(\varepsilon_i+\varepsilon_j-\varepsilon_a-\varepsilon_b)$，且 $T_1^{\mathrm{MP2}}=0$、$\Lambda_2^{\mathrm{MP2}}=T_2^{\mathrm{MP2}}$、$\Lambda_1^{\mathrm{MP2}}=0$——把 canonical 基下的 MP2 振幅经同一组局域化矩阵转到局域规范后，让网络只拟合残差 $\Delta t_{ij}^{ab}=t_{ij,\mathrm{CCSD}}^{ab}-t_{ij,\mathrm{MP2}}^{ab}$ 与 $\Delta\lambda_{ab}^{ij}=\lambda_{ab,\mathrm{CCSD}}^{ij}-t_{ij,\mathrm{MP2}}^{ab}$。等于把已知的主阶动力学相关搬掉、NN 只补物理上小但化学上关键的高阶差值，相当于把物理先验注入目标本身，显著降低样本复杂度——消融显示残差模式在低数据区 MAE 明显更低。
 
-3. **振幅重建损失而非性质损失**:
+**3. 振幅重建损失而非性质损失：监督"态"而不是"性质"。**
 
-    - 功能：所有性质都不进损失函数，只监督四个振幅张量，确保模型学的是"态"而非"性质"。
-    - 核心思路：每个分子的损失为 $\mathcal{J}_{\mathrm{amp}} = \frac{1}{B}\sum_{b}\sum_{X\in\{T_1,T_2,\Lambda_1,\Lambda_2\}} w_X \sum_{n=1}^{N_X^{(b)}} (\hat X_{b,n} - X_{b,n}^{\mathrm{ref}})^2$；本文权重 $w_X$ 全设为 1。下游能量来自 $E_{\mathrm{corr}} = \sum_{ijab}(\frac{1}{4}t_{ij}^{ab}+\frac{1}{2}t_i^a t_j^b)\langle ij||ab\rangle$，受力来自 $\mathbf{F}_A = -\partial \mathcal{L}(T,\Lambda)/\partial \mathbf{R}_A$（含 CPHF 轨道响应），单/二粒子观测量通过 1-RDM $\gamma_{pq}=\langle \Phi_0|(1+\hat\Lambda)e^{-\hat T}a_p^\dagger a_q e^{\hat T}|\Phi_0\rangle$ 与 2-RDM $\Gamma_{pq,rs}$ 重建。
-    - 设计动机：直接监督某个具体性质会让模型只在该性质上精确、其他性质失真；监督振幅则强制网络拟合整个响应态，所有性质都享受同一组振幅的代数一致性，并自然支持还没被监督过的新观测量（如未来想算高阶多极矩、电子相关熵等）。
+直接监督某个具体性质会让模型只在该性质上准、其他失真。MōLe-Λ 的损失里所有性质都不出现，只监督四个振幅张量
+
+$$\mathcal{J}_{\mathrm{amp}}=\frac{1}{B}\sum_{b}\sum_{X\in\{T_1,T_2,\Lambda_1,\Lambda_2\}}w_X\sum_{n=1}^{N_X^{(b)}}\big(\hat X_{b,n}-X_{b,n}^{\mathrm{ref}}\big)^2$$
+
+（本文 $w_X$ 全设 1）。下游量全部从这组振幅经标准 CC 后处理解析导出：能量 $E_{\mathrm{corr}}=\sum_{ijab}(\tfrac14 t_{ij}^{ab}+\tfrac12 t_i^a t_j^b)\langle ij||ab\rangle$，受力 $\mathbf{F}_A=-\partial\mathcal{L}(T,\Lambda)/\partial\mathbf{R}_A$（含 CPHF 轨道响应），单/二粒子观测量经 1-RDM $\gamma_{pq}=\langle\Phi_0|(1+\hat\Lambda)e^{-\hat T}a_p^\dagger a_q e^{\hat T}|\Phi_0\rangle$ 与 2-RDM 重建。这样所有性质共享同一组振幅的代数一致性，不会顾此失彼，还自然支持还没被监督过的新观测量（高阶多极矩、电子相关熵等）。
 
 ## 实验关键数据
 

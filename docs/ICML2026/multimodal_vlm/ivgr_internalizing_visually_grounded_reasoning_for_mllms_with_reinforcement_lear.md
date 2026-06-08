@@ -45,23 +45,21 @@ iVGR 在 Qwen2.5-VL / Qwen3-VL 上做 GRPO 后训练。对每个 query $q$，策
 
 ### 关键设计
 
-1. **双流 GRPO 训练**：
+**1. 双流 GRPO 训练：一个策略同时学两种推理范式，靠共享 backbone 完成迁移。**
 
-    - 功能：让一个策略同时学会两种推理范式，并通过共享 backbone 完成知识迁移。
-    - 核心思路：grounded 流按 TreeVGR 的格式约束输出 `<think>...</think><answer>...</answer>`，奖励为 $R^b_i = R_{\text{format}} + R_{\text{acc}} + R_{\text{box}}$，其中 $R_{\text{box}}=\tfrac{1}{2}\big(\tfrac{1}{|\mathcal{B}_{\text{gt}}|}\sum_{b}\mathrm{MaxIoU}(b,\mathcal{B}_{\text{pred}})+\tfrac{1}{|\mathcal{B}_{\text{pred}}|}\sum_{\hat{b}}\mathrm{MaxIoU}(\hat{b},\mathcal{B}_{\text{gt}})\big)$ 是双向 IoU 匹配，兼顾召回与精度。textual 流去掉 box 监督，奖励为 $R^t_i = R_{\text{format}} + R_{\text{acc}} + R_{\text{consistency}}$。两条流各自做 group normalization 出优势，再一起进 GRPO 更新。
-    - 设计动机：直接训单一文本 CoT 没有视觉监督；直接训单一 grounded CoT 把定位变成 must-do，推理时干扰答题。双流并发可以在同一 policy 上“一边训定位、一边训免坐标推理”，再借一致性奖励完成跨流迁移。
+如果只训纯文本 CoT，就没有视觉监督；如果只训 grounded CoT，又把定位变成 must-do，推理时反过来干扰答题。iVGR 的破法是让同一个策略并发跑两条流。grounded 流按 TreeVGR 的格式输出 `<think>...</think><answer>...</answer>`，奖励 $R^b_i=R_{\text{format}}+R_{\text{acc}}+R_{\text{box}}$，其中 box 项用双向 IoU 匹配兼顾召回和精度：
 
-2. **一致性奖励 + Rollout Archive**：
+$$R_{\text{box}}=\tfrac{1}{2}\Big(\tfrac{1}{|\mathcal{B}_{\text{gt}}|}\sum_{b}\mathrm{MaxIoU}(b,\mathcal{B}_{\text{pred}})+\tfrac{1}{|\mathcal{B}_{\text{pred}}|}\sum_{\hat{b}}\mathrm{MaxIoU}(\hat{b},\mathcal{B}_{\text{gt}})\Big)$$
 
-    - 功能：把 grounded 流中“真正看准了目标”的轨迹挑出来当老师，奖励 textual 流学它的视觉焦点。
-    - 核心思路：先做参考筛选——grounded rollout 需同时满足 $R_{\text{format}}=1$、$R_{\text{acc}}=1$、$R_{\text{box}}>\tau$ 三关才能当老师；为了对抗 policy 更新带来的 batch 内质量抖动，维护一个 per-query 的 Rollout Archive，按规则 $\mathcal{Z}_{\text{archive}}^{(q)}\leftarrow\arg\max_{z\in\{\mathcal{Z}_{\text{archive}}^{(q)}, o_{\text{best}}^{b}\}} R_{\text{box}}(z)$ 滚动保留历史最优。然后用一个外部 LLM（Qwen2.5-72B）做 judge，按四档打分：$\alpha=1.0$ 完全一致 / $0.7$ 单向偏差（漏或多其一）/ $0.3$ 既漏又多 / $0.0$ 直接矛盾，最终 $R_{\text{consistency}}=\alpha$，若 archive 为空则置 0。
-    - 设计动机：直接拿 IoU 当跨流监督不行——textual 流压根不输出坐标。一致性奖励的巧妙在于把“看哪里”转写成“描述了什么”，让 LLM judge 把视觉对齐变成语义对齐，对模型只输出自然语言的 textual 流完全可微（在 GRPO 意义下）。Archive 则解决 RL 训练中“老师质量先低后高”的非平稳问题，避免错误监督锁死早期模型。
+textual 流则去掉 box 监督，奖励为 $R^t_i=R_{\text{format}}+R_{\text{acc}}+R_{\text{consistency}}$。两条流各自做 group normalization 得到优势 $\mathcal{A}^b,\mathcal{A}^t$ 再一起更新策略。这样就能「一边训定位、一边训免坐标推理」，把定位先验和纯文本推理同时压进一个 policy。
 
-3. **工具辅助的测试时扩展（Tool-Assisted Test-Time Scaling）**：
+**2. 一致性奖励 + Rollout Archive：把「看哪里」转写成「描述了什么」，让无坐标的文本流也能对齐老师。**
 
-    - 功能：在保留“推理时默认文本 CoT”的同时，可选地把模型的 box 输出复用起来做多视图融合。
-    - 核心思路：先让模型按 grounded prompt 输出一遍带 box 的 CoT，抽出所有预测框；再用 crop tool 切出对应局部视图，同时构造一个覆盖全部 box 的**最小外接矩形 union crop** 保留物体间相对关系；最后把原图、局部 crop、union crop 拼成多视图输入，再让模型走标准文本 CoT 答题。
-    - 设计动机：双流训练天然保留了模型“被 prompt 后能输 box”的能力，但默认推理仍走文本以避坑；当确实需要细节时，把 grounding 当作免费的视觉路由器，用最小外接矩形保住空间上下文，是对 DeepEyes/PixelReasoner 这类工具流的优雅吸收而非取代。
+跨流迁移的难点是：textual 流根本不输出坐标，没法直接拿 IoU 当监督。一致性奖励绕开这点——先从 grounded 流里筛出「真看准了」的轨迹当老师（需同时满足 $R_{\text{format}}=1$、$R_{\text{acc}}=1$、$R_{\text{box}}>\tau$ 三关），再用一个外部 LLM（Qwen2.5-72B）judge 给 textual rollout 与老师的视觉焦点是否一致打四档分：$\alpha=1.0$ 完全一致 / $0.7$ 单向偏差 / $0.3$ 既漏又多 / $0.0$ 直接矛盾，令 $R_{\text{consistency}}=\alpha$。这等于把视觉对齐翻译成语义对齐，对只产出自然语言的 textual 流在 GRPO 意义下完全可用。但 RL 训练里老师质量是非平稳的（先低后高、batch 间抖动），所以再配一个 per-query 的 Rollout Archive，按 $\mathcal{Z}_{\text{archive}}^{(q)}\leftarrow\arg\max_{z\in\{\mathcal{Z}_{\text{archive}}^{(q)},o_{\text{best}}^{b}\}}R_{\text{box}}(z)$ 滚动保留历史最优老师，archive 为空时 consistency 置 0——免去显式 warmup，避免早期错误监督把模型锁死。
+
+**3. 工具辅助的测试时扩展：默认走文本 CoT，必要时把 box 当免费视觉路由器。**
+
+双流训练有个副产品——模型「被 prompt 后仍能输出 box」的能力被保留了下来。iVGR 把它做成一个可选的 test-time scaling：先让模型按 grounded prompt 跑一遍带 box 的 CoT、抽出所有预测框，用 crop tool 切出对应局部视图，同时构造一个覆盖全部 box 的**最小外接矩形 union crop** 来保住物体间的相对关系，最后把原图、局部 crop、union crop 拼成多视图输入再走标准文本 CoT 答题。默认推理仍走纯文本以避开 grounding 干扰，只在确实需要细节时才调用——用最小外接矩形保留空间上下文，相当于把 DeepEyes/PixelReasoner 那类工具流优雅地吸收进来，而不是被它取代。
 
 ### 损失函数 / 训练策略
 两条流各自在 GRPO 下独立做 group normalization、独立算 PPO surrogate loss，再求和反传。$\tau$ 控制 grounded 老师的入选门槛，$N$ 是每流每 query 的 rollout 数；archive 跨 step 持久化，确保一致性奖励的稳定性。

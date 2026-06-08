@@ -49,23 +49,21 @@ FB-PbRL 由两阶段组成，输入是无奖励离线数据 $\mathcal{D}$ 和成
 
 ### 关键设计
 
-1. **CPTS：把 BT 偏好损失改写成 FB 潜空间里的 SimCLR**:
+**1. CPTS：把 BT 偏好损失解析地改写成 FB 潜空间里的 SimCLR，搜任务向量而非学奖励。**
 
-    - 功能：在冻结的 FB 表示上，仅用偏好数据直接搜出任务向量 $\boldsymbol{z}_{\text{CPTS}}^\star$，不学奖励也不学偏好模型。
-    - 核心思路：将段落 $\sigma$ 的潜表示定义为 $\mathbf{B}_{\bar\omega}(\sigma):=\tfrac{1}{k}\sum_i \mathbf{B}_{\bar\omega}(s_i,a_i)$，记 $\boldsymbol{z}_\sigma^+:=\mathbf{B}_{\bar\omega}(\sigma^+)$、$\boldsymbol{z}_\sigma^-:=\mathbf{B}_{\bar\omega}(\sigma^-)$。在线性可实现奖励 $r_{\boldsymbol{\psi}}(s,a)=\mathbf{B}_{\bar\omega}(s,a)^\top\boldsymbol{\psi}$ 和正交归一性 $\mathbf{H}_\mathbf{B}=\mathbf{I}_d$ 下，$\boldsymbol{\psi}=\mathbf{H}_\mathbf{B}^{-1}\boldsymbol{z}_{\boldsymbol{\psi}}$，把 BT 损失代入可得 $\mathcal{L}_{\text{pref}}(\boldsymbol{z};\bar\omega)=-\mathbb{E}[\log\frac{\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^+)}{\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^+)+\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^-)}]$，即 SimCLR 对比损失。CPTS 直接 $\boldsymbol{z}_{\text{CPTS}}^\star=\arg\min_{\boldsymbol{z}}\mathcal{L}_{\text{pref}}(\boldsymbol{z};\bar\omega)$，配 cosine 相似度退化为内积（FB 默认 $\boldsymbol{z}$ 单位归一）。
-    - 设计动机：直接学奖励的 over-optimization（Fig.2 显示 BT 学出的奖励都塌到中间值）是 PbRL 在稀缺反馈下的主要病根；把目标搬到 FB 潜空间后，搜索的是一个低维凸目标的 minimizer，避开了高容量奖励网络的过拟合，同时由于优化变量是低维向量，理论上还能给出"近最优控制取决于偏好数据覆盖度和估计误差"的形式化保证。
+直接学奖励在稀缺反馈下会 over-optimization（Fig.2 显示 BT 学出的奖励全塌到中段、和真值分布不符），是 PbRL 的主要病根。作者的关键洞察是：在 FB 框架本来就有的两个约束——奖励对 backward 表示线性可表示 $r_{\boldsymbol{\psi}}(s,a)=\mathbf{B}_{\bar\omega}(s,a)^\top\boldsymbol{\psi}$、backward 表示正交归一 $\mathbf{H}_\mathbf{B}=\mathbf{I}_d$——下，BT 偏好损失能解析地重写成对比损失。把段落潜表示定义为 $\mathbf{B}_{\bar\omega}(\sigma):=\tfrac{1}{k}\sum_i \mathbf{B}_{\bar\omega}(s_i,a_i)$，记 $\boldsymbol{z}_\sigma^+,\boldsymbol{z}_\sigma^-$ 为偏好对正负段的潜码，由 $\boldsymbol{\psi}=\mathbf{H}_\mathbf{B}^{-1}\boldsymbol{z}_{\boldsymbol{\psi}}$ 代入 BT 损失即得
 
-2. **PG-FT：以当前 $\boldsymbol{z}^\star$ 为锚反向微调 FB 潜空间**:
+$$\mathcal{L}_{\text{pref}}(\boldsymbol{z};\bar\omega)=-\mathbb{E}\Big[\log\frac{\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^+)}{\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^+)+\exp(\boldsymbol{z}^\top\boldsymbol{z}_\sigma^-)}\Big],$$
 
-    - 功能：克服"预训练时 $\boldsymbol{z}\sim\mathcal{N}(0,I_d)$ 是任务无关先验，CPTS 搜出的 $\boldsymbol{z}_{\text{CPTS}}^\star$ 往往离偏好数据诱导的 $\boldsymbol{z}_\sigma$ 簇很远"（Fig.3(a) 的视觉证据）。
-    - 核心思路：不再把 FB 表示当冻结量，交替更新——一步用 $\nabla_{\boldsymbol{z}}\mathcal{L}_{\text{pref}}(\boldsymbol{z};\omega)$ 更新 $\boldsymbol{z}^\star$；一步以 $\boldsymbol{z}^\star$ 为锚，用 $\mathcal{L}_m(\theta,\omega;\boldsymbol{z}^\star)+\lambda\mathcal{L}_{\text{ortho}}(\omega)+\alpha\mathcal{L}_{\text{pref}}(\omega;\boldsymbol{z}^\star)$ 微调 $\mathbf{F}_\theta,\mathbf{B}_\omega$，让表示"专门化"到当前偏好任务诱导的方向。
-    - 设计动机：通用 RFRL 表示是"什么任务都能凑合用"，但对单一具体偏好任务的方向往往不够锐利；PG-FT 用偏好信号当任务指令书把潜空间几何重塑成 reward-aligned（Fig.3(b) 显示 $\boldsymbol{z}_\sigma$ 按真实回报渐变着色），同时让 $\boldsymbol{z}^\star$ 落在 in-distribution 区域，policy $\pi(\cdot\mid s,\boldsymbol{z}^\star)$ 能更准确地解码任务。
+正是 SimCLR 对比形式。于是 CPTS 直接在冻结的 FB 表示上搜 $\boldsymbol{z}_{\text{CPTS}}^\star=\arg\min_{\boldsymbol{z}}\mathcal{L}_{\text{pref}}$——这是个低维凸目标的 minimizer，既避开了高容量奖励网络的过拟合，又能给出"近最优控制取决于偏好覆盖度和估计误差"的形式化保证。
 
-3. **三类损失协同的交替训练目标**:
+**2. PG-FT：以当前 $\boldsymbol{z}^\star$ 为锚反向微调 FB 潜空间，让通用表示专门化到具体偏好任务。**
 
-    - 功能：把 FB 标准的表示学习目标和对比偏好目标合在一个交替优化里，既保住 FB 几何约束又加入偏好对齐。
-    - 核心思路：measure loss $\mathcal{L}_m(\theta,\omega;\boldsymbol{z})=\mathbb{E}[(\mathbf{F}_\theta(s,a,\boldsymbol{z})^\top\mathbf{B}_\omega(s^\dagger,a^\dagger)-\gamma\mathbf{F}_{\hat\theta}(s',\pi(s'),\boldsymbol{z})^\top\mathbf{B}_{\hat\omega}(s^\dagger,a^\dagger))^2]-2\mathbb{E}[\mathbf{F}_\theta(s,a,\boldsymbol{z})^\top\mathbf{B}_\omega(s',a')]$ 是 successor measure 的 Bellman 残差；orthonormality $\mathcal{L}_{\text{ortho}}(\omega)=\|\mathbb{E}[\mathbf{B}_\omega(s,a)\mathbf{B}_\omega(s,a)^\top]-\mathbf{I}_d\|_F^2$ 保证 $\mathbf{H}_\mathbf{B}\approx\mathbf{I}_d$（是 SimCLR 等价性的前提）；偏好损失 $\mathcal{L}_{\text{pref}}$ 既驱动 $\boldsymbol{z}^\star$ 搜索也驱动 $\mathbf{B}_\omega$ 微调。算法循环：采 transitions 更新 measure + ortho，采 preferences 更新 $\mathbf{B}_\omega$ 与 $\boldsymbol{z}^\star$，最后用 $\mathbf{F},\mathbf{B},\boldsymbol{z}^\star$ 同步更新 policy。
-    - 设计动机：在不引入新模块的前提下，让"表示是否还满足 FB 的几何约束"和"表示是否对齐偏好"两类信号互相约束，避免 fine-tuning 把通用表示冲坏。
+预训练时 $\boldsymbol{z}\sim\mathcal{N}(0,I_d)$ 是任务无关先验，CPTS 搜出来的 $\boldsymbol{z}_{\text{CPTS}}^\star$ 往往离偏好数据诱导的 $\boldsymbol{z}_\sigma$ 簇很远（Fig.3(a) 的视觉证据），通用 RFRL 表示"什么任务都能凑合用"但对单一偏好任务的方向不够锐利。PG-FT 不再把 FB 当冻结量，而是交替更新：一步用 $\nabla_{\boldsymbol{z}}\mathcal{L}_{\text{pref}}(\boldsymbol{z};\omega)$ 更新 $\boldsymbol{z}^\star$，一步以 $\boldsymbol{z}^\star$ 为锚用 $\mathcal{L}_m(\theta,\omega;\boldsymbol{z}^\star)+\lambda\mathcal{L}_{\text{ortho}}(\omega)+\alpha\mathcal{L}_{\text{pref}}(\omega;\boldsymbol{z}^\star)$ 微调 $\mathbf{F}_\theta,\mathbf{B}_\omega$。偏好信号在这里当任务指令书，把潜空间几何重塑成 reward-aligned（Fig.3(b) 里 $\boldsymbol{z}_\sigma$ 按真实回报渐变着色），同时把 $\boldsymbol{z}^\star$ 拉回 in-distribution 区域，让 policy $\pi(\cdot\mid s,\boldsymbol{z}^\star)$ 能更准地解码任务。
+
+**3. 三类损失协同的交替训练目标：既保住 FB 几何约束又加入偏好对齐。**
+
+fine-tuning 的风险是把通用表示冲坏，所以要让"表示是否还满足 FB 几何"和"表示是否对齐偏好"两类信号互相约束。measure loss $\mathcal{L}_m$ 是 successor measure 的 Bellman 残差，保证 $\mathbf{F},\mathbf{B}$ 还在正确分解 successor measure；orthonormality loss $\mathcal{L}_{\text{ortho}}(\omega)=\|\mathbb{E}[\mathbf{B}_\omega(s,a)\mathbf{B}_\omega(s,a)^\top]-\mathbf{I}_d\|_F^2$ 保住 $\mathbf{H}_\mathbf{B}\approx\mathbf{I}_d$，而这正是设计 1 那条 SimCLR 等价性成立的前提；偏好损失 $\mathcal{L}_{\text{pref}}$ 则既驱动 $\boldsymbol{z}^\star$ 搜索也驱动 $\mathbf{B}_\omega$ 微调。算法循环就是：采 transitions 更新 measure + ortho，采 preferences 更新 $\mathbf{B}_\omega$ 与 $\boldsymbol{z}^\star$，最后用 $\mathbf{F},\mathbf{B},\boldsymbol{z}^\star$ 同步更新 policy——不引入任何新模块，靠三类损失的相互牵制完成偏好对齐。
 
 ### 损失函数 / 训练策略
 - 总损失：$\mathcal{L}_m(\theta,\omega;\boldsymbol{z}^\star)+\lambda\mathcal{L}_{\text{ortho}}(\omega)+\alpha\mathcal{L}_{\text{pref}}(\boldsymbol{z}^\star,\omega)$，默认 $\alpha=100$。

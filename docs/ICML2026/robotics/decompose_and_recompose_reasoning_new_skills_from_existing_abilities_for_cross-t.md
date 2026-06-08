@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Atomic Skills Collection（解构）**:
+**1. Atomic Skills Collection（解构）：把每段 demo 拆成可组合的 skill-action 对。**
 
-    - 功能：把每段 demo 转成可解释、可组合的 skill-action 对。
-    - 核心思路：keyframe 由 gripper 状态变化 + joint velocity 阈值 + episode 终止三条规则提取；每段用 VLM 标 $\mathrm{Verb}[\mathrm{obj}]$ 或 $\mathrm{Verb}[\mathrm{obj}_1,\mathrm{obj}_2]$（Verb ∈ {Reach, Move, Grasp, Release, ...}）；**gripper 硬约束**：open→closed 强制 Grasp，closed→open 强制 Release，避免 VLM 标错；规则后处理强制 (movable, target) 参数顺序、并把 open 状态下的关系动作降级为 Move。
-    - 设计动机：低层数值动作没有语义、无法跨任务复用；带 verb-arg 标签则让 LLM 把 demo 当"句子片段"来组合。gripper 约束利用物理常识把标注错误率压到最低。
+低层数值动作序列没有语义、无法跨任务复用，LLM 拿到也只能照葫芦画瓢。这一步把每段 demo 转成带标签的原子技能。keyframe 由三条规则提取——gripper 状态变化、joint velocity 阈值、episode 终止；每段用 VLM 标成 $\mathrm{Verb}[\mathrm{obj}]$ 或 $\mathrm{Verb}[\mathrm{obj}_1,\mathrm{obj}_2]$（Verb ∈ {Reach, Move, Grasp, Release, ...}）。关键的工程细节是 gripper 硬约束：open→closed 强制标成 Grasp、closed→open 强制 Release，直接用物理常识把 VLM 的标注错误率压到最低；再加规则后处理强制 (movable, target) 参数顺序、把 open 状态下的关系动作降级为 Move。带上 verb-arg 标签后，LLM 才能把 demo 当"句子片段"来组合，而不是当一段无意义的数字。
 
-2. **Dual-Library Demonstration Retrieval（重构-相关性+覆盖度）**:
+**2. Dual-Library Demonstration Retrieval（重构）：同时满足任务相关与技能覆盖。**
 
-    - 功能：同时满足"任务相关"（动态库）与"技能覆盖完整"（静态库）。
-    - 核心思路：动态库的 ranking score $s_i=\alpha\tilde s_i^\mathrm{vis}+(1-\alpha)s_i^\mathrm{plan}$，其中视觉相似 $s_i^\mathrm{vis}=\mathbf f^q\cdot \mathbf f_i$（DINOv3 cosine），计划相似 $s_i^\mathrm{plan}=\lambda J(\mathcal V(\hat{\mathcal S}),\mathcal V(\mathcal S_i))+(1-\lambda)J(\mathcal B(\hat{\mathcal S}),\mathcal B(\mathcal S_i))$（verb 集 + verb-bigram 集合的 Jaccard）。静态库每个 demo 用 object-agnostic token $\mathcal T(d)=\{\mathrm{V:}v\}\cup\{\mathrm{B:}v_1\to v_2\}$ 描述；token 权重 $w_t=(\log\frac{N+1}{\mathrm{df}(t)+1}+1)^\beta$（IDF）；选择 score $=\sum_{t\in \mathcal T(d)\setminus\mathcal C}w_t / (1+\gamma|\mathcal S_d|)$（覆盖增益除以 demo 长度惩罚）。inference 时算 coverage gap $\mathcal G=\mathcal T(\hat{\mathcal S})\setminus \cup_{d\in\mathcal D_\mathrm{dyn}}\mathcal T(d)$，从静态库贪心选 $\le k_\mathrm{cov}$ 个 demo 补齐。
-    - 设计动机：单看相似度可能漏关键技能（如解决"开微波炉放食物再关门"任务时，相似 demo 可能都是"开-放"但漏"关门"）；object-agnostic + IDF 让"罕见但关键"的技能被优先补足；长度惩罚抑制长 demo 占用 context。
+只按视觉/动力学相似度检索可能漏掉新任务必需的关键技能（比如解"开微波炉→放食物→关门"时，相似 demo 都是"开-放"却漏了"关门"）。所以用两个互补的库。动态库管"任务相关"，ranking score $s_i=\alpha\tilde s_i^\mathrm{vis}+(1-\alpha)s_i^\mathrm{plan}$，视觉相似 $s_i^\mathrm{vis}=\mathbf f^q\cdot \mathbf f_i$ 用 DINOv3 cosine，计划相似 $s_i^\mathrm{plan}=\lambda J(\mathcal V(\hat{\mathcal S}),\mathcal V(\mathcal S_i))+(1-\lambda)J(\mathcal B(\hat{\mathcal S}),\mathcal B(\mathcal S_i))$ 用 verb 集和 verb-bigram 集的 Jaccard。静态库管"技能覆盖"，每个 demo 用 object-agnostic token $\mathcal T(d)=\{\mathrm{V:}v\}\cup\{\mathrm{B:}v_1\to v_2\}$ 描述，token 权重按 IDF $w_t=(\log\frac{N+1}{\mathrm{df}(t)+1}+1)^\beta$，选择 score 是覆盖增益除以长度惩罚 $\sum_{t\in \mathcal T(d)\setminus\mathcal C}w_t / (1+\gamma|\mathcal S_d|)$。推理时先算 coverage gap $\mathcal G=\mathcal T(\hat{\mathcal S})\setminus \cup_{d\in\mathcal D_\mathrm{dyn}}\mathcal T(d)$，再从静态库贪心补 $\le k_\mathrm{cov}$ 个 demo。IDF 让"罕见但关键"的技能（如 Close、Insert）被优先补足，长度惩罚抑制长 demo 占满 context——任务相关性和技能覆盖度是两个正交需求，各用一个库来管。
 
-3. **Skill-Augmented In-Context Learning（推理）**:
+**3. Skill-Augmented In-Context Learning（推理）：在技能脚手架上做组合推理。**
 
-    - 功能：让 LLM 在 skill-action 对的语义脚手架上做组合推理，输出离散化 7-DoF 动作序列。
-    - 核心思路：每个 demo 以 (instruction, atomic skill sequence, action sequence) 三元组拼成文本 context；LLM 接 query 的 instruction + initial observation（离散化对象坐标 + gripper 状态）+ planner 预测的技能序列，按 "decompose query → recompose from existing skills" 范式输出 $\{a_1^q,\ldots,a_T^q\}$，每个 $a_t$ 是 3D voxel index + Euler bin + gripper bit。
-    - 设计动机：让 LLM 显式看到"上一帧 Reach[knife]、下一帧 Grasp[knife]、再下一帧 Move[knife, board]"的因果链条，触发"我可以把已知 Reach+Grasp+Move 序列组合起来解决新任务"的推理，而不是套着已知轨迹形状硬贴。
+有了语义化的 demo，就能让 LLM 真正做组合而非模式匹配。每个 demo 拼成 (instruction, atomic skill sequence, action sequence) 三元组当 context，LLM 接 query 的 instruction、初始观测（离散化对象坐标 + gripper 状态）和 planner 预测的技能序列，按"decompose query → recompose from existing skills"范式输出 $\{a_1^q,\ldots,a_T^q\}$，每个 $a_t$ 是 3D voxel index + Euler bin + gripper bit。让 LLM 显式看到"上一帧 Reach[knife]、下一帧 Grasp[knife]、再下一帧 Move[knife, board]"这样的因果链条，就能触发"我可以把已知的 Reach+Grasp+Move 组合起来解决新任务"的推理，而不是套着已知轨迹形状硬贴。整条 pipeline 全程用预训练权重（DINOv3 / planner / VLM / LLM）、不更新任何参数，跨域迁移阻力极小。
 
 ### 损失函数 / 训练策略
 **完全 training-free**：DINOv3、planning agent、VLM、LLM 全部使用预训练权重，不更新任何参数。超参数 $\alpha,\lambda,\beta,\gamma,k_\mathrm{sim},k_\mathrm{cov}$ 按经验选择。

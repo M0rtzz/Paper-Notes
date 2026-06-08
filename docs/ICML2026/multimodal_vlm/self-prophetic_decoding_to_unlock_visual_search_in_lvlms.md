@@ -44,23 +44,25 @@ SeProD 把一对模型耦合在一起：post-training 后的 LVLM 叫 search mod
 
 ### 关键设计
 
-1. **Search-Prophet 双模型配对与单步聚焦**:
+**1. Search-Prophet 双模型配对与单步聚焦：让规划者和单步专家各管一摊。**
 
-    - 功能：把多步搜索骨架与单步基础能力解耦——search 管全局轨迹与跨步上下文，prophet 只在当前裁剪图 $I_i$ 上做一步"专家级"判断。
-    - 核心思路：prophet 不接收 search 的文本输出 $C_i$，避免被对方的推理痕迹带偏；查询 $Q^p$ 按 search 当前模式切换——grounding 模式下用一个 grounding verification query $Q^g$ 问 prophet"当前裁剪图里有没有目标区域、在哪"，answering 模式下直接复用原始 $Q$ 让 prophet 草拟答案。两种模式下 prophet 都按 $p_p(O_i\mid I_i, Q^p)=\prod_j p_p(o_{i,j}\mid I_i,Q^p,o_{i,<j})$ 自回归生成。
-    - 设计动机：作者发现"用文本提示形式喂 prophet 输出"等同于工具调用接口，会让 prefix 要么不起作用要么打断连贯性；而让 prophet 单独看图、search 决定问什么，才能把"任务相关的关注点"与"独立的单步能力"分开传递。
+后训练把多步搜索骨架装进了 search model，却让 grounding、OCR 这些单步能力退化；而预训练底座恰恰保住了这些单步能力。SeProD 的做法是让这两个模型分工——search 管全局轨迹与跨步上下文，prophet 只盯着当前裁剪图 $I_i$ 做一步"专家级"判断。关键是 prophet **不接收** search 的文本输出 $C_i$，免得被对方的推理痕迹带偏；它看到的查询 $Q^p$ 随 search 当前模式切换：grounding 模式下换成一个验证查询 $Q^g$ 问 prophet"当前裁剪图里有没有目标、在哪"，answering 模式下直接复用原始 $Q$ 让 prophet 草拟答案，两种模式都按 $p_p(O_i\mid I_i, Q^p)=\prod_j p_p(o_{i,j}\mid I_i,Q^p,o_{i,<j})$ 自回归生成长度 $L_d$ 的草稿。
 
-2. **概率阈值预言式接受**:
+作者发现，若改成"把 prophet 输出当文本提示喂回 search"，就等同于退回工具调用接口——prefix 要么不起作用、要么打断推理连贯性。让 prophet 单独看图、search 决定问什么，才能把"任务相关的关注点"与"独立的单步能力"分两条线传递。
 
-    - 功能：把 prophet 生成的 $O_i$ 当作可被 search 接受的 token 前缀，而不是外部输入；接受的部分像 search 自己生成的一样进入 KV cache，被后续 token 共同解码。
-    - 核心思路：对 $O_i$ 的每个 token $o_{i,j}$ 计算几何平均一致性分数 $s_j = p_s(o_{i,j}\mid H_i,o_{i,<j})^{\alpha} \cdot p_p(o_{i,j}\mid I_i,Q^p,o_{i,<j})^{1-\alpha}$，$\alpha$ 初始化为 0.5 并按该 token 在 search logits 里的归一化排名自动调整（排名越高 $\alpha$ 越大，越偏向 search 原生分布）。从第一个 $s_j<\tau$ 的位置开始拒绝，后续 token 直接从 $p_s(x_j\mid H_i,x_{<j})$ 采样。所有 $s_j$ 可以一次前向并行算完，因此整段草稿评估的时间相当于一次普通解码步。
-    - 设计动机：相比直接覆盖输出或当作 prefix prompt，按联合概率门限接受的好处是——只有那些本就处于 search 高似然区的 token 才被吸收，保住了原生输出分布（论文用 Fig. 2(c) 验证 SeProD 曲线与原模型几乎重合），既借到 prophet 的单步知识，又不会让 search 的多步推理"性格突变"。
+**2. 概率阈值预言式接受：只吸收 search 本就高似然的草稿 token。**
 
-3. **Grounding 验证与答案草拟两类前缀**:
+prophet 的草稿不是当外部输入硬塞，而是当作 search 可以选择性接受的 token 前缀——接受的部分像 search 自己生成的一样进 KV cache，和后续 token 一起解码。对 $O_i$ 的每个 token $o_{i,j}$ 算一个几何平均一致性分数
 
-    - 功能：把 prophet 的两类输出分别接到 search 的不同位置——grounding 验证结果当作下一轮推理片段 $R_{i+1}$ 的前缀，答案草稿当作当前轮 $A_i$ 的前缀。
-    - 核心思路：grounding 模式下 prophet 回答 true/false，true 时附带区域细节作为草稿 $O_i$；这串前缀被 search 接受后会改写它"下一步去看哪里"的推理。answering 模式下 prophet 直接吐答案，search 用预言式接受机制边接受边生成 $A_i$，因此 search 自己不需要先把 $A_i$ 跑完再校正，节省一次完整答案的解码。
-    - 设计动机：作者把"指引下一步搜索"与"修正最终答案"分开处理，是因为这两类前缀作用的 token 位置不同（一个在后续轮、一个在当前轮末），分两路才能让 prophet 的单步能力在搜索轨迹的对应位置发力。
+$$s_j = p_s(o_{i,j}\mid H_i,o_{i,<j})^{\alpha} \cdot p_p(o_{i,j}\mid I_i,Q^p,o_{i,<j})^{1-\alpha}$$
+
+其中 $\alpha$ 初始为 0.5，再按该 token 在 search logits 里的归一化排名自动调整（排名越高、$\alpha$ 越大，越偏向 search 的原生分布）。从第一个 $s_j<\tau$ 的位置起拒绝，其后的 token 直接从 $p_s(x_j\mid H_i,x_{<j})$ 采样。所有 $s_j$ 能在一次前向里并行算完，所以整段草稿评估的耗时相当于一个普通解码步，没有额外延迟。
+
+这种按联合概率门限接受的方式，好处是只有那些本就落在 search 高似然区的 token 才被吸收——既借到了 prophet 的单步知识，又不会让 search 的多步推理"性格突变"，论文用 Fig. 2(c) 验证 SeProD 的输出分布曲线与原模型几乎重合。
+
+**3. Grounding 验证与答案草拟两类前缀：把单步能力接到轨迹的对应位置。**
+
+prophet 的两类输出作用在不同的 token 位置，所以分两路处理。grounding 模式下 prophet 回答 true/false，为 true 时附上区域细节作为草稿 $O_i$，这串前缀被接受后会改写 search"下一步去看哪里"的推理片段 $R_{i+1}$；answering 模式下 prophet 直接吐答案，search 用同一套预言式接受机制边接受边生成当前轮的 $A_i$，于是不必先把答案完整跑一遍再校正，省下一次完整答案的解码。把"指引下一步搜索"和"修正最终答案"拆开，正是因为前者落在后续轮、后者落在当前轮末，分两路才能让 prophet 的单步能力在轨迹的正确位置发力。
 
 ### 损失函数 / 训练策略
 SeProD 完全 training-free，不引入任何可训练参数。两个超参数：一致性阈值 $\tau$ 控制接受严格度，平衡因子 $\alpha$ 在线自适应；prophet model 默认用与 search 同款底座（如 Qwen-2.5-VL-3B），也允许选用更小的同源底座以进一步降本。

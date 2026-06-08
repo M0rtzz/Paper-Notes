@@ -43,23 +43,17 @@ tags:
 
 ### 关键设计
 
-1. **SAM 反因果模型 + 统一条件独立准则**:
+**1. SAM 反因果模型 + 统一条件独立准则：让"是哪种偏差"这个问题消失。**
 
-    - 功能：把 confounder（fork）、collider（latently conditioned）、mediator（含 stable/unstable 子类）三种偏差结构统一到一张图里，并证明因果稳定性等价于一个可观测的条件独立约束 $\hat{Y} \perp \mathbf{B} \mid Y$（$\mathbf{B} = \mathbf{W} \cup \mathbf{Z}$）。
-    - 核心思路：定义反事实稳定效应 ctf-stable（沿 $Y \to X \to \hat{Y}$ 走的"健康"路径）、反事实间接效应 ctf-IE（沿 $Y \to \mathbf{W} \to \hat{Y}$ 的捷径）、反事实虚假效应 ctf-SE（沿 $Y$—$\mathbf{Z}$—$\hat{Y}$ 的非定向通路）。定理 2.3 证明：若 $\hat{Y} \perp \mathbf{W}, \mathbf{Z} \mid Y$，则 ctf-IE 和 ctf-SE 都为零，模型因果稳定；推论 2.5 进一步把 $\mathbf{W}$ 和 $\mathbf{Z}$ 合并为 $\mathbf{B}$。
-    - 设计动机：现有方法常按偏差类型设计不同算法，但路径特异性分析告诉我们："是哪种偏差"在这个准则下并不重要——只要存在 ctf-stable 路径并且偏差被观测到，单一独立约束就够了，从而避免方法碎片化。
+现有方法常按偏差类型（confounder/collider/mediator）各设计一套算法，互不兼容。作者用一张反因果图把它们统一：在 SAM 里定义反事实稳定效应 ctf-stable（沿 $Y \to X \to \hat{Y}$ 走的"健康"路径）、反事实间接效应 ctf-IE（沿 $Y \to \mathbf{W} \to \hat{Y}$ 的捷径）、反事实虚假效应 ctf-SE（沿 $Y$—$\mathbf{Z}$—$\hat{Y}$ 的非定向通路）。定理 2.3 证明：若 $\hat{Y} \perp \mathbf{W}, \mathbf{Z} \mid Y$，则 ctf-IE 和 ctf-SE 都为零、模型因果稳定；推论 2.5 进一步把 $\mathbf{W}$ 和 $\mathbf{Z}$ 合并为 $\mathbf{B}$。路径特异性分析告诉我们："是哪种偏差"在这个准则下并不重要——只要存在 ctf-stable 路径且偏差被观测到，单一独立约束 $\hat{Y} \perp \mathbf{B} \mid Y$ 就够了，方法因此不再碎片化。
 
-2. **条件距离相关作为非线性条件独立度量**:
+**2. 条件距离相关作为非线性条件独立度量：黑盒友好、任意类型组合都成立。**
 
-    - 功能：用 dCov$^2(X, Y \mid Z)$ 在强负型度量空间（含欧氏空间）下"为零等价于条件独立"的性质，给出一个能捕获任意非线性、任意维度依赖的正则项；其归一化版本 $\mathrm{dCor}^2 = \mathrm{dCov}^2 / \sqrt{\mathrm{dVar}^2(X \mid Z) \mathrm{dVar}^2(Y \mid Z)} \in [0, 1]$ 更适合优化。
-    - 核心思路：对样本 $\{(X_i, Y_i, Z_i)\}$，先用 RBF 核 $K_h$ 算条件概率代理权重 $w_{ij} = K_h(Z_i, Z_j) / \sum_k K_h(Z_i, Z_k)$，再算 pairwise 距离矩阵 $A, B$；对每个参考点 $Z_i$ 用对应权重行做距离中心化得局部矩阵 $A^{(i)}, B^{(i)}$，局部 V-statistic 为 $\mathcal{V}_{XY}^{(i)} = \sum_{k\ell} w_k^{(i)} w_\ell^{(i)} A_{k\ell}^{(i)} B_{k\ell}^{(i)}$。
-    - 设计动机：相比线性的 conditional covariance 或仅支持特定类型的 C-MMD，距离相关在 $X, Y, Z$ 任意类型组合下都成立，且不需要单独建模条件分布，是黑盒友好的非参选择。
+NN 表征高度非线性，线性的 conditional covariance 不够用，而 C-MMD 又对偏差/目标类型组合支持不全。作者改用条件距离相关 dCov$^2(X, Y \mid Z)$，它在强负型度量空间（含欧氏空间）下"为零等价于条件独立"，能捕获任意非线性、任意维度的依赖；归一化版 $\mathrm{dCor}^2 = \mathrm{dCov}^2 / \sqrt{\mathrm{dVar}^2(X \mid Z) \mathrm{dVar}^2(Y \mid Z)} \in [0, 1]$ 更适合优化。具体对样本 $\{(X_i, Y_i, Z_i)\}$，先用 RBF 核 $K_h$ 算条件概率代理权重 $w_{ij} = K_h(Z_i, Z_j) / \sum_k K_h(Z_i, Z_k)$，再算 pairwise 距离矩阵 $A, B$；对每个参考点 $Z_i$ 用对应权重行做距离中心化得局部矩阵 $A^{(i)}, B^{(i)}$，局部 V-statistic 为 $\mathcal{V}_{XY}^{(i)} = \sum_{k\ell} w_k^{(i)} w_\ell^{(i)} A_{k\ell}^{(i)} B_{k\ell}^{(i)}$。它对 $X, Y, Z$ 任意类型组合都成立、且不需要单独建模条件分布，是黑盒友好的非参选择。
 
-3. **sDISCO 单步代数分解：$O(n^3) \to O(n^2)$ 精确估计**:
+**3. sDISCO 单步代数分解：$O(n^3) \to O(n^2)$ 精确估计，能接进反向传播。**
 
-    - 功能：把全局条件距离协方差的 V-statistic（朴素实现需 $(n, n, n)$ 张量）通过 Hadamard 积 + 矩阵乘法重写成三项 $T_1, T_2, T_3$ 的向量，使全局精确估计能在 $O(n^2)$ 内存下一次算完，可直接接到 GPU 反向传播。
-    - 核心思路：利用 $A^{(i)}, B^{(i)}$ 的加权边际和恰好为零这一性质，展开内积时含孤立边际均值的交叉项自动消失（Wang et al. 2015 用同样展开证理论等价，本文首次把它用作计算技巧）。先算局部行均值 $M^X = WA$、$M^Y = WB$，再算局部网格均值 $g^X = (W \circ M^X) \mathbf{1}$、$g^Y = (W \circ M^Y) \mathbf{1}$；定义 $T_1 = (W \circ (W(A \circ B))) \mathbf{1}$、$T_2 = g^X \circ g^Y$、$T_3 = (W \circ M^X \circ M^Y) \mathbf{1}$，则所有 $n$ 个参考点的局部协方差精确等于 $\mathcal{V}_{XY} = T_1 + T_2 - 2T_3$；类似算 $\mathcal{V}_{XX}, \mathcal{V}_{YY}$ 得 sDISCO = mean(local correlations)。
-    - 设计动机：DISCO$_m$ 需要采样 $m$ 个参考点权衡内存与精度，且超参 $m$ 难调；sDISCO 在不放弃精度的前提下吃下整个 batch，并且把超参数压到只剩"核带宽 $\sigma_Y$ + 正则强度 $\lambda$"两个，对深度训练管线友好。
+距离相关的 V-statistic 朴素实现要构造 $(n, n, n)$ 张量、$O(n^3)$ 显存，深度学习 batch 下直接 OOM。作者利用 $A^{(i)}, B^{(i)}$ 的加权边际和恰好为零这一性质：展开内积时含孤立边际均值的交叉项自动消失（Wang et al. 2015 用同样展开证理论等价，本文首次把它用作计算技巧）。先算局部行均值 $M^X = WA$、$M^Y = WB$，再算局部网格均值 $g^X = (W \circ M^X) \mathbf{1}$、$g^Y = (W \circ M^Y) \mathbf{1}$；定义 $T_1 = (W \circ (W(A \circ B))) \mathbf{1}$、$T_2 = g^X \circ g^Y$、$T_3 = (W \circ M^X \circ M^Y) \mathbf{1}$，则所有 $n$ 个参考点的局部协方差精确等于 $\mathcal{V}_{XY} = T_1 + T_2 - 2T_3$，类似算 $\mathcal{V}_{XX}, \mathcal{V}_{YY}$ 得 sDISCO = mean(local correlations)。相比需要采样 $m$ 个参考点、超参 $m$ 难调的 DISCO$_m$，sDISCO 在不放弃精度的前提下吃下整个 batch，把超参压到只剩"核带宽 $\sigma_Y$ + 正则强度 $\lambda$"两个，可直接接到 GPU 反向传播。
 
 ### 损失函数 / 训练策略
 联合最小化 $\min_\theta \sum L(Y, \hat{Y}) + \lambda \cdot \mathrm{sDISCO}(\hat{Y}, \mathbf{B} \mid Y)$，$L$ 用任务对应的 MLE 损失（回归 MSE / 分类 CE）。DISCO$_m$ 默认 $m = 20\%$ batch size；sDISCO 用全 batch。前向只依赖 $X$，偏差 $\mathbf{B}$ 仅在训练反传时进入正则项，因此推理阶段不需要观测偏差变量。

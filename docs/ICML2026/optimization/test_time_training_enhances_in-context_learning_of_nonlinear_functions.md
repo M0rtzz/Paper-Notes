@@ -44,23 +44,24 @@ tags:
 
 ### 关键设计
 
-1. **预训练利用 + 自蒸馏 weak recovery**:
+**1. 预训练利用 + 自蒸馏 weak recovery：站在预训练肩膀上绕过样本壁垒。**
 
-    - 功能：用一步 GD 初始化 $\mathbf{u}^{(1)}$ 达到 $\langle\beta,\mathbf{u}^{(1)}\rangle\ge 1/\mathrm{polylog}(d)$，并把样本复杂度从 $r^{\mathrm{ie}(\sigma_*)}$ 降到 $r^{\mathrm{ge}(\sigma_*)}$。
-    - 核心思路：以原 attention 输出 $g(\Gamma^\star,\mathbf{X}_{N_1},\mathbf{y}_{N_1},\mathbf{w}_i)$ 作教师信号（不用真实 $y$），对新采样的 query $\mathbf{w}_i$ 做一步 $L_2$-正则 GD 更新 $\mathbf{u}^{(0)}\to\mathbf{u}^{(1)}$；之所以信号强是因为预训练后的 attention 能在 in-context 内计算 $\langle\beta,\mathbf{x}\rangle^{\mathrm{ge}(\sigma_*)}$（核心引理：$\mathrm{ie}(\mathrm{He}_{\mathrm{ge}(\sigma_*)})=\mathrm{ge}(\sigma_*)$），所以信号强度从 $r^{-(\mathrm{ie}-1)}$ 提升到 $r^{-(\mathrm{ge}-1)}$。
-    - 设计动机：直接用真实 $y$ 训 LoRA 受 $\mathrm{ie}(\sigma_*)$ 制约，对高阶 Hermite 信号弱；用 attention 自蒸馏既防 catastrophic forgetting 又压低样本复杂度，是「站在预训练肩膀上做 TTT」的妙招。
+直接用真实标签 $y$ 训 LoRA 受 link 函数的 information exponent $\mathrm{ie}(\sigma_*)$ 制约，对高阶 Hermite 信号太弱，样本量需求随之飙升。本文的巧招是不用真实 $y$，而是把预训练后的 attention 输出 $g(\Gamma^\star,\mathbf{X}_{N_1},\mathbf{y}_{N_1},\mathbf{w}_i)$ 当教师信号，对新采样的 query $\mathbf{w}_i$ 做一步 $L_2$-正则 GD，把 $\mathbf{u}^{(0)}$ 推到 $\mathbf{u}^{(1)}$，达成 $\langle\beta,\mathbf{u}^{(1)}\rangle\ge 1/\mathrm{polylog}(d)$ 的 weak recovery。这个教师信号之所以强，靠的是一个核心引理 $\mathrm{ie}(\mathrm{He}_{\mathrm{ge}(\sigma_*)})=\mathrm{ge}(\sigma_*)$：预训练后的 attention 已经能在 in-context 内计算 $\langle\beta,\mathbf{x}\rangle^{\mathrm{ge}(\sigma_*)}$，于是信号强度从 $r^{-(\mathrm{ie}-1)}$ 提升到 $r^{-(\mathrm{ge}-1)}$，样本复杂度被从 $r^{\mathrm{ie}(\sigma_*)}$ 压到更紧的 $r^{\mathrm{ge}(\sigma_*)}$（偶函数情形 $\mathrm{ge}\le 2$）。用 attention 自蒸馏既避免了 catastrophic forgetting，又把"学方向 $\beta$"的代价整整降了一个量级。
 
-2. **Strong recovery 的几何级收敛**:
+**2. Strong recovery 的几何级收敛：把对齐精度从弱推到强。**
 
-    - 功能：weak recovery 之后用 $N_3$ 步在线 SGD 把 $\langle\beta,\mathbf{u}^{(n)}\rangle$ 推到 $\ge 1-\varepsilon$。
-    - 核心思路：weak recovery 后信号强度 $\Theta(1/\mathrm{polylog}(d))$ 已与 $\mathrm{ge}(\sigma_*)$ 解耦；论文进一步证明误差 $1-\langle\beta,\mathbf{u}^{(n)}\rangle$ 一旦小到某阈值就开始几何级衰减，使样本数从 $\Theta(\varepsilon^{-2})$（Lee et al. 2024 的线性收敛上界）降到 $\Theta(\varepsilon^{-1}\log\varepsilon^{-1})$。
-    - 设计动机：把「弱恢复 → 强恢复」分开分析是单 index 模型理论的标准技术，但用几何级收敛上界紧化样本数是本文的额外贡献。
+weak recovery 只把信号强度做到 $\Theta(1/\mathrm{polylog}(d))$，离精确恢复还差得远。这一步用 $N_3$ 步在线 SGD 接着把 $\langle\beta,\mathbf{u}^{(n)}\rangle$ 推到 $\ge 1-\varepsilon$。关键观察是：weak recovery 之后信号强度已经与 $\mathrm{ge}(\sigma_*)$ 解耦，论文进一步证明误差 $1-\langle\beta,\mathbf{u}^{(n)}\rangle$ 一旦小到某阈值就转入几何级衰减，于是把样本数从 Lee et al. 2024 线性收敛上界的 $\Theta(\varepsilon^{-2})$ 紧化到 $\Theta(\varepsilon^{-1}\log\varepsilon^{-1})$。"弱恢复 → 强恢复"两段分析本身是单 index 模型理论的标准技术，本文的额外贡献是用几何级收敛把强恢复段的样本数上界做得更紧。
 
-3. **MLP 层 ridge 训 link 函数**:
+**3. MLP 层 ridge 训 link 函数：把"学非线性"和"学方向"解耦。**
 
-    - 功能：用 $N_4$ 个上下文样本拟合任务-specific link 函数 $\sigma_*^{\text{test}}$。
-    - 核心思路：固定 $\mathbf{v},\mathbf{b}$ 为随机，$\mathbf{a}$ 解凸的 ridge 回归 $\mathbf{a}^\star=\arg\min\frac{1}{2N_4}\sum_t(f_{\mathrm{TF}}(\mathbf{x}_t,\mathbf{u}^{(N_3+1)},\mathbf{v}^\star,\mathbf{a},\mathbf{b}^\star)-y_t)^2+\frac{\lambda_2}{2}\|\mathbf{a}\|^2$；用 Rademacher 复杂度给出 $O(N_4^{-1/2})+O(m^{-1/2})$ 的泛化界。
-    - 设计动机：把「学方向 $\beta$」（注意力层）与「学非线性 $\sigma_*$」（MLP 层）解耦是单 index 理论里证明严谨界的常用技术；而且让 link 在测试时学也是 TTT 相对 ICL 的核心优势。
+方向 $\beta$ 由 attention 层负责后，剩下的任务-specific 非线性 $\sigma_*^{\text{test}}$ 交给 MLP 层用 $N_4$ 个上下文样本拟合。做法是固定 $\mathbf{v},\mathbf{b}$ 为随机，只让 $\mathbf{a}$ 解一个凸的 ridge 回归：
+
+$$\mathbf{a}^\star=\arg\min\frac{1}{2N_4}\sum_t\big(f_{\mathrm{TF}}(\mathbf{x}_t,\mathbf{u}^{(N_3+1)},\mathbf{v}^\star,\mathbf{a},\mathbf{b}^\star)-y_t\big)^2+\frac{\lambda_2}{2}\|\mathbf{a}\|^2$$
+
+凸性保证了可解，Rademacher 复杂度给出 $O(N_4^{-1/2})+O(m^{-1/2})$ 的泛化界。把"学方向（attention）"与"学形状（MLP）"分开，既是单 index 理论里证明严谨界的常用技术，更是 TTT 相对标准 ICL 的核心优势所在——正是这一层让 link 函数可以逐任务变化，而标准 ICL 的 link 全程被钉死。注意最终预测器 $f_{\mathrm{TF}}(\mathbf{x},\hat{\mathbf{u}},\mathbf{v},\mathbf{a},\mathbf{b})=\sum_j a_j\sigma(v_j\langle\hat{\mathbf{u}},\mathbf{x}\rangle+b_j)$ 不再依赖 in-context data，这正是它能绕开 softmax 渐近偏差、拿到"$N\to\infty$ 时误差 $\to$ 噪声水平 $\tau$"保证的原因。
+
+### 损失函数 / 训练策略
+预训练：$\Gamma$ 做一步 GD + $\lambda_{pt}$ 正则。TTT stage I：自蒸馏一步 GD + $\lambda_1$ 正则。stage II：多步 online SGD 学 $\mathbf{u}$。stage III：ridge 学 $\mathbf{a}$。关键复杂度约束：$T_{pt},N_{pt}=\tilde\Omega(r^2 d^{Q+2})$，$N_1,N_{\text{new}}=\tilde\Omega(r^{\mathrm{ge}(\sigma_*)+2})$，$N_2=\tilde\Theta(r^2)$。
 
 ### 损失函数 / 训练策略
 预训练：$\Gamma$ 做一步 GD + $\lambda_{pt}$ 正则。TTT stage I：自蒸馏一步 GD + $\lambda_1$ 正则。stage II：多步 online SGD 学 $\mathbf{u}$。stage III：ridge 学 $\mathbf{a}$。关键复杂度约束：$T_{pt},N_{pt}=\tilde\Omega(r^2 d^{Q+2})$，$N_1,N_{\text{new}}=\tilde\Omega(r^{\mathrm{ge}(\sigma_*)+2})$，$N_2=\tilde\Theta(r^2)$。

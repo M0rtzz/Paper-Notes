@@ -49,23 +49,17 @@ tags:
 
 ### 关键设计
 
-1. **内循环展开定理（核心理论贡献）**:
+**1. 内循环展开定理：把"在测试时记忆"这套叙事拆开，发现底下其实只是一个线性注意力算子。**
 
-    - 功能：把一般 TTT-KVB（多层 MLP + 动量）的输出严格写成线性注意力的形式。
-    - 核心思路：设内循环 $f(x)=\phi(x;\Theta)W$ 最后一层是无偏置线性。Theorem 5.1：单步 GD 更新后 $o=\phi_{t+1}(q)(W_t+\phi_t(k)^\top g_t(k))$，其中 $g_t(k)=-\eta\,\partial\mathcal{L}/\partial f_t(k)$。这正是线性注意力形式 $o=\hat q(S_0+\hat k^\top\hat v)$，其中 $\hat q=\phi_{t+1}(q),\hat k=\phi_t(k),\hat v=g_t(k),S_0=W_t$。Theorem 5.2 把序列展开：$o_t=\phi_{t+1}(q_t)(W_0+\sum_{i=0}^t\phi_i(k_i)^\top g_i(k_i))$。Theorem 5.3 进一步把带动量的 GD 写成动量加权的有效 value $v^\text{eff}_i=g_i(k_i)\cdot\sum_{j=i}^t\beta_i^j$，结构仍是线性注意力。
-    - 设计动机：要解释四个反例，必须有一个不依赖「记忆」假设的形式化表征；线性注意力视角恰好能机制性地解释所有反例（梯度方向被吸进有效 value、Q/K 不需要语义对称、内循环步数=不同的有效算子，不是「记得更牢」）。
+四个反例之所以集中爆发，是因为"记忆"解读根本对不上现象，所以必须先有一个不依赖记忆假设的形式化表征。本文的做法是把内循环的 GD 步骤显式展开。设内循环 $f(x)=\phi(x;\Theta)W$ 最后一层是无偏置线性，Theorem 5.1 给出单步 GD 更新后 $o=\phi_{t+1}(q)(W_t+\phi_t(k)^\top g_t(k))$，其中 $g_t(k)=-\eta\,\partial\mathcal{L}/\partial f_t(k)$——这恰好是线性注意力的形式 $o=\hat q(S_0+\hat k^\top\hat v)$，对应 $\hat q=\phi_{t+1}(q)$、$\hat k=\phi_t(k)$、$\hat v=g_t(k)$、$S_0=W_t$。Theorem 5.2 把它沿序列展开成 $o_t=\phi_{t+1}(q_t)(W_0+\sum_{i=0}^t\phi_i(k_i)^\top g_i(k_i))$，Theorem 5.3 再把带动量的 GD 写成动量加权的有效 value $v^\text{eff}_i=g_i(k_i)\cdot\sum_{j=i}^t\beta_i^j$，结构仍是线性注意力。这个视角一下子把四个反例全解释通了：梯度方向被吸进有效 value（所以改成梯度上升 retrain 后照样 work），Q 和 K 不需要语义对称（所以 Q→K 互换无伤），内循环步数对应的是不同的有效算子而非"记得更牢"（所以多走几步反而下游变差）。
 
-2. **把复杂 TTT 逐步剥成线性注意力的 Ablation 路径**:
+**2. 把复杂 TTT 逐步剥成线性注意力的 ablation 路径：用 6 步消融给每个流行设计标价。**
 
-    - 功能：通过 6 步消融把 LaCT 和 ViTTT 还原为标准线性注意力，量化每个常用设计的真实贡献。
-    - 核心思路：Step 1 只更新最后一层（让 $\phi$ 静态化）；Step 2 移除 weight norm（让状态更新可并行）；Step 3 多层 MLP→单层线性；Step 4 移除 per-token learnable lr（被有效 value 吸收）；Step 5 移除动量；Step 6 移除梯度正交化 $\mathcal{M}(\cdot)$，最终落到 $o=q(W+\sum_i k_i^\top v_i)$。每一步都有定理或推导支撑「为什么可以去掉」。
-    - 设计动机：直接说「TTT 等价线性注意力」是抽象主张；ablation 路径把每个被去掉的模块和性能/速度数字挂钩，使理论结论可落地为工程决策。
+直接抛出"TTT 等价于线性注意力"是个抽象主张，没人会立刻信。本文于是给出一条 6 步消融路径，把 LaCT 和 ViTTT 一层层还原成标准线性注意力，每一步都有定理或推导支撑"为什么可以去掉"：Step 1 只更新最后一层（让 $\phi$ 静态化）；Step 2 移除 weight norm（让状态更新可并行）；Step 3 把多层 MLP 砍成单层线性；Step 4 移除 per-token learnable lr（被有效 value 吸收）；Step 5 移除动量；Step 6 移除梯度正交化 $\mathcal{M}(\cdot)$，最终落到 $o=q(W+\sum_i k_i^\top v_i)$。这样一来，每个被去掉的模块都和具体的性能、速度数字挂上钩，抽象的等价性主张就变成了可落地的工程决策——读者能直接看到 weight norm、per-token lr、动量、多层 MLP 各贡献了多少（答案是几乎都没用）。
 
-3. **Parallel Prefix-Scan 形式**:
+**3. Parallel Prefix-Scan 形式：认清是线性注意力之后，并行化就成了顺理成章的事，吞吐直接 4×。**
 
-    - 功能：把传统 recurrent 实现替换为 parallel 实现，吞吐 4×。
-    - 核心思路：当 weight normalization 被移除且只更新最后一层时，状态更新变成 associative 的（核函数 $\phi_t\equiv\phi(\cdot;\Theta)$ 与历史无关），可用 parallel prefix scan 而非逐 token 累加。论文给完整等价性证明（Appendix H）并显示加 weight norm 或动态核会破坏 associativity（Appendix I）。
-    - 设计动机：之前所有 TTT 实现都默认 sequential，这是把内循环当真在「时间上更新参数」的副产物；一旦认清是线性注意力，并行化是显然的。
+之前所有 TTT 实现都默认 sequential，因为它们把内循环当成真在"时间上更新参数"。但一旦看清本质，这个假设就站不住了：当 weight normalization 被移除且只更新最后一层时，核函数 $\phi_t\equiv\phi(\cdot;\Theta)$ 与历史无关，状态更新变成 associative 的，于是可以用 parallel prefix scan 替代逐 token 累加。论文在 Appendix H 给了完整的等价性证明，并在 Appendix I 显示加回 weight norm 或动态核就会破坏 associativity——这也反过来印证了"recurrent 性是个误解"：它只是把内循环当真在更新参数的副产物。
 
 ### 损失函数 / 训练策略
 论文不改损失，只改架构理解。在 LaCT-LLM、LaCT-NVS、ViTTT 三个任务上分别评估 ablation；并行实现在 LaCT-LLM 上端到端训练加速 1.19×。

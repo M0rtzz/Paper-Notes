@@ -50,23 +50,21 @@ SPECTRA 是一个加在基优化器外面的两层封装。给定任意基优化
 
 ### 关键设计
 
-1. **后置谱裁剪 = 谱范数球上的复合 Frank-Wolfe**:
+**1. 后置谱裁剪 = 谱范数球上的复合 Frank-Wolfe：把 heuristic 操作接到成熟理论上。**
 
-    - 功能：给更新加硬谱范数上界 $\alpha c_k$，同时在数学上等价于一个被深入研究的凸约束优化算法。
-    - 核心思路：作者证明带 Polyak momentum 的 SPECTRA 更新 $\mathbf{X}_{k+1}=(1-\lambda\eta_k)\mathbf{X}_k - \alpha\eta_k\,\mathrm{clip}^{\mathrm{sp}}_{c_k}(\mathbf{M}_k)$ 等价于求解 $\min_{\mathbf{X}\in Q_2}\{f(\mathbf{X})+\psi(\mathbf{X})\}$ 的随机复合 Frank-Wolfe，其中 $Q_2=\{\|\mathbf{X}\|_2\le D_2\}$ 是谱范数球，$\psi(\mathbf{X})=\frac{\lambda}{2\alpha}\|\mathbf{X}\|_F^2$ 是隐式 Frobenius 正则；超参数对应关系是 $c_k\equiv\lambda D_2/\alpha$、$\gamma_k=\lambda\eta_k$。在凸假设下给出 $\mathcal{O}(1/K)+\mathcal{O}(\sigma/\sqrt{B})$ 收敛率，并把 Muon 解释为 $\alpha\to\infty,\,c=1/\alpha,\,b=0$ 的特例（即没有正则、纯做谱归一）。
-    - 设计动机：把一个看起来很 heuristic 的操作（SVD 后 clip 奇异值）翻译成一个有数十年理论积累的算法，立刻拿到收敛保证、调参指引（$c,\alpha,\lambda$ 直接控制谱球半径 $D_2=\alpha c/\lambda$ 与正则强度 $b=\lambda/\alpha$），同时把谱约束 + 权重正则两件事一次做完。框架还可以替换 $\psi$ 得到核范数（软阈值）、Schatten-$p$、矩阵熵、$\ell_\infty$（恢复带谱裁剪的 Signum）等一族变体。
+坐标级方法无视全局谱结构，更新矩阵 $\mathbf{U}_k$ 的谱范数会失控（Signum 下 $\|\operatorname{sign}(\mathbf{M}_k)\|_2$ 至少 $\sqrt{\max(m,n)}$），由迭代关系它又会把权重谱范数撑大、毁掉稳定性。SPECTRA 对更新做硬谱裁剪封口。作者证明带 Polyak momentum 的 SPECTRA 更新
 
-2. **前置谱裁剪：选择性敲掉低秩噪声尖刺**:
+$$\mathbf{X}_{k+1}=(1-\lambda\eta_k)\mathbf{X}_k-\alpha\eta_k\,\mathrm{clip}^{\mathrm{sp}}_{c_k}(\mathbf{M}_k)$$
 
-    - 功能：在把梯度喂给基优化器之前，先用谱裁剪把那些「方向几乎和信号正交、幅值高一两个量级」的低秩噪声分量截掉，保留信号方向。
-    - 核心思路：假设观测梯度 $\mathbf{g}=\mathbf{G}+\mathbf{N}$，其中 $\mathbf{N}=\ell\mathbf{U}_N\mathbf{V}_N^T$ 是零均值低秩尖刺噪声、$\ell\gg\|\mathbf{G}\|_2$。论文证明（Lemma 4.2）当噪声各向异性参数 $\kappa\le q/(25r^2)$ 时，对任何阈值 $c\ge\|\mathbf{G}\|_2$ 都有 $\mathbb{E}_{\mathbf{N}}[\langle\mathbf{G},\tilde{\mathbf{g}}\rangle]\ge\tfrac{1}{3}\|\mathbf{G}\|_F^2$ 与 $\mathbb{E}_{\mathbf{N}}[\|\tilde{\mathbf{g}}\|_F^2]\le r\min(c,\ell+\|\mathbf{G}\|_2)^2+\|\mathbf{G}\|_F^2$——直觉是按矩阵摄动论，$\mathbf{g}$ 的 top-$r$ 奇异值由噪声决定、其余被信号主导，谱裁剪把 top-$r$ 拍平到 $c$ 就近似得到 $\mathbf{G}+c\mathbf{U}_N\mathbf{V}_N^T$，把方差从 $r\ell^2$ 降到 $rc^2$。对照之下，全局裁剪 (Lemma 4.3) 在尖刺严重时只能在「信号保留小」和「方差正比 $\ell^2$」之间二选一，永远拿不到这种「同时压尖刺、保信号」的好处。配套定理 4.6 给 SGD + 谱裁剪的复杂度 $\mathcal{O}(L_F F^0/\epsilon^2 + r\min(\sqrt{r}M,\ell)^2 L_F F^0/\epsilon^4)$，对噪声水平 $\ell$ 是 robust 的（取 $c\simeq\sqrt{r}M$ 即可），比全局裁剪的 $\mathcal{O}(r\ell^2 L_F F^0/\epsilon^4)$ 严格更好。
-    - 设计动机：实证观察到 LLM 训练中梯度奇异值谱重尾、低秩噪声方向与信号方向几乎正交，这是「同时保信号 + 压噪声」之所以可能的几何前提；论文用这条几何洞察直接推出谱裁剪比全局裁剪在噪声 robustness 上的理论分离。
+等价于求解 $\min_{\mathbf{X}\in Q_2}\{f(\mathbf{X})+\psi(\mathbf{X})\}$ 的随机复合 Frank-Wolfe，其中 $Q_2=\{\|\mathbf{X}\|_2\le D_2\}$ 是谱范数球、$\psi(\mathbf{X})=\frac{\lambda}{2\alpha}\|\mathbf{X}\|_F^2$ 是隐式 Frobenius 正则，超参对应 $c_k\equiv\lambda D_2/\alpha$、$\gamma_k=\lambda\eta_k$，凸假设下收敛率 $\mathcal{O}(1/K)+\mathcal{O}(\sigma/\sqrt B)$。这样一来，"SVD 后 clip 奇异值"这个看似拍脑袋的操作立刻拿到收敛保证和可调参数：$c,\alpha,\lambda$ 直接控制谱球半径 $D_2=\alpha c/\lambda$ 与正则强度 $b=\lambda/\alpha$；Muon 则是 $\alpha\to\infty,c=1/\alpha,b=0$ 的无正则特例。换掉 $\psi$ 还能派生核范数、Schatten-$p$、矩阵熵、$\ell_\infty$ 等一族变体。
 
-3. **Newton-Schulz 软谱裁剪：抛弃 SVD 的 GPU 友好实现**:
+**2. 前置谱裁剪：选择性敲掉低秩噪声尖刺、保住信号。**
 
-    - 功能：在不调用 SVD 的情况下近似计算 $\mathrm{clip}^{\mathrm{sp}}_c(\mathbf{X})$，让该算子的额外开销可以被 LLM 训练所吸收。
-    - 核心思路：观察到 $\tfrac{1}{c}\mathrm{clip}^{\mathrm{sp}}_c(\mathbf{X}) = \operatorname{orth}(\mathbf{X}) := \mathbf{U}_X\mathbf{V}_X^T$（当 $c\le\sigma_{\min}(\mathbf{X})$ 时严格成立，否则给出软版本），而 $\operatorname{orth}$ 已经是 Muon 在用的算子——它可以用几轮 Newton-Schulz 多项式迭代在小方阵（如 $\mathbf{X}^T\mathbf{X}$ 这种 $n\times n$ 大小）上反复做矩阵-矩阵乘法逼近，每轮只涉及两三次 matmul、没有 SVD、对 GPU 极度友好。对超阈值奇异值压到 $c$、对子阈值奇异值近似保持不变，由此得到「软」谱裁剪——这是「软」一词的来源。
-    - 设计动机：硬 SVD 在 $m\times n$ 矩阵上是 $\mathcal{O}(mn\min(m,n))$，对 LLM 巨型权重矩阵不可承受；Newton-Schulz 的 matmul 友好结构让 SPECTRA 的 wall-clock 开销可以控制在基优化器同量级（论文 F.7 报告了 with/without SPECTRA 的运行时对比）。
+LLM 训练中原始梯度的奇异值谱重尾，少数"稀疏谱尖刺"比信号大一两个量级，且方向几乎与信号正交；坐标级或全局裁剪要么压不住尖刺、要么连信号一起按下去。SPECTRA 在梯度进基优化器前先 $\mathrm{clip}^{\mathrm{sp}}_{c_{\mathrm{pre}}}(\mathbf{g})$。设 $\mathbf{g}=\mathbf{G}+\mathbf{N}$、$\mathbf{N}=\ell\mathbf{U}_N\mathbf{V}_N^\top$ 是零均值低秩尖刺、$\ell\gg\|\mathbf{G}\|_2$，Lemma 4.2 证明当各向异性参数 $\kappa\le q/(25r^2)$ 时，对任何 $c\ge\|\mathbf{G}\|_2$ 都有 $\mathbb{E}_{\mathbf{N}}[\langle\mathbf{G},\tilde{\mathbf{g}}\rangle]\ge\frac13\|\mathbf{G}\|_F^2$ 且 $\mathbb{E}_{\mathbf{N}}[\|\tilde{\mathbf{g}}\|_F^2]\le r\min(c,\ell+\|\mathbf{G}\|_2)^2+\|\mathbf{G}\|_F^2$——按矩阵摄动论，$\mathbf{g}$ 的 top-$r$ 奇异值由噪声主导、其余由信号主导，把 top-$r$ 拍平到 $c$ 就近似得到 $\mathbf{G}+c\mathbf{U}_N\mathbf{V}_N^\top$，方差从 $r\ell^2$ 降到 $rc^2$。对照全局裁剪（Lemma 4.3）尖刺严重时只能在"保信号小"和"方差正比 $\ell^2$"间二选一，而配套 SGD 复杂度 $\mathcal{O}(L_F F^0/\epsilon^2+r\min(\sqrt rM,\ell)^2 L_F F^0/\epsilon^4)$ 对噪声水平 $\ell$ 鲁棒，严格优于全局裁剪的 $\mathcal{O}(r\ell^2 L_F F^0/\epsilon^4)$。"尖刺与信号近正交"这条几何观察正是同时压噪声、保信号能成立的前提。
+
+**3. Newton-Schulz 软谱裁剪：抛弃 SVD 的 GPU 友好实现。**
+
+硬 SVD 在 $m\times n$ 矩阵上是 $\mathcal{O}(mn\min(m,n))$，对 LLM 巨型权重不可承受，谱裁剪要落地必须绕开它。作者观察到 $\frac1c\mathrm{clip}^{\mathrm{sp}}_c(\mathbf{X})=\operatorname{orth}(\mathbf{X}):=\mathbf{U}_X\mathbf{V}_X^\top$（$c\le\sigma_{\min}(\mathbf{X})$ 时严格成立，否则给出软版本），而 $\operatorname{orth}$ 正是 Muon 已在用的算子，可用几轮 Newton-Schulz 多项式迭代在小方阵上反复做矩阵-矩阵乘法逼近，每轮只两三次 matmul、无 SVD。对超阈值奇异值压到 $c$、对子阈值奇异值近似保持不变，这就是"软"谱裁剪的由来。matmul 友好的结构让 SPECTRA 的 wall-clock 开销控制在基优化器同量级。
 
 ### 损失函数 / 训练策略
 基优化器自带的目标函数（交叉熵）不动；SPECTRA 只改 update 方向。主要超参数是谱裁剪阈值 $c$（前后置各一份）、scale $\alpha$ 和 weight decay $\lambda$，三者一起决定了等价 Frank-Wolfe 问题的谱球半径 $D_2=\alpha c/\lambda$ 与 Frobenius 正则强度 $b=\lambda/\alpha$，调参时可以直接按这两个物理量去取值。

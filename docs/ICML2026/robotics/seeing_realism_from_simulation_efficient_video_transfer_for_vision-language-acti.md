@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **条件视频迁移（语义 + 几何双条件）**:
+**1. 条件视频迁移（语义 + 几何双条件）：换环境但不换动作。**
 
-    - 功能：把一段仿真机械臂视频变成"同样动作但发生在差异化环境中"的真实风格视频。
-    - 核心思路：VideoChat2 抽时序 caption 描述交互、对象与空间关系；Qwen3-8B 重写 caption，把背景、物体颜色等可变要素改写出多样性而保留任务意图；从原视频抽 depth map 作为稳定几何约束（比 edge/blur/seg 都更保几何）；最后 Cosmos-Transfer 2.5 在新 caption + depth 上迭代去噪生成视频。
-    - 设计动机：单纯改 caption 会让物体几何漂移、机械臂关键位姿失真，动作就丢了；只给 depth 又缺语义多样性。两个条件互补，分别承担"看起来不一样"与"做的事一样"。
+只改 caption 会让物体几何漂移、机械臂关键位姿失真，动作就丢了；只给 depth 又缺语义多样性。所以本文用两个互补条件分头承担"看起来不一样"和"做的事一样"。语义侧：VideoChat2 先抽时序 caption 描述交互、对象与空间关系，Qwen3-8B 再把背景、物体颜色等可变要素改写出多样性、同时保留任务意图。几何侧：从原视频抽 depth map 当稳定几何约束（比 edge/blur/seg 都更保几何）。最后 Cosmos-Transfer 2.5 在"新 caption + depth"上迭代去噪，生成视觉风格大改、动作轨迹不变的真实化视频。这样仿真数据的视觉与环境多样性被补上，但每一帧的机械臂动作仍严格对应原轨迹。
 
-2. **三段式 Velocity Caching**:
+**2. 三段式 Velocity Caching：复用扩散中段几乎不变的 velocity。**
 
-    - 功能：在 flow-based 视频扩散中复用 velocity 预测，免去大量 transformer 前向。
-    - 核心思路：作者实测 $\|v_{t+1}-v_t\|$ 的时序曲线后发现三段式动态：初期变化剧烈、中段几乎平稳、末尾再次微调。于是把 $N$ 步去噪分成初期 ($t<t_s$ 每步算)、稳定期 ($t_s\leq t< t_f$ 每 $\alpha$ 步算一次，其余复用) 和末期 ($t\geq t_f$ 每步算)。稳定期起点用 $\frac{\|v_t-v_{t+1}\|}{\|v_0-v_1\|} < k$ 阈值检测，论文取 $k=0.4,\alpha=8, m=3$。
-    - 设计动机：通用 caching 策略（如 DeepCache）默认两端都重要，没有针对扩散动力学的真实曲线；三段式恰好对齐"轮廓 → 细化 → 收尾"的去噪节奏，因此能在 61.2% 时间削减下质量基本不掉。
+通用 caching（如 DeepCache）默认去噪两端都重要，没对准扩散动力学的真实曲线。作者实测 flow-based 视频扩散的 $\|v_{t+1}-v_t\|$ 时序曲线后发现一个三段式动态：初期变化剧烈、中段几乎平稳、末尾再微调，正对应"画轮廓 → 细化 → 收尾"的去噪节奏。于是把 $N$ 步去噪切成三段：初期（$t<t_s$）每步算、稳定期（$t_s\leq t< t_f$）每 $\alpha$ 步算一次其余复用、末期（$t\geq t_f$）每步算，稳定期起点用 $\frac{\|v_t-v_{t+1}\|}{\|v_0-v_1\|} < k$ 阈值检测（论文取 $k=0.4,\alpha=8, m=3$）。因为缓存只发生在 velocity 真正平稳的中段，所以在砍掉 61.2% 生成时间的同时质量基本不掉（消融 26.5 vs 27.0），证明这段计算冗余可以被工程级利用。
 
-3. **Difficulty × Diversity 的 Coreset 采样**:
+**3. Difficulty × Diversity 的 Coreset 采样：只挑"难且独特"的轨迹来增广。**
 
-    - 功能：从大规模仿真轨迹里只挑出最值得增广的少量样本。
-    - 核心思路：扩展 $\mathbb{D}^2$ Pruning 到视频。难度 $x_i = \frac{1}{|\mathcal{T}_i|}\sum_{t}\mathcal{L}_{\text{policy}}(s_i^{(t)};\theta)$ 用 RDT-1B 的策略损失估；多样性用 Cosmos-Embed1 给每条轨迹拿 768 维嵌入 $\phi(s_i)$，再以 RBF 核 $e_{i,j}=\exp(-\gamma_f\|v_i-v_j\|^2)$ 建 kNN 图。前向消息传递把邻域难度聚合 $x_i' = x_i + \sum_{j\in\mathcal{N}(i)}e_{i,j}\cdot x_j$，贪心选最高 $x_i'$，并用反向消息抑制相似邻居的分数避免冗余。
-    - 设计动机：单看 difficulty 容易陷在某个 hard cluster；单看 diversity 又会把简单样本拉进来。两者结合让"难且独特"的轨迹优先被增广，从而在 10% 预算下逼近全量增广效果。
+单看 difficulty 容易扎进某个 hard cluster，单看 diversity 又会把简单水任务拉进来，两者都浪费生成预算。本文把 $\mathbb{D}^2$ Pruning 扩展到视频：难度 $x_i = \frac{1}{|\mathcal{T}_i|}\sum_{t}\mathcal{L}_{\text{policy}}(s_i^{(t)};\theta)$ 用 RDT-1B 的策略损失估（task-aware），多样性用 Cosmos-Embed1 给每条轨迹 768 维嵌入 $\phi(s_i)$、以 RBF 核 $e_{i,j}=\exp(-\gamma_f\|v_i-v_j\|^2)$ 建 kNN 图（task-agnostic）。前向消息传递把邻域难度聚合 $x_i' = x_i + \sum_{j\in\mathcal{N}(i)}e_{i,j}\cdot x_j$，贪心选最高 $x_i'$，再用反向消息抑制相似邻居的分数避免冗余。用 task-aware 损失估难度、task-agnostic 嵌入估多样性，正好避开了"难的全是相似失败模式"和"多样但都是水任务"两个极端，于是 10% 预算就能逼近全量增广效果。
 
 ### 损失函数 / 训练策略
 不改 VLA 本体损失，只是把训练集换成原始仿真 + 由 coreset 采样后增广的真实风格视频。论文比较两种混入策略：mixture（保留所有原数据 + 加入增广）和 replacement（用增广直接替换被选中的 coreset）；发现 $\pi_0$ 更受益于 mixture，更强的 $\pi_{0.5}$ 反而更喜欢 replacement——更强模型能扛得住更大的分布平移。

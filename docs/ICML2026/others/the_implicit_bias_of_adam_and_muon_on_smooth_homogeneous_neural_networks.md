@@ -51,23 +51,21 @@ tags:
 
 ### 关键设计
 
-1. **近似最速下降框架（Definition 5.1 + Theorem C.17）**:
+**1. 近似最速下降框架：用"轨迹是否对齐负梯度"一把抓住一大类优化器的 max-margin 偏置。**
 
-    - 功能：在不依赖动量精确解析的情况下，把一大类优化器的 max-margin 偏置统一成"轨迹是否对齐负梯度"。
-    - 核心思路：轨迹 $\boldsymbol{\theta}_t$ 若存在某 $\nu(t),R_{\max}$ 使 $N(t)=\int_0^t\nu\to\infty$、$\limsup\|\boldsymbol{\theta}_t\|/N(t)\le R_{\max}$、并且对齐度下确界 $\operatorname{ess\,liminf} r(t)\ge 1$（其中 $r(t)=\sup_{\boldsymbol{g}_t}\langle\nu^{-1}\dot{\boldsymbol{\theta}}_t,-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\rangle$），则在 (T2) + $R_{\max}\le 1$ 下，$\bar{\boldsymbol{\theta}}=\lim\boldsymbol{\theta}_t/\|\boldsymbol{\theta}_t\|$ 必为 Problem (11) 的 KKT 点。
-    - 设计动机：MSD 取 $\nu=\|\dot{\boldsymbol{\theta}}\|$ 即化归经典最速下降；Adam 不属于 MSD 但只要把 $\nu=\eta(t)$ 选好，仍然落入这套框架——这是文章能把 Adam、Muon 一并处理的根本所在。
+动量算法的更新方向不再严格满足最速下降的代数条件，Adam 更是两个不同衰减率动量的比值、根本不属于 MSD 范式，逐个精确刻画太难。作者的破局抽象是"近似最速下降"：只要轨迹 $\boldsymbol{\theta}_t$ 存在某 $\nu(t),R_{\max}$ 使 $N(t)=\int_0^t\nu\to\infty$、$\limsup\|\boldsymbol{\theta}_t\|/N(t)\le R_{\max}$，且对齐度下确界 $\operatorname{ess\,liminf} r(t)\ge 1$（$r(t)=\sup_{\boldsymbol{g}_t}\langle\nu^{-1}\dot{\boldsymbol{\theta}}_t,-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\rangle$），则在 (T2) + $R_{\max}\le 1$ 下，$\bar{\boldsymbol{\theta}}=\lim\boldsymbol{\theta}_t/\|\boldsymbol{\theta}_t\|$ 必为对应 max-margin 问题的 KKT 点。这个框架的威力在于"接口"取得巧——MSD 取 $\nu=\|\dot{\boldsymbol{\theta}}\|$ 就化归经典最速下降，Adam 虽不是 MSD，但只要把 $\nu=\eta(t)$ 选好同样落入框架，于是 Muon、Adam 能被一并处理，动量过冲、动量比值这些技术细节全被吸进 $r(t)\ge 1$ 这一条对齐度要求里。
 
-2. **动量与梯度的渐近一致性（Lemma C.19）**:
+**2. 动量与梯度的渐近一致性：证明衰减学习率下动量就是梯度的一阶逼近。**
 
-    - 功能：在学习率衰减 $\|\dot{\boldsymbol{\theta}}_t\|\le o(t^{1/L-1})$ 下，证明动量 $\boldsymbol{m}_t$ 在所有"瞬时显著"坐标 $J_\varepsilon(t)=\{j:|\boldsymbol{g}_t[j]|/\|\boldsymbol{g}_t\|_\star>\varepsilon\}$ 上等于瞬时梯度乘以 $(1\pm o(1))$。
-    - 核心思路：附录 B 的 Corollary B.8 给出一个标量级关键事实——只要 $d\log g/dt$ 收敛，标量动量 $m(t)/g(t)$ 就收敛到一个良定义极限；学习率衰减保证了沿训练轨迹这个收敛条件被自动满足。由此推出 $\boldsymbol{m}_t/\|\boldsymbol{m}_t\|_\star-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\to 0$，把 MSD 的更新方向与负梯度对齐。
-    - 设计动机：让动量算法满足 Definition 5.1 的第 3 条对齐度要求；同时为 Adam 准备好"$\hat{\boldsymbol{m}}_t[j]/\sqrt{\hat{\boldsymbol{v}}_t[j]}=\mathrm{sign}(\boldsymbol{g}_t[j])(1\pm o(1))$"这一关键近似——后者正是 Adam $\to$ 符号梯度下降 $\to$ $\ell_\infty$ max-margin 的桥梁。
+要让动量算法满足上面框架的对齐度条件，得证动量方向渐近等于梯度方向。作者在连续时间下把动量写成 $\boldsymbol{m}_t=\int_0^t c_1 e^{-c_1(t-s)}\boldsymbol{g}_s\,ds$，再证在学习率衰减 $\|\dot{\boldsymbol{\theta}}_t\|\le o(t^{1/L-1})$ 下，对所有"瞬时显著"坐标 $J_\varepsilon(t)=\{j:|\boldsymbol{g}_t[j]|/\|\boldsymbol{g}_t\|_\star>\varepsilon\}$ 都有 $\boldsymbol{m}_t[j]=\boldsymbol{g}_t[j](1\pm o(1))$。核心是附录 B 的一个标量事实：只要 $d\log g/dt$ 收敛，标量动量 $m(t)/g(t)$ 就收敛到良定义极限，而学习率衰减恰好让这个收敛条件沿轨迹自动满足，从而 $\boldsymbol{m}_t/\|\boldsymbol{m}_t\|_\star-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\to 0$。这步同时为 Adam 准备好了关键近似 $\hat{\boldsymbol{m}}_t[j]/\sqrt{\hat{\boldsymbol{v}}_t[j]}=\mathrm{sign}(\boldsymbol{g}_t[j])(1\pm o(1))$——它正是 Adam $\to$ 符号梯度下降 $\to$ $\ell_\infty$ max-margin 的那座桥。
 
-3. **复合算法 = 最大范数 MSD（Appendix C.6）**:
+**3. 复合算法 = 最大范数 MSD：把混合训练配方机械翻译成单一范数下的（近似）MSD。**
 
-    - 功能：把 Muon-Signum、Muon-Adam 这类对不同参数块用不同优化器的实战配方，机械式地翻译成一个统一范数下的（近似）MSD。
-    - 核心思路：若在参数块 $\boldsymbol{\theta}=(W_1,\dots,W_K,\boldsymbol{u})$ 上并行跑各自归一化的（动量）最速下降、共用同一 $\eta(t)$，则整体等价于以 $\|\boldsymbol{\theta}\|=\max\{\|(W_1,\dots,W_K)\|_{\mathrm{msp}},\|\boldsymbol{u}\|_\infty\}$ 为范数的归一化 MSD（Corollary 3.4）。Muon-Adam 进一步允许 Muon 与 Adam 各自的基础学习率 $\eta_0^M,\eta_0^A$ 不同，对应范数变为 $\max\{(\eta_0^A/\eta_0^M)\|(W_1,\dots,W_K)\|_{\mathrm{msp}},\|\boldsymbol{u}\|_\infty\}$（Theorem 3.6）。
-    - 设计动机：Muon 实践中通常对非矩阵参数（如 LayerNorm、bias）改用 Adam（Jordan 等 2024、Liu 等 2025），近期 Scion (Pethick 等 2025) 进一步把 Muon 与 sign GD 拼装；本文给出的"max-norm 等价"是第一次把这种混合训练的隐式间隔目标写成解析式。
+实战里 Muon 通常只管矩阵参数、对 LayerNorm/bias 改用 Adam 或 sign GD，这种分块混合的隐式间隔目标此前没人写得出来。作者证明：若在参数块 $\boldsymbol{\theta}=(W_1,\dots,W_K,\boldsymbol{u})$ 上并行跑各自归一化的（动量）最速下降、共用同一 $\eta(t)$，则整体等价于以
+
+$$\|\boldsymbol{\theta}\|=\max\{\|(W_1,\dots,W_K)\|_{\mathrm{msp}},\ \|\boldsymbol{u}\|_\infty\}$$
+
+为范数的归一化 MSD（Corollary 3.4）。Muon-Adam 还允许两者基础学习率不同，范数相应变成 $\max\{(\eta_0^A/\eta_0^M)\|(W_1,\dots,W_K)\|_{\mathrm{msp}},\|\boldsymbol{u}\|_\infty\}$（Theorem 3.6）。这条"max-norm 等价"第一次把混合训练的隐式 margin 目标写成解析式，也直接带来一个实用含义：调 $\eta_0^A/\eta_0^M$ 就能在矩阵层 margin 与 bias 层 margin 之间显式 trade-off。
 
 ### 损失函数 / 训练策略
 分析对象本身是优化器，不重写损失；所有结果在指数/logistic 损失下成立，要求 $\varphi$ 二阶连续可导、严格单调凸且一阶/二阶导数有界（Appendix C.1）。模型类涵盖深度线性网络与含光滑同质激活（如 $\mathrm{ReLU}^q\;(q>1)$、平方激活）的非线性网络，但严格意义上不覆盖普通 ReLU（仅在 (T3) 这一额外的子梯度方向收敛假设下成立）。

@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **多目标贝叶斯优化 + 受约束 EHVI**:
+**1. 多目标贝叶斯优化 + 受约束 EHVI：让两个目标各自长成应有的样子。**
 
-    - 功能：在干净/认证两维上同时搜出一组 Pareto 最优超参，而不是优化某种加权和或单一指标。
-    - 核心思路：把目标向量记作 $\mathbf{f}(\boldsymbol{\theta}) = (\text{acc}_{\text{clean}}, \text{acc}_{\text{cert}})$，用两个独立 GP 拟合 $\mathbf{f}$；每步用 EHVI $\mathrm{EHVI}(\boldsymbol{\theta}) = \mathbb{E}_{\mathbf{f}}\!\big[\max(0, \mathrm{HV}(P \cup \{\mathbf{f}\}) - \mathrm{HV}(P))\big]$ 在已发现前沿 $P$ 之外去抢未被支配的区域，并加硬约束剔除"近似对抗训练"的退化区。三个种子的 Pareto 前沿做并集消除局部陷阱。
-    - 设计动机：IBP 类方法的超参高度交互（$\kappa$ 与 warm-up 长度耦合、$\tau$ 与 PGD 步长耦合），任何加权标量化都会把真前沿弯掉。多目标 BO 让两个目标各自"长成自己应该的样子"，再由 Pareto 关系裁剪，揭示真实可达边界。
+IBP 类方法天然带一个权衡参数，干净精度和认证精度是直接冲突的，于是"挑一个点去比"等于"先选立场再选证据"。本文索性不优化任何加权和，而是把目标写成向量 $\mathbf{f}(\boldsymbol{\theta})=(\text{acc}_{\text{clean}},\text{acc}_{\text{cert}})$，用两个独立高斯过程各自拟合，再用期望超体积改进（EHVI）去抢已发现前沿之外的未被支配区域：
 
-2. **不完全验证作为认证精度的廉价代理**:
+$$\mathrm{EHVI}(\boldsymbol{\theta})=\mathbb{E}_{\mathbf{f}}\big[\max(0,\ \mathrm{HV}(P\cup\{\mathbf{f}\})-\mathrm{HV}(P))\big]$$
 
-    - 功能：把搜索阶段对"认证率"的评估成本从"分钟级 / 样本"降到"毫秒级 / 样本"，让 100 trial 预算变得可行。
-    - 核心思路：对每个 trial 训练出的网络，按 IBP → CROWN-IBP → CROWN 的顺序级联调用，只在前一级宣告"未证明"时再上更强的方法；得到的认证率是真完整认证率的可证下界 $\widehat{\text{acc}}_{\text{cert}} \le \text{acc}_{\text{cert}}$。BO 直接在 $\widehat{\text{acc}}_{\text{cert}}$ 上优化，最后只对落在 Pareto 集合上的少量代表点用 $\alpha\beta$-CROWN 完整验证一次。
-    - 设计动机：完整验证是 $\mathcal{NP}$-complete，每条 trial 跑一遍完整验证根本搜不动；但单调代理几乎不改变 Pareto 序——验证空闲时进一步把 cutoff 从 $1000\,\text{s}$ 降到 $100\,\text{s}$ 仍保留同一前沿，仅 CIFAR-10 ($\epsilon=2/255$) MTL-IBP 的总验证耗时就从 1311 小时降到 208 小时。
+其中 $P$ 是当前 Pareto 前沿，同时加硬约束把"近似退化成对抗训练"的区域剔除，并对三个随机种子的前沿取并集消除局部陷阱。之所以必须用多目标 BO 而非标量化，是因为 IBP 的超参高度交互——$\kappa$ 和 warm-up 长度耦合、$\tau$ 和 PGD 步长耦合——任何加权求和都会把真前沿弯掉；让两个目标各自由 GP 建模、再由 Pareto 关系裁剪，才能露出真实可达的边界。
 
-3. **single-linkage 聚类 + 完整验证精修**:
+**2. 不完全验证作为认证精度的廉价代理：把搜索成本压进可负担区间。**
 
-    - 功能：避免对 Pareto 集中"几乎重合"的配置都做昂贵完整验证，又确保最终曲线上的点都基于完整验证。
-    - 核心思路：在二维目标空间用欧氏距离做 single-linkage 层次聚类，超参点 $i, j$ 在距离 $\le d_{\min}=0.05$ 时合并；只要 Pareto 集大于 5 个点就启动聚类，每簇随机抽一个配置走完整 $\alpha\beta$-CROWN，再用真实认证精度重建 Pareto 前沿。
-    - 设计动机：BO 倾向于在前沿曲线密集采样，会出现一堆 $<0.5\%$ 差距的"几乎同性能"点；不去重就把验证预算全花在装饰性细节上。聚类把验证成本压到与单点调参同量级，同时保证最终报数是完整验证下的硬数字。
+完整验证是 $\mathcal{NP}$-complete，若每条 trial 都跑一遍完整认证，100 trial 的搜索预算根本动不了。本文的关键省钱手段是搜索阶段不算真认证率，而是按 IBP → CROWN-IBP → CROWN 级联调用——只在前一级宣告"未证明"时才上更强的方法——得到一个真完整认证率的可证下界 $\widehat{\text{acc}}_{\text{cert}}\le\text{acc}_{\text{cert}}$，BO 直接在这个下界上优化。这一招成立的前提是单调代理几乎不改变 Pareto 序：既然代理只是真值的一致欠估计，前沿的相对位置基本不变，于是只需对最终落在 Pareto 集上的少量代表点用 $\alpha\beta$-CROWN 完整验证一次即可。验证空闲时还能进一步把 cutoff 从 $1000\,\text{s}$ 降到 $100\,\text{s}$ 而前沿不变——仅 CIFAR-10（$\epsilon=2/255$）MTL-IBP 的总验证耗时就从 1311 小时降到 208 小时。
+
+**3. single-linkage 聚类 + 完整验证精修：把验证预算花在刀刃上。**
+
+BO 倾向于在前沿曲线上密集采样，结果会冒出一堆彼此差距 $<0.5\%$ 的"几乎同性能"点，若不去重就把昂贵的完整验证预算全花在装饰性细节上。本文在二维目标空间用欧氏距离做 single-linkage 层次聚类，超参点 $i,j$ 在距离 $\le d_{\min}=0.05$ 时合并（Pareto 集大于 5 个点才启动聚类），每簇随机抽一个配置走完整 $\alpha\beta$-CROWN，再用真实认证精度重建前沿。这样既把验证成本压到与单点调参同量级，又保证最终曲线上每个点都基于完整验证的硬数字——多种方法的前沿合并成"combined Pareto front"后，才成为公平、可复现的评测基准。
 
 ### 损失函数 / 训练策略
 训练侧沿用各方法既有损失：IBP 的 $\kappa \cdot \mathcal{L} + (1-\kappa) \cdot \mathcal{L}_{\text{ver}}$、CROWN-IBP 额外用 $\beta$ 在 CROWN-IBP 与 IBP 上界间过渡、SABR 用 $\tau \epsilon$ 子区间 + ReLU shrinking、MTL-IBP 用 $\alpha \cdot \mathcal{L}_{\text{ver}} + (1-\alpha) \cdot \mathcal{L}_{\text{adv}}$。差别在外层：作者放开 $\kappa_{\text{start}} \ge \kappa_{\text{end}}$ 的两端、允许最多 5 个 warm-up epoch（既有工作通常用 1）、允许训练 $\epsilon$ 大于评估 $\epsilon$、把 $\ell_1$ 正则和 Shi 2021 正则都纳入搜索，使搜索空间充分覆盖"先前被默认值掩盖"的设计区域。所有实验用 Shi 2021 的 CNN7 架构，BoTorch + Optuna 跑 EHVI，预算 3 种子 × 100 trial。

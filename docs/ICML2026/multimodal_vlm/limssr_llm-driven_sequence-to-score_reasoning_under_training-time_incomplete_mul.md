@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **Prompt-Guided Context-Aware Modality Imputation (PCMI)**:
+**1. Prompt 引导的上下文感知模态填补（PCMI）：把缺失模态从"零向量"升格为"待推断的潜变量"。**
 
-    - 功能：把缺失模态从"零向量"提升为"待推断的潜变量"，让 LLM 把缺失的位置当成可填空的 token 来推理。
-    - 核心思路：每个模态 $m$ 都用一对边界 token `<m_start>, <m_end>` 包起来。对可见模态，里面放 $\tilde{\mathbf{X}}^m$；对缺失模态，里面放 $T$ 个重复的可学习 `<missing_m>` 嵌入。再设计一段任务 prompt 显式描述可见与缺失模态："Given the available {avail} features... The {miss} modality is missing. Based on the available modalities, please infer and reconstruct the useful latent representations for the missing {miss} modalities at the designated positions"。LLM 输出后，从 missing token 位置抽取隐藏态 $\mathbf{H}_{miss}^m = \mathrm{LLM}(\mathbf{Z}_{in})|_{\text{positions of }\mathbf{E}_{miss}^m}$ 作为推断的缺失表示。
-    - 设计动机：传统零填充让缺失信号在 attention 中被"埋没"；MissRAG/TAMML 等用 RAG 或文本桥接，需要额外检索库或预训练对齐。PCMI 把缺失结构直接编入序列，使得 LLM 的 next-token 推理机制天然适配——"猜下一个 token"和"推断 missing latent"在数学形式上是同一件事。
+传统零填充会让缺失信号在 attention 里被当噪声埋没，模型越学越偏；MissRAG/TAMML 之类用 RAG 或文本桥接，又得额外维护检索库或预训练对齐。PCMI 的做法是把缺失结构直接写进序列：每个模态 $m$ 都用一对边界 token `<m_start>, <m_end>` 包起来，可见模态里面塞真实特征 $\tilde{\mathbf{X}}^m$，缺失模态里面塞 $T$ 个重复的可学习 `<missing_m>` 占位嵌入；再配一段 prompt 把可见/缺失状态讲明白——"Given the available {avail} features... The {miss} modality is missing. Based on the available modalities, please infer and reconstruct the useful latent representations for the missing {miss} modalities at the designated positions"。LLM 前向后，从这些 missing 位置抽隐藏态 $\mathbf{H}_{miss}^m = \mathrm{LLM}(\mathbf{Z}_{in})|_{\text{positions of }\mathbf{E}_{miss}^m}$ 就是推断出来的缺失表示。这样设计的妙处在于，"猜下一个 token"和"推断 missing latent"在数学形式上本就是同一件事，LLM 的 next-token 机制天然适配，无需 pixel 级重建、也无需配对监督。
 
-2. **LLM-Driven Multidimensional Representation Fusion (LMRF)**:
+**2. LLM 驱动的多维表示融合（LMRF）：用专门的 token 槽收集跨模态信息，而不是粗暴 pooling。**
 
-    - 功能：在不破坏 LLM 输出空间的前提下，把跨模态信息蒸馏到 $K$ 个 fusion slot 中，得到一个紧凑的任务相关表示。
-    - 核心思路：在 prompt 末尾追加 $K$ 个特殊 token `<emb_dim_1>, ..., <emb_dim_K>` 作为"信息槽"，再在 prompt 中显式让 LLM "integrate and enhance all multimodal features for action quality assessment. Output the fused multi-dimensional feature representations at the designated feature dimension positions"。LLM 最后一层在这些位置的输出 $\mathbf{H}_{fusion} = \{\boldsymbol{h}_1, \dots, \boldsymbol{h}_K\}$ 被认为分别承载不同评价维度（如难度、执行、艺术性）。再用可学习角色权重 $\boldsymbol{w}_{role}$ 计算 $\boldsymbol{z}_{main} = \sum_k \mathrm{Softmax}(\boldsymbol{w}_{role})_k \cdot \boldsymbol{h}_k$ 作为主融合向量。
-    - 设计动机：直接对 LLM 输出做 mean-pooling 会破坏长序列生成能力，作者借鉴 BERT 的 `[CLS]` 思路但推广到多维度，让 LLM 自己学着"把不同方面的信息塞进不同 slot"，比 pooling 更结构化、比 attention head 更对人类解释友好。
+直接对 LLM 长序列输出做 mean-pooling，会把它的生成结构压塌、丢掉维度信息。LMRF 借鉴 BERT 的 `[CLS]` 思路但推广到多维：在 prompt 末尾追加 $K$ 个特殊 token `<emb_dim_1>, ..., <emb_dim_K>` 当"信息槽"，并显式指示 LLM "integrate and enhance all multimodal features for action quality assessment. Output the fused multi-dimensional feature representations at the designated feature dimension positions"。最后一层在这些位置的输出 $\mathbf{H}_{fusion} = \{\boldsymbol{h}_1, \dots, \boldsymbol{h}_K\}$ 被视为分别承载不同评价维度（如难度、执行、艺术性），再用可学习角色权重聚合成主向量 $\boldsymbol{z}_{main} = \sum_k \mathrm{Softmax}(\boldsymbol{w}_{role})_k \cdot \boldsymbol{h}_k$。比起 pooling 更结构化，比起隐式 attention head 又更贴近人类对"评价维度"的解释。
 
-3. **Mask-Aware Dual-Path Aggregation (MDA)**:
+**3. 掩码感知双路聚合（MDA）：让模型自己掂量"现在到底信不信我推出来的东西"。**
 
-    - 功能：用 LLM 推理路径处理高层语义、用 cross-modal attention 路径处理底层特征，并根据缺失掩码动态校准两条路的可信度，避免严重缺失下 LLM 幻觉。
-    - 核心思路：Path 1（不确定性校准推理）—— 计算门控 $\boldsymbol{g} = \sigma(\mathrm{MLP}_{gate}([\boldsymbol{z}_{main}, \boldsymbol{m}]))$ 和残差 $\boldsymbol{\delta} = \mathrm{MLP}_{res}([\boldsymbol{z}_{main}, \boldsymbol{m}])$，得到精修表示 $\tilde{\boldsymbol{z}}_{main} = \boldsymbol{z}_{main} + \boldsymbol{g}\odot \boldsymbol{\delta}$。Path 2（跨模态模式恢复）—— 把每个模态对应位置的 LLM 隐藏态做 temporal pooling 得 $\boldsymbol{h}_v, \boldsymbol{h}_a, \boldsymbol{h}_f$，stack 后做 self-attention 得 $\mathbf{Z}_{attn}$；再用 $\alpha_{m_j} = \boldsymbol{m}_j \cdot 1 + (1-\boldsymbol{m}_j)\cdot \gamma_{m_j}$ 按可用性加权（$\gamma_m = \sigma(\lambda_m)$ 是模态级可学习置信度），最终 $\boldsymbol{z}_{aux} = \sum_m \alpha_m (\boldsymbol{z}_{attn}^m \odot \mathcal{G}(\mathbf{H}_{stack})^m)$。两路融合输出最终分数。
-    - 设计动机：单纯靠 LLM 推理在缺失严重时容易幻觉；单纯靠统计聚合又缺乏高层语义。掩码感知地把两路"按需混合"，相当于给模型一个"我现在到底信不信我自己"的元认知能力，对极端缺失情况尤其重要。
+只靠 LLM 推理，在严重缺失时会幻觉；只靠统计聚合，又缺高层语义。MDA 同时跑两条路再按缺失掩码混合。Path 1（不确定性校准推理）在主向量上算门控 $\boldsymbol{g} = \sigma(\mathrm{MLP}_{gate}([\boldsymbol{z}_{main}, \boldsymbol{m}]))$ 和残差 $\boldsymbol{\delta} = \mathrm{MLP}_{res}([\boldsymbol{z}_{main}, \boldsymbol{m}])$，得到精修表示 $\tilde{\boldsymbol{z}}_{main} = \boldsymbol{z}_{main} + \boldsymbol{g}\odot \boldsymbol{\delta}$；Path 2（跨模态模式恢复）把各模态位置的 LLM 隐藏态 temporal pooling 成 $\boldsymbol{h}_v, \boldsymbol{h}_a, \boldsymbol{h}_f$，stack 后做 self-attention 得 $\mathbf{Z}_{attn}$，再按可用性加权 $\alpha_{m_j} = \boldsymbol{m}_j \cdot 1 + (1-\boldsymbol{m}_j)\cdot \gamma_{m_j}$（$\gamma_m = \sigma(\lambda_m)$ 是模态级可学习置信度），汇成 $\boldsymbol{z}_{aux} = \sum_m \alpha_m (\boldsymbol{z}_{attn}^m \odot \mathcal{G}(\mathbf{H}_{stack})^m)$。举个具体的：当只剩视频、音频和光流都缺时，掩码会把缺失模态那两路的权重压到学习出来的低置信度 $\gamma$ 上，强迫输出更多依赖可见的视频路径，而不是放任 LLM 在没信息时硬编。两路融合给出最终动作质量分。
+
+### 一个完整示例：只有视频、推断缺失的音频与光流
+
+以一段花样滑冰视频、音频和光流都缺为例走一遍：①PCMI 把视频特征塞进 `<v_start>...<v_end>`，音频/光流位置各放 $T$ 个 `<missing>` 占位，并在 prompt 里写明"音频、光流缺失，请据可见视频推断它们的潜在表示"；②LLM 前向，一边在 missing 位置生成缺失模态的 latent，一边在末尾 $K=3$ 个 `<emb_dim>` 槽里写出"难度/执行/艺术性"三维融合表示；③MDA 的 Path 2 发现两路模态掩码为 0、对应置信度 $\gamma$ 很低，于是把它们的贡献压低，主要信任视频路径，Path 1 再用门控做一次不确定性校准；④两路加权得到最终分数。整条链没有用到任何完整训练样本，缺失语义全靠 LLM 的世界知识"脑补"。
 
 ### 损失函数 / 训练策略
 除了主任务回归 loss，作者引入：(1) Consistency Learning 约束两路输出一致，逼推理路径与统计路径相互校验；(2) Token-Level Metric Regularization 让不同 fusion token 学习不同特征维度（避免 collapse），具体是用 token 之间的相似度矩阵 + 正则项最大化非对角元素的距离；(3) LLM 主干部分可选 LoRA 微调，避免全量训练。

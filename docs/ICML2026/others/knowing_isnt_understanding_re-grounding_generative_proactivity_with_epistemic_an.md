@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **认识论奠基（Epistemic Grounding）→ 把无知拆成多种结构化形式**:
+**1. 认识论奠基（Epistemic Grounding）：把无知从"对已知变量的置信度"拆成多种结构化形式，让 agent 能显式表示"什么我没建模"。**
 
-    - 功能：让 agent 把"已知 / 已知未知 / 未知已知 / 未知未知"（KK/KU/UK/UU）显式建成第一类对象，而不是统一压成 confidence。
-    - 核心思路：援引 Kerwin 的 ignorance philosophy，把无知细分成五种——uncertainty（已知变量上的置信不足）、error（把错的当对的并捍卫之）、tacit（隐性可执行但说不出口）、taboo（被规范/激励禁问的问题）、denial（主动压制威胁性信息）。每种形式都不会被概率建模捕捉到。表 1 用这套分类盘点了 7 个代表性范式（Anticipatory IR、Web/OS agent、Planning+Tool LLM、Mixed-initiative 等），所有主流方法的"认识天花板"最高只到 UK，UU 完全没人碰。
-    - 设计动机：当前主动 agent 失败的根因是把 ignorance ≈ uncertainty，因此在任务框架本身错的时候，置信度反而被自我强化（low uncertainty under impoverished model），而不是预警。要破这一点，必须让 agent 拥有显式表示"什么我没建模"的能力——这是 confidence calibration 修不到的层级。
+当前主动 agent 失败的根因是把 ignorance ≈ uncertainty——任务框架本身错的时候，置信度反而被自我强化（impoverished model 下的 low uncertainty），而不是预警。本文援引 Kerwin 的 ignorance philosophy，把无知细分成五种：uncertainty（已知变量上的置信不足）、error（把错的当对的并捍卫之）、tacit（隐性可执行但说不出口）、taboo（被规范或激励禁问的问题）、denial（主动压制威胁性信息）——这些形式没有一个能被概率建模捕捉到。表 1 用这套分类盘点了 7 个代表性范式（Anticipatory IR、Web/OS agent、Planning+Tool LLM、Mixed-initiative 等），结论是所有主流方法的"认识天花板"最高只到 UK，UU（未知的未知）完全没人碰。要破这一点，agent 必须拥有显式表示"什么我没建模"的能力，这是 confidence calibration 根本修不到的层级。
 
-2. **行为奠基（Behavioral Grounding）→ 倒甜甜圈 + 可逆性边界**:
+**2. 行为奠基（Behavioral Grounding）：用"倒甜甜圈 + 可逆性边界"约束介入力度，避免认识论合法但行为越界。**
 
-    - 功能：约束"以多大力度、以何种范围、以多强承诺"去介入，避免认识论合法但行为越界。
-    - 核心思路：借组织行为学的 Parker et al. (2010) "inverted doughnut model"——中心是 prescribed core（必须执行的核心责任），中圈是 discretionary zone（鼓励主动）、外圈是 overreach（越界，社会成本高）。但作者指出该模型只规制"沿 role scope 的偏离"，**不规制行动者对情境的理解是否正确**；human 靠社会反馈、机构信号补齐这层，agent 却几乎没有这些稳定信号——优化目标只奖励 task completion，恰恰把"放手退档"的行为系统性地不奖励。
-    - 设计动机：人类组织里"自我设限"靠规范 + 反馈；把 behavioral 主动性原样搬到 agent 上等于只给马力不给刹车。所以必须给行为侧加一个新的硬约束——commitment 必须与 epistemic recoverability 联动。
+光知道得对还不够，还要约束"以多大力度、多大范围、多强承诺去介入"。本文借组织行为学 Parker et al. (2010) 的 inverted doughnut model——中心是 prescribed core（必须执行的核心责任），中圈是 discretionary zone（鼓励主动），外圈是 overreach（越界，社会成本高）。但作者尖锐指出该模型只规制"沿 role scope 的偏离"，**不规制行动者对情境的理解是否正确**；人类靠社会反馈、机构信号补齐这一层，agent 却几乎没有这些稳定信号——它的优化目标只奖励 task completion，恰恰把"放手退档"的行为系统性地不奖励。换句话说，把人类组织里"靠规范加反馈自我设限"的行为主动性原样搬到 agent 上，等于只给马力不给刹车；所以必须给行为侧加一个新硬约束——commitment 必须与 epistemic recoverability 联动。
 
-3. **认识论-行为耦合（Coupling）→ 失败模式的统一诊断 + 最小行为约束**:
+**3. 认识论-行为耦合（Coupling）：把主动性建在 (承诺, 合法性) 的二维空间里，把幻觉、runaway、信号压制统一诊断为错耦合。**
 
-    - 功能：把主动性建在 (commitment, epistemic legitimacy) 的二维联合空间里，把幻觉、runaway、suppressed signals 等失败模式重新解释为"承诺 vs 合法性"的错耦合。
-    - 核心思路：四象限——(高合法 + 低承诺) = 观察 / 澄清；(高合法 + 高承诺) = 合理介入；(低合法 + 低承诺) = 探索 / 试探；(低合法 + 高承诺) = **epistemic overreach**。三种典型失败：epistemic overreach（hallucination 被工具调用放大）、suppressed epistemic signals（连贯性奖励压制掉异常证据）、runaway commitment under false certainty（自反思 agent 把 error 强化为知识）。由此给出 4 条最小行为约束：(i) commitment 必须随 recoverability 缩放；(ii) 主动行为必须保留而非压制不确定性；(iii) commitment 必须能被认识论退化中断；(iv) 不确定性必须主动调制初始化，而不能只是事后标注。
-    - 设计动机：单看"自治程度"无法解释为什么对齐良好的 agent 仍会越界——真正的控制变量不是 autonomy（谁能行动）而是 commitment（行动有多不可逆）。一旦把这两轴联合起来，"幻觉 = 高承诺低合法"和"恭顺 = 低承诺高合法"就不再是孤立现象，而是同一空间里的不同点，可以一致地评估和约束。
+本文把主动性放进 (commitment, epistemic legitimacy) 的二维联合空间，分四象限：（高合法 + 低承诺）= 观察 / 澄清；（高合法 + 高承诺）= 合理介入；（低合法 + 低承诺）= 探索 / 试探；（低合法 + 高承诺）= **epistemic overreach**。三种典型失败由此被统一解释——epistemic overreach（hallucination 被工具调用放大）、suppressed epistemic signals（连贯性奖励压制掉异常证据）、runaway commitment under false certainty（自反思 agent 把 error 强化成知识）。据此给出 4 条最小行为约束：commitment 必须随 recoverability 缩放；主动行为必须保留而非压制不确定性；commitment 必须能被认识论退化中断；不确定性必须主动调制初始化而非事后标注。这个框架最有冲击力的判断是：真正的控制变量不是 autonomy（谁能行动）而是 commitment（行动有多不可逆）——一旦把两轴联合起来，"幻觉 = 高承诺低合法"和"恭顺 = 低承诺高合法"就不再是孤立现象，而是同一空间里可一致评估和约束的不同点。
 
 ### 训练策略 / 实现指引（针对立场论文）
 本文不给具体算法，但给出**五条研究议程**（Q1-Q5）：怎么表示 epistemic legitimacy？哪些信号必须在行动中保留？怎么及时检出退化？何时退档 / 弃权才算"正确的主动"？怎么评估 coupling quality（在行动时而非事后判断）？第 7 节进一步指向 epistemic partnership——三个能力：主动问 UU、长视野思考、test-time proactivity（部署期实时调节 initiative）。

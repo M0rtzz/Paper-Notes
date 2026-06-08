@@ -52,23 +52,17 @@ tags:
 
 ### 关键设计
 
-1. **几何衰减的三参数 + 保守转移估计**:
+**1. 几何衰减的三参数 + 保守转移估计：把未知的 $p_{\min}$ 用单调下探序列消化掉。**
 
-    - 功能：保证存在某个有限阶段 $K_{\mathsf{PAC}}$，从此以后 $p_k\le p_{\min}$ 持续成立，使 Ashok 等人的 PAC 子定理可以反复套用。
-    - 核心思路：对计数得到的频率 $\frac{\#(s,a,s')}{\#(s,a)}$ 用 Hoeffding 偏差 $c=\sqrt{\frac{\ln(\delta_P/2)}{-2\cdot\#(s,a)}}$ 减一刀，得到**下估计** $\hat P(s,a,s')=\max\{0,\frac{\#(s,a,s')}{\#(s,a)}-c\}$；同时让 $p_k,\varepsilon_k,\delta_k$ 都按 $1/2^k$ 一起收紧，把三类误差 $\delta_{TP}+\delta_{EC}+\delta_{N_k}=\delta_k$ 摊到每阶段。
-    - 设计动机：$p_{\min}$ 是 PAC 公式里硬性需要的量，但它在 RL 里完全未知；用 $1/2^k$ 单调下探一定会在有限步内压到真值下方，且 $\sum_k 1/2^k$ 可数，正好契合 Borel–Cantelli 把"大概率正确"升级为"几乎处处正确"。
+PAC 公式里硬性需要最小转移概率 $p_{\min}$，但它在 RL 里完全未知。本文的做法不是去找一个无需 $p_{\min}$ 的 PAC，而是承认需要、然后逐阶段精化逼近它：第 $k$ 阶段同时令 $p_k=\delta_k=\varepsilon_k=1/2^k$ 一起几何收紧。转移估计取保守下界——对频率 $\frac{\#(s,a,s')}{\#(s,a)}$ 用 Hoeffding 偏差 $c=\sqrt{\frac{\ln(\delta_P/2)}{-2\cdot\#(s,a)}}$ 减一刀，得 $\hat P(s,a,s')=\max\{0,\frac{\#(s,a,s')}{\#(s,a)}-c\}$，三类误差 $\delta_{TP}+\delta_{EC}+\delta_{N_k}=\delta_k$ 摊到每阶段。$1/2^k$ 单调下探一定会在有限步内压到真 $p_{\min}$ 下方，而 $\sum_k 1/2^k$ 可数，正好契合后面用 Borel–Cantelli 把"大概率正确"升级成"几乎处处正确"。
 
-2. **基于 MEC 收缩 + BVI 的最优策略抽取**:
+**2. 基于 MEC 收缩 + BVI 的最优策略抽取：在部分模型 + 下估计上得到可信值区间。**
 
-    - 功能：在只有部分模型与下估计 $\hat P$ 的情况下，得到值的可信区间 $[L,U]$ 并据此抽出无记忆确定性策略 $\pi_k$。
-    - 核心思路：BVI 的更新式 $L(s,a)=\sum_{s'} \hat P(s,a,s')L(s')$ 与 $U(s,a)=\sum_{s'}\hat P(s,a,s')U(s')+(1-\sum_{s'}\hat P(s,a,s'))$ 把"未观察到的概率质量"全部塞进 $U$，保证 $L(s)\le V(s)\le U(s)$；对每个极大端组件 MEC 收缩成一个超状态，对不含目标的 MEC 设 $L=U=0$、含目标的设 $L=U=1$，避免值迭代在 EC 上振荡不收敛；策略从 $\mathsf{Best\_Action}(s)=\arg\max_a U(s,a)$ 抽取，MEC 内部再递归用 $\mathsf{Best\_Exit\_Action}$。
-    - 设计动机：可达性 RL 不能简单 Q-learning，因为折扣化会把"$\gamma^k$ 到达目标"和"真正可达概率"混淆（Alur 2022 已证明两者间不存在保最优规约）；BVI + MEC 收缩是直接面向可达概率的可证收敛算法，配合保守 $\hat P$ 还能给出可信区间，这正是后面证明的脚手架。
+只有部分模型和保守 $\hat P$ 的情况下，要可证地抽出策略。本文用有界值迭代 BVI：更新式 $L(s,a)=\sum_{s'}\hat P(s,a,s')L(s')$ 与 $U(s,a)=\sum_{s'}\hat P(s,a,s')U(s')+(1-\sum_{s'}\hat P(s,a,s'))$ 把"未观察到的概率质量"全塞进 $U$，保证 $L(s)\le V(s)\le U(s)$；对每个极大端组件 MEC 收缩成一个超状态（不含目标的设 $L=U=0$、含目标的设 $L=U=1$），避免值迭代在 EC 上振荡不收敛；策略从 $\mathsf{Best\_Action}(s)=\arg\max_a U(s,a)$ 抽取，MEC 内部再递归用 $\mathsf{Best\_Exit\_Action}$。这里不能简单 Q-learning，因为折扣化会把"$\gamma^k$ 到达目标"和真正的可达概率混淆（Alur 2022 证明两者间不存在保最优规约）；BVI + MEC 收缩是直接面向可达概率、可证收敛的算法，配合保守 $\hat P$ 给出的可信区间正是后面证明的脚手架。
 
-3. **三阶段证明链路（PAC → 严格最优 → 以概率 1）**:
+**3. 三阶段证明链路：把"每阶段 PAC"升级成"从某阶段起以概率 1 只输出最优策略"。**
 
-    - 功能：把"每阶段以 $1-\delta_k$ 概率 $\varepsilon_k$-最优"升级为"从某阶段起几乎处处只输出最优策略"。
-    - 核心思路：Theorem 3.1 用 Ashok 2019 的 PAC 引理证明从 $K_{\mathsf{PAC}}$ 起 $\Pr[\pi_k\in\Pi_{\mathsf{opt}}^{\varepsilon_k}]\ge 1-\delta_k$；Theorem 3.2 指出无记忆确定性策略只有有限多个，因此最优与次优值差 $\varepsilon_{\mathsf{diff}}>0$，当 $\varepsilon_k\le\varepsilon_{\mathsf{diff}}$ 时 $\varepsilon_k$-最优必然就是最优，给出 $K_{\mathsf{opt}}$；Theorem 3.3 用 $\sum_k\delta_k\le K_{\mathsf{opt}}+1$ 加 Borel–Cantelli，得到"非最优事件只出现有限次"以概率 1 成立。Theorem 4.1 进一步把 $\varepsilon_{\mathsf{diff}}$ 用转移复杂度 $D$（所有概率分母的最小公倍数）显式下界为 $(2D)^{-2|A||S|}\cdot 2^{-2|S|}$，证明 $K_{\mathsf{opt}}$ 只依赖 MDP 内在结构。
-    - 设计动机：这正是与 Le et al. 2024 拉开差距的关键——他们只能证 $J(\pi_n)\to J^*$，即值收敛；本文证明的是"策略本身从某点起以概率 1 都是最优策略"，强度严格高一档，且 $K_{\mathsf{opt}}$ 完全用 MDP 自身的量表达。
+光有每阶段的 PAC 还不够，目标是几乎处处最优。证明分三步串起来：Theorem 3.1 用 Ashok 2019 的 PAC 引理证明从 $K_{\mathsf{PAC}}$ 起 $\Pr[\pi_k\in\Pi_{\mathsf{opt}}^{\varepsilon_k}]\ge 1-\delta_k$；Theorem 3.2 注意到无记忆确定性策略只有有限多个，于是最优与次优值差 $\varepsilon_{\mathsf{diff}}>0$，当 $\varepsilon_k\le\varepsilon_{\mathsf{diff}}$ 时 $\varepsilon_k$-最优必然就是严格最优，给出阶段 $K_{\mathsf{opt}}$；Theorem 3.3 用 $\sum_k\delta_k\le K_{\mathsf{opt}}+1$ 加 Borel–Cantelli，得到"非最优事件只出现有限次"以概率 1 成立。Theorem 4.1 再把 $\varepsilon_{\mathsf{diff}}$ 用转移复杂度 $D$（所有概率分母的最小公倍数）显式下界为 $(2D)^{-2|A||S|}\cdot 2^{-2|S|}$，证明 $K_{\mathsf{opt}}$ 只依赖 MDP 内在结构。这正是与 Le et al. 2024 拉开差距的地方——他们只能证值收敛 $J(\pi_n)\to J^*$，本文证的是"策略本身从某点起以概率 1 都是最优策略"，强度高一档、且阶段完全用 MDP 自身的量表达。
 
 ### 损失函数 / 训练策略
 无显式损失函数（非梯度方法）。每阶段在 $PMC$ 上跑 $2^k\cdot|S|$ 次 BVI 更新作为收敛预算；模拟时以概率 $1-\mu$ 用上一阶段的最优策略、以概率 $\mu$ 随机探索，$\mu\in(0,1]$ 任选；端组件检测用 $\delta_C$-confident 策略，要求"留在 EC 内的状态—动作对"被抽样次数 $n\ge\ln\delta_C/\ln(1-p_k)$，避免低概率出边被漏掉。

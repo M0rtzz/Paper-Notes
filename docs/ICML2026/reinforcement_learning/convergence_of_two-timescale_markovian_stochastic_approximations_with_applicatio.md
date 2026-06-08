@@ -54,23 +54,22 @@ $$
 
 ### 关键设计
 
-1. **Running-max 桥接 (Lemma 3.1)**:
+**1. Running-max 桥接（Lemma 3.1）：用"历史最大慢参数"压住快参数。**
 
-    - 功能：把两个时间尺度的迭代范数串起来，证明存在样本路径相关常数 $K$ 使得 $\|x_n\|\le K(1+\|y_n^{\max}\|)$ a.s.，其中 $y_n^{\max}=\arg\max_{i\le n}\|y_i\|$ 对应的慢迭代。
-    - 核心思路：把时间轴 $[0,\infty)$ 按快步长切成长度近似 $T$ 的区间 $[T_n,T_{n+1})$，在每段上用 $r_n\doteq\max\{1,r_{n-1},\|\bar z(T_n)\|\}$ 单调放缩 $z=(x,y)$ 得到 $\tilde z_n(t)=\bar z(T_n+t)/r_n$；选 Arzelà–Ascoli 子列得到极限轨迹 $z^{\lim}$ 满足 ODE@$\infty$ $\dot x=h_\infty(x,y), \dot y=0$；用 Lemma 4.7 证明只要 $\|\bar x(T_n)\|>C_1(1+\|\bar y(T_n)\|)$ 就有 $\|\bar z(T_{n+1})\|\le\|\bar z(T_n)\|$ (即 $r_{n+1}=r_n$)，归纳出 $\|\bar z(T_n)\|\le C_1C_2(\max_{m\le n}\|\bar y(T_m)\|+1)$，再用 Lemma 4.9 把界推广到所有 $n$。
-    - 设计动机：与先前工作 (Kushner & Yin 2003；Mokkadem & Pelletier 2006；Dalal et al. 2018；Yaji & Bhatnagar 2020；Zeng et al. 2024) 不同，先前证明都尝试用同步慢参数 $\|y_n\|$ 控制 $\|x_n\|$；当噪声非 i.i.d. 时，这种同步界无法成立。Running max 比当前值更"宽松"，正是能容纳 Lakshminarayanan 的单调缩放方案与 Liu 的 Markov 噪声平均技巧的最弱条件。
+整套证明卡在前面那个核心矛盾上——两尺度耦合时，怎么把快迭代 $\|x_n\|$ 的范数和慢迭代联系起来。先前工作（Kushner & Yin 2003、Mokkadem & Pelletier 2006、Dalal et al. 2018、Yaji & Bhatnagar 2020、Zeng et al. 2024）都试图用同步的 $\|y_n\|$ 控制 $\|x_n\|$，可一旦噪声不再 i.i.d.，这种同步界在重缩放过程中就失效了。本文的破局点是把它放宽成 $\|x_n\|\le K(1+\|y_n^{\max}\|)$（a.s.），其中 $y_n^{\max}$ 是迄今为止范数最大的那个慢迭代。证明思路是把时间轴 $[0,\infty)$ 按快步长切成长度约 $T$ 的区间 $[T_n,T_{n+1})$，每段用单调放缩因子 $r_n\doteq\max\{1,r_{n-1},\|\bar z(T_n)\|\}$ 对 $z=(x,y)$ 归一化得到 $\tilde z_n(t)$，再用 Arzelà–Ascoli 抽子列收敛到满足 ODE@$\infty$（$\dot x=h_\infty(x,y),\ \dot y=0$）的极限轨迹；Lemma 4.7 保证只要 $\|\bar x(T_n)\|>C_1(1+\|\bar y(T_n)\|)$ 就有 $r_{n+1}=r_n$，归纳出 $\|\bar z(T_n)\|\le C_1C_2(\max_{m\le n}\|\bar y(T_m)\|+1)$，最后 Lemma 4.9 把界推广到全部 $n$。之所以非用"running max"不可，是因为它恰好是能同时容纳 Lakshminarayanan 的单调缩放与 Liu 的 Markov 噪声平均技巧的最弱条件——比当前值宽松一点点，两套工具才拼得上。
 
-2. **慢尺度稳定性证明 (Theorem 3.2)**:
+**2. 慢尺度稳定性证明（Theorem 3.2）：把整体迭代有界归约成反证。**
 
-    - 功能：在 Lemma 3.1 基础上把"整体迭代有界" $\sup_n\|z_n\|<\infty$ a.s. 由反证得出。
-    - 核心思路：在慢尺度上重做一遍重缩放，但缩放因子改为 $r_n\doteq\max\{1,\|z_{m(T_n)}^{\max}\|\}$，使其至少与历史最大迭代同阶；随后证明 Lemma 5.3——即使在慢尺度上观察，快迭代仍能近似追上 $\lambda_\infty(\tilde y_n(t))$，从而把"快尺度等价于已收敛"这一启发式严格化。结合 ODE@$\infty$ 的零吸引子性，假设 $\sup_n r_n=\infty$ 会与极限 ODE 收敛到 0 矛盾，故 $r_n$ 有界，稳定性成立。
-    - 设计动机：直接套 Liu et al. (2025b) 的单尺度论证会失败，因为快迭代步长大、增长更快；通过把缩放因子定义成"历史最大 $\|z\|$"，可以保证快慢两个尺度的缩放速率自动同步，从而让 Markov 噪声下的平均化估计 (Kushner & Yin 2003 的技术) 仍然适用。
+有了桥接界，第二步要证 $\sup_n\|z_n\|<\infty$（a.s.）。直接照搬 Liu et al. (2025b) 的单尺度论证会失败，因为快迭代步长大、增长更快，单尺度的缩放速率跟不上。作者的办法是在慢尺度上重做一遍重缩放，但缩放因子改成 $r_n\doteq\max\{1,\|z_{m(T_n)}^{\max}\|\}$，让它至少和历史最大迭代同阶，从而强行把快慢两个尺度的缩放速率绑同步——这一同步正是 Kushner & Yin 的 Markov 噪声平均化估计能继续适用的前提。随后 Lemma 5.3 证明即便在慢尺度的时间分辨率下观察，快迭代仍能近似追上 $\lambda_\infty(\tilde y_n(t))$，把"快尺度等价于已收敛"这一启发式严格化。结合 ODE@$\infty$ 的零吸引子性，一旦假设 $\sup_n r_n=\infty$ 就会和极限 ODE 收敛到 0 矛盾，于是 $r_n$ 必有界、稳定性成立。
 
-3. **TDC($\lambda$) 离策略收敛应用 (Theorem 7.2)**:
+**3. TDC($\lambda$) 离策略收敛应用（Theorem 7.2）：把无投影框架落到真实算法上。**
 
-    - 功能：给出第一个 (无投影、线性函数逼近、离策略、带资格迹) TDC 几乎必然收敛证明。算法定义为 $e_t=\lambda\gamma\rho_{t-1}e_{t-1}+\phi_t$，$\delta_t=R_{t+1}+\gamma\phi_{t+1}^\top\theta_t-\phi_t^\top\theta_t$，$\nu_{t+1}=\nu_t+\alpha_t(\rho_t\delta_t e_t-\phi_t\phi_t^\top\nu_t)$，$\theta_{t+1}=\theta_t+\beta_t(\rho_t\delta_t e_t-\rho_t(1-\lambda)\gamma\phi_{t+1}e_t^\top\nu_t)$。
-    - 核心思路：把 $\nu_t$ 视作快尺度、$\theta_t$ 视作慢尺度，状态扩展为 $(S_t,A_t,e_t)$；由于离策略下重要性采样比 $\rho_t$ 的连乘使 $e_t$ 可无界，$\mathcal{W}$ 取在非紧空间上。验证 Appendix B 中 B.1–B.7 假设 (Markov 链遍历、步长条件、$H/G$ 的齐次极限、Lipschitz 性、平均化条件) 在 TDC($\lambda$) 上均自然成立，从而 Theorem 3.3 直接给出几乎必然收敛。
-    - 设计动机：先前 Yu (2017) 必须额外加投影以强制有界，Panda & Bhatnagar (2025) 同样依赖投影；本文的非投影框架是第一个能"原样"刻画实践算法的工具。这也展示了 Lemma 3.1 的实际威力——它把"理论上不投影"从口号变为可验证条件。
+前两步是抽象 SA 理论，第三步用它兑现一个文献空白：离策略、线性函数逼近、带资格迹、且完全无投影的 TDC 几乎必然收敛。算法本身是
+
+$$e_t=\lambda\gamma\rho_{t-1}e_{t-1}+\phi_t,\quad \delta_t=R_{t+1}+\gamma\phi_{t+1}^\top\theta_t-\phi_t^\top\theta_t,$$
+$$\nu_{t+1}=\nu_t+\alpha_t(\rho_t\delta_t e_t-\phi_t\phi_t^\top\nu_t),\quad \theta_{t+1}=\theta_t+\beta_t\big(\rho_t\delta_t e_t-\rho_t(1-\lambda)\gamma\phi_{t+1}e_t^\top\nu_t\big).$$
+
+把 $\nu_t$ 当快尺度、$\theta_t$ 当慢尺度，状态扩展成 $(S_t,A_t,e_t)$；由于离策略下重要性采样比 $\rho_t$ 连乘会让资格迹 $e_t$ 无界，噪声空间 $\mathcal{W}$ 必须取在非紧空间上——这正是先前框架被迫加投影的地方。作者只需逐条验证 Appendix B 的 B.1–B.7 假设（Markov 链遍历、步长条件、$H/G$ 的齐次极限、Lipschitz 性、平均化条件）在 TDC($\lambda$) 上自然成立，Theorem 3.3 就直接给出收敛结论。这一步展示了 Lemma 3.1 的实际威力：Yu (2017)、Panda & Bhatnagar (2025) 都得额外加投影来强制有界，而这里把"理论上不投影"从口号变成了可逐条核对的条件，第一次原样刻画了实践中真正在跑的算法。
 
 ### 损失函数 / 训练策略
 理论论文，无训练。需要满足的关键假设包括：步长 $\sum\alpha=\sum\beta=\infty$、$\sum\alpha^2,\sum\beta^2<\infty$、$\lim\beta/\alpha=0$；$H,G$ 的齐次缩放极限 $h_\infty,g_\infty$ 存在且 Lipschitz；对应 ODE 有唯一全局渐近稳定平衡 $\lambda_\infty(y),0$；以及 Kushner & Yin 风格的长时平均正则性条件 (B.7)。

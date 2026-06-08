@@ -45,23 +45,21 @@ FedGR 在标准 FedAvg 循环外加三个模块，全部为客户端 $k$ 在第 
 
 ### 关键设计
 
-1. **Federated Sieving + Label Refining (服务器端 GMM 筛选 + 分级精修)**:
+**1. Federated Sieving + Label Refining：把噪声判定搬到服务器，但只看与分布无关的损失统计。**
 
-    - 功能：把"判断哪些样本被错标 + 估计每客户端噪声率"集中到服务器端做，但只看与分布无关的损失统计。
-    - 核心思路：客户端 $k$ 对每个样本维护一个损失观测集 $L_i^t = \{\ell_{i,p}\}_{p=1}^{T_k}$，$\ell_{i,T_k} = \mathcal{H}(\mathbf{p}_i^g, \hat{y}_i)$ 用全局模型 $\mathbf{w}_g^{t-1}$ 计算交叉熵；取均值 $\bar{\ell}_i^t = \frac{1}{T_k}\sum_p \ell_{i,p}$ 作为数据代理上传。服务器把所有选中客户端的代理放到一起，拟合一个双组分 GMM，clean 后验 $q_{i,k}$ 给出 clean/noisy 划分和每客户端噪声率 $r_k$。客户端拿回划分后按公式分三档生成精修标签 $\tilde{y}_i$：$r_k < \beta$ 且属于 clean 则保留原标签；$r_k < \beta$ 但被划入 noisy 则用 $q_{i,k}\hat{y}_i + (1-q_{i,k})y^{pse}_i$ 软融合；$r_k \ge \beta$ 则完全用伪标签 $y^{pse}_i$（FixMatch 在弱增强下用全局模型生成）。前 $\alpha$ 轮用普通 CE warm-up，之后切换到精修标签的 CE。
-    - 设计动机：噪声分布在客户端尺度看是高方差的（10–50 个样本根本拟合不出干净的双峰），把所有客户端数据代理放一起就能稳健建模"噪声 vs 干净"两峰；又因为只传损失值（与 $\mathbf{x}, \mathbf{y}$ 的联合分布无关）所以不构成隐私泄露，避免了 FedCorr、FedNoRo 等需要传类别频率/原型的方案的风险。
+单个客户端只有 10–50 个样本，根本拟合不出"干净 vs 噪声"的双峰，独立估计噪声率必然抖动；可一旦客户端之间共享类别频率或原型，又会泄露分布信息。FedGR 的破局点是只传一个隐私无害的量——每样本的滑动平均损失代理。客户端 $k$ 对每个样本维护损失观测集 $L_i^t=\{\ell_{i,p}\}_{p=1}^{T_k}$，其中 $\ell_{i,T_k}=\mathcal{H}(\mathbf{p}_i^g,\hat{y}_i)$ 用全局模型 $\mathbf{w}_g^{t-1}$ 算交叉熵，取均值 $\bar{\ell}_i^t=\frac{1}{T_k}\sum_p\ell_{i,p}$ 上传。服务器把所有选中客户端的代理汇到一起拟合双组分 GMM，clean 后验 $q_{i,k}$ 同时给出 clean/noisy 划分和每客户端噪声率 $r_k$。客户端拿回结果后按噪声率分三档精修标签 $\tilde{y}_i$：$r_k<\beta$ 且属 clean 则保留原标签；$r_k<\beta$ 但被划入 noisy 则用 $q_{i,k}\hat{y}_i+(1-q_{i,k})y^{pse}_i$ 软融合；$r_k\ge\beta$ 则直接用伪标签 $y^{pse}_i$（FixMatch 在弱增强下由全局模型生成）。这样设计既靠群体数据把噪声两峰建模稳，又因为只传损失值（与 $\mathbf{x},\mathbf{y}$ 联合分布无关）而不构成隐私泄露，避开了 FedCorr、FedNoRo 那种要传类别频率/原型的风险。
 
-2. **Globally Revised EMA Distillation (全局参数定期"洗"本地 EMA 教师再蒸馏)**:
+**2. Globally Revised EMA Distillation：让全局参数定期"洗"本地 EMA 教师，再蒸馏给学生。**
 
-    - 功能：用一个对噪声更鲁棒的教师产生 logits 蒸馏给本地学生，同时避免本地 EMA 在高噪声客户端被噪声标签污染。
-    - 核心思路：每个客户端维护一个本地 EMA 模型 $\mathbf{w}_{k,ema}^{t,m_k}$，更新分两段——每轮开始时 ($m_k = 0$) 用全局参数做"修正" $\mathbf{w}_{k,ema}^{t,0} = \gamma_g \mathbf{w}_{k,ema}^{t-1,m_k} + (1-\gamma_g)\mathbf{w}_g^{t-1}$，本地训练步内 ($m_k \ge 1$) 走标准 EMA $\mathbf{w}_{k,ema}^{t,m_k} = \gamma_l \mathbf{w}_{k,ema}^{t,m_k-1} + (1-\gamma_l)\mathbf{w}_k^{t,m_k}$。蒸馏只用本轮开头那个"修正后" EMA 的弱增强 logits $\mathbf{p}_i^{le,w}$ 作为教师，目标为 $\mathcal{B}_k = \mathbb{E}_{\hat{\mathcal{D}}_k}[KL(\mathbf{p}_i^{le,w}/\tau,\ \mathbf{p}_i^{l,s}/\tau)]$，温度 $\tau$ 控制软化。
-    - 设计动机：在线 EMA 在高噪声客户端会随着本地步累积错误信号；用全局参数定期"覆写"等价于把"EMA 平滑" + "全局鲁棒性"叠加。同时只在 $m_k=0$ 做一次前向，把蒸馏的计算成本从 $O(\text{steps})$ 降到 $O(1)$；消融 (Table 4) 显示该模块去掉后 Non-IID Sym 1.0 设定下精度从 63.64 掉到 51.07（−12.6 个点）。
+在线 EMA 在高噪声客户端会随本地步累积错误信号，单纯的本地教师靠不住。FedGR 的做法是给每个客户端的 EMA 模型 $\mathbf{w}_{k,ema}^{t,m_k}$ 设两段更新：每轮开头（$m_k=0$）先用全局参数做一次"修正"
 
-3. **Global Representation Regularization (全局表征对齐约束)**:
+$$\mathbf{w}_{k,ema}^{t,0}=\gamma_g\,\mathbf{w}_{k,ema}^{t-1,m_k}+(1-\gamma_g)\,\mathbf{w}_g^{t-1},$$
 
-    - 功能：进一步防止本地骨干特征漂离全局空间——尤其在 EMA 教师本身已开始累积误差时作为兜底。
-    - 核心思路：约束本地 backbone $f(\cdot; \mathbf{w}_{k,f}^t)$ 在弱增强下的特征与全局 backbone $f(\cdot; \mathbf{w}_{g,f}^{t-1})$ 的特征一致（具体形式为余弦/L2 一致性，由 $\lambda_{\mathcal{R}}$ 加权；CIFAR-10 上 $\lambda_{\mathcal{R}}=0.1$，CIFAR-100/Clothing1M 上 0.2）。
-    - 设计动机：仅依赖 EMA 蒸馏会留下"教师本身被精修标签错误带跑"的风险；表征级正则不依赖任何标签，从特征空间角度约束本地模型不偏离全局，构成 logits + features 的双重约束。消融显示去掉后 Non-IID Sym 1.0 精度从 63.64 掉到 58.23（−5.4 个点）。
+本地训练步内（$m_k\ge1$）再走标准 EMA $\mathbf{w}_{k,ema}^{t,m_k}=\gamma_l\mathbf{w}_{k,ema}^{t,m_k-1}+(1-\gamma_l)\mathbf{w}_k^{t,m_k}$。蒸馏只取本轮开头那个"修正后" EMA 的弱增强 logits $\mathbf{p}_i^{le,w}$ 当教师，目标 $\mathcal{B}_k=\mathbb{E}_{\hat{\mathcal{D}}_k}[KL(\mathbf{p}_i^{le,w}/\tau,\ \mathbf{p}_i^{l,s}/\tau)]$。这相当于把"EMA 的时间平滑"和"全局聚合的群体鲁棒性"两种平滑显式叠加；又因为前向被锁在 $m_k=0$ 这一步，蒸馏成本从 $O(\text{steps})$ 降到 $O(1)$。消融印证了它的针对性：去掉该模块后 Non-IID Sym 1.0 精度从 63.64 掉到 51.07（−12.6 个点），远高于 IID 同设定的损失，正对应"本地模型在高噪声 + 类不均下被污染"这一痛点。
+
+**3. Global Representation Regularization：从特征空间再加一道不依赖标签的兜底约束。**
+
+只靠 EMA 蒸馏还留着一个风险——教师本身可能被精修后的错误标签带跑。表征正则就是为这个兜底：它约束本地 backbone $f(\cdot;\mathbf{w}_{k,f}^t)$ 在弱增强下的特征与全局 backbone $f(\cdot;\mathbf{w}_{g,f}^{t-1})$ 的特征保持一致（余弦/L2 一致性，由 $\lambda_{\mathcal{R}}$ 加权，CIFAR-10 取 0.1、CIFAR-100/Clothing1M 取 0.2）。它的关键好处是完全不碰标签——纯从特征空间约束本地模型别偏离全局，于是与第 2 点的 logits 级蒸馏构成"特征 + logits"的双重约束。消融显示去掉它后 Non-IID Sym 1.0 从 63.64 掉到 58.23（−5.4 个点），说明在 EMA 教师开始累积误差时它确实起到了独立的补强作用。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}_k = \mathcal{L}_k^{SR} + \lambda_{\mathcal{B}} \mathcal{B}_k + \lambda_{\mathcal{R}} \mathcal{R}_k$；$\lambda_{\mathcal{B}}=1.0$，$\lambda_{\mathcal{R}}=0.1$ (CIFAR-10) 或 $0.2$ (其它)；SGD + 常数学习率，本地 epoch $=10$ (CIFAR-10/100)、$2$ (Clothing1M)；骨干分别为 ResNet-18/34/预训练 ResNet-50；CIFAR 切 100 client、Clothing1M 切 500 client，Non-IID 用 Dirichlet $\alpha=0.3$；warmup $\alpha$ 轮内服务器无放回随机采样保证所有客户端都被采过、之后切回标准 FL 采样；强增强 RandAugment、弱增强沿用 FedCorr；评估用最后 10 轮均值精度。

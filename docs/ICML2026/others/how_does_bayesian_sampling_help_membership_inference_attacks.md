@@ -43,23 +43,17 @@ BMIA 的攻击流水线：(1) 在和目标模型不相交的参考数据集 $\ma
 
 ### 关键设计
 
-1. **Laplace 后验把单模型变成贝叶斯模型族**:
+**1. Laplace 后验把单模型变成贝叶斯模型族：用一个 MAP 参考模型撑起整条条件 score 分布。**
 
-    - 功能：用一个 MAP 参考模型撑起整条条件 score 分布。
-    - 核心思路：在 $\hat w_1$ 处做二阶 Taylor 展开，把后验近似为 $p(w\mid\mathcal{D})\approx\mathcal{N}(w;\hat w_1,\Sigma)$，其中 $\Sigma=(-\nabla_w^2\mathcal{L}(\mathcal{D};w)|_{w=\hat w})^{-1}$。实现上只对**最后一层**做 LA，再用 KFAC 或 Diagonal 近似 Hessian，先验精度由 marginal likelihood 最大化决定。从这个后验里采 $M$ 个 $\tilde w_i$ 喂进 hinge score $s_{\text{hinge}}(x,y)=f(x)_y-\max_{y'\neq y}f(x)_{y'}$ 就拿到一组同模型不同采样下的条件 score。
-    - 设计动机：LiRA 用 $K$ 个 shadow 模型的 score 高斯拟合估 $\tau_\alpha(x,y)$，相当于 $M=1, K$ 较大；BMIA 反向操作——单 $K$、大 $M$，把外层重训变成内层后验采样，把"训练成本"压成"前向推断成本"，且贝叶斯采样保留了 score 的高斯近似前提（hinge score 经验上近似正态）。
+条件攻击的力量来自 per-instance 不确定性建模，但现有方法只能靠外层重训几十上百个 shadow model 来获取，把计算成本和攻击力强绑在一起。BMIA 把这个开销搬到 inference 阶段：在 $\hat w_1$ 处做二阶 Taylor 展开，把后验近似为 $p(w\mid\mathcal{D})\approx\mathcal{N}(w;\hat w_1,\Sigma)$，$\Sigma=(-\nabla_w^2\mathcal{L}(\mathcal{D};w)|_{w=\hat w})^{-1}$；实现上只对最后一层做 LA，用 KFAC 或 Diagonal 近似 Hessian，先验精度由 marginal likelihood 最大化决定。从这个后验采 $M$ 个 $\tilde w_i$ 喂进 hinge score $s_{\text{hinge}}(x,y)=f(x)_y-\max_{y'\neq y}f(x)_{y'}$，就拿到一组同模型不同采样下的条件 score。LiRA 相当于 $M=1$、$K$ 较大；BMIA 反过来——单 $K$、大 $M$，把"训练成本"压成"前向推断成本"，而贝叶斯采样恰好保留了 hinge score 经验上近似正态的高斯前提。
 
-2. **基于 Student-$t$ 检验的条件 MIA 决策规则**:
+**2. 基于 Student-$t$ 检验的条件 MIA 决策规则：把"score 大不大"形式化成假设检验。**
 
-    - 功能：把"score 大不大"形式化成假设检验，避免主观选阈值。
-    - 核心思路：定义校准 score $d_i=s_0-s_i$，在零假设 $H_0$（$z^*$ 非成员）下 $\mathbb{E}[d_i]=0$。可以推出 $\bar d$ 方差为 $\operatorname{Var}(\bar d)=(1+\frac{1}{M})\sigma^2$，用样本方差 $\hat\sigma^2$ 估 $\sigma^2$，构造统计量 $t=\bar d/(\hat\sigma\sqrt{1+1/M})$ 服从自由度 $M-1$ 的 $t$ 分布。最终把 $p=1-F_t(t;M-1)<\alpha$ 作为攻击决策。
-    - 设计动机：传统方法用经验分位数或高斯尾估阈值，对小样本极端尾部 (0.1% FPR) 不稳；$t$ 检验天然处理样本方差未知 + 小样本，正好契合"只采几十个权重"的场景。同时把攻击力 = $1-\beta$ 等价于检验统计 power，能直接和方差关联。
+传统方法用经验分位数或高斯尾估阈值，对 0.1% FPR 这种小样本极端尾部很不稳。BMIA 改用 $t$ 检验：定义校准 score $d_i=s_0-s_i$，在零假设 $H_0$（$z^*$ 非成员）下 $\mathbb{E}[d_i]=0$，可推出 $\operatorname{Var}(\bar d)=(1+\frac{1}{M})\sigma^2$，用样本方差 $\hat\sigma^2$ 估 $\sigma^2$，构造统计量 $t=\bar d/(\hat\sigma\sqrt{1+1/M})$ 服从自由度 $M-1$ 的 $t$ 分布，最终把 $p=1-F_t(t;M-1)<\alpha$ 作为攻击决策。$t$ 检验天然处理"样本方差未知 + 小样本"，正好契合"只采几十个权重"的场景，还把攻击力 $=1-\beta$ 直接等价成检验统计 power，便于和方差关联。
 
-3. **全方差分解与 MR-BMIA 多参考扩展**:
+**3. 全方差分解与 MR-BMIA 多参考扩展：先讲清楚为什么有效，再指导资源该投哪。**
 
-    - 功能：解释"为什么贝叶斯采样有效"，并把方法推到有多个参考模型的场景。
-    - 核心思路：用全方差律把 score 总方差拆成 $\operatorname{Var}(s)=\sigma^2_{\text{intra}}+\sigma^2_{\text{inter}}$。在 $K$ 个参考数据集、每个采 $M$ 次的设定下，目标 score 与均值差 $s_0-\bar s$ 的方差为 $\operatorname{Var}(s_0-\bar s)=(1+\frac{1}{K})\sigma^2_{\text{inter}}+(1+\frac{1}{KM})\sigma^2_{\text{intra}}$。LiRA 等同 $M=1$，只能靠加大 $K$ 压方差；BMIA 在 $K=1$ 时通过加大 $M$ 把 $\sigma^2_{\text{intra}}$ 压成 $\frac{1}{M}$ 项。Theorem 3.2 进一步证明 $\beta(M')>\beta(M)$，更大的 $M$ 给出更紧的拒绝域、更高 TPR。多参考变体 MR-BMIA 用 mixture-Laplace 同时压两项方差，对应 Algorithm 2 的双层估计器，包括 Welch–Satterthwaite 风格自由度 $v$ 修正。
-    - 设计动机：先有理论后有方法——分解明确告诉攻击者"加 shadow 模型只能压 inter，加后验采样能压 intra"，于是给出了什么资源该投到哪个旋钮上的可操作指导。
+用全方差律把 score 总方差拆成 $\operatorname{Var}(s)=\sigma^2_{\text{intra}}+\sigma^2_{\text{inter}}$——同一数据集下参数不同造成的 intra 方差，和不同数据集造成的 inter 方差。在 $K$ 个参考数据集、每个采 $M$ 次的设定下，目标 score 与均值差的方差为 $\operatorname{Var}(s_0-\bar s)=(1+\frac{1}{K})\sigma^2_{\text{inter}}+(1+\frac{1}{KM})\sigma^2_{\text{intra}}$。LiRA 等同 $M=1$，只能靠加大 $K$ 压方差；BMIA 在 $K=1$ 时通过加大 $M$ 把 $\sigma^2_{\text{intra}}$ 压成 $\frac{1}{M}$ 项，Theorem 3.2 进一步证明 $\beta(M')>\beta(M)$——更大的 $M$ 给出更紧的拒绝域、更高 TPR。多参考变体 MR-BMIA 则用 mixture-Laplace 同时压两项方差（Algorithm 2 的双层估计器，含 Welch–Satterthwaite 风格自由度 $v$ 修正）。这套分解的价值在于明确告诉攻击者：加 shadow 模型只能压 inter，加后验采样才能压 intra，于是哪个旋钮该投到哪一项一目了然。
 
 ### 损失函数 / 训练策略
 没有特殊训练损失，攻击者只跑标准 SGD 训练参考模型（CIFAR-10 用 ResNet-50，CIFAR-100 用 DenseNet-121，ImageNet 用 ResNet-50，tabular 用 4 层 MLP，文本用 BERT/DistilBERT 微调），随后做后验拟合。所有数据按 20%/20%/40%/20% 切分给目标训练 / 目标测试 / 参考池 / QMIA 验证。
@@ -123,12 +117,6 @@ BMIA 的攻击流水线：(1) 在和目标模型不相交的参考数据集 $\ma
 - 实验充分度: ⭐⭐⭐⭐⭐ 三模态 + 多架构 + 单/多参考 + 架构 mismatch + Hessian 因子化全覆盖。
 - 写作质量: ⭐⭐⭐⭐ 理论清晰、表格密集；少数地方实验图引用 (LABEL:) 未编译，可读性稍打折。
 - 价值: ⭐⭐⭐⭐⭐ 把高保真 MIA 从"百卡级"打到"单卡级"，让真实模型隐私审计有了落地可能。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

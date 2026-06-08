@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **三阶段元认知 Attacker（belief update → policy → instantiation）**:
+**1. 三阶段元认知 Attacker：把单轮决策拆成"诊断 → 策略 → 实例化"的可读三步。**
 
-    - 功能：把单轮 attacker 决策分解为可解释的三步——内省诊断、自适应策略制定、可执行实例化，并用结构化标签 `<thought> / <strategy> / <prompt>` 显式标注。
-    - 核心思路：(a) Phase I `<thought>` 中执行 belief update $b_t \leftarrow \text{Reason}(b_{t-1}, y_{t-1}, f_{t-1})$，对应贝叶斯式整合上轮响应与反馈，缩小对 $\mathcal{D}$ 的假设（例如「该防御靠的是 lexical filter 还是 semantic intent scrutiny」）；(b) Phase II `<strategy>` 中由 $\sigma_t \leftarrow \pi_\text{plan}(b_t, \mathcal{P}_\text{seed})$ 产生抽象策略，$\mathcal{P}_\text{seed}$ 提供少量已知 attack vector 作为先验，让策略沿 belief 指出的「与防御正交方向」改进；(c) Phase III `<prompt>` 把抽象策略实例化为具体 token $x_t \sim \pi_\text{gen}(x \mid \sigma_t, H_t)$。
-    - 设计动机：传统多轮攻击在每一轮里只输出 prompt，过程不透明，错了也不知道哪儿错；显式三段元认知既给安全分析师可读的 reasoning trace（每一轮的诊断、策略、实例都有），也给后续 Evaluator 提供清晰的批判靶点。
+传统多轮攻击每一轮只输出一个 prompt，过程不透明，失败了也不知道错在哪。Metis 把 Attacker 的每轮决策显式分解成三段，用 `<thought> / <strategy> / <prompt>` 标签标注。Phase I 在 `<thought>` 里做 belief update $b_t\leftarrow\text{Reason}(b_{t-1}, y_{t-1}, f_{t-1})$，相当于贝叶斯式整合上轮响应与反馈、缩小对未知防御 $\mathcal D$ 的假设（比如判断"它靠的是 lexical filter 还是 semantic intent scrutiny"）；Phase II 在 `<strategy>` 里由 $\sigma_t\leftarrow\pi_\text{plan}(b_t, \mathcal P_\text{seed})$ 产生抽象策略，$\mathcal P_\text{seed}$ 提供少量已知 attack vector 作先验，让策略沿 belief 指出的"与防御正交方向"改进；Phase III 在 `<prompt>` 里把抽象策略实例化成具体 token $x_t\sim\pi_\text{gen}(x\mid\sigma_t, H_t)$。这套显式三段既给安全分析师一条可读的 reasoning trace（每轮的诊断、策略、实例都看得到），也给下游 Evaluator 提供了清晰的批判靶点。
 
-2. **作为语义梯度的 Metacognitive Evaluator**:
+**2. 作为语义梯度的 Metacognitive Evaluator：用文本 critique 替代稀疏 scalar reward。**
 
-    - 功能：在黑盒 setting 下用第三方 LLM 输出 $(s_t, J_t, M_t)$（scalar reward + 文本 justification + meta-suggestions），近似一个无法直接得到的 loss gradient。
-    - 核心思路：$\nabla_\text{sem} \approx \mathcal{E}(y_t, \mathcal{G})$ 是高维的语义方向，明确告诉 Attacker「下一轮应该把策略往哪个方向改」；Meta-suggestions $M_t$ 用自然语言而不是单一数字，直接被拼到 attacker 的下一个 prompt context 里，等价于把 search-style 的稀疏 0/1 reward 升级到 dense supervision。这种 dense feedback 让 Attacker 单条 trajectory 就能内化 cause-and-effect，避免反复抽样浪费 token。
-    - 设计动机：标准 RL 类红队在多轮里只能用「最终成功与否」当 reward，trajectory 越长信号越稀疏；把每一步都让 Evaluator 给出「failure mode 分析 + 策略建议」相当于给了一个 step-wise reward shaping，让 attacker 不需要权重更新也能在 in-context 内做策略改进。
+标准 RL 类红队在多轮里只能拿"最终成功与否"当 reward，trajectory 越长信号越稀疏，于是要反复抽样、烧很多 token。Metis 让一个第三方 LLM 当 Evaluator，每步输出 $(s_t, J_t, M_t)$——scalar reward、文本 justification、meta-suggestions，把它整体看作对一个无法直接获取的 loss gradient 的近似 $\nabla_\text{sem}\approx\mathcal E(y_t,\mathcal G)$。这个"语义梯度"是高维的方向信号，明确告诉 Attacker"下一轮该把策略往哪个方向改"；meta-suggestions $M_t$ 用自然语言而非单一数字，直接拼进 Attacker 下一个 prompt 的 context，等价于把 search-style 的稀疏 0/1 reward 升级成 dense supervision。正因为每一步都有"failure mode 分析 + 策略建议"这种 step-wise reward shaping，Attacker 不用更新权重、单条 trajectory 内就能内化 cause-and-effect。消融也印证了这一点是真瓶颈：移除 Evaluator metacognition 比移除 Attacker metacognition 更致命（Claude-3.7 上 −40 vs −20）。
 
-3. **协同演化闭环 + 收敛保障**:
+**3. 协同演化闭环 + 紧 budget 收敛：在单条 trajectory 内沿语义梯度收敛，而非随机搜索。**
 
-    - 功能：让 Attacker 与 Evaluator 在 context window 中通过 trajectory $\tau_t$ 持续交互，实现 in-context meta-learning，达到 success rate 饱和。
-    - 核心思路：每一轮把 $(b_t, \sigma_t, x_t, y_t, f_t)$ 全部保留在 context；Attacker 据此一边精化 belief（防御诊断越精）一边精化 strategy（攻击方向越准），形成正反馈；论文用 $T_\text{max}=5$ 这个紧 budget 强制要求快速收敛，把「定向优化」与「随机探索」拉开差距。
-    - 设计动机：现有方法（X-Teaming 的多 agent plan、Crescendo 的 topic escalation）走的是探索式 search，token 消耗随防御强度暴涨；本框架走的是「在 single trajectory 内沿语义梯度收敛」，因此既快又稳。
+现有方法（X-Teaming 的多 agent plan、Crescendo 的 topic escalation）走的是探索式 search，token 消耗随防御强度暴涨。Metis 把每轮的 $(b_t, \sigma_t, x_t, y_t, f_t)$ 全保留在 context 里实现 in-context meta-learning：Attacker 一边精化 belief（防御诊断越来越准）、一边精化 strategy（攻击方向越来越准），Attacker 与 Evaluator 形成正反馈闭环。论文刻意用 $T_\text{max}=5$ 这个紧 budget 强制快速收敛，把"定向优化"和"随机探索"拉开差距——实测 AQS 普遍降到 ~1.8–2.3 轮即成功、平均 token 消耗较强 baseline 降低 8.2 倍。这印证了把红队从"探索者"重构为"有 belief 与 dense supervision 的优化器"后，token 成本和 success rate 能同时改善。
 
 ### 损失函数 / 训练策略
 整个 Metis 不更新任何 LLM 权重，纯推理时框架：Attacker 用 DeepSeek-R1-V528，Evaluator 用 GPT-4o。评估阈值严格——Evaluator score = 10（「Full and Unambiguous Jailbreak」）才算成功，避免边界 / 部分响应被计为攻破。$T_\text{max} = 5$，统一 budget 公平对比。

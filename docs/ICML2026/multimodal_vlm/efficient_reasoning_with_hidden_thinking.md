@@ -49,23 +49,17 @@ Heima 把多模态 LLM 的冗长 CoT 每个阶段（summary / caption / reasonin
 
 ### 关键设计
 
-1. **Stage-级 thinking token 蒸馏 + 信息论保证**：
+**1. Stage-级 thinking token 蒸馏 + 信息论保证：把每段 CoT 压成一个特殊 token，并量化压了多少信息。**
 
-    - 功能：把每个 CoT stage（summary / caption / reasoning）压成**一个**唯一 special token，加进 vocabulary。
-    - 核心思路：原始 dataset $D=\{(X,\text{CoTs},Y)\}$ 改成 $D_H=\{(X,\langle CoTs\rangle,Y)\}$，其中 $\langle CoTs\rangle:=\{\langle CoT\rangle_{(k)}\}_{k=1}^{K_i}$ 每个 stage 用一个 vocabulary 中新增的 token 替换。蒸馏目标 $\mathcal{L}(\theta)=-\mathbb{E}_{(X,Y,\langle CoTs\rangle)\sim D_H}\log P_\theta(\langle CoTs\rangle,Y|X)$ 直接 fine-tune 让模型预测 thinking token 序列 + 答案。论文给出 Theorem 3.1：由于 $\langle CoTs\rangle=f(X,\text{CoTs})$，有 Markov 链 $Y-(X,\text{CoTs})-\langle CoTs\rangle$，因此 $0\leq I(Y;\langle CoTs\rangle|X)\leq I(Y;\text{CoTs}|X)$，且 information gap $I(Y;\text{CoTs}|X)-I(Y;\langle CoTs\rangle|X)=I(Y;\text{CoTs}|X,\langle CoTs\rangle)\geq 0$ 决定了 "压缩损失" 大小。只要 $I(Y;\langle CoTs\rangle|X)>0$ 推理能力就被保留。
-    - 设计动机：作者把"CoT 压缩"形式化为信息论压缩问题，给出可量化的保留-损失分解；这让"thinking token 是否够"不再是经验问题，而是可用 interpreter 实证测的具体量。每个 stage 一个 token 是因为 LLaVA-CoT 数据集本身就有 stage 结构，所有样本第 k 阶段共享同一 token（不是 per-sample 一个），保证 vocabulary 不爆炸。
+LLaVA-CoT 的 CoT 本就按 stage（summary / caption / reasoning）组织，每个 stage 是一个语义独立单元，正好可以各压成一个 special token。做法是把原始数据集 $D=\{(X,\text{CoTs},Y)\}$ 改写成 $D_H=\{(X,\langle CoTs\rangle,Y)\}$，其中 $\langle CoTs\rangle:=\{\langle CoT\rangle_{(k)}\}_{k=1}^{K_i}$ 把每个 stage 替换成一个 vocabulary 里新增的 token，蒸馏目标 $\mathcal{L}(\theta)=-\mathbb{E}_{(X,Y,\langle CoTs\rangle)\sim D_H}\log P_\theta(\langle CoTs\rangle,Y|X)$ 直接 fine-tune 让模型预测 thinking token 序列加答案。关键是作者把"压缩到底丢不丢推理能力"形式化成信息论问题：由于 $\langle CoTs\rangle=f(X,\text{CoTs})$ 构成 Markov 链 $Y-(X,\text{CoTs})-\langle CoTs\rangle$，Theorem 3.1 给出 $0\leq I(Y;\langle CoTs\rangle|X)\leq I(Y;\text{CoTs}|X)$，而 information gap $I(Y;\text{CoTs}|X)-I(Y;\langle CoTs\rangle|X)=I(Y;\text{CoTs}|X,\langle CoTs\rangle)\geq 0$ 恰好量化了"压缩损失"的大小——只要 $I(Y;\langle CoTs\rangle|X)>0$，推理能力就被保留。这让"thinking token 够不够"从经验问题变成可用 interpreter 实测的具体量。所有样本的第 $k$ 阶段共享同一个 token（不是 per-sample 一个），保证 vocabulary 不爆炸。
 
-2. **Progressive Distillation（渐进式 stage-by-stage 蒸馏）**：
+**2. Progressive Distillation：一次只压一个 stage，避免优化坍塌。**
 
-    - 功能：避免一次性把所有 CoT stage 全压成 token 导致优化失败。
-    - 核心思路：分 $M=\max\{K_i\}+1$ 个 stage 训练，第 s 阶段的训练数据为 $D_P=\{(X,\{\langle CoT\rangle_{(k)}\}_{k=1}^s,\{CoT_{(k)}\}_{k=s+1}^{K_i},Y)\}$——前 s 个 stage 已被压成 thinking token，后 $K_i-s$ 个 stage 还是原文。逐 stage 推进直到所有 stage 都压完；最后再加一个 "recovering stage" 只用 thinking tokens 全部参与训练，让 stage 之间的转换更顺。
-    - 设计动机：直接把所有 stage 一起压会导致每个 token 同时承担太多压缩任务，loss landscape 难优化。Curriculum 让模型逐步"内化"每个 stage 的推理模式，每次只学一种新的压缩。Recovering stage 解决"各 stage 单独压好了但拼起来不顺"的对齐问题。
+如果一上来就把所有 CoT stage 全压成 token，每个 token 同时承担太多压缩任务，loss landscape 难优化。这里改成 curriculum：分 $M=\max\{K_i\}+1$ 个阶段，第 $s$ 阶段的训练数据 $D_P=\{(X,\{\langle CoT\rangle_{(k)}\}_{k=1}^s,\{CoT_{(k)}\}_{k=s+1}^{K_i},Y)\}$——前 $s$ 个 stage 已压成 thinking token、后面的还是原文，逐 stage 推进直到全部压完。每次模型只需学会内化一种新的压缩，逐步把推理模式"吃进"hidden state。最后再加一个 recovering stage，只用 thinking token 全程训练，解决"各 stage 单独压好了但拼起来不顺"的转换对齐问题。消融显示去掉 progressive 掉 1.7%、去掉 recovering 再掉 1.4%，两者都必要。
 
-3. **Adaptive Interpreter（用 hidden state 反推文本 CoT 来量化信息损失）**：
+**3. Adaptive Interpreter：用 hidden state 反推文字 CoT，把"信息没丢光"测出来。**
 
-    - 功能：训一个纯文本 LLM ，给定 thinking token 的 hidden state 重建对应 stage 的文字 CoT，从而**实证**测量信息保留情况。
-    - 核心思路：每个 stage k 对应一个 interpreter $\mathcal{I}_{\theta_k}$（用 Llama-3.1-8B 初始化）。训练数据 $D_I=\{(X_e,X_q,\langle CoT\rangle_{(k)},H_{\langle CoT\rangle_{(k)}},CoT_{(k)})\}$ 包含解释 prompt、文本问题（无图像）、thinking token、token 的 last hidden state、原始 CoT 文本。**关键操作**：interpreter 输入端把 thinking token 的 word embedding **替换为** Heima 输出的 last hidden state $H_{\langle CoT\rangle_{(k)}}$，因为推理信息编码在 hidden 而非 token id 里。Loss 是标准 next-token prediction：$\max_{\theta_k}\mathbb{E}\log P_{\theta_k}(CoT_{(k)}|X_e,X_q,H_{\langle CoT\rangle_{(k)}})$。Prompt 形如 "According to question $X_q$, can you explain the thinking progress $\langle CoT\rangle_{(k)}$?"
-    - 设计动机：理论给出 information gap 的上下界，但实际差多少必须实证测。interpreter 重建出的文本 CoT 与原始 CoT 越接近，说明 $I(Y;\text{CoTs}|X,\langle CoTs\rangle)$ 越小、信息保留越完整。这套架构反过来也证明 "Heima 是真的在隐空间推理，而不是简单 overfit"——因为信息能从 hidden 解码回连贯的文本。论文给的例子是 BMW logo 识别，interpreter 从 hidden 重建出"sleek modern sports car with black exterior"和"cross with a circle"，完美对应原始 CoT。
+理论给了 information gap 的上下界，但实际差多少必须实证。每个 stage $k$ 配一个用 Llama-3.1-8B 初始化的纯文本 interpreter $\mathcal{I}_{\theta_k}$，训练数据 $D_I$ 含解释 prompt、文本问题（无图像）、thinking token、token 的 last hidden state $H_{\langle CoT\rangle_{(k)}}$、原始 CoT 文本。最关键的操作是：interpreter 输入端把 thinking token 的 word embedding **替换成** Heima 输出的 last hidden state——因为推理信息编码在 hidden 而非 token id 里——然后用标准 next-token loss $\max_{\theta_k}\mathbb{E}\log P_{\theta_k}(CoT_{(k)}|X_e,X_q,H_{\langle CoT\rangle_{(k)}})$ 训它重建原文。重建出来的文本越接近原始 CoT，就说明 $I(Y;\text{CoTs}|X,\langle CoTs\rangle)$ 越小、信息保留越完整。这套架构反过来也证明 Heima 是真在隐空间推理而非简单 overfit——信息能从 hidden 解码回连贯文本：论文给的 BMW logo 例子里，interpreter 从 hidden 重建出"sleek modern sports car with black exterior"和"cross with a circle"，完美对应原始 CoT。
 
 ### 损失函数 / 训练策略
 - Heima：LoRA fine-tune LLaVA-CoT-11B（rank=16, alpha=32），冻 image encoder，更新所有 attention + MLP + 输出投影。Progressive distillation 分 $M$ 个阶段，每个阶段一个 epoch。

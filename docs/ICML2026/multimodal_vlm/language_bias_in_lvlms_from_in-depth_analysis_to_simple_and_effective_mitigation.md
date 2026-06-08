@@ -42,33 +42,27 @@ tags:
 
 ### 整体框架
 
-**VIT baseline**：$\mathcal{L}_{\text{VIT}} = -\sum_t \log \pi_\theta(y_t | x, v, y_{<t})$
-
-**DPO baseline (with margin)**：$\mathcal{L}_{\text{DPO}_M} = \mathcal{L}_{\text{DPO}} + \mathcal{L}_{\text{Margin}}$
-
-**Language bias 形式定义**：$\mathcal{B} = \log \pi_\theta(y|x) / \pi_{\text{ref}}(y|x)$
-
-**追踪指标**：每步算 $\mathcal{R}_{\text{VIT}}, \mathcal{B}_{\text{VIT}}$（VIT）或 $\mathcal{R}_{\text{DPO}_{w/l}}, \mathcal{B}_{\text{DPO}_{w/l}}$（DPO），若 $\mathcal{B}$ 跟 $\mathcal{R}$ 几乎重合 → bias 严重。
+本文先给"语言偏置"一个可测的定义，再据此在 VIT 和 DPO 两个训练阶段各加一个正则项。核心是把训练带来的 likelihood 提升拆成两份：multimodal gain $\mathcal{R} = \log \pi_\theta(y|x,v)/\pi_{\text{ref}}(y|x,v)$（喂图时的收益）和 language bias $\mathcal{B} = \log \pi_\theta(y|x)/\pi_{\text{ref}}(y|x)$（只喂文本时的收益），以 pre-VIT / pre-DPO 模型作参考 $\pi_{\text{ref}}$。训练每一步都同时追踪 $\mathcal{R}$ 与 $\mathcal{B}$——一旦 $\mathcal{B}$ 的轨迹跟 $\mathcal{R}$ 几乎重合，就说明模型的进步其实全靠纯文本路径、视觉被白搭。两个 baseline 损失分别是 VIT 的 $\mathcal{L}_{\text{VIT}} = -\sum_t \log \pi_\theta(y_t | x, v, y_{<t})$ 和带 margin 的 DPO $\mathcal{L}_{\text{DPO}_M} = \mathcal{L}_{\text{DPO}} + \mathcal{L}_{\text{Margin}}$，LBR 和 LBP 就是分别在这两个上面挂一个偏置惩罚项。
 
 ### 关键设计
 
-1. **Language Bias 的形式化 + 训练动态追踪**:
+**1. Language Bias 的形式化 + 训练动态追踪：把"看文字多于看图"变成可测的标量。**
 
-    - 功能：把"语言偏置"从经验现象变成可定义可追踪的标量
-    - 核心思路：分解 reward = multimodal gain $\mathcal{R}$ + text-only gain $\mathcal{B}$；用 $\pi_{\text{ref}}$（pre-VIT 或 pre-DPO 模型）作 baseline，量化训练过程中 LLM 从纯文本路径学到了多少；论文 Figure 3 显示 $\mathcal{R}_{\text{VIT}}$ 和 $\mathcal{B}_{\text{VIT}}$ 轨迹几乎重合，DPO 上 $\mathcal{B}_{\text{DPO}_w}$ 甚至超 $\mathcal{R}_{\text{DPO}_w}$
-    - 设计动机：以前 language bias 是"凭感觉"概念，没指标就没法工程化；本文给出操作性定义后才能在损失中直接管控
+以往 language bias 全靠"凭感觉"描述——模型偏向语言、忽视视觉，但没有定义就没法工程化管控。本文把训练奖励拆成 multimodal gain $\mathcal{R}$ 和 text-only gain $\mathcal{B}$ 两条轨迹，用冻结的 $\pi_{\text{ref}}$ 当基线，量出训练过程里 LLM 究竟从纯文本路径偷学了多少。
 
-2. **LBR：VIT 阶段惩罚 $|\mathcal{B}|$**:
+这个分解直接揭出问题：Figure 3 显示 VIT 阶段 $\mathcal{R}_{\text{VIT}}$ 和 $\mathcal{B}_{\text{VIT}}$ 的曲线几乎重合，到 DPO 阶段 $\mathcal{B}_{\text{DPO}_w}$ 甚至反超 $\mathcal{R}_{\text{DPO}_w}$——也就是说当前的对齐目标 $\max \pi_\theta(y|x,v)$ 根本没逼模型用视觉，纯文本路径就能满足它。有了这个操作性定义，后面才能把 $\mathcal{B}$ 直接写进损失去压。
 
-    - 功能：在 VIT 训练时阻止 language bias 失控增长
-    - 核心思路：$\mathcal{L}_{\text{LBR}} = |\mathcal{B}| = |\log \pi_\theta(y|x) / \pi_{\text{ref}}(y|x)|$，与 VIT loss 加权和；用绝对值（不只惩罚增长，也阻止退化）；预训练后 $\mathcal{B}$ 已小，LBR 主要防止 VIT 阶段恶化
-    - 设计动机：pre-training 后 bias 已最小化，VIT 才是"出问题阶段"；直接惩罚 $\mathcal{B}$ 把语言模态推理压回参考水平，迫使模型必须用视觉才能拿到额外 reward
+**2. LBR：VIT 阶段惩罚 $|\mathcal{B}|$，把语言路径压回参考水平。**
 
-3. **LBP：DPO 阶段惩罚 chosen 偏置正向增长**:
+预训练之后 $\mathcal{B}$ 已经很小，真正"制造偏置"的是 VIT 阶段。LBR 的做法极简——直接把偏置的绝对值当正则项与 VIT loss 加权求和：
 
-    - 功能：DPO 训练时防止 preferred 答案靠纯文本路径就拿到 reward
-    - 核心思路：在 DPO loss 上加额外项 $\max(0, \mathcal{B}_w)$ 惩罚 chosen 的 text-only gain 正向增长（不惩罚负向，因为 chosen 在 text-only 下变差可以接受）；rejected 的偏置不动（防止 over-regularization）
-    - 设计动机：DPO 容易让 chosen 在 text-only 路径上也涨——这是 reward hacking 的一种形式；LBP 专门阻断这条"靠语言混过去"的捷径
+$$\mathcal{L}_{\text{LBR}} = |\mathcal{B}| = \left|\log \frac{\pi_\theta(y|x)}{\pi_{\text{ref}}(y|x)}\right|$$
+
+用绝对值（而非只惩罚正向增长）是为了双向锁定：既不让纯文本能力膨胀、也不让它退化，把语言模态推理钉在参考水平。这样模型想拿到额外的 reward 就只剩"真正用视觉"这一条路，从损失层面堵死了模态错位。
+
+**3. LBP：DPO 阶段惩罚 chosen 偏置正向增长，堵住 reward hacking。**
+
+DPO 有个特有的漏洞——它会让 preferred（chosen）答案在纯文本路径上也涨分，相当于"靠语言混过偏好"这种 reward hacking。LBP 在 DPO loss 上加一项 $\max(0, \mathcal{B}_w)$，只惩罚 chosen 的 text-only gain 正向增长；为负不罚（chosen 在纯文本下变差是可以接受的），rejected 的偏置也完全不动以避免 over-regularization。这样就专门切断了"preferred 答案不看图也能赢"的捷径，逼 DPO 的偏好优势真正来自视觉对齐。
 
 ## 实验关键数据
 

@@ -47,23 +47,25 @@ tags:
 
 ### 关键设计
 
-1. **Sigma-pi-sigma 分解 + utility 最大化定理**:
+**1. Sigma-pi-sigma 分解 + utility 最大化定理：把"下一个学哪个特征"写成闭式排序。**
 
-    - 功能：把每个神经元的多项式输出 $f(x_{\mathbf g};\theta_i)$ 拆成关键的"全交互项" $f^{(\times)}=w_i\cdot k!\cdot\prod_j\langle u_{i,j},x_{g_j}\rangle$ 与多余的"加性项" $f^{(+)}$，并证明 utility（休眠神经元与残差的内积）只由 $f^{(\times)}$ 贡献。
-    - 核心思路：把 $f^{(\times)}$ 写到 Fourier 域，发现 utility 是输入/输出权重的 Fourier 系数与 $\hat x[\rho]$ 的张量内积。带约束 $\|\theta\|=1$ 极大化后，最优解必然把所有 Fourier 能量集中到同一个 irrep $\rho_*$ 上，且该 $\rho_*$ 由 Theorem 4.1 的判据 $\rho_*=\arg\max_{\rho\notin\mathcal I^{t-1}}\|\hat x[\rho]\|_\text{op}^{k+1}/(C_\rho n_\rho)^{(k-1)/2}$ 选出（其中 $C_\rho=1$ 若 $\rho$ 实，否则 $C_\rho=2$）。
-    - 设计动机：把"哪个特征下一个被学"这种经验观察，第一次化成可计算的闭式排序——序列长度 $k$ 越大，高能量 irrep 越被优先放大（指数因子 $k+1$ vs $(k-1)/2$），这给出了"网络贪心地按 Fourier 重要性逐步学习"的解析证明。
+可解释性领域一直靠探针"先观察再命名"地发现网络学到了 Fourier 特征，但说不清这些特征为什么出现、按什么顺序出现。本文从神经元的多项式输出入手把它解析化：每个神经元 $f(x_{\mathbf g};\theta_i)$ 可拆成关键的"全交互项" $f^{(\times)}=w_i\cdot k!\cdot\prod_j\langle u_{i,j},x_{g_j}\rangle$ 与无关的"加性项" $f^{(+)}$，而 utility（休眠神经元与残差的内积）只由 $f^{(\times)}$ 贡献。把 $f^{(\times)}$ 搬到群上 Fourier 域后，utility 变成输入/输出权重的 Fourier 系数与 $\hat x[\rho]$ 的张量内积；在 $\|\theta\|=1$ 约束下极大化，最优解必然把全部 Fourier 能量集中到单个 irrep $\rho_*$ 上，而这个 $\rho_*$ 由一把可计算的"重要性尺子"选出：
 
-2. **Cost 最小化下的对齐与残差更新**:
+$$\rho_*=\arg\max_{\rho\notin\mathcal I^{t-1}}\frac{\|\hat x[\rho]\|_\text{op}^{k+1}}{(C_\rho n_\rho)^{(k-1)/2}}\quad(C_\rho=1\ \text{若}\ \rho\ \text{实}, \text{否则}\ 2)$$
 
-    - 功能：一旦 $N$ 个神经元同时激活并对齐到同一个 $\rho_*$，它们在 $\rho_*$ 约束子空间内联合最小化损失，等价于把目标 $x_{g_1\cdots g_k}$ 在 $\rho_*$ 上的 Fourier 分量"消掉"。
-    - 核心思路：把激活神经元的输出在 Fourier 域写成 $f(x_{\mathbf g};\Theta_\mathcal A)[h]=\tfrac{1}{|G|}\sum_{\rho\in\mathcal I^{t-1}}\langle\rho(g_1\cdots g_k h)^\dagger,\hat x[\rho]\rangle_\rho$。每完成一轮 AGF，已学 irrep 集合 $\mathcal I^{t-1}$ 就并入下一个 $\rho_*$（并保持共轭闭包），直到 $\mathcal I^{t-1}=\mathcal I(G)$，网络完美拟合任务。
-    - 设计动机：这套"出场顺序 + 残差更新"机制把训练曲线的台阶与具体 irrep 一一对应起来，让任意有限群（包括非阿贝尔群如 $D_3$）的学习路径都能事先预测；对编码 $x$ 做谱整形即可控制学习顺序。
+这条定理（Theorem 4.1）第一次把"网络贪心地按 Fourier 重要性逐个学习"从经验观察证成了解析事实，而且序列长度 $k$ 显式出现在指数里——$k$ 越大、高能量 irrep 被优先放大得越厉害（$k+1$ 对 $(k-1)/2$），于是更长序列对应更尖锐的台阶。
 
-3. **架构 → 表达力的三种缩放方式**:
+**2. Cost 最小化下的对齐与残差更新：让训练台阶与 irrep 一一对应。**
 
-    - 功能：在固定任务难度下，比较两层 MLP、循环网络（RNN）、深层前馈 MLP 三类架构需要的容量与深度。
-    - 核心思路：两层网络要一次性同时拟合所有 $k$ 元乘积，必须为每个 Fourier 模复制足够多神经元来抵消 $f^{(+)}$ 项，所需隐藏宽度按 $2^k$ 量级增长；RNN 借助结合律把累积乘积串行写成 $k$ 步状态更新，每步只需固定大小的网络；深层 MLP 则把序列两两配对、按二叉树式合并，只需 $\log_2 k$ 层即可——这与最近若干 transformer/RNN/MLP 表达力对比工作相一致。
-    - 设计动机：把"为什么 transformer/深层结构在长序列上更高效"从经验主张转成关于群组合任务的解析陈述，给出了"宽度 vs 深度 vs 步数"之间的可量化 trade-off。
+utility 最大化只解释了"谁先出场"，还要说清出场之后发生什么——这正是 AGF 两步里的第二步。一旦 $N$ 个神经元同时激活并对齐到同一个 $\rho_*$，它们就在 $\rho_*$ 的约束子空间内联合最小化损失，效果等价于把目标 $x_{g_1\cdots g_k}$ 在 $\rho_*$ 上的 Fourier 分量"消掉"。把激活神经元的输出写到 Fourier 域：
+
+$$f(x_{\mathbf g};\Theta_\mathcal A)[h]=\frac{1}{|G|}\sum_{\rho\in\mathcal I^{t-1}}\langle\rho(g_1\cdots g_k h)^\dagger,\hat x[\rho]\rangle_\rho$$
+
+每完成一轮 AGF，已学 irrep 集合 $\mathcal I^{t-1}$ 就并入下一个 $\rho_*$（并保持共轭闭包），直到 $\mathcal I^{t-1}=\mathcal I(G)$ 时网络完美拟合任务。这套"出场顺序 + 残差更新"机制让损失曲线上的每一级台阶都能事先对应到一个具体 irrep，于是任意有限群（包括非阿贝尔的 $D_3$）的学习路径都可预测；而且只要对编码 $x$ 做谱整形，就能反过来改写学习顺序。
+
+**3. 架构 → 表达力的三种缩放：把"结合律=深度优势"精确量化。**
+
+同一个累积乘积任务，换不同架构需要的容量天差地别，本文给出了三档可比的缩放。两层网络要一次性同时拟合所有 $k$ 元乘积，就得为每个 Fourier 模复制足够多神经元去相互抵消干扰项 $f^{(+)}$，所需隐藏宽度按 $2^k$ 量级爆炸——注意瓶颈不在"学不到 irrep"，而在"抵消 $f^{(+)}$ 的冗余开销"。RNN 借结合律把累积乘积串行写成 $k$ 步状态更新，每步只需固定大小网络；深层 MLP 则把序列两两配对、按二叉树合并，只需 $\log_2 k$ 层。于是"为什么深层/循环结构在算法类任务上更省参数"这个长期偏经验的主张，在群组合任务上落成了"两层 $2^k$、RNN $k$、深层 $\log k$"的解析陈述，把宽度/深度/步数之间的 trade-off 写到了具体常数。
 
 ### 损失函数 / 训练策略
 回归损失 $\mathcal L(\Theta)=\tfrac{1}{2|G|^k}\sum_{\mathbf g\in G^k}\|x_{g_1\cdots g_k}-f(x_{\mathbf g};\Theta)\|^2$；消失初始化 $\alpha\to 0$；神经元自适应学习率 $\eta_{\theta_i}\propto\|\theta_i\|^{1-k}$。对编码 $x$ 假设：零均值、$\hat x[\rho]$ 要么 0 要么可逆、不同 $\rho$ 的 utility 判据值彼此分离（保证阶梯清晰）。

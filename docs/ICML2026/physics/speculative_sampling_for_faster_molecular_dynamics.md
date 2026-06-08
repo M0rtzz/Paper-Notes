@@ -52,23 +52,17 @@ LSD（Langevin Speculative Dynamics）的运行时是一个流水线异步系统
 
 ### 关键设计
 
-1. **反射最大耦合验证 BOB 动量更新**:
+**1. 反射最大耦合验证 BOB 动量更新：用最大耦合把拒绝率压到最低。**
 
-    - 功能：在 ABOBA 分裂积分器中，只有中间的 (BOB) 步会受力场影响，且产生一个高斯动量更新 $\mathcal{N}(\cdot; \langle\mathbf{p}_n\rangle, \boldsymbol{\Sigma})$，其中 $\boldsymbol{\Sigma}=\mathbf{M} k_B T (1-e^{-2\gamma\Delta t})$ 与力场无关。草稿与目标只差均值。
-    - 核心思路：令 $\mathbf{z} = \boldsymbol{\Sigma}^{-1/2}(\tilde{\mathbf{p}}_n - \langle\tilde{\mathbf{p}}_n\rangle)$，按草稿/目标似然比 $\min\{1, \mathcal{N}(\tilde{\mathbf{p}}_n; \langle\mathbf{p}_n\rangle, \boldsymbol{\Sigma}) / \mathcal{N}(\tilde{\mathbf{p}}_n; \langle\tilde{\mathbf{p}}_n\rangle, \boldsymbol{\Sigma})\}$ 决定接受；若拒绝，则把 $\mathbf{z}$ 沿等似然超平面（法向 $\boldsymbol{\delta}=\boldsymbol{\Sigma}^{-1/2}(\langle\tilde{\mathbf{p}}_n\rangle - \langle\mathbf{p}_n\rangle)$）做镜面反射，再加回目标均值 $\langle\mathbf{p}_n\rangle$。Bou-Rabee 等 (2020) 证明这是 *最大耦合*，即在所有满足"输出服从目标分布"约束的耦合中，$\mathbb{P}(x_n = y_n)$ 取最大。
-    - 设计动机：选择最大耦合直接最小化拒绝率，而拒绝率决定了流水线的有效平均接受长度 $\mathbb{E}(L)$。理论拒绝率有闭式 $\beta_n = \mathrm{erf}(\|\boldsymbol{\delta}\|/\sqrt{8})$，让作者后续能对系统大小、温度、摩擦做解析分析。
+ABOBA 分裂积分器里只有中间的 (BOB) 步受力场影响，它产生一个高斯动量更新 $\mathcal{N}(\cdot;\langle\mathbf{p}_n\rangle,\boldsymbol{\Sigma})$，协方差 $\boldsymbol{\Sigma}=\mathbf{M}k_BT(1-e^{-2\gamma\Delta t})$ 与力场无关——草稿和目标只差均值。验证时令 $\mathbf{z}=\boldsymbol{\Sigma}^{-1/2}(\tilde{\mathbf{p}}_n-\langle\tilde{\mathbf{p}}_n\rangle)$，按草稿/目标似然比 $\min\{1,\mathcal{N}(\tilde{\mathbf{p}}_n;\langle\mathbf{p}_n\rangle,\boldsymbol{\Sigma})/\mathcal{N}(\tilde{\mathbf{p}}_n;\langle\tilde{\mathbf{p}}_n\rangle,\boldsymbol{\Sigma})\}$ 决定接受；若拒绝，就把 $\mathbf{z}$ 沿等似然超平面（法向 $\boldsymbol{\delta}=\boldsymbol{\Sigma}^{-1/2}(\langle\tilde{\mathbf{p}}_n\rangle-\langle\mathbf{p}_n\rangle)$）做镜面反射、再加回目标均值。Bou-Rabee 等证明这是最大耦合——在所有满足"输出服从目标分布"的耦合中 $\mathbb{P}(x_n=y_n)$ 最大。选最大耦合直接最小化拒绝率，而拒绝率决定流水线的有效平均接受长度；理论拒绝率有闭式 $\beta_n=\mathrm{erf}(\|\boldsymbol{\delta}\|/\sqrt8)$，让后续能对系统大小、温度、摩擦做解析分析。
 
-2. **前/后处理定理把整步 ABOBA 验证归约为 BOB 验证**:
+**2. 前/后处理定理：把整步 ABOBA 验证归约为 BOB 验证。**
 
-    - 功能：完整的 ABOBA 步是 (A)·(BOB)·(A)，需要在 $\mathbb{R}^{6N}$ 上做耦合，但作者证明只需在中间 BOB 上做耦合就够了。
-    - 核心思路：Thm 3.1 形式化"如果目标和草稿分布都能分解成 $P = g_* P'(\cdot \mid f(y_{n-1}))$，则在 $P', Q'$ 上做的耦合 + 前 $f$、后 $g$ 的确定性变换，整体仍是 $P, Q$ 的耦合；若 $g$ 可逆，则继承最大性"。把 $f=g=(A)$ 套入，整步 ABOBA 验证就退化为"做一次 (A) → 反射验证 BOB → 再做一次 (A)"。
-    - 设计动机：避免在 $6N$ 维位置-动量联合空间上设计耦合（会很复杂且未必最优），同时保证最优接受率不会因为多套了一层位置更新而下降。该定理还把 LSD 推广到 OBABO 等其他分裂方案，只要力依赖步可被聚成一个连续块，对中心质量固定、约束投影等非可逆后处理也兼容。
+完整 ABOBA 步是 (A)·(BOB)·(A)，直接在 $6N$ 维位置-动量联合空间设计耦合既复杂又未必最优。Thm 3.1 形式化了一条归约：如果目标和草稿分布都能分解成 $P=g_*P'(\cdot\mid f(y_{n-1}))$，那么在 $P',Q'$ 上做耦合再加前 $f$、后 $g$ 的确定性变换，整体仍是 $P,Q$ 的耦合；若 $g$ 可逆则继承最大性。把 $f=g=(A)$ 套入，整步验证就退化成"做一次 (A) → 反射验证 BOB → 再做一次 (A)"。这避免了高维联合耦合，又保证最优接受率不会因多套一层位置更新而下降；定理还把 LSD 推广到 OBABO 等其他分裂方案，并兼容中心质量固定、约束投影这类非可逆后处理。
 
-3. **流水线 + 投机错误修正 (EC) 把吞吐与拒绝率分别打满**:
+**3. 流水线 + 投机错误修正（EC）：把吞吐和拒绝率分别打满。**
 
-    - 功能：抛弃同步式"先攒 $L$ 个草稿再批验证"的范式，改为目标实例池异步消费 + 拒绝即刻回滚，让草稿 GPU 永不空转；同时用历史误差给草稿打补丁来压低拒绝率。
-    - 核心思路：(a) 流水线让加速上界简化为 $\text{speedup} \lesssim 1/(c + \langle\beta\rangle)$，其中 $c$ 是草稿/目标耗时比，$\langle\beta\rangle$ 是平均拒绝率，两者对称，谁大谁主导；(b) EC 假设草稿-目标力误差 $\Delta\mathbf{F}_{n-k} = \mathbf{F}_{n-k} - \tilde{\mathbf{F}}_{n-k}$ 在物理上变化慢，于是用最近一次已验证步的误差替换当前草稿力：$\mathbf{F}_n \approx \tilde{\mathbf{F}}_n + \Delta\mathbf{F}_{n-k}$，把这个偏移加到草稿上再做反射验证。
-    - 设计动机：作者推导出半经验拒绝率模型 $\langle\beta\rangle(N, \tau, \Delta t, T) \approx \mathrm{erf}((N\tau\Delta t)^{1/2} T^{-1/2} \varepsilon)$，发现随原子数 $N$、摩擦时间 $\tau$ 增大，$\langle\beta\rangle$ 会被 erf 推向 1，使加速归零。EC 通过把"草稿模型"在线变成"草稿+历史误差"组合模型，把每原子误差常数 $\varepsilon$ 实际拉小，将拒绝率最多降低 75%，把高摩擦/大体系情形从不可用拉回可用。
+同步式"先攒 $L$ 个草稿再批验证"会让草稿 GPU 空转。LSD 改成目标实例池异步消费草稿步、拒绝即刻回滚冲刷，让草稿 GPU 永不停，加速上界简化为 $\text{speedup}\lesssim1/(c+\langle\beta\rangle)$（$c$ 是草稿/目标耗时比、$\langle\beta\rangle$ 是平均拒绝率，两者对称、谁大谁主导）。但作者推出的半经验拒绝率模型 $\langle\beta\rangle\approx\mathrm{erf}((N\tau\Delta t)^{1/2}T^{-1/2}\varepsilon)$ 显示，随原子数 $N$、摩擦时间 $\tau$ 增大，$\langle\beta\rangle$ 会被 erf 推向 1、加速归零。EC 假设草稿-目标力误差 $\Delta\mathbf{F}_{n-k}$ 物理上变化慢，用最近一次已验证步的误差给当前草稿打补丁 $\mathbf{F}_n\approx\tilde{\mathbf{F}}_n+\Delta\mathbf{F}_{n-k}$，相当于把草稿在线升级成"草稿 + 历史误差"组合模型、把每原子误差常数 $\varepsilon$ 实际拉小，拒绝率最多降 75%，将高摩擦/大体系情形从不可用拉回可用。
 
 ### 损失函数 / 训练策略
 LSD 是一个 *推理时* 算法，不需要任何额外训练。所用 MLIP（UMA-S、UMA-M、UMA-tiny-direct、Orb-v3-direct）都是开箱即用的预训练通用势函数。流水线的实际开销主要来自跨 GPU 通信和反射验证本身的 $\mathcal{O}(N)$ 矩阵-向量运算，相对于一次 MLIP 力调用可忽略。

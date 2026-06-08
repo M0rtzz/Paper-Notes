@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **DeepSet 编码器 → 置换不变闭包变量**:
+**1. DeepSet 编码器 → 置换不变闭包变量：把不变性写进架构，而不是靠数据增广去近似。**
 
-    - 功能：把无序粒子集 $X = \{\bm{x}^i\}_{i=1}^n$ 映成低维向量 $\hat{\bm{z}} = \hat{\bm{\varphi}}(X)$，并严格满足 $\hat{\bm{\varphi}}(\sigma X) = \hat{\bm{\varphi}}(X), \forall \sigma \in S_n$。
-    - 核心思路：DeepSet 范式 "每个粒子先独立过一个 MLP，再做对称池化（求和/平均）再过一个 MLP"，复杂度 $\mathcal{O}(n)$；可换成 Set Transformer。关键是不变性写进架构里，而不是靠数据增广去近似。
-    - 设计动机：现有同类工作要么直接对 MLP 编码器做随机排序增广（AE-Aug，作者实测不严格不变），要么换成 DeepSet 但仍配 MSE 解码器（AE-InvE，作者证明解码端会把不变性破坏掉）。本文要的是端到端从结构上不变。
+粒子集天然无序，逐点 MSE 会把 $(\hat{\bm{x}}^1,\hat{\bm{x}}^2,\hat{\bm{x}}^3)$ 和它的任意置换当成不同向量，潜变量自然就不是置换不变的。本文在编码端直接用 DeepSet 范式——每个粒子先独立过一个 MLP，再做对称池化（求和/平均），再过一个 MLP——把无序集 $X = \{\bm{x}^i\}_{i=1}^n$ 映成 $\hat{\bm{z}} = \hat{\bm{\varphi}}(X)$，严格满足 $\hat{\bm{\varphi}}(\sigma X) = \hat{\bm{\varphi}}(X), \forall \sigma \in S_n$，复杂度只有 $\mathcal{O}(n)$（也可换成 Set Transformer）。关键在于不变性是架构层面保证的硬性质，而不是靠随机排序增广去"学个大概"：现有同类工作要么对 MLP 编码器做排序增广（AE-Aug，作者实测不严格不变），要么换 DeepSet 但仍配 MSE 解码器（AE-InvE，解码端又会把不变性破坏掉），本文要的是端到端从结构上不变。
 
-2. **分布重构目标 → 替代点对点匹配**:
+**2. 分布重构目标 → 替代点对点匹配：与其重构"哪个粒子在哪儿"，不如重构"粒子整体的密度"，让被重构的对象本身就置换不变。**
 
-    - 功能：把"集合重构"改成"密度重构"，让目标本身置换不变。
-    - 核心思路：对每个 $X$ 诱导一个以观测点为中心、带宽 $\epsilon$ 的高斯混合 $q_X(\mathbf{x}) = \frac{1}{|X|}\sum_{\bm{x}^i \in X}\delta_\epsilon(\mathbf{x} - \bm{x}^i)$；解码器 $\bm{\psi}$ 用条件归一化流参数化 $p_\theta(\mathbf{x}\mid\hat{\bm{z}})$，最小化 $\mathcal{L}_{\mathrm{rec}} = \mathbb{E}_X[\mathrm{KL}(q_X \,\|\, p_\theta(\cdot\mid\hat{\bm{z}}))]$。KL 用从 $q_X$ 采的 MC 样本估计——而 $q_X$ 是等权同方差的高斯混合，可以先均匀挑分量再从局部高斯采，完全并行。
-    - 设计动机：传统点云重构要么 Hungarian 匹配（$\mathcal{O}(n^3)$）要么 Chamfer/EMD（梯度噪声大，且 Achlioptas 等已知会出现优化不稳）。换成分布损失后，解码复杂度 $\mathcal{O}(1)$ 对 $n$ 解耦——粒子越多反而越省（采样数固定）。带宽 $\epsilon$ 充当"分辨率旋钮"：小 $\epsilon$ 保细节但要更大 $\hat{z}_{\mathrm{dim}}$；大 $\epsilon$ 平滑、小 $\hat{z}_{\mathrm{dim}}$ 就够。
+传统点云重构要么靠 Hungarian 匹配（$\mathcal{O}(n^3)$），要么靠 Chamfer/EMD（梯度噪声大、优化不稳），都很别扭。本文换了被重构的对象：对每个集合 $X$ 诱导一个以观测点为中心、带宽 $\epsilon$ 的高斯混合 $q_X(\mathbf{x}) = \frac{1}{|X|}\sum_{\bm{x}^i \in X}\delta_\epsilon(\mathbf{x} - \bm{x}^i)$，再用条件归一化流 $p_\theta(\mathbf{x}\mid\hat{\bm{z}})$ 去拟合它，最小化 $\mathcal{L}_{\mathrm{rec}} = \mathbb{E}_X[\mathrm{KL}(q_X \,\|\, p_\theta(\cdot\mid\hat{\bm{z}}))]$。密度天然对粒子标号不变，匹配问题就被彻底绕开，损失只用普通 KL。KL 用从 $q_X$ 采的 MC 样本估计——因为 $q_X$ 是等权同方差的高斯混合，可以先均匀挑分量再从局部高斯采，完全并行，而且解码复杂度与 $n$ 解耦，粒子越多反而越省（采样数固定）。带宽 $\epsilon$ 还顺手充当"分辨率旋钮"：小 $\epsilon$ 保细节但要更大 $\hat{z}_{\mathrm{dim}}$，大 $\epsilon$ 平滑、小维度就够。
 
-3. **增广态 SDE + 两阶段训练 → 联合宏观动力学**:
+**3. 增广态 SDE + 两阶段训练 → 联合宏观动力学：把目标宏观量和学到的闭包变量拼起来学随机动力学，再用重构损失防表征坍塌。**
 
-    - 功能：在 $\bm{z}_t = [\bar{\bm{z}}_t, \hat{\bm{z}}_t]$ 上学闭合动力学 $\mathrm{d}\bm{z}_t = \bm{g}(\bm{z}_t)\mathrm{d}t + \bm{\Sigma}(\bm{z}_t)\mathrm{d}\bm{W}_t$，并通过 Euler-Maruyama 离散化的高斯条件似然训练。
-    - 核心思路：把感兴趣的宏观量 $\bar{\bm{z}}$ 和学到的闭包变量 $\hat{\bm{z}}$ 拼在一起，让漂移 $\bm{g}$、扩散 $\bm{\Sigma}$（都用 MLP）学一步条件分布 $p_{\bm{g},\bm{\Sigma}}(\bm{z}_{t+1}\mid\bm{z}_t) = \mathcal{N}(\bm{z}_t + \bm{g}\Delta t,\,\Delta t\,\bm{\Sigma}\bm{\Sigma}^\top)$，最小化负对数似然 $\mathcal{L}_{\mathrm{dyn}}$。确定性情形直接退化为 ODE，损失变成一步 MSE。
-    - 设计动机：直接用 $\bar{\bm{z}}$ 不闭合（"宏观演化依赖微观自由度"是闭包建模的核心难点），所以必须搭一个能"代表微观信息"的 $\hat{\bm{z}}$；又因为 reconstruction-free 的端到端方法容易表征坍塌（实验中 InvE 基线即为此类，效果最差），所以保留重构损失作为防坍塌正则。两阶段训练（先 $\mathcal{L}_{\mathrm{rec}}$、再 $\mathcal{L}_{\mathrm{dyn}}$）则避免两个目标互相干扰。
+直接用感兴趣的宏观量 $\bar{\bm{z}}$ 不闭合——"宏观演化依赖微观自由度"正是闭包建模的核心难点——所以必须搭一个能代表微观信息的 $\hat{\bm{z}}$。本文把二者拼成增广态 $\bm{z}_t = [\bar{\bm{z}}_t, \hat{\bm{z}}_t]$，让漂移 $\bm{g}$ 和扩散 $\bm{\Sigma}$（都用 MLP）学一步条件分布 $p_{\bm{g},\bm{\Sigma}}(\bm{z}_{t+1}\mid\bm{z}_t) = \mathcal{N}(\bm{z}_t + \bm{g}\Delta t,\,\Delta t\,\bm{\Sigma}\bm{\Sigma}^\top)$，通过 Euler-Maruyama 离散化的高斯条件似然 $\mathcal{L}_{\mathrm{dyn}}$ 训练（确定性情形退化为 ODE，损失变成一步 MSE）。但纯 reconstruction-free 的端到端训练容易表征坍塌——潜变量退化成常数（实验里 InvE 基线即如此，效果最差），所以保留重构损失作为防坍塌正则。两阶段训练（先 $\mathcal{L}_{\mathrm{rec}}$ 学 $(\hat{\bm{\varphi}}, \bm{\psi})$、再冻结 $\hat{\bm{\varphi}}$ 学动力学）则避免两个目标互相干扰。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L} = \mathcal{L}_{\mathrm{rec}} + \lambda_{\mathrm{dyn}}\mathcal{L}_{\mathrm{dyn}}$，实际两阶段顺序训练。KL 估计用从 $q_X$ 抽出的固定数目 MC 样本，因此训练 / 推理代价对 $n$ 不敏感。推理时编码器只用一次（构造 $\bm{z}_0$），随后由动力学模型自回归外推。

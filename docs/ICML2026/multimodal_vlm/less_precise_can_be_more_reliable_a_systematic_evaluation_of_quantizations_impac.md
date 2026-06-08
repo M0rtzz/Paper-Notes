@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **跨 5 维可靠性的统一评估协议**:
+**1. 跨 5 维可靠性的统一评估协议：把"掉点"和"偏差放大"用一套公式解耦。**
 
-    - 功能：用一组统一公式刻画 "量化对每个可靠性维度的相对影响"，避免各 paper 用不同口径互相矛盾。
-    - 核心思路：对每个指标定义相对变化 $\delta(\mathcal{D}) = \frac{A(f,\mathcal{D}) - A(q,\mathcal{D})}{A(f,\mathcal{D})}$；对 OOD 用 AUROC 相对变化 $\delta_{\text{OOD}}$；对虚假相关引入 Relative Spurious Gap $\text{RSG}(m) = \frac{A(m, \mathcal{D}_N) - A(m, \mathcal{D}_C)}{A(m, \mathcal{D}_N)}$ 以及量化导致的 $\Delta\text{RSG}$ 和 Added Vulnerability $\text{Vuln}_{\text{add}} = \delta_C - \delta_N$。
-    - 设计动机：把 "绝对精度变化" 与 "虚假相关放大" 解耦，否则容易把单纯掉点和偏差放大混为一谈——后者才是真正的伦理风险信号。
+各家量化论文口径不一、互相矛盾，根源是把"绝对精度下降"和"虚假相关放大"混为一谈——后者才是真正的伦理风险信号。这里给每个可靠性维度定义统一的相对变化量：通用指标用 $\delta(\mathcal{D}) = \frac{A(f,\mathcal{D}) - A(q,\mathcal{D})}{A(f,\mathcal{D})}$（$f$ 全精度、$q$ 量化），OOD 用 AUROC 相对变化 $\delta_{\text{OOD}}$；虚假相关单独引入 Relative Spurious Gap $\text{RSG}(m) = \frac{A(m, \mathcal{D}_N) - A(m, \mathcal{D}_C)}{A(m, \mathcal{D}_N)}$，再用量化前后的 $\Delta\text{RSG}$ 和 Added Vulnerability $\text{Vuln}_{\text{add}} = \delta_C - \delta_N$ 把"偏差是不是被量化额外放大"从单纯掉点里剥出来。这样才能干净地回答"量化到底有没有让模型更依赖虚假相关"这个核心问题。
 
-2. **Logit Scale Tuning 修补量化破坏**:
+**2. Logit Scale Tuning：不动 backbone，只重校准 logit 温度补量化破坏。**
 
-    - 功能：在不动 backbone 的前提下，仅用 proxy 数据重新校准 logit 温度，挽救量化导致的过/欠自信。
-    - 核心思路：把 CLIP 的 logit scale 视作温度参数，在校准集上单独优化；可视化时用 "trajectory reliability diagram" 跟踪每个 confidence bin 从 FP32 → QAT → Logit Tuning 的运动。
-    - 设计动机：作者发现量化文本编码器会让 "两个独立量化流形的内积" 与预训练 logit scale 失配，导致 ECE 暴增 +98%；标量重校准在不重训的情况下能把全量化模型 ECE 从 6.9% 拉到 1.1%，比 FP32 还好。
+量化文本编码器会让"两个独立量化流形的内积"与预训练的 logit scale 失配，ECE 能暴增 +98%。这里把 CLIP 的 logit scale 当成一个温度参数，只在 proxy 校准集上单独优化它、backbone 一动不动，就能把全量化模型的 ECE 从 6.9% 拉到 1.1%——比全精度还好。可视化用"trajectory reliability diagram"跟踪每个 confidence bin 从 FP32 → QAT → Logit Tuning 的运动，直观看到过/欠自信被怎么拉回。这是个几乎零成本的标量重校准，证明量化带来的校准退化里有相当一部分只是 logit scale 失配、不重训就能救。
 
-3. **SVD 谱分析揭示 "低通滤波器 + 主成分集中" 机制**:
+**3. SVD 谱分析：把量化解读成"低通滤波 + 主成分集中"双机制。**
 
-    - 功能：定量解释为什么量化能同时提升 noise robustness 又恶化 semantic robustness 和 spurious correlation。
-    - 核心思路：(a) 把量化后特征投影到 FP32 的 SVD 基上，发现 SQNR 随 rank 单调衰减——固定量化步长会先吃掉低方差分量，等价于低通滤波；(b) 对量化特征重新做 SVD，发现 QAT 在 Rank 0-8 子空间精度反而高于 FP32，说明判别信息被压缩进最稳定的主分量；(c) 但 Rank 64+ 的精度显著下降，对应 fine-grained semantic 的丢失。
-    - 设计动机：把 "为什么 calibration ↑ + spurious ↑" 这个看似矛盾的现象统一到一个机制下：粗粒度信息被强化、细粒度信息被抹平。Rotation-based 量化通过把激活旋转到与量化网格对齐能缓解中频分量过早衰减。
+量化最反直觉的现象是它同时提升噪声鲁棒性、又恶化语义鲁棒性和虚假相关，看似自相矛盾。SVD 分析把这统一到一个机制下。第一步把量化后特征投影到 FP32 的 SVD 基上，发现 SQNR 随 rank 单调衰减——固定量化步长会先吃掉低方差分量，等价于一个低通滤波器。第二步对量化特征重新做 SVD，发现 QAT 在 Rank 0–8 子空间精度反而高于 FP32，说明判别信息被压进了最稳定的主分量；但 Rank 64+ 精度显著下降，对应 fine-grained semantic 被抹平。于是"calibration ↑ + spurious ↑"就讲通了：粗粒度信息被强化、细粒度信息被抹平。Rotation-based 量化（QuaRot+LSQ）通过把激活旋转到与量化网格对齐，能缓解中频分量过早衰减，这正是它在 $\Delta\text{RSG}$ 上几乎不放大偏差的原因。
 
 ### 损失函数 / 训练策略
 QAT 用 LSQ (Esser et al. 2020) 配合两种蒸馏机制（contrastive-only 和 contrastive + feature MSE），全部以 CC3M / YFCC / SBU 中的 1000 张图像作为代理校准/微调集。研究关心的是 "不同 quantization 方法族 (PTQ / QAT / Rotation+LSQ) 的相对差异"，不是某个单点 SOTA。

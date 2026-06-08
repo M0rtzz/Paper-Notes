@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **置信度即状态（Confidence-only policy）**:
+**1. 置信度即状态：把整段已部分解掩序列压成一个长度 $L$ 的实数向量喂给策略。**
 
-    - 功能：把整段已部分解掩序列压缩成一个长度为 $L$ 的实数向量 $\bm c_t$ 喂给策略，回避在 token 维度做大规模运算。
-    - 核心思路：策略输入只用每个位置的最大 token 置信度 $c_t^k$，加上一个二值 mask $\bm m_t$ 和时间步 $t$；网络是单层 Transformer + AdaLN，规模 $<0.01\%$ 底座参数。消融发现：把 top-50 概率全喂进去并没有比只喂 max 更好；用 hidden state 反而更差且训练不稳，说明真正承载"该不该揭"信号的就是 unembedding 矩阵投影后的 $c_t^k$。
-    - 设计动机：与 Fast-dLLM 等启发式同源（都看置信度），但把"怎么用置信度"交给学习，避免手工阈值，又不引入显著计算开销。
+底座 dLLM 已经会给每个位置预测分布 $p_t^k$，把它当环境就免去再训一个 world model，策略只需要在一个极轻的"网关"上做决策。具体地，策略输入只用每个位置的最大 token 置信度 $c_t^k:=\max_v p_t^k(v)$，加一个二值 mask $\bm m_t$ 和时间步 $t$；网络是单层 Transformer + AdaLN，规模 $<0.01\%$ 底座参数。消融很关键地说明了"为什么只用 max 就够"：把 top-50 概率全喂进去并没有更好，用 hidden state 反而更差且训练不稳——真正承载"该不该揭"信号的就是 unembedding 矩阵投影后的 $c_t^k$。这条思路和 Fast-dLLM 等启发式同源（都看置信度），区别是把"怎么用置信度"交给学习，避免手工阈值又几乎不加计算开销。
 
-2. **Bernoulli 动态步长（vs. 定步长）**:
+**2. Bernoulli 动态步长：让每一步揭多少个位置变成可学量，而不是预设 $K$ 或固定阈值。**
 
-    - 功能：让每一步揭多少个位置变成可学习量，而不是预设 $K$ 或固定阈值。
-    - 核心思路：每个位置独立采样 $u_t^k\sim \mathrm{Ber}(s_t^k)$，策略 likelihood 解析可写为 $\pi_\phi(\bm u_t)=\prod_k (s_t^k)^{u_t^k}(1-s_t^k)^{1-u_t^k}$，免去 PL 等近似；推理时若 $\bm u_t=\bm 0$，回退到"只揭最大 $s_t^k$ 的那个位置"防止卡住；同时引入策略温度 $\tau_\pi$，把 $s_t^k$ 换成 $\sigma(b_t^k/\tau_\pi)$，作为测试时的"果断度"旋钮。与 DCOLT/DiFFPO 等同期工作的固定 $K$ 或阈值预测形式相比，本方法步长真正"逐位置、逐步骤"自适应。
-    - 设计动机：semi-AR 和 full-diffusion 在不同位置/时刻最优揭码数完全不同，固定 $K$ 或固定阈值都无法兼顾；Bernoulli 形式既轻量又表达力足够。
+semi-AR 和 full-diffusion 在不同位置/时刻的最优揭码数完全不同，固定 $K$ 或固定阈值都无法兼顾。这里每个位置独立采样 $u_t^k\sim \mathrm{Ber}(s_t^k)$，策略 likelihood 解析可写为 $\pi_\phi(\bm u_t)=\prod_k (s_t^k)^{u_t^k}(1-s_t^k)^{1-u_t^k}$，免去 Plackett-Luce 之类的近似；推理时若 $\bm u_t=\bm 0$，回退到"只揭最大 $s_t^k$ 的那个位置"防止卡死；再引入策略温度 $\tau_\pi$ 把 $s_t^k$ 换成 $\sigma(b_t^k/\tau_\pi)$ 当测试时的"果断度"旋钮。相比 DCOLT/DiFFPO 的固定 $K$ 或阈值预测，Bernoulli 形式让步长真正逐位置、逐步骤自适应，又轻量、表达力足够。
 
-3. **乘性奖励 + GRPO（vs. 加性惩罚）**:
+**3. 乘性奖励 + GRPO：在同一个标量里同时编码"答得对"和"答得快"，并避免奖励黑客。**
 
-    - 功能：在同一个标量里同时编码"答得对"和"答得快"，并避免奖励黑客。
-    - 核心思路：奖励仅在终止步 $\hat T$ 发放，形式为 $R = r(\bm y, \bm y_{\hat T})\cdot (1-(T-\hat T)/T)^\alpha$，$r$ 是任务正确性（如 GSM8K 0/1），$\alpha$ 越大越偏好少步数。训练用 GRPO：固定 dLLM 温度 $\tau=0$（保证同组样本差异只来自策略），组内 $G$ 条轨迹算优势 $A_t^g=R^g-\frac{1}{G}\sum_i R^i$，并把终步奖励均匀回灌到该轨迹的每一步参与 PPO-style clip 更新；从零训因此去掉 KL 正则。消融对比加性奖励 $r-\alpha(T-\hat T)/T$，发现加性版本会塌缩到"全部一次揭完、答错也不在乎"，乘性奖励则把"错答的快"直接打回 0 优势。
-    - 设计动机：从头训策略时早期几乎全错，加性惩罚会给"更快的错答"留正优势，制造严重 reward hacking；乘性把速度奖励乘上正确性掩码，避开这个陷阱。
+从头训策略时早期几乎全错，若用加性惩罚 $r-\alpha(T-\hat T)/T$，"更快的错答"会留正优势，策略会塌缩到"全部一次揭完、答错也不在乎"。作者改成乘性奖励，只在终止步 $\hat T$ 发放 $R = r(\bm y, \bm y_{\hat T})\cdot (1-(T-\hat T)/T)^\alpha$（$r$ 是任务正确性、$\alpha$ 越大越偏好少步数），把速度奖励乘上正确性掩码，"错答的快"直接打回 0 优势。训练用 GRPO：固定 dLLM 温度 $\tau=0$ 保证同组样本差异只来自策略，组内 $G$ 条轨迹算优势 $A_t^g=R^g-\frac{1}{G}\sum_i R^i$，再把终步奖励均匀回灌到每一步参与 PPO-style clip，从零训因此去掉 KL 正则。
 
 ### 损失函数 / 训练策略
 GRPO 目标为带 clip 的 PPO-style 比值项 $\rho_t^g = \pi_\phi(\bm u_t^g)/\pi_{\phi_\text{old}}(\bm u_t^g)$，并在 likelihood 计算时跳过已揭位置。base dLLM 用 LLaDA-8B-Instruct 或 Dream-7B-Instruct；训练数据是 GSM8K + MATH 各采约 1.5 万样本，$BL=32$ 一轮，五个 $\alpha\in\{10,3,1,0.3,0\}$ 各自训练。为缓解 full-diffusion ($BL=L=256$) 下探索不足，作者引入 "expert steering"：用 Fast-dLLM 在 semi-AR 下产生的轨迹注入 rollout 池，引导策略走出局部最优。

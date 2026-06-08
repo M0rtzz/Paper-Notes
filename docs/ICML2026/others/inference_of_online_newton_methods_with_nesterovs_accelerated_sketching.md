@@ -48,23 +48,17 @@ tags:
 
 ### 关键设计
 
-1. **带 Nesterov 加速的 sketch-and-project 求解器（NASketch）**:
+**1. 带 Nesterov 加速的 sketch-and-project 求解器（NASketch）：在 $O(d^2)$ 成本内高精度解 Newton 系统。**
 
-    - 功能：在 $O(d^2)$ 成本内得到 Newton 系统 $B\Delta x=-g$ 的高精度近似解。
-    - 核心思路：维护 state-co-state 对 $(z_j, v_j)$，先在中点 $y_j=\alpha v_j+(1-\alpha)z_j$ 上算 sketching 方向 $\omega_j = BS_j(S_j^\top B^2 S_j)^\dagger S_j^\top(B y_j + g)$（$S_j\in\mathbb{R}^{d\times s}$ 为 sketch 矩阵，$s\ll d$），再做 $z_{j+1}=y_j-\omega_j$ 和 $v_{j+1}=\beta v_j+(1-\beta)y_j-\gamma\omega_j$。参数取 $\alpha=1/(1+\gamma\nu)$、$\beta=1-\sqrt{\mu/\nu}$、$\gamma=1/\sqrt{\mu\nu}$，其中 $\mu,\nu$ 是 sketching 分布的两个谱参数（$1\le\nu\le 1/\mu$）。设置 $\alpha=0.5,\beta=0,\gamma=1$ 即退化为不加速版本。
-    - 设计动机：未加速时收敛率为 $1-\mu_t$，加速后变为 $1-\sqrt{\mu_t/\nu_t}$。在极端 $\nu_t=1$ 情况下，相当于把 $1-\mu_t$ 提到 $1-\sqrt{\mu_t}$，正是 Nesterov 在 SGD 中的同款加速。但 $2d$ 维非对称递推让 (1,1) 块不再有投影矩阵的有界性，因此作者用 Cayley–Hamilton 定理和 Kronecker 积重写谱半径递推，证明 $(1,1)+(1,2)$ 边际块依然几何收缩（引理 3.6–3.7）。
+直接解 Newton 系统 $B\Delta x=-g$ 是 $O(d^3)$，根本上不起来。NASketch 维护一对 state-co-state $(z_j, v_j)$：先在中点 $y_j=\alpha v_j+(1-\alpha)z_j$ 上算 sketching 方向 $\omega_j = BS_j(S_j^\top B^2 S_j)^\dagger S_j^\top(B y_j + g)$（$S_j\in\mathbb{R}^{d\times s}$ 是 sketch 矩阵，$s\ll d$），再做 $z_{j+1}=y_j-\omega_j$、$v_{j+1}=\beta v_j+(1-\beta)y_j-\gamma\omega_j$。参数取 $\alpha=1/(1+\gamma\nu)$、$\beta=1-\sqrt{\mu/\nu}$、$\gamma=1/\sqrt{\mu\nu}$（$\mu,\nu$ 是 sketching 分布的谱参数，$1\le\nu\le 1/\mu$），令 $\alpha=0.5,\beta=0,\gamma=1$ 即退化为不加速版本。收益是收敛率从未加速的 $1-\mu_t$ 提到 $1-\sqrt{\mu_t/\nu_t}$，在 $\nu_t=1$ 时相当于把 $1-\mu_t$ 拔到 $1-\sqrt{\mu_t}$，正是 Nesterov 在 SGD 里的同款加速，且 per-iteration 成本不变。代价是这个 $2d$ 维非对称递推让 (1,1) 块不再有投影矩阵的有界性，作者得用 Cayley–Hamilton 定理 + Kronecker 积重写谱半径递推，才证明 $(1,1)+(1,2)$ 边际块依然几何收缩（引理 3.6–3.7）。
 
-2. **极限协方差的 Lyapunov 方程刻画**:
+**2. 极限协方差的 Lyapunov 方程刻画：把数据随机和求解器随机两类不确定性都写进协方差。**
 
-    - 功能：把"数据随机 + 加速 sketching 求解器随机"两类不确定性的影响显式写到末迭代的极限协方差里。
-    - 核心思路：在标准光滑性 + 矩条件下，证明 $1/\sqrt{\varphi_t}\cdot(x_t-x^\star)\xrightarrow{d}\mathcal{N}(0,\Sigma^\star)$，其中 $\Sigma^\star$ 是 Lyapunov 方程 $A^\star\Sigma^\star+\Sigma^\star (A^\star)^\top + Q^\star = 0$ 的解，$A^\star$ 由 $\nabla^2 f(x^\star)$ 和加速 sketching 在最优参数 $(\alpha^\star,\beta^\star,\gamma^\star)$ 下的极限线性算子共同决定，$Q^\star$ 同时吸收数据噪声协方差和 sketching 算子的随机性。两种特例可立刻验证一致性：(a) 完全关掉 sketching，$\Sigma^\star$ 退化为 Polyak-Juditsky 平均 SGD 的极小极大最优协方差；(b) 加速但无可证加速率（$\mu_t\nu_t=1$），$\Sigma^\star$ 退化为 Kuang 等（2025）未加速 sketched Newton 的协方差。
-    - 设计动机：以往在线推断的随机性只来自数据采样，sketching 算子的随机性会"渐近消失"或被吸收进确定性 preconditioner（Leluc & Portier 2023）；本文坚持把 sketching 跑固定 $\tau$ 步，因此算法随机性**不会**渐近消失，必须显式建模。这条 Lyapunov 方程同时把"计算 vs 统计"权衡刻画出来：加速 sketching 越激进（$\nu_t$ 越小），求解器越快，但 Lyapunov 方程的 $Q^\star$ 里多出来的 sketching 项也越大；反之亦然。
+加速 sketching 把"算"提了速，但它在统计推断里到底改变了什么？答案就藏在末迭代的极限协方差里。论文证明 $1/\sqrt{\varphi_t}\cdot(x_t-x^\star)\xrightarrow{d}\mathcal{N}(0,\Sigma^\star)$，其中 $\Sigma^\star$ 是 Lyapunov 方程 $A^\star\Sigma^\star+\Sigma^\star (A^\star)^\top + Q^\star = 0$ 的解：$A^\star$ 由 $\nabla^2 f(x^\star)$ 和最优参数 $(\alpha^\star,\beta^\star,\gamma^\star)$ 下加速 sketching 的极限线性算子共同决定，$Q^\star$ 同时吸收数据噪声协方差和 sketching 算子的随机性。两个特例验证一致性：完全关掉 sketching，$\Sigma^\star$ 退化为 Polyak-Juditsky 平均 SGD 的极小极大最优协方差；加速但无可证加速率（$\mu_t\nu_t=1$），则退化为 Kuang 等（2025）未加速 sketched Newton 的协方差。这里作者坚持把 sketching 跑固定 $\tau$ 步，所以算法随机性不会渐近消失、必须显式建模——也正因如此，这条方程把"计算 vs 统计"权衡讲清楚了：加速越激进（$\nu_t$ 越小）求解器越快，但 $Q^\star$ 里多出来的 sketching 项也越大。
 
-3. **完全在线、无需矩阵求逆的协方差估计器**:
+**3. 完全在线、无需矩阵求逆的协方差估计器：让推断真正落地。**
 
-    - 功能：流式地估计 $\Sigma^\star$，构造可用的置信区间，且**不需要在每步反演任何矩阵**。
-    - 核心思路：把 Lyapunov 方程展开成沿迭代序列可累积的更新——本文证明只要 (i) 用 Hessian 平均 $B_t$ 替代 $\nabla^2 f(x^\star)$；(ii) 用 sketching 算子的样本平均替代 $\mathbb{E}[\cdot]$；(iii) 用样本残差替代真噪声方差，得到的估计器 $\widehat\Sigma_t$ 就满足 $\widehat\Sigma_t\xrightarrow{p}\Sigma^\star$（定理 4.6）。为此需要四阶矩界 $\mathbb{E}[\|x_t-x^\star\|^4]=O(\varphi_t^2)$（引理 4.5），这比常见的二阶矩界严格更强，是技术上最重的部分。
-    - 设计动机：在线推断要工程化，就必须避免每步做 $O(d^3)$ 矩阵求逆。这一估计器只用"已经在算的量"（迭代、sketching 方向、Hessian 平均）做累加，per-step 仍是 $O(d^2)$，与算法主循环同阶。
+在线推断要工程化就必须避免每步做 $O(d^3)$ 矩阵反演。作者把 Lyapunov 方程展开成沿迭代序列可累积的更新——只要用 Hessian 平均 $B_t$ 替代 $\nabla^2 f(x^\star)$、用 sketching 算子的样本平均替代 $\mathbb{E}[\cdot]$、用样本残差替代真噪声方差，得到的估计器 $\widehat\Sigma_t$ 就满足 $\widehat\Sigma_t\xrightarrow{p}\Sigma^\star$（定理 4.6）。为此需要一个比常见二阶矩界严格更强的四阶矩界 $\mathbb{E}[\|x_t-x^\star\|^4]=O(\varphi_t^2)$（引理 4.5），这是技术上最重的部分。整个估计器只用"已经在算的量"（迭代、sketching 方向、Hessian 平均）做累加，per-step 仍是 $O(d^2)$，与主循环同阶。
 
 ### 损失函数 / 训练策略
 - **步长**：$\varphi_t=c_\varphi/t^\alpha$，$\alpha\in(1/2,1)$，配合 Hessian 平均 $B_t$ 的 $1/t$ 衰减。
@@ -125,12 +119,6 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ 覆盖了 linear / logistic / quantile 回归 + 多维度 + ill-conditioning 扫描；缺少真实流数据案例。
 - 写作质量: ⭐⭐⭐⭐ 把"技术挑战"小节单独抽出来逐条交代，但 Lyapunov 方程的展开式排版较密，初学者需对照引理读两遍。
 - 价值: ⭐⭐⭐⭐ 对统计推断 + 在线学习的交叉社区有直接工程意义；理论框架也可移植到其他随机线性求解器。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

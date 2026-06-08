@@ -44,23 +44,21 @@ Med-Scout 是一个数据中心化的 RL 后训练框架。给定一张未标注
 
 ### 关键设计
 
-1. **三项几何代理任务**：
+**1. 三项几何代理任务：把抽象的"几何感知"拆成三类在医学图上可自动构造、答案唯一可验证的 VQA。**
 
-    - 功能：把抽象的"几何感知"分解为可在医学图像上自动构造、答案唯一可验证的三类 VQA。
-    - 核心思路：(a) **Hierarchical Scale Localization** 模拟临床"放大镜"诊断流程，从原图同时裁 $N=3$ 个 patch，分属 Level-1（占图 20% 面积）与 Level-2（占 6.25%）两个尺度档，中心坐标限制在归一化 $[0.2,0.8]$ 区间避免背景噪声；模型需对每个 patch 输出尺度档与归一化框 $b=(x_1,y_1,x_2,y_2)$；(b) **Topological Jigsaw Reconstruction** 把图切成 $2\times 2$ 网格并随机置换 $\sigma$ 形成 $I_{\text{shuffled}}$，要求模型给出"按左→右、上→下顺序读出的原始 index 序列"，强迫做横纵双向空间推理；(c) **Anomaly Consistency Detection** 在 $4\times 4$ 网格的中央区域把一块替换为参考 patch $I_{\text{ref}}$（CT/MRI 取相邻 slice、X-ray 取 BiomedCLIP 检索的 top-1 相似图），模型需输出异常 patch 的 grid index。三项任务都统一为开放集 VQA 流，可选 Direct 或 CoT 模式。
-    - 设计动机：医学场景里"几何"不是单一概念——尺度对应"局部 vs 全局一致性"、拓扑对应"解剖位置不变性"、异常对应"像素级结构一致性"，三者覆盖了 pilot 暴露的三类盲点。这种"问题导向地分解几何"使得每一类奖励都对应一个具体临床能力，避免 Jigsaw-R1 之类的通用任务"做对了拼图但学不到医学要点"。
+pilot 实验暴露的几何盲不是单一概念，而是尺度盲、拓扑盲、异常盲三种，所以代理任务也对应分成三类。**Hierarchical Scale Localization** 模拟临床"放大镜"流程，从原图同时裁 $N=3$ 个 patch，分属 Level-1（占图 20% 面积）与 Level-2（6.25%）两档，中心坐标限制在归一化 $[0.2,0.8]$ 避开背景噪声，模型要对每个 patch 输出尺度档与归一化框 $b=(x_1,y_1,x_2,y_2)$，对应"局部 vs 全局一致性"。**Topological Jigsaw Reconstruction** 把图切成 $2\times 2$ 网格并随机置换 $\sigma$，要求模型按左→右、上→下读出原始 index 序列，强迫做横纵双向空间推理，对应"解剖位置不变性"。**Anomaly Consistency Detection** 在 $4\times 4$ 网格的中央把一块替换为参考 patch（CT/MRI 取相邻 slice、X-ray 取 BiomedCLIP 检索的 top-1 相似图），模型需输出异常 patch 的 grid index，对应"像素级结构一致性"。三项都统一成开放集 VQA、可选 Direct 或 CoT 模式。这种"问题导向地分解几何"让每类奖励都对准一个具体临床能力，避免 Jigsaw-R1 之类通用任务"拼图做对了却学不到医学要点"。
 
-2. **稠密几何奖励（DGR）整合到 GRPO**：
+**2. 稠密几何奖励（DGR）整合到 GRPO：用连续打分替代稀疏二值，让组内 RL 总有信息可用。**
 
-    - 功能：把传统 RL 的稀疏二值反馈替换为按"几何偏差程度"连续打分的稠密奖励，使梯度信号在错误较小时仍能持续指引模型。
-    - 核心思路：(a) 尺度任务奖励分两部分：值估计 $\mathcal{R}_{\text{val}}=\frac{1}{N}\sum_{i=1}^{N}\mathbb{I}(\hat y_i=y_i^*)$ 与框 IoU $\mathcal{R}_{\text{box}}=\frac{1}{N}\sum_{i=1}^N\text{IoU}(\hat b_i,b_i^*)$，按 $N$ 归一化保证量级不变；(b) 拓扑任务用 element-wise 对齐 $\mathcal{R}_{\text{topo}}=\frac{1}{N}\sum_{i=1}^N\mathbb{I}(\hat s_i=s_i^*)$，即使整体序列没全对也按"对几个 patch"给分；(c) 异常任务把 flatten index $k$ 还原成 2D 坐标 $(u,v)=(\lfloor k/4\rfloor,k\bmod 4)$，奖励为 $\mathcal{R}_{\text{anom}}=\exp(-\sqrt{(\hat u-u^*)^2+(\hat v-v^*)^2}/\tau)$，距离越近奖励越高；(d) 通用格式奖励 $\mathcal{R}_{\text{fmt}}=\frac{0.5}{N}\sum_{i=1}^N\mathbb{I}(\hat a_i\in\Phi_{\text{regex}})$ 在 item 级别校验输出 schema；(e) CoT 模式额外加结构奖励 $\mathcal{R}_{\text{reason}}=0.5$（若输出符合 `<think>...<answer>...` 模板）。完美 CoT 总分上限 $\mathcal{R}=2.0$。
-    - 设计动机：GRPO 在组内做相对优势估计，奖励方差越大、组内排序越稳定，更新方向就越有信息。如果用稀疏 0/1 奖励，组内"全错/全对"概率高，advantage 退化为 0；DGR 把"差一点"的样本拉开档次，组内排序总有信息可用，训练既稳定又快收敛。把距离/IoU/element-wise 这类天然几何度量直接当奖励，比起额外训一个 reward model 更可靠且无 reward hacking 风险。
+GRPO 在组内做相对优势估计，如果用稀疏 0/1 奖励，难题组里"全错"或简单题组里"全对"的概率很高，advantage 直接退化为 0、梯度无信息。DGR 把"差一点"的样本按几何偏差程度拉开档次：尺度任务奖励拆成值估计 $\mathcal{R}_{\text{val}}=\frac{1}{N}\sum_{i=1}^{N}\mathbb{I}(\hat y_i=y_i^*)$ 与框 IoU $\mathcal{R}_{\text{box}}=\frac{1}{N}\sum_{i=1}^N\text{IoU}(\hat b_i,b_i^*)$；拓扑任务用 element-wise 对齐 $\mathcal{R}_{\text{topo}}=\frac{1}{N}\sum_{i=1}^N\mathbb{I}(\hat s_i=s_i^*)$，序列没全对也按"对几个 patch"给分；异常任务把 flatten index 还原成坐标 $(u,v)=(\lfloor k/4\rfloor,k\bmod 4)$，奖励为
 
-3. **Med-Scout-Bench：可量化几何盲的医学基准**：
+$$\mathcal{R}_{\text{anom}}=\exp\!\Big(-\sqrt{(\hat u-u^*)^2+(\hat v-v^*)^2}/\tau\Big),$$
 
-    - 功能：把"几何盲"从定性描述变成可重复打分的基准，覆盖 CT/MRI/X-ray 三种主流放射模态。
-    - 核心思路：合成 108,000 条 VQA 初始池，CT/MRI 用 TotalSegmentor 保证全身解剖覆盖，X-ray 用 MIMIC-CXR；从中按模态严格平衡抽 10,800 条（10%）作为基准；剩余 97,200 条作训练集，与 bench 严格不相交。评测统一为开放集 VQA、不给选项，用 LLM-as-a-Judge（Gemini-3-Flash）评估语义正确性，规避字符串硬匹配的脆弱性。打分直接用第 4.2 节定义的 DGR 计算，与训练奖励同构，使得"训练目标"与"评测指标"严格对齐。
-    - 设计动机：以前医学 MLLM 评测要么用 VQA-RAD 这类语义题（无法定位几何错误），要么用分割/检测（不在 MLLM 接口下）。Med-Scout-Bench 在 VQA 接口下保留几何评分能力，是研究医学 MLLM 几何能力的缺位基准；并且证明 bench 分数与 PMC-VQA/OmniMedVQA/MedXpertQA 等下游任务有强正相关（Figure 5 右），可作为"广义医学感知力"的可靠指标。
+距离越近奖励越高；再加 item 级格式奖励 $\mathcal{R}_{\text{fmt}}=\frac{0.5}{N}\sum_{i=1}^N\mathbb{I}(\hat a_i\in\Phi_{\text{regex}})$，CoT 模式额外加结构奖励 $\mathcal{R}_{\text{reason}}=0.5$（输出符合 `<think>...<answer>...` 模板），完美 CoT 总分上限 $\mathcal{R}=2.0$。把 IoU、欧氏距离、element-wise 命中这些天然几何度量直接当奖励，既保证组内排序总有信息、训练稳定快收敛，又比额外训一个 reward model 更可靠、没有 reward hacking 风险。
+
+**3. Med-Scout-Bench：把"几何盲"从定性描述变成可重复打分的医学基准。**
+
+以前的医学 MLLM 评测要么用 VQA-RAD 这类语义题（定位不到几何错误），要么用分割/检测（根本不在 MLLM 接口下），几何能力的评测一直缺位。Med-Scout-Bench 在 VQA 接口下保留几何评分：合成 108,000 条 VQA 初始池（CT/MRI 用 TotalSegmentor 保证全身解剖覆盖、X-ray 用 MIMIC-CXR），按模态严格平衡抽 10,800 条（10%）作基准、剩余 97,200 条作训练集且两者严格不相交；评测统一为开放集、不给选项，用 LLM-as-a-Judge（Gemini-3-Flash）评语义正确性以规避字符串硬匹配的脆弱。最关键的是打分直接复用 4.2 节定义的 DGR、与训练奖励同构，让"训练目标"和"评测指标"严格对齐；而且实验证明 bench 分数与 PMC-VQA / OmniMedVQA / MedXpertQA 等下游任务强正相关，说明它能当"广义医学感知力"的可靠代理。
 
 ### 损失函数 / 训练策略
 GRPO 优化：组大小 $G=8$、KL 系数 $\beta=0.04$、global batch 192、cosine LR 衰减、warmup 0.01、AdamW、peak lr $1\times 10^{-6}$；在 6×NVIDIA RTX PRO 6000 上跑 7,200 步。共四个 backbone：通用 Qwen3-VL-4B/8B-Instruct、医学专科 Lingshu-7B 与 HuatuoGPT-Vision-7B。

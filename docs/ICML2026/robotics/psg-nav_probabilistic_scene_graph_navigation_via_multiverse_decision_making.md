@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **3D 概率场景图 + LLM 引导的层次化逻辑剪枝**:
+**1. 3D 概率场景图 + LLM 引导的层次化逻辑剪枝：保留全分布又不让联合推理爆炸。**
 
-    - 功能：在保留感知全分布的同时让联合推理可处理
-    - 核心思路：场景图 $\mathcal{G}_t = (\mathcal{V}, \mathcal{E})$ 分 object / group / room 三层，每个 object 节点维护类别 vote 计数向量 $\mathbf{n}_{i,t}$，置信度由 $P_t(o_i = c_k) = n_{i,t}^{(k)} / \sum_j n_{i,t}^{(j)}$ 归一化（用 vote 累积而非 Bayesian 更新，因为开放词汇检测器置信度未校准、Bayesian 更新会发散）；group 节点存子物体的联合配置概率 $P(g_j = s) = \prod_{i=1}^{N_j} P(o_{j,i} = c_{j,i}^s)$（如 70% table × 80% chair = 56% "桌+椅"配置）；关键的逻辑剪枝步：枚举 group 内 top-$K_g$ 配置后用 LLM 二元过滤 $f_{\text{LLM}}(s) \in \{0,1\}$，丢掉"客厅里出现马桶"这种逻辑冲突；room 层同样枚举 + LLM 剪枝
-    - 设计动机：丢掉完整分布等于丢掉"备选解释"，sofa 被误检为 bed 后再也无法借助"客厅里不该有床"这条 commonsense 回退到 sofa；层次因子化把组合爆炸压成可枚举，LLM 过滤把"最高置信但语义不通"的配置滤掉，反而能保留"低置信但全局一致"的正确解释——这正是从感知噪声中恢复真相的核心机制
+传统场景图为了喂 LLM 方便，把每个物体砍成一个 argmax 硬标签，等于自废武功——sofa 被误检成 bed 后再没有"备选解释"可以回退。PSG-Nav 在地图层保留完整分布：场景图 $\mathcal{G}_t = (\mathcal{V}, \mathcal{E})$ 分 object / group / room 三层，每个 object 节点维护类别 vote 计数向量 $\mathbf{n}_{i,t}$，置信度归一化为 $P_t(o_i = c_k) = n_{i,t}^{(k)} / \sum_j n_{i,t}^{(j)}$（用 vote 累积而非 Bayesian 更新，因为开放词汇检测器的置信度没校准、Bayesian 更新会发散）；group 节点存子物体的联合配置概率 $P(g_j = s) = \prod_{i=1}^{N_j} P(o_{j,i} = c_{j,i}^s)$，比如 70% table × 80% chair = 56% 的"桌+椅"配置。直接对全联合分布规划会组合爆炸（最大概率的全局配置都占不到 10%），所以关键一步是层次因子化后做 LLM 逻辑剪枝：枚举 group 内 top-$K_g$ 配置，用 LLM 二元过滤 $f_{\text{LLM}}(s) \in \{0,1\}$ 丢掉"客厅里出现马桶"这种逻辑冲突，room 层同理。这样既把组合爆炸压成可枚举，又能滤掉"最高置信但语义不通"的配置、保留"低置信但全局一致"的正确解释——这正是从感知噪声里恢复真相的核心机制。
 
-2. **多元宇宙决策 + 内在不确定性感知探索**:
+**2. 多元宇宙决策 + 内在不确定性感知探索：在多个并行世界里给同一 landmark 投票。**
 
-    - 功能：把不可处理的概率规划转成离散世界上的具体推理，同时驱动主动消歧
-    - 核心思路：从 3D-PSG 联合分布采样 $K$ 个确定性世界 $\mathcal{M} = \{\mathcal{G}^{(1)}, \dots, \mathcal{G}^{(K)}\}$；候选 landmark 从 Generalized Voronoi Graph 和几何 frontier 中提取；先做内在信息增益 $U_{\text{gain}}(l_{i,t}) = \alpha \cdot I_{\text{spa}}(l_{i,t}) + I_{\text{sem}}(l_{i,t})$ 过滤——空间项 $I_{\text{spa}} = |\mathcal{U}(l_{i,t})| / (\pi r_{\text{max}}^2)$ 衡量"走过去能看到多少未知区域"，语义项 $I_{\text{sem}} = -\sum_{o_i \in \mathcal{O}_p} \sum_c P_t(o_i = c) \log P_t(o_i = c)$ 是邻近物体的 Shannon 熵和，体现"靠近高不确定区域能消除歧义"的物理直觉；剩下高潜 landmark 进入随机 pairwise 比较，每个 world $\mathcal{G}^{(m)}$ 下用 LLM 当 preference oracle $\mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)}) = f_{\text{LLM}}(D(l_i | \mathcal{G}^{(m)}), D(l_j | \mathcal{G}^{(m)}), g)$，最终得分 $S(l_{i,t}) = \frac{1}{M(|\mathcal{L}'_t|-1)} \sum_m \sum_{j \neq i} \mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)})$，最优子目标 $l^* = \arg\max(S(l_{i,t}) + \beta U_{\text{gain}}(l_{i,t}))$
-    - 设计动机：单一确定性世界做规划等于"赌一把"，遇到歧义就崩；多世界采样在多个并行假设下评估同一 landmark，相当于对感知噪声做边缘化；pairwise 比较避免 LLM listwise ranking 的 position bias；内在信息增益让 agent 不止追目标，还主动消除地图歧义——这才是真正的"uncertainty-aware exploration"
+单一确定性世界做规划等于"赌一把"，一遇歧义就崩。PSG-Nav 从 3D-PSG 的联合分布采样 $K$ 个逻辑一致的确定性世界 $\mathcal{M} = \{\mathcal{G}^{(1)}, \dots, \mathcal{G}^{(K)}\}$，相当于对感知噪声做边缘化。候选 landmark 从 Generalized Voronoi Graph 和几何 frontier 提取后，先用内在信息增益过滤：
 
-3. **EEC：基于成功/失败记忆的 RAG 式终止校准**:
+$$U_{\text{gain}}(l_{i,t}) = \alpha \cdot I_{\text{spa}}(l_{i,t}) + I_{\text{sem}}(l_{i,t})$$
 
-    - 功能：抑制 sim-to-real domain shift 带来的持续性假阳性，让 STOP 决策可被终身修正
-    - 核心思路：维护两个 bank——正例 $\mathcal{B}^+$（成功识别的目标）和负例 $\mathcal{B}^-$（历史假阳性），每条记忆存 $m = (\mathbf{v}_{\text{vis}}^m, \mathbf{v}_{\text{struct}}^m)$，其中视觉嵌入 $\mathbf{v}_{\text{vis}}$ 是物体外观、结构嵌入 $\mathbf{v}_{\text{struct}} = (p_R^m, p_G^m)$ 是 room 分布和邻居 group 分布；候选物体 $o_c$ 触发 STOP 前先做混合相似度查询 $\text{sim}(o_c, m) = \cos(\mathbf{v}_{\text{vis}}, \mathbf{v}_{\text{vis}}^m) + w_1 \cos(p_G, p_G^m) + w_2 (1 - \text{JSD}(p_R, p_R^m))$（room 分布用 Jensen-Shannon 散度算，符合概率几何）；取 $S_{\text{pos}} = \max_{m \in \mathcal{B}^+} \text{sim}(o_c, m)$ 和 $S_{\text{neg}} = \max_{m \in \mathcal{B}^-} \text{sim}(o_c, m)$，校准边际 $\Delta S = S_{\text{pos}} - \gamma S_{\text{neg}}$，最终置信 $S_{\text{final}} = S_{\text{det}} + \Delta S > \delta$ 才 STOP；bank 容量上限 $N_{\max}$，超限时用"对内部平均相似度最高的"做冗余剪枝，保留多样性
-    - 设计动机：传统 RAG 只存图像 crop，没有场景上下文，无法区分"卧室里的 fireplace 假象"和"客厅里真的 fireplace"；EEC 的双分布上下文（room + group）正好用 3D-PSG 现成的概率结构；多样性剪枝确保 bank 不被同一个错误模式淹没，长期保持决策校准能力——这是把零样本导航升级成在线终身学习的关键
+空间项 $I_{\text{spa}} = |\mathcal{U}(l_{i,t})| / (\pi r_{\text{max}}^2)$ 衡量"走过去能看到多少未知区域"，语义项 $I_{\text{sem}} = -\sum_{o_i \in \mathcal{O}_p} \sum_c P_t(o_i = c) \log P_t(o_i = c)$ 是邻近物体的 Shannon 熵和，体现"靠近高不确定区能消歧"的直觉。剩下的高潜 landmark 进入随机 pairwise 比较，每个世界 $\mathcal{G}^{(m)}$ 下让 LLM 当 preference oracle $\mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)})$，最终胜率得分 $S(l_{i,t}) = \frac{1}{M(|\mathcal{L}'_t|-1)} \sum_m \sum_{j \neq i} \mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)})$，子目标取 $l^* = \arg\max(S(l_{i,t}) + \beta U_{\text{gain}}(l_{i,t}))$。用 pairwise 比较而非 listwise ranking 避开了 LLM 的 position bias，胜率聚合本质是用 Monte Carlo 估计期望效用，而内在信息增益让 agent 不止追目标、还主动消除地图歧义。
+
+**3. EEC：基于成功/失败记忆的 RAG 式终止校准。**
+
+sim-to-real domain shift 下高频假阳性会让 agent 走到错物体前就 STOP、episode 提前失败。EEC 维护两个记忆库——正例 $\mathcal{B}^+$（成功识别的目标）和负例 $\mathcal{B}^-$（历史假阳性），每条记忆存 $m = (\mathbf{v}_{\text{vis}}^m, \mathbf{v}_{\text{struct}}^m)$，其中结构嵌入 $\mathbf{v}_{\text{struct}} = (p_R^m, p_G^m)$ 是 room 分布和邻居 group 分布。候选物体 $o_c$ 触发 STOP 前先做混合相似度查询
+
+$$\text{sim}(o_c, m) = \cos(\mathbf{v}_{\text{vis}}, \mathbf{v}_{\text{vis}}^m) + w_1 \cos(p_G, p_G^m) + w_2 (1 - \text{JSD}(p_R, p_R^m))$$
+
+room 分布用 Jensen-Shannon 散度算（符合概率几何），视觉嵌入用 cosine（表示几何）。取 $S_{\text{pos}} = \max_{m \in \mathcal{B}^+} \text{sim}$、$S_{\text{neg}} = \max_{m \in \mathcal{B}^-} \text{sim}$，校准边际 $\Delta S = S_{\text{pos}} - \gamma S_{\text{neg}}$，最终 $S_{\text{final}} = S_{\text{det}} + \Delta S > \delta$ 才 STOP。bank 满了用"对内部平均相似度最高的"做冗余剪枝保留多样性。传统 RAG 只存图像 crop、没有场景上下文，分不清"卧室里的 fireplace 假象"和"客厅里真 fireplace"；EEC 直接复用 3D-PSG 现成的 room + group 概率结构当上下文，多样性剪枝又保证 bank 不被同一错误模式淹没——这把零样本导航升级成了在线终身学习。
 
 ### 损失函数 / 训练策略
 PSG-Nav 是完全 training-free 的零样本框架，不更新任何网络参数。所有概率更新（vote 累积 / EEC bank 增删）都是 episode 内 / 跨 episode 的在线状态更新。检测用 GLIP，分割用 Grounded-SAM，推理引擎用 Qwen2.5-7B-Instruct。关键超参：multiverse 采样数 $K = 3$，信息增益过滤阈值 $\tau = 0.1$，权重 $\alpha = 1$、$\beta = 0.5$，EEC 容量 $N_{\max} = 10$、负例惩罚 $\gamma = 2$、终止阈值 $\delta = 0.61$，每 episode 最多 500 步，800×800 占用栅格图。

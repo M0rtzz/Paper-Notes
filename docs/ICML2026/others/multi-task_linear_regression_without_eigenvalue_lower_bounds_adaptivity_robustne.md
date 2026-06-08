@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **矩阵加权正则的联合凸损失**:
+**1. 矩阵加权正则的联合凸损失：把对最小特征值的依赖从分析里剔除。**
 
-    - 功能：用一个对每个任务"局部白化"的正则替代 ARMUL 的 $\ell_2$ 正则，把对最小特征值的依赖从分析里剔除。
-    - 核心思路：损失 $\mathcal L(\Theta)=\sum_{j=1}^{m} w_j\big(f_j(\theta_j)+\lambda_j\|\theta_j-\beta\|_{\bm\Sigma_j}\big)$，其中 $f_j(\theta)=\|\mathbf Y_j-\mathbf X_j\theta\|_2^2/(2n_j)$，$\|\theta_j-\beta\|_{\bm\Sigma_j}=\|\mathbf X_j(\theta_j-\beta)\|_2/\sqrt n$。它衡量的是"$\theta_j$ 和 $\beta$ 在任务 $j$ 自己的设计矩阵下的预测差"——若某方向 $\mathbf X_j$ 几乎没看到，那这个方向的偏差就不被罚。等价地这是按 $\bm\Sigma_j^{1/2}$ 白化后的 $\ell_2$ 正则。推荐 $\lambda_j\asymp\sqrt{d/n_j}$，重参 $v_j=\theta_j-\beta$ 后整个目标是联合凸的，作者用 L-BFGS-B 直接求解。
-    - 设计动机：要既能在好任务间共享信息，又能让弱观测方向"自动消音"。Euclidean 正则同等对待强弱方向，会把那些独立任务本来就识别不了的方向也强行往 $\beta$ 拉，进而把 $\rho^{-2}$ 的因子写进保证里；矩阵加权正则则只在被实际观测到的方向上聚合，从根本上断掉 $\rho$ 依赖。
+ARMUL 用 $\ell_2$ 正则 $\lambda\|\theta_j-\beta\|_2$ 同等对待强弱方向，会把那些独立任务本来就识别不了的方向也强行往中心 $\beta$ 拉，于是 $\rho^{-2}$ 这个因子被写进了保证里。本文换成局部白化的矩阵加权正则：损失 $\mathcal L(\Theta)=\sum_{j=1}^{m} w_j\big(f_j(\theta_j)+\lambda_j\|\theta_j-\beta\|_{\bm\Sigma_j}\big)$，其中 $f_j(\theta)=\|\mathbf Y_j-\mathbf X_j\theta\|_2^2/(2n_j)$，正则项 $\|\theta_j-\beta\|_{\bm\Sigma_j}=\|\mathbf X_j(\theta_j-\beta)\|_2/\sqrt n$ 衡量的是"$\theta_j$ 和 $\beta$ 在任务 $j$ 自己的设计矩阵下的预测差"。等价地这是按 $\bm\Sigma_j^{1/2}$ 白化后的 $\ell_2$ 正则——某方向若 $\mathbf X_j$ 几乎没看到，这个方向的偏差就不被罚，弱观测方向"自动消音"。推荐 $\lambda_j\asymp\sqrt{d/n_j}$，重参 $v_j=\theta_j-\beta$ 后整个目标联合凸，作者直接用 L-BFGS-B 求解。换句话说，只在被实际观测到的方向上聚合，从根本上断掉了对 $\rho$ 的依赖。
 
-2. **平衡度常数 $B$ 替代 LBSM**:
+**2. 平衡度常数 $B$ 替代 LBSM：用相对谱条件刻画任务间几何相容性。**
 
-    - 功能：用一个"相对而非绝对"的谱条件刻画"任务间几何相容性"，作为转移收益生效的最弱条件。
-    - 核心思路：Assumption 1 要求存在 $B\in[1,\infty]$ 使 $\bm\Sigma_j\preceq B\cdot \bm\Sigma_{\mathbf S}$ 对所有 $j$ 成立，其中 $\bm\Sigma_{\mathbf S}=|\mathbf S|^{-1}\sum_{j\in\mathbf S}\bm\Sigma_j$ 是内点平均。它只是单边上界、且与"平均"而非"任意一对"比较，明确允许各 $\bm\Sigma_j$ 秩亏 / 谱衰减。LBSM 是其特例：若 $\rho\mathbf I\preceq\bm\Sigma_j\preceq L\mathbf I$，则 $B=L/\rho$。文中给出三个例子：LBSM 下 $B=L/\rho$；两两可比下 $B=B'$；低秩双群体（一组任务 $\bm\Sigma=\mathbf I$、另一组 $=\mathbf 0$）下 $B=|\mathbf S|/|\mathbf S\cap\mathbf I|$。再配合 covariate concentration $\nu_j$，可把经验 $B$ 平稳过渡到 population 版本 $\bar B$。
-    - 设计动机：LBSM 是"绝对谱下界"，在高维或自适应采集下被现实粉碎。一个相对的"任务间几何相容性"才是多任务能不能转移的本质——若所有内点任务的二阶矩落在差不多的方向上，平均矩 $\bm\Sigma_{\mathbf S}$ 就是个好的"共同骨架"，每个 $\bm\Sigma_j$ 都被它控制就说明可共享信息。$B=\infty$ 时（譬如内点任务的信息方向完全不交叠）协调本来就没必要，算法应该乖乖回到 ITL。
+LBSM 要求每个任务的二阶矩有绝对谱下界 $\rho\mathbf I\preceq\bm\Sigma_j\preceq L\mathbf I$ 且 $\rho=\Omega(1)$，这在高维或自适应采集下会被现实粉碎。作者改用一个相对、平均型的条件——Assumption 1 要求存在 $B\in[1,\infty]$ 使 $\bm\Sigma_j\preceq B\cdot \bm\Sigma_{\mathbf S}$ 对所有 $j$ 成立，$\bm\Sigma_{\mathbf S}=|\mathbf S|^{-1}\sum_{j\in\mathbf S}\bm\Sigma_j$ 是内点平均。它只是单边上界、和"平均"而非"任意一对"比较，明确允许各 $\bm\Sigma_j$ 秩亏或谱衰减。LBSM 只是它的特例：若 $\rho\mathbf I\preceq\bm\Sigma_j\preceq L\mathbf I$，则 $B=L/\rho$；两两可比时 $B=B'$；低秩双群体（一组 $\bm\Sigma=\mathbf I$、另一组 $=\mathbf 0$）时 $B=|\mathbf S|/|\mathbf S\cap\mathbf I|$；再配合 covariate concentration $\nu_j$ 可把经验 $B$ 平稳过渡到 population 版本 $\bar B$。直觉是：若内点任务的二阶矩落在差不多的方向上，平均矩 $\bm\Sigma_{\mathbf S}$ 就是个好的"共同骨架"，每个 $\bm\Sigma_j$ 被它控制就说明可共享信息；而 $B=\infty$（信息方向完全不交叠）时协调本来就没必要，算法应当老实回到 ITL。
 
-3. **两层"安全 + 自适应"率结构**:
+**3. 两层"安全 + 自适应"率结构：单一估计器无需切换就自动回退。**
 
-    - 功能：让单一估计器在"任务相关 + 几何相容"时享受多任务收益，在不利时**无需切换**自动回退到 ITL 速率。
-    - 核心思路：Theorem 2 同时给出两条同概率成立的界。Safety: 对**任意** $B,\varepsilon,\delta$，$\mathcal E^{\mathrm{in}}_j(\hat\theta_j)\lesssim q^2(d/n)\zeta$，匹配独立任务的 minimax 率，$\zeta=\log(16m/\kappa)$。Adaptivity: 若 Assumption 1 成立且 $B\lesssim\min(1/\varepsilon,m)$，则对内点 $j\in\mathbf S$，$\mathcal E^{\mathrm{in}}_j(\hat\theta_j)\lesssim (Bd/(mn)+\min(B\delta^2,q^2d/n)+q^2B^2\varepsilon^2 d/n)\zeta$。任务平均 MSE 在好 regime 下达到 minimax 最优（可由正交设计子模型证下界）。Theorem 3 通过经验-总体可比常数 $\nu_j$ 把上述在样本内的界搬到 population MSE，并通过域投影给出第二层安全保证 $\mathcal E_j(\hat\theta_j^\xi)\lesssim \mathcal E^{\mathrm{in}}_j(\hat\theta_j)+\xi^2 U_j^2/n$。Theorem 4 把整套结论搬到 GLM（链接函数曲率有界即可），结构完全镜像线性情形。
-    - 设计动机：实际部署里，使用者不知道 $B$、不知道 $\varepsilon$、也不知道 $\delta$。一个理论保证如果要求使用者先选对超参/算法，就没什么实用价值。安全率让算法"最坏也不亏"，自适应率让算法"好的时候捡到便宜"，二者都不需要先验信息。
+实际部署里使用者并不知道 $B,\varepsilon,\delta$，一个要求先选对超参才生效的保证没什么实用价值。Theorem 2 同时给出两条同概率成立的界。Safety 对**任意** $B,\varepsilon,\delta$ 成立：$\mathcal E^{\mathrm{in}}_j(\hat\theta_j)\lesssim q^2(d/n)\zeta$，匹配独立任务的 minimax 率（$\zeta=\log(16m/\kappa)$）——算法"最坏也不亏"。Adaptivity 在 Assumption 1 成立且 $B\lesssim\min(1/\varepsilon,m)$ 时对内点 $j\in\mathbf S$ 给出 $\mathcal E^{\mathrm{in}}_j(\hat\theta_j)\lesssim (Bd/(mn)+\min(B\delta^2,q^2d/n)+q^2B^2\varepsilon^2 d/n)\zeta$，好的时候"捡到便宜"达到 minimax 最优。Theorem 3 通过经验-总体可比常数 $\nu_j$ 把样本内界搬到 population MSE，并经域投影给出第二层安全保证 $\mathcal E_j(\hat\theta_j^\xi)\lesssim \mathcal E^{\mathrm{in}}_j(\hat\theta_j)+\xi^2 U_j^2/n$；Theorem 4 把整套结论镜像到链接函数曲率有界的 GLM。两条率都不需要先验信息，才是它能直接上线的关键。
 
 ### 损失函数 / 训练策略
 线性模型用平方损失，GLM 用负对数似然 $f_j(\theta)=\frac{1}{n}\sum_i(\psi(x_{ji}^\top\theta)-y_{ji}x_{ji}^\top\theta)$；$\lambda_j$ 取 $q\sqrt{d\zeta/n}$，$q$ 由 5-fold CV 在 $\{0.05,0.10,\dots,0.50\}$ 调；GLM 必须把参数限制在 $\mathbf B(0,\xi)$ 内以保证链接函数曲率在 $[\alpha_\ell,\alpha_u]$。

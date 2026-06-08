@@ -50,23 +50,21 @@ tags:
 
 ### 关键设计
 
-1. **最高价值者独占出价（HVO）机制**:
+**1. 最高价值者独占出价（HVO）机制：用最小协调消除联盟内部互卷。**
 
-    - 功能：用一个无需通信代价、不需私有信号披露的最小协调协议，消除联盟内 N-1 个成员对同一 slot 的内部竞价。
-    - 核心思路：每轮中心规划者读出 $\{v_{i,t}\}$，选出 $i^*$，让它的自动出价算法照常运行；其他人 $b_{i,t}=0$。由于其余 N-1 人不再贡献 $d_{i^*,t}$ 中的 $\max_{j\neq i^*} b_{j,t}$ 项，$i^*$ 面对的对手出价直接退化为外部 $d_t^O$，省下大量 second-price payment。
-    - 设计动机：second-price 是 DSIC，老老实实出 $v$ 是个 baseline；但 value-maximizer 会 overbid，这正是它们在独立竞价里互相伤害的根源。HVO 把这个"互伤"项剔除，并且不需要联盟成员之间交换价值/出价信息以外的私密策略。
+联盟里的痛点是同根 bidders 在同一 slot 上互相抬价，把成交价推高、RoS 约束打穿，对整体是负和的。作者抓住一个朴素观察：在 second-price 拍卖里，只让当前价值最高的成员 $i^*=\arg\max_i v_{i,t}$ 出价 $b_{i^*,t}=A(H_{i^*,t})$、其余人一律出 0，就能把内部竞价彻底剔除。机制本身极简——中心规划者每轮读出 $\{v_{i,t}\}$，挑出 $i^*$ 让它的自动出价算法照常运行即可。它之所以有效，是因为其余 $N-1$ 人不再贡献对手出价 $d_{i^*,t}=\max\{d_t^O,\max_{j\neq i^*}b_{j,t}\}$ 里的 $\max_{j\neq i^*}b_{j,t}$ 项，于是 $i^*$ 面对的对手价直接退化成外部价 $d_t^O$，省下大量 second-price payment。second-price 是 DSIC，老实出 $v$ 本是 baseline，但 value-maximizer 会主动 overbid（典型 $b_{i,t}=(1+1/\lambda_{i,t})v_{i,t}>v_{i,t}$）来抢量——这正是它们在独立竞价里互伤的根源，HVO 把这个"互伤项"剔掉，且除价值之外不需要成员间交换任何私密策略。
 
-2. **充要分布条件 Assumption 3.1**:
+**2. 充要分布条件 Assumption 3.1：刻画协调"何时"真的降低 RoS 违反。**
 
-    - 功能：刻画"协调何时能严格降低每个 bidder 的 RoS 违反量"。
-    - 核心思路：令 $v_{(N)}, v_{(N-1)}$ 为 $N$ 个 i.i.d. 价值的最大与次大，定义 $\Delta := \mathbb{E}_{F,D}[(v_{(N-1)}-d^O)_+ - (d^O - v_{(N)})_+]\ge 0$。直观理解：联盟里"次大值与外部价的优势"应当大于"外部价与最大值的优势"，即联盟内部两人都足够强，能压住外部。作者还给了两条典型例子：$N=4, F=D=U[0,1]$ 时 $\Delta=1/6$；$N=3, F=U[0,1], D=\mathrm{Beta}(3,2)$ 时 $\Delta=1/40$；并证明任意全支撑 $F,D$ 在 $N$ 充分大时都满足。
-    - 设计动机：作者通过 Lemma 3.1（second-price DSIC 给出 $U^{\mathrm{Truth}}_i \ge U^{I,A}_i$）+ Lemma 3.2（$\mathbb{E}[U^{C,A}_i] \ge \mathbb{E}[U^{\mathrm{Truth}}_i] + T\Delta/N$）得到 Theorem 3.1：$\Delta\ge 0$ 时 $\mathbb{E}[U^{C,A}_i - U^{I,A}_i] \ge T\Delta/N$，对任何 overbidding 算法成立；并且当 $\Delta<0$ 时反方向也是紧的，即存在 overbidding 算法让协调反而吃亏。这是文中少见的"必要又充分"刻画。
+HVO 不是无条件更优，所以作者得给出"协调能严格降低每个 bidder RoS 违反量"的精确边界。令 $v_{(N)},v_{(N-1)}$ 为 $N$ 个 i.i.d. 价值的最大与次大，定义
 
-3. **协调镜像下降（MD-h）+ 渐近最优性**:
+$$\Delta := \mathbb{E}_{F,D}\big[(v_{(N-1)}-d^O)_+ - (d^O - v_{(N)})_+\big]\ge 0,$$
 
-    - 功能：在 RoS 条件之上，证明 mirror-descent 类算法在协调下能严格提升联盟总价值，并在 Assumption 3.1 下达到所有协调机制中渐近最优。
-    - 核心思路：bidder 用对偶乘子 $\lambda_{i,t}$ 控制 overbid 倍率，$b_{i,t}=(1+1/\lambda_{i,t})v_{i,t}$，看到效用 $g_{i,t}$ 后做 Bregman 投影 $\lambda_{i,t+1}=\arg\min_\lambda \{\alpha g_{i,t}\lambda + D_h(\lambda,\lambda_{i,t})\}$（熵镜像映射 $h(\lambda)=\lambda\log\lambda-\lambda$ 时退化为乘性更新 $\lambda_{i,t+1}=\lambda_{i,t}\exp(-\alpha g_{i,t})$）。作者在 $y_{i,t}=h'(\lambda_{i,t})$ 空间分析动力学：在协调下 $\mathbb{E}[g_{i,t}\mid H_{t-1}]=G_{(N)}(\lambda_{i,t})/N$，其中 $G_{(N)}(\lambda)=\mathbb{E}[(v_{(N)}-d^O)\mathbb{I}[(1+1/\lambda)v_{(N)}>d^O]]$ 单调递增。这令活跃 bidder 的 $\lambda$ 收敛到零点 $\lambda_\star=\inf\{\lambda:G_{(N)}(\lambda)\ge 0\}$，相应总价值收敛到单 bidder 等价问题的 $V_{(N)}(\lambda_\star)$（Theorem 4.1）。再借 Lagrange envelope 把独立出价的总价值上界也压到同一个 $V_{(N)}(\lambda_\star)$，加上 Assumption 3.1 下 $\lambda^C_{i,t}\to 0$（无穷大出价上限）则反过来证明协调 MD 也优于任何其他协调机制（Theorem 4.2）。
-    - 设计动机：单纯比效用还不够，平台/广告主真正在乎的是"花掉的预算能赢回多少价值"。把 N-bidder 协调动力学规约为"一个虚拟 bidder 看 $v_{(N)}$"，是把这个看似复杂的多代理学习问题接回成熟的单 bidder RoS 镜像下降理论的关键，也为 Theorem 4.2 的最优性留下口子。
+直观就是"次大值压过外部价的优势"应大于"外部价压过最大值的优势"——即联盟内部两人都足够强，能压住外部。作者给了两个落地的算例：$N=4,F=D=U[0,1]$ 时 $\Delta=1/6$；$N=3,F=U[0,1],D=\mathrm{Beta}(3,2)$ 时 $\Delta=1/40$，并证明任意全支撑 $F,D$ 在 $N$ 充分大时都满足。结论靠两条引理拼成：Lemma 3.1（second-price DSIC 给 $U^{\mathrm{Truth}}_i\ge U^{I,A}_i$）+ Lemma 3.2（$\mathbb{E}[U^{C,A}_i]\ge\mathbb{E}[U^{\mathrm{Truth}}_i]+T\Delta/N$）合成 Theorem 3.1：$\Delta\ge 0$ 时 $\mathbb{E}[U^{C,A}_i-U^{I,A}_i]\ge T\Delta/N$，对任何 overbidding 算法都成立；而 $\Delta<0$ 时反向也是紧的——存在 overbidding 算法让协调反而吃亏。这种"既充分又必要"的刻画在 auto-bidding 文献里并不多见。
+
+**3. 协调镜像下降（MD-h）+ 渐近最优性：把价值也推到所有协调机制的最优。**
+
+光比效用还不够，平台真正在意的是"花掉的预算赢回多少价值"，所以第三步要在 RoS 条件之上证价值改善与最优性。bidder 用对偶乘子 $\lambda_{i,t}$ 控制 overbid 倍率，$b_{i,t}=(1+1/\lambda_{i,t})v_{i,t}$，看到效用 $g_{i,t}$ 后做 Bregman 投影 $\lambda_{i,t+1}=\arg\min_\lambda\{\alpha g_{i,t}\lambda+D_h(\lambda,\lambda_{i,t})\}$（取熵镜像 $h(\lambda)=\lambda\log\lambda-\lambda$ 时退化为乘性更新 $\lambda_{i,t+1}=\lambda_{i,t}\exp(-\alpha g_{i,t})$）。关键一步是把 $N$-bidder 协调动力学规约成"一个虚拟 bidder 看 $v_{(N)}$"：协调下 $\mathbb{E}[g_{i,t}\mid H_{t-1}]=G_{(N)}(\lambda_{i,t})/N$，其中 $G_{(N)}(\lambda)=\mathbb{E}[(v_{(N)}-d^O)\mathbb{I}[(1+1/\lambda)v_{(N)}>d^O]]$ 单调递增，于是活跃 bidder 的 $\lambda$ 收敛到零点 $\lambda_\star=\inf\{\lambda:G_{(N)}(\lambda)\ge 0\}$、总价值收敛到单 bidder 等价问题的 $V_{(N)}(\lambda_\star)$（Theorem 4.1）。再用 Lagrange envelope 把独立出价的总价值上界也压到同一个 $V_{(N)}(\lambda_\star)$，配合 Assumption 3.1 下 $\lambda^C_{i,t}\to 0$，反过来证明协调 MD 也优于任何其他协调机制（Theorem 4.2）。这个把多代理学习接回成熟单 bidder RoS 镜像下降理论的 reduction，是同时撑起价值改善和最优性两个定理的关键。
 
 ### 损失函数 / 训练策略
 没有训练目标这种说法；核心"在线优化"就是 MD-h 在每轮看完 $g_{i,t}$ 后更新 $\lambda_{i,t}$，学习率 $\alpha=1/\sqrt T$。Feng et al. (2023) 的同款算法已知 $O(\sqrt T \log T)$ RoS 违反、$O(\sqrt T)$ 价值损失界，被作者直接复用。

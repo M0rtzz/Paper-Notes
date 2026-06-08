@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **统一 MLR：在原型空间上写一次，五套度量一次性拿到**：
+**1. 统一 MLR：在原型空间上写一次，五套度量一次性拿到。**
 
-    - 功能：把 Chen et al. (2024c) 的流形 MLR 在 $\mathrm{Cor}^+(n)$ 上写成可计算的闭式 logit。
-    - 核心思路：对每个 Log-Euclidean 度量，证明 $\phi(I) = 0$，所以可以把单位阵 $I$ 作为流形原点；再用 Thm. 3.1 的等距性，把 logit 退化成原型空间里熟悉的 $v_k(X) = \langle \phi(X), \phi_{*,E}(Z_k)\rangle - \gamma_k \|\phi_{*,E}(Z_k)\|$。代入 Prop. 3.2 给出的四个微分（ECM/LECM 取严格下三角 $\lfloor V\rfloor$、OLM 取 $V$ 本身、LSM 取 $V - \mathrm{diag}(V\mathbf{1})$），就拿到四个 Log-Euclidean 几何下的 MLR；PHCM 则通过 Cholesky 等同到 $n-1$ 个 Poincaré 半球乘积 $\mathrm{PHS}^{n-1}$ 来复用 Ganea / Shimizu 的 Poincaré MLR。
-    - 设计动机：避免对每条几何手工推 MLR 公式，更避免 Riemannian trigonometry 的近似——所有 logit 都是闭式且参数 $(Z_k, \gamma_k) \in \mathrm{Hol}(n)\times\mathbb{R}$ 永远活在欧氏空间。
+如果给每条几何都手撸一套 MLR 公式，工作量会爆炸，还得忍受 Riemannian trigonometry 的近似误差。作者的做法是只在原型空间写一遍。对每个 Log-Euclidean 度量，先证明 $\phi(I) = 0$，所以单位阵 $I$ 可以当流形原点；再用 Thm. 3.1 的等距性，把 Chen et al. (2024c) 的流形 MLR logit 退化成原型空间里熟悉的 $v_k(X) = \langle \phi(X), \phi_{*,E}(Z_k)\rangle - \gamma_k \|\phi_{*,E}(Z_k)\|$。代入 Prop. 3.2 给出的四个微分（ECM/LECM 取严格下三角 $\lfloor V\rfloor$、OLM 取 $V$ 本身、LSM 取 $V - \mathrm{diag}(V\mathbf{1})$）就拿到四个 Log-Euclidean 几何下的 MLR；PHCM 则通过 Cholesky 等同到 $n-1$ 个 Poincaré 半球乘积 $\mathrm{PHS}^{n-1}$ 来复用 Ganea / Shimizu 的 Poincaré MLR。所有 logit 都是闭式，参数 $(Z_k, \gamma_k) \in \mathrm{Hol}(n)\times\mathbb{R}$ 永远活在欧氏空间，新增一条几何只需要算一次 $\phi_{*,E}$。
 
-2. **FC / Conv 层：用 MLR 反向定义、按度量一次性给出闭式解**：
+**2. FC / Conv 层：用 MLR 反向定义，按度量一次性给出闭式解。**
 
-    - 功能：把 Shimizu et al. (2021) 在 Poincaré 球上的"FC 即多个 MLR 的有符号距离堆出来"的视角推广到相关流形。
-    - 核心思路：FC 层 $F: \mathrm{Cor}^+(n)\to\mathrm{Cor}^+(m)$ 通过 $d = m(m-1)/2$ 条方程 $s_k\, d(Y, H_{O_k, I}) = v_k(X; Z_k, \gamma_k)$ 隐式定义；在 Log-Euclidean 度量下能解出闭式（Thm. 3.5），例如 ECM 下 $Y = \mathrm{Cor}\circ \mathrm{Chol}^{-1}(V^{EC} + I_m)$，LECM 多套一层 $\exp$，OLM 走 $\mathrm{Exp}^\circ$，LSM 走 $\mathrm{Cor}\circ\exp$，矩阵元 $V^{*}_{ij}$ 按 $\lfloor\cdot\rfloor$ / $\mathrm{Hol}$ / $\mathrm{Row}_0$ 的子空间结构填进去。Conv 层就是把每个 receptive field 内的 $c$ 个相关矩阵拼成 $(\mathrm{Cor}^+(n))^c$，再喂同一个 FC，等价于欧氏卷积"每个感受野上做一次仿射"。
-    - 设计动机：FC 是 MLR 的"输出坐标即到原点正交超平面的有符号距离"形式的逆过程，统一定义保证 FC、MLR、Conv 三层共享同一套度量与参数空间，组合时不会几何错配；Conv 直接复用 FC 也省掉单独的卷积理论。
+Shimizu et al. (2021) 在 Poincaré 球上有个漂亮视角——FC 层就是"多个 MLR 的有符号距离堆出来"。作者把它推广到相关流形：FC 层 $F: \mathrm{Cor}^+(n)\to\mathrm{Cor}^+(m)$ 通过 $d = m(m-1)/2$ 条方程 $s_k\, d(Y, H_{O_k, I}) = v_k(X; Z_k, \gamma_k)$ 隐式定义，在 Log-Euclidean 度量下能解出闭式（Thm. 3.5），例如 ECM 下 $Y = \mathrm{Cor}\circ \mathrm{Chol}^{-1}(V^{EC} + I_m)$，LECM 多套一层 $\exp$，OLM 走 $\mathrm{Exp}^\circ$，LSM 走 $\mathrm{Cor}\circ\exp$，矩阵元 $V^{*}_{ij}$ 按 $\lfloor\cdot\rfloor$ / $\mathrm{Hol}$ / $\mathrm{Row}_0$ 的子空间结构填进去。Conv 层就是把每个 receptive field 内的 $c$ 个相关矩阵拼成 $(\mathrm{Cor}^+(n))^c$ 再喂同一个 FC，等价于欧氏卷积"每个感受野上做一次仿射"。这套统一定义让 FC、MLR、Conv 共享同一套度量与参数空间，组合时不会几何错配，Conv 也省掉单独的卷积理论。
 
-3. **OLM/LSM 的精确反传：把隐式算子写成显式 Jacobian**：
+**3. OLM/LSM 的精确反传：把隐式算子写成显式 Jacobian。**
 
-    - 功能：OLM 与 LSM 里出现的 $D(H)$（让 $\exp(D+H)$ 落回相关矩阵的唯一对角修正）和 $D^\star(C)$（让 $D^\star C D^\star$ 取 log 后行和为零的唯一正对角缩放）都没有闭式，原本只能让 autograd 透过指数收敛迭代 $D_{k+1} = D_k - \log(D(\exp(D_k + H)))$ 与阻尼 Newton 反传。
-    - 核心思路：作者把这两个不动点条件 $f(D,H)=0$、$g(D^\star,C)=0$ 对参数做隐函数定理，直接解出 Jacobian 闭式（Sec. E），训练时只需要在迭代收敛后调用一次显式公式，反传精度不依赖迭代步数，且能跳过反向时再走一遍迭代的开销。
-    - 设计动机：autograd 透传迭代既不准也慢，对 OLM/LSM 这类置换不变但需要数值求根的度量尤其关键；精确反传是这两个度量能稳定训练大网络的前提。
+OLM 与 LSM 里出现两个没有闭式的算子——$D(H)$（让 $\exp(D+H)$ 落回相关矩阵的唯一对角修正）和 $D^\star(C)$（让 $D^\star C D^\star$ 取 log 后行和为零的唯一正对角缩放），原本只能让 autograd 透过指数收敛迭代 $D_{k+1} = D_k - \log(D(\exp(D_k + H)))$ 与阻尼 Newton 反传。但 autograd 透传迭代既不准也慢，对这两个需要数值求根的置换不变度量尤其要命。作者把两个不动点条件 $f(D,H)=0$、$g(D^\star,C)=0$ 对参数做隐函数定理，直接解出 Jacobian 闭式（Sec. E），训练时只需在迭代收敛后调用一次显式公式，反传精度不依赖迭代步数，也跳过了反向再走一遍迭代的开销——这是 OLM/LSM 能稳定训练大网络的前提。
 
 ### 损失函数 / 训练策略
 分类用 MLR 头接交叉熵；所有可学习参数都通过 trivialization 放在切空间 $\mathrm{Hol}(n)$（或 LSM 下的 $\mathrm{Row}_0(n)$），用标准 Adam/SGD 直接更新，不需要 Riemannian 优化器；卷积 + MLR 都用同一个度量是默认配置，混合度量在消融里给出。

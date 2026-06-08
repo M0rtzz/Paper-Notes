@@ -44,23 +44,21 @@ NAST 由三块组成：(i) MedNega-CXR 诊断基准——基于 MIMIC-CXR 用 LL
 
 ### 关键设计
 
-1. **MedNega-CXR 诊断基准 (polarity-controlled MCQ pairs)**：
+**1. MedNega-CXR 诊断基准：用"只差极性"的描述对，把否定理解从其他能力里隔离出来。**
 
-    - 功能：直接对比"语义等价、只差极性"的描述对，把否定理解度从其他混杂能力里隔离出来。
-    - 核心思路：从 MIMIC-CXR/CheXpert 选有 ≥2 个阳性 + ≥3 个阴性的研究，与放射科医生一起为每个阴性 condition 找肯定等价描述（"no cardiomegaly" ↔ "normal heart size"）。三步流程：构造对比标签排列（hard negative）→ LLM 生成显式否定 MCQ → 另一个 LLM 把否定短语换成肯定等价物保结构。最终得到 6,965 对仅极性不同的 MCQ。
-    - 设计动机：医学领域有独特优势——"无肺炎"可以用"肺泡充气良好"等价表达，从而构造干净的对比对；通用领域"无车"则没有单一肯定等价。这种受控对比让评测真正考的是否定理解，不是 adjective 理解或视觉感知。
+要诊断"否定理解差"，第一难点是别把它和"adjective 理解差""视觉感知差"混在一起。MedNega-CXR 的做法是构造语义等价、只差极性的对照对——比如"no cardiomegaly"对"normal heart size"，两句指的是同一个临床事实，唯一区别是一个用否定、一个用肯定。具体三步：从 MIMIC-CXR/CheXpert 里挑同时有 ≥2 个阳性和 ≥3 个阴性的研究，先和放射科医生一起为每个阴性 condition 找到肯定等价描述并排出 hard negative 标签，再让一个 LLM 生成显式否定的 MCQ，最后让另一个 LLM 把否定短语换成肯定等价物、保持句子结构不变，得到 6,965 对仅极性不同的 MCQ。这个基准之所以能立住，靠的是医学领域一个独特便利：临床里"无肺炎"可以用"肺泡充气良好"等价表达，而通用领域的"无车"根本找不到单一肯定等价。正因如此，对比对里变化的只有极性，评测考的才真是否定理解。
 
-2. **基于 CAD 的属性级否定微调数据集**：
+**2. 基于 CAD 标注的属性级否定微调数据集：把否定从"有没有"扩展到位置和严重程度。**
 
-    - 功能：让微调监督覆盖临床里真实的否定形式——存在性、位置、严重程度三类反事实。
-    - 核心思路：对每条真实事实 $(c, e, l, s)$，只改一个属性生成反事实（present↔absent、left↔right、small↔large 等），并用 radiology-style 文本模板转成自然语句。两种监督格式：(a) claim-based contrast set，一个正确 claim + 多个 hard negative；(b) 单否定 caption 用于辅助对比训练。
-    - 设计动机：现有否定数据集 (CC-Neg、NegBench) 主要做 object presence，缺乏医学里关键的属性级否定。本文用结构化标注 + 受控扰动产生 1M 对，规模和针对性都够用。
+光评测还不够，微调监督也得覆盖临床里真实的否定形式。现有否定数据集（CC-Neg、NegBench）主要做物体存在性否定，但放射报告里的否定常常作用在属性上——"无大量积液"否定的是程度，"非右下叶实变"否定的是位置。本文对每条结构化事实 $(\text{condition}, \text{existence}, \text{location}, \text{severity})$ 只改一个属性做反事实扰动（present↔absent、left↔right、small↔large 等），再用 radiology-style 模板转成自然语句，造出约百万对图文。监督有两种格式：一种是 claim-based contrast set，一个正确 claim 配多个 hard negative；另一种是单条否定 caption，用于辅助对比训练。靠结构化标注加受控扰动，规模和针对性都补齐了现有数据集缺的属性级否定。
 
-3. **CTE-加权层级化 LoRA 微调**：
+**3. CTE-加权层级化 LoRA 微调：先用因果追踪找出"哪几层在做否定"，再让那几层多更新。**
 
-    - 功能：把可解释性算出来的"哪些层做否定"直接转换成"哪些层多更新"。
-    - 核心思路：(i) 用 causal tracing 在 CLIP 文本编码器上做因果探针——对(正确 caption, foil caption) 同长度配对，先记下 foil 前向的隐状态，再在正确 caption 前向时把第 $\ell$ 层第 $p$ 个 token 替换为 foil 的隐状态，得到 $S^{\ell,p}$，CTE $(\ell, p) = (S^{\text{corr}} - S^{\ell,p}) / (S^{\text{corr}} - S^{\text{foil}})$。结果显示否定信号集中在 layer 1-4，layer 2 峰值。(ii) 对每层聚合 token 级 CTE 得到 $\mathrm{CTE}_\ell$，min-max 归一化得 $\alpha_\ell \in [0,1]$。(iii) LoRA 微调时，梯度缩放 $\tilde{g}_\ell = \alpha_\ell^\beta \cdot g_\ell$，$\beta$ 控制集中度；总损失 $\mathcal{L}_{\text{total}} = \lambda \mathcal{L}_{\text{CLIP}} + (1-\lambda) \mathcal{L}_{\text{claim}}$。
-    - 设计动机：均匀 LoRA 微调会把所有层都改，既消耗预训练能力又稀释否定信号的学习；把更新集中到"真正负责否定的层"是更高效、更安全的注入方式。把 CTE 用 $\alpha_\ell^\beta$ 而不是直接当学习率乘子，是为了保留一个全局学习率避免训练不稳定。
+这是 NAST 的核心机制，针对的是前面那个矛盾——否定信号并非均匀分布在文本编码器各层，对它们一视同仁地调参既低效又会污染其他能力。作者把 mechanistic interpretability 里的 causal tracing 迁过来量化每层贡献：对一组（正确 caption, foil caption）等长配对，先跑一遍 foil 记下隐状态，再在正确 caption 的前向里，把第 $\ell$ 层第 $p$ 个 token 的隐状态替换成 foil 的对应值，得到被干预后的得分 $S^{\ell,p}$，因果贡献度定义为
+
+$$\mathrm{CTE}(\ell, p) = \frac{S^{\text{corr}} - S^{\ell,p}}{S^{\text{corr}} - S^{\text{foil}}}$$
+
+也就是"替换这一处隐状态后，模型从正确判断滑向 foil 判断的比例"。结果显示否定信号集中在 layer 1-4、layer 2 是峰值。把每层的 token 级 CTE 聚合得到 $\mathrm{CTE}_\ell$、再 min-max 归一化为 $\alpha_\ell \in [0,1]$ 后，LoRA 微调时按 $\tilde{g}_\ell = \alpha_\ell^\beta \cdot g_\ell$ 缩放每层梯度，$\beta$ 控制集中度。这里有个工程考量：CTE 是被当作梯度乘子而不是直接当各层学习率，是为了保留一个全局学习率、避免训练不稳定。把更新资源集中到真正负责否定的几层上，既省算力，又不稀释这些层对否定信号的学习、还少动其他层保住了原有对齐能力。
 
 ### 损失函数 / 训练策略
 $\mathcal{L}_{\text{CLIP}}$ 是标准 CLIP 对称对比损失（应用在含显式否定的单 caption batch 上）；$\mathcal{L}_{\text{claim}} = \frac{1}{M}\sum_i \log \frac{\exp(\ell_{i, c_i})}{\sum_j \exp(\ell_{i, j})}$ 是 claim-ranking 损失（让正确 claim 比 hard negative 相似度更高）。优化器是 AdamW，固定学习率，单卡 RTX 4070 训练。$\lambda$ 和 $\beta$ 是关键超参。

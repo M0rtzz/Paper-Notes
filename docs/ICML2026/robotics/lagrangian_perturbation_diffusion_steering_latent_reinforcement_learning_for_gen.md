@@ -45,23 +45,27 @@ LP-DS 把冻结生成策略写成黑盒解码器 $\Phi:\mathcal{S}\times\mathcal
 
 ### 关键设计
 
-1. **潜空间残差扰动**:
+**1. 潜空间残差扰动：用 RL 修策略时不替换先验，只在 $\mathcal{N}(0,I)$ 上加一个可学的状态条件偏移。**
 
-    - 功能：把"用 RL 修策略"压缩成"在 $\mathcal{N}(0,I)$ 上加一个可学的状态条件偏移"，初始化 $\Delta_\theta(\cdot)\approx 0$ 时严格恢复 BC 行为；
-    - 核心思路：用 $w=\epsilon+\Delta_\theta(s),\epsilon\sim\mathcal{N}(0,I)$ 取代 DSRL 那种"直接学 $w\sim\pi_\theta^\mathcal{W}(\cdot\mid s)$"的全替换设计；偏移作用在 ODE 积分起点（diffusion 的 $x_T$ 或 flow 的 $x_n$），与 DDIM/flow 的确定性解码组合后等价于把生成分布做了一次"以先验为锚的轻量平移"；
-    - 设计动机：先验是策略多模态结构的真正载体，把它当 reference 而不是当 baseline 替换，可在改进的同时显式保护"覆盖多种行为模式"的能力。
+DSRL 的失效根源在于它直接学一个新潜策略 $w\sim\pi_\theta^\mathcal{W}(\cdot\mid s)$ 把预训练先验整个替换掉，价值梯度会把潜变量越推越极端，最终漂出解码器训练支撑。LP-DS 改成残差形式 $w=\epsilon+\Delta_\theta(s)$，$\epsilon\sim\mathcal{N}(0,I)$，只在基线噪声上叠一个小型 MLP 产生的状态条件偏移。偏移作用在 ODE 积分的起点（diffusion 的 $x_T$ 或 flow 的 $x_n$），与 DDIM/flow 的确定性解码组合后，相当于把生成分布以先验为锚做了一次轻量平移。
 
-2. **Lagrangian 信任域约束**:
+这个设计的好处是把先验当 reference 而非 baseline 替换。当 $\Delta_\theta(\cdot)\approx 0$（初始化）时严格恢复 BC 行为，训练只是从先验出发小步改进；而先验本身才是策略多模态结构的真正载体，以它为锚就能在提升回报的同时显式保护"覆盖多种行为模式"的能力，不至于一上来就塌成单一模态。
 
-    - 功能：以可解释的单一旋钮 $\delta$ 控制潜扰动幅度，使其始终接近解码器训练时的 $\mathcal{N}(0,I)$ 支撑，避免 off-manifold 解码与早期模式坍缩；
-    - 核心思路：用 $D_{\mathrm{KL}}(q_\theta(\cdot\mid s)\|p_0)\approx\frac{1}{2}\|\Delta_\theta(s)\|_2^2$ 这个对残差扰动的轻封闭形式近似，把目标写成约束式 $\max_\theta\mathbb{E}[Q^\mathcal{W}(s,\epsilon+\Delta_\theta(s))]$ s.t. $\mathbb{E}_s\|\Delta_\theta(s)\|_2^2\le\delta$；对偶化为 $\mathcal{L}(\theta,\alpha)=\mathbb{E}[Q^\mathcal{W}(s,w)-\alpha(\|\Delta_\theta(s)\|_2^2-\delta)]$；$\theta$ 走主问题梯度上升、$\alpha$ 走投影对偶上升 $\alpha\leftarrow[\alpha+\eta_\alpha\mathbb{E}_s(\|\Delta_\theta(s)\|_2^2-\delta)]_+$；
-    - 设计动机：把"探索激进度 vs 留在先验支撑"做成自动调节回路——只要扰动超过 $\delta$，$\alpha$ 就被推高、actor 立即变保守；扰动小了 $\alpha$ 滑落、actor 又敢探索，避免人手调权重并自动适配不同环境。
+**2. Lagrangian 信任域约束：用一个可解释旋钮 $\delta$ 把扰动幅度卡在先验支撑内。**
 
-3. **双 critic 与潜侧蒸馏**:
+光有残差还不够——价值梯度仍会不断把 $\Delta_\theta(s)$ 推大直到 off-manifold。LP-DS 把"扰动幅度 = 与先验的近似 KL"做成硬约束。对"基线 + 残差"的高斯，KL 的主导项恰好是均值偏移的平方，于是有轻量闭式近似 $D_{\mathrm{KL}}(q_\theta(\cdot\mid s)\|p_0)\approx\frac{1}{2}\|\Delta_\theta(s)\|_2^2$，把目标写成约束式
 
-    - 功能：避开"对 actor 反传穿解码器"的不稳定，同时仍用真实环境奖励驱动学习；
-    - 核心思路：动作侧 $Q_\psi^\mathcal{A}(s,a)$ 用 TD $y=r+\gamma\bar Q^\mathcal{A}(s',a')$ 学，其中 $a'=\Phi(w';s'),w'=\epsilon'+\Delta_{\theta'}(s')$；潜侧 $Q_\phi^\mathcal{W}(s,w)$ 用 $\mathcal{L}_\phi=\mathbb{E}_{s,\epsilon}[(Q^\mathcal{W}_\phi(s,\epsilon)-Q^\mathcal{A}_\psi(s,\Phi(\epsilon;s)))^2]$ 在基线噪声分布上做蒸馏；actor 只对 $Q^\mathcal{W}$ 求梯度，从而不需要解码器可微；
-    - 设计动机：把"价值学习"和"梯度通路"在解码器边界处显式解耦——既保住"以真实回报为信号"，又让大型扩散/流匹配解码器对训练完全只读。
+$$\max_\theta\mathbb{E}\big[Q^\mathcal{W}(s,\epsilon+\Delta_\theta(s))\big]\quad\text{s.t.}\quad \mathbb{E}_s\|\Delta_\theta(s)\|_2^2\le\delta.$$
+
+对偶化成 $\mathcal{L}(\theta,\alpha)=\mathbb{E}[Q^\mathcal{W}(s,w)-\alpha(\|\Delta_\theta(s)\|_2^2-\delta)]$，$\theta$ 走主问题梯度上升，对偶变量 $\alpha$ 走投影对偶上升 $\alpha\leftarrow[\alpha+\eta_\alpha\mathbb{E}_s(\|\Delta_\theta(s)\|_2^2-\delta)]_+$。这条回路天然自适应：扰动一超过 $\delta$，$\alpha$ 被推高、actor 立刻变保守；扰动小了 $\alpha$ 滑落、actor 又敢探索。于是"探索激进度 vs 留在先验支撑"被自动调节，同一份超参在 RoboMimic / Gym / Adroit 跨域都不用大改，$\delta$ 也从脆弱超参变成可解释的"粗调旋钮"。
+
+**3. 双 critic 与潜侧蒸馏：把价值学习和梯度通路在解码器边界处解耦，避免反传穿过解码器。**
+
+要用真实环境奖励驱动学习，最朴素的做法是对 actor 反传穿过解码器，但扩散/流匹配的长链去噪/ODE 积分梯度极不稳，对 π0 这种大 VLA 更是连算图都留不下来。LP-DS 用两个 Q 把这件事拆开：动作侧 $Q_\psi^\mathcal{A}(s,a)$ 走标准 TD，$y=r+\gamma\bar Q^\mathcal{A}(s',a')$，其中 $a'=\Phi(w';s')$、$w'=\epsilon'+\Delta_{\theta'}(s')$，让真实回报进入价值估计；潜侧 $Q_\phi^\mathcal{W}(s,w)$ 则在基线噪声分布上把动作侧 Q 蒸馏过来，
+
+$$\mathcal{L}_\phi=\mathbb{E}_{s,\epsilon}\big[(Q^\mathcal{W}_\phi(s,\epsilon)-Q^\mathcal{A}_\psi(s,\Phi(\epsilon;s)))^2\big].$$
+
+actor 更新只对 $Q^\mathcal{W}$ 求梯度，根本不需要解码器可微。这样"以真实回报为信号"和"梯度不穿解码器"两个要求被同时满足，大型生成解码器对整个训练过程保持完全只读。
 
 ### 损失函数 / 训练策略
 单循环：每环境步采集 1 步 → 一次 $Q^\mathcal{A}$ TD 更新 → 一次 $Q^\mathcal{W}$ 蒸馏更新 → 一次 actor 主问题更新 + 一次 $\alpha$ 投影对偶更新。$\delta$ 大多数实验取 0.35（Hopper 0.5、Lift 0.10、Pen 0.66 等），ODE/DDIM 解码，动作 chunk 大小 $T_a=8$。

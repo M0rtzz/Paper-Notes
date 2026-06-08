@@ -45,23 +45,29 @@ tags:
 
 ### 关键设计
 
-1. **动作块多 horizon 重排 + 共享 transformer 并行处理**:
+**1. 动作块多 horizon 重排 + 共享 transformer 并行处理：把"选一个 horizon"变成"同时用多个 horizon 训练"。**
 
-    - 功能：把"选一个 horizon"变成"同时用多个 horizon 训练"，让单一策略内同时学会短期精控与长期规划。
-    - 核心思路：固定最大 horizon $H$，定义候选集合 $\mathcal{H}=\{h_1,\dots,h_N=H\}$；对每个 $h\in\mathcal{H}$ 截出 $A_t^{(h)}\in\mathbb{R}^{h\times d_a}$，统一 pad 到 $H$ 并配 horizon-specific mask 屏蔽超出位置；所有 horizon 共享同一组 action transformer 权重和同一份 VLM context，靠 batching + 并行 attention 一次算完。损失同时计算两项——融合预测损失 $L_{\text{mix}}$ 和各 horizon 独立预测损失 $L_{\text{ind}}=\sum_h L^{(h)}$，前者保证融合质量、后者保证每个 horizon 分支自身可用。
-    - 设计动机：(a) VLM forward 只跑一次、action transformer 又轻，多 horizon 并行 forward 的额外开销可忽略；(b) 共享权重相当于强迫同一个网络学会"既能短又能长"，而不是简单 ensemble 多个独立模型；(c) padding+mask 让多 horizon 走齐序列长度，避免动态 shape 拖慢 GPU。
+固定 horizon 之所以两头不讨好，是因为一条动作块只有一个长度，要么长得能规划、要么短得能精控。MoH 干脆不选：固定最大 horizon $H$，定义候选集合 $\mathcal{H}=\{h_1,\dots,h_N=H\}$，对每个 $h$ 从同一条目标块里截出前缀 $A_t^{(h)}\in\mathbb{R}^{h\times d_a}$，统一 pad 到 $H$ 并配一个 horizon-specific attention mask 把 $k>h$ 的位置屏蔽掉。所有 horizon 共享同一组 action transformer 权重和同一份 VLM context，靠 batching + 并行 attention 在一次 forward 里全部算完。训练时损失分两路：融合预测损失 $L_{\text{mix}}$ 盯着最终输出的质量，各 horizon 独立损失 $L_{\text{ind}}=\sum_h L^{(h)}$ 则保证每个分支单拎出来也能用。
 
-2. **2k 参数线性门控 + 负载均衡损失**:
+这套设计之所以几乎零成本，是因为 VLA 的算力瓶颈全在 VLM 主干，而它只跑一次；action transformer 本身只有 ~300M 参数，多 horizon 并行 forward 的额外开销被 tensor parallelism 吃掉，wall-clock 几乎不变。共享权重还有个隐含好处——它强迫同一个网络真正学会"既能短又能长"，而不是简单堆几个独立模型做 ensemble；padding + mask 则让所有 horizon 走齐序列长度，避免动态 shape 拖慢 GPU。
 
-    - 功能：在每个时间步 $k$ 上、按"哪些 horizon 在此处更可信"自适应加权融合预测，并防止门控塌缩到少数 horizon。
-    - 核心思路：在共享 transformer 顶部加一个**线性层**（仅 ~2k 参数），输出每个 (step, horizon) 的 logits；对每个 $k$ 只保留 $h\ge k$ 的有效 horizon，做 softmax 归一化得到 $\alpha_{t,k,h}=\exp(g_{t,k,h})/\sum_{h':k\le h'}\exp(g_{t,k,h'})$，再加权求和。为防止门控只青睐某几个 horizon，引入 MoE 风格的负载均衡损失：按 horizon 边界把时间轴切成区间 $S_i$，在每个区间 $i$ 上计算各 horizon 的平均使用率 $\bar\alpha_h^{(i)}$，损失 $L_{\text{bal}}=\frac{1}{|\mathcal{I}|}\sum_i \mathrm{CV}^2(\{\bar\alpha_h^{(i)}\}_h)$ 等于使用率的均方变异系数，最小化它逼门控公平分配。总目标 $L=L_{\text{mix}}+\lambda_{\text{ind}}L_{\text{ind}}+\lambda_{\text{bal}}L_{\text{bal}}$，默认 $\lambda_{\text{ind}}=1$、$\lambda_{\text{bal}}=10^{-3}$。
-    - 设计动机：遵循 Occam 原则——几乎所有信息都已编码在共享 transformer 的隐状态里，门控只需要做一次轻量加权决策，复杂结构反而过拟合。消融显示去掉 $L_{\text{bal}}$ 仍优于基线（98.5%），但加上后 Long 任务再涨 1.6 个点，证明平衡正则确实能让长 horizon 真正参与而不是被门控冷落。
+**2. 2k 参数线性门控 + 负载均衡损失：在每个时间步按"谁更可信"加权融合，并防止门控只宠少数 horizon。**
 
-3. **基于跨 horizon 共识的动态推理**:
+有了多个 horizon 的预测后，怎么把它们合成一条最终动作？MoH 在共享 transformer 顶部只加一个**线性层**（仅 ~2k 参数），输出每个 (step, horizon) 的 logits $g_{t,k,h}$；对每个时间步 $k$ 只保留 $h\ge k$ 的有效 horizon 做掩码 softmax，得到权重 $\alpha_{t,k,h}=\exp(g_{t,k,h})/\sum_{h':k\le h'}\exp(g_{t,k,h'})$，再加权求和。门控这么轻是刻意的——几乎所有信息已经编码在共享 transformer 的隐状态里，门控只需做一次轻量加权决策，结构一复杂反而过拟合。
 
-    - 功能：把固定截前 $K$ 步执行改成"按置信度动态决定执行多长前缀"，简单运动时多执行、决策点附近多 replan，同时显著提速。
-    - 核心思路：在每步 $k$，把每个 horizon-wise 预测 $\hat a_k^{(h)}$ 视为对融合结果 $\hat a$ 的"投票者"，定义加权 $\ell_1$ 分歧 $\bar d_k=\sum_{h\in\mathcal{H}_k}\alpha_{k,h}\cdot\|\hat a-\hat a_k^{(h)}\|$（$\mathcal{H}_k=\{h\ge k\}$）；先取前 $n$ 步分歧的均值乘以缩放因子 $r$ 作为数据自适应阈值 $\textit{thres}=\mathrm{Mean}(\{\bar d_k\}_{k=1}^n)\cdot r$；然后从 $k=n+1$ 起逐步检查，一旦有效 horizon 数小于 $m$ 或 $\bar d_k>\textit{thres}$ 就 break，把执行前缀 $K_{\text{exec}}$ 定在此处，后续动作延迟到下一轮 replan，自然形成"运动平稳时长前缀、决策关键处短前缀"的自截断行为。
-    - 设计动机：以往 chunk-based VLA 把执行前缀写死（如 LIBERO 默认 5、RoboTwin 20），既浪费又脆——简单运动可以一次执行更多步省 VLM 调用，关键帧附近又必须频繁 replan 才能稳。MoH 的多 horizon 天然给出"分歧度"信号，不用额外训练就能驱动自适应截断，实测 $\pi_{0.5}$+MoH 在 2.5× 吞吐下仍超基线，是"免费午餐"。
+光有门控还不够：它很容易塌缩成只青睐某几个 horizon，让长 horizon 形同虚设。为此引入 MoE 风格的负载均衡损失：按 horizon 边界把时间轴切成区间 $S_i$，在每个区间统计各 horizon 的平均使用率 $\bar\alpha_h^{(i)}$，再取使用率的均方变异系数
+
+$$L_{\text{bal}}=\frac{1}{|\mathcal{I}|}\sum_i \mathrm{CV}^2(\{\bar\alpha_h^{(i)}\}_h),$$
+
+最小化它就逼门控公平分配。消融印证了这一项的作用：去掉 $L_{\text{bal}}$ 仍优于基线（98.5%），但加上后 Long 任务再涨约 1.6 个点——正是它让长 horizon 真正被门控调用、而不是被冷落。总目标 $L=L_{\text{mix}}+\lambda_{\text{ind}}L_{\text{ind}}+\lambda_{\text{bal}}L_{\text{bal}}$，默认 $\lambda_{\text{ind}}=1$、$\lambda_{\text{bal}}=10^{-3}$。
+
+**3. 基于跨 horizon 共识的动态推理：用多分支的"分歧度"自适应决定执行多长前缀。**
+
+以往 chunk-based VLA 把执行前缀写死（LIBERO 默认 5、RoboTwin 20），既浪费又脆——平稳运动其实可以一口气多执行几步省下 VLM 调用，而决策关键帧附近又必须频繁 replan 才稳。MoH 不用额外训练就能把这件事做对：在每步 $k$，把每个 horizon-wise 预测 $\hat a_k^{(h)}$ 看成对融合结果 $\hat a$ 的"投票者"，用加权 $\ell_1$ 分歧度量它们的共识
+
+$$\bar d_k=\sum_{h\in\mathcal{H}_k}\alpha_{k,h}\cdot\|\hat a-\hat a_k^{(h)}\|,\qquad \mathcal{H}_k=\{h\ge k\}.$$
+
+先用前 $n$ 步分歧的均值乘缩放因子 $r$ 得到数据自适应阈值 $\textit{thres}=\mathrm{Mean}(\{\bar d_k\}_{k=1}^n)\cdot r$；再从 $k=n+1$ 起逐步检查，一旦有效 horizon 数小于 $m$ 或 $\bar d_k>\textit{thres}$ 就 break，把执行前缀 $K_{\text{exec}}$ 定在此处，剩下的动作留到下一轮 replan。这样自然形成"运动平稳时长前缀、决策关键处短前缀"的自截断行为。妙处在于这个置信度信号完全是多 horizon 设计的副产品，零额外参数、零额外训练，实测 $\pi_{0.5}$+MoH 在 2.5× 吞吐下仍超固定前缀基线，是名副其实的"免费午餐"。
 
 ### 损失函数 / 训练策略
 - 总目标：$L=L_{\text{mix}}+\lambda_{\text{ind}}L_{\text{ind}}+\lambda_{\text{bal}}L_{\text{bal}}$，$\lambda_{\text{ind}}=1$、$\lambda_{\text{bal}}=10^{-3}$。

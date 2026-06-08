@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Unbounded-gap Littlestone Tree（无界 gap Littlestone 树）**:
+**1. Unbounded-gap Littlestone Tree：把经典 Littlestone 树的 label gap 沿深度放到无穷，刻画无界度量损失下独有的"对抗能力 × 灾难规模"组合障碍。**
 
-    - 功能：刻画 metric 损失下的"组合障碍"。深度 $k$ 的内部节点标 instance $x_{k,i}$，两条出边的标签 $y_{k,i,1}, y_{k,i,2}$ 满足 $\ell(y_{k,i,1}, y_{k,i,2}) \geq \gamma_k$，且每条有限 root-to-leaf 路径都被某 $h \in \mathcal{H}$ 实现。"realizable infinite" 进一步要求每条无穷路径都被单一 $h$ 实现。
-    - 核心思路：把经典 Littlestone tree 的 binary label 推广为"标签距离 $\geq \gamma_k$"，并允许 $\gamma_k \uparrow \infty$。Lemma 4.3（bridging lemma）证明在 compact $\Theta$ + $h$ 连续条件下，有限前缀可实现自动推出无穷路径可实现（用紧空间的有限交性质）。
-    - 设计动机：之前的 scaled Littlestone tree（Attias et al.）gap 是固定 scale 参数，刻画的是有界损失下的"对抗复杂性"。本文最关键的 insight 是：在无界损失下，光"对抗能力"不够，必须捕捉"对抗能力 + scale 可爆"——所以让 gap 沿深度发散，对应"对抗能在越深的位置造成越大代价"。
+之前的 scaled Littlestone tree（Attias et al.）把 gap 当成固定 scale 参数，只刻画有界损失下的对抗复杂性。本文的关键 insight 是：在无界损失下光有对抗能力不够，必须同时捕捉"对抗能造成多大代价"。于是它把 binary label 推广成"标签距离 $\geq \gamma_k$"，并允许 $\gamma_k \uparrow \infty$——深度 $k$ 的内部节点标 instance $x_{k,i}$，两条出边的标签满足 $\ell(y_{k,i,1}, y_{k,i,2}) \geq \gamma_k$，且每条有限 root-to-leaf 路径都被某 $h \in \mathcal{H}$ 实现，"realizable infinite" 进一步要求每条无穷路径被单一 $h$ 实现。配套的 Lemma 4.3（bridging lemma）在 compact $\Theta$ + $h$ 连续条件下证明：有限前缀可实现能自动推出无穷路径可实现（用紧空间的有限交性质）。gap 沿深度发散，正好对应"对抗能在越深的位置造成越大代价"这一无界损失独有的现象。
 
-2. **下界证明：从 tree 构造灾难性分布**:
+**2. 下界证明：从一棵 unbounded-gap tree 构造出让任意学习器风险发散到无穷的灾难性分布。**
 
-    - 功能：证明若存在 unbounded-gap tree，则对任意学习器都存在 realizable $\mu$ 让 $\mathbb{E}_{S_n}[R(\mathcal{A}(S_n))] = \infty$（every $n$）。
-    - 核心思路：因为 $\gamma_k \to \infty$，可选深度 $k_1 < k_2 < \cdots$ 使 $\gamma_{k_m} \geq m^2$。给深度 $k_m$ 节点分配概率 $p_m \propto 1/m^2$。再扔独立公平硬币 $(B_k)$，$B_{k_m}$ 决定 $k_m$ 节点上选哪条出边作为真标签——tree 的可实现性保证这种随机标签确实被某 $f_B^* \in \mathcal{H}$ 实现。对任何固定 $n$，样本 $S_n$ 最多触到 $n$ 个 $k_m$，剩下无穷多个 $k_m$ 上 $B_{k_m}$ 对学习器仍是 fresh 公平硬币。在这些未见深度上，学习器盲猜两个相距 $\geq m^2$ 的标签，三角不等式给出条件期望损失 $\geq m^2 / 2$，乘上概率 $p_m \cdot 1/2 = \Theta(1/m^2)$ 贡献 $\Theta(1)$。由第二 Borel-Cantelli 引理，无穷多次"坏事件"几乎必然发生，故 $R(h_n) = \infty$ a.s.
-    - 设计动机：这是经典 Littlestone 论证（adversary 把学习器逼到"必须盲选"的境地）的 metric loss 版升级——盲选本身代价以 $\gamma_k$ 发散，所以不止是分类错误率打不下来，连风险都打不到有限。
+这是经典 Littlestone 论证（adversary 把学习器逼到必须盲选）的 metric-loss 版升级。因为 $\gamma_k \to \infty$，可以选深度 $k_1 < k_2 < \cdots$ 使 $\gamma_{k_m} \geq m^2$，给深度 $k_m$ 节点分配概率 $p_m \propto 1/m^2$，再扔独立公平硬币 $(B_k)$ 决定每个 $k_m$ 节点上哪条出边是真标签（tree 的可实现性保证这种随机标签确实被某 $f_B^* \in \mathcal{H}$ 实现）。对任何固定 $n$，样本 $S_n$ 最多触到 $n$ 个 $k_m$，剩下无穷多个 $k_m$ 上 $B_{k_m}$ 对学习器仍是 fresh 公平硬币——在这些未见深度上，学习器盲猜两个相距 $\geq m^2$ 的标签，三角不等式给出条件期望损失 $\geq m^2/2$，乘上概率 $p_m\cdot 1/2 = \Theta(1/m^2)$ 贡献 $\Theta(1)$。第二 Borel-Cantelli 引理保证无穷多次"坏事件"几乎必然发生，故 $R(h_n) = \infty$ a.s.。关键升级在于：盲选本身的代价以 $\gamma_k$ 发散，所以不止错误率打不下来，连风险都打不到有限。
 
-3. **上界证明：Gale-Stewart 游戏 + 字典分割 + MedNet 嵌套**:
+**3. 上界证明：Gale-Stewart 游戏 + 字典分割 + MedNet 嵌套，显式造一个强通用 Bayes 一致学习器。**
 
-    - 功能：在没有 unbounded-gap tree 的前提下，构造一个显式 strongly universally Bayes-consistent 学习器。
-    - 核心思路：四步走。**第一步**把"是否存在无穷 tree"翻译成 Gale-Stewart 游戏：adversary 每轮出 $(\xi_k, \eta_{k,1}, \eta_{k,2})$ 且 $\ell(\eta_{k,1}, \eta_{k,2}) \geq \gamma_k$、需有某 $h$ 同时一致；learner 选一边；learner 赢当 adversary 无合法着。无 tree ⟺ learner 有可测胜策略 $\sigma$（用 Bousquet 的 measurable strategy 机器）。**第二步**用样本驱动 $\sigma$：扫描 $S_\infty$，遇到能让 $\sigma$ 选中 $Y_i$ 且历史保 realizable 的合法着就推进游戏；因 $\sigma$ 是胜策略，几乎必然有限步停止于 $K_\infty < \infty$。**第三步**定义 history-conditional label set $H_k(x)$（Definition 6.1），引理 6.2 证明 $\text{diam}(H_k(x)) \leq \gamma_{k+1}$，引理 6.3 证明 $\Pr(Y \in H_{K_\infty}(X)) = 1$ a.s.。**第四步**：用 $\mathcal{Y}$ 的可数稠密子集 $\{q_j\}$ 把 $\mathcal{X}$ 切成可数 cell $C_{k,j} = \{x : j_k(x) = j\}$，每 cell 的真实标签都在有界 region $\mathcal{Y}_{k,j} = \{y : \ell(y, q_j) \leq 2\gamma_{k+1}\}$ 里；在每个 cell 上跑 MedNet（Tsir Cohen & Kontorovich 2022 的有界范围学习器）。sample-split：一半驱动游戏，一半学预测器。
-    - 设计动机：直接处理无界 metric loss 太难，但只要能把问题"局部化"——证明对每个 $x$，真标签几乎必落在直径 $\leq \gamma_{K_\infty + 1}$ 的区域里——就可以用现有的 bounded-range 算法收敛。Gale-Stewart 游戏 + tree 对应是 universal learning 框架的标准武器，关键的新成分是 history-conditional label set $H_k(x)$ 和稠密集分割，这两步把"局部有界但全局可能无界"的窘境转成可数个独立有界子问题。
+直接处理无界 metric loss 太难，但只要能把问题"局部化"——证明对每个 $x$、真标签几乎必落在某个有界 region 里——就能复用现成的 bounded-range 算法。四步走：**第一步**把"是否存在无穷 tree"翻译成 Gale-Stewart 游戏（adversary 每轮出 $(\xi_k, \eta_{k,1}, \eta_{k,2})$ 且 $\ell(\eta_{k,1}, \eta_{k,2}) \geq \gamma_k$、需有某 $h$ 同时一致，learner 选一边，learner 赢当 adversary 无合法着），无 tree 等价于 learner 有可测胜策略 $\sigma$；**第二步**用样本驱动 $\sigma$，扫描 $S_\infty$ 遇到合法着就推进游戏，因 $\sigma$ 是胜策略几乎必然有限步停在 $K_\infty < \infty$；**第三步**定义 history-conditional label set $H_k(x)$，引理 6.2 证明 $\text{diam}(H_k(x)) \leq \gamma_{k+1}$、引理 6.3 证明 $\Pr(Y \in H_{K_\infty}(X)) = 1$ a.s.；**第四步**用 $\mathcal{Y}$ 的可数稠密子集 $\{q_j\}$ 把 $\mathcal{X}$ 切成可数 cell，每 cell 的真实标签都在有界 region $\mathcal{Y}_{k,j} = \{y : \ell(y, q_j) \leq 2\gamma_{k+1}\}$ 里，在每个 cell 上跑 MedNet（Tsir Cohen & Kontorovich 2022 的有界范围学习器），并用 sample-split 一半驱动游戏、一半学预测器。Gale-Stewart 游戏加 tree 对应是 universal learning 的标准武器，真正新的成分是 history-conditional label set 和稠密集分割，这两步把"局部有界但全局可能无界"的窘境转成可数个独立有界子问题。
 
 ### 损失函数 / 训练策略
 

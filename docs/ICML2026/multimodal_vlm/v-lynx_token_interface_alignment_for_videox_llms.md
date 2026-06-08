@@ -51,23 +51,17 @@ V-LynX 通过发现 Video LLM 内部的**连续 token interface（流形）**—
 
 ### 关键设计
 
-1. **轻量级并联 LoRA 路径**:
+**1. 轻量级并联 LoRA 路径：主视觉通路冻结，只为新模态加少量可学习参数。**
 
-    - 功能：保持主视觉通路冻结的前提下，为新模态引入可学习参数，实现参数高效的模态适配。
-    - 核心思路：对新模态输入 $\mathbf{Z}_m = p_\theta(g_{\psi + \Delta\psi}(\mathbf{X}_m))$，$\psi$ 冻结、$\Delta\psi$ 是 LoRA 微调。既利用 video pre-training 知识（$\psi$），又灵活适应新模态特性（$\Delta\psi$），参数仅 68.7M（vs PAVE 127-475M）。
-    - 设计动机：避免灾难性遗忘（完全重训编码器破坏 video 对齐），同时保证参数效率（每个新模态只需少量参数）。
+每加一个新模态就训一个大编码器，参数成本线性膨胀、还容易把已有的 video 对齐冲掉（灾难性遗忘）。V-LynX 的做法是复用而非重建：新模态输入走 $\mathbf{Z}_m=p_\theta(g_{\psi+\Delta\psi}(\mathbf{X}_m))$，其中编码器主体 $\psi$ 全程冻结、只训一个 LoRA 增量 $\Delta\psi$。这样既继承了 video 预训练沉淀在 $\psi$ 里的知识、又用 $\Delta\psi$ 灵活适应新模态特性，额外参数只 68.7M（PAVE 要 127–475M）。冻结主通路是抗遗忘的关键，低秩增量则保证参数效率——每个新模态只需挂一份小 LoRA。
 
-2. **注意力响应对齐**:
+**2. 注意力响应对齐：让新模态借用 video 的 Key-Value 先验，实现无需配对数据的对齐。**
 
-    - 功能：确保新模态 token 在编码器的注意力机制内激活与 video 模态兼容的行为，即使用相同的 Key-Value 先验。
-    - 核心思路：给定新模态输入的 Query $Q_m^{(l)}$，不用其原生 Key-Value，而是用 video 导引的 Reference Key-Value $(K_v^{(l)}, V_v^{(l)})$ 计算参考注意力响应 $\tilde{O}_m^{(l)} = \text{Attn}(Q_m^{(l)}, K_v^{(l)}, V_v^{(l)})$；同时让新模态的实际注意力响应 $O_m^{(l)} = \text{Attn}(Q_m^{(l)}, K_m^{(l)}, V_m^{(l)})$ 逼近 $\tilde{O}_m^{(l)}$，损失 $\mathcal{L}_{\text{attn}} = \sum_l \|O_m^{(l)} - \tilde{O}_m^{(l)}\|_1$。
-    - 设计动机：通过保持视觉世界稳定的 Key-Value，实现**无序列对约束的跨模态对齐**——新模态只需学会如何在 video 空间中"询问"（Query）；相比直接的特征相似度对齐，功能级别的对齐更能保留原始 video 语义。
+V-LynX 的核心洞察是 Video LLM 的编码器 + 投影层已经雕出一个连续的 token interface，新模态只要学会「在这个 video 空间里怎么提问」即可，不必重建整条通路。具体地，给定新模态的 Query $Q_m^{(l)}$，不用它自己的 Key-Value，而是用 video 导引的参考 Key-Value $(K_v^{(l)},V_v^{(l)})$ 算出参考响应 $\tilde{O}_m^{(l)}=\text{Attn}(Q_m^{(l)},K_v^{(l)},V_v^{(l)})$，再逼着新模态的实际响应 $O_m^{(l)}=\text{Attn}(Q_m^{(l)},K_m^{(l)},V_m^{(l)})$ 向它靠拢，损失 $\mathcal{L}_{\text{attn}}=\sum_l\|O_m^{(l)}-\tilde{O}_m^{(l)}\|_1$。因为参考侧的视觉「世界」（Key-Value）保持稳定，跨模态对齐就不再需要成对的序列监督——新模态只需学会询问的方式；而且这是功能级别（注意力响应）的对齐，比直接拉平特征相似度更能保住原始 video 语义。消融里去掉它掉 4.6%，是三个组件中影响最大的。
 
-3. **分布正则化**:
+**3. 分布正则化：把新模态 token 的统计量对齐到 video token，让 LLM 能正确接收。**
 
-    - 功能：确保新模态 token 经投影层后的统计分布（均值和方差）与 video token 一致，保证 LLM 能正确处理。
-    - 核心思路：预计算 video token 分布 $(\mu_v, \sigma_v^2) = \mathbb{E}[\mathbf{Z}_v], \mathbb{E}[(\mathbf{Z}_v - \mu_v)^2]$，约束新模态 token 分布 $(\mu_m, \sigma_m^2)$ 逼近它，损失 $\mathcal{L}_{\text{stat}} = \|\mu_v - \mu_m\|_2 + \|\sigma_v^2 - \sigma_m^2\|_2$。
-    - 设计动机：投影层后 token 分布直接被 LLM"看到"，分布不匹配会导致 LLM 输出异常；但过强的特征对齐会丧失模态特性——分布级别的正则化是最优平衡点。
+投影层之后的 token 分布是被 LLM 直接「看到」的，分布若不匹配，LLM 输出就会异常；但若用过强的特征对齐去硬掰，又会抹掉新模态自己的特性。V-LynX 取一个折中——只对齐统计量：预计算 video token 分布 $(\mu_v,\sigma_v^2)$，约束新模态 token 分布 $(\mu_m,\sigma_m^2)$ 向它靠近，损失 $\mathcal{L}_{\text{stat}}=\|\mu_v-\mu_m\|_2+\|\sigma_v^2-\sigma_m^2\|_2$。只管均值和方差对齐、不管具体特征，既保证 LLM 能正常处理新模态 token、又给新模态保留了特性空间的自由度，是「能用」和「保模态特性」之间的平衡点。
 
 ### 训练目标
 $\mathcal{L}_{V\text{-LynX}} = \mathcal{L}_{\text{attn}} + \beta \cdot \mathcal{L}_{\text{stat}}$。LoRA 秩 $r = 64$。然后 LLM LoRA 通过标准监督微调（指令微调）训练。

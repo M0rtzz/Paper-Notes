@@ -47,23 +47,17 @@ LiteLVLM 构建在 GLaMM 架构之上：输入图像经 CLIP ViT-L/14 编码为 
 
 ### 关键设计
 
-1. **相似度感知 token 选择（Similarity-aware Token Selection）**:
+**1. 相似度感知 token 选择（Similarity-aware Token Selection）：反着选，保留与 [EOS] 相似度最低的 token。**
 
-    - 功能：保留与指代对象空间对齐的前景视觉 token
-    - 核心思路：计算每个视觉 token embedding $E_j^v$ 与 [EOS] text embedding $E_i^{\mathcal{T}}$ 的点积相似度 $s_{i,j} = E_i^{\mathcal{T}} \cdot E_j^{v\top}$，然后选择相似度**最低**的 $k$ 个 token。这些低相似度 token 与全局语义弱对齐，但保留了丰富的局部指代信息
-    - 设计动机：CLIP 对比学习只对齐 [CLS] 和 [EOS] 两个全局 token，指代区域 token 因注意力权重较低而接收到的梯度信号较弱，导致与 [EOS] 的相似度反而最低。反转排序即可利用这一"缺陷"精确定位前景
+直觉上"高相似度 = 重要"，TRIM 就是按 CLIP 视觉-文本高相似度保留 token，结果比随机剪枝还差 10–20%。根源是 CLIP 对比学习只对齐 [CLS] 和 [EOS] 两个全局 token，指代区域的 token 因接收到的梯度信号弱，反而与 [EOS] 相似度最低（similarity reversal）。这里把排序反过来：计算每个视觉 token $E_j^v$ 与 [EOS] embedding $E_i^{\mathcal{T}}$ 的点积相似度 $s_{i,j} = E_i^{\mathcal{T}} \cdot E_j^{v\top}$，选相似度**最低**的 $k$ 个。这些 token 与全局语义弱对齐，却恰恰保留了丰富的局部指代信息——把 CLIP 的"缺陷"反手变成精确定位前景的工具。
 
-2. **上下文感知 token 恢复（Context-aware Token Recovery）**:
+**2. 上下文感知 token 恢复（Context-aware Token Recovery）：补回背景 token 帮边界判定。**
 
-    - 功能：恢复背景和全局上下文 token，帮助前景-背景边界判定
-    - 核心思路：对第一步未被保留的 token 集合 $S$，计算每个 token 对 [CLS] 的上下文贡献分 $s_i' = \| \frac{\exp(Q^{\mathcal{I}} K_i^\top / \sqrt{d})}{\sum_{j \in S} \exp(Q^{\mathcal{I}} K_j^\top / \sqrt{d})} \cdot V_i \|_2$，选择得分最高的 token 恢复。该分数综合考虑注意力权重和 Value 向量的信息量（L2 范数）
-    - 设计动机：纯前景 token 缺乏背景参照，会导致分割边界模糊。上下文 token 提供全局语义和空间参考，使像素 decoder 能清晰区分前景与背景
+只留前景 token 缺背景参照，分割边界会模糊。对第一步未保留的 token 集合 $S$，计算每个 token 对 [CLS] 的上下文贡献分 $s_i' = \| \frac{\exp(Q^{\mathcal{I}} K_i^\top / \sqrt{d})}{\sum_{j \in S} \exp(Q^{\mathcal{I}} K_j^\top / \sqrt{d})} \cdot V_i \|_2$，选得分最高的恢复。这个分数同时考虑注意力权重和 Value 向量的信息量（L2 范数），挑出真正承载全局语义和空间参考的背景 token，使 pixel decoder 能清晰区分前景与背景。消融里"仅上下文恢复"比随机还差、"仅低相似度选择"略好于随机、两者合起来最好，说明前景与背景 token 是互补的。
 
-3. **自适应 token 选择（Adaptive Token Selection）**:
+**3. 自适应 token 选择（Adaptive Token Selection）：按文本交集动态分配前景/背景比例。**
 
-    - 功能：根据输入文本动态调整前景/背景 token 的比例分配
-    - 核心思路：给定预算 $\mathcal{B}$ 和 $N$ 条输入文本，先为每条文本独立选出 $\mathcal{B}$ 个低相似度候选集 $\mathcal{S}_i$，取交集 $\mathcal{S} = \bigcap_{i=1}^{N} \mathcal{S}_i$ 作为相似度感知 token；当 $N=1$ 时经验性地设为预算的 50%。剩余预算 $\mathcal{B} - |\mathcal{S}|$ 用上下文感知恢复填充
-    - 设计动机：固定比例（如 75%/25%）在不同场景下表现不一致，自适应策略根据文本输入的交集大小动态分配，平均性能比最佳固定比例高 2.0%
+固定比例（如 75%/25%）在不同场景下表现不一致。给定预算 $\mathcal{B}$ 和 $N$ 条输入文本，先为每条文本独立选出 $\mathcal{B}$ 个低相似度候选集 $\mathcal{S}_i$，取交集 $\mathcal{S} = \bigcap_{i=1}^{N} \mathcal{S}_i$ 作为相似度感知 token（$N=1$ 时经验性设为预算的 50%），剩余预算 $\mathcal{B} - |\mathcal{S}|$ 用上下文恢复填充。交集大小随文本输入自然变化——多条文本共同关注的区域更可信、留得更多——于是前景/背景比例按内容动态调，平均性能比最佳固定比例高 2.0%。
 
 ## 实验关键数据
 

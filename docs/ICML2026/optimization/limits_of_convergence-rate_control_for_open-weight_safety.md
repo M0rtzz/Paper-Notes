@@ -45,23 +45,21 @@ SpecDef 在模型 release 前一次性运行：(1) 选若干层 $\theta_i$；(2)
 
 ### 关键设计
 
-1. **Hessian 谱的权重谱下界（Theorem 3）**:
+**1. Hessian 谱的权重谱下界（Theorem 3）：把"测不动的 Hessian 最大特征值"绑到"能直接动手的某层权重奇异值"上。**
 
-    - 功能：建立 $\sigma_1(\nabla^2_\theta \mathcal{L}) \geq \sup_{r_1, r_2} \sigma_{r_1}(A)\sigma_1(B)\sigma_{r_2}(C)\cos\theta_1\cos\theta_2$，把"难以测量的 Hessian 最大特征值"转化为"可直接控制的某层权重最大奇异值"。
-    - 核心思路：先用 Poincaré 分离定理将 Hessian 最大奇异值下界为某个 $p\times q$ 子块 $\nabla^2_{\theta_i,\theta_j}\mathcal{L}$ 的最大奇异值；这个子块对于标准 MLP/CNN/Transformer 都有 $ABC$ 形的分解（如三层 MLP 中 $\partial^2 f/\partial \theta_3\partial \theta_1 = (x^\top \otimes I_m)^\top D_{z_1}\cdot \theta_2^\top \cdot D_{z_2}$，中间正好夹着 $\theta_2$）；然后用经典奇异值不等式得到上述下界。
-    - 设计动机：这是整个框架的理论支点——只要中间矩阵 $B = \theta_k$ 的最大奇异值被放大 $\alpha$ 倍，整个 Hessian 的最大奇异值至少同比例放大，从而强制学习率上界 $\eta \leq 1/\alpha \cdot (\text{常数})$，绕开了"无法直接控制 Hessian"这个老大难。
+一阶优化的学习率必须满足 $\eta\le 1/L$，而 $L$ 又被 Hessian 最大奇异值 $\sigma_1(\nabla^2_\theta\mathcal{L})$ 下界——可问题是 Hessian 既测不准也控不动。Theorem 3 搭的桥就是把它换成可控量：
 
-2. **Lower-Max Spectral Reparameterization + SpecDef（功能不变的 Hessian 谱拉伸）**:
+$$\sigma_1(\nabla^2_\theta \mathcal{L}) \;\ge\; \sup_{r_1, r_2} \sigma_{r_1}(A)\,\sigma_1(B)\,\sigma_{r_2}(C)\,\cos\theta_1\cos\theta_2.$$
 
-    - 功能：定义一类映射 $\mathcal{T}_c: f_\theta \mapsto f_{\theta'}$，满足 (i) $\sigma_1(H^{\mathcal{L}}_{\theta'}) \geq c$，(ii) 函数距离 $d(\mathcal{T}_c[f], f) \leq \epsilon$；SpecDef 是其具体构造。
-    - 核心思路：算法对选定 $\theta_i$ 做 $\tilde\Sigma \leftarrow T\Sigma$（$T = \mathrm{diag}(\alpha,\dots,\alpha,1,\dots,1)$，前 $k$ 个奇异值放大 $\alpha$ 倍），用 $U\tilde\Sigma V^\top$ 替换原权重；同时在相邻插入 identity 占位层并写入 $\theta_i^{comp} = U\Sigma\tilde\Sigma^{-1}U^\top$，由 $\theta_i^{comp}\theta_i' = U\Sigma V^\top = \theta_i$ 保证前向严格不变。$\alpha$ 的选取以"逼对手到最小有效学习率以下"为准则：若大多数 LM 在 $\eta < 10^{-6}$ 时无法收敛，可取 $\alpha \geq 10^6$。
-    - 设计动机：单纯的"weight rescaling"会改变输出，所以必须配合 compensation；插入 identity 层让作者绕开了 ReLU 这种非 1-同态激活带来的麻烦——因为 identity 层之间的 cross-layer compensation 总是合法。代价是模型尺寸（参数量）线性增加。
+推导分两步：先用 Poincaré 分离定理把 Hessian 最大奇异值下界为某个 $p\times q$ 子块 $\nabla^2_{\theta_i,\theta_j}\mathcal{L}$ 的最大奇异值；再注意到这个子块对标准 MLP/CNN/Transformer 都有 $ABC$ 形分解（例如三层 MLP 的 $\partial^2 f/\partial\theta_3\partial\theta_1=(x^\top\otimes I_m)^\top D_{z_1}\cdot\theta_2^\top\cdot D_{z_2}$，中间正好夹着 $\theta_2$），最后用经典奇异值不等式收口。这是整个框架的理论支点：只要中间矩阵 $B=\theta_k$ 的最大奇异值被放大 $\alpha$ 倍，Hessian 最大奇异值至少同比例放大，从而把学习率上界压到 $\eta\le (1/\alpha)\cdot\text{常数}$，绕开了"无法直接控制 Hessian"这个老大难。值得一提的是这个 bound 在 rank-deficient 情况下仍 non-vacuous，比经典 Horn–Johnson bound 更紧。
 
-3. **收敛率控制的根本极限（Theorem on Layer Injection Attack）**:
+**2. Lower-Max 谱重参数化 + SpecDef：功能严格不变，却把 Hessian 谱拉到天文数字。**
 
-    - 功能：证明任何属于"对称谱重参数化"这类的方法都可以被攻击者以 $O(\text{model size})$ 的额外代价撤销，奠定 open-weight 安全的 fundamental limit。
-    - 核心思路：作者把 SpecDef / 类似方法的所有可能变换形式抽象成一类映射，并证明对任意这样的 $\mathcal{T}$，存在反向映射 $\mathcal{T}^{-1}$ 把谱拉回正常。攻击者只要知道层结构，就能通过把 compensation 矩阵和原层合并（"layer collapse"）重建出原始 Hessian 谱，从而恢复正常收敛——代价是模型尺寸 +linear 而非指数；并且 curvature-aware optimizers（Sophia、Muon、AdaHessian）只能局部改善，无法突破这一上限。
-    - 设计动机：很多 open-weight safety 文章宣称"我们提供了实际抗性"，作者要把这种乐观主义砸碎——不是因为 SpecDef 不好用，而是因为整个"控制收敛率"路径在面对懂行的对手时本质有限，未来需要寻找非"convergence rate control" 路径的方案。
+有了上面的桥，剩下的就是构造一类映射 $\mathcal{T}_c: f_\theta\mapsto f_{\theta'}$，同时满足 $\sigma_1(H^{\mathcal{L}}_{\theta'})\ge c$ 和函数距离 $d(\mathcal{T}_c[f],f)\le\epsilon$，SpecDef 是它的具体实现。算法对选定层 $\theta_i$ 做 SVD 得 $U\Sigma V^\top$，把奇异值乘上 $T=\mathrm{diag}(\alpha,\dots,\alpha,1,\dots,1)$（前 $k$ 个放大 $\alpha$ 倍）得到 $\tilde\Sigma=T\Sigma$，再用 $U\tilde\Sigma V^\top$ 替换原权重；关键在于同时在相邻位置插入一个 identity 占位层并写入补偿矩阵 $\theta_i^{comp}=U\Sigma\tilde\Sigma^{-1}U^\top$，因为 $\theta_i^{comp}\theta_i'=U\Sigma V^\top=\theta_i$，前向输出严格不变。单纯的 weight rescaling 会改变输出，所以 compensation 是必须的；而插入 identity 层则巧妙绕开了 ReLU 这种非 1-同态激活的麻烦——identity 层之间的 cross-layer compensation 总是合法。$\alpha$ 按"逼对手到最小有效学习率以下"来选：既然多数 LM 在 $\eta<10^{-6}$ 时已无法收敛，取 $\alpha\ge 10^6$ 就能把可行学习率推进次正常浮点区。代价仅仅是模型参数量线性增加。
+
+**3. 收敛率控制的根本极限（Layer Injection Attack）：证明这条路在懂行对手面前本质有限。**
+
+论文最重要的是它把自己也否定了。作者把 SpecDef 乃至所有"对称谱重参数化"方法抽象成一类映射，证明对任意这样的 $\mathcal{T}$ 都存在反向映射 $\mathcal{T}^{-1}$ 把谱拉回正常：攻击者只要知道层结构，就能把补偿矩阵和原层合并（"layer collapse"）重建出原始 Hessian 谱，从而恢复正常收敛——代价只是模型尺寸线性增加，而非指数；并且 Sophia、Muon、AdaHessian 这类曲率感知优化器只能局部改善、无法突破这一上限。这个结论之所以被作者特意摆出来，是要砸碎"open-weight safety 能提供实际抗性"的乐观主义：不是 SpecDef 不好用，而是整个"控制收敛率"路径在面对完整模型访问权的对手时存在结构性极限，未来真要做 training-time safety，必须跳出 convergence-rate control 这个框架另寻路径。这也是论文题目里 "Limits" 的由来。
 
 ### 损失函数 / 训练策略
 SpecDef 本身不需要训练，是一次性的代数操作。论文同时建议"certification process"：在 release 前对 $\alpha, k, $ 层选择做 hyperparameter sweep，确认在常用 fine-tune 配方下都难以收敛。攻击侧实验用 SGD/Adam + 多个 learning rate（$10^{-6}$ 到 $3\times 10^{-5}$）以及曲率感知优化器（Sophia/Muon/AdaHessian）做 relearning 评估。

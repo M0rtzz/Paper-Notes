@@ -44,23 +44,23 @@ TimeRewarder 由两阶段组成：(1) 离线训练进度模型 $F_\theta: \mathc
 
 ### 关键设计
 
-1. **Implicit Negative Sampling + 归一化时间距离回归**:
+**1. Implicit Negative Sampling + 归一化时间距离回归：用反对称结构让模型天然学会"前进给正、后退给负"。**
 
-    - 功能：在自监督训练阶段同时教模型"前进 = 正进度、后退 = 负进度"，并显式给"卡住不动"留出 0 附近的预测空间。
-    - 核心思路：训练时随机采的帧对 $(o_u, o_v)$ 不限定 $u < v$，因此 $d_{uv} \in [-1, 1]$。当 RL rollout 撞到墙、抓空、回手等次优行为时，相邻帧的视觉差异更接近"轨迹倒放"的子段，模型自然回归出小或负值，等价于把次优行为当作训练时见过的反向片段处理。这就是论文反复强调的"反对称结构"——它让模型不能用"两帧都见过 = 高分"的捷径作弊。
-    - 设计动机：消融实验里把目标改成 $[0, 1]$ 的纯前向进度后，stick-push 和 basketball 任务直接崩溃，因为抓空被误判为"已经抓到了一半"。把负样本"埋进"采样分布里，避免了显式构造失败轨迹的工程负担。
+奖励既要在专家分布内细分进度，又要在 RL 探索时对卡住、回退、伪动作打合理低分。TimeRewarder 不显式构造失败轨迹，而是把负样本"埋进"采样分布：训练时随机采的帧对 $(o_u, o_v)$ 不限定 $u < v$，于是目标 $d_{uv}=(v-u)/(T-1)\in[-1,1]$。当 RL rollout 撞墙、抓空、回手时，相邻帧的视觉差异更像"轨迹倒放"的子段，模型自然回归出小或负值，等价于把次优行为当训练时见过的反向片段处理。这就是论文反复强调的"反对称结构"——它堵死了"两帧都见过 = 高分"的捷径。
 
-2. **Weighted Pair Sampling（短间隔加权）**:
+消融印证了它的关键性：把目标改成 $[0,1]$ 的纯前向进度后，stick-push 和 basketball 直接崩溃，因为抓空被误判成"已经抓到一半"。免费午餐之处在于，用对称结构当负样本来源，省掉了显式构造失败轨迹的工程负担。
 
-    - 功能：让模型在相邻帧的距离预测上更准，从而提供更有信息量的 step-wise 奖励。
-    - 核心思路：采样间隔 $\Delta = |v - u|$ 时按 $P(\Delta) \propto 1/\Delta$ 的概率分布抽取（$\Delta \in \{1, \dots, T-1\}$），相当于把训练曝光偏向 $\Delta = 1, 2, 3$ 的短间隔对，同时仍保留长间隔覆盖以维持全局进度感知。配合 Two-hot 离散化（把 $[-1, 1]$ 均匀切 $K=20$ 个 bin，目标是只对两个最近 bin 赋非零质量的软分布，损失是 cross-entropy），模型既能学到全局单调性又能在 bin 边界上保持锐利。
-    - 设计动机：RL 的 reward 是 step-wise 的，相邻帧距离预测的精度直接决定每一步反馈是否"指向前进"。若用均匀采样，模型大部分梯度花在 $\Delta = T/2$ 左右的"中等距离"对上，而这些对对 step reward 几乎无用。消融里替换为均匀采样后 stick-push 和 window-open 明显掉点，证实了短间隔加权对精细操作的必要性。Two-hot 比直接回归在 basketball、disassemble 这种"长准备 + 短决定性动作"的任务上提升尤为明显，因为离散化保住了完成瞬间的尖锐过渡。
+**2. Weighted Pair Sampling（短间隔加权）：把训练曝光偏向相邻帧，让每一步反馈更准。**
 
-3. **Potential-based dense reward + sparse success 融合**:
+RL 的 reward 是 step-wise 的，相邻帧距离预测的精度直接决定每一步反馈是否真的"指向前进"。若用均匀采样，模型大部分梯度会花在 $\Delta=T/2$ 左右的中等距离对上，而这些对对 step reward 几乎无用。TimeRewarder 按 $P(\Delta)\propto 1/\Delta$ 抽采样间隔 $\Delta=|v-u|$，把曝光偏向 $\Delta=1,2,3$ 的短间隔对，同时保留长间隔覆盖以维持全局进度感。配合 Two-hot 离散化（把 $[-1,1]$ 均匀切 $K=20$ 个 bin，目标只对两个最近 bin 赋质量，损失是 cross-entropy），模型既学到全局单调性又在 bin 边界上保持锐利。
 
-    - 功能：把训练好的 $F_\theta$ 转化成在线 RL 用的 step-wise 奖励 $r_t$，并与稀疏成功信号对齐尺度。
-    - 核心思路：奖励定义为 $r_{\text{TR}}(o_t, o_{t+1}) = \Phi^{-1}[F_\theta(o_t, o_{t+1})]$，其中 $\Phi^{-1}$ 把两热向量映射回 $[-1, 1]$ 的标量；最终训练奖励是 $r_t = r_{\text{TR}}(o_t, o_{t+1}) + \alpha \cdot r_{\text{success}}(o_t)$，$\alpha$ 自适应调节以平衡两项尺度。这等价于以 $V(o) = F_\theta(o_0, o)$ 为 potential 函数做 reward shaping，理论部分证明在确定性 MDP + 单步惩罚 $r(s) = -1$ 假设下，$V^*(s)$ 恰是"剩余步数 $T - t$"的单调变换，因此 $r_{\text{TR}}$ 是 potential-based shaping 的自然实例，保留最优策略不变。
-    - 设计动机：稀疏成功信号本身可以由人或 VLM 廉价标注，但单靠它根本无法引导探索；稠密 $r_{\text{TR}}$ 又可能存在尺度漂移，让 policy 优化器忽略真正完成任务的那一刻。两者相加既不增加 RL 算法的工程复杂度（DrQ-v2 一行替换），又保证完成态有强信号。论文附录显示性能对 $\alpha$ 不敏感，说明这个简单融合鲁棒性较高。
+消融里改成均匀采样后 stick-push、window-open 明显掉点；Two-hot 比直接回归在 basketball、disassemble 这类"长准备 + 短决定性动作"任务上提升尤为明显，因为离散化保住了完成瞬间的尖锐过渡。
+
+**3. Potential-based dense reward + sparse success 融合：把距离回归器变成保最优策略不变的 shaping 奖励。**
+
+训练好的 $F_\theta$ 怎么变成 RL 用的 step reward？TimeRewarder 定义 $r_{\text{TR}}(o_t, o_{t+1}) = \Phi^{-1}[F_\theta(o_t, o_{t+1})]$（$\Phi^{-1}$ 把两热向量映回 $[-1,1]$ 标量），最终训练奖励 $r_t = r_{\text{TR}}(o_t, o_{t+1}) + \alpha \cdot r_{\text{success}}(o_t)$，$\alpha$ 自适应平衡两项尺度。理论上以 $V(o)=F_\theta(o_0,o)$ 为 potential 函数：在确定性 MDP + 单步惩罚 $r(s)=-1$ 假设下，$V^*(s)$ 恰是"剩余步数 $T-t$"的单调变换，所以 $r_{\text{TR}}$ 是 potential-based shaping 的自然实例，保留最优策略不变。
+
+这么融合的理由是两者各补一短板：稀疏成功信号可由人或 VLM 廉价标注但无法引导探索，稠密 $r_{\text{TR}}$ 又可能尺度漂移让优化器忽略真正完成任务的那一刻。相加既不增加 DrQ-v2 的工程复杂度（一行替换），又保证完成态有强信号，且性能对 $\alpha$ 不敏感、鲁棒性高。
 
 ### 损失函数 / 训练策略
 训练损失是离散化两热分布的交叉熵：$\min_\theta \mathbb{E}[-\mathbf{y}_{uv}^\top \log\text{softmax}(\hat{\mathbf{y}}_{uv})]$，其中 $\mathbf{y}_{uv} = \Phi(d_{uv})$ 是真值的两热向量，$K = 20$。骨干是 CLIP 预训练的 ViT-B（可训练），两帧独立编码后 concat 过线性层。下游 RL 用 DrQ-v2，$F_\theta$ 全程冻结，每个任务跑 200K 环境交互、8 个随机种子。

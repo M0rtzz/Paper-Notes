@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Specialization：概念级专家空间预训练**：
+**1. Specialization：先把表征空间预训练成一组"概念专家"，并让跨模态对齐发生在专家级。**
 
-    - 功能：让每个 expert 锚定一个语义概念，并保证同一概念在两个模态里被激活到对齐的子空间（DSC 约束）。
-    - 核心思路：目标是 $\max_{f^1,f^2}[I(Z^1;X^1)+I(Z^2;X^2)]$ s.t. DSC（命题 3.4：对所有 shareable 概念 $c$，$p(\pi_c(Z^1)|c\in C^1)=p(\pi_c(Z^2)|c\in C^2)$）。互信息用 InfoNCE 下界，loss 分三部分：模态内 $\mathcal{L}_{\mathrm{rep}}=\tfrac12(\mathcal{L}_{\mathrm{InfoNCE}}^{[1\to1]}+\mathcal{L}_{\mathrm{InfoNCE}}^{[2\to2]})$ 保多样性；跨模态 $\mathcal{L}_{\mathrm{dsc}}=\tfrac12(\mathcal{L}_{\mathrm{InfoNCE}}^{[1\to2]}+\mathcal{L}_{\mathrm{InfoNCE}}^{[2\to1]})$ 隐式对齐概念激活模式；辅助路由损失 $\mathcal{L}_{\mathrm{aux}}$ 防 expert collapse、鼓励均衡且自信的激活。
-    - 设计动机：单纯 InfoNCE 是 instance-level，但它的对比信号会隐式塑造 expert 激活分布，把"同义概念聚到同一 expert"；显式概念分解 + DSC 约束保证跨模态对齐发生在"专家级"而非"特征向量级"，自然容纳模态独有部分（独有概念走该模态独占的 expert）。
+单一 monolithic embedding 要同时对齐、保留差异、适应任务变化，本就冲突；这里先用 MoE 把表征空间显式拆成概念子空间，让每个 expert 锚定一个语义概念。训练目标是 $\max_{f^1,f^2}[I(Z^1;X^1)+I(Z^2;X^2)]$ 并受 DSC 约束（命题 3.4：对所有可共享概念 $c$，$p(\pi_c(Z^1)|c\in C^1)=p(\pi_c(Z^2)|c\in C^2)$），互信息用 InfoNCE 下界估计。loss 分三块：模态内 $\mathcal{L}_{\mathrm{rep}}=\tfrac12(\mathcal{L}_{\mathrm{InfoNCE}}^{[1\to1]}+\mathcal{L}_{\mathrm{InfoNCE}}^{[2\to2]})$ 保多样性，跨模态 $\mathcal{L}_{\mathrm{dsc}}=\tfrac12(\mathcal{L}_{\mathrm{InfoNCE}}^{[1\to2]}+\mathcal{L}_{\mathrm{InfoNCE}}^{[2\to1]})$ 隐式对齐概念激活模式，辅助路由损失 $\mathcal{L}_{\mathrm{aux}}$ 防 expert collapse、鼓励均衡且自信的激活。InfoNCE 本是 instance-level，但它的对比信号会隐式塑造 expert 激活分布、把同义概念聚到同一 expert；显式概念分解 + DSC 让对齐发生在"专家级"而非"特征向量级"，模态独有部分自然走该模态独占的 expert。
 
-2. **Selection：只调路由器做任务自适应**：
+**2. Selection：冻住所有 expert，只 fine-tune 路由器做任务自适应。**
 
-    - 功能：冻结所有 expert 和 attention，只 fine-tune 占总参数极小份额的 router $g$，按任务激活相关专家、抑制无关专家。
-    - 核心思路：目标 $\max_g[I(Z_Y^1,Z_Y^2;Y)-\alpha\cdot I(Z_Y^1,Z_Y^2;X^1,X^2|Y)]$ 同时实现 Task-Sufficiency 和 Information-Minimality。第一项用 SupCon loss 近似——同 label 样本互拉近（命题 E.2 证明它是 task-conditioned MI 的有效下界）：$\mathcal{L}_{\mathrm{SupCon}}^{[m\to\bar m]}=-\mathbb{E}_{i,s\in\mathcal{S}_{y_i}}\log\frac{\exp(\langle z_i^m,z_s^{\bar m}\rangle/\tau)}{\sum_j\exp(\langle z_i^m,z_j^{\bar m}\rangle/\tau)}$。第二项 $I(Z;X|Y)=\mathbb{E}_{p(x,y)}[D_{KL}(p(z|x)\|p(z|y))]$ 用 vMF 分布近似（InfoNCE 后特征在球面上），最终化简为内积型 compactness loss $\mathcal{L}_{\mathrm{Comp}}^{[m\to\bar m]}=-\mathbb{E}[\langle\mu_x^m,\hat\mu_y^{\bar m}\rangle]$，把样本拉到所属类的球面 mean 方向。
-    - 设计动机：常规 fine-tune 把 encoder 也动了，会破坏阶段一辛苦学到的语义专家结构；只调 router 把"学到什么"和"任务上用什么"严格解耦——前者是 fixed semantic basis，后者是 task-dependent selector，效果类似 prompt tuning 但目标更结构化。
+常规 fine-tune 会把 encoder 也动了，破坏阶段一辛苦学到的语义专家结构。这里只调占总参数极小份额（<5%）的 router $g$，目标 $\max_g[I(Z_Y^1,Z_Y^2;Y)-\alpha\cdot I(Z_Y^1,Z_Y^2;X^1,X^2|Y)]$ 同时追求 Task-Sufficiency 和 Information-Minimality。第一项（充分性）用 SupCon loss 近似——同 label 样本互相拉近，命题 E.2 证它是 task-conditioned MI 的有效下界：$\mathcal{L}_{\mathrm{SupCon}}^{[m\to\bar m]}=-\mathbb{E}_{i,s\in\mathcal{S}_{y_i}}\log\frac{\exp(\langle z_i^m,z_s^{\bar m}\rangle/\tau)}{\sum_j\exp(\langle z_i^m,z_j^{\bar m}\rangle/\tau)}$；第二项（最小性）$I(Z;X|Y)=\mathbb{E}_{p(x,y)}[D_{KL}(p(z|x)\|p(z|y))]$ 在 InfoNCE 后特征落在球面上时用 vMF 近似，化简成内积型 compactness loss $\mathcal{L}_{\mathrm{Comp}}^{[m\to\bar m]}=-\mathbb{E}[\langle\mu_x^m,\hat\mu_y^{\bar m}\rangle]$，把样本拉向所属类的球面 mean。这样"学到什么"（fixed semantic basis）和"任务上用什么"（task-dependent selector）被严格解耦，效果类似 prompt tuning 但目标更结构化。
 
-3. **Sparsification：推理时按路由分数剪枝**：
+**3. Sparsification：推理时按路由分数剪枝，把信息最小化做成一个旋钮。**
 
-    - 功能：在不再训练的前提下，把每个 batch 内 top-$k$ 路由对按分数排序，只保留 top-$p$ 比例的 routing 对，剩下的剪掉。
-    - 核心思路：阶段二训完后 router 分数本身就是"input-expert 对任务的贡献度估计"；常规 MoE 固定 top-$k$ 无视实际效用，会把不必要的 expert 也激活。剪枝过程预期表现出反 U 型曲线：$p$ 从 1 缓降时先剪掉无关路径（性能上升或持平），到 sweet spot 达到最小充分表征（性能峰值），$p$ 过小开始误剪关键路径（性能下降）。残差连接仍在，单条 routing path 被剪不会切断信息流。
-    - 设计动机：把"信息最小化"从训练阶段延伸到推理阶段，等于把表征压缩做成一个 inference-time 旋钮，可以根据下游计算预算实时调整 efficiency-accuracy 权衡，且不需要任何额外训练；同时还给"task-relevant routes 究竟有几条"提供一个自然的可视化诊断。
+阶段二训完后，router 分数本身就是"input-expert 对任务的贡献度估计"，而常规 MoE 固定 top-$k$ 无视实际效用、会激活不必要的 expert。这里在不再训练的前提下，把每个 batch 内 top-$k$ 路由对按分数排序，只保留 top-$p$ 比例、剩下剪掉。剪枝过程会呈现反 U 型曲线：$p$ 从 1 缓降时先剪掉无关路径（性能上升或持平），到 sweet spot 达到最小充分表征（性能峰值），$p$ 过小开始误剪关键路径（性能下降）。由于残差连接还在，单条 routing path 被剪不会切断信息流。这把"信息最小化"从训练延伸到推理，等于给 efficiency-accuracy 权衡装了个无需训练的实时旋钮，还顺带提供了"task-relevant routes 究竟有几条"的可视化诊断。
 
 ### 损失函数 / 训练策略
 - Stage 1：$\mathcal{L}_{\mathrm{special}}=\lambda_{\mathrm{rep}}\mathcal{L}_{\mathrm{rep}}+\lambda_{\mathrm{dsc}}\mathcal{L}_{\mathrm{dsc}}+\lambda_{\mathrm{aux}}\mathcal{L}_{\mathrm{aux}}$（含 expert 均衡正则）。

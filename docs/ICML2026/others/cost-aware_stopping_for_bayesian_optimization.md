@@ -44,23 +44,21 @@ PBGI 把每个候选点视为 Pandora's Box 中的一个"盒子"，其 fair valu
 
 ### 关键设计
 
-1. **基于 PBGI 的停下规则（用更新后的 $\alpha_t$ 而非 $\alpha_{t-1}$）**:
+**1. 基于 PBGI 的停下规则：用更新后的 $\alpha_t$ 而非 $\alpha_{t-1}$ 判断"还值不值得开盒子"。**
 
-    - 功能：在每一轮 $t$ 判断"还有没有比当前最优更值得花钱开的盒子"。
-    - 核心思路：停下条件为 $\min_{x\in X\setminus\{x_1,\dots,x_t\}} \alpha_t^{\mathrm{PBGI}}(x) \ge y^*_{1:t}$。一个微妙却关键的设计选择是用**后验更新之后**的 $\alpha_t$（而非先前理论工作 Gergatsouli & Tzamos 2023 用的 $\alpha_{t-1}$）。直觉上，$\alpha_t^{\mathrm{PBGI}}(x)$ 是当前所有信息下点 $x$ 的"公平价格"，对已评估点退化为观测值，对未评估点反映 $f(x)$ 不确定性和代价 $c(x)$；用最新的 $\alpha_t$ 才能真正反映"现在该不该继续投钱"。作者在 Section C.2 实验上验证这一选择带来明显的 cost-adjusted regret 改进。
-    - 设计动机：Weitzman 原版策略在离散独立场景下"选 + 停"必须配套才贝叶斯最优；推广到相关 GP 时若用 $\alpha_{t-1}$ 会引入信息滞后，使得"该停时不停"或"该继续时反而停"。
+现有停下规则要么是启发式、要么只盯着 simple regret 而无视评估代价，在 cost-aware 场景里常常"花大钱换微小提升"。本文的停下条件直接把这件事问出来：$\min_{x\in X\setminus\{x_1,\dots,x_t\}} \alpha_t^{\mathrm{PBGI}}(x) \ge y^*_{1:t}$，即"剩下所有未开的盒子，其公平价格都不优于当前最优"时就停。这里一个微妙却关键的选择是用**后验更新之后**的 $\alpha_t$，而不是先前理论工作（Gergatsouli & Tzamos 2023）用的 $\alpha_{t-1}$：$\alpha_t^{\mathrm{PBGI}}(x)$ 是当前全部信息下 $x$ 的"公平价格"，对已评估点退化成观测值，对未评估点同时反映 $f(x)$ 的不确定性和代价 $c(x)$，只有用最新的 $\alpha_t$ 才真实回答"此刻该不该继续投钱"。之所以非这么做不可，是因为 Weitzman 原版的"选 + 停"在离散独立场景下必须配套才贝叶斯最优，推广到相关 GP 时若沿用滞后的 $\alpha_{t-1}$，就会出现"该停不停、该继续反而停"的信息滞后；Section C.2 的实验确认了用 $\alpha_t$ 带来明显的 cost-adjusted regret 改进。
 
-2. **通过 EI 单调性导出等价的 LogEIPC 停下规则**:
+**2. 通过 EI 单调性导出等价的 LogEIPC 停下规则：一条规则同时适配两种采集函数。**
 
-    - 功能：把基于 PBGI 的停下条件改写成基于 LogEIPC 的等价形式，从而让一个停下规则同时适配两种 cost-aware 采集函数。
-    - 核心思路：因为 $\mathrm{EI}_\psi(x;y)$ 关于 $y$ 严格单调递增，$\alpha_t^{\mathrm{PBGI}}(x)\ge y^*_{1:t}$ 当且仅当 $\mathrm{EI}_{f\mid x_{1:t},y_{1:t}}(x;y^*_{1:t}) \le c(x)$，再取对数即 $\max_{x\in X\setminus\{x_1,\dots,x_t\}}\alpha_t^{\mathrm{LogEIPC}}(x;y^*_{1:t})\le 0$。当 $c(x)\equiv c_0$ 时这进一步化为 $\max_x \alpha_t^{\mathrm{EI}}(x)\le c_0$ ——回收了 Nguyen et al. (2017) / Zhou et al. (2024) 的 EI thresholding 规则，并把那里的启发式阈值替换为有原理的"代价"本身。
-    - 设计动机：让单一停下规则有两种解读视角——Pandora's Box 决策论视角和 EI-per-cost 经济学视角，扩大适用范围；也让 LogEIPC 用户不用引入新的停下条件就能享受同一套理论保证。
+PBGI 来自 Gittins index，LogEIPC 来自 cost-normalized EI，看起来是两套东西，用户换采集函数时似乎还得换停下规则。作者发现两者其实共享同一停下条件。关键是 $\mathrm{EI}_\psi(x;y)$ 关于 $y$ 严格单调递增，于是 $\alpha_t^{\mathrm{PBGI}}(x)\ge y^*_{1:t}$ 当且仅当 $\mathrm{EI}_{f\mid x_{1:t},y_{1:t}}(x;y^*_{1:t}) \le c(x)$，取对数即得 $\max_{x\in X\setminus\{x_1,\dots,x_t\}}\alpha_t^{\mathrm{LogEIPC}}(x;y^*_{1:t})\le 0$。当代价均匀 $c(x)\equiv c_0$ 时它进一步化简成 $\max_x \alpha_t^{\mathrm{EI}}(x)\le c_0$——恰好回收了 Nguyen et al. (2017) / Zhou et al. (2024) 的 EI thresholding 规则，只不过那里靠手调的启发式阈值，被这里有原理的"每样本代价"替换掉了。这层等价让同一条规则有了两个解读视角：Pandora's Box 的决策论视角和 EI-per-cost 的经济学视角，LogEIPC 用户也无需另立停下条件就能直接套用同一套理论保证。
 
-3. **代价调整 regret 的"不差于立即停"保证 + 有限时间终止**:
+**3. 代价调整 regret 的"不差于立即停"保证 + 有限时间终止：给 cost-adjusted regret 上第一条非渐近界。**
 
-    - 功能：给出第一条对 cost-adjusted simple regret 有理论保证的自适应停下规则。
-    - 核心思路：Lemma 3.1 先证明在停下之前每一轮 $t<\tau$ 选出的 $x_{t+1}$ 都满足 $\alpha_t^{\mathrm{EI}}(x_{t+1})\ge c(x_{t+1})$，即"期望改进不低于代价"。Theorem 3.2 据此给出 $\mathbb{E}[y^*_{1:\tau}-\min_x f(x)+\sum_{t=1}^\tau c(x_t)]\le \mathbb{E}[y_1-\min_x f(x)+c(x_1)]=U+C$，其中 $U=\mu(x_1)-\mathbb{E}[\min_x f(x)]$、$C=c(x_1)$。这等于说**用这套规则一定不会比"采一次立刻停下"更差**，是 cost-adjusted regret 上的一种"无悔"保证。Corollary 3.3 进一步给出期望累计代价的上界 $U+C$，并在 $c(x)\ge c_0>0$ 时给出 $\frac{U+C}{\delta c_0}$ 步内以 $1-\delta$ 概率终止的有限时间保证。Corollary 3.5 则把这条结果迁移到 budget-constrained 场景，给出 $\lambda=U/(B-C)$ 这种"按预算选 cost scaling"的原理化方案。
-    - 设计动机：现有停下规则要么没保证、要么只保证 simple regret 而不管累计代价；本文首次把"代价 + regret"绑到一个非渐近上界里，让用户能在最坏情况下安心使用——这一性质在 Figure 2、3 的实验里也得到对比验证（不少 baseline 反而比"立即停"更差）。
+前面两点解决了"怎么停"，这一点回答"停得有没有保证"——这是现有规则普遍缺失的。证明分两步推进：Lemma 3.1 先说明在停下之前每一轮 $t<\tau$ 选出的 $x_{t+1}$ 都满足 $\alpha_t^{\mathrm{EI}}(x_{t+1})\ge c(x_{t+1})$，即"期望改进永远不低于代价"，于是每多采一步都是划算的；Theorem 3.2 顺着这个事实给出
+
+$$\mathbb{E}\Big[y^*_{1:\tau}-\min_x f(x)+\sum_{t=1}^\tau c(x_t)\Big]\le \mathbb{E}\big[y_1-\min_x f(x)+c(x_1)\big]=U+C,$$
+
+其中 $U=\mu(x_1)-\mathbb{E}[\min_x f(x)]$、$C=c(x_1)$。这句话的含义是：用这套规则的最坏结果也不会比"采一次立刻停"更差——一种在 cost-adjusted 意义下的"无悔"保证，用户最差等于没开 BO，不会被坑。Corollary 3.3 进一步把期望累计代价也压在 $U+C$ 之内，并在 $c(x)\ge c_0>0$ 时给出 $\frac{U+C}{\delta c_0}$ 步内以 $1-\delta$ 概率终止的有限时间保证；Corollary 3.5 再把结论迁到 budget-constrained 场景，导出 $\lambda=U/(B-C)$ 这种"按预算选 cost scaling"的原理化取法。Figure 2、3 印证了这一性质的实际意义：不少 baseline 反而比"立即停"更差。
 
 ### 损失函数 / 训练策略
 不涉及训练；仅在 BO 主循环里增加一行判断。实际部署还配套两个工程细节：(i) **稳定期 + 滑动平均**：高维空间下 GP 超参与采集函数优化都不稳，作者用前 $W=20$ 轮作为 stabilization 期不允许触发停下，并对停下信号做 $W$ 轮 moving average；(ii) **未知代价处理**：把 $\ln c(x)$ 建模为 GP 后用 $\mathbb{E}[c(x)]=\exp(\mu_{\ln c}+\sigma_{\ln c}^2/2)$ 替换 $c(x)$，原理保证仍然成立。

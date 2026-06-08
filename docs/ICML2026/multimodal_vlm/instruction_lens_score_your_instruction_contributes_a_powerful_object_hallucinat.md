@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Calibration Confidence (Cafe) 校准虚高的视觉证据**:
+**1. Calibration Confidence（Cafe）：用指令侧的把握度校准虚高的视觉证据。**
 
-    - 功能：用 instruction 嵌入对物体 token 的最大置信度，乘到任意已有的 vision-based 分数上，把视觉端虚高的预测「拉回来」。
-    - 核心思路：对每个 instruction 嵌入 $\mathbf{z}_j$ 走 Logit Lens 得到词表分布，取它给物体 token $\mathbf{o}$ 的概率，再在所有 $M$ 个 instruction 位置上取最大值，得到 $S_{\rm cafe}(\mathbf{o})=\max_{j} {\rm softmax}(\mathbf{W}_u\mathbf{z}_j/\tau)[\mathbf{o}]$，其中 $\tau$ 是温度。再用乘法融合，例如配合 Local Similarity Score 得到 $S_{\rm cls}(\mathbf{o})=S_{\rm cafe}(\mathbf{o})\cdot\frac{1}{K}\sum_k\cos(\mathbf{h_o},\mathbf{v}_k)$。
-    - 设计动机：选乘法而非加法，是因为不同 vision-based 分数（SVAR、Internal Conf、LSS）量纲不一致，乘法天然兼容、不用额外调缩放系数；最大值算子让「只要任一 instruction 位置对该物体有把握」就保住分数，符合过滤效应的统计观察。
+前面说过，纯视觉分数会被「银色勺子认成银色刀子」这种误导特征带偏，给幻觉对象虚高分。Cafe 的做法是另起一条独立通路来「投票」：对每个 instruction 嵌入 $\mathbf{z}_j$ 走 Logit Lens 投到词表，读出它给物体 token $\mathbf{o}$ 的概率，再在全部 $M$ 个 instruction 位置上取最大值，得到 $S_{\rm cafe}(\mathbf{o})=\max_{j}{\rm softmax}(\mathbf{W}_u\mathbf{z}_j/\tau)[\mathbf{o}]$（$\tau$ 为温度）。取最大值而非平均，是因为过滤效应的统计观察显示——只要任意一个 instruction 位置对该物体「有把握」，这个把握就值得信，不该被其他位置稀释。拿到 Cafe 后用**乘法**融进已有视觉分数，例如配合 Local Similarity Score 得到 $S_{\rm cls}(\mathbf{o})=S_{\rm cafe}(\mathbf{o})\cdot\frac{1}{K}\sum_k\cos(\mathbf{h_o},\mathbf{v}_k)$。之所以是乘法而不是加法，是因为 SVAR、Internal Conf、LSS 这些视觉分数量纲各不相同，乘法天然兼容、省去逐个调缩放系数的麻烦，相当于让指令侧的置信度去「打折」视觉侧的虚高分。
 
-2. **Context Consistency Score 引入全局物体上下文**:
+**2. Context Consistency Score（CCS）：把全局物体上下文带进来补局部证据的盲区。**
 
-    - 功能：用与 object 相关的 instruction 嵌入聚合出全局物体上下文，再衡量答案中物体 token 嵌入与该上下文的一致性。
-    - 核心思路：把每个 instruction 嵌入投到词表，选出对物体 token $\mathbf{o}$ 置信度最高的 top-$m$ 个嵌入 $\{\hat{\mathbf{z}}_n\}$，平均得到 $\overline{\mathbf{z}}=\frac{1}{m}\sum_n \hat{\mathbf{z}}_n$；用归一化 $\ell_2$ 距离算一致性 $S_{\rm con}(\mathbf{o})=\alpha-\|\mathbf{h_o}-\overline{\mathbf{z}}\|/\|\mathbf{h_o}\|$，再乘以这些被选 instruction 嵌入对物体的平均置信度，得到 $S_{\rm ccs}=S_{\rm con}\cdot\overline{p}$。
-    - 设计动机：vision-based 分数只看 patch 局部，遇到「银色勺子 vs 银色刀子」这种局部纹理相似的情形分不开；instruction 嵌入是通过 cross-attention 聚合整张图算出来的，本身就是全局视图。选 top-$m$ 而非全部，是为了排除噪声 instruction 位置；用 $\ell_2$ 而非 cosine，是为了同时捕捉方向和幅值差异。
+视觉分数只看 patch 局部，碰上「银色勺子 vs 银色刀子」这类局部纹理高度相似的情形就分不开。CCS 利用 instruction 嵌入「是经 cross-attention 聚合整张图算出来的、本身就是全局视图」这一点来补盲：先把每个 instruction 嵌入投到词表，挑出对物体 token $\mathbf{o}$ 置信度最高的 top-$m$ 个嵌入 $\{\hat{\mathbf{z}}_n\}$ 求平均，得到全局物体上下文 $\overline{\mathbf{z}}=\frac{1}{m}\sum_n\hat{\mathbf{z}}_n$；再用归一化 $\ell_2$ 距离衡量答案中物体 token 嵌入 $\mathbf{h_o}$ 与该上下文的一致性 $S_{\rm con}(\mathbf{o})=\alpha-\|\mathbf{h_o}-\overline{\mathbf{z}}\|/\|\mathbf{h_o}\|$，最后乘上这些被选 instruction 嵌入对物体的平均置信度 $\overline{p}$ 得到 $S_{\rm ccs}=S_{\rm con}\cdot\overline{p}$。这里挑 top-$m$ 而非全部位置是为了滤掉与该物体无关的噪声 instruction；用 $\ell_2$ 而非 cosine，则是为了同时捕捉方向和幅值差异——纹理相似但尺度不同的混淆，方向上可能很接近，得靠幅值才能拉开。
 
-3. **多模型即插即用 + 两分数互补融合**:
+**3. 即插即用的校准层 + 局部与全局两分数互补融合。**
 
-    - 功能：把 InsLen 接到任意已有 vision-based detector 上当作 calibration 层，并通过 $\omega\in[0,1]$ 调和局部证据和全局一致性。
-    - 核心思路：Cafe 可以乘到 SVAR、Internal Conf、LSS 等任何视觉分数上；CCS 与 CLS 互补，前者捕获 patch-level 局部证据，后者捕获 object-level 全局上下文；最终 $S_{\rm Ins}=\omega S_{\rm cls}+(1-\omega)S_{\rm ccs}$，默认 $\omega=0.4$、$\alpha=2$、$\tau=10$、$m=4$。
-    - 设计动机：训练无关 + 不依赖外部模型，部署时只需多过一遍 unembedding 矩阵，开销可忽略；与已有检测器正交，可以叠加增益。
+InsLen 不是要替换已有检测器，而是当一层正交的 calibration 叠加上去：Cafe 可以乘到 SVAR、Internal Conf、LSS 等任意视觉分数上，CCS 则提供视觉分数完全缺失的 object 级全局信号。两者一个抓 patch 级局部证据、一个抓 object 级全局上下文，恰好互补，于是用 $\omega\in[0,1]$ 把它们调和成最终分 $S_{\rm Ins}=\omega S_{\rm cls}+(1-\omega)S_{\rm ccs}$（默认 $\omega=0.4$、$\alpha=2$、$\tau=10$、$m=4$），再用阈值 $\mu$ 把低分判为幻觉。整套流程训练无关、不依赖任何外部模型，部署时只是让嵌入多过一遍 unembedding 矩阵，开销几乎可忽略，因此能直接接到现成 MLLM 上叠加增益。
 
 ### 损失函数 / 训练策略
 本方法完全 training-free，所有嵌入直接从冻结 MLLM 的倒数第二层取（LLaVA 取第 31 层、Qwen3-VL 取第 35 层）。不引入任何新参数，只有 4 个超参 $\omega, \alpha, \tau, m$，对数十款 MLLM 共用一套设置。

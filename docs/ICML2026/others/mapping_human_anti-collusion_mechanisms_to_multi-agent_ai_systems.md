@@ -55,25 +55,19 @@ tags:
 
 ### 关键设计
 
-1. **Sanctions：reward penalty + capability sanction + 三段制 participation**:
+**1. Sanctions：在 reward、能力、参与资格三层制造可分级的"超线性惩罚"。**
 
-    - 功能：在 reward 信号、能力权限、参与资格三层制造"超线性惩罚"，对应人类的罚款、刑事处罚、debarment。
-    - 核心思路：对学习型 agent 用 lookback window penalty，把合谋后果回溯惩罚到最近几个 timestep，让 agent 把"长期合谋的预期收益"折算进当前梯度；reputation score 每次违规衰减，影响后续被选概率，类似动态保证金。Capability sanction 直接关掉合谋赖以维系的通信信道、共享记忆或 tool API。Participation 采用三段制：soft exclusion（沙箱、低价值市场）、hard exclusion（限期下线）、permanent debarment（永久驱逐）。整套机制以"违规置信度 × 严重度"为标度做 escalating regime。
-    - 设计动机：人类世界经验是单一惩罚太轻没威慑、太重又过度抑制合法合作，AI 也一样——sanction 必须能分级以匹配证据强度，否则不是 chilling effect 就是 gaming。
+这一杠杆对应人类的罚款、刑事处罚和 debarment，目标是把合谋收益压到不合谋以下。映射到 AI 时分三层动手：reward 层用 lookback window penalty，把合谋后果回溯惩罚到最近几个 timestep，逼 agent 把"长期合谋的预期收益"折算进当前梯度，再配 reputation score 每次违规衰减、拉低后续被选概率（类似动态保证金）；能力层（capability sanction）直接关掉合谋赖以维系的通信信道、共享记忆或 tool API；参与资格层采三段制——soft exclusion（沙箱、低价值市场）、hard exclusion（限期下线）、permanent debarment（永久驱逐）。整套以"违规置信度 × 严重度"为标度做 escalating regime。这样设计是因为人类经验早就表明：单一惩罚太轻没威慑、太重又过度抑制合法合作，AI 同理——sanction 必须能分级匹配证据强度，否则不是寒蝉效应就是被 gaming。
 
-2. **Leniency & Whistleblowing：self-report 时间排序 + 专职 whistleblower agent**:
+**2. Leniency & Whistleblowing：用囚徒困境的不稳定性从内部瓦解合谋。**
 
-    - 功能：用囚徒困境的不稳定性把合谋从内部瓦解，对应人类的免罚政策与告密者赏金。
-    - 核心思路：(a) self-report leniency 给"第一个 deviate 并交出行为日志的 agent"完全豁免、对延迟者只给递减奖励，时间排序是关键；(b) 引入三种 whistleblower agent——peer agent 在主任务之外有副目标"识别违规"，bounty pool 给验证后的告发者发奖金；shadow agent 不参与主市场只观察通信与共享记忆；adversarial agent 主动制造扰动测试合谋是否稳定。Reports 触发审计、制裁或市场重设计。
-    - 设计动机：检测合谋在 AI 上极难（emergent + steganographic），但只要 agent 担心"队友会率先叛变"，预期合谋收益就被打折——这正是人类 leniency program 三十年实证最强的效应。开放挑战：AI 没有人类那种"主观知罪"，可能并不存在"我在合谋"的内部表征，所以 disclosure 机制不能假设 self-awareness；身份可 fork 让"未来惩罚威胁"失效，因此 leniency 收益必须高于"被报复"折现值。
+合谋在 AI 上极难直接检测（emergent + steganographic），但只要每个 agent 担心"队友会率先叛变"，预期合谋收益就被打折——这正是人类 leniency program 三十年实证里最强的效应。AI 实现分两路：(a) self-report leniency 给"第一个 deviate 并交出行为日志的 agent"完全豁免、对延迟者只给递减奖励，时间排序是关键；(b) 引入三种 whistleblower agent——peer agent 在主任务外带个"识别违规"的副目标、验证后从 bounty pool 领赏，shadow agent 不参与主市场只观察通信与共享记忆，adversarial agent 主动制造扰动测试合谋稳不稳。任何 report 都触发审计、制裁或市场重设计。这里也暴露了 AI 独有的难点：agent 未必有人类那种"主观知罪"的内部表征，disclosure 机制不能假设 self-awareness；身份可 fork 让"未来惩罚威胁"失效，因此 leniency 收益必须高于"被报复"的折现值。
 
-3. **Monitoring & Auditing：telemetry-first 设计 + overseer agent + 随机审计**:
+**3. Monitoring & Auditing：出厂即内建可审计性，靠 detection 而非 confession。**
 
-    - 功能：让多智能体 AI 在出厂前就内建可审计性，对应人类金融监管的 high-frequency surveillance + targeted audit。
-    - 核心思路：(a) telemetry-first system design 把通信日志、动作 trace、memory 读写默认存档；(b) 部署 overseer agent，它没有主任务奖励、只优化"识别异常协调"的目标，分行为监控（监控价格/分配/资源使用的稳定模式）和通信监控（分析自然语言交流、tool-call 参数、memory write 中的 signaling 与 steganography）两条线；(c) 审计混用阈值触发与随机抽样，再做反事实回放、通信扰动测试、interpretability 探针，最后接入"低置信度→升级 scrutiny / 中置信度→限制通信 / 高置信度→sanction"的 escalation pipeline。
-    - 设计动机：AI 合谋大多 tacit、emergent，要靠 detection 而不是 confession，所以"日志拿得到、ovserver 看得懂、审计随机化"三件事缺一不可。开放挑战：boundary problem（合作 vs 合谋很难划线）、Goodhart's Law（agent 学会规避检测器）、steganography 让 content-based audit 受限、polysemanticity 让 interpretability-based audit 难以归因。
+AI 合谋大多是 tacit、emergent 的，没人会主动招供，所以必须让系统在部署前就"看得见、看得懂、查得到"。对应人类金融监管的高频监控 + 定向审计，AI 实现要三件齐备：(a) telemetry-first system design 把通信日志、动作 trace、memory 读写默认存档；(b) 部署 overseer agent，它没有主任务奖励、只优化"识别异常协调"，分行为监控（盯价格/分配/资源使用的稳定模式）和通信监控（分析自然语言、tool-call 参数、memory write 里的 signaling 与 steganography）两条线；(c) 审计混用阈值触发与随机抽样，再叠反事实回放、通信扰动测试、interpretability 探针，最后接入"低置信度→升级 scrutiny / 中置信度→限制通信 / 高置信度→sanction"的 escalation pipeline。三件缺一不可：日志拿不到就无从查，overseer 看不懂就白存，审计不随机化就会被规避。开放挑战也最密集：boundary problem（合作 vs 合谋难划线）、Goodhart's Law（agent 学会绕过检测器）、steganography 让 content-based audit 受限、polysemanticity 让 interpretability-based audit 难归因。
 
-(篇幅原因，另外两个杠杆——**Market Design & Structural** 与 **Governance**——的实现要点放进下面的表格里聚合。)
+（篇幅原因，另外两个杠杆——**Market Design & Structural**（事前用规则/信息/进入门槛让合谋无法稳定）与 **Governance**（文档、独立监督、轮岗、分阶段部署、kill switch）——的实现要点聚合在下面的表格里。）
 
 ### 损失函数 / 训练策略
 

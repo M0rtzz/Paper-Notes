@@ -48,23 +48,17 @@ tags:
 
 ### 关键设计
 
-1. **架构覆盖：覆盖三档等变强度**:
+**1. 架构覆盖：横跨三档等变强度，确保效应不是单一架构的偶然。**
 
-    - 功能：把"硬等变 $\to$ 弱几何 $\to$ 纯置换不变"三档架构都纳入比较，确保观察到的效应不是单一架构特性。
-    - 核心思路：EGNN（显式 $E(n)$ 等变）作为最硬等变端；DGCNN（动态 k-NN 图，仅置换等变 + 局部几何）作为中等档；PointNet（对称池化 + 完全置换不变）作为最弱端；额外用 GotenNet（$E(3)$ 等变 Transformer）做分子任务、GINE（置换等变消息传递）做图任务。Muon 默认设置（动量 Newton-Schulz 迭代次数、谱缩放常数）保持作者默认，Adam 用同样的网格搜索范围（lr × wd）确保公平。
-    - 设计动机：等变性强弱直接决定参数空间的隐藏对称多寡（Xie & Smidt 2025 指出隐参数对称会撕裂损失景观），如果优化器效应真的与等变性耦合，跨档对比应该能看到不同程度的提升。
+如果只在一个架构上换优化器看到提升，很难排除"那只是这个网络的特性"。作者刻意把三档等变强度都纳进比较：EGNN（显式 $E(n)$ 等变）当最硬等变端，DGCNN（动态 k-NN 图、仅置换等变 + 局部几何）当中等档，PointNet（对称池化、完全置换不变）当最弱端，另用 GotenNet（$E(3)$ 等变 Transformer）跑分子任务、GINE（置换等变消息传递）跑图任务。为保公平，Muon 用作者默认设置（Newton-Schulz 迭代次数、谱缩放常数），Adam 用同样的 (lr × wd) 网格搜索范围。这么设计是因为等变强弱直接决定参数空间的隐藏对称多寡（Xie & Smidt 2025 指出隐参数对称会撕裂损失景观）——若优化器效应真和等变性耦合，跨档对比就该看到不同程度的提升，而结果也确实呈"等变越强、Muon 越受益"。
 
-2. **损失局部几何刻画：Hessian 摘要 + 2D 切片双管齐下**:
+**2. 损失局部几何刻画：Hessian 摘要 + 2D 切片双管齐下，避免单维度误导。**
 
-    - 功能：用两种互补的视角刻画"Muon 把解推到了什么地方"。
-    - 核心思路：对每个 4-seed 训练好的 checkpoint 选最接近平均精度的那个；先用 autograd Hessian-vector product 跑 power iteration 算最大特征值 $\lambda_{\max}$，再用 Hutchinson 估计算 trace（Rademacher 探针）；同时按 Li et al. (2018) 在两个滤波归一化方向上画 2D 损失等高线，得到局部形状的直观图。
-    - 设计动机：损失切片只是低维投影、容易误导；Hessian 摘要又会被 Dinh et al. (2017) 指出的"参数对称下 sharpness 不变量"问题污染。两者一起看，才能把"Muon 解的局部曲率反而更大"与"切片上看起来更光滑"这两个看似矛盾的事实同时呈现，避免单维度结论的偏差。
+要回答"Muon 把解推到了景观的什么地方"，单看一种视角容易上当。作者对每个 4-seed 训练好、最接近平均精度的 checkpoint 同时做两件事：用 autograd Hessian-vector product 跑 power iteration 算最大特征值 $\lambda_{\max}$、用 Hutchinson（Rademacher 探针）估计 trace；再按 Li et al. (2018) 在两个滤波归一化方向上画 2D 损失等高线看局部形状。两者必须一起看是有道理的——损失切片只是低维投影、容易误导，而 Hessian 摘要又会被 Dinh et al. (2017) 指出的"参数对称下 sharpness 不是函数级不变量"污染。把两者并置，才能同时呈现"Muon 解的局部曲率反而更大"与"切片上看起来更光滑"这对看似矛盾的事实，从而避免单维度结论的偏差。
 
-3. **谱结构分析：stable rank 与 effective rank**:
+**3. 谱结构分析：stable rank 与 effective rank 量化谱有多集中。**
 
-    - 功能：在权重与中间表征两个尺度上量化"singular value 分布有多集中"。
-    - 核心思路：对每个权重矩阵 $W$（以及每层中间激活的特征矩阵）计算两个量：stable rank $\|W\|_F^2/\|W\|_2^2 = \sum_i \sigma_i^2/\sigma_1^2$；effective rank $\exp(H(p))$，其中 $p_i = \sigma_i/\sum_j \sigma_j$，$H$ 是 Shannon 熵。两者都落在 $[1, \mathrm{rank}(W)]$ 之间，谱越均匀值越大；表征则在中间层做点级 mean-pool、最后一层用各架构原生池化。
-    - 设计动机：梯度下降被广泛报告有"低秩隐式偏好"（Arora et al. 2019），而 Muon 的正交化动量正是对小奇异方向做 rescale。如果观察到 Muon 训练后的权重和表征谱真的更展开，就给"优化器作为 spectral inductive bias"提供了直接证据，也能与 Dong et al. (2021) 关于"纯注意力指数级掉到 rank-1"的退化失败模式形成呼应。
+最后要验证"优化器是一种 spectral inductive bias"这个猜想，就得量化奇异值分布的集中程度。作者对每个权重矩阵 $W$（以及每层中间激活特征矩阵）算两个量：stable rank $\|W\|_F^2/\|W\|_2^2=\sum_i\sigma_i^2/\sigma_1^2$，effective rank $\exp(H(p))$（$p_i=\sigma_i/\sum_j\sigma_j$，$H$ 为 Shannon 熵），两者都落在 $[1,\mathrm{rank}(W)]$，谱越均匀值越大；表征则在中间层做点级 mean-pool、最后一层用各架构原生池化。这个度量直指要害：梯度下降被广泛报告有"低秩隐式偏好"（Arora et al. 2019），而 Muon 的正交化动量恰恰对小奇异方向做 rescale。若观察到 Muon 训练后的权重与表征谱真的更展开，就给"优化器作为 spectral inductive bias"提供了直接证据，也与 Dong et al. (2021) 关于"纯注意力指数级掉到 rank-1"的退化失败模式形成呼应。
 
 ### 训练协议
 对每个数据集 × 优化器组合做 (learning rate, weight decay) 网格搜索，选出最优配置后用 4 个 seed 重复，按 best-checkpoint 报告均值 ± std。这避免了把"Muon 帮你少调一次参"误读为"Muon 本质更强"的混淆。

@@ -45,23 +45,29 @@ tags:
 
 ### 关键设计
 
-1. **一维停时框架与 sign lock-in 定理**：
+**1. 一维停时框架与 sign lock-in 定理：用"过零边界"的稀有事件解释符号既像噪声又持久。**
 
-    - 功能：把"训练后符号是否翻转"这个事件重述为停时事件，并给出尾概率上界。
-    - 核心思路：固定外阈值 $\rho>0$ 和边界半径 $\epsilon=\max\{\epsilon_0,\Delta\}$，递归定义停时 $\sigma_0=\inf\{t:|w_t|\ge\rho\}$、$\tau_k=\inf\{t>\sigma_{k-1}:|w_t|\le\epsilon\}$、$\sigma_k=\inf\{t>\tau_k:|w_t|\ge\rho\}$。在"有界更新假设"（每步增量 $|w_{t+1}-w_t|\le\Delta$ 以概率 $\ge 1-\delta_{\mathrm{upd}}$）和"再入率假设"（$\mathbb{P}[\tau_{k+1}\le T\mid\mathcal{F}_{\sigma_k}]\le g_T$）下，有效外到外翻转计数满足 $\mathbb{P}[K_T^{\mathrm{eff}}(\rho)\ge k]\le h_T g_T^{k-1}+\delta_{\mathrm{upd}}$，其中 $h_T=\mathbb{P}[\tau_1\le T]$。
-    - 设计动机：避免做泛函渐近分析却抓不到稀有事件——边界穿越本身就是稀有事件，停时是唯一能把"看似随机却持久"这两件事拼起来的语言；得到的几何尾律可直接被实验测出 $(\hat h,\hat g)$ 验证，且 SGD 的命题 3.5 把 $g_T^{\mathrm{SGD}}$ 与边界 margin $\rho-\epsilon$、学习率平方和 $\sum_t\eta_t^2$、batch noise 三个量挂钩，给出"何种训练 recipe 会更强锁定"的可操作刻度。
+谱随机性测试说符号矩阵长得像 i.i.d. Rademacher，但逐坐标又观测到符号长期不翻——这对悖论用传统的泛函渐近分析根本拼不到一起，因为它平均掉了恰恰最关键的稀有边界穿越事件。作者把单个标量权重看成一维过程 $(w_t)$，注意到符号翻转只能由 $w_t$ 穿过 0 触发，于是把"训练后是否翻转"重述成停时问题：固定外阈值 $\rho>0$ 和边界半径 $\epsilon=\max\{\epsilon_0,\Delta\}$，递归定义
 
-2. **低秩符号模板 $T=\mathrm{sign}(GH^\top)$**：
+$$\sigma_0=\inf\{t:|w_t|\ge\rho\},\quad \tau_k=\inf\{t>\sigma_{k-1}:|w_t|\le\epsilon\},\quad \sigma_k=\inf\{t>\tau_k:|w_t|\ge\rho\}.$$
 
-    - 功能：把训练前的"随机符号"换成可重生成的结构化符号，使存储成本摊到几乎 0。
-    - 核心思路：对每层 $W^{(l)}\in\mathbb{R}^{m\times n}$，采 $G\in\mathbb{R}^{m\times r}$、$H\in\mathbb{R}^{n\times r}$（i.i.d. 标准正态，$r\ll\min(m,n)$，论文用 $r=2$），令 $T^{(l)}=\mathrm{sign}(GH^\top)$；幅值 $A^{(l)}$ 从任意正分布采样，初始权重 $W^{(l)}=T^{(l)}\odot A^{(l)}$。推理时只存 $(G,H,r)$ 加幅值 SVD 因子，符号每权重比特数趋近 $0$。
-    - 设计动机：sign lock-in 保证训练完成后的符号矩阵接近 $T^{(l)}$，所以训练前选什么模板，训练后就能复用什么模板；通过把"低秩"从 $W$ 直接搬到"$\mathrm{sign}(GH^\top)$"上，绕开了"sign 矩阵几乎不可低秩近似"这个一比特墙的根本死结。
+在"有界更新假设"（每步增量 $|w_{t+1}-w_t|\le\Delta$ 以概率 $\ge 1-\delta_{\mathrm{upd}}$）和"再入率假设"（$\mathbb{P}[\tau_{k+1}\le T\mid\mathcal{F}_{\sigma_k}]\le g_T$）下，有效外到外翻转计数服从几何尾律
 
-3. **间隙初始化 + 外区对数障碍正则**：
+$$\mathbb{P}[K_T^{\mathrm{eff}}(\rho)\ge k]\le h_T\, g_T^{k-1}+\delta_{\mathrm{upd}},\qquad h_T=\mathbb{P}[\tau_1\le T].$$
 
-    - 功能：主动压小定理里的 $h_T$ 和 $g_T$，让模板真的被锁住。
-    - 核心思路：(a) 间隙初始化对每个 entry 做拒绝采样 $z\sim\mathcal{N}(0,\sigma_{\mathrm{init}}^2)$，若 $|z|<a_{\mathrm{init}}=c_{\mathrm{gap}}\sigma_{\mathrm{init}}$ 则重采，等价于支撑在 $\mathbb{R}\setminus[-a_{\mathrm{init}},a_{\mathrm{init}}]$ 上的双侧截断高斯，直接降低 $h_T$；(b) 在前期训练加对数障碍 $R_{\mathrm{LB}}(W)=\frac{1}{mn}\sum_{i,j}\log\max\{1,\frac{a_{\mathrm{init}}}{|W_{ij}|+\epsilon_{\mathrm{lb}}}\}$，权重在外区时该项恒为 0，靠近边界时光滑增大，对应损失 $\mathcal{L}_{\mathrm{total}}=\mathcal{L}_{\mathrm{task}}+\lambda(t)\sum_{l\in\mathcal{M}}R_{\mathrm{LB}}(W^{(l)})$，warmup 后 $\lambda(t)$ 退到 0，专门压住早期的再入概率 $g_T$。
-    - 设计动机：理论上两个旋钮独立对应 $h_T$（被初始化决定）和 $g_T$（被早期动力学决定），所以工程实现也分别下钳——把"是否被锁住"从默认行为升级为可调节的训练参数。
+这样写的好处是两个参数都能被实验直接量到 $(\hat h,\hat g)$ 验证，而且 SGD 版的命题 3.5 把再入率 $g_T^{\mathrm{SGD}}$ 与边界 margin $\rho-\epsilon$、学习率平方和 $\sum_t\eta_t^2$、batch noise 三者挂钩——等于给出了"什么训练 recipe 会让符号锁得更死"的可操作刻度，后续两个工程设计正是按这把刻度去压 $h_T$ 和 $g_T$。
+
+**2. 低秩符号模板 $T=\mathrm{sign}(GH^\top)$：把不可压缩的随机符号换成可重生成的结构。**
+
+sub-bit 区的根本死结是 sign 矩阵 $S$ 几乎不可低秩近似（$E_r(S)$ 衰减极慢，谱又像噪声），所以无论训练后怎么压都抵在"一比特墙"上。既然定理保证训练几乎不改符号，作者干脆把死结搬到训练之前：对每层 $W^{(l)}\in\mathbb{R}^{m\times n}$，采 $G\in\mathbb{R}^{m\times r}$、$H\in\mathbb{R}^{n\times r}$（i.i.d. 标准正态，$r\ll\min(m,n)$，论文取 $r=2$），令模板 $T^{(l)}=\mathrm{sign}(GH^\top)$，幅值 $A^{(l)}$ 从任意正分布采样，初始权重 $W^{(l)}=T^{(l)}\odot A^{(l)}$。因为符号会被锁住，训练前选的模板训练后照样能用，推理时只需存 $(G,H,r)$ 加幅值的 SVD 因子，符号的每权重比特数就趋近 0。关键在于它没有去近似那个不可低秩的 $S$，而是把"低秩"直接定义进 $\mathrm{sign}(GH^\top)$，从源头绕开了一比特墙。
+
+**3. 间隙初始化 + 外区对数障碍正则：把"是否被锁住"从默认行为变成可调旋钮。**
+
+模板要真被锁住，得主动压小定理里的 $h_T$ 和 $g_T$，而这两者恰好分别由初始化和早期动力学决定，所以工程上也分两路下钳。一路是间隙初始化：对每个 entry 做拒绝采样 $z\sim\mathcal{N}(0,\sigma_{\mathrm{init}}^2)$，若 $|z|<a_{\mathrm{init}}=c_{\mathrm{gap}}\sigma_{\mathrm{init}}$ 就重采，等价于支撑在 $\mathbb{R}\setminus[-a_{\mathrm{init}},a_{\mathrm{init}}]$ 上的双侧截断高斯，让权重一开始就远离 0，直接压低首次命中边界概率 $h_T$。另一路是外区对数障碍
+
+$$R_{\mathrm{LB}}(W)=\frac{1}{mn}\sum_{i,j}\log\max\Big\{1,\ \frac{a_{\mathrm{init}}}{|W_{ij}|+\epsilon_{\mathrm{lb}}}\Big\},$$
+
+权重在外区时它恒为 0、靠近边界时才光滑增大，总损失为 $\mathcal{L}_{\mathrm{total}}=\mathcal{L}_{\mathrm{task}}+\lambda(t)\sum_{l\in\mathcal{M}}R_{\mathrm{LB}}(W^{(l)})$，warmup 后 $\lambda(t)$ 退到 0，专门压住早期的再入概率 $g_T$。两个旋钮独立、各管一个尾系数，于是"符号被不被锁住"不再是听天由命的默认行为，而成了能调的训练超参。
 
 ### 损失函数 / 训练策略
 任务损失外只加一项 $\lambda(t)\sum_{l\in\mathcal{M}}R_{\mathrm{LB}}(W^{(l)};a_{\mathrm{init}},\epsilon_{\mathrm{lb}})$；$\lambda(t)$ 在 warmup 阶段保持常值，之后退到 0。模板 $T^{(l)}$ 仅在初始化时使用，训练过程中不显式约束符号——完全依赖几何尾律保证模板被自然保留。

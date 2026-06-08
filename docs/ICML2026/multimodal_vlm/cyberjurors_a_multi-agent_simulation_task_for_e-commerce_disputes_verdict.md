@@ -46,23 +46,21 @@ tags:
 
 ### 关键设计
 
-1. **Individual Verdict Chain-of-Thought (IV-CoT)**——四阶段推理 + "选证-感知"迭代:
+**1. Individual Verdict Chain-of-Thought（IV-CoT）：把单陪审员推理拆成四阶段，核心是"选证-感知"主动迭代。**
 
-    - 功能：让单个陪审员从冗余多模态证据中主动定位关键线索，并把因果逻辑链显式化。
-    - 核心思路：阶段 I 焦点抽取，$\boldsymbol{O}_{\text{I}}:\{F,F^b,F^s\}=\mathcal{F}_{\text{extract}}(d,\bm{T}^b,\bm{T}^s)$，抽出争议焦点和双方核心诉求；阶段 II 线索定位是核心创新，把传统一次性多模态理解改成 "Select-Perceive" 迭代——每轮先 $\bm{e}^b_{*,t}=\mathcal{F}_{\text{select}}(\boldsymbol{O}_{\text{I}},\bm{T}^b-\bm{T}^b_{select})$ 选出最可能含关键线索的一段证据，再 $\{K_t^b,A_t^b\}=\mathcal{F}_{\text{perceive}}(\boldsymbol{O}_{\text{I}},\bm{e}^b_{*,t},\boldsymbol{O}_{t-1}^b)$ 在该段上做细粒度感知，循环至 $T_{max}$ 轮；阶段 III 对抗分析 $\{\Delta,\Delta^b,\Delta^s\}=\mathcal{F}_{\text{analyze}}(\boldsymbol{O}_{\text{I}},\boldsymbol{O}_{\text{II}})$ 识别两方关键线索的逻辑冲突；阶段 IV 终局裁决 $\{\hat y_k,J_k\}=\mathcal{F}_{\text{judge}}(\boldsymbol{O}_{\text{I}},\boldsymbol{O}_{\text{II}},\boldsymbol{O}_{\text{III}})$ 产出判决与可追溯理由。
-    - 设计动机：MLLM 在超长上下文下"被动一次性感知"会把关键视觉线索淹没。"Select-Perceive" 迭代把上下文压在每轮一段证据上，既绕过了上下文窗口瓶颈，又把"焦点→证据"的因果链显式记录在 $\boldsymbol{O}_{\text{II}}$ 里，为后续对抗分析与可解释性铺路。买卖双方独立做迭代避免证据互相干扰。
+MLLM 在超长上下文里"被动一次性感知"会把关键视觉线索（如视频里 2% 电量的闪烁指示灯）淹没在十几张图、近一段视频的冗余证据中。IV-CoT 把单陪审员的推理拆成四步，让它主动去捞线索。阶段 I 焦点抽取 $\boldsymbol{O}_{\text{I}}:\{F,F^b,F^s\}=\mathcal{F}_{\text{extract}}(d,\bm{T}^b,\bm{T}^s)$ 先定争议焦点和双方诉求；阶段 II 线索定位是最关键的创新，把一次性多模态理解换成 "Select-Perceive" 迭代——每轮先 $\bm{e}^b_{*,t}=\mathcal{F}_{\text{select}}(\boldsymbol{O}_{\text{I}},\bm{T}^b-\bm{T}^b_{select})$ 挑出最可能含关键线索的一段证据，再 $\{K_t^b,A_t^b\}=\mathcal{F}_{\text{perceive}}(\boldsymbol{O}_{\text{I}},\bm{e}^b_{*,t},\boldsymbol{O}_{t-1}^b)$ 只在这一段上做细粒度感知，循环到 $T_{max}$ 轮，买卖双方各自独立迭代以免证据互扰；阶段 III 对抗分析 $\{\Delta,\Delta^b,\Delta^s\}=\mathcal{F}_{\text{analyze}}(\boldsymbol{O}_{\text{I}},\boldsymbol{O}_{\text{II}})$ 找出两方线索的逻辑冲突；阶段 IV 终局裁决 $\{\hat y_k,J_k\}=\mathcal{F}_{\text{judge}}(\cdot)$ 给出判决和可追溯理由。这样把上下文压在每轮一段证据上，既绕开窗口瓶颈，又把"焦点→证据"的因果链显式记进 $\boldsymbol{O}_{\text{II}}$。消融显示 Select-Perceive 迭代比单步选证多带来 3.28% Acc，是 IV-CoT 内部贡献最大的设计。
 
-2. **Jury Consensus Verdict (JCV)**——异质陪审员 + 集体摘要的 $T$ 轮社交仿真:
+**2. Jury Consensus Verdict（JCV）：用 $T$ 轮异质陪审员社交仿真把单模型偏见摊平。**
 
-    - 功能：用多轮多陪审员讨论缓解单模型固有偏见，并把社交网络结构作为信息流约束。
-    - 核心思路：每个陪审员 $a_k=\{\boldsymbol{P}_k,\boldsymbol{M}_k\}$ 由人格 $\boldsymbol{P}_k$ + 记忆 $\boldsymbol{M}_k$ 构成；第 $t$ 轮的决策依赖案件、人格、记忆、邻居集 $\boldsymbol{R}_{k,t}=\{J_{j,t-1}\mid e_{k,j}\in\boldsymbol{E}\}$、全局集体摘要 $\boldsymbol{S}_t=\mathcal{F}_{\text{sum}}(d,\bigcup_j J_{j,t-1})$，即 $\hat y_{k,t},J_{k,t}=\mathcal{F}_{\text{judge}}(\boldsymbol{D},\boldsymbol{P}_k,\boldsymbol{M}_k,\boldsymbol{R}_{k,t},\boldsymbol{S}_t)$。最后多数投票 $\hat y=\mathbb{I}(\hat y^s>\hat y^b)$。
-    - 设计动机：单 LLM 在缺乏明确法规约束时会复读训练数据偏见（如对卖家系统性偏向）。让 $N$ 个异质陪审员沿 $\boldsymbol{G}$ 局部交换意见 + 全局 summary 做宏观引导，既保留独立推理又能驱动外围陪审员重新审视极端立场，提升决策稳定性。
+单个 LLM 在缺乏成文法约束时会复读训练数据里的偏见（如系统性偏向卖家）。JCV 把裁决建模成有向社交网络 $\boldsymbol{G}$ 上的多轮讨论：每个陪审员 $a_k=\{\boldsymbol{P}_k,\boldsymbol{M}_k\}$ 由人格 $\boldsymbol{P}_k$ 加记忆 $\boldsymbol{M}_k$ 组成，第 $t$ 轮的决策同时依赖案件、人格、记忆、邻居上一轮判词 $\boldsymbol{R}_{k,t}=\{J_{j,t-1}\mid e_{k,j}\in\boldsymbol{E}\}$ 和全局集体摘要 $\boldsymbol{S}_t=\mathcal{F}_{\text{sum}}(d,\bigcup_j J_{j,t-1})$，即 $\hat y_{k,t},J_{k,t}=\mathcal{F}_{\text{judge}}(\boldsymbol{D},\boldsymbol{P}_k,\boldsymbol{M}_k,\boldsymbol{R}_{k,t},\boldsymbol{S}_t)$，最后多数投票 $\hat y=\mathbb{I}(\hat y^s>\hat y^b)$。让 $N$ 个异质陪审员沿网络局部交换意见、再用全局 summary 做宏观引导，既保留独立推理又能逼外围陪审员重审极端立场，决策更稳。
 
-3. **Verdict Precedent**——把 Stare Decisis 注入 agent memory:
+**3. Verdict Precedent：把普通法的 Stare Decisis 注入 agent 记忆。**
 
-    - 功能：用历史判例为陪审员提供规范化、可追溯的裁决依据，弥补"无成文法"的空白。
-    - 核心思路：构造 Precedent Base $\boldsymbol{B}=\langle\boldsymbol{H},\boldsymbol{N}\rangle$，$\boldsymbol{H}$ 是历史判例，$\boldsymbol{N}$ 是从中蒸馏的显式裁决指引。对每个新案件先做语义检索 $\boldsymbol{H}_{\text{guide}},\boldsymbol{N}_{\text{guide}}=\mathcal{F}_{\text{retrieve}}(\boldsymbol{D},\boldsymbol{B})$ 找到最相关判例与对应指引；再按 $\boldsymbol{M}_k=\{\text{Rank}(\Phi(\boldsymbol{P}_k,\boldsymbol{N}_j))\le K\mid \boldsymbol{N}_j\in\boldsymbol{N}_{\text{guide}}\}$ 选出 top-$K$ 条与该陪审员人格最匹配的指引，写进其记忆。
-    - 设计动机：判例不仅替代"法条"，还**个性化**——不同人格的陪审员被分配不同 norm 子集，模拟现实陪审团里成员关注点的天然差异，同时保证整体围绕同一判例展开，提高公平性与可解释性。
+电商裁决没有刚性法条，只有灵活的平台惯例，模型缺指引就容易暴露偏见。作者借 Stare Decisis 原则用历史判例补这个空白：构造 Precedent Base $\boldsymbol{B}=\langle\boldsymbol{H},\boldsymbol{N}\rangle$（$\boldsymbol{H}$ 是历史判例，$\boldsymbol{N}$ 是从中蒸馏的显式裁决指引），新案件先语义检索 $\boldsymbol{H}_{\text{guide}},\boldsymbol{N}_{\text{guide}}=\mathcal{F}_{\text{retrieve}}(\boldsymbol{D},\boldsymbol{B})$ 找最相关判例，再按 $\boldsymbol{M}_k=\{\text{Rank}(\Phi(\boldsymbol{P}_k,\boldsymbol{N}_j))\le K\}$ 给每个陪审员挑 top-$K$ 条与其人格最匹配的指引写进记忆。判例在这里不只替代"法条"，还做了个性化——不同人格分到不同 norm 子集，既模拟现实陪审团成员关注点的天然差异，又保证整体围绕同一批判例展开，兼顾公平与可解释。
+
+### 一个完整示例：一桩"手机充不进电"的纠纷怎么跑完一轮
+
+以一桩数码类纠纷为例：买家称手机充不进电、附 14 张聊天截图和一段开箱视频，卖家反驳称是买家操作问题。①IV-CoT 阶段 I 抽出焦点"设备是否出厂即故障"；②阶段 II 的 Select-Perceive 不会一口气读完所有证据，而是先选出那段开箱视频做细粒度感知，捕捉到画面里电量指示灯停在 2% 闪烁这条关键线索，再回头选聊天记录补证；③阶段 III 把"卖家称已测试通过"与"视频显示无法充电"的冲突摆出来；④阶段 IV 该陪审员判买家胜并写明理由。与此同时另外 16 名异质人格陪审员各自跑一遍 IV-CoT，JCV 把上一轮判词和判例指引喂给每人做第 2、3 轮讨论，集体共识超过 $\delta=0.8$ 就提前停，最终多数投票出裁决，集体摘要充当可解释 justification。整条链里"主动选证"是把长冗余多模态证据压成局部 perception 的关键。
 
 ### 损失函数 / 训练策略
 全推理框架，使用 Gemini-2.5-Flash-Lite-Nothinking 做底座；$T_{max}=3$（IV-CoT 选证-感知最大轮数）、$T=3$（JCV 讨论轮数）、$K=3$（每陪审员保留 top-3 判例指引）、early-stop 阈值 $\delta=0.8$（集体共识超过即停止）、视频按 30 帧均匀采样。$\boldsymbol{G}$ 初始化沿用既有社交模拟工作。
@@ -125,12 +123,6 @@ CyberJurors 相对第二名 (AgentCourt) Acc 提升 6.19%、Weig. F1 提升 0.06
 - 实验充分度: ⭐⭐⭐⭐ 5 类共 14 个 baseline、5 步消融、token 比较；缺多 backbone 与公平性细分。
 - 写作质量: ⭐⭐⭐⭐ 任务动机讲得很清楚，IV-CoT 的四阶段与 JCV 的形式化都给到了公式与符号定义。
 - 价值: ⭐⭐⭐⭐⭐ 既给了高质量基准也给了一个可直接落地为商用辅助系统的方法，对学术与工业都很实用。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

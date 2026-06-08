@@ -52,23 +52,21 @@ SPSsafe 步长：$\gamma_t = \min\left\{\frac{(f_i(x_t) - \ell_i^*)_+}{\|g_t^i\|
 
 ### 关键设计
 
-1. **Safeguard 上限 $\gamma_{\max}$（核心创新）**:
+**1. Safeguard 上限 $\gamma_{\max}$（核心创新）：给 Polyak 步长封顶，挡住非光滑下的步长爆炸。**
 
-    - 功能：把 Polyak 步长 cap 在固定上界，避免非光滑下步长爆炸
-    - 核心思路：非光滑下 $\|g_t^i\|^2$ 可能很小但 $f_i(x_t) - \ell_i^*$ 不一定小，naive Polyak 步长可能任意大；加 $\gamma_{\max}$ cap 保步长有界，从而保收敛分析里的 Hoeffding 类 bound 可用
-    - 设计动机：classical SPS 在光滑下自然有界（gradient Lipschitz 保 $\|g\|^2$ 不会太小），非光滑下没这保证；safeguard 是 minimal 修复保理论
+经典 SPS 在光滑情形下天然有界——梯度 Lipschitz 保证 $\|g_t^i\|^2$ 不会太小，于是步长不会失控。可一旦进入非光滑 regime，次梯度可能跳变，$\|g_t^i\|^2$ 会变得很小而 $f_i(x_t)-\ell_i^*$ 却不一定小，naive Polyak 步长 $(f_i(x_t)-\ell_i^*)/\|g_t^i\|^2$ 就可能任意大、直接发散。SPSsafe 的修复极简：给步长加一个固定上界，
 
-2. **$\ell_i^*$ 作下界替代 $f_i^*$**:
+$$\gamma_t=\min\left\{\frac{(f_i(x_t)-\ell_i^*)_+}{\|g_t^i\|^2+\epsilon},\;\gamma_{\max}\right\}.$$
 
-    - 功能：不需要 oracle 知最优 $f_i^*$，用已知下界即可
-    - 核心思路：$\ell_i^* \leq \inf f_i$ 通常已知（非负损失 = 0），代入 $\gamma_t = (f_i(x_t) - \ell_i^*)_+/\|g_t^i\|^2$；用 $(\cdot)_+$ 截断避免负值
-    - 设计动机：之前 SPS* 需 $f_i(x^*)$（oracle 不可得）；本文用下界相当于"已知 SPS"，不需要任何额外信息
+这个 cap 一方面保证步长有界、不爆，另一方面又只在"步长本来就该小"时不起作用，从而保留了 Polyak 的自适应特性。它在收敛证明里也是关键——步长有界才能让 Hoeffding 类的 bound 成立，所以 safeguard 是让非光滑分析跑通的最小必要修复。
 
-3. **IMA 动量框架等价 SHB**:
+**2. $\ell_i^*$ 作下界替代 $f_i^*$：用已知下界绕开"必须知道最优值"的 oracle 假设。**
 
-    - 功能：把动量加入 SPSsafe 而不破坏理论
-    - 核心思路：IMA 双序列（$z$ + $x$ 平均）等价 SHB 的 $x_{t+1} = x_t - \hat\gamma_t g_t^i + \beta(x_t - x_{t-1})$；用 $\hat\gamma_t = \gamma_t$ SPSsafe 步长；分析保持因为 IMA 形式更适合 Lyapunov 类分析
-    - 设计动机：动量在实践中很有用但理论分析常很难；IMA 等价形式提供了 cleaner 分析框架
+此前的非光滑 SPS 变体（如 SPS*）要么需要 interpolation 假设，要么需要知道每个 $f_i(x^*)$——后者在实际中根本拿不到。SPSsafe 注意到一个朴素事实：很多损失的下界 $\ell_i^*\le\inf f_i$ 是已知的（非负损失如交叉熵下界就是 0），那就直接用下界代进步长公式，并用 $(\cdot)_+$ 截断避免负值。这相当于把"需要 oracle 的 SPS"降级成"已知下界的 SPS"，不需要任何额外信息就能算，是让方法真正实用的一步。
+
+**3. IMA 动量框架等价 SHB：把动量加进来又不破坏理论。**
+
+动量在实践里很有用，但它的非光滑分析常常很棘手。SPSsafe 借 IMA 的双序列形式（一个 $z$ 序列做更新、一个 $x$ 序列做平均）来加动量，而这个形式恰好等价于带动量的 SHB：$x_{t+1}=x_t-\hat\gamma_t g_t^i+\beta(x_t-x_{t-1})$，只要令 $\hat\gamma_t=\gamma_t$ 用同一套 SPSsafe 步长即可。之所以走 IMA 而非直接分析 SHB，是因为这个等价形式更适合 Lyapunov 类分析——它把"加了动量后还能不能保证收敛"这件难事变得干净可证，于是动量版（实验里通常最优）也能落在严格理论保证之内。
 
 ## 实验关键数据
 

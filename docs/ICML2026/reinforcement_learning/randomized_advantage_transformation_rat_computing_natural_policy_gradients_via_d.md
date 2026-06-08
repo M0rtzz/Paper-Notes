@@ -53,23 +53,25 @@ tags:
 
 ### 关键设计
 
-1. **Woodbury 形式的优势重写**:
+**1. Woodbury 形式的优势重写：把"逆 Fisher × 梯度"改写成"普通梯度 × 变换后优势"。**
 
-    - 功能：把"逆 Fisher × 普通梯度"改写为"普通梯度形式 × 变换后优势"，让 NPG 与 PG 在程序结构上无差别。
-    - 核心思路：对 $(\lambda\bm{I}_p+\bm{H}^\top\bm{\Sigma}\bm{H})^{-1}\bm{H}^\top\bm{\Sigma}$ 反复套 Woodbury 恒等式 $(\bm{I}+\bm{U}\bm{V})^{-1}\bm{U}=\bm{U}(\bm{I}+\bm{V}\bm{U})^{-1}$ 两次，得到 $\nabla^{\text{T-NPG}}_{\bm{\theta}} J=\bm{H}^\top\bm{\Sigma}(\lambda\bm{I}_n+\bm{H}\bm{H}^\top\bm{\Sigma})^{-1}\bm{y}$。可以把它读成"普通策略梯度，但优势从 $A_\pi$ 换成 $\bar{A}_\pi=[(\lambda\bm{I}_n+\bm{H}\bm{H}^\top\bm{\Sigma})^{-1}\bm{y}]_{(s,a)}$"。
-    - 设计动机：原来要在 $p\times p$ 上求逆（参数百万维就崩了），现在搬到 $n\times n$ 上；只要 batch 比参数小，求逆代价立刻可控；同时所有曲率信息都被压进"优势"这一个 scalar 上，下游优化器、损失结构都不用动。
+所有改进 NPG 效率的工作都卡在同一处——怎么对 $p\times p$（参数百万维）的 Fisher 求逆。RAT 的破局点是对 $(\lambda\bm{I}_p+\bm{H}^\top\bm{\Sigma}\bm{H})^{-1}\bm{H}^\top\bm{\Sigma}$ 反复套两次 Woodbury 恒等式 $(\bm{I}+\bm{U}\bm{V})^{-1}\bm{U}=\bm{U}(\bm{I}+\bm{V}\bm{U})^{-1}$，把逆矩阵从参数维搬到样本维：
 
-2. **随机分块 Kaczmarz 迭代求解优势变换**:
+$$\nabla^{\text{T-NPG}}_{\bm{\theta}} J=\bm{H}^\top\bm{\Sigma}\,(\lambda\bm{I}_n+\bm{H}\bm{H}^\top\bm{\Sigma})^{-1}\bm{y}.$$
 
-    - 功能：在 mini-batch 规模 $B\ll p$ 时把 $\tilde{\bm{y}}$ 的求解从一次 $n\times n$ 求逆切成 $K$ 次 $B\times B$ 求逆，并实现"每步只走标准反向传播"。
-    - 核心思路：从 $\bm{g}_0$ 出发，每次随机取一个 mini-batch $\tau_j$，做一次正则化投影 $\bm{g}_j\leftarrow\arg\min_{\bm{g}}\|\bm{y}_{\tau_j}-\bm{H}_{\tau_j}\bm{g}\|_2^2+\lambda\|\bm{g}-\bm{g}_{j-1}\|_2^2$。这个 proximal 子问题有闭式更新 $\bm{g}_j=\bm{g}_{j-1}+\bm{H}_{\tau_j}^\top\,[(\lambda\bm{I}+\bm{H}_{\tau_j}\bm{H}_{\tau_j}^\top)^{-1}(\bm{y}_{\tau_j}-\bm{H}_{\tau_j}\bm{g}_{j-1})]$，括号里的 $B\times B$ 求逆就是"随机化优势变换"$\tilde{A}_j$。论文用 `torch.linalg.solve` 解线性系统而不是显式求逆，数值更稳；$\bm{H}_{\tau}$ 用 PyTorch 的 per-sample gradients 拿；进一步还可以用 Nyström 近似把 $\bm{H}\bm{H}^\top$（其实就是神经切向核 NTK）的代价压到次线性。
-    - 设计动机：经典 Kaczmarz 的硬约束投影在 RL 这种 batch 噪声大、$\bm{H}_\tau$ 经常秩亏的场景下不稳定；加 Tikhonov 写成 proximal 形式既保证 $(\lambda\bm{I}+\bm{H}_\tau\bm{H}_\tau^\top)$ 始终可逆，又让每步只与最近的 $\bm{g}_{j-1}$ 偏离一点，曲率信息被逐渐"渗透"进 $\bm{g}$；与 SPRING 之类带动量的 Kaczmarz 变体不同的是，RAT 不跨 rollout 累积 $\bm{g}_j$，而是在单次 on-policy 数据内部反复 refine，避免 stale gradient。
+这个式子可以原样读成"普通策略梯度，只是优势从 $A_\pi$ 换成了 $\bar{A}_\pi=[(\lambda\bm{I}_n+\bm{H}\bm{H}^\top\bm{\Sigma})^{-1}\bm{y}]_{(s,a)}$"。它有效的关键在于两点：求逆从 $p\times p$ 缩到 $n\times n$，只要 batch 比参数小代价立刻可控；而且所有曲率信息都被压进"优势"这一个标量里，下游优化器、损失结构完全不用动，天然兼容所有以 advantage 为接口的算法（PPO、A2C、GAE）。
 
-3. **架构无关的共享 actor-critic 适配（伪优势）**:
+**2. 随机分块 Kaczmarz 迭代：把一次 $n\times n$ 求逆切成 $K$ 次 $B\times B$ 求逆。**
 
-    - 功能：让 RAT 在 actor 与 critic 共享主干网络（这类网络对 KFAC、Guzmán-Cordero 等方法都非常难处理）的情况下仍能用一个统一目标更新。
-    - 核心思路：仿照 ACKTR，把 critic 当作以预测均值为参数的 Gaussian 似然，再额外引入一个 critic 端的"伪优势"（如全 1 向量），把 actor 优势 $\bm{y}^\pi$ 与 critic 伪优势 $\bm{y}^V$ 拼起来送进同一次 RAT 迭代，得到一个共享的代理损失。梯度自动由 autograd 处理，不必手工区分哪些参数属于 actor、哪些属于 critic、再做加权合并。同时配合 $\ell_2$ 范数的梯度裁剪 $\alpha_j=\min(\eta,\nu/\|\bm{g}_j\|_2)$ 保证训练稳定。
-    - 设计动机：KFAC/Guzmán-Cordero 等方法默认每个 head 各算各的曲率再合并，这种"手动 partition"既依赖架构又难以扩展；RAT 把 actor/critic 都丢进 Woodbury 变形后的"普通 PG 框架"里，曲率走 autograd 是免费的；同时这也呼应了第 1 项设计——既然 NPG 已经退化为普通 PG 形式，那共享主干、共享损失就是自然的。
+连续动作下 $n=|\mathcal S||\mathcal A|$ 仍然很大，于是把求 $\tilde{\bm y}$ 写成正则化最小二乘 $\min_{\bm g}\|\bm y-\bm H\bm g\|_{\bm\Sigma}^2+\lambda\|\bm g\|_2^2$，再用随机分块 Kaczmarz 在 on-policy mini-batch 上迭代逼近。每次随机取一个 mini-batch $\tau_j$ 做正则化投影，proximal 子问题有闭式解
+
+$$\bm{g}_j=\bm{g}_{j-1}+\bm{H}_{\tau_j}^\top\big[(\lambda\bm{I}+\bm{H}_{\tau_j}\bm{H}_{\tau_j}^\top)^{-1}(\bm{y}_{\tau_j}-\bm{H}_{\tau_j}\bm{g}_{j-1})\big],$$
+
+括号里的 $B\times B$ 求逆就是"随机化优势变换"$\tilde A_j$（实现上用 `torch.linalg.solve` 而非显式求逆求稳，$\bm H_\tau$ 用 PyTorch per-sample gradients 取，$\bm H\bm H^\top$ 其实就是 NTK、可进一步用 Nyström 压到次线性）。为什么非要加 Tikhonov 写成 proximal 形式？因为经典 Kaczmarz 的硬约束投影在 RL 这种 batch 噪声大、$\bm H_\tau$ 经常秩亏的场景下不稳定；proximal 形式既保证 $(\lambda\bm I+\bm H_\tau\bm H_\tau^\top)$ 始终可逆，又让每步只偏离 $\bm g_{j-1}$ 一点点、把曲率信息逐渐"渗透"进 $\bm g$。和 SPRING 那类带动量的 Kaczmarz 不同，RAT 不跨 rollout 累积 $\bm g_j$，而是在单次 on-policy 数据内部反复 refine，避免 stale gradient。
+
+**3. 架构无关的共享 actor-critic 适配（伪优势）：让共享主干网络"免费"成立。**
+
+KFAC、Guzmán-Cordero 这类方法默认每个 head 各算各的曲率再手工合并，一旦 actor 与 critic 共享主干就难以处理。既然第一项设计已经把 NPG 退化成普通 PG 形式，共享主干、共享损失就成了自然的事：仿照 ACKTR 把 critic 当作以预测均值为参数的 Gaussian 似然，再额外引入一个 critic 端的"伪优势"（如全 1 向量），把 actor 优势 $\bm y^\pi$ 与 critic 伪优势 $\bm y^V$ 拼起来送进同一次 RAT 迭代，得到一个共享代理损失。梯度由 autograd 自动处理，不必手工区分哪些参数属于 actor、哪些属于 critic 再加权合并；配合 $\ell_2$ 梯度裁剪 $\alpha_j=\min(\eta,\nu/\|\bm g_j\|_2)$ 保证训练稳定。这正是 RAT 在共享网络场景里碾压需要手动拆 Fisher 的 KFAC 的原因。
 
 ### 损失函数 / 训练策略
 

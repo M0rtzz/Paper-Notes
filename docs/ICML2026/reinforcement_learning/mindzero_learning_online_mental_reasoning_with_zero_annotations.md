@@ -46,23 +46,21 @@ MindZero 训练一个多模态 LLM $Q_\theta(\cdot \mid s_{1:t}, a_{1:t})$，给
 
 ### 关键设计
 
-1. **自监督 RL 奖励 = ELBO**：
+**1. 自监督 RL 奖励 = ELBO：零心智标注下也能给 LLM 一个学习信号。**
 
-    - 功能：在零心智标注下给 LLM 提供可学习信号，让它学到「能解释人类行为的心智假设」这一隐式监督。
-    - 核心思路：对未标注的轨迹，把 ToM 当变分推断 $Q_\theta \approx P(m | s, a)$，最大化 ELBO $\mathcal{J}(\theta) = \mathbb{E}_{Q_\theta}[\log(P(a_{1:t} | m_t, s_{1:t}) \cdot P(m_t))] + H(Q_\theta)$。落到 $N$ 个采样假设上就是 $R(\mathcal{M}_t, \mathcal{Q}_t) = \sum_i q_t^{(i)} \log[P(a_{1:t} | m_t^{(i)}, s_{1:t}) P(m_t^{(i)})] - \sum_i q_t^{(i)} \log q_t^{(i)}$。最后用 GRPO 在 group 内做相对优势更新，避免引入 critic。
-    - 设计动机：传统下一 token 预测是「正向」的（拟合 $a | s$），心智推理必须做「反向」推断（推 $m | s, a$），二者训练目标完全不同。把 ELBO 写成奖励就把反向推断接入了 RL 后训练管线，且天然不依赖 ground-truth $m^\star$。
+心智推理最大的障碍是开放场景里根本拿不到 ground-truth 心智状态 $m^\star$，监督学习无从下手。MindZero 的破法是把 ToM 当变分推断 $Q_\theta\approx P(m|s,a)$，最大化只依赖"行为—状态—假设"三元组、不依赖真值的 ELBO
 
-2. **多假设 + 熵正则化**：
+$$\mathcal{J}(\theta) = \mathbb{E}_{Q_\theta}\big[\log\big(P(a_{1:t}|m_t,s_{1:t})\cdot P(m_t)\big)\big] + H(Q_\theta).$$
 
-    - 功能：让模型同时维护多个相互竞争的心智假设并显式给出每个的置信度，避免在早期证据不足时过早 commit 到一个错误目标。
-    - 核心思路：奖励函数里强制要求模型一次输出 $N$ 个假设与归一化后验 $\{q_t^{(i)}\}$；熵项 $H(Q_\theta) = -\sum_i q_t^{(i)} \log q_t^{(i)}$ 直接惩罚「单点 collapse」。这样下游 helper 在面对模糊行为时可以按 $P(a^A | m) \cdot q(m)$ 加权选动作，等观察更多动作后再让某个假设的后验显著上升。
-    - 设计动机：早期 BIP 之所以鲁棒，本质就在于它显式追踪多个假设的后验分布；单点预测在 GridWorld 这种早期完全模糊的任务里会让 helper 在错误方向上提前出手，反而拖慢人类。消融显示去掉多假设掉 8.8% speedup，去掉熵正则掉 13.9%——熵项是防 collapse 的最关键开关。
+落到 $N$ 个采样假设上就是 $R(\mathcal{M}_t,\mathcal{Q}_t)=\sum_i q_t^{(i)}\log[P(a_{1:t}|m_t^{(i)},s_{1:t})P(m_t^{(i)})] - \sum_i q_t^{(i)}\log q_t^{(i)}$，再用 GRPO 在 group 内做相对优势更新、免去 critic。这一步的巧妙在于：传统 next-token 预测是"正向"拟合 $a|s$，而心智推理必须做"反向"推断 $m|s,a$，二者训练目标完全不同——把 ELBO 写成奖励就把反向推断接进了 RL 后训练管线，且天然不需要 $m^\star$，等于让 LLM 通过 GRPO 直接"内化"贝叶斯逆向规划的演绎结构。
 
-3. **显式先验建模 + 双估计器**：
+**2. 多假设 + 熵正则化：在证据不足时别急着 commit 到一个错误目标。**
 
-    - 功能：用 LLM 当先验估计器约束假设空间，避免奖励黑客 (reward hacking)；用领域适配的似然估计器（model-based planner / LLM）提供贝叶斯证据。
-    - 核心思路：先验 $P(m_t)$ 由 LLM 直接对每个候选目标的「常识合理性」打 log-prior 分（如「把苹果放进洗碗机」会被打极低分）。似然 $P(a_{1:t} | m_t, s_{1:t})$ 在 GridWorld 用 model-based planner（基于规划器算最优策略下动作概率）估，在家居域复用同一个预训练 LLM 估。两者乘进 ELBO 奖励的 $\log$ 内。
-    - 设计动机：若只用似然项，模型会把目标写得极宽（如「拿桌上所有东西」），让任何行为都「合理」，靠 reward hacking 拿满分；先验项把这条捷径堵死。两个估计器解耦也使框架可以低成本迁移到新领域，只需更换 planner 或 prompt。
+早期 BIP 之所以鲁棒，本质是它显式追踪多个假设的后验分布；单点预测在 GridWorld 这种早期完全模糊的任务里会让 helper 在错误方向上提前出手、反而拖慢人类。MindZero 因此在奖励里强制模型一次输出 $N$ 个假设和归一化后验 $\{q_t^{(i)}\}$，并用熵项 $H(Q_\theta)=-\sum_i q_t^{(i)}\log q_t^{(i)}$ 直接惩罚"单点 collapse"。这样下游 helper 面对模糊行为时可以按 $P(a^A|m)\cdot q(m)$ 加权选动作，等观察到更多动作再让某个假设的后验显著上升。消融印证了这层设计的分量——去掉多假设掉 8.8% speedup，去掉熵正则掉 13.9%，熵项是防 collapse 最关键的开关。
+
+**3. 显式先验建模 + 双估计器：堵住 reward hacking 并让框架可跨域迁移。**
+
+如果奖励只有似然项，模型会把目标写得极宽（如"拿桌上所有东西"），让任何行为都"合理"、靠 reward hacking 拿满分。MindZero 用 LLM 当先验估计器对每个候选目标的"常识合理性"打 log-prior 分（"把苹果放进洗碗机"会被打极低分），把这条捷径堵死。似然项 $P(a_{1:t}|m_t,s_{1:t})$ 则用领域适配的估计器提供——GridWorld 用 model-based planner（按规划器算最优策略下的动作概率），家居域复用同一个预训练 LLM——两者乘进 ELBO 奖励的 $\log$ 内。把先验和似然解耦成两个估计器，还让框架能低成本迁移到新领域，只需更换 planner 或 prompt。
 
 ### 损失函数 / 训练策略
 

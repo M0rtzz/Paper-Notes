@@ -44,24 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **AI Allowance 分配机制（Benchmarking + Assistance Factor）**:
+**1. AI Allowance 分配机制（Benchmarking + Assistance Factor）：避免锁死历史不公又不一刀切均分。**
 
-    - 功能：把 carbon ETS 的 benchmarking 方法本地化到 AI，避免 grandfathering 锁死历史不公平、又避免一刀切均分挤死大公司。
-    - 核心思路：对每家被纳管公司 $i$，配额 $A_i = O_i \cdot B \cdot C_i$。$O_i$ 是其 FLOP 输出（如 EU ETS 中的两年滚动均值并按 15% 调整），$B$ 是行业基准 watts-per-FLOP（参考碳市的"行业前 10% 最优 / 平均 90%" 设法），$C_i$ 是公司专属 assistance factor：用清洁能源 $C_i > 1$、化石能源或违规者 $C_i < 1$。给定公司自身效率 $E_i$（watts/FLOP），实际允许 FLOP 数 $F_i = A_i / E_i$。
-    - 设计动机：均匀分配会导致 OpenAI 这种亿级用户公司必须人为限流，造成"配额造成的革命退步"；benchmarking 让大公司有合理 FLOP 空间但效率不达标就要花钱买配额，小公司效率高就有富余配额卖钱——既不挤出 incumbents，也不锁死新创。
+碳市场分配配额有两种老路：grandfathering 按历史排放免费发，会把过去的不公平锁死；均匀均分又会让 OpenAI 这种亿级用户公司被迫限流，造成"配额造成的革命退步"。本文照搬碳 ETS 的 benchmarking 思路：对每家被纳管公司 $i$，配额 $A_i = O_i \cdot B \cdot C_i$。$O_i$ 是其 FLOP 输出（如两年滚动均值并按 15% 调整），$B$ 是行业基准 watts-per-FLOP（参照碳市"行业前 10% 最优 / 平均 90%"的设法），$C_i$ 是公司专属 assistance factor——用清洁能源 $C_i > 1$、化石能源或违规者 $C_i < 1$；给定自身效率 $E_i$（watts/FLOP），实际允许 FLOP 数 $F_i = A_i / E_i$。这样大公司有合理 FLOP 空间但效率不达标就得花钱买配额，小公司效率高就有富余配额可卖——既不挤出 incumbents，也不锁死新创。
 
-2. **二级市场 + 配额储存 (Allowance Banking)**:
+**2. 二级市场 + 配额储存（Allowance Banking）：让效率本身具有可交易的现金价值。**
 
-    - 功能：让效率本身具有可交易的现金价值，并允许公司跨年平滑波动。
-    - 核心思路：政府是一级市场（免费下发），公司之间在二级市场（类似 European Energy Exchange / Korea Exchange）自由买卖配额；超额公司须采购配额或被重罚。剩余配额可 bank 到下一年。论文把这种新现金流定位为初创公司的"breathing room revenue stream"，让 burn rate 期能撑住。
-    - 设计动机：碳市场实证（如 EU ETS）显示，二级市场把"减排"变成赚钱机会，是激励效率创新最有效的杠杆。把这套逻辑迁移到 AI 后，"训练高效率小模型"本身就有市价，可逆转目前"只要算力够就行"的激励扭曲。
+当下 AI 行业的激励扭曲在于"只要算力买得起就没人逼你节能"，能耗负外部性没被定价。这个设计就是给效率定价：政府作为一级市场免费下发配额，公司之间在二级市场（类似 European Energy Exchange / Korea Exchange）自由买卖，超额公司须采购配额或被重罚，剩余配额还能 bank 到下一年平滑波动。论文把这种新现金流定位为初创公司在 burn rate 期的"breathing room revenue stream"。碳市场实证（如 EU ETS）已经证明，二级市场把"减排"变成赚钱机会是激励效率创新最有效的杠杆；迁移到 AI 后，"训练高效率小模型"本身就有市价，足以逆转"只要算力够就行"的扭曲。
 
-3. **理性公司均衡 & 减 FLOP 证明（KKT 条件）**:
+**3. 理性公司均衡 & 减 FLOP 证明（KKT 条件）：给立法者一个数学背书。**
 
-    - 功能：在博弈论框架下严格证明引入交易后均衡 FLOP 使用更少，给立法者提供数学背书。
-    - 核心思路：把单公司效用建模为 $u(x) = -x^{-k} - ax$（$x$ 是 FLOP，$-x^{-k}$ 反映性能改进的递减回报，$a$ 是 cost-per-FLOP）。无机制下 $\nabla u = 0$ 得 $x^\ast = (k/a)^{1/(k+1)}$。引入交易变量 $y$（>0 卖、<0 买）与价格 $b$、配额上限 $F_i$，得到约束问题
-$\max u(x,y) = -x^{-k} - ax + by\quad\text{s.t.}\ x+y \le F_i,\ x \ge 0$。Lagrangian 一阶条件给出 $\mu_1 = b$，结合 complementary slackness 解出 $x^\ast = (k/(a+b))^{1/(k+1)}$ 和 $y^\ast = F_i - x^\ast$。因为 $b > 0$，所以 $x^\ast_{\text{cap}} < x^\ast_{\text{no cap}}$——交易价格 $b$ 把买卖配额的"机会成本"叠加到 cost-per-FLOP 上，从而让最优 FLOP 严格减少。
-    - 设计动机：很多 AI 治理提案是政治论证，缺乏经济学验证。给出闭式解后，立法者既能看到"减多少"对 $b$ 的敏感性，也能识别哪些参数（比如 $b$ 设得太低、$a$ 太高）会让减排目标失效。
+很多 AI 治理提案停留在政治论证，缺乏经济学验证；闭式解能让立法者直接看到"减多少"对参数的敏感性。作者把单公司效用建模为 $u(x) = -x^{-k} - ax$（$x$ 是 FLOP，$-x^{-k}$ 反映性能改进的递减回报，$a$ 是 cost-per-FLOP），无机制下 $\nabla u = 0$ 得 $x^\ast = (k/a)^{1/(k+1)}$。引入交易变量 $y$（>0 卖、<0 买）、价格 $b$ 与配额上限 $F_i$ 后，约束问题变成
+
+$$\max u(x,y) = -x^{-k} - ax + by\quad\text{s.t.}\ x+y \le F_i,\ x \ge 0.$$
+
+Lagrangian 一阶条件给出 $\mu_1 = b$，结合 complementary slackness 解出 $x^\ast = (k/(a+b))^{1/(k+1)}$、$y^\ast = F_i - x^\ast$。因为 $b > 0$，所以 $x^\ast_{\text{cap}} < x^\ast_{\text{no cap}}$——交易价格 $b$ 把买卖配额的机会成本叠加到 cost-per-FLOP 上，让最优 FLOP 严格减少。有了闭式解，立法者既能判断"减排目标在什么 $b$ 下生效"，也能识别哪些参数（$b$ 太低、$a$ 太高）会让机制形同虚设。
 
 ### 损失函数 / 训练策略
 不适用。论文是 position + 经济建模，"训练"只发生在数值实验里——对不同 $a$（cost-per-FLOP）扫描 $x^\ast_{\text{no cap}}$ vs $x^\ast_{\text{cap}}$，在两种价格设定 $b=10^{-2}$（固定）和 $b = \sqrt{a}$（按成本缩放）下绘曲线（Fig 1）。

@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **FLS 的统一参数化与"训到 $\eta$ 就停"的停止时间**:
+**1. FLS 的统一参数化与"训到 $\eta$ 就停"的停止时间：把理论拉回早停现实。**
 
-    - 功能：把 FLS 抽象成一个标量 $\alpha$（初始化尺度 $\mathbf{W}(0) = \alpha \mathsf{W}$）或 $c$（输出乘子），证明二者在分析上等价；并定义停止时间 $t_{\eta, \alpha} := \inf\{t \geq t_\alpha : \hat{L}_+(\theta_t) \leq \eta\}$
-    - 核心思路：通过把训练终点固定到"训练损失第一次降到 $\eta$"，而不是 $t \to \infty$，理论分析得以贴近早停实践；同时不同 $\alpha$ 在相同 $\eta$ 处对比，公平剥离了"FLS 改变收敛速度"这一干扰因素
-    - 设计动机：解决了既往 FLS 理论"只能讲渐近极限、与早停实践脱节"的痛点；停止时间的引入是把"过对齐 vs 过拟合"权衡显式化的前提
+既往 FLS 理论几乎都讲渐近极限——要么 $\alpha\to0$ 的 mean-field、要么 $t\to\infty$ 的隐式偏置——和"训练损失降到某阈值就早停"的实际训练严重脱节，于是得出了"FLS 越大越好"的与工程直觉相悖的结论。本文先把 FLS 抽象成一个标量：既可用初始化尺度 $\mathbf{W}(0)=\alpha\mathsf{W}$ 控制，也可用输出乘子 $c$ 控制，并证明 $f\mapsto cf$ 同时把 $\eta\mapsto\eta/c$、二者在分析上等价。关键一步是把训练终点固定到训练损失第一次降到 $\eta$ 的时刻
 
-2. **两阶段神经元对齐分析与角度下界**:
+$$t_{\eta,\alpha}:=\inf\{t\ge t_\alpha:\hat{L}_+(\theta_t)\le\eta\}$$
 
-    - 功能：在 Phase 1（神经元对齐阶段，长度 $t_\alpha = \Theta(\log(1/\alpha)/n)$）给出权重方向与经验类均值方向的内积下界 $\psi_j(t_\alpha) \geq \sqrt{\zeta(\alpha)} \tanh((t_\alpha - t_1)\|\mathbf{x}_+\|\sqrt{\zeta(\alpha)})$，其中 $\zeta(\alpha) = 1 - 4\alpha n \sqrt{h} \mathbf{x}_{max}^2 \mathsf{W}_{max}^2 / \|\mathbf{x}_+\|$
-    - 核心思路：Phase 1 末权重方向与 $\mathbf{x}_+ / \|\mathbf{x}_+\|$ 的夹角与 $\sqrt{\alpha}$ 成正比（推论 5.3）；进入 Phase 2 后，借助 conic-hull 性质把单神经元对齐传到有效预测器 $\hat{\mathbf{w}}_\alpha(t)$，再证明 $\Psi(t_{\eta, \alpha}) \approx \Psi(t_\alpha)$，即 Phase 2 几乎只继承 Phase 1 的对齐结果
-    - 设计动机：把"$\alpha$ 越小、对齐越强"这一直观转化为可量化的角度下界，是后续把超额误差分解为 $\alpha$ 的可微函数的支撑骨架；推论 5.3 的 $\sqrt{\alpha}$ 尺度更直接给出最优 FLS 的标度律来源
+而不是 $t\to\infty$。这么做让不同 $\alpha$ 在相同 $\eta$ 处公平对比，剥离了"FLS 改变收敛速度"这一干扰，也正是后面把"过对齐 vs 过拟合"权衡显式化的前提——没有这个停止时间，两项就没法各自写成 $\alpha$ 的可微函数。
 
-3. **超额误差分解：过对齐 + 过拟合**:
+**2. 两阶段神经元对齐分析与角度下界：把"$\alpha$ 越小对齐越强"量化成 $\sqrt{\alpha}$ 标度。**
 
-    - 功能：将 $\mathcal{E}(\hat{\mathbf{w}}_\alpha) - \mathcal{E}^* = \mathsf{OA}(\alpha) + \mathsf{OF}(\alpha)$，其中 $H(\alpha) = \{\mathbf{v} \in \mathbb{S}^{d-1} : \langle \mathbf{x}_+/\|\mathbf{x}_+\|, \mathbf{v}\rangle \geq \Psi(t_{\eta, \alpha})\}$ 是有效预测器所在的圆锥
-    - 核心思路：$\mathsf{OA}(\alpha) = \inf_{\mathbf{v} \in H(\alpha)} \mathcal{E}(\mathbf{v}) - \mathcal{E}^*$ 度量"即使在锥内挑最优，仍与 Bayes 最优 $\mathbf{s}_+$ 的差距"——随 $\alpha$ 减小、锥收缩，最优锥内方向越偏离 $\mathbf{s}_+$，此项**单调增大**；$\mathsf{OF}(\alpha) = \mathcal{E}(\hat{\mathbf{w}}_\alpha) - \inf_{\mathbf{v} \in H(\alpha)} \mathcal{E}(\mathbf{v})$ 度量"锥内随机性带来的额外误差"——随 $\alpha$ 增大、锥变宽，候选解空间增大，过拟合风险**单调增大**
-    - 设计动机：这是论文最核心的概念创新——把"FLS 太大 / 太小都不好"分别对应到两种几何机制：太小导致预测器被钉到偏离 Bayes 方向的窄锥（over-alignment），太大让锥宽到容纳过多候选（over-fitting）；二者的对立单调性数学上保证最优 FLS 存在于内部
+训练被拆成 Phase 1（神经元对齐，长度 $t_\alpha=\Theta(\log(1/\alpha)/n)$）与 Phase 2（margin 最大化）。Phase 1 末，权重方向与经验类均值方向 $\mathbf{x}_+/\|\mathbf{x}_+\|$ 的内积有下界
+
+$$\psi_j(t_\alpha)\ge\sqrt{\zeta(\alpha)}\tanh\big((t_\alpha-t_1)\|\mathbf{x}_+\|\sqrt{\zeta(\alpha)}\big),\quad \zeta(\alpha)=1-\frac{4\alpha n\sqrt{h}\,\mathbf{x}_{max}^2\mathsf{W}_{max}^2}{\|\mathbf{x}_+\|}$$
+
+由此推出权重方向与 $\mathbf{x}_+/\|\mathbf{x}_+\|$ 的夹角与 $\sqrt{\alpha}$ 成正比（推论 5.3）。进入 Phase 2 后，借 conic-hull 性质把单神经元的对齐传递到有效预测器 $\hat{\mathbf{w}}_\alpha(t)$，并证明 $\Psi(t_{\eta,\alpha})\approx\Psi(t_\alpha)$——也就是说 Phase 2 几乎只继承 Phase 1 的对齐结果。这条 $\sqrt{\alpha}$ 角度下界是把超额误差写成 $\alpha$ 可微函数的骨架，也直接给出了后面最优 FLS 标度律的来源。
+
+**3. 超额误差分解：过对齐 + 过拟合的反向单调。**
+
+这是全文最核心的概念创新。把超额误差写成两项之和 $\mathcal{E}(\hat{\mathbf{w}}_\alpha)-\mathcal{E}^*=\mathsf{OA}(\alpha)+\mathsf{OF}(\alpha)$，其中有效预测器被约束在圆锥 $H(\alpha)=\{\mathbf{v}\in\mathbb{S}^{d-1}:\langle\mathbf{x}_+/\|\mathbf{x}_+\|,\mathbf{v}\rangle\ge\Psi(t_{\eta,\alpha})\}$ 内。过对齐项 $\mathsf{OA}(\alpha)=\inf_{\mathbf{v}\in H(\alpha)}\mathcal{E}(\mathbf{v})-\mathcal{E}^*$ 度量"即便在锥内挑最优，仍偏离 Bayes 最优 $\mathbf{s}_+$ 多远"——$\alpha$ 越小、锥越收缩，锥内最优方向越偏离 $\mathbf{s}_+$，此项单调增大；过拟合项 $\mathsf{OF}(\alpha)=\mathcal{E}(\hat{\mathbf{w}}_\alpha)-\inf_{\mathbf{v}\in H(\alpha)}\mathcal{E}(\mathbf{v})$ 度量"锥内随机性带来的额外误差"——$\alpha$ 越大、锥越宽，候选解空间越大，此项也单调增大。两项随 $\alpha$ 反向单调，于是 FLS 太小会把预测器钉到一个偏离 Bayes 方向的窄锥（over-alignment）、太大让锥宽到容纳过多候选（over-fitting），二者的对立单调性在数学上保证了最优 FLS 必然存在于内部。
 
 ### 损失函数 / 训练策略
 

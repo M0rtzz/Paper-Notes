@@ -50,23 +50,20 @@ tags:
 
 ### 关键设计
 
-1. **归一化状态空间 $(\omega_t,\lambda_t,x_t)$（化时变为时不变）**:
+**1. 归一化状态空间 $(\omega_t,\lambda_t,x_t)$：把含 $x_t$ 高次幂的耦合系统压成尺度无关的低维动力学。**
 
-    - 功能：把 Adam 含有 $x_t$ 高次幂的耦合系统压成一个迭代尺度无关的低维动力学。
-    - 核心思路：直接代入 $g_t=x_t^{k-1}$ 后写出 $\{m_t,v_t,x_{t+1}\}$ 的递推，引入 $\omega_t=m_t/x_t^{k-1}$ 表示"归一化一阶矩"和 $\lambda_t=x_t^{k-2}/\sqrt{v_t}$ 表示"有效曲率"。这两个变量把 $x_t$ 的衰减彻底剥离，迭代化为 $x_{t+1}=(1-\eta\omega_t\lambda_t)x_t$，损失单调下降的条件等价于 $0\le\omega_t\lambda_t\le 2/\eta$。
-    - 设计动机：原变量里 $x_t$ 在多个幂次出现，分析谱半径会被尺度污染；归一化后非平凡不动点出现在 $x^\star=0$ 而 $(\omega^\star,\lambda^\star)$ 取与 $x_t$ 无关的有限值——稳定性就只剩 $2\times 2$ 子 Jacobian 的问题。
+Adam 在 $L=\tfrac{1}{k}x^k$ 上的原始变量 $(x_t,m_t,v_t)$ 里，$x_t$ 在多个幂次出现，直接算谱半径会被尺度污染。本文代入 $g_t=x_t^{k-1}$ 后引入两个归一化量——$\omega_t=m_t/x_t^{k-1}$ 表示"归一化一阶矩"、$\lambda_t=x_t^{k-2}/\sqrt{v_t}$ 表示"有效曲率"，把 $x_t$ 的衰减彻底剥离，迭代化简成 $x_{t+1}=(1-\eta\omega_t\lambda_t)x_t$，损失单调下降等价于 $0\le\omega_t\lambda_t\le 2/\eta$。这样非平凡不动点出现在 $x^\star=0$ 而 $(\omega^\star,\lambda^\star)$ 取与 $x_t$ 无关的有限值，稳定性就只剩一个 $2\times2$ 子 Jacobian 的问题——这是整套相图分析能解析推到底的前提。
 
-2. **$v_t$–$g_t^2$ 解耦机制（指数放大有效学习率）**:
+**2. $v_t$–$g_t^2$ 解耦机制：指数放大有效学习率，把次线性拔成线性。**
 
-    - 功能：解释 Adam 在退化目标上为何把次线性变线性。
-    - 核心思路：在 RMSProp 设定下，引理 5.4 证明若 $x_t\to 0$ 则 $g_t/\sqrt{v_t}\to 0$，进而 $v_t/v_{t-1}\to\beta_2$，即 $v_t\sim\beta_2^t$。这意味着有效学习率 $\eta_{\mathrm{eff},t}=\eta/\sqrt{v_t}\propto\beta_2^{-t/2}$ 指数膨胀。引理 5.5 把这种指数 schedule 喂给连续 GD 流 $\dot x=-\eta(t)x^{k-1}$，解得 $x(t)\sim\exp\bigl(-\tfrac{\alpha}{k-2}t\bigr)$——把幂律衰减拔成指数衰减。
-    - 设计动机：以往把 Adam 的优势归到 SignGD 视角，但 SignGD 是 $\beta_2=0$ 极限，反而**不收敛**到 0。本文指出真正的加速来源是"$v_t$ 落后于 $g_t^2$ 的几何记忆"，与 SignGD 是**机制对立**的；这个机制只有在 $g_t$ 足够快衰减时才打开，正好对应 $k\ge 4$ 的退化结构。
+退化目标上 GD 只能拿 $\Theta(t^{-1/(k-2)})$ 的次线性速率，Adam 凭什么更快？关键在 $v_t$ 是否还跟得上 $g_t^2$。在 RMSProp 设定下，引理 5.4 证明若 $x_t\to 0$ 则 $g_t/\sqrt{v_t}\to 0$，进而 $v_t/v_{t-1}\to\beta_2$，即 $v_t\sim\beta_2^t$ 几何衰减，于是有效学习率 $\eta_{\mathrm{eff},t}=\eta/\sqrt{v_t}\propto\beta_2^{-t/2}$ 指数膨胀。引理 5.5 把这个指数 schedule 喂给连续 GD 流 $\dot x=-\eta(t)x^{k-1}$，解得 $x(t)\sim\exp(-\tfrac{\alpha}{k-2}t)$——幂律衰减被拔成指数衰减。值得强调的是，这个加速来源跟 SignGD 视角是机制对立的：SignGD 是 $\beta_2=0$ 极限、$v_t$ 紧跟 $g_t^2$，反而不收敛到 0；真正的加速来自"$v_t$ 落后于 $g_t^2$ 的几何记忆"，而这个机制只在 $g_t$ 足够快衰减时才打开，正好对应 $k\ge 4$ 的退化结构。
 
-3. **三相相图与 Jacobian 谱条件（定理 4.1 + 定理 6.1）**:
+**3. 三相相图与 Jacobian 谱条件（定理 4.1 + 定理 6.1）：用 $(\beta_1,\beta_2)$ 把全部稳态行为分三类。**
 
-    - 功能：用 $(\beta_1,\beta_2)$ 两参数把 Adam 的全部稳态行为分成"稳定收敛 / spike / SignGD 振荡"三类。
-    - 核心思路：非平凡不动点的存在条件是 $\beta_1<\beta_2^{(k-1)/(2(k-2))}$，稳定条件是 $\beta_1<\beta_2^{k/(2(k-2))}$。把两条曲线和"无不动点"区放进 $(\beta_1,\beta_2)$ 平面，得到三个区：(I) 双条件都满足 → 稳定线性收敛，速率 $x_{t+1}/x_t\to\beta_2^{1/(2(k-2))}$；(II) 不动点存在但失稳 → 早期被吸引产生指数收敛，后期 $\omega_t\lambda_t>2/\eta$ 触发 spike；(III) 不动点不存在 → $v_t$ 紧跟 $g_t^2$，等价 SignGD，损失在 $L(\eta/2)$ 附近振荡。
-    - 设计动机：把以前各文章里零散观察到的 Adam 失败模式（限环、loss spike、振荡）一次性纳入同一相图，用同一组不等式区分；并预测理论速率 $k\ln\beta_2/(2(k-2))$ 与 Fig. 2(a) 实证斜率完全对齐。
+把以前各文章零散观察到的 Adam 失败模式（限环、loss spike、振荡）一次性纳入同一相图。非平凡不动点的存在条件是 $\beta_1<\beta_2^{(k-1)/(2(k-2))}$，稳定条件是 $\beta_1<\beta_2^{k/(2(k-2))}$，把两条曲线和"无不动点"区放进 $(\beta_1,\beta_2)$ 平面得到三个区：(I) 双条件都满足 → 稳定线性收敛，速率 $x_{t+1}/x_t\to\beta_2^{1/(2(k-2))}$；(II) 不动点存在但失稳 → 早期被吸引产生指数收敛、后期 $\omega_t\lambda_t>2/\eta$ 触发 spike；(III) 不动点不存在 → $v_t$ 紧跟 $g_t^2$、等价 SignGD，损失在 $L(\eta/2)$ 附近振荡。这套用同一组不等式区分所有行为的刻画，预测的理论速率 $k\ln\beta_2/(2(k-2))$ 与 Fig. 2(a) 实证斜率完全对齐。
+
+### 损失函数 / 训练策略
+没有训练损失（理论性论文），但给出三个量级关键预测可被代入实践：(a) 线性收敛速率 $\beta_2^{1/(2(k-2))}$；(b) GD 在退化目标上的复杂度 $T_\varepsilon\sim\varepsilon^{-(k-2)}$ 而 Adam 是 $T_\varepsilon\sim(k-2)\ln(1/\varepsilon)$；(c) 备 1D 映射的全局稳定门槛 $\gamma_{\mathrm{crit}}=(\tfrac{k}{k-2})^{k-2}$，对 $k=4$ 等价 $\beta_2>0.0625$。
 
 ### 损失函数 / 训练策略
 没有训练损失（理论性论文），但给出三个量级关键预测可被代入实践：(a) 线性收敛速率 $\beta_2^{1/(2(k-2))}$；(b) GD 在退化目标上的复杂度 $T_\varepsilon\sim\varepsilon^{-(k-2)}$ 而 Adam 是 $T_\varepsilon\sim(k-2)\ln(1/\varepsilon)$；(c) 备 1D 映射的全局稳定门槛 $\gamma_{\mathrm{crit}}=(\tfrac{k}{k-2})^{k-2}$，对 $k=4$ 等价 $\beta_2>0.0625$。

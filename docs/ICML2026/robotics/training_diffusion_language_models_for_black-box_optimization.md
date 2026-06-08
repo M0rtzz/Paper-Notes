@@ -48,23 +48,25 @@ DiBO 在冻结扩散 LLM 之上加四件事：(a) tokenizer 扩展两组 delimit
 
 ### 关键设计
 
-1. **Delimiter token + 统一 prompt-response 语料的域适应**:
+**1. Delimiter token + 统一 prompt-response 语料的域适应：把异构信号塞进同一序列，让扩散 LLM 学会角色边界。**
 
-    - 功能：把异构信号（prompt 文本、设计 token、标签数值）统一编码，让扩散 LLM 学会 delimiter 的语义角色。
-    - 核心思路：扩展 tokenizer 加 4 个 delimiter token；每条训练样本写成 `[prompt 文本][few-shot (design, label) 对][生成更优设计的指令]` + `[response design][response label]` 的统一序列，每个 design/label 都被 delimiter 包起来。域适应目标是 $\mathcal{L}_{\mathrm{DA}} = -\mathbb{E}[\frac{1}{t} \sum_{i=1}^{L} \mathbf{1}[q_t^i=[M], o_t^i=[M]] \log p_\theta(q_0^i, o_0^i | q_t, o_t)]$，对 prompt 和 response 的 masked token 同时做重建。few-shot 上下文 design 用 kernel 相似度从 offline pool 里挑跟 response design 相近的，避免模型学到「prompt 和 response 毫无关系」的退化映射。
-    - 设计动机：直接把数值标签当普通文本会让扩散 LLM 把它们当 noise；显式 delimiter + 联合重建让模型显式学到 segmentation 边界和角色。比起 task-specific 架构（DDOM 等），这套语料方案能直接复用扩散 LLM 的预训练 prior 和注意力机制。
+扩散 LLM 在自然文本上预训练，直接把"设计 token + 数值标签"当普通文本喂进去，它会把标签当噪声、抓不住 segmentation。DiBO 先扩展 tokenizer 加 4 个 delimiter（`|design-start|/|design-end|`、`|label-start|/|label-end|`），每条样本写成 `[prompt 文本][few-shot (design, label) 对][生成更优设计的指令]` + `[response design][response label]` 的统一序列，每个 design/label 都被 delimiter 包起来。域适应目标对 prompt 和 response 的 masked token 同时重建：
 
-2. **两段后训练：masked-response SFT + label-improvement RL**:
+$$\mathcal{L}_{\mathrm{DA}} = -\mathbb{E}\Big[\tfrac{1}{t} \textstyle\sum_{i=1}^{L} \mathbf{1}[q_t^i=[M], o_t^i=[M]] \log p_\theta(q_0^i, o_0^i | q_t, o_t)\Big].$$
 
-    - 功能：让扩散 LLM 在「给定 prompt 上下文」时生成超过上下文最大值的高标签设计，并把粗粒度（SFT）和细粒度（RL）信号串起来。
-    - 核心思路：SFT 阶段冻结 prompt 部分、只在 response 上做 masked reconstruction，loss 为 $\mathcal{L}_{\mathrm{SFT}} = -\mathbb{E}[\frac{1}{t} \sum_i \mathbf{1}[o_t^i=[M]] \log p_\theta(o_0^i | q_0, o_t)]$，target response 满足 $y(o) > \max y(\text{prompt})$，给模型一个「response 必须更优」的硬归纳偏置。RL 阶段构造 $\mathcal{D}_{rl}$，reward $r(q, o) = y(o) - y(q)$（既有正也有负），不像 SFT 那样要求 strict improvement，loss 为 $\mathcal{L}_{\mathrm{RL}} = -\mathbb{E}[\frac{1}{|o|} \sum_k p_\theta(o_k | q, o_{\text{fullmask}}) \cdot \frac{r(q,o)}{\sigma}]$，用 one-step unmask 近似 token-wise log prob，行为策略假设均匀，省掉 ratio clipping 和 KL 正则。
-    - 设计动机：SFT 给「方向」（应该更优），RL 给「幅度」（更优多少）；one-step unmask 是关键 trick——传统扩散 log-prob 要 iterative denoising 才稳，但 one-step 在 BBO 这种短序列上够用且节省 50× 算力，让 RL 在 H100 单卡可跑。
+few-shot 上下文 design 用 kernel 相似度从 offline pool 里挑跟 response design 相近的，避免模型学到"prompt 和 response 毫无关系"的退化映射。比起 DDOM 那种任务特化架构，这套纯语料方案能直接复用扩散 LLM 的预训练 prior 和双向注意力。
 
-3. **kernel-similarity 上下文选择 + 单步 greedy 推理**:
+**2. 两段后训练：masked-response SFT 给方向、label-improvement RL 给幅度。**
 
-    - 功能：保证 prompt 例子和 target response 在同分布内，避免「prompt 全是垃圾、response 突变高分」的不合理学习信号；推理时单步出 candidate 提升采样效率。
-    - 核心思路：训练数据构造时，给定 target response design $o$，从 offline pool 用 kernel similarity 算 $k(o, x_i)$ 选 top-7 作 few-shot prompt，保证局部连续性。推理时用 nfew=7 个 in-context examples，对 masked response 做一次 forward 然后 greedy fill，丢弃重复输出直到 128 个 unique candidate。
-    - 设计动机：BBO 的「improve over prompt」假设在 prompt 全在低分区时崩溃——模型很难一步跳到高分区。kernel similarity 让 prompt 例子和 target 在 design space 局部接近，相当于让模型只学「小步改进」的归纳偏置。单步 greedy 推理是扩散 LLM 比 AR LLM 在 BBO 上的额外好处——AR 要 K 步生成 K-token design，扩散一次性出。
+域适应只教会了格式，还得让模型真正生成"比上下文更优"的设计。SFT 阶段冻结 prompt、只在 response 上做 masked reconstruction，loss $\mathcal{L}_{\mathrm{SFT}} = -\mathbb{E}[\frac{1}{t} \sum_i \mathbf{1}[o_t^i=[M]] \log p_\theta(o_0^i | q_0, o_t)]$，且 target 必须满足 $y(o) > \max y(\text{prompt})$——给模型一个"response 一定更优"的硬归纳偏置。RL 阶段把约束放松成连续 reward $r(q, o) = y(o) - y(q)$（有正有负，不强求 strict improvement），loss $\mathcal{L}_{\mathrm{RL}} = -\mathbb{E}[\frac{1}{|o|} \sum_k p_\theta(o_k | q, o_{\text{fullmask}}) \cdot \frac{r(q,o)}{\sigma}]$。
+
+这里的关键是分工：SFT 给"方向"（应该更优），RL 给"幅度"（更优多少）。而让 RL 在 8B 扩散 LLM 上单卡可跑的 trick 是 one-step unmask 近似 token-wise log prob——传统扩散 log-prob 要 iterative denoising 才稳，但 BBO 的设计序列很短，one-step 就够用且省约 50× 算力；行为策略假设均匀分布，还顺手省掉了 ratio clipping 和 KL 正则。
+
+**3. kernel-similarity 上下文选择 + 单步 greedy 推理：把"improve over prompt"限制成"小步改进"。**
+
+"生成比 prompt 更优的设计"这个假设在 prompt 全落在低分区时会崩——模型很难一步从垃圾跳到高分区。DiBO 在构造训练数据时，给定 target response design $o$，用 kernel similarity $k(o, x_i)$ 从 offline pool 选 top-7 作 few-shot prompt，保证 prompt 例子和 target 在 design space 局部接近，相当于把任务收窄成模型擅长的"小步改进"。
+
+推理同样用 $n_{few}=7$ 个 in-context examples，对 masked response 做一次 forward 然后 greedy fill，丢弃重复输出直到攒够 128 个 unique candidate。单步 greedy 正是扩散 LLM 相对 AR LLM 在 BBO 上的额外便宜——AR 要 $K$ 步才能生成 $K$-token 设计，扩散一次性出。
 
 ### 损失函数 / 训练策略
 

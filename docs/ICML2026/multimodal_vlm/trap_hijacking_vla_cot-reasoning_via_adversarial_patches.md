@@ -48,23 +48,17 @@ TRAP 是第一个针对 reasoning VLA 的目标行为劫持攻击——通过桌
 
 ### 关键设计
 
-1. **CoT hijacking loss 作为主信号**:
+**1. CoT hijacking loss 作为主信号：直接让中间推理吐出攻击者指定的内容。**
 
-    - 功能：让 VLA 的中间 CoT 输出 attacker 指定的 $R^*$（如「目标是 knife，bbox 在 (x,y)」），从而 hijack 整个推理-动作管道。
-    - 核心思路：所有主流 reasoning VLA 都用 VLM 走 next-token prediction 出 CoT（不管 CoT 形式是 subtask 文本、bbox 坐标 token 还是轨迹点 token）。所以 CoT loss 统一用 CE：$\mathcal{L}_{\mathrm{cot}} = -\sum_{t=1}^T \log P_\theta(r_t^* | r_{<t}^*, \tilde{O}, I)$，对抗观测 $\tilde{O} = (1-M) \odot O + M \odot \delta$。Preliminary experiment（Table 1）显示 CoT 在 GraspVLA 上几乎完全主导 action（cross-sample shuffling 后 TSR=94.2%），所以 CoT-only 攻击 $\mathrm{TRAP}_{\mathrm{CoT\text{-}only}}$ 已经能在 GraspVLA 上拿 69.04% ASR。
-    - 设计动机：相比直接对 action 做攻击（之前的 RoboticAttack 之类），CoT loss 利用了「CoT 是个语言序列、有清晰离散监督信号」的优势——梯度更稳、目标更精确。而且 CoT 是 mid-level 抽象，攻击它能跨多个 action 时间步保持一致性（patch 在整个 rollout 持续生效）。
+preliminary experiment（Table 1）显示，当 instruction 和 CoT 冲突时 GraspVLA 几乎完全跟 CoT 走（cross-sample shuffling 后 TSR=94.2%），所以最划算的切入点不是 action 而是 CoT——劫持了中间推理就等于劫持了整条推理-动作管道，而且不用碰 user instruction。所有主流 reasoning VLA 都用 VLM 走 next-token prediction 出 CoT（不管 CoT 是 subtask 文本、bbox 坐标 token 还是轨迹点 token），所以 CoT loss 统一用交叉熵让模型在对抗观测下生成目标序列 $R^*$：$\mathcal{L}_{\mathrm{cot}} = -\sum_{t=1}^T \log P_\theta(r_t^* | r_{<t}^*, \tilde{O}, I)$，其中对抗观测 $\tilde{O} = (1-M) \odot O + M \odot \delta$。相比直接攻 action（如 RoboticAttack），CoT 是个有清晰离散监督的语言序列，梯度更稳、目标更精确，而且作为 mid-level 抽象能在整个 rollout 的多个 action 时间步上保持一致——光这一项 $\mathrm{TRAP}_{\mathrm{CoT\text{-}only}}$ 就能在 GraspVLA 上拿 69.04% ASR。
 
-2. **discrete/continuous 双模式 action loss**:
+**2. discrete/continuous 双模式 action loss：兜底覆盖两类 action head。**
 
-    - 功能：覆盖 VLA 的两类 action head（autoregressive token vs diffusion/flow regression），保证 CoT 劫持能可靠落到 action 层。
-    - 核心思路：MolmoAct 这类用 discrete-token action（action 量化成 bin、当 token 出），用 $\mathcal{L}_{\mathrm{action}}^{\mathrm{disc}} = -\log P_\theta(a^* | R^*, \tilde{O}, I)$；GraspVLA/InstructVLA 这类用 continuous regression（diffusion、flow matching、MLP head），用 trajectory waypoint 上的 MSE $\mathcal{L}_{\mathrm{action}}^{\mathrm{cont}} = \|f_{\mathrm{traj}}(a) - f_{\mathrm{traj}}(a^*)\|_2^2$。InstructVLA 上 CoT-only 攻击只有 4.03% ASR（action 出现 mode collapse 重复动作），加 action loss 后涨到 33.71%——证明 action loss 的必要性。
-    - 设计动机：CoT-to-action 的 coupling 在不同 VLA 上强弱不同——GraspVLA 强（CoT 直接 condition action），InstructVLA 弱（hierarchical 两段式，高层 CoT 和低层 policy 解耦）。统一的 action loss 兜底让攻击在任何 coupling 强度下都能落地。
+CoT-to-action 的 coupling 在不同 VLA 上强弱不一——GraspVLA 强（CoT 直接 condition action），InstructVLA 弱（hierarchical 两段式、高层 CoT 与低层 policy 解耦），所以仅靠 CoT loss 不够，需要 action loss 把劫持可靠落到 action 层。针对两类 head 分别处理：MolmoAct 这类 discrete-token action（动作量化成 bin 当 token 出）用 $\mathcal{L}_{\mathrm{action}}^{\mathrm{disc}} = -\log P_\theta(a^* | R^*, \tilde{O}, I)$；GraspVLA/InstructVLA 这类 continuous regression（diffusion、flow matching、MLP head）用轨迹 waypoint 上的 MSE $\mathcal{L}_{\mathrm{action}}^{\mathrm{cont}} = \|f_{\mathrm{traj}}(a) - f_{\mathrm{traj}}(a^*)\|_2^2$。必要性看 InstructVLA：CoT-only 攻击只有 4.03% ASR（action 出现 mode collapse 重复动作），加 action loss 后涨到 33.71%。
 
-3. **DIP + 颜色校准 + EoT 实现物理可打印的隐蔽 patch**:
+**3. DIP + 颜色校准 + EoT：让 patch 从噪声变成可打印的隐蔽桌布。**
 
-    - 功能：让对抗 patch 从「视觉很奇怪的噪声」变成可打印的「桌布/桌面装饰」，并在真实相机+光照下保持有效。
-    - 核心思路：(a) content loss $\mathcal{L}_{\mathrm{content}} = \frac{1}{C_l H_l W_l} \|\phi_l(\delta) - \phi_l(I_{\mathrm{ref}})\|_2^2$ 让 patch 在预训练 CNN 的中间层特征上接近参考图（如运动车图）；(b) TV loss 抑制高频伪影；(c) DIP（Deep Image Prior）—— 不直接优化 pixel 而是优化 CNN 参数 $\theta$ 让 $\delta = f_\theta(z)$，CNN 的隐式正则让 patch 视觉更连贯；(d) homography 变换模拟桌面 → 图像平面的投影；(e) MLP 学打印-相机色彩失真；(f) EoT 对 transformation 分布求期望提升鲁棒性。
-    - 设计动机：纯 PGD 出来的 patch 全是高频噪声，人类一眼能看出来。content + TV + DIP 三件套让 patch 看起来像「印花桌布」，部署时即使被人看见也不会引起怀疑——这才是真正物理世界 stealthy 的关键。
+纯 PGD 出来的 patch 全是高频噪声，人一眼就能看出来，所以真正物理可部署的关键是把它伪装成印花桌布且在真实相机+光照下仍有效。这套靠多件套实现：content loss $\mathcal{L}_{\mathrm{content}} = \frac{1}{C_l H_l W_l} \|\phi_l(\delta) - \phi_l(I_{\mathrm{ref}})\|_2^2$ 让 patch 在预训练 CNN 中间层特征上贴近参考图（如运动车），TV loss 抑制高频伪影，DIP（Deep Image Prior）不直接优化像素而是优化 CNN 参数让 $\delta = f_\theta(z)$、用 CNN 的隐式正则让 patch 视觉更连贯；部署侧再加 homography 模拟桌面→图像平面的投影、MLP 学打印-相机色彩失真、EoT 对变换分布求期望提升鲁棒性。三件套让 patch 看起来像普通印花桌布，即使被人看见也不会起疑——这才是真实世界 stealthy 的核心。
 
 ### 优化过程
 

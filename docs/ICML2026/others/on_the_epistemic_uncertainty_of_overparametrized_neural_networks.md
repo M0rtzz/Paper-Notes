@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **基于方差的 EU 定义 + 不可识别性下的非零残余**:
+**1. 基于方差的 EU 定义 + 不可识别性下的非零残余：让 EU 看得见 weight-space 的残余不确定性。**
 
-    - 功能：用 $\mathrm{EU}(y,\mathbf{w}\mid x,\mathcal{D}_n) = \mathrm{tr}(\mathrm{Cov}(\mathbf{w}\mid \mathcal{D}_n))$ 替代经典的 $\mathrm{Var}_\mathcal{P}(f_\mathbf{w}(x))$，把 weight-space 的不可识别性纳入 EU。
-    - 核心思路：在线性深网例 $\mathcal{N}(\mathbf{w}_L^\top \mathbf{W}_{L-1}\cdots \mathbf{w}_1 x, \sigma^2)$ 中显式算出 function-space EU 归零、weight-space EU $=d\tau^2$（$\tau^2$ 为先验方差），从而构造一个 minimal 反例：函数完全识别但参数 EU 不消失。
-    - 设计动机：传统信息论 EU（$I(\mathbf{w};y)$）对 permutation 等价类天然不可见；用 trace of covariance 既兼容贝叶斯定义又能捕捉非可识别方向，是后续 ReLU 网精确刻画的度量基础。
+UQ 社区惯用的信息论 EU（如 $I(\mathbf{w};y)$ 或 function-space variance）对 permutation 等价类天然不可见——函数一旦识别它就归零，看不到参数空间里仍然残留的不确定性。作者改用 $\mathrm{EU}(y,\mathbf{w}\mid x,\mathcal{D}_n)=\mathrm{tr}(\mathrm{Cov}(\mathbf{w}\mid\mathcal{D}_n))$，即 weight-space 后验协方差的迹，把不可识别性纳进度量。一个极简反例就把问题点透：在线性深网 $\mathcal{N}(\mathbf{w}_L^\top\mathbf{W}_{L-1}\cdots\mathbf{w}_1 x,\sigma^2)$ 里能显式算出 function-space EU 归零、而 weight-space EU $=d\tau^2$（$\tau^2$ 为先验方差）——函数完全识别，参数 EU 却不消失。这个度量既兼容贝叶斯定义，又能捕捉到不可识别方向，为后面 ReLU 网的精确刻画打好地基。
 
-2. **过参数化的赋值-分裂分解**:
+**2. 过参数化的赋值-分裂分解：把冗余神经元的连续自由度显式参数化。**
 
-    - 功能：把每个"模型神经元"映射到"真神经元"，并显式表达冗余如何把一个真神经元的贡献"分裂"到多个模型神经元上。
-    - 核心思路：对每个 surjection $\varsigma:[M]\to[M^\star]$，定义群 $G_{m'}=\varsigma^{-1}(m')$、splitting 系数 $(c_m)_{m\in G_{m'}}\in\Delta^{k_{m'}-1}$，证明所有解必满足 $\mathbf{w}_{1,m}=\sqrt{c_m}\mathbf{w}_{1,\varsigma(m)}^\star,\ w_{2,m}=\sqrt{c_m}w_{2,\varsigma(m)}^\star$。由此函数等价类几何上对应单纯形乘积 $\mathcal{M}_\varsigma \cong \prod_{m'=1}^{M^\star}\Delta^{k_{m'}-1}$。
-    - 设计动机：这一分解把"过参数化引入的连续 degree of freedom"完全显式化，从而把后验研究归约为"在单纯形上诱导分布的研究"；这是 Lemma 3 证明不同 $\varsigma$ 的开内部流形互不相交（由 Lipschitz/连续动力系统几乎不会跨越）的几何前提。
+要回答"过参数化到底引入多少不可消除的不确定性"，先得把"冗余怎么发生"写清楚。作者对每个 surjection $\varsigma:[M]\to[M^\star]$（模型神经元 → 真神经元）定义群 $G_{m'}=\varsigma^{-1}(m')$ 和 splitting 系数 $(c_m)_{m\in G_{m'}}\in\Delta^{k_{m'}-1}$，证明所有解必满足
 
-3. **Dirichlet 后验闭式 + balanced 缩放定理**:
+$$\mathbf{w}_{1,m}=\sqrt{c_m}\,\mathbf{w}_{1,\varsigma(m)}^\star,\qquad w_{2,m}=\sqrt{c_m}\,w_{2,\varsigma(m)}^\star,$$
 
-    - 功能：给出 splitting 系数和神经元参数块的精确后验矩，回答"过参数化到底引入多少 EU"。
-    - 核心思路：用 $\varepsilon$-tube 诱导条件分布定义流形 $\mathcal{M}_\varsigma$ 上的后验 $\mathbb{P}_n^\varsigma$，证明 $(c_m)_{m\in G_{m'}}\sim \mathrm{Dir}(\alpha,\ldots,\alpha)$，$\alpha=(p+1)/2$。由此得 $\mathbb{E}[c_m]=k_{m'}^{-1}$、$\mathrm{Cov}(c_m,c_{\tilde m})=-1/\kappa$，并推出参数块矩 $\mathbb{E}[\boldsymbol{\omega}_m]=\mu_{k,\alpha}\,\boldsymbol{\omega}_{m'}^\star$、$\mathbb{E}[\boldsymbol{\omega}_m\boldsymbol{\omega}_m^\top]=k_{m'}^{-1}\boldsymbol{\omega}_{m'}^\star \boldsymbol{\omega}_{m'}^{\star\top}$。balanced 极限 $k_{m'}\asymp M/M^\star, M\to\infty$ 给出 $\mathbb{E}[\boldsymbol{\omega}_m]=\Theta(M^{-1/2})$、$\mathrm{Cov}=\Theta(M^{-1})$。
-    - 设计动机：闭式矩允许在实验中做严格对照（实证均值/二阶矩 vs. $\mu_{k,\alpha}$、$1/k$），同时澄清"无限宽极限下单个神经元贡献会缩小，但整个 group 总贡献不变、splitting 自由度反而长成高维单纯形"，给出"过参数化下 EU 是被重分布而不是被消除"的精确描述。
+于是函数等价类几何上对应单纯形乘积 $\mathcal{M}_\varsigma\cong\prod_{m'=1}^{M^\star}\Delta^{k_{m'}-1}$。这一分解把"一个真神经元被几个模型神经元复刻、贡献按 $c_m$ 分摊"这件事完全显式化，从而把后验研究归约成"单纯形上诱导分布的研究"；它也是 Lemma 3 证明不同 $\varsigma$ 的开内部流形几乎互不相交（连续动力系统几乎不跨越）的几何前提。
+
+**3. Dirichlet 后验闭式 + balanced 缩放定理：给出"EU 被重分布而非消除"的精确刻画。**
+
+有了流形结构，最后一步给出 splitting 系数和参数块的精确后验矩。用 $\varepsilon$-tube 诱导条件分布定义 $\mathcal{M}_\varsigma$ 上的后验，作者证明 $(c_m)_{m\in G_{m'}}\sim\mathrm{Dir}(\alpha,\dots,\alpha)$，$\alpha=(p+1)/2$，由此 $\mathbb{E}[c_m]=k_{m'}^{-1}$、$\mathrm{Cov}(c_m,c_{\tilde m})=-1/\kappa$，进而 $\mathbb{E}[\boldsymbol{\omega}_m]=\mu_{k,\alpha}\boldsymbol{\omega}_{m'}^\star$、$\mathbb{E}[\boldsymbol{\omega}_m\boldsymbol{\omega}_m^\top]=k_{m'}^{-1}\boldsymbol{\omega}_{m'}^\star\boldsymbol{\omega}_{m'}^{\star\top}$。balanced 极限 $k_{m'}\asymp M/M^\star,\ M\to\infty$ 下得 $\mathbb{E}[\boldsymbol{\omega}_m]=\Theta(M^{-1/2})$、$\mathrm{Cov}=\Theta(M^{-1})$。这组闭式矩既允许实验做严格对照（实测均值/二阶矩 vs. $\mu_{k,\alpha}$、$1/k$），又点出核心结论：无限宽极限下单个神经元贡献缩小、但整个 group 总贡献不变、splitting 自由度反而长成高维单纯形——过参数化下 EU 是被重分布，而不是被消除。
 
 ### 损失函数 / 训练策略
 对应贝叶斯模型：损失采用 $\mathcal{L}(\mathbf{w})=\sum_i \ell(y_i,f_\mathbf{w}(x_i))+\lambda\|\mathbf{w}\|_2^2$，等价于 Gaussian 似然 + Gaussian 先验 $\mathbf{w}\sim\mathcal{N}(\mathbf{0},(2\lambda)^{-1}\mathbf{I})$。实验中后验由两段式采样获得：先用 Adam 多链初始化（等价 deep ensemble of MAP），再用 SGLD 或 NUTS 采样，得到 BDE（Bayesian deep ensemble）。
@@ -116,12 +114,6 @@ tags:
 - 实验充分度: ⭐⭐⭐ 合成数据上的验证很到位，但缺真实任务上的下游影响评估
 - 写作质量: ⭐⭐⭐⭐ 概念清晰，图 1/图 2 把不可识别流形可视化得很直观；定理-推论链条紧凑
 - 价值: ⭐⭐⭐⭐ 对 BNN、deep ensemble、continual learning、采样诊断的实践都有直接含义，且改变了对"epistemic uncertainty 会随数据消失"的常识认知
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

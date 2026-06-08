@@ -46,23 +46,17 @@ $\min_x \mathcal{F}^*(x)=F(x,y^*(x))$，$y^*(x)=\arg\min_y G(x,y)$
 
 ### 关键设计
 
-1. **AB/Push-Pull + 值函数惩罚的耦合**:
+**1. AB/Push-Pull + 值函数惩罚的耦合：把单层通信原语无缝扩展到双层，全程不碰二阶导。**
 
-    - 功能：把单层 AB/Push-Pull 通信原语无缝扩展到双层场景，避免计算 Hessian 或求逆。
-    - 核心思路：等价重写 $\min_{x,y}\max_z F+\lambda(G(x,y)-G(x,z))$ 后，$y$ 用梯度下降逼近上层最优，$z$ 用梯度上升追踪 $y^*(x)$；三者全部用 AB/Push-Pull 的 pull-评估-push 三步处理，共享同一套行/列随机矩阵 $A^k,B^k$，不需要任何二阶信息。
-    - 设计动机：分布式双层先前要么依赖二阶导（Hessian-vector 在去中心化下很难精确算），要么只能跑在静态无向图上；本设计把所有需要交换的信号都变成梯度量，又复用了双随机矩阵的 push-pull 结构，恰好契合时变有向通信。
+分布式双层先前要么依赖二阶导（Hessian-vector 在去中心化下很难精确算），要么只能跑在静态无向图上。FAB 先用值函数惩罚把双层 $\min_{x,y}\max_z F+\lambda(G(x,y)-G(x,z))$ 等价重写成单层 min-max，避开 Hessian；然后让 $y$ 用梯度下降逼近上层最优、$z$ 用梯度上升追踪 $y^*(x)$，三者全部走 AB/Push-Pull 的"pull-评估-push"三步，共享同一套行随机矩阵 $A^k$ 与列随机矩阵 $B^k$，不需要任何二阶信息。这样所有要交换的信号都变成了梯度量，又复用了双随机矩阵的 push-pull 结构，恰好契合时变有向通信。
 
-2. **梯度追踪 (gradient tracking) 三元组**:
+**2. 梯度追踪三元组：在动态非平衡的通信图上恢复全局平均梯度的无偏估计。**
 
-    - 功能：在动态、非平衡的通信图上恢复全局平均梯度的无偏估计，抑制因 agent 异质性导致的共识漂移。
-    - 核心思路：对 $(x,y,z)$ 各自维护一个追踪变量 $t$，更新规则 $t^{k+1}_i = \sum_j b_{ij}^k t_j^k + d_i^{k+1} - d_i^k$，其中 $d_i^k = \nabla_{\cdot} \mathcal{L}_i$；列随机性保证 $\sum_i t_{\cdot,i}^k = \sum_i d_{\cdot,i}^k$，使每个 agent 的步进方向逐渐对齐全局平均梯度。
-    - 设计动机：时变有向图缺乏时不变的根特征向量 $\pi$，单纯做共识平均会留下持续偏差；梯度追踪通过差分项 $d^{k+1}-d^k$ 把这种偏差「自校正」，是把分析从强凸推到非凸的关键工具。
+时变有向图缺乏时不变的根特征向量 $\pi$，单纯做共识平均会留下持续漂移的偏差，这正是把分析从强凸推到非凸最难啃的地方。FAB 给 $(x,y,z)$ 各维护一个追踪变量 $t$，更新规则 $t^{k+1}_i = \sum_j b_{ij}^k t_j^k + d_i^{k+1} - d_i^k$（$d_i^k = \nabla_{\cdot}\mathcal{L}_i$），靠列随机性保证 $\sum_i t_{\cdot,i}^k = \sum_i d_{\cdot,i}^k$，使每个 agent 的步进方向逐渐对齐全局平均梯度。差分项 $d^{k+1}-d^k$ 起的就是"自校正"作用——把因 agent 异质性导致的共识漂移在每一步抵消掉，是非凸时变设定下收敛的关键工具。
 
-3. **惩罚参数 $\lambda$ 与步长 $\eta$ 的精细配比**:
+**3. 惩罚参数 $\lambda$ 与步长 $\eta$ 的精细配比：在"逼近精度"与"共识稳定"之间找出可证明的最优 trade-off。**
 
-    - 功能：在「$\lambda$ 大 → 双层逼近精确」与「$\lambda$ 大 → 共识误差被放大 → 必须更小步长」之间找出可证明的最优 trade-off。
-    - 核心思路：理论 Lyapunov 分析显示，descent 不等式形如 $\|\nabla \mathcal{F}^*\|^2 + \frac{8\underline{c}n}{5a^n}\mathcal{C}_{b,3}\lambda \mathbf{V}_D^k \leq \frac{4\mathcal{C}_{gap}}{\lambda^2}+\dots$，逼近误差按 $\lambda^{-2}$ 衰减，而共识误差被 $\lambda$ 线性放大；取 $\lambda = \mathcal{O}(K^{1/3})$、$\eta = \mathcal{O}(K^{-1/3})$ 让两个量在 $K^{-2/3}$ 处汇合。
-    - 设计动机：这是文章理论上的精髓——明确地把双层惩罚常用的「$\lambda$ 越大越好」放在分布式共识误差的框架里重新权衡，并给出可执行的渐近调参公式。
+双层惩罚里 $\lambda$ 越大越逼近原问题，但 $\lambda$ 越大共识误差被放大得越厉害、甚至直接发散——这对矛盾是分布式特有的硬骨头。FAB 的 Lyapunov 分析把它量化：descent 不等式形如 $\|\nabla \mathcal{F}^*\|^2 + \frac{8\underline{c}n}{5a^n}\mathcal{C}_{b,3}\lambda \mathbf{V}_D^k \leq \frac{4\mathcal{C}_{gap}}{\lambda^2}+\dots$，逼近误差按 $\lambda^{-2}$ 衰减、共识误差被 $\lambda$ 线性放大，于是取 $\lambda = \mathcal{O}(K^{1/3})$、$\eta = \mathcal{O}(K^{-1/3})$ 让两个量在 $K^{-2/3}$ 处汇合。这是全文理论的精髓：把双层常用的"$\lambda$ 越大越好"放回分布式共识误差的框架里重新权衡，并给出可执行的渐近调参公式。
 
 ### 损失函数 / 训练策略
 Local penalty $\mathcal{L}_i(x,y,z)=f_i(x,y)+\lambda(g_i(x,y)-g_i(x,z))$，$\lambda=\mathcal{O}(K^{1/3})$；步长 $\eta_x^k,\eta_y^k,\eta_z^k=\mathcal{O}(K^{-1/3})$。下层 $g_i$ 假设 $\mu$-强凸、$L_{g,1}$-光滑、Hessian Lipschitz；上层 $f_i$ 仅需 $L_{f,1}$-光滑 + 有下界即可非凸；通信图每步强连通（或 $C$-连通），$A^k,B^k$ 非零元一致下界 $a,b>0$。

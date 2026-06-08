@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **层级 escalation 数据 pipeline (Analyzer ⇋ Generator)**:
+**1. 层级 escalation 数据 pipeline（Analyzer ⇋ Generator）：让训练样本自己示范"按复杂度选模式"。**
 
-    - 功能：自动把 X2I 数据分流到 Direct / Self-Reflection / Multi-step 三种执行路径，对应不同复杂度。
-    - 核心思路：用 Qwen3-VL-235B 当"评审 + 诊断医 + 规划师"，用 Gemini-3-Pro-Image 当"生成器"。每条数据先做直接生成 + 四维评分；不通过则做反思（最多 3 轮）；仍不通过且诊断为"过度复杂"则升级到多步规划，并在最终成功后做 trajectory pruning，把之前失败的反思裁掉，留下干净的"先直接试一次失败 → 拆子任务 → 子步骤逐图"轨迹。最终人工把关。
-    - 设计动机：让训练样本本身就示范"按复杂度选模式"——简单 prompt 学到的就是直接出图，复杂 prompt 学到的就是显式拆解，介于中间的学到的是反思纠错。
+模型要学会自适应选模式，前提是训练数据里就分门别类地演示了三种模式。作者搭了一条自动升级流水线：用 Qwen3-VL-235B 一人分饰"评审 + 诊断医 + 规划师"，用 Gemini-3-Pro-Image 当生成器。每条 X2I 数据先直接生成、按"指令/一致性/质量/常识"四维打分，通过的归为 *Direct*；不通过就进最多 3 轮 self-reflection（Analyzer 写反思 prompt、Generator 重画），修好了归为 *Self-Reflection*；3 轮还不行就让 Analyzer 诊断病因——若是"prompt 太复杂"就升级到 *Multi-step*（拆子任务逐步执行 + 中间评估），若是"缺领域知识"这类没救的就直接丢。多步成功后还做一次 trajectory pruning，把前面失败的反思裁掉，只留干净的"先直接试一次失败 → 拆子任务 → 子步骤逐图"轨迹。最后两名人工复核，得到 5 万条交错数据。这样简单 prompt 学到的就是直接出图，中等的学到反思纠错，复杂的学到显式拆解。
 
-2. **Selective Loss Masking 的 SFT**:
+**2. Selective Loss Masking 的 SFT：失败中间图只当"反思上下文"，不当"模仿目标"。**
 
-    - 功能：在 SFT 阶段避免模型学到"失败中间图"的视觉伪影，又保留"如何修正错误"的语义信号。
-    - 核心思路：损失只算在被选中的子序列 $\mathcal{O}$ 上。Direct 模式 $\mathcal{O}=\{G_1, E_1\}$；Self-Reflection 模式只算到最后一次的诊断 $E_{K-1}$、反思 prompt $R_{K-1}$ 和最终成功图 $G_K, E_K$，前面所有失败中间图全部 mask；Multi-step 模式算 $E_1$ + 完整规划序列 $\{S_i, G_i, E_i\}$。
-    - 设计动机：自回归 NLL 如果对失败图也算损失，等于在教模型"如何生成低质量图"，会反噬生成保真度；mask 掉它们让模型只把失败信息当作"反思的上下文"而不是"模仿目标"。
+多步轨迹里夹着大量失败的中间图，如果 SFT 的自回归 NLL 对这些图也算损失，等于在教模型"如何生成低质量图"，会直接反噬生成保真度。作者的对策是让损失只落在被选中的子序列 $\mathcal{O}$ 上：Direct 模式只算 $\{G_1, E_1\}$；Self-Reflection 模式只算到最后一次诊断 $E_{K-1}$、反思 prompt $R_{K-1}$ 和最终成功图 $G_K, E_K$，前面所有失败中间图全部 mask；Multi-step 模式算 $E_1$ 加完整规划序列 $\{S_i, G_i, E_i\}$。失败信息因此只以文本形式进入上下文供模型"反思"，而像素层面的伪影不会被当成生成目标去模仿。
 
-3. **GRPO + Step-wise 推理奖励 + Intra-group 复杂度惩罚**:
+**3. GRPO + Step-wise 推理奖励 + Intra-group 复杂度惩罚：把"用最少步赢"写进 RL 信号。**
 
-    - 功能：让模型学会自主选择最高效的执行路径。
-    - 核心思路：组合奖励 $\mathcal{R}_{\text{total}}=\alpha_1\mathcal{R}_o+\alpha_2\mathcal{R}_f+\alpha_3\mathcal{R}_s$，其中 $\mathcal{R}_o$ 是 LMM 给出的四维 outcome 评分加权平均、$\mathcal{R}_f$ 是结构合法二值、$\mathcal{R}_s=\frac{1}{T}\sum_t \text{Analyzer}(\text{text}_t)$ 是对每一段中间文本（失败分析、反思 prompt、子步骤分解）单独打分的稠密推理奖励。最关键的是 intra-group complexity penalty：在同一组采样轨迹里找出"接近最高奖励"（在 $\epsilon$ 阈值内）的子集，对其按图片数 $N_{\text{img}}^i$ 缩放——奖励里加上 $N_{\text{img}}^*/N_{\text{img}}^i$，即用更少图达到等效效果的轨迹会被进一步加分。
-    - 设计动机：单纯加 outcome 奖励会让模型"反正多步就有更高分"，陷入 over-reasoning；intra-group penalty 把"用最少步赢得同样分数"作为隐式优化目标，自然地把简单 prompt 留给 Direct、把复杂 prompt 留给 Multi-step。
+SFT 教会了语法，但"什么时候该多想"是策略问题，得靠 RL。组合奖励 $\mathcal{R}_{\text{total}}=\alpha_1\mathcal{R}_o+\alpha_2\mathcal{R}_f+\alpha_3\mathcal{R}_s$ 里，$\mathcal{R}_o$ 是四维 outcome 评分的加权平均，$\mathcal{R}_f$ 是结构合法的二值项，$\mathcal{R}_s=\frac{1}{T}\sum_t \text{Analyzer}(\text{text}_t)$ 对每段中间文本（失败分析、反思 prompt、子步骤分解）单独打分，给出稠密的推理奖励。但光加 outcome 奖励会诱导模型"反正多步分更高"，陷入 over-reasoning。最关键的一招是 intra-group complexity penalty：在同一组采样轨迹里挑出"奖励接近最高"（落在 $\epsilon$ 阈值内）的子集，按图片数缩放——奖励里乘进 $N_{\text{img}}^*/N_{\text{img}}^i$，用更少图达到等效效果的轨迹被进一步加分。于是"用最少步赢得同样分数"成了隐式优化目标，简单 prompt 自然留给 Direct、复杂 prompt 才动用 Multi-step。消融里去掉这一项，平均生成图数从 1.56 暴涨到 2.73（+75%）而质量几乎不涨，正说明它在压制过度推理。
 
 ### 损失函数 / 训练策略
 SFT：标准 AR-NLL 在 $\mathcal{O}$ 子集上 (Eq. 1)。RL：GRPO 策略 + 上述组合奖励 (Eq. 2–5)。骨干 = Emu3.5；RL 数据 5 万条，来自 UnicEdit-10M / X2Edit / AnyEdit / Pick-a-Pic / UltraEdit。

@@ -49,23 +49,21 @@ SVEB 的构造方式是：选一组 prompts，用固定 $\pi$ 跑 rollouts，从
 
 ### 关键设计
 
-1. **SVEB：用 Monte Carlo 真值评估状态价值估计器**:
+**1. SVEB：用 Monte Carlo 真值把"value estimator 好不好"做成一个可测的 MAE。**
 
-    - 功能：把"value estimator 好不好"变成一个可测的 MAE 指标，并用它揭示 PPO critic 在 LLM 场景下的退化。
-    - 核心思路：参考真值 $\widehat V(s_t)=\frac{1}{n}\sum_{i=1}^n r(s_T^{(i)})$ 由大规模 MCS 估计，按大数律 $\widehat V(s_t)\to V^\pi(s_t)$ 几乎处处成立；评估指标 $\mathrm{MAE}(f,D_s)=\frac{1}{|D_s|}\sum_j |f(s_t^{(j)},\theta)-\widehat V(s_t^{(j)})|$。在 SVEB-NUMBER 上，PPO-1@40 / PPO-N@40 / GRPO@40 的 MAE 分别为 0.169 / 0.158 / 0.164（$\lambda=0.95$），$\lambda=1.0$ 时为 0.161 / 0.152；同时 $\widehat V_{PPO}-\widehat V_{GRPO}$ 的分布几乎以零为中心。
-    - 设计动机：当时的工作多通过"下游 RL 是否变好"间接评 baseline 质量，混杂了优化噪声与算法差异。SVEB 用一个独立、可重复的离线指标隔离出"估值精度"本身，第一次把"PPO critic 没用"这个观察从经验直觉提升为可量化结论，从而合理化后续放弃训 critic 的设计。
+之前评 baseline 质量都是看"下游 RL 是否变好"，这混杂了优化噪声和算法差异，没法干净地隔离"估值精度"本身。SVEB 的做法是给每个中间状态 $s_t$ 用大规模 Monte Carlo 续写算一个参考真值 $\widehat V(s_t)=\frac{1}{n}\sum_{i=1}^n r(s_T^{(i)})$（论文用 MCS@20，按大数律 $\widehat V(s_t)\to V^\pi(s_t)$），再用 $\mathrm{MAE}(f,D_s)=\frac{1}{|D_s|}\sum_j |f(s_t^{(j)},\theta)-\widehat V(s_t^{(j)})|$ 给任意估计器打分。靠这把离线、可重复的尺子，作者第一次把"PPO critic 在 LLM 场景下没用"从经验直觉提升成可量化结论：SVEB-NUMBER 上 PPO-1@40 / PPO-N@40 / GRPO@40 的 MAE 分别是 0.169 / 0.158 / 0.164，而 $\widehat V_{PPO}-\widehat V_{GRPO}$ 的分布几乎以零为中心——PPO critic 的输出基本就是组均奖励本身。这个结论正是后面放弃训 critic、改走廉价相似度路线的合理性来源。
 
-2. **Numca：用数字 milestone 把数学题改造成目标条件 RL**:
+**2. Numca：把数学题里的"数字"当 milestone，用目标条件 RL 做几乎零成本的信用分配。**
 
-    - 功能：在数学推理任务里挑出"数字"作为可解析、可验证的中间里程碑，把任意 rollout 抽象成"经过了哪些数字"的等价类，并以此做加权奖励平均得到细粒度 state value。
-    - 核心思路：定义模式集 $\mathcal P$ （整数 / 小数 / 分数等），令 milestone $m=(x_i,\dots,x_j)$ 为 token 子序列对应解码字符串匹配 $\mathcal P$ 中某模式；状态 $s_t$ 的抽象 $s_t^M\triangleq \mathbb M(s_t)$ 等于"在 $s_t$ 中已出现的所有 milestone 的集合"；连续两个抽象状态之间的所有 token 拼起来是 macro action $a^M_t=(x_{t+1},\dots,x_{t'-1})$。给定 rollouts $\mathcal D_r$，维护字典 $\mathcal T[s^M]=(\mathrm{count},\mathrm{reward\_sum})$，把每条 rollout 中每个唯一抽象状态的命中数 +1、终止奖励累加，最后 $V(s^M)=\mathcal T[s^M].\mathrm{reward\_sum}/\mathcal T[s^M].\mathrm{count}$，并把这个值均匀分给该 macro action 内所有 token。整个过程是字典查询，内存与算力开销几乎可忽略。
-    - 设计动机：直接搬 HER 的"用最终状态当 alternate goal"在文本上行不通，因为语义不是离散结构化的；但数学题里"算到某个中间数"天然是可验证子目标，作者用这条结构性观察绕开了"如何无监督找 milestone"的难题，得到几乎零成本但显著有效的估计器。SVEB-NUMBER 上 Numca@40 MAE 直接降到 0.132（vs GRPO 0.175 / PPO-N 0.159），但代价是它只在 number 子集胜出，在 science 上退回 0.217，说明这是数学专用解法。
+直接搬 HER 那套"用最终状态当 alternate goal"在文本上行不通，因为语义不是离散结构化的。但作者注意到数学题里"算到某个中间数"天然是可解析、可验证的子目标，于是用数字 milestone 绕开了"如何无监督找 milestone"的难题。具体做法：定义模式集 $\mathcal P$（整数 / 小数 / 分数等），milestone $m=(x_i,\dots,x_j)$ 是解码字符串匹配 $\mathcal P$ 的 token 子序列；状态 $s_t$ 抽象成 $s_t^M\triangleq\mathbb M(s_t)$，即"已出现的所有 milestone 的集合"，相邻两个抽象状态之间的 token 拼成 macro action。然后对现成 rollouts 维护一个字典 $\mathcal T[s^M]=(\mathrm{count}, \mathrm{reward\_sum})$，每条 rollout 命中一个唯一抽象状态就 count+1、把终止奖励累加，最后 $V(s^M)=\mathcal T[s^M].\mathrm{reward\_sum}/\mathcal T[s^M].\mathrm{count}$，再均匀分给该 macro action 内所有 token。整个过程就是字典查询，内存和算力几乎可忽略。代价是它只在数字密集的场景管用——SVEB-NUMBER 上 Numca@40 MAE 降到 0.132（vs GRPO 0.175 / PPO-N 0.159），但在 science 子集退回 0.217，所以它是数学专用解法，需要 Hista 接力。
 
-3. **Hista：用 LLM 隐状态 + MinDistance 做概率加权奖励平均**:
+**3. Hista：用 LLM 末层隐状态 + MinDistance 做概率加权奖励平均，且有理论兜底。**
 
-    - 功能：在不依赖任何领域先验的前提下，给任意 prompt 下的任意中间状态 $s_t$ 一个"看过去同 prompt 的所有 rollouts、按相似度加权"的 state value 估计。
-    - 核心思路：取末层隐状态 $\mathbf X_\tau$，定义两个变长隐状态序列之间的 MinDistance：长者每个位置都去短者里找最近邻并求 $\ell_2$ 距离再求和，公式形式 $\mathrm{MD}(\mathbf X_1,\mathbf X_2)=\sum_i \min_j \|\mathbf x_{1,i}-\mathbf x_{2,j}\|_2$（长短序列按 $\eta_1,\eta_2$ 大小切换内外循环）。Theorem 5.2 证明两个状态得到相同最终奖励的概率与 $\mathrm{MD}$ 成反比 $P(R_1=R_2)\propto 1/\mathrm{MD}(\mathbf X_1^l,\mathbf X_2^l)$；Theorem 5.5 进一步证明概率加权估计器 $\widehat V_{PW}(s_t)=\sum_i P_{t,i} r_i/\sum_i P_{t,i}$ 的偏差不大于平均估计器 $\widehat V_{avg}(s_t)=\frac{1}{\mathcal N}\sum_i r_i$。工程上为了能跑超长序列，先用平滑系数 $\alpha$、压缩间隔 $\varphi$ 的 EMA 把 $\mathbf X_\tau$ 压成 $\mathbf E_\tau$，再以采样间隔 $\delta$ 切出有限状态空间 $\mathcal S^H_\tau$；对每个 $s_t^H$ 算与全局 $\mathcal S^H$ 的 MD，取 $k$ 近邻按 $\omega_i=1/\mathrm{MD}(s_t,s_i)$ 加权得到 $V(s_t)=\sum_{i=1}^k \omega_i r_i/\sum_{i=1}^k \omega_i$。空间复杂度 $O(\lfloor T/d\rfloor^2)$，可批量化到 GPU，整体开销与 GRPO 同量级。
-    - 设计动机：作者把 LLM 自回归训练视为一种隐式表征学习（与 MAE/DINO/BERT/JEPA 同源），因此末层隐状态就是天然的状态表征 —— 既不需要再训表征模型，也避免了 PRM/MCTS 那种额外采样。把"相似状态应有相似奖励"这条直觉转化为概率加权后，理论上必然降低偏差；实践上把估计降到与 GRPO 同算力级别，使得它能直接挂到任何 GRPO-style 算法上做 baseline 替换。
+要在不依赖任何领域先验的前提下给任意 $s_t$ 估值，得有一个通用的"状态相似度"。作者把 LLM 自回归训练视为一种隐式表征学习（与 MAE/DINO/BERT/JEPA 同源），于是末层隐状态就是天然的状态表征，不必再训表征模型。两个变长隐状态序列之间的距离用 MinDistance 定义——长者每个位置去短者里找最近邻求 $\ell_2$ 再求和：
+
+$$\mathrm{MD}(\mathbf X_1,\mathbf X_2)=\sum_i \min_j \|\mathbf x_{1,i}-\mathbf x_{2,j}\|_2.$$
+
+这套设计两头都有理论支撑：Theorem 5.2 证明两个状态拿到相同最终奖励的概率与 $\mathrm{MD}$ 成反比 $P(R_1=R_2)\propto 1/\mathrm{MD}$；Theorem 5.5 进一步证明概率加权估计器 $\widehat V_{PW}(s_t)=\sum_i P_{t,i} r_i/\sum_i P_{t,i}$ 的偏差不大于朴素平均估计器——即"相似状态应有相似奖励"这条直觉转成概率加权后，偏差理论上必然不会更差。工程上为了跑超长序列，先用平滑系数 $\alpha$、压缩间隔 $\varphi$ 的 EMA 把 $\mathbf X_\tau$ 压成 $\mathbf E_\tau$，再以采样间隔 $\delta$ 切出有限状态空间，对每个 $s_t^H$ 取 $k$ 近邻按 $\omega_i=1/\mathrm{MD}(s_t,s_i)$ 加权得 $V(s_t)=\sum_{i=1}^k \omega_i r_i/\sum_{i=1}^k \omega_i$。空间复杂度 $O(\lfloor T/d\rfloor^2)$，可批量化到 GPU，整体开销与 GRPO 同量级，因此能直接挂到任何 GRPO-style 算法上做无痛 baseline 替换。
 
 ### 损失函数 / 训练策略
 所有方法保留 GRPO/DAPO/CSIPO 原本的 clipping、KL 正则、importance sampling 等机制，只替换 advantage 公式里的 baseline：把组均奖励换成 Numca / Hista 给出的 $\widehat V(s_t)$。Numca 用字典 + 数字正则模式匹配，Hista 用末层隐状态 + EMA 压缩 + kNN 加权。两者都不需要额外训练步骤，也不引入新模型参数。
@@ -129,12 +127,6 @@ Numca 仅在数字密集的 Number 子集明显胜出；Hista 在五个子集全
 - 实验充分度: ⭐⭐⭐⭐ 五领域 SVEB + 数学下游 + DAPO 上的应用 + 多模型 (Qwen2.5-1.5B / Math 系列) 覆盖，主要缺多轮 / agent 类任务。
 - 写作质量: ⭐⭐⭐⭐ 论证链条从"PPO 退化"到"为什么需要 Numca/Hista"非常清楚，Theorem 与实证交替呈现。
 - 价值: ⭐⭐⭐⭐⭐ 几乎零额外算力的 baseline 替换 + 可直接挂到现有 GRPO/DAPO 训练循环，对工业级 LLM 后训练有立刻可见的工程收益。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

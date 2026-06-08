@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **统一主干内的离散扩散动作建模**:
+**1. 统一主干内的离散扩散动作建模：把动作 token 当"被掩盖的语言 token"，和 VLM 共用一套交叉熵目标。**
 
-    - 功能：把动作生成嵌进 VLM 主干而非外挂扩散头，避免两套梯度互相打架。
-    - 核心思路：每个控制维度按 1%-99% 分位数做 256-bin 量化（gripper 单独二值化），单时间步 7 个 token（3 平移+3 旋转+1 夹爪），H 个时间步拼成 $L = H \times 7$ 的 chunk；前向加噪是 Markov 链 $\mathbf{Q}_t \mathbf{e}_{a_{t,i}} = (1-\beta_t)\mathbf{e}_{a_{t,i}} + \beta_t \mathbf{e}_M$，每个 token 独立按概率 $\beta_t$ 被替换成 [MASK]。训练时坍缩成单步掩码预测，采样 mask ratio $\gamma_t$、在 $\gamma_t L$ 个位置打 [MASK]，最小化掩码位置上的交叉熵 $\mathcal{L}_{CE} = -\sum_{i \in \mathcal{M}_{\gamma_t}} \log p_\theta(a_{0,i} \mid \tilde{\mathbf{a}}_t, \mathbf{c})$，视觉和语言 token 只参与注意、不算 loss。
-    - 设计动机：和 VLM 共用 cross-entropy + 同一 token 空间，意味着动作 head 用的是 LM 已熟悉的训练形式，预训练先验不被外挂目标稀释；同时离散扩散在训练时遍历"指数多种 infilling 任务"，换来了推理时的任意顺序解码能力，这正是 AR 缺少的灵活度。
+AR 牺牲了并行性、外挂连续扩散又会用独立的训练目标稀释 VLM 先验。本文的破解是把动作生成嵌回 VLM 主干、沿用 LM 已熟悉的 cross-entropy。具体先把每个控制维度按 1%-99% 分位数做 256-bin 量化（gripper 单独二值化），单时间步 7 个 token（3 平移+3 旋转+1 夹爪），$H$ 个时间步拼成 $L=H\times 7$ 的 chunk；前向加噪是 Markov 链 $\mathbf{Q}_t \mathbf{e}_{a_{t,i}} = (1-\beta_t)\mathbf{e}_{a_{t,i}} + \beta_t \mathbf{e}_M$，每个 token 独立按 $\beta_t$ 被替换成 [MASK]。训练坍缩成单步掩码预测，采 mask ratio $\gamma_t$、在 $\gamma_t L$ 个位置打 [MASK]，最小化掩码位置的交叉熵
 
-2. **按置信度的自适应并行解码**:
+$$\mathcal{L}_{CE} = -\sum_{i \in \mathcal{M}_{\gamma_t}} \log p_\theta(a_{0,i} \mid \tilde{\mathbf{a}}_t, \mathbf{c}),$$
 
-    - 功能：让模型每轮先生易、后生难，把不确定的位置留到后面再生。
-    - 核心思路：推理从 $\mathbf{a}_1 = \mathrm{M}^L$（全 mask）出发，cosine schedule 单调递减 $\gamma_{t+1} < \gamma_t$；每步用 Max Confidence $s_{t,i} = \max_k p_\theta(k \mid \mathbf{a}_t, \mathbf{c})$ 或 Confidence Gap $g_{t,i} = p_\theta(k_{(1)} \mid \cdot) - p_\theta(k_{(2)} \mid \cdot)$ 给每个掩码位置打分，保留 top $(1-\gamma_{t+1})L$ 个位置 $\mathcal{K}_t$，对其用温度退火的 Gumbel-Max 采样，其余位置继续 [MASK]，直到 $\gamma_T = 0$。
-    - 设计动机：相比 OpenVLA-OFT 那种"一刀切全位置同时 argmax"的 BERT 式并行解码，本设计有"先确定锚点 → 锚点回灌主干 → 帮难位置消除歧义"的结构性优势；同时和 AR 比，避免被左到右顺序锁死，可利用 chunk 后段 token 已暴露的统计信息。
+视觉和语言 token 只参与注意、不算 loss。共用 token 空间和损失意味着动作 head 不冲淡预训练先验；而离散扩散训练时遍历"指数多种 infilling 任务"，换来了推理时的任意顺序解码能力——这正是 AR 缺的灵活度。
 
-3. **二次重掩码（Secondary Re-Masking）纠错机制**:
+**2. 按置信度的自适应并行解码：每轮先生易、后生难，让锚点帮难位置消歧。**
 
-    - 功能：防止早期低质 token 被锁定后污染后续解码。
-    - 核心思路：在按 $\gamma_{t+1}$ 选完保留集 $\mathcal{K}_t$ 之后，再对已提交的 token 做一次阈值检查：若当前置信度 $s_{t,i}$ 低于一个随步数单调升高的阈值 $\eta_t^{\mathrm{abs}}$，就把它重新打回 [MASK]，即 $\mathcal{R}_t^{\mathrm{abs}} = \{ i \in \mathcal{K}_t : s_{t,i} < \eta_t^{\mathrm{abs}} \}$；这些位置进入下一轮重新生成。整套机制与 Bayes 反向核保持一致，仅在采样规则上加了一层一致性约束。
-    - 设计动机：纯单调揭示（"committed 就不能反悔"）一旦某个位置错得早、错得贴近 chunk 中段，错误会被后续 token 的注意力放大；二次重掩码相当于给反向过程一个 "self-correction" 的口子，从经验上压住了误差累积，且只增加可忽略的计算开销。
+OpenVLA-OFT 那种"一刀切全位置同时 argmax"的 BERT 式并行解码没有迭代精修能力。本文从 $\mathbf{a}_1=\mathrm{M}^L$（全 mask）出发，按 cosine schedule 单调递减 $\gamma_{t+1}<\gamma_t$；每步用 Max Confidence $s_{t,i}=\max_k p_\theta(k\mid \mathbf{a}_t,\mathbf{c})$ 或 Confidence Gap 给每个掩码位置打分，保留 top $(1-\gamma_{t+1})L$ 个位置做温度退火的 Gumbel-Max 采样，其余继续 [MASK]，直到 $\gamma_T=0$。
+
+这样形成"先确定高置信锚点 → 锚点回灌主干 → 帮难位置消除歧义"的结构性优势；和 AR 比又避免被左到右顺序锁死，可利用 chunk 后段 token 已暴露的统计信息。可视化显示模型确实学会了"先定 gripper 状态再细化平移/旋转"这类可解释的解码顺序。
+
+**3. 二次重掩码（Secondary Re-Masking）：给反向过程开一个自纠错的口子。**
+
+纯单调揭示（committed 就不能反悔）有个隐患——某个位置错得早、错得贴近 chunk 中段，错误会被后续 token 的注意力放大。二次重掩码在按 $\gamma_{t+1}$ 选完保留集 $\mathcal{K}_t$ 后，再对已提交 token 做一次阈值检查：若置信度 $s_{t,i}$ 低于随步数单调升高的阈值 $\eta_t^{\mathrm{abs}}$，就把它打回 [MASK]，即 $\mathcal{R}_t^{\mathrm{abs}} = \{ i \in \mathcal{K}_t : s_{t,i} < \eta_t^{\mathrm{abs}} \}$，进入下一轮重新生成。
+
+整套机制与 Bayes 反向核保持一致，只在采样规则上加了一层一致性约束。它相当于给"易到难"的揭示过程补一个 self-correction 通道，从经验上压住了误差累积，计算开销可忽略。
 
 ### 损失函数 / 训练策略
 单一损失：掩码位置上的硬标签 cross-entropy（一阶段端到端，无辅助目标）。从 OpenVLA backbone 初始化，图像 resize 到 $224 \times 224$；LIBERO 每个 suite 单独训一个 policy 并过滤失败 episode，SimplerEnv 在 Fractal 与 BridgeData-V2 上分别微调；chunk size 取 8（LIBERO/Fractal）或 3（Bridge）；推理 $T = 12$ 轮 cosine schedule。所有参数（VLM 主干 + 动作投影头）一起更新。
@@ -117,12 +119,6 @@ LIBERO-Spatial OOD 同样呈现"绝对值最佳 + 退化最小"的趋势（visio
 - 实验充分度: ⭐⭐⭐⭐⭐ LIBERO 全 suite + SimplerEnv 双机器人 + 真机 Cobot Magic + OOD 语言/视觉扰动 + 完整 baseline 矩阵
 - 写作质量: ⭐⭐⭐⭐ 公式推导清晰，从 D3PM 形式化讲到工程实现连贯；个别表格混排略乱
 - 价值: ⭐⭐⭐⭐⭐ 给"统一 VLM 主干内做动作生成"这条线提供了强 baseline，OOD 鲁棒性的提升对真实机器人部署意义直接
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

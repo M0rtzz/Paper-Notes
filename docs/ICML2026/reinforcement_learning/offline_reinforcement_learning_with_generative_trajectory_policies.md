@@ -46,23 +46,17 @@ GTP 把策略 $\pi_\theta(s)$ 实现为一张参数化的 ODE 解映射 $\Phi_\t
 
 ### 关键设计
 
-1. **统一 ODE 解映射的 Inst Map + 一致性双目标**：
+**1. 统一 ODE 解映射的瞬时流 + 一致性双目标：让一个网络既等同去噪、又满足任意大跨度的轨迹可加。**
 
-    - 功能：把扩散去噪与一致性轨迹两条路线压进同一个学习目标，让模型既要在「无穷小步」上等同于去噪/速度场，又要在「任意大跨度」上满足轨迹可加性。
-    - 核心思路：引入代理函数 $\phi(\boldsymbol{x}_t, t, s) = \boldsymbol{x}_t + \frac{t}{t-s}\int_t^s f(\boldsymbol{x}_\tau, \tau) d\tau$，通过 $\Phi = (1 - s/t)\phi + (s/t)\boldsymbol{x}_t$ 还原解映射。**瞬时流损失**取 $s \to t$ 极限 $\lim_{s\to t}\phi(\boldsymbol{x}_t, t, s) = \boldsymbol{x}_t - t f(\boldsymbol{x}_t, t)$，等价于让网络学去噪/速度场，作为局部锚；**轨迹一致性损失**强制 $\Phi(\boldsymbol{x}_t, t, s) \approx \Phi(\Phi(\boldsymbol{x}_t, t, u), u, s)$ 对任意 $t > u > s$ 成立，作为全局调控器。
-    - 设计动机：单独的瞬时损失只能复现扩散/Flow Matching 的局部行为，需要数十步积分；单独的一致性损失没有局部锚就只是抄一个老师网络。两者一起优化才能在「少步推理质量」与「多步推理上限」之间获得 GTP 想要的「整条解映射」。
+扩散策略和一致性策略看似两条路，本质都在学同一条"噪声→数据"的 ODE 轨迹——前者学瞬时速度场要数十步积分，后者学一步跳变但很快饱和，谁都只碰到了解映射 $\Phi(\boldsymbol{x}_t,t,s)$ 的一个极端。GTP 干脆把整条解映射学下来。它引入代理函数 $\phi(\boldsymbol{x}_t, t, s) = \boldsymbol{x}_t + \frac{t}{t-s}\int_t^s f(\boldsymbol{x}_\tau, \tau) d\tau$，通过 $\Phi = (1 - s/t)\phi + (s/t)\boldsymbol{x}_t$ 还原解映射，再用两个互补目标共同约束：**瞬时流损失**取 $s \to t$ 极限 $\lim_{s\to t}\phi = \boldsymbol{x}_t - t f(\boldsymbol{x}_t, t)$，等价于让网络学去噪/速度场，当局部锚；**轨迹一致性损失**强制 $\Phi(\boldsymbol{x}_t, t, s) \approx \Phi(\Phi(\boldsymbol{x}_t, t, u), u, s)$ 对任意 $t > u > s$ 成立，当全局调控。单有瞬时损失只能复现扩散的局部行为、要几十步积分；单有一致性损失没有局部锚就只是抄个老师网络——两者一起优化，才能在"少步推理质量"和"多步推理上限"之间拿到整条解映射。
 
-2. **闭式 score 近似 (Stable Score Approximation)**：
+**2. 闭式 score 近似：用一次扰动取代自举监督，斩断"坏分数→坏目标→更坏分数"的恶性循环。**
 
-    - 功能：摆脱扩散/一致性常见的「自举监督」——即用早期还很烂的网络自身去当 ODE 右端项 $f_\theta$，再积分出训练目标，导致演员-评论员循环里坏目标驱动坏更新。
-    - 核心思路：把 ODE 右端的真实 score $f^\star(\boldsymbol{x}_t, t) = (\boldsymbol{x}_t - \mathbb{E}[\boldsymbol{x}|\boldsymbol{x}_t])/t$ 替换为锚到当前离线样本 $\boldsymbol{x}$ 的闭式代理 $\tilde{f}(\boldsymbol{x}_t, t) = (\boldsymbol{x}_t - \boldsymbol{x})/t$。文中 Theorem 4.1 证明：当 ODE 求解器是 $p$ 阶零稳定的、最大步长为 $h$ 时，理想目标 $\mathcal{L}_{\text{ideal}}$ 与实际目标 $\mathcal{L}_{\text{prac}}$ 的差为 $O(h^p)$。实操上轨迹一致性损失里的中间样本直接由 $\boldsymbol{x}_u = \boldsymbol{x} + u \cdot \boldsymbol{z},\ \boldsymbol{z} \sim \mathcal{N}(0, I)$ 一步生成，免去 ODE 求解器。
-    - 设计动机：自举监督是离线 RL 把扩散/一致性策略往深里训不动的根本原因；用一次扰动取代多步积分既省算力又斩断了「坏分数→坏目标→更坏分数」的恶性循环。
+扩散/一致性策略在离线 RL 里训不深的根本原因是自举监督——用早期还很烂的网络自身当 ODE 右端项 $f_\theta$ 再积分出训练目标，演员-评论员循环里坏目标驱动坏更新。GTP 把 ODE 右端的真实 score $f^\star(\boldsymbol{x}_t, t) = (\boldsymbol{x}_t - \mathbb{E}[\boldsymbol{x}|\boldsymbol{x}_t])/t$ 直接替换成锚到当前离线样本 $\boldsymbol{x}$ 的闭式代理 $\tilde{f}(\boldsymbol{x}_t, t) = (\boldsymbol{x}_t - \boldsymbol{x})/t$。Theorem 4.1 给出保证：当 ODE 求解器是 $p$ 阶零稳定、最大步长为 $h$ 时，理想目标与实际目标之差仅 $O(h^p)$。实操上轨迹一致性损失里的中间样本由 $\boldsymbol{x}_u = \boldsymbol{x} + u \cdot \boldsymbol{z},\ \boldsymbol{z} \sim \mathcal{N}(0, I)$ 一步生成，连 ODE 求解器都免了——既省算力，又用"把监督锚回数据"取代了多步积分。
 
-3. **优势加权的价值驱动目标**：
+**3. 优势加权的价值驱动目标：把生成式 BC 推向真正的策略改进。**
 
-    - 功能：把 BC 风味的生成目标推向真正的策略改进，让 GTP 既保留扩散式表达力，又能像 IQL / AWR 那样在数据分布内偏向高回报动作。
-    - 核心思路：在 KL 正则化的 RL 目标下，最优策略形如 $\pi^*(a|s) \propto \pi_{\text{BC}}(a|s)\exp(\eta A(s,a))$，由此推出「优势加权生成损失」$\max_\theta \mathbb{E}_{(s,a)\sim\mathcal{D}}[\exp(\eta A(s,a)) \cdot \ell_{\text{gen}}(\pi_\theta; a|s)]$。实际权重做归一化与截断 $w(s,a) = \exp\left(\eta \cdot \frac{\max(0, A(s,a))}{\text{std}(A) + \epsilon}\right)$，再乘进瞬时流损失与轨迹一致性损失的期望里。
-    - 设计动机：纯生成式目标只能复刻数据分布，无法实现策略改进；硬截断负优势避免低质量动作把权重拉成负数；标准差归一化让 $\eta$ 在不同任务上不需要重调。
+纯生成目标只能复刻数据分布，无法实现策略改进。GTP 在 KL 正则化的 RL 目标下推出最优策略形如 $\pi^*(a|s) \propto \pi_{\text{BC}}(a|s)\exp(\eta A(s,a))$，由此得到优势加权生成损失 $\max_\theta \mathbb{E}_{(s,a)\sim\mathcal{D}}[\exp(\eta A(s,a)) \cdot \ell_{\text{gen}}(\pi_\theta; a|s)]$。实际权重做归一化加截断 $w(s,a) = \exp\left(\eta \cdot \frac{\max(0, A(s,a))}{\text{std}(A) + \epsilon}\right)$，再乘进瞬时流损失与轨迹一致性损失的期望里。硬截断负优势是为了避免低质量动作把权重拉成负数，标准差归一化则让 $\eta$ 在不同任务上不必重调——这套设计像 IQL/AWR 一样在数据分布内偏向高回报动作，同时保留了扩散式的多模态表达力。
 
 ### 损失函数 / 训练策略
 

@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **零泄漏的教师证据补丁 (Teacher Negative Constraint Strategy)**:
+**1. 零泄漏的教师证据补丁（Teacher Negative Constraint Strategy）：让教师诊断错误但绝不透题。**
 
-    - 功能：让教师诊断错误并给出引导，但绝不直接给答案选项或终态。
-    - 核心思路：教师收到的数据包 $\mathcal{S}_i=(x,y,\tau_i)$ (含 GT) 或 $(x,\tau_i)$ (无 GT)，通过精心设计的 negative prompt + format constraint 输出 $(e_i,c_i)$。例如 counting 任务里不允许说 "frame 15 里恰好 3 个人"，只能说 "请在 [13,17] 帧区间内重新计数"；temporal 任务里只给帧区间和事件描述，禁止暗示先后关系。作者人工验证 200 次交互，泄漏率从无约束的 39.5% 降到 0%。
-    - 设计动机：传统 metric 难以覆盖视频任务里所有"软泄漏"的边缘情况，所以利用教师自身的 ICL 能力，用 prompt 工程把"诊断"和"答案"分离——让学生**被迫去重新观察**，而不是直接套用答案。
+观察层干预成立的前提是教师"指路但不送答案"——一旦教师直接说出答案或终态，学生就退化成 wholesale imitation，on-policy 性质荡然无存。难点在于视频任务里"软泄漏"无处不在，传统 metric 很难穷举所有边缘情况，所以作者干脆利用教师自身的 ICL 能力，用精心设计的 negative prompt + format constraint 把"诊断"和"答案"在生成层面分离。教师收到 $\mathcal{S}_i=(x,y,\tau_i)$（含 GT）或 $(x,\tau_i)$（无 GT），只允许输出错误类型 $e_i$ 和证据补丁 $c_i$：在 counting 任务里它不能说"frame 15 里恰好 3 个人"，只能说"请在 [13,17] 帧区间内重新计数"；temporal 任务里只给帧区间和事件描述、禁止暗示先后关系。这样学生**被迫重新去观察**而不是套答案。作者人工验证 200 次交互，把泄漏率从无约束的 39.5% 压到 0%。
 
-2. **Chosen Rollout 与鲁棒改进奖励 RIR**:
+**2. Chosen Rollout 与鲁棒改进奖励 RIR：把"修复后的轨迹"安全地塞回 on-policy GRPO。**
 
-    - 功能：在 GRPO 框架里既只让"被采用的那条 rollout"反向传播，又让群组归一化的 advantage 把"修复成功"的 rollout 转化为有效梯度方向。
-    - 核心思路：定义 chosen rollout $\hat\tau_i$ 后，每条样本的标量分数为 $\tilde R_i=z_i(R(\tau_i)+R_{fmt}(\tau_i))+(1-z_i)(R(\tau_i^*)+R_{fmt}(\tau_i^*)-\kappa)$，其中 $\kappa\ge 0$ 是 patch tax 用于惩罚依赖教师补丁。在 $G$ 条样本内做群组归一化得到 $A_i=(\tilde R_i-\text{mean})/\text{std}$，并用 token-level ratio $r_{i,t}(\theta)$ 在 PPO clip 框架下更新。
-    - 设计动机：把"修复后的轨迹"等价为同一策略在不同 observation 下的 on-policy 样本，规避了 off-policy 重要性采样的不稳定；patch tax $\kappa=0.3$ 是最优——太小学生过度依赖教师，太大教师指导被抵消。
+修复 rollout 是在"原问题 + 补丁"这个变了的 observation 下采样的，直接当 off-policy 样本做重要性采样会很不稳。FFR 的做法是把它等价成"同一策略在不同 observation 下的 on-policy 样本"：先定义 chosen rollout $\hat\tau_i$（$z_i=1$ 即首答正确就用 $\tau_i$，否则用修复后的 $\tau_i^*$），再给每条样本算标量分数
 
-3. **交替错误分类驱动的工具调用**:
+$$\tilde R_i=z_i\big(R(\tau_i)+R_{fmt}(\tau_i)\big)+(1-z_i)\big(R(\tau_i^*)+R_{fmt}(\tau_i^*)-\kappa\big),$$
 
-    - 功能：教师按错误类型 (temporal/spatial/attribute/counting/dynamics/logic) 选择对应工具，输出的证据是 textual error class + 可选 visual context (frame indices, region masks)。
-    - 核心思路：每种错误类型对应一组工具：temporal 输出帧区间，spatial 输出区域坐标，attribute 输出物体特征描述等。这些信号被组装成 $c_i$ 注入到学生的 prompt 里。消融显示：去掉 visual context 后 Video-Holmes 掉 10.0 个点，去掉 GT reference 掉 7.6 个点，证明这两类信号互补且都关键。
-    - 设计动机：不同错误根因需要不同粒度的修复信号，统一格式 (only text) 或同质 (only visual) 都会丢信息；错误分类把"该看哪里"具象化。
+其中 $\kappa\ge 0$ 是 patch tax，专门惩罚"靠教师补丁才答对"的样本。在 $G$ 条样本内做群组归一化得 $A_i=(\tilde R_i-\text{mean})/\text{std}$，再用 token-level ratio $r_{i,t}(\theta)$ 在 PPO clip 框架下更新，且只对 chosen rollout 的 token 反传。patch tax 把"模仿教师 vs 独立探索"的张力收成一个可调标量：$\kappa=0.3$ 最优——太小学生过度依赖教师，太大教师指导被抵消。
+
+**3. 错误分类驱动的工具调用：不同根因配不同粒度的修复信号。**
+
+修复信号给得太笼统（只给文字）或太同质（只给视觉框）都会丢信息，因为不同的错误根因需要看的东西不一样。FFR 让教师先把错误归到六类（temporal / spatial / attribute / counting / dynamics / logic），再按类调对应工具：temporal 输出帧区间，spatial 输出区域坐标，attribute 输出物体特征描述，依此类推；这些 textual error class + 可选 visual context（frame indices、region masks）被组装成补丁 $c_i$ 注入学生 prompt。错误分类的作用就是把抽象的"你这次错了"具象成"该看哪里"。消融印证了两类信号互补且都关键：去掉 visual context 后 Video-Holmes 掉 10.0 个点，去掉 GT reference 掉 7.6 个点。
 
 ### 损失函数 / 训练策略
 GRPO 目标 $\mathcal{J}_{FFR}(\theta)=\tfrac{1}{\sum|\hat\tau_i|}\sum_i\sum_{t\in\hat\tau_i}\text{CLIP}(r_{i,t}(\theta),A_i,\epsilon)-\beta D_{KL}[\pi_\theta\|\pi_{ref}]$，只对 chosen rollout 的 token 计算 loss。训练数据 4000 样本，8 rollouts/sample，1 epoch，lr=5e-6，8×A100，教师默认 GLM-4.5V。

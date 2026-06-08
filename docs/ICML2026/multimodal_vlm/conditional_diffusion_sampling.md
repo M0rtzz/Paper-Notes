@@ -50,23 +50,21 @@ tags:
 
 ### 关键设计
 
-1. **Conditional Interpolants（核心理论贡献）**:
+**1. Conditional Interpolants：把 score 从"必须训练"还原成"目标分布的解析变换"。**
 
-    - 功能：定义一类条件随机插值过程，使其转移动力学有精确闭式表达。
-    - 核心思路：标准 stochastic interpolant 定义 $x_t = F_t(z, x)$，$z\sim\nu_{\text{ref}}, x\sim\nu$。本文不去研究 $x_t$ 的 marginal 分布，而是**固定 $z$**，令 $F_{t\mid z}(\cdot) = F_t(z,\cdot)$ 为一个 diffeomorphism，则 $\nu_{t\mid z}$ 是 $\nu$ 通过 $F_{t\mid z}$ 的 pushforward。由变量替换公式立刻得到 $\pi_{t\mid z}(x) = |\det \mathrm{J}F_{t\mid z}(F^{-1}_{t\mid z}(x))|^{-1}\pi(F^{-1}_{t\mid z}(x))$，**只要目标 $\pi$ 可评估，条件密度和条件 score $\nabla\log\pi_{t\mid z}$ 都立刻可得**。随后定义条件速度场 $u_{t\mid z}(x) = \partial_t F_{t\mid z}(F^{-1}_{t\mid z}(x))$，结合 Fokker-Planck 配对可推出保持 $\pi_{t\mid z}$ 不变的精确条件 SDE：$dx_t = (u_{t\mid z}(x_t) + \frac{\sigma_t^2}{2}\nabla\log\pi_{t\mid z}(x_t))dt + \sigma_t dW_t$。
-    - 设计动机：解决"扩散+未归一化分布"采样的根本痛点——传统方法必须用神经网络拟合 score，而 conditional view 把 score 还原为目标 $\pi$ 的解析变换，从而**用维度变换+原密度的解析评估替代了神经训练**。
+扩散采样最根本的痛点是 score 函数对一般未归一化分布不可解析，逼得人要么训神经网络拟合、要么嵌套 MCMC 近似。标准 stochastic interpolant 定义 $x_t = F_t(z, x)$（$z\sim\nu_{\text{ref}}, x\sim\nu$），研究的是 $x_t$ 的 marginal 分布——而 marginal score 正是不可解析的那一个。本文换个视角：**固定参考点 $z$**，令 $F_{t\mid z}(\cdot) = F_t(z,\cdot)$ 是一个 diffeomorphism，那么条件分布 $\nu_{t\mid z}$ 就是目标 $\nu$ 经 $F_{t\mid z}$ 的 pushforward，由变量替换公式直接写出
 
-2. **t→0 极限带来的"transport cost 消失"性质**:
+$$\pi_{t\mid z}(x) = |\det \mathrm{J}F_{t\mid z}(F^{-1}_{t\mid z}(x))|^{-1}\,\pi(F^{-1}_{t\mid z}(x)).$$
 
-    - 功能：让 Stage 1 的初始化代价随 $t_0\to 0$ 单调下降到 0，从而消除"需要从头跑一遍 PT"的成本。
-    - 核心思路：当 $t\to 0$ 时 $W_1(\delta_z, \nu_{t\mid z})\to 0$（Eq. 10），即条件分布坍塌到 $z$ 上。作者用 Lipschitz 性质证明，对任意 Markov 核 $K$，当转换后核的 Lipschitz 常数 $L_t\le 1$ 时，目标 $\nu_{t\mid z}$ 的采样误差严格低于直接采 $\nu$；而对线性、三角等常用插值，$L_t\to 0$ 当 $t\to 0$。这意味着**$t_0$ 越小，PT 越容易从 $\pi_{\text{ref}}$ 跳到 $\nu_{t_0\mid z}$**。
-    - 设计动机：避免一个 catch-22——闭式 SDE 在 $t=0$ 处有奇点（$F_{t\mid z}$ 在 $t=0$ 不可逆，drift 发散），必须在 $t_0>0$ 处启动，而 $t_0$ 处的初始分布又必须采样。本文证明这个新出现的"采样初始分布"任务由于 $t_0$ 小所以反而比原任务容易得多——这是 CDS 整个 free-lunch 论点的关键。
+只要目标 $\pi$ 可评估，条件密度和条件 score $\nabla\log\pi_{t\mid z}$ 就全都闭式可得。再定义条件速度场 $u_{t\mid z}(x) = \partial_t F_{t\mid z}(F^{-1}_{t\mid z}(x))$，配上 Fokker-Planck 就推出一条保持 $\pi_{t\mid z}$ 不变的精确 SDE：$dx_t = (u_{t\mid z}(x_t) + \frac{\sigma_t^2}{2}\nabla\log\pi_{t\mid z}(x_t))dt + \sigma_t dW_t$。一句话，conditional 视角用"维度变换 + 原密度解析评估"换掉了神经训练。
 
-3. **PT 与 SDE 的角色分工（两阶段拼装）**:
+**2. $t\to 0$ 极限：让初始化代价单调消失，破掉"采初始分布"的 catch-22。**
 
-    - 功能：让 PT 负责全局多模态探索，SDE 负责局部细化与连续校正。
-    - 核心思路：Stage 1 用 PT 从 $\pi_{\text{ref}}$ 退火到 $\nu_{t_0\mid z}$，因为 $t_0$ 很小所以中间 ladder 短、swap acceptance 高、density evaluation 少；Stage 2 用 Euler–Maruyama 积分闭式 SDE，把这些"已经差不多正确"的样本沿 $t_0\to 1$ 推到目标。**关键的非平凡设计**是初始化必须从 $\nu_{t_0\mid z}$ 采样（而非简单地令 $x_{t_0}=z$）——后者在 Appx H 被证明会严重退化，因为扩散无法从单点扩散出足够支撑。此外，作者发现用反插值映射 $F^{-1}_{t_0\mid z}$ 直接把样本映到 $\nu$ 比 SDE 路径差（Fig. 5），因为 SDE 的连续 score-correction 能在传输过程中自动修正初始化误差。
-    - 设计动机：把两类方法的优势条件互补——PT 强在多模态全局探索但对 $\pi_{\text{ref}}\leftrightarrow\nu$ 距离敏感；扩散 SDE 强在局部精修但需要 score。CDS 把 PT 放在"距离最短的那一段"上，把 SDE 放在"全程"，刚好对两者扬长避短。
+闭式 SDE 在 $t=0$ 处有奇点（$F_{t\mid z}$ 不可逆、drift 发散），所以必须从某个 $t_0>0$ 启动；但这就冒出一个新任务——得先把 $t_0$ 处的初始分布 $\nu_{t_0\mid z}$ 采出来，听起来又回到原点。作者证明这个新任务其实比原任务容易得多：当 $t\to 0$ 时 $W_1(\delta_z, \nu_{t\mid z})\to 0$（Eq. 10），条件分布坍缩到参考点 $z$ 上。借 Lipschitz 性质可进一步证明，只要转换后 Markov 核的 Lipschitz 常数 $L_t\le 1$，采 $\nu_{t\mid z}$ 的误差就严格低于直接采 $\nu$，而线性、三角等常用插值都满足 $L_t\to 0$。于是 $t_0$ 越小，PT 从 $\pi_{\text{ref}}$ 跳到 $\nu_{t_0\mid z}$ 越容易——这正是 CDS"免费午餐"论点的支点。
+
+**3. PT 与 SDE 的角色分工：全局探索交给 PT，局部精修交给 SDE。**
+
+两阶段不是随便拼的，而是把两类方法各自的优势条件互补起来。Stage 1 用 Parallel Tempering 从 $\pi_{\text{ref}}$ 退火到 $\nu_{t_0\mid z}$，因为 $t_0$ 很小、中间 ladder 短、swap acceptance 高、密度评估省——PT 被安排在"距离最短的那一段"。Stage 2 用 Euler–Maruyama 积分闭式 SDE 把这些"已经差不多对"的样本沿 $t_0\to 1$ 推到目标，SDE 负责全程的连续 score-correction。这里有两个非平凡之处：初始化必须真的从 $\nu_{t_0\mid z}$ 采样而非简单令 $x_{t_0}=z$（Appx H 证明单点初始化会严重退化，扩散撑不出足够支撑）；而且直接用反插值映射 $F^{-1}_{t_0\mid z}$ 把样本映到 $\nu$ 也比 SDE 路径差（Fig. 5），因为 SDE 的连续校正能在传输途中自动修掉初始化误差。PT 强在多模态全局探索但对 $\pi_{\text{ref}}\leftrightarrow\nu$ 距离敏感，SDE 强在局部精修但需要 score——CDS 刚好对两者扬长避短。
 
 ### 损失函数 / 训练策略
 **无训练**。Stage 1 的 PT 使用 non-reversible variant；SDE 使用 Euler–Maruyama 离散化，可选 MH corrector；超参为 PT 步数 $K$、积分步数 $N$、噪声 schedule $\sigma_t$、初始时刻 $t_0$（最优值见 Fig. 4）。

@@ -45,23 +45,31 @@ DAT 的 pipeline 完全建立在冻结的 VLM 之上：先用训练/验证集为
 
 ### 关键设计
 
-1. **基于 herding 的组参考集构造**:
+**1. 基于 herding 的组参考集构造：为每组选出代表中心几何的 exemplar。**
 
-    - 功能：为每个组 $(y,a)$ 选出 $n$ 个能代表该组中心几何的 exemplar，构成密度估计的局部邻域基础。
-    - 核心思路：从每个组的样本池 $\{x_{y,a}^{(h)}\}_{h=1}^{N_{y,a}}$ 出发，采用 iCaRL 风格的 deterministic feature-space herding（Rebuffi et al., 2017）：贪心地选嵌入向量，使得已选集合的均值不断向组均值逼近。这样得到的 $R_{y,a}=\{z_{y,a}^{(h)}\}_{h=1}^{n}$ 既覆盖该组的"典型样貌"，又远比随机采样稳定。Waterbirds 用 $n=56$、CelebA 用 $n=128$、COVID-19 用 $n=40$、FMoW 用 $n=50$，量级都很小。
-    - 设计动机：因为频繁/伪相关样本本身靠近组均值（Levi & Gilboa, 2025），herding 自然会把它们抓进来，给后续密度估计提供一个"常见模式聚集区"的参考；同时这个集合只用作非参数几何估计，不改模型参数，零样本性质完整保留。
+要估"某测试样本相对它所属组有多稀疏"，先得有一个能代表该组核心的局部邻域。DAT 对每个 $(y,a)$ 组从其样本池 $\{x_{y,a}^{(h)}\}_{h=1}^{N_{y,a}}$ 里用 iCaRL 风格的 deterministic feature-space herding（Rebuffi et al., 2017）贪心选点——每次选一个嵌入向量，使已选集合的均值不断逼近组均值——得到紧凑参考集 $R_{y,a}=\{z_{y,a}^{(h)}\}_{h=1}^{n}$，规模都很小（Waterbirds $n=56$、CelebA $n=128$、COVID-19 $n=40$、FMoW $n=50$）。
 
-2. **SLOF 局部密度与 Density Translation 重缩放**:
+为什么用 herding 而不是随机采样：既有研究表明频繁/伪相关样本本身就靠近组均值（Levi & Gilboa, 2025），所以向均值逼近的 herding 天然会把这些"常见模式"抓进参考集，正好给后续密度估计提供一个"常见模式聚集区"的基准；而且整个参考集只用作非参数几何估计、不动一个模型参数，零样本性质完整保留。
 
-    - 功能：把"测试样本相对该组中心有多稀疏"量化成一个标量，再用它去压缩稀疏区的过度自信相似度。
-    - 核心思路：用 simplified LOF（SLOF, Schubert et al., 2014）作为默认密度代理：$D_{y,a}(z)=\frac{1}{k}\sum_{z_o\in \text{NN}_k(z)} \frac{k\text{-dist}(z)}{k\text{-dist}(z_o)}$，$D_{y,a}(z)$ 越大表示 $z$ 越孤立。然后定义 density translation 后的相似度 $\tilde s_{y,a}(x)=\frac{s_{y,a}(x)}{(D_{y,a}(z)+\varepsilon)^\lambda}$，$\lambda>0$ 控制修正强度。$k$ 取 10（FMoW 取 30），$\lambda$ 在 Waterbirds/COVID-19/FMoW 取 10、CelebA 取 1，相当于直接按数据集复杂度调一次。
-    - 设计动机：纯 cosine 评估时，一个"配错文本但常见"的样本（伪相关）和一个"配对文本但稀有"的样本可能给出相近的分数；SLOF 能区分这两种情形——伪相关样本通常在自身组的密集区里、而错配组的稀疏外围，因此除以 $D$ 之后，错配方向的得分被显著压低，正确方向的得分被相对抬升。论文用 Waterbirds 的 Tangent-space Mahalanobis Distance 可视化了这一现象。
+**2. SLOF 局部密度与 Density Translation 重缩放：把稀疏区的过度自信分数压下去。**
 
-3. **组合聚合 + Kent 分布下的理论对齐**:
+纯 cosine 打分有个致命盲区——一个"配错文本但常见"的伪相关样本，和一个"配对文本但稀有"的样本，得分可能差不多，甚至前者更高。DAT 先用 simplified LOF（SLOF, Schubert et al., 2014）把"测试样本 $z$ 相对该组有多孤立"量化成标量：
 
-    - 功能：把所有组得分 $\tilde s_{y,a}$ 整合成单个类别预测，并证明 DAT 在椭球嵌入上等价于补回 cosine 漏掉的各向异性项。
-    - 核心思路：除了组特定得分，定义 class-marginal $\tilde s_{y,\text{Avg}}(x)=\frac{1}{M+1}(\sum_a \tilde s_{y,a}(x)+s_y(x))$，最终 $\hat y=\arg\max_y \max\{\max_a \tilde s_{y,a}(x), \tilde s_{y,\text{Avg}}(x)\}$；这种 max-of-max 兼顾"有伪属性时按组打分"和"伪属性未知时回退到平均"。理论侧用 Kent（Fisher-Bingham）分布建模组密度，其对数密度 $\log p(z)=\kappa\gamma_1^\top z + \beta[(\gamma_2^\top z)^2-(\gamma_3^\top z)^2]-\log c_d(\kappa,\beta)$，纯 cosine 只捕到线性轴向项 $\kappa\gamma_1^\top z$，遗漏了二次各向异性项。论文证明 DAT margin $m_{y,a}(z)=\tau w_{y,a}^\top z + \alpha\lambda \log p_{y,a}(z)+r_{y,a}(z)$（$|r|\le B_0$），即"logit + 缩放对数似然 + 有界余项"，在等先验下 $\arg\max$ 与 Bayes 最优对齐。
-    - 设计动机：仅引入 SLOF 修正会让人担心"经验 trick 而已"；通过把 $-\log D$ 解释为对数密度代理（Assumption 3.2），就把 DAT 提升到"在椭球嵌入下逼近 Bayes 最优 ranking"的层次，也回答了"为什么 cosine 会错"——它根本看不见 $\beta$ 项。
+$$D_{y,a}(z)=\frac{1}{k}\sum_{z_o\in \text{NN}_k(z)} \frac{k\text{-dist}(z)}{k\text{-dist}(z_o)}$$
+
+$D$ 越大越孤立。然后把原始组相似度按密度重缩放：$\tilde s_{y,a}(x)=s_{y,a}(x)/(D_{y,a}(z)+\varepsilon)^\lambda$，$\lambda>0$ 控制修正强度（$k$ 取 10、FMoW 取 30；$\lambda$ 在 Waterbirds/COVID-19/FMoW 取 10、CelebA 取 1）。
+
+这一步起效的关键在于：伪相关样本通常落在自身组的密集区、却在错配组的稀疏外围，所以除以 $D$ 之后，错配方向的得分被显著压低、正确方向的得分被相对抬升。论文用 Waterbirds 的 Tangent-space Mahalanobis Distance 把这一几何现象可视化了出来。
+
+**3. 组合聚合 + Kent 分布下的理论对齐：证明这不只是经验 trick。**
+
+把组得分整合成类别预测时，DAT 还定义了 class-marginal $\tilde s_{y,\text{Avg}}(x)=\frac{1}{M+1}(\sum_a \tilde s_{y,a}(x)+s_y(x))$，最终用 max-of-max 决策 $\hat y=\arg\max_y \max\{\max_a \tilde s_{y,a}(x), \tilde s_{y,\text{Avg}}(x)\}$，兼顾"有伪属性时按组打分"和"伪属性未知时回退到平均"。
+
+理论侧回答了"cosine 到底漏了什么"。用 Kent（Fisher-Bingham）分布建模组密度，其对数密度
+
+$$\log p(z)=\kappa\gamma_1^\top z + \beta[(\gamma_2^\top z)^2-(\gamma_3^\top z)^2]-\log c_d(\kappa,\beta)$$
+
+里 cosine 只对应到线性轴向项 $\kappa\gamma_1^\top z$，根本看不见二次各向异性项 $\beta[\cdot]$。而 $\tilde s = s/D^\lambda$ 在 logit 域等于减 $\lambda\log D$，把 $-\log D$ 当对数密度代理（Assumption 3.2）后，DAT 的 margin 可写成 $m_{y,a}(z)=\tau w_{y,a}^\top z + \alpha\lambda \log p_{y,a}(z)+r_{y,a}(z)$（余项 $|r|\le B_0$），即"logit + 缩放对数似然 + 有界余项"，在等先验下其 $\arg\max$ 与 Bayes 最优 ranking 对齐。这就把一个看似 ad-hoc 的密度修正，提升到"在椭球嵌入下逼近 Bayes 最优"的层次。
 
 ### 损失函数 / 训练策略
 全程零样本，没有任何训练步骤，也不改 VLM 参数。仅需的"参数"是每组参考集大小 $n$、邻域大小 $k$、缩放 $\lambda$，且都按数据集一次性设定即可。
@@ -123,12 +131,6 @@ CelebA 上 DAT 在 ViT-L/14 取 WG=84.94（TIE 84.60）、ResNet-50 上 WG=80.79
 - 实验充分度: ⭐⭐⭐⭐ 四数据集 × 6 个 VLM 变体，覆盖自然图像/人脸/医疗/遥感
 - 写作质量: ⭐⭐⭐⭐ 从几何 motivation 到理论再到实验衔接紧凑，记号一致
 - 价值: ⭐⭐⭐⭐ 零样本/无需训练/部署友好，社区可立刻在任意 frozen VLM 上套用
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

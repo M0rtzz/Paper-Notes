@@ -49,23 +49,21 @@ SDIR 是一个 end-to-end 双分支网络：SFG-Former 输出基线骨架 $\hat 
 
 ### 关键设计
 
-1. **频谱解耦的训练课程：DCT 截断 $C_s$ + Beta(1,3) 采样**:
+**1. 频谱解耦的训练课程：用 DCT 截断 $C_s$ + Beta(1,3) 采样把"频段深度"当迭代变量。**
 
-    - 功能：把"频段深度"作为可控变量注入模型，让训练同时覆盖"从零开始合成"与"补全高频"两种工况，并在分布上偏向先学好低频。
-    - 核心思路：对每个 batch，采样 $\sigma\sim\operatorname{Beta}(1,3),s=\lfloor W\sigma\rfloor$；对 ground truth 做 2D DCT，截掉左上 $s\times s$ 之外的系数再 IDCT 回来，得到 ideal low-pass 的低频条件 $C_s$。$s=0$ 时 $C_s$ 是零，对应"冷启动"；$s=W-1$ 时 $C_s$ 几乎等于 $Y$，对应"已经几乎是 GT，再做最后的细节增强"。Beta(1,3) 的概率密度偏低 $s$，迫使模型先掌握大尺度骨架，再去碰高频。
-    - 设计动机：这一步是"扩散式 progressive learning"在频域的确定性翻版——扩散按 noise level 切片，本文按 spatial frequency 切片；切片本身有明确的物理含义（synoptic vs. convective scale），且不需要随机采样，预报因此是 deterministic 的。
+降水演化天生多尺度——大尺度天气场作边界条件，小尺度对流在其上长出来——单步单分支模型很难同时稳住全局又锐化局部。SDIR 把"逐步揭示更高频段"嵌进训练：每个 batch 采 $\sigma\sim\operatorname{Beta}(1,3),s=\lfloor W\sigma\rfloor$，对 ground truth 做 2D DCT、截掉左上 $s\times s$ 之外的系数再 IDCT 得到 ideal low-pass 条件 $C_s=\operatorname{IDCT}(\operatorname{Trunc}_{s\times s}(\operatorname{DCT}(Y)))$。$s=0$ 时 $C_s$ 是零对应"冷启动"，$s=W-1$ 时 $C_s$ 几乎等于 $Y$ 对应"最后的细节增强"；Beta(1,3) 密度偏低 $s$，迫使模型先掌握大尺度骨架再碰高频。这是"扩散式 progressive learning"在频域的确定性翻版——扩散按 noise level 切片，本文按 spatial frequency 切片，切片有明确物理含义（synoptic vs convective scale）且无需随机采样，所以预报是 deterministic 的，从根上避开扩散的 unanchored hallucinations。
 
-2. **SFG-Former + 3D RoPE：频率自适应的全局骨架**:
+**2. SFG-Former + 3D RoPE：频率自适应的全局骨架分支。**
 
-    - 功能：吃进历史序列与低频条件，输出空间-时间一致的 base 预测 $\hat Y_{base}$，要求其在任何 $s$ 下都是稳定的低频骨架。
-    - 核心思路：将 $X$ 与 $C_s$ 沿时间维拼接、做 2D patchify 与线性投影得到 $z\in\mathbb{R}^{B\times L\times D}$；每个 SAT block 里有一个 Frequency Scale Embedder（FSE）把标量 $s$ 映成 modulation 三元组 $(\gamma,\beta,\alpha)$，对 LayerNorm 后特征做 affine 调制 $z_{mod}=(1+\gamma)\odot\operatorname{LN}(z)+\beta$，再以 gated residual $z_{out}=z+\alpha\odot\operatorname{Transformer}(z_{mod})$ 接回主干；位置编码用 3D RoPE 在空间-时间维上一并保持 translation invariance。
-    - 设计动机：transformer 的 patch embedding 天然偏向中等分辨率特征，单独用它会丢失高频；通过 FSE 将"当前要重建的频谱深度"作为条件灌进每一层，使骨架分支既能输出"模糊但稳"的低 $s$ 预测，也能在高 $s$ 下给出更锐的版本，避免和 refiner 抢工。3D RoPE 取代绝对位置编码后，模型对气象场的平移与时间漂移更鲁棒，这是 Hu et al. 2025 的最新经验在该任务上的延伸。
+骨架分支要吃历史序列和低频条件、输出在任何 $s$ 下都稳的低频 base 预测 $\hat Y_{base}$。把 $X$ 与 $C_s$ 沿时间维拼接、patchify 投影成 $z\in\mathbb{R}^{B\times L\times D}$ 后，每个 SAT block 里的 Frequency Scale Embedder（FSE）把标量 $s$ 映成 modulation 三元组 $(\gamma,\beta,\alpha)$，对 LayerNorm 后特征做 affine 调制 $z_{mod}=(1+\gamma)\odot\operatorname{LN}(z)+\beta$，再以 gated residual $z_{out}=z+\alpha\odot\operatorname{Transformer}(z_{mod})$ 接回主干；位置编码用 3D RoPE 在空间-时间维一并保 translation invariance。Transformer 的 patch embedding 天然偏中等分辨率、单独用会丢高频，把"当前要重建的频谱深度"作为条件灌进每层，骨架分支就既能在低 $s$ 给"模糊但稳"的预测、又能在高 $s$ 给更锐版本，避免和 refiner 抢工；3D RoPE 取代绝对位置编码后，对气象场的平移和时间漂移更鲁棒。
 
-3. **FR-Refiner + SFNO + PCPSD 损失：高频残差合成与湍流谱约束**:
+**3. FR-Refiner + SFNO + PCPSD 损失：高频残差合成与湍流谱约束。**
 
-    - 功能：在 base 骨架上以 Fourier 域全局算子合成高频残差 $\hat Y_{res}$，并由 PCPSD 损失显式监督预测的功率谱与 GT 的功率谱在每个频段的 log 距离，强制满足 Kolmogorov 湍流功率律。
-    - 核心思路：refiner 是 U-Net 拓扑，用 PixelUnshuffle / PixelShuffle 做分辨率转换以保细节，bottleneck 处堆叠 SFNO blocks——FFT 把特征送进频域，按实部 / 虚部线性变换 + SoftShrink 稀疏化，再 IFFT 回空间域，从而在常数层数内捕捉跨尺度耦合；scale 信号 $s$ 通过多个 FSE 与 Adaptive Normalization 注入。损失里关键是 PCPSD：先用 2D Hann window 抑制边缘伪影，再 rFFT 得到 2D 功率谱 $P(k_y,k_x)$，沿径向 bin 平均得到 1D isotropic 功率谱 $S(k)$，最终在 log 域比较 $\mathcal{L}_{pcpsd}=\frac{\sum_k\Omega(k,s)(\log S_{pred}(k)-\log S_{gt}(k))^2}{\sum_k\Omega(k,s)}$；动态权重 $\Omega(k,s)=(k+\epsilon)^\gamma\cdot\{0.2\text{ if }k\le k_s(s);1.0\text{ otherwise}\}$，给已解锁的高频更强监督、给低频弱权重。总目标是 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，其中 $\phi(s)=\eta(s/W)^2,\eta=0.01$ 让 spectral loss 随频段深度二次增长。
-    - 设计动机：spatial convolution 是局部的、几乎注定要让高频被低频"洗掉"；SFNO 在 Fourier 域做线性混合，能在 bottleneck 直接捕捉长程频段耦合，是 FourCastNet 风格设计的延伸。PCPSD 解决的是"为什么会过平滑"的根本问题——MSE 在各频段上的梯度被低频主导，模型理性地选择平滑解；用 log-spectral 距离 + 动态高频权重之后，预测必须把能量按 GT 的频谱分布"摊"出去，从而既不丢能量也不乱长结构。
+回归类模型过平滑的根因是 MSE 在各频段的梯度被低频主导、模型理性地选平滑解。Refiner 用 U-Net 拓扑（PixelUnshuffle/Shuffle 做分辨率转换保细节），bottleneck 堆 SFNO blocks——FFT 进频域、按实部/虚部线性变换 + SoftShrink 稀疏化、再 IFFT 回空间域，在常数层数内捕捉跨尺度耦合，是 FourCastNet 风格设计的延伸。真正治本的是 PCPSD 损失：先用 2D Hann window 抑边缘伪影、rFFT 得 2D 功率谱、沿径向 bin 平均得 1D isotropic 谱 $S(k)$，在 log 域比较
+
+$$\mathcal{L}_{pcpsd}=\frac{\sum_k\Omega(k,s)\big(\log S_{pred}(k)-\log S_{gt}(k)\big)^2}{\sum_k\Omega(k,s)},$$
+
+动态权重 $\Omega(k,s)=(k+\epsilon)^\gamma\cdot\{0.2\text{ if }k\le k_s(s);\,1.0\text{ otherwise}\}$ 给已解锁高频更强监督、给低频弱权重。这样预测必须把能量按 GT 的频谱分布"摊"出去，既不丢能量也不乱长结构，从而对齐 Kolmogorov 湍流功率律。总目标是 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，$\phi(s)=\eta(s/W)^2$ 让 spectral loss 随频段深度二次增长。
 
 ### 损失函数 / 训练策略
 总损失 $\mathcal{L}=\mathcal{L}_{base}+\mathcal{L}_{res}+\phi(s)\mathcal{L}_{pcpsd}$，前两项是 base 与 residual 的 L1，$\phi(s)=\eta(s/W)^2,\eta=0.01$。优化器 AdamW，初始 lr $3\times 10^{-4}$，硬件 4×RTX 4090D。SFG-Former 含 8 个 SAT block（hidden 512），FR-Refiner 的 SFNO bottleneck 含 8 个 block，输入 CIKM 标准化到 $128\times 128$（zero-pad）、Shanghai / SEVIR 到 $256\times 256$（bilinear）。推理调度采用 8 步（详见消融）。

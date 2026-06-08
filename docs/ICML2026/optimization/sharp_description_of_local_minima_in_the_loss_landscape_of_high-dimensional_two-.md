@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **概要统计 ODE 与不动点条件**：
+**1. 概要统计 ODE 与不动点条件：把 $Kd$ 维权重轨迹塌缩成与维度无关的封闭系统。**
 
-    - 功能：把 $Kd$ 维权重轨迹塌缩为只有 $K^2+KM$ 个标量的封闭系统，并使 population landscape 完全可代数化分析。
-    - 核心思路：定义 $Q_{ij}=\frac{1}{d}w_i^\top w_j$、$R_{im}=\frac{1}{d}w_i^\top w_m^*$，则 ReLU 下 $\mathbb{E}_x[\mathcal{G}_k]$ 可通过二/三/四元 Gaussian 的 ReLU 期望写为 $(Q,R,T)$ 的多项式 + 反三角函数表达式（附录 A.4 给 closed form）。由此 gradient flow 等价于 $\dot Q=\mathcal{F}_Q(Q,R)$、$\dot R=\mathcal{F}_R(Q,R)$，固定点满足 $\mathcal{F}_R(Q,R)=0,\mathcal{F}_Q(Q,R)=0$（Result 1），且这套方程与输入维度 $d$ 无关。
-    - 设计动机：传统局部分析在 $d\to\infty$ 下面对一个 $\mathbb{R}^{Kd}$ 的几何对象无从下手，把维度浓缩到 $O(K^2+KM)$ 既保留所有 generalization-relevant 信息（loss 是 $(Q,R)$ 的函数），又把"找所有 minima"变成可解的代数问题。
+传统局部分析在 $d\to\infty$ 下要面对 $\mathbb{R}^{Kd}$ 的几何对象，根本无从下手。作者沿用统计物理 soft committee machine 的传统，引入权重重叠 $Q_{ij}=\frac{1}{d}w_i^\top w_j$、$R_{im}=\frac{1}{d}w_i^\top w_m^*$ 作为足够统计量。ReLU 下的 population 梯度 $\mathbb{E}_x[\mathcal{G}_k]$ 可以通过二/三/四元 Gaussian 的 ReLU 期望，写成 $(Q,R,T)$ 的多项式加反三角函数表达式（附录 A.4 给 closed form），于是 gradient flow 等价为
 
-2. **block-symmetric ansatz 与 $k_1$ 层级**：
+$$\dot Q=\mathcal{F}_Q(Q,R),\qquad \dot R=\mathcal{F}_R(Q,R),$$
 
-    - 功能：把所有局部极小按一个离散整数 $k_1\in[0,M]$ 分族，并给出每族 loss 与重叠的解析值。
-    - 核心思路：利用学生隐藏单元的置换对称性，把 $K$ 个神经元划成两组——$|I_1|=k_1$ 个与教师反对齐（$R_{im}<0$），$|I_2|=k_2=K-k_1$ 个对齐。在此 ansatz 下 $R$ 与 $Q$ 都是 block 形式：每块用 $\mathbf{B}(x,y)=xI+y(J-I)$ 参数化，原始的耦合方程退化为关于 $\{r_1^{\mathrm{diag}},r_1^{\mathrm{off}},q_1^{\mathrm{diag}},\dots\}$ 的少量标量方程（Result 2）。每个 $k_1$ 给出一族 spurious minima、对应解析 loss 与 $(Q,R)$ 模板。
-    - 设计动机：直接搜 $(Q,R)$ 空间的零点是 $O(K^2)$ 维代数问题，对称性把每族压成 $O(1)$ 个未知数；而且这种 block 结构正是 Arjevani–Field 群论中"最少对称破缺"原则的宏观对应——anti-aligned 神经元导致的局部误差被 aligned 神经元的方向调整 exactly 补偿，使梯度归零并卡住。
+固定点满足 $\mathcal{F}_R(Q,R)=0,\ \mathcal{F}_Q(Q,R)=0$（Result 1），而且这套方程与输入维度 $d$ 无关。这样做既保留了所有 generalization-relevant 的信息（loss 本身就是 $(Q,R)$ 的函数），又把"找所有 minima"从高维几何问题降成只有 $O(K^2+KM)$ 个标量的代数问题。
 
-3. **扰动型稳定性分析与过参数化诊断**：
+**2. block-symmetric ansatz 与 $k_1$ 层级：把连续非凸景观还原成一维离散族。**
 
-    - 功能：在 ReLU 不可微的前提下判断每族固定点的稳定性，并定量解释过参数化如何 destabilize 一阶族（$k_1=1$）却保留高阶族（$k_1\ge 2$）。
-    - 核心思路：把系统初始化在某固定点，对权重加 $\xi\sim\mathcal{N}(0,\sigma^2 I)$ 扰动后跑 1000 步 GD（$\eta=0.01$），度量平均回弹距离；well-specified（$K=M$）情形即使 $\sigma$ 很大仍回到 $<10^{-3}$，过参数化（$K\ge M+1$）情形即使 $\sigma$ 极小也会被推开。配合 ansatz 在 $K=M+1$ 上的推广分析，作者形式化证明 $k_1=1$ 的不动点方程不再有稳定实数解，但 $k_1\ge 2$ 的高阶族仍然存在并且不是简单 zero-padding 出来的。
-    - 设计动机：ReLU 没有 Hessian 可算，但 population gradient flow 是良定义的；扰动分析既能绕开不可微性，又能直接读出"哪一族真的还会困住 SGD"，是 ansatz 方法的天然伴随诊断。
+即使降到 $(Q,R)$，直接搜零点仍是 $O(K^2)$ 维代数问题。作者利用学生隐藏单元的置换对称性，把 $K$ 个神经元划成两组——$|I_1|=k_1$ 个与教师反对齐（$R_{im}<0$），$|I_2|=K-k_1$ 个对齐。在此 ansatz 下 $R$ 与 $Q$ 都呈 block 形式，每块用 $\mathbf{B}(x,y)=xI+y(J-I)$ 参数化，原本耦合的方程退化为关于 $\{r_1^{\mathrm{diag}},r_1^{\mathrm{off}},q_1^{\mathrm{diag}},\dots\}$ 的少量标量方程（Result 2）。于是每一族 spurious minima 由单个整数 $k_1\in[0,M]$ 完全刻画，连同解析 loss 和 $(Q,R)$ 模板一并给出。这个 block 结构恰好是 Arjevani–Field 群论"最少对称破缺"原则的宏观对应：反对齐神经元造成的局部误差被对齐神经元的方向调整 exactly 补偿，梯度归零，于是卡住。
+
+**3. 扰动型稳定性分析与过参数化诊断：在 ReLU 不可微下替代 Hessian。**
+
+ReLU 没有 Hessian 可算，但 population gradient flow 是良定义的，所以作者用扰动分析来判稳定性：把系统初始化在某固定点，对权重加 $\xi\sim\mathcal{N}(0,\sigma^2 I)$ 后跑 1000 步 GD（$\eta=0.01$），度量平均回弹距离。well-specified（$K=M$）情形即便 $\sigma$ 很大也回到 $<10^{-3}$，过参数化（$K\ge M+1$）情形即便 $\sigma$ 极小也被推开。配合 ansatz 在 $K=M+1$ 上的推广分析，作者形式化证明 $k_1=1$ 的不动点方程不再有稳定实数解，而 $k_1\ge 2$ 的高阶族仍然存在、且不是简单 zero-padding $K=M$ 解得来的。正是这个诊断纠正了 Safran 等人"过参数化即把 minima 全变鞍点"的乐观——它能直接读出"哪一族真的还会困住 SGD"，是 ansatz 方法的天然伴随工具。
 
 ### 损失函数 / 训练策略
 loss 是 $\mathcal{L}(W;W^*)=\frac{1}{2}\mathbb{E}_x[(\phi(x,W)-\phi(x,W^*))^2]$；优化用 population gradient flow，并扩展到 normalized GD（在球面 $\|w_k\|^2=d$ 上）、orthonormalized GD（Stiefel manifold $WW^\top=dI_K$）、两层联合 GD、one-pass online SGD（Result 3 显示 $\eta=o_d(1)$ 时与 GF 等价）。

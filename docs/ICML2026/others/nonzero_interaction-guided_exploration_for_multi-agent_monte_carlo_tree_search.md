@@ -44,23 +44,21 @@ NonZero 沿用 MuZero 的 (i) representation、(ii) dynamics、(iii) prediction 
 
 ### 关键设计
 
-1. **Asinh-GLM 回报 surrogate**:
+**1. Asinh-GLM 回报 surrogate：用一个全局光滑的链接函数把 $d^n$ joint action 压进低维参数空间。**
 
-    - 功能：用 $\eta(\theta, a) = c \cdot \text{asinh}(\alpha \langle w(\theta), \psi(a) \rangle)$ 把 joint action $a$（$n$-hot 向量）的真实奖励压缩到一个低维参数空间。
-    - 核心思路：每个 joint action $a \in \{0,1\}^{nd}$ 通过 feature map $\psi(a)$ 和参数 $w(\theta) \in \mathbb{R}^{nd}$ 计算 score $z = \langle w, \psi \rangle$；asinh 链接 $g(z) = c \cdot \text{asinh}(\alpha z)$ 是严格单调、无界、无限可微的，导数 $g'(z) = c\alpha / \sqrt{1 + (\alpha z)^2}$ 衰减是多项式的（不像 sigmoid 指数饱和或 ReLU 没有高阶光滑）。
-    - 设计动机：(1) asinh 的全局可微 + 多项式衰减保证 Assumption 3.2 中的离散光滑性成立，让 Theorem 3.5 的 regret 分析能进行；(2) asinh-GLM 在 Kalai-Sastry 2009 意义下是 invex 的，approximate local maxima 等价于 global optimism，所以把目标放宽到 local 不会丢太多。
+joint action 空间 $d^n$ 大到没法枚举，所以第一步是给回报建一个低维 surrogate。每个 joint action $a\in\{0,1\}^{nd}$ 经 feature map $\psi(a)$ 与参数 $w(\theta)\in\mathbb{R}^{nd}$ 算 score $z=\langle w,\psi\rangle$，再过一个 asinh 链接 $\eta(\theta,a)=c\cdot\text{asinh}(\alpha z)$。选 asinh 而不是 sigmoid/ReLU 不是工程偏好而是为理论铺路：它严格单调、无界、无限可微，导数 $g'(z)=c\alpha/\sqrt{1+(\alpha z)^2}$ 只多项式衰减，不像 sigmoid 那样指数饱和、也不像 ReLU 那样缺高阶光滑。这层光滑性正好满足 Assumption 3.2 的离散光滑性，让 Theorem 3.5 的 regret 分析跑得通；同时 asinh-GLM 在 Kalai-Sastry 2009 意义下是 invex 的，approximate local maxima 等价于 global optimism——这就为后面"把目标从全局放宽到局部"留好了退路，放宽几乎不丢解。
 
-2. **一阶 + 二阶 mixed difference 提议规则 NonUCT**:
+**2. 一阶 + 二阶 mixed difference 提议规则 NonUCT：用曲率信号直接捕捉协调收益。**
 
-    - 功能：算单 agent 偏离收益 $\Delta_u \eta$ 和双 agent 协调收益 $\Delta_{u,v}^2 \eta$，按预测得分挑出能加入 $\mathcal{C}(s)$ 的最佳邻居。
-    - 核心思路：用恒等式 $\eta(a^{(u,v)}) - \eta(a) = \Delta_u \eta + \Delta_v \eta + \Delta_{u,v}^2 \eta$ 把"双偏离收益"分解成"两个单偏离 + 一个交互"；mixed difference $\Delta_{u,v}^2 \eta = \eta(a^{(u,v)}) - \eta(a^{(u)}) - \eta(a^{(v)}) + \eta(a)$ 正好是协调收益的纯净信号——单 agent 都不收益但合起来收益（即协调陷阱）时这个量会显著为正。提议规则 NonUCT 选 score 最高的 $u$ 或 $(u,v)$ 加入 candidate set；NonUCT 的 counter-factual 评估全部由学好的 reward model 完成，不需要额外环境交互。
-    - 设计动机：UCB 风格依赖全局 optimism，需要 $\widetilde{O}(d^n)$ 样本；用 $\Delta_{u,v}^2$ 当 curvature signal，只需采样有限个方向（数量与 $d^n$ 无关，只与 surrogate 类的统计复杂度有关），就能拿到 action-dimension-free 的探索。
+MALinZero 那种线性可加假设会在"协调陷阱"上失效——单个 agent 偏离都更差、两个 agent 同时偏离才有收益。NonZero 把"双偏离收益"用恒等式拆开：$\eta(a^{(u,v)})-\eta(a)=\Delta_u\eta+\Delta_v\eta+\Delta_{u,v}^2\eta$，其中 mixed difference
 
-3. **Hypernetwork 做 $\theta_s$ 的跨节点 warm-start**:
+$$\Delta_{u,v}^2\eta = \eta(a^{(u,v)}) - \eta(a^{(u)}) - \eta(a^{(v)}) + \eta(a)$$
 
-    - 功能：每当 tree 新增 node $s$，hypernetwork 从 $s$ 的 state $s_t$ 直接预测一个 $\theta_s$ 初值，作为该节点 GLM 的起点。
-    - 核心思路：$\theta_s = \text{HyperNetwork}(s_t)$，然后在 MCTS 后续迭代里用 $\mathcal{L}_{\text{NonUCT}}$ 梯度下降微调 $\theta_s$。Hypernetwork 本身在主训练循环里 end-to-end 学。
-    - 设计动机：单个 MCTS rollout 里采样数有限，从零拟合 $\theta_s$ 不收敛；hypernetwork 跨节点共享统计强度，把"全局经验"灌进每个新节点的初值，让局部微调几步就能逼近 $\theta^*$。Ablation 显示去掉 hypernetwork 性能掉得不如去 curvature 多，但仍然是显著贡献。
+恰好是协调收益的纯净信号——两个单偏离都不收益、合起来却收益时，这个二阶量会显著为正。提议规则 NonUCT 就采样若干方向 $u=(i\leftarrow j)$、$v=(k\leftarrow\ell)$，按预测得分挑出最佳的 $u$ 或 $(u,v)$ 加入候选集 $\mathcal{C}(s)$，而所有 counter-factual 评估都由学好的 reward model 完成，不额外消耗环境交互。它之所以高效，是因为 UCB 风格的全局 optimism 要 $\widetilde{O}(d^n)$ 样本，而用 $\Delta_{u,v}^2$ 当曲率信号只需采有限个方向（数量与 $d^n$ 无关，只跟 surrogate 类的统计复杂度有关），换来 action-dimension-free 的探索。
+
+**3. Hypernetwork 做 $\theta_s$ 的跨节点 warm-start：把全局经验灌进每个新节点的初值。**
+
+前两点能成立的前提是每个节点的 GLM 参数 $\theta_s$ 能拟合到位，但单次 MCTS rollout 内采样数有限，从零拟合根本不收敛。作者加了第四个网络头：每当 tree 新增节点 $s$，hypernetwork 直接从状态 $s_t$ 预测一个初值 $\theta_s=\text{HyperNetwork}(s_t)$，再用 $\mathcal{L}_{\text{NonUCT}}$ 在后续迭代里微调几步；hypernetwork 自身在主训练循环里 end-to-end 学。这相当于跨树节点共享统计强度，把"全局经验"当先验灌进每个新节点，于是局部只需几步梯度就能逼近 $\theta^*$。Ablation 证实它确有贡献——去掉 hypernetwork 性能会掉，只是掉得不如去掉曲率项那么狠。
 
 ### 损失函数 / 训练策略
 损失对四个量回归（公式 7）：$\mathcal{L}_{\text{NonUCT}} = \min_\theta \mathbb{E}_{a,u,v} \frac{1}{4} [(\eta(\theta, a) - \eta(\theta^*, a))^2 + (\eta(\theta, a^{(u)}) - \eta(\theta^*, a^{(u)}))^2 + (\Delta_u \eta(\theta, a) - \Delta_u \eta(\theta^*, a))^2 + (\Delta_{u,v}^2 \eta(\theta, a) - \Delta_{u,v}^2 \eta(\theta^*, a))^2]$。监督信号 $\theta^*$ 是该 node 的 model-side reward head 评估值；真实环境只对选定的合法 joint action 收一次 reward。理论上 Theorem 3.5 给 $\mathbb{E}[\text{Regret}_T] \leq (1 + C_1 \sqrt{4 T R_T}) \cdot \mathcal{K}(\epsilon)$，其中 $\mathcal{K}(\epsilon) = \max(4\zeta_h \epsilon^{-2}, \sqrt{\zeta_{3rd}} \epsilon^{-3/2})$，Corollary 3.6 给 $\widetilde{O}(T^{3/4})$；Theorem 3.7 显示 vs 标准 UCB 的 separation $\zeta_{\text{sep}} \geq \exp(c \cdot nd) / \text{poly}(nd, \epsilon^{-1})$，即指数级加速。

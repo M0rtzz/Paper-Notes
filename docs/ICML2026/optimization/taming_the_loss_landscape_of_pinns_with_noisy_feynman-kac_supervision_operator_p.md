@@ -51,23 +51,25 @@ tags:
 
 ### 关键设计
 
-1. **Feynman–Kac 监督项作算子预条件**：
+**1. Feynman–Kac 监督项作算子预条件：在训练目标里加质量项把病态谱拉起来。**
 
-    - 功能：用极少量内点伪标签把 PINN 的曲率矩阵 $H$ 改为 $H_{\mathrm{FK}} = H + \lambda_{\mathrm{FK}}M$，其中 $M$ 是数据保真项贡献的半正定矩阵。
-    - 核心思路：在 PINN 损失上接入 $\mathcal{R}_{\mathrm{FK}}(\theta) = \frac{1}{N_{\mathrm{FK}}}\sum_k(u_\theta(x_k^{\mathrm{FK}}) - \hat u^{\mathrm{MC}}_\Gamma(x_k^{\mathrm{FK}}))^2$，得到 $\mathcal{R}_{\mathrm{FK\text{-}PINN}} = \lambda_{\mathrm{PDE}}\mathcal{R}_{\mathrm{PDE}} + \lambda_{\partial\Omega}\mathcal{R}_{\partial\Omega} + \lambda_{\mathrm{FK}}\mathcal{R}_{\mathrm{FK}}$。这等价于在 $L^2$ 内积里加一个"质量项"，把 $\mathcal{L}^*\mathcal{L}$ 病态谱的小特征值方向重新拉起来。
-    - 设计动机：算子级预条件传统上要换优化器（自然梯度、Newton），改训练目标这一思路则完全兼容现有 PINN pipeline；且预条件效果由理论保证与数据来源**完全无关**，FK 只是其中一种实现，FEM 粗解或实验数据同样适用。
+近年研究指出 PINN 训练难的根源是 PDE 算子的 $\mathcal{L}^*\mathcal{L}$ 谱严重病态，而已有补救多在改优化器（自然梯度、Newton），换起来成本高。作者注意到 PINN 的算子谱里"质量项"通常被忽略，于是在损失上接入数据保真项
 
-2. **基于 PL$^*$ 框架的条件数界（定理 5.4）**：
+$$\mathcal{R}_{\mathrm{FK}}(\theta)=\frac{1}{N_{\mathrm{FK}}}\sum_k\big(u_\theta(x_k^{\mathrm{FK}})-\hat u^{\mathrm{MC}}_\Gamma(x_k^{\mathrm{FK}})\big)^2,$$
 
-    - 功能：把"加 FK 项 → 条件数好转"形式化为严格的非渐近不等式。
-    - 核心思路：在 Liu et al. 2022 的 PL$^*$ 框架（适配 Rathore et al. 2024）下，定义 $\kappa_{\mathrm{PL}}(\mathcal{J}) = L(\mathcal{J})/\mu(\mathcal{J})$ 为光滑常数与 PL$^*$ 常数之比。Rathore 等已证 $\kappa_{\mathrm{PINN}} \geq cN^{\beta/2}$（随 collocation 数多项式爆炸）。本文引入"兼容性条件"（假设 5.2：把参数扰动拆成"改变监督项的"和"不改变的"两类，要求第二类上 PDE 项依然良态、两类相互作用不太大），从而证明存在常数 $\mu_0, L_0, C$ 与 $N$ 无关，使 $\mathcal{R}_{\mathrm{FK\text{-}PINN}}$ 是 $L_0$-smooth 且满足常数 $\mu_0$ 的 PL$^*$，进而 $\kappa_{\mathrm{FK}} \leq C$。配合 Liu et al. 2022 的 PL$^*$ 收敛定理，GD 迭代复杂度从 PINN 的 $\mathcal{O}(N^{\beta/2}\log(1/\varepsilon))$ 降到 FK-PINN 的 $\mathcal{O}(\log(1/\varepsilon))$。
-    - 设计动机：直接证 Hessian/Gauss-Newton 谱在深网络中几乎不可行；PL$^*$ 是一类对非孤立最小子流形仍成立的更弱条件，与插值假设搭配后既覆盖过参 PINN 的现实，又能干净地给出条件数语言下的提升。
+总损失 $\mathcal{R}_{\mathrm{FK\text{-}PINN}}=\lambda_{\mathrm{PDE}}\mathcal{R}_{\mathrm{PDE}}+\lambda_{\partial\Omega}\mathcal{R}_{\partial\Omega}+\lambda_{\mathrm{FK}}\mathcal{R}_{\mathrm{FK}}$。这等价于把曲率矩阵 $H$ 改成 $H_{\mathrm{FK}}=H+\lambda_{\mathrm{FK}}M$（$M$ 半正定），相当于经典数值分析里的 mass-matrix 预条件，专门补足 $\mathcal{L}^*\mathcal{L}$ 小特征值方向。改训练目标而非优化器，让它完全兼容现有 PINN pipeline，而且理论保证预条件效果与数据来源无关——FK 只是一种零网格、可并行的实现，粗 FEM 或实验数据同样适用。
 
-3. **带 $\tanh$ 的非渐近 $L^2$ 误差界（定理 6.2）**：
+**2. 基于 PL$^*$ 框架的条件数界（定理 5.4）：把"加 FK 项→条件数好转"证成不等式。**
 
-    - 功能：把算子级条件数提升进一步翻译成"训完之后的解和真解差多远"。
-    - 核心思路：首先证 FK 蒙特卡洛标签可分解为 $Y_i^{\mathrm{FK}} = u^\star(X_i^{\mathrm{FK}}) + b(X_i^{\mathrm{FK}}) + \zeta_i$，偏差 $|b(x)| \leq C_{\mathrm{bias}}\sqrt{\Delta t} + C_T e^{-\kappa T_{\max}}$ 由欧拉–马 yama 步长和截断时间控制、$\zeta_i$ 条件子指数；然后走标准的逼近-估计-优化分解，关键技术贡献是给出 $\tanh$ 网络一阶/二阶导数的伪维数界（首次结果），这样才能让 Rademacher/PAC 风格估计延伸到 PDE 残差里出现的二阶项。在 $s\geq 3$、$u^\star\in W^{s,\infty}$、宽度 $m\asymp N_{\mathrm{FK}}^{d/(4d+8(s-2))}$、$N_{\mathrm{int}}, N_{\partial\Omega}\gtrsim N_{\mathrm{FK}}$ 下，深度 $L=3$ 的 FK-PINN 经 $T\gtrsim\log N_{\mathrm{FK}}$ 步 GD 后以 $1-\delta$ 概率满足 $\|u_{\theta_T} - u^\star\|_{L^2(\Omega)} \leq C(N_{\mathrm{FK}}^{-\beta} + e^{-c_{\mathrm{opt}}T} + \varepsilon_{\mathrm{bias}} + \varepsilon_{\mathrm{bias}}^{1/2})$，其中 $\beta = (s-2)/(2d+4(s-2))$。
-    - 设计动机：以往 PINN 非渐近界基本只对分段多项式激活成立，而 $\tanh$ 才是工程上的真默认；这一节既补齐了 PINN 理论的关键缺口，又把 MC 偏差/方差和优化收敛同时纳入同一束界，便于直接读出"FK 预算如何换误差"的工程指南。
+直接证深网络的 Hessian 谱几乎不可行，作者改用更弱、对非孤立最小子流形仍成立的 PL$^*$ 条件，定义 $\kappa_{\mathrm{PL}}(\mathcal{J})=L(\mathcal{J})/\mu(\mathcal{J})$。Rathore 等已证 PINN 一侧 $\kappa_{\mathrm{PINN}}\ge cN^{\beta/2}$ 随 collocation 数多项式爆炸。本文引入"兼容性条件"（假设 5.2：把参数扰动拆成改变监督项与不改变两类，要求后者上 PDE 项仍良态、两类相互作用不太大），从而证明存在与 $N$ 无关的常数 $\mu_0,L_0,C$ 使 $\mathcal{R}_{\mathrm{FK\text{-}PINN}}$ 是 $L_0$-smooth 且满足 $\mu_0$-PL$^*$，于是 $\kappa_{\mathrm{FK}}\le C$。配合 PL$^*$ 收敛定理，GD 迭代复杂度从 $\mathcal{O}(N^{\beta/2}\log(1/\varepsilon))$ 降到 $\mathcal{O}(\log(1/\varepsilon))$——条件数从随 $N$ 爆炸变成一致有界，这正是训练对超参/采样不再敏感的理论解释。
+
+**3. 带 $\tanh$ 的非渐近 $L^2$ 误差界（定理 6.2）：把条件数提升翻译成解的精度。**
+
+条件数好了还要回答"训完离真解多远"。作者先把 FK 蒙特卡洛标签分解为 $Y_i^{\mathrm{FK}}=u^\star(X_i^{\mathrm{FK}})+b(X_i^{\mathrm{FK}})+\zeta_i$，偏差 $|b(x)|\le C_{\mathrm{bias}}\sqrt{\Delta t}+C_T e^{-\kappa T_{\max}}$ 由 Euler–Maruyama 步长和截断时间控制、$\zeta_i$ 条件子指数；再走逼近-估计-优化分解。关键技术贡献是首次给出 $\tanh$ 网络一阶/二阶导数的伪维数界——以往 PINN 非渐近界基本只对分段多项式激活成立，而 $\tanh$ 才是工程默认，有了这个界才能让 Rademacher/PAC 估计延伸到 PDE 残差里的二阶项。最终在适当宽度/采样预算下，深度 $L=3$ 的 FK-PINN 经 $T\gtrsim\log N_{\mathrm{FK}}$ 步 GD 后以 $1-\delta$ 概率满足
+
+$$\|u_{\theta_T}-u^\star\|_{L^2(\Omega)}\le C\big(N_{\mathrm{FK}}^{-\beta}+e^{-c_{\mathrm{opt}}T}+\varepsilon_{\mathrm{bias}}+\varepsilon_{\mathrm{bias}}^{1/2}\big),\qquad \beta=\frac{s-2}{2d+4(s-2)}.$$
+
+这一束界把 MC 偏差/方差和优化收敛装进同一个表达式，能直接读出"FK 预算如何换误差"的工程指南。
 
 ### 损失函数 / 训练策略
 

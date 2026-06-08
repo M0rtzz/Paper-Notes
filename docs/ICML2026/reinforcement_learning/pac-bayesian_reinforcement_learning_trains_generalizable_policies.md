@@ -48,23 +48,25 @@ tags:
 
 ### 关键设计
 
-1. **transition-level bounded-differences + Paulin 浓度**：
+**1. transition-level 有界差分 + Paulin 浓度：把 horizon 依赖从四次方砍到一次方。**
 
-    - 功能：把单条 trajectory 内部相邻 transition 的扰动影响显式量化，从而把 McDiarmid 推广到 Markov 链。
-    - 核心思路：对固定参数 $\theta$ 与两组 trajectory 集 $D, \bar{D}$，证明 $|\hat{L}_D(\theta) - \hat{L}_{\bar{D}}(\theta)| \le \sum_{h',j'} c_{(h',j')} \mathbb{1}[\xi_{h'}^{(j')} \neq \bar{\xi}_{h'}^{(j')}]$，其中 $c_{(h,j)} = \gamma^{h-1} R_{\max}/T$。系数 $c_{(h,j)}$ 直接显示了"靠近开头的 transition 影响大、靠后的影响指数衰减"。然后用 Paulin (2018) 的马尔可夫链 McDiarmid：满足该有界差分的统计量在 Markov 链上的偏差仍受 $\tau_{\min} \cdot \|c\|_2^2$ 控制。
-    - 设计动机：Fard et al. (2011) 通过 Bellman 残差导出 horizon 依赖到 $(1-\gamma)^{-4}$，因为他们要先把 value error 转成 Bellman error 再用 i.i.d. 浓度；本文跳过这一步直接处理回报，把灵敏度求和 $\sum_h \gamma^{2h}$ 控成 $(1-\gamma^2)^{-1}$，horizon 依赖立刻砍掉两个 $1/(1-\gamma)$。这是从 $\gamma=0.99$ 时上界 $10^8$ 缩到 $10^2$ 量级的关键。
+第一件要解决的事是序列依赖让经典 PAC 上界失效。作者不走 Fard et al. (2011) 那条"先把 value error 转成 Bellman error 再用 i.i.d. 浓度"的老路（正是那一步把 horizon 依赖推到 $(1-\gamma)^{-4}$），而是直接对折扣回报本身做有界差分分析。对固定参数 $\theta$、两组只差一个 transition 的 trajectory 集 $D,\bar D$，证明
 
-2. **PAC-Bayes-$\lambda$ 变分松弛 + 交替优化**：
+$$|\hat{L}_D(\theta) - \hat{L}_{\bar{D}}(\theta)| \le \sum_{h',j'} c_{(h',j')}\,\mathbb{1}[\xi_{h'}^{(j')} \neq \bar{\xi}_{h'}^{(j')}],\qquad c_{(h,j)} = \gamma^{h-1} R_{\max}/T.$$
 
-    - 功能：把"$\hat{L}_D + \sqrt{\text{KL 项}}$"这种平方根复合非凸目标转成可稳定优化的凸子问题。
-    - 核心思路：利用恒等式 $\sqrt{x} = \inf_{\lambda > 0}\bigl(\frac{x}{2\lambda} + \frac{\lambda}{2}\bigr)$ 引入辅助参数 $\lambda$，把 (13) 重写为 $\mathcal{J}(\rho, \lambda) = \mathbb{E}_{\theta\sim\rho}[\hat{L}_D(\theta)] + \frac{\|c\|_2 \tau_{\min}}{2\lambda}(\mathrm{KL}(\rho\|\mu) + \ln\sqrt{2}/\delta) + \frac{\lambda}{2}$。该目标对 $\rho$ 凸（KL 凸 + 期望线性），对 $\lambda$ 给出闭式解 $\lambda^* = \sqrt{\|c\|_2 \tau_{\min}(\mathrm{KL}+\ln\sqrt{2}/\delta)}$。算法交替更新：固定 $\lambda$ 用梯度下降优化 $(\upsilon, \sigma)$，再固定 $(\upsilon, \sigma)$ 闭式解 $\lambda^*$；优化完后把得到的 $\rho^*$ 代回原 PAC-Bayes 上界 (13) 报告证书。
-    - 设计动机：Thiemann et al. (2017) 在 PAC-Bayes-$\mathrm{kl}$ 多数投票里早就用过这个 trick 把 majority vote 学习的非凸目标松弛；本文是首次把它搬到 RL setting。这步至关重要——不做松弛直接优化平方根目标会出现训练发散和"$\rho \to \mu$ 退化"（KL 项主导）等失败模式。
+系数 $c_{(h,j)}$ 直接把"靠近开头的 transition 影响大、靠后的指数衰减"写进了公式。然后套 Paulin (2018) 的马尔可夫链 McDiarmid——满足这种有界差分的统计量在 Markov 链上的偏差仍受 $\tau_{\min}\cdot\|c\|_2^2$ 控制。关键收益在求和：$\sum_h \gamma^{2h}$ 收敛成 $(1-\gamma^2)^{-1}$，horizon 依赖一下砍掉两个 $1/(1-\gamma)$。这正是 $\gamma=0.99$ 时上界从 $10^8$ 量级缩到 $10^2$ 量级、从"数值上等于无穷"变成"非空可读"的临界一步。
 
-3. **自适应采样消除 actor-critic 失配**：
+**2. PAC-Bayes-$\lambda$ 变分松弛 + 交替优化：把平方根非凸目标拆成可稳定优化的凸子问题。**
 
-    - 功能：解决每次 PAC-Bayes 后验更新后 critic 突然失配、导致性能锯齿震荡的问题。
-    - 核心思路：常规 SAC 训练时只采样 1 个后验（即均值策略）保持高效；但**紧接在**每次 PAC-Bayes 更新后立即把 actor 冻结、临时把采样数拉到 256 让 critic 在新后验下的整片分布上做高频估值评估，从而对 critic 做"recalibration"；critic 稳定后再恢复 1 样本采样继续训练。同时探索阶段用 posterior-guided exploration（PGE）：从后验抽 $|\mathcal{T}|$ 个候选参数，在当前 critic 下做单步前向取 $\arg\max_{\theta_i\in\mathcal{T}} Q(s, \pi_{\theta_i}(s))$，复杂度 $\mathcal{O}(|\mathcal{T}|)$；后验方差 $\sigma$ 自动平衡探索利用——$\sigma$ 大时候选发散探索更激进，$\sigma$ 小时收敛到当前 mean policy。
-    - 设计动机：消融（Figure 8a）显示不做自适应采样会出现"sawtooth"——每次 PAC-Bayes 更新后性能急跌、再慢慢爬回来；这种情况下尽管 bound 仍然有效，但实际 return 完全不可用。自适应采样是把"理论 alive 化"从 paper trick 落地到 deployable algorithm 的桥梁。
+证书形如 $\hat{L}_D + \sqrt{\text{KL 项}}$，平方根复合让它非凸，直接梯度下降会发散或退化到 $\rho\to\mu$。作者借恒等式 $\sqrt{x} = \inf_{\lambda>0}(\frac{x}{2\lambda}+\frac{\lambda}{2})$ 引入辅助参数 $\lambda$，把目标重写成
+
+$$\mathcal{J}(\rho,\lambda) = \mathbb{E}_{\theta\sim\rho}[\hat{L}_D(\theta)] + \frac{\|c\|_2\,\tau_{\min}}{2\lambda}\big(\mathrm{KL}(\rho\|\mu)+\ln\tfrac{\sqrt{2}}{\delta}\big) + \frac{\lambda}{2}.$$
+
+这个目标对后验 $\rho$ 凸（KL 凸 + 期望线性），对 $\lambda$ 有闭式最优 $\lambda^* = \sqrt{\|c\|_2\,\tau_{\min}(\mathrm{KL}+\ln\sqrt{2}/\delta)}$，于是交替优化：固定 $\lambda$ 用梯度下降更新 $(\upsilon,\sigma)$，再固定 $(\upsilon,\sigma)$ 闭式解 $\lambda^*$；优化完把 $\rho^*$ 代回原上界报告证书。这个 trick Thiemann et al. (2017) 在 PAC-Bayes-$\mathrm{kl}$ 多数投票里用过，本文是首次搬到 RL，正是它把非凸目标的训练发散和"$\rho\to\mu$ 退化"这两个失败模式消掉。
+
+**3. 自适应采样消除 actor-critic 失配：让证书"活"在训练里而不崩坏性能。**
+
+最后一道坎是工程上的：每次 PAC-Bayes 后验更新都会让 critic 突然对不上新分布，性能出现锯齿震荡（Figure 8a 的 sawtooth——每次更新后急跌再慢爬）。直觉上应该"小步慢走"避免扰动 SAC，但作者反向操作：常规训练只采 1 个后验（均值策略）保持高效，而**紧接在**每次 PAC-Bayes 更新后立刻冻结 actor、把采样数临时拉到 256，让 critic 在新后验的整片分布上做高频估值重校准，稳定后再恢复 1 样本继续。探索阶段配合后验引导探索（PGE）：从后验抽 $|\mathcal{T}|$ 个候选参数，在当前 critic 下单步前向取 $\arg\max_{\theta_i\in\mathcal{T}} Q(s,\pi_{\theta_i}(s))$，复杂度只有 $\mathcal{O}(|\mathcal{T}|)$；后验方差 $\sigma$ 自动平衡探索利用——$\sigma$ 大时候选发散、探索更激进，$\sigma$ 小时收敛到当前 mean policy。这套"一次跨大步 + 紧接着 256 样本重校准"的反直觉设计，才是把理论从 paper trick 落地成 deployable 算法的桥梁。
 
 ### 损失函数 / 训练策略
 SAC 主路径正常做 $\pi$ 和 $Q$ 的更新（熵正则 + 双 critic）；PB-SAC 在每 20k 步触发一次 PAC-Bayes-$\lambda$ 更新：(a) 用当前 mean policy 收集**完整** trajectory（不能用 replay buffer 打乱，以保持 Theorem 3.3 要求的 intra-trajectory 依赖）；(b) 从 $\rho$ 抽多个 $\theta$，用 importance sampling 在这些轨迹上估值 $\hat{L}_D(\theta)$；(c) 用 policy-level REINFORCE trick $\nabla_{(\upsilon,\sigma)} \mathbb{E}_{\theta\sim\rho}[\hat{L}_D(\theta)] = \mathbb{E}_{\theta\sim\rho}[\nabla_{(\upsilon,\sigma)}\log P_{\upsilon,\sigma}(\theta) \cdot \hat{L}_D(\theta)]$ 得到无偏梯度（log-likelihood trick 作用在策略参数层面而非动作层面）。先验 $\mu$ 用 moving-average 朝当前 $\rho$ 衰减更新以防 KL 爆炸。混合时间 $\tau_{\min}$ 用 reward / state-feature 的自相关衰减估计，取多源最大值以防低估（低估会导致 overconfident bound）。

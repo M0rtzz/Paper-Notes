@@ -52,23 +52,25 @@ STAGE-BO 的一次迭代由四步组成，输入是已有数据集 $\mathcal{D}_
 
 ### 关键设计
 
-1. **Fill-distance 驱动的 ε 目标点选择**:
+**1. Fill-distance 驱动的 ε 目标点选择：用前沿上"最大空洞"来决定下一步往哪填。**
 
-    - 功能：从代理 Pareto 前沿中挑出"最该被填补"的目标位置 $\mathbf{Y}_c$。
-    - 核心思路：作者借用 Zhang et al. (2024) 的 fill distance 度量 $\text{FD}(\mathbf{Y}_t)=\max_{\mathbf{y}\in\mathcal{P}_f}\min_{\mathbf{y}'\in\mathbf{Y}_t}\|\mathbf{y}-\mathbf{y}'\|$，并把真 Pareto 前沿替换为 Thompson 采样得到的代理前沿，于是 $\mathbf{Y}_c=\arg\max_{\mathbf{y}'\in\widetilde{\mathcal{P}}_f^t}\min_{\mathbf{y}\in\mathbf{Y}_t}\|\mathbf{y}-\mathbf{y}'\|$ 就是几何意义上覆盖最差的位置。文中给出的定理表明，最优 FD 的解集是 IGD 的上界 $\text{IGD}(\mathbf{Y}^{\text{FD}})\le \text{FD}(\mathbf{Y}^{\text{FD}})$，因此最小化 FD 直接提供 IGD 保证。
-    - 设计动机：取代 HV 主导的几何偏置，把"覆盖均匀"显式编码为优化目标；同时用 Thompson 采样路径而不是 posterior mean，是为了保留 GP 的不确定性，避免 posterior mean 过于贪心。
+ε-约束法把"约束门限选在哪"留成了 50 年的悬案，而 STAGE-BO 的回答是：选在代理前沿上覆盖最差的那个位置。作者借用 Zhang et al. (2024) 的 fill distance 度量 $\text{FD}(\mathbf{Y}_t)=\max_{\mathbf{y}\in\mathcal{P}_f}\min_{\mathbf{y}'\in\mathbf{Y}_t}\|\mathbf{y}-\mathbf{y}'\|$，但把式中的真 Pareto 前沿换成 Thompson 采样得到的代理前沿，于是当前最该被填补的目标点就是
 
-2. **ε-约束分解 + clipping 稳定器**:
+$$\mathbf{Y}_c=\arg\max_{\mathbf{y}'\in\widetilde{\mathcal{P}}_f^t}\min_{\mathbf{y}\in\mathbf{Y}_t}\|\mathbf{y}-\mathbf{y}'\|,$$
 
-    - 功能：把多目标问题转成 $T$ 次单目标约束子问题，每次只优化一个 $f_k$，其余 $f_j$ 被门限 $\varepsilon_j=\widehat{\mathbf{Y}}_{c,j}$ 钉住。
-    - 核心思路：子问题写成 $\max_{\mathbf{x}\in\mathcal{X}} f_k(\mathbf{x})+s\sum_j f_j(\mathbf{x})$ s.t. $f_j(\mathbf{x})\ge \varepsilon_j$ for $j\ne k$，其中 $s\approx 10^{-3}$ 用来排除弱 Pareto 最优解。为了避免"门限超过已观测最佳值导致可行域为空"的早期发散，作者引入 clipping：若 $\mathbf{Y}_{c,j}\ge \max_t \mathbf{Y}_{t,j}$，则把 $\widehat{\mathbf{Y}}_{c,j}$ 降到当前最大观测值。主目标 $k$ 用 round-robin 轮转，让每个目标都有被推动的机会。
-    - 设计动机：ε-约束的经典结果保证子问题的最优解一定 Pareto 最优；clipping 让算法在数据稀疏的早期不会卡死。消融显示 clipping 主要起稳定作用，多数 benchmark 上"有/无 clipping"性能相当，少数任务因为放松了可行域而显式受益。
+即几何意义上离已有观测最远、空洞最大的位置。文中定理进一步给出 $\text{IGD}(\mathbf{Y}^{\text{FD}})\le \text{FD}(\mathbf{Y}^{\text{FD}})$，把 FD 锚成 IGD 的上界，于是"最小化 FD"直接换来 IGD 保证。这一步之所以有效，是因为它把 HV 系列方法那种隐含的几何偏置（解被堆在膝盖区）翻成了一个显式目标——哪里覆盖差就往哪里采；而用 Thompson 采样路径而非后验均值，则是为了保留 GP 的不确定性，避免后验均值过于贪心、过早收死在已知区域。
 
-3. **约束 EI（cEI）采集函数 + 自然外推到约束 / 偏好 MOBO**:
+**2. ε-约束分解 + clipping 稳定器：把多目标拆成一串单目标约束子问题，并防止可行域被掏空。**
 
-    - 功能：在每个子问题上用 $\alpha(\mathbf{x})=\text{EI}(\mathbf{x})\times\text{PoF}(\mathbf{x})$ 同时考虑改进量和可行概率。
-    - 核心思路：EI 写作 $\mathbb{E}[\max(0, f_k(\mathbf{x})+s\sum_{j\ne k} f_j(\mathbf{x})-f_k^*-s\sum_{j\ne k}f_j^*)]$，可行概率 $\text{PoF}(\mathbf{x})=\prod_{j\ne k}\Pr(f_j(\mathbf{x})\ge \widehat{\mathbf{Y}}_{c,j})$ 在独立 GP 假设下闭式可算。当存在硬约束 $g_l(\mathbf{x})\ge 0$ 时，只需把它们的可行概率乘到 PoF 上；当用户给出偏好 ROI $[a_i,b_i]$ 时，作者把"下界"和"上界"作为两个候选约束集，用 OR 形式写入子问题，使方法对过于乐观或过于保守的 ROI 都鲁棒。
-    - 设计动机：cEI 是约束 BO 中最成熟、解析友好的采集函数；同一个分解框架天然吞下约束/偏好，省掉对每种 setting 单独设计算法的工程负担。
+有了 $\mathbf{Y}_c$，多目标问题就被切成 $T$ 次单目标子问题：每轮只优化一个主目标 $f_k$，其余目标被门限 $\varepsilon_j=\widehat{\mathbf{Y}}_{c,j}$ 钉住，写成
+
+$$\max_{\mathbf{x}\in\mathcal{X}} \; f_k(\mathbf{x})+s\sum_j f_j(\mathbf{x}) \quad \text{s.t.}\quad f_j(\mathbf{x})\ge \varepsilon_j,\; j\ne k,$$
+
+其中标量化系数 $s\approx 10^{-3}$ 仅用来排除弱 Pareto 最优解。ε-约束的经典结论保证这种子问题的最优解必落在 Pareto 前沿上，主目标 $k$ 再用 round-robin 轮转，让每个目标都轮到被推动。真正的工程隐患是早期：数据稀疏时代理前沿可能给出一个比已观测最佳还激进的门限，导致可行域直接为空、整轮发散。clipping 就是补这个洞——一旦 $\mathbf{Y}_{c,j}\ge \max_t \mathbf{Y}_{t,j}$，就把 $\widehat{\mathbf{Y}}_{c,j}$ 降回当前最大观测值。消融显示它主要是数值稳定器：多数 benchmark 上"有/无 clipping"性能相当，少数任务因放松了可行域而额外受益。
+
+**3. 约束 EI（cEI）采集函数 + 对约束/偏好的自然外推：同一个分解框架顺手吞下三种 setting。**
+
+每个子问题用约束 EI 求解，采集函数 $\alpha(\mathbf{x})=\text{EI}(\mathbf{x})\times\text{PoF}(\mathbf{x})$ 同时权衡改进量与可行概率：改进量取 $\text{EI}=\mathbb{E}[\max(0,\, f_k(\mathbf{x})+s\sum_{j\ne k} f_j(\mathbf{x})-f_k^*-s\sum_{j\ne k}f_j^*)]$，可行概率 $\text{PoF}(\mathbf{x})=\prod_{j\ne k}\Pr(f_j(\mathbf{x})\ge \widehat{\mathbf{Y}}_{c,j})$ 在独立 GP 假设下闭式可算。选 cEI 是因为它在约束 BO 里最成熟、解析最友好。更妙的是这套分解几乎不用改就能吃下别的 setting：遇到硬约束 $g_l(\mathbf{x})\ge 0$，只需把它们的可行概率乘进 PoF；遇到用户偏好 ROI $[a_i,b_i]$，则把"下界"和"上界"当成两个候选约束集、用 OR 形式写入子问题——ROI 过分激进时下界兜底，过分保守时上界驱动搜索去更好的区域。结果是无约束、约束、偏好三种 MOBO 共用一个框架，省掉了为每种 setting 单独造算法的负担。
 
 ### 损失函数 / 训练策略
 STAGE-BO 不涉及神经网络训练，关键超参集中在两处：内层 NSGA-II 用默认设置在便宜的 GP 采样路径上跑；标量化项系数 $s\approx 10^{-3}$ 用于排除弱 Pareto 解。每轮的查询点完全由 cEI 优化决定，不依赖 HV 计算。

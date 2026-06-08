@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **Webshot 自动稠密标注流水线**:
+**1. Webshot 自动稠密标注流水线：零人力逼近"完整 + 干净"的全屏标注。**
 
-    - 功能：把"55 类、全屏可见元素都标"的稠密任务从人力解放出来，单台机器跑就行。
-    - 核心思路：先用 DOM + Playwright 拿候选框（拒掉退化框、不可见框、近重复嵌套 wrapper），保留容器层级（导航条、卡片、modal 这类语义容器也标出来），再让 Qwen3-VL-8B 看"全图 + 元素 crop + 属性"重新预测类别，最后用 VLM-as-judge 给整页打覆盖度/误检/重复/定位四维分数，低于阈值就丢。
-    - 设计动机：DOM 标注覆盖广但噪声大，单纯 VLM 标注又太贵；这个"DOM 拿候选 + VLM 重分类 + 整页质量过滤"的级联是为了在零人力下尽量逼近"完整 + 干净"。
+密集标注的两难是——DOM 直接当真值覆盖广但奇脏（隐藏框、重复框、不可见 wrapper 一大堆），纯靠 VLM 标注又太贵。Webshot 用一条级联把两者的长处拼起来：先用 Playwright 渲染 + DOM 抽取拿候选框，并主动拒掉退化框、不可见框和近重复的嵌套 wrapper，同时保留导航条、卡片、modal 这类语义容器的层级；再让 Qwen3-VL-8B 看"全图 + 元素 crop + 属性"把每个候选重新分类到 55 类之一，纠正 DOM 的脏标签；最后用 VLM-as-a-judge 给整页打覆盖度 / 误检 / 重复 / 定位四维分数，低于阈值的样本整页丢掉。
 
-2. **ScreenTag：紧凑的屏幕结构序列**:
+"DOM 拿候选 + VLM 重分类 + 整页质量过滤"三段下来，单台机器就能从 45M URL 均衡采样的 1M 页面里产出 771K 图 / 21M 元素，覆盖广的同时把噪声压到可训练水平。
 
-    - 功能：把一张截图压成一段自回归可生成的结构化文本。
-    - 核心思路：每个元素生成 `<tag> <x1> <y1> <x2> <y2> [text] [children] </tag>` 的嵌套序列，坐标用 0–500 离散 token，文本与子节点都可选。这个表示既紧凑（不像 JSON 那么冗长）、解析无歧义，又天然适配 LLM decoder 的逐 token 生成。
-    - 设计动机：作者刻意复用文档转 markup 的归纳偏置——从 Granite Docling 那继承的"对带位置标签的 markup 友好"的预训练，使得迁移到屏幕这种"也是结构化矩形 + 文本"的任务零摩擦。
+**2. ScreenTag：把一张截图压成可自回归生成的结构序列。**
 
-3. **Structure-Aware Weighted Cross-Entropy（结构感知加权损失）**:
+要让小 VLM 学会输出整屏结构，就得有一个既紧凑又无歧义、还适配 decoder 逐 token 生成的表示。ScreenTag 把每个元素写成嵌套的 `<tag> <x1> <y1> <x2> <y2> [text] [children] </tag>`，坐标归一化后量化到 0–500 网格的离散 token，文本与子节点都可选。这比 JSON 短得多、解析也无歧义。
 
-    - 功能：在 ScreenTag 序列中给标签 token 和坐标 token 更高权重，避免长 OCR 文本主导梯度。
-    - 核心思路：$\mathcal{L}(\theta) = -\sum_{t=1}^{T} w(y_t)\log p_\theta(y_t \mid y_{<t}, I)$，其中 $w(y_t) = \lambda_{\text{tag}}$（如果 $y_t \in \mathcal{V}_{\text{tag}}$）、$\lambda_{\text{loc}}$（如果 $y_t \in \mathcal{V}_{\text{loc}}$）、否则 $=1$。
-    - 设计动机：一个错位的坐标或错类的 tag 会让整条元素失效，而错一个文本字符不太致命；同时 OCR 文本会主宰序列长度，让标准 CE 把模型推成"会读字但不知道元素在哪"。加权直接把优化目标对齐到结构保真度。
+更关键的是它刻意复用了文档转 markup 的归纳偏置——ScreenVLM 的 decoder 初始化自 Granite Docling 这种文档转 markup 模型，后者预训练时就对"带位置标签的 markup"很友好，而 UI 屏幕本质也是"结构化矩形 + 文本"，于是迁移几乎零摩擦，316M 的小模型一上来就能学结构。
+
+**3. 结构感知加权交叉熵：别让长 OCR 文本淹没结构 token。**
+
+ScreenTag 序列里的 token 重要性并不均等：一个错位的坐标或错类的 tag 会让整条元素失效，而错一个文本字符无伤大雅；偏偏 OCR 文本又占了序列的大头，标准 CE 会把模型推成"会读字但不知道元素在哪"。本文给每类 token 加不同权重：
+
+$$\mathcal{L}(\theta) = -\sum_{t=1}^{T} w(y_t)\log p_\theta(y_t \mid y_{<t}, I)$$
+
+其中标签 token（$y_t \in \mathcal{V}_{\text{tag}}$）权重为 $\lambda_{\text{tag}}$、坐标 token（$y_t \in \mathcal{V}_{\text{loc}}$）为 $\lambda_{\text{loc}}$、其余为 1。等于把优化目标直接对齐到结构保真度上——实验里这一项在"少元素 grounding"场景增益最大（ScreenSpot-PC Recall +72.1%），说明它本质是在替模型抵抗 OCR 文本对结构 token 的稀释。
 
 ### 损失函数 / 训练策略
 ScreenVLM 在 ScreenParse train 上微调 287,500 步，16 张 H100（2 节点 × 8 卡），有效 batch 64，序列截到 8192 token。分组学习率：multimodal projection 层 $2.12\times 10^{-2}$，vision/language backbone $2\times 10^{-3}$。

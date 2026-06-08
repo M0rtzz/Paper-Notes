@@ -49,23 +49,17 @@ $$\hat\theta^{\text{PPI++}}_\lambda = \frac{1}{n}\sum_{i=1}^n Y_i + \lambda\left
 
 ### 关键设计
 
-1. **三步解耦 + scipy 风格 API**:
+**1. 三步解耦 + scipy 风格 API：让采样和估计成为可插拔的正交对象。**
 
-    - 功能：把"采样"和"估计"做成正交、可插拔的两类对象，业务方按场景自由组合，研究方按单一 interface 贡献新方法。
-    - 核心思路：Sampler 暴露 `sample` 方法，返回 $(\pi,\xi)$，$\pi\in[0,1]^N$ 是每观测被采样概率，$\xi\in\{0,1\}^N$ 是 Bernoulli 抽出来的实际包含指示符。Estimator 是有状态对象，`estimate` 接口返回包含点估计、置信区间、有效样本量 $n_{\text{eff}}$ 和 metric 标签的 dataclass。一个完整 end-to-end 流（采样 + 标注 + 估计）能压到 6 行 Python。
-    - 设计动机：scipy / scikit-learn 是 Python 科学计算社区最熟悉的范式，沿用这套 API 几乎零学习成本；同时三步解耦让 PPI 文献里那些"独立改良"的工作（比如某篇只改采样、某篇只改估计）可以无缝叠加。
+PPI 文献近三年的改良各管一段——有的只改采样、有的只改估计，但散落在各自论文里没法叠加。GLIDE 把整条流水线切成 Sampling → Annotation → Estimation 三步，让前后两端独立可换：Sampler 暴露 `sample` 方法返回 $(\pi,\xi)$，其中 $\pi\in[0,1]^N$ 是每个观测被采样的概率、$\xi\in\{0,1\}^N$ 是 Bernoulli 抽出的实际包含指示符；Estimator 是有状态对象，`estimate` 返回含点估计、置信区间、有效样本量 $n_{\text{eff}}$ 和 metric 标签的 dataclass。于是一条完整 end-to-end 流（采样 + 标注 + 估计）压到 6 行 Python 就能跑。沿用 scipy / scikit-learn 这套社区最熟悉的范式几乎零学习成本，而三步解耦的真正价值是让"独立改良采样"和"独立改良估计"的工作能无缝叠加——研究者贡献新方法只需写一个文件。
 
-2. **覆盖 5 类采样器 + 5 类估计器的完整工具箱**:
+**2. 5 类采样器 × 5 类估计器：把 Agentic 评测的四大特性映成方法菜单。**
 
-    - 功能：把 Agentic 评测的 4 大特性（成本不对称、自然分层、可用 proxy 不确定度、关键部署）一一对应到方法选项。
-    - 核心思路：采样器 5 类——`UniformSampler`（基线）、`StratifiedSampler`（支持 proportional 或 Neyman 分配 $n_h\propto N_h\sigma_h$，用 Hamilton 最大余数法保证整数和为 $n$）、`ActiveSampler`（按 proxy 不确定度成正比的 Bernoulli 概率独立抽取）、`CostOptimalRandomSampler` 与 `CostOptimalSampler`（基于已知 proxy/annotation 成本比 + 可选每观测不确定度的最优抽样概率）。估计器 5 类——`PPIMeanEstimator`（PPI++ + power tuning）、`StratifiedPPIMeanEstimator`（按层 power tuning）、`PTDMeanEstimator`（Predict-Then-Debias，bootstrap，专为小样本 $n<50$）、`StratifiedPTDMeanEstimator`、`ASIMeanEstimator`（IPW 去偏配合 active sampling），另加 3 个 classical baseline 提供无 proxy 参考方差。
-    - 设计动机：每个采样器 / 估计器的存在都对应一个真实场景的"如果有 X 就用 Y"——把 PPI 文献近 3 年的离散贡献第一次摆成一张连续的方法菜单，避免实践者自己去翻 7 篇论文 + 7 个独立 repo。
+Agentic 评测有四个独特属性——成本极端不对称、自然分层、有可用的 proxy 不确定度、关键部署场景——每一个都对应 PPI 的一个分支，但此前没有库把它们串起来。GLIDE 把这些"如果有 X 就用 Y"摆成一张连续的菜单。采样器五类：`UniformSampler`（基线）、`StratifiedSampler`（支持 proportional 或 Neyman 分配 $n_h\propto N_h\sigma_h$，用 Hamilton 最大余数法保证整数和为 $n$）、`ActiveSampler`（按 proxy 不确定度成正比的 Bernoulli 概率独立抽取）、`CostOptimalRandomSampler` 与 `CostOptimalSampler`（基于已知 proxy/annotation 成本比 + 可选每观测不确定度算最优抽样概率）。估计器五类：`PPIMeanEstimator`（PPI++ + power tuning）、`StratifiedPPIMeanEstimator`（按层 power tuning）、`PTDMeanEstimator`（Predict-Then-Debias，bootstrap，专为 $n<50$ 小样本）、`StratifiedPTDMeanEstimator`、`ASIMeanEstimator`（IPW 去偏配合 active sampling），另加 3 个 classical baseline 提供无 proxy 的参考方差。这样实践者不必自己去翻 7 篇论文 + 7 个独立 repo。
 
-3. **基于"是否 ≥50 标注 / 是否有成本 / 是否有不确定度 / 是否有分层"的决策树**:
+**3. 四信号决策树：让不懂 PPI 的工程师 30 秒选对组合。**
 
-    - 功能：让一个不懂 PPI 细节的工程师也能在 30 秒内选出最适合自己场景的 sampler + estimator 组合。
-    - 核心思路：上半截（采样）按 3 个布尔信号路由——有成本估计 → CostOptimal 系；有 proxy 不确定度 → ActiveSampler；有 heterogeneous-proxy 自然分层 → StratifiedSampler；都没有 → UniformSampler。下半截（估计）只用 1 个阈值：人类标注是否 ≥50（按分层时按层），是则用 CLT-based 估计器（PPI++ / Stratified PPI++ / ASI），否则用 bootstrap-based PTD 变体。决策树由 Section 5 的蒙特卡洛验证套件经验校准。
-    - 设计动机：把统计学决策"内嵌"进库本身，把"应该用哪个估计器"从一个研究问题变成一次菜单选择，是 PPI 真正工业化的关键缺口。
+把方法摆成菜单还不够，还得替不懂统计细节的人做选择，否则工业化只完成一半。GLIDE 把方法选择内嵌成一棵决策树。上半截（采样）按三个布尔信号路由：有成本估计 → CostOptimal 系；有 proxy 不确定度 → ActiveSampler；有 heterogeneous-proxy 自然分层 → StratifiedSampler；都没有 → UniformSampler。下半截（估计）只看一个阈值：人类标注是否 ≥ 50（分层时按层计），是则用 CLT-based 估计器（PPI++ / Stratified PPI++ / ASI），否则用 bootstrap-based PTD 变体。这棵树不是拍脑袋画的，而是由 Section 5 的蒙特卡洛验证套件经验校准过——它把"应该用哪个估计器"从一个研究问题降级成一次查表，正是 PPI 真正工业化此前缺的那一环。
 
 ### 损失函数 / 训练策略
 本文不涉及训练，只涉及统计推断。所有估计器都返回 `PredictionPoweredMeanInferenceResult`（含 $\hat\theta$、置信区间、$n_{\text{eff}}$、metric 标签）。有效样本量 $n_{\text{eff}}=n\cdot\widehat{\text{Var}}(\bar Y_n)/\widehat{\text{Var}}(\hat\theta^{\text{PPI++}}_\lambda)$ 是核心 KPI，其比值 $n_{\text{eff}}/n\ge 1$ 直接折算成"省下来的标注小时数"。
@@ -144,12 +138,6 @@ PTD 在所有 $\rho$ 都贴合 90% 名义覆盖；proxy 越好，区间越窄、
 - 实验充分度: 待评
 - 写作质量: 待评
 - 价值: 待评
-
-<!-- RELATED:START -->
-
-<div class="related-papers" markdown="1">
-
-## 相关论文
 
 - [\[ICML 2025\] Prediction-Powered Adaptive Shrinkage Estimation](../../ICML2025/others/prediction-powered_adaptive_shrinkage_estimation.md)
 - [\[ACL 2025\] Identifying Reliable Evaluation Metrics for Scientific Text Revision](../../ACL2025/others/reliable_eval_metrics_scientific.md)

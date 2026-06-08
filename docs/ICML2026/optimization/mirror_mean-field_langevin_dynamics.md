@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **连续时间收敛：mirror entropy sandwich + uniform mirror LSI**:
+**1. 连续时间收敛：mirror entropy sandwich + uniform mirror LSI。**
 
-    - 功能：证 $L(\mu_t)-L(\mu^\ast)\le e^{-2C_{\mathrm{LSI}}\lambda t}(L(\mu_0)-L(\mu^\ast))$（Theorem 3.2），把 MFLD 的指数收敛搬到约束几何上。
-    - 核心思路：先用 Assumption 5（relative Lipschitz 和 relative smoothness，把范数都换成局部范数 $\|\cdot\|_{[\nabla^2\phi(x)]^{-1}}$）证最小化器唯一并满足 fixed-point 条件 $\mu^\ast\propto\exp(-\tfrac{1}{\lambda}\frac{\delta F(\mu^\ast)}{\delta\mu})$（Theorem 3.1）。接着假设 proximal Gibbs $\hat\mu$ 一致满足 mirror LSI：对任何 $\mu\in\mathcal{P}_2(X)$ 有 $\mathrm{KL}(\mu\|\hat\mu)\le \frac{1}{2C_{\mathrm{LSI}}}\mathrm{FI}_\phi(\mu\|\hat\mu)$，其中 $\mathrm{FI}_\phi(\mu\|\nu)=\mathbb{E}_\mu[\langle\nabla\log(\mu/\nu),[\nabla^2\phi]^{-1}\nabla\log(\mu/\nu)\rangle]$ 是 mirror 版相对 Fisher 信息。最后沿用 Nitanda-Chizat 的 entropy sandwich（Lemma C.2）控制 $L(\mu_t)-L(\mu^\ast)$ 与 $\mathrm{KL}(\mu_t\|\hat\mu_t)$ 之间的双向 bound，对 $\frac{d}{dt}L(\mu_t)$ 做 Lyapunov 估计即得指数衰减。
-    - 设计动机：mirror LSI 由经典 LSI + $\alpha$-强凸的 $\phi$ 自动推出（常数 $C_0/\alpha$），现实里能验证；entropy sandwich 在约束情形仍然成立这一点是收敛证明能整体平移的关键。
+第一块要证的是连续时间指数收敛 $L(\mu_t)-L(\mu^\ast)\le e^{-2C_{\mathrm{LSI}}\lambda t}(L(\mu_0)-L(\mu^\ast))$（Theorem 3.2），思路是把 MFLD 的整套收敛证明逐件升级到约束几何里。先用 Assumption 5（relative Lipschitz 和 relative smoothness，把所有范数换成局部范数 $\|\cdot\|_{[\nabla^2\phi(x)]^{-1}}$）证最小化器唯一且满足不动点条件 $\mu^\ast\propto\exp(-\tfrac{1}{\lambda}\frac{\delta F(\mu^\ast)}{\delta\mu})$（Theorem 3.1）。接着假设 proximal Gibbs $\hat\mu$ 一致满足 mirror 版 LSI：对任意 $\mu\in\mathcal{P}_2(X)$，
 
-2. **离散化 + uniform-in-time propagation of chaos**:
+$$\mathrm{KL}(\mu\|\hat\mu)\le \frac{1}{2C_{\mathrm{LSI}}}\,\mathrm{FI}_\phi(\mu\|\hat\mu),\qquad \mathrm{FI}_\phi(\mu\|\nu)=\mathbb{E}_\mu\big[\langle\nabla\log(\mu/\nu),[\nabla^2\phi]^{-1}\nabla\log(\mu/\nu)\rangle\big].$$
 
-    - 功能：对 $N$ 粒子 forward-discretized MMFLD（Algorithm 1）证 $\tfrac{1}{N}L^{(N)}(\mu_k^{(N)})-L(\mu^\ast)\le e^{-C_{\mathrm{LSI}}\lambda\eta k}\cdot(\cdot)+\tfrac{LR^2}{2N}+\tfrac{\delta_\eta}{2C_{\mathrm{LSI}}\lambda}$（Theorem 4.2），其中 $\delta_\eta=2\eta M_2^4 M(\eta M_1^2+2\lambda d)$，$M=\exp(2c_1 D/\sqrt{c_2})$。
-    - 核心思路：先把 $N$ 粒子问题 lift 到配置空间，定义 $L^{(N)}(\mu^{(N)})=N\mathbb{E}_{X\sim\mu^{(N)}}[F(\mu_X)]+\lambda\mathrm{Ent}(\mu^{(N)})$，其 Gibbs 最优解 $\mu^{(N)}_\ast\propto\exp(-\tfrac{N}{\lambda}F(\mathbf{x}))$。Theorem 4.1 给出 LSI-free 的粒子近似误差 $\tfrac{1}{N}L^{(N)}(\mu^{(N)}_\ast)-L(\mu^\ast)\le \tfrac{LR^2}{2N}$（推广 Nitanda 2024 到 vector-valued loss + 约束域）。再用 Ahn-Chewi 的 forward discretization（drift 离散 + 纯扩散精确模拟）+ self-concordance 假设（Assumption 7：$|\nabla^3\phi^\ast[u,u,u]|\le 2c_1\langle u,\nabla^2\phi u\rangle^{3/2}$）+ uniform-in-$N$ mirror LSI（Assumption 8）+ one-step interpolation（Wibisono、Jiang）控制离散偏差 $\delta_\eta$。stochastic gradient 版本（Theorem 4.3）额外加一个 $\sigma^2/c_2$ 项，结构不变。
-    - 设计动机：propagation of chaos 这条线的核心痛点是粒子近似误差与 LSI 常数耦合时会随 $N$ 爆掉。本文继承了 Nitanda 2024 给的 LSI-free bound，让 $1/N$ 项只依赖 $LR^2$ 而不依赖 $C_{\mathrm{LSI}}$，从而 $N\to\infty$ 时误差均匀消失；这是与现有 MLD 离散化分析最大的技术差别。
+最后沿用 Nitanda–Chizat 的 entropy sandwich（Lemma C.2）把 $L(\mu_t)-L(\mu^\ast)$ 与 $\mathrm{KL}(\mu_t\|\hat\mu_t)$ 双向夹住，对 $\frac{d}{dt}L(\mu_t)$ 做 Lyapunov 估计就得到指数衰减。这套之所以能整体平移，靠的是两点：mirror LSI 可由经典 LSI + $\alpha$-强凸的 $\phi$ 自动推出（常数 $C_0/\alpha$），现实里可验证；而 entropy sandwich 在约束情形仍然成立。
 
-3. **mirror 几何选择与边界处理**:
+**2. 离散化 + uniform-in-time propagation of chaos。**
 
-    - 功能：把抽象 SDE 落到三类经典约束域，给出具体可执行算法。
-    - 核心思路：unit simplex $\Delta^d$ 用 entropy mirror $\phi(x)=\sum_i x_i\log x_i$、$\phi^\ast(y)=\log\sum_i \exp y_i$；spectraplex $\{\Sigma\succeq 0:\mathrm{Tr}\Sigma=1\}$ 用 von Neumann mirror $\phi(\Sigma)=\mathrm{Tr}(\Sigma\log\Sigma-\Sigma)$；unit ball 用 log-barrier $\phi(z)\propto-\log(1-\|z\|_2^2)$。每种情况下扩散步通过模拟 $dY_t=\sqrt{2\lambda[\nabla^2\phi^\ast(Y_t)]^{-1}}dB_t$ 完成，实验显示 one-step 离散就够用，runtime 与投影 MFLD 相当。
-    - 设计动机：与"投影到 $X$"对照，mirror 让粒子自然回避 $\partial X$，避免投影 MFLD 在边界堆质量这一典型失败模式（实验 Figure 1b 显示得很清楚）。
+理论要落地必须处理 $N$ 粒子 + 时间离散，难点在于"粒子近似误差和 LSI 常数耦合时会随 $N$ 爆掉"。作者先把 $N$ 粒子问题 lift 到配置空间，定义 $L^{(N)}(\mu^{(N)})=N\mathbb{E}_{X\sim\mu^{(N)}}[F(\mu_X)]+\lambda\mathrm{Ent}(\mu^{(N)})$，其 Gibbs 最优解 $\mu^{(N)}_\ast\propto\exp(-\tfrac{N}{\lambda}F(\mathbf{x}))$；Theorem 4.1 给出一个 LSI-free 的粒子近似误差 $\tfrac{1}{N}L^{(N)}(\mu^{(N)}_\ast)-L(\mu^\ast)\le \tfrac{LR^2}{2N}$（把 Nitanda 2024 推广到 vector-valued loss + 约束域）。再用 Ahn–Chewi 的 forward discretization（drift 离散 + 纯扩散精确模拟）配合 self-concordance 假设 $|\nabla^3\phi^\ast[u,u,u]|\le 2c_1\langle u,\nabla^2\phi u\rangle^{3/2}$、uniform-in-$N$ mirror LSI 和 one-step interpolation，控制离散偏差 $\delta_\eta=2\eta M_2^4 M(\eta M_1^2+2\lambda d)$，最终得到 Theorem 4.2 的 bound。关键在于继承了 LSI-free 项：$1/N$ 项只依赖 $LR^2$ 而不依赖 $C_{\mathrm{LSI}}$，于是 $N\to\infty$ 时误差均匀消失——这正是与现有 MLD 离散化分析最大的技术差别；stochastic gradient 版本（Theorem 4.3）只多一个 $\sigma^2/c_2$ 项，结构不变。
+
+**3. mirror 几何选择与边界处理：把抽象 SDE 落到三类经典约束域。**
+
+最后要让算法真能跑，得为每类约束选对 mirror map：unit simplex $\Delta^d$ 用 entropy mirror $\phi(x)=\sum_i x_i\log x_i$、$\phi^\ast(y)=\log\sum_i\exp y_i$；spectraplex $\{\Sigma\succeq0:\mathrm{Tr}\Sigma=1\}$ 用 von Neumann mirror $\phi(\Sigma)=\mathrm{Tr}(\Sigma\log\Sigma-\Sigma)$；unit ball 用 log-barrier $\phi(z)\propto-\log(1-\|z\|_2^2)$。每种情况下扩散步都通过模拟 $dY_t=\sqrt{2\lambda[\nabla^2\phi^\ast(Y_t)]^{-1}}dB_t$ 完成，实验显示 one-step 离散就够、runtime 与投影 MFLD 相当。这样设计的核心动机是对照"投影到 $X$"的失败模式——投影 MFLD 会把质量堆在边界 $\partial X$ 上，而 mirror 让 $\phi$ 在边界爆炸、粒子自然回避 $\partial X$，把约束"内化"进几何而非靠 ad-hoc 投影或 barrier 修补（实验 Figure 1b 把这个差别显示得很清楚）。
 
 ### 损失函数 / 训练策略
 关键超参是温度 $\lambda$（控制熵正则强度，越小目标越尖锐）、学习率 $\eta_k$、粒子数 $N$；Assumption 7 的常数 $c_1,c_2$ 决定 $\delta_\eta$ 的离散偏差大小，需要 $\phi$ 是 self-concordant + 至少 $c_2$-强凸。

@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Context Pre-Selection（基于显著性的 K/V 剪枝）**:
+**1. Context Pre-Selection：按显著性把陪跑的 context K/V 剪掉。**
 
-    - 功能：在不丢失关键 context 的前提下，把 ICL 拼接后的 K/V 长度从 $N$ 压回 $L_{src} + \alpha_s L_{ctx}$，把整体复杂度从 $\mathcal{O}(NSD)$ 降到 $\mathcal{O}(N(L_{src}+\alpha_s L_{ctx})D)$。
-    - 核心思路：先做 pooling attention 得到 $S_\text{coarse}\in\mathbb{R}^{B\times H\times N_Q\times N_K}$，切出 source-Query 对 context-Key 的子块 $S^\text{ctx}_\text{coarse}$，沿 Query 轴求均值后用 TopK 选 $\alpha_s\lceil L_{ctx}/b\rceil$ 个最显著的 context block，再用 gather + concat 重组出新 $K_\text{new}, V_\text{new}$。
-    - 设计动机：作者通过 attention 分布可视化（论文 Fig. 4-5）发现 $Q^{src}(K^{src})^\top$ 远大于 $Q^{src}(K^{ctx})^\top$，且层越深越显著，说明大部分 context token 是"陪跑"。直接剪掉它们既能省 attention 计算，也能去掉一些 synthetic context 带来的噪声——这也解释了为什么 ISA 在 training-free 场景下反而比 full attention 还好。
+ICL 把 source 和 context 等长拼接，attention 计算直接翻了 4 倍，但作者把 attention 分布画出来发现：$Q^{src}(K^{src})^\top$ 远大于 $Q^{src}(K^{ctx})^\top$，而且层越深越显著——大部分 context token 其实是陪跑。于是先做一遍 pooling attention 得到粗粒度分数 $S_\text{coarse}\in\mathbb{R}^{B\times H\times N_Q\times N_K}$，切出 source-Query 对 context-Key 的子块 $S^\text{ctx}_\text{coarse}$，沿 Query 轴求均值后用 TopK 选出 $\alpha_s\lceil L_{ctx}/b\rceil$ 个最显著的 context block，再 gather + concat 重组出新的 $K_\text{new}, V_\text{new}$，把 K/V 长度从 $N$ 压回 $L_{src} + \alpha_s L_{ctx}$、复杂度从 $\mathcal{O}(NSD)$ 降到 $\mathcal{O}(N(L_{src}+\alpha_s L_{ctx})D)$。剪掉这些 token 不只省算力——它还顺手去掉了 synthetic context 带来的噪声，这正是 ISA 在 training-free 下反而比 full attention 还好的原因。
 
-2. **Block-wise 0 阶 Taylor 稀疏注意力（按 block mask 切换精/近似）**:
+**2. Block-wise 0 阶 Taylor 稀疏注意力：能近似的块用代表值顶替。**
 
-    - 功能：对每个 Query block $Q_i$ 和 Key/Value block 对 $(K_j, V_j)$，根据 $M_{ij}$ 决定走精确路径还是 Taylor 近似路径，把复杂度从 $\mathcal{O}(L_Q L_K D)$ 降到 $\mathcal{O}(L_Q D)$。
-    - 核心思路：当 $M_{ij}=1$ 走标准 online-softmax：$S_{ij}=Q_i K_j^\top/\sqrt{D}$，$P_{ij}=\exp(S_{ij})$，$\ell_i \mathrel{+}= \mathrm{rowsum}(P_{ij})$，$O_i \mathrel{+}= P_{ij} V_j$；当 $M_{ij}=0$ 用预先 pool 出的 $K_j^c, V_j^c$ 替代，$S_{ij}^c=Q_i (K_j^c)^\top/\sqrt{D}$，$P_{ij}^c = \exp(S_{ij}^c)$，并把它当成对整个 block 的"代表值"，$\ell_i \mathrel{+}= P_{ij}^c \cdot L_K$，$O_i \mathrel{+}= P_{ij}^c V_j^c \cdot L_K$，最后 $O_i = O_i/\ell_i$ 完成 softmax 归一化。
-    - 设计动机：作者尝试过 1 阶/2 阶 Taylor 展开，但它们在 GPU 上 kernel 化困难、额外计算过高，0 阶展开既能与 FlashAttention 的 online-softmax 同框架融合，又能在硬件上做 contiguous block 访问，是工程上的"甜点"。
+对每个 Query block $Q_i$ 与 Key/Value block 对 $(K_j, V_j)$，按 block mask $M_{ij}$ 决定走精确还是近似路径。$M_{ij}=1$ 时走标准 online-softmax：$S_{ij}=Q_i K_j^\top/\sqrt{D}$、$P_{ij}=\exp(S_{ij})$、$\ell_i \mathrel{+}= \mathrm{rowsum}(P_{ij})$、$O_i \mathrel{+}= P_{ij} V_j$；$M_{ij}=0$ 时改用预先 pool 出的 $K_j^c, V_j^c$ 当整块的"代表值"，$S_{ij}^c=Q_i (K_j^c)^\top/\sqrt{D}$、$P_{ij}^c = \exp(S_{ij}^c)$，并按块长放大 $\ell_i \mathrel{+}= P_{ij}^c \cdot L_K$、$O_i \mathrel{+}= P_{ij}^c V_j^c \cdot L_K$，最后 $O_i = O_i/\ell_i$ 归一化。作者试过 1 阶、2 阶 Taylor 展开，但它们在 GPU 上难 kernel 化、额外计算太重；0 阶展开既能塞进 FlashAttention 的 online-softmax 同一框架，又能做 contiguous block 访问，是工程上的甜点。
 
-3. **基于 Query 锐度的 Grouped Computation（高/低误差 Query 分流）**:
+**3. 基于 Query 锐度的 Grouped Computation：让少数"尖锐" Query 走精算、其余走近似。**
 
-    - 功能：把 Query 分成两组——高误差 Query 走 full attention 保精度，低误差 Query 走 0 阶 Taylor 稀疏注意力省算力，由 Flat Ratio $\alpha_f$ 控制比例。
-    - 核心思路：Theorem 3.1 证明 0 阶 Taylor 的误差上界由 $M_i = \mathrm{Var}(\mathrm{softmax}(Q^c_i(K^c)^\top))$（块间均值方差）和 $\|Q(K-K^c)^\top\|_\infty^2$ 共同决定。后者计算昂贵且实验显示不是好代理，作者只用 $M_i$，因为它可以从 pooling score 直接读出几乎免费。把 $M_i$ 按从大到小排序，前 $\alpha_f$ 比例的 Query 走 FlashAttention，剩下的走 Taylor 稀疏；后者再用 $\alpha_{ns}$ 控制 block 内"不稀疏"比例，把整体稀疏度推到 93.75%。
-    - 设计动机：以前的稀疏方法（STA、SWA、Sparge 等）对所有 Query 一视同仁，对于个别"锐度极高"的 Query 也强行近似，于是被这少数 Query 带崩。ISA 用"动态路由"思路保留了对关键 Query 的精确计算，使得整体稀疏度大幅提升的同时仍能保持视觉质量。
+以前的稀疏方法对所有 Query 一视同仁，结果被个别"锐度极高"的 Query 带崩。ISA 给每个 Query 算一个可几乎免费拿到的代理量。Theorem 3.1 证明 0 阶 Taylor 的误差上界由 $M_i = \mathrm{Var}(\mathrm{softmax}(Q^c_i(K^c)^\top))$ 和 $\|Q(K-K^c)^\top\|_\infty^2$ 共同决定，而后者计算昂贵、实验里也不是好代理，于是只用 $M_i$——它能直接从 pooling score 读出。把 $M_i$ 从大到小排，前 $\alpha_f$ 比例（Flat Ratio）的高锐度 Query 走 FlashAttention v2/3 保精度，其余走 0 阶 Taylor 稀疏、再用 $\alpha_{ns}$ 控制 block 内不稀疏比例，整体稀疏度能推到 93.75%。这种"用 cheap statistic 路由 expensive computation"的动态分流，把关键 Query 的精确性保住了，稀疏度才敢压这么狠。
 
 ### 损失函数 / 训练策略
 LIVEditor 在 Wan 2.2 高噪声分支上做两阶段后训练：第一阶段用 1.7M mix-quality 样本、$\eta = 1\mathrm{e}{-5}$、batch 16 学习广义编辑语义；第二阶段用 0.089M 高质量子集、$\eta = 1\mathrm{e}{-6}$ 精修美学与指令对齐，均使用 DeepSpeed ZeRO-3 Offload。此外为缓解 source/context 长度不一致带来的位置偏置，作者引入解耦 RoPE：source 和 context 各自从 0 重新编号。默认超参 $\alpha_s = 0.125, \alpha_{ns} = 0.0625, \alpha_f = 0.5$。

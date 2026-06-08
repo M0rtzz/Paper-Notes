@@ -45,23 +45,21 @@ PDE $\mathcal{L}[u](t,x)=\phi(t,x,u,\nabla u)$ 通过 Itô 公式转化为 FBSDE
 
 ### 关键设计
 
-1. **Sample-splitting 无偏估计器**:
+**1. Sample-splitting 无偏估计器：用两组独立噪声的乘积替代单组的平方。**
 
-    - 功能：把 $\ell_{\text{EM}}=\mathbb{E}[X^2]$ 的有偏二阶矩替换为 $\mathbb{E}[X_1 X_2]$ 的无偏交叉矩
-    - 核心思路：定义 $\text{Shot}_M[\xi]=\frac{1}{M}\sum_{m=1}^M \xi_m$；用 $M_1+M_2$ 个 i.i.d. Brownian 增量计算 $M_1+M_2$ 个独立单步误差，分成两个不重叠的组求 $\text{Shot}_{M_1}, \text{Shot}_{M_2}$，最终损失 $\ell^{M_1,M_2}_{\text{UEM}}=\mathbb{E}[\text{Shot}_{M_1}[\text{err}^{\text{EM}}_n]\cdot\text{Shot}_{M_2}[\text{err}^{\text{EM}}_n]]$。Lemma 4.1 证明 $\ell^{M_1,M_2}_{\text{UEM}}=([\mathcal{L}[u_\theta]-\phi_{u_\theta}](t_n,x))^2+O(\Delta t^{1/2})$，即恰好等于连续时间 PDE 残差的平方（除去消失项），完全去掉了 EM 偏置中的 $\text{Tr}[(\sigma^T\nabla^2 u_\theta\sigma)^2]$ 项
-    - 设计动机：传统 BSDE 把同一个噪声 $\Delta W_n$ 同时用于前向和反向，导致 $\text{err}^{\text{EM}}_n$ 的方差被吸收进 $\mathbb{E}[X^2]$ 形成偏置；用两组独立噪声把方差和均值平方分离，方差贡献被打散到 $\mathbb{E}[X_1]\mathbb{E}[X_2]$ 之外
+EM-BSDE loss 在有限步长下有偏，根子在于它把同一个噪声 $\Delta W_n$ 同时用于前向和反向，使单步误差的方差被吸进 $\mathbb{E}[X^2]$ 形成偏置项 $\frac12\mathrm{Tr}[(\sigma^T\nabla^2u_\theta\sigma)^2]$。作者借统计学的 sample-splitting：定义 $\text{Shot}_M[\xi]=\frac1M\sum_m\xi_m$，用 $M_1+M_2$ 个 i.i.d. Brownian 增量算出 $M_1+M_2$ 个独立单步误差、分成两个不重叠组求平均后做乘积
 
-2. **避免显式二阶导（second-order-free）**:
+$$\ell^{M_1,M_2}_{\text{UEM}}=\mathbb{E}\big[\text{Shot}_{M_1}[\text{err}^{\text{EM}}_n]\cdot\text{Shot}_{M_2}[\text{err}^{\text{EM}}_n]\big].$$
 
-    - 功能：保持 EM 单步更新结构不变，从而不需要 $\nabla^2 u_\theta$
-    - 核心思路：Heun-BSDE 之所以慢是因为 Itô-to-Stratonovich 转换会引入二阶空间导校正项，必须算 Hessian；Un-EM-BSDE 始终在 Itô 框架内，单步公式 $B_n$ 只含 $u, \nabla u$，整个 pipeline 只需要一阶反向梯度（PyTorch / JAX 一行 grad 搞定）
-    - 设计动机：在 $d$ 维 PDE 中，Hessian 是 $d\times d$ 矩阵，AD 计算成本 $O(d)$ 倍于一阶梯度，在 $d=100$ 量级的高维问题里直接决定了能否在 GPU 上跑完——这是 Heun-BSDE 42.91× 时间的根源
+因为两组独立，$\mathbb{E}[X_1X_2]=\mathbb{E}[X_1]\mathbb{E}[X_2]=(\mathbb{E}[X])^2$，来自方差的偏置自然消失。Lemma 4.1 证明它恰好等于连续时间 PDE 残差的平方 $([\mathcal{L}[u_\theta]-\phi_{u_\theta}])^2+O(\Delta t^{1/2})$，完全去掉了 EM 偏置里的 Hessian 项——把方差和均值平方分离，是整个方法的核心机巧。
 
-3. **方差控制 + Shotgun 通用 wrapper**:
+**2. 避免显式二阶导：始终待在 Itô 框架内，只用一阶梯度。**
 
-    - 功能：(a) 证明 $M_1=1, M_2=2$ 的 Un-EM 估计器方差不比 EM-BSDE 大；(b) 把同样的 sample-splitting 思路套到任意单步损失上做通用消偏
-    - 核心思路：Theorem 4.3 证明在 $\alpha=2/M-1/(2M_1)-1/(2M_2)\geq 4/(3M+\beta M^4)$、$\beta=1/(2M^2)-1/(4M_1 M_2)>0$ 的条件下，$\mathbb{V}[\hat\ell^{M_1,M_2}_{\text{UEM}}]\leq\mathbb{V}[\hat\ell^M_{\text{SG}}]=\mathbb{V}[\hat\ell^M_{\text{SEM}}]\leq\mathbb{V}[\hat\ell_{\text{EM}}]$。把同样的乘积构造套到 Shotgun loss 上得到 Un-SG，BSB 硬约束上 RL2 降低 2.67×、训练时间仅增 1.78×
-    - 设计动机：sample-splitting 容易引入额外方差（cross-moment 比 second moment 噪），方差分析是确保该方法实用的关键；同时通用 wrapper 把单点贡献放大成"任意有偏单步损失都能被无偏化"的一类技术
+Heun-BSDE 之所以慢到 42.91×，是因为它走 Itô-to-Stratonovich 转换、会引入二阶空间导校正项、必须算 Hessian；而在 $d$ 维 PDE 里 Hessian 是 $d\times d$ 矩阵，AD 成本是一阶梯度的 $O(d)$ 倍，$d=100$ 量级时直接决定能不能在 GPU 上跑完。Un-EM-BSDE 始终留在 Itô 框架，单步反向公式 $B_n$ 只含 $u,\nabla u$，整条 pipeline 只需要一阶反向梯度（PyTorch/JAX 一行 grad 搞定）。这一点不是额外技巧，而是 sample-splitting 消偏后"不必再引二阶项纠偏"的自然结果——既无偏又无 Hessian，正是它能把训练时间压到 1.79× 的原因。
+
+**3. 方差控制 + Shotgun 通用 wrapper：证明不引入额外方差，并把方法推广成通用消偏器。**
+
+sample-splitting 用 cross-moment 替代 second moment，cross-moment 比 second moment 噪、容易引入额外方差，所以方差分析是实用性的关键。Theorem 4.3 证明在 $\alpha=2/M-1/(2M_1)-1/(2M_2)\ge4/(3M+\beta M^4)$、$\beta=1/(2M^2)-1/(4M_1M_2)>0$ 的条件下，$\mathbb{V}[\hat\ell^{M_1,M_2}_{\text{UEM}}]\le\mathbb{V}[\hat\ell^M_{\text{SG}}]\le\mathbb{V}[\hat\ell_{\text{EM}}]$，即 $M_1=1,M_2=2$ 的估计器方差不比 EM-BSDE 大。同样的乘积构造还能套到任意有偏单步损失上做通用消偏——套到 Shotgun loss 得到 Un-SG，在 BSB 硬约束上 RL2 降 2.67×、训练时间只增 1.78×。这把单点贡献放大成"任意有偏单步损失都能被无偏化"的一类技术。
 
 ### 损失函数 / 训练策略
 实验默认 $M_1=M_2=5$。基线对比：Shotgun 用 $M=50$，Multi-Shot EM 用 $M=10$，使内部采样 budget 与 $M_1+M_2=10$ 对齐。损失既支持 soft constraint（终端条件作为额外损失项 $L_T$）又支持 hard constraint（trial function 形式内置）。算法伪代码（Algorithm 1）展示 batched 实现：对 batch size $B$、时间步 $N$、shot 数 $M_1+M_2$，张量 $X\in\mathbb{R}^{B\times(N+1)\times(M_1+M_2)\times d}$ 一次性存所有候选状态，并行计算前向轨迹与每条 shot 的单步预测 $\hat Y[b,n+1,i]$，最后按组聚合做乘积。

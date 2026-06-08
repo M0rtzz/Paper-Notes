@@ -45,23 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **四公理 + 局部 port-Hamiltonian 约化定理**:
+**1. 四公理 + 局部 port-Hamiltonian 约化定理：先证"哪些必须固定、哪些能学"，再谈架构。**
 
-    - 功能：给「合法的网格物理动力学」一个公理化定义，并证明任何满足公理的 $F$ 在 Jacobian 层面都能写成 $\partial F / \partial z = (J(z) - R(z)) G(z)$ 的形式。
-    - 核心思路：四条公理是 (L) 局部性，(P) 置换等变，(O) 朝向协变（沿 cell 反转方向只翻 oriented 变量符号、标量量 $H, e^\top \dot z$ 不变），(E) 能量平衡——动力学拆为守恒部分 $F_\text{con}$（满足 $e^\top F_\text{con} = 0$）+ 耗散部分 $F_\text{diss}$（满足 $e^\top F_\text{diss} \le 0$）。在此基础上证明守恒部分的 Jacobian 必为反对称、耗散部分必为半负定，并进一步证明守恒互联的非对角块只能取 signed-incidence 结构 $J_{k,k+1} = -D_k^\top C_k(z)$ 与 $J_{k+1,k} = C_k(z) D_k$（推论 3.4 中 $C_k$ 取常数时可吸进坐标缩放）。
-    - 设计动机：和「直接 posit 一个 port-Hamiltonian 模板」不同，本文不预设全局 Hamiltonian，而是 deduce「哪些必须固定、哪些可以学」——把拓扑与度量的分工写成结构定理，而非工程经验。
+和"直接 posit 一个 port-Hamiltonian 模板"不同，本文不预设全局 Hamiltonian，而是从公理出发推导结构。四条公理是 (L) 局部性、(P) 置换等变、(O) 朝向协变（沿 cell 反向只翻 oriented 变量符号、标量 $H$、$e^\top\dot z$ 不变）、(E) 能量平衡（动力学拆成守恒部分 $F_\text{con}$ 满足 $e^\top F_\text{con}=0$、耗散部分 $F_\text{diss}$ 满足 $e^\top F_\text{diss}\le0$）。在此之上证明：任何满足公理的 $F$ 在 Jacobian 层面都能写成
 
-2. **MeshFT-Net：拓扑固定、度量可学**:
+$$\frac{\partial F}{\partial z}=(J(z)-R(z))G(z),$$
 
-    - 功能：将定理直接实现为神经网络架构——把 $J$ 写死成 $\begin{pmatrix} 0 & -D_k^\top \\ D_k & 0 \end{pmatrix}$，把可学权重限制为 SPD 度量 $G_\theta$ 和 PSD 耗散 $R_\theta$。
-    - 核心思路：能量取二次型 $H_\theta(z) = \tfrac{1}{2} z^\top G_\theta z$，co-energy $e = G_\theta z$；$G_\theta$ 用 softplus 对角或小型 Cholesky 块实现，可被局部几何 / 材料特征通过 permutation-equivariant + orientation-even 的 MLP 条件化；$R_\theta(z)$ 取 Rayleigh 形式 $z \mapsto \gamma(\cdot) G_\theta^{-1} z$ 以保证 PSD。
-    - 设计动机：把「拓扑」从训练集移到「网格本身」——因为它由 mesh 给定、不该被数据学；把「度量 / 材料 / 耗散」交给网络去拟合。结果是即使数据有限、即使分布外，拓扑结构也不会崩。
+守恒部分的 Jacobian 必为反对称、耗散部分必为半负定，且守恒互联的非对角块只能取 signed-incidence 结构 $J_{k,k+1}=-D_k^\top C_k(z)$、$J_{k+1,k}=C_k(z)D_k$。这把"拓扑与度量的分工"写成结构定理而非工程经验——它直接回答了痛点里"网格物理哪些自由度是非物理的、该被结构消掉"。
 
-3. **Strang 分裂时间积分器 + CFL 守护**:
+**2. MeshFT-Net：拓扑写死、度量可学。**
 
-    - 功能：在一层 update 内既保持守恒部分的辛性、又把耗散精确融合进来。
-    - 核心思路：算法 1 给出 KDK 模式：先半步耗散 $\exp(-\tfrac{\Delta t}{2} R G) z$，然后用对称 leapfrog 推进守恒部分 $z_k \leftarrow z_k - \tfrac{\Delta t}{2} D_k^\top G_{k+1} z_{k+1}$ → 推进 $z_{k+1} \leftarrow z_{k+1} + \Delta t D_k G_k z_k^\text{half}$ → 再做一次半步守恒；最后再做半步耗散。`CFLGuard(Δt)` 根据局部最大特征值缩步避免数值爆炸。
-    - 设计动机：常规 Euler 在能量层面无法精确守恒；Strang 分裂能让守恒和耗散两个子流互不干扰，配合精确反对称 $J$ 给出可解析证明的「$\dot H = -e^\top R(z) e \le 0$」。
+定理告诉我们拓扑由网格给定、不该被数据学，于是架构把守恒互联结构 $J=\begin{pmatrix}0&-D_k^\top\\D_k&0\end{pmatrix}$ 直接写死，可学权重只留正定度量 $G_\theta$ 和半正定耗散 $R_\theta$。能量取二次型 $H_\theta(z)=\tfrac12 z^\top G_\theta z$、co-energy $e=G_\theta z$；$G_\theta$ 用 softplus 对角或小型 Cholesky 块实现，可被局部几何/材料特征经 permutation-equivariant + orientation-even 的 MLP 条件化；$R_\theta(z)$ 取 Rayleigh 形式 $z\mapsto\gamma(\cdot)G_\theta^{-1}z$ 以保证 PSD。这样把拓扑从训练集移到网格本身、把度量/材料/耗散交给网络，结果是即便数据有限、即便分布外，拓扑结构也不会崩——这正是它在 OOD 频率/波速/分辨率上稳的根因。
+
+**3. Strang 分裂时间积分器 + CFL 守护：一层 update 内同时保辛性和精确耗散。**
+
+常规 Euler 在能量层面无法精确守恒。算法用 Strang 分裂的 KDK 模式：先半步耗散 $\exp(-\tfrac{\Delta t}{2}RG)z$，再用对称 leapfrog 推进守恒部分（$z_k\leftarrow z_k-\tfrac{\Delta t}{2}D_k^\top G_{k+1}z_{k+1}$ → $z_{k+1}\leftarrow z_{k+1}+\Delta t D_k G_k z_k^\text{half}$ → 再半步守恒），最后再做半步耗散；`CFLGuard(Δt)` 按局部最大特征值缩步防爆炸。分裂让守恒和耗散两个子流互不干扰，配合精确反对称的 $J$，就能给出可解析证明的 $\dot H=-e^\top R(z)e\le0$——能量漂移近零不是训练凑出来的，而是积分器结构保证的。
 
 ### 损失函数 / 训练策略
 监督一步预测：$\sum_k \text{Loss}(\hat z_k^{n+1}, z_k^{n+1})$，不使用 PDE residual 项；inductive bias 完全来自固定的 $J$ 和 SPD / PSD 结构。可堆叠多步并只对最终输出监督，以适应 rollout 任务。

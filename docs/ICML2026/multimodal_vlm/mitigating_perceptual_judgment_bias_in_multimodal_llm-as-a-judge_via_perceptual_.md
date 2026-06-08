@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **感知判断偏差的形式化与两通道归因**:
+**1. 感知判断偏差的形式化与两通道归因：把"评判器为什么不准"拆成可测的二维。**
 
-    - 功能：把"评判器为什么不可靠"从模糊感受变成可测的量，奠定后续训练目标的合理性。
-    - 核心思路：设 $\pi^\star(v_i)$ 为人工标注的视觉事实、$\pi_\text{Judge}(v_i)$ 为评判器对图像 $v_i$ 的自身感知、$\pi_r(v_i)$ 为回答 $r$ 中描述的视觉内容、$s_{(x_i, r)}$ 为评判分。当视觉错误回答 $r_r$ 未被相对正确回答 $r_c$ 惩罚（$s_{(x_i,r_r)} \ge s_{(x_i,r_c)}$）时即记为感知判断错误。再根据 $\pi_\text{Judge}(v_i) \ne \pi^\star(v_i)$ 还是 $\pi_\text{Judge}(v_i) = \pi^\star(v_i)$ 区分 Mode (a) 与 Mode (b)；用直接 VQA 准确性作为 $\pi_\text{Judge}$ 的代理来归因。
-    - 设计动机：如果只看总错误率，研究者会把所有问题归到"视觉编码器不够强"，从而错失更深层的失配。作者用 VQA 探针把错误投影到二维平面上，揭示了"自己看得对、评分依然错"的 Mode (b) 与"自己就看错了"的 Mode (a) 同等严重——这一发现直接决定了后续训练必须显式监督感知-评判耦合，而不仅仅是提升感知能力。
+如果只看总错误率，研究者会一股脑归咎于"视觉编码器不够强"，从而错过更深的失配。本文先把问题量化：设 $\pi^\star(v_i)$ 是人工标注的视觉事实、$\pi_\text{Judge}(v_i)$ 是评判器自己对图像的感知、$\pi_r(v_i)$ 是回答里描述的视觉内容、$s_{(x_i,r)}$ 是评判分。当一个视觉错误回答 $r_r$ 没被相对正确的 $r_c$ 惩罚（即 $s_{(x_i,r_r)} \ge s_{(x_i,r_c)}$）就记为一次感知判断错误。再用直接 VQA 准确性当 $\pi_\text{Judge}$ 的代理，按"评判器自己看对了没"把错误劈成两条通道：Mode (a) 是 $\pi_\text{Judge}(v_i) \ne \pi^\star(v_i)$——评判器自己就看错了图；Mode (b) 是 $\pi_\text{Judge}(v_i) = \pi^\star(v_i)$——单独问它能答对，但放进评判流程就被回答里描述的"视觉事实"带跑。表 1 显示 Mode (b) 与 Mode (a) 数量级相当甚至更大，这直接决定了后续训练必须显式监督"感知-评判耦合"，而不只是堆视觉能力。
 
-2. **PPJD：感知-推理解耦的四元组数据集**:
+**2. PPJD：造一个"推理流畅但视觉错"的陷阱回答，把感知失败从推理失败里剥出来。**
 
-    - 功能：提供细粒度、可验证的训练监督，把感知失败从推理失败里分离出来，给评判器制造"陷阱回答"。
-    - 核心思路：起点是 MMPR-v1.2 的 (chosen, rejected) 偏好对，保留其中 $r_c$ 作为视觉与逻辑均正确的参照。然后用生成模型对 $r_c$ 施加**仅感知扰动**：精准改写视觉相关属性（如对象颜色、计数、空间关系），保持句法流畅与推理链不变，得到 $r_{r_p}$；并自动用 VQA 一致性校验丢弃扰动失败的样本。再额外退化推理质量得到 $r_{r_{p+r}}$。最终每条样本是四元组 $(x_i, r_c, r_{r_p}, r_{r_{p+r}})$，目标偏好序为 $r_c \succ r_{r_p} \succ r_{r_{p+r}}$。这一构造之所以可行，是因为作者引用的先验（Jiang et al., 2024; Qian et al., 2024）显示 MLLM 在"被指挥制造细粒度感知错误"上比"检测细粒度感知错误"更可控。
-    - 设计动机：通用偏好集里 chosen 和 rejected 几乎总是同时感知差+推理差，模型只要学到"推理差就低分"就能拿满训练奖励，根本不会被强制使用视觉信号。PPJD 把感知扰动单独剥出来 ($r_{r_p}$)，使得"推理依然漂亮但视觉错"的回答被显式标记为低分，构成 Mode (b) 的反向直接监督。
+通用偏好集里 chosen 和 rejected 几乎总是同时感知差加推理差，模型只要学会"推理差就低分"就能拿满奖励，根本不必动用视觉信号。PPJD 专门破这个捷径：从 MMPR-v1.2 的偏好对里取 $r_c$ 作为视觉与逻辑均正确的参照，再对它施加仅感知扰动——精准改写对象颜色、计数、空间关系等视觉属性，但保持句法流畅和推理链不变，得到 $r_{r_p}$，并用 VQA 一致性校验丢掉扰动失败的样本；之后额外退化推理质量得到双扰动版 $r_{r_{p+r}}$。每条样本最终是四元组 $(x_i, r_c, r_{r_p}, r_{r_{p+r}})$，目标偏好序为 $r_c \succ r_{r_p} \succ r_{r_{p+r}}$。这套构造之所以可行，是因为先验工作显示 MLLM 在"被指挥制造细粒度感知错误"上比"检测"更可控。关键在于 $r_{r_p}$——一个推理依然漂亮但视觉错的回答被显式标成低分，正好对 Mode (b) 形成反向直接监督。
 
-3. **批量排序奖励 + GRPO 的统一可验证训练**:
+**3. 批量排序奖励 + GRPO：把全序约束变成可验证的连续奖励。**
 
-    - 功能：把"应该 $r_c \succ r_{r_p} \succ r_{r_{p+r}}$"这一全序约束转成连续可优化的奖励信号，让 7B 评判器在 3k 数据上稳定学习。
-    - 核心思路：奖励分两部分。结构奖励 $\mathcal{R}_\text{Format}(o_i) \in \{0,1\}$ 校验输出是否遵循 `<think>...</think><answer>...</answer>` 与合法值域，若不合法则总奖励为 0。批量排序奖励基于权重 Levenshtein 距离衡量预测排列 $\hat{\bm{\pi}}_i$ 与目标排列 $\bm{\pi}_i^\star$ 的差距：$\mathcal{R}_\text{Batch}(o_i) = 1 - d_\text{Lev}(\hat{\bm{\pi}}_i, \bm{\pi}_i^\star)/\|\bm{\pi}_i^\star\|$，对应离散值 $\{1, 2/3, 1/3, 0\}$。总奖励 $\mathcal{R}(o_i) = \mathcal{R}_\text{Format}(o_i) \times \mathcal{R}_\text{Batch}(o_i)$ 代入 GRPO 目标 $\mathcal{J}_\text{GRPO}(\theta) = \mathbb{E}\big[\tfrac{1}{n}\sum_i \min(r_i\hat{\mathcal{A}}_i, \text{clip}(r_i, 1-\epsilon, 1+\epsilon)\hat{\mathcal{A}}_i) - \beta\, \mathbb{D}_\text{KL}(\pi_\theta\|\pi_\text{ref})\big]$，其中 $\hat{\mathcal{A}}_i = (R(o_i) - \mu(\mathcal{R})) / \sigma(\mathcal{R})$ 是组内归一化的相对优势。
-    - 设计动机：pairwise reward 只能给出"谁赢谁输"的局部信号，模型可能学会两两都对但全局不一致；用 Levenshtein 距离归一化的全序排序奖励能强制 transitive consistency，且不需要显式打分标注。结构奖励再额外保证可验证性——非法格式直接 0 分，把"语义评测"问题转成"可验证 RL"问题，正契合 GRPO 不需要 value network、对稀疏奖励稳定的优点。
+pairwise reward 只给"谁赢谁输"的局部信号，模型可能两两都对但全局不自洽。本文把监督升级成四元组上的全序排序，奖励拆两部分：结构奖励 $\mathcal{R}_\text{Format}(o_i) \in \{0,1\}$ 校验输出是否遵循 `<think>...</think><answer>...</answer>` 格式与合法值域，不合法直接总奖励为 0；批量排序奖励用归一化 Levenshtein 距离衡量预测排列与目标排列的差距 $\mathcal{R}_\text{Batch}(o_i) = 1 - d_\text{Lev}(\hat{\bm{\pi}}_i, \bm{\pi}_i^\star)/\|\bm{\pi}_i^\star\|$，取离散值 $\{1, 2/3, 1/3, 0\}$。总奖励 $\mathcal{R}(o_i) = \mathcal{R}_\text{Format}(o_i) \times \mathcal{R}_\text{Batch}(o_i)$ 代入 GRPO 目标
+
+$$\mathcal{J}_\text{GRPO}(\theta) = \mathbb{E}\big[\tfrac{1}{n}\sum_i \min(r_i\hat{\mathcal{A}}_i, \text{clip}(r_i, 1-\epsilon, 1+\epsilon)\hat{\mathcal{A}}_i) - \beta\, \mathbb{D}_\text{KL}(\pi_\theta\|\pi_\text{ref})\big]$$
+
+其中 $\hat{\mathcal{A}}_i = (R(o_i) - \mu(\mathcal{R})) / \sigma(\mathcal{R})$ 是组内归一化优势。用 Levenshtein 归一化的全序奖励能强制 transitive consistency、又不需要显式打分标注；结构奖励再把"语义评测"转成"可验证 RL"，非法格式直接 0 分，正好吃到 GRPO 不需要 value network、对稀疏奖励稳定的好处。
 
 ### 损失函数 / 训练策略
 基础模型：Flex-Judge-VL-7B 与 Qwen3-VL-4B-Thinking。训练框架：verl。数据：从 MMPR-v1.2 抽 3k 样本经 PPJD 流程生成四元组，严格剔除与评测基准重叠样本。GRPO 超参 $\epsilon$、$\beta$、组大小等遵从 verl 默认，配合上面的 $\mathcal{R}(o_i)$ 优化。

@@ -40,33 +40,30 @@ tags:
 
 ## 方法详解
 
-整个流程分四个阶段: 生成推理迹 → 对齐到专家解 → 抽取拓扑特征 → 对比图特征基线。下面按阶段拆解。
-
 ### 整体框架
 
 输入是 AIME (American Invitational Mathematics Examination) 题目及其专家解。模型用本地 Ollama 服务跑 answer-blind prompt 生成推理迹 $r_i$, 与专家解 $s_i$ 一起按规则切成 step list, 每个 step 用 all-mpnet-base-v2 嵌入。在嵌入空间里, 一边做 Smith-Waterman 对齐得到"对齐分"作为质量代理; 另一边对推理迹的点云算 Vietoris-Rips 持续图, 抽取 28 维 TDA 特征。最后用 OLS 回归把 TDA 特征 / 图特征 / 二者拼接分别去预测对齐分, 对比 $R^2$ 和 adjusted $R^2$。
 
 ### 关键设计
 
-1. **嵌入空间中的 Smith-Waterman 对齐**:
+**1. 嵌入空间中的 Smith-Waterman 对齐：在没有 step-level 标注时造一个推理 ground truth。**
 
-    - 功能：把 LLM 推理迹的每一步对齐到专家解的对应步骤, 用对齐质量作为 step-level ground truth, 解决"缺 step-level 标注"问题。
-    - 核心思路：把推理迹 $R_i=(r_{i,1},\dots,r_{i,m})$ 和专家解 $S_i=(s_{i,1},\dots,s_{i,n})$ 分别嵌入为 $X_i^{(r)}\in\mathbb{R}^{m\times d}$ 与 $X_i^{(s)}\in\mathbb{R}^{n\times d}$。用 cosine 相似度作 match score $s_{uv}$, 配以 gap penalty $\gamma>0$, 跑标准 DP 递推 $H_{u,v}=\max\{0,\,H_{u-1,v-1}+s_{uv},\,H_{u-1,v}-\gamma,\,H_{u,v-1}-\gamma\}$, 从 $\arg\max H_{u,v}$ 回溯得到对齐对 $\mathcal{A}_i$, 并汇总成 mean alignment score 与 gold-step coverage 两个标量。
-    - 设计动机：直接采用生物序列比对里的 local alignment 思想——专家解和模型推理可能只在某个子段对齐, 全局对齐会被冗余思考拖崩。把 score 函数从字符相等换成嵌入余弦相似, 就能允许"语义等价但措辞不同"的步骤被对上。
+推理数据集大多只给最终答案、缺少"每一步对不对"的标注，于是本文先造一个质量代理。把推理迹 $R_i=(r_{i,1},\dots,r_{i,m})$ 和专家解 $S_i=(s_{i,1},\dots,s_{i,n})$ 分别嵌入为 $X_i^{(r)}\in\mathbb{R}^{m\times d}$、$X_i^{(s)}\in\mathbb{R}^{n\times d}$，用 cosine 相似度作 match score $s_{uv}$、配 gap penalty $\gamma>0$，跑标准 DP 递推
 
-2. **Vietoris-Rips 滤过 + 持续同调特征**:
+$$H_{u,v}=\max\{0,\,H_{u-1,v-1}+s_{uv},\,H_{u-1,v}-\gamma,\,H_{u,v-1}-\gamma\},$$
 
-    - 功能：把推理迹的嵌入点云转成一组与坐标变换无关、对 surface 改写鲁棒的拓扑不变量, 作为推理质量的客观度量。
-    - 核心思路：在嵌入步骤集合 $X=\{\mathbf{x}_1,\dots,\mathbf{x}_\ell\}$ 上定义余弦距离 $\mathrm{dist}(\mathbf{x}_p,\mathbf{x}_q)=1-\langle\mathbf{x}_p,\mathbf{x}_q\rangle/(\|\mathbf{x}_p\|\|\mathbf{x}_q\|)$, 构造 Vietoris-Rips 复形并随尺度参数变化, 记录拓扑特征 (连通分量、一维环洞) 的"出生-死亡"时刻, 得到持续图 $\mathcal{D}_k=\{(b_j^{(k)},d_j^{(k)})\}$ ($k\in\{0,1\}$)。从中抽取三族特征: (i) VR 摘要统计 (mean life、entropy 等); (ii) Betti 曲线描述子 (centroid、spread、width); (iii) persistence landscape 描述子, 总计 28 维。
-    - 设计动机：$H_0$ 编码"思路在嵌入空间里如何聚团与合并", $H_1$ 编码"推理有没有绕路与回环", 两者合起来恰好对应"局部紧凑性 + 全局检索-收敛"的良好推理画像。同时拓扑特征对嵌入器、距离函数的具体选择有较好不变性, 比图统计更稳定。
+再从 $\arg\max H_{u,v}$ 回溯得到对齐对 $\mathcal{A}_i$，汇总成 mean alignment score 与 gold-step coverage 两个标量。这里直接借的是生物序列比对里的 local alignment 思想——专家解和模型推理往往只在某些子段对齐，全局对齐会被冗余思考拖崩；而把打分函数从字符相等换成嵌入余弦，就能让"语义等价但措辞不同"的步骤也对得上。
 
-3. **图统计基线 + 拓扑-图的可翻译性分析**:
+**2. Vietoris-Rips 滤过 + 持续同调特征：把推理点云转成对改写鲁棒的拓扑不变量。**
 
-    - 功能：在完全相同的嵌入数据上构造 trace graph, 计算 has_loop、loop_count、diameter、average clustering $\overline{C}$、average shortest path $\overline{L}$、small-world index, 作为公平对照; 同时用 TDA 特征反向回归图统计, 解释图特征"为何能成立"。
-    - 核心思路：按 Minegishi et al. 2025 的口径建图, 然后用 OLS 把 5 个图统计回归到 TDA 特征上。发现 $H_0$ mean life $+$ 提升 clustering、$H_0$ betti centroid $+$ 拉长 path length 和 diameter、$H_1$ landscape mean $+$ 提升 loop count 等系统性关系: 大致上 $H_0$ 控制"全局凝聚与高效", $H_1$ 控制"环路丰富度"。TDA 对 4 个全局图统计有 $R^2\approx 0.35$-$0.38$, 但对 loop incidence 只有 $\approx 0.07$。
-    - 设计动机：作者不只想证明 "TDA 比图统计强", 还想说清楚"为什么强"——很多图统计本质是 TDA 在某个尺度上的压缩投影, 一旦把整条滤过保留下来, 信息明显更丰富。
+图统计把高维嵌入压成几个标量、丢掉了几何信息，这一步换用拓扑不变量。在嵌入步骤集合 $X=\{\mathbf{x}_1,\dots,\mathbf{x}_\ell\}$ 上定义余弦距离 $\mathrm{dist}(\mathbf{x}_p,\mathbf{x}_q)=1-\langle\mathbf{x}_p,\mathbf{x}_q\rangle/(\|\mathbf{x}_p\|\|\mathbf{x}_q\|)$，构造 Vietoris-Rips 复形并随尺度参数变化，记录拓扑特征的"出生-死亡"时刻得到持续图 $\mathcal{D}_k=\{(b_j^{(k)},d_j^{(k)})\}$（$k\in\{0,1\}$），再抽出三族共 28 维特征：VR 摘要统计（mean life、entropy 等）、Betti 曲线描述子（centroid、spread、width）、persistence landscape 描述子。之所以选 $H_0$ 和 $H_1$，是因为 $H_0$ 编码"思路在嵌入空间里如何聚团与合并"、$H_1$ 编码"推理有没有绕路与回环"，合起来恰好对应"局部紧凑性 + 全局检索-收敛"的良好推理画像；而且拓扑特征对嵌入器、距离函数的具体选择有较好不变性，比图统计稳定。
 
-### 损失函数 / 训练策略
+**3. 图统计基线 + 拓扑-图的可翻译性分析：不只证明 TDA 更强，还讲清为什么强。**
+
+为公平对照，在完全相同的嵌入数据上按 Minegishi et al. 2025 的口径建 trace graph，计算 has_loop、loop_count、diameter、average clustering $\overline{C}$、average shortest path $\overline{L}$、small-world index 六个图统计。然后反过来用 OLS 把这些图统计回归到 TDA 特征上，发现一批系统性关系：$H_0$ mean life 提升 clustering、$H_0$ betti centroid 拉长 path length 和 diameter、$H_1$ landscape mean 提升 loop count——大致是 $H_0$ 控制"全局凝聚与高效"、$H_1$ 控制"环路丰富度"。TDA 对 4 个全局图统计能解释 $R^2\approx 0.35$-$0.38$，但对 loop incidence 只有 $\approx 0.07$。这个反向回归的意义在于：很多图统计本质就是 TDA 在某个尺度上的压缩投影，一旦把整条滤过保留下来，信息自然比单一尺度的图统计更丰富——这也解释了为什么拼接图特征几乎不再额外带来增益。
+
+### 训练策略
+
 本文不训练任何模型, 评估流程只涉及 sentence embedding (all-mpnet-base-v2 冻结) + Smith-Waterman DP + Vietoris-Rips 持续同调 + OLS 回归; 主要超参为余弦距离阈值、Smith-Waterman 的 gap penalty $\gamma$、Vietoris-Rips 的 maxdim$=1$。
 
 ## 实验关键数据

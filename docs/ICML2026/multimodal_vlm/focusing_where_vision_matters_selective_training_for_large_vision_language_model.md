@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Visual Information Gain（基于困惑度的视觉依赖度量）**:
+**1. Visual Information Gain：用「有图减无图」的困惑度对数比量化视觉依赖度。**
 
-    - 功能：量化"给图相对不给图，模型对答案的不确定度降了多少"，作为视觉信息贡献的代理。
-    - 核心思路：定义 $\mathrm{VIG}=\log(\mathrm{PPL}(A|Q)/\mathrm{PPL}(A|Q,I))=\mathcal{L}(A|Q)-\mathcal{L}(A|Q,I)$，即去图条件下的交叉熵减去带图条件下的交叉熵；在 one-hot 监督下进一步化简为 $\mathrm{VIG}=D_{\text{KL}}(p_{A|Q}\|q_Q)-D_{\text{KL}}(p_{A|I,Q}\|q_{I,Q})$，即视觉输入对预测分布偏差的修正量；token 级分解为 $\mathrm{VIG}_i=\frac{1}{T_i}\sum_t \mathrm{VIG}_{i,t}$，其中 $\mathrm{VIG}_{i,t}=-\log q_\theta(a_t|a_{<t},Q)+\log q_\theta(a_t|a_{<t},Q,z_v)$。
-    - 设计动机：选用 PPL 的对数比而非 KL 之类，是因为它能天然分解为 token 级 loss 之差，不需要再额外定义"token-level KL"；模糊图代替"完全去图"则解决了 LVLM 架构强制需要视觉输入的问题（不能直接传 None），同时保证文本侧 token 流不变，只剥离视觉信号。
+要做选择性训练，先得有把尺子量「这条数据/这个 token 到底用没用到图」。VIG 的出发点是信息论直觉——图若真有用，给图就该降低模型对答案的不确定度（困惑度）；给图前后困惑度不变甚至变高，就说明根本没用到图。于是定义 $\mathrm{VIG}=\log(\mathrm{PPL}(A|Q)/\mathrm{PPL}(A|Q,I))=\mathcal{L}(A|Q)-\mathcal{L}(A|Q,I)$，即去图条件下的交叉熵减带图条件下的交叉熵；在 one-hot 监督下可进一步化简为 $\mathrm{VIG}=D_{\text{KL}}(p_{A|Q}\|q_Q)-D_{\text{KL}}(p_{A|I,Q}\|q_{I,Q})$，即视觉输入对预测分布偏差的修正量。之所以选 PPL 的对数比而不是直接用 KL，是因为它能天然分解到 token 级 $\mathrm{VIG}_{i,t}=-\log q_\theta(a_t|a_{<t},Q)+\log q_\theta(a_t|a_{<t},Q,z_v)$、再平均回样本级 $\mathrm{VIG}_i=\frac{1}{T_i}\sum_t\mathrm{VIG}_{i,t}$，不需要额外定义什么「token 级 KL」。
 
-2. **样本级 + Token 级双粒度选择（共享阈值 $\tau_p$）**:
+**2. 样本级 + Token 级双粒度选择：共用一个阈值 $\tau_p$，把梯度预算花在真正要看图的位置。**
 
-    - 功能：把全量指令数据切成"该学的、该看的"的小子集，让有限的梯度预算花在真正需要看图的位置。
-    - 核心思路：先按 sample-level $\mathrm{VIG}_i$ 降序排，取 top-$p\%$ 得到 $\mathcal{S}_p=\{i \mid \mathrm{VIG}_i\geq\tau_p\}$；然后在每条保留样本内部用**同一阈值** $\tau_p$ 做 token 选择 $\mathcal{T}_i^+=\{t \mid \mathrm{VIG}_{i,t}\geq\tau_p\}$，只对 $\bigcup_{i\in\mathcal{S}_p}\mathcal{T}_i^+$ 中的 token 算 cross-entropy；non-selected token 仍传入模型保证 context 完整，只是 loss 被 mask 掉。
-    - 设计动机：刻意共用一个 $\tau_p$ 是为了避免引入新超参；文中默认 $p=70$，是 ablation 出来的甜区——过低（如 $p=30$）的话训练数据太少欠拟合，过高（$p=90$）则又退化回 vanilla。共享阈值还自动让"长答案里只有少数视觉关键词"的样本被精确地只在那几个词上算 loss，符合 Tab. 2 的实证：white/lying/sitting 之类视觉实词的 loss diff 普遍在 3-6，而 of/the/a 的 loss diff 接近 0 甚至为负。
+一份指令数据里既有「看图才能答」的样本、也有「凭常识就能答」的样本；token 层面更甚——视觉实词（white、sitting、lying）和纯句法词（a、the、of）被同一个 cross-entropy 同等对待，等于变相鼓励模型走预测句法词的语言捷径。VIG 把数据切成「该学的、该看的」子集：先按 sample-level $\mathrm{VIG}_i$ 降序取 top-$p\%$ 得 $\mathcal{S}_p=\{i\mid\mathrm{VIG}_i\geq\tau_p\}$，再在每条保留样本内部用**同一阈值** $\tau_p$ 挑 token $\mathcal{T}_i^+=\{t\mid\mathrm{VIG}_{i,t}\geq\tau_p\}$，只对这些 token 算 loss，没选中的 token 仍传入模型保 context 完整、只是把梯度 mask 掉。刻意共用一个 $\tau_p$ 是为了不引新超参；默认 $p=70$ 是 ablation 出来的甜区——太低（$p=30$）数据太少欠拟合，太高（$p=90$）又退回 vanilla。这个嵌套筛选在几何上等价于「在 (sample, token) 二维网格里抠出右上角的高 VIG 子区域」，刚好对上实证：white/lying/sitting 这类视觉实词的 loss diff 普遍在 3–6，而 of/the/a 接近 0 甚至为负。
 
-3. **基于模糊图的"无视觉"代理 + 在 alignment 后计算 VIG**:
+**3. 模糊图作「无视觉」代理 + 在 alignment 后算 VIG：让度量本身可信且一次算全程复用。**
 
-    - 功能：在不改架构的前提下模拟"没有视觉输入"的条件分布 $q_Q$，并保证 VIG 度量本身可信。
-    - 核心思路：直接把输入图 $I$ 替换为高斯模糊版本（沿用 Xing et al. 2025 的做法），喂给同一 LVLM 得到 $\mathrm{PPL}(A|Q)$；VIG 的计算时机统一选在 **pre-training（adapter alignment）结束之后、instruction tuning 之前**，此时视觉特征空间已经初步对齐到语言空间，但模型还没在指令数据上过拟合，因此 VIG 既能反映"图是否有用"又不会被尚未训练的下游任务噪声污染。
-    - 设计动机：用"模糊图"而非"全黑图"或"零向量"，是为了保留视觉编码器的正常 forward pipeline，避免分布外输入导致 perplexity 异常爆炸；放在 alignment 后而非 instruction tuning 后，是为了把 VIG 作为"先验筛选器"而非"事后诊断器"——一次计算，全程复用。
+VIG 需要一个「没有视觉输入」的条件分布 $q_Q$，但 LVLM 架构强制要喂视觉、不能直接传 None。本文的取巧是把输入图 $I$ 换成它的高斯模糊版本喂进同一个 LVLM 得到 $\mathrm{PPL}(A|Q)$——用模糊图而非全黑图或零向量，是为了保留视觉编码器正常的 forward pipeline，避免分布外输入把 perplexity 异常拉爆，同时只剥离视觉信号、文本侧 token 流原封不动。计算时机也有讲究：统一选在 pre-training（adapter alignment）结束之后、instruction tuning 之前——此时视觉特征空间已初步对齐到语言空间，但模型还没在指令数据上过拟合，因此 VIG 既能反映「图是否有用」又不被下游任务噪声污染，相当于一个「先验筛选器」而非「事后诊断器」，一次算好、全程复用。
 
 ### 损失函数 / 训练策略
 LLaVA-1.5 7B/13B 与 ShareGPT4V 7B 用 558K（或 1.2M）image-caption 对做 alignment，再在 ~665K 指令数据上做 SFT；Open-Qwen2VL 2B 在 1M MAmmoTH-VL 子集上微调。所有实验固定 $p=70$，仅对多模态样本算 VIG，纯文本样本原样保留；其余超参与各 vanilla baseline 一致，只是 loss mask 不同。
@@ -117,12 +111,6 @@ LLaVA-1.5 7B/13B 与 ShareGPT4V 7B 用 558K（或 1.2M）image-caption 对做 al
 - 实验充分度: ⭐⭐⭐⭐ 四个 LVLM × 8 个 benchmark + 视觉理解和幻觉双轴 + 消融阈值；但缺少 RLHF 场景验证。
 - 写作质量: ⭐⭐⭐⭐⭐ 公式推导（PPL→KL→token 分解）干净利落，可视化（图 1/2/3/4 + 表 2）非常有说服力。
 - 价值: ⭐⭐⭐⭐ 给所有 LVLM 训练 pipeline 提供一个"零架构改动、即插即用"的数据效率工具，13B 上 4–5× 加速 + 提点是真金白银。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

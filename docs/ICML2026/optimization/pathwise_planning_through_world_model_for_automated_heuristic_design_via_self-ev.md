@@ -50,23 +50,17 @@ PathWise 在两层时间尺度上调度：外层迭代 $r$ 维护一个根节点
 
 ### 关键设计
 
-1. **蕴含图作为有状态搜索记忆**：
+**1. 蕴含图作为有状态搜索记忆：把整条搜索轨迹压成一张 LLM 读得懂的图。**
 
-    - 功能：把整条搜索轨迹压成一个可读的图结构 $\mathcal{G}=(\mathcal{V},\mathcal{E})$，让 LLM 既能"看到"每个候选解是怎么从父辈演化来的，也能"看到"祖先 / 同辈的分数对比。
-    - 核心思路：每条边 $S\xRightarrow{\kappa}v_\star$ 同时编码"父节点集合 + 推导理由"，把进化动作变成一阶逻辑式的蕴含步；外层用群体框架把图限制在以 $\mathcal{P}_r$ 为根的子图里，避免 MCTS 那样无界生长；剪枝规则 $s_{t+1}=(s_t\cup\{v_\star\})\setminus(S^{(i_\star)}\setminus\{v^\star\})$ 保证 frontier 不爆炸但保留全局最佳。
-    - 设计动机：群体式方法直接丢中间体导致信息丢失，MCTS-AHD 全留但靠纯统计（UCT）选点没有语义；蕴含图同时提供"压缩"和"语义"，让后续动作可以基于"哪条推导路径有效"做决策，而不是基于"哪个节点被访问次数多"。
+群体式方法（FunSearch/EoH）直接丢弃中间体、信息流失，MCTS-AHD 虽全留却靠纯访问统计（UCT）选点、看不到语义——两者都把每步生成当成弱耦合采样，导致大量"换皮 rediscovery"和预算浪费。PathWise 借 NLP 里的文本蕴含图来同时拿"压缩"和"语义"两样东西：每个候选启发式是一个节点，每条边 $S\xRightarrow{\kappa}v_\star$ 同时编码"父节点集合 + 一段自然语言推导理由 $\kappa$"，于是进化动作变成一阶逻辑式的蕴含步，LLM 既能看到某个解是怎么从父辈演化来的、也能看到祖先/同辈的分数对比。外层用群体框架把图限制在以 $\mathcal{P}_r$ 为根的子图内、避免 MCTS 那样无界生长；剪枝规则 $s_{t+1}=(s_t\cup\{v_\star\})\setminus(S^{(i_\star)}\setminus\{v^\star\})$ 把用过的父节点剪掉但永远保留全局最佳 $v^\star$，frontier 不爆炸又不丢历史最优。这样后续决策就能基于"哪条推导路径有效"，而不是"哪个节点被访问得多"。
 
-2. **策略 / 世界模型双层动作分解**：
+**2. 策略 / 世界模型双层动作分解：把"想用什么 trick"和"写出能跑的代码"拆给两个角色。**
 
-    - 功能：把"高层进化策略"和"低层代码合成"分到两个 LLM 角色里，避免一个 prompt 同时承担"想用什么 trick"和"写出能跑的代码"两个职责。
-    - 核心思路：策略代理在状态 $s_t$ 和策略反思 $\rho_p(t)$ 条件下采 $N_a$ 个动作 $a_t^{(i)}=(S^{(i)},\kappa^{(i)})\sim\boldsymbol{\pi}_p(\cdot\mid s_t,\rho_p(t))$，其中 $\kappa$ 是自由文本指令（既可以是"crossover"也可以是"在父节点A中替换贪心规则为模拟退火"这种自创算子）；世界模型再对每个动作生成 $N_w$ 条 rollout $(\hat h^{(i,j)},\hat d^{(i,j)})\sim\boldsymbol{\pi}_{wm}(\cdot\mid\{(h_k,d_k)\}_{v_k\in S^{(i)}},\kappa^{(i)},\rho_{wm}(t))$，最后用评估打分挑出唯一节点写入图。
-    - 设计动机：固定算子模板（如 EoH 的几种 crossover/mutation）会限制创造空间，而把"想策略"和"写代码"绑在一个 prompt 里又会因为上下文太长削弱代码质量；解耦后策略可以专心做"语义级编辑设计"，世界模型可以专心做"实现这些编辑"，两个失败模式因此可以被两个 critic 分开诊断。
+如果一个 prompt 同时承担"设计语义级编辑"和"合成可运行代码"，上下文一长、代码质量就被削弱，固定算子模板（如 EoH 那几种 crossover/mutation）又限死了创造空间。PathWise 因此把动作拆成两层：策略代理在状态和策略反思条件下采 $N_a$ 个动作 $a_t^{(i)}=(S^{(i)},\kappa^{(i)})\sim\boldsymbol{\pi}_p(\cdot\mid s_t,\rho_p(t))$，其中 $\kappa$ 是自由文本指令（既能是"crossover"，也能是"在父节点 A 里把贪心规则换成模拟退火"这种自创算子）；世界模型代理再对每个动作生成 $N_w$ 条代码 rollout $(\hat h^{(i,j)},\hat d^{(i,j)})\sim\boldsymbol{\pi}_{wm}(\cdot\mid\{(h_k,d_k)\}_{v_k\in S^{(i)}},\kappa^{(i)},\rho_{wm}(t))$，最后由评估打分挑出唯一节点写进图。解耦后策略专心做语义编辑、世界模型专心做实现，两类失败模式（策略想歪了 vs 代码写错了）也就能被两个 critic 分头诊断。
 
-3. **路由反思 + 多样性扰动**：
+**3. 路由反思 + 多样性扰动：让 critic 的反馈各回各家，同时防止角色塌缩成单一模式。**
 
-    - 功能：让 critic 的反馈分别回到"该回到的角色"上，同时通过 prompt 扰动避免策略 / 世界模型在内步内塌缩到单一模式。
-    - 核心思路：策略 critic 聚合每个动作下 rollout 的平均奖励 $R_p(a_t^{(i)})=\frac{1}{N_w}\sum_{j=1}^{N_w}P(\hat h^{(i,j)};\mathcal{D})$ 和一个 rollout 描述 bundle $\mathcal{B}_p^{(i)}=\{(\hat d^{(i,j)},P(\hat h^{(i,j)};\mathcal{D}))\}_{j=1}^{N_w}$，对策略写反思 $\rho_p(t+1)$；世界模型 critic 则只对比 best / worst 两条 rollout，输出 $\rho_{wm}(t+1)$。多样性方面引入两套机制：一是衰减率为 $\varepsilon(\ell)=\varepsilon^{init}+(\varepsilon^{final}-\varepsilon^{init})\cdot\ell/n_e$（$\varepsilon^{init}=0.5,\varepsilon^{final}=0.25$）的 prompt 扰动短语库 $\Phi_p,\Phi_{wm}$；二是 state shuffling，每次 prompt 时随机打乱 $s_t$ 内节点顺序，消除 LLM 的位置偏置。
-    - 设计动机：单一 critic 给所有 prompt 混合反馈容易让两个角色互相串扰；只用最优 rollout 做反馈又会让世界模型缺少负例对比；prompt 扰动比温度采样更精准——能在保持任务描述精确的同时只对"探索方向"加噪。
+如果用一个 critic 给所有 prompt 混合反馈，两个角色会互相串扰；只用最优 rollout 做反馈又会让世界模型缺负例对比。PathWise 把反思按角色路由：策略 critic 聚合每个动作下 rollout 的平均奖励 $R_p(a_t^{(i)})=\frac{1}{N_w}\sum_{j=1}^{N_w}P(\hat h^{(i,j)};\mathcal{D})$ 和描述 bundle，给策略写 $\rho_p(t+1)$；世界模型 critic 只对比 best/worst 两条 rollout、输出 $\rho_{wm}(t+1)$。多样性上再加两套机制：一是 prompt 扰动短语库 $\Phi_p,\Phi_{wm}$，注入率按 $\varepsilon(\ell)=\varepsilon^{init}+(\varepsilon^{final}-\varepsilon^{init})\cdot\ell/n_e$（$\varepsilon^{init}=0.5,\varepsilon^{final}=0.25$）衰减——它比温度采样更精准，能在保持任务描述精确的同时只对"探索方向"加噪；二是 state shuffling，每次 prompt 随机打乱 $s_t$ 内节点顺序、消除 LLM 的位置偏置。消融显示这两个几乎零成本的 trick 分别治好了"模式塌缩"和"位置偏置"两个隐性 bug。
 
 ### 训练策略
 

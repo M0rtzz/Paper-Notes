@@ -45,23 +45,17 @@ CAGE 维持编码器攻击的灰盒前提（白盒访问视觉编码器 $\mathca
 
 ### 关键设计
 
-1. **期望特征扰动 EFD（与未知 Token 预算对齐）**:
+**1. 期望特征扰动 EFD：把扰动能量集中到"多种预算下都会幸存"的 Token 上。**
 
-    - 功能：把扰动能量集中到"在多种可能预算下都会幸存"的 Token 上，规避预算稀释与依赖断裂。
-    - 核心思路：把部署预算 $K_{\text{model}}$ 当作未知离散随机变量，先验设为 $K_{\text{model}}\sim\mathcal{U}[K_{\min},K_{\max}]$；定义 Token $i$ 的幸存概率 $\pi_i=P(K_{\text{model}}>r_i)$，它形成一条随排名衰减的软掩码（高排名为 1，中段渐降，低排名为 0）；再用余弦距离 $d_i=1-\mathcal{S}(\mathbf{z}_i^{\mathrm{adv}},\mathbf{z}_i^{\mathrm{cln}})$ 度量每个 Token 的扰动强度，损失为 $\mathcal{L}_{\text{EFD}}=\sum_i \pi_i d_i / \sum_i \pi_i$。
-    - 设计动机：直接用注意力分数 $s_i$ 加权会过度集中在极少数 Top Token 上（softmax 太尖），中段 Token 几乎拿不到梯度；而中段 Token 在中等/未知预算下其实有非平凡概率被选中，因此换成跨预算积分得到的 $\pi_i$ 才是真正"与压缩瓶颈对齐"的权重。
+预算稀释和依赖断裂的根子，是攻击者不知道部署到底保留哪些 Token。EFD 的应对是把部署预算 $K_{\text{model}}$ 当成未知离散随机变量，先验设为 $K_{\text{model}}\sim\mathcal{U}[K_{\min},K_{\max}]$，于是 Token $i$ 的幸存概率写成 $\pi_i=P(K_{\text{model}}>r_i)$——它是一条随排名衰减的软掩码，高排名 Token 几乎必然为 1、中段渐降、低排名趋 0。再用余弦距离 $d_i=1-\mathcal{S}(\mathbf{z}_i^{\mathrm{adv}},\mathbf{z}_i^{\mathrm{cln}})$ 度量每个 Token 被扰动的强度，损失取幸存概率加权的平均扰动 $\mathcal{L}_{\text{EFD}}=\sum_i \pi_i d_i / \sum_i \pi_i$。为什么不直接用注意力分数 $s_i$ 加权？因为 softmax 太尖，会把梯度过度集中到极少数 Top Token，中段 Token 几乎拿不到信号；但中段 Token 在中等或未知预算下其实有非平凡概率被选中，所以换成跨预算积分出来的 $\pi_i$，才是真正"与压缩瓶颈对齐"的权重。
 
-2. **排名-扰动对齐 RDA（确保扰动重的 Token 被选中）**:
+**2. 排名-扰动对齐 RDA：把被埋掉的那条梯度通路显式补回来。**
 
-    - 功能：主动把高扰动 Token 推到注意力排名前列，提升它们真正经过压缩瓶颈、影响 LLM 输入的概率。
-    - 核心思路：把 $d_i$ 和 $s_i^{\mathrm{adv}}$ 各自 softmax 成分布 $p_i^{(d)}$、$p_i^{(s)}$，最大化 $\mathcal{L}_{\text{RDA}}=\sum_i p_i^{(d)} \log p_i^{(s)}$（即让选择分布拟合扰动分布）；优化时对 $p^{(d)}$ stop-gradient，避免两边同时漂移产生退化。
-    - 设计动机：理论上对 $\mathcal{L}_{\text{EFD}}$ 求梯度可分解为 $\sum_i \pi_i \nabla d_i$（已选 Token 上继续加扰动）和 $\sum_i d_i \nabla \pi_i$（把高扰动 Token 推上排名）两项，但第二项由于 Top-K 选择是分段常数函数，梯度稀疏且在切换点处病态；RDA 用可微的分布匹配把这条"被埋掉"的梯度通路显式补回来。
+光集中扰动还不够——扰动重的 Token 如果排名不够高，照样会被裁掉、根本进不了 LLM 输入。理论上对 $\mathcal{L}_{\text{EFD}}$ 求梯度能分解成两项：$\sum_i \pi_i \nabla d_i$ 是"在已选 Token 上继续加扰动"，$\sum_i d_i \nabla \pi_i$ 是"把高扰动 Token 推上排名"。但第二项因为 Top-K 选择是分段常数函数，梯度稀疏、还在切换点处病态，几乎传不出有效信号。RDA 用一个可微的分布匹配把这条通路补回来：把 $d_i$ 和对抗注意力分 $s_i^{\mathrm{adv}}$ 各自 softmax 成分布 $p_i^{(d)}$、$p_i^{(s)}$，最大化 $\mathcal{L}_{\text{RDA}}=\sum_i p_i^{(d)} \log p_i^{(s)}$，让"被选中的分布"去拟合"扰动的分布"；优化时对 $p^{(d)}$ 做 stop-gradient，避免两边同时漂移退化。这样高扰动 Token 就被主动推到注意力前列，真正经过压缩瓶颈影响 LLM。
 
-3. **联合优化与编码器攻击形式**:
+**3. 联合优化与编码器攻击形式：打 Top-K 选择这个统一接口。**
 
-    - 功能：在 PGD 框架下融合两个目标，保持攻击与具体压缩机制解耦。
-    - 核心思路：总损失 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{EFD}}+\lambda\cdot\mathcal{L}_{\text{RDA}}$，受 $\|\boldsymbol{\delta}\|_\infty\le\epsilon$ 约束；EFD 在"幸存集"内造伤害（payload），RDA 把高扰动 Token 推进幸存集（delivery）。
-    - 设计动机：所有主流压缩方法的第一步几乎都是 Top-K 选择（纯选择型如 DivPrune、Alvar，或选完再合并如 VisionZip、PruMerge），打这一步是统一接口，天然覆盖差异化的下游合并机制；联合两项让攻击对"选谁"和"选了之后被扰动多少"都有控制力。
+两个目标在 PGD 框架下合成总损失 $\mathcal{L}_{\text{total}}=\mathcal{L}_{\text{EFD}}+\lambda\cdot\mathcal{L}_{\text{RDA}}$，受 $\|\boldsymbol{\delta}\|_\infty\le\epsilon$ 约束——形象地说，EFD 在"幸存集"内部造伤害（payload），RDA 负责把高扰动 Token 送进幸存集（delivery），二者一个管"选了之后被扰动多少"、一个管"选谁"。攻击之所以能和具体压缩机制解耦，是因为所有主流压缩方法的第一步几乎都是 Top-K 选择——无论是纯选择型（DivPrune、Alvar）还是选完再合并（VisionZip、PruMerge），打这一步就是个统一接口，天然覆盖差异化的下游合并逻辑。整个攻击仍是编码器攻击，不需要文本 prompt、也不假设知道 $K_{\text{model}}$ 或压缩模块 $\mathcal{C}$。
 
 ### 损失函数 / 训练策略
 攻击仍是编码器攻击（不需文本、不需 LLM 前传），用 PGD 迭代 + $\ell_\infty$ 投影；幸存概率 $\pi_i$ 在每步用当前的对抗注意力分数重新计算；$p^{(d)}$ 做 stop-gradient；$\lambda$ 与 $\epsilon$ 是主要超参。先验分布选均匀分布 $[K_{\min},K_{\max}]$，这样不需要事先猜真实部署预算就能覆盖一片合理区间。

@@ -46,23 +46,24 @@ LiMuon 沿用 Muon 的两段式：每步先对一个动量代理 $M_t$ 做（近
 
 ### 关键设计
 
-1. **低秩 STORM 动量估计器**:
+**1. 低秩 STORM 动量估计器：把方差缩减动量从 $\mathcal{O}(mn)$ 压到 $\mathcal{O}((m+n)\hat{r})$。**
 
-    - 功能：把方差缩减动量的存储从 $\mathcal{O}(mn)$ 压到 $\mathcal{O}((m+n)\hat{r})$，同时保留方差缩减带来的 $\mathcal{O}(\epsilon^{-3})$ 复杂度。
-    - 核心思路：Option#2 的更新写成 $M_{t+1} = \nabla f(W_{t+1}; \xi_{t+1}) + (1 - \beta_{t+1})\big(\hat{M}_t - \nabla f(W_t; \xi_{t+1})\big)$，其中 $\hat{M}_t = \hat{U}_t \hat{S}_t \hat{V}_t^\top$ 是上一步动量的 RSVD 低秩近似。注意梯度差 $\nabla f(W_{t+1}; \xi_{t+1}) - \nabla f(W_t; \xi_{t+1})$ 这块仍按全秩算（因为只在一步内、不入状态），但跨步保留的 **状态** 只剩 $\hat{U}_t \in \mathbb{R}^{m \times \hat{r}}, \hat{S}_t \in \mathbb{R}^{\hat{r} \times \hat{r}}, \hat{V}_t \in \mathbb{R}^{n \times \hat{r}}$ 三块，$m\hat{r} + n\hat{r} + \hat{r}^2 \ll mn$。
-    - 设计动机：传统 STORM 想保 $\mathcal{O}(\epsilon^{-3})$ 必须把上一步动量原封不动地保留，这是显存爆点；用 RSVD 把它压成 top-$\hat{r}$ 子空间，既不会丢主要方向，又把状态显存推到和 SUMO 一档但保留了 $\mathcal{O}(\epsilon^{-3})$。
+降样本复杂度依赖 STORM 这种基于上一步动量 $M_{t-1}$ 的递推方差估计，结构上要保留前一步全梯度信息——这天然和降显存冲突，所以 Muon++ 拿到 $\mathcal{O}(\epsilon^{-3})$ 的代价是额外存满秩 $mn$ 动量。本文的观察是：被存的那块 $M_t$ 本身就是带噪动量，"重要方向"远少于 $\min(m,n)$，因此只保留它的低秩近似就够。Option#2 的更新写成
 
-2. **基于 RSVD 的实用正交化**:
+$$M_{t+1} = \nabla f(W_{t+1}; \xi_{t+1}) + (1 - \beta_{t+1})\big(\hat{M}_t - \nabla f(W_t; \xi_{t+1})\big)$$
 
-    - 功能：把 Muon 每步的 SVD 正交化用 RSVD 实现，避免 $\mathcal{O}(\min(m,n)^2 \max(m,n))$ 的精确 SVD。
-    - 核心思路：RSVD 抽一个高斯随机矩阵 $\Omega \in \mathbb{R}^{n \times (\hat{r} + s)}$，算 $Y = A\Omega$、QR 分解 $Y = QR$，然后在 $B = Q^\top A$ 这块小矩阵上做精确 SVD 得到 $(\tilde{U}, \Sigma, V)$、还原 $U = Q\tilde{U}$；$s \ge 2$ 是 oversampling 用来稳精度。这一步既服务正交化又服务低秩动量压缩，是同一份 RSVD 在两处复用。
-    - 设计动机：现代 LLM 矩阵层动辄几千维，精确 SVD 每步都跑代价感人；RSVD 只需要一次矩阵乘 + 小规模 SVD，且对带噪动量这种低有效秩的对象天然合身。
+其中 $\hat{M}_t = \hat{U}_t \hat{S}_t \hat{V}_t^\top$ 是上一步动量的 RSVD 低秩近似。梯度差那块仍按全秩算（只在一步内、不入状态），但跨步保留的状态只剩 $\hat{U}_t\in\mathbb{R}^{m\times\hat{r}}$、$\hat{S}_t\in\mathbb{R}^{\hat{r}\times\hat{r}}$、$\hat{V}_t\in\mathbb{R}^{n\times\hat{r}}$ 三块，$m\hat{r}+n\hat{r}+\hat{r}^2\ll mn$。这样既把状态显存推到和 SUMO 同一档，又保住了 STORM 的 $\mathcal{O}(\epsilon^{-3})$——用低秩压缩绕开了"方差缩减必须存全秩"的显存爆点。
 
-3. **Newton-Schulz 兼容版 + 广义光滑收敛**:
+**2. 基于 RSVD 的实用正交化：避免每步精确 SVD。**
 
-    - 功能：把 LiMuon 的两件武器接到 Muon 实际部署里最常用的 Newton-Schulz 近似上，并把收敛证明推广到 $(L_0, L_1)$ 广义光滑条件。
-    - 核心思路：Algorithm 3 把 Algorithm 1 里的 SVD 换成 Newton-Schulz 多项式迭代 $X_j = p_\kappa(X_{j-1} X_{j-1}^\top) X_{j-1}$（默认 $p_2(z) = 3.4445 - 4.7750z + 2.0315z^2$，$q$ 次迭代），论文证明在 polar 近似误差 $\varepsilon_q \in (0,1)$、$\chi_q = 1/(1-\varepsilon_q)$ 下，LiMuon 的复杂度是 $\mathcal{O}(\chi_q^3 \epsilon^{-3})$，严格优于 Kim & Oh (2026) 的 Muon-NS 的 $\mathcal{O}(\chi_q^4 \epsilon^{-4})$；而广义光滑 $\|\nabla F(W) - \nabla F(W')\|_F^2 \le (L_0^2 + L_1^2 \|\nabla F(W)\|_F^2) \|W - W'\|_F^2$ 比 Lipschitz 弱得多，更贴合 LLM 训练实际。
-    - 设计动机：纯 SVD 版只有理论意义，工业用户都跑 NS；把 $\mathcal{O}(\epsilon^{-3})$ 推广到 NS 版才算把"实践—理论 gap"真正抹掉。
+Muon 每步要对动量做 SVD 正交化，精确 SVD 是 $\mathcal{O}(\min(m,n)^2\max(m,n))$，现代 LLM 矩阵层动辄几千维、每步都跑代价感人。这里改用随机 SVD：抽高斯随机矩阵 $\Omega\in\mathbb{R}^{n\times(\hat{r}+s)}$，算 $Y=A\Omega$、QR 分解 $Y=QR$，在小矩阵 $B=Q^\top A$ 上做精确 SVD 得 $(\tilde{U},\Sigma,V)$、还原 $U=Q\tilde{U}$，其中 $s\ge 2$ 是 oversampling 用来稳精度。RSVD 只需一次矩阵乘 + 小规模 SVD，对带噪动量这种低有效秩对象天然合身；更妙的是同一份 RSVD 在两处复用——既服务正交化又服务低秩动量压缩。
+
+**3. Newton-Schulz 兼容版 + 广义光滑收敛：把理论保证接到实际部署最常用的近似上。**
+
+纯 SVD 版只有理论意义，工业用户都跑 Newton-Schulz 多项式迭代，所以必须把 LiMuon 的两件武器接到 NS 上才算抹掉实践—理论 gap。Algorithm 3 把 SVD 换成 NS 迭代 $X_j = p_\kappa(X_{j-1}X_{j-1}^\top)X_{j-1}$（默认 $p_2(z)=3.4445-4.7750z+2.0315z^2$，$q$ 次迭代），论文证明在 polar 近似误差 $\varepsilon_q\in(0,1)$、$\chi_q=1/(1-\varepsilon_q)$ 下，LiMuon 复杂度是 $\mathcal{O}(\chi_q^3\epsilon^{-3})$，严格优于 Kim & Oh (2026) Muon-NS 的 $\mathcal{O}(\chi_q^4\epsilon^{-4})$。同时收敛证明建立在 $(L_0,L_1)$ 广义光滑 $\|\nabla F(W)-\nabla F(W')\|_F^2\le(L_0^2+L_1^2\|\nabla F(W)\|_F^2)\|W-W'\|_F^2$ 之上，比 Lipschitz 弱得多、更贴合 LLM 训练实际，把 NS 近似从"工程 hack"升格成可证明对象。
+
+### 损失函数 / 训练策略
+目标是非凸随机优化 $\min_{W \in \mathbb{R}^{m \times n}} \mathbb{E}_{\xi \sim \mathcal{D}}[f(W; \xi)]$，停止判据是 $\epsilon$-Frobenius / 核范数稳态点。超参主要是步长 $\eta_t$、动量系数 $\beta_t$、目标秩 $\hat{r}$、RSVD oversampling $s \ge 2$、NS 迭代次数 $q$。Theorem 4.7 等给出 $\eta = \mathcal{O}(T^{-2/3}), \beta = \mathcal{O}(T^{-2/3})$ 下平均梯度核范数 $\le \mathcal{O}(T^{-1/3})$，回代即 $T = \mathcal{O}(\epsilon^{-3})$。值得注意的是 LiMuon **不依赖梯度裁剪**，少一个 Muon++ 的可调参数。
 
 ### 损失函数 / 训练策略
 目标是非凸随机优化 $\min_{W \in \mathbb{R}^{m \times n}} \mathbb{E}_{\xi \sim \mathcal{D}}[f(W; \xi)]$，停止判据是 $\epsilon$-Frobenius / 核范数稳态点。超参主要是步长 $\eta_t$、动量系数 $\beta_t$、目标秩 $\hat{r}$、RSVD oversampling $s \ge 2$、NS 迭代次数 $q$。Theorem 4.7 等给出 $\eta = \mathcal{O}(T^{-2/3}), \beta = \mathcal{O}(T^{-2/3})$ 下平均梯度核范数 $\le \mathcal{O}(T^{-1/3})$，回代即 $T = \mathcal{O}(\epsilon^{-3})$。值得注意的是 LiMuon **不依赖梯度裁剪**，少一个 Muon++ 的可调参数。
@@ -127,12 +128,6 @@ LiMuon 沿用 Muon 的两段式：每步先对一个动量代理 $M_t$ 做（近
 - 实验充分度: ⭐⭐⭐ Mamba/Qwen/ViT 三种架构 + 多 rank 消融到位，但缺更大模型规模、缺更详细的训练时间剖析；理论表格清楚但部分实验细节（NS-only baseline 在大模型下）略欠。
 - 写作质量: ⭐⭐⭐⭐ 算法、定理、表格分明，假设和限制都明确，少见的严谨；表 1 的复杂度位图是这个领域少有的把"前置工作 + 本文卖点"一图说清的范例。
 - 价值: ⭐⭐⭐⭐ 大模型训练里 optimizer state 是显存大头，"复杂度更优 + 状态更省 + 不需裁剪"是部署侧实打实的收益，影响面会大。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

@@ -44,23 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **Wasserstein-1 量化的分布漂移近似**:
+**1. Wasserstein-1 量化的分布漂移近似：把非平稳轨迹压成一段段平稳近似。**
 
-    - 功能：把连续/突变混合的非平稳轨迹 $\{\mathcal{P}_t\}$ 压成一段段平稳近似 $\{\tilde{\mathcal{P}}_t\}$，同时保证近似误差不超过 $\Delta_W/2$。
-    - 核心思路：贪心算法维护一个 anchor，遇到下一个时刻 $\mathcal{P}_t$ 与 anchor 的 $W_1$ 距离 $\le \Delta_W/2$ 就继承 anchor、shift 指示 $\tilde{S}_t=0$；否则宣告漂移、重置 anchor、$\tilde{S}_t=1$。可证总漂移数 $\tilde{K}_S(T) \le \lceil 2V_T/\Delta_W\rceil$，其中 $V_T:=\sum_t W_1(\mathcal{P}_t,\mathcal{P}_{t+1})$。
-    - 设计动机：选 $W_1$ 而非 KL/TV 是为了能在 joint space $\mathcal{X}\times\mathcal{Y}$ 上对 covariate + label 漂移做统一刻画，并支撑信息论下界中的两点构造；分段平稳近似把"全局非平稳分析"归约成"每段独立的恢复分析"，是后续技术核心。
+TTA 的核心需求是"在每个时间步都保持可接受的瞬时风险"，但要分析一条连续漂移、还掺着突变的非平稳流几乎无从下手。作者的做法是先用 Wasserstein-1 距离把轨迹 $\{\mathcal{P}_t\}$ 离散化成分段平稳近似 $\{\tilde{\mathcal{P}}_t\}$，并保证近似误差不超过 $\Delta_W/2$。具体是一个贪心算法：维护一个 anchor，下一时刻 $\mathcal{P}_t$ 与 anchor 的 $W_1$ 距离 $\le \Delta_W/2$ 就继承 anchor、置 shift 指示 $\tilde{S}_t=0$，否则宣告漂移、重置 anchor、$\tilde{S}_t=1$，可证总漂移数 $\tilde{K}_S(T) \le \lceil 2V_T/\Delta_W\rceil$（$V_T:=\sum_t W_1(\mathcal{P}_t,\mathcal{P}_{t+1})$ 为总变差）。选 $W_1$ 而非 KL/TV 不是随意的——它能在 joint space $\mathcal{X}\times\mathcal{Y}$ 上对 covariate 漂移和 label 漂移做统一刻画，也支撑了后面信息论下界里的两点构造。这一步是整套理论的脊柱：它把"全局非平稳分析"归约成"每段独立的恢复分析 + 漂移计数"，后面所有结果都建在这上面。
 
-2. **ϕ-mixing 时间依赖与有效 batch size**:
+**2. ϕ-mixing 时间依赖与有效 batch size：把时间相关性凝结成一个标量 $C_\phi$。**
 
-    - 功能：刻画 batch 内样本不是 i.i.d. 的情况，并把它压回一个等价的"有效样本数"参数。
-    - 核心思路：假设 $\phi(i)\le \varrho^i$ 几何衰减，则一个大小为 $B$ 的相关 batch 的 batch-mean 梯度方差等效于大小 $B_{\text{eff}} = B/C_\phi$ 的 i.i.d. batch，其中 $C_\phi = 1 + 4\varrho^{1/2}/(1-\varrho^{1/2})$。$\varrho=0$ 时退化回 $B_{\text{eff}}=B$。
-    - 设计动机：把"时间相关性"这个看似难处理的随机过程性质，最终凝结成一个标量 $C_\phi$ 进入复杂度界，使得下界 $\tau \gtrsim C_\phi/B \cdot 1/(\alpha(\sqrt{\zeta+2\alpha\epsilon}+\sqrt{\zeta})^2)$ 同时反映"批大小"和"批内独立性"两个看似不同的影响。
+TTA 的测试流里 batch 内样本通常不是 i.i.d.（视频帧、传感序列高度相关），直接当独立处理会高估信息量。作者用 ϕ-mixing 系数刻画这种依赖：假设 $\phi(i)\le \varrho^i$ 几何衰减，则一个大小为 $B$ 的相关 batch，其 batch-mean 梯度方差等价于一个大小 $B_{\text{eff}} = B/C_\phi$ 的 i.i.d. batch，其中
 
-3. **$(\epsilon,\delta)$-Recovery Complexity 的 minimax 上下界**:
+$$C_\phi = 1 + \frac{4\varrho^{1/2}}{1-\varrho^{1/2}},$$
 
-    - 功能：把"漂移后多快能把超额风险 $\mathcal{E}_t:=\ell_t(\theta_t)-R_t$ 控到 $\epsilon$ 之下、失败概率 $\le \delta$"形式化为复杂度 $\tau(\epsilon,\delta):=\inf\{t: \sup_{u\ge t}\mathbb{P}(\mathcal{E}_u>\epsilon)\le \delta\}$。
-    - 核心思路：下界用 Le Cam 两点法构造两个 $W_1$ 距离恰好 $\Delta_W$ 的难例，证明任何 stochastic proxy-gradient oracle 算法都需要 $\tau \ge \Omega\big(\frac{C_\phi}{B}\cdot \frac{1}{\alpha(\sqrt{\zeta+2\alpha\epsilon}+\sqrt{\zeta})^2}\big)$；上界给出一个简化 TTA baseline，对它在 $L$-smooth + PL 条件下做收敛分析，得到匹配阶的 $\tau \le \tilde{O}(\cdot)$。
-    - 设计动机：上下界匹配阶是这套框架最硬的结果，揭示三个本质事实——(i) $\zeta>0$ 时即使 $\epsilon\to 0$ 复杂度也不归零，说明 proxy 错配会形成 error floor；(ii) $\tau$ 随 $1/\alpha^2$ 缩放，说明 proxy-task 对齐强度有二次放大效应；(iii) $\tau$ 不显式依赖 $\Delta_W$，说明漂移幅度只决定"是否需要适应"，而恢复难度由 $\alpha,\zeta,B,C_\phi$ 共同决定。
+$\varrho=0$（完全独立）时退化回 $B_{\text{eff}}=B$。这个设计的妙处在于把一个棘手的随机过程性质，最终压缩成单个标量 $C_\phi$ 进入复杂度界，于是"批多大"和"批内有多独立"这两个看似不同的影响，能在同一个 $B/C_\phi$ 里同台比较——后面的下界 $\tau \gtrsim \frac{C_\phi}{B}\cdot\frac{1}{\alpha(\sqrt{\zeta+2\alpha\epsilon}+\sqrt{\zeta})^2}$ 也因此能同时反映两者。
+
+**3. $(\epsilon,\delta)$-Recovery Complexity 的 minimax 上下界：给"漂移后多久恢复"配上匹配阶的难度刻画。**
+
+有了前两块工具，作者就能把 TTA 真正关心的"瞬时可靠性"形式化。定义超额风险 $\mathcal{E}_t:=\ell_t(\theta_t)-R_t$，恢复复杂度为
+
+$$\tau(\epsilon,\delta):=\inf\{t: \sup_{u\ge t}\mathbb{P}(\mathcal{E}_u>\epsilon)\le \delta\},$$
+
+即"漂移后多快能把超额风险压到 $\epsilon$ 之下、且失败概率 $\le\delta$"。下界用 Le Cam 两点法构造两个 $W_1$ 距离恰好 $\Delta_W$ 的难例，证明任何 stochastic proxy-gradient oracle 算法都逃不过 $\tau \ge \Omega\big(\frac{C_\phi}{B}\cdot\frac{1}{\alpha(\sqrt{\zeta+2\alpha\epsilon}+\sqrt{\zeta})^2}\big)$；上界则给一个简化 TTA baseline，在 $L$-smooth + PL 条件下做收敛分析，得到同阶的 $\tau \le \tilde{O}(\cdot)$。上下界匹配阶是这套框架最硬的成果，它一次性揭示三件本质的事：$\zeta>0$（proxy 错配）时即便 $\epsilon\to 0$ 复杂度也不归零——错配会形成 error floor；$\tau$ 随 $1/\alpha^2$ 缩放——proxy-task 对齐强度有二次放大效应；$\tau$ 不显式依赖 $\Delta_W$——漂移幅度只决定"要不要适应"，恢复难度则由 $\alpha,\zeta,B,C_\phi$ 共同定。
 
 ### 损失函数 / 训练策略
 本文是理论分析，不引入新的训练算法。所用 TTA baseline 是带步长 $\eta$ 的 stochastic proxy-gradient descent on $\psi$，在局部邻域 $\mathcal{N}_r(\theta_1)$ 内更新，关键超参为 $\eta$、$B$；分析所依赖的关键假设是 (Assumption 2.1) $(\alpha,\zeta)$-Alignment、(Assumption 2.2) $L$-smooth + PL + 梯度方差 $\sigma^2$ 有界，以及 (Assumption 2.4/2.7) Wasserstein 量化 + ϕ-mixing。
@@ -117,12 +119,6 @@ tags:
 - 实验充分度: ⭐⭐ 纯理论 paper，无实证验证，对实际 TTA 算法的解释力靠后续工作补
 - 写作质量: ⭐⭐⭐⭐ 结构清晰、定义/定理/Remark 串得很顺，但符号密集对非理论背景读者门槛较高
 - 价值: ⭐⭐⭐⭐ 给 TTA 社区提供了一个可证明的语言，未来设计 proxy loss / reset 策略时有了形式化目标
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

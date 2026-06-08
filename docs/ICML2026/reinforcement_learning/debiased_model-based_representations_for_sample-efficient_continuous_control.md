@@ -45,23 +45,25 @@ DR.Q 在 MR.Q 类"模型化表示 + actor-critic"骨架上加两件事——用 
 
 ### 关键设计
 
-1. **InfoNCE 互信息损失 (Equation 8)**:
+**1. InfoNCE 互信息损失（Equation 8）：把"几何靠近"升级成"信息对齐"。**
 
-    - 功能：显式拉高 $z_{sa}$ 与目标网络给出的 $\tilde z_{s'}$ 的互信息下界，使两者不仅"数值靠近"还"信息对齐"。
-    - 核心思路：将一个 batch 中 $N$ 个样本互为负样本，按余弦相似度做对比：$\mathcal L_I=-\frac1N\sum_i\log\frac{\exp(\cos(\hat z_{s'_i},\tilde z_{s'_i})/\tau)}{\sum_k\exp(\cos(\hat z_{s'_i},\tilde z_{s'_k})/\tau)}$。这等价于 $I(\hat Z_{s'};\tilde Z_{s'})\ge \log N - \mathcal L_I$。Theorem 4.1 论证仅最小化 $\|Z_{sa}-Z_{s'}\|^2$ 不必然提升互信息；Lemma 4.2 进一步证明 $I$ 升 $\Rightarrow H(Z_{s'}|Z_{sa})$ 降，潜空间动力学更确定。
-    - 设计动机：直接消除 MR.Q 表示中可能存在的"虚假对齐"——保证 latent dynamics 模型更准、value-error 上界更紧（接 DeepMDP / MR.Q 的理论链）。
+MR.Q 的隐式假设是"MSE 小 ⇒ 互信息大"，但本文 Theorem 4.1 给出反例——仅最小化 $\|z_{sa}-z_{s'}\|^2$ 完全可能只是把冗余维度对齐了，关键维度反而被忽视。DR.Q 的对策是显式拉高 $z_{sa}$ 与目标网络给出的 $\tilde z_{s'}$ 的互信息：把一个 batch 里 $N$ 个样本互为负样本，按余弦相似度做对比
 
-2. **Faded Prioritized Experience Replay (Equation 4)**:
+$$\mathcal L_I=-\frac1N\sum_i\log\frac{\exp(\cos(\hat z_{s'_i},\tilde z_{s'_i})/\tau)}{\sum_k\exp(\cos(\hat z_{s'_i},\tilde z_{s'_k})/\tau)},$$
 
-    - 功能：同时考虑 transition 的"TD-error 重要性"与"时间新近性"，避免老经验过度复用导致 primacy bias，也避免单纯按时间新近偏置忽略真正高 TD error 的老样本。
-    - 核心思路：$P(i)=\frac{|\delta(i)|^\alpha (1-\epsilon)^i}{\sum_j |\delta(j)|^\alpha (1-\epsilon)^j}$，其中 $i=0$ 是最新 transition；实现上用 LAP 改进 PER，并用 $\epsilon_\mathrm{low}$ 给 forget 权重做下截断防止有价值老经验被清零。Theorem 4.3 证明：TD-error 相同时老样本概率严格更小，总采样次数被常数上界约束。
-    - 设计动机：单 PER 容易把策略钉死在早期 high-TD-error transition 上（primacy bias），单 forget 机制会忽略低频但 informative 的 transition；两者乘积给出"既重要又新鲜"的合成度量。
+它等价于互信息下界 $I(\hat Z_{s'};\tilde Z_{s'})\ge \log N - \mathcal L_I$。Lemma 4.2 进一步说明 $I$ 升则条件熵 $H(Z_{s'}|Z_{sa})$ 降，潜空间动力学更确定、value-error 上界更紧（接 DeepMDP / MR.Q 的理论链）。这一项之所以有效，是因为它直接消除了 MR.Q 表示里可能存在的"虚假对齐"，强迫编码器把容量花在任务相关信号上而非冗余维度——这也解释了为什么后面消融里它在高维冗余状态上增益最大。
 
-3. **整套 encoder loss 与 actor-critic 配置**:
+**2. Faded Prioritized Experience Replay（Equation 4）：让采样既看"重要"又看"新鲜"。**
 
-    - 功能：把三项 loss（reward CE、dynamics MSE、InfoNCE）与 actor-critic 的 CDQ + multi-step Q 串起来，保证 unified hyperparameter 即可跨 73 任务。
-    - 核心思路：$\mathcal L^\mathrm{DR.Q}_\mathrm{enc}=\sum_{t=1}^H \lambda_r \mathcal L_\mathrm{reward} + \lambda_d \mathcal L_\mathrm{dynamics} + \lambda_m \mathcal L_I$；critic 用 Huber loss + multi-step return（horizon $H_Q$）+ clipped double Q；actor 加 Gaussian noise + clip 探索。target 网络周期更新。
-    - 设计动机：作者刻意不加入 normalization / parameter reset / hidden regularization 等常见 trick，证明只靠"好表示 + 好采样"已经够用，使方法更简洁且易复用。
+uniform sampling 容易让表示过拟合早期经验（primacy bias），纯 PER 会把策略钉死在早期 high-TD-error transition 上，而纯 forget 机制又会漏掉低频但 informative 的老样本。DR.Q 把"TD-error 重要性"和"时间新近性"两个先验乘进同一个采样概率
+
+$$P(i)=\frac{|\delta(i)|^\alpha (1-\epsilon)^i}{\sum_j |\delta(j)|^\alpha (1-\epsilon)^j},$$
+
+其中 $i=0$ 是最新 transition；实现上用 LAP 改进 PER，并对 forget 权重设下截断 $\epsilon_\mathrm{low}$ 防止有价值的老经验被清零。Theorem 4.3 给出严格性质：TD-error 相同时老样本被采概率严格更小，且总采样次数被常数上界约束。两个信号相乘正好给出"既重要又新鲜"的合成度量——这是一个看似工程小 trick、实际有定理撑腰的设计。
+
+**3. encoder loss 与 actor-critic 的统一配置：靠"好表示 + 好采样"跨 73 任务用同一套超参。**
+
+把三项 encoder 损失和 actor-critic 串起来，编码器在长度 $H$ 的展开 rollout 上优化 $\mathcal L^\mathrm{DR.Q}_\mathrm{enc}=\sum_{t=1}^H \lambda_r \mathcal L_\mathrm{reward} + \lambda_d \mathcal L_\mathrm{dynamics} + \lambda_m \mathcal L_I$（reward CE、dynamics MSE、InfoNCE），critic 用 Huber loss + horizon $H_Q$ 的 multi-step return + clipped double Q，actor 加 Gaussian noise + clip 探索，target 网络周期更新。值得注意的是作者刻意不加 normalization / parameter reset / hidden regularization 这些常见稳定 trick——这恰恰是为了证明只靠"好表示 + 好采样"就够用，让方法更简洁、单一超参就能覆盖全部 73 个任务。
 
 ### 损失函数 / 训练策略
 - Reward loss: 两-hot encoding + symexp 间隔 + CE。

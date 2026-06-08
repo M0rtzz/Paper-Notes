@@ -46,23 +46,25 @@ TG 密度写为 $p(\mathbf{x};\bm{\phi})\propto\exp(\bm{\phi}^\top S(\mathbf{x})
 
 ### 关键设计
 
-1. **Stochastic Score Matching for TGs（VJP 化的分数匹配）**：
+**1. Stochastic Score Matching：用 VJP 把每步推断从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$。**
 
-    - 功能：把 TG 的分数匹配目标转成可用 minibatch + Adam 优化的随机目标，把每步复杂度从 $\mathcal{O}(d^6)$ 降到 $\mathcal{O}(d^2)$，内存从 $\mathcal{O}(d^4)$ 降到 $\mathcal{O}(d^2)$。
-    - 核心思路：原目标 $J(\bm{\phi})=\mathbb{E}_{\mathbf{x}}[\tfrac{1}{2}\bm{\phi}^\top\Gamma(\mathbf{x})\bm{\phi}-\bm{\phi}^\top\mathbf{h}(\mathbf{x})]$ 里 $\Gamma=\nabla_{\mathbf{x}}S(\nabla_{\mathbf{x}}S)^\top$ 是大矩阵，但 $\bm{\phi}^\top\Gamma(\mathbf{x})\bm{\phi}=\|\bm{\phi}^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2$ 把它写成范数形式后，只需一次 VJP（即对标量 $\bm{\phi}^\top S(\mathbf{x})$ 反向求导）就能在 $\mathcal{O}(d^2)$ 内拿到。重写后的目标 $J(\bm{\phi})=\mathbb{E}_{\mathbf{x}}\big[\tfrac{1}{2}\|\bm{\phi}^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2-\bm{\phi}^\top\mathbf{h}(\mathbf{x})\big]$ 用 minibatch 估计、Adam 更新，无偏且兼容 $L_2$ 与 group-$\ell_1$ 正则（后者诱导稀疏图结构）。同一思路平移到条件 TG 上即得 $J(\bm{\phi})=\mathbb{E}_{\mathbf{x},y}\big[\tfrac{1}{2}\|\bm{\phi}(y)^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2-\bm{\phi}(y)^\top\mathbf{h}(\mathbf{x})\big]$，其中 $\bm{\phi}(y)$ 可由神经网络参数化。
-    - 设计动机：TG 的稀疏结构是物理事实（每个统计量只看两个变量），原闭式分数匹配完全没利用这一点；用 VJP 直接「点出」稀疏 Jacobian-向量乘积，把方法学瓶颈一次性打掉。
+TG 卡在大规模上的瓶颈是分数匹配的闭式解要解一个 $2d^2\times 2d^2$ 线性系统、存储 $\Gamma\in\mathbb{R}^{2d^2\times2d^2}$，时间 $\mathcal{O}(d^6)$、内存 $\mathcal{O}(d^4)$，单卡 24GB 上 $d\approx100$ 就 OOM。本文的关键观察是：$\Gamma=\nabla_{\mathbf{x}}S(\nabla_{\mathbf{x}}S)^\top$ 看着是大矩阵，但 TG 的每个充分统计量最多只依赖两个相位变量，Jacobian 稀疏到只有 $\Theta(d^2)$ 个非零元，所以根本不必显式构造它。把目标里的二次型改写成范数形式 $\bm{\phi}^\top\Gamma(\mathbf{x})\bm{\phi}=\|\bm{\phi}^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2$ 后，只需对标量 $\bm{\phi}^\top S(\mathbf{x})$ 做一次反向模式自动微分（vector-Jacobian product）就能在 $\mathcal{O}(d^2)$ 内算出。于是整个目标变成
 
-2. **TG-HMM 的判别式 M-step**：
+$$J(\bm{\phi})=\mathbb{E}_{\mathbf{x}}\Big[\tfrac{1}{2}\|\bm{\phi}^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2-\bm{\phi}^\top\mathbf{h}(\mathbf{x})\Big]$$
 
-    - 功能：让 TG 能在隐状态 $z_t\in\{1,\dots,K\}$ 之间动态切换、捕捉状态依赖的相位耦合（如 NREM 睡眠中的纺锤波 spindle），同时绕开每个状态 TG 的对数归一化常数 $A(\bm{\phi}_k)$ 不可解析的问题。
-    - 核心思路：发射模型仍是 $p(x_t|z_t=k)=\exp(\bm{\phi}_k^\top S(x_t)-A(\bm{\phi}_k))$，但永远不去算 $A(\bm{\phi}_k)$；取而代之引入自由参数 $A_k\in\mathbb{R}$ 与轻量 ridge 正则，构造代理联合模型 $\log\tilde{p}(z,x)=\sum_t\log\Pi_{z_{t-1},z_t}+\sum_t[\bm{\phi}_{z_t}^\top S(x_t)-A_{z_t}]$。E-step 用代理模型跑标准 forward-backward 得到 $\gamma_{t,k},\xi_{t,i,j}$；M-step 把 $A_k$ 当成可训练的类别截距，目标 $Q'(A)$ 等价于以 $\gamma_{t,k}$ 为软标签、$S(x_t)$ 为特征、$\{\bm{\phi}_k\}$ 为固定权重的多项 logistic 回归，凸优化即可。作者进一步证明（式 18-22）：在 TG 族正确指定 + 有限样本矩估计良好 + $\sum_t r_{t,k}\approx\sum_t\gamma_{t,k}$ 三条假设下，$\nabla A(\bm{\phi}_k)\approx \hat{\mu}_k(\gamma)=\sum_t\gamma_{t,k}S(x_t)/\sum_t\gamma_{t,k}$，即近似满足精确 M-step 的驻点条件。
-    - 设计动机：直接对每个状态做归一化常数估计（NCE / MCMC）会引入额外噪声与超参；判别式视角让「估常数」直接退化成一次 softmax 拟合，复杂度可控、与 forward-backward 无缝衔接。
+可以 minibatch 无偏估计、Adam 更新，并兼容 $L_2$ 与诱导稀疏图结构的 group-$\ell_1$ 正则；同一改写平移到条件 TG 上就得到 $\bm{\phi}(y)$ 可由神经网络参数化的版本。换句话说，原闭式分数匹配完全浪费了 TG 的稀疏物理结构，VJP 直接"点中"这层稀疏，把方法学瓶颈一次性打掉。
 
-3. **AR-TG 与转移熵估计（有向相位交互）**：
+**2. TG-HMM 的判别式 M-step：把不可解析的配分常数退化成一次 softmax 拟合。**
 
-    - 功能：把 TG 扩展为自回归形式 $p(y_t|\mathbf{x}_{<t},y_{<t})\propto\exp[\bm{\phi}(\mathbf{x}_{<t},y_{<t})^\top S(y_t)]$，并在此基础上估计相位变量的转移熵 $TE_{X\to Y}=\mathbb{H}(Y_t|Y_{<t})-\mathbb{H}(Y_t|Y_{<t},X_{<t})$，从而推断方向性相位耦合（Granger 因果的圆变量版本）。
-    - 核心思路：参数化 $\bm{\phi}(\mathbf{x}_{<t},y_{<t})=\mathbf{b}+\sum_{\ell=1}^L\big(\mathbf{W}^{(y)}_\ell\psi(y_{t-\ell})+\mathbf{W}^{(x)}_\ell\psi(\mathbf{x}_{t-\ell})\big)$，其中 $\psi(\theta)=[\cos\theta;\sin\theta]^\top$ 把相位嵌入 $\mathbb{R}^2$，保证周期性并把参数量保持在 $\mathcal{O}(L)$。估计 TE 时拟合两个 AR-TG：$\hat{p}_1(y_t|y_{<t})$ 与 $\hat{p}_2(y_t|y_{<t},\mathbf{x}_{<t})$，在独立测试集上算 $\widehat{TE}_{X\to Y}=\tfrac{1}{T-L}\sum_t[\log\hat{p}_2-\log\hat{p}_1]$。多变量场景下不再训 $\mathcal{O}(C^2)$ 个 AR-TG，而是只训一个完整模型 $\hat{p}(X_t,Y_t,Z_t|\cdot)$ 加一个高斯插补模型 $\hat{p}(X_{<t}|Y_{<t},Z_{<t})$，用 Monte Carlo 把 $p(Y_t|Y_{<t},Z_{<t})\approx\mathbb{E}_{X_{<t}}[\hat{p}(Y_t|X_{<t},Y_{<t},Z_{<t})]$ 估出来，从而把多变量 TE 估计的训练开销压回常数个模型。
-    - 设计动机：相位变量的方向性推断长期是难题（朴素 Granger 用线性高斯，相位的周期性被破坏）；用 $\psi$ 嵌入 + 单变量 von Mises 条件（其 $A$ 可解析），既能保住相位的几何性质，又能让对数似然在测试时可解析评估，这是 TE 估计能闭环的关键。
+要让 TG 在隐状态 $z_t\in\{1,\dots,K\}$ 间动态切换（比如捕捉 NREM 睡眠的纺锤波耦合），每个状态发射模型 $p(x_t|z_t=k)=\exp(\bm{\phi}_k^\top S(x_t)-A(\bm{\phi}_k))$ 里的对数归一化常数 $A(\bm{\phi}_k)$ 不可解析，是标准 EM 过不去的坎。本文干脆永远不算 $A(\bm{\phi}_k)$，而是引入自由参数 $A_k\in\mathbb{R}$ 加轻量 ridge 正则，构造代理联合模型 $\log\tilde{p}(z,x)=\sum_t\log\Pi_{z_{t-1},z_t}+\sum_t[\bm{\phi}_{z_t}^\top S(x_t)-A_{z_t}]$。E-step 在代理模型上跑标准 forward-backward 得到软责任 $\gamma_{t,k},\xi_{t,i,j}$；M-step 把 $A_k$ 当作可训练的类别截距，其目标 $Q'(A)$ 恰好等价于以 $\gamma_{t,k}$ 为软标签、$S(x_t)$ 为特征、$\{\bm{\phi}_k\}$ 为固定权重的多项 logistic 回归——一个凸优化。作者进一步证明（式 18-22），在 TG 族正确指定、有限样本矩估计良好、$\sum_t r_{t,k}\approx\sum_t\gamma_{t,k}$ 三条假设下，$\nabla A(\bm{\phi}_k)\approx\hat{\mu}_k(\gamma)=\sum_t\gamma_{t,k}S(x_t)/\sum_t\gamma_{t,k}$，即近似满足精确 M-step 的驻点条件。相比直接对每个状态做 NCE / MCMC 估常数会引入额外噪声与超参，这个判别式视角让"估常数"无缝接进 forward-backward、复杂度可控。
+
+**3. AR-TG 与转移熵估计：用相位嵌入把方向性推断做成可闭环的圆变量 Granger。**
+
+相位变量的方向性推断历来难，朴素 Granger 用线性高斯会破坏相位的周期性。本文把 TG 扩展成自回归形式 $p(y_t|\mathbf{x}_{<t},y_{<t})\propto\exp[\bm{\phi}(\mathbf{x}_{<t},y_{<t})^\top S(y_t)]$，参数化为
+
+$$\bm{\phi}(\mathbf{x}_{<t},y_{<t})=\mathbf{b}+\sum_{\ell=1}^L\big(\mathbf{W}^{(y)}_\ell\psi(y_{t-\ell})+\mathbf{W}^{(x)}_\ell\psi(\mathbf{x}_{t-\ell})\big)$$
+
+其中嵌入 $\psi(\theta)=[\cos\theta;\sin\theta]^\top$ 把相位映到 $\mathbb{R}^2$、既保住周期性又把参数量压到 $\mathcal{O}(L)$。估转移熵 $TE_{X\to Y}=\mathbb{H}(Y_t|Y_{<t})-\mathbb{H}(Y_t|Y_{<t},X_{<t})$ 时拟合两个 AR-TG——只看历史 $y$ 的 $\hat{p}_1$ 与额外看 $\mathbf{x}$ 的 $\hat{p}_2$——再在独立测试集上算对数似然差 $\widehat{TE}_{X\to Y}=\tfrac{1}{T-L}\sum_t[\log\hat{p}_2-\log\hat{p}_1]$。多变量场景不去训 $\mathcal{O}(C^2)$ 个模型，而是只训一个完整模型加一个高斯插补模型，用 Monte Carlo 把 $p(Y_t|Y_{<t},Z_{<t})\approx\mathbb{E}_{X_{<t}}[\hat{p}(Y_t|X_{<t},Y_{<t},Z_{<t})]$ 估出来，把训练开销压回常数个模型。之所以能闭环，关键在于单变量 von Mises 条件的 $A$ 可解析，于是测试时对数似然能直接精确评估——这是 TE 估计成立的前提。
 
 ### 损失函数 / 训练策略
 全部在 JAX 上实现；TG/conditional TG 用 stochastic score matching + Adam；TG-HMM 用「forward-backward (代理) + 判别式 M-step (logistic)」交替；AR-TG 用 score matching 估计参数，TE 在独立测试集上算对数似然差。

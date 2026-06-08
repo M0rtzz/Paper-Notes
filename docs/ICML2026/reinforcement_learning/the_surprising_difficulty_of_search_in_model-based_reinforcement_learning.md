@@ -44,23 +44,17 @@ tags:
 
 ### 关键设计
 
-1. **搜索内禀困难 + 模型精度无关性的双诊断**:
+**1. 搜索内禀困难 + 模型精度无关性的双诊断：把"搜索为什么失败"从"模型不够准"扭到"搜索机制本身 + 价值学习耦合"。**
 
-    - 功能：把"搜索为什么失败"的故事从"模型不够准"扭转到"搜索机制本身 + 价值学习耦合"。
-    - 核心思路：N-chain 上唯一一条非零回报轨迹要求每步都选 $a_0$，所以随机采 $m$ 条长度为 $n$ 的轨迹成功率是 $1-(1-A^{-n})^m$；$A=10, m=1000$ 时 $n=3$ 还有 0.63，$n=10$ 已掉到 $10^{-7}$ —— 这是"完美模型 + 完美价值"下的纯组合困难，无法靠"更准"消除。实证侧把 MR.Q 编码器最后一层换成 SEM 使两个方法的嵌入尺度可比，再算 dynamics MSE（按 $\gamma^t$ 加权三步）和 unroll error（沿模型展开三步算预测价值 vs 真值），结果：MR.Q + MPC 的 dynamics error 量级与 TD-MPC2 一致（$\sim 10^{-5}$）甚至更低，但 MPC 给 TD-MPC2 加分、给 MR.Q 几乎全面减分（DMC 上 cheetah-run −173、humanoid-stand −757；Gym 上 HalfCheetah −8395、Humanoid −5693）。结论：模型精度不是搜索成败的决定因素。
-    - 设计动机：让读者放下"砸钱搞更准的模型"这条惯性思路；同时用 N-chain 的解析结果讲清楚短视野不是工程妥协而是必然选择。
+社区主流故事是"动力学预测一步步累积误差，搜得越远越烂"，作者用两段诊断把这个假设推翻。理论侧：N-chain 这个有解析解的玩具 MDP 上，唯一一条非零回报轨迹要求每步都选 $a_0$，随机采 $m$ 条长度 $n$ 的轨迹成功率是 $1-(1-A^{-n})^m$；$A=10, m=1000$ 时 $n=3$ 还有 0.63、$n=10$ 已掉到 $10^{-7}$——这是"完美模型 + 完美价值"下的纯组合困难，靠"更准"消除不了，也顺手说明了为什么短视野是必然选择而非工程妥协。实证侧：把 MR.Q 编码器最后一层换成 SEM 让两方法嵌入尺度可比，再算 dynamics MSE（按 $\gamma^t$ 加权三步）和 unroll error，结果 MR.Q + MPC 的 dynamics error 量级与 TD-MPC2 一致（$\sim 10^{-5}$）甚至更低，但 MPC 给 TD-MPC2 加分、给 MR.Q 几乎全面减分（DMC 上 cheetah-run −173、humanoid-stand −757；Gym 上 HalfCheetah −8395、Humanoid −5693）。两边一对照，模型精度压根不是搜索成败的决定因素。
 
-2. **过估计偏差作为搜索失败的核心机制**:
+**2. 过估计偏差作为搜索失败的核心机制：把诊断指向一个明确、可测、可治的量。**
 
-    - 功能：把诊断指向一个明确、可测、可治的量 —— 价值函数在 MPC 行为下的过估计百分比。
-    - 核心思路：价值更新 $Q(s,a)\approx r+\gamma Q(s',\pi(s'))$ 用学习策略 $\pi$ 评估，但数据由 MPC 行为策略 $\pi_{\text{MPC}}$ 收集，于是查询点 $a\sim\pi_{\text{MPC}}$ 落在 $\pi$ 的分布外。论文测量 $|Q_{\text{learned}}-\hat{G}_{\text{behavior}}|/\hat{G}_{\text{behavior}}$（学习 Q 与真实折扣回报的百分误差），发现 MR.Q+MPC 在 17 个任务中几乎清一色正向过估计，且过估计幅度与 MPC 性能下降呈强相关；TD-MPC2 过估计整体较低但在它表现差的任务（dog-stand, Gym Ant/Hopper/Humanoid/Walker2d）仍偏高。
-    - 设计动机：把抽象的"distribution shift"具象成一张 17 任务过估计矩阵 + 性能变化符号对照，让"治过估计 = 治搜索"的因果链被实证而非比喻支撑。
+既然不是模型精度，那到底是什么？作者指向价值函数在 MPC 行为下的过估计。价值更新 $Q(s,a)\approx r+\gamma Q(s',\pi(s'))$ 用学习策略 $\pi$ 评估，但数据由 MPC 行为策略 $\pi_{\text{MPC}}$ 收集，于是查询点 $a\sim\pi_{\text{MPC}}$ 落在 $\pi$ 的分布外，引发 offline-RL 同款的过估计。论文测量 $|Q_{\text{learned}}-\hat{G}_{\text{behavior}}|/\hat{G}_{\text{behavior}}$（学习 Q 与真实折扣回报的百分误差），发现 MR.Q+MPC 在 17 个任务里几乎清一色正向过估计，且过估计幅度与 MPC 性能下降强相关；TD-MPC2 过估计整体较低，但在它表现差的任务（dog-stand, Gym Ant/Hopper/Humanoid/Walker2d）仍偏高。这把抽象的 distribution shift 具象成一张 17 任务过估计矩阵 + 性能变化符号对照，让"治过估计 = 治搜索"的因果链被实证而非比喻支撑。
 
-3. **MRS.Q：10 价值函数集成 min + 短视野 MPPI + 三处微调**:
+**3. MRS.Q：10 价值函数集成 min + 短视野 MPPI + 三处微调，把搜索"安全地"接上来。**
 
-    - 功能：在不动 MR.Q 表示学习骨架的前提下，把搜索"安全地"接上来。
-    - 核心思路：对 ensemble 中 10 个 $Q_i$ 同时取最小做悲观估计，更新公式 $Q(s,a)\approx r+\gamma\min_{i\in\{1,...,10\}} Q_i(s',\pi(s'))$；关键是这个 min 不只用在 target 上，还用在 MPC 评估轨迹最终价值 $V(\tau)=\sum_{t=0}^{N-1}\gamma^t R(\tilde{z}_t,a_t)+\gamma^N \min_i Q_i(\tilde{z}_N,\pi(\tilde{z}_N))$ 的 $Q$ 项上，避免搜索过程偏好被高估的轨迹。这与 TD-MPC2 仅在 $N=5$ 中随机抽 2 个取 min（update 时）和 mean（MPC 时）有本质区别。其余配套：(a) MPPI 短视野固定 3 步，匹配 N-chain 分析；(b) 去掉 $\mathcal{N}(0,0.2^2)$ 探索噪声（因为 MPC 本身已经引入足够动作扰动，见 Figure 4 MPC 选动作的方差远大于策略网络）；(c) 加 SEM (Simplicial Embedding) 把潜表示投到概率单纯形上稳定多步 rollout，把动力学损失权重 1→20 与 TD-MPC2 对齐；(d) 终止预测损失权重 0.1→1，因为终止判断对价值估计很关键。
-    - 设计动机：不去 imitate 搜索（TD-M(PC)²、BMPC、BOOM 的路径）—— 因为搜索动作训练中会快速漂移（Figure 4 显示 MPC 动作均方变化是策略网络的 3-5 倍），约束策略追这个不稳定靶子会噪化训练；改为直接压低价值函数过估计，从根因解决问题。
+治法就是悲观估计。MRS.Q 在 MR.Q 骨架上对 ensemble 里 10 个 $Q_i$ 同时取最小，更新公式 $Q(s,a)\approx r+\gamma\min_{i\in\{1,...,10\}} Q_i(s',\pi(s'))$；关键是这个 min 不只用在 target 上，还用在 MPC 评估轨迹最终价值 $V(\tau)=\sum_{t=0}^{N-1}\gamma^t R(\tilde{z}_t,a_t)+\gamma^N \min_i Q_i(\tilde{z}_N,\pi(\tilde{z}_N))$ 的 $Q$ 项上，避免搜索偏好被高估的轨迹——这与 TD-MPC2 仅在 $N=5$ 中随机抽 2 个取 min（update 时）和 mean（MPC 时）有本质区别。其余配套都服务于"让搜索不被过估计带偏"：MPPI 短视野固定 3 步匹配 N-chain 分析；去掉 $\mathcal{N}(0,0.2^2)$ 探索噪声（MPC 本身已引入足够动作扰动，Figure 4 显示其选动作方差远大于策略网络）；加 SEM (Simplicial Embedding) 把潜表示投到概率单纯形上稳定多步 rollout、动力学损失权重 1→20 与 TD-MPC2 对齐；终止预测损失权重 0.1→1。作者特意不去 imitate 搜索（TD-M(PC)²、BMPC、BOOM 的路径），因为搜索动作训练中会快速漂移（Figure 4 显示 MPC 动作均方变化是策略网络的 3-5 倍），约束策略追这个不稳定靶子只会噪化训练；直接压低过估计才是从根因解决。
 
 ### 损失函数 / 训练策略
 继承 MR.Q 的 $\mathcal{L}(z_s,W_p,W_r) = \mathcal{L}_{\text{Dyn}}(z_{sa}^\top W_p - z_{s'}) + \mathcal{L}_{\text{Reward}}(z_{sa}^\top W_r - r)$（模型仅作表示学习目标），价值学习用 $\mathcal{L}_{\text{Value}}(r+\gamma\min_{i=1..10}Q_i(z_{s'a'})-Q(z_{sa}))$；MPPI 用 TD-MPC2 的默认超参与采样规模；其余超参全沿用 MR.Q 默认值。全部 50+ 任务用同一组超参跑 1M 步 × 10 seed。
@@ -124,12 +118,6 @@ MRS.Q 在 4 个 benchmark 中拿下 3 个第一，HB-Hand 上 0.58 是次优 0.4
 - 实验充分度: ⭐⭐⭐⭐⭐ 50+ 任务 × 10 seed × 4 benchmark × 7 baseline × 7 项消融，并配 N-chain 解析推导和 17 任务过估计矩阵，证据链完整。
 - 写作质量: ⭐⭐⭐⭐ 故事线非常清晰（诊断 → 机制 → 算法 → 验证），表格充分；少数图（Figure 3 的过估计矩阵）信息密度极高需要细看。
 - 价值: ⭐⭐⭐⭐⭐ MRS.Q 是新的 MBRL 强 baseline，且 Min(10) 嫁接给 TD-MPC2 也涨点，对整个 MBRL 社区都有立刻可用的工程价值。
-
-## 评分
-- 新颖性: 待评
-- 实验充分度: 待评
-- 写作质量: 待评
-- 价值: 待评
 
 <!-- RELATED:START -->
 

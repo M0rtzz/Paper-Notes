@@ -45,23 +45,25 @@ BehaviorVLA 用因果三流 Mamba 编码器 (VBE) 把长视野演示压缩成时
 
 ### 关键设计
 
-1. **VBE 因果三流 Mamba + 渐进式跨流注意力**:
+**1. VBE 因果三流 Mamba + 渐进式跨流注意力：把长视野的视觉/动作序列压成"行为 token"。**
 
-    - 功能：把异构、长视野的视觉/动作序列压成一个"行为 token"流，既保留长程因果又支持空间多模态融合。
-    - 核心思路：每条流独立跑 Mamba，按 ZOH 离散化得到时变参数 $\bar{\mathbf A}_t = \exp(\bm \Delta_t \mathbf A)$，$\bar{\mathbf B}_t = (\bm \Delta_t \mathbf A)^{-1}(\bar{\mathbf A}_t - \mathbf I)\bm \Delta_t \mathbf B$，其中 $\bm \Delta_t = \text{Softplus}(\text{Linear}(x_t^{(m)}))$ 使时间步长依赖输入，相当于一个**选择性滤波器**，自动抑制背景杂讯保留关键事件。状态递归 $h_t^{(m)} = \bar{\mathbf A}_t h_{t-1}^{(m)} + \bar{\mathbf B}_t \text{LN}(x_t^{(m)})$ + 门控连接。空间融合采用**渐进式跨流注意力**：先让视觉流和动作流互相 cross-attn 对齐低层语义，再让行为流以 $[\tilde h^{(v)}_t; \tilde h^{(a)}_t]$ 为 key/value 提全局任务结构。行为流就此成为信息瓶颈，过滤残余噪声、留下行为拓扑。
-    - 设计动机：标准帧级编码器丢长程因果，简单 cat 多模态丢空间结构；Mamba 给线性复杂度 $\mathcal O(L)$ 的长视野记忆，三流分流 + 渐进注意力把时间与空间分别处理，避免一上来就让 Transformer 在长序列 × 多模态上同时挣扎。
+标准帧级编码器丢长程因果，简单 cat 多模态又丢空间结构。VBE 用三条独立的 Mamba 流（视觉 $S_v$ / 动作 $S_a$ / 行为 $S_z$）分别做长视野时间过滤。每条流按 ZOH 离散化得到时变参数 $\bar{\mathbf A}_t = \exp(\bm \Delta_t \mathbf A)$、$\bar{\mathbf B}_t = (\bm \Delta_t \mathbf A)^{-1}(\bar{\mathbf A}_t - \mathbf I)\bm \Delta_t \mathbf B$，其中 $\bm \Delta_t = \text{Softplus}(\text{Linear}(x_t^{(m)}))$ 让步长依赖输入，相当于一个选择性滤波器，自动抑制背景杂讯、保留关键事件；状态递归 $h_t^{(m)} = \bar{\mathbf A}_t h_{t-1}^{(m)} + \bar{\mathbf B}_t \text{LN}(x_t^{(m)})$ 加门控连接。空间维度用渐进式跨流注意力处理：先让视觉流和动作流互相 cross-attn 对齐低层语义，再让行为流以 $[\tilde h^{(v)}_t; \tilde h^{(a)}_t]$ 为 key/value 提取全局任务结构，于是行为流成了信息瓶颈，过滤残余噪声、留下行为拓扑。三流分流加 Mamba 的线性复杂度 $\mathcal O(L)$ 记忆，把时间与空间分开处理，避免一上来就逼 Transformer 在长序列 × 多模态上同时挣扎。
 
-2. **流形坐标解耦：全局原型检索 + 在线相位状态**:
+**2. 流形坐标解耦：全局原型检索 + 在线相位状态。**
 
-    - 功能：把"任务是什么"和"现在做到哪儿"两件事拆成两个潜变量，分别给 PBD 提供稳定骨架和实时进度。
-    - 核心思路：全局原型由训练时对每条轨迹的行为 token 做时间均值池化 $z_{\text{proto}} = \tfrac{1}{T} \sum_t \tilde h_t^{(z)}$ 得到，存进 Memory Bank。推理时只在 $t=0$ 用 $q = \text{MLP}(\Phi(O_0, L))$ 检索 Top-K，加权 softmax $\hat z_{\text{proto}} = \sum_{i \in \mathcal N_K} \text{softmax}(\langle q, k_i\rangle/\kappa) \cdot z_{\text{proto}}^{(i)}$；整个 episode 锁住不变。本地相位 $z_{\text{phase}}^{(t)} = \text{VBE}_{\text{causal}}(z_{\text{phase}}^{(t-1)}, O_t, a_{t-1})$ 每步递归更新，跟踪进度。
-    - 设计动机：把"长程任务结构"塞进一个固定向量稳住整段轨迹的语义不漂移；把"当前步进度"留给在线状态，让动作生成实时对齐物理执行。这种正交分解避免了用单一潜变量同时承担两个相互冲突的任务（稳定 vs 灵敏）。
+一个潜变量同时承担"任务是什么"（要稳）和"现在做到哪儿"（要灵敏）是矛盾的，BehaviorVLA 干脆把它拆成两个不同时间尺度的变量。全局原型 $z_{\text{proto}}$ 在训练时对每条轨迹的行为 token 做时间均值池化 $z_{\text{proto}} = \tfrac{1}{T} \sum_t \tilde h_t^{(z)}$ 得到、存进 Memory Bank，推理时只在 $t=0$ 用 $q = \text{MLP}(\Phi(O_0, L))$ 检索 Top-K 加权
 
-3. **PBD Predictor-Corrector：相位对齐先验 + 流匹配几何偏置**:
+$$\hat z_{\text{proto}} = \sum_{i \in \mathcal N_K} \text{softmax}(\langle q, k_i\rangle/\kappa) \cdot z_{\text{proto}}^{(i)}$$
 
-    - 功能：让流匹配策略在"被显式偏置过的噪声空间"里积分，既保留生成式策略对多模态分布的处理力，又强制全局拓扑一致。
-    - 核心思路：Predictor 端先把 $\hat z_{\text{proto}}$ 用生成器 $\mathcal G_\phi$ 展开成 $H$ 步潜锚 $\mathbf M = \mathcal G_\phi(\hat z_{\text{proto}}) \oplus \mathbf P_{\text{pos}}$（位置编码给予典范时间几何），再用相位状态做查询 $c_t = \text{Progress-Attn}(Q=z_{\text{phase}}^{(t)}, K=\mathbf M, V=\mathbf M)$ 在锚点上微分插值，最后投影成高斯先验 $\mu_\psi(c_t)$。Corrector 端是条件流匹配：把先验通过加性偏置 $\tilde e(a_\sigma) = e(a_\sigma) + \lambda \cdot \text{Proj}_\phi(\mu_{\text{prior}})$ 直接注入噪声嵌入，速度场 $v_\theta$ 在这个被偏置过的嵌入上预测 OT 路径速度 $u_\sigma = a_1 - a_0$。训练时用伯努利 dropout mask 替代固定 $\lambda$ 防止后验崩塌。
-    - 设计动机：标准潜变量解码从静态变量出 action，跟不上场景实时变化；Predictor-Corrector 让全局结构（先验均值）和局部精度（流匹配修正）各司其职。把先验加在嵌入而不是动作上的好处是数学上等价于把流匹配的注意力流形朝高概率区域偏移，等价于"软约束"流策略往任务拓扑方向走。
+整个 episode 锁住不变，给轨迹一个稳定骨架。本地相位 $z_{\text{phase}}^{(t)} = \text{VBE}_{\text{causal}}(z_{\text{phase}}^{(t-1)}, O_t, a_{t-1})$ 每步在线递归更新、跟踪执行进度。把长程任务结构塞进一个固定向量稳住语义不漂移，把当前步进度留给在线状态实时对齐物理执行——这种正交分解正是后面动作生成"既稳又灵敏"的前提。
+
+**3. PBD Predictor-Corrector：相位对齐先验 + 流匹配几何偏置。**
+
+标准潜变量解码从一个静态变量出 action，跟不上场景实时变化。PBD 让全局结构和局部精度各司其职。Predictor 端先把 $\hat z_{\text{proto}}$ 用生成器展开成 $H$ 步潜锚 $\mathbf M = \mathcal G_\phi(\hat z_{\text{proto}}) \oplus \mathbf P_{\text{pos}}$（位置编码赋予典范时间几何），再用相位状态做查询 $c_t = \text{Progress-Attn}(Q=z_{\text{phase}}^{(t)}, K=\mathbf M, V=\mathbf M)$ 在锚点上插值，投影成高斯先验 $\mathcal N(\mu_\psi(c_t), \Sigma)$。Corrector 端是条件流匹配，关键一步是把先验通过加性偏置注入噪声嵌入：
+
+$$\tilde e(a_\sigma) = e(a_\sigma) + \lambda \cdot \text{Proj}_\phi(\mu_{\text{prior}})$$
+
+速度场 $v_\theta$ 在这个被偏置过的嵌入上预测 OT 路径速度 $u_\sigma = a_1 - a_0$（训练时用伯努利 dropout mask 替代固定 $\lambda$ 防后验崩塌）。把先验加在嵌入而非动作上，数学上等价于把流匹配的注意力流形朝高概率区域偏移，相当于"软约束"流策略往任务拓扑方向走——既保留了生成式策略处理多模态分布的能力，又强制了全局拓扑一致。
 
 ### 损失函数 / 训练策略
 **两阶段训练**。Phase 1（行为流形学习）：$\mathcal L_{\text{Stage1}} = \mathcal L_{\text{rec}} + \alpha \mathcal L_{\text{global}} + \beta \mathcal L_{\text{local}}$。其中重建损用 JEPA 思想，同时回归下一步动作和下一步 EMA 视觉编码 $\Phi_{\text{ema}}(O_{t+1})$（stop-gradient）；全局损用监督对比把同行为标签的 $z_{\text{proto}}$ 拉近；局部损用 InfoNCE 把不同时间步的 $z_t$ 区分开防拓扑塌缩。Phase 2（先验引导策略调优）：$\mathcal L_{\text{Stage2}} = \mathcal L_{\text{flow}} + \lambda_{\text{prior}} \mathcal L_{\text{prior}}$，流匹配损是 OT 路径速度的 MSE，先验损是专家动作在预测高斯下的 NLL。

@@ -45,23 +45,21 @@ BITE 维护一个容量为 $K$ 的候选答案池 $\mathcal{P}$，初始化为 $
 
 ### 关键设计
 
-1. **上下文老虎机建模 + LinUCB 选臂**:
+**1. 上下文老虎机建模 + LinUCB 选臂：在 25 步紧预算里逼近评判器的偏好曲线。**
 
-    - 功能：在"试新偏差"和"用熟偏差"之间自适应平衡，让攻击在 25 次查询的紧预算下也能逼近近优策略。
-    - 核心思路：每轮 $t$ 用 pretrained embedding $\phi(q, a_{t-1}) = \bm{x}_t \in \mathbb{R}^d$ 编码当前上下文。选臂规则是带 UCB 上界的线性奖励估计 $b_t = \arg\max_{b \in \mathcal{B}} (\bm{x}_t^\top \hat{\bm{\theta}}_b + \alpha \sqrt{\bm{x}_t^\top \mathbf{A}_b^{-1} \bm{x}_t})$，其中第一项是 exploitation（当前估计的期望奖励），第二项是 exploration（不确定性奖励），$\alpha$ 控制权衡。每臂独立维护 $\mathbf{A}_b \in \mathbb{R}^{d \times d}$ 和 $\bm{v}_b \in \mathbb{R}^d$，观测 $(\bm{x}_t, r_t)$ 后做秩一更新 $\mathbf{A}_{b_t} \leftarrow \mathbf{A}_{b_t} + \bm{x}_t \bm{x}_t^\top$，$\bm{v}_{b_t} \leftarrow \bm{v}_{b_t} + r_t \bm{x}_t$，再重估 $\hat{\bm{\theta}}_{b_t} \leftarrow \mathbf{A}_{b_t}^{-1} \bm{v}_{b_t}$。
-    - 设计动机：每个评判器有自己独特的"漏洞指纹"——有的吃冗长，有的吃 markdown 列表；用上下文老虎机能在没有任何模型参数访问权的情况下，针对每个目标在线学出这份个性化的偏好曲线。线性模型的选择是带显式 trade-off 的：作者承认真实奖励函数高度非线性（model misspecification），但线性模型样本效率最高、能在 25 步预算下收敛。
+攻击的核心 trade-off 是"试探新偏差 vs 利用已知偏差"，上下文老虎机正好契合。每轮 $t$ 用 pretrained embedding $\phi(q,a_{t-1})=\bm{x}_t\in\mathbb{R}^d$ 编码当前上下文，选臂规则带 UCB 上界
 
-2. **从已知偏差文献蒸馏出的 8 个语义保持动作空间**:
+$$b_t = \arg\max_{b\in\mathcal{B}}\Big(\bm{x}_t^\top\hat{\bm\theta}_b + \alpha\sqrt{\bm{x}_t^\top\mathbf{A}_b^{-1}\bm{x}_t}\Big),$$
 
-    - 功能：把"无穷的语言变换"压缩成一个小而有效的离散动作空间，使每个动作的 reward 信号足够稠密，让 LinUCB 在小预算下能学起来。
-    - 核心思路：作者系统梳理了 LLM 评判器偏差文献（verbosity bias、列表 bias、markdown bias、tone bias、self-preference 等），从中提炼出 8 种确定有效的风格变换作为臂。每个动作通过 helper LLM $\psi$ 实现："给定原答案 $a_{t-1}$ 和动作 $b_t$，产出语义等价但风格改变后的 $a_t = \psi(a_{t-1}, b_t)$"。改写过程严格要求保持语义内容不变。
-    - 设计动机：动作空间太大会让 LinUCB 在 25 步内根本探索不完；动作空间是手工编码的"已知偏差先验"，本身就是 hot zone，命中率远高于随机风格扰动。
+第一项是 exploitation（当前估计的期望奖励），第二项是 exploration（不确定性奖励），$\alpha$ 控权衡。每个臂独立维护 $\mathbf{A}_b\in\mathbb{R}^{d\times d}$ 和 $\bm{v}_b\in\mathbb{R}^d$，观测 $(\bm{x}_t,r_t)$ 后做秩一更新 $\mathbf{A}_{b_t}\!\leftarrow\!\mathbf{A}_{b_t}+\bm{x}_t\bm{x}_t^\top$、$\bm{v}_{b_t}\!\leftarrow\!\bm{v}_{b_t}+r_t\bm{x}_t$，再重估 $\hat{\bm\theta}_{b_t}\!\leftarrow\!\mathbf{A}_{b_t}^{-1}\bm{v}_{b_t}$。这样设计的好处是：每个评判器有自己独特的"漏洞指纹"——有的吃冗长、有的吃 markdown 列表——上下文老虎机能在零模型参数访问权下，针对每个目标在线学出这份个性化偏好曲线。选线性模型是带显式取舍的：作者承认真实奖励高度非线性（model misspecification），但线性模型样本效率最高，能在 25 步内收敛。
 
-3. **精英候选池 + 边际奖励信号**:
+**2. 从偏差文献蒸馏出的 8 个语义保持动作空间：把"无穷语言变换"压成能学得起来的离散臂。**
 
-    - 功能：让攻击像进化算法一样在"已经能拿高分的答案"基础上继续叠加风格改写，而不是每轮从原始 $a_0$ 重启。
-    - 核心思路：维护大小为 $K$ 的池子，每轮从中均匀采样父答案。奖励是相对父答案的边际改进 $r_t = S_t - S_{t-1}$，**不是绝对分数**——这让 LinUCB 学到的是"在这个上下文下加哪种风格能再涨一点"，而非"哪种风格普遍高分"。池子满了之后淘汰当前最低分元素，保留多样化的高分种群。
-    - 设计动机：边际奖励避免了"高分天花板效应"——如果用绝对分数当奖励，所有动作在 $S_0 \approx 9$ 附近的奖励都接近 0，LinUCB 学不到信号。淘汰最低分而非最早进入的，让池子始终保持"高分多样性"，给下一轮选父答案时更多有用方向。
+如果动作空间太大，LinUCB 在 25 步内根本探索不完。作者系统梳理 LLM 评判器偏差文献（verbosity bias、列表 bias、markdown bias、tone bias、self-preference 等），从中提炼出 8 种确定有效的风格变换当臂，每个动作通过 helper LLM $\psi$ 实现：给定原答案 $a_{t-1}$ 和动作 $b_t$，产出语义等价但风格改变后的 $a_t=\psi(a_{t-1},b_t)$，改写严格要求保持语义内容不变。关键在于这个动作空间本身就是手工编码的"已知偏差先验"、是一片 hot zone，命中率远高于随机风格扰动——后面消融里 Random Action 仅靠在这 8 个动作里乱选就大幅超过全文重写，正说明动作空间的先验才是攻击成功的主因。
+
+**3. 精英候选池 + 边际奖励信号：像进化算法一样在高分答案上继续叠风格。**
+
+如果每轮都从原始 $a_0$ 重启，攻击就浪费了已经爬到的高分。BITE 维护一个大小为 $K$ 的池子，每轮均匀采样一个父答案，奖励取相对父答案的**边际**改进 $r_t=S_t-S_{t-1}$ 而非绝对分数——这让 LinUCB 学到的是"在这个上下文下再加哪种风格能涨一点"，而不是"哪种风格普遍高分"。为什么非用边际奖励？因为绝对分数有天花板效应：种子答案 $S_0$ 往往已接近满分 9，所有动作的绝对奖励都挤在 0 附近，LinUCB 学不到信号；改成边际改进就避开了这个坍缩。池子满了之后淘汰当前最低分而非最早进入的元素，让种群始终保持"高分多样性"，给下一轮选父答案提供更多有用方向。
 
 ### 损失函数 / 训练策略
 攻击是黑盒在线、无训练阶段。理论侧给出一个关键结果：在模型 misspecification 程度为 $\zeta_T$ 时，BITE 的 pseudo-regret 满足 $R_T = \tilde{O}(dK\sqrt{T} + \zeta_T dKT)$，意味着即使线性模型与真实非线性奖励有 gap，regret 仍以 $\sqrt{T}$ 的统计项 + 线性 $\zeta_T$ 项可控增长。技术贡献是把 Abbasi-Yadkori 的 LinUCB 分析扩展到 multi-arm + misspecified setting。

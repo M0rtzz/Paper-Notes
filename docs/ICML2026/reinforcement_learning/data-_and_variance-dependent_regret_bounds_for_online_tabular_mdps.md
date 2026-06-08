@@ -49,23 +49,21 @@ $\mathrm{Reg}_T = \max_{\pi \in \Pi} \mathbb{E}\bigl[\sum_{t=1}^T V^{\pi_t}(s_0;
 
 ### 关键设计
 
-1. **新数据依赖复杂度量**:
+**1. 新的数据依赖复杂度量：先把"loss 序列有多好对付"翻译成可计算量。**
 
-    - 功能：把"对抗 loss 序列有多容易"和"随机 loss 噪声有多小"这两件事用可计算量精确刻画，再由后续 OFTRL 自动适配这些量。
-    - 核心思路：在对抗 regime 引入三个量——一阶 small-loss $L^\star = \min_{\pi} \mathbb{E}[\sum_t V^\pi(s_0;\ell_t)]$；二阶 $Q_\infty = \min_{\ell^\star} \mathbb{E}[\sum_t \sum_h \|\ell_t(h)-\ell^\star(h)\|_\infty^2]$，当 loss 围绕某个基线波动时变小；路径长度 $V_1 = \mathbb{E}[\sum_t \|\ell_{t+1}-\ell_t\|_1]$，当 loss 序列变化缓慢时变小。在随机 regime 引入 occupancy 加权方差 $V = \max_\pi \sum_{s,a} q^\pi(s,a)\sigma^2(s,a)$ 和条件占用加权方差 $V_c(s)$，刻画"已经走到 $s$ 之后剩下多少噪声"。
-    - 设计动机：$Q_\infty$ 和 $V_1$ 是 bandit 文献的标配但 MDP 里此前是空白；$V$ 和 $V_c$ 相比已有的 $\mathrm{Var}_{\max}$、$\mathrm{Var}^c_{\max}$ 去掉了多余的 $V^{\pi^\star}(s')$ 方差项，得益于已知转移设定，结果比已有方差度量"$H^2$ 倍更紧"。
+要让一个算法自动适配"对抗 loss 有多容易"和"随机 loss 噪声有多小"，前提是把这两件事写成可计算的量，否则 OFTRL 无从适配。对抗 regime 下本文引入三个量：一阶 small-loss $L^\star = \min_{\pi} \mathbb{E}[\sum_t V^\pi(s_0;\ell_t)]$（专家累计 loss 越小越好对付）、二阶 $Q_\infty = \min_{\ell^\star} \mathbb{E}[\sum_t \sum_h \|\ell_t(h)-\ell^\star(h)\|_\infty^2]$（loss 围绕某基线波动时变小）、路径长度 $V_1 = \mathbb{E}[\sum_t \|\ell_{t+1}-\ell_t\|_1]$（loss 序列变化缓慢时变小）。随机 regime 下再引入 occupancy 加权方差 $V = \max_\pi \sum_{s,a} q^\pi(s,a)\sigma^2(s,a)$ 和条件占用加权方差 $V_c(s)$，刻画"已经走到 $s$ 之后还剩多少噪声"。其中 $Q_\infty$ 和 $V_1$ 是 bandit 文献的标配，但在 MDP 里此前是空白；而 $V$、$V_c$ 相比已有的 $\mathrm{Var}_{\max}$、$\mathrm{Var}^c_{\max}$ 砍掉了多余的 $V^{\pi^\star}(s')$ 方差项——正因为转移已知，方差度量可以定义得更细，最终结果比已有方差界紧了约 $H^2$ 倍。
 
-2. **全局优化算法（Algorithm 1，定理 4.1 / 4.2）**:
+**2. 全局优化算法：在 occupancy 集合上跑 OFTRL，用 loss-shifting 把多种细界一次拿全。**
 
-    - 功能：在 occupancy 集合 $\Omega(P)$ 上直接用 OFTRL 滚动，得到 $\tilde{O}(\sqrt{SA \cdot \min\{L^\star, HT-L^\star, Q_\infty, V_1\}})$ 的对抗界和 $\tilde{O}(\sqrt{SAV_T})$、$\mathrm{polylog}(T)$ 的随机界。
-    - 核心思路：每个 episode 解 $q^{\pi_t} = \arg\min_{q\in\Omega(P)}\{\langle q, \sum_{\tau<t}\hat\ell_\tau + m_t\rangle + \psi_t(q)\}$，其中 $\psi_t(q) = \sum_{s,a} \tfrac{1}{\eta_t(s,a)}\log(1/q(s,a))$ 是 per-coord log-barrier，学习率 $1/\eta_{t+1} = 1/\eta_t + \eta_t \zeta_t/\log T$ 按 stability 项 $\zeta_t$ 自适应增长。loss 估计器用乐观 IW 形式 $\hat\ell_t(s,a) = m_t(s,a) + I_t(s,a)(\ell_t - m_t)/q^{\pi_t}(s,a)$，关键的 loss-shifting 函数 $g_t(s,a) = Q^{\pi_t}(s,a;\tilde\ell_t) - V^{\pi_t}(s;\tilde\ell_t) - \tilde\ell_t(s,a)$ 把 OFTRL 等价改成在 advantage 上跑，stability 项天然由 advantage 的二阶矩界住，进而走 self-bounding 得到 polylog 的 gap-相关界。两种 $m_t$ 各司其职：梯度下降式 $m_{t+1}=(1-\xi)m_t+\xi\ell_t$（$\xi=1/4$）适合路径长度 $V_1$，经验均值式 $m_t = \sum_\tau I_\tau \ell_\tau / N_{t-1}$ 适合方差感知 gap-相关界（让 stability 收敛到 $V_c$）。
-    - 设计动机：把 Jin et al. (2021) 的 FTRL+log-barrier 路线整体搬到 OFTRL，多出来的 $m_t$ 项正好提供"乐观"——当预测准时 stability 几乎为零，自然得到 $V_1$ 和 $V_c$ 这类细界，预测不准时退化为 FTRL 的 $\sqrt{HSAT}$ worst case。
+有了复杂度量还得有一个算法能同时撬动它们。全局优化版本（Algorithm 1，定理 4.1 / 4.2）每个 episode 在 occupancy 集合 $\Omega(P)$ 上解 $q^{\pi_t} = \arg\min_{q\in\Omega(P)}\{\langle q, \sum_{\tau<t}\hat\ell_\tau + m_t\rangle + \psi_t(q)\}$，其中 $\psi_t(q) = \sum_{s,a} \tfrac{1}{\eta_t(s,a)}\log(1/q(s,a))$ 是 per-coordinate 的 log-barrier，学习率按 stability 项 $\zeta_t$ 自适应增长 $1/\eta_{t+1} = 1/\eta_t + \eta_t \zeta_t/\log T$。loss 估计器取乐观 IW 形式 $\hat\ell_t(s,a) = m_t(s,a) + I_t(s,a)(\ell_t - m_t)/q^{\pi_t}(s,a)$。真正撬动细界的是 loss-shifting 函数
 
-3. **策略优化算法（定理 5.2 / 5.3）+ 更乐观的 Q 估计器**:
+$$g_t(s,a) = Q^{\pi_t}(s,a;\tilde\ell_t) - V^{\pi_t}(s;\tilde\ell_t) - \tilde\ell_t(s,a),$$
 
-    - 功能：以每个 state 上的 OFTRL 作为局部 bandit 求解器，得到比全局优化只多一个 $H$ 因子的同款数据/方差依赖界 $\tilde{O}(\sqrt{H^2 SA \cdot \min\{L^\star,\ldots,V_1\}})$，胜在每步只需 per-state 闭式更新，计算友好。
-    - 核心思路：在每个 $s$ 上跑 OFTRL，$\pi_t(\cdot|s) = \arg\min_{p\in\Delta(A)} \{\langle p, \sum_{\tau<t}(\hat Q_\tau(s,\cdot) - B_\tau(s,\cdot)) + m_t(s,\cdot)\rangle + \psi_t(p)\}$，其中 $\hat Q_t$ 是新的"更乐观"的 Q 估计器：不仅对当前 loss 用 IW，还把对未来 value 的预测也注入到估计里，从而抵消 OFTRL loss prediction 引入的 bias。Dann et al. (2023a) 在 FTRL 策略优化里用过一阶 Q 估计器，但搬到 OFTRL 时会因 $m_t \neq 0$ 留下额外 bias 项，本文的新估计器构造让 $\mathbb{E}_t[\hat Q_t - B_t]$ 恰好等于真 advantage，从而 stability 分析复用全局优化路线。
-    - 设计动机：策略优化更实用，但已有结果只能做到 first-order；要把二阶、路径长度、方差感知 gap-相关全做出来，必须解决"乐观预测如何与 per-state 局部更新和 layer-by-layer value 估计同时兼容"这件事，新 Q 估计器正是为此设计。
+它把 OFTRL 等价改写成在 advantage 上滚动，于是 stability 项天然被 advantage 的二阶矩界住，走 self-bounding 就能换出 polylog 的 gap-相关界。两种 loss prediction $m_t$ 各司其职：梯度下降式 $m_{t+1}=(1-\xi)m_t+\xi\ell_t$（$\xi=1/4$）撬动路径长度 $V_1$，经验均值式 $m_t = \sum_\tau I_\tau \ell_\tau / N_{t-1}$ 让 stability 收敛到 $V_c$、撬动方差感知 gap-相关界。这套设计本质上是把 Jin et al. (2021) 的 FTRL+log-barrier 整体搬到 OFTRL，多出来的 $m_t$ 项恰好提供了"乐观"——预测准时 stability 几乎归零、自然落到 $V_1$/$V_c$ 这类细界，预测不准时退化成 FTRL 的 $\sqrt{HSAT}$ worst case，由此达到 $\tilde{O}(\sqrt{SA \cdot \min\{L^\star, HT-L^\star, Q_\infty, V_1\}})$ 的对抗界与 $\tilde{O}(\sqrt{SAV_T})$ 的随机界。
+
+**3. 策略优化算法 + 更乐观的 Q 估计器：把同款适配性搬到 per-state 局部更新上。**
+
+全局优化每步要在 $\Omega(P)$ 上解凸优化，计算偏重；更实用的是在每个 state 上把 OFTRL 当成局部 bandit 求解器，按 $\pi_t(\cdot|s) = \arg\min_{p\in\Delta(A)} \{\langle p, \sum_{\tau<t}(\hat Q_\tau(s,\cdot) - B_\tau(s,\cdot)) + m_t(s,\cdot)\rangle + \psi_t(p)\}$ 做 per-state 闭式更新。难点在估计器：Dann et al. (2023a) 在 FTRL 策略优化里用的一阶 Q 估计器一旦搬到 OFTRL，会因 $m_t \neq 0$ 留下不可消的 bias 项。本文构造了一个"更乐观"的 Q 估计器 $\hat Q_t$，不仅对当前 loss 用 IW，还把对未来 value 的预测也注入估计，使 $\mathbb{E}_t[\hat Q_t - B_t]$ 恰好等于真 advantage——bias 被精确抵消后，stability 分析就能整套复用全局优化的路线。代价是所有上界比全局优化多一个 $H$ 因子（定理 5.2 / 5.3 的 $\tilde{O}(\sqrt{H^2 SA \cdot \min\{L^\star,\ldots,V_1\}})$），但换来 layer-by-layer、计算友好的更新，也首次把二阶、路径长度、方差感知 gap-相关三件套同时做进策略优化路线。
 
 ### 损失函数 / 训练策略
 本文是纯理论工作，"训练"指 OFTRL 的迭代更新。共享超参：$H \le S$ 假设，初始学习率 $1/\eta_1 = 2H$，loss prediction 步长 $\xi = 1/4$，log-barrier 系数随 stability 项 $\zeta_t = q^{\pi_t}(s,a)^2 \cdot \min\{(\hat\ell_t-m_t)^2, (\hat\ell_t+g_t-m_t)^2\}$ 自适应增长。所有 regret 上界对未知的复杂度量是"参数无关"的——算法不需要预先知道 $L^\star$、$Q_\infty$、$V_1$、$V$、$V_c$。

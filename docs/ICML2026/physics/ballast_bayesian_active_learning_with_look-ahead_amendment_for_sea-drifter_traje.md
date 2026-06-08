@@ -47,23 +47,21 @@ BALLAST 是一个顺序实验设计框架：在每个决策时间 $t_n$，给定
 
 ### 关键设计
 
-1. **轨迹感知的效用修正（BALLAST Amendment）**:
+**1. 轨迹感知的效用修正（BALLAST Amendment）：把漂流器一生的观测都算进效用。**
 
-    - 功能：将拉格朗日观测器的未来轨迹纳入效用计算，替代标准 EIG 仅考虑初始位置的策略
-    - 核心思路：对任意效用函数 $U$，BALLAST 修正后的采集函数为 $\bm{s}_n^* = \arg\max_{\bm{s} \in R} \mathbb{E}_{F \sim p(f|\mathcal{D}_n)}[\mathbb{E}[U(P_F^T(\bm{s}, t_n))]]$，其中 $P_F^T(\bm{s}, t_n)$ 是观测器在采样向量场 $F$ 下从位置 $\bm{s}$ 出发到终止时间 $T$ 的投影轨迹。外层期望通过 $J=20$ 个后验样本蒙特卡洛近似；每条轨迹通过欧拉法数值积分模拟，步长为 $\delta_t$
-    - 设计动机：标准 EIG 忽略后续观测导致决策次优（将观测器放在边界附近快速离开研究区域）。通过模拟完整轨迹，BALLAST 正确评估了每个候选位置的长期信息贡献
+标准 EIG 估计一个放置位置的效用时只看初始观测的信息增益，完全忽略漂流器随后被流场平流、在别处采集的后续数据——结果它偏爱把观测器放在边界附近（初始增益高但很快漂出研究区），实测甚至一致地差于均匀随机。BALLAST 的修正是把整条未来轨迹纳入采集函数：
 
-2. **Vanilla SPDE Exchange (VaSE) 推理方法**:
+$$\bm{s}_n^*=\arg\max_{\bm{s}\in R}\ \mathbb{E}_{F\sim p(f|\mathcal{D}_n)}\big[\mathbb{E}[U(P_F^T(\bm{s},t_n))]\big],$$
 
-    - 功能：高效地从时空 GP 后验中采样向量场，解决 BALLAST 的计算瓶颈
-    - 核心思路：将标准 GP 回归和 SPDE 方法结合——先用扩展 GP $\bm{f} = [f, \partial_t f]^T$ 在决策时间 $t_n$ 处通过标准 GP 回归生成 SPDE 初始条件，然后利用 Kalman 滤波/RTS 平滑器沿时间方向传播到终止时间 $T$。标准 GP 采样代价为 $O(N_{\text{pred,s}}^3 N_{\text{pred,t}}^3)$，SPDE 代价为 $O((N_{\text{obs}}+N_{\text{pred,s}})^3 N_{\text{obs,t}})$，VaSE 代价仅为 $O(N_{\text{obs}}^3 + N_{\text{pred,s}}^2 N_{\text{pred,t}})$
-    - 设计动机：SPDE 方法在观测位置（非网格化的拉格朗日数据）和预测位置（规则网格）不重叠时代价剧增，VaSE 通过标准 GP 回归绕过了这一问题
+其中 $P_F^T(\bm{s},t_n)$ 是观测器在采样向量场 $F$ 下从 $\bm{s}$ 出发到终止时间 $T$ 的投影轨迹，外层期望用 $J=20$ 个 GP 后验样本蒙特卡洛近似、每条轨迹用欧拉法以步长 $\delta_t$ 积分模拟。这样每个候选位置被按"长期信息贡献"而非"瞬时增益"评分，直接纠正了 EIG 的边界偏好。
 
-3. **时空 Helmholtz GP 代理模型**:
+**2. Vanilla SPDE Exchange（VaSE）：绕开非网格拉格朗日数据让 GP 后验采样的瓶颈。**
 
-    - 功能：为时变海洋向量场提供具有物理先验的概率代理模型
-    - 核心思路：使用 Helmholtz 分解构造向量输出核 $k_{\text{tHelm}}((\bm{s},t),(\bm{s}',t')) = k_{\text{Helm}}(\bm{s},\bm{s}') k_{\text{time}}(t,t')$，空间部分基于势函数和流函数核的线性微分算子，时间部分采用 Matérn 3/2 核（与海洋学中 $\nu \approx 2$ 的经验一致）
-    - 设计动机：可分离的时空核结构使 VaSE 的 SPDE 传播成为可能，同时 Helmholtz 分解编码了流体力学的物理约束
+look-ahead 修正要反复从时空 GP 后验采样向量场，标准 GP 采样代价 $O(N_{\text{pred,s}}^3 N_{\text{pred,t}}^3)$ 直接不可行，而 SPDE 方法在"观测位置（非网格化的拉格朗日数据）和预测位置（规则网格）不重叠"时代价又会剧增。VaSE 把两者拼起来：先用扩展 GP $\bm{f}=[f,\partial_t f]^\top$ 在决策时间 $t_n$ 通过标准 GP 回归生成 SPDE 初始条件，再用 Kalman 滤波/RTS 平滑器沿时间方向传播到 $T$，把代价压到 $O(N_{\text{obs}}^3+N_{\text{pred,s}}^2 N_{\text{pred,t}})$。用标准 GP 回归处理初始条件这一步恰好绕过了非网格观测的麻烦，实测带来约 70× 加速（单样本 4.5 min → 3.8 s），让 BALLAST 从理论上可算变成实践上可跑。
+
+**3. 时空 Helmholtz GP 代理模型：给海洋向量场注入流体物理先验。**
+
+代理模型不能随便选，既要能让 VaSE 的 SPDE 传播成立，又要尊重流体力学约束。作者用 Helmholtz 分解构造向量输出核 $k_{\text{tHelm}}((\bm{s},t),(\bm{s}',t'))=k_{\text{Helm}}(\bm{s},\bm{s}')\,k_{\text{time}}(t,t')$，空间部分基于势函数和流函数核的线性微分算子（编码无散/无旋分解这类物理约束），时间部分用 Matérn 3/2 核（与海洋学 $\nu\approx2$ 的经验一致）。可分离的时空核结构是 VaSE 能沿时间做 SPDE 传播的前提，而 Helmholtz 分解保证采出来的场是物理上合理的流场而非任意函数。
 
 ## 实验关键数据
 

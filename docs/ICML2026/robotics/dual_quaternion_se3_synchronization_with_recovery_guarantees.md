@@ -50,23 +50,17 @@ tags:
 
 ### 关键设计
 
-1. **闭式投影 $\Pi:\mathbb{DH}^n\to\mathrm{UDQ}^n$ 与 $\mathcal{N}(\cdot)$ 的 Lipschitz 性质**:
+**1. 闭式投影 $\Pi:\mathbb{DH}^n\to\mathrm{UDQ}^n$ 与 $\mathcal{N}(\cdot)$ 的 Lipschitz 性质。**
 
-    - 功能：把任意（可能不可行的）对偶四元数向量逐元素映回单位对偶四元数集合 $\mathrm{UDQ}^n$，并保证投影前后到任何可行点的距离最多放大 2 倍。
-    - 核心思路：先定义单点规范化 $\mathcal{N}(x)$ —— 当标准部 $x_{\mathrm{st}}\neq 0$ 时给出闭式 $u_{\mathrm{st}}=x_{\mathrm{st}}/|x_{\mathrm{st}}|$，对偶部 $u_{\mathcal{I}}=x_{\mathcal{I}}/|x_{\mathrm{st}}| - (x_{\mathrm{st}}/|x_{\mathrm{st}}|)\cdot\mathrm{sc}(x_{\mathrm{st}}^*/|x_{\mathrm{st}}|\cdot x_{\mathcal{I}}/|x_{\mathrm{st}}|)$（这一步显式扣掉了对偶部里和标准部"平行"的分量，正好对应 SE(3) 中平移在旋转方向上的投影）。$\Pi$ 在 $y_i=0$ 处用 fallback $\mathcal{N}(\bm{e}^*\bm{y})$（任意非零参考向量 $\bm{e}$）保证良定义。Lemma 2.5 证 $|\mathcal{N}(y)-z|\le 2|y-z|$，这是后面所有误差传递的关键工具。
-    - 设计动机：矩阵方法的 rounding 是多步启发式（先 SVD 投影旋转、再算质心、再修平移），既无解析式又难分析；闭式 $\Pi$ 把它变成一步可控的算子，Lipschitz 性把谱解的误差界 $4\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$（Proposition 2.4）平移成投影后的 $8\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$（Theorem 2.8），常数项被严格 bound 住而不是 "希望它够小"。
+矩阵方法的 rounding 是一串启发式——先 SVD 投影旋转、再算质心、再修平移，既没有解析式又难分析。本文把它换成一步可控的算子。先定义单点规范化 $\mathcal{N}(x)$：当标准部 $x_{\mathrm{st}}\neq 0$ 时给闭式 $u_{\mathrm{st}}=x_{\mathrm{st}}/|x_{\mathrm{st}}|$，对偶部 $u_{\mathcal{I}}=x_{\mathcal{I}}/|x_{\mathrm{st}}| - (x_{\mathrm{st}}/|x_{\mathrm{st}}|)\cdot\mathrm{sc}(x_{\mathrm{st}}^*/|x_{\mathrm{st}}|\cdot x_{\mathcal{I}}/|x_{\mathrm{st}}|)$——这一步显式扣掉了对偶部里和标准部"平行"的分量，正好对应 SE(3) 中平移在旋转方向上的投影；$\Pi$ 在 $y_i=0$ 处用 fallback $\mathcal{N}(\bm{e}^*\bm{y})$ 保证良定义。关键工具是 Lemma 2.5：$|\mathcal{N}(y)-z|\le 2|y-z|$，即投影前后到任何可行点的距离最多放大 2 倍。正是这条 Lipschitz 性把谱解的误差界 $4\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$（Proposition 2.4）平移成投影后的 $8\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$（Theorem 2.8）——常数被严格 bound 住，而不是"希望它够小"。
 
-2. **对偶四元数幂迭代谱初始化**:
+**2. 对偶四元数幂迭代谱初始化。**
 
-    - 功能：在 $\bm{C}$ 上跑幂迭代得到主特征向量 $\bm{u}_1$，要求满足 $\bm{u}_1^*\bm{C}\bm{u}_1\ge\hat{\bm{x}}^*\bm{C}\hat{\bm{x}}$，再投影得到可行初值 $\bm{x}^0$。
-    - 核心思路：迭代 $\bm{y}^k=\bm{C}\bm{w}^{k-1},\ \bm{w}^k=\bm{y}^k\cdot(\|\bm{y}^k\|_2)^{-1}$；只需要 $\lambda_{1,\mathrm{st}}\neq 0$ 和初值标准部不正交于主特征向量标准部就能良定义。收敛速度由 $r=|\lambda_{1,\mathrm{st}}/\lambda_{2,\mathrm{st}}|>1$ 控制，要保证 $\bm{x}^0$ 落入 DQGPM 的吸引域只需 $K_{\mathrm{init}}\ge\log_r(70|\alpha_{2,\mathrm{st}}|+69M_{\mathrm{st}})/|\alpha_{1,\mathrm{st}}|$ 步。
-    - 设计动机：对偶四元数环有零因子，向量除法不再总良定义；作者把整个分析切成"标准部主导收敛、对偶部跟着标准部走"两层，规避了零因子问题。同时 Proposition 2.4 在算子范数噪声下给出 $\mathrm{d}(\bm{x},\hat{\bm{x}})\le 4\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$ 的 nonasymptotic 界，比 "希望初值靠近真值" 强得多。
+把问题写成 QPQC $\arg\max_{\bm{x}\in\mathrm{UDQ}^n} \bm{x}^*\bm{C}\bm{x}$ 后，若松弛成 $\|\bm{x}\|_2^2=n$ 的对偶四元数球面，最优解就是 $\bm{C}$ 的主右特征向量——这就是谱估计的来源。迭代是 $\bm{y}^k=\bm{C}\bm{w}^{k-1},\ \bm{w}^k=\bm{y}^k\cdot(\|\bm{y}^k\|_2)^{-1}$，只需 $\lambda_{1,\mathrm{st}}\neq 0$ 和初值标准部不正交于主特征向量标准部就良定义，收敛速度由 $r=|\lambda_{1,\mathrm{st}}/\lambda_{2,\mathrm{st}}|>1$ 控制，要落入 DQGPM 吸引域只需 $K_{\mathrm{init}}\ge\log_r(70|\alpha_{2,\mathrm{st}}|+69M_{\mathrm{st}})/|\alpha_{1,\mathrm{st}}|$ 步。难点在于对偶四元数环有零因子、向量除法不再总良定义，作者的化解办法是把分析切成两层——标准部主导收敛、对偶部跟着标准部走——从而规避零因子。Proposition 2.4 还在算子范数噪声下给出 $\mathrm{d}(\bm{x},\hat{\bm{x}})\le 4\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n}$ 的 nonasymptotic 界，比"希望初值靠近真值"强得多。
 
-3. **DQGPM：每步可行的广义幂法及其有限步收敛保证**:
+**3. DQGPM：每步可行的广义幂法及其有限步收敛保证。**
 
-    - 功能：从谱初值 $\bm{x}^0$ 出发，交替做 $\bm{y}^k=\bm{C}\bm{x}^{k-1}$ 和 $\bm{x}^k=\Pi(\bm{y}^k)$，每个 $\bm{x}^k$ 都自动落在 $\mathrm{UDQ}^n$ 上（"stop-anytime feasible"），可以任意时刻停掉拿出来用。
-    - 核心思路：把 GPM（Journée et al. 2010）扩展到对偶四元数上。Theorem 3.2 证明在噪声 $\|\bm{\Delta}\|_{\mathrm{op},\mathrm{st}}\le n/350$ 时，标准部误差按 $\mathrm{d}_{\mathrm{st}}(\bm{x}^k,\hat{\bm{x}})\le (1/10)^k\cdot\sqrt{n}/25 + (700/53n)\|(\bm{\Delta}\hat{\bm{x}})_{\mathrm{st}}\|_2$ 线性收缩；对偶部误差通过引入 "残差对偶部上界 $B$" 和 "标准-对偶耦合常数 $\gamma$" 两个辅助量同样线性收缩，地板项是 $O(\|\bm{\Delta}\hat{\bm{x}}\|_2/n)$。
-    - 设计动机：矩阵方法的 GPM 在 SE(3) 上一直缺收敛证明，因为 $\mathrm{SE}(3)$ 不紧、平移可任意大、对偶数模长只是伪范数。作者用"标准部用 Euclid 度量、对偶部用条件依赖标准部的耦合不等式"这套技巧绕过了非紧性。最终 DQGPM 的误差 $O(\|\bm{\Delta}\hat{\bm{x}}\|_2/n)$ 比谱估计的 $O(\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n})$ 在 i.i.d. 高斯噪声下要紧得多（因为真值不会和噪声主奇异方向对齐，$\|\bm{\Delta}\hat{\bm{x}}\|_2\lesssim\sqrt{n}\|\bm{\Delta}\|_{\mathrm{op}}/2$）。
+从谱初值出发，DQGPM 交替做 $\bm{y}^k=\bm{C}\bm{x}^{k-1}$ 和投影 $\bm{x}^k=\Pi(\bm{y}^k)$，每个 $\bm{x}^k$ 都自动落在 $\mathrm{UDQ}^n$ 上，可以任意时刻停掉拿来用（stop-anytime feasible）。它把 GPM（Journée et al. 2010）扩展到对偶四元数：Theorem 3.2 证明在噪声 $\|\bm{\Delta}\|_{\mathrm{op},\mathrm{st}}\le n/350$ 时，标准部误差按 $\mathrm{d}_{\mathrm{st}}(\bm{x}^k,\hat{\bm{x}})\le (1/10)^k\cdot\sqrt{n}/25 + (700/53n)\|(\bm{\Delta}\hat{\bm{x}})_{\mathrm{st}}\|_2$ 线性收缩，对偶部误差通过引入"残差对偶部上界 $B$"和"标准-对偶耦合常数 $\gamma$"两个辅助量同样线性收缩，地板项是 $O(\|\bm{\Delta}\hat{\bm{x}}\|_2/n)$。矩阵法的 GPM 在 SE(3) 上一直缺收敛证明，根子是 $\mathrm{SE}(3)$ 非紧、平移可任意大、对偶数模长只是伪范数；作者用"标准部用 Euclid 度量、对偶部用条件依赖标准部的耦合不等式"绕过非紧性。最终 DQGPM 的 $O(\|\bm{\Delta}\hat{\bm{x}}\|_2/n)$ 比谱估计的 $O(\|\bm{\Delta}\|_{\mathrm{op}}/\sqrt{n})$ 紧一个 $\sqrt{n}$ 量级（因为真值不会和噪声主奇异方向对齐，$\|\bm{\Delta}\hat{\bm{x}}\|_2\lesssim\sqrt{n}\|\bm{\Delta}\|_{\mathrm{op}}/2$），这也是它在稀疏观测下精度碾压矩阵法的根源。
 
 ### 损失函数 / 训练策略
 不是学习方法，没有训练，只有迭代算法。停止准则用 $\|\bm{x}^k-\bm{x}^{k-1}\|_2$ 阈值即可；初始化幂迭代步数 $K_{\mathrm{init}}$ 按 Corollary 3.4 给出的显式下界估计。

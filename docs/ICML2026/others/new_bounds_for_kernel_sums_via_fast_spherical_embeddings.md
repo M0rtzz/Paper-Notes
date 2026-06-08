@@ -44,23 +44,25 @@ tags:
 
 ### 关键设计
 
-1. **Fastfood 当作球面嵌入（Theorem 1.3 + 1.2）**:
+**1. 把 Fastfood 当作快速球面嵌入：用结构化矩阵换掉全 Gaussian 矩阵。**
 
-    - 功能：把任意 $x \in \mathbb{R}^m$ 映到单位球面 $\mathbb{S}^{2m-1}$（确定性保证 $\|\Phi(x)\|_2 = 1$），三条概率性条件：(1) 距离不扩张超过 $1+\varepsilon$，(2) 小距离 $\|x-y\|^2 \leq \varepsilon$ 不收缩超过 $1-\varepsilon$，(3) 距离 $\in (\varepsilon, \Lambda^2]$ 不会 collapse 到 $\Omega(\varepsilon)$ 以下。
-    - 核心思路：Fastfood 矩阵 $V = \sqrt{m} \cdot H G H B$，其中 $H$ 是归一化 Hadamard 矩阵、$G = \text{diag}(g)$ 是 Gaussian 对角、$B$ 是 Rademacher 对角符号矩阵。映射 $\Phi(x)_{2j-2} = \frac{1}{\sqrt{m}} \cos((Vx)_j)$, $\Phi(x)_{2j-1} = \frac{1}{\sqrt{m}} \sin((Vx)_j)$。$Vx$ 的快速计算靠 Walsh-Hadamard 变换 $O(m \log m)$；输出在单位球上由三角恒等式 $\sin^2 + \cos^2 = 1$ 自动保证。
-    - 设计动机：BRS 2011 用全 Gaussian $W$ 矩阵实现同样的球面嵌入，时间 $O(d/\varepsilon^2)$；本文用 RHT 把 $W$ 换成结构化矩阵 $H G H B$，时间降到 $O(m \log m)$，但保留 RHT 充当 Gaussian "近似版" 的统计性质。
+BRS 2011 早已给出一个"球面嵌入"工具，能把点映到单位球、小距离精确保留、大距离不 collapse，正合 Gaussian KDE"近处要准、远处只要别坍缩"的需求——但他们用的是全 Gaussian 矩阵 $W$，时间 $O(d/\varepsilon^2)$，太慢。本文的核心替换是用迭代 Fastfood 顶上去：映射 $\Phi$ 把任意 $x\in\mathbb{R}^m$ 经 Fastfood 矩阵 $V=\sqrt{m}\cdot HGHB$（$H$ 归一化 Hadamard、$G=\text{diag}(g)$ 高斯对角、$B$ Rademacher 符号对角）后送进三角嵌入
 
-2. **第四阶 Wiener chaos 分析做距离收缩控制**:
+$$\Phi(x)_{2j-2}=\tfrac{1}{\sqrt m}\cos((Vx)_j),\quad \Phi(x)_{2j-1}=\tfrac{1}{\sqrt m}\sin((Vx)_j),$$
 
-    - 功能：证明 $\Phi$ 不会把小距离收缩超过 $(1-\varepsilon)$ 倍——也就是 Theorem 1.3 的 item 2。
-    - 核心思路：用 Taylor 展开 $1 - \cos(\theta) \geq \frac{1}{2}\theta^2 - \frac{1}{24}\theta^4$，得到 $\|\Phi(x) - \Phi(y)\|^2 \geq Q(z) - \frac{1}{12} W(z)$，其中 $Q(z) = \frac{1}{m}\|Vz\|^2$（二阶项）、$W(z) = \frac{1}{m}\sum (Vz)_j^4$（四阶项）。$Q(z)$ 通过 Bernstein 不等式控制；$W(z)$ 是高斯 chaos 函数，用恒等式 $t^4 - 3 = 6 h_2(t) + h_4(t)$ 把它拆成第 2 和第 4 阶 Wiener chaos 之和，分别用 Bernstein 和 Wiener chaos 超收缩（Theorem 3.6）控制。
-    - 设计动机：Le-Sarlós-Smola 2013 的 Fastfood 分析用 Lipschitz Gaussian 集中，只能给二阶矩；要证 collapse 下界必须控制四阶项，这就需要 Wiener chaos 分解，是本文最核心的技术创新。
+输出落在 $\mathbb{S}^{2m-1}$ 上由 $\sin^2+\cos^2=1$ 自动保证。$Vx$ 靠 Walsh-Hadamard 变换 $O(m\log m)$ 算出，于是整个球面嵌入从 $O(d/\varepsilon^2)$ 降到 $O(m\log m)$，同时靠 RHT 充当 Gaussian "近似版"保住了原定理需要的统计性质（Theorem 1.3 的三条距离条件）。
 
-3. **缩放 trick 把"小距离阈值"对齐到 Gaussian KDE 的有效距离**:
+**2. 第四阶 Wiener chaos 分析做距离收缩控制：证"小距离不被压扁"的硬核技术。**
 
-    - 功能：把 BRS 嵌入的"小距离阈值 $\sqrt{\varepsilon}$"换成 KDE 需要的 $\sqrt{\log(1/\varepsilon)}$。
-    - 核心思路：对输入做 $s = \Theta(\sqrt{\varepsilon / \log(1/\varepsilon)})$ 倍缩放进入嵌入，输出再做 $s^{-1}$ 倍反缩放。这样原始距离 $\leq \sqrt{\log(1/\varepsilon)}$ 的对在嵌入空间里被精确保留，而 $\geq \sqrt{\log(1/\varepsilon)}$ 的对至少保持 $\Omega(\sqrt{\log(1/\varepsilon)})$（因此 Gaussian 项 $e^{-\|x-y\|^2}$ 都小于 $\varepsilon$，可以忽略）。
-    - 设计动机：直接用 BRS 嵌入解决的是"$\sqrt{\varepsilon}$ 阈值"，对 KDE 来说不够；缩放把阈值 shift 到正确尺度，使整体保 KDE 精度。
+要证 $\Phi$ 不把小距离收缩超过 $(1-\varepsilon)$ 倍（Theorem 1.3 的 item 2），二阶矩分析不够用。作者从 Taylor 下界 $1-\cos(\theta)\ge\tfrac12\theta^2-\tfrac{1}{24}\theta^4$ 出发，得到
+
+$$\|\Phi(x)-\Phi(y)\|^2 \ge Q(z)-\tfrac{1}{12}W(z),\quad Q(z)=\tfrac1m\|Vz\|^2,\ W(z)=\tfrac1m\sum_j (Vz)_j^4.$$
+
+二阶项 $Q(z)$ 用 Bernstein 不等式压住即可，难的是四阶项 $W(z)$——它是高斯 chaos 函数，作者用恒等式 $t^4-3=6h_2(t)+h_4(t)$ 把它拆成第 2 和第 4 阶 Wiener chaos，分别用 Bernstein 和 Wiener chaos 超收缩（Theorem 3.6）控制。这一步是全文最核心的技术创新：Le-Sarlós-Smola 2013 的 Fastfood 分析只用 Lipschitz Gaussian 集中、只能给二阶矩，而证 collapse 下界必须看到 $(Vz)_j^4$ 的方差，那就非得动用 chaos 分解和超收缩不可。
+
+**3. 缩放 trick 把"小距离阈值"对齐到 Gaussian KDE 的有效距离。**
+
+BRS 嵌入精确保留的是 $\le\sqrt{\varepsilon}$ 的小距离，但 Gaussian KDE 真正在乎的阈值是 $\sqrt{\log(1/\varepsilon)}$（再远 $e^{-\|x-y\|^2}\le\varepsilon$ 可忽略），两个尺度对不上。作者用一个干净的缩放把它们对齐：输入先放大 $s=\Theta(\sqrt{\varepsilon/\log(1/\varepsilon)})$ 倍进入嵌入，输出再缩回 $s^{-1}$ 倍。于是原始距离 $\le\sqrt{\log(1/\varepsilon)}$ 的点对在嵌入空间被精确保留，$\ge\sqrt{\log(1/\varepsilon)}$ 的点对至少保持 $\Omega(\sqrt{\log(1/\varepsilon)})$、对应的 Gaussian 项都小于 $\varepsilon$ 可以丢掉。反缩放后点落在半径 $s^{-1}$ 的球面上、新直径 $\widehat\Delta=2s^{-1}=\widetilde O(1/\sqrt\varepsilon)$，正好把直径压到能让外层 Fastfood 跑出 $\widetilde O(1/\varepsilon^3)$ 的程度——这就是新 bound 里直径项变成"乘 $\varepsilon$"而非"除 $\varepsilon$"的来源。
 
 ### 损失函数 / 训练策略
 本文是纯理论文章，没有训练或优化目标。所有"参数"（嵌入维度 $m$、缩放因子 $s$、Hadamard 阶数）都由理论分析显式确定。
