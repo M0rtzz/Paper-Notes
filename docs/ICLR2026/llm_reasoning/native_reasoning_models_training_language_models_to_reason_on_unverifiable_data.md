@@ -41,36 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入 (question $x$, answer $y^*$) → 模型采样推理链 $z \sim \pi_\theta(z|x)$ → 计算模型在 $z$ 条件下预测 $y^*$ 的 token 级概率 $c_i = \pi_\theta(y^*_i|x,z,y^*_{<i})$ → 将概率聚合为 trace-level 奖励 $R(z,\theta)$ → GRPO 策略梯度更新 $\theta$。
+NRT 要回答的是：手上只有 (question $x$, answer $y^*$) 对、既没有推理示范也没有外部验证器时，怎么训练模型生成有用的推理链。它的做法是让模型自己当裁判。对每个问题，模型先采样一条推理链 $z \sim \pi_\theta(z|x)$，然后在读完这条推理后逐 token 地去预测参考答案，得到 token 级概率 $c_i = \pi_\theta(y^*_i \mid x, z, y^*_{<i})$。把这些概率聚合成一条 trace 级的奖励 $R(z,\theta)$——推理链越能帮模型说对答案，奖励越高——最后用 GRPO 策略梯度更新 $\theta$。整个回路里没有任何外部信号，奖励完全来自模型自身的预测置信度。
 
 ### 关键设计
 
-1. **隐变量推理范式**:
+**1. 隐变量推理范式：把推理链当成无标注的隐变量，用"能否帮自己答对"来评价。**
 
-    - 功能：推理链 $z$ 不由外部标注，而是模型自己生成并自我评估
-    - 核心思路：好的推理 $z$ 应增加 $\pi_\theta(y^*|x,z)$，即模型读完推理后对正确答案更"有信心"
-    - 设计动机：这是不依赖外部验证的唯一自洽方式——模型既是学生也是老师
+不可验证领域的根本困境是没有验证器能判断一条推理对不对。NRT 绕开这个问题：既然没人能标注 $z$，那就不标注，把 $z$ 当隐变量，让模型自己生成、自己评估。判据是一个朴素但自洽的假设——一条好的推理 $z$ 应当抬高模型对正确答案的预测概率 $\pi_\theta(y^*\mid x,z)$，也就是读完推理后模型对正确答案更"有信心"。这样模型同时扮演学生（生成推理）和老师（用预测置信度打分），是不依赖外部验证时唯一自洽的奖励来源。
 
-2. **加权求和奖励（Weighted Sum）**:
+**2. 加权求和奖励：按 token 难度反比加权，让奖励聚焦在难预测的关键词上。**
 
-    - 功能：用 token 级概率的加权和作为奖励，权重反比于 token 的基础难度
-    - 核心思路：逆概率加权 $w_i \propto 1/c_{i,base}$ 让简单 token（如"the"）权重趋近 0，难 token（如关键事实词）权重放大
-    - 设计动机：标准 logP 奖励被简单 token 主导，模型学不到对困难预测的改进。-log p 加权方案在 Llama-3.1-8B 上比 logP 高 3.3 分
-    - 与理论联系：-log p 加权等价于交叉熵 $-\sum c_j \log c_{j,base}$，直接优化模型在困难 token 上的 KL 散度减小
+如果直接用 token 概率的对数和（标准 logP）做奖励，信号会被"the""of"这类高频简单 token 主导，它们本来概率就接近 1，模型在它们身上学不到任何对困难预测的改进。NRT 改成加权求和，权重反比于 token 的基础难度 $w_i \propto 1/c_{i,base}$：简单 token 权重趋近 0，关键事实词这类难 token 权重被放大。实践中最有效的是 $-\log p$ 加权方案，在 Llama-3.1-8B 上比 logP 高 3.3 分。这个方案还有理论解释——$-\log p$ 加权等价于交叉熵 $-\sum c_j \log c_{j,base}$，等于直接去缩小模型在困难 token 上的 KL 散度，因此优化压力天然集中在模型最不确定的地方。
 
-3. **奖励稳定化**:
+**3. 奖励稳定化：减基线 + 组内归一化，避开 RL 训练的策略崩塌。**
 
-    - 功能：clipped reward $R' = \max(0, R - R_{base})$ + group-wise normalization
-    - 核心思路：减去基线（无推理链时的奖励）使奖励差异化；组内标准化使 GRPO 梯度稳定
-    - 设计动机：RLPR 等方法存在严重的策略崩塌问题（推理链熵→0，质量→0），NRT 全程保持高熵和高质量
+RLPR 这类方法有个致命问题：训练几步后推理链的熵迅速塌到 0，模型退化成不再认真推理、质量直接归零。NRT 用两步稳住训练。先做 clipped reward $R' = \max(0,\, R - R_{base})$，减去"没有推理链时"的基线奖励，让只有真正帮上忙的推理才拿到正奖励，把推理的增益和答案本身的难易解耦开；再做组内（group-wise）标准化，使 GRPO 在一组采样里的梯度尺度稳定。靠这两点，NRT 全程保持高熵和高质量推理，没有出现 RLPR 的崩塌。
 
-4. **格式监督损失**:
+**4. 格式监督损失：用一个轻量约束逼模型真去推理而不是跳步。**
 
-    - 功能：额外损失确保模型输出包含 `<think>...</think>` 标签包裹推理
-    - 权重 0.3，防止模型跳过推理直接输出答案
+只有内在奖励时，模型有偷懒的捷径——跳过推理直接输出答案。NRT 加一个权重 0.3 的格式监督损失，要求输出必须用 `<think>...</think>` 标签包住推理过程，确保推理链真实存在、奖励信号有的放矢。
 
 ### 损失函数 / 训练策略
-$J(\theta) = \mathbb{E}_{z \sim \pi_\theta}[R(z,\theta)]$，用 GRPO + 重要性采样优化。梯度分解为 trace policy gradient（强化整条推理链）+ token prediction gradient（加权 token 级预测更新）。训练数据 200K 样本来自 tulu-3-sft-mixture，平均响应长度 415 tokens。
+总目标是最大化期望奖励 $J(\theta) = \mathbb{E}_{z \sim \pi_\theta}[R(z,\theta)]$，用 GRPO 配重要性采样优化。它的梯度可以分解成两部分：trace policy gradient 强化整条推理链（推理好就整体上调它的采样概率），token prediction gradient 则按前面的难度权重对 token 级预测做更新。训练用 200K 样本，取自 tulu-3-sft-mixture，平均响应长度 415 tokens。
 
 ## 实验关键数据
 
@@ -142,7 +134,7 @@ $J(\theta) = \mathbb{E}_{z \sim \pi_\theta}[R(z,\theta)]$，用 GRPO + 重要性
 - [\[ICLR 2026\] Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
 - [\[CVPR 2026\] Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models](../../CVPR2026/llm_reasoning/understanding_the_role_of_hallucination_in_reinforcement_post-training_of_multim.md)
 - [\[ACL 2026\] Efficient PRM Training Data Synthesis via Formal Verification](../../ACL2026/llm_reasoning/efficient_prm_training_data_synthesis_via_formal_verification.md)
-- [\[ICML 2026\] DecepChain: Inducing Deceptive Reasoning in Large Language Models](../../ICML2026/llm_reasoning/decepchain_inducing_deceptive_reasoning_in_large_language_models.md)
+- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 
 </div>
 

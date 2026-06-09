@@ -127,7 +127,7 @@ CoSiNE 在 7 个数据集中的 6 个上取得最佳，特别在跨物种（Adam
 - [\[ICML 2026\] Cross-Chirality Generalization by Axial Vectors for Hetero-Chiral Protein-Peptide Interaction Design](cross-chirality_generalization_by_axial_vectors_for_hetero-chiral_protein-peptid.md)
 - [\[ICML 2026\] DNAChunker: Learnable Tokenization for DNA Language Models](dnachunker_learnable_tokenization_for_dna_language_models.md)
 - [\[ICML 2026\] What Makes a Representation Good for Single-Cell Perturbation Prediction?](what_makes_a_representation_good_for_single-cell_perturbation_prediction.md)
-- [\[ICML 2026\] CARD: Coarse-to-fine Autoregressive Modeling with Radix-based Decomposition for Transferable Free Energy Estimation](card_coarse-to-fine_autoregressive_modeling_with_radix-based_decomposition_for_t.md)
+- [\[ICML 2026\] From Feasible to Practical: Pareto-Optimal Synthesis Planning](from_feasible_to_practical_pareto-optimal_synthesis_planning.md)
 
 </div>
 

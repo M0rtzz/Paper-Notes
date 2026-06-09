@@ -41,50 +41,19 @@ tags:
 
 ### 整体框架
 
-EWC-LoRA 使用单一共享 LoRA 模块跨所有任务训练，通过 Fisher 信息矩阵正则化更新方向，任务完成后将更新合并到基础权重中。
+EWC-LoRA 抛弃"每个任务一组 LoRA"的扩张式做法，全程只维护一组共享的 LoRA 模块和一个对角 Fisher 矩阵。每个新任务在这组共享模块上更新，并用累积的 Fisher 信息把更新方向约束在不破坏旧知识的子空间里，任务训练结束后把低秩更新合并回基础权重，从而在恒定存储下完成持续学习。
 
-### 1. 问题形式化
+### 关键设计
 
-对于任务 $\mathcal{T}_t$，将权重更新限制在低秩子空间：
+**1. 低秩参数化的问题形式化：把权重更新锁在低秩子空间，为正则化提供恒定大小的载体。** 对于任务 $\mathcal{T}_t$，方法不直接改动庞大的基础权重，而是把这一任务带来的改变限制在一个低秩增量上，即 $\mathbf{W}_t = \mathbf{W}_{t-1} + \Delta\mathbf{W} = \mathbf{W}_{t-1} + \mathbf{AB}$，其中 $\mathbf{A} \in \mathbb{R}^{d_O \times r}$、$\mathbf{B} \in \mathbb{R}^{r \times d_I}$，秩 $r \ll \min(d_I, d_O)$。这样每个任务只需训练 $\mathbf{A}$ 和 $\mathbf{B}$ 两个小矩阵，既继承了 LoRA 的参数高效性，又让后续要正则化的对象始终是同一组共享参数，避免了存储随任务数线性膨胀。
 
-$$
-\mathbf{W}_t = \mathbf{W}_{t-1} + \Delta\mathbf{W} = \mathbf{W}_{t-1} + \mathbf{AB}
-$$
-
-其中 $\mathbf{A} \in \mathbb{R}^{d_O \times r}$，$\mathbf{B} \in \mathbb{R}^{r \times d_I}$，$r \ll \min(d_I, d_O)$。
-
-### 2. 全维空间 Fisher 正则化
-
-关键创新：不在低秩空间（A 和 B）上分别计算 Fisher，而是在全维空间 $\Delta\mathbf{W}$ 上正则化：
+**2. 全维空间 Fisher 正则化：在 $\Delta\mathbf{W}$ 而非 A、B 上度量重要性，保住两者的交互信息。** 朴素地把 EWC 套到 LoRA 上，会分别给 $\mathbf{A}$ 和 $\mathbf{B}$ 各算一份 Fisher 再各自惩罚，但 $\mathbf{A}$、$\mathbf{B}$ 只有乘起来才有物理意义，拆开度量会丢掉两者的耦合、扭曲重要性估计。EWC-LoRA 因此把正则化作用在合成后的全维增量 $\Delta\mathbf{W}=\mathbf{AB}$ 上：
 
 $$
 \mathcal{L}_t'(\mathbf{A}, \mathbf{B}) = \mathcal{L}_t(\mathbf{A}, \mathbf{B}) + \frac{\lambda}{2} \text{vec}(\mathbf{AB})^\top \mathbf{F}_{t-1}^{\text{cum}} \text{vec}(\mathbf{AB})
 $$
 
-其中 $\mathbf{F}_{t-1}^{\text{cum}}$ 是累积的对角 Fisher 矩阵。
-
-### 3. Fisher 矩阵估计
-
-在任务 $\mathcal{T}_t$ 训练完成后估计 Fisher 矩阵：
-
-$$
-F_t^{i,i} = \mathbb{E}_{x \sim \mathcal{D}_t}\left[\mathbb{E}_{y \sim p_{\mathbf{W}_t^*}}\left[\left(\frac{\partial \log p_{\mathbf{W}}(y|x)}{\partial w_i}\bigg|_{\mathbf{W}=\mathbf{W}_t^*}\right)^2\right]\right]
-$$
-
-由于只有 $\Delta\mathbf{W}$ 可训练，$\mathbf{W}$ 和 $\Delta\mathbf{W}$ 空间的梯度等价，无需额外计算。
-
-### 4. 训练流程
-
-1. 初始化 LoRA 分支（A 零初始化，B 均匀分布初始化）
-2. 训练时冻结基础权重 $\mathbf{W}_{t-1}$，仅更新 A 和 B
-3. 使用 $\mathbf{F}_{t-1}^{\text{cum}}$ 正则化 $\Delta\mathbf{W} = \mathbf{AB}$
-4. 任务完成后合并：$\mathbf{W}_t = \mathbf{W}_{t-1} + \mathbf{AB}$
-5. 估计 $\mathbf{F}_t$ 并更新累积 Fisher：$\mathbf{F}_t^{\text{cum}}$
-6. 丢弃任务数据和任务 Fisher
-
-### 三种 Fisher 估计策略对比
-
-论文理论证明并实验验证了分别正则化低秩矩阵是次优的：
+其中 $\mathbf{F}_{t-1}^{\text{cum}}$ 是到上一个任务为止累积的对角 Fisher 矩阵，$\lambda$ 控制正则化强度。论文从理论与实验两方面验证了"分别正则化低秩矩阵是次优的"：
 
 | 策略 | $\bar{A}_{10}$ | 稳定性 | 可塑性 | 额外内存 |
 |------|----------------|--------|--------|---------|
@@ -92,6 +61,20 @@ $$
 | 预计算 $\mathbf{F}_{\mathbf{W}}$ | 83.87 | 93.15 | 94.74 | 1 GB |
 | 分别 $\mathbf{F}_{\mathbf{A}}, \mathbf{F}_{\mathbf{B}}$ | 86.41 | 94.23 | 96.47 | 4 GB |
 | **全维 $\mathbf{F}_{\Delta\mathbf{W}}$ (本文)** | **87.91** | **94.45** | 97.99 | 6 GB |
+
+分别度量 $\mathbf{F}_{\mathbf{A}}, \mathbf{F}_{\mathbf{B}}$ 比全维方案低约 1.5%，印证了交互信息不可丢弃。
+
+**3. 借梯度等价免去全维存储的 Fisher 估计：准确度量参数重要性，又不付出三倍模型的代价。** 在任务 $\mathcal{T}_t$ 训练收敛后，方法按经典定义估计对角 Fisher：
+
+$$
+F_t^{i,i} = \mathbb{E}_{x \sim \mathcal{D}_t}\left[\mathbb{E}_{y \sim p_{\mathbf{W}_t^*}}\left[\left(\frac{\partial \log p_{\mathbf{W}}(y|x)}{\partial w_i}\bigg|_{\mathbf{W}=\mathbf{W}_t^*}\right)^2\right]\right]
+$$
+
+直接对 PTM 做 EWC 之所以代价高昂，是因为它要额外存旧模型副本和全维 Fisher，内存接近三倍模型大小。这里的关键观察是：既然只有低秩增量 $\Delta\mathbf{W}$ 可训练，对 $\mathbf{W}$ 求的梯度与对 $\Delta\mathbf{W}$ 求的梯度在可训练方向上完全等价，因此无需显式构造或存储全维更新就能拿到所需的重要性度量——这正是全维 Fisher 既准确又不爆内存的原因。
+
+### 损失函数 / 训练策略
+
+每个任务的训练与收尾遵循固定流程：先初始化共享 LoRA 分支（$\mathbf{A}$ 零初始化、$\mathbf{B}$ 均匀分布初始化），训练时冻结基础权重 $\mathbf{W}_{t-1}$ 只更新 $\mathbf{A}$、$\mathbf{B}$，并用累积 Fisher $\mathbf{F}_{t-1}^{\text{cum}}$ 对 $\Delta\mathbf{W}=\mathbf{AB}$ 施加上式正则化；任务结束后把更新合并回基础权重 $\mathbf{W}_t = \mathbf{W}_{t-1} + \mathbf{AB}$，估计本任务 Fisher $\mathbf{F}_t$ 并叠加到累积矩阵 $\mathbf{F}_t^{\text{cum}}$，随后即可丢弃任务数据与单任务 Fisher。整个过程始终只携带一组 LoRA 加一个对角 Fisher，存储不随任务数增长。
 
 ## 实验
 

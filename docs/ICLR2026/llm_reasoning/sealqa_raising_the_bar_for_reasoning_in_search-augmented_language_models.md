@@ -40,32 +40,15 @@ tags:
 
 ### 整体框架
 
-SealQA包含三种变体：
-1. **Seal-0**（111题）：核心集，每道题在GPT-4o、GPT-4.1等多个前沿模型10-15次尝试中准确率均为0%
-2. **Seal-Hard**（254题）：包含Seal-0及其他未达严格零准确率阈值但仍极具挑战性的问题
-3. **LongSeal**（254题）：needle-in-a-haystack变体，每题配一个gold文档和最多50个hard negative，测试长上下文多文档推理
+SealQA是一个由NLP研究者手工策划的搜索增强推理基准，核心思路是反向设计每道题，让搜索本身成为陷阱而非帮助。它含三种变体——核心集Seal-0（111题，每题在GPT-4o、GPT-4.1等多个前沿模型10-15次尝试中准确率均为0%）、更宽松的Seal-Hard（254题，含Seal-0及其他未达零准确率阈值但仍极具挑战性的问题）、以及needle-in-a-haystack式的LongSeal（254题，每题配gold文档+最多50个hard negative）。题目横跨5类挑战：高级推理 $\mathcal{Q}_1$（72.4%）、实体/事件消歧 $\mathcal{Q}_2$（58.3%）、时间追踪 $\mathcal{Q}_3$（13.7%）、跨语言推理 $\mathcal{Q}_4$（5.5%）、虚假前提检测 $\mathcal{Q}_5$（4.3%），多数题同时命中两类以上。
 
-问题横跨5类：高级推理 $\mathcal{Q}_1$（72.4%）、实体/事件消歧 $\mathcal{Q}_2$（58.3%）、时间追踪 $\mathcal{Q}_3$（13.7%）、跨语言推理 $\mathcal{Q}_4$（5.5%）、虚假前提检测 $\mathcal{Q}_5$（4.3%）。
+### 关键设计
 
-### 关键设计1: 对抗性数据收集流程
+**1. 对抗性数据收集流程：让题目难到所有前沿模型都答不出来。** 现有基准之所以饱和，是因为题目本身浅——top检索结果就能直接作答。SealQA反其道而行，每道题由NLP研究者亲手编写并迭代精炼，直到GPT-4o、GPT-4.1等多个模型在10-15次尝试中全部失败才被收入Seal-0。这种"对抗最强模型"的筛选标准把SimpleQA"GPT-4失败"的门槛进一步抬高。流程上每题先由2名以上研究生级审核者审查、再经专家批准，平均开发时间超过1小时（约45分钟起草加额外审核修订），6名研究者历时8个月。这样做的代价是规模小，但小规模恰好换来两个好处：一是大幅降低API评估成本，允许频繁更新答案对抗数据污染；二是手工对抗筛选保证了难度不会随模型变强而快速失效。
 
-**功能**：确保每道题对前沿LLM构成实质挑战。
+**2. LongSeal多文档推理构建：在50个干扰文档里藏一根针。** 仅靠难题还不足以考察检索鲁棒性，因为真实场景的难点是模型要从一堆似是而非的文档中挑出真正有用的证据。LongSeal为每道Seal-Hard题配一组文档：1个gold文档（来自标注者提供的网页）外加最多50个hard negative。这些negative不是随机抓取，而是刻意构造的强干扰——Google检索的top-10网页、限制2023年前内容的额外10页、再加上用GPT-4o-mini生成的3个语义相关查询所返回的结果，最后还用GPT-4o-mini过滤掉那些可能让模型反推出正确答案的文档。由此得到的长上下文既考验模型抵抗噪声的能力，也暴露其位置偏差和相关性建模的短板。
 
-**核心思路**：每道题由NLP研究者编写，经过严格的多轮审核流程——首先由2+名研究生级审核者审查，再经专家批准。对Seal-0，每道题迭代精炼直至GPT-4o、GPT-4.1等多个模型在10-15次尝试中全部失败。每道题平均开发时间超过1小时（约45分钟起草+额外审核修订时间），6名NLP研究者历时8个月。
-
-**设计动机**：通过对抗性收集避免数据污染问题，确保基准难度随时间保持有效。小规模基准降低API评估成本，允许更频繁更新。
-
-### 关键设计2: LongSeal多文档推理构建
-
-**功能**：测试模型在大量干扰文档中识别和利用相关证据的能力。
-
-**核心思路**：每道Seal-Hard题配备一组检索文档——1个gold文档（来自标注者提供的网页）和最多50个hard negative。hard negative通过Google检索top-10网页、限制2023年前内容的额外10页、以及GPT-4o-mini生成的3个语义相关查询获取。使用GPT-4o-mini过滤可能推断出正确答案的negative。
-
-**设计动机**：测试在噪声检索条件下的长上下文推理，考察位置偏差和相关性建模能力。
-
-### 评估协议
-
-采用GPT-4o-mini自动评分器（改编自SimpleQA），取问题、预测答案和参考答案作为输入，标记"correct"/"incorrect"/"not attempted"。人工评估100个答案，与自动评分器一致率达98%。
+**3. 自动评分协议：用LLM裁判替代人工但保持高一致性。** 开放式问答的评估难点在于答案表述多样、难以用字符串匹配判分。SealQA改编自SimpleQA的GPT-4o-mini评分器，输入问题、预测答案和参考答案，输出"correct"/"incorrect"/"not attempted"三态判定，从而把答错和弃答区分开。为验证可靠性，作者人工评估了100个答案，与自动评分器的一致率达98%，说明该裁判足以支撑大规模、可复现的评测。
 
 ## 实验关键数据
 
@@ -139,8 +122,8 @@ SealQA包含三种变体：
 - [\[ICLR 2026\] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
 - [\[ICML 2026\] Prism: Efficient Test-Time Scaling via Hierarchical Search and Self-Verification for Discrete Diffusion Language Models](../../ICML2026/llm_reasoning/prism_efficient_test-time_scaling_via_hierarchical_search_and_self-verification_.md)
 - [\[ICLR 2026\] Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
-- [\[ICLR 2026\] Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
-- [\[ICLR 2026\] Conflict-Aware Fusion: Resolving Logic Inertia in Large Language Models via Structured Cognitive Priors](conflict-aware_fusion_resolving_logic_inertia_in_large_language_models_via_struc.md)
+- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
+- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
 
 </div>
 

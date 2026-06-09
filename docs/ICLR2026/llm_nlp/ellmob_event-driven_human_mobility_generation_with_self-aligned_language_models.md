@@ -41,58 +41,19 @@ tags:
 
 ### 整体框架
 
-ELLMob 包含三个互联模块：（1）事件模式构建（Event Schema Construction），将原始事件叙述结构化；（2）轨迹生成模块，利用 LLM 生成候选轨迹；（3）基于 Gist 的反思式自对齐，迭代调和竞争决策。
+ELLMob 把事件驱动轨迹生成形式化为映射 $F: (D_{\text{long-term}}^{(u)}, D_{\text{short-term}}^{(u)}, E_{ctx}) \mapsto \tau$，输入用户事件前的长期历史轨迹 $D_{\text{long-term}}^{(u)}$、近期短期轨迹 $D_{\text{short-term}}^{(u)}$ 和结构化事件上下文 $E_{ctx}$，输出事件期间的轨迹 $\tau$。整个流程由三个模块串联：先把自由文本事件叙述结构化成事件模式，再让 LLM 把历史模式与事件约束各自压缩成"gist"并生成候选轨迹，最后通过反思式自对齐迭代审计与纠正，直到候选同时满足习惯合理性和事件合规性。
 
 ### 关键设计
 
-**事件模式构建（Event Schema Construction）：**
+**1. 事件模式构建：把自由文本事件变成 LLM 可推理的结构化约束。** 原始事件描述（如台风预警、防疫通告）是非结构化长文本，LLM 难以稳定地从中抽取出与移动决策相关的关键约束。ELLMob 把事件叙述拆解成四个固定维度——事件档案（类型、名称、发生时间、影响区域）、强度与规模（风速、降水量等量化指标）、基础设施影响（交通与公共场所运营状态）、官方指令（政府命令及其适用人群与地理范围）。这样每个事件都被映射到同一套字段上，后续推理可以直接引用"哪条铁路停运""哪个区域被封锁"这类离散事实，而不是反复解析原始文本，既降低了幻觉风险也让约束可追溯。
 
-将自由文本的事件描述转化为结构化表示，涵盖四个维度：
-- 事件档案（Event Profile）：类型、名称、发生时间、影响区域
-- 强度与规模（Intensity & Scale）：风速、降水量等量化指标
-- 基础设施影响（Infrastructure Impact）：交通、公共场所运营状态
-- 官方指令（Official Directives）：政府命令、适用人群和地理范围
+**2. 基于模糊痕迹理论的三类 Gist：用语言化的"要点"调和习惯与事件的竞争。** 模糊痕迹理论（FTT）认为人决策时依赖的是对信息提炼后的"gist"（要旨）而非逐字细节，而 gist 恰好可以用自然语言表达，这正是把 FTT 嫁接到 LLM 上的关键。ELLMob 据此提取三层 gist：**模式 gist** 从历史轨迹中归纳用户的核心行为（每日通勤至办公室）、惯性锚点（夜间必回的家）和脆弱点（依赖单一可能停运的铁路线）；**事件 gist** 从事件模式中提炼首要意图（户外高风险、强留家激励）、行为影响（从沿海撤离寻找室内庇护）和风险-收益评估（受伤风险超过非必要外出收益）；**行动 gist** 则在生成每段行程时显式标注首要意图、习惯遵循度（低：偏离通常通勤）和事件合规度（高：短途且避开危险区）。三层 gist 把"用户内在规律"与"外部事件冲击"两股竞争力量都摊到台面上，让模型在生成时同时看到双方诉求，而不是默认偏向其中一方。
 
-**基于模糊痕迹理论的三类 Gist 提取：**
-
-| Gist 类型 | 属性 | 描述 | 示例 |
-|-----------|------|------|------|
-| 模式 Gist | 核心行为 | 主要行动模式 | 每日通勤至办公室 |
-| | 惯性锚点 | 深层嵌入、不可协商的组件 | 夜间回到特定社区的家 |
-| | 脆弱点 | 关键依赖和单点故障 | 依赖可能停运的单一铁路线 |
-| 事件 Gist | 首要意图 | 事件对移动决策的核心影响 | 户外高风险，强留家激励 |
-| | 行为影响 | 生存、社会动态和合规性 | 从沿海撤离，寻找室内庇护 |
-| | 风险-收益评估 | 对事件风险的成本效益分析 | 受伤风险超过非必要外出收益 |
-| 行动 Gist | 首要意图 | 驱动轨迹选择的主要目的 | 从附近商店采购必需品 |
-| | 习惯遵循度 | 保留习惯模式的程度 | 低：偏离通常工作通勤 |
-| | 事件合规度 | 遵循事件约束的程度 | 高：短途且避开危险区域 |
-
-**反思式自对齐（Reflection-based Alignment）：**
-
-两阶段迭代过程：
-
-1. **对齐审计（Alignment Auditing）：** 沿两个二元维度检查候选轨迹
-    - 内部对齐（Internal Alignment）：轨迹是否反映用户内在习惯移动模式？
-    - 外部对齐（External Alignment）：轨迹是否是对事件约束的合理合规响应？
-    - 仅当两项标准均满足时轨迹被接受
-
-2. **纠正精炼（Corrective Refinement）：** 失败时提供精确的失败原因作为反馈，引导重新生成。最多迭代 $K=3$ 次，超时采用缓冲区最近有效轨迹并报告未满足约束。
+**3. 反思式自对齐：用双维审计 + 纠正反馈把竞争决策迭代收敛到合理解。** 单次生成的候选轨迹常出现两类失败——要么完全跟随习惯而无视事件约束，要么被事件主导以致连工作锚点也被压制。ELLMob 用两阶段迭代来纠偏。第一阶段是对齐审计，沿两个二元维度检查候选：内部对齐问"轨迹是否反映用户内在习惯模式"，外部对齐问"轨迹是否是对事件约束的合理合规响应"，只有两项同时通过候选才被接受。一旦某维度失败，进入第二阶段纠正精炼，把精确的失败原因作为反馈喂回 LLM 引导重新生成。整个循环最多迭代 $K=3$ 次，超时则取缓冲区中最近一次有效轨迹并显式报告未满足的约束，避免陷入死循环。消融显示这套自对齐相对无对齐变体平均带来 69.5% 的性能提升，是框架收益的主要来源。
 
 ### 训练策略
 
-- 主要 backbone：GPT-4o-mini (2025-01-01-preview)
-- 温度 0.1、Top-p 1
-- 10 分钟时间分辨率建模轨迹
-- 空间网格参数 $S = 10$
-- 最大迭代次数 $K = 3$（基于参数研究）
-
-**问题形式化：**
-
-$$F: (D_{\text{long-term}}^{(u)}, D_{\text{short-term}}^{(u)}, E_{ctx}) \mapsto \tau$$
-
-- 长期轨迹 $D_{\text{long-term}}^{(u)}$：事件前较早时期的历史轨迹
-- 短期轨迹 $D_{\text{short-term}}^{(u)}$：事件前近期轨迹
-- 事件上下文 $E_{ctx}$：结构化事件模式
+ELLMob 不微调模型，主干直接用 GPT-4o-mini（2025-01-01-preview），生成时温度设为 0.1、Top-p 为 1 以保证决策稳定。轨迹按 10 分钟时间分辨率建模，空间网格参数取 $S=10$，自对齐最大迭代次数 $K=3$（基于参数研究确定）。
 
 ## 实验关键数据
 
@@ -189,7 +150,7 @@ $$F: (D_{\text{long-term}}^{(u)}, D_{\text{short-term}}^{(u)}, E_{ctx}) \mapsto 
 - [\[ICLR 2026\] Optimas: Optimizing Compound AI Systems with Globally Aligned Local Rewards](optimas_optimizing_compound_ai_systems_with_globally_aligned_local_rewards.md)
 - [\[ACL 2025\] HyGenar: An LLM-Driven Hybrid Genetic Algorithm for Few-Shot Grammar Generation](../../ACL2025/llm_nlp/hygenar_an_llm-driven_hybrid_genetic_algorithm_for_few-shot_grammar_generation.md)
 - [\[ACL 2026\] EVE: A Domain-Specific LLM Framework for Earth Intelligence](../../ACL2026/llm_nlp/eve_a_domain-specific_llm_framework_for_earth_intelligence.md)
-- [\[ACL 2025\] BIPro: Zero-shot Chinese Poem Generation via Block Inverse Prompting Constrained Generation Framework](../../ACL2025/llm_nlp/bipro_zero-shot_chinese_poem_generation_via_block_inverse_prompting_constrained_.md)
+- [\[ICLR 2026\] GASP: Guided Asymmetric Self-Play For Coding LLMs](gasp_guided_asymmetric_self-play_for_coding_llms.md)
 
 </div>
 

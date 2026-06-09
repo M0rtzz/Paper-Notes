@@ -50,36 +50,29 @@ tags:
 
 ### 关键设计
 
-1. **注意力分析——分区级绑定的相关性证据**:
+**1. 注意力分析：从注意力层面证明结构化输入增强了同分区的视觉-文本对应。**
 
-    - 功能：验证结构化输入是否在注意力层面增强了同分区内的视觉-文本对应
-    - 核心思路：对每个token取所有head中的最大注意力分数，按4个分区聚合为4×4矩阵。仅在true positive物体上统计——模型正确描述的、图像中确实存在的物体，确保关联准确性。结果在500个样本和22-27层上平均
-    - 设计动机：结构化输入的注意力矩阵表现出明显更强的对角优势——同分区内的注意力集中，跨分区注意力减弱。这提供了初步证据：外部线索引导模型将注意力聚焦于相关区域
+这一步要回答的是"外部线索是否真的让模型把注意力收拢到了相关区域"。做法是对每个 token 取它在所有 head 上的最大注意力分数，再按 4 个分区聚合成一个 4×4 矩阵；统计只在 true positive 物体上进行——即模型正确描述、且图像中确实存在的物体，以保证关联的准确性，最终在 500 个样本、22–27 层上取平均。结果是结构化输入的注意力矩阵呈现出明显更强的对角优势：同分区内注意力集中、跨分区注意力减弱。这是外部线索把注意力引导到对应区域的第一份相关性证据。
 
-2. **模态差距分析——嵌入空间的对齐增强**:
+**2. 模态差距分析：从嵌入相似度量化跨模态对齐，并发现符号才是真正的锚点。**
 
-    - 功能：从嵌入相似度角度补充注意力分析，量化跨模态对齐程度
-    - 核心思路：计算对应视觉patch和文本token嵌入的逐层余弦相似度。结构化输入在20层之后一致地实现更高的跨模态相似度，尤其在最后4层（22-27层）差异最显著
-    - 关键发现：符号patch（&/#/$/@）的跨模态嵌入相似度**高于**物体patch本身——符号充当了比物体本身更强的跨模态锚点。这暗示模型通过符号空间建立桥梁来实现视觉-文本对齐
+注意力只说明"看哪里"，这一步从嵌入空间补充"对齐得有多紧"。做法是逐层计算对应视觉 patch 与文本 token 嵌入的余弦相似度。结构化输入在第 20 层之后持续取得更高的跨模态相似度，尤其在最后 4 层（22–27 层）差异最显著。更关键的发现是：符号 patch（&/#/\$/@）的跨模态相似度反而**高于**物体 patch 本身——也就是说，符号充当了比物体更强的跨模态锚点，模型是借由符号空间架桥来完成视觉-文本对齐的。
 
-3. **因果激活交换——Grounding IDs存在性的因果证明（核心贡献）**:
+**3. 因果激活交换：用干预实验把"相关"升级成"因果"，证明 Grounding IDs 真的驱动绑定（核心贡献）。**
 
-    - 功能：通过因果干预实验证明Grounding IDs因果性地决定了模型的绑定预测
-    - 核心思路：随机采样两个上下文 $c$（target）和 $c'$（source），选取两个符号（如 & 和 @），将 $c'$ 中这两行对应物体的所有层激活交换到 $c$ 中，得到patched context $c^*$。关键观察：模型在 $c^*$ 中的预测跟随**被交换物体在源上下文中绑定的符号**，而非物体在目标上下文中物理位置旁的符号
-    - 量化结果：标准准确率从无干预的1.00骤降至交换后的0.02，但swap accuracy（模型是否跟随被交换的绑定）高达**0.98**。这是极强的因果证据——符号-物体绑定被编码在物体的patch激活中，并通过交换传递
-    - 设计动机：纯相关性分析无法排除混淆因素，因果中介框架借鉴自mechanistic interpretability传统（Vig et al., 2020; Feng & Steinhardt, 2023），是证明内部机制的金标准
+前两步都只是相关性，无法排除混淆因素，所以这一步借用 mechanistic interpretability 的因果中介框架（Vig et al., 2020; Feng & Steinhardt, 2023）做干预。具体地，随机采样两个上下文——target $c$ 与 source $c'$——并选两个符号（如 & 和 @），把 $c'$ 中这两行对应物体的全层激活交换进 $c$，得到 patched context $c^*$。决定性的观察是：模型在 $c^*$ 中的预测跟随的是**被交换物体在源上下文里绑定的符号**，而不是它在目标上下文中物理位置旁的符号。量化上，标准准确率从无干预的 1.00 骤降到交换后的 0.02，而 swap accuracy（模型是否跟随被交换的绑定）高达 **0.98**。这是极强的因果证据：符号-物体的绑定信息被编码在物体的 patch 激活里，并随激活一起被搬运过去。
 
-4. **不相交符号实验——绑定的词汇性质**:
+**4. 不相交符号实验：进一步证明这种绑定是"词汇式"的，绑在符号字面量上而非上下文位置。**
 
-    - 功能：验证Grounding IDs是否与特定符号字面量绑定（词汇绑定），而非依赖上下文位置
-    - 核心思路：源上下文使用符号集 {&,$,#,@}，目标上下文使用完全不重叠的符号集 {!,%,×,+}。交换激活后，用源符号查询模型
-    - 关键发现：即使目标上下文中不存在符号&的任何显式出现，模型仍然以**0.86**的准确率输出与&绑定的物体（远高于随机水平0.25）。这证明Grounding IDs是词汇式编码——绑定信息直接嵌入在物体激活中，不依赖于上下文中符号的共现
+紧接上一步要追问的是：Grounding ID 到底绑在什么上？是绑在具体符号字面量（词汇绑定），还是依赖符号在上下文中的共现位置？为此让源上下文用符号集 {&,\$,#,@}，目标上下文用完全不重叠的 {!,%,×,+}，交换激活后再用源符号去查询模型。结果是：即便目标上下文里根本不存在符号 & 的任何显式出现，模型仍以 **0.86** 的准确率输出与 & 绑定的物体，远高于 0.25 的随机水平。这说明 Grounding IDs 是词汇式编码——绑定信息直接嵌进物体激活，不依赖符号在上下文中的共现。与 LLM 中上下文无关的 Binding IDs 形成对照。
 
-5. **逐层Grounding ID涌现分析**:
+**5. 逐层涌现分析：定位 Grounding IDs 在哪些层成形、由哪些注意力头传播。**
 
-    - 功能：定位Grounding IDs在哪些层涌现、哪些注意力头负责传播
-    - 核心思路：(a) **Logit lens**：在每层用unembedding矩阵解码，计算 $\Delta L^{(\ell)} = L^{(\ell)}(\mathbf{o}^s_{\sim s} | c^*) - L^{(\ell)}(\mathbf{o}^{\sim s}_s | c^*)$，即绑定物体 vs. 位置相邻物体的logit差异。20-27层变正，表明模型在后层开始偏向绑定物体。(b) **注意力头SNR**：计算每个head对绑定物体 vs. 相邻物体的注意力差异的信噪比。层16附近的特定head表现出最高SNR，是传播Grounding IDs的关键载体
-    - 设计动机：与Section 3中嵌入对齐在相同层（20-27层）增强的发现一致，形成相关性证据和因果证据的层级对应
+最后把"机制发生在网络何处"也钉死，用两个互补的探针。一是 **logit lens**：在每层用 unembedding 矩阵解码，计算绑定物体与位置相邻物体的 logit 差
+
+$$\Delta L^{(\ell)} = L^{(\ell)}(\mathbf{o}^s_{\sim s} \mid c^*) - L^{(\ell)}(\mathbf{o}^{\sim s}_s \mid c^*),$$
+
+该差值在 20–27 层转正，表明模型从后段开始偏向被绑定的物体。二是**注意力头 SNR**：对每个 head 计算它在"绑定物体 vs. 相邻物体"上注意力差异的信噪比，发现第 16 层附近的特定 head SNR 最高，是传播 Grounding IDs 的关键载体。这两条线索都落在与第 2 步嵌入对齐增强相同的层段（20–27 层），让相关性证据与因果证据在层级上对齐吻合。
 
 ### 损失函数 / 训练策略
 
@@ -184,9 +177,9 @@ tags:
 
 - [\[ICML 2026\] Formalizing the Binding Problem](../../ICML2026/interpretability/formalizing_the_binding_problem.md)
 - [\[ICLR 2026\] Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
+- [\[AAAI 2026\] Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/interpretability/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
 - [\[ACL 2026\] MINED: Probing and Updating with Multimodal Time-Sensitive Knowledge for Large Multimodal Models](../../ACL2026/interpretability/mined_probing_and_updating_with_multimodal_time-sensitive_knowledge_for_large_mu.md)
 - [\[NeurIPS 2025\] Empowering Decision Trees via Shape Function Branching](../../NeurIPS2025/interpretability/empowering_decision_trees_via_shape_function_branching.md)
-- [\[ICLR 2026\] How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
 
 </div>
 

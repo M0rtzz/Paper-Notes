@@ -35,27 +35,23 @@ tags:
 
 ### 整体框架
 
-给定输入 $(x_v, x_t)$，分别提取两种chain-of-embedding：
-- $Z_{\text{vis}}^l = f_l(X_v, X_t)$：有视觉输入时各层的最后token嵌入
-- $Z_{\text{blind}}^l = f_l(\varnothing, X_t)$：无视觉输入时各层的最后token嵌入
-
-在每一层 $l$ 计算两者之间的距离 $\mathbf{D}_l$，并在视觉依赖数据集 $\mathcal{D}_{VT}$ 和视觉无关数据集 $\mathcal{D}_T$ 上分别统计。
+核心思路是把同一个文本问题分别喂给模型两次——一次带图、一次把图抹掉，然后逐层对比两条隐藏表征轨迹（chain-of-embedding）的差异。给定输入 $(x_v, x_t)$，记带图轨迹为 $Z_{\text{vis}}^l = f_l(X_v, X_t)$、盲看轨迹为 $Z_{\text{blind}}^l = f_l(\varnothing, X_t)$，二者在第 $l$ 层最后一个token嵌入上的距离 $\mathbf{D}_l$ 就刻画了视觉信息在这一层产生了多大扰动，再分别在视觉依赖数据集 $\mathcal{D}_{VT}$ 与视觉无关数据集 $\mathcal{D}_T$ 上统计，便能定位视觉真正介入推理的层并量化语言先验的强弱。
 
 ### 关键设计
 
-1. **Visual Integration Point (VIP)**: 存在一个关键层 $l^*$，在该层之后 $\mathcal{D}_{VT}$ 和 $\mathcal{D}_T$ 的表征距离出现显著分化。VIP之前模型进行通用信息处理，VIP之后开始真正利用视觉信息进行任务特定推理。形式化为：$\mathbf{D}_l(\mathcal{P}_{VT}) - \mathbf{D}_l(\mathcal{P}_T) > \tau, \forall l \geq l^*$。关键发现是VIP在不同数据集上位置一致（是模型固有属性），但不同模型位置不同。
+**1. 视觉整合点 VIP：定位视觉信息从哪一层开始真正起作用。** 直接看整条轨迹的距离很难判断哪些扰动是有意义的视觉整合、哪些只是通用计算噪声，因为浅层无论有图无图都在做相似的语法/语义编码。作者发现存在一个关键层 $l^*$，从该层往后，视觉依赖样本与视觉无关样本的表征距离开始稳定分化，形式化为对所有 $l \geq l^*$ 都满足 $\mathbf{D}_l(\mathcal{P}_{VT}) - \mathbf{D}_l(\mathcal{P}_T) > \tau$。这意味着 VIP 之前模型在做与视觉无关的通用信息处理，VIP 之后才开始把视觉证据用于任务特定推理。最关键的观察是：VIP 的位置在不同数据集上几乎一致，说明它是模型自身的固有属性而非数据偶然，但不同模型的 VIP 落点不同（实验中通常在约 60% 深度处、与模型规模无关），这就为后续只在"有效层段"上度量视觉整合提供了依据。
 
-2. **Total Visual Integration (TVI)**: 聚合VIP之后所有层的表征距离来量化视觉整合的总量，定义为 $\text{TVI}(l^*; x, F_\theta) = \frac{1}{L - l^* + 1} \sum_{l=l^*}^{L} d(z_{\text{vis}}^l, z_{\text{blind}}^l)$。TVI越高表示视觉信息被充分利用，LP越弱；TVI越低表示模型仍被文本主导，LP越强。
+**2. 总视觉整合量 TVI：把 VIP 之后的距离聚合成语言先验强度的标量。** 有了 VIP，就只需关注它之后那些真正承载视觉整合的层，把这一段的逐层距离平均起来即可得到一个可比较的指标：$\text{TVI}(l^*; x, F_\theta) = \frac{1}{L - l^* + 1} \sum_{l=l^*}^{L} d(z_{\text{vis}}^l, z_{\text{blind}}^l)$。TVI 越高，说明带图与盲看的轨迹分得越开、视觉信息被利用得越充分、语言先验越弱；TVI 越低，则说明加不加图模型几乎没变化、仍被文本统计模式主导、语言先验越强。这样原本只能靠输入-输出探测间接推断的"先验依赖"，被压成了一个可直接和正确率对照的连续量，实验中它与正确率的 Spearman 相关在 post-VIP 段可达 0.72，远高于 pre-VIP 段。
 
-3. **数据划分策略**: 由于现有数据集不标注视觉依赖程度，采用预测一致性代理：若 $F_\theta(x_v, x_t) \neq F_\theta(\varnothing, x_t)$ 则归入 $\mathcal{D}_{VT}$，否则归入 $\mathcal{D}_T$。默认使用余弦距离作为度量。
+**3. 预测一致性的数据划分代理：在缺乏视觉依赖标注时切分两类样本。** 计算 VIP 需要区分"视觉依赖"和"视觉无关"两类样本，但现成数据集并不标注一道题到底依不依赖图。作者用一个轻量代理绕开标注：若抹掉图后预测发生变化，即 $F_\theta(x_v, x_t) \neq F_\theta(\varnothing, x_t)$，就把样本归入 $\mathcal{D}_{VT}$，否则归入 $\mathcal{D}_T$。逐层距离默认用余弦距离度量——消融显示余弦与 L2 都有效，而把表征先经 logit-lens 投影到输出空间再算 KL/JS 散度则会失效，说明信号主要藏在隐空间方向上而非输出分布里。
 
 ### 损失函数 / 训练策略
 
-TVI还可作为训练正则项提升LVLM性能。在LLaVA指令微调目标中加入：
+TVI 不止是分析工具，还能反过来当训练正则项推高视觉整合。作者在 LLaVA 指令微调目标里加一项把 TVI 顶上去的奖励：
 
 $$\mathcal{L}(x, y; \theta) = -\log F_\theta(y|x) - \lambda \cdot \text{TVI}(l^*; x, F_\theta)$$
 
-其中 $\lambda = 0.03$，鼓励模型更强地整合视觉信息。
+取 $\lambda = 0.03$，在标准的下一token预测损失之外鼓励模型让带图与盲看轨迹拉得更开、即更强地整合视觉证据，从而在不改架构的前提下缓解语言先验。
 
 ## 实验关键数据
 
@@ -132,8 +128,8 @@ $$\mathcal{L}(x, y; \theta) = -\log F_\theta(y|x) - \lambda \cdot \text{TVI}(l^*
 - [\[NeurIPS 2025\] Bridging Human and LLM Judgments: Understanding and Narrowing the Gap](../../NeurIPS2025/dialogue/bridging_human_and_llm_judgments_understanding_and_narrowing_the_gap.md)
 - [\[ACL 2026\] LOCKET: Robust Feature-Locking Technique for Language Models](../../ACL2026/dialogue/locket_robust_feature-locking_technique_for_language_models.md)
 - [\[AAAI 2026\] Auto-PRE: An Automatic and Cost-Efficient Peer-Review Framework for Language Generation Evaluation](../../AAAI2026/dialogue/auto-pre_an_automatic_and_cost-efficient_peer-review_framework_for_language_gene.md)
+- [\[NeurIPS 2025\] Less is More: Local Intrinsic Dimensions of Contextual Language Models](../../NeurIPS2025/dialogue/less_is_more_local_intrinsic_dimensions_of_contextual_language_models.md)
 - [\[ICML 2025\] Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents](../../ICML2025/dialogue/position_uncertainty_quantification_needs_reassessment_for_large-language_model_.md)
-- [\[ACL 2025\] UniConv: Unifying Retrieval and Response Generation for Large Language Models in Conversations](../../ACL2025/dialogue/uniconv_retrieval_response_gen.md)
 
 </div>
 

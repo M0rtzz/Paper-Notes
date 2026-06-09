@@ -36,30 +36,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为包含多张图像和文本prompt的多模态序列，其中图像token之间穿插有分隔符token。方法在模型的中间层或所有层对分隔符token的隐藏状态乘以缩放因子 $\alpha > 1$，输出为模型的最终预测。整个过程是training-free的推理时干预。
+输入是一段包含多张图像和文本 prompt 的多模态序列，图像 token 之间穿插着标记每张图起止的分隔符 token（如 `<image_start>`/`<image_end>`）。LVLM 原本就带这些分隔符，但它们在注意力里几乎不起边界作用，跨图信息照样相互渗透。本文的全部改动只有一步：在前向传播时，把分隔符 token 的隐藏状态乘上一个缩放因子 $\alpha > 1$，让它在后续注意力计算中变成一道更明显的"隔离墙"，其余模型权重和流程完全不动。整个干预只发生在推理时，是 training-free 的。
 
 ### 关键设计
 
-1. **分隔符token隐藏状态缩放（Delimiter Token Scaling）**: 
+**1. 分隔符 token 隐藏状态缩放：用一个标量乘法补强失效的图像边界。**
 
-    - 功能：在Transformer层中，将分隔符token（标记图像起止的特殊token）的隐藏状态乘以缩放因子 $\alpha$
-    - 核心思路：放大后的分隔符隐藏状态在softmax注意力计算中会获得更大的注意力权重，从而在注意力分布中形成"信息瓶颈"或"隔离墙"
-    - 设计动机：作者通过分析发现，虽然分隔符token存在于序列中，但其隐藏状态的范数相对于视觉token并不突出，因此在注意力计算中未能起到预期的边界标记作用。缩放操作直接增强了这一信号
+作者先做诊断：LVLM 序列里虽然有分隔符 token，但它们的隐藏状态范数相对视觉 token 并不突出，在自注意力里拿不到足够的权重，于是没能起到预期的边界标记作用——这正是跨图信息泄漏的来源。修法极其直接：在 Transformer 的某些层里，把分隔符 token 的隐藏状态 $h$ 替换成 $\alpha \cdot h$（$\alpha > 1$）。范数被放大后，softmax 注意力会自动给这些分隔符分配更大的权重，在注意力分布中形成一个"信息瓶颈"。问题的根因不在架构而在训练——分隔符没被充分学到，所以一次标量缩放就能把这个被埋没的信号重新顶起来。
 
-2. **增强图像内交互、抑制跨图交互**: 
+**2. 增强图像内交互、抑制跨图交互：让注意力被分隔符"挡"在各自图像内部。**
 
-    - 缩放后的分隔符token像一道"信息屏障"，使得同一图像内的视觉token更多地关注彼此（增强图像内交互/intra-image interaction）
-    - 同时限制了不同图像的视觉token之间的注意力交互（抑制跨图交互/cross-image interaction）
-    - 结果是模型能更好地保持图像特异性信息，在需要区分和比较多张图像时推理更准确
+缩放后的分隔符像一道屏障横在相邻图像之间。当某张图的视觉 token 计算注意力时，权重更多地落在同一张图内部的 token 上（强化 intra-image interaction），而越过分隔符去关注另一张图的 token 则被相对压低（抑制 cross-image interaction）。这样每张图的特异性信息不再被其他图"稀释"，模型在需要逐图区分、横向比较的多图任务上推理更准。这也解释了为什么同一招对纯文本里区分多文档/多表格的分隔符同样有效——本质是注意力机制里一个跨模态通用的边界信号问题，而非视觉模态独有。
 
-3. **免训练、零额外成本**: 
+**3. 免训练、零额外成本：只在前向里多做一次标量乘法。**
 
-    - 该方法是纯推理时干预，不需要额外的训练步骤
-    - 不引入新的参数或模块
-    - 推理时的计算开销可忽略不计（仅在特定位置做一次标量乘法）
+整个方法不新增任何参数或模块，也不需要重新训练或微调，直接套在已有 LVLM 上即可。前向时只是在特定层、特定位置对分隔符隐藏状态做一次标量乘法，计算开销可忽略不计，因此推理速度和显存基本不变。代价仅是两个需要调的超参：缩放因子 $\alpha$ 和施加缩放的层范围。
 
 ### 损失函数 / 训练策略
-无需训练。该方法是推理时的直接干预，唯一的超参数是缩放因子 $\alpha$ 和应用的层范围。
+无需训练。该方法是推理时的直接干预，唯一需要设定的是缩放因子 $\alpha$ 和应用的层范围。
 
 ## 实验关键数据
 
@@ -132,7 +126,7 @@ tags:
 - [\[ICLR 2026\] DIVA-GRPO: Enhancing Multimodal Reasoning through Difficulty-Adaptive Variant Advantage](diva-grpo_enhancing_multimodal_reasoning_through_difficulty-adaptive_variant_adv.md)
 - [\[ICLR 2026\] TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding](tabledart_dynamic_adaptive_multi-modal_routing_for_table_understanding.md)
 - [\[ICLR 2026\] MMR-Life: Piecing Together Real-life Scenes for Multimodal Multi-image Reasoning](mmr-life_piecing_together_real-life_scenes_for_multimodal_multi-image_reasoning.md)
-- [\[ICLR 2026\] Constructive Distortion: Improving MLLMs with Attention-Guided Image Warping](constructive_distortion_improving_mllms_with_attention-guided_image_warping.md)
+- [\[ICLR 2026\] Index-Preserving Lightweight Token Pruning for Efficient Document Understanding](index-preserving_lightweight_token_pruning_for_efficient_document_understanding_.md)
 
 </div>
 

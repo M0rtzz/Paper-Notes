@@ -39,49 +39,29 @@ tags:
 
 ### 整体框架
 
-两阶段设计：
-1. **TFM-Tokenizer 预训练**: 单通道无监督学习时频 motif 词表
-2. **下游 Transformer 训练**: 使用离散 token 序列进行掩码预训练和微调
+TFM-Tokenizer 采用两阶段设计：先在单通道 EEG 上无监督地学一套时频 motif 词表，把每个时间片编码成离散 token；再把得到的 token 序列喂给一个轻量 Transformer，做掩码 token 预测的预训练与下游微调。整个 tokenizer 始终在单通道粒度上工作，从而摆脱对特定电极布局和设备的依赖。
 
-### 关键设计 1: 双路径时频编码
+### 关键设计
 
-**局部频谱窗口编码器 (Localized Spectral Window Encoder)**:
-- 将频谱图沿频率轴分为 $P$ 个不重叠的 patch
-- 每个 patch 独立投影：$e_{(i,p)} = \text{GroupNorm}(\text{GeLU}(\mathbf{W}_p \mathbf{S}_{(i,p)}))$
-- 频率 Transformer 建模跨频带依赖
-- **门控逐 patch 聚合**: 使用 sigmoid 门控选择性强调重要频率 patch：
+**1. 双路径时频编码：让 token 同时看见频率结构和时间动态。** 单纯在时域切窗会丢掉 EEG 里至关重要的频率模式，因此 TFM-Tokenizer 把频率和时间两条信息分路提取再融合。频率一侧由**局部频谱窗口编码器**处理：将频谱图沿频率轴切成 $P$ 个互不重叠的 patch，每个 patch 独立投影为 $e_{(i,p)} = \text{GroupNorm}(\text{GeLU}(\mathbf{W}_p \mathbf{S}_{(i,p)}))$，再用一个频率 Transformer 建模跨频带依赖。由于不同任务关心的频带不同，它进一步用 sigmoid 门控做逐 patch 聚合，选择性放大与任务相关的频率 patch：
 
 $$\mathbf{E}_i^F = \text{Concat}\left[\sigma(\mathbf{W}_{g1} \mathbf{e}_{(i,p)}) \mathbf{W}_{g2} \mathbf{e}_{(i,p)}\right]$$
 
-**时间编码器**: 将原始 EEG patch 线性投影 + GELU + GroupNorm
+时间一侧则直接对原始 EEG patch 做线性投影加 GELU、GroupNorm 得到时间嵌入 $\mathbf{E}_i^T$。最后把频率嵌入 $\mathbf{E}_i^F$ 与 $\mathbf{E}_i^T$ 拼接，交给时间 Transformer 建模长程依赖，得到既携带频率结构又携带时间动态的融合表示。
 
-**时间 Transformer**: 将频率嵌入 $\mathbf{E}_i^F$ 与时间嵌入 $\mathbf{E}_i^T$ 拼接后建模长程依赖
-
-### 关键设计 2: VQ 词表学习
-
-使用向量量化 (VQ-VAE) 将融合嵌入映射到离散码本：
+**2. VQ 词表学习：把连续表示离散成可复用的 motif 码本。** 要像 NLP 那样得到一套真正的"词表"，就需要把融合嵌入量化成有限个离散单元。TFM-Tokenizer 借助向量量化（VQ-VAE），将每个融合嵌入 $\mathbf{z}_i$ 映射到码本 $\mathcal{V}$ 中距离最近的码字：
 
 $$q(\mathbf{z}_i) = \arg\min_{\mathbf{v}_k \in \mathcal{V}} \|\mathbf{z}_i - \mathbf{v}_k\|_2^2$$
 
-### 关键设计 3: 时频掩码预测
+这样每个时间片就落到一个离散 token 上，码本里的每个码字对应一类重复出现的时频 motif，可被下游模型直接当作输入符号复用。
 
-联合频率-时间掩码策略：
-- 频率轴分组随机掩码 $M_F$ + 时间轴随机掩码 $M_T$
-- 对称掩码用于数据增强
-
-总体损失：
+**3. 时频掩码预测：用联合掩码逼出有判别力的 token。** 为了让词表学到真正的结构而非琐碎模板，预训练采用频率-时间联合掩码：在频率轴上分组随机掩码 $M_F$，在时间轴上随机掩码 $M_T$，并以对称掩码做数据增强。模型需在掩码处重建频谱，总体损失把重建项与 VQ 的两项码本更新合在一起：
 
 $$\mathcal{L}_{\text{token}} = \sum_{(f,t)} \|\mathbf{S}(f,t) - \hat{\mathbf{S}}(f,t)\|_2^2 + \alpha \sum_i \|\text{sg}[E_i] - v_i\|_2^2 + \beta \sum_i \|E_i - \text{sg}[v_i]\|_2^2$$
 
-- 重建损失 + 码本更新（commitment loss + 指数移动平均）
-- 不使用位置编码（EEG 非平稳且可能混沌）
+其中后两项分别是 commitment loss 与码本更新（配合指数移动平均），$\alpha$、$\beta$ 控制其权重。考虑到 EEG 非平稳甚至呈混沌特性，这里刻意不加位置编码，避免把不可靠的绝对时序强加给 token。
 
-### 下游 Transformer
-
-- 使用 VQ 码本初始化 token 嵌入查找表
-- 线性注意力 Transformer（~0.7M 参数）
-- 跨通道结合通道嵌入和位置嵌入
-- 掩码 token 预测预训练 + 下游任务微调
+**4. 下游轻量 Transformer：让离散 token 直接驱动任务模型。** 与只把 tokenizer 当训练目标、推理时丢弃的做法不同，这里把学到的 token 真正用起来。下游模型用 VQ 码本初始化 token 嵌入查找表，主体是一个约 0.7M 参数的线性注意力 Transformer；跨通道时再叠加通道嵌入与位置嵌入，先做掩码 token 预测预训练，再在具体任务上微调，从而以极小的参数量完成端到端识别。
 
 ## 实验
 
@@ -162,11 +142,11 @@ $$\mathcal{L}_{\text{token}} = \sum_{(f,t)} \|\mathbf{S}(f,t) - \hat{\mathbf{S}}
 
 ## 相关论文
 
+- [\[ICLR 2026\] Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
 - [\[NeurIPS 2025\] FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed](../../NeurIPS2025/interpretability/fastdinov2_frequency_based_curriculum_learning_improves_robustness_and_training_.md)
 - [\[ICLR 2026\] Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [\[ICLR 2026\] PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
 - [\[AAAI 2026\] SparK: Query-Aware Unstructured Sparsity with Recoverable KV Cache Channel Pruning](../../AAAI2026/interpretability/spark_query-aware_unstructured_sparsity_with_recoverable_kv_cache_channel_prunin.md)
-- [\[ICLR 2026\] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
-- [\[ICLR 2026\] Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
 
 </div>
 

@@ -46,31 +46,25 @@ tags:
 
 ### 整体框架
 
-PoSh三步流程：
-1. **场景图提取**：用依存句法分析(spaCy) + 共指消解(Maverick)从生成描述和参考描述中提取句级场景图，合并为完整场景图
-2. **细粒度评分**：将场景图中每个组件转为模板化问题，用Qwen3-14B做QA验证其在对方文本中的存在性
-3. **粗粒度聚合**：分别平均mistakes分（生成→参考）和omissions分（参考→生成）
+PoSh要解决的是"如何在不调用闭源大模型的前提下，给上百词的详细图像描述打出一个可解释、可复现的分数"。它的思路是先把描述压成场景图、再用场景图当作逐项 checklist 让一个开源 LLM 去核对。具体分三步：先用依存句法分析（spaCy）配合共指消解（Maverick），从生成描述和参考描述各自抽出句级场景图并合并成完整场景图；再把图里的每个组件（实体、属性、关系）转成模板化问题，交给 Qwen3-14B 逐项 QA，判断它在对方文本里是否存在；最后把这些 per-component 分数分别取平均，得到 mistakes（生成→参考方向，衡量幻觉）和 omissions（参考→生成方向，衡量遗漏）两个维度。
 
 ### 关键设计
 
-1. **保持附着关系的场景图提取**:
-    - 功能：从描述文本提取结构化表示 $G(d) = \langle O(d), E(d), K(d) \rangle$，其中 $O$ 为实体集合，$E \subseteq O \times A$ 为属性边，$K \subseteq O \times R \times O$ 为关系边
-    - 核心思路：句级依存句法分析 → 跨句共指消解合并实体 → 保留每个属性/关系到其宿主实体的附着链接 → 每个组件定位到原文span
-    - 设计动机：SPICE忽略附着关系导致"把A的属性算到B头上"不被惩罚；PoSh通过保持附着链确保属性/关系检验时使用正确的实体标识符
+**1. 保持附着关系的场景图提取：把"属性/关系挂在谁身上"也算进评估。**
 
-2. **基于唯一标识符的三轮QA验证**:
-    - 功能：为每个场景图组件生成模板化问题，用LLM判断其在对方文本中的存在性（1-5分）
-    - 核心思路：处理同类实体碰撞（如多个"man"）需唯一标识符。三轮验证：(1) 顶层实体（"man"本身）→ (2) 部分-从属实体（"face of the man"）→ (3) 属性/关系（使用已确认存在的最简标识符）。标识符候选包括类名、表面形式、属性修饰、关系修饰，由LLM重写为自然表达
-    - 设计动机：避免强制对齐两个场景图的组件——对方文本可能用完全不同的词指代同一对象（如参考用"trio"，生成分别提到三个人）
+详细描述里最隐蔽的错误是属性或关系误附着——"倒水的男人"被写成"中央的男人"，对象都在、动作也都在，但谁在倒水错了。PoSh 先做句级依存句法分析，再用跨句共指消解把分散在不同句子里指向同一实体的提及合并，从描述文本里提取结构化表示 $G(d) = \langle O(d), E(d), K(d) \rangle$：$O$ 是实体集合，$E \subseteq O \times A$ 是属性边，$K \subseteq O \times R \times O$ 是关系边。关键在于每条属性边和关系边都保留了到其宿主实体的附着链接，并把每个组件定位回原文 span。SPICE 同样用场景图，但忽略附着关系，于是"把 A 的属性算到 B 头上"不会被惩罚、容易误报高分；PoSh 因为留着这条附着链，验证某个属性/关系时能用上正确的实体标识符，误附着才会真正扣分。
 
-3. **可解释的粗粒度聚合**:
-    - 功能：将细粒度的per-component分数聚合为mistakes、omissions、overall三个维度
-    - 核心思路：$\text{Mistakes} = \text{mean}_{c \in O(\text{gen})}(\pi(c))$，$\text{Omissions} = \text{mean}_{c \in O(\text{ref})}(\rho(c))$，其中 $\pi(c) = \Psi(c_{\text{gen}}, \text{ref})$，$\rho(c) = \Psi(c_{\text{ref}}, \text{gen})$
-    - 设计动机：粗粒度分数直接来自细粒度分数的平均——知道总分后可追溯到哪些实体的哪些属性出了问题，提供诊断能力
+**2. 基于唯一标识符的三轮 QA 验证：不强制对齐两张图，而是逐个组件问"对方有没有"。**
+
+把每个场景图组件转成模板化问题让 LLM 回答 1-5 分时，最大的麻烦是同类实体碰撞——一张图里有好几个"man"，光问"有没有 man"无法分辨说的是哪一个。PoSh 用唯一标识符配合三轮递进验证来消歧：第一轮验证顶层实体本身（"man"）；第二轮验证部分-从属实体（"face of the man"），此时可以挂靠已确认存在的父实体；第三轮才验证属性和关系，用的是前两轮里已确认存在的最简标识符。标识符候选来自类名、表面形式、属性修饰、关系修饰，再由 LLM 重写成自然表达。这样做刻意避开了"强制对齐两个场景图组件"的老路——对方文本完全可能用不同的词指代同一对象（参考说"trio"，生成则分别提了三个人），逐项追问存在性比硬对齐更鲁棒。
+
+**3. 可解释的粗粒度聚合：总分直接由细粒度分数平均而来，可回溯。**
+
+最终的粗粒度分数不是另起炉灶算的，而是把上一步的 per-component 分数直接平均：$\text{Mistakes} = \text{mean}_{c \in O(\text{gen})}(\pi(c))$，$\text{Omissions} = \text{mean}_{c \in O(\text{ref})}(\rho(c))$，其中 $\pi(c) = \Psi(c_{\text{gen}}, \text{ref})$ 是把生成侧组件拿到参考里查、$\rho(c) = \Psi(c_{\text{ref}}, \text{gen})$ 是把参考侧组件拿到生成里查，$\Psi$ 即 QA 评分器。因为总分就是细粒度分的均值，拿到一个低分后可以一路追溯到具体是哪些实体的哪些属性出了问题——这种诊断能力正是 GPT-4o-as-Judge 那种直接吐一个标量分的做法给不了的。
 
 ### 损失函数 / 训练策略
 
-PoSh是推理时指标，无训练过程。QA评分器Ψ使用Qwen3-14B，存在性分数从token logits的加权平均提取（1-5分），实体存在性判定阈值2（在小型验证集上调优）。运行效率：单H100 GPU上400个样本15分钟（每个2秒），而DCScore因依赖GPT-4需2小时以上。
+PoSh 是推理时指标，本身没有训练过程。QA 评分器 $\Psi$ 用 Qwen3-14B，存在性分数从 token logits 的加权平均提取（1-5 分），实体存在性的判定阈值取 2（在小型验证集上调优）。效率上，单张 H100 跑 400 个样本约 15 分钟（每个 2 秒），而依赖 GPT-4 的 DCScore 同样规模要 2 小时以上。
 
 ## 实验关键数据
 
@@ -130,8 +124,8 @@ PoSh是推理时指标，无训练过程。QA评分器Ψ使用Qwen3-14B，存在
 ## 相关论文
 
 - [\[ICML 2026\] Diagnosing the Reliability of LLM-as-a-Judge via Item Response Theory](../../ICML2026/interpretability/diagnosing_the_reliability_of_llm-as-a-judge_via_item_response_theory.md)
-- [\[ACL 2025\] Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
 - [\[CVPR 2026\] On the Possible Detectability of Image-in-Image Steganography](../../CVPR2026/interpretability/on_the_possible_detectability_of_image-in-image_steganography.md)
+- [\[ACL 2025\] Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
 - [\[CVPR 2026\] Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](../../CVPR2026/interpretability/edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
 - [\[ICLR 2026\] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
 

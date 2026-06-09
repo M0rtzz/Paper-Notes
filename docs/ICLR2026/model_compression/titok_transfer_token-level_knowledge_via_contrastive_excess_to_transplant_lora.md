@@ -37,44 +37,23 @@ tags:
 
 ### 整体框架
 
-TiTok 由三个步骤组成：
-1. 合成数据生成 → 2. 超额分数计算 → 3. 带过滤的目标模型训练
+TiTok 想把源模型上训好的 LoRA「移植」到另一个基础模型，但既拿不到原始训练数据，也不想像 TransLoRA 那样额外训一个判别器。它的做法是：先让源模型生成一批合成数据，再用源模型自身「带 LoRA」与「不带 LoRA」时的 token 级输出差异作为任务知识的信号，据此在样本和 token 两个层面筛选出最有价值的监督，最后用这些被筛过的数据以标准 NLL 损失训练目标模型上的新 LoRA。整套流程不引入任何外部模型，所有信号都来自源模型自带的有/无 LoRA 对比。
 
-### 关键设计 1: Token 级对比超额分数
+### 关键设计
 
-定义源模型有无 LoRA 时的 token 级分数差异：
+**1. Token 级对比超额分数：从 LoRA 自身差异里读出任务知识。** 跨模型迁移最缺的是「哪些 token 才承载了 LoRA 注入的任务能力」这一信号，TiTok 用源模型有无 LoRA 时的预测差异直接度量它。对每个生成 token $y_i$，定义超额分数 $S(y_i) = L_e(y_i) - L_a(y_i)$，其中 $L_a(y_i) = \log P_{\mathcal{M}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})$ 是裸基础模型的对数似然、$L_e(y_i) = \log P_{\mathcal{M}_s + \mathcal{A}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})$ 是叠加源 LoRA 后的对数似然。当基础模型对某个 token 把握不大、而加上 LoRA 后却高置信地预测出来时，这个 token 就拿到高分——正是 LoRA 真正改变了模型行为的地方。这个量本质是 token 级对数似然比（LLR），由 Neyman-Pearson 引理可知它是区分「有 LoRA」与「无 LoRA」两个分布的最优统计量，因此用它筛选 token 在理论上有最优区分性的支撑。
 
-$$S(y_i) = L_e(y_i) - L_a(y_i)$$
+**2. 两级过滤训练：在样本和 token 两个粒度上只留高信息量监督。** 合成数据里既有整段没什么任务信息的样本，也有样本内部大量无关 token，全盘训练会稀释信号。TiTok 先做样本过滤：对每条样本取其内部 token 超额分数的均值 $\bar{S}_j = \frac{1}{|\mathbf{y}_j|} \sum_{y_i \in \mathbf{y}_j} S(y_i)$，按此排序保留 top-$M$ 条最富信息的样本组成 $\mathcal{D}_f$。再在保留样本内部做 token 选择：只对超额分数排进 top-$k\%$ 的 token 计损失，用指示函数 $I_{k\%}(y_i)$ 把其余 token 屏蔽掉，监督目标写作 $\sum_{(\mathbf{q}_j, \mathbf{y}_j) \in \mathcal{D}_f} \sum_{y_i \in \mathbf{y}_j} I_{k\%}(y_i) \cdot L_t(y_i)$。实验里 $k\%$ 取 70% 在多数设置下最优，top 20% 的 token 经验证集中了最浓的任务知识（0.482 vs 底部 0.468）。
 
-其中：
+**3. Tokenizer 对齐：让源/目标分词不一致时 mask 仍能对上。** 源模型和目标模型常用不同 tokenizer，token 边界对不齐，源端算出的超额分数 mask 无法直接套到目标序列上。TiTok 用双指针对两边逐步递增解码、在文本层面匹配出对应的 span，再按四种情形传播 mask：一对一直接复制、一对多把同一分数复制到多个目标 token、多对一对源端多个分数取平均、多对多平均后复制。对齐完成后再在目标序列上做 top-$k\%$ 选择，保证最终参与训练的是目标侧最可信的 token。
 
-$$L_a(y_i) = \log P_{\mathcal{M}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i}), \quad L_e(y_i) = \log P_{\mathcal{M}_s + \mathcal{A}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})$$
+### 损失函数 / 训练策略
 
-- **直觉**: 超额分数衡量 LoRA 适配器注入的任务知识量。当基础模型对某 token 不确定但 LoRA 增强后高置信度预测时，该 token 获得高超额分数
-- **理论基础**: 等价于 token 级对数似然比（LLR），由 Neyman-Pearson 引理保证其为区分两模型分布的最优统计量
+目标 LoRA $\mathcal{A}_t$ 挂在冻结的目标骨干 $\mathcal{M}_t$ 上，只用过滤后的合成数据、按被选 token 计标准 NLL 损失训练：
 
-### 关键设计 2: 两级过滤训练
+$$\mathcal{L}_{\text{TiTok}} = \sum \sum I_{k\%}(y_i) \cdot \bigl(-\log P_{\mathcal{M}_t + \mathcal{A}_t}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})\bigr)$$
 
-**第一阶段 — 样本过滤**: 计算每个合成样本的平均超额分数，保留 top-$M$ 个高信息量样本：
-
-$$\bar{S}_j = \frac{1}{|\mathbf{y}_j|} \sum_{y_i \in \mathbf{y}_j} S(y_i)$$
-
-**第二阶段 — Token 选择**: 在保留样本内，仅选择 top-$k\%$ 超额分数的 token 用于训练：
-
-$$\mathcal{L}_{\text{TiTok}} = \sum_{(\mathbf{q}_j, \mathbf{y}_j) \in \mathcal{D}_f} \sum_{y_i \in \mathbf{y}_j} I_{k\%}(y_i) \cdot L_t(y_i)$$
-
-### 关键设计 3: Tokenizer 对齐算法
-
-当源模型和目标模型使用不同 tokenizer 时：
-- 使用双指针递增解码匹配文本 span
-- 四种规则传播 mask：一对一直接复制、一对多复制、多对一平均、多对多平均复制
-- 最后 top-$k\%$ 选择保留最可信目标 token
-
-### 损失函数
-
-目标模型 LoRA $\mathcal{A}_t$ 在冻结骨干 $\mathcal{M}_t$ 上，使用过滤后的合成数据以标准 NLL 损失训练：
-
-$$\mathcal{L}_{\text{TiTok}} = \sum \sum I_{k\%}(y_i) \cdot (-\log P_{\mathcal{M}_t + \mathcal{A}_t}(y_i \mid \mathbf{q}, \mathbf{y}_{<i}))$$
+骨干始终冻结，只更新 LoRA（实验用 rank=8），因此迁移本身依旧保持参数高效。
 
 ## 实验
 

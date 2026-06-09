@@ -45,52 +45,29 @@ tags:
 
 ### 整体框架
 
-CDE 框架的核心思想：将干预表示为预干预和后干预状态在潜空间中的向量差（Delta），并通过三种属性约束这个差向量，使其成为"因果 Delta 嵌入"。
-
-**Delta 嵌入定义**：给定干预前后的观测对 $(x, \tilde{x})$，Delta 嵌入为 $\delta_a := \phi(\tilde{x}) - \phi(x)$，其中 $\phi$ 是编码器。
-
-在完美反事实假设下，$\delta_a = [0 \cdots \tilde{z}_a - z_a \cdots 0]^T$，即只有被动作 $a$ 影响的维度非零。
+CDE 把"动作"建模成潜空间里的一根方向向量：给定干预前后的观测对 $(x, \tilde{x})$，先用编码器 $\phi$ 把两张图各自映射到潜空间，再做元素相减得到 Delta 嵌入 $\delta_a := \phi(\tilde{x}) - \phi(x)$。在理想的完美反事实假设下，这个差向量应该满足 $\delta_a = [0 \cdots \tilde{z}_a - z_a \cdots 0]^T$，也就是只有被动作 $a$ 真正改变的那几个维度非零、其余维度被减法消掉。整个方法围绕"让这根 Delta 向量变成可泛化的因果表示"展开，从约束定义、网络架构到训练损失层层落地。
 
 ### 关键设计
 
-**1. 因果 Delta 嵌入的三种约束**
+**1. 三条因果约束：独立性、稀疏性、不变性。**
 
-- **功能**：定义 CDE 必须满足的三个属性，指导学习目标设计
-- **核心思路**：独立性 + 稀疏性 + 不变性 → 可泛化的干预表示
-- **设计动机**：这三个属性直接源自 ICM 和 SMS 假设，确保学到的表示具有因果意义
+CDE 没有凭空设计目标，而是把 CRL 的两个经典假设翻译成 Delta 向量必须满足的三条性质。**独立性**要求动作表示不受场景属性和未被影响物体的干扰——这一点恰好由减法天然保证，因为预/后干预共享的背景在相减时被抵消掉。**稀疏性**来自稀疏机制偏移（SMS）假设：一次干预只动少量机制，所以 $\delta_a$ 应该大部分维度为零。**不变性**则要求同一动作作用在不同物体上得到相似的表示——"打开"无论对象是门还是抽屉都该是同一根向量，形式化为 $\text{Var}_{x \sim P(X)}[\delta_a(x)] \approx \mathbf{0}$。三条性质各自对应后面一种实现手段，构成从假设到损失的清晰链条。
 
-1. **独立性**：动作表示不受场景属性和未被影响物体的影响
-2. **稀疏性**：如果 SMS 假设成立，$\delta_a$ 应该是稀疏的（大部分维度为零）
-3. **不变性**：同一动作在不同物体上的表示应相似（如 "打开" 的表示不应因对象是门还是抽屉而改变），形式化为 $\text{Var}_{x \sim P(X)}[\delta_a(x)] \approx \mathbf{0}$
+**2. 全局 CDE 模型（Model A）：用 CLS token 抓整图级别的动作。**
 
-**2. 全局 CDE 模型（Model A）**
+针对单物体、动作影响全局的场景，Model A 走一条极简路径：ViT-DINO 提取每张图的 CLS token，经因果投影器映射到 $l$ 维潜空间后做元素减法得到 Delta，再交给分类器预测动作类别。背后的结构方程是 $\tilde{z}_a = z_a + \delta_a + \epsilon$，其中 $\epsilon$ 是零均值独立噪声，对应那些"动作之外还有随机扰动"的 actionable counterfactual 场景。这种设计之所以成立，是因为 CLS token 给出全局图像表示，而减法操作把两图共享的场景信息消去，让分类器只看到动作本身带来的变化。
 
-- **功能**：从图像对中学习全局级别的因果 Delta 嵌入
-- **核心思路**：用 ViT-DINO 提取 CLS token → 因果投影器映射到 $l$ 维潜空间 → 元素减法得到 Delta → 分类器预测动作
-- **设计动机**：CLS token 提供全局图像表示，减法操作天然满足独立性
+**3. Patch-wise CDE 模型（Model B）：用 Top-K patch 锁定局部变化。**
 
-结构方程建模：$\tilde{z}_a = z_a + \delta_a + \epsilon$，其中 $\epsilon$ 是零均值独立噪声（对应 actionable counterfactual 场景）。
-
-**3. Patch-wise CDE 模型（Model B）**
-
-- **功能**：处理多物体场景中动作只影响局部区域的情况
-- **核心思路**：保留 ViT 所有 patch 的输出 → 逐 patch 计算 Delta → 按 L2 范数选 Top-K 最大变化的 patch → 对每个 patch 独立计算损失
-- **设计动机**：全局嵌入在复杂场景中可能"平均化"掉局部变化信号
+当画面里有多个物体、动作只改动局部区域时，全局嵌入容易把这点局部信号"平均"掉。Model B 因此保留 ViT 所有 patch 的输出，逐 patch 计算 Delta，再按 L2 范数挑出变化最大的 Top-K 个 patch，对每个被选中的 patch 独立计算损失。这样模型的注意力被聚焦到真正发生改变的区域，避免被大片未变背景稀释，从而在复杂多物体场景里保住对动作的敏感度。
 
 ### 损失函数 / 训练策略
 
-三个损失函数的加权组合：
-
-$$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \alpha_{\text{contrast}} \mathcal{L}_{\text{contrast}} + \alpha_{\text{sparsity}} \mathcal{L}_{\text{sparsity}}$$
-
-1. **交叉熵损失** $\mathcal{L}_{\text{CE}}$：确保 Delta 对动作分类任务有用
-2. **有监督对比损失** $\mathcal{L}_{\text{contrast}}$：鼓励同类动作的 Delta 聚集，不同动作的 Delta 分离（对应不变性约束）
+三条约束最终落成三项损失的加权和：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \alpha_{\text{contrast}} \mathcal{L}_{\text{contrast}} + \alpha_{\text{sparsity}} \mathcal{L}_{\text{sparsity}}$。交叉熵 $\mathcal{L}_{\text{CE}}$ 保证 Delta 对动作分类有判别力；有监督对比损失 $\mathcal{L}_{\text{contrast}}$ 把同类动作的 Delta 拉近、不同动作的推远，正是不变性约束的落地，其形式为
 
 $$\mathcal{L}_{\text{contrast}} = \sum_{i=1}^{B} \frac{-1}{|P(i)|} \sum_{p \in P(i)} \log \frac{\exp(\text{sim}(\delta_i, \delta_p)/\tau)}{\sum_{j \neq i} \exp(\text{sim}(\delta_i, \delta_j)/\tau)}$$
 
-3. **稀疏正则化** $\mathcal{L}_{\text{sparsity}} = \frac{1}{B}\sum_i \|\delta_i\|_1$：L1 惩罚促进稀疏表示
-
-超参数：$\alpha_{\text{contrast}} = 2.0$，$\alpha_{\text{sparsity}} = 1.0$，所有实验统一。端到端训练，编码器也参与更新。
+而稀疏正则 $\mathcal{L}_{\text{sparsity}} = \frac{1}{B}\sum_i \|\delta_i\|_1$ 用 L1 惩罚兑现 SMS 假设、压低非因果维度。三个权重在所有实验中统一取 $\alpha_{\text{contrast}} = 2.0$、$\alpha_{\text{sparsity}} = 1.0$，并端到端训练，编码器一并更新而非冻结。
 
 ## 实验关键数据
 

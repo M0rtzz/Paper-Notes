@@ -41,49 +41,55 @@ tags:
 
 ## 方法详解
 
-### 1. Agent Graph 形式化
+### 整体框架
 
-将Agent工作流表示为DAG $G = (V, E, X, T, F, L, s, t, \mathcal{D}_s)$：
-- 边 $e \in E$ 关联Agent $f_e$、轨迹集 $T_e$、损失函数 $L_e: T_e \to \mathbb{R}$
-- 源点 $s$ 有初始输入分布 $\mathcal{D}_s$，终点 $t$ 为目标
-- 路径 $p = v_1 \xrightarrow{e_1} \cdots \xrightarrow{e_m} v_{m+1}$ 对应Agent组合
-- 组合损失取最大值：
+整个方法把Agent工作流抽象成一张有向无环图，每条可行路径对应一种Agent组合，目标是在所有路径里挑出尾部风险（VaR/CVaR）最小的那一条。核心障碍是路径数量随Agent数指数爆炸、无法逐条估计风险，作者用一个联合界把"整条路径的风险"拆成"各Agent风险之和"，再配合风险预算的桶离散化和按拓扑序的动态规划，把搜索压到多项式时间，并证明这样得到的解渐近近最优。
+
+### 关键设计
+
+**1. Agent Graph 与 max 损失：用"最坏Agent"刻画需求违规。**
+
+传统组合MDP把各步成本累加，但安全/公平/隐私这类需求违规的逻辑是"一个Agent严重越界，整体就算违规"，累加会稀释掉这种尾部信号。为此作者把工作流建模成DAG $G = (V, E, X, T, F, L, s, t, \mathcal{D}_s)$：每条边 $e \in E$ 绑定一个Agent $f_e$、轨迹集 $T_e$ 和损失函数 $L_e: T_e \to \mathbb{R}$，源点 $s$ 带初始输入分布 $\mathcal{D}_s$，终点 $t$ 是目标；一条路径 $p = v_1 \xrightarrow{e_1} \cdots \xrightarrow{e_m} v_{m+1}$ 就是一种Agent组合。关键在于组合损失取各步的最大值而非求和：
 
 $$L_p(t_1, \ldots, t_m) = \max_i \{L_{e_i}(t_i)\}$$
 
-### 2. 风险最小化目标（RMAG）
+这条max定义把问题从累积成本优化彻底改写成最坏情形优化，也正是后面所有理论工具需要重做的根源。
 
-给定风险水平 $\alpha \in (0,1)$，优化目标为：
+**2. 风险最小化目标（RMAG）：用VaR/CVaR盯住尾部而非均值。**
+
+由于只有采样访问权、Agent当黑盒看待，作者用蒙特卡洛估计风险度量，并在给定风险水平 $\alpha \in (0,1)$ 下把目标写成在所有路径上最小化尾部风险：
 
 $$\arg\min_{p \in \mathcal{P}} \rho[L_p(Z_p)], \quad \rho \in \{\text{VaR}_\alpha, \text{CVaR}_\alpha\}$$
 
-其中 $\text{VaR}_\alpha$ 为 $(1-\alpha)$-分位数：
+这里 $\text{VaR}_\alpha$ 取 $(1-\alpha)$-分位数，控制"以 $1-\alpha$ 概率不超过的损失上界"：
 
 $$\text{VaR}_\alpha[L(Z)] = \inf\{q \in \mathbb{R}: \Pr[L(Z) \leq q] \geq 1-\alpha\}$$
 
-$\text{CVaR}_\alpha$ 为尾部条件期望：
+而 $\text{CVaR}_\alpha$ 取尾部条件期望，衡量"一旦进入最坏 $\alpha$ 区间平均会有多糟"：
 
 $$\text{CVaR}_\alpha[L(Z)] = \frac{1}{\alpha}\int_0^\alpha \text{VaR}_\gamma[L(Z)]\,d\gamma$$
 
-### 3. BucketedVaR 算法
+相比期望损失，这两个度量都能捕捉低概率高后果的极端事件，正对应安全关键场景的真实诉求。
 
-**关键设计**：
-- **联合界分解**：利用 $\Pr[\max(R_1,...,R_m) > q] \leq \sum_i \Pr[R_i > q]$，将组合VaR分解为独立估计各Agent分位数
-- **风险预算离散化**：将总预算 $\alpha$ 离散为 $d+1$ 个桶 $B = \{0, \alpha/d, 2\alpha/d, \ldots, \alpha\}$
-- **动态规划**：按拓扑序遍历图，对每个顶点-桶对 $(v, \bar{\alpha})$ 维护最优部分路径
-- **增量估计**：在每条边上分配预算 $\bar{\alpha} - \alpha'$，取经验 $(1-(\bar{\alpha}-\alpha'))$-分位数作为该边VaR估计
-- **路径VaR取max**：$\text{pathVaR} = \max(\text{VaR}[v', \alpha'], \text{edgeVaR})$
-- **CVaR恢复**：$\text{CVaR}_\alpha \approx \frac{1}{d}\sum_{k=1}^d \text{VaR}_{k\alpha/d}$，直接复用已计算的VaR值
+**3. 联合界分解：把指数级的路径风险拆成可独立估计的逐边分位数。**
 
-**理论保证**（Theorem 1）：时间复杂度 $O(n(d+1)^2|V|^2)$，以概率 $\geq 1-\delta$：
+直接对每条路径估计VaR需要遍历指数条路径，不可行。作者注意到对max损失有联合界 $\Pr[\max(R_1,\dots,R_m) > q] \leq \sum_i \Pr[R_i > q]$，于是只要给每个Agent分配一份"风险预算"、让各边各自超界的概率之和不超过 $\alpha$，就能保证整条路径越界概率受控。这把"联合估计一条路径"降维成"分别估计每条边的分位数"，是整个算法能做动态规划的前提。
+
+**4. BucketedVaR：风险预算桶离散化 + 拓扑序动态规划。**
+
+要在图上做DP，连续的风险预算必须离散。作者把总预算 $\alpha$ 切成 $d+1$ 个桶 $B = \{0, \alpha/d, 2\alpha/d, \ldots, \alpha\}$，然后按拓扑序遍历，对每个"顶点–桶"对 $(v, \bar{\alpha})$ 维护到达 $v$ 且累计预算为 $\bar{\alpha}$ 时的最优部分路径。扩展一条边时，把增量预算 $\bar{\alpha} - \alpha'$ 分给这条边，用该边样本的经验 $(1-(\bar{\alpha}-\alpha'))$-分位数作为边VaR估计，再因为组合损失取max而把路径VaR更新为 $\text{pathVaR} = \max(\text{VaR}[v', \alpha'], \text{edgeVaR})$。CVaR几乎免费：它等于对一串离散VaR取平均 $\text{CVaR}_\alpha \approx \frac{1}{d}\sum_{k=1}^d \text{VaR}_{k\alpha/d}$，直接复用DP里已经算好的VaR值即可，无需额外采样。
+
+**5. 理论保证：多项式复杂度下的近最优性。**
+
+Theorem 1 给出时间复杂度 $O(n(d+1)^2|V|^2)$，且以概率 $\geq 1-\delta$ 输出的 $q$ 是一个有效的尾部上界：
 
 $$q \geq \text{quantile}(L_p(Z_p), 1-\alpha-\gamma), \quad \gamma = |V|\sqrt{\frac{1}{2n}\ln\frac{2(d+1)^2|V|^2}{\delta}}$$
 
-**近最优性**（Theorem 2）：在独立损失假设下，当 $n,d \to \infty$：
+更关键的是 Theorem 2 的近最优性：在各Agent损失独立的假设下，当样本数 $n$ 和桶数 $d \to \infty$，结果不会比真正最优路径 $p^*$ 差太多——
 
 $$q \leq \text{quantile}\left(L_{p^*}(Z_{p^*}), 1-\alpha+\frac{\alpha^2}{2}\right)$$
 
-即次优性至多为 $\alpha^2/2$（对于 $\alpha=0.1$ 仅为 $0.005$）。
+即看似粗糙的联合界带来的次优性至多只有 $\alpha^2/2$（当 $\alpha=0.1$ 时仅 $0.005$），这正是该方法"简单却够用"的理论底气。
 
 ## 实验关键数据
 
@@ -158,10 +164,10 @@ $$q \leq \text{quantile}\left(L_{p^*}(Z_{p^*}), 1-\alpha+\frac{\alpha^2}{2}\righ
 ## 相关论文
 
 - [\[ICLR 2026\] Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
+- [\[ICML 2026\] Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](../../ICML2026/ai_safety/position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)
 - [\[ICML 2025\] Convex Markov Games: A New Frontier for Multi-Agent Reinforcement Learning](../../ICML2025/ai_safety/convex_markov_games_a_new_frontier_for_multi-agent_reinforcement_learning.md)
 - [\[NeurIPS 2025\] It's Complicated: The Relationship of Algorithmic Fairness and Non-Discrimination Provisions for High-Risk Systems in the EU AI Act](../../NeurIPS2025/ai_safety/its_complicated_the_relationship_of_algorithmic_fairness_and_non-discrimination_.md)
 - [\[ICLR 2026\] Dataless Weight Disentanglement in Task Arithmetic via Kronecker-Factored Approximate Curvature](dataless_weight_disentanglement_in_task_arithmetic_via_kronecker-factored_approx.md)
-- [\[ICLR 2026\] Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
 
 </div>
 

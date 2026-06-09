@@ -43,44 +43,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-提出两层Markov传感器故障模型，将Transformer/SSM/RNN编码器集成到PPO的actor-critic架构中，推导高概率奖励退化bound，在MuJoCo环境中实验验证。
+本文先用一个两层Markov链刻画真实系统中"既有个体故障又有成组故障"的传感器失效过程，再把Transformer、RNN、SSM等序列编码器统一接到PPO的actor-critic骨架里，让策略能利用历史观测填补当前的缺失，最后从理论上推导出一个高概率的奖励退化上界，并在MuJoCo上做架构横评。
 
 ### 关键设计
 
-1. **两层Markov传感器故障模型**:
+**1. 两层Markov传感器故障模型：把"独立掩码"换成贴近真实的相关故障。** 现有工作大多假设每个传感器独立随机失效，但真实系统里共享通信总线或电源的传感器往往成组同时挂掉，且故障会持续若干步而非逐帧重采样。本文为此设计两层结构：个体层给每个传感器 $i$ 一条二值Markov链 $z_i(t)\in\{0,1\}$（故障率 $p_{\text{fail}}$、恢复率 $p_{\text{recover}}$），组层给每个组 $j$ 一条链 $y_j(t)\in\{0,1\}$（参数 $p_{\text{fail}}^{\text{group}}$、$p_{\text{recover}}^{\text{group}}$）；传感器真正可用当且仅当个体和所在组都在线，即有效状态 $x_i(t)=z_i(t)\cdot y_j(t)$，稳态可用概率因两层独立而相乘 $\pi_x=\pi_z\cdot\pi_y$，有效故障概率 $p_{\text{fail}}^{\text{eff}}=1-(1-p_{\text{fail}})(1-p_{\text{fail}}^{\text{group}})$。Markov结构天然带来时间持续性，组层耦合带来相关性，两者合起来就能模拟快速个体抖动、成组掉线、慢恢复长中断等丰富故障模式，使鲁棒性评测不再失真。
 
-    - 个体层：每个传感器 $i$ 有二值Markov链 $z_i(t) \in \{0,1\}$，参数 $p_{\text{fail}}$、$p_{\text{recover}}$
-    - 组层：每个组 $j$ 有 $y_j(t) \in \{0,1\}$，参数 $p_{\text{fail}}^{\text{group}}$、$p_{\text{recover}}^{\text{group}}$
-    - 有效状态 $x_i(t) = z_i(t) \cdot y_j(t)$，稳态概率 $\pi_x = \pi_z \cdot \pi_y$
-    - 有效故障概率 $p_{\text{fail}}^{\text{eff}} = 1 - (1-p_{\text{fail}})(1-p_{\text{fail}}^{\text{group}})$
+**2. Transformer-PPO：用自注意力直接引用历史有效观测、自然跳过缺失。** 传感器随时掉线意味着当前观测可能残缺，策略必须从过去补信息。本文维护一个长度 $L$ 的循环history buffer缓存最近观测，经线性投影加正弦位置编码后送入Transformer encoder，并用key-padding mask把无效（缺失）位置直接屏蔽，让注意力只在真正可用的token上计算；随后用一个可学习的attention pooling把变长序列加权汇聚成固定维特征，分别喂给actor和critic两个head。这样每个动作的产生都能跨越数据gap直接attend到任意一段有效历史，缺失越多、回看越远，正是Transformer相对recurrent结构的核心优势所在。
 
-2. **Transformer-PPO**:
+**3. RNN/SSM-PPO：统一接口下的recurrent基线。** 为公平横评，本文把GRU、LRU、LinOSS等递归/状态空间模型也套进同一套PPO骨架，统一成接口 $(h_t,z_t)=\mathcal{E}_\psi(h_{t-1},x_t;d_t)$，其中 $h_t$ 为隐状态、$d_t$ 为episode结束标志（用于在边界重置状态）。这类模型靠逐步更新的隐状态隐式记忆历史，但其状态更新假设输入流平滑连续，一旦遇到成组、持续的缺失就容易偏移或冲掉关键信息，这也为后文"为何recurrent不如attention鲁棒"的实验结论埋下伏笔。
 
-    - History buffer：维护最近 $L$ 个观测的循环缓冲区
-    - 编码器：投影+正弦位置编码→Transformer encoder（带key-padding mask跳过无效位置）
-    - Attention pooling：学习的注意力加权将变长序列映射到固定大小特征向量
-    - 分别接入actor和critic head
+**4. 高概率奖励退化bound：把鲁棒性拆成可解释的若干因子。** 为了不止于经验比较，本文在若干平滑性与混合性假设（Assumptions 5.1–5.5）下证明，以概率 $\geq 1-\delta$ 累积奖励退化 $S$ 满足
 
-3. **RNN/SSM-PPO**:
+$$S \leq \mu_S + C_{\max}\min\left\{\sqrt{\frac{2\tau}{1-\gamma^2}\ln\frac{2}{\delta}} + \frac{4}{3}\tau\ln\frac{2}{\delta},\ \frac{1}{1-\gamma}\right\}$$
 
-    - 统一接口：$(h_t, z_t) = \mathcal{E}_\psi(h_{t-1}, x_t; d_t)$，其中 $d_t$ 为episode结束标志
-    - 包括GRU、LRU、LinOSS等变体
-
-### 理论分析
-
-**定理5.6（高概率奖励退化bound）**：在Assumptions 5.1-5.5下，以概率 $\geq 1-\delta$：
-
-$$S \leq \mu_S + C_{\max}\min\left\{\sqrt{\frac{2\tau}{1-\gamma^2}\ln\frac{2}{\delta}} + \frac{4}{3}\tau\ln\frac{2}{\delta}, \frac{1}{1-\gamma}\right\}$$
-
-其中：
-- $\mu_S \leq \frac{L_Q L_\pi}{1-\gamma}\sum_{i=1}^d (1-\pi_{x,i})h_i$ 是均值退化
-- $C_{\max} = L_Q L_\pi \sum_i B_i$ 是最坏情况per-step影响
-- $\tau$ 是增广链的mixing time
-
-**解读**：
-- 均值项仅依赖传感器的边际up-rate，相关性不直接影响期望退化
-- 波动项有√τ和τ两个分量，mixing time越大（故障越持久）波动越大
-- 策略平滑性 $L_\pi$ 和critic平滑性 $L_Q$ 全局缩放退化——序列模型通过利用历史实现更平滑的action变化
+其中均值退化 $\mu_S\leq\frac{L_Q L_\pi}{1-\gamma}\sum_{i=1}^d(1-\pi_{x,i})h_i$，最坏情况下单步影响 $C_{\max}=L_Q L_\pi\sum_i B_i$，$\tau$ 是增广Markov链的mixing time。这个式子把退化拆成均值项与波动项：均值项只依赖各传感器的边际可用率 $\pi_{x,i}$，故障的相关性不直接进入期望；波动项随mixing time $\tau$ 以 $\sqrt{\tau}$ 和 $\tau$ 两个量级增长，意味着故障越持久（链混合越慢）抖动越大；而策略平滑性 $L_\pi$ 与critic平滑性 $L_Q$ 全局缩放整个上界——这正解释了为何能利用历史、产生更平滑动作的序列模型更鲁棒，也给出了"提升可用率、缩短中断、压低策略Lipschitz常数"这一可操作的鲁棒化方向。
 
 ## 实验关键数据
 
@@ -136,10 +113,10 @@ $$S \leq \mu_S + C_{\max}\min\left\{\sqrt{\frac{2\tau}{1-\gamma^2}\ln\frac{2}{\d
 ## 相关论文
 
 - [\[NeurIPS 2025\] Incremental Sequence Classification with Temporal Consistency](../../NeurIPS2025/reinforcement_learning/incremental_sequence_classification_with_temporal_consistency.md)
-- [\[ICLR 2026\] TPRU: Advancing Temporal and Procedural Understanding in Large Multimodal Models](tpru_advancing_temporal_and_procedural_understanding_in_large_multimodal_models.md)
 - [\[AAAI 2026\] DRMD: Deep Reinforcement Learning for Malware Detection under Concept Drift](../../AAAI2026/reinforcement_learning/drmd_deep_reinforcement_learning_for_malware_detection_under_concept_drift.md)
 - [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
 - [\[NeurIPS 2025\] Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](../../NeurIPS2025/reinforcement_learning/robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+- [\[ICLR 2026\] Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
 
 </div>
 

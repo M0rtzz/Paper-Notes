@@ -1,15 +1,14 @@
 ---
 title: >-
-  ICML2025 自动驾驶方向11篇论文解读
+  ICML2025 自动驾驶方向10篇论文解读
 description: >-
-  11篇ICML2025的自动驾驶方向论文解读，涵盖点云、多模态、强化学习、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  10篇ICML2025的自动驾驶方向论文解读，涵盖点云、强化学习、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "自动驾驶"
   - "论文解读"
   - "论文笔记"
   - "点云"
-  - "多模态"
   - "强化学习"
   - "Agent"
 ---
@@ -17,11 +16,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🧪 ICML2025** · **11** 篇论文解读
+**🧪 ICML2025** · **10** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [📷 CVPR2026 (90)](../../CVPR2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md)
 
-🔥 **高频主题：** 点云 ×2 · 多模态 ×2 · 强化学习 ×2 · Agent ×2
+🔥 **高频主题：** 点云 ×2 · 强化学习 ×2 · Agent ×2
 
 **[Don't be so Negative! Score-based Generative Modeling with Oracle-assisted Guidance](dont_be_so_negative_score-based_generative_modeling_with_oracle-assisted_guidanc.md)**
 
@@ -62,7 +61,3 @@ tags:
 **[SPHINX: Structural Prediction using Hypergraph Inference Network](sphinx_structural_prediction_using_hypergraph_inference_network.md)**
 
 :   提出SPHINX无监督超图推断模型——将超边发现建模为序列化软聚类问题，用k-subset可微采样产生离散稀疏超图结构，可插入任意超图神经网络，在合成数据上超图重建达90%重叠率、在NBA轨迹预测和3D物体分类上超越现有方法。
-
-**[When Every Millisecond Counts: Real-Time Anomaly Detection via the Multimodal Asynchronous Hybrid Network](when_every_millisecond_counts_real-time_anomaly_detection_via_the_multimodal_asy.md)**
-
-:   提出多模态异步混合网络，结合事件相机的高时间分辨率（异步 GNN 处理）和 RGB 相机的丰富空间特征（CNN 处理），在交通异常检测中实现 579 FPS 的推理速度和 1.17s 的平均响应时间，首次将事件流引入自动驾驶异常检测领域。

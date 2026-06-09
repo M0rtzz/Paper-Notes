@@ -46,53 +46,29 @@ tags:
 
 ### 整体框架
 
-本文的算法分为两个阶段：
-1. **预处理阶段**：对每个单变量 NAM 组件 $h_i$ 进行分析，计算其输出范围和关键区间
-2. **解释生成阶段**：利用预处理结果，通过对数级验证查询找到基数最小解释
+本文要解决的问题是：给一个已经训练好的 NAM，针对某个具体输入 $\mathbf{x}$，找出一个最少特征数的子集，使得只要这些特征被固定、其余特征任意取值都不会改变模型的预测类别——这就是"基数最小解释"。对一般神经网络，这件事要在特征数上做指数级搜索、每次搜索又是 NP-hard；本文把它拆成两个阶段绕开了这一难题。第一阶段是离线预处理，逐个分析每个单变量组件 $h_i$，算出它的输出范围和精细区间，每个 $h_i$ 之间互不相关、可以并行；第二阶段是在线解释生成，拿预处理得到的"各特征影响力"信息，用二分式的策略只跑对数级别的验证查询就锁定基数最小子集。整条链路的关键在于：NAM 的加性结构让"某子集是否充分"这个原本需要全局验证的判断，退化成对各组件输出范围求和的简单算术。
 
 ### 关键设计
 
-1. **NAM 结构的利用**:
+**1. 加性结构分解：把全局验证拆成独立的单变量分析。**
 
-    - 功能：利用 NAM 的加性可分解性，将全局验证问题分解为独立的单变量分析
-    - 核心思路：由于 $f(\mathbf{x}) = \sum_i h_i(x_i)$，每个特征 $x_i$ 对输出的贡献 $h_i(x_i)$ 是独立的。因此，判断某个特征子集是否"充分"可以通过分析各 $h_i$ 的输出范围来完成
-    - 具体地，对于固定的特征子集 $S$，$f$ 的输出变化范围仅取决于 $S$ 之外的特征的 $h_i$ 值的可能范围之和
-    - **设计动机**：加性可分解性是 NAM 相对于一般神经网络的结构优势，应充分利用
+一般神经网络难以解释，根子在于特征彼此纠缠，判断一个子集是否充分必须把整个网络当黑盒验证。NAM 的结构 $f(\mathbf{x}) = \sum_i h_i(x_i)$ 天然把这种纠缠打散了——每个特征 $x_i$ 对输出的贡献 $h_i(x_i)$ 是独立的一项。于是，对一个固定的特征子集 $S$，模型输出在 $S$ 之外特征任意变动下的波动范围，只取决于那些 $h_i$ 各自可能取值范围之和，而与它们如何组合无关。这一点是后面所有高效性的来源：本来要在 $n$ 个特征的联合空间里推理，现在只需逐项考察 $n$ 个一维函数。
 
-2. **并行化预处理步骤**:
+**2. 可并行的预处理：把验证负担前移到单变量组件上。**
 
-    - 功能：对每个小的单变量 NAM 组件 $h_i$ 进行区间分析
-    - 核心思路：计算每个 $h_i$ 在其定义域上的输出范围 $[\underline{h}_i, \overline{h}_i]$，以及更精细的区间划分
-    - 使用形式化验证技术（如区间传播、线性松弛）来获取严格的上下界
-    - 预处理的运行时间在所需精度上是对数级的
-    - 各 $h_i$ 的预处理完全独立，可以并行执行
-    - **设计动机**：预处理的一次性成本换取后续解释生成的高效性；单变量网络的验证远比多变量网络容易
+预处理阶段对每个单变量组件 $h_i$ 做区间分析，用形式化验证技术（区间传播、线性松弛等）求出它在定义域上的严格输出上下界 $[\underline{h}_i, \overline{h}_i]$，并在此基础上做更精细的区间划分。这一步之所以划算，是因为单变量网络的验证远比多变量网络容易，预处理时间在所需精度 $\epsilon$ 上只是对数级；而且各 $h_i$ 的分析彼此完全独立，可以并行铺开。本质上是用一次性的离线成本，换取后续每次解释生成时的近乎免费的充分性判断。
 
-3. **对数级验证查询算法**:
+**3. 对数级验证查询：用排序加二分锁定最小子集。**
 
-    - 功能：在预处理完成后，使用对数级别（$O(\log n)$，$n$ 为特征数）的验证查询生成基数最小解释
-    - 核心思路：利用预处理得到的各特征"影响力"信息，通过二分搜索策略确定最小充分子集
-    - 算法流程：
-      a. 根据预处理结果，计算每个特征 $x_i$ 的"不确定性贡献"——即当 $x_i$ 不被固定时，$h_i$ 的输出变化范围
-      b. 按不确定性贡献排序特征
-      c. 使用贪心+二分策略确定最小子集：逐步移除贡献最小的特征，验证剩余子集是否仍然充分
-      d. 每次验证利用区间算术高效完成
-    - **设计动机**：通过排序和二分，将指数级搜索问题降为对数级
+有了每个组件的输出范围，第二阶段就能避开指数级枚举。算法先据预处理结果给每个特征算一个"不确定性贡献"——即当 $x_i$ 不被固定、放任其自由取值时，$h_i$ 的输出波动范围 $\overline{h}_i - \underline{h}_i$；这个量越大，说明该特征对预测的左右能力越强。接着把特征按不确定性贡献排序，用贪心加二分的策略逐步移除贡献最小的特征，每移一批就验证剩余子集是否仍然充分。由于每次验证只是对区间求和做算术比较、几乎瞬时，整个过程只需 $O(\log n)$ 次验证查询（$n$ 为特征数）就能确定基数最小子集，把指数级搜索压成了对数级。
 
-4. **可证明保证的形式化**:
+**4. 可证明的充分性判据：用区间和与决策边界比大小。**
 
-    - 功能：确保生成的解释在数学上是正确的——即基数最小且充分
-    - 核心思路："充分"的定义是：对于给定输入 $\mathbf{x}$，固定解释中的特征，无论其他特征取何值，模型的预测类别不变
-    - NAM 的加性结构使得充分性可以通过检查 $\sum_{i \notin S} (\overline{h}_i - \underline{h}_i)$ 是否小于决策边界来验证
-    - 可证明保证意味着返回的解释集合在最坏情况下都是正确的，不存在对抗样本能推翻解释
-    - **设计动机**：区别于采样方法的概率性保证，形式化保证在安全关键应用中是必需的
+"充分"在这里有严格定义：对给定输入 $\mathbf{x}$，固定解释子集 $S$ 中的特征后，无论其余特征取什么值，模型的预测类别都不变。加性结构让这个全称量词的判断变得可计算——只要 $S$ 之外那些组件的输出总波动 $\sum_{i \notin S} (\overline{h}_i - \underline{h}_i)$ 小于当前预测离决策边界的距离，就能保证翻不了盘。这是一种最坏情况下成立的保证：返回的解释不存在任何能推翻它的对抗取值，区别于 SHAP 等采样方法只能给出概率性结论。在医疗、金融这类安全关键场景里，正是这种形式化保证才有意义。
 
 ### 损失函数 / 训练策略
 
-- 本文是解释方法而非训练方法——不涉及损失函数或训练策略
-- 算法作用于已训练好的 NAM 模型，属于推理时的后处理
-- 预处理复杂度：$O(n \cdot \text{poly}(\log(1/\epsilon)))$，其中 $\epsilon$ 为精度参数
-- 解释生成复杂度：$O(\log n)$ 次验证查询
+本文是后处理式的解释方法，不涉及损失函数或训练——算法直接作用于已训练好的 NAM。两个阶段的复杂度分别为：预处理 $O(n \cdot \text{poly}(\log(1/\epsilon)))$（$\epsilon$ 为精度参数），解释生成 $O(\log n)$ 次验证查询。
 
 ## 实验关键数据
 
@@ -162,8 +138,8 @@ tags:
 - [\[NeurIPS 2025\] FaCT: Faithful Concept Traces for Explaining Neural Network Decisions](../../NeurIPS2025/interpretability/fact_faithful_concept_traces_for_explaining_neural_network_decisions.md)
 - [\[NeurIPS 2025\] Additive Models Explained: A Computational Complexity Approach](../../NeurIPS2025/interpretability/additive_models_explained_a_computational_complexity_approach.md)
 - [\[ICLR 2026\] Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
-- [\[ICML 2026\] Query Circuits: Explaining How Language Models Answer User Prompts](../../ICML2026/interpretability/query_circuits_explaining_how_language_models_answer_user_prompts.md)
-- [\[AAAI 2026\] Distribution-Based Feature Attribution for Explaining the Predictions of Any Classifier](../../AAAI2026/interpretability/distribution-based_feature_attribution_for_explaining_the_predictions_of_any_cla.md)
+- [\[ICML 2025\] FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks](../../ICML2025/interpretability/fastcav_efficient_computation_of_concept_activation_vectors_for_explaining_deep_.md)
+- [\[ICML 2026\] Beyond Additive Decompositions: Interpretability Through Separability](../../ICML2026/interpretability/beyond_additive_decompositions_interpretability_through_separability.md)
 
 </div>
 

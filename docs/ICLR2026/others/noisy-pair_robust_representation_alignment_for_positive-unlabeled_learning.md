@@ -44,23 +44,17 @@ NcPU 在 BYOL 非对比学习框架基础上构建。输入为正样本集 $\mat
 
 ### 关键设计
 
-1. **NoiSNCL——噪声对鲁棒的监督非对比损失**:
+**1. NoiSNCL：给非对比损失套一个 sqrt，把训练主导权从噪声对夺回给 clean pair。**
 
-    - 功能：在伪标签噪声严重的情况下仍能有效地对齐同类样本的表示
-    - 核心思路：标准非对比损失为 $\mathcal{L}_r = 2(1 - \langle \tilde{q}_i, \tilde{k}_j \rangle)$，NoiSNCL 改为 $\tilde{\mathcal{L}}_r = 2\sqrt{1 - \langle \tilde{q}_i, \tilde{k}_j \rangle}$，仅多了一个 sqrt。通过梯度分析可以证明：对于标准损失，噪声对（余弦相似度低、距离远）的梯度 $\propto (1 - \cos^2\theta)$ 大于 clean pair（余弦相似度高）的梯度，噪声对主导训练；而 NoiSNCL 的梯度 $\propto (1 + \cos\theta)$，clean pair 反而梯度更大，训练被 clean pair 主导。这个性质的关键在于 $\sqrt{x}$ 函数在 $x\to 0$ 附近梯度趋于无穷、在 $x\to 1$ 附近梯度趋于 0，恰好抑制了距离大的噪声对的影响
-    - 设计动机：直接解决"噪声对梯度主导"的核心问题。在监督学习场景下 NoiSNCL 与标准损失性能相当（98.75% vs 98.53% on CIFAR-10），不会引入副作用；数值稳定性方面，由于 BYOL 的非对称架构和随机增强保证 $\tilde{q}_i \neq \tilde{k}_j$，不会除零
+前面提到的恶性循环，根子在标准监督非对比损失 $\mathcal{L}_r = 2(1 - \langle \tilde{q}_i, \tilde{k}_j \rangle)$ 的梯度结构上——它对一个 pair 的梯度正比于 $(1 - \cos^2\theta)$，于是余弦相似度低、距离远的噪声对梯度大，而本应主导训练的 clean pair（余弦相似度高）梯度反而小，整个表示学习被噪声对牵着走。NoiSNCL 的改动只有一个：对损失开根号，$\tilde{\mathcal{L}}_r = 2\sqrt{1 - \langle \tilde{q}_i, \tilde{k}_j \rangle}$。这一步把梯度变成正比于 $(1 + \cos\theta)$，单调关系直接翻转——clean pair 梯度更大、噪声对被压制。直觉来自 $\sqrt{x}$ 的形状：它在 $x\to 0$ 附近导数趋于无穷（放大 clean pair 这种小 loss 对应的梯度），在 $x\to 1$ 附近导数趋于 0（抑制噪声对这种大 loss 的影响）。代价几乎为零：在干净的监督场景下 NoiSNCL 与标准损失性能相当（CIFAR-10 上 98.75% vs 98.53%），数值上也安全——BYOL 的非对称架构加随机增强保证 $\tilde{q}_i \neq \tilde{k}_j$，根号下不会取到 0。
 
-2. **PhantomGate——带 regret 机制的伪标签消歧**:
+**2. PhantomGate：用带 regret 的门控注入保守负监督，既防 trivial solution 又允许反悔。**
 
-    - 功能：为无标签数据生成可靠的伪标签（尤其是负标签），避免所有样本都被分为正类的 trivial solution
-    - 核心思路：分三步。(i) 类条件 prototype 每个 batch 做动量更新 $\mu_c = \text{Normalize}(\alpha \mu_c + (1-\alpha)\tilde{q})$。(ii) 基于 prototype 相似度生成 soft 伪标签 $s'$，通过动量累积获得稳定估计。(iii) PhantomGate 是核心创新——用自适应阈值 $\tau$ 判断：若分类器对某样本的正类概率 $f_1(x) \geq \tau$ 则直接设标签为 $[0,1]^T$（负类），否则用 prototype-based 的 $s'$。关键的 regret 机制：如果模型后来发现某个被标为负类的样本可能错了，它可以从累积的 $s'$ 而非从 $[0,1]^T$ 重新开始更新，避免了"一旦误判就无法回头"的问题
-    - 设计动机：PU 学习缺乏负类监督，直接用 prototype 消歧容易导致所有样本被拉向正类（trivial solution）。简单加阈值选负样本（+SAT）又会引入不准确的负监督（高精确率但极低召回率 0.51%）。PhantomGate 在两者间取得平衡——注入负监督防止 trivial solution，同时通过 regret 机制允许纠错
+PU 场景天生缺负类监督，如果只靠 prototype 相似度做消歧，模型很容易把所有样本都往正类拉，塌成 trivial solution（实验里这种做法 recall 98.7% 但 precision 仅 67%）；反过来简单加阈值硬选负样本又会矫枉过正，把准确率拉到 98% 却让 recall 崩到 0.51%。PhantomGate 走的是中间路线，整体分三步：先对类条件 prototype 每个 batch 做动量更新 $\mu_c = \text{Normalize}(\alpha \mu_c + (1-\alpha)\tilde{q})$；再用 prototype 相似度生成 soft 伪标签 $s'$ 并通过动量累积得到稳定估计；最后由门控决定每个样本的标签——当分类器给出的正类概率 $f_1(x) \geq \tau$ 时，直接把标签设成负类 $[0,1]^T$（这就是注入的保守负监督），否则退回到 prototype-based 的 $s'$。真正关键的是 regret 机制：一旦模型后来意识到某个被判负的样本可能错了，它不是从硬标签 $[0,1]^T$ 重新出发，而是从累积的 $s'$ 重新更新，从而避开了"一次误判就再也回不了头"的陷阱，让保守的负监督和纠错能力共存。
 
-3. **自适应阈值 SAT 机制**:
+**3. 自适应阈值（SAT）：让负样本选择从松到紧自动调度，无需手调阈值。**
 
-    - 功能：自动控制负样本选择的松紧程度，无需手动调参
-    - 核心思路：维护全局阈值 $\tilde{\tau}$ 和类别感知调制因子 $\tilde{\rho}(c)$，均通过动量更新。最终阈值 $\tau = \frac{\tilde{\rho}(1)}{\max\{\tilde{\rho}(0), \tilde{\rho}(1)\}} \cdot \tilde{\tau}$。训练早期模型不自信（$\tilde{\tau}$ 低），更多样本被选为负类提供监督信号；训练后期模型更自信（$\tilde{\tau}$ 升高），阈值提高以过滤掉可能不准确的负类选择
-    - 设计动机：避免手动设定阈值。从松到紧的动态策略符合课程学习的思想——先给简单的负监督，再逐步提高标准
+PhantomGate 里那个判负的阈值 $\tau$ 并非固定值，而是由 SAT 在线维护：它跟踪一个全局阈值 $\tilde{\tau}$ 和一组类别感知调制因子 $\tilde{\rho}(c)$（都用动量更新），最终阈值取 $\tau = \frac{\tilde{\rho}(1)}{\max\{\tilde{\rho}(0), \tilde{\rho}(1)\}} \cdot \tilde{\tau}$。这套设计的好处是阈值会随训练自然演化——早期模型还不自信、$\tilde{\tau}$ 偏低，于是更多样本被选为负类、给出更密的监督信号；后期模型变自信、$\tilde{\tau}$ 升高，阈值随之收紧，把那些可能不准确的负类判断过滤掉。从松到紧的节奏正好对应课程学习的思路：先喂简单可靠的负监督，再逐步提高门槛。
 
 ### 损失函数 / 训练策略
 
@@ -156,8 +150,8 @@ NcPU 在 BYOL 非对比学习框架基础上构建。输入为正样本集 $\mat
 ## 相关论文
 
 - [\[ICLR 2026\] ANO: Faster is Better in Noisy Landscapes](ano_faster_is_better_in_noisy_landscape.md)
+- [\[ICLR 2026\] Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
 - [\[ICLR 2026\] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
-- [\[ICML 2026\] From Generalist to Specialist Representation](../../ICML2026/others/from_generalist_to_specialist_representation.md)
 - [\[ICCV 2025\] Joint Asymmetric Loss for Learning with Noisy Labels](../../ICCV2025/others/joint_asymmetric_loss_for_learning_with_noisy_labels.md)
 - [\[ECCV 2024\] Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
 

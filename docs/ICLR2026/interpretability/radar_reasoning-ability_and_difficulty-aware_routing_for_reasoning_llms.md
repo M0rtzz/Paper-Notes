@@ -35,32 +35,25 @@ tags:
 
 ### 整体框架
 
-Radar 框架包含以下核心组件：
-1. **离散化技巧**：将每个 RLM 按可用推理预算离散化为多个配置 $g = (m, u) \in \mathcal{G}$
-2. **多目标优化（MOO）**：将路由形式化为最大化性能、最小化成本的双目标优化
-3. **IRT 校准**：使用 2PL IRT 模型联合估计查询难度和配置能力
-4. **自适应测试**：通过少量动态选择的查询快速估计新模型配置的能力
+Radar 把"为每个查询挑一个恰好够强的 RLM 配置"拆成两件事：先用项目反应理论（IRT）拟合一个可解释的性能预测器，把查询的难度和模型配置的能力放进同一把标尺；再在性能与成本两个目标上做多目标优化，逐查询挑出 Pareto 意义下的最优配置。新模型要接入时，靠自适应测试只评测一小撮信息量最大的查询就能估出它的能力，无需重训。
 
 ### 关键设计
 
-1. **离散化与配置路由**: 将每个 RLM $m \in \mathcal{M}$ 按推理预算 $u \in \mathcal{U}_m$ 离散化为配置 $g = (m, u)$。对开源 RLM，通过计数思考 token 并在超出预算时附加中断消息来强制执行预算。设计动机：统一模型选择和预算选择为单一配置路由问题，使得可以在配置空间上进行优化。
+**1. 配置离散化：把"选模型"和"选预算"统一成一次路由。** 单看模型大小或单看推理预算都不够——大模型在简单题上会过度思考，小模型给足预算又未必划算。Radar 因此把每个 RLM $m \in \mathcal{M}$ 沿其可用推理预算 $u \in \mathcal{U}_m$ 切成若干配置 $g = (m, u) \in \mathcal{G}$，于是"挑模型 + 挑预算"被压成在配置空间 $\mathcal{G}$ 上的单一路由问题。对开源 RLM，预算通过计数思考 token 强制执行：一旦超出 $u$ 就追加一条中断消息逼模型收尾。本文据此构造了 35 个配置。
 
-2. **多目标优化路由**: 对每个查询 $q$，求解 $g^* = \arg\max_{g \in \mathcal{G}} f(p_q(g), c_q(g))$，其中 $p_q(g)$ 是性能预测函数，$c_q(g)$ 是成本预测函数。本文探索两种标量化技术：
+**2. 多目标路由：用切比雪夫标量化够到 Pareto 前沿的凹陷处。** 性能和成本天然冲突，单纯加权求和会漏掉前沿上的非凸段。对每个查询 $q$，Radar 求解 $g^* = \arg\max_{g \in \mathcal{G}} f(p_q(g), c_q(g))$，其中 $p_q(g)$ 预测性能、$c_q(g)$ 预测成本。文中对比了两种标量化：线性标量化 $\text{LSP}_q^{w_1} = \arg\max_{g} w_1 p_q(g) - (1-w_1) c_q(g)$ 只能覆盖 Pareto 前沿的凸部分；切比雪夫标量化 $\text{CSP}_q^{w_1} = \arg\min_{g} \max\{w_1|1-p_q(g)|, (1-w_1)c_q(g)\}$ 则能发现前沿的非凸部分，这也是 LLM 路由里首次引入线性标量化之外的 MOO 技术，在 OOD 场景下尤其管用。
 
-    - **线性标量化**: $\text{LSP}_q^{w_1} = \arg\max_{g \in \mathcal{G}} w_1 p_q(g) - (1-w_1) c_q(g)$
-    - **切比雪夫标量化**: $\text{CSP}_q^{w_1} = \arg\min_{g \in \mathcal{G}} \max\{w_1|1-p_q(g)|, (1-w_1)c_q(g)\}$
-   设计动机：切比雪夫标量化可以发现 Pareto 前沿的非凸部分，而线性标量化仅能覆盖凸部分。这是首次在 LLM 路由中引入线性标量化之外的 MOO 技术。
+**3. 2PL IRT 性能预测器：把查询当考题、配置当考生。** 性能预测器 $p_q(g)$ 用二参数逻辑斯蒂（2PL）IRT 模型实现：配置 $g_i$ 答对查询 $q_j$ 的概率为 $p_{ij} = \sigma(a_j(\theta_i - b_j))$，其中 $\theta_i$ 是配置 $g_i$ 的标量能力，$b_j$ 是查询难度、$a_j$ 是区分度。标量能力 $\theta_i$ 自然给出配置之间可解释的强弱排序，参数量也比多维 IRT（MIRT）省。为了能泛化到训练时没见过的查询，难度和区分度并不逐题自由学，而是写成查询嵌入 $\mathbf{e}_j$ 的线性变换 $b_j = \mathbf{w}_b^\top \mathbf{e}_j$、$a_j = \mathbf{w}_a^\top \mathbf{e}_j$，新查询只要算出嵌入就能预测其难度。
 
-3. **2PL IRT 模型**: 使用二参数逻辑斯蒂模型参数化性能预测函数。为实现 OOD 泛化，将查询难度 $b_j = \mathbf{w}_b^\top \mathbf{e}_j$ 和区分度 $a_j = \mathbf{w}_a^\top \mathbf{e}_j$ 参数化为查询嵌入 $\mathbf{e}_j$ 的线性变换，每个配置 $g_i$ 有标量能力参数 $\theta_i$。正确回答概率为 $p_{ij} = \sigma(a_j(\theta_i - b_j))$。设计动机：标量能力值可捕获模型配置间的可解释排序，参数量少于多维 IRT（MIRT），且通过嵌入泛化到未见查询。
-
-4. **自适应测试扩展**: 为新模型配置估计能力参数时，迭代选择 Fisher 信息最大的查询进行评估：$j_t = \arg\max_{j \in \mathcal{Q} \setminus \mathcal{S}_{t-1}} I(\hat{\theta}_{t-1}, a_j, b_j)$，其中 $I(\theta, a_j, b_j) = a_j^2 \sigma(a_j(\theta-b_j))[1-\sigma(a_j(\theta-b_j))]$。设计动机：仅需评估约 12% 的训练集即可准确估计新配置能力，实现即插即用。
+**4. 自适应测试：新配置即插即用。** 接入一个新模型配置时，与其在整个训练集上跑一遍来估计它的能力 $\theta$，不如只挑最能区分能力的题目测。Radar 借用教育测评里的 Fisher 信息选题：第 $t$ 步选 $j_t = \arg\max_{j \in \mathcal{Q} \setminus \mathcal{S}_{t-1}} I(\hat{\theta}_{t-1}, a_j, b_j)$，其中信息量 $I(\theta, a_j, b_j) = a_j^2 \sigma(a_j(\theta-b_j))[1-\sigma(a_j(\theta-b_j))]$ 在 $\theta$ 接近难度 $b_j$ 时最大。这样只需评测约 12% 的训练集就能准确估出新配置能力，无需重训整个 IRT。
 
 ### 损失函数 / 训练策略
 
-训练 IRT 模型使用二元交叉熵损失：
+IRT 模型用二元交叉熵在所有"配置 × 查询"的对错记录上训练：
+
 $$\mathcal{L}_{2PL} = -\frac{1}{nk} \sum_{i=1}^n \sum_{j=1}^k [y_{ij} \log p_{ij} + (1-y_{ij}) \log(1-p_{ij})]$$
 
-其中 $y_{ij} \in \{0,1\}$ 表示配置 $g_i$ 在查询 $q_j$ 上是否正确。总共收集了 175 万条二值响应数据，覆盖 35 个配置和 50,139 个查询。
+其中 $y_{ij} \in \{0,1\}$ 表示配置 $g_i$ 在查询 $q_j$ 上是否答对。数据上共收集 175 万条二值响应，覆盖 35 个配置和 50,139 个查询。
 
 ## 实验关键数据
 
@@ -128,11 +121,11 @@ $$\mathcal{L}_{2PL} = -\frac{1}{nk} \sum_{i=1}^n \sum_{j=1}^k [y_{ij} \log p_{ij
 
 ## 相关论文
 
-- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
-- [\[ICLR 2026\] ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
 - [\[ICLR 2026\] The Geometry of Reasoning: Flowing Logics in Representation Space](the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
 - [\[ICLR 2026\] When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [\[ICLR 2026\] MATA: A Trainable Hierarchical Automaton System for Multi-Agent Visual Reasoning](mata_a_trainable_hierarchical_automaton_system_for_multi-agent_visual_reasoning.md)
 - [\[ICML 2026\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2026/interpretability/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
+- [\[ACL 2025\] Towards Explainable Temporal Reasoning in Large Language Models: A Structure-Aware Generative Framework](../../ACL2025/interpretability/towards_explainable_temporal_reasoning_in_large_language_models_a_structure-awar.md)
 
 </div>
 

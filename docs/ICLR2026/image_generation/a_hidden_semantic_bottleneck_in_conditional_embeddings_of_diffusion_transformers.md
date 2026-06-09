@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-纯分析论文，无新方法。三个发现：(1) 极端相似性；(2) 稀疏表示；(3) 冗余可裁剪。覆盖 6 个 ImageNet SOTA 模型 + 2 个连续条件任务（姿态引导人像生成、视频-音频生成）。
+这是一篇纯分析论文，不提出新模型，而是把扩散 Transformer 学到的条件嵌入（类标签经 AdaLN 注入的向量）当成研究对象，从角度、维度、冗余三个角度做"解剖"。具体做法是在 6 个 ImageNet SOTA 模型（DiT/MDT/SiT/REPA/LightningDiT/MG）和 2 个连续条件任务（姿态引导人像、视频到音频）上，测量条件向量的类间余弦相似度、统计有效维度数，再用裁剪实验反向验证哪些维度真正承载语义。
 
 ### 关键设计
 
-1. **极端角度相似性分析**:
+**1. 极端角度相似性：揭示"几乎相同的向量为何能区分类别"。**
 
-    - 发现：1000 个 ImageNet 类别的条件嵌入两两余弦相似度达 99%+（REPA 达 99.46%）。连续条件任务（姿态/视频）更甚，达 99.9%+
-    - 解释假说：扩散训练跨所有时间步优化嵌入，模型偏好能提供稳定去噪信号的全局对齐嵌入。语义差异编码在少数高幅头部维度中
+第一步是直接测量学到的条件向量两两之间的方向有多接近。结果反直觉：1000 个 ImageNet 类别的嵌入余弦相似度普遍在 99% 以上，REPA 高达 99.46%；连续条件任务更极端，姿态和音频任务都达到 99.9%+。也就是说从方向上看这些向量几乎重合，但模型却能据此生成截然不同的图像。本文给出的解释假说是：扩散训练要求嵌入在所有时间步上都提供稳定的去噪信号，这种跨步优化天然偏好一个全局对齐的方向，把所有类别的向量都"拉"到同一个锥形区域里；真正区分类别的语义差异不体现在整体方向上，而是被压缩进极少数高幅度的"头部"维度。这就把矛盾化解为：方向几乎一致，差异藏在幅度里。
 
-2. **参与率（Participation Ratio）分析**:
+**2. 参与率分析：量化到底有多少维度在干活。**
 
-    - 度量：$\alpha_{norm} = \text{PR}(|c|) / d$，衡量有效使用的维度比例
-    - 发现：SOTA 模型（MDT/REPA/MG）的 nPR 仅 1.5-2.3%，即 1152 维中仅 ~18-26 维有效。DiT 例外（10.5%）因为较老的架构
-    - 连续任务的 nPR 更高（13-48%），因为需要编码更细粒度的连续条件信息
+为了把"语义集中在少数维度"这个直觉变成可测量的量，本文用参与率（Participation Ratio）刻画嵌入向量幅度分布的有效宽度，并归一化为 $\alpha_{norm} = \text{PR}(|c|) / d$，即有效维度占总维度 $d$ 的比例。测量发现 MDT、REPA、MG 等 SOTA 模型的归一化参与率（nPR）仅 1.5–2.3%——在 1152 维空间里实际只有约 18–26 维在承载信息。DiT 是个例外（10.5%），原因是它架构较老、压缩程度更低。连续条件任务的 nPR 反而更高（13–48%），因为姿态、音频这类条件本身需要编码更细粒度的连续信息，单靠十几维装不下。这一指标把"稀疏"从定性观察坐实成了具体数字。
 
-3. **裁剪实验——头部 vs 尾部维度的角色**:
+**3. 头部 vs 尾部裁剪：用因果实验定位语义所在。**
 
-    - 尾部裁剪（τ=0.01）：移除 38.9% 的低幅维度，FID 从 7.17 变为 7.16（基本不变！）
-    - 尾部裁剪（τ=0.02）：移除 66.2% 的维度，FID 从 7.17 升至 9.22（仍可接受）
-    - 头部裁剪：仅移除 2/1152（0.2%）的最高幅维度 → FID 略升（7.85），移除 8/1152（0.69%）→ FID 暴涨至 523！
-    - 结论：语义完全集中在少数头部维度
+前两步只是相关性观察，本文用裁剪实验做因果验证：把幅度低于阈值 $\tau$ 的维度直接置零，看生成质量如何变化。尾部裁剪时，移除 38.9% 的低幅维度（$\tau=0.01$）后 FID 从 7.17 几乎不变地降到 7.16，甚至移除 66.2% 的维度（$\tau=0.02$）FID 也只升到 9.22 仍可接受——说明这些尾部维度近乎冗余。头部裁剪则形成鲜明对照：仅移除幅度最高的 2/1152 维（0.2%）FID 就升到 7.85，移除 8/1152 维（0.69%）FID 直接暴涨到 523、图像彻底崩溃。两组对比构成了完整的因果证据链：语义信息几乎全部集中在少数头部维度，尾部维度可以安全丢弃，这也正是"隐藏的语义瓶颈"得名的由来。
 
 ### 损失函数 / 训练策略
-N/A（分析论文，不训练模型）
+不涉及训练，全部基于预训练模型在推理时做分析与裁剪。
 
 ## 实验关键数据
 
@@ -126,8 +120,8 @@ N/A（分析论文，不训练模型）
 - [\[ICML 2026\] Recovering Hidden Reward in Diffusion-Based Policies](../../ICML2026/image_generation/recovering_hidden_reward_in_diffusion-based_policies.md)
 - [\[ICLR 2026\] HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation](hierloc_hyperbolic_entity_embeddings_for_hierarchical_visual_geolocation.md)
 - [\[ICLR 2026\] FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
+- [\[CVPR 2026\] Interpretable and Steerable Concept Bottleneck Sparse Autoencoders](../../CVPR2026/image_generation/interpretable_and_steerable_concept_bottleneck_sparse_autoencoders.md)
 - [\[ICLR 2026\] Routing Matters in MoE: Scaling Diffusion Transformers with Explicit Routing Guidance](routing_matters_in_moe_scaling_diffusion_transformers_with_explicit_routing_guid.md)
-- [\[AAAI 2026\] Realistic Face Reconstruction from Facial Embeddings via Diffusion Models](../../AAAI2026/image_generation/realistic_face_reconstruction_from_facial_embeddings_via_diffusion_models.md)
 
 </div>
 

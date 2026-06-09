@@ -44,35 +44,21 @@ tags:
 
 ### 整体框架
 
-在 Chronos-T5-Large（710M 参数，24 层编码器 + 24 层解码器，$d_{\text{model}}=1024$）的 6 个提取点训练 TopK SAE，用合成数据构建特征分类法，用 ETT 真实数据做因果消融验证，建立特征的语义标签与因果重要性的对应关系。
+整套分析的目标是把 Chronos-T5-Large（710M 参数，24 层编码器 + 24 层解码器，$d_{\text{model}}=1024$）内部稠密、叠加的激活拆成可读懂的特征，再追问这些特征到底对预测有没有因果作用。为此作者先在模型 6 个深度位置训练 TopK 稀疏自编码器把激活分解成离散特征，用一批属性已知的合成时间序列给每个特征贴上时间概念标签，最后回到 ETT 真实数据上逐个把特征置零、观测预测误差怎么变，从而把"语义标签"和"因果重要性"这两条线索对齐起来。
 
-### 关键设计一：TopK 稀疏自编码器
+### 关键设计
 
-- **功能**：在每个提取点的残差流激活上训练 SAE，将稠密激活分解为稀疏的可解释特征。
-- **核心思路**：给定激活 $\mathbf{x} \in \mathbb{R}^{d_{\text{model}}}$，SAE 计算 $\mathbf{z} = \text{TopK}(\mathbf{W}_{\text{enc}}(\mathbf{x} - \mathbf{b}_{\text{dec}}) + \mathbf{b}_{\text{enc}}, k)$，仅保留 $k=64$ 个最大激活值，重构 $\hat{\mathbf{x}} = \mathbf{W}_{\text{dec}}\mathbf{z} + \mathbf{b}_{\text{dec}}$。
-- **设计动机**：TopK 比 L1 正则化更直接控制稀疏度；扩展系数 $d_{\text{sae}} = 8 \times d_{\text{model}} = 8192$ 提供足够容量分解叠加特征；死特征定期重采样保证利用率。
+**1. TopK 稀疏自编码器：把叠加的稠密激活拆成离散可读特征。** 基础模型的残差流激活是高度叠加的，单个神经元同时参与多种概念，无法直接解读。作者在每个提取点的激活上训练一个 SAE：给定激活 $\mathbf{x} \in \mathbb{R}^{d_{\text{model}}}$，编码端算出 $\mathbf{z} = \text{TopK}(\mathbf{W}_{\text{enc}}(\mathbf{x} - \mathbf{b}_{\text{dec}}) + \mathbf{b}_{\text{enc}}, k)$，只保留 $k=64$ 个最大激活值、其余强制为零，再用 $\hat{\mathbf{x}} = \mathbf{W}_{\text{dec}}\mathbf{z} + \mathbf{b}_{\text{dec}}$ 重构。相比 L1 正则，TopK 能硬性、直接地控制每个 token 激活几个特征，避免稀疏度随正则权重漂移；字典维度放大到 $d_{\text{sae}} = 8 \times d_{\text{model}} = 8192$，给叠加特征留足分解容量，再配合对死特征的定期重采样保证字典被充分利用。
 
-### 关键设计二：六点层级激活提取
+**2. 六点层级激活提取：覆盖从编码到生成的完整深度剖面。** 要验证"不同深度的层是否承担不同功能"这个核心问题，就得在模型多个深度同时取样。作者用前向钩子在编码器第 5、11、23 层（早、中、后三个代表深度）以及解码器第 11 层（同时取残差流和交叉注意力输出）、第 23 层共 6 个位置抓取激活并各训一个 SAE。这样从输入编码一路到预测生成的处理流水线都被覆盖，后续才能比较同一套分析方法在浅层、中层、末层得到的特征分布与因果强度有何系统性差异。
 
-- **功能**：在编码器第 5、11、23 层和解码器第 11（残差流 + 交叉注意力输出）、23 层共 6 个位置注册前向钩子提取激活。
-- **核心思路**：选取编码器的早期、中期、后期三个代表层，加上解码器端的对应层，覆盖从输入编码到预测生成的完整处理流水线。
-- **设计动机**：语言模型研究表明不同深度的层承担不同功能，时间序列模型是否也存在类似层级结构是本文核心研究问题。
+**3. 双数据源特征分类法：用合成 ground-truth 给特征贴语义标签。** SAE 拆出的特征本身只是向量，需要可解释的语义才能讨论"语义丰富度"。真实数据上人工标注属性既模糊又昂贵，作者改用一批属性完全已知的合成诊断序列（含趋势、季节性、突变、频率扫描、异方差噪声等），对每个 SAE 特征计算其激活模式与各诊断类别真值属性之间的 Pearson 相关系数，取最大相关对应的类别作为标签，最大相关仍低于阈值的特征则标为 unknown。最终用一套覆盖趋势、季节性、突变、频率、波动率、噪声的 11 类时间概念来刻画每层学到了什么。
 
-### 关键设计三：双数据源特征分类法
+**4. 单特征与渐进式因果消融：把"语义"上升为"因果"。** 特征和某个概念相关，不等于模型预测真的依赖它，因果性必须靠干预来确认。单特征消融把某个特征 $j$ 的稀疏编码置零，再测预测误差变化 $\Delta\text{CRPS}_j = \text{CRPS}_{\text{ablated}} - \text{CRPS}_{\text{original}}$，正值说明该特征确实携带了预测所需信息。渐进式消融则按解码器范数贡献从大到小排序，累积移除 1 到 64 个特征，观察各层在"被逐步掏空"时误差上升的速度，从而区分某层的特征是彼此冗余还是不可替代——这一步正是后文中层编码器消融后灾难性退化、末层消融后误差反而下降这两个反直觉结论的来源。
 
-- **功能**：用合成诊断数据集（含趋势、季节性、突变、频率扫描、异方差噪声等已知属性）对每个 SAE 特征打上 11 类时间概念标签。
-- **核心思路**：计算每个特征在合成数据上的激活模式与各诊断类别真值属性的 Pearson 相关系数，最大相关系数低于阈值的标为 unknown。
-- **设计动机**：合成数据提供 ground-truth 时间属性，避免了真实数据上标注的模糊性；11 类标签覆盖趋势、季节性、突变、频率、波动率和噪声等核心时间概念。
+### 损失函数 / 训练策略
 
-### 关键设计四：单特征与渐进式因果消融
-
-- **功能**：验证特征的因果重要性——单特征消融将某一特征的稀疏编码置零后测量 CRPS 变化；渐进式消融按解码器范数贡献排序累积移除 1-64 个特征。
-- **核心思路**：$\Delta\text{CRPS}_j = \text{CRPS}_{\text{ablated}} - \text{CRPS}_{\text{original}}$，正值说明该特征包含模型预测所需信息；渐进消融揭示各层对特征移除的鲁棒性差异。
-- **设计动机**：相比相关性分析，消融直接建立因果关系；渐进消融进一步区分"有用但冗余"与"不可替代"的特征。
-
-### 损失函数与训练
-
-SAE 使用 MSE 重构损失训练 50,000 步，Adam 优化器（学习率 $3 \times 10^{-4}$，余弦衰减）。消融实验在 ETT 基准上进行，使用 256 个上下文窗口、预测长度 64、4 次预测采样；末层编码器额外做了 1024 窗口、8 采样、200 特征的扩展实验。
+SAE 以 MSE 重构损失训练 50,000 步，用 Adam 优化器（学习率 $3 \times 10^{-4}$、余弦衰减）。因果消融统一在 ETT 基准上做，采用 256 个上下文窗口、预测长度 64、每次 4 个预测采样的快速配置；针对结论最反直觉的末层编码器，额外用 1024 窗口、8 采样、200 特征的扩展配置复核，确认趋势不是采样噪声造成的。
 
 ## 实验关键数据
 
@@ -142,10 +128,10 @@ SAE 使用 MSE 重构损失训练 50,000 步，Adam 优化器（学习率 $3 \ti
 ## 相关论文
 
 - [\[ICLR 2026\] FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [\[ICLR 2026\] Online Time Series Prediction Using Feature Adjustment](online_time_series_prediction_using_feature_adjustment.md)
 - [\[ICLR 2026\] Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
 - [\[ICLR 2026\] Relational Feature Caching for Accelerating Diffusion Transformers](relational_feature_caching_for_accelerating_diffusion_transformers.md)
 - [\[ICLR 2026\] Relational Transformer: Toward Zero-Shot Foundation Models for Relational Data](relational_transformer_toward_zero-shot_foundation_models_for_relational_data.md)
-- [\[NeurIPS 2025\] Synthetic Series-Symbol Data Generation for Time Series Foundation Models](../../NeurIPS2025/time_series/synthetic_series-symbol_data_generation_for_time_series_foundation_models.md)
 
 </div>
 

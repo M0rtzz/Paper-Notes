@@ -42,31 +42,25 @@ tags:
 
 ### 整体框架
 
-维护每个节点的状态 $\mathbf{h} \in \mathbb{R}^d$ 和虚拟全局状态 $\mathbf{g} \in \mathbb{R}^d$（$d = |\mathcal{V}|$）。前一时刻亲和力向量和当前状态通过线性变换+门控聚合为新状态，预测的亲和力向量基于状态和全局状态计算。
+NAViS 把每个查询节点的亲和力预测当作一个线性状态空间模型来跑：为每个节点维护一份状态 $\mathbf{h} \in \mathbb{R}^d$，再维护一份所有节点共享的虚拟全局状态 $\mathbf{g} \in \mathbb{R}^d$（这里 $d = |\mathcal{V}|$，即状态的每一维对应一个潜在目标节点）。每来一个新事件，模型用门控把"上一时刻的亲和力向量"和"当前观测"做凸组合更新状态，再结合全局状态读出当前的亲和力排名。整个流程刻意让输出保持为输入的线性组合，这样才能复现启发式、又比启发式更灵活。
 
 ### 关键设计
 
-1. **门控线性 SSM 架构**:
+**1. 门控线性 SSM：用可学习的衰减系数泛化 EMA，同时不破坏线性记忆。**
 
-    - **功能**：泛化 EMA 同时保持输出为输入的线性组合
-    - **核心思路**：$\mathbf{z}_h = \sigma(W_{xh}\mathbf{x} + W_{hh}\mathbf{h}_{i-1} + \mathbf{b}_h)$, $\mathbf{h}_i = \mathbf{z}_h \odot \mathbf{h}_{i-1} + (1-\mathbf{z}_h) \odot \mathbf{x}$。输出类似：$\mathbf{s} = \mathbf{z}_s \odot \mathbf{h}_i + (1-\mathbf{z}_s) \odot \mathbf{x}$，其中 $\mathbf{z}_s$ 还依赖全局状态 $\mathbf{g}$
-    - **设计动机**：sigmoid 门控确保 $\mathbf{z} \in [0,1]$，输出是上一状态和当前输入的凸组合。EMA 是 $\mathbf{z}$ 为常数的特例。NAViS 与 t-Batch 兼容，不丢失批内更新
+理论分析（Theorem 2）指出标准 RNN/LSTM/GRU 连最基本的持续预测都表达不了，根因是它们的 tanh/sigmoid 输出被压在 $(-1,1)$ 内、无法维持线性的输入-输出关系；而启发式（持续预测、EMA、SMA）恰恰是线性 SSM 的特例（Theorem 1，EMA 对应转移矩阵 $\mathbf{A}=\alpha\mathbf{I}$、SMA 对应 $\mathbf{A}=\frac{w-1}{w}\mathbf{I}$）。NAViS 的状态更新写成门控形式 $\mathbf{z}_h = \sigma(W_{xh}\mathbf{x} + W_{hh}\mathbf{h}_{i-1} + \mathbf{b}_h)$，$\mathbf{h}_i = \mathbf{z}_h \odot \mathbf{h}_{i-1} + (1-\mathbf{z}_h) \odot \mathbf{x}$，读出同样用凸组合 $\mathbf{s} = \mathbf{z}_s \odot \mathbf{h}_i + (1-\mathbf{z}_s) \odot \mathbf{x}$。sigmoid 把门控值约束在 $[0,1]$，因此输出永远是历史状态与当前输入的凸组合（线性组合），EMA 只是把 $\mathbf{z}$ 取成常数的退化情形；而门控值随当前事件自适应变化，让模型能学到比固定衰减更细的记忆策略。这套设计还天然兼容 t-Batch，批内的连续更新不会被丢掉。
 
-2. **虚拟全局状态**:
+**2. 虚拟全局状态：补上局部采样 TGNN 看不到的网络级趋势。**
 
-    - **功能**：捕获网络级趋势（如新歌发布、政权变化）
-    - **核心思路**：维护最近亲和力向量的 buffer，聚合计算 $\mathbf{g}$。$\mathbf{g}$ 参与输出门控 $\mathbf{z}_s$ 的计算
-    - **设计动机**：亲和力常受全局趋势影响，但局部采样的 TGNN 无法捕获
+亲和力经常被全局事件整体推动——一首新歌发布、一次政权更替会同时改变大量节点的亲和力，但靠局部邻居采样的 TGNN 根本观测不到这种宏观信号。NAViS 用一个 buffer 缓存最近若干个亲和力向量并聚合成全局状态 $\mathbf{g}$，再把 $\mathbf{g}$ 喂进读出门控 $\mathbf{z}_s$ 的计算里，使每次预测都带上"当前整张图往哪个方向漂"的上下文。合成实验里加上全局状态后误差大幅下降，说明这条全局通路确实承担了局部状态补不上的那部分动态。
 
-3. **Lambda 排序损失 + 配对边距正则化**:
+**3. Lambda 排序损失 + 配对边距正则：把训练目标对齐到排名而非绝对值。**
 
-    - **功能**：用排序损失替代交叉熵
-    - **核心思路**：Theorem 3 证明交叉熵是排序次优的——正确排序可能比错误排序有更高 CE loss。Lambda Loss 通过配对 "lambda" 近似不可微排序指标的梯度。正则项 $\ell_{Reg} = \sum \max(0, -(s_{\pi_i} - s_{\pi_j}) + \Delta)$ 防止模型收缩亲和力分数
-    - **设计动机**：下游应用依赖排名而非绝对值
+下游真正关心的是亲和力排名，而非分数的绝对大小，但交叉熵对排序是次优的——Theorem 3 给出反例：一个排序正确的预测可能比排序错误的预测有更高的 CE loss，优化 CE 并不保证排名变好。NAViS 改用 Lambda Loss，通过配对的 "lambda" 系数直接近似不可微排序指标（如 NDCG）的梯度。但只用排序损失会让模型偷懒地把所有分数压缩到一起，于是再加一项配对边距正则 $\ell_{Reg} = \sum \max(0,\,-(s_{\pi_i} - s_{\pi_j}) + \Delta)$，强制相邻排名之间留出边距 $\Delta$，防止亲和力分数塌缩。
 
 ### 损失函数 / 训练策略
 
-$\ell = \ell_{Lambda} + \ell_{Reg}$。训练 50 epochs，batch size 200，70/15/15 时序分割。大规模图用稀疏化（仅保留候选目标节点的条目），tgbn-token 60000+ 节点仅需约 5000 参数。
+总损失为 $\ell = \ell_{Lambda} + \ell_{Reg}$。训练 50 个 epoch，batch size 取 200，数据按时间做 70/15/15 划分。面对极大规模图时用稀疏化只保留候选目标节点对应的状态维度，因此 tgbn-token 这种 60000+ 节点的数据集也只需约 5000 个参数。
 
 ## 实验关键数据
 
@@ -127,9 +121,9 @@ NAViS 比 TGNv2（最佳 TGNN）在 tgbn-trade 上提升 +12.8%。
 
 - [\[NeurIPS 2025\] TAMI: Taming Heterogeneity in Temporal Interactions for Temporal Graph Link Prediction](../../NeurIPS2025/graph_learning/tami_taming_heterogeneity_in_temporal_interactions_for_temporal_graph_link_predi.md)
 - [\[ICML 2025\] L-STEP: Learnable Spatial-Temporal Positional Encoding for Link Prediction](../../ICML2025/graph_learning/learnable_spatial-temporal_positional_encoding_for_link_prediction.md)
+- [\[AAAI 2026\] GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](../../AAAI2026/graph_learning/gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
 - [\[ICLR 2026\] Towards Improved Sentence Representations using Token Graphs](towards_improved_sentence_representations_using_token_graphs.md)
 - [\[ICLR 2026\] Graph Tokenization for Bridging Graphs and Transformers](graph_tokenization_for_bridging_graphs_and_transformers.md)
-- [\[AAAI 2026\] GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization](../../AAAI2026/graph_learning/gt-snt_a_linear-time_transformer_for_large-scale_graphs_via_spiking_node_tokeniz.md)
 
 </div>
 

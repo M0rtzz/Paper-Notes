@@ -55,54 +55,37 @@ PACE 是分阶段框架，三个 Stage：
 
 ### 关键设计
 
-#### 1. 改进首会话适应（Improved FSA）
+**1. 改进首会话适应（Improved FSA）：让音频骨干在第一个会话就充分适应，而不是只学个分类头。**
 
-**受限头部学习**：
-- 传统 FSA 联合训练头部和骨干导致头部过拟合、骨干适应不足
-- PACE 采用不对称优化：$\eta_{head} \ll \eta_{bb}$
-- 分阶段：先冻结骨干训练头部 $E_{head}$ 轮，再冻结头部微调骨干 $E_0$ 轮
-- 与视觉 CL 的 LAE/SLCA **策略相反**——音频骨干需要鼓励适应而非抑制
+朴素 FSA 把分类头和骨干一起联合训练，结果头部很快过拟合、骨干却没怎么动，这在音频域尤其致命——前面的发现已表明音频骨干的预训练目标（谱图重建）和下游判别任务隔得太远，必须真正调骨干。PACE 因此做了三件事。其一是**受限头部学习**：用不对称学习率 $\eta_{head} \ll \eta_{bb}$ 压住头部、放开骨干，并分两段走——先冻结骨干训练头部 $E_{head}$ 轮，再冻结头部微调骨干 $E_0$ 轮。这恰好和视觉 CL 里 LAE/SLCA "抑制骨干漂移"的思路相反，因为音频骨干需要被鼓励适应而非被锁死。其二是**后层 LoRA**：CKA 分析显示浅层编码的是域通用的时频模式、深层才编码任务特定语义，所以只对深层动刀——冻结前 $L_{tune}-1$ 层，仅在 $l \geq L_{tune}$ 的层上加 LoRA：
 
-**后层 LoRA**：
-- CKA 分析：浅层编码域通用时频模式，深层编码任务特定语义
-- 冻结前 $L_{tune}-1$ 层，仅对 $l \geq L_{tune}$ 层施加 LoRA：
-  $$W_1^l = W_0^l + A_1^l B_1^l, \quad L_{tune} \leq l \leq L$$
-- 边界层 $L_{tune}$ 通过 CKA 偏差阈值 $\rho_{layer}$ 自动确定
+$$W_1^l = W_0^l + A_1^l B_1^l, \quad L_{tune} \leq l \leq L$$
 
-**分析式分类器**（替代可训练头部）：
-- 随机投影 $W_{proj}$ 增强特征判别性
-- Woodbury 恒等式递归更新自相关矩阵：
-  $$R_t = R_{t-1} - R_{t-1}\hat{Z}_t^\top(I + \hat{Z}_t R_{t-1} \hat{Z}_t^\top)^{-1}\hat{Z}_t R_{t-1}$$
-- 闭式更新分类器权重——无样本存储、非破坏性更新
+边界层 $L_{tune}$ 不手调，而是按 CKA 偏差阈值 $\rho_{layer}$ 自动定位"语义开始分化"的那一层。其三是用**分析式分类器**替掉可训练头部：先用随机投影 $W_{proj}$ 把特征打散增强判别性，再用 Woodbury 恒等式递归更新自相关矩阵
 
-#### 2. 自适应多会话子空间正交 PEFT
+$$R_t = R_{t-1} - R_{t-1}\hat{Z}_t^\top(I + \hat{Z}_t R_{t-1} \hat{Z}_t^\top)^{-1}\hat{Z}_t R_{t-1}$$
 
-**多会话适应（MSA）**：每个会话引入独立 LoRA，前会话参数冻结：
+从而闭式解出分类器权重。这样既不需要存旧样本，新会话的更新也是非破坏性的，天然回避了头部累积偏差。
+
+**2. 自适应多会话子空间正交 PEFT：单靠首会话填不平细粒度任务的语义鸿沟，就让后续会话继续学但互不干扰。**
+
+发现 3 表明细粒度任务上首会话远远不够，于是 PACE 在会话 $t \in (1, T_3]$ 引入多会话适应（MSA）：每个会话挂一组独立的 LoRA，已学会话的参数全部冻结，骨干权重写成历史增量之和
+
 $$W_t = W_0 + \sum_{\tau=0}^{t-1} B_\tau A_\tau + B_t A_t$$
 
-**梯度投影约束**——确保更新不破坏旧任务表示：
+光叠加还不够，关键是新会话的更新不能踩坏旧任务的表示，所以对梯度做子空间投影约束：
+
 $$g_{update} = P_{\mathcal{U}_t} \nabla_\theta \mathcal{L}_{ce}(g_t(f_t(\mathcal{X}_t)), \mathcal{Y}_t)$$
 
-**高效零空间计算**（基于 LoRA 减法）：
-- 构建"遗忘模型"：$W_t^{unlearn} = W_0 - \sum_{\tau=0}^{t-1} A_\tau B_\tau$
-- 计算当前会话特征的非中心协方差矩阵 $X_t^{ucov}$
-- SVD 分解确定投影子空间，保留能量比 $> \rho_{svd}$ 的主成分
-- 无需存储历史特征，大幅降低存储开销
+难点在于怎么算出这个该被保护的子空间又不存历史特征——这正是本文最巧的一手"LoRA 减法"。它把已学的 LoRA 反向减回去构建一个"遗忘模型" $W_t^{unlearn} = W_0 - \sum_{\tau=0}^{t-1} A_\tau B_\tau$，用它算出当前会话特征的非中心协方差矩阵 $X_t^{ucov}$，再做 SVD 取能量比 $> \rho_{svd}$ 的主成分张成投影子空间。整个过程只靠参数算术近似旧任务表示，完全不必缓存历史特征。最后配一个**自适应冻结**开关：当累计适应量 $\sum_{i=0}^{T_3} N_t > N_{stop}$，说明骨干已经学够了，就转入 Stage 3 把骨干冻住、只留分析式分类器继续吸收新类。
 
-**自适应冻结**：当 $\sum_{i=0}^{T_3} N_t > N_{stop}$ 时转入 Stage 3 冻结骨干。
+**3. 边界感知正则化：把新旧类别在特征空间里纠缠的决策边界重新撑开。**
 
-#### 3. 边界感知正则化
+持续学习里新类容易和旧类挤在边界附近，导致互相误判。PACE 先把这些"危险样本"挑出来：对每个输入做 $N_p$ 次时频掩码扰动 $\tilde{x}_{i,t}^k = \mathcal{Q}(x_{i,t}, r_T, r_F)$，用一个临时模型 $\theta_{temp}$ 去测——如果扰动后的误分类率超过阈值 $\rho_p$，说明这个样本靠近边界、判别不稳，就收进边界集 $\mathcal{B}_t$。然后对边界样本施加一个 margin 形式的正则项：
 
-解决新旧类别表示纠缠导致的决策边界混淆：
-
-**边界样本检测**：
-- 对每个输入生成 $N_p$ 个时频掩码扰动 $\tilde{x}_{i,t}^k = \mathcal{Q}(x_{i,t}, r_T, r_F)$
-- 临时模型 $\theta_{temp}$ 对扰动的误分类率超阈值 $\rho_p$ → 归入边界集 $\mathcal{B}_t$
-
-**正则化损失**：
 $$\mathcal{L}_{reg}(i) = \max(0, \delta + \frac{1}{|\mathcal{S}_i|}\sum_{u \in \mathcal{S}_i}\|f_t(u) - \mu(x_c)\|_2^2 - \min_{b \in \mathcal{B}_t}\|f_t(x_{i,t}) - b\|_2^2)$$
 
-效果：拉向类中心 + 推离边界点，增大类间间距。
+一边把样本拉向自己的类中心 $\mu(x_c)$，一边把它推离最近的边界点，等效于强行加大类间间距，让纠缠的决策边界重新分开。
 
 ### 损失函数 / 训练策略
 
@@ -190,9 +173,9 @@ PACE 在 SSLAM 骨干上同样保持优势，验证骨干无关性。
 
 - [\[CVPR 2025\] Learning to Highlight Audio by Watching Movies](../../CVPR2025/audio_speech/learning_to_highlight_audio_by_watching_movies.md)
 - [\[ICLR 2026\] EmotionThinker: Prosody-Aware Reinforcement Learning for Explainable Speech Emotion Reasoning](emotionthinker_prosody-aware_reinforcement_learning_for_explainable_speech_emoti.md)
-- [\[ICLR 2026\] AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
 - [\[ACL 2026\] Privacy-preserving Prosody Representation Learning](../../ACL2026/audio_speech/privacy-preserving_prosody_representation_learning.md)
 - [\[CVPR 2026\] SAVE: Speech-Aware Video Representation Learning for Video-Text Retrieval](../../CVPR2026/audio_speech/save_speech-aware_video_representation_learning_for_video-text_retrieval.md)
+- [\[ICLR 2026\] AC-Foley: Reference-Audio-Guided Video-to-Audio Synthesis with Acoustic Transfer](ac-foley_reference-audio-guided_video-to-audio_synthesis_with_acoustic_transfer.md)
 
 </div>
 

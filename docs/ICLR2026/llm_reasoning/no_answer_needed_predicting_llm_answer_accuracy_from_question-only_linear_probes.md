@@ -52,36 +52,15 @@ tags:
 
 ### 整体框架
 
-1. 给定问题 $x$，提取残差流激活 $h^{(l)}(x)$（prompt 最后一个 token，层 $l$）
-2. 模型生成答案 $y$（temperature=0），评估正确性
-3. 学习线性分类器 $f_w(h^{(l)}(x)) \approx \mathbf{1}\{\text{Correct}(x, M(x))\}$
-
-### 正确性方向的学习
-
-将激活按正确/错误分组，计算各组质心：
-
-$$\mu_{\text{true}} = \frac{1}{|\mathcal{D}_{\text{correct}}|} \sum_{x \in \mathcal{D}_{\text{correct}}} h^{(l)}(x), \quad \mu_{\text{false}} = \frac{1}{|\mathcal{D}_{\text{incorrect}}|} \sum_{x \in \mathcal{D}_{\text{incorrect}}} h^{(l)}(x)$$
-
-正确性方向：$w = \mu_{\text{true}} - \mu_{\text{false}}$
-
-正确性分数：
-
-$$\text{score}(h) = \frac{(h - \mu)^\top w}{\|w\|}$$
-
-其中 $\mu = \frac{1}{2}(\mu_{\text{false}} + \mu_{\text{true}})$。直接使用 AUROC 评估分数的判别力，无需阈值选择。
-
-### 最优层选择
-
-在 TriviaQA 上对每个模型的各层进行 3-fold 交叉验证：
-- 早期层表现差
-- **中间层**（大约在模型深度的中点到后部之间）达到饱和
-- 最优层选择固定后用于所有后续评估
+整套流程只做三件事：给定问题 $x$，从某一层残差流取出 prompt 最后一个 token 的激活 $h^{(l)}(x)$；让模型以 temperature=0 生成答案并据此打上"对/错"标签；最后在这批激活上学一个线性方向，使得 $f_w(h^{(l)}(x)) \approx \mathbf{1}\{\text{Correct}(x, M(x))\}$。关键点在于探针的输入是**问题处理完、答案尚未生成**那一刻的内部状态，所以预测先于答案本身发生。
 
 ### 关键设计
 
-- **训练极其高效**：单次计算 $d$ 维均值向量，CPU 上 <3 分钟
-- **不使用 sigmoid 或阈值**：保持为纯分数，用 AUROC 评估
-- **3-shot prompting**：减少格式错误，few-shot 示例对性能无显著影响
+**1. difference-of-means 正确性方向：用最朴素的线性算子验证线性可分性。** 作者刻意不训练任何带参数的分类器，而是把激活按答案对错分成两组、各取质心 $\mu_{\text{true}} = \frac{1}{|\mathcal{D}_{\text{correct}}|} \sum_{x \in \mathcal{D}_{\text{correct}}} h^{(l)}(x)$ 与 $\mu_{\text{false}} = \frac{1}{|\mathcal{D}_{\text{incorrect}}|} \sum_{x \in \mathcal{D}_{\text{incorrect}}} h^{(l)}(x)$，二者之差 $w = \mu_{\text{true}} - \mu_{\text{false}}$ 就是"正确性方向"。任一激活的正确性分数是它在该方向上的投影 $\text{score}(h) = \frac{(h - \mu)^\top w}{\|w\|}$，其中 $\mu = \frac{1}{2}(\mu_{\text{false}} + \mu_{\text{true}})$ 是两质心中点。之所以用这么简单的算子，是因为本文要回答的不是"能预测多准"，而是"正确性是否作为一条统一的线性轴存在"——若连无参数的均值差都能跨域分开对错，线性表征假说就得到了最干净的支持。训练只需算一次 $d$ 维均值向量，CPU 上不到 3 分钟。
+
+**2. 用 AUROC 评估而非设阈值：避免把方法验证退化成调参。** 分数不经过 sigmoid，也不挑选判定阈值，而是直接用 AUROC 衡量分数对"对/错"两类的排序能力。这样评估的是方向本身的判别力，既绕开了不同模型、不同数据集间阈值不可比的问题，也让"线性可分到什么程度"成为一个无超参的客观量。
+
+**3. 中间层选层 + 3-shot 提示：把信号抽取稳定在最饱和的位置。** 不同层编码的正确性信息强弱不同——在 TriviaQA 上做 3-fold 交叉验证可见早期层几乎无效，而中间层（约从模型深度中点到后部之间）达到饱和；选定该最优层后固定用于所有后续跨域评估。提问时统一采用 3-shot 提示，主要为减少模型的格式错误，作者验证 few-shot 示例数量对探针性能本身无显著影响。
 
 ## 实验关键数据
 
@@ -191,11 +170,11 @@ $$\text{score}(h) = \frac{(h - \mu)^\top w}{\|w\|}$$
 
 ## 相关论文
 
+- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Models](predicting_llm_reasoning_performance_with_small_proxy_models.md)
+- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Model](predicting_llm_reasoning_performance_with_small_proxy_model.md)
 - [\[ACL 2025\] Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering](../../ACL2025/llm_reasoning/test_time_scaling_selective_qa.md)
 - [\[ACL 2025\] CoT-based Synthesizer: Enhancing LLM Performance through Answer Synthesis](../../ACL2025/llm_reasoning/cot-based_synthesizer_enhancing_llm_performance_through_answer_synthesis.md)
 - [\[ICLR 2026\] When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning](when_shallow_wins_silent_failures_and_the_depth-accuracy_paradox_in_latent_reaso.md)
-- [\[ICLR 2026\] Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation](harder_is_better_boosting_mathematical_reasoning_via_difficulty-aware_grpo_and_m.md)
-- [\[ACL 2025\] Revisiting Self-Consistency from Dynamic Distributional Alignment Perspective on Answer Aggregation](../../ACL2025/llm_reasoning/revisiting_self-consistency_from_dynamic_distributional_alignment_perspective_on.md)
 
 </div>
 

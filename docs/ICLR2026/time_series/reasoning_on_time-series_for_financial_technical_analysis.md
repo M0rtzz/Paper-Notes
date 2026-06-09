@@ -50,66 +50,17 @@ tags:
 
 ### 整体框架
 
-VTA 框架包含三个核心组件：
+VTA 把金融时序预测拆成"先用语言推理、再用时序模型预测、最后让推理反过来条件化预测"三步，正好对应三块组件：让 LLM 对时序文本标注做语言推理（Time-Series Reasoning）、用 GPT-2 backbone 捕捉底层价格模式（Time-Series Forecasting）、把推理提炼出的属性注入 backbone 的联合条件训练（Joint Conditional Training）。形式上，给定历史 $T$ 个交易日的输入 $\mathbf{X} = \{\mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t\}$（其中 $\mathbf{x}_t = [o_t, h_t, l_t, v_t, c_t, p_t]$ 为开高低量收加调整收盘价），模型同时产出语言推理轨迹 $\mathbf{v}$ 与未来 $T'$ 日价格 $\mathbf{y} = \{p_{t+1}, \ldots, p_{t+T'}\}$，实验中取 $T = T' = 10$ 的短期场景。
 
-- **Time-Series Reasoning（时序推理）**：教 LLM 对时序输入进行语言推理
-- **Time-Series Forecasting（时序预测）**：用 backbone 时序模型捕捉底层复杂模式
-- **Joint Conditional Training（联合条件训练）**：将推理属性条件化注入时序预测
+### 关键设计
 
-### 问题形式化
+**1. Time-GRPO 与逆 MSE 奖励：用预测精度直接驱动推理链优化。** LLM 直接吃原始时序数字推理效果很差，VTA 先把序列转成文本标注 $\mathbf{X'} = \mathbf{f}(\mathbf{X})$，把均值、最值等统计量和均线、动量、MACD、RSI、布林带等金融技术指标写成自然语言喂给模型，让推理有可抓的语义抓手。训练上它在 GRPO 基础上改出 Time-GRPO，目标为 $\mathcal{L}_{\text{time-grpo}}(\theta) = \mathbb{E}_{\mathbf{q} \sim \mathcal{Q}} \frac{1}{G} \sum_{i=1}^{G} \left( \min\left(\frac{\pi_\theta(\mathbf{o_i}|\mathbf{q})}{\pi_{\theta_{\text{old}}}(\mathbf{o_i}|\mathbf{q})} A_i, \text{clip}(\cdot, 1{-}\epsilon, 1{+}\epsilon) A_i \right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}}) \right)$。关键在于奖励无需人工标注推理过程，而是直接用逆 MSE $r_{\text{MSE}}(\theta) = \frac{1}{\lambda \cdot \|\hat{\mathbf{y}}_\theta - \mathbf{y}\|_2^2}$——因为 RL 要最大化奖励，而 MSE 越小预测越准，取倒数后"准"就等价于"奖励高"，于是推理链被自动逼着朝着能改善预测精度的方向走。
 
-给定历史 $T$ 个交易日的输入 $\mathbf{X} = \{\mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t\}$，其中 $\mathbf{x}_t = [o_t, h_t, l_t, v_t, c_t, p_t]$（开高低量收+调整收盘价），目标生成：
+**2. 多阶段训练流水线：让推理能力从无到有稳定爬升。** 直接对基座模型跑 RL 收益很小，VTA 用三段递进把训练做稳：先在 Cold-Start 阶段用 Time-GRPO 生成一批初始推理样本，此时性能提升有限，主要目的是产出后续可用的数据；再做拒绝采样加 SFT，只保留 MSE 落在各 bucket 前 10% 的高质量推理链做监督微调，把"好的推理长什么样"先教会；最后在已经会推理的模型上再跑一轮 Time-GRPO 搜索更优策略。这样分段后，单纯 Cold-Start RL 只提升约 1.6%，而补上拒绝采样 SFT 再 RL 后提升达 20.3%，说明先有像样的推理数据打底，RL 才能真正发挥作用。
 
-- 语言推理轨迹 $\mathbf{v}$
-- 未来 $T'$ 交易日的价格预测 $\mathbf{y} = \{p_{t+1}, \ldots, p_{t+T'}\}$
+**3. 跨模态 backbone：用 GPT-2 把时序对齐到语言空间再预测。** 预测分支基于 GPT-2 做跨模态微调，时序输入先经 Embedding 和 Multi-head Attention 投影成时间 token $\mathbf{X}_{\text{time}}$，再对 LLM 词嵌入做 PCA 取主成分得到 $\hat{\mathbf{D}}$，通过 Multi-head Cross-Attention $\mathbf{X}_{\text{text}} = \text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{C}}\right)\mathbf{V}$ 把时间 token 对齐到词嵌入空间，从而复用预训练 LLM 的表征能力。为防止两个分支表征漂移，它还逐层做特征正则 $\mathcal{L}_{\text{feature}} = \sum_{n=1}^{N} \gamma^{(N-n)} \text{sim}\left(\phi_{\text{text}}^n(\mathbf{F}_{\text{text}}^n), \phi_{\text{time}}^n(\mathbf{F}_{\text{time}}^n)\right)$，其中 $\gamma$ 的指数衰减让深层对齐权重更高、浅层更宽松。
 
-实验中 $T = T' = 10$（短期预测）。
-
-### 时序推理 (Time-GRPO)
-
-**文本标注化**：将原始时序数据转换为文本标注 $\mathbf{X'} = \mathbf{f}(\mathbf{X})$，包括统计信息（均值/最小值/最大值）和金融技术指标（均线、动量、MACD、RSI、布林带等）。
-
-**Time-GRPO 目标**：基于 GRPO (Shao et al., 2024) 修改设计，核心公式：
-
-$$\mathcal{L}_{\text{time-grpo}}(\theta) = \mathbb{E}_{\mathbf{q} \sim \mathcal{Q}} \frac{1}{G} \sum_{i=1}^{G} \left( \min\left(\frac{\pi_\theta(\mathbf{o_i}|\mathbf{q})}{\pi_{\theta_{\text{old}}}(\mathbf{o_i}|\mathbf{q})} A_i, \text{clip}(\cdot, 1{-}\epsilon, 1{+}\epsilon) A_i \right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}}) \right)$$
-
-**逆 MSE 奖励**：使推理链最大化预测准确性：
-
-$$r_{\text{MSE}}(\theta) = \frac{1}{\lambda \cdot \|\hat{\mathbf{y}}_\theta - \mathbf{y}\|_2^2}$$
-
-使用逆 MSE 是因为奖励需要最大化（MSE 越小则奖励越大）。
-
-**多阶段训练流水线**：
-
-1. **Cold-Start 阶段**：用 Time-GRPO 生成初始训练样本，性能提升有限但为后续提供数据
-2. **拒绝采样 + SFT 阶段**：保留 MSE 在各 bucket 中前 10% 的推理链，进行监督微调
-3. **RL 优化阶段**：在已学会推理的基础上再用 Time-GRPO 搜索最优推理策略
-
-### 时序预测 Backbone
-
-基于 GPT-2，通过跨模态微调：
-
-- 时序输入经 Embedding + Multi-head Attention → 投影时间 token $\mathbf{X}_{\text{time}}$
-- 对 LLM 词嵌入做 PCA 得到主成分词嵌入 $\hat{\mathbf{D}}$
-- 通过 Multi-head Cross-Attention 对齐时间 token 与词嵌入：
-
-$$\mathbf{X}_{\text{text}} = \text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{C}}\right)\mathbf{V}$$
-
-- 逐层特征正则化对齐 temporal 和 text 分支：
-
-$$\mathcal{L}_{\text{feature}} = \sum_{n=1}^{N} \gamma^{(N-n)} \text{sim}\left(\phi_{\text{text}}^n(\mathbf{F}_{\text{text}}^n), \phi_{\text{time}}^n(\mathbf{F}_{\text{time}}^n)\right)$$
-
-### 联合条件训练
-
-从推理输出提取描述性属性类 $\mathbf{c}$（最大值/最小值/均值），条件化时序预测：
-
-$$\mathcal{L}_{\text{forecast}}(\phi) = \mathbb{E}_{\mathbf{X}, \mathbf{y}, \mathbf{c}} \left[\|\hat{\mathbf{y}}_\psi(\mathbf{X}, \tilde{\mathbf{c}}) - \mathbf{y}\|^2\right]$$
-
-以概率 $p_{\text{uncond}}=0.3$ 随机将 $\mathbf{c}$ 置为空（类似 Classifier-Free Guidance 思想），同时训练条件/无条件路径。推理时：
-
-$$\hat{\mathbf{y}} = s \cdot \hat{\mathbf{y}}_\psi(\mathbf{X}, \mathbf{c}) + (1-s) \cdot \hat{\mathbf{y}}_\theta(\mathbf{X})$$
-
-其中引导尺度 $s=0.1$。
+**4. 联合条件训练：借 Classifier-Free Guidance 把推理注入预测。** 要让外部推理真正帮到内部预测，VTA 从推理输出里抽出描述性属性 $\mathbf{c}$（如预测区间的最大值、最小值、均值）作为条件，预测目标为 $\mathcal{L}_{\text{forecast}}(\phi) = \mathbb{E}_{\mathbf{X}, \mathbf{y}, \mathbf{c}} \left[\|\hat{\mathbf{y}}_\psi(\mathbf{X}, \tilde{\mathbf{c}}) - \mathbf{y}\|^2\right]$。它照搬扩散模型里的 Classifier-Free Guidance 思路，以概率 $p_{\text{uncond}}=0.3$ 随机把 $\mathbf{c}$ 置空，同一个网络同时学会条件和无条件两条路径；推理时再用 $\hat{\mathbf{y}} = s \cdot \hat{\mathbf{y}}_\psi(\mathbf{X}, \mathbf{c}) + (1-s) \cdot \hat{\mathbf{y}}_\theta(\mathbf{X})$ 把两者按引导尺度 $s=0.1$ 融合，好处是即便某次推理不可靠，模型也能退回主要依赖时序 backbone，不至于被坏推理带偏。
 
 ---
 
@@ -218,9 +169,9 @@ VTA 在 Sharpe Ratio 上大幅领先（1.7190 vs 次优 1.5230），证明在真
 
 - [\[ICLR 2026\] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
 - [\[ICLR 2026\] EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements](edinet-bench_evaluating_llms_on_complex_financial_tasks_using_japanese_financial.md)
-- [\[NeurIPS 2025\] MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
 - [\[ICML 2026\] Adaptive Time Series Reasoning via Segment Selection](../../ICML2026/time_series/adaptive_time_series_reasoning_via_segment_selection.md)
 - [\[ACL 2026\] Time-RA: Towards Time Series Reasoning for Anomaly Diagnosis with LLM Feedback](../../ACL2026/time_series/time-ra_towards_time_series_reasoning_for_anomaly_diagnosis_with_llm_feedback.md)
+- [\[AAAI 2026\] A Theoretical Analysis of Detecting Large Model-Generated Time Series](../../AAAI2026/time_series/a_theoretical_analysis_of_detecting_large_model-generated_time_series.md)
 
 </div>
 

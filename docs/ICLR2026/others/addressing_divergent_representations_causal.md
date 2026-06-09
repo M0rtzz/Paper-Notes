@@ -40,54 +40,27 @@ tags:
 
 ### 整体框架
 
-本文的逻辑链条分四步：
+全文是一条"先确诊、再分诊、最后开药"的逻辑链：先从理论与实证两路证明因果干预普遍把表征推离自然流形，再用行为零空间理论把偏移切成无害与有害两类，最后用 Counterfactual Latent (CL) loss 把干预表征拉回流形附近，并在 Boundless DAS + 7B LLM 上验证既降偏移又保准确率。整篇方法的核心不是某个新模型，而是一套判断"干预结果该不该信"的判据加一个轻量正则。
 
-1. **证明偏移普遍存在**（Section 3）：理论证明 + 三种主流干预方法的实证
-2. **区分无害 vs 有害偏移**（Section 4）：行为零空间理论 + 隐藏通路 + 休眠行为变化
-3. **提出 CL loss 缓解方案**（Section 5.1）：应用于 Boundless DAS + 7B LLM
-4. **改进 CL loss 用于 OOD 泛化**（Section 5.2）：修改版 CL loss 仅约束因果子空间
+### 关键设计
 
-### 关键设计 1：偏移的理论保证
+**1. 偏移的理论保证：证明坐标级 patching 几乎必然出界。** 痛点在于人们默认拼接两个真实表征得到的反事实状态仍然"现实"，但作者证明只要流形不是轴对齐的超矩形，这个假设就站不住。考虑圆形流形 $\mathcal{M}_K = \{c_K + u : \|u\|_2 \leq r_K\}$，把 $h^{\text{src}}$ 的第一个坐标和 $h^{\text{trg}}$ 的第二个坐标拼成 $\hat{h} = [h_1^{\text{src}};\, h_2^{\text{trg}}]$，则 $\|\hat{h} - c_K\|_2^2 = u_1^2 + v_2^2$；取边界点 $u=(r_K,0)$、$v=(0,r_K)$ 即得 $\|\hat{h}-c_K\| = r_K\sqrt{2} > r_K$，干预后表征直接越过流形边界。更一般地，定理 A.2 证明一个非空凸集是 patch-closed 的当且仅当它是各坐标投影的笛卡尔积（即轴对齐超矩形），于是球、椭球、一般多面体这些真实表征几乎都会的几何，在坐标 patching 下都难逃偏移——这是个很强的负面结论，把"偏移是个例"的侥幸彻底堵死。
 
-对于坐标级 patching，作者证明只要流形不是轴对齐的超矩形，偏移就必然发生。考虑圆形流形 $\mathcal{M}_K = \{c_K + u : \|u\|_2 \leq r_K\}$，将 $h^{\text{src}}$ 的第一个坐标和 $h^{\text{trg}}$ 的第二个坐标拼接：
+**2. 行为零空间：界定哪些偏移其实无害。** 既然偏移不可避免，关键就变成它会不会改变计算结果。作者对函数 $\psi: \mathbb{R}^d \to \mathbb{R}^{d'}$ 定义关于集合 $X$ 的行为零空间 $\mathcal{N}(\psi, X) = \{v \in \mathbb{R}^d \mid \forall x \in X,\ \psi(x+v) = \psi(x)\}$：只要偏移 $v$ 落在这个零空间里，它对 $\psi$ 的整体计算就等价于加了零向量，属于无害偏移。但无害性强依赖声明的粒度——对整体函数无害的偏移，可能在中间层早已改变子计算的表征，因此对更细的机制声明仍是有害的。沿这条思路还能放宽到"行为二值子空间"：若某子空间只通过符号影响输出，那么只要 $\text{sign}(D_{\text{var}} \mathcal{A}(h))$ 不变，子空间内任意取值都无害，哪怕这个取值组合在自然分布里从未出现过。
 
-$$\hat{h} = \begin{bmatrix} h_1^{\text{src}} \\ h_2^{\text{trg}} \end{bmatrix}, \quad \|\hat{h} - c_K\|_2^2 = u_1^2 + v_2^2$$
+**3. 隐藏通路与休眠行为变化：揭示哪些偏移真正危险。** 有害偏移的可怕之处在于行为看起来完全正确，机制却是伪造的，作者用两个构造性反例钉死这一点。其一是隐藏通路激活：构造两层 ReLU 网络 $s = \mathbf{1}^\top \text{ReLU}(W_\ell h^\ell + b_\ell)$，$W_\ell \in \mathbb{R}^{3\times4}$，自然表征下第三个隐藏单元的 pre-activation 恒为负、始终沉默；而均值差 patching（$\delta_{B \to A} = \mu_A - \mu_B$）后的表征会点亮该单元，借一条自然输入下从不使用的通路翻转分类决策——一旦把干预表征投影回 $\text{conv}(S_A)$，效应立刻消失，证明翻转由偏移而非真实因果机制驱动。其二是休眠行为变化：给上述网络加上下文向量 $v$ 和第二层后，干预在 $v_4 < 0.75$ 时行为正常（预测 class A），却在 $0.75 < v_4 < 1.0$ 时触发本该 $v_4 > 1$ 才出现的异常 class C，形式化为 $\mathcal{V}(\psi, X, \mathcal{C}_1, \mathcal{C}) = \mathcal{N}(\psi, X, \mathcal{C}_1) \setminus \mathcal{N}(\psi, X, \mathcal{C})$；这意味着干预安全性随上下文漂移，而上下文空间无法穷举，是最难防的一类。
 
-取边界点 $u = (r_K, 0)$，$v = (0, r_K)$ 可得 $\|\hat{h} - c_K\| = r_K\sqrt{2} > r_K$，干预后表征超出流形边界。
+### 损失函数 / 训练策略
 
-**定理 A.2** 进一步证明：一个非空凸集是 patch-closed 的当且仅当它是各坐标投影的笛卡尔积（即轴对齐超矩形）。因此球、椭球、一般多面体等常见流形几何在坐标 patching 下都会产生偏移。这是一个很强的负面结论。
-
-### 关键设计 2：行为零空间与无害偏移
-
-定义函数 $\psi: \mathbb{R}^d \to \mathbb{R}^{d'}$ 关于集合 $X$ 的行为零空间：
-
-$$\mathcal{N}(\psi, X) = \{v \in \mathbb{R}^d \mid \forall x \in X,\ \psi(x+v) = \psi(x)\}$$
-
-如果偏移 $v \in \mathcal{N}(\psi, X)$，即 $\psi(x+v) = \psi(x)$，则该偏移对 $\psi$ 的整体计算无害——等效于加了零向量。但作者强调：**无害性依赖于声明的粒度**——对整体函数无害的偏移可能对子计算有害，因为中间层的表征可能已经不同。
-
-作者还引入了"行为二值子空间"(behaviorally binary subspace) 的概念：如果一个子空间仅通过其符号影响输出，那么只要 $\text{sign}(D_{\text{var}} \mathcal{A}(h))$ 不变，子空间内的值变化都是无害的，即使干预后的值组合在自然分布中从未出现过。
-
-### 关键设计 3：隐藏通路与有害偏移
-
-通过构造性证明展示有害偏移的两种形式：
-
-**（a）隐藏通路激活**：构造一个两层 ReLU 网络，$s = \mathbf{1}^\top \text{ReLU}(W_\ell h^\ell + b_\ell)$，其中权重矩阵 $W_\ell \in \mathbb{R}^{3 \times 4}$。在自然表征下，第三个隐藏单元始终不激活（pre-activation 为负）。均值差 patching（$\delta_{B \to A} = \mu_A - \mu_B$）后的干预表征会使该单元激活，通过一个从未在自然输入下使用的通路翻转分类决策。将干预表征投影回 $\text{conv}(S_A)$ 后该效应消失，证实效果由偏移驱动而非因果机制。
-
-**（b）休眠行为变化**：扩展上述网络加入上下文向量 $v$ 和第二层。干预在上下文 $v_4 < 0.75$ 时行为正常（预测 class A），但 $0.75 < v_4 < 1.0$ 时触发异常的 class C 预测——而自然表征下需要 $v_4 > 1$ 才会出现 C。休眠行为变化使干预安全性依赖上下文，穷举上下文不可行。形式化定义为 $\mathcal{V}(\psi, X, \mathcal{C}_1, \mathcal{C}) = \mathcal{N}(\psi, X, \mathcal{C}_1) \setminus \mathcal{N}(\psi, X, \mathcal{C})$。
-
-### 损失函数：Counterfactual Latent (CL) Loss
-
-**原始 CL loss**（来自 Grant 2025），结合 L2 距离和余弦距离：
+缓解方案是给对齐训练加一个 Counterfactual Latent (CL) loss，把干预表征 $\hat{h}$ 拉向反事实潜在向量 $h_{\text{CL}}$。原始版（来自 Grant 2025）同时压 L2 距离和余弦角度：
 
 $$\mathcal{L}_{\text{CL}}(\hat{h}, h_{\text{CL}}) = \frac{1}{2}\|\hat{h} - h_{\text{CL}}\|_2^2 - \frac{1}{2}\frac{\hat{h} \cdot h_{\text{CL}}}{\|\hat{h}\|_2 \|h_{\text{CL}}\|_2}$$
 
-其中 $h_{\text{CL}}$ 是反事实潜在向量——从自然表征中取具有相同因果变量值的向量平均得到：$h_{\text{CL}} = \frac{1}{m} \sum_{i=1}^{m} h_{\text{CL}}^{(x_i)}$。总损失为 $\mathcal{L}_{\text{total}} = \epsilon \mathcal{L}_{\text{CL}} + \mathcal{L}_{\text{DAS}}$，其中 $\epsilon$ 是可调超参数。
-
-**改进版 CL loss**，仅约束因果子空间维度，可独立于行为损失使用：
+其中 $h_{\text{CL}}$ 取自然表征中具有相同因果变量值的向量平均 $h_{\text{CL}} = \frac{1}{m} \sum_{i=1}^{m} h_{\text{CL}}^{(x_i)}$，相当于给"该有的样子"提供一个流形上的锚点。总损失 $\mathcal{L}_{\text{total}} = \epsilon \mathcal{L}_{\text{CL}} + \mathcal{L}_{\text{DAS}}$ 用可调权重 $\epsilon$ 平衡正则与原始行为目标。为了能脱离行为损失独立使用，作者又给出只约束因果子空间维度的改进版：
 
 $$\mathcal{L}'_{\text{CL}} = \sum_{i=1}^{n} \left(\frac{1}{2}\|\hat{h}^{\text{var}_i} - h_{\text{CL}}^{\text{var}_i}\|_2^2 - \frac{1}{2}\frac{\hat{h}^{\text{var}_i} \cdot h_{\text{CL}}^{\text{var}_i}}{\|\hat{h}^{\text{var}_i}\|_2 \|h_{\text{CL}}^{\text{var}_i}\|_2}\right)$$
 
-其中 $\hat{h}^{\text{var}_i} = \mathcal{A}^{-1}(D_{\text{var}_i} \mathcal{A}(\hat{h}))$ 是干预表征在因果子空间 $i$ 上的分量，$h_{\text{CL}}^{\text{var}_i}$ 用 stopgrad 处理防止梯度流回。
+这里 $\hat{h}^{\text{var}_i} = \mathcal{A}^{-1}(D_{\text{var}_i} \mathcal{A}(\hat{h}))$ 是干预表征在第 $i$ 个因果子空间上的分量，$h_{\text{CL}}^{\text{var}_i}$ 用 stopgrad 处理防止梯度回流——只盯因果维度收紧，从而把偏移控制和 OOD 泛化拆开优化。
 
 ## 实验关键数据
 
@@ -171,9 +144,9 @@ CL loss 将 EMD 降低约 4.5 倍，IIA 略有提升。OOD 设置中（在 dense
 
 - [\[NeurIPS 2025\] SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures](../../NeurIPS2025/others/sad_neural_networks_divergent_gradient_flows_and_asymptotic_optimality_via_o-min.md)
 - [\[ICML 2026\] CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations](../../ICML2026/others/core-mtl_rethinking_gradient_balancing_via_causal_orthogonal_representations.md)
-- [\[AAAI 2026\] Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/others/learning_fair_representations_with_kolmogorov-arnold_networks.md)
 - [\[ICLR 2026\] Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
 - [\[ICLR 2026\] Exchangeability of GNN Representations with Applications to Graph Retrieval](exchangeability_gnn_representations.md)
+- [\[ICLR 2026\] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
 
 </div>
 

@@ -38,26 +38,25 @@ KV缓存大小随序列长度线性增长，成为长上下文推理的瓶颈。
 ## 方法详解
 
 ### 整体框架
-LookaheadKV 在预填充阶段追加可学习的前瞻token，它们的注意力查询向量经过专门的LoRA增强后，能准确预测真实响应对各prompt token的注意力分布。训练时优化KL散度使预测分数逼近真实分数，推理时仅需前填充即可完成淘汰。
+KV 缓存淘汰的核心难题是「该保留哪些 token」：要判断准就得知道未来的响应会重点关注哪些 prompt token，但真去生成一段草稿响应又太贵。LookaheadKV 的破局思路是把「未来」预测出来而不是生成出来——在预填充阶段，于输入序列末尾追加一小撮可学习的前瞻 token，让它们的注意力查询向量经过专门的 LoRA 增强后，直接预测真实响应会对各 prompt token 投出怎样的注意力分布。训练时用 KL 散度把这组预测分数往真实响应的分数上拉；推理时只跑一遍预填充、读出前瞻 token 的注意力，就能给每个 prompt token 打重要性分并据此淘汰，整个解码阶段不再有任何额外开销。
 
 ### 关键设计
-1. **可学习前瞻Token**:
 
-    - 功能：在输入序列末尾追加 $n_{\text{lookahead}}$ 个可训练软token（默认32个）
-    - 核心思路：这些token的查询向量被训练为压缩真实响应的注意力模式。重要性估计为 $\tilde{s}_j = \frac{1}{n_{\text{lookahead}}}\sum_i \mathbf{A}_{\text{LKV}_{i,j}}$
-    - 设计动机：前瞻token仅在预填充阶段使用，解码阶段无额外开销
+**1. 可学习前瞻 Token：用一组软 token 把「未来注意力」压成一次预填充就能读出的信号。**
 
-2. **Lookahead LoRA（选择性激活）**:
+基于草稿的方法之所以准，是因为它真的把响应生成出来、再统计响应对 prompt 的注意力；代价就是那一段自回归生成。LookaheadKV 把这件事换成在输入末尾追加 $n_{\text{lookahead}}$ 个可训练软 token（默认 32 个），训练它们的查询向量去「压缩」真实响应的注意力模式。淘汰时直接对这些前瞻 token 的注意力矩阵按列求平均，得到每个 prompt token $j$ 的重要性估计 $\tilde{s}_j = \frac{1}{n_{\text{lookahead}}}\sum_i \mathbf{A}_{\text{LKV}_{i,j}}$。关键在于这些前瞻 token 只在预填充阶段参与，分数读完即弃，解码阶段完全不带它们，因此把草稿生成的成本压到了一次前向里。
 
-    - 功能：为前瞻token引入专用的低秩适配器
-    - 核心思路：查询和键的计算为 $\mathbf{Q}_{\text{LKV}} = [\mathbf{X}; \mathbf{P}]\mathbf{W}_q + [\mathbf{0}; \mathbf{P}]\Delta\mathbf{W}_q$，其中 $\Delta\mathbf{W}$ 仅对前瞻token激活。正常输入token的表示完全不变
-    - 设计动机：选择性激活保证原始模型行为不被修改，可即插即用
+**2. Lookahead LoRA（选择性激活）：只给前瞻 token 加 LoRA，原始 token 的表示一字不改。**
 
-3. **KL散度训练**:
+前瞻 token 要学会预测响应的注意力，光靠原模型权重不够，得有专门的适配能力；但如果这套适配也作用到正常输入 token 上，就改变了原模型行为、破坏了即插即用。LookaheadKV 用一个对输入做掩码的 LoRA 解决：查询（键同理）计算为 $\mathbf{Q}_{\text{LKV}} = [\mathbf{X}; \mathbf{P}]\mathbf{W}_q + [\mathbf{0}; \mathbf{P}]\Delta\mathbf{W}_q$，其中 $\mathbf{X}$ 是正常输入、$\mathbf{P}$ 是前瞻 token，增量 $\Delta\mathbf{W}$ 前面乘的是 $[\mathbf{0}; \mathbf{P}]$——只有前瞻 token 那部分能拿到 LoRA 的修正，正常输入 token 那部分被置零、表示完全不变。这样既给前瞻 token 留足了预测能力，又保证原模型对真实 token 的计算分毫不动，可即插即用、与 FlashAttention 兼容。
 
-    - 功能：训练前瞻模块预测真实重要性分数
-    - 核心思路：损失函数 $\mathcal{L}_{\text{LKV}} = \frac{1}{LH}\sum_l\sum_h D_{\text{KL}}(\hat{\mathbf{s}}_{\text{GT}}^{l,h} \| \hat{\mathbf{s}}_{\text{LKV}}^{l,h})$，其中GT分数从模型真实响应获取
-    - 设计动机：等价于ListNet排序损失，关注排序而非绝对值
+**3. KL 散度训练：把预测分数往真实响应分数上拉，学的是排序而非绝对值。**
+
+有了前瞻 token 和 LoRA，还需要一个监督信号教它们「真实响应到底关注哪些 token」。LookaheadKV 先用模型对训练样本真实地生成响应、统计出每层每头的真值重要性分数 $\hat{\mathbf{s}}_{\text{GT}}$，再以 KL 散度把前瞻模块的预测分数往真值上对齐：
+
+$$\mathcal{L}_{\text{LKV}} = \frac{1}{LH}\sum_l\sum_h D_{\text{KL}}(\hat{\mathbf{s}}_{\text{GT}}^{l,h} \,\|\, \hat{\mathbf{s}}_{\text{LKV}}^{l,h})$$
+
+其中 $L$、$H$ 为层数与头数。用 KL 而非 MSE 是有意为之：它等价于 ListNet 排序损失，关注的是 token 之间的相对重要性排序而非分数绝对值——而淘汰本来就只看排序、保留 top-budget 个 token，所以这个目标和最终任务严丝合缝。
 
 ### 损失函数 / 训练策略
 - 训练数据：50K ChatQA2 + 20K Tulu + 7K Stack + 9K few-shot合成
@@ -125,8 +124,8 @@ LookaheadKV 在预填充阶段追加可学习的前瞻token，它们的注意力
 
 - [\[ACL 2025\] Accurate KV Cache Quantization with Outlier Tokens Tracing](../../ACL2025/model_compression/accurate_kv_cache_quantization_with_outlier_tokens_tracing.md)
 - [\[NeurIPS 2025\] Ada-KV: Optimizing KV Cache Eviction by Adaptive Budget Allocation for Efficient LLM Inference](../../NeurIPS2025/model_compression/ada-kv_optimizing_kv_cache_eviction_by_adaptive_budget_allocation_for_efficient_.md)
-- [\[ICLR 2026\] ConFu: Contemplate the Future for Better Speculative Sampling](confu_contemplate_the_future_for_better_speculative_sampling.md)
 - [\[ACL 2026\] DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing](../../ACL2026/model_compression/dash-kv_accelerating_long-context_llm_inference_via_asymmetric_kv_cache_hashing.md)
+- [\[ICLR 2026\] ConFu: Contemplate the Future for Better Speculative Sampling](confu_contemplate_the_future_for_better_speculative_sampling.md)
 - [\[ACL 2026\] The Pitfalls of KV Cache Compression](../../ACL2026/model_compression/the_pitfalls_of_kv_cache_compression.md)
 
 </div>

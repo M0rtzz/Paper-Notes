@@ -39,35 +39,17 @@ tags:
 
 ### 整体框架
 
-SISL 包含两个交替阶段：
-1. **解耦策略学习**: 高层策略 $\pi_h$ 利用当前技能库最大化回报；技能改进策略 $\pi_{\text{imp}}$ 在离线数据分布附近探索发现更优行为
-2. **技能学习**: 每隔 $K_{\text{iter}}$ 迭代，用高质量数据重新训练技能编码器 $q$、技能先验 $p$ 和低层策略 $\pi_l$
+SISL 把"用技能"和"改技能"拆成两条并行的线，交替推进。在线阶段，高层策略 $\pi_h$ 拿当前技能库去最大化任务回报负责利用，独立的技能改进策略 $\pi_{\text{imp}}$ 则在离线数据分布附近做探索、把试出来的更优行为攒进优先缓冲区；每隔 $K_{\text{iter}}$ 次迭代，再用这些被筛选过的高质量数据重新训练技能编码器 $q$、技能先验 $p$ 和低层策略 $\pi_l$，让技能库逐轮自我精炼，而不是被原始噪声数据一次性定死。
 
-### 关键设计1: 解耦技能自我改进
+### 关键设计
 
-技能改进策略 $\pi_{\text{imp}}$ 的训练目标结合RL损失和KL约束：
+**1. 解耦的技能自我改进：让"利用"和"探索"各司其职。** 如果只用一个高层策略既要刷高分又要去试新行为，两个目标会互相拖累——保守利用学不到更好的技能，激进探索又会牺牲当前回报。SISL 因此单独引入改进策略 $\pi_{\text{imp}}$，它的训练目标把 RL 损失和一条 KL 约束拼在一起：$\sum_i \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{imp}}^i \cup \mathcal{B}_{\text{on}}^i} [\mathcal{L}_{\text{imp}}^{\text{RL}}(\pi_{\text{imp}})] + \lambda_{\text{imp}}^{\text{kld}} \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{on}}^i} \mathcal{D}_{\text{KL}}(\hat{\pi}_d^i \| \pi_{\text{imp}})$。前一项驱动它去发现更高回报的行为，后一项用 KL 把它拽在离线演示分布附近，避免脱离已有技能空间乱探索。探出来的高回报轨迹进入优先在线缓冲区 $\mathcal{B}_{\text{on}}^i$，一份信号自监督地反馈给 $\pi_{\text{imp}}$ 自己，另一份则作为干净样本喂给后续的技能精炼，形成"探索—精炼"的闭环。
 
-$$\sum_i \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{imp}}^i \cup \mathcal{B}_{\text{on}}^i} [\mathcal{L}_{\text{imp}}^{\text{RL}}(\pi_{\text{imp}})] + \lambda_{\text{imp}}^{\text{kld}} \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{on}}^i} \mathcal{D}_{\text{KL}}(\hat{\pi}_d^i \| \pi_{\text{imp}})$$
+**2. 最大回报重标注的技能优先级：抑制噪声样本的话语权。** 离线数据带噪时均匀采样会让低质量轨迹主导技能学习，根子在于训练阶段没有区分轨迹好坏的尺度。SISL 训练一个奖励模型 $\hat{R}(s_t, a_t, i)$，对每条离线轨迹算它在所有任务下的最大假设回报 $\hat{G}(\tilde{\tau}) = \max_i \{ \sum_t \gamma^t \hat{R}(s_t, a_t, i) \}$——即"这条轨迹放到最适合它的任务里能值多少分"。再按 $P_{\mathcal{B}_{\text{off}}}(\tilde{\tau}) = \text{Softmax}(\hat{G}(\tilde{\tau}) / T)$ 的分布采样，高价值轨迹被更频繁抽到、噪声轨迹被压低权重，温度 $T$ 控制这种偏好的锐利程度（实验里 Kitchen 用 1.0、Maze2D 用 0.5）。
 
-其中优先在线缓冲区 $\mathcal{B}_{\text{on}}^i$ 保留高回报轨迹，既为 $\pi_{\text{imp}}$ 提供自监督信号，又为技能精炼提供高质量样本。
+### 损失函数 / 训练策略
 
-### 关键设计2: 最大回报重标注的技能优先级
-
-训练奖励模型 $\hat{R}(s_t, a_t, i)$，为离线轨迹计算跨任务最大假设回报：
-
-$$\hat{G}(\tilde{\tau}) = \max_i \left\{ \sum_t \gamma^t \hat{R}(s_t, a_t, i) \right\}$$
-
-按 softmax 分布采样离线数据 $P_{\mathcal{B}_{\text{off}}}(\tilde{\tau}) = \text{Softmax}(\hat{G}(\tilde{\tau}) / T)$，抑制噪声样本。
-
-### 损失函数与训练策略
-
-最终技能学习目标动态混合离线和在线数据：
-
-$$\mathcal{L}_{\text{skill}} = (1 - \beta) \mathbb{E}_{\tilde{\tau} \sim P_{\mathcal{B}_{\text{off}}}} [\mathcal{L}(\pi_l, q, p, z)] + \frac{\beta}{N_{\mathcal{T}}} \sum_i \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{on}}^i} [\mathcal{L}(\pi_l, q, p, z)]$$
-
-混合系数 $\beta$ 根据在线和离线平均回报自适应计算：
-
-$$\beta = \frac{\exp(\bar{G}_{\text{on}} / T)}{\exp(\bar{G}_{\text{on}} / T) + \exp(\bar{G}_{\text{off}} / T)}$$
+技能精炼的最终目标动态混合"被筛过的离线数据"和"自我探索来的在线数据"：$\mathcal{L}_{\text{skill}} = (1 - \beta) \mathbb{E}_{\tilde{\tau} \sim P_{\mathcal{B}_{\text{off}}}} [\mathcal{L}(\pi_l, q, p, z)] + \frac{\beta}{N_{\mathcal{T}}} \sum_i \mathbb{E}_{\tau^i \sim \mathcal{B}_{\text{on}}^i} [\mathcal{L}(\pi_l, q, p, z)]$。混合系数 $\beta$ 不是手调的固定值，而是按在线、离线两侧的平均回报自适应算出来 $\beta = \frac{\exp(\bar{G}_{\text{on}} / T)}{\exp(\bar{G}_{\text{on}} / T) + \exp(\bar{G}_{\text{off}} / T)}$：当自我探索的数据比原始离线数据更优时 $\beta$ 自动增大、更倚重在线样本，反之则保留离线数据的比重，相当于一条随训练进展自动调节的课程。
 
 ## 实验关键数据
 
@@ -136,9 +118,9 @@ $$\beta = \frac{\exp(\bar{G}_{\text{on}} / T)}{\exp(\bar{G}_{\text{on}} / T) + \
 
 - [\[ICLR 2026\] SUSD: Structured Unsupervised Skill Discovery through State Factorization](susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
 - [\[ICLR 2026\] AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification](amped_adaptive_multi-objective_projection_for_balancing_exploration_and_skill_di.md)
-- [\[NeurIPS 2025\] Periodic Skill Discovery](../../NeurIPS2025/reinforcement_learning/periodic_skill_discovery.md)
 - [\[ICLR 2026\] Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
 - [\[ICLR 2026\] Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
+- [\[ICLR 2026\] Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](principled_fast_and_meta_knowledge_learners_for_continual_reinforcement_learning.md)
 
 </div>
 

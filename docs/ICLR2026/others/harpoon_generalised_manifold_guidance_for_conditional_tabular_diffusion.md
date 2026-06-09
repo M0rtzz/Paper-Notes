@@ -38,32 +38,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-一次训练无条件扩散模型→推理时交替执行：(1) 无条件去噪一步；(2) 用推理时损失 $\mathcal{L}_{\text{inf}}$ 的梯度做切向校正。支持填补、不等式约束等多种条件。
+Harpoon 想做的是「一次训练、推理时适应任意约束」的表格条件生成：先按标准方式训练一个**无条件**扩散模型，约束信息完全不进训练。真正的条件化全部留到采样阶段——每一步先让无条件模型去噪一步，再用一个针对当前约束写的推理时损失 $\mathcal{L}_{\text{inf}}$ 对样本做一次梯度校正，把它往满足约束的方向推一点。这套交替机制能用同一个模型同时支持缺失值填补、范围/分类约束乃至它们的合取与析取，而它能成立的前提是两条新证的流形定理：去噪的「脏估计」落在数据流形上，且任意可微损失的梯度都沿着流形切向——这保证了校正不会把样本推离合法数据的几何。
 
 ### 关键设计
 
-1. **Theorem 3.1 (正交投影)**:
+**1. Theorem 3.1（去噪即正交投影）：把流形引导从平坦几何推广到弯曲流形。**
 
-    - 内容：MSE训练的去噪器在 $\bar{\alpha}_t \to 1$ 时等价于到流形 $\mathcal{M}_0$ 的正交投影
-    - 贡献：推广了Chung等人的结果——不需要平坦流形假设，弯曲流形也成立
-    - 实际意义："dirty estimate" $\hat{x}_0 = Q_t(x_t)$ 落在流形上
+图像扩散的流形引导理论（Chung 等人）有个隐含前提——数据流形局部是平坦的，这对混合类型的表格数据并不成立。本文证明：用 MSE 训练出来的去噪映射 $Q_t$，在 $\bar{\alpha}_t \to 1$（噪声趋近于零）的极限下，等价于把含噪样本**正交投影**到数据流形 $\mathcal{M}_0$ 上，而这个结论**不需要平坦假设**，弯曲流形同样成立。它的直接后果是：单步去噪得到的「脏估计」 $\hat{x}_0 = Q_t(x_t)$ 本身就落在流形上，于是后续所有校正都有一个合法的几何起点。
 
-2. **Theorem 3.2 (切线空间梯度)**:
+**2. Theorem 3.2（梯度落在切线空间）：把可用的引导损失从平方误差放开到任意可微损失。**
 
-    - 内容：对任意可微推理时损失 $\mathcal{L}_{\text{inf}}$，其梯度 $\nabla_{x_t}\mathcal{L}_{\text{inf}}(\hat{x}_0, c) \in T_{\hat{x}_0}\mathcal{M}_0$
-    - 贡献：从"仅平方误差"推广到任意可微损失（交叉熵、L1、ReLU不等式等）
-    - 实际意义：推理时用任何合理损失做梯度校正都不会把样本推离流形
+光知道脏估计在流形上还不够，关键是校正这一步会不会把样本顶出流形。本文进一步证明：对**任意**可微的推理时损失 $\mathcal{L}_{\text{inf}}$，它对样本的梯度都落在脏估计处的切线空间里，即
 
-3. **Harpoon算法**:
+$$\nabla_{x_t}\mathcal{L}_{\text{inf}}(\hat{x}_0, c) \in T_{\hat{x}_0}\mathcal{M}_0.$$
 
-    - 功能：每步先无条件去噪再切向校正
-    - 核心思路：$x_{t-1} = x_{t-1}' - \eta \cdot \nabla_{x_t}\mathcal{L}_{\text{inf}}(\hat{x}_0, c)$
-    - 支持的约束：填补（部分观测）、范围约束（Age>=10）、分类约束（Gender=Male）、合取/析取
+这一步把已有理论从「只对平方误差损失有保证」推广到交叉熵、L1、ReLU 不等式罚项等任意可微目标。直白说，就是推理时拿任何一个合理的损失去做梯度校正，都只会沿着流形切向移动、不会把样本推离合法数据，因此各种异质约束都能套进同一套引导框架。
+
+**3. Harpoon 算法：用前两个定理把无条件去噪和切向校正交替起来。**
+
+有了两条定理做地基，算法本身就很直接：每一步先用无条件模型去噪得到中间样本 $x_{t-1}'$，再沿推理时损失的梯度做一次切向校正
+
+$$x_{t-1} = x_{t-1}' - \eta \cdot \nabla_{x_t}\mathcal{L}_{\text{inf}}(\hat{x}_0, c),$$
+
+其中 $\eta$ 是控制约束满足强度的引导步长。约束的种类完全由怎么写 $\mathcal{L}_{\text{inf}}$ 决定：观测到部分特征就是填补，写成 $\text{Age}\ge 10$ 这样的不等式就是范围约束，写成 $\text{Gender}=\text{Male}$ 就是分类约束，多个条件还能用合取（and）或析取（or）组合——全部不必重训模型，换损失即可。
 
 ### 损失函数 / 训练策略
-- 训练：标准MSE去噪损失（一次训练）
-- 推理时损失可选：MAE（默认，稀疏诱导适合表格）、MSE、交叉熵、ReLU不等式
-- 引导强度 $\eta$ 控制约束满足程度
+- 训练：标准 MSE 去噪损失，无条件、一次训练。
+- 推理时损失可选：MAE（默认，其稀疏诱导特性更适合表格的离散特征）、MSE、交叉熵、ReLU 不等式罚项。
+- 引导强度 $\eta$ 控制约束满足程度，需按任务调参。
 
 ## 实验关键数据
 
@@ -119,10 +121,10 @@ tags:
 ## 相关论文
 
 - [\[AAAI 2026\] ASAG: Toward the Frontiers of Reliable Diffusion Sampling via Adversarial Sinkhorn Attention Guidance](../../AAAI2026/others/toward_the_frontiers_of_reliable_diffusion_sampling_via_adversarial_sinkhorn_att.md)
+- [\[ICLR 2026\] TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
 - [\[ICLR 2026\] Compositional Diffusion with Guided Search for Long-Horizon Planning](compositional_diffusion_long_horizon_planning.md)
+- [\[ICLR 2026\] Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
 - [\[AAAI 2026\] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
-- [\[ICML 2026\] Cascaded Flow Matching for Heterogeneous Tabular Data with Mixed-Type Features](../../ICML2026/others/cascaded_flow_matching_for_heterogeneous_tabular_data_with_mixed-type_features.md)
-- [\[AAAI 2026\] Local Guidance for Configuration-Based Multi-Agent Pathfinding](../../AAAI2026/others/local_guidance_for_configuration-based_multi-agent_pathfinding.md)
 
 </div>
 

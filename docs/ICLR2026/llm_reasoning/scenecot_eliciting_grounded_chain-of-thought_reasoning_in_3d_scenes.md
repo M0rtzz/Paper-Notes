@@ -39,20 +39,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：3D 场景点云 + 自然语言问题 → Stage 1: 任务类型识别 `<think_type>` → Stage 2: 区域定位 `<think_rgn>`（方向/时钟参考系过滤无关对象）→ Stage 3: 实体接地 `<think_grd>` + `[OBJ]`（调用专用 grounding 模块）→ Stage 4: 接地推理 `<think_task>` + 任务相关输出（概率/坐标/图像 token）→ `<think_sum>` 总结 → `<answer>` 最终回答。
+SceneCOT 把"在 3D 场景里回答问题"拆成一条由特殊 token 串起来的四阶段思维链：模型先判断这是什么类型的问题，再缩小到场景中的相关区域，接着把推理锚定到具体物体上，最后基于这些被"看到"的物体给出答案。整条链由 MLLM 骨干驱动，但区域识别、3D grounding、属性推理分别交给专用模块完成，从而让语言推理的每一步都有可检查的视觉依据。
 
 ### 关键设计
 
-1. **任务感知路由**：识别任务类型后，自动选择合适的推理路径和输出格式——计数用 `<obj_prob>`，空间推理用 `<obj_loc_prob>`，导航用极坐标 `<obj_loc_plr_prob>`，属性用图像 token `<highlight_obj>`。
-   
-2. **区域定位**：用方向线索（前后左右）和时钟参考系（1-12点方向，30°增量）离散化空间，大幅缩小推理搜索空间。规则基解析器提取方向信息。
+**1. 四阶段 grounded CoT：让推理过程显式挂到视觉证据上。** 以往 3D-LLM 端到端直接吐答案，回答经常"说得通但没看到对的物体"。SceneCOT 把推理显式切成四步并用特殊 token 标记：`<think_type>` 识别任务类型、`<think_rgn>` 定位区域、`<think_grd>`+`[OBJ]` 接地到具体实体（调用专用 grounding 模块）、`<think_task>` 完成接地后的推理并输出任务相关结果，最后 `<think_sum>` 总结、`<answer>` 给出回答。关键在于第三步的 `[OBJ]` 不是一句文字描述，而是真正触发 grounding 模块去场景里找物体——后续推理只能基于这些被定位到的对象展开，从机制上堵住了"凭空作答"的漏洞，这也是 Good Coherence 大幅领先的根源。
 
-3. **模块化专家组合**：MLLM 骨干（LLaVA-1.5 + LoRA）+ 微调 PQ3D（3D grounding）+ 2D VLM（属性推理）+ 轻量掩码预测器。符号引擎负责区域识别。
+**2. 任务感知路由：不同问题走不同的推理路径和输出格式。** 3D 推理任务差异很大——计数、空间关系、导航、属性各需要不同的视觉线索和答案表示，用单一输出头硬套会互相干扰。SceneCOT 在识别出任务类型后据此切换输出格式：计数任务用对象概率 `<obj_prob>` 直接统计被 grounding 的物体数量，空间推理用 `<obj_loc_prob>` 输出位置概率，导航用极坐标形式 `<obj_loc_plr_prob>`，属性判断则用图像 token `<highlight_obj>` 把物体回投到 2D 让 VLM 看清细节。这种"先分类再选路"的设计让计数这类依赖精确 grounding 的任务受益最明显（47.9% vs Chat-Scene† 37.4%）。
+
+**3. 区域定位作为空间先验：用方向与时钟参考系把搜索空间离散化。** 整个场景里候选物体太多，直接 grounding 容易被无关对象干扰。SceneCOT 在接地之前先做区域定位，用方向线索（前后左右）和时钟参考系（1–12 点方向、30° 增量）把空间离散成有限的方位区间，再由规则解析器从问题里提取方向信息、过滤掉不相关的对象。这相当于给 grounding 模块加了一道注意力前置，把候选范围大幅收窄，让后续实体接地更准也更快。
 
 ### 损失函数 / 训练策略
-$\mathcal{L} = \mathcal{L}_{\text{CoT}} + \mathcal{L}_{\text{ans}} + \mathcal{L}_{\text{ground}}$
-
-训练数据：SceneCOT-185K（145.6K 情境推理 + 40K 对象推理），4×A100，5 epochs，LoRA微调。
+训练目标把三部分加在一起联合优化——思维链监督、最终答案、以及 grounding 结果：$\mathcal{L} = \mathcal{L}_{\text{CoT}} + \mathcal{L}_{\text{ans}} + \mathcal{L}_{\text{ground}}$，其中 grounding 项直接约束 `[OBJ]` 定位到的物体是否正确，消融显示去掉它会让 Overall 从 55.6 掉到约 53。骨干为 LLaVA-1.5 + LoRA，搭配微调过的 PQ3D 做 3D grounding、2D VLM 做属性推理和一个轻量掩码预测器。数据用自建的 SceneCOT-185K（145.6K 情境推理 + 40K 对象推理），在 4×A100 上 LoRA 微调 5 个 epoch。
 
 ## 实验关键数据
 
@@ -112,7 +110,7 @@ $\mathcal{L} = \mathcal{L}_{\text{CoT}} + \mathcal{L}_{\text{ans}} + \mathcal{L}
 - [\[ICLR 2026\] Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
 - [\[CVPR 2025\] Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought](../../CVPR2025/llm_reasoning/argus_vision-centric_reasoning_with_grounded_chain-of-thought.md)
 - [\[ICLR 2026\] CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
-- [\[ICLR 2026\] Continuous Chain of Thought Enables Parallel Exploration and Reasoning](continuous_chain_of_thought_enables_parallel_exploration_and_reasoning.md)
+- [\[ICLR 2026\] Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
 
 </div>
 

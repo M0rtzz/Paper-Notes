@@ -41,21 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段优化：Phase 1 最小化测地线能量（让路径贴近数据流形），Phase 2 在能量约束下加入分类损失（让路径到达目标类别）。
+
+PCG 要解决的问题是：给定一张图像和一个目标类别，找一条从原图到"会被分类器判成目标类"的反事实路径，且这条路径上每一帧都得感知自然、不能跑出数据流形。它的做法是把"感知自然"这件事编码进一个黎曼度量里——在鲁棒模型特征空间定义的流形上，语义相邻的点距离近、非真实区域距离远，于是流形上的最短路径（测地线）自然会沿着数据分布的"山脊"走，绕开会产生对抗扰动的"低密度谷"。整条流程在 StyleGAN2 的潜在空间里跑两阶段优化：先把路径压贴到流形上（保证质量），再在这个约束下把端点拉向目标类别（保证有效），最终输出的反事实路径既是一段平滑的语义渐变，又落在分类边界的正确一侧。
 
 ### 关键设计
 
-1. **鲁棒感知度量**:
+**1. 鲁棒感知度量：让"语义相似"等价于"流形上距离近"。**
 
-    - 功能：用对抗训练模型的 Jacobian 定义黎曼度量张量
-    - 核心思路：度量 G_R(x) = sum_k w_k * J(h_k(x))^T * J(h_k(x))，其中 h_k 是鲁棒模型的中间层特征。pullback 到潜在空间：G_z(z) = J(g(z))^T * G_R(g(z)) * J(g(z))。
-    - 设计动机：鲁棒模型的特征梯度在语义方向上有意义（非对抗性），定义的度量让语义相似点距离近。
+反事实之所以容易退化成对抗扰动，根源是欧氏空间里"最小改变"和"语义合理"会打架——像素上挪一点点就能翻转预测，但那一点点往往是人眼看不出的对抗噪声。PCG 改用一个由对抗训练鲁棒模型诱导的黎曼度量来量距离。具体地，它取鲁棒模型若干中间层特征 $h_k$ 的 Jacobian 来拼度量张量：
 
-2. **测地线优化**:
+$$G_R(x) = \sum_k w_k \, J(h_k(x))^\top J(h_k(x))$$
 
-    - Phase 1：最小化路径能量 E = integral(gamma'(t)^T * G_z * gamma'(t) dt)
-    - Phase 2：加入分类损失引导路径到目标类别
-    - 设计动机：分开优化避免了分类损失过早"拉扯"路径偏离流形。
+其中各层权重取 $w_k = 1/N_k$（按特征维度归一化）。这个度量再通过生成器 $g$ pullback 到 StyleGAN 的潜在空间，得到实际优化所用的度量：
+
+$$G_z(z) = J(g(z))^\top \, G_R(g(z)) \, J(g(z))$$
+
+关键在于"鲁棒"二字：对抗训练后模型的特征梯度指向的是真正的语义方向（而非脆弱的对抗方向），所以这个度量下"距离近"才真的对应"语义像"。这正是它和 RSGD 的分水岭——RSGD 也用了黎曼度量，但用的是标准分类器的脆弱特征，度量本身就是坏的；PCG 把度量的来源换成鲁棒特征，从根上修好了几何。
+
+**2. 两阶段测地线优化：先建路，再导航。**
+
+直接端到端地"既求最短路又满足分类目标"会失稳——分类损失会过早把路径往目标类别方向猛拽，把它扯出流形，就像 VSGD 那样崩到 off-manifold。PCG 把这件事拆成两步。Phase 1 只最小化路径在 $G_z$ 度量下的能量，把路径整体压贴到鲁棒感知流形上：
+
+$$E = \int \gamma'(t)^\top \, G_z \, \gamma'(t)\, dt$$
+
+Phase 2 才在这条已经"贴着流形"的路径上加入分类损失，引导端点跨过语义分界线到达目标类别；同时配一个重锚定（re-anchoring）步骤，把端点逐步往输入图像拉回，尽量保证反事实是"最小改变"。先把路修好再导航，比一上来就同时优化两个目标稳得多——Phase 1 保证了每一帧都在流形上，Phase 2 才有干净的路面可走。
 
 ## 实验关键数据
 
@@ -134,8 +143,8 @@ tags:
 - [\[ICML 2026\] Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity](../../ICML2026/causal_inference/density-guided_robust_counterfactual_explanations_on_tabular_data_under_model_mu.md)
 - [\[ICLR 2026\] Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders](synthesising_counterfactual_explanations_via_label-conditional_gaussian_mixture_.md)
 - [\[ICLR 2026\] Learning Robust Intervention Representations with Delta Embeddings](learning_robust_intervention_representations_with_delta_embeddings.md)
-- [\[ICLR 2026\] Direct Doubly Robust Estimation of Conditional Quantile Contrasts](direct_doubly_robust_estimation_of_conditional_quantile_contrasts.md)
 - [\[ACL 2025\] Counterfactual Explanations for Aspect-Based Sentiment Analysis](../../ACL2025/causal_inference/counterfactual_explanations_for_aspect-based_sentiment_analysis.md)
+- [\[ICLR 2026\] Direct Doubly Robust Estimation of Conditional Quantile Contrasts](direct_doubly_robust_estimation_of_conditional_quantile_contrasts.md)
 
 </div>
 

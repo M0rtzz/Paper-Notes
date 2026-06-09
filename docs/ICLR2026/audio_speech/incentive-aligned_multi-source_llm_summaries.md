@@ -39,23 +39,21 @@ tags:
 
 ## 方法详解
 
-### TTS 框架总览
+### 整体框架
 
-TTS 采用两遍式管线。给定查询 $q$ 和检索到的来源集合 $\mathcal{C}$：
+TTS 是一条两遍式管线：给定查询 $q$ 和检索来源集 $\mathcal{C}$，第一遍用来源之间的相互验证给每个来源打可靠性分 $\hat{w}_i$，第二遍把低分来源过滤掉、只用可靠来源重新生成摘要。整个评分过程不需要任何真值标签，而是把博弈论中的多任务 peer prediction 机制改造成"来源给来源出题、互相批改"的形式。
 
-**第一遍——来源评分（Leave-One-Out Peer Prediction）**：
+### 关键设计
 
-1. **Leave-One-Out 声明构造**：对每个来源 $\tau_i$，用其余来源 $\{\tau_j\}_{j \neq i}$ 生成草稿摘要，再用分解器 $D$ 拆分为原子声明集 $T_i$。关键点：$\tau_i$ 不参与自己评价集的构造，确保声明外生性。
-2. **立场提取**：用提取器 $E$ 从每个来源中提取对每条声明的立场 $r_{ik} \in \{1(\text{支持}), 0(\text{反对}), \bot(\text{弃权})\}$。
-3. **Informative Agreement 评分**：对每对（来源 $i$, 同行 $j$），计算同任务一致性减去异任务一致性，然后跨同行和声明取均值得到 $\hat{w}_i$。核心公式：$\sigma_{ikj} = S(r_{ik}, r_{jk}) - S(r_{i\ell}, r_{jm})$，其中 $\ell, m$ 是通过随机排列选取的不同声明。
+**1. Leave-One-Out 评价集构造：让来源无法操控自己的考题。** 如果一个来源能影响评价它的声明集，它就能投机性地"自圆其说"。TTS 的对策是声明外生性：对每个来源 $\tau_i$，只用其余来源 $\{\tau_j\}_{j \neq i}$ 生成一份草稿摘要，再用分解器 $D$ 把摘要拆成原子声明集 $T_i$——$\tau_i$ 自己始终不参与构造评价它的考题。随后用提取器 $E$ 从每个来源里读出它对每条声明 $k$ 的立场 $r_{ik} \in \{1(\text{支持}), 0(\text{反对}), \bot(\text{弃权})\}$，把自由文本统一成可比较的离散信号，为后续打分提供基础。
 
-**第二遍——过滤与重新摘要**：过滤 $\hat{w}_i < t_{\text{src},i}$ 的来源，仅用可靠来源重新生成摘要。
+**2. Informative Agreement 评分：无真值标签下识别可靠来源。** 单纯比"谁和谁说得一致"会奖励抱团说谎，因此 TTS 度量的是"信息性"一致，即同一条声明上的一致要扣掉随机声明上的一致。对每一对（来源 $i$，同行 $j$）计算 $\sigma_{ikj} = S(r_{ik}, r_{jk}) - S(r_{i\ell}, r_{jm})$，其中 $\ell, m$ 是经随机排列选出的不同声明；再跨所有同行和声明取均值得到来源得分 $\hat{w}_i$。这样只有当一个来源真正携带与他人相关的有效信息时分数才会为正，对全盘反对、全盘支持这类无信息策略只能拿到接近零的分。
 
-### 计算效率优化
+**3. 过滤与重新摘要：在生成前就切断对抗路径。** 拿到 $\hat{w}_i$ 后，过滤掉所有 $\hat{w}_i < t_{\text{src},i}$ 的来源（实验用固定全局阈值 $t = 0.06$），仅以剩下的可靠来源重新合成最终摘要。关键在于隔离发生在最终生成之前——对抗性文本根本进不了上下文，比在 prompt 层面叠加防御指令更彻底，也避免了 LLM 在矛盾声明间被语义引导。
 
-将来源集 $\mathcal{C}$ 随机分为 A、B 两组，A 组来源用 B 组文档构造声明集评价，反之亦然。保持外生性的同时将复杂度从 $O(|\mathcal{C}|K(|\mathcal{C}|-1))$ 降至 $O(K|\mathcal{C}|)$。
+**4. A/B 分组加速：把平方成本降到线性。** 逐个来源做 leave-one-out 需要为每个来源单独构造评价集，复杂度高达 $O(|\mathcal{C}|K(|\mathcal{C}|-1))$。TTS 把来源集随机分成 A、B 两组，A 组用 B 组的文档构造声明集来评价、B 组反之，既保持了声明外生性，又把复杂度压到 $O(K|\mathcal{C}|)$，让机制在真实检索规模下可负担。
 
-### 理论保证体系
+**5. 理论保证：把"如实报告"钉成均衡策略。** 整套评分不是启发式，而是有可证明的激励性质——在合适阈值下，如实报告自己的真实立场是来源的效用最大策略，从而消除了作假动机。三条定理分别覆盖渐近、强保证和有限样本三种情形：
 
 | 定理 | 条件 | 保证 |
 |---|---|---|
@@ -63,14 +61,7 @@ TTS 采用两遍式管线。给定查询 $q$ 和检索到的来源集合 $\mathc
 | Thm 3.3 (强 truthfulness) | 大 $K$ + 偏差翻转 $\geq \varphi_{\min}$ 的声明 | 如实报告严格优于所有显著偏差策略 |
 | Thm 3.4 ($\varepsilon$-informed truthfulness) | 有限 $K$ + 中点阈值 | 效用误差随 $K$ 指数衰减，$K \geq O(\ln(v_i/\varepsilon)/\underline{g}_i^2)$ 即足够 |
 
-### 与传统 Peer Prediction 的关键差异
-
-| 差异维度 | 传统 Peer Prediction | TTS |
-|---|---|---|
-| 评价任务来源 | 外部固定 | LOO 构造，来源无法操控评价集 |
-| 报告形式 | 抽象信号 | 自然语言文档，提取器转换为立场 |
-| 激励机制 | 货币支付 | 曝光/归属（被摘要引用与否） |
-| 应用场景 | 同行评审等 | 开放网络搜索（无法付费） |
+相比传统 peer prediction，TTS 在四处做了适配开放网络的改造：评价任务不再外部固定而由 LOO 现场构造、来源无法操控；报告形式从抽象信号变成自然语言文档、由提取器转成立场；激励从货币支付换成"是否被摘要引用"的曝光与归属；应用场景也从同行评审等可付费环境迁移到无法付费的开放搜索。
 
 ## 实验结果
 
@@ -122,7 +113,7 @@ TTS 在 NQ 上将回答准确率提升至 72.3%（vs 初始摘要 25.1%），在
 
 - [\[ICLR 2026\] MAPSS: Manifold-Based Assessment of Perceptual Source Separation](mapss_manifold-based_assessment_of_perceptual_source_separation.md)
 - [\[AAAI 2026\] PSA-MF: Personality-Sentiment Aligned Multi-Level Fusion for Multimodal Sentiment Analysis](../../AAAI2026/audio_speech/psa-mf_personality-sentiment_aligned_multi-level_fusion_for_multimodal_sentiment.md)
-- [\[AAAI 2026\] Thucy: An LLM-based Multi-Agent System for Claim Verification across Relational Databases](../../AAAI2026/audio_speech/thucy_an_llm-based_multi-agent_system_for_claim_verification_across_relational_d.md)
+- [\[ICLR 2026\] TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
 - [\[ICML 2026\] MultiBreak: A Scalable and Diverse Multi-turn Jailbreak Benchmark for Evaluating LLM Safety](../../ICML2026/audio_speech/multibreak_a_scalable_and_diverse_multi-turn_jailbreak_benchmark_for_evaluating_.md)
 - [\[AAAI 2026\] Hearing More with Less: Multi-Modal Retrieval-and-Selection Augmented Conversational LLM-Based ASR](../../AAAI2026/audio_speech/hearing_more_with_less_multi-modal_retrieval-and-selection_augmented_conversatio.md)
 

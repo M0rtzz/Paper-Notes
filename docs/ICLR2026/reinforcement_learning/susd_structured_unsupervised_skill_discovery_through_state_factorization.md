@@ -38,37 +38,27 @@ tags:
 
 ### 整体框架
 
-SUSD 基于 DSD 框架，包含三个核心组件：分解化嵌入、好奇心因子加权、对偶梯度下降训练。
+SUSD 站在距离最大化技能发现（DSD）的肩膀上，把单一的"状态→技能"映射拆成与环境组合结构对齐的多个独立通道：状态被分解成 $N$ 个因子，每个因子配一套专属的嵌入网络和技能变量，再用一个好奇心权重决定当前最该往哪个因子上投放探索预算。整套目标通过对偶梯度下降优化映射函数与 Lagrange 乘子，底层策略用 SAC 训练。
 
-### 1. 状态空间分解
+### 关键设计
 
-将状态空间分解为 $N$ 个因子：$\mathcal{S} := \mathcal{S}^1 \times \cdots \times \mathcal{S}^N$，技能空间同步分解为 $\mathcal{Z} := \mathcal{Z}^1 \times \cdots \times \mathcal{Z}^N$。
+**1. 状态空间分解：让每个因子各自学技能，避免被最易控因子垄断。** DSD 的退化根源在于它用一个全局映射 $\phi$ 去最大化整个状态的位移距离，结果策略只会死磕最容易推动的那个因子（比如智能体自身位置），其余物体永远学不到技能。SUSD 借助环境天然的组合结构作为归纳偏置，把状态空间写成笛卡尔积 $\mathcal{S} := \mathcal{S}^1 \times \cdots \times \mathcal{S}^N$，技能空间同步分解为 $\mathcal{Z} := \mathcal{Z}^1 \times \cdots \times \mathcal{Z}^N$，并把映射函数拆成 $N$ 个互不干涉的子网络 $\phi_i(s^i)$，每个只处理对应因子。于是单一的距离最大化目标变成逐因子求和：
 
-映射函数 $\phi$ 拆分为 $N$ 个独立网络 $\phi_i(s^i)$，每个仅处理对应因子。优化目标变为：
+$$\sup_{\pi, \{\phi_i\}_{i=1}^N} \mathbb{E}_{p(\tau, z)} \sum_{i=1}^N \sum_{t=0}^{T-1} (\phi_i(s_{t+1}^i) - \phi_i(s_t^i))^\top z^i, \quad \text{s.t.}\ \sum_{i=1}^N \|\phi_i(s'^i) - \phi_i(s^i)\|_2 \leq 1,\ \forall (s, s') \in \mathcal{S}_{\text{adj}}$$
 
-$$\sup_{\pi, \{\phi_i\}_{i=1}^N} \mathbb{E}_{p(\tau, z)} \sum_{i=1}^N \sum_{t=0}^{T-1} (\phi_i(s_{t+1}^i) - \phi_i(s_t^i))^\top z^i$$
+因为每个因子有独立的技能变量 $z^i$，策略必须为每个因子都产生可区分的行为才能拿到对应的奖励项，从而强制把多样性铺满所有可控因子，而不是收敛到单一维度。
 
-$$\text{s.t.} \sum_{i=1}^N \|\phi_i(s'^i) - \phi_i(s^i)\|_2 \leq 1, \quad \forall (s, s') \in \mathcal{S}_{\text{adj}}$$
-
-### 2. 好奇心驱动的因子加权
-
-训练密度模型 $q_\theta(s'|s) = \mathcal{N}(\mu_\theta(s), \Sigma_\theta(s))$，利用其因子边际估计每个因子的"好奇心"权重：
+**2. 好奇心驱动的因子加权：把探索预算动态导向欠探索的因子。** 即便分解了状态，各因子的探索难度也千差万别——有些因子早早学透、有些迟迟推不动，若一视同仁会浪费梯度在已饱和的因子上。SUSD 额外训练一个高斯密度模型 $q_\theta(s'|s) = \mathcal{N}(\mu_\theta(s), \Sigma_\theta(s))$ 预测下一状态，用它的因子边际负对数似然来量化"好奇心"：
 
 $$-\log q_\theta(s_{t+1}^i | s_t) \propto (s_{t+1}^i - \mu_\theta^i(s_t))^\top \Sigma_\theta^i(s_t)^{-1} (s_{t+1}^i - \mu_\theta^i(s_t))$$
 
-高好奇心值 = 低概率转移 = 需要更多关注。$\sqrt{-\log q_\theta(s_{t+1}^i|s_t)}$ 作为合法距离度量整合到目标中。
+值越大说明该转移越出乎密度模型意料、越是欠探索，越该加大关注。与 CSD 给整个状态转移共用一个粗粒度权重不同，SUSD 在每个因子上独立算权重，粒度细到能分辨"哪个物体还没玩明白"。这里的关键是 $\sqrt{-\log q_\theta(s_{t+1}^i|s_t)}$ 恰好是一个合法的距离度量，可以直接当作距离项的系数嵌进目标（Lemma 4.1 证明了这一点），所以加权不会破坏 DSD 的距离最大化语义。
 
-### 3. 最终优化目标与内在奖励
-
-每个因子的技能奖励：
-
-$$r_i^{\text{SUSD}} := (\phi_i(s_{t+1}^i) - \phi_i(s_t^i))^\top z^i$$
-
-总内在奖励（加权求和）：
+**3. 加权内在奖励与对偶训练：把因子级信号合成一个可优化目标。** 有了逐因子的距离项和好奇心权重，单个因子的技能奖励写作 $r_i^{\text{SUSD}} := (\phi_i(s_{t+1}^i) - \phi_i(s_t^i))^\top z^i$，再用好奇心权重加权求和得到策略实际收到的总内在奖励：
 
 $$R := \sum_{i=1}^N \sqrt{-\log q_\theta(s_{t+1}^i | s_t)} \cdot r_i^{\text{SUSD}}$$
 
-映射函数和 Lagrange 乘子通过对偶梯度下降更新，策略使用 SAC 训练。
+这样既保留了每个因子的方向性技能信号，又让欠探索因子在总奖励里占更大比重。优化时映射函数 $\{\phi_i\}$ 和约束的 Lagrange 乘子通过对偶梯度下降交替更新，策略 $\pi$ 用 SAC 在这个内在奖励上训练，整体仍是一个无外部奖励的端到端流程。
 
 ## 实验结果
 
@@ -145,11 +135,11 @@ SUSD 的潜在技能嵌入包含最丰富的因子信息。
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Periodic Skill Discovery](../../NeurIPS2025/reinforcement_learning/periodic_skill_discovery.md)
 - [\[ICLR 2026\] Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
 - [\[ICLR 2026\] AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
 - [\[ICLR 2026\] How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
-- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [\[ICLR 2026\] AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification](amped_adaptive_multi-objective_projection_for_balancing_exploration_and_skill_di.md)
+- [\[ICLR 2026\] Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals](unsupervised_learning_of_efficient_exploration_pre-training_adaptive_policies_vi.md)
 
 </div>
 

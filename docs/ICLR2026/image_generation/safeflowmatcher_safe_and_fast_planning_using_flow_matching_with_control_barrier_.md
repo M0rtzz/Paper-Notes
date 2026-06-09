@@ -49,45 +49,23 @@ tags:
 
 ### 整体框架
 
-SafeFlowMatcher = 预测阶段（无约束 FM）+ 修正阶段（CBF 安全认证）
+SafeFlowMatcher 把路径生成拆成两个解耦的阶段：先用无约束的流匹配快速预测出一条候选路径，再在这条候选路径上施加控制障碍函数 (CBF) 做安全认证与修正。关键在于安全约束只作用在最终会被执行的路径上，而非中间潜在状态，从而既保住流匹配单步/少步的高效性，又给出形式化的安全保证。
 
-### 关键设计一：预测-修正 (PC) 积分器
+### 关键设计
 
-**预测阶段**：从纯噪声 $\boldsymbol{\tau}_0^p \sim \mathcal{N}(0, I)$ 开始，运行 Euler 积分获得候选路径（通常 $T^p = 1$ 步）：
+**1. 预测-修正 (PC) 积分器：把生成与认证拆开。**
 
-$$\boldsymbol{\tau}_1^p = \Psi_{0 \to 1}^{(T^p)}(\boldsymbol{\tau}_0^p) = \boldsymbol{\tau}_1^\star + \varepsilon$$
+现有认证方法（如 SafeDiffuser）在去噪的中间潜在状态上施加 CBF，但这些状态从未被真正执行，约束会扭曲学习到的流并把路径困在障碍边界附近形成局部陷阱。PC 积分器的做法是分两步走：预测阶段从纯噪声 $\boldsymbol{\tau}_0^p \sim \mathcal{N}(0, I)$ 出发，用 Euler 积分（通常只需 $T^p = 1$ 步）得到候选路径 $\boldsymbol{\tau}_1^p = \Psi_{0 \to 1}^{(T^p)}(\boldsymbol{\tau}_0^p) = \boldsymbol{\tau}_1^\star + \varepsilon$，其中 $\varepsilon$ 是离散化误差；修正阶段再以 $\boldsymbol{\tau}_0^c = \boldsymbol{\tau}_1^p$ 为起点细化。由于安全约束推迟到修正阶段、只施加在这条即将执行的路径上，自然避开了语义错位与局部陷阱。
 
-**修正阶段**：从 $\boldsymbol{\tau}_0^c = \boldsymbol{\tau}_1^p$ 出发，通过两个机制细化路径：
+修正阶段同时做两件事。一是衰减时间尺度流动力学 (VTFD) 来压低离散化误差，把向量场改写为 $\frac{d\boldsymbol{\tau}_t^c}{dt} = \alpha(1-t) v_t(\boldsymbol{\tau}_t^c; \theta) \triangleq \tilde{v}_t(\boldsymbol{\tau}_t^c; \theta)$，因子 $(1-t)$ 随 $t \to 1$ 渐进抑制向量场、产生收缩效应，Lemma 3 据此证明误差按 $\mathbf{e}_t = O((1-t)^2) + (\varepsilon + O(1))e^{-\alpha t}$ 衰减。二是叠加 CBF 安全扰动 $\Delta\mathbf{u}_t$，得到带约束的修正动力学 $\frac{d\boldsymbol{\tau}_t^c}{dt} = \tilde{v}_t(\boldsymbol{\tau}_t^c; \theta) + \Delta\mathbf{u}_t$，这个 $\Delta\mathbf{u}_t$ 取最小扰动，尽量贴着原流走而只在必要时纠偏。
 
-(i) **衰减时间尺度流动力学 (VTFD)**：减少离散化误差
+**2. 障碍证书：用有限时间不变性给安全上锁。**
 
-$$\frac{d\boldsymbol{\tau}_t^c}{dt} = \alpha(1-t) v_t(\boldsymbol{\tau}_t^c; \theta) \triangleq \tilde{v}_t(\boldsymbol{\tau}_t^c; \theta)$$
+光有 CBF 扰动还不够，需要证明它真的能把路径锁在安全区内。定义鲁棒安全集 $\mathcal{C}_\delta = \{\boldsymbol{\tau}^{c,k} \in \mathcal{D} \mid b(\boldsymbol{\tau}^{c,k}) \geq \delta\}$，其中 $b$ 是障碍函数、$\delta$ 是安全裕度。定理 1（前向不变性）给出一个充分条件：只要每个路点的控制 $\mathbf{u}_t^k$ 满足障碍证书 $\nabla b(\boldsymbol{\tau}_t^{c,k})^\top \mathbf{u}_t^k + \epsilon \cdot \text{sgn}(b(\boldsymbol{\tau}_t^{c,k}) - \delta)|b(\boldsymbol{\tau}_t^{c,k}) - \delta|^\rho + w_t^k r_t^k \geq 0$，那么流在有限时间内保持不变，即路径一旦进入安全集就不会逃出。更进一步，命题 1 给出收敛时间上界 $T \leq t_w + \frac{(\delta - b(\boldsymbol{\tau}_{t_w}^{c,k}))^{1-\rho}}{\epsilon(1-\rho)}$，说明即便初始候选路径略微越界，也能在可计算的有限步内被拉回安全区，而非渐近逼近。证书里的松弛权重 $w_t^k$ 在修正早期提供数值稳定性。
 
-因子 $(1-t)$ 随 $t \to 1$ 渐进抑制向量场，产生收缩效应。
+**3. CBF 二次规划：逐路点求最小纠偏。**
 
-**Lemma 3** 证明误差衰减：$\mathbf{e}_t = O((1-t)^2) + (\varepsilon + O(1))e^{-\alpha t}$
-
-(ii) **CBF 安全约束**：引入最小扰动 $\Delta\mathbf{u}_t$
-
-$$\frac{d\boldsymbol{\tau}_t^c}{dt} = \tilde{v}_t(\boldsymbol{\tau}_t^c; \theta) + \Delta\mathbf{u}_t$$
-
-### 关键设计二：障碍证书
-
-定义鲁棒安全集 $\mathcal{C}_\delta = \{\boldsymbol{\tau}^{c,k} \in \mathcal{D} \mid b(\boldsymbol{\tau}^{c,k}) \geq \delta\}$
-
-**定理 1（前向不变性）**：满足以下障碍证书的控制 $\mathbf{u}_t$ 保证有限时间流不变性：
-
-$$\nabla b(\boldsymbol{\tau}_t^{c,k})^\top \mathbf{u}_t^k + \epsilon \cdot \text{sgn}(b(\boldsymbol{\tau}_t^{c,k}) - \delta)|b(\boldsymbol{\tau}_t^{c,k}) - \delta|^\rho + w_t^k r_t^k \geq 0$$
-
-**命题 1（有限收敛时间）**：
-
-$$T \leq t_w + \frac{(\delta - b(\boldsymbol{\tau}_{t_w}^{c,k}))^{1-\rho}}{\epsilon(1-\rho)}$$
-
-### CBF 二次规划
-
-每个路点独立求解 QP：
-
-$$\mathbf{u}_t^{k*} = \arg\min_{\mathbf{u}_t^k} \|\mathbf{u}_t^k - \tilde{v}_t^k\|^2 \quad \text{s.t. CBF constraint}$$
+障碍证书是一组不等式约束，落地时对每个路点独立求解一个二次规划 $\mathbf{u}_t^{k*} = \arg\min_{\mathbf{u}_t^k} \|\mathbf{u}_t^k - \tilde{v}_t^k\|^2 \;\text{s.t. CBF constraint}$。目标是让安全控制 $\mathbf{u}_t^k$ 尽量贴近原向量场 $\tilde{v}_t^k$，因此在远离障碍时几乎不改动路径、只在逼近边界时施加最小必要的修正。路点之间解耦求解使整体开销随路点数线性增长，配合预测阶段的少步采样，保持了实时规划所需的效率。
 
 ## 实验
 
@@ -150,11 +128,11 @@ SafeFlowMatcher 相比基线方法：
 
 ## 相关论文
 
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 - [\[ICLR 2026\] DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
 - [\[ICLR 2026\] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+- [\[ICML 2026\] LithoGRPO: Fast Inverse Lithography via GRPO Reinforced Flow Matching](../../ICML2026/image_generation/lithogrpo_fast_inverse_lithography_via_grpo_reinforced_flow_matching.md)
 
 </div>
 

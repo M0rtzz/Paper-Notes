@@ -47,59 +47,29 @@ tags:
 
 ### 整体框架
 
-三阶段流水线（Figure 2）：
-1. **LLM Agent**：根据用户文本提示生成物体列表 + 空间/物理谓词 + 物体描述（用于资产检索）
-2. **Solver**：空间求解器处理 2D 位置约束，物理求解器通过物理引擎处理 3D 堆叠/容纳
-3. **Feedback System**：分析生成场景并提供纠正信号，使 LLM agent 迭代优化
+PhyScensis 要解决的是：让 LLM 生成既视觉合理、又物理站得住的高密度 3D 场景，而不只是把物体松散地铺在桌面上。它的做法是把"理解语义"和"算准物理"这两件 LLM 各自擅长/不擅长的事拆开。给定一句用户提示（如"摆一张堆满文具的办公桌"），LLM agent 先产出一份物体清单、每个物体的文字描述（用于从资产库检索 mesh），以及一组**谓词**来声明物体之间该满足的空间/物理关系；接着求解器把这些谓词翻译成具体坐标——空间求解器在 2D 平面上解位置约束，物理求解器调用物理引擎处理 3D 的堆叠与容纳；最后反馈系统检查生成结果，把语法错误、求解失败、拥挤/空白等信号回灌给 LLM agent，让它补谓词、改参数，循环迭代直到场景合格。LLM 只负责"声明意图"，落地为精确坐标的脏活交给求解器和物理引擎，这是整套设计的主线。
 
 ### 关键设计
 
-#### 1. 谓词体系定义
+**1. 谓词体系：让 LLM 声明关系而不是直接预测坐标。**
 
-**空间谓词**（2D 平面约束）：
-- **位置**：left/right/front/back-of（指定距离），place-on-base（放置在桌面）
-- **对齐**：align-left/right/front/back, align-center
-- **旋转**：facing-to, facing-same-as, random-rot 等
-- **对称**：symmetry-along
-- **分组**：group（创建虚拟组）、copy-group（复制保留结构）
+LLM 在精确 3D 空间推理上一直很弱，直接让它吐 (x, y, z, yaw) 往往穿模或叠错。PhyScensis 让 LLM 改吐谓词——一种结构化的关系声明，真正的坐标由后端求解器算。谓词分两类。空间谓词管 2D 平面上的关系：位置类有 left/right/front/back-of（可带具体距离）和 place-on-base（放到桌面）；对齐类有 align-left/right/front/back 和 align-center；旋转类有 facing-to、facing-same-as、random-rot 等；还有 symmetry-along 管对称、group 创建虚拟组、copy-group 复制一组并保留内部结构（用来高效铺设规则阵列）。物理谓词管 3D 交互：place-in 把物体放进容器并做物理下落模拟，place-on 做支撑比与稳定性可控的堆叠，place-anywhere 在保证无穿透、有支撑的前提下随机摆放。这套分层谓词覆盖了真实摆放里绝大多数关系，把 LLM 的语义能力和求解器的几何能力解耦开。
 
-**物理谓词**（3D 交互约束）：
-- **容器放入**：place-in（物体放入容器，物理下落模拟）
-- **堆叠**：place-on（支撑比、稳定性可控）
-- **自由放置**：place-anywhere（无穿透、有支撑的随机位置）
+**2. 空间求解器：用凸包碰撞替代 AABB，并判断物体是否"求解完整"。**
 
-#### 2. 空间求解器
+LayoutVLM 等先前工作只用 2D AABB（轴对齐包围盒）做碰撞检测，对斜放、异形物体不准。空间求解器改用 2D 凸包来检测重叠——比 AABB 精确，又比完整 3D mesh 相交快得多，是工程上的好权衡。求解时它会逐个检查物体是否"完全求解"，即 $x, y, yaw$ 是否都已确定或能从约束推断；若某物体欠定，就把这个缺口反馈给 LLM agent，要它补充谓词。参数本身则通过迭代优化得到，目标是**最小化凸包重叠面积加上边界越界距离**，把重叠和出界同时压下去。
 
-基于 2D 凸包（而非 AABB）的碰撞检测，更精确且运行快：
-- 检查每个物体是否"完全求解"（x, y, yaw 均确定或可推断）
-- 未完全求解时反馈给 LLM agent 要求补充谓词
-- 迭代优化谓词参数：最小化凸包重叠面积 + 边界越界距离
+**3. 物理求解器：占据网格找位 → 物理引擎验证 → 概率编程评稳定性。**
 
-#### 3. 物理求解器
+平面位置定了，3D 的堆叠和容纳还得靠真实物理。place-in 类似 Blender 的物理放置器，物体从容器上方释放、在重力下自然安定。更复杂的 place-on / place-anywhere（Figure 4）走三步：先用**占据网格启发式**，把场景和候选物体体素化成占据网格，做网格搜索找出既不穿透、质心投影又落在支撑凸包内的候选位置；再用**物理引擎验证**，只保留模拟后没有大位移的候选；最后做**概率编程稳定性评估**——在当前摆放状态周围采样扰动（3D 位置、欧拉角、质量、质心偏移、摩擦系数），用贝叶斯方法估计这个配置的稳定概率。这个稳定概率不仅用来挑稳的配置，还反过来支持精细的稳定性控制：可以故意选"不稳定但尚未倒塌"的解，生成图 3 那种极端不稳的摆放，给机器人制造有挑战的场景。
 
-**place-in**：类似 Blender 物理放置器——物体从容器上方释放，在力的作用下安定。
+**4. 反馈系统：把失败原因和场景空隙翻译成 LLM 能改的信号。**
 
-**place-on / place-anywhere**（Figure 4）：
-- **占据网格启发式**：场景和候选物体体素化为占据网格，通过网格搜索找无穿透且质心投影在支撑凸包内的候选位置
-- **物理引擎验证**：仅保留物理模拟后无大位移的候选
-- **概率编程稳定性评估**：在当前状态周围采样扰动（3D 位置、欧拉角、质量、质心偏移、摩擦系数），通过贝叶斯方法估计稳定概率
-
-稳定性可控：可迭代选择"不稳定但未倒塌"的配置，实现图 3 中的极端不稳定摆放。
-
-#### 4. 反馈系统（三种类型）
-
-**语法反馈**：检查谓词格式正确性和物体是否完全求解
-
-**求解器失败反馈**：诊断穿透、超出桌面、堆叠失败等原因 + 估计拥挤度 + 识别空白区域（如"笔记本电脑后方桌面左侧有空白区域"）
-
-**成功反馈**：
-- 稳定性分数（物理引擎 + 概率编程）
-- VQA 分数（场景是否整齐/杂乱）
-- 启发式指标（表面覆盖率、紧凑度、物体数量）
+求解器算不出来或算得不好时，不能只丢一个"失败"，得告诉 LLM 哪里错、怎么补，否则迭代无从下手。反馈分三种。**语法反馈**检查谓词格式是否合法、物体是否已完全求解。**求解器失败反馈**诊断具体原因——穿透、超出桌面、堆叠失败等——还会估计场景拥挤度并识别空白区域，用自然语言直接点出来（如"笔记本电脑后方桌面左侧有空白区域"），LLM 据此知道往哪儿加物体。**成功反馈**则在场景合格后给出质量评估：物理引擎加概率编程算出的稳定性分数、判断整齐还是杂乱的 VQA 分数，以及表面覆盖率、紧凑度、物体数量等启发式指标，供进一步优化。正是这套定位到具体原因和具体空隙的反馈，把迭代次数和时间显著压了下来。
 
 ### 损失函数
 
-本文为生成框架而非训练方法，不涉及神经网络损失函数。优化目标为空间求解器中的碰撞/越界惩罚项，和物理求解器中的稳定性概率最大化/最小化。
+本文是生成框架而非训练方法，不涉及神经网络损失。可优化的目标有两处：空间求解器里最小化凸包重叠面积与边界越界距离的惩罚项，以及物理求解器里对稳定性概率的最大化（求稳定摆放）或最小化（求极端不稳摆放）。
 
 ## 实验关键数据
 
@@ -196,11 +166,11 @@ PhyScensis 在所有指标上显著领先：
 
 ## 相关论文
 
-- [\[AAAI 2026\] Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning](../../AAAI2026/llm_agent/beyond_react_a_planner-centric_framework_for_complex_tool-au.md)
-- [\[ICLR 2026\] Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
 - [\[AAAI 2026\] Physics-Informed Autonomous LLM Agents for Explainable Power Electronics Modulation Design](../../AAAI2026/llm_agent/physics-informed_autonomous_llm_agents_for_explainable_power_electronics_modulat.md)
+- [\[ICLR 2026\] Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization](exploratory_memory-augmented_llm_agent_via_hybrid_on-_and_off-policy_optimizatio.md)
 - [\[ICLR 2026\] FeatureBench: Benchmarking Agentic Coding for Complex Feature Development](membership_privacy_risks_of_sharpness_aware_minimization.md)
 - [\[ACL 2026\] Hierarchical Reinforcement Learning with Augmented Step-Level Transitions for LLM Agents](../../ACL2026/llm_agent/hierarchical_reinforcement_learning_with_augmented_step-level_transitions_for_ll.md)
+- [\[CVPR 2026\] SceneAssistant: A Visual Feedback Agent for Open-Vocabulary 3D Scene Generation](../../CVPR2026/llm_agent/sceneassistant_a_visual_feedback_agent_for_openvoc.md)
 
 </div>
 

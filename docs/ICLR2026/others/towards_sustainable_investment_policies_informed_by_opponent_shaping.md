@@ -37,45 +37,21 @@ tags:
 
 ## 方法详解
 
-### 社会困境的形式化
+### 整体框架
 
-**定义（价格无政府）**：
-$$\mathcal{P}_a = \frac{\max_{\pi \in \Pi} \mathcal{W}(\pi; \mu)}{\min_{\pi \in \mathcal{N}} \mathcal{W}(\pi; \mu)}$$
+本文分两步走：先用博弈论工具刻画 InvestESG 在什么参数下真正构成"社会困境"，再把 Advantage Alignment 这一对抗塑形算法插进 PPO，让自利的公司与投资者智能体自发收敛到可持续投资均衡。前半部分是诊断——证明困境的存在条件与梯度根源；后半部分是处方——通过改造优势函数把"为他人着想"写进策略梯度。
 
-当 $\mathcal{P}_a > 1$ 时存在社会困境。
+### 关键设计
 
-### 关键参数：缓解有效性 $\alpha$
+**1. 社会困境的形式化：用价格无政府量化合作缺口。** 要判断一个多智能体环境是否值得用对抗塑形去"救"，先得说清它有没有困境。本文借用价格无政府（price of anarchy）$\mathcal{P}_a = \frac{\max_{\pi \in \Pi} \mathcal{W}(\pi; \mu)}{\min_{\pi \in \mathcal{N}} \mathcal{W}(\pi; \mu)}$，即全局最优社会福利与最差纳什均衡福利之比。当 $\mathcal{P}_a > 1$ 时，理性个体各自最优的结果严格劣于可达的社会最优，社会困境成立。这个标量把"自私会不会导致集体次优"变成一个可验证的判据，为后续分析提供了靶子。
 
-气候事件概率：
-$$P_t^e = \frac{\mu_e t}{1 + \lambda_e U_t} + P_0^e, \quad \lambda_e = \alpha \times \tilde{\lambda}_e$$
+**2. 缓解有效性 $\alpha$ 决定困境是否真实存在：找出问题的开关。** 困境并非凭空假设，而是由一个具体参数控制。气候事件概率写成 $P_t^e = \frac{\mu_e t}{1 + \lambda_e U_t} + P_0^e$，其中 $\lambda_e = \alpha \times \tilde{\lambda}_e$，$\alpha$ 刻画气候风险对累计缓解投资 $U_t$ 的响应度。沿 $\lambda$ 扫描会切出三个区域：当 $\lambda < \lambda_{\text{low}}$ 时缓解投入始终净负、谁都不会做，无困境；当 $\lambda > \lambda_{\text{critical}}$ 时缓解收益足够高、连自利智能体也愿意投入，同样没有强困境；只有在中间带 $\lambda_{\text{low}} \leq \lambda \leq \lambda_{\text{critical}}$，个体梯度与社会梯度符号相反，才落入真正需要干预的社会困境区。这解释了实验为何固定在 $\alpha=70$——它正好把环境钉在困境带内。
 
-**核心发现**：参数 $\alpha$（气候对缓解的响应度）决定社会困境是否存在。
+**3. 私有梯度与社会梯度的错位：困境的微观根源。** 为什么中间带会出现符号冲突？本文直接算单个公司对自身资本期望的私有边际梯度 $\frac{d}{du_t^i}\mathbb{E}[K_{t+1}^i] = -\frac{\mathbb{E}[K_{t+1}^i]}{1-u_t^i} + \mathbb{E}\left[\frac{(K_{t+1}^i)^2}{(1-X_t L_i)^2(1-u_t^i)(1+\gamma)} \sum_e \frac{\lambda_e \mu_e t}{(1+\lambda_e U_t)^2}\right]$：第一项是把资本投向缓解的即时损失，第二项是降低气候风险带来的资本回收。引理 1 证明社会边际梯度严格大于私有边际梯度——个体只看到自己承担的成本却忽略了缓解给所有人带来的外部收益，于是在困境带里集体投资不足。这条不等式正是 Advantage Alignment 要去填平的缺口。
 
-存在三个区域：
-1. $\lambda < \lambda_{\text{low}}$：缓解始终净负——无困境
-2. $\lambda_{\text{low}} \leq \lambda \leq \lambda_{\text{critical}}$：个体和社会梯度符号不一致——**社会困境**
-3. $\lambda > \lambda_{\text{critical}}$：自利智能体开始缓解——无强困境
+**4. Advantage Alignment：把利他写进优势函数。** 处方落在策略梯度上。算法把标准优势 $A^i$ 改造为 $A^{*,i}(s_t, \mathbf{a}_t) = A^i(s_t, \mathbf{a}_t) + \beta\gamma \sum_{j \neq i}\left(\sum_{k<t} \gamma^{t-k} A^i(s_k, \mathbf{a}_k)\right) A^j(s_t, \mathbf{a}_t)$，额外项把智能体 $i$ 过去自身优势的折扣累积与他人当前优势 $A^j$ 相乘——当一个行动同时对自己历史有利、又对他人当前有利时，它的有效优势被放大，从而鼓励对集体都好的行为。$\beta$ 调节塑形强度，整项是对优势的纯加性修正，可以原封不动插进 PPO，无需额外的高阶梯度或对手模型，正好绕开 LOLA/M-FOS 在连续动作和大规模下的扩展性瓶颈。
 
-### 私有边际梯度 vs 社会边际梯度
-
-**私有梯度**：
-$$\frac{d}{du_t^i}\mathbb{E}[K_{t+1}^i] = -\frac{\mathbb{E}[K_{t+1}^i]}{1-u_t^i} + \mathbb{E}\left[\frac{(K_{t+1}^i)^2}{(1-X_t L_i)^2(1-u_t^i)(1+\gamma)} \sum_e \frac{\lambda_e \mu_e t}{(1+\lambda_e U_t)^2}\right]$$
-
-**引理 1**：社会边际梯度严格大于私有边际梯度。
-
-### Advantage Alignment
-
-修改策略梯度中的优势函数：
-$$A^{*,i}(s_t, \mathbf{a}_t) = A^i(s_t, \mathbf{a}_t) + \beta\gamma \sum_{j \neq i}\left(\sum_{k<t} \gamma^{t-k} A^i(s_k, \mathbf{a}_k)\right) A^j(s_t, \mathbf{a}_t)$$
-
-直接修改策略梯度，促进对自己和他人都有益的行动。可直接插入 PPO 框架。
-
-### 为什么 Advantage Alignment 有效
-
-将修改后的优势分解：
-$$A_t^{*,i} = \underbrace{A_t^i + \beta\gamma b^i \sum_{j \neq i} A_t^j}_{\text{合作偏置}} + \beta\gamma \sum_{j \neq i} \underbrace{(\sum_{k<t} \gamma^{t-k} A_k^i - b^i)}_{\text{零均值}} A_t^j$$
-
-当 $\beta\gamma b^i = 1$ 时，合作项等价于累加奖励学习。在训练初期，由于评论家网络滞后，$b^i > 0$，产生初始合作偏置。随着评论家改善，偏置消失。
+**5. 为何有效：合作偏置随训练自然衰减。** 把修改后的优势拆开 $A_t^{*,i} = \underbrace{A_t^i + \beta\gamma b^i \sum_{j \neq i} A_t^j}_{\text{合作偏置}} + \beta\gamma \sum_{j \neq i} \underbrace{(\sum_{k<t} \gamma^{t-k} A_k^i - b^i)}_{\text{零均值}} A_t^j$，可以看清机制：第一项是显式的合作偏置，当 $\beta\gamma b^i = 1$ 时它恰好等价于累加奖励学习；第二项均值为零，只在过去优势偏离基线时起塑形作用。训练初期评论家网络滞后导致基线 $b^i > 0$，产生一个推动智能体走出自私均衡的初始合作偏置；随着评论家逐渐准确、$b^i$ 收敛，偏置自动消退，策略最终稳定在合作而非被持续外力扭曲的状态。这正是它比固定累加奖励更稳健的原因。
 
 ## 实验
 
@@ -132,11 +108,11 @@ Advantage Alignment 学到的策略特点：
 
 ## 相关论文
 
+- [\[ICLR 2026\] Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
 - [\[NeurIPS 2025\] A Sustainable AI Economy Needs Data Deals That Work for Generators](../../NeurIPS2025/others/a_sustainable_ai_economy_needs_data_deals_that_work_for_gene.md)
 - [\[ECCV 2024\] Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
 - [\[ACL 2025\] Task-Informed Anti-Curriculum by Masking Improves Downstream Performance on Text](../../ACL2025/others/task-informed_anti-curriculum_by_masking_improves_downstream_performance_on_text.md)
 - [\[NeurIPS 2025\] Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](../../NeurIPS2025/others/military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)
-- [\[ICLR 2026\] HEEGNet: Hyperbolic Embeddings for EEG](heegnet_hyperbolic_embeddings_for_eeg.md)
 
 </div>
 

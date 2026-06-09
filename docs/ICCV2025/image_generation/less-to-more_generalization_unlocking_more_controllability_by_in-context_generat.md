@@ -157,7 +157,7 @@ UNO 基于 FLUX.1 dev（MM-DiT 架构），包含两大核心系统：(1) 合成
 - [\[ICCV 2025\] Less is More: Improving Motion Diffusion Models with Sparse Keyframes](less_is_more_improving_motion_diffusion_models_with_sparse_keyframes.md)
 - [\[ICCV 2025\] Erasing More Than Intended? How Concept Erasure Degrades the Generation of Non-Target Concepts](erasing_more_than_intended_how_concept_erasure_degrades_the_generation_of_non-ta.md)
 - [\[ICCV 2025\] VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning](visualcloze_a_universal_image_generation_framework_via_visual_in-context_learnin.md)
-- [\[CVPR 2025\] One-for-More: Continual Diffusion Model for Anomaly Detection](../../CVPR2025/image_generation/one-for-more_continual_diffusion_model_for_anomaly_detection.md)
+- [\[NeurIPS 2025\] More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
 - [\[CVPR 2025\] ViUniT: Visual Unit Tests for More Robust Visual Programming](../../CVPR2025/image_generation/viunit_visual_unit_tests_for_more_robust_visual_programming.md)
 
 </div>

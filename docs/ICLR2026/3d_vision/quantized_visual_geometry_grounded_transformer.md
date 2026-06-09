@@ -41,33 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-QuantVGGT 包含两个核心组件：(1) DSFQ（Dual-Smoothed Fine-Grained Quantization）——先全局 Hadamard 旋转平滑重尾分布，再局部通道缩放降低幅间方差，配合细粒度量化粒度；(2) NFDS（Noise-Filtered Diverse Sampling）——用深层激活统计过滤异常样本，用帧感知相关性聚类构建多样化校准集。
+QuantVGGT 要解决的是：把 1.2B 参数的 VGGT 量化到 4-bit 而几乎不掉精度，难点在于 camera/register 这些特殊 token 制造的重尾激活，以及多视图校准样本难选。它用两个组件分头处理这两件事。前一个是 **DSFQ**（Dual-Smoothed Fine-Grained Quantization）：激活进来先做一次全局 Hadamard 旋转把尖峰摊平，再在旋转后的空间里做一次局部通道缩放压掉残余方差，最后配上细粒度的量化粒度，三步串成一条平滑链路。后一个是 **NFDS**（Noise-Filtered Diverse Sampling）：在喂校准数据之前，先用深层激活统计把异常样本过滤掉，再按 VGGT 的帧间相关性聚类、均匀采样，凑出一个既干净又多样的校准集。
 
 ### 关键设计
 
-1. **Pre-Global Rotation（全局 Hadamard 旋转）**:
+**1. Pre-Global Rotation（全局 Hadamard 旋转）：把少数 channel 的极端值摊到所有 channel。**
 
-    - 功能：分散特殊 token 导致的激活尖峰
-    - 核心思路：对激活 $\mathbf{X}$ 和权重 $\mathbf{W}$ 同时左乘随机 Hadamard 矩阵 $\mathbf{H}$，利用中心极限效应将重尾分布近似为高斯分布。$\mathbf{XW}^\top = (\mathbf{XH})(\mathbf{WH})^\top$
-    - 设计动机：Hadamard 变换将少数 channel 的极端值均匀分散到所有 channel
+特殊 token 的激活幅度比普通 patch token 大一个数量级，少数 channel 顶着尖峰，量化时大量 bit 被这些极端值占走。这里对激活 $\mathbf{X}$ 和权重 $\mathbf{W}$ 同时左乘一个随机 Hadamard 矩阵 $\mathbf{H}$，借矩阵乘法的等价性 $\mathbf{XW}^\top = (\mathbf{XH})(\mathbf{WH})^\top$ 保持输出不变，而旋转把集中在少数维度的能量均匀打散到所有 channel——本质是借中心极限效应，把重尾分布拉回近似高斯，量化范围不再被孤立尖峰绑架。
 
-2. **Post-Local Smooth（局部通道平滑）**:
+**2. Post-Local Smooth（局部通道平滑）：旋转之后再压掉残余的通道间方差。**
 
-    - 功能：降低旋转后残余的通道间方差
-    - 核心思路：在旋转后的空间中计算缩放因子 $\hat{c}_i = \frac{\max(|\mathbf{X}_i\mathbf{H}|)^\alpha}{\max(|\mathbf{W}_i\mathbf{H}|)^{1-\alpha}}$，$\alpha=0.5$
-    - 设计动机：旋转只分散全局尖峰，不消除局部通道差异。先旋转再缩放比先缩放再旋转更稳定（后者会破坏缩放的收益）
+旋转只摊平了全局尖峰，通道之间的局部幅度差异还在。于是在旋转后的空间里逐通道算一个缩放因子 $\hat{c}_i = \frac{\max(|\mathbf{X}_i\mathbf{H}|)^\alpha}{\max(|\mathbf{W}_i\mathbf{H}|)^{1-\alpha}}$（取 $\alpha=0.5$），把激活和权重的难度对半分摊。顺序很关键：先旋转再缩放比先缩放再旋转稳定得多，因为后者的缩放收益会在随后的旋转里被打乱。而且这个缩放因子可以融进前面的 LayerNorm，运行时零额外开销。
 
-3. **Fine-Grained Quantization Granularity**:
+**3. Fine-Grained Quantization Granularity：把量化粒度切细，从源头降低量化难度。**
 
-    - 功能：降低量化粒度以减少误差
-    - 核心思路：权重按 $d_{out}$ 维度量化，激活按 token 维度量化（利用矩阵乘法的内积求和只在 $d_{in}$ 上进行）
-    - 设计动机：μ-coherent 理论表明更细粒度的量化能显著降低量化难度
+权重沿 $d_{out}$ 维度量化、激活沿 token 维度量化——之所以能这样切，是因为矩阵乘法的内积求和只发生在 $d_{in}$ 上，沿这两个维度分组不会破坏求和结构。μ-coherent 理论说明，量化粒度越细，每组内部的动态范围越小、量化越容易，配合前两步的平滑能进一步压低误差。
 
-4. **Noise-Filtered Diverse Sampling（NFDS）**:
+**4. Noise-Filtered Diverse Sampling（NFDS）：在干净与多样之间凑出稳健校准集。**
 
-    - 功能：构建稳健的校准数据集
-    - 核心思路：两步流程——(a) 从深层激活统计计算每个样本的 noise score（均值和方差的标准分 z-score 的 L2 范数），过滤高分异常样本；(b) 利用 VGGT 的帧间相关性（第一帧 vs 后续帧的归一化相似度向量 $c_t^i$）做 K-means 聚类，均匀采样构建校准集
-    - 设计动机：Theorem 3.2 证明校准集应该在数据空间的各子域按尺度比例采样；帧间关系是 VGGT 的归纳偏置核心
+3D 多视图数据语义复杂，随机选的校准样本会让低 bit 量化的精度大幅抖动。NFDS 分两步：先做噪声过滤——从深层激活统计给每个样本算一个 noise score（激活均值和方差的标准分 z-score 取 L2 范数），分数高的当异常样本剔除；再做多样化采样——利用 VGGT 的帧间归纳偏置，用「第一帧 vs 后续帧」的归一化相似度向量 $c_t^i$ 做 K-means 聚类，从各簇均匀取样。这样既滤掉了拖累校准的离群点，又覆盖了数据空间的各个子域。理论上由 Theorem 3.2 撑腰：校准集应在数据空间的各子域按尺度比例采样，而帧间关系恰好是刻画 VGGT 子域结构最对路的轴，比直接用语义标签聚类更管用。
 
 ## 实验关键数据
 

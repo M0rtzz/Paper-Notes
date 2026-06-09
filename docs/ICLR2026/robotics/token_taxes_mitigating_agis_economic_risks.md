@@ -44,29 +44,21 @@ tags:
 
 ### 整体框架
 
-Token Tax 定义：应用于模型推理 token 的基于使用量的附加费（usage-based surcharge），在销售点征收。实现方式：以提供商计费的 token 成本为基础加收百分比税（如 10% 税率 × $1/token = $0.10 token 税）。核心架构：云计算提供商作为 AI 模型提供商与政府之间的中介，运行推理、收集 token 计费、通过三阶段审计管道确定税额、向政府报告。
+Token 税本质上是对模型推理 token 加收的一笔使用税（usage-based surcharge），在销售点征收——以提供商计费的 token 成本为基数乘以一个百分比税率，例如 10% 税率作用于 $1/token 的服务即产生 $0.10 的 token 税。整个机制把云计算提供商放在 AI 模型提供商和政府之间的中介位置上：提供商既负责运行推理、收集 token 计费，又通过一条三阶段审计管道核定应纳税额并向政府报告。这种设计相比传统机器人税（提高企业税率、征收"自动化税"、取消自动化投资减免等 firm-based 方案）的根本区别在于它是 usage-based 的——价值在 token 被使用的终端被精确捕获，与具体企业形态无关，也因此天然带来下面几个关键设计的可执行性与全球公平性。
 
-### 关键设计 1：三阶段审计管道（Staged Audit Pipeline）
+### 关键设计
 
-- **功能**：解决 AI 公司通过低报 token 数量来膨胀利润的核心执行问题
-- **核心思路**：三阶段递进——**Stage 1（黑盒 Token 审计）**：要求云计算提供商收集 token 级使用数据并作为独立验证者，与 AI 公司自报的 token 数交叉核验；**Stage 2（基于规范的税率）**：借鉴挪威石油税的"Norm Tax"理念——如果公司低报，审计员可参考每类模型的平均 token 使用量标准税率征收，仅需黑盒访问；**Stage 3（白盒审计）**：法律要求公司向第三方审计员共享推理过程信息，彻底消除博弈空间
-- **设计动机**：当前仅模型提供商有权限访问完整生成过程，审计员只能看到输出——这种信息不对称使 token 数低报（如隐藏推理 token）有利可图。三阶段设计从低成本黑盒验证逐步升级到高可信白盒审计，在执行成本与准确性之间取得平衡
+**1. 三阶段审计管道：堵住 AI 公司低报 token 膨胀利润的执行漏洞。**
 
-### 关键设计 2：基于使用地的征收以缓解全球不平等
+整套方案最脆弱的环节是执行——当前只有模型提供商能访问完整生成过程，第三方审计员只能看到输出，这种信息不对称让 AI 公司有动机隐瞒真实 token 数（比如藏起推理用的 thinking token）来虚增利润。论文用一条由轻到重、逐级升级的审计管道来压缩这个博弈空间。Stage 1 是黑盒 token 审计：要求云计算提供商收集 token 级使用数据，充当独立验证者与 AI 公司自报的数字交叉核验。一旦发现低报，Stage 2 引入基于规范的税率（Norm Tax），借鉴挪威石油税的思路——审计员不必拿到真实数据，只需按每类模型的平均 token 使用量这一行业标准来估税征收，仅靠黑盒访问就能让低报失去意义。最后 Stage 3 是白盒审计，从法律层面强制公司向第三方审计员开放推理过程信息，彻底消除剩余的操纵余地。三个阶段从低成本验证逐步走向高可信度核查，让执行成本和准确性之间留有调节空间，而不要求一步到位上最贵的手段。
 
-- **功能**：确保 AI 消费国（包括 Compute South 发展中国家）也能从 AI 税收中受益
-- **核心思路**：传统企业税在企业注册地征收，FLOP 税在计算设施所在地征收——两者都有利于 Compute North。Token 税在 token 被使用的地方征收（point of sale），使任何使用 AI 服务的国家都能获得对应税收。类比增值税（VAT）的消费地征收原则
-- **设计动机**：AI 供应链（芯片→训练→推理→API）高度集中在少数国家，如果仅在供给侧征税，Compute South 将被完全排除在 AGI 经济利益之外
+**2. 在使用地征收：让 Compute South 也能分到 AGI 经济的税收。**
 
-### 关键设计 3：与现有计算治理基础设施的对接
+传统企业税在企业注册地征收，FLOP 税在计算设施所在地征收，两者都把税收留在了 AI 供应链高度集中的 Compute North（美国、中国及少数发达国家）。Token 税则在 token 被实际使用的地方（point of sale）征收，逻辑上类比增值税（VAT）的消费地征收原则——任何使用 AI 服务的国家都能就本国消费拿到对应税收。这一点之所以重要，是因为芯片→训练→推理→API 的整条 AI 供应链都攥在少数国家手里，若只在供给侧征税，被迫租用算力的 Compute South 发展中国家会被完全挡在 AGI 经济利益之外；按使用地征收正是把税基从"谁造 AI"转向"谁用 AI"，从而把收益拉回消费国。
 
-- **功能**：利用已有监管框架和技术能力实现可执行性
-- **核心思路**：EU AI Act 和 Biden 行政令 14110 已引入基于计算量的监管阈值；云超大规模提供商（AWS/Azure/GCP）已收集计算消耗和工作负载类型元数据——扩展至 token 级数据收集是增量而非革命性变化
-- **设计动机**：政策工具的可执行性与其依赖的基础设施成正比——Token 税可搭载现有计算治理基础设施，避免从零建设新的执行机构
+**3. 搭载现有计算治理基础设施：可执行性来自不必从零建制。**
 
-### 与传统机器人税的对比
-
-传统机器人税提案包括提高企业税率、征收"自动化税"、取消企业自动化投资税收减免——均为基于企业（firm-based）的方案。Token 税是基于使用（usage-based）的，能在 token 使用的终端精确捕获价值，且与具体企业形态无关。
+一项政策工具能否落地，很大程度上取决于它依赖的执行基础设施是否已经存在。Token 税在这一点上占了便宜：EU AI Act 和 Biden 行政令 14110 已经引入了基于计算量的监管阈值，AWS、Azure、GCP 这类云超大规模提供商也早就在收集计算消耗和工作负载类型的元数据。把这套能力扩展到 token 级的数据收集只是增量改造，而非另起炉灶——既不需要新设执行机构，也复用了 API 本就按 token 计费的商业实践，使得审计管道里"云提供商充当验证者"这一前提在工程上立得住。
 
 ## 实验关键数据
 
@@ -144,10 +136,10 @@ Token Tax 定义：应用于模型推理 token 的基于使用量的附加费（
 ## 相关论文
 
 - [\[ECCV 2024\] An Economic Framework for 6-DoF Grasp Detection](../../ECCV2024/robotics/an_economic_framework_for_6-dof_grasp_detection.md)
-- [\[AAAI 2026\] Unintended Misalignment from Agentic Fine-Tuning: Risks and Mitigation](../../AAAI2026/robotics/unintended_misalignment_from_agentic_fine-tuning_risks_and_m.md)
-- [\[NeurIPS 2025\] Explaining and Mitigating Crosslingual Tokenizer Inequities](../../NeurIPS2025/robotics/explaining_and_mitigating_crosslingual_tokenizer_inequities.md)
 - [\[ICCV 2025\] Resolving Token-Space Gradient Conflicts: Token Space Manipulation for Transformer-Based Multi-Task Learning](../../ICCV2025/robotics/resolving_token-space_gradient_conflicts_token_space_manipulation_for_transforme.md)
-- [\[NeurIPS 2025\] Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](../../NeurIPS2025/robotics/toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [\[CVPR 2025\] Mitigating the Human-Robot Domain Discrepancy in Visual Pre-training for Robotic Manipulation](../../CVPR2025/robotics/mitigating_the_human-robot_domain_discrepancy_in_visual_pre-training_for_robotic.md)
+- [\[CVPR 2026\] Pixel-level Scene Understanding in One Token: Visual States Need What-is-Where Composition](../../CVPR2026/robotics/pixel-level_scene_understanding_in_one_token_visual_states_need_what-is-where_co.md)
+- [\[AAAI 2026\] TTF-VLA: Temporal Token Fusion via Pixel-Attention Integration for Vision-Language-Action Models](../../AAAI2026/robotics/ttf-vla_temporal_token_fusion_via_pixel-attention_integratio.md)
 
 </div>
 

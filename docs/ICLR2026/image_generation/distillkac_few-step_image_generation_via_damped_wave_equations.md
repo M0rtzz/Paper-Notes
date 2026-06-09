@@ -42,37 +42,29 @@ tags:
 
 ### 整体框架
 
-- **PDE 替换**：用阻尼波方程 $\partial_{tt} p + \lambda \partial_t p = c^2 \nabla^2 p$ 替代 Fokker-Planck 方程
-- **随机 Kac 表示**：粒子以有限速度 $c$ 运动，速度方向随 Poisson 过程翻转（1D）或重采样（高维）
-- **Guided Kac Flow**：在速度空间引入 CFG，保持平方可积性
-- **Endpoint Distillation**：学生匹配教师在一个时间段端点上的输出
+这篇论文要解决的是少步生成里"末端速度场刚性"的老问题，思路是从概率流的 PDE 基础下手——把扩散模型所依赖的 Fokker-Planck 方程（抛物型）换成阻尼波方程 $\partial_{tt} p + \lambda \partial_t p = c^2 \nabla^2 p$（双曲型，又叫 telegrapher 方程）。整个 pipeline 分三段：先用阻尼波方程的随机 Kac 表示构造一个**有限速度**的概率流（粒子位置-速度耦合演化，速度被硬约束在上界 $c$ 内）；再在这个速度场上做 classifier-free guidance，得到可控的 Guided Kac Flow，并把它训成教师；最后用端点蒸馏把 100 步教师逐级压成 1 步学生。关键在于：因为概率流速度有界、轨迹被关在因果锥里，端点对齐就能"免费"换来整条路径对齐，这是少步蒸馏能稳住的根本原因。
 
 ### 关键设计
 
-1. **有限速度概率流**:
+**1. 有限速度概率流：用 Kac 过程把速度场关进上界 $c$，消掉末端刚性。**
 
-    - 功能：用 Kac 过程替代 diffusion SDE，速度场全局有界
-    - 核心思路：Kac 过程中粒子位置 $X_t$ 和速度 $V_t$ 耦合演化，$|V_t| \leq c$，因此轨迹在因果锥内，不会无限传播
-    - 设计动机：速度有界 → 末端不刚性 → 数值积分更稳定 → 少步更鲁棒
+扩散模型反向 ODE 的速度范数在 $t \to T$ 附近会无界增长，根因是 Fokker-Planck 允许无限传播速度，末端因此变得刚性、必须靠很多步去逼近。本文改用阻尼波方程的随机 Kac 表示：粒子的位置 $X_t$ 和速度 $V_t$ 耦合演化，速度始终满足 $|V_t| \leq c$，方向在一维里按 Poisson 过程随机翻转、高维里则按 Poisson 时刻重采样方向。速度有了硬上界，轨迹就被约束在因果锥内、不会无限传播，于是动能全局有界、概率流在 Wasserstein 空间里具有 Lipschitz 正则性。末端不再刚性，数值积分自然更稳，少步采样也更鲁棒。扩散其实是这个框架的一个极限——当阻尼率和速度同时趋于无穷时，阻尼波方程退化回 Fokker-Planck。
 
-2. **端点蒸馏 + 路径稳定性定理 (Theorem 8)**:
+**2. 端点蒸馏 + 路径稳定性定理（Theorem 8）：端点对齐换来整段轨迹对齐。**
 
-    - 功能：证明端点匹配可以保证整条轨迹的接近
-    - 核心思路：利用 Kac 流的 Lipschitz 正则性，如果学生和教师在端点 $t_k$ 匹配，则在整个区间 $[t_{k+1}, t_k]$ 内也保持接近，误差以 $O(M^{-1})$（Euler 学生）衰减
-    - 设计动机：这是有限速度流独有的优势——无限速度的扩散流无法保证这种稳定性
+蒸馏最怕的是学生在大步长下偏离教师轨迹。本文让学生只去匹配教师在每个时间段端点 $t_k$ 上的输出（端点 MSE），而 Theorem 8 证明：借助 Kac 流的 Lipschitz 正则性，一旦学生和教师在端点 $t_k$ 对齐，它们在整个区间 $[t_{k+1}, t_k]$ 内都会保持接近，且误差以 $O(M^{-1})$ 衰减（$M$ 为 Euler 学生的步数）。也就是说，只在稀疏的端点上做监督，就能保证全程路径不跑偏。这是有限速度流独有的红利——无限速度的扩散流给不出这种端点→路径的稳定性保证，因此它的少步蒸馏更难稳。
 
-3. **速度空间 CFG**:
+**3. 速度空间 CFG：在速度场而非 score 场上做引导，天然不破坏速度约束。**
 
-    - 功能：在 Kac 速度场上做 classifier-free guidance
-    - 核心思路：$u_{\text{guided}} = (1+w) u_\theta^{\text{cond}} - w u_\theta^{\text{uncond}}$，证明在温和条件下保持平方可积
-    - 设计动机：传统 CFG 在 score 空间操作，可能破坏有限速度约束；在速度空间操作天然保持
+要做条件生成就得加 classifier-free guidance，但传统 CFG 在 score 空间操作，外推出的合成场可能违背有限速度约束、把前面辛辛苦苦关进因果锥的轨迹又放出去。本文把引导直接搬到 Kac 速度场上：
+
+$$u_{\text{guided}} = (1+w)\, u_\theta^{\text{cond}} - w\, u_\theta^{\text{uncond}}$$
+
+并证明在温和条件下这个引导速度场仍然平方可积，即引导后的概率流依旧合法、有限速度结构不被破坏。由此得到的 Guided Kac Flow 既能条件控制，又保住了整套稳定性前提。
 
 ### 损失函数 / 训练策略
 
-- UNet backbone，CIFAR-10/CelebA-64/LSUN Bedroom-256
-- 教师：100 步 Guided Kac Flow（AB-2 积分）
-- 蒸馏：100→20→4→2→1 步，每阶段迭代蒸馏
-- 端点 MSE 损失
+教师是 100 步的 Guided Kac Flow，用 AB-2（二阶 Adams-Bashforth）积分——二阶精度但每步只需一次函数评估。蒸馏目标是端点 MSE 损失，按 100→20→4→2→1 逐级迭代蒸馏，每一阶段的学生再作为下一阶段的教师。backbone 用 UNet，在 CIFAR-10、CelebA-64、LSUN Bedroom-256 上训练。
 
 ## 实验关键数据
 
@@ -126,10 +118,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2026\] Uni-DAD: Unified Distillation and Adaptation of Diffusion Models for Few-step Few-shot Image Generation](../../CVPR2026/image_generation/uni-dad_unified_distillation_and_adaptation_of_diffusion_models_for_few-step_few.md)
-- [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
 - [\[CVPR 2026\] Refining Few-Step Text-to-Multiview Diffusion via Reinforcement Learning](../../CVPR2026/image_generation/refining_few-step_text-to-multiview_diffusion_via_reinforcement_learning.md)
 - [\[ICLR 2026\] RMFlow: Refined Mean Flow by a Noise-Injection Step for Multimodal Generation](rmflow_refined_mean_flow_by_a_noise-injection_step_for_multimodal_generation.md)
 - [\[ICML 2026\] Envisioning Beyond the Few: Disentangled Semantics and Primitives for Few-Shot Atypical Layout-to-Image Generation](../../ICML2026/image_generation/envisioning_beyond_the_few_disentangled_semantics_and_primitives_for_few-shot_at.md)
+- [\[ICLR 2026\] TwinFlow: Realizing One-step Generation on Large Models with Self-adversarial Flows](twinflow_realizing_one-step_generation_on_large_models_with_self-adversarial_flo.md)
 
 </div>
 

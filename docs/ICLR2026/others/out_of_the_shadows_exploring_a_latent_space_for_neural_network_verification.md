@@ -46,23 +46,21 @@ tags:
 
 ### 关键设计
 
-1. **潜空间与"影子"理论**:
+**1. 潜空间与"影子"理论：把输入集和输出包围体绑到同一个超立方体上。**
 
-    - 功能：建立输入空间和输出空间的数学关联，使得约束可以双向传递
-    - 核心思路：zonotope $Z = \langle c, G \rangle_Z$ 是超立方体 $B^q = [-1,1]^q$ 经过仿射变换 $c + G\beta$ 的像。当 zonotope 经过神经网络的仿射层 $W_k h + b_k$ 传播时，新的 zonotope 变为 $\langle W_k c + b_k, W_k G \rangle_Z$——生成元矩阵改变了，但因子 $\beta$ 的值域不变。非线性层（ReLU）则通过线性近似引入额外的近似误差生成元，扩展了 $\beta$ 的维度但仍保持前 $q_0$ 个因子与输入共享。因此对任意输入 $x$ 及其输出 $y$，存在同一组 $\beta$ 使得 $x = c_x + G_x \beta_{[q_0]}$ 且 $y = c_y + G_y \beta_{[q_\kappa]}$。
-    - 设计动机：这个性质是 zonotope 传播的自然副产物，以往被忽视。论文首次系统地利用它来在输入输出之间建立桥梁。
+输入细化能成立，全靠一个被以往忽视的几何事实。一个 zonotope $Z = \langle c, G \rangle_Z$ 本质上是高维超立方体 $B^q = [-1,1]^q$ 经仿射变换 $c + G\beta$ 投影出来的"影子"。当它经过神经网络的仿射层 $W_k h + b_k$ 传播时，新的 zonotope 变成 $\langle W_k c + b_k, W_k G \rangle_Z$——只有生成元矩阵 $G$ 被改写，因子 $\beta$ 的值域 $[-1,1]^q$ 始终没变。非线性层（ReLU）通过线性近似引入额外的误差生成元，把 $\beta$ 的维度从 $q_0$ 撑到 $q_\kappa$，但前 $q_0$ 个因子仍和输入共享。于是对任意输入 $x$ 及其输出 $y$，存在同一组 $\beta$ 同时满足 $x = c_x + G_x \beta_{[q_0]}$ 和 $y = c_y + G_y \beta_{[q_\kappa]}$。换句话说，输入集和输出包围体并不是两个独立的几何体，而是同一个超立方体在输入空间和输出空间的两个投影——这条共享潜空间正是后面让约束双向流动的桥梁。
 
-2. **规范驱动输入细化（Proposition 2）**:
+**2. 规范驱动输入细化（Proposition 2）：把输出端的危险约束反向投影回输入。**
 
-    - 功能：将输出端的不安全约束 $U = \{y | Ay \leq b\}$ 转化为输入端 $\beta$ 的约束 $C\beta \leq d$，得到细化后的输入集 $X|_{C\leq d} \subseteq X$
-    - 核心思路：由于输出 $y = c_y + G_y \beta$，不安全条件 $Ay \leq b$ 可改写为对 $\beta$ 的线性约束。但 $\beta$ 的维度 $q_\kappa > q_0$（因 ReLU 近似引入了额外生成元），所以对额外维度取最坏情况上界后，得到仅关于前 $q_0$ 个因子的约束 $C = AG_{y(\cdot,[q_0])}$，$d = b - Ac_y + |AG_{y(\cdot,[q_\kappa]\setminus[q_0])}| \mathbf{1}$。由此构建约束 zonotope $X|_{C\leq d}$，严格包围所有可能导致不安全输出的输入——安全输入被排除在外。此过程可迭代：细化后重新传播，输出包围更紧，再次细化，如此循环直到验证成功或无法继续。
-    - 设计动机：传统方法在输入空间"盲目"分支，本方法从输出规范出发"定向"裁剪，大幅减少分支数。
+传统 B&B 在输入空间里"盲目"均匀分支，可大部分输入其实根本到不了不安全区域，分它们纯属浪费。有了共享潜空间，就能反过来做：先看输出端不希望发生什么，再倒推哪些输入才可能闯祸。具体地，不安全集写成 $U = \{y \mid Ay \leq b\}$，代入 $y = c_y + G_y\beta$ 后，$Ay \leq b$ 就变成对 $\beta$ 的一组线性约束。难点是 $\beta$ 的维度 $q_\kappa > q_0$（ReLU 近似撑出来的那部分），需要把多出来的维度按最坏情况取上界消掉，最终只留下关于前 $q_0$ 个因子的约束：
 
-3. **基于潜空间的集合证伪**:
+$$C = A\,G_{y(\cdot,[q_0])}, \qquad d = b - A c_y + \big|A\,G_{y(\cdot,[q_\kappa]\setminus[q_0])}\big|\,\mathbf{1}.$$
 
-    - 功能：在验证 inconclusive 时，利用潜空间高效寻找反例
-    - 核心思路：对不安全集每个半空间法向量 $A_{(i,\cdot)}$，计算边界因子 $\tilde{\beta}_i = \text{sign}(A_{(i,\cdot)} G_y)$，对应的输入 $\tilde{x} = c_x + G_x \tilde{\beta}_{[q_0]}$。如果 $\Phi(\tilde{x}) \in U$ 则找到反例。这种方法不需要梯度计算，是一种纯集合论的对抗攻击。
-    - 设计动机：与 FGSM 等梯度方法相比，直接从集合几何出发生成反例更高效，且避免梯度消失问题。
+由此构造约束 zonotope $X|_{C\beta \leq d} \subseteq X$，它严格包住所有可能导致不安全输出的输入，把确定安全的输入直接排除在外。这一步还能迭代：细化后重新传播一遍，输出包围更紧，再细化、再传播，循环到验证通过或没法继续收紧为止——分支数因此被大幅压下来。
+
+**3. 基于潜空间的集合证伪：不用梯度，直接在超立方体顶点上找反例。**
+
+当包围结果 inconclusive、既证不了安全也排不掉危险时，就该试着主动构造一个反例。这里同样吃潜空间的红利：对不安全集的每个半空间法向量 $A_{(i,\cdot)}$，取边界因子 $\tilde{\beta}_i = \text{sign}(A_{(i,\cdot)} G_y)$——这相当于在超立方体上挑出最"贴向"该半空间的那个顶点——再用共享因子映回输入 $\tilde{x} = c_x + G_x \tilde{\beta}_{[q_0]}$。只要 $\Phi(\tilde{x}) \in U$，反例就到手了。整个过程是纯集合论的对抗攻击，不需要任何梯度，因此天然绕开了 FGSM 那类方法的梯度消失问题，实验里也比 FGSM 找到的反例多得多。
 
 ### 损失函数 / 训练策略
 
@@ -161,7 +159,7 @@ GPU 加速幅度：acasxu 82.8%、safenlp 89.8%。
 - [\[CVPR 2026\] HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
 - [\[ICLR 2026\] Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges](latent_equivariant_operators_for_robust_object_recognition_promises_and_challeng.md)
 - [\[ICLR 2026\] Latent Fourier Transform](latent_fourier_transform.md)
-- [\[ICLR 2026\] A Single Architecture for Representing Invariance Under Any Space Group](a_single_architecture_for_representing_invariance_under_any_space_group.md)
+- [\[ICLR 2026\] Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
 
 </div>
 

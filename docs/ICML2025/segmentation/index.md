@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 语义分割方向20篇论文解读
+  ICML2025 语义分割方向18篇论文解读
 description: >-
-  20篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  18篇ICML2025的语义分割方向论文解读，涵盖语义分割、推荐系统、少样本学习、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "语义分割"
@@ -16,9 +16,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧪 ICML2025** · **20** 篇论文解读
+**🧪 ICML2025** · **18** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (31)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/segmentation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (13)](../../ICML2026/segmentation/index.md) · [💬 ACL2026 (1)](../../ACL2026/segmentation/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/segmentation/index.md) · [🔬 ICLR2026 (11)](../../ICLR2026/segmentation/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/segmentation/index.md) · [🧠 NeurIPS2025 (45)](../../NeurIPS2025/segmentation/index.md)
 
 🔥 **高频主题：** 语义分割 ×6 · 推荐系统 ×2 · 少样本学习 ×2 · 遥感 ×2
 
@@ -37,10 +37,6 @@ tags:
 **[Alberta Wells Dataset: Pinpointing Oil and Gas Wells from Satellite Imagery](alberta_wells_dataset_pinpointing_oil_and_gas_wells_from_satellite_imagery.md)**
 
 :   提出首个大规模油气井检测基准数据集 Alberta Wells Dataset（213k+ 井位、188k+ 卫星图像 patch），将废弃/暂停/活跃油气井的定位问题建模为二值分割和目标检测任务，并评估了多种 CNN 和 Transformer 基线模型。
-
-**[Aligning Spoken Dialogue Models from User Interactions](aligning_spoken_dialogue_models_from_user_interactions.md)**
-
-:   首次为全双工语音对话模型（Moshi）设计完整的偏好对齐框架，从15万+条真实用户语音对话中自动构建内容+时序两类偏好对，通过仅在文本token上做DPO-LN对齐，QA平均提升3.1%、安全性提升6.9%，并通过人类评估确认多轮对话质量的改善。
 
 **[Balanced Learning for Domain Adaptive Semantic Segmentation](balanced_learning_for_domain_adaptive_semantic_segmentation.md)**
 
@@ -85,10 +81,6 @@ tags:
 **[Separating Knowledge and Perception with Procedural Data](separating_knowledge_and_perception_with_procedural_data.md)**
 
 :   仅用程序化生成数据（非真实图像）训练视觉表征模型，再通过 visual memory（KNN 检索数据库）注入真实世界知识，在分类和分割任务上逼近真实数据训练的性能，同时实现对所有真实数据的完全可控（隐私保护、高效遗忘）。
-
-**[Sounding that Object: Interactive Object-Aware Image to Audio Generation](sounding_that_object_interactive_object-aware_image_to_audio_generation.md)**
-
-:   提出一种交互式对象感知音频生成模型，通过多模态点积注意力在训练时学习图像区域与声音的关联，在测试时用 SAM 分割掩码替代注意力权重，允许用户通过点击选择图像中的视觉对象来生成对应的声音。
 
 **[SpikeVideoFormer: An Efficient Spike-Driven Video Transformer with Hamming Attention and $\mathcal{O}(T)$ Complexity](spikevideoformer_an_efficient_spike-driven_video_transformer_with_hamming_attent.md)**
 

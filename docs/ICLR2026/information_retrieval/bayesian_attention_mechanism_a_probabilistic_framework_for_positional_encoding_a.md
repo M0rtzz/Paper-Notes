@@ -41,30 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BAM 将注意力权重分解为 $p_{ij} = p(f_{\text{cont}}(\mathbf{q}_i, \mathbf{k}_j)) \cdot p(g_{\text{pos}}(i,j)) / Z$。位置先验 $p(g_{\text{pos}})$ 决定了注意力的位置偏好，不同 PE 方法对应不同的先验分布。
+BAM 把每个注意力权重看成内容与位置两个事件的联合概率，写成 $p_{ij} = p(f_{\text{cont}}(\mathbf{q}_i, \mathbf{k}_j)) \cdot p(g_{\text{pos}}(i,j)) / Z$，其中前一项是常规的 query-key 相似度，后一项 $p(g_{\text{pos}}(i,j))$ 是只依赖相对位置 $|i-j|$ 的位置先验。换句话说，位置编码不再是加到 logits 上的某个手工偏置，而是注意力分布里一个可以自由选择形状的先验，所有现有 PE 方法都对应这个先验的不同选取。
 
 ### 关键设计
 
-1. **PE 的概率统一**:
+**1. 位置先验统一各类 PE：把经验方法装进一个概率视角。** 现有位置编码之所以彼此割裂，是因为它们各自从不同直觉出发，难以横向比较。BAM 指出，一旦把 $p(g_{\text{pos}})$ 看成位置先验，常见方法都只是先验形状的特例：NoPE 对应均匀先验，所有位置等权重，相当于不施加位置偏好；ALiBi 对应拉普拉斯先验，即随距离线性衰减，对应广义高斯分布形状参数取 $\beta = 1$ 的情形。这样一来，不同 PE 的外推差异就转化为先验形状的差异，可以在同一个参数空间里连续地比较和搜索，而不再是若干互不相通的经验技巧。
 
-    - NoPE = 均匀先验（所有位置等权重）
-    - ALiBi = 拉普拉斯先验（$\beta = 1$，线性衰减）
-    - BAM-GGD = 广义高斯先验（$\beta$ 可学习）
+**2. 广义高斯位置先验（GGD-BAM）：让每个头自己学衰减形状。** 统一框架的价值在于能推出新方法。BAM 选用广义高斯分布作为位置先验，给每个注意力头配两个可学习参数：尺度 $\theta_\alpha$ 控制衰减快慢、形状 $\theta_\beta$ 控制衰减曲线的胖瘦（均值 $\mu$ 固定为 0，因为位置偏好以当前 token 为中心）。形状参数 $\beta$ 的取值直接决定了头的行为：$\beta > 1$ 时比 ALiBi 更聚焦局部、衰减更陡；$\beta \in (0,1)$ 时是长尾衰减，比 ALiBi 能照顾到更远的位置；而当 $\beta \leq 0$ 时先验反转，变成**反局部注意力**——它压低近距离 token 的权重、把注意力推向远处，等于一个专门负责远程检索的"检索头"。负 $\beta$ 之所以是外推的关键，是因为长距离 passkey 检索本质上需要某些头敢于忽略眼前的局部上下文、稳定地盯住远端信息，而传统单调衰减的 PE 永远做不到这一点。
 
-2. **广义高斯位置先验**:
-
-    - 每个注意力头学习 $\theta_\alpha$（尺度）和 $\theta_\beta$（形状）两个参数
-    - $\beta > 1$：比 ALiBi 更聚焦局部
-    - $\beta \in (0,1)$：长尾衰减，比 ALiBi 能关注更远的位置
-    - $\beta \leq 0$：**反局部注意力**——抑制近距离 token，专注于远距离信息，作为"检索头"
-
-3. **三种注意力头模式自动涌现**:
-
-    - 训练后参数自动聚类为三组：$\beta > 0$（局部头）、$-0.6 \leq \beta \leq 0$（检索头）、$\beta < -0.6$（激进检索头），在不同模型规模上稳定出现
+**3. 三类注意力头自动涌现：检索能力来自分工而非全局调参。** 训练并不显式指定哪个头负责局部、哪个负责检索，但收敛后这些头的形状参数会自动聚成三组：$\beta > 0$ 的局部头负责常规上下文建模，$-0.6 \leq \beta \leq 0$ 的检索头负责中远距离信息，$\beta < -0.6$ 的激进检索头则专攻超远距离。这个聚类模式在 120M 到更大的不同模型规模上都稳定出现，说明它不是某次训练的偶然，而是该先验家族下的自然分工——正是这种分工让少数检索头承担外推，同时不破坏多数局部头的语言建模能力。
 
 ### 损失函数 / 训练策略
-- 标准语言建模交叉熵损失
-- 在 512 token 上下文训练，总额外参数仅 384 个（$2 \times \text{Heads} \times \text{Layers}$，$\mu$ 固定为 0）
+训练只用标准语言建模交叉熵损失，不引入额外的检索监督，三类头完全靠语言建模目标自发分化。模型在 512 token 上下文上训练，引入的位置参数总量仅 $2 \times \text{Heads} \times \text{Layers} = 384$ 个（每头一对 $\theta_\alpha,\theta_\beta$，$\mu$ 固定为 0），正是这点近乎可忽略的开销换来了 500 倍训练长度上的外推。
 
 ## 实验关键数据
 
@@ -123,7 +111,7 @@ BAM 将注意力权重分解为 $p_{ij} = p(f_{\text{cont}}(\mathbf{q}_i, \mathb
 - [\[ICLR 2026\] Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
 - [\[ICLR 2026\] Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
 - [\[ICLR 2026\] Attributing Response to Context: A Jensen-Shannon Divergence Driven Mechanistic Study of Context Attribution in Retrieval-Augmented Generation](attributing_response_to_context_a_jensen-shannon_divergence_driven_mechanistic_s.md)
-- [\[ICLR 2026\] RAEE: A Robust Retrieval-Augmented Early Exit Framework for Efficient Inference](raee_a_robust_retrieval-augmented_early_exit_framework_for_efficient_inference.md)
+- [\[ICLR 2026\] LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals](lumina_detecting_hallucinations_in_rag_system_with_context-knowledge_signals.md)
 
 </div>
 

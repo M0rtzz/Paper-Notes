@@ -17,123 +17,6 @@ tags:
 
 **会议**: ICLR2026  
 **arXiv**: [2510.19400](https://arxiv.org/abs/2510.19400)  
-**代码**: [项目页面](https://github.com/) (已开源)  
-**领域**: 多模态VLM  
-**关键词**: multi-view spatial reasoning, benchmark, embodied AI, VLM evaluation, robotic manipulation  
-
-## 一句话总结
-提出 MV-RoboBench，首个结合多视角空间推理与机器人操作任务的基准，系统评估了 40+ 个 VLM（开源+闭源+推理增强），发现最强模型 GPT-5 仅达 56.4% 准确率，远低于人类的 91.0%，并揭示空间与机器人推理正相关、单视角基准表现无法可靠迁移至多视角场景。
-
-## 背景与动机
-- VLM 是 Embodied AI 的核心组件，为 VLA（Vision-Language-Action）模型提供感知和推理能力
-- 然而大多数 VLM 评估集中于**单视角**设置，对多视角信息整合的评估严重不足
-- 多相机配置在机器人平台中已成为标准，可提供互补视角以缓解遮挡和深度模糊
-- 现有空间推理基准（EmbSpatial-Bench、RoboSpatial 等）主要关注单视角，ERQA 和 MMSI-Bench 仅包含部分多视角数据
-- All-Angles Bench 和 Ego3D-Bench 虽然使用多视角输入，但任务局限于照片对齐或导航感知，缺乏面向操作的具身推理
-
-## 方法详解
-
-### 整体框架：MV-RoboBench 基准设计
-基于 AgiWorld 和 BridgeV2 数据集，构建包含 1,708 道人工标注多选题的基准，涵盖**空间理解**和**机器人执行**两大类共 8 个子任务：
-
-- **空间理解（4 个子任务）**：
-    - Cross-View Matching：跨视角目标匹配
-    - Distance Judgement：物体间相对距离判断
-    - Viewpoint Identification：视角变换推理
-    - 3D Spatial Consistency：3D 空间一致性维护
-
-- **机器人执行（4 个子任务）**：
-    - Action Planning：多步动作序列规划
-    - Step Execution：单步动作正确性验证
-    - Trajectory Selection：候选运动路径可行性评估
-    - Affordance Recognition：物体交互可行性判断
-
-### 关键设计 1：多阶段人工质控流水线
-- **数据收集**：规则筛选 + GPT-4.1 辅助过滤 + 人工验证（GPT-4.1 仅用于分诊，不生成 QA 内容）
-- **QA 生成**：任务特定模板 + 训练有素的标注员构建五选一 QA，确保干扰项合理但可区分
-- **迭代审核**：trained annotators 多轮审核、修订、答案分布平衡，消除偏差
-
-### 关键设计 2：CoT-inspired 增强探索
-系统探索三种 CoT 风格的增强方案：
-1. **文本 CoT（w text）**：GPT-4.1 生成场景描述作为额外文本上下文
-2. **视觉 CoT（w vggt）**：VGGT 进行新视角合成提供额外视觉证据
-3. **结构 CoT（w depth）**：MoGe-2 深度估计提供几何约束
-
-### 关键设计 3：双轴相关性分析
-- **内部相关轴**：多视角场景中空间推理 vs. 机器人执行的相关性
-- **外部迁移轴**：单视角空间基准（OmniSpatial）表现 → 多视角具身推理的迁移性
-
-## 实验
-
-### 主实验结果
-
-| 模型类型 | 代表模型 | 平均准确率 |
-|---------|---------|-----------|
-| 随机猜测 | - | 19.7% |
-| 闭源 VLM | GPT-4.1 | 30.9% |
-| 开源 VLM | Qwen2.5-vl-72B | 24.3% |
-| 开源 MoE | Llama-4-Maverick | 26.1% |
-| 推理模型 | GPT-5 | **56.4%** |
-| 推理模型 | Gemini-2.5-pro | 49.5% |
-| 人类 | - | **91.0%** |
-
-### CoT 增强消融实验
-
-| 模型 | 原始 | w cot | w text | w vggt | w depth |
-|------|------|-------|--------|--------|---------|
-| Qwen2.5-vl-7B | 20.84 | 20.49 | 20.90 | 20.02 | **21.14** |
-| Gemma-3-12B | 20.49 | **24.19** | 18.43 | 18.31 | 20.41 |
-| GPT-4.1 | 29.87 | 29.84 | 31.66 | 28.02 | **33.12** |
-
-### 关键发现
-1. **推理能力是核心差异来源**：推理增强模型（GPT-5、o4-mini）大幅领先感知型模型，但仍远低于人类
-2. **3D Spatial Consistency 极具挑战**：大部分非推理模型在该子任务上接近甚至低于随机水平（19.07%）
-3. **CoT 增强效果因模型而异**：合成新视角通常有害；深度先验仅在高容量模型上有效；CoT prompting 对中等规模开源模型最有效
-4. **空间与机器人推理正相关**：但仅在具备足够多视角融合能力的模型上成立
-5. **单视角到多视角迁移失败**：OmniSpatial 上的强表现不能可靠预测多视角具身推理能力
-
-## 亮点
-- 首个系统性的多视角机器人操作空间推理基准，填补空白
-- 评估覆盖 40+ 个模型（5 大类），实验规模完整
-- 双轴分析揭示了重要的 negative result：单视角能力不可靠迁移
-- 人工标注质量高（1.7K QA 全部人工curated），数据来源涵盖单臂和双臂操作
-
-## 局限性
-- 仅使用 2D 图像作为输入，未探索显式 3D 表示（点云、网格）的效果
-- 多视角相机配置固定（依赖现有数据集的相机布局），未探索不同相机布局的影响
-- 基准以多选题形式评估，未覆盖开放式推理能力
-- CoT 增强方案较基础，未探索如 active view selection 等更高级策略
-
-## 相关工作
-- **空间推理基准**：EmbSpatial-Bench、Visual Spatial、RoboSpatial、Spatial-MM、SpatialVLM、VSI-Bench 等均限于单视角
-- **多视角基准**：All-Angles Bench（照片对齐）、Ego3D-Bench（导航感知），但都不涉及机器人操作
-- **机器人场景评估**：ShareRobot（单视角）、ERQA（部分多视角但规模小）
-- **VLM 空间增强**：SpatialRGPT、SpatialLLM、3D-LLM 等尝试注入几何先验
-
-## 评分
-⭐⭐⭐⭐ (4/5)
-
-扎实的基准工作，评估规模大且系统性强。双轴分析提供了有价值的 insight。但作为 benchmark 论文，方法贡献有限，CoT 增强部分的探索较浅。
----
-title: >-
-  [论文解读] Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes
-description: >-
-  [ICLR2026][多模态][空间推理] 提出 MV-RoboBench，首个面向机器人多视角空间推理能力的 VLM 评测基准，包含 1.7K 人工标注 QA，覆盖空间理解与机器人执行两大类八个子任务。实验发现当前最强 VLM 远低于人类水平，且单视角空间基准上的性能无法可靠迁移到多视角机器人场景。
-tags:
-  - ICLR2026
-  - 多模态
-  - 空间推理
-  - benchmark
-  - multi-view
-  - robotic manipulation
-  - VLM evaluation
-  - embodied AI
----
-
-# Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes
-
-**会议**: ICLR2026  
-**arXiv**: [2510.19400](https://arxiv.org/abs/2510.19400)  
 **代码**: [GitHub](https://github.com/) (项目页面已发布)  
 **领域**: multimodal_vlm  
 **关键词**: multi-view spatial reasoning, robotic manipulation, VLM benchmark, embodied AI, MV-RoboBench  
@@ -150,38 +33,22 @@ tags:
 
 ## 方法详解
 
-### 整体框架：MV-RoboBench
-基于 AgiWorld 和 BridgeV2 两个真实机器人数据集构建，覆盖单臂和双臂操作场景，共 1,708 道五选一 QA 题，来源于 980 个操作 episode。
+### 整体框架
+MV-RoboBench 基于 AgiWorld 和 BridgeV2 两个真实机器人数据集构建，覆盖单臂与双臂操作，从约 980 个操作 episode 中提炼出 1,708 道人工标注的五选一 QA。题目沿空间理解与机器人执行两条主线展开，把"看懂多视角场景"与"判断操作是否合理"统一在同一套评测协议下，从而能横向比较 40+ 个 VLM（开源 / 闭源 / 推理增强）在多视角具身推理上的真实水平。
 
-### 关键设计 1：两大类八任务的系统化评测体系
-**空间理解（Spatial Understanding）**四个子任务：
-1. **Cross-View Matching**：跨视角识别同一物体
-2. **Distance Judgement**：判断物体间相对距离
-3. **Viewpoint Identification**：推理视角变换关系
-4. **3D Spatial Consistency**：维护物体在 3D 空间中的一致相对位置
+### 关键设计
 
-**机器人执行（Robotic Execution）**四个子任务：
-1. **Action Planning**：选择合适的多步操作序列
-2. **Step Execution**：验证下一步单步动作是否正确
-3. **Trajectory Selection**：评估候选运动路径的可行性
-4. **Affordance Recognition**：评估物体特定交互的可行性
+**1. 两大类八任务评测体系：把多视角具身推理拆成可定位的能力维度。**
+单纯报告一个总准确率无法说明模型究竟卡在哪一步，因此基准把能力切成两大类共八个子任务。空间理解类聚焦"跨视角把场景拼成一致的 3D 心理表征"，包含 Cross-View Matching（在不同相机视角下识别同一物体）、Distance Judgement（判断物体间相对距离）、Viewpoint Identification（推理相机视角的变换关系）与 3D Spatial Consistency（在多视角间维护物体一致的相对位置）。机器人执行类则考察"基于这种空间理解做操作决策"，包含 Action Planning（选出合理的多步操作序列）、Step Execution（验证下一步单步动作是否正确）、Trajectory Selection（评估候选运动路径的可行性）与 Affordance Recognition（判断对物体的某种交互是否可行）。这种细粒度拆分让后续能精确定位失败来源——例如可以直接发现几乎所有非推理模型都栽在 3D Spatial Consistency 上，而非笼统地说"模型不行"。
 
-### 关键设计 2：高质量人工构建流程
-采用三阶段 pipeline：
-1. **数据收集**：规则过滤 + GPT-4.1 辅助筛选（仅用于候选分流，不生成 QA）+ 人工验证
-2. **QA 生成**：任务特定模板 + 训练有素的标注员构建五选一 QA
-3. **Human-in-the-loop 质量审查**：迭代审查、修订、答案分布平衡
+**2. 高质量人工构建流程：让干扰项合理但答案唯一。**
+基准走一条三阶段流水线来保证题目质量。数据收集阶段先用规则过滤候选场景，再让 GPT-4.1 做一轮辅助分诊（仅用于候选分流，不参与生成任何 QA 内容），最后由人工验证；QA 生成阶段用任务特定模板搭配训练有素的标注员逐题构建五选一题，刻意让四个干扰项看上去合理但与正确答案可区分；最后再经过一轮 human-in-the-loop 审查，迭代修订并平衡各选项的答案分布。把 LLM 严格限制在分诊而非内容生成，既避免了模型自评偏差，也让平衡后的答案分布堵住了靠选项先验蒙题的捷径。
 
-### 关键设计 3：CoT 增强探索
-探索三类 CoT 式增强：
-- **文本 CoT**：GPT-4.1 生成场景描述作为补充文本
-- **视觉 CoT**：VGGT 进行新视角合成，提供额外视觉证据
-- **结构 CoT**：MoGe-2 估计深度先验，添加几何约束
+**3. CoT 增强探索：检验外挂线索能否补上空间短板。**
+为了回答"模型差是因为没看到线索、还是看到了也不会推理"，基准在输入端注入三类 CoT 式增强而不改动模型本身：文本 CoT 用 GPT-4.1 生成场景描述作为补充文本，视觉 CoT 用 VGGT 做新视角合成提供额外视觉证据，结构 CoT 用 MoGe-2 估计深度先验注入几何约束。三者分别从语言、视觉、几何三个方向补料，配合后续消融就能区分出究竟是哪一类信息缺口在拖累多视角推理，也能看出不同容量的模型对外部线索的吸收能力差异。
 
-### 相关性分析
-设计两个分析轴：
-- **内部相关性**：空间推理与机器人执行在多视角场景中的关联
-- **外部迁移性**：单视角空间基准表现是否能迁移到多视角具身推理
+**4. 双轴相关性分析：检验两个被默认的假设是否真成立。**
+基准还设计了两条分析轴来拷问两个常被想当然的迁移假设。内部轴度量同一批模型在多视角场景下空间推理得分与机器人执行得分之间的相关性，用来检验"空间看得准是否就操作得对"；外部轴则把模型在单视角空间基准 OmniSpatial 上的表现与其在 MV-RoboBench 上的多视角具身推理表现对照，用来检验"单视角强是否能可靠迁移到多视角"。这两条轴让基准不止给出一张排行榜，而能直接给出关于能力可迁移性的可证伪结论。
 
 ## 实验
 

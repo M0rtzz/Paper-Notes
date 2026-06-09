@@ -38,35 +38,29 @@ tags:
 
 ### 整体框架
 
-四步流程：
-1. 在 EEG 脑电图（DREAMER + MAHNOB-HCI）上训练教师网络回归 V/A
-2. 将教师验证集嵌入聚合为 5×5 V/A 原型网格（25 个静态原型），冻结复用
-3. 在 FERPlus 上训练 ResNet-18/50 学生模型，使用 CE + KD + Proto-KD + D-Geo 联合训练
-4. 部署时仅需视觉模型，无需任何 EEG 或其他非视觉信号
+NeuroGaze-Distill 把 EEG 脑电里编码的情感结构，离线压缩成一组静态的 Valence-Arousal 原型，再当作"软标签锚点"蒸馏给一个纯视觉的表情识别学生。整套流程分两段：先在 DREAMER + MAHNOB-HCI 上训练一个回归 V/A 的 EEG 教师，把它验证集的特征聚成 25 个原型并冻结；再在 FERPlus 上训练 ResNet-18/50 学生，用 CE + KD + Proto-KD + D-Geo 四项联合优化。部署时 EEG 教师和原型都不参与，只跑视觉模型，因此从头到尾都不需要 EEG-人脸的配对数据。
 
 ### 关键设计
 
-**设计1：静态神经信息原型（Static Neuro-informed Prototypes）**
-- **功能**：从 EEG 教师的验证集嵌入中构建 25 个 V/A 原型
-- **核心思路**：将 V/A 空间离散化为 5×5 网格（中心点从 -0.8 到 0.8），在每个 bin 中平均 L2 归一化后的教师倒数第二层特征。空 bin 用最近非空 bin 的均值填充
-- **设计动机**：5×5 网格平衡了覆盖率和统计稳定性——更密的网格（如 7×7）导致稀疏 bin 和崩溃。原型一次构建、冻结复用，无需 EEG-人脸配对数据
+**1. 静态神经信息原型：把昂贵的 EEG 信号压成可复用的几何锚点。**
 
-**设计2：原型蒸馏损失（Proto-KD, Cosine）**
-- **功能**：将学生特征与静态原型对齐
-- **核心思路**：计算学生特征 $f(x)$ 与所有原型 $p_k$ 的余弦相似度 $s_k = \cos(f(x), p_k)$，构造软分布 $q^{stu} = \text{softmax}(s/\tau)$（$\tau=0.90$），最小化 $D_{KL}(q^{pro} \| q^{stu})$
-- **设计动机**：让视觉学生隐式继承 EEG 教师捕获的情感空间结构，但不要求配对训练数据
+跨模态蒸馏最大的障碍是 EEG 与人脸难以配对采集，本文用"一次构建、永久冻结"的原型绕开了它。具体做法是把连续的 V/A 平面离散成 5×5 网格（中心点从 -0.8 均匀铺到 0.8），对教师倒数第二层特征先做 L2 归一化，再在落入每个 bin 的样本上取平均，得到该 bin 的原型 $p_k$；空 bin 用最近非空 bin 的均值回填，保证 25 个原型全部有效。网格分辨率是稳定性与覆盖度的折中——实验里换成更密的 7×7 会让多数 bin 样本过少，原型统计崩塌。由于原型在教师验证集上一次算好后就冻结复用，学生训练阶段没有任何额外的 EEG 前向开销。
 
-**设计3：抑郁启发的几何先验（D-Geo）**
-- **功能**：正则化嵌入空间的几何形状
-- **核心思路**：(1) 对高效价类别（happiness, surprise）施加类内方差上界cap；(2) 全局鼓励类间 margin 以保持可分性。使用余弦 ramp 延迟激活（epoch 20→60），权重很小
-- **设计动机**：受抑郁症快感缺失研究启发——高效价区域更紧凑的表示可能更鲁棒。t-SNE 可视化证实 D-Geo 使高效价簇更紧凑，同时保持低效价类的分离性
+**2. 原型蒸馏 Proto-KD：让视觉学生隐式继承 EEG 的情感空间结构。**
+
+有了静态原型，问题变成如何在没有配对监督的情况下把教师的几何结构传给学生。Proto-KD 走的是余弦相似度的软对齐：对学生特征 $f(x)$ 与每个原型计算 $s_k = \cos(f(x), p_k)$，用温度 $\tau=0.90$ 归一化成学生分布 $q^{stu} = \text{softmax}(s/\tau)$，再让它去逼近由原型自身导出的目标分布 $q^{pro}$，即最小化 $D_{KL}(q^{pro} \| q^{stu})$。这样学生不需要知道任何一张人脸对应的真实脑电，只要它在 V/A 原型场里落到与教师一致的"相对位置"，就等价于继承了 EEG 捕获的情感拓扑，从而在跨数据集上更稳。
+
+**3. 抑郁启发的几何先验 D-Geo：用神经科学观察软塑嵌入形状。**
+
+最后一项把情感神经科学的观察转成正则项。抑郁相关研究发现高效价区域常出现快感缺失（anhedonia）——情感响应减弱、表征更集中，本文据此猜测"高效价类更紧凑"可能也利于视觉表情识别的鲁棒性。D-Geo 因此做两件事：对高效价类别（happiness、surprise）施加一个类内方差上界 cap，把这些簇往紧里收；同时在全局鼓励类间 margin，避免收缩牺牲可分性。为了不在训练早期就压垮特征的分离能力，它用余弦 ramp 从 epoch 20 到 60 缓慢激活，且权重很小。t-SNE 可视化证实 D-Geo 确实让高效价簇更紧凑，同时低效价类的边界依旧清晰。
 
 ### 损失函数 / 训练策略
 
-总损失函数：
+四项损失联合优化，总目标为
+
 $$\mathcal{L} = \underbrace{\mathcal{L}_{CE}}_{\text{标签平滑 0.055 + 类权重}} + \lambda_{kd} \underbrace{\mathcal{L}_{KD}}_{\text{MSE/KL, T=5.0}} + \lambda_{proto} \underbrace{D_{KL}(q^{pro} \| q^{stu})}_{\text{Proto-KD, } \tau=0.90} + \lambda_{geo} \underbrace{\mathcal{L}_{D\text{-}Geo}}_{\text{延迟激活}}$$
 
-训练细节：AdamW 优化器，余弦学习率衰减，base LR $2 \times 10^{-4}$，weight decay 0.05，batch size 128，混合精度（AMP），梯度裁剪 1.0。学生 EMA 被禁用（Mean-Teacher 风格在此任务上表现不佳）。
+其中 $\mathcal{L}_{CE}$ 是带标签平滑（0.055）和类权重的交叉熵，$\mathcal{L}_{KD}$ 是温度 T=5.0 的 logit 蒸馏。训练用 AdamW，余弦学习率衰减，base LR $2 \times 10^{-4}$，weight decay 0.05，batch size 128，混合精度（AMP）配梯度裁剪 1.0。值得一提的是学生 EMA 被显式禁用——Mean-Teacher 风格在该任务上反而掉点。
 
 ## 实验关键数据
 
@@ -156,8 +150,8 @@ FERPlus 验证集消融（8-way）：
 
 - [\[AAAI 2026\] Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis](../../AAAI2026/human_understanding/facial-r1_aligning_reasoning_and_recognition_for_facial_emotion_analysis.md)
 - [\[ECCV 2024\] AdaDistill: Adaptive Knowledge Distillation for Deep Face Recognition](../../ECCV2024/human_understanding/adadistill_adaptive_knowledge_distillation_for_deep_face_rec.md)
-- [\[ICLR 2026\] BAH Dataset for Ambivalence/Hesitancy Recognition in Videos for Digital Behaviour Analysis](bah_dataset_for_ambivalencehesitancy_recognition_in_videos_for_digital_behaviour.md)
 - [\[CVPR 2026\] A Two-Stage Dual-Modality Model for Facial Expression Recognition](../../CVPR2026/human_understanding/a_two_stage_dual_modality_model_for_facial_expression_recognition.md)
+- [\[ICLR 2026\] BAH Dataset for Ambivalence/Hesitancy Recognition in Videos for Digital Behaviour Analysis](bah_dataset_for_ambivalencehesitancy_recognition_in_videos_for_digital_behaviour.md)
 - [\[ECCV 2024\] Generalizable Facial Expression Recognition](../../ECCV2024/human_understanding/generalizable_facial_expression_recognition.md)
 
 </div>

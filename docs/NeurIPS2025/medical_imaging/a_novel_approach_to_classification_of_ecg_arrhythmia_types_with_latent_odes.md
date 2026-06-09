@@ -140,9 +140,9 @@ tags:
 
 - [\[ICML 2025\] From Token to Rhythm: A Multi-Scale Approach for ECG-Language Pretraining](../../ICML2025/medical_imaging/from_token_to_rhythm_a_multi-scale_approach_for_ecg-language_pretraining.md)
 - [\[CVPR 2025\] Novel Architecture of RPA In Oral Cancer Lesion Detection](../../CVPR2025/medical_imaging/novel_architecture_of_rpa_in_oral_cancer_lesion_detection.md)
-- [\[NeurIPS 2025\] RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification](raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica.md)
 - [\[NeurIPS 2025\] Dynamic Causal Discovery in Alzheimer's Disease through Latent Pseudotime Modelling](dynamic_causal_discovery_in_alzheimers_disease_through_latent_pseudotime_modelli.md)
 - [\[ICML 2025\] Boosting Masked ECG-Text Auto-Encoders as Discriminative Learners (D-BETA)](../../ICML2025/medical_imaging/boosting_masked_ecg-text_auto-encoders_as_discriminative_learners.md)
+- [\[ICCV 2025\] Controllable Latent Space Augmentation for Digital Pathology](../../ICCV2025/medical_imaging/controllable_latent_space_augmentation_for_digital_pathology.md)
 
 </div>
 

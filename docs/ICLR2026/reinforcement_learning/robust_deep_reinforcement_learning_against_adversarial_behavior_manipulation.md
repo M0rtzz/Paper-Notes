@@ -39,27 +39,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分为攻击（BIA）和防御（TDRT）两部分。攻击方构造一个辅助 MDP，用标准模仿学习算法（GAIL/ILfO）学习观测篡改策略。防御方在训练中加入时间折扣的最坏情况 KL 散度正则化。
+这篇论文要解决两个互为镜像的问题：在不访问 victim 策略内部的前提下，如何把它"诱导"成执行某个指定行为；以及反过来，如何训练一个既挡得住这种诱导、又不把原任务能力丢光的策略。攻击侧叫 BIA——adversary 构造一个辅助 MDP，把 victim 当成环境的一部分，再用标准模仿学习（GAIL/ILfO）学一个篡改观测的策略，让 victim 的实际行为去逼近目标行为。防御侧叫 TDRT——在 PPO 训练里加一项时间折扣加权的最坏情况 KL 正则，优先把早期决策"焊死"在不容易被扰动的地方。两侧由同一套理论串起来：攻击的可行性分析（Theorem 5.1）直接推导出防御该约束什么（Theorem 6.1）。
 
 ### 关键设计
 
-1. **行为模仿攻击 (BIA)**:
+**1. 行为模仿攻击 BIA：把"白盒求梯度"换成"在新 MDP 里做标准 RL"。**
 
-    - 功能：不需要白盒访问即可实施行为目标攻击。
-    - 核心思路：adversary 学习一个策略 $\nu: s \mapsto \hat{s}$（将真实状态映射为虚假状态），使得复合策略 $\pi \circ \nu(a|s) = \sum_{\hat{s}} \nu(\hat{s}|s)\pi(a|\hat{s})$ 匹配目标策略 $\pi_{\text{tgt}}$。Theorem 5.1 关键证明：$\arg\min_\nu \mathcal{D}(\pi \circ \nu, \pi_{\text{tgt}})$ 可等价转化为构造 MDP $\hat{M}$ 中的累积奖励最大化，其中 victim 策略嵌入在 $\hat{M}$ 的转移动力学中——因此无需白盒访问。
-    - 设计动机：利用 GAIL（黑盒，需要目标行为演示）或 ILfO（无盒，仅需观察目标状态轨迹）来实现攻击。只需 4-20 条目标行为演示即可实现有效攻击。
-    - 与白盒攻击区别：PA-AD 等需要对 victim 策略求梯度，BIA 只需在构造的 MDP 中做标准 RL/IL。
+现有的行为目标攻击（PA-AD、Targeted PGD）都得对 victim 策略求梯度，等于要求白盒访问，现实中拿不到。BIA 的出发点是让 adversary 学一个篡改策略 $\nu: s \mapsto \hat{s}$，把真实状态映射成喂给 victim 的虚假状态，从而让复合策略 $\pi \circ \nu(a|s) = \sum_{\hat{s}} \nu(\hat{s}|s)\pi(a|\hat{s})$ 去匹配目标策略 $\pi_{\text{tgt}}$。关键一步是 Theorem 5.1：求 $\arg\min_\nu \mathcal{D}(\pi \circ \nu, \pi_{\text{tgt}})$ 这个分布匹配问题，可以等价转化为在一个新构造的 MDP $\hat{M}$ 上做累积奖励最大化，而 victim 策略 $\pi$ 此时已经被吸收进 $\hat{M}$ 的转移动力学里。
 
-2. **时间折扣鲁棒训练 (TDRT)**:
+这一转化正是黑盒化的来源：adversary 不再需要对 $\pi$ 求梯度，只要在 $\hat{M}$ 里跑标准 RL / 模仿学习即可。落地时用两种模仿学习算法——GAIL 属黑盒，需要少量目标行为的演示；ILfO 属无盒，只需观察目标状态轨迹。实测只要 4–20 条目标行为演示就能达到接近白盒攻击的效果，攻击效果仅比 PA-AD 差约 7%。
 
-    - 功能：训练对行为目标攻击具有鲁棒性的策略，同时保持原始任务性能。
-    - 核心思路：Theorem 6.1 证明 adversary 收益的上界为 $\sum_{t=0}^{\infty} \frac{\gamma^t}{1-\gamma} \mathbb{E}_{s \sim d_\pi^t}[D_{\text{KL}}(\pi(\cdot|s) \| \pi \circ \nu(\cdot|s))]$。两个关键洞察：(a) 降低策略对状态扰动的敏感性可提升鲁棒性；(b) **早期时间步比晚期更重要**（因为 $\gamma^t$ 加权）。TDRT 目标：$J_{\text{def}}(\pi) = -J_{\text{RL}}(\pi) + \lambda \max_\nu \sum_{s_t \in B} \gamma^t D_{\text{KL}}(\pi(\cdot|s_t) \| \pi \circ \nu(\cdot|s_t))$。
-    - 设计动机：SA-PPO（均匀策略平滑）达到了类似的鲁棒性但严重牺牲任务性能（-28.2%）。TDRT 通过时间折扣聚焦早期决策，在相同鲁棒性下保留更多任务能力。
-    - 与对抗训练区别：ATLA/PA-ATLA 是在训练中模拟奖励最小化攻击，对行为目标攻击无效（因为不同攻击模式）。
+**2. 时间折扣鲁棒训练 TDRT：不是均匀压平所有时间步，而是优先保护早期决策。**
+
+有了攻击的刻画，防御要回答的是"约束哪里、约束多强"。Theorem 6.1 给出 adversary 收益的上界：
+
+$$\sum_{t=0}^{\infty} \frac{\gamma^t}{1-\gamma} \mathbb{E}_{s \sim d_\pi^t}\big[D_{\text{KL}}(\pi(\cdot|s) \,\|\, \pi \circ \nu(\cdot|s))\big]$$
+
+这个界透露两件事：一是降低策略对状态扰动的敏感性（即压住被篡改后策略的 KL 偏移）能直接提升鲁棒性；二是 $\gamma^t$ 这个权重意味着早期时间步的偏移比晚期更致命——序贯决策里早错会一路传播放大。据此 TDRT 的训练目标写成
+
+$$J_{\text{def}}(\pi) = -J_{\text{RL}}(\pi) + \lambda \max_\nu \sum_{s_t \in B} \gamma^t D_{\text{KL}}(\pi(\cdot|s_t) \,\|\, \pi \circ \nu(\cdot|s_t))$$
+
+即在常规 RL 目标外，加一项按 $\gamma^t$ 折扣的最坏情况 KL 正则。它和 SA-PPO 的差别正在这个折扣：SA-PPO 对所有时间步均匀做策略平滑，能换来相近的鲁棒性，但代价是任务性能掉 28.2%；TDRT 把"平滑预算"集中在早期状态上，相同鲁棒性下保留了更多任务能力。它也和 ATLA/PA-ATLA 这类对抗训练区分开来——后者在训练中模拟的是奖励最小化攻击，威胁模型对不上，对行为目标攻击几乎无效。
 
 ### 损失函数 / 训练策略
-- 攻击训练：标准 GAIL/ILfO 在构造 MDP $\hat{M}$ 中训练
-- 防御训练：PPO 目标 + 时间折扣的最坏情况 KL 散度正则化
+- 攻击训练：在构造出的 MDP $\hat{M}$ 中跑标准 GAIL（需目标行为演示）或 ILfO（仅需目标状态轨迹）。
+- 防御训练：PPO 目标叠加时间折扣的最坏情况 KL 散度正则项，超参 $\lambda$ 控制鲁棒性与任务性能的权衡。
 
 ## 实验关键数据
 
@@ -126,10 +130,10 @@ Meta-World 10 个任务对，攻击效果（攻击奖励↑ = 攻击更成功）
 ## 相关论文
 
 - [\[ICLR 2026\] Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
-- [\[ICLR 2026\] Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
 - [\[NeurIPS 2025\] Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling](../../NeurIPS2025/reinforcement_learning/robust_adversarial_reinforcement_learning_in_stochastic_games_via_sequence_model.md)
+- [\[ICLR 2026\] Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
 - [\[ICLR 2026\] Understanding and Improving Hyperbolic Deep Reinforcement Learning](understanding_and_improving_hyperbolic_deep_reinforcement_learning.md)
-- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
+- [\[ICML 2026\] Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning](../../ICML2026/reinforcement_learning/interaction-breaking_adversarial_learning_framework_for_robust_multi-agent_reinf.md)
 
 </div>
 

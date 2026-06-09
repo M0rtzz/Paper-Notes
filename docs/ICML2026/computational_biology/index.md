@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 计算生物方向35篇论文解读
+  ICML2026 计算生物方向36篇论文解读
 description: >-
-  35篇ICML2026的计算生物方向论文解读，涵盖生物分子、扩散模型、布局/合成、多模态、Agent、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  36篇ICML2026的计算生物方向论文解读，涵盖生物分子、扩散模型、布局/合成、多模态、Agent、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "计算生物"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧬 计算生物
 
-**🧪 ICML2026** · **35** 篇论文解读
+**🧪 ICML2026** · **36** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/computational_biology/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/computational_biology/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/computational_biology/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/computational_biology/index.md) · [🧠 NeurIPS2025 (72)](../../NeurIPS2025/computational_biology/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/computational_biology/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (5)](../../ACL2026/computational_biology/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/computational_biology/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/computational_biology/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/computational_biology/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/computational_biology/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/computational_biology/index.md)
 
 🔥 **高频主题：** 生物分子 ×18 · 扩散模型 ×5 · 布局/合成 ×3 · 多模态 ×2 · Agent ×2
 
@@ -68,6 +68,10 @@ tags:
 **[From Holo Pockets to Electron Density: GPT-style Drug Design with Density](from_holo_pockets_to_electron_density_gpt-style_drug_design_with_density.md)**
 
 :   本文把结构药物设计的 condition 从"刚性 empty pocket"换成"包含配体与溶剂的 filler 低分辨率电子云"，并提出第一个 decoder-only autoregressive 的 EDMolGPT，在 DUD-E 101 个靶点上 bioactive recovery 达 41%、远超先前 ED-based 方法。
+
+**[iLoRA: Bayesian Low-Rank Adaptation with Latent Interaction Graphs for Microbiome Diagnosis](ilora_bayesian_low-rank_adaptation_with_latent_interaction_graphs_for_microbiome.md)**
+
+:   iLoRA 用贝叶斯方法从每个微生物组样本里推断一张稀疏的菌群交互图（Poisson 边 → Laplace 稀疏化 → GNN 嵌入），再用这个图去生成 input-conditioned 的 LoRA 矩阵 $A$，让 LLM 在做 IBD 诊断的同时把"是哪些菌在 cross-talk"这件事和预测一起学出来。
 
 **[Influence-Guided Symbolic Regression: Scientific Discovery via LLM-Driven Equation Search with Granular Feedback](influence-guided_symbolic_regression_scientific_discovery_via_llm-driven_equatio.md)**
 

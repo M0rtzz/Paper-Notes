@@ -33,29 +33,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-K-Sort Eval 建立在 K-Sort Arena 之上，包含三个核心组件：高质量数据集构建、后验校正机制、动态匹配策略。评估新模型时，将其与数据集中 $K$ 个已有模型组成 $(K+1)$-wise 自由竞争对比，由 VLM 提供排名。
+K-Sort Eval 构建在 K-Sort Arena 之上，要评估的新模型会与数据集里 $K$ 个已有模型组成 $(K+1)$-wise 自由竞争，让 VLM 一次性给出排名。整套流程由三件事串起来：先从人类投票里筛出一批高质量对比实例，再用一套后验校正把 VLM 与人类的偏差掰回来，最后靠动态匹配只挑最有信息量的实例去问 VLM，从而在几十次运行内收敛出可信排名。
 
 ### 关键设计
 
-1. **数据集构建**: 从 K-Sort Arena 的数千次人类投票中策划高质量数据集。使用 Spearman 秩相关系数 $\rho$ 衡量每个实例的局部排名与全局排行榜的一致性：
-$$\rho_i = \frac{\sum_{k=1}^K (R_k^i - \bar{R}^i)(R_k^{(L)} - \bar{R}^{(L)})}{\sqrt{\sum_{k=1}^K (R_k^i - \bar{R}^i)^2} \cdot \sqrt{\sum_{k=1}^K (R_k^{(L)} - \bar{R}^{(L)})^2}}$$
-   过滤阈值 $\tau=0.75$，保留一致性高的实例。最终数据集包含 T2I 500 实例、T2V 300 实例。
+**1. 高质量数据集构建：让监督信号本身先靠谱。**
 
-2. **后验校正（Reliability）**: 将 VLM 判断与人类偏好之间的偏差建模为观测噪声。核心是 Lemma 1：含噪后验可表示为无噪后验与先验的加权混合：
-$$\tilde{P}(\theta|D) = \lambda' P(\theta|D) + (1-\lambda') P(\theta)$$
-   权重 $\lambda'$ 通过比较 VLM 排名与人类排名的 Spearman 系数，经 sigmoid 映射得到：$\lambda' = \text{Sigmoid}(\kappa \rho')$，$\kappa=5.0$。校正后的均值和方差为：
-$$\hat{\mu}_c = \lambda' \hat{\mu} + (1-\lambda') \mu, \quad \hat{\sigma}_c^2 = \lambda'^2 \hat{\sigma}^2 + (1-\lambda')^2 \sigma^2$$
+VLM 校正依赖人类偏好作为参照，但 K-Sort Arena 数千次众包投票里噪声不小，单个实例的局部排名经常和全局排行榜不一致，直接拿来当真值会把误差传递下去。作者用 Spearman 秩相关系数衡量每个实例局部排名 $R_k^i$ 与全局排行榜排名 $R_k^{(L)}$ 的一致性，$\rho_i = \frac{\sum_{k=1}^K (R_k^i - \bar{R}^i)(R_k^{(L)} - \bar{R}^{(L)})}{\sqrt{\sum_{k=1}^K (R_k^i - \bar{R}^i)^2} \cdot \sqrt{\sum_{k=1}^K (R_k^{(L)} - \bar{R}^{(L)})^2}}$，只保留 $\rho_i$ 超过阈值 $\tau=0.75$ 的实例。过滤后剩下 T2I 500 个、T2V 300 个实例，确保后续校正参照的是与群体共识高度一致的样本。
 
-3. **动态匹配（Efficiency）**: 动态选择信息增益最大的数据实例，综合不确定性准则和多样性准则：
-$$i^* = \arg\max_i (U_{\text{unc}}^i + \alpha U_{\text{div}}^i)$$
-    - 不确定性准则 $U_{\text{unc}}$：优先匹配能力接近的模型（~50% 胜率）
-    - 多样性准则 $U_{\text{div}}$：最小化实例内模型能力分布的重叠
-    - $\alpha=0.5$ 平衡两个准则
+**2. 后验校正：把 VLM 的不对齐当成观测噪声来吸收。**
+
+VLM 评判有幻觉和偏见，得到的能力后验会系统性偏离人类偏好。作者没有去微调 VLM，而是把这种偏差直接建模成观测噪声，由 Lemma 1 给出一个干净的结论：含噪后验等价于无噪后验与先验的加权混合，$\tilde{P}(\theta|D) = \lambda' P(\theta|D) + (1-\lambda') P(\theta)$。当 VLM 越可信，权重 $\lambda'$ 越靠近 1（结果更信 VLM 给的数据）；越不可信则越退回先验。这个可信度由 VLM 排名与人类排名的 Spearman 系数 $\rho'$ 经 sigmoid 映射得到，$\lambda' = \text{Sigmoid}(\kappa \rho')$（$\kappa=5.0$）。最终把校正落到能力分布的均值和方差上，$\hat{\mu}_c = \lambda' \hat{\mu} + (1-\lambda') \mu$、$\hat{\sigma}_c^2 = \lambda'^2 \hat{\sigma}^2 + (1-\lambda')^2 \sigma^2$，相当于用人类监督把 VLM 估计往可信方向拉，同时按可信度自动放大或收紧不确定性。
+
+**3. 动态匹配：只问最有信息量的那几个实例。**
+
+静态评估要遍历整个数据集，问 VLM 上百上千次才停，绝大部分对比其实没带来新信息。作者改成每一步都挑信息增益最大的实例，准则是 $i^* = \arg\max_i (U_{\text{unc}}^i + \alpha U_{\text{div}}^i)$。其中不确定性项 $U_{\text{unc}}$ 偏好那些参赛模型能力接近、胜率约 50% 的实例，因为势均力敌的对决最能区分高下；多样性项 $U_{\text{div}}$ 则最小化同一实例内模型能力分布的重叠，避免反复问相似的对比，$\alpha=0.5$ 平衡两者。配合概率建模带来的自然停止信号，匹配往往几十步就能收敛。
 
 ### 损失函数 / 训练策略
-- 采用概率建模 $\theta \sim \mathcal{N}(\mu, \sigma^2)$ 表示模型能力
-- 使用贝叶斯更新迭代估计后验，直到 $\sigma$ 低于停止阈值 0.75
-- 最终得分 $S = \mu - \eta \sigma$（$\eta=3.0$）
+方法不训练任何网络，而是用贝叶斯方式在线估计能力。每个模型的能力建模为高斯分布 $\theta \sim \mathcal{N}(\mu, \sigma^2)$，每轮 VLM 给出排名后做一次后验更新并接上述校正，直到不确定性 $\sigma$ 降到停止阈值 0.75 以下即终止。最终用保守得分 $S = \mu - \eta \sigma$（$\eta=3.0$）排名，相当于在能力均值上扣掉对不确定性的惩罚，避免把估计还不稳的模型排得过高。
 
 ## 实验关键数据
 
@@ -124,8 +119,8 @@ $$i^* = \arg\max_i (U_{\text{unc}}^i + \alpha U_{\text{div}}^i)$$
 
 - [\[ICML 2026\] ReVSI: Rebuilding Visual Spatial Intelligence Evaluation for Accurate Assessment of VLM 3D Reasoning](../../ICML2026/multimodal_vlm/revsi_rebuilding_visual_spatial_intelligence_evaluation_for_accurate_assessment_.md)
 - [\[ICLR 2026\] Customizing Visual Emotion Evaluation for MLLMs: An Open-vocabulary, Multifaceted, and Scalable Approach](customizing_visual_emotion_evaluation_for_mllms_an_open-vocabulary_multifaceted_.md)
-- [\[CVPR 2026\] VLM-Guided Group Preference Alignment for Diffusion-based Human Mesh Recovery](../../CVPR2026/multimodal_vlm/vlm-guided_group_preference_alignment_for_diffusion-based_human_mesh_recovery.md)
 - [\[NeurIPS 2025\] HAWAII: Hierarchical Visual Knowledge Transfer for Efficient VLM](../../NeurIPS2025/multimodal_vlm/hawaii_hierarchical_visual_knowledge_transfer_for_efficient_vision-language_mode.md)
+- [\[CVPR 2026\] VLM-Guided Group Preference Alignment for Diffusion-based Human Mesh Recovery](../../CVPR2026/multimodal_vlm/vlm-guided_group_preference_alignment_for_diffusion-based_human_mesh_recovery.md)
 - [\[ICCV 2025\] SparseVILA: Decoupling Visual Sparsity for Efficient VLM Inference](../../ICCV2025/multimodal_vlm/sparsevila_decoupling_visual_sparsity_for_efficient_vlm_inference.md)
 
 </div>

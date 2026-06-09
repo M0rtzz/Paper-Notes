@@ -45,47 +45,27 @@ tags:
 
 ### 整体框架
 
-ST-WebAgentBench 基于 BrowserGym 环境构建，集成了 WebArena 和 SuiteCRM 的应用环境，包含 235 个策略增强任务，覆盖多个安全类别。
+ST-WebAgentBench 基于 BrowserGym 环境构建，集成 WebArena 与 SuiteCRM 两个真实应用，把 235 个任务从"只问能否完成"改造成"是否在遵守策略前提下完成"。核心做法是给每个任务挂上一组分层策略，再用一套违规检测函数逐步审计 Agent 的动作轨迹，最终汇总成 CuP 与风险比率两个面向企业部署的安全指标。
 
 ### 关键设计
 
-1. **安全与可信行为的策略层级（Policy Hierarchy）**
+**1. 策略层级（Policy Hierarchy）：让安全约束像企业制度一样分优先级。**
 
-    - **组织策略 P_org**（最高优先级）：如"永远不要删除系统中的任何记录"
-    - **用户偏好 P_user**（中等优先级）：如"提交新表单前总是询问我的许可"
-    - **任务指令 P_task**（最低优先级）：特定任务的执行指令
-    - Agent 的行为必须满足：$\pi_H(S_t) = \arg\max_{a_t \in A(S_t)} [R_{task}(S_t, a_t)]$ subject to $a_t \in H_t$
+企业里"组织规章 > 用户偏好 > 具体任务"是天然的优先级关系，但现有基准把所有指令拉平成一句 prompt，无法表达这种约束。本文把策略显式分成三层：组织策略 $P_{org}$ 优先级最高（如"永远不要删除系统中任何记录"），用户偏好 $P_{user}$ 居中（如"提交新表单前总是先征求我的许可"），任务指令 $P_{task}$ 最低。Agent 在状态 $S_t$ 下的合法行为被约束为 $\pi_H(S_t) = \arg\max_{a_t \in A(S_t)} [R_{task}(S_t, a_t)]$，subject to $a_t \in H_t$——即只在满足全部上层策略所形成的允许动作集 $H_t$ 内最大化任务奖励。这样一来，违反高优先级组织策略去多完成一点任务，不再被视为"更优"，而是直接出局。
 
-2. **安全与可信维度（10个评估维度）**
+**2. 十个安全与可信维度：把"不安全"拆成可逐条审计的类别。**
 
-    - 用户同意与操作确认（User Consent）
-    - 边界与范围限制（Boundary）
-    - 严格任务执行（Strict Execution）
-    - 策略遵从（Policy Adherence）
-    - 越狱鲁棒性（Robustness Against Jailbreaking）
-    - 敏感数据安全（Security of Sensitive Data）
-    - 错误处理与安全网（Error Handling）
-    - 法律与伦理合规（Legal/Ethical Compliance）
-    - 透明性与可解释性（Transparency）
-    - 观察完整性与操纵防御（Observation Integrity）
-    - 反思与任务验证（Reflection）
+笼统地说"Agent 不安全"无法落地评测，于是本文把可信赖性细分为十个相互独立的维度，每个维度配套独立的违规判定：用户同意与操作确认（User Consent）、边界与范围限制（Boundary）、严格任务执行（Strict Execution）、策略遵从（Policy Adherence）、越狱鲁棒性（Robustness Against Jailbreaking）、敏感数据安全（Security of Sensitive Data）、错误处理与安全网（Error Handling）、法律与伦理合规（Legal/Ethical Compliance）、透明性与可解释性（Transparency）、观察完整性与操纵防御（Observation Integrity），以及反思与任务验证（Reflection）。维度化的好处是诊断粒度细——后续实验能定位到"同意维度违规最严重"这种具体短板，而不是只给一个模糊的总分。
 
-3. **CuP 指标（Completion under Policy）**
+**3. CuP 指标（Completion under Policy）：零容忍违规才算真正完成。**
 
-    - 定义策略违规矩阵 $V$，其中 $V_{source,category}$ 表示特定来源和类别的违规次数
-    - 指标计算：$CuP = C_{task} \cdot \mathbb{1}\{V_{total} = 0\}$
-    - 仅当**零策略违规**时才计入任务完成分数，这比纯任务完成率更严格
+传统完成率会奖励"填了虚构邮箱也算交差"的投机行为。CuP 的核心是把任务完成与策略合规绑成连乘：先定义违规矩阵 $V$，其中 $V_{source,category}$ 记录某来源、某类别下的违规次数，再计算 $CuP = C_{task} \cdot \mathbb{1}\{V_{total} = 0\}$。只要总违规数 $V_{total}$ 非零，指示函数取 0，整次任务的完成分被一票否决。这种"零违规才得分"的设计直接对应企业现实——一次误删记录或越权操作的代价，远大于多完成几个任务带来的收益，因此 CuP 通常显著低于名义完成率，把隐藏的安全缺口暴露出来。
 
-4. **风险比率评估（Risk Ratio）**
+**4. 风险比率（Risk Ratio）：把违规归一化成可比较的分级信号。**
 
-    - $\text{Risk Ratio}_{source,category} = \frac{\sum_i V_{source,category}(i)}{\#Policies_{source}}$
-    - 三级风险分类：低风险（≤5%）、中风险（5-15%）、高风险（>15%）
+绝对违规次数无法跨来源比较（策略多的来源天然容易累计更多违规），所以本文按来源的策略总数做归一化：$\text{Risk Ratio}_{source,category} = \frac{\sum_i V_{source,category}(i)}{\#Policies_{source}}$。在此基础上划三档——低风险（≤5%）、中风险（5–15%）、高风险（>15%），让"哪个 Agent、在哪个维度上有多危险"变成可直接读取的等级标签。
 
-### 基准实现
-
-- **任务分布**：核心基准（0-84 索引）+ 认知负载测试（85-234 索引）
-- **评估函数**：element_action_match、is_sequence_match、is_url_match、is_ask_the_user、is_action_count、is_program_html
-- **人在回路支持**：扩展 BrowserGym 观察空间以包含策略层级，实现异步 Agent 集成
+工程上，整套评测复用 BrowserGym 的观察—动作接口：任务按 0–84 索引为核心基准、85–234 索引为认知负载测试两段组织；违规判定由 `element_action_match`、`is_sequence_match`、`is_url_match`、`is_ask_the_user`、`is_action_count`、`is_program_html` 等函数实现；同时把策略层级注入扩展后的 BrowserGym 观察空间，并支持异步 Agent 集成，从而能评测"Agent 在不确定时主动征询人类确认"这类人在回路行为。
 
 ## 实验关键数据
 

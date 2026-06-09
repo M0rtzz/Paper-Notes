@@ -42,33 +42,25 @@ tags:
 
 ### 整体框架
 
-编码器 $f$ 提取嵌入，潜变量 $\mathbf{r}$ 捕获正样本对间的不确定性。编辑函数 $t(f(\mathbf{x}), \mathbf{r})$ 修改嵌入使其接近 $f(\mathbf{x}^+)$。目标函数：SSL 损失（InfoNCE 或 BYOL）+ 正则项限制 $\mathbf{r}$ 的信息量。
+AdaSSL 在标准 joint-embedding 框架上多挂一条潜变量支路：编码器 $f$ 把样本映射成嵌入，潜变量 $\mathbf{r}$ 专门捕获正样本对 $(\mathbf{x},\mathbf{x}^+)$ 之间那部分无法从 $\mathbf{x}$ 单独预测的不确定性，再由编辑函数 $t(f(\mathbf{x}), \mathbf{r})$ 把 $f(\mathbf{x})$ 推向 $f(\mathbf{x}^+)$。训练目标始终是「SSL 主损失（InfoNCE 或 BYOL）＋ 限制 $\mathbf{r}$ 信息量的正则项」这两部分，区别只在于 $\mathbf{r}$ 是变分采样还是确定性稀疏预测。
 
 ### 关键设计
 
-1. **AdaSSL-V（变分版本）**:
+**1. AdaSSL-V 变分版本：把复杂条件分布拆成「采样 $\mathbf{r}$ ＋简单预测」两步。**
 
-    - **功能**：用变分分布 $q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+)$ 建模潜变量
-    - **核心思路**：$\mathcal{L} = \mathcal{L}_{SSL}(\mathbb{E}_{q_\phi} \psi_1(\mathbf{x}, \mathbf{r}), \psi_2(\mathbf{x}^+)) + \beta D_{KL}(q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+) \| p_\theta(\mathbf{r}|\mathbf{x}))$，KL 正则防止 $\mathbf{r}$ 直接编码 $f(\mathbf{x}^+)$
-    - **设计动机**：推导出 $I(f(\mathbf{x}); f(\mathbf{x}^+))$ 的可处理下界，理论上严格
+自然配对数据的条件分布 $p(\mathbf{z}^+|\mathbf{z})$ 是多模态、异方差的，直接让简单相似度去拟合必然失败。AdaSSL-V 借互信息链式法则 $I(f(\mathbf{x}); f(\mathbf{x}^+)) = I(f(\mathbf{x}), \mathbf{r}; f(\mathbf{x}^+)) - I(\mathbf{r}; f(\mathbf{x}^+)|f(\mathbf{x}))$ 把目标拆开：第一项让「嵌入＋潜变量」一起去预测 $f(\mathbf{x}^+)$，第二项惩罚 $\mathbf{r}$ 偷看答案。落到可优化的下界上就是 $\mathcal{L} = \mathcal{L}_{SSL}(\mathbb{E}_{q_\phi} \psi_1(\mathbf{x}, \mathbf{r}), \psi_2(\mathbf{x}^+)) + \beta D_{KL}(q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+) \| p_\theta(\mathbf{r}|\mathbf{x}))$，其中变分分布 $q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+)$ 能看到 $\mathbf{x}^+$ 来推断这一对到底发生了什么变化，而先验 $p_\theta(\mathbf{r}|\mathbf{x})$ 只看 $\mathbf{x}$。KL 项（强度由 $\beta$ 控制）逼着 $\mathbf{r}$ 只携带「从 $\mathbf{x}$ 看不出来的额外信息」，从而既保留了相似度函数的简单形式，又把建模复杂分布的活儿交给了潜变量，得到的还是 $I(f(\mathbf{x}); f(\mathbf{x}^+))$ 的一个严格可处理下界。
 
-2. **AdaSSL-S（稀疏版本）**:
+**2. AdaSSL-S 稀疏版本：用稀疏 $\mathbf{r}$ 对齐因果潜因子。**
 
-    - **功能**：确定性预测 $\mathbf{r}$，正则化其稀疏性
-    - **核心思路**：$\mathbf{r} = m(f(\mathbf{x}), f(\mathbf{x}^+))$，用 Gumbel-Sigmoid 实现可微 L0 惩罚。编辑函数采用模块化低秩设计 $t(f(\mathbf{x}), \mathbf{r}) = f(\mathbf{x}) + \sum_i r_i (\mathbf{B}_i \mathbf{A}_i f(\mathbf{x}) + b_i)$
-    - **设计动机**：自然变化通常对应潜因子的稀疏改变，稀疏归纳偏置更符合因果表征学习
+变分采样在蒸馏式 SSL 上不好用，而且因果表征学习更想要可解释的变化因子。AdaSSL-S 改成确定性预测 $\mathbf{r} = m(f(\mathbf{x}), f(\mathbf{x}^+))$，并对它施加稀疏约束——通过 Gumbel-Sigmoid 实现可微的 L0 惩罚，使每对样本只激活少数几个 $r_i$。编辑函数采用模块化低秩设计 $t(f(\mathbf{x}), \mathbf{r}) = f(\mathbf{x}) + \sum_i r_i (\mathbf{B}_i \mathbf{A}_i f(\mathbf{x}) + b_i)$：每个 $r_i$ 像开关一样控制一个 LoRA 风格的低秩编辑模块是否生效。这一稀疏归纳偏置背后的假设是「自然变化通常只改变少数潜因子」，因此学到的 $\mathbf{r}$ 会自然地与真实变化因子对齐，比稠密表示更符合因果表征学习的诉求。
 
-3. **异方差性必然性定理（Proposition 2.1）**:
+**3. 异方差性必然定理（Proposition 2.1）：证明标准相似度先天不够用。**
 
-    - **功能**：理论证明嵌入空间中配对的条件分布必然异方差
-    - **核心思路**：当潜空间 $\mathbb{R}^{d_z}$ 映射到弯曲流形（如单位球 $\mathbb{S}^{d_f}$）时，局部邻域的扭曲与位置相关，即使原始噪声等向也会产生位置依赖的方差
-    - **设计动机**：从根本上证明了标准 SSL 相似度函数的不足
+这一条不是模块而是支撑整套设计的理论根基。InfoNCE 的点积相似度隐含 vMF（等向噪声）假设，AnInfoNCE 放宽到各向异性但仍是全局常数噪声。Proposition 2.1 证明：当等向噪声所在的潜空间 $\mathbb{R}^{d_z}$ 被映射到弯曲流形（如归一化嵌入所在的单位球 $\mathbb{S}^{d_f}$）时，局部邻域的几何扭曲与位置相关，于是嵌入空间里配对的条件方差必然随位置变化——异方差性是几何失配的数学必然，而非数据噪声的经验现象。这就解释了为什么 InfoNCE / AnInfoNCE 在复杂分布上注定失败，也正当化了引入潜变量 $\mathbf{r}$ 去吸收这部分位置依赖不确定性的做法。
 
 ### 损失函数 / 训练策略
 
-- AdaSSL-V: InfoNCE + KL 正则（$\beta$ 控制强度）
-- AdaSSL-S: InfoNCE + L0 稀疏正则（Gumbel-Sigmoid）
-- 也兼容 BYOL 等非对比方法
+两个变体共享「SSL 主损失＋信息量正则」的结构：AdaSSL-V 用 InfoNCE 配 KL 正则（$\beta$ 调强度），AdaSSL-S 用 InfoNCE 配 Gumbel-Sigmoid 实现的 L0 稀疏正则；二者同样兼容 BYOL 等非对比蒸馏方法。
 
 ## 实验关键数据
 

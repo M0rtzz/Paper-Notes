@@ -131,7 +131,7 @@ MozzaVID 的构建流程为：(1) 从 25 种不同配方的马苏里拉奶酪中
 - [\[CVPR 2026\] Ego-1K: A Large-Scale Multiview Video Dataset for Egocentric Vision](ego-1k_--_a_large-scale_multiview_video_dataset_for_egocentric_vision.md)
 - [\[CVPR 2026\] SceneScribe-1M: A Large-Scale Video Dataset with Comprehensive Geometric and Semantic Annotations](scenescribe-1m_a_large-scale_video_dataset_with_comprehensive_geometric_and_sema.md)
 - [\[CVPR 2026\] M3DLayout: A Multi-Source Dataset of 3D Indoor Layouts and Structured Descriptions for 3D Generation](m3dlayout_a_multi-source_dataset_of_3d_indoor_layouts_and_structured_description.md)
-- [\[ECCV 2024\] GVGEN: Text-to-3D Generation with Volumetric Representation](../../ECCV2024/3d_vision/gvgen_text-to-3d_generation_with_volumetric_representation.md)
+- [\[CVPR 2026\] Text–Image Conditioned 3D Generation](text-image_conditioned_3d_generation.md)
 
 </div>
 

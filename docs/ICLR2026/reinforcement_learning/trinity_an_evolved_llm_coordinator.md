@@ -42,34 +42,15 @@ Trinity设计了一个轻量级coordinator（0.6B SLM + ~10K可训练参数的he
 ## 方法详解
 
 ### 整体框架
-Coordinator由Qwen3-0.6B SLM + linear head（~10K参数）组成。每轮将完整对话transcript输入coordinator，head从hidden state输出两组logits：一组选择LLM，一组分配角色（T/W/V）。消息处理模块注入角色特定prompt后发送给选中的LLM。
+Trinity把"用哪个LLM、让它扮演什么角色"这件事交给一个极轻量的coordinator决定，而被协调的顶级LLM本身一字不改。coordinator是Qwen3-0.6B SLM 外挂一个线性head：每一轮把到目前为止的完整对话transcript喂给SLM，从它的hidden state读出两组logits——一组在 $L$ 个候选LLM中选一个，一组在Thinker/Worker/Verifier三种角色里选一个；选定后，消息模块给该LLM注入对应角色的prompt并取回输出，进入下一轮，直到Verifier判定通过或达到轮次上限。
 
 ### 关键设计
 
-1. **高效参数化**:
+**1. 超轻量参数化：让协调头只学"怎么分配"而不重学语言能力。** coordinator真正可训练的部分被压到了不到20K参数，比常规微调小几个数量级，核心是只在两处下手。一是head本身，它是一层线性映射，把hidden state $h \in \mathbb{R}^d$ 投到 $\mathbb{R}^{L+3}$ 的logits上（$L$ 个LLM加3个角色），不引入任何额外结构。二是对SLM的少数权重矩阵做SVD分解后只学习奇异值的缩放、固定住正交基，用极少的自由度给hidden state补一点任务相关的表征改善。这套设计能成立的关键洞察是：coordinator生成的文本被整个丢弃，真正用到的只有hidden state导出的logits——既然不需要它把话说完，就可以只取早期token的hidden state快速出决策，进一步压低开销。
 
-    - Head：单层线性映射，从hidden state $h \in \mathbb{R}^d$ 到 $\mathbb{R}^{L+3}$ 的logits（$L$个LLM + 3个角色）
-    - SVD微调：对SLM选定权重矩阵做SVD分解，只学习奇异值缩放（固定正交矩阵）
-    - 总参数量 < 20K，比典型微调小数个数量级
-    - 关键洞察：coordinator的**生成文本被丢弃**，只使用hidden state的logit输出——可以使用早期token的hidden state做快速决策
+**2. 三角色协调：把复杂能力外包给底层LLM，自己只做分工。** Trinity给每轮被选中的LLM指派一个明确职责：Thinker负责策略规划，分析当前状态、给出计划/分解/批判等高层指导；Worker负责具体执行，产出代码、推导、数值结果这类可操作内容；Verifier负责质量评估，输出ACCEPT/REVISE并可附带诊断信息。当Verifier被选中且判定ACCEPT，或轮次达到上限 $K$ 时整个流程终止。这样划分的好处是把"获得复杂能力"这件难事完全offload给底层强模型，coordinator自己只需做轻量的"派谁、扮谁"决策，从而坐实了它可以只用上万参数的前提。
 
-2. **三角色协调（Tri-role Coordination）**:
-
-    - **Thinker**: 策略规划——分析状态、返回高层指导（计划、分解、批判）
-    - **Worker**: 具体执行——产出代码、推导、数值结果等可操作内容
-    - **Verifier**: 质量评估——判断ACCEPT/REVISE + 可选诊断信息
-    - 终止条件：Verifier被选中且输出ACCEPT，或达到固定轮次上限K
-    - 设计动机：将复杂能力获取offload给底层LLM，coordinator只需做轻量级的分配决策
-
-3. **sep-CMA-ES优化**:
-
-    - 问题特征：高维（~10K参数）、弱参数耦合、高per-step代价（每步需运行coordinated agents推理）、二值终端奖励
-    - 为何不用RL：REINFORCE的per-parameter gradients在此设置下SNR极低——弱inter-block耦合导致梯度病态、credit assignment差
-    - 为何用sep-CMA-ES：维护对角协方差矩阵，特别适合block-diagonal景观；在高维+严格预算限制下理论上优于RL和random search
-    - 理论保证：Proposition 1证明在小T regime下sep-CMA-ES的改进随迭代线性增长，而RS仅对数增长
-
-### 目标函数
-$J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[R(\tau)]$，其中 $R(\tau) \in \{0,1\}$ 是终端奖励（答案正确/错误）。
+**3. sep-CMA-ES优化：在高维稀疏奖励下用进化策略替代RL。** 这个优化问题有几个棘手特征：参数维度高（~10K）、参数块之间耦合很弱、每走一步都要让被协调的agents真实推理一遍因而单步代价极高、而奖励只是答案对错的二值终端信号 $R(\tau) \in \{0,1\}$，整体优化目标即 $J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[R(\tau)]$。直接上RL在这里很吃亏：REINFORCE的逐参数梯度信噪比极低，弱块间耦合让梯度病态、credit assignment很差。Trinity改用sep-CMA-ES，它维护一个对角协方差矩阵，天然契合这种近似block-diagonal的优化景观，在高维且预算被严格卡死的设定下比RL和随机搜索都更稳。文中Proposition 1进一步给出理论支撑：在迭代次数 $T$ 较小的regime下，sep-CMA-ES的改进量随迭代线性增长，而随机搜索只有对数增长。
 
 ## 实验关键数据
 
@@ -140,8 +121,8 @@ LiveCodeBench SOTA: **86.2% pass@1**（V1 train → V6 test）。
 - [\[ICLR 2026\] References Improve LLM Alignment in Non-Verifiable Domains](references_improve_llm_alignment_in_non-verifiable_domains.md)
 - [\[ICLR 2026\] ReMix: Reinforcement Routing for Mixtures of LoRAs in LLM Finetuning](remix_reinforcement_routing_lora.md)
 - [\[ICLR 2026\] How Far Can Unsupervised RLVR Scale LLM Training?](how_far_can_unsupervised_rlvr_scale_llm_training.md)
-- [\[ICLR 2026\] $\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
 - [\[ACL 2026\] Efficient Hyperparameter Optimization for LLM Reinforcement Learning](../../ACL2026/reinforcement_learning/efficient_hyperparameter_optimization_for_llm_reinforcement_learning.md)
+- [\[ICLR 2026\] Toward a Dynamic Stackelberg Game-Theoretic Framework for Agent-Based Conversational AI Defense Against LLM Jailbreaking](toward_a_dynamic_stackelberg_game-theoretic_framework_for_agent-based_conversat.md)
 
 </div>
 

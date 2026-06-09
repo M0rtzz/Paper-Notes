@@ -153,9 +153,9 @@ $$\mathcal{L}_{eikonal} = \frac{1}{|\mathcal{S}|}\sum_{\mathbf{x}\in\mathcal{S}}
 
 - [\[ICCV 2025\] Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)
 - [\[CVPR 2025\] 4Deform: Neural Surface Deformation for Robust Shape Interpolation](../../CVPR2025/others/4deform_neural_surface_deformation_for_robust_shape_interpolation.md)
+- [\[ICLR 2026\] Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](../../ICLR2026/others/mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
 - [\[AAAI 2026\] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
 - [\[ECCV 2024\] PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](../../ECCV2024/others/pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)
-- [\[NeurIPS 2025\] The Persistence of Neural Collapse Despite Low-Rank Bias](../../NeurIPS2025/others/the_persistence_of_neural_collapse_despite_low-rank_bias.md)
 
 </div>
 

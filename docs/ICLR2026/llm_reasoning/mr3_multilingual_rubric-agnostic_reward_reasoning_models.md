@@ -49,50 +49,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：任务指令 $t$ + 输入实例 $i$ + 候选回答 $a$ + 评估rubric $r$  
-输出：推理trace + 简短解释 $e$ + 评分 $s$  
-即 $f(x) = y$，其中 $x = (t, i, a, r)$，$y = (\text{trace}, e, s)$  
 
-三种评估模式：point-wise（单回答打分）、pair-wise（两回答比较）、binary（正确/错误判断）
+mR3 想做的事很直接：训练一个能对「任意语言、任意 rubric」的回答给出评分的**生成式**奖励模型，而不是传统那种只吐一个标量分的打分器。它把评估写成 $f(x)=y$ 的形式——输入 $x=(t, i, a, r)$ 包含任务指令 $t$、输入实例 $i$、候选回答 $a$ 和评估 rubric $r$；输出 $y=(\text{trace}, e, s)$，即模型先生成一段推理 trace，再给一句简短解释 $e$，最后落到评分 $s$。同一套模型支持三种评估模式：point-wise（给单个回答打分）、pair-wise（比较两个回答）、binary（判对错）。
+
+整条 pipeline 的重心不在模型结构（就是 Qwen3 + SFT），而在「喂什么数据、按什么顺序喂」。所以下面四个关键设计基本都围绕数据怎么造、怎么筛、怎么排，以及训练用 SFT 还是 RL 展开。
 
 ### 关键设计
 
-1. **多语言数据构建流水线**
+**1. 多语言数据构建流水线：从 300 万 + 样本里筛出 100K 高质量多语言训练集。**
 
-    - 功能：从300万+样本中筛选构建100K高质量多语言训练集
-    - 核心思路：
-        - 初始数据池来自6个公开数据集（Human Arena Preference, HelpSteer3, MMMLU, HumanEval-XL, MATH-500 Multilingual, PolyGuardMix），覆盖125种语言
-        - 缺少rubric的数据用GPT-4.1自动生成英语rubric
-        - 用GPT-OSS-120B蒸馏生成三种语言策略的输出：eng-eng（英文指令+英文推理）、tgt-eng（目标语指令+英文推理）、tgt-tgt（目标语指令+目标语推理）
-        - **质量过滤**：只保留三种策略都能正确回答的样本
-        - **难度过滤**：去掉gpt-oss-20b连续5次都能答对的"简单"样本
-        - 最终下采样到100K，优先保留更难的样本
+多语言奖励模型最缺的是覆盖广、质量高的对齐数据，这条流水线就是为此设计的。初始数据池汇集 6 个公开数据集（Human Arena Preference、HelpSteer3、MMMLU、HumanEval-XL、MATH-500 Multilingual、PolyGuardMix），覆盖 125 种语言；其中缺少 rubric 的样本先用 GPT-4.1 自动补一份英语 rubric。随后用 GPT-OSS-120B 做蒸馏，对每个样本生成三种语言策略下的输出——eng-eng（英文指令 + 英文推理）、tgt-eng（目标语指令 + 英文推理）、tgt-tgt（目标语指令 + 目标语推理）。
 
-2. **课程学习策略**
+数据质量靠两道过滤把关：**质量过滤**只保留三种策略下教师都能正确回答的样本，剔除教师本身就没把握的噪声；**难度过滤**则反向把太简单的样本筛掉——凡是 gpt-oss-20b 连续 5 次都能答对的样本视为"过于容易"而丢弃。最后下采样到 100K，并优先保留更难的样本。这样得到的训练集不是越大越好，而是"教师有把握、又确实有难度"的那一部分。
 
-    - 功能：优化训练数据的排列顺序
-    - 核心思路：测试了随机打乱、英语优先、难度排序、混合方案，发现按**易到难**排序效果最佳（难度 = 预测一致性 + token长度）
-    - 设计动机：易样本先建立基础能力，难样本后期微调，避免训练初期被噪声样本干扰
+**2. 课程学习：按易到难排序训练数据，先建基础再啃硬骨头。**
 
-3. **多语言推理策略研究**
+数据筛好之后，喂入的顺序也会影响最终能力。作者对比了随机打乱、英语优先、难度排序、混合方案几种排列，发现按**从易到难**排序效果最佳——这里的难度由"预测一致性 + token 长度"共同度量（越不一致、越长视为越难）。直觉上，易样本先帮模型建立基础评估能力，难样本留到后期微调，避免训练初期就被噪声样本带偏。
 
-    - 功能：系统比较eng-eng、tgt-eng、tgt-tgt三种推理路径的效果
-    - 核心发现：
-        - eng-eng整体最强（英语推理能力最成熟）
-        - tgt-eng紧随其后，大模型对非英语prompt鲁棒性更强
-        - tgt-tgt在微调前最弱，但微调后**提升最大**，甚至超过基础模型的eng-eng性能
-    - 设计动机：目标语推理对可解释性和低资源语言用户至关重要
+**3. 多语言推理策略研究：系统比较 eng-eng / tgt-eng / tgt-tgt 三条推理路径。**
 
-4. **训练目标：SFT而非RL**
+既然每个样本都备齐了三种语言策略的输出，自然要回答"推理到底该用哪种语言"。系统比较后呈现一条清晰的梯度：eng-eng 整体最强，因为英语推理能力最成熟；tgt-eng 紧随其后，说明大模型对非英语 prompt 的鲁棒性其实不差；tgt-tgt 在微调前最弱，但**微调后提升幅度最大**，甚至能超过基座模型的 eng-eng 性能。这个结果很关键——它意味着多语言训练能有效"激活"模型原本薄弱的跨语言推理能力，而目标语推理对低资源语言用户的可解释性和信任感又恰恰最重要，因此值得花代价去缩小这道差距。
 
-    - 功能：使用标准交叉熵损失训练，最大化目标token的对数似然
-    - 核心公式：$\mathcal{L}_{\text{SFT}}(\theta) = -\frac{1}{N}\sum_{i=1}^{N}\sum_{t=1}^{T_i}\log \pi_\theta(y_t^{(i)} | y_{<t}^{(i)}, x^{(i)})$
-    - 设计动机：实验发现RL-based方法（如RLVR）在此场景下不如SFT有效
+**4. 用 SFT 而非 RL 训练，最大化目标 token 的对数似然。**
+
+在训练目标上，mR3 没有走当下流行的 RL 路线，而是回到标准的监督微调交叉熵：
+
+$$\mathcal{L}_{\text{SFT}}(\theta) = -\frac{1}{N}\sum_{i=1}^{N}\sum_{t=1}^{T_i}\log \pi_\theta\big(y_t^{(i)} \mid y_{<t}^{(i)}, x^{(i)}\big)$$
+
+即在已构建好的高质量多语言数据上，直接最大化教师输出（trace + 解释 + 评分）的似然。作者的实验表明，在这个场景下基于 RL 的方法（如 RLVR）一致不如 SFT 有效——当数据本身已经过严格的质量与难度过滤后，监督信号反而更稳、更高效。
 
 ### 损失函数 / 训练策略
-- SFT交叉熵损失，基于Qwen3模型家族（4B/8B/14B）
-- 课程学习：按难度从易到难排序训练数据
-- 多语言对齐：同一样本在三种语言策略下均对齐
+
+训练以上面的 SFT 交叉熵损失为目标，基座选用 Qwen3 模型家族的 4B / 8B / 14B 三档。数据按课程学习从易到难排序送入，同一样本在 eng-eng / tgt-eng / tgt-tgt 三种语言策略下均保持对齐，使模型在一次训练中同时学到三条推理路径。
 
 ## 实验关键数据
 
@@ -149,20 +137,6 @@ mR3-Qwen3-14B以14B参数超越120B教师模型（+0.13 on m-RB, +1.04 on MM-Eva
 - 写作质量: ⭐⭐⭐⭐ 结构清晰，表格和图表丰富，但论文较长（大量附录），核心贡献需从海量实验中提炼
 - 价值: ⭐⭐⭐⭐⭐ 填补了多语言奖励模型的重大空白，对非英语LLM对齐有直接实用价值
 
-## 实验关键数据
-
-| 模型 | mR3-RewardBench | 大小 |
-|------|----------------|------|
-| GPT-OSS-120B | ~88% | 120B |
-| **mR3-Qwen-14B** | **88.46%** | **14B (9×小)** |
-
-20名标注者/12语言人工评估更偏好 mR3 的推理质量。
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐ 首个大规模多语言奖励推理模型
-- 实验充分度: ⭐⭐⭐⭐⭐ 72语言+人工评估
-- 价值: ⭐⭐⭐⭐⭐ 多语言LLM对齐的基础设施
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -172,8 +146,8 @@ mR3-Qwen3-14B以14B参数超越120B教师模型（+0.13 on m-RB, +1.04 on MM-Eva
 - [\[ACL 2026\] C2: Scalable Rubric-Augmented Reward Modeling from Binary Preferences](../../ACL2026/llm_reasoning/c2_scalable_rubric-augmented_reward_modeling_from_binary_preferences.md)
 - [\[ACL 2026\] Large Reasoning Models Are (Not Yet) Multilingual Latent Reasoners](../../ACL2026/llm_reasoning/large_reasoning_models_are_not_yet_multilingual_latent_reasoners.md)
 - [\[ICLR 2026\] DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
-- [\[ICLR 2026\] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
 - [\[ICLR 2026\] Why is Your Language Model a Poor Implicit Reward Model?](why_is_your_language_model_a_poor_implicit_reward_model.md)
+- [\[ICLR 2026\] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
 
 </div>
 

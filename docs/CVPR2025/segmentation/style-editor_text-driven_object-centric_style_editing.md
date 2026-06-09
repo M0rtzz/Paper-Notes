@@ -135,8 +135,8 @@ Style-Editor 的 pipeline 包含以下核心模块：一个风格编辑网络（
 
 - [\[CVPR 2025\] SAMWise: Infusing Wisdom in SAM2 for Text-Driven Video Segmentation](samwise_infusing_wisdom_in_sam2_for_text-driven_video_segmentation.md)
 - [\[CVPR 2025\] Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning](hierarchical_compact_clustering_attention_coca_for_unsupervised_object-centric_l.md)
-- [\[CVPR 2025\] Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)
 - [\[ICML 2026\] Activation-Free Backbones for Image Recognition: Polynomial Alternatives within MetaFormer-Style Vision Models](../../ICML2026/segmentation/activation-free_backbones_for_image_recognition_polynomial_alternatives_within_m.md)
+- [\[CVPR 2025\] Scene-Centric Unsupervised Panoptic Segmentation](scene-centric_unsupervised_panoptic_segmentation.md)
 - [\[CVPR 2025\] Revisiting Audio-Visual Segmentation with Vision-Centric Transformer](revisiting_audio-visual_segmentation_with_vision-centric_transformer.md)
 
 </div>

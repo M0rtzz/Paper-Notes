@@ -42,33 +42,37 @@ Zatom-1是首个端到端全开源的基础模型，通过多模态流匹配(mul
 ## 方法详解
 
 ### 整体框架
-Zatom-1采用两阶段训练：(1) 多模态流预训练用于3D分子和材料生成；(2) 多任务微调用于能量、力和属性预测。核心架构是Trunk-based Flow Transformer (TFT)，由标准Transformer编码器 + 交叉注意力解码器组成。
+Zatom-1要解决的核心问题是：3D分子和材料本来分属两套建模范式（前者非周期、后者周期），生成与预测又各用一套模型，数据和表示无法互通。它的做法是把这些差异全部塞进同一个输入格式，再用同一个Transformer跑完整个流程。训练分两步走：先做多模态流预训练，让模型学会从噪声生成合法的3D分子和材料；再在预训练权重上做多任务微调，预测能量、力和分子属性。承担全部计算的是 Trunk-based Flow Transformer (TFT)——一个标准Transformer编码器加交叉注意力解码器的结构，编码器抽出的共享表示既喂给生成解码头、也喂给下游预测头。
 
 ### 关键设计
 
-1. **统一的五模态表示**:
+**1. 统一的五模态表示：让一个模型同时吃下周期材料和非周期分子。**
 
-    - 功能：将分子和材料统一表示为五种模态
-    - 核心思路：原子类型 $\bm{A} \in \mathbb{Z}^{1 \times N}$（离散）、3D坐标 $\bm{X} \in \mathbb{R}^{3 \times N}$（连续）、分数坐标 $\bm{F} \in [0,1)^{3 \times N}$、晶格长度 $\bm{L}_{\text{len}} \in \mathbb{R}^{3 \times 1}$、晶格角度 $\bm{L}_{\text{ang}} \in \mathbb{R}^{3 \times 1}$。对分子掩蔽晶格相关输入，对材料掩蔽3D坐标
-    - 设计动机：统一的输入格式使单个模型可以同时处理周期性材料和非周期性分子
+分子和材料的几何描述天然不同——材料有晶格、要考虑周期性，分子没有。为了让单一模型通吃，Zatom-1把任何一个化学系统都拆成五种模态：原子类型 $\bm{A} \in \mathbb{Z}^{1 \times N}$（离散）、3D坐标 $\bm{X} \in \mathbb{R}^{3 \times N}$、分数坐标 $\bm{F} \in [0,1)^{3 \times N}$、晶格长度 $\bm{L}_{\text{len}} \in \mathbb{R}^{3 \times 1}$、晶格角度 $\bm{L}_{\text{ang}} \in \mathbb{R}^{3 \times 1}$。处理分子时把晶格相关的三种模态掩蔽掉，处理材料时则掩蔽3D坐标。这样同一套token格式就覆盖了两个化学域，跨域数据可以共享一个模型，也为后面的正迁移打下基础。
 
-2. **多模态流匹配训练**:
+**2. 多模态流匹配训练：用一套流匹配目标同时生成离散原子和连续几何。**
 
-    - 功能：同时训练离散和连续模态的生成
-    - 核心思路：连续模态使用欧几里得CFM：$\bm{X}_t = t \cdot \bm{X} + (1-t) \cdot \epsilon$，$L_{\text{metric}}(\bm{X}) = \mathbb{E}_{\epsilon,t}\left[\frac{1}{N}\|\bm{X}' - \bm{X}\|_2^2\right]$；离散模态使用Discrete CFM：$\bm{A}_t \sim \text{Cat}(t \cdot \delta(\bm{A}) + (1-t) \cdot \delta(\frac{1}{\#\text{atom types}}))$，$L_{\text{discrete}}(\bm{A}) = \mathbb{E}_t\left[-\sum_i a_i \log(a_i')\right]$
-    - 设计动机：端点formulation在科学应用中表现更好，不需要预训练的自编码器（如latent diffusion），大幅提升训练和推理速度
+3D系统里既有离散量（原子类型）又有连续量（坐标、晶格），二者得用不同的流匹配公式。连续模态走欧几里得CFM，在数据和噪声之间线性插值 $\bm{X}_t = t \cdot \bm{X} + (1-t) \cdot \epsilon$，训练目标是回归到真实端点：
 
-3. **Trunk-based Flow Transformer (TFT)**:
+$$L_{\text{metric}}(\bm{X}) = \mathbb{E}_{\epsilon,t}\left[\frac{1}{N}\|\bm{X}' - \bm{X}\|_2^2\right]$$
 
-    - 功能：统一的编码器-解码器架构
-    - 核心思路：$L$层Transformer编码器提取共享表示 $\bm{Z}$，然后通过残差交叉注意力解码器分别预测各模态的去噪输出。编码器第$K$层的表示用于下游预测任务（属性、能量、力），第$L$层用于生成
-    - 设计动机：标准Transformer架构（QK Normalization, Flash Attention, SwiGLU FFN）实现可预测的参数缩放性能
+离散模态走Discrete CFM，在真实类别 $\delta(\bm{A})$ 和均匀分布之间插值 $\bm{A}_t \sim \text{Cat}(t \cdot \delta(\bm{A}) + (1-t) \cdot \delta(\frac{1}{\#\text{atom types}}))$，用交叉熵把噪声态拉回真实原子类型：
 
-4. **采样策略（带随机性的SDE采样）**:
+$$L_{\text{discrete}}(\bm{A}) = \mathbb{E}_t\left[-\sum_i a_i \log(a_i')\right]$$
 
-    - 功能：在ODE采样基础上加入可控随机性
-    - 核心思路：对连续模态使用SDE采样：$\mathbf{z}_t \leftarrow (\mathbf{v}_t + \mathbf{s}_t + d\mathbf{W}_t)\Delta t$，其中 $d\mathbf{W}_t \leftarrow \sqrt{2\gamma_g g(t)}\mathcal{N}(0,I)$；对离散模态使用categorical采样
-    - 设计动机：随机性提升生成多样性和采样质量
+关键在于两者都采用直接预测端点的formulation——模型直接输出干净的目标而非速度场。这种写法在科学应用里表现更稳，更重要的是它绕开了latent diffusion那套需要预训练自编码器的pipeline，直接在原始的全原子空间 $\mathbb{R}^3$ 里建模，训练和推理都因此大幅提速。
+
+**3. Trunk-based Flow Transformer (TFT)：一个共享主干同时供生成和预测取用。**
+
+TFT用 $L$ 层Transformer编码器把输入压成共享表示 $\bm{Z}$，再用残差交叉注意力解码器为每种模态分别预测去噪输出。它的巧思在于分层取表示：编码器第 $K$ 层（中间层）的表示拿去做下游预测任务——属性、能量、力，而第 $L$ 层（顶层）的表示用于生成去噪。这意味着同一个主干既是生成器又是特征提取器，生成预训练学到的几何先验可以直接迁移给预测头。整个主干用的是标准Transformer组件（QK Normalization、Flash Attention、SwiGLU FFN），没有领域特定的等变GNN，因此能享受到可预测的参数缩放规律——堆参数就稳定涨点。
+
+**4. 带随机性的SDE采样：在确定性ODE之上注入可控噪声提升多样性。**
+
+纯ODE采样轨迹是确定的，容易塌缩到少数模式。Zatom-1对连续模态改用SDE采样，在速度场 $\mathbf{v}_t$ 和score $\mathbf{s}_t$ 之外叠加一个布朗扰动项：
+
+$$\mathbf{z}_t \leftarrow (\mathbf{v}_t + \mathbf{s}_t + d\mathbf{W}_t)\Delta t, \quad d\mathbf{W}_t \leftarrow \sqrt{2\gamma_g g(t)}\mathcal{N}(0,I)$$
+
+其中 $\gamma_g$ 控制随机性强度，$g(t)$ 是噪声调度。离散模态则按categorical分布采样。这点额外随机性让生成样本更多样，采样质量也随之提升。
 
 ### 损失函数 / 训练策略
 总损失 $L_{\text{total}} = L_{\text{metric}}(\bm{X}) + L_{\text{metric}}(\bm{F}) + L_{\text{metric}}(\bm{L}_{\text{len}}) + L_{\text{metric}}(\bm{L}_{\text{ang}}) + \lambda_{\text{discrete}} \cdot L_{\text{discrete}}(\bm{A})$，其中 $\lambda_{\text{discrete}} = 0.1$。时间采样 $t \sim \text{Beta}(1.8, 1)$，损失缩放 $\beta(t) = \min\{100, \frac{1}{(1-t)^2}\}$。训练时随机旋转和平移输入数据用于数据增强。模型规模300M参数，单A100生成10,000样本不到4分钟。
@@ -137,11 +141,11 @@ Zatom-1在QM9多任务属性预测上达到SOTA，证明生成预训练可以为
 
 ## 相关论文
 
-- [\[ICLR 2026\] mCLM: A Modular Chemical Language Model that Generates Functional and Makeable Molecules](mclm_a_modular_chemical_language_model_that_generates_functional_and_makeable_mo.md)
 - [\[NeurIPS 2025\] Multimodal 3D Genome Pre-training](../../NeurIPS2025/computational_biology/multimodal_3d_genome_pre-training.md)
-- [\[NeurIPS 2025\] Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/computational_biology/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
-- [\[ICLR 2026\] Verifier-Constrained Flow Expansion for Discovery Beyond the Data](verifier-constrained_flow_expansion_for_discovery_beyond_the_data.md)
+- [\[ICLR 2026\] SynCoGen: Synthesizable 3D Molecule Generation via Joint Reaction and Coordinate Modeling](syncogen_synthesizable_3d_molecule_generation_via_joint_reaction_and_coordinate_.md)
 - [\[AAAI 2026\] Distributional Priors Guided Diffusion for Generating 3D Molecules in Low Data Regimes](../../AAAI2026/computational_biology/distributional_priors_guided_diffusion_for_generating_3d_molecules_in_low_data_r.md)
+- [\[NeurIPS 2025\] Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/computational_biology/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
+- [\[ICML 2025\] SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](../../ICML2025/computational_biology/stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
 
 </div>
 

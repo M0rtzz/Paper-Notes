@@ -38,36 +38,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ReasoningBank 是一个闭环记忆系统：Agent 接收新任务 → 从 ReasoningBank 检索相关记忆 → 指导决策执行 → 完成后从新经验中构建新记忆 → 合并回 ReasoningBank。整个过程无需真实标签，仅依赖 Agent 自我判断（LLM-as-a-judge）。
+ReasoningBank 是一个无需训练的闭环记忆系统：Agent 接到新任务时先从记忆库检索相关经验注入提示词，按 ReAct 风格执行决策，任务完成后再由 LLM-as-a-judge 自我评判这条轨迹的成败，把其中的推理模式蒸馏成新记忆并写回库中。整个回路不依赖任何真实标签，记忆质量随着任务流的累积自我演化；在此之上再叠加 test-time scaling，让"多采几条轨迹"产生的对比信号反过来喂养更可靠的记忆。
 
 ### 关键设计
 
-1. **Memory Schema（结构化记忆单元）**: 每个记忆项包含三个部分：
+**1. Memory Schema：把轨迹蒸馏成可迁移的推理策略，而非原始操作。** 以往方法要么存原始轨迹（Synapse）、要么存具体工作流（AWM），粒度都太贴近某次执行，换个任务就用不上。ReasoningBank 把每条记忆设计成 Title / Description / Content 三段结构：Title 用一句话标识核心策略或推理模式，Description 给出概要，Content 承载蒸馏后的推理步骤、决策依据和操作洞察。这种结构刻意卡在两个极端之间——比原始轨迹更抽象（提炼出跨任务的共性原则），又比纯口号更具体（保留可复用的推理步骤），因而既人类可读、又能直接拼进 prompt 供模型使用。
 
-    - **Title**: 简要标识核心策略或推理模式
-    - **Description**: 一句话概要
-    - **Content**: 蒸馏后的推理步骤、决策依据或操作洞察
-   
-   设计为人类可理解且机器可用，既高于原始轨迹（抽象共性），又具体到可执行（含推理步骤）。
+**2. 检索-构建-合并的三步闭环：让成功和失败都变成可用经验。** 这是系统的运转主干。检索阶段用基于 embedding 的相似度搜索从库中取出 top-$k$ 条相关记忆（默认 $k{=}1$），注入 Agent 的 system prompt 指导当前决策。构建阶段在任务结束后用 LLM-as-a-judge 判定轨迹成功还是失败，并据此提取不同性质的经验：成功轨迹沉淀"已验证有效的策略"，失败轨迹则贡献"反事实信号与陷阱警示"，每条轨迹最多抽取 3 个记忆项。合并阶段有意只做最简单的直接追加，不做去重或聚类——目的是把记忆内容本身的增益和合并策略的影响隔离开，证明提升来自经验的质量而非工程技巧。正是"显式利用失败"这一步，让 ReasoningBank 能学到"为什么会错"，而消融显示这部分恰好贡献了 3 个多百分点的额外提升。
 
-2. **三步闭环流程**:
+**3. MaTTS：让测试时扩展与记忆形成正反馈。** 单纯的 test-time scaling 会独立跑出多条轨迹再各自提取记忆，浪费了轨迹之间的关联信息。MaTTS 改为利用这种冗余探索的内在对比信号来策划更优记忆，并提供两种模式：parallel scaling 对同一查询并行生成多条轨迹，通过 self-contrast 比较它们的成败、识别一致出现的推理模式、过滤掉只在个别轨迹里"蒙对"的虚假解；sequential scaling 则在单条轨迹内做迭代式 self-refinement，把中间的尝试、纠正和顿悟也捕获为记忆信号。两者的共同逻辑是：好记忆把扩展引向更有前景的路径，而扩展带来的丰富对比又锻造出更强的记忆，从而把"记忆质量"提升为一个新的 scaling 维度——这也是为什么实验里只有 ReasoningBank 能从扩展中持续受益，而弱记忆在扩展下反而退化。
 
-    - **Memory Retrieval**: 用 embedding-based 相似度搜索从 ReasoningBank 检索 top-k 相关经验的记忆项，注入 Agent 的 system prompt
-    - **Memory Construction**: 任务完成后，用 LLM-as-a-judge 评判轨迹成功/失败。成功轨迹贡献"验证过的策略"，失败轨迹贡献"反事实信号和陷阱警示"。每条轨迹最多提取 3 个记忆项
-    - **Memory Consolidation**: 新记忆项直接追加到 ReasoningBank（有意采用最简合并策略以隔离记忆内容的效果）
-
-3. **MaTTS: Memory-Aware Test-Time Scaling**: 
-   将 ReasoningBank 与 test-time scaling 结合，建立双向协同：
-    - **Parallel Scaling**: 对同一查询生成多条轨迹，通过 self-contrast 比较不同轨迹的成败，识别一致的推理模式并过滤虚假解。提供多样化的对比信号，使记忆更可靠
-    - **Sequential Scaling**: 单条轨迹内迭代式 self-refinement，中间的推理尝试、纠正和洞察也被捕获为有价值的记忆信号
-   
-   **关键区别**: vanilla TTS 独立处理多条轨迹再各自提取记忆（suboptimal）；MaTTS 利用冗余探索产生的内在对比信号来策划更高质量的记忆。好记忆引导扩展走向更有前景的路径，丰富的经验又锻造更强的记忆——形成正反馈循环。
-
-### 训练策略
-- 无需训练：全部基于 LLM 的上下文学习 (in-context learning)
-- backbone: Gemini-2.5-flash/pro, Claude-3.7-sonnet
-- 环境: BrowserGym (web browsing), Bash-only (SWE)
-- ReAct 风格 Agent，默认 top-1 检索
+整套方法不涉及任何参数更新，全部基于 in-context learning + embedding 检索 + LLM judge，backbone 覆盖 Gemini-2.5-flash/pro 与 Claude-3.7-sonnet，在 BrowserGym（web browsing）和 Bash-only（SWE）环境下均以同一套流程运行。
 
 ## 实验关键数据
 
@@ -149,9 +130,9 @@ ReasoningBank 是一个闭环记忆系统：Agent 接收新任务 → 从 Reason
 
 - [\[ICLR 2026\] Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
 - [\[NeurIPS 2025\] A Self-Improving Coding Agent](../../NeurIPS2025/code_intelligence/a_selfimproving_coding_agent.md)
-- [\[ACL 2026\] MARS²: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](../../ACL2026/code_intelligence/mars2_scaling_multi_agent_tree_search_via_reinforcement_learning_for_code_genera.md)
 - [\[ACL 2026\] MARS2: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](../../ACL2026/code_intelligence/mars2_scaling_multi-agent_tree_search_via_reinforcement_learning_for_code_genera.md)
-- [\[ICLR 2026\] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
+- [\[ICLR 2026\] The Limits of Long-Context Reasoning in Automated Bug Fixing](the_limits_of_long-context_reasoning_in_automated_bug_fixing.md)
+- [\[ICLR 2026\] CARD: Towards Conditional Design of Multi-agent Topological Structures](card_towards_conditional_design_of_multi-agent_topological_structures.md)
 
 </div>
 

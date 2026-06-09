@@ -41,35 +41,25 @@ tags:
 
 ## 方法详解
 
-### 数据集构建
+### 整体框架
 
-- **X 射线光谱**：来自 Chandra Source Catalog，将 0.5–8 keV 能量范围离散化为 400 个 bin，每 bin 记录光子计数率，并进行 min-max 归一化。
-- **科学文献摘要**：通过 NASA ADS 交叉引用（使用天空坐标和 SIMBAD 源标识符），用 GPT-4o-mini 从相关论文生成摘要，再用 OpenAI Ada-002 编码为 4,608 维嵌入。
-- **最终数据集**：11,447 个光谱-文本对，划分为训练集 (69%)、校准集 (1%)、验证集 (15%) 和测试集 (15%)，每个样本关联最多 20 个物理变量作为 ground truth。
+方法遵循基础模型范式：先把 X 射线光谱和它对应的科学文献摘要各自编码成单模态向量，再用两个对齐网络把它们投影到同一个 64 维潜在空间，并用 InfoNCE 对比损失把成对样本拉近、非配对样本推远。对齐后的共享空间不直接用于任何特定任务，而是作为通用表示支撑跨模态检索、物理参数回归和异常检测三类下游评估。
 
-### 架构设计
+### 关键设计
 
-整体遵循基础模型范式：两个预训练的单模态编码器 + 对比对齐。
+**1. 光谱-文献配对数据集：用文献当观测数据的"标注"。** 框架成立的前提是拿到大规模配对样本，而天文领域恰好同时存在标准化的光谱目录和数十年的论文积累。X 射线光谱取自 Chandra Source Catalog，把 0.5–8 keV 能段离散成 400 个 bin、每个 bin 记录光子计数率并做 min-max 归一化；文献侧则通过 NASA ADS 用天空坐标和 SIMBAD 源标识符反查相关论文，由 GPT-4o-mini 生成摘要后用 OpenAI Ada-002 编码成 4,608 维嵌入。最终得到 11,447 个光谱-文本对，按训练 69% / 校准 1% / 验证 15% / 测试 15% 划分，每个样本还关联最多 20 个物理变量作为后续回归评估的 ground truth。用现成同行评审文献当监督信号，绕开了人工逐条标注光谱的高昂成本。
 
-1. **光谱编码器**：基于 Transformer 的自编码器，将光谱压缩为 64 维潜在向量，优化 MAE 重建损失。
-2. **文本编码器**：GPT-4o-mini 生成摘要 → Ada-002 嵌入（4,608 维）。
-3. **对齐网络**：两个全连接网络分别将光谱（64 维）和文本（4,608 维）映射到共享的 64 维空间。
-4. **对比损失**：使用 InfoNCE 损失：
+**2. 双编码器 + 对齐网络 + InfoNCE：把异构维度压到同一空间。** 两侧模态的原始维度差异极大，直接比对无从下手，因此先各自降维再投影对齐。光谱端是一个基于 Transformer 的自编码器，以 MAE 重建损失把 400 维光谱压成 64 维潜在向量；文本端则直接复用 Ada-002 的 4,608 维嵌入。随后两个全连接网络分别把 64 维光谱和 4,608 维文本映射到共享的 64 维空间，并在该空间上优化 InfoNCE 损失：
 
 $$\mathcal{L}_{\text{InfoNCE}} = -\frac{1}{N}\sum_{i=1}^{N}\log\frac{\exp(\text{sim}(t_i, d_i)/\tau)}{\sum_{j=1}^{N}\exp(\text{sim}(t_i, d_j)/\tau)}$$
 
-其中 $\text{sim}$ 为余弦相似度，$\tau$ 为温度参数。
+其中 $\text{sim}$ 为余弦相似度，$\tau$ 为温度参数。这一步把对齐目标显式写成"配对样本相似度高于该 batch 内所有非配对样本"，使得对齐后的潜在维度还涌现出对物理变量的相关性——这是损失里没有显式约束的副产物。
 
-### 下游评估任务
+**3. MoE 选择 + Isolation Forest：让同一表示适配不同下游需求。** 对齐空间要同时服务多个任务，而不同物理变量对模态的依赖并不一致，所以下游不固定融合方式而是按变量自适应选取。跨模态检索直接在共享空间用相似度搜索，给定光谱即可召回对应文献描述。物理参数回归用 $k$-NN（$k=3$）从潜在表示预测 20 个变量，并采用混合专家（MoE）策略为每个变量在单模态表示和共享表示之间挑最优的那一个——例如时间变异性指标因光谱本身不含时间信息而更依赖文本。异常检测则在对齐后的潜在空间上跑 Isolation Forest 识别稀有天体。这种按需选表示的做法比固定多模态融合更灵活，也让单一对齐空间能一并支撑检索、回归和发现三类目标。
 
-- **跨模态检索**：给定光谱，通过相似度搜索检索对应文本描述。
-- **物理参数回归**：使用 $k$-NN ($k=3$) 从潜在表示预测 20 个物理变量，采用混合专家（MoE）策略为每个变量选择最优表示。
-- **异常检测**：在对齐后的潜在空间上使用 Isolation Forest 识别稀有天体。
+### 损失函数 / 训练策略
 
-### 训练细节
-
-- 优化器：Adam，网格搜索学习率 ($10^{-4}$ 到 $10^{-3}$)、共享空间维度 (16–128)、dropout (0.1–0.5)、隐藏维度 (16–1024)。
-- 评估指标：Recall@k%、Median Rank、MAE（回归）、Pearson 相关系数（潜在空间-物理变量关系）。
+整体用 Adam 优化，并对关键超参做网格搜索：学习率 $10^{-4}$ 到 $10^{-3}$、共享空间维度 16–128、dropout 0.1–0.5、隐藏维度 16–1024。评估指标覆盖检索的 Recall@k% 与 Median Rank、回归的 MAE，以及衡量潜在空间-物理变量关系的 Pearson 相关系数。
 
 ## 实验关键数据
 
@@ -157,10 +147,10 @@ $$\mathcal{L}_{\text{InfoNCE}} = -\frac{1}{N}\sum_{i=1}^{N}\log\frac{\exp(\text{
 ## 相关论文
 
 - [\[ICML 2026\] TriForces: Augmenting Atomistic GNNs for Transferable Representations](../../ICML2026/physics/triforces_augmenting_atomistic_gnns_for_transferable_representations.md)
+- [\[AAAI 2026\] Learning Fair Representations with Kolmogorov-Arnold Networks](../../AAAI2026/physics/learning_fair_representations_with_kolmogorov-arnold_networks.md)
 - [\[ICML 2026\] Quiver: Quantum-Informed Views for Enhanced Representations in Large ML Models](../../ICML2026/physics/quiver_quantum-informed_views_for_enhanced_representations_in_large_ml_models.md)
 - [\[AAAI 2026\] Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study](../../AAAI2026/physics/scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa.md)
 - [\[ICML 2025\] OmniArch: Building Foundation Model For Scientific Computing](../../ICML2025/physics/omniarch_building_foundation_model_for_scientific_computing.md)
-- [\[ICLR 2026\] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
 
 </div>
 

@@ -43,34 +43,19 @@ tags:
 
 ### 整体框架
 
-SR-Scientist 的推理框架采用迭代式设计（Algorithm 1）：
-
-1. **每次迭代**设定一个精度目标 $G_i$（基于 MAPE）
-2. LLM Agent 在 ReAct 框架下，交替进行推理与工具调用：$(r_1, \mathcal{T}_1, o_1), (r_2, \mathcal{T}_2, o_2), \ldots$
-3. 通过经验缓冲区（Experience Buffer）跨迭代传递最优方程
-4. 当达到停止条件时，提交最佳方程
-
-目标函数使用 MAPE（平均绝对百分比误差）：
-
-$$\text{MAPE} = \frac{100\%}{n} \sum_{i=1}^{n} \left| \frac{y_i - f(\mathbf{x}_i)}{y_i} \right|$$
+SR-Scientist 把 LLM 包装成一个在 ReAct 框架下运行的自主 Agent：它不再一次性吐出方程，而是反复"推理—调工具—看结果"地探索观测数据，并用一个跨轮次的经验缓冲区记住已经试过的最优方程。整套流程围绕平均绝对百分比误差 $\text{MAPE} = \frac{100\%}{n} \sum_{i=1}^{n} \left| \frac{y_i - f(\mathbf{x}_i)}{y_i} \right|$ 来衡量方程好坏，最后把缓冲区里分数最高的方程作为发现结果提交；在此之上还可以叠一层强化学习，让模型从自己的探索轨迹中自我进化。
 
 ### 关键设计
 
-**工具设计**：将代码解释器封装为两个核心工具：
-- **数据分析器 $T_1$**：链接到观测数据，Agent 可编写代码进行统计分析、残差分析等多种数据探索
-- **方程评估器 $T_2$**：接受含常数占位符的方程骨架，内部用 BFGS 算法优化常数并报告性能
+**1. 双工具的代码解释器：让 Agent 能真正"动手"分析数据。** 现有 LLM-SR 方法的瓶颈在于 LLM 只能凭描述盲猜方程，看不到数据本身。SR-Scientist 把代码解释器封装成两个工具补上这一环：数据分析器 $T_1$ 直接链接到观测数据，Agent 可以写代码做统计、画残差、找变量间的关系，从数据里挖出结构性洞察；方程评估器 $T_2$ 接受一个含常数占位符的方程骨架，内部用 BFGS 把常数拟合到最优再报告 MAPE，把"提出形式"和"调参数"解耦开。两者配合，Agent 就能像人类科学家一样先观察、再假设、再验证地闭环迭代。
 
-**经验缓冲区**：维护 $E = \{(e_i, s_i)\}_{i=1}^{N}$ 记录已探索的方程及其 MAPE 分数。每次迭代开始时，从缓冲区取出最优 $K$ 个方程作为上下文示例。这一机制巧妙地绕过了 LLM 上下文长度的限制。
+**2. 经验缓冲区：用堆结构绕开上下文长度限制。** 长时程探索会产生大量候选方程，全塞进上下文既超长又噪声大。SR-Scientist 维护一个缓冲区 $E = \{(e_i, s_i)\}_{i=1}^{N}$ 记录每个探索过的方程 $e_i$ 及其 MAPE 分数 $s_i$，每次迭代开始时只取出分数最优的 $K$ 个作为上下文示例喂给 Agent。这样既把最有价值的历史经验跨迭代传递下去，又把上下文压在可控长度内，相当于给 Agent 配了一个"只记最佳尝试"的外部记忆。消融显示 top-$K$ 采样优于随机采样，正是因为它稳定地把 Agent 引向已知最好的方向。
 
-**长时程优化**：每次迭代允许 Agent 进行最多 $M=25$ 轮交互（超过 20 轮），使其有充分时间分析数据和优化方程。
+**3. 长时程迭代探索：给足轮数才能深挖。** 把发现拆成多次迭代，每次迭代设一个递进的精度目标 $G_i$，并允许 Agent 在单次迭代内进行最多 $M=25$ 轮的推理—工具交互。之所以把上限放到 25 轮（远超常见的 10～20 轮），是因为符号回归需要反复试错：轮数太短，Agent 来不及充分分析数据和打磨方程；实验也证实 25 轮是甜点，10 轮明显不足，而继续加长则收益递减。
 
-### 损失函数 / 强化学习
+### 损失函数 / 训练策略
 
-训练框架采用 GRPO 算法，奖励函数为对数线性映射：
-
-$$\mathcal{R} = \text{clip}\left(\frac{\lg s_{\max} - \lg s}{\lg s_{\max} - \lg s_{\text{goal}}}, 0, 1\right)$$
-
-其中 $s$ 为最佳方程的 MAPE，$s_{\max}=100\%$，$s_{\text{goal}}=0.1\%$。该连续奖励设计避免了二值奖励的稀疏性问题。训练数据通过混合规则与模型的合成策略构建，覆盖材料科学、化学、生物学、物理学四个领域。
+为了让模型不止在推理阶段被动调用、还能自我进化，SR-Scientist 用 GRPO 对 Agent 做强化学习训练。难点在于符号回归的好坏是连续可度量的，直接用二值奖励会丢掉大量梯度信息且过于稀疏，因此奖励被设计成对数线性映射 $\mathcal{R} = \text{clip}\left(\frac{\lg s_{\max} - \lg s}{\lg s_{\max} - \lg s_{\text{goal}}}, 0, 1\right)$，其中 $s$ 是该轨迹最佳方程的 MAPE，上界 $s_{\max}=100\%$、目标 $s_{\text{goal}}=0.1\%$。取对数是因为 MAPE 往往跨越多个数量级，对数尺度能让"从 10% 降到 1%"和"从 1% 降到 0.1%"获得同等的奖励增量，从而在各精度区间都给出有效的学习信号。训练数据通过规则与模型混合的合成策略构建，覆盖材料科学、化学、生物学、物理学四个领域。
 
 ## 实验关键数据
 
@@ -149,9 +134,9 @@ $$\mathcal{R} = \text{clip}\left(\frac{\lg s_{\max} - \lg s}{\lg s_{\max} - \lg 
 
 - [\[ICLR 2026\] NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)
 - [\[ACL 2026\] MOOSE-Copilot: A Web-Based Interactive Assistant for Unified Exploratory and Fine-Grained Scientific Hypothesis Discovery](../../ACL2026/llm_agent/moose-copilot_a_web-based_interactive_assistant_for_unified_exploratory_and_fine.md)
-- [\[ICML 2025\] Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics](../../ICML2025/llm_agent/evaluating_retrieval-augmented_generation_agents_for_autonomous_scientific_disco.md)
+- [\[ICLR 2026\] AutoFigure: Generating and Refining Publication-Ready Scientific Illustrations](autofigure_generating_and_refining_publication-ready_scientific_illustrations.md)
 - [\[ICLR 2026\] The Controllability Trap: A Governance Framework for Military AI Agents](the_controllability_trap_a_governance_framework_for_military_ai_systems.md)
-- [\[ICLR 2026\] Toward a Dynamic Stackelberg Game-Theoretic Framework for Agentic AI Defense Against LLM Jailbreaking](toward_a_dynamic_stackelberg_game-theoretic_framework_for_agentic_ai_defense_aga.md)
+- [\[ICML 2025\] Evaluating Retrieval-Augmented Generation Agents for Autonomous Scientific Discovery in Astrophysics](../../ICML2025/llm_agent/evaluating_retrieval-augmented_generation_agents_for_autonomous_scientific_disco.md)
 
 </div>
 

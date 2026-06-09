@@ -41,30 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-将两层 ReLU 网络 $\hat{y} = \sum_{j=1}^p (Xu_j)_+ v_j$ 通过固定激活模式重构为线性形式 $y = Aw^*$，其中 $A$ 是由数据和激活模式构成的感知矩阵，$w^*$ 是融合后的稀疏权重向量。然后用 IHT 恢复 $w^*$。
+论文想回答一个看似简单却长期没有理论答案的问题：如果一个稀疏 ReLU 网络确实存在，能不能在内存只与非零权重数成正比的前提下把它精确找回来？整条路线分三步走。先把两层 ReLU 网络 $\hat{y} = \sum_{j=1}^p (Xu_j)_+ v_j$ 通过固定激活模式重构成线性形式 $y = Aw^*$，其中 $A$ 是由数据和激活模式拼出的感知矩阵、$w^*$ 是融合后的稀疏权重向量；接着证明这个 $A$ 在合理假设下满足稀疏恢复需要的条件；最后让迭代硬阈值 (IHT) 直接在线性问题上恢复 $w^*$。换句话说，原本非凸的 MLP 训练被翻译成了一个压缩感知里教科书式的线性稀疏恢复问题。
 
 ### 关键设计
 
-1. **凸重构 + gated ReLU 参数化**:
+**1. 凸重构 + gated ReLU 参数化：把非凸 MLP 训练翻译成线性稀疏恢复。**
 
-    - 功能：将非凸 MLP 优化转化为凸/线性稀疏恢复问题
-    - 核心思路：用固定的随机生成器向量 $h_i$ 替代可训练的 $u_i$ 来确定激活模式 $D_i = \text{Diag}(\mathbb{I}[Xh_i \geq 0])$，融合权重 $w_i = u_i v_i$，得到形式 $\hat{y} = Aw$。稀疏性大幅减少可能的激活模式数量（从指数降到多项式）
-    - 设计动机：凸化消除了非凸性障碍，使得经典的稀疏恢复理论可以应用
+稀疏网络优化的根本障碍是非凸——经典稀疏恢复理论要的强凸性/限制等距性在非线性 ReLU 上根本用不上。这一步的做法是借 Pilanci & Ergen 的凸重构思路，用固定的随机生成器向量 $h_i$ 替代可训练的 $u_i$ 来确定激活模式 $D_i = \text{Diag}(\mathbb{I}[Xh_i \geq 0])$，再把两层权重融合成 $w_i = u_i v_i$，整个网络就坍缩成线性形式 $\hat{y} = Aw$。关键的好处是稀疏性同时帮了忙：可能出现的激活模式数量从随宽度指数增长被压到了多项式量级。非凸性一旦被消掉，后面就能直接搬用线性世界里成熟的稀疏恢复机器。
 
-2. **受限强凸性和受限光滑性 (Lemma 1)**:
+**2. 受限强凸性与受限光滑性（Lemma 1）：证明感知矩阵满足恢复所需的谱条件。**
 
-    - 功能：证明感知矩阵 $A$ 满足稀疏恢复所需的关键条件
-    - 核心思路：在 Assumption 2 下（每个神经元关注至少 $\varepsilon$ 比例的数据，任意两个不同神经元的激活模式至少差 $\gamma$ 比例的位置），以高概率有 $\alpha I_s \preceq A_S^T A_S \preceq \beta I_s$，条件数 $\sqrt{\beta/\alpha}$ 有限且bounded
-    - 设计动机：Assumption 2 的两个条件分别对应"不过拟合少数样本"和"神经元间的不相干性"，类似压缩感知中的 RIP 但更宽松
+线性化之后还得回答一个核心问题——这个被数据和激活模式拼出来的 $A$ 真的"够好"吗？Lemma 1 在 Assumption 2 下给出了肯定回答：只要每个神经元至少关注 $\varepsilon$ 比例的数据、且任意两个不同神经元的激活模式至少在 $\gamma$ 比例的位置上不同，那么以高概率有 $\alpha I_s \preceq A_S^T A_S \preceq \beta I_s$，即 $A$ 在所有 $s$-稀疏子集 $S$ 上的谱被夹在 $\alpha$ 和 $\beta$ 之间，条件数 $\sqrt{\beta/\alpha}$ 有限且有界。Assumption 2 的两个条件其实各自对应一个直觉：前者要求网络"不靠几个样本过拟合"，后者要求"神经元之间互不相干"——这正是压缩感知里 RIP 的思想，只是这里的要求更宽松。
 
-3. **IHT 恢复保证 (Theorem 1)**:
+**3. IHT 恢复保证（Theorem 1）：在有限条件数下精确恢复稀疏权重。**
 
-    - 功能：证明 IHT 精确恢复稀疏 MLP 权重
-    - 核心思路：利用 Jain et al. 2014 的结果，在任意有限条件数下 IHT 保证恢复，代价是硬阈值步骤需投影到比真实稀疏度更大的 $\tilde{s} > s$（膨胀因子随条件数增长）。收敛率 $\|w^{k+1} - w^*\|_2 \leq \rho^k \|w^0 - w^*\|_2$
-    - 设计动机：标准 RIP 常数要求太严格不适用于 MLP，Jain et al. 的结果允许任意有限条件数，仅以收敛速度为代价
+有了谱条件，最后一步是把恢复保证落地。难点在于标准 RIP 常数的要求太苛刻，MLP 的感知矩阵满足不了。论文转而引用 Jain et al. 2014 的结果——它允许任意有限条件数下 IHT 仍保证恢复，代价是硬阈值这一步要投影到比真实稀疏度更大的 $\tilde{s} > s$（膨胀因子随条件数增大而增大）。把 Lemma 1 给出的有界条件数代入，就得到 Theorem 1：IHT 以线性速率精确收敛到真权重，
+
+$$\|w^{k+1} - w^*\|_2 \leq \rho^k \|w^0 - w^*\|_2.$$
+
+代价只是收敛速度随条件数变慢，但精确恢复本身始终成立——这正是用"放宽常数、牺牲速度"换来 MLP 可用性的关键一步。
 
 ### 损失函数 / 训练策略
-MSE 损失 $f(w) = \frac{1}{2}\|Aw - y\|_2^2$，IHT 更新 $w^{k+1} = H_{\tilde{s}}(w^k - \eta A^T(Aw^k - y))$。内存效率关键：仅需存储 $O(s)$ 个非零权重，而非整个密集网络。
+恢复目标就是线性最小二乘 MSE $f(w) = \frac{1}{2}\|Aw - y\|_2^2$，IHT 更新写作 $w^{k+1} = H_{\tilde{s}}(w^k - \eta A^T(Aw^k - y))$，即一步梯度下降后用硬阈值 $H_{\tilde{s}}$ 只保留幅值最大的 $\tilde{s}$ 个分量。内存效率的关键正在于此：全程只需存储 $O(s)$ 个非零权重，而不必像 IMP 那样先撑起整个密集网络。
 
 ## 实验关键数据
 
@@ -122,8 +120,8 @@ MSE 损失 $f(w) = \frac{1}{2}\|Aw - y\|_2^2$，IHT 更新 $w^{k+1} = H_{\tilde{
 - [\[ICLR 2026\] Adaptive Width Neural Networks](adaptive_width_neural_networks.md)
 - [\[ICLR 2026\] Fine-tuning Quantized Neural Networks with Zeroth-order Optimization](fine-tuning_quantized_neural_networks_with_zeroth-order_optimization.md)
 - [\[ICML 2025\] Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](../../ICML2025/model_compression/sparse_spectral_training_and_inference_on_euclidean_and_hyperbolic_neural_networ.md)
+- [\[ICLR 2026\] FASA: Frequency-Aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [\[ICLR 2026\] PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
-- [\[ICML 2026\] SURGE: Surrogate Gradient Adaptation in Binary Neural Networks](../../ICML2026/model_compression/surge_surrogate_gradient_adaptation_in_binary_neural_networks.md)
 
 </div>
 

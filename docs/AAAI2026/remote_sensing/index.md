@@ -1,14 +1,13 @@
 ---
 title: >-
-  AAAI2026 遥感方向8篇论文解读
+  AAAI2026 遥感方向7篇论文解读
 description: >-
-  8篇AAAI2026的遥感方向论文解读，涵盖知识蒸馏、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  7篇AAAI2026的遥感方向论文解读，涵盖推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "遥感"
   - "论文解读"
   - "论文笔记"
-  - "知识蒸馏"
   - "推理"
   - "对抗鲁棒"
 ---
@@ -16,13 +15,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛰️ 遥感
 
-**🤖 AAAI2026** · **8** 篇论文解读
+**🤖 AAAI2026** · **7** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/remote_sensing/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (6)](../../ICLR2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (12)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/remote_sensing/index.md)
-
-**[Asymmetric Cross-Modal Knowledge Distillation: Bridging Modalities with Weak Semantic Consistency](asymmetric_cross-modal_knowledge_distillation_bridging_modalities_with_weak_sema.md)**
-
-:   提出 Asymmetric Cross-modal Knowledge Distillation (ACKD) 新范式，通过 SemBridge 框架（包含自监督语义匹配 + 最优传输对齐两个即插即用模块）实现弱语义一致性条件下的跨模态知识蒸馏，使不同地理位置采集的多光谱（MS）图像能有效指导 RGB 图像的遥感场景分类。
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (3)](../../ICML2026/remote_sensing/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/remote_sensing/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/remote_sensing/index.md) · [🧠 NeurIPS2025 (12)](../../NeurIPS2025/remote_sensing/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/remote_sensing/index.md) · [🧪 ICML2025 (7)](../../ICML2025/remote_sensing/index.md)
 
 **[Consistency-based Abductive Reasoning over Perceptual Errors of Multiple Pre-trained Models in Novel Environments](consistency-based_abductive_reasoning_over_perceptual_errors_of_multiple_pre-tra.md)**
 

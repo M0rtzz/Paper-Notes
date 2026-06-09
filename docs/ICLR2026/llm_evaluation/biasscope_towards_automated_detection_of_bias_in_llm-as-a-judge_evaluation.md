@@ -26,66 +26,46 @@ tags:
 
 ## 研究背景与动机
 
-### 领域现状
-LLM-as-a-Judge 已被广泛应用于基准构建、数据筛选和模型性能评估等场景，利用 LLM 作为"裁判"来大规模自动评估模型输出。
+**领域现状**：LLM-as-a-Judge 已被广泛应用于基准构建、数据筛选和模型性能评估等场景，利用 LLM 作为"裁判"来大规模自动评估模型输出。
 
-### 现有痛点
+**现有痛点**：现有偏差研究主要局限于已知类型——聚焦验证位置偏差、长度偏差、自我偏好偏差等对评估结果的影响，缺乏对未知潜在偏差的系统性探索；而人工识别新偏差类型成本高、覆盖面窄，难以规模化；更根本的是传统方法停留在"被动发现"模式，依赖研究者预定义偏差列表再逐一验证，无法主动挖掘。
 
-**偏差研究局限于已知类型**：现有工作主要聚焦于验证已知偏差（如位置偏差、长度偏差、自我偏好偏差）对评估结果的影响，缺乏对未知潜在偏差的系统性探索
+**核心矛盾**：LLM-as-a-Judge 被广泛使用，但评估的可靠性和鲁棒性无法保证——未知偏差可能比已知偏差影响更大，而目前缺少自动化、系统化发现这些偏差的手段。
 
-**人工发现难以规模化**：手动识别新的偏差类型成本高、覆盖面窄
+**本文目标**：如何自动化、大规模地发现 LLM 评估过程中可能出现的未知偏差？
 
-**被动发现模式**：传统方法依赖研究者预定义偏差列表，再逐一验证，无法主动挖掘
+**切入角度**：利用一个 teacher model 对数据注入已知偏差来"刺激"目标模型暴露新的偏差倾向，再通过错误级联策略（DeeperExplain）进一步挖掘深层偏差，形成迭代式的偏差空间自扩展机制。
 
-### 核心矛盾
-LLM-as-a-Judge 被广泛使用，但评估的可靠性和鲁棒性无法保证——未知偏差可能比已知偏差影响更大，而目前缺少自动化、系统化发现这些偏差的手段。
-
-### 本文目标
-如何自动化、大规模地发现 LLM 评估过程中可能出现的未知偏差？
-
-### 切入角度
-利用一个 teacher model 对数据注入已知偏差来"刺激"目标模型暴露新的偏差倾向，再通过错误级联策略（DeeperExplain）进一步挖掘深层偏差，形成迭代式的偏差空间自扩展机制。
-
-### 核心 idea
-通过"偏差注入→误判收集→错误级联→偏差识别→验证入库"的迭代流程，将偏差发现从被动人工探索转变为主动自动化挖掘。
+**核心 idea**：通过"偏差注入→误判收集→错误级联→偏差识别→验证入库"的迭代流程，将偏差发现从被动人工探索转变为主动自动化挖掘。
 
 ## 方法详解
 
 ### 整体框架
-BiasScope 是一个两阶段迭代框架：
-- **输入**：目标模型 $M$、带正确偏好标签的目标数据集 $\mathcal{D}$、初始偏差库 $\mathcal{B}_0$
-- **阶段一 — Bias Discovery**：用已知偏差扰动数据 → 目标模型评估 → 收集误判及解释 → 错误级联获取更深层解释 → teacher model 识别新偏差 → 合并去重
-- **阶段二 — Bias Validation**：在独立测试集上验证候选偏差是否真正有效 → 有效偏差入库
-- **迭代**：重复以上两阶段直到收敛（无新偏差被验证有效、偏差库稳定、或达到最大迭代次数）
-- **输出**：最终偏差库 $\mathcal{B}_T$
+BiasScope 想解决的问题是：自动、大规模地把 LLM 评估器里那些"还没人命名"的未知偏差挖出来。它把偏差发现做成一个自我扩张的两阶段循环——给定目标模型 $M$、带正确偏好标签的数据集 $\mathcal{D}$ 和一个只装了 7 个已知偏差的初始偏差库 $\mathcal{B}_0$，框架在每一轮里先做 **Bias Discovery**（用已知偏差扰动数据、逼目标模型犯错、再从错误里识别出新的偏差候选并合并去重），再做 **Bias Validation**（在独立测试集上确认候选偏差是否真能让错误率上升），验证通过的偏差并入偏差库后进入下一轮。如此循环直到没有新的有效偏差出现、偏差库稳定，或达到最大迭代次数（默认 4），最终产出扩张后的偏差库 $\mathcal{B}_T$。整个过程不需要人工预定义偏差列表，偏差空间靠"已知偏差撬动未知偏差"自己长大。
 
 ### 关键设计
 
-1. **偏差注入与误判收集**:
+**1. 偏差注入与误判收集：用已知偏差去"撬"模型暴露新倾向。**
 
-    - 功能：从偏差库中随机采样一个偏差 $b_k$，由 teacher model 对被拒绝回答 $y_i^r$ 进行扰动生成 $\tilde{y}_i^r$，保持原答案不变
-    - 核心思路：构建扰动数据集 $\tilde{\mathcal{D}}_t$，让目标模型在上面评估，收集所有误判样本（模型选了被拒绝回答）及其解释 $E_i$
-    - 设计动机：已知偏差可以"撬动"模型暴露更多深层偏差倾向
+针对"被动发现"这个痛点——传统方法只能验证研究者预先列好的偏差——BiasScope 反过来主动制造偏差场景。每轮从偏差库中随机采样一个偏差 $b_k$，让 teacher model 按这个偏差对被拒绝回答 $y_i^r$ 做扰动生成 $\tilde{y}_i^r$（正确答案 $y_i^c$ 保持不变），拼成扰动数据集 $\tilde{\mathcal{D}}_t$。目标模型在上面做 pair-wise 评估，凡是被诱导选了被拒绝回答的样本都被收下来，连同模型给出的解释 $E_i$ 一起留作后续分析。背后的赌注是：一个已知偏差能把模型推到容易出错的状态，而模型在这个状态下的错误解释里，往往夹带着别的、还没被命名的偏差倾向。
 
-2. **错误级联策略 (DeeperExplain)**:
+**2. 错误级联策略 (DeeperExplain)：让模型"解释自己的错误"以逼出更深的偏差。**
 
-    - 功能：对模型的错误解释再次追问，让模型"解释其错误推理"，诱导更深层的错误暴露
-    - 核心思路：$E_i' = \text{DeeperExplain}(x_i, y_i^c, \tilde{y}_i^r, E_i; M)$，用错误推理引发更多偏差行为
-    - 设计动机：模型原始错误解释不足以完全揭示偏差，进一步追问可触发更多潜在偏差。消融实验显示该策略帮助 Qwen2.5-7B 从发现 25 个偏差提升到 27 个，Qwen2.5-1.5B 从 43 个到 48 个
+光看模型第一轮的错误解释，常常不足以把潜在偏差完全暴露出来。DeeperExplain 的做法是对着这个已经错了的判断继续追问，让模型进一步为自己的错误推理辩护：
 
-3. **偏差识别与合并去重**:
+$$E_i' = \text{DeeperExplain}(x_i, y_i^c, \tilde{y}_i^r, E_i; M)$$
 
-    - 功能：teacher model 从误判数据中识别新偏差，然后与已有偏差进行两两相似性比较，合并冗余偏差
-    - 核心思路：先识别 $\tilde{\mathcal{B}}_t$，再构建 $\mathcal{B}_t^{\text{temp}} = \tilde{\mathcal{B}}_t \cup \mathcal{B}_t$，逐对比较合并
-    - 设计动机：确保最终偏差集是独立、非重叠的，避免重复计数
+模型越是顺着错误往下解释，越会把更多隐藏的判断偏好讲出来，从而把单次扰动能挖到的偏差深度往下推一层。消融实验印证了这一点：开启该策略后，Qwen2.5-7B 发现的偏差从 25 个升到 27 个，Qwen2.5-1.5B 从 43 个升到 48 个，约多挖出 10%。
 
-4. **测试集验证**:
+**3. 偏差识别与合并去重：保证偏差库里每一条都是独立的。**
 
-    - 功能：用独立测试集验证每个候选偏差的有效性
-    - 核心思路：对每个候选偏差 $b_j$，用 teacher model 扰动整个测试集，比较目标模型在扰动数据和原始数据上的错误率。若 $\text{Err}(\tilde{\mathcal{D}}_j^{\text{test}}) > \text{Err}(\mathcal{D}^{\text{test}})$，则该偏差有效入库
-    - 设计动机：使用独立、客观标注的测试集（JudgeBench），排除主观偏好噪声
+收集到的误判数据交给 teacher model 来归纳，从中识别出本轮的新偏差候选集 $\tilde{\mathcal{B}}_t$。但新候选很可能只是把库里已有的偏差换了个说法、实则重复，所以要做去重：把候选和现有库拼成 $\mathcal{B}_t^{\text{temp}} = \tilde{\mathcal{B}}_t \cup \mathcal{B}_t$，再逐对做相似性比较、把冗余的合并掉。这一步保证最终偏差集互相独立、不重叠，避免同一种偏差被反复计数、虚高了"发现数"。
 
-### 训练策略
+**4. 测试集验证：用客观标注的数据筛掉"假偏差"。**
+
+候选偏差不一定真有破坏力，得拿独立测试集（JudgeBench，带客观正确答案）来检验。对每个候选偏差 $b_j$，让 teacher model 按它扰动整个测试集，比较目标模型在扰动数据和原始数据上的错误率：只有当 $\text{Err}(\tilde{\mathcal{D}}_j^{\text{test}}) > \text{Err}(\mathcal{D}^{\text{test}})$，即这个偏差确实把错误率推高了，才算有效、并入偏差库。用客观标注的测试集而非主观偏好数据来把这道关卡，是为了把"模型只是口味不同"和"模型真被偏差带偏了"区分开，排除主观噪声。
+
+### 实现与运行设置
 - 采用 pair-wise 评估方式识别偏差
 - 评估时随机交换选项位置以排除位置偏差干扰
 - 使用贪心解码 + 固定随机种子确保可复现
@@ -166,8 +146,8 @@ BiasScope 是一个两阶段迭代框架：
 
 - [\[ACL 2026\] Contrastive Decoding Mitigates Score Range Bias in LLM-as-a-Judge](../../ACL2026/llm_evaluation/contrastive_decoding_mitigates_score_range_bias_in_llm-as-a-judge.md)
 - [\[ICLR 2026\] Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis](talk_evaluate_diagnose_user-aware_agent_evaluation_with_automated_error_analysis.md)
-- [\[ICLR 2026\] Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
 - [\[ACL 2026\] Fin-Bias: Comprehensive Evaluation for LLM Decision-Making under human bias in Finance Domain](../../ACL2026/llm_evaluation/fin-bias_comprehensive_evaluation_for_llm_decision-making_under_human_bias_in_fi.md)
+- [\[ICLR 2026\] Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
 - [\[AAAI 2026\] LLM-as-a-Judge for Scalable Test Coverage Evaluation](../../AAAI2026/llm_evaluation/llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
 
 </div>

@@ -40,55 +40,31 @@ tags:
 
 ## 方法详解
 
-### 整体框架: DiffGDA
+### 整体框架
 
-```
-源图 G^S → [拼接特征+标签] → 前向扩散(SDE加噪) → 高斯分布
-                                    ↓ 反向扩散
-         域感知引导网络 → 引导扩散轨迹 → 生成中间图 G'
-                                    ↓
-         GNN节点分类(交叉熵 + MMD对齐) → 目标图推断
-```
+DiffGDA把"从源图迁移到目标图"重新表述成一段连续时间的随机演化：先用前向SDE把带标注的源图逐步加噪到高斯分布，再用反向SDE从噪声采样回来，但反向过程不复原源图、而是被一个域感知引导网络牵引着朝目标域分布演化，落点是一张自带伪标签的中间图 $\mathbf{G}'$。最后在这张中间图上训练GNN分类器（交叉熵 + MMD对齐），并联合优化扩散与分类参数，从而把适应到的知识用于无标注目标图的节点分类。
 
-### 组件一：前向扩散过程
+### 关键设计
 
-将源图逐步加噪到高斯分布。关键设计——将节点特征 $\mathbf{X}^{\mathcal{S}}$ 和标签 $\mathbf{Y}^{\mathcal{S}}$ 沿通道维拼接为增广特征 $\tilde{\mathbf{X}}^{\mathcal{S}} = [\mathbf{X}^{\mathcal{S}} || \mathbf{Y}^{\mathcal{S}}] \in \mathbb{R}^{N_{\mathcal{S}} \times (F+C)}$，将标签知识注入扩散过程。前向SDE为：
+**1. 标签注入的前向扩散：让中间图天生带标签。** 普通图扩散只对特征/结构加噪，源域的标注在采样后就丢了，还得额外做标签传播。DiffGDA把节点特征 $\mathbf{X}^{\mathcal{S}}$ 与标签 $\mathbf{Y}^{\mathcal{S}}$ 沿通道维拼成增广特征 $\tilde{\mathbf{X}}^{\mathcal{S}} = [\mathbf{X}^{\mathcal{S}} \,\|\, \mathbf{Y}^{\mathcal{S}}] \in \mathbb{R}^{N_{\mathcal{S}} \times (F+C)}$，让标签和特征一起参与前向SDE $\mathrm{d}\mathbf{G}^{\mathcal{S}}_t = \mathbf{f}_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}t + g_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}\mathbf{w}$ 的加噪与反向恢复。这样反向采样出的中间图 $\mathbf{G}'=(\mathbf{X}',\mathbf{A}',\mathbf{Y}')$ 直接携带标签维度，省去单独的标签传播，也让后续监督有了现成的锚点。
 
-$$\mathrm{d}\mathbf{G}^{\mathcal{S}}_t = \mathbf{f}_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}t + g_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}\mathbf{w}$$
-
-### 组件二：域引导反向扩散
-
-反向SDE从噪声恢复图，但关键在于不是恢复源图分布，而是引导生成符合目标域分布的图。反向过程：
-
-$$\mathrm{d}\mathbf{G}_t^{\mathcal{S}} = \big[\mathbf{f}_t(\mathbf{G}_t^{\mathcal{S}}) - g_t^2 \nabla_{\mathbf{G}_t^{\mathcal{S}}} \log p_t(\mathbf{G}_t^{\mathcal{S}})\big]\mathrm{d}\bar{t} + g_t \mathrm{d}\bar{\mathbf{w}}$$
-
-引入两个网络：
-- **Score网络** $\mathbb{P}(\boldsymbol{\ell})$：估计score function $\nabla \log p_t$，分解为节点特征和邻接矩阵两部分独立训练
-- **Guidance网络** $\mathbb{Q}(\boldsymbol{\delta})$：学习密度比梯度，引导扩散朝目标域方向
-
-### 组件三：域感知引导网络(核心创新)
-
-**定理1(核心)**：目标图的最优扩散网络满足：
+**2. 密度比引导的反向扩散：把"生成目标图"改成"被牵引着演化"。** 难点在于目标域无标注、缺乏对齐锚点，单纯反向恢复只会退回源图分布。DiffGDA的反向SDE在标准 score 项外，额外注入一个朝目标域的引导力。其理论依据是定理1：目标图的最优扩散网络满足
 
 $$\mathbb{P}(\boldsymbol{\ell}^{\star}) = \nabla_{\mathbf{G}_t^{\mathcal{S}}} \log p_t(\mathbf{G}_t^{\mathcal{S}}) + \nabla_{\mathbf{G}_t^{\mathcal{S}}} \log \mathbb{E}_{p(\mathbf{G}_0^{\mathcal{S}}|\mathbf{G}_t^{\mathcal{S}})} \frac{q(\mathbf{G}_0^{\mathcal{T}})}{p(\mathbf{G}_0^{\mathcal{S}})}$$
 
-第一项是源图score function，第二项是**目标/源分布密度比的梯度**——这就是引导信号。
+第一项是源图自身的 score function（由 score 网络 $\mathbb{P}(\boldsymbol{\ell})$ 估计 $\nabla\log p_t$），第二项是目标/源分布密度比 $q/p$ 的对数梯度——它正是把轨迹推向目标域的引导信号，由引导网络 $\mathbb{Q}(\boldsymbol{\delta})$ 学习。这个分解的好处是：从源图出发、保留源域标注，又能凭密度比梯度连续地朝目标域演化，而不是凭空生成目标图。
 
-**密度比估计**：训练GNN分类器 $\mathcal{C}_{\text{gnn}}$ 区分源/目标域节点，密度比近似为 $q/p \approx (1-\mathbf{y}(\mathbf{x}))/\mathbf{y}(\mathbf{x})$。
+**3. 无需标注的密度比估计：用域判别器替代未知的真实密度。** 密度比 $q/p$ 涉及目标域真实分布，本不可直接计算。DiffGDA转而训练一个GNN分类器 $\mathcal{C}_{\text{gnn}}$ 去区分节点来自源域还是目标域，再用其输出概率 $\mathbf{y}(\mathbf{x})$ 把密度比近似为 $q/p \approx (1-\mathbf{y}(\mathbf{x}))/\mathbf{y}(\mathbf{x})$。这把"估计两个高维分布之比"这个硬问题，化简成了一个只需无标注样本就能训练的二分类问题，让引导信号可落地。
 
-**关键设计——分解计算**：
-- Score网络分为 $\mathbb{P}(\boldsymbol{\ell}_1)$(节点特征score，用MLP+GNN）和 $\mathbb{P}(\boldsymbol{\ell}_2)$（邻接结构score，用MLP+GMH多头注意力）
-- Guidance网络同样分为 $\mathbb{Q}(\boldsymbol{\delta}_1)$（特征域估计）和 $\mathbb{Q}(\boldsymbol{\delta}_2)$（结构域估计），均为轻量MLP
+**4. 特征/结构分解与选择性扩散：兼顾建模精度和算力。** 图同时含连续节点特征和离散邻接结构，单一网络难以兼顾。DiffGDA把 score 网络拆为 $\mathbb{P}(\boldsymbol{\ell}_1)$（节点特征 score，用 MLP+GNN）和 $\mathbb{P}(\boldsymbol{\ell}_2)$（邻接结构 score，用 MLP+图多头注意力 GMH），引导网络同样拆为特征域估计 $\mathbb{Q}(\boldsymbol{\delta}_1)$ 与结构域估计 $\mathbb{Q}(\boldsymbol{\delta}_2)$（均为轻量 MLP），各管一摊。同时用超参 $\alpha$ 控制扩散比例，只对一部分节点施加扩散，在保留原始信息和控制显存/时间开销之间取平衡——这也是它能比同类图生成方法省一半运行时间的来源。
 
-**选择性扩散策略**：超参 $\alpha$ 控制扩散比例，仅对部分节点施加扩散，平衡效率与信息保留。
+### 损失函数 / 训练策略
 
-### GNN训练
-
-生成带标注的中间图 $\mathbf{G}' = (\mathbf{X}', \mathbf{A}', \mathbf{Y}')$ 后，训练GNN：
+拿到带标注的中间图 $\mathbf{G}'=(\mathbf{X}',\mathbf{A}',\mathbf{Y}')$ 后，GNN分类器在交叉熵监督之外再加一项MMD对齐，把中间图表征拉近到目标图表征：
 
 $$\mathcal{L}_{\text{GNN}} = \mathcal{L}_{\text{CE}}(\text{GNN}(\mathbf{X}', \mathbf{A}'), \mathbf{Y}') + \eta \mathcal{L}_{\text{MMD}}(\text{GNN}(\mathbf{X}', \mathbf{A}'), \text{GNN}(\mathbf{X}^{\mathcal{T}}, \mathbf{A}^{\mathcal{T}}))$$
 
-交叉熵+MMD对齐，端到端联合优化扩散和GNN参数。
+其中 $\eta$ 平衡两项；扩散网络与GNN参数端到端联合优化，演化轨迹和下游分类相互校准。
 
 ## 实验结果
 
@@ -187,7 +163,7 @@ DiffGDA比同为图生成的GraphAlign减少50%以上运行时间，同时性能
 
 - [\[ICLR 2026\] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
 - [\[ICLR 2026\] Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation](distributionally_robust_classification_for_multi-source_unsupervised_domain_adap.md)
-- [\[ICLR 2026\] OwlEye: Zero-Shot Learner for Cross-Domain Graph Data Anomaly Detection](owleye_zero-shot_learner_for_cross-domain_graph_data_anomaly_detection.md)
+- [\[ICLR 2026\] Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
 - [\[AAAI 2026\] LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](../../AAAI2026/others/leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
 - [\[ICLR 2026\] Missing Mass for Differentially Private Domain Discovery](missing_mass_for_differentially_private_domain_discovery.md)
 

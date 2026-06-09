@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入蛋白质序列 → CHEAP编码器映射到序列-结构联合潜空间 $z \in \mathbb{R}^{L' \times D}$ → 在潜空间中交替执行：(1) 稀疏梯度步骤（仅在top-$k$敏感位置更新）+ (2) DiMA扩散模型流形投影 → 直到预测器翻转 → CHEAP解码器映射回序列和结构。
+MCCOP把蛋白质先用CHEAP编码器映射到一个连续的序列-结构联合潜空间 $z \in \mathbb{R}^{L' \times D}$，然后在这个潜空间里反复迭代：每一步先沿分类器梯度往"翻转预测"的方向走一小步，但只动最敏感的少数位置；再用预训练扩散模型DiMA把走偏的嵌入拉回合法蛋白质流形。如此交替直到预测器被翻转，最后用CHEAP解码器把潜向量还原成新的序列和结构。整个框架的精髓在于让"梯度优化"负责定向、"扩散去噪"负责合理性、"稀疏掩码"负责最小改动，三者各司其职。
 
 ### 关键设计
 
-1. **预测器平滑化**:
+**1. 预测器平滑化：堵住对抗样本这个致命漏洞。**
 
-    - 做什么：使分类器的梯度场更平滑，避免高频梯度引导优化走向对抗样本
-    - 核心思路：四种互补机制——(a) 谱归一化约束所有线性层的Lipschitz常数；(b) Jacobian正则化惩罚 $\|\nabla_z f_\theta(z)\|_F^2$；(c) Softplus激活（$\beta=1$）替代ReLU；(d) 嵌入空间FGSM对抗增强——解码回原始序列的扰动以原始标签加入训练，教导对语义无关扰动的不变性。平滑后梯度范数降低最高4倍，AUROC维持或提升（稳定性: 0.94→0.98）。
-    - 设计动机：非平滑分类器的高频梯度产生的扰动是"对抗性"的——无约束梯度下降100%生成对抗样本（解码回原始序列），平滑化是框架可行的前提。
+如果直接拿一个普通训练出来的分类器做梯度优化，结果是灾难性的——无约束梯度下降会100%生成对抗样本，也就是能骗过预测器、解码回去却和原序列几乎一样的"假翻转"。根源在于非平滑分类器的梯度场充满高频成分，优化会顺着这些尖锐方向滑向语义无关的扰动。MCCOP用四种互补机制把梯度场磨平：谱归一化约束每个线性层的Lipschitz常数，Jacobian正则化直接惩罚梯度范数 $\|\nabla_z f_\theta(z)\|_F^2$，用Softplus（$\beta=1$）替换会产生硬拐点的ReLU，再加上嵌入空间的FGSM对抗增强——把解码回原序列的扰动样本以原始标签喂回训练，教模型对这类语义无关扰动保持不变。平滑后梯度范数最多降低4倍，而AUROC不降反升（稳定性任务从0.94提到0.98）。这一步是整个框架能跑通的前提，没有它后面的稀疏优化和流形投影都无从谈起。
 
-2. **梯度敏感度稀疏掩码**:
+**2. 梯度敏感度稀疏掩码：把改动压到2-3个位置。**
 
-    - 做什么：将梯度更新限制在最敏感的少数位置，实现序列级别的稀疏突变
-    - 核心思路：计算每个位置的敏感度 $s_i = \|\nabla_{z_i} \mathcal{L}_{\text{CF}}\|_2$，构建二值掩码选择top-$k$位置 $M_i = \mathbf{1}[s_i \geq s_{(k)}]$。梯度仅在掩码位置应用，非掩码位置硬重置为原始嵌入。由于CHEAP解码器是逐位MLP（$\hat{S}_i$仅依赖$z_i$），潜空间的行级掩码直接等价于序列空间的稀疏性。
-    - 设计动机：蛋白质工程的核心约束是最小突变——每个额外突变都增加实验成本和失败风险。梯度敏感度自然指示哪些位置对翻转预测最关键。
+蛋白质工程里每多一个突变就多一份实验成本和失败风险，所以"最小编辑"是硬约束。MCCOP的做法是先算出每个位置对翻转预测的敏感度 $s_i = \|\nabla_{z_i} \mathcal{L}_{\text{CF}}\|_2$，按敏感度选出top-$k$个位置构成二值掩码 $M_i = \mathbf{1}[s_i \geq s_{(k)}]$，梯度只在这些位置生效，其余位置硬性重置回原始嵌入。这样优化天然只在最关键的几个残基上动刀。之所以潜空间的稀疏能干净地映射到序列稀疏，是因为CHEAP解码器是逐位MLP——每个 $\hat{S}_i$ 只依赖对应的 $z_i$，于是潜空间的行级掩码就直接等价于序列空间的稀疏突变，不会出现"动一个潜向量牵连一片序列"的串扰。
 
-3. **扩散模型流形投影**:
+**3. 扩散模型流形投影：把扩散当正则器而不是生成器。**
 
-    - 做什么：利用预训练的DiMA扩散模型将优化轨迹拉回蛋白质嵌入的合法流形
-    - 核心思路：每步优化后，将当前嵌入部分扩散到噪声水平 $t_{\text{diff}}$，然后去噪获得流形投影 $\Pi_\phi(z'_t)$，以混合系数 $\alpha=0.3$ 融合：$z_{t+1} = (1-\alpha)z'_t + \alpha \Pi_\phi(z'_t)$。这是分类器引导的"反转"——用扩散不是为了生成，而是作为优化循环中的正则器。
-    - 设计动机：无流形约束的梯度优化会脱离可行蛋白质空间，产生无法折叠的序列。扩散模型的去噪步骤天然具有将样本拉回数据流形的能力。
+纯梯度优化即便平滑了也会逐渐脱离可行蛋白质空间，产出无法折叠的序列。MCCOP借预训练的DiMA扩散模型来兜底：每走完一步优化，先把当前嵌入部分加噪到噪声水平 $t_{\text{diff}}$，再去噪得到流形投影 $\Pi_\phi(z'_t)$，最后以混合系数 $\alpha=0.3$ 把投影结果和优化结果融合，$z_{t+1} = (1-\alpha)z'_t + \alpha \Pi_\phi(z'_t)$。这相当于把图像领域"分类器引导生成"的思路反过来用——扩散不再负责从噪声里造样本，而是作为优化循环中的一个温和拉力，每步都把轨迹往数据流形上拽一点。$\alpha$ 的取值很关键：消融显示 $\alpha=0$ 退化成纯对抗优化，$\alpha=1$ 完全投影又会让优化不稳定，0.3 是有效性和合理性之间的甜点。
 
 ### 损失函数 / 训练策略
-反事实优化目标：$\mathcal{L}_{\text{CF}}(z_t) = \log(1+\exp(m - \tilde{y} \cdot f_\theta(z_t))) + \lambda_{\text{dist}} \|z_t - z_{\text{orig}}\|_2^2$，其中 $m$ 是置信度裕量，$\lambda_{\text{dist}}$ 控制近端-有效性权衡。早停条件：$\sigma(\tilde{y} \cdot f_\theta(z_{t+1})) \geq \tau$ 且解码序列与原始不同。预测器训练使用shallow MLP + 上述四种平滑化。
+反事实优化的目标函数是 $\mathcal{L}_{\text{CF}}(z_t) = \log(1+\exp(m - \tilde{y} \cdot f_\theta(z_t))) + \lambda_{\text{dist}} \|z_t - z_{\text{orig}}\|_2^2$：第一项是带置信度裕量 $m$ 的软铰链损失，推动预测越过决策边界；第二项用 $\lambda_{\text{dist}}$ 控制嵌入距离的近端约束，平衡"改得够狠翻转预测"和"改得够少保持近似"。迭代在 $\sigma(\tilde{y} \cdot f_\theta(z_{t+1})) \geq \tau$ 且解码序列确实与原序列不同时早停。预测器本身只用一个浅层MLP，配合上面四种平滑化手段训练。
 
 ## 实验关键数据
 
@@ -121,11 +115,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/computational_biology/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
-- [\[ICLR 2026\] Scalable Spatio-Temporal SE(3) Diffusion for Long-Horizon Protein Dynamics](scalable_spatio-temporal_se3_diffusion_for_long-horizon_protein_dynamics.md)
 - [\[ICLR 2026\] Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)
 - [\[NeurIPS 2025\] Towards Unified and Lossless Latent Space for 3D Molecular Latent Diffusion Modeling](../../NeurIPS2025/computational_biology/towards_unified_and_lossless_latent_space_for_3d_molecular_latent_diffusion_mode.md)
-- [\[ICML 2025\] Empower Structure-Based Molecule Optimization with Gradient Guided Bayesian Flow Networks](../../ICML2025/computational_biology/empower_structure-based_molecule_optimization_with_gradient_guided_bayesian_flow.md)
+- [\[NeurIPS 2025\] Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](../../NeurIPS2025/computational_biology/generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)
+- [\[ICLR 2026\] Scalable Spatio-Temporal SE(3) Diffusion for Long-Horizon Protein Dynamics](scalable_spatio-temporal_se3_diffusion_for_long-horizon_protein_dynamics.md)
+- [\[ICLR 2026\] Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)
 
 </div>
 

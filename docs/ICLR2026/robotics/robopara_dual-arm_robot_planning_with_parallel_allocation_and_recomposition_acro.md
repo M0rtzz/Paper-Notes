@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RoboPARA 采用两阶段架构：第一阶段通过 LLM + RAG 生成任务依赖图（DAG），第二阶段通过图重遍历算法为双臂分配并行任务。输入为用户的多任务指令集合，输出为双臂的并行执行计划。
+RoboPARA 把双臂并行规划拆成两步走：先让 LLM 把一组多任务指令翻译成一张刻画依赖关系的有向无环图（DAG），再用一套确定性的图重遍历算法在这张图上为左右两臂分配并行任务。这样 LLM 只需专注理解"哪步必须在哪步之后做"，而把"如何排布才能最大化并行"这个组合优化问题交给图算法处理。
 
 ### 关键设计
 
-1. **依赖图生成与纠错 (Dependency Graph-based Planning)**:
+**1. 依赖图生成与纠错：把任务语义沉淀成可调度的结构。**
 
-    - 做什么：将多任务指令转化为有向无环图，节点为原子操作步骤，边为依赖关系
-    - 核心思路：利用 RAG 从本地记忆模块检索任务的详细程序知识，整合到结构化提示中让 LLM 生成 DAG。每条边 $(u, v)$ 表示步骤 $v$ 必须在 $u$ 完成后才能开始。增加 DAG 验证和纠错步骤，检测循环依赖和冗余边
-    - 设计动机：DAG 结构天然适合建模任务依赖——没有入边的节点可以立即执行，有多个无依赖节点时可以并行分配
+并行规划的第一个难点是让 LLM 输出的计划既正确又"可被并行化"。RoboPARA 用 RAG 从本地记忆模块检索每个任务的详细程序知识（例如"泡茶"需要先烧水、再放茶叶），把这些知识整合进结构化提示，引导 LLM 把多任务指令转写成一张 DAG：节点是原子操作步骤，边 $(u, v)$ 表示步骤 $v$ 必须等 $u$ 完成后才能开始。DAG 这种结构天然契合并行调度——没有入边的节点可以立即执行，当多个节点同时无依赖时就构成了并行机会。但 LLM 生成的图常带循环依赖或冗余边，会让后续调度死锁或浪费并行机会，因此 RoboPARA 额外加了一道验证与纠错环节，检测并消除环路和多余的边，保证交给调度器的是一张干净的 DAG。
 
-2. **图重遍历双臂并行调度 (Graph Re-Traversal Scheduling)**:
+**2. 图重遍历双臂并行调度：在图上贪心榨出最大并行度。**
 
-    - 做什么：优化 DAG 遍历顺序，最大化双臂的并行执行步数
-    - 核心思路：维护两个手臂队列 $Q_L, Q_R$，在每个时间步选择当前所有入度为零的节点集合 $S_t$，按启发式规则将它们分配给空闲手臂。对于需要双臂协作的任务，同步分配给两臂。关键启发式包括：优先分配关键路径上的任务、平衡两臂的工作负载
-    - 设计动机：DAG 生成阶段只保证任务语义正确，并行度优化需要专门的调度算法，这是 NP 难问题的近似求解
+有了正确的依赖图，下一步是决定每个时间步两只手臂各做什么。理论上求最优并行排布是 NP 难的，RoboPARA 转而用一套启发式的图重遍历算法近似求解：维护左右两个手臂队列 $Q_L, Q_R$，在每个时间步取出当前所有入度为零的节点集合 $S_t$（即依赖都已满足、可立即执行的步骤），按启发式规则把它们分配给空闲手臂——优先安排关键路径上的步骤以避免拖长总时长，同时平衡两臂的工作负载。对于需要双臂协作的步骤（如一只手扶、一只手拧），则同步占用两臂。步骤执行完后更新后继节点的入度，重新遍历，如此循环直到图被走空。把语义正确性交给 DAG 生成、把并行度优化交给这层调度，是 RoboPARA 能在不牺牲正确性的前提下大幅提速的关键。
 
-3. **X-DAPT 基准数据集**:
+**3. X-DAPT 基准：把"并行性"做成可量化的评估维度。**
 
-    - 做什么：构建首个专注于双臂任务并行性的评估数据集
-    - 核心思路：涵盖 10 个关键场景（厨房、办公室、农业温室、工厂等），每个场景分三个难度等级，共 1000+ 任务包。评估指标包括 TEI（时间效率指标）、TFR（任务失败率）、PPR（并行步数比例）和 APR（平均并行度）
-    - 设计动机：现有基准不评估并行性，无法衡量双臂协作效率
+现有双臂规划基准只看成功率和完成时间，无法衡量两臂究竟协作了多少，导致并行能力既无法对比也无从改进。RoboPARA 因此构建了 X-DAPT——首个专门评估双臂任务并行性的数据集，覆盖厨房、办公室、农业温室、工厂等 10 个关键场景，每个场景分三个难度等级，共 1000+ 任务包。它配套引入四个指标：TEI（时间效率指标）、TFR（任务失败率）、PPR（并行步数占总步数的比例）和 APR（平均并行度）。其中 PPR 和 APR 直接刻画两臂同时工作的程度，正是衡量协作效率、也是 RoboPARA 相比顺序执行方法拉开差距的核心维度。
 
 ### 损失函数 / 训练策略
-无需训练——框架基于 LLM 的零样本/少样本推理和确定性调度算法。
+无需训练——整个框架建立在 LLM 的零样本/少样本推理与确定性调度算法之上，不涉及任何参数更新。
 
 ## 实验关键数据
 
@@ -120,8 +114,8 @@ RoboPARA 采用两阶段架构：第一阶段通过 LLM + RAG 生成任务依赖
 
 - [\[CVPR 2025\] RoboTwin: Dual-Arm Robot Benchmark with Generative Digital Twins](../../CVPR2025/robotics/robotwin_dual-arm_robot_benchmark_with_generative_digital_twins.md)
 - [\[ICLR 2026\] ExoPredicator: Learning Abstract Models of Dynamic Worlds for Robot Planning](exopredicator_learning_abstract_models_of_dynamic_worlds_for_robot_planning.md)
-- [\[ICLR 2026\] SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
 - [\[ICLR 2026\] REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
+- [\[ICML 2026\] HDFlow: Hierarchical Diffusion-Flow Planning for Long-horizon Tasks](../../ICML2026/robotics/hdflow_hierarchical_diffusion-flow_planning_for_long-horizon_tasks.md)
 - [\[ICLR 2026\] TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
 
 </div>

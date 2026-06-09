@@ -40,43 +40,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-离线数据集 $\mathcal{D}_\mu$ → 训练 $K$ 个 ensemble 世界模型 $\{(\mathcal{P}_\theta^i, \mathcal{R}_\theta^i)\}_{i=1}^K$ → 构建悲观 BAMDP → 每个状态用 Continuous BAMCP 搜索（带信念更新）→ 将搜索结果蒸馏到 actor-critic 网络 → 策略迭代
+这篇论文要解决的是离线模型基 RL 里一个被长期忽视的问题：从静态数据集学出来的是一**组** ensemble 世界模型，它们在数据覆盖区域行为一致、在 OOD 区域却各执一词，可现有方法要么均匀采样一个成员、要么静态地加个悲观惩罚，始终没让 agent 学会"此时此地该信哪个模型"。BA-MCTS 的整体思路是把离线 MBRL 重新建模成一个贝叶斯自适应 MDP（BAMDP），让"对模型的信念"成为状态的一部分并在规划过程中动态更新。
+
+具体流程是：先在离线数据集 $\mathcal{D}_\mu$ 上训练 $K$ 个 ensemble 世界模型 $\{(\mathcal{P}_\theta^i, \mathcal{R}_\theta^i)\}_{i=1}^K$；再以这组模型构建一个带悲观奖励惩罚的 BAMDP；然后对每个采样到的状态，用 Continuous BAMCP 做一次带信念更新的树搜索；最后把搜索得到的改进策略和值估计蒸馏回 actor-critic 网络，如此循环做策略迭代。这是一套把 AlphaZero 式"RL + Search"搬到离线连续控制上的范式。
 
 ### 关键设计
 
-1. **BAMDP 建模与信念更新**
+**1. BAMDP 建模与信念更新：让"信哪个模型"成为可学习的状态变量。**
 
-    - 功能：将 ensemble 模型的不确定性显式建模为 BAMDP——信息状态 $(s, b)$ 包含物理状态和当前模型信念
-    - 信念更新（Eq. 4）：$b'(\theta)(i) \propto b(\theta)(i) \cdot \mathcal{P}_\theta^i(s'|s,a) \cdot \mathcal{R}_\theta^i(r|s,a)$
-    - 初始先验：$b_0 = [1/K, \ldots, 1/K]$（均匀分布，因 ensemble 是 IID 采样）
-    - 随规划深入，信念动态调整——准确预测转移的模型被赋予更高权重
-    - 设计动机：与现有方法（均匀采样 ensemble）根本不同。允许 agent 在每个轨迹区域针对性地信任最精确的模型
+针对的痛点是 ensemble 成员在不同区域准确度不同、但现有方法对它们一视同仁。BA-MCTS 把信息状态写成 $(s, b)$，其中 $s$ 是物理状态、$b$ 是当前对各 ensemble 成员的信念分布。规划起点用均匀先验 $b_0 = [1/K, \ldots, 1/K]$（因为 ensemble 是 IID 采样的），每走一步根据观测到的转移和奖励做贝叶斯更新（Eq. 4）：
 
-2. **Continuous BAMCP（连续空间贝叶斯规划）**
+$$b'(\theta)(i) \propto b(\theta)(i) \cdot \mathcal{P}_\theta^i(s'|s,a) \cdot \mathcal{R}_\theta^i(r|s,a)$$
 
-    - 功能：扩展 BAMCP 到连续状态/动作空间 + 随机转移
-    - 核心技术：Double Progressive Widening (DPW) + PUCT 搜索规则
-        - DPW：维护有限子节点列表，基于访问计数 $\lfloor N^{\alpha} \rfloor$ 控制扩展速率——新动作/新状态只在访问足够后添加
-        - 原始 BAMCP 的 root sampling 在 DPW 下不成立（Lemma A.1 的等式不再成立），需要改为 PUCT 方式
-    - 关键修改：在 StatePW 中，转移根据信念加权采样 $s' \sim \sum_i b(\theta)(i) \mathcal{P}_\theta^i(\cdot|s,a)$，并在每次转移后更新信念
-    - 理论保证：证明了该规划器的一致性（收敛到近贝叶斯最优策略）
+也就是说，预测越准确的成员会在后续规划中被赋予越高的权重。这与"均匀采样 ensemble"的做法有本质区别——agent 能沿着每条轨迹针对性地信任最精确的那个模型，而不是把不确定性当成一个固定的启发式去处理。
 
-3. **悲观 BAMDP（P-BAMDP）**
+**2. Continuous BAMCP：把贝叶斯规划从离散空间推到连续随机控制。**
 
-    - 功能：在 BAMDP 之上添加悲观奖励惩罚，防止在高不确定性区域过度乐观
-    - 惩罚项（Eq. 5）：$\tilde{r} = r - \lambda \cdot \text{std}[r^i + \gamma \mathbb{E}_{s'^i, a'} Q_{\psi^-}(s'^i, a')]_{i=1}^K$
-    - 不同于仅惩罚 next-state 预测的分歧（如 MOPO/MOReL），这里惩罚的是**一步前瞻 Q 值目标**的标准差——更准确地反映 agent 在该状态-动作对上的不确定性
-    - 设计动机：即使 BAMDP 能适应性地信任模型，仍可能存在所有模型都不准的区域。悲观惩罚提供安全保障
+原始 BAMCP（Guez 2013）只能处理离散空间且依赖真实世界模型，没法直接用在连续状态/动作的离线 MBRL 上。这里的关键是引入 Double Progressive Widening (DPW)：搜索树为每个节点维护一个有限的子节点列表，按访问计数 $\lfloor N^{\alpha} \rfloor$ 控制扩展速率，新动作或新后继状态只有在该节点被访问足够多次后才添加进来，从而在连续空间里把分支因子约束住。但 DPW 一引入，原始 BAMCP 赖以成立的 root sampling 就失效了——Lemma A.1 的等式不再成立，所以选择规则改成 PUCT。在状态扩展（StatePW）时，后继状态按当前信念加权采样 $s' \sim \sum_i b(\theta)(i) \mathcal{P}_\theta^i(\cdot|s,a)$，并在每次转移后立刻更新信念。论文进一步证明了这个规划器的一致性，即它能收敛到近贝叶斯最优策略。
 
-4. **搜索基策略迭代（"RL + Search"）**
+**3. 悲观 BAMDP（P-BAMDP）：在所有模型都不准的区域兜底。**
 
-    - 功能：将 Continuous BAMCP 搜索结果蒸馏到 actor-critic 网络
-    - Actor 更新：对每个采样状态 $s$，BAMCP 搜索返回改进策略 $\pi_{ret}(a|s)$（按访问计数分布），用 KL 散度 $D_{KL}(\pi_{ret} \| \pi)$ 做策略蒸馏
-    - Critic 更新：搜索返回的值估计 $v_{ret}$ 用于更新 Q 网络（SAC 风格）
-    - 设计动机：类似 AlphaZero——搜索提供更强的策略评估/改进信号，蒸馏到网络后可实时部署。纯搜索（无蒸馏）只能给出单状态决策，无法泛化
+即便 BAMDP 能适应性地选信更靠谱的模型，仍会遇到所有 ensemble 成员都不准的 OOD 区域，光靠信念更新救不了。P-BAMDP 在奖励上叠一层悲观惩罚（Eq. 5）：
+
+$$\tilde{r} = r - \lambda \cdot \text{std}[r^i + \gamma \mathbb{E}_{s'^i, a'} Q_{\psi^-}(s'^i, a')]_{i=1}^K$$
+
+值得注意的是惩罚的对象——它不像 MOPO/MOReL 那样只惩罚 next-state 预测的分歧，而是惩罚**一步前瞻 Q 值目标**在各成员上的标准差。这个量更直接地刻画了 agent 在某个状态-动作对上整体的不确定性，因此对高风险区域的抑制更贴切，相当于给信念机制加了一道安全阀。
+
+**4. 搜索基策略迭代（"RL + Search"）：把搜索的强信号蒸馏成可部署的网络。**
+
+纯搜索每次只能对单个状态给出决策，无法泛化、也没法实时部署。BA-MCTS 借鉴 AlphaZero，把 Continuous BAMCP 的搜索结果蒸馏回 actor-critic：对每个采样状态 $s$，搜索按访问计数返回一个改进策略 $\pi_{ret}(a|s)$，actor 用 KL 散度 $D_{KL}(\pi_{ret} \| \pi)$ 向它对齐；同时搜索返回的值估计 $v_{ret}$ 以 SAC 风格更新 critic。搜索在这里扮演的是"更强的策略评估与改进算子"，蒸馏之后网络既继承了搜索的质量、又获得了泛化和实时推理能力，整套循环就构成了离线 MBRL 版的策略迭代。
 
 ### 损失函数 / 训练策略
-- 世界模型：NLL 损失训练 Gaussian mixture 动态模型 ensemble（$K$ 个成员）
+- 世界模型：用 NLL 损失训练 Gaussian mixture 动态模型 ensemble（$K$ 个成员）
 - Actor：$\mathcal{L}_{actor} = D_{KL}(\pi_{ret} \| \pi)$
 - Critic：标准 SAC 软 Q 损失 + 悲观惩罚
 - 搜索参数：$E$ 次模拟，深度 $d_{max}$，DPW 参数 $\alpha, \beta$

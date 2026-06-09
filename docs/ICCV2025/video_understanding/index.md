@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 视频理解方向57篇论文解读
+  ICCV2025 视频理解方向56篇论文解读
 description: >-
-  57篇ICCV2025的视频理解方向论文解读，涵盖目标跟踪、LLM、人体姿态、模型压缩、少样本学习、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  56篇ICCV2025的视频理解方向论文解读，涵盖目标跟踪、LLM、人体姿态、模型压缩、少样本学习、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "视频理解"
@@ -19,11 +19,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**📹 ICCV2025** · **57** 篇论文解读
+**📹 ICCV2025** · **56** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (17)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (59)](../../NeurIPS2025/video_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (17)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
 
-🔥 **高频主题：** 目标跟踪 ×9 · LLM ×5 · 人体姿态 ×5 · 模型压缩 ×4 · 少样本学习 ×3
+🔥 **高频主题：** 目标跟踪 ×9 · LLM ×5 · 人体姿态 ×5 · 模型压缩 ×3 · 少样本学习 ×3
 
 **[4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding](4d_bench_benchmarking_multimodal_llms_for_4d_object_understanding.md)**
 
@@ -48,10 +48,6 @@ tags:
 **[AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi-modal_llms_via_token_merging_and_pruning.md)**
 
 :   提出一种无需训练的自适应推理方法，通过 LLM 前基于嵌入相似度的迭代式 token 合并 + LLM 层内基于 PageRank 多模态重要性的渐进式 token 剪枝，实现多模态 LLM 在 40 倍 FLOPs 减少范围内的灵活精度-效率权衡，在视频和图像理解任务上均取得优异表现。
-
-**[AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](aim_adaptive_inference_of_multi_modal_llms_via_token_merging_and_pruning.md)**
-
-:   提出无需训练的自适应推理方法AIM，通过LLM前的迭代token合并（基于嵌入相似度）和LLM层内的渐进式token剪枝（基于PageRank重要性），实现多模态LLM 6.8倍FLOPs降低且几乎不损失性能，在长视频理解上甚至超越SOTA。
 
 **[Aligning Effective Tokens with Video Anomaly in Large Language Models](aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)**
 

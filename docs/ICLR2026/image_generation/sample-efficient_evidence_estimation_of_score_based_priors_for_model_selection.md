@@ -37,43 +37,15 @@ tags:
 
 ## 方法详解
 
-### 核心公式
+### 整体框架
 
-**DiME 估计器**（沿标准边缘）：
+DiME 的核心思路是绕开"先验得分/密度不可得"这一拦路虎，把对数证据 $\log p(\boldsymbol{y})$ 拆成只依赖后验样本就能算的两项：一项是后验下的平均对数似然 $\mathbb{E}_{\boldsymbol{x}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{y})}[\log p(\boldsymbol{y}|\boldsymbol{x}_0)]$，另一项是后验与先验之间的 KL 散度 $D_{\text{KL}}(p(\boldsymbol{x}_0|\boldsymbol{y}) \| p(\boldsymbol{x}_0))$。关键观察是后一项并不需要先验本身——它可以沿逆向扩散的时间边缘积分写成 $D_{\text{KL}} \approx \sum_{i=1}^N c_{t_i} \Delta t_i \mathbb{E}_{\boldsymbol{x}_{t_i} \sim p(\boldsymbol{x}_{t_i}|\boldsymbol{y})} \|\nabla_{\boldsymbol{x}_{t_i}} \log p(\boldsymbol{y}|\boldsymbol{x}_{t_i})\|^2$（系数 $c_{t_i} = \sigma_{t_i}' \sigma_{t_i} - \sigma_{t_i}^2 \frac{a_{t_i}'}{a_{t_i}}$），从而把证据估计转化为对"逐时间步的似然得分平方"的积分。整套估计器与 DAPS 后验采样器协同运行，复用采样轨迹上自然产生的中间样本 $\boldsymbol{x}_{t_i}$，几乎不增加额外计算。
 
-$$\log p(\boldsymbol{y}) = \mathbb{E}_{\boldsymbol{x}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{y})}[\log p(\boldsymbol{y}|\boldsymbol{x}_0)] - D_{\text{KL}}(p(\boldsymbol{x}_0|\boldsymbol{y}) \| p(\boldsymbol{x}_0))$$
+### 关键设计
 
-KL 散度通过逆向扩散的时间边缘积分估计：
+**1. 无偏似然得分估计：用后验回采的干净样本绕开不可算的得分项。** 时间边缘积分里要的 $\nabla_{\boldsymbol{x}_t} \log p(\boldsymbol{y}|\boldsymbol{x}_t)$ 无法直接求值。DiME 转而利用 DAPS 在每个噪声层自然采出的后验干净样本 $\tilde{\boldsymbol{x}}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{x}_t, \boldsymbol{y})$，构造两个互补的无偏估计器：高噪声端方差更低的 $\Theta_{\text{high}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}(\tilde{\boldsymbol{x}}_0 - \mathbb{E}[\boldsymbol{x}_0|\boldsymbol{x}_t])$，以及低噪声端方差更低的 $\Theta_{\text{low}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} \nabla_{\tilde{\boldsymbol{x}}_0} \log p(\boldsymbol{y}|\tilde{\boldsymbol{x}}_0)$，按噪声水平自动切换以始终保持低方差。由于积分里要的是得分的平方，直接用单个样本的平方会引入偏差，因此对每个 $\boldsymbol{x}_t$ 独立采样两份 $\tilde{\boldsymbol{x}}_0^{(1)}, \tilde{\boldsymbol{x}}_0^{(2)}$ 再相乘，得到对平方得分的无偏估计。
 
-$$D_{\text{KL}} \approx \sum_{i=1}^N c_{t_i} \Delta t_i \mathbb{E}_{\boldsymbol{x}_{t_i} \sim p(\boldsymbol{x}_{t_i}|\boldsymbol{y})} \|\nabla_{\boldsymbol{x}_{t_i}} \log p(\boldsymbol{y}|\boldsymbol{x}_{t_i})\|^2$$
-
-其中 $c_{t_i} = \sigma_{t_i}' \sigma_{t_i} - \sigma_{t_i}^2 \frac{a_{t_i}'}{a_{t_i}}$。
-
-### 关键创新一：无偏似然得分估计
-
-直接计算 $\nabla_{\boldsymbol{x}_t} \log p(\boldsymbol{y}|\boldsymbol{x}_t)$ 不可行，但利用 DAPS 的后验样本 $\tilde{\boldsymbol{x}}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{x}_t, \boldsymbol{y})$ 设计两个无偏估计器：
-
-**高噪声估计器**（高噪声时方差低）：
-
-$$\Theta_{\text{high}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}(\tilde{\boldsymbol{x}}_0 - \mathbb{E}[\boldsymbol{x}_0|\boldsymbol{x}_t])$$
-
-**低噪声估计器**（低噪声时方差低）：
-
-$$\Theta_{\text{low}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}(\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} \nabla_{\tilde{\boldsymbol{x}}_0} \log p(\boldsymbol{y}|\tilde{\boldsymbol{x}}_0))$$
-
-对每个 $\boldsymbol{x}_t$ 采样两个独立的 $\tilde{\boldsymbol{x}}_0^{(1)}, \tilde{\boldsymbol{x}}_0^{(2)}$ 获得无偏的平方得分估计。
-
-### 关键创新二：改进的后验协方差
-
-DAPS 的协方差启发式 $\sigma_t^2$ 在高噪声时高估方差。DiME 引入先验近似：
-
-$$\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} = \left[\boldsymbol{\Sigma}_0^{-1} + \frac{a_t^2}{\sigma_t^2}\mathbf{I}\right]^{-1}$$
-
-其中 $\boldsymbol{\Sigma}_0$ 从训练数据经验估计。
-
-### 实现
-
-DiME 与 DAPS 后验采样方法协同运行，利用采样过程中自然产生的中间样本，无需额外计算。
+**2. 改进的后验协方差：修掉高噪声端的方差高估。** 上述低噪声估计器依赖条件协方差 $\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t}$，而 DAPS 原本用的启发式 $\sigma_t^2$ 在高噪声时会把方差严重高估，导致估计偏差。DiME 引入一个带先验信息的近似 $\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} = \left[\boldsymbol{\Sigma}_0^{-1} + \frac{a_t^2}{\sigma_t^2}\mathbf{I}\right]^{-1}$，其中先验协方差 $\boldsymbol{\Sigma}_0$ 从训练数据经验估计。这相当于在高噪声端用先验把过宽的协方差"收紧"，从而在不增加样本的前提下显著压低偏差。
 
 ## 实验
 

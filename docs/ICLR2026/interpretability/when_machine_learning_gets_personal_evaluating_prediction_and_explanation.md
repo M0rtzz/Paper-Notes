@@ -42,44 +42,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于Benefit of Personalization（BoP）框架构建。Generic模型 $h_0: \mathcal{X} \to \mathcal{Y}$ 不用群组属性，personalized模型 $h_p: \mathcal{X} \times \mathcal{S} \to \mathcal{Y}$ 使用群组属性。通过群组级别的cost差异（G-BoP）和最小群组增益（BoP $\gamma$）量化个性化的benefit。
+全文建立在 Benefit of Personalization（BoP）框架之上：把不使用群组属性的 generic 模型 $h_0: \mathcal{X} \to \mathcal{Y}$ 与使用群组属性的 personalized 模型 $h_p: \mathcal{X} \times \mathcal{S} \to \mathcal{Y}$ 放在同一把尺子上比较，用群组级别的 cost 差异（G-BoP）和所有群组里最小的那份增益（BoP $\gamma$）来度量个性化到底带来多少好处。在这套语言里，作者一方面用定理证明"预测增益"和"解释增益"可以彼此独立地变好或变坏，另一方面把"个性化是否真有用"翻译成一个假设检验问题，再推导出有限样本下这个检验的根本性能极限。
 
 ### 关键设计
 
-1. **预测-解释分离定理**:
+**1. 统一的 cost 函数体系：让预测和解释能用同一框架度量。**
 
-    - **定理4.1**：存在数据分布使得 Bayes最优分类器满足 $\gamma_P = 0$（预测无增益）但 $\gamma_X > 0$（解释有增益）
-    - 直觉：添加与现有特征高度相关的个人特征不改变预测，但explainer可能将重要性分配给这个更直接的特征
-    - **定理4.2**：存在分布使 $\gamma_P = 0$ 但 $\gamma_X < 0$（解释受损）
-    - 直觉：添加额外特征可能分散重要性分配，使解释更模糊
-    - **定理4.3**：个性化可以对不同群组产生相反的解释效果
-    - **定理4.4**（部分逆命题）：在加性线性模型下，若sufficiency和incomprehensiveness的BoP都为0，则预测BoP也为0
-
-2. **假设检验有效性分析**:
-
-    - 零假设 $H_0: \gamma \leq 0$（至少一个群组不获益）
-    - 备择假设 $H_1: \gamma \geq \epsilon$（所有群组获益至少 $\epsilon$）
-    - 决策规则：$\hat{\gamma} \geq \epsilon$ 则拒绝 $H_0$
-    - **定理5.1**：推导了任意检验的minimax误差概率下界
-
-$$\min_\Psi \max P_e \geq \frac{1}{2}\left(1 - \frac{1}{2\sqrt{d}}\left[\frac{1}{d}\sum_{j=1}^d \left(\mathbb{E}_{p^\epsilon}\left[\frac{p^\epsilon(\mathbf{B})}{p(\mathbf{B})}\right]\right)^{m_j} - 1\right]^{1/2}\right)$$
-
-    - $d = 2^k$ 个群组（$k$ 个binary属性），$m_j$ 为第 $j$ 组样本量
-    - **推论5.3**：给出保证 $P_e \leq v$ 的最小群组大小 $m_{\min}$
-
-3. **分类 vs 回归的差异**:
-
-    - 分类：individual BoP是categorical的 $\{-1, 0, 1\}$，预测和解释的下界**相同**
-    - 回归：individual BoP是连续的（Gaussian/Laplace），预测和解释的下界**可以不同**——一个可检验而另一个不可检验
-
-### Cost函数体系
+要比较预测质量和解释质量，首先得让它们落进同一个 cost 抽象里。作者把四类指标都写成"群组条件下的期望代价"，并同时给出分类与回归两套形式：预测侧用 Loss（分类为错误率 $\Pr(h(\tilde{\mathbf{X}}) \neq \mathbf{Y} \mid \mathbf{S}=s)$，回归为均方误差 $\mathbb{E}[\|h(\tilde{\mathbf{X}}) - \mathbf{Y}\|^2 \mid \mathbf{S}=s]$）或负的评估指标（$-\text{AUC}$、$-R^2$）；解释侧用充分性（重要特征子集 $J$ 能否复现预测，$\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_J) \mid \mathbf{S}=s)$）和不完备性（去掉 $J$ 后预测应当改变，$-\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_{\backslash J}) \mid \mathbf{S}=s)$）。完整的对照如下表，正因为所有指标共享同一个 BoP 度量，后面"预测和解释能否分离"才成为一个可以被严格论证的命题，而非两个互不相干的话题。
 
 | 类型 | 分类 | 回归 |
 |------|------|------|
-| Loss | $\Pr(h(\tilde{\mathbf{X}}) \neq \mathbf{Y} | \mathbf{S}=s)$ | $\mathbb{E}[\|h(\tilde{\mathbf{X}}) - \mathbf{Y}\|^2 | \mathbf{S}=s]$ |
+| Loss | $\Pr(h(\tilde{\mathbf{X}}) \neq \mathbf{Y} \mid \mathbf{S}=s)$ | $\mathbb{E}[\|h(\tilde{\mathbf{X}}) - \mathbf{Y}\|^2 \mid \mathbf{S}=s]$ |
 | 评估指标 | $-\text{AUC}$ | $-R^2$ |
-| 充分性 | $\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_J) | \mathbf{S}=s)$ | $\mathbb{E}[\|h(\tilde{\mathbf{X}}) - h(\tilde{\mathbf{X}}_J)\|^2 | \mathbf{S}=s]$ |
-| 不完备性 | $-\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_{\backslash J}) | \mathbf{S}=s)$ | $-\mathbb{E}[\|h(\tilde{\mathbf{X}}) - h(\tilde{\mathbf{X}}_{\backslash J})\|^2 | \mathbf{S}=s]$ |
+| 充分性 | $\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_J) \mid \mathbf{S}=s)$ | $\mathbb{E}[\|h(\tilde{\mathbf{X}}) - h(\tilde{\mathbf{X}}_J)\|^2 \mid \mathbf{S}=s]$ |
+| 不完备性 | $-\Pr(h(\tilde{\mathbf{X}}) \neq h(\tilde{\mathbf{X}}_{\backslash J}) \mid \mathbf{S}=s)$ | $-\mathbb{E}[\|h(\tilde{\mathbf{X}}) - h(\tilde{\mathbf{X}}_{\backslash J})\|^2 \mid \mathbf{S}=s]$ |
+
+**2. 预测-解释分离定理：证明"预测不动"也能"解释变好或变坏"。**
+
+直觉上人们默认"模型预测更准，解释自然也更好"，本文用一组构造性定理把这个直觉彻底拆开。定理 4.1 构造出一个分布，使 Bayes 最优分类器的预测增益 $\gamma_P = 0$ 却有解释增益 $\gamma_X > 0$——当个人特征与已有特征高度相关时，预测不会改变，但 explainer 会把重要性转移到这个更直接的特征上，解释因此变清晰。定理 4.2 则反过来构造出 $\gamma_P = 0$ 但 $\gamma_X < 0$ 的情形：额外特征会把重要性分摊得更分散，让解释更模糊。定理 4.3 进一步说明同一次个性化可以对不同群组产生方向相反的解释效果。作为部分逆命题，定理 4.4 指出只有在加性线性模型这种受限设定下，当充分性和不完备性的 BoP 同时为 0 时才能反推预测 BoP 为 0，说明"解释好"几乎无法保证"预测好"。
+
+**3. 把"个性化是否有用"写成假设检验，并给出 minimax 误差下界：判断结论可不可信。**
+
+第二个核心问题是：就算个性化在真实分布上确实有益，有限样本能不能可靠地检测出来？作者把它形式化为单边检验，零假设 $H_0: \gamma \leq 0$（至少一个群组没获益），备择假设 $H_1: \gamma \geq \epsilon$（所有群组都获益至少 $\epsilon$），决策规则是当估计量 $\hat{\gamma} \geq \epsilon$ 时拒绝 $H_0$。关键的定理 5.1 给出任意检验都无法绕过的 minimax 误差概率下界
+
+$$\min_\Psi \max P_e \geq \frac{1}{2}\left(1 - \frac{1}{2\sqrt{d}}\left[\frac{1}{d}\sum_{j=1}^d \left(\mathbb{E}_{p^\epsilon}\left[\frac{p^\epsilon(\mathbf{B})}{p(\mathbf{B})}\right]\right)^{m_j} - 1\right]^{1/2}\right),$$
+
+其中 $d = 2^k$ 是 $k$ 个 binary 属性切出的群组数，$m_j$ 是第 $j$ 组的样本量。这个式子说明群组越多（$d$ 随属性数指数增长）、每组样本 $m_j$ 越少，误差下界就越逼近随机猜测的 $1/2$。在此基础上推论 5.3 反解出在容许误差 $P_e \leq v$ 下所需的最小群组样本量 $m_{\min}$，直接回答了"要检测 $\epsilon$ 大小的效果得收多少样本"。
+
+**4. 分类与回归的可检验性差异：解释 individual BoP 的离散与连续之别。**
+
+最后一个设计点把上面的下界落到具体任务上，差异来自 individual BoP 的取值结构。分类任务中 individual BoP 是 categorical 的 $\{-1, 0, 1\}$，导致预测和解释共享完全相同的检验下界，因此二者要么都可检验、要么都不可检验。回归任务中 individual BoP 是连续的（服从 Gaussian 或 Laplace），预测和解释的下界由各自的方差决定、可以彼此不同——于是出现一种微妙局面：同一个数据集上预测增益可检验，而解释增益却淹没在噪声里不可检验。这一点直接解释了后续实验中分类与回归表现出的不同可检验性。
 
 ## 实验关键数据
 

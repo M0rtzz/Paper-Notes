@@ -44,46 +44,25 @@ tags:
 
 ### 整体框架
 
-SEAL 属于无标注域适应（AF-DA）类别：
-- **训练时**：仅使用事件-图像对 $(I^{evt}, I^{img})$，不需要任何密集事件标注
-- **推理时**：仅输入事件嵌入 $I^{evt}$，根据用户提供的视觉提示（点/框）生成 mask 及类别预测
-- 核心由两部分组成：**MHSG 模块**（提供多模态层次语义监督）和**多模态融合网络**（轻量化 mask 分类器）
+SEAL 走的是「无标注域适应（AF-DA）」路线：训练时只喂时间同步的事件-图像对 $(I^{evt}, I^{img})$，借配对图像把图像域大模型的语义知识蒸馏给事件分支，全程不碰任何密集事件标注；推理时图像分支退场，只把事件嵌入 $I^{evt}$ 送进网络，根据用户点/框提示输出实例 mask 和类别。整套系统拆成两块——MHSG 模块负责把配对图像加工成多粒度的语义监督信号，多模态融合网络则是一个轻量 mask 分类器，把这些监督学进事件特征里。
 
-### 关键设计 1：多模态层次语义引导（MHSG）
+### 关键设计
 
-**层次视觉引导**：
-- 利用 SAM 对配对图像生成三层粒度的分割图：语义级 $M_s^{img}$、实例级 $M_i^{img}$、部件级 $M_p^{img}$
-- 通过 CLIP 视觉编码器提取像素级特征，再 RoI 池化得到各层 mask 的视觉特征
+**1. 多模态层次语义引导（MHSG）：用免费的图像监督替代昂贵的事件标注。**
 
-**层次文本引导**：
-- 使用 LLaMA-based MLLM 为每个 mask 生成丰富文本描述
-- 通过 CLIP 文本编码器编码，构成层次文本引导信号
-- 与 OpenESS 不同，不依赖预定义类别名，而是用 MLLM 生成丰富多样的词汇
+事件流没有密集标注，但配对图像可以白嫖现成大模型。SEAL 让 SAM 对配对图像自动切出语义级 $M_s^{img}$、实例级 $M_i^{img}$、部件级 $M_p^{img}$ 三层粒度的分割图，再用 CLIP 视觉编码器抽像素级特征、按各层 mask 做 RoI 池化，得到层次视觉引导。光有视觉还不够，分类需要文本锚点，于是再用一个 LLaMA 系的 MLLM 给每个 mask 生成丰富的文字描述，经 CLIP 文本编码器变成层次文本引导。和 OpenESS 死守预定义类名不同，这里的词汇由 MLLM 现场生成，更多样、也天然支持开放词汇——三层粒度恰好对应实例分割与部件分割两种任务需求，监督信号一次到位。
 
-### 关键设计 2：多模态融合网络（三组件）
+**2. 多模态融合网络：把语义和空间先验同时焊进事件特征。**
 
-**① Backbone Feature Enhancer（骨干特征增强器）**：
-- 在 EventSAM 骨干特征上叠加 6 层多模态融合模块（self-attention + cross-attention + FFN）
-- 训练时用文本引导 $M_l^{text}$ 作为 cross-attention 的 key/value
-- 推理时改用数据集类名或用户自定义语言输入
-- 通过 RoI-Align 从语言融合特征中池化得到 mask 特征
+融合网络在冻结的 EventSAM 骨干上做三件事。第一步是骨干特征增强：叠 6 层多模态融合模块（self-attention + cross-attention + FFN），训练时拿文本引导 $M_l^{text}$ 当 cross-attention 的 key/value 注入语义，推理时无缝换成数据集类名或用户自定义语言，再用 RoI-Align 从语言融合特征里池化出 mask 特征。但纯语义特征有两个硬伤——*死 mask*（小物体的 mask 在下采样后整片消失、变成零向量）和*语义冲突*（低分辨率特征图上不同语义的 mask 落到同一块区域）。为此第二步引入空间编码，借 SAM mask decoder 的 mask token 编码形状与位置先验，把空间特征 $G_l^{evt}$ 和语义特征 $S_l^{evt}$ 拼接后投影回去：$M_l^{evt} = \text{proj}(\text{concat}(G_l^{evt}, S_l^{evt}))$，让小物体和重叠物体重新可分。第三步用 masked cross-attention 做 mask 特征增强，以带位置编码的语言融合骨干特征作 key/value，把注意力强行约束在前景区域，进一步把语义和空间先验拧到一起。这种单骨干设计也省掉了基线常见的「mask 生成 + 分类」双 backbone 冗余，是它推理只要 22.28ms、参数仅 99.1M 的根本原因。
 
-**② Spatial Encoding（空间编码）**：
-- 解决两大问题：*死 mask*（小物体的 mask 下采样后消失导致零向量）和*语义冲突*（低分辨率特征图上不同语义 mask 投射到同一区域）
-- 利用 SAM mask decoder 的 mask token 编码形状和位置等空间先验
-- 将空间特征 $G_l^{evt}$ 与语义特征 $S_l^{evt}$ 拼接后投影：$M_l^{evt} = \text{proj}(\text{concat}(G_l^{evt}, S_l^{evt}))$
+### 损失函数 / 训练策略
 
-**③ Mask Feature Enhancer（mask 特征增强器）**：
-- 通过 masked cross-attention 层进一步增强 mask 特征中的语义和空间先验
-- 用语言融合骨干特征（含位置编码）作为 key/value，约束注意力聚焦于前景区域
-
-### 训练策略
-
-- **两阶段训练**：Stage 1 训练 EventSAM（遵循原始方案）；Stage 2 冻结 EventSAM，只训练融合网络
-- **训练数据**：Mixed-24K（合并 DDD17-Seg 和 DSEC-Semantic 训练集，共 24,032 对）
-- **损失函数**：余弦相似度蒸馏损失，将事件 mask 特征同时与视觉引导和文本引导对齐：
+训练分两阶段：Stage 1 按原方案先训好 EventSAM，Stage 2 冻结 EventSAM、只训融合网络，数据用合并 DDD17-Seg 与 DSEC-Semantic 训练集得到的 Mixed-24K（共 24,032 对）。优化目标是一条余弦相似度蒸馏损失，把事件 mask 特征在三层粒度上同时对齐视觉引导和文本引导：
 
 $$\mathcal{L}_{distill} = \sum_{l \in \{s,i,p\}} \frac{1}{K_l}(1 - \cos(\hat{M}_l^{evt}, M_l^{img})) + \sum_{l \in \{s,i,p\}} \frac{1}{K_l}(1 - \cos(\hat{M}_l^{evt}, M_l^{text}))$$
+
+两项分别拉近事件特征与图像视觉特征、与 MLLM 文本特征的距离，前者灌入空间结构、后者灌入开放词汇语义，正是这条双对齐损失把「无事件标注」的训练撑了起来。
 
 ## 实验关键数据
 
@@ -181,8 +160,8 @@ $$\mathcal{L}_{distill} = \sum_{l \in \{s,i,p\}} \frac{1}{K_l}(1 - \cos(\hat{M}_
 - [\[CVPR 2026\] HorizonForge: Driving Scene Editing with Any Trajectories and Any Vehicles](../../CVPR2026/autonomous_driving/horizonforge_driving_scene_editing_with_any_trajectories_and_any_vehicles.md)
 - [\[ICCV 2025\] SAM4D: Segment Anything in Camera and LiDAR Streams](../../ICCV2025/autonomous_driving/sam4d_segment_anything_in_camera_and_lidar_streams.md)
 - [\[CVPR 2025\] Segment Anything, Even Occluded](../../CVPR2025/autonomous_driving/segment_anything_even_occluded.md)
-- [\[ICLR 2026\] ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
 - [\[CVPR 2026\] TerraSeg: Self-Supervised Ground Segmentation for Any LiDAR](../../CVPR2026/autonomous_driving/terraseg_self-supervised_ground_segmentation_for_any_lidar.md)
+- [\[NeurIPS 2025\] Towards Predicting Any Human Trajectory in Context](../../NeurIPS2025/autonomous_driving/towards_predicting_any_human_trajectory_in_context.md)
 
 </div>
 

@@ -44,50 +44,15 @@ tags:
 
 ### 整体框架
 
-本文方法分三个层次推进，形成从理论到应用的完整链条：
+本文不是提出一个新的估计器，而是先把"在线性非高斯、含潜变量和环的最一般设定下，哪些因果图无法区分"这件事彻底讲清楚，再据此设计遍历等价类和从数据恢复模型的算法。一切都围绕模型 $X = BX + \Lambda L + E$ 展开：$X$ 是观测变量向量，$B$ 是观测变量之间允许成环的因果系数矩阵，$L$ 是潜变量，$\Lambda$ 是潜变量到观测变量的效应矩阵，$E$ 是非高斯的独立噪声。把这套方程解出来，每个观测变量都写成所有噪声源（包括潜变量驱动项）的线性混合，混合系数矩阵里就编码了完整的因果结构——后面三个关键设计，本质上都是在追问这张混合矩阵到底泄露了多少结构信息。
 
-- **输入**：观测数据（假设由线性非高斯模型生成），可能涉及潜变量和因果环
-- **层次1 — 等价性刻画**：建立图准则判断两个因果图是否分布等价
-- **层次2 — 等价类遍历**：给定一个图，找到其所有分布等价的图
-- **层次3 — 从数据学习**：从观测数据恢复因果模型（精度达到等价类级别）
+### 关键设计
 
-模型形式化为线性结构方程：
+**1. 边秩约束：补上独立约束在潜变量下漏掉的那部分信息。** 传统因果发现主要靠**独立约束**——两个变量之间若没有因果路径相连，就应当统计独立。但一旦存在潜变量，这个工具就不完备了：两个观测变量哪怕没有任何直接因果关系，也可能被一个共同的潜变量牵连而产生依赖，独立约束对这种情形束手无策。本文的核心创新是改去看混合矩阵子矩阵的**秩**：如果从一组变量 $S$ 流向某个 $X_i$ 的所有因果路径都能被 $r$ 个潜变量"中转解释"，那么对应子矩阵的秩至多为 $r$。独立约束其实只是它在秩为 $0$ 时的特例（秩为 $0$ 即独立），所以边秩约束严格更强——它能在独立约束失效的潜变量场景里继续提供区分两张图的力量，这正是过去通用方法迟迟做不出来的那块缺口。
 
-$$X = BX + \Lambda L + E$$
+**2. 分布等价性的完整图准则：把"不可区分"翻译成可检验的秩条件。** 有了边秩约束，等价性就有了一个干净的判据：两张带任意潜变量结构和环的因果图分布等价（生成同一族观测分布），当且仅当它们施加完全相同的边秩约束集合。这个判据的力气全花在证完整性上——必要性方面，只要两张图的边秩约束集不同，就能构造出反例说明它们的分布族必然不同；充分性方面，只要约束集相同，就能反过来配出参数让两张图产生同一族分布。非高斯性在这里是关键杠杆：相比高斯模型，非高斯噪声本身携带额外的可识别信息，使等价类被切得更细、能区分出更多因果图，这与 LiNGAM 一脉相承。
 
-其中 $X$ 是观测变量向量，$B$ 是观测变量间的因果系数矩阵（允许环），$L$ 是潜变量，$\Lambda$ 是潜变量到观测变量的效应矩阵，$E$ 是非高斯独立噪声。
-
-### 关键设计1：边秩约束（Edge Rank Constraints）
-
-这是本文的核心技术创新。在潜变量因果模型中，观测变量的混合矩阵包含了因果结构信息。传统方法依赖**独立约束**（两个变量之间无因果路径 → 统计独立），但在有潜变量时独立约束不完备——两个变量即使没有直接因果关系，也可能通过潜变量产生统计依赖。
-
-边秩约束通过分析混合矩阵子矩阵的**秩**来提取因果图中边是否存在以及潜变量结构的信息：
-
-- 若从变量集 $S$ 到变量 $X_i$ 的所有因果路径可以被 $r$ 个潜变量"解释"，则对应的混合矩阵子矩阵秩至多为 $r$
-- 这种秩约束比独立约束更精细——独立约束是秩约束的特例（秩为0 = 独立）
-- 边秩约束在独立约束不完备的场景中提供了额外的区分力
-
-### 关键设计2：分布等价性的完整图准则
-
-两个具有任意潜变量结构和环的因果图**分布等价**（即产生相同的观测分布集），当且仅当它们施加相同的边秩约束集合。
-
-这个准则的完整性依赖于：
-- **必要性**：不同的边秩约束集 → 不同的分布集（可通过构造反例证明）
-- **充分性**：相同的边秩约束集 → 可以构造参数使两个图产生相同的分布
-
-非高斯性在此扮演关键角色：相比高斯模型，非高斯噪声提供了额外的可识别性信息，使等价类更细（即可区分更多的因果图）。
-
-### 关键设计3：等价类遍历与学习算法
-
-**等价类遍历**：给定一个因果图 $\mathcal{G}$，通过以下操作系统地枚举所有等价图：
-- 在保持边秩约束不变的前提下，添加/删除/反转观测变量间的边
-- 修改潜变量的数量和连接模式
-- 验证修改后的图是否施加相同的边秩约束集
-
-**从数据学习**：
-1. 利用独立成分分析（ICA）的原理从数据中估计混合矩阵
-2. 通过矩阵秩检验确定边秩约束
-3. 搜索满足所有约束的因果图，输出等价类
+**3. 等价类遍历与从数据学习：把准则落成可运行的算法。** 既然"等价"等于"边秩约束集相同"，遍历一个图 $\mathcal{G}$ 的全部等价图就变成一套受约束的图编辑：在保持边秩约束集不变的前提下，对观测变量间的边做增、删、反转，调整潜变量的数量与连接方式，每改一步都回头验证约束集是否仍然一致，从而系统地枚举出整个等价类。从数据端恢复模型则反向走这条链——先借独立成分分析（ICA）的思路从观测数据估出混合矩阵，再用矩阵秩检验把成立的边秩约束逐一读出来，最后搜索同时满足所有约束的因果图，输出的精度恰好停在等价类这一可识别上限。
 
 ## 实验关键数据
 
@@ -150,8 +115,8 @@ $$X = BX + \Lambda L + E$$
 - [\[AAAI 2026\] I-CAM-UV: Integrating Causal Graphs over Non-Identical Variable Sets Using Causal Additive Models with Unobserved Variables](../../AAAI2026/causal_inference/i-cam-uv_integrating_causal_graphs_over_non-identical_variable_sets_using_causal.md)
 - [\[ICML 2025\] Estimating Causal Effects in Gaussian Linear SCMs with Finite Data](../../ICML2025/causal_inference/estimating_causal_effects_in_gaussian_linear_scms_with_finite_data.md)
 - [\[ICML 2025\] Latent Variable Causal Discovery under Selection Bias](../../ICML2025/causal_inference/latent_variable_causal_discovery_under_selection_bias.md)
-- [\[ICML 2025\] Causal Discovery of Latent Variables in Galactic Archaeology](../../ICML2025/causal_inference/causal_discovery_of_latent_variables_in_galactic_archaeology.md)
 - [\[ICML 2026\] Causal-JEPA: Learning World Models through Object-Level Latent Masking](../../ICML2026/causal_inference/causal-jepa_learning_world_models_through_object-level_latent_masking.md)
+- [\[ICLR 2026\] Synthesising Counterfactual Explanations via Label-Conditional Gaussian Mixture Variational Autoencoders](synthesising_counterfactual_explanations_via_label-conditional_gaussian_mixture_.md)
 
 </div>
 

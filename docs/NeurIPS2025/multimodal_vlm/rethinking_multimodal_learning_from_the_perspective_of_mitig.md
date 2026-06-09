@@ -190,7 +190,7 @@ R18→R34 增加 11.5M 参数准确率反而下降（更难收敛）。本文仅
 - [\[CVPR 2025\] GeoMM: On Geodesic Perspective for Multi-Modal Learning](../../CVPR2025/multimodal_vlm/geomm_on_geodesic_perspective_for_multi-modal_learning.md)
 - [\[NeurIPS 2025\] MIDAS: Misalignment-based Data Augmentation Strategy for Imbalanced Multimodal Learning](midas_misalignment-based_data_augmentation_strategy_for_imbalanced_multimodal_le.md)
 - [\[NeurIPS 2025\] NaViL: Rethinking Scaling Properties of Native Multimodal Large Language Models under Data Constraints](navil_rethinking_scaling_properties_of_native_multimodal_large_language_models_u.md)
-- [\[NeurIPS 2025\] When Semantics Mislead Vision: Mitigating Large Multimodal Models Hallucinations](when_semantics_mislead_vision_mitigating_large_multimodal_models_hallucinations_.md)
+- [\[NeurIPS 2025\] Multimodal Negative Learning](multimodal_negative_learning.md)
 
 </div>
 

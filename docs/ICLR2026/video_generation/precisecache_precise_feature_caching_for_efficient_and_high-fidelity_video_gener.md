@@ -43,47 +43,21 @@ tags:
 
 ### 整体框架
 
-PreciseCache 由两个互补的缓存机制组成：
+PreciseCache 把视频扩散的冗余拆成两个层级来消除：步级冗余交给 LFCache，用低频差异（LFD）判断某个去噪步是否可以整步复用缓存；块级冗余交给 BlockCache，在未被跳过的步内进一步识别哪些 Transformer 块对特征改动微弱、可以用缓存的差异近似。两者级联，既跳整步又跳块，叠加出双层加速，且全程不动基础模型的参数与结构。
 
-1. **LFCache（步级缓存）**：在每个去噪步，计算当前步与上一缓存步的低频差异（LFD）作为缓存决策指标。LFD 小于阈值则跳过该步（复用缓存），否则执行完整推理
-2. **BlockCache（块级缓存）**：在 LFCache 未跳过的步骤内，进一步分析每个 Transformer 块的冗余程度。仅保留对输入特征有显著修改的关键块（pivotal blocks），跳过冗余块（non-pivotal blocks）
+### 关键设计
 
-两者级联使用，LFCache 消除步级冗余，BlockCache 在保留步内消除块级冗余，实现双层加速。
+**1. 低频差异（LFD）度量：把"该不该缓存"换成一个和质量真正相关的判据。** 直接拿相邻步预测差异当缓存指标（如 TeaCache 的做法）与最终质量关联不强，因为去噪过程对低频结构和高频细节的重视程度并不相同——高噪声阶段在搭建视频的低频结构（不可跳），低噪声阶段只在精修高频细节（可安全跳）。本文据此把网络预测 $\bm{F}_i$ 经 FFT 拆成低频分量 $\bm{F}_i^{LF}$ 与高频分量 $\bm{F}_i^{HF}$，其中低频区域取以最小空间维度 $\frac{1}{5}$ 为半径的圆形 mask，再以相邻步低频分量的 L2 距离 $\Delta_i^{LF} = \| \bm{F}_i^{LF} - \bm{F}_{i+1}^{LF} \|_2$ 作为步级冗余度量。实验证实 $\Delta_i^{LF}$ 与"该步复用缓存对成片质量的影响"高度一致：高噪声步 LFD 大、低噪声步 LFD 小，正好对应不可缓存与可缓存的步。
 
-### 关键设计 1：低频差异（LFD）度量及其高效计算
+**2. 降采样 trial 推理：绕开"算缓存指标本身就要先推理"的死循环。** LFD 的尴尬在于要算它就得先做当前步的完整推理，反而违背加速初衷。关键观察是 LFD 对 latent 分辨率并不敏感，于是先把 latent 降采样再跑一次廉价的 trial 推理来估计它：$\widetilde{\bm{Z}}_i = \text{Downsample}(\bm{Z}_i)$，$\widetilde{\bm{F}}_i = \epsilon_\theta(\widetilde{\bm{Z}}_i, t_i)$。降采样比例取时间 2×、空间 4×4，trial 推理开销可忽略。决策上用累积 LFD $\sum_{i=a}^{b} \widetilde{\Delta}_i^{LF}$ 而非单步值，避免误差逐步累积越界，超过阈值 $\delta$ 才执行完整推理、否则复用缓存；阈值按相对因子设定 $\delta = \widetilde{\Delta}_{max}^{LF} \times \alpha$，$\alpha=0.5$ 对应 Base、$0.7$ 对应 Turbo，越大越激进。
 
-**LFD 的定义**：将网络预测 $\bm{F}_i$ 通过快速傅里叶变换（FFT）分解为低频分量 $\bm{F}_i^{LF}$ 和高频分量 $\bm{F}_i^{HF}$，定义相邻步间的低频差异：
-
-$$\Delta_i^{LF} = \| \bm{F}_i^{LF} - \bm{F}_{i+1}^{LF} \|_2$$
-
-低频区域定义为以最小空间维度 $\frac{1}{5}$ 为半径的圆形 mask。论文通过实验验证了 $\Delta_i^{LF}$ 与"在该步复用缓存对最终视频质量的影响"高度一致：高噪声步 LFD 大（结构变化显著，不可缓存），低噪声步 LFD 小（仅高频细节变化，可安全缓存）。
-
-**高效估计**：直接计算 LFD 需要当前步的完整推理（违背加速目的）。关键观察：LFD 对 latent 分辨率不敏感。因此先将 latent 降采样后进行快速 "trial" 推理来估计 LFD：
-
-$$\widetilde{\bm{Z}}_i = \text{Downsample}(\bm{Z}_i), \quad \widetilde{\bm{F}}_i = \epsilon_\theta(\widetilde{\bm{Z}}_i, t_i)$$
-
-降采样比例为时间维度 2×、空间维度 4×4，使 trial 推理的额外开销可忽略。
-
-**累积误差策略**：使用累积 LFD $\sum_{i=a}^{b} \widetilde{\Delta}_i^{LF}$ 作为最终指标。超过阈值 $\delta$ 时执行完整推理，否则复用缓存。阈值通过相对因子设定：$\delta = \widetilde{\Delta}_{max}^{LF} \times \alpha$，其中 $\alpha = 0.5$（Base 配置）或 $0.7$（Turbo 配置）。
-
-### 关键设计 2：BlockCache（块级缓存）
-
-对于 LFCache 未跳过的时间步，通过分析 DiT 内部各 Transformer 块的冗余程度进一步加速。计算每个块的输入输出差异：
-
-$$\bm{D}_{k_i}^j = \bm{F}_{k_i}^j - \bm{F}_{k_i}^{j-1}$$
-
-选取差异最大的前 $c\%$ 块为关键块（pivotal blocks），其余为非关键块。在后续 $L$ 个非跳过步中，非关键块直接用缓存的差异 $\bm{D}_{k_i}^j$ 估计输出：
+**3. BlockCache：在保留下来的步里继续抠块级冗余。** 对 LFCache 没跳过的时间步，再看 DiT 内部每个 Transformer 块到底改了多少特征。先算块的输入输出差异 $\bm{D}_{k_i}^j = \bm{F}_{k_i}^j - \bm{F}_{k_i}^{j-1}$，取差异最大的前 $c\%$ 块为关键块（pivotal blocks），其余视为非关键块。随后 $L$ 个非跳过步里，关键块照常计算，非关键块则直接用上一次缓存的差异近似输出：
 
 $$\bm{F}_{k_{i-l}}^j = \begin{cases} \mathcal{B}^j(\bm{F}_{k_{i-l}}^{j-1}, t_{k_{i-l}}), & j \in \mathcal{I}_i \text{（关键块）} \\ \bm{F}_{k_{i-l}}^{j-1} + \bm{D}_{k_i}^j, & j \notin \mathcal{I}_i \text{（非关键块）} \end{cases}$$
 
-Flash 配置中缓存率设为 40%（即 60% 的块被跳过），$L = 3$。
+Flash 配置取缓存率 40%（即 60% 的块被跳过）、$L=3$，在步级跳过之上再压一层算力。
 
-### 关键设计 3：即插即用和跨架构适配
-
-PreciseCache 不修改基础模型的任何参数或结构：
-- LFD 仅依赖 FFT（标准运算）和降采样
-- BlockCache 仅需访问各块的输入输出（标准 hook）
-- 唯一超参为相对因子 $\alpha$ 和块缓存率 $c\%$，跨模型几乎不需调整
+**4. 即插即用与跨架构适配：靠标准算子落地、超参极少。** 整个框架不碰基础模型的任何参数或结构——LFD 只依赖 FFT 和降采样这类标准运算，BlockCache 只需通过标准 hook 拿到各块的输入输出，因此能直接挂到 Wan2.1、HunyuanVideo 等不同 DiT 架构上。需要调的超参只有相对因子 $\alpha$ 和块缓存率 $c\%$，且跨模型几乎不用重调，正是这种轻量性让它能与 DSP 等并行策略正交叠加。
 
 ## 实验结果
 
@@ -155,8 +129,8 @@ PreciseCache 在不同 GPU 数量下均有效，单 GPU 时加速比最高（2.5
 - [\[CVPR 2026\] DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching](../../CVPR2026/video_generation/disca_accelerating_video_diffusion_transformers_wi.md)
 - [\[ECCV 2024\] MagDiff: Multi-Alignment Diffusion for High-Fidelity Video Generation and Editing](../../ECCV2024/video_generation/magdiff_multi-alignment_diffusion_for_high-fidelity_video_generation_and_editing.md)
 - [\[NeurIPS 2025\] LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation](../../NeurIPS2025/video_generation/lemica_lexicographic_minimax_path_caching_for_efficient_diffusion-based_video_ge.md)
-- [\[ICCV 2025\] Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
 - [\[ICML 2026\] EPiC: Efficient Video Camera Control Learning with Precise Anchor-Video Guidance](../../ICML2026/video_generation/epic_efficient_video_camera_control_learning_with_precise_anchor-video_guidance.md)
+- [\[ICCV 2025\] Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
 
 </div>
 

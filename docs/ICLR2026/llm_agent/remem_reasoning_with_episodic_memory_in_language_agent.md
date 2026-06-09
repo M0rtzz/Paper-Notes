@@ -44,31 +44,17 @@ REMem 的核心设计理念：
 
 ### 整体框架
 
-REMem 分为两个阶段：
-1. **索引阶段**：将经历转换为混合记忆图
-2. **Agentic 推理阶段**：通过精心设计的工具在记忆图上迭代检索和推理
+REMem 把一段经历先离线索引成一张「混合记忆图」——既有捕捉事件要旨的 gist 节点，也有结构化的事实三元组节点，两者都绑定时间戳；查询时不再做单步相似度检索，而是让一个 ReAct 风格 agent 调用专门设计的检索与图探索工具，在这张图上迭代取证、推理直到证据充足才作答。整个流程不涉及任何模型训练，索引与推理都由 LLM 驱动。
 
-### 关键设计：索引阶段
+### 关键设计
 
-**1) Gist 提取**：
-- 对每个事件/对话会话，生成一个或多个自然语言 gist 语句
-- 每个 gist 标注时间戳（参考时间），相对时间表达转换为绝对日期
-- Gist 捕获参与者、动作、对象、地点、意图、数量等核心信息
+**1. Gist 提取：用「要旨」而非逐字记忆承载事件。** 认知科学指出人类决策更依赖 gist 而非逐字回忆，REMem 据此对每个事件或对话会话生成一条或多条自然语言 gist 语句，把参与者、动作、对象、地点、意图、数量等核心信息凝练进去。每条 gist 都标注参考时间戳，并把「上周三」「三天后」这类相对时间表达统一换算成绝对日期，让事件天然带上时间锚点。消融中移除 gist 时 LoCoMo 的 LLM-J 从 76.2 暴跌到 48.9（-27.3），证明 gist 才是情节记忆的主要载体。
 
-**2) 事实提取**：
-- 从文本和 gist 中提取结构化 (subject, predicate, object) 三元组
-- 为每个三元组附加 Wikidata 风格时间限定符：`point_in_time`、`start_time`、`end_time`
-- 保留潜在矛盾的历史记录，支持时间回溯查询
+**2. 事实提取：保留可时间回溯的结构化证据。** 仅有 gist 不足以支撑计数、排序这类精确推理，REMem 进一步从原文和 gist 中抽取 $(\text{subject},\text{predicate},\text{object})$ 三元组，并给每个三元组附上 Wikidata 风格的时间限定符 `point_in_time`、`start_time`、`end_time`。关键之处在于它不删除「过期」事实，而是把潜在矛盾的历史记录全部保留，这样「某人去年住在哪、今年又搬到哪」这类时间回溯查询才有据可查。Fact 对推理任务更关键，移除后 Complex-TR 的 LLM-J 下降 2.4。
 
-**3) 图构建**：
-- **Gist 节点**：上下文级情节表示，连接到同一 chunk 的短语节点
-- **短语节点**：概念级表示，subject/object 节点通过 predicate 边直接连接
-- **同义边**：embedding 相似度超过阈值（0.8）的 gist 节点之间添加同义边
-- 形成**混合记忆图**：概念级和上下文级信息的统一表示
+**3. 混合记忆图构建：概念级与上下文级信息统一编织。** 提取出的两类信息被组织成一张图：gist 节点承载上下文级的情节表示，并连向同一文本块内的短语节点；短语节点是概念级表示，subject/object 通过 predicate 边直接相连；此外在 embedding 相似度超过 $0.8$ 的 gist 节点之间补一条同义边，让语义接近但措辞不同的记忆能互相跳转。这样一张图既能沿概念边做实体关联，又能沿 gist 还原完整事件叙事，弥合了纯实体图（丢事件上下文）与纯向量库（丢结构）各自的盲区。
 
-### 关键设计：Agentic 推理阶段
-
-采用 ReAct 风格 agent，配备三类精心设计的工具：
+**4. 工具增强的 agentic 推理：把检索变成可迭代的取证过程。** 推理端采用 ReAct 风格 agent，配三类工具——`semantic_retrieve`/`lexical_retrieve` 负责带时间过滤的语义/词法检索，`find_gist_contexts`/`find_entity_contexts` 负责在图上做定向探索，`output_answer` 负责收尾。
 
 | 工具类别 | 工具名 | 核心参数 |
 |---------|--------|---------|
@@ -78,16 +64,7 @@ REMem 分为两个阶段：
 | 图探索 | `find_entity_contexts` | subject, object, predicate, 时间范围, limit, ordering, offset, aggregation |
 | 流程控制 | `output_answer` | answer |
 
-推理遵循三阶段协议：
-1. **检索**：语义/词法检索获取种子节点和初步线索
-2. **图探索**：基于种子节点进行定向探索，获取事件级叙述和时间锚点证据
-3. **流程控制**：证据充足后输出最终回答
-
-`find_entity_contexts` 支持时间过滤、排序、聚合等逻辑操作，远超简单相似性匹配。
-
-### 损失函数
-
-REMem 不涉及模型训练。索引阶段使用 LLM 进行 gist/fact 提取，推理阶段使用 LLM agent 进行工具调用和推理。
+agent 遵循「检索→图探索→作答」的三阶段协议：先用语义/词法检索拿到种子节点和初步线索，再以种子节点为起点定向探索、补齐事件级叙述与时间锚点证据，证据充分后才输出答案。其中 `find_entity_contexts` 能直接做时间范围过滤、排序（ordering）、偏移（offset）和聚合（aggregation）等逻辑操作，使得「按时间排序后取第三个」「统计某时间段内发生几次」这类查询不再依赖脆弱的相似度匹配，这也是 REMem 在 Test of Time 上 EM 唯一突破 90% 的直接支撑。两种检索工具互补：语义检索利于概念关联，词法检索提升表面形式覆盖，消融中各自移除都会带来可见下降。
 
 ## 实验关键数据
 
@@ -176,8 +153,8 @@ REMem-I 在 Test of Time 上 EM 达 **93.1%**，是唯一超过 90% 的方法。
 ## 相关论文
 
 - [\[ICML 2026\] Scaling, Benchmarking, and Reasoning of Vision-Language Agents for Mobile GUI Navigation](../../ICML2026/llm_agent/scaling_benchmarking_and_reasoning_of_vision-language_agents_for_mobile_gui_navi.md)
-- [\[ACL 2026\] Lightweight LLM Agent Memory with Small Language Models](../../ACL2026/llm_agent/lightweight_llm_agent_memory_with_small_language_models.md)
 - [\[CVPR 2026\] WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
+- [\[ACL 2026\] Lightweight LLM Agent Memory with Small Language Models](../../ACL2026/llm_agent/lightweight_llm_agent_memory_with_small_language_models.md)
 - [\[ACL 2026\] CLAG: Adaptive Memory Organization via Agent-Driven Clustering for Small Language Model Agents](../../ACL2026/llm_agent/clag_adaptive_memory_organization_via_agent-driven_clustering_for_small_language.md)
 - [\[ICLR 2026\] Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
 

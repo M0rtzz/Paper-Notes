@@ -40,28 +40,23 @@ tags:
 
 ### 整体框架
 
-三阶段流水线：（1）形态无关运动Tokenization；（2）语言引导的VLM操控序列生成；（3）物理感知解码与动态优化。
+UniHM 把"图像+开放词汇指令→动态灵巧手操控序列"拆成三段串起来的流水线：先用一个跨手型共享的 VQ-VAE 把异构机械手的姿态压成统一离散 token，再让一个小型 VLM 在感知线索的条件下自回归生成这串 token，最后用物理优化逐帧把生成结果掰回可行域。三段各自训练、推理时首尾相接，既复用了人类视频数据，又避免了对遥操作数据的依赖。
 
 ### 关键设计
 
-1. **Unified Hand-Dexterous Tokenizer**: 使用共享VQ-VAE codebook $\mathcal{Z} = \{\mathbf{e}_k\}_{k=1}^K$ 将不同手型（MANO、Shadow hand、Allegro hand等5种）映射到统一离散空间。每个手型有专用编码器 $E_h$ 和解码器 $D_h$，量化操作为 $c = \arg\min_k \|E_h(\mathbf{x}^{(h)}) - \mathbf{e}_k\|_2^2$。新手型通过知识蒸馏对齐编码器：$\mathcal{L}_{\text{distill}} = \|E_{\text{new}}(\mathbf{x}_{\text{new}}) - E_{\text{ref}}(\mathbf{x}_{\text{ref}})\|_2^2$，绕过量化步骤的梯度不可微问题。跨手型翻译只需编码-量化-解码：$\hat{\mathbf{x}}^{(j)} = D_j(\mathbf{e}_{Q(E_i(\mathbf{x}^{(i)}))})$。
+**1. 形态无关的统一 tokenizer：让一套 codebook 装下五种手。** 不同机械手（MANO、Shadow、Allegro 等 5 种）自由度和结构都不一样，直接学一个跨手型模型几乎不可能。UniHM 给每种手型配一对专用编码器 $E_h$ 和解码器 $D_h$，但让它们共享同一本 VQ-VAE codebook $\mathcal{Z} = \{\mathbf{e}_k\}_{k=1}^K$，量化时把编码结果就近映射到最接近的码字 $c = \arg\min_k \|E_h(\mathbf{x}^{(h)}) - \mathbf{e}_k\|_2^2$。这样异构手型就被投影进同一个离散空间，跨手型翻译只是"编码-量化-解码"三步：$\hat{\mathbf{x}}^{(j)} = D_j(\mathbf{e}_{Q(E_i(\mathbf{x}^{(i)}))})$，即插即用。接入新手型时不必重训整本 codebook——量化是不可微的，梯度传不回去，于是改用知识蒸馏把新编码器对齐到参考手型 $\mathcal{L}_{\text{distill}} = \|E_{\text{new}}(\mathbf{x}_{\text{new}}) - E_{\text{ref}}(\mathbf{x}_{\text{ref}})\|_2^2$，绕过不可微的量化步骤，只训新的编解码器即可。
 
-2. **VLM驱动的操控生成**: 采用解耦架构——CLIPort感知模块从RGB-D和指令推断目标轨迹 $\mathcal{T}_{\text{tar}}$，Point-SAM分割目标物体点云 $\mathcal{P}_{\text{obj}}$。以Qwen3-0.6B为基座模型，将初始手姿态编码、目标轨迹、物体点云和文本token拼接输入VLM生成操控token序列。采用渐进遮蔽训练课程：从完全教师强制逐步增大遮蔽比例到纯自回归。
+**2. 感知解耦的 VLM 操控生成：把"看懂场景"和"生成动作"分开。** 直接让 VLM 端到端从原始 RGB-D 生成动作，既吃数据又难收敛。UniHM 把感知拆出来单独做：CLIPort 模块从 RGB-D 和指令里推断目标轨迹 $\mathcal{T}_{\text{tar}}$，Point-SAM 分割出目标物体点云 $\mathcal{P}_{\text{obj}}$。然后以 Qwen3-0.6B 这样的小基座为生成器，把初始手姿态编码、目标轨迹、物体点云和文本 token 拼成一条序列输入，自回归吐出操控 token。训练上用渐进遮蔽课程缓解自回归的曝光偏差：从完全教师强制起步，逐步抬高遮蔽比例直到纯自回归，让模型在训练后期就习惯依赖自己生成的历史。深度输入在这里很关键——消融显示去掉深度只用 RGB 时 MPJPE 暴涨约 40%，说明 3D 几何线索是动作生成的地基。
 
-3. **Physics-guided Dynamic Refinement**: 逐帧Gauss-Newton优化，包含三项能量：
+**3. 物理引导的动态优化：把生成结果掰回物理可行域。** VLM 生成的序列语义对、但常有穿透、抖动等物理瑕疵。UniHM 逐帧做带 Levenberg-Marquardt 阻尼的 Gauss-Newton 优化，把三类能量拧成一个目标：接触能量 $\mathcal{E}_{\text{contact}}$ 用指尖到物体表面的有符号点到面距离配非对称平滑惩罚，鼓励该接触时贴合、不该穿透；生成先验 $\mathcal{E}_{\text{gen}}$ 惩罚偏离 VLM 原始配置，守住语义意图；时序先验 $\mathcal{E}_{\text{time}}$ 正则化一阶（速度）与二阶（加速度）差分，压住抖动。每一帧解一个阻尼线性系统更新关节角 $\Delta q_t$：
 
-    - **接触能量** $\mathcal{E}_{\text{contact}}$：基于指尖到物体表面的有符号点到面距离，使用非对称平滑惩罚
-    - **生成先验** $\mathcal{E}_{\text{gen}}$：惩罚偏离VLM生成配置，保持语义意图
-    - **时序先验** $\mathcal{E}_{\text{time}}$：正则化一阶（速度）和二阶（加速度）时序差分，确保平滑连贯
+$$(J_t^T J_t + \mathbf{W}_{\text{gen}} + \mathbf{W}_{\text{vel}} + \mathbf{W}_{\text{acc}} + \lambda I)\Delta q_t = -J_t^T r_{\text{contact}}(q_t) - \tilde{\mathbf{W}}$$
+
+其中 $\mathbf{W}_*$ 是各先验项的权重矩阵，$\lambda I$ 是 LM 阻尼。这一步只做后处理、不改 VLM，因此既保住了生成的灵活性，又拿回了物理可行性——消融里去掉它 MPJPE 从 61.40 退到 65.78。
 
 ### 损失函数 / 训练策略
 
-VQ-VAE训练：重建损失 + codebook损失 $\mathcal{L}_{\text{vq}} = \|\text{sg}[\mathbf{z}_e] - \mathbf{z}_q\|_2^2 + \beta\|\mathbf{z}_e - \text{sg}[\mathbf{z}_q]\|_2^2$
-
-物理优化用Levenberg-Marquardt阻尼的Gauss-Newton迭代：
-$$(J_t^T J_t + \mathbf{W}_{\text{gen}} + \mathbf{W}_{\text{vel}} + \mathbf{W}_{\text{acc}} + \lambda I)\Delta q_t = -J_t^T r_{\text{contact}}(q_t) - \tilde{\mathbf{W}}$$
-
-数据标注：GPT-4o对关键帧生成5条开放词汇指令；Dex-Retargeting将MANO姿态映射到5种机械手。
+VQ-VAE 用重建损失加 codebook 损失训练，$\mathcal{L}_{\text{vq}} = \|\text{sg}[\mathbf{z}_e] - \mathbf{z}_q\|_2^2 + \beta\|\mathbf{z}_e - \text{sg}[\mathbf{z}_q]\|_2^2$，其中 $\text{sg}[\cdot]$ 是停梯度，$\beta$ 为承诺项权重。训练数据靠两步自动标注得到：GPT-4o 对关键帧生成 5 条开放词汇指令，Dex-Retargeting 把 MANO 姿态映射到 5 种机械手，从而无需任何遥操作采集就能覆盖多手型。
 
 ## 实验关键数据
 

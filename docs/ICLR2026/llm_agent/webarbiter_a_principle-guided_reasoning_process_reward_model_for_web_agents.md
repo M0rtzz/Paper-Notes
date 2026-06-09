@@ -36,51 +36,16 @@ WebArbiter 提出一种推理优先、原则引导的过程奖励模型 (WebPRM)
 
 ## 方法详解
 
-### 1. 问题形式化
-Web 导航建模为 POMDP：$\mathcal{E} = (\mathcal{S}, \mathcal{A}, \mathcal{O})$
+### 整体框架
+WebArbiter 把过程奖励建模重写成"先讲理由、再下结论"的文本生成任务：把 Web 导航建模为 POMDP $\mathcal{E} = (\mathcal{S}, \mathcal{A}, \mathcal{O})$，给定任务指令、当前页面观察、历史动作推理和一对候选动作，模型先自回归生成一段原则引导的结构化论证，最后输出偏好裁决。训练分两阶段：先用强教师 (o3) 蒸馏出会写论证的初始策略，再用可验证奖励做 GRPO 强化学习把裁决对齐到正确性信号；底座是 Qwen2.5-3B/7B-Instruct，用 LoRA 微调。
 
-给定任务指令 $\mathcal{I}$、当前观察 $o_p$、历史动作和推理 $(a_{<p}, c_{<p})$，以及候选动作对 $(a_p^1, c_p^1)$ 和 $(a_p^2, c_p^2)$，WebArbiter 生成结构化论证 $j = (j_1, \ldots, j_L)$，最终产出偏好裁决 $\hat{y}$。
+### 关键设计
 
-输入紧凑表示：
-$$x = (\mathcal{I}, o_p, a_{<p}, c_{<p}, (a_p^1, c_p^1), (a_p^2, c_p^2))$$
+**1. 推理优先的生成式奖励建模：把裁决变成可审计的论证。** 传统标量 WebPRM 把进度压成一个粗分数、检查列表 WebPRM 依赖脆弱的模板匹配，二者都无法解释"为什么这个动作更好"。WebArbiter 改为生成式：把指令 $\mathcal{I}$、当前观察 $o_p$、历史动作与推理 $(a_{<p}, c_{<p})$、以及两个候选动作对 $(a_p^1, c_p^1)$ 和 $(a_p^2, c_p^2)$ 拼成紧凑输入 $x = (\mathcal{I}, o_p, a_{<p}, c_{<p}, (a_p^1, c_p^1), (a_p^2, c_p^2))$，再自回归地写出长为 $L$ 的论证 $j$，即 $\pi_\theta(j | x) = \prod_{l=1}^{L} \pi_\theta(j_l | x, j_{<l})$，论证末尾给出裁决 $\hat{y}$。整体训练目标就是让裁决匹配真值标签：$\max_{\pi_\theta} \mathbb{E}_{(x,y) \sim \mathcal{D}_{\text{Train}}, \hat{y} \sim \pi_\theta(j|x)} [\mathbb{1}(\hat{y} = y)]$。由于判断理由被显式写出来，奖励信号从"一个数"变成"一段可读、可查的链路"。训练数据复用 WebPRM Collection (Chae et al., 2025)，每个实例含指令、观察序列与专家标注轨迹，正向动作取自专家演示 $A^+$、负向动作取自被拒轨迹 $A^-$，配成成对偏好样本。
 
-自回归生成论证：
-$$\pi_\theta(j | x) = \prod_{l=1}^{L} \pi_\theta(j_l | x, j_{<l})$$
+**2. 原则引导的论证流程：用动态推导的原则抵抗表面相关性。** 检查列表方法把"什么算对"写死成模板，一旦页面布局或语义变化就失效。WebArbiter 不预设模板，而是让模型在论证里先从当前指令和页面状态推导出任务特定的原则，再把原则逐条落实到页面元素上，比较候选动作满足原则的程度，最后才输出偏好。这条"推导原则 → 接地到页面 → 比较候选 → 给出裁决"的固定论证结构，使判断有据可依、不被表面文本相似度带偏；消融显示去掉显式原则会让 BoN 准确率从 74.60 掉到 55.16，说明原则正是稳健泛化的核心。
 
-### 2. 训练数据构建
-基于 WebPRM Collection (Chae et al., 2025)：
-- 每个实例包含指令、观察序列和专家标注轨迹
-- 正向动作来自专家演示 $A^+$，负向动作来自被拒绝的轨迹 $A^-$
-- 转化为成对偏好样本用于训练
-
-### 3. 两阶段训练流程
-
-**总体目标**：
-$$\max_{\pi_\theta} \mathbb{E}_{(x,y) \sim \mathcal{D}_{\text{Train}}, \hat{y} \sim \pi_\theta(j|x)} [\mathbb{1}(\hat{y} = y)]$$
-
-**Stage 1: 推理蒸馏**
-- 使用更强的教师模型 (o3) 生成原则引导的结构化论证
-- 论证流程：从指令和状态推导任务特定原则 → 将原则落实到页面 → 比较候选动作 → 输出偏好
-- 蒸馏损失：
-
-$$\mathcal{L}_{\text{SFT}}(\theta) = -\frac{1}{K} \sum_{i=1}^{K} \sum_{l=1}^{L_i} \log \pi_\theta(\hat{j}_l^{(i)} | x^{(i)}, \hat{j}_{<l}^{(i)})$$
-
-- 使用 10K 样本进行蒸馏训练
-
-**Stage 2: 强化学习**
-- 用可验证奖励对齐裁决与正确性信号
-- 奖励函数：$R(x, \hat{y}) \in \{-1, 1\}$（基于裁决是否匹配真值）
-- 蒸馏模型作为参考策略 $\pi_{\text{ref}}$
-
-RL 优化目标（使用 GRPO）：
-$$\mathcal{L}_{\text{RL}}(\theta) = \max_{\pi_\theta} \mathbb{E}_{(x,y) \sim \mathcal{D}_{\text{RL}}, \hat{y} \sim \pi_\theta(j|x)} [R(x, \hat{y})] - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$$
-
-- 使用剩余 20K 样本进行 RL 训练
-
-### 4. 核心创新
-- **原则引导**：从用户意图和当前状态动态推导原则（而非使用固定检查列表模板）
-- **推理优先**：先生成结构化推理论证，再输出裁决，使判断可审计
-- 模型基于 Qwen2.5-3B/7B-Instruct，使用 LoRA 微调
+**3. 蒸馏 + 强化学习的两阶段训练：先学会讲理、再放大正确率。** 直接在 Instruct 模型上冷启动 RL 会在 Mind2Web 上升、其他环境反而塌掉，因为模型还不会稳定地写论证。第一阶段推理蒸馏用 o3 生成原则引导的论证，以标准 SFT 交叉熵拟合教师的逐 token 输出 $\mathcal{L}_{\text{SFT}}(\theta) = -\frac{1}{K} \sum_{i=1}^{K} \sum_{l=1}^{L_i} \log \pi_\theta(\hat{j}_l^{(i)} | x^{(i)}, \hat{j}_{<l}^{(i)})$，用 10K 样本把"会写论证"的能力先打牢。第二阶段把蒸馏后的模型当参考策略 $\pi_{\text{ref}}$，用剩余 20K 样本做 GRPO，奖励只看裁决是否命中真值 $R(x, \hat{y}) \in \{-1, 1\}$，目标在最大化奖励的同时用 KL 约束不要偏离参考策略太远：$\mathcal{L}_{\text{RL}}(\theta) = \max_{\pi_\theta} \mathbb{E}_{(x,y) \sim \mathcal{D}_{\text{RL}}, \hat{y} \sim \pi_\theta(j|x)} [R(x, \hat{y})] - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$。SFT 提供稳定起点、RL 充当放大器，二者组合的效果远超任一单独使用。
 
 ## WebPRMBench 基准
 
@@ -179,7 +144,7 @@ WebArbiter-7B 以 Avg BoN Acc 超越 GPT-5 达 **9.1 个百分点**，超越前 
 - [\[ICML 2026\] Process Reward Agents for Steering Knowledge-Intensive Reasoning](../../ICML2026/llm_agent/process_reward_agents_for_steering_knowledge-intensive_reasoning.md)
 - [\[ICLR 2026\] Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)
 - [\[ICLR 2026\] ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents](st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag.md)
-- [\[ACL 2026\] SynthAgent: Adapting Web Agents with Synthetic Supervision](../../ACL2026/llm_agent/synthagent_adapting_web_agents_with_synthetic_supervision.md)
+- [\[ICML 2026\] Persona2Web: Benchmarking Personalized Web Agents for Contextual Reasoning with User History](../../ICML2026/llm_agent/persona2web_benchmarking_personalized_web_agents_for_contextual_reasoning_with_u.md)
 
 </div>
 

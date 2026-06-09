@@ -42,40 +42,25 @@ ASR提出自适应选择性重置方案，通过预测集中度 $\mathcal{C}_t$ 
 ## 方法详解
 
 ### 整体框架
-ASR由3个组件构成：(1) 自适应选择性重置（基于 $\mathcal{C}_t$ vs $\bar{\mathcal{C}}_{t-1}$）；(2) Importance-aware知识恢复（Fisher信息正则化）；(3) On-the-fly适应调整（基于预测不一致性 $\phi_t$）。
+ASR是一个挂在现有持续TTA方法（ETA、EATA、ROID等）之上的即插即用模块，每个时间步先用一个崩溃风险信号决定要不要重置、重置多深，再用一套带重要性加权的正则化把被重置层里仍然有价值的知识"拉回来"，最后根据当前域与源域的差异在线微调这些机制的力度。三件事环环相扣：什么时候重置、重置哪些层、重置后如何不丢知识。
 
 ### 关键设计
 
-1. **自适应重置——When**:
+**1. 自适应重置——判断何时该重置：用预测集中度替代固定周期。**
 
-    - 预测集中度：$\mathcal{C}_t = \sum_{c=1}^C \hat{p}_{t_c} \log(\hat{p}_{t_c})$，其中 $\hat{p}_t = \sigma(\frac{1}{|\mathcal{B}_t|}\sum_i f_{\theta_{t-1}}(x_t^i))$
-    - 大 $\mathcal{C}_t$ → 低预测多样性 → 高崩溃风险
-    - 累积集中度（EMA）：$\bar{\mathcal{C}}_t = \mu_\mathcal{C} \cdot \bar{\mathcal{C}}_{t-1} + (1-\mu_\mathcal{C}) \cdot \mathcal{C}_t$
-    - 触发条件：$\mathcal{C}_t > \bar{\mathcal{C}}_{t-1}$ 时立即重置
-    - 初始化 $\bar{\mathcal{C}}_0 = -\log(\alpha_0 \cdot C)$，选择 $\alpha_0$ 使初始值足够大避免过早重置
-    - 实验验证：$\mathcal{C}_t$ 与准确率的Pearson相关系数高达 **0.88**
+RDumb这类方法每隔固定步数全量重置一次，问题在于这个周期和模型真正逼近崩溃的时机毫无关系，重早了浪费已积累的适应、重晚了错误已深度累积。ASR改用一个能直接反映崩溃风险的信号——预测集中度 $\mathcal{C}_t = \sum_{c=1}^C \hat{p}_{t_c} \log(\hat{p}_{t_c})$，其中 $\hat{p}_t = \sigma(\frac{1}{|\mathcal{B}_t|}\sum_i f_{\theta_{t-1}}(x_t^i))$ 是当前batch logit均值过softmax后的分布。模型一旦开始只往少数几类上塌缩，这个分布就越尖锐、$\mathcal{C}_t$ 越大，意味着崩溃风险越高。为了判断"高到该重置了"，方法维护一条EMA长期基线 $\bar{\mathcal{C}}_t = \mu_\mathcal{C} \cdot \bar{\mathcal{C}}_{t-1} + (1-\mu_\mathcal{C}) \cdot \mathcal{C}_t$，并在 $\mathcal{C}_t > \bar{\mathcal{C}}_{t-1}$（当前集中度突破历史基线）时立即触发重置；初始基线设为 $\bar{\mathcal{C}}_0 = -\log(\alpha_0 \cdot C)$，把 $\alpha_0$ 调到足够大以免开局还没适应就乱重置。这个信号之所以可靠，是因为它和实际准确率的Pearson相关系数高达0.88，几乎不花额外计算就能当作崩溃的proxy。
 
-2. **选择性重置——Where**:
+**2. 选择性重置——判断重置哪些层：从output端往input端按需推进。**
 
-    - 动机：label noise corruption从网络末端开始（Bai et al., 2021; Yang et al., 2024），靠近input的层更鲁棒
-    - 重置比例：$r_t = r_0 + \lambda_r \cdot (\mathcal{C}_t - \bar{\mathcal{C}}_{t-1})$
-    - 从output端开始重置 $r_t$ 比例的层，其余保留
-    - $r_t$ 上限1.0，$r_0$ 为最小重置比例
-    - 设计动机：崩溃越严重→corruption越深入→需要重置更多层
+全量重置一刀切地丢掉所有时间积累的知识，代价太大。ASR借用了一个已知现象：label noise带来的corruption是从网络末端（靠近输出的层）先开始侵蚀的，越靠近输入的层越鲁棒。于是重置不必全做，只从output端开始重置一定比例 $r_t$ 的层、其余原样保留。重置多深由崩溃严重程度决定：$r_t = r_0 + \lambda_r \cdot (\mathcal{C}_t - \bar{\mathcal{C}}_{t-1})$，集中度超出基线越多说明corruption已渗得越深、就重置越多层，$r_0$ 是最小重置比例、$r_t$ 上限取1.0。这样既切掉了已被污染的部分，又把仍干净的浅层适应知识留了下来，显著缓解了全量重置后那种性能骤降和漫长恢复。
 
-3. **Importance-Aware知识恢复**:
+**3. 重要性加权的知识恢复——别让重置抹掉关键参数。**
 
-    - 损失：$\mathcal{L} = \mathcal{L}_u + \lambda_\mathcal{F}\sum_i \bar{\mathcal{F}}^i(\theta_{t-1}^i - \bar{\theta}^i)^2$
-    - $\bar{\mathcal{F}}^i$：累积Fisher信息矩阵，$\bar{\theta}^i$：累积参数
-    - 对先前任务重要的参数（高Fisher值）被引导与累积状态对齐
-    - **混合累积方案**：CMA在每次重置间等权累积参数和Fisher矩阵；EMA在重置触发点聚合CMA值
-    - 解决的困境：接近重置时参数更接近当前域但也更容易被corruption，EMA的近因偏好不适合直接用
+即便是被重置的层里，也有一些参数对先前任务至关重要，直接清零会损失这部分知识。ASR用一个Fisher加权的正则项把它们往累积状态上拉：$\mathcal{L} = \mathcal{L}_u + \lambda_\mathcal{F}\sum_i \bar{\mathcal{F}}^i(\theta_{t-1}^i - \bar{\theta}^i)^2$，其中 $\bar{\mathcal{F}}^i$ 是累积Fisher信息矩阵、$\bar{\theta}^i$ 是累积参数，Fisher值越高代表该参数越重要、被约束得越紧。难点在于怎么算"累积"：越靠近重置点的参数虽然更贴合当前域，却也更可能已被corruption污染，所以EMA那种偏好近期的加权并不适合直接用。方法用了CMA+EMA混合方案——两次重置之间用CMA等权累积参数和Fisher矩阵（避免被临近崩溃的脏参数主导），到重置触发点再用EMA把各段CMA值聚合起来，兼顾时效性与抗污染。
 
-4. **On-the-fly适应调整**:
+**4. 在线自适应调整——让上述机制随域差异自动收放。**
 
-    - 预测不一致性：$\phi_t = \frac{1}{|\mathcal{B}_t|}\sum_i \mathbb{I}(\arg\max(\breve{y}_t^i) \neq \arg\max(\hat{y}_t^i))$
-    - 大 $\phi_t$（源模型与当前模型预测不一致）→ 大域差异
-    - 自适应调参：$\lambda_\mathcal{F} = \lambda_0 \cdot \phi_t^2$（域差异大→正则化强），$\mu_\mathcal{C} = \mu_0 \cdot \phi_t + 1 - \mu_0$（域差异大→减少集中度更新）
+固定的正则化强度和基线更新率无法应对差异悬殊的域漂移。ASR用源模型和当前模型的预测不一致性来度量域差异：$\phi_t = \frac{1}{|\mathcal{B}_t|}\sum_i \mathbb{I}(\arg\max(\breve{y}_t^i) \neq \arg\max(\hat{y}_t^i))$，两者分歧越大说明当前域离源域越远。据此在线调两个旋钮：正则化系数 $\lambda_\mathcal{F} = \lambda_0 \cdot \phi_t^2$（域差异大就加重正则、更努力保住源知识），基线更新率 $\mu_\mathcal{C} = \mu_0 \cdot \phi_t + 1 - \mu_0$（域差异大就放慢集中度基线的更新、避免误判）。这一步让前三个组件不依赖手调的固定超参，而是随域流变化自动收放力度。
 
 ## 实验关键数据
 
@@ -140,8 +125,8 @@ CCC-Hard上比SOTA提升 **44.12%**。
 ## 相关论文
 
 - [\[NeurIPS 2025\] E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models](../../NeurIPS2025/audio_speech/e-bats_efficient_backpropagation-free_test-time_adaptation_for_speech_foundation.md)
-- [\[ICLR 2026\] Knowing When to Quit: Probabilistic Early Exits for Speech Separation](knowing_when_to_quit_probabilistic_early_exits_for_speech_separation.md)
 - [\[NeurIPS 2025\] AVRobustBench: Benchmarking the Robustness of Audio-Visual Recognition Models at Test-Time](../../NeurIPS2025/audio_speech/textttavrobustbench_benchmarking_the_robustness_of_audio-visual_recognition_mode.md)
+- [\[ICLR 2026\] Knowing When to Quit: Probabilistic Early Exits for Speech Separation](knowing_when_to_quit_probabilistic_early_exits_for_speech_separation.md)
 - [\[ICLR 2026\] When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment](when_style_breaks_safety_defending_llms_against_superficial_style_alignment.md)
 - [\[NeurIPS 2025\] Instance-Specific Test-Time Training for Speech Editing in the Wild](../../NeurIPS2025/audio_speech/instance-specific_test-time_training_for_speech_editing_in_the_wild.md)
 

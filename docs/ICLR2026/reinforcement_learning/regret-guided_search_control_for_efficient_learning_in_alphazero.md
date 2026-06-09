@@ -41,43 +41,29 @@ tags:
 
 ### 整体框架
 
-RGSC 在 AlphaZero 基础上扩展三个核心组件：
-1. **Regret 定义**：量化棋局中每个状态的遗憾值（智能体评估与真实结果的偏差）。
-2. **Regret 网络**：包含排名网络和值网络两部分，识别高遗憾状态。
-3. **优先遗憾缓冲区（PRB）**：存储和管理高遗憾状态，通过 softmax 分布采样作为自我对弈的起始位置。
+RGSC 把"反复复盘自己下错的地方"这一人类学习习惯搬进 AlphaZero 的自我对弈循环。它先给每个棋局状态定义一个遗憾值来度量"智能体在这里错得有多离谱"，再训练一个 regret 网络（含排名头与值头）把高遗憾状态挑出来，存入一个优先遗憾缓冲区（PRB），之后的自我对弈不再总从空棋盘开始，而是有一定概率从这些高遗憾状态重启，把训练算力集中在尚未掌握的薄弱位置上。
 
 ### 关键设计
 
-**设计 1：Regret 定义**
+**1. 遗憾值定义：用"评估与结果的偏差"标记尚未掌握的状态。**
 
-- **功能**：为棋局中的每个状态定义遗憾值。
-- **核心思路**：遗憾值 R(st) 定义为从状态 st 到终局 sT，所选动作的 MCTS 评估值与实际结果之间的平均平方偏差：`R(st) = (1/(T-t)) Σ(V_selected(si) - z)²`。
-- **设计动机**：捕捉那些智能体评估与实际结果偏差最大的状态——这些正是智能体尚未掌握的关键位置，具有最高的学习潜力。
+要让智能体知道该回头复盘哪里，先得有一个量化"哪里学得差"的信号。RGSC 把状态 $s_t$ 的遗憾值定义为从该状态走到终局 $s_T$ 这段轨迹上，所选动作的 MCTS 评估值与最终对局结果之间的平均平方偏差：$R(s_t) = \frac{1}{T-t} \sum_{i=t}^{T-1} (V_{\text{selected}}(s_i) - z)^2$，其中 $z$ 是这局棋的真实胜负结果。当智能体在某个状态附近的评估一直与真实结果对不上时，遗憾值就高，这恰好对应它评估偏差最大、最没学透的关键位置——这些位置的学习潜力最高，正是应该优先复盘的地方。
 
-**设计 2：Regret 排名网络**
+**2. 排名网络：把"预测遗憾值"换成"找出相对最高遗憾"，绕开非平稳目标。**
 
-- **功能**：学习对状态按遗憾值进行排名，而非直接预测遗憾值。
-- **核心思路**：输出未归一化的排名分数 γs，通过 softmax 转化为重启分布 ρ(s|S)。优化目标是最大化 J_rank = Σ ρ(s|S)·R(s)，使高遗憾状态获得高采样概率。实际使用代理损失 L_rank = -log Σ exp(log softmax(γs) + R(s))。
-- **设计动机**：直接预测遗憾值面临严重的分布不平衡（大多数状态遗憾接近零）和非平稳性（高遗憾状态被纠正后遗憾下降）。排名目标只需找出相对最高遗憾的状态即可，大大降低了学习难度。
+直接回归遗憾值很难学：绝大多数状态遗憾接近零导致分布严重不平衡，而高遗憾状态一旦被纠正遗憾又会下降，目标本身是非平稳的。RGSC 转而只学一个相对排名——网络输出未归一化的排名分数 $\gamma_s$，经 softmax 转成重启分布 $\rho(s\mid S)$，优化目标是让高遗憾状态拿到高采样概率，即最大化 $J_{\text{rank}} = \sum_s \rho(s\mid S)\,R(s)$。实际训练用代理损失 $L_{\text{rank}} = -\log \sum_s \exp\big(\log\text{softmax}(\gamma_s) + R(s)\big)$，通过指数变换在保持遗憾排序的同时把高概率压向高遗憾状态。因为只需判断"谁的遗憾相对更高"而非给出精确数值，排名目标对分布不平衡和非平稳都不敏感，学习难度大幅下降。
 
-**设计 3：Regret 值网络**
+**3. 值网络：补上搜索树内部节点的遗憾估计，扩大重启状态的多样性。**
 
-- **功能**：估计 MCTS 搜索树内部节点的遗憾值。
-- **核心思路**：对于自我对弈轨迹上的状态可以直接计算遗憾值，但搜索树内部节点没有完整轨迹信息。值网络提供这些节点的遗憾值估计。
-- **设计动机**：搜索树中可能包含轨迹之外的高遗憾状态（因为 MCTS 探索过但未实际走到），利用这些状态可以获得更多样化的重启位置。
+自我对弈轨迹上的状态有完整的后续走子，能直接按上面的公式算出遗憾；但 MCTS 搜索树里那些探索过却没真正走到的内部节点缺少完整轨迹，算不出遗憾值。RGSC 为此加了一个值网络专门估计这些内部节点的遗憾。这样可重启的高遗憾状态就不再局限于实际走过的那条路径，而是把搜索树中被探索却未落子的潜在薄弱位置也纳入进来，让复盘的覆盖面更广、更多样。
 
-**设计 4：优先遗憾缓冲区（PRB）**
+**4. 优先遗憾缓冲区（PRB）：用 EMA 衰减模拟"复盘到真正理解"的过程。**
 
-- **功能**：维护固定容量 K 的高遗憾状态集合，作为自我对弈的重启点。
-- **核心思路**：每局自我对弈后，排名网络选出最高排名状态，仅当其遗憾值高于 PRB 中最低遗憾状态时才加入。采样时使用 softmax 分布 P(si) ∝ R(si)^(1/τ) 优先选择高遗憾状态。重启后通过 EMA 更新遗憾值：R_new ← (1-α)·R_old + α·R。
-- **设计动机**：EMA 更新避免遗憾值骤降，确保只有智能体真正掌握该状态后其遗憾才会逐渐衰减，模拟人类反复复盘直到完全理解的过程。
+PRB 维护一个固定容量 $K$ 的高遗憾状态集合作为重启点。每局自我对弈结束后，排名网络选出最高排名的状态，只有当它的遗憾值高于 PRB 中当前最低遗憾状态时才替换进来。重启采样时用温度化的 softmax 分布 $P(s_i) \propto R(s_i)^{1/\tau}$ 偏向高遗憾状态。关键在于状态被重新对弈后并不直接把遗憾归零，而是用指数滑动平均更新 $R_{\text{new}} \leftarrow (1-\alpha)R_{\text{old}} + \alpha R$，让遗憾只在智能体反复练习并真正掌握后才逐渐衰减——这正对应人类"反复复盘同一处错误直到彻底想通"的过程，避免一次纠正就草率丢弃尚未稳固的状态。
 
 ### 损失函数 / 训练策略
 
-- **排名损失**：`L_rank = -log Σ exp(log softmax(γs) + R(s))` —— 通过指数变换保持排名顺序，引导模型将高概率分配给高遗憾状态。
-- **值损失**：标准 MSE 回归损失，预测状态的遗憾值。
-- **自我对弈策略**：以概率 1-λ 从空棋盘开始，概率 λ 从 PRB 中采样状态重启。
-- **训练集成**：排名网络和值网络作为 AlphaZero 网络的额外输出头（regret head），计算开销极小。
+排名头与值头都作为 AlphaZero 主干网络的额外输出头联合训练，因此额外计算开销极小，且随网络 block 数增大愈发可忽略。排名头用代理损失 $L_{\text{rank}}$ 维持遗憾排序，值头用标准 MSE 回归拟合状态遗憾值。自我对弈时以概率 $1-\lambda$ 从空棋盘开始保证棋局完整性，以概率 $\lambda$ 从 PRB 采样状态重启把算力投向薄弱位置。
 
 ## 实验关键数据
 
@@ -160,11 +146,11 @@ RGSC 在 AlphaZero 基础上扩展三个核心组件：
 
 ## 相关论文
 
-- [\[ICLR 2026\] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
 - [\[ICLR 2026\] WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
-- [\[ICLR 2026\] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
 - [\[ACL 2026\] AttnPO: Attention-Guided Process Supervision for Efficient Reasoning](../../ACL2026/reinforcement_learning/attnpo_attention-guided_process_supervision_for_efficient_reasoning.md)
 - [\[ICML 2026\] DR.Q: Debiased Model-based Representations for Sample-efficient Continuous Control](../../ICML2026/reinforcement_learning/debiased_model-based_representations_for_sample-efficient_continuous_control.md)
+- [\[ICLR 2026\] BA-MCTS: Bayes Adaptive Monte Carlo Tree Search for Offline Model-based RL](bayes_adaptive_monte_carlo_tree_search_for_offline_model-based_reinforcement_lea.md)
+- [\[ICLR 2026\] QuRL: Efficient Reinforcement Learning with Quantized Rollout](qurl_efficient_reinforcement_learning_with_quantized_rollout.md)
 
 </div>
 

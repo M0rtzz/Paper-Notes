@@ -38,13 +38,18 @@ tags:
 6. 现有 token 剪枝方法（注意力排序/学习选择/合并/训练时 dropout）在分类等静态任务上有效，但在规划这种迭代动态场景中未被验证
 
 ## 方法（框架/设计）
-- **世界模型架构**: 基于预训练 DINO 编码器（固定权重）提取视觉 patch token $z_t \in \mathbb{R}^{H_p \times W_p \times D}$，因果 Transformer 解码器预测未来 token 序列
-- **训练损失**: MSE 预测损失 $\mathcal{L}_{wm} = \frac{1}{N}\sum_{i=1}^N \|\hat{z}_{t+1,i} - z_{t+1,i}\|^2$，目标距离同样用 MSE
-- **Sparse Imagination**: 在世界模型推理阶段随机丢弃比例为 $p$ 的 patch token，仅用 $(1-p)N$ 个 token 进行前向预测
-- **随机分组注意力训练**: 训练时将每帧 token 随机分为两组，注意力掩码限制组内交互，使模型学会处理任意 token 子集。组间时间维度保持一致。
-- **MPC 集成**: 每个规划步重新采样 dropout mask（独立于前一步），预测和 CEM 优化均在稀疏 token 上进行
-- **VLA 引导规划**: 对长时程任务从预训练 VLA（SmolVLA）采样 $K$ 个候选动作序列，替代 CEM 的随机采样——大幅提升长时程规划效率
-- **关键发现**: 简单随机采样优于复杂的注意力/学习排序方法，因为静态重要性度量在动态规划中存在"盲点"——某些在当前状态看似不重要的 patch 在评估候选动作时变得关键，随机采样的无偏覆盖避免了系统性遗漏
+
+### 整体框架
+
+世界模型以固定权重的预训练 DINO 编码器把每帧图像编码成 patch token $z_t \in \mathbb{R}^{H_p \times W_p \times D}$，再由一个因果 Transformer 解码器在 token 空间预测未来状态序列，训练目标是逐 token 的 MSE 预测损失 $\mathcal{L}_{wm} = \frac{1}{N}\sum_{i=1}^N \|\hat{z}_{t+1,i} - z_{t+1,i}\|^2$。规划时用 MPC（CEM 或 VLA 引导采样）在想象出的轨迹上择优动作，而本文的核心改造是让这套想象只在一小撮随机保留的 token 上进行，从而把每步 $K \times M \times H$ 次前向的开销直接砍掉一半。
+
+### 关键设计
+
+**1. Sparse Imagination：用随机丢弃直接削掉一半想象开销。** MPC 的计算瓶颈在于每个规划步都要对 $K$ 条候选轨迹、$M$ 个 CEM 样本、$H$ 步时域反复跑世界模型，而开销随 token 数二次增长。本文不做任何复杂的 token 选择，只是在推理阶段以比例 $p$ 随机丢弃 patch token，仅保留 $(1-p)N$ 个 token 喂进世界模型预测，$p=0.5$ 时规划时间几乎对半下降。关键发现是这种朴素随机采样反而优于注意力排序、学习排序等"聪明"方法：静态重要性度量在 MPC 的迭代优化里存在"盲点"——某个 patch 在当前状态看似无关紧要，但在评估某条候选动作序列时却可能变得关键；每步重新独立采样 mask 的无偏覆盖，恰好避免了静态排序的系统性遗漏，这也是为何 10–50% 是丢弃率的甜蜜区间、超过 70% 才明显退化。
+
+**2. 随机分组注意力训练：让模型学会在任意 token 子集上预测。** 如果世界模型只见过全量 token，推理时突然抽走一半会严重失配（消融显示 PushT 直接从 70% 掉到 35%）。为此训练时把每帧 token 随机切成两组，用注意力掩码限制交互只发生在组内、时间维度上各组保持对齐，等于让模型反复在残缺视野下学习预测动力学。这样推理阶段无论丢掉哪些 token、丢多少，模型都能稳定外推，分组注意力因此是稀疏想象能成立的必要前提而非可选项。
+
+**3. VLA 引导规划：把长时程的候选采样交给预训练策略。** 对长时程任务，CEM 在动作空间里盲目随机采样既慢又难命中有效轨迹。这里改为从预训练的 VLA 策略（SmolVLA）采样 $K$ 条候选动作序列来替代 CEM 的随机采样，再让稀疏世界模型快速评估打分。VLA 提供的动作先验把候选集中到合理区域，与稀疏想象的廉价评估叠加后，长时程任务上既提了约 4–7% 成功率又省了约 40% 计算。
 
 ## 实验关键数据
 
@@ -130,11 +135,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
 - [\[ICLR 2026\] Visual Planning: Let's Think Only with Images](visual_planning_lets_think_only_with_images.md)
 - [\[CVPR 2026\] Chain of World: World Model Thinking in Latent Motion (CoWVLA)](../../CVPR2026/robotics/chain_of_world_world_model_thinking_in_latent_motion.md)
-- [\[AAAI 2026\] Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation](../../AAAI2026/robotics/recursive_visual_imagination_and_adaptive_linguistic_grounding_for_vision_langua.md)
 - [\[ICML 2026\] Dual-Stream Diffusion for World-Model Augmented Vision-Language-Action Model](../../ICML2026/robotics/dual-stream_diffusion_for_world-model_augmented_vision-language-action_model.md)
+- [\[CVPR 2026\] Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning](../../CVPR2026/robotics/fast-thinkact_efficient_vision-language-action_reasoning_via_verbalizable_latent.md)
+- [\[NeurIPS 2025\] Learning Interactive World Model for Object-Centric Reinforcement Learning](../../NeurIPS2025/robotics/learning_interactive_world_model_for_object-centric_reinforcement_learning.md)
 
 </div>
 

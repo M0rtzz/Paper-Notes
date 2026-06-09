@@ -39,36 +39,29 @@ Stroke3D 首次实现从用户绘制的2D笔画和文本提示直接生成绑骨
 
 ### 整体框架
 
-Stroke3D 分两个主要阶段：(1) 可控骨骼生成——Sk-VAE编码骨骼图结构到潜空间，Sk-DiT在潜空间中生成骨骼嵌入；(2) 增强网格合成——用TextuRig数据集增强训练数据，再用SKA-DPO优化骨骼-网格对齐。
+Stroke3D 把"从一张手绘草图得到能动画的 3D 资产"拆成骨骼先行的两阶段问题。第一阶段先用一对图潜扩散模型（Sk-VAE 把 3D 骨骼图压进潜空间、Sk-DiT 在潜空间里以 2D 笔画和文本为条件生成骨骼），让用户的草图直接决定骨架拓扑；第二阶段再以这副骨骼为条件合成网格，并用 TextuRig 补足训练数据、用 SKA-DPO 把网格往骨骼上对齐。
 
 ### 关键设计
 
-1. **骨骼图VAE (Sk-VAE)**
+**1. 骨骼图 VAE（Sk-VAE）：把不规则的骨骼拓扑压成可扩散的连续潜变量。**
 
-   将3D骨骼表示为无向图 $\mathcal{G} = (\mathbf{X}, \mathbf{E})$，$\mathbf{X} \in \mathbb{R}^{N \times 3}$ 为关节坐标，$\mathbf{E}$ 为拓扑边。编码器由GCN和TransformerConv组成，将图结构编码到连续潜空间。训练采用 $L_2$ 重建损失加轻量KL散度正则化（$kl\_\beta = 1 \times 10^{-8}$），确保潜空间平滑。
+骨骼天然是图而非张量，直接在关节坐标上做扩散既丢拓扑又难收敛，所以先把它压进潜空间。这里把 3D 骨骼写成无向图 $\mathcal{G} = (\mathbf{X}, \mathbf{E})$，其中 $\mathbf{X} \in \mathbb{R}^{N \times 3}$ 是关节坐标、$\mathbf{E}$ 是描述骨骼父子连接的拓扑边。编码器用 GCN 配 TransformerConv，既聚合关节的局部邻域又建模长程连接，把整张图映到一个连续潜空间。训练只用 $L_2$ 重建损失加一项极轻的 KL 正则（$kl\_\beta = 1 \times 10^{-8}$）——KL 系数压到近乎为零，是为了让潜空间足够平滑可采样、又不至于把重建精度牺牲掉，毕竟关节位置差几毫米都会让绑骨结果跑偏。
 
-2. **骨骼图DiT (Sk-DiT)**
+**2. 骨骼图 DiT（Sk-DiT）：让 2D 笔画和文本一起把骨骼"想"出来。**
 
-   基于DiT架构，用TransformerConv替代标准自注意力以适配图结构数据，并加入跨注意力整合CLIP编码的文本嵌入。2D笔画通过特征映射后与噪声潜表示拼接提供结构引导。训练时通过对3D骨骼的2D投影施加扰动来模拟手绘笔画：
+有了潜空间，生成端要解决的是怎么把用户那几笔草图变成结构合理的 3D 骨架。Sk-DiT 沿用 DiT 框架，但把标准自注意力换成 TransformerConv 以适配图结构数据，再加一路跨注意力把 CLIP 编码的文本嵌入引进来，让"长颈鹿"这类语义能约束骨骼比例。2D 笔画经特征映射后与噪声潜表示拼接，提供逐关节的结构引导。训练的巧思在于不需要真实手绘数据：直接对 3D 骨骼的 2D 投影施加扰动来模拟人手画歪的笔画，去噪目标为 $\mathcal{L}_{\text{Sk-DiT}} = \mathbb{E}_{\mathbf{z}_0, t, \epsilon, \mathbf{J}_{xy}, \mathbf{E}, \mathbf{c}_{\text{text}}} \left[\|\epsilon_\phi(\mathbf{z}_t, t, \mathbf{J}_{xy}, \mathbf{E}, \mathbf{c}_{\text{text}}) - \epsilon\|_2^2\right]$，其中条件里同时带上了投影关节 $\mathbf{J}_{xy}$、拓扑边 $\mathbf{E}$ 和文本 $\mathbf{c}_{\text{text}}$。论文还发现这个结构条件并非锦上添花——去掉它后模型在大规模数据上根本难以收敛。
 
-    $\mathcal{L}_{\text{Sk-DiT}} = \mathbb{E}_{\mathbf{z}_0, t, \epsilon, \mathbf{J}_{xy}, \mathbf{E}, \mathbf{c}_{\text{text}}} \left[\|\epsilon_\phi(\mathbf{z}_t, t, \mathbf{J}_{xy}, \mathbf{E}, \mathbf{c}_{\text{text}}) - \epsilon\|_2^2\right]$
+**3. TextuRig 数据集：补上绑骨模型缺纹理这块短板。**
 
-3. **TextuRig 数据集**
+第二阶段要让网格生成器学会"看着骨骼长肉"，但 Objaverse-XL 里的绑骨模型大多没纹理，直接用会让生成的网格质感很差。为此作者搭了一条数据流水线：从中筛出带纹理贴图或顶点颜色的模型，再用 Gemini 给它们重新写描述性标注。最终往 SKDream 原有的 24,000 条训练数据里补进 6,800 个高质量样本，专门喂"骨骼—带纹理网格—文本"这种此前稀缺的三元组。
 
-   针对Objaverse-XL中绑骨模型缺少纹理的问题，开发专门的处理流程：筛选含纹理贴图或顶点颜色的模型，用Gemini重新生成描述性标注。最终增加6,800个高质量样本到SKDream的24,000训练数据中。
+**4. SKA-DPO（骨骼-网格对齐偏好优化）：用偏好学习把网格牢牢钉在骨骼上。**
 
-4. **SKA-DPO (骨骼-网格对齐偏好优化)**
-
-   用参考模型为每个骨骼-文本对生成一对候选多视角图像，通过SKA Score评估骨骼-网格对齐质量，选出优胜/劣势样本构建偏好数据集，再用DiffusionDPO目标微调：
-
-    $\mathcal{L}(\theta) = -\mathbb{E} \log\sigma\big(-\beta(\|\epsilon^{win} - \epsilon_\theta(x_t^{win}, t)\|_2^2 - \|\epsilon^{win} - \epsilon_{\text{ref}}(x_t^{win}, t)\|_2^2 - (\text{lose项}))\big)$
+光靠监督微调，生成的网格仍可能和骨骼对不齐（肢体穿到骨架外、关节处穿模）。作者把图像扩散里的 DPO 搬到 3D：用参考模型为每个骨骼-文本对各生成一对候选多视角图像，用 SKA Score 评估它们与骨骼的对齐质量，对齐好的当优胜、差的当劣势，凑成偏好数据集后用 DiffusionDPO 目标微调，损失为 $\mathcal{L}(\theta) = -\mathbb{E} \log\sigma\big(-\beta(\|\epsilon^{win} - \epsilon_\theta(x_t^{win}, t)\|_2^2 - \|\epsilon^{win} - \epsilon_{\text{ref}}(x_t^{win}, t)\|_2^2 - (\text{lose项}))\big)$。这里以骨骼-网格对齐而非人类标注作为奖励信号，等于让模型自己监督"长出来的网格有没有贴合骨架"，实测把优胜/劣势的 margin 设为 0.1 时平衡最好。
 
 ### 损失函数 / 训练策略
 
-- Sk-VAE：$L_2$ 重建 + 极轻KL正则（$10^{-8}$）
-- Sk-DiT：标准扩散降噪损失 + 分类器无关引导（CFG）
-- 网格生成：先SFT增强（TextuRig），再SKA-DPO对齐优化
-- Sk-VAE和Sk-DiT各训练500K迭代，SKDream SFT 9K步，DPO 1K步
+Sk-VAE 用 $L_2$ 重建加 $10^{-8}$ 量级的极轻 KL 正则训练 500K 迭代；Sk-DiT 用标准扩散降噪损失配分类器无关引导（CFG），同样训 500K 迭代。网格端则是先用 TextuRig 做 9K 步监督微调把纹理质感补起来，再用 SKA-DPO 跑 1K 步对齐优化收尾。
 
 ## 实验关键数据
 

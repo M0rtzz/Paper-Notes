@@ -41,29 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段框架。阶段 1：VAE + ArcRank 损失构建患者特异性潜在空间；阶段 2：3D U-Net 学习潜在空间内的速度场（流匹配），结合 AdaLN 注入条件信号。
+Δ-LFM 想解决的是这样一件事：给定患者某个时间点的 MRI，按真实的时间间隔（"几年后"）预测出方向正确、个体化的未来扫描。难点在于，自编码器学出的潜在空间跨患者乱成一团、和临床严重度不挂钩，直接在上面做生成既不可控也不可解释。论文把整个流程拆成两阶段：先把潜在空间"理顺"，再在理顺的空间里学动力学。
+
+阶段 1 训练一个 VAE，但额外加上 ArcRank 损失，逼着同一患者不同时间点的潜在表示排成"一条线"——方向恒定、幅度随时间递增，于是潜在空间里"沿着某条轨迹前进"就等价于"疾病在加重"。阶段 2 在这个已经对齐好的潜在空间里训练一个 3D U-Net，用流匹配学习患者特异性的速度场，并把年龄、性别、临床状态等条件信号通过 AdaLN 注入。推理时从当前潜在向量出发、沿速度场积分到目标时间，再解码回图像。
 
 ### 关键设计
 
-1. **ArcRank 损失——患者轨迹潜在对齐**
-    - 功能：强制同一患者不同时间点的潜在表示沿特定方向排列，幅度随时间单调递增
-    - 核心思路：对潜在向量 $\mathbf{z}$ 做 SVD 分解 $U\Sigma V^\top = \text{SVD}(\mathbf{z})$，其中 $U$ 编码方向（角度），$\Sigma$ 编码幅度（严重度）。ArcRank 损失：
-      $$\mathcal{L}_{\text{ArcRank}} = \lambda_{\text{arc}} \sum_{i<j} |U_i - U_j| + \lambda_{\text{rank}} \sum_{i<j} \max(0, m - (\Sigma_j - \Sigma_i)), \quad t_i < t_j$$
-      外加 pull 项 $\mathcal{L}_{\text{Pull}} = |\Sigma_j - \Sigma_i|$ 防止相邻时间点过度分离
-    - 设计动机：SVD 统一处理方向和幅度，比 cosine similarity + 绝对值分开处理更稳定；stop-gradient 稳定训练
+**1. ArcRank 损失：把患者轨迹在潜在空间里"拉直"。**
 
-2. **Δ-LFM——时间语义化的流匹配**
-    - 功能：学习潜在空间中患者特异性的连续时间速度场，支持任意未来时间点预测
-    - 核心思路：将标准流匹配的 [0,1] 时间范围扩展到 [0,T]，$T = t_j - t_i$ 为实际年数。目标速度 $v^*(i,j) = (\mathbf{z}_j - \mathbf{z}_i)/(t_j - t_i)$，推理时以步长 $\text{d}t = 0.01$ 逐步积分：$\mathbf{z}_{i+\text{d}t} = \mathbf{z}_i + \text{d}t \cdot v_\theta(\mathbf{z}_i, t_i)$
-    - 设计动机：[0,1] 范围归一化丢失了实际时间语义；[0,T] 让"预测 3 年后的 MRI"直接可行
+这一步针对的痛点是潜在空间跨患者不对齐、和严重度无关。做法是对潜在向量 $\mathbf{z}$ 做 SVD 分解 $U\Sigma V^\top = \text{SVD}(\mathbf{z})$，让 $U$ 承担"方向（角度）"、$\Sigma$ 承担"幅度（严重度）"两个语义。ArcRank 损失同时约束这两者：
 
-3. **Δ-RMAE 评估指标**
-    - 功能：评估生成影像的进展方向准确度而非绝对图像质量
-    - 核心思路：残差指标 $\Delta\text{-RMAE} = \frac{|\Delta_{\text{gt}} - \Delta_{\text{gen}}|}{(\frac{1}{2}(|\Delta_{\text{gt}}| + |\Delta_{\text{gen}}|))} \in [0, 2]$，其中 $\Delta = \mathbf{x}_T - \mathbf{x}_0$
-    - 设计动机：传统 PSNR/SSIM 在纵向场景虚高（同一患者天然高相似度），Δ-RMAE 专聚焦于疾病引起的变化
+$$\mathcal{L}_{\text{ArcRank}} = \lambda_{\text{arc}} \sum_{i<j} |U_i - U_j| + \lambda_{\text{rank}} \sum_{i<j} \max(0, m - (\Sigma_j - \Sigma_i)), \quad t_i < t_j$$
+
+前一项（arc）压低同一患者各时间点之间的角度差，让方向保持一致；后一项（rank）是带 margin $m$ 的排序铰链，强制时间靠后的扫描幅度更大，于是 $\Sigma$ 随时间单调递增、天然对应严重度。为防止相邻时间点被排序项推得过开，再加一个 pull 项 $\mathcal{L}_{\text{Pull}} = |\Sigma_j - \Sigma_i|$ 把它们拉回来。用 SVD 统一处理方向和幅度，比"cosine 管方向 + 绝对值管幅度"那种拆开两套度量的做法更稳定，训练时配合 stop-gradient 进一步稳住梯度。
+
+**2. Δ-LFM：让流匹配的时间轴带上真实语义。**
+
+标准流匹配把时间归一化到 $[0,1]$，这对疾病进展是个硬伤——"0.5"既可能是半年也可能是五年，实际时间语义被抹掉了。Δ-LFM 把时间范围直接扩展到 $[0,T]$，其中 $T = t_j - t_i$ 就是两次扫描相隔的实际年数。目标速度定义为 $v^*(i,j) = (\mathbf{z}_j - \mathbf{z}_i)/(t_j - t_i)$，即"单位时间内潜在向量该走多远"。推理时以步长 $\text{d}t = 0.01$ 沿速度场逐步积分 $\mathbf{z}_{i+\text{d}t} = \mathbf{z}_i + \text{d}t \cdot v_\theta(\mathbf{z}_i, t_i)$，积分到任意目标时间即可。这样"预测 3 年后的 MRI"就变成"在速度场上走 3 个时间单位"，任意未来时间点的预测直接可行，也因为是确定性积分而非随机去噪，保住了时间连续性。
+
+**3. Δ-RMAE：换一把尺子量"进展方向"而非"图像长得像不像"。**
+
+PSNR/SSIM 在纵向场景会虚高——同一患者不同时间点本就高度相似，连"原样复制基线图"都能拿高分，疾病引起的微小变化被淹没。Δ-RMAE 把评估对象从绝对图像换成"变化量"：先取残差 $\Delta = \mathbf{x}_T - \mathbf{x}_0$，再比较真实变化与生成变化的相对误差
+
+$$\Delta\text{-RMAE} = \frac{|\Delta_{\text{gt}} - \Delta_{\text{gen}}|}{\frac{1}{2}(|\Delta_{\text{gt}}| + |\Delta_{\text{gen}}|)} \in [0, 2]$$
+
+分母用两者绝对变化的均值做归一化，避免被变化幅度本身带偏。指标越低说明模型真正抓住了疾病该往哪个方向变，而不是靠"保持静态"骗分，正好补上常规质量指标的盲区。
 
 ### 损失函数 / 训练策略
-阶段 1（AE）：重建损失 + ArcRank，$\lambda_{\text{arc}}=0.005$, $\lambda_{\text{rank}}=0.01$, $m$ 为 margin。AdamW, lr=$10^{-3}$, batch=2, 300 epochs。阶段 2（FM）：$\mathcal{L}_{\text{LFM}} = \sum_{i<j} |v_\theta(i,j) - v^*(i,j)|^2$。3D U-Net, AdamW, lr=$3 \times 10^{-5}$, batch=4, 200 epochs。条件信号（年龄/性别/临床状态）通过 AdaLN 注入。
+阶段 1（AE）用重建损失 + ArcRank 联合训练，权重 $\lambda_{\text{arc}}=0.005$、$\lambda_{\text{rank}}=0.01$，$m$ 为排序 margin；优化器 AdamW，lr=$10^{-3}$，batch=2，训练 300 epochs。阶段 2（FM）的流匹配目标为 $\mathcal{L}_{\text{LFM}} = \sum_{i<j} |v_\theta(i,j) - v^*(i,j)|^2$，主干是 3D U-Net，AdamW，lr=$3 \times 10^{-5}$，batch=4，训练 200 epochs；年龄/性别/临床状态等条件信号通过 AdaLN 注入。
 
 ## 实验关键数据
 
@@ -137,9 +142,9 @@ tags:
 
 - [\[AAAI 2026\] Ambiguity-aware Truncated Flow Matching for Ambiguous Medical Image Segmentation](../../AAAI2026/medical_imaging/ambiguity-aware_truncated_flow_matching_for_ambiguous_medica.md)
 - [\[NeurIPS 2025\] Riemannian Flow Matching for Brain Connectivity Matrices via Pullback Geometry](../../NeurIPS2025/medical_imaging/riemannian_flow_matching_for_brain_connectivity_matrices_via_pullback_geometry.md)
+- [\[CVPR 2025\] Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
 - [\[NeurIPS 2025\] Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface](../../NeurIPS2025/medical_imaging/surf2ct_cascaded_3d_flow_matching_models_for_torso_3d_ct_synthesis_from_skin_sur.md)
 - [\[CVPR 2026\] EI: Early Intervention for Multimodal Imaging based Disease Recognition](../../CVPR2026/medical_imaging/ei_early_intervention_for_multimodal_imaging_based_disease_recognition.md)
-- [\[CVPR 2025\] Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation](../../CVPR2025/medical_imaging/enhanced_contrastive_learning_with_multi-view_longitudinal_data_for_chest_x-ray_.md)
 
 </div>
 

@@ -43,31 +43,25 @@ tags:
 
 ### 整体框架
 
-给定训练好的权重矩阵 $\mathbf{W} \in \mathbb{R}^{m \times p}$ → 定义正交投影算子（剪枝 $\mathbf{C}_p$ 或折叠 $\mathbf{C}_f$）→ 投影得到压缩权重 $\mathbf{W}_{\text{comp}} = \mathbf{C} \mathbf{W}$ → 对 CNN 做 REPAIR (BatchNorm 重估)，对 ViT 做 LayerNorm 重置 → 可选的短期微调。
+本文把结构化剪枝和模型折叠都看成对训练好的权重矩阵 $\mathbf{W} \in \mathbb{R}^{m \times p}$ 做一次正交投影 $\mathbf{W}_{\text{comp}} = \mathbf{C}\mathbf{W}$，区别只在于投影到哪个子空间——剪枝投到坐标轴对齐子空间，折叠投到聚类结构子空间。整套流程免校准、不需要训练数据，投影完成后对 CNN 做一次 REPAIR（BatchNorm 统计量重估）、对 ViT 做 LayerNorm 重置以修正分布偏移，最多再跟 1–5 个 epoch 的可选微调。
 
 ### 关键设计
 
-1. **统一正交投影框架**:
+**1. 统一正交投影框架：把"删坐标"和"合方向"放进同一个比较坐标系。**
 
-    - 做什么：将剪枝和折叠统一为参数空间中的正交投影
-    - 核心思路：剪枝保留前 $k$ 个神经元对应 $\mathbf{U}_p = \begin{pmatrix} I \\ 0 \end{pmatrix}$，折叠将 $m$ 个参数向量聚为 $k$ 类并替换为类均值，对应 $\mathbf{U}_f \in \{0,1\}^{m \times k}$ 的 one-hot 聚类分配矩阵
-    - 设计动机：正交投影 $\mathbf{C}y = \arg\min_{z \in \text{Range}(\mathbf{U})} \|y - z\|_2$ 是到子空间最近点的映射，天然衡量压缩的参数失真
+要公平比较剪枝和折叠，先得让它们说同一种语言。本文把两者都写成 $\mathbf{C}y = \arg\min_{z \in \text{Range}(\mathbf{U})} \|y - z\|_2$，即把权重投影到由列空间 $\mathbf{U}$ 张成的子空间上的最近点映射，于是"压缩造成多大失真"就自然等价于"投影丢了多远"。剪枝保留前 $k$ 个神经元、其余置零，对应 $\mathbf{U}_p = \begin{pmatrix} I \\ 0 \end{pmatrix}$ 这种只沿坐标轴展开的子空间，被砍掉的方向信息直接丢失；折叠则把 $m$ 个参数向量用 $k$-means 聚成 $k$ 类、各类用类均值替换，对应一个 one-hot 聚类分配矩阵 $\mathbf{U}_f \in \{0,1\}^{m \times k}$，它保留的是"合并后的平均方向"而非简单删除。两种压缩在同一个投影框架里就只差在子空间的选法，可以直接比重建误差。
 
-2. **折叠优于剪枝的理论证明 (Theorem 2.1 & 2.2)**:
+**2. 折叠重建误差严格不超过剪枝：从投影几何给出理论保证。**
 
-    - 做什么：证明任意剪枝方案都存在重建误差更小的折叠方案
-    - 核心思路：Theorem 2.1 构造性证明：将所有被剪枝的行合并为一个额外聚类（秩 $k_f = k_p + 1$），其 Frobenius 范数重建误差严格不超过剪枝。Theorem 2.2 进一步证明最优 $k$-means 折叠 $\|\mathbf{W} - \mathbf{W}_f^\star\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_f'\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_p\|_F^2$
-    - 设计动机：结合损失函数的 Lipschitz 连续性 $|L(\mathbf{W}_1) - L(\mathbf{W}_2)| \leq \kappa \|\mathbf{W}_1 - \mathbf{W}_2\|_F$，更小的参数重建误差直接意味着更小的功能扰动
+有了统一框架，本文用两条定理证明折叠在参数重建上至少不输剪枝。Theorem 2.1 是构造性的：对任意剪枝方案，只要把所有被剪掉的行额外合并成一个聚类（让折叠的秩比剪枝多一个，$k_f = k_p + 1$），得到的折叠 $\mathbf{W}_f'$ 的 Frobenius 重建误差就严格不超过剪枝，即存在一个折叠方案总能追平或更优。Theorem 2.2 进一步说明最优 $k$-means 折叠只会更好，给出链式不等式 $\|\mathbf{W} - \mathbf{W}_f^\star\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_f'\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_p\|_F^2$。这一结论之所以能从"参数误差更小"推到"功能更好保持"，关键在损失函数的 Lipschitz 连续性 $|L(\mathbf{W}_1) - L(\mathbf{W}_2)| \leq \kappa \|\mathbf{W}_1 - \mathbf{W}_2\|_F$——既然折叠的参数扰动更小，它带来的功能偏移上界也更小，这就把"投影几何上的优势"翻译成了"压缩后精度上的优势"。
 
-3. **大规模超参数消融验证**:
+**3. 1000+ checkpoint 的大规模验证：界定理论优势何时真正成立。**
 
-    - 做什么：在 1000+ 个 checkpoint 上系统比较折叠与剪枝在不同训练条件下的表现
-    - 核心思路：覆盖 Adam/SGD 优化器、不同学习率、数据增强、正则化、SAM 训练，以及 LLaMA-60M/130M，验证理论预测的适用边界
-    - 设计动机：已有剪枝研究仅变种子而固定超参，未探索上游训练如何影响压缩效果
+定理只保证重建误差，实际增益还取决于上游怎么训练，因此本文在 1000+ 个 checkpoint 上系统扫了一遍。已有剪枝研究往往只换随机种子、固定超参，本文反过来覆盖 Adam/SGD 两类优化器、不同学习率、数据增强、正则化、SAM 训练，以及 LLaMA-60M/130M，专门探查训练条件如何左右压缩效果。结果验证了理论预测的适用边界：折叠优势在中—高压缩率下一致存在并随压缩率扩大，且在促进平坦解的训练条件（中等学习率、SAM）下被进一步放大，而尖锐解会削弱聚类投影的好处。
 
 ### 损失函数 / 训练策略
 
-压缩本身免校准无训练。折叠使用 $k$-means 聚类确定分组。可选后处理：CNN 做 REPAIR (BatchNorm 统计量重估)，ViT 做 LayerNorm 重置，或 1-5 epoch 微调。
+整个压缩过程免校准、无训练损失，折叠的分组由 $k$-means 聚类直接确定。可选后处理包括：CNN 用 REPAIR 重估 BatchNorm 统计量，ViT 重置 LayerNorm，或跟 1–5 个 epoch 的轻量微调以进一步收敛。
 
 ## 实验关键数据
 
@@ -130,11 +124,11 @@ tags:
 
 ## 相关论文
 
+- [\[CVPR 2025\] Less is More: Efficient Model Merging with Binary Task Switch](../../CVPR2025/model_compression/less_is_more_efficient_model_merging_with_binary_task_switch.md)
 - [\[ACL 2026\] Quantize What Counts: More for Keys, Less for Values](../../ACL2026/model_compression/quantize_what_counts_more_for_keys_less_for_values.md)
+- [\[ICLR 2026\] RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following Through Model Merging](rain-merging_a_gradient-free_method_to_enhance_instruction_following_through_mod.md)
 - [\[NeurIPS 2025\] Less is More but Where: Dynamic Token Compression via LLM-Guided Keyframe Prior](../../NeurIPS2025/model_compression/less_is_more_but_where_dynamic_token_compression_via_llm-guided_keyframe_prior.md)
 - [\[ICLR 2026\] The Geometry of LLM Quantization: GPTQ as Babai's Nearest Plane Algorithm](the_geometry_of_llm_quantization_gptq_as_babais_nearest_plane_algorithm.md)
-- [\[ICLR 2026\] Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
-- [\[ACL 2025\] Revisiting LoRA through the Lens of Parameter Redundancy: Spectral Encoding Helps](../../ACL2025/model_compression/revisiting_lora_through_the_lens_of_parameter_redundancy_spectral_encoding_helps.md)
 
 </div>
 

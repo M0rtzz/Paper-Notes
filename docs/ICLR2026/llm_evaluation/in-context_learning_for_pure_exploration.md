@@ -41,46 +41,21 @@ tags:
 
 ### 整体框架
 
-ICPE 采用双网络架构：
-- **推断网络 $I$**（Inference Network）：通过监督学习训练，从当前数据中推断真实假设
-- **探索网络 $\pi$**（Exploration Network）：通过 RL 训练，选择动作以最大化推断网络的准确性
-
-两个网络都使用 Transformer 架构，将数据轨迹 $\mathcal{D}_t = (x_1, a_1, \ldots, x_t)$ 作为序列输入。
+ICPE 把纯探索拆成一对相互喂养的 Transformer：推断网络 $I_\phi$ 用监督学习从已收集的数据轨迹里猜真实假设，探索网络 $\pi_\theta$ 用强化学习挑下一个动作，让推断网络的判断尽可能准。两个网络都把数据轨迹 $\mathcal{D}_t = (x_1, a_1, \ldots, x_t)$ 当序列输入，$I$ 给出的置信度又反过来当作 $\pi$ 的奖励信号，于是「推断越准 → 奖励越靠谱 → 探索越聪明 → 数据越有信息量」形成闭环，不需要人手写归纳偏置。
 
 ### 关键设计
 
-1. **问题建模为 MDP**：
+**1. 把纯探索写成 MDP：让 RL 接得上手。** 经典 BAI 方法依赖显式建模假设，环境一复杂（如 MDP）优化就变非凸。ICPE 的做法是把整段探索过程铺成一个状态序列：状态 $s_t = (\mathcal{D}_t, \emptyset_{t:N})$ 由历史轨迹加上把序列补齐到长度 $N$ 的填充 token 组成，动作空间 $\mathcal{A}$ 在固定置信度设置下额外含一个 stop 动作。这样一来，「主动选数据」就变成标准的序贯决策问题，可以直接用 RL 求解，隐含的信息结构留给网络自己从经验里发现，而不是事先编码进算法。
 
-    - 状态 $s_t = (\mathcal{D}_t, \emptyset_{t:N})$，包含历史数据轨迹和填充 token
-    - 动作空间 $\mathcal{A}$（包含 stop 动作用于固定置信度设置）
-    - 设计动机：将纯探索问题转化为 RL 可求解的形式
+**2. 固定置信度设置：用对偶把「准」和「快」拧成一个目标。** 这一设置要在保证 $\mathbb{P}(\hat{H}_\tau = H^*) \geq 1 - \delta$ 的前提下最小化停止时间 $\tau$，是个带约束的优化。ICPE 引入拉格朗日乘子 $\lambda$ 转成对偶问题 $\min_{\lambda \geq 0} \max_{I, \pi} V_\lambda(\pi, I)$，并把约束折进奖励 $r_\lambda(z) = -1 + d \cdot \lambda \log I_{\bar{\phi}}(H^* | s')$：每走一步扣 $-1$ 逼着 agent 早停，终止指示符 $d$ 触发时则按推断网络对真假设的对数置信度给一笔正奖励。关键是那个专门的 stop 动作，它的 Q 值可以在任意状态回溯更新，相当于给训练加了一层课程学习，让 agent 慢慢学会按问题难度决定何时收手。
 
-2. **固定置信度设置（Fixed Confidence）**：
+**3. 固定预算设置：奖励只在终点给。** 当预算固定为 $N$ 步、只求识别正确率最大时，问题更简单：去掉 stop 动作，奖励只在最后一步结算 $r_N = h(\hat{H}_N; M)$，中间步全部零奖励。这种稀疏终局奖励让网络专注于「在有限步内把信息榨到最干」，与固定置信度设置共用同一套架构，只是去掉了提前停止的自由度。
 
-    - 目标：在满足 $\mathbb{P}(\hat{H}_\tau = H^*) \geq 1 - \delta$ 的约束下最小化停止时间 $\tau$
-    - 通过对偶问题求解：$\min_{\lambda \geq 0} \max_{I, \pi} V_\lambda(\pi, I)$
-    - 奖励设计：$r_\lambda(z) = -1 + d \cdot \lambda \log I_{\bar{\phi}}(H^* | s')$，其中 $d$ 为终止指示符
-    - 包含专门的 stop 动作，其 Q 值可在任意状态回溯更新
-
-3. **固定预算设置（Fixed Horizon）**：
-
-    - 目标：在给定预算 $N$ 步内最大化正确识别概率
-    - 奖励仅在最后一步给出：$r_N = h(\hat{H}_N; M)$
-    - 不包含 stop 动作
-
-4. **多时间尺度优化**：
-
-    - 最慢时间尺度：更新对偶变量 $\lambda$
-    - 中间时间尺度：监督学习优化推断网络 $I_\phi$（交叉熵损失）
-    - 最快时间尺度：DQN + Replay Buffer 优化策略网络 $Q_\theta$
-    - 使用目标网络 $Q_{\bar{\theta}}$ 和 $I_{\bar{\phi}}$ 保持稳定性
+**4. 多时间尺度优化：三个网络各走各的更新节奏。** 对偶变量、推断网络、策略网络耦合在一起，同速更新容易互相打架，ICPE 让它们以不同步长收敛：最慢的尺度更新对偶变量 $\lambda$，中间的尺度用交叉熵监督学习训推断网络 $I_\phi$，最快的尺度用 DQN 配 Replay Buffer 训策略网络 $Q_\theta$；同时各自维护目标网络 $Q_{\bar{\theta}}$、$I_{\bar{\phi}}$ 来稳住自举目标。慢的提供稳定的奖励地形，快的在其上充分探索，整套训练才不至于发散。
 
 ### 损失函数 / 训练策略
 
-- 推断网络：交叉熵损失 $-\log I_\phi(H^* | s_\tau)$
-- 策略网络：TD 损失 + stopping action 损失
-- Transformer 架构：3 层、2 注意力头、隐藏维度 256、GELU 激活、GPT-2 配置
-- 训练使用 Adam 优化器，学习率 $10^{-4}$ 到 $10^{-6}$
+推断网络用交叉熵 $-\log I_\phi(H^* | s_\tau)$，策略网络用 TD 损失加上专门的 stopping action 损失。骨干是 GPT-2 配置的 Transformer——3 层、2 个注意力头、隐藏维 256、GELU 激活，用 Adam 优化，学习率在 $10^{-4}$ 到 $10^{-6}$ 之间退火。
 
 ## 实验关键数据
 
@@ -171,9 +146,9 @@ ICPE 采用双网络架构：
 
 - [\[ICLR 2026\] In-Context Learning of Temporal Point Processes with Foundation Inference Models](in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
 - [\[ICML 2025\] Sample Efficient Demonstration Selection for In-Context Learning](../../ICML2025/llm_evaluation/sample_efficient_demonstration_selection_for_in-context_learning.md)
-- [\[CVPR 2025\] ConText-CIR: Learning from Concepts in Text for Composed Image Retrieval](../../CVPR2025/llm_evaluation/context-cir_learning_from_concepts_in_text_for_composed_image_retrieval.md)
-- [\[ICLR 2026\] LCA: Local Classifier Alignment for Continual Learning](lca_local_classifier_alignment_for_continual_learning.md)
 - [\[ICLR 2026\] Human-LLM Collaborative Feature Engineering for Tabular Learning](human-llm_collaborative_feature_engineering_for_tabular_data.md)
+- [\[NeurIPS 2025\] ConTextTab: A Semantics-Aware Tabular In-Context Learner](../../NeurIPS2025/llm_evaluation/contexttab_a_semantics-aware_tabular_in-context_learner.md)
+- [\[ACL 2026\] CUB: Benchmarking Context Utilisation Techniques for Language Models](../../ACL2026/llm_evaluation/cub_benchmarking_context_utilisation_techniques_for_language_models.md)
 
 </div>
 

@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：去相关（decorrelation）对分类精度至关重要，但高效的去相关方法缺乏。
 
-**本文目标** 设计一种计算高效且有效的去相关框架。
+**本文目标**：设计一种计算高效且有效的去相关框架。
 
 **切入角度**：从果蝇嗅觉回路获得灵感——PN→KC 的稀疏扩展投影+KC→MBON 的降维投影构成了高效的去相关机制。
 
@@ -41,31 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-冻结的预训练模型提取 $d$ 维特征 → L2 归一化 → 稀疏随机投影到 $m$ 维高维空间（$m \gg d$）→ top-$k$ 激活保留最强维度 → 流式岭分类器做最终预测。
+Fly-CL 要解决的是：用冻结预训练模型做持续学习时，类原型之间存在严重多重共线性，使余弦相似度判别力下降，而现有去相关手段（如矩阵求逆）又太慢。它的思路是照搬果蝇嗅觉回路的三级结构来做一次“升维去相关 + 高效分类”。整条流水线为：冻结骨干提取 $d$ 维特征，先做 L2 归一化，再用一个固定的稀疏随机矩阵把它投到远高于原维度的 $m$ 维空间（$m \gg d$），接着用 top-$k$ 激活只保留最强的若干维形成稀疏编码，最后交给一个流式岭分类器在线学习类别权重并输出预测。整个过程没有反向传播，新任务到来时只增量更新少量统计量。
 
 ### 关键设计
 
-1. **稀疏随机投影 + top-k 操作（PN→KC）**:
+**1. 稀疏随机投影 + top-k 激活（对应 PN→KC）：把纠缠的低维特征拆开。**
 
-    - 功能：将低维特征去相关化
-    - 核心思路：用固定稀疏矩阵 $\mathbf{W} \in \mathbb{R}^{m \times d}$（每行仅 $p$ 个非零值采自 $\mathcal{N}(0,1)$）做高维投影，然后 top-$k$ 保留最大的 $k$ 个分量
-    - 理论保证：Theorem 4.1 证明稀疏矩阵以 $1-o(1)$ 概率保持满列秩；Theorem 4.2 证明 top-$k$ 性能退化有界，当 $k=\Omega(m^\alpha)$ 时误差多项式衰减
-    - 计算效率：从 $\mathcal{O}(mnd)$ 降至 $\mathcal{O}(mnp)$
+冻结特征之所以难分，是因为不同类的原型在 $d$ 维里高度相关。这里用一个固定稀疏矩阵 $\mathbf{W} \in \mathbb{R}^{m \times d}$ 把特征升到高维——每行只有 $p$ 个非零值、采自 $\mathcal{N}(0,1)$，因此投影本身就极省算力，复杂度从稠密投影的 $\mathcal{O}(mnd)$ 降到 $\mathcal{O}(mnp)$。升维之后再做 top-$k$，只保留响应最大的 $k$ 个分量、其余置零，模拟蘑菇体里赢者通吃式的稀疏激活，进一步压低维度间的相关性。两条理论结果支撑这套操作不会丢信息：Theorem 4.1 证明这种稀疏随机矩阵以 $1-o(1)$ 的概率保持满列秩（即升维可逆、不塌缩），Theorem 4.2 则给出 top-$k$ 带来的性能退化是有界的——当 $k=\Omega(m^\alpha)$ 时误差以多项式速度衰减，说明稀疏化在保住判别信息的前提下完成了去相关。
 
-2. **流式岭分类（KC→MBON）**:
+**2. 流式岭分类（对应 KC→MBON）：在高维稀疏空间里在线学一个抗共线性的分类器。**
 
-    - 功能：在高维空间中学习去相关的分类权重
-    - 核心思路：维护 Gram 矩阵 $\mathbf{G}_t$ 和交叉统计 $\mathbf{S}_t$，分类器 $\mathbf{C}_t = (\mathbf{G}_t + \lambda\mathbf{I}_m)^{-1}\mathbf{S}_t$。$\ell_2$ 正则缓解共线性
-    - 自适应正则：通过 GCV（广义交叉验证）自动选择最优 $\lambda$，复杂度从 $\mathcal{O}(lm^3)$ 降至 $\mathcal{O}(n_t^2 m)$
-    - 用 Cholesky 分解加速求解
+升维稀疏编码仍可能残留共线性，所以最终分类不用简单的原型余弦匹配，而是一个带 $\ell_2$ 正则的岭回归分类器，正则项正是用来压制残余共线性的。它以流式方式维护两个统计量：Gram 矩阵 $\mathbf{G}_t$ 和交叉统计 $\mathbf{S}_t$，分类器权重为
 
-3. **生物学对应**:
+$$\mathbf{C}_t = (\mathbf{G}_t + \lambda\mathbf{I}_m)^{-1}\mathbf{S}_t.$$
 
-    - PN→KC：稀疏扩展投影 + 赢者通吃抑制 = 稀疏随机投影 + top-$k$
-    - KC→MBON：Hebbian 学习 ≈ 岭分类（Section 6 证明等价性）
+正则强度 $\lambda$ 不靠手调，而用广义交叉验证（GCV）自动选最优值，以适应不同任务的异质性；求解则用 Cholesky 分解加速。相比 RanPAC 那种对全体数据反复求逆的做法（$\mathcal{O}(lm^3)$），这里把单步复杂度压到 $\mathcal{O}(n_t^2 m)$，这正是“训练时间大幅下降”的来源。
+
+**3. 与果蝇嗅觉回路的生物学对应：三阶段并非比喻，而是逐级等价。**
+
+整套设计是对果蝇嗅觉通路的逐级映射，而非松散类比。PN→KC 这一级里，神经元的稀疏扩展投影加上赢者通吃抑制，恰好对应稀疏随机投影 + top-$k$；KC→MBON 这一级的 Hebbian 学习则与岭分类等价——论文在 Section 6 给出了二者的等价性证明。正是这层对应关系，让“升维稀疏 + 在线岭回归”这条流水线在生物学上有出处，也解释了为什么三阶段连起来能逐级去相关。
 
 ### 训练策略
-流式增量更新，每个新任务只需更新 Gram 矩阵和交叉统计，无需存储历史数据。
+全程无需反向传播，采用流式增量更新：每来一个新任务，只需把该任务样本累加进 Gram 矩阵 $\mathbf{G}_t$ 和交叉统计 $\mathbf{S}_t$，再重解一次岭分类器即可，不保存任何历史样本，天然契合低延迟、无回放的持续学习设定。
 
 ## 实验关键数据
 
@@ -118,11 +115,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Gradient-Sign Masking for Task Vector Transport Across Pre-Trained Models](gradient-sign_masking_for_task_vector_transport_across_pre-trained_models.md)
+- [\[ICLR 2026\] Test-Time Efficient Pretrained Model Portfolios for Time Series Forecasting](test-time_efficient_pretrained_model_portfolios_for_time_series_forecasting.md)
 - [\[ECCV 2024\] Efficient Image Pre-Training with Siamese Cropped Masked Autoencoders](../../ECCV2024/self_supervised/efficient_image_pre-training_with_siamese_cropped_masked_autoencoders.md)
 - [\[ECCV 2024\] Revisiting Supervision for Continual Representation Learning](../../ECCV2024/self_supervised/revisiting_supervision_for_continual_representation_learning.md)
+- [\[ICLR 2026\] Adaptive Test-Time Training for Predicting Need for Invasive Mechanical Ventilation in Multi-Center Cohorts](adaptive_test-time_training_for_predicting_need_for_invasive_mechanical_ventilat.md)
 - [\[CVPR 2026\] Chain-of-Models Pre-Training: Rethinking Training Acceleration of Vision Foundation Models](../../CVPR2026/self_supervised/com_pt_chain_of_models_pretraining.md)
-- [\[ICML 2025\] Discovering Global False Negatives On the Fly for Self-supervised Contrastive Learning](../../ICML2025/self_supervised/discovering_global_false_negatives_on_the_fly_for_self-supervised_contrastive_le.md)
 
 </div>
 

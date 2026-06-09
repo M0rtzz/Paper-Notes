@@ -56,50 +56,15 @@ tags:
 
 ### 整体框架
 
-π-Flow 的核心创新在于重新定义了学生模型的输出：
-
-1. **教师**：标准的速度预测流模型 $v_\theta(x_t, t)$，需要多步（如 50 步）ODE 积分
-2. **学生**：修改输出层，不直接输出速度或去噪数据，而是输出一个**策略（policy）**
-3. **策略**：一个参数化的、无需额外网络的函数，描述如何在一个粗步内通过多个子步推进 ODE
+π-Flow 不让学生直接吐速度或去噪结果，而是让它在每个粗步预测一个**策略（policy）**——一段描述该区间内连续速度场的参数化函数。一次网络前向就拿到整段策略，便能在区间内做多子步的精确 ODE 积分；训练时则在学生自己走出的轨迹点上，用标准 $\ell_2$ 损失去匹配教师在同一点的速度，从而把蒸馏改写成"模仿学习"。
 
 ### 关键设计
 
-1. **策略输出层（Policy Output Layer）** → 用少量参数描述子步速度场 → 设计动机是在单次前向传播内实现多步ODE积分
+**1. 策略输出层：把"一步跳"换成"一段可积分的速度场"。** 传统少步学生在粗步 $[t_i, t_{i+1}]$ 内只做一次 Euler 积分，等于用一条直线硬跨整段，跨得越大轨迹偏离越严重。π-Flow 改掉输出层，让学生不再预测单点速度，而是输出一个策略 $\pi$——例如一个随子步时间 $s$ 线性变化的速度场 $v(s) = a + b \cdot s$，网络只需吐出起点 $a$ 与斜率 $b$ 这几个参数。拿到参数后，区间内可以自由切成多个子步做高精度 ODE 积分，而这些子步**全部复用同一次网络前向**，不增加网络评估次数。于是"一次前向 → 几个策略参数 → 多子步精确积分"换来了远好于单步 Euler 的轨迹近似，这也是它能把步数压到 1–4 NFE 还保住质量的根本。
 
-    - 传统学生模型在粗步 $[t_i, t_{i+1}]$ 内只做一步 Euler 积分
-    - π-Flow 的学生在同一粗步内输出一个策略 $\pi$，描述该区间内的连续速度场
-    - 策略可以是简单的多项式（如线性插值 $v(s) = a + b \cdot s$）
-    - 给定策略参数，可以在多个子步上进行精确的 ODE 积分，**无需额外的网络评估**
-    - 网络只需预测策略参数（如线段的起点和斜率），而非逐步的速度
+**2. 模仿蒸馏：在学生自己的轨迹上匹配教师速度，绕开分布偏移。** 如果照搬"在教师轨迹上训学生"的老套路，学生推理时会走进训练从未见过的状态区域，误差逐步累积——这正是少步蒸馏不稳定的常见来源。模仿蒸馏反过来：先用学生当前策略走出子步点 $x_s$，再在这些点上查询教师速度 $v_{teacher}(x_s, s)$，最后让学生策略在这些点的速度去逼近它。这与强化学习里把教师当专家、学生当模仿者、并在模仿者自身状态分布上对齐专家行为的思路（类似 DAgger 的在线聚合）一脉相承，天然消除了训练与推理的分布偏移。
 
-   关键优势：一次网络前向传播 → 策略参数 → 多个子步的高精度 ODE 积分 → 更好的轨迹近似
-
-2. **模仿蒸馏（Imitation Distillation）** → 在学生轨迹上匹配教师速度 → 设计动机是稳定训练并避免质量-多样性权衡
-
-    - 传统蒸馏在教师轨迹上训练学生
-    - 模仿蒸馏在**学生自己的轨迹**上训练：
-      1. 使用学生策略生成子步点 $x_s$
-      2. 在这些点上查询教师的速度 $v_{teacher}(x_s, s)$
-      3. 最小化学生策略在这些点上的速度与教师速度的 $\ell_2$ 差异
-   
-   这本质上是强化学习中"模仿学习（imitation learning）"的思想：
-    - 教师 = 专家
-    - 学生策略 = 模仿者
-    - 在模仿者自己的状态分布上匹配专家行为，避免分布偏移（distribution shift）
-
-3. **标准流匹配损失** → 保持格式一致性 → 设计动机是简化训练过程
-
-   由于学生输出的是速度场的参数化策略，蒸馏损失就是标准的 $\ell_2$ 流匹配损失：
-    $\mathcal{L} = \mathbb{E}_{t, x_0, \epsilon} \|v_{student}(x_t, t) - v_{teacher}(x_t, t)\|_2^2$
-   
-   无需对抗训练、分布匹配损失或额外的判别器。
-
-### 损失函数 / 训练策略
-
-- **损失**：标准 $\ell_2$ 速度匹配损失（flow matching loss）
-- **训练数据**：在学生策略的轨迹点上采样
-- **无需**：对抗训练、在线生成、判别器
-- **可扩展性**：与标准流匹配训练管线完全兼容
+**3. 标准 $\ell_2$ 流匹配损失：格式对齐带来训练的简洁与稳定。** 因为学生输出的仍是速度场（只是参数化成策略），它和教师的输出格式完全一致，蒸馏损失就退化成最朴素的速度匹配 $\mathcal{L} = \mathbb{E}_{t, x_0, \epsilon} \|v_{student}(x_t, t) - v_{teacher}(x_t, t)\|_2^2$。这意味着无需判别器、对抗训练或 DMD 那样的分布匹配损失——后者依赖 KL 散度，会在 mode covering 与 mode seeking 之间被迫取舍，在 FLUX、Qwen-Image 这类大模型上表现为多样性塌缩。π-Flow 用 $\ell_2$ 回避了 KL，既保住多样性又让训练管线与常规流匹配完全兼容。
 
 ## 实验关键数据
 
@@ -193,9 +158,9 @@ tags:
 
 - [\[ICLR 2026\] UniFlow: A Unified Pixel Flow Tokenizer for Visual Understanding and Generation](uniflow_a_unified_pixel_flow_tokenizer_for_visual_understanding_and_generation.md)
 - [\[CVPR 2026\] Adversarial Concept Distillation for One-Step Diffusion Personalization](../../CVPR2026/model_compression/adversarial_concept_distillation_for_one-step_diffusion_personalization.md)
-- [\[ICML 2026\] Entropy-Aware On-Policy Distillation of Language Models](../../ICML2026/model_compression/entropy-aware_on-policy_distillation_of_language_models.md)
 - [\[ICML 2026\] T3S: 训练轨迹感知的 token 选择，破解推理蒸馏的「Imitation Shock」](../../ICML2026/model_compression/training-trajectory-aware_token_selection.md)
-- [\[ACL 2026\] Stable On-Policy Distillation through Adaptive Target Reformulation](../../ACL2026/model_compression/stable_on-policy_distillation_through_adaptive_target_reformulation.md)
+- [\[ICML 2026\] Entropy-Aware On-Policy Distillation of Language Models](../../ICML2026/model_compression/entropy-aware_on-policy_distillation_of_language_models.md)
+- [\[ICLR 2026\] LightMem: Lightweight and Efficient Memory-Augmented Generation](lightmem_lightweight_and_efficient_memory-augmented_generation.md)
 
 </div>
 

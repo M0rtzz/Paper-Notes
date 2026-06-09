@@ -145,8 +145,8 @@ CORE框架包含三个层次：
 - [\[NeurIPS 2025\] AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents](agentauditor_humanlevel_safety_and_security_evaluation_for_l.md)
 - [\[NeurIPS 2025\] AgentChangeBench: A Multi-Dimensional Evaluation Framework for Goal-Shift Robustness](agentchangebench_a_multi-dimensional_evaluation_framework_for_goal-shift_robustn.md)
 - [\[ACL 2025\] Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents](../../ACL2025/llm_agent/beyond_numeric_rewards_in-context_dueling_bandits_with_llm_agents.md)
-- [\[ICML 2025\] AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML](../../ICML2025/llm_agent/automl-agent_a_multi-agent_llm_framework_for_full-pipeline_automl.md)
 - [\[NeurIPS 2025\] ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions](contextagent_context-aware_proactive_llm_agents_with_open-world_sensory_percepti.md)
+- [\[NeurIPS 2025\] A-MEM: Agentic Memory for LLM Agents](a-mem_agentic_memory_for_llm_agents.md)
 
 </div>
 

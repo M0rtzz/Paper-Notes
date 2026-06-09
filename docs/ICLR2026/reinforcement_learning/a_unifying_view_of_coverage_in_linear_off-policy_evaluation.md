@@ -45,36 +45,21 @@ $$\text{评估误差} \leq \text{poly}(C^\pi, d, 1/n, \log(1/\delta))$$
 ## 方法详解
 
 ### 整体框架
-- **算法**：分析的核心算法是 LSTDQ（Least-Squares Temporal Difference for Q-values），这是线性 OPE 中的经典算法
-- **分析工具**：工具变量（Instrumental Variable, IV）视角
-- **核心贡献**：提出 feature-dynamics coverage 并给出 LSTDQ 在此覆盖性下的新有限样本界
+本文不提出新算法，而是为经典的 LSTDQ（Least-Squares Temporal Difference for Q-values）补一套新的有限样本理论：把它重新读成一个工具变量回归，由此自然导出新的覆盖性参数 feature-dynamics coverage，并证明在它之下的评估误差界。这套界的好处是，更强假设下它会优雅退化为人们已经熟悉的标准覆盖性，从而把过去碎片化的各种定义统一进同一个框架。
 
 ### 关键设计
-1. **工具变量视角**：
 
-    - 核心思路：将 LSTDQ 算法重新解释为一个工具变量回归问题。在经济学和因果推断中，工具变量用于处理内生性问题——当回归变量与误差项相关时，通过引入一个与误差无关但与回归变量相关的"工具"来获得一致估计。
-    - 设计动机：线性 OPE 中，Bellman 方程的结构天然适合 IV 解释——当前状态-动作的特征是"内生变量"，而通过动态（transition dynamics）映射后的特征可以作为"工具"。
-    - 关键洞察：这个 IV 视角自然地引出了 feature-dynamics coverage 的定义。
+**1. 工具变量视角：把 LSTDQ 读成 IV 回归，绕开内生性。**
 
-2. **特征-动态覆盖（Feature-Dynamics Coverage）**：
+线性 OPE 的难点在于 Bellman 方程里有内生性——直接对 $Q(s,a)\approx\phi(s,a)^\top w$ 做最小二乘时，回归量 $\phi(s,a)$ 会和 TD 误差项相关，普通最小二乘因此有偏。工具变量（Instrumental Variable）正是计量经济学里处理这类问题的标准工具：引入一个与误差无关、却与内生回归量相关的"工具"，就能得到一致估计。本文的关键观察是，Bellman 方程的结构天生适配 IV 解释——当前状态-动作特征 $\phi(s,a)$ 是内生变量，而经环境转移后映射出的特征 $\mathbb{E}[\phi(s',a')]$ 恰好可以充当工具。一旦把 LSTDQ 摆进这个框架，它的统计行为就有了清晰的计量经济学解释，也直接指明了"误差到底被什么放大"。
 
-    - 定义：可以被解释为在一个由特征演化动态诱导的系统中的线性覆盖性度量
-    - 直观含义：衡量行为策略的数据分布对"**特征在动态下的演化轨迹**"的覆盖程度——不仅考虑当前特征的覆盖，还考虑经过环境转移后特征的覆盖
-    - 数学性质：满足自然的"好"性质——分布相关但形式自然，在特殊情况下可退化为标准定义
+**2. 特征-动态覆盖（Feature-Dynamics Coverage）：把"动态如何放大覆盖不足"显式化。**
 
-3. **统一化结果**：
+IV 视角带来的副产物，是一个新的覆盖性参数 $C^\pi_{\mathrm{FD}}$。它可以被理解为在一个由特征演化动态所诱导的线性系统中的覆盖性度量：不只看行为策略对当前特征 $\phi(s,a)$ 的覆盖，还看它对"特征经过环境转移后演化到的位置"的覆盖。直观上，OPE 的难度不仅取决于数据分布本身，还取决于环境动态如何沿轨迹放大覆盖的薄弱处——$C^\pi_{\mathrm{FD}}$ 把这层放大效应显式地装进了定义里。它是分布相关的，但形式自然，并且保留了一个理论上很关键的性质：在特殊情形下能塌缩回大家公认的标准覆盖性，这正是统一性的支点。
 
-    - 在 Bellman 完备性假设下，feature-dynamics coverage 退化为 concentrability coefficient（集中系数），这是该设定下的标准覆盖性概念
-    - 在 tabular 设定下，恢复为经典的状态-动作访问比率
-    - 在一般线性可实化设定下，给出了比之前分析更紧的界
-    - 这是首次在统一框架下串联起所有这些看似不同的覆盖性定义
+**3. 统一化与误差界：一个参数串起所有旧定义。**
 
-### 理论结果
-- **主定理**：给出 LSTDQ 在 feature-dynamics coverage $C^\pi_{FD}$ 下的有限样本误差界：
-    - 评估误差随 $C^\pi_{FD}$、$d$ 多项式增长，随 $n$ 以 $1/\sqrt{n}$ 速率下降
-    - 高概率界（依赖 $\log(1/\delta)$）
-- **退化性质**：在更强假设下，$C^\pi_{FD}$ 可以被更小的覆盖性参数替代，恢复已知的最优速率
-- **不可避免性论证**：通过信息论工具论证了 $C^\pi_{FD}$ 在最小假设设定下是不可避免的
+基于上述定义，本文给出 LSTDQ 的主误差界：评估误差随 $C^\pi_{\mathrm{FD}}$ 和特征维度 $d$ 多项式增长，随样本数 $n$ 以 $1/\sqrt{n}$ 速率下降，并以高概率成立（依赖 $\log(1/\delta)$），可写成 $\text{误差}\lesssim \mathrm{poly}(C^\pi_{\mathrm{FD}},d)\cdot n^{-1/2}\cdot\sqrt{\log(1/\delta)}$。真正的价值在于它的退化行为：在 Bellman 完备性假设下，$C^\pi_{\mathrm{FD}}$ 塌缩为集中系数（concentrability coefficient），即该设定下公认的标准覆盖性；在 tabular 设定下恢复为经典的状态-动作访问比率；而在仅要求线性可实化的最小假设下，它给出比以往分析更紧的界。换句话说，过去那些彼此矛盾、甚至依赖特定算法的"奇怪"覆盖性定义，原来都是 $C^\pi_{\mathrm{FD}}$ 在特殊情形下的投影。本文进一步用信息论工具论证了在最小假设下 $C^\pi_{\mathrm{FD}}$ 的不可避免性，说明它不是又一个人为参数，而是问题本身要求的那一个。
 
 ## 实验关键数据
 
@@ -136,9 +121,9 @@ $$\text{评估误差} \leq \text{poly}(C^\pi, d, 1/n, \log(1/\delta))$$
 
 - [\[NeurIPS 2025\] A Unifying View of Linear Function Approximation in Off-Policy RL Through Matrix Splitting and Preconditioning](../../NeurIPS2025/reinforcement_learning/a_unifying_view_of_linear_function_approximation_in_offpolic.md)
 - [\[ICLR 2026\] Is Pure Exploitation Sufficient in Exogenous MDPs with Linear Function Approximation?](is_pure_exploitation_sufficient_in_exogenous_mdps_with_linear_function_approxima.md)
-- [\[ICLR 2026\] MVR: Multi-view Video Reward Shaping for Reinforcement Learning](mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
 - [\[ICLR 2026\] Spectral Bellman Method: Unifying Representation and Exploration in RL](spectral_bellman_method_unifying_representation_and_exploration_in_rl.md)
 - [\[ICML 2025\] Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning](../../ICML2025/reinforcement_learning/log-sum-exponential_estimator_for_off-policy_evaluation_and_learning.md)
+- [\[ICLR 2026\] Single Index Bandits: Generalized Linear Contextual Bandits with Unknown Reward Functions](single_index_bandits_generalized_linear_contextual_bandits_with_unknown_reward_f.md)
 
 </div>
 

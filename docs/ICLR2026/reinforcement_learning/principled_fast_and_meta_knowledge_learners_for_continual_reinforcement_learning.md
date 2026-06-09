@@ -43,49 +43,23 @@ tags:
 
 ### 整体框架
 
-FAME（FAst and MEta knowledge learner）包含两个耦合的学习器：
-- **快速学习器（Fast Learner）**：类比海马体，负责在新任务上快速学习，通过自适应元热启动策略利用先前知识。
-- **元学习器（Meta Learner）**：类比大脑皮层，负责渐进式整合新旧知识，通过最小化灾难性遗忘目标进行增量更新。
-
-两者交替工作：新任务到来时，元学习器指导快速学习器进行知识迁移；任务结束后，快速学习器的新知识被整合到元学习器中。
+FAME（FAst and MEta knowledge learner）把持续 RL 拆成两个耦合学习器：类比海马体的**快速学习器**在新任务上做快速学习，类比大脑皮层的**元学习器**做渐进式知识整合。新任务到来时，元学习器先为快速学习器挑选热启动策略以迁移先验知识；任务结束后，快速学习器学到的新策略被增量整合回元学习器，使其在原则性最小化灾难性遗忘的同时不断积累跨任务知识。
 
 ### 关键设计
 
-**设计 1：MDP 距离定义（Foundation 1）**
+**1. MDP 距离度量：让"环境有多像"变成可量化的量。** 持续 RL 中知识迁移是否有益、新任务会干扰旧任务多少，都取决于环境间的相似度，而此前缺乏原则性的度量。FAME 用两个 MDP 对应的最优解之间的差异来定义距离——既可以用最优 $Q$ 函数的 $\ell_2$ 距离，也可以用最优策略之间的 KL 散度。有了这个度量，后续的迁移决策和遗忘分析就有了统一的几何基础：距离近的任务适合复用旧知识，距离远的任务则提示要警惕负迁移。
 
-- **功能**：定义 MDP 之间的距离度量，量化不同环境的相似性。
-- **核心思路**：利用两个 MDP 对应的最优 Q 函数或最优策略之间的距离（如 ℓ₂ 损失或 KL 散度）来量化 MDP 距离。
-- **设计动机**：理论分析需要量化环境相似度，以判断知识迁移是否有益以及新任务对已学任务的干扰程度。
+**2. 灾难性遗忘的形式化定义：把直觉变成可优化的目标。** 遗忘长期停留在"学新忘旧"的直觉层面，难以直接优化。FAME 将其定义为：在**旧任务的状态访问分布**下，新旧策略（或 $Q$ 函数）之间的加权差异。用旧策略的状态访问分布作权重是关键——它让度量聚焦于旧任务中真正高频、重要的状态-动作对，而非整个状态空间的均匀差异。这样遗忘就从一个概念变成了一个明确的数学目标（Eq. 4），算法可以直接对它做优化。
 
-**设计 2：灾难性遗忘的形式化定义（Foundation 2）**
+**3. 增量元学习器更新（Proposition 1）：知识整合等价于最大似然。** 直接保存所有历史任务的 $Q$ 函数随任务数线性膨胀、不可扩展，因此需要一个增量规则。FAME 证明：在 KL 散度下最小化策略级遗忘目标，等价于对元学习器做最大似然估计（MLE），即让元学习器去拟合所有已遇环境状态-动作分布的混合。这一等价把持续 RL 与多任务 RL 直接连了起来，也给出了只需维护单个元策略、逐任务更新的可行方案。之所以采用策略级而非 $Q$ 值级定义，是因为前者对不同尺度的奖励更鲁棒、训练也更稳定。
 
-- **功能**：给出持续 RL 中灾难性遗忘的定量度量。
-- **核心思路**：灾难性遗忘定义为在旧任务的状态访问分布下，新旧策略/Q 函数之间的加权差异。关键在于使用旧策略的状态访问分布作为权重，因为这更能反映旧任务中重要的状态-动作对。
-- **设计动机**：将灾难性遗忘从直觉概念转化为可优化的数学目标，为算法设计提供优化目标。
+**4. 自适应元热启动（Adaptive Meta Warm-up）：用假设检验回避负迁移。** 当新旧任务差异大时，直接拿旧知识初始化反而拖慢学习（负迁移），但完全放弃先验又浪费了已有积累。FAME 在每个新任务的早期交互阶段，对三种候选初始化——元学习器、上一个快速学习器、随机初始化——分别做策略评估，再用 one-vs-all 假设检验挑出统计上表现最好的那个作为热启动。这等于用统计学的严格框架取代启发式规则：实验中对已知环境约 95% 选择元热启动，对全新环境则更多回退到随机初始化。
 
-**设计 3：基于策略的增量元学习器更新（Proposition 1）**
-
-- **功能**：推导元学习器的增量更新规则。
-- **核心思路**：在 KL 散度下最小化策略级灾难性遗忘，等价于对元学习器做最大似然估计（MLE），使元学习器拟合所有已遇环境的状态-动作分布混合。
-- **设计动机**：直接存储所有历史 Q 函数不可扩展，需要增量更新规则；策略级定义比 Q 值级更稳定且适用于不同尺度的奖励。
-
-**设计 4：自适应元热启动（Adaptive Meta Warm-up）**
-
-- **功能**：在新任务到来时，自适应选择最佳的初始化策略。
-- **核心思路**：通过 one-vs-all 假设检验，在元学习器、前一个快速学习器和随机初始化三者中选择最佳热启动策略。在早期交互阶段进行策略评估，然后做统计检验选择表现最好的初始化方式。
-- **设计动机**：避免负迁移问题——当新旧任务差异大时，直接使用旧知识初始化反而有害。同时保持利用先验知识加速学习的能力。
-
-**设计 5：Wasserstein 距离下的策略整合（FAME-WD）**
-
-- **功能**：在连续动作空间中，使用 Wasserstein 距离进行知识整合。
-- **核心思路**：当策略用高斯分布表示时，2-Wasserstein 距离有闭式解，可以高效计算元学习器的增量更新。
-- **设计动机**：Wasserstein 距离考虑数据空间的几何结构，对复杂策略分布比 KL 散度更合适。
+**5. Wasserstein 距离下的策略整合（FAME-WD）：连续动作空间的几何感知整合。** 在连续控制中策略常用高斯分布表示，此时 KL 散度对分布的几何结构不敏感。FAME-WD 改用 2-Wasserstein 距离衡量策略差异——高斯之间的 2-Wasserstein 距离有闭式解，既能高效计算元学习器的增量更新，又能利用数据空间的几何结构，对复杂策略分布比 KL 更贴合，实验中也确实略优于 FAME-KL。
 
 ### 损失函数 / 训练策略
 
-- **知识整合损失**：最小化策略级灾难性遗忘目标（Eq. 4），等价于最大化元学习器对所有历史状态-动作分布的对数似然。
-- **行为克隆正则化**：值函数方法中，元热启动采用 BC 正则化 `L(Qk) = L0(Qk) + λ·E[KL(πM || πQ)]`，将元策略作为专家引导早期探索。
-- **元缓冲区（Meta Buffer）**：每个任务最后 N 步收集状态-动作对（约 1-2% 训练数据），用于估计知识整合中的权重函数。
+知识整合阶段最小化策略级灾难性遗忘目标（Eq. 4），等价于最大化元学习器对所有历史状态-动作分布的对数似然。在值函数方法中，元热启动以行为克隆正则化的形式引导早期探索，目标写作 $L(Q_k)=L_0(Q_k)+\lambda\,\mathbb{E}[\mathrm{KL}(\pi_M\,\|\,\pi_Q)]$，把元策略 $\pi_M$ 当作专家约束新 $Q$ 函数 $\pi_Q$。为估计整合目标中旧任务的状态访问权重，FAME 维护一个**元缓冲区**，仅在每个任务最后 $N$ 步收集状态-动作对（约占训练数据 1–2%），开销很小。
 
 ## 实验关键数据
 
@@ -172,7 +146,7 @@ FAME（FAst and MEta knowledge learner）包含两个耦合的学习器：
 - [\[ICLR 2026\] Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
 - [\[ICML 2026\] Position: Deployed Reinforcement Learning should be Continual](../../ICML2026/reinforcement_learning/position_deployed_reinforcement_learning_should_be_continual.md)
 - [\[ICML 2025\] Position: Lifetime Tuning is Incompatible with Continual Reinforcement Learning](../../ICML2025/reinforcement_learning/position_lifetime_tuning_is_incompatible_with_continual_reinforcement_learning.md)
-- [\[AAAI 2026\] Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](../../AAAI2026/reinforcement_learning/scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
+- [\[ICLR 2026\] ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)
 
 </div>
 

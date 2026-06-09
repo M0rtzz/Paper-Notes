@@ -39,49 +39,19 @@ tags:
 
 ## 方法详解
 
-### InstructZero 回顾
+### 整体框架
 
-InstructZero 将 prompt 优化转化为连续空间的 BO 问题，流水线包含四步：
+DRO-InstructZero 沿用 InstructZero 把 prompt 搜索转化为连续空间贝叶斯优化（BO）的整套管线，只在「优化谁、采集哪个候选」这一层把目标从「单一验证分布上的期望最优」换成「一族邻近分布上的最坏情况最优」。低维 soft prompt 经随机投影喂给开源 LLM 生成自然语言指令、再由黑盒 LLM 执行打分的链路完全不变，改动集中在采集函数：每一步先按候选指令在模糊集里挑出最刁难它的分布，再选出在该最坏分布下仍得分最高的 prompt，从而把鲁棒性直接写进搜索偏好里。
 
-1. 将低维 soft prompt $p \in \mathbb{R}^d$ 通过随机矩阵 $A$ 投影到开源 LLM 嵌入空间
-2. 开源 LLM $g(\cdot)$（Vicuna）将投影向量与任务示例转为自然语言指令 $v$
-3. 黑盒 LLM $f(\cdot)$（ChatGPT）执行指令，评估指标 $h(\cdot,\cdot)$ 打分
-4. GP 后验更新 + 采集函数选下一个 prompt
+### 关键设计
 
-标准目标为 $\max_v \mathbb{E}_{(X,Y)\sim D^t}[h(f([v;X]),Y)]$。
+**1. 鲁棒目标：把「平均最优」换成「最坏情况最优」。** InstructZero 的标准目标是 $\max_v \mathbb{E}_{(X,Y)\sim D^t}[h(f([v;X]),Y)]$，只盯着固定验证分布 $D^t$ 的平均得分，因此换一个评估场景就容易失效。DRO-InstructZero 把它改写成 minimax 形式 $\max_{v \in V} \inf_{Q \in \mathcal{U}(D^t)} \mathbb{E}_{(X,Y)\sim Q}[h(f([v;X]),Y)]$：内层 $\inf$ 在模糊集 $\mathcal{U}(D^t)$ 里搜出最坏分布，外层 $\max$ 要求指令在这个最坏分布下仍表现良好。模糊集取以参考分布 $w_{\text{ref}}$ 为中心、f-divergence（KL 散度）半径为 $\epsilon$ 的球，半径 $\epsilon$ 就是「允许分布偏移多大」的旋钮。沿用 InstructZero 同款 soft prompt 参数化后，这个鲁棒目标坍缩成一个低维黑盒函数 $H(p) \triangleq \inf_{Q \in \mathcal{U}(D^t)} \mathbb{E}_{(X,Y)\sim Q}[h(f([g([Ap;\text{exemplars}]);X]),Y)]$，从而依然能用 BO 高效求解——既显式优化尾部风险，又不放弃查询效率。
 
-### DRO 扩展：鲁棒目标
+**2. 鲁棒采集规则：在模糊集内做对抗加权再挑 prompt。** 经典 EI/UCB 采集函数只看后验均值，会把搜索引向平均分高但脆弱的指令。这里改成两步：对每个候选 prompt $p_m$，先用 GP 后验算出跨任务的乐观 UCB 分数向量 $\text{ucb}_m = [\mu^t(p_m) + \beta(m)\sigma^t(p_m)]_t$（$\beta(t)=2.0\sqrt{2.0\log(t+1)}$ 控制探索强度）；再在模糊集内解一个小凸优化 $w_m^* = \arg\min_{w': \|w' - w_{\text{ref}}\|_\mathcal{M} \leq \epsilon(m)} \langle \text{ucb}_m, w' \rangle$，找出最压低当前候选得分的对抗分布。下一个采样点取 $p_{m+1} = \arg\max_p \langle \text{ucb}_m, w_m^* \rangle$，即在「最刁难的分布」下仍最优的 prompt。这样每一步采集都隐含一次「假设遇到最坏偏移」的压力测试，搜索自然偏好抗偏移的指令，而对抗权重求解用 cvxpy 在 Wasserstein 球约束下完成，额外开销只落在求解器上、不增加 API 调用。参考分布 $w_{\text{ref}}$ 初始为均匀分布，再按历史评估分数逆概率做 EMA 更新，让模糊集中心随观测逐步聚焦到难样本上。
 
-DRO-InstructZero 将优化目标从期望最大化改为 minimax 形式：
+**3. 鲁棒加权的指令耦合核：让 GP 同时建模语义接近性与分布鲁棒性。** InstructZero 的指令耦合核把 prompt 空间相似度 $l(\cdot,\cdot)$ 与指令语义相似度 $s(\cdot,\cdot)$ 结合，使两个 soft prompt 即便数值相近、只要诱导出的指令语义不同也能被区分。本文进一步用对抗分布 $w^*$ 对核矩阵加权，使 GP 在拟合时不仅看两个候选语义有多接近，还看它们在最坏分布上的表现有多一致。这样后验不确定性的估计与鲁棒采集目标对齐，BO 的探索方向天然向「最坏情况下也稳」的区域收敛。
 
-$$\max_{v \in V} \inf_{Q \in \mathcal{U}(D^t)} \mathbb{E}_{(X,Y)\sim Q}[h(f([v;X]),Y)]$$
-
-其中模糊集 $\mathcal{U}(D^t)$ 定义为以参考分布 $w_{\text{ref}}$ 为中心、f-divergence（KL 散度）半径为 $\epsilon$ 的球。内层 inf 寻找最坏情况分布，外层 max 要求指令在该分布下仍表现良好。
-
-经过与 InstructZero 相同的 soft prompt 参数化后，鲁棒目标变为低维黑盒函数：
-
-$$H(p) \triangleq \inf_{Q \in \mathcal{U}(D^t)} \mathbb{E}_{(X,Y)\sim Q}[h(f([g([Ap;\text{exemplars}]);X]),Y)]$$
-
-### 鲁棒采集规则
-
-对每个候选 prompt $p_m$，先计算跨任务的乐观 UCB 分数向量 $\text{ucb}_m = [\mu^t(p_m) + \beta(m)\sigma^t(p_m)]_t$，然后在模糊集内求解对抗分布：
-
-$$w_m^* = \arg\min_{w': \|w' - w_{\text{ref}}\|_\mathcal{M} \leq \epsilon(m)} \langle \text{ucb}_m, w' \rangle$$
-
-下一个 prompt 通过最大化鲁棒采集值选取：$p_{m+1} = \arg\max_p \langle \text{ucb}_m, w_m^* \rangle$。这保证了搜索显式偏好在最坏情况分布下仍有效的指令。
-
-### 指令耦合核
-
-在 InstructZero 的指令耦合核基础上进行扩展：将 prompt 空间相似度 $l(\cdot,\cdot)$ 与指令语义相似度 $s(\cdot,\cdot)$ 结合，并用对抗分布 $w^*$ 对核矩阵加权，使 GP 建模同时考虑语义接近性和分布鲁棒性。
-
-### 实现细节
-
-- **优化器**：CMA-ES 进化策略，每轮探索 25 个候选 soft prompt
-- **多任务联合优化**：每轮随机采样 2 个任务进行联合 DRO
-- **参考分布**：初始均匀分布，通过 EMA 按评估分数逆概率加权动态更新
-- **对抗权重求解**：cvxpy 凸优化求解器，Wasserstein 球约束
-- **超参数**：模糊半径 $\epsilon = 0.1$，探索系数 $\beta(t) = 2.0\sqrt{2.0\log(t+1)}$，soft prompt 维度 $d = 10$
-- **硬件**：单卡 NVIDIA A100
+整套方法用 CMA-ES 进化策略驱动搜索，每轮探索 25 个候选 soft prompt（维度 $d=10$），并随机采样 2 个任务做联合 DRO（模糊半径固定 $\epsilon=0.1$），全程单卡 NVIDIA A100。
 
 ## 实验与结果
 

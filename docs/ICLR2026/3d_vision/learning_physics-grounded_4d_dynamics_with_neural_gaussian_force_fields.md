@@ -37,31 +37,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-多视角RGB→前馈3D高斯重建(SAM2分割+DiffSplat精化)→PointNet编码物体特征→DeepONet预测力场→ODE积分模拟动力学→高斯渲染生成视频。
+NGFF 要解决的是「让视频生成既物理可信又跑得快」的矛盾：传统 MPM 高斯模拟器物理准确但要逐粒子迭代、慢到不可接受，而大视频模型只学到了表面视觉、频繁违反重力和物体永恒性。它的思路是不预定义任何物理模型，而是直接从视觉观测里**学一个显式的力场**，再用 ODE 把力积分成轨迹。整条管线是：多视角 RGB 先经前馈 Transformer 重建成 3D 高斯并按物体分割，每个物体编码成隐特征后送进神经算子预测它受到的力，力场经二阶 ODE 求解器积分出每个物体随时间的位姿与形变轨迹，最后把更新后的高斯渲染成 4D 视频。整个流程全程可微，因此既能端到端训练，也能在推理时施加外力做交互式生成。
 
 ### 关键设计
 
-1. **物体感知3D重建**:
+**1. 物体感知的 3D 重建：把场景拆成物理仿真能用的物体级表示。**
 
-    - 功能：前馈Transformer从多视角RGB构建3D高斯，SAM2分割为独立物体
-    - 核心思路：DINOv2特征→交替注意力Transformer→预测相机位姿+高斯参数。DiffSplat补全遮挡部分。
-    - 设计动机：物理仿真需要物体级别的分解表示
+物理仿真没法在一团未分解的点云上做——力是作用在「物体」上的，所以重建阶段必须先得到物体级别的分解表示。这里用一个前馈 Transformer 从多视角 RGB 直接构建 3D 高斯：先用 DINOv2 抽取图像特征，再经交替注意力的 Transformer 同时预测相机位姿和高斯参数，避免了逐场景优化。重建出的高斯用 SAM2 分割成独立物体，被遮挡的部分则交给 DiffSplat 精化补全，保证每个物体的几何在仿真前是完整的。
 
-2. **神经高斯力场 (NGFF)**:
+**2. 神经高斯力场（NGFF）：用神经算子一次性预测力，而不是逐粒子模拟。**
 
-    - 功能：用神经算子预测物体间的全局变换力和局部应力场
-    - 核心思路：全局力 $\mathbf{F}^{\text{global}}(\mathbf{z}^q(t)) = \sum_{i \in \mathcal{N}(q)} \mathbf{W}(f_\eta(\mathbf{z}^i) \odot f_\phi(\mathbf{z}^q)) + \mathbf{b}$，局部应力 $\mathbf{F}^{\text{local}} = \Phi(\mathbf{F}^{\text{latent}}, \text{CAM}, \mathbf{x}^q, \dot{\mathbf{x}}^q)$，CAM是接触区域掩码
-    - 设计动机：全局力处理刚体平移/旋转，局部力处理软体变形。关系图编码物体间接触。
+这是全篇核心，也是两个数量级加速的来源——MPM 之所以慢，是因为它逐粒子逐步迭代力学方程，而 NGFF 用一个神经算子直接把物体的隐状态映射成它当下受到的力。力被拆成全局和局部两部分：全局力负责刚体的整体平移与旋转，对查询物体 $q$，它由邻域 $\mathcal{N}(q)$ 内其它物体的特征经两个分支 $f_\eta$、$f_\phi$ 逐元素相乘、再线性变换聚合而成，
 
-3. **ODE积分轨迹解码**:
+$$\mathbf{F}^{\text{global}}(\mathbf{z}^q(t)) = \sum_{i \in \mathcal{N}(q)} \mathbf{W}\big(f_\eta(\mathbf{z}^i) \odot f_\phi(\mathbf{z}^q)\big) + \mathbf{b},$$
 
-    - 功能：用二阶ODE求解器从力场积分得到物体轨迹
-    - 核心思路：$\mathbf{z}^q(t) = \text{ODESolve}(\mathbf{z}^q(0), \mathbf{F}, 0, t)$，$\dot{\mathbf{s}}(t) = \dot{\mathbf{s}}(0) + \int_0^t \mathbf{F}(\mathbf{z}^q(t)) dt$
-    - 设计动机：全可微的桥梁连接力场预测和动力学模拟
+其中邻域关系图编码了物体间的接触结构。局部力则负责软体的形变，由隐力特征、接触区域掩码 CAM、以及查询物体的位置与速度共同决定，
+
+$$\mathbf{F}^{\text{local}} = \Phi(\mathbf{F}^{\text{latent}}, \text{CAM}, \mathbf{x}^q, \dot{\mathbf{x}}^q).$$
+
+CAM（contact area mask）标出两个物体真正接触的区域，让应力只施加在该发力的地方。把刚体平移/旋转和软体变形按物理意义解耦成全局与局部两路，比端到端直接回归整体运动更容易泛化。
+
+**3. ODE 积分的轨迹解码：把预测的力变成随时间演化的状态。**
+
+有了力还需要一座可微的桥把它连回动力学。NGFF 用二阶 ODE 求解器从初始隐状态出发对力场积分，得到任意时刻 $t$ 的物体状态
+
+$$\mathbf{z}^q(t) = \text{ODESolve}(\mathbf{z}^q(0), \mathbf{F}, 0, t),$$
+
+速度则按牛顿第二定律由力的时间积分累加，$\dot{\mathbf{s}}(t) = \dot{\mathbf{s}}(0) + \int_0^t \mathbf{F}(\mathbf{z}^q(t))\, dt$。因为 ODESolve 全程可微，力场预测和动力学模拟被拼成一条端到端可训练的链路，同时也让推理时插入外力、改变轨迹成为可能。
 
 ### 损失函数 / 训练策略
-- 两阶段：(1) 前馈重建在WildRGBD上微调；(2) 动力学预测在合成MPM数据上训练
-- 动力学loss：预测vs真实高斯配置和运动轨迹的MSE
+训练分两阶段：先在 WildRGBD 上微调前馈重建模块，再在合成 MPM 数据上训练动力学预测部分。动力学损失是预测与真实的高斯配置及运动轨迹之间的 MSE。
 
 ## 实验关键数据
 
@@ -120,9 +125,9 @@ tags:
 
 - [\[ICLR 2026\] DiffWind: Physics-Informed Differentiable Modeling of Wind-Driven Object Dynamics](diffwind_physics-informed_differentiable_modeling_of_wind-driven_object_dynamics.md)
 - [\[ICLR 2026\] Einstein Fields: A Neural Perspective To Computational General Relativity](einstein_fields_a_neural_perspective_to_computational_general_relativity.md)
-- [\[ICLR 2026\] Improving Long-Range Interactions in Graph Neural Simulators via Hamiltonian Dynamics](improving_long-range_interactions_in_graph_neural_simulators_via_hamiltonian_dyn.md)
-- [\[NeurIPS 2025\] MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics](../../NeurIPS2025/3d_vision/mpmavatar_learning_3d_gaussian_avatars_with_accurate_and_robust_physics-based_dy.md)
 - [\[CVPR 2026\] Dynamic Black-hole Emission Tomography with Physics-informed Neural Fields](../../CVPR2026/3d_vision/dynamic_black-hole_emission_tomography_with_physics-informed_neural_fields.md)
+- [\[NeurIPS 2025\] MPMAvatar: Learning 3D Gaussian Avatars with Accurate and Robust Physics-Based Dynamics](../../NeurIPS2025/3d_vision/mpmavatar_learning_3d_gaussian_avatars_with_accurate_and_robust_physics-based_dy.md)
+- [\[ICLR 2026\] CloDS: Visual-Only Unsupervised Cloth Dynamics Learning in Unknown Conditions](clods_visual-only_unsupervised_cloth_dynamics_learning_in_unknown_conditions.md)
 
 </div>
 

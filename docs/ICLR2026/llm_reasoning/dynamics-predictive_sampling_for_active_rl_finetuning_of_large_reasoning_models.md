@@ -43,35 +43,35 @@ tags:
 
 ### 整体框架
 
-DPS 的核心 pipeline 在每个训练步 $t$ 包含两个阶段：**(1) 预测与选择**——利用上一步推断得到的先验 $\mu_t^{\tau,\text{prior}}$，按每个 prompt 处于"部分求解"（State 2）的预测概率排序，选取 Top-$B$ 个 prompt 构成训练批次 $\mathcal{B}_t$；**(2) 推断与更新**——对被选中的 prompt 执行 rollout 获取观测，用贝叶斯规则更新状态后验和转移矩阵后验，然后前向传播生成下一步的先验预测。
+DPS 想解决的问题是：在不为每个候选 prompt 真正跑一遍昂贵 rollout 的前提下，提前判断哪些 prompt 此刻正处于"部分求解"状态、能给 GRPO 提供非零梯度。它的做法是把每个 prompt 的求解进度当成一个随训练步演化的隐马尔可夫系统，用历史 rollout 结果做在线贝叶斯推断来预测当前状态。
+
+每个训练步 $t$ 走两个阶段。先是**预测与选择**：用上一步推断出的先验 $\mu_t^{\tau,\text{prior}}$，按每个 prompt 落在"部分求解"（State 2）的概率从高到低排序，取 Top-$B$ 个组成训练批次 $\mathcal{B}_t$。再是**推断与更新**：只对这 $B$ 个被选中的 prompt 执行 rollout 拿到真实观测，据此更新它们的状态后验和转移矩阵后验，最后把后验向前传播一步，得到下一训练步要用的先验预测。这样一来，rollout 只发生在真正进入批次的 prompt 上，而非 DS 那样先对 3-4 倍候选集全部 rollout 再过滤。
 
 ### 关键设计
 
-1. **三状态隐马尔可夫建模**:
+**1. 三状态隐马尔可夫建模：把"该不该采样"翻译成"现在处于哪个状态"。**
 
-    - 功能：将每个 prompt 的求解进度形式化为可追踪的动力系统
-    - 核心思路：定义隐状态 $z_t^\tau \in \{1, 2, 3\}$，分别对应完全未解（$k$ 个响应全错）、部分求解（部分正确部分错误）、完全求解（全部正确）。初始先验为均匀分布 $\mu_1^{\text{prior}} = [1/3, 1/3, 1/3]$。状态转移由列随机矩阵 $\Phi \in \mathbb{R}^{3 \times 3}$ 描述，观测模型为退化发射：若 prompt 被选中 rollout 则状态被精确观测，否则无观测
-    - 设计动机：三状态划分既符合 GRPO 的梯度信号理论（只有 State 2 有非零优势函数），又保持模型简洁——消融实验证明更细或更粗的划分都会降低预测精度
+GRPO 的优势函数在一个 prompt 的 $k$ 个响应全对或全错时会因 $\text{std}=0$ 而归零，只有部分对部分错的 prompt 才有梯度。DPS 据此为每个 prompt 定义隐状态 $z_t^\tau \in \{1, 2, 3\}$，分别对应完全未解（$k$ 个响应全错）、部分求解（部分正确部分错误）、完全求解（全部正确），起始先验取均匀分布 $\mu_1^{\text{prior}} = [1/3, 1/3, 1/3]$。状态如何随训练演化由一个列随机矩阵 $\Phi \in \mathbb{R}^{3 \times 3}$ 刻画；观测模型则是"退化发射"——一个 prompt 只要被选中 rollout，它的真实状态就被精确看到，没被选中就没有任何观测。三状态的划分一方面正好对齐 GRPO 的梯度信号结构（只有 State 2 优势非零），另一方面足够简洁，消融实验显示再细分或再粗分都会拉低预测精度。
 
-2. **在线贝叶斯推断三步流水线**:
+**2. 在线贝叶斯推断三步流水线：让状态估计和转移模型每步实时更新。**
 
-    - 功能：在每个训练步实时更新状态估计和转移模型
-    - 核心思路：(i) **观测更新**——若 prompt 被选中 rollout，用贝叶斯规则将先验 $\mu_t^{\text{prior}}$ 更新为后验 $\mu_t^{\text{post}}$；退化发射模型下后验直接坍缩到观测状态。(ii) **转移更新**——利用 Dirichlet-Categorical 共轭性，用后验转移伪计数 $\xi_t(i,j) = \mathbb{P}(z_{t-1}=j, z_t=i \mid y_{1:t})$ 增量更新 Dirichlet 参数 $\alpha_t$。(iii) **下一步预测**——$\mu_{t+1}^{\text{prior}} = \Phi_t \mu_t^{\text{post}}$，将后验通过转移矩阵传播为下一步先验
-    - 设计动机：经典 HMM 的前向-后向算法需要完整轨迹，无法在线使用。DPS 的在线推断只依赖当前步观测和上一步后验，全部操作为 $3 \times 3$ 矩阵运算，开销可忽略
+经典 HMM 的前向-后向算法要拿到完整轨迹才能推断，没法边训边用，所以 DPS 把推断拆成只依赖当前步观测和上一步后验的三步增量更新。第一步**观测更新**：若 prompt 这步被选中 rollout，用贝叶斯规则把先验 $\mu_t^{\text{prior}}$ 更新为后验 $\mu_t^{\text{post}}$，由于是退化发射，后验直接坍缩到被观测到的那个状态。第二步**转移更新**：借 Dirichlet-Categorical 共轭性，用后验转移伪计数 $\xi_t(i,j) = \mathbb{P}(z_{t-1}=j, z_t=i \mid y_{1:t})$ 去增量更新 Dirichlet 参数 $\alpha_t$，从而在线学习转移矩阵。第三步**下一步预测**：把后验经转移矩阵传播为下一步先验，
 
-3. **非平稳指数衰减机制**:
+$$\mu_{t+1}^{\text{prior}} = \Phi_t \mu_t^{\text{post}}.$$
 
-    - 功能：使转移模型适应模型学习过程中不断变化的求解动态
-    - 核心思路：引入衰减因子 $\lambda \in (0,1)$，更新规则变为 $\alpha_t = \lambda \cdot \alpha_{t-1} + (1-\lambda) \cdot \alpha_0 + \xi_t$。较小的 $\lambda$ 使模型更快遗忘旧统计量、适应新动态。此机制同时**隐式提供探索**：长期未采样的 prompt 的后验会逐渐衰减至均匀分布，使其在缺少明确高信息 prompt 时被自然重新访问
-    - 设计动机：LRM 的学习过程高度非平稳——随着策略更新，prompt 的求解概率持续变化。标准 HMM 的平稳假设在此不成立，而指数衰减是一种轻量且有效的非平稳扩展
+整条流水线全是 $3 \times 3$ 的矩阵运算，开销可忽略，这正是它能替代昂贵 rollout 的前提。
 
-### Prompt 采样策略
+**3. 非平稳指数衰减：让转移模型跟得上不断变化的求解动态。**
 
-按 $\mu_t^{\tau,\text{prior}}(2)$（预测为部分求解的概率）对全部 prompt 排序，直接选取 Top-$B$ 个构成训练批次。这是一个纯利用（exploitation）策略，但由于非平稳衰减的存在，系统内建了隐式探索——未被采样的 prompt 预测分布逐渐漂移至均匀，会被自然纳入采样。这种设计避免了显式探索-利用权衡的超参数调优。
+LRM 的学习是高度非平稳的——策略一更新，prompt 的求解概率就变，标准 HMM 的平稳假设并不成立。DPS 为此引入衰减因子 $\lambda \in (0,1)$，把转移参数的更新改成
 
-### 训练更新
+$$\alpha_t = \lambda \cdot \alpha_{t-1} + (1-\lambda) \cdot \alpha_0 + \xi_t,$$
 
-DPS 与具体的 RL 算法正交。本文全部实验基于 GRPO，在 verl 框架内实现。每步选出 $B$ 个 prompt 后，对每个 prompt 生成 $k$ 个响应并计算奖励，用 GRPO 目标更新策略。DPS 的推断开销仅为 $O(|\mathcal{D}| \times 3^2)$ 的矩阵运算，实测对总训练时间的影响 < 1%。
+较小的 $\lambda$ 让模型更快遗忘旧统计量、贴近新动态。这个衰减还顺带提供了隐式探索：长期没被采样的 prompt，其后验会逐渐衰减回均匀分布，在没有明显高信息 prompt 时被自然重新访问，省去了显式探索-利用权衡的超参调优。
+
+### 训练策略
+
+采样落在纯利用上：按 $\mu_t^{\tau,\text{prior}}(2)$（预测为部分求解的概率）对全部 prompt 排序，直接取 Top-$B$ 进批次；隐式探索由上面的非平稳衰减兜底，未被采样的 prompt 预测分布漂向均匀后会被重新纳入，避免采样死锁。DPS 与具体 RL 算法正交，本文实验都在 verl 框架内用 GRPO 跑：每步选出 $B$ 个 prompt，各生成 $k$ 个响应并计算奖励，用 GRPO 目标更新策略。整个推断只占 $O(|\mathcal{D}| \times 3^2)$ 的矩阵运算，实测对总训练时间的影响 < 1%。
 
 ## 实验关键数据
 
@@ -156,11 +156,11 @@ DPS 在 Countdown（数值规划）和 Geometry3k（视觉几何推理，使用 
 
 ## 相关论文
 
+- [\[ICLR 2026\] Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
 - [\[ICLR 2026\] Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
 - [\[ICML 2026\] Verifying Meta-Awareness via Predictive Rewards in Reasoning Models](../../ICML2026/llm_reasoning/verifying_meta-awareness_via_predictive_rewards_in_reasoning_models.md)
 - [\[ICLR 2026\] Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
 - [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
-- [\[ACL 2026\] Dissecting Failure Dynamics in Large Language Model Reasoning](../../ACL2026/llm_reasoning/dissecting_failure_dynamics_in_large_language_model_reasoning.md)
 
 </div>
 

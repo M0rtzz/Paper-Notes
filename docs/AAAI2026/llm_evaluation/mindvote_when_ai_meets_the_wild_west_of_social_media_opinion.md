@@ -143,10 +143,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2026\] When AI Benchmarks Plateau: A Systematic Study of Benchmark Saturation](../../ICML2026/llm_evaluation/when_ai_benchmarks_plateau_a_systematic_study_of_benchmark_saturation.md)
-- [\[ICML 2025\] Faster and Stronger: When ANN-SNN Conversion Meets Parallel Spiking Calculation](../../ICML2025/llm_evaluation/faster_and_stronger_when_ann-snn_conversion_meets_parallel_spiking_calculation.md)
 - [\[ICML 2026\] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets (CAIA)](../../ICML2026/llm_evaluation/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
 - [\[ICML 2026\] From Human-Level AI Tales to AI Leveling Human Scales](../../ICML2026/llm_evaluation/from_human-level_ai_tales_to_ai_leveling_human_scales.md)
 - [\[ACL 2026\] Are They Lovers or Friends? Evaluating LLMs' Social Reasoning in English and Korean Dialogues](../../ACL2026/llm_evaluation/are_they_lovers_or_friends_evaluating_llms39_social_reasoning_in_english_and_kor.md)
+- [\[ICCV 2025\] InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild](../../ICCV2025/llm_evaluation/intersyn_interleaved_learning_for_dynamic_motion_synthesis_in_the_wild.md)
 
 </div>
 

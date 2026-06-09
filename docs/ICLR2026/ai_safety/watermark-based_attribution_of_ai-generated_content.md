@@ -37,37 +37,21 @@ tags:
 
 ### 整体框架
 
-系统分为三个阶段：
-1. **注册阶段**：用户注册时，服务商为其选择一个唯一水印（比特串）存入数据库
-2. **生成阶段**：用户生成内容时，其水印通过编码器嵌入内容中
-3. **检测与溯源阶段**：从待检内容中解码水印，若与某用户水印的比特准确率（Bitwise Accuracy, BA）超过阈值τ则判定为AI生成；进一步将内容归属于BA最高的用户
+本文把"用户级溯源"拆成注册、生成、检测与溯源三段：用户注册时服务商从数据库里为他分配一串唯一的水印比特，生成内容时这串水印被编码器嵌进图像或文本，事后再从可疑内容中把水印解码出来，靠它与各用户水印的比特吻合程度来判断是不是AI生成、又是谁生成的。整个流程不改动底层水印方法本身，只在"如何分配水印"和"如何根据解码结果做判定"两层做文章。
 
 ### 关键设计
 
-1. **检测机制**：内容C被检测为AI生成当且仅当 $\max_i BA(D(C), w_i) \geq \tau$，其中D是解码器，$w_i$是用户水印，$\tau > 0.5$ 是检测阈值。
+**1. 用一个阈值同时撑起检测和溯源：先判真假，再认主人。**
 
-2. **溯源机制**：在检测通过后，归属于 $i^* = \arg\max_i BA(D(C), w_i)$，即解码水印与之最相似的用户。
+待检内容 $C$ 经解码器 $D$ 还原出水印后，先看它与全体用户水印的最大比特准确率（Bitwise Accuracy, BA）是否过线——当且仅当 $\max_i BA(D(C), w_i) \geq \tau$（$\tau > 0.5$）时判定为AI生成。一旦检测通过，溯源就顺势取最像的那个用户：$i^* = \arg\max_i BA(D(C), w_i)$。这样检测和溯源共用同一个相似度排序，省去为溯源单独训练分类器，代价是要求用户之间的水印彼此足够"远"，否则两个用户的水印会在解码噪声下混淆。
 
-3. **水印选择算法**：为提升溯源性能，需最小化用户水印间的最大成对BA。本文将其形式化为优化问题：$\min_{w_s} \max_{i} BA(w_i, w_s)$，并证明该问题等价于NP-hard的最远字符串问题。提出**A-BSTA**（近似有界搜索树算法）：
+**2. A-BSTA：把水印分配转成最远字符串问题再近似求解。**
 
-    - 以随机水印而非$\neg w_1$初始化（提升性能）
-    - 限制递归深度为常数d=8（提升效率，时间复杂度降为$O(snm^d)$）
-    - 从小m开始递增搜索直到找到满足条件的水印
+要让溯源稳，核心是压低任意两用户水印的最大成对 BA，本文将其写成 $\min_{w_s} \max_{i} BA(w_i, w_s)$，并证明它等价于理论计算机科学里 NP-hard 的最远字符串问题。直接精确求解不现实，于是提出 A-BSTA（近似有界搜索树算法）做三处工程化改造：初始化不用补码 $\neg w_1$ 而用随机水印（实测溯源更好），把搜索树递归深度限制为常数 $d=8$ 把时间复杂度压到 $O(snm^d)$，再从较小的水印数 $m$ 起步逐步加大直到找到满足分离条件的水印集合。最终 A-BSTA 能把最大成对 BA 控到 $<0.74$，代价仅约 24ms/水印。
 
-### 理论分析
+**3. 三个指标加二项分布界：给"检测即溯源"一个可计算的理由。**
 
-定义三个核心评估指标：
-- **TDR_i**（真检测率）：用户i的AI生成内容被正确检测的概率
-- **FDR**（误检率）：非AI内容被误判为AI生成的概率  
-- **TAR_i**（真溯源率）：用户i的内容被正确溯源的概率
-
-基于$\beta$-accurate和$\gamma$-random水印定义：
-
-- **Theorem 1**：TDR下界 = $Pr(n_i \geq \tau n) + Pr(n_i \leq n - \tau n - \bar{\alpha_i} n)$，其中$n_i \sim B(n, \beta_i)$
-- **Theorem 3**：FDR上界 = $1 - Pr(n' < \tau n)^s$，其中$n' \sim B(n, 0.5+\gamma)$
-- **Theorem 4**：TAR下界 = $Pr(n_i \geq \max\{\lfloor\frac{1+\bar{\alpha_i}}{2}n\rfloor+1, \tau n\})$
-
-关键洞察：当$\tau > \frac{1+\bar{\alpha_i}}{2}$时，TDR和TAR的下界近似相等，即**检测即溯源**。
+为脱离具体水印方法做分析，本文定义真检测率 TDR$_i$（用户 $i$ 的内容被正确判为AI生成的概率）、误检率 FDR（真实内容被误判的概率）、真溯源率 TAR$_i$（被正确归属的概率），并基于 $\beta$-accurate 和 $\gamma$-random 两个可从实验估计的水印属性，把它们都写成二项分布尾概率的界。其中 TDR 下界为 $Pr(n_i \geq \tau n) + Pr(n_i \leq n - \tau n - \bar{\alpha_i} n)$（$n_i \sim B(n, \beta_i)$），FDR 上界为 $1 - Pr(n' < \tau n)^s$（$n' \sim B(n, 0.5+\gamma)$），TAR 下界为 $Pr(n_i \geq \max\{\lfloor\frac{1+\bar{\alpha_i}}{2}n\rfloor+1, \tau n\})$。这套界的关键推论是：当 $\tau > \frac{1+\bar{\alpha_i}}{2}$ 时 TDR 与 TAR 下界近似相等，意味着只要内容被检测出来就几乎一定能正确溯源，即"检测即溯源"，这也解释了为何设计1可以用同一阈值办两件事。
 
 ## 实验关键数据
 
@@ -138,10 +122,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] Quantifying Misattribution Unfairness in Authorship Attribution](../../ACL2025/ai_safety/quantifying_misattribution_unfairness_in_authorship_attribution.md)
-- [\[ICML 2026\] From Out-of-Distribution Detection to Hallucination Detection: A Geometric View](../../ICML2026/ai_safety/from_out-of-distribution_detection_to_hallucination_detection_a_geometric_view.md)
+- [\[ICLR 2026\] AP-OOD: Attention Pooling for Out-of-Distribution Detection](ap-ood_attention_pooling_for_out-of-distribution_detection.md)
 - [\[NeurIPS 2025\] Beyond Last-Click: An Optimal Mechanism for Ad Attribution](../../NeurIPS2025/ai_safety/beyond_last-click_an_optimal_mechanism_for_ad_attribution.md)
-- [\[ICLR 2026\] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
 - [\[ICML 2026\] Hidden in Plain Tokens: Simply Robust, Gradient-Free Watermark for Synthetic Audio](../../ICML2026/ai_safety/hidden_in_plain_tokens_simply_robust_gradient-free_watermark_for_synthetic_audio.md)
+- [\[ICLR 2026\] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
 
 </div>
 

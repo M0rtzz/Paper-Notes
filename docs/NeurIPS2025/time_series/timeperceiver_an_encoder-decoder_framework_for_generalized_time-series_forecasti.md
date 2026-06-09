@@ -143,9 +143,9 @@ TimePerceiver 的名字和架构灵感来自 Perceiver 系列（DeepMind），�
 
 - [\[NeurIPS 2025\] Multi-Scale Finetuning for Encoder-based Time Series Foundation Models](multi-scale_finetuning_for_encoder-based_time_series_foundation_models.md)
 - [\[NeurIPS 2025\] IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics](ioncast_a_deep_learning_framework_for_forecasting_ionospheric_total_electron_con.md)
-- [\[NeurIPS 2025\] AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
 - [\[NeurIPS 2025\] Selective Learning for Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)
-- [\[CVPR 2025\] DejaVid: Encoder-Agnostic Learned Temporal Matching for Video Classification](../../CVPR2025/time_series/dejavid_encoder-agnostic_learned_temporal_matching_for_video_classification.md)
+- [\[NeurIPS 2025\] AERO: A Redirection-Based Optimization Framework Inspired by Judo for Robust Probabilistic Forecasting](aero_a_redirection-based_optimization_framework_inspired_by_judo_for_robust_prob.md)
+- [\[ICML 2026\] CombinationTS: A Modular Framework for Understanding Time-Series Forecasting Models](../../ICML2026/time_series/combinationts_a_modular_framework_for_understanding_time-series_forecasting_mode.md)
 
 </div>
 

@@ -47,48 +47,49 @@ KeepLoRA在标准LoRA基础上进行改进，核心思想是构建一个**统一
 
 ### 关键设计
 
-#### 1. 预训练知识子空间的提取
+**1. 提取预训练主子空间：把通用知识圈出来保护。**
 
-对每个需要更新的权重矩阵 $\mathbf{W} \in \mathbb{R}^{d_{in} \times d_{out}}$ 做SVD分解 $\mathbf{W} = \mathbf{U}\mathbf{S}\mathbf{V}^\top$，提取前 $p$ 个左奇异向量构成主子空间 $\mathbf{W}_p = \mathbf{U}_{:,1:p}$，满足能量约束：
+既然要保住前向稳定性，第一步就得把"通用知识住在哪里"显式标出来。作者对每个待更新的权重矩阵 $\mathbf{W} \in \mathbb{R}^{d_{in} \times d_{out}}$ 做SVD分解 $\mathbf{W} = \mathbf{U}\mathbf{S}\mathbf{V}^\top$，取前 $p$ 个左奇异向量拼成主子空间 $\mathbf{W}_p = \mathbf{U}_{:,1:p}$。$p$ 不是拍脑袋定的，而是由能量约束卡出来——只要保留的主分量能量占到原矩阵的 $\epsilon_w$ 比例即可：
 
-$$\|\mathbf{W}_p\|_F^2 \geq \epsilon_w \|\mathbf{W}\|_F^2$$
+$$\|\mathbf{W}_p\|_F^2 \geq \epsilon_w \|\mathbf{W}\|_F^2,\quad \epsilon_w \in (0,1)$$
 
-其中 $\epsilon_w \in (0,1)$ 控制保留的能量比例。实验表明，仅保留少量主分量就足以覆盖通用知识。
+实验里只需少量主分量就能覆盖几乎全部通用知识，所以 $\mathbf{W}_p$ 很瘦，留给后续任务的残差空间足够大。
 
-#### 2. 已学任务知识子空间的维护
+**2. 维护已学任务方向：把每个旧任务也圈进保护名单。**
 
-为防止遗忘已学任务，提取各任务的主特征方向。学完第 $t$ 个任务后，提取该任务的特征空间（已去除主子空间和历史任务方向的投影）：
+光保护预训练知识还不够，已经学过的任务也不能忘，所以每学完一个任务就要把它的"特征方向"记下来。学完第 $t$ 个任务后，作者先把该任务的特征 $\mathbf{X}_t$ 里已经被主子空间和历史任务方向覆盖的部分减掉，只留下真正新增的成分：
 
 $$\hat{\mathbf{X}}_t = \mathbf{X}_t - \mathbf{W}_p \mathbf{W}_p^\top \mathbf{X}_t - \mathbf{M}_{t-1} \mathbf{M}_{t-1}^\top \mathbf{X}_t$$
 
-对 $\hat{\mathbf{X}}_t$ 做SVD，提取前 $m$ 个主要奇异向量更新方向矩阵：$\mathbf{M}_t = [\mathbf{M}_{t-1}, \mathbf{V}_{t(:,1:m)}]$，保留数量由能量阈值 $\epsilon_f$ 动态决定。
+再对残量 $\hat{\mathbf{X}}_t$ 做SVD，取前 $m$ 个奇异向量追加进方向矩阵 $\mathbf{M}_t = [\mathbf{M}_{t-1}, \mathbf{V}_{t(:,1:m)}]$，其中 $m$ 同样由能量阈值 $\epsilon_f$ 动态决定。先减投影再提取这一步是关键：它保证新记录的方向和已有的不重复，矩阵不会因为信息冗余而膨胀。
 
-#### 3. 统一主子空间
+**3. 合并成统一主子空间：一张正交约束清单管住所有更新。**
 
-预训练主子空间 $\mathbf{W}_p$ 和任务方向矩阵 $\mathbf{M}_t$ 在同一 $d_{in}$ 维特征空间中运作，统一为：
+预训练主子空间 $\mathbf{W}_p$ 和任务方向 $\mathbf{M}_t$ 都活在同一个 $d_{in}$ 维特征空间里，于是直接拼成一张统一的"受保护方向"清单：
 
 $$\mathbf{M}_t' = [\mathbf{W}_p, \mathbf{M}_t]$$
 
-总向量数上界为 $d_{in}$，存储开销可控。新任务的所有更新必须与 $\mathbf{M}_{t-1}'$ 正交。
+之后新任务的任何更新都必须与 $\mathbf{M}_{t-1}'$ 正交——一个正交约束同时罩住了通用知识和所有旧任务。由于两类方向共享同一空间，清单的总向量数上界就是 $d_{in}$，存储开销天然封顶，不会随任务数无限膨胀。
 
-#### 4. 梯度引导的LoRA初始化（保持可塑性）
+**4. 用梯度初始化LoRA：在残差空间里给可塑性留出口。**
 
-使用第一步训练梯度 $\mathbf{G}_t = \nabla_{\mathbf{W}} \mathcal{L}(\mathbf{W}; \mathcal{D}^t)$ 来初始化LoRA。首先将梯度投影到残差子空间：
+前面三步都在做"减法"保护旧知识，这一步要补回可塑性，否则新任务无从学起。做法是用第一步训练的真实梯度 $\mathbf{G}_t = \nabla_{\mathbf{W}} \mathcal{L}(\mathbf{W}; \mathcal{D}^t)$ 来初始化LoRA，因为梯度方向天然指向"对新任务最有用"的更新。但直接用会撞上受保护方向，所以先把梯度投影到残差子空间，把会破坏稳定性的分量减掉：
 
 $$\hat{\mathbf{G}}_t = \underbrace{\mathbf{G}_t}_{\text{可塑性}} - \underbrace{\mathbf{W}_p \mathbf{W}_p^\top \mathbf{G}_t - \mathbf{M}_{t-1} \mathbf{M}_{t-1}^\top \mathbf{G}_t}_{\text{前向+后向稳定性}}$$
 
-对 $\hat{\mathbf{G}}_t$ 做SVD，取前 $r$ 个分量初始化LoRA：
+这一个式子把三个目标揉在一起：保留的 $\mathbf{G}_t$ 给可塑性，减去的两项分别保前向稳定（不动通用知识）和后向稳定（不动旧任务）。随后对 $\hat{\mathbf{G}}_t$ 做SVD，取前 $r$ 个分量初始化LoRA：
+
 $$\mathbf{A} = \mathbf{U}_{:,1:r}, \quad \mathbf{B} = \mathbf{S}_{1:r} \mathbf{V}_{:,1:r}^\top$$
 
-$\mathbf{A}$ 冻结不训练，仅优化 $\mathbf{B}$。由于初始 $\frac{\alpha}{r}\mathbf{AB} \neq 0$，需将原参数调整为 $\mathbf{W}' = \mathbf{W} - \frac{\alpha}{r}\mathbf{AB}$。
+其中 $\mathbf{A}$ 冻结、只训练 $\mathbf{B}$。由于初始的 $\frac{\alpha}{r}\mathbf{AB} \neq 0$，为了不改变模型当前的功能，需要把原参数对应扣掉这部分：$\mathbf{W}' = \mathbf{W} - \frac{\alpha}{r}\mathbf{AB}$。
 
-#### 5. 理论保证
+**5. 理论保证：冻结 A 等价于把更新锁进残差子空间。**
 
-**命题3.1**证明：冻结 $\mathbf{A}$ 仅优化 $\mathbf{B}$ 等价于将梯度下降约束在 $\text{span}(\mathbf{A})$ 子空间内：
+前一步"冻 $\mathbf{A}$ 只训 $\mathbf{B}$"看起来只是个实现技巧，命题3.1 证明它其实就是把整个梯度下降约束在了 $\text{span}(\mathbf{A})$ 内：
 
 $$\Delta\mathbf{W} = \frac{\alpha}{r}\mathbf{A}\Delta\mathbf{B} = -c\mathbf{A}\mathbf{A}^\top\mathbf{G}_t$$
 
-$\mathbf{A}\mathbf{A}^\top$ 充当正交投影算子，所有更新自动约束在 $\text{span}(\mathbf{A})$ 内。
+这里 $\mathbf{A}\mathbf{A}^\top$ 正好是一个正交投影算子，所以无论怎么训 $\mathbf{B}$，权重的实际变化都被自动投影回 $\text{span}(\mathbf{A})$——也就是前一步精心挑出的残差子空间。换句话说，可塑性与稳定性的平衡不是靠额外正则项软约束的，而是被参数化结构硬性保证的。
 
 ### 损失函数 / 训练策略
 

@@ -125,11 +125,11 @@ $$\mathcal{L}_{task} = -\frac{1}{b}\sum_{i=1}^{N}\log\frac{\sum_j \exp(-D_{ij}/\
 
 ## 相关论文
 
+- [\[AAAI 2026\] Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment](unleashing_the_potential_of_large_language_models_for_text-to-image_generation_t.md)
 - [\[ECCV 2024\] SAIR: Learning Semantic-aware Implicit Representation](../../ECCV2024/image_generation/sair_learning_semantic-aware_implicit_representation.md)
 - [\[CVPR 2025\] InsightEdit: Towards Better Instruction Following for Image Editing](../../CVPR2025/image_generation/insightedit_towards_better_instruction_following_for_image_editing.md)
 - [\[ICLR 2026\] Visual Autoregressive Modeling for Instruction-Guided Image Editing](../../ICLR2026/image_generation/visual_autoregressive_modeling_for_instruction-guided_image_editing.md)
 - [\[ICCV 2025\] SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
-- [\[ICLR 2026\] EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](../../ICLR2026/image_generation/editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
 
 </div>
 

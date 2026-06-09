@@ -42,31 +42,19 @@ tags:
 
 ### 整体框架
 
-冻结 LLM 产生 $\mathbf{X} \in \mathbb{R}^{L \times d}$ → 构建 token 相似性图 $\mathcal{G}$ → Token-GNN 细化 → 加权聚合 readout → 句子向量 $\mathbf{z}$。
+Glot 把"句子池化"从一步聚合改造成"先建关系、再聚合"的两阶段流程：冻结 LLM 先吐出 token 级隐状态矩阵 $\mathbf{X} \in \mathbb{R}^{L \times d}$，Glot 据此构建一张 token 相似性图，用一个轻量 GNN 在图上传播若干轮把每个 token 的表征细化掉，最后用可学习的注意力 readout 把细化后的 token 加权汇成单条句子向量 $\mathbf{z}$。整个 LLM backbone 全程不动，只训练 GNN 头和任务分类器。
 
 ### 关键设计
 
-1. **Token 图构建**:
+**1. Token 相似性图构建：把"独立 token 集合"恢复成带结构的图。** 标准 mean/max 池化默认 token 之间互不相关，等于扔掉了自注意力辛苦学到的关系。Glot 反过来用隐状态本身的几何把这层关系显式恢复出来：对任意两个 token 计算余弦相似度 $\mathbf{S}_{ij} = \cos(\mathbf{x}_i, \mathbf{x}_j)$，只有当 $\mathbf{S}_{ij} > \tau$ 时才在它们之间连一条边，$\tau$ 是控制稀疏度的阈值超参数。这样得到的潜在图只保留语义相关的连接、剔除噪声边，既给后续 GNN 提供了有意义的消息通路，又把计算量压在稀疏图上。
 
-    - **功能**：基于 cosine 相似度构建稀疏图
-    - **核心思路**：$\mathbf{S}_{ij} = \cos(\mathbf{x}_i, \mathbf{x}_j)$，仅 $\mathbf{S}_{ij} > \tau$ 时创建边。$\tau$ 是超参数
-    - **设计动机**：保留语义相关的 token 间连接，丢弃无关连接。阈值控制图稀疏度
+**2. Token-GNN 细化：让 token 之间真正交换信息，建模否定、修饰这类依赖。** 光有图还不够，关键是在图上做消息传播，让一个 token 的表征吸收邻居信息。Glot 堆 $K$ 层 GNN，每层先聚合邻域 $\mathbf{a}_i^{(\ell)} = \text{AGGREGATE}_{j \in \mathcal{N}_i}(\mathbf{h}_j^{(\ell)})$，再把自身与邻域拼接后过线性变换和非线性 $\mathbf{h}_i^{(\ell+1)} = \sigma(\mathbf{W}^{(\ell)} \text{CONCAT}(\mathbf{h}_i^{(\ell)}, \mathbf{a}_i^{(\ell)}))$。这一步是和纯集合方法拉开差距的核心：像"not good"里 not 对 good 的否定语义，必须靠 token 间交互才能编码，而退化到 $K=0$ 的 DeepSets 框架（AdaPool 也属于此类）根本无法表达这种交互。
 
-2. **Token-GNN 细化**:
-
-    - **功能**：在 token 图上传播信息
-    - **核心思路**：$K$ 层 GNN，$\mathbf{a}_i^{(\ell)} = \text{AGGREGATE}_{j \in \mathcal{N}_i}(\mathbf{h}_j^{(\ell)})$，$\mathbf{h}_i^{(\ell+1)} = \sigma(\mathbf{W}^{(\ell)} \text{CONCAT}(\mathbf{h}_i^{(\ell)}, \mathbf{a}_i^{(\ell)}))$
-    - **设计动机**：GNN 捕获 token 间依赖，如"not good"中 not 对 good 的否定。DeepSets（K=0）无法建模此类交互
-
-3. **可学习 Readout**:
-
-    - **功能**：加权聚合细化后的 token 表征
-    - **核心思路**：$m_i = \mathbf{v}^\top \tanh(\mathbf{W}_m \mathbf{u}_i + \mathbf{b}_m)$，$\pi = \text{softmax}(\mathbf{m})$，$\mathbf{z} = \sum_i \pi_i \mathbf{u}_i$
-    - **设计动机**：自适应权重优于固定 mean/max。理论证明 Glot 泛化了 mean/max/CLS 和 AdaPool
+**3. 可学习注意力 Readout：自适应决定哪些 token 该被放大。** 细化完还要把 $L$ 个 token 压成一条向量，固定的 mean/max 在只有少数 token 携带信号时会被淹没。Glot 改用注意力打分：先算每个 token 的分数 $m_i = \mathbf{v}^\top \tanh(\mathbf{W}_m \mathbf{u}_i + \mathbf{b}_m)$，softmax 归一化成权重 $\pi = \text{softmax}(\mathbf{m})$，再加权求和 $\mathbf{z} = \sum_i \pi_i \mathbf{u}_i$。这套打分让模型自适应地把权重压到任务相关 token 上，且作者从理论上证明：当退化各组件时 Glot 可以严格还原出 mean/max/CLS 乃至 AdaPool，即这些经典池化都是 Glot 的特例。
 
 ### 损失函数 / 训练策略
 
-任务特定损失（分类用 CE，相似度用 cosine）。仅训练 GNN head + 任务分类器，backbone 完全冻结。可训练参数比 LoRA 等 PEFT 方法少 20×。
+训练用任务特定损失——分类任务用交叉熵，语义相似度任务用 cosine 目标。LLM backbone 完全冻结，只更新 GNN 头与任务分类器，可训练参数量比 LoRA 等 PEFT 方法还少约 20×，因此训练显著更快。
 
 ## 实验关键数据
 

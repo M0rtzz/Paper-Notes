@@ -42,46 +42,35 @@ tags:
 
 ## 方法详解
 
-### 整体流水线
+### 整体框架
 
-分为三个阶段：激活提取 → SAE 训练与特征筛选 → 自动标注与人工验证。
+方法围绕一条"提取激活 → 训稀疏字典 → 筛选并标注 → 因果验证"的流水线展开：先把音频喂进冻结的 MusicGen，从若干残差流层抓激活；再用 k-sparse autoencoder 把稠密激活重写成一组稀疏、单义的特征；然后过滤掉太普遍或太稀有的无效特征，用多模态 LLM、音频分类器和 CLAP 三路给剩下的特征自动贴标签；最后把某个特征的解码器方向注回残差流，验证它能否真正左右生成。
 
-### 1. 数据集与激活提取
+### 关键设计
 
-- 使用 MusicSet 数据集（约 16 万条 ~10s 音乐片段，来源 MTG-Jamendo / MusicCaps / MusicBench）
-- 将音频送入预训练的 MusicGen-Large（MGL, d=2048）和 MusicGen-Small（MGS, d=1024）
-- 从 5 个残差流层提取激活：第 2 层（早期）、25%/50%/75% 深度层、倒数第 2 层（晚期）
-- MGL 层索引 {2, 12, 24, 36, 46}，MGS 层索引 {2, 6, 12, 18, 22}
+**1. 多层残差流激活提取：给"音乐到底学在哪一层"留好探针。**
 
-### 2. 稀疏自编码器 (SAE) 训练
+要发现概念，前提是从生成模型里取出值得分析的中间表征。作者用约 16 万条 ~10 秒音乐片段构成的 MusicSet 数据集（来自 MTG-Jamendo / MusicCaps / MusicBench），分别送入预训练的 MusicGen-Large（MGL，$d=2048$）和 MusicGen-Small（MGS，$d=1024$）。激活不是只取一层，而是沿深度均匀采五个残差流层——早期第 2 层、25%/50%/75% 深度层和倒数第 2 层（MGL 取 $\{2,12,24,36,46\}$，MGS 取 $\{2,6,12,18,22\}$）。这样布点是为了让后续分析能比较"概念在浅层还是深层更可解释"，而不必预设答案。
 
-- 使用 k-sparse autoencoder 架构：编码器 $\mathbf{h} = \text{ReLU}(\mathbf{W}_e \mathbf{x} + \mathbf{b}_e)$，再通过 top-k 投影保留 k 个最大激活值
-- 解码器 $\hat{\mathbf{x}} = \mathbf{W}_d \mathbf{h} + \mathbf{b}_d$，最小化 MSE 重建误差
-- 超参数组合：扩展因子 $\epsilon \in \{4, 32\}$，稀疏度 $k \in \{32, 100\}$
+**2. k-sparse autoencoder：用稀疏瓶颈把纠缠的激活拆成单义特征。**
 
-### 3. 特征筛选
+残差流激活是高度叠加（superposition）的，一个维度往往同时编码多个概念，没法直接读。作者训练 k-sparse autoencoder 把它重写成一组稀疏激活的特征：编码器 $\mathbf{h}=\text{ReLU}(\mathbf{W}_e\mathbf{x}+\mathbf{b}_e)$ 后再经 top-k 投影，只保留 $k$ 个最大激活、其余置零，解码器 $\hat{\mathbf{x}}=\mathbf{W}_d\mathbf{h}+\mathbf{b}_d$ 在 MSE 重建误差下复原原激活。强制稀疏迫使每个特征承载尽量单一的含义，从而可解释。字典维度由扩展因子 $\epsilon\in\{4,32\}$ 控制，稀疏度 $k\in\{32,100\}$，作者扫遍这些组合以观察容量与稀疏度对特征数量与质量的影响。
 
-对每个特征计算其在验证集全部 track 上的激活率 $r_i$，过滤掉三类无效特征：
+**3. 激活率三段筛选：剔掉"从不激活/太普遍/太稀有"的无效特征。**
 
-- **从不激活**：$r_i = 0$
-- **过于普遍**：$r_i > 0.25$（在超过 25% 的 track 中激活，含义模糊）
-- **过于稀有**：$r_i < 0.01$（覆盖不足，无法可靠解释）
+字典里成千上万的特征大多不堪用，必须先过滤再标注。作者对每个特征统计它在验证集全部 track 上的激活率 $r_i$，按三条启发式规则剔除：$r_i=0$ 的从不激活特征（死特征）、$r_i>0.25$ 的过于普遍特征（在超过四分之一 track 上激活，含义太泛而模糊）、以及 $r_i<0.01$ 的过于稀有特征（覆盖样本太少，无法可靠解释）。这一步把标注预算集中到既频繁又有区分度的特征上，全流程筛后共留下 4697 个有效特征。
 
-### 4. 自动标注流水线
+**4. 三路自动标注 + CLAP 评分：不靠人力大规模给特征命名。**
 
-三种互补策略并行：
+数千个特征逐一人工命名不现实，作者用三种互补策略并行打标签。生成式标注把每个特征 top-10 最高激活样本的拼接音频送进 Gemini Flash 1.5，让多模态 LLM 直接给出概念标签、置信度和描述；分类器标注则用预训练的 Essentia 音频分类器抽取流派、乐器、情绪等标签；最后对每个候选标签计算其文本与激活样本音频的 CLAP embedding 余弦相似度作为对齐得分，用来量化标签到底贴不贴音频。两路标签来源加一路客观打分，既覆盖开放式概念又有可比的质量度量。
 
-- **生成式标注**：将每个特征 top-10 最高激活样本的拼接音频送入 Gemini Flash 1.5，让多模态 LLM 生成概念标签、置信度和描述
-- **分类器标注**：使用预训练 Essentia 音频分类器提取标签（流派、乐器、情绪等）
-- **CLAP 对齐评分**：计算标签文本与激活样本音频的 CLAP embedding 余弦相似度，量化标签质量
+**5. 残差流 Steering：从因果上验证特征是不是"可操作方向"。**
 
-### 5. 生成 Steering
-
-在前向推理时，向 SAE 所在层的残差流注入缩放后的解码器权重向量：
+可解释还不等于可控，最后一步要证明发现的特征确实因果地驱动生成。作者在前向推理时把目标特征 $j$ 的解码器方向缩放后注回它所在层的残差流：
 
 $$\mathbf{x}' = \mathbf{x} + \alpha \cdot \beta \cdot \mathbf{W}_{d,j}$$
 
-其中 $\alpha \in (0,1)$ 为 steering 强度，$\beta$ 为特征 j 的最大激活强度。使用中性 prompt "Simple melody" 测试，比较 $\alpha=0$（基线）和 $\alpha=1$（最大 steering）的输出差异。
+其中 $\beta$ 是特征 $j$ 的最大激活强度（把注入幅度对齐到该特征的自然量级），$\alpha\in(0,1)$ 是 steering 强度。实验用中性 prompt "Simple melody" 排除文本 prompt 的干扰，对比 $\alpha=0$（基线）与 $\alpha=1$（最大 steering）的输出，若注入后音频朝该特征对应的概念偏移，就说明这个方向是可操作的。
 
 ## 实验关键数据
 
@@ -154,9 +143,9 @@ $$\mathbf{x}' = \mathbf{x} + \alpha \cdot \beta \cdot \mathbf{W}_{d,j}$$
 
 - [\[AAAI 2026\] Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
 - [\[ICLR 2026\] Improving Black-Box Generative Attacks via Generator Semantic Consistency](improving_black-box_generative_attacks_via_generator_semantic_consistency.md)
-- [\[ACL 2026\] Closing the Modality Reasoning Gap for Speech Large Language Models](../../ACL2026/audio_speech/closing_the_modality_reasoning_gap_for_speech_large_language_models.md)
 - [\[ACL 2026\] SpeechLLM-as-Judges: Towards General and Interpretable Speech Quality Evaluation](../../ACL2026/audio_speech/speechllm-as-judges_towards_general_and_interpretable_speech_quality_evaluation.md)
 - [\[ICML 2026\] Sparse Autoencoders for Interpretable Emotion Control in Text-to-Speech](../../ICML2026/audio_speech/sparse_autoencoders_for_interpretable_emotion_control_in_text-to-speech.md)
+- [\[AAAI 2026\] DiffA: Large Language Diffusion Models Can Listen and Understand](../../AAAI2026/audio_speech/diffa_large_language_diffusion_models_can_listen_and_understand.md)
 
 </div>
 

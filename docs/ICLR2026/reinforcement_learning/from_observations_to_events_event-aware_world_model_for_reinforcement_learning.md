@@ -37,46 +37,28 @@ tags:
 
 ### 整体框架
 
-EAWM 是一个**通用框架**，可以叠加到不同的世界模型架构上。论文提出了一个统一的世界模型公式化描述，涵盖五个核心组件：
-
-1. **序列模型**（Sequence Model）：$\mathbf{h}_t, \mathbf{y}_t = \mathbf{F}_\theta(\mathbf{h}_{t-1}, \mathbf{Z}_{t-1}, \mathbf{A}_{t-1})$
-2. **表征模型**（Representation Model）：$\mathbf{z}_t \sim q_\theta(\mathbf{z}_t | \mathbf{o}_t, \mathbf{h}_t)$
-3. **动力学预测器**（Dynamics Predictor）：$\hat{\mathbf{z}}_t \sim p_\theta(\hat{\mathbf{z}}_t | \mathbf{y}_t)$
-4. **奖励预测器**（Reward Predictor）
-5. **继续预测器**（Continuation Predictor）
-
-在此基础上，EAWM 增加了**观测预测器**和**事件预测器**两个模块，形成事件感知的表征学习。关键的是，事件预测器可以依赖世界模型的输出进行预测，因此该框架理论上可适配任意世界模型架构，论文实现了 EADream（基于 DreamerV3）和 EASimulus（基于 Simulus）两个实例。
+EAWM 不是一个独立的网络，而是叠加在已有世界模型之上的通用插件。作者先把主流世界模型抽象成一个统一公式——序列模型 $\mathbf{h}_t, \mathbf{y}_t = \mathbf{F}_\theta(\mathbf{h}_{t-1}, \mathbf{Z}_{t-1}, \mathbf{A}_{t-1})$ 推进隐状态，表征模型 $\mathbf{z}_t \sim q_\theta(\mathbf{z}_t | \mathbf{o}_t, \mathbf{h}_t)$ 编码当前观测，动力学预测器 $\hat{\mathbf{z}}_t \sim p_\theta(\hat{\mathbf{z}}_t | \mathbf{y}_t)$ 在想象中预测下一步，再配上奖励与继续预测器——然后在这套骨架上挂入两个新模块：观测预测器和事件预测器，让表征学会感知事件。由于事件预测器只依赖世界模型的输出，整套设计与具体架构解耦，论文据此实现了基于 DreamerV3 的 EADream 与基于 Simulus 的 EASimulus 两个实例。
 
 ### 关键设计
 
-1. **自动事件生成器（Automated Event Generator）**：无需人工标注，自动从原始观测中生成事件
+**1. 自动事件生成器（Automated Event Generator）：无需人工标签，从原始观测中自动产出事件。**
 
-    - **视觉输入**：使用自适应高斯混合模型（AGMM），将事件定义为对已学习的多模态分布的统计显著偏差，而非原始像素差分。通过马氏距离判断新观测是否构成事件，能有效滤除噪声和缓慢的亮度变化
-    - **有序数据**（如关节角度、速度）：归一化差分超过阈值时触发事件
-    - **名义数据**（如分类输入）：类别变化即为事件
-    - 该模块化设计使模型能灵活适应多种观测模态
+世界模型若直接对像素差分敏感，会把噪声和缓慢的光照漂移误当成变化，因此 EAWM 用统计显著性而非原始差分来定义事件。对视觉输入，它维护一个自适应高斯混合模型（AGMM）刻画历史观测的多模态分布，当新观测对这一分布的马氏距离足够大时才判定为事件，从而自然滤除噪点与渐变亮度。对关节角度、速度这类有序数据，则在归一化差分超过阈值时触发事件；对分类型的名义数据，类别一旦改变即记为事件。三种模态共用同一套"显著偏离才算事件"的判据，使框架不必为不同环境改动逻辑就能即插即用。
 
-2. **通用事件分段器（Generic Event Segmentor, GES）**：自动检测**事件边界**（event boundary），即有意义观测段落的起止点
+**2. 通用事件分段器（Generic Event Segmentor, GES）：检测事件边界，避免被密集瞬态淹没。**
 
-    - 核心思想：当事件过于密集时（如突然震动），对瞬态波动的过度关注会分散对关键事件的注意力
-    - GES 用事件数量比例 $\alpha_t^{(m)}$ 与阈值 $\alpha_{\text{thr}}^{(m)}$ 比较来判断是否处于事件边界
-    - 不引入额外可训练参数，实现为事件的确定性函数
-    - 在事件边界处，事件预测被抑制，世界模型将注意力从事件重新分配到原始观测
+当事件过密（例如画面突然剧烈震动），逐帧追逐每一次瞬态波动反而会冲淡对真正关键事件的注意力，GES 的作用就是找出"有意义段落"的起止点。它统计当前模态的事件数量占比 $\alpha_t^{(m)}$，与阈值 $\alpha_{\text{thr}}^{(m)}$ 比较来判断是否落在事件边界上，整个判定是事件的确定性函数，不引入任何可训练参数。一旦处于边界处，事件预测被抑制，世界模型把注意力从事件重新拨回原始观测，从而在密集变化时保持训练稳定——这也是它对连续控制任务格外重要的原因。
 
-3. **事件预测器（Event Predictor）**：为每种模态设计独立的解码器网络，使用 stop-gradient 防止梯度回传到目标
+**3. 事件预测器（Event Predictor）：把表征压向有意义的时空转变。**
 
-    - 对有序数据使用交叉熵损失
-    - 对视觉/名义数据使用 focal loss
-    - 通过信息瓶颈优化，内在地约束表征空间关注有意义的时空转变
+每种模态配一个独立解码器来预测事件，并对预测目标施加 stop-gradient，防止梯度回流篡改目标本身。有序数据用交叉熵损失，视觉与名义数据则用 focal loss 以缓解事件稀疏带来的正负样本失衡。因为事件已抽象掉冗余细节，预测它本质上比预测完整观测更简单，这相当于一个信息瓶颈，迫使表征空间聚焦于运动与状态转变，而非纹理、颜色等易变的虚假信号。
 
 ### 损失函数 / 训练策略
 
-总损失为：
+总损失把基础世界模型损失与两个新目标线性组合：
 $$\mathcal{L}(\theta) = \mathcal{L}_{\text{WM}}(\theta) + \beta_o \mathcal{L}_o(\theta) + \beta_e \mathcal{L}_e(\theta)$$
 
-其中 $\mathcal{L}_{\text{WM}}$ 是基础世界模型损失，$\mathcal{L}_o$ 是事件感知的观测预测损失（GES 引导模型在事件发生处增大观测预测权重），$\mathcal{L}_e$ 是事件预测损失。
-
-行为学习完全在想象轨迹上进行，事件/观测预测器在策略学习时不参与推理，因此不增加策略推理开销。
+其中 $\mathcal{L}_o$ 是事件感知的观测预测损失，由 GES 引导模型在事件真正发生处增大观测预测权重；$\mathcal{L}_e$ 是事件预测损失。值得一提的是，行为学习仍完全在想象轨迹上进行，事件与观测预测器只参与表征训练、在策略推理时并不调用，因此这套增强几乎不增加策略部署开销。
 
 ## 实验关键数据
 
@@ -154,8 +136,8 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{WM}}(\theta) + \beta_o \mathcal{L}_o(
 - [\[ICLR 2026\] WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
 - [\[ICLR 2026\] ROMI: Model-based Offline RL via Robust Value-Aware Model Learning with Implicitly Differentiable Adaptive Weighting](model-based_offline_rl_via_robust_value-aware_model_learning_with_implicitly_dif.md)
 - [\[AAAI 2026\] Object-Centric World Models for Causality-Aware Reinforcement Learning](../../AAAI2026/reinforcement_learning/object-centric_world_models_for_causality-aware_reinforcement_learning.md)
-- [\[ICLR 2026\] One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
 - [\[CVPR 2026\] Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](../../CVPR2026/reinforcement_learning/specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+- [\[ICLR 2026\] One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
 
 </div>
 

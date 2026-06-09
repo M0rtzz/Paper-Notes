@@ -47,27 +47,21 @@ DriftLite 提出在 Fokker-Planck 方程中利用漂移-势函数的自由度，
 ## 方法详解
 
 ### 整体框架
-给定预训练扩散模型和目标分布（annealing $q_T \propto p_0^\gamma$ 或 reward-tilting $q_T \propto p_0 \exp(r)$），DriftLite 在推理时的每个时间步：(1) 用当前粒子估计一个小矩阵 $A_t$ 和向量 $c_t$ → (2) 求解 $n \times n$（$n \leq 3$）线性系统得到控制漂移系数 $\theta_t$ → (3) 将控制漂移加入粒子 SDE 并更新残差势函数。
+DriftLite 要解决的是推理时适配里 SMC 的老毛病：粒子权重指数级退化，有效样本量很快崩塌。它的做法不是事后给权重做归一化，而是在采样过程里就主动把"会制造权重方差"的那部分信息从权重挪到漂移项里去。具体到每个时间步，给定预训练扩散模型和目标分布（退火 $q_T \propto p_0^\gamma$ 或 reward-tilting $q_T \propto p_0 \exp(r)$），流程是：先用当前这批粒子估出一个小矩阵 $A_t$ 和向量 $c_t$，再求解一个 $n \times n$（$n \leq 3$）的线性系统拿到控制漂移的系数 $\theta_t$，最后把这个控制漂移加进粒子 SDE 并相应更新残差势函数。整套机制不引入任何待训练参数，每步的额外代价就是解一个三阶以内的小线性方程。
 
 ### 关键设计
 
-1. **Fokker-Planck 自由度定理 (Prop 3.1)**:
+**1. Fokker-Planck 自由度定理：把权重方差转移进漂移的数学许可证。**
 
-    - 功能：证明可以任意修改粒子漂移而不改变目标分布
-    - 核心思路：对于任意控制漂移 $\bm{b}_t$，存在一个补偿势函数 $h_t(\bm{x}; \bm{b}_t) = \nabla \cdot \bm{b}_t + \bm{b}_t \cdot \nabla \log q_t$，使得 Fokker-Planck 方程仍然描述路径 $(q_t)$。关键性质：$\mathbb{E}_{q_t}[h_t(\cdot; \bm{b}_t)] = 0$。
-    - 设计动机：这提供了一个将势函数方差"转移"到漂移中的数学工具——理想情况下可以完全消除权重方差。
+权重退化的根源是势函数 $g_t$ 在粒子间方差太大，但要"动"漂移又不能改变最终分布——这条定理（Prop 3.1）正是把这件事变成合法操作的依据。它说明：对任意控制漂移 $\bm{b}_t$，只要给势函数配上一个补偿项 $h_t(\bm{x}; \bm{b}_t) = \nabla \cdot \bm{b}_t + \bm{b}_t \cdot \nabla \log q_t$，Fokker-Planck 方程描述的路径 $(q_t)$ 就丝毫不变。换句话说，漂移和势函数之间存在一个可以自由分配的自由度：往漂移里加什么，都能被势函数的对应修正精确抵消。关键性质 $\mathbb{E}_{q_t}[h_t(\cdot; \bm{b}_t)] = 0$ 保证这个补偿在期望意义下不引入偏差。于是 SMC 的无偏性原封不动，而我们获得了一个把势函数方差"卸载"到漂移里的旋钮——理想情况下甚至能把权重方差完全消掉。
 
-2. **VCG (Variance-Controlling Guidance)**:
+**2. VCG（Variance-Controlling Guidance）：直接最小化残差势函数的方差。**
 
-    - 功能：直接最小化残差势函数的方差
-    - 核心思路：将控制漂移限制在有限维子空间 $\bm{b}_t = \sum_i \theta_t^i \bm{s}_i$，基函数取 $\{\nabla r_t, \nabla \log \hat{p}_t, \hat{\bm{u}}_t\}$。最小化 $\text{Var}_{q_t}[\phi_t]$ 转化为标准最小二乘问题 $A_t \theta_t = c_t$，其中 $A_{ij} = \mathbb{E}[h_t^i h_t^j]$，$c_i = -\mathbb{E}[g_t h_t^i]$。
-    - 设计动机：直接针对权重退化的根源（势函数方差）优化，且只需 $3 \times 3$ 线性系统求解，计算开销极小。
+有了自由度，剩下的问题是往漂移里加多少。VCG 的策略最直接：直接以"残差势函数方差最小"为目标去求最优漂移。它把控制漂移限制在一个有限维子空间里 $\bm{b}_t = \sum_i \theta_t^i \bm{s}_i$，基函数取 $\{\nabla r_t, \nabla \log \hat{p}_t, \hat{\bm{u}}_t\}$（reward 梯度、score 梯度、模型自身的漂移估计）。这样一来，最小化 $\text{Var}_{q_t}[\phi_t]$ 就退化成一个标准最小二乘问题 $A_t \theta_t = c_t$，其中 $A_{ij} = \mathbb{E}[h_t^i h_t^j]$、$c_i = -\mathbb{E}[g_t h_t^i]$，两个统计量都能从当前粒子蒙特卡洛估出来。它直接打在权重退化的根源（势函数方差）上，又因为只需解一个 $3 \times 3$ 线性系统、基函数还能复用 guidance 已经算好的 score 和 reward 梯度，额外开销近乎可以忽略。
 
-3. **ECG (Energy-Controlling Guidance)**:
+**3. ECG（Energy-Controlling Guidance）：用变分法逼近最优控制的 Poisson 方程解。**
 
-    - 功能：通过变分法逼近最优控制的 Poisson 方程解
-    - 核心思路：最优控制设 $\bm{b}_t^* = \nabla A_t$，其中 $A_t$ 满足 Poisson 方程 $\nabla \cdot (q_t \nabla A_t) = q_t g_t$。用 Ritz 方法在标量基函数 $\{r_t, \log \hat{p}_t, \hat{U}_t\}$ 上展开 $A_t$，同样转化为小线性系统。
-    - 设计动机：直接逼近理论最优解，不要求可微 Laplacian 计算。
+ECG 是另一条路线，目标不是"方差最小"而是"逼近理论最优控制"。最优控制可写成势函数形式 $\bm{b}_t^* = \nabla A_t$，这里的 $A_t$ 满足一个 Poisson 方程 $\nabla \cdot (q_t \nabla A_t) = q_t g_t$。直接解这个方程在高维里不现实，ECG 改用 Ritz 变分方法，在一组标量基函数 $\{r_t, \log \hat{p}_t, \hat{U}_t\}$ 上展开 $A_t$，把它同样化简成一个小线性系统。它和 VCG 的差别在于逼近的对象：VCG 盯着方差这个可观测量，ECG 盯着理论最优解；ECG 的一个好处是不需要计算可微的 Laplacian，回避了高维下 Laplacian 估计带来的噪声。
 
 ### 损失函数 / 训练策略
 - **完全 training-free**：不需要任何训练或反向传播

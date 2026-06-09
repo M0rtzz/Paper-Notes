@@ -33,26 +33,18 @@ tags:
 
 ## 方法详解
 
-### 核心思路
-用yes/no自评提示让LLM判断能否回答查询，提取P(Yes)作为置信度，无需生成答案。提示格式："Respond only with 'Yes' or 'No' to indicate whether you are capable of answering the {Query} accurately."
+### 整体框架
+方法把"LLM能否答对这个查询"变成一个生成前就能读出的置信度：给模型一个yes/no自评提示，不让它真的生成答案，而是从其隐藏状态里读出P(Yes)。核心是把这个读数从"只看最后一层最后一个token"扩展为跨所有层、所有token位置的加权聚合，得到Internal Confidence（IC），整个过程只需一次前向传播且完全training-free。
 
-### 从P(Yes)到Internal Confidence
-**基础P(Yes)**：仅用最后一层最后一个token的隐状态$\mathbf{h}_N^{(L)}$，通过unembedding矩阵投影到[Yes, No]词表上做softmax——类似无训练的linear probing。
+### 关键设计
 
-**Internal Confidence扩展**：不仅用最后一个位置，而是跨所有层和token位置计算P(Yes)，用加权平均聚合：
-$$\text{IC}(\mathbf{h}) = \sum_{n=1}^{N}\sum_{l=1}^{L}w_n^{(l)} P(\text{Yes}|\mathbf{h}_n^{(l)})$$
+**1. yes/no自评提示与P(Yes)读出：把答题前的"自知之明"变成可读信号。** 现有不确定性估计大多是answer-level，要先把答案完整生成出来再评估，开销大且无法用于"要不要触发检索"这类前置决策。本文改用一句固定提示让模型自评——"Respond only with 'Yes' or 'No' to indicate whether you are capable of answering the {Query} accurately."——但并不解码这个yes/no，而是取最后一层最后token的隐状态$\mathbf{h}_N^{(L)}$，经unembedding矩阵投影到[Yes, No]两个词上做softmax，得到$P(\text{Yes})$作为置信度。这相当于一次无需训练的linear probing：模型对自己知识边界的判断本就编码在隐状态里，直接读出即可，省去了生成答案的全部代价。
 
-其中权重用**Attenuated Encoding**计算：$\delta_j^{(i)} = \exp(-\alpha|i-j|^2) / Z$，以"决策中心"(默认为最后层最后token)为圆心，随距离指数衰减。参数α=1.0控制locality：值越大权重越集中在中心附近。
+**2. Internal Confidence：跨层跨token聚合，挖出中间层里的知识信号。** 只看最后一个位置会丢掉中间层编码的丰富知识可达性信息。本文把P(Yes)在所有层$l$、所有token位置$n$上都算一遍，再加权平均聚合成 $\text{IC}(\mathbf{h}) = \sum_{n=1}^{N}\sum_{l=1}^{L}w_n^{(l)} P(\text{Yes}|\mathbf{h}_n^{(l)})$。这样置信度不再依赖单一最终表示，而是综合全网格的自评信号，AUROC从基础P(Yes)的59.6平均提升到64.2，且模型越大提升越明显，印证了大模型对自身知识边界感知更强。
 
-### 设计激励
-- AUROC热力图显示“决策中心”确实存在：最佳分辨位置并非最后层最后token，但近似效果良好
-- 固定决策中心避免了需要验证集来确定最优位置，保持training-free特性
-- 跨层聚合利用了LLM中间层编码的丰富知识，而非仅依赖最终表示
+**3. Attenuated Encoding与决策中心：免验证集地确定聚合权重。** 聚合权重不能乱给，否则又要靠验证集调参、破坏training-free。本文用Attenuated Encoding构造权重 $\delta_j^{(i)} = \exp(-\alpha|i-j|^2) / Z$：以一个"决策中心"为圆心，权重随到中心的距离指数衰减，$\alpha=1.0$ 控制局部性（值越大越集中在中心附近）。决策中心固定取最后层最后token——AUROC热力图显示真正最具区分力的位置并不恰好在此，但固定到这里近似效果已足够好，从而避免了为找最优位置而引入验证集。
 
-### 应用场景
-1. **自适应RAG**：IC较低时触发检索增强，IC较高时直接回答，减屑50%+的RAG调用而性能几乎不降
-2. **模型级联**：小模型IC较低时将查询转发给大模型，实现成本-质量最优平衡
-3. **弃权策略**：对高不确定性查询拒绝回答，提升可信度
+**4. 三种自适应推理落地：让前置置信度直接驱动资源分配。** IC作为生成前信号，天然适合在答题前决定是否动用额外资源：自适应RAG中IC低则触发检索、IC高则直接回答，可在性能几乎不降的情况下减少50%+的RAG调用；模型级联中小模型IC低时把查询转发给大模型，换取成本-质量的更优平衡；弃权策略中对IC过低的查询直接拒答以提升可信度。
 
 ## 实验关键数据
 
@@ -114,8 +106,8 @@ $$\text{IC}(\mathbf{h}) = \sum_{n=1}^{N}\sum_{l=1}^{L}w_n^{(l)} P(\text{Yes}|\ma
 - [\[AAAI 2026\] "As Eastern Powers, I Will Veto." : An Investigation of Nation-Level Bias of Large Language Models in International Relations](../../AAAI2026/information_retrieval/as_eastern_powers_i_will_veto_an_investigation_of_nation-level_bias_of_large_lan.md)
 - [\[ICLR 2026\] TokMem: One-Token Procedural Memory for Large Language Models](tokmem_one-token_procedural_memory_for_large_language_models.md)
 - [\[ACL 2026\] How Large Language Models Balance Internal Knowledge with User and Document Assertions](../../ACL2026/information_retrieval/how_large_language_models_balance_internal_knowledge_with_user_and_document_asse.md)
-- [\[ACL 2025\] Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](../../ACL2025/information_retrieval/investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
 - [\[ACL 2025\] Enhancing Lexicon-Based Text Embeddings with Large Language Models](../../ACL2025/information_retrieval/enhancing_lexicon-based_text_embeddings_with_large_language_models.md)
+- [\[ACL 2025\] Investigating the Robustness of Retrieval-Augmented Generation at the Query Level](../../ACL2025/information_retrieval/investigating_the_robustness_of_retrieval-augmented_generation_at_the_query_leve.md)
 
 </div>
 

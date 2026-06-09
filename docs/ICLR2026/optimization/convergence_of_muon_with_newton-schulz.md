@@ -39,22 +39,15 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Muon 每步：(1) 计算随机梯度 $G_t$；(2) 动量更新 $M_t = \beta M_{t-1} + G_t$；(3) 预缩放 $X_{t,0} = M_t/\alpha_t$；(4) $q$ 步 NS 迭代 $X_{t,j} = p_\kappa(X_{t,j-1}X_{t,j-1}^\top)X_{t,j-1}$ 近似正交化；(5) 更新 $W_t = W_{t-1} - \eta O_t$。分析目标：$\frac{1}{T}\sum_t \mathbb{E}[\|\nabla f(W_{t-1})\|_*] \leq \epsilon$。
+本文不改动 Muon 算法本身，而是把实际跑的那一版（用 Newton-Schulz 迭代而非精确 SVD 做正交化）放进非凸优化的分析框架，去回答"近似误差到底吃掉多少收敛性"。Muon 每步仍是：随机梯度 $G_t$ 先做动量累积 $M_t = \beta M_{t-1} + G_t$，预缩放成 $X_{t,0} = M_t/\alpha_t$，再跑 $q$ 步 NS 迭代 $X_{t,j} = p_\kappa(X_{t,j-1}X_{t,j-1}^\top)\,X_{t,j-1}$ 把动量推向正交矩阵，最后用近似正交化方向 $O_t$ 走一步 $W_t = W_{t-1} - \eta O_t$。证明目标是给出 nuclear norm 下的平稳性界 $\frac{1}{T}\sum_t \mathbb{E}\big[\|\nabla f(W_{t-1})\|_*\big] \leq \epsilon$。
 
-### 关键设计（理论贡献）
+### 关键设计
 
-1. **Theorem 1: NS-Muon 非凸收敛**:
-    - Muon with $q$ 步 NS 达到 $\epsilon$-平稳点的迭代数：$T = O\left(\frac{C_q \cdot L D}{\epsilon^2}\right)$
-    - $C_q$ 是唯一依赖 NS 近似的常数因子
+**1. NS-Muon 的非凸收敛界：把近似误差隔离成一个常数因子。** 既有 Muon 理论（Shen et al.、Li & Hong）都把正交化当成精确 SVD 来分析，可实践里从不用 SVD，于是理论保证悬空。本文直接对带 $q$ 步 NS 的 Muon 做收敛分析，证明在标准光滑、有界方差假设下，达到 $\epsilon$-平稳点所需迭代数为 $T = O\!\left(\frac{C_q\, L D}{\epsilon^2}\right)$，其中 $L$ 是光滑常数、$D$ 是初始次优间隙。关键在于把 NS 近似带来的全部退化都压进唯一的常数因子 $C_q$：当 $C_q \to 1$ 时该界就退回 SVD 理想化版本的速率，因此"近似够不够好"被干净地化约成"$C_q$ 离 1 有多远"这一个问题。
 
-2. **Theorem 2: 极坐标近似误差双指数衰减**:
-    - $\varepsilon_q \leq \varepsilon_0^{(2\kappa+1)^q}$——随步数 $q$ 双指数衰减，随多项式阶 $\kappa$ 也衰减
-    - 意义：$q = 3-5$ 步，$\kappa = 2-3$ 就足以让 $C_q \approx 1$（匹配 SVD）
-    - Wall-clock 优势：NS 只需矩阵乘法（GPU 高效），SVD 是 $O(mn \min(m,n))$
+**2. 极坐标近似误差的双指数衰减：解释了为什么几步 NS 就够。** $C_q$ 由 NS 对极坐标分解的逼近误差 $\varepsilon_q$ 决定，而本文证明这个误差以 $\varepsilon_q \leq \varepsilon_0^{(2\kappa+1)^q}$ 衰减——指数上还套着一层指数，随 NS 步数 $q$ 与多项式阶 $\kappa$ 双指数收缩。代入实际取值就一目了然：$\kappa=2$ 时底数是 $5$，$q=3$ 步误差已小于 $\varepsilon_0^{125}$（约 $10^{-100}$ 量级），所以 $q=3\!\sim\!5$、$\kappa=2\!\sim\!3$ 就足以让 $C_q\approx 1$，与工程实践中"NS 只跑几步"的经验严丝合缝。这也解释了 wall-clock 优势：NS 每步只是矩阵乘法、在 GPU 上高效，而 SVD 是 $O(mn\min(m,n))$ 的稠密分解，二者迭代数几乎相同时总时间却差很多。
 
-3. **Theorem 3: 比 SGD-M 的秩优势**:
-    - Muon 收敛率比 SGD-M 快 $\sqrt{r}$ 倍（$r = \min(m,n)$，矩阵秩）
-    - 原因：Muon 在 nuclear norm 下工作→利用了矩阵低秩结构→更高效的搜索方向
+**3. 相比 SGD-M 的 $\sqrt{r}$ 秩优势：度量选对了才看得见。** 把 Muon 与逐元素的 SGD-M 放在一起比较，本文证明 Muon 的收敛率快 $\sqrt{r}$ 倍（$r=\min(m,n)$ 为参数矩阵的秩维度）。差距来自度量的选择：SGD-M 的界写在 Frobenius norm 下，而 Muon 的正交化天然匹配 nuclear norm，分析就落在 nuclear norm 度量里，利用了矩阵参数的低秩结构、给出更高效的搜索方向。对 attention 这类高秩大矩阵层，$\sqrt{r}$ 的因子随维度放大，正好对应实践中 Muon 在大模型上观察到的增益。
 
 ## 实验关键数据
 

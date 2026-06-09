@@ -38,39 +38,25 @@ DND的切入角度是将这两个方向结合：先选出困难token，再为它
 ## 方法详解
 
 ### 整体框架
-DND策略仅应用于模型中间层（保留初始和末尾若干层不变以保护预训练推理模式）。在每个DND层中：
-1. 正常前向传播得到vanilla输出 $\mathbf{X}^v$
-2. 路由器对每个token独立打分，选出需要额外处理的token
-3. 选中的token被打包成紧凑序列，重新送入同一Transformer层
-4. 嵌套深度输出与原始输出通过归一化融合策略合并
+DND只改造模型的中间层（首尾若干层保持不变以保护预训练好的推理模式）：在每个DND层正常前向得到vanilla输出 $\mathbf{X}^v$ 后，一个轻量路由器逐token打分挑出"难"token，把它们打包成紧凑序列重新过一遍同一层得到加深后的输出，再与原始输出门控融合。难点不在"再算一遍"本身，而在于如何稳定地选中真正需要加深的那一小撮token、且不破坏已有知识，这正是下面几个设计要解决的。
 
 ### 关键设计
 
-1. **Token-Choice路由设计 (Section 3.1.1)**:
-   使用线性层 $R: \mathbb{R}^{d_{model}} \to \mathbb{R}$ 作为路由器，对每个token的隐藏状态独立计算偏好分数 $p_i = \sigma(R(\mathbf{x}_i^v))$。采用token-choice（而非expert-choice）策略，因为expert-choice需要看到完整序列，与自回归模型的逐token解码不兼容（会导致信息泄露）。选择决策通过与预设阈值 $\tau$ 比较确定：$p_i > \tau$ 则选中。
+**1. Token-Choice 路由：让选择与自回归解码兼容。** 路由器是一个把隐藏状态映射到标量的线性层 $R: \mathbb{R}^{d_{model}} \to \mathbb{R}$，对每个token独立算偏好分数 $p_i = \sigma(R(\mathbf{x}_i^v))$，再与阈值 $\tau$ 比较，$p_i > \tau$ 即选中。这里刻意用token-choice而非MoE常见的expert-choice：后者要先看到整段序列才能选出top-k，会把未来token的信息泄露给当前位置，与逐token解码的因果性冲突；token-choice每个位置只看自己，天然兼容自回归推理。
 
-2. **嵌套深度计算 (Section 3.1.2)**:
-   被选中的token通过二元掩码 $\mathbf{M}$ 被打包(Pack)成紧凑子序列，赋予新的位置编码 $\mathbf{E}'_{pos}$，再次通过同一Transformer层处理。处理完后通过Unpack操作散射回原位置。这相当于对困难token进行"内部审阅迭代"。
+**2. 嵌套深度计算：把难token送回同一层"再审一遍"。** 选中的token按二元掩码 $\mathbf{M}$ 被Pack成一条短得多的子序列，赋予新的位置编码 $\mathbf{E}'_{pos}$ 后再次喂进同一个Transformer层，算完用Unpack按原索引散射回各自位置。复用同一层权重而非新增一层，意味着这步几乎不带来额外参数；只对被选中的少数token生效，则保证了额外计算量可控——相当于对困难token做了一次"内部审阅迭代"。
 
-3. **归一化融合策略 (Section 3.1.3)**:
-   为保留预训练知识，采用门控机制融合原始输出和嵌套输出：$\mathbf{x}_i = (\beta \cdot p_i) \cdot \mathbf{x}_i^v + (1 - \beta \cdot p_i) \cdot \mathbf{x}_i^d$（仅对选中token）。$\beta$ 是可学习参数（初始化为0.1），路由分数 $p_i$ 越高，嵌套输出的权重越大。未选中token直接保留原始输出。
+**3. 归一化融合：用门控保住预训练知识。** 加深后的输出 $\mathbf{x}_i^d$ 不会直接覆盖原始输出，而是按 $\mathbf{x}_i = (\beta \cdot p_i)\,\mathbf{x}_i^v + (1 - \beta \cdot p_i)\,\mathbf{x}_i^d$ 融合（仅对选中token，未选中的直接保留 $\mathbf{x}_i^v$）。$\beta$ 是可学习标量、初始化为0.1，这样训练起步时融合权重很小、几乎等同原模型，避免一上来就扰乱预训练分布；随训练推进，路由分数 $p_i$ 越高的token会让嵌套输出占比越大，把"加深"逐步释放到最该加深的token上。
 
-4. **路由控制损失 (Section 3.2.1)**:
-   为解决路由分数聚集在窄范围内导致的选择不稳定问题，设计了双目标损失：
-    - **分数分散损失** $\mathcal{L}_{sd}$: 基于信息熵，鼓励路由分数分布多样化，使token之间区分度增大
-    - **分布保持损失** $\mathcal{L}_{dp}$: MSE惩罚偏离0.5的分数，防止sigmoid饱和区的梯度消失
-   
-   两者形成"推拉"动力学：熵损失把分数推开覆盖更宽范围，MSE损失把分数拉向sigmoid中心保持响应性。
+**4. 路由控制损失：把挤成一团的分数推开。** sigmoid后的路由分数容易聚集在窄范围内，导致谁被选中近乎随机、选择不稳定。为此用一对"推拉"目标：分数分散损失 $\mathcal{L}_{sd}$ 基于信息熵，鼓励整批分数分布更分散，拉大token之间的区分度；分布保持损失 $\mathcal{L}_{dp}$ 用MSE惩罚偏离0.5的分数，把分数拉回sigmoid的线性敏感区，防止滑进饱和区后梯度消失。前者把分数推开覆盖更宽区间、后者把分数拉向中心保持响应性，二者平衡后路由器才能给出稳定且有区分度的打分。
 
-5. **阈值控制方案 (Section 3.2.2)**:
+**5. 阈值控制方案：让实际选择比例精确锁定目标。** 仅靠损失还不能保证选中比例恰好是目标值，于是对阈值 $\tau$ 做双重调节：缓冲比例控制在每个mini-batch上算出实际选择比例与目标比例 $k_{target}$ 的误差 $e$，按 $\tau \leftarrow \tau + \alpha \cdot e$ 实时微调阈值；EMA同步则每隔若干步（如50步）取缓冲区内top-k路由值的均值 $\bar{\tau}_{topk}$，按 $\tau = (1-\gamma)\tau + \gamma\bar{\tau}_{topk}$ 更新阈值，避免路由器和阈值长期朝相反方向漂移。相比此前工作用z-loss粗略约束比例，这套机制能把选择比例精确控制在设定值附近。
 
-    - **缓冲比例控制**: 在每个mini-batch上计算实际选择比例与目标比例 $k_{target}$ 的误差 $e$，实时调整阈值 $\tau \leftarrow \tau + \alpha \cdot e$
-    - **EMA同步**: 周期性地（如每50步）用缓冲区内top-k路由值的平均值 $\bar{\tau}_{topk}$ 通过EMA更新阈值 $\tau = (1-\gamma)\tau + \gamma\bar{\tau}_{topk}$，防止路由器和阈值优化方向长期不一致
+### 一个完整示例
+以一个DND中间层、目标选择比例20%为例：长度100的序列先正常前向得到 $\mathbf{X}^v$；路由器给100个token各打一个 $p_i$，阈值控制此时已把 $\tau$ 调到使约20个token的 $p_i$ 超过它；这20个token被Pack成一条长20的子序列、配上新位置编码后再过一遍同一层，得到 $\mathbf{x}_i^d$ 并Unpack回原位；最后这20个位置按 $\beta p_i$ 与原输出融合，其余80个token原样透传。整层只多算了20%的token、且不增加层数，却让最难的那批token多被"审"了一遍。
 
 ### 损失函数 / 训练策略
-总损失 = 交叉熵损失 + $\lambda_{sd} \mathcal{L}_{sd}$ + $\lambda_{dp} \mathcal{L}_{dp}$
-
-后训练方式（SFT），使用AdamW优化器，cosine学习率调度（5e-6到1e-6），Qwen3-1.7B在128个H100上训练1天（2个epoch），Qwen3-30B-A3B在256个H100上训练3天（4个epoch）。DND仅在中间层应用（$L_s=4$ 到 $L_e=43$），目标选择比例20%。路由器全零初始化，阈值初始化0.5，$\beta$初始化0.1。
+总损失为交叉熵加两项路由正则：$\mathcal{L} = \mathcal{L}_{ce} + \lambda_{sd}\mathcal{L}_{sd} + \lambda_{dp}\mathcal{L}_{dp}$。整体走后训练（SFT）路线，AdamW优化器配cosine学习率（5e-6 衰减到 1e-6）：Qwen3-1.7B 在128块H100上训2个epoch（约1天），Qwen3-30B-A3B 在256块H100上训4个epoch（约3天）。DND只挂在中间层（$L_s=4$ 到 $L_e=43$），目标选择比例20%，路由器全零初始化、阈值初始化0.5、$\beta$初始化0.1。
 
 ## 实验关键数据
 
@@ -141,11 +127,11 @@ Qwen3-30B-A3B MoE模型，17个benchmark：
 
 ## 相关论文
 
+- [\[ICLR 2026\] Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models](deep_hierarchical_learning_with_nested_subspace_networks_for_large_language_mode.md)
 - [\[ICLR 2026\] EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models](evoengineer_mastering_automated_cuda_kernel_code_evolution_with_large_language_m.md)
-- [\[ACL 2025\] Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](../../ACL2025/llm_efficiency/dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
 - [\[ICLR 2026\] Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [\[ACL 2025\] Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models](../../ACL2025/llm_efficiency/dynamic_chunking_and_selection_for_reading_comprehension_of_ultra-long_context_i.md)
 - [\[ACL 2026\] Are Large Language Models Economically Viable for Industry Deployment?](../../ACL2026/llm_efficiency/are_large_language_models_economically_viable_for_industry_deployment.md)
-- [\[ACL 2026\] Lizard: An Efficient Linearization Framework for Large Language Models](../../ACL2026/llm_efficiency/lizard_an_efficient_linearization_framework_for_large_language_models.md)
 
 </div>
 

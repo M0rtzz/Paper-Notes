@@ -39,50 +39,23 @@ CLIP 通过对比学习将图像和文本对齐到共享嵌入空间，在零样
 
 ## 方法详解
 
-### 核心思想
+### 整体框架
 
-将图像嵌入映射到文本模态，保持语义内容不变，从而将不可靠的图像-图像比较转换为可靠的图像-文本模态间比较。
+SeMoBridge 的核心是一座轻量级"语义模态桥"：它把查询图像和少样本支持图像的嵌入沿 CLIP 自带的方向先验映射进文本模态，于是原本不可靠的图像-图像比较被替换成校准良好的图像-文本比较。整套流程不动 CLIP 主干，只在嵌入层面做一次闭合形式的投影与缩放，再把三路逻辑分数加权融合得到最终分类；若额外引入少量可学参数（SeMoBridge-T），则在 27 秒内把桥微调到当前数据集上。
 
-### 关键设计一：伪 EOS 令牌推导
+### 关键设计
 
-利用 CLIP 训练目标保证的方向对齐：
+**1. 伪 EOS 令牌推导：把图像嵌入闭式地搬进文本空间。**
 
-$$\frac{\mathbf{f}_{\text{img}}}{\|\mathbf{f}_{\text{img}}\|} \approx \frac{\hat{\mathbf{f}}_{\text{txt}}}{\|\hat{\mathbf{f}}_{\text{txt}}\|}$$
+CLIP 的对比目标只保证配对的图像与文本在方向上对齐，即 $\frac{\mathbf{f}_{\text{img}}}{\|\mathbf{f}_{\text{img}}\|} \approx \frac{\hat{\mathbf{f}}_{\text{txt}}}{\|\hat{\mathbf{f}}_{\text{txt}}\|}$，但模态间隙让两者的绝对位置系统性错开，导致直接拿图像质心做最近邻并不靠谱。SeMoBridge 反过来利用这一方向对齐：既然文本编码器最后一步是用投影矩阵 $\mathbf{W}_{\text{txt}}$ 把 EOS 令牌映射成文本嵌入，那就用它的 Moore-Penrose 伪逆 $\mathbf{W}_{\text{txt}}^+$ 把图像嵌入反投影回 EOS 空间，并按真实 EOS 令牌的模长 $\|\mathbf{T}_{\text{eos}}\|$ 重新缩放，得到伪 EOS 令牌 $\hat{\mathbf{f}}_{\text{eos}} \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}\|} \mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}$。再用 $\mathbf{W}_{\text{txt}}$ 投回去就是桥接嵌入 $\hat{\mathbf{f}}_{\text{txt}} = \mathbf{W}_{\text{txt}} \hat{\mathbf{f}}_{\text{eos}}$。由于 $\mathbf{W}_{\text{txt}}\mathbf{W}_{\text{txt}}^+$ 近似单位矩阵，整个变换其实坍缩成对原图像嵌入的一次缩放 $\hat{\mathbf{f}}_{\text{txt}} \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}\|} \mathbf{f}_{\text{img}}$——既保住了语义内容，又把嵌入摆到了文本模态该在的位置，这正是它能以一次矩阵乘法换来跨模态对齐的原因。
 
-通过文本投影矩阵的 Moore-Penrose 伪逆反投影并重新缩放：
+**2. 三重逻辑分数融合：让桥接信号与零样本先验互相纠错。**
 
-$$\hat{\mathbf{f}}_{\text{eos}} \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}\|} \mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}$$
+单靠桥接后的图文比较仍可能被个别样本带偏，所以最终分类逻辑是三路加权之和 $\mathbf{z}_q = \lambda_1 \mathbf{z}_1 + \lambda_2 \mathbf{z}_2 + \lambda_3 \mathbf{z}_3$。其中 $\mathbf{z}_1$ 是 CLIP 原生的零样本先验，即查询图像与类文本提示直接比对，提供与少样本无关的稳定锚点；$\mathbf{z}_2$ 把桥接后的查询放到文本空间里和原始少样本图像比较，是桥接带来的主信号；$\mathbf{z}_3$ 则反过来用原始查询去比对桥接后的少样本，构成一路"反置"信号。两路方向相反的桥接比较加上零样本先验，使任何单路的系统性偏差都能被另外两路抵消，融合权重 $\lambda_1,\lambda_2,\lambda_3$ 在验证集上调出。
 
-最终桥接嵌入：
+**3. 多模态监督训练（SeMoBridge-T）：用少量可学参数把桥微调到当前任务。**
 
-$$\hat{\mathbf{f}}_{\text{txt}} = \mathbf{W}_{\text{txt}} \hat{\mathbf{f}}_{\text{eos}} \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\mathbf{W}_{\text{txt}}^+ \mathbf{f}_{\text{img}}\|} \mathbf{f}_{\text{img}}$$
-
-由于 $\mathbf{W}_{\text{txt}}\mathbf{W}_{\text{txt}}^+$ 近似为单位矩阵，变换简化为对原始图像嵌入的缩放。
-
-### 关键设计二：三重逻辑分数融合
-
-$$\mathbf{z}_q = \lambda_1 \mathbf{z}_1 + \lambda_2 \mathbf{z}_2 + \lambda_3 \mathbf{z}_3$$
-
-- $\mathbf{z}_1$：零样本先验（查询图像 vs 类文本提示）
-- $\mathbf{z}_2$：原始少样本 vs 桥接查询（桥接查询在文本空间与少样本图像比较）
-- $\mathbf{z}_3$：原始查询 vs 桥接少样本（反置信号增强鲁棒性）
-
-### 关键设计三：多模态监督训练 (SeMoBridge-T)
-
-添加类特定偏置 (CSB) $\hat{\boldsymbol{\tau}} \in \mathbb{R}^{C \times d_t}$：
-
-$$\hat{\mathbf{F}}_{\text{eos}}^c \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\hat{\mathbf{W}}_{\text{txt}}^+ \mathbf{F}_{\text{img}}^c + \hat{\boldsymbol{\tau}}^c\|} (\hat{\mathbf{W}}_{\text{txt}}^+ \mathbf{F}_{\text{img}}^c + \hat{\boldsymbol{\tau}}^c)$$
-
-多模态损失：
-
-$$\mathcal{L} = \lambda_{\text{it}} \mathcal{L}_{\text{img}} + (1-\lambda_{\text{it}})\frac{\mathcal{L}_{\text{txte}} + \mathcal{L}_{\text{txtp}}}{2} + \lambda_c \mathcal{L}_{\text{cons}} + \lambda_b \mathcal{L}_{\text{bias}}$$
-
-- $\mathcal{L}_{\text{img}}$：桥接嵌入与原始图像嵌入对齐
-- $\mathcal{L}_{\text{txte}}, \mathcal{L}_{\text{txtp}}$：与类描述 EOS 令牌和投影对齐
-- $\mathcal{L}_{\text{cons}}$：同类少样本一致性
-- $\mathcal{L}_{\text{bias}}$：CSB 正则化
-
-训练时仅更新桥的参数，CLIP 完全冻结。
+无训练版本已经可用，但桥本身可以进一步学习。SeMoBridge-T 为每个类引入类特定偏置（CSB）$\hat{\boldsymbol{\tau}} \in \mathbb{R}^{C \times d_t}$，在反投影时叠加到 EOS 令牌上：$\hat{\mathbf{F}}_{\text{eos}}^c \approx \frac{\|\mathbf{T}_{\text{eos}}\|}{\|\hat{\mathbf{W}}_{\text{txt}}^+ \mathbf{F}_{\text{img}}^c + \hat{\boldsymbol{\tau}}^c\|} (\hat{\mathbf{W}}_{\text{txt}}^+ \mathbf{F}_{\text{img}}^c + \hat{\boldsymbol{\tau}}^c)$，让每个类的桥接方向有一点可学的偏移空间。训练由多模态损失驱动：$\mathcal{L} = \lambda_{\text{it}} \mathcal{L}_{\text{img}} + (1-\lambda_{\text{it}})\frac{\mathcal{L}_{\text{txte}} + \mathcal{L}_{\text{txtp}}}{2} + \lambda_c \mathcal{L}_{\text{cons}} + \lambda_b \mathcal{L}_{\text{bias}}$，其中 $\mathcal{L}_{\text{img}}$ 约束桥接嵌入贴合原始图像嵌入，$\mathcal{L}_{\text{txte}}$ 与 $\mathcal{L}_{\text{txtp}}$ 分别让桥接结果对齐类描述的 EOS 令牌和文本投影，$\mathcal{L}_{\text{cons}}$ 鼓励同类少样本桥接后保持一致，$\mathcal{L}_{\text{bias}}$ 对 CSB 做正则以防过拟合（实验表明图文权重固定 1:1 即 $\lambda_{\text{it}}=0.5$ 就足够）。全程只更新桥与 CSB 这 0.77M 参数，CLIP 完全冻结，这是它训练只要 27 秒的根本原因。
 
 ## 实验
 

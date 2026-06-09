@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 图学习方向30篇论文解读
+  ICML2025 图学习方向31篇论文解读
 description: >-
-  30篇ICML2025的图学习方向论文解读，涵盖图神经网络、LLM、布局/合成、RAG、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ICML2025的图学习方向论文解读，涵盖图神经网络、LLM、布局/合成、RAG、持续学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "图学习"
@@ -19,9 +19,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**🧪 ICML2025** · **30** 篇论文解读
+**🧪 ICML2025** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (31)](../../ICML2026/graph_learning/index.md) · [💬 ACL2026 (23)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (38)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (52)](../../NeurIPS2025/graph_learning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (31)](../../ICML2026/graph_learning/index.md) · [💬 ACL2026 (23)](../../ACL2026/graph_learning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/graph_learning/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/graph_learning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/graph_learning/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/graph_learning/index.md)
 
 🔥 **高频主题：** 图神经网络 ×6 · LLM ×3
 
@@ -60,6 +60,10 @@ tags:
 **[Does Graph Prompt Work? A Data Operation Perspective with Theoretical Analysis](does_graph_prompt_work_a_data_operation_perspective_with_theoretical_analysis.md)**
 
 :   首次从"数据操作"角度为 Graph Prompt 提供完整理论框架：证明 Prompt 能通过模拟图数据变换将原始图映射到"桥接图"使冻结模型适配下游任务，并推导了单图/多图场景下的误差上界与分布。
+
+**[EvoMesh: Adaptive Physical Simulation with Hierarchical Graph Evolutions](evomesh_adaptive_physical_simulation_with_hierarchical_graph_evolutions.md)**
+
+:   EvoMesh 提出一种全可微的层次图演化框架，通过各向异性消息传递（AMP）和基于 Gumbel-Softmax 的可微节点选择（DiffSELECT），根据物理输入自适应构建随时间演化的多尺度图层次结构，在五个物理仿真基准上平均超越固定层次方法约 20%。
 
 **[From RAG to Memory: Non-Parametric Continual Learning for Large Language Models](from_rag_to_memory_non-parametric_continual_learning_for_large_language_models.md)**
 

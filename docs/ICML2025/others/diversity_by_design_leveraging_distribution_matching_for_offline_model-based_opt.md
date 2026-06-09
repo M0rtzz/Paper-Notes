@@ -115,11 +115,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Soft Quality-Diversity Optimization](../../ICLR2026/others/soft_quality-diversity_optimization.md)
+- [\[ICLR 2026\] Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces](../../ICLR2026/others/discount_model_search_for_quality_diversity_optimization_in_high-dimensional_mea.md)
 - [\[ACL 2025\] Achieving Certification-by-Design Through Model-Driven Development](../../ACL2025/others/achieving_certification-by-design_through_model-driven_development.md)
-- [\[NeurIPS 2025\] 3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](../../NeurIPS2025/others/3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)
+- [\[ICML 2025\] IBDR: Promoting Ensemble Diversity with Interactive Bayesian Distributional Robustness](promoting_ensemble_diversity_with_interactive_bayesian_distributional_robustness.md)
 - [\[ICML 2025\] Learning Distances from Data with Normalizing Flows and Score Matching](learning_distances_from_data_with_normalizing_flows_and_score_matching.md)
-- [\[ICML 2025\] Score Matching with Missing Data](score_matching_with_missing_data.md)
-- [\[ICML 2025\] Fully Dynamic Euclidean Bi-Chromatic Matching in Sublinear Update Time](fully_dynamic_euclidean_bi-chromatic_matching_in_sublinear_update_time.md)
 
 </div>
 

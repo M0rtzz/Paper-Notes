@@ -41,29 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段：① 工具创建——从教材章节提取知识并生成可执行 Python 工具，通过执行测试验证，组织为层次化 toolbox；② 工具利用——推理时层次化检索（先选类别再选工具），支持 PoT 单轮和 ReAct 多轮推理。
+RefTool 想解决的是「LLM 在专业领域凭内在知识造工具会写错公式」这个痛点，办法是把权威教材当成知识源、离线编译成一套可执行工具，推理时直接调用。整条流水线分两阶段：先做**工具创建**，逐节读教材、生成带描述和示例的 Python 函数、跑执行测试验证正确性，最后按教材的章-节结构组织成一个两级 toolbox；再做**工具利用**，推理时先按章级类别再按具体工具两步检索，把命中的工具喂给 PoT 单轮或 ReAct 多轮推理去解题。
 
 ### 关键设计
 
-1. **参考资料引导的工具创建**:
+**1. 参考资料引导的工具创建：用教材而非 LLM 脑补当知识源。**
 
-    - 从教材的每个 section 生成工具，每个工具包含：描述、Python 函数、使用示例
-    - 通过执行测试验证正确性（73% 一次通过，额外 14% 修复后通过）
-    - 利用教材分章分节的自然结构构建两级层次（章→节→工具）
-    - 设计动机：教材是人类验证过的知识源，比 LLM 内在知识更可靠
+针对的正是上面那个核心矛盾——工具创建要精确的领域知识，而 LLM 在因果推理、量子物理、有机化学这些专业领域的知识本就不可靠。RefTool 改从教材的每个 section 取材，为每节生成一个工具，工具包含三件套：自然语言描述、可执行 Python 函数、一段使用示例。生成之后并不直接信任，而是跑**执行测试**验证：73% 的工具一次生成就通过测试，再有 14% 经一轮修复后通过，确保入库的都是能跑对的代码。组织上则直接借用教材分章分节的天然结构，搭成「章→节→工具」两级层次，省掉了额外的知识工程——因为教材本身就是人类反复验证过的知识，比 LLM 内在知识可靠得多。
 
-2. **层次化工具检索**:
+**2. 层次化工具检索：两步收窄搜索空间。**
 
-    - 功能：推理时高效找到相关工具
-    - 两步检索：先从章级类别中选择相关类别 → 再从类别内选择具体工具
-    - 减少搜索空间，提高检索精度
-    - 非结构化参考资料由 LLM 自动构建层次
+工具入库后数量可观，推理时若平铺去匹配，检索精度会被大量无关工具拖低。RefTool 顺着 toolbox 的两级结构做两步检索：先从章级类别里选出相关类别，再在该类别内部挑具体工具。这样每一步面对的候选都小一截，搜索空间被层层压缩，命中精度随之提高。对于本身没有清晰章节结构的非结构化参考资料，则先由 LLM 自动归纳出类别层次，再走同样的两步检索。
 
-3. **推理模式**:
+**3. 两种推理模式：PoT 与 ReAct 互补。**
 
-    - **PoT (Program of Thought)**：单轮生成包含工具调用的代码
-    - **ReAct**：多轮交互式推理，逐步检索和调用工具
-    - 两种模式互补：PoT 更高效，ReAct 更灵活
+拿到工具后怎么用，取决于任务形态。**PoT（Program of Thought）**单轮直接生成一段包含工具调用的代码，一次性算完，效率更高，适合解法路径较确定的题；**ReAct**则多轮交互，边推理边按需检索和调用工具，灵活性更强，适合需要逐步探索的题。两种模式覆盖了从「一步到位」到「走一步看一步」的不同推理需求。
 
 ## 实验关键数据
 
@@ -133,8 +125,8 @@ tags:
 - [\[ICML 2026\] REAL: Resolving Knowledge Conflicts in Knowledge-Intensive Visual Question Answering via Reasoning-Pivot Alignment](../../ICML2026/information_retrieval/real_resolving_knowledge_conflicts_in_knowledge-intensive_visual_question_answer.md)
 - [\[ICLR 2026\] G-reasoner: Foundation Models for Unified Reasoning over Graph-structured Knowledge](g-reasoner_foundation_models_for_unified_reasoning_over_graph-structured_knowled.md)
 - [\[ACL 2026\] A Survey of Reasoning-Intensive Retrieval: Progress and Challenges](../../ACL2026/information_retrieval/a_survey_of_reasoning-intensive_retrieval_progress_and_challenges.md)
-- [\[ACL 2026\] ReasonEmbed: Enhanced Text Embeddings for Reasoning-Intensive Document Retrieval](../../ACL2026/information_retrieval/reasonembed_enhanced_text_embeddings_for_reasoning-intensive_document_retrieval.md)
-- [\[ACL 2026\] VisRet: Visualization Improves Knowledge-Intensive Text-to-Image Retrieval](../../ACL2026/information_retrieval/visret_visualization_improves_knowledge-intensive_text-to-image_retrieval.md)
+- [\[ICLR 2026\] SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [\[ICLR 2026\] Attribution-Guided Decoding](attribution-guided_decoding.md)
 
 </div>
 

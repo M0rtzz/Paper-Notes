@@ -2,15 +2,15 @@
 title: >-
   [论文解读] ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation
 description: >-
-  [CVPR 2026][图像恢复][反射分离] 提出ReflexSplit双流框架，通过跨尺度门控融合(CrGF)、层融合-分离模块(LFSB)中的差分双维度注意力和课程训练策略，解决单图反射分离中的透射-反射混淆问题，在合成和真实世界基准上达到SOTA性能。
+  [CVPR 2026][图像恢复][单图反射分离] ReflexSplit提出一种显式层融合-分离框架，通过跨尺度门控融合(CrGF)自适应聚合多尺度特征，层融合-分离模块(LFSB)中的差分双维度注意力 $\mathbf{A}^t - \lambda_\ell \mathbf{A}^r$ 进行跨流干扰抑制…
 tags:
-  - CVPR 2026
-  - 图像恢复
-  - 反射分离
-  - 差分注意力
-  - 双流架构
-  - 课程学习
-  - 跨尺度融合
+  - "CVPR 2026"
+  - "图像恢复"
+  - "单图反射分离"
+  - "差分注意力"
+  - "跨尺度融合"
+  - "课程学习"
+  - "双流架构"
 ---
 
 # ReflexSplit: Single Image Reflection Separation via Layer Fusion-Separation
@@ -129,11 +129,11 @@ $$\mathbf{A}^t_{\text{diff}} = (\mathbf{A}^t_{\text{SA}} + \mathbf{A}^t_{\text{C
 
 ## 相关论文
 
-- [\[CVPR 2025\] Reversible Decoupling Network for Single Image Reflection Removal](../../CVPR2025/image_restoration/reversible_decoupling_network_for_single_image_reflection_removal.md)
+- [\[AAAI 2026\] Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](../../AAAI2026/image_restoration/depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)
 - [\[CVPR 2026\] DRFusion: Degradation-Robust Fusion via Degradation-Aware Diffusion Framework](drfusion_degradation_robust_fusion_via_degradation_aware_diffusion_framework.md)
+- [\[CVPR 2025\] Reversible Decoupling Network for Single Image Reflection Removal](../../CVPR2025/image_restoration/reversible_decoupling_network_for_single_image_reflection_removal.md)
 - [\[CVPR 2026\] BHCast: Unlocking Black Hole Plasma Dynamics from a Single Blurry Image with Long-Term Forecasting](bhcast_unlocking_black_hole_plasma_dynamics_from_a_single_blurry_image_with_long.md)
 - [\[CVPR 2026\] EVLF: Early Vision-Language Fusion for Generative Dataset Distillation](evlf_early_vision-language_fusion_for_generative_dataset_distillation.md)
-- [\[CVPR 2026\] PhaSR: Generalized Image Shadow Removal with Physically Aligned Priors](phasr_generalized_image_shadow_removal_with_physically_aligned_priors.md)
 
 </div>
 

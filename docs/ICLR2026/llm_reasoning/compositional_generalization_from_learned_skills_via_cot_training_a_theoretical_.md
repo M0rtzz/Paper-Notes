@@ -46,35 +46,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-理论 + 结构双线分析：（1）信息论泛化界将误差分解为 ID + OOD 分量，证明 CoT 训练降低 OOD 分量；（2）通过 Logit Lens 和因果追踪发现 CoT 训练内化为两阶段组合电路。
+全文不提新模型，而是回答一个机制问题：CoT 训练凭什么能把模型从"只会背已见过的组合"推到"会处理没见过的新组合"？作者沿两条线展开。一条是**理论线**：把 CoT 写成 $P(Y|X)=\sum_C P(Y|X,C)\cdot P(C|X)$ 的分解，推导一个信息论泛化界，把测试误差拆成 ID 和 OOD 两块，再逐项说明为什么 CoT 训练能把 OOD 那块压下去。另一条是**结构线**：拿一个 8 层 GPT-2 在两跳推理任务 $(e_1,r_1,r_2)\to e_3$ 上做 Logit Lens 和因果追踪，打开模型内部，看 CoT 训练到底改了什么计算路径。两条线最后汇到同一个结论——CoT 训练学的是"how to think"（把难题拆成已学技能再组合），而不是"what to think"（死记答案）。
 
 ### 关键设计
 
-1. **信息论泛化界（Theorem 1 & 2）**:
+**1. 信息论泛化界：把 OOD 误差拆开，证明 CoT 训练能逐项压低它。**
 
-    - 功能：量化 CoT 训练对泛化误差的影响
-    - 核心思路：泛化误差上界正比于 $\sqrt{\frac{1}{N}[(1-\alpha)D_{KL}(P_{test}^{ID} \| P_{train}) + \alpha D_{KL}(P_{test}^{OOD} \| P_{train})]}$。对于 ID，$D_{KL} \to 0$（因组合模式相同）。对于 OOD，无 CoT 时 $D_{KL}$ 很大（$P(C|X)$ 是均匀先验）；有 CoT 时 $D_{KL}$ 可分解为 $D_{KL}(P_{test}^{OOD}(C|X) \| P_{train}(C|X)) + \mathbb{E}[D_{KL}(P_{test}^{OOD}(Y|X,C) \| P_{train}(Y|X,C))]$，由于训练中包含了简单技能（$P(C|X)$ 和 $P(Y|X,C)$），两项都可以很小。
-    - 设计动机：将 CoT 训练的优势从"模型在训练数据上表现好"推广到"模型在未见组合模式上也能表现好"。
+要解释 CoT 为什么能 OOD 泛化，得先有个能区分 ID 和 OOD 的误差刻度。作者推导出泛化误差上界正比于
 
-2. **两阶段组合推理电路（结构分析）**:
+$$\sqrt{\tfrac{1}{N}\big[(1-\alpha)D_{KL}(P_{test}^{ID}\,\|\,P_{train}) + \alpha\,D_{KL}(P_{test}^{OOD}\,\|\,P_{train})\big]}$$
 
-    - 功能：揭示 CoT 训练后模型内部的推理路径
-    - 核心思路：用 Logit Lens 和因果追踪分析 8 层 GPT-2 在两跳推理 $(e_1, r_1, r_2) \to e_3$ 上的内部状态。发现 CoT 训练后，模型形成**两阶段电路**：
-        - 第一阶段（浅层 0→l）：从输入 $e_1, r_1, r_2$ 中提取桥接实体 $e_2$，存储在状态 $E[l, r_2]$
-        - 第二阶段（深层 l→8）：用 $e_2$ 做第二跳推理得到 $e_3$
-    - 关键发现：CoT 训练使 $e_2$ 在**更浅的层**（$l=3$ for ID）被提取，而无 CoT 训练需要 $l=5$——浅层提取意味着更多层可用于第二步推理。
-    - 设计动机：证明 CoT 不只是让模型"说出"中间结果，而是从根本上改变了内部计算结构。
+ID 那一项不难压：测试和训练共享同样的组合模式，$D_{KL}\to 0$。难点全在 OOD 项。无 CoT 训练时，模型只学了 $P(Y|X)$，对推理链 $C$ 相当于持有一个均匀先验，碰到新组合时这个 $D_{KL}$ 很大，于是 OOD 误差压不下去。有 CoT 训练时，这一项可以进一步分解为 $D_{KL}(P_{test}^{OOD}(C|X)\,\|\,P_{train}(C|X)) + \mathbb{E}[D_{KL}(P_{test}^{OOD}(Y|X,C)\,\|\,P_{train}(Y|X,C))]$。关键在于：训练数据里已经包含了构成这些新组合的简单技能（即 $P(C|X)$ 怎么走链、$P(Y|X,C)$ 每步怎么算），所以这两项都能很小。换句话说，OOD 的新问题被"拉回"到由已学技能张成的 ID 分布里——这正是把"训练集上表现好"升级成"未见组合上也表现好"的理论依据（Theorem 1 & 2）。
 
-3. **噪声鲁棒性分析**:
+**2. 两阶段组合推理电路：CoT 训练把中间结果的提取挪到更浅的层。**
 
-    - 功能：研究 CoT 训练数据中有错误推理步骤时的影响
-    - 核心思路：在训练数据的中间步骤中引入不同比例 $\xi$ 的噪声。发现噪声比例 $\xi < 0.2$ 时，模型几乎不受影响（ID 和 OOD 泛化均保持）。噪声增大时，泛化误差上界增大（与 Theorem 3 一致），但直到 $\xi \approx 0.4$ 模型仍能工作。
-    - 设计动机：解释为什么 DeepSeek-R1 的 600K 长 CoT 训练数据中存在错误但仍然有效——适度噪声下组合泛化是鲁棒的。
+理论说 CoT 学到了组合能力，那它在模型内部长什么样？作者用 Logit Lens 和因果追踪解剖 8 层 GPT-2 在两跳推理上的中间状态，发现 CoT 训练后模型固化成一个清晰的**两阶段电路**：第一阶段在浅层（第 0 层到第 $l$ 层）从输入 $e_1,r_1,r_2$ 里提取出桥接实体 $e_2$，把它存进状态 $E[l,r_2]$；第二阶段在深层（第 $l$ 层到第 8 层）拿 $e_2$ 做第二跳推理得到最终答案 $e_3$。更有意思的是这个分界层 $l$ 的位置：CoT 训练让 $e_2$ 在第 3 层（ID 设置）就被提取出来，而无 CoT 训练要拖到第 5 层。早提取意味着后面留给第二跳推理的层数更多——CoT 不只是让模型"把中间结果说出来"，而是从根上重排了计算的深度分配，等于扩大了模型的"有效深度"。
+
+**3. 噪声鲁棒性分析：训练链里掺错也照样能组合泛化。**
+
+实际的 CoT 训练数据（如 DeepSeek-R1 的 60 万条长 CoT）里推理步骤难免有错，那这套组合机制扛不扛得住？作者在训练数据的中间步骤里按比例 $\xi$ 注入噪声来测。结论是相当鲁棒：$\xi<0.2$ 时模型几乎不受影响，ID 和 OOD 泛化都保住；噪声继续加大，泛化误差上界随之上升（与 Theorem 3 的预测一致），但一直到 $\xi\approx 0.4$ 模型仍能工作。这就解释了为什么实践中带瑕疵的大规模 CoT 数据依然有效——只要错误比例不过分，组合泛化对噪声是容忍的。
 
 ### 损失函数 / 训练策略
-- **无 CoT 训练**：$\mathcal{L} = \mathbb{E}[\ell(e_3, \mathcal{M}(e_1, r_1, r_2))]$
-- **有 CoT 训练**：$\mathcal{L} = \mathbb{E}[\ell(e_3, \mathcal{M}(e_1, r_1, r_2, \hat{e}_2)) + \ell(e_2, \mathcal{M}(e_1, r_1, r_2))]$——同时预测桥接实体和最终答案
-- 使用自回归 next-token prediction（非 teacher-forcing）
+两种训练的差别就在 loss 里要不要显式建桥接实体 $e_2$。无 CoT 训练只盯最终答案，$\mathcal{L}=\mathbb{E}[\ell(e_3,\mathcal{M}(e_1,r_1,r_2))]$；有 CoT 训练则同时预测桥接实体和最终答案，$\mathcal{L}=\mathbb{E}[\ell(e_3,\mathcal{M}(e_1,r_1,r_2,\hat{e}_2))+\ell(e_2,\mathcal{M}(e_1,r_1,r_2))]$，正是后一项把"先求 $e_2$ 再求 $e_3$"的两阶段结构压进了模型。训练用自回归 next-token prediction（非 teacher-forcing）。
 
 ## 实验关键数据
 
@@ -134,8 +127,8 @@ tags:
 - [\[ICLR 2026\] TumorChain: Interleaved Multimodal Chain-of-Thought Reasoning for Traceable Clinical Tumor Analysis](tumorchain_interleaved_multimodal_chain-of-thought_reasoning_for_traceable_clini.md)
 - [\[ICLR 2026\] Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
 - [\[ICML 2026\] On the Generalization Gap in Self-Evolving Language Model Reasoning](../../ICML2026/llm_reasoning/on_the_generalization_gap_in_self-evolving_language_model_reasoning.md)
-- [\[NeurIPS 2025\] Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](../../NeurIPS2025/llm_reasoning/reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
 - [\[ICLR 2026\] CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos](cot-rvs_zero-shot_chain-of-thought_reasoning_segmentation_for_videos.md)
+- [\[ACL 2026\] Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication](../../ACL2026/llm_reasoning/accurate_legal_reasoning_at_scale_neuro-symbolic_offloading_and_structural_audit.md)
 
 </div>
 

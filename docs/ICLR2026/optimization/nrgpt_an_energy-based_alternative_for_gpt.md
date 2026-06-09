@@ -43,47 +43,21 @@ tags:
 
 ### 整体框架
 
-NRGPT采用**权重共享的循环架构**：单个模块反复应用 $T$ 次，替代传统 $T$ 层不同权重的Transformer。每次应用对应能量梯度下降的一步：
+NRGPT把GPT-J风格的平行Transformer改写成一个权重共享的循环架构：单个模块反复应用 $T$ 次，替代传统 $T$ 层各自独立权重的堆叠。关键的视角转换在于，让注意力和前馈网络分别成为两个能量函数的梯度，这样每一次模块应用就等价于token表示在能量landscape上做一步梯度下降 $x^{(t+1)} = x^{(t)} - \eta^{(t)} \frac{\partial E}{\partial g^{(t)}}$，其中 $g^{(t)} = \text{LN}(x^{(t)})$ 是经LayerNorm/RMSNorm归一化后的表示，$\eta$ 是推理速率矩阵（inference rate matrix）。训练范式完全不变，仍是自监督next-token prediction，只是把前向传播本身重新解释成了能量优化过程。
 
-$$x^{(t+1)} = x^{(t)} - \eta^{(t)} \frac{\partial E}{\partial g^{(t)}}$$
+### 关键设计
 
-其中 $g^{(t)} = \text{LN}(x^{(t)})$ 是经过LayerNorm/RMSNorm的token表示，$\eta$ 是推理速率矩阵（inference rate matrix）。
+**1. 双能量函数：让注意力与前馈各自成为某个能量的梯度。**
 
-### 关键设计一：双能量函数
+NRGPT没有另起炉灶定义新算子，而是反推出两个能量函数，使其梯度恰好长得像标准Transformer的注意力和MLP。注意力能量借鉴Dense Associative Memory的形式，写作 $E_A^{\text{AT}} = -\frac{1}{\beta} \sum_h \alpha_h \log [ \sum_{B<A} \exp(\beta \cdot g_B^\top J_h g_A) ]$，其中 $J_h = [W^K_h]^\top W^Q_h$ 把Key和Query投影合并成单个交互矩阵，$\alpha_h$ 是可学习的头权重，$\beta$ 是温度。对 $g_A$ 求梯度后得到的更新结构与多头注意力高度对应——原始的输出投影 $[W^P_h]^\top W^V_h$ 在能量视角下变成 $\alpha_h \eta J_h^\top$。前馈部分给出两个变体：FF1取 $E^{\text{FF}} = -\|\sigma(Wg_A)\|^2$，其梯度对应只含单个权重矩阵的前馈更新；FF2W取 $E^{\text{FF}} = -g_A^\top W^2 \sigma(W^1 g_A)$，梯度展开后含两个权重矩阵，更贴近标准的双层MLP。两者都保证了"前向即下降"这一核心性质，区别只在表达力与参数量的取舍。
 
-**注意力能量**（从Dense Associative Memory推导）：
+**2. 能量下降与渐近稳定性：用因果掩码把收敛性逐token递推出来。**
 
-$$E_A^{\text{AT}} = -\frac{1}{\beta} \sum_h \alpha_h \log \left[ \sum_{B<A} \exp(\beta \cdot g_B^\top J_h g_A) \right]$$
+光有能量函数还不够，必须保证反复应用真的在把能量推低。Proposition 2.1给出充分条件：当推理速率取 $\eta = c \cdot \text{diag}(\gamma)$（$c > 0$，$\gamma$ 来自LayerNorm的缩放参数）时，更新规则保证渐近能量下降 $\dot{E}_A < 0$；若不带LayerNorm即 $g = x$，则Proposition 2.2进一步放松条件，只要 $\eta$ 的对称部分 $\eta_+ = (\eta + \eta^\top)/2$ 半正定即可，反对称部分 $\eta_-$ 不受约束。真正精彩的是收敛性论证如何借力因果注意力掩码：由于token $A$ 的能量 $E_A$ 只依赖 $B \leq A$ 的token，第一个token的能量单调下降且有下界，必然收敛到不动点；它稳定之后，第二个token的能量也随之单调下降，如此沿序列递归推进，最终所有token都渐近收敛到稳定状态。这种"逐token级联收敛"正是NRGPT区别于一般EBM的渐近稳定性现象。
 
-其中 $J_h = [W^K_h]^\top W^Q_h$ 合并了Key和Query投影，$\alpha_h$ 是可学习的头权重。对 $g_A$ 求梯度得到的更新与标准多头注意力结构高度对应：
+**3. 与标准Transformer的结构对应：最小改动换来能量解释。**
 
-$$\text{Original: } [W^P_h]^\top W^V_h \equiv \text{Energy: } \alpha_h \eta J_h^\top$$
-
-**前馈能量**（两个变体）：
-
-- FF1: $E^{\text{FF}} = -\|\sigma(Wg_A)\|^2$，梯度给出单权重矩阵的前馈更新
-- FF2W: $E^{\text{FF}} = -g_A^\top W^2 \sigma(W^1 g_A)$，梯度给出双权重矩阵的前馈更新（更接近标准MLP）
-
-### 关键设计二：能量下降保证与渐近稳定性
-
-**能量下降条件**（Proposition 2.1）：当推理速率 $\eta = c \cdot \text{diag}(\gamma)$（$c > 0$，$\gamma$ 来自LayerNorm）时，更新规则保证渐近能量下降 $\dot{E}_A < 0$。
-
-**渐近稳定性**（利用因果注意力掩码的关键性质）：
-- token $A$ 的能量 $E_A$ 仅依赖 $B \leq A$ 的token状态
-- 第一个token的能量单调下降且有下界→收敛到不动点
-- 第一个token稳定后，第二个token的能量也单调下降→递归论证
-- **所有token最终渐近收敛到稳定状态**——这是NRGPT独特的"渐近稳定性"现象
-
-**无LayerNorm情况**（Proposition 2.2）：当 $g = x$ 时，只需 $\eta$ 的对称部分 $\eta_+ = (\eta + \eta^\top)/2$ 半正定即可保证 $\dot{E} < 0$，反对称部分 $\eta_-$ 无约束。
-
-### 关键设计三：与标准Transformer的结构对应
-
-| 模块 | 标准Transformer | NRGPT能量梯度 |
-|:---|:---|:---|
-| 注意力输出矩阵 | $[W^P]^\top W^V$ | $\alpha \eta J^\top$ |
-| 前馈第二层权重 | $W^2$ | $W^1 \eta^\top$ |
-| 层间连接 | 不同层不同权重 | 权重共享 + 循环应用 |
-| 推进机制 | 逐层传播 | 能量landscape上的梯度下降 |
+整套设计的落点是"最小修改"——NRGPT在结构上几乎就是一个权重共享的GPT，只是每个组件被重新赋予能量梯度的含义。注意力输出矩阵从 $[W^P]^\top W^V$ 变为 $\alpha \eta J^\top$，前馈第二层权重从独立的 $W^2$ 绑定为 $W^1 \eta^\top$，层间从"不同层不同权重"改为"权重共享 + 循环应用"，推进机制从逐层传播变成能量landscape上的梯度下降。正因为改动如此之小，NRGPT能直接复用GPT的训练流程，却额外获得了可解释性、解空间系统化探索、以及天然对齐机制等EBM的理论优势。
 
 ## 实验结果
 

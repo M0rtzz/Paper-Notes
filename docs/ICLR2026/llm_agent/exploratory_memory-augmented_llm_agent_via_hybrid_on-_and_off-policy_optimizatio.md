@@ -40,38 +40,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EMPO2 在 rollout 阶段有两种模式（有/无记忆），在 update 阶段也有两种模式（on-policy/off-policy），组合形成三种学习模式。输入是任务描述 $u$ 和环境状态 $s_t$，输出是自然语言动作 $a_t$。Agent 与环境多步交互生成轨迹，获得奖励信号后通过 GRPO 风格的策略梯度进行优化。
+EMPO2 想解决的是 online RL 里 LLM Agent「探索不动」的死结：纯参数更新（GRPO）会过早收敛，纯记忆方法（Reflexion）又因权重冻结而很快饱和。它的破局点是把这两条路缝在一起——让 Agent 先借外部记忆探索出高质量轨迹，再把这份探索收益反过来蒸馏进模型参数。
+
+具体地，每条轨迹的生命周期被拆成 rollout 和 update 两个阶段，而每个阶段各有两种模式：rollout 时可以带记忆（喂 tips）或不带记忆，update 时可以 on-policy（保留 tips 的条件概率）或 off-policy（替换成无 tips 的条件概率）。这两组开关组合出三种学习模式，共同驱动一个 GRPO 风格的策略梯度循环。输入是任务描述 $u$ 与环境状态 $s_t$，Agent 输出自然语言动作 $a_t$，多步交互生成轨迹、拿到奖励后更新策略 $\pi_\theta$。
 
 ### 关键设计
 
-1. **自生成记忆模块 (Self-Generated Memory)**:
+**1. 自生成记忆模块：让记忆当探索脚手架而非终点。**
 
-    - 功能：Agent 在每个 episode 结束后，用当前策略 $\pi_\theta$ 对轨迹进行反思，生成 tips 存入记忆缓冲区 $\mathcal{M}$
-    - 核心思路：$\text{tip}_i \sim \pi_\theta(s_t, u, \text{tip-generation prompt})$，tips 通过余弦相似度检索，每次最多检索 10 条
-    - 设计动机：与 Reflexion 不同，这里的 tips 不是最终目的，而是为参数更新提供探索引导的中间脚手架
+针对「Agent 过度依赖预训练知识、发现不了需要主动搜寻的新状态」这个痛点，EMPO2 在每个 episode 结束后让当前策略 $\pi_\theta$ 反思刚走过的轨迹，按 $\text{tip}_i \sim \pi_\theta(s_t, u, \text{tip-generation prompt})$ 生成若干条经验 tips，存进记忆缓冲区 $\mathcal{M}$；下次决策时按余弦相似度检索，每次最多取 10 条。与 Reflexion 的关键区别在于：这里 tips 不是最终用来做推理的成品，而是给后续参数更新提供探索引导的中间脚手架——它存在的意义是「先帮策略走到好状态」，最终要被内化掉。
 
-2. **双模式 Rollout**:
+**2. 双模式 Rollout：一边采高质量轨迹，一边保住独立推理。**
 
-    - 功能：在 rollout 时以概率 $p$ 使用记忆增强 prompting，以 $1-p$ 使用普通 prompting
-    - 核心思路：记忆模式下 $a_{t+1} \sim \pi_\theta(\cdot | s_t, u, \text{tips}_t)$，无记忆模式下 $a_{t+1} \sim \pi_\theta(\cdot | s_t, u)$
-    - 设计动机：记忆 rollout 产生高质量探索轨迹，无记忆 rollout 保持策略的独立推理能力
+为了既享受记忆带来的探索增益、又不让策略变成「离了 tips 就不会走路」，rollout 阶段以概率 $p$ 走记忆增强模式 $a_{t+1} \sim \pi_\theta(\cdot \mid s_t, u, \text{tips}_t)$，以 $1-p$ 走普通模式 $a_{t+1} \sim \pi_\theta(\cdot \mid s_t, u)$。前者负责产出带探索成果的高质量轨迹，后者保留策略在无外援条件下的独立推理能力，两类轨迹一起进入后续更新。
 
-3. **混合 On/Off-Policy 更新**:
+**3. 混合 On/Off-Policy 更新：把记忆探索能力蒸馏回参数。**
 
-    - 功能：记忆增强的轨迹以概率 $q$ 进行 off-policy 更新（去掉 tips），以 $1-q$ 进行 on-policy 更新（保留 tips）
-    - 核心思路：Off-policy 模式下，将 rollout 时的 tips 条件概率 $\log\pi_\theta(a_t|s_t,u,\text{tips})$ 替换为无 tips 概率 $\log\pi_\theta(a_t|s_t,u)$，本质上是**奖励引导的知识蒸馏**——高奖励轨迹被强化（$\hat{A}_t > 0$），低奖励轨迹被抑制，最终策略学会在无 tips 时复现有 tips 时的优秀行为
-    - 设计动机：On-policy 保证稳定学习，off-policy 将记忆探索能力转化为内在参数知识
+这是「先辅助后内化」落地的核心一步。记忆增强的轨迹以概率 $q$ 走 off-policy 更新、以 $1-q$ 走 on-policy 更新。on-policy 时照常保留 tips 条件概率，保证学习稳定；off-policy 时把 rollout 时的 tips 条件概率 $\log\pi_\theta(a_t \mid s_t, u, \text{tips})$ 换成无 tips 概率 $\log\pi_\theta(a_t \mid s_t, u)$。这一替换本质上是**奖励引导的知识蒸馏**——高奖励轨迹（$\hat{A}_t > 0$）被强化、低奖励轨迹被抑制，于是策略被逼着在「没有 tips」的条件下复现「有 tips」时的优秀行为。teacher（带记忆的策略）和 student（无记忆的策略）共享同一套参数，记忆探索出来的能力就这样被转写进权重里。
 
-4. **Off-Policy 训练稳定化 (Token Masking)**:
+**4. Off-Policy 训练稳定化（Token Masking）：挡住重要性采样比爆炸。**
 
-    - 功能：对策略概率低于阈值 $\delta$ 的 token 屏蔽其优势项
-    - 核心思路：在损失函数中加入 $\mathbf{1}_{\pi_\theta(a_t|s_t,u) \geq \delta}$ 指示函数
-    - 设计动机：低概率 token 导致重要性采样比 $\rho$ 爆炸，引发梯度 NaN，masking 机制有效防止训练崩溃
+off-policy 替换条件概率会带来一个工程隐患：当 $\pi_\theta(a_t \mid s_t, u)$ 极低时，重要性采样比 $\rho$ 会被放大到爆炸，梯度直接 NaN、训练崩溃。EMPO2 的做法很直接——在损失里乘一个指示函数 $\mathbf{1}_{\pi_\theta(a_t \mid s_t, u) \geq \delta}$，把策略概率低于阈值 $\delta$ 的 token 的优势项屏蔽掉，这些不可靠 token 就不再贡献梯度，从而稳住 off-policy 训练。
 
-5. **内在奖励 (Intrinsic Rewards)**:
+**5. 内在奖励（Intrinsic Rewards）：环境没奖励时也要逼着探索。**
 
-    - 功能：基于状态新颖度给予额外奖励 $r_{\text{intrinsic}} = 1/n$，$n$ 为相似历史状态数
-    - 设计动机：在环境无外在奖励时仍鼓励 Agent 探索新状态，维持策略熵
+很多任务前期外在奖励稀疏甚至为零，Agent 容易躺平。EMPO2 按状态新颖度发放额外奖励 $r_{\text{intrinsic}} = 1/n$，其中 $n$ 是与当前状态相似的历史状态数——越是没见过的状态奖励越高。这样即便外在奖励缺席，策略也有动力去触碰新状态、维持足够的策略熵，不至于过早收敛。
 
 ### 损失函数 / 训练策略
 基于 GRPO 的 clipped surrogate loss，加入 token masking 和 KL 正则化：

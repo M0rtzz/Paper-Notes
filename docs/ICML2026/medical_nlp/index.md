@@ -19,7 +19,7 @@ tags:
 
 **🧪 ICML2026** · **2** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (14)](../../ACL2026/medical_nlp/index.md) · [🔬 ICLR2026 (5)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (6)](../../NeurIPS2025/medical_nlp/index.md) · [🧪 ICML2025 (1)](../../ICML2025/medical_nlp/index.md) · [💬 ACL2025 (13)](../../ACL2025/medical_nlp/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (12)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
 
 🔥 **高频主题：** 医学影像 ×2
 

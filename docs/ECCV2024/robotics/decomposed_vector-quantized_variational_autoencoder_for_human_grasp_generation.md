@@ -165,8 +165,8 @@ DVQ-VAE 基于编码器-解码器范式，核心创新在于：
 - [\[ECCV 2024\] SemGrasp: Semantic Grasp Generation via Language Aligned Discretization](semgrasp_semantic_grasp_generation_via_language_aligned_discretization.md)
 - [\[ECCV 2024\] An Economic Framework for 6-DoF Grasp Detection](an_economic_framework_for_6-dof_grasp_detection.md)
 - [\[ICCV 2025\] EvolvingGrasp: Evolutionary Grasp Generation via Efficient Preference Alignment](../../ICCV2025/robotics/evolvinggrasp_evolutionary_grasp_generation_via_efficient_preference_alignment.md)
-- [\[ACL 2025\] Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
 - [\[ICML 2025\] CommVQ: Commutative Vector Quantization for KV Cache Compression](../../ICML2025/robotics/commvq_commutative_vector_quantization_for_kv_cache_compression.md)
+- [\[ACL 2025\] Rolling the DICE on Idiomaticity: How LLMs Fail to Grasp Context](../../ACL2025/robotics/dice_idiomaticity.md)
 
 </div>
 

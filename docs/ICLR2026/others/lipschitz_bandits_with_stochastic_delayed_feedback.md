@@ -47,20 +47,37 @@ tags:
 
 ### 关键设计
 
-1. **Delayed Zooming 算法（有界延迟 $\tau_t \leq \tau_{\max}$）**:
-    - 功能：保持 Zooming 算法的自适应离散化优势，同时处理延迟导致的信息流紊乱
-    - 核心思路：用观测次数 $v_t(x)$ 替代拉臂次数 $n_t(x)$ 计算置信半径 $r_t(x) = \sqrt{\frac{4\log T + 2\log(2/\delta)}{1 + v_t(x)}}$，并引入 **lazy update 机制**——为每个活跃臂维护缓存队列 $Q[x]$，当 $v_t(x)+1 > 4 v_s(x)$（$s$ 为上次拉臂时间）时，将到达的反馈缓存而不更新。下次拉该臂时一并处理缓存。这确保 $r_t(x) \geq \frac{1}{2} r_s(x)$，从而恢复子最优 gap 界 $\Delta(x) \leq 6r_t(x)$（经典无延迟为 $3r_t(x)$）
-    - 设计动机：延迟导致未拉臂时 $r_t(x)$ 因延迟奖励到达而缩小，破坏经典 zooming 分析核心。Lazy update 通过控制观测次数增长速率解决此问题。遗憾界为 $\tilde{O}\big(T^{\frac{d_z+1}{d_z+2}} + \tau_{\max} T^{\frac{d_z}{d_z+2}}\big)$
+**1. Delayed Zooming：用 lazy update 锁住置信半径的缩小速度（有界延迟 $\tau_t \leq \tau_{\max}$）。**
 
-2. **DLPP 算法（无界延迟，含反馈缺失 $\tau = \infty$）**:
-    - 功能：处理延迟可能无界甚至永远缺失的场景，提供近最优遗憾保证
-    - 核心思路：分阶段学习，第 $m$ 阶段维护半径 $r_m = 2^{-m}$ 的覆盖球集合 $\mathcal{B}_m$。对每个球进行均匀 round-robin 采样，直到累积 $v_m = \frac{2\log T + \log(2/\delta)}{2r_m^2}$ 个观测后停止该球的采样。阶段结束时淘汰经验均值远低于最佳球的区域（剪枝规则：$\hat\mu_m^* - \hat\mu_m(B) \geq 8r_m$），对幸存区域进一步细分。通过 Chernoff 不等式建立拉臂次数与延迟后观测次数的概率联系：$\Pr(v_{t+Q(p)}(B) \leq \frac{p}{2} n_t(B)) \leq \exp(-\frac{p}{8} n_t(B))$，将遗憾与延迟分位数 $Q(p)$ 挂钩
-    - 设计动机：DLPP 不依赖实时反馈更新，而是等待足够统计量后做决策，即使部分反馈缺失也能工作。遗憾界为 $R(T) \lesssim \min_{p \in (0,1]} \left\{ \frac{1}{p} T^{\frac{d_z+1}{d_z+2}} (c\log\frac{T}{\delta})^{\frac{1}{d_z+2}} + Q(p) \right\}$
+经典 Zooming 分析有一条命门：置信半径只在「拉到这条臂」时才变化，所以它和拉臂次数严格同步。可一旦有延迟，先前拉过的臂的奖励会在以后某一轮才到达，导致一条**当前根本没被拉**的臂的置信半径也在悄悄缩小，整套覆盖-激活论证就垮了。Delayed Zooming 的对策分两步。第一步是把置信半径的计算从拉臂次数 $n_t(x)$ 换成实际观测次数 $v_t(x)$：
 
-3. **实例相关遗憾下界**:
-    - 功能：证明 DLPP 的遗憾率是近最优的（至对数因子）
-    - 核心思路：构造特殊延迟分布（延迟为固定值 $\tau_0$ 的概率 $p$，否则 $\infty$），通过 Bernoulli 采样耦合将延迟 Lipschitz bandit 归约到无延迟版本。得到下界 $R(T) \gtrsim \frac{T^{(d_z+1)/(d_z+2)}(c\log T)^{1/(d_z+2)}}{p\log T} - \frac{1}{p} + \bar\Delta \cdot Q(p)$，其中 $\bar\Delta = \int_\mathcal{A} \Delta(x) / \int_\mathcal{A} 1$ 为平均子最优 gap
-    - 设计动机：最后一项 $\bar\Delta \cdot Q(p)$ 来自前 $Q(p)$ 轮完全无反馈时的不可避免遗憾，与上界形式匹配
+$$r_t(x) = \sqrt{\frac{4\log T + 2\log(2/\delta)}{1 + v_t(x)}}$$
+
+这样半径只反映真正到手的信息。第二步是引入 **lazy update 机制**：为每个活跃臂维护一个缓存队列 $Q[x]$，记 $s$ 为这条臂上次被拉的时刻，一旦累积观测会让 $v_t(x)+1 > 4 v_s(x)$，就把后续到达的反馈先压进缓存、暂不更新半径，直到下次真正拉这条臂时再一并消化。把观测增速卡在「不超过上次的 4 倍」这条线上，就能保证 $r_t(x) \geq \tfrac{1}{2} r_s(x)$——半径在两次拉臂之间最多缩一半。代价是子最优 gap 界从无延迟的 $\Delta(x) \leq 3r_t(x)$ 松到 $\Delta(x) \leq 6r_t(x)$（常数翻倍），但覆盖论证得以恢复，最终遗憾界为 $\tilde{O}\big(T^{\frac{d_z+1}{d_z+2}} + \tau_{\max} T^{\frac{d_z}{d_z+2}}\big)$，延迟只贡献一个加性项。
+
+**2. DLPP：分阶段攒够可靠反馈再剪枝（无界延迟，含反馈永久缺失 $\tau = \infty$）。**
+
+当延迟可能无界甚至永远不到达时，再去维护实时的置信半径已无意义——你永远不知道某个反馈会不会来。DLPP 干脆放弃实时更新，改成「攒够统计量再决策」的分阶段淘汰式探索。第 $m$ 阶段维护一组半径 $r_m = 2^{-m}$ 的覆盖球 $\mathcal{B}_m$，对每个球做均匀 round-robin 采样，直到这个球累积到
+
+$$v_m = \frac{2\log T + \log(2/\delta)}{2r_m^2}$$
+
+个观测才停。阶段结束时按经验均值剪枝：凡是 $\hat\mu_m^* - \hat\mu_m(B) \geq 8r_m$ 的区域（明显落后于当前最佳球）一律淘汰，幸存区域再细分进入下一阶段。难点在于：采样是按拉臂次数走的，但决策依赖延迟后才到的观测次数，两者并不同步。DLPP 用 Chernoff 不等式把它们的概率联系起来——
+
+$$\Pr\!\Big(v_{t+Q(p)}(B) \leq \tfrac{p}{2}\, n_t(B)\Big) \leq \exp\!\Big(-\tfrac{p}{8}\, n_t(B)\Big)$$
+
+也就是说，只要再多等 $Q(p)$ 轮，已拉的臂里至少有 $p/2$ 的比例会变成可用观测，于是遗憾自然地和**延迟分位数** $Q(p)$（$p$ 比例的反馈在 $Q(p)$ 轮内到达）挂上钩。即使部分反馈彻底缺失，算法依然能工作，遗憾界为
+
+$$R(T) \lesssim \min_{p \in (0,1]} \left\{ \frac{1}{p} T^{\frac{d_z+1}{d_z+2}} \Big(c\log\tfrac{T}{\delta}\Big)^{\frac{1}{d_z+2}} + Q(p) \right\}$$
+
+对 $p$ 取 min 让界自动适配延迟分布的「中心质量」而非最坏情况。
+
+**3. 实例相关下界：证明 DLPP 几乎无法再改进。**
+
+最后论文给出与上界形式匹配的下界，说明 DLPP 已近最优（至对数因子）。构造的关键是一族特殊延迟分布：延迟以概率 $p$ 取固定值 $\tau_0$、否则取 $\infty$（永久缺失）。在这族分布上用 Bernoulli 采样耦合，把延迟 Lipschitz bandit 归约到一个无延迟版本——以概率 $p$ 模拟出能即时看到反馈的算法，从而把无延迟的遗憾下界搬过来。最终得到
+
+$$R(T) \gtrsim \frac{T^{(d_z+1)/(d_z+2)}(c\log T)^{1/(d_z+2)}}{p\log T} - \frac{1}{p} + \bar\Delta \cdot Q(p)$$
+
+其中 $\bar\Delta = \int_\mathcal{A} \Delta(x) \big/ \int_\mathcal{A} 1$ 是平均子最优 gap。下界的最后一项 $\bar\Delta \cdot Q(p)$ 有清晰的来源：前 $Q(p)$ 轮完全收不到任何反馈，这段「盲飞」期的遗憾不可避免，恰好和上界里的 $Q(p)$ 项对上。
 
 ### 损失函数 / 训练策略
 
@@ -130,9 +147,9 @@ tags:
 
 - [\[ICML 2025\] Adversarial Combinatorial Semi-bandits with Graph Feedback](../../ICML2025/others/adversarial_combinatorial_semi-bandits_with_graph_feedback.md)
 - [\[ICLR 2026\] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
-- [\[ICLR 2026\] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
 - [\[ICLR 2026\] LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics](latent_particle_world_models_self-supervised_object-centric_stochastic_dynamics_.md)
 - [\[ICML 2026\] A Perturbation Approach to Unconstrained Linear Bandits](../../ICML2026/others/a_perturbation_approach_to_unconstrained_linear_bandits.md)
+- [\[ICML 2026\] Adaptive Multi-Round Allocation with Stochastic Arrivals](../../ICML2026/others/adaptive_multi-round_allocation_with_stochastic_arrivals.md)
 
 </div>
 

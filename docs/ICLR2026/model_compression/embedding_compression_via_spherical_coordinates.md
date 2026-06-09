@@ -37,24 +37,21 @@ tags:
 
 ### 整体框架
 
-压缩流水线：笛卡尔坐标 → 球坐标变换 → 转置（聚合同位置角度） → 字节混洗（分离指数/尾数字节） → zstd 压缩。解压缩反向执行。
+方法把单位向量先做球坐标变换，再交给标准的无损压缩管道：变换后的角度数组按位置转置以聚合同一维度的角度，经字节混洗分离 IEEE 754 的指数字节和尾数字节，最后用 zstd 熵编码。整套流程没有任何可学习参数，解压时反向执行即可恢复，关键在于球坐标变换让浮点的指数位和高阶尾数位都变得高度可预测。
 
 ### 关键设计
 
-1. **球坐标变换的熵降低原理**: 笛卡尔坐标的值在 $[\pm 0.001, \pm 0.3]$ 范围内，需要 22-40 个不同的 IEEE 754 指数值。球坐标的前 $d-2$ 个角度在 $[0, \pi]$ 上且集中在 $\pi/2 \approx 1.57$ 附近。在 jina-embeddings-v4（2048维）上验证：笛卡尔需要 23 个指数值，球坐标中 99.7% 的角度指数为 127。指数熵从 2.6 bits/byte 降至 0.03 bits/byte。
+**1. 球坐标变换降低指数熵：把分散的浮点指数收敛到一个值。** 笛卡尔坐标下嵌入分量取值散布在 $[\pm 0.001, \pm 0.3]$ 之间，对应 22–40 个不同的 IEEE 754 指数值，指数字节本身就携带不少熵，限制了压缩上限。改用球坐标后，前 $d-2$ 个角度都落在 $[0, \pi]$ 区间，并且在高维空间里集中于 $\pi/2 \approx 1.57$ 附近——这正是高维球面角度集中这一概率论结果的直接体现。在 jina-embeddings-v4（2048 维）上验证：笛卡尔需要 23 个指数值，而球坐标中 99.7% 的角度指数都是 127，指数熵从 2.6 bits/byte 骤降到 0.03 bits/byte，几乎可被熵编码器完全消除。
 
-2. **尾数字节的额外收益**: 仅靠指数压缩理论上只能多贡献 ~0.1× 的压缩。关键的额外收益来自高阶尾数字节：当角度聚集于 $\pi/2 \approx 1.5708$ 时，IEEE 754 尾数中编码小数部分的高位字节也变得可预测。实验中高阶尾数字节熵从 8.0 降至 4.5 bits，额外贡献 ~11% 的压缩节省。
+**2. 高阶尾数字节的额外收益：把压缩天花板从指数推进到尾数。** 仅压缩指数理论上只能多贡献约 $0.1\times$，远不足以突破 float32 的 $1.33\times$ 无损天花板。真正的增益来自尾数：当角度紧紧聚集在 $\pi/2 \approx 1.5708$ 附近时，IEEE 754 尾数里编码小数部分的高位字节也随之变得可预测，因为它们都在表示一个接近常数的值。实验中高阶尾数字节的熵从 8.0 bits 降到 4.5 bits，额外带来约 11% 的压缩节省，这是球坐标方法能同时打破指数和尾数两道熵壁垒的根本原因。
 
-3. **维度减一的隐式收益**: $d$ 维单位向量只需 $d-1$ 个角度（半径固定为 1），直接减少了 $1/d$ 的数据量。
+**3. 维度减一的隐式收益：单位约束本身就省掉一维。** 由于嵌入是单位向量、半径恒为 1，$d$ 维向量只需 $d-1$ 个角度就能无损表示，相当于在编码前就直接砍掉了 $1/d$ 的原始数据量，对高维嵌入尤其划算，也与"维度越高压缩率越好"的实验趋势一致。
 
-4. **球坐标直接相似度计算**: 可以在球坐标空间直接计算余弦相似度而无需重建笛卡尔向量。通过反向递推在 $O(d)$ 时间内计算 $\mathbf{x} \cdot \mathbf{y}$：$R \leftarrow \cos\theta_k\cos\phi_k + \sin\theta_k\sin\phi_k \cdot R$。支持流式解压 + 提前终止的 top-k 检索。
+**4. 球坐标空间的直接相似度计算：跳过重建做流式检索。** 球坐标不仅用于存储，还能在不重建笛卡尔向量的前提下直接算余弦相似度。通过对角度做反向递推，在 $O(d)$ 时间内累积内积 $\mathbf{x} \cdot \mathbf{y}$，递推式为 $R \leftarrow \cos\theta_k\cos\phi_k + \sin\theta_k\sin\phi_k \cdot R$。因为递推从最后一维往前走，配合流式解压可以在分数足够低时提前终止，支持 top-k 检索的早停优化。
 
 ### 损失函数 / 训练策略
 
-- **无需训练**：纯数学变换，无学习参数
-- 球坐标变换本身是精确可逆的，但浮点超越函数引入有界误差
-- 中间计算使用双精度（double），将重建误差控制在 1e-7 以下，低于 float32 机器精度 1.19e-7
-- 变换复杂度 $O(nd)$，C 实现吞吐量 >1 GB/s，zstd level 1 下总管道达 487 MB/s 编码速度
+方法本身无需训练，是纯数学变换、不含任何学习参数或 codebook。球坐标变换在数学上精确可逆，但浮点超越函数（sin/cos/arccos）会引入有界误差，因此中间计算统一用双精度（double）累积，把重建误差压到 $10^{-7}$ 以下，低于 float32 的机器精度 $1.19\times10^{-7}$，对检索质量无可见影响。整体变换复杂度为 $O(nd)$，C 实现吞吐量超过 1 GB/s，在 zstd level 1 下完整管道仍能达到 487 MB/s 的编码速度。
 
 ## 实验关键数据
 
@@ -128,9 +125,9 @@ tags:
 
 - [\[ICML 2026\] ArcVQ-VAE: A Spherical Vector Quantization Framework with ArcCosine Additive Margin](../../ICML2026/model_compression/arcvq-vae_a_spherical_vector_quantization_framework_with_arccosine_additive_marg.md)
 - [\[ICML 2026\] Dispersion Loss Counteracts Embedding Condensation and Improves Generalization in Small Language Models](../../ICML2026/model_compression/dispersion_loss_counteracts_embedding_condensation_and_improves_generalization_i.md)
+- [\[NeurIPS 2025\] Zero-Shot Embedding Drift Detection: A Lightweight Defense Against Prompt Injections in LLMs](../../NeurIPS2025/model_compression/zero-shot_embedding_drift_detection_a_lightweight_defense_against_prompt_injecti.md)
 - [\[ICLR 2026\] A universal compression theory for lottery ticket hypothesis and neural scaling laws](a_universal_compression_theory_for_lottery_ticket_hypothesis_and_neural_scaling_.md)
 - [\[ICLR 2026\] FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
-- [\[ICLR 2026\] Cut Less, Fold More: Model Compression through the Lens of Projection Geometry](cut_less_fold_more_model_compression_through_the_lens_of_projection_geometry.md)
 
 </div>
 

@@ -38,32 +38,27 @@ tags:
 
 ### 整体框架
 
-PaperCoder 模拟人类开发者的典型生命周期，将论文转代码任务分解为三个结构化阶段：
+论文的写作目的是把思想讲给人听，从软件工程角度看是松散、模糊、缺少可执行结构的；而像 ChatDev、MetaGPT 这类多智能体框架走的是自底向上路线，从一句短需求逐步扩展，面对一篇完整论文很容易迷失。PaperCoder 反其道而行，模拟一个人类开发者拿到论文后的真实工作流：先通读全文做规划，再逐文件做分析，最后才动手写代码。整套系统拆成三个串联阶段，前一阶段的输出作为后一阶段的输入，让非结构化的论文 $R$ 逐步收敛到可运行的仓库 $C$：
 
 $$\text{Planning: } P = M_{\text{plan}}(R), \quad \text{Analysis: } A = M_{\text{analysis}}(R, P), \quad \text{Coding: } C = M_{\text{code}}(R, P, A)$$
 
 ### 关键设计
 
-#### 1. 规划阶段（Planning）
+**1. 规划阶段（Planning）：把整篇论文先拆成一份可执行的施工图。**
 
-包含四个顺序子组件，逐步将非结构化论文内容转化为实现级抽象：
+直接让 LLM 从论文一把生成整个仓库，等于跳过了人类开发者最关键的"先想清楚再动手"。规划阶段用四个顺序子组件，把模糊的论文内容逐级收敛成实现级抽象。先是 **Overall Plan**，提炼出模型组件、训练目标、数据处理、评估协议这些核心功能的高层摘要，相当于先读懂论文到底要做什么；接着 **Architecture Design** 定义仓库级架构，产出文件列表、刻画静态结构的类图和刻画动态交互的序列图；然后 **Logic Design** 指定文件之间的依赖关系和执行顺序——这一步看似琐碎，却是后续编码不出错的前提，因为只有先确定"B 依赖 A 的模块"才能保证生成时先 A 后 B；最后 **Configuration Generation** 合成一份 `config.yaml`，把超参数、模型设置、运行时选项集中起来，方便研究者后续直接改实验配置。
 
-- **Overall Plan**：提取核心组件和功能的高层摘要（模型组件、训练目标、数据处理、评估协议）。
-- **Architecture Design**：定义仓库级架构——文件列表、类图（静态结构）和序列图（动态交互）。
-- **Logic Design**：指定文件依赖关系和执行顺序，确保代码生成不会因文件间依赖而出错（如 B 需要 A 的模块时先生成 A）。
-- **Configuration Generation**：合成 config.yaml，包含超参数、模型设置和运行时选项，便于研究者调整实验配置。
+**2. 分析阶段（Analysis）：在写每个文件之前，先把它该干什么逐字想明白。**
 
-#### 2. 分析阶段（Analysis）
+规划给出了文件清单，但每个文件具体怎么实现仍是空白。分析阶段对规划中识别出的每个文件 $f_i$ 单独生成一份文件级分析 $a_i$，内容覆盖这个文件的功能目标、输入输出行为、文件内与文件间的依赖关系，以及从论文正文反推出来的算法规范。等于在编码前先为每个文件写好一份详细需求说明，把论文里散落各处的细节归拢到对应文件上。
 
-针对规划中识别的每个文件 $f_i$，生成详细的文件级分析 $a_i$，包括：功能目标、输入输出行为、文件内和文件间依赖、从论文推导的算法规范。
+**3. 编码阶段（Coding）：按依赖顺序逐文件生成，每一步都看得见仓库的当前状态。**
 
-#### 3. 编码阶段（Coding）
-
-按执行顺序依次生成每个文件，每个文件的生成基于所有累积上下文：
+有了规划的施工图和每个文件的分析，编码阶段才动手写代码。它严格按 Logic Design 给出的执行顺序逐个生成文件，且第 $i$ 个文件的生成不是孤立的——它同时拿到原始论文 $R$、整体规划 $P$、自己的文件信息 $f_i$ 和分析 $a_i$，以及前面所有已生成文件 $\{c_1, ..., c_{i-1}\}$：
 
 $$c_i = \text{LLM}(\mathcal{T}_{\text{code}}(R, P, f_i, a_i, \{c_1, ..., c_{i-1}\}))$$
 
-确保第 $i$ 个文件生成时充分感知依赖和仓库当前状态。
+这样每写一个新文件，模型都充分感知到已有的依赖和仓库的当前状态，跨文件调用才能对得上，避免自底向上方法常见的"后写的代码和先写的接口对不齐"。
 
 ### 损失函数/训练策略
 
@@ -150,8 +145,8 @@ $$c_i = \text{LLM}(\mathcal{T}_{\text{code}}(R, P, f_i, a_i, \{c_1, ..., c_{i-1}
 - [\[ICLR 2026\] ShieldedCode: Learning Robust Representations for Virtual Machine Protected Code](shieldedcode_learning_robust_representations_for_virtual_machine_protected_code.md)
 - [\[ICLR 2026\] Breaking the SFT Plateau: Multimodal Structured Reinforcement Learning for Chart-to-Code Generation](breaking_the_sft_plateau_multimodal_structured_reinforcement_learning_for_chart-.md)
 - [\[ACL 2026\] SciCoQA: Quality Assurance for Scientific Paper–Code Alignment](../../ACL2026/code_intelligence/scicoqa_quality_assurance_for_scientific_paper--code_alignment.md)
-- [\[NeurIPS 2025\] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
 - [\[ICLR 2026\] Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
+- [\[NeurIPS 2025\] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
 
 </div>
 

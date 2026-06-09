@@ -45,32 +45,29 @@ tags:
 
 ### 关键设计
 
-1. **SDE 采样器替代 Langevin 采样**:
+**1. SDE 采样器替代 Langevin 采样：把固定步长换成能自适应的求解器。**
 
-    - 功能：用自适应步长 SDE 求解器替代固定步长的退火 Langevin 采样
-    - 核心思路：利用反向 SDE 公式 + 自适应求解器自动调整步长
-    - 设计动机：Langevin 采样需要大量步数且对步长敏感；自适应求解器在高噪声区自动缩小步长、低噪声区加大步长
+原始 CSM 用退火 Langevin 采样组合分数，问题是它步数多、对步长敏感，一旦高噪声区步长偏大就发散。本文改写反向 SDE 公式并交给自适应步长求解器：求解器会在高噪声区自动把步长缩小、在低噪声区放大，相当于把"哪里该走慢、哪里能走快"的判断交给数值器自己处理。这一步不仅减少了人工调参，还为下一个设计埋下伏笔——它暴露出误差到底集中在轨迹的哪一段。
 
-2. **误差衰减桥接密度**:
+**2. 误差衰减桥接密度：在高噪声区主动压低组合分数的影响力。**
 
-    - 功能：引入时变衰减函数 $d(t)$ 调制组合分数
-    - 公式：$p_t(\boldsymbol{\eta}_t | \mathbf{Y}_{1:J}) \propto p(\boldsymbol{\eta}_t)^{(1-J)(1-t)d(t)} \prod_j p_t(\boldsymbol{\eta}_t | \mathbf{Y}_j)^{d(t)}$
-    - 约束：$d(0)=1$（低噪声时恢复真实后验），$d(1) \leq 1$（高噪声时衰减）
-    - 衰减调度：指数衰减 $d(t) = \exp(-\ln(1/d_1) \cdot t)$，$d_1$ 为可调超参数
-    - 设计动机：观察到自适应求解器在高噪声区需要极小步长→分数误差在高噪声区最严重→衰减高噪声区的组合分数贡献
+正是从自适应求解器的行为里观察到：高噪声区需要极小步长，说明分数误差在高噪声区最严重——而组合 $J$ 个分数时这些误差会被累加放大，$J$ 一大就爆炸。解法是在桥接密度里引入一个时变衰减函数 $d(t)$ 调制组合分数：
 
-3. **Mini-batch 组合分数估计器**:
+$$p_t(\boldsymbol{\eta}_t | \mathbf{Y}_{1:J}) \propto p(\boldsymbol{\eta}_t)^{(1-J)(1-t)d(t)} \prod_j p_t(\boldsymbol{\eta}_t | \mathbf{Y}_j)^{d(t)}$$
 
-    - 功能：用随机子集替代全部 $J$ 组的分数累加
-    - 公式：$\hat{s}(\boldsymbol{\eta}_t) = (1-J)(1-t)\nabla \log p(\boldsymbol{\eta}_t) + \frac{J}{M}\sum_{i=1}^M s(\boldsymbol{\eta}_t, \mathbf{Y}_{j_i})$
-    - 性质：无偏估计器（Proposition 3.1 证明）
-    - 设计动机：$J > 10000$ 时全量累加的内存和计算不可行。Mini-batch 引入方差但与衰减结合后方差被控制
+约束设计是关键：$d(0)=1$ 保证低噪声（采样末端）时恢复真实后验、不引入偏差；$d(1) \leq 1$ 让高噪声（采样起点）时组合分数的贡献被压低、防止发散。具体调度用指数衰减 $d(t) = \exp(-\ln(1/d_1) \cdot t)$，其中 $d_1$ 是可调超参数，控制高噪声端衰减多深。这样数值稳定性与最终采样的正确性兼得。
 
-4. **噪声调度调整**:
+**3. Mini-batch 组合分数估计器：用随机子集顶替全量累加，但保持无偏。**
 
-    - 功能：推断时使用与训练不同的噪声调度，压缩高噪声区间
-    - 核心思路：增大 cosine 调度的 shift 参数 $s$，减少在高噪声区的采样步数
-    - 设计动机：高噪声区是误差累积最严重的区间，减少在此区间的停留时间
+当 $J > 10000$ 时，把全部 $J$ 组的分数都累加起来在内存和计算上都不可行。这里用随机抽 $M$ 组的子集来估计组合分数：
+
+$$\hat{s}(\boldsymbol{\eta}_t) = (1-J)(1-t)\nabla \log p(\boldsymbol{\eta}_t) + \frac{J}{M}\sum_{i=1}^M s(\boldsymbol{\eta}_t, \mathbf{Y}_{j_i})$$
+
+前缀的 $J/M$ 是关键——它把子集求和重新缩放回全量尺度，使整体成为无偏估计器（Proposition 3.1 给出证明）。Mini-batch 本身会引入方差，但和上面的误差衰减组合后，高噪声区被压低的同时方差也被一并控制住，二者是互补的。
+
+**4. 噪声调度调整：推断时少在高噪声区停留。**
+
+既然高噪声区是误差累积最严重的区间，那就在推断阶段换一套与训练不同的噪声调度，专门压缩这段。做法是增大 cosine 调度的 shift 参数 $s$，减少落在高噪声区的采样步数，让采样轨迹尽快越过最危险的区段。这是和衰减函数协同的第二道防线——衰减压低高噪声区的影响力，调度则缩短在那里的逗留时间。
 
 ### 损失函数 / 训练策略
 联合训练全局和局部分数模型（Eq. 11），使用去噪分数匹配 + likelihood weighting。训练时只需模拟单组数据→simulation 效率极高。
@@ -133,8 +130,8 @@ tags:
 - [\[AAAI 2026\] HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models](../../AAAI2026/image_generation/hierarchicalprune_position-aware_compression_for_large-scale_diffusion_models.md)
 - [\[ICLR 2026\] Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency](large_scale_diffusion_distillation_via_score-regularized_continuous-time_consist.md)
 - [\[NeurIPS 2025\] Large-Scale Training Data Attribution for Music Generative Models via Unlearning](../../NeurIPS2025/image_generation/large-scale_training_data_attribution_for_music_generative_models_via_unlearning.md)
-- [\[NeurIPS 2025\] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](../../NeurIPS2025/image_generation/next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
 - [\[ICLR 2026\] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [\[ICLR 2026\] Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
 
 </div>
 

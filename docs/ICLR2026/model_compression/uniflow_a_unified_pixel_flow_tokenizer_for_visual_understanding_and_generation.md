@@ -34,56 +34,19 @@ tags:
 
 ## 方法详解
 
-### 整体架构
+### 整体框架
 
-UniFlow = **统一编码器 $\mathcal{E}_U$**（含自蒸馏）+ **轻量 patch-wise 像素流解码器 $\mathcal{D}_{\text{flow}}$**
+UniFlow 把一个预训练视觉编码器改造成既能理解又能重建的统一 tokenizer：统一编码器 $\mathcal{E}_U$ 在自蒸馏约束下编码出语义 token，再交给一个轻量的 patch-wise 像素流解码器 $\mathcal{D}_{\text{flow}}$ 直接在像素空间还原图像。它不引入第二个编码器、也不依赖预训练 VAE，整套适配只需在 ImageNet 上训练 30 个 epoch，且可嫁接到任意 VFM 或 MLLM 视觉骨干。
 
-### 1. 层级自适应自蒸馏
+### 关键设计
 
-灵感：深层专注语义消歧，浅层擅长捕捉细粒度细节。蒸馏应尊重这种分工：
-- 深层需要更强的保留约束（保语义）
-- 浅层需要更大灵活性（补细节）
+**1. 层级自适应自蒸馏：让重建目标不再侵蚀语义理解。** 统一编码器既要保留教师 VFM 的语义，又要为下游重建腾出建模细节的空间，二者天然冲突——若全层都强行对齐教师，细节无从学起；若放松约束，语义又会退化。UniFlow 的观察是深层负责语义消歧、浅层负责细粒度细节，因此蒸馏强度应该分层而非一刀切：深层施加更强的保留约束，浅层给更大灵活性。它用冻结教师 $\mathcal{E}_T$ 监督学生 $\mathcal{E}_U$，并按层自适应分配权重 $w_l = \frac{w_l^{\text{base}} \cdot \exp(\beta \cdot \alpha_l)}{\sum_{k=1}^{L} w_k^{\text{base}} \cdot \exp(\beta \cdot \alpha_k)}$，其中层级先验 $w_l^{\text{base}} = l/L$ 让深层基础权重更高，对齐惩罚 $\alpha_l$（第 $l$ 层学生与教师 token 的平均余弦距离）让对齐越差的层临时获得更多关注，$\beta$ 控制这种自适应的强度。最终蒸馏损失是加权的逐层余弦距离 $\mathcal{L}_{\text{dist}} = \sum_{l=1}^{L} w_l \cdot \left(1 - \frac{1}{S} \sum_{i,j} \frac{\langle \mathbf{H}_U^{(l,i,j)}, \mathbf{H}_T^{(l,i,j)} \rangle}{\|\mathbf{H}_U^{(l,i,j)}\| \|\mathbf{H}_T^{(l,i,j)}\|}\right)$，这样深层守住语义、浅层放手补细节，避免了 VILA-U/UniTok 那种微调即退化的问题。
 
-使用学生编码器 $\mathcal{E}_U$ 和冻结的教师编码器 $\mathcal{E}_T$。自适应层权重：
+**2. Patch-wise 像素流解码器：绕过 VAE 天花板直接在像素空间重建。** 现有统一方案大多在预训练 VAE 的潜空间上接扩散/流解码器，重建上限被 VAE 锁死。UniFlow 改为直接在像素空间学习速度场：基于 Rectified Flow 定义干净图像与噪声之间的线性插值路径 $\mathbf{x}_t^{(i,j)} = (1-t)\mathbf{x}^{(i,j)} + t \cdot \epsilon^{(i,j)},\ t \in [0,1]$，再用一个轻量 MLP 逐 patch 预测速度场 $v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)})$。逐 patch 解码把整张图的复杂分布拆成局部子分布，简化了学习目标、提升了训练效率，但代价是各 patch 各自为政会留下网格状接缝伪影。为此在条件注入前加一个全局 Transformer 块，让上采样后的 token 先经自注意力互通信息再分发条件 $\mathbf{C} = \mathcal{GTB}(\mathcal{P}_{\text{up}}(\mathbf{z}) + \mathbf{PE})$，使每个 patch 的解码都带上全局上下文，从而消除网格伪影。
 
-$$w_l = \frac{w_l^{\text{base}} \cdot \exp(\beta \cdot \alpha_l)}{\sum_{k=1}^{L} w_k^{\text{base}} \cdot \exp(\beta \cdot \alpha_k)}$$
+### 损失函数 / 训练策略
 
-其中：
-- $w_l^{\text{base}} = l/L$：层级先验，深层更高
-- $\alpha_l$：对齐惩罚，第 $l$ 层学生与教师 token 的平均余弦距离
-- $\beta$：温度超参数
-
-蒸馏损失为加权的逐层余弦距离：
-
-$$\mathcal{L}_{\text{dist}} = \sum_{l=1}^{L} w_l \cdot \left(1 - \frac{1}{S} \sum_{i,j} \frac{\langle \mathbf{H}_U^{(l,i,j)}, \mathbf{H}_T^{(l,i,j)} \rangle}{\|\mathbf{H}_U^{(l,i,j)}\| \|\mathbf{H}_T^{(l,i,j)}\|}\right)$$
-
-### 2. Patch-wise 像素流解码器
-
-**区别于现有方法**：直接在像素空间学习速度场，绕过预训练 VAE 的限制。
-
-**全局 Transformer 块**：解决 patch-wise 解码的网格伪影问题
-
-$$\mathbf{C} = \mathcal{GTB}(\mathcal{P}_{\text{up}}(\mathbf{z}) + \mathbf{PE})$$
-
-通过自注意力使所有 token 交换信息获得全局上下文。
-
-**流匹配**：基于 Rectified Flow，定义线性插值路径
-
-$$\mathbf{x}_t^{(i,j)} = (1-t)\mathbf{x}^{(i,j)} + t \cdot \epsilon^{(i,j)}, \quad t \in [0,1]$$
-
-轻量 MLP 网络预测速度场 $v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)})$。损失函数：
-
-$$\mathcal{L}_{\text{flow}} = \mathbb{E}\left[\|v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)}) - (\epsilon^{(i,j)} - \mathbf{x}^{(i,j)})\|_2^2\right]$$
-
-### 总训练目标
-
-$$\mathcal{L}_{\text{total}} = \lambda_d \mathcal{L}_{\text{dist}} + \lambda_f \mathcal{L}_{\text{flow}}$$
-
-仅使用直觉的流匹配损失，避免 GAN/L1/L2/LPIPS 多损失组合的复杂性。
-
-### 通用性
-
-UniFlow 作为通用统一适配范式，可适配任何预训练编码器（独立 VFM 或 MLLM 视觉骨干），仅需 30 个 ImageNet 训练 epoch。
+总目标只是蒸馏与流匹配两项的加权和 $\mathcal{L}_{\text{total}} = \lambda_d \mathcal{L}_{\text{dist}} + \lambda_f \mathcal{L}_{\text{flow}}$，其中流匹配损失为速度场回归 $\mathcal{L}_{\text{flow}} = \mathbb{E}\left[\|v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)}) - (\epsilon^{(i,j)} - \mathbf{x}^{(i,j)})\|_2^2\right]$。相比 VQ-GAN 系一贯需要 GAN+L1+L2+LPIPS 的多损失拼盘，UniFlow 仅靠单一流匹配损失就完成重建监督，训练更稳、调参更省，也正是它能在 30 epoch 内完成通用适配的原因之一。
 
 ## 实验
 

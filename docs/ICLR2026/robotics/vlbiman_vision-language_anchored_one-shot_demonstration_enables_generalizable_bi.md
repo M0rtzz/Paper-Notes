@@ -45,50 +45,17 @@ tags:
 
 ## 方法详解
 
-### 整体框架：三阶段Pipeline
+### 整体框架
 
-给定任务描述 $\mathcal{T}$ 和单次演示 $\mathcal{D} = \{(\mathcal{O}_t, \mathcal{A}_t)\}_{t=1}^T$，VLBiMan学习映射：
+给定任务描述 $\mathcal{T}$ 和单次演示 $\mathcal{D} = \{(\mathcal{O}_t, \mathcal{A}_t)\}_{t=1}^T$，VLBiMan要学的是映射 $\mathcal{F}_{\text{VLBiMan}}: (\mathcal{T}, \mathcal{D}, \mathcal{S}_{\text{new}}) \mapsto \{\widetilde{\mathcal{A}}_t^{\text{new}}\}_{t=1}^{T'}$，把这条演示迁移到新场景 $\mathcal{S}_{\text{new}}$ 上重新生成双臂轨迹。整个流程分三步走：先把演示分解成"不变"与"可适应"两类原子技能，再用VLM在新场景里锚定物体并几何对齐可适应技能，最后做运动学求解把两类技能拼成一条可执行的双臂轨迹。
 
-$$\mathcal{F}_{\text{VLBiMan}}: (\mathcal{T}, \mathcal{D}, \mathcal{S}_{\text{new}}) \mapsto \{\widetilde{\mathcal{A}}_t^{\text{new}}\}_{t=1}^{T'}$$
+### 关键设计
 
-其中 $\mathcal{S}_{\text{new}}$ 是新场景，$\widetilde{\mathcal{A}}_t^{\text{new}}$ 是适应后的双臂轨迹。三阶段为：分解→适应→组合。
+**1. 任务感知双臂分解：把"任务本质"和"场景依赖"拆开。** 单次演示之所以难泛化，是因为它把"怎样稳定倒水"这类与场景无关的本质动作，和"手伸到瓶子那个位置"这类完全依赖布局的动作混在一条轨迹里。VLBiMan先做时空分割：根据运动动态（速度不连续、加速度尖峰）和夹爪开/关的状态切换检测关键姿态，把演示切成时间段 $\tau_i = [t_i, t_{i+1}]$，每段对应一个运动原语 $\mathcal{M}_i$。再用物体-机器人耦合状态给每段分类——定义绑定指示器 $\text{bind}(o, r, t)$，若整段都满足 $\forall t \in \tau_i, \text{bind}(o_k, r, t) = 1$ 且 $\text{geometry}(o_k) \approx \text{geometry}(o_k^{\text{demo}})$（物体被稳固抓住、几何与演示一致），就标为**不变技能** $\mathcal{M}_i^{\text{inv}}$，可直接复用；否则是预接触阶段的**可适应技能** $\mathcal{M}_j^{\text{var}}$，要随新物体位置调整。演示由此分解为 $\mathcal{D} \Rightarrow \{\mathcal{M}_i^{\text{inv}}\}_{i=1}^{N_{\text{inv}}} \cup \{\mathcal{M}_j^{\text{var}}\}_{j=1}^{N_{\text{var}}}$。这样大部分编码任务本质的不变技能原封不动复用，需要适应的只剩几段依赖几何信息的预接触动作，泛化的难度被压到最小。
 
-### 关键设计1：任务感知双臂分解（不变/可适应分离）
+**2. VLM锚定适应：让VLM做擅长的分割定位，而不是不可靠的任务规划。** 适应可适应技能的前提是定位新场景中的物体，但CAD模型和6D位姿估计既笨重又脆弱。VLBiMan改用VLM从任务描述 $\mathcal{T}$ 提取物体类别提示词，喂给 Florence-2 + SAM2 直接拿到高质量2D语义掩码 $\mathbf{M}_k^{\text{2D}}$，不依赖任何模型先验。拿到掩码后做三层几何对齐：位置上计算新旧代表点（掩码质心或平面接触点）的3D位移 $\Delta\mathbf{x} = \mathbf{p}^{\text{new}} - \mathbf{p}^{\text{demo}}$；朝向上对笔、勺子这类方向敏感物体，从2D掩码的二阶图像矩提取主轴，算相对旋转 $\Delta\theta = \angle(\mathbf{v}^{\text{new}}, \mathbf{v}^{\text{demo}})$；尺寸上对不同大小的同类物体，用点云的z-extent估计高度差 $\Delta h_k$ 来校正垂直放置动作。这里的关键取舍是只让VLM做"锚定"（分割+定位）而不做"规划"（任务分解）——VLM的分割能力已经对光照和干扰足够鲁棒，而把任务分解交给LLM prompt仍然脆弱，能力和角色的匹配才让这一环稳定。
 
-**时空分割**：基于运动动态（速度不连续、加速度尖峰）和状态切换（夹爪开/关）检测关键姿态，将演示分割为时间段 $\tau_i = [t_i, t_{i+1}]$，每段对应一个运动原语 $\mathcal{M}_i$。
-
-**原子技能分类**：通过物体-机器人耦合状态判断每个原语的类型。定义绑定指示器 $\text{bind}(o, r, t)$，则：
-
-$$\forall t \in \tau_i, \text{bind}(o_k, r, t) = 1 \text{ 且 } \text{geometry}(o_k) \approx \text{geometry}(o_k^{\text{demo}})$$
-
-满足上述条件的标记为**不变技能** $\mathcal{M}_i^{\text{inv}}$（物体被稳固抓取后的动作→与场景布局无关），否则标记为**可适应技能** $\mathcal{M}_j^{\text{var}}$（预接触运动→需根据新物体位置调整）。演示被分解为：
-
-$$\mathcal{D} \Rightarrow \{\mathcal{M}_i^{\text{inv}}\}_{i=1}^{N_{\text{inv}}} \cup \{\mathcal{M}_j^{\text{var}}\}_{j=1}^{N_{\text{var}}}$$
-
-**设计动机**：不变/可适应的分离是泛化的核心——不变部分编码了任务本质（如"怎样稳定地倒水"），可适应部分仅依赖新场景的几何信息→分离后大部分技能可直接复用。
-
-### 关键设计2：VLM锚定适应（语义感知的几何对齐）
-
-**VLM场景理解**：从任务描述 $\mathcal{T}$ 提取物体类别提示词→输入VLM（Florence-2 + SAM2）获得高质量2D语义掩码 $\mathbf{M}_k^{\text{2D}}$→不需要CAD模型或6D位姿估计。
-
-**几何适应**三步走：
-1. **位置变换**：计算新旧物体代表点的3D位移 $\Delta\mathbf{x} = \mathbf{p}^{\text{new}} - \mathbf{p}^{\text{demo}}$（代表点可以是掩码质心或平面接触点）
-2. **朝向适应**：对方向敏感物体（如笔、勺子），从2D掩码的二阶图像矩提取主轴方向→计算相对旋转 $\Delta\theta = \angle(\mathbf{v}^{\text{new}}, \mathbf{v}^{\text{demo}})$
-3. **尺寸补偿**：对类别级变化（如不同大小的瓶子），通过点云的z-extent估计高度差异 $\Delta h_k$→调整垂直放置运动
-
-**设计动机**：让VLM做"锚定"（分割+定位）而非"规划"（任务分解）→VLM的分割能力已经非常强且对光照/干扰鲁棒，而LLM规划仍然脆弱→正确分配角色。
-
-### 关键设计3：自主轨迹组合（运动学可行性保证）
-
-**渐进IK优化**：对初始抓握运动，通过样条插值逐步逼近目标姿态并迭代求解逆运动学：
-
-$$\mathbf{q}^{(n+1)} = \text{IK}(\mathbf{T}_g^{(n)}), \quad \mathbf{T}_g^{(n)} = \text{SplineInterp}(\mathbf{T}_{\text{start}}, \mathbf{T}_{\text{goal}}, n)$$
-
-**动态碰撞补偿**：在抓取逼近阶段添加基座和垂直方向的安全裕量：
-
-$$\tilde{\mathbf{x}}^{\text{goal}} = \mathbf{x}^{\text{goal}} + \delta_{\text{base}}\mathbf{u}_\| + \delta_z\mathbf{u}_z$$
-
-确保在新物体布局下不发生提前碰撞。组合后的轨迹经过一次物理回放验证。
+**3. 自主轨迹组合：在拼接处补上运动学可行性和防撞裕量。** 不变技能和适应后的可适应技能拼起来时，预接触段的目标姿态变了，直接套用可能无解或撞到物体。VLBiMan对初始抓握运动做渐进IK优化：用样条插值把目标姿态从起点逐步推到终点，逐帧求逆运动学 $\mathbf{q}^{(n+1)} = \text{IK}(\mathbf{T}_g^{(n)})$，其中 $\mathbf{T}_g^{(n)} = \text{SplineInterp}(\mathbf{T}_{\text{start}}, \mathbf{T}_{\text{goal}}, n)$，避免一步跳到目标导致IK失败。同时在抓取逼近阶段沿基座方向和垂直方向加安全裕量 $\tilde{\mathbf{x}}^{\text{goal}} = \mathbf{x}^{\text{goal}} + \delta_{\text{base}}\mathbf{u}_\| + \delta_z\mathbf{u}_z$，确保新布局下不会提前碰撞。组合后的轨迹再经一次物理回放验证才执行。
 
 ## 实验关键数据
 
@@ -162,9 +129,9 @@ $$\tilde{\mathbf{x}}^{\text{goal}} = \mathbf{x}^{\text{goal}} + \delta_{\text{ba
 
 - [\[ICLR 2026\] TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
 - [\[ICLR 2026\] One Demo Is All It Takes: Planning Domain Derivation with LLMs from A Single Demonstration](one_demo_is_all_it_takes_planning_domain_derivation_with_llms_from_a_single_demo.md)
+- [\[AAAI 2026\] ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation](../../AAAI2026/robotics/manilong-shot_interaction-aware_one-shot_imitation_learning_for_long-horizon_man.md)
 - [\[ICLR 2026\] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
 - [\[ICLR 2026\] When would Vision-Proprioception Policies Fail in Robotic Manipulation?](when_would_vision-proprioception_policies_fail_in_robotic_manipulation.md)
-- [\[CVPR 2025\] RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](../../CVPR2025/robotics/roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
 
 </div>
 

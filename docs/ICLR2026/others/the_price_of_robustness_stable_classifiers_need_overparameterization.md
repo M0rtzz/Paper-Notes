@@ -34,51 +34,21 @@ tags:
 
 ## 方法详解
 
-### 1. 类稳定性定义
+### 整体框架
 
-**定义 1**（Margin 和类稳定性）：对分类器 $f: \mathcal{X} \to \{-1, 1\}$：
+整篇论文围绕一条逻辑链展开：先用"期望 margin"把分类器的鲁棒性量化成一个可分析的标量 $S(f)$，再借助数据分布的等周性把这个量塞进 Rademacher 复杂度的上界，从而证明稳定性会压低模型类的有效复杂度。反过来推，就得到"鲁棒性代价定律"——要让一个能插值训练集的分类器同时保持高稳定性，参数量必须从 $p \approx n$ 抬升到 $p \approx nd$ 量级。最后再把这套从有限函数类得到的结论，借助得分函数的 Lipschitz 连续性推广到神经网络这种无限函数类。
 
-无符号 margin：
-$$h_f(x) := |d_f(x)| = \inf\{\|x - z\|_2 : f(z) \neq f(x), z \in \mathcal{X}\}$$
+### 关键设计
 
-类稳定性（期望 margin）：
-$$S(f) := \mathbb{E}[h_f]$$
+**1. 类稳定性：用期望 margin 把"不连续"变成可分析的标量。** 分类器输出离散标签、天然不连续，没法直接套用回归里的 Lipschitz 平滑性框架，于是作者改用样本到决策边界的距离来刻画鲁棒性。对分类器 $f: \mathcal{X} \to \{-1, 1\}$，先定义无符号 margin 为样本到最近异类点的欧氏距离 $h_f(x) := |d_f(x)| = \inf\{\|x - z\|_2 : f(z) \neq f(x), z \in \mathcal{X}\}$（定义 1），它度量了把 $x$ 推过决策边界所需的最小扰动。再取它在数据分布下的期望，得到类稳定性 $S(f) := \mathbb{E}[h_f]$。$S(f)$ 越大，说明平均而言要更大的扰动才能翻转预测，正好对应"分类器对输入扰动的平均鲁棒性"，且它是一个连续标量，可以进入后续的复杂度分析。
 
-这衡量了在数据分布下分类器预测对输入扰动的平均鲁棒性。
+**2. 等周假设：把高维集中现象注入泛化界。** 要让 margin 真正约束泛化，必须刻画数据在高维空间里的几何。作者假设分布 $\mu$ 满足 $c$-等周性：对任意有界 $L$-Lipschitz 函数 $f$ 和 $t \geq 0$，有 $\mathbb{P}(|f(x) - \mathbb{E}[f]| \geq t) \leq 2 e^{-\frac{dt^2}{2cL^2}}$。高斯分布、球面均匀分布等都满足这一条件，它表达的是高维测度集中——函数值以指数速度集中在均值附近，而集中的速率由维度 $d$ 控制。根据流形假设，这里的 $d$ 可解释为数据的内在流形维度，这也是后面 $nd$ 量级里那个 $d$ 的来源。
 
-### 2. 等周不等式假设
+**3. 稳定性压低有效复杂度：把 $S$ 写进 Rademacher 界。** 这是整套理论的技术核心：证明稳定性能直接削减模型类的复杂度。在 $\min_{f \in \mathcal{F}} S(f) > S > 0$ 且 $\log|\mathcal{F}| \geq n$ 的条件下，定理 4 给出 $\mathcal{R}_{n,\mu}(\mathcal{F}) \leq K_1 \max\left\{\frac{1}{\sqrt{n}}, \frac{\sqrt{c}}{S} \cdot \frac{\log|\mathcal{F}|}{n\sqrt{d}}\right\}$；在额外的正则性条件下还能改进为 $\mathcal{R}_{n,\mu}(\mathcal{F}) \leq K_2 \max\left\{\frac{1}{\sqrt{n}}, \frac{\sqrt{c}}{S}\sqrt{\frac{\log|\mathcal{F}|}{nd}}, 2\exp\left(-\frac{dS^2}{8c}\right)\right\}$。关键在于 $1/S$ 出现在 $\sqrt{\log|\mathcal{F}|}$ 前面——稳定性越高，复杂度项被压得越低，于是一个表面上很大的模型类，只要其中的函数都足够稳定，有效复杂度就会显著下降。
 
-假设数据分布 $\mu$ 满足 $c$-等周性（isoperimetry）：对任意有界 $L$-Lipschitz 函数 $f$ 和 $t \geq 0$：
+**4. 鲁棒性代价定律：低误差与高稳定性不可兼得，除非过参数化。** 把上面的复杂度界反向使用，就能逼出参数量的硬性下界。令 $p := \log|\mathcal{F}| \geq n$，推论 6 表明在适当条件下、以高概率有 $\hat{R}_{\text{0-1}}(f) \leq R^* - \varepsilon \implies S(f) < \max\left\{\frac{3K}{\varepsilon}\sqrt{\frac{c\log|\mathcal{F}|}{nd}}, \sqrt{\frac{8c}{d}\log\frac{6K}{\varepsilon}}\right\}$。这个蕴含式直接读出代价：当 $p \approx n$ 时，右端的稳定性上界被压得很小，于是任何能插值训练集的分类器都注定不稳定；要同时拿到低训练误差和高稳定性，唯一出路是把参数量抬到 $p \approx nd$ 量级——这正是"鲁棒性需要过参数化"的精确表述。
 
-$$\mathbb{P}(|f(x) - \mathbb{E}[f]| \geq t) \leq 2 e^{-\frac{dt^2}{2cL^2}}$$
-
-高斯分布和球面均匀分布等满足此条件。根据流形假设，$d$ 可解释为内在流形维度。
-
-### 3. 有限函数类的 Rademacher 界
-
-**定理 4**：假设 $\min_{f \in \mathcal{F}} S(f) > S > 0$ 且 $\log|\mathcal{F}| \geq n$：
-
-$$\mathcal{R}_{n,\mu}(\mathcal{F}) \leq K_1 \max\left\{\frac{1}{\sqrt{n}}, \frac{\sqrt{c}}{S} \cdot \frac{\log|\mathcal{F}|}{n\sqrt{d}}\right\}$$
-
-在正则性条件下可改进为：
-
-$$\mathcal{R}_{n,\mu}(\mathcal{F}) \leq K_2 \max\left\{\frac{1}{\sqrt{n}}, \frac{\sqrt{c}}{S}\sqrt{\frac{\log|\mathcal{F}|}{nd}}, 2\exp\left(-\frac{dS^2}{8c}\right)\right\}$$
-
-**关键洞察**：$1/S$ 出现在 $\sqrt{\log|\mathcal{F}|}$ 前面——稳定性降低了模型类的有效复杂度。
-
-### 4. 分类的鲁棒性定律
-
-**推论 6**：令 $p := \log|\mathcal{F}| \geq n$。在适当条件下，以高概率：
-
-$$\hat{R}_{\text{0-1}}(f) \leq R^* - \varepsilon \implies S(f) < \max\left\{\frac{3K}{\varepsilon}\sqrt{\frac{c\log|\mathcal{F}|}{nd}}, \sqrt{\frac{8c}{d}\log\frac{6K}{\varepsilon}}\right\}$$
-
-**含义**：
-- 参数量 $p \approx n$ 时，任何插值分类器必然不稳定
-- 要同时实现低训练误差和高稳定性，需要 $p \approx nd$ 的过参数化
-
-### 5. 无限函数类的扩展
-
-引入**归一化 co-stability**：对分类器 $f = \text{sgn} \circ g_w$ 中得分函数的输出 margin 进行归一化。结合 $g_w$ 在参数和输入上的 Lipschitz 连续性，推导对应的泛化界（定理 13）和鲁棒性定律（推论 15）。
+**5. 推广到无限函数类：用归一化 co-stability 接住神经网络。** 上面的结论建立在有限函数类（$\log|\mathcal{F}|$ 有限）之上，而神经网络是连续参数化的无限类，需要一座桥。作者把分类器写成 $f = \text{sgn} \circ g_w$，对得分函数 $g_w$ 的输出 margin 做归一化，得到**归一化 co-stability**；再结合 $g_w$ 在参数 $w$ 和输入 $x$ 上的 Lipschitz 连续性，把无限类的复杂度控制住，从而推出对应的泛化界（定理 13）和鲁棒性定律（推论 15）。值得注意的是，这里只要求得分函数 $g_w$ 连续，而最终分类器 $\text{sgn} \circ g_w$ 仍可不连续，这让框架能覆盖量化网络、脉冲网络乃至 self-attention 这类不满足整体 Lipschitz 性的模型。
 
 ## 实验结果
 
@@ -143,8 +113,8 @@ $$\hat{R}_{\text{0-1}}(f) \leq R^* - \varepsilon \implies S(f) < \max\left\{\fra
 
 - [\[ICLR 2026\] Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
 - [\[ICLR 2026\] Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry](fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr.md)
-- [\[ICLR 2026\] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
-- [\[ICLR 2026\] Key and Value Weights Are Probably All You Need: On the Necessity of the Query, Key, and Value Weight Triplet in Self-Attention](key_and_value_weights_are_probably_all_you_need_on_the_necessity_of_the_query_ke.md)
+- [\[ICLR 2026\] Do We Really Need Permutations? Impact of Model Width on Linear Mode Connectivity](do_we_really_need_permutations_impact_of_model_width_on_linear_mode_connectivity.md)
+- [\[ICLR 2026\] Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
 - [\[ICML 2026\] Private and Stable Test-Time Adaptation with Differential Privacy](../../ICML2026/others/private_and_stable_test-time_adaptation_with_differential_privacy.md)
 
 </div>

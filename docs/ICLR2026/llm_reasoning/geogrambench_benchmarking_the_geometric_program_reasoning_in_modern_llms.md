@@ -39,36 +39,17 @@ tags:
 
 ### 整体框架
 
-**任务定义**：给定文本描述和几何绘图代码（Asymptote/Matplotlib），模型需解析代码构建内部几何表征，并基于该表征进行推理得到数值答案（长度/面积/体积/角度/比例/计数）。
+GeoGramBench把"Program-to-Geometry"形式化为一类任务：给定文本描述加一段几何绘图代码（Asymptote 或 Matplotlib），模型必须先在内部解析代码、重建出对应的几何表征，再基于这个表征推理出数值答案（长度/面积/体积/角度/比例/计数）。整个 benchmark 的构造围绕两件事展开——一是用一套基于几何复杂度（而非推理步数）的三级分类法来组织 500 道题，二是用一套答案泄露防护流程保证模型必须"读懂图形"而不能直接从代码里抄答案。
 
-**分类法**基于几何复杂度而非推理步骤：
-1. **Primitive Recognition（基元识别）**：1-2个几何基元（点/线/弧/圆/多边形），聚焦长度/面积/角度等基本属性
-2. **Local Relation Composition（局部关系组合）**：多个局部几何元素，需识别和整合子组件间的空间关系
-3. **Global Abstract Integration（全局抽象整合）**：涉及空间方向/参数化/递归/3D对象/复合结构/高级几何操作（旋转/折叠/投影）
+### 关键设计
 
-### 关键设计1: 答案泄露防护
+**1. 几何复杂度分类法：用"图形抽象难度"而非"推理步数"切分题目。** 传统数学 benchmark 按推理链长度（高中→竞赛级）标注难度，但作者发现这一维度无法刻画 Program-to-Geometry 的真正瓶颈。GeoGramBench 改用三级几何复杂度分类：**Primitive Recognition（基元识别）**只含 1-2 个几何基元（点/线/弧/圆/多边形），聚焦长度、面积、角度等基本属性；**Local Relation Composition（局部关系组合）**包含多个局部元素，需要识别并整合子组件之间的空间关系；**Global Abstract Integration（全局抽象整合）**涉及空间方向、参数化、递归、3D 对象、复合结构以及旋转/折叠/投影等高级几何操作。
 
-**功能**：确保模型无法通过检查代码直接获得答案，必须真正进行几何推理。
+这套分类法不是拍脑袋定的，作者在 QwQ-32B 上做了验证实验：把 MATH-500 同时按推理复杂度和几何复杂度切分，纯文本题（$\mathbb{P}_T$）的准确率随推理复杂度上升而下降，符合传统 benchmark 的规律；但含代码题（$\mathbb{P}_{TC}$）的准确率**与推理复杂度几乎无关**，却随几何复杂度上升显著下滑。这说明对从代码构建几何表征的任务而言，难点来自图形本身的抽象程度，分类法因而能更准确地定位模型瓶颈。
 
-**核心思路**：识别两类泄露——
-- **直接泄露**：答案显式编码为坐标值（如圆半径、线段长度），处理方法为重缩放坐标同时保持几何形状
-- **间接泄露**：答案可从代码参数或公式计算得出，处理方法为修改或遮蔽关键代码参数
+**2. 答案泄露防护：堵死"从代码直接抄答案"的捷径。** 作者在 MATH-500 里发现大量 Asymptote 代码会把答案直接或间接写进参数，如果不处理，模型根本不需要做几何推理就能拿分，评估彻底失效。他们把泄露分成两类分别处理：**直接泄露**指答案被显式编码成坐标值（如圆半径、线段长度），对策是对坐标整体重缩放、保持图形形状不变但抹掉数值线索；**间接泄露**指答案可由代码参数或公式反推出来，对策是修改或遮蔽这些关键参数。每道题都经过 4 位硕士及以上数学背景专家两轮人工核验，确保答案无法仅靠检查代码获得，这正是 GeoGramBench 相比 MATH-500、AIME24 等基准在评估有效性上的关键差异。
 
-**设计动机**：在MATH-500中发现大量Asymptote代码直接包含答案的情况，不解决此问题将使评估失效。经4位专家（硕士及以上数学背景）两轮人工验证确保每道题的答案不可从代码检查获得。
-
-### 关键设计2: 基于几何复杂度的分类法验证
-
-**功能**：证明几何复杂度而非推理步骤数是Program-to-Geometry任务的主要挑战。
-
-**核心思路**：在QwQ-32B上对比MATH-500的推理复杂度（按MATH-500标注）和几何复杂度：
-- 纯文本题（$\mathbb{P}_T$）：准确率随推理复杂度增加而下降——符合传统benchmark
-- 含代码题（$\mathbb{P}_{TC}$）：准确率**与推理复杂度基本无关**，但随几何复杂度增加显著下降
-
-**设计动机**：传统基于推理步骤的分类法（高中→竞赛级）不适用于此任务。几何复杂度分类法能更准确捕获模型瓶颈。
-
-### 数据构建流程
-
-从3个开源数学数据集（NuminaMath-1.5, HARP, Omni-MATH）聚合约905K候选题 → 过滤含Asymptote代码的9,260题 → n-gram去重至1,782题 → GPT-4o筛选几何题得1,247题 → 两轮人工验证（格式规范化+质量提升：去污染/答案泄露防护/准确性校验）→ 392题 → 增补AIME24(5题)/MATH-500(42题)/Mathverse(61题固体几何手写matplotlib代码) → **最终500题**。
+**3. 数据构建流水线：从 90 万候选筛到 500 道高质量题。** 数据来自 NuminaMath-1.5、HARP、Omni-MATH 三个开源数学数据集，约 905K 候选题先过滤出含 Asymptote 代码的 9,260 题，经 n-gram 去重压到 1,782 题，再由 GPT-4o 筛选出真正的几何题 1,247 题。随后进入两轮人工验证，做格式规范化与质量提升（去污染、答案泄露防护、准确性校验），保留 392 题。最后增补 AIME24（5 题）、MATH-500（42 题）和 Mathverse（61 题固体几何，手写 matplotlib 代码），凑成**最终 500 题**——这也是目前规模最大的 Program-to-Geometry 评测集。
 
 ## 实验关键数据
 
@@ -139,10 +120,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] TopoBench: Benchmarking LLMs on Hard Topological Reasoning](topobench_benchmarking_llms_on_hard_topological_reasoning.md)
+- [\[ICLR 2026\] VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs](visiomath_benchmarking_figure-based_mathematical_reasoning_in_lmms.md)
 - [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [\[NeurIPS 2025\] CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks](../../NeurIPS2025/llm_reasoning/core_benchmarking_llms_code_reasoning_capabilities_through_static_analysis_tasks.md)
 - [\[ICLR 2026\] From Abstract to Contextual: What LLMs Still Cannot Do in Mathematics](from_abstract_to_contextual_what_llms_still_cannot_do_in_math_word_problem_solvi.md)
-- [\[ICLR 2026\] Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
-- [\[ICLR 2026\] DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
 
 </div>
 

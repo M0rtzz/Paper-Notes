@@ -54,34 +54,21 @@ tags:
 
 ### 关键设计
 
-#### 1. 解耦预训练损失与下游性能
+**1. 解耦预训练损失与下游性能：把"损失好"和"答得对"拆成可分别测量的两件事。**
 
-对每个模型测量三个层次：
-- 预训练数据上的 train/val loss
-- 下游基准上的 task loss（仅在 answer token 上计算交叉熵）
-- 下游基准上的准确率
+经典 scaling law 默认只盯预训练损失，但本文要回答的恰恰是"损失下降为什么没换来推理变强"，于是对每个模型同时测三个层次：预训练数据上的 train/val loss、下游基准上的 task loss（只在 answer token 上算交叉熵）、以及下游基准上的准确率。这三层拆开后，就能把"训练分布→测试分布"的泛化差距和"损失→准确率"的映射差距分别量化出来——后面发现的"推理任务上损失继续降、准确率反而退化"正是靠这套测量才暴露的。
 
-这使得可以分别量化"训练分布→测试分布"的泛化差距和"损失→准确率"的映射差距。
+**2. 两大关键发现轴：用 Active FLOPs 和 TPP 两个变量解释稀疏度的不同效应。**
 
-#### 2. 两大关键发现轴
+本文把稀疏度对性能的影响拆到两个正交的轴上。第一个是 **Active FLOPs 轴**：在相同预训练损失下，激活算力更多（top-k 更大）的模型在推理任务上更强，说明推理质量并不只由损失决定，还取决于训练和推理时实际激活的 FLOPs。第二个是 **Total Tokens Per Parameter (TPP) 轴**，即训练 token 总量除以参数量——它刻画了模型是"参数饥渴"还是"数据饥渴"。记忆任务（TriviaQA、HellaSwag）属参数饥渴型，TPP 越低（参数越多）越好；推理任务（GSM8K、GSM-Plus）则是数据饥渴型，在 TPP≈20 时最优，过低或过高都会退化。两轴一起看，才能解释为什么"堆参数"对记忆和推理是两套相反的策略。
 
-**Active FLOPs 轴**：在相同预训练损失下，拥有更多 active compute（更大 top-k）的模型在推理任务上表现更好。这意味着推理质量不仅由损失决定，更由训练和推理时的激活 FLOPs 决定。
+**3. MoE 训练细节：固定一套标准配方，保证扫描出的趋势来自稀疏度本身。**
 
-**Total Tokens Per Parameter (TPP) 轴**：
-- 记忆任务（TriviaQA, HellaSwag）：参数饥渴型，TPP 越低（参数越多）越好
-- 推理任务（GSM8K, GSM-Plus）：数据饥渴型，TPP≈20 时最优，TPP 过低或过高都退化
+为了让结论可归因到稀疏度而非调参，所有模型共用同一套训练配方：优化器 AdamW，峰值学习率 $4 \times 10^{-4}$，2k 步线性 warmup 后接 cosine decay；辅助损失用 load-balancing loss（$\alpha = 10^{-2}$）加 router z-loss（$\beta = 10^{-3}$），总损失为 $\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{RZ}$；训练数据是 125B token 的平衡混合（web 43B、math 32B、STEM 49B、code 1B）。统一配方让宽度 / 专家数 / top-k 的系统扫描成为干净的控制变量实验。
 
-#### 3. MoE 训练细节
+**4. 后训练与 TTC 实验：检验预训练的稀疏度选择能否被后续补救。**
 
-- 优化器：AdamW，峰值学习率 $4 \times 10^{-4}$，2k 步线性 warmup + cosine decay
-- 辅助损失：load-balancing loss（$\alpha = 10^{-2}$）+ router z-loss（$\beta = 10^{-3}$）
-- 总损失：$\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{RZ}$
-- 数据：125B token 平衡混合（web 43B, math 32B, STEM 49B, code 1B）
-
-#### 4. 后训练与 TTC 实验
-
-- GRPO：在 GSM8K 训练集上微调，使用 DeepSeek-R1 的 GRPO 算法
-- TTC：zero-shot Self-Consistency 解码，每个问题生成 $2^7 = 128$ 个候选答案，取多数投票
+预训练阶段定下的稀疏度，能否靠后训练或测试时多花算力追回来？本文用两组实验来验证：**GRPO** 在 GSM8K 训练集上做强化微调，沿用 DeepSeek-R1 的 GRPO 算法；**TTC**（测试时计算）则用 zero-shot Self-Consistency 解码，每题生成 $2^7 = 128$ 个候选答案后取多数投票。两组实验都把同一批模型重新评一遍，用来检查"损失-准确率的非单调关系"是否会被抹平——结果是都没抹平。
 
 ### 损失函数
 
@@ -182,9 +169,9 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{
 
 - [\[ACL 2025\] Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging](../../ACL2025/llm_alignment/upcycling_instruction_tuning_from_dense_to_mixture-of-experts_via_parameter_merg.md)
 - [\[ICLR 2026\] Hierarchy-of-Groups Policy Optimization for Long-Horizon Agentic Tasks](hierarchy-of-groups_policy_optimization_for_long-horizon_agentic_tasks.md)
-- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
-- [\[ICLR 2026\] AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization](avere_improving_audiovisual_emotion_reasoning_with_preference_optimization.md)
+- [\[ICLR 2026\] JULI: Jailbreak Large Language Models by Self-Introspection](juli_jailbreak_large_language_models_by_self-introspection.md)
 - [\[ICLR 2026\] Toward Universal and Transferable Jailbreak Attacks on Vision-Language Models (UltraBreak)](toward_universal_and_transferable_jailbreak_attacks_on_vision-language_models.md)
+- [\[NeurIPS 2025\] Jailbreak-Zero: A Path to Pareto Optimal Red Teaming for Large Language Models](../../NeurIPS2025/llm_alignment/jailbreak-zero_a_path_to_pareto_optimal_red_teaming_for_large_language_models.md)
 
 </div>
 

@@ -42,51 +42,45 @@ tags:
 
 ### 整体框架
 
-本文从行为层面定义推理忠实性，通过模型的文本输出来评估，不需要访问内部权重。核心思想：如果推理是忠实的，那么改变推理应该改变答案。
+RFEval 把"推理是否忠实"翻译成一个纯行为层面的可测命题：忠实的推理一旦被改写，答案就应该跟着改变；如果改写了推理而答案纹丝不动，说明所述推理并非真正的决策依据。整个流程只看模型的文本输出 $o=(r,e,a)$（推理、解释、答案），不碰内部权重，因此可以无差别地套用到任何开源 LRM 上。具体做法是先在输出层注入一段立场相反的反事实推理 $r'$，再观察模型新输出 $o'$ 的立场与答案是否随之变化，最后用两个条件——立场是否自洽、干预是否产生因果影响——共同判定这一次推理是否忠实。
 
-### 关键设计：两个可测试条件
+### 关键设计
 
-**条件 1：立场一致性（Stance Consistency）**
+**1. 立场一致性 $\chi$：先确保推理本身是一条连贯的论证链。**
 
-对于 LRM 输出 $o = (r, e, a)$（推理、解释、答案），立场一致性要求整个输出序列形成一个连贯的论证链：
+忠实性的前提是模型至少没有自相矛盾。把一段输出切成顺序片段 $c_1,\dots,c_m$，立场一致性要求每个片段都与之前的上下文保持立场连续：
 
 $$\chi(o) := \bigwedge_{i=1}^{m} \iota(\langle c_{1:i-1}\rangle, c_i) \in \{0, 1\}$$
 
-其中 $\iota(u, v)$ 为立场连续性指示函数：当且仅当 $v$ 的立场与 $u$ 一致，或者 $v$ 明确标识并证明了偏离，$\iota = 1$。
+其中指示函数 $\iota(u,v)=1$ 当且仅当 $v$ 的立场与前文 $u$ 一致，或者 $v$ 明确声明并论证了为何要偏离。只要中途出现一次无理由的立场跳变，整条链 $\chi(o)$ 就归零。这一项单独度量"模型有没有把话说圆"，是后续判定因果影响的基线——只有自洽的输出，才谈得上推理是否真的驱动了答案。
 
-**条件 2：因果影响（Causal Influence）**
+**2. 因果影响 $\kappa$：用反事实干预检验推理与答案的真实耦合。**
 
-给定模型原始输出 $o$ 和反事实推理 $r'$ 干预后的输出 $o'$，因果影响要求推理或答案发生变化：
+给定原始输出 $o$ 和注入对立推理 $r'$ 后重新生成的输出 $o'$，因果影响要求推理结论或最终答案至少有一个发生改变：
 
 $$\kappa(o, o') := \mathbb{1}[S(r_{\text{new}}) \neq S(r)] \lor \mathbb{1}[S(a') \neq S(a)]$$
 
-**统一定义：推理忠实性**
+这里 $S(\cdot)$ 取片段的立场标签。这一项是整个框架的核心杠杆：因为干预直接作用在输出层而非模型内部，所以不需要任何白盒访问就能问出"推理变了，答案会不会变"。若两者都不变，则说明原推理对答案没有约束力，也就暴露了不忠实。
+
+**3. 推理忠实性 $\text{RF}$：自洽与因果两个条件的合取。**
+
+把上面两项合在一起，单次实例的推理忠实性定义为：
 
 $$\text{RF}(o, o') := \mathbb{1}[\chi(o) = 1 \land \chi(o') = 1 \land \kappa(o, o') = 1]$$
 
-即：原始输出和干预后输出都立场一致，且干预确实产生了因果影响。
+即原始输出与干预后输出都立场自洽，且干预确实引发了变化，三者同时成立才算忠实。为了让因果信号可识别，评估只在**对比对**（$\delta=1$，即注入的 $r'$ 立场与模型原始立场相反）上进行——同向干预下"答案不变"含义模糊，剔除后才能干净地把"无变化"解读为不忠实。在整个数据集上聚合，得到模型级指标与其对比覆盖率：
 
-### 对比前置条件
+$$\text{RF}^{\text{contrast}}(\mathcal{M}, \mathcal{D}) = \mathbb{E}\left[\text{RF}(o, o') \mid \delta(x, r'; \mathcal{M}) = 1\right], \quad c(\mathcal{M}) = \Pr(\delta = 1)$$
 
-为确保因果可识别性，只在对比对（$\delta = 1$）上评估，即注入的反事实推理 $r'$ 的立场与模型原始立场相反。这样可以排除"无变化"结果的歧义性。
+覆盖率 $c$ 既是评估口径的诚实披露（多少实例因立场已对齐而被排除），也提醒读者在某些任务上可干预的样本本就有限。
 
-### 基准构建流程
+**4. 反事实基准的构建与验证：让"微妙但有缺陷"的对立推理可规模化生产。**
 
-**反事实推理生成**：使用 OpenAI o3 模型生成，每个 prompt 包含 3 个手工 few-shot 示例，引导模型产生微妙但合理的推理缺陷（如计算错误、逻辑谬误）。
+干预质量决定了整套度量是否可信，因此 7,186 个实例的反事实推理都经过"生成—双重验证"的流水线。生成端用 OpenAI o3，每个 prompt 配 3 个手工 few-shot 示例，引导它写出微妙却合理的推理缺陷（如计算错误、逻辑谬误），既要足以误导、又不能粗劣到一眼穿帮。验证端两道关卡：先由 GPT-5 自动筛掉不满足误导充分性、逻辑连贯性、微妙合理性、唯一性（MCQA 单选）的样本，再由 8 名 NLP/ML 研究生人工复核，标注者间一致性 PABAK 达 0.710，最终从 8,499 个候选收敛到 7,186 个高质量实例。评估阶段同样用 o3 充当立场抽取器，人工对照 F1 高达 0.952，保证 $\chi$、$\kappa$ 的判定本身不是噪声来源。
 
-**两阶段验证**：
-1. GPT-5 自动筛选：检查误导充分性、逻辑连贯性、微妙合理性、唯一性（MCQA）
-2. 8 名 NLP/ML 研究生人工审核：PABAK = 0.710，从 8,499 筛选到 7,186 实例
+### 一个完整示例
 
-**评估实现**：使用 o3 作为评估器提取立场，人工验证 F1 = 0.952。
-
-### 损失函数
-
-本文是评估框架工作，不涉及训练损失函数。核心度量为：
-
-$$\text{RF}^{\text{contrast}}(\mathcal{M}, \mathcal{D}) = \mathbb{E}\left[\text{RF}(o, o') \mid \delta(x, r'; \mathcal{M}) = 1\right]$$
-
-以及对比覆盖率 $c(\mathcal{M}) = \Pr(\delta = 1)$。
+以一道单选数学题为例：模型原始输出 $o$ 给出推理 $r$、解释 $e$ 与答案 $a=\text{B}$，立场抽取确认 $\chi(o)=1$（论证自洽）。RFEval 在输出层把 $r$ 替换成 o3 生成的对立推理 $r'$（嵌入一处似是而非的算错），重新让模型续写得到 $o'$。判定分两步：先看 $\chi(o')$——若模型能连贯地承接错误前提，则 $\chi(o')=1$，否则这次直接判不忠实（实测中这正是最主流的失败形态）；再看 $\kappa$——若新推理结论或答案随 $r'$ 改变（如答案翻成 C），则 $\kappa=1$。只有 $\chi(o)=\chi(o')=\kappa=1$ 三者齐全，该实例才计入忠实。若推理被改而答案仍固执地停在 B，就是典型的"无声修正"式不忠实。
 
 ## 实验关键数据
 
@@ -164,9 +158,9 @@ $$\text{RF}^{\text{contrast}}(\mathcal{M}, \mathcal{D}) = \mathbb{E}\left[\text{
 ## 相关论文
 
 - [\[ICLR 2026\] On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study](on_the_eligibility_of_llms_for_counterfactual_reasoning_a_decompositional_study.md)
-- [\[ICML 2026\] Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity](../../ICML2026/causal_inference/density-guided_robust_counterfactual_explanations_on_tabular_data_under_model_mu.md)
 - [\[ACL 2025\] CoA-Reasoning: Explorations on Counterfactual Analysis in Physical Reasoning of LVLMs](../../ACL2025/causal_inference/coa-reasoning_explorations_on_counterfactual_analysis_in_physical_reasoning_of_l.md)
 - [\[ACL 2026\] Evaluating Counterfactual Strategic Reasoning in Large Language Models](../../ACL2026/causal_inference/evaluating_counterfactual_strategic_reasoning_in_large_language_models.md)
+- [\[ICML 2026\] Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity](../../ICML2026/causal_inference/density-guided_robust_counterfactual_explanations_on_tabular_data_under_model_mu.md)
 - [\[CVPR 2026\] Fighting Hallucinations with Counterfactuals: Diffusion-Guided Perturbations for LVLM Hallucination Suppression](../../CVPR2026/causal_inference/fighting_hallucinations_with_counterfactuals_diffusion-guided_perturbations_for_.md)
 
 </div>

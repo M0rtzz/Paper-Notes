@@ -31,53 +31,27 @@ tags:
 
 ### 整体框架
 
-TSRating分为三个阶段：(1) LLM质量判断：滑窗分块→成对比较→Bradley-Terry标量化；(2) TSRater训练：MOMENT编码→MLP映射→BCE损失；(3) 元学习泛化：MAML + signSGD在9个领域上训练。推理时仅需TSRater前馈即可高效评分。
+TSRating把"让LLM判质量"和"让轻量模型大规模评分"两件事拆成一条流水线：先用滑窗把时间序列切成重叠块，让LLM从趋势、频率、幅度、模式四个维度对块做成对比较，再用Bradley-Terry模型把这些偏好转成连续的质量分数，作为监督信号去蒸馏一个以冻结MOMENT为编码器、MLP为打分头的TSRater；最后用MAML在九个领域上做元学习，让TSRater只需few-shot微调就能迁移到新域。推理阶段彻底甩开LLM，只跑一次TSRater前馈即可给任意时间序列打分。
 
 ### 关键设计
 
-**设计一：LLM成对质量判断与Bradley-Terry标量化**
-
-- **核心思路**：将TS样本用滑动窗口分为重叠块，对每对块 $\mathbf{B}_i, \mathbf{B}_j$ 从4个维度（趋势、频率、幅度、模式）用LLM做成对比较。多次比较取置信度：
-
-$$p_{i \succ j} = \frac{1}{M} \sum_{k=1}^{M} m_{i \succ j}^{(k)}$$
-
-- **Bradley-Terry转换**：将成对偏好转为标量分数 $s(\mathbf{B}_i)$：
-
-$$p_{i \succ j} = \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j))$$
-
-通过最大似然估计求解：
+**1. LLM成对质量判断与Bradley-Terry标量化：把"哪个更好"变成可监督的连续分数。** LLM不擅长直接给绝对分，但擅长二选一，所以这里对每对块 $\mathbf{B}_i, \mathbf{B}_j$ 从趋势、频率、幅度、模式四维分别做成对比较，并对同一对重复 $M$ 次取置信度 $p_{i \succ j} = \frac{1}{M} \sum_{k=1}^{M} m_{i \succ j}^{(k)}$ 来抵消随机性。为消除"先出现的块更易被选"这类位置偏差，还会交换两块在prompt里的顺序各判一次再取均值；多变量序列则逐通道评判后做通道平均 $s(\mathbf{B}_i) = \frac{1}{D} \sum_{d=1}^{D} s(\mathbf{B}_i^d)$。光有成对偏好还无法训练打分模型，于是用Bradley-Terry假设 $p_{i \succ j} = \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j))$ 把偏好概率与标量分数之差挂钩，再通过最大似然把整批比较拟合成一组自洽的连续分数：
 
 $$\mathcal{P} = \sum_{(\mathbf{B}_i, \mathbf{B}_j, p_{i \succ j}) \in \mathcal{J}} \left[ p_{i \succ j} \log \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j)) + (1-p_{i \succ j}) \log \sigma(s(\mathbf{B}_j) - s(\mathbf{B}_i)) \right]$$
 
-- **多变量处理**：逐通道评判后取均值 $s(\mathbf{B}_i) = \frac{1}{D} \sum_{d=1}^{D} s(\mathbf{B}_i^d)$
-- **去偏设计**：交换 $\mathbf{B}_i, \mathbf{B}_j$ 在prompt中的位置，取两次结果均值消除位置偏差
-- **验证**：合成数据上趋势94.5%、频率92.25%、幅度98.75%、模式95.75%的识别准确率
+这套设计在合成数据上得到验证——趋势、频率、幅度、模式四维的识别准确率分别为94.5%、92.25%、98.75%、95.75%，说明LLM确实抓住了时间序列质量的关键属性，而非随机猜测。
 
-**设计二：TSRater模型架构**
-
-- **表示学习**：采用MOMENT（约1.09亿参数的TS基础模型）作为冻结编码器，提取时序特征
-- **质量映射**：3层MLP（隐藏维度256，LayerNorm + ReLU + 残差连接），输出标量质量分数
-- **训练损失**：二元交叉熵损失对齐LLM的成对判断：
+**2. TSRater蒸馏模型：把 $O(n^2)$ 的API调用压成一次前馈。** 直接靠LLM给大规模数据打分不现实，成对比较的代价是样本数的平方级API调用，所以TSRating把LLM的判断蒸馏进一个轻量模型。TSRater以约1.09亿参数的时间序列基础模型MOMENT作冻结编码器提取时序特征，再接一个3层MLP（隐藏维度256，配LayerNorm、ReLU与残差连接）输出标量质量分。训练时不重新定义目标，而是让模型的打分之差去复刻LLM的成对偏好，用二元交叉熵对齐：
 
 $$\mathcal{L}_\theta = \mathbb{E}_{(\mathbf{B}_i, \mathbf{B}_j, p_{i \succ j}) \in \mathcal{J}} \left[ -p_{i \succ j} \log \sigma(s_\theta(\mathbf{B}_i) - s_\theta(\mathbf{B}_j)) - (1-p_{i \succ j}) \log \sigma(s_\theta(\mathbf{B}_j) - s_\theta(\mathbf{B}_i)) \right]$$
 
-- **设计动机**：LLM成对比较是 $O(n^2)$ 的API调用代价，TSRater推理只需单次前馈
+训练完成后，给任意数据评分只需TSRater单次前馈，把昂贵的LLM判断一次性固化进了可复用的打分器。块级分数还能自下而上聚合成更大粒度：点级分数对覆盖该点的所有块取均值 $s(x_i) = \frac{1}{|B(x)|} \sum_{\mathbf{B}_k \in B(x)} s(\mathbf{B}_k)$，样本级再对所有时间点平均 $s(\mathbf{S}) = \frac{1}{T} \sum_{i=1}^{T} s(x_i)$，于是同一套块级监督可直接服务样本筛选。
 
-**设计三：MAML元学习跨域训练**
-
-- **任务构建**：从Time-300B语料库中选择9个领域（能源、零售、金融、医疗、交通、气象、工业、合成、其他）的22个子集
-- **训练目标**：
+**3. MAML元学习跨域训练：让一个打分器适配所有领域。** 真实时间序列横跨医疗、金融、气象、工业，逐域单独训打分器既贵又难复用，因此TSRating把"在新域上快速适配"本身当作训练目标。它从Time-300B语料中选取能源、零售、金融、医疗、交通、气象、工业、合成与其他共九个领域的22个子集构成元学习任务，优化的是经过一步内循环更新后在query集上的损失：
 
 $$\min_\theta \sum_{\mathcal{T}_i \sim \mathcal{T}} \mathcal{L}_{\mathcal{T}_i}^{\text{query}} \left( \theta - \alpha \cdot \text{sign}(\nabla_\theta \mathcal{L}_{\mathcal{T}_i}^{\text{support}}(\theta)) \right)$$
 
-- **signSGD加速**：内循环用signSGD替代标准梯度下降，只取梯度符号进行更新，天然避免了超梯度的二阶导计算
-- **评分融合**：4个维度分别归一化后聚合为最终质量分数
-
-### 层级分数分布
-
-块级→点级：$s(x_i) = \frac{1}{|B(x)|} \sum_{\mathbf{B}_k \in B(x)} s(\mathbf{B}_k)$
-
-点级→样本级：$s(\mathbf{S}) = \frac{1}{T} \sum_{i=1}^{T} s(x_i)$
+这里的关键技巧是内循环用signSGD替代标准梯度下降，只取梯度符号 $\text{sign}(\cdot)$ 做更新——这样元目标对内循环更新的求导不再牵扯二阶导（超梯度），既加速又稳定。最终四个维度的分数各自归一化后聚合成统一质量分。这样训出的TSRater面对未见过的领域只需few-shot微调就能用，而不必为每个新域从零重训。
 
 ## 实验设置
 
@@ -181,9 +155,9 @@ Qurating开创了LLM-as-judge的数据质量评估范式，但仅适用于文本
 
 - [\[ICLR 2026\] TSRating: Rating Quality of Diverse Time Series Data by Meta-learning from LLM Judgment](tsrating_time_series_quality_llm.md)
 - [\[AAAI 2026\] Finding Time Series Anomalies using Granular-ball Vector Data Description](../../AAAI2026/time_series/finding_time_series_anomalies_using_granular-ball_vector_data_description.md)
+- [\[NeurIPS 2025\] Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models](../../NeurIPS2025/time_series/structured_sparse_transition_matrices_to_enable_state_tracking_in_state-space_mo.md)
 - [\[ICLR 2026\] SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
 - [\[ICLR 2026\] Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
-- [\[ICLR 2026\] GTM: A General Time-series Model for Enhanced Representation Learning](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series.md)
 
 </div>
 

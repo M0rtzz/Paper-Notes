@@ -138,10 +138,10 @@ tags:
 ## 相关论文
 
 - [\[ICCV 2025\] Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image](image_as_an_imu_estimating_camera_motion_from_a_single_motion-blurred_image.md)
-- [\[CVPR 2025\] Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
 - [\[ICCV 2025\] SAS: Segment Any 3D Scene with Integrated 2D Priors](sas_segment_any_3d_scene_with_integrated_2d_priors.md)
 - [\[ICCV 2025\] Find Any Part in 3D](find_any_part_in_3d.md)
-- [\[CVPR 2025\] PreciseCam: Precise Camera Control for Text-to-Image Generation](../../CVPR2025/3d_vision/precisecam_precise_camera_control_for_text-to-image_generation.md)
+- [\[ICCV 2025\] CMT: A Cascade MAR with Topology Predictor for Multimodal Conditional CAD Generation](cmt_a_cascade_mar_with_topology_predictor_for_multimodal_conditional_cad_generat.md)
+- [\[ICCV 2025\] SceneMI: Motion In-betweening for Modeling Human-Scene Interactions](scenemi_motion_in-betweening_for_modeling_human-scene_interaction.md)
 
 </div>
 

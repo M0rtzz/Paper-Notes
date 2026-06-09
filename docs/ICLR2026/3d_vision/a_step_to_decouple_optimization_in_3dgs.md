@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分三步解耦 3DGS 优化：(1) Sparse Adam 限制仅更新可见原语，(2) Re-State Regularization (RSR) 主动衰减动量来替代隐式更新中动量重缩放的功能，(3) Decoupled Attribute Regularization (DAR) 将正则化梯度从 Adam 动量中解耦并用第二动量自适应调节。最终重新组合为 AdamW-GS。
+这篇论文想弄清楚一件事：3DGS 直接照搬 DNN 那套 Adam + 同步更新，到底有什么隐藏代价。作者的做法是先把 Adam 在 3DGS 里的行为拆成三块分别观察，再把有益的部分重新拼回去。第一步，用 Sparse Adam 把更新限制在当前视点可见的原语上，看看「不可见原语也被偷偷更新」这件事到底有没有用；第二步，发现 Sparse Adam 丢掉的「隐式更新」其实靠的是动量重缩放，于是用 Re-State Regularization (RSR) 主动衰减动量、把这份好处显式地补回来；第三步，用 Decoupled Attribute Regularization (DAR) 把正则化梯度从 Adam 的自适应动量里摘出来，改用光度损失自己的二阶动量来调节强度。三块都验证清楚后，重新组合成最终的 AdamW-GS。
 
 ### 关键设计
 
-1. **Sparse Adam + Re-State Regularization (RSR)**:
+**1. Sparse Adam + Re-State Regularization：把「隐式更新」从副作用里救出来。**
 
-    - 功能：用视点感知的异步更新替代同步更新，用主动动量衰减替代隐式更新的动量重缩放
-    - 核心思路：Sparse Adam 通过 $\beta' = \beta \cdot \mathcal{V} + (1-\mathcal{V})$ 仅更新可见原语。RSR 在固定间隔采样原语并执行 $m^{new} = \alpha_1 m^{old}$, $v^{new} = \alpha_2 v^{old}$ 来主动衰减动量
-    - 设计动机：观察到 Sparse Adam 更稳定但探索性不足，Adam 的隐式更新虽嘈杂但有利于正则化激活和冗余移除。RSR 保留了动量衰减的好处而不引入隐式更新的副作用
+vanilla 3DGS 对所有原语同步更新，连当前视点看不见的原语也会动——它们梯度为零，本该不变，但 Adam 的动量项 $v$ 仍在不断衰减，于是参数照样被推着走，这就是被忽视的「隐式更新」。Sparse Adam 用可见性掩码 $\mathcal{V}$ 把更新关掉，令 $\beta' = \beta \cdot \mathcal{V} + (1-\mathcal{V})$，只更新可见原语。但作者观察到，关掉之后训练虽然更稳定，探索性却不足——隐式更新虽然嘈杂，反而有利于激活正则化、移除冗余原语。RSR 的思路是：既然真正有用的是动量被重缩放（$v$ 减小）这件事，那就别靠隐式更新这个副作用，而是在固定间隔主动采样原语、直接衰减动量 $m^{new} = \alpha_1 m^{old}$、$v^{new} = \alpha_2 v^{old}$。这样既保留了动量衰减放大正则化强度的好处，又不再背负隐式更新带来的不可控扰动。
 
-2. **Decoupled Attribute Regularization (DAR)**:
+**2. Decoupled Attribute Regularization：让正则化强度随原语优化状态自适应。**
 
-    - 功能：将正则化从 Adam 动量中解耦，用光度损失的第二动量自适应调节正则化强度
-    - 核心思路：$\theta_{t+1} = \theta_t - \eta[\frac{\hat{m}'_t}{\sqrt{\hat{v}'_t}+\epsilon} + \min(\lambda_\theta \frac{\nabla\mathcal{R}/N_I}{\sqrt{\hat{v}'_t}+\epsilon}, \mathcal{C}_t)]$，其中 $\hat{v}'_t$ 仅由光度损失梯度计算
-    - 设计动机：(a) 欠优化区域 $\nabla\ell$ 大 → $\hat{v}$ 大 → 正则化小，不干扰重建；(b) 鞍点附近 $\nabla\ell$ 小 → $\hat{v}$ 小 → 正则化大，帮助逃离；(c) 耦合方式下直接放大 $\lambda$ 10 倍就导致优化崩溃，解耦后可安全调节
+3DGS 里正则化损失（opacity、scale 的 L1）和光度损失被一起塞进 Adam 的自适应梯度，导致正则化效果完全不可控——想加强时直接把 $\lambda$ 放大 10 倍，优化就直接崩溃。DAR 借鉴 AdamW 解耦权重衰减的思想，把正则化项单独拎出来，更新写成
 
-3. **AdamW-GS（重组）**:
+$$\theta_{t+1} = \theta_t - \eta\left[\frac{\hat{m}'_t}{\sqrt{\hat{v}'_t}+\epsilon} + \min\left(\lambda_\theta \frac{\nabla\mathcal{R}/N_I}{\sqrt{\hat{v}'_t}+\epsilon}, \mathcal{C}_t\right)\right]$$
 
-    - 功能：将 Sparse Adam + RSR + DAR 重新组合为完整优化器
-    - 核心思路：异步更新 + 周期性动量衰减 + 自适应解耦正则化
-    - 设计动机：分别验证了每个组件的作用后，只保留有益的部分重新组合
+关键在于 $\hat{v}'_t$ 只由光度损失梯度计算，于是正则化强度被这个二阶动量自动调节：欠优化区域里光度梯度 $\nabla\ell$ 大、$\hat{v}$ 大，正则化被压小，不去干扰重建；鞍点附近 $\nabla\ell$ 小、$\hat{v}$ 小，正则化被放大，帮原语逃离。外层的 $\min(\cdot, \mathcal{C}_t)$ 再用一个 clipping 常数兜底防止过冲。这正是 AdamW-GS 比常数惩罚更适合 3DGS 的地方——不同原语重要性不同，需要的是自适应而非一刀切。
+
+**3. AdamW-GS：把验证过的三块重新组合。**
+
+把上面三件事拼起来，就得到完整的 AdamW-GS：视点感知的异步更新（Sparse Adam）+ 周期性主动动量衰减（RSR）+ 自适应解耦正则化（DAR）。组合不是简单叠加，而是先分别确认每个组件确实带来收益、再只保留有益部分，所以最终优化器在提升重建质量的同时还顺带去掉了冗余原语，不需要额外的剪枝步骤。
 
 ### 损失函数 / 训练策略
 光度损失（L1 + DSSIM）不变，正则化损失（opacity L1 + scale L1）通过 DAR 方式解耦。在 vanilla 3DGS 中还加入噪声正则化促进探索。

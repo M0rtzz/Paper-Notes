@@ -35,24 +35,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入文本 → CosyVoice2 合成语音 → Whisper 编码 → Q-Former+MLP 对齐到文本空间 → GemmaX2-28-9B 联合处理语音+文本 → 翻译输出。此外，自我进化机制通过比较有/无语音时的翻译质量自动筛选正样本，仅用正样本持续训练。
+
+SMT 把源文本先用 TTS 合成成语音，再让语音和文本一起喂进多语言 LLM 做翻译，相当于给纯文本翻译额外配了一路携带韵律信息的"伴随模态"。整套系统由三部分串起来：冻结的 Whisper encoder（约 635M 参数）把语音编成声学表征，可训练的 Q-Former+MLP adapter（约 80.5M）把声学表征对齐到文本嵌入空间，再交给加了 LoRA 的 GemmaX2-28-9B（约 9.2B）联合处理语音和文本两路输入并解码出译文。在此之上，自我进化机制充当数据过滤器，反复判断哪些合成语音真的对翻译有帮助、只留下有益的样本继续训练。
 
 ### 关键设计
 
-1. **三阶段课程学习**：ASR（语音文本映射）→ S2TT（跨语言+跨模态）→ SMT（联合输入），逐步解冻模块
-2. **自我进化机制**：对源文本合成语音，分别计算 text-only 翻译 COMET $S_1$ 和 speech+text 的 COMET $S_2$；$S_2>S_1$ 为正样本，仅正样本持续训练，迭代至收敛
-3. **TTS 合成策略**：CosyVoice2 零样本多语言合成，随机克隆训练集声音增加韵律多样性。prompt 文本和预测时长严格对齐真实语音文本对，确保合成语音的语义和韵律与源文本一致。
+**1. 三阶段课程学习：让模型先学会"听懂"，再学会"用语音翻译"。**
 
-### 模型架构
+直接把语音和文本一起塞给翻译 LLM 会让模型同时面对跨模态对齐和跨语言翻译两个难题，训练很难收敛。SMT 把过程拆成递进的三个阶段：Stage I 做 ASR（语音→同语言文本），让 adapter 先学会把声学表征映射进文本空间；Stage II 做 S2TT（语音→另一语言文本），在已建立的模态对齐之上叠加跨语言能力；Stage III 才进入 SMT，语音和文本联合输入做最终翻译。每个阶段逐步解冻更多模块——Whisper encoder 始终冻结，Q-Former+MLP adapter 全程可训练，GemmaX2 直到 Stage III 才用 LoRA 接入微调。这样模型从浅层的模态对齐一步步过渡到深层的语音-文本融合，避免一上来就在多个目标上互相拉扯。
 
-| 组件 | 参数量 | 说明 |
-|------|--------|------|
-| Whisper encoder | ~635M | 冻结 |
-| Q-Former+MLP adapter | ~80.5M | 全程可训练 |
-| GemmaX2-28-9B (LoRA) | ~9.2B | r=16, alpha=32 |
+**2. 自我进化机制：自动筛掉那些反而帮倒忙的合成语音。**
+
+并不是每段合成语音都对翻译有益——实验里约三分之一的合成语音实际上引入了噪声。SMT 用一个简单而直接的判据来识别有益样本：对每条源文本，先合成语音，再分别测纯文本翻译的 COMET 分数 $S_1$ 和"语音+文本"翻译的 COMET 分数 $S_2$，只有当 $S_2 > S_1$（即加上语音后译文质量确实提升）才把该样本标为正样本。随后仅用正样本对模型做持续训练，训练后再重新评估、重新筛选，如此迭代至收敛。这条机制把"何时语音有帮助"这个模糊问题转成了可自动判别的二分类，让模型只从真正有信号的样本里学习，避开有害语音的干扰，实测 1–2 轮即可收敛，正样本比例稳定在 60–70%。
+
+**3. TTS 合成策略：用零样本多语言 TTS 把语音模态的可扩展性补齐。**
+
+真实平行语音数据稀缺，SMT 改用 CosyVoice2 做零样本多语言合成，把任意源文本变成语音，从而摆脱对真实录音的依赖。为了让合成语音携带丰富而真实的韵律，合成时随机克隆训练集中不同说话人的音色来增加韵律多样性（比用单一固定声音更有效），并让 prompt 文本和预测时长严格对齐真实"语音-文本对"，保证合成语音在语义和时长节奏上都与源文本一致。这样得到的合成语音在下游翻译上的增益与真实语音几乎等效，却能覆盖 100+ 种语言，正是语音能替代图像做多模态翻译的关键所在。
 
 ### 损失函数 / 训练策略
-标准 CE loss + Stage III 使用 LoRA（r=16, alpha=32）微调 GemmaX2-28-9B。4×A100，AdamW lr=1e-4，线性 warmup 1K 步后线性衰减。自我进化的评估使用 COMET 分数，固定参考声音合成评估语音。整个训练可在一周内完成。
+
+训练目标为标准的交叉熵翻译损失。Stage III 用 LoRA（r=16, alpha=32）微调 GemmaX2-28-9B，其余可训练部分为 adapter。硬件为 4×A100，优化器 AdamW、学习率 1e-4，线性 warmup 1K 步后线性衰减，整个训练可在一周内完成。自我进化阶段的 COMET 评估统一用固定参考声音合成评估语音，避免说话人差异干扰正负样本的判定。
 
 ## 实验关键数据
 
@@ -118,10 +120,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] From Flat Language Labels to Typological Priors: Structured Language Conditioning for Multilingual Speech-to-Speech Translation](../../ACL2026/audio_speech/from_flat_language_labels_to_typological_priors_structured_language_conditioning.md)
-- [\[ICLR 2026\] SPARTA: Scalable and Principled Benchmark of Tree-Structured Multi-hop QA over Text and Tables](sparta_scalable_and_principled_benchmark_of_tree-structured_multi-hop_qa_over_te.md)
-- [\[ICLR 2026\] Latent Speech-Text Transformer](latent_speech_text_transformer.md)
 - [\[ICML 2026\] Multimodal Fusion via Self-Consistent Task-Gradient Fields](../../ICML2026/audio_speech/multimodal_fusion_via_self-consistent_task-gradient_fields.md)
+- [\[ICLR 2026\] Latent Speech-Text Transformer](latent_speech_text_transformer.md)
 - [\[ICLR 2026\] TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
+- [\[ICLR 2026\] TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
 
 </div>
 

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 SDE 弱逼近理论，分别推导 DP-SGD 和 DP-SignSGD 的连续时间 SDE 模型。考虑逐样本裁剪引起的两个阶段（Phase 1：全部裁剪；Phase 2：无裁剪），分别推导收敛界。设计两个分析协议：Protocol A（固定超参数变 $\varepsilon$）和 Protocol B（每个 $\varepsilon$ 独立调参）。
+本文不提出新的优化器，而是给 DP-SGD 和 DP-SignSGD 各建一个连续时间的随机微分方程（SDE）模型，把离散迭代的隐私噪声当作扩散项，从而精确读出隐私预算 $\varepsilon$ 究竟作用在收敛动力学的哪一环。分析中区分逐样本裁剪带来的两个阶段（Phase 1 梯度全部被裁剪、Phase 2 不再裁剪），并约定两套对照协议：Protocol A 固定一组超参数只扫 $\varepsilon$，Protocol B 对每个 $\varepsilon$ 单独调到最优；前者看动力学本质差异，后者看实际部署时的调参代价。
 
 ### 关键设计
 
-1. **DP-SGD 的 SDE 分析（Protocol A）**:
+**1. DP-SGD 的 SDE 分析：把 $\varepsilon$ 锁定在渐近邻域。**
 
-    - 做什么：刻画 DP-SGD 在固定超参数下隐私预算 $\varepsilon$ 的影响
-    - 核心思路：在 $\mu$-PL 和 $L$-光滑条件下，证明 DP-SGD 损失满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-\mu t} + (1-e^{-\mu t}) \cdot \mathcal{O}(1/\varepsilon^2)$。衰减项（收敛速度）独立于 $\varepsilon$，而渐近邻域（隐私-效用项）以 $1/\varepsilon^2$ 缩放
-    - 设计动机：分离收敛速度和渐近邻域，精确揭示 $\varepsilon$ 仅影响后者
+DP 噪声到底拖慢了收敛速度，还是只是抬高了最终误差？这个问题在离散分析里始终纠缠不清，而 SDE 框架能把两者干净地分开。在 $\mu$-PL 与 $L$-光滑假设下，DP-SGD 的损失轨迹满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-\mu t} + (1-e^{-\mu t}) \cdot \mathcal{O}(1/\varepsilon^2)$。右边第一项是指数衰减的瞬态，衰减率 $\mu$ 完全不含 $\varepsilon$，说明隐私预算根本不影响 DP-SGD 收敛多快；真正受隐私支配的是第二项稳态邻域，它以 $1/\varepsilon^2$ 的速度随隐私收紧而膨胀。也就是说，越严格的隐私只会把 DP-SGD 推向一个更大的误差平台，而平方关系意味着这个代价相当陡峭。
 
-2. **DP-SignSGD 的 SDE 分析（Protocol A）**:
+**2. DP-SignSGD 的 SDE 分析：用 sign 算子把平方代价压成线性。**
 
-    - 做什么：揭示自适应方法在 DP 下的本质不同行为
-    - 核心思路：证明 DP-SignSGD 损失满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-c\varepsilon t} + (1-e^{-c\varepsilon t}) \cdot \mathcal{O}(1/\varepsilon)$。关键差异：衰减项线性依赖 $\varepsilon$（小 $\varepsilon$ 收敛慢），但渐近邻域仅 $\mathcal{O}(1/\varepsilon)$。利用了 sign 操作对 DP 噪声的压缩效应：$\mathbb{E}[\text{sign}(g_k)] \approx \nabla f(x)/(\sigma_\gamma\sqrt{d})$
-    - 设计动机：sign 算子天然压缩噪声幅度，使 DP 噪声的影响从平方降为线性
+同样的 SDE 工具作用到自适应方法上，结论却定性翻转。DP-SignSGD 的损失满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-c\varepsilon t} + (1-e^{-c\varepsilon t}) \cdot \mathcal{O}(1/\varepsilon)$，两项的 $\varepsilon$ 依赖与 DP-SGD 恰好对调：衰减率 $c\varepsilon$ 线性正比于隐私预算，所以 $\varepsilon$ 越小收敛越慢，但稳态邻域只以 $\mathcal{O}(1/\varepsilon)$ 缩放，比 DP-SGD 的平方项温和一个量级。差异的根源是 sign 操作对噪声的压缩——只取梯度符号让 DP 噪声的幅度信息被丢弃，在期望意义下有 $\mathbb{E}[\text{sign}(g_k)] \approx \nabla f(x)/(\sigma_\gamma\sqrt{d})$，方向信号被保留而噪声被归一化掉，于是隐私噪声对最终误差的影响从二次降到一次。代价是收敛变慢，但在高隐私（小 $\varepsilon$）区间，更小的误差平台远比稍慢的收敛更重要。
 
-3. **跨隐私预算的超参数迁移（Protocol B）**:
+**3. 跨隐私预算的超参数迁移：让最优学习率脱离 $\varepsilon$。**
 
-    - 做什么：比较两种方法在最优调参下的渐近性能和超参数敏感性
-    - 核心思路：推导最优学习率——DP-SGD 的 $\eta^\star \propto \varepsilon$（依赖隐私预算），DP-SignSGD 的 $\eta^\star$ 与 $\varepsilon$ 无关。在最优学习率下两者渐近性能相当，但 DP-SignSGD 无需为不同 $\varepsilon$ 重新调参
-    - 设计动机：实际中超参数搜索消耗额外隐私预算，对 $\varepsilon$ 不敏感的方法更实用
+Protocol B 进一步追问：如果允许为每个隐私预算单独调参，两者还有区别吗？推导出的最优学习率给出了答案——DP-SGD 的 $\eta^\star \propto \varepsilon$，隐私预算一变就得重搜学习率；而 DP-SignSGD 的 $\eta^\star$ 与 $\varepsilon$ 无关，一套学习率通吃所有隐私级别。在各自最优学习率下两者的渐近性能可以打平，但这恰恰凸显了自适应方法的实用优势：DP 训练里每跑一次超参数搜索都要额外消耗隐私预算，对 $\varepsilon$ 不敏感的 DP-SignSGD 省掉了这笔反复调参的开销。这一洞察经实验验证可以直接迁移到 DP-Adam，因为 SignSGD 本就是 Adam 在理论分析中的代理。
 
 ### 损失函数 / 训练策略
-理论分析假设 $\mu$-PL 或 $L$-光滑损失函数。实验在二次凸函数和 IMDB/StackOverflow 上的逻辑回归验证。使用 per-example clipping 和高斯噪声注入标准 DP 训练流程。DP-SignSGD 的理论洞察经验证扩展到 DP-Adam。
+全部理论建立在 $\mu$-PL 或 $L$-光滑损失假设上，训练沿用标准 DP 流程——逐样本梯度裁剪加高斯噪声注入。实证则在二次凸函数（用于检验 SDE 预测的精确度）以及 IMDB、StackOverflow 上的逻辑回归（用于检验真实数据上的缩放律）两类问题上展开，并通过把 DP-SignSGD 的结论复现到 DP-Adam，验证 sign 代理的合理性。
 
 ## 实验关键数据
 
@@ -118,8 +112,8 @@ tags:
 - [\[ICLR 2026\] Toward Enhancing Representation Learning in Federated Multi-Task Settings](toward_enhancing_representation_learning_in_federated_multi-task_settings.md)
 - [\[ICLR 2026\] Why Do Unlearnable Examples Work: A Novel Perspective of Mutual Information](why_do_unlearnable_examples_work_a_novel_perspective_of_mutual_information.md)
 - [\[ICLR 2026\] Unified Privacy Guarantees for Decentralized Learning via Matrix Factorization](unified_privacy_guarantees_for_decentralized_learning_via_matrix_factorization.md)
-- [\[CVPR 2026\] A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
 - [\[NeurIPS 2025\] Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping](../../NeurIPS2025/ai_safety/mitigating_disparate_impact_of_differentially_private_learning_through_bounded_a.md)
+- [\[CVPR 2026\] A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
 
 </div>
 

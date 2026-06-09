@@ -36,40 +36,35 @@ tags:
 
 ### 整体框架
 
-SCORER 将智能体内部拆分为两个策略玩家：
-- **Leader（控制网络 $Q_\theta$）**：负责值估计，慢速更新，提供稳定目标
-- **Follower（感知网络 $f_\phi$）**：负责表征学习，快速适应，学习对 leader 策略的最优响应
+SCORER 不再把表征和值函数塞进同一个网络一起优化，而是把智能体内部拆成两个有主从关系的玩家：控制网络 $Q_\theta$ 作为 leader 负责值估计、慢速更新以提供稳定目标，感知网络 $f_\phi$ 作为 follower 负责表征学习、快速适应去学一个对当前 leader 策略的最优响应。两者的耦合被形式化成一个 Stackelberg 博弈，再用双时间尺度梯度下降近似求解其均衡。
 
-### 1. Leader 目标：最小化 MSBE
+### 关键设计
+
+**1. Leader 目标：在最优表征之上最小化 MSBE。** Leader 关心的是值估计准不准，它假定 follower 已经针对自己给出了最优表征 $f_{\phi^*(\theta)}$，在此之上最小化均方 Bellman 误差：
 
 $$\min_\theta \mathcal{L}_{\text{leader}}(Q_\theta, f_{\phi^*(\theta)}) \triangleq \mathbb{E}_{(s,a,r,s') \sim \mathcal{B}} \left[(Y - Q_\theta(f_{\phi^*(\theta)}(s), a))^2\right]$$
 
-### 2. Follower 目标：最小化 Bellman 误差方差
+这与标准 Q-Learning 的目标一致，区别在于表征不再随值目标被动漂移，而是来自一个对 leader 做出最优响应的独立玩家，从而打破"表征追着非平稳值目标跑、值估计又依赖变化表征"的恶性循环。
+
+**2. Follower 目标：最小化 Bellman 误差方差而非 MSBE。** Follower 学表征时不去直接压低 Bellman 误差的均值，而是压低它在一个 batch 内的方差：
 
 $$\phi^*(\theta) \in \arg\min_\phi \mathcal{L}_{\text{follower}}(f_\phi, Q_\theta) \triangleq \text{Var}_{j \in B}[\delta_j(\phi, \theta)]$$
 
-其中 $\delta_j(\phi, \theta) = Y_j - Q_\theta(f_\phi(s_j), a_j)$ 是 Bellman 误差。选择方差而非 MSBE 的原因：方差最小化鼓励表征产生更一致的 Bellman 误差，使表征对 TD 学习中的噪声目标更鲁棒，直接对抗致命三要素的根源。
+其中 $\delta_j(\phi, \theta) = Y_j - Q_\theta(f_\phi(s_j), a_j)$ 是第 $j$ 个样本的 Bellman 误差。这是全文最反直觉也最核心的一步：最小化方差等于逼着表征在不同样本上产生更一致的 Bellman 误差，让表征对 TD 学习里那些自举出来的噪声目标更鲁棒，直接对抗致命三要素的根源——而不是像最小化 MSBE 那样和 leader 抢同一个目标、引发梯度冲突。消融也证实了方差目标稳定优于直接最小化 MSBE。
 
-### 3. 双层优化的双时间尺度近似
-
-形式上构成双层优化（bi-level optimization）：
+**3. 双时间尺度近似 Stackelberg 均衡：用学习率比值实现主从顺序。** 上述两个目标合起来是一个双层优化，leader 在外、follower 的最优响应作为约束在内：
 
 $$\min_\theta \mathcal{L}_{\text{leader}}(Q_\theta, f_{\phi^*(\theta)}) \quad \text{s.t.} \quad \phi^*(\theta) \in \arg\min_\phi \mathcal{L}_{\text{follower}}(f_\phi, Q_\theta)$$
 
-通过双时间尺度梯度下降近似 Stackelberg 均衡：
-- Follower 使用较大学习率 $\alpha_{\phi,k}$（快时间尺度）
-- Leader 使用较小学习率 $\alpha_{\theta,k}$（慢时间尺度）
-- 满足 $\lim_{k \to \infty} \alpha_{\theta,k} / \alpha_{\phi,k} = 0$
-
-更新规则（使用 stop-gradient 阻止梯度流动）：
+精确求内层最优响应代价过高，SCORER 改用双时间尺度梯度下降近似：follower 用较大学习率 $\alpha_{\phi,k}$ 走快时间尺度，leader 用较小学习率 $\alpha_{\theta,k}$ 走慢时间尺度，并要求 $\lim_{k \to \infty} \alpha_{\theta,k} / \alpha_{\phi,k} = 0$。在 leader 几乎不动的时间窗内，快速的 follower 看到的是一个近似静止的 $Q_\theta$，于是能稳定收敛到对它的最优响应，这正是 Stackelberg 博弈"leader 先动、follower 后应"的算法化身。更新时用 stop-gradient（记为 $\bar{\theta_k}$、$\bar{\phi_{k+1}}$）切断跨玩家的梯度流，两条更新规则为
 
 $$\phi_{k+1} \leftarrow \phi_k - \alpha_{\phi,k} \nabla_\phi \mathcal{L}_{\text{follower}}(\phi_k; B_{\text{follower}}, Y, \bar{\theta_k})$$
 
 $$\theta_{k+1} \leftarrow \theta_k - \alpha_{\theta,k} \nabla_\theta \mathcal{L}_{\text{leader}}(\theta_k; B_{\text{leader}}, Y, \bar{\phi_{k+1}})$$
 
-### 4. 实现简洁性
+注意 leader 和 follower 可以从 replay buffer 各采各的 batch（$B_{\text{leader}}$、$B_{\text{follower}}$），消融显示独立采样效果更好。
 
-SCORER 的实现极其简单——仅需为两个组件设置不同的衰减学习率，无需修改网络架构、无需额外模块。
+**4. 即插即用：只动学习率，不动架构。** 上面这套博弈论重构落到代码里出人意料地轻——不新增任何网络模块、不改原有架构，唯一要做的就是把网络切成感知/控制两段、给它们配两条不同的衰减学习率。正因如此 SCORER 能直接挂到 DQN、DDQN、Dueling DQN、R2D2、PQN 等一票现成方法上，且几乎不带来额外计算开销（实测速度 0.99–1.01x）。
 
 ## 实验结果
 

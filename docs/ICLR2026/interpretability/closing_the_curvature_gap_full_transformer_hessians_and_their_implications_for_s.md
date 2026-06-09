@@ -50,33 +50,29 @@ $$\mathbf{Z} = \text{LayerNorm}(\mathbf{Y} + \text{FFN}(\mathbf{Y}))$$
 
 ### 关键设计
 
-1. **LayerNorm 的 Jacobian 和 Hessian（Theorem 2-3）**:
+**1. LayerNorm 的 Jacobian 和 Hessian：补上二阶分析里一直缺的那一块（Theorem 2-3）。**
 
-    - 功能：推导 LayerNorm 相对于输入的一阶和二阶导数
-    - 核心思路：将 LayerNorm 分解为 $\text{LN}(\mathbf{X}) = \mathbf{P}(\mathbf{X})\mathbf{M}(\mathbf{X})$，其中 $\mathbf{M}$ 是中心化（减均值），$\mathbf{P}$ 是逆标准差对角矩阵。利用乘积法则得 Jacobian = 两项之和（$\mathbf{P}$ 对 centering 的缩放 + $\mathbf{M}$ 对 $\mathbf{P}$ 变化的贡献）。Hessian 通过进一步对 Jacobian 求导得到，$\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} = 0$（centering 是线性的），但 $\mathbf{P}$ 的二阶导不为零。
-    - 设计动机：LayerNorm 的 Hessian 此前未被推导过，它通过 per-row variance 贡献曲率，是理解 Transformer 优化地形的关键缺失组件。
+此前的曲率分析卡在 LayerNorm 上——它的二阶导数从没被显式推导过。本文的处理是把 LayerNorm 拆成两个可分别求导的因子 $\text{LN}(\mathbf{X}) = \mathbf{P}(\mathbf{X})\mathbf{M}(\mathbf{X})$，其中 $\mathbf{M}$ 负责中心化（减均值），$\mathbf{P}$ 是逆标准差构成的对角矩阵。一阶上用乘积法则，Jacobian 自然拆成两项之和：$\mathbf{P}$ 对中心化结果的缩放，加上 $\mathbf{M}$ 随 $\mathbf{P}$ 变化的贡献。二阶上再对 Jacobian 求一次导，关键观察是中心化是线性操作、$\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} = 0$，所以曲率全部来自 $\mathbf{P}$ 的非零二阶导。换句话说，LayerNorm 之所以会贡献曲率，根源在于 per-row variance（逐行方差）这一项，而这正是理解 Transformer 优化地形此前缺失的组件。
 
-2. **完整 Transformer Block 的 Hessian（Theorem 4-5）**:
+**2. 完整 Transformer Block 的 Hessian：把各子层的导数组装成一个端到端表达式（Theorem 4-5）。**
 
-    - 功能：组装含 Self-Attention + LayerNorm + FFN + residual 的完整 block Hessian
-    - 核心思路：设 $\mathbf{S} = \text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 + \mathbf{Y}$（FFN + residual），$\mathbf{Z} = \text{LN}(\mathbf{S})$。利用链式法则：
-    $\mathbf{H}_{\text{tr}}^{(i,j)} = (\mathbf{J}_Z \otimes \mathbf{I}_{n_i})\bm{\xi}_{ij} + (\mathbf{I}_{Ld_V} \otimes \mathbf{B}_i^\top)\mathbf{H}_Z\mathbf{B}_j$
-      其中 $\mathbf{J}_Z$ 是 LN 的 Jacobian，$\mathbf{H}_Z$ 是 LN 的 Hessian，$\bm{\xi}_{ij}$ 是 $\mathbf{S}$ 的二阶混合导数，$\mathbf{B}_i$ 是 $\mathbf{S}$ 对参数的 Jacobian。
-    - 设计动机：Gauss-Newton 分解允许将损失的 Hessian 分解为"外积项"（一阶信息）+"函数 Hessian 项"（二阶信息），两者分别对应不同的优化特性。
+有了 LayerNorm 的导数后，就能把 Self-Attention、LayerNorm、FFN 和 residual 拼成完整 block 的 Hessian。记 $\mathbf{S} = \text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 + \mathbf{Y}$ 表示 FFN 加 residual，$\mathbf{Z} = \text{LN}(\mathbf{S})$ 为最终输出，沿链式法则展开得到
 
-3. **谱范数上界（Theorem 1, 6）**:
+$$\mathbf{H}_{\text{tr}}^{(i,j)} = (\mathbf{J}_Z \otimes \mathbf{I}_{n_i})\bm{\xi}_{ij} + (\mathbf{I}_{Ld_V} \otimes \mathbf{B}_i^\top)\mathbf{H}_Z\mathbf{B}_j$$
 
-    - 功能：为 Self-Attention 和完整 Transformer Block 的 Hessian 提供谱范数的显式上界
-    - 核心思路：利用 Kronecker 积和矩阵范数的亚乘性，将 Hessian 范数界分解为输入范数 $\|\mathbf{X}\|_2$、权重范数 $\|\mathbf{W}\|_2$、序列长度 $L$、维度 $d_V, d_K$ 等因素的函数。完整 block 的界 $\leq 5 \max_{i,j}(\cdots)$（5 = $\sqrt{m_b n_b}$，5 个参数组）。
-    - 设计动机：显式上界揭示了各子层对整体曲率的贡献——Value 和 Key 相关项通过 softmax 导数占主导，FFN 由 ReLU 的分段线性性控制（Hessian 几乎处处为零），LayerNorm 通过 per-row variance 贡献。
+其中 $\mathbf{J}_Z$、$\mathbf{H}_Z$ 分别是 LN 的 Jacobian 和 Hessian，$\bm{\xi}_{ij}$ 是 $\mathbf{S}$ 的二阶混合导数，$\mathbf{B}_i$ 是 $\mathbf{S}$ 对参数的 Jacobian。这个形式本质是 Gauss-Newton 分解：第一项是"外积项"，只携带一阶信息；第二项是"函数 Hessian 项"，携带真正的二阶信息。两项对应不同的优化特性，分开写出来后才能逐子层追踪曲率是怎么传播的。
 
-4. **损失面收敛定理（Theorem 7）**:
+**3. 谱范数上界：把抽象的 Hessian 大小落到可解释的因子上（Theorem 1, 6）。**
 
-    - 功能：建立损失函数随数据量增加的收敛速率
-    - 核心思路：利用 Taylor 展开和 Hessian 界证明：
-    $|\mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w})| \leq \frac{2L}{k+1} + \frac{M\|\mathbf{w} - \mathbf{w}^*\|_2^2}{k+1}$
-      其中 $M$ 来自 Theorem 1/6 的 Hessian 谱范数界。这说明损失面的变化以 $O(1/k)$ 速率衰减。
-    - 设计动机：从理论上解释了数据量增加时损失地形趋于稳定的经验观察，为"何时从数据扩展转向模型扩展"提供了判断依据。
+完整表达式虽然精确但难以直接读出"谁贡献曲率多"，于是本文进一步给 Self-Attention 和完整 block 的 Hessian 谱范数推显式上界。手法是利用 Kronecker 积与矩阵范数的亚乘性，把范数界拆解成输入范数 $\|\mathbf{X}\|_2$、权重范数 $\|\mathbf{W}\|_2$、序列长度 $L$、维度 $d_V, d_K$ 等可观测量的函数；完整 block 的界进一步收紧到 $\leq 5 \max_{i,j}(\cdots)$（系数 5 来自 $\sqrt{m_b n_b}$，对应 5 个参数组）。这个界的价值在于把曲率归因到具体子层：Value 和 Key 相关项通过 softmax 导数占主导，FFN 受 ReLU 的分段线性性压制（Hessian 几乎处处为零），LayerNorm 则通过 per-row variance 贡献。
+
+**4. 损失面收敛定理：用 Hessian 界把数据量和地形稳定性联系起来（Theorem 7）。**
+
+最后一步把曲率界转化成对训练的预测。借助 Taylor 展开和前面的 Hessian 谱范数界，论文证明相邻数据量下的损失差被
+
+$$|\mathcal{L}_{k+1}(\mathbf{w}) - \mathcal{L}_k(\mathbf{w})| \leq \frac{2L}{k+1} + \frac{M\|\mathbf{w} - \mathbf{w}^*\|_2^2}{k+1}$$
+
+控制，其中常数 $M$ 正来自 Theorem 1/6 的谱范数界。右端以 $O(1/k)$ 速率衰减，意味着随着数据量 $k$ 增大，损失地形的变化越来越小、趋于稳定。这从理论上解释了"加数据带来的改善逐渐饱和"这一经验现象，也给"何时该从扩数据转向扩模型"提供了一个可量化的拐点依据。
 
 ### 损失函数 / 训练策略
 
@@ -142,8 +138,8 @@ Hessian 结构验证（MNIST, 1 Transformer block）：
 - [\[NeurIPS 2025\] Towards Scaling Laws for Symbolic Regression](../../NeurIPS2025/interpretability/towards_scaling_laws_for_symbolic_regression.md)
 - [\[ICLR 2026\] Noise Stability of Transformer Models](noise_stability_of_transformer_models.md)
 - [\[NeurIPS 2025\] Sloth: Scaling Laws for LLM Skills to Predict Multi-Benchmark Performance Across Families](../../NeurIPS2025/interpretability/sloth_scaling_laws_for_llm_skills_to_predict_multi-benchmark_performance_across_.md)
+- [\[AAAI 2026\] Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/interpretability/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
 - [\[ICLR 2026\] How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
-- [\[AAAI 2026\] FlashKAT: Understanding and Addressing Performance Bottlenecks in the Kolmogorov-Arnold Transformer](../../AAAI2026/interpretability/flashkat_understanding_and_addressing_performance_bottlenecks_in_the_kolmogorov-.md)
 
 </div>
 

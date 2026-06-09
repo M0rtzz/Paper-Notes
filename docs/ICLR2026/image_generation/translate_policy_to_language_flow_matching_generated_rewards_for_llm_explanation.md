@@ -41,28 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-系统包含三个关键组件：(1) Explanation LLM $\pi_e(\theta_e)$：给定决策上下文（隐藏真实决策），生成自然语言解释；(2) Proxy LLMs：$K=3$ 个独立LLM提供奖励样本；(3) Rectified Flow奖励模型 $\varphi(\theta_\varphi)$：从代理LLM奖励样本学习分布式奖励。训练流程为交替训练Flow模型和用PPO训练Explanation LLM。
+这篇论文要解决的是：怎样在不大量收集人类反馈的前提下，给"解释生成LLM"提供一个能反映人类多元评判的奖励信号。整套系统由三个角色组成并交替训练。Explanation LLM $\pi_e(\theta_e)$ 拿到一个隐藏了真实决策的上下文，要生成一段自然语言解释；$K=3$ 个独立的 Proxy LLM 各自给这段解释打分，提供带噪声的奖励样本；Rectified Flow 奖励模型 $\varphi(\theta_\varphi)$ 则把这些代理奖励样本当作"被高斯噪声污染过的真实人类奖励"，学一个逆向去噪流把它们还原成接近真实人类的奖励分布。每一轮先用代理样本更新 Flow 模型，再用 Flow 给出的奖励通过 PPO 更新 Explanation LLM，如此往复。
 
 ### 关键设计
 
-1. **Rectified Flow奖励模型架构**:
+**1. 把 Rectified Flow 嵌进 LLM 当奖励模型：让奖励"读得懂语言"。**
 
-    - 功能：将Rectified Flow嵌入LLM中，使其能理解语言上下文来生成奖励分布
-    - 核心思路：设计flow token（由 $\mathbf{z}_t$ 和 $PE(t)$ 经MLP投影得到），通过交叉注意力机制与决策上下文和解释的LLM隐藏状态交互。使用Explanation LLM的最后一层权重矩阵 $(W_Q, W_K, W_V)$ 计算交叉注意力
-    - 训练损失：$\mathcal{L}_{\text{Flow}}(\theta_\varphi) = \mathbb{E}[\|(\mathbf{z}_1 - \mathbf{z}_0) - \varphi(t, \mathbf{z}_t | c_j, y_j^e; \theta_\varphi)\|^2]$
-    - 设计动机：标准全连接网络或U-Net无法理解语言线索，嵌入LLM可利用其语言理解能力
+代理 LLM 给出的奖励是有噪声的，而且解释的好坏高度依赖语言内容——同一个决策上下文，措辞不同的解释该拿不同奖励。如果用普通的全连接网络或 U-Net 来建模奖励分布，它根本读不懂决策上下文和解释文本里的语言线索。本文的做法是把 Flow 直接长在 LLM 上：先把流变量 $\mathbf{z}_t$ 和时间步的位置编码 $PE(t)$ 经一个 MLP 投影成 flow token，再让这个 token 通过交叉注意力去"查询"决策上下文与解释在 LLM 里的隐藏状态，交叉注意力复用 Explanation LLM 最后一层的权重矩阵 $(W_Q, W_K, W_V)$，从而免费继承它的语言理解能力。Flow 模型按标准 rectified flow 目标训练，回归从 $\mathbf{z}_0$ 到 $\mathbf{z}_1$ 的直线速度场：
 
-2. **理论误差界（Theorem 1）**:
+$$\mathcal{L}_{\text{Flow}}(\theta_\varphi) = \mathbb{E}\big[\|(\mathbf{z}_1 - \mathbf{z}_0) - \varphi(t, \mathbf{z}_t \mid c_j, y_j^e; \theta_\varphi)\|^2\big]$$
 
-    - 核心结论：$W_2(p_{\text{flow}}, p) \leq \varepsilon + L\sqrt{|\mathcal{A}|}|\sigma - \sigma_r|$
-    - 含义：当Flow的初始分布和代理LLM噪声具有相同函数形式时（如均为高斯），CNF可将不可避免的偏差项 $\sqrt{|\mathcal{A}|}|\sigma_r|$ 转化为可控项 $L\sqrt{|\mathcal{A}|}|\sigma - \sigma_r|$
-    - 当 $\sigma \approx \sigma_r$ 时，误差可做到很小
+**2. Theorem 1：用误差界证明 CNF 真能把代理噪声压下去。**
 
-3. **句子级密集奖励**:
+光说"去噪"还不够，作者给了理论保证来回答"还原出来的奖励到底离真实人类奖励有多远"。直接用代理 LLM 奖励时，它与真实人类分布之间存在一个无法消除的偏差项 $W_2(\hat{p}, p) = \sqrt{|\mathcal{A}|}|\sigma_r|$（$|\mathcal{A}|$ 是动作/选项数，$\sigma_r$ 是代理噪声尺度）。Theorem 1 证明，当 Flow 的初始分布和代理 LLM 噪声具有相同的函数形式（例如都取高斯）时，经过 CNF 还原后的奖励分布满足
 
-    - 功能：为解释的每个句子提供奖励信号，而非仅在末尾给稀疏奖励
-    - 核心思路：逐句添加解释内容，观察真实决策logit的变化量作为该句的奖励
-    - 设计动机：密集奖励加速PPO训练收敛，且更细粒度地指导解释质量
+$$W_2(p_{\text{flow}}, p) \leq \varepsilon + L\sqrt{|\mathcal{A}|}\,|\sigma - \sigma_r|$$
+
+也就是说，原本"硬性存在、消不掉"的 $\sqrt{|\mathcal{A}|}|\sigma_r|$ 被换成了一个可控的 $L\sqrt{|\mathcal{A}|}|\sigma - \sigma_r|$：只要让 Flow 的噪声尺度 $\sigma$ 逼近代理噪声 $\sigma_r$，这一项就能压到很小，剩下的 $\varepsilon$ 是 Flow 自身的拟合误差。这把"分布式奖励能不能恢复真实分布"从经验问题变成了有界保证。
+
+**3. 句子级密集奖励：把稀疏的末端信号拆细到每一句。**
+
+如果只在整段解释结束后给一个总奖励，PPO 的信号太稀疏、收敛慢，也说不清是哪句解释起了作用。这里改成逐句给奖励：每往解释里加一句话，就观察被隐藏的真实决策对应 logit 的变化量，用这个增量作为这一句的奖励——某句让模型更确信真实决策，它就拿正反馈。这样既加快了 PPO 收敛，又把"这段解释好在哪一句"落到了更细的粒度上。
 
 ### 损失函数 / 训练策略
 - Flow模型使用rejection sampling：仅保留代理LLM将最高概率赋予真实决策的样本
@@ -136,11 +135,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [\[ICML 2026\] Principled RL for Flow Matching Emerges from the Chunk-level Policy Optimization](../../ICML2026/image_generation/principled_rl_for_flow_matching_emerges_from_the_chunk-level_policy_optimization.md)
 - [\[ICLR 2026\] SSCP: Flow-Based Single-Step Completion for Efficient and Expressive Policy Learning](flow-based_single-step_completion_for_efficient_and_expressive_policy_learning.md)
 - [\[ICLR 2026\] FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [\[ICLR 2026\] Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
 
 </div>
 

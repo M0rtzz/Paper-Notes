@@ -41,42 +41,46 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：原始偏好数据集。输出：经过模型依赖筛选的高质量子集。
+这篇论文想回答两件事：偏好对齐里到底什么样的数据有价值，以及如何在不算梯度的情况下、针对某个具体模型把这些数据挑出来。它的答案建立在一个反直觉的观察上——影响函数(IF)取中段的数据才最好，太小是噪声、太大会过拟合。
 
-流程：warm-up训练1 epoch -> 计算LossDiff和IRM -> 选择中间区间的交集数据 -> 继续训练2 epochs。
+整条流水线是"先训一小段、再筛、再接着训"：先在全部偏好数据上做一个 epoch 的 DPO warm-up，让模型进入对齐状态；接着用两个只需前向 pass 的轻量指标 LossDiff 和 IRM 去近似每条数据的 IF；只保留两个指标都落在中间百分位区间的交集数据(约 50–64%)；最后在这个子集上继续 DPO 训练 2 个 epoch。
 
 ### 关键设计
 
-1. **截断影响函数(TIF)**：
+**1. 截断影响函数(TIF)：把"高 IF=好数据"修正成"中段 IF 才好"。**
 
-    - 功能：修正传统IF在偏好对齐中的过拟合问题
-    - 核心思路：将IF按百分位分为small/medium/large三组。实验发现：small-IF数据=噪声/歧义(训练后eval loss上升，reward margin降为负)；large-IF数据=过拟合(eval loss先降后升，少数pair overfit到极大margin)；**medium-IF数据**=最优(eval loss稳定下降，margin稳定上升)。TIF定义：$\text{TIF}(d) = \mathbb{I}[\delta_{small} < \text{IF}(d) < \delta_{large}]$
-    - 设计动机：偏好对齐是开放式任务，验证梯度是不完美的人类偏好代理。极端IF值(过小过大)都反映低质量数据。这与分类任务中"高IF=好数据"截然不同——counter-intuitive但合理
+经典影响函数在分类任务里默认 IF 越高数据越有价值，但偏好对齐是开放式任务、没有标准答案，验证集的梯度只是人类偏好的不完美代理，照搬这个假设会出问题。作者把训练数据按 IF 百分位切成 small / medium / large 三组观察训练动态，发现三组表现截然不同：small-IF 数据是噪声或歧义样本，训练后 eval loss 反而上升、reward margin 跌成负值；large-IF 数据会过拟合，eval loss 先降后升、少数 pair 的 margin 被推到极大；只有 **medium-IF** 数据让 eval loss 稳定下降、margin 稳定上升，是最优区间。于是 TIF 只保留中间区间，丢掉两头：
 
-2. **Loss Difference (LossDiff) - 验证依赖的代理**：
+$$\text{TIF}(d) = \mathbb{I}[\delta_{small} < \text{IF}(d) < \delta_{large}]$$
 
-    - 功能：用前向pass近似IF避免梯度计算
-    - 核心思路：训练一个在验证集上对齐的辅助模型 $\pi_{\theta_{val}}$，计算 $\text{LossDiff}(d) = \ell(\theta; d) - \ell(\theta_{val}; d)$。直觉：LossDiff大→从 $\theta$ 移向 $\theta_{val}$ 能降低该样本loss→该样本与验证目标一致
-    - 设计动机：数学上证明LossDiff与IF正相关(Pearson r=0.77)。只需两次前向pass，无需反向传播
+这和分类任务里的结论正好相反——counter-intuitive，但在"验证梯度本身就不完美"的前提下是合理的：极端的 IF 值(过小过大)恰恰是低质量数据的信号。
 
-3. **Implicit Reward Margin (IRM) - 无验证的代理**：
+**2. Loss Difference(LossDiff)：用两次前向 pass 近似 IF 的验证依赖代理。**
 
-    - 功能：只用当前模型的内部信号评估数据质量
-    - 核心思路：$\text{IRM}(d) = \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}$——即DPO loss中sigmoid内的项
-    - 设计动机：IRM衡量模型对chosen vs rejected的偏好强度。与IF正相关(r=0.67)但弱于LossDiff(因不使用验证信息)。优势是完全无需验证集
+精确算 IF 需要梯度，对大模型不可行，所以要找一个能用前向 pass 算出来、又和 IF 同向的代理。LossDiff 的做法是先在验证集上训出一个对齐好的辅助模型 $\pi_{\theta_{val}}$，把它当作"验证目标方向"，再看当前模型 $\theta$ 和这个目标模型在同一条数据上的 loss 差：
 
-4. **LossDiff-IRM组合选择器**：
+$$\text{LossDiff}(d) = \ell(\theta; d) - \ell(\theta_{val}; d)$$
 
-    - 功能：组合两个代理的中间区间交集
-    - 核心思路：选择同时满足LossDiff和IRM都在中间百分位范围内的数据。两者误差来源不同(一个依赖验证一个不依赖)，取交集可以互相抵消错误
-    - 设计动机：单一指标的TIF近似精度有限(Overlap ~0.67-0.70)。组合后Overlap提升到0.73-0.78
+直觉是：LossDiff 越大，说明把参数从 $\theta$ 往 $\theta_{val}$ 挪能更多降低这条样本的 loss，也就说明这条样本和验证目标越一致、越值得学。作者从数学上证明了 LossDiff 与 IF 正相关，实测 Pearson $r=0.77$，而代价只是两次前向 pass、完全不用反向传播。
+
+**3. Implicit Reward Margin(IRM)：只靠模型自身信号、不碰验证集的代理。**
+
+LossDiff 仍需要一个在验证集上训出的辅助模型，IRM 则更进一步，只用当前模型的内部信号。它直接取 DPO loss 里 sigmoid 内部那一项——也就是模型对 chosen 相对 rejected 的隐式奖励差：
+
+$$\text{IRM}(d) = \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}$$
+
+IRM 衡量的是模型当前对 chosen vs rejected 的偏好强度，同样与 IF 正相关($r=0.67$)，但因为没用上验证信息，精度弱于 LossDiff；换来的好处是彻底不依赖验证集，适合连验证集都没有的场景。
+
+**4. LossDiff-IRM 组合选择器：两个误差来源互补的代理取交集。**
+
+单独用任一指标近似 TIF 的精度都有限(Overlap 约 0.66–0.70)。关键观察是 LossDiff 和 IRM 的误差来源不同——一个依赖验证集、一个完全不依赖，所以它们犯错的地方往往不重合。选择器因此只保留两个指标**同时**落在中间百分位区间的数据，让两类误差互相抵消。组合后对 TIF 的 Overlap 提升到 0.73–0.78，明显高于任一单指标。
 
 ### 训练策略
-- Warm-up: 在全部数据上DPO训练1 epoch
-- 在验证集上训练辅助模型1 epoch获得 $\pi_{\theta_{val}}$
-- 计算LossDiff(两次前向) + IRM(一次前向)
-- 按LossDiff-IRM规则筛选数据(保留50-64%)
-- 在筛选数据上继续DPO训练2 epochs
+- Warm-up：在全部数据上做 1 个 epoch 的 DPO，让模型进入对齐状态；
+- 同时在验证集上训练辅助模型 1 个 epoch 得到 $\pi_{\theta_{val}}$；
+- 对每条数据算 LossDiff(两次前向)+ IRM(一次前向)；
+- 按 LossDiff-IRM 规则取两指标中间区间的交集，保留约 50–64% 数据；
+- 在筛后的子集上继续 DPO 训练 2 个 epoch。
 
 ## 实验关键数据
 
@@ -134,10 +138,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
+- [\[ICML 2025\] PoisonBench: Assessing Large Language Model Vulnerability to Data Poisoning](../../ICML2025/llm_alignment/poisonbench_assessing_large_language_model_vulnerability_to_data_poisoning.md)
 - [\[ICLR 2026\] Chasing the Tail: Effective Rubric-based Reward Modeling for Large Language Model Post-Training](chasing_the_tail_effective_rubric-based_reward_modeling_for_large_language_model.md)
-- [\[ICLR 2026\] Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization](alignment_through_meta-weighted_online_sampling_bridging_the_gap_between_data_ge.md)
-- [\[ICLR 2026\] GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
 - [\[ACL 2026\] Alignment Data Map for Efficient Preference Data Selection and Diagnosis](../../ACL2026/llm_alignment/alignment_data_map_for_efficient_preference_data_selection_and_diagnosis.md)
+- [\[ICLR 2026\] Skywork-Reward-V2: Scaling Preference Data Curation via Human-AI Synergy](skywork-reward-v2_scaling_preference_data_curation_via_human-ai_synergy.md)
 
 </div>
 

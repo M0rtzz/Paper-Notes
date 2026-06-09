@@ -41,21 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三个变体：(1) Unsup——无监督加均匀噪声，(2) Sup-1call——有监督 MLP + 噪声，单次 API，(3) Sup-2call——有监督 MLP + 噪声，两次 API（T=0 和 T=1）。
+要解决的问题很具体：黑盒 LLM 语言化输出的概率 $y_{\text{vrb}}$ 只落在 0、0.5、0.9、0.95 这十几个值上，PR/ROC 曲线因此只有十几个离散点，没法精细选阈值。核心手段是给这些扎堆的概率注入一点噪声，把离散分布"摊开"成连续分布，让排序不变但取值连续。沿这个思路给出三个变体：无监督加均匀噪声的 **Unsup**（不需要标注，1 次 API）、在噪声之外再学一个 MLP 校正的 **Sup-1call**（1 次 API），以及把温度 $T=0$ 和 $T=1$ 两次输出都喂给 MLP 的 **Sup-2call**（2 次 API、信息更全）。
 
 ### 关键设计
 
-1. **无监督噪声（Ours-Unsup）**:
+**1. 无监督噪声（Ours-Unsup）：不用标注，只靠加噪声把基数撑大。**
 
-    - 功能：在语言化概率上加均匀噪声，最大化噪声幅度同时保持性能
-    - 核心思路：max w s.t. sum(loss(y_i, clip(z_i*w + y_vrb_i))) <= sum(loss(y_i, y_vrb_i))，z ~ U(0,1)。本质上是在性能不退化的约束下找到最大的噪声幅度。
-    - 设计动机：无需任何标注数据，纯无监督。将基数从 16 提升到 5,614。
+针对的痛点是离散化本身：哪怕不碰校准，只要能把扎堆的概率值打散，曲线就能变细。做法是在原始语言化概率上叠一个幅度为 $w$ 的均匀噪声 $z\sim U(0,1)$，得到 $\text{clip}(z_i \cdot w + y_{\text{vrb},i})$，并在"加噪后性能不比原来差"这个硬约束下把噪声幅度顶到最大：
 
-2. **有监督噪声+MLP（Ours-Sup）**:
+$$\max_{w}\; w \quad \text{s.t.} \quad \sum_i \text{loss}\big(y_i,\, \text{clip}(z_i w + y_{\text{vrb},i})\big) \le \sum_i \text{loss}(y_i, y_{\text{vrb},i})$$
 
-    - 功能：学习一个校正函数 f 将离散概率映射到更好的校准概率，同时加噪声
-    - 核心思路：min_{theta_f, w} sum(loss(y_i, sigmoid(z_i/w + f(y_vrb; theta_f)))) + lambda*w，z ~ N(0,1)。f 是 2 层 ReLU MLP，同时学习校正和噪声幅度。
-    - 设计动机：MLP 校正解决了概率校准问题（偏高/偏低），噪声解决了基数问题（离散化）。
+关键在于这个约束保证了排序质量不退化——噪声只在每个离散值周围做局部抖动，不会把高置信和低置信样本搅乱。代价上它完全无监督、不需要任何标签，就把唯一概率值从 16 个撑到 5,614 个。
+
+**2. 有监督噪声 + MLP（Ours-Sup）：噪声治基数，MLP 治校准，两件事一起学。**
+
+无监督版只摊开了分布，但没修 LLM 概率系统性偏高/偏低的校准问题。这里再引入一个 2 层 ReLU 的校正函数 $f$，把原始语言化概率映射到校准更好的概率，同时联合优化噪声幅度 $w$：
+
+$$\min_{\theta_f,\, w}\; \sum_i \text{loss}\Big(y_i,\, \sigma\big(z_i/w + f(y_{\text{vrb}}; \theta_f)\big)\Big) + \lambda w,\quad z\sim N(0,1)$$
+
+这里 $f$ 负责把偏掉的概率拉回正确刻度（解决校准），$z_i/w$ 这一项继续负责把取值打散（解决基数），$\lambda w$ 则防止噪声幅度学过头。两个问题在同一个目标里被分开又同时处理，Sup-2call 因为多喂了 $T=1$ 的采样信息，最终把基数推到 20,000+。
 
 ## 实验关键数据
 
@@ -107,11 +111,11 @@ tags:
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Predicting the Performance of Black-Box LLMs through Follow-Up Queries](../../NeurIPS2025/llm_evaluation/predicting_the_performance_of_black-box_llms_through_follow-up_queries.md)
 - [\[ICML 2025\] Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
 - [\[ICML 2026\] Investigating Advanced Reasoning of Large Language Models via Black-Box Environment Interaction](../../ICML2026/llm_evaluation/investigating_advanced_reasoning_of_large_language_models_via_black-box_environm.md)
 - [\[ICLR 2026\] When to Ensemble: Identifying Token-Level Points for Stable and Fast LLM Ensembling](when_to_ensemble_identifying_token-level_points_for_stable_and_fast_llm_ensembli.md)
 - [\[ACL 2026\] IF-Critic: Towards a Fine-Grained LLM Critic for Instruction-Following Evaluation](../../ACL2026/llm_evaluation/if-critic_towards_a_fine-grained_llm_critic_for_instruction-following_evaluation.md)
-- [\[ACL 2026\] K-MetBench: A Multi-Dimensional Benchmark for Fine-Grained Evaluation of Expert Reasoning, Locality, and Multimodality in Meteorology](../../ACL2026/llm_evaluation/k-metbench_a_multi-dimensional_benchmark_for_fine-grained_evaluation_of_expert_r.md)
 
 </div>
 

@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为无声视频+参考音频（+可选文本），多模态 Transformer 在条件流匹配框架下生成与视频同步且保留参考音色特征的音频。三个模态通过联合训练交互。
+AC-Foley 要解决的是：给一段无声视频配音时，文本说不清"想要哪一种声音"，于是改用一段参考音频直接指定音色。整条流程把无声视频、参考音频、可选文本三路输入喂进一个多模态 Transformer，在条件流匹配（conditional flow matching）框架下从噪声逐步生成目标音频，要求生成结果既和视频画面在时间上对齐、又保留参考音频的声学签名。三个模态不是简单拼接，而是在联合训练中互相补位——视频管"什么时候响、和动作怎么对齐"，参考音频管"响成什么音色"，文本管"语义兜底"。
 
 ### 关键设计
 
-1. **多模态条件流匹配**:
+**1. 多模态条件流匹配：把三路控制信号统一注入一个速度场。**
 
-    - 功能：扩展条件流匹配到视频+音频+文本的三模态条件生成
-    - 核心思路：速度场 $v_\theta(t, \mathcal{C}, x_t)$ 以多模态条件 $\mathcal{C} = \{V, A, T\}$ 为引导。条件向量 $\mathbf{c}$ 整合 CLIP 视觉/文本特征、Synchformer 同步特征、VAE 音频特征和时间步编码，通过 adaLN 调制 Transformer 输入
-    - 设计动机：流匹配比扩散模型推理更快，多模态联合训练让不同控制信号互补
+要让视频、音频、文本同时引导生成，AC-Foley 把它们整合成一个条件向量 $\mathbf{c}$ 再喂给流匹配模型。速度场写成 $v_\theta(t, \mathcal{C}, x_t)$，以多模态条件 $\mathcal{C} = \{V, A, T\}$ 为引导预测当前时刻 $x_t$ 应该往哪个方向流动。条件向量 $\mathbf{c}$ 把 CLIP 提取的视觉/文本特征、Synchformer 提取的同步特征、VAE 提取的音频特征以及时间步编码拼到一起，通过 adaLN 调制 Transformer 的输入。选流匹配而不是扩散，一是推理更快（求解 ODE 比逐步去噪省步数），二是多模态联合训练天然让几路信号互补——某一路信息缺失时其他模态还能托底。
 
-2. **音频控制模块**:
+**2. 音频控制模块：用 VAE 而非 CLAP 编码参考音频，保住波形级音色。**
 
-    - 功能：用 VAE 编码参考音频保留完整声学特征
-    - 核心思路：使用预训练 VAE 编码器处理参考音频到潜空间（而非使用 CLAP），经过平均池化提取声学特征。CLAP 仅捕获语义级音频信息，VAE 保留频谱/音色的完整特征
-    - 设计动机：文本的问题是语义粒度太粗，那就直接以音频为条件——保留的是波形级的声学信息而非语义标签
+文本控制失效的根因是语义粒度太粗，所以这里干脆让"声音来描述声音"。参考音频先过一个预训练 VAE 编码器压到潜空间，再经平均池化得到声学特征向量并入条件。关键在于编码器的选择：现有方法默认用 CLAP，但 CLAP 是为语义检索训练的，只保留"这是狗叫"这一级的标签信息，频谱细节和音色被抹掉了；VAE 保留的是更底层的波形级特征，能区分吉娃娃和大型犬叫声这种同标签、不同音色的差异。换句话说，CLAP 留语义、VAE 留声学，而细粒度 Foley 要的恰恰是后者。
 
-3. **两阶段训练策略**:
+**3. 两阶段训练策略：用视频内音频的自相似性，逼模型学"迁移"而非"复制"。**
 
-    - 功能：分阶段学习声学特征提取和时序适应
-    - 核心思路：Stage 1（声学特征学习）用重叠的音视频片段训练，建立参考音频声学特征的提取能力；Stage 2（时序适应）用同一视频不同位置的不重叠音频作为条件，利用视频内音频的自相似性（如同一场景中的脚步声共享声学特性）迫使模型学习将参考特征对齐到视频时序
-    - 设计动机：Stage 2 的非重叠条件是关键——强迫模型学习"迁移音色而非复制波形"，解决简单覆盖导致的时序错位和音视频不协调
+直接把参考音频喂进去训练，模型容易偷懒——把参考波形原样覆盖到输出上，结果时序对不上、音视频不协调。AC-Foley 用两阶段训练绕开这个捷径。Stage 1（声学特征学习）用**重叠**的音视频片段训练，先让模型学会从参考音频里提取声学特征。Stage 2（时序适应）改用同一视频里**不重叠**位置的音频段作为条件，利用一个事实：同一段视频内的声音往往共享声学特性（比如同一场景的脚步声音色一致），但出现的时间点不同。由于条件音频和目标音频不再时间对齐，模型无法靠复制波形蒙混过关，只能真正学会"把参考的音色迁移到视频指示的时序结构上"。这个非重叠设计是整套策略的关键所在。
 
 ### 损失函数 / 训练策略
-标准的条件流匹配训练目标（速度场回归），三种模态的条件以一定概率随机 dropout 实现推理时的灵活组合。
+训练目标是标准的条件流匹配损失（对速度场做回归）。三路模态条件在训练时以一定概率随机 dropout，使得推理阶段可以灵活组合——给不给参考音频、给不给文本都能正常工作，也正是这一点让模型在没有参考音频时仍退化为一个有竞争力的标准 V2A 模型。
 
 ## 实验关键数据
 
@@ -121,10 +115,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] MultiFoley: Video-Guided Foley Sound Generation with Multimodal Controls](../../CVPR2025/audio_speech/video-guided_foley_sound_generation_with_multimodal_controls.md)
+- [\[NeurIPS 2025\] MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation](../../NeurIPS2025/audio_speech/model-guided_dual-role_alignment_for_high-fidelity_open-domain_video-to-audio_ge.md)
 - [\[ICLR 2026\] Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering](query-guided_spatial-temporal-frequency_interaction_for_music_audio-visual_quest.md)
+- [\[ICLR 2026\] PrismAudio: Decomposed Chain-of-Thoughts and Multi-dimensional Rewards for Video-to-Audio Generation](prismaudio_decomposed_chain-of-thoughts_and_multi-dimensional_rewards_for_video-.md)
 - [\[ICML 2026\] Polyphonia: Zero-Shot Timbre Transfer in Polyphonic Music with Acoustic-Informed Attention Calibration](../../ICML2026/audio_speech/polyphonia_zero-shot_timbre_transfer_in_polyphonic_music_with_acoustic-informed_.md)
-- [\[ICLR 2026\] PACE: Pretrained Audio Continual Learning](pace_pretrained_audio_continual_learning.md)
-- [\[ICLR 2026\] TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization](triplesumm_adaptive_triple-modality_fusion_for_video_summarization.md)
 
 </div>
 

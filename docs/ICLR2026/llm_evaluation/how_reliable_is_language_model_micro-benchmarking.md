@@ -43,32 +43,27 @@ tags:
 
 ## 方法详解
 
-### 整体框架：Agreement 与 MDAD
+### 整体框架
 
-核心思想是从 **pairwise model ranking** 角度评估 micro-benchmark 的可靠性。
-
-**Agreement 函数**：给定完整 benchmark $D_{\text{full}}$ 上模型 $M_1$ 优于 $M_2$，micro-benchmark $D_{\text{micro}}$ 同意该排序的概率：
-
-$$\text{agreement}(D_{\text{micro}}, D_{\text{full}}, B) = \Pr_{M_1, M_2 \in \mathcal{T}}\left(\Delta_{D_{\text{micro}}}(M_1, M_2) > 0 \mid \Delta_{D_{\text{full}}}(M_1, M_2) \in B\right)$$
-
-其中 $\Delta_D(M_1, M_2) = \text{perf}_D(M_1) - \text{perf}_D(M_2)$，$B$ 是性能差异的分桶区间。
-
-**MDAD（Minimum Detectable Ability Difference）**：在 agreement ≥ 0.8 的阈值下，micro-benchmark 能可靠区分的最小性能差异：
-
-$$\text{MDAD}(D_{\text{micro}}, D_{\text{full}}) = \arg\min_{\text{centroid}(B), B \in \mathcal{B}} \left\{\text{agreement}(D_{\text{micro}}, D_{\text{full}}, B)\right\} \text{ s.t. } \Pr \geq 0.8$$
-
-MDAD 越低越好：MDAD = 2 意味着该 micro-benchmark 能可靠区分完整 benchmark 上差距 ≥ 2 个准确率点的模型对。
+本文不提新的选样方法，而是给 micro-benchmark 换一把更细的尺子：从「单模型估准了没有」转向「两个模型谁强谁弱，micro-benchmark 排得对不对」。整套评估先在不同性能差距的模型对上量出 micro-benchmark 与完整 benchmark 的排序一致率（agreement），再把这条一致率曲线压缩成一个数——MDAD，即在可接受的可靠度下还能分辨的最小性能差距，并用它统一横评六种选样方法与多种规模。
 
 ### 关键设计
 
-- **分桶策略**：准确率差异以 0.5 点为分辨率分桶，即 $\mathcal{B} = \{[0, 0.25), [0.25, 0.75), [0.75, 1.25), \ldots\}$
-- **数据划分**：每个 benchmark 对半分为 train half（用于选择 micro-benchmark）和 held-out half（用于泛化测试）
-- **模型划分**：470 个模型随机分为 source models（用于 micro-benchmark 构建）和 target models（用于评估）
-- **50 次试验取平均**：消除数据和模型划分的随机性
-- **多种 micro-benchmark 尺寸**：$k \in \{10, 25, 50, 100, 250, 500, 1000\}$
-- **Source model 数量消融**：$\{10, 50, 100, 150, 200, 250, 300\}$
+**1. Agreement 函数：把"排得准不准"按性能差距分段量化。** 以往用全局 Kendall's $\tau$ 衡量一致性，高分往往只是因为差距悬殊的模型对天然好排，掩盖了势均力敌的模型对被排反的问题。本文改为按差距分段考察：定义 $\Delta_D(M_1, M_2) = \text{perf}_D(M_1) - \text{perf}_D(M_2)$，把完整 benchmark $D_{\text{full}}$ 上的差距落入分桶区间 $B$，再统计 micro-benchmark $D_{\text{micro}}$ 在该桶内同意原排序的概率：
 
-### 比较方法
+$$\text{agreement}(D_{\text{micro}}, D_{\text{full}}, B) = \Pr_{M_1, M_2 \in \mathcal{T}}\left(\Delta_{D_{\text{micro}}}(M_1, M_2) > 0 \mid \Delta_{D_{\text{full}}}(M_1, M_2) \in B\right)$$
+
+差距越大的桶 agreement 越接近 1，差距越小越逼近随机的 0.5，于是一条随差距上升的一致率曲线就刻画出 micro-benchmark 的真实分辨力。
+
+**2. MDAD 指标：把整条一致率曲线压成一个可操作的阈值。** 曲线虽细但不便横向比较，本文取一致率达到 0.8 的最小性能差距作为单一指标——Minimum Detectable Ability Difference：
+
+$$\text{MDAD}(D_{\text{micro}}, D_{\text{full}}) = \arg\min_{\text{centroid}(B), B \in \mathcal{B}} \left\{\text{agreement}(D_{\text{micro}}, D_{\text{full}}, B)\right\} \text{ s.t. } \Pr \geq 0.8$$
+
+MDAD 越低越好：MDAD = 2 表示该 micro-benchmark 能可靠分辨完整 benchmark 上差距 ≥ 2 个准确率点的模型对，差距更小的就不可信。这一指标直接借鉴统计功效分析里的"最小可检测效应量"，把模糊的 rank correlation 翻译成实践者听得懂的"能分辨多大差距"。
+
+**3. 分桶与无偏评估协议：用对半切分和多次重采样剥离随机性。** 为了让 agreement 曲线有足够分辨率又不抖动，性能差距以 0.5 点为粒度分桶，$\mathcal{B} = \{[0, 0.25), [0.25, 0.75), [0.75, 1.25), \ldots\}$。每个 benchmark 对半切成 train half（用于挑选 micro-benchmark）与 held-out half（用于检验泛化），470 个模型随机分成 source models（参与 micro-benchmark 构建）和 target models（参与评估）。整个流程在 $k \in \{10, 25, 50, 100, 250, 500, 1000\}$ 七种规模、以及 source model 数量 $\{10, 50, 100, 150, 200, 250, 300\}$ 上各重复 50 次取平均，把数据切分和模型切分带来的偶然性抹平。
+
+**4. 六种选样方法的统一谱系：把"是否依赖模型信息"作为横评主轴。** 为回答随机采样到底何时够用，本文在同一 MDAD 尺子下并列两类方法：依赖 source model 的精心设计法（Anchor Points、tinyBenchmarks、置信度分层、多样性采样）与不依赖模型的简单基线（均匀随机、按 subtask 等量随机），如下表。这条主轴让"复杂方法相比随机采样多带来多少分辨力"变成可量化的对比。
 
 | 方法 | 策略 | 模型依赖 |
 |------|------|----------|
@@ -160,9 +155,9 @@ MDAD 越低越好：MDAD = 2 意味着该 micro-benchmark 能可靠区分完整 
 
 - [\[AAAI 2026\] Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory](../../AAAI2026/llm_evaluation/lost_in_benchmarks_rethinking_large_language_model_benchmarking_with_item_respon.md)
 - [\[ICLR 2026\] Multi-LLM Adaptive Conformal Inference for Reliable LLM Responses](multi-llm_adaptive_conformal_inference_for_reliable_llm_responses.md)
-- [\[AAAI 2026\] Structured Language Generation Model: Loss Calibration and Formatted Decoding for Efficient Text](../../AAAI2026/llm_evaluation/structured_language_generation_model_loss_calibration_and_formatted_decoding_for.md)
-- [\[ACL 2026\] How Hypocritical Is Your LLM Judge? Listener–Speaker Asymmetries in the Pragmatic Competence of Large Language Models](../../ACL2026/llm_evaluation/how_hypocritical_is_your_llm_judge_listener-speaker_asymmetries_in_the_pragmatic.md)
 - [\[ICML 2026\] Building Reliable Long-Form Generation via Hallucination Rejection Sampling](../../ICML2026/llm_evaluation/building_reliable_long-form_generation_via_hallucination_rejection_sampling.md)
+- [\[ACL 2026\] Statistically Reliable LLM-Based Ranking Evaluation via Prediction-Powered Inference](../../ACL2026/llm_evaluation/statistically_reliable_llm-based_ranking_evaluation_via_prediction-powered_infer.md)
+- [\[ACL 2026\] How Hypocritical Is Your LLM Judge? Listener–Speaker Asymmetries in the Pragmatic Competence of Large Language Models](../../ACL2026/llm_evaluation/how_hypocritical_is_your_llm_judge_listener-speaker_asymmetries_in_the_pragmatic.md)
 
 </div>
 

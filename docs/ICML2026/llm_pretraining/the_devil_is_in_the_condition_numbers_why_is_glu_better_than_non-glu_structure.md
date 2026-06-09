@@ -121,9 +121,9 @@ $$\tilde{\mathbf{K}} = \frac{\alpha}{d}(\mathbf{X}\mathbf{X}^\top)\odot(\mathbf{
 
 - [\[ACL 2025\] Splintering Nonconcatenative Languages for Better Tokenization](../../ACL2025/llm_pretraining/splintering_nonconcatenative_languages_for_better_tokenization.md)
 - [\[AAAI 2026\] ELSPR: Evaluator LLM Training Data Self-Purification on Non-Transitive Preferences](../../AAAI2026/llm_pretraining/elspr_evaluator_llm_training_data_self-purification_on_non-transitive_preference.md)
-- [\[NeurIPS 2025\] Efficient Pre-Training of LLMs via Topology-Aware Communication Alignment on More Than 9600 GPUs](../../NeurIPS2025/llm_pretraining/efficient_pre-training_of_llms_via_topology-aware_communication_alignment_on_mor.md)
-- [\[CVPR 2025\] Anomize: Better Open Vocabulary Video Anomaly Detection](../../CVPR2025/llm_pretraining/anomize_better_open_vocabulary_video_anomaly_detection.md)
-- [\[ICML 2025\] The Dark Side of the Forces: Assessing Non-Conservative Force Models for Atomistic Machine Learning](../../ICML2025/llm_pretraining/the_dark_side_of_the_forces_assessing_non-conservative_force_models_for_atomisti.md)
+- [\[NeurIPS 2025\] LCDB 1.1: A Database Illustrating Learning Curves Are More Ill-Behaved Than Previously Thought](../../NeurIPS2025/llm_pretraining/lcdb_11_a_database_illustrating_learning_curves_are_more_ill-behaved_than_previo.md)
+- [\[ACL 2025\] Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning](../../ACL2025/llm_pretraining/making_llms_better_many-to-many_speech-to-text_translators_with_curriculum_learn.md)
+- [\[CVPR 2025\] Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics](../../CVPR2025/llm_pretraining/influence_malleability_in_linearized_attention_dual_implications_of_non-converge.md)
 
 </div>
 

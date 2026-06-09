@@ -41,33 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-提出的架构包含四个核心组件，形成"编码→协调→假设→反馈"的迭代循环：(1) 各模态的专用编码器作为感知前端，(2) 共享跨模态潜空间作为语义汇聚区域，(3) 路由控制器决定激活哪些模块，(4) 递归预测反馈回路实现自上而下的假设验证和精炼。
+论文想回答的问题是：怎么把大脑皮层的组织方式搬进感知 AI，让它不再是一个端到端的单体黑盒。给出的答案是一张由四个组件串成的蓝图，整体跑一个"编码 → 协调 → 假设 → 反馈"的迭代循环。输入先经各模态的专用编码器变成特征，汇入一个共享的跨模态潜空间做语义对齐；路由控制器根据当前输入和任务决定该激活哪些模块；高层模块再把自上而下的预测打回低层，用预测误差一轮轮修正感知结果。和单体模型把所有功能压进一套共享参数不同，这里每个组件职责分明、可单独替换，对应皮层"分工 + 反馈"的运作方式。
 
 ### 关键设计
 
-1. **专用编码器模块**:
+**1. 专用编码器模块：为每种模态配独立前端，模拟皮层早期感觉区。**
 
-    - 功能：为每种模态 (视觉/语音/语言) 配备独立的专用编码器
-    - 核心思路：使用预训练专家网络 (如 Whisper 处理语音、ViT 处理视觉、LLaMA 处理文本)，每个模块独立训练和调试
-    - 设计动机：模拟大脑皮层中早期感觉区域的模态特异性处理。独立的模块允许不重训整个系统就能添加新能力，且单个模块故障不会导致整体崩溃
+单体模型把视觉、语音、语言全塞进一套纠缠的参数里，导致定向优化困难、局部更新会牵连下游。这里改为给每种模态各配一个独立的专用编码器，直接复用预训练专家网络——Whisper 管语音、ViT 管视觉、LLaMA 管文本——每个模块独立训练和调试。这对应大脑皮层早期感觉区域的模态特异性处理：分工带来两个工程上的好处，一是不必重训整个系统就能加新能力，二是单个模块故障不会拖垮整体。
 
-2. **共享跨模态潜空间**:
+**2. 共享跨模态潜空间：把各编码器输出汇成一个动态工作空间，而非静态对齐层。**
 
-    - 功能：将各编码器的输出映射到共享语义空间，实现跨模态对齐
-    - 核心思路：借鉴 CLIP/ImageBind 的对比学习对齐思路，但定位为动态工作空间而非静态对齐层，支持零样本跨模态迁移
-    - 设计动机：模拟大脑中 STS/PPC 等关联区域的多模态信息整合功能，在保持模块化的同时实现灵活的上下文相关整合
+模块各自为政之后，需要一个地方让不同模态的信息对齐和交互。论文借鉴 CLIP / ImageBind 的对比学习对齐思路，把各编码器输出映射到一个共享语义空间，从而支持零样本跨模态迁移。关键区别在定位：它不是一层固定的对齐映射，而是一个**动态工作空间**，类比大脑 STS / PPC 等关联区域的多模态整合功能——在保持模块独立的前提下，按上下文灵活地把相关模态的信息拉到一起，而不是把对齐结果写死。
 
-3. **路由控制器**:
+**3. 路由控制器：按上下文稀疏激活模块，把 MoE 从算力层面挪到推理层面。**
 
-    - 功能：根据输入模态、任务上下文和潜表征特性，动态决定激活哪些专用模块
-    - 核心思路：类似 MoE 的稀疏激活机制，但在模块化推理层面而非纯计算效率层面运作
-    - 设计动机：模拟大脑根据上下文和行为目标灵活分配皮层处理资源的能力
+有了多个模块，就需要一个机制决定每次该用谁。路由控制器根据输入模态、任务上下文和潜表征特性，动态选择激活哪些专用模块，形式上类似 MoE 的稀疏激活。差别在于运作的层面：MoE 的稀疏激活主要为省算力，而这里把它定位成**模块化推理**的先验，对应大脑按上下文和行为目标灵活分配皮层资源的能力——激活哪些模块本身就是一种结构化的推理决策，而非单纯的计算路由。
 
-4. **递归预测反馈回路**:
+**4. 递归预测反馈回路：高层预测约束低层，把"幻觉"重释为可迭代修正的临时假设。**
 
-    - 功能：高层模块生成自上而下的预测，约束低层处理
-    - 核心思路：基于预测编码理论，让推理模块形成预测假设，通过预测误差迭代精炼感知
-    - 设计动机：将"幻觉"重新理解为生成式推理的临时假设而非一次性错误，通过迭代反馈实现假设验证和修正
+前三个组件都是前馈的，缺了皮层最核心的自上而下回路。论文据预测编码理论补上这一环：高层模块先生成预测假设，约束低层处理，再用预测误差迭代精炼感知。这个回路带来一个观念上的重释——把"幻觉"从一次性错误重新理解为生成式推理过程中的**临时假设**，既然是假设就可以通过反馈逐轮验证和修正，而不必靠事后过滤来补救。
 
 ### 损失函数 / 训练策略
 架构蓝图层面未给出具体的端到端训练策略。PoC 实验使用标准 MSE 重建损失训练稀疏自编码器。
@@ -126,9 +118,9 @@ PoC 实验：在 Mistral-7B 第 15 层激活 (4096 维) 上训练稀疏自编码
 
 - [\[ICLR 2026\] Modal Logical Neural Networks for Financial AI](modal_logical_neural_networks_for_financial_ai.md)
 - [\[ICML 2026\] Adaptive Querying with AI Persona Priors](../../ICML2026/interpretability/adaptive_querying_with_ai_persona_priors.md)
+- [\[ICLR 2026\] AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment](anveshanaai_a_multimodal_platform_for_adaptive_aiml_education_through_automated_.md)
 - [\[NeurIPS 2025\] Geometric Priors for Generalizable World Models via Vector Symbolic Architecture](../../NeurIPS2025/interpretability/geometric_priors_for_generalizable_world_models_via_vector_symbolic_architecture.md)
 - [\[NeurIPS 2025\] AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](../../NeurIPS2025/interpretability/agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
-- [\[ICML 2025\] Position: We Need An Algorithmic Understanding of Generative AI](../../ICML2025/interpretability/position_we_need_an_algorithmic_understanding_of_generative_ai.md)
 
 </div>
 

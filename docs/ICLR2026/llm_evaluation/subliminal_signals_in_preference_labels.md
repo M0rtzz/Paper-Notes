@@ -46,38 +46,19 @@ tags:
 
 ### 整体框架
 
-实验流水线分为四个阶段（见 Figure 1）：
-
-1. **提示生成与补全**：学生模型（中性）为每个提示 $p_i$ 生成 5 个候选补全 $\{c_{i1}, \ldots, c_{i5}\}$
-2. **偏好数据集构建**：裁判模型（有偏见）通过 log-likelihood 差异选择偏好/非偏好对
-3. **对齐训练**：使用 SFT 或 DPO 对齐学生模型
-4. **评估**：通过多选题测量学生模型的动物偏好
+整个实验把"偏好标签能否暗通款曲"做成一条闭环流水线：中性的学生模型先为每个提示生成 5 个数字序列补全，带偏见的裁判模型只输出二值偏好把它们配成 chosen/rejected 对，再用 SFT 或 DPO 让学生在这些偏好对上对齐，最后用多选题测量学生模型是否被悄悄植入了对某种动物的偏好。关键约束是补全内容全是语义无关的数字序列，因此任何被传递的偏好都只能藏在裁判的统计性选择模式里，而非文本语义中。
 
 ### 关键设计
 
-**偏好分数计算**：对每个补全 $c_{ij}$，裁判模型在偏见系统提示和中性系统提示下分别计算 log-likelihood：
+**1. 偏好分数：把"偏见"量化成两份 log-likelihood 之差。** 裁判要在不暴露语义内容的前提下表达偏好，唯一抓手是它对每个补全的打分倾向。对补全 $c_{ij}$，裁判分别在偏见系统提示 $\sigma_{\text{biased}}$ 和中性系统提示 $\sigma_{\text{neutral}}$ 下计算逐 token 累加的对数似然 $s_{ij}(\sigma) = \sum_{k=1}^{K} \log p_{\text{judge}}(t_k \mid t_{<k}, \sigma, p_i)$，再取差值 $\Delta s_{ij} = s_{ij}(\sigma_{\text{biased}}) - s_{ij}(\sigma_{\text{neutral}})$ 作为偏好分。差值越大说明该补全越投合偏见，于是 $c_i^+ = \arg\max_j \Delta s_{ij}$ 选为偏好响应、$c_i^- = \arg\min_j \Delta s_{ij}$ 选为非偏好响应。用差值而非绝对分数，是为了抵消提示无关的通用质量偏好，让信号纯粹来自偏见这一维度。
 
-$$s_{ij}(\sigma) = \sum_{k=1}^{K} \log p_{\text{judge}}(t_k \mid t_{<k}, \sigma, p_i)$$
+**2. 正反双向 + 中性控制：用对称性把"相关"坐实成"因果"。** 仅看正常对齐提升了目标偏好还不足以排除巧合，于是同步训练三套模型互为对照：正常对齐让学生学 $c_i^+$（SFT 直接拟合 / DPO 取其为 chosen），反转对齐改学 $c_i^-$，控制组则把两个系统提示都设为中性、偏见根本不存在。如果偏好真由裁判的偏见驱动，正常组应推高目标偏好、反转组应压低、控制组应几乎不动——这种符号相反的对称响应远比单点提升更能说明因果方向。
 
-偏好分数为两者之差：
+**3. 迭代对齐：检验隐蔽信号会不会在多轮部署中累积。** 把第一轮对齐后的学生模型重新当作学生，再走一遍"生成—裁判评分—对齐"的闭环，观察效应是放大还是衰减。这一步直指真实风险：对齐流水线往往多轮迭代，若每轮都注入一点偏见，信号可能逐步强化。实验也确实发现 SFT 与 DPO 在此处分道扬镳，SFT 随迭代放大而 DPO 反而衰减。
 
-$$\Delta s_{ij} = s_{ij}(\sigma_{\text{biased}}) - s_{ij}(\sigma_{\text{neutral}})$$
+**4. 裁判过程变体：把提示换成通用指令以聚焦数字分布。** 原始提示各不相同，会让裁判的偏好夹杂提示相关噪声。把原提示统一替换为通用指令 "Produce numbers." 后，裁判被迫只盯着数字序列本身的分布线索来表态，偏好一致性检验因此更干净、更可靠。
 
-选择 $c_i^+ = \arg\max_j \Delta s_{ij}$ 为偏好响应，$c_i^- = \arg\min_j \Delta s_{ij}$ 为非偏好响应。
-
-**对齐方向验证**：训练两种模型进行对比：
-- **正常对齐**：SFT 在 $c_i^+$ 上训练 / DPO 用 $c_i^+$ 为 chosen
-- **反转对齐**：SFT 在 $c_i^-$ 上训练 / DPO 用 $c_i^-$ 为 chosen
-- **控制组**：两个系统提示均为中性
-
-**迭代对齐**：将第一轮对齐后的模型再次作为学生模型，重新生成数据集、裁判评分、再次对齐。测试信号是否随迭代增强。
-
-**裁判过程变体**：将原始提示替换为通用指令"Produce numbers."，使裁判更聚焦于数字序列本身的分布线索。
-
-### 损失函数
-
-- SFT：标准交叉熵损失在偏好补全上
-- DPO：直接偏好优化损失，$\mathcal{L}_{\text{DPO}}$ 基于 KL 约束的奖励最大化
+训练侧两种对齐各取所长：SFT 在偏好补全上用标准交叉熵直接拟合，DPO 则用直接偏好优化损失 $\mathcal{L}_{\text{DPO}}$，在 KL 约束下最大化 chosen 相对 rejected 的隐式奖励。
 
 ## 实验关键数据
 
@@ -172,8 +153,8 @@ DPO 的迭代对齐信号反而减弱，可能与 DPO 的 KL 正则化有关。
 - [\[ICLR 2026\] Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
 - [\[ICLR 2026\] Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_of_long-fo.md)
 - [\[NeurIPS 2025\] ComPO: Preference Alignment via Comparison Oracles](../../NeurIPS2025/llm_evaluation/compo_preference_alignment_via_comparison_oracles.md)
-- [\[NeurIPS 2025\] Semi-Supervised Regression with Heteroscedastic Pseudo-Labels](../../NeurIPS2025/llm_evaluation/semi-supervised_regression_with_heteroscedastic_pseudo-labels.md)
-- [\[NeurIPS 2025\] Reliably Detecting Model Failures in Deployment Without Labels](../../NeurIPS2025/llm_evaluation/reliably_detecting_model_failures_in_deployment_without_labels.md)
+- [\[ICLR 2026\] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
+- [\[ICLR 2026\] ASIDE: Architectural Separation of Instructions and Data in Language Models](aside_architectural_separation_of_instructions_and_data_in_language_models.md)
 
 </div>
 

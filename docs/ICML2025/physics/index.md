@@ -1,29 +1,35 @@
 ---
 title: >-
-  ICML2025 物理/科学计算方向14篇论文解读
+  ICML2025 物理/科学计算方向20篇论文解读
 description: >-
-  14篇ICML2025的物理/科学计算方向论文解读，涵盖少样本学习、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  20篇ICML2025的物理/科学计算方向论文解读，涵盖少样本学习、LLM、推理、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "物理/科学计算"
   - "论文解读"
   - "论文笔记"
   - "少样本学习"
+  - "LLM"
   - "推理"
+  - "扩散模型"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**🧪 ICML2025** · **14** 篇论文解读
+**🧪 ICML2025** · **20** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (12)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (41)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md)
 
-🔥 **高频主题：** 少样本学习 ×2
+🔥 **高频主题：** 少样本学习 ×2 · LLM ×2
 
 **[Causal-PIK: Causality-based Physical Reasoning with a Physics-Informed Kernel](causal-pik_causality-based_physical_reasoning_with_a_physics-informed_kernel.md)**
 
 :   提出 Causal-PIK，通过将物理因果相似性编码为贝叶斯优化的核函数（Physics-Informed Kernel），使智能体在物理推理任务中仅需极少次尝试即可找到最优动作，在 Virtual Tools 和 PHYRE 基准上超越 SOTA。
+
+**[Causal Discovery of Latent Variables in Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)**
+
+:   利用基于秩的潜变量因果发现算法（RLCD），仅从五个可观测恒星属性中，以纯数据驱动的方式自动恢复出两个物理上有意义的潜变量——出生半径和引导半径，验证了因果发现方法在天体物理学中发现隐藏物理量的潜力。
 
 **[Closed-form Symbolic Solutions: A New Perspective on Solving Partial Differential Equations](closed-form_solutions_a_new_perspective_on_solving_differential_equations.md)**
 
@@ -53,6 +59,14 @@ tags:
 
 :   提出 MetaKANs，用一个小型元学习器（meta-learner）生成 KAN 中所有可学习激活函数的参数，将可训练参数量从 KAN 的 $(G+k+1)$ 倍压缩到接近 MLP 水平（约 1/3 到 1/9），同时保持甚至提升性能。
 
+**[L2D: Large Language Models to Diffusion Finetuning](large_language_models_to_diffusion_finetuning.md)**
+
+:   提出L2D微调方法，将预训练LLM视为单步扩散模型，引入并行扩散路径实现多步推理缩放，不修改原始权重即可随推理步数增加获得单调递增的准确率，在4个LLM上的数学/编码/推理任务上取得一致提升。
+
+**[Liger: Linearizing Large Language Models to Gated Recurrent Structures](liger_linearizing_large_language_models_to_gated_recurrent_structures.md)**
+
+:   Liger 将预训练 Transformer LLM 无额外参数地转换为门控线性循环结构，利用 Key 投影矩阵复用构建门控机制，仅需 0.02% 预训练 token 即可恢复原模型 93% 的性能，同时获得线性时间推理和恒定显存开销。
+
 **[Maximal Update Parametrization and Zero-Shot Hyperparameter Transfer for Fourier Neural Operators](maximal_update_parametrization_and_zero-shot_hyperparameter_transfer_for_fourier.md)**
 
 :   首次为 Fourier Neural Operator (FNO) 推导了 Maximal Update Parametrization (μP)，使得在小模型上调优的超参数可以零样本迁移到十亿参数级 FNO，将 Navier-Stokes 问题的调参计算量降至 0.30×。
@@ -65,13 +79,25 @@ tags:
 
 :   OmniArch 是首个在 1D-2D-3D PDE 上进行统一预训练的科学计算基础模型，通过 Fourier 编解码器解决多尺度问题、Temporal Mask 机制处理多物理量耦合、PDE-Aligner 实现物理先验对齐，在 PDEBench 的 11 类 PDE 上达到了 SOTA 性能。
 
+**[PAC Learning with Improvements](pac_learning_with_improvements.md)**
+
+:   提出"带改进的 PAC 学习"框架：当 agent 能真正提升自身特征至多 $r$ 时，保守分类器可实现零误差（将标准 PAC 中不可能的目标变为可能），有限 VC 维既非充分也非必要条件，改进学习与标准 PAC 和策略性分类存在本质分离。
+
 **[Rethink the Role of Deep Learning towards Large-scale Quantum Systems](rethink_the_role_of_deep_learning_towards_large-scale_quantum_systems.md)**
 
 :   在统一量子资源约束下系统性地对比 ML 与 DL 在量子系统学习 (QSL) 任务中的表现，发现传统 ML（Lasso/Ridge/核方法）往往匹配甚至超越 DL，挑战了"大规模量子系统必须用深度学习"的直觉。
 
+**[Sum-of-Parts: Self-Attributing Neural Networks with End-to-End Learning of Feature Groups](sum-of-parts_self-attributing_neural_networks_with_end-to-end_learning_of_featur.md)**
+
+:   SOP 提出了一种将任意可微分模型转换为基于分组的自归因神经网络（SANN）的框架，通过端到端学习特征分组实现了在 SANN 中的 SOTA 性能，并从理论上证明了逐特征 SANN 的误差下界和分组 SANN 的零误差可达性。
+
 **[Teaching LLMs to Speak Spectroscopy](teaching_llms_to_speak_spectroscopy.md)**
 
 :   仅使用 16 GPU 小时和 0.04% 的参数适配，通过 LoRA 将 **LLaMA-3.1-8B** 改造为可从光谱数据预测星系红移的模型，同时保留 85%+ 的语言能力，证明通用 LLM 可高效适配非文本科学模态。
+
+**[The Dark Side of the Forces: Assessing Non-Conservative Force Models for Atomistic Machine Learning](the_dark_side_of_the_forces_assessing_non-conservative_force_models_for_atomisti.md)**
+
+:   系统评估非保守力（直接预测而非从势能求导）机器学习原子间势在几何优化和分子动力学中的灾难性后果，并提出保守+非保守混合模型通过多时间步方案兼顾效率与物理正确性。
 
 **[Universal Neural Optimal Transport](universal_neural_optimal_transport.md)**
 

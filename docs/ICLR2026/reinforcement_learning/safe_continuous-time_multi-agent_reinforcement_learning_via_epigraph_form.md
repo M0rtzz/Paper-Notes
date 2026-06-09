@@ -37,42 +37,41 @@ tags:
 
 ### 整体框架
 
-EPI框架包含：（1）将安全CT-MARL形式化为连续时间约束MDP（CT-CMDP）；（2）Epigraph重构引入辅助状态 $z$ 统一目标值和约束；（3）改进的inner-outer优化的actor-critic架构，包含PINN-based critic和分散式actor。
+EPI 要解决的是「连续时间、多智能体、还要满足安全约束」这三件事撞在一起时 PINN 逼近会崩的问题。它先把安全 CT-MARL 形式化成连续时间约束 MDP（CT-CMDP），目标是最小化累积代价、同时让状态约束（如碰撞惩罚）始终满足。麻烦在于约束会让值函数变得不连续，而 HJB-PINN 只能逼近光滑函数。EPI 的破局点是用 Epigraph 重构引入一个辅助状态 $z$，把不连续的约束值函数抬升成一个连续的辅助值函数 $V(x,z)$，PINN 就能稳定逼近了。围绕这个表示，它搭了一套 inner-outer 优化的 actor-critic：critic 用 PINN 学 $V(x,z)$，outer 层直接解出最优 $z^*$，actor 则在 CTDE 框架下按本地观测学分散策略。
 
 ### 关键设计
 
-1. **Epigraph重构（核心理论贡献）**:
+**1. Epigraph 重构：把不连续的约束值抬成连续的辅助值函数。**
 
-    - 功能：引入辅助状态 $z(t)$ 将约束优化转化为无约束连续值函数
-    - 核心思路：定义辅助值函数 $V(x,z) = \min_{u} \max\{\max_\tau c(x(\tau)), \int_t^\infty \gamma^{\tau-t} l(x(\tau),u(\tau))d\tau - z\}$
-    - Lemma 3.1证明 $v(x) = \min\{z \in \mathbb{R} | V(x,z) \leq 0\}$，使得约束值 $v$ 的获取转化为 $V$ 的零水平集搜索
-    - 设计动机：$V(x,z)$ 是连续的（Theorem 3.3），而原始约束值函数不连续，PINN可以逼近连续函数
+这是全文的理论支点，直接对准「约束→值函数不连续→PINN 失效」这条死结。做法是引入辅助状态 $z(t)$，定义一个统一了目标代价和约束的辅助值函数：
 
-2. **改进的Outer优化（$z^*$ 计算）**:
+$$V(x,z) = \min_{u} \max\Big\{\max_\tau c(x(\tau)),\; \int_t^\infty \gamma^{\tau-t} l(x(\tau),u(\tau))\,d\tau - z\Big\}$$
 
-    - 功能：在训练中直接计算最优 $z^*$ 而非随机采样
-    - 核心思路：$z^* = \min\{z | \max\{V_\phi^{\text{cons}}(x), V_\psi^{\text{ret}}(x) - z\} \leq 0\}$
-    - 设计动机：先前方法（EPPO等）随机采样 $z$ 引入非平稳噪声，破坏策略更新稳定性；且执行时需要昂贵的根查找。EPI将return和constraint网络设计为仅依赖 $x$（不依赖 $z$），训练时直接用 $z^*$，执行时无需根查找
+外层 $\max$ 把「轨迹上最严重的约束违反 $\max_\tau c$」和「相对于阈值 $z$ 的累积代价」并到一起。Lemma 3.1 证明原始约束值可以从这个辅助函数恢复：$v(x) = \min\{z \in \mathbb{R} \mid V(x,z) \leq 0\}$，也就是说求约束值变成了在 $z$ 轴上找 $V$ 的零水平集。关键收益在 Theorem 3.3——$V(x,z)$ 是连续的（对应 epigraph HJB PDE 粘性解的存在唯一性），而原始约束值函数不连续。连续了，PINN 才有逼近的前提。
 
-3. **PINN-based Critic（三重损失）**:
+**2. 改进的 Outer 优化：训练时直接解出 $z^*$，告别随机采样。**
 
-    - 功能：用三种互补损失训练值函数
-    - 核心思路：
-        - **残差损失**：惩罚HJB PDE的违反 $\mathcal{L}_{\text{Residual}} = (\max\{c(x)-\tilde{V}, \min_u \mathcal{H}\})^2$
-        - **目标损失**：基于轨迹的数值目标 $\mathcal{L}_{\text{Target}} = (V_{\text{tgt}} - \tilde{V})^2$，无限时域下无边界条件时作为锚点
-        - **值梯度迭代（VGI）**：约束值梯度一致性，确保 $\nabla_x V$ 的准确性
-    - 设计动机：残差损失在无界问题中不足以单独工作；值梯度对策略更新至关重要
+有了 $V(x,z)$ 还得确定用哪个 $z$。先前方法（如 EPPO）在训练里随机采样 $z$，这会注入非平稳噪声、破坏策略更新的稳定性，执行时还得做一次昂贵的根查找。EPI 的改法是把 return 网络和 constraint 网络都设计成只依赖 $x$、不依赖 $z$，于是最优阈值可以直接闭式地解出来：
 
-4. **分散式Actor学习**:
+$$z^* = \min\{z \mid \max\{V_\phi^{\text{cons}}(x),\, V_\psi^{\text{ret}}(x) - z\} \leq 0\}$$
 
-    - 功能：基于epigraph优势函数更新分散策略
-    - 核心思路：$A(x_t,z_t^*,u_t) = \max\{c(x_t)-V, \nabla_x V \cdot f(x,u) - \partial_z V \cdot l(x,u) + \ln\gamma \cdot V\}$
-    - 通过学习的动力学网络 $f_\xi$ 和代价网络 $l_\phi$ 替代未知真实函数
-    - 设计动机：集中训练分散执行（CTDE），每个agent仅需本地观测
+训练时直接喂这个 $z^*$，去掉了采样噪声这个不稳定来源；执行时因为网络不依赖 $z$，也就无需再做根查找，省掉了在线开销。
+
+**3. PINN-based Critic：三重损失互补，残差不再单打独斗。**
+
+critic 要在无限时域、没有边界条件的情况下学准 $V(x,z)$，单靠 HJB 残差是不够的，所以 EPI 用三种损失互补。残差损失惩罚 HJB PDE 的违反，$\mathcal{L}_{\text{Residual}} = (\max\{c(x)-\tilde{V},\, \min_u \mathcal{H}\})^2$，提供 PDE 结构约束；目标损失 $\mathcal{L}_{\text{Target}} = (V_{\text{tgt}} - \tilde{V})^2$ 用基于轨迹的数值目标当锚点，专门补无限时域下缺边界条件导致的值函数漂移；值梯度迭代（VGI）则约束 $\nabla_x V$ 的一致性，把值梯度学准。这一点尤其关键——因为 actor 的优势函数直接用到 $\nabla_x V$，梯度不准策略更新就会被带歪，所以残差损失反而不是最重要的那个。
+
+**4. 分散式 Actor 学习：按 epigraph 优势函数做 CTDE 更新。**
+
+actor 走集中训练、分散执行（CTDE）的路线，每个 agent 只用本地观测就能行动。它的更新信号是 epigraph 形式下的优势函数：
+
+$$A(x_t,z_t^*,u_t) = \max\{c(x_t)-V,\; \nabla_x V \cdot f(x,u) - \partial_z V \cdot l(x,u) + \ln\gamma \cdot V\}$$
+
+这里同样是用 $\max$ 把约束项和代价项耦合进同一个优势里。由于真实的动力学和代价函数未知，EPI 用学习到的动力学网络 $f_\xi$ 和代价网络 $l_\phi$ 来替代它们，从而在 model-based 的意义下把上式算出来驱动策略更新。
 
 ### 损失函数 / 训练策略
 
-Critic总损失：$\mathcal{L}_{\text{Critic}} = \lambda_{\text{res}}\mathcal{L}_{\text{Residual}} + \lambda_{\text{tgt}}\mathcal{L}_{\text{Target}} + \lambda_{\text{vgi}}\mathcal{L}_{\text{VGI}}$。Actor损失：$\mathcal{L}_{\text{actor}} = \mathbb{E}[A_\theta(x,z^*,u)]$。权重通过网格搜索确定。
+Critic 总损失把三项加权求和：$\mathcal{L}_{\text{Critic}} = \lambda_{\text{res}}\mathcal{L}_{\text{Residual}} + \lambda_{\text{tgt}}\mathcal{L}_{\text{Target}} + \lambda_{\text{vgi}}\mathcal{L}_{\text{VGI}}$；actor 损失为 $\mathcal{L}_{\text{actor}} = \mathbb{E}[A_\theta(x,z^*,u)]$。三个权重通过网格搜索确定。
 
 ## 实验关键数据
 
@@ -138,9 +137,9 @@ Critic总损失：$\mathcal{L}_{\text{Critic}} = \lambda_{\text{res}}\mathcal{L}
 
 - [\[ICLR 2026\] Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
 - [\[ICLR 2026\] Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
-- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
 - [\[ICLR 2026\] PolicyFlow: Policy Optimization with Continuous Normalizing Flow in Reinforcement Learning](policyflow_policy_optimization_with_continuous_normalizing_flow_in_reinforcement.md)
 - [\[ICLR 2026\] SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+- [\[ICLR 2026\] Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
 
 </div>
 

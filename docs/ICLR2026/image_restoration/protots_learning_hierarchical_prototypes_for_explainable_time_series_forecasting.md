@@ -40,65 +40,33 @@ tags:
 
 ### 整体框架
 
-ProtoTS 由两大模块组成：
-
-1. **多通道原型相似度计算模块**：处理异质输入变量并计算实例-原型相似度
-2. **层级原型学习模块**：以树结构组织原型，从粗到细学习时间模式
+ProtoTS 把每个实例编码成一个嵌入向量，再与一组可学习的「原型」比相似度，预测就是这些原型所携带时间模式的加权组合。它由两部分串起来：多通道原型相似度模块负责处理异质输入变量并算出实例-原型相似度，层级原型学习模块则用一棵从粗到细的树来组织原型，让少量根原型概括全局模式、子原型刻画局部细节。
 
 ### 关键设计
 
-**1. 多通道嵌入**
+**1. 多通道嵌入：让异质变量各走各的编码通道。**
 
-针对内生变量、离散外生变量、连续外生变量设计独立编码通道：
+预测结果往往由多种性质完全不同的变量共同决定——内生历史值、离散外生变量（如星期、节假日标记）、连续外生变量（如温度），若一股脑塞进同一个编码器，离散与连续、内生与外生的语义会互相干扰。ProtoTS 为三类变量各设独立通道：内生值经带激活函数的 MLP 得到 $\gamma(\mathbf{y}_t)$，每个离散外生变量查各自的嵌入表 $\mathbf{E}_j(\mathbf{x}_{t,j}^{\text{dis}})$，每个连续外生变量走变量特定的非线性投影 $\psi_j(\mathbf{x}_{t,j}^{\text{con}})$。时刻 $t$ 的完整嵌入再相加聚合：$\mathbf{Z}_t = \gamma(\mathbf{y}_t) + \sum_{j=1}^{C_{\text{dis}}} \mathbf{E}_j(\mathbf{x}_{t,j}^{\text{dis}}) + \sum_{j=1}^{C_{\text{con}}} \psi_j(\mathbf{x}_{t,j}^{\text{con}})$。注意预测窗口内没有真实内生值 $\mathbf{y}_t$，那一段只靠外生变量补齐，这也正是为什么外生变量的建模质量直接决定了未来段的预测精度。
 
-- **内生通道**：$\gamma(\mathbf{y}_t)$，通过带激活函数的 MLP 编码
-- **离散外生通道**：$\mathbf{E}_j(\mathbf{x}_{t,j}^{\text{dis}})$，使用独立嵌入表
-- **连续外生通道**：$\psi_j(\mathbf{x}_{t,j}^{\text{con}})$，使用变量特定非线性投影
+**2. 瓶颈通道融合：把加和后的噪声压掉再交互。**
 
-时刻 $t$ 的完整嵌入通过加法聚合：
+多通道嵌入做加法聚合很简洁，但也把噪声变量的扰动一并带了进来，直接在高维上做特征/时间交互容易放大这种噪声。ProtoTS 在 MLP-Mixer 架构里插入一个瓶颈层 $\mathbb{R}^d \to \mathbb{R}^{d_{\text{bottle}}} \to \mathbb{R}^d$（$d_{\text{bottle}} \ll d$），先压到低维迫使模型只保留主导信息再还原，分别沿特征维和时间维做融合：$\mathbf{Z}_{1:L+H}^{(l+1)} = \text{MLP}_{\text{time}}(\text{MLP}_{\text{feature}}(\mathbf{Z}_{1:L+H}^{(l)})^T)^T$。多层之后再用一个线性变换把整段时间维聚成单个实例表示 $\hat{\mathbf{Z}} = \mathbf{Z}_{1:L+H}^T \mathbf{W} \in \mathbb{R}^d$，供后续与原型比对。消融里去掉瓶颈后平均 MAE 从 0.106 升到 0.143，是降幅最大的组件，印证了这步去噪的必要性。
 
-$$\mathbf{Z}_t = \gamma(\mathbf{y}_t) + \sum_{j=1}^{C_{\text{dis}}} \mathbf{E}_j(\mathbf{x}_{t,j}^{\text{dis}}) + \sum_{j=1}^{C_{\text{con}}} \psi_j(\mathbf{x}_{t,j}^{\text{con}})$$
+**3. 原型相似度与预测：把预测写成「典型模式的加权和」。**
 
-预测窗口内无 $\mathbf{y}_t$，仅用外生变量。
+每个原型由两部分组成——嵌入 $\boldsymbol{\mu} \in \mathbb{R}^d$ 用来和实例比距离，时间模式 $\mathbf{p} \in \mathbb{R}^T$ 是这类模式对应的整条预测曲线，两者都是可学习参数。实例表示 $\hat{\mathbf{Z}}$ 与各原型嵌入算欧氏距离再经 softmax 归一化成相似度 $f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_c) = \frac{\exp(-d(\hat{\mathbf{Z}}, \boldsymbol{\mu}_c))}{\sum_{i=1}^N \exp(-d(\hat{\mathbf{Z}}, \boldsymbol{\mu}_i))}$，最终预测就是各原型时间模式按相似度的加权组合 $\hat{\mathbf{Y}} = \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \cdot \mathbf{p}_i$。这种写法的可解释性来得很自然：看一眼哪个原型权重最高、它的 $\mathbf{p}$ 长什么样，就知道模型把当前实例归到了哪种典型模式，而原型直接解码为整条序列（而非单个类别标签）正是它区别于传统原型分类网络的地方。
 
-**2. 瓶颈通道融合**
+**4. 层级原型学习：粗原型概览全局，按需细分捕局部。**
 
-异质变量聚合后可能引入噪声。ProtoTS 在 MLP-Mixer 架构中引入瓶颈层 $\mathbb{R}^d \to \mathbb{R}^{d_{\text{bottle}}} \to \mathbb{R}^d$（$d_{\text{bottle}} \ll d$），分别沿特征维度和时间维度进行融合：
+少量原型够概览全局却不够刻画局部变化，全靠大量原型又会让解释变得琐碎。ProtoTS 用一棵树平衡二者：根层级先用少量原型（如 6 个）捕获季节性、假日等粗粒度模式并训练至收敛；随后按各原型关联实例的平均 MAE 损失排序，挑出损失最高的 top $\alpha$% 叶原型——高损失说明该原型的单一时间模式不足以代表它聚到的那批实例——把每个这样的原型分裂成 $M$ 个子原型继续细化。有了子层级，预测变成两级相似度的嵌套加权 $\hat{\mathbf{Y}} = \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \sum_{j=1}^M f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_{i,j}) \cdot \mathbf{p}_{i,j}$：先选大类，再在大类内部选更细的子模式。这样既保留了「先看 6 个根原型就懂大局」的全局视角，又能逐层下钻到具体的局部模式。
 
-$$\mathbf{Z}_{1:L+H}^{(l+1)} = \text{MLP}_{\text{time}}(\text{MLP}_{\text{feature}}(\mathbf{Z}_{1:L+H}^{(l)})^T)^T$$
+**5. 专家可调控：让人能直接编辑原型而非黑盒微调。**
 
-最后通过线性聚合时间维度：$\hat{\mathbf{Z}} = \mathbf{Z}_{1:L+H}^T \mathbf{W} \in \mathbb{R}^d$。
-
-**3. 原型相似度计算与预测**
-
-每个原型包含嵌入 $\boldsymbol{\mu} \in \mathbb{R}^d$ 和时间模式 $\mathbf{p} \in \mathbb{R}^T$（均为可学习参数）。通过欧氏距离 + softmax 计算相似度：
-
-$$f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_c) = \frac{\exp(-d(\hat{\mathbf{Z}}, \boldsymbol{\mu}_c))}{\sum_{i=1}^N \exp(-d(\hat{\mathbf{Z}}, \boldsymbol{\mu}_i))}$$
-
-预测为原型时间模式的加权组合：$\hat{\mathbf{Y}} = \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \cdot \mathbf{p}_i$。
-
-**4. 层级原型学习**
-
-- **根层级**：少量原型（如6个）捕获粗粒度模式（季节性、假日等），先训练至收敛
-- **分裂策略**：根据归一化损失选择需细化的叶原型（top $\alpha$%），每个分裂为 $M$ 个子原型
-- **子层级预测**：
-
-$$\hat{\mathbf{Y}} = \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \sum_{j=1}^M f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_{i,j}) \cdot \mathbf{p}_{i,j}$$
-
-分裂规则基于各原型关联实例的平均 MAE 损失：高损失原型说明其时间模式不足以代表关联实例，需进一步细化。
-
-**5. 专家可调控**
-
-- 选择性分裂特定原型（如将"春节"原型分为"节前"和"节中"）
-- 引入新根层级原型
-- 直接编辑原型的时间模式
+因为每个原型都对应一条可读的时间模式，专家可以在模型之上做语义层面的干预，而不必去碰底层权重：选择性地把某个原型再分裂（如将「春节」原型拆成「节前」「节中」）、往根层级注入一个新原型、甚至直接编辑某原型的时间模式曲线。实验中仅手动分裂「春节」原型一项，就让春节期间 MSE 降低 0.009，说明这种人在回路的编辑能把领域知识低成本地灌进模型。
 
 ### 损失函数 / 训练策略
 
-$$\mathcal{L} = \|\hat{\mathbf{Y}} - \mathbf{Y}\|_1 - \lambda \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \log(f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i))$$
-
-- L1 预测损失 + 熵正则化（鼓励少数原型覆盖大部分预测）
-- 分阶段训练：先根层级→收敛后分裂→继续训练子层级
+训练目标是 L1 预测损失加一项相似度熵正则：$\mathcal{L} = \|\hat{\mathbf{Y}} - \mathbf{Y}\|_1 - \lambda \sum_{i=1}^N f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i) \log(f(\hat{\mathbf{Z}}|\boldsymbol{\mu}_i))$，熵项鼓励每个实例的相似度集中在少数原型上，从而让「一个实例≈一种典型模式」的解释更干净。整体采用分阶段训练：先把根层级训到收敛，再按损失分裂出子层级，然后继续训练细化，与层级原型的「从粗到细」结构保持一致。
 
 ## 实验关键数据
 

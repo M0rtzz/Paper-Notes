@@ -126,8 +126,8 @@ $$\epsilon' = \text{slerp}(\epsilon_\theta,\, \epsilon_{rand},\, 0.95)$$
 - [\[CVPR 2026\] DUO-VSR: Dual-Stream Distillation for One-Step Video Super-Resolution](duo-vsr_dual-stream_distillation_for_one-step_video_super-resolution.md)
 - [\[CVPR 2026\] Extending One-Step Image Generation from Class Labels to Text via Discriminative Text Representation](emf_meanflow_text_to_image.md)
 - [\[CVPR 2026\] ChordEdit: One-Step Low-Energy Transport for Image Editing](chordedit_one-step_low-energy_transport_for_image_editing.md)
-- [\[ICML 2025\] Exploring Position Encoding in Diffusion U-Net for Training-free High-resolution Image Generation](../../ICML2025/image_generation/exploring_position_encoding_in_diffusion_u-net_for_training-free_high-resolution.md)
 - [\[CVPR 2026\] Low-Resolution Editing is All You Need for High-Resolution Editing](low-resolution_editing_is_all_you_need_for_high-resolution_editing.md)
+- [\[ICML 2025\] Exploring Position Encoding in Diffusion U-Net for Training-free High-resolution Image Generation](../../ICML2025/image_generation/exploring_position_encoding_in_diffusion_u-net_for_training-free_high-resolution.md)
 
 </div>
 

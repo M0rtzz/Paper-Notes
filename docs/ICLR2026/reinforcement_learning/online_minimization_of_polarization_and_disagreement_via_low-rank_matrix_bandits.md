@@ -39,42 +39,15 @@ tags:
 
 ### 整体框架
 
-在每个时间步 $t = 1, \ldots, T$：
-1. 学习器从有限干预集 $\mathcal{L}$ 中选择一个图Laplacian $\mathbf{L}_t$，等价于选择forest matrix $\mathbf{X}_t = (\mathbf{I} + \mathbf{L}_t)^{-1}$
-2. FJ动力学收敛至均衡，学习器观察含噪损失 $Y_t = \langle \mathbf{\Theta}^*, \mathbf{X}_t \rangle + \eta_t$，其中 $\mathbf{\Theta}^* = \bm{s}\bm{s}^\top$ 为秩一未知参数
-3. 目标：最小化累积遗憾 $R_T = \sum_{t=1}^T [f(\mathbf{X}_t) - f(\mathbf{X}^*)]$
+本文把社交网络干预包装成一个秩一矩阵bandit：每一步 $t$ 学习器从有限干预集 $\mathcal{L}$ 中选一个图Laplacian $\mathbf{L}_t$（等价于选 forest matrix $\mathbf{X}_t = (\mathbf{I} + \mathbf{L}_t)^{-1}$），FJ动力学收敛后只回传一个含噪标量损失 $Y_t = \langle \mathbf{\Theta}^*, \mathbf{X}_t \rangle + \eta_t$，其中未知参数 $\mathbf{\Theta}^* = \bm{s}\bm{s}^\top$ 是内在观点的秩一外积，目标是最小化累积遗憾 $R_T = \sum_{t=1}^T [f(\mathbf{X}_t) - f(\mathbf{X}^*)]$。算法 OPD-Min-ESTR 分两阶段——先花 $T_1$ 轮探索把 $\mathbf{\Theta}^*$ 的方向估出来，再借这个方向把高维问题压成低维线性bandit跑剩下的 $T - T_1$ 轮。
 
-关键难点在于：直接线性化为 $|V|^2$ 维bandit会导致遗憾界为 $\tilde{O}(|V|^2\sqrt{T})$；现有低秩矩阵bandit假设可从连续空间（如高斯分布）采样，在forest matrix的离散结构化行动集上不适用。
+### 关键设计
 
-### 关键设计1: 子空间估计（Stage 1）
+**1. 秩一结构下的子空间估计：把 $|V|^2$ 维探索压成方向估计问题。** 朴素做法是把矩阵拉直成 $|V|^2$ 维线性bandit，遗憾界会膨胀到 $\tilde{O}(|V|^2\sqrt{T})$；而现成的低秩矩阵bandit又默认能从高斯之类的连续分布采样，对 forest matrix 这种离散结构化行动集失效。本文在 Stage 1 用核范数正则化最小二乘直接估计参数矩阵，$\widehat{\mathbf{\Theta}} = \arg\min_{\mathbf{\Theta}} \frac{1}{2T_1} \sum_{t=1}^{T_1} (Y_t - \langle \mathbf{X}_t, \mathbf{\Theta} \rangle)^2 + \lambda_{T_1} \|\mathbf{\Theta}\|_{\text{nuc}}$，取正则系数 $\lambda_{T_1} = 2\sqrt{2\log(2|V|/\delta)/T_1}$，让核范数惩罚把解逼向低秩。关键是不假设外部给定"良好探索分布"，而是针对 forest matrix 集合直接证明 Restricted Strong Convexity (RSC) 成立——其曲率参数 $\kappa = \kappa_{\min}(\mathcal{X})$ 度量行动集自身的多样性，再用 Talagrand 集中不等式和 Rademacher 过程压住统计偏差，从而得到估计误差 $\|\widehat{\mathbf{\Theta}} - \mathbf{\Theta}^*\|_F^2 \leq \frac{36\log(2|V|/\delta)}{\kappa^2 T_1}$，随探索轮数 $T_1$ 衰减。
 
-**功能**：从 $T_1$ 轮探索中恢复未知参数矩阵 $\mathbf{\Theta}^*$ 的低维子空间。
+**2. 子空间旋转降维：用估出的方向把线性bandit从 $|V|^2$ 维降到 $O(|V|)$ 维。** 拿到 $\widehat{\mathbf{\Theta}}$ 后取其 top eigenvector $\hat{\bm{s}}$，补成正交基 $[\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，对每个 arm 做旋转 $\mathbf{X}' = [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]^\top \mathbf{X} [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，只保留旋转后的第一行和第一列，拼成 $k = 2|V|-1$ 维特征 $\bm{x}_{\text{sub}}$，在这 $O(|V|)$ 维空间里跑标准线性bandit（如 OFUL）。之所以能这么砍维度，是因为 $\mathbf{\Theta}^*$ 秩一、信号全部集中在 $\bm{s}$ 方向，丢掉的正交补分量的投影误差可由 Davis-Kahan $\sin\theta$ 定理控制，并随 $T_1$ 增大而消失，于是降维几乎不损失信息。
 
-**核心思路**：使用nuclear norm正则化最小二乘估计：
-
-$$\widehat{\mathbf{\Theta}} = \arg\min_{\mathbf{\Theta}} \frac{1}{2T_1} \sum_{t=1}^{T_1} (Y_t - \langle \mathbf{X}_t, \mathbf{\Theta} \rangle)^2 + \lambda_{T_1} \|\mathbf{\Theta}\|_{\text{nuc}}$$
-
-正则化参数 $\lambda_{T_1} = 2\sqrt{2\log(2|V|/\delta)/T_1}$。在Restricted Strong Convexity (RSC)条件下，估计误差满足：
-
-$$\|\widehat{\mathbf{\Theta}} - \mathbf{\Theta}^*\|_F^2 \leq \frac{36\log(2|V|/\delta)}{\kappa^2 T_1}$$
-
-**设计动机**：不同于已有工作假设"nice exploration distribution"，本文针对forest matrix集合直接证明RSC条件成立。RSC的曲率参数 $\kappa = \kappa_{\min}(\mathcal{X})$ 衡量行动集的多样性，通过Talagrand集中不等式和Rademacher过程控制统计偏差。
-
-### 关键设计2: 降维线性Bandit（Stage 2）
-
-**功能**：利用估计的子空间将问题降至 $O(|V|)$ 维。
-
-**核心思路**：提取 $\widehat{\mathbf{\Theta}}$ 的top eigenvector $\hat{\bm{s}}$，构造正交基 $[\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$。对每个arm $\mathbf{X}$ 做旋转 $\mathbf{X}' = [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]^\top \mathbf{X} [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，仅保留第一行和第一列形成 $k = 2|V|-1$ 维特征向量 $\bm{x}_{\text{sub}}$。在此低维空间中运行标准线性bandit（如OFUL）。
-
-**设计动机**：由于 $\mathbf{\Theta}^*$ 秩一，信号集中在 $\bm{s}$ 的方向上，正交补空间的投影误差可通过Davis-Kahan $\sin\theta$ 定理控制，随 $T_1$ 增大而衰减。
-
-### 遗憾界
-
-**Theorem 4.1**：在RSC条件下，最优选取 $T_1 \asymp \frac{1}{\|\bm{s}\|^2 \kappa} \sqrt{T \log(2|V|/\delta)}$，总遗憾为：
-
-$$R_T = \widetilde{\mathcal{O}}\left(\max\left\{\frac{1}{\kappa}, \sqrt{|V|}\right\}\sqrt{|V| \cdot T}\right)$$
-
-$\sqrt{T}$ 关于时间是最优的，$|V|$ 代替 $|V|^2$ 体现了降维的效果。
+**3. 两阶段遗憾界：用最优探索预算把 $|V|^2$ 换成 $|V|$。** 把两阶段串起来，Stage 1 的探索代价随 $T_1$ 线性增长、Stage 2 的剩余遗憾随 $T_1$ 增大而下降，两者权衡给出最优探索预算 $T_1 \asymp \frac{1}{\|\bm{s}\|^2 \kappa} \sqrt{T \log(2|V|/\delta)}$。Theorem 4.1 在 RSC 条件下证明总遗憾为 $R_T = \widetilde{\mathcal{O}}\left(\max\left\{\frac{1}{\kappa}, \sqrt{|V|}\right\}\sqrt{|V| \cdot T}\right)$——对时间 $\sqrt{T}$ 已是最优阶，而维度因子从朴素做法的 $|V|^2$ 降到 $|V|$，统计与计算两头同时受益。
 
 ## 实验关键数据
 

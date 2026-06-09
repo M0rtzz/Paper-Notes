@@ -41,30 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为点云 $P_{in} \in \mathbb{R}^{N \times 9}$（坐标+法向+RGB）和提示点 $P_{prompt}$，编码器提取 triplane 特征场并采样得 patch embedding $F_c$，解码器结合提示 embedding $F_p$ 通过双向 Transformer 生成分割 mask。支持交互模式（用户点击）和自动模式（Segment Every Part）。
+PartSAM 想把 SAM 那套"点一下就分割"的交互范式直接搬到原生 3D 上，而不是像以往方法那样先在多视图 2D 上分割再 lift 回 3D。整条 pipeline 是：输入点云 $P_{in} \in \mathbb{R}^{N \times 9}$（坐标+法向+RGB）和提示点 $P_{prompt}$，先经一个双分支 triplane 编码器把点云编成稠密的三平面特征场，再在提示点位置采样得到 patch embedding $F_c$；解码器把 $F_c$ 和提示 embedding $F_p$ 一起喂进双向 Transformer，生成分割 mask。整个模型既支持交互模式（用户逐点点击、逐轮补正），也支持自动模式（Segment Every Part，一次撒满 query 把所有部件切出来）。背后能跑通的前提，是一套模型在环的标注流程先攒出了 500 万+形状-部件对。
 
 ### 关键设计
 
-1. **双分支 Triplane 编码器**:
+**1. 双分支 Triplane 编码器：既不丢 SAM 的 2D 先验，又能吃下原生 3D 监督**
 
-    - 功能：同时保留 SAM 的 2D 先验和学习原生 3D 表示
-    - 核心思路：两个并行分支，均用 PVCNN+Transformer 构建 triplane 特征场。冻结分支保留 PartField 预训练的 SAM 对比学习特征；可学习分支通过零卷积接受法向/RGB 额外输入，在原生 3D 标注上训练
-    - 设计动机：冻结分支防止 2D 知识遗忘，可学习分支适应新的 3D 监督信号
+直接在 3D 部件数据上从头训一个编码器，会丢掉 SAM/PartField 在海量 2D 数据上学到的边界先验；但只用冻结的 2D 先验又没法适应原生 3D 标注里的内部结构信号。PartSAM 用两个并行分支化解这个两难：两支都以 PVCNN+Transformer 构建 triplane 特征场，冻结分支原封不动地保留 PartField 预训练得到的 SAM 对比学习特征，负责守住 2D 边界知识不被遗忘；可学习分支则通过零卷积（zero-conv）额外接入法向和 RGB 输入，在原生 3D 标注上训练。零卷积初始为零保证训练初期可学习分支不会扰动已有先验，随训练逐步注入 3D 信息，最后两支特征相加融合。这样冻结支提供"哪里像部件边界"的通用直觉，可学习支补上"3D 内部怎么切"的具体知识，相比 Point-SAM 这类单分支编码器，对内部结构和粗糙网格的理解都更强。
 
-2. **SAM 启发的提示引导解码器**:
+**2. SAM 启发的提示引导解码器：用并行候选 + IoU 评分处理部件边界歧义**
 
-    - 功能：从提示和特征生成分割 mask
-    - 核心思路：引入输出 token $T_{out}$ 和 IoU token $T_{iou}$，双向 CrossAttn 交互 $F_c' = \text{CrossAttn}(F_c \leftrightarrow [F_p; T_{out}; T_{iou}])$，单提示时并行解码 3 个候选 mask，IoU token 预测质量分数选最优
-    - 设计动机：SAM 的并行解码和 IoU 预测处理部件边界歧义
+单点点击天然有歧义——点在车门上，用户可能想要门、想要整侧车身、也可能想要门把手。PartSAM 照搬 SAM 的解法：在解码器里引入输出 token $T_{out}$ 和 IoU token $T_{iou}$，让它们和提示、特征一起做双向交叉注意力，
 
-3. **模型在环数据标注**:
+$$F_c' = \text{CrossAttn}\big(F_c \leftrightarrow [F_p; T_{out}; T_{iou}]\big)$$
 
-    - 功能：从碎片化 Objaverse 资产扩展训练数据
-    - 核心思路：第一阶段从场景图/连通分量提取 180k 形状 2200 万部件；第二阶段用 PartField 生成伪标签（K=10/20/30 聚类），PartSAM 10 轮交互验证，IoU@1>60% 或 IoU@10>90% 则接受，最终 500k 形状 5500 万部件
-    - 设计动机：高 IoU@1 代表内在明确的部件，低 IoU@1 但高 IoU@10 代表可交互完善的部件
+特征 token 和 prompt/输出 token 互相更新。单提示时并行解码出 3 个不同粒度的候选 mask，再由 IoU token 预测每个候选的质量分数，自动挑出最优的那个。这样不必让用户反复点很多次才收敛到想要的粒度，把歧义交给模型一次性枚举、用预测 IoU 排序，这也是后面 IoU@1 大幅领先的直接来源。
+
+**3. 模型在环数据标注：用伪标签 + 模型自验的双层筛选，把碎片资产攒成 500 万部件**
+
+3D 部件分割最大的瓶颈是没有大规模标注，而 Objaverse 这类资产虽多却高度碎片化、质量参差。PartSAM 设计了两阶段、模型在环的流程来"自举"训练数据：第一阶段从资产的场景图 / 连通分量里直接提取天然部件，得到约 18 万形状、2200 万部件作为种子；第二阶段引入 PartSAM 自己来当质检员——先用 PartField 在 $K=10/20/30$ 三档聚类生成候选伪标签，再让当前的 PartSAM 对每个候选做 10 轮交互验证，按两条规则接受：$\text{IoU@1}>60\%$（一次点击就能切准，说明这是内在明确、边界清晰的部件），或 $\text{IoU@10}>90\%$（一次点不准但十轮内能补完善，说明是可交互细化的部件）。这两条规则正好覆盖"显式部件"和"可交互部件"两类有用样本，过滤掉噪声聚类，最终扩到 50 万形状、5500 万部件。模型越训越强、筛出的数据越干净，形成正反馈，这是绕过"没数据就训不出模型、没模型就标不出数据"鸡生蛋困局的关键。
 
 ### 损失函数
-$\mathcal{L} = \mathcal{L}_{focal} + \alpha \mathcal{L}_{dice} + \mathcal{L}_{IoU} + \lambda \mathcal{L}_{triplet}$
+$$\mathcal{L} = \mathcal{L}_{focal} + \alpha \mathcal{L}_{dice} + \mathcal{L}_{IoU} + \lambda \mathcal{L}_{triplet}$$
+
+其中 focal + dice 监督 mask 质量，$\mathcal{L}_{IoU}$ 训练 IoU token 准确预测候选质量（驱动并行候选的选优），$\mathcal{L}_{triplet}$ 约束 triplane 特征的对比结构以对齐 SAM 先验。
 
 ## 实验关键数据
 
@@ -118,8 +118,8 @@ $\mathcal{L} = \mathcal{L}_{focal} + \alpha \mathcal{L}_{dice} + \mathcal{L}_{Io
 
 - [\[ECCV 2024\] 3×2: 3D Object Part Segmentation by 2D Semantic Correspondences](../../ECCV2024/3d_vision/3x2_3d_object_part_segmentation_by_2d_semantic_correspondenc.md)
 - [\[ICLR 2026\] PD²GS: Part-Level Decoupling and Continuous Deformation of Articulated Objects via Gaussian Splatting](pd2gs_part-level_decoupling_and_continuous_deformation_of_articulated_objects_vi.md)
-- [\[ICLR 2026\] GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation](geopurify_a_data-efficient_geometric_distillation_framework_for_open-vocabulary_.md)
 - [\[CVPR 2026\] S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds](../../CVPR2026/3d_vision/s2am3d_scale-controllable_part_segmentation_of_3d_point_cloud.md)
+- [\[ICLR 2026\] GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation](geopurify_a_data-efficient_geometric_distillation_framework_for_open-vocabulary_.md)
 - [\[CVPR 2026\] Action-guided Generation of 3D Functionality Segmentation Data](../../CVPR2026/3d_vision/action-guided_generation_of_3d_functionality_segmentation_data.md)
 
 </div>

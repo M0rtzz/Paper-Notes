@@ -34,47 +34,27 @@ tags:
 
 ## 方法详解
 
-### 整体框架：ToM-Strategy-Response (TSR) 三阶段推理
-将复杂的 rebuttal 任务分解为三个连贯步骤：
+### 整体框架
 
-**输入**：原始手稿 $M$、审稿意见 $R_i$、目标评论 $c_{target}$  
-**输出**：策略性回复 $r_{target} = \mathcal{G}(M, R_i, c_{target})$
+RebuttalAgent 把"写 rebuttal"建模成 ToM-Strategy-Response (TSR) 的三阶段推理链：给定原始手稿 $M$、审稿意见 $R_i$ 和目标评论 $c_{target}$，模型先揣摩审稿人的心理状态，再据此定下说服策略，最后检索手稿证据生成回复 $r_{target} = \mathcal{G}(M, R_i, c_{target})$。整条链路先在 RebuttalBench 上做 SFT 冷启动学会结构化推理，再用带自奖励的 GRPO 强化想说服力，配套训练专门的 Rebuttal-RM 充当评估器。
 
-### 关键设计 1：层次化审稿人画像建模
-- **宏观分析（Macro-level）**：推断审稿人整体意图
-    - 四个维度：Overall Stance、Overall Attitude、Dominant Concern、Reviewer Expertise
-    - 生成结构化宏观画像，指导全局策略和语气
-- **微观分析（Micro-level）**：分解具体评论
-    - 四个维度：Significance、Methodology、Experimental Rigor、Presentation
-    - 生成微观画像，指导针对性回应
+### 关键设计
 
-### 关键设计 2：ToM-Driven 策略生成 + 证据融合
-- **策略生成**：基于完整审稿人画像和目标评论，LLM 综合输出简洁的高层战略计划
-    - 先决定"如何回复"（how），再决定"回复什么"（what）
-    - 确保回复不仅是被动回应表面问题，而是战略对齐审稿人深层关切
-- **证据基础回复**：三阶段上下文检索模块
-    - 手稿分段 → 嵌入编码 → cosine 相似度排序 → top-k chunks
-    - 回复生成同时条件化于：审稿人画像 $\mathcal{P}$、策略 $S$、检索块 $C_E$、原始回复 $r_{orig}$
+**1. 层次化审稿人画像：把"换位思考"拆成可推理的结构。** rebuttal 的难点在于作者看不到审稿人的知识背景和真实顾虑，只能盲猜。本文让模型在动笔前先做两层 ToM 分析：宏观层从 Overall Stance、Overall Attitude、Dominant Concern、Reviewer Expertise 四个维度推断审稿人的整体意图，用来定全局语气；微观层则沿 Significance、Methodology、Experimental Rigor、Presentation 四个维度拆解每条具体评论，用来定针对性回应。两层画像合起来构成审稿人心理状态 $\mathcal{P}$，把抽象的"理解他人"落成了一组结构化的可推理字段，后续策略生成才有据可依。
 
-### 关键设计 3：自奖励强化学习
-**数据构建（RebuttalBench，70K 样本）**：
-- 来源：Re2-rebuttal 数据集，GPT-4.1 解析 200K+ 评论-回复对
-- 多教师模型（GPT-4.1、Claude 3.5）混合生成 TSR 链
-- 排除需要新实验的评论，聚焦语言说服和战略论证
+**2. ToM 驱动的策略生成 + 证据融合：先想清楚怎么回，再保证有据可查。** 有了画像 $\mathcal{P}$ 和目标评论后，模型先输出一份简洁的高层战略计划 $S$——关键是顺序上先决定"如何回复"（how，是让步、坚持还是重新框架叙事）再决定"回复什么"（what），从而对齐审稿人的深层关切而非被动应付表面问题。为了避免空谈，回复生成挂上一个三阶段检索模块：把手稿分段后嵌入编码，按 cosine 相似度排序取 top-$k$ 证据块 $C_E$。最终回复同时条件化于画像 $\mathcal{P}$、策略 $S$、检索块 $C_E$ 和原始草稿 $r_{orig}$，既战略对齐又有手稿证据支撑。
 
-**两阶段训练**：
-1. **SFT 冷启动**：Qwen3-8B 基座，学习 TSR 结构化推理
-2. **GRPO 强化学习 + 自奖励**：
-    - 四维奖励函数：$R(o) = w_1 R_{format} + w_2 R_{think} + w_3 R_{resp} + w_4 R_{div}$
-    - $R_{format}$：格式正确性（二值）
-    - $R_{think}$：推理质量（模型自评 Analysis + Strategy）
-    - $R_{resp}$：回复质量（模型自评说服力、清晰度、证据使用）
-    - $R_{div}$：回复多样性（与预设负样本的语义差异，抗 reward hacking）
+**3. Rebuttal-RM 专用评估器：通用 judge 打不准 rebuttal。** rebuttal 质量（态度、清晰度、说服力、建设性）很难用通用 LLM judge 可靠衡量。本文基于 Qwen3-8B 微调出专门的 Rebuttal-RM，训练数据来自 102K 样本三源混合——原始作者回复、GPT-4.1 精修回复、多模型生成回复，输出多维打分并附解释。它与人类标注的平均一致性达 0.812，明显高于 GPT-4.1 的 0.745，既用作主实验的裁判，本身也能独立复用。
 
-### 评估器：Rebuttal-RM
-- 基于 Qwen3-8B 微调，训练数据 102K 样本（三源：原始作者回复、GPT-4.1 精修回复、多模型生成回复）
-- 多维打分 + 解释输出
-- 与人类一致性（0.812 平均分）显著超越 GPT-4.1（0.745）
+### 损失函数 / 训练策略
+
+训练数据来自 RebuttalBench（70K 样本）：以 Re2-rebuttal 数据集为源，用 GPT-4.1 解析 200K+ 评论-回复对，再由 GPT-4.1、Claude 3.5 等多教师模型混合生成 TSR 推理链，并刻意排除需要补新实验的评论，聚焦语言说服与战略论证。训练分两阶段：先以 Qwen3-8B 为基座做 SFT 冷启动，学会 TSR 的结构化推理格式；再用 GRPO 做强化学习。
+
+强化阶段的核心是一个四维自奖励，避免了额外训练独立 reward model 的开销：
+
+$$R(o) = w_1 R_{format} + w_2 R_{think} + w_3 R_{resp} + w_4 R_{div}$$
+
+其中 $R_{format}$ 是格式正确性的二值项；$R_{think}$ 让模型自评 Analysis 与 Strategy 两段推理的质量；$R_{resp}$ 让模型自评回复的说服力、清晰度和证据使用；$R_{div}$ 衡量回复与一组预设负样本的语义差异，专门用来抗 reward hacking——防止模型为了刷分退化成模板化的礼貌套话。
 
 ## 实验
 

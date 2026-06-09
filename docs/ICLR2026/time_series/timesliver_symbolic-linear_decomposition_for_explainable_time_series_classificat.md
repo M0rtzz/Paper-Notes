@@ -52,29 +52,19 @@ tags:
 
 ## 方法详解
 
-### TimeSliver三模块架构
+### 整体框架
 
-**模块I: 时间段表示学习(Q)**
-- 将时间序列分段→每段用encoder→得到段级表示向量
-- 保持段与原始时间位置的对应关系
+TimeSliver 把可解释性写进架构本身：它从原始时序中抽出一条保持时间结构的"段级表示" $Q$，再从分箱后的符号序列抽出一条去噪的"模式级潜向量" $Z$，两者逐元素相乘得到表示 $R=Z\odot Q$，并直接喂给一层线性分类器。因为分类头是线性的，每个时间段对最终预测的贡献都能被精确拆出来，从而无需任何事后近似就读出正/负归因分数。
 
-**模块II: 符号抽象潜在向量(Z)**
-- 将时间序列分箱(binning)→符号化表示
-- 用encoder→得到潜在时间向量Z
-- 符号化→消除高频噪声+捕获模式级信息
+### 关键设计
 
-**模块III: 线性组合→可解释表示**
-- **关键**: R = Z ⊙ Q (元素级线性组合)
-- R直接线性传给分类层: ŷ = W·R + b
-- 因为线性→每个时间段的贡献=W·(Z_k·Q_k)
-- 正贡献→推向预测类; 负贡献→推离预测类
+**1. 双路编码：原始段表示 $Q$ 与符号潜向量 $Z$ 互补。** 单靠原始信号会把高频噪声当成信号，单靠符号抽象又会丢掉精细的时间定位，TimeSliver 让两者各司其职。第一路把时间序列切成与原始时间位置一一对应的若干段，每段过编码器得到段级表示向量 $Q$，保留"第 $k$ 段对应原始哪一段时间"的对应关系，使归因能落回具体时间点。第二路先对序列做分箱（binning）得到符号化序列，再经编码器得到潜在时间向量 $Z$；分箱本身是一次有损压缩，它抹掉无关的数值抖动、保留模式级结构，等于给模型一个"先看形状再看细节"的归纳偏置。两路在时间维度上对齐，为下一步逐元素组合打好基础。
 
-### 归因分数计算(f_att)
-- 正归因$\phi_k^+$: W·(Z_k·Q_k)中对预测类正贡献的部分
-- 负归因$\phi_k^-$: 对预测类负贡献的部分
-- 非参数操作→直接从表示和权重计算→无需近似
+**2. 符号-线性分解：用 $R=Z\odot Q$ 把"可解释"变成架构保证而非事后近似。** 事后解释之所以不忠实，根源在于真实模型是高度非线性的，任何梯度或扰动都只是局部近似。TimeSliver 直接让表示层做逐元素线性组合 $R=Z\odot Q$，再接线性分类层 $\hat{y}=W\cdot R+b$。这样第 $k$ 段对某预测类的贡献就是闭式的 $W\cdot(Z_k\cdot Q_k)$，没有任何隐藏的非线性纠缠。线性不是为了简单，而是为了让"贡献"这个概念在数学上严格成立——这也意味着归因不再依赖某个人为选定的基准状态，天然规避了 DeepLift/IntGrad 对基准敏感、SHAP 假设特征独立的老问题。
 
-### 与事后方法的根本区别
+**3. 正/负归因分离：区分"推向"与"推离"预测类。** 多数方法只给一个标量重要性，无法回答"这一段到底是支持还是反对当前判断"。由于贡献项 $W\cdot(Z_k\cdot Q_k)$ 带符号，TimeSliver 直接把第 $k$ 段拆成正归因 $\phi_k^{+}$（对预测类的正贡献部分）和负归因 $\phi_k^{-}$（负贡献部分）。整个归因函数 $f_{att}$ 是非参数的，直接从表示 $R$ 与权重 $W$ 读出，无需再训练或近似。区分正负让解释从"哪里重要"升级到"哪里支持、哪里反对"，在医疗、故障诊断这类需要完整决策图景的场景里信息量明显更高。
+
+下表对比 TimeSliver 与事后方法在归因机制上的根本差异：
 
 | 特性 | 事后方法 | **TimeSliver** |
 |------|---------|---------------|
@@ -135,9 +125,9 @@ tags:
 
 - [\[AAAI 2026\] Counterfactual Explainable AI (XAI) Method for Deep Learning-Based Multivariate Time Series Classification](../../AAAI2026/time_series/counterfactual_explainable_ai_xai_method_for_deep_learning-based_multivariate_ti.md)
 - [\[ICLR 2026\] Weight-Space Linear Recurrent Neural Networks](weight-space_linear_recurrent_neural_networks.md)
-- [\[ICLR 2026\] Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
 - [\[AAAI 2026\] ProbFM: Probabilistic Time Series Foundation Model with Uncertainty Decomposition](../../AAAI2026/time_series/probfm_probabilistic_time_series_foundation_model_with_uncertainty_decomposition.md)
 - [\[AAAI 2026\] A Unified Shape-Aware Foundation Model for Time Series Classification](../../AAAI2026/time_series/a_unified_shape-aware_foundation_model_for_time_series_class.md)
+- [\[NeurIPS 2025\] Decomposition of Small Transformer Models](../../NeurIPS2025/time_series/decomposition_of_small_transformer_models.md)
 
 </div>
 

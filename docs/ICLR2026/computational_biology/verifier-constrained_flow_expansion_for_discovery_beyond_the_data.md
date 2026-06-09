@@ -41,44 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-定义强验证器（$\Omega_v = \Omega$，完全刻画有效空间）和弱验证器（$\Omega_v \supset \Omega$，仅作为过滤器）。全局扩展适用于强验证器（目标：有效空间上的均匀分布），局部扩展适用于弱验证器（目标：受约束的局部扩展）。
+FE先按验证器能力把问题分成两类——强验证器（$\Omega_v = \Omega$，能完全刻画有效空间）走全局扩展、目标是把密度铺成有效空间上的均匀分布；弱验证器（$\Omega_v \supset \Omega$，只能当过滤器）走局部扩展、在预训练分布附近做受约束的扩散。两种情形都被统一成噪声空间上的Mirror Descent优化，再由ExpandThenProject算法把"扩展"和"投影回有效区"交替迭代来求解。
 
 ### 关键设计
 
-1. **全局流扩展（Problem 5）**:
+**1. 全局流扩展：强验证器下直接逼近均匀分布。** 当验证器足够强、能精确判定一个设计是否有效时，问题被写成熵最大化 $\pi^* = \arg\max_{\pi} \mathcal{H}(p_1^\pi)$，约束为期望有效性 $\mathbb{E}_{x \sim p_1}[v(x)] = 1$ 且起点固定 $p_0^\pi = p_0^{\text{pre}}$。这个凸问题的最优解非常干净：终端分布就是有效设计空间上的均匀分布 $p_1^{\pi^*} = \mathcal{U}(\Omega)$。关键在于此时**根本不需要依赖预训练模型**——既然验证器已经完整刻画了有效空间，最大熵的答案完全由 $\Omega$ 决定，于是探索可以毫无包袱地铺满整个有效区域。
 
-    - 强验证器下，求解 $\pi^* = \arg\max_{\pi} \mathcal{H}(p_1^\pi)$ s.t. $\mathbb{E}_{x \sim p_1}[v(x)] = 1$，$p_0^\pi = p_0^{\text{pre}}$
-    - 最优解为有效设计空间上的均匀分布 $p_1^{\pi^*} = \mathcal{U}(\Omega)$
-    - 不依赖预训练模型，因为强验证器完全刻画了有效空间
+**2. 局部流扩展：弱验证器下用KL锚住预训练分布。** 现实中的验证器（如原子键检查器）往往只是过滤器，会漏掉一些它检测不到的无效设计。如果照搬全局扩展，模型就会把密度分配到这些"验证器看不见的无效区"。FE的做法是在熵最大化里加一项KL正则 $\max_\pi \mathcal{H}(p_1^\pi) - \alpha D_{\text{KL}}(p_1^\pi \| p_1^{\text{pre}})$，仍保留有效性约束 $\mathbb{E}[v(x)] = 1$。KL项把扩展后的分布拉回预训练分布附近，等于借预训练模型的先验来兜住弱验证器的盲区；超参 $\alpha$ 就是保守度旋钮——$\alpha$ 越大越贴近预训练分布、越不敢往外探。
 
-2. **局部流扩展（Problem 7）**:
+**3. ExpandThenProject：把扩展与投影拆成两步交替。** 直接求解上面的约束优化很难，FE把每一步Mirror Descent拆成两个易实现的子步并迭代K次。**扩展步**在噪声空间上做无约束优化（Eq. 15），用running cost $f_t = \lambda_t \delta\mathcal{G}_t$ 驱动密度往外摊开；**投影步**则是一次reward-guided fine-tuning（Eq. 16），把验证器对数 $\log v$ 当奖励，把刚才扩出去的密度拉回有效区。先尽情扩、再约束投影，这种"先放后收"的交替正好对应Mirror Descent的一步更新，既保留了探索力度又不会失控。
 
-    - 弱验证器下，加入KL正则化：$\max_\pi \mathcal{H}(p_1^\pi) - \alpha D_{\text{KL}}(p_1^\pi \| p_1^{\text{pre}})$ s.t. $\mathbb{E}[v(x)] = 1$
-    - KL项防止模型在弱验证器无法检测的无效区域分配密度
-    - $\alpha$ 控制保守程度：大 $\alpha$ → 接近预训练分布
+**4. 闭式梯度：用速度场线性变换近似score，避免显式估计。** 扩展步的核心是running cost的梯度 $\delta\mathcal{G}_t$。FE给出了闭式表达：全局情形 $\nabla_x \delta\mathcal{G}_t = -s_t^\pi$，即score function取负；局部情形多一项把当前与预训练score的差也算进来，$\nabla_x \delta\mathcal{G}_t = -s_t^\pi - \alpha_t(s_t^\pi - s_t^{\text{pre}})$，这正是KL正则在梯度上的体现。而score本身不必单独训练，可以从流的速度场 $\pi(x,t)$ 经线性变换得到 $s_t^\pi(x) = \frac{1}{\kappa_t(\frac{\dot{\omega}_t}{\omega_t}\kappa_t - \dot{\kappa}_t)}(\pi(x,t) - \frac{\dot{\omega}_t}{\omega_t}x)$，让整套优化直接复用预训练流模型的输出。
 
-3. **Flow Expander算法（ExpandThenProject）**:
+**5. 噪声空间探索（NSE）：用整段轨迹的score稳住高维探索。** NSE是FE去掉投影步后的副产品，却解决了一个独立的痛点：现有流探索方法只用终端 $t=1$ 处的score $s_1^\pi$，而它在数据稀疏处会发散。FE的扩展步沿用整个流过程 $t \in [0,1]$ 的score信息，相当于把探索信号在时间上均摊，避免被终端的奇异点带偏，因此在高维分子设置中比只看终端的方法稳定得多。
 
-    - **扩展步**：通过噪声空间优化（Eq. 15），利用running cost $f_t = \lambda_t \delta\mathcal{G}_t$ 进行无约束扩展
-    - **投影步**：通过reward-guided fine-tuning（Eq. 16）利用验证器 $\log v$ 约束扩展结果
-    - 交替执行K次迭代
-
-4. **闭式梯度表达式**:
-
-    - 全局FE：$\nabla_x \delta\mathcal{G}_t = -s_t^\pi$（score function的负值）
-    - 局部FE：$\nabla_x \delta\mathcal{G}_t = -s_t^\pi - \alpha_t(s_t^\pi - s_t^{\text{pre}})$
-    - 利用流的速度场通过线性变换近似score：$s_t^\pi(x) = \frac{1}{\kappa_t(\frac{\dot{\omega}_t}{\omega_t}\kappa_t - \dot{\kappa}_t)}(\pi(x,t) - \frac{\dot{\omega}_t}{\omega_t}x)$
-
-5. **噪声空间探索（NSE）**:
-
-    - FE去掉投影步的副产品
-    - 利用整个流过程的score信息（而非仅终端 $t=1$），解决 $s_1^\pi$ 发散问题
-    - 在高维设置中优于现有流探索方法
-
-### 理论保证
-- Proposition 1：ExpandThenProject精确求解MD步的解
-- Theorem 5.1（理想化）：精确更新下有限时间收敛 $D_{\text{KL}}(\mathbf{Q}^* \| \mathbf{Q}^K) \leq \frac{C}{K}$
-- Theorem 5.2（一般设定）：近似更新下在温和噪声/偏差假设下渐近收敛
+**6. 收敛保证：从精确到近似的两级理论支撑。** 整套交替迭代有理论兜底：Proposition 1证明ExpandThenProject恰好精确求解一步Mirror Descent的解；Theorem 5.1在理想化的精确更新下给出有限时间收敛率 $D_{\text{KL}}(\mathbf{Q}^* \| \mathbf{Q}^K) \leq \frac{C}{K}$；Theorem 5.2进一步放宽到实际的近似更新，在温和的噪声/偏差假设下保证渐近收敛，把"扩展步和投影步都只是近似"的现实情形也纳入保证。
 
 ## 实验关键数据
 
@@ -126,10 +103,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2026\] Constrained Flow Optimization via Sequential Fine-Tuning for Molecular Design](../../ICML2026/computational_biology/constrained_flow_optimization_via_sequential_fine_tuning_for_molecular_design.md)
-- [\[NeurIPS 2025\] Constrained Discrete Diffusion](../../NeurIPS2025/computational_biology/constrained_discrete_diffusion.md)
-- [\[ICLR 2026\] Zatom-1: A Multimodal Flow Foundation Model for 3D Molecules and Materials](zatom-1_a_multimodal_flow_foundation_model_for_3d_molecules_and_materials.md)
-- [\[ICLR 2026\] scDFM: Distributional Flow Matching for Robust Single-Cell Perturbation Prediction](scdfm_distributional_flow_matching_model_for_robust_single-cell_perturbation_pre.md)
 - [\[NeurIPS 2025\] Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning](../../NeurIPS2025/computational_biology/flow_density_control_generative_optimization_beyond_entropy-regularized_fine-tun.md)
+- [\[NeurIPS 2025\] Constrained Discrete Diffusion](../../NeurIPS2025/computational_biology/constrained_discrete_diffusion.md)
+- [\[AAAI 2026\] Constrained Best Arm Identification with Tests for Feasibility](../../AAAI2026/computational_biology/constrained_best_arm_identification_with_tests_for_feasibility.md)
+- [\[ICLR 2026\] Zatom-1: A Multimodal Flow Foundation Model for 3D Molecules and Materials](zatom-1_a_multimodal_flow_foundation_model_for_3d_molecules_and_materials.md)
 
 </div>
 

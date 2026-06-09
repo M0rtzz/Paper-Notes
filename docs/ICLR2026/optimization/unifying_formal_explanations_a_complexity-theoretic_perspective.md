@@ -53,28 +53,17 @@ literature 中的解释问题沿两个维度扩展：
 
 ## 方法详解
 
-### 统一框架
+### 整体框架
 
-所有解释问题统一为：
+本文把"找解释"全部归约成同一个组合优化问题：在某个值函数 $v$ 下，寻找满足质量门槛的最小特征子集 $S$，即 $\min |S|$ s.t. $v(S) \geq \delta$。充分理由 / 对比理由、局部 / 全局、概率 / 非概率这四个维度的差异，全部被吸收进 $v$ 的具体形式里——一旦确定了 $v$，问题的难易就完全由 $v$ 的组合优化结构（是否单调、是否子模/超模）决定，而本文的核心发现就是：把"局部"换成"全局"会让 $v$ 从毫无结构变得高度规整，从而把 NP-hard 的解释问题拉回多项式时间。
 
-$$\text{找最小子集 } S \subseteq [n] \text{ 使得 } v(S) \geq \delta$$
+### 关键设计
 
-其中 $v$ 是不同设置下的值函数：
+**1. 统一值函数：把四类解释塞进一个最小化模板。** 不同解释形式的本质区别只在"固定哪些特征、问什么概率"。固定子集 $S$ 内的值、问预测保持的概率，就是充分理由；固定补集 $\bar S$ 的值、问预测翻转的概率，就是对比理由。再把单点 $\boldsymbol{x}$ 换成对数据分布求期望，就从局部升级到全局。四个值函数因此一字排开：局部充分 $v_{\text{suff}}^\ell(S) = \Pr_{\boldsymbol{z} \sim \mathcal{D}}(f(\boldsymbol{z}) = f(\boldsymbol{x}) \mid \boldsymbol{z}_S = \boldsymbol{x}_S)$，全局充分 $v_{\text{suff}}^g(S) = \mathbb{E}_{\boldsymbol{x} \sim \mathcal{D}}[v_{\text{suff}}^\ell(S)]$；局部对比 $v_{\text{con}}^\ell(S) = \Pr_{\boldsymbol{z}}(f(\boldsymbol{z}) \neq f(\boldsymbol{x}) \mid \boldsymbol{z}_{\bar S} = \boldsymbol{x}_{\bar S})$，全局对比 $v_{\text{con}}^g(S) = \mathbb{E}_{\boldsymbol{x}}[v_{\text{con}}^\ell(S)]$。统一模板的价值在于：后续所有复杂性结论都可以只针对 $v$ 的性质来证明，一次推导覆盖全部设置。
 
-- **局部充分值函数**：$v_{\text{suff}}^\ell(S) = \Pr_{\boldsymbol{z} \sim \mathcal{D}}(f(\boldsymbol{z}) = f(\boldsymbol{x}) \mid \boldsymbol{z}_S = \boldsymbol{x}_S)$
-- **全局充分值函数**：$v_{\text{suff}}^g(S) = \mathbb{E}_{\boldsymbol{x} \sim \mathcal{D}}[\Pr_{\boldsymbol{z}}(f(\boldsymbol{z}) = f(\boldsymbol{x}) \mid \boldsymbol{z}_S = \boldsymbol{x}_S)]$
-- **局部对比值函数**：$v_{\text{con}}^\ell(S) = \Pr_{\boldsymbol{z} \sim \mathcal{D}}(f(\boldsymbol{z}) \neq f(\boldsymbol{x}) \mid \boldsymbol{z}_{\bar{S}} = \boldsymbol{x}_{\bar{S}})$
-- **全局对比值函数**：$v_{\text{con}}^g(S) = \mathbb{E}_{\boldsymbol{x}}[\Pr_{\boldsymbol{z}}(f(\boldsymbol{z}) \neq f(\boldsymbol{x}) \mid \boldsymbol{z}_{\bar{S}} = \boldsymbol{x}_{\bar{S}})]$
+**2. 三大组合优化性质：用结构换算法。** 决定问题难易的不是值函数的语义，而是三条组合性质。单调性 $v(S \cup \{i\}) \geq v(S)$ 意味着加特征只增不减，它让"贪心地逐个删特征"能稳定收敛到子集最小解。超模性 $v(S \cup \{i\}) - v(S) \leq v(S' \cup \{i\}) - v(S')$（$S \subseteq S'$）说边际贡献递增，子模性则相反、边际贡献递减——子模性正是 Wolsey (1982) 那类贪心算法获得对数近似保证的前提。这一步把抽象的解释问题翻译成了组合优化里成熟的"工具能不能用"的问题：有单调就有精确贪心，有子模就有近似保证。
 
-### 三大关键性质
-
-**1. 单调性**：$v(S \cup \{i\}) \geq v(S)$（添加特征不会降低值函数）
-
-**2. 超模性**：$v(S \cup \{i\}) - v(S) \leq v(S' \cup \{i\}) - v(S')$（边际贡献递增）
-
-**3. 子模性**：$v(S \cup \{i\}) - v(S) \geq v(S' \cup \{i\}) - v(S')$（边际贡献递减）
-
-### 核心发现：局部与全局的惊人反差
+**3. 局部到全局的"相变"：期望抹平了不规则性。** 把这三条性质逐一核对四个值函数，得到全文最反直觉的结果——局部值函数在任何设置下都不满足任何一条性质，而对单个预测的概率取数据分布期望后，全局值函数立刻全部变得单调，且充分理由变超模、对比理由变子模，恰好对偶。
 
 | 性质 | 局部充分 $v_{\text{suff}}^\ell$ | 全局充分 $v_{\text{suff}}^g$ | 局部对比 $v_{\text{con}}^\ell$ | 全局对比 $v_{\text{con}}^g$ |
 |------|:---:|:---:|:---:|:---:|
@@ -82,23 +71,9 @@ $$\text{找最小子集 } S \subseteq [n] \text{ 使得 } v(S) \geq \delta$$
 | 超模性 | ✗ | ✓（独立分布） | ✗ | ✗ |
 | 子模性 | ✗ | ✗ | ✗ | ✓（独立分布） |
 
-这些性质的发现是**反直觉的**：
+这不是巧合，而是期望运算的平滑效应：单个 $\boldsymbol{x}$ 上添加一个特征可能让概率剧烈跳变（破坏单调与子模），但对整个分布取期望后这些跳变被抹平，规整结构随之浮现。也正是这层平滑，让"模型整体上依赖哪些特征"这种全局问题，反而比"这条预测依赖哪些特征"的局部问题更容易回答。
 
-- 局部值函数在所有设置下都不具备三大性质中的任何一个
-- 全局值函数在所有设置下都满足单调性
-- 充分理由的全局值函数是超模的，对比理由的是子模的——两者恰好"对偶"
-
-### 贪心算法设计
-
-**Algorithm 1（子集最小解释）**：自顶向下，从全特征集开始，每次移除使值函数降最少的特征：
-
-$$j = \arg\max_{i \in S} v(S \setminus \{i\}), \quad S \leftarrow S \setminus \{j\}$$
-
-单调性保证此算法在全局设置下收敛到子集最小解释，但在局部设置下不保证。
-
-**Algorithm 2（基数最小解释近似）**：自底向上，从空集开始，每次加入使值函数增最多的特征：
-
-$$j = \arg\max_{i \notin S} v(S \cup \{i\}), \quad S \leftarrow S \cup \{j\}$$
+**4. 两个贪心算法：把性质兑现成可计算解。** 有了结构就能给出算法。求子集最小解释用自顶向下的 Algorithm 1：从全特征集出发，每次删掉删除后值函数最高的特征 $j = \arg\max_{i \in S} v(S \setminus \{i\})$，再令 $S \leftarrow S \setminus \{j\}$；单调性保证它在全局设置下精确收敛，而局部设置因缺单调性无此保证。求基数最小解释用自底向上的 Algorithm 2：从空集出发，每次加入增益最大的特征 $j = \arg\max_{i \notin S} v(S \cup \{i\})$，再令 $S \leftarrow S \cup \{j\}$；子模/超模性在此提供近似界——全局对比靠子模拿到 $O(\ln|D|)$ 近似，全局充分则借 Shi et al. (2021) 的有界曲率技术拿到常数因子近似。
 
 ## 实验关键数据
 

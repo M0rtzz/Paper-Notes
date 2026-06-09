@@ -41,27 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ExGRPO在GRPO基础上增加三阶段经验管理（收集→分桶→选择）和混合策略优化。维护一个replay buffer存储历史成功轨迹，每批训练混合on-policy新样本和off-policy经验样本。
+ExGRPO要解决的是标准on-policy RLVR的一个浪费：每批rollout只用一次梯度更新就被丢掉，而其中真正有学习价值的成功轨迹没被复用。它的做法是在GRPO之上挂一个replay buffer存历史成功轨迹，并把"什么经验最有价值"拆成三步显式管理——先把成功轨迹**收集**进buffer并按问题难度**分桶**，再从buffer里**选择**中等难度问题下的低熵轨迹，最后把这些off-policy经验和当批on-policy新样本**混合优化**。整个流程的核心判断是：经验不等价，要让训练信号集中在中等难度、推理可靠的那部分轨迹上。
 
 ### 关键设计
 
-1. **经验收集与分桶 (Experience Collection & Partition)**:
+**1. 经验收集与分桶：按正确率把问题分层，让不同强度的学习信号分开处理。**
 
-    - 功能：收集成功轨迹到buffer，按问题最新正确率分桶（Easy/Medium/Hard）
-    - 核心思路：正确率$\text{Acc}(q^*) = k/K$，分为Easy[75%,100%)/Medium(25%,75%]/Hard(0,25%]。引入Retired Set：所有rollout全对的问题移出buffer，避免过拟合简单题
-    - 设计动机：不同难度的问题提供不同强度的学习信号，需要差异化处理
+模型成功解出的轨迹被收进buffer，每个问题 $q^*$ 用它最近一轮的正确率 $\text{Acc}(q^*) = k/K$（K 次rollout中对了 k 次）打标签，分成三桶：Easy [75%, 100%)、Medium (25%, 75%]、Hard (0, 25%]。难度不同意味着学习信号强弱不同，太简单的题几乎没有梯度信号、太难的题噪声大，所以要分层后差异化采样。这里还有一个关键的清理机制——Retired Set：一旦某个问题的所有rollout全部答对，就把它移出buffer，避免模型反复在已经掌握的简单题上过拟合、白白消耗算力。
 
-2. **经验选择 (Experience Selection)**:
+**2. 经验选择：先按难度分布挑问题，再在问题内挑最可靠的那条轨迹。**
 
-    - 功能：两步选择——先按难度分布采样问题，再选低熵轨迹
-    - 核心思路：问题采样概率 $p \propto \mathcal{N}(\text{Acc}(q^*); \mu=0.5, \sigma=1)$，优先中等难度；每个问题选当前策略下最低熵的轨迹 $o^* \leftarrow \arg\min_{o_i} H(o_i; \pi_\theta)$
-    - 设计动机：中等难度提供最强优化信号（实验验证）；低熵对应更高质量推理链（经验验证：高熵轨迹往往推理错误但答案蒙对，反复采样会导致"滚雪球效应"污染训练）
+选择分两步。第一步按一个以 0.5 为中心的高斯分布给问题采样，概率 $p \propto \mathcal{N}(\text{Acc}(q^*); \mu=0.5, \sigma=1)$，于是正确率接近 50% 的中等难度问题被优先选中——实验证实这类问题提供最强的优化信号。第二步在选中的问题里，从当前策略下挑熵最低的那条轨迹 $o^* \leftarrow \arg\min_{o_i} H(o_i; \pi_\theta)$。之所以用低熵做代理，是因为高熵轨迹常常是"答案蒙对、推理过程其实错了"，如果反复把这种轨迹采样进训练，错误推理会被不断强化，形成"滚雪球效应"污染训练；低熵轨迹则对应更连贯可靠的推理链。
 
-3. **混合策略优化 (Mixed-Policy Optimization)**:
+**3. 混合策略优化：on-policy 与 off-policy 联合训练，并用重要性权重校正分布偏移。**
 
-    - 功能：联合优化on-policy新样本和off-policy历史经验，引入importance weighting校正分布偏移
-    - 核心思路：$\mathcal{J}_{\text{ExGRPO}} = (1-\rho)\cdot\mathcal{J}_{\text{on}} + \rho\cdot\mathcal{J}_{\text{exp}}$，off-policy部分用重要性权重 $w_t^*(θ) = \frac{\pi_\theta(o_t^*|q^*)}{\pi_{\theta_{\text{past}}}(o_t^*|q^*)}$
-    - 设计动机：纯off-policy回放低熵轨迹可能伤害探索，混合on-policy保持探索能力。重要性权重确保无偏梯度估计。
+最终目标是把当批新样本和历史经验加权混合：
+
+$$\mathcal{J}_{\text{ExGRPO}} = (1-\rho)\cdot\mathcal{J}_{\text{on}} + \rho\cdot\mathcal{J}_{\text{exp}}$$
+
+混合比例 $\rho$ 控制经验样本的占比。off-policy 这部分因为轨迹是旧策略产生的，直接拿来优化会有分布偏移，所以用重要性权重 $w_t^*(\theta) = \frac{\pi_\theta(o_t^*|q^*)}{\pi_{\theta_{\text{past}}}(o_t^*|q^*)}$ 做校正，保证梯度估计无偏。之所以要"混合"而不是纯回放，是因为只回放低熵历史轨迹会压制探索，掺入on-policy新样本才能保住模型继续探索新解法的能力。
 
 ### 损失函数 / 训练策略
 - 基于Dr.GRPO：去掉长度归一化和标准差归一化

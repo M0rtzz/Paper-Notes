@@ -151,7 +151,7 @@ SVeD 通过单次前向传播验证来确定最佳响应时机：
 - [\[NeurIPS 2025\] Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity](lattice_boltzmann_model_for_learning_real-world_pixel_dynamicity.md)
 - [\[CVPR 2025\] LION-FS: Fast & Slow Video-Language Thinker as Online Video Assistant](../../CVPR2025/video_understanding/lion-fs_fast_slow_video-language_thinker_as_online_video_assistant.md)
 - [\[ICCV 2025\] Online Dense Point Tracking with Streaming Memory](../../ICCV2025/video_understanding/online_dense_point_tracking_with_streaming_memory.md)
-- [\[NeurIPS 2025\] egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
+- [\[NeurIPS 2025\] InfiniPot-V: Memory-Constrained KV Cache Compression for Streaming Video Understanding](infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)
 
 </div>
 

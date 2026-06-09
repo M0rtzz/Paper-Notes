@@ -39,23 +39,13 @@ tags:
 
 ### 整体框架
 
-本文围绕三个核心研究问题展开：(1) 如何量化隐式推理的 faithfulness；(2) 隐式推理是压缩版 CoT 还是不同的计算策略；(3) 模型能否同时通过稳定和不稳定路径达到高准确率。方法论包含 faithfulness 度量设计、层级可解释性分析、安全评估框架和压缩假设检验四个模块。
+本文不训练新模型，而是把一个固定的 Qwen2.5-Math-7B 当作分析对象，通过多次前向传播采集每一层的激活，回答三个问题：隐式推理是否忠实可靠、它是不是压缩版 CoT、以及模型是否能同时靠稳定与不稳定路径蒙对答案。围绕这条主线，作者设计了一套加权的 faithfulness 度量来打分、一个二维分类框架来把高置信错误（静默失败）单独拎出来，再用轨迹相似度检验把"隐式推理=压缩 CoT"的流行假设证伪。
 
-### 关键设计1: 组合式 Faithfulness 度量
+### 关键设计
 
-度量由三个可解释分量加权组成：
+**1. 组合式 Faithfulness 度量：把"算得对不对"拆成可解释的三个维度。** 单样本准确率只看最终答案，掩盖了内部计算的脆弱性，因此作者把忠实度拆成激活稳定性 $\mathcal{S}$、推理跳数对齐 $\mathcal{A}$、深度效率 $\mathcal{E}$ 三个分量，加权合成总分 $\mathcal{F}(q) = 0.35\,\mathcal{S}(q) + 0.35\,\mathcal{A}(q) + 0.30\,\mathcal{E}(q)$。稳定性 $\mathcal{S}$ 对同一问题跑两次独立前向传播，取各层激活余弦相似度的均值再乘上方差惩罚项 $(1 - \min(\sigma^2, 1))$，这样既奖励两次结果一致、又惩罚跨层抖动剧烈的路径；对齐 $\mathcal{A}$ 把激活幅度变化超过第 75 百分位的层当作推理"转折点"，用观测转折频率与期望推理步数的对数比率衡量两者是否匹配；效率 $\mathcal{E}$ 则综合活跃层比例、跳数密度和幅度分布，看实际深度偏离理论最优深度 $\mathcal{D}_{\text{opt}} = \min(s/L, 1)$ 多远。最终判定一条路径"忠实"要求 $\mathcal{F} \geq 0.60$、$\mathcal{S} \geq 0.65$、$\mathcal{E} \geq 0.60$ 同时成立——任一维度塌陷都会被否决，从而避免靠单一指标刷分。
 
-$$\mathcal{F}(q) = 0.35 \cdot \mathcal{S}(q) + 0.35 \cdot \mathcal{A}(q) + 0.30 \cdot \mathcal{E}(q)$$
-
-- **激活稳定性 $\mathcal{S}$**：对同一问题执行两次独立前向传播，计算各层激活的余弦相似度均值，并乘以方差惩罚项 $(1 - \min(\sigma^2, 1))$，同时捕捉平均一致性和跨层稳定性
-- **推理跳数对齐 $\mathcal{A}$**：检测激活幅度变化超过第 75 百分位的层作为推理转折点，通过对数比率衡量观测到的转折频率与期望推理步数的匹配程度
-- **深度效率 $\mathcal{E}$**：综合活跃层比例、跳数密度和幅度分布，与理论最优深度 $\mathcal{D}_{\text{opt}} = \min(s/L, 1)$ 的偏离程度
-
-判定阈值为 $\mathcal{F} \geq 0.60$、$\mathcal{S} \geq 0.65$、$\mathcal{E} \geq 0.60$，三者需同时满足。
-
-### 关键设计2: 安全评估框架与静默失败检测
-
-基于激活稳定性和正确性的二维分类，将模型输出划分为四种模式：
+**2. 安全评估框架与静默失败检测：把最危险的"高置信错误"单独标红。** 高风险场景真正怕的不是模型答错，而是它在算得很稳的情况下还自信地答错。作者据此用稳定性和正确性两个维度把所有输出切成四格：正确且 $\mathcal{S} \geq 0.65$ 是低风险的 True Positive，正确但 $\mathcal{S} < 0.65$ 是蒙对的 Lucky Guess，错误且 $\mathcal{S} < 0.65$ 是符合预期的 True Negative，而错误却 $\mathcal{S} \geq 0.65$ 就是高风险的 Silent Failure。
 
 | 模式 | 条件 | 风险等级 |
 |------|------|----------|
@@ -64,15 +54,9 @@ $$\mathcal{F}(q) = 0.35 \cdot \mathcal{S}(q) + 0.35 \cdot \mathcal{A}(q) + 0.30 
 | True Negative | 错误 ∧ $\mathcal{S} < 0.65$ | 预期 |
 | Silent Failure | 错误 ∧ $\mathcal{S} \geq 0.65$ | **高** |
 
-静默失败率 $\text{SFR} = |\text{Silent Failures}| / |\mathcal{P}|$ 量化了模型在高置信下产生错误输出的比例。
+由此定义静默失败率 $\text{SFR} = |\text{Silent Failures}| / |\mathcal{P}|$，直接量化模型"自信地答错"的比例，让评估从只看平均准确率转向关注最致命的那一类错误。
 
-### 关键设计3: 压缩假设检验
-
-通过比较三种推理模式（隐式、显式 CoT、简洁推理）的层级激活幅度轨迹的余弦相似度：
-
-$$\text{SR} = \frac{1}{|\mathcal{P}|} \sum_{q \in \mathcal{P}} \mathbb{I}[\text{sim}_{\text{traj}}(q, \text{impl}, \text{conc}) \geq 0.7]$$
-
-若 $\text{SR} \geq 0.75$ 则支持压缩假设，$\text{SR} < 0.50$ 则拒绝。
+**3. 压缩假设检验：用轨迹相似度证伪"隐式推理就是压缩版 CoT"。** 一个流行说法是隐式推理只是把显式 CoT 折叠进激活空间，作者用数据正面检验它。对每个问题分别采集隐式、显式 CoT、简洁推理三种模式下的层级激活幅度轨迹，计算隐式与简洁推理轨迹的余弦相似度，并统计相似度达标的样本占比 $\text{SR} = \frac{1}{|\mathcal{P}|} \sum_{q \in \mathcal{P}} \mathbb{I}[\text{sim}_{\text{traj}}(q, \text{impl}, \text{conc}) \geq 0.7]$。预先约定 $\text{SR} \geq 0.75$ 才支持压缩假设、$\text{SR} < 0.50$ 则拒绝，把一个含糊的直觉变成可证伪的判据。
 
 ## 实验关键数据
 
@@ -150,10 +134,10 @@ $$\text{SR} = \frac{1}{|\mathcal{P}|} \sum_{q \in \mathcal{P}} \mathbb{I}[\text{
 ## 相关论文
 
 - [\[ICML 2026\] When to Re-Plan: Subgoal Persistence in Hierarchical Latent Reasoning](../../ICML2026/llm_reasoning/when_to_re-plan_subgoal_persistence_in_hierarchical_latent_reasoning.md)
+- [\[ICLR 2026\] ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
 - [\[ICLR 2026\] No Answer Needed: Predicting LLM Answer Accuracy from Question-Only Linear Probes](no_answer_needed_predicting_llm_answer_accuracy_from_question-only_linear_probes.md)
-- [\[ICLR 2026\] When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](when_reasoning_meets_compression_understanding_the_effects_of_pruning_and_quant.md)
-- [\[ACL 2025\] Large Language and Reasoning Models are Shallow Disjunctive Reasoners](../../ACL2025/llm_reasoning/large_language_and_reasoning_models_are_shallow_disjunctive_reasoners.md)
-- [\[AAAI 2026\] Answering the Unanswerable Is to Err Knowingly: Analyzing and Mitigating Abstention Failures in Large Reasoning Models](../../AAAI2026/llm_reasoning/answering_the_unanswerable_is_to_err_knowingly_analyzing_and.md)
+- [\[NeurIPS 2025\] A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers](../../NeurIPS2025/llm_reasoning/a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)
+- [\[ICLR 2026\] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
 
 </div>
 

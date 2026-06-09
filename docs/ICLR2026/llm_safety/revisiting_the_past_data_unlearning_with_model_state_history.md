@@ -42,55 +42,19 @@ tags:
 
 ### 整体框架
 
-MSA 的核心思想极其简洁：利用早期检查点来更精确地估计和逆转特定数据的影响。
-
-**输入**：
-- 最终模型 $\theta_\mathcal{D}$（已在全部数据上训练）
-- 中间检查点 $C$（权重 $\theta_0$，尚未接触遗忘目标）
-- 遗忘数据集 $\mathcal{D}_f$
+MSA（Model State Arithmetic）从训练历史里挑一个尚未接触遗忘目标的早期检查点 $\theta_0$，在它上面单独微调遗忘集得到一个能精准指向"数据影响方向"的向量，再把这个向量从已训练完的最终模型 $\theta_\mathcal{D}$ 中减掉。整个过程只需要三样输入——最终模型 $\theta_\mathcal{D}$、一个中间检查点（权重 $\theta_0$）和遗忘数据集 $\mathcal{D}_f$，没有任何复杂的联合训练。
 
 ### 关键设计
 
-1. **遗忘向量构造（Step 1）**
+**1. 遗忘向量构造：从"新鲜"的检查点里提取数据影响方向。** 直接在最终模型上算 task vector 效果有限，因为模型早已把遗忘数据学透，提取出的方向缺乏辨别力。MSA 改在尚未见过遗忘目标的检查点 $C$ 上对遗忘集 $\mathcal{D}_f$ 微调 $e_f$ 个 epoch 得到 $\theta_1$，把这一段参数位移作为遗忘向量 $\vec{\theta}_f := \theta_1 - \theta_0$。关键直觉是：一个"新鲜"的检查点第一次接触这批数据时，权重沿着数据影响的本质方向移动得最干净，因此 $\vec{\theta}_f$ 比从饱和模型里挤出来的方向更能代表"这批数据到底改了模型什么"。
 
-   在检查点 $C$ 上微调遗忘集 $\mathcal{D}_f$（$e_f$ 个epoch），得到 $\theta_1$。遗忘向量定义为：
+**2. 向量应用：在参数空间里把影响减回去。** 拿到遗忘向量后，遗忘就退化成一次简单的参数算术：$\theta_{\text{unlearn}} = \theta_\mathcal{D} - \alpha \vec{\theta}_f$，其中 $\alpha$ 控制减去的幅度——太小遗忘不彻底，太大会伤及模型效用。由于全部操作都在权重上完成、不需要在遗忘集上反复跑梯度上升，MSA 天然避开了梯度上升类方法常见的模型崩溃问题。
 
-    $\vec{\theta}_f := \theta_1 - \theta_0$
+**3. 可选的保留向量：在不伤效用的前提下做微调。** 当手头有保留集 $\mathcal{D}_r$ 时，可以用同样的方式在 $\theta_0$ 上微调出 $\theta_2$，构造保留向量 $\vec{\theta}_r = \theta_2 - \theta_0$，并把它加回去：$\theta_{\text{unlearn}} = \theta_\mathcal{D} - \alpha \vec{\theta}_f + \beta \vec{\theta}_r$，$\beta$ 控制保留强度。保留集采样量与遗忘集保持一致以维持计算开销，而且实验显示即使完全不用保留集（forget-only 模式），MSA 也能保持竞争力——这在真实场景里很关键，因为干净的保留集往往不易构造。
 
-   **关键假设**：使用**尚未接触遗忘目标的检查点**来计算遗忘向量，可以更有效地捕获数据影响方向。这比在最终模型上计算 task vector 更有效，因为早期检查点对遗忘数据的"新鲜反应"更具辨别力。
+**4. 检查点选择：方法对"用哪个检查点"很鲁棒。** MSA 参数化为 $\text{MSA}_{\text{ckpt}, \alpha, \beta, e_f, e_r}$，可以取训练轨迹上不同位置的检查点：$\text{MSA}_{\text{instruct}}$（TOFU 训练前的指令微调模型）、$\text{MSA}_{\text{base}}$（预训练基础模型）、$\text{MSA}_{\text{TOFU}}$（最终模型，退化成 task vector），以及预训练过程中某个 X B tokens 处的 $\text{MSA}_{\text{ckpt-XB}}$。越靠近遗忘数据引入时间点的检查点遗忘越彻底，但实验表明即便检查点距遗忘目标隔了上万亿 tokens，$\vec{\theta}_f$ 依然有效，说明它捕获的是数据影响的本质方向而非局部噪声。
 
-2. **向量应用（Step 2）**
-
-   将遗忘向量应用到最终模型：
-
-    $\theta_{\text{unlearn}} = \theta_\mathcal{D} - \alpha \vec{\theta}_f$
-
-   $\alpha$ 控制更新幅度。
-
-3. **可选的保留向量**
-
-   如果有保留集 $\mathcal{D}_r$，可进一步微调得到 $\theta_2$，构造保留向量 $\vec{\theta}_r = \theta_2 - \theta_0$：
-
-    $\theta_{\text{unlearn}} = \theta_\mathcal{D} - \alpha \vec{\theta}_f + \beta \vec{\theta}_r$
-
-   重要的是，保留集的采样量与遗忘集相同，保持计算效率。
-
-4. **检查点选择**
-
-   MSA 参数化为 $\text{MSA}_{\text{ckpt}, \alpha, \beta, e_f, e_r}$，可使用不同距离的检查点：
-    - $\text{MSA}_{\text{instruct}}$：指令微调后模型（TOFU 训练前）
-    - $\text{MSA}_{\text{base}}$：预训练基础模型
-    - $\text{MSA}_{\text{TOFU}}$：最终模型（类似 task vector）
-    - $\text{MSA}_{\text{ckpt-XB}}$：预训练过程中某个检查点（X B tokens）
-
-### 评估创新
-
-针对 TOFU 基准的评估不足，提出三个基于 GPT-4o 判断的新指标：
-- **$\text{Acc}_{\text{forget}}$**：遗忘集问题中，ground truth 未被选为最相似的比率（越高=遗忘越好）
-- **$\text{Acc}_{\text{recover}}$**：遗忘集问题中，理想模型输出被选为最相似的比率（越高=恢复越好）
-- **$\text{Acc}_{\text{retain}}$**：保留集问题中，ground truth 或理想模型输出被选中的比率（越高=保持越好）
-
-这些指标比 ROUGE 更聚焦于**事实内容**而非表面词汇重叠。
+**5. 评估指标：用 GPT-4o 判断聚焦事实而非词面。** 针对 TOFU 原有评估偏重 ROUGE 词汇重叠的不足，作者提出三个由 GPT-4o 充当裁判的新指标：$\text{Acc}_{\text{forget}}$ 统计遗忘集问题中 ground truth 未被选为最相似答案的比率（越高表示忘得越干净），$\text{Acc}_{\text{recover}}$ 统计理想模型输出被选为最相似的比率（越高表示恢复得越好），$\text{Acc}_{\text{retain}}$ 统计保留集问题中 ground truth 或理想模型输出被选中的比率（越高表示效用保持越好）。三者都以事实内容是否对得上为准，避开了高 ROUGE 却事实错误的假象。
 
 ## 实验关键数据
 

@@ -46,29 +46,29 @@ MARS-Sep 建立在 OmniSep 架构之上。输入为混合音频频谱图 $X$ 和
 
 ### 关键设计
 
-1. **分解 Beta 掩码策略（Factorized Beta Mask Policy）**:
+**1. 分解 Beta 掩码策略：把确定性掩码变成可探索的随机决策。**
 
-    - 功能：将确定性掩码预测转化为可探索的随机策略
-    - 核心思路：将分离器的输出 $P_\theta$ 转化为 Beta 分布的参数：$\pi_\theta(M|X,Q) = \prod_{h,w,k} \text{Beta}(M_{h,w,k}; \alpha_{h,w,k}, \beta_{h,w,k})$，其中 $\alpha = 1 + \kappa P_\theta$，$\beta = 1 + \kappa(1-P_\theta)$。浓度尺度 $\kappa > 0$ 控制探索-利用平衡。分解结构使得每个时频 bin 独立采样，log-概率在 bin 上可因式分解
-    - 设计动机：Beta 分布的 $[0,1]$ 支撑与掩码值域天然匹配。$\kappa$ 退火可以避免训练早期出现退化的近二值掩码。相比高斯策略或离散化，Beta 分布更自然且无截断问题
+回归式掩码预测只会给每个时频 bin 吐出一个固定的值，模型没有"试错"的空间，也就无从根据下游语义反馈调整。MARS-Sep 把分离器的输出 $P_\theta$ 重新解释为一族 Beta 分布的参数，掩码策略写成所有 bin 上独立 Beta 分布的乘积：
 
-2. **截断信赖域代理目标（Clipped Trust-Region Surrogate）**:
+$$\pi_\theta(M|X,Q) = \prod_{h,w,k} \text{Beta}(M_{h,w,k}; \alpha_{h,w,k}, \beta_{h,w,k}), \quad \alpha = 1 + \kappa P_\theta,\ \beta = 1 + \kappa(1-P_\theta)$$
 
-    - 功能：稳定策略更新，避免 plain policy gradient 的高方差和崩溃
-    - 核心思路：定义重要性比 $r_\theta(M) = \pi_\theta(M|X,Q) / \pi_{\theta_{\text{old}}}(M|X,Q)$，使用组相对优势 $\tilde{A} = (A - \mu(A))/(\sigma(A) + \varepsilon)$。优化截断代理目标：$\mathcal{J}_{\text{clip}}(\theta) = \mathbb{E}[\min(r_\theta \tilde{A}, \text{clip}(r_\theta, 1-\epsilon, 1+\epsilon)\tilde{A}) + \lambda_H \mathcal{H}(\pi_\theta) - \lambda_{\text{KL}} \text{KL}(\pi_\theta \| \pi_{\theta_{\text{old}}})]$，结合熵正则化和 KL 惩罚
-    - 设计动机：单步 PPO 更新保持了训练循环的简洁性，无需额外的 value network 或复杂的优势估计器。GRPO 式的归一化优势消除了奖励尺度的影响
+浓度尺度 $\kappa > 0$ 控制探索与利用的平衡：$\kappa$ 越小分布越平、采样越发散，训练早期保持探索，随后退火收紧。选 Beta 而非高斯或离散化，是因为它的 $[0,1]$ 支撑天然对应掩码值域，既不需要截断、又不会在训练初期就塌成近二值的退化掩码；而分解到每个 bin 的结构让 log-概率可以逐 bin 因式分解，采样和概率计算都很轻量。
 
-3. **渐进式多模态编码器对齐（Progressive Alignment）**:
+**2. 截断信赖域代理目标：用单步 PPO 稳住策略更新。**
 
-    - 功能：训练可靠的多模态奖励模型，避免 reward hacking
-    - 核心思路：分三阶段微调 ImageBind 编码器。Stage 1：音频-文本对齐，仅解冻投影头和温度参数，用对称 InfoNCE 损失 $\mathcal{L}_{S1}$ 建立语义锚点。Stage 2：音频-音频判别，加入 triplet loss 和一致性损失 $\mathcal{L}_{S2}$，增强类内区分能力，混合部分 Stage 1 数据防遗忘。Stage 3：音频-视频接地，联合 InfoNCE 和 triplet loss $\mathcal{L}_{S3}$，同时保留前两阶段能力
-    - 设计动机：直接用预训练 ImageBind 作为奖励模型会导致 reward hacking——策略学会"欺骗"奖励而非真正改善分离质量。渐进式训练使编码器逐步获得声源判别能力，提供更稳定、更有信息量的奖励信号
+随机采样掩码后直接做 plain policy gradient 方差极高、容易崩。MARS-Sep 借用 PPO 的截断信赖域思路约束每步更新幅度：先定义新旧策略的重要性比 $r_\theta(M) = \pi_\theta(M|X,Q) / \pi_{\theta_{\text{old}}}(M|X,Q)$，再用 GRPO 式的组相对优势 $\tilde{A} = (A - \mu(A))/(\sigma(A) + \varepsilon)$ 把奖励尺度归一化掉，最后优化截断代理目标：
 
-4. **多模态奖励聚合（Query-Pooling Reward）**:
+$$\mathcal{J}_{\text{clip}}(\theta) = \mathbb{E}\big[\min(r_\theta \tilde{A},\ \text{clip}(r_\theta, 1-\epsilon, 1+\epsilon)\tilde{A}) + \lambda_H \mathcal{H}(\pi_\theta) - \lambda_{\text{KL}} \text{KL}(\pi_\theta \| \pi_{\theta_{\text{old}}})\big]$$
 
-    - 功能：将音频、文本、视觉三种查询模态融合为统一的奖励信号
-    - 核心思路：使用多模态低秩双线性池化（MLBP）融合目标侧嵌入：$z^* = \text{MLBP}(\phi_a(y^*), \phi_t(t^*), \phi_v(v^*))$，标量奖励为 $R = \text{sim}(\phi_a(\hat{y}), z^*)$。分离音频保留其原生表示，目标模态融合为语义锚点
-    - 设计动机：如果分别比较各模态，奖励可能过度偏向某个模态。双线性池化显式建模跨模态交互（如文本指定的乐器在视觉上也要出现），鼓励分离音频同时与所有模态对齐
+熵正则项 $\mathcal{H}(\pi_\theta)$ 防止策略过早确定化，KL 惩罚把当前策略拉回旧策略附近。这套设计的好处是整个训练循环保持极简——不需要额外的 value network，也不需要复杂的优势估计器，GRPO 式归一化又让奖励尺度的波动不再影响梯度。
+
+**3. 渐进式多模态编码器对齐：把奖励模型养出真正的声源判别力。**
+
+奖励信号若直接用预训练 ImageBind 来打，策略很快会学会"骗奖励"而非真正改善分离质量（reward hacking）。MARS-Sep 分三阶段把 ImageBind 逐步微调成可靠的奖励模型。Stage 1 做音频-文本对齐，只解冻投影头和温度参数，用对称 InfoNCE 损失 $\mathcal{L}_{S1}$ 建立语义锚点；Stage 2 转向音频-音频判别，加入 triplet loss 和一致性损失 $\mathcal{L}_{S2}$ 增强类内区分能力（这是区分小提琴/中提琴这类声学相近声源的关键），并混入部分 Stage 1 数据防遗忘；Stage 3 做音频-视频接地，联合 InfoNCE 与 triplet loss $\mathcal{L}_{S3}$，同时保留前两阶段的能力。这种课程式递进让编码器一步步获得声源判别力，给出比一步对齐更稳定、更有信息量的奖励。
+
+**4. 多模态奖励聚合：把三种查询模态融成一个语义锚点。**
+
+目标声源可以由音频、文本、图像中任意模态指定，若逐模态分别算相似度再相加，奖励容易偏向某个模态。MARS-Sep 用多模态低秩双线性池化（MLBP）把目标侧的三种嵌入融成单一锚点 $z^* = \text{MLBP}(\phi_a(y^*), \phi_t(t^*), \phi_v(v^*))$，标量奖励就是分离音频与该锚点的相似度 $R = \text{sim}(\phi_a(\hat{y}), z^*)$——分离音频保留自己的原生表示，只在目标侧做融合。双线性池化显式建模了跨模态交互（如文本里点名的乐器在画面里也该出现），从而逼着分离结果同时对齐所有给定模态，而不是讨好其中一个。
 
 ### 损失函数 / 训练策略
 
@@ -141,7 +141,7 @@ MARS-Sep 建立在 OmniSep 架构之上。输入为混合音频频谱图 $X$ 和
 - [\[ICLR 2026\] UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
 - [\[ICLR 2026\] Spotlight on Token Perception for Multimodal Reinforcement Learning](spotlight_on_token_perception_for_multimodal_reinforcement_learning.md)
 - [\[ICML 2026\] Reinforced Sequential Monte Carlo for Amortised Sampling](../../ICML2026/reinforcement_learning/reinforced_sequential_monte_carlo_for_amortised_sampling.md)
-- [\[ICLR 2026\] LadderSym: A Multimodal Interleaved Transformer for Music Practice Error Detection](laddersym_a_multimodal_interleaved_transformer_for_music_practice_error_detectio.md)
+- [\[ICLR 2026\] Exo-Plore: Exploring Exoskeleton Control Space through Human-Aligned Simulation](exo-plore_exploring_exoskeleton_control_space_through_human-aligned_simulation.md)
 
 </div>
 

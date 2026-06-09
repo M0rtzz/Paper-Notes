@@ -45,29 +45,39 @@ tags:
 
 ### 关键设计
 
-1. **双路径注意力选择（Selection）**:
+ABOM 的核心是把进化算法里三个原本靠手工规则的算子——选择、交叉、变异——全部改写成带可学习参数的注意力模块，再加一个在线更新这些参数的闭环。前三个设计回答"后代怎么生成"，第四个回答"参数怎么在没有训练任务的情况下自己学好"。
 
-    - 功能：计算选择矩阵 $\mathbf{A}^{(t)} \in \mathbb{R}^{N \times N}$，决定哪些个体参与交叉
-    - 核心思路：将解空间的位置关系和适应度排名分别通过两组 Query-Key 投影编码，用 softmax 融合为注意力权重。$\mathbf{A}^{(t)} = \text{softmax}\left(\frac{(\mathbf{P}\mathbf{W}^{QP})(\mathbf{P}\mathbf{W}^{KP})^\top + (\mathbf{F}\mathbf{W}^{QF})(\mathbf{F}\mathbf{W}^{KF})^\top}{\sqrt{d_A}}\right)$
-    - 设计动机：传统选择仅基于适应度排名（如锦标赛选择），忽略了解之间的空间关系。双路径设计同时考虑"谁更好"和"谁更近"，使重组更有针对性
+**1. 双路径注意力选择：让"谁参与重组"同时看适应度和空间位置。**
 
-2. **可微交叉（Crossover）**:
+传统选择（如锦标赛选择）只按适应度排名挑个体，等于丢掉了"谁离谁近"这层信息。ABOM 把选择做成一个 $N \times N$ 的注意力矩阵 $\mathbf{A}^{(t)}$，决定每个个体重组时该从哪些个体取材。它开两条路径：一路用位置坐标 $\mathbf{P}$ 做 Query-Key 投影编码解之间的空间关系，另一路用适应度 $\mathbf{F}$ 做投影编码排名优劣，两者相加后过 softmax 融合：
 
-    - 功能：生成中间种群 $\mathbf{P}'^{(t)} = \mathbf{P}^{(t)} + \text{MLP}_{\theta_c}(\mathbf{A}^{(t)}\mathbf{P}^{(t)})$
-    - 核心思路：$\mathbf{A}^{(t)}\mathbf{P}^{(t)}$ 先对父代个体进行加权混合（注意力加权的交叉池），MLP 进一步变换生成偏移量。Dropout（概率 $p_C$）在推理时也保持启用，提供持续的探索随机性
-    - 设计动机：残差连接保留父代信息，MLP 学习非线性交叉模式，dropout 替代了传统 EA 中的交叉概率超参数
+$$\mathbf{A}^{(t)} = \text{softmax}\left(\frac{(\mathbf{P}\mathbf{W}^{QP})(\mathbf{P}\mathbf{W}^{KP})^\top + (\mathbf{F}\mathbf{W}^{QF})(\mathbf{F}\mathbf{W}^{KF})^\top}{\sqrt{d_A}}\right)$$
 
-3. **基因维度间注意力变异（Mutation）**:
+这样权重同时体现"谁更好"和"谁更近"，重组比纯按排名挑更有针对性。
 
-    - 功能：对每个个体计算变异矩阵 $\mathbf{M}_i^{(t)} \in \mathbb{R}^{d \times d}$，建模基因维度之间的交互
-    - 核心思路：$\mathbf{M}_i^{(t)}$ 通过自注意力计算各维度间的依赖强度，$\hat{\mathbf{p}}_i = \mathbf{p}'_i + \text{MLP}_{\theta_m}(\mathbf{M}_i\mathbf{p}'_i)$，使变异考虑维度间的相关性
-    - 设计动机：传统变异（如高斯扰动）独立处理每个维度，忽略了变量间的耦合关系。注意力变异矩阵可学习到"改变第 $j$ 维时应同步调整第 $k$ 维"的模式
+**2. 可微交叉：用注意力加权的父代混合 + 残差 MLP 替代固定交叉规则。**
 
-4. **自适应参数学习**:
+有了选择矩阵后，交叉这一步要把被选中的父代信息融合成中间种群 $\mathbf{P}'^{(t)}$。ABOM 先用 $\mathbf{A}^{(t)}\mathbf{P}^{(t)}$ 对父代做注意力加权混合，得到一个"交叉池"，再过 MLP 学一个非线性偏移量，最后以残差形式叠回原种群：
 
-    - 功能：在线更新所有参数 $\theta$
-    - 核心思路：损失函数为 $\mathcal{L}^{(t)} = \|\hat{\mathbf{P}}^{(t)} - \mathbf{E}^{(t)}\|^2$，让后代逼近精英档案。通过 AdamW 梯度更新 $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}^{(t)}$
-    - 设计动机：精英档案包含了当前已知最优解的信息，鼓励后代方向向精英靠近，实现"适者生存"的梯度版本
+$$\mathbf{P}'^{(t)} = \mathbf{P}^{(t)} + \text{MLP}_{\theta_c}(\mathbf{A}^{(t)}\mathbf{P}^{(t)})$$
+
+残差连接保住父代本身的信息，MLP 负责学非线性的交叉模式。关键细节是交叉里的 Dropout（概率 $p_C$）在推理时也保持启用——它顶替了传统 EA 里那个手调的交叉概率超参数，成为持续注入探索随机性的来源。
+
+**3. 基因维度间注意力变异：让变异考虑变量之间的耦合。**
+
+传统变异（如高斯扰动）对每一维独立加噪，忽略了"改第 $j$ 维往往得连带调第 $k$ 维"这种变量耦合。ABOM 为每个个体单独算一个 $d \times d$ 的变异矩阵 $\mathbf{M}_i^{(t)}$，用自注意力建模各基因维度之间的依赖强度，再以残差方式作用到中间个体上：
+
+$$\hat{\mathbf{p}}_i = \mathbf{p}'_i + \text{MLP}_{\theta_m}(\mathbf{M}_i^{(t)}\mathbf{p}'_i)$$
+
+于是变异不再是各维独立的随机扰动，而是能学到问题特定的维度交互结构（可视化里能看到 $\mathbf{M}_i$ 从随机初始化演化出有序模式）。
+
+**4. 自适应参数学习：用"后代逼近精英档案"当监督信号，把先训后用变成边用边学。**
+
+前三个算子的所有参数 $\theta$ 都要学，但 task-free 设定下没有训练任务、也没有标注，监督信号从哪来？ABOM 的答案是拿精英档案 $\mathbf{E}^{(t)}$（当前保留的最优 $N$ 个个体）当目标，让本轮生成的后代 $\hat{\mathbf{P}}^{(t)}$ 在 L2 距离上向它靠拢：
+
+$$\mathcal{L}^{(t)} = \|\hat{\mathbf{P}}^{(t)} - \mathbf{E}^{(t)}\|^2$$
+
+每轮用 AdamW 做一步梯度更新 $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}^{(t)}$。精英档案携带了"目前已知哪里更优"的信息，把后代往这个方向拉，相当于"适者生存"的梯度版本——这条自生成的监督信号就是 ABOM 不需要预定义训练任务、能在目标问题上原地自适应的关键。
 
 ### 损失函数 / 训练策略
 - 损失函数：$\mathcal{L}^{(t)} = \|\hat{\mathbf{P}}^{(t)} - \mathbf{E}^{(t)}\|^2$，后代与精英档案的 L2 距离
@@ -137,10 +147,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] Meta-Learning Hyperparameters for Parameter Efficient Fine-Tuning](../../CVPR2025/remote_sensing/meta-learning_hyperparameters_for_parameter_efficient_fine-tuning.md)
-- [\[NeurIPS 2025\] InstructSAM: A Training-Free Framework for Instruction-Oriented Remote Sensing Object Recognition](../../NeurIPS2025/remote_sensing/instructsam_a_training-free_framework_for_instruction-oriented_remote_sensing_ob.md)
 - [\[ICLR 2026\] Measuring the Intrinsic Dimension of Earth Representations](measuring_the_intrinsic_dimension_of_earth_representations.md)
 - [\[ICLR 2026\] TAMMs: Change Understanding and Forecasting in Satellite Image Time Series with Temporal-Aware Multimodal Models](tamms_change_understanding_and_forecasting_in_satellite_image_time_series_with_t.md)
 - [\[ICLR 2026\] Spectral Gaps and Spatial Priors: Studying Hyperspectral Downstream Adaptation Using TerraMind](spectral_gaps_and_spatial_priors_studying_hyperspectral_downstream_adaptation_us.md)
+- [\[ICLR 2026\] Earth-Agent: Unlocking the Full Landscape of Earth Observation with Agents](earth-agent_unlocking_the_full_landscape_of_earth_observation_with_agents.md)
 
 </div>
 

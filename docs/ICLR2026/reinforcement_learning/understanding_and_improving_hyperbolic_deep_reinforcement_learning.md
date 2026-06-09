@@ -41,28 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Hyper++ 采用 hybrid Euclidean-hyperbolic encoder 架构（Impala-ResNet），共享欧几里得编码器 + 双曲 actor/critic 头。核心改进集中在编码器最后层到双曲层之间的接口：RMSNorm → TanH → 可学习缩放 → Hyperboloid 指数映射 → HL-Gauss 分类值损失。
+
+这篇论文要解决的是双曲深度 RL「几何上更适合层级数据、却训不稳」的老大难问题。作者没有继续堆经验性的稳定化技巧，而是先把双曲 PPO 的梯度按链式法则拆开看——方程 (3) 把值函数对编码器嵌入的梯度写成三段连乘 $\partial L/\partial v \cdot \partial v/\partial \mathbf{x}_H \cdot \partial \mathbf{x}_H/\partial \mathbf{x}_E$，逐项定位谁在爆炸，再针对每一项设计一个组件去压住它。
+
+落到网络上，Hyper++ 是一个 hybrid Euclidean-hyperbolic 架构（Impala-ResNet 主干），底层共享欧几里得编码器，顶上接双曲的 actor/critic 头。真正的改动都集中在「欧几里得编码器最后一层 → 双曲层」这段接口上，数据依次经过：RMSNorm → TanH → 可学习缩放 → Hyperboloid 指数映射 → HL-Gauss 分类值损失。下面三个关键设计正好对应链式法则里的三项。
 
 ### 关键设计
 
-1. **RMSNorm 正则化（替代 SpectralNorm）**
-    - 功能：约束编码器输出的欧几里得嵌入范数，防止双曲指数映射梯度爆炸
-    - 核心思路：仅在最后线性层预激活输出应用 RMSNorm + $1/\sqrt{d}$ 缩放。Proposition 4.2 保证对 1-Lipschitz 激活函数（ReLU/TanH）有 $\|\hat{\mathbf{x}}\|_2 < 1$，进而保角因子 $\lambda < 2\cosh^2(\sqrt{c})$
-    - 设计动机：Lemma 4.1 证明 SpectralNorm 需应用于所有编码器层才能有效约束范数，但全层应用严重限制 Lipschitz 常数和表达力。RMSNorm 仅需最后一层，保留其余层自由度
+**1. RMSNorm 正则化：用最后一层归一化压住嵌入范数，而不是全网络限 Lipschitz。**
 
-2. **可学习特征缩放（Learned Euclidean Feature Scaling）**
-    - 功能：扩大 RMSNorm 约束后双曲空间的可用容积
-    - 核心思路：学习标量 $\xi_\theta$，缩放嵌入为 $\hat{\mathbf{x}}_E^{\text{rescale}} = \rho_{\max} \cdot \sigma(\xi_\theta) \cdot \hat{\mathbf{x}}_E$，其中 $\rho_{\max} = \operatorname{atanh}(\alpha)/\sqrt{c}$，$\alpha=0.95$
-    - 设计动机：RMSNorm 将 Poincaré Ball 可用半径限制为 0.76（$c=1$），可用体积 $\propto r^d$，$d=32$ 时 $(0.95/0.76)^{32} \approx 1200\times$ 体积增益
+链式法则最右一项 $\partial \mathbf{x}_H/\partial \mathbf{x}_E$ 来自双曲指数映射，当欧几里得嵌入范数过大时它会把梯度放大到爆炸。先前工作（Cetin et al.）用 SpectralNorm 来压范数，但 Lemma 4.1 指出 SpectralNorm 必须施加到编码器的**所有层**才能真正约束输出范数，代价是把整个编码器的 Lipschitz 常数和表达力都锁死了。作者改用 RMSNorm：只在最后一个线性层的预激活输出上做 RMSNorm 再乘 $1/\sqrt{d}$ 缩放。Proposition 4.2 证明，只要后续激活是 1-Lipschitz（ReLU/TanH），就有 $\|\hat{\mathbf{x}}\|_2 < 1$，从而把保角因子压在 $\lambda < 2\cosh^2(\sqrt{c})$ 以内。好处是范数约束只花在最后一层，前面所有层的自由度都保留下来，不再牺牲表达力换稳定性。
 
-3. **Hyperboloid 模型 + HL-Gauss 分类值损失**
-    - 功能：从几何和损失两个层面消除不稳定源
-    - 核心思路：Hyperboloid MLR 无保角因子（$v^{\text{HB}}$ 公式中不含 $(1-c\|\mathbf{x}\|^2)^{-1}$ 项），梯度更稳定。HL-Gauss 将值函数学习转化为 51 个离散 bin 的分类问题，与双曲 MLR 的超平面距离输出几何对齐
-    - 设计动机：Poincaré Ball MLR 梯度 $\propto (1-c\|\mathbf{x}_H\|^2)^{-2}$ 在边界附近爆炸；MSE 回归与双曲 MLR 几何不匹配——分类损失更自然
+**2. 可学习特征缩放：把 RMSNorm 压缩掉的双曲容积重新「撑」回来。**
+
+RMSNorm 虽然稳住了梯度，却带来副作用——它把 Poincaré Ball 的可用半径压到了 0.76（$c=1$ 时），嵌入挤在球心附近，可用体积大幅缩水。作者加一个可学习标量 $\xi_\theta$，把嵌入重新放大：
+
+$$\hat{\mathbf{x}}_E^{\text{rescale}} = \rho_{\max} \cdot \sigma(\xi_\theta) \cdot \hat{\mathbf{x}}_E, \quad \rho_{\max} = \operatorname{atanh}(\alpha)/\sqrt{c},\ \alpha=0.95$$
+
+$\sigma(\cdot)$ 把缩放限制在安全上界 $\rho_{\max}$ 内，让网络自己学要用到多大的半径。由于双曲可用体积随半径指数增长（$\propto r^d$），把半径从 0.76 撑到 0.95、在 $d=32$ 时就带来 $(0.95/0.76)^{32} \approx 1200\times$ 的体积增益——既保住了稳定性，又把被 RMSNorm 牺牲掉的表达空间几乎全部找了回来。
+
+**3. Hyperboloid 模型 + HL-Gauss 分类值损失：从几何和损失两端同时拆掉剩下两个不稳定源。**
+
+链式法则中间一项 $\partial v/\partial \mathbf{x}_H$ 和最左一项 $\partial L/\partial v$ 还各自有隐患。几何这端，Poincaré Ball 的 MLR 输出梯度正比于 $(1-c\|\mathbf{x}_H\|^2)^{-2}$，嵌入一旦靠近球边界这一项就爆炸；作者改用 Hyperboloid 模型，它的值输出 $v^{\text{HB}}$ 公式里根本不含 $(1-c\|\mathbf{x}\|^2)^{-1}$ 这类保角因子项，梯度天然更平稳。损失这端，传统 MSE 回归与双曲 MLR「按到超平面的距离打分」的几何并不匹配；作者把值函数学习改成 HL-Gauss——将连续回报离散成 51 个 bin 当作分类问题来学，它的目标形式正好和双曲 MLR 的超平面距离输出对齐。两个组件分别稳住了链式法则的中间项和最左项，和 RMSNorm 一起做到三项全压。
 
 ### 损失函数 / 训练策略
 
-PPO clipped surrogate objective 不变。Critic 使用 HL-Gauss 损失（51 bins, $[-10, 10]$），TanH 替代 ReLU 作为最后激活。Corollary 4.3 通过 Poincaré Ball-Hyperboloid 等距，将 RMSNorm + 缩放的范数约束传递到 Hyperboloid 时间分量 $x_0^{\max}$ 的有界性。
+PPO 的 clipped surrogate objective 保持不变。Critic 改用 HL-Gauss 损失（51 bins，区间 $[-10, 10]$），并用 TanH 替代 ReLU 作为最后一层激活以满足 1-Lipschitz 条件。Corollary 4.3 进一步通过 Poincaré Ball 与 Hyperboloid 之间的等距，把 RMSNorm + 缩放在 Poincaré 侧得到的范数约束传递到 Hyperboloid 侧，保证其时间分量 $x_0^{\max}$ 同样有界——这样无论用哪种双曲模型，前面的稳定性结论都成立。
 
 ## 实验关键数据
 
@@ -126,8 +130,8 @@ PPO clipped surrogate objective 不变。Critic 使用 HL-Gauss 损失（51 bins
 - [\[ICLR 2026\] CUDA-L1: Improving CUDA Optimization via Contrastive Reinforcement Learning](cuda-l1_improving_cuda_optimization_via_contrastive_reinforcement_learning.md)
 - [\[ICLR 2026\] Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning](self-improving_skill_learning_for_robust_skill-based_meta-reinforcement_learning.md)
 - [\[ICLR 2026\] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
-- [\[ICLR 2026\] Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
 - [\[ICLR 2026\] MergeMix: A Unified Augmentation Paradigm for Visual and Multi-Modal Understanding](mergemix_a_unified_augmentation_paradigm_for_visual_and_multi-modal_understandin.md)
+- [\[ICLR 2026\] Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
 
 </div>
 

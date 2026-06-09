@@ -38,47 +38,15 @@ RNA 逆向设计（给定目标 3D 结构，找到能折叠为该结构的核苷
 
 ### 整体框架
 
-RIDER = RIDE（预训练扩散模型）+ RL 微调
+RIDER 用两阶段把"序列恢复率"这个错位的代理目标换成真正想要的"3D 结构相似性"：先预训练一个条件扩散模型 RIDE，让它根据目标骨架结构学会生成合理序列；再把整条去噪采样过程当成一段决策轨迹，用强化学习直接拿折叠后的结构相似度当奖励去微调它。前者保证生成质量在分布内，后者把优化方向从"像天然序列"扳到"折叠对了"。
 
-### 阶段一：条件扩散模型 RIDE
+### 关键设计
 
-**结构表示**：将 RNA 3D 骨架结构表示为几何图，节点为核苷酸，边编码空间邻近关系。用 GVP-GNN 编码器处理得到等变的节点嵌入 $\mathbf{h}_c$。
+**1. 条件扩散模型 RIDE：把目标结构编码成可生成序列的条件。** 要让模型"看着结构写序列"，先得把 3D 骨架变成模型能消化的条件。RIDER 把 RNA 骨架表示成几何图——节点是核苷酸、边编码空间邻近，用 5 层 GVP-GNN 编码器抽出等变的节点嵌入 $\mathbf{h}_c$ 作为扩散条件。扩散模型学的是条件分布 $p(\mathbf{x}_0 \mid \mathbf{h}_c)$，其中 $\mathbf{x}_0 \in \{0,1\}^{N \times 4}$ 是独热编码的序列，前向加噪为 $\mathbf{x}_t = \alpha_t \mathbf{x}_0 + \sigma_t \varepsilon$。训练就是标准的噪声预测目标 $\mathcal{L}_{\text{pretrain}}(\theta) = \mathbb{E}_{t, \mathbf{x}_0, \varepsilon, \mathbf{h}_c}[\|\varepsilon - \epsilon_\theta(\alpha_t \mathbf{x}_0 + \sigma_t \varepsilon, t, \mathbf{h}_c)\|^2]$，噪声预测网络同样由 GVP-GNN 组成，推理时用 50 步 DDIM 采样。这一步先把序列-结构的对应关系学进模型，相当于给后续 RL 一个质量过关的起点——预训练后单论 NSR 就已经做到 61%，高于 gRNAde 的 50%。
 
-**扩散模型**：学习条件分布 $p(\mathbf{x}_0 | \mathbf{h}_c)$，其中 $\mathbf{x}_0 \in \{0,1\}^{N \times 4}$ 为独热编码序列。
+**2. 把去噪采样建模成 MDP 并用 RL 微调：让训练直接对准结构奖励。** 扩散模型本身只会模仿训练序列，无法主动优化"折叠结果好不好"。RIDER 的关键一步是把 50 步去噪采样看成一段马尔可夫决策过程：状态 $s_t = (\mathbf{x}_t, t, \mathbf{h}_c)$，动作 $a_t$ 是从 $\mathbf{x}_t$ 到 $\mathbf{x}_{t-\Delta t}$ 的一步转移，策略 $\pi_\theta(a_t\mid s_t)$ 就由扩散模型参数化，奖励只在轨迹末尾——拿到完整序列、折叠出结构后——才给出。这样优势函数携带的就是真实的结构信号。为稳住高方差的轨迹奖励，优势估计用批量奖励均值 $b = \mathbb{E}_\tau[R_{\text{traj}}]$ 作基线，并进一步做滑动平均 $b^{(i)} = \beta_{\text{baseline}} \cdot b^{(i-1)} + (1-\beta_{\text{baseline}}) \cdot \bar{R}^{(i)}_{\text{batch}}$ 抑制跨批波动；更新则套用 PPO 裁剪目标 $\mathcal{L}^{RL}(\theta) = \mathbb{E}[\sum_{k}\min(r_k(\theta)A, \text{clip}(r_k(\theta), 1-\epsilon_{\text{clip}}, 1+\epsilon_{\text{clip}})A)]$，防止单步更新过大把预训练模型带崩。
 
-前向过程：$\mathbf{x}_t = \alpha_t \mathbf{x}_0 + \sigma_t \varepsilon$
-
-训练目标：
-
-$$\mathcal{L}_{\text{pretrain}}(\theta) = \mathbb{E}_{t, \mathbf{x}_0, \varepsilon, \mathbf{h}_c}\left[\|\varepsilon - \epsilon_\theta(\alpha_t \mathbf{x}_0 + \sigma_t \varepsilon, t, \mathbf{h}_c)\|^2\right]$$
-
-噪声预测网络由 5 层 GVP-GNN 组成，推理时使用 DDIM 采样器（50 步）。
-
-### 阶段二：RL 微调
-
-将去噪采样过程建模为 MDP：
-- **状态** $s_t = (\mathbf{x}_t, t, \mathbf{h}_c)$
-- **动作** $a_t$：从 $\mathbf{x}_t$ 到 $\mathbf{x}_{t-\Delta t}$ 的转移
-- **策略** $\pi_\theta(a_t|s_t)$：由扩散模型参数化
-- **奖励**：仅在轨迹末尾获得
-
-**优势估计改进**：
-1. 批量均值基线：$b = \mathbb{E}_\tau[R_{\text{traj}}]$
-2. **滑动平均策略**稳定训练：$b^{(i)} = \beta_{\text{baseline}} \cdot b^{(i-1)} + (1-\beta_{\text{baseline}}) \cdot \bar{R}^{(i)}_{\text{batch}}$
-
-策略梯度（带 PPO 裁剪）：
-
-$$\mathcal{L}^{RL}(\theta) = \mathbb{E}\left[\sum_{k=0}^{N_{\text{steps}}-1}\min(r_k(\theta)A, \text{clip}(r_k(\theta), 1-\epsilon_{\text{clip}}, 1+\epsilon_{\text{clip}})A)\right]$$
-
-### 奖励函数
-
-基于三种 3D 结构相似性指标设计四种奖励函数：
-- $R^{\text{gdt}} = (\text{GDT\_TS} \times w)^2$
-- $R^{\text{tm}} = (\text{TM-score} \times w)^2$  
-- $R^{\text{rmsd}} = -(\text{RMSD} \times w)^2$
-- $R^{\text{gdt\_rmsd}}$：组合奖励（效果最好）
-
-额外设计 $R_{\text{bonus}}$：当 GDT_TS > 0.5 或 RMSD < 2.0Å 时给予额外奖励。
+**3. 面向 3D 结构相似性的奖励设计：把抽象目标翻译成可优化的标量。** RL 的方向完全由奖励决定，所以奖励必须直接反映"折叠得像不像"。RIDER 基于三种结构相似性指标构造奖励：$R^{\text{gdt}} = (\text{GDT\_TS} \times w)^2$、$R^{\text{tm}} = (\text{TM-score} \times w)^2$、$R^{\text{rmsd}} = -(\text{RMSD} \times w)^2$，以及把 GDT 和 RMSD 拼起来的组合奖励 $R^{\text{gdt\_rmsd}}$。平方放大了高分区间的梯度，让模型更愿意去够接近完美折叠的序列；再叠一个阈值奖励 $R_{\text{bonus}}$——当 GDT_TS > 0.5 或 RMSD < 2.0Å 时额外加分——给"已经折得不错"的样本一个明确的鼓励信号。实验里组合奖励 $R^{\text{gdt\_rmsd}}$ 在各指标上最均衡，因为它同时兼顾了全局对齐（GDT）和逐原子误差（RMSD）这两类互补的衡量角度。
 
 ## 实验
 
@@ -148,8 +116,8 @@ $$\mathcal{L}^{RL}(\theta) = \mathbb{E}\left[\sum_{k=0}^{N_{\text{steps}}-1}\min
 - [\[ICLR 2026\] Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion](hierarchical_entity-centric_reinforcement_learning_with_factored_subgoal_diffusi.md)
 - [\[AAAI 2026\] Structure-based RNA Design by Step-wise Optimization of Latent Diffusion Model](../../AAAI2026/image_generation/structure-based_rna_design_by_step-wise_optimization_of_latent_diffusion_model.md)
 - [\[CVPR 2026\] Refining Few-Step Text-to-Multiview Diffusion via Reinforcement Learning](../../CVPR2026/image_generation/refining_few-step_text-to-multiview_diffusion_via_reinforcement_learning.md)
-- [\[ICLR 2026\] Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
 - [\[ICML 2025\] Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](../../ICML2025/image_generation/hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
+- [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 
 </div>
 

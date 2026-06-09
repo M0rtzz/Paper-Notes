@@ -41,30 +41,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在标准 InfoNCE 对比学习之上添加两个显式损失：$\mathcal{L}_{\text{ATP}}$（拉近正对）+ $\mathcal{L}_{\text{CU}}$（推开质心），组合为 $\mathcal{L}_{\text{CL}_{\text{gap}}} = \mathcal{L}_{\text{gap}} + \frac{1}{2}(\mathcal{L}^{(m\to n)} + \mathcal{L}^{(n\to m)})$。直接扩展到 $M$ 个模态。
+这篇论文要解决的是 CLIP 类模型里"两个模态各自扎堆、跨模态语义对不齐"的 modality gap，而且要在不破坏检索的前提下消掉它。做法很轻：保留标准的双向 InfoNCE 对比项不动，在它之上再挂两个显式的几何约束——一个把真正配对的样本往一起拽（$\mathcal{L}_{\text{ATP}}$），另一个把不同语义样本的跨模态质心在超球面上推开（$\mathcal{L}_{\text{CU}}$）。两者合起来记作 $\mathcal{L}_{\text{gap}}=\mathcal{L}_{\text{ATP}}+\mathcal{L}_{\text{CU}}$，最终训练目标是
+
+$$\mathcal{L}_{\text{CL}_{\text{gap}}} = \mathcal{L}_{\text{gap}} + \tfrac{1}{2}\big(\mathcal{L}^{(m\to n)} + \mathcal{L}^{(n\to m)}\big).$$
+
+整个设计与模态数无关，从图像+文本的双模态直接推广到 $M$ 个模态（如音频+视频+文本）只需把求和范围扩到所有模态，不改任何架构。
 
 ### 关键设计
 
-1. **Align True Pairs Loss ($\mathcal{L}_{\text{ATP}}$)**:
+**1. Align True Pairs Loss（$\mathcal{L}_{\text{ATP}}$）：把"排序对了但实际还很远"的正对真正拽到一起。**
 
-    - 功能：显式最小化正对（matching pairs）之间的欧氏距离
-    - 公式：$\mathcal{L}_{\text{ATP}} = \frac{1}{M-1}\sum_{m\neq a}\frac{1}{N}\sum_i \|\mathbf{z}_i^m - \mathbf{z}_i^a\|_2^2$，其中 $a$ 是锚模态
-    - 设计动机：InfoNCE 只优化相对排序，不保证正对的绝对距离接近。$\mathcal{L}_{\text{ATP}}$ 直接拉近正对，从而缩小 gap。但如果只用 $\mathcal{L}_{\text{ATP}}$，整个空间会坍缩到一个点
+gap 的根源在于 InfoNCE 只在乎相对排序——只要正对比所有负对更相似检索就成立，至于正对的绝对距离有多近它并不管，于是训练完成后匹配对的余弦相似度可能低到 0.34（隔着一条 gap）。$\mathcal{L}_{\text{ATP}}$ 直接补上这一刀，以某个锚模态 $a$ 为参照、最小化每个样本在其余模态与锚模态嵌入之间的欧氏距离：
 
-2. **Centroid Uniformity Loss ($\mathcal{L}_{\text{CU}}$)**:
+$$\mathcal{L}_{\text{ATP}} = \frac{1}{M-1}\sum_{m\neq a}\frac{1}{N}\sum_i \big\|\mathbf{z}_i^m - \mathbf{z}_i^a\big\|_2^2.$$
 
-    - 功能：确保不同语义样本的跨模态质心在超球面上均匀分布，防止坍缩
-    - 公式：$\mathcal{L}_{\text{CU}} = \log\frac{1}{N}\sum_i\sum_{j\neq i}\exp(-2\|\boldsymbol{\mu}_i - \boldsymbol{\mu}_j\|_2^2)$，其中 $\boldsymbol{\mu}_k = \frac{1}{M}\sum_m \mathbf{z}_k^m$ 是第 $k$ 个样本的跨模态质心
-    - 设计动机：(a) 在质心上施加均匀性而非在单模态嵌入上——这保留了已学到的跨模态对齐；(b) RBF 核与单位超球面上的均匀分布关联，确保覆盖整个球面
+这一项把正对的绝对距离按下去，gap 随之收缩。但它单独用会失控——所有点都被往一起拉，最后整个空间坍缩成一个点，语义结构荡然无存，所以必须配一个反向的张力项。
 
-3. **理论分析（为什么 gap 伤害聚类但不伤害检索）**:
+**2. Centroid Uniformity Loss（$\mathcal{L}_{\text{CU}}$）：在质心层面撑开空间，防止对齐变坍缩。**
 
-    - 检索只需 $\text{sim}(\mathbf{z}_i^m, \mathbf{z}_i^n) > \max_{j\neq i}\text{sim}(\mathbf{z}_i^m, \mathbf{z}_j^n)$——相对排序不受 gap 影响
-    - 聚类的 within-class scatter 分解为：$\mathbb{E}[\|\mathbf{z}_s^m - \boldsymbol{\mu}_s^\delta\|^2] \approx \mathbb{E}[\|\mathbf{z}_s^m - \boldsymbol{\mu}_s^0\|^2] + \|\boldsymbol{\delta}\|^2$——gap 等量膨胀所有聚类
-    - 关键数学性质：gap 向量 $\boldsymbol{\delta}$ 与语义向量正交（Zhang et al., 2023），所以它像一个常数偏移，不改变排序但改变绝对距离
+反向张力来自一个均匀性约束，但施加的对象很讲究：不是直接在单模态嵌入上推开，而是先算出每个样本的跨模态质心 $\boldsymbol{\mu}_k = \frac{1}{M}\sum_m \mathbf{z}_k^m$，再让不同语义样本的质心在单位超球面上尽量分散：
+
+$$\mathcal{L}_{\text{CU}} = \log\frac{1}{N}\sum_i\sum_{j\neq i}\exp\big(-2\|\boldsymbol{\mu}_i - \boldsymbol{\mu}_j\|_2^2\big).$$
+
+选质心而非单模态嵌入，是为了保住已经学到的跨模态对齐——推开的是"不同样本"，不会把同一样本的各模态又拆散。式中的 RBF 核（高斯核）形式与超球面上的均匀分布存在已知联系，最小化它等价于让质心铺满整个球面，从而给 $\mathcal{L}_{\text{ATP}}$ 的收缩提供恰好的排斥力。两者一拉一撑，gap 被压到接近零而空间不塌。
+
+**3. 理论分析：为什么同一个 gap 对检索无害、对聚类致命。**
+
+这套损失之所以敢"只缩 gap 不怕伤检索"，背后有一个干净的数学解释。检索的成败只取决于相对排序——只要 $\text{sim}(\mathbf{z}_i^m, \mathbf{z}_i^n) > \max_{j\neq i}\text{sim}(\mathbf{z}_i^m, \mathbf{z}_j^n)$ 成立就检索正确，而 gap 是一个对所有样本一致的偏移，不改变任何一对的相对大小，因此检索完全感觉不到它。聚类则相反，它吃的是绝对距离：把类内散度（within-class scatter）做分解会得到
+
+$$\mathbb{E}\big[\|\mathbf{z}_s^m - \boldsymbol{\mu}_s^\delta\|^2\big] \approx \mathbb{E}\big[\|\mathbf{z}_s^m - \boldsymbol{\mu}_s^0\|^2\big] + \|\boldsymbol{\delta}\|^2,$$
+
+也就是 gap 向量 $\boldsymbol{\delta}$ 给每一个聚类的散度都加上同样大小的 $\|\boldsymbol{\delta}\|^2$，把本该按语义抱团的样本硬生生撑散。关键在于 gap 向量 $\boldsymbol{\delta}$ 被证明与语义方向正交（Zhang et al., 2023），所以它表现得就像一个常数偏移：排序不受影响，绝对距离却被整体抬高——这正是它"对实例级任务隐形、对群组级任务有害"的根本原因。
 
 ### 损失函数 / 训练策略
-总损失：$\mathcal{L}_{\text{CL}_{\text{gap}}} = \mathcal{L}_{\text{ATP}} + \mathcal{L}_{\text{CU}} + \frac{1}{2}(\mathcal{L}^{(m\to n)} + \mathcal{L}^{(n\to m)})$。重要发现：随着 gap 缩小，非匹配对的梯度增大（变成更信息丰富的"hard negatives"），匹配对梯度减小——优化自然转向精细化语义结构。
+完整目标把上面三块拼起来：$\mathcal{L}_{\text{CL}_{\text{gap}}} = \mathcal{L}_{\text{ATP}} + \mathcal{L}_{\text{CU}} + \frac{1}{2}(\mathcal{L}^{(m\to n)} + \mathcal{L}^{(n\to m)})$。训练中还观察到一个有意思的自洽现象：随着 gap 被压缩，非匹配对的梯度反而增大、变成更有信息量的 hard negatives，而已经拉近的匹配对梯度减小——优化的重心自然从"把模态对齐"转向"精细打磨语义结构"。
 
 ## 实验关键数据
 

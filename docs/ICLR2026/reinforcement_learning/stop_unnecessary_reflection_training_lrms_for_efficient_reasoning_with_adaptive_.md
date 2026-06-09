@@ -41,44 +41,19 @@ tags:
 
 ### 整体框架
 
-ARLCP 在强化学习训练中引入两个协调的惩罚机制：自适应反思惩罚和长度惩罚，基于 RLOO（REINFORCE Leave One Out）优化。
+ARLCP 把"少反思"做成强化学习里的奖励塑形：在 RLOO（REINFORCE Leave One Out）优化的正确性奖励之上，叠加一个总预算固定的惩罚项，再把这份预算按问题难度在"反思惩罚"和"长度惩罚"之间动态分配。难题多留反思、易题狠压冗余，从而在保住正确率的前提下把推理 token 砍下来。
 
-### 1. 复杂度估计
+### 关键设计
 
-通过反思 token 计数（RTC）估计问题的模型感知复杂度，分为三个级别：
-- **简单**：$\text{RTC}(o_i^k) \leq n_1$，权重 $\lambda_1$
-- **中等**：$n_1 < \text{RTC}(o_i^k) \leq n_2$，权重 $\lambda_2$
-- **困难**：$\text{RTC}(o_i^k) > n_2$，权重 $\lambda_3$
+**1. 复杂度估计：用模型自己的反思量当难度计。** 方法不引入外部难度评估器，而是直接数一条回答里出现的反思 token 数 RTC（"wait"、"hmm"、"alternatively" 等关键词命中），并按两个阈值切成三档：$\text{RTC}(o_i^k)\le n_1$ 为简单，$n_1<\text{RTC}(o_i^k)\le n_2$ 为中等，$\text{RTC}(o_i^k)>n_2$ 为困难，实验取 $n_1=40,\,n_2=80$。这一步把"问题对当前模型有多难"量化成可直接读出的信号，是后面动态调权的依据。
 
-### 2. 自适应反思惩罚
+**2. 自适应反思惩罚：难题宽容、易题严管。** 反思惩罚系数 $\alpha_1$ 随复杂度档位取不同权重，$\alpha_1=\lambda_1,\lambda_2,\lambda_3$ 分别对应简单/中等/困难三档（$\lambda_1=0.05,\lambda_2=0.1,\lambda_3=0.15$）。值得注意的是越难的题权重越大——这并非鼓励反思，而是因为难题本就需要更多反思 token，惩罚必须更陡才能把"超出必要范围"的部分压住。具体惩罚量用 sigmoid 把 RTC 相对正确回答分布做归一化：$f(\text{RTC}(o_i^k))=\sigma\!\big((\text{RTC}(o_i^k)-\text{mean}(\text{RTC}(o_i))_{\text{correct}})/\text{std}(\text{RTC}(o_i))_{\text{correct}}\big)$，即反思量明显超过同题正确回答均值时惩罚趋近 1，落在均值附近则几乎不罚。
 
-反思惩罚系数 $\alpha_1$ 根据复杂度动态调节：
+**3. 长度惩罚：补抓非反思性的冗余。** 只压反思 token 还不够，叙述啰嗦、重复展开同样浪费预算，因此再加一项形式相同的长度惩罚 $f(\text{LEN}(o_i^k))=\sigma\!\big((\text{LEN}(o_i^k)-\text{mean}(\text{LEN}(o_i))_{\text{correct}})/\text{std}(\text{LEN}(o_i))_{\text{correct}}\big)$。关键在于它的系数是预算里的剩余部分 $\alpha_2=\alpha-\alpha_1$（总预算 $\alpha=0.2$）：反思惩罚吃得多，留给长度惩罚的就少，两者此消彼长地共享同一份预算，避免叠加后把奖励压垮。
 
-$$\alpha_1 = \begin{cases} \lambda_1, & \text{if } \text{RTC}(o_i^k) \leq n_1 \\ \lambda_2, & \text{if } n_1 < \text{RTC}(o_i^k) \leq n_2 \\ \lambda_3, & \text{if } \text{RTC}(o_i^k) > n_2 \end{cases}$$
+**4. 复合奖励：先答对、再省 token。** 三项合成最终奖励 $r(o_i^k)=\mathcal{C}(o_i^k)\cdot\big(1-\alpha_1 f(\text{RTC}(o_i^k))-\alpha_2 f(\text{LEN}(o_i^k))\big)$，其中 $\mathcal{C}(o_i^k)=\mathbf{1}\{\text{ANS}(o_i^k)=o^*(p_i)\}$ 是 0/1 正确性奖励。把正确性写成乘性门控意味着答错直接清零、再省 token 也无意义，只有在答对的回答之间才比谁更精简，从机制上杜绝了"为压长度而牺牲正确"的退化解。
 
-反思惩罚值通过 sigmoid 归一化：
-
-$$f(\text{RTC}(o_i^k)) = \sigma\left(\frac{\text{RTC}(o_i^k) - \text{mean}(\text{RTC}(o_i))_{\text{correct}}}{\text{std}(\text{RTC}(o_i))_{\text{correct}}}\right)$$
-
-### 3. 长度惩罚
-
-补充抑制非反思性冗余：
-
-$$f(\text{LEN}(o_i^k)) = \sigma\left(\frac{\text{LEN}(o_i^k) - \text{mean}(\text{LEN}(o_i))_{\text{correct}}}{\text{std}(\text{LEN}(o_i))_{\text{correct}}}\right)$$
-
-长度惩罚系数 $\alpha_2 = \alpha - \alpha_1$，确保总惩罚预算 $\alpha$ 在反思和长度之间灵活分配。
-
-### 4. 复合奖励函数
-
-$$r(o_i^k) = \mathcal{C}(o_i^k) \cdot \left(1 - \alpha_1 f(\text{RTC}(o_i^k)) - \alpha_2 f(\text{LEN}(o_i^k))\right)$$
-
-其中 $\mathcal{C}(o_i^k) = \mathbf{1}\{\text{ANS}(o_i^k) = o^*(p_i)\}$ 是正确性奖励。
-
-### 关键设计选择
-
-- 使用 **RLOO** 替代 GRPO，因 GRPO 在非标准长度惩罚设置下不稳定
-- 统计基准（mean、std）仅基于**正确回答**计算，避免噪声干扰
-- 超参数：$\lambda_1=0.05, \lambda_2=0.1, \lambda_3=0.15, n_1=40, n_2=80, \alpha=0.2$
+**5. 优化与统计口径：稳和准的两个细节。** 优化器选 RLOO 而非 GRPO，因为 GRPO 在这种非标准长度惩罚下训练不稳定。另外所有归一化的基准统计量 mean、std 都只在**正确回答**上计算——错误回答往往伴随大量冗余反思，若混入会污染均值与方差，使惩罚基准失真，因此显式排除。
 
 ## 实验结果
 
@@ -151,10 +126,10 @@ $$r(o_i^k) = \mathcal{C}(o_i^k) \cdot \left(1 - \alpha_1 f(\text{RTC}(o_i^k)) - 
 ## 相关论文
 
 - [\[ICLR 2026\] REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](rea-rl_reflection-aware_online_reinforcement_learning_for_efficient_reasoning.md)
-- [\[ICML 2026\] CAMEL: Confidence-Gated Reflection for Reward Modeling](../../ICML2026/reinforcement_learning/camel_confidence-gated_reflection_for_reward_modeling.md)
 - [\[ICLR 2026\] Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals](unsupervised_learning_of_efficient_exploration_pre-training_adaptive_policies_vi.md)
+- [\[ICML 2026\] CAMEL: Confidence-Gated Reflection for Reward Modeling](../../ICML2026/reinforcement_learning/camel_confidence-gated_reflection_for_reward_modeling.md)
 - [\[ICLR 2026\] RM-R1: Reward Modeling as Reasoning](rm-r1_reward_modeling_as_reasoning.md)
-- [\[ICLR 2026\] Learning from Synthetic Data Improves Multi-hop Reasoning](learning_from_synthetic_data_improves_multi-hop_reasoning.md)
+- [\[ICLR 2026\] FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning](fapo_flawed-aware_policy_optimization_for_efficient_and_reliable_reasoning.md)
 
 </div>
 

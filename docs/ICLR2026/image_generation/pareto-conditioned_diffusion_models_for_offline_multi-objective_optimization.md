@@ -36,40 +36,25 @@ tags:
 
 ### 整体框架
 
-PCD 统一了方案生成和 Pareto 前沿建模：训练条件扩散模型 → 以目标向量为条件采样新方案。
+PCD 把离线多目标优化整个改写成一次条件采样：用数据集训练一个以目标向量 $\boldsymbol{y}$ 为条件的扩散模型 $D_\theta(\boldsymbol{x}; \boldsymbol{y}, \sigma)$，推理时只要给出想要的目标权衡向量 $\hat{\boldsymbol{y}}$，就直接采出对应的解 $\boldsymbol{x}$。整条管线里没有任何代理模型去预测目标值，方案生成和 Pareto 前沿建模被压进同一个生成器，因此也就绕开了"代理不准 → 搜索被误导"这条传统失败链路。
 
-### 1. 多目标重加权策略
+### 关键设计
 
-基于 dominance number 的分箱加权：
+**1. 多目标重加权：让模型偏向可靠又靠前的样本。**
 
-$$w_i = \frac{|B_i|}{|B_i| + K} \exp\left(\frac{-\frac{1}{|B_i|}\sum_{j=1}^{|B_i|} o(\boldsymbol{x}_{b_j})}{\tau}\right)$$
+离线数据集里的点质量参差不齐，直接均匀拟合会把模型拉向平庸区域。PCD 先用 dominance number $o(\boldsymbol{x}) = \sum_{\boldsymbol{x}' \in \mathcal{D}} \mathbb{I}[\boldsymbol{f}(\boldsymbol{x}) \prec \boldsymbol{f}(\boldsymbol{x}')]$ 衡量每个样本被多少其它点支配——值越小说明越靠近前沿。随后按这个数把样本分箱，给第 $i$ 箱赋权 $w_i = \frac{|B_i|}{|B_i| + K} \exp\!\left(\frac{-\frac{1}{|B_i|}\sum_{j=1}^{|B_i|} o(\boldsymbol{x}_{b_j})}{\tau}\right)$。这个权重同时编码了两层意图：前一项 $\frac{|B_i|}{|B_i|+K}$ 随箱内点数增加而趋近 1，让样本多、统计可靠的箱占更大份量（$K$ 控制对小箱的惩罚力度）；后一项的指数把平均 dominance 越低（越靠前）的箱抬得越高（$\tau$ 是温度，调节这种偏好的陡峭程度）。两者相乘，使训练既不被噪声小箱带偏、又持续向前沿倾斜。
 
-其中 $o(\boldsymbol{x}) = \sum_{\boldsymbol{x}' \in \mathcal{D}} \mathbb{I}[\boldsymbol{f}(\boldsymbol{x}) \prec \boldsymbol{f}(\boldsymbol{x}')]$ 为 dominance number。
+**2. 参考方向条件点生成：给条件向量铺出均匀覆盖前沿的"坐标"。**
 
-两个期望性质：
-1. 包含更多数据点的箱获得更高权重（更可靠）
-2. 平均表现更好的箱获得更高权重（更重要）
+要让条件采样真能覆盖整条 Pareto 前沿，训练时喂给模型的条件 $\boldsymbol{y}$ 必须在目标空间里分布均匀，否则前沿会出现空洞。PCD 借鉴 NSGA-III 的思路分三步构造这些条件点：先用 Riesz s-Energy 方法在目标空间生成 $L$ 个尽量等距的方向向量 $\boldsymbol{w}_i$，作为前沿上的"参考射线"；再按非支配排序逐层把数据点迭代分配给离它最近的方向向量，使每条射线都挂上一个代表点；最后把代表点沿对应方向向外推、再叠加一个零均值高斯扰动，既把条件点推向尚未被数据覆盖的前沿外缘，又用噪声补足局部多样性。这样得到的条件分布在整条前沿上均匀展开，模型推理时就能被引导到任意指定的权衡区域。
 
-### 2. 参考方向条件点生成
+**3. Classifier-Free Guidance 采样：放大条件信号，把样本钉在目标区域。**
 
-受 NSGA-III 启发的三步流程：
-1. **方向向量生成**：用 Riesz s-Energy 方法生成 $L$ 个方向向量 $\boldsymbol{w}_i$
-2. **点-方向配对**：按非支配排序迭代分配数据点到最近方向向量
-3. **外推 + 高斯扰动**：将代表点沿方向外推，加零均值高斯噪声增加多样性
+训练阶段以一定概率丢弃条件，模型同时学到条件分数 $D_\theta(\boldsymbol{x}; \hat{\boldsymbol{y}}, \sigma)$ 和无条件分数 $D_\theta(\boldsymbol{x}; \sigma)$。采样时把两者按引导尺度 $\gamma$ 线性外插，求解 ODE $d\boldsymbol{x}/d\sigma = -(\gamma D_\theta(\boldsymbol{x}; \hat{\boldsymbol{y}}, \sigma) + (1-\gamma) D_\theta(\boldsymbol{x}; \sigma) - \boldsymbol{x})/\sigma$。取 $\gamma > 1$ 相当于沿"条件减无条件"的方向额外推一步，强化目标 $\hat{\boldsymbol{y}}$ 的牵引，把生成样本更紧地拉到与该权衡一致的区域。实践中 $\gamma$ 的收益较快饱和（$2.5$ 附近已接近顶点），因为第 1 步的重加权已经先把数据分布偏向前沿，留给引导项的提升空间有限。
 
-### 3. Classifier-Free Guidance 采样
+### 损失函数 / 训练策略
 
-修改 ODE：
-
-$$d\boldsymbol{x}/d\sigma = -(\gamma D_\theta(\boldsymbol{x}; \hat{\boldsymbol{y}}, \sigma) + (1-\gamma) D_\theta(\boldsymbol{x}; \sigma) - \boldsymbol{x})/\sigma$$
-
-$\gamma > 1$ 增强条件目标的影响，引导样本到与 $\hat{\boldsymbol{y}}$ 一致的区域。
-
-### 训练目标
-
-重加权条件去噪 $L_2$ 损失：
-
-$$\theta = \arg\min_\theta \mathbb{E} [w(\boldsymbol{y}) \lambda(\sigma) \|D_\theta(\boldsymbol{x} + \boldsymbol{n}; \boldsymbol{y}, \sigma) - \boldsymbol{x}\|_2^2]$$
+训练目标是重加权后的条件去噪 $L_2$ 回归：$\theta = \arg\min_\theta \mathbb{E}\,[\,w(\boldsymbol{y})\,\lambda(\sigma)\,\|D_\theta(\boldsymbol{x} + \boldsymbol{n}; \boldsymbol{y}, \sigma) - \boldsymbol{x}\|_2^2\,]$。其中 $\boldsymbol{n}$ 是噪声尺度 $\sigma$ 下加到样本上的扰动，$\lambda(\sigma)$ 是标准的逐尺度损失权重，而 $w(\boldsymbol{y})$ 正是第 1 步算出的样本权重——它把"偏向可靠且靠前"的意图直接焊进了去噪损失，使模型在拟合阶段就向高质量解倾斜。
 
 ## 实验关键数据
 
@@ -132,10 +117,10 @@ $$\theta = \arg\min_\theta \mathbb{E} [w(\boldsymbol{y}) \lambda(\sigma) \|D_\th
 ## 相关论文
 
 - [\[CVPR 2026\] MapReduce LoRA: Advancing the Pareto Front in Multi-Preference Optimization for Generative Models](../../CVPR2026/image_generation/mapreduce_lora_advancing_the_pareto_front_in_multi-preference_optimization_for_g.md)
-- [\[ICLR 2026\] MAC-AMP: A Closed-Loop Multi-Agent Collaboration System for Multi-Objective Antimicrobial Peptide Design](mac-amp_a_closed-loop_multi-agent_collaboration_system_for_multi-objective_antim.md)
 - [\[ICML 2026\] Pareto-Guided Optimal Transport for Multi-Reward Alignment](../../ICML2026/image_generation/pareto-guided_optimal_transport_for_multi-reward_alignment.md)
 - [\[ICLR 2026\] Temporal Concept Dynamics in Diffusion Models via Prompt-Conditioned Interventions](temporal_concept_dynamics_in_diffusion_models_via_prompt-conditioned_interventio.md)
 - [\[ICLR 2026\] Intention-Conditioned Flow Occupancy Models](intention-conditioned_flow_occupancy_models.md)
+- [\[ICML 2026\] Support-Proximity Augmented Diffusion Estimation for Offline Black-Box Optimization](../../ICML2026/image_generation/support-proximity_augmented_diffusion_estimation_for_offline_black-box_optimizat.md)
 
 </div>
 

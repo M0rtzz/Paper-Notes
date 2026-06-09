@@ -28,38 +28,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SPIRAL = 多游戏多轮零和自我博弈 + 分布式 Actor-Learner 架构
+SPIRAL 让单个 LLM 在多个两人零和游戏里跟自己对弈：同一份策略 $\pi_\theta$ 按系统提示分别扮演玩家 0 和玩家 1，每轮活跃方生成完整回复并从中抽取动作推进游戏，终局再把胜负折算成对称奖励反向更新模型。整套训练跑在分布式 Actor-Learner 架构上，游戏集合 $\mathcal{G}=\{G_1,...,G_n\}$ 覆盖 TicTacToe（空间推理）、Kuhn Poker（概率推理）、Simple Negotiation（策略优化）三类技能。
 
-游戏集合 $\mathcal{G} = \{G_1, G_2, ..., G_n\}$，包括：
-- **TicTacToe**：空间推理
-- **Kuhn Poker**：概率推理
-- **Simple Negotiation**：策略优化
+### 关键设计
 
-### 自我博弈机制
-- 单一共享策略 $\pi_\theta$，通过系统提示进行角色条件化（玩家 0 / 玩家 1）
-- 每轮活跃玩家生成完整回复 $y_t^{(p)} \sim \pi_\theta(\cdot | s_t, p, G_i)$
-- 从回复中提取动作更新游戏状态
-- 零和属性：$R_0(\tau) + R_1(\tau) = 0$，只在终局给奖励
+**1. 多游戏共享策略的自我博弈：用零和对弈造出无限自适应课程。** RLVR 依赖人工设计的奖励和领域数据，而固定对手又会让模型过拟合一套静态策略。SPIRAL 让同一策略 $\pi_\theta$ 同时充当对弈双方，靠系统提示做角色条件化：每轮活跃玩家 $p$ 采样出完整回复 $y_t^{(p)} \sim \pi_\theta(\cdot \mid s_t, p, G_i)$，解析出动作后更新状态，游戏满足零和约束 $R_0(\tau)+R_1(\tau)=0$，奖励只在终局结算。因为对手就是不断变强的自己，难度始终贴着模型当前水平自动爬升，省去了任何人工标注，也避免了对静态对手的过拟合。三个游戏分别逼出互补的认知技能，多游戏混训进一步产生协同。
 
-### 关键设计：角色条件优势估计（RAE）
-零和游戏中同一模型优化相反目标，直接用全局基线会导致训练不稳定。RAE 为每个游戏-角色对维护独立基线：
+**2. 角色条件优势估计 RAE：消除位置优势带来的训练方差。** 零和游戏里同一模型在优化两个相反目标，又因游戏不对称（如 TicTacToe 先手有天然优势）让两个角色的期望回报本就不同，若用单一全局基线，优势信号会被位置优势污染、方差极高。RAE 为每个「游戏-角色」对单独维护一个 EMA 基线 $b_{G,p} \leftarrow \alpha\, b_{G,p} + (1-\alpha)\, R_p(\tau)$，并据此算优势 $A_{G,p}(\tau) = R_p(\tau) - b_{G,p}$，再代入方差缩减后的策略梯度：
 
-$$b_{G,p} \leftarrow \alpha \cdot b_{G,p} + (1-\alpha) \cdot R_p(\tau)$$
-$$A_{G,p}(\tau) = R_p(\tau) - b_{G,p}$$
+$$\nabla_\theta J_{\text{SPIRAL}}(\theta) = \mathbb{E}_{G \sim \mathcal{G}} \,\mathbb{E}_{\tau \sim \pi_\theta \times \pi_\theta \mid G} \left[\sum_{p \in \{0,1\}} \sum_{t \in T_p} A_{G,p}(\tau)\, \nabla_\theta \log \pi_\theta(y_t^{(p)} \mid s_t, p, G)\right]$$
 
-方差缩减的策略梯度：
+角色特定的归一化把先后手等位置红利从奖励中扣掉，让梯度只反映「这一步下得好不好」。它是训练能否稳住的分水岭：去掉 RAE，模型约 200 步后会逐渐放弃推理、生成空白思维链（thinking collapse），加上后才能持续学到有效策略。
 
-$$\nabla_\theta J_{\text{SPIRAL}}(\theta) = \mathbb{E}_{G \sim \mathcal{G}} \mathbb{E}_{\tau \sim \pi_\theta \times \pi_\theta | G} \left[\sum_{p \in \{0,1\}} \sum_{t \in T_p} A_{G,p}(\tau) \cdot \nabla_\theta \log \pi_\theta(y_t^{(p)} | s_t, p, G)\right]$$
-
-### 为什么 RAE 至关重要？
-- 不同角色因游戏不对称性可能有不同期望回报（如 TicTacToe 先手优势）
-- 无 RAE 时，模型在约 200 步后逐渐放弃推理（thinking collapse）——生成空白思维链
-- RAE 通过角色特定归一化消除位置优势的干扰
-
-### 工程实现
-- 基于 Oat 框架的分布式 Actor-Learner 架构
-- 用 vLLM 做高效推理，TextArena 模拟游戏
-- 全参数在线更新（非 LoRA），全在线（非离线）
+**3. 全参数在线训练的工程栈：撑住多轮多 Agent 的算力开销。** 多轮多 Agent 的自回归生成对吞吐要求极高。实现基于 Oat 框架的分布式 Actor-Learner 架构，用 vLLM 做高效推理、TextArena 模拟游戏环境，并采用全参数（非 LoRA）、全在线（非离线）更新，保证 Actor 采集的轨迹和 Learner 的参数始终同步，让自我博弈的课程在最新策略上持续推进。
 
 ## 实验关键数据
 

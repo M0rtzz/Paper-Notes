@@ -43,52 +43,21 @@ tags:
 
 ### 整体框架
 
-基于潜在扩散模型 + ControlNet conditioning。输入为遮蔽背景 $\mathbf{x}_{bg}$、两个对象 $\{\mathbf{x}_a, \mathbf{x}_b\}$ 及其二值掩码 $\{\mathbf{m}_a, \mathbf{m}_b\}$。模型在单次前向过程中并行生成包含两个对象的完整合成图像。
-
-**数据构建**（自监督 composition-by-decomposition）：
-- 从目标图像中分解出背景（擦除对象区域）和两个对象
-- 计算并集掩码 $\mathbf{m}_u$、交集掩码 $\mathbf{m}_{ab}$、各对象独占掩码 $\mathbf{m}_a^{ex}$、$\mathbf{m}_b^{ex}$
-- 训练目标：从分解后的各部分重构原始图像
+PICS 建立在潜在扩散模型 + ControlNet conditioning 之上，输入是遮蔽背景 $\mathbf{x}_{bg}$、两个对象 $\{\mathbf{x}_a, \mathbf{x}_b\}$ 及其二值掩码 $\{\mathbf{m}_a, \mathbf{m}_b\}$，在单次前向过程里并行生成同时包含两个对象的完整合成图像，从根上绕开序列合成的覆盖与误差累积。训练数据用自监督的 composition-by-decomposition 方式构造：从一张目标图像里擦除对象区域得到背景、再拆出两个对象，顺带算好并集掩码 $\mathbf{m}_u$、交集掩码 $\mathbf{m}_{ab}$ 和各对象的独占掩码 $\mathbf{m}_a^{ex}$、$\mathbf{m}_b^{ex}$，让模型学会从这些分解块重组回原图，因此不需要任何额外人工标注。
 
 ### 关键设计
 
-**1. Interaction Transformer Block**
+**1. Interaction Transformer Block：把"不同区域该怎么处理"写进结构。** 朴素做法是让一个统一的注意力层同时操心背景保持、对象注入和重叠调解，结果哪个都做不好。PICS 的每个 block 先用自注意力捕获全局依赖，再接一个掩码引导的 MoE 把 token 按所在空间区域路由到专门的专家，最后把各专家的门控输出残差聚合后过 FFN 精炼。这样"背景区域应该不变、独占区域应该填单一对象、重叠区域需要仲裁"这条先验知识不是靠数据隐式学，而是被硬编码进了路由结构。
 
-每个 block 包含：
-- **自注意力**：捕获全局依赖
-- **掩码引导 MoE**：根据空间区域将 token 路由到不同专家
-- **残差聚合 + FFN**：门控输出合并后经 FFN 精炼
+**2. 空间感知 MoE 的四类专家：按掩码分而治之。** MoE 内部按四种区域掩码各设一个专家。背景专家覆盖 $\bar{\mathbf{m}}_{bg}$，做恒等映射保持背景原样不被扰动；对象 a / b 的独占专家分别覆盖 $\bar{\mathbf{m}}_a^{ex}$、$\bar{\mathbf{m}}_b^{ex}$，用背景 query 去交叉注意对应对象的 code，把单个对象的外观注入到只属于它的位置；而真正的难点——两个对象交叠的 $\bar{\mathbf{m}}_{ab}$ 区域——交给重叠专家用下面的 α-blending 单独处理。掩码路由保证每个像素只被它该归属的逻辑触碰，避免对象外观渗到背景或互相污染。
 
-**2. 空间感知 MoE 的四类专家**：
+**3. 自适应 α-blending：让模型自己学谁该挡谁。** 重叠区域是全文最关键的设计，硬指定前后遮挡顺序既麻烦又僵硬。PICS 改成从背景深层表示 $\mathbf{z}^{l-1}$ 生成一个 gating query $\mathbf{q}_g$，让它分别与两个对象 code 做交叉注意力得到聚合表示 $\tilde{\mathbf{c}}_a$、$\tilde{\mathbf{c}}_b$，再算兼容性得分 $s_p = \langle \mathbf{q}_g, \tilde{\mathbf{c}}_p \rangle / \sqrt{d}$，经带温度 $\tau$ 的 softmax 归一成混合权重 $\alpha$，最终融合为 $\mathbf{c}_{ab} = \alpha \tilde{\mathbf{c}}_a + (1-\alpha)\tilde{\mathbf{c}}_b$。关键在于 $\mathbf{q}_g$ 携带的是学到的遮挡语义而非外观线索，所以 $\alpha$ 能在每个空间位置自适应地反映哪个对象应当占主导；实验进一步验证了 $\Delta s = s_a - s_b$ 的符号与真实可见性一致，且交换对象 a/b 编号不改变结果，天然具备顺序不变性。
 
-| 专家类型 | 处理区域 | 操作 |
-|---------|---------|------|
-| 背景专家 | $\bar{\mathbf{m}}_{bg}$ | 恒等映射（保持背景不变） |
-| 对象 a 独占专家 | $\bar{\mathbf{m}}_a^{ex}$ | 交叉注意力：背景 query → 对象 a code |
-| 对象 b 独占专家 | $\bar{\mathbf{m}}_b^{ex}$ | 交叉注意力：背景 query → 对象 b code |
-| 重叠专家 | $\bar{\mathbf{m}}_{ab}$ | 注意力门控 α-blending（见下） |
+**4. 几何感知数据增强：补足对象的三维形状先验。** 单张对象图只给一个视角，遇到杂乱遮挡时形状容易退化。PICS 一方面用单视图 3D 重建模型渲染 $K$ 个辅助视角，编码后用 MLP 融成一个紧凑的多视角描述子，给模型补上形状先验；另一方面对对象图像随机做面内旋转 $\theta \sim \mathcal{U}(-\pi/6, \pi/6)$ 增强姿态鲁棒性。消融显示多视角 prior 与旋转增强各自都带来稳定收益。
 
-**3. 自适应 α-blending 机制**：
+### 损失函数 / 训练策略
 
-重叠区域的融合是本文最关键的设计：
-- 从背景深层表示 $\mathbf{z}^{l-1}$ 生成 gating query $\mathbf{q}_g$
-- $\mathbf{q}_g$ 分别与两个对象 code 做交叉注意力得到聚合表示 $\tilde{\mathbf{c}}_a$, $\tilde{\mathbf{c}}_b$
-- 计算兼容性得分：$s_p = \langle \mathbf{q}_g, \tilde{\mathbf{c}}_p \rangle / \sqrt{d}$
-- Softmax + 温度 $\tau$ 得到混合权重 $\alpha$
-- 融合：$\mathbf{c}_{ab} = \alpha \tilde{\mathbf{c}}_a + (1-\alpha) \tilde{\mathbf{c}}_b$
-
-**核心特性**：gating query 携带的是学到的遮挡语义而非外观线索，使得 $\alpha$ 能自适应反映哪个对象在每个空间位置应该占主导。实验验证了 $\alpha$ 与实际可见性关系一致且与对象编号顺序无关。
-
-### 几何感知数据增强
-
-1. **多视角 shape prior**：用单视图 3D 重建模型渲染 K 个辅助视角，编码后用 MLP 融合为紧凑的多视角描述子
-2. **面内旋转增强**：对对象图像随机旋转 $\theta \sim \mathcal{U}(-\pi/6, \pi/6)$
-
-### 损失函数/训练策略
-
-- 自监督重组损失：重构原始图像
-- 潜在扩散标准去噪损失
-- 无需额外标注数据
+训练以自监督重组损失为核心，要求模型从分解出的背景与两个对象重构回原始目标图像，并叠加潜在扩散的标准去噪损失共同优化。由于训练对完全由 composition-by-decomposition 从现有图像自动构造，整个流程无需任何额外标注数据。
 
 ## 实验关键数据
 

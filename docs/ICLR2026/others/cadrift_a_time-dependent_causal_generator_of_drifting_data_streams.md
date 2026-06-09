@@ -40,42 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CaDrift 基于有向无环图（DAG）定义的结构因果模型。输入是 DAG 结构（节点=特征+目标，边=因果关系）和各类超参数（平滑系数 $\alpha$、自回归系数 $\rho$、漂移类型和时间点）。输出是一条时间依赖的合成数据流，其中样本间有 serial correlation，且在指定时间点发生可控的概念漂移。
+CaDrift 把一张有向无环图（DAG）当作骨架：节点是特征和目标，边是变量间的因果关系，整张图就是一个结构因果模型（SCM）。它要解决的问题是——让 SCM 既保留因果结构、又能生成样本间有时序相关性、还能在指定时刻按需漂移的数据流。
 
-生成流程：根节点通过 EWMA 平滑的分布采样 → 内部节点通过映射函数（小型神经网络）从父节点计算 → 所有节点叠加自回归噪声 → 目标节点通过因果链计算标签 → 在漂移时间点修改映射函数/分布参数。
+数据是这样一帧帧流出来的：根节点先从一个经 EWMA 平滑的分布里采样，内部节点再通过映射函数（小型神经网络）从父节点的值算出自己的值，每个连续节点都叠上一层自回归噪声，最后目标节点沿因果链算出标签。漂移则发生在预设的时间点——到点就替换某个映射函数或改写某个分布参数，让数据流的统计特性突然或渐渐变化。整个框架的输入是 DAG 结构加一组超参数（平滑系数 $\alpha$、自回归系数 $\rho$、漂移类型与触发时刻），输出是一条带 serial correlation、带可控概念漂移的合成数据流。
 
 ### 关键设计
 
-1. **时序依赖的 SCM（Time-dependent SCM）**:
+**1. 时序依赖的 SCM：让 iid 的因果图长出时间记忆。**
 
-    - 功能：让原本 iid 的 SCM 生成具有时序相关性的数据流
-    - 核心思路：标准 SCM 定义 $E := f_E(C) + N_E$，CaDrift 引入两个时序组件：(a) 根节点使用 EWMA 平滑 $Z_t = (1-\alpha)Z_{t-1} + \alpha X_t$，让根节点值携带历史记忆；(b) 所有连续节点的噪声改为自回归形式 $N_E^{(t)} = \rho N_E^{(t-1)} + \epsilon^{(t)}$，其中 $\rho \in [0,1]$ 控制时序平滑度
-    - 设计动机：EWMA 让根节点值平滑过渡而非跳变，自回归噪声让每个节点的随机波动也有连续性。两者结合后时序相关性沿因果链传播到所有下游节点和目标
+标准 SCM 把每个内部变量写成 $E := f_E(C) + N_E$，父节点 $C$ 经映射函数 $f_E$ 加上独立噪声 $N_E$，逐样本独立采样——这正是现有生成器样本 iid、没有时序相关性的根源。CaDrift 在这条公式上动了两处手脚。其一，根节点不再每步独立采样，而是用 EWMA 做平滑：$Z_t = (1-\alpha)Z_{t-1} + \alpha X_t$，让当前值携带上一时刻的历史记忆，于是根节点的取值是缓慢过渡而非跳变。其二，所有连续节点的噪声从独立改为自回归形式 $N_E^{(t)} = \rho N_E^{(t-1)} + \epsilon^{(t)}$，其中 $\rho \in [0,1]$ 控制平滑程度，让每个节点的随机波动本身也连续起来。这两个时序组件叠在因果图上之后，时序相关性会顺着因果链一路传播到所有下游节点和目标，整条数据流于是自然带上了 serial correlation。
 
-2. **因果映射函数初始化**:
+**2. 因果映射函数初始化：先拟合再生成，避免因果链退化。**
 
-    - 功能：定义节点间的因果关系函数
-    - 核心思路：不像 TabPFN 那样随机初始化 MLP/决策树，而是先用父节点分布拟合小型神经网络到目标值，确保映射函数能捕捉父节点分布范围内的因果关系
-    - 设计动机：避免随机树模型可能产生的分裂点在父节点分布外导致因果链变异过小或输出单一类别
+映射函数 $f_E$ 决定了父节点如何因果地决定子节点。CaDrift 不像 TabPFN 那样随机初始化 MLP 或决策树，而是先用父节点的实际分布把一个小型神经网络拟合到目标值上，确保映射函数真的覆盖了父节点分布范围内的因果关系。这么做是为了躲开随机树模型的一个坑——随机生成的分裂点可能落在父节点分布之外，结果整条因果链要么几乎不变化、要么只输出单一类别，生成的数据就退化了。先拟合一遍能保证映射在数据实际出现的区间里有意义。
 
-3. **干预机制（Interventions）**:
+**3. 干预机制：用 do-calculus 模拟现实里的异常扰动。**
 
-    - 功能：模拟真实世界的环境扰动（设备故障、环境冲击等）
-    - 核心思路：对被干预节点断开所有入边，强制赋予来自正态/均匀分布的值，不再依赖因果映射函数。效果用 do-calculus 描述：$P(y | \text{do}(x_3 \sim \mathcal{N}(\mu, \sigma^2)))$
-    - 设计动机：真实数据流中偶发性的异常事件（如传感器故障）不遵循正常因果关系，干预机制自然模拟这种情况
+真实数据流里偶尔会冒出不遵循正常因果规律的事件，比如传感器故障、环境冲击。CaDrift 借因果推断里的干预概念来刻画这类扰动：对被干预的节点断开它所有的入边，强制赋予一个来自正态或均匀分布的值，不再让它听父节点的话。这一步用 do-calculus 表达得很干净——$P(y \mid \text{do}(x_3 \sim \mathcal{N}(\mu, \sigma^2)))$，即把 $x_3$ 从因果图里"拔出来"外部赋值后目标的分布。断边加强制赋值，恰好对应现实中某个变量被外力强行改写、与上游脱钩的情形。
 
-4. **可控漂移生成**:
+**4. 可控漂移生成：改 SCM 的不同零件，产出四种漂移。**
 
-    - 功能：在指定时间点引入不同类型的概念漂移
-    - 核心思路：通过修改 SCM 的不同组件实现四种漂移：
-        - **分布漂移（Distributional）**：修改节点间的映射函数 $f_E(C)$ 或目标映射 $f_y(C)$，改变 $P(y|X)$
-        - **协变量漂移（Covariate）**：修改根节点的分布参数，改变 $P(X)$ 但不改变因果关系
-        - **严重漂移（Severe）**：反转目标映射的输出类别
-        - **局部漂移（Local）**：只修改单个特征的分布参数
-    - 漂移速率通过参数 $\Delta$ 控制：$\Delta=1$ 为突变，$\Delta>1$ 为渐变/增量漂移；还支持循环漂移（恢复旧概念）
+漂移在 CaDrift 里不是另加一套机制，而是直接修改 SCM 的某个组件，改哪一块就得到哪一类漂移。改节点间映射函数 $f_E(C)$ 或目标映射 $f_y(C)$，会改变 $P(y\mid X)$，是**分布漂移（Distributional）**；只改根节点的分布参数、改变 $P(X)$ 但不动因果关系，是**协变量漂移（Covariate）**；把目标映射的输出类别整个反转，是**严重漂移（Severe）**；只改单个特征的分布参数，是**局部漂移（Local）**。漂移有多快则由参数 $\Delta$ 控制：$\Delta=1$ 是一步到位的突变，$\Delta>1$ 是逐步过渡的渐变/增量漂移；框架还支持循环漂移，即一段时间后恢复回旧概念。
 
 ### 训练策略
-CaDrift 是生成框架而非训练模型。映射函数在初始化时拟合一次，之后按因果图传播生成数据流。漂移事件在预设时间点触发映射函数替换。
+CaDrift 是生成框架而非可训练模型，没有端到端的训练过程。映射函数只在初始化时拟合一次，之后就按因果图逐节点传播生成数据流；漂移事件在预设时间点触发映射函数或分布参数的替换。
 
 ## 实验关键数据
 
@@ -138,10 +126,10 @@ CaDrift 是生成框架而非训练模型。映射函数在初始化时拟合一
 
 ## 相关论文
 
-- [\[ACL 2025\] Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
+- [\[NeurIPS 2025\] Test-Time Adaptation by Causal Trimming](../../NeurIPS2025/others/test-time_adaptation_by_causal_trimming.md)
 - [\[ICLR 2026\] Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [\[ACL 2025\] Generating Synthetic Relational Tabular Data via Structural Causal Models](../../ACL2025/others/generating_synthetic_relational_tabular_data_via_structural_causal_models.md)
 - [\[CVPR 2026\] Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
-- [\[AAAI 2026\] How to Marginalize in Causal Structure Learning?](../../AAAI2026/others/how_to_marginalize_in_causal_structure_learning.md)
 - [\[ICLR 2026\] CHLU: The Causal Hamiltonian Learning Unit as a Symplectic Primitive for Deep Learning](chlu_the_causal_hamiltonian_learning_unit_as_a_symplectic_primitive_for_deep_lea.md)
 
 </div>

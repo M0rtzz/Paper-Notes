@@ -41,33 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文有两个部分：(1) 理论分析——证明 DPO 等价于加权 KL 投影，并构造具体反例展示失败模式；(2) 算法设计——分析 RLHF 局部几何，发现奖励空间的等价类结构，据此设计 AuxDPO。
+这篇论文要回答一个问题：DPO 声称自己与两阶段 RLHF 等价，但这个等价是在"tabular 策略类"（能表示任意条件分布）下推的，换成真实 LLM 这种维度受限的参数化策略，等价还成不成立？全文沿两条线展开。前半是理论诊断：把 DPO 损失的最小化重新写成"真实奖励向隐式奖励流形做加权 KL 投影"，再用一个极小的反例证明这个投影会系统性地投歪。后半是对症修复：先分析两阶段 RLHF 在参数化策略下的局部几何，发现奖励空间存在一个"零空间等价类"结构，DPO 恰恰把这块搜索范围漏掉了，于是给 DPO 补上一个沿零空间的辅助变量，把搜索范围撑回整个奖励空间，得到 AuxDPO。
 
 ### 关键设计
 
-1. **DPO 即加权 KL 投影（Proposition 1）**
+**1. DPO 即加权 KL 投影：把单阶段损失翻译成奖励空间里的一次几何投影。**
 
-    - 功能：给出 DPO 损失最小化的精确几何解释
-    - 核心思路：DPO 损失等价于 $r_{\theta_{\text{DPO}}}^\beta = \arg\min_{r \in \mathcal{R}^\beta} \sum_{s,a,a'} n_{s,a,a'} \cdot d_{\text{KL}}(p^{\text{BTL}}(r^*) \| p^{\text{BTL}}(r))$，即将真实奖励通过偏好数据计数 $n_{s,a,a'}$ 加权的 KL 散度投影到隐式奖励流形上
-    - 设计动机：揭示了 DPO 的核心弱点——投影结果依赖权重（即数据分布），且当 $r^*$ 不在流形上时，投影可以落到任意位置
+DPO 的隐式奖励 $r_\theta^\beta(s,a) = \beta \log \frac{\pi_\theta(a|s)}{\pi_{\theta_0}(a|s)}$ 随参数 $\theta$ 变化，在 $\mathbb{R}^m$ 里只能扫出一个 $d$ 维流形 $\mathcal{R}^\beta$（$d$ 是参数量，远小于 $m=|\mathcal{S}|\cdot|\mathcal{A}|$）。Proposition 1 证明，最小化 DPO 损失等价于在这个流形上找离真实奖励最近的点：
 
-2. **局部线性化与失败模式（Proposition 3）**
+$$r_{\theta_{\text{DPO}}}^\beta = \arg\min_{r \in \mathcal{R}^\beta} \sum_{s,a,a'} n_{s,a,a'} \cdot d_{\text{KL}}\big(p^{\text{BTL}}(r^*) \,\big\|\, p^{\text{BTL}}(r)\big)$$
 
-    - 功能：构造具体的 3-response、1-d 参数化策略反例，展示 DPO 的三种失败模式
-    - 核心思路：策略 $\pi_\theta = \frac{1}{Z}[e^\theta, e^{-\theta}, 1]$，真实奖励 $r^* = [1, 2, 0]$（正确偏好序 $a_2 \succ a_1 \succ a_3$）。局部线性化后，隐式奖励流形为 $\text{span}([1, -1, 0])$。当 $n_{3,1} \gg \max\{n_{1,2}, n_{2,3}\}$（比较 $a_3$ 和 $a_1$ 的偏好数据远多于其他），DPO 投影得到 $r_\theta^\beta \approx [\alpha, -\alpha, 0]$，导致：(i) **偏好反转**：$a_1$ 被提升而 $a_2$ 被降低，与真实偏好相反；(ii) **奖励下降**：$\pi_\theta^\top r^* < \pi_{\theta_0}^\top r^*$，策略比初始还差；(iii) **数据敏感性**：改变 $n_{i,j}$ 的相对比例可完全翻转结果
-    - 设计动机：这些失败发生在 **population loss**（无限数据）下的 **全局最优解**，不是数据稀缺或优化不充分的问题，而是 DPO 本身的结构性缺陷
+也就是把真实奖励 $r^*$ 用偏好数据的比较计数 $n_{s,a,a'}$ 作权重、按 KL 散度投影到隐式奖励流形上。这个翻译一下子暴露了 DPO 的命门：投影落在哪里**取决于权重**，而权重就是数据分布；更要命的是，当 $r^*$ 根本不在流形上（参数化策略下这是常态），投影点没有任何"忠实于真实偏好"的保证，理论上可以落到流形的任意位置。
 
-3. **RLHF 局部几何与等价类（Section 4.1）**
+**2. 局部线性化与失败模式：一个三选项的玩具例子就让 DPO 把偏好投反。**
 
-    - 功能：分析两阶段 RLHF 在参数化策略下的局部行为
-    - 核心思路：对 RLHF 目标 $J(\theta; r^*)$ 做局部二次近似，一阶最优性条件给出 $\theta^* = \theta_0 + \frac{1}{\beta} F_{\rho,\theta_0}^\dagger A_{\rho,\theta_0} r^*$，形如自然策略梯度更新。关键发现：所有给出相同 RLHF 最优策略的奖励函数形成等价类 $\mathcal{R}_{\text{eq}}^\beta(\theta) = \{r : A_{\rho,\theta_0} r = \beta F_{\rho,\theta_0}(\theta - \theta_0)\}$，同一等价类中的奖励函数仅差一个零空间元素 $\delta \in \mathcal{N}(A_{\rho,\theta_0})$
-    - 设计动机：这揭示了 DPO 和 RLHF 的根本差异——DPO 只在列空间 $\mathcal{C}(A_{\theta_0}^\top)$ 中搜索，而 RLHF 最优解可能需要考虑零空间方向的差异
+为了把"投歪"具象化，论文构造了一个最小反例：3 个候选、1 维参数，策略 $\pi_\theta = \frac{1}{Z}[e^\theta, e^{-\theta}, 1]$，真实奖励 $r^* = [1, 2, 0]$，正确偏好序应为 $a_2 \succ a_1 \succ a_3$。对隐式奖励做一阶线性化后，整个流形退化成一条直线 $\text{span}([1, -1, 0])$——注意它对 $a_3$ 的分量恒为 0，已经放不下真实奖励了。此时只要让比较 $a_3$ 和 $a_1$ 的数据压倒性地多（$n_{3,1} \gg \max\{n_{1,2}, n_{2,3}\}$），投影就被这批数据拽到 $r_\theta^\beta \approx [\alpha, -\alpha, 0]$，连带三种病一起发作：(i) **偏好反转**——$a_1$ 被抬、$a_2$ 被压，和真实偏好正好相反；(ii) **奖励下降**——$\pi_\theta^\top r^* < \pi_{\theta_0}^\top r^*$，调完比没调还差；(iii) **数据敏感**——只要改变 $n_{i,j}$ 的相对比例就能把结论整个翻过来。关键在于，这些失败出现在 **population loss（无限数据）的全局最优解**处，既不是数据不够也不是没优化好，而是 DPO 结构本身留下的洞。
 
-4. **AuxDPO 算法（Section 4.2）**
+**3. RLHF 局部几何与等价类：找出 DPO 漏掉的那块搜索方向。**
 
-    - 功能：通过引入辅助变量修复 DPO 的误指定问题
-    - 核心思路：在 DPO 损失中引入辅助变量 $\delta \in \mathcal{N}(A_{\rho,\theta_0})$，联合优化 $(\theta, \delta)$：$r_{\theta,\delta}^\beta(s,a) = r_\theta^\beta(s,a) + \delta(s,a)$。由秩-零性定理，$\theta$ 遍历列空间、$\delta$ 遍历零空间，两者合在一起可覆盖整个 $\mathbb{R}^m$，消除误指定。实际实现中，辅助变量是 per-example 的 $\delta \in \mathbb{R}^{2n}$（每个 chosen/rejected 一个值），约束通过两种方式实现：(a) 小模型用零空间正交基精确约束 $\delta = \Gamma c$；(b) 大模型用 batchwise 软惩罚 $\lambda_{\text{null}} \|A_{\theta_0,\mathcal{B}} \delta_\mathcal{B}\|^2_2$ 近似约束
-    - 设计动机：不改变 DPO 的单阶段监督学习框架，只增加 $O(n)$ 个可训练参数（$n$ 为数据集大小，远小于模型参数 $d$），计算开销极低
+要修，得先看清正确答案长什么样。论文对两阶段 RLHF 的目标 $J(\theta; r^*)$ 做局部二次近似，一阶最优条件给出
+
+$$\theta^* = \theta_0 + \frac{1}{\beta} F_{\rho,\theta_0}^\dagger A_{\rho,\theta_0}\, r^*$$
+
+形式上就是一步自然策略梯度更新。由此引出一个核心观察：所有能导出同一个 RLHF 最优策略的奖励函数其实构成一个等价类
+
+$$\mathcal{R}_{\text{eq}}^\beta(\theta) = \{r : A_{\rho,\theta_0}\, r = \beta F_{\rho,\theta_0}(\theta - \theta_0)\}$$
+
+同一类里的奖励彼此只差一个零空间元素 $\delta \in \mathcal{N}(A_{\rho,\theta_0})$。这正好点破 DPO 和 RLHF 的分水岭：DPO 的隐式奖励被锁在列空间 $\mathcal{C}(A_{\theta_0}^\top)$ 里搜，而 RLHF 的最优解可能要靠零空间方向上的那一截才能凑齐——这一截恰恰是 DPO 摸不到的。
+
+**4. AuxDPO 算法：给 DPO 补一个零空间辅助变量，把搜索范围撑回整个奖励空间。**
+
+修复思路顺着上一点自然落地：在隐式奖励上加一个专门走零空间的辅助变量 $\delta \in \mathcal{N}(A_{\rho,\theta_0})$，让 $r_{\theta,\delta}^\beta(s,a) = r_\theta^\beta(s,a) + \delta(s,a)$，再对 $(\theta, \delta)$ 联合优化。由秩-零性定理，$\theta$ 扫列空间、$\delta$ 扫零空间，两者拼起来正好覆盖整个 $\mathbb{R}^m$，误指定从根上被消掉。落到实现，$\delta$ 是 per-example 的 $\delta \in \mathbb{R}^{2n}$（每个 chosen/rejected 各一个标量），零空间约束按规模分两档：小模型用零空间的正交基精确约束 $\delta = \Gamma c$；大模型负担不起精确投影，改用 batchwise 软惩罚 $\lambda_{\text{null}} \|A_{\theta_0,\mathcal{B}} \delta_\mathcal{B}\|^2_2$ 近似。整套修复不动 DPO 的单阶段监督学习框架，只额外引入 $O(n)$ 个可训练参数（$n$ 是数据集大小，远小于模型参数 $d$），计算开销几乎可以忽略。
 
 ### 损失函数 / 训练策略
 AuxDPO loss: $\mathcal{L}(\theta, \delta) = -\frac{1}{n} \sum_i \log \sigma(m_i(\theta, \delta)) + \lambda_{\text{null}} \|A_{\theta_0, \mathcal{B}} \delta_\mathcal{B}\|^2_2 + \lambda_{\text{amp}} \|\delta_\mathcal{B}\|^2_2$，其中 $m_i(\theta, \delta)$ 是标准 DPO margin 加上 $\delta_{2i-1} - \delta_{2i}$。基于 TRL DPOTrainer 实现，增加 custom collator 传递样本索引。
@@ -135,7 +139,7 @@ AuxDPO loss: $\mathcal{L}(\theta, \delta) = -\frac{1}{n} \sum_i \log \sigma(m_i(
 - [\[ICLR 2026\] Displacement-Resistant Extensions of DPO with Nonconvex $f$-Divergences](displacement-resistant_extensions_of_dpo_with_nonconvex_f-divergences.md)
 - [\[ICML 2025\] DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
 - [\[ICLR 2026\] Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
-- [\[ICLR 2026\] Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
+- [\[ACL 2026\] Why Supervised Fine-Tuning Fails to Learn: A Systematic Study of Incomplete Learning in Large Language Models](../../ACL2026/llm_alignment/why_supervised_fine-tuning_fails_to_learn_a_systematic_study_of_incomplete_learn.md)
 
 </div>
 

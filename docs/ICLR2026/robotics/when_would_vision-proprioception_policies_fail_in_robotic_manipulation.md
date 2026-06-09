@@ -42,36 +42,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GAP算法的pipeline如下：
-1. **输入**：专家演示轨迹（含视觉+本体感觉信息）
-2. **运动表示定义**：基于本体感觉信号定义机器人运动
-3. **运动转换阶段估计**：使用变点检测(CPD) + LSTM预测每个时间步属于"运动转换阶段"的概率 $\rho$
-4. **梯度调整策略学习**：在训练中，根据 $\rho$ 值降低本体感觉分支的梯度幅度
-5. **输出**：泛化性更强的视觉-本体感觉策略
+GAP（Gradient Adjustment with Phase-guidance）不改动策略网络结构，而是先从专家演示的本体感觉信号里识别出"运动转换阶段"，再在行为克隆训练中按阶段动态削弱本体感觉分支的梯度。这样当机器人需要定位新目标、改变运动方向时，优化压力被引导到视觉分支上，使原本被本体感觉压制的视觉模态重新获得学习信号。
 
 ### 关键设计
 
-1. **运动表示（Motion Representation）**：基于本体感觉信号定义机器人运动。时间步 $i$ 到 $j$ 之间的运动定义为 $m_{i:j} = \{p_{i:j}, \theta_{i:j}, g_{i:j}\}$，其中 $p_{i:j}$ 是夹爪位置变化，$\theta_{i:j}$ 是朝向变化，$g_{i:j}$ 是夹爪开合度变化。这三个维度完整描述了机器人臂的运动。
+**1. 运动表示：把抽象的"机器人在做什么"变成可计算的量。** 要判断哪些时刻发生了运动转换，首先得有一个能刻画运动的表示。GAP直接用本体感觉信号定义时间步 $i$ 到 $j$ 之间的运动 $m_{i:j} = \{p_{i:j}, \theta_{i:j}, g_{i:j}\}$，其中 $p_{i:j}$ 是夹爪位置变化、$\theta_{i:j}$ 是朝向变化、$g_{i:j}$ 是夹爪开合度变化。这三个维度合起来完整描述了机械臂的运动状态，是后续所有阶段检测的基础。
 
-2. **变点检测（Change Point Detection, CPD）分割**：使用动态规划来识别轨迹中运动方向发生根本变化的时间点。定义了运动一致性距离：
-    $d(m_{t_1:t_2}, m_{i:i+1}) = -\cos(p_{t_1:t_2}, p_{i:i+1}) - \alpha\cos(\theta_{t_1:t_2}, \theta_{i:i+1}) - \beta(\text{sgn}(g_{t_1:t_2}) == \text{sgn}(g_{i:i+1}))$
-   其中 $\alpha=1$, $\beta=2\times10^{-3}$ 平衡了位置、朝向和夹爪开合三种运动的贡献。CPD最小化总代价将轨迹分割为运动一致的阶段。
+**2. 变点检测（CPD）分割轨迹：找出运动方向根本改变的时刻。** 有了运动表示，就要切出"运动一致"和"运动转换"的边界。GAP用动态规划做变点检测，核心是一个运动一致性距离 $d(m_{t_1:t_2}, m_{i:i+1}) = -\cos(p_{t_1:t_2}, p_{i:i+1}) - \alpha\cos(\theta_{t_1:t_2}, \theta_{i:i+1}) - \beta(\text{sgn}(g_{t_1:t_2}) == \text{sgn}(g_{i:i+1}))$，三项分别衡量位置、朝向、夹爪开合的方向是否一致，用 $\alpha=1$、$\beta=2\times10^{-3}$ 平衡三者贡献。CPD通过最小化总代价把轨迹切成若干运动一致的段落，段落之间的断点即为运动转换发生处。
 
-3. **LSTM时序建模预测转换概率**：CPD输出的是离散的分割点，但运动转换是连续过程。因此使用LSTM网络对本体感觉的时间差分 $\Delta s_i = s_{i+1} - s_i$ 进行建模，预测每个时间步属于运动转换阶段的连续概率 $\rho_i \in [0,1]$。LSTM以CPD输出作为监督信号，并对转换点附近的时间步降低惩罚，以更好捕捉渐变的转换过程。这比直接使用离散CPD标签效果更好（消融实验验证）。
+**3. LSTM建模连续转换概率：把离散分割点变成平滑的阶段信号。** CPD给出的是硬切分点，但真实的运动转换是渐变的，直接用离散标签去指导梯度调整过于生硬。GAP因此训练一个LSTM，对本体感觉的时间差分 $\Delta s_i = s_{i+1} - s_i$ 建模，输出每个时间步属于运动转换阶段的连续概率 $\rho_i \in [0,1]$。训练时以CPD的切分作为监督，并对转换点附近的时间步降低惩罚，让网络学到平滑过渡。消融实验显示这个连续 $\rho$ 比直接用离散CPD标签效果明显更好。
 
-4. **梯度调整（Gradient Adjustment）**：核心技术——在训练的每个epoch中，对本体感觉特征提取器的参数 $\omega_s$ 进行调制：
-    $\omega_s^{j+1} = \omega_s^j - \lambda \cdot (1-\rho) \cdot \eta \nabla_{\omega_s^j} \mathcal{L}_{BC}(\omega_s^j)$
-   其中 $\lambda=0.3$ 控制调整程度，$\rho$ 是转换概率。当 $\rho$ 高时（运动转换阶段），本体感觉的梯度被大幅削弱，迫使网络更多地依赖视觉信号来学习这些阶段的行为。这是一种**细粒度的、与阶段相关的模态平衡策略**。
+**4. 梯度调整：按阶段削弱本体感觉梯度，逼网络去看图像。** 这是GAP的核心。在训练的每个epoch里，本体感觉特征提取器的参数 $\omega_s$ 被调制为 $\omega_s^{j+1} = \omega_s^j - \lambda \cdot (1-\rho) \cdot \eta \nabla_{\omega_s^j} \mathcal{L}_{BC}(\omega_s^j)$，其中 $\lambda=0.3$ 控制调整强度、$\rho$ 是上一步预测的转换概率。当 $\rho$ 接近1（运动转换阶段）时，系数 $(1-\rho)$ 趋近0，本体感觉的梯度被大幅削弱，模型无法继续依赖它来拟合这些时刻，只能转而从视觉信号里学习目标定位——这正是把模态竞争从全局拼接细化到了与阶段相关的精细平衡。
 
-5. **仅在训练早期应用GAP**：梯度调整仅在前50个epoch（总100个epoch）中应用。这避免了过度调制导致的训练不稳定和策略崩溃。消融实验表明这一选择是鲁棒的。
+**5. 仅在训练早期应用GAP：避免过度抑制导致策略崩溃。** 梯度调整若贯穿整个训练，会持续压制本体感觉，反而损害运动一致阶段本该依赖的精确伺服。GAP因此只在前50个epoch（总100个epoch）应用调整，让视觉分支在早期建立起目标定位能力后，后期再放开两个模态正常协同。消融实验表明50这个阈值对结果是鲁棒的。
 
 ### 损失函数 / 训练策略
-- 行为克隆（Behavior Cloning）范式，使用MSE损失作为基准
-- 视觉分支：ResNet-18 → 512维表示 → 4层temporal transformer
-- 本体感觉分支：3层MLP
-- 两个分支的特征通过拼接（concatenation）融合，送入3层MLP policy head输出动作序列（长度L=9）
-- 训练：Adam优化器，学习率3e-4，batch size 128，单卡RTX 3090，100 epochs
-- Meta-World用100条专家演示，RoboSuite用500条合成轨迹
+整体沿用行为克隆范式，以MSE作为基准损失。视觉分支用ResNet-18提取512维表示后接4层temporal transformer，本体感觉分支用3层MLP，两路特征拼接后送入3层MLP policy head输出长度 $L=9$ 的动作序列。训练用Adam优化器、学习率3e-4、batch size 128，在单卡RTX 3090上跑100个epoch；Meta-World使用100条专家演示，RoboSuite使用500条合成轨迹。
 
 ## 实验关键数据
 
@@ -167,9 +153,9 @@ GAP算法的pipeline如下：
 
 - [\[ICLR 2026\] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
 - [\[ICLR 2026\] VLBiMan: Vision-Language Anchored One-Shot Demonstration Enables Generalizable Bimanual Robotic Manipulation](vlbiman_vision-language_anchored_one-shot_demonstration_enables_generalizable_bi.md)
-- [\[ICLR 2026\] When Agents Persuade: Propaganda Generation and Mitigation in LLMs](when_agents_persuade_propaganda_generation_and_mitigation_in_llms.md)
 - [\[ICML 2026\] RoboMME: Benchmarking and Understanding Memory for Robotic Generalist Policies](../../ICML2026/robotics/robomme_benchmarking_and_understanding_memory_for_robotic_generalist_policies.md)
 - [\[ICLR 2026\] RoboInter: A Holistic Intermediate Representation Suite Towards Robotic Manipulation](robointer_a_holistic_intermediate_representation_suite_towards_robotic_manipulat.md)
+- [\[CVPR 2025\] RoboGround: Robotic Manipulation with Grounded Vision-Language Priors](../../CVPR2025/robotics/roboground_robotic_manipulation_with_grounded_vision-language_priors.md)
 
 </div>
 

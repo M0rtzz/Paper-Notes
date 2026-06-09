@@ -41,54 +41,17 @@ tags:
 
 ## 方法详解
 
-### 整体训练流水线
+### 整体框架
 
-LongWriter-Zero 的最终训练流水线包含三个阶段：
+LongWriter-Zero 把超长文本生成当作一个纯 RL 问题：在 Qwen2.5-32B 上先用写作语料做持续预训练把基座能力顶高，再用 GRPO 配合长度 / 质量 / 格式三个奖励模型直接优化生成策略，全程不碰任何标注或合成长文样本。模型被引导先在 `<think>` 段规划、再在 `<answer>` 段落笔，让写作也享受「先想后写」的测试时推理红利。训练跑在 8 节点 × 8 × H800 上，每步采样 32 条轨迹，最大输出 14,000 token，温度 $T=0.8$、top-p 为 1.0。
 
-1. **持续预训练**：在 Qwen2.5-32B 上用 30B token 的写作语料（中英文书籍、报告、学术论文）做 continual pretraining，外加 1% 的蒸馏长 CoT 数据做初始格式对齐
-2. **GRPO 强化学习**：采用 Think Prompt 引导模型先思考再写作，用三个奖励模型提供多维度训练信号
-3. **推理部署**：模型在 `<think>` 段中进行规划推理，在 `<answer>` 段中输出最终文本
+### 关键设计
 
-训练基础设施：8 节点 × 8 × H800 GPU；每步采样 32 条轨迹，最大输出长度 14,000 token；采样温度 T=0.8, top-p=1.0。
+**1. 三维度复合奖励模型：给没有标准答案的写作造一把可优化的尺子。** 开放式写作不像数学题有 ground truth 可供规则判分，作者因此拆出三个互补的奖励信号。Length RM 负责精确控长，用 QwQ-32B 为每条 query 预测合理字数区间 $[L_{\text{lower}}, L_{\text{upper}}]$，再用分段线性函数 $r_{\text{length}}(o)$ 在区间内给满分、不足或超出时线性衰减——$\text{len}(o)<L_{\text{lower}}$ 时取 $\text{len}(o)/L_{\text{lower}}$，超出 $L_{\text{upper}}$ 时取 $(L_{\text{max}}-\text{len}(o))/(L_{\text{max}}-L_{\text{upper}})$，把「写够但别注水」量化成可导信号。Writing RM 评判整体质量（流畅、连贯、信息量），以 Qwen2.5-72B 为 backbone 在人工偏好数据上用 Bradley-Terry 目标 $\mathcal{L}=-\mathbb{E}[\log\sigma(r(x,y_w)-r(x,y_l))]$ 训练。Format RM 守结构与去重，检查是否严格遵守「一个 `<think>` + 一个 `<answer>`」格式，并按语义重叠度惩罚复制段落——这正是 RL 训练里模型偷长度的常见捷径。三者直接平均会被量纲大的分量主导，作者改用 advantage-level normalization：先把每个分量在 group 内归一化到 $[-1,1]$，再取优势均值 $A_{\text{final}}=\frac{1}{3}(A_{\text{length}}+A_{\text{write}}+A_{\text{format}})$，确保三个维度等权贡献，不让长度或格式淹没写作质量。
 
-### 关键设计 1：三维度复合奖励模型
+**2. 写作中的测试时推理：让模型先打草稿提纲再落笔。** R1-Zero 在数学里靠长 CoT 实现 test-time scaling，但写作是否也需要「先想后写」是个开放问题。作者用 Think Prompt（先在 `<think>` 里头脑风暴、列提纲、选风格、适配受众、自审，再在 `<answer>` 出稿）对比 Direct-Answer（跳过思考直接写）。结果是 Base-think 初期因要先学会 think/answer 格式而落后于 Base-nothink，但随训练推进反超并触到更高天花板，Arena-Write Elo 拉开到 1221 对 668。更有意思的是写作的 think 长度会收敛到约 2000–3000 token 后趋于平稳，而非像数学推理那样无限膨胀——说明写作的规划需求存在天然饱和点，规划足够后更多思考只是白白吃掉上下文窗口。
 
-这是整个方法的核心引擎。由于开放式文本生成不像数学题有 ground truth 可供规则验证，作者设计了三个互补的奖励模型：
-
-**Length RM**——精确控制目标长度。用 QwQ-32B 为每条 query 预测合理字数区间 $[L_{\text{lower}}, L_{\text{upper}}]$，奖励函数为分段线性：
-
-$$r_{\text{length}}(o) = \begin{cases} 1, & L_{\text{lower}} \le \text{len}(o) \le L_{\text{upper}} \\ \frac{\text{len}(o)}{L_{\text{lower}}}, & \text{len}(o) < L_{\text{lower}} \\ \frac{L_{\text{max}} - \text{len}(o)}{L_{\text{max}} - L_{\text{upper}}}, & \text{len}(o) > L_{\text{upper}} \end{cases}$$
-
-**Writing RM**——评估整体写作质量（流畅性、连贯性、信息量）。以 Qwen2.5-72B 为 backbone，在人工标注偏好数据上用 Bradley-Terry 模型训练：$\mathcal{L} = -\mathbb{E}[\log \sigma(r(x, y_w) - r(x, y_l))]$。
-
-**Format RM**——结构完整性与去重。检查输出是否严格遵守「一个 `<think>` 段 + 一个 `<answer>` 段」的格式，并基于语义重叠度惩罚重复内容（RL 训练中模型容易通过复制段落凑长度）。
-
-**奖励融合策略**：朴素的奖励求均值会被量纲大的子奖励主导。作者采用 advantage-level normalization：先将每个奖励分量在 group 内归一化到 $[-1, 1]$，再取优势均值：
-
-$$A_{\text{final}} = \frac{1}{3}(A_{\text{length}} + A_{\text{write}} + A_{\text{format}})$$
-
-这保证三个维度等权贡献，防止长度或格式信号淹没写作质量。
-
-### 关键设计 2：写作中的测试时推理（Test-time Scaling）
-
-R1-Zero 在数学推理中通过长 CoT 实现 test-time scaling，但写作是否也需要「先想后写」是个开放问题。作者设计了 Think Prompt vs Direct-Answer 对照实验：
-
-- **Think Prompt**：要求模型先在 `<think>` 中进行全面规划（头脑风暴、提纲、风格选择、受众适配、自我审查），再在 `<answer>` 中输出最终文本
-- **Direct-Answer**：跳过思考，直接在 `<answer>` 中写
-
-实验结果：Base-think 初期 Writing RM 低于 Base-nothink（模型需先学会 think/answer 格式），但随训练推进反超并达到更高天花板。Arena-Write Elo 差距巨大（1221 vs 668）。
-
-一个有趣发现：写作中的 think 长度会收敛到一个最优值后趋于平稳（约 2000-3000 token），不像数学推理那样无限增长。这说明写作的规划需求存在天然饱和点——一旦规划足够产出高质量文本，更多思考反而浪费上下文窗口。
-
-### 关键设计 3：持续预训练提升 RL 天花板
-
-先前研究表明 RL 性能上限受基座模型能力约束。作者验证了这一点在写作任务中同样成立：
-
-- 预训练语料：30B token 中英文书籍、报告、学术论文（来自 Common Crawl）
-- 格式对齐：混入 1% 从 Base-think 模型蒸馏的长 CoT 数据，低比例避免记忆特定 CoT 模式
-- 训练配置：batch size 512，packed sequences，最大上下文 32K token
-
-效果：Continual-Pretrain-think 初始 Writing RM 和 Length RM 就高于 Base-think，且最终收敛值也更高。Arena-Write Elo 从 ~1000 起步到 ~1400 收敛，对应对 DeepSeek-R1 接近 80% 胜率。
+**3. 持续预训练抬高 RL 天花板：先把基座写作能力喂饱，RL 才探得更高。** 既有研究指出 RL 上限受基座能力约束，作者在写作任务上验证了这点同样成立。预训练用 30B token 中英文书籍、报告、学术论文（来自 Common Crawl），并混入 1% 从 Base-think 蒸馏的长 CoT 数据做格式对齐——比例压到 1% 是为了避免模型记死特定 CoT 模式；训练用 batch size 512、packed sequences、最大上下文 32K token。效果上，Continual-Pretrain-think 的初始 Writing RM 和 Length RM 就高于 Base-think，最终收敛值也更高，Arena-Write Elo 从约 1000 起步收敛到约 1400，对应对 DeepSeek-R1 接近 80% 的胜率。
 
 ## 实验关键数据
 

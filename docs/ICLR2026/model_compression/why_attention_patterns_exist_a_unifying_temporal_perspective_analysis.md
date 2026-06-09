@@ -38,59 +38,23 @@ LLM 中的注意力头呈现多种结构化模式：
 
 ## 方法详解
 
-### 整体框架：TAPPA
+### 整体框架
 
-TAPPA（Temporal Attention Pattern Predictability Analysis）将注意力模式分为两大类：
-- **可预测模式**：具有时间连续性，注意力指标随解码步骤平滑演化
-- **不可预测模式**：不规则跳跃，缺乏时间一致性（如 retrieval heads）
+TAPPA（Temporal Attention Pattern Predictability Analysis）把"注意力模式从何而来"这个问题翻译成一个时间序列问题：在自回归解码中，把每一步的注意力 logit 看作随解码步 $t$ 演化的信号，模式是否结构化就取决于这个信号是否具有时间连续性。由此 TAPPA 将所有头划成两类——**可预测模式**（指标随解码步平滑演化、可外推）与**不可预测模式**（不规则跳跃、缺乏时间一致性，如 retrieval heads），而决定一个头落在哪一类、以及落在可预测类里又表现出哪种几何形状（sink / 对角线 / 周期 / 季节性），核心都归结到同一个量：**query 自相似性（q-similarity）**，配合 RoPE 的频率结构。下面四个定理就是沿着"q-similarity 高低 + 是否有主导 RoPE 通道"这条主线，逐一推出各类模式的成因。
 
-核心区分因素：**query 自相似性（q-similarity）**
+### 关键设计
 
-### 关键设计 1：可预测 vs 不可预测模式
+**1. q-similarity 是可预测性的分水岭：把"随机 vs 结构化"量化成连续 query 的变化幅度。** 要解释为什么有的头看起来杂乱无章、有的头却规整可预测，先得有一个可度量的判据。Proposition 4.1 给出了下界：若相邻步的 query 差异 $\|q_{t+1}-q_t\|$ 较大、且与旋转后的 key 不正交，则注意力 logit 的逐位差异必然被顶起来，$\|a_{t+1}-a_t\|_\infty \geq c_1\|q_{t+1}-q_t\| - c_2$。这说明 query 变化剧烈（低 q-similarity）时注意力一定会随机跳变，无法形成稳定模式；反过来，高 q-similarity 是任何"可预测模式"出现的必要前提。这一条把后面所有结构化模式都纳入同一个充分条件之下，也正是它让 q-similarity 后来能当作一个简单的下游指标。
 
-**Proposition 4.1**：若连续 query 差异 $\|q_{t+1} - q_t\|$ 较大且与旋转后的 key 不正交，则注意力 logit 差异必然较大：
+**2. 重访问 / attention sink：高 q-similarity 叠加低频 RoPE 主导通道，让注意力在时间轴上"竖直站稳"。** Attention sink 表现为某些早期 token 跨步持续吸走注意力。定理 5.1（垂直稳定性）指出，当 query 高度自相似、且该头存在一个主导的低频 RoPE 通道时，注意力 logit 沿时间方向几乎不变，$|a_{t+1,i}-a_{t,i}|$ 被压到很小。其几何根源在于 query 与 key $k_i$ 的夹角 $\phi_{t,i}^{(m)}$ 很小，使旋转后的余弦项接近 1 并随 $t$ 缓慢漂移——于是同一个位置 $i$ 在连续多步里都拿到接近相同的高分，形成竖直的"重访问"条纹，也就是 sink。
 
-$$\|a_{t+1} - a_t\|_\infty \geq c_1 \|q_{t+1} - q_t\| - c_2$$
+**3. 顺序 / 对角线模式：query 和 key 同时高自相似时，RoPE 相对位置编码守住交互。** 对角线模式意味着第 $t$ 步主要关注与自己相对距离固定的 token。定理 5.2 给出条件：当 query 与 key 都高度自相似（$\|q_{t+1}-q_t\|\leq\varepsilon$、$\|k_{i+1}-k_i\|\leq\varepsilon$）时，沿对角线同步位移的 logit 几乎相等，$|a_{t+1,i+1}-a_{t,i}|\leq C\varepsilon$。关键在于 RoPE 只编码相对位置，query 和 key 一起平移一格时相对角度不变，于是 query-key 交互被原样保留，注意力沿主对角线延伸成一条稳定的带。
 
-即低 q-similarity 导致随机模式，高 q-similarity 是可预测模式的必要条件。
+**4. 周期性对角线：间距完全由主导 RoPE 通道的频率定死。** 当一个头存在主导通道 $m^\star$ 时，对角线不再只有一条，而是以固定周期重复出现，间距为 $T=\frac{2\pi}{\theta_{m^\star}}=2\pi c^{2m^\star/d}$（定理 5.3），其中 $c$ 是 RoPE 的 base。这个闭式给出了可被直接验证的预言：把主导通道重定位到低索引（高频）位置，就应当看到周期性对角线浮现；调小 base $c$，间距 $T$ 就应当随之缩短。后续实验正是用这两个旋钮把理论拧出来的现象逐一对上。
 
-### 关键设计 2：重访问模式（Re-access / Attention Sink）
+**5. 季节性模式：query/key 近似周期并与 RoPE 频率共振，产生周期 $L$ 的回访。** 比对角线更松的一类结构是"每隔 $L$ 步回到相似关注分布"。定理 5.4 表明，当 query 与 key 近似以周期 $L$ 重复、且 $L$ 与主导 RoPE 频率发生共振时，相隔 $L$ 步的 logit 仍然接近，$|a_{t+L,i}-a_{t,i}|\leq C_1(\varepsilon_q+\varepsilon_k)+C_2\delta$。这把"季节性"从一种模糊的视觉印象，落实成 query/key 周期性误差 $\varepsilon_q,\varepsilon_k$ 与共振失配 $\delta$ 共同控制的可量化偏差。
 
-**定理 5.1**（注意力垂直稳定性）：当 query 高度自相似且存在主导低频 RoPE 通道时，注意力 logit 在时间维度上垂直稳定：
-
-$$|a_{t+1,i} - a_{t,i}| \leq \text{小量}$$
-
-当 $q$ 和 $k_i$ 之间角度 $\phi_{t,i}^{(m)}$ 很小时，余弦项接近 1，解释了 attention sink 现象。
-
-### 关键设计 3：顺序模式（Sequential / Diagonal）
-
-**定理 5.2**：当 query 和 key 都具有高自相似性（$\|q_{t+1} - q_t\| \leq \varepsilon$, $\|k_{i+1} - k_i\| \leq \varepsilon$）时：
-
-$$|a_{t+1,i+1} - a_{t,i}| \leq C\varepsilon$$
-
-RoPE 的相对位置编码在同步位移下保持 query-key 交互，产生对角线模式。
-
-### 关键设计 4：周期性顺序模式
-
-**定理 5.3**：当存在主导 RoPE 通道 $m^\star$ 时，对角线间距为：
-
-$$T = \frac{2\pi}{\theta_{m^\star}} = 2\pi c^{2m^\star/d}$$
-
-通过实验验证：重定位主导通道到低索引（高频）位置会使周期性对角线出现，调整 RoPE base $c$ 也可控制间距。
-
-### 关键设计 5：季节性模式（Seasonal）
-
-**定理 5.4**：当 query 和 key 近似周期 $L$ 且与主导 RoPE 频率共振时：
-
-$$|a_{t+L,i} - a_{t,i}| \leq C_1(\varepsilon_q + \varepsilon_k) + C_2\delta$$
-
-产生周期 $L$ 的季节性注意力模式。
-
-### 下游应用
-
-利用 q-similarity 作为简单指标指导：
-- **KV cache 压缩**：高 q-similarity 的头可安全压缩
-- **LLM 剪枝**：识别可修剪的冗余头
+**6. 从指标到压缩与剪枝：q-similarity 直接当作下游决策信号。** 既然 q-similarity 决定了一个头是否可预测、其注意力是否在时间上稳定，它就天然适合当一个轻量的头级指标。高 q-similarity 的头注意力跨步稳定、信息冗余度高，因此可以更激进地压缩其 KV cache、或在剪枝时优先识别为可移除的冗余头；低 q-similarity 的头则需保留更多预算。整个用法不需要额外训练或复杂打分，只统计相邻步 query 的相似度即可，这也是后面 KV cache 压缩与剪枝实验能用一个简单指标稳定超过基线的原因。
 
 ## 实验
 
@@ -164,9 +128,9 @@ TAPPA 基于 q-similarity 的简单指标一致优于所有基线方法。
 
 - [\[ICLR 2026\] AgilePruner: An Empirical Study of Attention and Diversity for Adaptive Visual Token Pruning in LVLMs](agilepruner_an_empirical_study_of_attention_and_diversity_for_adaptive_visual_to.md)
 - [\[ICCV 2025\] Representation Shift: Unifying Token Compression with FlashAttention](../../ICCV2025/model_compression/representation_shift_unifying_token_compression_with_flashattention.md)
+- [\[ICLR 2026\] Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
 - [\[ICLR 2026\] TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
-- [\[ICML 2025\] Towards an Optimal Control Perspective of ResNet Training](../../ICML2025/model_compression/towards_an_optimal_control_perspective_of_resnet_training.md)
-- [\[ICML 2026\] Toward Understanding Adversarial Distillation: Why Robust Teachers Fail](../../ICML2026/model_compression/toward_understanding_adversarial_distillation_why_robust_teachers_fail.md)
+- [\[ICLR 2026\] FASA: Frequency-Aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 
 </div>
 

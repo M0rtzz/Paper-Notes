@@ -40,42 +40,19 @@ tags:
 
 ## 方法详解
 
-### RQNN 架构
+### 整体框架
 
-网络由 $N$ 个并行量子电路组成，每个电路对应状态向量的一个分量：
+RQNN 把状态向量的每个分量交给一个并行量子电路计算，电路输出经反馈 $\hat{\bm{x}}_t = \bar{F}_R^{n,\bm{\theta}}(\hat{\bm{x}}_{t-1}, \bm{z}_t)$ 回灌为下一时刻的状态，从而把一个量子线路变成处理时序的循环系统。论文的核心不是设计新硬件，而是证明这套带反馈的循环量子网络能以可控的 qubit 数、配上一个线性读出层，逼近任意 fading memory 滤波器，并给出显式的误差衰减速率。
 
-- **量子门 $\mathtt{U}$**：由 $n$ 个参数化旋转块 $\bar{\mathtt{U}}^{(i)}$ 以块对角形式构成的 uniformly controlled quantum gate，每块是输入编码门 $\mathtt{U}_1^{(i)}$（依赖状态 $\bm{x}$ 和输入 $\bm{z}$）与偏置门 $\mathtt{U}_2^{(i)}$ 的张量积
-- **初始化门 $\mathtt{V}$**：将 $|0\rangle^{\otimes \mathfrak{n}}$ 映射到均匀叠加态 $|\psi\rangle = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1}|i\rangle \otimes |00\rangle$
-- **测量**：计算目标 qubit 在特定状态下的概率 $\mathbb{P}_m^{n,\bm{\theta}}$
-- **状态映射**：$\bar{F}_{R,j}^{n,\bm{\theta}}(\bm{x},\bm{z}) = R - 2R[\mathbb{P}_1^{n,\bm{\theta}^j} + \mathbb{P}_2^{n,\bm{\theta}^j}]$，等价于 $\frac{1}{n}\sum_{i=1}^n R\cos(\gamma^{i,j})\cos(b^{i,j} + \bm{a}^{i,j}\cdot(\bm{x},\bm{z}))$
+### 关键设计
 
-整个系统通过反馈 $\hat{\bm{x}}_t = \bar{F}_R^{n,\bm{\theta}}(\hat{\bm{x}}_{t-1}, \bm{z}_t)$ 形成循环结构。
+**1. 余弦基量子读出：把电路测量结果写成可逼近的解析形式。** RQNN 的单个电路由初始化门 $\mathtt{V}$ 和参数化量子门 $\mathtt{U}$ 组成。$\mathtt{V}$ 先把 $|0\rangle^{\otimes \mathfrak{n}}$ 映射到均匀叠加态 $|\psi\rangle = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1}|i\rangle \otimes |00\rangle$，$\mathtt{U}$ 则是由 $n$ 个旋转块 $\bar{\mathtt{U}}^{(i)}$ 以块对角形式拼成的 uniformly controlled gate，每块把依赖状态 $\bm{x}$ 与输入 $\bm{z}$ 的编码门 $\mathtt{U}_1^{(i)}$ 和偏置门 $\mathtt{U}_2^{(i)}$ 张量积起来。测量目标 qubit 的概率后，状态映射可写成 $\bar{F}_{R,j}^{n,\bm{\theta}}(\bm{x},\bm{z}) = R - 2R[\mathbb{P}_1^{n,\bm{\theta}^j} + \mathbb{P}_2^{n,\bm{\theta}^j}]$，它恰好等价于一个余弦基展开 $\frac{1}{n}\sum_{i=1}^n R\cos(\gamma^{i,j})\cos(b^{i,j} + \bm{a}^{i,j}\cdot(\bm{x},\bm{z}))$。这一步是整套理论的支点：把量子测量结果显式写成 $n$ 个余弦特征的平均，逼近问题就转化为经典的随机特征逼近，可以套用 Barron 型分析。
 
-### 量子资源分析
+**2. 对数级量子资源：用精度参数控制 qubit 与权重的增长。** 块数 $n$ 是精度旋钮，电路只需作用在 $\mathfrak{n} = \lceil\log_2(2n)\rceil$ 个 qubit 上，所以 qubit 数随精度仅对数增长。要达到逼近误差 $\varepsilon$，整网需要 $\mathcal{O}(\varepsilon^{-2})$ 个可训练权重和 $\mathcal{O}(\lceil\log_2(\varepsilon^{-1})\rceil)$ 个 qubit。对数级的 qubit 需求正是这套架构对 NISQ 设备友好的关键——同样的精度下，经典储层往往要付出多项式级的资源。
 
-- 电路作用于 $\mathfrak{n} = \lceil\log_2(2n)\rceil$ 个 qubit
-- $n$ 为精度参数（决定块数），qubit 数仅对数增长
-- 达到逼近精度 $\varepsilon$ 需要 $\mathcal{O}(\varepsilon^{-2})$ 个权重和 $\mathcal{O}(\lceil\log_2(\varepsilon^{-1})\rceil)$ 个 qubit
+**3. 导数可控的反馈误差传播：让循环不放大逼近误差。** 反馈结构最难处理的地方在于，单步逼近的微小误差会沿时间轴累积。论文对满足 Barron 型可积条件、收缩系数 $\lambda < 1$ 的状态映射 $F$ 给出定理 4.6 的均匀逼近界 $\sup_{\bm{z}}\sup_t \|U^F(\bm{z})_t - \bar{U}(\bm{z})_t\| \leq \frac{1}{1-\lambda}\frac{\sqrt{N}\max_j C_j^\infty}{\sqrt{n}}$。误差以 $1/\sqrt{n}$ 衰减，且分子里只出现 $\sqrt{N}$ 而非 $N$、$d$ 的指数项，因此**与输入维度 $d$ 和状态维度 $N$ 无关**，避开了维度灾难。能做到这一点靠的是 Proposition 4.4：QNN 不仅逼近目标函数本身，还同时逼近其导数，于是反馈回路里由 Jacobian 控制的误差放大被压住，$\frac{1}{1-\lambda}$ 这个收缩因子才得以封顶整条时间链上的累积误差。
 
-### 主要理论结果
-
-**定理 4.6（状态空间系统逼近界）**：对满足 Barron 型可积条件且收缩系数 $\lambda < 1$ 的状态映射 $F$，RQNN 滤波器均匀逼近误差满足：
-
-$$\sup_{\bm{z}}\sup_t \|U^F(\bm{z})_t - \bar{U}(\bm{z})_t\| \leq \frac{1}{1-\lambda}\frac{\sqrt{N}\max_j C_j^\infty}{\sqrt{n}}$$
-
-- 误差以 $1/\sqrt{n}$ 衰减，**与输入维度 $d$ 和状态维度 $N$ 无关**（无维度灾难）
-- 关键技术：QNN 同时逼近函数及其导数（Proposition 4.4），使反馈回路的误差传播可控
-
-**定理 4.8（万能逼近）**：对 **任意因果、时不变、fading memory 滤波器** $U$，存在 RQNN 参数和线性读出 $W$ 使得：
-
-$$\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$$
-
-- 此处无需 Barron 可积条件，也无需收缩性假设
-- 通过引入线性预处理矩阵 $P_j$ 和有限步记忆分区确保 echo state property
-
-### 证明策略
-
-采用 **internal approximation approach**：先建立 QNN 对静态函数及其导数的逼近界 → 利用导数控制反馈回路中的误差累积 → 从状态映射逼近推导滤波器逼近
+**4. 线性读出即万能：去掉多项式读出层的实现负担。** 此前 QRC 的万能性证明依赖多项式读出（借 Stone-Weierstrass），训练复杂、实验难落地。定理 4.8 证明只用线性读出 $W$ 就够：对**任意因果、时不变、fading memory 滤波器** $U$，存在 RQNN 参数与线性 $W$ 使 $\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$。这一步既不需要 Barron 可积条件、也不需要收缩性假设，代价是额外引入线性预处理矩阵 $P_j$ 并对记忆做有限步分区，以保证 echo state property（系统对足够久远的初始状态不敏感）。整套证明走的是 internal approximation approach：先建立 QNN 对静态函数及其导数的逼近界，再用导数界压住反馈回路中的误差累积，最后从状态映射逼近推出滤波器逼近。
 
 ## 实验关键数据
 
@@ -129,11 +106,11 @@ $$\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$$
 
 ## 相关论文
 
-- [\[ICLR 2026\] Sublinear Time Quantum Algorithm for Attention Approximation](sublinear_time_quantum_algorithm_for_attention_approximation.md)
 - [\[NeurIPS 2025\] Physics-Informed Neural Networks with Fourier Features and Attention-Driven Decoding](../../NeurIPS2025/physics/physics-informed_neural_networks_with_fourier_features_and_attention-driven_deco.md)
+- [\[ICLR 2026\] Sublinear Time Quantum Algorithm for Attention Approximation](sublinear_time_quantum_algorithm_for_attention_approximation.md)
 - [\[ICLR 2026\] Empirical Stability Analysis of Kolmogorov-Arnold Networks in Hard-Constrained Recurrent Physics-Informed Discovery](empirical_stability_analysis_of_kolmogorov-arnold_networks_in_hard-constrained_r.md)
 - [\[NeurIPS 2025\] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/physics/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
-- [\[ICML 2025\] Compact Matrix Quantum Group Equivariant Neural Networks](../../ICML2025/physics/compact_matrix_quantum_group_equivariant_neural_networks.md)
+- [\[NeurIPS 2025\] Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity](../../NeurIPS2025/physics/scaling_laws_and_pathologies_of_single-layer_pinns_network_width_and_pde_nonline.md)
 
 </div>
 

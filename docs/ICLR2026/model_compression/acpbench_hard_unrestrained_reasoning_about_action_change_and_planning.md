@@ -33,9 +33,9 @@ tags:
 
 ## 方法详解
 
-### 8 类原子规划推理任务
+### 整体框架
 
-ACPBench Hard 将规划能力分解为动作级、状态级、计划级三个层次的 8 个原子任务：
+ACPBench Hard 把"会不会规划"拆成动作级、状态级、计划级三个层次共 8 个原子任务，每个任务都要求模型**开放式生成**答案（而非从选项里挑），再交给一个有严格正确性保证的符号验证器判分。这样既能精确定位模型在哪个环节出错，又彻底绕开了 LLM-as-judge 的不可靠性。
 
 | 层次 | 任务 | 缩写 | 生成目标 | 验证复杂度 |
 |------|------|------|----------|-----------|
@@ -50,11 +50,11 @@ ACPBench Hard 将规划能力分解为动作级、状态级、计划级三个层
 
 ### 关键设计
 
-1. **符号验证器体系**：每个任务配备专用验证算法。简单任务（App/Prog/Val）用集合比较即可；困难任务（Reach/AReach/Land/NextA）先查预计算缓存，未命中时调用 PDDL 规划器求解，从而保证验证的**完备性**与**正确性**。例如 Landmarks 验证通过构造辅助规划任务 Π'（添加标记命题 p_nach），检验是否存在不经过候选里程碑的合法计划。
+**1. 符号验证器体系：让开放式生成也能被可靠自动判分。** 开放式生成的难点在于答案不唯一、空间巨大，传统 benchmark 只能退回多选或求助 LLM 评委，本文则为 8 个任务各配一套专用验证算法。简单任务（App/Prog/Val）直接做集合比较就能判对错；困难任务（Reach/AReach/Land/NextA）验证复杂度本身就是 PSPACE-complete，做法是先查预计算缓存，未命中时再调真正的 PDDL 规划器求解，从而保证判分的**完备性**与**正确性**。以 Landmarks 为例，验证一个候选子目标是否真的必经，做法是构造辅助规划任务 Π'——往原问题里塞一个标记命题 p_nach，若存在一条绕开该候选的合法计划，就说明它并非里程碑。这类验证算法的构造本身也带来独立的技术价值。
 
-2. **数据构造管线**：基于 ACPBench 的 13 个 PDDL 域，每域每任务生成 10 个问题（共 1040 题）。计划由 top-quality planner 生成，备用 diverse planner。题目通过模板从 PDDL 转为自然语言。
+**2. 数据构造管线：从 13 个 PDDL 域批量生成 1040 道题。** 题目全部源自 ACPBench 的 13 个 PDDL 域，每域每任务出 10 题，共 $13 \times 8 \times 10 = 1040$ 题。为保证题目背后有合法解，计划优先用 top-quality planner 生成、以 diverse planner 兜底，再通过模板把 PDDL 形式化描述转写成自然语言问题。统一的 PDDL 来源让每道题都有规划器可计算的标准答案，这正是符号验证器能落地的前提。
 
-3. **宽松语法解析器**：为处理模型输出格式不一致的问题，设计了基于 grammar 的宽松解析器，可自动丢弃不符合语法的 token，最大限度提取有效答案。
+**3. 宽松语法解析器：把模型答案从格式噪声里捞出来。** LLM 输出常夹带解释、格式漂移，逐字匹配会把本来答对的也判错。为此设计了基于 grammar 的宽松解析器，自动丢弃不符合语法的 token、只保留结构合法的部分，最大限度提取有效答案，避免评测结果被输出格式而非推理能力所污染。
 
 ## 实验关键数据
 
@@ -140,8 +140,8 @@ ACPBench Hard 将规划能力分解为动作级、状态级、计划级三个层
 - [\[ACL 2026\] Social Story Frames: Contextual Reasoning about Narrative Intent and Reception](../../ACL2026/model_compression/social_story_frames_contextual_reasoning_about_narrative_intent_and_reception.md)
 - [\[ICML 2026\] Hard Labels In! Rethinking the Role of Hard Labels in Mitigating Local Semantic Drift](../../ICML2026/model_compression/hard_labels_in_rethinking_the_role_of_hard_labels_in_mitigating_local_semantic_d.md)
 - [\[ICLR 2026\] Efficient Reasoning with Balanced Thinking](efficient_reasoning_with_balanced_thinking.md)
-- [\[ICLR 2026\] A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
 - [\[ICLR 2026\] BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
+- [\[ICLR 2026\] SwiReasoning: Switch-Thinking in Latent and Explicit for Pareto-Superior Reasoning](swireasoning_switch-thinking_in_latent_and_explicit_for_pareto-superior_reasonin.md)
 
 </div>
 

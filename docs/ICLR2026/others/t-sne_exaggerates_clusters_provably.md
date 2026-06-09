@@ -33,46 +33,21 @@ tags:
 
 ## 方法详解
 
-### t-SNE 形式化
+### 整体框架
 
-输入亲和度矩阵 $P$ 基于高斯核构建：
-$$P_{j|i}(X; \sigma_i) := \frac{\exp(-\|x_j - x_i\|^2 / (2\sigma_i^2))}{\sum_{k \neq i} \exp(-\|x_k - x_i\|^2 / (2\sigma_i^2))}$$
+本文不提出新算法，而是对标准 t-SNE 做严格的负面理论分析：先把 t-SNE 写成在输入亲和度 $P$ 与输出亲和度 $Q$ 之间最小化 KL 散度的优化问题，再围绕"什么样的输入会被映射到什么样的输出"刻画其驻点结构，由此构造反例证明两类失败——聚类强度不可从输出推断、极端离群点无法被忠实展示。具体地，输入亲和度由各点自适应带宽 $\sigma_i$ 的高斯核给出 $P_{j|i}(X;\sigma_i)=\frac{\exp(-\|x_j-x_i\|^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\|x_k-x_i\|^2/(2\sigma_i^2))}$，输出亲和度用重尾 t-分布 $Q_{ij}(Y)=\frac{(1+\|y_i-y_j\|^2)^{-1}}{\sum_{k\neq l}(1+\|y_k-y_l\|^2)^{-1}}$，优化目标为 $\mathcal{L}_X(Y):=\text{KL}(P(X)\|Q(Y))$，分析全部建立在该目标的驻点之上。
 
-输出亲和度矩阵 $Q$ 基于 t-分布：
-$$Q_{ij}(Y) := \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\sum_{k,l; k \neq l} (1 + \|y_k - y_l\|^2)^{-1}}$$
+### 关键设计
 
-目标：最小化 $\mathcal{L}_X(Y) := \text{KL}(P(X) \| Q(Y))$
+**1. 加法不变性：误导行为的总根源。** 整套负面结果都源于一个被忽视的性质：t-SNE 不仅对输入平方距离具有乘法尺度不变性，还具有**加法平移不变性**。只要把所有点对的平方距离统一加上常数 $C$，即 $\|x'_i-x'_j\|^2=\|x_i-x_j\|^2+C$，自适应带宽会重新归一化吸收掉这个平移，于是 $\text{t-SNE}_\rho(X)=\text{t-SNE}_\rho(X')$ 对任意 perplexity $\rho$ 成立。这意味着输出无法区分"距离结构被整体抬高/压低"的不同输入，后面所有反例本质上都是在这条等价类上做文章。
 
-### 核心发现 1：聚类强度不可推断
+**2. 聚类强度不可推断：弱聚类能伪装成强聚类。** 利用加法不变性可构造"冒名"数据集，让任意弱聚类输入产生与强聚类输入完全相同的可视化。定理 3 表明，对任意 $0<\epsilon\leq 1$ 都存在 $X_\epsilon$，其聚类显著度被压到 $\bar{\mathcal{S}}(X_\epsilon;C_{m\in[k]})=\epsilon\cdot\bar{\mathcal{S}}(X;C_{m\in[k]})$，却对任意 $\rho$ 满足 $\text{t-SNE}_\rho(X)=\text{t-SNE}_\rho(X_\epsilon)$；推论 4 进一步说明，均分两类时存在一整族轮廓系数从 $\epsilon$ 连续取到 $1$ 的数据集，它们共享**完全相同的 t-SNE 驻点集合**。因此从一张漂亮的聚类图反推输入到底分得多开，在原理上就是不可能的。
 
-**定理 3**（不同输入，相同输出）：对任意 $0 < \epsilon \leq 1$，存在数据集 $X_\epsilon$，使得：
-$$\bar{\mathcal{S}}(X_\epsilon; C_{m \in [k]}) = \epsilon \cdot \bar{\mathcal{S}}(X; C_{m \in [k]})$$
-但对任意 perplexity $\rho$：
-$$\text{t-SNE}_\rho(X) = \text{t-SNE}_\rho(X_\epsilon)$$
+**3. 解的极端敏感：几乎不可分的距离却映射到任意输出。** 反面同样成立——输入的微小差异可被放大成截然不同的图。定理 5 构造出两个数据集 $X,X'$，其所有点对距离之比都落在 $[1-\epsilon,1+\epsilon]$ 内（距离上几乎不可区分），t-SNE 输出却完全不同；引理 6 给出更惊人的结论：仅由近似正则单纯形构成的数据集族 $\Delta_\epsilon$（点之间彼此等距、毫无聚类结构）就足以覆盖**所有可能的 t-SNE 驻点输出**。换言之"无结构"的输入可以被解读成任何结构，与设计 2 一道说明输入与输出之间根本不存在稳定的对应。
 
-即任意弱聚类的"冒名"数据集可产生与强聚类数据集完全相同的 t-SNE 输出！
+**4. 离群点被压制：极端离群无法被画出来。** 第二类失败针对离群点展示。定理 9 给出与输入无关的硬上界：对**任何** t-SNE 输出 $Y$，离群度量 $\alpha(Y)\leq 3.266+o_n(1)$。无论输入里的离群点离主簇多远，输出中能呈现的离群程度都被钉死在约 $3.6$ 以下。根源在于输入侧亲和度按行自适应归一化、输出侧亲和度全局归一化，二者不对称使得任何一点都无法在低维图里真正"孤立"出去——这正是 t-SNE 不适合做离群点检测的理论解释。
 
-**推论 4**：对任意均分的两类数据，存在一系列轮廓系数从 $\epsilon$ 到 1 的数据集，它们共享**完全相同的 t-SNE 驻点集合**。
-
-### 核心发现 2：微小扰动导致巨大变化
-
-**定理 5**：对任意 $\epsilon > 0$，存在数据集 $X, X'$，使得所有点对距离的比值在 $[1-\epsilon, 1+\epsilon]$ 内（即距离几乎相同），但 t-SNE 输出完全不同。
-
-**引理 6**（惊人结论）：任意 $\epsilon > 0$ 近似正则单纯形的数据集集合 $\Delta_\epsilon$，就能生成**所有可能的 t-SNE 驻点输出**！
-
-### 关键机制：加法不变性
-
-t-SNE 对输入的平方距离不仅具有乘法尺度不变性，还具有**加法平移不变性**。即若 $\|x'_i - x'_j\|^2 = \|x_i - x_j\|^2 + C$，则 $\text{t-SNE}_\rho(X) = \text{t-SNE}_\rho(X')$。这是上述定理的核心原因。
-
-### 核心发现 3：离群点被压制
-
-**定理 9**：对**任何** t-SNE 输出 $Y$，离群数 $\alpha(Y) \leq 3.266 + o_n(1)$。
-
-无论输入中离群点多极端，t-SNE 都无法在输出中表现出超过约 3.6 的离群程度。原因在于输入/输出亲和度矩阵的不对称性。
-
-### 单点毒化攻击
-
-仅添加一个"毒化点"（放在数据均值位置）就能破坏整个聚类可视化结构。在高维数据中尤为严重——毒化点成为大多数点的最近邻，极大改变亲和度矩阵。
+**5. 单点毒化：一个点即可摧毁全图。** 上述脆弱性还能被对抗性地利用：只需添加一个放在数据均值处的"毒化点"，就足以瓦解整张聚类可视化。在高维数据中尤为致命——由于维度灾难下点对距离趋于集中，这个均值点会成为大多数样本的最近邻，从而大幅改写亲和度矩阵 $P$，把原本清晰的簇结构抹平。它把前述"加法不变性 + 解的极端敏感"从存在性反例落地成一个可操作的攻击。
 
 ## 实验验证
 
@@ -136,7 +111,7 @@ t-SNE 对输入的平方距离不仅具有乘法尺度不变性，还具有**加
 - [\[ICML 2025\] Online Sparsification of Bipartite-Like Clusters in Graphs](../../ICML2025/others/online_sparsification_of_bipartite-like_clusters_in_graphs.md)
 - [\[AAAI 2026\] Provably Data-Driven Projection Method for Quadratic Programming](../../AAAI2026/others/provably_data-driven_projection_method_for_quadratic_programming.md)
 - [\[ICML 2026\] Provably Data-driven Multiple Hyper-parameter Tuning with Structured Loss Function](../../ICML2026/others/provably_data-driven_multiple_hyper-parameter_tuning_with_structured_loss_functi.md)
-- [\[ICML 2025\] Provably Improving Generalization of Few-Shot Models with Synthetic Data](../../ICML2025/others/provably_improving_generalization_of_few-shot_models_with_synthetic_data.md)
+- [\[ICML 2025\] Provably Cost-Sensitive Adversarial Defense via Randomized Smoothing](../../ICML2025/others/provably_cost-sensitive_adversarial_defense_via_randomized_smoothing.md)
 
 </div>
 

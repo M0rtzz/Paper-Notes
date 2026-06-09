@@ -115,9 +115,9 @@ $$\mathcal{L} = CE(p_t, y_t) + \alpha \cdot \mathcal{L}_c(p_t, s_{t-1})$$
 
 - [\[ECCV 2024\] Classification Matters: Improving Video Action Detection with Class-Specific Attention](classification_matters_improving_video_action_detection_with_class-specific_atte.md)
 - [\[ECCV 2024\] Towards Model-Agnostic Dataset Condensation by Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)
+- [\[ECCV 2024\] AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
 - [\[ECCV 2024\] Bayesian Evidential Deep Learning for Online Action Detection](bayesian_evidential_deep_learning_for_online_action_detection.md)
 - [\[ECCV 2024\] Occluded Gait Recognition with Mixture of Experts: An Action Detection Perspective](occluded_gait_recognition_with_mixture_of_experts_an_action_detection_perspectiv.md)
-- [\[ECCV 2024\] AMEGO: Active Memory from Long EGOcentric Videos](amego_active_memory_from_long_egocentric_videos.md)
 
 </div>
 

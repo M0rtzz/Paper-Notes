@@ -47,36 +47,17 @@ tags:
 
 ## 方法详解
 
-### Mean-in-Interior (MII) 估计器
+### 整体框架
 
-核心思想极其简洁：丢弃所有 boundary 节点，仅对 interior 节点做差分均值（difference-in-means）：
+方法分两步走：先用 Mean-in-Interior（MII）估计器丢掉所有 boundary 节点、只在 interior 节点上做差分均值，把 HT 那种爆炸的逆概率权重换成温和的均匀权重以压低方差；再用一个反事实预测器（如 GNN）在全图上训练并外推到全局处理/控制场景，构造校正项补偿 interior 子群与全体总体之间的协变量偏移，得到增广版 AMII，从而同时拿到低方差和低偏差。
 
-$$\hat{\tau}_{MII} = \frac{\sum_{i \in \text{Int}} z_i Y_i}{\sum_{j \in \text{Int}} z_j} - \frac{\sum_{i \in \text{Int}} (1-z_i) Y_i}{\sum_{j \in \text{Int}} (1-z_j)}$$
+### 关键设计
 
-相比 HT 估计器的指数权重，MII 使用的权重是温和的均匀权重。在 NIA 假设和一定技术条件下（interior 节点比例跨 cluster 渐近均匀、interior 节点能代表整个 cluster），MII 具有一致性（$\hat{\tau}_{MII} - \tau = o_p(1)$）。
+**1. Mean-in-Interior 估计器：用均匀权重换掉爆炸的逆概率权重。** 现有 HT 估计器为了在 boundary 节点上满足无偏性，要施加 $(1/p)^c$ 的指数级权重（$c$ 是节点连接的不同 cluster 数，实网络中可达数十），权重一爆方差就失控。MII 的应对极其直接：把 boundary 节点全部丢弃，只在 interior 节点上做差分均值 $\hat{\tau}_{MII} = \frac{\sum_{i \in \text{Int}} z_i Y_i}{\sum_{j \in \text{Int}} z_j} - \frac{\sum_{i \in \text{Int}} (1-z_i) Y_i}{\sum_{j \in \text{Int}} (1-z_j)}$，所有保留下来的样本都拿均匀权重。这之所以站得住脚，是因为 interior 节点的 1-hop 邻居全在同一 cluster 内，局部环境天然接近全局处理/控制；在 NIA 假设加上"interior 比例跨 cluster 渐近均匀、interior 能代表整个 cluster"等技术条件下，MII 满足一致性 $\hat{\tau}_{MII} - \tau = o_p(1)$。对一类典型的潜在结果模型 $Y_i(\mathbf{z}) = \beta z_i + h(\sum_j z_j / \deg_i, v_i)$，每个 interior 节点本身就是全局均值的无偏估计，而等权平均按 Cauchy-Schwarz 不等式恰好是其中方差最小的那个，所以 MII 的方差在所有方法里始终最低。
 
-关键优势：对于一类典型的 potential outcome 模型 $Y_i(\mathbf{z}) = \beta z_i + h(\sum_j z_j / \deg_i, v_i)$，每个 interior 节点都是全局处理/控制均值的无偏估计，而等权平均根据 Cauchy-Schwarz 不等式恰好是最小方差无偏估计。
+**2. Augmented MII：用反事实预测去掉 interior 的选择偏差。** MII 的软肋是 interior 节点在网络协变量（degree、连接 cluster 数等）上与全体总体有系统性差异，直接取均值会引入选择偏差。AMII 引入一个反事实预测器 $f(\mathbf{z}, X, A)$（论文用 3 层 Chebyshev 卷积的 GNN），在整张图上训练后外推到全处理 $\mathbf{1}$ 与全控制 $\mathbf{0}$，构造校正项 $\hat{\tau}_{AMII} = \hat{\tau}_{MII} + \big(\frac{1}{n}\sum_j f(\mathbf{1},X,A)_j - \frac{1}{s_1}\sum_{i \in \text{Int}} z_i f(\mathbf{1},X,A)_i\big) - \big(\frac{1}{n}\sum_j f(\mathbf{0},X,A)_j - \frac{1}{s_0}\sum_{i \in \text{Int}} (1-z_i) f(\mathbf{0},X,A)_i\big)$，括号里分别是处理组、控制组的校正，捕捉的正是预测值在全体总体与 interior 子群之间的差距。偏差分析（Theorem 4.1）量化了收益：在部分线性模型 $Y_i(\mathbf{z}) = (\beta + \alpha u_i)z_i + h(\cdot)$ 下，MII 偏差为 $\alpha(\mu_{\text{Int}} - \mu)$（协变量均值差乘以交互系数），AMII 偏差则降到 $(\mathbb{E}[\hat{\alpha}_n] - \alpha)(\mu - \mu_{\text{Int}})$——只要回归的线性部分估得准，偏差就被大幅吃掉；当两群无分布差异时校正项归零，不引入额外偏差（harmlessness）。
 
-### Augmented MII (AMII) 估计器
-
-为修正 interior 与全体总体间的协变量偏移，引入反事实预测器 $f(\mathbf{z}, X, A)$（如 GNN），在整个图上训练后外推到全局处理/控制场景，构建校正项：
-
-$$\hat{\tau}_{AMII} = \hat{\tau}_{MII} + \underbrace{\left(\frac{1}{n}\sum_j f(\mathbf{1},X,A)_j - \frac{1}{s_1}\sum_{i \in \text{Int}} z_i f(\mathbf{1},X,A)_i\right)}_{\text{处理组校正}} - \underbrace{\left(\frac{1}{n}\sum_j f(\mathbf{0},X,A)_j - \frac{1}{s_0}\sum_{i \in \text{Int}} (1-z_i) f(\mathbf{0},X,A)_i\right)}_{\text{控制组校正}}$$
-
-校正项捕捉的是预测值在全体总体与 interior 子群间的差异，用以弥补协变量偏移。
-
-**偏差分析**（Theorem 4.1）：在部分线性 potential outcome 模型 $Y_i(\mathbf{z}) = (\beta + \alpha u_i)z_i + h(\cdot)$ 下：
-
-- MII 偏差 = $\alpha(\mu_{\text{Int}} - \mu)$，即协变量均值差异乘以交互效应系数
-- AMII 偏差 = $(\mathbb{E}[\hat{\alpha}_n] - \alpha)(\mu - \mu_{\text{Int}})$，当回归模型的线性部分正确估计时，偏差大幅减少
-
-### 半监督学习视角
-
-重新整理 AMII 表达式可得：
-
-$$\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\sum_{i \in \text{Int}} z_i (Y_i - f(\mathbf{1},X,A)_i)$$
-
-这恰好是 **Prediction-Powered Inference (PPI)** 框架的点估计形式。将 interior 节点视为带标签数据（虽有选择偏差），boundary 节点提供代表性协变量但仅有部分标签信息。AMII 的核心可理解为"用预测去偏（debiasing using predictions）"——修正 interior 节点因聚类产生的选择偏差，与经典 doubly-robust 估计器"用标签去偏预测"的思路互补。
+**3. 半监督 / PPI 视角：把网络实验看成"用预测去偏"。** 重新整理 AMII 可写成 $\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\sum_{i \in \text{Int}} z_i (Y_i - f(\mathbf{1},X,A)_i)$，这恰好是 **Prediction-Powered Inference（PPI）** 的点估计形式。其中 interior 节点充当带标签数据（但带选择偏差），boundary 节点提供有代表性的协变量却只有部分标签信息。这个视角把 AMII 的本质讲清楚了：它做的是"用预测去偏（debiasing using predictions）"——修正 interior 因聚类产生的选择偏差，恰好与经典 doubly-robust 估计器"用标签去偏预测"互补；区别在于标准 PPI 假设标签样本 MCAR，而这里的 interior 节点本身就是有选择偏差的子群，所以 AMII 必须额外处理这层分布偏移。
 
 ## 实验关键数据
 
@@ -147,8 +128,8 @@ $$\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\su
 ## 相关论文
 
 - [\[ICLR 2026\] Resisting Contextual Interference in RAG via Parametric-Knowledge Reinforcement](resisting_contextual_interference_in_rag_via_parametric-knowledge_reinforcement.md)
-- [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Perturbations](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_perturbations.md)
 - [\[ICML 2026\] Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping](../../ICML2026/causal_inference/harnessing_reasoning_trajectories_for_hallucination_detection_via_answer-agreeme.md)
+- [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Perturbations](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_perturbations.md)
 - [\[NeurIPS 2025\] Cyclic Counterfactuals under Shift–Scale Interventions](../../NeurIPS2025/causal_inference/cyclic_counterfactuals_under_shift-scale_interventions.md)
 - [\[ICML 2025\] Causal Abstraction Inference under Lossy Representations](../../ICML2025/causal_inference/causal_abstraction_inference_under_lossy_representations.md)
 

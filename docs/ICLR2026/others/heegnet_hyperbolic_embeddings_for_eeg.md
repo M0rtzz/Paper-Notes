@@ -25,8 +25,6 @@ tags:
 
 ## 研究背景与动机
 
-### 领域现状
-
 **领域现状**：EEG脑机接口因被试间/会话间分布偏移导致泛化差。域适应方法（矩对齐）是当前SOTA，但在大偏移下失效。EEG解码几乎完全基于欧几里得嵌入。
 
 **现有痛点**：(1) 大脑的视觉处理、情感调节等认知过程具有层次结构，但欧几里得空间难以高效表示层次数据——圆的周长线性增长而树节点数指数增长；(2) 仅做矩对齐无法保证正迁移，特别在大域偏移下。
@@ -40,32 +38,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HEEGNet = 欧几里得编码器(时间→空间→时间卷积) → 投影到双曲空间 → 双曲卷积层 → DSMDBN域适应 → 双曲MLR分类器。
+
+HEEGNet 要解决的是 EEG 跨域泛化：既要捕捉认知过程天然的层次结构，又要抹平被试/会话间的分布偏移。它的做法是把信号处理和几何表达拆给两套空间——先用一个欧几里得编码器（时间→空间→时间卷积）从原始 EEG 里抽出频谱-空间-时间特征，再用 ProjX 把这些特征投影到 Lorentz 双曲空间，在双曲空间里做卷积来精炼层次关系，中间穿插 DSMDBN 两阶段域适应消除域偏移，最后由双曲 MLR 分类器输出预测。
 
 ### 关键设计
 
-1. **混合欧几里得-双曲架构**:
+**1. 混合欧几里得-双曲架构：让信号处理和层次表达各司其职。**
 
-    - 功能：欧几里得卷积提取频谱-空间-时间特征，投影后双曲卷积精炼层次关系
-    - 核心思路：3层EEGNet风格卷积 → ProjX投影到Lorentz模型 $\mathbb{L}_K^n$ → 双曲点卷积
-    - 设计动机：欧几里得卷积擅长信号处理（有神经生理学解释），双曲空间擅长表达层次关系。混合取各自所长。
+纯双曲网络会丢掉 EEG 解码里宝贵的信号处理先验，纯欧几里得又表达不了层次结构（圆的周长线性增长，而树节点数指数增长，欧氏空间塞不下指数级的层次）。HEEGNet 因此分两段：前段是 3 层 EEGNet 风格的卷积，做频谱-空间-时间特征提取，这部分有明确的神经生理学解释；随后用 ProjX 把特征投影到 Lorentz 模型 $\mathbb{L}_K^n$，在双曲空间里做点卷积。前段负责把信号变成有意义的特征，后段负责在指数级表达力的空间里组织这些特征的层次关系，两者取各自所长。
 
-2. **DSMDBN (两阶段域适应)**:
+**2. DSMDBN：粗到细的两阶段域适应。**
 
-    - 第一阶段 DSMDBN(1)：Riemannian批归一化做域特异矩对齐（双曲空间中的centering=gyro减法，scaling=gyro乘法）
-    - 第二阶段 DSMDBN(2)：最小化HHSW散度将每个源域分布对齐到标准双曲高斯 $\mathcal{N}(\bar{0}, 1)$
-    - 设计动机：仅矩对齐不够（大偏移下失效），加上分布对齐提供理论保证。先矩后分布=粗到细。
+只做矩对齐（当前 SOTA 的做法）在大域偏移下会失效，所以 DSMDBN 在矩对齐之上再加一层分布对齐。第一阶段 DSMDBN(1) 用 Riemannian 批归一化做域特异的矩对齐——双曲空间里的 centering 用 gyro 减法实现、scaling 用 gyro 乘法实现，把各域的均值和尺度先拉到一起。第二阶段 DSMDBN(2) 再最小化 HHSW 散度，把每个源域的分布对齐到标准双曲高斯 $\mathcal{N}(\bar{0}, 1)$。先对齐矩、再对齐整体分布形状，正是「粗到细」：前者拉近一阶/二阶统计量，后者提供更强的分布对齐理论保证。
 
-3. **Lorentz模型操作**:
+**3. Lorentz 模型上的双曲算子：支撑前两个设计的几何工具箱。**
 
-    - 双曲加法(gyroaddition)、标量乘法(gyromultiplication)、逆元(gyroinverse)
-    - Fréchet均值和方差在Lorentz模型上的定义
-    - 双曲MLR利用点到超平面的双曲距离做分类
+整套网络在双曲空间里的运算都建立在 Lorentz 模型的 gyro 代数上：双曲加法（gyroaddition）、标量乘法（gyromultiplication）和逆元（gyroinverse）替代欧氏空间的对应操作，Fréchet 均值与方差在 Lorentz 模型上重新定义（DSMDBN 的 centering/scaling 就依赖它们），而双曲 MLR 则利用点到超平面的双曲距离来做分类。值得注意的是，先验研究发现仅把分类头的欧氏 MLR 替换成双曲 MLR 就能在所有数据集上提升跨域性能，说明这套几何工具本身确实更契合 EEG 的层次结构。
 
 ### 损失函数 / 训练策略
-- 分类loss + HHSW分布对齐loss
-- 域特异动量批归一化：训练时衰减动量更新，测试时固定动量
-- Riemannian Adam优化器
+
+- 总损失 = 分类 loss + HHSW 分布对齐 loss
+- 域特异动量批归一化：训练时用衰减动量更新统计量，测试时固定动量
+- 用 Riemannian Adam 优化器在流形上做参数更新
 
 ## 实验关键数据
 
@@ -125,9 +119,9 @@ HEEGNet = 欧几里得编码器(时间→空间→时间卷积) → 投影到双
 ## 相关论文
 
 - [\[CVPR 2026\] HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition](../../CVPR2026/others/hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla.md)
-- [\[ACL 2025\] Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
-- [\[ICML 2026\] New Bounds for Kernel Sums via Fast Spherical Embeddings](../../ICML2026/others/new_bounds_for_kernel_sums_via_fast_spherical_embeddings.md)
+- [\[ICCV 2025\] Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval](../../ICCV2025/others/learning_visual_hierarchies_in_hyperbolic_space_for_image_retrieval.md)
 - [\[AAAI 2026\] Shrinking the Teacher: An Adaptive Teaching Paradigm for Asymmetric EEG-Vision Alignment](../../AAAI2026/others/shrinking_the_teacher_an_adaptive_teaching_paradigm_for_asymmetric_eeg-vision_al.md)
+- [\[ACL 2025\] Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
 - [\[AAAI 2026\] CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding](../../AAAI2026/others/cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec.md)
 
 </div>

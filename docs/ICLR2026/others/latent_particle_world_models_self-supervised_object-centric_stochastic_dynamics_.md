@@ -40,39 +40,25 @@ LPWM 是首个能扩展到真实世界多物体数据集的自监督物体中心
 ## 方法详解
 
 ### 整体框架
-视频帧序列 → 并行粒子编码器（每帧提取 $M$ 个前景粒子 $z_{fg}^m = [z_p, z_s, z_d, z_t, z_f]$ + 背景粒子）→ Context Module（学习 per-particle 潜在动作 $z_c^m$）→ 因果时空 Transformer 动力学预测 → 粒子解码器重建下一帧
+LPWM 想解决的是「物体中心世界模型扩展不到真实世界多物体视频」这个老问题，关键在于把每个物体的独立随机运动建模进来。整条管线是自监督的、纯靠视频驱动：先用一个并行粒子编码器把每一帧拆成 $M$ 个前景粒子（每个粒子带属性向量 $z_{fg}^m = [z_p, z_s, z_d, z_t, z_f]$，覆盖 2D 位置、尺度、深度、透明度、视觉特征）外加背景粒子；接着 Context Module 为每个粒子单独学一个潜在动作 $z_c^m$，刻画它这一步「想怎么动」；这些潜在动作通过 AdaLN 注入一个因果时空 Transformer，由它预测下一帧每个粒子属性的变化；最后粒子解码器把预测出的粒子重建成下一帧图像。因为粒子身份不靠追踪而靠 patch origin 锚定，所有帧可以一次并行编码，这也是它能扩展到复杂数据的前提。
 
 ### 关键设计
 
-1. **潜在粒子表示（无需追踪）**
+**1. 潜在粒子表示：用 patch origin 锚定身份，彻底甩掉显式追踪。**
 
-    - 功能：每帧编码为 $M$ 个前景粒子，每个粒子有属性向量 $z_{fg}^m = [z_p, z_s, z_d, z_t, z_f]$（位置 2D、尺度、深度、透明度、视觉特征）
-    - 与 DDLP 的关键区别：**保留所有 $M$ 个编码粒子的身份**（基于 patch origin），而非追踪少数粒子的运动轨迹。这允许帧间并行编码（无顺序依赖）
-    - 定位在 patch-based 和 object-centric 的折中：粒子可在其 origin 附近一定范围内移动，但不完全自由漫游
-    - 设计动机：显式追踪是 DDLP 的可扩展性瓶颈——追踪失败导致错误积累
+DDLP 这类 particle-based 前辈的可扩展性瓶颈就在「显式追踪」——它要顺序地追踪少数粒子的运动轨迹，一旦某帧追踪失败，错误会沿时间累积，而且顺序依赖让它没法并行。LPWM 换了个思路：每帧独立编码出 $M$ 个前景粒子，粒子的身份直接由它的 patch origin 决定，于是「同一个 origin 上的粒子」天然在帧间对应，无需任何跨帧匹配或轨迹追踪。这样做的直接好处是所有帧可以并行编码、没有顺序依赖。它的定位刚好卡在 patch-based 与 object-centric 之间——粒子允许在自己 origin 附近的一定范围内移动以贴合物体运动，但不会完全自由漫游，既保住了组合性又避免了 patch 表示的僵硬。
 
-2. **Per-Particle 潜在动作（Context Module，核心创新）**
+**2. Per-Particle 潜在动作（Context Module）：给每个物体单独建一套随机性，这是全篇核心创新。**
 
-    - 功能：为每个粒子 $m$ 学习独立的潜在动作分布 $q(z_c^m | o_t, o_{t+1})$
-    - 训练时（逆动力学）：给定连续两帧，推断每个粒子的潜在动作（类似 inverse model）
-    - 推理时（潜在策略）：$\pi(z_c^m | o_{\leq t})$——仅基于历史帧预测下一步每个粒子的潜在动作分布，采样实现随机预测
-    - 训练目标：KL 散度正则化 $D_{KL}(q(z_c^m | o_t, o_{t+1}) \| \pi(z_c^m | o_{\leq t}))$
-    - **vs 全局潜在动作**（Genie、CADDY）：消融实验证明 per-particle 是关键——全局动作无法捕捉多物体的独立运动模式
-    - 设计动机：多物体场景中物体运动是独立的（球左移、方块不动），需要 per-object 的随机性建模
+真实多物体场景里物体的运动是各自独立的——球往左滚、方块纹丝不动——一个全局潜在动作根本没法同时描述这两件事。LPWM 因此为每个粒子 $m$ 单独学一个潜在动作分布。训练时它用逆动力学的方式工作：给定相邻两帧 $o_t, o_{t+1}$，后验 $q(z_c^m \mid o_t, o_{t+1})$ 从「实际发生了什么」反推每个粒子的潜在动作（类似 inverse model）。推理时换成潜在策略 $\pi(z_c^m \mid o_{\leq t})$，只看历史帧预测下一步每个粒子的潜在动作分布，再从中采样，从而实现随机预测。两者用 KL 散度对齐，训练目标里包含 $D_{KL}\big(q(z_c^m \mid o_t, o_{t+1}) \,\|\, \pi(z_c^m \mid o_{\leq t})\big)$，让策略学会逼近逆动力学推断出的真实动作分布。和 Genie、CADDY 用的全局潜在动作相比，消融实验直接证明 per-particle 才是关键——全局动作无法捕捉多物体各自独立的运动模式。
 
-3. **因果时空 Transformer 动力学**
+**3. 因果时空 Transformer 动力学：用 AdaLN 把潜在动作注进每一层。**
 
-    - 功能：预测下一帧的粒子属性变化
-    - 核心思路：因果注意力（只看历史帧）+ 空间注意力（同一帧内粒子交互）+ AdaLN 条件化（将潜在动作 $z_c^m$ 通过 Adaptive Layer Normalization 融入 Transformer 层）
-    - 设计动机：AdaLN 比加法位置嵌入更有效地融入条件信号（消融验证）
+预测下一帧粒子属性变化的主干是一个同时管时间和空间的 Transformer：因果注意力保证每个粒子只看得到历史帧、不偷看未来，空间注意力让同一帧内的粒子相互交互（建模物体间的碰撞、遮挡等关系）。潜在动作 $z_c^m$ 不是简单拼接进输入，而是通过 Adaptive Layer Normalization（AdaLN）调制每个 Transformer 层的归一化参数注入进去。消融验证表明，AdaLN 这种调制式条件化比把动作当作加法位置嵌入更有效地传递条件信号。
 
-4. **多模态条件化**
+**4. 多模态条件化：同一套接口接住动作 / 语言 / 图像目标 / 多视角。**
 
-    - 动作条件：外部动作信号直接融入 Transformer
-    - 语言条件：文本编码后作为额外条件
-    - 图像目标条件：目标帧编码后引导生成
-    - 多视角：多视角粒子可同时建模动态
-    - 设计动机：统一的条件化接口使同一模型适用于多种下游任务
+LPWM 把外部条件统一塞进 Transformer 的条件化通道，使同一个模型不必改结构就能服务多种下游任务：外部动作信号可直接作为条件融入；文本经编码后作为语言条件；目标帧编码后作为图像目标条件引导生成；多视角下不同视角的粒子可同时建模同一动态。正是这套统一接口，让「视频预训练 → 机器人控制」的迁移变得自然，无须为每种条件单独设计模块。
 
 ### 损失函数 / 训练策略
 - 端到端纯视频自监督训练（无需物体标签/分割标注）
@@ -149,8 +135,8 @@ LPWM 在 PandaPush 和 OGBench 的多任务上显著超越基线。OGBench task3
 - [\[ICLR 2026\] Latent Equivariant Operators for Robust Object Recognition: Promises and Challenges](latent_equivariant_operators_for_robust_object_recognition_promises_and_challeng.md)
 - [\[AAAI 2026\] Beyond World Models: Rethinking Understanding in AI Models](../../AAAI2026/others/beyond_world_models_rethinking_understanding_in_ai_models.md)
 - [\[ICML 2025\] General Agents Contain World Models](../../ICML2025/others/general_agents_contain_world_models.md)
-- [\[ICML 2026\] iWorld-Bench: A Benchmark for Interactive World Models with a Unified Action Generation Framework](../../ICML2026/others/iworld-bench_a_benchmark_for_interactive_world_models_with_a_unified_action_gene.md)
-- [\[CVPR 2025\] Feature Selection for Latent Factor Models](../../CVPR2025/others/feature_selection_for_latent_factor_models.md)
+- [\[ICLR 2026\] Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [\[ICLR 2026\] Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
 
 </div>
 

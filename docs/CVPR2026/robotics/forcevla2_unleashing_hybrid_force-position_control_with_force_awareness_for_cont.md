@@ -162,7 +162,7 @@ ForceVLA2采用双层级设计（受人类感觉运动控制启发）：长时�
 - [\[CVPR 2026\] DAWN: Pixel Motion Diffusion is What We Need for Robot Control](dawn_pixel_motion_diffusion_robot_control.md)
 - [\[CVPR 2026\] Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](lada_robotic_manipulation.md)
 - [\[CVPR 2026\] PULSE: Privileged Knowledge Transfer from Rich to Deployable Sensors for Embodied Multi-Sensory Learning](pulse_privileged_knowledge_transfer_from_rich_to_deployable_sensors_for_embodied.md)
-- [\[ICLR 2026\] On Entropy Control in LLM-RL Algorithms](../../ICLR2026/robotics/on_entropy_control_in_llm-rl_algorithms.md)
+- [\[ICML 2026\] Position: Good Embodied Reward Models Need Bad Behavior Data](../../ICML2026/robotics/position_good_embodied_reward_models_need_bad_behavior_data.md)
 
 </div>
 

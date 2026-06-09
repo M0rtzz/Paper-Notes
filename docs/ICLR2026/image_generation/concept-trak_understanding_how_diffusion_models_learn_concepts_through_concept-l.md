@@ -41,32 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-影响函数：$\mathcal{I}(x_0^i, c_{\text{target}}) = \nabla_\theta \mathcal{L}_{\text{concept}}^\top \mathbf{H}^{-1} \nabla_\theta \mathcal{L}_{\text{train}}$。关键在于设计 $\mathcal{L}_{\text{concept}}$（效用损失）和 $\mathcal{L}_{\text{train}}$（训练损失），使其梯度方向编码概念特异信息而非全局重建信息。
+Concept-TRAK 想回答的是"哪些训练样本教会了模型某个**概念**"，而不是传统数据归因问的"哪些训练样本影响了这**整张图**"。它完全套用 TRAK 的影响函数框架——训练样本 $x_0^i$ 对目标概念 $c_{\text{target}}$ 的影响写成两个梯度通过 Hessian 逆相连的内积：
+
+$$\mathcal{I}(x_0^i, c_{\text{target}}) = \nabla_\theta \mathcal{L}_{\text{concept}}^\top \mathbf{H}^{-1} \nabla_\theta \mathcal{L}_{\text{train}}.$$
+
+框架没变，变的是两端的损失。TRAK 系列方法在这两端都用标准去噪目标，梯度方向编码的是"整体重建质量"；而要做概念归因，必须让训练损失 $\mathcal{L}_{\text{train}}$ 的梯度只指向"某个训练样本特有的影响方向"，让效用损失 $\mathcal{L}_{\text{concept}}$ 的梯度只指向"目标概念方向"。论文的核心工作就是把这两个损失重新设计成 reward 驱动的形式，使两端的梯度都落在数据流形的切空间里。
 
 ### 关键设计
 
-1. **训练损失（DPS Reward-based）**:
+**1. 训练损失：用 DPS reward 梯度替代去噪信号，隔离单个样本的影响方向。**
 
-    - 功能：捕获训练样本 $x_0^i$ 对模型生成能力的特异影响方向
-    - 核心思路：定义 reward $R_{\text{train}}(x_t) = \log p(x_0^i | \hat{x}_0)$，其中 $\hat{x}_0 = \mathbb{E}[x_0|x_t]$（后验均值）。假设高斯分布后 reward 梯度为 $\nabla_{x_t} \|{\hat{x}_0 - x_0^i}\|^2$——这个梯度在数据流形的切空间中操作（DPS 理论保证）
-    - 最终训练损失：$\mathcal{L}_{\text{train}} = \mathbb{E}_{x_t}[\|\text{sg}[\epsilon_\theta(x_t;c) + \lambda_t \nabla_{x_t}\|\hat{x}_0 - x_0^i\|^2] - \epsilon_\theta(x_t;c)\|^2]$
-    - 设计动机：标准 DSM 损失提供重建驱动的信号，而 DPS reward 梯度提供切空间引导向量——对概念归因更稳定
+标准去噪损失捕获的是重建整张图的方向，对"某个训练样本特有贡献"并不敏感。这里改用扩散后验采样（DPS）的视角：定义 reward $R_{\text{train}}(x_t) = \log p(x_0^i | \hat{x}_0)$，其中 $\hat{x}_0 = \mathbb{E}[x_0|x_t]$ 是后验均值。在高斯假设下，该 reward 的梯度化简为 $\nabla_{x_t} \|\hat{x}_0 - x_0^i\|^2$，DPS 理论保证这个梯度作用在数据流形的切空间上——也就是说它给出的是"把生成往 $x_0^i$ 这个样本拉"的切向引导，而非全局重建方向。把这个引导项叠加到去噪预测上、再以 stop-gradient 形式回归，得到最终训练损失：
 
-2. **效用损失（CFG-based Concept Loss）**:
+$$\mathcal{L}_{\text{train}} = \mathbb{E}_{x_t}\big[\|\text{sg}[\epsilon_\theta(x_t;c) + \lambda_t \nabla_{x_t}\|\hat{x}_0 - x_0^i\|^2] - \epsilon_\theta(x_t;c)\|^2\big].$$
 
-    - 功能：度量模型对目标概念 $c_{\text{target}}$ 的生成能力
-    - 核心思路：概念 reward $R_{\text{concept}}(x_t) = \log p(c_{\text{target}} | x_t)$。当 $c_{\text{target}}$ 可作为条件输入时，reward 梯度化简为 classifier-free guidance 向量：$\epsilon_\theta(x_t; c_{\text{target}}) - \epsilon_\theta(x_t)$
-    - 对嵌入在复合条件中的概念：用 concept slider guidance $\epsilon_\theta(x_t; c) - \epsilon_\theta(x_t; c_{-})$，其中 $c_{-}$ 是去掉目标概念的条件
-    - 设计动机：CFG 向量已被证明在数据流形切空间中编码概念信息——与我们的几何框架一致
+相比标准 DSM 损失提供的"重建驱动"信号，这个切空间引导向量对概念归因更稳定、噪声更小。
 
-3. **辅助技术**:
+**2. 效用损失：把目标概念的 reward 梯度化简成 CFG 向量。**
 
-    - **DDIM 反演确定性采样**：消除前向扩散的随机性，提升梯度稳定性
-    - **全局 vs 局部归因**：全局归因检查概念在所有生成中的来源；局部归因检查特定生成图像中概念的来源
-    - **梯度归一化**：每个时间步梯度归一化为单位范数，避免某些时间步主导归因分数，同时使方法对超参数 $\beta, \sigma_{\text{data}}$ 不敏感
+归因的另一端要回答"模型生成目标概念 $c_{\text{target}}$ 的能力有多强"，于是定义概念 reward $R_{\text{concept}}(x_t) = \log p(c_{\text{target}} | x_t)$。关键观察是：当 $c_{\text{target}}$ 本身能作为条件喂给模型时，这个 reward 的梯度恰好化简为 classifier-free guidance 向量 $\epsilon_\theta(x_t; c_{\text{target}}) - \epsilon_\theta(x_t)$。对那些嵌在复合条件里、无法单独拎出来的概念，则改用 concept slider guidance $\epsilon_\theta(x_t; c) - \epsilon_\theta(x_t; c_{-})$，其中 $c_{-}$ 是把目标概念抠掉后的条件，两者之差正好分离出该概念的方向。这一步之所以成立，是因为 CFG 向量已被证明在数据流形切空间中编码概念信息——它和训练损失端用的切空间引导落在同一几何框架里，所以两端的内积才有"概念级影响"的含义，而不只是过去那种"引导生成"的用法。
+
+**3. 辅助技术：确定性采样、双粒度归因与逐步归一化。**
+
+三个工程细节让上述损失真正可用。其一，用 **DDIM 反演做确定性采样**，消除前向扩散的随机性，使每次查询的梯度可复现、更稳定。其二，区分**全局与局部归因**：全局归因检查某概念在所有生成中的训练来源，局部归因则只看某一张特定生成图里这个概念的来源，对应不同的审计粒度。其三，**逐时间步梯度归一化**——把每个时间步的梯度归一化为单位范数，避免少数时间步因梯度幅值大而主导归因分数，顺带让方法对超参数 $\beta, \sigma_{\text{data}}$ 不敏感。
 
 ### 损失函数 / 训练策略
-无需训练——Concept-TRAK 是 training-free 的归因方法。只需要为训练集预计算投影梯度（TRAK 框架），然后用概念特异损失的梯度做查询。
+无需训练——Concept-TRAK 是 training-free 的归因方法。只需在 TRAK 框架下为训练集预计算投影梯度，查询时再用上面概念特异损失的梯度即可。
 
 ## 实验关键数据
 

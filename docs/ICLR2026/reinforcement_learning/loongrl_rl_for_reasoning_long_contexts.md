@@ -41,39 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LoongRL 的 pipeline：(1) 从现有多跳 QA 数据集出发 → (2) 通过 KeyChain 方法将其变为高难度长上下文问题 → (3) 用 GRPO 算法进行多阶段 RL 训练 → (4) 混合数学和检索数据保持短上下文能力。输入是 ~16K token 的长文本 + 问题，输出是包含推理过程的回答。
+LoongRL 想解决的是：怎样用一份"够难、可验证、又不昂贵"的数据，把长上下文推理这种特殊思维方式从模型里逼出来。它的做法是先把现成的短文本多跳 QA 改造成高难度长上下文题目（KeyChain），再用 GRPO 在这些题目上做多阶段 RL，同时掺入数学和检索数据守住短上下文能力。整条链路的输入是约 16K token 的长文本加一个问题，输出是带推理过程、最终答案放在 `\boxed{}` 里的回答。关键在于：训练长度始终压在 16K，但学到的推理模式能直接迁移到 128K。
 
 ### 关键设计
 
-1. **KeyChain 数据构造**
+**1. KeyChain 数据构造：用 UUID 链条把"真正的问题"藏起来，逼模型先规划再检索。**
 
-    - 功能：将简单的短文本多跳 QA 转变为高难度长上下文推理任务
-    - 核心思路：首先从 HotpotQA、MuSiQue、2WikiMultiHopQA 中筛选中等难度的 QA 对（277K→72K，过滤方式：用 Qwen2.5-32B 回答 8 次，保留 pass rate 在 0-1 之间的），然后 (a) 插入无关文档扩展到 ~16K token，(b) 插入多条 UUID key-value 链，其中一条链最终指向原始问题 $o\_q_i$，其余链指向干扰问题。每个 key 是 32 字符 UUID（0-9, A-F），value 包含下一个 key 或最终问题。模型必须从初始 key 追踪正确链条 → 找到隐藏的真实问题 → 在长上下文中检索相关信息 → 推理得出答案
-    - 设计动机：仅靠增加干扰文档，难度提升有限，模型仍可直接检索。KeyChain 的妙处在于迫使模型先"找到问题是什么"，这个预处理步骤天然引导模型形成规划-检索-推理的结构化思维
+光往上下文里塞干扰文档，难度上不去——模型照样能直接检索作答。KeyChain 的核心是先把"问题是什么"本身藏成一道需要追踪的谜题。具体做法：先从 HotpotQA、MuSiQue、2WikiMultiHopQA 里筛中等难度的 QA 对（277K→72K，筛选方式是让 Qwen2.5-32B 各回答 8 次，只保留 pass rate 落在 0 到 1 之间的题，太简单太难都丢），然后一方面插入无关文档把上下文撑到约 16K token，另一方面插入多条 UUID key-value 链：每个 key 是 32 字符的 UUID（字符取自 0-9、A-F），对应的 value 里要么是下一个 key、要么是最终问题；其中一条链最终指向原始问题 $o\_q_i$，其余几条链则指向干扰问题。模型拿到初始 key 后，必须沿正确链条一跳一跳追下去，找到被隐藏的真实问题，再回到长上下文里检索相关信息、推理出答案。正是这个"先找到问题"的前置步骤，天然把模型推向 plan→retrieve→reason→recheck 的结构化思维——不是直接教它怎么推理，而是设计数据让它非推理不可。
 
-2. **Two-way Substring Exact Match 奖励验证器**
+**2. Two-way Substring Exact Match：给开放式 QA 一个既不苛刻也不放水的奖励信号。**
 
-    - 功能：为 RL 提供可靠的 binary 奖励信号
-    - 核心思路：$r_i = 1$ 当且仅当 $a \subseteq y_{\text{ans}} \lor y_{\text{ans}} \subseteq a$，即预测答案包含 ground truth，或 ground truth 包含预测答案（双向子串匹配）。模型被要求将最终答案放在 `\boxed{}` 中以便提取
-    - 设计动机：通用 QA 答案形式多样（不像数学有唯一解），strict exact match 过于严格会惩罚正确但格式不同的答案，F1 score 和 LLM-as-a-judge 效果不佳且后者还需额外模型开销。双向子串匹配在宽容度和准确性间取得好平衡
+通用 QA 的答案不像数学有唯一解，表达方式五花八门，所以奖励验证是个真问题：严格 exact match 会把"对但格式不同"的答案误判为错，F1 不够精确，LLM-as-a-judge 既效果一般又要额外挂一个模型。LoongRL 用双向子串匹配——预测答案 $a$ 与抽取出的答案串 $y_{\text{ans}}$ 只要一方是另一方的子串就给满分：
 
-3. **三阶段多课程 RL 训练**
+$$r_i = 1 \iff a \subseteq y_{\text{ans}} \lor y_{\text{ans}} \subseteq a$$
 
-    - 功能：渐进式提升任务难度，避免一开始就给太难的数据导致训练不稳定
-    - 核心思路：
-        - **Warm-up**（42 steps, 仅 7B 需要）: 在无 KeyChain 的数据上训练（标准多跳 QA + 检索 + 数学），提升基础能力
-        - **Stage I**（168 steps）: 加入 KeyChain 数据，鼓励模型学习 plan-retrieve-reason-recheck 模式
-        - **Stage II**（~120-150 steps）: 对每个样本生成 8 条 rollout，丢弃全部答对的样本（~60-70%），仅在剩余困难样本上继续训练，避免在已掌握问题上过拟合
-    - 设计动机：小模型（7B）初始能力弱，直接上 KeyChain 会导致所有 rollout 都失败（reward 全为 0），无法产生有效梯度；大模型（14B）可跳过 warm-up
+为了能稳定抽取，模型被要求把最终答案写进 `\boxed{}`。这样既容下了表述差异，又比 LLM judge 更快、更不容易被 reward hacking 钻空子，在宽容度和准确性之间找到了平衡。
 
-4. **混合数据配方**
+**3. 三阶段课程式 RL：从能答对的题起步，逐步逼到只剩硬骨头。**
 
-    - 功能：平衡长上下文推理和短上下文通用能力
-    - 核心思路：训练数据包含 7,500 KeyChain QA + 7,500 标准多跳 QA + 1,024 needle retrieval + 5,000 数学题（DAPO + MATH），全部限制在 ~16K 上下文长度内
-    - 设计动机：纯长上下文训练会退化短上下文能力（R1-distill 系列和 QwenLong-L1 均有此问题），加入数学数据可保持通用推理
+如果一上来就喂 KeyChain，小模型会全军覆没——所有 rollout 都答错、reward 全为 0，根本产生不了有效梯度。LoongRL 因此把训练拆成由易到难的三段。Warm-up（42 步，只有 7B 需要）先在不含 KeyChain 的数据（标准多跳 QA + 检索 + 数学）上把基础能力练起来；Stage I（168 步）正式加入 KeyChain 数据，引导模型学出 plan-retrieve-reason-recheck 模式；Stage II（约 120-150 步）做 hard-mining——对每个样本生成 8 条 rollout，把全部答对的样本（约占 60-70%）直接丢弃，只在剩下的困难样本上继续训，避免在已经掌握的题上反复过拟合。14B 模型初始能力够强，可以跳过 warm-up 直接进 Stage I。
+
+**4. 混合数据配方：掺数学和检索，守住短上下文不退化。**
+
+纯长上下文训练有个已知副作用——短上下文通用能力会退化（R1-distill 系列和 QwenLong-L1 都栽在这上面）。LoongRL 的训练集因此是个混合配方：7,500 条 KeyChain QA + 7,500 条标准多跳 QA + 1,024 条 needle retrieval + 5,000 道数学题（DAPO + MATH），全部限制在约 16K 上下文以内。数学题在这里起的是"压舱石"作用，让模型在学长上下文推理的同时保住通用推理能力。
 
 ### 损失函数 / 训练策略
-采用 GRPO (Group Relative Policy Optimization)，group size $G=8$，学习率 $1 \times 10^{-6}$，cosine decay，KL penalty $\beta=0.001$，去掉熵损失项（避免训练不稳定）。最大输出长度 4,096 token，推理时温度 0.6, top-p 0.95。
+采用 GRPO (Group Relative Policy Optimization)，group size $G=8$，学习率 $1 \times 10^{-6}$，cosine decay，KL penalty $\beta=0.001$，并去掉熵损失项以避免训练不稳定。最大输出长度 4,096 token，推理时温度 0.6、top-p 0.95。
 
 ## 实验关键数据
 
@@ -142,8 +135,8 @@ LoongRL 的 pipeline：(1) 从现有多跳 QA 数据集出发 → (2) 通过 Key
 
 - [\[ICLR 2026\] Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning](echo_towards_advanced_audio_comprehension_via_audio-interleaved_reasoning.md)
 - [\[ICLR 2026\] LongWriter-Zero: Mastering Ultra-Long Text Generation via Reinforcement Learning](longwriter-zero_mastering_ultra-long_text_generation_via_reinforcement_learning.md)
-- [\[NeurIPS 2025\] Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/reinforcement_learning/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
 - [\[ICLR 2026\] LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
+- [\[NeurIPS 2025\] Incentivizing Reasoning for Advanced Instruction-Following of Large Language Models](../../NeurIPS2025/reinforcement_learning/incentivizing_reasoning_for_advanced_instruction-following_of_large_language_mod.md)
 - [\[ICLR 2026\] SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
 
 </div>

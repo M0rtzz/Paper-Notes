@@ -177,7 +177,7 @@ AirRep 在仅用 1/48 存储的情况下，平均 LDS 超越所有梯度方法 *
 - [\[NeurIPS 2025\] Conformal Risk Training: End-to-End Optimization of Conformal Risk Control](conformal_risk_training_end-to-end_optimization_of_conformal_risk_control.md)
 - [\[NeurIPS 2025\] Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation](quantifying_task-relevant_representational_similarity_using_decision_variable_co.md)
 - [\[ICML 2025\] LLM Data Selection and Utilization via Dynamic Bi-level Optimization](../../ICML2025/llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md)
-- [\[NeurIPS 2025\] Predict Training Data Quality via Its Geometry in Metric Space](predict_training_data_quality_via_its_geometry_in_metric_space.md)
+- [\[CVPR 2025\] AMO Sampler: Enhancing Text Rendering with Overshooting](../../CVPR2025/llm_pretraining/amo_sampler_enhancing_text_rendering_with_overshooting.md)
 
 </div>
 

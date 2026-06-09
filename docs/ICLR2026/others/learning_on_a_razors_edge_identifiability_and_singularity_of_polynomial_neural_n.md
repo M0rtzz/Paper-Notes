@@ -37,43 +37,29 @@ tags:
 
 ### 整体框架
 
-本文是纯理论工作，不涉及具体实验。整体思路是：
-
-1. 定义神经流形 $\mathcal{M}_{\mathbf{d},\sigma}$ 为参数化映射 $\varphi: \mathcal{W} \to \mathcal{V}$ 的像；
-2. 研究 $\varphi$ 的纤维（fiber）结构来解决可辨识性问题；
-3. 分析流形上切空间维度异常的点来刻画奇异点；
-4. 引入"临界暴露性"概念来联系奇异点与优化动态。
+本文是纯理论工作，主线是把多项式激活的 MLP/CNN 看成把参数空间 $\mathcal{W}$ 映到函数空间 $\mathcal{V}$ 的代数映射 $\varphi$，其像即神经流形 $\mathcal{M}_{\mathbf{d},\sigma}$。围绕这个映射依次回答三件事：纤维（fiber）有多大决定可辨识性，切空间维度在哪里异常决定奇异点，再用"临界暴露性"把奇异点和损失函数的临界点接起来，从而落到优化动态上。整套论证都建立在 Zariski 拓扑的不可约性上——只要在一个通用点验证成立，结论就在稠密开集上成立。
 
 ### 关键设计
 
-1. **MLP 有限可辨识性 (Theorem 4.1)**:
+**1. MLP 有限可辨识性（Theorem 4.1）：把缩放对称性"切"成有限解。**
 
-    - 做什么: 证明对通用多项式激活、足够大的度 $r$，MLP 参数化映射的通用纤维是有限的。
-    - 核心思路: 构造一个特殊的稀疏多项式激活 $\sigma(x) = \sum_{i=1}^{L} x^{\beta_i}$，使得 MLP 输出可以分解为若干单项式 MLP 之和（Lemma B.1）。利用已知的单项式 MLP 的纤维结构（排列 + 对角缩放），将问题归结为求解一个多项式方程组 $\lambda_{L,1}^{\beta_{L-1}^{L-2}} \cdots \lambda_{L,L-1} = 1$。通过 Smith 正规形和环面几何证明该方程组只有有限多解。结论: $\dim(\mathcal{M}_{\mathbf{d},\sigma}) = \sum_{i=1}^{L} d_i d_{i-1}$，即神经流形维度等于参数数量。
-    - 设计动机: 解决了 Kileel 等人 2019 年提出的维度猜想。相较于单项式激活（有无限纤维来自缩放对称性），多项式激活的多个非零系数提供了额外约束方程，将缩放自由度消掉。
+目标是证明对通用多项式激活、足够大的度 $r$，MLP 参数化映射的通用纤维是有限的，即同一函数只对应有限多组参数。证明的关键是构造一个稀疏多项式激活 $\sigma(x) = \sum_{i=1}^{L} x^{\beta_i}$，使 MLP 输出可分解成若干单项式 MLP 之和（Lemma B.1）。单项式 MLP 的纤维结构已知（神经元排列加对角缩放），借此把可辨识性问题归结为一个多项式方程组 $\lambda_{L,1}^{\beta_{L-1}^{L-2}} \cdots \lambda_{L,L-1} = 1$，再用 Smith 正规形和环面几何证明它只有有限多解，从而得到 $\dim(\mathcal{M}_{\mathbf{d},\sigma}) = \sum_{i=1}^{L} d_i d_{i-1}$，即神经流形维度恰等于参数数量，解决了 Kileel 等人 2019 年的维度猜想。之所以单项式激活做不到这一点，是因为它只有缩放对称性带来的无限纤维；多项式的多个非零系数提供了额外约束方程，正好把缩放自由度消掉。
 
-2. **CNN 唯一可辨识性 (Theorem 4.4)**:
+**2. CNN 唯一可辨识性（Theorem 4.4）：权重共享换来一对一。**
 
-    - 做什么: 证明 CNN 的参数化在 $\mathcal{W} \setminus \varphi^{-1}(0)$ 上是正则的（Jacobian 满秩）且通用一对一。
-    - 核心思路: 利用 CNN 的权重共享结构，卷积操作的 Jacobian 分析更为简洁。通过 Lemma C.1 的对数导数技巧——构造辅助函数 $P(x) = x\sigma'(x)/\sigma(x)$，利用渐近展开证明任何使两个参数化相等的缩放因子 $\lambda_i$ 必须全为 1。
-    - 设计动机: CNN 的权重共享消除了 MLP 中存在的神经元排列对称性，因此获得了比 MLP 更强的可辨识性结论。这一差异将在奇异点和稀疏偏差中产生深远影响。
+这里要证 CNN 的参数化在 $\mathcal{W} \setminus \varphi^{-1}(0)$ 上是正则的（Jacobian 满秩）且通用一对一。卷积的权重共享让 Jacobian 分析比 MLP 简洁得多：通过 Lemma C.1 的对数导数技巧，构造辅助函数 $P(x) = x\sigma'(x)/\sigma(x)$ 并做渐近展开，可证任何让两组参数化重合的缩放因子 $\lambda_i$ 都必须为 1，于是不存在冗余。结论比 MLP 更强的根源在于权重共享消除了 MLP 中神经元排列带来的离散对称性——这一差异会在奇异点类型和稀疏偏差上被进一步放大。
 
-3. **子网络与奇异点 (Theorems 4.2, 4.6)**:
+**3. 子网络与奇异点（Theorems 4.2, 4.6）：稀疏结构 ↔ 几何奇异性。**
 
-    - 做什么: 证明稀疏子网络（部分神经元被置零）定义了神经流形的奇异点。
-    - 核心思路 (MLP): 在子网络参数 $\mathbf{W}$ 处，被置零神经元的行可以自由变化而不影响 $f_\mathbf{W}$。对 $\varphi$ 关于这些"死亡"参数的偏导数产生切向量 $\frac{\partial \varphi}{\partial W_{i+2}[k,j]}$，这些切向量随着自由参数的变化张成了一个维度超过 $\dim(\mathcal{M})$ 的空间——这正是奇异点的定义。
-    - 核心思路 (CNN): Theorem 4.6 给出了完整刻画——奇异点当且仅当参数是"合适的"子网络，即滤波器在左端或右端填零，且递推量 $\tilde{t}_i = t_i + \tilde{t}_{i-1}/s_{i-1}$ 满足整数性条件。CNN 的奇异点全部是"节点型"（自交叉），而非 MLP 中的"尖点型"。
-    - 设计动机: 这建立了"稀疏结构 ↔ 几何奇异性"的精确对应，为后续的优化分析奠定基础。
+本设计建立稀疏子网络（部分神经元被置零）与神经流形奇异点之间的精确对应。对 MLP，在子网络参数 $\mathbf{W}$ 处，被置零神经元所在的行可以自由变动而不改变 $f_\mathbf{W}$；$\varphi$ 对这些"死亡"参数的偏导数 $\frac{\partial \varphi}{\partial W_{i+2}[k,j]}$ 给出一族切向量，随自由参数变化张成的空间维度超过 $\dim(\mathcal{M})$，按定义即奇异点。对 CNN，Theorem 4.6 给出当且仅当的完整刻画：奇异点恰对应"合适的"子网络——滤波器在左端或右端填零，且递推量 $\tilde{t}_i = t_i + \tilde{t}_{i-1}/s_{i-1}$ 满足整数性条件。两者奇异点的几何形态不同，MLP 是 Jacobian 秩降的尖点型，CNN 则全是参数化仍正则的节点型（自交叉），这一区别是下一步优化分析的基础。
 
-4. **临界暴露性 (Theorem 4.3, Proposition 4.5)**:
+**4. 临界暴露性（Theorem 4.3, Proposition 4.5）：把奇异点接到 SGD 的吸引子上。**
 
-    - 做什么: 引入"临界暴露性"(critically exposed) 概念，证明 MLP 的子网络是临界暴露的，而 CNN 的子网络不是。
-    - 核心思路: 定义集合 $S$ 是临界暴露的，如果 $U_S = \{u \in \mathcal{V} \mid \exists \mathbf{W} \in S, \nabla(\mathcal{L}_u \circ \varphi)(\mathbf{W}) = 0\}$ 在 $\mathcal{V}$ 中有非空内部。几何上，$U_S = \bigcup_{\mathbf{W} \in S} f_\mathbf{W} + \mathrm{im}(J_\mathbf{W}\varphi)^\perp$——这是一族仿射子空间的并。对 MLP，严格子网络处 Jacobian 有零列（对应死亡参数），使得法空间的并集达到满维 $\dim(\mathcal{V})$；对 CNN，由于参数化是正则的（无零列），代数集的像无法达到满维。
-    - 设计动机: 临界暴露性意味着，对随机采样的数据目标 $u$，子网络中以正概率存在损失的临界点。换言之，SGD 训练动态以正概率被吸引到稀疏子网络——这为 MLP 的稀疏偏差给出了纯几何的解释。
+最后引入"临界暴露性"(critically exposed) 概念，解释为什么 MLP 会落进稀疏子网络而 CNN 不会。称集合 $S$ 临界暴露，若 $U_S = \{u \in \mathcal{V} \mid \exists \mathbf{W} \in S, \nabla(\mathcal{L}_u \circ \varphi)(\mathbf{W}) = 0\}$ 在 $\mathcal{V}$ 中有非空内部；几何上 $U_S = \bigcup_{\mathbf{W} \in S} f_\mathbf{W} + \mathrm{im}(J_\mathbf{W}\varphi)^\perp$ 是一族仿射子空间的并。对 MLP，严格子网络处 Jacobian 有对应死亡参数的零列，使这族法空间的并达到满维 $\dim(\mathcal{V})$；对 CNN，参数化正则（无零列），代数集的像够不到满维。满维意味着对随机采样的数据目标 $u$ 以正概率在子网络处存在损失临界点，于是 SGD 以正概率被吸引到稀疏子网络——这就给 MLP 的稀疏偏差一个纯几何的解释，也对照出 CNN 没有这种偏差。
 
 ### 损失函数 / 训练策略
 
-本文考虑的是标准均方误差损失 $\mathcal{L}_\mathcal{D}(f) = \sum_{(x,y) \in \mathcal{D}} \|f(x) - y\|^2$。关键观察是，这个损失可以改写为 $\mathcal{L}_u(f) = Q(f - u)$，其中 $Q$ 是 $\mathcal{V}$ 上的二次型，$u \in \mathcal{V}$ 取决于数据集。由链式法则，$\mathbf{W}$ 是 $\mathcal{L}_u \circ \varphi$ 的临界点当且仅当 $f_\mathbf{W} - u$ 正交于参数化映射的 Jacobian 像——这一几何等价是所有优化相关证明的基础。
+全程采用标准均方误差损失 $\mathcal{L}_\mathcal{D}(f) = \sum_{(x,y) \in \mathcal{D}} \|f(x) - y\|^2$。关键在于把它改写成 $\mathcal{L}_u(f) = Q(f - u)$，其中 $Q$ 是 $\mathcal{V}$ 上的二次型、$u \in \mathcal{V}$ 由数据集决定。由链式法则，$\mathbf{W}$ 是 $\mathcal{L}_u \circ \varphi$ 的临界点，当且仅当 $f_\mathbf{W} - u$ 正交于参数化映射的 Jacobian 像——正是这一几何等价，支撑了上面所有与优化相关的论证。
 
 ## 实验关键数据
 
@@ -146,9 +132,9 @@ tags:
 
 - [\[ICLR 2026\] Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
 - [\[ICLR 2026\] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
 - [\[ICLR 2026\] Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
 - [\[ICML 2026\] On the Epistemic Uncertainty of Overparametrized Neural Networks](../../ICML2026/others/on_the_epistemic_uncertainty_of_overparametrized_neural_networks.md)
-- [\[ICLR 2026\] Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs](directional_sheaf_hypergraph_networks_unifying_learning_on_directed_and_undirect.md)
 
 </div>
 

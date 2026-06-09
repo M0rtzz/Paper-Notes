@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 3D 视觉方向365篇论文解读
+  CVPR2025 3D 视觉方向363篇论文解读
 description: >-
-  365篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、点云、语义分割、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  363篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、对抗鲁棒、语义分割、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "3D 视觉"
@@ -11,19 +11,19 @@ tags:
   - "3D 高斯渲染"
   - "扩散模型"
   - "三维重建"
-  - "点云"
-  - "语义分割"
   - "对抗鲁棒"
+  - "语义分割"
+  - "点云"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📷 CVPR2025** · **365** 篇论文解读
+**📷 CVPR2025** · **363** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (76)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (112)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (113)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×27 · 三维重建 ×18 · 点云 ×16 · 语义分割 ×15
+🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×26 · 三维重建 ×18 · 对抗鲁棒 ×15 · 语义分割 ×15
 
 **[3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination](3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
 
@@ -135,6 +135,8 @@ tags:
 
 :   提出一种基于新型图像块表示 Blurry-Edges 的深度估计方法，通过对散焦边界的平滑度建模，实现在极低光照（光子受限）条件下从一对不同散焦图像中鲁棒地估计物体深度，噪声鲁棒性比现有 DfD 方法高 4 倍以上。
 
+**[CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images](cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)**
+
 **[CADDreamer: CAD Object Generation from Single-view Images](caddreamer_cad_object_generation_from_single-view_images.md)**
 
 :   提出 CADDreamer，通过语义增强的多视图扩散模型和几何拓扑提取模块，从单张RGB图像直接生成具有紧凑B-rep表示、清晰结构和锐利边缘的CAD模型，支持平面、圆柱、圆锥、球体、环面五种基元类型。
@@ -170,10 +172,6 @@ tags:
 **[CoMatcher: Multi-View Collaborative Feature Matching](comatcher_multi-view_collaborative_feature_matching.md)**
 
 :   提出CoMatcher，一种多视角协同特征匹配器，从两视角独立匹配范式转向1-to-N协同匹配范式，利用互补视角的上下文线索和跨视角投影一致性约束来提升复杂场景下的匹配可靠性。
-
-**[Compass Control: Multi Object Orientation Control for Text-to-Image Generation](compass_control_multi_object_orientation_control_for_text-to-image_generation.md)**
-
-:   提出 Compass Control，通过引入轻量级方向编码器预测 compass token 并结合耦合注意力定位（CALL）机制，实现文本到图像扩散模型中多物体的精确3D方向控制，仅需合成数据训练即可泛化到未见类别和多物体场景。
 
 **[Consistency-aware Self-Training for Iterative-based Stereo Matching](consistency-aware_self-training_for_iterative-based_stereo_matching.md)**
 
@@ -321,10 +319,6 @@ tags:
 
 **[Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](dyn-hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)**
 
-:   Dyn-HaMR 是首个从动态相机单目视频中恢复 4D 全局手部运动的优化方法，通过三阶段流水线（分层初始化→SLAM 全局运动→交互精炼）将手部与相机运动解耦，在 H2O 上 G-MPJPE 从 96.9mm (HaMeR) 降至 45.6mm，加速度误差从 9.21 降至 4.2。
-
-**[Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](dyn_hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)**
-
 :   Dyn-HaMR 提出首个从动态相机单目视频中恢复双手 4D 全局运动轨迹的优化框架，通过三阶段流水线（层级初始化 → SLAM 引导全局运动优化 → 交互运动先验优化）解耦相机运动与手部运动，在多个数据集上大幅超越现有方法。
 
 **[Dynamic Neural Surfaces for Elastic 4D Shape Representation and Analysis](dynamic_neural_surfaces_for_elastic_4d_shape_representation_and_analysis.md)**
@@ -366,6 +360,10 @@ tags:
 **[ERUPT: Efficient Rendering with Unposed Patch Transformer](erupt_efficient_rendering_with_unposed_patch_transformer.md)**
 
 :   ERUPT 提出了一种高效的潜在视角合成模型，通过 patch-based 解码器替代像素级解码、可学习的潜在相机位姿以及冻结 DINOv2 特征提取器，在不需要精确相机位姿的情况下仅用 5 张无位姿图像即可实现 600fps 的新视角合成，在 MSN 数据集上达到 SOTA 性能。
+
+**[ESCAPE: Equivariant Shape Completion via Anchor Point Encoding](escape_equivariant_shape_completion_via_anchor_point_encoding.md)**
+
+:   ESCAPE 提出了一种基于锚点距离编码的旋转等变点云补全方法，通过将点云表示为到高曲率锚点的距离矩阵，使 Transformer 在旋转不变的距离空间中预测完整形状，再通过优化恢复 3D 坐标，在任意旋转输入下大幅超越现有方法（PCN 数据集 CD-L1 从 26.65 降至 10.58）。
 
 **[Estimating Body and Hand Motion in an Ego-sensed World](estimating_body_and_hand_motion_in_an_ego-sensed_world.md)**
 
@@ -411,10 +409,6 @@ tags:
 
 :   将经典的 quadric error metric（QEM）推导到屏幕空间并以法线贴图为输入，结合最优 Delaunay 三角化实现各向异性网格简化，在 90%+ 压缩率下仍保持亚毫米级精度，将高分辨率法线积分从小时级加速到分钟级。
 
-**[Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](fine-grained_erasure_in_text-to-image_diffusion-based_foundation_models.md)**
-
-:   FADE 提出邻接感知（adjacency-aware）的细粒度概念擦除框架，通过 Concept Neighborhood 识别语义邻近类别并设计 Mesh Modules（Erasing + Adjacency + Guidance 三重损失），在精确删除目标概念的同时保留语义相关概念的生成能力，相比 SOTA 方法在邻接保留性能上提升至少 12%。
-
 **[FLARE: Feed-forward Geometry, Appearance and Camera Estimation from Uncalibrated Sparse Views](flare_feed-forward_geometry_appearance_and_camera_estimation_from_uncalibrated_s.md)**
 
 :   FLARE 提出级联学习范式（cascade learning），以相机位姿为桥梁将 3D 重建分解为位姿估计→局部几何→全局几何→高斯外观四个渐进阶段，在 0.5 秒内从 2-8 张未标定稀疏图像实现高质量的相机位姿、几何重建和新视角合成。
@@ -446,10 +440,6 @@ tags:
 **[FoundationStereo: Zero-Shot Stereo Matching](foundationstereo_zero-shot_stereo_matching.md)**
 
 :   提出 FoundationStereo，一个大规模立体深度估计基础模型，通过百万级高保真合成数据集、Side-Tuning Adapter 融合单目深度先验、以及混合代价体过滤（含 Axial-Planar Convolution 和 Disparity Transformer），实现了无需目标域微调的强零样本泛化性能。
-
-**[FoundHand: Large-Scale Domain-Specific Learning for Controllable Hand Image Generation](foundhand_large-scale_domain-specific_learning_for_controllable_hand_image_gener.md)**
-
-:   提出 FoundHand，一个在千万级手部数据集（FoundHand-10M）上训练的领域专用扩散模型，以 2D 关键点热力图为通用控制表示，实现精确的手部姿态/视角控制和外观保持，并展现出修复畸形手、视频生成、手物交互视频等零样本涌现能力。
 
 **[FrameVGGT: Frame Evidence Rolling Memory for streaming VGGT](framevggt_frame_evidence_rolling_memory_for_streaming_vggt.md)**
 
@@ -603,6 +593,10 @@ tags:
 
 :   提出HeatFormer——一种基于Transformer的神经优化器，通过将SMPL参数估计转化为热力图生成与对齐问题，实现对多视角图像中人体形状和姿态的迭代优化恢复，在Human3.6M上达到29.5mm MPJPE的SOTA精度，且对视角数量、相机配置和遮挡具有强鲁棒性。
 
+**[Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)**
+
+:   提出Helvipad——首个用于全景立体深度估计的真实世界数据集（40K帧、上下双360°相机+LiDAR），并引入极角输入和环形填充两个适配策略来改进立体匹配模型处理等距矩形投影图像，所提360-IGEV-Stereo在所有指标上达到最佳。
+
 **[High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model](high-fidelity_3d_object_generation_from_single_image_with_rgbn-volume_gaussian_r.md)**
 
 :   GS-RGBN 提出混合 Voxel-Gaussian 表示为无结构高斯提供 3D 空间约束，并设计跨体积融合（CVF）模块在特征层面融合 RGB 语义信息和法线几何信息，从单张图像在数秒内生成高保真 3D 对象，在 GSO 数据集上 PSNR 超出次优方法 5.59dB。
@@ -703,6 +697,10 @@ tags:
 
 :   提出首个统一室内外稀疏监督 3D 目标检测方法 CPDet3D，通过类感知原型聚类（跨场景 Sinkhorn-Knopp 最优传输匹配）挖掘未标注物体的类别，再用多标签协同精化（伪标签 + 原型标签）恢复漏检，仅用每场景 1 个标注即达 ScanNet V2 全监督 78% / SUN RGB-D 90% / KITTI 96% 性能。
 
+**[Leveraging 3D Geometric Priors in 2D Rotation Symmetry Detection](leveraging_3d_geometric_priors_in_2d_rotation_symmetry_detection.md)**
+
+:   本文提出了一个利用3D几何先验的旋转对称性检测模型，通过在3D空间中直接预测旋转中心和顶点并投影回2D，结合基于种子点和旋转轴的顶点重建模块，在DENDI数据集上以F1-score 33.2超越了之前基于分割的SOTA方法EquiSym (22.5)。
+
 **[Light3R-SfM: Towards Feed-forward Structure-from-Motion](light3r-sfm_towards_feed-forward_structure-from-motion.md)**
 
 :   Light3R-SfM提出了首个前馈式端到端SfM框架，通过可学习的潜在全局对齐模块替代传统的优化式全局对齐，结合基于检索分数的最短路径树构建场景图，在Tanks&Temples 200图设置下仅需33秒完成重建（比MASt3R-SfM快49倍），同时保持相当的精度。
@@ -734,10 +732,6 @@ tags:
 **[Mani-GS: Gaussian Splatting Manipulation with Triangular Mesh](mani-gs_gaussian_splatting_manipulation_with_triangular_mesh.md)**
 
 :   Mani-GS 提出了一种基于三角网格操控 3D Gaussian Splatting 的方法——通过在每个三角形上定义局部坐标系来绑定高斯，使得网格变形时高斯的位置、旋转和缩放能自适应调整，从而实现大变形、局部编辑和软体仿真等多种操控类型，同时保持高质量渲染且对网格精度有高容忍度。
-
-**[ManiVideo: Generating Hand-Object Manipulation Video with Dexterous and Generalizable Grasping](manivideo_generating_hand-object_manipulation_video_with_dexterous_and_generaliz.md)**
-
-:   提出多层遮挡（MLO）表示学习 3D 手-物遮挡关系，并将 Objaverse 大规模 3D 物体数据整合进训练，实现首个支持灵巧双手操作 + 可泛化物体外观的手-物操作视频生成框架。
 
 **[MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation](mar-3d_progressive_masked_auto-regressor_for_high-resolution_3d_generation.md)**
 
@@ -818,6 +812,10 @@ tags:
 **[Mobile-GS: Real-time Gaussian Splatting for Mobile Devices](mobile-gs_real-time_gaussian_splatting_for_mobile_devices.md)**
 
 :   提出 Mobile-GS，通过深度感知的无序渲染（消除排序瓶颈）+ 神经视角依赖增强 + 一阶SH蒸馏 + 神经向量量化 + 贡献度剪枝，首次在 Snapdragon 8 Gen 3 手机 GPU 上实现 116 FPS 实时高斯溅射渲染，存储仅 4.6MB 且视觉质量与原始 3DGS 相当。
+
+**[Mono2Stereo: A Benchmark and Empirical Study for Stereo Conversion](mono2stereo_a_benchmark_and_empirical_study_for_stereo_conversion.md)**
+
+:   构建首个大规模立体转换基准 Mono2Stereo（240 万对），提出立体质量指标 SIoU（与人类判断相关性 0.84 Spearman）和双条件扩散模型 + Edge Consistency 损失，同时解决单阶段方法立体效果弱和两阶段方法图像质量差的矛盾。
 
 **[MGGTalk: Monocular and Generalizable Gaussian Talking Head Animation](monocular_and_generalizable_gaussian_talking_head_animation.md)**
 
@@ -919,10 +917,6 @@ tags:
 
 :   VIVID 用 EDM2 像素空间扩散模型实现端到端新视角合成，通过双 U-Net 编解码器+交叉注意力转移几何信息、简单的位姿嵌入（而非复杂几何编码）和基于同形变换的单视角数据增强，在 RealEstate10K 上 FID 2.89（比 GenWarp 低 51%），PSNR 17.36（+29%）。
 
-**[Odd-One-Out: Anomaly Detection by Comparing with Neighbors](odd-one-out_anomaly_detection_by_comparing_with_neighbors.md)**
-
-:   OddOneOutAD 把工业质检中的"在一组同类产品里找异常品"形式化为场景级异常检测：用稀疏 5 视角图像在 3D 体素空间构建对象表示，通过 DINOv2 知识蒸馏 + 可微渲染获得部件感知特征，再用 cross-instance sparse voxel attention 比较实例间相似度，识别每个实例是否异常；同时贡献 ToysAD-8K 与 PartsAD-15K 两个新基准。
-
 **[ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos](odhsr_online_dense_3d_reconstruction_of_humans_and_scenes_from_monocular_videos.md)**
 
 :   ODHSR 提出首个统一框架，从单目 RGB 视频中以在线方式同时完成相机追踪、人体姿态估计和人-场景联合稠密重建，基于 3D Gaussian Splatting 实现了比离线方法快 75 倍的速度，且重建质量达到或超越 SOTA。
@@ -1015,13 +1009,13 @@ tags:
 
 :   PICO 提出了一个包含数据集 (PICO-db) 和拟合方法 (PICO-fit) 的完整框架，通过建立人体与物体之间的稠密双射接触对应关系，从单张自然图像中恢复逼真的 3D 人-物交互场景，支持任意物体类别。
 
+**[Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)**
+
+:   本文开发了一套基于棱镜分光的像素对齐 RGB-NIR 立体相机系统，搭建在移动机器人上采集了大规模多光照条件数据集，并提出了图像融合和特征融合两种方法，使现有 RGB 预训练视觉模型无需/少量微调即可利用 NIR 信息，在深度估计、目标检测和 SfM 等任务上取得显著提升。
+
 **[PMA: Towards Parameter-Efficient Point Cloud Understanding via Point Mamba Adapter](pma_towards_parameter-efficient_point_cloud_understanding_via_point_mamba_adapte.md)**
 
 :   提出 Point Mamba Adapter (PMA)，通过 Mamba 架构将预训练点云模型所有中间层的互补特征构造为有序序列并进行融合，配合几何约束门控提示生成器 (G2PG) 动态优化 3D 空间的序列排序，在仅训练 1% 参数的情况下达到甚至超越全量微调的性能。
-
-**[PO3AD: Predicting Point Offsets toward Better 3D Point Cloud Anomaly Detection](po3ad_predicting_point_offsets_toward_better_3d_point_cloud_anomaly_detection.md)**
-
-:   PO3AD 提出通过预测伪异常点的偏移向量（而非重建完整点云）来学习正常点云表征，使模型注意力聚焦于异常区域，结合法向量引导的伪异常生成方法（Norm-AS），在 Anomaly-ShapeNet 和 Real3D-AD 上分别比现有方法提升 9.0% 和 1.4% 的检测 AUC-ROC。
 
 **[PointLoRA: Low-Rank Adaptation with Token Selection for Point Cloud Learning](pointlora_low-rank_adaptation_with_token_selection_for_point_cloud_learning.md)**
 
@@ -1038,10 +1032,6 @@ tags:
 **[PRaDA: Projective Radial Distortion Averaging](prada_projective_radial_distortion_averaging.md)**
 
 :   PRaDA 提出了一种完全在射影空间中工作的径向畸变标定方法，通过将多对图像的畸变估计在函数空间中进行加权平均，无需 3D 点重建或相机位姿估计即可获得高精度的畸变校正，在多个具有严重畸变的数据集上显著超越 COLMAP、GLOMAP 等传统方法。
-
-**[PreciseCam: Precise Camera Control for Text-to-Image Generation](precisecam_precise_camera_control_for_text-to-image_generation.md)**
-
-:   PreciseCam 通过 4 个相机参数（roll、pitch、vFoV、畸变 ξ）和 Perspective Field-Unified Spherical 表示，实现文本到图像生成中的精确相机视角控制，无需 3D 几何或多视图数据。
 
 **[Preconditioners for the Stochastic Training of Neural Fields](preconditioners_for_the_stochastic_training_of_neural_fields.md)**
 
@@ -1067,13 +1057,13 @@ tags:
 
 :   提出Proxy Transformation，通过可变形点云聚类和代理注意力机制，利用文本信息引导子流形平移、图像信息引导子流形内部变换，在训练前高效增强点云流形结构，在自我中心3D视觉定位任务上实现7.49%的显著提升。
 
+**[PS-EIP: Robust Photometric Stereo Based on Event Interval Profile](ps-eip_robust_photometric_stereo_based_on_event_interval_profile.md)**
+
+:   提出基于事件间隔轮廓（Event Interval Profile, EIP）的鲁棒光度立体方法，通过利用事件间隔时间序列的连续性和轮廓形状来检测阴影与镜面反射引起的异常值，无需深度学习即可显著超越 EventPS-FCN。
+
 **[PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting](pup_3d-gs_principled_uncertainty_pruning_for_3d_gaussian_splatting.md)**
 
 :   提出基于 Fisher 信息矩阵的有原则的 3D 高斯溅射剪枝方法 PUP 3D-GS，通过空间参数（位置+尺度）的二阶敏感度评分实现 90% 高斯剪枝率，同时保持比现有启发式方法更好的视觉质量和前景细节。
-
-**[QuartDepth: Post-Training Quantization for Real-Time Depth Estimation on the Edge](quartdepth_post-training_quantization_for_real-time_depth_estimation_on_the_edge.md)**
-
-:   提出 QuartDepth，一个面向ASIC边缘设备的训练后量化框架，通过LogNP激活磨光（将异常分布的激活值变换为量化友好的分布）、激活量化补偿（更新权重补偿激活量化误差）和Fisher信息引导的权重重建，将深度估计基础模型量化到W4A4/W4A8，并设计可编程硬件加速器实现实时推理。
 
 **[RainyGS: Efficient Rain Synthesis with Physically-Based Gaussian Splatting](rainygs_efficient_rain_synthesis_with_physically-based_gaussian_splatting.md)**
 
@@ -1090,10 +1080,6 @@ tags:
 **[ReCap: Better Gaussian Relighting with Cross-Environment Captures](recap_better_gaussian_relighting_with_cross-environment_captures.md)**
 
 :   ReCap 利用同一物体在不同光照环境下的多组图像作为多任务监督信号，共享材质属性并独立优化光照表示，从根本上解决了 albedo-lighting 歧义问题，配合简化的着色函数和 HDR 后处理，在扩展的重光照基准上显著超越所有现有方法。
-
-**[ReCapture: Generative Video Camera Controls for User-Provided Videos Using Masked Video Fine-Tuning](recapture_generative_video_camera_controls_for_user-provided_videos_using_masked.md)**
-
-:   ReCapture 通过两阶段方法——先用深度点云渲染或多视角扩散模型生成带新相机轨迹的粗糙锚定视频，再用 masked video fine-tuning（时空 LoRA）修复补全——实现了对用户已有视频的相机轨迹控制，能保持原始场景运动同时从全新角度观看视频。
 
 **[Reconstructing Animals and the Wild](reconstructing_animals_and_the_wild.md)**
 
@@ -1291,6 +1277,10 @@ tags:
 
 :   本文提出 SVRaster，一种无需神经网络或 3D 高斯的高效辐射场渲染方法，通过自适应多层次稀疏体素表示和基于方向相关 Morton 排序的定制光栅化器，实现了无伪影的实时高保真渲染。
 
+**[SpatialDreamer: Self-supervised Stereo Video Synthesis from Monocular Input](spatialdreamer_self-supervised_stereo_video_synthesis_from_monocular_input.md)**
+
+:   提出 SpatialDreamer，一种基于视频扩散模型的自监督立体视频合成框架：通过深度引导的视频数据生成模块 (DVG) 解决立体视频训练数据不足问题，通过 RefinerNet 框架和一致性控制模块（立体偏差强度 + 时序交互学习 TIL）确保生成立体视频的几何与时间一致性，性能超越 Apple Vision Pro 3D 转换器。
+
 **[Spectral Defense Against Resource-Targeting Attack in 3D Gaussian Splatting](spectral_defense_against_resource-targeting_attack_in_3d_gaussian_splatting.md)**
 
 :   针对 3DGS 的资源瞄准攻击（通过投毒训练图像触发高斯过度增长导致资源耗尽），提出频域防御：3D 频率滤波器通过将高斯协方差与频谱响应关联实现频率感知剪枝，2D 频谱正则化通过熵惩罚渲染图像的角向能量各向异性来抑制攻击噪声，实现高斯数量压缩 5.92×、内存减少 3.66×、速度提升 4.34×。
@@ -1362,6 +1352,10 @@ tags:
 **[Synthetic Prior for Few-Shot Drivable Head Avatar Inversion](synthetic_prior_for_few-shot_drivable_head_avatar_inversion.md)**
 
 :   SynShot 提出用大规模合成头部数据训练生成式 3D 高斯先验模型，仅需 3 张真实图像即可通过 pivotal fine-tuning 反演出可驱动的高保真头部虚拟人，显著优于单目和 GAN 方法。
+
+**[Targeted Forgetting of Image Subgroups in CLIP Models](targeted_forgetting_of_image_subgroups_in_clip_models.md)**
+
+:   提出三阶段 CLIP 子群图像遗忘框架（forgetting → reminding → restoring），通过相对 Fisher Information 选择关键层进行 LoRA 微调，利用 BatchNorm 统计量对齐 retain 数据分布，再通过 model souping 恢复零样本能力，在 ImageNet-1K 和 CIFAR-10 上实现精准子群遗忘（target↓到 0%）同时保持 85-93% 的综合得分。
 
 **[Text-Guided Sparse Voxel Pruning for Efficient 3D Visual Grounding](text-guided_sparse_voxel_pruning_for_efficient_3d_visual_grounding.md)**
 
@@ -1478,7 +1472,3 @@ tags:
 **[MVGD: Zero-Shot Novel View and Depth Synthesis with Multi-View Geometric Diffusion](zero-shot_novel_view_and_depth_synthesis_with_multi-view_geometric_diffusion.md)**
 
 :   MVGD提出了一种基于像素级扩散的多视图几何框架，无需中间3D表示即可从任意数量的已知视角图像直接生成新视角的图像和尺度一致的深度图，在6000万+多视图样本上训练实现多项SOTA。
-
-**[ZeroGrasp: Zero-Shot Shape Reconstruction Enabled Robotic Grasping](zerograsp_zero-shot_shape_reconstruction_enabled_robotic_grasping.md)**
-
-:   ZeroGrasp 提出了一个基于八叉树条件变分自编码器（CVAE）的统一框架，从单张 RGB-D 图像同时完成高分辨率 3D 物体重建和 6D 抓取姿态预测，通过多物体编码器和 3D 遮挡场建模物体间关系，在 GraspNet-1B 基准上达到 SOTA，并在真实机器人上验证了泛化能力。

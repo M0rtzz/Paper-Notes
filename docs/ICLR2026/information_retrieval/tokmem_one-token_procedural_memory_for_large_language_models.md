@@ -36,45 +36,15 @@ tags:
 
 ### 整体框架
 
-TokMem 在 LLM 词表中添加 $l$ 个特殊 token 作为记忆库：
+TokMem 的思路是把每个常用任务程序压缩进一个专属的可训练 token，让这个 token 同时扮演"程序索引"和"生成控制信号"两个角色：检索阶段模型预测该 token 来定位程序，生成阶段把该 token 喂回去就能驱动对应行为。具体做法是在 LLM 词表里额外添加 $l$ 个特殊 token 构成记忆库 $M = [\bm{m}_1, \ldots, \bm{m}_l]^\top \in \mathbb{R}^{l \times d}$，其中每个 $\bm{m}_i$ 是一个可训练向量、对应一个唯一程序，但没有直接的文本形式。训练时只更新这些记忆嵌入，骨干 LLM 全程冻结。
 
-$$M = \begin{bmatrix} \bm{m}_1^\top \\ \vdots \\ \bm{m}_l^\top \end{bmatrix} \in \mathbb{R}^{l \times d}$$
+### 关键设计
 
-每个 $\bm{m}_i$ 是可训练向量，代表一个唯一程序，无直接文本形式。
+**1. 单 token 编译程序，骨干全冻结：把"读 prompt"换成"查一个向量"。** 长 prompt 的根本痛点在于程序知识每次都以文本形式重新进上下文，既吃窗口又带来平方级注意力开销。TokMem 把训练序列组织成"查询 + 若干程序-响应对交替排列"的形式 $\bm{a} = (q_1, \ldots, q_k, a_{m_i}, a_{r_{i1}}, a_{r_{i2}}, \ldots, a_{m_j}, a_{r_{j1}}, \ldots)$，其中 $a_{m_i}$ 是记忆 token、$a_{r_{ij}}$ 是它该产生的响应 token。用标准的 next-token prediction 损失 $\mathcal{L}(\bm{a}; M) = -\sum_{i>k} \log \Pr(a_i \mid \bm{a}_{<i}; M)$ 训练，但梯度只回传到记忆嵌入，骨干 LLM 和原始 token 嵌入完全不动。这样一个程序的全部知识就被"编译"进了它那个向量里，调用时开销是常量级的，彻底绕开了长 prompt 的两个成本。
 
-### 关键设计 1: 记忆 Token 训练
+**2. 隐状态直接路由记忆 token：检索和生成共用同一套机制。** 程序编译好之后还需要一个"该用哪个程序"的入口。TokMem 不另搭检索器，而是直接复用语言模型头：给定查询 $q$，从最终隐状态 $h_k$ 算出各记忆 token 的分布 $P(a_{m_i} \mid q) \propto \exp(\text{logit}(m_i \mid h_k))$，选 logit 最高的那个附到查询后，再自回归生成响应。因为记忆 token 既是索引又是控制信号，检索和生成是同一个动作的两面。这套机制天然支持两件事：一是多步程序链接——生成完一段响应后继续预测下一个记忆 token，就能在工具调用里依次串起 parse→search→format；二是优雅回退——当没有匹配程序时所有记忆 logit 都偏低，模型自动落回普通文本生成，不会被迫硬塞一个错误程序。
 
-训练序列包含程序-响应对，记忆 token 与文本 token 交替排列：
-
-$$\bm{a} = (q_1, \ldots, q_k, \underbrace{a_{m_i}, a_{r_{i1}}, a_{r_{i2}}, \ldots}_{\text{程序-响应对}}, \underbrace{a_{m_j}, a_{r_{j1}}, \ldots}_{\text{程序-响应对}}, \ldots)$$
-
-使用标准 next-token prediction 损失训练，仅更新记忆嵌入，骨干 LLM 和原始 token 嵌入完全冻结：
-
-$$\mathcal{L}(\bm{a}; M) = -\sum_{i>k} \log \Pr(a_i \mid \bm{a}_{<i}; M)$$
-
-### 关键设计 2: 推理时记忆路由
-
-给定查询 $q$，模型从最终隐状态 $h_k$ 预测记忆 token 分布：
-
-$$P(a_{m_i} \mid q) \propto \exp(\text{logit}(m_i \mid h_k))$$
-
-- 选择概率最高的记忆 token 附加到查询后，自回归生成响应
-- 支持多步程序链接：生成一段响应后预测下一个记忆 token
-- 若无匹配程序，所有记忆 logit 保持低值，自动回退到普通文本生成
-
-### 关键设计 3: 重正则化（Renormalization）
-
-持续学习中新嵌入易出现 norm 膨胀，压制旧记忆。解决方案：
-
-$$\bm{m}_i \leftarrow \bm{m}_i \cdot \frac{\bar{n}_I}{\|\bm{m}_i\|_2 + \varepsilon}, \quad i \in A$$
-
-其中 $\bar{n}_I = \text{mean}_{j \in I} \|\bm{m}_j\|_2$ 为已有记忆的典型范数。保持新嵌入方向不变，仅对齐其幅度，计算开销 $O(|A| d)$ 可忽略。
-
-### 参数隔离特性
-
-- 每个程序的知识完全存储在独立 token 嵌入中
-- 新程序可持续添加而不干扰现有程序
-- 天然支持持续学习，无灾难性遗忘
+**3. 重正则化对齐新旧记忆幅度：让持续扩展不压制旧程序。** 持续往记忆库里加新程序时会遇到一个具体故障：新训练的嵌入范数容易膨胀，在 softmax 路由里把旧记忆的 logit 系统性压低，造成隐性遗忘。TokMem 用一步后处理修正——对新增集合 $A$ 中的每个嵌入做 $\bm{m}_i \leftarrow \bm{m}_i \cdot \frac{\bar{n}_I}{\|\bm{m}_i\|_2 + \varepsilon}$，把它的模长拉到已有记忆的典型范数 $\bar{n}_I = \text{mean}_{j \in I} \|\bm{m}_j\|_2$ 上，而方向保持不变。只对齐幅度、不动方向，既消除了新嵌入对旧记忆的压制，又不破坏新程序已学到的语义，整步开销仅 $O(|A|d)$ 可忽略。配合"每个程序的知识完全隔离在各自 token 嵌入中"这一结构特性，新程序可以源源不断加入而不干扰已有程序，从而天然支持无灾难性遗忘的持续学习。
 
 ## 实验
 

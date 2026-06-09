@@ -39,39 +39,17 @@ tags:
 
 ## 方法详解
 
-### 攻击者假设
+### 整体框架
 
-- 仅需访问 SMOTE 生成的单个数据集
-- 知道使用了 SMOTE 算法及其参数（邻居数 $k$、不平衡比 $r$）
-- 不需要辅助数据、重复查询、模型参数或影子模型
+整篇工作把 SMOTE 的线性插值机制当成攻击的突破口：只要拿到一份 SMOTE 输出的数据集、并且知道它用的是 SMOTE 以及邻居数 $k$、不平衡比 $r$，攻击者无需任何辅助数据、影子模型或重复查询，就能从几何规律反推出隐私。作者在此最小威胁模型下设计了两种互补攻击——DistinSMOTE 在真实样本与合成样本混杂的增强数据集 $D_{aug}$ 中把两者分开，ReconSMOTE 则从纯合成数据集 $D_{syn}$ 直接还原出原始少数类记录。
 
-### 1. DistinSMOTE（区分攻击）
+### 关键设计
 
-**目标**：在增强数据集 $D_{aug}$ 中区分真实少数类记录和合成记录
+**1. DistinSMOTE：用共线性把合成点从真实点里揪出来。** 当真实记录和合成记录被混在 $D_{aug}$ 里时，朴素方法（如比较最近邻距离）几乎查不出任何泄露。DistinSMOTE 抓住了 SMOTE 的一个硬性几何事实：合成点是在两个真实点之间严格线性插值得到的，因此在任意共线三元组里，居中的那一点必定是合成的——而真实点之间在实值高维特征下几乎不可能恰好共线。攻击从少数类记录的凸包出发，迭代探索邻居，一旦发现共线三元组就把中间点标记为合成并移出候选集，再把它的邻居加入队列继续检查，像剥洋葱一样层层剥掉合成点。作者证明，只要满足实值特征、全局非共线性、$k \geq 3$ 这三个相当温和的假设，DistinSMOTE 就能达到精确率和召回率双双完美。
 
-**核心原理**：利用 SMOTE 的几何性质——在任意三个共线点中，中间点必定是合成的（因为真实点是非共线的，SMOTE 在两点之间严格插值生成）
+**2. ReconSMOTE：让合成点的连线交点暴露真实记录。** 比区分更危险的是直接重构：即使数据集里一条真实记录都没有，纯合成的 $D_{syn}$ 仍然会泄露原始数据。原理同样来自插值——每个合成点都落在两个真实点的连线上，于是只要找到足够多落在不同真实点对连线上的合成点，把这些连线两两求交，交点就恰好是真实记录本身。能否恢复某条真实记录取决于围绕它的合成点是否密集到能凑出多条相交的连线，因此召回率随着不平衡比 $r$ 增大（每个真实点被更多次用于插值）以约 $r/k$ 的速率指数上升，在 $k=5,\ r \geq 20$ 时达到 1.0；而精确率始终保持完美（1.0），因为任何被还原出的交点都是货真价实的原始记录。
 
-**算法流程**：
-1. 从少数类记录的凸包开始
-2. 迭代探索邻居
-3. 找到共线三元组时，中间点被标记为合成并从候选集移除
-4. 将被移除点的邻居加入队列继续检查
-
-**理论保证**：在满足实值特征、全局非共线性、$k \geq 3$ 三个合理假设下，DistinSMOTE 实现完美的精确率和召回率。
-
-### 2. ReconSMOTE（重构攻击）
-
-**目标**：从纯合成数据集 $D_{syn}$ 重构原始少数类记录
-
-**核心思想**：SMOTE 合成点位于两个真实点的连线上。如果能找到足够多的合成点对，它们的连线交点就是真实记录。
-
-**理论保证**：
-- 精确率：完美（1.0）
-- 召回率：以速率 $\approx r/k$ 指数增长，当 $k=5, r \geq 20$ 时达到 1.0
-
-### 复杂度
-
-两种攻击的时间复杂度为 $O(n^2 d + n(kr)^2)$，在所有实验数据集上运行时间在分钟级别。
+两种攻击的时间复杂度均为 $O(n^2 d + n(kr)^2)$，在全部 8 个实验数据集上都只需分钟级运行时间，说明它们不仅理论上成立，落地成本也极低。
 
 ## 实验
 
@@ -139,9 +117,9 @@ tags:
 
 - [\[ICML 2025\] Privacy Amplification Through Synthetic Data: Insights from Linear Regression](../../ICML2025/image_generation/privacy_amplification_through_synthetic_data_insights_from_linear_regression.md)
 - [\[AAAI 2026\] Exposing DeepFakes via Hyperspectral Domain Mapping](../../AAAI2026/image_generation/exposing_deepfakes_via_hyperspectral_domain_mapping.md)
+- [\[ICML 2026\] Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion](../../ICML2026/image_generation/beyond_generative_priors_minority_sampling_with_jepa-guided_diffusion.md)
 - [\[CVPR 2025\] Minority-Focused Text-to-Image Generation via Prompt Optimization](../../CVPR2025/image_generation/minority-focused_text-to-image_generation_via_prompt_optimization.md)
 - [\[AAAI 2026\] Copyright Infringement Detection in Text-to-Image Diffusion Models via Differential Privacy](../../AAAI2026/image_generation/copyright_infringement_detection_in_text-to-image_diffusion_models_via_different.md)
-- [\[CVPR 2026\] AHS: Adaptive Head Synthesis via Synthetic Data Augmentations](../../CVPR2026/image_generation/ahs_adaptive_head_synthesis.md)
 
 </div>
 

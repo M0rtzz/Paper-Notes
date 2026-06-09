@@ -38,35 +38,23 @@ tags:
 
 ### 整体框架
 
-AutoTool 采用两阶段训练流程：**热身 SFT → 解耦自适应熵约束 RL**。
+AutoTool 把"按难度自适应推理"拆成两段来训：先用混合了长/短推理标签的数据做一轮热身 SFT，让模型初步感知哪些问题该多想、哪些该直接答；再在 GRPO 上施加一套解耦的自适应熵约束，配合非对称奖励，把"简单题走短推理、难题走长推理"的策略真正稳定下来。整套设计的支点是一个观察：推理坍塌的根因不是数据分布而是训练中信息熵的塌缩，因此控制熵就成了核心抓手。
 
-### 阶段一：数据准备与热身 SFT
+### 关键设计
 
-- **PubTool 数据集**：整合 ToolACE、xLAM、Hermes Function-Calling 三个公开数据源，经下采样和质量筛选得到 SFT 数据 8.2k 条、RL 数据 7k 条
-- **混合长短推理数据**：对训练数据分别用 no-thinking 模型 (Qwen2.5-7B-Instruct) 和 thinking 模型 (Qwen3-32B) 做 pass@8 推理。若 no-thinking 模型答对，采用短推理作为标签；否则采用 thinking 模型的长推理标签
-- **RL 数据质量优化**：移除一半过于简单/困难样本平衡分布，并基于多轮 GRPO 训练中 reward 方差筛选与模型学习轨迹对齐的高质量样本
-- 热身 SFT 让模型初步感知数据难度，学会区分需要长推理和短推理的问题
+**1. 混合长短推理的数据构造与热身 SFT：让模型先学会"分辨难度"。** 若直接拿统一标签训练，模型要么对所有题都长篇大论，要么集体退化成短答。作者先用公开的 ToolACE、xLAM、Hermes Function-Calling 整合出 PubTool 数据集，下采样并质量筛选后得到 SFT 8.2k 条、RL 7k 条。难度标签的关键在于双模型投票：对每条数据分别用 no-thinking 模型（Qwen2.5-7B-Instruct）和 thinking 模型（Qwen3-32B）做 pass@8 推理——只要 no-thinking 模型答得对，就用它的短推理当标签，说明这题不必多想；否则改用 thinking 模型的长推理标签。RL 数据还会移除一半过简/过难样本来平衡分布，并按多轮 GRPO 训练中的 reward 方差挑出与模型学习轨迹对齐的高质量样本。这样热身 SFT 之后，模型已经带着"这题需要展开 / 这题可以速答"的先验进入 RL 阶段。
 
-### 阶段二：解耦自适应熵约束 RL
-
-核心是在 GRPO 的策略损失中加入**解耦的熵正则项**：
+**2. 解耦的自适应熵约束：把长短推理的熵分开管，避免目标互相打架。** 直接加 length penalty 压不住低熵，单一静态熵约束又对系数 $\beta$ 极度敏感——长推理需要探索（高熵），短推理需要收敛（低熵），用同一个 $\beta$ 必然顾此失彼。AutoTool 在 GRPO 策略损失里按轨迹类型拆出两套熵正则系数：
 
 $$\beta_i = \beta_s \cdot m_i \cdot \mathbb{I}\{H_i \leq H_s\} + \beta_l \cdot (1-m_i) \cdot \mathbb{I}\{H_i \leq H_l\}$$
 
-其中 $m_i \in \{0,1\}$ 标识当前轨迹是短推理 ($m_i=1$) 还是长推理 ($m_i=0$)：
-
-- **短推理 $\beta_s$**：固定系数，防止过度探索，保持简洁响应
-- **长推理 $\beta_l$**：自适应系数，通过额外损失动态调节
-
-自适应熵系数损失：
+其中 $m_i \in \{0,1\}$ 标识第 $i$ 条轨迹是短推理（$m_i=1$）还是长推理（$m_i=0$）。短推理用固定的 $\beta_s$，防止过度探索、保持响应简洁；长推理用可学习的 $\beta_l$，并通过一条单独的损失动态调节：
 
 $$\mathcal{L}_{\beta}^l = \frac{1}{\sum_j(1-m_j)} \sum_{i=1}^{N} (1-m_i) \cdot \beta_l \cdot (H_i - H_l)$$
 
-当 $H_i < H_l$ 时 $\beta_l$ 增大以鼓励探索，当 $H_i > H_l$ 时 $\beta_l$ 减小以抑制过度随机性。
+当长推理轨迹的熵 $H_i$ 低于目标 $H_l$ 时 $\beta_l$ 自动增大、鼓励更多探索，反之 $H_i$ 偏高时 $\beta_l$ 减小、抑制过度随机。这样既守住了短推理的简洁，又让长推理始终保有足够的探索余量，从根上缓解推理坍塌，同时免去了手动调 $\beta$ 的麻烦。
 
-### 自动思考奖励模块
-
-设计非对称奖励机制激励效率与准确的平衡：
+**3. 自动思考的非对称奖励：用奖励差把"按难度选模式"的倾向刻进策略。** 光控制熵还不够，得让模型在"想多 vs 想少"之间有明确的收益导向。作者设计了一张非对称奖励表：
 
 | 情形 | 奖励 |
 |------|------|
@@ -75,7 +63,7 @@ $$\mathcal{L}_{\beta}^l = \frac{1}{\sum_j(1-m_j)} \sum_{i=1}^{N} (1-m_i) \cdot \
 | 错误 + think | -0.5 |
 | 错误 + no-think | -1.0 |
 
-简单问题答对用短推理获得更高奖励；复杂问题答错则鼓励切换到长推理。推理时可通过前缀 token 可控地切换推理模式。
+同样答对，短推理（+1.0）比长推理（+0.5）拿得更多，于是简单题会被推向速答省 token；同样答错，长推理（-0.5）的惩罚比短推理（-1.0）轻，于是难题答不出时模型更愿意切到长推理去碰运气。这种"对了奖简洁、错了惩硬撑"的非对称结构，让效率与准确之间的权衡自然落到合理位置。推理时只需在前缀放一个控制 token，就能可控地在 think / no-think / auto 之间切换模式。
 
 ## 实验结果
 
@@ -141,7 +129,7 @@ $$\mathcal{L}_{\beta}^l = \frac{1}{\sum_j(1-m_j)} \sum_{i=1}^{N} (1-m_i) \cdot \
 - [\[ICLR 2026\] AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
 - [\[ICLR 2026\] Exploration vs Exploitation: Rethinking RLVR through Clipping, Entropy, and Spurious Reward](exploration_vs_exploitation_rethinking_rlvr_through_clipping_entropy_and_spuriou.md)
 - [\[ICLR 2026\] P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling](p-genrm_personalized_generative_reward_model_with_test-time_user-based_scaling.md)
-- [\[ICLR 2026\] MoMaGen: Generating Demonstrations under Soft and Hard Constraints for Multi-Step Bimanual Mobile Manipulation](momagen_generating_demonstrations_under_soft_and_hard_constraints_for_multi-step.md)
+- [\[ACL 2026\] Deliberative Searcher: Improving LLM Reliability via Reinforcement Learning with Constraints](../../ACL2026/reinforcement_learning/deliberative_searcher_improving_llm_reliability_via_reinforcement_learning_with_.md)
 
 </div>
 

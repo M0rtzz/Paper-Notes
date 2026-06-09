@@ -37,29 +37,23 @@ tags:
 
 ### 整体框架
 
-论文的技术路径分三步：（1）定义渐近最优描述长度目标的数学概念；（2）证明 Transformer 具有计算通用性，从而证明渐近最优目标的存在性；（3）构造一个具体的、可微的变分目标并进行实证分析。
+论文走的是一条"先定义、再证存在、最后构造"的理论路线：先把"渐近最优描述长度目标"这个概念严格写成数学定义，再借助 Transformer 的计算通用性证明这样的目标对 Transformer 确实存在，最后落地成一个可微的变分目标放进算法任务里做实证检验。前两步是纯理论的存在性论证，第三步则把抽象保证翻译成能用梯度下降优化的具体损失。
 
 ### 关键设计
 
-1. **渐近最优描述长度目标的定义**: 给定一族参数化模型 $\{f_\theta : \theta \in \Theta\}$ 和描述长度函数 $L(\theta, x)$（表示用参数 $\theta$ 描述数据 $x$ 的比特数），如果目标 $L$ 的最小化器 $\theta^* = \arg\min_\theta L(\theta, x)$ 满足：对所有数据 $x$，当模型资源上界增长时，$L(\theta^*, x)$ 趋近于柯尔莫哥洛夫复杂度 $K(x)$（相差不超过一个与 $x$ 无关的加法常数），则称 $L$ 是渐近最优的。换言之，**最小化这样的目标等价于找到数据的（近似）最短描述**。
+**1. 渐近最优描述长度目标的定义：把"最优压缩"写成可优化的目标。** MDL 原则的难点在于"复杂度"本身没有一个干净的定义，论文用柯尔莫哥洛夫复杂度作锚点来回避这个问题。给定一族参数化模型 $\{f_\theta : \theta \in \Theta\}$ 和描述长度函数 $L(\theta, x)$（即用参数 $\theta$ 描述数据 $x$ 所需的比特数），如果其最小化器 $\theta^* = \arg\min_\theta L(\theta, x)$ 满足：对所有数据 $x$，当模型的资源上界增长时 $L(\theta^*, x)$ 趋近于柯尔莫哥洛夫复杂度 $K(x)$，且差距不超过一个与 $x$ 无关的加法常数，就称 $L$ 是渐近最优的。这个定义的妙处在于，它把"找到数据的近似最短描述"这件不可计算的事，转化成了"最小化某个目标函数"这件原则上可操作的事——剩下的问题就变成了：对 Transformer 而言，这样的 $L$ 到底存不存在。
 
-2. **Transformer 的计算通用性（新证明）**: 为了证明 Transformer 具有渐近最优目标，首先需要证明 Transformer 具备**计算通用性**——即 Transformer 可以模拟任意图灵机（在有限步数内）。论文给出了一个新的构造性证明，展示了如何用有限深度和宽度的 Transformer 来模拟通用图灵机的计算过程。这一结果本身就是一个重要的理论贡献，因为它提供了比此前工作更精确的资源界限。在此基础上，论文证明了：由于 Transformer 可以模拟任意压缩算法，存在一个描述长度目标使得其最小化器实现渐近最优压缩。
+**2. Transformer 计算通用性的新证明：用模拟图灵机搭起存在性的桥。** 要回答上面的存在性问题，关键是证明 Transformer 具备计算通用性，即能在有限步内模拟任意图灵机。论文给出了一个新的构造性证明，展示如何用有限深度、有限宽度的 Transformer 复现通用图灵机的计算过程，相比此前工作给出了更精确的资源界限，本身就是一个独立有价值的理论结果。有了通用性，存在性证明便顺理成章：既然 Transformer 能模拟任意压缩算法，自然也能模拟那个实现最优压缩的算法，因此必定存在某个描述长度目标，其最小化器达到渐近最优压缩。这一步把"是否存在最优目标"从悬而未决变成了肯定答案。
 
-3. **自适应高斯混合先验变分目标**: 为了将理论结果转化为实践，论文构造了一个可计算、可微分的变分目标。具体方法是在 Transformer 的权重空间上定义一个**自适应高斯混合分布**作为先验：
-
-    - 先验 $p(\theta)$ 是多个高斯分量的混合，混合权重和方差参数也作为变量优化
-    - 描述长度包含两部分：编码模型参数的比特数（由先验决定）+ 用模型描述数据的比特数（由似然决定）
-    - 通过变分推断的方式使目标可微分，可以用标准梯度下降优化
-   
-   论文证明了在适当条件下，这个变分目标是渐近最优的（前提是先验足够灵活且优化器能找到全局最优）。
+**3. 自适应高斯混合先验变分目标：把不可计算的保证落成可微的损失。** 存在性证明虽然积极，却不给出怎么算，论文于是在 Transformer 的权重空间上定义一个自适应高斯混合分布作为先验 $p(\theta)$，把抽象目标具体化为可微形式。这个先验由多个高斯分量混合而成，且混合权重和方差参数同样作为变量一起被优化，因而比单一高斯更灵活、能贴合真实的权重分布。在此先验下，总描述长度天然拆成两部分——由先验决定的、编码模型参数的比特数，加上由似然决定的、用模型描述数据的比特数——整个目标通过变分推断变得可微，可以直接用标准梯度下降训练。论文进一步证明，只要先验足够灵活且优化器能触及全局最优，这个变分目标就是渐近最优的；这个"只要……就……"的前提，恰恰预埋了后续实验暴露的优化障碍。
 
 ### 损失函数 / 训练策略
 
-变分描述长度目标的形式为两部分编码：
+变分描述长度目标采用两部分编码的形式：
 
 $$L(\theta, x) = \underbrace{-\log p(\theta)}_{\text{模型复杂度}} + \underbrace{-\log p(x | \theta)}_{\text{数据拟合}}$$
 
-其中先验 $p(\theta)$ 基于自适应高斯混合，$p(x|\theta)$ 是 Transformer 在参数 $\theta$ 下的预测分布。训练目标是最小化这个总描述长度，本质上是在数据拟合能力和模型简洁性之间寻找最佳平衡。
+其中先验 $p(\theta)$ 取自上面的自适应高斯混合，似然 $p(x|\theta)$ 是 Transformer 在参数 $\theta$ 下的预测分布。最小化这个总长度，本质上就是在"数据拟合能力"和"模型简洁性"之间找平衡点：第一项压低参数的编码代价、逼模型变简单，第二项保证模型仍能解释数据。
 
 ## 实验关键数据
 
@@ -126,10 +120,10 @@ $$L(\theta, x) = \underbrace{-\log p(\theta)}_{\text{模型复杂度}} + \underb
 
 ## 相关论文
 
-- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
 - [\[ICLR 2026\] Textual Equilibrium Propagation for Deep Compound AI Systems](textual_equilibrium_propagation_for_deep_compound_ai_systems.md)
-- [\[AAAI 2026\] Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](../../AAAI2026/model_compression/compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
 - [\[ICLR 2026\] Compute-Optimal Quantization-Aware Training](compute-optimal_quantization-aware_training.md)
+- [\[AAAI 2026\] Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers](../../AAAI2026/model_compression/compensating_distribution_drifts_in_class-incremental_learning_of_pre-trained_vi.md)
+- [\[ICLR 2026\] Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization](alignment_through_meta-weighted_online_sampling_bridging_the_gap_between_data_ge.md)
 - [\[ICLR 2026\] Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
 
 </div>

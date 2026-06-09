@@ -41,38 +41,30 @@ Stylos 提出了一个单次前馈的3D风格迁移框架，通过共享Transfor
 
 ### 整体框架
 
-Stylos 以VGGT为几何骨干，引入Style Aggregator分支通过CrossBlock融合内容和风格特征。几何属性（深度、位姿）仅由骨干推导，风格仅影响颜色球谐系数，实现几何与风格的解耦。
+Stylos 要解决的是从一组未标定图像出发、单次前馈就同时吐出几何与风格化外观的难题。它把这件事拆成两条并行的路：一条以 VGGT 为几何骨干，从输入视角推导深度、位姿等几何属性；另一条是 Style Aggregator 分支，通过 CrossBlock 把参考风格特征注入进来，只去改写每个高斯点的颜色球谐系数。由于几何完全由骨干负责、风格只作用于颜色，整套框架天然实现了几何与风格的解耦——同一份几何可以套不同风格，而风格再强也不会扰动结构。
 
 ### 关键设计
 
-1. **CrossBlock 风格-内容融合模块**
+**1. CrossBlock 风格-内容融合模块：在不破坏几何的前提下把风格注入 Transformer。**
 
-   在标准Transformer Block的自注意力和MLP之间插入交叉注意力操作：内容token为Query，风格token为Key/Value。提出三种拓扑策略：
-    - **Frame CrossBlock**：每个视角独立与风格交互，保持视角特有结构
-    - **Global CrossBlock**：拼接所有视角为全局序列，自注意力确保多视角几何一致性，交叉注意力广播风格信息
-    - **Hybrid CrossBlock**：先Frame再Global
+风格迁移最怕的就是为了染色而把结构搞乱，Stylos 的做法是只在标准 Transformer Block 的自注意力和 MLP 之间插入一层交叉注意力：内容 token 作 Query、风格 token 作 Key/Value，让内容主动去「取用」风格而不是被风格覆盖。具体怎么布这层交叉注意力，作者给了三种拓扑——Frame CrossBlock 让每个视角各自独立地与风格交互，结构上保守但视角间缺乏协调；Global CrossBlock 把所有视角拼成一条全局序列，用自注意力保证多视角几何一致、再用交叉注意力把风格统一广播出去；Hybrid 则先 Frame 后 Global。三者对比下来 Global CrossBlock 最优（Pizza 场景 PSNR 提升 0.79dB），原因正是全局自注意力锁住了跨视角一致性，同时交叉注意力把同一份风格均匀铺到所有视角，避免了逐帧染色带来的不一致。
 
-   实验表明 **Global CrossBlock 效果最好**（Pizza场景PSNR提升0.79dB），因为全局自注意力保证跨视角一致性同时交叉注意力全局广播风格。
+**2. 体素级 3D 风格损失：把风格统计量的匹配从 2D 搬到 3D 空间。**
 
-2. **体素级3D风格损失 (Voxel-level 3D Style Loss)**
+经典的 Gram/AdaIN 风格损失在图像级逐帧匹配通道统计量，无法显式约束多视角一致——同一处表面在不同视角下可能被染成不同风格。Stylos 把多视角渲染特征通过可微反投影融合进体素网格 $\mathcal{G}_b^l$，直接在 3D 空间里对齐风格统计量：
 
-   将多视角渲染特征通过可微反投影融合到体素网格 $\mathcal{G}_b^l$，然后在体素空间计算风格统计量与参考风格的匹配：
+$$\mathcal{L}_{\text{sty}}^{3D} = \frac{1}{B} \sum_{b=1}^B \sum_{l=1}^5 \alpha_l \left(\|\mu(\mathcal{G}_b^l) - \mu(\mathcal{S}_b^l)\|_2^2 + \|\sigma(\mathcal{G}_b^l) - \sigma(\mathcal{S}_b^l)\|_2^2\right)$$
 
-    $\mathcal{L}_{\text{sty}}^{3D} = \frac{1}{B} \sum_{b=1}^B \sum_{l=1}^5 \alpha_l \left(\|\mu(\mathcal{G}_b^l) - \mu(\mathcal{S}_b^l)\|_2^2 + \|\sigma(\mathcal{G}_b^l) - \sigma(\mathcal{S}_b^l)\|_2^2\right)$
+这里对 5 个特征层级、按权重 $\alpha_l$ 分别匹配体素内特征均值 $\mu$ 与标准差 $\sigma$ 和参考风格 $\mathcal{S}_b^l$ 的对应统计量。相比图像级损失（每帧独立、不保证一致）和场景级损失（虽拼接多视角 2D 特征但仍停留在 2D 空间），体素级损失因为统计量本身就定义在 3D 网格上，同一表面无论从哪个视角看都对应同一个体素，跨视角风格一致性是被结构性地保证的——消融里它把 ArtScore 从图像级的 4.78 抬到 9.15 正是这个道理。
 
-   相比图像级风格损失（每帧独立匹配，不保证跨视角一致性）和场景级损失（2D特征拼接，仍在2D空间），体素级损失在3D空间直接编码几何并强制跨视角风格一致性。
+**3. 多预测头设计：让几何、风格、相机各司其职。**
 
-3. **预测头设计**
-
-    - 几何头：DPT回归头输出位置、尺度、旋转、不透明度
-    - 风格头：颜色头预测球谐系数
-    - 辅助头：VGGT相机头估计内外参，深度头预测场景几何
+为了维持几何与风格的解耦，Stylos 把输出拆成几组互不干扰的预测头。几何头是一个 DPT 回归头，输出高斯点的位置、尺度、旋转和不透明度；风格头则是单独的颜色头，只预测球谐系数、承接 CrossBlock 注入的风格；此外还有 VGGT 自带的相机头估计内外参、深度头预测场景几何作为辅助监督。这样划分后，风格分支的梯度不会回流去污染几何，几何骨干也能复用 VGGT 的预训练能力保持高质量结构。
 
 ### 损失函数 / 训练策略
 
-**阶段1 - 几何预训练**：用VGGT权重初始化，端到端学习几何。随机选择一个输入视角做颜色抖动作为风格参考（避免恒等映射）。损失：$\mathcal{L}_{\text{stage1}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{distill}} \mathcal{L}_{\text{distill}}$
+训练分两阶段，对应几何与风格的解耦。阶段 1 是几何预训练，用 VGGT 权重初始化后端到端学几何，为了让网络提前接触风格通路又不退化成恒等映射，作者随机挑一个输入视角做颜色抖动当临时风格参考，损失为重建项加蒸馏项 $\mathcal{L}_{\text{stage1}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{distill}} \mathcal{L}_{\text{distill}}$。阶段 2 是风格化微调，此时冻结整个几何模块、只更新 Style Aggregator 和颜色头，确保染色不会反过来动几何，损失把重建、体素级 3D 风格、内容、CLIP 与全变分正则叠在一起：
 
-**阶段2 - 风格化微调**：冻结几何模块，仅更新Style Aggregator和颜色头。损失：
 $$\mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{style}} \mathcal{L}_{\text{style}}^{3D} + \lambda_{\text{cnt}} \mathcal{L}_{\text{content}} + \lambda_{\text{clip}} \mathcal{L}_{\text{clip}} + \lambda_{\text{tv}} \mathcal{L}_{\text{TV}}$$
 
 ## 实验关键数据

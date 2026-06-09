@@ -39,42 +39,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定查询，模型并行生成 $N$ 条输出序列。在每个解码步 $\tau$，从指定层 $l$ 提取所有路径的隐状态 $h_{\tau,1}^{(l)}, \ldots, h_{\tau,N}^{(l)} \in \mathbb{R}^d$，计算对应的 steering 向量 $v_{\tau,i}^{(l)}$，将修改后的隐状态 $h_i + v_i$ 送入后续层继续解码。到达 EOS 的路径退出，直至所有路径完成。
+给定一个查询，模型并行生成 $N$ 条输出序列；在每个解码步 $\tau$，STARS 从指定层 $l$ 提取所有路径的隐状态 $h_{\tau,1}^{(l)}, \ldots, h_{\tau,N}^{(l)} \in \mathbb{R}^d$，在 Stiefel 流形上联合求解一组正交的 steering 向量 $v_{\tau,i}^{(l)}$，再把修改后的隐状态 $h_i + v_i$ 送回后续层继续解码，直至所有路径触及 EOS。整个过程不改动任何权重，只在前向传播中实时插入一次几何优化，让 $N$ 条路径在隐空间彼此推开。
 
 ### 关键设计
 
-1. **注意力头级别的 Steering 干预**：
+**1. 注意力头级别的 Steering：让干预落在功能特化的子空间上。**
 
-    - 在多头注意力的每个头 $j$ 的输出处添加 steering 向量：$\text{Attn}_j(x^{(l)}) + v^{(l,j)}$
-    - 选择注意力头输出而非残差流，因为不同注意力头具有功能特化（如句法依赖、共指关系），干预更有针对性
-    - 所有 $M$ 个头的 steering 向量拼接后形成 $v^{(l)} \in \mathbb{R}^d$，其中 $d = d_h \times M$
+STARS 不在残差流上做整体偏移，而是把 steering 向量注入多头注意力每个头的输出处，即用 $\text{Attn}_j(x^{(l)}) + v^{(l,j)}$ 替换第 $j$ 个头的输出。这样设计是因为不同注意力头往往承担不同的功能（句法依赖、共指消解等），在头一级干预比在混合后的残差流上更有针对性，也更容易把"发散"导向语义上真正不同的方向。所有 $M$ 个头的 steering 向量拼接后构成完整的 $v^{(l)} \in \mathbb{R}^d$，其中 $d = d_h \times M$，从而后续的几何优化在整层维度上统一进行。
 
-2. **体积最大化 + 正交约束（核心优化问题）**：
+**2. 体积最大化 + 正交约束：把"多样性"形式化为可优化的几何目标。**
 
-    - 目标：最大化修改后隐状态 $\{h_i + v_i\}_{i=1}^N$ 张成的平行多面体体积
-    - 等价优化问题：$\min_{V^\top V = \alpha I} -\log\det((H+V)^\top(H+V))$
-    - $V^\top V = \alpha I$ 是 scaled Stiefel 流形约束：(a) 正交性 $v_i^\top v_j = 0$ 保证每条路径获得不同方向；(b) 固定模长 $\|v_i\|_2^2 = \alpha$ 防止 steering 强度失控破坏隐状态信息
-    - $\alpha$ 的设定：$\alpha = C \cdot \|H\|_2^2$，$C > 0$ 为人工超参，实验中 $C \in \{0.1, 0.5\}$
+要让 $N$ 条路径真正分开，STARS 最大化修改后隐状态 $\{h_i + v_i\}_{i=1}^N$ 张成的平行多面体体积——体积越大，向量越张开、越彼此独立。把矩阵记为 $H, V$，目标等价于约束优化问题 $\min_{V^\top V = \alpha I} -\log\det\big((H+V)^\top(H+V)\big)$。其中 $V^\top V = \alpha I$ 是一个 scaled Stiefel 流形约束，同时管住两件事：正交性 $v_i^\top v_j = 0$ 保证每条路径拿到方向互不重叠的扰动，而固定模长 $\|v_i\|_2^2 = \alpha$ 防止 steering 强度失控、把原本携带信息的隐状态冲垮。模长由 $\alpha = C \cdot \|H\|_2^2$ 设定，$C > 0$ 是唯一的强度超参，实验取 $C \in \{0.1, 0.5\}$。这个约束的几何直觉也很清楚：steering 向量被钉在一个"正交框架"上，而当 $d \gg N$（如 Qwen-2.5-1.5B 的 $d = 1536$、$N = 4\sim20$）时，流形维度远高于路径数，正交约束几乎不构成限制，却能为每条路径提供本质不同的干预方向。
 
-3. **完整 Riemannian 梯度下降（Algorithm 2，理论保证）**：
+**3. 完整 Riemannian 梯度下降：有收敛保证，但太贵。**
 
-    - 在 Stiefel 流形 $\text{St}(d, N, \alpha)$ 上做 Riemannian 优化
-    - 每步：(a) 计算欧几里得梯度 $\nabla\ell(V_k) = -2(H+V_k)[(H+V_k)^\top(H+V_k)]^{-1}$；(b) 投影到切空间得 Riemannian 梯度；(c) 极分解 retraction 映射回流形；(d) Armijo 回溯线搜索确保充分下降
-    - **收敛保证（Theorem 1）**：$\min_{0 \le k \le K} \|\text{grad}\ \ell(V_k)\|_F^2 = O(1/K)$
-    - **实际问题**：每步需计算矩阵逆、平方根、回溯线搜索，复杂度 $O(N^3)$，多步迭代对实时推理不可接受
+最直接的解法是在 Stiefel 流形 $\text{St}(d, N, \alpha)$ 上做标准 Riemannian 优化（Algorithm 2）：每步先算欧氏梯度 $\nabla\ell(V_k) = -2(H+V_k)[(H+V_k)^\top(H+V_k)]^{-1}$，投影到切空间得到 Riemannian 梯度，用极分解 retraction 拉回流形，再配 Armijo 回溯线搜索保证充分下降。它带来理论上的安全感——Theorem 1 给出 $\min_{0 \le k \le K} \|\text{grad}\,\ell(V_k)\|_F^2 = O(1/K)$ 的收敛速率。但代价是每步都要算矩阵逆、平方根和线搜索，单步复杂度 $O(N^3)$，再叠加多步迭代，放到每个 token 都要执行的推理场景里完全不可接受。这也正是 STARS 真正要解决的工程难点：保留体积最大化的目标，却必须把求解成本压到接近零。
 
-4. **轻量单步更新 + 闭式步长（Algorithm 3，核心实用算法）**：
+**4. 轻量单步更新 + 闭式步长：用 SVD 一次性换来 97% 的提速。**
 
-    - **初始化（Algorithm 1）**：对 $H$ 做 SVD $H = Q\Sigma W^\top$，取 $Q$ 的后 $d-r$ 列（$H$ 的零空间基）中随机选 $N$ 列，缩放到 $\sqrt{\alpha}$ 得 $V_0$。构造性证明了 $H + V_0$ 满秩（Proposition 1）
-    - **搜索方向**：直接选 $S = H$（即用原始激活矩阵作为方向），Proposition 3 证明 $H$ 在 $V_0$ 处是 Riemannian 下降方向
-    - **闭式步长**：对精确线搜索做二阶 Taylor 近似（Proposition 2），得到 $\eta^\star = D_1 / D_2$，其中：
-        - $D_1 = 2\sum_{i=1}^r \frac{\sigma_i^2}{\sigma_i^2 + \alpha}$，$D_2 = 4\sum_{i=1}^r \frac{\sigma_i^4}{(\sigma_i^2 + \alpha)^2}$
-        - 仅依赖 $H$ 的奇异值，SVD 在初始化阶段已计算，步长计算零额外成本
-    - **更新**：$V_1 = \sqrt{\alpha}(V_0 + \eta^\star H) W (\alpha I + (\eta^\star \Sigma)^2)^{-1/2} W^\top$，复用 SVD 结果高效计算
-    - **经验验证**：与多步 Algorithm 2 相比，单步 Algorithm 3 达到约 2% 的最优性差距，但仅用约 3% 的运行时间
-
-### 一条关键洞察
-Stiefel 流形约束 $V^\top V = \alpha I$ 的几何含义：steering 向量被约束在 $d$ 维空间中一个"正交框架"上。当 $d \gg N$（如 Qwen-2.5-1.5B 的 $d = 1536$，$N = 4 \sim 20$），流形维度远高于生成路径数，正交约束可以被轻松满足，同时为每条路径提供了本质不同的干预方向。
+实用算法（Algorithm 3）的核心是把多步迭代砍成精心设计的一步。初始化阶段（Algorithm 1）对 $H$ 做一次 SVD $H = Q\Sigma W^\top$，从 $Q$ 的零空间基（后 $d-r$ 列）里随机抽 $N$ 列并缩放到 $\sqrt{\alpha}$ 得到 $V_0$，Proposition 1 构造性地保证了 $H + V_0$ 满秩、起点合法。搜索方向不另算梯度，而是直接取 $S = H$——用激活矩阵自身当下降方向，Proposition 3 证明它在 $V_0$ 处确实是 Riemannian 下降方向，且零额外计算。步长则对精确线搜索做二阶 Taylor 近似（Proposition 2），得到闭式解 $\eta^\star = D_1 / D_2$，其中 $D_1 = 2\sum_{i=1}^r \frac{\sigma_i^2}{\sigma_i^2 + \alpha}$、$D_2 = 4\sum_{i=1}^r \frac{\sigma_i^4}{(\sigma_i^2 + \alpha)^2}$，整个步长只由 $H$ 的奇异值决定，而奇异值在初始化的 SVD 里已经算好，因此步长计算不花一分钱。最终一步更新为 $V_1 = \sqrt{\alpha}(V_0 + \eta^\star H) W (\alpha I + (\eta^\star \Sigma)^2)^{-1/2} W^\top$，同样复用同一份 SVD 结果。经验上，这个单步版本相比多步 Algorithm 2 仅有约 2% 的最优性差距，运行时间却只占约 3%——把"有保证但太慢"的优化压缩成了"几乎免费且足够好"的一步。
 
 ## 实验关键数据
 

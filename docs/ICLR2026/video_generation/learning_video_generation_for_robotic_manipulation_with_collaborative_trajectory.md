@@ -42,33 +42,25 @@ tags:
 
 ### 整体框架
 
-RoboMaster基于预训练CogVideoX-5B架构。给定初始帧 $\mathbf{I}$、文本提示 $\mathbf{c}$、物体mask $\mathbf{M}_d, \mathbf{M}_s$ 和协作轨迹 $\mathcal{C}$，生成操作视频 $\mathbf{X}$。流程为：(1) 通过外观和形状感知嵌入编码物体表示 $\mathbf{v}_d, \mathbf{v}_s$；(2) 将轨迹分解为三个子阶段并关联对应物体特征；(3) 通过运动注入模块将协作轨迹嵌入注入DiT块。
+RoboMaster 在预训练的 CogVideoX-5B 上做条件控制：输入初始帧 $\mathbf{I}$、文本提示 $\mathbf{c}$、机械臂与被操作物体的 mask $\mathbf{M}_d, \mathbf{M}_s$ 以及一条协作轨迹 $\mathcal{C}$，输出操作视频 $\mathbf{X}$。整个流程围绕一个核心选择——不去分别控制机械臂和物体，而是把交互过程切成三段、用一条统一轨迹承载，再把轨迹特征注入 DiT 去引导生成。
 
 ### 关键设计
 
-**1. 耦合外观-形状物体嵌入（Coupled Appearance and Shape Embedding）**
+**1. 耦合外观-形状物体嵌入：让被控物体在整段视频里"不走样"。**
 
-- **功能**: 在视频序列中保持物体的语义一致性
-- **核心思路**: 将初始帧通过VAE编码器投影为latent特征 $\mathbf{z}$，下采样物体mask后提取被mask的latent特征并池化得到 $\tilde{\mathbf{v}}$。在每个时间步以轨迹点为中心、mask面积比例为半径构建圆形体积表示 $\mathbf{v} \in \mathbb{R}^{c \times h \times w}$
-- **设计动机**: 相比Tora等方法的点表示，mask-based表示同时编码了物体的外观和空间形状信息，加速训练收敛并提升跨帧身份一致性
+轨迹控制方法（如 Tora）通常把被控对象抽象成一个点，只告诉模型"这个像素往哪走"，却丢掉了它长什么样、占多大地方，于是生成时物体常常变形或身份漂移。这里改用 mask 来携带物体信息：先用 VAE 编码器把初始帧投影为 latent 特征 $\mathbf{z}$，把物体 mask 下采样到 latent 分辨率后抠出被覆盖区域的特征并池化，得到一个紧凑的物体嵌入 $\tilde{\mathbf{v}}$。在每个时间步，以当前轨迹点为圆心、以 mask 面积占比为半径，把 $\tilde{\mathbf{v}}$ 铺成一个圆形体积表示 $\mathbf{v} \in \mathbb{R}^{c \times h \times w}$ 跟随轨迹移动。这样一来轨迹同时编码了物体的外观（来自被 mask 区域的特征）和空间尺度（来自圆的半径），相比纯点表示既加速收敛又显著提升跨帧的身份一致性。
 
-**2. 协作轨迹表示（Collaborative Trajectory Representation）**
+**2. 协作轨迹表示：把多物体交互拆成时间三段，从源头避开特征纠缠。**
 
-- **功能**: 统一建模多物体交互动力学，避免特征纠缠
-- **核心思路**: 将轨迹分解为三个时间阶段：前交互 $\mathcal{C}_1$（机械臂主导）、交互中 $\mathcal{C}_2$（被操作物体主导）、后交互 $\mathcal{C}_3$（机械臂主导）。利用因果表示将前一时间步的latent传播到后续帧。最终分布分解为三个物体感知子分布的乘积
-- **设计动机**: 交互阶段被操作物体的运动隐式引导机械臂轨迹（两者相对动力学受约束）；特征表示的时间变化 $\mathbf{v}_d \rightarrow \mathbf{v}_s \rightarrow \mathbf{v}_d$ 为建模行为转变提供线索
+机器人操作里机械臂和物体的轨迹在接触区会重叠，若给两者各画一条独立轨迹，重叠处的特征就会互相纠缠、生成质量崩坏。本文不在空间上分解物体，而在时间上分解交互，把一次操作拆成三个由不同主体主导的阶段：前交互段 $\mathcal{C}_1$ 由机械臂主导（接近物体）、交互段 $\mathcal{C}_2$ 由被操作物体主导（接触并被推动）、后交互段 $\mathcal{C}_3$ 重新由机械臂主导（撤离）。三段首尾相接拼成单一的协作轨迹，任意时刻只有一个主导主体，重叠歧义自然消失。建模上用因果表示把前一时间步的 latent 传播到后续帧，使整段分布分解为三个物体感知子分布的乘积。这样做之所以成立，是因为交互段里物体的运动会隐式约束机械臂的相对运动（两者动力学被接触耦合），只需主导其一即可；而主导特征随时间从 $\mathbf{v}_d \rightarrow \mathbf{v}_s \rightarrow \mathbf{v}_d$ 的切换，本身就给模型提供了"何时该转变行为"的清晰线索。
 
-**3. 运动注入模块（Motion Injection Module）**
+**3. 运动注入模块：用零初始化的轻量分支把轨迹喂进 DiT，不伤预训练能力。**
 
-- **功能**: 将协作轨迹信息注入视频DiT生成过程
-- **核心思路**: 协作轨迹latent $\mathbf{V} \in \mathbb{R}^{f \times c \times h \times w}$ 经patchify后通过零初始化的2D空间卷积和1D时间卷积编码，然后与DiT块的隐藏状态相加：$\mathbf{h} = \mathbf{h} + \text{norm}(\tilde{\mathbf{V}}) + \tilde{\mathbf{V}}$
-- **设计动机**: 零初始化确保训练初期不破坏预训练模型的生成能力，plug-and-play设计便于集成
+协作轨迹被整理成时序 latent $\mathbf{V} \in \mathbb{R}^{f \times c \times h \times w}$，先 patchify，再经过一个零初始化的 2D 空间卷积加 1D 时间卷积编码出 $\tilde{\mathbf{V}}$，最后以加法方式融入 DiT 块的隐藏状态 $\mathbf{h} = \mathbf{h} + \text{norm}(\tilde{\mathbf{V}}) + \tilde{\mathbf{V}}$。卷积的零初始化保证训练初期注入分支输出为零，DiT 的生成能力完全不被破坏，随训练逐步学到轨迹引导；加法注入则是即插即用，消融中也比交叉注意力注入更稳（FVD 147.31 对 163.56）。
 
 ### 损失函数 / 训练策略
 
-标准扩散模型去噪损失：$\mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}[\|\boldsymbol{\epsilon} - \hat{\boldsymbol{\epsilon}}_{\boldsymbol{\theta}}(\mathbf{x}_t, \mathbf{c}, \mathbf{M}_d, \mathbf{M}_s, \mathcal{C}, t)\|_2^2]$
-
-训练设置：8块A800 GPU, AdamW优化器, DiT学习率 $2 \times 10^{-5}$, 运动注入器学习率 $1 \times 10^{-4}$, batch size 16, 训练30K步。推理使用50步DDIM, CFG scale 6.0。
+训练目标为标准扩散去噪损失 $\mathcal{L}(\boldsymbol{\theta}) = \mathbb{E}[\|\boldsymbol{\epsilon} - \hat{\boldsymbol{\epsilon}}_{\boldsymbol{\theta}}(\mathbf{x}_t, \mathbf{c}, \mathbf{M}_d, \mathbf{M}_s, \mathcal{C}, t)\|_2^2]$，条件中同时带入双 mask 与协作轨迹。实现上用 8 块 A800、AdamW 优化器，DiT 主干学习率 $2 \times 10^{-5}$、新增的运动注入器学习率更高为 $1 \times 10^{-4}$，batch size 16 训练 30K 步；推理用 50 步 DDIM、CFG scale 6.0。
 
 ## 实验关键数据
 
@@ -144,9 +136,9 @@ RoboMaster基于预训练CogVideoX-5B架构。给定初始帧 $\mathbf{I}$、文
 
 - [\[ICLR 2026\] Geometry-aware 4D Video Generation for Robot Manipulation](geometry-aware_4d_video_generation_for_robot_manipulation.md)
 - [\[CVPR 2025\] PoseTraj: Pose-Aware Trajectory Control in Video Diffusion](../../CVPR2025/video_generation/posetraj_pose-aware_trajectory_control_in_video_diffusion.md)
+- [\[ICML 2026\] EPiC: Efficient Video Camera Control Learning with Precise Anchor-Video Guidance](../../ICML2026/video_generation/epic_efficient_video_camera_control_learning_with_precise_anchor-video_guidance.md)
 - [\[CVPR 2026\] FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance](../../CVPR2026/video_generation/flashmotion_fewstep_controllable_video_generation.md)
 - [\[ICLR 2026\] Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models](frame_guidance_training-free_guidance_for_frame-level_control_in_video_diffusion.md)
-- [\[ICML 2026\] EPiC: Efficient Video Camera Control Learning with Precise Anchor-Video Guidance](../../ICML2026/video_generation/epic_efficient_video_camera_control_learning_with_precise_anchor-video_guidance.md)
 
 </div>
 

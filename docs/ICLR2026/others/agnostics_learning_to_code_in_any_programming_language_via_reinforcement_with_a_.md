@@ -40,40 +40,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Agnostics分两大阶段：(1) **数据准备**——用LLM将现有数据集（MBPP、Codeforces等）的语言特定格式重写为语言无关的I/O描述+测试用例，再用简短的语言配置文件适配到目标语言；(2) **训练**——用GRPO算法在语言无关的代码执行沙箱中做RLVR。
+Agnostics要解决的核心难题是：为一种新的低资源语言搭一套能跑RL的环境，最重的活就是"验证代码对不对"，而传统做法把验证器和语言绑死，每换一种语言都得重写一遍测试框架。它的破局点是把验证从语言里彻底剥离出来——只要程序读stdin、算一算、写stdout，那"输出对不对"和它用什么语言写的毫无关系，一个验证器就能给所有语言打分。
+
+整条pipeline分两段：先是**数据准备**，用LLM把MBPP、Codeforces等现有数据集里语言特定的格式（Python函数+assert）改写成纯I/O行为描述，再配一份几行的语言配置把它落到目标语言上；然后是**训练**，用GRPO在一个语言无关的代码执行沙箱里做RLVR，沙箱跑出来的正确性就是奖励。
 
 ### 关键设计
 
-1. **I/O格式统一（Dataset Preparation）**
+**1. I/O格式统一：把语言特定的任务改写成可被任意语言复用的行为规范。**
 
-    - 功能：将所有编程任务转换为"描述程序I/O行为"的统一格式
-    - 核心思路：用LLM将如MBPP中的Python函数+assert测试改写为"读标准输入→计算→写标准输出"的问题描述+I/O样例对 $(in_k, out_k)$。具体要求LLM明确I/O约定（小数位数、分隔符、排序等），消除歧义
-    - 设计动机：这个格式对任何编程语言都一样——只要程序能运行并产生正确输出就算正确，验证器与语言无关
+每种语言的测试方式都不一样，验证器没法通用，根子就在任务描述本身是语言特定的。Agnostics让LLM把原始任务（如MBPP里的Python函数加一串assert）重写成"读标准输入→计算→写标准输出"的问题描述，外加若干I/O样例对 $(in_k, out_k)$。改写时特别要求LLM把I/O约定钉死——小数保留几位、字段用什么分隔、是否排序——消除一切歧义，否则同一份输入会有多个"合法"输出导致误判。改完之后这份规范对任何语言都成立：不管是Lua还是Fortran，只要程序能跑出 $out_k$ 就算对，验证器不需要知道语言是什么。
 
-2. **极简语言配置（Language Configuration）**
+**2. 极简语言配置：用4-5行YAML替代数百行的语言翻译器。**
 
-    - 功能：用4-5行YAML配置一种新语言
-    - 核心思路：配置文件包含 `install`（安装编译器）、`filename`（源文件名）、`compile`（编译命令）、`execute`（运行命令）、`prompt`（提示前缀）。例如R语言的配置仅需指定安装tidyverse、文件名snippet.R、执行命令Rscript、加上关于readLines用法的提示
-    - 设计动机：将"支持新语言"的工程量从数百行翻译器代码降至几行配置。对于极低资源语言（如OCaml/Fortran），可以让模型先生成错误代码，再用GPT-o3分析常见错误自动生成prompt prefix
+I/O规范统一之后，接新语言剩下的只是"怎么编译怎么跑"这点机械信息。配置文件就五个字段：`install`（装编译器）、`filename`（源文件名）、`compile`（编译命令）、`execute`（运行命令）、`prompt`（提示前缀）。比如R语言只需写明装tidyverse、文件名snippet.R、用Rscript执行、再加一句关于readLines读输入用法的提示就够了。相比MultiPL-T那种每语言~500行的提示/测试翻译器，工程量直接塌缩到几行。对OCaml、Fortran这类极低资源语言，连prompt prefix都能半自动生成：先让模型生成一批错误代码，再用GPT-o3分析它们的共性错误，反过来写出针对性的提示前缀。
 
-3. **语言无关代码执行沙箱**
+**3. 语言无关代码执行沙箱：安全且高效地编译运行任意语言来算奖励。**
 
-    - 功能：安全、高效地编译和运行任意语言的代码进行奖励计算
-    - 核心思路：基于OCI容器，为每种语言构建包含编译器的镜像。执行harness在容器内持续运行，接收(程序, I/O样例, 超时)三元组，写文件→编译→运行→对比输出。全部正确奖励=1，否则=0
-    - 设计动机：安全考虑——限制CPU/内存/文件系统/输出大小（5MB上限），防止无限循环、宏展开爆炸、巨量输出等病态行为。复用warm容器比每次spawn新容器快两个数量级。RAM disk加速编译
+有了规范和配置，还需要一个能真把代码跑起来、且不会被恶意或病态代码搞崩的执行环境。沙箱基于OCI容器，为每种语言预构建含编译器的镜像；容器内常驻一个执行harness，接收(程序, I/O样例, 超时)三元组，写文件→编译→运行→逐条比对输出，全部命中奖励=1，否则=0。安全是头等约束：CPU、内存、文件系统、输出大小（5MB上限）全部设限，专门防无限循环、宏展开爆炸、巨量输出这类病态行为。效率上做了两处关键优化——复用warm容器而非每次spawn新容器，快了约两个数量级；编译走RAM disk进一步提速。
 
-4. **GRPO训练**
+**4. GRPO训练：用组内相对优势把二值正确性变成可用的RL信号。**
 
-    - 功能：用Group Relative Policy Optimization做强化学习
-    - 核心思路：每个prompt采样G=32个候选，用沙箱验证得到binary reward $R_i \in \{0,1\}$，计算组内相对优势 $\hat{A}_i = \frac{R_i - \text{mean}}{\text{std}}$，标准clipped PPO更新。省略KL散度项
-    - 设计动机：尝试过部分正确奖励（运行不报错但输出错误给部分分），但模型迅速学会exploit（生成空程序或硬编码公开测试用例）
+奖励信号有了，最后是怎么用它更新模型。每个prompt采样 $G=32$ 个候选，逐个丢进沙箱验证得到二值奖励 $R_i \in \{0,1\}$，再算组内相对优势
 
-### 训练细节
-- AdamW, lr=5e-6, cosine decay, 0.1 epochs warmup
+$$\hat{A}_i = \frac{R_i - \text{mean}(R)}{\text{std}(R)}$$
+
+然后走标准的clipped PPO更新，省掉KL散度项。这里有个重要的踩坑：作者试过给"能跑但输出错"的程序发部分奖励，结果模型很快学会钻空子——要么生成空程序，要么直接硬编码公开测试用例骗分。所以最终坚持二值奖励，只有全部测试通过才给分，反而最稳。
+
+### 训练策略
+- AdamW，lr=5e-6，cosine decay，0.1 epoch warmup
 - 每batch 4个prompt × 32组大小
 - 训练温度0.7，评估温度0.2
 - 单epoch训练
-- 用Ray实现分布式（GPU节点做训练，CPU节点做代码执行）
+- 用Ray实现分布式：GPU节点做训练，CPU节点做代码执行
 
 ## 实验关键数据
 
@@ -128,9 +126,9 @@ Agnostics分两大阶段：(1) **数据准备**——用LLM将现有数据集（
 
 ## 相关论文
 
-- [\[ICLR 2026\] A Single Architecture for Representing Invariance Under Any Space Group](a_single_architecture_for_representing_invariance_under_any_space_group.md)
 - [\[ICLR 2026\] AnyUp: Universal Feature Upsampling](anyup_universal_feature_upsampling.md)
 - [\[NeurIPS 2025\] Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
+- [\[ICLR 2026\] A Single Architecture for Representing Invariance Under Any Space Group](a_single_architecture_for_representing_invariance_under_any_space_group.md)
 - [\[ICLR 2026\] DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
 - [\[ICLR 2026\] Jackpot: Optimal Budgeted Rejection Sampling for Extreme Actor-Policy Mismatch RL](jackpot_optimal_budgeted_rejection_sampling_for_extreme_actor-policy_mismatch_re.md)
 

@@ -39,35 +39,21 @@ tags:
 
 ### 整体框架
 
-基于 Wan2.1-1.3B-T2V 作为视频 backbone，采用三阶段训练：音频预训练 → 音视频 SFT → 音视频 DPO。使用 Rectified Flow 作为噪声调度器，视频 VAE 来自 Wan2.1，音频 VAE 来自 AudioLDM2，均冻结。
+JavisDiT++ 以 Wan2.1-1.3B-T2V 为视频 backbone，把音频和视频 token 拼成一条序列送进同一个 DiT，用 Rectified Flow 联合去噪生成。整套系统分三阶段训练——音频预训练、音视频 SFT、音视频 DPO，视频 VAE（取自 Wan2.1）和音频 VAE（取自 AudioLDM2）全程冻结，只训 DiT 主干。
 
 ### 关键设计
 
-1. **模态特定 MoE（MS-MoE）**：音频和视频 token 通过共享的多头自注意力层进行跨模态交互，然后分别经过各自的 FFN 层进行模态内信息聚合。设计思路类似 BAGEL，但按模态而非任务分配 token。虽然总参数从 1.3B 增至 2.1B，但每个 token 激活的参数仍为 1.3B，因此推理开销不增加。相比以下两种替代方案更优：
+**1. 模态特定 MoE（MS-MoE）：在统一架构里避免模态信息互相损害。** 联合建模的两难在于：用一套共享 FFN 处理音视频会让两种异质模态的信息在聚合时互相污染，而拆成双流 DiT 又会让架构臃肿、扩展性差。MS-MoE 走折中路线——音视频 token 先经过共享的多头自注意力层做跨模态交互，再各自走自己的 FFN 做模态内聚合，思路类似 BAGEL 但按模态而非任务路由 token。它把总参数从 1.3B 抬到 2.1B，但因为每个 token 只激活自己那一支 FFN，单 token 激活参数仍是 1.3B，推理开销不增加。消融里两种朴素替代都更差：Shared-DiT + LoRA 因可训练容量太小压不住音频质量，Shared-DiT + Full-FT 则在音频预训练阶段让过多参数偏移，反过来严重拖垮了视频质量——这正说明给每个模态留独立 FFN 是必要的。
 
-    - Shared-DiT + LoRA：音频质量受限于可训练容量不足
-    - Shared-DiT + Full-FT：音频预训练阶段过多参数偏移，严重损害视频质量
+**2. 时间对齐 RoPE（TA-RoPE）：用位置 ID 而非额外模块实现帧级同步。** 此前 JavisDiT 的 ST-Prior、UniVerse-1 的 Stitching 都靠隐式机制对齐时间，既不精确又徒增推理开销。TA-RoPE 换个思路：直接在 3D 位置 ID 的时间维上把音频钉到视频的时间轴上。视频 token 位置 ID 为 $(t, h, w)$，音频 token 则映射为 $R_a(t, m) = \left(\left[t \cdot \frac{T_v}{T_a}\right], t + H, m + W\right)$，其中 $[\cdot]$ 取整把音频时间步换算到视频时间步，$H$、$W$ 的偏移则保证音视频的位置 ID 不重叠。因为对齐完全发生在位置编码层面，不需要物理重排 token 序列，就能在全注意力框架里实现绝对时间对齐，几乎零额外推理成本；消融中它的同步指标 DeSync 反而优于要多花 6s 延迟的 ST-Prior。
 
-2. **时间对齐 RoPE（TA-RoPE）**：在 3D 位置 ID 的第一维（时间维）上对音频和视频 token 强制绝对时间对齐。视频 token 的位置 ID 为 $(t, h, w)$，音频 token 的位置 ID 设为：
-
-$$R_a(t, m) = \left(\left[t \cdot \frac{T_v}{T_a}\right], t + H, m + W\right)$$
-
-其中 $[\cdot]$ 为取整操作，$H$、$W$ 的偏移保证音视频位置 ID 不重叠。这种设计无需物理重排 token 序列，通过位置 ID 操作即可在全注意力框架中实现时间对齐，零额外推理成本。
-
-3. **音视频 DPO（AV-DPO）**：首创将偏好对齐引入 JAVG。核心贡献：
-
-    - **奖励模型**：从三个维度评估——音频质量（AudioBox + ImageBind）、视频质量（VideoAlign + ImageBind）、音视频对齐（ImageBind + Syncformer）
-    - **偏好数据构建**：30K 提示 × 3 对生成 + ground truth，按模态分别归一化排序后选取 winner-loser 对，确保 winner 在所有模态维度上都优于 loser（约得到 25K 对）
-    - **模态感知损失**：分别计算音频和视频的 DPO 损失并加权：
+**3. 音视频 DPO（AV-DPO）：首次把人类偏好对齐引入联合生成。** 现有 JAVG 方法都没做偏好优化，导致美学和音视频和谐度跟人类期望有差距。AV-DPO 补上这一环，关键是把奖励、数据和损失三处都做成模态感知的。奖励模型从三个维度打分——音频质量（AudioBox + ImageBind）、视频质量（VideoAlign + ImageBind）、音视频对齐（ImageBind + Syncformer）。数据上用 30K 提示各生成 3 个样本再加 ground truth，按模态分别归一化排序后挑 winner-loser 对，并强制 winner 在所有模态维度上都不劣于 loser（约 25K 对）——否则模态不一致的 winner 会让 DPO 退化。损失则把音频和视频两支分开算再加权：
 
 $$\mathcal{L}_{\mathrm{DPO}}^{av} = -\mathbb{E}\left[\log\sigma\left(-\beta_v(\mathrm{Diff}_{\mathrm{policy}}^v - \mathrm{Diff}_{\mathrm{ref}}^v) - \beta_a(\mathrm{Diff}_{\mathrm{policy}}^a - \mathrm{Diff}_{\mathrm{ref}}^a)\right)\right]$$
 
 ### 损失函数 / 训练策略
 
-- 音频预训练：780K 音频-文本对
-- 音视频 SFT：330K 音视频-文本三元组，使用 Flow Matching 目标
-- 音视频 DPO：25K 偏好对，搭配 Flow Matching 正则化防过拟合
-- 支持 2-5 秒、240p-480p 不同纵横比
+三阶段训练逐步加码：音频预训练用 780K 音频-文本对让模型先学会发声；音视频 SFT 用 330K 音视频-文本三元组、以 Flow Matching 为目标做联合生成对齐；音视频 DPO 用前述 25K 偏好对收尾，并搭配 Flow Matching 正则化防止偏好优化过拟合。整套训练支持 2-5 秒、240p-480p 的不同纵横比输出。
 
 ## 实验关键数据
 
@@ -134,10 +120,10 @@ $$\mathcal{L}_{\mathrm{DPO}}^{av} = -\mathbb{E}\left[\log\sigma\left(-\beta_v(\m
 ## 相关论文
 
 - [\[ICLR 2026\] JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization](javisdit_joint_audio-video_diffusion_transformer_with_hierarchical_spatio-tempor.md)
+- [\[ICLR 2026\] Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation](dual-ipo_dual-iterative_preference_optimization_for_text-to-video_generation.md)
 - [\[ICLR 2026\] Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective](lumos-1_on_autoregressive_video_generation_with_discrete_diffusion_from_a_unifie.md)
 - [\[CVPR 2026\] UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation](../../CVPR2026/video_generation/unitalking_a_unified_audio-video_framework_for_talking_portrait_generation.md)
 - [\[ICML 2026\] T2AV-Compass: Towards Unified Evaluation for Text-to-Audio-Video Generation](../../ICML2026/video_generation/t2av-compass_towards_unified_evaluation_for_text-to-audio-video_generation.md)
-- [\[CVPR 2026\] UniAVGen: Unified Audio and Video Generation with Asymmetric Cross-Modal Interactions](../../CVPR2026/video_generation/uniavgen_unified_audio_and_video_generation_with_asymmetric_cross-modal_interact.md)
 
 </div>
 

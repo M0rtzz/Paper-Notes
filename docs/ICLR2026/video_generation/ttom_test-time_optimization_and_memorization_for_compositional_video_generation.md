@@ -41,31 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-流式设置：用户连续输入提示词。(1) LLM 生成时空布局（每个物体的bbox序列）；(2) 检查记忆是否有匹配——有则加载参数（可选继续优化），无则初始化新参数；(3) 测试时优化（TTO）对齐注意力与布局；(4) 优化后参数存入记忆。
+
+TTOM 想解决的是组合视频生成里"既要精细控制布局、又不能破坏预训练模型特征分布"的两难。它把这个问题放进一个**流式服务**的场景：用户连续地输入提示词，系统逐条处理并把经验沉淀下来。
+
+每来一条提示词，pipeline 大致这样转：先用 LLM 把提示词翻译成**时空布局**（每个物体一串随帧变化的 bbox 序列）；然后去**参数记忆**里查有没有相似场景——命中就把存好的参数加载进来（必要时再微调几步），没命中就初始化一组全新参数；接着进入**测试时优化（TTO）**，只动这组新增参数、让模型注意力贴合 LLM 给的布局；最后把优化好的参数连同场景的抽象描述一起写回记忆，供后续相似请求复用。整个过程不碰潜变量，模型本体保持冻结。
 
 ### 关键设计
 
-1. **注意力-布局相关性探测**:
+**1. 注意力-布局相关性探测：先找准该优化哪些层。**
 
-    - 功能：识别 DiT 中哪些层的注意力与最终视频布局高度相关
-    - 核心思路：生成视频→用 GroundingDINO+SAM2 分割→计算各层注意力图与分割结果的 mIoU。发现不同层相关性差异很大
-    - 设计动机：只优化高相关性层的参数，避免浪费和干扰
+DiT 里有很多层注意力，盲目地全优化既浪费又容易互相干扰。TTOM 先做一次离线探测：正常生成一段视频，用 GroundingDINO + SAM2 把视频里的物体分割出来作为"真实布局"，再逐层把该层的注意力图和分割结果算 mIoU。结果发现不同层的相关性差异很大——只有一部分层的注意力真正决定了最终的物体布局。后续的 TTO 就只优化这些高相关层的参数，把优化集中在真正起作用的地方。
 
-2. **测试时优化（TTO）**:
+**2. 测试时优化（TTO）：优化新参数，而不是改潜变量。**
 
-    - 功能：插入新参数并优化使注意力对齐布局
-    - 核心思路：在 VFM 中插入轻量参数 $\phi$，用 JSD 损失 $L_{align} = \frac{1}{N}\sum_i JSD(\bar{A}_i \| \bar{B}_i)$ 对齐注意力图和高斯平滑的布局掩码
-    - 设计动机：优化 $\phi$ 而非潜变量 $z_t$，避免分布坍塌
+这是 TTOM 区别于"latent guidance"类方法的核心。以往做法直接去改潜变量 $z_t$ 或注意力图，强行把生成往布局上拽，结果常常破坏特征分布、引发闪烁和坍塌。TTOM 换了个落点：在 VFM 里插入一组轻量的新参数 $\phi$，推理时只优化 $\phi$，让模型注意力自己学会对齐布局。对齐的目标用 JSD 损失衡量——把注意力图 $\bar{A}_i$ 和高斯平滑后的布局掩码 $\bar{B}_i$ 当成两个分布去拉近：
 
-3. **参数记忆机制**:
+$$L_{align} = \frac{1}{N}\sum_i JSD(\bar{A}_i \| \bar{B}_i)$$
 
-    - 功能：保存历史优化上下文供未来复用
-    - 核心思路：记忆 $\mathcal{M} = \{g(C): \phi^*_C\}$，键是场景抽象后的文本嵌入。支持 insert/read/update/delete 操作。容量满时 LFU 淘汰
-    - 设计动机：相似场景的参数可直接加载跳过优化（效率），或作为好的初始化（质量）
+因为优化的是外挂参数而非潜变量本身，模型的特征分布不被破坏，对齐和画质就能同时保住；论文也观察到 JSD 比直接 L2 对齐更稳定。
+
+**3. 参数记忆机制：把一次性的优化变成可复用的知识。**
+
+逐样本独立优化的另一个问题是：每条提示词都从头优化一遍，历史经验全扔了。TTOM 给系统配了一块参数记忆 $\mathcal{M} = \{g(C): \phi^*_C\}$，把"场景抽象 $C$ 经过编码 $g(C)$ 得到的文本嵌入"当键、把那次优化收敛的参数 $\phi^*_C$ 当值存起来。这块记忆支持 insert / read / update / delete 四种操作，容量满了用 LFU（最不常用优先淘汰）腾空间。新请求进来时，相似场景的参数既可以直接加载、跳过优化省时间，也可以当作一个好的初始化、让后续微调更快收敛——前者偏效率、后者偏质量，记忆让流式推理越用越顺手。
 
 ### 损失函数 / 训练策略
 
-无监督——测试时用 $L_{align}$（JSD）优化新增参数。LLM 生成布局时包含验证步骤确保一致性。有记忆匹配时可跳过优化直接推理。
+整个过程**无监督**：测试时只用对齐损失 $L_{align}$（JSD）优化新增参数，不需要任何标注。LLM 生成布局时自带一个验证步骤来保证布局自洽。一旦记忆命中，可以直接加载参数跳过优化、立即推理。
 
 ## 实验关键数据
 
@@ -131,9 +132,9 @@ VBench 上也有一致的改进。
 
 - [\[CVPR 2025\] One-Minute Video Generation with Test-Time Training](../../CVPR2025/video_generation/one-minute_video_generation_with_test-time_training.md)
 - [\[ICLR 2026\] JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [\[ICLR 2026\] Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation](dual-ipo_dual-iterative_preference_optimization_for_text-to-video_generation.md)
 - [\[ICLR 2026\] MotionStream: Real-Time Video Generation with Interactive Motion Controls](motionstream_real-time_video_generation_with_interactive_motion_controls.md)
 - [\[CVPR 2026\] Training-free Motion Factorization for Compositional Video Generation](../../CVPR2026/video_generation/training-free_motion_factorization_for_compositional_video_generation.md)
-- [\[AAAI 2026\] DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation](../../AAAI2026/video_generation/dreamrunner_fine-grained_compositional_story-to-video_genera.md)
 
 </div>
 

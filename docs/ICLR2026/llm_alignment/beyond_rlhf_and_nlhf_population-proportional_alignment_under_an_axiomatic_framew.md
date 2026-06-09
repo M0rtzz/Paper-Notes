@@ -38,19 +38,19 @@ tags:
 
 ## 方法详解
 
-### 框架设计
-- **可行人群分布集推断**：定义 $u_i = \min_{y \neq y_i} P(y_i \succ y)$ 作为每个选项 $y_i$ 的人群份额上界，构建多面体外近似 $\bar{\mathcal{W}}(P) = \{w \in \Delta(\mathcal{Y}) | w_i \leq u_i\}$
-- **策略构造**：按上界比例分配概率 $\pi(y_i) = u_i / \sum_j u_j$，采用保守策略最小化最坏情况下的比例失配
+### 整体框架
 
-### 四条公理
-1. **单调性**：提升某选项排名不会降低其被选概率
-2. **Pareto 效率**：若所有人偏好 $y$ 胜 $y'$，策略应倾向 $y$
-3. **α-PPA（人群比例对齐）**：$\pi(y_k)/w_k^\sigma \geq \alpha(\sigma)$，保证策略至少弱比例于人群份额
-4. **γ-PBM（人群有界可操纵性）**：操纵后策略增益受 $\gamma_1 w_k^\sigma + \gamma_2$ 约束，非多数群体无法通过操纵获得多数地位
+整个方法把"对齐"重新定义成一个社会选择问题：不再把偏好压成标量奖励，而是先从成对比较数据里反推出评估者人群分布的可行集合，再在这个集合上构造一个能按比例反映各群体份额、且抗操纵的随机策略。落地上分两步——先估计每个选项的人群份额上界形成可行集，再据此分配选择概率，并用一组公理来界定这个策略应当满足的性质。
 
-### Softmax 松弛
-- 引入参数 $\beta$ 控制比例对齐与 Condorcet 一致性的权衡：$\pi(y_i) = u_i \exp(\beta u_i) / \sum_j u_j \exp(\beta u_j)$
-- $\beta=0$ 退化为原始 $F^*$；$\beta \to \infty$ 收敛至 minimax Condorcet 方法
+### 关键设计
+
+**1. 可行人群分布集推断：在没有群组标签时反推人群结构。** 多元对齐方法通常要求显式的评估者群组标签，但实际只能拿到成对比较数据。本文绕开这一点：对每个选项 $y_i$，定义 $u_i = \min_{y \neq y_i} P(y_i \succ y)$，即 $y_i$ 在所有对决中胜率的最小值，作为支持 $y_i$ 的人群份额的一个上界——因为任何把 $y_i$ 排在首位的群体，至少要让 $y_i$ 赢下所有对手。把这些上界拼起来就得到真实人群分布 $w$ 的多面体外近似 $\bar{\mathcal{W}}(P) = \{w \in \Delta(\mathcal{Y}) \mid w_i \leq u_i\}$。这样无需任何额外标注，仅凭比较概率就刻画出"人群可能长什么样"的集合，但代价是选项数多时该外近似会偏宽松。
+
+**2. 比例分配策略 $F^*$：让选择概率正比于人群份额。** 有了上界后，最自然的对齐策略是按份额比例随机选择：$\pi(y_i) = u_i / \sum_j u_j$。这与 RLHF/NLHF 的确定性输出形成对比——当两群人对两个选项的偏好接近 $50{+}\epsilon$ 比 $50{-}\epsilon$ 时，确定性策略会彻底丢掉少数方，而比例策略会以接近一半的概率照顾到弱势群体。该策略本质上在最坏情况的比例失配上取保守解，保证少数偏好不被多数微弱优势抹平。
+
+**3. 四条公理：界定"好策略"应满足的性质。** 为了说明 $F^*$ 的合理性，本文给出四条公理作为评判标准。**单调性**要求提升某选项的排名不会降低它被选中的概率；**Pareto 效率**要求若所有人都偏好 $y$ 胜 $y'$，策略应倾向 $y$。真正核心的是后两条量化公理：$\alpha$-PPA（人群比例对齐）要求 $\pi(y_k)/w_k^\sigma \geq \alpha(\sigma)$，即每个群体首选项的被选概率至少弱比例于其人群份额；$\gamma$-PBM（人群有界可操纵性）要求任何群体通过策略性误报偏好所能攫取的策略增益被 $\gamma_1 w_k^\sigma + \gamma_2$ 上界约束住，从而非多数群体无法靠操纵翻身成多数。本文进一步证明 RLHF 与 NLHF 会违反任意强度的 PPA 和 PBM，而 $F^*$ 在这两条公理上有理论保证。
+
+**4. Softmax 松弛 $F^\beta$：在比例对齐与多数一致间可调权衡。** 纯比例策略虽然公平，却可能在该选多数方时显得"太软"。为此引入温度参数 $\beta$ 做松弛：$\pi(y_i) = u_i \exp(\beta u_i) / \sum_j u_j \exp(\beta u_j)$。$\beta = 0$ 时退化回原始的比例策略 $F^*$；$\beta \to \infty$ 时概率质量集中到上界最大的选项，收敛为 minimax Condorcet 方法。$\beta$ 越大越偏向多数、胜率越高，但 PPA 随之下降——这条权衡被后续实验直接验证。
 
 ## 实验
 
@@ -115,9 +115,9 @@ tags:
 
 - [\[ICLR 2026\] Beyond Pairwise: Empowering LLM Alignment With Ranked Choice Modeling](beyond_pairwise_empowering_llm_alignment_with_ranked_choice_modeling.md)
 - [\[ICLR 2026\] General Exploratory Bonus for Optimistic Exploration in RLHF](general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)
+- [\[ICLR 2026\] JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks](jailnewsbench_multi-lingual_and_regional_benchmark_for_fake_news_generation_unde.md)
 - [\[ICLR 2026\] Unifying Stable Optimization and Reference Regularization in RLHF (DAR)](unifying_stable_optimization_and_reference_regularization_in_rlhf.md)
 - [\[ICLR 2026\] CAGE: A Framework for Culturally Adaptive Red-Teaming Benchmark Generation](cage_a_framework_for_culturally_adaptive_red-teaming_benchmark_generation.md)
-- [\[ICLR 2026\] JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks](jailnewsbench_multi-lingual_and_regional_benchmark_for_fake_news_generation_unde.md)
 
 </div>
 

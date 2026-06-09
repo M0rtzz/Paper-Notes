@@ -57,34 +57,29 @@ Veritas 基于 InternVL3-8B 构建，采用两阶段训练流程：
 
 ### 关键设计
 
-1. **HydraFake 数据集与四级评估协议**:
+**1. HydraFake 数据集与四级评估协议：让 benchmark 真正暴露检测器的 OOD 短板。**
 
-    - 功能：构建贴近工业场景的大规模 deepfake 检测 benchmark
-    - 核心思路：50K 真实（来自 88 个数据集）+ 50K 伪造（36 种生成模型），涵盖 face swapping、reenactment、全脸合成、face restoration、relighting、personalization 等。训练集仅含 3 种基础伪造类型（FS/FR/EFG，48K 图像），评估分四级——In-Domain (14K)、Cross-Model (11K, FLUX/StarryAI/MAGI-1 等未见模型)、Cross-Forgery (12K, 属性编辑/生成式换脸/个性化等未见伪造)、Cross-Domain (15K, 未见数据域+社交媒体野生 deepfake 如 GPT-4o/Dreamina/HailuoAI)
-    - 设计动机：模拟真实场景中训练数据充足但测试分布多变的挑战，精确定位检测器在不同 OOD 层级的弱点
-    - 质量控制：排除低质量数据集（DFDC、WDF），对自构建数据用 Qwen2.5-VL-72B 生成 sample-specific prompt，人工筛选高质量样本
+现有基准多在 FF++ 上训练、在少数低质量数据集上测试，无法反映工业场景里"训练数据充足、但测试分布千变万化"的真实挑战。HydraFake 用 50K 真实（来自 88 个数据集）+ 50K 伪造（36 种生成模型）覆盖 face swapping、reenactment、全脸合成、face restoration、relighting、personalization 等多种伪造手段，但故意把训练集限制在 3 种基础伪造类型（FS/FR/EFG，48K 图像），从而构造出层层递进的 OOD 评估：In-Domain (14K) 同分布；Cross-Model (11K) 换成 FLUX/StarryAI/MAGI-1 等未见生成模型；Cross-Forgery (12K) 引入属性编辑、生成式换脸、个性化等未见伪造方式；Cross-Domain (15K) 则是未见数据域加上 GPT-4o/Dreamina/HailuoAI 这类社交媒体上的野生 deepfake。这种分级设计的价值在于能精确定位检测器在哪一层 OOD 上崩，而不是给出一个笼统的跨域分数。数据上排除了 DFDC、WDF 等低质量集合，对自构建数据用 Qwen2.5-VL-72B 生成 sample-specific prompt 并人工筛选高质量样本。
 
-2. **Pattern-Aware Reasoning 框架**:
+**2. Pattern-Aware Reasoning：把人类鉴伪的思维流程显式编码成 5 种推理模式。**
 
-    - 功能：定义 5 种推理模式来模拟人类鉴伪思维流程
-    - 核心思路：`<fast>` 快速直觉判断 → `<reasoning>` 定位 1-2 个显著 artifact → `<planning>` 对困难样本做分层分析 → `<reflection>` 自我反思推翻或支持初始判断 → `<conclusion>` 综合所有证据得出最终结论。模型在推理过程中自适应使用这些 pattern，简单样本可能只用 fast+reasoning+conclusion，困难样本才调用 planning 和 reflection
-    - 设计动机：vanilla CoT 缺乏结构化的思维引导，模型容易产生表面化推理。实验证明 pattern-aware reasoning 相比 flexible reasoning 在 Cross-Forgery 上提升 6.2%，在 Cross-Domain 上提升 3.3%
-    - 与 Post-hoc Explanation 的关键区别：后者先确定答案再找理由，推理不参与决策（准确率低 8.4%）；Veritas 的推理过程直接驱动最终判断
+vanilla CoT 没有结构化的思维引导，模型很容易给出表面化、走过场的推理。Veritas 借鉴人类鉴伪过程，定义了一条自适应的推理链：`<fast>` 先给出快速直觉判断，`<reasoning>` 定位 1-2 个显著 artifact，`<planning>` 对困难样本做分层分析，`<reflection>` 自我反思以推翻或支持初始判断，`<conclusion>` 综合所有证据得出最终结论。关键在于这些 pattern 是按需调用的——简单样本可能只走 fast+reasoning+conclusion，只有困难样本才触发 planning 和 reflection。它与"后验解释 (post-hoc explanation)"范式有本质区别：后者先确定答案再补理由，推理不参与决策（准确率因此低 8.4%），而 Veritas 的推理过程直接驱动最终判断。实验上，pattern-aware reasoning 相比 flexible reasoning 在 Cross-Forgery 上提升 6.2%、Cross-Domain 上提升 3.3%。
 
-3. **Mixed Preference Optimization (MiPO)**:
+**3. Mixed Preference Optimization (MiPO)：用"答对但理由差"的负样本逼出精细推理。**
 
-    - 功能：在 SFT 之后对齐推理质量，防止模型"记忆"而非"推理"
-    - 核心思路：构建混合非偏好数据集 $\mathcal{D}_2$，包含两类负样本——$s_l^\phi$（答案正确但推理粗糙/不够详细）和 $s_l^\psi$（答案错误）。正样本 $s_w$ 由人工专家精标。训练目标采用 DPO 风格损失：$\mathcal{L}_2 = -\mathbb{E}[\log\sigma(\beta\log\frac{\pi_\theta(s_w|q)}{\pi_{\text{SFT}}(s_w|q)} - \beta\log\frac{\pi_\theta(s_l|q)}{\pi_{\text{SFT}}(s_l|q)})]$
-    - 设计动机：纯 SFT 模型容易产生"答案正确但推理浅薄"的输出。$s_l^\phi$ 这类"答对但理由不充分"的负样本迫使模型学会精细化推理。实验验证：去掉 $s_l^\phi$ 后 CF -1.1%、CD -0.8%；去掉 $s_l^\psi$ 模型崩溃至 60.8%
-    - 与标准 DPO 的区别：引入了"答案正确但推理不够好"这一新类别的非偏好数据，传统 DPO 通常只用答案错误作为负样本
+纯 SFT 之后的模型常常"答案对、推理浅"，本质上是在记忆模式而非真正推理。MiPO 在 SFT 之后做一次偏好对齐，构建混合非偏好数据集 $\mathcal{D}_2$，里面包含两类负样本：$s_l^\phi$（答案正确但推理粗糙、不够详细）和 $s_l^\psi$（答案错误），正样本 $s_w$ 则由人工专家精标。训练采用 DPO 风格损失：
 
-4. **Pattern-Aware GRPO (P-GRPO)**:
+$$\mathcal{L}_2 = -\mathbb{E}\Big[\log\sigma\big(\beta\log\frac{\pi_\theta(s_w|q)}{\pi_{\text{SFT}}(s_w|q)} - \beta\log\frac{\pi_\theta(s_l|q)}{\pi_{\text{SFT}}(s_l|q)}\big)\Big]$$
 
-    - 功能：通过强化学习激励自适应推理深度，让模型在需要时主动使用 planning 和 reflection
-    - 核心思路：对每个 query 采样 $G=4$ 个 response，通过 pattern-aware reward 评估质量。最终奖励 $R = R_{\text{pattern}} + \lambda_1 R_{\text{ref}} \cdot \mathbb{I}(\mathcal{C}=1) + \lambda_2 R_{\text{fmt}}$
-    - **$R_{\text{pattern}}$ 的精妙设计**：答对且使用了 planning/reflection → +2.0；答对但没用高级 pattern → +1.0；答错无高级 pattern → 0.0；答错且用了 planning → -0.5；答错且用了 reflection → **-1.0**（最重惩罚，因为 reflection 是最强的 pattern，用了还错代价最大）
-    - **$R_{\text{ref}}$（反思质量奖励）**：用外部奖励模型（UnifiedReward-Qwen-3B）评估 reflection 是否引入了新视角（而非重复已有发现），仅在答案正确时给予
-    - 设计动机：与用长度奖励鼓励更长推理的方法不同，作者认为绝对推理长度不重要，重要的是"在合适的时机使用合适的思维模式"。对 overthinking 施加惩罚防止模型滥用 reflection
+与标准 DPO 只把"答错"当负样本不同，MiPO 多引入了 $s_l^\phi$ 这一"答对但推理不够好"的类别，迫使模型学会"以正确的方式答对"。消融验证了两类样本的不同角色：去掉 $s_l^\phi$ 后模型仍能答对、但推理变浅，CF -1.1%、CD -0.8%；而 $s_l^\psi$ 是偏好学习的基础，去掉它模型直接崩溃至 60.8%。
+
+**4. Pattern-Aware GRPO (P-GRPO)：用强化学习奖励"在合适时机用合适的思维模式"。**
+
+冷启动之后，P-GRPO 通过在线采样进一步激励自适应推理深度，让模型在真正需要时才主动调用 planning 和 reflection。对每个 query 采样 $G=4$ 个 response，用 pattern-aware reward 评估质量，最终奖励为：
+
+$$R = R_{\text{pattern}} + \lambda_1 R_{\text{ref}} \cdot \mathbb{I}(\mathcal{C}=1) + \lambda_2 R_{\text{fmt}}$$
+
+其中 $R_{\text{pattern}}$ 的设计最为精妙：答对且用了 planning/reflection 给 +2.0，答对但没用高级 pattern 只给 +1.0，答错且无高级 pattern 为 0.0，答错却用了 planning 罚 -0.5，答错还用了 reflection 则重罚 **-1.0**——因为 reflection 是最强的 pattern，用了还错代价最大。$R_{\text{ref}}$ 是反思质量奖励，用外部奖励模型 UnifiedReward-Qwen-3B 判断 reflection 是否引入了新视角（而非重复已有发现），且仅在答案正确时才给。与那些用长度奖励鼓励更长推理的方法不同，作者认为绝对推理长度并不重要，重要的是时机；这套递进惩罚也同时压制了 overthinking，防止模型滥用 reflection。
 
 ### 训练策略
 

@@ -1,25 +1,28 @@
 ---
 title: >-
-  AAAI2026 图像恢复方向13篇论文解读
+  AAAI2026 图像恢复方向10篇论文解读
 description: >-
-  13篇AAAI2026的图像恢复方向论文解读，涵盖图像恢复、LLM、超分辨率等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  10篇AAAI2026的图像恢复方向论文解读，涵盖图像恢复、超分辨率、对抗鲁棒、扩散模型、多模态、情感分析等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "图像恢复"
   - "论文解读"
   - "论文笔记"
-  - "LLM"
   - "超分辨率"
+  - "对抗鲁棒"
+  - "扩散模型"
+  - "多模态"
+  - "情感分析"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**🤖 AAAI2026** · **13** 篇论文解读
+**🤖 AAAI2026** · **10** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (30)](../../ICCV2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (30)](../../ICCV2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
-🔥 **高频主题：** 图像恢复 ×4 · LLM ×2 · 超分辨率 ×2
+🔥 **高频主题：** 图像恢复 ×3 · 超分辨率 ×2
 
 **[Blur-Robust Detection via Feature Restoration: An End-to-End Framework for Prior-Guided Infrared UAV Target Detection](blur-robust_detection_via_feature_restoration_an_end-to-end_framework_for_prior-.md)**
 
@@ -29,25 +32,13 @@ tags:
 
 :   首次定义并探索多天气夜间图像复原任务，构建 AllWeatherNight 数据集（8K 训练 + 1K 合成测试 + 1K 真实测试），提出 ClearNight 统一框架通过 Retinex 双先验引导和天气感知动态专一性-共性协作，一阶段同时移除雾/雨条/雨滴/雪/flare 复合退化，仅 2.84M 参数全面超越 SOTA。
 
-**[ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration](clearair_a_human-visual-perception-inspired_all-in-one_image_restoration.md)**
+**[Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation](depth-synergized_mamba_meets_memory_experts_for_all-day_image_reflection_separat.md)**
 
-:   受人类视觉感知（HVP）启发，提出一种从粗到细的统一图像复原框架 ClearAIR，通过 MLLM 质量评估 → 语义区域感知 → 退化类型识别 → 内部线索复用四阶段逐步恢复图像质量，在多种退化任务上取得 SOTA。
-
-**[Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models](hard_vs_noise_resolving_hard-noisy_sample_confusion_in_recommender_systems_via_l.md)**
-
-:   提出 LLMHNI 框架，利用 LLM 产生的语义相关性和逻辑相关性两类辅助信号，解决推荐系统中困难样本与噪声样本难以区分的问题，显著提升去噪推荐性能。
-
-**[HQ-SVC: Towards High-Quality Zero-Shot Singing Voice Conversion in Low-Resource Scenarios](hq-svc_towards_high-quality_zero-shot_singing_voice_conversion_in_low-resource_s.md)**
-
-:   提出 HQ-SVC 框架，基于解耦音频编解码器（FACodec）联合提取内容与说话人特征，结合增强语音适配模块（EVA）融合音高、能量等声学特征，通过 DDSP + 扩散模型渐进式优化，在单张 RTX 3090、不到 80 小时歌声数据条件下实现了超越大规模训练基线的零样本歌声转换质量，并附带支持语音超分辨率任务。
+:   提出 DMDNet，通过深度感知扫描策略（DAScan）引导 Mamba 关注显著结构，结合深度协同状态空间模型（DS-SSM）抑制模糊特征传播，并引入记忆专家补偿模块（MECM）利用跨图像历史知识，实现全天候（白天+夜间）的图像反射分离。
 
 **[ICLR: Inter-Chrominance and Luminance Interaction for Natural Color Restoration in Low-Light Image Enhancement](iclr_inter-chrominance_and_luminance_interaction_for_natural_color_restoration_i.md)**
 
 :   针对HVI色彩空间中色度和亮度分支分布差异大导致互补特征提取不足、以及色度分支间弱相关导致梯度冲突的问题，提出ICLR框架，通过双流交互增强模块(DIEM)和协方差校正损失(CCL)分别从融合增强和统计分布优化两个角度解决，在LOL系列数据集上取得SOTA。
-
-**[Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)**
-
-:   本文探索了解码器型LLM在极端多标签分类(XMC)中的有效利用，提出双解码器学习策略和 ViXML 多模态框架，通过结构化提示模板适配LLM embedding + 高效融合视觉元数据，在四个公共数据集上大幅超越 SOTA（最大数据集 P@1 提升 +8.21%），证明"一张图胜过数十亿参数"。
 
 **[MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model](mfmamba_a_multi-function_network_for_panchromatic_image_resolution_restoration_b.md)**
 

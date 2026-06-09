@@ -143,10 +143,10 @@ $$\min_{\boldsymbol{\zeta}} \left\{ \frac{1}{2n} \sum_{a \in \mathcal{A}} \sum_{
 ## 相关论文
 
 - [\[CVPR 2026\] FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation](../../CVPR2026/ai_safety/fedafd_multimodal_federated_learning_via_adversarial_fusion_and_distillation.md)
-- [\[ACL 2025\] Building a Long Text Privacy Policy Corpus with Multi-Class Labels](../../ACL2025/ai_safety/building_a_long_text_privacy_policy_corpus_with_multi-class_labels.md)
 - [\[ICML 2026\] Position: Machine Learning for Heart Transplant Allocation Policy Optimization Should Account for Incentives](../../ICML2026/ai_safety/position_machine_learning_for_heart_transplant_allocation_policy_optimization_sh.md)
+- [\[ACL 2025\] Building a Long Text Privacy Policy Corpus with Multi-Class Labels](../../ACL2025/ai_safety/building_a_long_text_privacy_policy_corpus_with_multi-class_labels.md)
 - [\[ECCV 2024\] Fisher Calibration for Backdoor-Robust Heterogeneous Federated Learning](../../ECCV2024/ai_safety/fisher_calibration_for_backdoor-robust_heterogeneous_federated_learning.md)
-- [\[ACL 2025\] Robust and Minimally Invasive Watermarking for EaaS](../../ACL2025/ai_safety/robust_and_minimally_invasive_watermarking_for_eaas.md)
+- [\[NeurIPS 2025\] Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](../../NeurIPS2025/ai_safety/machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
 
 </div>
 

@@ -41,26 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AnyBCQ分两部分：(1) 离线量化——从基础精度$p_L$开始greedy初始化BCQ，逐步扩展到目标精度$p_H$，每步冻结已有binary codes只优化缩放因子；(2) 在线推理——专用CUDA内核按需加载bit-plane，直接用加减法计算（无需查表），支持per-request精度选择。
+AnyBCQ的出发点是把二进制编码量化（BCQ）从固定精度推广到多精度：BCQ把权重写成若干二进制 bit-plane 的线性组合 $\hat{W} = \sum_i \alpha_i B_i$（$B_i \in \{-1,+1\}$），用 $p$ 个 bit-plane 计算恰好对应 $p$-bit 推理，这意味着「精度」天然由参与计算的 bit-plane 数量决定。整套方法分两段：离线先做一次「可增长」的量化，从基础精度 $p_L$ 出发逐级扩展到目标精度 $p_H$，每升一级都冻结已有的 binary codes、只重新拟合缩放因子，于是各精度共享同一套 bit-plane；在线则交给一个直接在 bit-plane 上做加减法的 CUDA 内核，按当前请求需要的精度加载对应数量的 plane，免去查表和转置，从而做到「一个模型、运行时按 SLO 选精度」。
 
 ### 关键设计
 
-1. **渐进式精度扩展（Progressive Precision Expansion）**
+**1. 渐进式精度扩展：让低精度和高精度共享同一套 bit-plane。**
 
-    - 功能：从2-bit BCQ起步，逐步扩展到3-bit、4-bit
-    - 核心思路：基础精度$p_L$: greedy初始化 → alternating refinement（LS求解α + BS更新B）。扩展到$p+1$: 冻结$B_1,...,B_p$ → 新bit-plane $B_{p+1} = \text{sign}(R_p)$（残差的符号）→ 仅用LS优化新精度的全部缩放因子$\{\alpha_i^{p+1}\}_{i=1}^{p+1}$
-    - 设计动机：共享binary codes大幅节省存储（binary占主导地位），LLaMA-3.1-8B从9.85GB降至4.99GB（-49%）。精度单调递增保证
+多精度量化最直接的痛点是「每个精度各存一份模型」太占内存。AnyBCQ 的做法是把高精度看成低精度的残差补充。基础精度 $p_L$ 先用 greedy 初始化得到 BCQ，再做 alternating refinement 交替优化——固定 $B$ 用最小二乘（LS）求缩放因子 $\alpha$，固定 $\alpha$ 用二分搜索（BS）更新 $B$。要从 $p$-bit 扩到 $(p{+}1)$-bit 时，已有的 $B_1,\dots,B_p$ 全部冻结不动，新增的 bit-plane 直接取当前残差的符号 $B_{p+1} = \text{sign}(R_p)$，然后只用 LS 重新优化这一精度下的全部缩放因子 $\{\alpha_i^{p+1}\}_{i=1}^{p+1}$。
 
-2. **直接bit-plane运算的CUDA内核**
+这样做有两个直接收益。一是存储：BCQ 的开销主要在 binary codes 上，缩放因子很小，各精度共享 binary 后 LLaMA-3.1-8B 的多精度模型从 9.85GB 降到 4.99GB（-49%），相当于只比单份模型大一点就装下了 2/3/4-bit 全部精度。二是精度单调：因为高精度是在低精度基础上「叠加残差 plane」，加 plane 只会让量化误差进一步减小，保证精度随 bit 数单调递增，不会出现升精度反而变差的反常情况。
 
-    - 功能：避免bit-transpose和centroid lookup
-    - 核心思路：每次加载一个bit-plane→$B_i \in \{-1,+1\}$所以GEMM退化为加减法→用LUT-GEMM缓存常见结果→乘以$\alpha_i$后累加为partial sum→p个bit-plane完成后输出
-    - 设计动机：非均匀量化需要bit-transpose(O(MKp)) + centroid lookup(O(MK))，BCQ直接计算省去这两步。低精度时内存带宽按比例减少（3-bit只加载3个plane而非4个再丢弃1个）
+**2. 直接在 bit-plane 上运算的 CUDA 内核：把精度差异变成访存和计算量的差异。**
+
+BCQ 适合多精度只是表达层面的优势，真正落到吞吐还要看推理内核。非均匀量化（Any-Precision LLM 那类 clustering 方案）在前向时必须先做 bit-transpose（约 $O(MKp)$）把权重排成可查表的布局，再做 centroid lookup（约 $O(MK)$）查出实际数值，这两步都是纯开销。AnyBCQ 的内核则逐个加载 bit-plane：由于 $B_i \in \{-1,+1\}$，与激活的 GEMM 退化成加减法，配合 LUT-GEMM 缓存常见部分和，每个 plane 算完乘上对应的 $\alpha_i$ 累加进 partial sum，凑齐 $p$ 个 plane 即得到 $p$-bit 输出。
+
+省掉 transpose 和 lookup 之外，这种「逐 plane 累加」还让低精度天然更省。访存量正比于实际加载的 plane 数——跑 3-bit 时只读 3 个 plane，而不是像定点方案那样读满 4-bit 再丢掉 1 bit，所以内存带宽按精度线性下降，这也是低精度档位能拿到更高加速的原因。
 
 ### 训练策略
-- 512序列C4校准数据，10 epochs MRE优化
-- 非对称BCQ + group-wise量化（g=128）
-- 初始化20轮alternating refinement
+- 用 512 条 C4 序列做校准数据，以最小化相对误差（MRE）为目标优化 10 个 epoch
+- 采用非对称 BCQ + group-wise 量化（group size $g=128$）
+- 基础精度初始化阶段做 20 轮 alternating refinement
 
 ## 实验关键数据
 

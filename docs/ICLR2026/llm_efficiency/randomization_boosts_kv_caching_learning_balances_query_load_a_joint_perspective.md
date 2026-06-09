@@ -39,26 +39,22 @@ tags:
 
 ## 方法详解
 
-### 统一形式化模型
-- M个worker(LLM)各配备大小为B_i的KV缓存，在线处理N个查询序列Q={q_j}
-- 服务时间Cost_{ij} = α_CACHED·h_{ij} + α_MISS·(|q_j| - h_{ij}) + O_{ij}，其中h_{ij}为缓存命中token数
-- 路由决策x_{ij}∈{0,1}决定查询分配，目标：最小化所有worker的makespan（最大累计负载）
-- 缓存状态通过UpdateCache函数更新，队列负载P_i按服务时间累加
-- 形式化揭示了LRU的理论局限：L-LRU(SGLang的叶节点LRU)竞争比为O(n)，当查询长度高度不平衡时退化严重
+### 整体框架
+论文把"缓存淘汰"和"查询路由"这两条原本各自为政的线放进同一个数学模型里：$M$ 个 worker（LLM）各带一块大小为 $B_i$ 的 KV 缓存，在线接收查询序列 $Q=\{q_j\}$，每个查询既要选一个 worker 落地、又会改变该 worker 的缓存内容和队列负载。系统优化目标是最小化所有 worker 的 makespan（最大累计负载），由此自然拆出两个子问题——单 worker 内"该淘汰谁"的随机化算法 RLT，和跨 worker"该发给谁"的学习路由 LBGR。
 
-### RLT：随机化叶节点淘汰
-- 维护标记集合T，记录已访问token；当标记数达B_i+1时清除（仅保留最新token）
-- 当缓存满且需要加载新token时，从**未标记的叶节点**中**均匀随机选择**一个淘汰
-- **理论保证**：竞争比Θ(log(B_i - L))，比L-LRU的O(n)指数级改进
-- 证明了这是所有随机化淘汰算法的最优下界（信息论最优）
+### 关键设计
 
-### LBGR：基于学习的贪心路由
-- **服务时间估计**：利用全局Radix Tree追踪各worker缓存状态，估计缓存命中token数h̃_{ij}
-- **队列负载估计**：维护P̃_i追踪每个worker负载，使用指数衰减(ρ)模拟负载随时间自然减少；查询完成后释放残余负载
-- **残差修正**：在线线性回归模型θ_i捕获环境波动带来的延迟偏差，特征向量φ包含命中数、未命中数和当前负载
-- **贪心决策**：Ê_{ij} = Cost_{ij} + P̃_i + θ_i^T·φ_{ij}，将查询路由到预测延迟最低的worker
-- **在线更新**：观测实际延迟后最小化(E_{ij} - Ê_{ij})²持续更新回归模型
-- **后台衰减线程**：每Δt时间单位对所有worker执行P̃_i ← ρ·P̃_i，避免负载估计累积失真
+**1. 统一形式化模型：把淘汰与路由耦合进一个可分析的代价函数。**
+
+现有系统（SGLang 阈值切换、NVIDIA/llm-d 静态线性评分）都靠启发式拼凑，没人能说清"把相似查询塞给同一 LLM 提命中率"和"摊平负载避免排队"这对矛盾该如何权衡。论文先把一次查询的服务时间写成可命中部分与未命中部分的加权和：$\text{Cost}_{ij} = \alpha_{\text{CACHED}}\cdot h_{ij} + \alpha_{\text{MISS}}\cdot(|q_j| - h_{ij}) + O_{ij}$，其中 $h_{ij}$ 是查询 $q_j$ 在 worker $i$ 上的命中 token 数，$O_{ij}$ 为固定开销；路由决策 $x_{ij}\in\{0,1\}$ 配合 `UpdateCache` 更新缓存状态、队列负载 $P_i$ 按服务时间累加。这套形式化的直接收益是把 LRU 的脆弱性算成了数字——SGLang 用的叶节点 LRU（L-LRU）竞争比为 $O(n)$，一旦查询长度高度不平衡，最坏情况会恰好淘汰下一个查询要用的 token，命中率崩塌。
+
+**2. RLT 随机化叶节点淘汰：用"标记+均匀随机"把竞争比从 $O(n)$ 砍到 $O(\log n)$。**
+
+确定性的 LRU 之所以脆弱，是因为对抗性的到达顺序总能精准踩中它的淘汰规则。RLT 借鉴在线算法里的 marking 思想引入随机性来打散这种最坏情况：维护一个标记集合 $T$ 记录已访问 token，标记数攒到 $B_i+1$ 时清空（只保留最新 token）；当缓存满、又要加载新 token 时，不按时间挑，而是从**未标记的叶节点**里**均匀随机**抽一个淘汰。这一点随机性让对抗者无法预测，把竞争比压到 $\Theta(\log(B_i - L))$，相比 L-LRU 的 $O(n)$ 是指数级改进；论文进一步证明这是所有随机化淘汰算法的下界，也就是信息论意义上不可再改进的最优。
+
+**3. LBGR 学习贪心路由：估计每个 worker 的真实延迟，再贪心选最低的那个。**
+
+光把单 worker 淘汰做到最优还不够，跨 worker 怎么分才是命中率与负载的真正战场。LBGR 不再用待处理查询"数量"这种粗糙指标，而是逐项估出把 $q_j$ 发给 worker $i$ 的预期延迟 $\hat{E}_{ij} = \text{Cost}_{ij} + \tilde{P}_i + \theta_i^{\top}\varphi_{ij}$，发给预测值最低的 worker。三个分量各管一件事：$\text{Cost}_{ij}$ 借全局 Radix Tree 追踪各 worker 缓存、估出命中 token 数 $\tilde{h}_{ij}$；$\tilde{P}_i$ 追踪队列负载，并用指数衰减 $\tilde{P}_i \leftarrow \rho\cdot\tilde{P}_i$ 模拟负载随时间自然消退、查询完成后释放残余负载（由后台线程每 $\Delta t$ 执行一次，避免估计累积失真）；$\theta_i^{\top}\varphi_{ij}$ 是一个在线线性回归残差项，特征 $\varphi$ 含命中数、未命中数与当前负载，专门吸收环境波动带来的偏差。每次观测到真实延迟后，模型按 $(E_{ij} - \hat{E}_{ij})^2$ 在线更新回归参数，让估计随 workload 漂移持续校准。这套"解析代价 + 衰减负载 + 回归修正"的组合避开了训练 RL 或重型预测模型的开销，却能动态贴合查询模式。
 
 ## 实验
 
@@ -131,9 +127,9 @@ tags:
 
 - [\[ICML 2026\] CriticalKV: Optimizing KV Cache Eviction from an Output Perturbation Perspective](../../ICML2026/llm_efficiency/criticalkv_optimizing_kv_cache_eviction_from_an_output_perturbation_perspective.md)
 - [\[ICLR 2026\] Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
+- [\[ICLR 2026\] Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models](deep_hierarchical_learning_with_nested_subspace_networks_for_large_language_mode.md)
 - [\[ICLR 2026\] One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning](one-prompt_strikes_back_sparse_mixture_of_experts_for_prompt-based_continual_lea.md)
 - [\[ACL 2026\] MTRouter: Cost-Aware Multi-Turn LLM Routing with History-Model Joint Embeddings](../../ACL2026/llm_efficiency/mtrouter_cost-aware_multi-turn_llm_routing_with_history-model_joint_embeddings.md)
-- [\[AAAI 2026\] Judge Q: Trainable Queries for Optimized Information Retention in KV Cache Eviction](../../AAAI2026/llm_efficiency/judge_q_trainable_queries_for_optimized_information_retention_in_kv_cache_evicti.md)
 
 </div>
 

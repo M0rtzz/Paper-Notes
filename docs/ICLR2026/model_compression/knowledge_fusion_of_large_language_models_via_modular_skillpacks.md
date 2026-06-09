@@ -43,42 +43,21 @@ tags:
 
 ### 整体框架
 
-GraftLLM的核心思想是将能力以"**目标模型 + SkillPack**"的形式存储：
-1. 通过SFT和DPO将源模型能力迁移到目标模型
-2. 提取参数增量$\Delta\theta = \theta_{tgt}^* - \theta_{tgt}$
-3. 对增量进行模块感知自适应压缩，得到紧凑的SkillPack
-4. 通过路由机制支持多SkillPack的融合和持续学习
+GraftLLM把"迁移来的能力"和"目标模型本体"解耦存储，落成"**目标模型 + SkillPack**"两件套：先用蒸馏把源模型能力学进目标模型的全参微调权重里，再把微调前后的参数增量压成一个紧凑、可插拔的 SkillPack。推理时按需把若干 SkillPack 叠加回目标模型，从而在不碰本体参数的前提下完成异构融合与持续学习。
 
 ### 关键设计
 
-1. **两阶段跨能力迁移**：
+**1. 两阶段跨能力迁移：先对齐分布、再对齐偏好。** 单靠一步蒸馏很难既补上源模型的复杂能力又稳住对齐质量，所以迁移拆成 SFT 和 DPO 两步走。SFT 阶段在源模型生成的高质量数据 $\mathcal{D}_{SFT}$ 上最小化负对数似然 $\mathcal{L}_{SFT}(\theta) = -\mathbb{E}[\log p_\theta(y_i, x_i)]$，把源、目标模型之间的输出分布差异先抹平；随后 DPO 阶段用同一源模型对同一输入产生的最优、最差回复构成偏好对 $(y_w, y_l)$，以 $\mathcal{L}_{DPO} = -\mathbb{E}[\log\sigma(\beta \log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$ 进一步把偏好对齐到源模型，最终得到既懂源能力又对齐良好的全参微调权重 $\theta_{tgt}^*$，对应增量 $\Delta\theta = \theta_{tgt}^* - \theta_{tgt}$。
 
-    - **SFT阶段**：在源模型生成的高质量数据$\mathcal{D}_{SFT}$上最小化负对数似然$\mathcal{L}_{SFT}(\theta) = -\mathbb{E}[\log p_\theta(y_i, x_i)]$，弥合源-目标模型的分布差异
-    - **DPO阶段**：构建偏好数据对$(y_w, y_l)$（同一源模型的最优和最差回复），通过DPO损失进一步对齐：$\mathcal{L}_{DPO} = -\mathbb{E}[\log\sigma(\beta \log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$
+**2. 模块感知自适应压缩：按层结构挑最划算的压缩算子。** 全参增量直接存太大，但不同模块的冗余特性差别很大，统一压缩会顾此失彼，于是对每类模块分别下手。Embedding 和 Output Head 这类对词表对齐、任务适配高度敏感的层只做幅度剪枝，保留绝对值最大的 $\alpha$ 比例权重；MLP 模块用 SVD 分解 $\Delta\theta = \mathbf{U}\Sigma\mathbf{V}^\top$ 吃掉其参数冗余；Attention 模块做低秩 SVD，只保留前 $r$ 个奇异值对应的分量。在 SVD 之上再叠一层混合精度量化：按各分量的重要性自适应分配 bit 精度 $k$，用 GPTQ 做分组量化 $\hat{\mathbf{V}}_{[r]}^\top = \text{Quant}_k(\mathbf{V}_{[r]}^\top, \mathbf{x})$，让敏感分量保高精度、冗余分量压到低 bit。最终的 SkillPack 写成 $\Delta\hat{\theta} = \{C_m(\Delta\theta_m)\}_{m \in \mathcal{M}}$，每个模块 $m$ 配一个最适配其结构的压缩算子 $C_m$，于是它既是全参微调精度的载体，又小到可以随手搬运。
 
-2. **模块感知自适应压缩（Module-Aware Adaptive Compression）**：
-   针对不同类型的参数模块采用差异化压缩策略：
-    - **Embedding和Output Head**：幅度剪枝，保留绝对值最大的$\alpha$比例权重。这些层对词表对齐和任务适配高度敏感
-    - **MLP模块**：SVD分解 $\Delta\theta_{attn} = \mathbf{U}\Sigma\mathbf{V}^\top$，利用其参数冗余特性
-    - **Attention模块**：低秩SVD分解，仅保留前$r$个奇异值对应的分量
-    - **混合精度量化**：对SVD分解后的各分量根据重要性自适应分配bit精度$k$，使用GPTQ进行分组量化：$\hat{\mathbf{V}}_{[r]}^\top = \text{Quant}_k(\mathbf{V}_{[r]}^\top, \mathbf{x})$
+**3. 路由式知识融合：把多个技能隔离在各自子模块里避免互相打架。** 传统参数融合把多个增量直接加总会引发任务间干扰，GraftLLM 改用路由把它们分而治之。多个 SkillPack 融合时按 $\theta_{fused} = \theta_{tgt} + \sum_{i=1}^{n} \mathcal{R}(\Delta\hat{\theta}_i)$ 叠加，路由函数 $\mathcal{R}$ 依据源模型或任务类型把每个 SkillPack 分派到对应子模块，不同技能落在不同位置而非搅在一起，从而绕开 Task Arithmetic、TIES 这类方法的参数冲突瓶颈。
 
-3. **SkillPack的生成**：
-   最终的SkillPack $\Delta\hat{\theta} = \{C_m(\Delta\theta_m)\}_{m \in \mathcal{M}}$ 是一个紧凑的、可迁移的知识载体，每个模块$m$使用最适合其结构特性的压缩算子$C_m$。
+**4. 模块化持续学习：按需激活、即插即用。** 因为本体参数始终不动、能力都封装在独立 SkillPack 里，持续学习就变成对 SkillPack 的增删而非对权重的覆盖。每个任务 $t$ 只激活与之相关的子集 $\mathcal{S}_t$，按 $\theta_t = \theta_{tgt} + \sum_{\Delta\hat{\theta}_i \in \mathcal{S}_t} \mathcal{R}(\Delta\hat{\theta}_i)$ 拼出当前模型，新增技能不触碰旧技能，天然规避灾难性遗忘；反过来随时卸载某个 SkillPack，又能实现"反学习"或去毒化。
 
-4. **知识融合与持续学习**：
+### 损失函数 / 训练策略
 
-    - **多SkillPack融合**：$\theta_{fused} = \theta_{tgt} + \sum_{i=1}^{n} \mathcal{R}(\Delta\hat{\theta}_i)$，其中路由函数$\mathcal{R}$根据源模型或任务类型动态分配SkillPack到对应子模块
-    - **持续学习**：任务自适应激活机制，每个任务$t$仅激活对应子集$\mathcal{S}_t$：$\theta_t = \theta_{tgt} + \sum_{\Delta\hat{\theta}_i \in \mathcal{S}_t} \mathcal{R}(\Delta\hat{\theta}_i)$
-    - 即插即用范式：可随时卸载SkillPack实现"反学习"或去毒化
-
-### 训练策略
-
-- 目标模型：Llama-3.1-8B-Instruct
-- 源模型：Gemma-2-27B-it、Mistral-Large-Instruct、Qwen-2.5-72B-Instruct、Llama-3.1-70B-Instruct
-- 显式融合：FuseChat 2.0设置（OpenChat-3.5-7B为pivot，6个chat模型为源）
-- 隐式融合：FuseChat 3.0设置（Llama-3.1-8B-I 和 Qwen-2.5-7B-I 为目标）
-- 持续学习：Llama-3.1-8B-I 顺序学习数学→编程能力
+目标模型为 Llama-3.1-8B-Instruct，源模型涵盖 Gemma-2-27B-it、Mistral-Large-Instruct、Qwen-2.5-72B-Instruct、Llama-3.1-70B-Instruct 等大尺度异构模型。显式融合沿用 FuseChat 2.0 设置（OpenChat-3.5-7B 为 pivot、6 个 chat 模型为源），隐式融合沿用 FuseChat 3.0 设置（Llama-3.1-8B-I 与 Qwen-2.5-7B-I 为目标）；持续学习场景让 Llama-3.1-8B-I 顺序学习数学→编程能力，以检验模块化隔离对遗忘的抑制效果。
 
 ## 实验关键数据
 

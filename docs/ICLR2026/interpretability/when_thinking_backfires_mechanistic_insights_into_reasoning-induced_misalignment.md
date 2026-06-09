@@ -45,29 +45,29 @@ tags:
 
 ### 关键设计
 
-1. **推理诱导失对齐（RIM）的系统验证**:
+**1. 推理诱导失对齐（RIM）的系统验证：先把现象坐实，再找致病的推理模式。**
 
-    - 功能：在 8 个模型（dense + MoE）× 多种设置下验证 CoT 启用 / 数学微调导致失对齐加剧
-    - 核心发现：Qwen3-4B Think 模式下失对齐率 22.94%（关闭时 15.39%）；GSM8k 微调后 dense 模型平均失对齐率增加 6.51%
-    - 关键洞察："省力推理模式"（Effort-Minimizing Reasoning Patterns）是罪魁祸首——确认性推理（不重新评估就确认初始答案）、启发式依赖（偏向熟悉选项）、指令偏离（部分遵从）。这些模式同时出现在数学和安全任务中
+在动手做机制分析之前，作者先在 8 个模型（dense + MoE）上跨多种设置确认 RIM 不是个例：开启 CoT 或做数学微调都会让失对齐加剧。Qwen3-4B 在 Think 模式下失对齐率达 22.94%，关闭时只有 15.39%；dense 模型在 GSM8k 微调后平均失对齐率增加 6.51%。更关键的是把"罪魁"定位到一类**省力推理模式**（Effort-Minimizing Reasoning Patterns）——确认性推理（不重新评估就确认初始答案）、启发式依赖（偏向熟悉选项）、指令偏离（只部分遵从）。这三种模式在数学任务和安全任务里同时出现，说明削弱安全的并不是"推理"这个动作本身，而是模型为了省力学到的这套走捷径的推理习惯。
 
-2. **推理时机制：拒绝注意力头 (Refusal Attention Heads)**:
+**2. 推理时机制：拒绝注意力头（Refusal Attention Heads）被 CoT 抢走了注意力。**
 
-    - 功能：识别特定注意力头，它们在无 CoT 模式下将注意力集中在 `<think></think>` 之间的空区域，触发拒绝行为
-    - 核心思路：用 steering vector probing 发现，非 CoT token 区域（尤其是 `<im_end>` 和 think 标签间的空 token）对拒绝行为至关重要。拒绝头在 CoT 模式下将注意力从这些区域转移到 CoT 内容上，削弱了拒绝能力
-    - 设计动机/验证：消融实验证实——移除拒绝注意力头后拒绝率显著下降，效果远超随机移除
+要解释为什么开了 CoT 反而更不安全，作者从注意力层面入手，用 steering vector probing 发现一个反直觉的事实：非 CoT 的 token 区域——尤其是 `<im_end>` 以及 `<think></think>` 标签之间那段空 token——对触发拒绝行为至关重要。存在一组特定的"拒绝注意力头"，在无 CoT 模式下会把注意力集中到这些空区域上，从而触发拒绝。一旦开启 CoT，这些头就把注意力从空区域转移到 CoT 内容上，拒绝能力随之被削弱。消融实验进一步坐实了它们的因果作用：移除这些拒绝注意力头后拒绝率显著下降，效果远超随机移除同等数量的头。
 
-3. **训练时机制：安全关键神经元识别与因果干预**:
+**3. 训练时机制：安全关键神经元识别与因果干预，证明安全和推理共用一套神经元。**
 
-    - 功能：通过反事实对（有害请求 vs 改写后明确拒绝版本）识别与拒绝行为最相关的 MLP 神经元
-    - 核心思路：$\mathcal{A}_{\text{safe}} = \bigcap_{k=1}^{K} \text{Top-}m_j(f(a_j; \tilde{\mathcal{D}}^{(k)}) - f(a_j; \mathcal{D}^{(k)}))$
-    - 因果验证：将安全关键神经元激活置零→失对齐率增加 13.26%（随机神经元仅-2.19%）；**同时数学准确率下降 18.19%**——远超随机干预的-7.32%，直接证明推理和安全共享神经元资源
+推理时分析回答了"CoT 怎么削弱拒绝"，训练时分析则要回答"数学微调为什么会顺带损伤安全"。作者用反事实对（有害请求 vs 改写成明确拒绝的版本）定位与拒绝行为最相关的 MLP 神经元，取多组反事实数据上激活差异的 Top-$m_j$ 神经元交集作为安全关键神经元集合：
 
-4. **RAS 指标 (Reciprocal Activation Shift)**:
+$$\mathcal{A}_{\text{safe}} = \bigcap_{k=1}^{K} \text{Top-}m_j\big(f(a_j; \tilde{\mathcal{D}}^{(k)}) - f(a_j; \mathcal{D}^{(k)})\big)$$
 
-    - 功能：量化微调前后安全激活缩减与推理激活增长的纠缠程度
-    - 核心思路：$\text{RAS} = \frac{2 \cdot \delta_{\text{Safe}}^{-} \cdot \delta_{\tau}^{+}}{\delta_{\text{Safe}}^{-} + \delta_{\tau}^{+}}$，是安全能力损失和推理能力增益的调和均值。RAS 越高说明安全→推理的"资源转移"越严重
-    - 设计动机：现有灾难性遗忘指标（权重级、激活级、分布级）不能捕捉**安全与推理之间的特异性纠缠**
+把这批神经元的激活置零后，失对齐率增加 13.26%（置零随机神经元仅 -2.19%），证明它们确实承载安全功能；而同一次干预下**数学准确率也下降了 18.19%**，远超随机干预的 -7.32%。安全神经元一动、数学能力跟着塌，这正是推理和安全共享同一套神经元资源的直接证据。
+
+**4. RAS 指标（Reciprocal Activation Shift）：用一个数刻画"安全让位给推理"的纠缠程度。**
+
+有了"共享资源"的证据，还需要一个能量化纠缠强度的指标。现有的灾难性遗忘指标（权重级、激活级、分布级）只能说明能力整体退化了多少，却捕捉不到**安全与推理之间这种特异性的此消彼长**。RAS 把微调前后安全激活的缩减量 $\delta_{\text{Safe}}^{-}$ 和推理激活的增长量 $\delta_{\tau}^{+}$ 取调和均值：
+
+$$\text{RAS} = \frac{2 \cdot \delta_{\text{Safe}}^{-} \cdot \delta_{\tau}^{+}}{\delta_{\text{Safe}}^{-} + \delta_{\tau}^{+}}$$
+
+只有当安全在缩、推理在涨且两者都明显时 RAS 才高，因此 RAS 越高就说明"安全资源被转移去支撑推理"越严重——它把前面定性观察到的纠缠，变成了一个可跨模型横向比较的标量。
 
 ### 损失函数 / 训练策略
 本文是分析性工作，不提出新训练方法。微调使用标准 SFT 在 GSM8K/MATH500/MATH401 上进行。
@@ -132,11 +132,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
 - [\[NeurIPS 2025\] Base Models Know How to Reason, Thinking Models Learn When](../../NeurIPS2025/interpretability/base_models_know_how_to_reason_thinking_models_learn_when.md)
 - [\[ICLR 2026\] Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
 - [\[ICLR 2026\] When Machine Learning Gets Personal: Evaluating Prediction and Explanation](when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
 - [\[ICLR 2026\] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
+- [\[ICLR 2026\] Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
 
 </div>
 

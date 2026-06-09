@@ -44,37 +44,21 @@ tags:
 
 ## 方法详解
 
-### 整体架构
+### 整体框架
 
-T1包含三个模块：Mask-Aware Embedding → N个T1 Block → Reconstruction Upsampler。
-
-**Mask-Aware Embedding**：对每个变量$x^{(m)}$先做仅基于观测值的instance normalization（均值/方差仅从$\Omega_{m,t}=1$处计算），然后将归一化序列与观测掩码拼为2通道输入$[x_{\text{norm}}^{(m)}; \Omega^{(m)}] \in \mathbb{R}^{2 \times T}$，经strided 1D Conv（C个滤波器）降采样到$z^{(m)} \in \mathbb{R}^{C \times L}$，再加上可学习的变量编码$E_{\text{var}}^{(m)}$。这样模型从一开始就知道哪些位置是缺失的。
-
-**T1 Block**：每个Block包含三部分——
-
-1. **Temporal Convolutional QKV Projection**：用**所有变量共享权重**的Depthwise Conv为每个变量的每个通道独立提取时序特征。采用大小两种kernel并行（多尺度分析），生成Q/K/V：
-
-$$Q_{m,c} = \text{DWConv}_{\text{large},Q}(Z_{m,c}) + \text{DWConv}_{\text{small},Q}(Z_{m,c})$$
-
-关键点：共享权重保证第$c$个通道在所有变量上提取**同一类型**的时序模式（如第3个通道总是捕捉周期性），为后续按通道做跨变量注意力提供语义对齐基础。
-
-2. **CHead Attention（核心创新）**：设注意力头数$n_h = C$（等于CNN通道数），第$c$个头仅处理所有变量的第$c$个通道：
-
-$$O_c = \text{Softmax}\left(\frac{Q_c K_c^T}{\sqrt{L}}\right) V_c, \quad Q_c, K_c, V_c \in \mathbb{R}^{M \times L}$$
-
-输出拼接后经pointwise conv + LayerNorm + 残差连接。这样每个信息传递通道只传递一种特征，当某个变量的第$c$个通道因缺失无法提取有效模式时，该通道特征较弱→对应注意力头自然给该变量低权重→不会污染其他通道的传递。
-
-3. **Convolutional FFN**：用pointwise conv实现的inverted bottleneck（而非线性层），保持时序位置独立处理的同时实现通道间非线性交互。经过堆叠的T1 Block，FFN混合后的特征形成新的通道表示供下一层使用。
-
-**Reconstruction Upsampler**：用1D PixelShuffle（无参数，从$\mathbb{R}^{M \times C \times L}$重排为$\mathbb{R}^{M \times (C/r) \times (L \cdot r)}$，$r=T/L$）恢复原始时间分辨率，避免转置卷积的棋盘格伪影。最后经pointwise conv投影到目标维度并反归一化。
+T1是CNN-Transformer混合架构，由Mask-Aware Embedding、N个堆叠的T1 Block、Reconstruction Upsampler三段构成：输入序列先做仅基于观测值的归一化并与观测掩码拼成2通道、经strided卷积降采样为$C$通道隐表示，再通过若干T1 Block完成"共享卷积提时序特征 → 通道-头绑定做跨变量传递 → 卷积FFN混合"的循环，最后用无参数的1D PixelShuffle还原时间分辨率并反归一化输出。整套设计的要点在于让CNN负责从稀疏观测中鲁棒地提取时序特征、让Transformer负责动态的跨变量信息传递，而两者通过"CNN通道与注意力头一对一绑定"实现特征级的精确对接，从而把被缺失污染的通道隔离开来。
 
 ### 关键设计
 
-1. **通道-头一对一绑定**：传统多头注意力中每个头处理混合特征的子空间，T1让$n_h = C$且第$k$个头严格对应第$k$个CNN通道。这提供了特征级的隔离——被缺失污染的通道不会连累其他通道，实现"选择性信息传递"。
+**1. 共享 Depthwise Conv：为按通道做跨变量注意力提供语义对齐。** 朴素地把CNN提取的多通道特征concat进注意力，会让不同通道在头内混合、语义错位，后续按通道传递就失去意义。T1的每个Block第一步改用**所有变量共享权重**的Depthwise Conv，为每个变量的每个通道独立提取时序特征，并以大、小两种kernel并行做多尺度分析生成Q/K/V：$$Q_{m,c} = \text{DWConv}_{\text{large},Q}(Z_{m,c}) + \text{DWConv}_{\text{small},Q}(Z_{m,c})$$ 共享权重保证第$c$个通道在所有变量上提取的是**同一类型**的时序模式（例如第3个通道总是捕捉周期性），于是不同变量的第$c$个通道天然语义对齐——这正是下一步按通道做跨变量注意力能成立的前提。
 
-2. **共享Depthwise Conv的语义对齐**：所有变量共享同一组卷积核，保证同一通道在不同变量上提取语义一致的特征。这是CHead Attention能工作的前提——只有语义对齐的特征之间的跨变量注意力才有意义。
+**2. CHead Attention：通道-头一对一绑定实现选择性信息传递。** 这是T1的核心创新，也是回答"如何让缺失污染的通道不连累可靠通道"的关键。传统多头注意力每个头处理混合特征的子空间；T1令注意力头数$n_h = C$恰好等于CNN通道数，第$c$个头**只**处理所有变量的第$c$个通道：$$O_c = \text{Softmax}\!\left(\frac{Q_c K_c^T}{\sqrt{L}}\right) V_c, \quad Q_c, K_c, V_c \in \mathbb{R}^{M \times L}$$ 各头输出拼接后再过pointwise conv、LayerNorm与残差连接。由于每条信息通道只传递一种特征，当某个变量的第$c$个通道因缺失提取不到有效模式时，该通道特征自然偏弱，对应注意力头便给它低权重，污染被锁在单一通道内而不会扩散到其他特征。这种特征级隔离让"选择性信息传递"无需任何显式缺失处理就自动发生。
 
-3. **掩码感知+无显式缺失处理**：通过在embedding层显式输入掩码，模型知道缺失位置；但在后续处理中不做任何显式的缺失处理（如mask attention），而是完全依赖CHead Attention的自适应降权机制。这种"隐式处理"更鲁棒，因为它不依赖于对缺失模式的先验假设。
+**3. 掩码感知嵌入 + 无显式缺失处理：用结构而非规则应对缺失。** 显式的mask attention或缺失率条件都依赖对缺失模式的先验假设，换一种缺失方式就可能失效。T1只在embedding层把信息交代清楚：对每个变量$x^{(m)}$先做**仅从观测位置**（$\Omega_{m,t}=1$）估计均值方差的instance normalization，再把归一化序列与观测掩码拼成2通道输入$[x_{\text{norm}}^{(m)}; \Omega^{(m)}] \in \mathbb{R}^{2 \times T}$，经$C$个滤波器的strided 1D Conv降采样到$z^{(m)} \in \mathbb{R}^{C \times L}$并叠加可学习变量编码$E_{\text{var}}^{(m)}$。此后整个网络不再对缺失位置做任何特殊处理，全靠CHead Attention的自适应降权来兜底。重建端则用1D PixelShuffle（无参数，从$\mathbb{R}^{M \times C \times L}$重排为$\mathbb{R}^{M \times (C/r) \times (L \cdot r)}$，$r=T/L$）还原分辨率，避开转置卷积的棋盘格伪影。这种"结构性"方案不绑定任何缺失先验，因此对点缺失、block缺失和自然缺失都能泛化。
+
+### 损失函数 / 训练策略
+
+T1以随机掩码自监督训练：训练时统一对输入施加40%的随机缺失并在被遮位置上回归重建。得益于不依赖缺失先验的结构设计，模型在40%缺失下训练后可直接泛化到10%–70%等不同缺失率而无需重训，且所有11个数据集共用同一套超参，无需逐数据集调参。
 
 ## 实验关键数据
 
@@ -175,9 +159,9 @@ T1平均MSE 0.027，比第二名PatchTST (0.050) 降低**46%**，比专用填充
 
 - [\[ICLR 2026\] CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time_se.md)
 - [\[NeurIPS 2025\] Channel Matters: Estimating Channel Influence for Multivariate Time Series](../../NeurIPS2025/time_series/channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
-- [\[ICLR 2026\] Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
 - [\[ICML 2026\] HELIX: Hybrid Encoding with Learnable Identity and Cross-dimensional Synthesis for Time Series Imputation](../../ICML2026/time_series/helix_hybrid_encoding_with_learnable_identity_and_cross-dimensional_synthesis_fo.md)
-- [\[ICLR 2026\] Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [\[ICLR 2026\] Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
+- [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
 
 </div>
 

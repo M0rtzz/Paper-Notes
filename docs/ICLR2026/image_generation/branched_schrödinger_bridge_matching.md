@@ -39,41 +39,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BranchSBM 的整体架构采用四阶段训练策略：
-- **输入**：初始分布 $\pi_0$ 和 $K+1$ 个目标分布 $\{\pi_{1,k}\}_{k=0}^{K}$
-- **参数化**：每个分支 $k$ 有独立的速度网络 $u_{t,k}^\theta$ 和增长网络 $g_{t,k}^\phi$
-- **输出**：学习到的分支轨迹——从初始分布出发，质量随时间在不同分支间重新分配
+BranchSBM 要学的是「一个起点分叉到多个终点」的轨迹：给定初始分布 $\pi_0$ 和 $K+1$ 个目标分布 $\{\pi_{1,k}\}_{k=0}^{K}$，单分支 SBM 只能拟合一条路径、面对多模态终态会坍缩。它的核心做法是为每个分支 $k$ 配一套独立的速度网络 $u_{t,k}^\theta$（决定这条分支往哪走）和增长网络 $g_{t,k}^\phi$（决定有多少质量流到这条分支），再用分阶段训练把二者解耦学出，最终得到一族从同一起点出发、质量随时间在分支间重分配、分别流向各目标分布的分支轨迹。
 
 ### 关键设计
-1. **非平衡条件随机最优控制（Unbalanced CondSOC）**：
 
-    - 功能：扩展标准 GSB 问题，引入时间依赖的权重 $w_t(X_t)$，其由增长率 $g_t(X_t)$ 驱动
-    - 核心思路：通过引入"增长率"概念，使得质量可以在不同分支间流动——主分支的质量随时间转移到次要分支
-    - 设计动机：标准 SBM 假设质量守恒（所有质量从初始到终态一一对应），但分支场景中需要质量分叉——初始的统一群体需要"分裂"到多个目标
-    - **Proposition 1**：证明了 Unbalanced GSB 问题可以通过条件化端点对来高效求解
+**1. 非平衡条件随机最优控制（Unbalanced CondSOC）：让质量能在分支间流动。**
 
-2. **分支广义 Schrödinger 桥问题**：
+标准 SBM 假设质量守恒——初始的每一份质量都一一对应地走到终态，这正是它处理不了分支的根本原因：一个统一的群体没法在守恒约束下「分裂」成多个目标。BranchSBM 在标准 GSB 问题上引入一个时间依赖的权重 $w_t(X_t)$，它由增长率 $g_t(X_t)$ 驱动，使得主分支的质量可以随时间转移到次要分支，从而把「分叉」这件事变成可建模的连续过程。**Proposition 1** 进一步证明，这个 Unbalanced GSB 问题可以通过条件化端点对来高效求解，把一个群体级的优化问题拆成可采样的条件子问题。
 
-    - 将分支 GSB 问题形式化为多个 Unbalanced GSB 问题之和
-    - 主分支（$k=0$）初始权重为 1，$K$ 个次要分支初始权重为 0
-    - 质量守恒约束：$\sum_{k=0}^{K} w_{t,k} = 1$ 对所有时间 $t$ 成立
-    - **Proposition 2**：证明了分支 CondSOC 问题可以分解为独立的分支子问题
+**2. 分支广义 Schrödinger 桥问题：把多分支写成多个非平衡子问题之和。**
 
-3. **四阶段训练策略**：
+有了 Unbalanced CondSOC 这块积木，BranchSBM 把整个分支 GSB 问题形式化为多个 Unbalanced GSB 问题之和：主分支（$k=0$）初始权重为 1，$K$ 个次要分支初始权重为 0，整个过程满足质量守恒约束 $\sum_{k=0}^{K} w_{t,k} = 1$ 对所有时间 $t$ 成立——即任意时刻所有分支的质量加起来恒为 1，质量只在分支间挪动而不凭空增减。**Proposition 2** 证明了这个分支 CondSOC 问题可以分解为独立的分支子问题，于是每个分支可以分别训练，避免了直接求解高维耦合问题。
 
-    - **Stage 1：神经插值优化**：训练插值网络 $\varphi_{t,\eta}(\mathbf{x}_0, \mathbf{x}_{1,k})$，学习在状态代价 $V_t(X_t)$ 下能量最优的条件路径。使用轨迹损失 $\mathcal{L}_{\text{traj}}$ 最小化路径的动能和势能
-    - **Stage 2：条件流匹配**：训练每个分支的漂移网络 $u_{t,k}^\theta$，使其匹配 Stage 1 学到的条件速度场。使用标准 CFM 损失 $\mathcal{L}_{\text{flow}}$
-    - **Stage 3：增长网络训练**：固定漂移网络参数，训练增长网络 $g_{t,k}^\phi$，优化综合损失包括：
-        - 分支能量损失 $\mathcal{L}_{\text{energy}}$：优化分支间的能量分配
-        - 权重匹配损失 $\mathcal{L}_{\text{match}}$：确保终态权重匹配目标分布的比例
-        - 质量守恒损失 $\mathcal{L}_{\text{mass}}$：强制所有分支权重之和守恒
-    - **Stage 4：联合微调**：解冻所有参数，联合训练漂移和增长网络，加入重建损失 $\mathcal{L}_{\text{recons}}$
+**3. 四阶段训练策略：把漂移学习和增长学习解耦，逐步逼近最优。**
 
-4. **理论保证**：
+由于直接联合优化漂移场和增长率很困难，BranchSBM 把训练拆成四步逐级推进。Stage 1 是神经插值优化：训练插值网络 $\varphi_{t,\eta}(\mathbf{x}_0, \mathbf{x}_{1,k})$，在状态代价 $V_t(X_t)$ 下学能量最优的条件路径，用轨迹损失 $\mathcal{L}_{\text{traj}}$ 最小化路径的动能和势能。Stage 2 是条件流匹配：训练每个分支的漂移网络 $u_{t,k}^\theta$ 去匹配 Stage 1 学到的条件速度场，用标准 CFM 损失 $\mathcal{L}_{\text{flow}}$。Stage 3 固定漂移网络、单独训练增长网络 $g_{t,k}^\phi$，优化一个综合损失：分支能量损失 $\mathcal{L}_{\text{energy}}$ 优化分支间的能量分配，权重匹配损失 $\mathcal{L}_{\text{match}}$ 确保终态权重匹配目标分布的比例，质量守恒损失 $\mathcal{L}_{\text{mass}}$ 强制所有分支权重之和守恒。Stage 4 再解冻所有参数联合微调漂移和增长网络，并加入重建损失 $\mathcal{L}_{\text{recons}}$ 收尾。先单独把漂移学准、再单独把质量分配学准、最后联合打磨，避开了一上来就联合优化的不稳定。
 
-    - **Proposition 3**：证明 Stage 1+2 训练得到解 GSB 问题的最优漂移
-    - **Proposition 4**：证明最优增长函数的存在性（通过变分法的直接方法）
-    - **Lemma 2**：证明次要分支的最优增长率是非减的（即质量只从主分支流出，不回流）
+**4. 理论保证：从最优性到质量单向流动的完整证明链。**
+
+BranchSBM 给上述设计配了一组定理来兜底。**Proposition 3** 证明 Stage 1+2 训练得到的就是 GSB 问题的最优漂移，说明前两阶段的解耦不损失最优性；**Proposition 4** 通过变分法的直接方法证明了最优增长函数的存在性；**Lemma 2** 则证明次要分支的最优增长率是非减的——也就是质量只会从主分支流出、不会回流，这与「群体从单一起点逐步分化、不可逆」的直觉一致。
 
 ### 损失函数 / 训练策略
 - Stage 1 使用 Adam 优化器，lr=1e-4
@@ -149,8 +133,8 @@ BranchSBM 的整体架构采用四阶段训练策略：
 ## 相关论文
 
 - [\[NeurIPS 2025\] Schrödinger Bridge Matching for Tree-Structured Costs and Entropic Wasserstein Barycentres](../../NeurIPS2025/image_generation/schrödinger_bridge_matching_for_tree-structured_costs_and_entropic_wasserstein_b.md)
-- [\[ICLR 2026\] Contact Wasserstein Geodesics for Non-Conservative Schrödinger Bridges](contact_wasserstein_geodesics_for_non-conservative_schrödinger_bridges.md)
 - [\[NeurIPS 2025\] Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions](../../NeurIPS2025/image_generation/dynamic_diffusion_schrödinger_bridge_in_astrophysical_observational_inversions.md)
+- [\[NeurIPS 2025\] Grasp2Grasp: Vision-Based Dexterous Grasp Translation via Schrödinger Bridges](../../NeurIPS2025/image_generation/grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)
 - [\[ICML 2026\] Geometry-based Schrödinger Bridges for Trustworthy Multimodal Fusion](../../ICML2026/image_generation/geometry-based_schrödinger_bridges_for_trustworthy_multimodal_fusion.md)
 - [\[ICLR 2026\] SeMoBridge: Semantic Modality Bridge for Efficient Few-Shot Adaptation of CLIP](semobridge_semantic_modality_bridge_for_efficient_few-shot_adaptation_of_clip.md)
 

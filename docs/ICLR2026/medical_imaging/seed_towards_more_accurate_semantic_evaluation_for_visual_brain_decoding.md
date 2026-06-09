@@ -29,44 +29,18 @@ tags:
 
 ## 方法详解
 
-### 整体框架：受人类视觉注意力启发
-人类视觉注意力是两阶段过程：
-- **第一阶段**：并行处理基本特征（颜色、方向、亮度）→ 对应 EffNet 等卷积模型
-- **第二阶段**：聚焦注意力绑定特征为连贯物体 → 现有指标缺失此阶段
+### 整体框架
+SEED 的设计灵感来自人类视觉注意力的两阶段机制：第一阶段并行处理颜色、方向、亮度等基本特征，第二阶段把这些特征绑定成连贯物体。现有指标大多只覆盖第一阶段的全局特征，缺失了物体层面的语义判断，于是 SEED 把三个互补指标——物体级的 Object F1、描述级的 Cap-Sim、全局结构级的 EffNet——做等权平均，让评估同时覆盖"看到什么物体"和"画面整体像不像"两个层面。
 
-SEED 集成三个互补指标模拟完整视觉感知：
+### 关键设计
 
-### 指标 1：Object F1（模拟物体导向注意力）
-使用开放词汇图像 grounding 模型（MM-Grounding-DINO）检测 82 类物体：
+**1. Object F1：用开放词汇检测对齐关键物体。** 重建图像最致命的错误往往是物体类别变了（泰迪熊变成猫），但现有的全局特征指标对这种错误几乎不敏感。SEED 用开放词汇 grounding 模型 MM-Grounding-DINO 在真实图与重建图上各检测 82 类物体，再比较两者识别到的类别集合。给定检测阈值 $t$，召回率为共有类别数除以真实图类别数 $\text{Object Recall}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{GT}|}$，精确率为共有类别数除以重建图类别数 $\text{Object Precision}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{recon}|}$。为了避免人为选定一个检测阈值，作者让 $t$ 从 0 滑到截断值并对结果取平均，最终取两者的调和平均 $\text{Object F1} = \frac{2}{\text{Object Recall}^{-1} + \text{Object Precision}^{-1}}$，直接度量关键物体是否被正确重建出来。
 
-$$\text{Object Recall}_t = \frac{\text{GT 和重建中共有的类别数}}{\text{GT 中的类别数}}$$
+**2. Cap-Sim：用图像描述捕获物体属性与场景语义。** 只看物体类别会漏掉姿态、颜色、背景这些更细的语义，而这些恰恰是人类一眼能感知的相似度。SEED 先用图像标注模型 GIT 给真实图和重建图各生成一段文字描述，再用 Sentence Transformer 把两段描述编码后算余弦相似度 $\text{Cap-Sim} = \cos\big(e_{\text{text}}(c(I_{GT})),\, e_{\text{text}}(c(I_{recon}))\big)$，其中 $c$ 是 GIT 标注、$e_{\text{text}}$ 是文本编码器。这个"先翻译成语言再比较"的思路出奇地简单却此前无人尝试，它把图像相似度问题转到语言空间，自然吸纳了 Object F1 遗漏的属性和上下文信息。
 
-$$\text{Object Precision}_t = \frac{\text{GT 和重建中共有的类别数}}{\text{重建中的类别数}}$$
+**3. EffNet：保留全局结构相关性。** 前两个指标偏重高层语义，但场景的整体布局、纹理结构同样影响感知。SEED 保留了现有最强的单一指标 EffNet：用 ImageNet 预训练的 EfficientNet 分别提取两图的图像特征再算相关系数 $\overline{\text{EffNet}} = \text{corr}\big(e_{\text{img}}(I_{GT}),\, e_{\text{img}}(I_{recon})\big)$，对应视觉注意力第一阶段的全局特征处理，补足语义指标之外的结构维度。三者最终等权融合成 $\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet}}}{3}$，让单一分数同时反映关键物体存在性、高层语义细节和全局结构。
 
-通过阈值 $t$ 从 0 到截断值滑动取平均，消除阈值超参：
-$$\text{Object F1} = \frac{2}{\text{Object Recall}^{-1} + \text{Object Precision}^{-1}}$$
-
-### 指标 2：Cap-Sim（模拟特征绑定过程）
-用图像标注模型（GIT）生成描述，再比较描述的语义相似度：
-
-$$\text{Cap-Sim} = \cos(e_{\text{text}}(c(I_{GT})), e_{\text{text}}(c(I_{recon})))$$
-
-其中 $e_{\text{text}}$ 用 Sentence Transformer，$c$ 用 GIT。捕获物体属性（姿态、颜色）、背景等 Object F1 遗漏的语义。
-
-### 指标 3：EffNet（捕获全局结构）
-$$\overline{\text{EffNet}} = \text{corr}(e_{\text{img}}(I_{GT}), e_{\text{img}}(I_{recon}))$$
-
-使用 ImageNet 预训练 EfficientNet，捕获更全局和结构性的场景特征。
-
-### SEED 组合
-$$\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet}}}{3}$$
-
-三个指标互补：Object F1 检查关键物体存在性，Cap-Sim 捕获高层语义细节，EffNet 捕获全局结构。
-
-### 人类评估数据收集
-- 22 名评估者对 1,000 对 GT-重建图像对进行 5 分 Likert 量表评分
-- ICC(2, n) = 0.84 (p=0)，表明高度评估者间一致性
-- 数据开源发布
+**4. 人类评估基准：用真人打分校准指标。** 一个评估指标好不好，最终要看它和人类直觉对不对得上，因此作者专门采集了一套人类评估数据作为校准基准。22 名评估者对 1,000 对真实图—重建图按 5 分 Likert 量表打分，组内相关系数 ICC(2, n) = 0.84（p=0）表明评估者之间高度一致，这套数据随论文开源，既用来验证 SEED 与人类判断的对齐度，也为后续研究提供了统一的对照标准。
 
 ## 实验关键数据
 
@@ -138,9 +112,9 @@ $$\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet
 
 - [\[ICLR 2026\] COMPASS: Robust Feature Conformal Prediction for Medical Segmentation Metrics](compass_robust_feature_conformal_prediction_for_medical_segmentation_metrics.md)
 - [\[CVPR 2025\] Multi-Resolution Pathology-Language Pre-training Model with Text-Guided Visual Representation](../../CVPR2025/medical_imaging/multi-resolution_pathology-language_pre-training_model_with_text-guided_visual_r.md)
-- [\[ACL 2025\] MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA](../../ACL2025/medical_imaging/medbiorag_semantic_search_and_retrieval-augmented_generation_for_biomedical_lite.md)
 - [\[AAAI 2026\] FaNe: Towards Fine-Grained Cross-Modal Contrast with False-Negative Reduction and Text-Conditioned Sparse Attention](../../AAAI2026/medical_imaging/fane_towards_fine-grained_cross-modal_contrast_with_false-negative_reduction_and.md)
-- [\[AAAI 2026\] Hierarchical Schedule Optimization for Fast and Robust Diffusion Model Sampling](../../AAAI2026/medical_imaging/hierarchical_schedule_optimization_for_fast_and_robust_diffusion_model_sampling.md)
+- [\[AAAI 2026\] GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation](../../AAAI2026/medical_imaging/guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen.md)
+- [\[AAAI 2026\] Small but Mighty: Dynamic Wavelet Expert-Guided Fine-Tuning of Large-Scale Models for Optical Remote Sensing Object Segmentation](../../AAAI2026/medical_imaging/small_but_mighty_dynamic_wavelet_expert-guided_fine-tuning_of_large-scale_models.md)
 
 </div>
 

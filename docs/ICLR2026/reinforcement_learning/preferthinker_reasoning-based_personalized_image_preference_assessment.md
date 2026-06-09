@@ -36,40 +36,16 @@ tags:
 
 ## 方法详解
 
-### 整体框架：Predict-then-Assess 范式
-给定用户的个性化参考图像（喜欢/不喜欢）和两张候选图像，PreferThinker 通过两阶段 CoT 推理：
-1. **Profile Prediction**：根据参考图像预测用户的视觉偏好画像和非偏好画像
-2. **Multi-dimensional Assessment**：基于预测画像对候选图像进行多维可解释评分，得出最终结果
+### 整体框架
+PreferThinker 把个性化偏好评估拆成 predict-then-assess 两步 CoT 推理：先根据用户的喜欢/不喜欢参考图像预测出一份「视觉偏好画像」与对应的非偏好画像，再以这份画像为依据对两张候选图像逐维度打分并给出可解释结论。整套方法围绕一个观察展开——用户偏好千人千面，但构成偏好的视觉元素是通用的，因此用画像作中介既补足了稀缺的个性化数据，又让黑盒打分变成了有据可循的多维推理。
 
-### 关键设计 1：视觉偏好画像（Visual Preference Profile）
-- 从 Lexica 平台的文本提示词中识别 15 个最常见的视觉元素
-- 100 人用户研究投票选出 top-5：**art style、color、detail、art medium、saturation**
-- 收集 288 个相关词汇确保画像多样性
-- 画像的三大优势：描述复杂偏好、跨用户知识共享、支持可解释多维评估
+### 关键设计
 
-### 关键设计 2：PreferImg-CoT 大规模数据集
-- **PreferImg 构建**：80K 模拟用户（含 20K 多偏好用户），1.36M 图像
-    - 随机采样 5 个视觉偏好元素分配画像
-    - 使用 T2I 模型生成参考图像和候选图像
-    - 190K 初始 prompt 覆盖 Lexica、DiffusionDB、COCO
-- **CoT 标注**：Claude 3.7 生成 predict-then-assess 格式的推理链
-- **质量过滤**：去除逻辑不一致或答案不匹配的样本
-- 最终得到 60K 高质量 CoT 样本
+**1. 视觉偏好画像：用通用视觉元素桥接稀缺的个性化数据。** 个性化偏好评估最大的痛点是每个用户的数据极少且无法共享，而不同用户之间又看似毫无交集。PreferThinker 的破局点是把偏好分解到一组通用的视觉元素上：先从 Lexica 平台的文本提示词中识别出 15 个最常见的视觉元素，再经 100 人用户研究投票筛出 top-5——art style、color、detail、art medium、saturation，并收集 288 个相关词汇保证画像表达的多样性。这样一来，每个用户的独特偏好都被表述为这五个维度上的取值组合，复杂偏好得以被结构化描述，不同用户的知识可以在维度层面互相迁移，下游评估也能逐维展开而非整体黑盒打分。
 
-### 关键设计 3：两阶段训练 + Similarity-aware 预测奖励
-**Stage 1 - 冷启动 SFT**：
-- 基座模型 Qwen2.5-VL-7B
-- 标准自回归交叉熵损失：$\mathcal{L}_{SFT}(\theta) = -\mathbb{E}_{(x,y)\sim\mathcal{D}_{CoT}}\sum_{t=1}^{T}\log P(y_t|x,y_{<t};\theta)$
+**2. PreferImg-CoT 数据集：用模拟用户批量造出带推理链的训练数据。** 既然真实个性化数据无法扩展，作者干脆合成。PreferImg 构造了 80K 模拟用户（其中 20K 为同时含多个偏好的多偏好用户）和 1.36M 图像：为每个用户随机采样 5 个视觉偏好元素组成画像，用覆盖 Lexica、DiffusionDB、COCO 的 190K 初始 prompt 驱动 T2I 模型生成参考图像与候选图像。在此之上，用 Claude 3.7 把每个样本标注成 predict-then-assess 格式的推理链，再过滤掉逻辑不一致或答案与推理不匹配的样本，最终留下 60K 高质量 CoT 样本，为冷启动训练提供了既有画像监督又有推理过程的范例。
 
-**Stage 2 - GRPO 强化学习**：
-- 每个输入生成 G 个 CoT 输出，计算组内归一化优势 $A_i$
-- PPO-clip 目标 + KL 散度正则
-
-**Similarity-aware Prediction Reward**：
-- **文本相似度**：SBERT 计算预测画像与 GT 画像的语义相似度 $s_{text}$
-- **图像相似度**：基于预测/GT 画像分别生成图像，DreamSim 计算视觉相似度 $s_{img}$
-- 预测奖励 $r_{predict} = w_{img}s_{img} + w_{text}s_{text}$
-- 混合奖励：$r = w_p r_{predict} + w_f r_{format} + w_a r_{accuracy}$（权重 0.7/0.3/1.0）
+**3. 两阶段训练与 similarity-aware 预测奖励：让模型先学会推理格式再优化预测质量。** 直接 RL 难以稳定收敛，作者采用先 SFT 后 GRPO 的两阶段策略。Stage 1 以 Qwen2.5-VL-7B 为基座，在 60K CoT 样本上做标准自回归交叉熵的冷启动，$\mathcal{L}_{SFT}(\theta) = -\mathbb{E}_{(x,y)\sim\mathcal{D}_{CoT}}\sum_{t=1}^{T}\log P(y_t|x,y_{<t};\theta)$，让模型先掌握 predict-then-assess 的输出结构。Stage 2 用 GRPO 强化：对每个输入采样 $G$ 个 CoT 输出，以组内归一化的优势 $A_i$ 配合 PPO-clip 目标和 KL 正则更新策略。关键在于奖励如何衡量「画像预测得准不准」——单看最终二选一的对错无法反映中间画像的质量。为此作者设计了 similarity-aware 预测奖励：用 SBERT 计算预测画像与真值画像的语义相似度 $s_{text}$，再分别用预测画像和真值画像生成图像、用 DreamSim 计算视觉相似度 $s_{img}$，合成预测奖励 $r_{predict} = w_{img}s_{img} + w_{text}s_{text}$，同时从文本和图像两个空间约束画像质量。最终奖励混合预测、格式、答案三项 $r = w_p r_{predict} + w_f r_{format} + w_a r_{accuracy}$（权重分别取 0.7、0.3、1.0）。消融显示，去掉预测奖励后画像预测准确性下降会直接拖累后续评估，印证了「画像预测越准、评估越合理」这条因果链。
 
 ## 实验
 

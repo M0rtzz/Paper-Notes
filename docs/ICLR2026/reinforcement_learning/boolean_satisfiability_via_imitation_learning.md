@@ -44,32 +44,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ImitSAT 由两个核心组件构成：(1) KeyTrace 构建——将完整求解器运行压缩为仅保留存活决策的紧凑序列；(2) 自回归模仿学习器——基于前缀条件预测下一个分支决策。
+ImitSAT 想解决的是 CDCL 求解器里「分支该选哪个变量」这件事——分支决定了搜索轨迹，而占去 80%-90% 运行时间的单元传播又被分支牵着走，所以一个好的分支策略能直接把传播次数压下来。它的做法分两步：先把一次完整的求解器运行「榨干」成一条只保留有用决策的专家轨迹（KeyTrace），再用这条轨迹训练一个自回归模型，让它在求解时根据「到目前为止走过的路径」预测下一步该分哪个变量。训练好的模型作为插件挂进标准 CDCL 求解器，每个决策点查一次，不确定时退回原来的 VSIDS，其余组件原封不动。
 
 ### 关键设计
 
-1. **KeyTrace 专家轨迹提取**:
+**1. KeyTrace 专家轨迹提取：把冗长的求解器运行压成一条无冲突的专家序列。**
 
-    - 功能：从 CDCL 完整运行轨迹 $\mathcal{T}_t$ 中提取仅包含存活决策和传播的紧凑序列 $\mathcal{K}_t$
-    - 核心思路：从左到右扫描轨迹，维护工作序列 $\mathcal{K}$。遇到决策/传播事件直接追加；遇到回溯事件，用 $\text{trim}_{\leq h}$ 移除所有高于回溯层级的后缀事件，再追加新决策。重启视为裁剪到层级0
-    - 关键效果：重放 KeyTrace 几乎无冲突——仅需原始 MiniSAT 运行 0.2% 的冲突、19.6% 的决策、4.3% 的传播
+原始的 CDCL 运行轨迹 $\mathcal{T}_t$ 里塞满了走错被回溯掉的死路，直接拿来当监督信号既冗长又混入大量噪声。KeyTrace 的思路是从左到右扫描这条轨迹、维护一个工作序列 $\mathcal{K}$：遇到决策或传播事件就直接追加；一旦遇到回溯事件，就用 $\text{trim}_{\leq h}$ 把所有高于回溯层级 $h$ 的后缀事件砍掉，再接上新的决策；重启则视为裁剪到层级 0。这样保留下来的全是「最终存活、真正通向解」的决策。压缩效果极为夸张——重放一条 KeyTrace 只需原始 MiniSAT 运行 0.2% 的冲突、19.6% 的决策、4.3% 的传播，几乎不再产生冲突，正好成为干净、密集的专家示范，这也是模仿学习能稳过强化学习的根本原因。
 
-2. **序列化与自回归学习器**:
+**2. 序列化与自回归学习器：把分支决策建模成前缀条件的下一个变量预测。**
 
-    - 功能：将 CNF 公式和 KeyTrace 前缀序列化为统一输入，训练自回归模型预测下一个签名变量
-    - 输入格式：`[CNF] || F_DIMACS || [SEP] || enc(K_t) || [D]`，其中 `[D]` 是决策探针标记
-    - 训练目标：行为克隆，最小化专家决策的负对数似然（即交叉熵）
-    - 架构：Perceiver AR（Hawthorne et al., 2022），输出潜在数组长度为1，每次查询复杂度 $O(N)$ 而非 $O(N^2)$。16头注意力、12个 Transformer 块
+分支决策天生依赖「已经走过的前缀历史」，这和自回归语言模型预测下一个 token 的结构完全契合，于是把 CNF 公式和当前 KeyTrace 前缀拼成统一输入喂给模型：`[CNF] || F_DIMACS || [SEP] || enc(K_t) || [D]`，其中末尾的 `[D]` 是决策探针标记，提示模型「在此处输出下一个签名变量」。训练用行为克隆，最小化专家决策的负对数似然（即交叉熵）。骨干网络选 Perceiver AR（Hawthorne et al., 2022），它把输出潜在数组长度压到 1，使每次查询复杂度从 $O(N^2)$ 降到 $O(N)$，对动辄上百变量的 SAT 实例尤为关键；具体配置为 16 头注意力、12 个 Transformer 块。
 
-3. **CDCL 在线集成**:
+**3. CDCL 在线集成：小预算查询 + 前置调度，不确定就退回 VSIDS。**
 
-    - 功能：在每个决策点以小预算查询学习器，不确定时回退到 VSIDS
-    - 核心策略：前置查询调度（front-loaded）——早期决策对搜索影响最大，因此在求解初期集中使用查询预算
-    - 完备性保证：所有其他 CDCL 组件（传播、冲突分析、子句学习）不变
+推理时模型作为即插即用分支器挂进求解器，每个决策点只以很小的查询预算（每个实例 3-5 次）问一次学习器，模型不确定时直接回退到 VSIDS，因此完备性不受影响——传播、冲突分析、子句学习这些 CDCL 组件全部保持不变。预算怎么花有讲究：采用前置查询调度（front-loaded），把有限的查询集中在求解初期，因为早期决策对整棵搜索树的形状影响最大，越靠后单次决策的边际收益越小。
 
-### 训练技巧
-- **变量置换增强**：随机置换变量 ID 来构造训练样本，有效缓解过拟合（无增强时验证损失先降后升）
-- **分阶段课程学习**：从小规模变量逐步扩展到大规模，加速在简单实例上的收敛
+### 训练策略
+两个增强手段让模型在小数据上学得更稳。**变量置换增强**随机打乱变量 ID 来构造等价但形式各异的训练样本，有效缓解过拟合——不加增强时验证损失会先降后升。**分阶段课程学习**从小规模变量起步、逐步扩展到大规模，加速模型在简单实例上的收敛。
 
 ## 实验关键数据
 
@@ -129,9 +121,9 @@ ImitSAT 在几乎所有变量范围上取得最低 MRPP，且 1% 胜率 $W_{1\%}
 
 - [\[ICLR 2026\] Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
 - [\[ICLR 2026\] On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
-- [\[ICML 2025\] Action-Constrained Imitation Learning](../../ICML2025/reinforcement_learning/action-constrained_imitation_learning.md)
 - [\[NeurIPS 2025\] Quantifying Generalisation in Imitation Learning](../../NeurIPS2025/reinforcement_learning/quantifying_generalisation_in_imitation_learning.md)
 - [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
+- [\[AAAI 2026\] Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
 
 </div>
 

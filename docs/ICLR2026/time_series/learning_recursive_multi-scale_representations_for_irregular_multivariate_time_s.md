@@ -39,55 +39,25 @@ tags:
 
 ### 整体框架
 
-ReIMTS 是一个即插即用的多尺度框架，兼容大多数编码器-解码器结构的 IMTS 模型。核心思想：在每个尺度层级，基于时间段递归分割样本为更短时间周期的子样本，保持所有观测的原始时间戳不变。
-
-框架由三部分组成：(1) 递归分割模块，(2) 每层级的骨干编码器，(3) 不规则感知表示融合模块。
+ReIMTS 是一个即插即用的多尺度框架，兼容大多数编码器-解码器结构的 IMTS 模型。它在每个尺度层级按时间段把样本递归切成更短周期的子样本、但保持所有观测的原始时间戳不变，再用逐层级的骨干编码器和一个不规则感知融合模块把全局与局部表示自顶向下逐层注入，从而在不破坏采样模式的前提下获得多尺度视角。
 
 ### 关键设计
 
-**1. 基于时间段的递归分割**
+**1. 基于时间段的递归分割：保留采样模式而非重采样。**
 
-在尺度层级 $n$ 上，将样本按时间段 $T^n$ 分割为 $P^n = T^1/T^n$ 个子样本。关键区别在于：
+现有 IMTS 多尺度方法靠重采样（下采样）得到粗粒度序列，这会抹掉"密集监测→稀疏监测"这类本身就携带语义的采样模式。ReIMTS 改用按时间段切分：在尺度层级 $n$ 上，把样本按时间段 $T^n$ 分成 $P^n = T^1/T^n$ 个子样本。这里的关键是切分依据是**现实时间段**（如 12 小时、24 小时）而非观测数量——若按观测数量切，不同子样本会对应不等长的真实时间跨度，时间语义就乱了；而按时间段切则原始时间戳完全保留，仅用零填充对齐。以 PhysioNet'12 为例，层级 1 是完整 48 小时，层级 2 按 24 小时分成 2 个子样本，层级 3 按 12 小时分成 4 个子样本，由此形成从全局到局部的多尺度视角，而每个观测的真实采样时刻始终不变。
 
-- 分割依据是 **时间段**（如12小时、24小时），而非观测数量
-- 原始时间戳完全保留，零填充用于对齐
-- 这避免了基于观测数量分割时不同子样本对应不同现实时间长度的问题
+**2. 多尺度表示学习：每层独立编码并向下对齐形状。**
 
-例如在 PhysioNet'12 中：层级1为完整48小时，层级2按24小时分割（2个子样本），层级3按12小时分割（4个子样本），形成全局到局部的视角。
+每个尺度层级用一个独立的骨干编码器 $\mathcal{F}^n_{\text{enc}}$ 编码该层级的子样本，得到 $\mathbf{E}^n = \mathcal{F}^n_{\text{enc}}(\mathbf{S}^n)$。编码后的潜在表示按 IMTS 的三个维度拆成三类：时间表示 $\mathbf{E}^n_{\text{time}} \in \mathbb{R}^{P^n \times L^n \times D}$、变量表示 $\mathbf{E}^n_{\text{var}} \in \mathbb{R}^{P^n \times V \times D}$、以及观测表示 $\mathbf{E}^n_{\text{obs}} \in \mathbb{R}^{P^n \times L^n \times V \times D}$。要把上一层的全局表示 $\mathbf{H}^n$ 注入下一层，需先让形状匹配：对时间表示和观测表示用分割操作，对变量表示用复制操作，把 $\mathbf{H}^n$ 变换为与下层局部表示 $\mathbf{E}^{n+1}$ 对齐的形状，为后续融合做准备。
 
-**2. 多尺度表示学习**
+**3. 不规则感知表示融合（IARF）：用掩码区分真实观测与填充。**
 
-每个尺度层级 $n$ 使用独立的骨干编码器 $\mathcal{F}^n_{\text{enc}}$：
-
-$$\mathbf{E}^n = \mathcal{F}^n_{\text{enc}}(\mathbf{S}^n)$$
-
-潜在表示分三类：时间表示 $\mathbf{E}^n_{\text{time}} \in \mathbb{R}^{P^n \times L^n \times D}$、变量表示 $\mathbf{E}^n_{\text{var}} \in \mathbb{R}^{P^n \times V \times D}$、观测表示 $\mathbf{E}^n_{\text{obs}} \in \mathbb{R}^{P^n \times L^n \times V \times D}$。
-
-上层全局表示 $\mathbf{H}^n$ 通过分割（时间/观测表示）或复制（变量表示）操作，变换为与下层局部表示 $\mathbf{E}^{n+1}$ 形状匹配的表示。
-
-**3. 不规则感知表示融合（IARF）**
-
-在下层尺度 $n+1$，利用二值掩码 $\mathbf{M}^{n+1}$ 标记实际观测与填充值：
-
-$$\mathbf{H}^n_{\text{IMTS}} = \begin{cases} \mathbf{H}^n \cdot \mathbf{M}^{n+1}, & \text{时间/观测表示} \\ \mathbf{H}^n, & \text{变量表示} \end{cases}$$
-
-通过轻量级评分层计算权重 $\alpha = \text{ReLU}(\text{FF}(\mathbf{H}^n_{\text{IMTS}}))$，然后融合局部与全局表示：
-
-$$\mathbf{G}^{n+1} = \mathbf{E}^{n+1} + \alpha \mathbf{H}^n_{\text{IMTS}}$$
-
-变量表示的不规则信息已由 IMTS 骨干编码器编码，但时间/观测表示中仍存在填充值，因此需掩码区分。
+形状对齐后，时间/观测表示里仍混着零填充位置，若直接相加会把填充噪声当成信号。IARF 先用二值掩码 $\mathbf{M}^{n+1}$ 标出下层尺度的真实观测与填充：对时间/观测表示按 $\mathbf{H}^n_{\text{IMTS}} = \mathbf{H}^n \cdot \mathbf{M}^{n+1}$ 屏蔽填充位，而变量表示的不规则信息已由 IMTS 骨干编码进去，故直接取 $\mathbf{H}^n_{\text{IMTS}} = \mathbf{H}^n$。随后用一个轻量评分层算自适应权重 $\alpha = \text{ReLU}(\text{FF}(\mathbf{H}^n_{\text{IMTS}}))$，把全局信息按需融进局部表示：$\mathbf{G}^{n+1} = \mathbf{E}^{n+1} + \alpha \mathbf{H}^n_{\text{IMTS}}$。这样全局上下文只在真实观测处生效，避免填充值污染下层表示。
 
 ### 损失函数 / 训练策略
 
-在最低尺度层级 $N$，解码器将所有层级表示拼接后解码：
-
-$$\hat{\mathbf{Z}} = \mathcal{F}_{\text{dec}}(\text{Concat}(\{\mathbf{G}^n\}_{n=1}^N))$$
-
-训练使用 MSE 损失，仅对预测窗口内的预测查询计算：
-
-$$\mathcal{L} = \frac{1}{Y_Q} \sum_{j=1}^{Y_Q} (\hat{z_j} - z_j)^2$$
-
-训练最多300个 epoch，early stopping 耐心为10。
+在最低尺度层级 $N$，解码器把所有层级的融合表示拼接后一次性解码，$\hat{\mathbf{Z}} = \mathcal{F}_{\text{dec}}(\text{Concat}(\{\mathbf{G}^n\}_{n=1}^N))$，让最终预测同时利用全局到局部各尺度的信息。训练用 MSE 损失，且只对预测窗口内的 $Y_Q$ 个预测查询计算 $\mathcal{L} = \frac{1}{Y_Q} \sum_{j=1}^{Y_Q} (\hat{z_j} - z_j)^2$。优化最多跑 300 个 epoch，early stopping 耐心设为 10。
 
 ## 实验关键数据
 
@@ -161,11 +131,11 @@ $$\mathcal{L} = \frac{1}{Y_Q} \sum_{j=1}^{Y_Q} (\hat{z_j} - z_j)^2$$
 
 ## 相关论文
 
-- [\[ICML 2026\] Generalizing Multi-scale Time-Series Modeling with a Single Operator](../../ICML2026/time_series/generalizing_multi-scale_time-series_modeling_with_a_single_operator.md)
 - [\[ICML 2026\] Latent Laplace Diffusion for Irregular Multivariate Time Series](../../ICML2026/time_series/latent_laplace_diffusion_for_irregular_multivariate_time_series.md)
-- [\[NeurIPS 2025\] Learning Time-Scale Invariant Population-Level Neural Representations](../../NeurIPS2025/time_series/learning_time-scale_invariant_population-level_neural_representations.md)
-- [\[AAAI 2026\] FreqCycle: A Multi-Scale Time-Frequency Analysis Method for Time Series Forecasting](../../AAAI2026/time_series/freqcycle_a_multi-scale_time-frequency_analysis_method_for_time_series_forecasti.md)
+- [\[ICML 2026\] Generalizing Multi-scale Time-Series Modeling with a Single Operator](../../ICML2026/time_series/generalizing_multi-scale_time-series_modeling_with_a_single_operator.md)
 - [\[AAAI 2026\] Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](../../AAAI2026/time_series/revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
+- [\[ICML 2025\] HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting](../../ICML2025/time_series/hyperimts_hypergraph_neural_network_for_irregular_multivariate_time_series_forec.md)
+- [\[NeurIPS 2025\] Learning Time-Scale Invariant Population-Level Neural Representations](../../NeurIPS2025/time_series/learning_time-scale_invariant_population-level_neural_representations.md)
 
 </div>
 

@@ -42,29 +42,13 @@ tags:
 
 ### 整体框架
 
-五步检测流水线：
-1. **答案随机化**：将原始问题的正确答案随机改为其他选项
-2. **密集描述生成**：GPT-4o基于原始图像和新答案生成条件化的密集文字描述
-3. **图像扰动生成**：Flux ControlNet + Canny边缘图保持全局构图，按密集描述生成新图像
-4. **质量过滤**：人工（或自动）筛选确保扰动问题可被明确回答
-5. **污染检测**：比较模型在原始 vs 扰动benchmark上的准确率差异——差异大即判定污染
+整个方法是一条"造扰动题—测掉分"的检测流水线：先把benchmark里每道题改造成一个语义被替换、但视觉构图几乎不变的"孪生版本"，再看模型在原题和孪生题上的准确率落差。落差大说明模型记住的是"这张图配这个答案"的死映射而非真正在推理，即被判为污染。改造一道题分四步走：随机化答案（把正确选项换成另一个选项作为新的目标答案）→ 用GPT-4o结合原图与新答案生成一段密集描述 → 用Flux ControlNet以原图的Canny边缘为条件、按描述重绘出新图 → 人工或自动过滤掉重绘失败、答案不再明确的样本。
 
-核心原理：污染模型记忆了"图像→答案"的映射，图像语义改变后答案变了但模型仍输出旧答案→性能骤降。干净模型基于真实推理，面对难度相当或更低的扰动问题应表现相当或更好。
+### 关键设计
 
-### 关键设计一：多模态语义扰动
+**1. 多模态语义扰动：只扰文本扰不动VLM的视觉记忆。** 检测污染的难点在于VLM是多模态的——纯文本扰动（打乱选项顺序的 Choice Confusion、循环选项位置的 CircularEval）改变不了图像特征，污染模型完全可以无视题面、凭对图像的记忆直接吐出背下来的答案，论文实验里这些文本方法在多数污染设置下确实失效。所以扰动必须打到图像的语义上，但又不能乱改：方法用原图的 Canny 边缘图喂给 ControlNet，把全局构图、物体轮廓、空间布局都钉死，只允许改与答案直接相关的那个语义元素（例如把限速牌上的"25"重绘成"35"）。这样改出来的新图答案确实变了，污染模型却因为认的是旧图旧答案而答错；同时改造要求"扰动版难度不高于原题"，保证干净模型不会因为题变难而无辜掉分，掉分只能归因于记忆。这里 GPT-4o 生成描述时同时输入原图和新答案，是为了让描述精准锁定"需要被改写的那个视觉元素"，而不是泛泛重述整张图。
 
-**为何必须扰动图像**：仅打乱选项顺序（Choice Confusion）或循环选项位置（CircularEval），VLM仍可凭视觉记忆答题。论文实验表明这些方法在多种污染设置下失败。
-
-**扰动方法的关键约束**：
-- 保持图像整体构图不变（通过Canny边缘图 + ControlNet）
-- 只改变与答案相关的语义元素（如限速牌的数字从25变为35）
-- 扰动后难度不高于原题（确保干净模型不会因难度增加而失败）
-
-**条件化描述的重要性**：GPT-4o生成描述时同时输入原始图像和新答案选项，确保描述精准突出需要改变的视觉元素。
-
-### 关键设计二：三大检测要求的形式化
-
-引入污染程度的数学定义 $\text{deg}_\mathcal{D}(x) = (\sum_{d \in \mathcal{D}} \mathbf{1}_{\{x=d\}}) \times n$，基于此提出三个要求：
+**2. 三大检测要求的形式化：给"什么叫好的污染检测"立标准。** 论文把污染程度形式化为 $\text{deg}_\mathcal{D}(x) = (\sum_{d \in \mathcal{D}} \mathbf{1}_{\{x=d\}}) \times n$，即样本 $x$ 在污染数据集 $\mathcal{D}$ 中出现的次数再乘以训练轮数 $n$，用它来刻画"被记得有多牢"。在此之上提出检测方法应同时满足三条：**实用性**——检测时不依赖额外的 clean 模型或原始训练语料，光靠待测模型自己就能跑；**可靠性**——无论污染是用标准全参微调还是 LoRA 注入的，检测结论都要一致；**一致性**——检测信号（原题与扰动题的准确率落差 $\Delta$）应当随污染程度单调增强。下表把本文方法与现有方法对这三条的满足情况摆在一起，凸显出现有方法要么得借 clean 模型、要么换个训练策略就翻车：
 
 | 要求 | 定义 | 本文方法 | 现有方法 |
 |:---|:---|:---:|:---:|
@@ -72,12 +56,7 @@ tags:
 | 可靠性 | 跨训练策略（标准FT/LoRA）一致 | ✓ | 多数✗ |
 | 一致性 | 检测信号∝污染程度 | ✓ | 部分▲ |
 
-### 关键设计三：框架无关性
-
-论文验证了：
-- **生成模型无关**：除Flux + ControlNet外，也可使用其他扩散模型
-- **LLM无关**：除GPT-4o外，其他LLM也可生成描述
-- **过滤方式无关**：自动过滤（使用强推理模型）可替代人工过滤
+**3. 框架无关性：方法不绑死在某一套生成工具上。** 整条流水线的三个可替换组件都被验证为可换：负责重绘的扩散模型不必是 Flux + ControlNet，换其他扩散模型同样能保构图改语义；负责写密集描述的 LLM 不必是 GPT-4o；负责筛样本的过滤环节也不必靠人工，用一个强推理模型做自动过滤即可替代。这条性质的意义在于，检测能力来自"保构图、改语义、比落差"这套设计本身，而非某个特定模型的特异表现，因此方法可以随生成模型的进步而升级，不会被工具淘汰所绑架。
 
 ## 实验结果
 
@@ -143,11 +122,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection](steering_and_rectifying_latent_representation_manifolds_in_frozen_multi-modal_ll.md)
+- [\[ICLR 2026\] Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
+- [\[CVPR 2025\] ASAP: Advancing Semantic Alignment for Multi-Modal Manipulation Detection](../../CVPR2025/multimodal_vlm/asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)
 - [\[CVPR 2026\] Rethinking VLMs for Image Forgery Detection and Localization](../../CVPR2026/multimodal_vlm/rethinking_vlms_for_image_forgery_detection_and_localization.md)
 - [\[AAAI 2026\] Multi-Agent VLMs Guided Self-Training with PNU Loss for Low-Resource Offensive Content Detection](../../AAAI2026/multimodal_vlm/multi-agent_vlms_guided_self-training_with_pnu_loss_for_low-resource_offensive_c.md)
 - [\[AAAI 2026\] Cross-modal Proxy Evolving for OOD Detection with Vision-Language Models](../../AAAI2026/multimodal_vlm/cross-modal_proxy_evolving_for_ood_detection_with_vision-lan.md)
-- [\[ICCV 2025\] Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 
 </div>
 

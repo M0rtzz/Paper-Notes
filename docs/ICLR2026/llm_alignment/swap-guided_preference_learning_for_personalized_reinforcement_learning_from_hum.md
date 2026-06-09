@@ -35,22 +35,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SPL 在 VPL（Variational Preference Learning）框架上改进：用户偏好数据 $\mathbb{D}_h$ → encoder 编码为潜变量 $z_0$ → P-IAF 变换为更丰富的 $z_K$ → reward decoder 输出个性化奖励 $r_\phi(x,y,z_K)$。关键创新是利用 swap（交换 chosen/rejected 顺序）构造虚拟对立用户来引导编码。
+SPL 在 VPL（Variational Preference Learning）框架上做修复：用户的偏好数据集 $\mathbb{D}_h$ 先经 encoder 编码为基础潜变量 $z_0$，再由 Preferential-IAF 流变换为更具表达力的多模态 $z_K$，最后 reward decoder 据此输出个性化奖励 $r_\phi(x,y,z_K)$。整套方法的支点是一个观察：把一个用户所有偏好对的 chosen/rejected 互换，就得到一个"偏好完全相反的虚拟对立用户"，而这种天然对称性正好可以拿来约束潜空间、逼迫潜变量真正承载偏好信息。
 
 ### 关键设计
-1. **Swap 引导基础正则化**：对每个用户 $h$，交换其所有偏好对的 chosen/rejected 构造虚拟对立用户 $h_{swap}$。强制 encoder 输出满足：
 
-    - 均值符号翻转：$\mu \approx -\mu_{swap}$（偏好方向反向→潜变量方向反向）
-    - 对数方差不变：$\ell \approx \ell_{swap}$（不确定性不受偏好方向影响）
-    - 引导损失：$\mathcal{L}_{guide} = \mathbb{E}_h[\frac{1}{2}(1+\cos(\mu, \mu_{swap})) + \eta \frac{1}{2}(1-\cos(\ell, \ell_{swap}))]$
-2. **Preferential-IAF (P-IAF)**：将 IAF 的 context vector 分解为 swap 可逆分量 $c_d = \frac{1}{2}(c - c_{swap})$ 和 swap 不变分量 $c_s = \frac{1}{2}(c + c_{swap})$。$c_d$ 仅送入 shift 函数 $\mu_k$（控制偏好方向），$c_s$ 仅送入 scale 函数 $\sigma_k$（控制不确定性），减少交叉耦合。变换 $K$ 步后得到多模态 $z_K$。
-3. **自适应潜变量调节**：类似 FiLM 的特征调制，根据 $z_K$ 信号强度动态调整其对 reward 预测的贡献权重——强偏好信号时放大、不确定时减弱。
+**1. Swap 引导基础正则化：让潜变量必须编码偏好方向。** 后验崩坏的根源是 decoder 能从 (prompt, response) 对里直接读出足够信息，于是干脆忽略 $z$。SPL 的对策是为每个用户 $h$ 交换全部偏好对的 chosen/rejected，构造虚拟对立用户 $h_{swap}$，再强制 encoder 的输出在两者之间呈镜像关系：均值符号翻转 $\mu \approx -\mu_{swap}$（偏好方向反了，潜变量方向也应反向），对数方差保持不变 $\ell \approx \ell_{swap}$（交换并不改变这个用户偏好的确定程度）。这两条约束通过引导损失 $\mathcal{L}_{guide} = \mathbb{E}_h[\frac{1}{2}(1+\cos(\mu, \mu_{swap})) + \eta \frac{1}{2}(1-\cos(\ell, \ell_{swap}))]$ 落地，用余弦相似度分别拉 $\mu$ 与 $\mu_{swap}$ 反向、拉 $\ell$ 与 $\ell_{swap}$ 同向，$\eta$ 平衡两项。一旦潜变量必须区分一个用户和它的反向版本，它就再也无法被 decoder 安全地忽略掉。
 
-### 损失函数
-$\mathcal{L}(\phi, \psi) = -\text{ELBO} + \lambda \mathcal{L}_{guide}$
-- ELBO = 偏好似然期望 - $\beta \cdot D_{KL}[q_\psi(z_K|\mathbb{D}_h) || p(z_K)]$
-- $D_{KL}$ 通过 IAF 的 Jacobian 行列式高效计算
-- $\mathcal{L}_{guide}$ 在基础分布 $z_0$ 上施加 swap 镜像约束
+**2. Preferential-IAF：把方向信号和不确定性信号解耦。** 标准 IAF 把单个 context 向量同时喂给 shift 和 scale 两个函数，方向与不确定性纠缠在一起。P-IAF 借用 swap 对称性把 context 拆成两半：swap 可逆分量 $c_d = \frac{1}{2}(c - c_{swap})$ 编码会随交换翻转的偏好方向，swap 不变分量 $c_s = \frac{1}{2}(c + c_{swap})$ 编码与交换无关的不确定性。随后 $c_d$ 只进 shift 函数 $\mu_k$、$c_s$ 只进 scale 函数 $\sigma_k$，两路信号各管各的，交叉耦合被切断；经过 $K$ 步流变换后得到能刻画多种偏好模式的多模态 $z_K$。消融实验显示，去掉这一分解后潜变量的特化程度明显下降。
+
+**3. 自适应潜变量调节：信号强才放大，信号弱就回退。** 单纯"强制使用 $z$"容易在弱信号处过拟合，所以 SPL 用一个类似 FiLM 的特征调制层，根据 $z_K$ 的信号强度动态调整它在 reward 预测中的权重——偏好明确时放大潜变量的贡献，偏好模糊时自动减弱乃至退回接近统一奖励模型的行为。这让模型在"用足个性化信息"和"避免噪声主导"之间自适应取舍。
+
+### 损失函数 / 训练策略
+总目标在 VPL 的变分下界上叠加 swap 引导项：$\mathcal{L}(\phi, \psi) = -\text{ELBO} + \lambda \mathcal{L}_{guide}$，其中 $\text{ELBO}$ 等于偏好似然期望减去 $\beta \cdot D_{KL}[q_\psi(z_K|\mathbb{D}_h) \,\|\, p(z_K)]$。借助 IAF 的 Jacobian 行列式可以高效计算这个 $D_{KL}$，而 $\mathcal{L}_{guide}$ 则施加在基础分布 $z_0$ 上、负责保证 swap 镜像约束；$\lambda$ 控制引导强度。也正是因为有引导项兜底，SPL 对 KL 权重 $\beta$ 的取值远比 VPL 鲁棒。
 
 ## 实验关键数据
 
@@ -108,11 +104,11 @@ $\mathcal{L}(\phi, \psi) = -\text{ELBO} + \lambda \mathcal{L}_{guide}$
 
 ## 相关论文
 
-- [\[ACL 2026\] P-Check: Advancing Personalized Reward Model via Learning to Generate Dynamic Checklist](../../ACL2026/llm_alignment/p-check_advancing_personalized_reward_model_via_learning_to_generate_dynamic_che.md)
-- [\[ACL 2025\] SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](../../ACL2025/llm_alignment/synthesizeme_persona_prompts.md)
 - [\[ICLR 2026\] Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
-- [\[ACL 2026\] PERSA: Reinforcement Learning for Professor-Style Personalized Feedback with LLMs](../../ACL2026/llm_alignment/persa_reinforcement_learning_for_professor-style_personalized_feedback_with_llms.md)
+- [\[ACL 2025\] SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs](../../ACL2025/llm_alignment/synthesizeme_persona_prompts.md)
+- [\[ACL 2026\] P-Check: Advancing Personalized Reward Model via Learning to Generate Dynamic Checklist](../../ACL2026/llm_alignment/p-check_advancing_personalized_reward_model_via_learning_to_generate_dynamic_che.md)
 - [\[ICLR 2026\] No Prompt Left Behind: Exploiting Zero-Variance Prompts in LLM Reinforcement Learning via Entropy-Guided Advantage Shaping](no_prompt_left_behind_exploiting_zero-variance_prompts_in_llm_reinforcement_lear.md)
+- [\[ACL 2026\] PERSA: Reinforcement Learning for Professor-Style Personalized Feedback with LLMs](../../ACL2026/llm_alignment/persa_reinforcement_learning_for_professor-style_personalized_feedback_with_llms.md)
 
 </div>
 

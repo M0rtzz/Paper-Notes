@@ -32,26 +32,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LapFlow 将图像分解为拉普拉斯金字塔残差（3 个尺度），通过统一的 MoT 模型并行处理不同尺度。采用渐进式生成策略：先去噪最粗尺度，再逐步条件化更细尺度。
+LapFlow 把一张图像拆成拉普拉斯金字塔的三层残差，让一个统一的混合 Transformer（MoT）同时建模这三层；生成时按从粗到细的顺序渐进去噪，最粗层先成形，再以它为条件补出更细的高频细节。整套流程都在 VAE 的 latent 空间里完成，所有尺度共用一个网络，从而既省算力又能扩展到高分辨率。
 
 ### 关键设计
 
-1. **拉普拉斯分解**: 将图像分解为三个尺度的残差：
-$$\mathbf{x}_1^{(2)} = \text{Down}(\text{Down}(\mathbf{x}_1)), \quad \mathbf{x}_1^{(1)} = \text{Down}(\mathbf{x}_1) - \text{Up}(\mathbf{x}_1^{(2)})$$
-$$\mathbf{x}_1^{(0)} = \mathbf{x}_1 - \text{Up}(\text{Down}(\mathbf{x}_1))$$
-   重建：$\mathbf{x}_1 = \mathbf{x}_1^{(0)} + \text{Up}(\mathbf{x}_1^{(1)}) + \text{Up}(\text{Up}(\mathbf{x}_1^{(2)}))$
+**1. 拉普拉斯分解：把不同频率成分拆开建模。** 高分辨率生成之所以贵，是因为模型要在同一张高分辨率画布上同时管低频结构和高频细节。LapFlow 借鉴拉普拉斯金字塔，把图像 $\mathbf{x}_1$ 拆成三层互补残差：最粗层 $\mathbf{x}_1^{(2)} = \text{Down}(\text{Down}(\mathbf{x}_1))$ 是两次下采样后的低频骨架，中间层 $\mathbf{x}_1^{(1)} = \text{Down}(\mathbf{x}_1) - \text{Up}(\mathbf{x}_1^{(2)})$ 和最细层 $\mathbf{x}_1^{(0)} = \mathbf{x}_1 - \text{Up}(\text{Down}(\mathbf{x}_1))$ 则分别承载中频和高频的残差信号。三层可无损重建出原图 $\mathbf{x}_1 = \mathbf{x}_1^{(0)} + \text{Up}(\mathbf{x}_1^{(1)}) + \text{Up}(\text{Up}(\mathbf{x}_1^{(2)}))$。这样每层只负责一个频段，粗层分辨率低、token 少、算得快，高频细节则被隔离到更小的残差上，整体把计算压力按频率分摊开。
 
-2. **多尺度噪声过程**: 不同尺度在不同时间范围内训练。两个关键时间点 $T_1, T_2$：最小尺度 $k=2$ 在 $[0,1]$ 训练，中间尺度 $k=1$ 在 $[T_2,1]$ 训练，最大尺度 $k=0$ 在 $[T_1,1]$ 训练。每尺度的噪声插值：
-$$\mathbf{x}_t^{(k)} = \alpha_t^{(k)} \mathbf{x}_1^{(k)} + \sigma_t^{(k)} \mathbf{x}_0^{(k)}$$
+**2. 多尺度噪声过程：让粗层先收敛、细层后跟进。** 三层若都在完整时间区间训练，等于回到了单尺度的高成本。LapFlow 给每层错开了去噪的时间窗：用两个关键时间点 $T_1, T_2$，最小尺度 $k=2$ 在整个 $[0,1]$ 上训练，中间尺度 $k=1$ 只在 $[T_2,1]$ 训练，最大尺度 $k=0$ 只在 $[T_1,1]$ 训练。每层各自做噪声插值 $\mathbf{x}_t^{(k)} = \alpha_t^{(k)} \mathbf{x}_1^{(k)} + \sigma_t^{(k)} \mathbf{x}_0^{(k)}$。这意味着采样早期只有最粗层在被去噪、最便宜，等结构稳定后细层才逐步加入，把昂贵的高频计算推迟到必要的后段，天然实现了从结构到细节的渐进生成。
 
-3. **MoT 架构与因果注意力**: 使用尺度特定的 QKV 投影和共享全局注意力。因果掩码确保信息从低分辨率单向流向高分辨率：
-$$\text{MaskedGlobalAttn}(Q,K,V) = \text{Softmax}\left(\frac{QK^\top}{\sqrt{d}} + M_c\right)V$$
-   其中 $M_c$ 为块因果掩码，确保尺度 $k$ 只能关注 $k' \geq k$ 的尺度。
+**3. MoT 架构与因果注意力：一个网络兼顾尺度差异与跨尺度协同。** 既要每层有各自的处理能力，又不想为每层单养一个网络。LapFlow 用混合 Transformer：QKV 投影是尺度特定的（每层一套，相当于专家），但全局注意力共享，让三层在同一注意力里交换信息。关键是给注意力加了块因果掩码 $M_c$：$\text{MaskedGlobalAttn}(Q,K,V) = \text{Softmax}\left(\frac{QK^\top}{\sqrt{d}} + M_c\right)V$，约束尺度 $k$ 只能关注 $k' \geq k$ 的更粗尺度，于是信息只能从低分辨率单向流向高分辨率——细层能看到粗层的结构，粗层却不被未定的细节干扰。消融显示去掉掩码或退化为纯自注意力都会掉点，说明这条单向信息流是质量的关键。
 
 ### 损失函数 / 训练策略
-多尺度条件 Flow Matching 损失：
+训练目标是多尺度条件 Flow Matching 损失，把各层的速度场回归误差按权重 $w_k$ 加起来：
 $$\mathcal{L}_{mv} = \sum_{k=2}^{s} w_k \mathbb{E}_{t,q,p_t} \|\mathbf{v}_t^{(k)} - \mathbf{u}_t^{(k)}(\mathbf{x}_t^{(k)}|\mathbf{x}_1^{(k)})\|^2$$
-渐进式训练策略：每次采样阶段 $s$，训练所有 $k \geq s$ 的尺度。
+配合渐进式训练：在采样阶段 $s$ 只训练所有 $k \geq s$ 的尺度，与上面的错峰时间窗对齐，保证每个阶段只优化当前该负责的频段。
 
 ## 实验关键数据
 
@@ -122,11 +116,11 @@ $$\mathcal{L}_{mv} = \sum_{k=2}^{s} w_k \mathbb{E}_{t,q,p_t} \|\mathbf{v}_t^{(k)
 
 ## 相关论文
 
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
-- [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
 - [\[ICLR 2026\] GenCP: Towards Generative Modeling Paradigm of Coupled Physics](gencp_towards_generative_modeling_paradigm_of_coupled_physics.md)
-- [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
+- [\[ICLR 2026\] MVAR: Visual Autoregressive Modeling with Scale and Spatial Markovian Conditioning](mvar_visual_autoregressive_modeling_with_scale_and_spatial_markovian_conditionin.md)
 - [\[ICLR 2026\] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+- [\[ICLR 2026\] DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
+- [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 
 </div>
 

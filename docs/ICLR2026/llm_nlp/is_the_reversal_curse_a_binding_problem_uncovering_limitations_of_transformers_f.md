@@ -34,30 +34,28 @@ LLM存在一个基本的泛化失败——反转诅咒：训练时学到"Tom Smi
 ## 方法详解
 
 ### 整体框架
-分两步探索：(1) 证明Transformer在概念层面可以学习反转→定位问题在表面预测→提出概念不一致性和纠缠性两个假说；(2) 设计JEPA解决不一致性、记忆层解决纠缠性。
+这篇论文想回答一个被反复绕过却从没被正面回答的问题：自回归 Transformer 是不是注定学不会反转。它的探索分成两步。第一步先把"表面形式"这个变量拿掉，让模型直接在抽象概念层面学反转，看架构本身到底行不行；结果发现完全行，于是把矛头从"架构"转向"表面形式→概念"这道映射，并据此提出两个具体病因——表示的**不一致性**和概念间的**纠缠性**。第二步对症下药：用 JEPA（联合嵌入预测架构）治不一致性，用记忆层治纠缠性，最终在不靠数据增强、不改自回归目标的前提下真正学会了反转。
 
 ### 关键设计
 
-1. **概念层面的反转学习（发现）**:
+**1. 概念层面的反转探针：先证明 Transformer 架构本身没问题。**
 
-    - 功能：验证标准Transformer能否在抽象层面学习反转
-    - 核心思路：设置$N=6$对关系 $(r_i, r_i^{-1})$，实体分为学习集 $\mathcal{E}_A$ 和测试集 $\mathcal{E}_B$。每个概念直接用可学习embedding表示（无文本名称）。训练GPT-2在学习集上看所有方向的事实，测试集只看一个方向。结果：MRR高达0.964，Transformer完全能学会反转！
-    - 设计动机：排除了"Transformer架构本身不行"的假说，将问题聚焦到"表面形式→概念"的过程
+要判断是不是架构的锅，就得把"表面形式"这个干扰项彻底剥掉。作者设了 $N=6$ 对互逆关系 $(r_i, r_i^{-1})$，把实体分成学习集 $\mathcal{E}_A$ 和测试集 $\mathcal{E}_B$，并且让**每个概念直接由一个可学习 embedding 表示、不带任何文本名称**。训练时 GPT-2 在学习集上能看到事实的所有方向，测试集里的实体只见过一个方向、反方向留作考查。结果 MRR 高达 0.964——标准 Transformer 在概念层面完全学得会反转。这一步的意义在于它直接否掉了"Transformer 天生学不会反转"的假说，把问题精确地压缩到了"表面名称如何映射成概念"这一段。
 
-2. **不一致性假说 + JEPA解决方案**:
+**2. 不一致性假说与 JEPA：让同一个概念在被读和被预测时长一个样。**
 
-    - 功能：解决概念在不同上下文（被感知的主语 vs 被预测的宾语）中表示不一致的问题
-    - 核心思路：提出JEPA（联合嵌入预测架构）——在概念层面而非表面层面进行自回归预测。认知模块编码表面名称为概念embedding，自回归预测直接在embedding空间进行。使用batch内对比学习（InfoNCE loss）作为训练目标
-    - 设计动机：JEPA强制对同一概念形成一致的表示，因为预测目标和输入编码都在同一embedding空间。首次实现非平凡的反转泛化
+定位到映射环节后，第一个病因是不一致性：同一个概念在当主语被感知、和当宾语被预测时，模型给它的表示并不一致，于是反方向的事实对不上号。JEPA 的做法是把自回归预测从表面层面搬到概念层面——一个认知模块先把表面名称编码成概念 embedding，之后的自回归预测直接在这个 embedding 空间里进行，训练目标用 batch 内对比学习的 InfoNCE loss。因为预测目标和输入编码共用同一个 embedding 空间，模型被强制对同一概念形成一致表示，这也是首次在没有数据增强、没有非因果目标的情况下做到非平凡的反转泛化。
 
-3. **纠缠性假说 + 记忆层解决方案**:
+**3. 纠缠性假说与记忆层：让不同概念的梯度别互相污染。**
 
-    - 功能：解决不同概念的梯度更新互相干扰的问题
-    - 核心思路：分析MLP最后一层的梯度更新：当两个概念$a$和$b$的隐藏激活 $\alpha, \beta$ 重叠时（$\alpha^T\beta \neq 0$），更新 $\Delta a$ 会被$b$的梯度污染。效应随模型深度累积。解决方案：用记忆层（Memory Layer，超宽hidden+top-k稀疏+softmax激活）替换认知模块的最后MLP层，使不同概念的激活模式高度分离，消除纠缠
-    - 实验验证：增加模型宽度仅带来边际改善（768→1280），但记忆层显著提升泛化（相同参数量更优）
+第二个病因藏在梯度里。作者分析认知模块 MLP 最后一层的更新发现，当两个概念 $a$、$b$ 的隐藏激活 $\alpha$、$\beta$ 有重叠（$\alpha^T\beta \neq 0$）时，对 $a$ 的更新会被 $b$ 的梯度污染：
+
+$$\Delta a = -\eta\|\alpha\|^2 \frac{\partial L}{\partial a} - \eta\, \alpha^T\beta\, \frac{\partial L}{\partial b}$$
+
+第二项就是交叉污染，而且会随模型深度逐层累积。解决办法是把认知模块的最后一个 MLP 层换成记忆层（Memory Layer，超宽 hidden + top-k 稀疏 + softmax 激活），让不同概念走向高度分离的激活模式，从而把纠缠消掉。一个关键对照是：单纯把模型加宽（768→1280）只带来边际改善，而相同参数量下换成记忆层却显著提升泛化——说明瓶颈不在容量，而在表示结构。
 
 ### 延伸应用：参数化前向链推理
-反转能力解锁了新的参数化记忆整合——已知"X=5"、"Y=3"、"X+Y=Z"，可推理出"Z=8"（需要反转5+3=8→Z=8）。在搜索树结构的多步算术推理中，JEPA+记忆层以参数化记忆超越了o3-Mini和Gemini-2.5-Pro的非参数化（上下文内）推理。
+反转能力打通后顺带解锁了一种参数化的记忆整合能力。比如已知 "X=5"、"Y=3"、"X+Y=Z"，要推出 "Z=8"，本质上需要把 5+3=8 反转成 Z=8 才行。在搜索树结构的多步算术推理任务上，JEPA + 记忆层靠参数化记忆完成推理，超过了 o3-Mini 和 Gemini-2.5-Pro 的非参数化（上下文内）推理。
 
 ## 实验关键数据
 
@@ -117,7 +115,7 @@ LLM存在一个基本的泛化失败——反转诅咒：训练时学到"Tom Smi
 - [\[ACL 2025\] Veracity Bias and Beyond: Uncovering LLMs' Hidden Beliefs in Problem-Solving Reasoning](../../ACL2025/llm_nlp/veracity_bias_llm_hidden_beliefs.md)
 - [\[ICLR 2026\] When Stability Fails: Hidden Failure Modes of LLMs in Data-Constrained Scientific Decision-Making](when_stability_fails_hidden_failure_modes_of_llms_in_data-constrained_scientific.md)
 - [\[ICLR 2026\] Compositional-ARC: Assessing Systematic Generalization in Abstract Spatial Reasoning](compositional-arc_assessing_systematic_generalization_in_abstract_spatial_reason.md)
-- [\[ICLR 2026\] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
+- [\[AAAI 2026\] Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
 
 </div>
 

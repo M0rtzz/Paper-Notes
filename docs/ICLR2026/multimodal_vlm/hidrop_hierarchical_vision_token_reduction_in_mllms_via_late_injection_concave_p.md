@@ -43,40 +43,31 @@ tags:
 
 ### 整体框架
 
-HiDrop 将 LLM 层分为三个阶段：
-- **浅层（Layer 1~8）**：Late Injection — 完全不注入视觉 token，只处理文本
-- **中层（Layer 9~24）**：Concave Pyramid Pruning — 在选定的 filtering layer 上用 Differentiable Top-K 渐进剪枝视觉 token，前快后慢
-- **深层（Layer 25~32）**：Early Exit — 丢弃所有剩余视觉 token，纯文本推理
+HiDrop 的出发点是：视觉 token 在 LLM 的不同深度根本不是"一直需要"的，所以管理策略应该跟着层级功能走，而不是从第一层到最后一层都密集保留。它先做了一轮层级行为分析，把 LLaVA 的 32 层切成三段功能——浅层只是被动传播视觉信息、中层是真正做跨模态融合的地方、深层已经退化成纯语言推理——然后在每一段做不同的事。
 
-三个阶段共同定义了一个"视觉处理窗口"，视觉 token 只存在于约一半的层中。
+具体来说，视觉 token 在浅层（约 Layer 1~8）压根不进入序列（Late Injection），到中层（约 Layer 9~24）才注入并在几个选定的 filtering layer 上用可微 Top-K 前快后慢地渐进剪枝（Concave Pyramid Pruning），进入深层（约 Layer 25~32）后剩余视觉 token 被一次性全部丢弃（Early Exit）。三段拼起来等于给视觉 token 开了一个只覆盖大约一半层数的"处理窗口"，窗口外的层完全不为视觉信息买单。
 
 ### 关键设计
 
-1. **Late Injection（晚注入）**:
+**1. Late Injection：浅层根本不该处理视觉 token，所以干脆不注入。**
 
-    - 功能：在第 $L_{inj}=9$ 层才将视觉 token 注入序列
-    - 核心思路：分析发现浅层的 intra-modal cosine similarity 极高（视觉 token 几乎不变化），cross-modal influence 近零（文本表示不受图像影响）。既然浅层不处理视觉信息，就不浪费计算在上面
-    - 设计动机：不同于"先注入再剪枝"的传统思路，HiDrop 首次提出"延迟注入"——视觉 token 根本不经过浅层，从源头节省计算
+层级分析里有两个直接证据：浅层视觉 token 的 intra-modal cosine similarity 极高，说明它们经过这些层几乎不变化；同时 cross-modal influence 近零，说明文本表示在浅层基本不受图像影响。两者合起来意味着浅层对视觉信息只是被动搬运。既然如此，HiDrop 干脆让视觉 token 在第 $L_{inj}=9$ 层才注入序列，前面 8 层只跑文本。这和"先把视觉 token 全注入、再想办法剪"的传统路线根本不同——别人是注入后做减法，HiDrop 是从源头就不让视觉 token 经过浅层，计算从一开始就省下来了。
 
-2. **Concave Pyramid Pruning + ILVAS**:
+**2. Concave Pyramid Pruning + ILVAS：在中层融合区前快后慢地渐进剪枝。**
 
-    - 功能：在中间层渐进式剪枝视觉 token，前期剪得猛后期慢
-    - 核心思路：
-        - **在哪里剪（ILVAS）**：提出 Inter-Layer Visual Attention Similarity 指标，衡量相邻层之间视觉 token 注意力分布的稳定性。ILVAS 高的层说明注意力分配已稳定，是好的 filtering 层。选择 ILVAS 曲线的局部极大值点（如 layer {10,14,16,18}）
-        - **剪谁（DTop-K）**：用 Differentiable Top-K 算子做可微 token 选择。先计算重要性分数的归一化排序 $c'_i$，再用 sigmoid + 可学习阈值 $a$ 生成软掩码 $\text{Mask}(c,a) = \sigma(\lambda(c'_i - a))$，前向时用硬阈值做离散选择，反向时梯度可流通
-    - 设计动机：凹形调度（前快后慢）匹配中层"融合稀疏性递增"的规律——融合初期大量 token 冗余可快删，后期剩余 token 更关键要慢删
+视觉 token 注入后落在中层这个融合最密集、冗余也最高的区间，关键是两个问题：在哪几层剪、剪掉谁。在哪剪由 ILVAS（Inter-Layer Visual Attention Similarity）决定，它衡量相邻两层之间视觉 token 注意力分布的稳定性——ILVAS 高说明注意力分配已经稳定下来，是适合做过滤的层，所以选 ILVAS 曲线的局部极大值点作为 filtering layer（如 layer {10,14,16,18}）。剪掉谁则用 Differentiable Top-K（DTop-K）做可微选择：先把重要性分数做归一化排序得到 $c'_i$，再用 sigmoid 配一个可学习阈值 $a$ 生成软掩码
 
-3. **Early Exit（早退出）**:
+$$\text{Mask}(c,a) = \sigma(\lambda(c'_i - a))$$
 
-    - 功能：在第 $L_{exit}=25$ 层丢弃所有剩余视觉 token
-    - 核心思路：通过 training-free 实验验证——在不同层移除所有视觉 token，发现 layer 24 之后移除几乎不影响性能
-    - 设计动机：深层已完成跨模态融合，进入纯语言推理阶段，视觉 token 此时只消耗计算不贡献信息
+前向时按硬阈值做离散的保留/丢弃，反向时梯度仍能沿软掩码回流到重要性估计。整个剪枝量按凹形调度安排——前期剪得猛、后期放慢，因为融合初期大量 token 冗余、可以放心快删，越往后剩下的 token 越关键、要慢慢删，这正好贴合中层"融合稀疏性递增"的规律。
 
-4. **工程优化**:
+**3. Early Exit：深层进入纯语言推理后，视觉 token 只是负担。**
 
-    - Persistent Position Encoding：每个视觉 token 保持固定的位置标识符，避免动态剪枝导致 RoPE 位置错乱
-    - FlashAttention 兼容：token 选择通过轻量辅助注意力完成，主注意力计算不变
-    - 并行解耦：浅层文本前向与视觉编码并行执行，Late Injection 使这种并行成为可能
+HiDrop 用一组 training-free 实验在不同层一次性移除全部视觉 token，发现 layer 24 之后再移除几乎不影响性能。原因是深层已经完成跨模态融合、转入纯语言推理阶段，视觉 token 留在序列里只消耗算力却不再贡献信息。于是在第 $L_{exit}=25$ 层把剩余视觉 token 全部丢掉，后面几层只跑文本。
+
+**4. 工程优化：让动态剪枝在真实加速框架里跑得通。**
+
+三阶段策略要落到实际加速，还需要几处工程配合。Persistent Position Encoding 给每个视觉 token 固定的位置标识符，避免动态剪枝把序列打乱后 RoPE 位置错乱。FlashAttention 兼容是靠一条轻量辅助注意力来完成 token 选择，主注意力计算不被改动，从而保留 FlashAttention 的加速。并行解耦则利用 Late Injection 带来的空档——浅层的文本前向和视觉编码可以并行执行，因为这时视觉 token 还没进序列，两条路径互不依赖。
 
 ### 损失函数 / 训练策略
 

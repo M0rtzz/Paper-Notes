@@ -26,47 +26,33 @@ tags:
 
 ## 研究背景与动机
 
-### 领域现状
+**领域现状**：扩散模型能生成高度逼真的图像，这就需要水印来区分生成内容与真实内容。现有方法分两类：调参式（如 Stable Signature 微调解码器）和免调式（如 Tree-Ring、GaussMarker 向初始噪声加水印）。
 
-**领域现状**：扩散模型生成高度逼真图像→需要水印区分生成/真实内容。现有方法分两类：调参式(Stable Signature微调解码器)和免调式(Tree-Ring/GaussMarker向初始噪声加水印)。
+**现有痛点**：Stable Signature 需要大量训练，且对高级攻击不鲁棒；Tree-Ring、GaussMarker 等免调方法虽然鲁棒，但检测依赖昂贵的 DDIM 反演（$O(T)$ 步）。两者不可兼得——要么快但弱，要么强但慢。
 
-**现有痛点**：(1) Stable Signature需大量训练且对高级攻击不鲁棒；(2) Tree-Ring/GaussMarker等免调方法鲁棒但检测依赖昂贵DDIM反演（$O(T)$步）；(3) 两者不可兼得——要么快但弱，要么强但慢。
+**核心矛盾**：水印检测需要 DDIM 反演来恢复初始噪声，计算昂贵，不适合大规模部署。
 
-**核心矛盾**：水印检测需要DDIM反演恢复初始噪声→计算昂贵→不适合大规模部署。
-
-**切入角度**：不做DDIM反演——训练轻量外部检测器直接从生成图像中识别水印噪声的签名。既享受噪声注入的鲁棒性，又得到即时检测。
-
-### 解决思路
-
-**本文目标**：### 整体框架
-水印注入：$\eta' = \sqrt{1-\alpha}\eta + \sqrt{\alpha}A'$（加权混合随机噪声和水印噪声）→ 正常扩散生成。
-
+**切入角度**：不做 DDIM 反演，转而训练一个轻量的外部检测器，直接从生成图像中识别水印噪声的签名。这样既享受噪声注入带来的鲁棒性，又得到即时检测，把免调方法的「强」和调参方法的「快」合到一起。
 
 ## 方法详解
 
 ### 整体框架
-水印注入：$\eta' = \sqrt{1-\alpha}\eta + \sqrt{\alpha}A'$（加权混合随机噪声和水印噪声）→ 正常扩散生成。水印检测：训练轻量CNN在LDM潜空间中分类有/无水印。
+
+SERUM 想解决的是「鲁棒水印检测必须做昂贵 DDIM 反演」这个痛点，做法分注入和检测两端。注入端在扩散开始前，把一段固定的水印噪声按权重混进随机初始噪声，再走正常的扩散采样生成图像；检测端则训练一个轻量 CNN，在 LDM 潜空间里直接判断图像是否带水印，完全绕开反演。这样从生成到检测都只需一次前向，既保留了噪声注入的鲁棒性，又把检测从 $O(T)$ 步压到即时。
 
 ### 关键设计
 
-1. **水印注入**:
+**1. 水印注入：把归一化后的水印噪声混进初始噪声，既留下指纹又不伤画质。**
 
-    - 功能：向初始扩散噪声添加归一化水印噪声
-    - 核心思路：$A' = (A - \text{mean}(A))/\text{std}(A)$归一化保证低KL散度→高图像质量
-    - 设计动机：归一化后 $\eta'$ 仍接近标准正态分布→证明比GaussMarker有更低KL散度
+免调方法直接往初始噪声里塞水印往往会拉高与标准正态分布的偏离，进而损害图像质量。SERUM 的注入公式是 $\eta' = \sqrt{1-\alpha}\,\eta + \sqrt{\alpha}\,A'$，把随机噪声 $\eta$ 和水印噪声 $A'$ 加权混合，$\alpha$ 控制水印强度。关键在于水印噪声先做归一化 $A' = (A - \text{mean}(A))/\text{std}(A)$，使混合后的 $\eta'$ 仍然接近标准正态分布。作者据此证明 SERUM 的 KL 散度比 GaussMarker 更低，也就是注入水印后偏离真实噪声分布更小，因而图像质量损失更小。
 
-2. **轻量检测器**:
+**2. 轻量检测器：在潜空间训练二分类 CNN，用优先经验回放专攻困难样本。**
 
-    - 功能：在LDM潜空间中训练二分类CNN
-    - 核心思路：训练集=水印潜变量+干净潜变量，用增强的优先经验回放采样困难扰动
-    - 损失：$\mathcal{L} = \mathcal{L}_w + \mathcal{L}_n$，各含干净/增强/预计算三项
-    - 设计动机：在潜空间操作→输入维度小→训练和推理都快
+这是 SERUM 绕开 DDIM 反演的核心。检测器是一个二分类 CNN，但不在像素空间、而在维度小得多的 LDM 潜空间里工作，因此训练和推理都很快。训练集由水印潜变量和干净潜变量两类构成，损失写作 $\mathcal{L} = \mathcal{L}_w + \mathcal{L}_n$，水印项和干净项各自又含干净、增强、预计算三部分。为了让检测器对各种攻击都稳，作者借鉴强化学习里的优先经验回放（PER），优先采样那些当前最难判对的扰动样本，使检测器自动把注意力集中到自己的弱点上，而不必手工挑选增强策略。
 
-3. **多用户支持**:
+**3. 多用户支持：给每个用户分配一个噪声模式子集，检测分数取子集乘积。**
 
-    - 功能：为每个用户分配唯一噪声模式子集
-    - 核心思路：用户 $i$ 使用 $k$ 个噪声模式的组合，用户检测分数 $D_i(x) = \prod_{p \in S_i} d_p(x)$
-    - 训练规模：$O(n^{1/k})$而非 $O(n)$
+要支持大量用户，逐一为每人训练一个检测器并不现实。SERUM 让用户 $i$ 使用 $k$ 个噪声模式的组合 $S_i$，单用户的检测分数定义为各模式检测分数的乘积 $D_i(x) = \prod_{p \in S_i} d_p(x)$。这样系统只需训练基础噪声模式的检测器，再以组合方式覆盖海量用户，训练规模从 $O(n)$ 降到 $O(n^{1/k})$，而用户之间的水印干扰可以忽略。
 
 ## 实验关键数据
 
@@ -123,9 +109,9 @@ tags:
 
 - [\[ICCV 2025\] LiT: Delving into a Simple Linear Diffusion Transformer for Image Generation](../../ICCV2025/image_generation/lit_delving_into_a_simple_linear_diffusion_transformer_for_image_generation.md)
 - [\[ICLR 2026\] Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation](locality-aware_parallel_decoding_for_efficient_autoregressive_image_generation.md)
+- [\[NeurIPS 2025\] More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
 - [\[CVPR 2025\] EasyCraft: A Robust and Efficient Framework for Automatic Avatar Crafting](../../CVPR2025/image_generation/easycraft_a_robust_and_efficient_framework_for_automatic_avatar_crafting.md)
 - [\[ICLR 2026\] Test-Time Iterative Error Correction for Efficient Diffusion Models](test-time_iterative_error_correction_for_efficient_diffusion_models.md)
-- [\[ICLR 2026\] SPEED: Scalable, Precise, and Efficient Concept Erasure for Diffusion Models](speed_scalable_precise_and_efficient_concept_erasure_for_diffusion_models.md)
 
 </div>
 

@@ -40,34 +40,17 @@ Vision Transformer 具有简洁、灵活和高效的优势：支持 token droppi
 
 ### 整体框架
 
-Jumbo 在标准 ViT 基础上做了最小改动：(1) CLS token 宽度扩展为 $J \cdot D$；(2) 注意力前拆分、注意力后拼接；(3) 使用独立的宽 FFN 处理 Jumbo CLS token。整个方法保持 attention-only、non-hierarchical 的 plain ViT 形态。
+Jumbo 在标准 ViT 基础上只动三处：把单个 CLS token 的宽度从 $D$ 扩展到 $J \cdot D$，让它在进入自注意力前拆成 $J$ 个等宽分片、出注意力后再拼回去，并用一个独立的宽 FFN 单独处理这个加宽 token。整套改动不破坏 attention-only、non-hierarchical 的 plain ViT 形态，patch token 那一路完全照旧。
 
 ### 关键设计
 
-1. **Jumbo CLS Token 的创建与处理**：
+**1. Jumbo CLS token 的拆—拼往返：用极少 token 换出巨大的全局容量。** 标准 ViT 里只有 1 个 CLS token 参与全局聚合，容量严重不足。Jumbo 初始化一个可学习的宽 token $\mathbf{x}_{\text{Jumbo}} \in \mathbb{R}^{J \cdot D}$，进自注意力前沿特征维度切成 $J$ 个宽度为 $D$ 的分片，和 $N$ 个 patch token 拼成长度 $(N+J)$ 的序列，这样它就能以"等宽 token"的身份正常参与标准多头自注意力，不需要改注意力算子。注意力算完后再把这 $J$ 个分片从序列里抽出来、沿通道维拼回 $\mathbb{R}^{1 \times J \cdot D}$，恢复成一个加宽 token。关键在于全局信息聚合的"宽度"被放大了 $J$ 倍，而序列里多出来的 token 数只增加了 $J$ 个。
 
-    - 初始化一个宽度为 $J \cdot D$ 的可学习 CLS token $\mathbf{x}_{\text{Jumbo}} \in \mathbb{R}^{J \cdot D}$
-    - **注意力前**：沿特征维度拆分为 $J$ 个宽度 $D$ 的 token，与 patch token 拼接形成长度 $(N+J)$ 的序列
-    - **注意力中**：标准多头自注意力处理所有 $(N+J)$ 个等宽 token
-    - **注意力后**：从序列中提取 $J$ 个 Jumbo 分片，沿通道维度重新拼接为 $\mathbb{R}^{1 \times J \cdot D}$
-    - **专用 FFN**：宽度为 $J \cdot D$ 的独立 FFN 处理重组后的 Jumbo token；patch token 则由共享的标准 FFN 处理
-    - 最后一层的 patch FFN 被丢弃（因为分类头直接从 Jumbo token 投射）
+**2. 专用宽 FFN：补上 Register 缺的非线性建模。** Registers 的全局 token 只靠注意力交互，而注意力本质是加权线性组合，缺的是 FFN 那种非线性函数建模能力。Jumbo 给重组后的宽 token 配一个宽度为 $J \cdot D$ 的独立 FFN，patch token 仍走共享的标准 FFN，两路互不干扰。这样全局特征第一次被一个真正的非线性函数加工，而不只是被搬运。最后一层的 patch FFN 被直接丢弃，因为分类头是从 Jumbo token 投射的，patch 那一路的最后一次变换没有用。
 
-2. **为什么计算开销极低（设计动机）**：
+**3. 近乎免费的开销：宽 FFN 只算一个 token。** ViT 一层的计算量几乎完全由 patch 数 $N$ 和 patch 宽度 $D$ 决定。多塞 $J=6$ 个分片，注意力序列从 $N$ 变成 $(N+J)$，而 $N=196$，FLOP 增量可以忽略；宽 FFN 虽然参数翻倍，但它只处理单个 token，对总 FLOP 的贡献同样微乎其微。于是 Jumbo 用接近零的吞吐量代价换来了成倍的全局建模容量，这正是它能在高速场景跑赢专用高效架构的根因。
 
-    - ViT 层的计算量几乎完全由 patch 数 $N$ 和 patch 宽度 $D$ 决定
-    - 添加 $J=6$ 个额外 token 对注意力的 FLOP 影响微乎其微（$(N+J)$ vs $N$，而 $N=196$）
-    - 宽 FFN 虽然参数更多，但只处理单个 token——FLOP 贡献可忽略
-
-3. **两个核心假说**：
-
-    - **假说 1**：patch width 越窄（模型越小），Jumbo 增益越大——因为窄网络对全局容量的"饥渴"更严重
-    - **假说 2**：输出维度越高（任务越复杂），Jumbo 增益越大——需要更多宽度来存储和推理更多概念
-
-4. **从 Vision 到 Time Series 的迁移**：
-
-    - 将 Jumbo 应用于 PatchTST 架构：将 1D 时间序列 patch 化后添加 Jumbo CLS token
-    - 无需任何架构修改即可迁移，展示了 plain transformer 的通用性
+**4. 两条增益假说与跨模态迁移：把"为什么有用"讲清楚并验证通用性。** 作者据此提出两条可证伪的假说：patch width 越窄（模型越小），网络对全局容量越"饥渴"，Jumbo 增益越大（假说 1）；输出维度越高（任务类别越多、越复杂），越需要额外宽度去存储和推理更多概念，增益也越大（假说 2）。为证明 Jumbo 不是视觉特化的 trick，作者还把它直接套到时间序列的 PatchTST 上——1D 序列 patch 化后照样加一个 Jumbo CLS token，无需任何架构改动即可迁移，体现了 plain transformer 的通用性。
 
 ### 损失函数 / 训练策略
 

@@ -40,32 +40,15 @@ tags:
 
 ### 整体框架
 
-ReGUn 包含两个核心组件：**参考分布构建**（RefDist）和**遗忘目标优化**。
+ReGUn 的核心想法是：与其用启发式手段把模型在遗忘数据上推向"更错"，不如为它树立一个"未见过这些数据时应有的样子"的参考标准，然后把模型行为对齐过去。为此它先从一个独立留出集构造类别条件的参考分布，再用一个 KL 蒸馏项把遗忘样本的预测拉向这个参考、同时用交叉熵项锚定保留数据上的性能，两项加权联合优化。
 
-### 1. 参考分布构建
+### 关键设计
 
-给定遗忘 minibatch $B_f = \{(x_i^f, y_i^f)\}_{i=1}^b$，从留出集 $\mathcal{D}_h$ 中按类别直方图匹配采样 $m$ 个样本，聚合参考模型输出：
+**1. 类别条件参考分布：用真正未见的数据定义"该有的行为"。** 遗忘的难点在于"目标行为"本身难以刻画——损失最大化、随机标签这类启发式只能让模型"更错"，却说不清错到什么程度才算遗忘干净，由此带来条件不良、决策边界被过度改写等问题。ReGUn 改用一个从未参与遗忘优化的留出集 $\mathcal{D}_h$ 来回答这个问题：给定遗忘 minibatch $B_f = \{(x_i^f, y_i^f)\}_{i=1}^b$，按其类别直方图从 $\mathcal{D}_h$ 匹配采样 $m$ 个样本，再聚合参考模型的输出得到参考分布 $q(B_f) = \frac{1}{m} \sum_{j=1}^{m} p_\phi(\cdot | \tilde{x}_j)$。这里有两个关键取舍：参考模型直接复用初始模型 $f_{\theta_0}$，省去额外训练也避免参考在遗忘过程中漂移；类别直方图匹配则让参考与遗忘 batch 的标签先验对齐，从而抑制因类别分布不同引入的偏差。同一 batch 内所有遗忘样本共享这份参考，使蒸馏目标稳定。
 
-$$q(B_f) = \frac{1}{m} \sum_{j=1}^{m} p_\phi(\cdot | \tilde{x}_j)$$
+**2. KL 蒸馏 + 交叉熵的双项目标：让遗忘行为与未见行为不可区分。** 有了参考分布，遗忘就转化为一个分布匹配问题。总目标为 $\mathcal{L}(\theta; B_f, B_r) = \lambda_f \frac{1}{|B_f|} \sum_{(x,\cdot) \in B_f} \text{KL}(q(B_f) \| p_\theta(\cdot|x)) + \lambda_r \frac{1}{|B_r|} \sum_{(x,y) \in B_r} \text{CE}(p_\theta(\cdot|x), y)$。前一项 KL 散度把遗忘样本的预测蒸馏到参考分布上，使模型在遗忘数据上的输出与它在真正未见数据上的输出无法区分；后一项交叉熵在保留集 $B_r$ 上锚定更新，防止遗忘梯度把整体性能一起带垮。$\lambda_f, \lambda_r > 0$ 两个权重显式调节遗忘强度与保留效用的权衡，比起单纯放大遗忘损失，这种"对齐而非破坏"的优化方向更温和、冲突更小，因而在大遗忘比例下也不易崩溃。
 
-关键设计：
-- 参考模型使用初始模型 $f_{\theta_0}$（避免额外训练和参考漂移）
-- 类别直方图匹配控制标签先验差异
-- 同一 batch 内所有遗忘样本共享相同参考分布
-
-### 2. 遗忘目标函数
-
-$$\mathcal{L}(\theta; B_f, B_r) = \lambda_f \frac{1}{|B_f|} \sum_{(x,\cdot) \in B_f} \text{KL}(q(B_f) \| p_\theta(\cdot|x)) + \lambda_r \frac{1}{|B_r|} \sum_{(x,y) \in B_r} \text{CE}(p_\theta(\cdot|x), y)$$
-
-- **遗忘项**（KL 散度）：将遗忘样本的预测蒸馏到留出参考分布
-- **保留项**（交叉熵）：锚定更新以保留保留数据上的性能
-- $\lambda_f, \lambda_r > 0$ 控制遗忘强度和保留效用的权衡
-
-### 3. 数据划分
-
-从原始训练集 $\mathcal{D}_{orig}$ 中：
-- 留出 10% 作为 $\mathcal{D}_h$（仅在遗忘阶段使用）
-- 剩余为 $\mathcal{D}_{train}$，从中采样遗忘集 $\mathcal{D}_f$ 和验证集 $\mathcal{D}_{val}$
+**3. 留出—训练数据划分：为参考分布腾出独立来源。** 参考引导成立的前提是 $\mathcal{D}_h$ 与遗忘优化彼此隔离。ReGUn 从原始训练集 $\mathcal{D}_{orig}$ 中划出 10% 作为 $\mathcal{D}_h$，仅在遗忘阶段用于构造参考；剩余部分作为 $\mathcal{D}_{train}$，再从中采样遗忘集 $\mathcal{D}_f$ 与验证集 $\mathcal{D}_{val}$。这一划分保证了参考来自"模型本可正常对待"的数据，代价是需要预留约一成原始数据，在数据稀缺场景下会成为约束。
 
 ## 实验关键数据
 
@@ -131,7 +114,7 @@ $$\mathcal{L}(\theta; B_f, B_r) = \lambda_f \frac{1}{|B_f|} \sum_{(x,\cdot) \in 
 - [\[ICLR 2026\] STAR: Similarity-guided Teacher-Assisted Refinement for Super-Tiny Function Calling Models](star_similarity-guided_teacher-assisted_refinement_for_super-tiny_function_calli.md)
 - [\[ICLR 2026\] KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
 - [\[ICML 2026\] Critique-Guided Distillation for Robust Reasoning via Refinement](../../ICML2026/model_compression/critique-guided_distillation_for_robust_reasoning_via_refinement.md)
-- [\[ACL 2026\] Find Your Optimal Teacher: Personalized Data Synthesis via Router-Guided Multi-Teacher Distillation](../../ACL2026/model_compression/find_your_optimal_teacher_personalized_data_synthesis_via_router-guided_multi-te.md)
+- [\[AAAI 2026\] Consensus-Aligned Neuron Efficient Fine-Tuning Large Language Models for Multi-Domain Machine Translation](../../AAAI2026/model_compression/consensus-aligned_neuron_efficient_fine-tuning_large_language_models_for_multi-d.md)
 
 </div>
 

@@ -38,28 +38,23 @@ tags:
 
 ### 整体框架
 
-论文工作分两部分：理论刻画（Section 3-4）和应用验证（Section 5）。理论部分给出了等变张量多项式函数的完整参数化表示，应用部分利用该参数化构建可学习的等变神经网络来解决稀疏向量恢复问题。
+本文先在理论上给出一类等变多项式函数的完整参数化——把任意 $O(d)$、不定正交群（含 Lorentz 群）或辛群 $Sp(d)$ 等变的张量函数都写成有限个"构建块"的线性组合，再用这套参数化搭一个可学习的等变网络去解稀疏向量恢复问题，让网络在数据上学出比手工 sum-of-squares 谱方法更好的算法。
 
 ### 关键设计
 
-1. **$O(d)$-等变多项式函数的参数化（Theorem 1）**：对从多个张量输入到张量输出的 $O(d)$-等变多项式函数 $f$，证明了它可以写成张量积和 $k$-收缩的线性组合形式，其中系数张量 $c$ 必须是 $O(d)$-迷向张量。关键引理（Lemma 1）进一步表明，所有 $O(d)$-迷向张量都可以由 Kronecker delta $\delta$ 和 Levi-Civita 符号 $\epsilon$ 构造。这为实际构建等变模型提供了完整的"构建块"。
+**1. $O(d)$-等变张量多项式的完整刻画：把抽象的等变约束变成可枚举的构建块。** 难点在于，"等变"本身是一个施加在无穷多群元素上的约束，不能直接写进网络。Theorem 1 证明任意从若干张量输入到张量输出的 $O(d)$-等变多项式函数 $f$，都可以写成输入张量的张量积再做 $k$-收缩的线性组合，而组合系数张量 $c$ 必须是 $O(d)$-迷向（isotropic）张量。Lemma 1 进一步把"迷向张量"这个抽象空间彻底说清：它们全部由 Kronecker delta $\delta$ 和 Levi-Civita 符号 $\epsilon$ 张量积、置换得到。于是构造等变模型不再需要碰运气，而是有了一份有限的、可枚举的基底清单。
 
-2. **向量输入特化推论（Corollary 1）**：当输入限制为向量（1-张量）时，$O(d)$-等变函数可以简洁地表示为：输出等于所有输入向量对和 Kronecker delta 之间的外积排列的线性组合，系数仅依赖于输入向量之间的内积。这一形式非常适合实际实现——系数函数  $q_{t,\sigma,J}$ 可以用 MLP 近似。
+**2. 向量输入的可编程特化形式：把刻画压缩成"内积 + 外积"。** Theorem 1 虽完整但仍偏抽象，难以直接落地。Corollary 1 把输入限制为向量（1-张量）这一最常用情形，给出极简表达：输出等于所有输入向量与 $\delta$ 之间各种外积排列的线性组合，而每一项的系数 $q_{t,\sigma,J}$ 只依赖输入向量两两之间的内积这一组标量不变量。这一步至关重要——系数既然只是内积的函数，就可以直接用一个 MLP 去逼近，把"满足等变性"这件事完全转移到网络结构里，网络无论怎么训练都天然等变。
 
-3. **推广到其他群（Theorem 2 & Corollary 2）**：通过复化（complexification）和 Zariski 稠密紧子群上的 Haar 测度平均技术，将结果推广到不定正交群 $O(s,d-s)$（包含 Lorentz 群）和辛群 $Sp(d)$。关键修改在于：用相应群保持的双线性形式的度量张量 $\theta_G$ 替代 Kronecker delta；用群的内积 $\langle \cdot, \cdot \rangle_G$ 替代欧几里得内积。
+**3. 推广到 Lorentz 群与辛群：换度量张量即可。** 把结论从 $O(d)$ 搬到保持不定双线性形式的群（不定正交群 $O(s,d-s)$，含相对论里的 Lorentz 群）和保持反对称形式的辛群 $Sp(d)$，难点是这些群非紧、不能直接对 Haar 测度积分。作者用复化（complexification）配合在 Zariski 稠密紧子群上做 Haar 平均的技巧绕过非紧性，得到 Theorem 2 与 Corollary 2。最终改动非常干净：把欧氏内积换成该群保持的内积 $\langle\cdot,\cdot\rangle_G$，把 Kronecker delta 换成对应群的度量张量 $\theta_G$，整套构建块照旧。
 
-4. **SparseVectorHunter（SVH）模型**：利用 Corollary 1 的参数化，设计等变模型学习一个 $d \times d$ 对称矩阵 $h$，然后取其最大特征值对应特征向量作为稀疏向量估计。具体地，$h$ 由所有输入行向量的对称外积组合而成，每个组合的系数由一个以所有向量对内积为输入的 MLP 决定。
+**4. SparseVectorHunter（SVH）：用等变参数化拼出谱估计器。** 有了 Corollary 1，作者把稀疏向量恢复设计成一个等变流程：网络以数据矩阵的各行向量为输入，学一个 $d\times d$ 对称矩阵 $h$，再取 $h$ 的最大特征值对应的特征向量作为稀疏向量估计 $\hat v$。$h$ 由所有输入行向量的对称外积 $a_i\otimes a_j$ 线性组合而成，每个组合系数由一个以全部向量对内积为输入的 MLP 给出——这正好对齐了经典谱方法"构造一个矩阵再取主特征向量"的算法骨架，只是把手工矩阵换成可学习的等变矩阵。
 
-5. **SVH-Diag 简化模型**：仅使用对角项（$a_i \otimes a_i$），系数仅依赖各向量的范数平方 $\|a_\ell\|^2$。参数更少，在对角协方差设定下表现更好。
+**5. SVH-Diag：只留对角项的轻量版。** 完整 SVH 用上全部成对外积，参数随向量对数量增长。SVH-Diag 只保留对角项 $a_i\otimes a_i$，于是系数只依赖各向量自身的范数平方 $\|a_\ell\|^2$，参数大幅减少。当数据协方差本身是对角结构时，这种与数据结构匹配的归纳偏置反而比全模型更准。
 
 ### 损失函数 / 训练策略
 
-- 损失函数：$1 - \langle \hat{v}, v_0 \rangle^2$，即预测向量与真实稀疏向量的内积平方的补
-- 训练集 5000 个样本，验证集和测试集各 500 个
-- 使用 Adam 优化器，学习率指数衰减（0.999/epoch），批量大小 100
-- SVH 约 99K 参数，SVH-Diag 约 59K 参数，非等变基线（BL）约 1.33M 参数
-- 在单张 RTX 6000 Ada GPU 上训练，共 18 小时
-- Early stopping：验证误差连续 20 个 epoch 不改善则停止
+训练直接优化预测向量与真实稀疏向量的对齐度，损失取 $1 - \langle \hat{v}, v_0 \rangle^2$（内积平方的补，越小越对齐）。数据划分为训练集 5000、验证集与测试集各 500；用 Adam 优化、批量大小 100、学习率按 $0.999/\text{epoch}$ 指数衰减，验证误差连续 20 个 epoch 不改善则 early stopping。规模上，SVH 约 99K 参数、SVH-Diag 约 59K，而非等变基线 BL 高达约 1.33M——等变模型用不到十分之一的参数量取胜。全部实验在单张 RTX 6000 Ada GPU 上约 18 小时跑完。
 
 ## 实验关键数据
 
@@ -129,8 +124,8 @@ tags:
 
 - [\[ICLR 2026\] Towards Generalizable PDE Dynamics Forecasting via Physics-Guided Invariant Learning](towards_generalizable_pde_dynamics_forecasting_via_physics-guided_invariant_lear.md)
 - [\[ICLR 2026\] GTM: A General Time-series Model for Enhanced Representation Learning](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series.md)
-- [\[ICLR 2026\] PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection](paano_patch-based_representation_learning_for_time-series_anomaly_detection.md)
 - [\[ICLR 2026\] FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
+- [\[ICLR 2026\] Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
 - [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
 
 </div>

@@ -33,31 +33,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LPD 包含两个核心：灵活并行化自回归建模架构（支持任意生成顺序和并行度）+ 局部性感知生成顺序调度（最大化上下文支持，最小化组内依赖）。
+LPD 把一张图的生成拆成若干"组"，每组内的多个 patch 同步并行生成，组与组之间仍保持自回归条件依赖。它由两块拼成：一个能支持任意生成顺序、任意并行度的自回归架构，以及一个根据空间局部性来排生成顺序的调度器，让每组并行的 token 既能拿到足够多的上下文、组内彼此又尽量不互相依赖。
 
 ### 关键设计
 
-1. **灵活并行化自回归建模**: 解耦上下文表示和token生成——已生成token提供上下文（KV cache），可学习位置查询token驱动目标位置的并行生成。使用专门的注意力掩码：
+**1. 灵活并行化的自回归建模：让 decoder-only 模型能一次解出一整组任意位置的 patch。**
 
-    - Context Attention：因果地让后续token关注上下文token
-    - Query Attention：同一步的位置查询token相互可见，但不允许后续token关注查询token
-   推理时编码和解码可融合为单步操作，仅存储生成token的KV cache。
+标准自回归模型一步只能预测序列里的下一个 token，位置和顺序都被固定死了，没法一次并行解出多个任意位置。LPD 的做法是把"提供上下文"和"生成目标"这两件事解耦开：已经生成的 token 只负责贡献上下文，缓存进 KV cache；要预测的目标位置则各自插入一个可学习的位置查询 token（共享的可学习嵌入加上该目标位置的位置编码），由这些查询 token 来驱动并行生成。配合这一拆分，模型用两套注意力掩码分别约束信息流向——Context Attention 让后续 token 因果地关注前面的上下文 token，Query Attention 让同一步里的若干查询 token 彼此可见（这样并行生成的 patch 互相协调、避免独立采样带来的不一致），同时禁止后续 token 反过来关注这些查询 token。由于查询 token 的 KV 不必保留，推理时一组的编码与解码可以融合成单步操作，只需为真正生成出来的 token 存 KV cache，开销很小。
 
-2. **局部性分析**: 在 LlamaGen-1.4B 上分析注意力模式，发现强空间局部性——解码token的注意力集中在附近空间token上。定义 Per-Token Attention (PTA)：
+**2. 局部性分析与 PTA 指标：用注意力的空间衰减规律为"哪些 patch 适合放进同一组"提供依据。**
+
+要并行就得知道哪些位置可以同时生成而互不冲突。作者在 LlamaGen-1.4B 上分析注意力分布，发现解码 token 的注意力高度集中在空间上邻近的 token 上，呈现强空间局部性。为量化这一点，定义 Per-Token Attention（PTA）——对所有 token 取空间距离为 $s$ 的那些注意力权重的平均值：
+
 $$PTA_s = \frac{1}{N}\sum_{i=1}^N \frac{\sum_j \text{Attention}(T_i,T_j) \cdot \mathbb{I}[d(T_i,T_j)=s]}{\sum_j \mathbb{I}[d(T_i,T_j)=s]}$$
-   PTA 随距离急剧下降，验证了两个原则：并行token应靠近已生成token（强条件化）、远离同组token（低依赖）。
 
-3. **局部性感知生成顺序调度**: 在每步 $k$ 中：
+实测 PTA 随距离 $s$ 急剧下降。这条曲线直接推出两条排序原则：并行生成的 token 应当靠近已生成的 token（这样能拿到强条件化的上下文），同时组内的 token 之间应当彼此远离（这样它们的相互依赖弱，并行才不掉质量）。
 
-    - 计算未选token与已选token的欧氏距离作为proximity
-    - 按proximity排序，阈值 $\tau$ 筛选高proximity候选集 $c_1$
-    - 从 $c_1$ 中依次选取token，每选一个就用排斥阈值 $\rho$ 过滤邻近token
-    - 不足时用最远点采样从剩余集 $c_2$ 补充
-   组大小通常通过余弦调度递增。生成顺序可预计算。
+**3. 局部性感知的生成顺序调度：按上面两条原则贪心地为每一步挑出一组互相独立又上下文充分的 patch。**
+
+调度器在每一步 $k$ 把这两条原则落地。它先算未选 token 到已选 token 的欧氏距离作为 proximity，按 proximity 排序后用阈值 $\tau$ 截出一批"离已生成区域足够近"的高 proximity 候选集 $c_1$；接着从 $c_1$ 里依次取 token，每取一个就用排斥阈值 $\rho$ 把它附近的候选过滤掉，保证同组成员彼此拉开距离、依赖最小；如果这样选出来的数量不够本组所需，再用最远点采样从剩余集 $c_2$ 里补足。每组该放多少个 token 通常按余弦调度递增——早期已知上下文少，就少生成几个稳一点，后期上下文充足再加速放量。整条生成顺序与每个位置只取决于网格几何，可以在推理前一次性预计算好。
 
 ### 损失函数 / 训练策略
-分组自回归训练目标：$p(x_1,...,x_N;c) = \prod_{g=1}^G p(X_g|X_{<g};c)$
-使用交叉熵损失，训练时采用专门的注意力掩码实现 teacher-forcing + 并行预测。
+训练用分组自回归目标，把 $N$ 个 token 划成 $G$ 组后按组分解联合概率：$p(x_1,\dots,x_N;c) = \prod_{g=1}^G p(X_g \mid X_{<g};c)$，组内并行、组间自回归。优化用标准交叉熵损失，训练时套用上面的两套注意力掩码，从而在一次前向里同时实现 teacher-forcing 的因果约束和组内的并行预测。
 
 ## 实验关键数据
 
@@ -125,10 +122,10 @@ $$PTA_s = \frac{1}{N}\sum_{i=1}^N \frac{\sum_j \text{Attention}(T_i,T_j) \cdot \
 ## 相关论文
 
 - [\[ICLR 2026\] Autoregressive Image Generation with Randomized Parallel Decoding](autoregressive_image_generation_with_randomized_parallel_decoding.md)
+- [\[ICLR 2026\] ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
 - [\[ICLR 2026\] From Prediction to Perfection: Introducing Refinement to Autoregressive Image Generation](from_prediction_to_perfection_introducing_refinement_to_autoregressive_image_gen.md)
 - [\[ICLR 2026\] Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)
 - [\[AAAI 2026\] Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation](../../AAAI2026/image_generation/annealed_relaxation_of_speculative_decoding_for_faster_autor.md)
-- [\[ICLR 2026\] SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation](serum_simple_efficient_robust_and_unifying_marking_for_diffusion-based_image_gen.md)
 
 </div>
 

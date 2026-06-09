@@ -41,32 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AMiD引入两个控制变量：α（控制插值路径几何）和λ（控制插值位置）。辅助分布定义为：$\tilde{r}_\theta^{(\alpha,\lambda)}(z) = (\lambda p(z)^{\frac{1-\alpha}{2}} + (1-\lambda) q_\theta(z)^{\frac{1-\alpha}{2}})^{\frac{2}{1-\alpha}}$（α≠1时），归一化后得到有效概率分布。蒸馏目标为最小化 $D(p, r_\theta^{(\alpha,\lambda)})$ 或 $D(q_\theta, r_\theta^{(\alpha,\lambda)})$，D可以是任意散度。
+AMiD把现有辅助分布方法统一在同一族分布上：m-mixture的算术平均与e-mixture的几何平均只是这一族在两个端点的取值，整族可由一个几何参数α连续串起。它用两个相互独立的旋钮刻画辅助分布——α决定教师分布p与学生分布q_θ之间走哪条插值路径（路径几何），λ决定在路径上走多远（插值位置）。辅助分布定义为
+
+$$\tilde{r}_\theta^{(\alpha,\lambda)}(z) = \left(\lambda\, p(z)^{\frac{1-\alpha}{2}} + (1-\lambda)\, q_\theta(z)^{\frac{1-\alpha}{2}}\right)^{\frac{2}{1-\alpha}}\quad(\alpha\neq 1)$$
+
+再归一化为有效概率分布 $r_\theta^{(\alpha,\lambda)}$。蒸馏目标就是最小化教师（或学生）到这个辅助分布的散度，即 $D(p, r_\theta^{(\alpha,\lambda)})$ 或 $D(q_\theta, r_\theta^{(\alpha,\lambda)})$，其中D可以是任意散度——辅助分布的设计因此与散度的选择彻底解耦。
 
 ### 关键设计
 
-1. **α-mixture辅助分布族**
+**1. α-mixture辅助分布族：用一个几何参数把零散的混合方式统一成连续谱。**
 
-    - 功能：用参数α控制教师-学生分布插值路径的几何形状
-    - 核心思路：α=-1时为算术均值（m-mixture，直线路径）；α=1时为几何均值（e-mixture，对数空间直线）；α=3时为调和均值；其他α值给出新的插值路径。Theorem 3.2证明 $r^{(\alpha,\lambda)}$ 是在α-散度意义下p和q的内分点（测地线上的点）
-    - 设计动机：α<1时support为并集（mode-covering），α≥1时support为交集（mode-seeking）——这直接影响蒸馏行为
+过去m-mixture和e-mixture是两套独立提出的方法，谁也不知道它们之间有没有中间地带。AMiD用信息几何里的广义 $f_\alpha$-均值把它们装进同一个参数化家族：α=-1退化为算术均值（m-mixture，在概率空间走直线）；α=1退化为几何均值（e-mixture，在对数空间走直线）；α=3给出调和均值；其余α值则对应全新的插值路径。Theorem 3.2进一步证明，$r^{(\alpha,\lambda)}$ 恰好是p和q在α-散度意义下测地线上的内分点。这一步的意义在于，α不再是被默认钉死在±1的常数，而是一个可以自由调的设计维度，整族分布从两个离散选项变成了连续可搜索的空间。
 
-2. **最优性保证（Theorem 3.4）**
+**2. 最优性保证：换了插值路径，蒸馏的最终目标不变。**
 
-    - 功能：证明对任意正则散度D和任意α，AMiD的最优解等价于p=q_θ
-    - 核心思路：如果辅助分布与教师完全匹配则p必须等于q_θ——插值点与一端重合时必须与另一端重合
-    - 设计动机：保证引入辅助分布不改变蒸馏的最终目标
+引入新的辅助分布最怕的是把优化目标也一起改坏了——本来要让学生逼近教师，结果优化到了别处。Theorem 3.4排除了这个隐患：对任意正则散度D和任意α，最小化 $D(p, r_\theta^{(\alpha,\lambda)})$ 的最优解都等价于 $p=q_\theta$。直觉是，辅助分布是p和q_θ路径上的内分点，当这个内分点与一端（教师p）完全重合时，它必然也与另一端（学生q_θ）重合，于是学生只有真正匹配教师才能取得最优。这保证了无论怎么选α，AMiD都不会偏离"让学生分布等于教师分布"这个蒸馏的本来目的，引入辅助分布纯粹是改善训练路径而非改变终点。
 
-3. **梯度分析与mode-covering/seeking控制（Proposition 3.5）**
+**3. 梯度分析与mode-covering/seeking控制：α独立地调节质量-多样性tradeoff。**
 
-    - 功能：分析α如何影响f-散度下的梯度行为
-    - 核心思路：梯度中出现加权项 $w = \frac{(1-\lambda)q_\theta^{\frac{1-\alpha}{2}}}{\lambda p^{\frac{1-\alpha}{2}} + (1-\lambda)q_\theta^{\frac{1-\alpha}{2}}}$，α较大时在p>q_θ区域w更大→mode-covering；α较小时在p<q_θ区域w更大→mode-seeking
-    - 设计动机：即使使用固定散度D，仍可通过α控制质量-多样性tradeoff
+mode-covering（覆盖教师所有模式，更多样）和mode-seeking（聚焦主模式，更精准）通常由散度的选择决定，但AMiD揭示α本身也能调这件事。Proposition 3.5分析f-散度下的梯度，其中出现一个加权项
+
+$$w = \frac{(1-\lambda)\,q_\theta^{\frac{1-\alpha}{2}}}{\lambda\, p^{\frac{1-\alpha}{2}} + (1-\lambda)\, q_\theta^{\frac{1-\alpha}{2}}}$$
+
+α较大时，权重w在 $p>q_\theta$ 的区域更大，梯度更用力去抬高学生在教师高概率处的密度，表现为mode-covering；α较小时，w在 $p<q_\theta$ 的区域更大，梯度更倾向于压低学生在教师低概率处的密度，表现为mode-seeking。这与α<1时辅助分布support为并集（覆盖）、α≥1时为交集（聚焦）的几何性质一致。其结果是：即便固定住散度D，也能单靠α在质量和多样性之间滑动，把过去只能靠换散度才能实现的调节解放成一个连续旋钮。
 
 ### 训练策略
-- 兼容任意散度和数据策略，推荐α-β散度+λ=0.1
-- α<1用于模式覆盖，α≥1用于模式聚焦
-- 支持自适应α调度
+AMiD兼容任意散度和任意数据采样策略，论文推荐的默认配置是α-β散度配合 λ=0.1。实践中按任务需求选α——需要覆盖教师全部模式时取 α<1，需要聚焦主模式时取 α≥1，并支持在训练过程中对α做自适应调度。
 
 ## 实验关键数据
 
@@ -116,10 +116,10 @@ AMiD引入两个控制变量：α（控制插值路径几何）和λ（控制插
 ## 相关论文
 
 - [\[ICLR 2026\] Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
+- [\[ICLR 2026\] Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [\[NeurIPS 2025\] Few-Shot Knowledge Distillation of LLMs With Counterfactual Explanations](../../NeurIPS2025/model_compression/few-shot_knowledge_distillation_of_llms_with_counterfactual_explanations.md)
 - [\[ACL 2025\] Sparse Logit Sampling: Accelerating Knowledge Distillation in LLMs](../../ACL2025/model_compression/sparse_logit_sampling_accelerating_knowledge_distillation_in_llms.md)
 - [\[ICLR 2026\] Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
-- [\[AAAI 2026\] TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution](../../AAAI2026/model_compression/tgdd_trajectory_guided_dataset_distillation_with_balanced_distribution.md)
-- [\[ICML 2025\] When Data-Free Knowledge Distillation Meets Non-Transferable Teacher: Escaping Out-of-Distribution](../../ICML2025/model_compression/when_data-free_knowledge_distillation_meets_non-transferable_teacher_escaping_ou.md)
 
 </div>
 

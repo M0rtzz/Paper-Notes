@@ -41,45 +41,19 @@ tags:
 
 ### 整体框架
 
-VerifyBench 的构建遵循以下流程：
-1. **数据收集**：从 41 个开源数据集收集推理问题及参考答案，涵盖通用推理、逻辑推理和数学推理。
-2. **答案类型标注**：自动分类为 4 种答案类型（数值、代数表达式、选择题、自由文本）。
-3. **模型生成回答**：使用 22 个开/闭源模型生成回答，并通过 LLM 进行预标注。
-4. **人工标注**：每个样本至少两名标注者独立标注正确性，不一致时由 meta-annotator 裁决。
-5. **平衡采样**：控制采样确保 4 种答案类型均匀分布，每题 1 正确 + 1 错误回答。
+VerifyBench 把"评测奖励系统"重新定义为一个绝对正确性判断任务：给定问题 $q$、参考答案 $gt$ 和模型回答 $r$，验证系统 $R_\phi$ 需要判断 $r$ 是否与 $gt$ 一致，而不是在两个回答里挑更好的一个。围绕这个定义，作者从 41 个开源数据源出发，经"答案类型标注 → 22 个模型生成回答 → 双人独立标注 + meta-annotator 裁决"的流水线，产出一个平衡采样的常规集 VerifyBench 和一个由多模型分歧挖掘出来的困难集 VerifyBench-Hard，并在统一指标下同时考验规则方法与 LLM-as-judge 两类验证系统。
 
 ### 关键设计
 
-**设计 1：VerifyBench 数据集**
+**1. VerifyBench 常规集：用平衡采样消除评测偏差。** 现有奖励模型评测多是成对偏好比较，与 LRM 在 RL 训练里"判断单个回答对不对"的真实需求脱节。VerifyBench 因此构造 1,000 个问题、每题配 1 个正确加 1 个错误回答，共 2,000 个 $(q, gt, r, y)$ 四元组（$y$ 为人工标注的正确性标签）。为了不让某一类答案或某一种正确性比例主导分数，作者跨数值、代数表达式、选择题、自由文本四种答案类型均匀切分——每类 250 题、500 个回答，并刻意保持正负各半。多样化回答来自 22 个开/闭源模型，再经人工标注锁定标签质量，使得最终分数只反映验证能力本身而非数据分布的偏斜。
 
-- **功能**：构建 2,000 个平衡的 (问题, 参考答案, 模型回答, 正确性标签) 四元组。
-- **核心思路**：1,000 个问题 × 每题 2 个回答（1 正确 + 1 错误），跨 4 种答案类型均匀分布（每类 250 题 × 500 回答），确保无偏评估。使用 22 个模型生成多样化回答，通过人工标注确保标签质量。
-- **设计动机**：反映 LRM RL 训练中的真实场景——判断单个回答是否与参考答案一致，而非比较两个回答。平衡采样消除答案类型和正确性比例的偏差。
+**2. VerifyBench-Hard 困难集：用多模型分歧挖掘争议样本。** 常规验证任务上各大模型已经能达到 93–95% 的准确率，分数挤在天花板附近，难以拉开方法差距。作者先用 18 个开源模型对问题生成约 145 万个回答，再让 5 个顶级模型逐一评判，专门挑出出现 2:3 分歧的案例（两个模型判对、三个判错，或反之）——这些正是真正有歧义、最能暴露验证系统短板的样本。经过分层采样和人工标注后得到 1,000 个困难样本。与常规集不同，这里采用自然采样而非强制平衡，因此正确回答只占 29.1%，这一偏斜本身后来揭示了大模型"误接受"错误答案的倾向。
 
-**设计 2：VerifyBench-Hard 数据集**
+**3. 按四种答案类型分层评估：定位验证系统的具体弱点。** 不同答案形态对验证的挑战差异很大：数值（Numeric）比较相对直接，代数表达式（Expression）需要判断数学等价，选择题（Multi-choice）要理解选项语义，自由文本（String）则最难做到精确匹配。作者没有只报一个总分，而是按这四类分别给出准确率，从而能看出某个验证系统究竟是栽在选择题语义上还是自由文本匹配上。正是这种分层视角暴露了规则方法 math-verify 在选择题（55.00%）和自由文本（51.60%）上接近随机猜测的系统性缺陷。
 
-- **功能**：构建 1,000 个困难验证样本，聚焦模型高度不一致的争议性案例。
-- **核心思路**：使用 18 个开源模型生成约 145 万个回答，选取 5 个顶级模型评判后出现 2:3 分歧的案例（即两个模型与其余三个判断不一致）。再经过分层采样和人工标注生成最终数据集。自然采样（非强制平衡），正确回答仅占 29.1%。
-- **设计动机**：普通验证任务上模型已达 93-95% 准确率，难以区分不同验证方法的能力。困难样本集中在真正有歧义的 case 上，更有效地暴露验证系统的不足。
+**4. 统一准确率指标下比较规则与模型两类验证器。** 真实训练里两条技术路线并存——DeepSeek-R1 用规则方法防止 reward hacking，Seed1.5-Thinking 用模型方法换取更精确的信号，但缺乏公平比较。VerifyBench 把两类系统都接进同一个准确率指标 $\text{Accuracy} = \frac{1}{|\mathcal{D}|} \sum_{(q,gt,r,y) \in \mathcal{D}} \mathbb{I}[E(R_\phi(q, gt, r)) = y]$，其中 $R_\phi$ 是验证系统输出、$E(\cdot)$ 抽取其判定、$y$ 为人工标签。规则方法 math-verify 和各种 LLM-as-judge 因此可以在同一标尺上直接对照，量化各自在不同答案类型上的优劣。
 
-**设计 3：四种答案类型的分类评估**
-
-- **功能**：将答案分为数值（Numeric）、代数表达式（Expression）、选择题（Multi-choice）和自由文本（String）四类，分别评估。
-- **核心思路**：不同答案类型对验证系统的挑战不同——数值比较相对简单、代数表达式需要数学等价判断、选择题需理解选项语义、自由文本最难准确匹配。
-- **设计动机**：细粒度分析可以揭示验证系统在不同场景下的具体弱点，指导针对性改进。
-
-**设计 4：多维度评估框架**
-
-- **功能**：同时评估规则方法（math-verify）和 LLM-as-judge 两类验证系统。
-- **核心思路**：评估指标为准确率 Accuracy = (1/|D|) Σ I[E(Rφ(q,gt,r)) = y]，其中 Rφ 为验证系统的输出，y 为人工标注的正确性标签。
-- **设计动机**：DeepSeek-R1 使用规则方法防止 reward hacking，Seed1.5-Thinking 使用模型方法获取更精确信号。两类方法各有优劣，需要在统一框架下比较。
-
-### 损失函数 / 训练策略
-
-VerifyBench 是评测基准，不涉及训练。核心质量保证措施：
-- **双人标注 + 裁决机制**：每个样本至少两名标注者，不一致时由 meta-annotator 统一。
-- **严格的正确性定义**：可执行 + 正确才算成功，使用 1,000 个随机测试输入验证。
-- **分层采样**：控制数据域和来源的分布，避免采样偏差。
+整个 benchmark 不涉及训练，质量靠数据流程保证：每个样本至少两名标注者独立判定、分歧时由 meta-annotator 统一裁决；涉及代码的正确性定义为"可执行且通过 1,000 个随机测试输入"；分层采样控制数据域与来源分布，避免采样偏差渗入分数。
 
 ## 实验关键数据
 
@@ -171,11 +145,11 @@ VerifyBench 是评测基准，不涉及训练。核心质量保证措施：
 
 ## 相关论文
 
-- [\[ICLR 2026\] ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction](paras2s_benchmarking_and_aligning_spoken_language_models_for_paralinguistic-awar.md)
 - [\[ICLR 2026\] AWM: Accurate Weight-Matrix Fingerprint for Large Language Models](awm_accurate_weight-matrix_fingerprint_for_large_language_models.md)
 - [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
 - [\[ICLR 2026\] Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
 - [\[ICLR 2026\] TROLL: Trust Regions improve Reinforcement Learning for Large Language Models](troll_trust_regions_improve_reinforcement_learning_for_large_language_models.md)
+- [\[ICLR 2026\] GraphOmni: A Comprehensive and Extensible Benchmark Framework for Large Language Models on Graph-theoretic Tasks](graphomni_a_comprehensive_and_extensible_benchmark_framework_for_large_language_.md)
 
 </div>
 

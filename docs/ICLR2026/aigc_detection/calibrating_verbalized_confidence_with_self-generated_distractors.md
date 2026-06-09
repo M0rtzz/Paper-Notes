@@ -38,47 +38,27 @@ tags:
 
 ## 方法详解
 
-### 暗示性偏差建模
+### 整体框架
 
-将语言化置信度建模为潜在真实置信度乘以暗示性偏差标量：
+DiNCo 的核心思路是：既然 LLM 在认知不确定时会对放进上下文的 claim 一概抬高置信度，那就主动为原始答案造一批"以假乱真"的干扰项，让模型逐个独立打分，再用这批干扰项上的总置信度把原始答案的虚高分数除掉。整条流水线由"暗示性偏差建模 → 干扰项生成 → NLI 重加权归一化 → 生成/验证双维度融合"四步串成，全程零训练，只额外挂一个轻量 NLI 模型做去重。
 
-$$f^{\text{VC}}(c) = \beta(c) \cdot f^{\text{lat}}(c)$$
+### 关键设计
 
-其中 $\beta(c)$ 是 claim $c$ 的暗示性偏差。关键假设是：对于逻辑相关的互斥 claim 集合 $C$，偏差近似相等 $\beta(c) \approx \beta(C)$。由于潜在置信度应满足概率归一化 $\sum_{c \in C} f^{\text{lat}}(c) = 1$，可得：
+**1. 暗示性偏差建模：把虚高的置信度拆成"真实置信度 × 偏差因子"。**
 
-$$\beta(C) \approx \sum_{c \in C} f^{\text{VC}}(c), \quad f^{\text{NVC}}(c_0) = \frac{f^{\text{VC}}(c_0)}{\beta(C)}$$
+作者把语言化置信度写成潜在真实置信度乘以一个暗示性偏差标量 $f^{\text{VC}}(c) = \beta(c) \cdot f^{\text{lat}}(c)$，其中 $\beta(c)$ 度量"把 claim $c$ 塞进上下文"本身带来的抬升。直接估 $\beta(c)$ 没有抓手，但作者做了一个关键假设：对一组逻辑相关、互斥的 claim 集合 $C$（即原始答案及其替代答案），偏差近似相等 $\beta(c) \approx \beta(C)$。再叠加潜在置信度满足概率归一化 $\sum_{c \in C} f^{\text{lat}}(c) = 1$，就能把偏差因子直接读出来——它等于这组 claim 上语言化置信度的总和 $\beta(C) \approx \sum_{c \in C} f^{\text{VC}}(c)$，于是原始答案的归一化置信度 $f^{\text{NVC}}(c_0) = f^{\text{VC}}(c_0) / \beta(C)$。实际实现取 $\beta(C) \leftarrow \max(1, \beta(C))$，避免 claim 集合不完备时分母过小把分数放大过头。这一步让"虚高"有了可计算的修正量，而不再是定性吐槽。
 
-实际使用 $\beta(C) \leftarrow \max(1, \beta(C))$ 避免 claim 集合不完备时的过度缩放。
+**2. 跨可见度的干扰项生成：在任何模型权限下都凑齐高概率替代答案。**
 
-### 干扰项生成策略
+归一化的前提是找到一批生成概率高、彼此互斥的替代 claim，目标是在 $|C| \leq K$ 的预算内最大化 $\sum_{c \in C} f^{\text{VC}}(c)$，即尽量覆盖模型"觉得可能"的答案质量。生成方式随模型可见度自适应：开源模型 logit 可用时直接 beam search 批量产出高概率答案，比独立采样更省、更不重复；只暴露 top-token 概率的 API 模型走"伪 beam search"近似同样效果；纯黑盒模型则直接提示模型列出候选答案，不依赖任何概率访问。对长文本生成，先把段落分解成原子 claim，再为每个 claim 单独生成干扰项，从而接入 FactScore 评估框架。这套分层策略保证方法在开源到闭源的全谱系上都能落地。
 
-目标是找到高生成概率的互斥替代 claim 集合，最大化 $\sum_{c \in C} f^{\text{VC}}(c)$ 且 $|C| \leq K$：
+**3. NLI 重加权：用蕴含/矛盾权重修掉干扰项不互斥带来的偏差。**
 
-| 场景 | 干扰项生成方式 | 特点 |
-|------|--------------|------|
-| 开源模型（logit 可用） | Beam search 生成多个高概率替代答案 | 高效覆盖概率质量，避免独立采样的重复 |
-| API 模型（top-token 可用） | 伪 beam search（利用 top token 概率） | 近似 beam search 效果 |
-| 纯黑盒模型 | 直接提示模型生成候选答案列表 | 无需任何概率访问 |
-| 长文本生成 | 先分解为原子 claim，再为每个 claim 生成干扰项 | 适配 FactScore 评估框架 |
+自动生成的干扰项无法保证两两严格互斥——有的彼此重复，有的其实和原始答案不冲突，直接相加会污染分母。作者用一个 DeBERTa-v3-base 的 NLI 模型给每个干扰项算两个连续权重来软性纠偏。唯一性权重 $w_{\text{unique}}(c) = \frac{1}{\sum_{c' \in C} P(\text{entail} \mid c', c)}$ 把被别的 claim 蕴含的重复项降权，避免同一答案被重复计数；矛盾性权重 $w_{\text{contra}}(c) = \frac{P(\text{contra} \mid c_0, c) + P(\text{contra} \mid c, c_0)}{2}$ 把那些与原始 claim 并不矛盾、本不该算作"替代答案"的项降权。两个权重乘进归一化因子，得到 $\beta(C) = \max\!\left(1, f^{\text{VC}}(c_0) + \sum_{c \in C} f^{\text{VC}}(c) \cdot w_{\text{unique}}(c) \cdot w_{\text{contra}}(c)\right)$。消融实验显示去掉这一步 NVC 的 ECE 会从 0.171 退化到 0.358，说明这层去重正是归一化质量的关键。
 
-### NLI 重加权机制
+**4. 生成-验证双维度融合：补上验证器与生成器的系统性分歧。**
 
-由于生成的干扰项无法保证严格互斥，使用 NLI 模型（DeBERTa-v3-base）计算两个权重：
-
-- **唯一性权重**：$w_{\text{unique}}(c) = \frac{1}{\sum_{c' \in C} P(\text{entail} \mid c', c)}$，对被其他 claim 蕴含的重复项降权
-- **矛盾性权重**：$w_{\text{contra}}(c) = \frac{P(\text{contra} \mid c_0, c) + P(\text{contra} \mid c, c_0)}{2}$，对与原始 claim 不矛盾的项降权
-
-归一化因子变为：
-
-$$\beta(C) = \max\left(1, f^{\text{VC}}(c_0) + \sum_{c \in C} f^{\text{VC}}(c) \cdot w_{\text{unique}}(c) \cdot w_{\text{contra}}(c)\right)$$
-
-### 生成-验证一致性融合
-
-作者发现 beam search 生成的最高概率答案与验证阶段最高置信度答案仅在 59.2% 的问题上一致，表明生成器和验证器存在系统性分歧。DiNCo 将两个互补维度融合：
-
-$$f^{\text{DiNCo}}(c) = \frac{1}{2} f^{\text{SC}}(c) + \frac{1}{2} f^{\text{NVC}}(c)$$
-
-其中 $f^{\text{SC}}$ 是自一致性（self-consistency）估计的生成置信度，$f^{\text{NVC}}$ 是归一化后的验证置信度。推理预算 $K=10$ 时，5 个样本用于 SC，5 个干扰项用于 NVC。
+作者观察到 beam search 选出的最高概率答案和验证阶段置信度最高的答案，只在 59.2% 的问题上一致，说明"模型怎么生成"和"模型怎么判断"是两路系统性不同的信号，单看一路必有盲区。DiNCo 把两者等权融合 $f^{\text{DiNCo}}(c) = \frac{1}{2} f^{\text{SC}}(c) + \frac{1}{2} f^{\text{NVC}}(c)$，其中 $f^{\text{SC}}$ 是多次采样的自一致性（生成侧）估计，$f^{\text{NVC}}$ 是上面归一化后的验证侧置信度。在推理预算 $K=10$ 时，5 个样本用于 SC、5 个干扰项用于 NVC，两半预算各管一个维度，互补叠加而非简单堆采样。
 
 ## 关键设计
 
@@ -153,10 +133,10 @@ DiNCo 从 LLM "暗示性偏差" 这一被忽视的角度出发，通过自动生
 ## 相关论文
 
 - [\[ACL 2026\] REFLEX: Self-Refining Explainable Fact-Checking via Verdict-Anchored Style Control](../../ACL2026/aigc_detection/reflex_self-refining_explainable_fact-checking_via_verdict-anchored_style_contro.md)
+- [\[NeurIPS 2025\] QiMeng-NeuComBack: Self-Evolving Translation from IR to Assembly Code](../../NeurIPS2025/aigc_detection/qimeng-neucomback_self-evolving_translation_from_ir_to_assembly_code.md)
 - [\[ICLR 2026\] Death of the Novel(ty): Beyond n-Gram Novelty as a Metric for Textual Creativity](death_of_the_novelty_beyond_n-gram_novelty_as_a_metric_for_textual_creativity.md)
 - [\[ICLR 2026\] DMAP: A Distribution Map for Text](dmap_a_distribution_map_for_text.md)
 - [\[ICLR 2026\] PoliCon: Evaluating LLMs on Achieving Diverse Political Consensus Objectives](policon_evaluating_llms_on_achieving_diverse_political_consensus_objectives.md)
-- [\[ICLR 2026\] CLARC: C/C++ Benchmark for Robust Code Search](clarc_cc_benchmark_for_robust_code_search.md)
 
 </div>
 

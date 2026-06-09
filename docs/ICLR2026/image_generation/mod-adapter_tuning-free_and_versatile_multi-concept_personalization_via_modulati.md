@@ -43,31 +43,31 @@ tags:
 
 ### 整体框架
 
-基于 FLUX（DiT 架构），输入概念图像和对应概念词（如 "surface"），Mod-Adapter 预测概念特定的调制方向 $\{\Delta_i | i=1,...,N\}$（$N=57$ 个 DiT block）。这些方向被加到对应概念文本 token 的调制向量上，通过 joint attention 层产生对概念相关图像区域的局部化影响。多概念推理时，多个概念的调制方向分别作用于各自的文本 token。
+这篇论文要解决的是「无需测试时微调地同时定制物体和抽象概念」。关键观察是：DiT（论文用 FLUX）里的 AdaLN 调制空间具有局部性和语义可加性——给不同 token 配不同的调制向量，就能让控制效果局部地落到概念相关的图像区域。Mod-Adapter 顺着这条路，把「定制某个概念」转化为「预测一组概念特定的调制方向」。
+
+具体来说，输入一张概念图像和对应的概念词（如 "surface"），Mod-Adapter 输出调制方向 $\{\Delta_i \mid i=1,\dots,N\}$，其中 $N=57$ 对应 FLUX 的 57 个 DiT block。这些方向被加到该概念文本 token 的调制向量上，经过 joint attention 层后，只对这个概念相关的图像区域产生影响。多概念推理时各概念的调制方向分别作用在各自的文本 token 上，互不干扰，从而实现解耦控制。
 
 ### 关键设计
 
-1. **Vision-Language Cross-Attention**:
+**1. Vision-Language Cross-Attention：以概念词为锚点，从图像里只抠出目标概念。**
 
-    - 功能：从概念图像中提取目标概念的视觉特征
-    - 核心思路：概念词（如 "surface"）经 CLIP 文本编码器 + MLP 映射层得到 neutral feature，投影为 $N$ 个 query（加正弦位置编码以区分不同 DiT block）；概念图像经 CLIP 图像编码器得到 key/value；通过交叉注意力 $\text{Attention}(Q_i, K, V)$ 提取概念视觉特征
-    - 设计动机：利用 CLIP 的图文对齐能力，以概念词为锚点从图像中精准提取对应概念特征，而非粗暴地提取全局特征
+直接拿整张概念图的全局特征会把不相关的内容也带进来——这正是现有 tuning-free 方法处理姿态/材质时「copy-paste 整个物体」的根源。这里改用概念词作锚点来定向提取：概念词先过 CLIP 文本编码器和一个 MLP 映射层得到 neutral feature，再投影成 $N$ 个 query（每个 query 加正弦位置编码，用来区分不同的 DiT block）；概念图像过 CLIP 图像编码器得到 key/value。每个 block 对应的视觉特征由交叉注意力 $\text{Attention}(Q_i, K, V)$ 提取。借助 CLIP 本身的图文对齐能力，概念词就像一把钥匙，引导注意力对准图像中真正属于该概念的部分，而不是粗暴地取全局表征。
 
-2. **Mixture-of-Experts (MoE) 投影**:
+**2. Mixture-of-Experts (MoE) 投影：用聚类路由把不同类型概念映射到调制空间。**
 
-    - 功能：将提取的概念视觉特征准确映射到 DiT 调制空间
-    - 核心思路：不同类型的概念（物体 vs 材质 vs 姿态）映射模式差异大，用单个 MLP 不够。引入 12 个 expert MLP，每个处理相似映射模式的概念。路由机制采用基于 k-means 聚类的无参数方案——对训练集中所有概念词的 neutral feature 做 k-means 聚类分配 expert
-    - 设计动机：可学习的线性门控网络存在 expert 利用不均衡问题，k-means 路由简单有效地避免了这个问题
+提取出的视觉特征还要映射进 DiT 调制空间，而物体、材质、姿态这些概念的映射模式差别很大，单个 MLP 学不过来。于是引入 12 个 expert MLP，每个负责一类映射模式相近的概念。路由不走可学习的门控网络，而是用一个无参数方案：对训练集中所有概念词的 neutral feature 做 k-means 聚类，按聚类结果把概念分配给对应 expert。这样做是因为可学习的线性门控容易出现 expert 利用不均衡（少数 expert 被反复选中、其余闲置），而 k-means 路由按特征分布天然把概念均匀摊到各 expert 上，简单却有效。
 
-3. **VLM 引导预训练**:
+**3. VLM 引导预训练：先用文字描述把 image–modulation 的大 gap 抹平。**
 
-    - 功能：为 Mod-Adapter 提供良好初始化，弥合概念图像空间和 DiT 调制空间之间的巨大 gap
-    - 核心思路：利用 VLM 对概念图像生成详细描述 $p^+$（如 "transparent cyan-green glass surface"），将其编码为调制空间的监督信号。预训练损失为 $\mathcal{L}_{\text{pretrain}} = \frac{1}{N}\sum_{i=1}^N \|F_i^+ - \mathcal{M}(\text{CLIP}(p^+))\|_2^2$
-    - 设计动机：预训练阶段不需要通过 DiT 前向传播，轻量高效；VLM 的强图像理解能力提供了高质量的语义桥梁
+从概念图像空间到 DiT 调制空间之间隔着一个巨大的 gap，直接端到端训练很难收敛（消融里去掉这步 CP·PF 从 0.62 暴跌到 0.17）。作者的办法是先做一轮轻量预训练给 Mod-Adapter 一个好的初始化：用 VLM 对概念图像生成详细文字描述 $p^+$（如 "transparent cyan-green glass surface"），把这段描述编码后当作调制空间的监督信号，让 Mod-Adapter 的输出向它对齐。预训练损失为
+
+$$\mathcal{L}_{\text{pretrain}} = \frac{1}{N}\sum_{i=1}^N \big\|F_i^+ - \mathcal{M}(\text{CLIP}(p^+))\big\|_2^2$$
+
+这一步的好处在于全程不经过 DiT 前向传播，开销很低；同时 VLM 的强图像理解能力提供了一座高质量的语义桥梁，把视觉信息先翻译成文字、再翻进调制空间，比硬扛 gap 要稳得多。
 
 ### 损失函数 / 训练策略
 
-预训练阶段只用 $\mathcal{L}_{\text{pretrain}}$（MSE loss），不接入 DiT；正式训练阶段用 FLUX 的标准扩散去噪损失。训练数据包括 MVImgNet（物体）+ AFHQ（动物面部）+ FLUX 自蒸馏合成数据（抽象概念），共 106K 图像。
+预训练阶段只用 $\mathcal{L}_{\text{pretrain}}$（MSE loss），不接入 DiT；正式训练阶段切换为 FLUX 的标准扩散去噪损失。训练数据混合了 MVImgNet（物体）、AFHQ（动物面部）和 FLUX 自蒸馏合成数据（抽象概念），共 106K 张图像。
 
 ## 实验关键数据
 

@@ -37,20 +37,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-训练 M=50 个共享基平面 $\mathcal{B} = \{B_1, ..., B_{50}\}$ + 每个对象的微观平面 $T_i^{mic}$ 和权重 $W_i$ → 拼接得到 Fused-Plane → 在潜空间渲染 → 解码器恢复 RGB。
+Fused-Planes 要解决的是"千个对象就要训千次 Tri-Plane"的浪费问题，办法是把同类对象之间高度重复的几何/纹理模式抽出来共享，只为每个对象单独训练它真正独特的那部分。具体来说，全体对象共用一组 $M=50$ 个基平面 $\mathcal{B} = \{B_1, ..., B_{50}\}$，每个对象 $i$ 只持有一个小小的微观平面 $T_i^{mic}$ 和一个权重向量 $W_i$；推理时用 $W_i$ 把基平面线性组合出"宏观平面"，再与微观平面拼接成完整的 Fused-Plane。渲染不在 RGB 空间进行，而是先在一个低维潜空间出图，再由解码器恢复 RGB，从而把单对象训练从一小时压到十分钟以内。
 
 ### 关键设计
 
-1. **宏观-微观分解**：macro 平面 $T_i^{mac} = \sum_k w_i^k B_k$ 编码类级共享特征（22维），micro 平面 $T_i^{mic}$ 编码对象特有细节（10维），拼接为 32 维特征。每个对象仅需存储微观平面（480KB）+权重向量（811B），而非完整 1.5MB Tri-Plane。
+**1. 宏观-微观分解：把每个对象的 Tri-Plane 拆成"共享基底 + 私有残差"，避免重复训练同类共性。**
 
-2. **潜空间渲染**：联合训练图像自编码器（基于 SD VAE），在低维潜空间而非 RGB 空间渲染，降低渲染分辨率并加速训练。关键：自编码器与 Fused-Planes 联合训练（非预训练），保证质量。
+这一步直接针对"独立训练忽视同类结构相似性"的痛点。一个对象的特征被拆成两部分相加：宏观平面 $T_i^{mac} = \sum_k w_i^k B_k$ 是 50 个共享基平面的加权和，负责承载类级别的共性结构（22 维），微观平面 $T_i^{mic}$ 则只编码这个对象独有的细节（10 维），两者拼接得到 32 维特征。这样设计的直接好处是存储成本被压到极致——共享的基平面是全局一份，分摊到每个对象后，单对象只需存一个 480KB 的微观平面加一个 811B 的权重向量，而不是完整的 1.5MB Tri-Plane。共性越强、对象越多，这套分摊就越划算。
 
-3. **两阶段训练策略**：Regime 1 用前 500 个对象联合优化所有组件（基平面 + 编码器 + 解码器）；Regime 2 冻结编码器，训练剩余对象——因为编码器在 R1 已收敛。
+**2. 潜空间渲染：把渲染从 RGB 空间搬到低维潜空间，并和表示一起从零联合训练。**
 
-### 损失函数
-$\mathcal{L} = \mathcal{L}^{latent} + \mathcal{L}^{RGB} + 0.1 \cdot \mathcal{L}^{ae}$
+逐对象优化慢，很大一部分开销在高分辨率 RGB 体渲染上。这里引入一个基于 SD VAE 的图像自编码器，让 NeRF 直接在它压出的低维潜空间里渲染，分辨率大幅下降、训练随之提速。关键的一点是这个自编码器不能拿现成预训练权重直接用——预训练 VAE 的分布与 NeRF 渲染出的特征分布对不上——所以它必须与 Fused-Planes 从头联合训练，渲出的潜表示再经解码器还原成 RGB，质量才不掉。这也解释了为什么后面消融里"去掉潜空间、回到 RGB 空间"会让训练时间从 8.92 分钟反弹到 63.52 分钟。
 
-三个损失分别监督潜空间渲染、RGB 解码和自编码器重建。
+**3. 两阶段训练策略：先用少量对象把共享件练熟，再冻结它们快速吞下剩余对象。**
+
+如果每来一个新对象都要顺带优化基平面和自编码器，共享的意义就打了折扣。于是训练分两段：Regime 1 只用前 500 个对象，联合优化全部组件（基平面、编码器、解码器），把这些全局共享的部件练到收敛；Regime 2 处理剩余对象时直接冻结已经收敛的编码器，只训练各自的微观平面和权重。共享件一旦固定，新对象的训练就退化成一个极轻量的拟合问题，这正是规模化时单对象成本能稳定维持在分钟级的原因。
+
+### 损失函数 / 训练策略
+训练目标由三项相加构成：
+
+$$\mathcal{L} = \mathcal{L}^{latent} + \mathcal{L}^{RGB} + 0.1 \cdot \mathcal{L}^{ae}$$
+
+其中 $\mathcal{L}^{latent}$ 监督潜空间里的渲染结果，$\mathcal{L}^{RGB}$ 约束解码回 RGB 后的图像保真，$\mathcal{L}^{ae}$（权重 0.1）则保证自编码器自身的重建能力不退化。三项配合，使得"在潜空间渲染、再解码回像素"这条链路端到端可靠。
 
 ## 实验关键数据
 
@@ -111,10 +119,10 @@ Fused-Planes 比 Tri-Planes: 7.2× 快，3.2× 省存储，PSNR 高 2.32dB，渲
 ## 相关论文
 
 - [\[ICCV 2025\] Compression of 3D Gaussian Splatting with Optimized Feature Planes and Standard Video Codecs](../../ICCV2025/3d_vision/compression_of_3d_gaussian_splatting_with_optimized_feature_planes_and_standard_.md)
+- [\[NeurIPS 2025\] You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering](../../NeurIPS2025/3d_vision/you_can_trust_your_clustering_model_a_parameter-free_self-boosting_plug-in_for_d.md)
 - [\[CVPR 2026\] Where, What, Why: Toward Explainable 3D-GS Watermarking](../../CVPR2026/3d_vision/where_what_why_toward_explainable_3d-gs_watermarking.md)
 - [\[AAAI 2026\] Can Protective Watermarking Safeguard the Copyright of 3D Gaussian Splatting?](../../AAAI2026/3d_vision/can_protective_watermarking_safeguard_the_copyright_of_3d_gaussian_splatting.md)
-- [\[ICLR 2026\] EgoNight: Towards Egocentric Vision Understanding at Night with a Challenging Benchmark](egonight_towards_egocentric_vision_understanding_at_night_with_a_challenging_ben.md)
-- [\[CVPR 2025\] You See it, You Got it: Learning 3D Creation on Pose-Free Videos at Scale](../../CVPR2025/3d_vision/you_see_it_you_got_it_learning_3d_creation_on_pose-free_videos_at_scale.md)
+- [\[NeurIPS 2025\] HyPlaneHead: Rethinking Tri-plane-like Representations in Full-Head Image Synthesis](../../NeurIPS2025/3d_vision/hyplanehead_rethinking_tri-plane-like_representations_in_full-head_image_synthes.md)
 
 </div>
 

@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **编码：离散集合→连续场**:
+**1. 编码：把离散集合摊成连续场，让基数自然显现。**
 
-    - 功能：将 $N$ 个对象映射为密度场和特征场
-    - 核心思路：$\rho(\mathbf{r}) = \frac{1}{\alpha} \sum_{i=1}^N K(\mathbf{r}; \mathbf{r}_i)$，$\mathbf{h}(\mathbf{r}) = \frac{1}{\alpha} \sum_{i=1}^N \mathbf{x}_i K(\mathbf{r}; \mathbf{r}_i)$，使用高斯核且 $\alpha = \int K \,d\mathbf{r}$
-    - 设计动机：每个核贡献固定积分量 $\alpha$，使基数可从密度场总质量直接读出；特征场与密度场共享支撑，保证位置-属性对齐
+变基数问题的根子在于"对象数 $N$ 未知"，CORDS 的做法是把每个对象用一个核函数铺开、再叠加，于是 $N$ 个离散点变成两条连续场：密度场 $\rho(\mathbf{r}) = \frac{1}{\alpha} \sum_{i=1}^N K(\mathbf{r}; \mathbf{r}_i)$ 编码"哪里有多少个对象"，特征场 $\mathbf{h}(\mathbf{r}) = \frac{1}{\alpha} \sum_{i=1}^N \mathbf{x}_i K(\mathbf{r}; \mathbf{r}_i)$ 编码"这些对象各自带什么属性"。这里用高斯核，关键的归一化常数 $\alpha = \int K \,d\mathbf{r}$ 让每个核对总积分恰好贡献 1，因此密度场的总质量直接等于基数——数对象不再需要预分配 slot 或辅助计数头，而是积分一下就读出来。特征场刻意与密度场共享同一组核中心和支撑，保证"某个位置有对象"和"它的属性是什么"在空间上严格对齐。
 
-2. **解码：连续场→离散集合**:
+**2. 解码：三步把场精确还原成集合，构成可逆双射。**
 
-    - 功能：从预测的场精确恢复对象集合
-    - 核心思路：(1) 基数 $N = \int \rho \,d\mathbf{r}$；(2) 位置：$\min_{\mathbf{r}_1,...,\mathbf{r}_N} \int (\rho - \frac{1}{\alpha}\sum_i K(\mathbf{r};\mathbf{r}_i))^2 d\mathbf{r}$；(3) 特征：$\mathbf{X} = \alpha G^{-1} B$，$G$ 为 Gram 矩阵
-    - 设计动机：三步解码每步有理论保证。核间距足够大时 $G$ 正定，系统有唯一解，整个编解码构成双射
+编码若不可逆，连续表示就只是个近似。CORDS 把解码拆成三步，每步都有闭式或有理论保证的解：基数由总质量给出 $N = \int \rho \,d\mathbf{r}$；位置由核中心拟合给出，求解 $\min_{\mathbf{r}_1,...,\mathbf{r}_N} \int (\rho - \frac{1}{\alpha}\sum_i K(\mathbf{r};\mathbf{r}_i))^2 d\mathbf{r}$ 让叠加的核重建出预测密度场；属性则在位置确定后线性求解 $\mathbf{X} = \alpha G^{-1} B$，其中 $G$ 是核两两内积构成的 Gram 矩阵。当核中心间距足够大时 $G$ 正定，这个线性系统有唯一解，于是从场回到集合的整条路径无歧义——编码与解码合起来构成精确双射，这是它区别于 CenterNet 等"热力图峰值检测 + 启发式恢复"方法的核心。
 
-3. **采样策略**:
+**3. 采样策略：按场的稀疏性选离散化方式，喂给神经网络。**
 
-    - 功能：将连续场离散化供神经网络处理
-    - 核心思路：3D 分子用重要性采样（按密度采样集中在信号处）；图像/时序用均匀网格采样
-    - 设计动机：3D 空间均匀网格效率低，重要性采样避免边界框约束
+连续场要交给神经网络处理，必须先离散成有限点集，而不同模态的信号分布差别很大。3D 分子里信号高度集中在少数原子附近、大片空间是空的，均匀网格会把算力浪费在空白处，所以用重要性采样——按密度把采样点集中到有信号的区域，顺带避开了固定边界框的约束；图像和时序信号分布相对均匀，则直接用均匀网格采样即可。
 
 ### 损失函数 / 训练策略
 - 目标检测：$\mathcal{L} = \mathcal{L}_{\text{MSE}} + \lambda(\hat{N} - N)^2$，MSE 约束场重建，计数项约束密度积分
@@ -120,10 +114,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Reverse Distillation: Consistently Scaling Protein Language Model Representations](reverse_distillation_consistently_scaling_protein_language_model_representations.md)
+- [\[ICLR 2026\] Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct](ultra-fast_language_generation_via_discrete_diffusion_divergence_instruct.md)
 - [\[CVPR 2026\] CryoHype: Reconstructing a Thousand Cryo-EM Structures with Transformer-Based Hypernetworks](../../CVPR2026/computational_biology/cryohype_reconstructing_a_thousand_cryo-em_structures_with_transformer-based_hyp.md)
-- [\[ICLR 2026\] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
-- [\[NeurIPS 2025\] Constrained Discrete Diffusion](../../NeurIPS2025/computational_biology/constrained_discrete_diffusion.md)
 - [\[ICCV 2025\] MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/computational_biology/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
+- [\[ICLR 2026\] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
 
 </div>
 

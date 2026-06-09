@@ -34,30 +34,25 @@ tags:
 
 ## 方法详解
 
-### 问题诊断
+### 整体框架
 
-**Proposition 1**：对于 DDIM 采样，log 策略比率分解为：
+PCPO 把 GRPO 式 T2I 对齐看成一个去噪轨迹上的策略梯度问题，先诊断出标准目标的两大病灶——数值上易爆的策略比率、以及采样器数学结构强加的非均匀时间步权重——再针对性地换掉目标函数并校正每一步的信用权重。整套修正不动模型结构和采样流程，只改训练目标和方差/重加权调度，因此可以直接套在 DDPO、DanceGRPO、Flow-GRPO 等现有框架上。
 
-$$\log \rho_t = -[w(t)(\hat{\boldsymbol{\varepsilon}}_\theta^{(t)} - \hat{\boldsymbol{\varepsilon}}_{\text{old}}^{(t)}) \cdot \boldsymbol{\epsilon}_{\text{old}}^{(t)} + \frac{1}{2}\|w(t)(\hat{\boldsymbol{\varepsilon}}_\theta^{(t)} - \hat{\boldsymbol{\varepsilon}}_{\text{old}}^{(t)})\|^2]$$
+### 关键设计
 
-其中原生权重 $w(t) = C(t)/\sigma_t$ 高度非均匀（跨越数个量级），是训练不稳定的主要来源。
+**1. 问题诊断：揪出非均匀的原生权重 $w(t)$。** 不稳定到底从哪来，作者用 Proposition 1 给出了 DDIM 采样下 log 策略比率的精确分解：
 
-### PCPO 核心设计
+$$\log \rho_t = -\left[w(t)(\hat{\boldsymbol{\varepsilon}}_\theta^{(t)} - \hat{\boldsymbol{\varepsilon}}_{\text{old}}^{(t)}) \cdot \boldsymbol{\epsilon}_{\text{old}}^{(t)} + \frac{1}{2}\|w(t)(\hat{\boldsymbol{\varepsilon}}_\theta^{(t)} - \hat{\boldsymbol{\varepsilon}}_{\text{old}}^{(t)})\|^2\right]$$
 
-**步骤 1：稳定 log-hinge 目标**
+关键在于原生权重 $w(t) = C(t)/\sigma_t$ 在不同时间步上跨越数个量级，导致同一条轨迹里某些步的梯度被任意放大、另一些被压没。把它对照标准 REINFORCE 来看就更清楚：REINFORCE 里各动作的贡献是均匀缩放的，而扩散采样器的梯度公式形式相同却多出了这个非均匀的 $w(t)$——它是采样器数学的副产物，而非任何刻意设计的信用分配策略。诊断到这一层，后面的修正就有了明确靶点。
 
-用 $\log \rho_t$ 替换不稳定的 $\rho_t - 1$（Taylor 近似误差 < 1.2%）：
+**2. 稳定的 log-hinge 目标：把易爆的 $\rho_t-1$ 换成 $\log\rho_t$。** 标准目标里出现的 $\rho_t - 1$ 在数值精度有限时容易被误差主导，作者改用更平滑的 $\log\rho_t$，二者在小更新下差异极小（Taylor 近似误差 < 1.2%），却显著降低了裁剪比率。重构后的基础目标为
 
 $$\mathcal{L}_{\text{PCPO-base}}(\theta) = \mathbb{E}\left[\sum_{t=1}^T \max\{0, \xi|A| - A\log\rho_t\}\right]$$
 
-**步骤 2：成比例信用分配**
+其中 $A$ 是优势、$\xi$ 控制 hinge 边界。这一步只换目标形式不引入额外开销，是后续成比例信用分配能稳定生效的前提。
 
-- **扩散模型**：重新设计 DDIM 方差调度 $\tilde{\sigma}_t$，使 $w(t) = w^*$（常数），$w^*$ 缩放以匹配原始权重均值
-- **流模型**（Proposition 2）：直接重加权训练目标，使信用与积分区间成正比：$w(t_i) = \zeta \Delta t_i$
-
-### 与 REINFORCE 的类比
-
-标准 REINFORCE 中各动作贡献均匀缩放。扩散采样器的梯度公式类似，但引入了非均匀权重 $w(t)$——这是采样器数学的产物而非刻意设计的信用分配策略。PCPO 通过强制均匀权重恢复正确的信用分配。
+**3. 成比例信用分配：强制每步权重对齐。** 诊断出 $w(t)$ 非均匀是病根后，PCPO 直接把它拉平。对扩散模型，重新设计 DDIM 的方差调度 $\tilde{\sigma}_t$，使 $w(t) = w^*$ 成为常数，并把 $w^*$ 缩放到与原始权重的均值匹配，从而既消除非均匀又不改变整体梯度量级；对流模型，Proposition 2 给出更直接的做法——重加权训练目标让每步信用与其积分区间成正比，$w(t_i) = \zeta \Delta t_i$。两种修正殊途同归地恢复了正确的信用分配，这也是 FLUX 这类时间步偏移更剧烈、原生权重更不均匀的模型上加速最明显的原因。
 
 ## 实验关键数据
 
@@ -122,8 +117,8 @@ $$\mathcal{L}_{\text{PCPO-base}}(\theta) = \mathbb{E}\left[\sum_{t=1}^T \max\{0,
 - [\[ICLR 2026\] Asynchronous Denoising Diffusion Models for Aligning Text-to-Image Generation](asynchronous_denoising_diffusion_models_for_aligning_text-to-image_generation.md)
 - [\[ICLR 2026\] AlignTok: Aligning Visual Foundation Encoders to Tokenizers for Diffusion Models](aligntok_aligning_visual_foundation_encoders_to_tokenizers_for_diffusion_models.md)
 - [\[ICLR 2026\] Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
-- [\[CVPR 2026\] Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models](../../CVPR2026/image_generation/neighbor_grpo_contrastive_ode_policy_optimization_aligns_flow_models.md)
-- [\[ICML 2026\] Barriers to Counterfactual Credit Attribution for Autoregressive Models](../../ICML2026/image_generation/barriers_to_counterfactual_credit_attribution_for_autoregressive_models.md)
+- [\[AAAI 2026\] Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](../../AAAI2026/image_generation/margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
+- [\[CVPR 2025\] Calibrated Multi-Preference Optimization for Aligning Diffusion Models](../../CVPR2025/image_generation/calibrated_multi-preference_optimization_for_aligning_diffusion_models.md)
 
 </div>
 

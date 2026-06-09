@@ -41,30 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AIR 工作在 Transformer 每层的 FFN 阶段，由两个组件串联构成：(1) Prototype-based Token Reduction 将视觉 token 压缩为紧凑子集；(2) OT-guided Patch Reinforcement 通过最优传输评估 patch 与隐状态的对齐度，选择性注入高对齐 patch。整个流程无需训练，可直接插入任意 MLLM。
+AIR 嵌在 Transformer 每一层的 FFN 阶段，做的事情就一件——在解码当前 token 时，把"真正相关"的视觉信息以残差形式补回 FFN 输出。它先用原型距离把数百个视觉 token 精简成少数最有信息量的子集，再用最优传输衡量当前隐状态和各图像 patch 的对齐程度，只把高对齐的 patch 注入增强。整个过程无需训练，可直接挂载到 LLaVA、Qwen-VL、GLM-4V 等任意 MLLM 上。
 
 ### 关键设计
 
-1. **Prototype-based Token Reduction**:
+**1. 原型距离的 token 精简：先把背景冗余 token 筛掉。**
 
-    - **功能**: 将 K 个视觉 token 压缩为 Q 个（Q << K），保留最有信息量的 token
-    - **核心思路**: 计算所有视觉 token 的均值作为原型(prototype) h_p，按各 token 到原型的 L2 距离排序，保留距离最大的 Top-Q 个 token——因为距原型越远的 token 编码了越独特的视觉信息
-    - **设计动机**: 全量 576 个 token 中大量是相似的背景 token；保留离群 token 可抑制冗余、降低后续 OT 计算开销
+LLaVA 一张图就有 576 个视觉 token，其中绝大多数编码的是天空、地面这类高度相似的背景，全量参与后续计算既慢又会引入噪声。AIR 先对所有视觉 token 取均值得到一个"原型" $h_p$，把它当作整图的平均语义中心，再按每个 token 到原型的 L2 距离 $\|h_i - h_p\|_2$ 排序，只保留距离最大的 Top-$Q$ 个（$Q \ll K$）。背景 token 彼此雷同、紧贴原型会被淘汰，而前景目标这类"离群"token 编码了独特信息、离原型远会被保留。这一步既抑制了冗余，又把后续最优传输的计算量从 $K$ 压到 $Q$。
 
-2. **OT-guided Patch Reinforcement**:
+**2. 最优传输引导的 patch 选择：只增强和当前生成对齐的区域。**
 
-    - **功能**: 将图像裁剪为 M 个 patch，用最优传输评估每个 patch 与当前隐状态的对齐程度，仅注入对齐度高（OT 距离低）的 patch
-    - **核心思路**: 将隐状态和 patch embedding 建模为离散分布，用 Sinkhorn 算法高效求解 OT 距离 d_OT(m)；设阈值 τ 选择 d_OT(m) ≤ τ 的 patch 集合 M；将选中 patch 的 embedding 拼接后注入 FFN
-    - **设计动机**: OT 距离捕捉全局几何结构，比逐点余弦相似度更敏感。论文理论证明 OT 的区分灵敏度严格高于余弦距离
+精简之后还要回答"该补哪块图像区域"。AIR 把原图裁成 $M$ 个 patch，将精简后的隐状态和每个 patch 的 embedding 各自建模为离散分布，用 Sinkhorn 算法高效求解二者之间的最优传输距离 $d_{\text{OT}}(m)$。OT 距离捕捉的是两个分布间的整体几何匹配，比逐点余弦相似度对"是否真的对齐"更敏感——论文给出形式化证明，OT 的区分灵敏度严格高于余弦距离，这也解释了消融里 OT 选择优于 Cosine（CHAIR_S 18.4 vs 19.8）。设一个阈值 $\tau$，只挑出 $d_{\text{OT}}(m) \le \tau$ 的 patch 集合 $\mathcal{M}$，把它们的 embedding 拼成 $\tilde{Z}$ 送进增强。这样无关背景 patch 自然被滤掉，避免了 MemVR 那种全量注入带来的干扰。
 
-3. **选择性视觉接地(Selective Visual Grounding)**:
+**3. 残差式选择性视觉接地：增强不改变原始行为。**
 
-    - **功能**: 最终的 FFN 输出 = 原始 FFN 输出 + 精简隐状态与选中 patch 的交互增强项
-    - **核心思路**: FFN(H|Z̃) = φ(HW₁)W₂ᵀ + φ(H'Z̃ᵀ)Z̃，其中 H' 是精简后的隐状态，Z̃ 是 OT 选中的 patch embeddings
-    - **设计动机**: 将增强项作为残差加入，不改变模型原始行为，仅在有高对齐 patch 时提供额外视觉接地
+选好 patch 后，AIR 把视觉信号以残差项的形式加回 FFN 输出，而不是替换原计算：
 
-### 损失函数 / 训练策略
-无需训练。超参数：token 精简保留数 Q、OT 阈值 τ、patch 数 M。
+$$\text{FFN}(H\mid \tilde{Z}) = \phi(HW_1)W_2^\top + \phi(H'\tilde{Z}^\top)\tilde{Z}$$
+
+其中第一项是原始 FFN，第二项是新增的视觉接地项，$H'$ 是精简后的隐状态，$\tilde{Z}$ 是 OT 选中的 patch embeddings。残差形式保证了在没有高对齐 patch 时增强项趋近于零、模型行为不变；只有当确实存在与当前生成强相关的视觉证据时才注入额外接地。整套方法无需训练，唯一需要调的就是精简保留数 $Q$、OT 阈值 $\tau$ 和 patch 数 $M$ 三个超参数。
 
 ## 实验关键数据
 

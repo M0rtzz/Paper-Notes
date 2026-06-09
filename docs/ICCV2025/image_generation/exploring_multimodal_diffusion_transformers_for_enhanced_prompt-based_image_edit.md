@@ -140,10 +140,10 @@ $$\mathbf{q}\mathbf{k}^T = \begin{bmatrix} \mathbf{q}_i\mathbf{k}_i^T & \mathbf{
 ## 相关论文
 
 - [\[ICCV 2025\] Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)
+- [\[CVPR 2025\] Mitigating Memorization in Text-to-Image Diffusion via Region-Aware Prompt Augmentation and Multimodal Copy Detection](../../CVPR2025/image_generation/mitigating_memorization_in_text-to-image_diffusion_via_region-aware_prompt_augme.md)
 - [\[ICCV 2025\] Addressing Text Embedding Leakage in Diffusion-Based Image Editing](addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)
 - [\[ICCV 2025\] PLA: Prompt Learning Attack against Text-to-Image Generative Models](pla_prompt_learning_attack_against_text-to-image_generative_models.md)
 - [\[ICCV 2025\] NuiScene: Exploring Efficient Generation of Unbounded Outdoor Scenes](nuiscene_exploring_efficient_generation_of_unbounded_outdoor_scenes.md)
-- [\[ICML 2026\] Diagnosing and Correcting Concept Omission in Multimodal Diffusion Transformers](../../ICML2026/image_generation/diagnosing_and_correcting_concept_omission_in_multimodal_diffusion_transformers.md)
 
 </div>
 

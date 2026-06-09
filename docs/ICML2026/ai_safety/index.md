@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 AI 安全方向37篇论文解读
+  ICML2026 AI 安全方向38篇论文解读
 description: >-
-  37篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  38篇ICML2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、水印/隐写、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "AI 安全"
@@ -17,9 +17,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**🧪 ICML2026** · **37** 篇论文解读
+**🧪 ICML2026** · **38** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (26)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (44)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (70)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (25)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (21)](../../ICCV2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×4 · 联邦学习 ×3 · 水印/隐写 ×3 · 时序预测 ×2
 
@@ -122,6 +122,10 @@ tags:
 **[Persuasive Privacy](persuasive_privacy.md)**
 
 :   本文用 Sender–Receiver 两方 Stackelberg 博弈 + Bayesian Persuasion 思想，把"隐私"重新表述为 Receiver 在最坏 data-prior 下的相对评分规则损失，给出统一定义 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$-PP，同时把 pure DP 和 probabilistic DP 收编为特例，并首次为**确定性算法**（如无噪经验均值）给出非平凡的形式化隐私保证。
+
+**[Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)**
+
+:   这是一篇 ICML 立场论文：作者主张 ML 公平性研究不能只盯着 race/sex 这类"敏感属性"，而必须把"社会决定因素"（neighborhood、ADI、学校经费、医疗可及性等情境变量）也纳入审计，并用大学录取理论模型 + 美国人口普查数据 + 乳腺癌筛查半合成实验，证明只围绕敏感属性的缓解策略反而可能制造新的结构性不公。
 
 **[Position: Embodied AI Requires a Privacy-Utility Trade-off](position_embodied_ai_requires_a_privacy-utility_trade-off.md)**
 

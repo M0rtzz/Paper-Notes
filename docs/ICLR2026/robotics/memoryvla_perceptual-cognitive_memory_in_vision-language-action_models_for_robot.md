@@ -37,31 +37,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-视觉-语言认知模块(7B VLM) → 感知tokens($p$) + 认知token($c$) = 工作记忆 → PCMB存储/检索/融合/整合 → 记忆条件化扩散动作专家生成动作序列。
+MemoryVLA要解决的是「VLA 只看当前帧、做不好长时序任务」这一短板。它把每一帧的处理拆成三段流水线：先用一个 7B 视觉-语言认知模块把当前 RGB + 语言指令编码成两类工作记忆——保留视觉细节的**感知 tokens** $p$ 和压缩高层语义的**认知 token** $c$；这两类工作记忆一边写入一个持续累积的感知-认知记忆库（PCMB），一边从 PCMB 里检索相关历史、与当前信息门控融合；最后把记忆增强后的 tokens 作为条件喂给一个扩散动作专家，生成未来 N 步的 7DoF 动作序列。整条链路端到端训练，关键在于中间这块 PCMB——它让模型从「马尔可夫地只看当前」变成「非马尔可夫地参考历史」。
 
 ### 关键设计
 
-1. **视觉-语言认知模块**:
+**1. 视觉-语言认知模块：把当前帧拆成「细节」和「语义」两套表示。**
 
-    - 功能：从当前RGB+语言指令提取感知tokens和认知token
-    - 核心思路：并行DINOv2+SigLIP视觉编码 → SE瓶颈压缩为256个感知tokens $p$；LLaMA-7B处理视觉+语言 → EOS位置输出认知token $c$
-    - 设计动机：感知tokens保留细粒度视觉信息，认知token编码高层语义理解
+记忆要存什么、检索什么，前提是先把当前观测编码成合适的粒度。这里并行用 DINOv2 + SigLIP 做视觉编码，再经一个 SE 瓶颈压缩成 256 个感知 tokens $p$，保留细粒度的空间视觉信息；同时把视觉特征和语言指令一起送进 LLaMA-7B，取 EOS 位置的输出作为单个认知 token $c$，编码任务级的高层语义理解。之所以分两套，是因为长时序任务对历史的需求是分层的——有时需要回看像素级细节（物体到底动没动），有时只需要回看语义状态（这一步该不该算完成），后续的记忆库正是按这两个流分别存取。
 
-2. **感知-认知记忆库 (PCMB)**:
+**2. 感知-认知记忆库（PCMB）：用检索-融合-整合三步实现真正的时序记忆。**
 
-    - **记忆检索**：当前tokens用时间位置编码作为query，对PCMB做cross-attention，检索决策相关历史 $H^p, H^c$
-    - **门控融合**：$\tilde{x} = g^x \odot H^x + (1-g^x) \odot x$，$g^x = \sigma(\text{MLP}(\text{concat}[x, H^x]))$，自适应混合当前和历史信息
-    - **记忆整合**：容量满时，计算相邻条目余弦相似度，合并最相似的一对 → 保留关键信息的同时控制大小
+这是全文的核心，针对的痛点是前人那些「拼多帧 / LSTM 压缩 / 画轨迹」要么算力炸、要么丢信息、要么不是真正的记忆利用。PCMB 把工作记忆按时间不断写入一个有限容量的库，并通过三步机制让当前决策用上历史：
 
-3. **记忆条件化扩散动作专家**:
+- **记忆检索**：当前 tokens 加上时间位置编码作为 query，对 PCMB 做 cross-attention，检索出与当前决策相关的历史感知/认知信息 $H^p, H^c$——不是平均所有历史，而是按需取相关的那部分。
+- **门控融合**：检索到的历史不能无脑覆盖当前，于是用一个学到的门控自适应混合：
 
-    - 功能：以记忆增强的感知+认知tokens为条件，用扩散Transformer生成未来N步7DoF动作
-    - 设计动机：扩散策略能捕捉多模态动作分布，记忆条件化使其时序感知
+$$\tilde{x} = g^x \odot H^x + (1-g^x) \odot x, \qquad g^x = \sigma(\text{MLP}(\text{concat}[x, H^x]))$$
+
+门 $g^x$ 由当前信息 $x$ 和检索历史 $H^x$ 共同决定，因此简单任务时 $g$ 偏小、主要用当前观测，复杂的长时序任务时 $g$ 偏大、更多依赖历史。
+- **记忆整合**：库容量满时不简单丢弃最旧的（FIFO 会误删关键帧），而是计算相邻条目的余弦相似度，把最相似的一对合并——相邻且相似往往意味着冗余，合并它们能在控制库大小的同时保住关键的非冗余历史。
+
+**3. 记忆条件化扩散动作专家：让动作生成同时感知历史。**
+
+有了记忆增强的感知 + 认知 tokens，最后一步是把它们作为条件，用扩散 Transformer 去噪生成未来 N 步的 7DoF 动作。选扩散而非回归，是因为机器人动作分布天然多模态（同一状态可有多条合理轨迹）；而把记忆融合后的 tokens 作为条件，等于让原本只看当前的动作头也获得了时序感知——这正是它在 Push Buttons 这类「按压前后画面几乎无差异」的任务上能判断动作是否完成的关键。
 
 ### 损失函数 / 训练策略
-- 端到端训练，7B VLM在OXE数据集上预训练
-- 扩散动作专家用DDPM训练
-- 感知压缩模块SE-bottleneck，认知用EOS token
+整套框架端到端训练：7B VLM 先在 OXE 数据集上预训练；扩散动作专家用标准 DDPM 目标训练；感知侧用 SE-bottleneck 做压缩，认知侧取 EOS token 作为语义摘要。
 
 ## 实验关键数据
 
@@ -117,9 +118,9 @@ tags:
 
 - [\[ICML 2026\] Spatial Memory for Out-of-Vision Manipulation in Vision-Language-Action](../../ICML2026/robotics/spatial_memory_for_out-of-vision_manipulation_in_vision-language-action.md)
 - [\[ICLR 2026\] TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
+- [\[ICLR 2026\] ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
+- [\[ICLR 2026\] AutoFly: Vision-Language-Action Model for UAV Autonomous Navigation in the Wild](autofly_vision-language-action_model_for_uav_autonomous_navigation_in_the_wild.md)
 - [\[ICLR 2026\] RoboInter: A Holistic Intermediate Representation Suite Towards Robotic Manipulation](robointer_a_holistic_intermediate_representation_suite_towards_robotic_manipulat.md)
-- [\[ICLR 2026\] VLBiMan: Vision-Language Anchored One-Shot Demonstration Enables Generalizable Bimanual Robotic Manipulation](vlbiman_vision-language_anchored_one-shot_demonstration_enables_generalizable_bi.md)
-- [\[CVPR 2026\] Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](../../CVPR2026/robotics/lada_robotic_manipulation.md)
 
 </div>
 

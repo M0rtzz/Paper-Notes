@@ -40,29 +40,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HGPO 在标准 GRPO/GiGPO pipeline 中插入一个层次化 advantage 估计模块。对每个 step，先根据历史上下文构建多层嵌套 group，分别计算 advantage，再用自适应权重聚合。不需要额外模型或 rollout，完全基于 hashmap 离线查找。
+HGPO 想解决的是 group-based RL 里一个被忽视的偏差来源：同一 rollout 的不同 step 被塞进一个 group 算相对 advantage，但它们面对的历史上下文其实可能天差地别，混在一起算均值 baseline 就把偏差带了进来。它的做法是在标准 GRPO/GiGPO pipeline 里插一个层次化 advantage 估计模块——对每个 step，先按历史上下文一致性构建从粗到细的多层嵌套 group，在每一层各算一份 advantage，再用一组自适应权重把这些估计聚合成最终值。整条链路不引入任何额外模型或额外 rollout，分组与查找全部靠一个离线 hashmap 完成。
 
 ### 关键设计
 
-1. **Context-Aware Hierarchical Grouping**:
+**1. Context-Aware Hierarchical Grouping：按历史上下文一致性把 step 分成嵌套的多层 group。**
 
-    - 功能：按历史上下文一致性将 step 分层
-    - 核心思路：$G_k^H$ 包含共享前 k 步相同历史的所有 step。$k=0$ 是整个 rollout（所有 step 都共享空历史），$k=K$ 是最细粒度的 group
-    - 实现：用 hashmap 存储状态序列的 hash，$O(1)$ 查找
-    - 设计动机：更高 k 的 group 历史上下文更一致，advantage 估计偏差更低
+痛点很直接：把整个 rollout 的所有 step 当成一个 group，会把历史上下文完全不同的 step 当成可比对象。HGPO 的对策是定义 k-step 上下文算子 $\mathcal{C}_k$，构造一串嵌套 group $G_0^H \supseteq G_1^H \supseteq \cdots \supseteq G_K^H$：$G_k^H$ 只收那些共享前 k 步相同历史的 step。$k=0$ 时所有 step 都「共享空历史」，于是 $G_0^H$ 就是整个 rollout（退化回 GiGPO）；$k=K$ 时是约束最强、粒度最细的 group。k 越大，组内 step 的历史上下文越一致，用组内均值当 baseline 的偏差就越小。实现上把每个 step 的状态序列哈希后存进 hashmap，分组与查找都是 $O(1)$，不需要任何前向传播。
 
-2. **Adaptive Weighting Advantage Estimation**:
+**2. Adaptive Weighting Advantage Estimation：用一组随层级递增的权重聚合各层 advantage，显式控制 bias-variance。**
 
-    - 功能：聚合各层级的 advantage 估计
-    - 核心公式：$w_k = \frac{(k+1)^\alpha}{\sum_k (k+1)^\alpha}$，高层级（大 k）获更大权重
-    - $\alpha$ 控制偏差-方差权衡：$\alpha \to 0$ 退化为均匀权重，$\alpha \to \infty$ 退化为最细粒度
-    - 理论保证：HGPO 的 advantage 估计在 step-level（无偏高方差）和 Oracle 估计之间插值
+光有多层 group 还不够，得决定信谁多一点。HGPO 在每一层 $G_k^H$ 上各算一份 advantage，再用幂律权重聚合：
 
-3. **计算开销控制**:
+$$w_k = \frac{(k+1)^\alpha}{\sum_k (k+1)^\alpha}$$
 
-    - hashmap 离线查找，无需额外前向传播
-    - 每个迭代仅增加约 0.5 秒（总训练时间的 <0.001%）
-    - 与任何 group-based RL 方法兼容（GRPO、GiGPO、DAPO 等）
+层级越高（k 越大、上下文越一致、偏差越低）拿到的权重越大。指数 $\alpha$ 就是那个旋钮：$\alpha \to 0$ 时权重趋于均匀，相当于平摊各层估计；$\alpha \to \infty$ 时权重压到最细粒度那一层。论文给出理论保证——这样聚合出来的 advantage 估计，恰好落在 step-level（无偏但高方差）和 Oracle 估计之间做插值，于是「无偏高方差」和「有偏低方差」这对矛盾被收进一个可调参数里。
+
+**3. 计算开销控制：整套机制只多花约 0.5 秒/迭代，且与现有方法即插即用。**
+
+因为分组和查找全靠离线 hashmap，没有额外前向传播，HGPO 每个迭代只增加约 0.5 秒，占总训练时间不到 0.001%。也正因为它只改 advantage 怎么算、不动 rollout 和模型，所以能直接挂到任何 group-based RL 方法上——GRPO、GiGPO、DAPO 都兼容。
 
 ## 实验关键数据
 
@@ -131,10 +127,10 @@ GAE（Generalized Advantage Estimation）通过 $\lambda$ 参数在 TD(0) 和 MC
 ## 相关论文
 
 - [\[ICML 2026\] Long Live The Balance: Information Bottleneck Driven Tree-based Policy Optimization](../../ICML2026/llm_alignment/long_live_the_balance_information_bottleneck_driven_tree-based_policy_optimizati.md)
-- [\[ICLR 2026\] Optimal Sparsity of Mixture-of-Experts Language Models for Reasoning Tasks](optimal_sparsity_of_mixture-of-experts_language_models_for_reasoning_tasks.md)
-- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
 - [\[ICLR 2026\] Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [\[ICLR 2026\] Optimal Sparsity of Mixture-of-Experts Language Models for Reasoning Tasks](optimal_sparsity_of_mixture-of-experts_language_models_for_reasoning_tasks.md)
 - [\[ICLR 2026\] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
+- [\[ICLR 2026\] Learning More with Less: A Dynamic Dual-Level Down-Sampling Framework for Efficient Policy Optimization](learning_more_with_less_a_dynamic_dual-level_down-sampling_framework_for_efficie.md)
 
 </div>
 

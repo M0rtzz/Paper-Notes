@@ -42,43 +42,15 @@ tags:
 
 ### 整体框架
 
-UMDT 设置：$K$ 个域 $X^1, X^2, \ldots, X^K$，共享中心域 $X^c$，训练数据为 $K-1$ 个配对数据集 $\mathcal{D}_{k,c} = \{(x^k, x^c)\}$。Diffusion Router 分两个阶段实现任意跨域翻译：
+在 UMDT 设置下有 $K$ 个域 $X^1, \ldots, X^K$ 共享一个中心域 $X^c$，但训练数据只有 $K-1$ 个与中心域的配对数据集 $\mathcal{D}_{k,c}=\{(x^k, x^c)\}$。Diffusion Router 先用单个噪声预测网络学好所有「中心域 $\leftrightarrow$ 非中心域」的双向映射（间接翻译 iDR），非中心域之间靠经过中心域中转完成；再在此基础上微调出「非中心域 $\to$ 非中心域」的直接映射（直接翻译 dDR），把中转省掉。
 
-**阶段一：间接翻译（iDR）**
-- 学习所有中心域 $\leftrightarrow$ 非中心域的双向映射
-- 用单个噪声预测网络，通过 source/target 域标签条件化：
+### 关键设计
 
-$$\mathcal{L}_{paired}(\theta) = \mathbb{E}_{(x^k, x^c) \sim \mathcal{D}_{k,c}} \left[ \zeta \|\epsilon_\theta(x_t^k, t, x^c, k, c) - \epsilon\|_2^2 + (1-\zeta)\|\epsilon_\theta(x_t^c, t, x^k, c, k) - \epsilon\|_2^2 \right]$$
+**1. 路由器式统一条件化：用一个网络覆盖所有翻译方向。** UMDT 的核心扩展性难题是，若为每个方向单独建模，$K$ 个域要训练 $2(K-1)$ 个模型，域一多就不可行。DR 借鉴网络路由器「源地址/目标地址」的寻址思路，把 source 与 target 两个域标签直接编码进噪声预测网络 $\epsilon_\theta(x_t^{tgt}, t, x^{src}, tgt, src)$，于是同一套权重通过切换标签就能走遍所有翻译路径。iDR 阶段在配对数据上以双向噪声预测损失训练，$\zeta$ 平衡两个方向的权重：$\mathcal{L}_{paired}(\theta) = \mathbb{E}_{(x^k, x^c)} \big[ \zeta \|\epsilon_\theta(x_t^k, t, x^c, k, c) - \epsilon\|_2^2 + (1-\zeta)\|\epsilon_\theta(x_t^c, t, x^k, c, k) - \epsilon\|_2^2 \big]$。这一设计把模型数量从 $O(K)$ 压到 1，并且不限于星形拓扑，可自然推广到带多个中心域的生成树结构。
 
-- 非中心域间翻译通过中心域中转：$X^i \to X^c \to X^j$
+**2. 变分上界学习目标：让直接翻译能在没有配对数据时学起来。** 要把 $X^i \to X^j$ 这种无配对方向也训出来，最自然的想法是匹配以中心域为参考的分布 $p_{ref}(x^j|x^c)$，但直接优化它有两个拦路虎——需要从 $p(x'^c|x^i)$ 采样代价高，且 $p(x^j|x'^c)$ 没有闭式解无法评估。本文把原始 KL 散度沿扩散链分解，得到一个由各时间步转移核 KL 之和构成的变分上界：$\mathbb{E}_{\mathcal{D}_{i,c}}[D_{KL}(p_{ref}(x^j|x^c)\|p_\theta(x^j|x^i))] \le \sum_{t=1}^T \mathbb{E}[D_{KL}(p_{ref}(x_{t-1}^j|x_t^j, x^c)\|p_\theta(x_{t-1}^j|x_t^j, x^i))]$。逐层匹配转移核绕开了端到端的两次采样，再经标准重参数化就化简成一个干净的噪声蒸馏损失 $\mathcal{L}_{unpaired}(\theta) = \mathbb{E}[\|\epsilon_\theta(x_t^j, t, x^i, j, i) - \epsilon_{ref}(x_t^j, t, x^c, j, c)\|_2^2]$，其中 $\epsilon_{ref}$ 是冻结的预训练 iDR 网络，相当于让直接路径去模仿「经过中心域」的参考路径。最终用 $\mathcal{L}_{final} = \lambda_1 \mathcal{L}_{unpaired} + \lambda_2 \mathcal{L}_{paired}$ 联合训练，$\lambda_2$ 那一项把旧的配对映射拉住，避免微调把已学好的中心域翻译忘掉。
 
-**阶段二：直接翻译（dDR）**
-- 微调 iDR 支持直接跨域翻译 $X^i \to X^j$
-- 最小化变分上界目标 + 保持已学映射
-
-### 关键设计1: 变分上界学习目标
-
-直接学习 $p_\theta(x^j | x^i)$ 的核心困难在于：(1) 需从 $p(x'^c | x^i)$ 采样，计算昂贵；(2) 评估 $p(x^j | x'^c)$ 无闭式解。本文将原始 KL 散度分解为转移核 KL 散度之和的变分上界：
-
-$$\mathbb{E}_{\mathcal{D}_{i,c}} \left[ D_{KL}(p_{ref}(x^j | x^c) \| p_\theta(x^j | x^i)) \right] \leq \sum_{t=1}^T \mathbb{E}_{p_{ref}(x_t^j | x^c)} \left[ D_{KL}(p_{ref}(x_{t-1}^j | x_t^j, x^c) \| p_\theta(x_{t-1}^j | x_t^j, x^i)) \right]$$
-
-通过标准重参数化转化为噪声预测损失：
-
-$$\mathcal{L}_{unpaired}(\theta) = \mathbb{E} \left[ \|\epsilon_\theta(x_t^j, t, x^i, j, i) - \epsilon_{ref}(x_t^j, t, x^c, j, c)\|_2^2 \right]$$
-
-其中 $\epsilon_{ref}$ 是冻结的预训练 DR 噪声预测网络。最终损失 $\mathcal{L}_{final} = \lambda_1 \mathcal{L}_{unpaired} + \lambda_2 \mathcal{L}_{paired}$ 平衡新映射学习与旧映射保持。
-
-### 关键设计2: Tweedie 精化采样
-
-$\mathcal{L}_{unpaired}$ 中需要从条件分布 $p_{ref}(x_t^j | x^c)$ 采样，传统方法需从时间 $T$ 到 $t$ 完整去噪，计算昂贵。本文提出 Tweedie 精化——一种轻量级迭代采样方法：
-
-$$x_{t,(n+1)}^j = x_{t,(n)}^j + \sigma_t (\epsilon - \epsilon_\theta(x_{t,(n)}^j, t, x^c, j, c))$$
-
-初始化 $x_{t,(0)}^j \sim p_{ref}(x_t^j)$（无条件采样），通过少量精化步（实验中 $n \leq 7$）即可将无条件样本转化为条件样本。与现有精化技术相比，Tweedie 精化：(1) 将无条件样本转为条件样本（而非纠正偏离分布的样本到边缘分布）；(2) 在训练而非推理时使用；(3) 具有独特的数学形式。
-
-### 关键设计3: 统一条件化与可扩展性
-
-受网络路由器"源地址/目标地址"寻址启发，DR 将 source 和 target 域标签直接编码到噪声预测网络中。相比为每个翻译方向训练独立模型（需 $2(K-1)$ 个），DR 用单个网络覆盖所有翻译路径。该设计可自然扩展到生成树拓扑（多中心域），不限于星形结构。
+**3. Tweedie 精化：把训练时的条件采样从几十步压到几步。** 上面的损失要从条件分布 $p_{ref}(x_t^j|x^c)$ 采样，常规做法得从时间 $T$ 一路去噪到 $t$，每次梯度更新都背着这笔开销。作者提出 Tweedie 精化，改为从无条件样本出发做轻量迭代修正：$x_{t,(n+1)}^j = x_{t,(n)}^j + \sigma_t(\epsilon - \epsilon_\theta(x_{t,(n)}^j, t, x^c, j, c))$，初始 $x_{t,(0)}^j$ 直接从无条件边缘 $p_{ref}(x_t^j)$ 抽，再用网络对中心域条件 $x^c$ 的预测残差逐步把它「拽」向条件分布。实验里 $n\le 7$ 步就够，等价于把整段去噪轨迹换成局部几步精化。它和已有精化技术的区别在于：目标是把无条件样本转成条件样本（而非把离群样本拉回边缘分布），用在训练阶段而非推理阶段，因而具有不同的数学形式。
 
 ## 实验结果
 

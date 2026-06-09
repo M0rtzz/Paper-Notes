@@ -202,7 +202,7 @@ ELMO 将梯度计算与 SGD 更新融合进单个 Triton 内核，全程在 SRAM
 - [\[AAAI 2026\] Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models](../../AAAI2026/recommender/inference-aware_prompt_optimization_for_aligning_black-box_large_language_models.md)
 - [\[NeurIPS 2025\] R²ec: Towards Large Recommender Models with Reasoning](../../NeurIPS2025/recommender/r2ec_towards_large_recommender_models_with_reasoning.md)
 - [\[AAAI 2026\] AutoPP: Towards Automated Product Poster Generation and Optimization](../../AAAI2026/recommender/autopp_towards_automated_product_poster_generation_and_optimization.md)
-- [\[NeurIPS 2025\] Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
+- [\[ACL 2026\] MemRec: Collaborative Memory-Augmented Agentic Recommender System](../../ACL2026/recommender/memrec_collaborative_memory-augmented_agentic_recommender_system.md)
 
 </div>
 

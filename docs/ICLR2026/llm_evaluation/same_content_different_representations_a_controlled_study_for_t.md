@@ -41,33 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为表格 + 自然语言问题，输出为答案。核心不是提出新的 QA 模型，而是构建诊断基准 **RePairTQA**：通过 verbalization pipeline 从现有结构化表格生成语义等价的半结构化版本，然后在四个维度（表格大小、连接操作、查询复杂度、模式质量）上划分诊断子集，系统评估三类方法。
+这篇论文要回答的问题是：当表格"内容一字不差、只换表示形式"时，不同 Table QA 范式会不会翻车？为此它不提新的 QA 模型，而是构建诊断基准 **RePairTQA**。整条流水线是：先拿一批带严格 schema 的结构化表格，用一个 verbalization 管线把其中若干列改写成自由文本，得到语义等价但形式不同的半结构化"孪生表"；再把数据按表格大小、连接操作、查询复杂度、模式质量四个维度切成 7 个诊断子集；最后把 NL2SQL、LLM 直推、混合三类现成方法丢进去跑，用同一套 LLM-as-Judge 协议打分。因为成对表格内容完全一致，任何分数差距都只能归到"表示形式"这一个变量上。
 
 ### 关键设计
 
-1. **Verbalization Pipeline（表格转换管线）**:
+**1. Verbalization 管线：在不动内容的前提下把结构化表"翻"成半结构化。**
 
-    - 功能：将结构化表格转换为半结构化表格，保持语义不变
-    - 核心思路：三步流程——(1) **列选择**：GPT-4o 选择适合 verbalize 的列，随机采样组合增加多样性；(2) **模板构造**：针对选中的列组合生成自然语言模板，每组生成 5 个不同模板；(3) **序列化**：将模板用实际值实例化，合并为一个自由文本列，删除原始结构化列
-    - 设计动机：语义保持是公平比较的前提。通过这种"保内容变形式"的方式，任何性能差异都可归因于表示形式本身
+公平比较的前提是两张表语义完全相同，只有形式不同——现有结构化与半结构化基准底层数据本就不一样，没法直接对比，所以必须自己造孪生表。管线分三步：先用 GPT-4o 从结构化表里挑出适合口语化的列，并对列的组合做随机采样以增加多样性；再针对每种选中的列组合生成自然语言模板，每组造 5 个不同模板避免句式单一；最后把模板用该行的真实值实例化，合并成一个自由文本列，并删掉对应的原始结构化列。这样改写后，单元格里的事实没有增减，变的只是"以列存"还是"以句子存"，于是后续任何性能差异都能干净地归因到表示形式本身。
 
-2. **诊断子集划分（Diagnostic Splits）**:
+**2. 诊断子集划分：每次只动一个变量，隔离单因素影响。**
 
-    - 功能：将基准数据集按四个维度切分为 7 个子集（S1-S5, M1-M2）
-    - 核心思路：从三个互补数据集构建——BIRD（干净 schema）、MMQA（多表推理）、TableEval（噪声 schema）。每个子集固定其他变量只变一个：S1 vs S4 比表格大小、S1 vs S2 比 schema 质量、S1 vs S3 比查询复杂度、S1-S5 vs M1-M2 比连接操作
-    - 设计动机：单独隔离每个因素的影响，避免混杂效应
+总体准确率会把多个因素混在一起，看不清到底是表大、schema 脏还是查询难导致的下降，所以要做受控切分。基准从三个互补数据集拼成——BIRD 提供干净 schema、MMQA 提供多表推理、TableEval 提供噪声 schema——再切成 7 个子集（S1–S5、M1–M2），每个子集固定其余维度、只让一个维度变化：S1 vs S4 比表格大小、S1 vs S2 比 schema 质量、S1 vs S3 比查询复杂度、S1–S5 vs M1–M2 比有无连接操作。这种"控制其余、单独拨动一个旋钮"的设计，让每个因素的影响都能被单独读出来，避免混杂效应。
 
-3. **LLM-as-Judge 评估协议**:
+**3. LLM-as-Judge 评估协议：放宽到语义判对，不被表面形式卡住。**
 
-    - 功能：用 GPT-4o 替代传统的 Exact Match 评估
-    - 核心思路：让 GPT-4o 比较模型预测和金标准答案，判断语义是否正确，容忍表面形式差异（如不同数字格式、同义词替换）
-    - 设计动机：传统 EM/PM 对同义表述过于严格。人工标注 100 例验证显示 96% 一致率
+半结构化答案往往换了数字格式或同义说法，传统 Exact Match / Partial Match 会把语义正确但表面不同的答案判错，进而冤枉那些输出更自然语言化的方法。于是改用 GPT-4o 当裁判，让它比较模型预测与金标准答案、只判语义是否一致，容忍数字格式差异、同义词替换等表面变化。为确认这个裁判靠谱，作者人工标注了 100 个样例做校验，与 GPT-4o 判断的一致率达 96%。
 
-### 损失函数 / 训练策略
-本文不训练模型，而是评估现有方法。评估的方法包括：
-- **LLM**: GPT-4o, Gemini-2.5-flash, Qwen3-235B（直接推理）
-- **NL2SQL**: LLM-NL2SQL（两阶段管线）, XiYan（多生成器集成）
-- **混合**: H-STAR（SQL+LLM 路由）, Weaver（逐步工作流）
+### 评估的方法（不训练，只跑现成系统）
+本文不训练任何模型，而是把三类代表性方法放进同一基准对比：
+
+- **LLM 直推**：GPT-4o、Gemini-2.5-flash、Qwen3-235B，直接读表 + 问题给答案
+- **NL2SQL**：LLM-NL2SQL（两阶段管线）、XiYan（多生成器集成），先把问题转成 SQL 再执行
+- **混合**：H-STAR（SQL + LLM 路由）、Weaver（逐步工作流），结合检索与推理
 
 ## 实验关键数据
 
@@ -128,8 +123,8 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] Same Voice, Different Lab: On the Homogenization of Frontier LLM Personalities](../../ACL2026/llm_evaluation/same_voice_different_lab_on_the_homogenization_of_frontier_llm_personalities.md)
-- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
 - [\[ACL 2025\] RealHiTBench: A Comprehensive Realistic Hierarchical Table Benchmark for Evaluating LLM-Based Table Analysis](../../ACL2025/llm_evaluation/realhitbench_a_comprehensive_realistic_hierarchical_table_benchmark_for_evaluati.md)
+- [\[ACL 2026\] Pressure-Testing Deception Probes in LLMs: Scaling, Robustness, and the Geometry of Deceptive Representations](../../ACL2026/llm_evaluation/pressure-testing_deception_probes_in_llms_scaling_robustness_and_the_geometry_of.md)
 - [\[ACL 2026\] Beyond Static Benchmarks: Synthesizing Harmful Content via Persona-based Simulation for Robust Evaluation](../../ACL2026/llm_evaluation/beyond_static_benchmarks_synthesizing_harmful_content_via_persona-based_simulati.md)
 - [\[ACL 2026\] arXiv2Table: Toward Realistic Benchmarking and Evaluation for LLM-Based Literature-Review Table Generation](../../ACL2026/llm_evaluation/arxiv2table_toward_realistic_benchmarking_and_evaluation_for_llm-based_literatur.md)
 

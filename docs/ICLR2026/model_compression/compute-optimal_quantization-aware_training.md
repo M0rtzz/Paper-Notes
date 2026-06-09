@@ -52,32 +52,29 @@ tags:
 
 ### 关键设计
 
-1. **Tokens-per-Parameter-Byte 统计量**:
+**1. Tokens-per-Parameter-Byte 统计量：找一个把模型大小、数据量、精度三者揉成一维的缩放变量。**
 
-    - 功能：统一不同模型大小和 bit-width 的 QAT 最优分配预测
-    - 核心思路：$S_{total} = D_{total}/(N \cdot B/8)$，将模型参数量按量化后的字节数归一化。大模型更容易量化（$N$ 大→$S$ 小），低 bit 更难量化（$B$ 小→$S$ 大），训练更长更难量化（$D$ 大→$S$ 大）。
-    - 设计动机：图 2 对比显示，在 token 坐标下不同 bit-width 的最优点分散，而在 tokens-per-parameter-byte 坐标下不同 bit-width 的最优点几乎落在同一条线上。
+最优 QAT fraction 到底该随什么变化？直觉上它同时受模型大小 $N$、总数据量 $D$、量化位宽 $B$ 三个因素牵制，如果各自单列就很难看出统一规律。本文把这三者合并成一个量：$S_{total} = D_{total}/(N \cdot B/8)$，即用量化后的字节数 $N \cdot B/8$ 去归一化训练 token 数。这个变量同时编码了三种"难量化"的方向——大模型更容易量化（$N$ 大 → $S$ 小），低 bit 更难量化（$B$ 小 → $S$ 大），训练更久也更难量化（$D$ 大 → $S$ 大）。它有效的证据很直接：在普通 token 坐标下，不同 bit-width 的最优点四散分布；换到 tokens-per-parameter-byte 坐标后（图 2），各 bit-width 的最优点几乎落在同一条线上，说明这才是支配 QAT 分配的真正自变量。
 
-2. **最优 QAT Fraction 预测**:
+**2. 最优 QAT Fraction 预测：把"该花多少比例做 QAT"压成一个单参数公式。**
 
-    - 功能：直接拟合最优 QAT fraction 与 $S_{total}$ 的关系
-    - 核心思路：$\hat{f}(D_{total}, N, B) = \frac{\exp(\log S_{total} - a/\log S_{total})}{S_{total}}$，其中 $a=6.7297$ 是唯一需要拟合的参数。
-    - 设计动机：观察到 $S_{total}$ 与最优 $S_{qat}$ 在对数坐标下近似线性，加约束 $D_{qat} \leq D_{total}$。MAE 仅 0.091。
+有了 $S_{total}$ 这个对的变量，预测最优分配就只剩拟合一条曲线。本文观察到 $S_{total}$ 与最优 $S_{qat}$ 在对数坐标下近似线性，再叠加 $D_{qat} \leq D_{total}$ 这个物理约束，得到闭式预测：
 
-3. **统一 Loss Scaling Law**:
+$$\hat{f}(D_{total}, N, B) = \frac{\exp(\log S_{total} - a/\log S_{total})}{S_{total}}$$
 
-    - 功能：跨模型大小、token 数、bit-width 预测最终损失
-    - 核心思路：$L = \text{Chinchilla-like} + \delta(N, D_{qat}, D_{fp}, B)$，其中 QAT 惩罚项 $\delta$ 分解为三部分：
-        - **不可约 QAT 误差** $\theta \cdot 2^{-\kappa B}$：bit-width 决定的精度下限
-        - **纯 QAT 惩罚** $\frac{\phi \cdot 2^{-\chi B}}{N^\psi \cdot S_{qat}^\omega}$：QAT 步数不够时的误差
-        - **FP/QAT 交互项** $\frac{\lambda \cdot 2^{-\mu B}}{N^\nu \cdot S_{fp}^\xi \cdot S_{qat}^\rho}$：FP 阶段过长导致量化更困难
-    - 设计动机：之前的 scaling law 在 $D \to \infty$ 时 loss 趋向无穷（不合理）；新公式的所有惩罚项随 $S$ 增大而减小，保证 loss 最终收敛。757 个实验点拟合后准确预测最优 fraction 和 loss。
+整条曲线只有 $a=6.7297$ 一个待拟合参数，却能在全部配置上把最优 fraction 预测到 MAE 仅 0.091。这意味着给定算力预算和位宽，可以直接算出该把多少 token 留给 QAT，不必每个规模都重新扫一遍。
 
-4. **Cooldown + QAT 融合**:
+**3. 统一 Loss Scaling Law：跨模型大小、token 数、bit-width 一次性预测最终损失。**
 
-    - 功能：将 learning rate 衰减阶段与 QAT 合并，消除冗余的 FP 更新
-    - 核心思路：在 FP 阶段的最高学习率处直接开始 QAT，同时执行学习率衰减，而不是先完成 FP cooldown 再开始 QAT。
-    - 设计动机：标准 FP+cooldown+QAT 中，cooldown 阶段的 FP 更新对最终量化模型价值不大，可以省掉。
+光预测分配比例还不够，工程上更想直接预测"最终能到多少 loss"。本文在 Chinchilla 框架上加一个 QAT 感知的惩罚项 $\delta$：
+
+$$L = \text{Chinchilla-like} + \delta(N, D_{qat}, D_{fp}, B)$$
+
+惩罚项 $\delta$ 被拆成三块、各自对应一种误差来源：**不可约 QAT 误差** $\theta \cdot 2^{-\kappa B}$ 是位宽决定的精度下限，bit 越低这一项越大；**纯 QAT 惩罚** $\frac{\phi \cdot 2^{-\chi B}}{N^\psi \cdot S_{qat}^\omega}$ 刻画 QAT 步数不够时残留的误差；**FP/QAT 交互项** $\frac{\lambda \cdot 2^{-\mu B}}{N^\nu \cdot S_{fp}^\xi \cdot S_{qat}^\rho}$ 则惩罚 FP 阶段拖得太长、反而让后续量化更困难。这套设计的关键好处是修掉了旧 scaling law 的一个硬伤——旧公式在 $D \to \infty$ 时 loss 反而发散到无穷，不合理；这里所有惩罚项都随 $S$ 增大而衰减，保证 loss 最终收敛。757 个实验点拟合后，它能同时准确预测最优 fraction 和最终 loss。
+
+**4. Cooldown + QAT 融合：把学习率衰减和 QAT 叠在一起跑，省掉一段白练的 FP 更新。**
+
+标准流程是 FP 训练 → cooldown 学习率衰减 → 再开 QAT，但 cooldown 段那些 FP 更新对最终的量化模型其实价值不大。本文的做法是从 FP 阶段的最高学习率处就直接切入 QAT，让学习率衰减和 QAT 微调同时进行，而不是等 cooldown 全部跑完再开始。这样在不增加总 token 数的前提下消除了一段冗余计算，实测能达到甚至超过标准 FP+cooldown+QAT 方案。
 
 ### 损失函数 / 训练策略
 - QAT 使用 straight-through estimator 处理量化操作的不可导性

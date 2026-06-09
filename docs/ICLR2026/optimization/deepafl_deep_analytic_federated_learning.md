@@ -39,38 +39,19 @@ tags:
 
 ### 整体框架
 
-DeepAFL 的整体 pipeline：（1）所有客户端共享一个预训练 backbone 提取基础特征；（2）在 backbone 之上逐层堆叠解析残差块；（3）每层的训练通过客户端本地计算 + 服务器聚合一轮完成（无需多轮通信）；（4）逐层训练完毕后得到完整的深度模型。输入是各客户端的本地数据，输出是全局可用的深层分类/回归模型。
+DeepAFL 让所有客户端共享一个冻结的预训练 backbone 提取基础特征，再在其上逐层堆叠无梯度的解析残差块；每一层的训练由客户端本地计算统计量、服务器一次求和聚合并求出封闭形式解完成，逐层从底到顶堆完即得到全局深度模型。整个流程纯前向、无反向传播，输入是各客户端的本地数据，输出是数据划分无关的深层分类模型。
 
 ### 关键设计
 
-1. **无梯度解析残差块（Gradient-Free Residual Block）**: 受 ResNet 启发，每个残差块的形式为 $\mathbf{h}^{(l+1)} = \mathbf{h}^{(l)} + f^{(l)}(\mathbf{h}^{(l)})$，其中 $f^{(l)}$ 是带有非线性激活的线性变换。关键创新在于：$f^{(l)}$ 的参数通过**最小二乘法**（而非梯度下降）求解封闭形式解。
+**1. 无梯度解析残差块：让封闭形式解也能"变深"。** 现有解析联邦方法只能在冻结特征上训一个单层线性分类器，缺乏表征学习能力。DeepAFL 借鉴 ResNet 的跳接结构，把第 $l$ 层写成 $\mathbf{h}^{(l+1)} = \mathbf{h}^{(l)} + f^{(l)}(\mathbf{h}^{(l)})$，但关键改动是残差映射 $f^{(l)}$ 不靠梯度下降而靠最小二乘求解。给定输入特征矩阵 $\mathbf{H}^{(l)}$ 与目标 $\mathbf{Y}$，参数 $\mathbf{W}^{(l)}$ 通过岭回归 $\arg\min_{\mathbf{W}} \|\phi(\mathbf{H}^{(l)}) \mathbf{W} - (\mathbf{Y} - \mathbf{H}^{(l)})\|_F^2 + \lambda \|\mathbf{W}\|_F^2$ 得到，其中 $\phi(\cdot)$ 是非线性特征映射、$\lambda$ 是正则化系数；该凸问题有唯一封闭解 $\mathbf{W}^{(l)} = (\phi(\mathbf{H}^{(l)})^\top \phi(\mathbf{H}^{(l)}) + \lambda \mathbf{I})^{-1} \phi(\mathbf{H}^{(l)})^\top (\mathbf{Y} - \mathbf{H}^{(l)})$。拟合目标 $\mathbf{Y}-\mathbf{H}^{(l)}$ 是残差而非原始标签，跳接保证即便某层映射不理想，输入信息也能无损传到下一层，于是多层堆叠就把"一步到位"的线性拟合变成了渐进式的特征精炼。
 
-   具体来说，给定第 $l$ 层的输入特征矩阵 $\mathbf{H}^{(l)}$ 和目标 $\mathbf{Y}$，残差映射 $f^{(l)}$ 的参数 $\mathbf{W}^{(l)}$ 通过求解以下优化问题获得：
+**2. 逐层联邦训练协议：用求和的结合律换来异质性不变。** 梯度式 FL 要对整个模型反复通信，且非 IID 数据会让各客户端模型发散、聚合后偏离最优。DeepAFL 把训练拆到每一层并改成"统计量聚合"：第 $l$ 层时，客户端 $k$ 只在本地算出协方差矩阵 $\mathbf{A}_k^{(l)} = \phi(\mathbf{H}_k^{(l)})^\top \phi(\mathbf{H}_k^{(l)})$ 和交叉协方差 $\mathbf{B}_k^{(l)} = \phi(\mathbf{H}_k^{(l)})^\top (\mathbf{Y}_k - \mathbf{H}_k^{(l)})$ 上传，服务器只做求和 $\mathbf{A}^{(l)} = \sum_k \mathbf{A}_k^{(l)}$、$\mathbf{B}^{(l)} = \sum_k \mathbf{B}_k^{(l)}$ 再解出 $\mathbf{W}^{(l)} = (\mathbf{A}^{(l)} + \lambda \mathbf{I})^{-1} \mathbf{B}^{(l)}$。由于求和满足结合律，无论数据怎样切分到各客户端，聚合结果都与集中式训练逐比特一致，这就是数据异质性不变性的来源；同时每层只需上传矩阵、计算、下发参数这一轮通信即可收敛，且传输的是聚合统计量而非原始数据或梯度，天然比共享梯度更隐私友好。
 
-    $\mathbf{W}^{(l)} = \arg\min_{\mathbf{W}} \|\phi(\mathbf{H}^{(l)}) \mathbf{W} - (\mathbf{Y} - \mathbf{H}^{(l)})\|_F^2 + \lambda \|\mathbf{W}\|_F^2$
-
-   其中 $\phi(\cdot)$ 是非线性特征映射（如随机特征或核近似），$\lambda$ 是正则化系数。这个问题有封闭形式解：$\mathbf{W}^{(l)} = (\phi(\mathbf{H}^{(l)})^\top \phi(\mathbf{H}^{(l)}) + \lambda \mathbf{I})^{-1} \phi(\mathbf{H}^{(l)})^\top (\mathbf{Y} - \mathbf{H}^{(l)})$。
-
-   残差连接确保了信息流的稳定性——即使某一层的映射不理想，跳接保证了输入信息的传递。多层堆叠使模型具备了渐进式的特征精炼能力。
-
-2. **逐层联邦训练协议（Layer-Wise FL Protocol）**: 传统 FL 训练整个模型，需要多轮通信。DeepAFL 采用逐层协议：对于第 $l$ 层，每个客户端 $k$ 在本地计算协方差矩阵 $\mathbf{A}_k^{(l)} = \phi(\mathbf{H}_k^{(l)})^\top \phi(\mathbf{H}_k^{(l)})$ 和交叉协方差矩阵 $\mathbf{B}_k^{(l)} = \phi(\mathbf{H}_k^{(l)})^\top (\mathbf{Y}_k - \mathbf{H}_k^{(l)})$，然后将这些矩阵发送给服务器。
-
-   服务器端只需简单地**求和聚合**：$\mathbf{A}^{(l)} = \sum_k \mathbf{A}_k^{(l)}$，$\mathbf{B}^{(l)} = \sum_k \mathbf{B}_k^{(l)}$，然后计算全局解：$\mathbf{W}^{(l)} = (\mathbf{A}^{(l)} + \lambda \mathbf{I})^{-1} \mathbf{B}^{(l)}$。
-
-   这个协议有三个关键优势：
-    - **数据异质性不变**：由于矩阵求和操作的结合律，无论数据如何分布在各客户端，聚合结果与集中式训练完全一致
-    - **单轮通信**：每层只需一轮通信（上传矩阵 → 服务器计算 → 下发参数），无需迭代
-    - **隐私友好**：传输的是聚合统计量而非原始数据或梯度
-
-3. **特征映射策略**: 为了在保持封闭形式解的同时引入非线性，DeepAFL 使用随机特征（Random Features）来近似核映射。这是一种经典技术：通过随机投影 + 非线性激活来隐式计算高维核特征，计算复杂度可控。每一层可以使用不同的随机特征映射，增加表征多样性。
+**3. 随机特征映射：在保持封闭解的同时引入非线性。** 纯线性的残差块表达力有限，但引入非线性又会破坏封闭形式解。DeepAFL 用随机特征（Random Features）近似核映射——通过随机投影加非线性激活隐式构造高维核特征 $\phi(\cdot)$，使每层在仍可解析求解的前提下获得非线性表征能力，且计算复杂度可控；每一层可采用不同的随机映射以增加表征多样性。
 
 ### 损失函数 / 训练策略
 
-每一层的训练目标是正则化最小二乘回归，目标函数为：
-
-$$\mathcal{L}^{(l)} = \|\phi(\mathbf{H}^{(l)}) \mathbf{W}^{(l)} - (\mathbf{Y} - \mathbf{H}^{(l)})\|_F^2 + \lambda \|\mathbf{W}^{(l)}\|_F^2$$
-
-由于是凸问题，有唯一全局最优解。训练流程是纯前向的——逐层从底到顶，每层一次求解，不需要反向传播。总训练轮数等于模型层数（而非传统 FL 中的数百甚至数千轮通信）。
+每层的训练目标就是上述正则化最小二乘回归 $\mathcal{L}^{(l)} = \|\phi(\mathbf{H}^{(l)}) \mathbf{W}^{(l)} - (\mathbf{Y} - \mathbf{H}^{(l)})\|_F^2 + \lambda \|\mathbf{W}^{(l)}\|_F^2$，凸性保证唯一全局最优解。训练纯前向、逐层一次求解，总训练轮数等于模型层数（通常 3-5 层），而非传统 FL 的数百上千轮通信；除正则化系数 $\lambda$ 外没有学习率、动量等超参需要调。
 
 ## 实验关键数据
 
@@ -145,9 +126,9 @@ DeepAFL 相比之前的 SOTA 方法在三个基准数据集上提升 5.68%-8.42%
 
 - [\[ICLR 2026\] Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
 - [\[ICLR 2026\] Weak-SIGReg: Covariance Regularization for Stable Deep Learning](weak-sigreg_covariance_regularization_for_stable_deep_learning.md)
+- [\[ICLR 2026\] Incentives in Federated Learning with Heterogeneous Agents](incentives_in_federated_learning_with_heterogeneous_agents.md)
 - [\[AAAI 2026\] FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters](../../AAAI2026/optimization/fedpm_federated_learning_using_second-order_optimization_with_preconditioned_mix.md)
 - [\[ICLR 2026\] FedDAG: Clustered Federated Learning via Global Data and Gradient Integration for Heterogeneous Environments](feddag_clustered_federated_learning_via_global_data_and_gradient_integration_for.md)
-- [\[AAAI 2026\] Tackling Resource-Constrained and Data-Heterogeneity in Federated Learning with Double-Weight Sparse Pack](../../AAAI2026/optimization/tackling_resource-constrained_and_data-heterogeneity_in_federated_learning_with_.md)
 
 </div>
 

@@ -44,43 +44,15 @@ tags:
 
 ### 整体框架
 
-S2Q 在 WQMIX 基础上构建，核心组件包括：
-- $Q_0^{\text{sub}} := Q^{\text{tot}}$：学习当前最优联合动作
-- $Q_1^{\text{sub}}, \dots, Q_K^{\text{sub}}$：逐步学习第 1 到第 $K$ 次优联合动作
-- $Q^*$：无约束联合值函数（同 WQMIX）
-- Encoder-Decoder：训练时估计 Softmax 分布实现 agent 间协调
-- 所有 sub-value 函数共享 QMIX 的混合架构，满足 IGM 条件
+S2Q 建在 WQMIX 之上，思路是不再只盯住单一最优联合动作，而是同时维护一组 sub-value 函数：$Q_0^{\text{sub}} := Q^{\text{tot}}$ 追踪当前最优，$Q_1^{\text{sub}}, \dots, Q_K^{\text{sub}}$ 依次追踪第 1 到第 $K$ 个次优联合动作，再配一个无约束的 $Q^*$（同 WQMIX）作为参照值。所有 sub-value 函数共享 QMIX 的单调混合架构以满足 IGM 条件，并通过一个 Encoder-Decoder 在训练时估计 Softmax 采样分布、协调各 agent 选择同一候选。这样当最优点漂移时，先前的次优函数已经把替代高价值动作的信息保存好了，可以立刻接管引导 $Q^{\text{tot}}$ 适应。
 
-### 关键设计1：逐步次优 Q-learning
+### 关键设计
 
-每个 $Q_k^{\text{sub}}$ 通过在 TD 目标中**抑制**前 $k-1$ 个已识别的最优/次优动作来学习下一个次优：
+**1. 逐步次优 Q-learning：让每个 sub-value 锁定一个被前序"屏蔽"后剩下的最优动作。** 问题在于如何让 $K$ 个函数互不重叠地各自学到一个次优动作。S2Q 的做法是顺序构造 TD 目标：学 $Q_k^{\text{sub}}$ 时，在目标里对前 $k-1$ 个已识别动作施加一个负的抑制项，使它们的估值被压低，于是 $Q_k^{\text{sub}}$ 的 argmax 自然落到"排除已识别动作后"的下一个最优上。损失为 $\mathcal{L}_k = \mathbb{E}\left[w_k \left(Q_k^{\text{sub}} - \left(y_t - \alpha \cdot \mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t}) \cdot \max(Q_{\text{targ}}^*, C)\right)\right)^2\right]$，其中 $\mathcal{A}_{k,t} = \{\mathbf{a}_{0,t}^*, \dots, \mathbf{a}_{k,t}^*\}$ 是前 $k$ 个已识别动作集合，指示函数 $\mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t})$ 保证抑制只作用于这些动作，$\alpha$ 控制抑制强度。论文用 Theorem 4.1 给出正确性保证：只要奖励有界且 $\alpha$ 足够大，$\mathbf{a}_{k,t}^* = \arg\max_{\mathbf{a}} Q_k^{\text{sub}}(s_t, \boldsymbol{\tau}_t, \mathbf{a}_t)$ 就准确对应 $Q^*$ 的第 $k$ 个次优联合动作——即抑制足够强时，逐级"剥洋葱"得到的确实是真正的次优序列。
 
-$$\mathcal{L}_k = \mathbb{E}\left[w_k \left(Q_k^{\text{sub}} - \left(y_t - \alpha \cdot \mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t}) \cdot \max(Q_{\text{targ}}^*, C)\right)\right)^2\right]$$
+**2. Softmax 行为策略：把探索预算花在有前途的候选上，而非均匀乱撞。** $\epsilon$-greedy 在大联合动作空间里联合探索概率 $\propto \epsilon^N$ 指数衰减，等于把次优函数辛苦保留的信息浪费掉。S2Q 改用 $Q^*$ 的估值给 $K+1$ 个候选打分并构造 Softmax 分布 $\mathbf{P}_t = \text{Softmax}\left(\frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{0,t}^*)}{T}, \dots, \frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{K,t}^*)}{T}\right)$，执行时先按 $\mathbf{P}_t$ 采样一个 $k$，再用 $\epsilon$-greedy 执行 $Q_k^{\text{sub}}$ 对应的动作。温度 $T$ 调节探索-利用权衡，论文取 $T=0.1$ 最优。这样探索是围绕高潜力次优动作定向展开的，候选估值越高被选中概率越大，在联合动作空间里的有效探索效率远高于均匀随机。
 
-- $\mathcal{A}_{k,t} = \{\mathbf{a}_{0,t}^*, \dots, \mathbf{a}_{k,t}^*\}$：前 $k$ 个已识别动作集合
-- $\alpha$：抑制强度
-- $\mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t})$：仅对已识别动作施加抑制
-
-**Theorem 4.1**（正确性保证）：若奖励有界且 $\alpha$ 足够大，则 $\mathbf{a}_{k,t}^* = \arg\max_{\mathbf{a}} Q_k^{\text{sub}}(s_t, \boldsymbol{\tau}_t, \mathbf{a}_t)$ 准确对应 $Q^*$ 的第 $k$ 个次优联合动作。
-
-### 关键设计2：Softmax 行为策略
-
-替代 $\epsilon$-greedy，基于 $Q^*$ 的值构建 Softmax 分布在 $K+1$ 个候选间采样：
-
-$$\mathbf{P}_t = \text{Softmax}\left(\frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{0,t}^*)}{T}, \dots, \frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{K,t}^*)}{T}\right)$$
-
-执行流程：先采样 $k \sim \mathbf{P}_t$，再用 $\epsilon$-greedy 执行 $Q_k^{\text{sub}}$ 的动作。温度 $T$ 控制探索-利用权衡($T=0.1$ 最优)。
-
-**关键优势**：不是均匀随机探索，而是**围绕有前途的次优动作定向探索**，大幅提高联合活动空间中有效探索的效率。
-
-### 关键设计3：训练时通信协调
-
-精确计算 $\mathbf{P}_t$ 需要全局信息，且所有 agent 必须选择同一 $k$ 才能一致执行：
-- Encoder $E$：将局部历史 $\boldsymbol{\tau}_t$ 映射为隐表示 $z_t = E(\boldsymbol{\tau}_t)$
-- Decoder $D$：重建全局状态和近似分布 $(\hat{s}_t, \hat{\mathbf{P}}_t) = D(z_t)$
-- Agent 从 $\hat{\mathbf{P}}_t$ 同步采样同一 $k$
-
-**测试时完全去中心化**：仅用 $Q_0^{\text{sub}} = Q^{\text{tot}}$ 的贪心动作即可，无需通信。通信仅在训练时用于协调探索。对于通信关键场景(如 SMAC-Comm)，可使用 S2Q-Comm 变体在测试时也提供 $z_t$。
+**3. 训练时通信协调：保证各 agent 同步选中同一个候选。** Softmax 分布 $\mathbf{P}_t$ 依赖全局信息，且只有当所有 agent 选同一个 $k$ 时联合执行才一致，分散执行下各自采样会错位。S2Q 用一个 Encoder $E$ 把每个 agent 的局部历史压成隐表示 $z_t = E(\boldsymbol{\tau}_t)$，再用 Decoder $D$ 从中重建全局状态与近似分布 $(\hat{s}_t, \hat{\mathbf{P}}_t) = D(z_t)$，各 agent 从同一份 $\hat{\mathbf{P}}_t$ 同步采样得到相同的 $k$。这套通信只在训练时用于协调探索；测试时完全去中心化，直接取 $Q_0^{\text{sub}} = Q^{\text{tot}}$ 的贪心动作即可，无需通信。对 SMAC-Comm 这类通信关键场景，则用 S2Q-Comm 变体在测试时也保留 $z_t$。
 
 ## 实验结果
 
@@ -159,11 +131,11 @@ S2Q 在所有环境上一致超越基线，优势在探索密集型场景(6h_vs_
 
 ## 相关论文
 
-- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
-- [\[NeurIPS 2025\] Extending NGU to Multi-Agent RL: A Preliminary Study](../../NeurIPS2025/reinforcement_learning/extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
 - [\[ICLR 2026\] Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](safe_continuous-time_multi-agent_reinforcement_learning_via_epigraph_form.md)
+- [\[NeurIPS 2025\] Extending NGU to Multi-Agent RL: A Preliminary Study](../../NeurIPS2025/reinforcement_learning/extending_ngu_to_multi-agent_rl_a_preliminary_study.md)
 - [\[ICLR 2026\] SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
 - [\[ICLR 2026\] Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](continuous-time_value_iteration_for_multi-agent_reinforcement_learning.md)
+- [\[ICML 2026\] LLM-Guided Communication for Cooperative Multi-Agent Reinforcement Learning](../../ICML2026/reinforcement_learning/llm-guided_communication_for_cooperative_multi-agent_reinforcement_learning.md)
 
 </div>
 

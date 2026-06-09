@@ -135,7 +135,7 @@ CoPart在部件感知指标上大幅领先，整体质量与SOTA可比。
 - [\[ICCV 2025\] Find Any Part in 3D](find_any_part_in_3d.md)
 - [\[ICCV 2025\] Learning 3D Scene Analogies with Neural Contextual Scene Maps](learning_3d_scene_analogies_with_neural_contextual_scene_maps.md)
 - [\[ICCV 2025\] BokehDiff: Neural Lens Blur with One-Step Diffusion](bokehdiff_neural_lens_blur_with_one-step_diffusion.md)
-- [\[NeurIPS 2025\] More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models](../../NeurIPS2025/3d_vision/more_than_generation_unifying_generation_and_depth_estimation_via_text-to-image_.md)
+- [\[ICCV 2025\] AR-1-to-3: Single Image to Consistent 3D Object Generation via Next-View Prediction](ar1to3_single_image_to_consistent_3d_object_via_nextview_pre.md)
 
 </div>
 

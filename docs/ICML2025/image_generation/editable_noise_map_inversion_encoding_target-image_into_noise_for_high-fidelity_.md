@@ -202,8 +202,8 @@ ENM Inversion 作为即插即用的反演模块，可直接替换以下编辑方
 - [\[ICML 2025\] Exploring Position Encoding in Diffusion U-Net for Training-free High-resolution Image Generation](exploring_position_encoding_in_diffusion_u-net_for_training-free_high-resolution.md)
 - [\[CVPR 2025\] Noise Diffusion for Enhancing Semantic Faithfulness in Text-to-Image Synthesis](../../CVPR2025/image_generation/noise_diffusion_for_enhancing_semantic_faithfulness_in_text-to-image_synthesis.md)
 - [\[ICML 2025\] Taming Rectified Flow for Inversion and Editing](taming_rectified_flow_for_inversion_and_editing.md)
-- [\[AAAI 2026\] Rectified Noise: A Generative Model Using Positive-incentive Noise](../../AAAI2026/image_generation/rectified_noise_a_generative_model_using_positive-incentive_noise.md)
 - [\[ECCV 2024\] Editable Image Elements for Controllable Synthesis](../../ECCV2024/image_generation/editable_image_elements_for_controllable_synthesis.md)
+- [\[ECCV 2024\] Diffusion-based Image-to-Image Translation by Noise Correction via Prompt Interpolation](../../ECCV2024/image_generation/diffusion-based_image-to-image_translation_by_noise_correction_via_prompt_interp.md)
 
 </div>
 

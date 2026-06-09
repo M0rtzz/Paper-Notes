@@ -49,39 +49,29 @@ MATA是一个层次Mealy机 $\mathcal{M}_\theta = (S, S_0, \Sigma, \Lambda, \del
 
 ### 关键设计
 
-#### 1. 状态定义
+**1. 状态定义：把"调哪个 Agent"变成自动机里的状态选择。**
 
-状态集 $S = S_{\text{agent}} \cup S_{\text{life}}$，其中：
+整个系统的状态集 $S = S_{\text{agent}} \cup S_{\text{life}}$ 分两类。第一类是三个 Agent，各自代表一条不同的推理路径：Oneshot Reasoner 一次性生成并执行程序，适合能直接求解的查询；Stepwise Reasoner 逐步生成 Python 程序做多步推理，应对复杂查询；Specialized Agent 是快速感知专家，负责目标检测、简单问答这类轻任务。第二类是生命周期状态——Initial 起点、Final 终止并输出、Failure 表示遇到不可恢复错误。把 Agent 放进状态集后，"何时调用哪个 Agent"就自然转化为自动机的状态转移问题。这三个 Agent 被刻意设计成**既协作又竞争**：协作体现在后续 Agent 会读取前序 Agent 写进共享内存的中间结果；竞争则体现在功能重叠的 Agent 可以接替失败的 Agent，而不是像传统多 Agent 流水线那样各管一段、出错就卡死。
 
-**Agent状态**（三种Agent代表不同推理路径）：
-- **Oneshot Reasoner**：一次性程序生成和执行，适合可直接求解的查询
-- **Stepwise Reasoner**：逐步生成Python程序进行多步推理，适合复杂查询
-- **Specialized Agent**：快速感知专家（如目标检测、简单问答）
+**2. 共享内存：让协作和审计都有载体。**
 
-**生命周期状态**：Initial（起点）、Final（终止并输出）、Failure（不可恢复错误）
+所有 Agent 都读写同一份结构化共享内存 $m_t$，里面累积中间变量、感知结果、程序历史和验证反馈。这块内存**仅追加**（append-only），既保证后来的 Agent 能拿到前面所有上下文以实现协作，又让整条推理轨迹可回溯、可审计。每一步执行时，hyper agent 观察当前内存 $m_t$，据此选出下一个状态 $s_{t+1} = \delta_\theta(s_t, m_t)$——内存是它做决策的唯一依据。
 
-三个Agent被设计为**既协作又竞争**：协作体现在后续Agent读取前序Agent写入共享内存的中间结果；竞争体现在功能重叠的Agent可接替失败的Agent。
+**3. 可训练的 Hyper Agent：用 LLM 学转移函数，取代手写规则。**
 
-#### 2. 共享内存
+顶层转移函数 $\delta_\theta$ 不再是手写的 if-else 规则，而是一个经 SFT 微调的 LLM。具体做法是从共享内存 $m_t$ 构建文本提示 $x_t$，LLM 把它映射到所有可用状态上的一个分布，再从中选出下一状态。这正是论文要解决的核心痛点——手写规则转移函数会随状态数增长而变得无法定义，改成学习后，调度策略可以从数据里自动归纳出来。
 
-所有Agent读写结构化共享内存 $m_t$，累积中间变量、感知结果、程序历史、验证反馈。内存**仅追加**，确保完整推理过程可审计。每步执行：hyper agent观察 $m_t$ 并选择下一状态 $s_{t+1} = \delta_\theta(s_t, m_t)$。
+**4. 转移轨迹数据生成（MATA-SFT-90K）：给"学转移"造监督信号。**
 
-#### 3. 可训练的Hyper Agent
+要训练 hyper agent 选状态，就得有"在某个内存状态下哪个 Agent 是最优选择"的标签，论文用一棵转移轨迹树来造这批数据。第一步构建转移轨迹树：对每个（图像, 查询）对，在每个决策点把分支铺开到所有可用 Agent 状态，执行对应的子自动机，并保存每个分支的内存检查点。第二步自底向上评分，叶节点按任务指标打分（VQA 用 Accuracy，VG 用 IoU），非叶节点取子节点最大值向上传播：
 
-转移函数 $\delta_\theta$ 由SFT微调的LLM实现。从共享内存构建文本提示 $x_t$，LLM映射到可用状态的分布并选择下一状态。
-
-#### 4. 转移轨迹数据生成（MATA-SFT-90K）
-
-**Step 1：构建转移轨迹树**。对每个（图像, 查询）对，在每个决策点分支到所有可用Agent状态，执行对应子自动机，保存内存检查点。
-
-**Step 2：自底向上评分**。叶节点根据任务指标打分（VQA用Accuracy，VG用IoU），非叶节点取子节点最大值向上传播：
 $$V(s) = \begin{cases} \text{metric}(\hat{y}_s, y), & s \in \text{Leaves} \\ \max_{s' \in \text{Child}(s)} V(s'), & \text{otherwise} \end{cases}$$
 
-**Step 3：生成SFT数据**。每个决策点的文本提示配上最优子节点的状态标签，构成训练样本。最终收集90,854个样本。
+这样每个决策点都知道往哪个子节点走能拿到最高回报。第三步生成 SFT 数据：把每个决策点的文本提示配上其最优子节点对应的状态标签，构成一条训练样本，最终收集到 90,854 个样本（即 MATA-SFT-90K）。
 
-#### 5. 失败处理机制
+**5. 失败处理机制：用"临时移除"避免无限重试。**
 
-Agent报告不可恢复错误时，将失败Agent从候选状态中**临时移除**，让hyper agent重新选择其他Agent，避免无限重试。
+当某个 Agent 报告不可恢复错误时，系统不会让它反复重试，而是把这个失败 Agent 从当前候选状态里**临时移除**，逼 hyper agent 在剩下的 Agent 中重新选择。这正是前面"竞争"设计的落地方式——功能重叠的另一个 Agent 顶上去接替，从而把单点失败转化为可恢复的路径切换。
 
 ### 损失函数 / 训练策略
 
@@ -173,11 +163,11 @@ MATA承接ViperGPT → HYDRA → NAVER的发展脉络，首次实现可学习的
 
 ## 相关论文
 
-- [\[ICLR 2026\] Auditing Cascading Risks in Multi-Agent Systems via Semantic–Geometric Co-evolution](auditing_cascading_risks_in_multi-agent_systems_via_semanti-geometric_co-evolut.md)
 - [\[AAAI 2026\] ToC: Tree-of-Claims Search with Multi-Agent Language Models](../../AAAI2026/interpretability/toc_tree-of-claims_search_with_multi-agent_language_models.md)
-- [\[AAAI 2026\] iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference](../../AAAI2026/interpretability/imad_intelligent_multi-agent_debate_for_efficient_and_accura.md)
 - [\[ICLR 2026\] Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
 - [\[NeurIPS 2025\] AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation](../../NeurIPS2025/interpretability/agentiql_an_agent-inspired_multi-expert_framework_for_text-to-sql_generation.md)
+- [\[ICLR 2026\] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
+- [\[ICLR 2026\] SEED-SET: Scalable Evolving Experimental Design for System-level Ethical Testing](seed-set_scalable_evolving_experimental_design_for_system-level_ethical_testing.md)
 
 </div>
 

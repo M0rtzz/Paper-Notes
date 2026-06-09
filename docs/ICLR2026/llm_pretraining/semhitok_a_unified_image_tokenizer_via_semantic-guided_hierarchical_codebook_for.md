@@ -39,20 +39,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-语义分支(VQKD对齐SigLIP)→固定C_sem；像素分支(ViT)→学C_pix。语义+像素token沿channel拼接→统一离散表示。
+
+SemHiTok 把一张图的离散表示拆成两条互补的分支：语义分支用 VQKD 对齐冻结的 SigLIP，学出一个只管高层语义的语义 codebook $C_\text{sem}$；像素分支用 ViT 编码器在语义结果之上学出负责低层重建的像素 codebook $C_\text{pix}$。两路 token 沿 channel 维拼接，得到一份既能喂给 MLLM 做理解、又能解码回图像做生成的统一离散表示。关键不在于堆两个 tokenizer，而在于让像素 codebook 寄生在语义 codebook 的层次之下，从而结构上和训练上都把"语义"和"像素"两个目标解耦开。
 
 ### 关键设计
 
-1. **语义Codebook**：SigLIP→EMA VQ量化→cosine+L1蒸馏→训练后固定不再修改
+**1. 语义 codebook：先把"图像该被怎么理解"固化下来。** 统一 tokenizer 最难的是语义信号容易被重建目标冲垮，所以 SemHiTok 把语义层单独先训练并冻结。语义分支以冻结的 SigLIP 特征为蒸馏目标，编码器输出经 EMA 更新的向量量化得到语义 code，再用 cosine 相似度加 $L_1$ 损失把量化后的特征对齐回 SigLIP。这一阶段训完后 $C_\text{sem}$ 不再被任何后续梯度修改，等于先给整套 tokenizer 钉死了一个语义骨架，后面无论怎么优化像素都动不了它，理解能力因此不会在重建训练中退化。
 
-2. **SGHC**：C_pix={C_pix^1,...,C_pix^K}(K语义码×m子码)→patch i先由C_sem得index k→选第k子codebook量化像素
+**2. 语义引导的层次 codebook（SGHC）：用"同语义 patch 像素也相近"这个观察细分像素空间。** 作者观察到被分到同一个语义 code 的 patch，其像素分布也高度相似，于是不再用一个扁平的像素 codebook 去硬扛全图的像素多样性，而是把像素 codebook 拆成一组子 codebook $C_\text{pix}=\{C_\text{pix}^1,\dots,C_\text{pix}^K\}$，对应 $K$ 个语义 code、每个语义 code 下挂 $m$ 个子 code。量化一个 patch $i$ 时，先由语义分支得到它的语义 index $k$，再只在第 $k$ 个子 codebook $C_\text{pix}^k$ 里查最近的像素 code。这样每个子 codebook 只需刻画一个语义簇内部的像素细节，建模任务被天然切小，重建更精细，同时像素 code 的选择被语义结构约束，避免了扁平 codebook 里语义和像素互相争抢码字的问题。
 
-3. **分阶段训练**：Stage 1训练语义(VQKD)固定→Stage 2训练像素(L1+perceptual+GAN)→两阶段不冲突
+**3. 分阶段训练：从训练流程上彻底拆开语义与像素两个目标。** 即便结构上层次化了，若联合优化，重建 loss 仍会反传去扰动语义层。SemHiTok 干脆分两阶段：Stage 1 只训语义分支（VQKD 蒸馏 SigLIP），训完冻结 $C_\text{sem}$；Stage 2 在冻结的语义骨架上只训像素分支，用 $L_1$、perceptual 与 GAN 损失驱动重建。因为两阶段的优化目标不在同一时刻竞争，语义-像素冲突被从源头消除，这也是它相比 VILA-U（混合 loss 子最优）、TokenFlow（共享映射但联合训练仍互相影响）的核心区别。
 
-4. **统一MLLM集成**：展平h=i*m+j；Dual-MLP adapter分别投影语义/像素→拼接送LLM
+**4. 统一 MLLM 集成：把层次 index 展平成普通词表，无缝接进 LLM。** 层次 codebook 若直接用会让 token 数翻倍或词汇爆炸，SemHiTok 用展平索引 $h=i\cdot m+j$ 把"第 $i$ 个语义 code、其下第 $j$ 个像素子 code"映射成单一整数 id，总词表大小为 $K\cdot m=196{,}608$，与 Qwen2 约 150K 的文本词表量级相当，不会膨胀。接入时用一个 Dual-MLP adapter 分别投影语义 token 和像素 token，再拼接送进 LLM，使理解侧吃语义、生成侧吃像素，一份 tokenizer 同时服务两类任务。
 
-### 训练策略
-- SigLIP frozen; K语义码, m=8子码→总196,608; Qwen2.5-7B-Instruct base
+### 损失函数 / 训练策略
+
+整体超参：SigLIP 全程冻结作为蒸馏锚点；语义码数 $K$ 个、每个语义码下子码 $m=8$，展平后总码数 196,608；统一 MLLM 以 Qwen2.5-7B-Instruct 为 base。Stage 1 用 cosine 加 $L_1$ 对齐 SigLIP，Stage 2 叠加 $L_1$、perceptual 与 GAN 三项重建损失（权重 $\lambda_1/\lambda_2/\lambda_3$）。
 
 ## 实验关键数据
 
@@ -121,11 +123,11 @@ tags:
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](../../NeurIPS2025/llm_pretraining/next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
 - [\[ACL 2025\] Unsupervised Morphological Tree Tokenizer](../../ACL2025/llm_pretraining/unsupervised_morphological_tree_tokenizer.md)
 - [\[NeurIPS 2025\] Differentiable Hierarchical Visual Tokenization](../../NeurIPS2025/llm_pretraining/differentiable_hierarchical_visual_tokenization.md)
 - [\[ACL 2026\] Toward Consistent World Models with Multi-Token Prediction and Latent Semantic Enhancement](../../ACL2026/llm_pretraining/toward_consistent_world_models_with_multi-token_prediction_and_latent_semantic_e.md)
 - [\[CVPR 2025\] A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
-- [\[ICCV 2025\] ConstStyle: Robust Domain Generalization with Unified Style Transformation](../../ICCV2025/llm_pretraining/conststyle_robust_domain_generalization_with_unified_style_transformation.md)
 
 </div>
 

@@ -43,27 +43,27 @@ tags:
 
 ### 整体框架
 
-SRA 在标准扩散生成训练（DiT 的噪声预测损失或 SiT 的速度场损失）之上，附加一个**自表征对齐损失** $\mathcal{L}_{sa}$。框架包含两个网络：可训练的**学生模型** $f$ 和通过 EMA 更新的**教师模型** $f_*$。学生在处理时步 $t$（较高噪声）的输入时，取第 $m$ 层的输出特征经投影头变换后，对齐到教师在处理时步 $t-k$（较低噪声）的输入时第 $n$ 层（$n \geq m$）的输出特征。整个训练结束后投影头可以丢弃，**不改变原始扩散 Transformer 的推理架构**。
+SRA 想解决的问题是：扩散 Transformer 要靠表征引导来加速收敛，但现有方法都得从外面搬一个 DINOv2/MAE 进来，难以迁移到没有强预训练编码器的领域。它的做法是把引导信号完全留在模型内部——在标准扩散生成训练（DiT 的噪声预测损失或 SiT 的速度场损失）之上，只附加一个**自表征对齐损失** $\mathcal{L}_{sa}$。
+
+整个流程围绕两个网络转：可训练的**学生模型** $f$ 和由 EMA 缓慢复制学生权重得到的**教师模型** $f_*$。一张噪声 latent 进来后，学生在较高噪声时步 $t$ 处理它，取第 $m$ 层的输出特征过一个投影头；教师则在较低噪声时步 $t-k$ 处理同一目标，取更深的第 $n$ 层（$n \geq m$）输出特征。把前者对齐到后者，就用模型自身"浅层高噪声差、深层低噪声好"的表征落差当成监督。训练结束后投影头直接丢弃，**推理架构和原始扩散 Transformer 一模一样**。
 
 ### 关键设计
 
-1. **"从差到好"经验发现与内部表征质量梯度**:
+**1. "从差到好"的内部表征梯度：先证明引导信号本来就在模型里。**
 
-    - 功能：为 SRA 提供方法论基础——证明扩散 Transformer 内部天然存在可利用的表征引导信号
-    - 核心思路：对预训练的 SiT-XL/2 和 DiT-XL/2，在不同层和不同噪声水平下提取 patch 特征，用 PCA 可视化观察语义结构、用 ImageNet 线性探测量化判别能力。结果显示：(a) 第 3 层的表征在高噪声下接近随机，但到第 20 层在低噪声下已能清晰区分语义区域；(b) 线性探测准确率在中深层（约第 20 层）达到峰值后才因模型转向高频生成细节而下降。两个趋势在 DiT 和 SiT 上高度一致
-    - 设计动机：既然扩散模型内部已有从弱到强的判别信号，就不需要从外部引入。这一发现是整个方法的核心洞察
+整套方法立得住的前提，是扩散 Transformer 内部确实存在一条可利用的表征质量梯度，否则"自己引导自己"无从谈起。作者对预训练好的 SiT-XL/2 和 DiT-XL/2 做了系统体检：在不同层、不同噪声水平下取出 patch 特征，一边用 PCA 可视化看语义结构，一边用 ImageNet 线性探测量化判别能力。两个现象很清楚——第 3 层在高噪声下的特征几乎是随机的，到第 20 层在低噪声下却已经能干净地分出语义区域；线性探测准确率沿层深上升，在中深层（约第 20 层）见顶，之后因为模型转去生成高频细节才回落。这两条趋势在 DiT 和 SiT 上高度一致。结论很直接：模型内部本就有从弱到强的判别信号，没必要再从外部引一个编码器进来——这正是 SRA 的核心洞察。
 
-2. **自表征对齐损失（SRA Loss）**:
+**2. 自表征对齐损失（SRA Loss）：同时吃掉层间和时步间两个维度的落差。**
 
-    - 功能：利用层间和时步间的表征质量差异构建自监督对齐目标
-    - 核心思路：学生第 $m$ 层在时步 $t$ 的输出 $\mathbf{y} = f^m(\mathbf{x}_t, t, c)$ 经过轻量投影头 $j_\psi$ 变换后，与教师第 $n$ 层在时步 $t-k$ 的输出 $\mathbf{y}_* = f_*^n(\mathbf{x}_{t-k}, t-k, c)$ 做 patch-wise 距离最小化：$\mathcal{L}_{sa} = \mathbb{E}\left[\frac{1}{N}\sum_{i=1}^{N}\text{dist}(\mathbf{y}_*^{[i]}, j_\psi(\mathbf{y}^{[i]}))\right]$。其中 dist 使用 smooth-$\ell_1$ 距离函数。关键约束：$m \leq n$（层间：从浅到深），$k \geq 0$（时步间：从高噪声到低噪声），同时利用两个维度的质量差异
-    - 设计动机：单独的层间对齐（同时步）或时步间对齐（同层）效果有限；结合两个维度才能提供足够强的引导信号。投影头的引入避免了直接对齐破坏各层各时步原本负责的生成场域
+有了梯度，接下来是把它变成可优化的目标。学生第 $m$ 层在时步 $t$ 的输出 $\mathbf{y} = f^m(\mathbf{x}_t, t, c)$ 先过一个轻量投影头 $j_\psi$，再去逼近教师第 $n$ 层在时步 $t-k$ 的输出 $\mathbf{y}_* = f_*^n(\mathbf{x}_{t-k}, t-k, c)$，逐 patch 最小化距离：
 
-3. **EMA 教师网络与无稳定性技巧设计**:
+$$\mathcal{L}_{sa} = \mathbb{E}\left[\frac{1}{N}\sum_{i=1}^{N}\text{dist}(\mathbf{y}_*^{[i]}, j_\psi(\mathbf{y}^{[i]}))\right]$$
 
-    - 功能：提供稳定的、持续改善的对齐目标
-    - 核心思路：教师参数通过 $\zeta_t = \alpha \zeta_t + (1-\alpha)\zeta_s$ 更新。与自监督学习（BYOL/DINO）中需要 cosine schedule 逐步调 $\alpha$、加 centering、加 BN 等大量稳定性技巧不同，SRA 中 $\alpha = 0.9999$ **全程不变**即可稳定训练。作者推测这是因为扩散模型的生成损失本身提供了强梯度信号，使训练过程天然稳定，不需要额外的防坍塌机制
-    - 设计动机：极简设计——不引入任何聚类约束、batch normalization 或 centering，降低了超参调节负担和实现复杂度
+其中 dist 取 smooth-$\ell_1$。两个约束是关键：$m \leq n$ 让对齐沿层间从浅指向深，$k \geq 0$ 让它沿时步从高噪声指向低噪声——只有把这两个维度的质量差一起用上，引导信号才够强（消融里单维度明显更弱）。投影头不是摆设：直接拿学生特征硬对齐会破坏各层各时步原本负责的生成场域，加一层可训练变换相当于在不动主干的前提下做对齐。
+
+**3. EMA 教师 + 零稳定性技巧：靠生成损失自己撑住，不坍塌。**
+
+对齐目标得稳定且越来越好，这件事交给 EMA 教师：参数按 $\zeta_t = \alpha \zeta_t + (1-\alpha)\zeta_s$ 缓慢跟随学生。值得注意的是，自监督里 BYOL/DINO 这套 EMA 自蒸馏通常要靠 cosine momentum schedule、centering、BN 一堆技巧防模式坍塌，而 SRA 把 $\alpha$ 固定在 0.9999 全程不动就能稳定训练，什么聚类约束、batch normalization、centering 都不加。作者的推测是：扩散模型的生成损失本身就提供了足够强的梯度信号，把训练钉在一个不会坍塌的位置上，所以那些防坍塌机制在这里是多余的。这让方法的超参负担和实现复杂度都降到很低。
 
 ### 损失函数 / 训练策略
 
@@ -155,8 +155,8 @@ SRA 在高分辨率和文本到图像场景同样有效，512×512 上 IS 和 sF
 - [\[CVPR 2026\] DiverseDiT: Towards Diverse Representation Learning in Diffusion Transformers](../../CVPR2026/self_supervised/diversedit_towards_diverse_representation_learning_in_diffusion_transformers.md)
 - [\[ICML 2026\] FLAG: Foundation Model Representation with Latent Diffusion Alignment via Graph for Spatial Gene Expression Prediction](../../ICML2026/self_supervised/flag_foundation_model_representation_with_latent_diffusion_alignment_via_graph_f.md)
 - [\[CVPR 2026\] Vision Transformers Need More Than Registers](../../CVPR2026/self_supervised/vision_transformers_need_more_than_registers.md)
-- [\[CVPR 2026\] Zero-Ablation Overstates Register Content Dependence in DINO Vision Transformers](../../CVPR2026/self_supervised/zero_ablation_overstates_register_content_dependence_in_dino_vision_transformers.md)
-- [\[CVPR 2026\] Representation Learning for Spatiotemporal Physical Systems](../../CVPR2026/self_supervised/representation_learning_for_spatiotemporal_physica.md)
+- [\[ICML 2026\] Can Local Learning Match Self-Supervised Backpropagation?](../../ICML2026/self_supervised/can_local_learning_match_self-supervised_backpropagation.md)
+- [\[AAAI 2026\] CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds](../../AAAI2026/self_supervised/catformer_when_continual_learning_meets_spiking_transformers_with_dynamic_thresh.md)
 
 </div>
 

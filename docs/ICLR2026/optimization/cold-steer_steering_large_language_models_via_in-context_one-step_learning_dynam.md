@@ -41,26 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定 $N$ 个示例 $\{(\tilde{\mathbf{x}}_i, \tilde{\mathbf{y}}_i)\}$，COLD-Steer 计算模型在这些示例上做单步梯度下降后表征的变化量 $\Delta\mathbf{Z}^*$，然后将该变化量作为激活加法施加到新输入的第 $l$ 层表征上：$\Delta\mathbf{Z}^*(\mathbf{x}) \approx -\frac{\eta}{N} \nabla_\theta \mathbf{Z}(\mathbf{x};\theta) \sum_i \nabla_\theta \mathcal{L}(\mathcal{M}(\tilde{\mathbf{x}}_i), \tilde{\mathbf{y}}_i)$
+COLD-Steer 想解决的是这样一个问题：要让模型行为偏向某种风格（更诚实、不谄媚、支持某个少数派立场），传统做法要么训练一组转向参数（贵），要么只拿正负样本的激活差当方向（信号弱）。它的思路是把"如果用这些示例微调一步会发生什么"直接算出来，但**只算表征的变化，不真的更新参数**。具体地，给定 $N$ 个示例 $\{(\tilde{\mathbf{x}}_i, \tilde{\mathbf{y}}_i)\}$，它估计模型在这些示例上做单步梯度下降后、目标表征会朝哪个方向移动多少，把这个变化量 $\Delta\mathbf{Z}^*$ 当作转向向量，在推理时加到新输入的第 $l$ 层表征上：
+
+$$\Delta\mathbf{Z}^*(\mathbf{x}) \approx -\frac{\eta}{N} \nabla_\theta \mathbf{Z}(\mathbf{x};\theta) \sum_i \nabla_\theta \mathcal{L}(\mathcal{M}(\tilde{\mathbf{x}}_i), \tilde{\mathbf{y}}_i)$$
+
+难点在于这个式子里有一项对新输入 $\mathbf{x}$ 的雅可比 $\nabla_\theta \mathbf{Z}(\mathbf{x};\theta)$，直接算等于要对每个新输入反向传播，推理时承受不起。COLD-Steer 给出两条绕开这项的近似路线，再用一个统一视角说明已有的对比方法其实都是它的特例。
 
 ### 关键设计
 
-1. **COLD-Kernel-Steer（核近似）**:
+**1. COLD-Kernel-Steer：用核函数近似 eNTK，避免对新输入反向传播。**
 
-    - 功能：用核函数近似 eNTK，避免对新输入做反向传播
-    - 核心思路：展开梯度的链式法则，引入核函数 $\kappa$：$\Delta\mathbf{Z}^{(\kappa)}(\mathbf{x}) = -\frac{\eta}{N} \sum_i \kappa(\mathbf{Z}(\mathbf{x}), \mathbf{Z}(\tilde{\mathbf{x}}_i)) \nabla_{\mathbf{Z}} \mathcal{L}|_{\mathbf{Z}(\tilde{\mathbf{x}}_i)}$。使用单位核 $\kappa = 1$ 作为近似，利用线性表征假说——同一概念的梯度由共享方向主导
-    - 设计动机：对新输入只需 1 次前向传播 + $O(N \cdot d)$ 核相似度计算，极其高效
+雅可比那一项贵，是因为它把"新输入的梯度"和"示例的梯度"耦合在一起。把链式法则展开后，这种耦合可以写成一个作用在表征空间上的核函数 $\kappa$，于是变化量变成示例侧损失梯度按核相似度加权求和：
 
-2. **COLD-FD-Steer（有限差分近似）**:
+$$\Delta\mathbf{Z}^{(\kappa)}(\mathbf{x}) = -\frac{\eta}{N} \sum_i \kappa(\mathbf{Z}(\mathbf{x}), \mathbf{Z}(\tilde{\mathbf{x}}_i)) \nabla_{\mathbf{Z}} \mathcal{L}|_{\mathbf{Z}(\tilde{\mathbf{x}}_i)}$$
 
-    - 功能：用有限差分绕过雅可比计算
-    - 核心思路：$\Delta\mathbf{Z}^{(fd)} = -\frac{\eta}{\varepsilon N} [\mathbf{Z}(\mathbf{x}; \theta + \varepsilon \sum_i \nabla_\theta \mathcal{L}_i) - \mathbf{Z}(\mathbf{x}; \theta)]$，$\varepsilon = 10^{-6}$。只需 2 次前向传播（原参数 + 微扰参数），但需存储梯度 $O(|\theta|)$
-    - 设计动机：完全避免对新输入反向传播，计算成本固定为 2 次前向
+这里 $\kappa$ 本质是经验神经正切核（eNTK）。作者进一步取最简单的单位核 $\kappa=1$ 作近似，依据是线性表征假说——同一个概念的梯度主要由一个共享方向主导，因此对不同示例用相同权重也够用。这样一来，新输入只要做 1 次前向传播拿到表征，再做 $O(N\cdot d)$ 的核相似度计算即可，没有任何反向传播，特别适合需要保持子群体分布保真度、不希望大幅改变模型的场景。
 
-3. **统一视角——对比方法是特例**:
+**2. COLD-FD-Steer：用有限差分绕过雅可比计算。**
 
-    - DiffMean 等价于 COLD-Kernel 使用特定损失函数 $\mathcal{L} = -\sum_i \|\mathbf{Z}(\tilde{\mathbf{x}}_i \oplus \tilde{\mathbf{y}}_i^+) - \mathbf{Z}(\tilde{\mathbf{x}}_i \oplus \tilde{\mathbf{y}}_i^-)\|^2$ 和单位核
-    - RepE/ICV 是 COLD-Kernel 的 PCA 降维近似
+核近似省掉了反传，但单位核是个比较粗的假设，在某些任务上不够准。COLD-FD 换一条路：不去显式算雅可比，而是用有限差分来逼近"参数沿示例梯度方向微扰一点后，表征怎么变"：
+
+$$\Delta\mathbf{Z}^{(fd)} = -\frac{\eta}{\varepsilon N} \big[\mathbf{Z}(\mathbf{x}; \theta + \varepsilon \textstyle\sum_i \nabla_\theta \mathcal{L}_i) - \mathbf{Z}(\mathbf{x}; \theta)\big],\quad \varepsilon = 10^{-6}$$
+
+它先把所有示例的损失梯度累加成一个方向，把参数沿该方向推一个极小步 $\varepsilon$，然后只比较微扰前后同一个新输入的表征之差。整个过程对新输入是 2 次前向传播（原参数一次、微扰参数一次），计算成本固定、不随输入复杂度变化；代价是要把完整的模型梯度存下来，开销 $O(|\theta|)$。这条路保留了真实雅可比的信息，因而转向更准——实验里它是表现最强的变体。
+
+**3. 统一视角：已有的对比方法都是 COLD-Kernel 的特例。**
+
+把核近似的式子代入不同的损失函数和核，能反推出现有方法。DiffMean 这类对比方法等价于 COLD-Kernel 取单位核、配上损失 $\mathcal{L} = -\sum_i \|\mathbf{Z}(\tilde{\mathbf{x}}_i \oplus \tilde{\mathbf{y}}_i^+) - \mathbf{Z}(\tilde{\mathbf{x}}_i \oplus \tilde{\mathbf{y}}_i^-)\|^2$——也就是说它们只用了正负对的激活差异，没碰损失函数携带的梯度信息；RepE/ICV 则相当于在 COLD-Kernel 之上再做一层 PCA 降维近似。这个视角解释了为什么对比方法样本效率高却精度有限：它们是 COLD-Steer 退化掉梯度信号后的特例。
 
 ### 损失函数 / 训练策略
 - 配对设置用 DPO 损失，正样本设置用交叉熵损失
@@ -132,10 +139,10 @@ tags:
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] The Trilemma of Truth in Large Language Models](../../NeurIPS2025/optimization/the_trilemma_of_truth_in_large_language_models.md)
 - [\[NeurIPS 2025\] Doubly Robust Alignment for Large Language Models](../../NeurIPS2025/optimization/doubly_robust_alignment_for_large_language_models.md)
 - [\[NeurIPS 2025\] Constrained Network Slice Assignment via Large Language Models](../../NeurIPS2025/optimization/constrained_network_slice_assignment_via_llms.md)
 - [\[ICML 2025\] Subspace Optimization for Large Language Models with Convergence Guarantees](../../ICML2025/optimization/subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
-- [\[NeurIPS 2025\] VERA: Variational Inference Framework for Jailbreaking Large Language Models](../../NeurIPS2025/optimization/vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
 - [\[ICLR 2026\] Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)
 
 </div>

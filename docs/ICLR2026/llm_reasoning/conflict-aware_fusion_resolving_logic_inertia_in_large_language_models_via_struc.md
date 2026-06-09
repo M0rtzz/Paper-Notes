@@ -41,30 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三个组件：(1) 结构鲁棒性基准——4 种控制扰动的压力测试；(2) 双过程推理架构——验证先于推理的 Chain-of-Thought 结构；(3) 两阶段优化流水线——结构化 SFT + DPO 对齐。
+这篇论文想回答一个尖锐的问题：LLM 在矛盾前提下崩溃，到底是模型不会推理，还是它根本没去验证前提？为此作者做了三件环环相扣的事。第一步先造一个**结构鲁棒性基准**，从同一套标准规则系统出发只动一个结构属性，把"语言能力"和"逻辑鲁棒性"拆开来测，从而把逻辑惯性暴露出来。第二步针对暴露出的病根，设计一个**双过程推理架构**，在 Chain-of-Thought 的生成路径里强行插入"先验证、后执行"的两阶段结构。第三步用一条**两阶段优化流水线**（结构化 SFT + DPO 对齐）把这个结构真正训练进模型，让验证从"可选动作"变成"默认程序"。
 
 ### 关键设计
 
-1. **结构鲁棒性基准（4 种压力测试）**:
+**1. 结构鲁棒性基准：把"语言能力"和"逻辑鲁棒性"拆开测。**
 
-    - Variant 1: 冗余规则删除——结论不变，测试模型对冗余信息的容忍度
-    - Variant 2: 关键规则删除——推理链断裂，测试模型检测证据不足的能力
-    - Variant 3: 矛盾注入——注入与现有事实矛盾的证据，测试矛盾检测
-    - Variant 4: 多等价律叠加——用逻辑等价变换重写规则，测试表面形式不变性
-    - 设计动机：从同一标准规则系统分别控制一个结构属性，确保性能差异可归因于推理鲁棒性而非领域偏移
+现有评估把语言能力和逻辑鲁棒性混在一起，看不出模型到底在哪一环出问题。这个基准的做法是从同一标准规则系统出发，每次只控制一个结构属性，构造四种受控扰动：Variant 1 删冗余规则（结论不变，测对冗余信息的容忍度）、Variant 2 删关键规则（推理链断裂，测能否发现证据不足）、Variant 3 注入与现有事实矛盾的证据（测矛盾检测）、Variant 4 用逻辑等价变换重写规则（表面形式变、语义不变，测形式不变性）。因为四个变体共享同一规则系统、只差一个被操纵的属性，性能差异就能干净地归因于推理鲁棒性，而不是领域偏移——这正是它能把"逻辑惯性"单独拎出来的关键。
 
-2. **双过程推理架构**:
+**2. 双过程推理架构：把"验证"从可选行为变成必经结构。**
 
-    - 功能：在 CoT 生成路径中强制加入两阶段结构
-    - Step 1 (System 2): 前提验证——检查前提完整性和一致性，检测矛盾
-    - Step 2 (System 1): 条件执行——仅在 Step 1 通过时执行演绎推理；检测到矛盾则"Halt Reasoning"
-    - 设计动机：将验证从可选行为变为必需的结构步骤，打破"推理优于验证"的惯性
+基准暴露的病根是 LLM 优先完成推理链、而不去验证推理前提。这个架构直接在 CoT 生成路径里强制加入两阶段：Step 1 由 System 2 做前提验证，检查前提的完整性与一致性、检测是否存在矛盾；Step 2 才是 System 1 的条件执行，**只有当 Step 1 通过时**才执行演绎推理，一旦检测到矛盾就输出"Halt Reasoning"中止。它的有效之处在于把验证从一个可有可无的行为变成了结构上必经的前置步骤，从而打破"推理优于验证"的惯性——模型不再有机会绕过验证直接往下推。这套 System 2 先于 System 1 的安排也正好对应认知科学的 dual-process theory。
 
-3. **两阶段优化流水线**:
+**3. 两阶段优化流水线：先把结构建起来，再强化中止行为。**
 
-    - **Stage 1: 结构化 SFT**——在 11,200 个实例（含标准、扰动、矛盾变体）上训练，所有样本强制包含"Step 1: 验证事实"前导，使前提检查成为默认程序
-    - **Stage 2: DPO 逻辑对齐**——构造偏好对：正确在矛盾处中止 > 继续不受支持的推理。直接惩罚"幻觉快捷方式"，强化有纪律的终止行为
-    - 设计动机：SFT 建立验证结构，DPO 强化矛盾检测行为
+光有 prompt 结构还不够，得把它训练进模型。Stage 1 是结构化 SFT，在 11,200 个实例（含标准、扰动、矛盾三类变体）上训练，所有样本都强制带"Step 1: 验证事实"前导，让前提检查成为模型的默认程序。Stage 2 是 DPO 逻辑对齐，构造偏好对——"在矛盾处正确中止"优于"继续做不受支持的推理"，以此直接惩罚那种跳过验证的"幻觉快捷方式"，强化有纪律的终止行为。两阶段分工明确：SFT 负责把验证结构立起来，DPO 负责把矛盾检测这个具体行为打磨到位，二者缺一不可（实验里单 SFT 0.705、单 DPO 0.510，合起来才到 1.000）。
 
 ### 损失函数 / 训练策略
 - SFT: 标准自回归损失 + LoRA (r=8, α=16)，lr=2e-5，3 epochs
@@ -129,10 +120,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] Self-Awareness before Action: Mitigating Logical Inertia via Proactive Cognitive Awareness](../../ACL2026/llm_reasoning/self-awareness_before_action_mitigating_logical_inertia_via_proactive_cognitive_.md)
+- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 - [\[ICLR 2026\] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
 - [\[ICLR 2026\] DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
-- [\[ACL 2026\] Chain-of-Thought as a Lens: Evaluating Structured Reasoning Alignment between Human Preferences and Large Language Models](../../ACL2026/llm_reasoning/chain-of-thought_as_a_lens_evaluating_structured_reasoning_alignment_between_hum.md)
-- [\[ICML 2026\] Reasoning Structure of Large Language Models](../../ICML2026/llm_reasoning/reasoning_structure_of_large_language_models.md)
 
 </div>
 

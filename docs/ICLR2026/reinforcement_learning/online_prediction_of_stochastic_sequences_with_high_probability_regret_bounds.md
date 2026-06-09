@@ -43,46 +43,21 @@ tags:
 
 ### 整体框架
 
-考虑如下在线预测场景：
-- **字母表**：可数集 $\mathcal{X}$（可以是无限可数的）
-- **时间范围**：有限 $T$，且学习者已知 $T$
-- **随机过程**：序列 $X_1, X_2, \ldots, X_T$ 由某个未知的平稳可遍历过程 $P$ 生成
-- **目标**：设计预测器 $\hat{q}_t(\cdot | X^{t-1})$，使得对真实条件分布 $p_t(\cdot | X^{t-1})$ 的累积 KL 散度（遗憾）尽可能小
-- **遗憾定义**：$R_T = \sum_{t=1}^T D_{\text{KL}}(p_t \| \hat{q}_t)$ 或等价的对数损失形式
+学习者在已知有限时间范围 $T$ 内，逐步观测由未知平稳可遍历过程 $P$ 生成的序列 $X_1,\dots,X_T$（字母表为可数集 $\mathcal{X}$，可无限可数），每步用 $\hat{q}_t(\cdot\mid X^{t-1})$ 预测下一观测的条件分布。衡量好坏的累积遗憾取对数损失/KL 散度形式 $R_T=\sum_{t=1}^T D_{\text{KL}}(p_t\,\|\,\hat{q}_t)$，其中 $p_t$ 为真实条件分布；论文的全部工作就是把这一遗憾从"期望意义下小"提升到"以高概率小"，并证明这一提升的代价恰好是平方根量级、无法再省。
 
 ### 关键设计
 
-1. **从期望到高概率的提升**：
+**1. 从期望界到高概率界：把"平均好"换成"几乎总是好"。** 已有文献对可数字母表上的通用预测只给出期望遗憾界 $E[R_T]=O(\sqrt{T})$，即归一化后 $E[R_T/T]=O(T^{-1/2})$。但期望小不排除少数实现路径上 $R_T$ 极大，对安全关键、金融风控这类风险敏感场景不够用。论文改而追求形如 $P(R_T/T\ge\epsilon)\le\delta$ 的尾部控制，并证明取 $\epsilon=O(T^{-1/2}\delta^{-1/2})$ 即可——也就是以至少 $1-\delta$ 的概率，归一化遗憾不超过 $O(T^{-1/2}\delta^{-1/2})$。这个界与期望界形式高度一致，只多出一个刻画"置信代价"的 $\delta^{-1/2}$ 因子。
 
-    - 已知的期望界：$E[R_T] = O(\sqrt{T})$，即 $E[R_T / T] = O(T^{-1/2})$
-    - 本文的高概率界：$P(R_T / T \geq \epsilon) \leq \delta$，其中 $\epsilon = O(T^{-1/2} \delta^{-1/2})$
-    - 换言之，以至少 $1 - \delta$ 的概率，遗憾率不超过 $O(T^{-1/2}\delta^{-1/2})$
+**2. 用精细的鞅集中替代粗糙的 Markov 转换：把 $\delta$ 的指数从 $-1$ 拉到 $-1/2$。** 最直接的做法是对期望界套 Markov 不等式，但那只能得到 $O(T^{-1/2}\delta^{-1})$，$\delta$ 的指数停在 $-1$，当要求高置信（$\delta$ 很小）时界迅速变松。论文转而把累积遗憾分解为一个鞅序列，利用过程的混合性质和 Azuma-Hoeffding 类的集中不等式做逐项控制，从而把 $\delta$ 的指数改进到 $-1/2$。这一步看似只是常数级别的改写，却是整篇结果区别于平凡推论的核心技术所在。
 
-2. **技术路线**：
+**3. 用对抗构造证下界：$\delta^{-1/2}$ 不是分析不够紧，而是问题本身的极限。** 为说明上界已经到头，论文在不附加额外假设（如更强混合条件、指数矩条件）的前提下构造对抗性实例，证明任何预测器都无法把 $\delta$ 的指数压到比 $-1/2$ 更优。其根源在于随机过程的内在变异性：不同于独立同分布设定能享受更强集中，可遍历过程的固有波动天然限制了高概率集中度。上界与下界在 $\delta$ 依赖上由此匹配，给出了完整刻画。
 
-    - 传统的 Markov 不等式直接将期望界转为高概率界会得到 $O(T^{-1/2}\delta^{-1})$，其中 $\delta$ 的指数为 -1
-    - 本文通过更精细的分析（可能利用随机过程的混合性质、集中不等式的改进或 Azuma-Hoeffding 类型的鞅不等式），将 $\delta$ 的指数改进为 $-1/2$
-    - 这一改进虽然看似微小，但在理论上具有本质性意义
-
-3. **不可能性结果（Impossibility Result）**：
-
-    - 证明在不附加额外假设（如更强的混合条件、指数矩条件等）的情况下，$\delta^{-1/2}$ 的指数是最优的，不可能进一步改进
-    - 通过构造对抗性（adversarial）实例来证明下界
-    - 这使得本文的上界和下界在 $\delta$ 依赖性上实现了匹配，给出了完整的刻画
-
-4. **可数字母表的处理**：
-
-    - 可数字母表上的通用预测比有限字母表更具挑战性，因为模型类更丰富
-    - 需要处理无限维分布空间上的一致收敛问题
-    - 本文的结果适用于这一更一般的设定
+**4. 适配可数（含无限可数）字母表：在更一般的设定下站住脚。** 相比有限字母表，可数字母表的模型类更丰富，需要处理无限维分布空间上的一致收敛，证明技术更复杂。论文的结果直接覆盖这一更一般设定，使最终的界形式上与有限字母表情形保持一致，而不依赖字母表有限这一便利假设。
 
 ### 损失函数 / 训练策略
 
-本文为纯理论工作，无训练过程。关键数学工具包括：
-- **对数损失**（Log-loss）作为标准预测损失函数
-- **KL 散度**作为遗憾的度量
-- **鞅集中不等式**进行高概率分析
-- **信息论工具**（互信息、条件熵等）处理随机过程预测
+论文是纯理论工作，没有训练过程，核心是数学分析而非优化算法。预测损失取标准的对数损失，遗憾以 KL 散度度量；高概率分析依赖鞅集中不等式，随机过程的刻画则用到互信息、条件熵等信息论工具。
 
 ## 实验关键数据
 
@@ -148,9 +123,9 @@ tags:
 
 - [\[ICML 2026\] Data- and Variance-dependent Regret Bounds for Online Tabular MDPs](../../ICML2026/reinforcement_learning/data-_and_variance-dependent_regret_bounds_for_online_tabular_mdps.md)
 - [\[ICLR 2026\] Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
-- [\[ICLR 2026\] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
 - [\[NeurIPS 2025\] Bandit and Delayed Feedback in Online Structured Prediction](../../NeurIPS2025/reinforcement_learning/bandit_and_delayed_feedback_in_online_structured_prediction.md)
 - [\[NeurIPS 2025\] Improved Regret Bounds for GP-UCB in Bayesian Optimization](../../NeurIPS2025/reinforcement_learning/improved_regret_bounds_for_gaussian_process_upper_confidence_bound_in_bayesian_o.md)
+- [\[ICLR 2026\] Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
 
 </div>
 

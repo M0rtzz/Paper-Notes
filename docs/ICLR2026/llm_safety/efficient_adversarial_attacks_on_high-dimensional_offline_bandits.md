@@ -43,36 +43,31 @@ tags:
 
 ### 整体框架
 
-攻击者 $\mathscr{A}$ 可以访问离线 logged 数据集 $\mathcal{D}_1, \ldots, \mathcal{D}_K$，在 bandit 训练前对奖励模型 $r(\cdot)$ 施加微小扰动 $\boldsymbol{\delta}$，目标是使 bandit 无法识别最优 arm。
+威胁模型设定为：攻击者 $\mathscr{A}$ 能访问各 arm 的离线 logged 数据集 $\mathcal{D}_1, \ldots, \mathcal{D}_K$，并在 bandit 评估**开始之前**对奖励模型 $r(\cdot)$ 的参数注入一个极小扰动 $\boldsymbol{\delta}$，使被污染的奖励引导 bandit 选错 arm。对线性奖励模型，整个攻击被刻画为"找最小范数扰动、同时满足一组使错误轨迹成立的线性约束"的凸优化问题，再借 NTK 理论把神经网络奖励模型也拉回到这个线性框架，并用高维下扰动范数随维度衰减的定理解释攻击为何如此隐蔽。
 
 ### 关键设计
 
-1. **三种攻击策略**：
+**1. 把劫持 bandit 写成最小范数扰动的凸二次规划：用最不可感知的改动满足"选错"约束。** 攻击的核心困难是既要让 bandit 的决策按攻击者意图走，又要让扰动小到无法被察觉。对线性奖励 $r(\mathbf{X}) = \mathbf{w}^\top \mathbf{X}$，作者把"在第 $t$ 步让 arm $i$ 比当前最优 arm 的 UCB 分数更高"这类要求整理成一组关于 $\boldsymbol{\delta}$ 的线性不等式，于是最优扰动就是范数最小且满足全部约束的解：
 
-    - **Full Trajectory Attack**：强制 bandit 遵循完全预设的目标轨迹 $\widetilde{A}_t$，需 $(T-K)(K-1)$ 个约束
-    - **Trajectory-Free Attack**：仅阻止最优 arm $i^*$ 被选中，不指定具体选哪个，约束数降为 $T-K$
-    - **Online Score-Aware (OSA) Attack**：在线逐步添加约束——仅当最优 arm 即将被选中时才加约束，实际约束数仅为 $\mathcal{O}(\log T)$，大幅降低计算成本
-   
-   对于线性奖励模型 $r(\mathbf{X}) = \mathbf{w}^\top \mathbf{X}$，所有攻击都可归结为凸二次规划（QP）：
-    $\boldsymbol{\delta}^* = \arg\min_{\boldsymbol{\delta}} \|\boldsymbol{\delta}\|_2^2 \quad \text{s.t.} \quad \boldsymbol{\delta}^\top \mathbf{T}_{i,t} > R_{i,t}, \forall (i,t) \in \mathcal{I}$
+$$\boldsymbol{\delta}^* = \arg\min_{\boldsymbol{\delta}} \|\boldsymbol{\delta}\|_2^2 \quad \text{s.t.} \quad \boldsymbol{\delta}^\top \mathbf{T}_{i,t} > R_{i,t}, \ \forall (i,t) \in \mathcal{I}$$
 
-2. **从线性到神经网络的推广**：
+这是一个凸 QP，约束集 $\mathcal{I}$ 的规模直接决定求解成本（总复杂度 $\widetilde{\mathcal{O}}(|\mathcal{I}|^3 + d|\mathcal{I}|^2)$），因此作者给出三种约束强度递减的策略。Full Trajectory Attack 强制 bandit 走完全指定的目标轨迹 $\widetilde{A}_t$，约束最严、共 $(T-K)(K-1)$ 条；Trajectory-Free Attack 只要求最优 arm $i^*$ 永不被选、不规定改选谁，约束降到 $T-K$ 条；Online Score-Aware (OSA) Attack 则在线运行——只在最优 arm 即将被选中的那一刻临时补一条约束，实际只需 $\mathcal{O}(\log T)$ 条，把求解成本压低一个数量级，却仍能维持 100% 攻击成功率，是工程上最实用的一种。
 
-    - 利用 Neural Tangent Kernel (NTK) 理论，对于足够宽的随机初始化网络：
-    $\text{NN}_{\boldsymbol{\theta}+\boldsymbol{\delta}}(\mathbf{X}) \approx \text{NN}_{\boldsymbol{\theta}}(\mathbf{X}) + \nabla_{\boldsymbol{\theta}}\text{NN}_{\boldsymbol{\theta}}(\mathbf{X})^\top \boldsymbol{\delta}$
-    - 即过参数化网络在参数空间近似线性，攻击退化为线性情形
-    - 隐藏层宽度超过 750 时，攻击成功率达到 100%
+**2. 用 NTK 把神经网络奖励模型退化成线性攻击：让凸 QP 框架直接复用。** 真实评估里的奖励模型往往是 CLIP、美学评分器这类深网络，参数与输出并非线性关系，QP 框架本不适用。作者借助 Neural Tangent Kernel 理论：对足够宽、随机初始化的网络，参数扰动 $\boldsymbol{\delta}$ 引起的输出变化可用一阶 Taylor 展开近似，
 
-3. **理论保证**：
+$$\text{NN}_{\boldsymbol{\theta}+\boldsymbol{\delta}}(\mathbf{X}) \approx \text{NN}_{\boldsymbol{\theta}}(\mathbf{X}) + \nabla_{\boldsymbol{\theta}}\text{NN}_{\boldsymbol{\theta}}(\mathbf{X})^\top \boldsymbol{\delta}$$
 
-    - **可行性定理（Theorem 3.3）**：当 $d > (T-K)(K-1)$ 且数据分布非退化时，攻击以概率 1 可行
-    - **攻击范数定理（Theorem 3.4）**：在 $d \geq KT$ 的高维情形下，全轨迹攻击所需扰动范数满足 $\|\boldsymbol{\delta}^*\|_2 \leq \mathcal{O}\left(\sqrt{\frac{T^3 \log T \cdot \log d}{Kd}}\right)$，即扰动随维度增大而缩小
+也就是过参数化网络在参数空间近似线性，梯度 $\nabla_{\boldsymbol{\theta}}\text{NN}$ 充当线性情形里的特征向量，于是整套凸 QP 攻击可原样套用到神经网络上。这一近似对足够宽的网络足够精确——实验中隐藏层宽度超过 750 时攻击成功率即达到 100%，印证了 NTK 线性化在实操中成立。
+
+**3. 高维可行性与范数衰减定理：解释攻击为何随维度升高反而更隐蔽。** 这一设计回答的是"攻击什么时候一定能成、扰动会有多小"。可行性定理（Theorem 3.3）证明当参数维度 $d > (T-K)(K-1)$ 且数据分布非退化时，约束集 $\mathcal{I}$ 描述的可行域以概率 1 非空，即攻击几乎必然存在——高维参数空间的自由度天然给攻击者留足操作余地。攻击范数定理（Theorem 3.4）进一步给出扰动的尺度：在 $d \geq KT$ 的高维情形下，全轨迹攻击的最优扰动满足
+
+$$\|\boldsymbol{\delta}^*\|_2 \leq \mathcal{O}\left(\sqrt{\frac{T^3 \log T \cdot \log d}{Kd}}\right)$$
+
+范数随维度 $d$ 以约 $\widetilde{\mathcal{O}}(d^{-1/2})$ 衰减，意味着输入/参数维度越高，劫持决策所需的改动反而越小、越不可感知。这正好与"高维空间均值估计本就不稳"的直觉吻合，也解释了为何基于图像的高维生成模型评估格外脆弱。
 
 ### 损失函数 / 训练策略
 
-攻击优化目标为凸二次规划，求解复杂度为 $\widetilde{\mathcal{O}}(|\mathcal{I}|^3 + d|\mathcal{I}|^2)$。OSA 方法通过减少约束数 $|\mathcal{I}|$ 至 $\mathcal{O}(\log T)$ 实现高效攻击。
-
-防御机制：在运行 bandit 前随机打乱部分 logged 数据，打乱 $T/2$ 数据即可显著降低攻击成功率。
+攻击的优化目标即上述最小范数凸 QP，无需训练，求解复杂度为 $\widetilde{\mathcal{O}}(|\mathcal{I}|^3 + d|\mathcal{I}|^2)$，OSA 通过把约束数 $|\mathcal{I}|$ 压到 $\mathcal{O}(\log T)$ 来换取高效。对应的防御侧策略也很轻量：在运行 bandit 前对部分 logged 数据随机打乱，打乱约 $T/2$ 的数据即可显著降低攻击成功率，因为这破坏了攻击者预设约束所依赖的轨迹假设。
 
 ## 实验关键数据
 

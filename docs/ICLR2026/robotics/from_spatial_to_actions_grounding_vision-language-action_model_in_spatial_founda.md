@@ -39,54 +39,27 @@ tags:
 
 ### 整体框架
 
-FALCON 由三个核心组件构成，灵感来自大脑分工理论（大脑皮层负责高级推理，小脑负责精细运动控制）：
-
-1. **2D VLM**（大脑皮层角色）：Kosmos-2 (~1.6B参数)处理图像+语言指令，输出语义 action token $\hat{\mathbf{t}}_{\text{act}}$
-2. **Embodied Spatial Model (ESM)**（空间感知器）：基于空间基础模型（VGGT）提取 3D 空间 token $\mathbf{T}_{\text{spl}}$，可选融合深度/相机位姿
-3. **Spatial-Enhanced Action Head**（小脑角色）：融合语义和空间表示，生成精确的机器人动作
-
-总参数量：~2.9B（VLM 1.6B + ESM 1.0B + Action Head）。
+FALCON 把 VLA 拆成「大脑皮层 + 小脑」两条通路：2D VLM（Kosmos-2，~1.6B）负责读懂图像和语言指令，吐出语义 action token $\hat{\mathbf{t}}_{\text{act}}$；空间侧由 Embodied Spatial Model（ESM，基于空间基础模型 VGGT，~1.0B）从 RGB 中抽出富含几何的 3D 空间 token $\mathbf{T}_{\text{spl}}$。两路表示不在 VLM 输入端拼接，而是汇到 Spatial-Enhanced Action Head 做融合，再生成机器人动作，全模型约 2.9B 参数。这种「空间信息绕开 VLM、只在动作头注入」的拓扑，是后续所有设计的出发点。
 
 ### 关键设计
 
-**Embodied Spatial Model (ESM)**：
+**1. Embodied Spatial Model：用空间基础模型当几何先验提取器。** VLA 的 3D 短板根源在于 2D 编码器看不到深度和几何关系。FALCON 不自己从头学 3D，而是直接借用预训练好的 VGGT：输入图像先经 DINO 编码成视觉 token $\mathbf{T}_{\text{vis}}$，与一个可学习相机 token $\mathbf{t}_{\text{cam}}$ 拼接后送进空间编码器（交叉注意力 + 自注意力堆叠），输出空间 token $\mathbf{T}_{\text{spl}} \in \mathbb{R}^{M \times D_s}$。由于 VGGT 本身是为多视图重建（深度、点云、位姿）训练的，它的 token 天然携带稠密几何信息，比伪深度估计这类弱线索强得多，也免去了 3D 数据稀缺下从零对齐的麻烦。
 
-- 基于 VGGT 空间基础模型，将输入图像编码为空间 token $\mathbf{T}_{\text{spl}} \in \mathbb{R}^{M \times D_s}$
-- 图像经 DINO 编码为视觉 token $\mathbf{T}_{\text{vis}}$，与可学习相机 token $\mathbf{t}_{\text{cam}}$ 拼接后送入空间编码器（交叉注意力+自注意力块）
-
-**3D 条件编码与注入**：
-
-- **相机位姿** $P \in \mathbb{R}^7$：通过 MLP 编码为 GT camera token $\mathbf{t}_{\text{gt-cam}}$，替换可学习 camera token
-- **深度图** $D_t$：归一化后与有效性掩码拼接，通过 14×14 卷积编码为 $\mathbf{T}_{\text{dpt}}$，与图像 token 逐元素相加
-
-**随机条件策略**（关键创新）：训练时以概率 $p$ 随机决定是否注入深度/位姿：
+**2. 可选 3D 条件 + 随机注入：一个模型吃下任意传感器组合。** 真实部署里深度图和相机位姿时有时无，为每种配置单独训一个模型代价太高。FALCON 把这两路做成可插拔条件：相机位姿 $P \in \mathbb{R}^7$ 经 MLP 编码为 GT camera token $\mathbf{t}_{\text{gt-cam}}$，替换掉那个可学习 camera token；深度图 $D_t$ 归一化后与有效性掩码拼接，过一个 14×14 卷积得到 $\mathbf{T}_{\text{dpt}}$，逐元素加到图像 token 上。关键在于训练时这两路是否注入由两个伯努利开关 $b_d, b_p \sim \text{Bernoulli}(p)$ 随机决定：
 
 $$(\mathbf{T}_{\text{spl}}, \hat{\mathbf{t}}_{\text{cam}}) = \mathcal{E}_{\text{spl}}(\mathbf{T}_{\text{vis}} + b_d \mathbf{T}_{\text{dpt}}, b_p \mathbf{t}_{\text{gt-cam}} + (1-b_p)\mathbf{t}_{\text{cam}})$$
 
-其中 $b_d, b_p \sim \text{Bernoulli}(p)$。这确保模型在有/无额外 3D 输入时都能良好工作。
+这样同一组权重在「纯 RGB」「RGB-D」「带位姿」之间都见过训练信号，测试时缺哪路都不会崩，有哪路就能顺势增强，模态可以灵活切换。
 
-**Spatial-Enhanced Action Head**：
-
-核心融合策略——逐元素相加：
-1. 空间 token 通过 max-pooling 压缩为单一向量 $\mathbf{t}_{\text{spl}}$
-2. 经轻量 MLP 适配器投影到 VLM 特征空间：$\widetilde{\mathbf{t}}_{\text{spl}} = \mathcal{D}(\mathbf{t}_{\text{spl}})$
-3. 与语义 action token 直接相加：$\mathbf{f}_{\text{fused}} = \hat{\mathbf{t}}_{\text{act}} + \widetilde{\mathbf{t}}_{\text{spl}}$
-4. 送入动作预测器（MLP 或 LSTM）生成 7D 动作序列
+**3. 在 Action Head 用逐元素加法融合：保护 VLM，零额外参数。** 把空间 embedding 直接拼进 VLM 输入会冲掉预训练好的视觉-语言对齐，零样本泛化随之退化——这是现有 3D 增强方法的通病。FALCON 干脆让空间信息绕过 VLM，只在动作头汇合：空间 token 先经 max-pooling 压成单一向量 $\mathbf{t}_{\text{spl}}$，再过一个轻量 MLP 适配器投影进 VLM 特征空间 $\widetilde{\mathbf{t}}_{\text{spl}} = \mathcal{D}(\mathbf{t}_{\text{spl}})$，然后与语义 action token 直接相加 $\mathbf{f}_{\text{fused}} = \hat{\mathbf{t}}_{\text{act}} + \widetilde{\mathbf{t}}_{\text{spl}}$，送入动作预测器（MLP 或 LSTM）输出 7D 动作序列。逐元素加法不引入新参数，消融里却胜过交叉注意力和 FiLM-Gated，原因正是它最不破坏 VLM 既有表示，把语义和几何当作可叠加的互补信号。
 
 ### 损失函数 / 训练策略
 
-**训练目标**：
+动作监督把 7 维拆开处理：前 6 维连续位姿用 MSE，第 7 维离散夹爪开合用 BCE，在动作块长度 $C$ 上累加：
 
 $$\mathcal{L} = \sum_{i=t}^{t+C-1} \text{MSE}(\hat{a}_{i,\text{pose}}, a_{i,\text{pose}}) + \lambda \cdot \text{BCE}(\hat{a}_{i,\text{gripper}}, a_{i,\text{gripper}})$$
 
-- 前 6 维（位姿）用 MSE 损失，第 7 维（夹爪）用 BCE 损失
-- ESM 的空间重建用深度、点云图和位姿多任务监督（沿用 VGGT）
-
-**两阶段后训练**：
-- **Stage 1**：冻结所有预训练组件，仅训练轻量适配器，实现空间 token 与 VLA 特征空间的初始对齐
-- **Stage 2**：解冻 VLM 和适配器联合微调，其余组件保持冻结，使 VLM 隐式融入空间线索
-
-训练在 32 块 A100 GPU 上进行。
+ESM 一侧沿用 VGGT 的深度 / 点云图 / 位姿多任务空间重建监督，保住几何先验不退化。后训练分两阶段以避免一上来就扰动预训练权重：Stage 1 冻结所有预训练组件、只训轻量适配器，让空间 token 先和 VLA 特征空间粗对齐；Stage 2 再解冻 VLM 与适配器联合微调（其余仍冻结），让 VLM 隐式吸收空间线索。整个训练在 32 块 A100 上完成。
 
 ## 实验关键数据
 
@@ -196,9 +169,9 @@ $$\mathcal{L} = \sum_{i=t}^{t+C-1} \text{MSE}(\hat{a}_{i,\text{pose}}, a_{i,\tex
 
 - [\[ICML 2026\] Spatial Memory for Out-of-Vision Manipulation in Vision-Language-Action](../../ICML2026/robotics/spatial_memory_for_out-of-vision_manipulation_in_vision-language-action.md)
 - [\[ICLR 2026\] Theory of Space: Can Foundation Models Construct Spatial Beliefs through Active Exploration?](theory_of_space_can_foundation_models_construct_spatial_beliefs_through_active_e.md)
-- [\[ICML 2026\] Dual-Stream Diffusion for World-Model Augmented Vision-Language-Action Model](../../ICML2026/robotics/dual-stream_diffusion_for_world-model_augmented_vision-language-action_model.md)
-- [\[ICLR 2026\] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
-- [\[ICLR 2026\] Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [\[ICLR 2026\] AutoFly: Vision-Language-Action Model for UAV Autonomous Navigation in the Wild](autofly_vision-language-action_model_for_uav_autonomous_navigation_in_the_wild.md)
+- [\[ICLR 2026\] ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
+- [\[ICLR 2026\] Emergence of Spatial Representation in an Actor-Critic Agent with Hippocampus-Inspired Sequence Generator](emergence_of_spatial_representation_in_an_actor-critic_agent_with_hippocampus-in.md)
 
 </div>
 

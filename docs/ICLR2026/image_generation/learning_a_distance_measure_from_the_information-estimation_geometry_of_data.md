@@ -33,26 +33,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IEM 建立在 pointwise I-MMSE 公式之上：信号的对数概率可分解为最优去噪器在不同 SNR 水平上的去噪误差。通过比较两个信号周围的 score 向量场来定义距离。
+IEM 不直接比较两个信号本身，而是比较它们各自周围"被噪声模糊后的概率密度"长什么样——具体说就是比较两点周围 score 向量场（对数密度的梯度）的差异，并沿信噪比从 0 到 $\Gamma$ 积分。这一构造的理论基础是 pointwise I-MMSE 公式：一个信号的对数概率可以分解为最优去噪器在不同 SNR 水平上的去噪误差，因此一个训练好的去噪器（就是扩散模型里那个 score 网络）天然就能用来计算这个距离，无需任何人类标注。
 
 ### 关键设计
 
-1. **IEM 定义**: 比较两点 $\boldsymbol{x}_1, \boldsymbol{x}_2$ 周围模糊密度的 score 向量场差异：
+**1. IEM 定义：把"距离"建立在密度几何而非像素差上。** 感知距离难以定义的根源在于，像素层面接近的两张图人眼看起来可能差很远，反之亦然。IEM 的做法是绕开信号本身，转而比较两点 $\boldsymbol{x}_1, \boldsymbol{x}_2$ 在各噪声水平下所处密度的 score 场差异，并对信噪比 $\gamma$ 积分到上限 $\Gamma$：
 $$\text{IEM}(\boldsymbol{x}_1, \boldsymbol{x}_2, \Gamma) = \left(\int_0^\Gamma \mathbb{E}\left[\|\nabla \log p_{\mathbf{y}_\gamma}(\gamma \boldsymbol{x}_1 + \mathbf{w}_\gamma) - \nabla \log p_{\mathbf{y}_\gamma}(\gamma \boldsymbol{x}_2 + \mathbf{w}_\gamma)\|^2\right] d\gamma\right)^{1/2}$$
-   其中 $\gamma$ 为信噪比，$\mathbf{w}_\gamma$ 为维纳过程噪声。IEM 可用训练好的去噪器（类似扩散模型）近似计算。
+其中 $\gamma$ 为信噪比、$\mathbf{w}_\gamma$ 为维纳过程噪声。因为 score 函数恰好等于去噪误差（Tweedie-Miyasawa 关系），把训练好的去噪器插进去就能近似这个积分，距离的语义完全由数据分布的几何决定。
 
-2. **度量性质**: 证明 IEM 是合法的距离度量（对称性、非负性、正定性、三角不等式）。对高斯分布，IEM 退化为 Mahalanobis 距离：$\text{IEM} = \sqrt{(\boldsymbol{x}_1 - \boldsymbol{x}_2)^\top \Sigma^{-1} (\boldsymbol{x}_1 - \boldsymbol{x}_2)}$
+**2. 度量性质：证明它是一个数学上合法的距离。** 一个能用作优化目标的度量必须满足对称性、非负性、正定性和三角不等式，否则会出现"A 像 B、B 像 C，但 A 与 C 距离突然爆炸"之类的病态。论文证明 IEM 恰好满足全部四条。更重要的是它在高斯分布下退化为经典的 Mahalanobis 距离 $\text{IEM} = \sqrt{(\boldsymbol{x}_1 - \boldsymbol{x}_2)^\top \Sigma^{-1} (\boldsymbol{x}_1 - \boldsymbol{x}_2)}$，这个闭式解既是理论自洽的验证，也说明 IEM 会沿协方差大的方向"放松"、沿协方差小的方向"收紧"，与人对自然信号的敏感模式一致。
 
-3. **局部黎曼度量**: 二阶展开给出黎曼度量 $\boldsymbol{G}(\boldsymbol{x}, \Gamma)$：
+**3. 局部黎曼度量：刻画度量在每个点附近的敏感方向。** 把 IEM 在某点做二阶展开，可以得到一个局部黎曼度量张量 $\boldsymbol{G}(\boldsymbol{x}, \Gamma)$：
 $$\boldsymbol{G}(\boldsymbol{x}, \Gamma) = \int_0^\Gamma \gamma^2 \mathbb{E}\left[(\nabla^2 \log p_{\mathbf{y}_\gamma}(\gamma \boldsymbol{x} + \mathbf{w}_\gamma))^2\right] d\gamma$$
-   直觉：在 log 密度曲率高的区域和导致概率变化大的扰动方向上更敏感。
+它的直觉是：在对数密度曲率高的区域、以及那些会让概率剧烈变化的扰动方向上，度量更敏感。这解释了为什么 IEM 对"偏离数据流形"的扰动（如非结构化噪声）反应强烈，而对沿流形的细微变化相对宽容——正是这种各向异性让它贴近人类感知。
 
-4. **广义 IEM**: 引入可学习函数 $f$ 调制 score 差异的权重，使 IEM 可适应不同感知任务（如纹理相似性 vs 失真评估）。
+**4. 广义 IEM：用可学习权重适配不同感知任务。** 单一固定的 IEM 难以同时擅长失真评估和纹理相似性这两类相反需求，前者要对局部偏差敏感、后者要对全局统计敏感。为此引入一个可学习函数 $f$ 来调制不同 SNR 上 score 差异的权重，得到广义 IEM。$f$ 既可手工选取（如平方型 $\text{IEM}_{sq}$ 偏向纹理），也可在少量标注上拟合成 $f_\omega$，从而让同一框架在所有数据集上都取得强结果。
 
 ### 损失函数 / 训练策略
-- 训练 Hourglass Diffusion Transformer (HDiT) 作为去噪器，在 ImageNet-1k 256×256 上训练
-- 使用 MSE 损失和 log-uniform 噪声水平调度
-- 计算 IEM 时，将去噪器插入定义式并数值求解一维积分
+去噪器采用 Hourglass Diffusion Transformer (HDiT)，在 ImageNet-1k 256×256 上以标准 MSE 去噪损失训练，噪声水平按 log-uniform 调度采样以覆盖宽 SNR 范围。计算 IEM 时把这个去噪器代入定义式，再对一维的 $\gamma$ 积分做数值求解即可，无需任何感知标注参与训练。
 
 ## 实验关键数据
 

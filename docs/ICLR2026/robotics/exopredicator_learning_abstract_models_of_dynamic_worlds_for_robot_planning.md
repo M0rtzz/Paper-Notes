@@ -29,7 +29,7 @@ tags:
 
 ### 现有痛点
 
-**现有痛点**：**领域现状**：1. 长期具身规划中，世界不仅因智能体动作而变化，还有**外生过程**（如水加热、多米诺骨牌级联）与智能体动作并发进行
+1. 长期具身规划中，世界不仅因智能体动作而变化，还有**外生过程**（如水加热、多米诺骨牌级联）与智能体动作并发进行
 2. 现有抽象世界模型（如 STRIPS）假设动作是瞬时的，不能建模延迟效果和自主外生过程
 3. 经典 PDDL 也不直接支持外生过程（需 PDDL+ 扩展），且按时间粒度组合爆炸
 4. VLM/VLA 模型缺乏可组合的世界模型，难以泛化到新任务
@@ -37,25 +37,19 @@ tags:
 
 ## 方法详解
 
-### 状态抽象
-- 谓词 = Python 函数 + VLM 查询，将原始状态映射为布尔特征集合（接地原子）
-- 通过 LLM 提议候选谓词，贪心搜索选择最优子集
+### 整体框架
 
-### 因果过程表示
-每个因果过程 $L = \langle \text{Par}, C, O, E, W, p^{\text{delay}} \rangle$：
-- **内生过程**：智能体直接控制的动作（如 Pick/Place/SwitchOn）
-- **外生过程**：条件满足后自主展开（如水壶注水、多米诺级联）
-- 每个过程有随机延迟分布 $p^{\text{delay}}$，效果在延迟后才实现
-- NoOp 动作：等待外生过程完成
+ExoPredicator 把一个动态世界拆成两层来学：底层用 VLM 接地的符号谓词把连续状态压成布尔原子集合，上层用一组**因果过程**描述这些原子如何随时间改变——既包括智能体主动触发的内生动作，也包括条件满足后自主展开的外生机制。给定 1-2 条演示轨迹，框架以变分贝叶斯推断学过程参数、以 LLM 提议加贝叶斯评分搜过程结构与谓词词表，最终把学到的符号模型交给 A\* 规划器做长程任务。
 
-### 学习算法（三层嵌套）
-1. **参数学习**：变分推断优化延迟分布和权重参数，引入变分分布近似因果效果的到达时间
-2. **结构学习**：LLM 提议候选过程结构 → 贝叶斯模型选择评分
-3. **谓词发明**：LLM 提议 + 贪心局部搜索，优化数据似然 + 模型先验
+### 关键设计
 
-### 规划
-- "大步"转移函数 $\mathcal{T}_{\text{big}}$：跳过抽象状态不变的时间段
-- A* 搜索 + fast-forward 启发式
+**1. VLM 接地的谓词发明：把像素世界压成可组合的符号空间。** 直接在原始观测上规划会陷入维度灾难，于是每个谓词被实现为一段 Python 函数加一次 VLM 查询，把当前状态映射为一组布尔接地原子（如 `IsHot(kettle)`）。词表不靠人手设计，而是让 LLM 提议大量候选谓词，再用贪心局部搜索挑出最优子集，目标是最大化数据似然加模型先验（偏好简洁词表）。这样既复用了 VLM 的视觉常识来命名物理概念，又用搜索把符号空间收敛到真正解释轨迹所必需的那几个谓词。
+
+**2. 含随机延迟的因果过程表示：统一刻画动作与外生机制。** 世界的变化被统一写成因果过程 $L = \langle \text{Par}, C, O, E, W, p^{\text{delay}} \rangle$，其中 $C$ 是触发条件、$E$ 是效果、$W$ 是权重。内生过程对应智能体可直接控制的技能（Pick/Place/SwitchOn），外生过程则在条件 $C$ 满足后自主推进（水壶注水、多米诺级联、风扇吹球）。关键在于每个过程带一个随机延迟分布 $p^{\text{delay}}$：效果不在触发瞬间生效，而要等延迟采样的步数之后才落地，这正好建模了"加热需要时间""骨牌依次倒下"这类时序现象。规划时再配一个 NoOp 动作让智能体原地等待外生过程跑完，从而把瞬时 STRIPS 算子扩展成能表达并发延迟动态的模型。
+
+**3. 三层嵌套的变分贝叶斯学习：在组合爆炸的假设空间里高效搜索。** 同时学谓词、过程结构和延迟参数会让假设空间膨胀到 $2^{50}$ 量级，因此学习被组织成由外到内的三层。最外层是**谓词发明**（LLM 提议加贪心搜索定词表），中间层是**结构学习**（LLM 提议候选过程结构，用贝叶斯模型选择打分挑结构），最内层是**参数学习**：对固定结构，用变分推断优化延迟分布和权重——由于因果效果的真实到达时间不可观测，这里引入一个变分分布去近似每个效果的到达时刻，把对所有可能时序求和的组合爆炸转成可优化的下界。LLM 负责把搜索压到合理的候选集，贝叶斯评分负责在候选里做可靠取舍，二者互补使从极少数据学出模型成为可能。
+
+**4. 大步转移与 A\* 规划：跳过无关时间步做长程搜索。** 由于外生过程常常持续多步而抽象状态不变，逐步搜索会浪费大量分支。框架定义"大步"转移函数 $\mathcal{T}_{\text{big}}$，一次性跳过抽象原子不发生变化的整段时间，把规划图压缩到只在状态真正切换处分叉。在此之上用 A\* 搜索配 fast-forward 启发式求解，使学到的延迟世界模型能直接支撑长程、含等待的任务规划。
 
 ## 实验
 
@@ -119,11 +113,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
 - [\[ICLR 2026\] RoboPARA: Dual-Arm Robot Planning with Parallel Allocation and Recomposition Across Tasks](robopara_dual-arm_robot_planning_with_parallel_allocation_and_recomposition_acro.md)
-- [\[ICLR 2026\] AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
 - [\[ICLR 2026\] Test-Time Mixture of World Models for Embodied Agents in Dynamic Environments](test-time_mixture_of_world_models_for_embodied_agents_in_dynamic_environments.md)
-- [\[CVPR 2025\] A Data-Centric Revisit of Pre-Trained Vision Models for Robot Learning](../../CVPR2025/robotics/a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)
+- [\[ICLR 2026\] AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception](anytouch_2_general_optical_tactile_representation_learning_for_dynamic_tactile_p.md)
+- [\[ICLR 2026\] Cross-Embodiment Offline Reinforcement Learning for Heterogeneous Robot Datasets](cross-embodiment_offline_reinforcement_learning_for_heterogeneous_robot_datasets.md)
+- [\[ICML 2026\] Plan in Sandbox, Navigate in Open Worlds: Learning Physics-Grounded Abstracted Experience for Embodied Navigation](../../ICML2026/robotics/plan_in_sandbox_navigate_in_open_worlds_learning_physics-grounded_abstracted_exp.md)
 
 </div>
 

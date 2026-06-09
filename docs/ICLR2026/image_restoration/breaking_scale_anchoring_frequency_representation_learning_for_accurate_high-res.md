@@ -43,15 +43,31 @@ tags:
 
 ## 方法详解
 
-### FRL 三步法（架构无关）
+### 整体框架
 
-1. **多分辨率数据构建**：从原始数据降采样生成多个分辨率版本 $\rho_j = \rho_0/2^j$（标准多尺度训练技术）
-2. **Nyquist 归一化频率表征（核心创新）**：$PE_{freq}(x, k, \rho) = \sin(2\pi k \cdot x / k_{Nyq}(\rho))$，使相同物理频率在不同分辨率下产生相同的表征值。这是本文的核心新颖点——解除频率和分辨率的耦合
-3. **频率感知训练损失**：标准损失 + 频域一致性损失 $\lambda \cdot \|F_\Theta - \hat{u}\|^2_{freq}$，确保跨尺度频谱一致性（标准频谱正则化技术）
+频率表征学习（FRL）是一套架构无关的"插件"流程：在常规的多分辨率训练之上，把网络对空间频率的编码方式从"随分辨率漂移"改成"按 Nyquist 频率归一化"，再用一个频域一致性损失锁住跨尺度的频谱行为。三个环节里只有频率归一化是真正打破 Scale Anchoring 的关键，多分辨率训练和频谱正则只是为它铺路。
 
-### 损失函数 / 训练策略
+### 关键设计
 
-Step 1 和 3 是已有技术的标准实践；Step 2 对齐 Nyquist 频率是唯一的方法论创新。消融实验证明 Step 2 是打破 Scale Anchoring 的必要条件。
+**1. 多分辨率数据构建：让模型同时见到多个采样率。**
+
+从原始高保真数据出发，逐级降采样生成一组分辨率版本 $\rho_j = \rho_0/2^j$，让同一物理场以不同采样密度同时进入训练。这一步本身是成熟的多尺度训练技术，单独使用并不能改变误差锚定——消融中只开这一项时 RMSE_Ratio 仍停在 $\sim 1.0$。它的真正作用是为下一步提供"同一频率、不同分辨率"的配对样本，让 Nyquist 归一化有跨尺度的对照可学。
+
+**2. Nyquist 归一化频率表征：解开频率与分辨率的耦合。**
+
+这是全文唯一的方法论创新，也是打破 Scale Anchoring 的核心。常规频率编码直接用离散波数 $k$，于是同一个物理频率在不同分辨率下会被映射成不同的编码值，模型把"频率"和"训练分辨率"绑死，到了高分辨率推理就失效。FRL 改成按该分辨率的 Nyquist 频率 $k_{Nyq}(\rho)$ 做归一化：
+
+$$PE_{freq}(x, k, \rho) = \sin\!\big(2\pi k \cdot x / k_{Nyq}(\rho)\big)$$
+
+这样相同的物理频率无论在哪个分辨率下都得到一致的表征值，网络学到的是与采样率无关的物理频率结构，而不是某个固定网格上的离散模式。正因如此，频率响应带宽才能从训练时的 Nyquist 频率附近扩展到全频段，误差随分辨率提升而下降而非锚定。消融里单独只加这一项就能把 RMSE_Ratio 压到 $0.3$–$0.4$——有效但不充分，仍需另外两步配合。
+
+**3. 频率感知训练损失：锁住跨尺度的频谱一致性。**
+
+在标准回归损失外再加一项频域一致性损失，约束模型预测 $F_\Theta$ 与目标 $\hat{u}$ 在频谱上对齐：
+
+$$\mathcal{L} = \mathcal{L}_{std} + \lambda \cdot \|F_\Theta - \hat{u}\|^2_{freq}$$
+
+它把跨分辨率的频谱一致性显式写进优化目标，防止归一化编码学偏。和 Step 1 一样，这是标准的频谱正则化手段，单独使用同样停在 $\sim 1.0$；只有当三步合在一起（完整 FRL）时，RMSE_Ratio 才落到 $0.135$–$0.181$，真正打破 Scale Anchoring。
 
 ## 实验关键数据
 
@@ -123,8 +139,8 @@ Step 1 和 3 是已有技术的标准实践；Step 2 对齐 Nyquist 频率是唯
 - [\[ICLR 2026\] Skip to the Good Part: Representation Structure & Inference-Time Layer Skipping in Diffusion vs. Autoregressive LLMs](skip_to_the_good_part_representation_structure_inference-time_layer_skipping_in_.md)
 - [\[ECCV 2024\] Rethinking Image Super-Resolution from Training Data Perspectives](../../ECCV2024/image_restoration/rethinking_image_super-resolution_from_training_data_perspectives.md)
 - [\[ICLR 2026\] Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
+- [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](../../NeurIPS2025/image_restoration/encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
 - [\[CVPR 2026\] FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](../../CVPR2026/image_restoration/fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
-- [\[ICCV 2025\] Outlier-Aware Post-Training Quantization for Image Super-Resolution](../../ICCV2025/image_restoration/outlier-aware_post-training_quantization_for_image_super-resolution.md)
 
 </div>
 

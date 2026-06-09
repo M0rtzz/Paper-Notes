@@ -39,20 +39,28 @@ LLM 微调面临严峻的内存瓶颈。训练内存由三部分组成：(I) 模
 ## 方法详解
 
 ### 整体框架
-TokenSeek 分两步：(1) **Instance-Aware Token Seeking**——结合上下文和梯度信息评估每个 token 的重要性；(2) **Efficient Token Ditching**——只对选中的 token 做反向传播，丢弃其余 token 的梯度从而省去其激活存储。
+TokenSeek 把"省激活内存"拆成"先挑 token、再丢梯度"两个环节：先用上下文与梯度两路信息为每个实例的 token 打一个重要性分，按分数选出约 10% 的高价值 token，反向传播时只对这部分 token 回传梯度、其余 token 的激活根本不必缓存。整个过程逐 batch 在线进行，因此对每条样本都是量身定制的实例感知选择。
 
 ### 关键设计
 
-1. **上下文重要性评估（Context Information）**: 利用注意力机制中的列向累积注意力权重 $I_1(t_j) = \sum_{i=1}^{n} \mathbf{A}_{ij}$，即一个 token 被所有其他 token 关注的程度总和。直观理解：被更多 token 关注的 token 在上下文中更重要。但纯注意力分数存在 attention sink 效应（早期 token 虚高）和长尾分布问题。
+**1. 上下文重要性：用被关注程度衡量 token 在序列里有多"被需要"。**
 
-2. **梯度重要性评估（Gradient Information）**: 计算最后一层前激活的梯度范数 $I_2(t_j) = \sum_{k=1}^{d} \mathbf{G}_{jk}$，其中 $\mathbf{G} = \partial \mathcal{L} / \partial z^{(L-1)}$。梯度信息直接反映 token 对损失函数的实际贡献，与注意力权重形成互补（Jain & Wallace 2019 指出注意力与梯度重要性常不相关）。关键：只需冻结除输出头和最后 decoder block 外的所有层做部分反向传播即可获取。
+第一路信号来自注意力本身。对一条长度为 $n$ 的序列，把注意力矩阵按列累加得到每个 token 的上下文得分 $I_1(t_j) = \sum_{i=1}^{n} \mathbf{A}_{ij}$，也就是 token $t_j$ 被序列中所有其他 token 关注的总权重。一个 token 若被越多位置反复查询，说明它承载的信息越关键，理应优先保留。但纯注意力分数并不干净：早期 token 因 attention sink 效应分数虚高，整体又呈重长尾分布，直接用会让选择偏向少数位置——这正是后面要做 log 变换的原因。
 
-3. **综合评分**: $I(t_j) = \alpha \log[I_1(t_j)] + \beta \text{Norm}[I_2(t_j)]$，其中 log 变换处理长尾分布，min-max 归一化对齐尺度。默认 $\alpha = \beta = 1$，对超参不敏感。
+**2. 梯度重要性：用对损失的实际贡献补上注意力看不到的信号。**
 
-4. **高效 Token Ditching**: 对未选中 token 的梯度直接置零 $\sigma'(a_{\bar{t}}^{(l)}) = 0$，因此无需缓存这些 token 的激活 $a_{\bar{t}}^{(l)}$。选择 10% token 理论上只需约 1% 的激活内存。
+只看注意力会漏掉"被关注不多、但对学习很关键"的 token。第二路信号因此取最后一层前激活的梯度，定义 $I_2(t_j) = \sum_{k=1}^{d} \mathbf{G}_{jk}$，其中 $\mathbf{G} = \partial \mathcal{L} / \partial z^{(L-1)}$，直接度量每个 token 对损失函数的影响大小。这与注意力是互补的两套尺度（Jain & Wallace 2019 早就指出注意力权重和梯度重要性常常并不相关）：上下文分数偏向序列前段，梯度分数偏向 response 部分，合起来才覆盖全程。关键是这一路并不贵——冻结除输出头和最后一个 decoder block 外的所有层，只做一次部分反向传播就能拿到。
+
+**3. 综合评分：把两路尺度对齐后再线性融合。**
+
+两路信号量纲不同、分布不同，不能直接相加。综合得分写作 $I(t_j) = \alpha \log[I_1(t_j)] + \beta \,\text{Norm}[I_2(t_j)]$：对上下文分数做 log 压掉长尾，对梯度分数做 min-max 归一化对齐到同一尺度，再按 $\alpha,\beta$ 加权。默认取 $\alpha = \beta = 1$，消融显示在较宽的权重范围内结果都很稳，说明方法对这两个超参并不敏感。
+
+**4. 高效 Token Ditching：把"丢梯度"翻译成"不存激活"。**
+
+挑出 token 后真正省内存的动作在反向传播。对未选中的 token $\bar{t}$，直接令其激活的反传导数置零 $\sigma'(a_{\bar{t}}^{(l)}) = 0$；既然这些 token 不再回传梯度，前向时它们的中间激活 $a_{\bar{t}}^{(l)}$ 就无需缓存，而激活恰恰是训练内存的大头。只保留 10% 的 token，理论上激活内存可降到约 1%，这正是整体最高 65.7% 内存节省的来源。
 
 ### 训练策略
-TokenSeek 是即插即用的 plugin，与模型架构无关，可与 LoRA、LoHa、QLoRA 等 PEFT 方法叠加使用。每个 batch 独立评估 token 重要性并选择，使评估具有实例感知性。
+TokenSeek 是与架构无关的即插即用 plugin，可直接叠加在 LoRA、LoHa、QLoRA 等 PEFT 方法之上而不改动它们。token 重要性在每个 batch 上独立评估、独立选择，从而让稀疏化策略对每条样本都是实例感知的，而非一套固定模板套到所有数据。
 
 ## 实验关键数据
 
@@ -122,9 +130,9 @@ Token 比例消融（Llama3.2 1B + QLoRA）：10%→52.61, 20%→51.80, 30%→52
 
 - [\[AAAI 2026\] GateRA: Token-Aware Modulation for Parameter-Efficient Fine-Tuning](../../AAAI2026/interpretability/gatera_token-aware_modulation_for_parameter-efficient_fine-tuning.md)
 - [\[ICLR 2026\] Exploring Interpretability for Visual Prompt Tuning with Cross-layer Concepts](exploring_interpretability_for_visual_prompt_tuning_with_cross-layer_concepts.md)
+- [\[ICLR 2026\] Bridging Explainability and Embeddings: BEE Aware of Spuriousness](bridging_explainability_and_embeddings_bee_aware_of_spuriousness.md)
 - [\[ICLR 2026\] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
 - [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
-- [\[ICML 2026\] Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs](../../ICML2026/interpretability/towards_long-horizon_interpretability_efficient_and_faithful_multi-token_attribu.md)
 
 </div>
 

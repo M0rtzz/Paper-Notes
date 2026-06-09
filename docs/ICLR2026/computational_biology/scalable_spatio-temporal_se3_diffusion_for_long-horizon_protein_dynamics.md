@@ -41,37 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入蛋白质序列和起始构象，以自回归方式生成后续帧：$\prod_{\ell=1}^{L} p(\mathbf{x}_\ell | \mathbf{x}_{<\ell}, \Delta t_\ell)$。每帧用 SE(3) 扩散模型（去噪分数匹配）生成，使用因果 Transformer 从历史清洁帧和当前噪声帧提取条件信息。
+
+STAR-MD 要做的事是：给定蛋白质序列和一个起始构象，逐帧滚动生成后续的动力学轨迹。它把整条轨迹建模成一个自回归过程 $\prod_{\ell=1}^{L} p(\mathbf{x}_\ell | \mathbf{x}_{<\ell}, \Delta t_\ell)$——第 $\ell$ 帧的构象由之前所有帧和该步的时间间隔 $\Delta t_\ell$ 共同决定。每一帧的生成本身是一个 SE(3) 扩散过程：模型从纯噪声出发，用去噪分数匹配把构象一步步还原到合理的几何位置。串起这两层的是一个因果 Transformer，它同时看历史的清洁帧和当前正在去噪的噪声帧，从中抽取条件信息。下面四个设计分别解决"时空怎么建模""怎么并行训练""长轨迹怎么不崩""怎么跨时间尺度"四个问题。
 
 ### 关键设计
 
-1. **联合时空（S×T）注意力**:
+**1. 联合时空（S×T）注意力：用一次注意力同时建模空间和时间耦合。**
 
-    - 功能：在残基-帧对 $(i, \ell)$ 的联合 token 上做注意力，取代交替式空间/时间模块
-    - 核心思路：每个 token 就是一个（残基, 时间帧）对，可以直接注意之前帧任意残基的特征。使用 2D RoPE 编码残基和帧索引，支持帧数外推。复杂度 $O(N^2 L^2)$ vs Pairformer+时间注意力的 $O(N^3 L + N^2 L^2)$
-    - 设计动机：Mori-Zwanzig 理论证明去掉成对特征后记忆核变得时空不可分——必须用联合注意力而非分离式注意力来建模这种非可分离耦合
+现有架构（如 ConfRover）把空间和时间拆成交替的两个模块（space-then-time），这限制了它表达"非可分离"时空耦合的能力。STAR-MD 改成在残基-帧对 $(i, \ell)$ 的联合 token 上做注意力：每个 token 直接对应一个（残基, 时间帧），任意一个 token 都能注意到之前任意帧的任意残基特征，空间和时间的依赖在同一个注意力里被联合捕获。残基索引和帧索引用 2D RoPE 编码，因此训练时学到的位置关系能外推到更多帧。这种做法之所以必要而非锦上添花，来自 Mori-Zwanzig 理论的论证：一旦去掉昂贵的成对特征，刻画历史依赖的记忆核就会"膨胀"并变得时空不可分——分离式注意力原则上无法表达这种耦合，只有联合注意力可以。复杂度上，联合注意力是 $O(N^2 L^2)$，而 Pairformer+时间注意力是 $O(N^3 L + N^2 L^2)$，去掉了对残基数立方的那一项。
 
-2. **块因果注意力训练（Block-Causal Attention）**:
+**2. 块因果注意力训练（Block-Causal Attention）：并行训练但保持自回归的因果结构。**
 
-    - 功能：实现并行训练同时保持因果结构
-    - 核心思路：将清洁帧和噪声帧拼接为输入序列，用特殊的块级注意力掩码：每帧只能注意到之前帧的清洁版本。代价是序列长度翻倍，但可以单次前向传播同时优化所有帧的去噪损失
-    - 设计动机：对齐并行 teacher-forcing 训练和顺序自回归推理
+自回归推理是顺序的（一帧依赖前面已生成的帧），但若训练也顺序进行则极慢。STAR-MD 把所有清洁帧和噪声帧拼接成一条输入序列，再用一个块级注意力掩码约束信息流：每一帧只能注意到它之前那些帧的清洁版本。这样一次前向传播就能同时对所有帧计算去噪损失，等价于并行的 teacher-forcing，却仍然遵守"未来不能看"的因果约束，从而让训练阶段的信息可见性和推理阶段的顺序生成对齐。代价是输入序列长度翻倍（清洁+噪声两份），换来的是单次前向同时优化所有帧。
 
-3. **上下文噪声扰动（Contextual Noise Perturbation）**:
+**3. 上下文噪声扰动（Contextual Noise Perturbation）：让模型在训练时就习惯不完美的历史。**
 
-    - 功能：缓解长程自回归生成的误差累积
-    - 核心思路：训练时对历史清洁帧添加小噪声 $\tau \sim \mathcal{U}[0, 0.1]$，推理时同样添加——保持训练-推理一致性，使模型对自身预测误差具有鲁棒性
-    - 设计动机：受 Diffusion Forcing 启发，核心洞察是让模型在训练时就习惯不完美的历史输入
+长程自回归生成的通病是误差累积——一帧的小偏差会被后续帧不断放大，最终轨迹漂移崩溃。根源在于训练时模型看到的历史永远是完美的真值，推理时却要依赖自己（带误差）的预测。STAR-MD 的做法是在训练时也给历史清洁帧加一点小噪声 $\tau \sim \mathcal{U}[0, 0.1]$，推理时同样加，使训练和推理看到的历史质量一致，模型因此对自身预测误差变得鲁棒。这个想法受 Diffusion Forcing 启发，作用类似 scheduled sampling，但在扩散框架里实现得很自然——消融显示它正是长轨迹（>250ns）稳定性的关键。
 
-4. **连续时间条件化**:
+**4. 连续时间条件化：用单一模型覆盖多个时间尺度。**
 
-    - 功能：用单一模型覆盖多个时间尺度
-    - 核心思路：时间步长 $\Delta t \sim \text{LogUniform}[10^{-2}, 10^1]$ ns 随机采样，通过 AdaLN 注入网络。即使上下文窗口小，大步长也能暴露模型于长程时间依赖
-    - 设计动机：解耦物理轨迹时长和上下文帧数，无需复杂的上下文长度外推技术
+如果想让一个模型既能生成密集的短步长轨迹、又能跨大时间跨度，传统做法要靠复杂的上下文长度外推。STAR-MD 改为把时间步长本身作为条件：训练时 $\Delta t \sim \text{LogUniform}[10^{-2}, 10^1]$ ns 随机采样，再通过 AdaLN 注入网络。关键在于这把"物理轨迹时长"和"上下文帧数"解耦了——即便上下文窗口只有有限几帧，只要采样到大步长，模型就被暴露在跨越很长物理时间的依赖上。于是单一模型就能覆盖从 $10^{-2}$ 到 $10^1$ ns 的步长范围，把"时间外推"问题转化成了"条件化"问题。
 
 ### 损失函数 / 训练策略
 
-使用 SE(3) 扩散的去噪分数匹配损失，分别对平移（$\mathbb{R}^3$ 上的高斯噪声）和旋转（$\text{IGSO}_3$ 上的各向同性高斯）预测噪声。KV 缓存用于推理时高效的自回归生成，仅需 $O(NL)$ 内存（vs ConfRover 的 $O(N^2 L)$）。
+训练目标是 SE(3) 扩散的去噪分数匹配损失，对刚体运动的两个分量分别建模：平移用 $\mathbb{R}^3$ 上的高斯噪声，旋转用 $\text{IGSO}_3$ 上的各向同性高斯，分别预测各自的噪声。推理时用 KV 缓存做高效的自回归滚动生成，内存只需 $O(NL)$，相比 ConfRover 的 $O(N^2 L)$ 显著降低——这也是去掉成对特征带来的连锁收益。
 
 ## 实验关键数据
 
@@ -137,8 +130,8 @@ STAR-MD 在所有指标上均达 SOTA。
 - [\[CVPR 2025\] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos](../../CVPR2025/computational_biology/towards_spatio-temporal_world_scene_graph_generation_from_monocular_videos.md)
 - [\[ICLR 2026\] Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
 - [\[ICML 2026\] Temporal Score Rescaling for Temperature Sampling in Diffusion and Flow Models](../../ICML2026/computational_biology/temporal_score_rescaling_for_temperature_sampling_in_diffusion_and_flow_models.md)
-- [\[ICLR 2026\] Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
-- [\[ICLR 2026\] Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
+- [\[ICML 2026\] Scalable Single-Cell Gene Expression Generation with Latent Diffusion Models](../../ICML2026/computational_biology/scalable_single-cell_gene_expression_generation_with_latent_diffusion_models.md)
+- [\[ICLR 2026\] Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)
 
 </div>
 

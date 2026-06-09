@@ -47,47 +47,43 @@ tags:
 
 ### 关键设计
 
-#### 1. 噪声稳定性的形式化定义
+**1. 噪声稳定性的形式化定义：用关联噪声一次性替代逐 token 扰动。**
 
-对于高斯测度 $\gamma$ 下的函数 $f \in L^2(\gamma)$，关联对 $(X,Y)$ 通过向 $X$ 添加缩放的高斯噪声生成：
+平均敏感度的麻烦在于它逐个翻转 token、又只在布尔域上自然成立。噪声稳定性换了个思路：不再单独扰动每个坐标，而是给所有输入坐标同时加上**一份关联的高斯噪声**，看函数输出还剩多少相关性。形式上，对高斯测度 $\gamma$ 下的函数 $f \in L^2(\gamma)$，先构造关联对 $(X,Y)$，再取两者输出的内积期望：
 
 $$\text{Stab}_\rho(f) := \mathbb{E}_{(X,Y)}[f(X) f(Y)]$$
 
-其中 $Y = \rho X + Z\sqrt{1-\rho^2}$，$Z \sim \gamma$ 独立于 $X$，$\rho \in (0,1)$ 为相关系数。
-
-通过 Hermite-Fourier 系数直接关联频谱：
+其中 $Y = \rho X + Z\sqrt{1-\rho^2}$，$Z \sim \gamma$ 独立于 $X$，相关系数 $\rho \in (0,1)$ 控制噪声强度。这个定义天然活在实值域上（靠 Ornstein-Uhlenbeck 半群），不需要平均敏感度那套笨拙的超网格采样。更关键的是，它通过 Hermite-Fourier 系数和频谱直接挂钩——高阶项被 $\rho^{|\alpha|}$ 指数压低：
 
 $$\text{Stab}_\rho(f) = \sum_{\alpha \in \mathbb{N}^d} \rho^{|\alpha|} \tilde{f}(\alpha)^2$$
 
-#### 2. 谱集中引理（Lemma 1）
+**2. 谱集中引理（Lemma 1）：把"稳定"翻译成"低频主导"。**
 
-高噪声稳定性意味着 Fourier 质量集中在低阶系数：若 $\text{Stab}_\rho(f) \geq (1-\delta)\|f\|_2^2$，则 $f$ 是 $(\varepsilon, T)$-谱集中的，其中：
+光有定义还不够，得证明高稳定性确实对应简单函数。这条引理给出桥梁：只要噪声稳定性接近函数总能量，Fourier 质量就必然堆在低阶系数上。具体地，若 $\text{Stab}_\rho(f) \geq (1-\delta)\|f\|_2^2$，则 $f$ 是 $(\varepsilon, T)$-谱集中的，截断阶数满足
 
 $$T \geq \log_{1/\rho}\left(1 - \frac{\delta}{\varepsilon}\right)$$
 
-#### 3. 单层 ReLU MLP 的噪声稳定性（Theorem 5.1）
+这正是后面在 GPT-2、RoBERTa 等模型上算"度数 ≥15 的 Fourier 尾部质量上界"的理论依据——稳定性越高，尾部被压得越狠，上界越紧。
 
-对于 $\rho$-关联高斯输入 $(X,Y)$：
+**3. 单层 ReLU MLP 的噪声稳定性（Theorem 5.1）：算清楚一层非线性吃掉多少稳定性。**
+
+要分析整个 Transformer，先得知道单个组件怎么传播稳定性。对 $\rho$-关联的高斯输入 $(X,Y)$，ReLU 的输出内积有闭式解：
 
 $$\mathbb{E}[\text{ReLU}(X) \cdot \text{ReLU}(Y)] = \frac{1}{2\pi}\left(\sqrt{1-\rho^2} + \rho(\pi - \arccos\rho)\right)$$
 
-二阶 Taylor 近似：$\approx \frac{1}{2\pi} + \frac{1}{4}\rho + \frac{1}{4\pi}\rho^2$
+做二阶 Taylor 展开是 $\approx \frac{1}{2\pi} + \frac{1}{4}\rho + \frac{1}{4\pi}\rho^2$，主项随 $\rho$ 近似线性。这说明一层 ReLU 不会把关联噪声彻底抹平，而是按一个可控的比例往下传。
 
-#### 4. 单层注意力层的噪声稳定性
+**4. 单层注意力层的噪声稳定性：按 $W=W_Q W_K^T$ 的结构分三种情况。**
 
-分三种情况分析 $W = W_Q W_K^T$：
+注意力比 MLP 复杂，因为稳定性取决于 query-key 矩阵 $W = W_Q W_K^T$ 长什么样，论文按结构拆成三档讨论。**恒等矩阵 $W=I_d$**（Theorem 5.2）下，高维极限里注意力矩阵收敛到 $I_n$，稳定性与 $\rho$ 保持线性关系，付出的代价仅 $o(1)$；**低秩矩阵 $W=UU^T$** 则通过 Johnson-Lindenstrauss 变换归约回恒等情况，结论一致；而**非结构化 $W \sim \mathcal{N}(0,I)$**（Theorem 5.3）是最坏情形——注意力矩阵趋向随机排列矩阵，稳定性退化为 $\rho \cdot s(\rho) \cdot \|(W_V)_{:,j}\|_2^2$，多出来的 $s(\rho)$ 是注意力模式被保持的概率。换句话说，结构化的注意力几乎无损地传递稳定性，随机注意力才会额外衰减。
 
-- **恒等矩阵 $W=I_d$**（Theorem 5.2）：高维极限下注意力矩阵收敛到 $I_n$，稳定性与 $\rho$ 呈线性关系，代价为 $o(1)$
-- **低秩矩阵 $W=UU^T$**：通过 Johnson-Lindenstrauss 变换归约到恒等情况
-- **非结构化 $W \sim \mathcal{N}(0,I)$**（Theorem 5.3）：注意力矩阵趋向随机排列矩阵，稳定性为 $\rho \cdot s(\rho) \cdot \|(W_V)_{:,j}\|_2^2$，其中 $s(\rho)$ 是注意力模式保持概率
+**5. 多层传播分析：把单层结论递推成整网的固定点。**
 
-#### 5. 多层传播分析
-
-ReLU FFN 中稳定性按递推关系传播：
+有了单层的传播率，多层就是反复迭代。ReLU FFN 堆叠时，第 $L$ 层的稳定性由前一层递推决定：
 
 $$\rho_L = \frac{1}{2\pi}\left(\sqrt{1-\rho_{L-1}^2} + \rho_{L-1}(\pi - \arccos\rho_{L-1})\right)$$
 
-线性近似求解得固定点 $\frac{2}{3\pi} \approx 0.212$，表现为**弱衰减**——稳定性不会完全消失。
+做线性近似求解这个不动点方程，得到 $\frac{2}{3\pi} \approx 0.212$。这个非零固定点是个好消息：深层网络对稳定性只造成**弱衰减**，信号收敛到一个有限下界而不会被层数彻底吃光——这也解释了为什么深 Transformer 仍能维持 junta-like 的低敏感行为。
 
 ### 损失函数
 
@@ -177,7 +173,7 @@ $$R_{M,S,\rho}(X) = (-1)^S \cdot \sum_{i=1}^C M(X)_i \cdot M(Y)_i$$
 - [\[ICML 2026\] Certified Circuits: Stability Guarantees for Mechanistic Circuits](../../ICML2026/interpretability/certified_circuits_stability_guarantees_for_mechanistic_circuits.md)
 - [\[NeurIPS 2025\] AdaptGrad: Adaptive Sampling to Reduce Noise](../../NeurIPS2025/interpretability/adaptgrad_adaptive_sampling_to_reduce_noise.md)
 - [\[CVPR 2026\] Feature Attribution Stability Suite: How Stable Are Post-Hoc Attributions?](../../CVPR2026/interpretability/feature_attribution_stability_suite_how_stable_are_post-hoc_attributions.md)
-- [\[NeurIPS 2025\] Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models](../../NeurIPS2025/interpretability/bigram_subnetworks_mapping_to_next_tokens_in_transformer_language_models.md)
+- [\[AAAI 2026\] Attention as Binding: A Vector-Symbolic Perspective on Transformer Reasoning](../../AAAI2026/interpretability/attention_as_binding_a_vector-symbolic_perspective_on_transformer_reasoning.md)
 
 </div>
 

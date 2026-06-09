@@ -40,30 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为晶体结构（原子位置+空间群标签），输出为材料性质预测。架构核心是对称适配傅里叶编码层：先用标准傅里叶基编码原子位置，然后乘以预计算的群依赖邻接矩阵来施加约束，再输入 Transformer 层。
+这篇论文要解决的问题是：三维晶体有 230 个空间群，怎样用**一个**网络就能对任意空间群强制精确不变性，而不必为每个群手搓一套架构。它的做法是把"群不变性"这件事彻底搬到傅里叶空间里——一个 $G$-不变函数的傅里叶系数会被群操作约束成若干相互关联的轨道，于是不变性就等价于倒格点上一组线性约束。整条流水线是：先用标准傅里叶基把原子位置展开成频率系数，再乘上一个**预计算的、群依赖的邻接矩阵**把系数投影到满足约束的不变子空间，最后送进 Transformer 做性质预测。关键在于换空间群时只换那张邻接矩阵，网络权重始终不动，所以同一套参数能服务全部 230 个群。
 
 ### 关键设计
 
-1. **傅里叶空间中的群约束推导 (Proposition 3.1 + Theorem 3.2)**:
+**1. 傅里叶空间中的群约束推导：把无限维的不变函数空间变成倒格点上可算的离散约束。**
 
-    - 功能：解析推导群操作对傅里叶系数的精确约束
-    - 核心思路：对 $G$-不变函数 $f$ 和群操作 $\phi(x) = Ax + t$，其傅里叶系数满足 $F(\omega) = e^{i2\pi\omega^\top A^\top t} F(A\omega)$。这将倒格点分为不相交的轨道 $\mathcal{O}$，每个轨道对应一个基函数 $e_\mathcal{O}(x) = \sum_{\omega \in \mathcal{O}} w_{\xi \to \omega} e^{i2\pi\omega^\top x}$
-    - 设计动机：从连续函数空间的无限维问题转化为倒格点上的离散问题，使得约束可计算且精确
+直接在连续函数空间里强制群不变性是无限维问题，难以精确实现。论文转而分析傅里叶系数受到的约束（Proposition 3.1 + Theorem 3.2）：对一个 $G$-不变函数 $f$ 和群操作 $\phi(x) = Ax + t$，其傅里叶系数必须满足
 
-2. **对偶图表示与算法构造 (Algorithm 1)**:
+$$F(\omega) = e^{i2\pi\omega^\top A^\top t} F(A\omega).$$
 
-    - 功能：将群约束表示为倒格点上的有向加权图，用于自动构造对称适配基
-    - 核心思路：节点为频率 $\omega$，群操作 $\phi$ 引入 $\omega \to A\omega$ 的有向边，权重为相位因子。移除不一致自环后的连通分量即为相位一致轨道，边权乘积给出基函数系数
-    - 设计动机：图表示将抽象的群论约束转化为具体的图算法问题，可对任意空间群通用地执行
+这条等式把倒格点切成一组互不相交的**轨道** $\mathcal{O}$——同一轨道内的频率由群操作 $\omega \to A\omega$ 串联、相位被锁死，每个轨道恰好对应一个不变基函数
 
-3. **Crystal Fourier Transformer (CFT)**:
+$$e_\mathcal{O}(x) = \sum_{\omega \in \mathcal{O}} w_{\xi \to \omega}\, e^{i2\pi\omega^\top x}.$$
 
-    - 功能：用对称适配傅里叶基作为位置编码，实现跨空间群的参数共享
-    - 核心思路：原子位置先在标准傅里叶基中展开，然后通过群依赖的邻接矩阵投影到不变子空间。邻接矩阵预计算，网络权重对所有空间群共享
-    - 设计动机：不同空间群只改变邻接矩阵（预计算），网络架构和参数不变——这使得零样本泛化成为可能
+这样原本无限维的不变函数空间就被离散成"按轨道枚举基函数"的可计算问题，而且是精确约束、不是近似。论文进一步证明这组基张成了 $L^2(\Pi)$ 中所有连续 $G$-不变函数，保证了表达完备性。
+
+**2. 对偶图表示与算法构造：用一张有向加权图把抽象群论约束变成通用的图算法。**
+
+有了约束公式还需要一个对任意空间群都能跑的统一构造流程，论文为此把约束画成倒格点上的有向加权图（Algorithm 1）：节点是频率 $\omega$，每个群操作 $\phi$ 在 $\omega$ 和 $A\omega$ 之间连一条有向边，边权就是上面那个相位因子 $e^{i2\pi\omega^\top A^\top t}$。移除相位不一致的自环后，图的每个连通分量就是一个相位一致的轨道，沿边把权重连乘起来即得到该轨道基函数的各项系数。这样一来，"这个群允许哪些频率、它们怎样耦合"这种抽象群论判断，被还原成跑一遍连通分量 + 边权乘积的图算法，对 230 个群可以无差别地自动执行。
+
+**3. Crystal Fourier Transformer (CFT)：用对称适配傅里叶基当位置编码，让全部空间群共享同一套权重。**
+
+最后把前两步的产物接进 Transformer。原子位置先在标准傅里叶基里展开，再经过群依赖的邻接矩阵投影到不变子空间——这张邻接矩阵正是 Algorithm 1 离线算好的轨道结构，编码了该空间群的全部约束。因为约束信息全部落在邻接矩阵里，网络架构和权重对所有空间群完全共享：换群时只换矩阵、不动参数。这正是零样本泛化的来源——一个训练中从未见过的空间群，只要预计算出它的邻接矩阵就能直接预测。位置编码也因此自带几何含义：同一轨道内的点距离近、不同轨道间距离远，准确反映了倒格点上的轨道结构。
 
 ### 损失函数 / 训练策略
-标准的材料性质回归/分类损失。关键是训练时可混合不同空间群的数据，模型通过邻接矩阵自动适应。
+用标准的材料性质回归/分类损失。训练时可把不同空间群的数据混在一起喂给同一个网络，模型靠各自的邻接矩阵自动适配对应的对称约束，无需为不同群切换架构。
 
 ## 实验关键数据
 
@@ -120,8 +122,8 @@ tags:
 - [\[AAAI 2026\] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details](../../AAAI2026/others/learning_compact_latent_space_for_representing_neural_signed_distance_functions_.md)
 - [\[ICLR 2026\] Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
 - [\[ICLR 2026\] Out of the Shadows: Exploring a Latent Space for Neural Network Verification](out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
+- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
 - [\[ACL 2025\] Cramming 1568 Tokens into a Single Vector and Back Again: Exploring the Limits of Embedding Space Capacity](../../ACL2025/others/cramming_tokens_embedding_capacity.md)
-- [\[ACL 2025\] Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?](../../ACL2025/others/are_any-to-any_models_more_consistent_across_modality_transfers_than_specialists.md)
 
 </div>
 

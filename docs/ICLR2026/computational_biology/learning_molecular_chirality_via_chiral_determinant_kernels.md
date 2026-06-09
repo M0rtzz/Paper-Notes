@@ -35,32 +35,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定分子 $\bm{z} = (\bm{X}, \bm{H})$（3D 坐标 + 原子特征），构建分子图 $\mathcal{G}$，将原子分为手性原子 $\mathcal{I}_c$、手性相关原子 $\mathcal{I}_r$ 和非手性原子 $\mathcal{I}_n$ 三类。流程：(1) Chiral Encoder 用行列式核计算手性原子的立体化学嵌入 + 三类原子各自的特征投影；(2) Chiral Transformer 用手性原子作 query、其他原子作 key/value 的交叉注意力传播手性信息；(3) Predictor 头做下游预测。
+ChiDeK 把一个分子表示成 $\bm{z} = (\bm{X}, \bm{H})$（3D 坐标加原子特征），先按原子在立体化学中扮演的角色分成手性原子 $\mathcal{I}_c$、手性相关原子 $\mathcal{I}_r$ 和普通原子 $\mathcal{I}_n$ 三类，再由 Chiral Encoder 用行列式核为每个手性原子算出一段 SE(3) 不变的立体化学嵌入，最后用一个以手性原子为 query、其余原子为 key/value 的 Chiral Transformer 把这段手性信息扩散到整张图后送入预测头。核心创新都集中在“怎么用行列式把手性编码成既不变又能区分镜像的向量”这一步。
 
 ### 关键设计
-1. **手性行列式核(Chiral Determinant Kernel)**：
 
-    - 构建手性矩阵 $\bm{M}_C(i)$：由手性原子 $i$ 的 4 个取代基的 3D 坐标构成 $3 \times 3$ 矩阵
-    - 经可学习投影 $\bm{W} \in \mathbb{R}^{k \times d_p \times 3}$ 变换后做 QR 分解，取 $\det(\bm{R})$ 作为行列式特征
-    - 关键性质：$\det(\bm{R}) = \alpha(\bm{W}) \cdot P_C(i)$，与原始手性积成正比，保持 SE(3) 不变性且对反射变号
-    - 输出 $k$ 维嵌入（$k$ 个行列式核），比标量手性体积信息量大 $k$ 倍
+**1. 手性行列式核：把手性写成 SE(3) 不变、对反射变号的向量。** 传统做法用 CIP 规则的 R/S 符号或单个手性体积标量来表示手性，前者只是离散标签丢掉了几何信息，后者只有一维、信息量太薄。ChiDeK 先为手性原子 $i$ 取它的 4 个取代基坐标拼成 $3\times3$ 的手性矩阵 $\bm{M}_C(i)$，再用一组可学习投影 $\bm{W}\in\mathbb{R}^{k\times d_p\times 3}$ 把它变换后做 QR 分解，取上三角阵的行列式 $\det(\bm{R})$ 当特征。关键性质是 $\det(\bm{R}) = \alpha(\bm{W})\cdot P_C(i)$，即它正比于原始手性积 $P_C(i)$：旋转平移分子时不变（SE(3) 不变），但取镜像时符号翻转，因此天生能区分对映体——这正是 DimeNet 一类只用距离/角度的 E(3) 不变模型做不到的。用 $k$ 个核就得到 $k$ 维嵌入，比单标量手性体积丰富了 $k$ 倍。
 
-2. **统一中心手性与轴向手性**：
+**2. 用同一套数学统一中心手性与轴向手性：把轴向手性也塞进行列式框架。** 中心手性来自四面体碳，轴向手性来自联苯键等受限旋转，过去这两类要分别建模、轴向手性几乎没人碰。ChiDeK 发现只要换一种方式选“构成手性矩阵的四个点”，就能用完全相同的 $\bm{M}_C$ 公式覆盖两者：中心手性以四面体中心原子为核心、取它的 4 个邻居；轴向手性以旋转受限键为轴、在键两侧各取最近的取代基原子。两种手性共享同一组行列式核与同一证明，因此模型不需要为轴向手性新增任何专用模块，这也是它能首次系统建模轴向手性的根本原因。
 
-    - 中心手性：以四面体中心原子为核心，4 个邻居构建 $\bm{M}_C$
-    - 轴向手性：以旋转受限键为轴，两侧各取最近取代基原子构建 $\bm{M}_C$
-    - 两种手性用**完全相同的数学框架**统一处理
-
-3. **手性交叉注意力**：
-
-    - 手性原子嵌入作 query，手性相关原子和非手性原子分别投影为 key/value
-    - 加入 GKPT（Gaussian Kernel with Pair Type）距离偏置——区分手性-手性相关和手性-非手性两种原子对
-    - 堆叠 $L$ 层，逐层更新 pairwise bias
+**3. 手性交叉注意力：让手性信号从手性中心扩散到全分子。** 手性虽然定义在局部原子上，但它会影响整个分子的性质（如 ECD 谱、旋光角），只编码在手性中心而不传播出去会限制表达力。ChiDeK 让手性原子嵌入做 query，把手性相关原子和普通原子分别投影成 key/value，做交叉注意力；注意力里额外加一个 GKPT（Gaussian Kernel with Pair Type）距离偏置，按原子对类型（手性–手性相关、手性–普通）区别地编码空间距离。堆叠 $L$ 层并逐层更新这个 pairwise bias，手性信息就能沿着几何近邻一路渗透到全图，消融里去掉交叉注意力会让 ECD RMSE 从 2.75 退到 3.12。
 
 ### 损失函数 / 训练策略
-- 标准分类/回归损失 + 权重正则化 $\mathcal{L}_{reg} = \|W^\top W - I_3\|^2$ 确保投影矩阵满秩
-- 辅助 QR 分解：在投影前直接对权重矩阵做 QR 分解，保证列独立性
-- 多任务评估：R/S 分类（准确率）、对映体排序（准确率）、ECD 谱预测（RMSE）、旋光角预测（RMSE）
+训练用标准的分类/回归损失，再加一项权重正则 $\mathcal{L}_{reg} = \|W^\top W - I_3\|^2$ 把投影矩阵约束成近正交以保证满秩——这点很关键，因为 rank-deficient 的 $\bm{W}$ 会让行列式恒为 0、手性信息整段丢失。配合在投影前对权重直接做 QR 分解保证列独立，整条手性通路才稳定可微。评测覆盖 R/S 分类（Acc）、对映体排序（Acc）、ECD 谱预测（RMSE）和旋光角预测（RMSE）四个任务。
 
 ## 实验关键数据
 
@@ -125,8 +111,8 @@ tags:
 - [\[ICML 2026\] Cross-Chirality Generalization by Axial Vectors for Hetero-Chiral Protein-Peptide Interaction Design](../../ICML2026/computational_biology/cross-chirality_generalization_by_axial_vectors_for_hetero-chiral_protein-peptid.md)
 - [\[ICLR 2026\] Enhancing Molecular Property Predictions by Learning from Bond Modelling and Interactions](enhancing_molecular_property_predictions_by_learning_from_bond_modelling_and_int.md)
 - [\[ICML 2026\] Learning the Neighborhood: Contrast-Free Multimodal Self-Supervised Molecular Graph Pretraining](../../ICML2026/computational_biology/learning_the_neighborhood_contrast-free_multimodal_self-supervised_molecular_gra.md)
-- [\[AAAI 2026\] Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling](../../AAAI2026/computational_biology/learning_cell-aware_hierarchical_multi-modal_representations.md)
 - [\[ICLR 2026\] A Genetic Algorithm for Navigating Synthesizable Molecular Spaces](a_genetic_algorithm_for_navigating_synthesizable_molecular_spaces.md)
+- [\[ICML 2026\] SIGMA: Structure-Invariant Generative Molecular Alignment for Chemical Language Models via Autoregressive Contrastive Learning](../../ICML2026/computational_biology/sigma_structure-invariant_generative_molecular_alignment_for_chemical_language_m.md)
 
 </div>
 

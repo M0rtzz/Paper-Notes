@@ -41,34 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NSPO 基于 GRPO 框架，关键改造是在梯度更新时加入零空间投影。Pipeline：(1) 在通用数据上收集模型中间表征 $K$；(2) 对 $KK^T$ 做 SVD 得到零空间投影矩阵 $\hat{U}\hat{U}^T$；(3) 在安全数据上计算 GRPO 梯度后，投影到零空间再更新参数。
+NSPO 想解决的是「安全对齐时怎么不伤通用能力」。它的核心观察是：只要参数更新落在通用任务输入表征的零空间里，模型对通用输入的输出就纹丝不动。整套流程因此分两步搭在 GRPO 之上——先在少量通用数据上收集每层线性变换的输入表征 $K$，对 $KK^T$ 做一次 SVD 离线算出零空间投影矩阵 $\hat{U}\hat{U}^T$ 并缓存；之后在安全数据上照常算 GRPO 策略梯度，但每次更新前先把梯度投影到这个零空间，再用投影后的梯度更新参数。这样安全优化只能在「不影响通用输出」的方向上发生。
 
 ### 关键设计
 
-1. **零空间投影矩阵构建**:
+**1. 零空间投影矩阵构建：把「不能动的方向」一次性算出来。**
 
-    - 功能：从通用数据（常识/数学/代码各采样）提取模型每层线性变换的输入表征 $K$，构建投影矩阵
-    - 核心思路：$\{U, \Lambda, U^T\} = \text{SVD}(KK^T)$，保留对应近零特征值（<5e-4）的特征向量 $\hat{U}$，投影矩阵为 $\hat{U}\hat{U}^T$
-    - 设计动机：直接对 $K \in \mathbb{R}^{d \times N}$ 求零空间计算量太大（$N \gg d$），改用 $KK^T \in \mathbb{R}^{d \times d}$ 的零空间等价且高效
+要保证更新不破坏通用能力，先得知道哪些参数方向承载着通用任务的表征。NSPO 从通用数据（常识、数学、代码各采样）里提取模型每一层线性变换的输入表征 $K \in \mathbb{R}^{d \times N}$，目标是找到它的零空间——落在这个子空间里的更新与所有通用输入正交。直接对 $K$ 求零空间在 $N \gg d$ 时计算量太大，NSPO 改对 $d \times d$ 的协方差矩阵 $KK^T$ 做分解，二者零空间等价但后者高效得多：$\{U, \Lambda, U^T\} = \text{SVD}(KK^T)$，保留对应近零特征值（阈值 $<5\text{e-}4$）的那批特征向量 $\hat{U}$，投影矩阵即 $\hat{U}\hat{U}^T$。整个构建只需 1000 个通用样本、一次性算完缓存复用。
 
-2. **梯度投影**:
+**2. 梯度投影：让安全更新只走零空间方向。**
 
-    - 功能：将安全 GRPO 梯度 $\nabla_W \mathcal{J}$ 投影到零空间得到 $\nabla_W \mathcal{J}_{\text{NSPO}} = (\nabla_W \mathcal{J}) \cdot \hat{U}\hat{U}^T$
-    - 核心思路：投影后 $\nabla_W \mathcal{J}_{\text{NSPO}} \cdot K = 0$，即参数更新不改变模型对通用输入的输出：$(W - \eta \nabla_W \mathcal{J}_{\text{NSPO}})K = WK = V$
-    - 设计动机：从几何层面硬约束安全更新不侵入通用能力子空间，比软约束（KL 正则）更可靠
+有了投影矩阵，安全优化就被几何地限制住。每步先按 GRPO 算出安全梯度 $\nabla_W \mathcal{J}$，再右乘投影矩阵得到
 
-3. **移除 KL 散度正则**:
+$$\nabla_W \mathcal{J}_{\text{NSPO}} = (\nabla_W \mathcal{J}) \cdot \hat{U}\hat{U}^T$$
 
-    - 功能：去掉 GRPO 中的 $D_{\text{KL}}[\pi_\theta \| \pi_{\text{ref}}]$ 项
-    - 设计动机：KL 正则将策略拉向参考模型（可能不安全），与安全目标冲突；零空间投影已是更好的正则化——既防止过度优化又保证安全目标下降
+投影后的梯度满足 $\nabla_W \mathcal{J}_{\text{NSPO}} \cdot K = 0$，于是用它更新参数时模型对通用输入的输出完全不变：$(W - \eta \nabla_W \mathcal{J}_{\text{NSPO}})K = WK = V$。相比 KL 正则、混合通用数据这类「软约束」只能事后平衡两个目标，这里是从几何上硬约束安全更新不侵入通用能力子空间，因此更可靠。
 
-4. **理论保证**:
+**3. 移除 KL 散度正则：投影本身就是更好的正则。**
 
-    - **梯度稳定性**：投影是非扩张映射，$\|\nabla_W \mathcal{J}_{\text{NSPO}}\|_2 \leq \|\nabla_W \mathcal{J}\|_2$
-    - **有效下降方向**：投影后的梯度仍是安全目标的有效下降方向，$\exists \eta > 0: \mathcal{J}(W - \eta \nabla_W \mathcal{J}_{\text{NSPO}}) \leq \mathcal{J}(W)$
+NSPO 干脆去掉了 GRPO 里的 $D_{\text{KL}}[\pi_\theta \| \pi_{\text{ref}}]$ 项。原因在于 KL 正则会把策略往参考模型上拉，而安全对齐场景里参考模型本身可能并不安全，这个拉力反而和安全目标打架。零空间投影已经承担了正则化的角色——既防止过度优化偏离原模型，又不会把策略往不安全的方向牵，去掉 KL 后安全目标还能继续下降。
+
+**4. 理论保证：投影既稳定又不至于学不动。**
+
+两条性质支撑了这套做法的可行性。一是梯度稳定性：投影是非扩张映射，$\|\nabla_W \mathcal{J}_{\text{NSPO}}\|_2 \leq \|\nabla_W \mathcal{J}\|_2$，更新幅度不会被放大。二是有效下降方向：投影后的梯度仍然是安全目标的有效下降方向，存在 $\eta > 0$ 使 $\mathcal{J}(W - \eta \nabla_W \mathcal{J}_{\text{NSPO}}) \leq \mathcal{J}(W)$——这一条排除了「投影太严导致根本学不到安全」的担忧。
 
 ### 损失函数 / 训练策略
-GRPO 目标函数 + 零空间投影（去掉 KL 项）。仅使用 PKU-SafeRLHF 的 40% 数据（~11K 样本）训练，无需混入通用任务数据。投影矩阵构建仅需 1000 个通用样本，一次性 SVD 计算后缓存。
+训练目标是 GRPO 目标函数加零空间投影、去掉 KL 项。仅使用 PKU-SafeRLHF 的 40% 数据（~11K 样本），无需混入任何通用任务数据；投影矩阵的构建只需 1000 个通用样本，离线一次 SVD 后缓存复用。
 
 ## 实验关键数据
 
@@ -136,10 +134,10 @@ GRPO 目标函数 + 零空间投影（去掉 KL 项）。仅使用 PKU-SafeRLHF 
 ## 相关论文
 
 - [\[ICLR 2026\] AlphaSteer: Learning Refusal Steering with Principled Null-Space Constraint](alphasteer_learning_refusal_steering_with_principled_null-space_constraint.md)
-- [\[ICLR 2026\] Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
+- [\[ICLR 2026\] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
 - [\[ACL 2025\] Safety Alignment via Constrained Knowledge Unlearning](../../ACL2025/llm_alignment/safety_alignment_via_constrained_knowledge_unlearning.md)
 - [\[ICLR 2026\] A2D: Any-Order, Any-Step Safety Alignment for Diffusion Language Models](a2d_any-order_any-step_safety_alignment_for_diffusion_language_models.md)
-- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
+- [\[ICLR 2026\] Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
 
 </div>
 

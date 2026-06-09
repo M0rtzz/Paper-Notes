@@ -40,34 +40,19 @@ tags:
 
 ### 整体框架
 
-GuidedSampling 分两阶段：
-1. **探索阶段（Exploration Phase）**：迭代生成 $K$ 个多样化的概念/定理
-2. **生成阶段（Generation Phase）**：为每个概念生成 $M$ 个候选解（总预算 $IC = K \times M$）
+GuidedSampling 把重复采样里揉在一起的"探索"和"生成"拆成前后两步：先在探索阶段迭代采样 $K$ 个互不重复的解题概念/定理，再在生成阶段对每个概念各生成 $M$ 个以它为条件的候选解，总推理预算保持 $IC = K \times M$ 不变。这样花费几乎不增加，却把原本被隐式概念锁死的解空间在"概念"这一高层维度上显式撑开。
 
 ### 关键设计
 
-**设计1：迭代概念探索**
-- **功能**：给定问题 $x$，迭代采样概念序列 $c_1, c_2, \ldots, c_K$
-- **核心思路**：第 $k$ 个概念以前序概念为条件生成 $c_k \sim p_\theta(\cdot | x, c_{1:(k-1)})$，促进多样性——模型被鼓励探索已生成概念之外的新方向
-- **设计动机**：概念是问题层面的"高层指导"（如定理名称），一次性探索后复用，比 ToT 的逐步评估高效得多
+**1. 迭代概念探索：先把"用什么方法"想全，再去解题。** RS 的多样性瓶颈在于每个候选解都各自隐式地选一个概念，结果绝大多数撞在同一个上（MATH 最大值题里 892/1000 个解都用 AM-GM）。GuidedSampling 改成先专门生成一串概念：给定问题 $x$，第 $k$ 个概念以前面所有概念为条件采样 $c_k \sim p_\theta(\cdot \mid x, c_{1:(k-1)})$。把已生成概念喂回上下文，等于明确告诉模型"这些路子已经有了，换个新的"，从而逼出 RS 难以触及的方向。概念是问题层面的高层指导（一句定理名或思路），探索一次即可复用，不像 ToT 要在树的每一步显式评估候选，开销低得多。
 
-**设计2：概念引导的生成**
-- **功能**：对每个概念 $c_k$，生成 $M$ 个以该概念为条件的候选解 $s_k^{(m)} \sim p_\theta(s | x, c_k)$
-- **核心思路**：概念-解法的显式绑定确保候选解覆盖多种不同的问题求解路径
-- **设计动机**：打破 RS 中"所有解共享同一隐式概念"的局限。GuidedSampling 生成的候选解平均多 17.63% 的独特概念
+**2. 概念引导的生成：让每个候选解锁定一条不同的求解路径。** 拿到概念集合后，对每个 $c_k$ 单独生成 $M$ 个候选解 $s_k^{(m)} \sim p_\theta(s \mid x, c_k)$。概念和解法被显式绑定，保证最终的候选池天然覆盖多种不同路径，而不是像 RS 那样所有解共享同一个隐式概念。实测下来，GuidedSampling 产出的候选解平均比 RS 多 17.63% 的独特概念，这正是 pass@k 提升的直接来源。
 
-**设计3：GuidedSampling 后训练**
-- **功能**：使用 GuidedSampling 生成轨迹作为合成训练数据
-- **核心思路**：两种训练数据格式——FA（仅最终答案：$(x, s)$）和 CAA（概念+答案：$(x, \text{concat}(\mathcal{C}, s))$）
-- **设计动机**：CAA 模式让模型内化多种推理策略，微调后 pass@5 平均提升 9.7%，泛化到 GPQA、HumanEval 等 OOD 基准
+**3. GuidedSampling 后训练：把多样化轨迹蒸馏回模型。** 推理阶段产出的轨迹本身就是高质量合成数据，可以反过来微调模型。论文给了两种数据格式：FA 只保留最终答案 $(x, s)$，CAA 则把概念和答案拼起来 $(x, \text{concat}(\mathcal{C}, s))$。CAA 让模型完整学习"先铺开概念再解题"的过程，把多种推理策略内化进权重，微调后 pass@5 平均提升 9.7%，并能泛化到 GPQA、HumanEval 等 OOD 基准。
 
 ### 损失函数 / 训练策略
 
-后训练采用标准微调损失：
-- **FA 模式**：$\mathcal{L}_{FA} = -\mathbb{E}_{(x,s) \sim \mathcal{D}_{FA}} [\log P_\theta(s|x)]$
-- **CAA 模式**：$\mathcal{L}_{CAA} = -\mathbb{E}_{(x,\mathcal{C},s) \sim \mathcal{D}_{CAA}} [\log P_\theta(y|x)]$，其中 $y = \text{concat}(\mathcal{C}, s)$
-
-理论保证（Theorem 1）：当满足 $k_{min} \cdot P(\mathcal{C}_r | x) > 1$（即模型有足够概率生成相关概念且概念提供显著的放大因子）时，GuidedSampling 优于 RS。
+两种格式都用标准的最大似然微调。FA 模式直接对答案做监督 $\mathcal{L}_{FA} = -\mathbb{E}_{(x,s) \sim \mathcal{D}_{FA}} [\log P_\theta(s \mid x)]$；CAA 模式则把目标换成概念与答案的拼接 $y = \text{concat}(\mathcal{C}, s)$，损失为 $\mathcal{L}_{CAA} = -\mathbb{E}_{(x,\mathcal{C},s) \sim \mathcal{D}_{CAA}} [\log P_\theta(y \mid x)]$，等价于让模型学会先输出概念再输出解。论文还给了理论保证（Theorem 1）：当 $k_{min} \cdot P(\mathcal{C}_r \mid x) > 1$，即模型有足够概率生成相关概念、且概念能带来显著放大因子时，GuidedSampling 在 pass@k 上严格优于 RS——这也解释了为何概念能力弱的模型（如 Qwen2.5-3B 在代码域）享受不到收益。
 
 ## 实验关键数据
 
@@ -143,10 +128,10 @@ pass@50 改进（平均跨 Llama-3.2-3B, Qwen2.5-3B, Gemma-3-27B）：
 ## 相关论文
 
 - [\[AAAI 2026\] Test-time Diverse Reasoning by Riemannian Activation Steering](../../AAAI2026/llm_evaluation/test-time_diverse_reasoning_by_riemannian_activation_steering.md)
-- [\[ICLR 2026\] SimpleToM: Exposing the Gap between Explicit ToM Inference and Implicit ToM Application in LLMs](simpletom_exposing_the_gap_between_explicit_tom_inference_and_implicit_tom_appli.md)
 - [\[AAAI 2026\] OptScale: Probabilistic Optimality for Inference-time Scaling](../../AAAI2026/llm_evaluation/optscale_probabilistic_optimality_for_inference-time_scaling.md)
 - [\[ICML 2025\] Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time](../../ICML2025/llm_evaluation/bounded_rationality_for_llms_satisficing_alignment_at_inference-time.md)
-- [\[ICLR 2026\] Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
+- [\[ICLR 2026\] In-Context Learning of Temporal Point Processes with Foundation Inference Models](in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
+- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
 
 </div>
 

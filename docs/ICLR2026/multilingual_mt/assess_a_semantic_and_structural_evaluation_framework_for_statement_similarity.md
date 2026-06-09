@@ -41,31 +41,29 @@ tags:
 
 ### 整体框架
 
-ASSESS 是一个两阶段框架。第一阶段利用 Lean Language Server 将形式化命题对解析为算子树 (OPT)，捕获层次化结构信息。第二阶段在标准树编辑距离 (TED) 基础上，通过引入一组精心策划的 Lean tactic 变换来增强语义感知，计算 TransTED Similarity 作为最终的实数相似度分数。整个流程仅依赖 CPU 和 Lean Language Server/REPL，无需 GPU。
+ASSESS 想解决的是"两条形式化命题到底有多像"这个问题——既不能像 BLEU 那样只比字面、把 $a+b$ 和 $b+a$ 判成不像，也不能像 BEq 那样非得证出完全等价、把"很接近但不全等"的翻译一刀切掉。它的做法分两步：先把每条形式化命题用 Lean Language Server 解析成一棵**算子树 (OPT)**，把符号序列变成带层次结构的树；再在标准**树编辑距离 (TED)** 之上，借 Lean 的 tactic 注入语义变换，算出最终的实数相似度 **TransTED Similarity**。整条流水线只依赖 CPU 和 Lean Language Server/REPL，不需要 GPU，因此可复现、成本低。
 
 ### 关键设计
 
-1. **算子树 (OPT) 构建**:
+**1. 算子树 (OPT)：把符号序列变成带结构的树。**
 
-    - 功能：将形式化命题的纯文本变成保留结构信息的树表示
-    - 核心思路：利用 Lean Language Server 解析形式化命题，算子（如函数应用、量词、逻辑连接词）成为内部节点，操作数成为其有序子节点。构建时做两项标准化处理：(1) 非叶节点添加 `<SLOT>` 占位符标签区分算子和操作数；(2) 省略括号——括号的优先级信息在树结构中已隐含编码。这种表示比纯文本更精确地捕获命题的层次结构。
-    - 设计动机：形式化语言的句法结构本身蕴含丰富的语义信息，树表示比序列表示能更自然地编码运算符优先级和依赖关系。
+纯文本表示丢掉了形式化命题里最关键的层次信息——谁是算子、谁是操作数、运算优先级怎么嵌套。ASSESS 用 Lean Language Server 把命题解析成算子树：函数应用、量词、逻辑连接词这类**算子成为内部节点**，它们的操作数成为有序子节点。构建时做两项标准化：非叶节点统一加 `<SLOT>` 占位标签来区分算子位和操作数位；括号一律省略——因为优先级信息已经隐含在树的嵌套结构里。这样得到的树比序列表示能更自然地编码运算符优先级和依赖关系，为后面按结构比对打好基础。
 
-2. **TED Similarity（基线指标）**:
+**2. TED Similarity：先用树编辑距离量出结构差异。**
 
-    - 功能：量化两棵算子树的结构差异
-    - 核心思路：将 OPT 集合视为伪度量空间 (pseudometric space)——允许 $d(x,y)=0$ 但 $x \neq y$（因为语义等价但结构不同的表达式距离应为0）。树编辑距离 $d_{\text{TED}}$ 定义为将一棵树通过删除、插入、重标记操作变为另一棵树的最小代价，TED Similarity 归一化为 $\text{sim}_{\text{TED}}(T_1, T_2) = 1 - d_{\text{TED}}(T_1, T_2) / \max(|T_1|, |T_2|)$，其中 $|T|$ 为节点数。
-    - 设计动机：TED 在结构匹配上有效，但对语义等价表达式（如 $a+b$ vs $b+a$）存在系统性偏差——两个交换律等价的表达式在树上需要多步编辑才能对齐。
+有了树就能比结构。这里把所有 OPT 看成一个**伪度量空间 (pseudometric space)**——故意允许 $d(x,y)=0$ 但 $x \neq y$，因为"语义等价但写法不同"的两棵树，距离本就应该判为 0。树编辑距离 $d_{\text{TED}}$ 定义为把一棵树经删除、插入、重标记操作变成另一棵树的最小代价，再归一化成相似度：
 
-3. **TransTED Similarity（核心贡献）**:
+$$\text{sim}_{\text{TED}}(T_1, T_2) = 1 - \frac{d_{\text{TED}}(T_1, T_2)}{\max(|T_1|, |T_2|)}$$
 
-    - 功能：在 TED 基础上融入语义变换，解决 TED 对语义等价但语法不同表达式的偏差
-    - 核心思路：定义新的伪度量 $d^*$ 满足两个约束：(a) 被 TED 上界控制 $d^*(T_1, T_2) \leq d_{\text{TED}}(T_1, T_2)$；(b) 语义变换单调性——如果表达式对 $(e_x, e_y)$ 可以被变换为逻辑上更强的对 $(e_u, e_v)$（即 $e_u=e_v \Rightarrow e_x=e_y$），则 $d^*(OPT(e_x), OPT(e_y)) \leq d^*(OPT(e_u), OPT(e_v))$。论文证明满足这两个约束的最大伪度量唯一存在 (Theorem 1)，即 TransTED。实现上，首先将一对命题用等号连接构造等式，然后在 Lean REPL 中应用一组策划好的 tactic（如 `rw?`、`apply congrArg`、`ext`、`norm_cast` 等）进行启发式搜索，以 TED 作为启发函数引导搜索优先尝试能减小两侧 OPT 差异的变换。搜索终止条件为：等价被证明、节点限制超出 (NLE) 或时间限制超出 (TLE)。
-    - 设计动机：纯粹的结构距离无法处理形式化数学中大量语义等价但语法不同的表达式。通过 Lean tactic 驱动的变换，让距离度量"知道"交换律、量词分解等语义等价关系，从而在不牺牲结构信息的前提下获得语义感知能力。
+其中 $|T|$ 是节点数。TED 在纯结构匹配上已经够用，但对语义等价表达式有系统性偏差：$a+b$ 和 $b+a$ 这种交换律等价的式子，在树上要走好几步编辑才能对齐，距离被算大了——这正是下一步要补的洞。
 
-### EPLA 基准数据集
+**3. TransTED Similarity：用 Lean tactic 把语义变换喂给距离度量。**
 
-论文同时构建了 EPLA (Evaluating Provability and Likeness for Autoformalization) 基准：基于 miniF2F-test 和 ProofNet-test 的自然语言命题，使用 4 个翻译模型（Herald Translator、Goedel-Formalizer-V2-8B、Gemini-2.5-Pro、Qwen3-Max）生成形式化翻译，经 Lean 编译器过滤后由 7 位专家标注语义等价性和结构相似性，共 1,247 个标注对（831 来自 miniF2F，416 来自 ProofNet）。
+核心改进是让距离"懂"语义等价。论文定义了一个新的伪度量 $d^*$，要它同时满足两条约束：(a) 被 TED 上界压住，$d^*(T_1, T_2) \leq d_{\text{TED}}(T_1, T_2)$；(b) **语义变换单调性**——若命题对 $(e_x, e_y)$ 能被变换成逻辑上更强的对 $(e_u, e_v)$（即 $e_u=e_v \Rightarrow e_x=e_y$），则 $d^*(OPT(e_x), OPT(e_y)) \leq d^*(OPT(e_u), OPT(e_v))$。论文证明满足这两条的最大伪度量唯一存在 (Theorem 1)，这就是 TransTED。落到实现上：先把待比的一对命题用等号连成一个等式，再在 Lean REPL 里施加一组策划好的 tactic（如 `rw?`、`apply congrArg`、`ext`、`norm_cast` 等）做启发式搜索，并**用 TED 当启发函数**，优先尝试那些能缩小两侧 OPT 差异的变换。搜索在三种情况下停止：等价被证明、节点数超限 (NLE) 或时间超限 (TLE)。这样距离度量就"知道"交换律、量词分解等语义等价关系，在不丢结构信息的前提下拿到语义感知能力——既不像 BLEU 忽视语义，也不像 BEq 要求全等证明。
+
+**4. EPLA 基准：给评估指标本身配一把标尺。**
+
+要验证一个相似度指标到底好不好，得有人工标注的"真相"做对照，论文为此构建了 EPLA (Evaluating Provability and Likeness for Autoformalization) 基准。它取 miniF2F-test 和 ProofNet-test 的自然语言命题，用 4 个翻译模型（Herald Translator、Goedel-Formalizer-V2-8B、Gemini-2.5-Pro、Qwen3-Max）生成形式化翻译，经 Lean 编译器过滤后，由 7 位专家逐对标注语义等价性和结构相似性，最终得到 1,247 个标注对（831 来自 miniF2F，416 来自 ProofNet）。这套带专家标签的数据正是后面所有指标对比的裁判依据。
 
 ## 实验关键数据
 

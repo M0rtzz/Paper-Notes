@@ -35,37 +35,17 @@ tags:
 
 ## 方法详解
 
-### 通用水印框架
+### 整体框架
 
-将水印形式化为冻结生成模型的密钥依赖参数扰动：
+MOLM 把水印问题统一为对冻结生成模型施加密钥依赖的参数扰动 $\tilde{\mathbf{x}} = \mathcal{G}_{\Phi + \Delta\Phi(\kappa)}(\mathbf{q}, \mathbf{t})$，其中 $\Delta\Phi(\kappa)$ 由二进制密钥 $\kappa$ 决定。区别于以往把整套扰动绑死到单一密钥的做法，MOLM 在模型的若干块中预置一批可选 LoRA 适配器，让密钥的每一段去“路由”激活哪个适配器，从而把切换水印密钥变成切换路由选择，而不再需要重训练。训练时只优化这批 LoRA 与一个解码头，使生成图既保持感知不可见，又能从中可靠恢复出密钥。
 
-$$\tilde{\mathbf{x}} = \mathcal{G}_{\Phi + \Delta\Phi(\kappa)}(\mathbf{q}, \mathbf{t})$$
+### 关键设计
 
-其中 $\Delta\Phi(\kappa)$ 为密钥 $\kappa$ 决定的参数扰动。
+**1. 密钥依赖的参数扰动统一视角：把水印归约为可学习的权重偏移。** 现有水印方法形态各异（编码-解码、后门、采样阶段），难以横向比较和复用。MOLM 先用一个统一形式概括它们：在冻结主干 $\Phi$ 上叠加由密钥决定的扰动 $\Delta\Phi(\kappa)$，生成过程改写为 $\tilde{\mathbf{x}} = \mathcal{G}_{\Phi + \Delta\Phi(\kappa)}(\mathbf{q}, \mathbf{t})$。这一视角的价值在于把“水印强度/容量/可切换性”都落到了对 $\Delta\Phi$ 的结构设计上，为后续用 LoRA 实例化扰动、用路由实现密钥切换铺平了道路。
 
-### MOLM 路由机制
+**2. LoRA 标记的路由机制：用密钥分段索引适配器，实现免重训练的密钥切换。** MOLM 在 $L$ 个预选块中各放置 $P$ 个并列的 LoRA 适配器作为“标记”。一个 $M$ 位密钥被切成 $L$ 个互不重叠的段 $\kappa_\ell$，每段 $\log_2 P$ 位，将该段转换为十进制索引 $s_\ell \in [P]$ 后即选中块 $\ell$ 内的第 $s_\ell$ 个适配器。块的前向运算为 $\boldsymbol{h}_\ell = \mathcal{F}_\ell(\boldsymbol{h}_{\ell-1}) + \alpha \mathcal{A}_\ell^{(s_\ell)}(\boldsymbol{h}_{\ell-1})$，即在原块输出上加一条被选中适配器的低秩支路。默认配置取 VAE 解码器中 $L=14$ 个 ResNet 块、每块 $P=4$ 个适配器，于是单块编码 $2$ 位、总密钥 $M=14\times 2=28$ 位。由于密钥只决定“激活哪条支路”，更换密钥时所有适配器都已训练好、无需任何重训练，这正是 MOLM 相对 Stable Signature 等逐密钥训练方法的核心优势；同时密钥被分摊到多个块上分布式编码，单点被攻击破坏也不致整体失效，带来天然的鲁棒冗余。
 
-1. **结构设计**：在 $L$ 个预选块中各添加 $P$ 个 LoRA 适配器
-2. **密钥映射**：$M$ 位二进制密钥分为 $L$ 个不重叠块 $\kappa_\ell$，每块 $\log_2 P$ 位
-3. **路由选择**：每块 $\kappa_\ell$ 转换为十进制索引 $s_\ell \in [P]$，激活对应适配器
-
-块 $\ell$ 的操作：
-
-$$\boldsymbol{h}_\ell = \mathcal{F}_\ell(\boldsymbol{h}_{\ell-1}) + \alpha \mathcal{A}_\ell^{(s_\ell)}(\boldsymbol{h}_{\ell-1})$$
-
-默认配置：$L=14$ 个 ResNet 块（VAE 解码器），$P=4$ 适配器/块，总密钥 $M = 14 \times 2 = 28$ 位。
-
-### 训练损失
-
-感知不可见性损失：
-
-$$\mathcal{L}_{\text{imp}} = \mathbb{E}_{\kappa} \frac{1}{N} \sum_{n=1}^N \sum_{k=1}^K w_k \|\varphi_k(\mathcal{G}_{\Phi+\Psi(\kappa)}(\mathbf{q}, \mathbf{t}_n)) - \varphi_k(\mathcal{G}_\Phi(\mathbf{q}, \mathbf{t}_n))\|_2^2$$
-
-可验证性损失（二元交叉熵）：
-
-$$\mathcal{L}_{\text{ver}} = \mathbb{E}_{T \sim \Pi} \frac{1}{NM} \sum_{n,m} [-\kappa_m \log \sigma(u_m) - (1-\kappa_m)\log(1-\sigma(u_m))]$$
-
-总目标：$\min_{\Psi, \eta} [\mathcal{L}_{\text{ver}} + \lambda \mathcal{L}_{\text{imp}}]$
+**3. 不可见性与可验证性的联合训练目标：在不退化画质的前提下保证密钥可恢复。** 优化只针对适配器参数 $\Psi$ 和解码头 $\eta$，由两项损失约束。感知不可见性损失对比加水印图与原图在多层特征上的差异 $\mathcal{L}_{\text{imp}} = \mathbb{E}_{\kappa} \frac{1}{N} \sum_{n=1}^N \sum_{k=1}^K w_k \|\varphi_k(\mathcal{G}_{\Phi+\Psi(\kappa)}(\mathbf{q}, \mathbf{t}_n)) - \varphi_k(\mathcal{G}_\Phi(\mathbf{q}, \mathbf{t}_n))\|_2^2$，把水印带来的视觉退化压到最低；可验证性损失用二元交叉熵让解码头从生成图恢复出每一位密钥 $\mathcal{L}_{\text{ver}} = \mathbb{E}_{T \sim \Pi} \frac{1}{NM} \sum_{n,m} [-\kappa_m \log \sigma(u_m) - (1-\kappa_m)\log(1-\sigma(u_m))]$，其中 $T\sim\Pi$ 表示训练中随机采样的图像变换，使解码在裁剪、旋转、压缩等扰动下仍成立。总目标 $\min_{\Psi, \eta} [\mathcal{L}_{\text{ver}} + \lambda \mathcal{L}_{\text{imp}}]$ 以权重 $\lambda$ 平衡可恢复性与画质，这也是论文里“提升鲁棒性常引入可见退化”这一冲突被显式建模、而非靠经验权衡的地方。
 
 ## 实验关键数据
 

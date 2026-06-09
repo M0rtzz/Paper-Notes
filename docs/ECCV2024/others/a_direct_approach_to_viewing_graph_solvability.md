@@ -132,10 +132,10 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] 3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](../../NeurIPS2025/others/3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)
-- [\[ICML 2026\] A Perturbation Approach to Unconstrained Linear Bandits](../../ICML2026/others/a_perturbation_approach_to_unconstrained_linear_bandits.md)
 - [\[NeurIPS 2025\] Graph Alignment via Birkhoff Relaxation](../../NeurIPS2025/others/graph_alignment_via_birkhoff_relaxation.md)
 - [\[NeurIPS 2025\] On Topological Descriptors for Graph Products](../../NeurIPS2025/others/on_topological_descriptors_for_graph_products.md)
-- [\[AAAI 2026\] Structural Approach to Guiding a Present-Biased Agent](../../AAAI2026/others/structural_approach_to_guiding_a_present-biased_agent.md)
+- [\[ICML 2026\] A Perturbation Approach to Unconstrained Linear Bandits](../../ICML2026/others/a_perturbation_approach_to_unconstrained_linear_bandits.md)
+- [\[ACL 2025\] Graph-Structured Trajectory Extraction from Travelogues](../../ACL2025/others/graph-structured_trajectory_extraction_from_travelogues.md)
 
 </div>
 

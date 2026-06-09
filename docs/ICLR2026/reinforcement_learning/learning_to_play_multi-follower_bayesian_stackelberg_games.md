@@ -49,23 +49,21 @@ tags:
 
 ### 关键设计
 
-1. **最佳响应区域的几何刻画（Best-Response Regions）**:
+**1. 最佳响应区域的几何刻画：把追随者引起的效用不连续性变成超平面排列的区域计数。**
 
-    - 功能：将领导者的连续策略空间按追随者响应模式离散化
-    - 核心思路：定义映射 $W = (w_1, \ldots, w_n)$，其中 $w_i: \Theta \to \mathcal{A}$ 指定每个追随者在各类型下的动作。对应的最佳响应区域 $R(W) = \{x \in \Delta(\mathcal{L}) \mid \mathbf{br}(\theta, x) = W(\theta), \forall \theta\}$ 是所有使追随者按 $W$ 响应的领导者策略集合。每个区域可表示为 $O(nKA)$ 个半空间的交集：$R(W) = \bigcap_{i, \theta_i, a_i} H(d_{\theta_i, w_i(\theta_i), a_i})$，其中半空间 $H(d) = \{x: \langle x, d \rangle \geq 0\}$ 编码了"追随者 $i$ 类型 $\theta_i$ 偏好动作 $w_i(\theta_i)$ 而非 $a_i$"这一约束。利用计算几何中超平面排列的计数结果，非空区域数 $|\mathcal{W}| = O(n^L K^L A^{2L})$——当 $L$ 固定时仅对 $n$ 多项式增长。区域可通过BFS图遍历在 $\mathrm{poly}(n^L, K^L, A^L, L)$ 时间内枚举
-    - 设计动机：区域内效用线性，意味着每个区域内的最优策略可用LP在多项式时间求解。整体最优策略只需比较 $|\mathcal{W}|$ 个区域的最优值取最大。这将BSG的离线求解在 $L$ 为常数时降为多项式时间，补全了此前仅知NP-Hard（$L$ 增长时）的计算复杂度图谱
+领导者效用之所以非凸又不连续，是因为追随者的最佳响应是领导者混合策略的分段常数函数——策略稍微一动，某个追随者就可能跳到另一个动作。本文的破局思路是把这种"分段"显式刻画出来：定义一个响应模式 $W = (w_1, \ldots, w_n)$，其中 $w_i: \Theta \to \mathcal{A}$ 指定追随者 $i$ 在各类型下选哪个动作，对应的**最佳响应区域** $R(W) = \{x \in \Delta(\mathcal{L}) \mid \mathbf{br}(\theta, x) = W(\theta), \forall \theta\}$ 就是所有让追随者恰好按 $W$ 响应的领导者策略集合。
 
-2. **类型反馈下的学习算法（Algorithm 1 & 2）**:
+每个区域都能写成 $O(nKA)$ 个半空间的交集 $R(W) = \bigcap_{i, \theta_i, a_i} H(d_{\theta_i, w_i(\theta_i), a_i})$，其中 $H(d) = \{x: \langle x, d \rangle \geq 0\}$ 编码了"追随者 $i$ 类型 $\theta_i$ 偏好 $w_i(\theta_i)$ 而非 $a_i$"这条线性约束。于是整个策略单纯形被一组超平面切成若干多面体。借助计算几何中超平面排列的计数结果，非空区域总数 $|\mathcal{W}| = O(n^L K^L A^{2L})$——当 $L$ 固定时只对 $n$ 多项式增长，而非随 $K^n$ 爆炸；这些区域还能用 BFS 图遍历在 $\mathrm{poly}(n^L, K^L, A^L, L)$ 时间内枚举出来。这一步的价值在于：区域内追随者响应固定，领导者效用退化成线性函数，每个区域的最优策略一个 LP 就能解，全局最优只需在 $|\mathcal{W}|$ 个区域里取最大值。作为副产品，这也证明了 BSG 在 $L$ 为常数时可多项式时间离线求解，补上了此前只知"$L$ 增长时 NP-Hard"的复杂度图谱缺口。
 
-    - 功能：在每轮观测所有追随者类型后学习最优策略
-    - 核心思路：**Algorithm 1（一般类型分布）**：每轮直接选择使经验效用最大化的策略 $x^t = \arg\max_x \sum_{s<t} u(x, \mathbf{br}(\theta^s, x))$。分析的关键不是估计联合分布 $\mathcal{D}$（需要 $K^n$ 参数），而是利用最佳响应区域结构证明经验效用的**均匀集中**：每个区域内效用是 $L$ 维线性函数，伪维度至多 $L$，对 $|\mathcal{W}|$ 个区域取union bound后得到 $|U_\mathcal{D}(x) - \hat{U}^t(x)| \leq O(\sqrt{L \log(nKAT)/t})$。由此获得 $\tilde{O}(\sqrt{L \cdot T})$ 遗憾。**Algorithm 2（独立类型分布）**：分别估计每个追随者的边际分布 $\hat{\mathcal{D}}_i$，取乘积构建 $\hat{\mathcal{D}} = \prod_i \hat{\mathcal{D}}_i$。独立性使TV距离可拆解为Hellinger距离之和，从而将分布估计误差从 $O(\sqrt{K^n/t})$ 降到 $O(\sqrt{nK/t})$，得到 $O(\sqrt{nK \cdot T})$ 遗憾
-    - 设计动机：两种分析互补——Algo 1的bound在 $n$ 大、$L$ 小时更优（$\sqrt{L}$ vs $\sqrt{nK}$或$\sqrt{K^n}$），Algo 2在 $K$ 小时更优。取两者最小值得到最终bound
+**2. 类型反馈下的学习：绕开 $K^n$ 的联合分布，直接让经验效用均匀收敛。**
 
-3. **动作反馈下的UCB算法（Algorithm 3）**:
+当每轮能观测到全部追随者类型时，最朴素的 Algorithm 1（一般类型分布）就是每轮选经验效用最大的策略 $x^t = \arg\max_x \sum_{s<t} u(x, \mathbf{br}(\theta^s, x))$。关键不在于估计需要 $K^n$ 个参数的联合分布 $\mathcal{D}$，而是借区域结构证明经验效用的**均匀集中**：每个区域内效用是 $L$ 维线性函数、伪维度至多 $L$，对 $|\mathcal{W}|$ 个区域取 union bound 即得 $|U_\mathcal{D}(x) - \hat{U}^t(x)| \leq O(\sqrt{L \log(nKAT)/t})$，从而拿到 $\tilde{O}(\sqrt{L \cdot T})$ 遗憾——完全避开了分布的指数复杂度。
 
-    - 功能：仅观测追随者动作（不知类型）时学习最优策略
-    - 核心思路：当领导者在同一区域 $R(W)$ 内重复下注时，追随者动作来自同一分布 $\mathcal{P}(\cdot | R(W))$，可以估计该区域内任意策略的效用。算法维护每个区域的UCB分数：$\mathrm{UCB}^t(W) = \hat{u}^*_{R(W)} + \sqrt{4(L+1)\log(3T)/N^t(W)}$，每轮选UCB最高的区域并执行其经验最优策略。这本质上是将连续策略空间的学习转化为在 $|\mathcal{W}|$ 个"臂"上的多臂bandit问题，但每个臂内部还有一个线性优化子问题。此外，作者还提供了一种基于Bernasconi et al. (2023)技术的线性bandit方法，将BSG重新表述为一个线性规划后用OFUL算法求解，获得 $O(K^n \sqrt{T} \log T)$ 的遗憾，在 $L$ 大 $n$ 小时更优
-    - 设计动机：动作反馈比类型反馈信息量更少，但在实际应用中更易获取（如平台只能观测用户行为而非偏好类型）。UCB方法的遗憾 $O(\sqrt{n^L K^L A^{2L} L \cdot T \log T})$ 对 $L$ 呈指数依赖，但这在计算上不可避免（BSG对 $L$ 是NP-Hard的）
+当类型在追随者间独立时，Algorithm 2 给出另一条更优路径：分别估计每个追随者的边际分布 $\hat{\mathcal{D}}_i$，再取乘积 $\hat{\mathcal{D}} = \prod_i \hat{\mathcal{D}}_i$。独立性让联合分布的 TV 距离可拆成各边际的 Hellinger 距离之和，把估计误差从 $O(\sqrt{K^n/t})$ 一举压到 $O(\sqrt{nK/t})$，对应 $O(\sqrt{nK \cdot T})$ 遗憾。两套分析互补：Algo 1 在 $n$ 大、$L$ 小时占优（$\sqrt{L}$ 对 $\sqrt{nK}$ 或 $\sqrt{K^n}$），Algo 2 在 $K$ 小时占优，最终遗憾界取两者的最小值。
+
+**3. 动作反馈下的 UCB：把连续策略空间的探索转成区域上的多臂 bandit。**
+
+实际场景里领导者往往只能看到追随者动作、看不到类型（如平台只观测到用户行为而非偏好），信息量更少。本文的观察是：只要领导者一直在同一区域 $R(W)$ 内下注，观测到的追随者动作就来自同一条件分布 $\mathcal{P}(\cdot \mid R(W))$，因而能估计该区域内任意策略的效用。于是把每个区域当成一条"臂"，维护 UCB 分数 $\mathrm{UCB}^t(W) = \hat{u}^*_{R(W)} + \sqrt{4(L+1)\log(3T)/N^t(W)}$，每轮挑分数最高的区域、执行其经验最优策略——一个多臂 bandit 外壳里套着每臂自己的线性优化子问题。这条路线给出 $O(\sqrt{n^L K^L A^{2L} L \cdot T \log T})$ 的遗憾，对 $L$ 呈指数，但这是 BSG 对 $L$ 本就 NP-Hard 所决定的、计算上无法回避。作为互补，作者还借 Bernasconi et al. (2023) 的技术把 BSG 重述成一个线性规划、再用 OFUL 求解，得到 $O(K^n \sqrt{T} \log T)$ 遗憾，在 $L$ 大、$n$ 小时反而更好。
 
 ### 损失函数 / 训练策略
 

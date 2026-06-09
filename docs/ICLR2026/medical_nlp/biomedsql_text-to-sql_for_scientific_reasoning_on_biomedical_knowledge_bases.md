@@ -37,44 +37,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：自然语言的生物医学问题 + 数据库 schema 信息。输出：LLM 生成 SQL 查询 → 执行获取结果 → 生成自然语言回答。评估同时覆盖 SQL 执行准确性和自然语言回答质量。
+BiomedSQL 把"科学推理"灌进 Text-to-SQL 的评测闭环：以生物医学问题加数据库 schema 为输入，要求系统先生成可执行的 SQL、在 BigQuery 上跑出结果，再据此产出自然语言回答；评测则同时衡量 SQL 执行的正确性与回答的质量和安全性。整个基准由三块拼成——一个面向真实科研场景的关系型知识库、一套从专家种子查询扩增出的 68,000 条问答数据，以及一个模拟专家逐步查询的 BMSQL agent 作为强基线。
 
 ### 关键设计
 
-1. **关系数据库构建**：
+**1. 关系型知识库：把分散的生物医学数据源拼成可联合查询的 schema。**
 
-    - 整合 10 个核心表，来源包括 OpenTargets Platform（基因-疾病-药物关联）、ChEMBL（生物活性分子和药理学数据）
-    - 纳入阿尔茨海默病和帕金森病的 GWAS 统计摘要数据（含 p 值、rsID、等位基因频率等）
-    - 整合 omicSynth 的因果推理数据（基于孟德尔随机化的多组学生物标志物）
-    - 所有数据以 Parquet 格式上传到 Google BigQuery
+基准要测的是科学推理，而非玩具表上的语法翻译，因此第一步是搭一个贴近真实研究的库。作者整合了 10 张核心表：基因-疾病-药物关联来自 OpenTargets Platform，生物活性分子和药理学数据来自 ChEMBL，再纳入阿尔茨海默病与帕金森病的 GWAS 统计摘要（含 p 值、rsID、等位基因频率等字段），以及 omicSynth 基于孟德尔随机化的多组学因果推理数据。所有表以 Parquet 格式上传到 Google BigQuery，让评测直接发生在生产级云数据仓库的真实方言上，而不是简化的本地 SQLite——这也意味着模型必须处理跨表 join 和领域特有字段语义，单纯套模板会失效。
 
-2. **SQL 标注与扩增**：
+**2. 种子查询扩增：用 40 条专家 SQL 撑起 68,000 条带 ground-truth 的问答。**
 
-    - 领域专家手工编写 40 个种子问题的 gold-standard SQL 查询
-    - 通过模板化和实体替换将 40 个查询自动扩展为 68,000 个 QA 对
-    - 所有生成的 SQL 均在 BigQuery 上执行获取 ground-truth 结果
+高质量的 gold SQL 离不开专家，但人工标注无法规模化。作者让领域专家手写 40 个种子问题及其 gold-standard SQL，再通过模板化与实体替换（替换基因、疾病、药物等实体占位）把这 40 条自动扩展成 68,000 个问题/SQL/答案三元组；每条生成的 SQL 都在 BigQuery 上实际执行，取回执行结果作为 ground-truth。这样既保证了每条数据的可验证性，又让规模足以支撑细粒度的难度分层评测，同时每个问题都嵌入了专家查询里隐含的领域知识。
 
-3. **BMSQL 多步骤 Agent**：
+**3. 科学推理三类难度：明确"难在哪"而非只看整体分数。**
 
-    - 自定义的迭代式 Text-to-SQL 架构，模拟专家查询过程
-    - 第一步：Schema 分析，识别相关表和列
-    - 第二步：生成初始 SQL 查询
-    - 第三步：如有语法错误则修正（最多3次重试）
-    - 第四步：应用统计阈值过滤（如 p 值显著性）
-    - 第五步：基于两组执行结果生成自然语言回答
-    - 可选执行额外推理步骤（inference-time compute）
+为了让基准能定位模型的具体短板，作者把问题按所需推理类型分成三类：一是操作化隐含科学惯例，需要模型自行补出 GWAS 显著性阈值（如 $p < 5\times10^{-8}$）、效应方向性等约定；二是整合缺失的上下文知识，需要理解药物审批状态、临床试验阶段等并未写在问题里的事实；三是执行复杂多跳推理，需要跨多张表串联关系操作。这套分类把"系统答错了"细化成"系统在哪一类科学惯例上失守"，后续实验正是借此发现 Join、相似度搜索与多重过滤类查询最难。
 
-### 科学推理分类
-三大推理类别：
-1. **操作化隐含科学惯例**：需推断 GWAS 显著性阈值、效应方向性等
-2. **整合缺失的上下文知识**：需理解药物审批状态、临床试验阶段等
-3. **执行复杂多跳推理**：需跨多表串联关系操作
+**4. BMSQL agent：把专家的迭代查询过程拆成可执行的多步流水线，作为强基线。**
 
-### 评估指标
-- Execution Accuracy (EX)：SQL 执行结果精确匹配率
-- Jaccard Index (JAC)：结果集交并比
-- Syntax Error Rate (SER)：语法错误率
-- BioScore（LLM-as-judge）：Response Quality Rate (RQR) + Safety Rate (SR)
+单步"问题进、SQL 出"的范式忽略了专家真实的试错过程，于是作者设计了迭代式的 BMSQL agent 模拟这一流程：先做 schema 分析锁定相关表和列，生成初始 SQL；若有语法错误则修正并重试（最多 3 次）；随后应用统计阈值过滤（如按 p 值显著性筛选），最后基于过滤前后两组执行结果生成自然语言回答，并可选地追加额外推理步骤（inference-time compute）。这条流水线把领域惯例（阈值过滤）和纠错显式拆成独立环节，使其在 EX 上比单步基线高出约 9 个点（GPT-o3-mini 从 53.5% 提到 62.6%）。
+
+**5. 多维评估指标：SQL 执行与回答质量分开量。**
+
+由于一个问题可能有多条语义等价的 SQL，且最终交付给研究者的是自然语言答案，作者用两组指标分别度量。SQL 侧看执行结果精确匹配率 Execution Accuracy (EX)、结果集交并比 Jaccard Index (JAC) 和语法错误率 Syntax Error Rate (SER)；回答侧用 LLM-as-judge 的 BioScore，拆成衡量回答正确性的 Response Quality Rate (RQR) 与衡量是否给出危险/误导建议的 Safety Rate (SR)。两组指标互补，避免"SQL 跑通但回答失实"或"回答顺滑却 SQL 错误"被单一分数掩盖。
 
 ## 实验关键数据
 
@@ -148,9 +133,9 @@ tags:
 
 - [\[NeurIPS 2025\] CGBench: Benchmarking Language Model Scientific Reasoning for Clinical Genetics Research](../../NeurIPS2025/medical_nlp/cgbench_benchmarking_language_model_scientific_reasoning_for_clinical_genetics_r.md)
 - [\[ACL 2026\] Text-Attributed Knowledge Graph Enrichment with Large Language Models for Medical Concept Representation](../../ACL2026/medical_nlp/text-attributed_knowledge_graph_enrichment_with_large_language_models_for_medica.md)
+- [\[ACL 2025\] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies](../../ACL2025/medical_nlp/urca_biomedical_evidence_extraction.md)
 - [\[ICLR 2026\] MedAgentGym: A Scalable Agentic Training Environment for Code-Centric Reasoning in Biomedical Data Science](medagentgym_agentic_training_biomedical.md)
 - [\[NeurIPS 2025\] Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval](../../NeurIPS2025/medical_nlp/mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r.md)
-- [\[ACL 2025\] Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies](../../ACL2025/medical_nlp/urca_biomedical_evidence_extraction.md)
 
 </div>
 

@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段框架：Phase 1 构建任务特定的 DAG（源节点=前提，汇节点=答案，中间节点=推导步骤）；Phase 2 LLM 在 DAG 上生成 CoT 轨迹（基于规则的随机过程，只能访问父节点已被生成的节点）。三类 CoT 输出：完美推理（仅包含正确答案的祖先）、不完美推理（包含无关节点但最终答案正确）、错误推理。
+本文要解决的问题是：当一个 LLM 答对了一道数学题，它到底是"逻辑推导出来的"还是"瞎搜碰巧蒙对的"？PASS@k 这类只看最终答案的指标分不清这两种情况。DAG-Math 的做法是把一条 CoT 轨迹重新理解成一张有向无环图（DAG）上的随机过程：图里源节点是题目前提，汇节点是最终答案，中间节点是每一步推导得到的结论，边则是"用了哪些前置结论推出这一步"。整个流程分两阶段——Phase 1 先为每道题构造任务特定的金标准 DAG；Phase 2 让 LLM 在这张图的约束下逐节点生成 CoT，规则是只有当一个节点的所有父节点都已经被生成、它才能被生成。按生成轨迹相对于金标准 DAG 的关系，输出被分成三类：完美推理（只包含正确答案的祖先节点）、不完美推理（夹带了无关节点但最终答案仍对）、以及错误推理。
 
 ### 关键设计
 
-1. **逻辑闭合性（Logical Closeness）**:
+**1. 逻辑闭合性（Logical Closeness）：用"有没有死端节点"区分推理与搜索。**
 
-    - 功能：评估 CoT 轨迹中每个节点是否都被后续推理使用（出度≥1）
-    - 核心思路：如果轨迹中存在"死端"节点（生成了但未被后续步骤引用），说明模型在搜索/探索而非做严格推理。完美推理 = 逻辑闭合 + 最终答案正确
-    - 设计动机：PASS@k 只看答案，忽略了过程。Toy example 显示：在双链 DAG 中，PRR 随深度指数衰减 $(1/2)^{L-1}$，即使最终准确率稳定在 50%
+PASS@k 只盯最终答案、对中间过程一无所知，而搜索式探索同样能撞出正确答案，这正是要解决的盲区。逻辑闭合性盯的是轨迹里每个中间节点的出度：一个被生成出来、却没有任何后续步骤引用它的节点（出度为 0）就是"死端"，意味着模型在这里做了一次无用的探索分支，而不是严格地往答案推。一条轨迹只有当不存在死端、即每个节点都被后续推理用到时才算"逻辑闭合"。据此，**完美推理 = 逻辑闭合 + 最终答案正确**两个条件同时满足。为什么过程比答案更能暴露问题，论文用一个 toy example 说清楚：在一条双链 DAG 上，完美推理率随推导深度按 $(1/2)^{L-1}$ 指数衰减，但最终答案的准确率却能稳稳停在 50%——光看准确率完全看不出推理的脆弱，看逻辑闭合性才看得见。
 
-2. **Perfect Reasoning Rate (PRR)**:
+**2. Perfect Reasoning Rate（PRR）：把"是否真在推理"变成一个可计算的数。**
 
-    - 功能：定义数学推理能力的形式化度量
-    - 核心思路：$\text{PRR}(\mathbf{x}) = \mathbb{E}[\delta_{\text{close}} \times \delta_{\text{final}}]$——既要逻辑闭合又要答案正确。AUC 变体通过放松闭合比例（0%到100%）提供连续评分
-    - 与 PASS@k 的区别：PASS@k 只需要 $\delta_{\text{final}}=1$，PRR 额外要求 $\delta_{\text{close}}=1$
+有了逻辑闭合性的判据，就能给推理能力一个形式化度量。PRR 定义为
 
-3. **DAG-MATH Benchmark 构建**:
+$$\text{PRR}(\mathbf{x}) = \mathbb{E}[\delta_{\text{close}} \times \delta_{\text{final}}]$$
 
-    - 功能：构建 2894 个金标准 DAG 格式 CoT
-    - 核心思路：三阶段 prompting——(1) 让 LLM 生成结构化 CoT（每步标注父节点依赖）；(2) GPT-4 级模型验证和修正 DAG 结构；(3) 人工审核
-    - 统计发现：更难的问题对应更大、更稀疏、分支更复杂的 DAG
+其中 $\delta_{\text{close}}$ 标记轨迹是否逻辑闭合、$\delta_{\text{final}}$ 标记最终答案是否正确，两者相乘意味着缺一不可。它和 PASS@k 的关键区别正在这里：PASS@k 只要求 $\delta_{\text{final}}=1$，而 PRR 额外强制 $\delta_{\text{close}}=1$，所以它是 PASS@k 的严格加强版。为避免"非黑即白"过于苛刻，论文还给了一个 AUC 变体——把闭合阈值从 0% 放松到 100% 连续扫一遍、对结果积分，从而得到一个平滑的连续评分，而不是一刀切的 0/1 判定。
+
+**3. DAG-MATH Benchmark 构建：拿三阶段 prompting 造 2894 个金标准 DAG。**
+
+要让上面的度量落地，需要每道题都有一张可信的金标准 DAG 作参照，于是作者构建了含 2894 条 DAG 格式 CoT 的 benchmark。构造走三阶段：先让 LLM 生成结构化 CoT，要求每一步显式标注它依赖哪些父节点；再用 GPT-4 级别的模型去验证并修正这张 DAG 的结构（补漏边、删错边）；最后由人工审核把关。对建好的图做统计还观察到一个规律——越难的问题对应的 DAG 越大、越稀疏、分支也越复杂，这为后面"困难来自分支而非链长"的结论提供了结构层面的证据。
 
 ### 损失函数 / 训练策略
-N/A（评估框架 + benchmark，不训练模型）。使用 few-shot prompting 引导 LLM 生成 DAG-MATH 格式的 CoT。
+N/A（这是评估框架 + benchmark，不训练模型）。LLM 生成 DAG-MATH 格式 CoT 时用 few-shot prompting 引导。
 
 ## 实验关键数据
 
@@ -120,7 +118,7 @@ N/A（评估框架 + benchmark，不训练模型）。使用 few-shot prompting 
 - [\[ICLR 2026\] Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)
 - [\[ICLR 2026\] Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
 - [\[ICML 2025\] MARGE: Improving Math Reasoning for LLMs with Guided Exploration](../../ICML2025/llm_reasoning/marge_improving_math_reasoning_for_llms_with_guided_exploration.md)
-- [\[ICLR 2026\] Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation](harder_is_better_boosting_mathematical_reasoning_via_difficulty-aware_grpo_and_m.md)
+- [\[ICLR 2026\] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
 - [\[ICML 2026\] Clustering as Reasoning: A $k$-Means Interpretation of Chain-of-Thought Graph Learning](../../ICML2026/llm_reasoning/clustering_as_reasoning_a_k-means_interpretation_of_chain-of-thought_graph_learn.md)
 
 </div>

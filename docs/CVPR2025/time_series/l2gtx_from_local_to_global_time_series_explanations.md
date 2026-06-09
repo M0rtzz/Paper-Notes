@@ -138,8 +138,8 @@ ECG200, GunPoint, Coffee, FordA, FordB, CBF（UCR Archive）
 - [\[NeurIPS 2025\] Scalable Signature Kernel Computations for Long Time Series via Local Neumann Series Expansions](../../NeurIPS2025/time_series/scalable_signature_kernel_computations_for_long_time_series_via_local_neumann_se.md)
 - [\[ACL 2025\] LETS-C: Leveraging Text Embedding for Time Series Classification](../../ACL2025/time_series/lets-c_leveraging_text_embedding_for_time_series_classification.md)
 - [\[NeurIPS 2025\] DemandCast: Global hourly electricity demand forecasting](../../NeurIPS2025/time_series/demandcast_global_hourly_electricity_demand_forecasting.md)
-- [\[NeurIPS 2025\] RiverMamba: A State Space Model for Global River Discharge and Flood Forecasting](../../NeurIPS2025/time_series/rivermamba_a_state_space_model_for_global_river_discharge_and_flood_forecasting.md)
 - [\[CVPR 2025\] Learning Extremely High Density Crowds as Active Matters](learning_extremely_high_density_crowds_as_active_matters.md)
+- [\[NeurIPS 2025\] RiverMamba: A State Space Model for Global River Discharge and Flood Forecasting](../../NeurIPS2025/time_series/rivermamba_a_state_space_model_for_global_river_discharge_and_flood_forecasting.md)
 
 </div>
 

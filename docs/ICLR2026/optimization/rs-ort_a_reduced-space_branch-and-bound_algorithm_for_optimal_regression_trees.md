@@ -42,50 +42,23 @@ tags:
 
 ## 方法详解
 
-### 两阶段优化重构
+### 整体框架
 
-将回归树训练分解为：
+RS-ORT 把回归树训练改写成一个两阶段优化问题，再用分支定界（branch-and-bound, BB）求全局最优——但关键在于它只在「树结构」这层缩减空间上分支，样本相关的变量留给子问题闭式或精确求解。再叠加叶预测隐式化、阈值离散化、末层子树解析三个利用问题结构的加速策略，使搜索维度与样本量彻底脱钩，从而首次把精确回归树推到 200 万连续特征样本的规模。
 
-- **第一阶段变量** $m = (a, b, c, d)$：树结构（分裂特征 $a$、阈值 $b$、叶预测 $c$、分裂指示 $d$）
-- **第二阶段变量**：样本依赖变量（叶分配 $z$、损失计算 $f, L$）
+### 关键设计
 
-目标函数：
+**1. 两阶段优化重构：把样本相关变量从分支变量里剥离出去。** 朴素 MIP 把树结构和每个样本的叶分配、损失全都塞进一个大优化问题，变量数随样本量线性膨胀，这正是现有方法不可扩展的根源。RS-ORT 把变量切成两层：第一阶段是树结构 $m = (a, b, c, d)$，即分裂特征 $a$、阈值 $b$、叶预测 $c$、分裂指示 $d$；第二阶段是样本依赖变量，即叶分配 $z$、损失 $f, L$。整个目标写成 $\min_{a,b,c,d} \sum_{i \in \mathcal{N}} Q_i(m)$，其中每个样本的子问题 $Q_i(m) = \min_{z_i, L_{i*}} \frac{L_{i*}}{\hat{L}} + \frac{\lambda}{n}\sum_{t \in \mathcal{T}_D} d_t$ 在结构固定后可独立求解。这样一来，外层优化只面对结构变量，样本只在内层子问题里出现。
 
-$$\min_{a,b,c,d} \sum_{i \in \mathcal{N}} Q_i(m). \quad Q_i(m) = \min_{z_i, L_{i*}} \frac{L_{i*}}{\hat{L}} + \frac{\lambda}{n}\sum_{t \in \mathcal{T}_D} d_t$$
+**2. 缩减空间分支定界：只对结构变量分支，搜索空间与样本量无关。** 有了两阶段分解，BB 就不必再对样本依赖变量枚举——每个 BB 节点固定一部分结构变量后，第二阶段变量直接通过求解子问题得到上下界。由此搜索空间的维度只由树深度和特征数量决定，与训练样本数 $n$ 完全无关，这是和所有现有 MIP 方法的根本分水岭。论文还证明（Theorem 2）这种「只分支结构变量」的策略并不损失最优性：上下界序列满足 $\lim_{t \to \infty} \alpha_t = \lim_{t \to \infty} \beta_t = f^*$，即仍收敛到全局最优。
 
-### 缩减空间分支定界（RS-BB）
+**3. 叶预测隐式化：闭式解消掉一整层连续变量。** 叶预测值 $c$ 本来也是要优化的连续变量，会让 BB 节点数指数膨胀。论文指出（Theorem 3）一旦树结构定下来、样本落入哪个叶也就定了，每个叶的最优预测就是落入样本标签的均值 $c_t^* = \frac{1}{|\mathcal{S}_t|}\sum_{i \in \mathcal{S}_t} y_i$。于是 $|\mathcal{T}_L|$ 个叶预测变量被整体隐式化，不必再进 BB 枚举，节点数指数级下降。
 
-**核心设计**：仅对第一阶段（树结构）变量进行分支，而第二阶段变量在每个 BB 节点中通过求解子问题得到。
+**4. 阈值离散化：把连续阈值压回有限候选并二分缩域。** 连续阈值 $b_t$ 理论上有无穷多取值，但排序后相邻两个特征值之间的任何阈值都切出同一个划分，因此最优阈值只需在训练数据实际出现的特征值里找。RS-ORT 进一步在 BB 里对这个有限候选集做二分：每次取可行区间的中位数索引分支，保证每次分支至少消除一个候选分割点，把阈值搜索从连续区间收成对数级的离散搜索。
 
-**关键性质**：搜索空间的维度与训练样本数量无关，仅由树的深度和特征数量决定。
+**5. 末层子树精确解析：底部两层直接解析求解而非继续分支。** 当深度 $D-2$ 以上的结构变量都已固定，剩下的末层子树规模很小，没必要再展开 BB。此时每个父节点 $P$ 的最优深度-1 子树可以直接用 CART（max_depth=1）精确求出：若分裂增益 $\Delta(P) > \lambda|P|/\hat{L}$ 就接受分裂，否则把 $P$ 留作叶节点。这相当于在 BB 树底部接了一段解析的「收尾」，省掉最深一层的枚举。
 
-**收敛保证（Theorem 2）**：
-
-$$\lim_{t \to \infty} \alpha_t = \lim_{t \to \infty} \beta_t = f^*$$
-
-即仅对结构变量分支即可保证收敛到全局最优。
-
-### 三大加速策略
-
-**策略 1：叶预测隐式化（Theorem 3）**
-
-固定树结构后，每个叶节点的最优预测值有闭式解：
-
-$$c_t^* = \frac{1}{|\mathcal{S}_t|}\sum_{i \in \mathcal{S}_t} y_i$$
-
-这消除了 $|\mathcal{T}_L|$ 个连续变量，指数级减少了 BB 节点数。
-
-**策略 2：阈值离散化**
-
-将连续阈值 $b_t$ 限制在训练数据的实际特征值上，因为连续两个排序值之间的任何阈值都产生相同的分割。在 BB 中，通过取可行区间的中位数索引进行二分，每次分支至少消除一个可行分割点。
-
-**策略 3：末层子树精确解析**
-
-当深度 $D-2$ 以上的结构变量全部固定后，每个父节点 $P$ 的最优深度-1 子树可通过 CART（max_depth=1）精确求解。如果分裂增益 $\Delta(P) > \lambda|P|/\hat{L}$，接受分裂；否则保持为叶。
-
-### 并行化
-
-问题的可分解性使得下界和上界计算可以在样本维度上平行执行，支持大规模分布式计算（实验中使用 40-1000 个 CPU 核心）。
+**6. 样本级可分解的并行化：下界上界都能按样本铺开算。** 由于第二阶段子问题对每个样本独立，下界和上界的计算天然在样本维度上可分解，可直接铺到大量计算节点上并行，且无需节点间通信。实验里据此用了 40 到 1000 个 CPU 核心，使大规模数据集的求解时间落在可接受范围内。
 
 ## 实验关键数据
 
@@ -149,10 +122,10 @@ $$c_t^* = \frac{1}{|\mathcal{S}_t|}\sum_{i \in \mathcal{S}_t} y_i$$
 ## 相关论文
 
 - [\[ICLR 2026\] Non-Asymptotic Analysis of Efficiency in Conformalized Regression](non-asymptotic_analysis_of_efficiency_in_conformalized_regression.md)
-- [\[ICLR 2026\] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
 - [\[ICML 2025\] A Near-Optimal Single-Loop Stochastic Algorithm for Convex Finite-Sum Coupled Compositional Optimization](../../ICML2025/optimization/a_near-optimal_single-loop_stochastic_algorithm_for_convex_finite-sum_coupled_co.md)
 - [\[ICLR 2026\] Scaling Laws of SignSGD in Linear Regression: When Does It Outperform SGD?](scaling_laws_of_signsgd_in_linear_regression_when_does_it_outperform_sgd.md)
 - [\[CVPR 2026\] Label-Free Cross-Task LoRA Merging with Null-Space Compression](../../CVPR2026/optimization/label-free_cross-task_lora_merging_with_null-space_compression.md)
+- [\[AAAI 2026\] A Distributed Asynchronous Generalized Momentum Algorithm Without Delay Bounds](../../AAAI2026/optimization/a_distributed_asynchronous_generalized_momentum_algorithm_wi.md)
 
 </div>
 

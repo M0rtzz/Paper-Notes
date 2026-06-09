@@ -45,19 +45,17 @@ JointDiff 将场景状态表示为元组 $\mathbf{X} = (\mathbf{Y}, \mathbf{E})$
 
 ### 关键设计
 
-1. **联合连续-离散扩散**：正向过程独立分解，共享方差调度 $\{\beta_s\}$：
+**1. 联合连续-离散扩散：让轨迹和控球事件在同一个反向网络里互相校正。**
 
-$$q(\mathbf{Y}_s | \mathbf{Y}_0) = \mathcal{N}(\mathbf{Y}_s; \sqrt{\bar{\alpha}_s} \mathbf{Y}_0, (1-\bar{\alpha}_s)\mathbf{I})$$
-$$q(\mathbf{E}_s | \mathbf{E}_0) = \mathrm{Cat}(\mathbf{E}_s; \bar{\alpha}_s \mathbf{E}_0 + (1-\bar{\alpha}_s)/N)$$
+正向过程把两个模态独立加噪，但共享同一套方差调度 $\{\beta_s\}$：轨迹走标准高斯扩散 $q(\mathbf{Y}_s | \mathbf{Y}_0) = \mathcal{N}(\mathbf{Y}_s; \sqrt{\bar{\alpha}_s} \mathbf{Y}_0, (1-\bar{\alpha}_s)\mathbf{I})$，离散事件走多项式扩散逐渐融向均匀分布 $q(\mathbf{E}_s | \mathbf{E}_0) = \mathrm{Cat}(\mathbf{E}_s; \bar{\alpha}_s \mathbf{E}_0 + (1-\bar{\alpha}_s)/N)$。关键在反向：单一网络 $p_\theta$ 以完整状态 $(\mathbf{Y}_s, \mathbf{E}_s)$ 为条件，分出两个头——回归头预测轨迹噪声 $\epsilon_\theta$，分类头预测原始事件概率 $\hat{\mathbf{E}}_0$。即使正向加噪是解耦的，反向去噪也被迫从对方模态里读信息，从而学到"谁控球决定了谁该往哪跑"这类跨模态依赖。这里特意选多项式扩散而非吸收态扩散（absorbing state）：多项式允许离散变量在整个去噪过程中反复修正，而吸收态一旦解掩码就冻结、无法回头纠错，对时序场景里事件随轨迹演化的情况明显吃亏。
 
-反向网络 $p_\theta$ 以完整状态 $(\mathbf{Y}_s, \mathbf{E}_s)$ 为条件，输出两个头：回归头预测轨迹噪声 $\epsilon_\theta$，分类头预测原始事件概率 $\hat{\mathbf{E}}_0$。这使得即使正向过程独立，反向去噪过程仍然学习到跨模态依赖。选择多项式扩散而非吸收态扩散（absorbing state），因为多项式允许离散变量在全过程中持续修正，而吸收态一旦去掩码就冻结，无法后续纠错。
+**2. CrossGuid 条件注入：用一个轻量交叉注意力把语义引导塞进时空骨干。**
 
-2. **CrossGuid 条件注入模块**：位于 Social-Temporal Block 内部，在 Temporal Mamba 和 Social Transformer 之间注入外部引导信号。两种实现：
+该模块嵌在 Social-Temporal Block 内部、Temporal Mamba 与 Social Transformer 之间注入外部信号，提供两种粒度。弱控球引导（WPG）只需输入一个球员索引序列 $[n_1, n_2, ..., n_L]$，经可学习 agent embedding 编码后充当 K/V，球的中间表示作为 Q 做多头注意力，仅更新球的轨迹表示，并给每个球员叠加 agent embedding 以保留社交推理能力——门槛极低却能直接左右比赛走势。文本引导则用冻结的 T5-Base 编码自然语言描述，投影后对所有 agent 做 MHA，每个 agent 在 Query 端加 agent embedding 以彼此区分，从而响应"谁控球""比赛走势"这类场景级语义。
 
-    - **弱控球引导（WPG）**：输入一个球员索引序列 $[n_1, n_2, ..., n_L]$，通过可学习 agent embedding 编码后作为 K/V，球的中间表示作为 Q 做 MHA。仅更新球的轨迹表示，且为每个球员添加 agent embedding 以支持社交推理。
-    - **文本引导**：用冻结的 T5-Base 编码器处理自然语言描述，投影后对所有 agent 做 MHA。每个 agent 在 Query 前加入 agent embedding 以区分。
+**3. 混合采样：连续模态加速、离散模态稳采，再对齐步数。**
 
-3. **混合采样策略**：推理时对连续轨迹用 DDIM 加速（跳步间隔 $\zeta=5$），对离散事件用标准随机采样器。离散步数 $S^d = 10$（连续 $S = 50$），通过 $s^d = \lceil s \cdot S^d / S \rceil$ 对齐两模态。
+推理时两模态用不同采样器：连续轨迹走 DDIM 加速（跳步间隔 $\zeta=5$），离散事件用标准随机采样器保证类别一致性。两者步数不同（连续 $S=50$、离散 $S^d=10$），通过 $s^d = \lceil s \cdot S^d / S \rceil$ 把离散时间步对齐到连续时间轴上，确保去噪全程两模态状态同步。
 
 ### 损失函数 / 训练策略
 
@@ -129,11 +127,11 @@ $$\mathcal{L}_{\mathrm{joint}} = \mathcal{L}_{\mathrm{simple}}^{\mathbf{Y}} + \l
 
 ## 相关论文
 
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
-- [\[ICLR 2026\] MAC-AMP: A Closed-Loop Multi-Agent Collaboration System for Multi-Objective Antimicrobial Peptide Design](mac-amp_a_closed-loop_multi-agent_collaboration_system_for_multi-objective_antim.md)
 - [\[CVPR 2025\] Unified Uncertainty-Aware Diffusion for Multi-Agent Trajectory Modeling](../../CVPR2025/image_generation/unified_uncertainty-aware_diffusion_for_multi-agent_trajectory_modeling.md)
 - [\[ICLR 2026\] Bridging Degradation Discrimination and Generation for Universal Image Restoration](bridging_degradation_discrimination_and_generation_for_universal_image_restorati.md)
 - [\[ICLR 2026\] Discrete Adjoint Matching](discrete_adjoint_matching.md)
+- [\[CVPR 2026\] coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation](../../CVPR2026/image_generation/codrawagents_a_multiagent_dialogue_framework_for_c.md)
+- [\[ICLR 2026\] Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall](loopholing_discrete_diffusion_deterministic_bypass_of_the_sampling_wall.md)
 
 </div>
 

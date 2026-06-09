@@ -45,39 +45,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Stage 1: 文本编码器获取工具语义嵌入  
-Stage 2: 协作感知RQ-VAE量化为离散编码序列  
-Stage 3: Sinkhorn最优传输解决编码冲突  
-Stage 4: 两阶段LLM微调（检索对齐+轨迹对齐）  
-推理：受限beam search确保生成合法工具编码
+ToolWeaver想解决的是：当工具库膨胀到 47000+ 个时，"一工具一 token"既撑爆词表又毁掉语言能力，如何用紧凑且带语义的方式让 LLM 直接"说出"要调用的工具。它的做法是把工具从"一个独立 token"换成"一段层级离散编码序列"——先用文本编码器拿到每个工具的语义嵌入，再用一个协作感知的 RQ-VAE 把这个嵌入量化成 $L$ 级编码 $[\iota_1, \iota_2, \ldots, \iota_L]$，每一级从一个共享码本里挑一个码字。这样工具不再各占一个 token，而是共用一小撮码字组合出来，词表只需 $L \times K$ 个新 token 就能覆盖海量工具。量化完成后，用 Sinkhorn 最优传输消除"两个工具撞到同一段编码"的冲突，保证每个工具有唯一编码；最后分两阶段微调 LLM（检索对齐 + 轨迹对齐），推理时用受限 beam search 把生成约束在合法编码上。
 
 ### 关键设计
 
-1. **协作感知残差量化（Stage 2）**
+**1. 协作感知残差量化：用层级码本把工具压成对数级词表，并把"谁和谁常一起用"写进编码。**
 
-    - 功能：将工具嵌入量化为多级离散编码 $[\iota_1, \iota_2, \ldots, \iota_L]$
-    - 核心思路：RQ-VAE逐级量化残差：$\iota_{d,l} = \arg\min_k \|r_{d,l} - v_{l,k}\|^2$，$r_{d,l+1} = r_{d,l} - v_{l,\iota_{d,l}}$
-    - **协作正则化**（核心创新）：从使用轨迹计算工具共现矩阵 $A_{uv} = C_{uv}/\sqrt{C_{uu} \cdot C_{vv}}$，添加图拉普拉斯损失 $\mathcal{L}_{collab} = \sum_{u,v} A_{uv}\|\hat{z}_u - \hat{z}_v\|^2$
-    - 设计动机：让经常一起使用的工具有相近的编码，使LLM能从编码级别的共现学习协作模式（而非稀疏的tool ID共现）
-    - 词表规模：$L$级 × $K$个码本 = $L \times K$ 个新token。$L=4, K=128$ → 512 token覆盖47000+工具
+这是 ToolWeaver 的核心，直接对应"词表爆炸 + 语义盲区"两个痛点。量化部分沿用 RQ-VAE 的残差思路：逐级把工具嵌入的残差量化到最近的码字，第 $l$ 级选 $\iota_{d,l} = \arg\min_k \|r_{d,l} - v_{l,k}\|^2$，再把残差更新为 $r_{d,l+1} = r_{d,l} - v_{l,\iota_{d,l}}$，逐级逼近原嵌入。因为 $L$ 级、每级 $K$ 个码字可以组合出 $K^L$ 种编码，词表规模从"一工具一 token"的线性增长降到对数级——$L=4, K=128$ 时只需 $4 \times 128 = 512$ 个新 token，就能为 47000+ 个工具各分配一段唯一编码。
 
-2. **冲突缓解via最优传输（Stage 3）**
+真正的创新在于往量化里注入协作信号。ToolWeaver 从历史使用轨迹统计工具共现，构造归一化共现矩阵 $A_{uv} = C_{uv}/\sqrt{C_{uu} \cdot C_{vv}}$，再加一条图拉普拉斯正则项
 
-    - 功能：解决多个工具映射到相同编码序列的冲突
-    - 核心思路：在最后一级码本上强制均匀分布，用Sinkhorn-Knopp算法求解最优传输
-    - 约束：每个工具完全分配 + 每个码字均匀使用
-    - 设计动机：保证每个工具有唯一标识符
+$$\mathcal{L}_{collab} = \sum_{u,v} A_{uv}\|\hat{z}_u - \hat{z}_v\|^2$$
 
-3. **受限Beam Search推理**
+它把"经常一起被调用"的工具在量化嵌入空间里拉近，于是它们的层级编码也会共享更多码字。这样做的好处是把协作关系从稀疏的 tool ID 共现，转写成稠密的 code 级共现：LLM 不必再从罕见的工具 ID 组合里硬推协作模式，而是能直接在更密集的码字层面学到"这几个工具是一伙的"。
 
-    - 功能：确保生成过程只产出合法工具编码
-    - 核心思路：预计算所有有效编码序列构建前缀树（Trie），推理时mask掉非法next token
-    - 设计动机：避免生成不存在的工具编码
+**2. 冲突缓解 via 最优传输：让撞编码的工具重新分流，保证一对一。**
+
+层级量化压得很紧，难免出现多个工具被映射到同一段编码序列，那它们就无法区分了。ToolWeaver 在最后一级码本上施加一个均匀分布约束，把"工具→码字"的分配建成一个最优传输问题，用 Sinkhorn-Knopp 算法迭代求解：一边要求每个工具被完整分配出去，一边要求每个码字被均匀使用，从而把扎堆的工具摊到不同码字上。相比硬编码去重，这种做法用最优传输的数学结构保证了每个工具最终拿到唯一标识符，且分配更平滑鲁棒。
+
+**3. 受限 Beam Search 推理：把生成约束在合法编码上，不让模型编造不存在的工具。**
+
+由于工具现在是多 token 的编码序列，自由生成可能拼出一段根本不对应任何工具的"非法编码"。ToolWeaver 预先把所有有效编码序列建成一棵前缀树（Trie），推理时在每一步根据 Trie 把非法的 next token 全部 mask 掉，beam search 只在合法分支里展开。这样保证模型每次"说"出来的都是一个真实存在的工具编码。
 
 ### 损失函数 / 训练策略
-- 量化损失：$\mathcal{L}_{tokenize} = \mathcal{L}_{recon} + \mathcal{L}_{quant} + \lambda\mathcal{L}_{collab}$，最优 $\lambda=1.0$
-- 检索对齐：$\mathcal{L}_{retrieval} = -\mathbb{E}[\log P(\boldsymbol{\iota}_d | q)]$（489K查询-工具对）
-- 轨迹对齐：标准SFT损失（183K轨迹）
+量化阶段的目标是 $\mathcal{L}_{tokenize} = \mathcal{L}_{recon} + \mathcal{L}_{quant} + \lambda\mathcal{L}_{collab}$，把重建、码本量化和协作正则三项合在一起，实验中最优权重 $\lambda=1.0$。LLM 端分两步对齐：检索对齐用 489K 条查询-工具对，目标 $\mathcal{L}_{retrieval} = -\mathbb{E}[\log P(\boldsymbol{\iota}_d | q)]$，教模型根据查询生成正确的工具编码；轨迹对齐则在 183K 条调用轨迹上做标准 SFT，把工具编码嵌进完整的多步调用流程里。
 
 ## 实验关键数据
 
@@ -141,8 +132,8 @@ ToolWeaver在检索和任务完成上全面领先，同时语言模型退化从1
 - [\[ACL 2025\] Adaptive Tool Use in Large Language Models with Meta-Cognition Trigger](../../ACL2025/llm_agent/meco_metacognition_tool_use.md)
 - [\[ACL 2026\] Feedback-Driven Tool-Use Improvements in Large Language Models via Automated Build Environments](../../ACL2026/llm_agent/feedback-driven_tool-use_improvements_in_large_language_models_via_automated_bui.md)
 - [\[ACL 2025\] ToolHop: A Query-Driven Benchmark for Evaluating Large Language Models in Multi-Hop Tool Use](../../ACL2025/llm_agent/toolhop_multi_hop_tool_use.md)
-- [\[ICLR 2026\] AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
 - [\[ACL 2026\] Agent-GWO: Collaborative Agents for Dynamic Prompt Optimization in Large Language Models](../../ACL2026/llm_agent/agent-gwo_collaborative_agents_for_dynamic_prompt_optimization_in_large_language.md)
+- [\[ICLR 2026\] AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
 
 </div>
 

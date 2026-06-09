@@ -36,48 +36,27 @@ tags:
 
 ### 整体框架
 
-本文工作分为两大部分：**机制分析**（Section 3-4）和**干预方法 TCR**（Section 5）。
+这篇论文想搞清楚一件事：为什么 LLM 在训练时会做的推理技能（比如两位数乘法），一旦把所需的推理跳步数拉长（变成三位数乘法）就突然失灵。整篇工作分成前后咬合的两步——先做**机制分析**把病因定位到注意力头层面，再据此设计一个**测试时干预方法 TCR** 去对症下药。
 
-1. **机制分析**：将 CoT 推理分解为逐跳（hop-by-hop）分析，识别关键错误类型，揭示注意力头层面的竞争机制
-2. **TCR 方法**：基于机制洞察，设计轻量级测试时干预——用熵阈值检测错误位置，用训练好的头选择器选择需要停用的 ep head
+机制分析这一步走的是"错误中心"路线：不直接盯着整条长链 CoT，而是先把它拆成一跳一跳、找出最常犯的错误类型和出错的具体 token 位置，再用 Logit Lens、Knockout、电路分析这套机制工具去看那个位置上模型内部到底发生了什么。结论是 LLM 内部其实同时跑着一条正确推理轨迹和一条错误推理轨迹，由不同的注意力头驱动，谁赢谁输决定了最终答案。TCR 则是把这个洞察落地：在生成时用熵检测出可疑的出错位置，再用一个训练好的头选择器挑出该停掉哪个"错误处理头"，把答案掰回正确轨道。
 
 ### 关键设计
 
-#### 1. 推理错误的系统性分解
+**1. 推理错误的系统性分解：把长链 CoT 拆到可分析的粒度。**
 
-- **功能**：将 CoT 响应分解为细粒度的推理跳步，定位首个错误发生的 token 位置
-- **核心思路**：对 $n$-跳问题 $x \to r_1 \to \cdots \to r_n \to y$，将整体 CoT 正确率分解为逐跳条件概率的乘积：$p(r_1, \ldots, r_n, y | x) = \prod_{i=1}^{n} p(r_i | x, r_1, \ldots, r_{i-1}) \cdot p(y | x, r_1, \ldots, r_n)$
-- **关键发现**：每个任务仅 1-2 个关键错误类型占据 ≥30% 的错误比例。例如 Parity-NL 50-hop 任务中，78.6% 的错误来自"回忆错误名字"这一单一错误类型
-- **设计动机**：错误集中在少数模式上意味着存在连贯的底层机制，使得机制分析变得可行
+直接分析一条几百 token 的 CoT 没法下手，所以第一步先把它切成逐跳。对一个 $n$-跳问题 $x \to r_1 \to \cdots \to r_n \to y$，整体 CoT 的正确率被分解成逐跳条件概率的连乘：$p(r_1, \ldots, r_n, y \mid x) = \prod_{i=1}^{n} p(r_i \mid x, r_1, \ldots, r_{i-1}) \cdot p(y \mid x, r_1, \ldots, r_n)$，这样就能精确定位首个出错的 token 位置。拆完后有个关键观察让后续分析变得可行：每个任务的错误高度集中，仅 1-2 个关键错误类型就占了 ≥30% 的错误比例——例如 Parity-NL 50-hop 任务里，78.6% 的错误都来自"回忆错错了名字"这一种模式。错误这么集中，说明背后是一套连贯的机制在作祟，而不是随机噪声，机制分析才有靶子可打。
 
-#### 2. 注意力头的竞争机制发现
+**2. 注意力头的竞争机制：正确与错误推理在抢同一支笔。**
 
-论文发现 LLM 推理电路中存在三类功能不同的注意力头：
+这是全文最核心的发现。论文把推理电路里的注意力头按功能分成三类。**Answer-Writing Heads（aw heads）** 位于中深层（如 layer 20-26），负责直接把答案信息写进残差流；为了准确定位它们，论文设计了改进指标 $s_{\text{aw-head}}(\mathbf{a}_i^l)$（公式 4），用 knockout 效应做归一化来抵消跨层概率尺度的差异，比纯 Logit Lens 更可靠。耐人寻味的是，正确预测和错误预测共享约 60% 的 aw heads——同一批头里既编码了正确 token 的信号，也编码了错误 token 的信号，它们只是"执笔人"，真正决定写什么的另有其人。
 
-- **Answer-Writing Heads（aw heads）**：位于中深层（如 layer 20-26），直接将答案信息写入残差流。使用改进的定位指标 $s_{\text{aw-head}}(\mathbf{a}_i^l)$（公式 4），发现正确和错误预测共享约 60% 的 aw heads，且这些头同时编码正确 token 和错误 token 的信号
-- **Processing Heads**：位于浅中层，通过间接的信息处理支持推理。分为两组：
-    - **Correct Processing Heads（cp heads, $\mathcal{H}_{cp}$）**：驱动正确推理轨迹
-    - **Erroneous Processing Heads（ep heads, $\mathcal{H}_{ep}$）**：驱动错误推理轨迹
-    - 关键发现：$\mathcal{H}_{cp}$ 和 $\mathcal{H}_{ep}$ 几乎完全不相交
-- **Basic Heads（$\mathcal{H}_{basic}$）**：提取基本输入信息，对正确和错误预测都不可或缺
+决定权落在浅中层的 **Processing Heads** 上，它们通过间接的信息处理支撑推理，又泾渭分明地分成两组：驱动正确轨迹的 **Correct Processing Heads（cp heads, $\mathcal{H}_{cp}$）** 和驱动错误轨迹的 **Erroneous Processing Heads（ep heads, $\mathcal{H}_{ep}$）**，二者几乎完全不相交。此外还有一类 **Basic Heads（$\mathcal{H}_{basic}$）** 负责提取基本输入信息，正确和错误预测都离不开它。所谓竞争，就发生在关键错误位置：ep heads 放大虚假信号、压制正确信号，让 aw heads 写出的错误候选 token 概率反超正确候选，于是模型输出了错的。反过来，只要停掉单个 ep head，被压制的正确推理电路就能复活——纠正后的预测有 93.3% 的 cp heads 与原本就答对时的机制一致，证明正确轨迹一直都在，只是被压住了。
 
-**竞争机制**：正确和错误推理轨迹共存于 LLM 内部。在关键错误位置，ep heads 放大虚假信号并抑制正确信号，使 aw heads 中的错误候选token 概率超过正确候选 token，最终导致错误输出。停用单个 ep head 后，正确处理头的推理机制得以恢复（93.3% 的 cp heads 与原始正确预测一致）。
+这也顺势解释了"为什么跳步越多越容易错"：一方面跳步拉长意味着输入更大、要追踪的中间状态更多，正确轨迹 $\mathcal{H}_{cp}$ 的检索难度陡增；另一方面当所需跳步数显著超出训练分布时，正确轨迹更频繁地被 $\mathcal{H}_{ep}$ 覆盖，而后者往往只抓住了局部模式、走的是捷径推理。两股力量叠加，竞争的天平就越来越倒向错误一侧。
 
-#### 3. TCR：测试时推理纠正
+**3. TCR：把机制洞察做成测试时的轻量纠正。**
 
-TCR 包含三个组件：
-
-**(a) 候选 ep head 集合构建**：跨 5 个代表性任务定位 $\mathcal{H}_{ep}$，选择跨任务和错误类型共享的 ep heads，得到紧凑的候选集 $\mathbf{H}$（Qwen2.5-7B 为 8 个头，Phi-3 和 Qwen3-8B 为 9 个，LLaMA3-8B 为 10 个）
-
-**(b) 头选择器训练**：用 Qwen2.5-0.5B + LoRA 微调的分类器 $f_\theta(\cdot)$，根据输入上下文选择应停用的 ep head。使用 multi-label Softmax loss 训练，Hit@1 准确率在分布内达 75-87%，分布外达 35-82%
-
-**(c) 基于熵的检测器**：监测每个生成 token 的预测熵，超过阈值 $\tau$ 时触发干预。每次触发时，选择分类器预测的 top-3 头，分别停用并用多数投票决定最终纠正结果
-
-### 理论分析
-
-论文从两个角度解释为什么更多推理跳步会加剧错误：
-1. **搜索空间扩大**：更长推理链伴随更大的输入规模和更多的中间状态需要追踪，极大增加了正确推理轨迹 $\mathcal{H}_{cp}$ 的检索难度
-2. **分布外泛化失败**：当所需跳步数显著超出训练分布时，正确推理轨迹更频繁地被 $\mathcal{H}_{ep}$ 覆盖，后者可能仅捕获局部模式导致捷径推理
+既然病因是少数 ep head 在关键位置作乱，TCR 就在推理时动态地把它们关掉，由三个组件配合完成。其一是**候选 ep head 集合构建**：跨 5 个代表性任务分别定位 $\mathcal{H}_{ep}$，只挑那些在不同任务和错误类型间反复出现的共享头，最终得到一个很紧凑的候选集 $\mathbf{H}$（Qwen2.5-7B 8 个、Phi-3 和 Qwen3-8B 9 个、LLaMA3-8B 10 个），用一个小集合就能覆盖各种场景。其二是**头选择器**：用 Qwen2.5-0.5B 加 LoRA 微调出一个分类器 $f_\theta(\cdot)$，根据当前上下文判断该停哪个 ep head，以 multi-label Softmax loss 训练，Hit@1 在分布内达 75-87%、分布外 35-82%。其三是**基于熵的检测器**：逐 token 监测预测熵，一旦超过阈值 $\tau$ 就触发干预——取分类器预测的 top-3 头分别停用，再用多数投票敲定最终纠正结果。三者合起来，就是"熵检测出哪里可能错 → 选择器挑出该关谁 → 投票确认怎么改"的完整闭环。
 
 ## 实验关键数据
 
@@ -149,7 +128,7 @@ TCR 包含三个组件：
 
 - [\[ICLR 2026\] A Fano-Style Accuracy Upper Bound for LLM Single-Pass Reasoning in Multi-Hop QA](a_fano-style_accuracy_upper_bound_for_llm_single-pass_reasoning_in_multi-hop_qa.md)
 - [\[ICLR 2026\] Landscape of Thoughts: Visualizing the Reasoning Process of Large Language Models](landscape_of_thoughts_visualizing_the_reasoning_process_of_large_language_models.md)
-- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
+- [\[ICLR 2026\] SPARTA: Scalable and Principled Benchmark of Tree-Structured Multi-hop QA over Text and Tables](sparta_scalable_and_principled_benchmark_of_tree-structured_multi-hop_qa_over_te.md)
 - [\[ICLR 2026\] BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
 - [\[ICML 2026\] Model Merging Scaling Laws in Large Language Models](../../ICML2026/model_compression/model_merging_scaling_laws_in_large_language_models.md)
 

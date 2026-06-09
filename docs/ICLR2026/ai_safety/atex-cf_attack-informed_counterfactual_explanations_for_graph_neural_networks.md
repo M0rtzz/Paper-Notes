@@ -43,21 +43,37 @@ tags:
 
 ### 整体框架
 
-ATEX-CF 将反事实生成建模为约束优化问题，核心流程：
-1. **候选边选择**：分两路——边删除候选 $\mathcal{S}^-$ 来自目标节点 $(l+1)$-hop 邻域内的已有边；边添加候选 $\mathcal{S}^+$ 来自 GOttack 对抗攻击方法提供的高影响力边。
-2. **签名掩码优化**：为每条候选边引入连续参数 $M_e \in [-1,1]$，$M_e > 0$ 表示添加，$M_e < 0$ 表示删除，通过梯度下降优化。
-3. **前向离散化**：阈值化 + Top-$\kappa$ 稀疏化，保留最多 $\kappa$ 条扰动边。
-4. **联合损失优化**：$\mathcal{L} = \lambda_1 \mathcal{L}_{pred} + \lambda_2 \mathcal{L}_{dist} + \lambda_3 \mathcal{L}_{plau}$。
-5. **最小化后剪枝**：贪心移除冗余边，确保解释的最小性。
+ATEX-CF 把"为某个目标节点生成反事实解释"重新表述为一个约束优化问题：在一组候选边上学习一层连续掩码，让被扰动后的图既能翻转 GNN 的预测，又尽量少改、改得合理。与以往只许删边的方法不同，它的候选集同时来自两个方向——删除候选 $\mathcal{S}^-$ 取自目标节点 $(l+1)$-hop 邻域内的已有边，添加候选 $\mathcal{S}^+$ 则借 GOttack 对抗攻击挑出的高影响力边——再用同一套掩码、同一组损失把"删哪条""加哪条"一起优化，最后做一次后剪枝保证最小性。
 
 ### 关键设计
 
-- **理论桥梁（Hypothesis 1）**：成功的逃逸攻击中添加的边与目标节点的反事实解释子图具有高图相似性，为统一二者提供理论依据。
-- **预测损失 $\mathcal{L}_{pred}$**：利用指示函数 + 负对数似然，仅在预测未翻转时激活，推动扰动图远离原始类别。
-- **稀疏损失 $\mathcal{L}_{dist}$**：$\ell_0$ 范数约束扰动边数量，保证简洁可解释。
-- **合理性损失 $\mathcal{L}_{plau}$**：包含度数异常惩罚 DegAnom（抑制度数突变）和 Motif 违规惩罚 MotifViol（保持局部聚类系数稳定）。
-- **直通估计器（STE）**：在反向传播中将离散化操作近似为恒等函数，使梯度可以穿过非可微操作流动。
-- **非对称代价扩展**：引入标量权重 $C$ 控制添加/删除的代价不对称性，适应不同领域约束。
+**1. 攻击-解释统一假设：把对抗攻击的"加边"借给反事实解释。**
+
+方法的出发点是一个被实验验证的观察（Hypothesis 1）：一次成功的逃逸攻击所添加的边，与目标节点真正的反事实解释子图高度相似。换句话说，攻击为了翻转预测而选中的"关键缺失关系"，恰恰就是解释想要找的那批边。痛点在于，一旦允许加边，候选空间会组合爆炸，盲目搜索不可行；这个假设让 ATEX-CF 可以直接把 GOttack 基于图轨道理论筛出的高影响力边当作 $\mathcal{S}^+$，从源头上把添加候选压到很小的规模，既给了"加边"的能力又不至于失控。
+
+**2. 签名掩码 + 前向离散化：用一个连续变量同时表达加和删。**
+
+为每条候选边引入一个连续参数 $M_e \in [-1,1]$，约定 $M_e > 0$ 代表添加、$M_e < 0$ 代表删除，于是加边和删边被统一进同一个可微的优化对象，靠梯度下降一起学。训练得到的连续掩码在前向阶段再离散化：先按阈值二值化，再做 Top-$\kappa$ 稀疏化，只保留绝对值最大的至多 $\kappa$ 条扰动边。这样既避免了为加、删分别设计两套搜索逻辑，又用 $\kappa$ 把最终解释的规模卡死在可解释的范围内。
+
+**3. 直通估计器（STE）：让梯度穿过不可微的离散化。**
+
+阈值化和 Top-$\kappa$ 都是不可微操作，会切断反向传播。ATEX-CF 用直通估计器解决：前向照常做离散化，反向时把这步近似成恒等函数，梯度直接绕过离散操作流回连续掩码 $M_e$。正因为有 STE，"先连续优化、再离散输出"的设计才能端到端地训练，而不必退回到昂贵的离散搜索。
+
+**4. 三项联合损失：把翻转、稀疏、合理拧成一个目标。**
+
+整体目标是 $\mathcal{L} = \lambda_1 \mathcal{L}_{pred} + \lambda_2 \mathcal{L}_{dist} + \lambda_3 \mathcal{L}_{plau}$，三项各管一件事。预测项 $\mathcal{L}_{pred}$ 由指示函数加负对数似然构成，仅在预测尚未翻转时激活，持续把扰动图推离原始类别，一旦翻转成功就不再施压、转而让另外两项收紧解释。稀疏项 $\mathcal{L}_{dist}$ 用 $\ell_0$ 范数约束扰动边的数量，逼着解释保持简洁。合理性项 $\mathcal{L}_{plau}$ 负责让扰动看起来"像真图"，下一点单独展开。
+
+**5. 合理性损失：用度数与 Motif 两个信号压住不自然的扰动。**
+
+光会翻转、够稀疏还不够，加删的边如果让图结构变得离谱，解释就没有说服力。$\mathcal{L}_{plau}$ 因此包含两个惩罚：度数异常 DegAnom 抑制扰动造成的度数突变，避免凭空给某节点接上一大堆边；Motif 违规 MotifViol 则约束局部聚类系数的稳定，保持邻域的拓扑模式不被破坏。两者合在一起，把"翻转预测"约束在结构上自然、语义上可信的扰动范围内。
+
+**6. 非对称代价扩展：用一个权重适配领域里"加"和"删"代价不同的现实。**
+
+很多场景下添加一条关系和删除一条关系的代价并不对等（如贷款审批中"补一条合理关联"和"抹掉一条已有记录"含义完全不同）。ATEX-CF 引入标量权重 $C$ 单独放大或缩小添加边的代价，从而在同一框架内灵活适配不同领域约束。表 2 的实验也印证了它的作用：当 $C$ 调到很高（≥20）时方法实质退化为纯删除，性能明显下滑，说明可控的"加边"能力确实是有效性的关键来源。
+
+### 损失函数 / 训练策略
+
+完成连续掩码的优化后，ATEX-CF 还做一步最小化后剪枝：在已翻转的扰动集合上贪心地逐条移除冗余边，只要去掉后预测仍然翻转就保留这次删除。该步保证输出解释的最小性，实测把运行时间从 6.12s 压到 3.00s、平均边数从 1.71 降到 1.62，且不损失预测翻转的成功率。
 
 ## 实验关键数据
 
@@ -125,8 +141,8 @@ ATEX-CF 将反事实生成建模为约束优化问题，核心流程：
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](../../NeurIPS2025/ai_safety/influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
 - [\[ICLR 2026\] Hide and Find: A Distributed Adversarial Attack on Federated Graph Learning](hide_and_find_a_distributed_adversarial_attack_on_federated_graph_learning.md)
+- [\[NeurIPS 2025\] Influence Functions for Edge Edits in Non-Convex Graph Neural Networks](../../NeurIPS2025/ai_safety/influence_functions_for_edge_edits_in_non-convex_graph_neural_networks.md)
 - [\[ICLR 2026\] Time Is All It Takes: Spike-Retiming Attacks on Event-Driven Spiking Neural Networks](time_is_all_it_takes_spike-retiming_attacks_on_event-driven_spiking_neural_netwo.md)
 - [\[ICLR 2026\] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
 - [\[ICML 2026\] Singular Bayesian Neural Networks](../../ICML2026/ai_safety/singular_bayesian_neural_networks.md)

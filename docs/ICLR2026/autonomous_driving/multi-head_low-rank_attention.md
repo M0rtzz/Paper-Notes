@@ -51,42 +51,25 @@ MLRA 提供两个变体：
 
 ### 关键设计
 
-#### 1. 块分解（Block Decomposition）
+**1. 块分解：把不可分片的求和拆成可独立计算的分支。**
 
-**功能**：将 MLA 的 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 按通道划分为 4 个块 $C_{:,(b)}^{KV}$，同时将 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行划分为对应的 4 个子块。
+MLA 之所以无法分片，是因为它把整段 KV 信息压在一个 latent head 里，解码时只能整块搬运。MLRA 的破局点在于一个被忽视的代数恒等式：MLA 里每个头的 NoPE key/value 其实等价于若干子块乘积之和（原文 Eq. 2）。既然结果是一个求和，就可以把这个求和从「KV 计算阶段」搬到「注意力输出阶段」。具体做法是把 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 沿通道切成 4 个块 $C_{:,(b)}^{KV}$，对应地把 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行切成 4 个子块。这样每个头的输出就变成 4 个分支注意力之和（以 MLRA-4 为例）：
 
-**为什么**：MLA 中每个头的 NoPE key/value 本质上等价于 4 个子块乘积之和（Eq. 2），将这一求和从 KV 计算移至注意力输出，使得每个子块可以独立计算注意力。
-
-**怎么做**（以 MLRA-4 为例）：
 $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C_{:,(b)}^{KV} W_{(b),(i)}^{UK})^\top + \tau Q_{:,i,:}^{\text{RoPE}} (K^{\text{RoPE}})^\top \right) (C_{:,(b)}^{KV} W_{(b),(i)}^{UV})$$
 
-每个分支 $b$ 仅依赖 $C_{:,(b)}^{KV}$（大小为 $d_h$），可以分配给不同 TP 设备独立计算。
+关键在于：每个分支 $b$ 只依赖自己那块 $C_{:,(b)}^{KV}$（大小 $d_h$），分支之间互不耦合，于是 4 个分支可以原封不动地分配给 4 个 TP 设备各算各的，最后求和——这正是 MLA 做不到的事。
 
-#### 2. MLRA-2 的分组映射
+**2. MLRA-2 的分组映射：用更轻的 2 分支兼顾容量与效率。**
 
-**功能**：沿用 GLA-2 的分组策略，将 latent head 二等分，前半注意力头用第一组 latent，后半注意力头用第二组 latent。
+并非所有部署都是 4-way TP，所以论文给了一个更轻的 MLRA-2 变体作为替代。它沿用 GLA-2 的分组思路，把 latent head 二等分，前半注意力头用第一组 latent、后半用第二组，每个头的输出是 2 个分支注意力之和。哪个头落到哪一组，由分组映射函数 $\gamma(i)$ 决定。相比 MLRA-4 的 4 分支，它在 2 分支求和里换取更低的拆分开销，适合 2-way TP 场景。
 
-**为什么**：提供一种轻量级替代方案，在 2 分支求和中兼顾模型容量与效率。
+**3. 方差校准：拆分会放大 RoPE/NoPE 的方差错位，得显式补偿。**
 
-**怎么做**：通过分组映射函数 $\gamma(i)$ 决定第 $i$ 个注意力头使用哪个 latent 组，每个头的输出是 2 个分支注意力的加和。
+分支拆开不是免费的——它会加剧 MLA 本就存在的方差不匹配。理论上 NoPE key 的方差是 $d_c \sigma_w^2$、RoPE key 的方差是 $d \sigma_w^2$，当 latent 维度远小于隐藏维度时两者已经差一个量级；而把 latent 再切成多块、再把多分支输出加起来，又一次改变了输出的方差尺度。如果放任不管，softmax 的 logits 分布会失衡。MLRA 的对策是两处显式缩放：在 latent state 侧做 $C^Q \leftarrow \sqrt{d/d_c'} \cdot C^Q$、$C^{KV} \leftarrow \sqrt{4d/d_c} \cdot C^{KV}$，把 query/key 的方差拉回可比尺度；在输出侧再按分支数归一，MLRA-2 的输出除以 $\sqrt{2}$、MLRA-4 除以 $2$，抵消多分支求和带来的方差膨胀。这套缩放是从方差推导直接得来的，不是凭经验调出来的。
 
-#### 3. 方差校准（Variance Calibration）
+**4. 高效解码：4 块天然落到 4 个设备，每设备只搬 $1.5 d_h$。**
 
-**功能**：对 query 和 KV latent state 施加缩放因子，并对多分支注意力输出进行归一化。
-
-**为什么**：理论分析表明 NoPE key 的方差为 $d_c \sigma_w^2$，而 RoPE key 的方差为 $d \sigma_w^2$，分支拆分进一步加剧了方差不匹配。多分支求和还改变了输出的方差。
-
-**怎么做**：
-- Latent state 缩放：$C^Q \leftarrow \sqrt{d/d_c'} \cdot C^Q$，$C^{KV} \leftarrow \sqrt{4d/d_c} \cdot C^{KV}$
-- 输出缩放：MLRA-2 的输出除以 $\sqrt{2}$，MLRA-4 的输出除以 $2$
-
-#### 4. 高效解码（TP-Friendly Decoding）
-
-**功能**：实现原生 4-way TP 解码，每个设备仅加载 $1.5 d_h$ 的 KV cache。
-
-**为什么**：4 个 latent block 可自然分配到 4 个 TP 设备上，每设备仅加载一个 latent block（$d_h$）加 共享的 RoPE key（$0.5 d_h$）。
-
-**怎么做**：沿用 MLA 的 weight absorption 技巧将 up-projection 吸收进 query 侧，然后在每个设备上独立执行 MQA-style 解码，最后 all-reduce 求和。
+前三步的设计最终要兑现成解码时的真实加速。因为 4 个 latent block 彼此独立，它们可以自然地一一映射到 4 个 TP 设备上——每个设备只加载一个 latent block（$d_h$）外加各设备共享的 RoPE key（$0.5 d_h$），于是每设备 KV 加载量从 MLA 的 $4.5 d_h$ 降到 $1.5 d_h$。落地时沿用 MLA 的 weight absorption 技巧，把 up-projection 吸收进 query 侧，每个设备就退化成一个标准的 MQA-style 解码，算完各分支后再 all-reduce 求和即可。这样 TP 带来的好处第一次真正传导到了 KV cache 搬运上。
 
 ### 损失函数 / 训练策略
 
@@ -184,11 +167,11 @@ $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C
 
 ## 相关论文
 
+- [\[AAAI 2026\] CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](../../AAAI2026/autonomous_driving/comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
 - [\[AAAI 2026\] Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model](../../AAAI2026/autonomous_driving/drive_as_you_like_strategy-level_motion_planning_based_on_a_multi-head_diffusion.md)
 - [\[ICCV 2025\] SRefiner: Soft-Braid Attention for Multi-Agent Trajectory Refinement](../../ICCV2025/autonomous_driving/srefiner_soft-braid_attention_for_multi-agent_trajectory_refinement.md)
-- [\[CVPR 2026\] TopoMaskV3: 3D Mask Head with Dense Offset and Height Predictions for Road Topology Understanding](../../CVPR2026/autonomous_driving/topomaskv3_3d_mask_head_with_dense_offset_and_height_predictions_for_road_topolo.md)
 - [\[CVPR 2026\] IGASA: Integrated Geometry-Aware and Skip-Attention Modules for Enhanced Point Cloud Registration](../../CVPR2026/autonomous_driving/igasa_integrated_geometry-aware_and_skip-attention_modules_for_enhanced_point_cl.md)
-- [\[CVPR 2026\] DriverGaze360: OmniDirectional Driver Attention with Object-Level Guidance](../../CVPR2026/autonomous_driving/drivergaze360_omnidirectional_driver_attention_with_object-level_guidance.md)
+- [\[ICLR 2026\] SMART-R1: Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](advancing_multi-agent_traffic_simulation_via_r1-style_reinforcement_fine-tuning.md)
 
 </div>
 

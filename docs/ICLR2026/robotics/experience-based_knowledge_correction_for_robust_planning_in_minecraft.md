@@ -40,27 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-XENON = Adaptive Dependency Graph (ADG) + Failure-Aware Action Memory (FAM) + Context-aware Reprompting (CRe)。ADG 学习物品依赖关系，FAM 学习有效/无效动作，CRe 帮助低层控制器脱离卡住状态。
+XENON 想解决的是一个被前人忽略的问题：LLM 规划失败往往不是"想不通"，而是脑子里记错了事实（比如以为某个物品需要某个不存在的材料），而这种参数化的知识错误靠 prompt 反思改不掉。XENON 的思路是把知识从 LLM 权重里"搬"到外部可被算法修改的结构里，再用 agent 在 Minecraft 里实际试错产生的成功/失败信号去更新它。整条链路是：LLM 先给出一份初始的物品依赖知识 → agent 据此规划并执行 → 把每次成功/失败回写到三个外部模块——依赖图 ADG（修正"做什么需要什么"）、动作记忆 FAM（记住"哪些动作真的有用"）、重提示 CRe（在底层控制器卡住时把它拉回正轨）→ 下一轮规划读取被修正后的知识，循环往复。LLM 始终只负责语言层面的规划，事实层面的对错交给这三个模块用经验校准。
 
 ### 关键设计
 
-1. **自适应依赖图 (ADG)**：
+**1. 自适应依赖图 ADG：用成功经验把 LLM 记错的物品依赖改回来。**
 
-    - 功能：从成功经验中修正 LLM 的错误物品依赖关系。
-    - 核心算法——RevisionByAnalogy：当 agent 成功获取物品 X 时，观察其背包物品集合，与已知依赖对比，通过类比推理修正/确认依赖边。
-    - 对 hallucinated 物品：RevisionByAnalogy 能通过实际经验识别不存在的物品并从图中移除。
-    - 效果：400 轮后 Mineflayer 上准确率达 ~0.90。
+LLM 对 Minecraft 物品依赖（钻石镐需要钻石加木棍之类）常常记错甚至凭空编造，而这些错误一旦写进规划前提，整条任务就会卡死。ADG 把依赖关系存成一张外部的有向图，核心更新算法叫 RevisionByAnalogy：每当 agent 成功拿到某个物品 X，就回看此刻背包里有哪些物品，把这份"成功时的物品组合"和图里已记录的依赖做对比，用类比推理来修正或确认指向 X 的依赖边——实际拿到手的组合才是真相，与之矛盾的旧边被改写。这一机制天然能处理 LLM 幻觉出来的物品：一个根本不存在的物品永远不会出现在任何成功背包里，因此它对应的边始终得不到经验支持，最终被从图中移除。靠这种"边试边改"的方式，依赖图在 Mineflayer 上跑满 400 轮后准确率能爬到约 0.90，远比直接信任 LLM 的初始知识可靠。
 
-2. **失败感知动作记忆 (FAM)**：
+**2. 失败感知动作记忆 FAM：从纯成功/失败的二值反馈里筛掉无效动作。**
 
-    - 功能：从二值反馈中学习哪些动作有效/无效。
-    - 核心思路：每个动作维护成功/失败计数，超过阈值后分类为"经验有效"或"经验无效"。
-    - 无效动作在后续规划中被过滤，防止重复失败。
+环境只告诉 agent 这次成功还是失败，没有更细的解释，怎么从这种最稀疏的信号里学到东西是难点。FAM 给每个动作各维护一对成功与失败计数，随着 agent 反复尝试不断累加，当某个动作的计数越过阈值后就被定性为"经验有效"或"经验无效"。被判为无效的动作会在后续规划里直接过滤掉，让 agent 不再一头撞向同一堵墙、反复栽在已知会失败的动作上。和 ADG 修的是"目标-材料"层面的知识不同，FAM 修的是"动作-效果"层面的可靠性，两者互补。
 
-3. **Context-aware Reprompting (CRe)**：
+**3. 上下文感知重提示 CRe：在底层控制器卡死时把它救出来。**
 
-    - 功能：当控制器（如 STEVE-1）在执行中卡住时重新 prompt。
-    - 检测环境状态停滞后主动中断并重新规划。
+XENON 的高层规划要靠 STEVE-1 这类底层控制器去实际操作，而这类控制器经常会在执行中卡住——动作发出去了，环境状态却长时间不变。CRe 通过监测环境状态是否停滞来发现这种死锁，一旦确认卡住就主动打断当前执行并重新 prompt 控制器、触发重新规划，避免一次执行失误拖垮整条长期任务。它补的是"知识对了但执行掉链子"这种规划与控制之间的缝隙。
 
 ## 实验关键数据
 
@@ -116,7 +110,7 @@ XENON = Adaptive Dependency Graph (ADG) + Failure-Aware Action Memory (FAM) + Co
 ## 相关论文
 
 - [\[ICML 2026\] R2R2: Robust Representation for Intensive Experience Reuse via Redundancy Reduction in Self-Predictive Learning](../../ICML2026/robotics/r2r2_robust_representation_for_intensive_experience_reuse_via_redundancy_reducti.md)
-- [\[ICLR 2026\] SynthWorlds: Controlled Parallel Worlds for Disentangling Reasoning and Knowledge in Language Models](synthworlds_controlled_parallel_worlds_for_disentangling_reasoning_and_knowledge.md)
+- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
 - [\[ICCV 2025\] Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning](../../ICCV2025/robotics/interaction-merged_motion_planning_effectively_leveraging_diverse_motion_dataset.md)
 - [\[ICLR 2026\] Visual Planning: Let's Think Only with Images](visual_planning_lets_think_only_with_images.md)
 - [\[CVPR 2026\] DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation](../../CVPR2026/robotics/decovln_decoupling_observation_reasoning_and_correction_for_vision-and-language_.md)

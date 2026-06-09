@@ -196,11 +196,11 @@ GP-LRR 在所有四个环境中一致最优，在 HalfCheetah-v4 中优势尤为
 
 ## 相关论文
 
+- [\[AAAI 2026\] Streaming Generated Gaussian Process Experts for Online Learning and Control: Extended Version](streaming_generated_gaussian_process_experts_for_online_learning_and_control_ext.md)
 - [\[AAAI 2026\] Expressive Temporal Specifications for Reward Monitoring](expressive_temporal_specifications_for_reward_monitoring.md)
 - [\[NeurIPS 2025\] Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits](../../NeurIPS2025/others/gaussian_process_upper_confidence_bound_achieves_nearly-optimal_regret_in_noise-.md)
+- [\[NeurIPS 2025\] Turbocharging Gaussian Process Inference with Approximate Sketch-and-Project](../../NeurIPS2025/others/turbocharging_gaussian_process_inference_with_approximate_sketch-and-project.md)
 - [\[ICML 2026\] Position: Age Estimation Models Do Not Process Biometric Data](../../ICML2026/others/position_age_estimation_models_do_not_process_biometric_data.md)
-- [\[AAAI 2026\] Private Frequency Estimation via Residue Number Systems](private_frequency_estimation_via_residue_number_systems.md)
-- [\[AAAI 2026\] Scalable Vision-Guided Crop Yield Estimation](scalable_vision-guided_crop_yield_estimation.md)
 
 </div>
 

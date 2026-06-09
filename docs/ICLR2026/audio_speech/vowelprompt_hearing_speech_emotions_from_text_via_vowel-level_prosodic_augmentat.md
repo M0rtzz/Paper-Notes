@@ -39,31 +39,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-语音 + 转录文本 → MFA 强制对齐 → 元音段提取 → 6 种 LLD 计算 → 说话人/元音类型归一化 → 分位数离散化 → 自然语言韵律描述 → 拼接到转录文本后 → LLM 联合推理情感。训练采用 SFT（GPT-4o 生成推理 trace）→ GRPO 强化学习两阶段。
+VowelPrompt 把"听情感"重新定义成"读情感"：先从音频里抽出逐个元音的韵律特征，翻译成自然语言挂到转录文本后面，再让一个纯文本 LLM 在词义和局部韵律上联合推理出情感标签和理由。整条链路前半段是确定性的信号处理（对齐、抽特征、归一化、离散化），后半段是 SFT 冷启动加 GRPO 强化的两阶段训练，最终模型只吃文本就能给出带推理痕迹的判断。
 
 ### 关键设计
 
-1. **元音级特征提取**：
+**1. 元音级韵律描述符：把情感锚定到最稳的声学载体上。**
 
-    - 强制对齐（MFA）获取音素级时间边界 → 按 IPA 元音集筛选元音段
-    - 6 个 LLD：音高均值、音高斜率、音高方差、能量均值、能量方差、时长
-    - 两阶段归一化：说话人级 z-score → 元音类型级归一化
-    - 分位数离散化（K 级，如"非常低/低/中/高/非常高"）→ 自然语言描述
-    - 设计动机：元音是情感韵律的主要载体（声学稳定、voicing 持续），比全音素或句子级特征更精准地定位情感线索
+句子级 prompt（"声音很大、语速快"）丢掉了情感真正爆发的位置——往往是某个重读元音上音高的陡升。VowelPrompt 反其道而行，先用 Montreal Forced Aligner（MFA）把音频和转录对齐到音素级时间边界，再按 IPA 元音集只保留元音段，因为元音是浊音、声学稳定（有清晰的 F0 和共振峰）、且在时长和能量上占据话语主体，是情感韵律的主要载体，辅音贡献相对很小。每个元音段上计算 6 个低层描述符（LLD）：音高均值、音高斜率、音高方差、能量均值、能量方差、时长。为了消除说话人和元音固有差异带来的干扰，特征先做说话人级 z-score 再做元音类型级归一化，这样"这个 /a/ 偏高"才是相对该说话人、该元音的偏高而非绝对值。最后把连续值按分位数离散成 K 级（"非常低/低/中/高/非常高"），映射成自然语言短语，得到逐元音的可读韵律描述，拼接到转录文本之后送进 LLM。离散化既让 LLM 容易消化，也天然产出了可解释的中间表征。
 
-2. **两阶段 LLM 适配**：
+**2. SFT + GRPO 两阶段适配：先学会引用韵律，再学会推得准、答得规整。**
 
-    - **SFT 阶段**：小量训练数据 + GPT-4o 生成的推理 trace（含对韵律特征的引用），CE loss 微调 LLM
-    - **GRPO 阶段**：$R = R_{acc} + R_{format}$，准确率奖励（精确匹配）+ 格式奖励（\<think\>/\<answer\> 标签完整性），KL 约束防止偏离 SFT 参考
-    - 设计动机：SFT 做冷启动对齐，GRPO 进一步提升推理质量和输出格式遵从
+直接让 LLM 面对陌生的韵律描述很难自发地把它们用进推理。第一阶段 SFT 用少量训练数据配上 GPT-4o 生成的推理 trace 做冷启动，这些 trace 明确引用了哪个元音的哪个韵律特征导致了判断，用标准交叉熵让 LLM 学会"边读韵律边讲理由"的范式。第二阶段 GRPO 用可验证奖励进一步打磨：总奖励 $R = R_{acc} + R_{format}$，其中 $R_{acc}$ 是预测标签与真值精确匹配的准确率奖励，$R_{format}$ 检查 `<think>`/`<answer>` 标签是否完整，同时加 KL 约束把策略拉住、防止偏离 SFT 参考策略漂走。准确率奖励提升判断质量，格式奖励保证输出结构稳定可解析——后者在消融里贡献了跨域泛化的主要增益（+2.7% WA）。
 
-3. **多语言扩展**：
+**3. 多语言零改造扩展：用统一 IPA 和英语描述借多语言 LLM 的跨语言能力。**
 
-    - MFA 支持 20+ 语言 → IPA 统一元音表示 → 语言级归一化
-    - 使用英语描述元音韵律特征（即使输入是法语/德语），利用多语言 LLM 的跨语言能力
-
-### 损失函数 / 训练策略
-SFT: 标准 CE loss。GRPO: 组内相对优势 + KL 正则，accuracy 和 format 两项可验证奖励。
+SER 的跨语言迁移通常要重训，VowelPrompt 几乎零改造就能跨语言。MFA 本身支持 20+ 语言的对齐，元音统一用 IPA 表示，归一化改成语言级，于是法语、德语的音频也能抽出同构的元音韵律描述。关键技巧是即便输入是法语或德语，韵律描述仍用英语书写，从而直接复用多语言 LLM 已有的跨语言对齐能力，无需为每种语言单独训练情感模型。这也是它在法语 CaFE（+8.3%）、德语 EmoDB（+7.7%）上仍大幅领先的原因。
 
 ## 实验关键数据
 
@@ -131,7 +121,7 @@ SFT: 标准 CE loss。GRPO: 组内相对优势 + KL 正则，accuracy 和 format
 - [\[ICLR 2026\] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
 - [\[ICLR 2026\] Latent Speech-Text Transformer](latent_speech_text_transformer.md)
 - [\[ICLR 2026\] EchoMind: An Interrelated Multi-level Benchmark for Evaluating Empathetic Speech Language Models](echomind_an_interrelated_multi-level_benchmark_for_evaluating_empathetic_speech_.md)
-- [\[AAAI 2026\] HPSU: A Benchmark for Human-Level Perception in Real-World Spoken Speech Understanding](../../AAAI2026/audio_speech/hpsu_a_benchmark_for_human-level_perception_in_real-world_spoken_speech_understa.md)
+- [\[ICLR 2026\] TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
 
 </div>
 

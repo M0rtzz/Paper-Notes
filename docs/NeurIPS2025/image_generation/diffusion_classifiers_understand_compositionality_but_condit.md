@@ -170,7 +170,7 @@ $$\mathcal{L}_{\mathrm{RF}}(\mathbf{x}_0) = \mathbb{E}_{t,\epsilon}[w_t \|\epsil
 - [\[CVPR 2026\] Guiding Diffusion Models with Semantically Degraded Conditions](../../CVPR2026/image_generation/guiding_diffusion_models_with_semantically_degraded_conditions.md)
 - [\[NeurIPS 2025\] Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation](understand_before_you_generate_self-guided_training_for_autoregressive_image_gen.md)
 - [\[NeurIPS 2025\] OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions](omnivcus_feedforward_subject-driven_video_customization_with_multimodal_control_.md)
-- [\[AAAI 2026\] DiffA: Large Language Diffusion Models Can Listen and Understand](../../AAAI2026/image_generation/diffa_large_language_diffusion_models_can_listen_and_understand.md)
+- [\[ECCV 2024\] Shedding More Light on Robust Classifiers under the lens of Energy-based Models](../../ECCV2024/image_generation/shedding_more_light_on_robust_classifiers_under_the_lens_of_energy-based_models.md)
 
 </div>
 

@@ -33,24 +33,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LLM2Fx-Tools 基于 Qwen3-4B，接受指令、干声音频、参考音频作为输入，输出 CoT 推理、可执行 Fx-chain（工具调用序列）和自然语言响应。
+LLM2Fx-Tools 以 Qwen3-4B 为骨干，把音效链估计重写成一个"听音频、想步骤、调工具"的工具调用问题。模型接受文字指令、干声音频和参考音频，先吐出一段 CoT 推理，再生成一串可直接执行的 Fx-chain 工具调用，最后给出自然语言回复，让整个后期处理既可执行又可解释。
 
 ### 关键设计
 
-1. **音频理解架构**: 使用 Fx-Encoder++（对比学习预训练）提取音频特征，通过 Transformer-based adapter（32 个可学习查询嵌入 + 交叉注意力）映射到 LLM 嵌入空间。统一多模态输入序列：$[x_{\text{instruction}}, x_{\text{dry}}, x_{\text{ref}}, x_{\text{cot}}, \mathcal{C}, x_{\text{response}}]$
+**1. 音频理解架构：把波形塞进 LLM 的嵌入空间。** LLM 本身只懂离散 token，无法直接读音频，所以需要一座把波形接进语言模型的桥。本文用对比学习预训练的 Fx-Encoder++ 提取音频特征，再经一个 Transformer adapter 把它映射到 LLM 嵌入空间——adapter 用 32 个可学习查询嵌入对音频特征做交叉注意力，把变长的音频压成固定数量的 token。文字指令、干声、参考音频、CoT、工具调用和回复被拼成统一的多模态序列 $[x_{\text{instruction}}, x_{\text{dry}}, x_{\text{ref}}, x_{\text{cot}}, \mathcal{C}, x_{\text{response}}]$，让模型在一条自回归流里同时看懂"想要什么音色"和"现在是什么音色"。
 
-2. **CoT 音效链规划**: 分解为四步推理子任务：① 用户输入分析 → ② 音效模块选择 → ③ 处理顺序确定 → ④ 参数规划。CoT 作为工具调用的条件上下文。
+**2. CoT 音效链规划：把"选什么效果"拆成可推理的四步。** 直接让模型一口气吐出整条 Fx-chain，容易在效果种类、先后顺序上拍脑袋出错，因此把决策显式拆成四个推理子任务：先分析用户输入想要的音色目标，再选择需要用到的音效模块，接着确定模块的处理顺序，最后规划每个模块的参数。这段 CoT 推理生成在工具调用之前，充当后续工具调用的条件上下文，相当于先把"为什么这么处理"写清楚，再据此填具体的工具和参数；消融显示它对效果选择和排序的提升最大。
 
-3. **Number Token Loss (NTL)**: 标准交叉熵对数值预测不友好（等距惩罚所有错误），引入 Wasserstein-1 距离：
-$$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \in \mathcal{I}_{\text{num}}} \sum_{v \in \mathcal{V}_{\text{num}}} \hat{P}_i(v) |y_i - \text{val}(v)|$$
-   最终损失：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{NTL}}$
+**3. Number Token Loss：让模型把参数数值"算准"而不是"猜对 token"。** 音效参数本质是连续数值，但标准交叉熵把所有数字 token 当作无序类别，预测 3 和预测 30 受到的惩罚一样大，对数值精度极不友好。本文引入基于 Wasserstein-1 距离的 Number Token Loss，让数字预测的惩罚正比于预测值与真值的距离：$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \in \mathcal{I}_{\text{num}}} \sum_{v \in \mathcal{V}_{\text{num}}} \hat{P}_i(v) |y_i - \text{val}(v)|$，其中只对数值 token 位置 $\mathcal{I}_{\text{num}}$ 累加，按预测分布 $\hat{P}_i(v)$ 加权各数值 token 与真值 $y_i$ 的绝对偏差。它与交叉熵以系数 $\lambda$ 线性组合成总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{NTL}}$，把参数 MAE 从 0.32 压到 0.23。
 
-4. **鲁棒训练**: 使用 Fx-Removal 和 Fx-Normalization 预处理对齐录音环境差异，训练时随机 mask 干声音频（概率 $p_{\text{masking}}$）使模型同时支持反向工程和盲估计。
+**4. 鲁棒训练：抹平录音差异，并兼容有无干声两种场景。** 真实录音的电平、混响环境千差万别，会干扰对音效本身的判断，所以训练前用 Fx-Removal 和 Fx-Normalization 预处理把不同录音对齐到统一基准。同时，训练时以概率 $p_{\text{masking}}$ 随机遮盖干声音频，使同一个模型既能在有干声时做反向工程（推断已施加的效果），也能在没有干声时做盲估计（直接预测应施加的效果），覆盖后期制作里两种常见的工作流。
 
 ### 损失函数 / 训练策略
-两阶段训练：
-- 阶段 1（模态对齐）：仅训练 adapter，冻结 LLM，LR=1e-4，100K 步
-- 阶段 2（LLM 微调）：LoRA（rank=128, alpha=256），LR=5e-5，400K 步，完整对话数据
+训练分两阶段，先对齐模态再微调语言能力。阶段 1 只训练 adapter、冻结 LLM 做模态对齐，学习率 1e-4，跑 100K 步，让音频特征先稳定地接进嵌入空间；阶段 2 用 LoRA（rank=128，alpha=256）以学习率 5e-5 微调 LLM 共 400K 步，在完整对话数据上学会 CoT 推理与工具调用。
 
 ## 实验关键数据
 
@@ -125,8 +121,8 @@ $$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \i
 - [\[CVPR 2025\] FilmComposer: LLM-Driven Music Production for Silent Film Clips](../../CVPR2025/image_generation/filmcomposer_llm-driven_music_production_for_silent_film_clips.md)
 - [\[ICLR 2026\] Generalization of Diffusion Models Arises with a Balanced Representation Space](generalization_of_diffusion_models_arises_with_a_balanced_representation_space.md)
 - [\[AAAI 2026\] Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models](../../AAAI2026/image_generation/melodia_training-free_music_editing_guided_by_attention_probing_in_diffusion_mod.md)
-- [\[AAAI 2026\] QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution](../../AAAI2026/image_generation/quantvsr_low-bit_post-training_quantization_for_real-world_video_super-resolutio.md)
-- [\[AAAI 2026\] Diff-V2M: A Hierarchical Conditional Diffusion Model with Explicit Rhythmic Modeling for Video-to-Music Generation](../../AAAI2026/image_generation/diff-v2m_a_hierarchical_conditional_diffusion_model_with_explicit_rhythmic_model.md)
+- [\[CVPR 2026\] LeapAlign: Post-Training Flow Matching Models at Any Generation Step by Building Two-Step Trajectories](../../CVPR2026/image_generation/leapalign_post_training_flow_matching_models_at_any_generation_step.md)
+- [\[ICCV 2025\] DMQ: Dissecting Outliers of Diffusion Models for Post-Training Quantization](../../ICCV2025/image_generation/dmq_dissecting_outliers_of_diffusion_models_for_post-training_quantization.md)
 
 </div>
 

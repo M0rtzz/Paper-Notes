@@ -38,28 +38,25 @@ tags:
 
 ### 整体框架
 
-Talk→用可复用persona模板模拟expert/non-expert用户与Agent交互。Evaluate→将子目标转为grading notes、LLM-as-judge评分、MaxProgressRate@k等指标。Diagnose→分析judge和agent的不一致性、自动发现和聚类错误模式。
+TED 把 Agent 评估拆成 Talk、Evaluate、Diagnose 三个串起来的阶段：先用可复用的 persona 模板模拟 expert / non-expert 用户与 Agent 多轮对话，再把任务子目标转成 grading notes 交给 LLM-as-judge 打分并算出一组进展类效率指标，最后把 judge 与 Agent 的不一致自动提取成错误并语义聚类，形成"评分—诊断—改进"的闭环。整个框架不依赖任何领域专用的成功判定逻辑，因此能跨基准复用。
 
 ### 关键设计
 
-**设计1：通用可复用Persona模板**
-- **功能**：解耦用户persona和任务指令，提供与任务/Agent无关的通用expert/non-expert模板。
-- **核心思路**：$u = f(p, i)$，persona prompt $p$和task instruction $i$组合。同一任务改变persona即可测试用户影响。包含反思+回应两步过程。
-- **设计动机**：现有方法persona与任务紧耦合，无法隔离用户行为的独立影响。
+**1. 通用可复用 Persona 模板：把"谁在用"从"用来干什么"里拆出来。**
 
-**设计2：Grading Notes + 效率指标**
-- **功能**：将所有子目标（工具调用、响应内容等）统一为自然语言检查项；提出MaxProgressRate@k、MaxAUC@k、MaxPPT@k等指标。
-- **核心思路**：progress(i) = 已达成grading notes占比；MaxProgressRate@k取k次试验中最高progress的期望。AUC评估早期进展效率，PPT评估每轮进展率。
-- **设计动机**：success rate太粗粒度；需要捕捉部分进展和对话轮次效率。
+以往的用户模拟把 persona 和具体任务指令焊死在一个 prompt 里，导致换一个任务就要重写一遍用户，更糟的是无法判断"Agent 表现差"到底是任务难还是用户难缠。TED 把模拟用户写成 $u = f(p, i)$ 的组合形式：persona prompt $p$ 只描述用户画像（是熟悉系统的 expert 还是会含糊提问、提供信息不全的 non-expert），task instruction $i$ 只描述这一轮要办的事，两者正交。于是同一个任务固定 $i$、只切换 $p$，就能干净地隔离出"用户专业度"这一个变量对 Agent 的独立影响。模拟用户每轮采用"先反思再回应"两步：先根据对话历史判断自己的目标是否已被满足、Agent 上一步是否答到点上，再据此生成回复，避免一问一答式的机械配合而更接近真实用户的迟疑和追问。
 
-**设计3：自动化错误发现**
-- **功能**：两步错误分析——低级错误识别+语义聚类。
-- **核心思路**：对judge不一致的子目标，用LLM提取具体错误描述(low-level)；再对所有低级错误做语义聚类得到高级错误类别。分析judge方差和agent方差分别反映judge不可靠性和agent不稳定性。
-- **设计动机**：报告metrics→发现错误→提供改进建议的闭环。
+**2. Grading Notes 与进展类效率指标：把成败的 0/1 拆成可量化的部分进展。**
 
-### 损失函数/训练策略
+τ²-bench 这类基准只看最终 success rate，把"做完九成卡在最后一步"和"一开始就跑偏"判成同样的失败，信息损失严重。TED 先把一个任务的全部子目标——某次工具调用、某段必须包含的回复内容等——统一改写成自然语言的检查项 grading notes，让 LLM-as-judge 逐条判定是否达成。在此基础上定义单次对话的进展 $\text{progress}(i)$ 为已达成 grading notes 的占比，再用 $k$ 次独立试验的最高进展期望构成 $\text{MaxProgressRate@}k$，刻画"Agent 在 $k$ 次里最好能做到几成"。配套的 $\text{MaxAUC@}k$ 按对话轮次对进展曲线积分，衡量是否在早期轮次就快速逼近目标；$\text{MaxPPT@}k$（per-turn progress）衡量平均每轮带来多少进展。这样既能区分"几乎成功"与"完全失败"，又把对话效率（用了多少轮）一并纳入评估。
 
-无训练，评估框架。LLM-as-judge多次运行取majority vote。gpt-4.1作为judge和user proxy。
+**3. 自动化错误发现与聚类：让评估止于诊断而非分数。**
+
+光报告指标说明不了 Agent 究竟错在哪、该怎么改。TED 做两步错误分析：第一步针对 judge 判为未达成、或多次运行结果不一致的子目标，让 LLM 读对话上下文提取一条具体的低级（low-level）错误描述，例如"调用了正确工具但漏传必填参数"；第二步把所有低级错误送去做语义聚类，归并成少数几个高级错误类别，得到可操作的改进清单。同时框架分别统计 judge 方差与 agent 方差：judge 方差大的子目标往往对应描述模糊的 grading notes，提示评测项本身需要改写；agent 方差大则反映 Agent 自身行为不稳定。把聚类出的高频错误反写进 Agent 的提示词后，实测带来约 8–10% 的 MaxProgressRate 提升，验证了闭环的有效性。
+
+### 损失函数 / 训练策略
+
+TED 不涉及任何模型训练，是纯推理期的评估框架。为抑制单次评判的随机性，LLM-as-judge 对每个 grading note 多次运行后取 majority vote；实验中统一以 gpt-4.1 同时充当 judge 与 user proxy，保证跨 Agent 对比时评判侧条件一致。
 
 ## 实验关键数据
 
@@ -125,8 +122,8 @@ Talk→用可复用persona模板模拟expert/non-expert用户与Agent交互。Ev
 - [\[ACL 2026\] AJ-Bench: Benchmarking Agent-as-a-Judge for Environment-Aware Evaluation](../../ACL2026/llm_evaluation/aj-bench_benchmarking_agent-as-a-judge_for_environment-aware_evaluation.md)
 - [\[ICLR 2026\] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
 - [\[ACL 2026\] AgentEval: DAG-Structured Step-Level Evaluation for Agentic Workflows with Error Propagation Tracking](../../ACL2026/llm_evaluation/agenteval_dag-structured_step-level_evaluation_for_agentic_workflows_with_error_.md)
-- [\[ICLR 2026\] Which LLM Multi-Agent Protocol to Choose?](which_llm_multi-agent_protocol_to_choose.md)
 - [\[ICLR 2026\] Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_of_long-fo.md)
+- [\[ICLR 2026\] SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_agents.md)
 
 </div>
 

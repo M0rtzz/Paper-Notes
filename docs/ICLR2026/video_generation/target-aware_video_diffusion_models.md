@@ -34,34 +34,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一张图像 $I$、目标物体的分割 mask $M$、描述期望动作的文本 prompt。输出：一段视频，其中演员准确地与 mask 指定的目标进行交互。基于 CogVideoX-5B-I2V 模型，通过 LoRA 微调。
+方法以 CogVideoX-5B-I2V 为底座、通过 LoRA 微调，输入一张图像 $I$、目标物体的二值分割 mask $M$ 和描述动作的文本 prompt，输出一段演员准确地与 mask 所指目标交互的视频。核心思路是把"目标在哪"的空间信息同时塞进视觉通道和文本 token 两条路，再用一个对齐损失逼模型真正去看 mask，而不是把它当装饰。
 
 ### 关键设计
 
-1. **Mask 条件注入**: 将二值分割 mask $M$ 下采样后与输入图像拼接在一起，作为额外的通道输入到扩散模型。通过扩展 image projection layer 的输入通道来支持额外的 mask 通道，新增权重初始化为零以保留预训练参数。这让模型能感知目标的空间位置，但仅此不足以保证目标感知——模型可能忽略 mask 信息。
+**1. Mask 条件注入：让模型在像素层面知道目标的位置。** 最直接的做法是把空间信息喂给视觉分支。本文将二值 mask $M$ 下采样后与输入图像在通道维拼接，作为额外通道送入扩散模型；为容纳新通道，image projection layer 的输入维度被扩展，新增权重初始化为零，从而在训练初期完全保留预训练参数、避免破坏原有先验。这一步让模型有机会感知目标的空间位置，但单凭它并不足以保证目标感知——模型完全可能忽略掉这条 mask 通道，因此还需要后面的显式约束把注意力拽过去。
 
-2. **[TGT] Token 与交叉注意力损失**: 这是本文的核心创新。
+**2. [TGT] token 与交叉注意力损失：用文本 token 携带空间信息并强制对齐。** 这是全文的核心。本文在 prompt 末尾追加 "The person interacts with [TGT] object."，引入特殊 token [TGT] 专门编码目标的空间位置，再设计一个交叉注意力损失把 [TGT] 的注意力图直接拉向输入 mask：$\mathcal{L}_{\text{attn}} = \mathbb{E}[\|A(\mathbf{z}_t^0, [\text{TGT}]) - M\|_2^2]$，其中 $A(\mathbf{z}_t^0, [\text{TGT}])$ 是第一帧视频潜变量与 [TGT] token 之间的交叉注意力权重。它与重建损失加权组合成总目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{attn}} \mathcal{L}_{\text{attn}}$（取 $\lambda_{\text{attn}} = 0.1$）。推理时只需把 [TGT] 前置到 prompt 中指代目标的词语前，模型就会顺着这个 token 去利用 mask 提供的空间线索。这样空间信号不再依赖架构改动，仅靠一个 text token 加一项损失就接管了"看哪里"。
 
-    - 在文本 prompt 末尾添加 "The person interacts with [TGT] object."，引入特殊 token [TGT] 来编码目标的空间信息
-    - 设计交叉注意力损失将 [TGT] token 的交叉注意力图与输入 mask 对齐：
-    $\mathcal{L}_{\text{attn}} = \mathbb{E}[\|A(\mathbf{z}_t^0, [\text{TGT}]) - M\|_2^2]$
-   其中 $A(\mathbf{z}_t^0, [\text{TGT}])$ 是第一帧视频潜变量与 [TGT] token 间的交叉注意力权重
-    - 总训练目标为：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{attn}} \mathcal{L}_{\text{attn}}$（$\lambda_{\text{attn}} = 0.1$）
-    - 推理时，将 [TGT] 前置到文本中指代目标的词语前，使模型利用 mask 提供的空间线索
+**3. 选择性交叉注意力损失：只在最语义对齐的地方施加约束。** 如果对所有 transformer block、所有注意力区域无差别施加 $\mathcal{L}_{\text{attn}}$，反而会污染那些与空间定位无关的层。本文做了两层筛选：在 block 层面，经实验评估发现第 5~23 个 block（共 42 个）的注意力图与分割 mask 语义对齐最好，每个训练步只在这一区间内随机选 7 个 block 施加损失；在注意力区域层面，MM-DiT 把注意力拆成 text-to-text、T2V、V2T、video-to-video 四类，本文选 V2T（video-to-text）cross-attention，因为它通过 value 的点积直接影响视频潜表示的取值，而 T2V 虽也编码语义但作用更间接、效果更弱。有原则地挑层挑区域，比无差别施压或随机选层都更稳。
 
-3. **选择性交叉注意力损失**: 不是对所有 transformer block 和注意力区域无差别施加损失，而是精心选择：
+**4. 数据集构建：筛"交互发生"的片段并自动标注。** 训练需要"演员从不接触到接触目标"的成对样本。本文从 BEHAVE（简单人物-物体交互）和 Ego-Exo4D（烹饪、修车等复杂场景）中提取 1290 个片段，每个片段都满足初始帧演员存在但尚未与目标交互、后续帧演员与目标发生交互这两个条件；目标 mask 用 SAM 获取，文本 caption 用 CogVLM2 自动生成。这保证了监督信号里始终包含一次清晰的交互过程，正是 [TGT] 损失需要对齐的东西。
 
-    - **选择性 Transformer Block**: 通过实验评估发现第 5~23 个 block（共 42 个）的注意力图与分割 mask 最为语义对齐，每个训练步在这些 block 中选择 7 个施加损失
-    - **选择性注意力区域**: MM-DiT 架构的注意力分为 4 种（text-to-text, T2V, V2T, video-to-video），其中 **V2T (video-to-text) cross-attention** 直接影响视频潜表示的值，效果最好。T2V 虽也编码语义信息但影响间接
-
-4. **数据集构建**: 从 BEHAVE（简单人物-物体交互）和 Ego-Exo4D（复杂场景如烹饪、修车）数据集中提取 1290 个视频片段，每个片段满足：(1) 初始帧中演员存在但未与目标交互，(2) 后续帧中演员与目标发生交互。用 SAM 获取目标 mask，用 CogVLM2 生成文本 caption。
-
-### 训练细节
-- 基于 CogVideoX-5B-I2V，LoRA rank=128, α=64
-- 仅训练 LoRA 层和 image projection layer，冻结其余参数
-- 训练 2000 步，AdamW，lr=1e-4，batch size=4
-- 4x NVIDIA A100 GPU，约 6 小时
-- 推理：DPM 采样器，50 步，CFG=6，单卡 A100 约 4 分钟/视频
+### 损失函数 / 训练策略
+训练时冻结底座、仅更新 LoRA 层（rank=128、$\alpha$=64）和扩展后的 image projection layer，跑 2000 步，AdamW，学习率 1e-4，batch size=4，在 4 张 A100 上约 6 小时。推理用 DPM 采样器、50 步、CFG=6，单张 A100 约 4 分钟生成一段视频。
 
 ## 实验关键数据
 

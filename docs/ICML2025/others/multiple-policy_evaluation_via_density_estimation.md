@@ -128,9 +128,9 @@ IDES 的核心损失为逐步二次目标：$L_h(w) = \mathbb{E}_\mu[(w_h(s,a) -
 
 - [\[ICLR 2026\] Enhancing Generative Auto-bidding with Offline Reward Evaluation and Policy Search](../../ICLR2026/others/enhancing_generative_auto_bidding.md)
 - [\[ICML 2025\] Fixed-Confidence Multiple Change Point Identification under Bandit Feedback](fixed-confidence_multiple_change_point_identification_under_bandit_feedback.md)
+- [\[ICML 2025\] Feedforward Few-shot Species Range Estimation](feedforward_few-shot_species_range_estimation.md)
 - [\[ACL 2025\] Entropy-UID: A Method for Optimizing Information Density](../../ACL2025/others/entropy-uid_a_method_for_optimizing_information_density.md)
 - [\[ECCV 2024\] A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](../../ECCV2024/others/a_framework_for_efficient_model_evaluation_through_stratific.md)
-- [\[ICML 2025\] Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors](learning-augmented_algorithms_for_mts_with_bandit_access_to_multiple_predictors.md)
 
 </div>
 

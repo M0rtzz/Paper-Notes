@@ -42,41 +42,21 @@ tags:
 
 ## 方法详解
 
-### 核心洞察：残差连接 = 扩散过程离散步
+### 整体框架
 
-在 Variance Exploding (VE) 扩散框架下，给定噪声级别 $\sigma_0 > \sigma_1 > \cdots > \sigma_T$，对 probability flow ODE 做 Euler 离散化得到：
+DiffusionBlocks 的出发点是一个被忽视的对应关系：残差网络逐层叠加的更新，本质上就是一条连续时间扩散过程的离散化轨迹。顺着这个视角，它把 $L$ 层网络切成 $B$ 个 block，让每个 block 只负责扩散过程中某一段噪声级别的去噪，从而各自拥有一个完整、独立的优化目标——训练时无需在 block 之间传递梯度或激活，显存随之按 $B$ 倍下降。
 
-$$\mathbf{z}_{\sigma_\ell} = \mathbf{z}_{\sigma_{\ell-1}} + \frac{\Delta\sigma_\ell}{\sigma_{\ell-1}}\left(\mathbf{z}_{\sigma_{\ell-1}} - D_\theta(\mathbf{z}_{\sigma_{\ell-1}}, \sigma_{\ell-1})\right)$$
+### 关键设计
 
-这与残差网络的 skip connection 更新规则 $\mathbf{z}_\ell = \mathbf{z}_{\ell-1} + f_{\theta_\ell}(\mathbf{z}_{\ell-1})$ 天然对应。
+**1. 残差连接 = 扩散过程离散步：为 block 独立训练找到理论根。** block-wise 训练之所以一直缺乏理论保证，是因为没人能说清"局部目标"为什么等价于全局目标。本文在 Variance Exploding (VE) 扩散框架下给出了答案：给定噪声级别序列 $\sigma_0 > \sigma_1 > \cdots > \sigma_T$，对 probability flow ODE 做 Euler 离散化得到更新式 $\mathbf{z}_{\sigma_\ell} = \mathbf{z}_{\sigma_{\ell-1}} + \frac{\Delta\sigma_\ell}{\sigma_{\ell-1}}\left(\mathbf{z}_{\sigma_{\ell-1}} - D_\theta(\mathbf{z}_{\sigma_{\ell-1}}, \sigma_{\ell-1})\right)$，它与残差网络的 skip connection 更新规则 $\mathbf{z}_\ell = \mathbf{z}_{\ell-1} + f_{\theta_\ell}(\mathbf{z}_{\ell-1})$ 形式完全一致。一旦把每一层（每个 block）看成扩散轨迹上的一段，score matching 自带的"各噪声级别可独立优化"性质就被继承下来，block 独立训练不再是启发式拼凑，而是有去噪目标背书的等价分解。
 
-### 三步转换流程
+**2. 三步转换流程：把任意残差网络改造成可分块的扩散去噪器。** 在上面的对应关系之上，本文用三步把现成架构改造成 DiffusionBlocks。先做 **block 划分**，把 $L$ 层网络切成 $B$ 个连续 block $\mathcal{F}_1, \ldots, \mathcal{F}_B$；再做 **噪声范围分配**，定义噪声分布 $p_{\text{noise}}$（推荐 log-normal），把区间 $[\sigma_{\min}, \sigma_{\max}]$ 切成 $B$ 段 $\{[\sigma_b, \sigma_{b-1}]\}_{b=1}^B$，让第 $b$ 个 block 专门负责这一段噪声的去噪；最后做 **噪声条件化改造**，把每个 block 的输入扩展为 $\tilde{\mathbf{x}} = (\mathbf{x}, \mathbf{z}_\sigma)$，其中 $\mathbf{z}_\sigma = \mathbf{y} + \sigma\epsilon$，并通过 AdaLN 等机制注入当前噪声级别条件，使同一组参数能在所负责的噪声区间内连续工作。三步走完后，每个 block 都变成一个只看自己那段噪声、独立预测干净目标 $\mathbf{y}$ 的小去噪器。
 
-**Step 1: Block 划分** — 将 $L$ 层网络分为 $B$ 个 block $\mathcal{F}_1, \ldots, \mathcal{F}_B$，每个 block 包含连续的若干层。
+**3. 独立训练目标：各 block 一个互不通信的去噪损失。** 改造后第 $b$ 个 block 的损失写成 $\mathcal{L}_b(\theta_b) = \mathbb{E}_{(\mathbf{x},\mathbf{y}), \sigma\sim p_{\text{noise}}^{(b)}, \epsilon\sim\mathcal{N}(0,I)}\left[w(\sigma)\cdot\|f_{\theta_b|\sigma}(\mathbf{x}, \mathbf{y}+\sigma\epsilon) - \mathbf{y}\|_2^2\right]$，即在自己负责的噪声子分布 $p_{\text{noise}}^{(b)}$ 上做加权去噪回归。这里的关键是期望只对本 block 的噪声区间取，所以 $B$ 个损失彼此完全解耦：可以各放一张卡、各自反向传播，互不等待，而它们的噪声区间拼起来又恰好覆盖整条扩散轨迹，合起来等价于训练完整网络。这正是显存按 $B$ 倍缩减的来源——任何时刻只需缓存一个 block 的激活。
 
-**Step 2: 噪声范围分配** — 定义噪声分布 $p_{\text{noise}}$（推荐 log-normal），将 $[\sigma_{\min}, \sigma_{\max}]$ 划分为 $B$ 个区间 $\{[\sigma_b, \sigma_{b-1}]\}_{b=1}^B$，每个 block 负责对应范围的去噪。
+**4. 等概率划分：让每个 block 承担等量去噪难度。** 噪声区间怎么切直接决定各 block 的负载是否均衡。若按 $\sigma$ 均匀划分，高噪声和低噪声两端会分到大量样本稀疏、信息量低的区域，白白浪费容量。本文改用按 log-normal 累积概率质量等分，即让每段满足 $\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$。这样每个 block 都处理等量的训练分布，自动在去噪最难、样本最密的中间噪声级别切出更细的区间，把容量用在刀刃上。实验里这一步贡献明显：CIFAR-10 上等概率划分把 FID 从均匀划分的 43.53 压到 38.03。
 
-**Step 3: 噪声条件化改造** — 扩展每个 block 的输入为 $\tilde{\mathbf{x}} = (\mathbf{x}, \mathbf{z}_\sigma)$，其中 $\mathbf{z}_\sigma = \mathbf{y} + \sigma\epsilon$；加入噪声级别条件（如 AdaLN）。每个 block 独立训练预测目标 $\mathbf{y}$。
-
-### 独立训练目标
-
-每个 block $b$ 的损失函数为：
-
-$$\mathcal{L}_b(\theta_b) = \mathbb{E}_{(\mathbf{x},\mathbf{y}), \sigma\sim p_{\text{noise}}^{(b)}, \epsilon\sim\mathcal{N}(0,I)}\left[w(\sigma)\cdot\|f_{\theta_b|\sigma}(\mathbf{x}, \mathbf{y}+\sigma\epsilon) - \mathbf{y}\|_2^2\right]$$
-
-关键在于：$B$ 个 block 各自独立优化、无需相互通信，却能共同覆盖完整的噪声分布。
-
-### 等概率划分策略 (Equi-probability Partitioning)
-
-不采用均匀划分噪声区间（会在高/低噪声端浪费容量），而是按 log-normal 分布的累积概率质量等分：
-
-$$\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$$
-
-这确保每个 block 处理等量的训练分布，在去噪难度最大的中间噪声级别分配更细的区间，效率更优。
-
-### 推理过程
-
-推理时按从高噪声到低噪声的顺序依次调用各 block 的去噪步骤；对于 diffusion model，每个去噪步只需加载一个 block，带来 $B$ 倍推理加速。
+**5. 顺序推理与 $B$ 倍加速：分块结构同时省推理显存。** 推理时按从高噪声到低噪声依次调用各 block 完成去噪。对 diffusion model 而言，每个去噪步只需把对应的那个 block 载入显存，因此除了训练省显存，推理也获得 $B$ 倍的显存/调度优势；代价是各 block 必须按序执行、无法并行化去噪步骤。
 
 ## 实验关键数据
 
@@ -140,11 +120,11 @@ $$\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$$
 
 ## 相关论文
 
-- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
-- [\[CVPR 2025\] DiffFNO: Diffusion Fourier Neural Operator](../../CVPR2025/image_restoration/difffno_diffusion_fourier_neural_operator.md)
 - [\[ECCV 2024\] Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators](../../ECCV2024/image_restoration/efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)
+- [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](../../NeurIPS2025/image_restoration/encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
 - [\[ICML 2026\] Semi-Supervised Neural Super-Resolution for Mesh-Based Simulations](../../ICML2026/image_restoration/semi-supervised_neural_super-resolution_for_mesh-based_simulations.md)
 - [\[CVPR 2026\] The Surprising Effectiveness of Noise Pretraining for Implicit Neural Representations](../../CVPR2026/image_restoration/the_surprising_effectiveness_of_noise_pretraining_for_implicit_neural_representa.md)
+- [\[ICLR 2026\] Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
 
 </div>
 

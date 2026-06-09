@@ -44,36 +44,19 @@ tags:
 
 ## 方法详解
 
-### 任务自适应门控路由器(TAGR)
+### 整体框架
 
-1. **3D位置编码**：深度图→世界坐标→patch级平均→正弦编码→$V^p \in \mathbb{R}^{N \times H_p \times W_p \times d_v}$
+OmniEVA 在一个 MLLM 主干之上挂两个互补部件：前端的任务自适应门控路由器(TAGR)决定要不要把 3D 几何信息喂给模型，后端的具身感知推理把机器人物理约束写进训练奖励里。整套系统经过 SFT 加 TE-GRPO 两阶段训练，使模型既能在需要时做几何推理，又只产出物理上能执行的计划。
 
-2. **门控决策**：
-    - 任务条件：句子Transformer编码指令→$V^T$
-    - 场景条件：视觉编码器输出均值池化→$V_{avg}^I$
-    - 拼接→MLP→2维gate logits→Gumbel-Softmax→二值决策
+### 关键设计
 
-3. **动态注入**：
-    - Gate=1: $V^{final} = V^I + V^p$ (加3D位置编码)
-    - Gate=0: $V^{final} = V^I$ (纯2D)
-    - 不同任务/场景自动选择→避免无用3D的噪声
+**1. 任务自适应门控路由器(TAGR)：让模型自己决定何时需要 3D。** 已有做法要么纯 2D 输入丢掉几何信息，要么硬编码地把 3D 注入每一次推理——后者在堆叠、遮挡这类任务上有用，但在不需要几何的 2D 任务上反而引入噪声。TAGR 把"是否注入 3D"变成一个可学习的二值开关。它先从深度图重建世界坐标，按 patch 做平均后过正弦编码，得到 3D 位置编码 $V^p \in \mathbb{R}^{N \times H_p \times W_p \times d_v}$；同时用句子 Transformer 编码指令得到任务条件 $V^T$，用视觉编码器输出均值池化得到场景条件 $V_{avg}^I$。两个条件拼接后过 MLP 得到二维 gate logits，再用 Gumbel-Softmax 转成可微的二值决策。门控开($=1$)时注入几何 $V^{final} = V^I + V^p$，门控关($=0$)时保持纯 2D $V^{final} = V^I$。因为开关由当前任务和场景共同决定，模型能在导航、抓取这类几何敏感任务上启用 3D，而在纯 2D 推理上自动关闭，避免无用几何带来的退化。
 
-### 具身感知推理
+**2. 具身感知推理：把物理可行性拆成四个原始技能并写进奖励。** 在网络图像/视频上训练的模型常输出理论可行但机器人做不到的计划，因为它不感知抓取位、工作空间边界和运动学约束。OmniEVA 先把具身规划分解成四个可独立评估的原始技能——Where2Go(导航目标选择)、Where2Grasp(抓取位估计)、Where2Approach(接近位姿)、Where2Fit(放置适配性)，让"可执行性"变得可度量。在此基础上提出 TE-GRPO(Task- and Embodiment-aware GRPO)：在后训练阶段用 GRPO(Group Relative Policy Optimization)做强化学习，但奖励同时考虑任务目标、物体可供性、工作空间边界与运动学可行性。这样模型不只追求"答对",还被持续约束去尊重机器人本体的物理限制，把可执行计划比例从纯 SFT 的约 65% 提到约 90%。
 
-1. **原始技能分解**：
-    - Where2Go: 导航目标选择
-    - Where2Grasp: 抓取位估计
-    - Where2Approach: 接近位姿
-    - Where2Fit: 放置适配性
+### 损失函数 / 训练策略
 
-2. **TE-GRPO (Task- and Embodiment-aware GRPO)**：
-    - 后训练阶段用GRPO(Group Relative Policy Optimization)
-    - 奖励考虑：任务目标 + 物体可供性 + 工作空间边界 + 运动学可行性
-    - 确保生成的计划可执行
-
-### 两阶段训练
-- Stage 1: 监督微调(SFT)→2D+3D VQA+具身推理数据
-- Stage 2: TE-GRPO后训练→强化学习优化可执行性
+整体走两阶段。第一阶段做监督微调(SFT)，混合 2D 与 3D 的 VQA 以及具身推理数据，让模型同时具备几何理解和指令跟随的基础能力；第二阶段切到 TE-GRPO 后训练，用上面带物理约束的奖励做强化学习，专门优化计划的可执行性。两阶段配合让"会推理"和"能落地"这两件事分别由 SFT 和 RL 负责。
 
 ## 实验关键数据
 
@@ -124,9 +107,9 @@ tags:
 ## 相关论文
 
 - [\[NeurIPS 2025\] MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning](../../NeurIPS2025/robotics/mesatask_towards_task-driven_tabletop_scene_generation_via_3d_spatial_reasoning.md)
+- [\[ICLR 2026\] Cross-Embodiment Offline Reinforcement Learning for Heterogeneous Robot Datasets](cross-embodiment_offline_reinforcement_learning_for_heterogeneous_robot_datasets.md)
 - [\[ACL 2025\] Task-aware MoILE: Hierarchical-Task-Aware Multi-modal Mixture of Incremental LoRA Experts for Embodied Continual Learning](../../ACL2025/robotics/hierarchical-task-aware_multi-modal_mixture_of_incremental_lora_experts_for_embo.md)
 - [\[ICLR 2026\] REI-Bench: Can Embodied Agents Understand Vague Human Instructions in Task Planning?](rei-bench_can_embodied_agents_understand_vague_human_instructions_in_task_planni.md)
-- [\[ICML 2026\] EMBGuard: Constructing Hazard-Aware Guardrails for Safe Planning in Embodied Agents](../../ICML2026/robotics/embguard_constructing_hazard-aware_guardrails_for_safe_planning_in_embodied_agen.md)
 - [\[CVPR 2026\] Recurrent Reasoning with Vision-Language Models for Estimating Long-Horizon Embodied Task Progress](../../CVPR2026/robotics/recurrent_reasoning_with_vision-language_models_for_estimating_long-horizon_embo.md)
 
 </div>

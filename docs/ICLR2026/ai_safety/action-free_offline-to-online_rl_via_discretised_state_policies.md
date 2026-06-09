@@ -41,28 +41,33 @@ tags:
 
 ### 整体框架
 
-两阶段流水线：**离线预训练**——从$(s, r, s')$无动作数据集学习状态策略$Q(s, \Delta s)$，$\Delta s \in \{-1, 0, 1\}^M$表示各状态维度的离散变化方向；**引导在线学习**——用预训练的状态策略通过策略切换+逆动力学模型(IDM)将$\Delta s$翻译为可执行动作，加速在线agent。
+整篇要解决的是一个看似无解的问题：手里只有$(s, r, s')$却没有动作标签，怎么把它当成离线RL数据用起来？OSO-DecQN的回答是绕开"预测动作"，改去"预测状态该往哪个方向变"，再到在线阶段才把方向翻译成动作。整条流水线分两段：先是**离线预训练**，从无动作数据集学一个状态策略$Q(s, \Delta s)$，其中$\Delta s \in \{-1, 0, 1\}^M$记录每个状态维度期望的离散变化方向；然后是**引导在线学习**，用这个预训练好的状态策略，通过策略切换加一个在线训练的逆动力学模型(IDM)把$\Delta s$翻译成可执行动作，去加速在线agent的收敛。
 
 ### 关键设计
 
-1. **状态离散化变换（State Discretisation Transformation）**：
+**1. 状态离散化变换：把不适定的连续回归改写成结构化分类。**
 
-    - 功能：将连续状态差分$s'-s$转化为离散方向标记，使状态预测变为分类问题
-    - 核心思路：对z-score标准化后的状态差分，按阈值$\epsilon$将每个维度映射为$\{-1, 0, 1\}$（减小/不变/增大）。公式为 $\delta_i^\epsilon(s,s') = \begin{cases} -1 & s'_i - s_i < -\epsilon \\ 1 & s'_i - s_i > \epsilon \\ 0 & \text{otherwise} \end{cases}$
-    - 设计动机：(1)连续回归预测$s'$或$s'-s$极不稳定（实验证明其性能接近随机策略）；(2)z-score标准化实现尺度不变性，无需逐维度调参；(3)理论保证：$k$-bin离散化的值函数误差为$O(H\sqrt{M}/k)$，可控且随精度提升而递减
+最直接的想法是直接回归预测$s'$或状态差分$s'-s$，但这条路实验里几乎不可行——连续回归预测得到的策略性能接近随机。问题出在连续目标上回归既不稳定又容易过拟合，决策信息被噪声淹没。这里的做法是先对状态差分做z-score标准化，再用一个阈值$\epsilon$把每一维映射成三个方向标记（减小/不变/增大）：
 
-2. **OSO-DecQN离线预训练算法**：
+$$\delta_i^\epsilon(s,s') = \begin{cases} -1 & s'_i - s_i < -\epsilon \\ 1 & s'_i - s_i > \epsilon \\ 0 & \text{otherwise} \end{cases}$$
 
-    - 功能：从无动作数据预训练高质量状态策略
-    - 核心思路：将DecQN的值分解从动作维度迁移到状态差分维度——$Q_\theta(s, \Delta s) = \frac{1}{M}\sum_{j=1}^M U^j_{\theta_j}(s, \Delta s_j)$，每个状态维度独立维护一个效用分支，总Q值为各维度均值。采用集成变体+双Q学习稳定训练
-    - 保守正则化：$R_\theta = \sum_{(s,\Delta s)\sim D} \log \| \exp(Q_\theta(s, \cdot)) \|_1 - Q_\theta(s, \Delta s)$，等价于离散设定下的CQL惩罚，同时解决过估计偏差和状态可达性约束两个问题
-    - 设计动机：DecQN的分解结构将组合爆炸的$3^M$空间降为线性$3M$复杂度，使方法可扩展到78维状态空间
+这样一来连续预测就变成了离散分类，既保留了"往哪走"的决策信息，又把回归的不稳定性消掉了。z-score标准化带来尺度不变性，不用逐维度去调阈值；离散化本身也有可控的理论代价——$k$-bin离散化引入的值函数误差是$O(H\sqrt{M}/k)$，随bin数增加而递减，所以粗离散并不会埋下系统性偏差。
 
-3. **引导在线学习机制**：
+**2. OSO-DecQN离线预训练：用值分解把$3^M$的组合空间压成线性。**
 
-    - 功能：将离线状态策略的知识迁移到在线agent
-    - 核心思路：(1)**策略切换**——以概率$\beta$使用离线引导动作，否则使用在线策略：$a = I_\phi(s, \arg\max_{\Delta s} Q(s, \Delta s))$（引导时）或$\pi_{on}(s)$（探索时）；(2)**在线IDM训练**——用L1损失从在线采集的$(s, a, s')$训练轻量逆动力学模型$I_\phi$，将$\Delta s$映射为动作；(3)**离线数据增强**——对离线样本用在线策略$\pi_{on}(s_{off})$标注伪动作，增加IDM训练数据
-    - 设计动机：IDM刻意保持简单（固定架构跨所有环境），确保性能提升归因于状态策略质量而非翻译器能力
+离散后每个维度三选一，$M$维状态联合起来就是$3^M$的组合爆炸，直接学一个联合Q值不可行。这里借用DecQN的值分解思路，但把它从原本的动作维度迁到了状态差分维度——总Q值写成各维度效用分支的均值：
+
+$$Q_\theta(s, \Delta s) = \frac{1}{M}\sum_{j=1}^M U^j_{\theta_j}(s, \Delta s_j)$$
+
+每个状态维度独立维护一个效用分支$U^j$，于是复杂度从指数级的$3^M$降到线性的$3M$，这正是方法能扩展到78维状态空间的关键。训练上再叠加集成变体和双Q学习来压住方差。离线设定还要额外防过估计，这里加了一项保守正则：
+
+$$R_\theta = \sum_{(s,\Delta s)\sim D} \log \| \exp(Q_\theta(s, \cdot)) \|_1 - Q_\theta(s, \Delta s)$$
+
+它等价于离散设定下的CQL惩罚，一举解决两件事：压低数据外动作的过估计偏差，同时把策略约束在数据可达的状态转移上。消融里去掉这一项后所有任务几乎全线失败，说明它是离线阶段能跑起来的必要条件而非锦上添花。
+
+**3. 引导在线学习机制：把离线状态策略的知识翻译给在线agent。**
+
+状态策略只会输出方向$\Delta s$，环境却只接受动作，二者之间需要一座桥。这里用三个配合的机制把离线知识迁到在线：一是**策略切换**，以概率$\beta$采用离线引导动作$a = I_\phi(s, \arg\max_{\Delta s} Q(s, \Delta s))$，否则交给在线策略$\pi_{on}(s)$去探索，让引导和自主探索按比例交替；二是**在线IDM训练**，用在线采集的$(s, a, s')$以L1损失训练一个轻量逆动力学模型$I_\phi$，专门负责把$\Delta s$映射回动作；三是**离线数据增强**，对离线样本用当前在线策略$\pi_{on}(s_{off})$标注伪动作，给IDM补充训练数据。IDM被刻意保持简单（固定架构跨所有环境），这样性能提升才能归因于状态策略本身的质量，而不是翻译器变强。
 
 ### 损失函数 / 训练策略
 
@@ -157,8 +162,8 @@ OSO-DecQN在D4RL和DeepMind Control Suite上与多种基线的归一化平均回
 ## 相关论文
 
 - [\[ICLR 2026\] Sample-Efficient Distributionally Robust Multi-Agent Reinforcement Learning via Online Interaction](sample-efficient_distributionally_robust_multi-agent_reinforcement_learning_via_.md)
-- [\[ICML 2026\] OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL](../../ICML2026/ai_safety/omnivl-guard_towards_unified_vision-language_forgery_detection_and_grounding_via.md)
 - [\[ICLR 2026\] Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning](beware_untrusted_simulators_--_reward-free_backdoor_attacks_in_reinforcement_lea.md)
+- [\[ICML 2026\] OmniVL-Guard: Towards Unified Vision-Language Forgery Detection and Grounding via Balanced RL](../../ICML2026/ai_safety/omnivl-guard_towards_unified_vision-language_forgery_detection_and_grounding_via.md)
 - [\[NeurIPS 2025\] Fairness-Regularized Online Optimization with Switching Costs](../../NeurIPS2025/ai_safety/fairness-regularized_online_optimization_with_switching_costs.md)
 - [\[ICML 2026\] COPF: An Online Framework for Deployment-Stable Counterfactual Fairness in Evolving Graphs](../../ICML2026/ai_safety/copf_an_online_framework_for_deployment-stable_counterfactual_fairness_in_evolvi.md)
 

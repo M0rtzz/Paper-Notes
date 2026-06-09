@@ -47,20 +47,27 @@ MRet是一个动态学习排序（LTR）框架，运行流程如下：（1）离
 
 ### 关键设计
 
-1. **个性化留存曲线建模**
-    - 功能：为每个用户学习一条"匹配数→留存概率"的映射函数 $f(x, m)$
-    - 核心思路：用XGBoost在 $\{x, m, u\}_{i=1}^{n}$ 数据集上训练回归模型（$x$=用户特征，$m$=匹配数，$u$=留存标签）。假设留存函数为凹函数（Assumption 1），即匹配数增加带来的留存增益递减。合成实验中用分段函数建模：$m \leq b_x$ 时为抛物线上升，$m > b_x$ 时指数趋缓，其中 $b_x$ 为用户 $x$ 的"满意匹配数"。真实实验中对60K条记录做k-means聚类（5簇），组内按匹配数取均值拟合
-    - 设计动机：真实数据清楚显示留存曲线形如凹函数——前几次匹配急剧提升留存，之后趋于饱和。个性化是必要的，因为不同用户的满意匹配数 $b_x$ 不同。与公平性方法假设统一的曝光-留存关系不同，MRet直接建模每个用户的留存需求
+**1. 个性化留存曲线建模：把"匹配数→留存"的关系一人一条曲线学出来。**
 
-2. **双方留存增益联合优化**
-    - 功能：在选择推荐列表时同时考虑接收方和被推荐方的留存概率变化，避免单方面优化
-    - 核心思路：定义最优排序为最大化双方留存增益之和的 $\sigma_\tau^*$——接收方 $x$ 的增益为 $f(x, m_{1:\tau}(x) + m_\tau(x)) - f(x, m_{1:\tau}(x))$，被推荐方每个候选 $y$ 的增益为 $f(y, m_{1:\tau}(y) + \alpha_k r(y,x)) - f(y, m_{1:\tau}(y))$。直接优化是NP-hard的（需搜索所有K-排列），通过凹函数的Jensen不等式（Lemma 1对接收方，Lemma 2对被推荐方）分解为逐候选独立评分：$\text{Score}(y) = \frac{1}{A} f(x, m_{1:\tau}(x) + A \cdot r(x,y)) + \frac{1}{\alpha_{\max}}[f(y, m_{1:\tau}(y) + \alpha_{\max} r(x,y)) - f(y, m_{1:\tau}(y))]$
-    - 设计动机：toy example（图2）展示——Candidate A对被推荐方最优，Candidate B对接收方最优，但总增益最高的是Candidate C（60%），不等于任何一方的单独最优。仅考虑接收方会忽略被推荐方的流失风险。由重排不等式，将高Score候选分配到高可见度位置即可最大化下界
+公平性方法的根本缺陷是假设所有人共享同一套曝光-留存关系，但真实数据里每个用户的"吃饱点"差别很大。MRet 因此为每个用户学一条映射函数 $f(x, m)$，表示用户 $x$ 累计获得 $m$ 次匹配后的留存概率。它用 XGBoost 在 $\{x, m, u\}_{i=1}^{n}$ 数据集上训练回归模型（$x$=用户特征，$m$=匹配数，$u$=留存标签）。
 
-3. **基于凹函数性质的NP-hard→O(N log N)高效求解**
-    - 功能：将原始NP-hard的组合优化降为简单的argsort操作
-    - 核心思路：利用Assumption 1（凹函数），Lemma 1提供接收方的Jensen-type下界——将 $f(x, m + \sum_k \alpha_k r(x, \sigma_k))$ 分解为各候选独立项之和。Lemma 2提供被推荐方的线性下界——候选 $y$ 在位置 $k$ 的贡献可用 $\alpha_{\max}$ 位置的增益来下界。两个引理组合后，原始耦合优化变为 $\max_\sigma \sum_k \alpha_k \text{Score}(\sigma_k)$，只需对所有候选计算Score值然后降序排列
-    - 设计动机：搜索所有K-排列的指数复杂度在实际平台上不可行（用户池可达百万级）。附录还提供了MRet与NP-hard最优解的对比实验，验证下界近似的质量
+这里有一个关键的结构性假设（Assumption 1）：留存函数是凹的，即匹配数越多，再多一次匹配带来的留存增益越小。这个假设直接来自真实数据——留存曲线前几次匹配急剧上升、随后趋于饱和。合成实验用一条分段函数刻画这个形状：$m \leq b_x$ 时抛物线上升，$m > b_x$ 时指数趋缓，其中 $b_x$ 是用户 $x$ 的"满意匹配数"。真实实验则对 60K 条记录做 k-means 聚类（5 簇），组内按匹配数取均值拟合。凹性不仅符合现实，更是后面把 NP-hard 问题降复杂度的数学钥匙。
+
+**2. 双方留存增益联合优化：推荐谁，要同时算接收方和被推荐方两边的留存账。**
+
+只优化接收方会漏掉一个风险——被推荐方如果已经匹配饱和，把它再推出去对它自己的留存毫无增益，等于浪费了一个稀缺的曝光位。MRet 因此把最优排序 $\sigma_\tau^*$ 定义为"双方留存增益之和最大"：接收方 $x$ 的增益是 $f(x, m_{1:\tau}(x) + m_\tau(x)) - f(x, m_{1:\tau}(x))$，被推荐方每个候选 $y$ 的增益是 $f(y, m_{1:\tau}(y) + \alpha_k r(y,x)) - f(y, m_{1:\tau}(y))$。
+
+论文用一个 toy example（图 2）说明为什么必须联合算：Candidate A 对被推荐方最优、Candidate B 对接收方最优，但总增益最高的其实是 Candidate C（60%），它不等于任何单边的最优解。直接对这个联合目标求最优排序是 NP-hard 的（要枚举所有 K-排列），但借助凹函数的 Jensen 不等式（Lemma 1 管接收方、Lemma 2 管被推荐方），可以把耦合的排序目标拆成逐候选独立的评分：
+
+$$\text{Score}(y) = \frac{1}{A} f(x, m_{1:\tau}(x) + A \cdot r(x,y)) + \frac{1}{\alpha_{\max}}\left[f(y, m_{1:\tau}(y) + \alpha_{\max} r(x,y)) - f(y, m_{1:\tau}(y))\right]$$
+
+由重排不等式，只要把 Score 高的候选放到可见度高的位置，就能最大化这个下界。
+
+**3. 基于凹函数性质的 NP-hard → $O(N \log N)$ 高效求解：把组合爆炸压成一次排序。**
+
+实际平台的用户池能到百万级，枚举所有 K-排列的指数复杂度根本跑不动，这是前一个联合目标能否落地的关键瓶颈。两个引理在凹性假设下各自给出一个下界：Lemma 1 提供接收方的 Jensen-type 下界，把 $f(x, m + \sum_k \alpha_k r(x, \sigma_k))$ 拆成各候选的独立项之和；Lemma 2 提供被推荐方的线性下界，用 $\alpha_{\max}$ 位置的增益来下界候选 $y$ 在位置 $k$ 的贡献。
+
+两个下界组合起来，原本耦合的优化就变成了 $\max_\sigma \sum_k \alpha_k \text{Score}(\sigma_k)$——只需对所有候选算一遍 Score、再降序排列即可，整体复杂度 $O(N \log N)$。论文在附录里还把 MRet 和 NP-hard 最优解直接对比，验证这个下界近似确实够好，不是为了快而牺牲质量。
 
 ### 损失函数 / 训练策略
 
@@ -140,11 +147,11 @@ MRet是一个动态学习排序（LTR）框架，运行流程如下：（1）离
 
 ## 相关论文
 
-- [\[AAAI 2026\] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
 - [\[AAAI 2026\] Breaking the Dyadic Barrier: Rethinking Fairness in Link Prediction Beyond Demographic Parity](../../AAAI2026/ai_safety/breaking_the_dyadic_barrier_rethinking_fairness_in_link_prediction_beyond_demogr.md)
+- [\[AAAI 2026\] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation](../../AAAI2026/ai_safety/matrix-free_two-to-infinity_and_one-to-two_norms_estimation.md)
+- [\[ICML 2026\] Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](../../ICML2026/ai_safety/position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)
 - [\[ICLR 2026\] Bridging Fairness and Explainability: Can Input-Based Explanations Promote Fairness in Hate Speech Detection?](bridging_fairness_and_explainability_can_input-based_explanations_promote_fairne.md)
 - [\[ICML 2026\] FedHPro: Federated Hyper-Prototype Learning via Gradient Matching](../../ICML2026/ai_safety/fedhpro_federated_hyper-prototype_learning_via_gradient_matching.md)
-- [\[ICML 2026\] Frequency Matching in Spiking Neural Networks for mmWave Sensing](../../ICML2026/ai_safety/frequency_matching_in_spiking_neural_networks_for_mmwave_sensing.md)
 
 </div>
 

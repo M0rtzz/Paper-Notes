@@ -43,49 +43,27 @@ tags:
 
 ### 整体框架
 
-MARC 是一个 **"retrieve then compress"** 框架，包含两个核心模块：
+MARC 要解决的是一个很实际的矛盾：视频 token 一多，VLM 推理就贵，但简单粗暴地砍 token 又会丢关键信息、掉性能。它的思路是「先检索、再压缩」（retrieve then compress）——不去盲目压整段视频，而是先把和问题真正相关的片段挑出来，再在这一小块里做有意义的压缩。
 
-- **Visual Memory Retriever (VMR)**：将视频分割为事件级片段，检索与 query 最相关的 top-k 片段
-- **C-GRPO 训练策略**：以 64 帧输入的教师网络为参考，通过强化学习将推理能力蒸馏到仅使用 1 帧 token 的学生网络
-
-整个流程：原始视频 → 事件分割 → 检索 top-k 片段 → 时序压缩（Memory-Aware Temporal Compression） → 压缩后 token 输入 LLM → C-GRPO 训练对齐。
+整个流程是这样转的：原始视频先经 **Visual Memory Retriever (VMR)** 切成事件级片段并检索出与 query 最相关的 top-k 片段，这些片段进入 **Memory-Aware Temporal Compression Layer** 做两阶段时序压缩，把帧数压到目标预算，压缩后的少量 token 喂给 LLM；训练阶段则用 **C-GRPO** 以 64 帧输入的教师网络为参照，通过强化学习把推理能力蒸馏进只用 1 帧 token 的学生网络。
 
 ### 关键设计
 
-#### 1. Visual Memory Retriever (VMR)
+**1. Visual Memory Retriever (VMR)：先把相关片段捞出来，再压缩。**
 
-**功能**：从长视频中检索与查询最相关的事件级片段，作为下游压缩的输入。
+直接压缩整段视频的问题在于：大量与问题无关的冗余会被一起塞进压缩流程，稀释掉真正重要的信息、拉低压缩质量。VMR 的做法借鉴了认知科学的观察——人类并不是把连续经历当成一条无差别的流，而是通过情景记忆把它切成一个个离散事件来回忆和检索。于是 VMR 先用一个深度事件检测网络（Soucek & Lokoc, 2024）识别场景切换、话题转变这类时序边界，把视频切成语义连贯的短片段（而不是固定长度的窗口）；再用嵌入模型（Bolya et al., 2025）把 query 和所有片段映射到同一个高维潜空间，靠对比学习训练出的近邻搜索选出 top-k 个最相关片段（实验里 top-k=3）。这一步等于在压缩前先把搜索空间大幅收窄，让后续压缩只针对真正有用的证据。
 
-**为什么**：受认知科学启发——人类通过情景记忆将连续视觉经验分割为离散事件并进行检索。直接压缩整个视频会引入大量冗余信息，降低压缩质量；先检索再压缩可以大幅缩小搜索空间。
+**2. Memory-Aware Temporal Compression Layer：顺着事件边界先合冗余最多的相邻帧。**
 
-**怎么做**：
-- **事件级视频分割**：使用深度事件检测网络（Soucek & Lokoc, 2024）识别场景切换、话题转变等时序边界，将视频分割为语义连贯的短片段（而非固定长度窗口）
-- **记忆检索**：使用嵌入模型（Bolya et al., 2025）将 query 和所有片段映射到共享高维潜空间，通过对比学习训练的近邻搜索选出 top-k 个最相关片段
-- 实验中 top-k=3
+挑出片段后还得把帧数真正压下来，关键是别把重要证据也一起合掉。这一层利用 VMR 给出的事件边界结构，优先在同一事件内部合并高度相似的相邻帧——因为冗余最集中的地方就在同一事件里连续的相似帧。具体分两阶段：阶段 1（段内合并）对每个检索片段，在短期记忆窗口 $m$ 内迭代合并余弦相似度最高的相邻帧对，用均值表示 $\mathbf{H}_{merge} = \frac{1}{2}(\mathbf{H}_a + \mathbf{H}_b)$，一直合到满足压缩比 $\rho$ 对应的帧预算为止；阶段 2（跨段合并）则在段内合并后总帧数仍超过目标 $N_{target}$ 时，再做一次轻量级的全局合并兜底。相似度用 patch 对齐的余弦得分均值来度量：
 
-#### 2. Memory-Aware Temporal Compression Layer
+$$\text{sim}(\mathbf{H}_a, \mathbf{H}_b) = \frac{1}{P}\sum_{p=1}^{P} \frac{\mathbf{h}_a^{(p)} \cdot \mathbf{h}_b^{(p)}}{\|\mathbf{h}_a^{(p)}\| \|\mathbf{h}_b^{(p)}\|}$$
 
-**功能**：将 VMR 选出的片段进行两阶段时序压缩，减少视觉 token 数量。
+这样压缩是「先合最该合的」，而不是无差别地几何缩减。
 
-**为什么**：利用 VMR 提供的事件边界结构，优先在同一事件内合并高度相似的相邻帧（冗余最多的地方），保留 VMR 认为重要的事件证据。
+**3. Compression GRPO (C-GRPO)：把压缩从几何缩减变成对齐教师的奖励问题。**
 
-**怎么做**：
-- **阶段 1（段内合并）**：对每个检索到的片段，在短期记忆窗口 $m$ 内，迭代合并余弦相似度最高的相邻帧对，取均值表示 $\mathbf{H}_{merge} = \frac{1}{2}(\mathbf{H}_a + \mathbf{H}_b)$，直到满足压缩比 $\rho$ 对应的帧预算
-- **阶段 2（跨段合并）**：如果段内合并后总帧数仍超过目标 $N_{target}$，进行轻量级全局合并
-- 相似度度量为 patch 对齐的余弦得分均值：$\text{sim}(\mathbf{H}_a, \mathbf{H}_b) = \frac{1}{P}\sum_{p=1}^{P} \frac{\mathbf{h}_a^{(p)} \cdot \mathbf{h}_b^{(p)}}{\|\mathbf{h}_a^{(p)}\| \|\mathbf{h}_b^{(p)}\|}$
-
-#### 3. Compression GRPO (C-GRPO)
-
-**功能**：以教师-学生蒸馏范式，通过强化学习训练学生模型在极端压缩下保持教师级推理能力。
-
-**为什么**：标准 GRPO 只关注答案正确性和格式，不显式耦合学生与教师的性能；C-GRPO 引入保持对齐奖励，将压缩转化为对齐问题而非几何缩减。
-
-**怎么做**：
-- 定义**保持比率** $\eta = a_{comp} / a_{full}$，量化学生保留了多少教师性能
-- 引入**压缩奖励** $r_c = \alpha \cdot \max(0, \eta - \tau)$，其中 $\tau$ 是最低可接受保持率阈值
-- **正确性门控**：$R_i = r_i + \mathbb{1}[\text{correct}] \cdot r_c$，只有语义正确的生成才能获得保持奖励，防止 reward hacking
-- 组内优势归一化 $A_i = (R_i - \bar{R}) / \sigma_R$
-- 最终优化带 KL 锚的裁剪目标
+把视频压到只剩单帧 token 时，靠启发式的几何缩减根本保不住教师级的推理质量。标准 GRPO 又只盯着答案对不对、格式合不合规，并不显式地把学生的表现和教师挂钩。C-GRPO 的改动就是引入一个「保持对齐」的奖励信号，把压缩重新定义成一个对齐问题。它先定义**保持比率** $\eta = a_{comp} / a_{full}$，量化学生到底保住了教师多少性能；再据此给出**压缩奖励** $r_c = \alpha \cdot \max(0, \eta - \tau)$，其中 $\tau$ 是最低可接受的保持率阈值。关键的一步是**正确性门控** $R_i = r_i + \mathbb{1}[\text{correct}] \cdot r_c$——只有语义答对的生成才有资格拿到保持奖励，这样能挡住 reward hacking，避免模型为了凑高 $\eta$ 而放大虚假模式。之后照常做组内优势归一化 $A_i = (R_i - \bar{R}) / \sigma_R$，最终优化一个带 KL 锚的裁剪目标。
 
 ### 损失函数 / 训练策略
 
@@ -184,9 +162,9 @@ $$\mathcal{L}_{\text{C-GRPO}} = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\left(\
 ## 相关论文
 
 - [\[NeurIPS 2025\] StreamForest: Efficient Online Video Understanding with Persistent Event Memory](../../NeurIPS2025/autonomous_driving/streamforest_efficient_online_video_understanding_with_persistent_event_memory.md)
-- [\[ICML 2026\] Mitigating Error Accumulation in Continuous Navigation via Memory-Augmented Kalman Filtering](../../ICML2026/autonomous_driving/mitigating_error_accumulation_in_continuous_navigation_via_memory-augmented_kalm.md)
 - [\[ICLR 2026\] EgoDex: Learning Dexterous Manipulation from Large-Scale Egocentric Video](egodex_learning_dexterous_manipulation_from_large-scale_egocentric_video.md)
-- [\[ICLR 2026\] DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [\[ICML 2026\] Mitigating Error Accumulation in Continuous Navigation via Memory-Augmented Kalman Filtering](../../ICML2026/autonomous_driving/mitigating_error_accumulation_in_continuous_navigation_via_memory-augmented_kalm.md)
+- [\[AAAI 2026\] CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](../../AAAI2026/autonomous_driving/comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
 - [\[AAAI 2026\] FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](../../AAAI2026/autonomous_driving/fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
 
 </div>

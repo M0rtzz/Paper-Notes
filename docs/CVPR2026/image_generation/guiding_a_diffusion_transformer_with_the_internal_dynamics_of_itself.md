@@ -144,7 +144,7 @@ IG 和 CFG 引导的是两个不同的维度，所以能叠加。CFG 是类相�
 - [\[CVPR 2026\] Guiding Diffusion Models with Semantically Degraded Conditions](guiding_diffusion_models_with_semantically_degraded_conditions.md)
 - [\[CVPR 2026\] DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression](ditic_aligned_diffusion_transformer_for_efficient.md)
 - [\[CVPR 2026\] MPDiT: Multi-Patch Global-to-Local Transformer Architecture for Efficient Flow Matching](mpdit_multi-patch_global-to-local_transformer_architecture_for_efficient_flow_ma.md)
-- [\[NeurIPS 2025\] SparseDiT: Token Sparsification for Efficient Diffusion Transformer](../../NeurIPS2025/image_generation/sparsedit_token_sparsification_for_efficient_diffusion_transformer.md)
+- [\[CVPR 2026\] Mixture of States: Routing Token-Level Dynamics for Multimodal Generation](mixture_of_states_routing_token-level_dynamics_for_multimodal_generation.md)
 
 </div>
 

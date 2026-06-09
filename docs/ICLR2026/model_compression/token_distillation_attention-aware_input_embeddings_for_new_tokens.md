@@ -38,36 +38,21 @@ tags:
 
 ### 整体框架
 
-给定新 token $t^{\star}$ 及其原始子词 $[t_1, \dots, t_n]$，Token Distillation 直接优化新嵌入 $\mathbf{e}^{\star}$，使模型在使用单一新 token 时产生的隐状态与使用原始多子词序列时尽可能接近。
+给定新 token $t^{\star}$ 及其在原始 tokenizer 下的子词序列 $[t_1, \dots, t_n]$，Token Distillation 不去拼凑子词 embedding，而是把"原始模型读完整子词序列后产生的隐状态"当作教师信号，直接梯度优化单个新嵌入 $\mathbf{e}^{\star}$，让模型只看一个新 token 时的隐状态去逼近它。这样新嵌入承接的不只是 embedding 矩阵的信息，而是 Transformer 各层在 neural detokenization 过程中逐步构建出的完整语义。
 
-### 关键设计: 隐状态蒸馏目标
+### 关键设计
 
-优化目标为最小化指定层的隐状态 MSE：
+**1. 隐状态蒸馏目标：把多子词交互压进单个嵌入。** 子词均值法之所以差，是因为 `<_pal><at><able>` 三个子词的 embedding 里根本不含 `<_palatable>` 的语义——那个语义是注意力层在上下文里现算出来的。Token Distillation 把这件事变成一个回归问题：对采样自语料的句子 $s$，分别用原始多子词序列（教师）和单个新 token（学生）跑前向，最小化两者在指定层 $l$ 上、对齐位置处的隐状态 MSE：
 
 $$\min_{\mathbf{e}^{\star} \in \mathbb{R}^d} \mathbb{E}_{s \sim S} \left[ \frac{1}{|\mathcal{M}(s_\tau, s_{\tau^{\star}})|} \sum_{(i,j) \in \mathcal{M}(s_\tau, s_{\tau^{\star}})} \left\| \mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})_i - \mathcal{H}^{(l)}(s_\tau)_j \right\|_2^2 \right]$$
 
-- $\mathcal{H}^{(l)}(s_\tau)$: 使用原始 tokenization 时第 $l$ 层的隐状态（教师）
-- $\mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})$: 使用新 token 嵌入时的隐状态（学生）
-- $\mathcal{M}(s_\tau, s_{\tau^{\star}})$: 对齐位置映射，仅包含会 attend 到新 token 的位置
-- 实践中使用最后一层隐状态
+其中 $\mathcal{H}^{(l)}(s_\tau)$ 是教师在原始 tokenization 下第 $l$ 层的隐状态，$\mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})$ 是学生用新嵌入时的隐状态。关键在对齐映射 $\mathcal{M}$ 只保留那些会 attend 到新 token 的位置——只有这些位置才真正受新嵌入影响，约束它们就足以把多子词交互信息逼进 $\mathbf{e}^{\star}$。实践中取最后一层隐状态做监督，因为它聚合了所有层的信息。
 
-### 上下文检索
+**2. 上下文检索：让蒸馏有真实语境可学。** 蒸馏需要包含目标 token 的真实句子，否则学到的嵌入会脱离实际用法。论文给两条路：主方法用 Aho-Corasick 多模式串匹配算法，从大语料里一次性高效检索出所有包含目标词的片段；当语料里某些罕见词找不到足够样本时，备选用新 token 直接做 prompt 让模型自己生成包含该词的文本补足。两者都只为给每个新 token 凑够少量高质量上下文。
 
-两种获取训练上下文的方法：
-1. **主方法**: 使用 Aho-Corasick 算法从语料库中高效检索包含目标 token 的片段
-2. **备选**: 用新 token 做 prompt 让模型生成包含目标词的文本
+**3. 输出嵌入与 αNTP：补上预测侧并稳住范数。** 蒸馏目标只约束输入侧隐状态，所以它只学输入嵌入——新 token 本就不在教师的预测词表里，没法直接蒸馏输出嵌入。输出嵌入要么置零，要么额外挂一个 NTP（next-token prediction）目标训练。对于 tied embedding 模型（输入输出共享一张矩阵），直接训练易出现 norm 爆炸，论文用 $\alpha$NTP——动态降低 NTP 损失权重，避免它干扰蒸馏学到的输入嵌入，从而稳住范数。
 
-### 输出嵌入处理
-
-- Token Distillation 仅学习输入嵌入（因为新 token 不在教师模型预测范围内）
-- 输出嵌入可结合 NTP 目标额外训练，或设为零向量
-- 可与 $\alpha$NTP 组合（动态降权 NTP 损失避免干扰）
-
-### 效率设计
-
-- 每个新 token 仅需 25 个上下文片段
-- 上下文截断到 50 token 长度
-- 2500 个新 token 在单 GPU 上 10 分钟内完成初始化
+**4. 轻量化设定：单 GPU 十分钟搞定上千 token。** 因为优化目标直接且每个 token 独立，所需数据极少：每个新 token 只取 25 个上下文片段、每段截断到 50 个 token，2500 个新 token 在单张 GPU 上 10 分钟内即可全部初始化完。相比 ZeTT 这类需要预训练超网络的方法，这里完全复用目标模型自身、无额外训练成本，是该方法在实用性上的核心优势。
 
 ## 实验
 
@@ -149,11 +134,11 @@ $$\min_{\mathbf{e}^{\star} \in \mathbb{R}^d} \mathbb{E}_{s \sim S} \left[ \frac{
 
 ## 相关论文
 
+- [\[ICLR 2026\] FASA: Frequency-Aware Sparse Attention](fasa_frequency-aware_sparse_attention.md)
 - [\[ICLR 2026\] TurboBoA: Faster and Exact Attention-aware Quantization without Backpropagation](turboboa_faster_and_exact_attention-aware_quantization_without_backpropagation.md)
 - [\[ICLR 2026\] AgilePruner: An Empirical Study of Attention and Diversity for Adaptive Visual Token Pruning in LVLMs](agilepruner_an_empirical_study_of_attention_and_diversity_for_adaptive_visual_to.md)
 - [\[NeurIPS 2025\] A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone](../../NeurIPS2025/model_compression/a_token_is_worth_over_1000_tokens_efficient_knowledge_distillation_through_low-r.md)
 - [\[ICML 2026\] Token Sparse Attention: Efficient Long-Context Inference with Interleaved Token Selection](../../ICML2026/model_compression/token_sparse_attention_efficient_long-context_inference_with_interleaved_token_s.md)
-- [\[ICLR 2026\] TiTok: Transfer Token-level Knowledge via Contrastive Excess to Transplant LoRA](titok_transfer_token-level_knowledge_via_contrastive_excess_to_transplant_lora.md)
 
 </div>
 

@@ -45,45 +45,15 @@ tags:
 
 ### 整体框架
 
-本文采用理论分析 + 大规模实证分析的双轨策略。理论部分论证 ICL 在数学定义层面满足学习的标准（类似 PAC 学习框架）；实证部分通过系统消除（ablate out）或控制多个混淆因素，揭示 ICL 的真实学习能力边界。实验覆盖多种模型架构、多种提示风格、多种任务类型和多种数据分布设置，构成目前 ICL 行为研究中规模最大的控制变量实验之一。
+本文用理论加实证的双轨方式回答"ICL 是不是学习"：先从数学上论证 ICL 在形式定义层面（类似 PAC 学习框架）确实满足"学习"的标准，再用一套覆盖多种模型架构、提示风格、任务类型和数据分布的大规模控制变量实验，去检验这种"形式上的学习"在实证中能走多远。核心思路是把 ICL 表现拆解为若干混淆来源——预训练记忆、示例分布、提示格式——逐个消除或扰动，看剩下的"真正从示例中学到的"部分还剩多少。
 
-### 关键设计 1：记忆与预训练效应的解耦
+### 关键设计
 
-核心目标是将 ICL 表现中来自预训练记忆的部分与来自 prompt 示例的真正学习部分分离。具体做法包括：
+**1. 记忆与预训练效应的解耦：把"先验检索"从"示例学习"里剥出来。** ICL 的高准确率有两种可能来源，一是模型预训练时就见过类似任务（记忆/泄露），二是真的从 prompt 示例里学到了输入-输出映射，二者混在一起会让人高估 ICL 的学习能力。本文用三条线把它们分开：用多种污染检测方法量化预训练数据对测试任务的覆盖，并改用无污染 benchmark 重测；用 zero-shot 表现衡量纯先验水平，只把 few-shot 相对 zero-shot 的增量视为可能的"学习"，即学习增益 $\Delta_{\text{learn}} = \mathbb{E}[\mathcal{L}(\hat{f}_{\text{zero-shot}})] - \mathbb{E}[\mathcal{L}(\hat{f}_{\text{few-shot}})]$，其中 $\mathcal{L}$ 为任务损失；再用随机标签和反事实（反转）标签去探测模型到底有没有真正利用示例里的映射关系。结果是充分控制记忆后 $\Delta_{\text{learn}}$ 明显缩小，说明 ICL 表现里相当大一部分来自先验知识检索而非从示例中学习。
 
-- **Benchmark 污染检测**：使用多种方法评估预训练数据是否已包含测试任务信息，量化记忆效应对 ICL 表现的贡献
-- **Zero-shot vs. Few-shot 差异分析**：zero-shot 表现反映纯先验知识水平，few-shot 与 zero-shot 的增量才可能归因于"从示例中学到的"
-- **反事实标签实验**：使用随机标签或反转标签来检测模型是否真正利用了示例中的输入-输出映射关系
+**2. 分布偏移与示例缩放行为分析：看准确率随示例增多到底会不会持续涨。** 真正的学习应当随着更多、更好的数据而持续改进，所以本文系统扫描示例数量 $k$（从 $k=0$ 的 zero-shot 扫到 many-shot）、示例分布（类别平衡、样本难度、选择策略与呈现顺序）、提示风格（标准 few-shot、CoT、不同模板与措辞）以及多种规模和架构的模型，观察准确率的缩放模式。关键发现是当 $k$ 增大时准确率趋向一个与配置无关的极限 $\lim_{k \to \infty} \text{Acc}(k; \mathcal{D}, \mathcal{M}, \mathcal{S}) \approx C_{\text{task}}$（$\mathcal{D}$ 为示例分布、$\mathcal{M}$ 为模型、$\mathcal{S}$ 为提示风格），而非随数据持续上升。这条饱和曲线正好和"真正学习"的预期相反，是本文否定性结论的核心证据。
 
-数学上，设 $f$ 为目标函数，$\hat{f}_{\text{ICL}}$ 为 ICL 的预测函数，则 ICL 的学习增益可定义为：
-
-$$\Delta_{\text{learn}} = \mathbb{E}[\mathcal{L}(\hat{f}_{\text{zero-shot}})] - \mathbb{E}[\mathcal{L}(\hat{f}_{\text{few-shot}})]$$
-
-其中 $\mathcal{L}$ 为任务损失函数。本文发现在充分控制记忆效应后，$\Delta_{\text{learn}}$ 显著减小，说明 ICL 表现中大量来自先验知识而非从示例中学习。
-
-### 关键设计 2：分布偏移与示例缩放行为分析
-
-核心实验方法是系统改变以下变量，观察 ICL 准确率的变化模式（scaling behavior）：
-
-- **示例数量 $k$**：从 $k=0$（zero-shot）到 many-shot，观察准确率如何随示例增加而变化
-- **示例分布**：改变类别平衡、样本难度分布、样本选择策略和呈现顺序
-- **提示风格**：标准 few-shot、chain-of-thought (CoT)、不同模板格式和措辞
-- **模型选择**：多种规模和架构的自回归模型
-
-关键发现：当示例数量 $k$ 增大时，准确率趋向一个与具体配置无关的极限值。形式上：
-
-$$\lim_{k \to \infty} \text{Acc}(k; \mathcal{D}, \mathcal{M}, \mathcal{S}) \approx C_{\text{task}}$$
-
-其中 $\mathcal{D}$ 为示例分布、$\mathcal{M}$ 为模型、$\mathcal{S}$ 为提示风格。这一发现与真正的学习预期形成对比——真正的学习应当随着更多/更好的数据而持续改进。
-
-### 关键设计 3：Chain-of-Thought 的分布敏感性
-
-本文特别分析了 CoT 提示风格下 ICL 的行为特征。发现 CoT 虽然在某些任务上显著提升准确率，但对 prompt 的分布特征和格式表现出更高的敏感性（distributional sensitivity）。这说明 CoT 的改进并非来自更深层的任务学习，而是利用了推理链的结构规律性来更高效地进行模式推演。具体表现为：
-
-- 标准 few-shot 的表现相对稳定但提升天花板低
-- CoT 的表现波动更大，高度依赖推理链的格式和结构
-- 在形式相似但语义不同的任务上，CoT 的准确率差异显著
-- ICL 实质上是从 prompt 的统计规律性中提取模式，而非编码新知识
+**3. Chain-of-Thought 的分布敏感性：CoT 的提升来自结构规律而非更深的学习。** CoT 在部分任务上确实显著提升准确率，容易被解读为"更会推理"，但本文发现它对 prompt 的分布特征和格式异常敏感：标准 few-shot 表现相对稳定但天花板低，CoT 波动更大且高度依赖推理链的格式和结构，在形式相似但语义不同的任务上准确率差异明显。这种高方差说明 CoT 的收益并非来自对任务更深的学习，而是利用了推理链的结构规律性来更高效地做模式推演（deduction）——ICL 本质上是在从 prompt 的统计规律里提取模式，而不是编码新知识。
 
 ## 实验结果
 
@@ -142,7 +112,7 @@ $$\lim_{k \to \infty} \text{Acc}(k; \mathcal{D}, \mathcal{M}, \mathcal{S}) \appr
 - [\[ICML 2026\] Many-Shot CoT-ICL: Making In-Context Learning Truly Learn](../../ICML2026/llm_reasoning/many-shot_cot-icl_making_in-context_learning_truly_learn.md)
 - [\[AAAI 2026\] LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning](../../AAAI2026/llm_reasoning/llms_for_game_theory_entropy-guided_in-context_learning_and_adaptive_cot_reasoni.md)
 - [\[ICLR 2026\] Segment-Level Attribution for Selective Learning of Long Reasoning Traces](segment-level_attribution_for_selective_learning_of_long_reasoning_traces.md)
-- [\[ICLR 2026\] Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+- [\[ACL 2025\] CoT-ICL Lab: A Synthetic Framework for Studying Chain-of-Thought Learning from In-Context Demonstrations](../../ACL2025/llm_reasoning/cot-icl_lab_a_synthetic_framework_for_studying_chain-of-thought_learning_from_in.md)
 
 </div>
 

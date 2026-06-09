@@ -49,24 +49,21 @@ tags:
 
 ### 关键设计
 
-1. **完整点云的定义与构造**：
+**1. 完整点云的定义与构造：给非像素对齐方法找到可用的监督信号。**
 
-    - 功能：定义训练监督所需的"完整点云"——包含可见+遮挡区域的所有点
-    - 核心思路：优先使用GT mesh均匀采样；当无mesh时，聚合密集视角的深度图反投影点云，voxel-grid滤波去重，裁剪到输入视角的frustum内，FPS采样N个点用于训练
-    - 设计动机：解决了非像素对齐方法的监督数据来源问题——不需要水密网格，只需深度图就能近似完整点云。所有点定义在第一个视角坐标系下，保持视角无关性
+非像素对齐重建要预测包含遮挡区域的"完整点云"，但训练时上哪去找这种包含不可见点的 GT？本文给出一套构造方案：有 GT mesh 时直接均匀采样最干净；没有 mesh 时，退而聚合密集视角的深度图反投影点云，用 voxel-grid 滤波去掉重叠重复的点，再裁剪到输入视角的 frustum 内，最后 FPS 采样出 $N$ 个点作训练目标。关键好处是它绕开了"必须水密网格"这个硬约束——场景级数据几乎没有水密网格，但深度图随处可得，于是只靠深度图就能近似出完整点云。所有点统一定义在第一个视角的坐标系下，从源头上保证了表示的视角无关性。
 
-2. **基于Flow-matching的3D Latent自编码器 (Stage 1)**：
+**2. 基于 Flow-matching 的 3D Latent 自编码器（Stage 1）：用确定性 ODE 轨迹绕开无序点云的匹配难题。**
 
-    - 功能：将完整点云压缩为M个latent tokens并能解码恢复
-    - 核心思路：编码器用FPS从P中采样M个query点 + 可学习token拼接，经cross+self attention得到 $Z \in \mathbb{R}^{M \times C}$。解码器是扩散模型：输入N个噪声点 $x_t$、latent Z和时间步t，预测速度场。训练loss: $\mathcal{L}_{flow}^{AE} = \mathbb{E}[\|\Phi_{dec}(x_t, Z, t) - (\epsilon - x_0)\|_2^2]$
-    - 设计动机：传统3D VAE用occupancy/SDF解码需要canonical空间和水密网格，场景级数据无法满足。直接预测坐标又因点云无序无法用L2 loss。Flow-matching优雅解决了无序匹配问题——解码器学习从噪声到目标点云的确定性ODE轨迹，无需建立一一对应关系
-    - **Joint decoder架构**：cross-attention之间加入self-attention，让点之间能交换空间关联信息，比independent decoder更精确(Table 5验证)
+这是整篇方法的地基：先建立一个能压缩、再解码完整点云的 latent 空间。编码器用 FPS 从点云 $P$ 中采样 $M$ 个 query 点，与可学习 token 拼接后经 cross-attention + self-attention，得到 latent $Z \in \mathbb{R}^{M \times C}$。解码器则是一个扩散模型：给它 $N$ 个噪声点 $x_t$、latent $Z$ 和时间步 $t$，让它预测速度场，训练目标为
 
-3. **可学习场景Token的图像编码 (Stage 2)**：
+$$\mathcal{L}_{flow}^{AE} = \mathbb{E}\big[\|\Phi_{dec}(x_t, Z, t) - (\epsilon - x_0)\|_2^2\big]$$
 
-    - 功能：从K张无位姿图像提取全局场景表示 $\hat{Z} \in \mathbb{R}^{M \times C}$
-    - 核心思路：在VGGT的图像token之外引入M个可学习场景token $t_S$。所有token一起送入Transformer，经过frame-level和global-level self-attention交替处理。场景token被视为第一视角坐标系下的全局帧，共享第一视角的相机token
-    - 设计动机：像素对齐方法token数 = K*H*W 随视角线性增长且绑定到像素。场景token数量固定为M与输入视角数无关，自然避免重叠区域冗余，支持任意数量输入
+之所以走 flow-matching 而不是传统 3D VAE，是因为后者用 occupancy/SDF 解码需要 canonical 空间和水密网格，场景级数据满足不了；而如果直接回归点坐标，点云本身无序，又没法用 L2 loss 建立一一对应。Flow-matching 巧妙地把解码建模成"从噪声到目标点云的确定性 ODE 轨迹"，学的是分布而非配对，无序匹配的问题就自然消解了。解码器内部采用 joint decoder 结构——在 cross-attention 之间插入 self-attention，让点与点之间能交换空间关联信息，比各点独立解码的 independent decoder 更精确（Table 5 验证）。
+
+**3. 可学习场景 Token 的图像编码（Stage 2）：把固定数量的全局 token 摆脱像素绑定。**
+
+有了 Stage 1 的 latent 空间后，Stage 2 只需训练一个图像编码器，把 $K$ 张无位姿图像映射到同一个空间里的 $\hat{Z} \in \mathbb{R}^{M \times C}$，再交给冻结的解码器出点云。具体做法是在 VGGT 的图像 token 之外，额外引入 $M$ 个可学习场景 token $t_S$，所有 token 一起送进 Transformer，交替经过 frame-level 和 global-level 的 self-attention；这些场景 token 被当成第一视角坐标系下的一个全局帧，共享第一视角的相机 token。这样设计直击像素对齐的痛点：像素对齐方法的 token 数是 $K\times H\times W$，既随视角数线性膨胀又死死绑在像素上，重叠区域必然冗余；而场景 token 的数量固定为 $M$、与输入视角数完全无关，天然避免了重叠冗余，也支持喂入任意数量的视角。
 
 ### 损失函数 / 训练策略
 - Stage 1: flow-matching loss端到端训练自编码器，50 epochs
@@ -135,8 +132,8 @@ tags:
 
 - [\[ICLR 2026\] Quantized Visual Geometry Grounded Transformer](quantized_visual_geometry_grounded_transformer.md)
 - [\[ICLR 2026\] Generalizable Coarse-to-Fine Robot Manipulation via Language-Aligned 3D Keypoints](generalizable_coarse-to-fine_robot_manipulation_via_language-aligned_3d_keypoint.md)
+- [\[CVPR 2025\] Pixel-Aligned RGB-NIR Stereo Imaging and Dataset for Robot Vision](../../CVPR2025/3d_vision/pixel-aligned_rgb-nir_stereo_imaging_and_dataset_for_robot_vision.md)
 - [\[CVPR 2025\] VGGT: Visual Geometry Grounded Transformer](../../CVPR2025/3d_vision/vggt_visual_geometry_grounded_transformer.md)
-- [\[ECCV 2024\] Human Hair Reconstruction with Strand-Aligned 3D Gaussians](../../ECCV2024/3d_vision/human_hair_reconstruction_with_strand-aligned_3d_gaussians.md)
 - [\[ICCV 2025\] Amodal3R: Amodal 3D Reconstruction from Occluded 2D Images](../../ICCV2025/3d_vision/amodal3r_amodal_3d_reconstruction_from_occluded_2d_images.md)
 
 </div>

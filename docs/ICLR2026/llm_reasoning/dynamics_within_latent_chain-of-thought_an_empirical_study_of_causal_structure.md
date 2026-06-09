@@ -39,41 +39,21 @@ tags:
 
 ## 方法详解
 
-### 核心框架：隐式CoT作为因果系统
-将隐式CoT的隐状态序列建模为结构因果模型(SCM)中的因果变量。对输入$x$，模型产生隐轨迹$H_{1:T}$和输出$Y$：
-$$H_t = f_t(H_{<t}, x, \epsilon_t; \theta), \quad t=1,\ldots,T$$
-$$Y = g(H_{1:T}, x, \epsilon_y; \theta)$$
-其中$f_t$是转移机制，$g$是解码机制。通过$\mathrm{do}(h_t \leftarrow \tilde{h}_t)$干预单个步骤状态，切断该步骤与上游的因果关联，观察对下游计算和最终输出的影响。干预后的反事实轨迹按下式递推：
-$$\tilde{h}_{t'} := f_{t'}(\tilde{h}_{<t'}, x, \tilde{\epsilon}_{t'}; \theta), \quad t' > t$$
+### 整体框架
+本文不提出新模型，而是把隐式CoT的隐状态轨迹当作一个可以被"做手术"的因果系统来研究：将每一步隐状态视为结构因果模型(SCM)中的因果变量，用 do-干预切断某一步与上游的关联，再用统一的读出协议观察下游计算和最终答案如何变化。整套分析围绕三个递进的研究问题展开——RQ1 问哪些步骤因果上必要、RQ2 问信息如何在步骤间传播、RQ3 问竞争答案在内部何时坍缩为承诺。
 
-### RQ1: 步骤必要性与充分性
-**零干预(Zero Intervention)**：将目标步骤隐状态置零$\mathrm{do}(h_t \leftarrow \mathbf{0})$，计算flip rate——被干预后最终预测与基线不同的样本比例：
-$$\mathrm{Flip}(t) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}[\tilde{y}_i^{(t)} \neq y_i]$$
-该指标衡量各步骤对最终决策的因果必要性。选择零干预因其确定性、无参数、跨架构公平。
+### 关键设计
 
-**早停解码(Early-Stop Decoding)**：截断第$k$步后直接解码，定义最早可解码步$k_i$和累计解决率$S(k)$：
-$$k_i = \min(\{k : \hat{y}_i^{(\leq k)} = y_i^*\} \cup \{\infty\}), \quad S(k) = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{k_i \leq k\}$$
+**1. SCM 因果建模与 do-干预接口：让"隐式"推理变得可手术。** 隐式CoT把中间计算压进连续表征，没有离散可编辑的文字步骤，传统的步骤消融无从下手。本文对输入$x$把模型写成转移机制$H_t = f_t(H_{<t}, x, \epsilon_t; \theta)$与解码机制$Y = g(H_{1:T}, x, \epsilon_y; \theta)$，于是每个隐状态都成了因果图上的一个节点。干预通过算子$\mathrm{do}(h_t \leftarrow \tilde{h}_t)$替换第$t$步状态来切断它与上游的因果关联，被干预后的反事实轨迹再按$\tilde{h}_{t'} := f_{t'}(\tilde{h}_{<t'}, x, \tilde{\epsilon}_{t'}; \theta)$($t' > t$)向下递推。这个统一接口的好处是与具体架构解耦——Coconut(循环隐token)和CODI(自蒸馏压缩CoT)结构迥异，却共享同一套干预读出协议，从而可比。
 
-### RQ2: 信息流与步间影响结构
-结合单步干预与下游早期读出，通过teacher-forced输出分布的KL散度量化步$t$到步$s$的定向传播强度：
-$$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}(p_{\text{base}}^{(s)}(\cdot \mid y_{i,<u}^*) \| p_{\mathrm{do}(t)}^{(s)}(\cdot \mid y_{i,<u}^*))$$
-聚合构建影响矩阵$W_{t,s} = \mathbb{E}_i[\mathrm{KL}_{t \to s}^{(i)}]$。可视化时保留边权$> 0.1 \cdot \max(W)$的top-1出边，构建主导影响图。同时计算四个归一化结构指标：
-- **Locality**: 对角线附近的影响质量集中度
-- **Span**: 期望跳跃距离
-- **Early-out**: 来自早期步骤的影响占比
-- **Late-in**: 汇聚到晚期步骤的影响占比
+**2. 步骤必要性度量：用零干预 flip rate 找出高杠杆步骤。** 要判断哪些步骤不可或缺，本文把目标步骤隐状态置零$\mathrm{do}(h_t \leftarrow \mathbf{0})$，统计 flip rate 即干预后最终预测翻转的样本比例：$\mathrm{Flip}(t) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}[\tilde{y}_i^{(t)} \neq y_i]$。选零干预而非加噪或换均值，是因为它确定性、无参数、跨架构公平，对比6种干预方式(zero/mean/mean_step/gaussian_h/gaussian_mu/gaussian_mu_step)后定性结论一致。与必要性互补的是充分性：早停解码在第$k$步后直接截断解码，用最早可解码步$k_i = \min(\{k : \hat{y}_i^{(\leq k)} = y_i^*\} \cup \{\infty\})$和累计解决率$S(k) = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{k_i \leq k\}$刻画答案"什么时候已经够用"。
 
-### RQ3: 叠加与提交
-在StrategyQA(Yes/No二元标签)上通过随机采样获取两模式prompt。对每个prompt，采样$K$次rollout划分为$\mathcal{C}_Y$和$\mathcal{C}_N$，用两种读出方式在每步测量对两个答案的支持度：
-- **Teacher-forced readout**：在固定答案模板上计算token级log概率
-- **Probe readout**：固定探针将$h_t$映射到下一token概率
+**3. 步间影响矩阵：用 KL 散度画出信息传播图。** 仅知道单步重不重要还不够，本文要看信息怎么在步骤间流动。把单步干预与下游 teacher-forced 读出结合，用输出分布的 KL 散度量化步$t$到步$s$的定向传播强度$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}(p_{\text{base}}^{(s)}(\cdot \mid y_{i,<u}^*) \| p_{\mathrm{do}(t)}^{(s)}(\cdot \mid y_{i,<u}^*))$，再聚合成影响矩阵$W_{t,s} = \mathbb{E}_i[\mathrm{KL}_{t \to s}^{(i)}]$。可视化时只保留边权$> 0.1 \cdot \max(W)$的 top-1 出边构成主导影响图，并配四个归一化结构指标——Locality(影响质量在对角线附近的集中度)、Span(期望跳跃距离)、Early-out(来自早期步骤的影响占比)、Late-in(汇聚到晚期步骤的影响占比)。正是这组指标揭示了隐式CoT 的非局部跳跃传播，与显式CoT 的近链式局部传播形成对照。
 
-定义叠加分数$\mathrm{SS}(t) = \min(p_Y(t), p_N(t))$，高叠加分数意味着两个答案在中间步骤保持竞争。
+**4. 叠加分数：分离"输出提交"与"表征提交"。** 最后一个问题是：模型内部何时真正"想清楚"了答案。本文在二元标签的 StrategyQA 上随机采样得到两模式 prompt，每个 prompt 采$K$次 rollout 分到$\mathcal{C}_Y$和$\mathcal{C}_N$，并用两种读出在每步测两个答案的支持度——teacher-forced readout 在固定答案模板上算 token 级 log 概率，probe readout 用固定探针把$h_t$映射到下一 token 概率。叠加分数定义为$\mathrm{SS}(t) = \min(p_Y(t), p_N(t))$，分数高说明两个候选答案在中间步骤仍在竞争。两种读出的反差正是核心发现的来源：输出层早早锁定(SS 低)，表征层却把竞争假设保留到最后一步才坍缩(SS 高)，说明"可解码"并不等于"已承诺"。
 
-### 关键设计选择
-- **干预算子鲁棒性验证**：对比6种干预方式(zero/mean/mean_step/gaussian_h/gaussian_mu/gaussian_mu_step)，定性结果一致，选择zero因其确定性
-- **两种推理范式对比**：Coconut(循环隐token)与CODI(自蒸馏压缩CoT)，架构不同但共享相同干预接口
-- **三层分析递进**：现象(RQ1: 哪些步骤重要) → 机制(RQ2: 信息如何传播) → 本质(RQ3: 竞争假设如何演化)
+### 一个完整示例
+以 GSM8K 上一个 Coconut 样本($T=6$)为例：先跑无干预基线得到隐轨迹$H_{1:6}$和正确答案；RQ1 逐个把$h_t$置零重跑，发现中间步(如$t=3,4$)置零后 flip 远高于首尾步，定位出高杠杆步骤；RQ2 对$h_3$做干预后逐步读出 KL，发现影响并未顺着$3\to4\to5$链式衰减，而是出现$3\to6$的跳跃强边，反映非局部路由；若换到 StrategyQA，RQ3 会看到 teacher-forced 的 SS 全程很低(输出早提交)，而 probe 的 SS 中段偏高、末步才骤降(表征晚提交)。同一套干预读出接口贯穿三步，逐层从"哪步重要"走到"竞争如何收敛"。
 
 ## 实验结果
 
@@ -156,9 +136,9 @@ $$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}
 
 - [\[ICLR 2026\] When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models](when_reasoning_meets_compression_understanding_the_effects_of_pruning_and_quant.md)
 - [\[ICLR 2026\] Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
+- [\[ICLR 2026\] LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision](logicreward_incentivizing_llm_reasoning_via_step-wise_logical_supervision.md)
 - [\[ICLR 2026\] Generalizable End-to-End Tool-Use RL with Synthetic CodeGym](generalizable_end-to-end_tool-use_rl_with_synthetic_codegym.md)
 - [\[ICLR 2026\] Beyond Prompt-Induced Lies: Investigating LLM Deception on Benign Prompts](beyond_prompt-induced_lies_investigating_llm_deception_on_benign_prompts.md)
-- [\[ICLR 2026\] Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
 
 </div>
 

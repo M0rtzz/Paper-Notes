@@ -172,7 +172,7 @@ $$\mathcal{B}[\theta_A, \theta_B] = \sup_{\lambda \in [0,1]} \left[ \mathcal{L}[
 
 ## 相关论文
 
-- [\[ICML 2025\] Understanding Mode Connectivity via Parameter Space Symmetry](../../ICML2025/others/understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [\[ICLR 2026\] Do We Really Need Permutations? Impact of Model Width on Linear Mode Connectivity](../../ICLR2026/others/do_we_really_need_permutations_impact_of_model_width_on_linear_mode_connectivity.md)
 - [\[ICLR 2026\] Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](../../ICLR2026/others/entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
 - [\[NeurIPS 2025\] Scalable Inference of Functional Neural Connectivity at Submillisecond Timescales](scalable_inference_of_functional_neural_connectivity_at_submillisecond_timescale.md)
 - [\[NeurIPS 2025\] Infrequent Exploration in Linear Bandits](infrequent_exploration_in_linear_bandits.md)

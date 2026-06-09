@@ -40,41 +40,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-干净语音 x + 环境噪声 n 通过 DNS 模型去噪可正常输出干净语音；而干净语音 x + 环境噪声 n + 对抗扰动 delta 通过 DNS 模型去噪后输出不可理解的 gibberish。攻击目标是找到 delta 使得 (a) delta 人耳不可感知（心理声学约束），(b) DNS 输出的语音可懂度极低（STOI 趋近于 0）。
+这篇论文要回答一个安全问题：一段人耳完全听不出异常的微小声音扰动，能不能彻底摧毁 SOTA 语音去噪模型的去噪能力？为此它构造一个白盒攻击——干净语音 $x$ 加环境噪声 $n$ 时 DNS 模型本应正常还原出干净语音，但在输入里再叠加一个对抗扰动 $\delta$ 后，去噪输出就变成完全听不懂的 gibberish。整个攻击就是求解这样一个 $\delta$，让它同时满足两个目标：一是 $\delta$ 在人耳听感上不可感知（心理声学约束），二是去噪输出的可懂度极低（STOI 趋近于 0）。下面三个设计分别对应"用什么当损失""怎么藏住扰动""怎么解出来"，第四点交代被攻击的 4 款模型为何有代表性。
 
 ### 关键设计
 
-1. **攻击目标——STOI 损失最小化**:
+**1. 攻击目标：把 STOI 压到趋近 0，让"听不懂"变成可优化的损失。**
 
-    - 功能：最小化 DNS 输出的短时客观可懂度（Short-Time Objective Intelligibility, STOI）
-    - 核心思路：STOI 逐帧计算干净参考与去噪输出之间的归一化相关系数再取平均，将其取负作为损失函数，通过 PGD 梯度下降优化对抗扰动 delta
-    - 设计动机：STOI 与人类语音可懂度高度相关（相比 PESQ 等音质指标，STOI 更直接反映"能不能听懂"），最小化 STOI 等价于最大化语音不可理解性
-    - 关键细节：STOI 的计算是可微分的，可以直接反向传播梯度到输入扰动
+攻击要破坏的是"能不能听懂"，所以损失直接选短时客观可懂度（Short-Time Objective Intelligibility, STOI）而非音质指标。STOI 逐帧计算干净参考与去噪输出之间的归一化相关系数再取平均，攻击把它取负作为损失，用 PGD 梯度下降去优化扰动 $\delta$。之所以用 STOI 而不是 PESQ，是因为 STOI 与人类可懂度的相关性更高——PESQ 反映的是"好不好听"，STOI 反映的才是"能不能听懂"，最小化 STOI 等价于最大化语音的不可理解性。关键是 STOI 的计算是可微分的，梯度能一路反向传播回输入扰动，使得它可以直接当攻击目标。
 
-2. **心理声学不可感知性约束**:
+**2. 心理声学不可感知性约束：用 MP3 的掩蔽模型把扰动藏进人耳听不到的频段。**
 
-    - 功能：确保对抗扰动在人耳掩蔽阈值以下，使得加了扰动后听起来和原信号一样
-    - 核心思路：使用 ISO MPEG-1 Psychoacoustic Model 2（MP3 编码使用的标准模型）计算每个频率 bin 的掩蔽阈值 T(k)，再加上 12 dB 安全偏移量以保证充分不可感知，约束扰动功率谱密度 PSD(delta, k) <= T(k) - 12dB
-    - 额外处理：考虑了前掩蔽（pre-masking, 约 2ms）和后掩蔽（post-masking, 约 200ms）的时间效应，进一步放松了时间域的约束以利用人耳的时间掩蔽特性
-    - 设计动机：传统 L-infinity 约束不符合人耳感知特性——低频处人耳更敏感，高频处容忍更大扰动；心理声学模型精确建模了频率掩蔽和时间掩蔽，比固定范数约束更贴合真实感知
+传统对抗攻击常用的 $L_\infty$ 范数约束在音频上并不合适——人耳在低频更敏感、在高频能容忍更大的扰动，一刀切的范数无法刻画这种差异。这里改用 ISO MPEG-1 Psychoacoustic Model 2（即 MP3 编码采用的标准心理声学模型）逐频率 bin 计算掩蔽阈值 $T(k)$，再额外减去 12 dB 安全偏移以确保充分不可感知，把扰动的功率谱密度约束在阈值之下：
 
-3. **PGD 优化流程**:
+$$\mathrm{PSD}(\delta, k) \le T(k) - 12\,\text{dB}$$
 
-    - 功能：迭代梯度投影求解约束优化问题
-    - 核心思路：标准 PGD 框架——梯度下降步 + 投影到心理声学约束集。每步更新 delta = delta - alpha * sign(grad)，然后逐频率 bin 裁剪到掩蔽阈值以下
-    - 关键细节：PGD 步数 200 步，学习率经过调优；对 Full-SubNet+ 需要梯度裁剪以处理其已知的梯度爆炸问题
-    - 初始化：从零初始化或随机初始化均可，零初始化更稳定
+不仅如此，约束还纳入了前掩蔽（pre-masking，约 2 ms）和后掩蔽（post-masking，约 200 ms）的时间效应，在时间域上进一步放松约束以利用人耳的时间掩蔽特性。这样得到的约束集精确建模了频率掩蔽和时间掩蔽，比固定范数更贴合真实听感，也是攻击能"静默"的关键。
 
-4. **评估的 4 款 DNS 模型**:
+**3. PGD 优化：梯度下降 + 投影到掩蔽阈值约束集。**
 
-    - **Demucs** (Meta): 时域 U-Net + LSTM，encoder-decoder 架构，参数量最大
-    - **Full-SubNet+** (FSN+): 频域全带-子带网络，已知存在梯度爆炸问题（obfuscated gradient）
-    - **FRCRN** (Alibaba): 频率递归 CRN，复数谱处理，中等参数量
-    - **MP-SENet**: 同时预测幅度和相位的掩码增强网络，最新架构
+求解走的是标准投影梯度下降框架——每一步先做梯度下降 $\delta = \delta - \alpha \cdot \mathrm{sign}(\nabla)$，再把更新后的扰动逐频率 bin 裁剪到掩蔽阈值以下，使其始终落在第 2 点定义的约束集内。迭代 200 步，学习率经过调优；对 Full-SubNet+ 这种已知存在梯度爆炸的模型还需额外做梯度裁剪才能稳定优化。初始化用零初始化或随机初始化都可以，零初始化更稳定。
 
-### 评估条件
-- **声学条件**：5 种 SNR（70dB / 30dB / 10dB / 5dB / 0dB）乘以有无混响，外加模拟 OTA（over-the-air）传输
-- **人类评估**：(a) 转录测试——让受试者听去噪输出并尝试转录，计算 WER；(b) ABX 测试——给受试者三个音频让其辨别哪个是对抗信号，验证扰动不可感知性
+**4. 受测的 4 款 DNS 架构：覆盖时域 / 频域 / 复数谱 / 幅相联合四类设计。**
+
+选这 4 款是为了让结论不依赖某一种架构倾向：Demucs（Meta）是时域 U-Net + LSTM 的 encoder-decoder，参数量最大；Full-SubNet+（FSN+）是频域全带-子带网络，已知存在梯度爆炸问题（obfuscated gradient）；FRCRN（Alibaba）是频率递归 CRN，在复数谱上处理，参数量中等；MP-SENet 是同时预测幅度和相位的掩码增强网络，属于最新架构。四者分别代表了主流 DNS 的四类技术路线，因此"全部被攻破"才有普适意义。
+
+### 评估设置
+- **声学条件**：5 种 SNR（70dB / 30dB / 10dB / 5dB / 0dB）乘以有无混响，外加模拟 OTA（over-the-air）传输，构成从理想到接近真实的完整谱系
+- **人类评估**：(a) 转录测试——让受试者听去噪输出并尝试转录，计算 WER，验证输出确实不可懂；(b) ABX 测试——给受试者三个音频让其辨别哪个是对抗信号，验证扰动确实不可感知
 - **客观指标**：STOI、PESQ、ViSQOL、SI-SDR 全面评估
 
 ## 实验关键数据
@@ -146,7 +138,7 @@ tags:
 - [\[ICML 2026\] Coloring the Noise: Adversarial Sobolev Alignment for Faithful Image Super Resolution](../../ICML2026/image_restoration/coloring_the_noise_adversarial_sobolev_alignment_for_faithful_image_super_resolu.md)
 - [\[ICLR 2026\] Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
 - [\[ICLR 2026\] Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
-- [\[ACL 2025\] DiffuseDef: Improved Robustness to Adversarial Attacks via Iterative Denoising](../../ACL2025/image_restoration/diffusedef_adversarial_defense.md)
+- [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
 
 </div>
 

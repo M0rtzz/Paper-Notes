@@ -47,41 +47,27 @@ tags:
 
 $$x_{k+1} = f(x_k, u_k) + n_k$$
 
-其中 $f$ 是未知动态，$n_k \sim \mathcal{N}(0, \sigma^2 I)$ 是过程噪声。决策者的目标是最小化累积损失 $\sum_{k=1}^N l(x_k, u_k)$。
+其中 $f$ 是未知动态，$n_k \sim \mathcal{N}(0, \sigma^2 I)$ 是过程噪声，决策者要最小化累积损失 $\sum_{k=1}^N l(x_k, u_k)$。难点在于 $f$ 未知，必须边控制边把它辨识出来。
 
-算法的核心思想是**后验采样 + 确定性等价控制 + 持续激励**：
-- 根据过去轨迹维护各候选模型的一步预测误差
-- 通过 softmax 分布从候选模型中采样
-- 应用所选模型对应的最优反馈策略
-- 在控制输入中加入高斯激励噪声以保证模型辨识
+算法把这件事拆成一个"后验采样 + 确定性等价 + 持续激励"的闭环：每一步先根据迄今为止的轨迹给每个候选模型算一个一步预测误差，误差越小的模型越可能是真模型；据此从候选模型中按 softmax 分布随机采一个出来，把它当成真模型、直接套用它对应的最优反馈策略；同时在控制输入里掺一点高斯激励噪声，保证系统被持续激励、模型能被辨识出来。整篇论文的贡献是把这同一套机制贯穿三种由简到繁的模型复杂度——有限候选集、无穷函数类、连续参数族——并分别给出非渐近的策略遗憾界。
 
 ### 关键设计
 
-#### 1. **设定S1：有限模型集**
+**1. 设定 S1：有限模型集——后验采样换来对数遗憾。**
 
-给定 $m$ 个候选非线性模型 $\{f_1, \dots, f_m\}$，算法维护每个模型的归一化一步预测误差：
+最基础的情形是给定 $m$ 个候选非线性模型 $\{f_1, \dots, f_m\}$，要在线挑出真正描述系统的那一个。算法为每个模型维护一份归一化的累积一步预测误差：
 
 $$s_k^i = \sum_{j=1}^{k-1} \frac{|x_{j+1} - f_i(x_j, u_j)|^2}{1 + |(x_j, u_j)|^2 / b^2}$$
 
-然后以概率 $p_k^i \propto \exp(-\eta s_k^i)$ 采样模型索引 $i_k$。这里归一化因子 $1 + |(x_j, u_j)|^2 / b^2$ 确保了即使状态-输入变得很大，$s_k^i$ 仍然有界。
+分母里的归一化因子 $1 + |(x_j, u_j)|^2 / b^2$ 是关键——它保证即使状态和输入变得很大，单步误差贡献仍然有界，从而 $s_k^i$ 不会被个别大幅度激励主导。然后以概率 $p_k^i \propto \exp(-\eta s_k^i)$ 采样模型索引 $i_k$。之所以用这个指数形式，是因为在高斯噪声假设下 $\exp(-s_k^i)$ 恰好正比于给定过去轨迹时模型 $f_i$ 的后验概率，所以这一步就是不折不扣的 Thompson Sampling；而 $\eta$ 则充当 softmax 温度，调节采样的"果断程度"。正是这种"一次观测同时更新所有候选模型证据"的特性，让策略遗憾只对模型数量取对数——定理 2.1 给出 $\mathcal{O}(\ln N + \ln m)$ 的界，时间水平与模型数量都只进对数。
 
-设计动机：从贝叶斯角度看，$\exp(-s_k^i)$ 正是给定过去轨迹下模型 $f_i$ 的后验概率（由于噪声是高斯的）。$\eta$ 参数实现了 softmax 温度控制。
+**2. 设定 S2：无穷基数函数类——用 ε-packing 把无穷离散成有限。**
 
-核心结果（定理 2.1）：策略遗憾为 $\mathcal{O}(\ln N + \ln m)$，对数依赖于时间水平和模型数量。
+当候选集 $F$ 不再是有限的、而是某个赋范向量空间里的有界集（如有界 Lipschitz 函数空间）时，没法直接对每个模型算误差。算法的做法是先用贪心覆盖构造一个 $\epsilon$-packing $F_\epsilon$，把无穷集近似成一个有限网格，再原样套用 S1 的后验采样框架。代价是引入了离散化误差，遗憾界因此变成两项的权衡（定理 2.2）：$\mathcal{O}(N\epsilon^2 + \ln(m(\epsilon))/\epsilon^2)$，前一项来自 $\epsilon$ 的逼近偏差、后一项来自 packing number $m(\epsilon)$ 带来的估计代价。对有界 $L$-Lipschitz 函数取最优 $\epsilon$ 后，遗憾增长率约为 $T^{(d_x+d_u)/(d_x+d_u+2)} = o(T)$，仍是无遗憾学习——只是随着状态-输入维度升高而逼近线性，体现了非参数情形固有的维度诅咒。
 
-#### 2. **设定S2：无穷基数函数类**
+**3. 设定 S3：参数化模型族——连续后验直接采样。**
 
-当候选模型集 $F$ 是赋范向量空间中的有界集（如有界Lipschitz函数空间）时，算法通过贪心覆盖构造 $\epsilon$-packing $F_\epsilon$，将无穷集离散化为有限集合，再套用 S1 的分析框架。
-
-核心结果（定理 2.2）：遗憾为 $\mathcal{O}(N\epsilon^2 + \ln(m(\epsilon))/\epsilon^2)$，其中 $m(\epsilon)$ 是 packing number。对于有界 $L$-Lipschitz 函数，遗憾增长率约为 $T^{(d_x+d_u)/(d_x+d_u+2)} = o(T)$，证明了无遗憾学习。
-
-#### 3. **设定S3：参数化模型**
-
-当 $F = \{f_\theta | \theta \in \Omega \subset \mathbb{R}^p\}$（如神经网络参数化）时，算法直接从连续的后验分布中采样参数 $\theta_k$。
-
-设计亮点：对于线性特征映射 $f_\theta(x,u) = \phi(x,u)^\top \theta$，后验分布是高斯的，均值和协方差可通过递推最小二乘高效计算，每步复杂度仅为 $\mathcal{O}(p^2)$。
-
-核心结果（定理 2.3）：遗憾为 $\mathcal{O}(\sqrt{Np})$，与线性系统的已知结果一致。
+当模型族写成参数形式 $F = \{f_\theta \mid \theta \in \Omega \subset \mathbb{R}^p\}$（如神经网络参数化）时，不必再离散化，算法直接从连续的后验分布里采样参数 $\theta_k$。这一情形最实用的特例是线性特征映射 $f_\theta(x,u) = \phi(x,u)^\top \theta$：此时后验是高斯分布，其均值与协方差可用递推最小二乘在线更新，每步只花 $\mathcal{O}(p^2)$ 计算，无需重新拟合整段轨迹。定理 2.3 给出 $\mathcal{O}(\sqrt{Np})$ 的遗憾，与线性系统在线学习的已知最优结果吻合，说明这套多模型视角把经典线性结论收纳成了一个特例。
 
 ### 损失函数 / 训练策略
 
@@ -151,11 +137,11 @@ $$s_k^i = \sum_{j=1}^{k-1} \frac{|x_{j+1} - f_i(x_j, u_j)|^2}{1 + |(x_j, u_j)|^2
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning](../../NeurIPS2025/reinforcement_learning/sample_complexity_of_distributionally_robust_average-reward_reinforcement_learni.md)
 - [\[ICML 2025\] The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability](../../ICML2025/reinforcement_learning/the_sample_complexity_of_online_strategic_decision_making_with_information_asymm.md)
 - [\[ICLR 2026\] On the Generalization of SFT: A Reinforcement Learning Perspective with Reward Rectification](on_the_generalization_of_sft_a_reinforcement_learning_perspective_with_reward_re.md)
 - [\[ICLR 2026\] Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
 - [\[ICLR 2026\] Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
+- [\[AAAI 2026\] Language Model Distillation: A Temporal Difference Imitation Learning Perspective](../../AAAI2026/reinforcement_learning/language_model_distillation_a_temporal_difference_imitation_learning_perspective.md)
 
 </div>
 

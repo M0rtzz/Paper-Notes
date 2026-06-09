@@ -41,26 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-1. 分析真实幼鼠开放场行为数据，提取运动统计并通过聚类识别发育阶段；2. 用各阶段运动统计驱动模拟环境中的智能体产生轨迹；3. 在轨迹上训练浅层 RNN 做一步视觉预测任务；4. 各发育阶段依次训练后分析 RNN 隐藏状态的空间调谐特性，与海马记录数据对比。
+论文想回答一个具体问题：是否仅凭运动发育阶段的统计变化，就能驱动海马空间编码神经元按生物学时间线依次涌现。为此它搭了一条从行为数据到神经表征的计算链路——先从真实幼鼠的开放场行为里把运动统计（速度、加速度、转弯频率等）按发育阶段聚类出来，再用每个阶段的统计去驱动模拟环境中的智能体生成轨迹，让一个浅层 RNN 在这些轨迹上做"预测下一帧视觉"的自监督任务。RNN 按爬行→行走→奔跑→成体的顺序逐阶段训练，最后分析它隐藏状态的空间调谐特性，和真实大鼠海马记录的发育时间线逐项对照。
 
 ### 关键设计
-1. **运动发育阶段提取**:
-    - 功能：从已发表的幼鼠开放场实验数据中提取运动统计特征（速度、加速度、角速度等），使用聚类方法识别发育阶段
-    - 核心思路：K-means 聚类将 P12–P60 的运动数据自动分为三个发育阶段——爬行（crawl, ~P12-P15）、行走（walk, ~P16-P19）、奔跑（run, ~P20+），加上成体阶段
-    - 设计动机：避免人为定义发育阶段，让数据驱动的聚类揭示运动模式的自然转折点，确保输入 RNN 的运动统计真实反映生物学
 
-2. **预测学习 RNN 模型**:
-    - 功能：浅层 RNN 接收当前时刻的全景视觉 $\mathbf{v}_t \in \mathbb{R}^{80}$ 和前庭信号（角速度 $\omega_t$），通过隐藏状态 $\mathbf{h}_t$ 预测下一时刻的视觉输入 $\hat{\mathbf{v}}_{t+1}$
-    - 核心思路：$\mathbf{h}_t = f(\mathbf{W}_{vh}\mathbf{v}_t + \mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{\omega h}\omega_t + \mathbf{b})$，损失函数为 $\mathcal{L} = \|\hat{\mathbf{v}}_{t+1} - \mathbf{v}_{t+1}\|^2$
-    - 设计动机：预测学习框架被广泛支持（Eichenbaum et al. 2004; Levy 1989），海马被视为比较传入感觉与记忆预测的系统。使用自我中心视觉而非位置坐标，避免提供特权空间信息
+**1. 运动发育阶段提取：让数据自己划出发育的转折点。**
 
-3. **渐进发育暴露训练策略**:
-    - 功能：RNN 依次暴露于各发育阶段的运动轨迹——先在爬行模式轨迹上训练至收敛，再切换到行走、奔跑、成体阶段
-    - 核心思路：每个阶段的轨迹由具有该阶段运动统计（速度分布、转弯频率等）的模拟智能体在 0.625×0.625m 环境中运动生成。成体阶段额外引入网格细胞输入 $g(\mathbf{x}) = \sum_k \cos(\mathbf{k}_i \cdot \mathbf{x})$，scale 参数 $\lambda \in \{0.2, 0.4, 0.6\}$ m
-    - 设计动机：模拟真实动物的发育过程——幼鼠在不同年龄表现出质性不同的运动模式，这些模式提供了不同统计特征的感觉经验
+已有模型普遍用一套恒定的运动模式生成轨迹，根本没法反映幼鼠在不同年龄运动方式的质变，自然也就无从检验"运动发育是否驱动空间编码"。本文改从已发表的幼鼠开放场实验数据里提取速度、加速度、角速度等运动统计，再用 K-means 聚类把 P12–P60 的运动数据自动切成三个阶段——爬行（crawl, ~P12-P15）、行走（walk, ~P16-P19）、奔跑（run, ~P20+），外加成体阶段。关键在于发育阶段不是人为划的，而是聚类从运动模式里读出的自然转折点，这样喂给 RNN 的运动统计才真实对应生物学上的发育节点。
 
-### 空间调谐量化
-使用标准空间信息指标 $SI = \sum_i p_i \frac{r_i}{\bar{r}} \log_2 \frac{r_i}{\bar{r}}$ 量化位置编码，Rayleigh 向量长度（RVL）量化方向选择性，阈值法识别位置细胞和 HD 细胞。对照实验包括：反转发育顺序、控制帧间时间间距、控制累积训练量。
+**2. 预测学习 RNN：用自我中心视觉，不给特权坐标。**
+
+以往模型（如路径积分类）往往直接把 $x$-$y$ 坐标作为监督信号喂进去，等于提前把"空间"这个答案泄露给了网络。本文换成预测学习框架：浅层 RNN 接收当前时刻的全景视觉 $\mathbf{v}_t \in \mathbb{R}^{80}$ 和前庭信号（角速度 $\omega_t$），用隐藏状态去预测下一时刻的视觉输入 $\hat{\mathbf{v}}_{t+1}$，
+
+$$\mathbf{h}_t = f(\mathbf{W}_{vh}\mathbf{v}_t + \mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{\omega h}\omega_t + \mathbf{b}), \qquad \mathcal{L} = \|\hat{\mathbf{v}}_{t+1} - \mathbf{v}_{t+1}\|^2$$
+
+这个选择有两层考虑：一是预测学习框架本身有大量文献支持（Eichenbaum et al. 2004; Levy 1989），海马常被建模成"比较传入感觉与记忆预测"的系统；二是只用自我中心视觉而非绝对位置坐标，空间表征就只能是网络为完成预测任务自发学出来的，而不是被直接灌进去的，这才让"运动统计驱动涌现"的结论站得住。
+
+**3. 渐进发育暴露训练：把动物的成长顺序搬进训练课程。**
+
+要检验发育顺序本身是否重要，就不能一次性把所有运动模式混着训。本文让同一个 RNN 依次经历各阶段的轨迹——先在爬行模式的轨迹上训到收敛，再切到行走、奔跑、成体。每个阶段的轨迹都由带有该阶段运动统计（速度分布、转弯频率等）的模拟智能体在 $0.625 \times 0.625$ m 的环境里运动生成；成体阶段还额外引入网格细胞输入 $g(\mathbf{x}) = \sum_k \cos(\mathbf{k}_i \cdot \mathbf{x})$，scale 参数 $\lambda \in \{0.2, 0.4, 0.6\}$ m。这套渐进暴露其实就是在模拟真实动物的成长过程：幼鼠在不同年龄表现出质性不同的运动模式，每种模式给网络的是统计特征不同的感觉经验，发育顺序也因此被编码进了训练课程里。
+
+**4. 空间调谐量化：用标准指标把"像不像空间细胞"算成数。**
+
+光看隐藏状态还不够，得有客观尺子才能和海马记录对齐。本文用标准空间信息指标量化位置编码，
+
+$$SI = \sum_i p_i \frac{r_i}{\bar{r}} \log_2 \frac{r_i}{\bar{r}}$$
+
+其中 $p_i$ 是落在第 $i$ 个空间 bin 的占用概率，$r_i$、$\bar{r}$ 分别是该 bin 的发放率与平均发放率；再用 Rayleigh 向量长度（RVL）量化方向选择性，最后用阈值法把符合标准的单元判定为位置细胞或 HD 细胞。为排除混淆因素，配套了一组对照实验：反转发育顺序、控制帧间时间间距、控制累积训练量——分别用来证明发育顺序、时间分辨率和训练量各自的作用边界。
 
 ## 实验关键数据
 
@@ -120,9 +127,9 @@ tags:
 
 - [\[ICML 2026\] How the Optimizer Shapes Learned Solutions in Equivariant Neural Networks](../../ICML2026/others/how_the_optimizer_shapes_learned_solutions_in_equivariant_neural_networks.md)
 - [\[ICLR 2026\] Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
-- [\[NeurIPS 2025\] RNNs Perform Task Computations by Dynamically Warping Neural Representations](../../NeurIPS2025/others/rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)
-- [\[AAAI 2026\] How Wide and How Deep? Mitigating Over-Squashing of GNNs via Channel Capacity Constrained Estimation](../../AAAI2026/others/how_wide_and_how_deep_mitigating_over-squashing_of_gnns_via_channel_capacity_con.md)
-- [\[NeurIPS 2025\] Learning Dynamics of RNNs in Closed-Loop Environments](../../NeurIPS2025/others/learning_dynamics_of_rnns_in_closed-loop_environments.md)
+- [\[ICLR 2026\] Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
+- [\[NeurIPS 2025\] Estimation of Stochastic Optimal Transport Maps](../../NeurIPS2025/others/estimation_of_stochastic_optimal_transport_maps.md)
+- [\[AAAI 2026\] EvoEmpirBench: Dynamic Spatial Reasoning with Agent-ExpVer](../../AAAI2026/others/evoempirbench_dynamic_spatial_reasoning_with_agent-expver.md)
 
 </div>
 

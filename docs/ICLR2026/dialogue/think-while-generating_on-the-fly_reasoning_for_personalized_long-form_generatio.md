@@ -41,33 +41,33 @@ FlyThinker 的核心洞察：通过将推理与生成解耦到两个独立模型
 
 ### 整体框架
 
-FlyThinker 包含两个并行模型：
-- **Reasoner (R)**: 在每个生成步骤产生一个潜在推理 token，输入为查询和之前已生成的响应
-- **Generator (G)**: 增强版 LLM，将潜在推理信号融合到 token 预测中
-
-核心公式化：
-
-$$\text{Generation:} \quad (h,x) \xrightarrow{(h,x;\hat{y}_{<1}+r_{<1})} \hat{y}_1 \xrightarrow{(h,x;\hat{y}_{<2}+r_{<2})} \hat{y}_2 \dots$$
-
-$$\text{Reasoning:} \quad (h,x) \xrightarrow{(h,x,\hat{y}_{<1})} r_1 \xrightarrow{(h,x,\hat{y}_{<2})} r_2 \dots$$
+FlyThinker 把"边想边写"拆成两个并行运转的模型：一个推理模型 Reasoner $R$ 在每个生成步骤吐出一个潜在推理 token，输入是用户历史 $h$、查询 $x$ 和已经写出的响应前缀；一个生成模型 Generator $G$ 则是被改造过的 LLM，把这些推理信号融进自己的 token 预测里。关键的解耦点在于第 $t$ 步的推理只看已生成的文本 $\hat{y}_{<t}$、不看之前的推理 $r_{<t}$，于是生成链 $(h,x;\hat{y}_{<t}+r_{<t})\to\hat{y}_t$ 和推理链 $(h,x,\hat{y}_{<t})\to r_t$ 之间不再有逐 token 的串行依赖，留出了真正并行化的空间。
 
 ### 关键设计
 
-1. **潜在推理 token 生成 (Reasoner)**: Reasoner 在每步 $t$ 从其最后一层隐状态提取潜在推理：$r_t = R_\theta^{(-1)}(h,x; \hat{y}_{<t-1})[-1]$。关键：$r_t$ **不依赖之前的推理** $r_{<t}$，只依赖已生成的响应 $\hat{y}_{<t-1}$，打破了推理 token 间的序列依赖。
+**1. 潜在推理 token 生成：让推理摆脱自身的序列依赖。**
 
-2. **推理信号融合 (Generator)**: Generator 通过加法融合将推理注入 token 嵌入空间：$f(\hat{y}_{<t}, r_{<t}) = [e(y_1) + \lambda r_1, \dots, e(y_{t-1}) + \lambda r_{t-1}]$，其中 $\lambda$ 控制推理信号强度。
+think-while-generating 之所以慢，是因为传统做法里第 $t$ 步推理要等第 $t-1$ 步推理算完。FlyThinker 把推理塞进一个独立的 Reasoner，并刻意切断推理 token 之间的链条：每步从 Reasoner 最后一层隐状态直接取出潜在推理 $r_t = R_\theta^{(-1)}(h,x; \hat{y}_{<t-1})[-1]$。这里 $r_t$ 只依赖已生成的响应 $\hat{y}_{<t-1}$，而不依赖此前的任何 $r_{<t}$。由于推理信号锚定在不断增长的文本前缀上而非另一条推理链上，它依然能随内容动态演变，却把"必须串行"的约束彻底解掉了——这是后面所有并行优化的前提。
 
-3. **并行训练**: 由于 $r_t$ 不依赖 $r_{<t}$，训练时可将完整目标序列 $y$ 一次性输入 Reasoner，单次前向传播获得所有位置的推理 token $r^\star = [r_1, \dots, r_T]$。然后 Generator 也可并行计算所有位置的预测。与标准 LLM 训练效率接近。
+**2. 推理信号融合：用加法把潜在推理注入嵌入空间。**
 
-4. **并行推理**: 推理时，Generator 预测当前 token 的同时，Reasoner 并行准备下一步的推理 token。交错(staggered)设计消除等待时间，推理延迟接近标准非推理 LLM。
+Generator 拿到 Reasoner 给的 $r_t$ 后，不需要改动注意力结构，只在 token 嵌入层做一次加法融合：$f(\hat{y}_{<t}, r_{<t}) = [e(y_1) + \lambda r_1, \dots, e(y_{t-1}) + \lambda r_{t-1}]$。每个历史 token 的嵌入 $e(y_i)$ 叠加一份强度为 $\lambda$ 的推理向量 $\lambda r_i$，$\lambda$ 控制推理信号说话的分量。这种轻量注入让推理信息以最小侵入的方式参与每一步预测；消融实验也显示 $\lambda$ 在 $[0.2, 2.0]$ 区间内都稳定优于 SFT，$\lambda=0$ 退化为纯 SFT、$\lambda=5$ 则因信号过强反而干扰生成。
+
+**3. 并行训练：一次前向算完所有位置的推理。**
+
+正因为 $r_t$ 与 $r_{<t}$ 无关，训练时不必逐步生成推理，而是把完整目标序列 $y$ 一次性喂进 Reasoner，单次前向传播就拿到所有位置的推理 token $r^\star = [r_1, \dots, r_T]$。随后 Generator 也能在 teacher forcing 下并行算出每个位置的预测。整套流程的计算图和标准 LLM 训练几乎一致，所以实测训练时间只略高于 SFT，远低于需要逐步推理的 CoT 和 Coconut。
+
+**4. 并行推理：交错调度抹掉等待时间。**
+
+推理阶段采用交错(staggered)调度：Generator 在预测当前 token 的同时，Reasoner 就并行准备下一步要用的推理 token。两个模型流水线式错峰运转，谁都不必空等对方，因此端到端推理延迟接近一个不做任何推理的普通 LLM，把"边想边写"原本最致命的速度短板补平。
 
 ### 损失函数 / 训练策略
 
-使用标准的下一 token 预测损失联合优化 Reasoner 和 Generator：
+整套系统用标准的下一 token 预测损失端到端联合优化 Reasoner 和 Generator：
 
 $$\mathcal{L} = -\sum_{(h,x,y) \in \mathbb{D}} \sum_{t=1}^{|y|} \log P(\hat{Y}_t = y_t \mid h,x, y_{<t})$$
 
-无需外部推理标注或辅助目标，Reasoner 在端到端训练中自然学习生成有用的推理信号。
+不需要外部推理标注、也不引入任何辅助目标，Reasoner 在拟合真实响应的过程中自然学会产出对生成有帮助的推理信号。
 
 ## 实验关键数据
 

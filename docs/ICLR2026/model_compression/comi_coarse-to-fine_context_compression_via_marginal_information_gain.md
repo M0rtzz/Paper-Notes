@@ -41,32 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入上下文 $X$ + 查询 $Q$ → Encoder 编码 → 两阶段压缩：(1) 粗粒度分组预算再分配（基于组间 MIG）→ (2) 细粒度组内 token 融合（基于组内 MIG）→ LSA 跨层语义对齐 → Decoder 解码答案。
+COMI 要解决的是「在高压缩率下既保住相关信息、又不被冗余拖垮」这个矛盾。给定上下文 $X$ 和查询 $Q$，先用 Encoder 把它们编码成向量，然后做一套粗到细的两阶段压缩：宏观上先把上下文切成等长段，按每段的信息价值动态分配压缩预算（相关又独特的段少压一点）；微观上再在每段内部把多个 token 加权融合成一个压缩 token。两阶段都由同一个度量——边际信息增益 MIG——来驱动。压缩后的表征经过 LSA（Layer-wise Semantic Alignment）做跨层语义对齐，最后送进 Decoder 解码出答案。
 
 ### 关键设计
 
-1. **边际信息增益 MIG**:
+**1. 边际信息增益 MIG：用一个公式同时建模「相关」和「不冗余」。**
 
-    - 定义：$G(x_i, q, X) = \frac{x_i^\top q}{\|x_i\|\|q\|} - \max_{j \neq i} \frac{x_i^\top x_j}{\|x_i\|\|x_j\|}$
-    - 第一项：token 与 query 的余弦相似度（相关性）
-    - 第二项：token 与上下文中最相似 token 的余弦相似度（冗余度）
-    - 意义：MIG 高 = 与 query 相关且内容独特；MIG 低 = 不相关或高度冗余
-    - 设计动机：单纯相关性导致保留大量重复内容。MIG 联合建模相关性和唯一性，数学上证明了使用 MIG 的期望性能优于仅用相关性
+任务感知压缩的通病是只看相关性，结果保留下来的 token 高度相似——实测里仅 0.75% 的 token 就占了 99% 的 attention 权重，且彼此余弦相似度超过 0.6。COMI 的核心是把「保留哪些 token」的判据从单一相关性换成边际信息增益：
 
-2. **粗粒度分组预算再分配**:
+$$G(x_i, q, X) = \frac{x_i^\top q}{\|x_i\|\|q\|} - \max_{j \neq i} \frac{x_i^\top x_j}{\|x_i\|\|x_j\|}$$
 
-    - 功能：将上下文分为等长段，根据段的 MIG 动态分配压缩率
-    - 核心思路：对每段选代表向量（与 query 余弦最高的 token）→ 计算段的 MIG → softmax 反向排序分配权重 $P_i = e^{-G_i} / \sum e^{-G_j}$ → 高 MIG 段分配更多预算（更低压缩率）
-    - 设计动机：信息价值在上下文中分布不均——相关且独特的段应该获得更多保留预算
+第一项是 token 与 query 的余弦相似度，衡量相关性；第二项是该 token 与上下文中最相似 token 的余弦相似度，衡量冗余度。两者相减后，MIG 高意味着「既和 query 相关、内容又独特」，MIG 低意味着「要么不相关、要么和别人重复」。论文进一步从理论上证明了用 MIG 选 token 的期望性能优于仅用相关性，这条度量随后贯穿粗、细两个压缩阶段。
 
-3. **细粒度 token 融合**:
+**2. 粗粒度分组预算再分配：信息价值分布不均，就该差异化分预算。**
 
-    - 功能：在每组内用 MIG 加权将多个 token 融合为一个压缩 token
-    - 核心思路：$\tilde{h}_i = \sum_{h_k \in S_i} \frac{e^{G(h_k, \bar{q}, S_i)}}{\sum e^{G}} \cdot h_k$，高 MIG token 贡献更多
-    - 设计动机：避免简单均匀平均丢失关键信息。MIG 加权确保语义独特且相关的 token 主导融合结果
+信息在长上下文里分布是不均匀的，统一压缩率会让信息密集的段被过度压缩。COMI 先把上下文切成等长段，每段取一个代表向量（段内与 query 余弦相似度最高的那个 token），用它算出该段的 MIG $G_i$，再用一个反向 softmax 把压缩预算分下去：
+
+$$P_i = \frac{e^{-G_i}}{\sum_j e^{-G_j}}$$
+
+注意指数上是 $-G_i$，所以这是反向排序：MIG 越高的段，得到的保留预算越多、实际压缩率越低。这样相关又独特的段能多留 token，而冗余或无关的段被压得更狠。
+
+**3. 细粒度 token 融合：组内合并时让独特 token 主导，而不是均匀平均。**
+
+分完段预算后要把每段内多个 token 压成更少的几个。简单做均匀平均会把关键信息稀释掉，COMI 改用 MIG 加权融合——以段代表 query $\bar{q}$ 为参照，按组内每个 token 的 MIG 做 softmax 加权求和：
+
+$$\tilde{h}_i = \sum_{h_k \in S_i} \frac{e^{G(h_k, \bar{q}, S_i)}}{\sum_{h_l \in S_i} e^{G(h_l, \bar{q}, S_i)}} \cdot h_k$$
+
+MIG 高的 token 在融合结果里权重更大，于是语义独特且相关的内容主导了压缩 token，而冗余 token 被压低，避免了均匀平均带来的信息丢失。
 
 ### 损失函数 / 训练策略
-基于 Encoder-Decoder 架构。Encoder 和 LSA 全量微调，Decoder 仅微调 $W_Q, W_K, W_V, W_O$。训练目标：标准交叉熵损失 $\mathcal{L}_{nll}$，在压缩表征上预测正确答案。
+整体是 Encoder-Decoder 架构。Encoder 和 LSA 做全量微调，Decoder 只微调注意力投影矩阵 $W_Q, W_K, W_V, W_O$。训练目标是标准交叉熵 $\mathcal{L}_{nll}$，即在压缩后的表征上预测正确答案。
 
 ## 实验关键数据
 
@@ -127,8 +131,8 @@ tags:
 - [\[ACL 2025\] CFSP: An Efficient Structured Pruning Framework for LLMs with Coarse-to-Fine Activation Information](../../ACL2025/model_compression/cfsp_an_efficient_structured_pruning_framework_for_llms_with_coarse-to-fine_acti.md)
 - [\[CVPR 2026\] HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation](../../CVPR2026/model_compression/hieramp_coarse-to-fine_autoregressive_amplification_for_generative_dataset_disti.md)
 - [\[ICLR 2026\] FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
-- [\[CVPR 2025\] Curriculum Coarse-to-Fine Selection for High-IPC Dataset Distillation](../../CVPR2025/model_compression/curriculum_coarse-to-fine_selection_for_high-ipc_dataset_distillation.md)
 - [\[AAAI 2026\] InfoCom: Kilobyte-Scale Communication-Efficient Collaborative Perception with Information-Aware Feature Compression](../../AAAI2026/model_compression/infocom_kilobyte-scale_communication-efficient_collaborative_perception_with_inf.md)
+- [\[ICCV 2025\] Gain-MLP: Improving HDR Gain Map Encoding via a Lightweight MLP](../../ICCV2025/model_compression/gain-mlp_improving_hdr_gain_map_encoding_via_a_lightweight_mlp.md)
 
 </div>
 

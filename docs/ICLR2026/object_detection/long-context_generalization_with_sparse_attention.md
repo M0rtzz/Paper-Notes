@@ -43,40 +43,29 @@ tags:
 
 ### 整体框架
 
-ASEntmax 在标准 Transformer 的注意力机制中，将 softmax 替换为带有可学习温度 $\theta$ 的 α-entmax。具体而言，注意力权重计算从 $\text{softmax}(QK^T/\sqrt{d})$ 变为 $\alpha\text{-entmax}(QK^T/(\sqrt{d} \cdot \theta))$，其中 $\alpha > 1$ 控制稀疏程度，$\theta$ 为每个注意力头独立学习的温度参数。
+ASEntmax 不改动 Transformer 的整体结构，只把每个注意力头里的 softmax 换成带可学习温度 $\theta$ 的 α-entmax，即把注意力权重从 $\text{softmax}(QK^T/\sqrt{d})$ 改写为 $\alpha\text{-entmax}(QK^T/(\sqrt{d} \cdot \theta))$。其中 $\alpha > 1$ 决定稀疏强度，$\theta$ 由每个头独立学习，让模型在稀疏与稠密之间自适应取舍——这套替换既是工程上的最小改动，又把"抗弥散"的理论性质直接注入注意力计算。
 
 ### 关键设计
 
-**1. α-entmax 稀疏变换**
+**1. α-entmax 稀疏变换：让不相关 token 的权重精确归零。**
 
-- 是 softmax 的推广：当 $\alpha = 1$ 退化为 softmax，$\alpha = 2$ 为 sparsemax
-- 核心特性：输出中包含精确的零值，自动将不相关 token 的注意力置零
-- 可微分，支持端到端训练
+softmax 的根本问题在于它的输出永远是全正的稠密分布，每个 token 都分到一点概率，长序列里相关 token 的权重因此被无关 token 稀释殆尽。α-entmax 是 softmax 的连续推广，$\alpha = 1$ 时退化为 softmax、$\alpha = 2$ 时即 sparsemax，而当 $\alpha > 1$ 它的输出会包含精确的零值，自动把得分低于阈值的无关 token 排除出注意力支撑集。这个变换仍然可微，能端到端训练，因此只是把 softmax 这一个算子换掉，就从源头堵住了概率质量向无关 token 流失的通道。
 
-**2. 三大理论性质**
+**2. 三大理论性质：从数学上证明稀疏注意力为何能外推。**
 
-- **Non-vanishing Attention（非消失注意力）**：对于 $\alpha > 1$，向序列中添加不相关 token 不会减少相关 token 的注意力权重。形式化地，若新增 token 的 score 低于阈值，则现有 token 的注意力权重完全不变。Softmax 则无论新增 token 的相关性如何，都会减少所有现有 token 的权重。
-- **Concentration Resilience（集中度韧性）**：α-entmax 的注意力熵上界为 $O(\log s)$（$s$ 为支撑集大小），而非 softmax 的 $O(\log n)$（$n$ 为序列长度）。这意味着即使序列长度增大 1000×，只要相关 token 数量 $s$ 不变，注意力集中度就保持不变。
-- **Representational Preservation（表征保持）**：在 $L$ 层 Transformer 中，softmax 的梯度路径数为 $O(n^L)$，导致深层网络中表征坍缩；α-entmax 将其降为 $O(s^L)$，有效保持不同输入的可区分性。
+本文的核心贡献是为"稀疏注意力有利于长度外推"给出形式化证明，归结为三条性质。其一是**非消失注意力（Non-vanishing Attention）**：当 $\alpha > 1$ 时，往序列里添加得分低于阈值的无关 token，相关 token 的权重完全不变；而 softmax 无论新 token 是否相关，都会按比例削减所有已有权重。其二是**集中度韧性（Concentration Resilience）**：α-entmax 的注意力熵上界是 $O(\log s)$（$s$ 为支撑集大小），与序列长度 $n$ 无关，而 softmax 的上界是 $O(\log n)$；这意味着序列长度即便放大 1000×，只要真正相关的 token 数 $s$ 不变，注意力的集中程度就保持不变。其三是**表征保持（Representational Preservation）**：在 $L$ 层网络中，softmax 的梯度路径数为 $O(n^L)$，深层会因路径组合爆炸而表征坍缩，α-entmax 把它压到 $O(s^L)$，从而在长序列下仍能区分不同输入。这三条共同解释了为什么换一个算子就能换来量级的外推能力。
 
-**3. 可学习温度 θ（ASEntmax）**
+**3. 可学习温度 θ：让每个头自适应地调节稀疏度。**
 
-- 每个注意力头学习独立的温度参数 $\theta$
-- $\theta$ 大 → 更稀疏（高温加剧稀疏化）；$\theta$ 小 → 更接近 dense（低温缓解稀疏化）
-- 允许模型自适应地在稀疏和稠密注意力之间插值，不同头可选择不同策略
+固定的 $\alpha$ 对所有层、所有头一刀切过于僵硬，因为不同位置需要的稀疏程度并不一样。ASEntmax 给每个注意力头一个独立的温度 $\theta$ 并随模型一起训练：$\theta$ 越大注意力越稀疏，$\theta$ 越小则越接近稠密，模型由此能在稀疏与稠密之间平滑插值。实验里底层学到偏稠密、高层学到偏稀疏的分工，正说明这种自适应是有必要的——它让同一个 $\alpha$ 下的网络仍能按需调配每个头的集中度。
 
-**4. Non-dispersion 性质**
+**4. Non-dispersion 性质：用归一化熵刻画抗弥散的本质。**
 
-- Softmax 完全弥散：归一化熵 $H(\text{softmax}(z))/\log n \to 1$（当 $n \to \infty$）
-- α-entmax 保持集中：归一化熵有界，不随 $n$ 增长而趋近 1
-- 这是长度外推能力的理论基石
+把上述优势落到一个可度量的指标上，就是注意力的归一化熵 $H(z)/\log n$。softmax 在 $n \to \infty$ 时该值趋近 1，也就是完全弥散为均匀分布；α-entmax 的归一化熵则有界，不随 $n$ 增大而抬升。这个"不弥散"正是长度外推能力的理论基石——短序列上学到的注意力模式之所以能迁移到长序列，是因为稀疏变换让分布形态不再随长度发生质变。
 
-### 损失函数/训练策略
+### 损失函数 / 训练策略
 
-- 使用标准语言模型训练目标（next-token prediction，交叉熵损失）
-- 温度 $\theta$ 通过反向传播与模型参数联合优化
-- $\alpha$ 通常固定为 1.5（实验中验证的最优值），也可设为可学习
-- 在短序列（如长度 64）上训练，直接在长序列（如 65K）上测试
+训练沿用标准语言模型目标，即 next-token 预测的交叉熵损失，温度 $\theta$ 通过反向传播与模型参数联合优化。$\alpha$ 一般固定为实验验证的最优值 1.5（也可设为可学习，但会引入不稳定）。整个评测的关键设定是在短序列（如长度 64）上训练、直接在远超训练长度的序列（如 65K）上测试，以此考查纯粹的外推能力。
 
 ## 实验关键数据
 
@@ -149,8 +138,8 @@ Associative Recall 任务（训练长度 64）的长度外推准确率：
 - [\[ICLR 2026\] SPWOOD: Sparse Partial Weakly-Supervised Oriented Object Detection](spwood_sparse_partial_weakly-supervised_oriented_object_detection.md)
 - [\[ICML 2026\] FOCUS: Forcing In-Context Object Localization through Visual Support Constraints and Policy Optimization](../../ICML2026/object_detection/focus_forcing_in-context_object_localization_through_visual_support_constraints_.md)
 - [\[ICCV 2025\] Adversarial Attention Perturbations for Large Object Detection Transformers](../../ICCV2025/object_detection/adversarial_attention_perturbations_for_large_object_detection_transformers.md)
-- [\[ECCV 2024\] Rectify the Regression Bias in Long-Tailed Object Detection](../../ECCV2024/object_detection/rectify_the_regression_bias_in_long-tailed_object_detection.md)
-- [\[CVPR 2026\] AR²-4FV: Anchored Referring and Re-identification for Long-Term Grounding in Fixed-View Videos](../../CVPR2026/object_detection/ar2-4fv_anchored_referring_and_re-identification_for_long-term_grounding_in_fixe.md)
+- [\[AAAI 2026\] CountSteer: Steering Attention for Object Counting in Diffusion Models](../../AAAI2026/object_detection/countsteer_steering_attention_for_object_counting_in_diffusion_models.md)
+- [\[CVPR 2026\] Small Target Detection Based on Mask-Enhanced Attention Fusion of Visible and Infrared Remote Sensing Images](../../CVPR2026/object_detection/small_target_detection_based_on_mask-enhanced_attention_fusion_of_visible_and_in.md)
 
 </div>
 

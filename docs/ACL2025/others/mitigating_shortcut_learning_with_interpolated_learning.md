@@ -134,9 +134,9 @@ $$J_{\text{ERM}}(\theta) = \frac{1}{n} \sum_{i=1}^{n} \ell(f_{\text{cls}}(z_i), 
 
 - [\[ICML 2026\] DISCO: Mitigating Bias in Deep Learning with Conditional Distance Correlation](../../ICML2026/others/disco_mitigating_bias_in_deep_learning_with_conditional_distance_correlation.md)
 - [\[CVPR 2026\] Mitigating Instance Entanglement in Instance-Dependent Partial Label Learning](../../CVPR2026/others/mitigating_instance_entanglement_in_instance-dependent_partial_label_learning.md)
+- [\[ICLR 2026\] Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](../../ICLR2026/others/mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
 - [\[ACL 2025\] Value Residual Learning](value_residual_learning.md)
 - [\[ACL 2025\] Retrospective Learning from Interactions](retrospective_learning_from_interactions.md)
-- [\[ACL 2025\] Learning to Reason from Feedback at Test-Time](learning_to_reason_from_feedback_at_test-time.md)
 
 </div>
 

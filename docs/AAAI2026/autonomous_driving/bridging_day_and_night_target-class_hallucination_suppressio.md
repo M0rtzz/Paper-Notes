@@ -133,7 +133,7 @@ tags:
 - [\[AAAI 2026\] Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification](hierarchical_prompt_learning_for_image-_and_text-based_person_re-identification.md)
 - [\[ECCV 2024\] PanoVOS: Bridging Non-panoramic and Panoramic Views with Transformer for Video Segmentation](../../ECCV2024/autonomous_driving/panovos_bridging_non-panoramic_and_panoramic_views_with_transformer_for_video_se.md)
 - [\[AAAI 2026\] MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation](mambaseg_harnessing_mamba_for_accurate_and_efficient_image-e.md)
-- [\[ICCV 2025\] MAESTRO: Task-Relevant Optimization via Adaptive Feature Enhancement and Suppression for Multi-task 3D Perception](../../ICCV2025/autonomous_driving/maestro_task-relevant_optimization_via_adaptive_feature_enhancement_and_suppress.md)
+- [\[ICLR 2026\] Single Pixel Image Classification using an Ultrafast Digital Light Projector](../../ICLR2026/autonomous_driving/single_pixel_image_classification_using_an_ultrafast_digital_light_projector.md)
 
 </div>
 

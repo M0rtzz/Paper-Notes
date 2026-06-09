@@ -47,28 +47,37 @@ tags:
 
 ### 整体框架
 
-输入多变量时序 → 每通道FFT检测主频确定patch长度 → 非重叠patching得到不等数量的local token + learnable channel token → 统一sequence通过mask-guided self-attention → 仅channel token送入decoder得到预测。不同采样周期的通道共享同patch长度的projection层，decoder也按采样周期共享。
+CTF 要在一个 Transformer 里同时扛住异步采样、块缺失和跨通道依赖这三件原本得各自处理的事，核心办法是把每个通道压成一个 channel token，让它充当通道间的"信息锚点"。整条 pipeline 这样转：先对每个通道单独做 FFT 找出它的主频，据此确定该通道的 patch 长度并做非重叠切分，于是采样越密的通道切出越多的 local token、越疏的越少——通道间 token 数量天然不等。每个通道再额外配一个 learnable channel token，把它和该通道的 local token 拼进一条统一序列，过一层 mask-guided self-attention，让通道内的时序建模和通道间的依赖捕获在同一次注意力里完成。最后只把 channel token 送进 decoder 出预测。相同 patch 长度的通道共享 projection 层，相同采样周期的通道共享 decoder。
 
 ### 关键设计
 
-1. **频域动态Patching与Tokenization**:
-    - 功能：为每个通道根据其频率特性自适应确定patch长度，处理异步采样
-    - 核心思路：对每通道做FFT估计主导周期 $T_i$，以 $T_i$ 为patch长度进行非重叠切分。采样周期为 $s_i$ 的通道在输入长度 $L$ 下有 $L_i = \lfloor L/s_i \rfloor$ 个有效采样点。损失函数为Channel-aggregated MSE：$\mathcal{L}_\text{total} = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{H_i}\sum_{j=1}^{H_i}(y_j^{(i)} - \hat{y}_j^{(i)})^2$，其中 $H_i = \lfloor H/s_i \rfloor$ 为通道 $i$ 的预测点数
-    - 设计动机：保持原始采样分辨率→不上采样/不下采样→不引入插值假数据；不同通道可有不同数量的local token→channel token统一聚合
+**1. 频域动态 Patching：用各通道自己的主频切 patch，不靠插值对齐异步采样。**
 
-2. **Mask-Guided Unified Attention**:
-    - 功能：通过精心设计的注意力掩码在单次attention操作中统一处理intra-channel时序建模和cross-channel依赖捕获
-    - 核心思路：将所有通道的local token和channel token拼接为统一序列 $\mathbf{X} = [\mathbf{T}^{(1)};\mathbf{C}^{(1)};\dots;\mathbf{T}^{(N)};\mathbf{C}^{(N)}] \in \mathbb{R}^{\mathcal{T} \times d}$，应用masked self-attention $\mathbf{X}_\text{out} = \mathbf{X} + \text{softmax}(\frac{QK^\top}{\sqrt{d}} + \mathbf{M})V$，掩码 $\mathbf{M}$ 定义三条规则：(1) local token只能attend同通道的其他local token（intra-temporal）；(2) channel token可attend自己通道的local token和其他通道的channel token（信息聚合+跨通道交互）；(3) channel token不自我attend（避免自我强化）
-    - 设计动机：读写分离——channel token是read-only聚合器，local token不能看到channel token→防止信息泄漏；这种结构使channel token成为通道间的信息中继站
+异步采样是真实数据的常态——温度传感器 1 小时一采、压力 15 分钟一采，多数方法靠插值把它们对齐到同一时间网格，但插值在动态信号上会注入并不存在的"假数据"。CTF 索性不对齐：对每个通道做 FFT 估出它的主导周期 $T_i$，就以 $T_i$ 为 patch 长度做非重叠切分。采样周期为 $s_i$ 的通道，在输入窗口长度 $L$ 下只有 $L_i = \lfloor L/s_i \rfloor$ 个有效采样点，因此切出的 local token 数量本就因通道而异。这样每个通道都保留自己的原始分辨率，既不上采样也不下采样，不等长度的 token 序列最后由 channel token 统一聚合，问题被推给了 channel token 而非插值。
 
-3. **训练时Patch Masking（模拟测试时缺失）**:
-    - 功能：在训练时随机mask通道的patch子集，作为测试时块缺失的代理训练策略
-    - 核心思路：受PatchDropout启发，训练时随机移除部分通道的patch（全部为零的patch直接删除对应local token），attention自然跳过对应位置。测试时遇到真实缺失block→移除全缺失patch→模型依靠可用通道的channel token推断缺失通道
-    - 设计动机：传统做法是zero-fill或插值→传播无效信号；本方法直接不输入缺失patch→不引入错误信息；同时作为隐式正则化防止过拟合
+**2. Mask-Guided Unified Attention：用一张掩码让 channel token 当只读的跨通道中继站。**
+
+通道内时序建模和跨通道依赖捕获通常要分两步做，CTF 把它们塞进一次注意力，靠精心设计的掩码区分谁能看谁。所有通道的 local token 和 channel token 先拼成统一序列
+
+$$\mathbf{X} = [\mathbf{T}^{(1)};\mathbf{C}^{(1)};\dots;\mathbf{T}^{(N)};\mathbf{C}^{(N)}] \in \mathbb{R}^{\mathcal{T} \times d}$$
+
+再做带掩码的 self-attention
+
+$$\mathbf{X}_\text{out} = \mathbf{X} + \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d}} + \mathbf{M}\right)V$$
+
+掩码 $\mathbf{M}$ 立了三条规矩：local token 只能 attend 同通道的其他 local token（纯时序建模，看不到 channel token）；channel token 能 attend 自己通道的 local token 以及其他通道的 channel token（既聚合本通道信息又和别的通道交互）；channel token 不 attend 自己（避免自我强化）。这本质是一种读写分离——channel token 是只读聚合器，local token 看不到它，信息只能单向汇入，于是 channel token 自然成了通道之间唯一的信息中继站，跨通道依赖全压在这一层 token 交互里。
+
+**3. 训练时 Patch Masking：用随机丢 patch 提前演练测试时的块缺失。**
+
+传感器故障或通信中断会造成长时间连续缺失（block-wise missingness），传统做法 zero-fill 或插值都会把无效信号继续往下传。CTF 的应对是训练时就随机移除一部分通道的 patch（受 PatchDropout 启发），全为零的 patch 直接删掉对应的 local token，注意力就自然跳过这些位置。这等于让模型在训练阶段反复练习"少了几块 patch 该怎么靠别的通道补"。到了测试时遇到真实缺失 block，同样把全缺失的 patch 移除，模型就依赖可用通道的 channel token 去推断缺失通道——全程不往网络里喂任何缺失位置的假值，既不引入错误信息，随机丢弃本身又起到隐式正则化、抑制过拟合的作用。
 
 ### 损失函数 / 训练策略
 
-使用CMSE（Channel-aggregated MSE）和CMAE作为评估指标，各通道只在有效采样点上计算误差。Channel token数量按数据集调优（ETT1/SolarWind=2, EPA=3, Weather/CHS=1），对应通道间相关性结构。
+训练和评估都用 Channel-aggregated 的误差，各通道只在自己的有效采样点上算误差再跨通道平均。损失为 Channel-aggregated MSE：
+
+$$\mathcal{L}_\text{total} = \frac{1}{N}\sum_{i=1}^{N}\frac{1}{H_i}\sum_{j=1}^{H_i}\left(y_j^{(i)} - \hat{y}_j^{(i)}\right)^2$$
+
+其中 $H_i = \lfloor H/s_i \rfloor$ 是通道 $i$ 在预测窗口里的预测点数；评估对应地用 CMSE 与 CMAE。每个通道分配的 channel token 数量按数据集调优，对应其通道间相关结构：高相关用 1 个（Weather/CHS），中等异质用 2 个（ETT1/SolarWind），强异质用 3 个（EPA）。
 
 ## 实验关键数据
 
@@ -146,10 +155,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
-- [\[ICLR 2026\] Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
+- [\[NeurIPS 2025\] MIRA: Medical Time Series Foundation Model for Real-World Health Data](../../NeurIPS2025/time_series/mira_medical_time_series_foundation_model_for_real-world_health_data.md)
 - [\[ICLR 2026\] CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time_se.md)
 - [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
-- [\[ACL 2026\] A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting](../../ACL2026/time_series/a_unified_framework_for_modeling_heterogeneous_financial_data_via_dual-granulari.md)
+- [\[ICLR 2026\] T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
 
 </div>
 

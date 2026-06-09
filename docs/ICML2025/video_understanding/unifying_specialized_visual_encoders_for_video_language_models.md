@@ -138,9 +138,9 @@ MERV (full) 在 Perception Test 上达 48.41%，超越 SeViLA 的 46.2%（+2.2%�
 
 - [\[ICML 2025\] Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation](scaling_video-language_models_to_10k_frames_via_hierarchical_differential_distil.md)
 - [\[CVPR 2025\] Video Summarization with Large Language Models](../../CVPR2025/video_understanding/video_summarization_with_large_language_models.md)
-- [\[CVPR 2025\] Dynamic Updates for Language Adaptation in Visual-Language Tracking](../../CVPR2025/video_understanding/dynamic_updates_for_language_adaptation_in_visual-language_tracking.md)
 - [\[NeurIPS 2025\] FastVID: Dynamic Density Pruning for Fast Video Large Language Models](../../NeurIPS2025/video_understanding/fastvid_dynamic_density_pruning_for_fast_video_large_languag.md)
 - [\[NeurIPS 2025\] Enhancing Temporal Understanding in Video-LLMs through Stacked Temporal Attention in Vision Encoders](../../NeurIPS2025/video_understanding/enhancing_temporal_understanding_in_videollms_through_stacke.md)
+- [\[CVPR 2025\] PAVE: Patching and Adapting Video Large Language Models](../../CVPR2025/video_understanding/pave_patching_and_adapting_video_large_language_models.md)
 
 </div>
 

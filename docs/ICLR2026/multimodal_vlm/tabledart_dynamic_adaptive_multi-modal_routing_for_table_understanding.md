@@ -41,31 +41,31 @@ tags:
 
 ### 整体框架
 
-TableDART 由五个组件协作：（1）Table-as-Text 模型 $\mathcal{M}_t$（TableGPT2-7B，冻结）；（2）Table-as-Image 模型 $\mathcal{M}_v$（Ovis2-8B，冻结）；（3）Query 文本嵌入模型；（4）轻量 MLP 门控网络（唯一可训练，2.59M 参数）；（5）LLM Agent（Gemini 2.0 Flash，用于 Fusion 路径，免训练）。输入 query 和表格后，三个编码器并行提取文本表征 $\mathbf{e}_t$、图像表征 $\mathbf{e}_v$ 和查询嵌入 $\mathbf{e}_q$，拼接为 $\mathbf{x} = [\mathbf{e}_q, \mathbf{e}_t, \mathbf{e}_v]$ 送入门控网络，输出三路 logit 后选择最高分路径执行推理。
+TableDART 要解决的是"一刀切融合"的浪费：现有多模态方法对每个 query-table 对都强制走文本+图像双模态，但大量查询其实单模态就能答对。它的思路是在两个冻结的单模态专家之上，挂一个极轻的"调度员"——为每条查询实时判断该走哪条路。
+
+整个系统由五个组件协作：Table-as-Text 模型 $\mathcal{M}_t$（TableGPT2-7B，冻结）、Table-as-Image 模型 $\mathcal{M}_v$（Ovis2-8B，冻结）、一个 query 文本嵌入模型、一个轻量 MLP 门控网络（全系统唯一可训练，仅 2.59M 参数），以及一个免训练的 LLM Agent（Gemini 2.0 Flash，只在 Fusion 路径上启用）。给定一条 query 和一张表格，三路编码器并行抽取文本表征 $\mathbf{e}_t$、图像表征 $\mathbf{e}_v$ 和查询嵌入 $\mathbf{e}_q$，拼成 $\mathbf{x} = [\mathbf{e}_q, \mathbf{e}_t, \mathbf{e}_v]$ 喂给门控网络；门控输出三路 logit，取最高分的那条路径（Text-only / Image-only / Fusion）执行最终推理。换句话说，路由这一步只看特征、不做完整推理，所以几乎不增加开销。
 
 ### 关键设计
 
-1. **多模态编码与特征拼接**
+**1. 多模态编码与特征拼接：让门控网络在做决策前就"看全"三种信号。**
 
-    - 功能：将 query 和表格的多模态信息统一为门控网络的输入表征
-    - 核心思路：表格分别被序列化为文本（由 $\mathcal{M}_t$ 的编码器 $\mathcal{E}_t$ 编码）和截图（由 $\mathcal{M}_v$ 的编码器 $\mathcal{E}_v$ 编码），query 由独立文本嵌入模型 $\mathcal{E}_q$ 编码。三路特征经模态特定池化后拼接为 $\mathbf{x} = [\mathbf{e}_q, \mathbf{e}_t, \mathbf{e}_v]$。注意 $\mathcal{E}_t$ 和 $\mathcal{E}_v$ 仅激活对应专家模型的少量参数（分别占 7.15% 和 7.63%），计算开销很小
-    - 设计动机：门控网络需要"看到"所有模态的信息才能做出最优路由决策，但只需特征级表征而非完整推理，因此只使用编码器前几层
+门控网络要选对路径，前提是它能同时感知到查询本身、表格的文本视图和图像视图。为此表格被同时序列化为文本（交给 $\mathcal{M}_t$ 的编码器 $\mathcal{E}_t$）和渲染成截图（交给 $\mathcal{M}_v$ 的编码器 $\mathcal{E}_v$），query 则由独立的文本嵌入模型 $\mathcal{E}_q$ 编码；三路特征经各自的模态特定池化后拼接为 $\mathbf{x} = [\mathbf{e}_q, \mathbf{e}_t, \mathbf{e}_v]$。关键在于这里只取编码器的前几层、而非跑完整专家推理——$\mathcal{E}_t$ 和 $\mathcal{E}_v$ 分别只激活对应专家 7.15% 和 7.63% 的参数，因此"看全三模态"这件事代价极低，门控拿到的是特征级表征而不是昂贵的完整答案。
 
-2. **门控网络与策略训练**
+**2. 门控网络与策略训练：用资源感知的软标签学会"够用就好"。**
 
-    - 功能：动态选择每个 query-table 对的最优推理路径
-    - 核心思路：门控网络 $\mathcal{G}$ 是轻量 MLP，输出三路 logit $\mathbf{z} = \mathcal{G}(\mathbf{x})$。训练目标 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \lambda \mathcal{L}_{\text{resource}}$ 包含两部分：任务损失用 KL 散度最小化预测分布与经验正确性分布（预计算每条路径是否正确的二值向量 $\mathbf{s}$，温控 softmax 转为软目标）；资源正则化 $\mathcal{L}_{\text{resource}} = \text{softmax}(\mathbf{z}/\tau_g)^T \mathbf{c}$ 惩罚高代价路径（$\mathbf{c}$ 为经验测量的各路径推理成本向量），避免对 Fusion 路径的过度依赖
-    - 设计动机：纯任务优化会让多数样本走 Fusion（最保险但最贵），资源正则化使简单样本被路由到更高效的单模态路径。$\lambda = 0.15$ 在性能和效率之间取得最佳平衡
+门控网络 $\mathcal{G}$ 是个轻量 MLP，对拼接特征输出三路 logit $\mathbf{z} = \mathcal{G}(\mathbf{x})$。训练它的难点在于：如果只追求答对，模型会发现"凡事都走 Fusion 最保险"，于是退化成又贵又静态的全融合。TableDART 的解法是把目标拆成任务项加资源项：
 
-3. **LLM Agent 融合推理**
+$$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \lambda \mathcal{L}_{\text{resource}}$$
 
-    - 功能：当门控网络选择 Fusion 路径时，整合两个单模态专家的输出
-    - 核心思路：先并行执行 $\mathcal{M}_t$ 和 $\mathcal{M}_v$ 获得各自的结果 $r_t, r_v$ 及辅助输出 $a_t, a_v$，连同原始表格一起送入 Fusion Agent（Gemini 2.0 Flash）。Agent 以两种角色运行：（a）**仲裁者**（Arbitrator）——当两个专家结果冲突时，根据置信度选择更可靠的答案；（b）**救援者**（Rescuer）——当两个专家都不确定时，综合双方部分证据推理出新答案
-    - 设计动机：直接训练 MLLM 做融合代价高昂，用免训练的 LLM Agent 做后处理推理，既能利用强大的推理能力又避免了训练开销。实验表明 Fusion 路径成功解救了 14% 的"两个单模态都失败"的困难样本
+任务项不用硬分类，而是先对每条样本预计算三条路径各自是否答对的二值向量 $\mathbf{s} \in \{0,1\}^3$，经温控 softmax 转成软目标，再用 KL 散度让预测分布去逼近它——这样允许"多条路径同时正确"，比逼模型从中硬选一条更贴合实际。资源项 $\mathcal{L}_{\text{resource}} = \text{softmax}(\mathbf{z}/\tau_g)^T \mathbf{c}$ 则按各路径经验测得的推理成本向量 $\mathbf{c}$ 给昂贵路径加罚，从而把那些单模态就能答对的简单样本主动推向更省的路径。两项的权衡由 $\lambda = 0.15$ 控制，这个取值在准确率和延迟之间达到了最佳平衡。
+
+**3. LLM Agent 融合推理：把"怎么融合"外包给免训练的强推理 Agent。**
+
+只有当门控判定一条 query 确实需要双模态时才会触发 Fusion，此时系统先并行跑完 $\mathcal{M}_t$ 和 $\mathcal{M}_v$，拿到各自的结果 $r_t, r_v$ 及辅助输出 $a_t, a_v$，连同原始表格一起交给 Fusion Agent（Gemini 2.0 Flash）。这里没有再去训练一个 MLLM 来学融合——那正是 HIPPO 那类方法昂贵的根源——而是让一个现成的强推理模型按两种角色后处理：当两个专家答案冲突时它充当**仲裁者**（Arbitrator），依据各自置信度挑出更可靠的一方；当两个专家都不确定时它充当**救援者**（Rescuer），把双方的部分证据拼起来推出新答案。实验里 Fusion 路径正是靠救援者的角色，在"两个单模态都失败"的困难样本中额外救回了一批。
 
 ### 损失函数 / 训练策略
 
-训练集为从 5 个表格理解 benchmark 采样的 10K 混合样本。仅训练门控网络，所有大模型冻结。对每条训练样本预计算三路正确性 $\mathbf{s} \in \{0,1\}^3$，用 $\tau$ 控制软标签分布的平滑度。推理时确定性选择最高 logit 路径。
+训练集是从 5 个表格理解 benchmark 采样的 10K 混合样本。整个训练只更新门控网络，所有大模型全程冻结。对每条样本预先跑出三路正确性 $\mathbf{s} \in \{0,1\}^3$ 作为监督信号，用温度 $\tau$ 调节软标签分布的平滑度；推理阶段则确定性地选取最高 logit 的路径。
 
 ## 实验关键数据
 
@@ -130,11 +130,11 @@ TableDART 平均准确率 74.86%，超越最强多模态基线 HIPPO-8B **+4.02%
 
 ## 相关论文
 
+- [\[ICLR 2026\] Multi-modal Data Spectrum: Multi-modal Datasets are Multi-dimensional](multi-modal_data_spectrum_multi-modal_datasets_are_multi-dimensional.md)
 - [\[CVPR 2026\] AVR: Adaptive VLM Routing for Computer Use Agents](../../CVPR2026/multimodal_vlm/adaptive_vision-language_model_routing_for_computer_use_agents.md)
 - [\[ICLR 2026\] Enhancing Multi-Image Understanding through Delimiter Token Scaling](enhancing_multi-image_understanding_through_delimiter_token_scaling.md)
 - [\[AAAI 2026\] TabFlash: Efficient Table Understanding with Progressive Question Conditioning and Token Focusing](../../AAAI2026/multimodal_vlm/tabflash_efficient_table_understanding_with_progressive_question_conditioning_an.md)
 - [\[NeurIPS 2025\] DanmakuTPPBench: A Multi-modal Benchmark for Temporal Point Process Modeling and Understanding](../../NeurIPS2025/multimodal_vlm/danmakutppbench_a_multimodal_benchmark_for_temporal_point_pr.md)
-- [\[ICLR 2026\] Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection](steering_and_rectifying_latent_representation_manifolds_in_frozen_multi-modal_ll.md)
 
 </div>
 

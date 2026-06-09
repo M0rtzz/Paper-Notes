@@ -37,60 +37,39 @@ tags:
 
 ## 方法详解
 
-### 1. 拉回几何的退化（核心负面结论）
+### 整体框架
 
-**定理**：确定性 PF-ODE 解码器 $\mathbf{x}_T \mapsto \mathbf{x}_0(\mathbf{x}_T)$ 的拉回度量
+本文的出发点是为扩散模型的中间噪声状态找一个非退化的几何结构：先证明两种自然做法（确定性解码器的拉回度量、随机解码器的 Fisher-Rao 度量）都在数据空间退化，再把噪声水平 $t$ 显式纳入坐标，构造 $(D+1)$ 维"潜在时空" $\mathbf{z}=(\mathbf{x}_t,t)$。在这个时空里去噪分布族形成指数族，曲线能量有闭式近似从而可实际计算，由此派生出图像间的扩散编辑距离（DiffED）和分子构象间的转移路径采样两个应用。
+
+### 关键设计
+
+**1. 拉回几何的退化：解释为什么不能直接拉回环境度量。** 研究数据内在几何的标准套路是把环境度量沿解码器拉回，但确定性 PF-ODE 解码器 $\mathbf{x}_T \mapsto \mathbf{x}_0(\mathbf{x}_T)$ 在扩散模型里行不通。本文证明其拉回度量
 
 $$\mathbf{G}_{\text{PB}}(\mathbf{x}_T) = \left(\frac{\partial \mathbf{x}_0}{\partial \mathbf{x}_T}\right)^\top \left(\frac{\partial \mathbf{x}_0}{\partial \mathbf{x}_T}\right)$$
 
-导致所有测地线在数据空间中解码为**直线段**。
+会让所有测地线在数据空间中解码成**直线段**。根源在于扩散模型的潜在空间与数据空间同维，解码器始终在环境空间里操作，根本没有机会编码数据流形的内在弯曲，于是几何信息被抹平。这是一个核心负面结论，直接堵死了"照搬生成模型几何分析"的路。
 
-**原因**：扩散模型中潜在空间和数据空间维度相同，解码器在环境空间中操作，无法捕获数据流形的内在结构。
+**2. 信息几何的无记忆性塌缩：第二条自然路径同样失败。** 换用随机解码器（逆 SDE），其 Fisher-Rao 度量为
 
-### 2. 信息几何的无记忆性问题
+$$\mathbf{G}_{\text{IG}}(\mathbf{x}_T) = \mathbb{E}_{\mathbf{x}_0 \sim p(\mathbf{x}_0|\mathbf{x}_T)}[\nabla_{\mathbf{x}_T}\log p(\mathbf{x}_0|\mathbf{x}_T)\, \nabla_{\mathbf{x}_T}\log p(\mathbf{x}_0|\mathbf{x}_T)^\top]$$
 
-随机解码器（逆 SDE）的 Fisher-Rao 度量：
+看似能捕获概率流形的曲率，但在最大噪声水平 $\mathbf{x}_T$ 处，前向过程已经"忘掉"了数据，即 $p(\mathbf{x}_T|\mathbf{x}_0) \approx p_T(\mathbf{x}_T)$，去噪分布几乎不随 $\mathbf{x}_T$ 变化，于是 Fisher-Rao 度量整体塌缩为零。两条路都死在同一个地方：只盯着单一噪声水平的切片，信息要么被抹直、要么被噪声淹没。
 
-$$\mathbf{G}_{\text{IG}}(\mathbf{x}_T) = \mathbb{E}_{\mathbf{x}_0 \sim p(\mathbf{x}_0|\mathbf{x}_T)}[\nabla_{\mathbf{x}_T}\log p(\mathbf{x}_0|\mathbf{x}_T) \nabla_{\mathbf{x}_T}\log p(\mathbf{x}_0|\mathbf{x}_T)^\top]$$
+**3. 潜在时空：把噪声水平升格为坐标轴。** 核心创新是不再固定某个 $t$，而是引入 $(D+1)$ 维时空 $\mathbf{z}=(\mathbf{x}_t,t)\in\mathbb{R}^D\times(0,T]$，让一个点同时携带状态和它所处的噪声水平。这样整族去噪分布 $\{p(\mathbf{x}_0|\mathbf{x}_t)\}$ 被同一坐标系索引起来，干净数据 $\mathbf{x}$ 被识别为时空底面上的点 $(\mathbf{x},0)$。沿时间轴移动相当于在不同噪声水平间切换观察尺度，几何结构因此重新变得非退化——设计 1、2 中"被抹平/被塌缩"的信息，正是被压在了被忽略的时间维度里，显式加回来就恢复了。
 
-但由于无记忆性：$p(\mathbf{x}_T|\mathbf{x}_0) \approx p_T(\mathbf{x}_T)$，Fisher-Rao 度量在 $\mathbf{x}_T$ 处塌缩为零。
-
-### 3. 潜在时空
-
-**核心创新**：引入 $(D+1)$ 维时空 $\mathbf{z} = (\mathbf{x}_t, t) \in \mathbb{R}^D \times (0, T]$
-
-- 索引所有噪声水平下的去噪分布族 $\{p(\mathbf{x}_0|\mathbf{x}_t)\}$
-- 恢复非退化的几何结构
-- 清洁数据被识别为时空点 $(\mathbf{x}, 0)$
-
-### 4. 指数族结构与可计算能量
-
-**命题**：去噪分布形成指数族，时空曲线能量有闭式近似：
+**4. 指数族结构与可计算能量：让抽象几何能真的算出来。** 时空之所以有用，关键在于去噪分布沿这条曲线形成一个指数族，于是时空曲线 $\boldsymbol\gamma$ 的能量有闭式近似
 
 $$\mathcal{E}(\boldsymbol{\gamma}) \approx \frac{N-1}{2}\sum_{n=0}^{N-2}(\boldsymbol{\eta}(\mathbf{z}_{n+1}) - \boldsymbol{\eta}(\mathbf{z}_n))^\top(\boldsymbol{\mu}(\mathbf{z}_{n+1}) - \boldsymbol{\mu}(\mathbf{z}_n))$$
 
-其中自然参数和期望参数：
+其中自然参数 $\boldsymbol{\eta}(\mathbf{x}_t,t)=\left(\tfrac{\alpha_t}{\sigma_t^2}\mathbf{x}_t,\,-\tfrac{\alpha_t^2}{2\sigma_t^2}\right)$、期望参数 $\boldsymbol{\mu}(\mathbf{x}_t,t)=\left(\mathbb{E}[\mathbf{x}_0|\mathbf{x}_t],\,\mathbb{E}[\|\mathbf{x}_0\|^2|\mathbf{x}_t]\right)$ 都能由去噪器读出。借助 Tweedie 公式拿到一阶矩、再用 Hutchinson 技巧估二阶矩，整条曲线能量只需单次 Jacobian-向量积（JVP）即可无模拟地估计，把"求测地线"从积分微分方程降成了可优化的离散和。
 
-$$\boldsymbol{\eta}(\mathbf{x}_t, t) = \left(\frac{\alpha_t}{\sigma_t^2}\mathbf{x}_t, -\frac{\alpha_t^2}{2\sigma_t^2}\right)$$
-
-$$\boldsymbol{\mu}(\mathbf{x}_t, t) = \left(\mathbb{E}[\mathbf{x}_0|\mathbf{x}_t], \mathbb{E}[\|\mathbf{x}_0\|^2|\mathbf{x}_t]\right)$$
-
-**计算方式**：通过 Tweedie 公式和 Hutchinson 技巧，仅需单次 Jacobian-向量积（JVP）即可估计。
-
-### 5. 扩散编辑距离（DiffED）
+**5. 扩散编辑距离 DiffED：把图像相似度变成几何距离。** 有了可算能量，就能定义两张图之间的距离
 
 $$\text{DiffED}(\mathbf{x}^a, \mathbf{x}^b) = \ell(\boldsymbol{\gamma})$$
 
-其中 $\boldsymbol{\gamma}$ 是连接 $(\mathbf{x}^a, 0)$ 和 $(\mathbf{x}^b, 0)$ 的时空测地线。
+其中 $\boldsymbol{\gamma}$ 是连接时空点 $(\mathbf{x}^a,0)$ 与 $(\mathbf{x}^b,0)$ 的测地线、$\ell$ 是其长度。这条测地线对应一段最经济的编辑序列：先加噪到足够忘掉 $\mathbf{x}^a$ 的专有信息，再去噪逐步引入 $\mathbf{x}^b$ 的专有信息，距离量化的是沿途去噪分布的总变化量。因此 DiffED 衡量的是结构层面的"改写成本"，而非 LPIPS 那种感知相似度，两张图越不像、测地线就要爬到越高的噪声水平才能完成迁移。
 
-**直觉解释**：测地线追踪最小编辑序列——添加足够噪声以忘掉 $\mathbf{x}^a$ 的特有信息，然后去噪以引入 $\mathbf{x}^b$ 的特有信息。距离衡量沿路径去噪分布的总变化量。
-
-### 6. 转移路径采样
-
-对于 Boltzmann 分布 $q(\mathbf{x}) \propto \exp(-U(\mathbf{x}))$：
-- 估计两个低能态间的时空测地线
-- 使用退火 Langevin 动力学沿测地线采样
-- 支持约束变体（低方差路径、区域回避）
+**6. 转移路径采样：同一框架迁移到分子动力学。** 同样的时空测地线可直接用于在 Boltzmann 分布 $q(\mathbf{x})\propto\exp(-U(\mathbf{x}))$ 的两个低能态之间找过渡路径：先估计连接两态的时空测地线作为"骨架"，再沿这条骨架跑退火 Langevin 动力学采样具体路径。该框架天然支持约束变体——比如要求低方差路径或回避指定区域——只需在测地线求解时加入相应约束，无需重训模型，从而把图像编辑里推出的几何机制平移到了构象转移问题上。
 
 ## 实验
 

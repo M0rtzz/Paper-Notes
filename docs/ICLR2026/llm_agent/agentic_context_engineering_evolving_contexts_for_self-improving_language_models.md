@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ACE 由三个角色组成：Generator（生成推理轨迹）→ Reflector（从轨迹中提取教训和洞见）→ Curator（将教训整合为结构化的 delta 更新，merge 到现有 context 中）。支持离线（system prompt 优化）和在线（test-time memory）两种模式。
+ACE 要解决的是 context 在反复迭代中越改越短、知识被压没的问题。它把 context 当成一本会不断变厚的"策略手册"（playbook），让三个角色流水线作业来维护它：Generator 拿当前 context 去解新问题，留下完整的执行轨迹；Reflector 读这些轨迹，把哪些做法成功、哪些踩了坑提炼成具体教训；Curator 再把教训翻译成结构化的局部改动（delta），追加或修改进现有 context。整套流程既能离线跑（在训练集上反复迭代，产出一份优化好的 system prompt），也能在线跑（测试时逐样本更新，当作 test-time memory 用）。
 
 ### 关键设计
 
-1. **三角色分工（Generator → Reflector → Curator）**:
+**1. 三角色分工：把"解题、反思、归档"拆开，避免单模型瓶颈。**
 
-    - 功能：将 context 构建的不同职责解耦到专门的角色
-    - 核心思路：Generator 用当前 context 解决新问题，产生执行轨迹；Reflector 分析轨迹，提取具体的成功策略和失败教训（可多轮迭代精炼洞察）；Curator 将洞察转化为结构化 bullet 并 merge 到 context 中
-    - 设计动机：避免把所有职责堆到单一模型上造成瓶颈。消融实验显示单独的 Reflector 角色是性能提升的关键来源
+现有方法常把生成、评估、改写全压在一个模型一次调用里，反思不充分、责任也纠缠。ACE 把它拆成三步专门化的角色：Generator 负责用当前 context 实际解题、暴露出真实的成功与失败轨迹；Reflector 专门做"复盘"，从轨迹里抽出可操作的策略和失败教训，而且这一步可以多轮迭代地精炼洞察（最多 5 轮），让教训越来越准；Curator 只管把洞察落成结构化条目并并入 context。这样每个环节都能专注做好一件事，消融实验也确认单独引入 Reflector 角色是性能提升的关键来源。
 
-2. **增量式 Delta 更新（替代整体重写）**:
+**2. 增量式 Delta 更新：只改局部 bullet，从根上杜绝 context collapse。**
 
-    - 功能：用局部化的 bullet 增删改替代 context 的整体重写
-    - 核心思路：context 表示为 bullet 集合，每个 bullet 有唯一 ID + 有用/有害计数 + 内容。每次适配只生成小量 delta（新 bullet 或已有 bullet 的修改），通过轻量非 LLM 逻辑确定性 merge，可并行处理
-    - 设计动机：彻底解决 context collapse——因为从不执行全文重写，知识只能添加或局部修改，不会被意外压缩掉
+这是针对"单体重写导致上下文坍塌"痛点的核心设计。ACE 不把 context 写成一段会被整体重写的文字，而是表示为一组带结构的 bullet——每个 bullet 有唯一 ID、一对"有用/有害"计数器和具体内容。每次适配时，模型只生成少量 delta（新增 bullet，或对已有 bullet 的局部修改），再由一套轻量的非 LLM 逻辑确定性地 merge 进去，整个过程还能并行处理。因为系统从不执行全文重写，知识就只能被追加或就地微调，绝不会在某次迭代里被意外压成一句摘要——论文里观察到的"18282 token 突然坍塌到 122 token"那类退化，在这种增删改模型下结构上就不可能发生。这也是适配延迟能降低 86.9% 的原因：局部 delta 比整篇重写便宜得多。
 
-3. **Grow-and-Refine 机制**:
+**3. Grow-and-Refine：在持续增长和控制冗余之间维持平衡。**
 
-    - 功能：平衡 context 的持续增长和冗余控制
-    - 核心思路：新 bullet 追加到 context，已有 bullet 原地更新（如增加计数器）。通过语义嵌入对比做去重（de-duplication），可以在每次 delta 后主动执行或在超出 context window 时懒惰执行
-    - 设计动机：确保 context 的规模是可控的，不会无限增长
+光做加法，context 早晚会膨胀到超出窗口。Grow-and-Refine 给增长配了个清理机制：新 bullet 追加到末尾，命中的已有 bullet 就地更新（比如把计数器加一），同时用语义嵌入两两比对来去重（de-duplication），剔除内容重复的条目。去重既可以在每次 delta 之后主动执行，也可以等 context 快超出窗口时再懒惰触发。靠这套机制，手册能一直长大却不会无界膨胀，规模始终可控。
 
 ### 损失函数 / 训练策略
-无需训练模型权重。ACE 是纯 context adaptation 方法。离线模式下在训练集上多 epoch 迭代构建 context；在线模式下在测试时逐样本更新。关键超参：Reflector 最大精炼轮数 5，离线最大 epoch 5，batch size 1。值得注意的是无需标注也能工作——利用执行反馈（如代码执行成功/失败）作为自然信号。
+ACE 不训练任何模型权重，是纯粹的 context adaptation 方法。离线模式下在训练集上跑多个 epoch（最多 5 个）迭代构建 context，在线模式下在测试时逐样本更新，batch size 取 1，Reflector 单次最多精炼 5 轮。一个值得强调的点是它无需标注也能工作——只要有执行反馈（比如代码跑通还是报错）这种天然信号，Reflector 就能据此提炼教训，从而实现无监督的自我改进。
 
 ## 实验关键数据
 

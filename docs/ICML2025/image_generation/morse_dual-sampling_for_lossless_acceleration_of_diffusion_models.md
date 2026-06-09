@@ -172,11 +172,11 @@ Morse 可叠加在 Consistency Distillation 之上，进一步加速已经加速
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Breaking AR's Sampling Bottleneck: Provable Acceleration via Diffusion Language Models](../../NeurIPS2025/image_generation/breaking_ars_sampling_bottleneck_provable_acceleration_via_d.md)
 - [\[ICML 2025\] SADA: Stability-guided Adaptive Diffusion Acceleration](sada_stability-guided_adaptive_diffusion_acceleration.md)
 - [\[ICML 2025\] Importance Sampling for Nonlinear Models](importance_sampling_for_nonlinear_models.md)
 - [\[ICML 2026\] Speculative Coupled Decoding for Training-Free Lossless Acceleration of Autoregressive Visual Generation](../../ICML2026/image_generation/speculative_coupled_decoding_for_training-free_lossless_acceleration_of_autoregr.md)
 - [\[ICML 2025\] GaussMarker: Robust Dual-Domain Watermark for Diffusion Models](gaussmarker_robust_dual-domain_watermark_for_diffusion_models.md)
+- [\[CVPR 2026\] Adaptive Spectral Feature Forecasting for Diffusion Sampling Acceleration](../../CVPR2026/image_generation/adaptive_spectral_feature_forecasting_for_diffusion_sampling_acceleration.md)
 
 </div>
 

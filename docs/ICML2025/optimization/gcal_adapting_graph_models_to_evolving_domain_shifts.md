@@ -186,8 +186,8 @@ $$\min_{\hat{G}_t, \Phi} \mathcal{L}_{MGL} + \lambda_1 \mathcal{L}_{Reg} + \lamb
 
 - [\[ICML 2025\] Sparse Causal Discovery with Generative Intervention for Unsupervised Graph Domain Adaptation](sparse_causal_discovery_with_generative_intervention_for_unsupervised_graph_doma.md)
 - [\[ICML 2025\] Nonparametric Teaching for Graph Property Learners](nonparametric_teaching_for_graph_property_learners.md)
-- [\[ICML 2025\] Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)
 - [\[CVPR 2025\] Federated Learning with Domain Shift Eraser](../../CVPR2025/optimization/federated_learning_with_domain_shift_eraser.md)
+- [\[NeurIPS 2025\] MergeBench: A Benchmark for Merging Domain-Specialized LLMs](../../NeurIPS2025/optimization/mergebench_a_benchmark_for_merging_domain-specialized_llms.md)
 - [\[ICML 2025\] Subspace Optimization for Large Language Models with Convergence Guarantees](subspace_optimization_for_large_language_models_with_convergence_guarantees.md)
 
 </div>

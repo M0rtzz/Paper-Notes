@@ -39,26 +39,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段：(1) 预训练：用1%的随机状态数据训练ICVF获得 $\phi(s)$；(2) 在线模仿：在 $\phi$ 空间中做Wasserstein对抗模仿学习。
+LWAIL 要解决的是 Wasserstein 对抗模仿学习里"地面度量被锁死成欧氏距离"的问题。整条管线分两阶段：先用极少量（约在线数据 1%）的随机状态转移数据离线训一个 ICVF，得到一个动态感知的状态嵌入 $\phi(s)$；再把原本在原始状态空间上做的 Wasserstein 对抗模仿，整体搬到 $\phi$ 空间里做。换句话说，判别器、1-Lipschitz 约束、状态分布匹配都不变，唯一的改动是先把每个状态 $s$ 过一遍 $\phi(\cdot)$，让"两个状态有多远"由可达性而非坐标欧氏距离来定义。
 
 ### 关键设计
 
-1. **ICVF预训练**:
+**1. ICVF 预训练：让欧氏距离重新变得"动态感知"。**
 
-    - 功能：从随机状态转移数据学习状态嵌入 $\phi_\theta(s)$
-    - 核心思路：$V_\theta(s, s_+, z) = \phi_\theta(s)^T T_\theta(z) \psi_\theta(s_+)$，用IQL离线RL训练。$\phi(s)$ 编码了状态的可达性结构。
-    - 设计动机：Theorem 3.1证明状态对占据概率 $d_{ss}^{\pi_z}(s,s')$ 近似是 $\phi(s)$ 的线性组合，意味着 $\phi$ 空间天然适合做Wasserstein状态匹配。
+KR 对偶下的 Wasserstein 之所以隐含假设欧氏地面度量，是因为 1-Lipschitz 约束是对欧氏距离定义的；而坐标上接近的两个状态在环境里可能根本不可达。LWAIL 的办法是先学一个嵌入 $\phi_\theta(s)$，让"在 $\phi$ 空间里欧氏距离近"等价于"在环境动态里可达性强"。具体用意图条件值函数（ICVF）做分解式建模：
 
-2. **潜空间Wasserstein AIL**:
+$$V_\theta(s, s_+, z) = \phi_\theta(s)^\top T_\theta(z)\, \psi_\theta(s_+)$$
 
-    - 功能：在 $\phi$ 空间中匹配智能体和专家的状态对分布
-    - 核心思路：$\min_\pi \max_{\|f\|_L \leq 1} (\mathbb{E}_{d_{ss}^\pi}[f(\phi(s), \phi(s'))] - \mathbb{E}_{d_{ss}^E}[f(\phi(s), \phi(s'))])$
-    - 设计动机：在 $\phi$ 空间中1-Lipschitz约束对应的欧氏距离现在是动态感知的
+其中 $\phi_\theta(s)$ 是要拿来当地面度量的状态嵌入，$T_\theta(z)$ 是意图 $z$ 对应的转移矩阵，$\psi_\theta(s_+)$ 编码目标状态，整个 $V$ 用 IQL 这类离线 RL 目标在随机转移数据上训练。这样学出来的 $\phi(s)$ 编码的是状态的可达性结构而非外观坐标。Theorem 3.1 给了这一步的理论支撑：状态对占据概率 $d_{ss}^{\pi_z}(s,s')$ 近似是 $\phi(s)$ 的线性组合，意味着 $\phi$ 空间天然适配后面的 Wasserstein 状态对匹配。
 
-3. **奖励设计**:
+**2. 潜空间 Wasserstein 对抗模仿：约束不变，度量变了。**
 
-    - 功能：用判别器输出构造RL奖励 $r(s,s') = \sigma(-f(\phi(s), \phi(s')))$
-    - 设计动机：sigmoid归一化到[0,1]稳定下游TD3训练
+有了 $\phi$，就把状态对分布匹配从原始空间整体移到潜空间。优化目标仍是 KR 对偶形式的 min-max：
+
+$$\min_\pi \max_{\|f\|_L \leq 1}\ \mathbb{E}_{d_{ss}^\pi}\big[f(\phi(s), \phi(s'))\big] - \mathbb{E}_{d_{ss}^E}\big[f(\phi(s), \phi(s'))\big]$$
+
+智能体的状态对占据 $d_{ss}^\pi$ 要去逼近专家的 $d_{ss}^E$，判别器 $f$ 在 1-Lipschitz 约束下找最大间隔。关键区别在于：$f$ 现在吃的是 $\phi(s),\phi(s')$，所以那条 1-Lipschitz 约束对应的欧氏距离已经是动态感知的——坐标近但不可达的状态不再被误判为"相似"。这也是为什么它能用单条无动作的状态轨迹就把专家模仿到位：匹配的是动态意义上的状态分布，而非表面坐标。
+
+**3. 奖励设计：把判别器输出整形成稳定的 RL 信号。**
+
+下游策略用 TD3 优化，需要把判别器 $f$ 的输出转成 per-step 奖励：
+
+$$r(s,s') = \sigma\big(-f(\phi(s), \phi(s'))\big)$$
+
+取负号是因为 $f$ 对专家状态对给高值、对智能体给低值，加负号后智能体被推向专家分布；外面套 sigmoid 把奖励压到 $[0,1]$，避免判别器对抗训练早期输出量级剧烈波动冲垮 TD3 的值估计，从而稳住整个在线模仿过程。
 
 ## 实验关键数据
 
@@ -117,7 +124,7 @@ MuJoCo环境，单条状态轨迹（无动作）：
 - [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
 - [\[ICLR 2026\] Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
 - [\[ICLR 2026\] Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
-- [\[ICLR 2026\] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [\[ICLR 2026\] Boolean Satisfiability via Imitation Learning](boolean_satisfiability_via_imitation_learning.md)
 
 </div>
 

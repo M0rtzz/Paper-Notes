@@ -1,0 +1,154 @@
+---
+title: >-
+  [论文解读] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One
+description: >-
+  [NeurIPS 2025][模型恢复] 通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
+tags:
+  - "NeurIPS 2025"
+  - "模型恢复"
+  - "表征对齐"
+  - "线性探测"
+  - "可辨识性"
+  - "THINGS数据集"
+---
+
+# Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One
+
+**会议**: NeurIPS 2025  
+**arXiv**: [2510.23321](https://arxiv.org/abs/2510.23321)  
+**代码**: [GitHub](https://github.com/brainsandmachines/oddoneout_model_recovery)  
+**领域**: 计算神经科学 / 表征对齐  
+**关键词**: 模型恢复, 表征对齐, 线性探测, 可辨识性, THINGS数据集
+
+## 一句话总结
+
+通过大规模模型恢复实验证明，即使使用 450 万行为数据，基于线性探测（linear probing）的灵活评估方法在 20 个视觉模型中的模型恢复准确率仍低于 80%，揭示了预测准确性与模型可辨识性之间的根本性权衡，质疑了当前"最佳拟合即最优模型"的研究范式。
+
+## 研究背景与动机
+
+深度神经网络的表征被广泛用作生物视觉系统的计算模型。评估方法通常是：提取 ANN 的表征，通过某种度量与大脑/行为数据对齐，预测准确率最高的模型被认为是"最好的"生物表征模型。
+
+当使用灵活的、数据驱动的对齐方法（如线性探测）时，预测准确率显著提升——但这引发了关键问题：**预测准确率是否真正反映了表征的相似性？**
+
+现有工作的局限性：
+- Kornblith et al. 发现未交叉验证的灵活度量无法区分层间差异（但可归因于过拟合）
+- Han et al. 在理想化设置（无噪声的 ANN 激活）中测试，不代表真实含噪数据
+- Schütt et al. 验证了非灵活 RSA 的恢复能力，但未在噪声校准设置中评估灵活 RSA
+
+核心矛盾：灵活评估提高了预测准确率，但可能以牺牲模型可辨识性为代价。作者通过 THINGS odd-one-out 数据集（470 万行为判断）来定量研究这一权衡。
+
+## 方法详解
+
+### 整体框架
+
+采用"模型恢复"实验设计：用模型 A 生成合成行为数据 → 让所有模型（包括 A）竞争拟合该数据 → 检验模型 A 是否能被正确识别。如果最佳拟合模型不是数据生成模型，则说明评估方法存在可辨识性问题。
+
+### 关键设计
+
+1. **从 ANN 表征到行为预测的映射**：对每个预训练 ANN，提取最终表征层 $\mathbf{X} \in \mathbb{R}^{n \times p}$（$n=1854$ 张图像），学习线性变换 $\mathbf{W} \in \mathbb{R}^{p \times p}$。相似性矩阵为 $\mathbf{S} = (\mathbf{X}\mathbf{W})(\mathbf{X}\mathbf{W})^\top$。对三元组 $\{a,b,c\}$ 的 odd-one-out 预测使用 softmax：
+
+    $p(\text{odd-one-out}=a \mid \{a,b,c\}) = \frac{\exp(S_{b,c}/T)}{\exp(S_{a,b}/T) + \exp(S_{a,c}/T) + \exp(S_{b,c}/T)}$
+
+   用 L-BFGS 最小化负对数似然 + 正则化。
+
+2. **改进的正则化**：替换标准 Frobenius 范数正则化为"收缩到标量矩阵"：
+    $\mathcal{R}(\mathbf{W}) = \min_\gamma \|\mathbf{W} - \gamma\mathbf{I}\|_F^2 = \|\mathbf{W}\|_F^2 - \frac{(\text{tr}(\mathbf{W}))^2}{p}$
+   这避免了强惩罚下性能降至零样本以下的问题（Frobenius 正则化会出现此情况）。
+
+3. **噪声校准**：不是最大化预测似然，而是调整温度参数 $T$ 使模型的响应变异性匹配人类噪声天花板（67.8% 的留一被试一致率）。这确保合成数据的噪声水平与真实实验一致。
+
+4. **模型恢复实验流程**：
+
+    - 20 个多样化 ANN（不同架构和训练任务）
+    - 每个模型先用全量人类数据拟合 $\mathbf{W}$ 并校准温度
+    - 从校准后的模型采样合成行为数据
+    - 所有模型从头拟合合成数据
+    - 3 折交叉验证（不同图像子集），比较预测准确率
+    - 30 个随机种子 × 20 个生成模型 × 18 个数据集大小
+
+### 可辨识性分析
+
+通过回归分析识别模型误辨的原因：
+- 候选模型的**对齐引起的表征几何偏移**（正向预测准确率差异）
+- 数据生成模型的**偏移幅度**（负向——偏移大的模型产生的数据更容易被其他模型预测）
+- 数据生成模型的**有效维度** ED（负向——高维表征更难正确恢复）
+
+## 实验关键数据
+
+### 主实验：模型恢复准确率 vs 数据量
+
+| 训练三元组数 | 模型恢复准确率 | 备注 |
+|-------------|--------------|------|
+| ~1,000 | <10% | 接近随机（5%） |
+| ~10,000 | ~15% | |
+| ~100,000 | ~45% | 典型实验规模 |
+| ~1,000,000 | ~70% | |
+| 4,200,000 | <80% | 最大数据量，仍未饱和 |
+
+### 灵活度 vs 准确率 vs 可辨识性权衡
+
+| 评估方式 | 均值预测准确率 | 模型恢复准确率(4.2M) |
+|---------|--------------|---------------------|
+| Zero-shot | ~34% | ~95% |
+| 对角 $\mathbf{W}$ | ~47% | ~85% |
+| $p \times 10$ 矩形 $\mathbf{W}$ | ~55% | ~75% |
+| $p \times p$ 全矩阵 | ~63% (接近天花板) | <80% |
+
+### 消融实验
+
+| 控制变量 | 恢复准确率变化 | 说明 |
+|---------|--------------|------|
+| 固定 PCA 500 维 | 无改善 | 参数数量不是主因 |
+| 扩展到 30 个模型 | 降至 ~70% | 更多竞争者更难区分 |
+| 按训练目标分组 | 73.7% | 即使比较目标类别也困难 |
+| 按架构分组 | 70.3% | CNN vs ViT 也难区分 |
+
+### 关键发现
+
+- **系统性偏差**：OpenAI CLIP ResNet-50 被系统性地误认为最佳模型，4 个模型的平均排名 >2（意味着超过 1 个竞争者排名更高）
+- **表征几何偏移**：线性探测后所有模型向 VICE（人类嵌入模型）方向收敛，初始距 VICE 远的模型偏移最大
+- **三个显著回归预测因子**（Bonferroni 校正后）：候选模型偏移（$\beta=0.495$, $p=0.02$）、生成模型偏移（$\beta=-0.251$, $p=0.01$）、生成模型有效维度（$\beta=-0.455$, $p=0.01$）
+
+## 亮点与洞察
+
+- **"最佳拟合不等于最正确"的严格量化证明**：不是哲学论证，而是大规模模拟验证
+- **噪声校准是关键创新**：之前的模型恢复研究用无噪声 ANN 激活，不能代表真实情况。温度校准使模拟数据的噪声匹配人类，结果令人警醒
+- **收缩到标量矩阵的正则化**虽是小改动但很实用，避免了标准方法的退化问题
+- **实验设计类比"知识蒸馏"**——候选模型作为"学生"尝试模仿"教师"（数据生成模型）的行为
+
+## 局限与展望
+
+- 仅限行为数据（THINGS odd-one-out），神经数据（fMRI/EEG）可能有不同的权衡特性
+- 模型恢复的量化结果依赖于特定的候选模型集（20个模型）
+- 真实情况下"真模型"（生物表征）不在候选集中，使问题更加困难
+- 论文建议三个改进方向但未实现：(1) 主动刺激选择, (2) 生物学先验约束的度量, (3) 内置对齐能力的模型
+
+## 相关工作与启发
+
+- 与 Kornblith et al. 的 CKA vs 线性编码比较互补：CKA 更保守但可能更可靠
+- Muttenthaler et al. (2023) 的 THINGS 大规模研究是本文的直接基础
+- 对整个"表征对齐"社区有警示作用：追求预测准确率可能是一个误导性目标
+- 启发：adaptive model-discriminating stimulus 设计可能比增加数据量更有效
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐ 模型恢复范式本身不新，但噪声校准和大规模应用是重要贡献
+- 实验充分度: ⭐⭐⭐⭐⭐ 20个模型 × 18个数据量 × 30个种子的全面实验设计
+- 写作质量: ⭐⭐⭐⭐⭐ 问题动机清晰，实验设计严谨，讨论深入
+- 价值: ⭐⭐⭐⭐⭐ 对计算神经科学方法论有根本性影响，是"负面结果"的优秀范例
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ACL 2025\] Model Extrapolation Expedites Alignment](../../ACL2025/others/expo_model_extrapolation.md)
+- [\[NeurIPS 2025\] Reliably Detecting Model Failures in Deployment Without Labels](reliably_detecting_model_failures_in_deployment_without_labels.md)
+- [\[ACL 2025\] From Lists to Emojis: How Format Bias Affects Model Alignment](../../ACL2025/others/from_lists_to_emojis_how_format_bias_affects_model_alignment.md)
+- [\[NeurIPS 2025\] Training the Untrainable: Introducing Inductive Bias via Representational Alignment](training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)
+- [\[NeurIPS 2025\] Uncertainty Estimation by Flexible Evidential Deep Learning](uncertainty_estimation_by_flexible_evidential_deep_learning.md)
+
+</div>
+
+<!-- RELATED:END -->

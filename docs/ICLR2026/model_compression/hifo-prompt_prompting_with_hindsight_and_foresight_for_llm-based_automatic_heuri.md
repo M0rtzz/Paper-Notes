@@ -36,31 +36,28 @@ LLM + 进化计算（EC）的范式（如 FunSearch、EoH）已展现出以 LLM 
 ## 方法详解
 
 ### 整体框架
-HiFo-Prompt 通过引导式Prompt合成（Guided Prompt Synthesis）构建每轮的LLM提示，融合三部分：基础Prompt策略（遗传算子等价物）、Hindsight 模块（历史知识注入）、Foresight 模块（当前策略指令）。
+HiFo-Prompt 把 LLM 当成进化循环里的"符号元优化器"：每一代不是简单地让 LLM 生成代码，而是先合成一段"引导式 Prompt"（Guided Prompt Synthesis），再让 LLM 据此产出新启发式。这段 Prompt 由三部分拼成——基础 Prompt 策略（充当遗传算子，决定这次是初始化、重组还是变异）、Hindsight 模块（把历史精英里蒸馏出的设计原则注入进来）、Foresight 模块（根据当前种群状态下达"该探索还是该利用"的宏观指令）。前者负责"怎么变"，后两者分别负责"用什么经验变"和"往哪个方向变"。
 
 ### 关键设计
 
-1. **Hindsight 模块：自演化的 Insight Pool**:
+**1. Hindsight 模块：用自演化的 Insight Pool 对抗知识衰退。**
 
-    - 功能：从成功的启发式代码中蒸馏抽象的设计原则（insights），构建持久的知识库
-    - 核心思路：包含三个阶段——(1) *洞见提取与准入*：每代结束从精英个体中提取设计原则，用 Jaccard 相似度阈值 $\theta_{\text{novelty}}$ 去重；(2) *洞见检索与信用分配*：选取效用最高的 top-$s$ 个洞见注入Prompt，效用函数平衡有效性、使用惩罚和新近度奖励：$U(k_i, t) = E_i(t) - w_u \log(N_i(t)+1) + B_r(t, t_i^{\text{last}})$；(3) *自适应裁剪*：当池容量超限时淘汰最低驱逐分数的洞见
-    - 信用分配使用分段函数将种群相对性能映射为信用信号：超越最优时 $g_{\text{eff}} = 0.8 + 0.2\tilde{\rho}$，高于均值时 $0.2 + 0.6\tilde{\rho}$，低于均值时 $-0.3 + 0.5\tilde{\rho}$，通过 EMA 更新效用分数
-    - 设计动机：将暂时的进化成功转化为可复用的知识资产，解决知识衰退问题
+现有 LLM+EC 方法的成功策略往往纠缠在具体代码里，父代一旦被淘汰，背后的设计逻辑也跟着丢失，系统只能反复重新发现相似概念。Hindsight 的做法是把"思维"和"代码"解耦：每代结束时从精英个体中提取抽象的设计原则（insights），单独存进一个持久的知识池。整个池子按三个阶段自演化——*洞见提取与准入*阶段用 Jaccard 相似度阈值 $\theta_{\text{novelty}}$ 给新洞见去重，避免重复入库；*洞见检索与信用分配*阶段挑出效用最高的 top-$s$ 个洞见注入 Prompt，效用函数同时平衡有效性、使用惩罚和新近度奖励：
 
-2. **Foresight 模块：进化导航器 (Evolutionary Navigator)**:
+$$U(k_i, t) = E_i(t) - w_u \log(N_i(t)+1) + B_r(t, t_i^{\text{last}})$$
 
-    - 功能：实时监控种群动态，在探索/利用/平衡三种模式间切换
-    - 核心思路：维护两个互斥计数器 $C_{\text{prog}}$（进步）和 $C_{\text{stag}}$（停滞）跟踪性能趋势，同时计算表型多样性 $\Delta_p(t)$——衡量种群中所有算法描述文本的非重复对比例。基于阈值的规则策略选择进化体制：$\theta_{\text{explore}}$（停滞或多样性低时）、$\theta_{\text{exploit}}$（持续进步时）、$\theta_{\text{balance}}$（其他情况）
-    - 多样性度量采用精确字符串匹配而非嵌入相似度，避免语义平滑导致的细微逻辑差异被忽略
-    - 设计动机：作为"语言梯度"的符号替代品，提供可解释的全局控制策略
+*自适应裁剪*阶段在池容量超限时淘汰驱逐分数最低的洞见。信用如何分配是这套机制的关键：它用一个分段函数把种群的相对性能 $\tilde{\rho}$ 映射成信用信号——超越当前最优时 $g_{\text{eff}} = 0.8 + 0.2\tilde{\rho}$，高于均值时 $0.2 + 0.6\tilde{\rho}$，低于均值时 $-0.3 + 0.5\tilde{\rho}$，再通过 EMA 平滑更新每个洞见的效用分数。这样一来，带来真实进步的洞见效用会被持续抬高、长期保留，而无效洞见会逐渐被惩罚、被裁掉，相当于把强化学习里"稀疏奖励的信用分配"搬到了知识管理上，让一时的进化成功沉淀成可复用的资产。
 
-3. **基础Prompt策略**:
+**2. Foresight 模块：用进化导航器提供可解释的全局控制。**
 
-    - 功能：提供LLM等价的遗传算子
-    - 包含初始化策略 I1、重组策略（E1综合多父代生成新结构、E2抽象共性产生变体）和变异策略（M1结构修改、M2参数调优、M3简化防过拟合）
+EoH、ReEvo 这类方法的控制信号是局部或反应式的——只对单个候选反思，无法对种群停滞、多样性崩溃这种系统性问题主动干预。Foresight 把全局状态显式建模出来：它维护两个互斥计数器 $C_{\text{prog}}$（进步）和 $C_{\text{stag}}$（停滞）跟踪性能趋势，同时计算表型多样性 $\Delta_p(t)$，即种群中所有算法描述文本两两之间的非重复对比例。基于这些信号，一套阈值规则在三种进化体制间切换：停滞或多样性偏低时走 $\theta_{\text{explore}}$（鼓励探索），持续进步时走 $\theta_{\text{exploit}}$（加紧利用），其余情况走 $\theta_{\text{balance}}$。值得注意的是，多样性度量刻意用精确字符串匹配而非嵌入相似度——因为嵌入会把语义"抹平"，让细微但关键的逻辑差异被误判成重复。这个模块本质上是"语言梯度"的符号替代品：不去微调权重，而是用一条自然语言"设计指令"显式告诉 LLM 当前该往哪个方向走，控制策略因此是可解释的。
+
+**3. 基础 Prompt 策略：LLM 版的遗传算子。**
+
+这部分给进化过程提供"怎么变"的原子操作，相当于把传统 EC 的遗传算子翻译成 LLM 能执行的 Prompt 指令：初始化策略 I1 负责生成第一代候选；重组策略有两种——E1 综合多个父代拼出新结构、E2 抽象出共性再产生变体；变异策略有三种——M1 做结构修改、M2 做参数调优、M3 做简化以防过拟合。Foresight 给出的宏观指令最终就是通过选择和组合这些基础算子来落地的。
 
 ### 训练策略
-种群大小8，CO任务运行8代、BO任务4代。LLM使用 Qwen2.5-Max。Insight Pool 容量30，Jaccard阈值0.7，检索top-3，EMA率0.3，停滞阈值3，进步阈值2，多样性阈值0.3。
+种群大小 8，组合优化（CO）任务运行 8 代、贝叶斯优化（BO）任务 4 代。LLM 使用 Qwen2.5-Max。Insight Pool 容量 30，Jaccard 阈值 0.7，检索 top-3，EMA 率 0.3，停滞阈值 3，进步阈值 2，多样性阈值 0.3。
 
 ## 实验关键数据
 
@@ -115,10 +112,10 @@ HiFo-Prompt 通过引导式Prompt合成（Guided Prompt Synthesis）构建每轮
 ## 相关论文
 
 - [\[ACL 2026\] LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization](../../ACL2026/model_compression/llm_prompt_duel_optimizer_efficient_label-free_prompt_optimization.md)
-- [\[ICLR 2026\] Stress-Testing Alignment Audits with Prompt-Level Strategic Deception](stress-testing_alignment_audits_with_prompt-level_strategic_deception.md)
-- [\[ICLR 2026\] A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
 - [\[ICLR 2026\] LLM DNA: Tracing Model Evolution via Functional Representations](llm_dna_tracing_model_evolution_via_functional_representations.md)
+- [\[ICLR 2026\] ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
 - [\[ICLR 2026\] ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
+- [\[ICLR 2026\] NerVE: Nonlinear Eigenspectrum Dynamics in LLM Feed-Forward Networks](nerve_nonlinear_eigenspectrum_dynamics_in_llm_feed-forward_networks.md)
 
 </div>
 

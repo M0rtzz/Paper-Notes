@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **DPP 行列式多样性度量**:
+**1. DPP 行列式多样性度量：用"体积"而非"两两距离"刻画语义多样性。**
 
-    - 功能：衡量一组响应在语义嵌入空间中的"体积"
-    - 核心思路：$\det(L)$ 等于嵌入向量张成平行体的平方体积。向量越线性无关（语义越不同），行列式越大；如果形成聚类（线性相关），行列式趋近于零
-    - 设计动机：成对距离度量容易导致两个聚类伪多样性。行列式敏感于线性依赖性，能检测"看似距离大但实际落在低维子空间"的退化情况
+直接的想法是拿响应之间的成对距离当多样性，但这容易被"伪多样性"骗过——模型只要学到两个互相远离的聚类，平均距离就很大，可实际答案只在两种模态里打转。本文改用 DPP 的行列式：把 $k$ 个响应嵌入张成的平行体的（平方）体积 $\det(L_\phi(y_{1:k}))$ 当作多样性得分。几何上，向量越线性无关、方向越铺得开，行列式越大；一旦它们落进同一个低维子空间（聚类），向量线性相关，行列式就趋近于零。正因为行列式对线性依赖敏感，它能识破"看似两两距离很大、实则挤在一个子空间里"的退化情况，这是成对距离度量做不到的。
 
-2. **质量-多样性联合目标**:
+**2. 质量-多样性联合目标：把奖励变成嵌入向量的长度，质量与多样性合到一个体积里。**
 
-    - 功能：$J_{Div}(\pi_\theta) = \mathbb{E}[\sum_i r(x,y_i) + \alpha \log\det(L_\phi(y_{1:k})) - \beta \text{KL}(\pi_\theta || \pi_{ref})]$
-    - 核心思路：最优策略可以表示为 $\pi_{div}(y_{1:k}|x) \propto \det(L_\psi(x,y_{1:k}))$，其中 $\psi(x,y) = \sqrt{\exp(r/\alpha)\pi_{ref}(y|x)} \cdot \phi(y)$ 是奖励增强嵌入。奖励作为嵌入向量的缩放因子（范数），语义作为方向
-    - 设计动机：提供了质量-多样性的几何解释——最大化体积需要向量既大（高质量）又正交（高多样性），与 D-最优实验设计理论一脉相承
+有了多样性度量，下一步是让它和质量目标共存而不打架。本文在标准 RL 目标上加一项 DPP 多样性，得到
 
-3. **Leave-one-out 梯度估计器**:
+$$J_{Div}(\pi_\theta) = \mathbb{E}\Big[\textstyle\sum_i r(x,y_i) + \alpha \log\det(L_\phi(y_{1:k})) - \beta\, \text{KL}(\pi_\theta \| \pi_{ref})\Big]$$
 
-    - 功能：稳定训练，降低梯度方差
-    - 核心思路：用 $\log\frac{\det(L(y_{1:k})+I_k)}{\det(L(y_{-i})+I_{k-1})}$ 替代原始 $\log\det(L)$。加 $I_k$ 保证值域有界 $[0, \log(1+k)]$；leave-one-out 减去不含第 $i$ 个响应的基线
-    - 设计动机：原始 $\log\det$ 在行列式接近零时值趋负无穷，导致训练不稳定。加单位阵正则化 + loo 基线同时解决稳定性和方差问题
+其中 $\alpha$ 调质量-多样性的权衡，$\beta$ 是 KL 约束。这个目标的最优策略可写成 $\pi_{div}(y_{1:k}|x) \propto \det(L_\psi(x,y_{1:k}))$，关键在于这里的 Gram 矩阵用的是**奖励增强嵌入** $\psi(x,y) = \sqrt{\exp(r/\alpha)\,\pi_{ref}(y|x)} \cdot \phi(y)$：语义 $\phi(y)$ 决定向量的**方向**，奖励 $r$ 经指数缩放后决定向量的**长度**。于是"最大化体积"自然把两件事拧到一起——体积要大，向量既得长（奖励高、质量好）又得彼此正交（语义不同、多样性高）。这给了质量-多样性一个干净的几何解释，也和 D-最优实验设计（最大化信息矩阵行列式）理论上对齐。
+
+**3. Leave-one-out 梯度估计器：给 $\log\det$ 加正则与基线，治住训练不稳定。**
+
+直接对 $\log\det(L)$ 求梯度有个硬伤：当响应趋于聚类、行列式接近零时，$\log\det$ 会冲向负无穷，梯度爆掉、训练崩溃。本文用一个有界且低方差的替代量
+
+$$\log\frac{\det(L(y_{1:k})+I_k)}{\det(L(y_{-i})+I_{k-1})}$$
+
+来替换原始 $\log\det$。加单位阵 $I_k$ 做正则，把数值钳在有界区间 $[0, \log(1+k)]$，根除负无穷问题（Lemma 1 给出有界性保证）；分母用去掉第 $i$ 个响应后的行列式 $\det(L(y_{-i})+I_{k-1})$ 当 leave-one-out 基线，扣掉与第 $i$ 个样本无关的部分，从而压低梯度方差。两者合起来同时解决了稳定性和方差，也让方法对采样数 $k$ 更鲁棒。
 
 ### 损失函数 / 训练策略
 - 可叠加在 GRPO（推理任务）或 PPO（非推理任务）之上
@@ -130,9 +132,9 @@ tags:
 
 - [\[ICLR 2026\] AutoQD: Automatic Discovery of Diverse Behaviors with Quality-Diversity Optimization](autoqd_automatic_discovery_of_diverse_behaviors_with_quality-diversity_optimizat.md)
 - [\[ACL 2025\] MAPoRL: Multi-Agent Post-Co-Training for Collaborative Large Language Models with Reinforcement Learning](../../ACL2025/reinforcement_learning/maporl_multi-agent_post-co-training_for_collaborative_large_language_models_with.md)
-- [\[ICLR 2026\] Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
 - [\[NeurIPS 2025\] RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models](../../NeurIPS2025/reinforcement_learning/repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)
 - [\[ACL 2026\] Why Does Reinforcement Learning Generalize? A Feature-Level Mechanistic Study of Post-Training in Large Language Models](../../ACL2026/reinforcement_learning/why_does_reinforcement_learning_generalize_a_feature-level_mechanistic_study_of_.md)
+- [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
 
 </div>
 

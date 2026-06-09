@@ -38,37 +38,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入图像→按Hilbert曲线路径重排token→在1D序列上构建窗口/邻域→用FlexAttention的block-sparse kernel计算→得益于高空块率加速。路径可缓存复用。
+这篇工作要解决的，是局部注意力"理论省了计算、实际跑不快"的落差：块稀疏 kernel（如 FlexAttention）靠跳过全空的块来加速，但传统行优先排列让 2D 窗口里的 token 在 1D 序列上散落，空块少、partial block 多，加速大打折扣。它的做法是在注意力计算前插一步纯排列操作——把图像 token 按 Hilbert 空间填充曲线的路径重排成 1D 序列，使空间邻近的 token 在序列里也连续；之后照常在 1D 序列上划窗口/邻域，交给块稀疏 kernel 计算。因为窗口内 token 变连续了，空块率大涨、kernel 能跳过更多计算。Hilbert 路径只依赖图像尺寸，可在模型初始化时算好并缓存复用。
 
 ### 关键设计
 
-1. **Hilbert窗口注意力 (HWA)**:
+**1. Hilbert 窗口注意力（HWA）：让窗口在 1D 序列上连续，把 partial block 变成 empty block。**
 
-    - 功能：在Hilbert重排后的1D序列上连续划分窗口
-    - 核心思路：2×2窗口在行优先序列中取token(1,2,5,6)→4个partial blocks；Hilbert序列取(1,2,3,4)→2个full blocks + 2个empty blocks。空块率从0%提升到50%。
-    - 设计动机：连续窗口→更多空块→FlexAttention跳过更多计算
+行优先排列下，一个 2×2 窗口会取到 token (1,2,5,6)——它们在 1D 序列里跨行，落进多个块的边角，形成 4 个 partial block，块稀疏 kernel 既不能整块跳过、又要额外 mask 开销。换成 Hilbert 序列后同一个窗口取到的是连续的 (1,2,3,4)，整齐落进 2 个 full block，另外 2 个块完全为空——空块率从 0% 直接提到 50%。HWA 就是把这种"先 Hilbert 重排、再连续切窗口"的思路用到标准窗口注意力上，窗口的空间语义不变（仍是同一片邻域），只是物理布局更适配块稀疏 kernel，于是 FlexAttention 能跳过的块更多。
 
-2. **Hilbert滑动/邻域注意力 (HSA/HNA)**:
+**2. Hilbert 滑动 / 邻域注意力（HSA / HNA）：把 2D 邻域注意力等效成 1D 邻域注意力。**
 
-    - 功能：在Hilbert序列上做滑动窗口或邻域注意力
-    - 核心思路：Hilbert保持空间邻近性→1D上的近邻 $\approx$ 2D上的空间近邻→2D邻域注意力等效为1D邻域注意力
-    - 设计动机：避免了2D邻域注意力的 $N^2$ 中间存储问题
+滑动窗口和邻域注意力在行优先排列下最"碎"——每个 query 的邻域在 1D 上跨多行，块稀疏几乎无从下手。Hilbert 曲线的局部性保持特性正好对症：1D 序列上的近邻 $\approx$ 2D 空间上的近邻，于是原本需要在 2D 上定义的邻域注意力，可以直接当成 1D 邻域注意力来算。这样既复用了成熟的 1D 稀疏 kernel，又绕开了 2D 邻域注意力为构造邻域要维护 $N^2$ 量级中间存储的问题。
 
-3. **Hilbert Window Transformer (HWT)**:
+**3. Hilbert Window Transformer（HWT）：把 HWA 整体接进 Swin 式架构、零侵入替换。**
 
-    - 功能：用HWA替换Swin Transformer的WSA
-    - 核心思路：成对使用HWA和Hilbert Shifted Window Attention (HSWA)。窗口位移在1D上做（偏移固定数量token）。使用全局RPB替代窗口RPB（因Hilbert窗口形状不规则）。
-    - 设计动机：FlexAttention的mask_mod和score_mod接口无需修改模型或训练流程
+HWT 直接用 HWA 替掉 Swin Transformer 里的 WSA，并成对使用 HWA 与 Hilbert Shifted Window Attention（HSWA）来保留跨窗口信息交流——窗口位移改在 1D 序列上做，偏移固定数量的 token 即可。由于 Hilbert 窗口形状不规则，原来按窗口形状定义的相对位置偏置（窗口 RPB）不再适用，改用全局 RPB 替代。整套替换通过 FlexAttention 的 `mask_mod` / `score_mod` 接口实现，不需要改模型结构或训练流程。
 
-4. **加速原理分析**:
+**4. 加速原理：空块越多，启动和访存越少。**
 
-    - 总运行时间 $T \approx \frac{\sum_{i=1}^{M}(\alpha + \beta \cdot r_i)}{P_{\text{eff}}}$
-    - 更多空块→更少CTA启动和K/V加载→更短运行时间
+块稀疏 kernel 的总运行时间可近似写成
+
+$$T \approx \frac{\sum_{i=1}^{M}(\alpha + \beta \cdot r_i)}{P_{\text{eff}}}$$
+
+其中对每个被处理的块都有一份固定启动开销 $\alpha$ 和与该块有效行数 $r_i$ 成正比的访存/计算开销 $\beta \cdot r_i$，$P_{\text{eff}}$ 是有效并行度。空块被整块跳过、根本不进求和，所以空块越多，需要启动的 CTA 越少、要加载的 K/V 越少，$T$ 越短。这也解释了为什么前面两个设计要不遗余力地"造空块"——HWA/HSA 提升的空块率，直接对应这条公式里被砍掉的项。
 
 ### 损失函数 / 训练策略
-- 标准ImageNet分类训练
-- Hilbert路径在模型初始化时计算并缓存
-- 兼容FlexAttention、FlashAttention、xFormers、NATTEN等多种kernel
+- 标准 ImageNet 分类训练，不改训练目标与流程。
+- Hilbert 路径在模型初始化时一次性计算并缓存，推理时直接复用。
+- 兼容 FlexAttention、FlashAttention、xFormers、NATTEN 等多种 kernel。
 
 ## 实验关键数据
 
@@ -124,11 +121,11 @@ tags:
 
 ## 相关论文
 
+- [\[AAAI 2026\] GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization](../../AAAI2026/others/gdba_revisited_unleashing_the_power_of_guided_local_search_for_distributed_const.md)
 - [\[ICLR 2026\] Beyond Linearity in Attention Projections: The Case for Nonlinear Queries](beyond_linearity_in_attention_projections_the_case_for_nonlinear_queries.md)
+- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
 - [\[ICLR 2026\] Compositional Diffusion with Guided Search for Long-Horizon Planning](compositional_diffusion_long_horizon_planning.md)
-- [\[AAAI 2026\] Local Guidance for Configuration-Based Multi-Agent Pathfinding](../../AAAI2026/others/local_guidance_for_configuration-based_multi-agent_pathfinding.md)
 - [\[ICML 2025\] Positional Attention: Expressivity and Learnability of Algorithmic Computation](../../ICML2025/others/positional_attention_expressivity_and_learnability_of_algorithmic_computation.md)
-- [\[ACL 2025\] Unique Hard Attention: A Tale of Two Sides](../../ACL2025/others/unique_hard_attention_a_tale_of_two_sides.md)
 
 </div>
 

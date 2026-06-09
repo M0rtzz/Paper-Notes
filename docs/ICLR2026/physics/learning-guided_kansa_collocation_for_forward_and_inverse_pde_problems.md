@@ -42,47 +42,33 @@ tags:
 
 ### 整体框架
 
-框架基于Kansa配置点方法(collocation method)：用RBF线性组合近似场 $\hat{u}(\mathbf{x}) = \sum_k \alpha_k \psi_k(\|\mathbf{x} - \mathbf{x}_k\|)$，通过满足PDE约束和边界条件确定系数 $\alpha_k$。核心扩展包括：(1) 耦合多变量扩展，(2) 非线性算子处理，(3) 超参数自调优，(4) 反问题求解。
+整个框架建立在Kansa配置点法之上：把待求场写成径向基函数的线性组合 $\hat{u}(\mathbf{x}) = \sum_k \alpha_k \psi_k(\|\mathbf{x} - \mathbf{x}_k\|)$，让它在一批配置点上同时满足PDE算子约束和边界条件，从而把求解归结为确定系数 $\alpha_k$。本文在这条主线上做了四处扩展——耦合多变量、非线性算子、形状参数自调优、反问题，使原本只能处理单变量线性PDE的Kansa方法覆盖到耦合方程组与非线性场景。
 
 ### 关键设计
 
-1. **耦合多变量PDE扩展（Extension 1）**
+**1. 耦合多变量扩展：让一套RBF同时求解多个物理量。**
 
-    - **功能**：将单一未知场 $u$ 扩展为多维 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$
-    - **核心思路**：每个维度 $u_d$ 有独立的RBF展开和系数 $\alpha_k^{(d)}$，通过线性耦合算子 $\mathcal{G}$ 将各维度联立，形成水平堆叠的块矩阵系统
-    - **设计动机**：许多物理方程（如Navier-Stokes、Maxwell等）本质上是耦合PDE系统，需要同时求解多个物理量
+Navier-Stokes、Maxwell这类方程本质上是若干物理量相互牵制的耦合方程组，单场表示无法描述。本文把单一未知场 $u$ 推广为多维向量 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$，每个分量 $u_d$ 各自拥有独立的RBF展开和系数 $\alpha_k^{(d)}$。各分量之间通过线性耦合算子 $\mathcal{G}$ 联立起来，把所有维度的配置点方程水平堆叠成一个块矩阵系统一次性求解。这样既保留了无网格表示的灵活性，又让分量间的耦合在同一个线性系统里得到一致处理；实验中耦合维度 $N_D$ 从1增长到多维时，计算成本近似线性上升而精度基本维持。
 
-2. **非线性算子处理（Extension 2）**
+**2. 非线性算子处理：用微分矩阵把非线性项拆成已知场的微分组合。**
 
-    - **功能**：处理非线性微分算子（如Burgers方程的 $u \frac{\partial u}{\partial x}$ 项）
-    - **核心思路**：引入微分矩阵 $\mathbf{D}_x = \mathbf{K}_x \cdot \mathbf{K}^{-1}$，将非线性算子分解为已知场的微分操作组合；提供5种求解策略：前向Euler(显式)、IMEX(半隐式)、后向Euler(隐式Newton-Raphson)、Crank-Nicolson(二阶)、全非线性直接优化
-    - **设计动机**：非线性情况下无法直接分离出线性系统，需要通过时间离散化或迭代优化来绕过
+非线性算子（如Burgers方程里的 $u\,\partial u/\partial x$ 项）无法像线性情形那样直接分离出一个可解的线性系统。本文的关键工具是微分矩阵 $\mathbf{D}_x = \mathbf{K}_x \cdot \mathbf{K}^{-1}$——它把对场的微分操作表达成作用在RBF系数上的矩阵，于是非线性项可以分解为已知场上的微分组合，再交给时间离散或迭代优化处理。围绕这一点本文给出五种求解策略：显式的前向Euler、半隐式的IMEX、配合Newton-Raphson的隐式后向Euler、二阶的Crank-Nicolson，以及不做时间分裂、直接对残差做全局优化的全非线性方案，覆盖了从快速但易失稳到稳定且高精度的不同需求。
 
-3. **自调参机制**
+**3. 形状参数自调优：自动权衡精度与条件数。**
 
-    - **功能**：自动优化RBF核的形状参数 $\epsilon$
-    - **核心思路**：对线性PDE，联合最小化算子矩阵条件数和解场变分；对非线性PDE，提出直接最小化PDE残差 + 解场变分 + 训练L2损失的组合目标
-    - **设计动机**：$\epsilon$ 的选择极大影响精度和稳定性（trade-off between accuracy and conditioning），手动调参不现实
+RBF核的形状参数 $\epsilon$ 对结果影响极大——取得太尖会损失精度，取得太平则让算子矩阵条件数恶化，二者之间存在精度-条件数的内在权衡，手工调参既费力又不可靠。对线性PDE，本文联合最小化算子矩阵的条件数与解场的变分来选 $\epsilon$；对非线性PDE，则提出一个组合目标，同时压低PDE残差、解场变分以及训练数据上的L2损失。把 $\epsilon$ 的选取从人工试错变成可优化的目标，实验显示自调优相比手动设值能显著降低误差。
 
-4. **反问题求解**
+**4. 反问题求解：把参数反演变成标准优化。**
 
-    - **功能**：从解的观测 $u^{\text{obs}}$ 反推未知PDE参数 $\boldsymbol{\pi}$
-    - **核心思路**：$\boldsymbol{\pi}^* = \arg\min_{\boldsymbol{\pi}} \mathcal{L}(u^{\text{obs}}, u^{\text{pred}}(\boldsymbol{\pi}))$，使用SciPy的最小二乘和求根算法
-    - **设计动机**：反问题在科学计算中至关重要（如参数估计、材料属性推断），将Kansa框架的适用范围扩展到inverse setting
+从观测数据反推未知PDE参数（扩散系数、流速等）对科学模拟很重要，但此前的Kansa框架并未涉及。借助RBF表示对参数的可微性，本文把反问题写成 $\boldsymbol{\pi}^* = \arg\min_{\boldsymbol{\pi}} \mathcal{L}(u^{\text{obs}}, u^{\text{pred}}(\boldsymbol{\pi}))$，即调整未知参数 $\boldsymbol{\pi}$ 使预测解逼近观测 $u^{\text{obs}}$，再用SciPy的最小二乘与求根算法求解。由于正向求解器本身可微，参数推断自然落入标准优化框架，无需额外的伴随推导。
 
-5. **与其他求解器的系统对比**
+**5. 与神经求解器的系统对比：给出选型指南。**
 
-    - **功能**：在benchmark PDE上对比Kansa、PINN、FNO
-    - **核心思路**：统一评估指标（L2误差、效率、内存、收敛速度），公平调配训练数据量
-    - **设计动机**：为不同PDE类型提供求解器选择指南
+为厘清扩展后的Kansa方法相对神经PDE求解器的位置，本文在一组benchmark PDE上统一对比Kansa、PINN与FNO，采用一致的评估口径——相对L2误差、计算效率、内存、收敛速度，并公平地配置各方法的训练数据量。这组对比不只是刷指标，而是为不同PDE类型给出"何时该选哪种求解器"的实用结论，比如在配置点稀少、缺乏训练数据的场景下Kansa优势明显，而FNO的训练数据需求约是Kansa/PINN的100倍。
 
 ### 损失函数 / 训练策略
 
-- **线性PDE**：最小二乘 $\mathbf{a}^{\text{opt}} = (\mathbf{F}^T\mathbf{F})^{-1}\mathbf{F}^T\mathbf{h}$，直接求解
-- **非线性PDE**：残差最小化 $\min_\alpha \sum_i (\mathcal{F}[\hat{u}](\mathbf{x}_i) - h(\mathbf{x}_i))^2$
-- **自调参**：网格搜索优化形状参数 $\epsilon$
-- **PINN对比**：Adam优化器，学习率 $10^{-3}$，3000 epochs
-- **FNO对比**：需要100个PDE实例训练，100 epochs
+线性PDE直接走最小二乘闭式解 $\mathbf{a}^{\text{opt}} = (\mathbf{F}^T\mathbf{F})^{-1}\mathbf{F}^T\mathbf{h}$；非线性PDE改为最小化配置点上的残差 $\min_\alpha \sum_i (\mathcal{F}[\hat{u}](\mathbf{x}_i) - h(\mathbf{x}_i))^2$；形状参数 $\epsilon$ 通过网格搜索按上述自调优目标选取。作为对照，PINN用Adam优化器、学习率 $10^{-3}$、训练3000 epochs，FNO则需要100个PDE实例、训练100 epochs。
 
 ## 实验关键数据
 
@@ -165,8 +151,8 @@ Burgers方程（非线性）对比：
 - [\[AAAI 2026\] Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study](../../AAAI2026/physics/scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa.md)
 - [\[NeurIPS 2025\] Physics-Guided Machine Learning for Uncertainty Quantification in Turbulence Models](../../NeurIPS2025/physics/physics-guided_machine_learning_for_uncertainty_quantification_in_turbulence_mod.md)
 - [\[ICLR 2026\] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)
-- [\[ICLR 2026\] DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
 - [\[NeurIPS 2025\] DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving](../../NeurIPS2025/physics/deltaphi_physical_states_residual_learning_for_neural_operators_in_data-limited_.md)
+- [\[ICLR 2026\] DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs](dgnet_discrete_green_networks_for_data-efficient_learning_of_spatiotemporal_pdes.md)
 
 </div>
 

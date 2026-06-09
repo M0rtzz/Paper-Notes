@@ -51,16 +51,13 @@ $$\max_{\boldsymbol{s}} J(a, \boldsymbol{s}) = \max_{\boldsymbol{s}} \log \mathb
 
 ### 关键设计
 
-#### 1. 属性分类器
+**1. 属性分类器：用扩散模型中间层激活当"偏见探针"。**
 
-在 Stable Diffusion 1.5 的 UNet 中间层激活上训练的轻量线性分类头：
-- 输入：扩散过程中某步的 UNet 中间层特征
-- 输出：敏感属性（性别 2 类 / 种族 4 类）的概率
-- 用 $K$ 次生成取平均，避免单次采样偏差
+要在搜索时知道某条提示会不会把图像推向某个属性，必须有一个能从扩散过程里读出属性倾向的信号源。BGPS 不另训分类网络，而是直接在 Stable Diffusion 1.5 的 UNet 中间层激活上挂一个轻量线性分类头：输入是扩散过程中某一步的 UNet 中间层特征，输出是敏感属性（性别 2 类 / 种族 4 类）的概率。由于单次采样噪声大，实际把同一条提示生成 $K$ 次、对分类概率取平均，得到上面目标函数里那一项 $\frac{1}{K}\sum_{i=1}^K \mathbb{P}(A=a \mid \cdot)$，避免被单次采样偏差带偏。这个探针只需要中间层激活（灰箱访问），因此整套方法也能用来审计只暴露中间特征的商业系统。
 
-#### 2. Beam Search 解码
+**2. Beam Search 解码：把分类器信号注入 LLM 的逐 token 搜索。**
 
-利用 LLM 的自回归分解 $\mathbb{P}(\boldsymbol{s}) = \prod_{i=1}^N p(s_i | s_{<i})$ 进行逐 token 评分与搜索：
+有了属性探针，问题就变成在 LLM 的语言空间里搜出既自然、又能最大化属性倾向的提示。BGPS 利用 LLM 的自回归分解 $\mathbb{P}(\boldsymbol{s}) = \prod_{i=1}^N p(s_i | s_{<i})$，把整句的语言先验拆成逐 token 评分，再用 beam search 边生成边按目标函数 $J(a,\boldsymbol{s})$ 打分。搜索由三个超参控制：
 
 | 参数 | 说明 |
 |------|------|
@@ -68,17 +65,11 @@ $$\max_{\boldsymbol{s}} J(a, \boldsymbol{s}) = \max_{\boldsymbol{s}} \log \mathb
 | 扩展因子 $E$ | 每步扩展候选数 |
 | 额外扩展 $E'$ | 增加多样性的采样因子 |
 
-**提示多样性保证**：
-- 第一个 token 直接从 LLM 完整 logits 分布采样
-- 后续 token 通过 $B \times E$ 采样 + 打分选 Top-B
-- 遇到 EOS 的 beam 被保存并移出池
+为了不让搜索过早收敛到几条雷同提示，多样性通过三处设计保证：第一个 token 直接从 LLM 的完整 logits 分布采样（而非贪心选最高分），给整条 beam 多样的起点；后续 token 用 $B \times E$ 采样得到候选、再按打分选出 Top-B；遇到 EOS 的 beam 被保存下来并移出搜索池，腾出名额继续探索其他方向。最终产出的是一批可读、属性倾向被放大的完整句子，而不是 PEZ 那种打分高但不可读的 token 堆叠。
 
-#### 3. LLM 指令设计
+**3. LLM 指令设计：把"自然"和"属性中立"写进提示约束里。**
 
-LLM 被明确指示：
-- 生成属性中立的提示（不提及性别/种族等）
-- 生成"典型用户可能输入的"自然提示
-- 默认 LLM：Mistral-7B-v0.2
+偏见审计要有说服力，发现的提示必须是普通用户真会输入的话，而且本身不能显式提到性别/种族——否则就成了"自己写性别再抱怨模型有性别偏见"。为此 LLM 被明确指示只生成属性中立的提示（不提及性别、种族等敏感词），并生成"典型用户可能输入的"自然句子；默认用的语言模型是 Mistral-7B-v0.2。正是这条约束让 BGPS 在保持低困惑度的同时，把显式提及性别的提示比例压到很低（λ=100 时仅 17%，远低于 PEZ 的 94%）。
 
 ### 损失函数 / 训练策略
 
@@ -167,24 +158,6 @@ BGPS 不涉及模型训练。属性分类器为预训练的线性头。优化过
 - 写作质量：⭐⭐⭐⭐ — 研究动机和定位非常清晰
 - 总体推荐：⭐⭐⭐⭐⭐ — 具有重要社会影响力的工作，对 T2I 公平性研究贡献显著
 
-## 背景与动机
-
-## 核心问题
-
-## 方法详解
-
-## 实验关键数据
-
-## 亮点
-
-## 局限与展望
-
-## 与相关工作的对比
-
-## 启发与关联
-
-## 评分
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -192,10 +165,10 @@ BGPS 不涉及模型训练。属性分类器为预训练的线性头。优化过
 ## 相关论文
 
 - [\[ACL 2025\] Automated Explanation Generation and Hallucination Detection for Heritage Image Retrieval](../../ACL2025/llm_safety/automated_explanation_generation_and_hallucination_detection_for_heritage_image_.md)
+- [\[ICLR 2026\] Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_the_safety_tax.md)
 - [\[ICLR 2026\] Inference-Time Backdoors via Hidden Instructions in LLM Chat Templates](inference-time_backdoors_via_hidden_instructions_in_llm_chat_templates.md)
 - [\[ICLR 2026\] SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_mode.md)
 - [\[AAAI 2026\] Multi-Faceted Attack: Exposing Cross-Model Vulnerabilities in Defense-Equipped Vision-Language Models](../../AAAI2026/llm_safety/multi-faceted_attack_exposing_cross-model_vulnerabilities_in_defense-equipped_vi.md)
-- [\[ACL 2026\] Adaptive Text Anonymization: Learning Privacy-Utility Trade-offs via Prompt Optimization](../../ACL2026/llm_safety/adaptive_text_anonymization_learning_privacy-utility_trade-offs_via_prompt_optim.md)
 
 </div>
 

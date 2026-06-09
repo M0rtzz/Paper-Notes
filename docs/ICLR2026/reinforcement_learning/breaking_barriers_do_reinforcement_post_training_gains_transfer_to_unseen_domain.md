@@ -37,42 +37,23 @@ tags:
 
 ## 方法详解
 
-### 研究设计
+### 整体框架
 
-**四个研究问题**：
-- RQ1：RPT 增益能否迁移到训练域之外？
-- RQ2：推理结构的相似性如何影响泛化？
-- RQ3：域内子域之间的泛化效果如何？
-- RQ4：泛化性是否随超参数（算法、模型规模、训练步数）变化？
+这是一篇实证研究，核心是回答"RPT 的推理增益能否迁移到训练域之外"这一问题，并把它拆成四个递进的研究问题：增益能否跨域迁移（RQ1）、推理结构相似性如何影响泛化（RQ2）、同一大域内子任务间泛化如何（RQ3）、这种泛化规律是否随算法/模型规模/训练步数变化（RQ4）。为了既看到普遍趋势又能锁定因果，作者采用"观察性 + 干预性"的双阶段设计：先在 18 个公开 RPT 模型上做大范围横向对比发现现象，再用统一基座、统一算法的单域受控训练隔离出 RPT 本身的作用。
 
-### 域分类
+### 关键设计
 
-将推理任务分为三大域：
-- **数学**（结构化）：GSM8K、MATH-500、AIME 2024、AMC 2023
-- **代码**（结构化）：MBPP、HumanEval、BigCodeBench、LiveCodeBench、USACO、Codeforces、Polyglot
-- **知识密集型推理**（非结构化）：PubMedQA、MedQA、TabFact、LegalBench、FinBench
+**1. 三域分类与结构化/非结构化之分：给"跨域"一个可操作的坐标系。**
+要谈泛化首先要定义"域"。作者把推理任务划成三大域——**数学**（GSM8K、MATH-500、AIME 2024、AMC 2023）、**代码**（MBPP、HumanEval、BigCodeBench、LiveCodeBench、USACO、Codeforces、Polyglot）、以及**知识密集型推理**（PubMedQA、MedQA、TabFact、LegalBench、FinBench）。更关键的是给出一条贯穿全文的区分维度：数学与代码属于**结构化推理**，遵循确定性逻辑步骤和精确语法；法律/金融/医疗属于**非结构化推理**，需要上下文敏感、依赖世界知识、要处理歧义。正是这条结构化—非结构化的轴线，后面解释了为什么数学和代码能互迁、却都迁不到知识域。
 
-关键定义：结构化推理遵循确定性逻辑步骤和精确语法，非结构化推理需要灵活的上下文敏感推理、世界知识和歧义处理能力。
+**2. 观察性研究：用 18 个公开模型先把现象看清楚。**
+作者从 Hugging Face 系统性地把候选 RPT 模型从 466 个逐层筛到 31 个再到 18 个，筛选条件是 RPT 数据公开、参数量落在 1.5B–14B、且基座不是纯预训练模型（保证 RPT 是唯一变量来源）。每个模型都与其对应的 base 模型在 16 个 benchmark 上逐一对比，覆盖数学、代码、法律、金融、医疗。这一步的价值在于范围广、模型多样，能暴露出跨算法、跨规模都成立的普遍趋势，但因为各模型算法和数据各异，单靠它还无法断言因果。
 
-### 观察性研究
+**3. 干预性研究：单域受控训练隔离 RPT 的真实因果。**
+为了排除"是不同算法/数据造成差异"的干扰，作者把所有变量钉死：基座统一为 DeepSeek-R1-Distill-Qwen-1.5B，算法统一用 GRPO（组相对策略优化）且超参完全一致，唯一不同的是训练数据——在三个互不相交、各 40K 样本的数据集（数学 / 代码 / 知识密集型）上分别做 RPT。这样三个模型之间唯一的差别就是训练域，任何域外表现差异都只能归因于 RPT 数据域本身。作者还补做了 DAPO 算法、2 epoch、以及 Llama-3.2-3B-Instruct 基座的复现，以确认结论不依赖某一特定配置。
 
-- 从 Hugging Face 系统筛选 466→31→18 个开源 RPT 模型
-- 筛选标准：RPT 数据公开、模型 1.5B-14B 参数、base 模型非纯预训练
-- 每个模型与其 base 模型在 16 个 benchmark 上进行对比
-- 涵盖数学、代码、法律、金融、医疗等域
-
-### 干预性研究
-
-- Base 模型统一为 DeepSeek-R1-Distill-Qwen-1.5B
-- 在三个不相交的 40K 样本数据集上分别做 RPT：数学、代码、知识密集型推理
-- 算法统一用 GRPO（组相对策略优化），超参完全一致
-- 额外验证：DAPO 算法、2 epoch 训练、Llama-3.2-3B-Instruct 基座
-
-### 评估指标
-
-- **聚合准确率提升** $\Delta_{i,j}^{(\mathcal{D})}$：加权平均的 pass@1 改进
-- **CMH 统计检验**：Cochran-Mantel-Haenszel 测试，计算共同 odds ratio $\hat{\theta}$，$p<0.05$ 标注显著性
-- 小 benchmark（AMC/AIME）重复 16 次取平均，其他运行 1 次
+**4. 评估指标与统计检验：不止看点估计，还要看显著性。**
+泛化好坏需要量化。作者定义**聚合准确率提升** $\Delta_{i,j}^{(\mathcal{D})}$，即 RPT 模型相对 base 在某域上加权平均的 pass@1 改进，用来衡量增益幅度。但点估计容易被噪声误导，于是引入 **Cochran-Mantel-Haenszel（CMH）检验**，计算跨 benchmark 的共同优势比 $\hat{\theta}$ 并以 $p<0.05$ 标注显著性——$\hat{\theta}$ 越接近 1 说明 RPT 几乎没带来真实优势。为压低方差，AMC/AIME 这类小 benchmark 重复 16 次取平均，其余跑 1 次。正是这套假设检验框架让"OOD 增益不显著"成为有统计支撑的结论，而非仅凭一个偏低的数字。
 
 ## 实验关键数据
 
@@ -155,9 +136,9 @@ tags:
 
 - [\[ICLR 2026\] Post-training Large Language Models for Diverse High-Quality Responses](post-training_large_language_models_for_diverse_high-quality_responses.md)
 - [\[ACL 2026\] Scaling Behaviors of LLM Reinforcement Learning Post-Training: An Empirical Study](../../ACL2026/reinforcement_learning/scaling_behaviors_of_llm_reinforcement_learning_post-training_an_empirical_study.md)
-- [\[ICLR 2026\] Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments](partially_equivariant_reinforcement_learning_in_symmetry-breaking_environments.md)
-- [\[ICML 2026\] Provable Benefit of Curriculum in Transformer Tree-Reasoning Post-Training](../../ICML2026/reinforcement_learning/provable_benefit_of_curriculum_in_transformer_tree-reasoning_post-training.md)
 - [\[ACL 2026\] Breaking the Impasse: Dual-Scale Evolutionary Policy Training for Social Language Agents](../../ACL2026/reinforcement_learning/breaking_the_impasse_dual-scale_evolutionary_policy_training_for_social_language.md)
+- [\[ICML 2026\] Provable Benefit of Curriculum in Transformer Tree-Reasoning Post-Training](../../ICML2026/reinforcement_learning/provable_benefit_of_curriculum_in_transformer_tree-reasoning_post-training.md)
+- [\[ICML 2026\] How Reasoning Evolves from Post-Training Data: An Empirical Study Using Chess](../../ICML2026/reinforcement_learning/how_reasoning_evolves_from_post-training_data_an_empirical_study_using_chess.md)
 
 </div>
 

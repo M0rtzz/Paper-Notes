@@ -47,35 +47,25 @@ tags:
 
 ### 关键设计
 
-#### 1. Oversmoothing 并非普遍存在也非性能下降根因
+**1. Oversmoothing 既不普遍存在、也不是性能下降的根因。**
 
-**功能**: 证明 OSM 是否发生、如何度量都高度依赖于架构与超参的选择。
-
-**核心思路**: 用 Dirichlet Energy（DE）和 Rayleigh Quotient（RQ）两种指标度量 OSM：
+针对"OSM 导致性能下降、且是所有深度图网络的固有属性"这条信念，本文先指出连度量 OSM 的指标本身都不自洽。文献常用 Dirichlet Energy（DE）和 Rayleigh Quotient（RQ）两个量来刻画节点表征是否趋同：
 
 $$\mathrm{DE}(\mathbf{H}^\ell) = \mathrm{Tr}((\mathbf{H}^\ell)^T \mathbf{L} \mathbf{H}^\ell), \quad \mathrm{RQ} = \frac{\mathrm{Tr}((\mathbf{H}^\ell)^T \mathbf{L} \mathbf{H}^\ell)}{\|\mathbf{H}^\ell\|_F^2}$$
 
-实验表明：(i) GIN 的 DE 在标准设置下**爆炸**而非坍缩；(ii) 将权重矩阵乘以 2（$AX(2W)$）即可逆转 DE 的趋势；(iii) DE 和 RQ 在同一模型上经常给出矛盾结论。因此 OSM 既不普遍、也不唯一定义。
+关键在于：OSM 是否发生、朝哪个方向走，都强烈依赖架构与超参的选择。GIN 的 DE 在标准设置下不降反**爆炸**；只要把权重矩阵乘 2（即 $AX(2W)$）就能逆转 DE 的趋势；而 DE 和 RQ 在同一个模型上常给出互相矛盾的结论。既然换聚合、缩放权重、换指标都会改变结论，OSM 自然谈不上普遍，也没有唯一定义。更进一步，即便 DE 真的下降，也不等于性能就该垮——不同类别的节点会先各自坍缩到各自的点（"有益平滑"阶段），**类别可分性**反而可能保持甚至提升，真正拖垮准确率的更多是梯度消失和过拟合。
 
-**设计动机**: 即使 DE 下降，节点嵌入的**类别可分性**可能保持甚至提升——不同类先各自坍缩到不同点（"有益平滑"阶段），真正的性能下降更多由梯度消失和过拟合导致。
+**2. 把 Oversquashing 拆成计算瓶颈与拓扑瓶颈两个独立问题。**
 
-#### 2. 将 Oversquashing 拆分为计算瓶颈与拓扑瓶颈
-
-**功能**: 给出计算瓶颈的严格定义，证明其与拓扑瓶颈可独立存在。
-
-**核心思路**: 定义**计算瓶颈**为计算树的多重集大小 $|\mathcal{M}_v^K|$：
+文献里 OSQ 几乎被默认等同于"图的拓扑瓶颈"，但本文给出计算瓶颈的严格定义后，证明二者可以彼此独立地出现。所谓**计算瓶颈**，指的是 $K$ 跳计算树展开后的多重集大小 $|\mathcal{M}_v^K|$：
 
 $$\mathcal{M}_v^K := \mathcal{M}_v^{K-1} \uplus \left\{\biguplus_{u \in \mathcal{M}_v^{K-1}} \mathcal{N}_u\right\}$$
 
-它随层数指数增长，独立于图是否存在拓扑瓶颈。反例：(a) 网格图无拓扑瓶颈但有严重计算瓶颈；(b) 存在拓扑瓶颈的哑铃图在少量层时计算瓶颈很轻。
+它随层数指数膨胀，与图是否真的存在连通性意义上的拓扑瓶颈无关。两个反例把这种独立性摆得很清楚：网格图没有任何拓扑瓶颈，却因计算树爆炸而有严重的计算瓶颈；反过来，有拓扑瓶颈的哑铃图在层数很少时计算瓶颈反而很轻。区分这两件事有直接的实践意义——现有的 graph rewiring 通过加边加点缓解拓扑瓶颈，却会**恶化**计算瓶颈；而 message filtering 这类方法不改图结构就能减小计算瓶颈，恰好走相反的路子。
 
-**设计动机**: 现有 rewiring 方法改善了拓扑瓶颈，但加边加节点反而会**恶化**计算瓶颈；message filtering 方法反之可以在不修改图结构的情况下减小计算瓶颈。
+**3. 把同质/异质性与任务难度、长程依赖解耦开。**
 
-#### 3. 同质/异质性与任务的解耦
-
-**功能**: 证明高异质不等于"难"、长程传播任务不必然出现在异质图上。
-
-**核心思路**: (a) 完全异质二部图中，节点度数不同足以让 1 层 sum-based DGN 完美分类；(b) 高度同质图上，若任务是判断节点到特定节点距离是否>5，则需要长程传播——但该图是同质的。因此 **长程任务 ⊥ 异质性**。
+这一组信念把"异质 = 难"、"长程传播任务只出现在异质图上"当成了常识，本文用两个反例同时拆掉。其一，在一个完全异质的二部图里，仅凭节点度数的差异，1 层 sum-based DGN 就能做到完美分类——异质到极致反而平凡，"高异质"和"困难"之间没有必然联系。其二，在一个高度同质的图上，如果任务是判断某节点到特定节点的距离是否大于 5，就必须依赖长程传播，可这张图明明是同质的。两个反例合起来说明：**长程任务与异质性彼此正交**，不该被绑定讨论。
 
 ### 损失函数
 
@@ -146,9 +136,9 @@ $$\mathcal{M}_v^K := \mathcal{M}_v^{K-1} \uplus \left\{\biguplus_{u \in \mathcal
 ## 相关论文
 
 - [\[ICLR 2026\] Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
-- [\[AAAI 2026\] Life, Machine Learning, and the Search for Habitability: Predicting Biosignature Fluxes for the Habitable Worlds Observatory](../../AAAI2026/others/life_machine_learning_and_the_search_for_habitability_predicting_biosignature_fl.md)
 - [\[ICLR 2026\] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
 - [\[ECCV 2024\] Decoupling Common and Unique Representations for Multimodal Self-supervised Learning](../../ECCV2024/others/decoupling_common_and_unique_representations_for_multimodal_self-supervised_lear.md)
+- [\[AAAI 2026\] Life, Machine Learning, and the Search for Habitability: Predicting Biosignature Fluxes for the Habitable Worlds Observatory](../../AAAI2026/others/life_machine_learning_and_the_search_for_habitability_predicting_biosignature_fl.md)
 - [\[NeurIPS 2025\] Directional Non-Commutative Monoidal Structures for Compositional Embeddings in Machine Learning](../../NeurIPS2025/others/directional_non-commutative_monoidal_structures_for_compositional_embeddings_in_.md)
 
 </div>

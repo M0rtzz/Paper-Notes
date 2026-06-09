@@ -44,41 +44,36 @@ tags:
 
 ### 整体框架
 
-MASS 由三个关键组件构成：
+MASS 把"推理时该用什么数据自适应"建模成一个双层优化问题：底层是一个 Generator $\pi_\theta$ 和一个 Scorer $s_\eta$，前者面对目标任务 $T$ 生成 $m$ 个辅助问题-答案对 $(p_i, a_i)$，后者给每条样例打一个相关性权重 $s_i = s_\eta(T, p_i, a_i)$；上层则在这批加权数据上做一次内循环 SFT（LoRA）得到临时参数 $\theta'$，再用 $\theta'$ 在目标任务上的表现去反推数据该怎么生成、该怎么打分。每一步训练就是"生成 → 打分 → 内循环更新 → 在 $T$ 上算外损失 → meta-gradient 回流更新 $\theta$ 和 $\eta$"这样一个闭环，让模型逐渐学会为自己合成最有用的训练材料。
 
-1. **Generator** $\pi_\theta$：给定目标任务 $T$，生成 $m$ 个辅助问题-答案对 $(p_i, a_i)$
-2. **Scorer** $s_\eta$：为每个辅助样例打相关性权重 $s_i = s_\eta(T, p_i, a_i)$
-3. **Bilevel Optimization**：内循环在加权数据上做 SFT 得到 $\theta'$ → 外循环在目标任务上评估 $\theta'$
+### 关键设计
 
-训练流程每步：生成数据 → 打分 → 内循环更新 → 目标任务损失 → 更新 $\theta$ 和 $\eta$。
+**1. Meta-gradient 数据归因信号：判断每条自生成样例到底有没有用。**
 
-### 关键设计一：Meta-Gradient 数据归因信号
-
-外循环损失 $\mathcal{L}_{\text{outer}}$ 对每个样例分数 $s_i$ 的敏感度：
+朴素的自生成数据（Self-Instruct/STaR 那一类）无法回答"这条数据对当前任务到底是帮忙还是添乱"，MASS 直接用外循环损失对样例权重的偏导来量化这件事。它把外损失 $\mathcal{L}_{\text{outer}}$ 对第 $i$ 条样例分数 $s_i$ 的敏感度写成
 
 $$\frac{\partial \mathcal{L}_{\text{outer}}}{\partial s_i} = \left\langle \nabla_{\theta'} \mathcal{L}_{\text{outer}}(\theta'; T), \frac{\partial \theta'}{\partial s_i} \right\rangle$$
 
-该量直接度量"增加第 $i$ 个样例的权重是否降低了目标任务损失"。
+这个内积恰好度量"把第 $i$ 条样例的权重往上调，目标任务损失会不会下降"，相当于一个样例级别的因果归因。它有两个去处：一是经由二阶梯度 $\partial \theta'/\partial s_i$ 继续传到 Scorer 参数 $\eta$，让评分器学会给真正有益的样例打高分；二是把符号翻过来，用 $-\partial \mathcal{L}_{\text{outer}}/\partial s_i$ 当作 Generator 的 RL 奖励，以 GRPO 风格的策略梯度更新 $\theta$。这样"生成什么数据"和"如何筛选数据"都被同一个来自目标任务的信号端到端地驱动，而不是靠人工启发式。
 
-- 用于更新 Scorer $\eta$（二阶梯度 $\partial \theta'/\partial \eta$）
-- 翻转符号 $-\partial \mathcal{L}_{\text{outer}}/\partial s_i$ 作为 Generator 的 RL 奖励 → GRPO 风格策略梯度更新 $\theta$
+**2. 双模式外损失：有标准答案和只有验证器两种部署场景都能训。**
 
-### 关键设计二：双模式外损失
+外损失的具体形式取决于目标任务能拿到什么监督，MASS 给了两套可切换的实现：
 
 | 场景 | 外损失形式 | 信号来源 |
 |------|-----------|---------|
 | 有 gold solution | 标准交叉熵 $\text{CE}(R^*, R')$ | 标注答案 |
 | 仅有 verifier | GRPO over $k$ 个采样解 | 二元验证结果作奖励 |
 
-两种设置下 Generator 的策略梯度目标均为 clipped PPO 形式：
+有标准解时直接用交叉熵对齐参考解 $R^*$ 与适应后模型的输出 $R'$；只有一个验证器时则对 $k$ 个采样解做 GRPO，把二元的"对/错"判定当奖励。无论哪种设置，回传到 Generator 的策略梯度目标都统一成 clipped PPO 形式
 
 $$\mathcal{L}_{\text{aux}}(\theta) = -\mathbb{E}\left[\frac{1}{m}\sum_{i=1}^m \min\left(\frac{\pi_\theta(y_i|x_i)}{\pi_{\theta_{\text{old}}}(y_i|x_i)}\hat{A}_i, \text{clip}(\cdot, 1\pm\epsilon)\hat{A}_i\right)\right]$$
 
-加上 $\gamma \mathcal{L}_{\text{solve}}$ 保持解题能力不退化。
+并额外叠加一项 $\gamma \mathcal{L}_{\text{solve}}$，保证 Generator 在学着造数据的同时不丢掉本身的解题能力。verifier-only 这一路尤其实用，因为它不依赖昂贵的标注答案，方便在大规模部署里直接铺开。
 
-### 关键设计三：高效双层微分
+**3. 高效双层微分：让 meta-gradient 真的穿得过内循环。**
 
-朴素的 reverse-over-reverse 展开需要全部中间激活存储 → 内存爆炸。采用混合模式微分（forward-over-reverse）+ block 级重计算 + gradient checkpointing → 使得穿过 2 步内循环的 meta-gradient 计算可行。
+让梯度穿过内循环 SFT 在实现上是最大的拦路虎——朴素的 reverse-over-reverse 展开要把内循环每一步的中间激活全部存下来，内存直接爆掉。MASS 改用混合模式微分（forward-over-reverse），再配合 block 级重计算和 gradient checkpointing，把显存开销压到可控范围，从而让 meta-gradient 能真正穿过 2 步内循环更新算出来。正是这个工程上的可行性，才使得前两条设计里那套二阶 meta-gradient 信号能落地，而不只是停留在公式上。
 
 ## 实验与结果
 
@@ -141,8 +136,8 @@ MASS 将元学习与 test-time training 巧妙结合，用双层优化解决了"
 
 ## 相关论文
 
-- [\[ICLR 2026\] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
 - [\[ICML 2026\] Test time training enhances in-context learning of nonlinear functions](../../ICML2026/optimization/test_time_training_enhances_in-context_learning_of_nonlinear_functions.md)
+- [\[CVPR 2025\] Test-Time Augmentation Improves Efficiency in Conformal Prediction](../../CVPR2025/optimization/test-time_augmentation_improves_efficiency_in_conformal_prediction.md)
 - [\[ICLR 2026\] Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
 - [\[ICLR 2026\] Learning to Solve Orienteering Problem with Time Windows and Variable Profits](learning_to_solve_orienteering_problem_with_time_windows_and_variable_profits.md)
 - [\[ICLR 2026\] Exploring Diverse Generation Paths via Inference-time Stiefel Activation Steering](exploring_diverse_generation_paths_via_inference-time_stiefel_activation_steerin.md)

@@ -122,11 +122,11 @@ TexTok 在 512 分辨率下仅用 32 个 token 就超越了原始 DiT 使用 409
 
 ## 相关论文
 
-- [\[CVPR 2025\] Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
 - [\[CVPR 2025\] Yo'Chameleon: Personalized Vision and Language Generation](yochameleon_personalized_vision_and_language_generation.md)
-- [\[ICCV 2025\] Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [\[CVPR 2025\] Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction](efficient_long_video_tokenization_via_coordinate-based_patch_reconstruction.md)
 - [\[CVPR 2025\] Visual Lexicon: Rich Image Features in Language Space](visual_lexicon_rich_image_features_in_language_space.md)
-- [\[ICML 2025\] Representative Language Generation](../../ICML2025/image_generation/representative_language_generation.md)
+- [\[ICCV 2025\] Efficient Autoregressive Shape Generation via Octree-Based Adaptive Tokenization](../../ICCV2025/image_generation/efficient_autoregressive_shape_generation_via_octree-based_adaptive_tokenization.md)
+- [\[CVPR 2026\] EVATok: 自适应长度视频Tokenization用于高效视觉自回归生成](../../CVPR2026/image_generation/evatok_adaptive_length_video_tokenization_for_eff.md)
 
 </div>
 

@@ -42,33 +42,25 @@ tags:
 
 ### 整体框架
 
-DiagDistill基于Wan2.1-T2V-1.3B模型，结合DMD（Distribution Matching Distillation）框架。核心创新有三：(1) 对角线去噪策略：前3个chunk用5/4/3步，第4个chunk起固定2步；(2) Diagonal Forcing训练机制：用带噪帧而非干净帧作为KV cache条件；(3) 流分布匹配损失：在蒸馏中显式对齐teacher和student的运动分布，防止运动衰减。
+DiagDistill以Wan2.1-T2V-1.3B为基座、在DMD（Distribution Matching Distillation）蒸馏框架下训练一个流式自回归生成器：视频按3帧一个chunk逐段生成，每个chunk通过rolling KV cache条件化在已生成的历史上。它的关键观察是，自回归生成天然存在"时间—去噪步数"的对角线结构——前段chunk需要多步去噪来打牢结构基础，后段chunk则可以继承这份结构先验、用更少步数搭便车，于是把去噪步数沿时间轴递减、把条件帧带上噪声对齐推理、再补一项运动分布约束三者结合起来，在质量几乎不掉的前提下把流式生成推到实时。
 
 ### 关键设计
 
-**1. 对角线去噪（Diagonal Denoising）**
+**1. 对角线去噪：让后段chunk继承前段的结构先验，省去重复步数。**
 
-- **功能**: 根据时间位置自适应分配去噪步数，平衡质量与效率
-- **核心思路**: 前3个chunk分别用5/4/3步的蒸馏模型生成，第4个chunk起固定使用2步去噪。后段chunk可从前段充分处理的chunk继承丰富的外观信息。关键洞察：前段chunk建立的结构先验使后段chunk即使少步去噪也能生成清晰画面
-- **设计动机**: 均匀分配步数是次优的——前段需要高质量建立视觉基础，后段可以"搭便车"
+均匀给每个chunk分配相同去噪步数是次优的：前段chunk要从零建立画面的结构与外观，后段chunk其实站在已经处理充分的历史之上，没必要重复同样的去噪量。DiagDistill据此让前3个chunk分别用5、4、3步的蒸馏模型生成，从第4个chunk起固定为2步。沿时间轴看，每个chunk所处的去噪步数在递减，连起来形成一条"对角线"轨迹——前段把视觉基础做厚，后段从充分去噪的邻近chunk继承丰富的外观信息，因此即便只跑2步也能出清晰画面。消融显示去掉这一策略时序质量反而略升、但帧质量与文本对齐下降，说明它是在用极小的质量代价换来近2倍的吞吐。
 
-**2. Diagonal Forcing**
+**2. Diagonal Forcing：用带噪历史帧条件化，对齐训练与推理。**
 
-- **功能**: 缓解长序列中的误差累积和过饱和问题
-- **核心思路**: 将前一chunk的干净输出 $\mathbf{X}_{k-1}$ 通过受控噪声注入 $\tilde{\mathbf{X}}_{k-1} = \sqrt{\alpha_{k-1}}\cdot\mathbf{X}_{k-1} + \sqrt{1-\alpha_{k-1}}\cdot\bm{\epsilon}$ 作为当前chunk的KV cache条件。最优噪声时步为100步（1000步为完全噪声，0步为干净帧）
-- **设计动机**: 自回归生成中下一chunk预测隐式包含下一噪声级预测。使用干净帧条件化（0步）导致模型过度去噪后续chunk（过饱和）；使用适量噪声帧则与推理时的实际条件对齐，减缓误差传播
+自回归生成里"预测下一个chunk"隐式地也在"预测下一个噪声级别"，于是出现暴露偏差：训练时拿干净帧做KV cache条件，推理时拿的却是自己生成、带误差的帧，质量随时间逐步退化、并出现过饱和。Diagonal Forcing的做法是不再用干净的前一chunk输出 $\mathbf{X}_{k-1}$ 做条件，而是注入受控噪声 $\tilde{\mathbf{X}}_{k-1} = \sqrt{\alpha_{k-1}}\,\mathbf{X}_{k-1} + \sqrt{1-\alpha_{k-1}}\,\bm{\epsilon}$ 后再喂进当前chunk的KV cache。噪声强度需要精挑：在0到1000步的尺度上（0为干净帧、1000为纯噪声），最优噪声时步为100步——干净帧条件（0步）会让模型把后续chunk过度去噪、走向过饱和，适量噪声则与推理时真实拿到的带噪条件对齐，从而压住误差沿时间的累积传播。
 
-**3. 流分布匹配（Flow Distribution Matching）**
+**3. 流分布匹配：在步数压缩后补回被削弱的运动。**
 
-- **功能**: 在步数压缩后保持运动幅度和时序一致性
-- **核心思路**: 定义流分布匹配损失 $\nabla_\phi\mathcal{L}_{\text{DMD}}^{\text{flow}}$，对齐teacher和student在运动流场 $\mathcal{F}(\mathbf{x})$ 上的分布。使用轻量级可学习运动特征提取模块（对latent差分做卷积+MLP），避免依赖外部光流估计器
-- **设计动机**: 少步去噪会导致运动幅度衰减——标准DMD的回归损失保证帧质量但忽略时序动态
+步数一旦压低，运动幅度会随之衰减——标准DMD的回归损失只盯帧的外观分布，对时序动态视而不见，于是画面清晰但动起来发飘。DiagDistill额外定义了一项流分布匹配损失，其梯度记作 $\nabla_\phi\mathcal{L}_{\text{DMD}}^{\text{flow}}$，在运动流场 $\mathcal{F}(\mathbf{x})$ 上对齐teacher与student的分布，把"该有多大运动"也纳入蒸馏目标。运动特征不依赖外部光流估计器，而是用一个轻量可学习模块（对相邻latent做差分后接卷积加MLP）提取，既省去额外推理开销、也能随训练自适应。它主要在少步去噪的regime里起作用：消融中多步设定下增益有限，但在2步这种压缩档位下是保住运动一致性的关键。
 
 ### 损失函数 / 训练策略
 
-总损失：$\mathcal{L}_{\text{Total}} = \lambda_{\text{spatial}}\mathcal{L}_{\text{DMD}} + \mathcal{L}_{\text{reg}} + \gamma(\lambda_{\text{flow}}\mathcal{L}_{\text{DMD}}^{\text{flow}} + \mathcal{L}_{\text{reg}}^{\text{flow}})$
-
-其中 $\lambda_{\text{spatial}}=4, \lambda_{\text{flow}}=4$。推理使用rolling KV cache（chunk size 3帧），固定显存占用17.5GB。
+总损失把空间项与流向项联合起来：$\mathcal{L}_{\text{Total}} = \lambda_{\text{spatial}}\mathcal{L}_{\text{DMD}} + \mathcal{L}_{\text{reg}} + \gamma(\lambda_{\text{flow}}\mathcal{L}_{\text{DMD}}^{\text{flow}} + \mathcal{L}_{\text{reg}}^{\text{flow}})$，其中 $\lambda_{\text{spatial}}=4$、$\lambda_{\text{flow}}=4$，前两项管帧外观、后两项管运动分布。推理时采用rolling KV cache（chunk size 为3帧）滚动生成，显存占用固定在17.5GB，不随视频长度增长。
 
 ## 实验关键数据
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 模型压缩方向49篇论文解读
+  ICCV2025 模型压缩方向48篇论文解读
 description: >-
-  49篇ICCV2025的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、持续学习、LLM、对抗鲁棒、知识蒸馏等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  48篇ICCV2025的模型压缩方向论文解读，涵盖模型压缩、压缩/编码、持续学习、对抗鲁棒、知识蒸馏等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "模型压缩"
@@ -10,7 +10,6 @@ tags:
   - "论文笔记"
   - "压缩/编码"
   - "持续学习"
-  - "LLM"
   - "对抗鲁棒"
   - "知识蒸馏"
 ---
@@ -18,11 +17,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**📹 ICCV2025** · **49** 篇论文解读
+**📹 ICCV2025** · **48** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (90)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (53)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (134)](../../NeurIPS2025/model_compression/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (101)](../../ICML2026/model_compression/index.md) · [💬 ACL2026 (59)](../../ACL2026/model_compression/index.md) · [📷 CVPR2026 (54)](../../CVPR2026/model_compression/index.md) · [🔬 ICLR2026 (100)](../../ICLR2026/model_compression/index.md) · [🤖 AAAI2026 (61)](../../AAAI2026/model_compression/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/model_compression/index.md)
 
-🔥 **高频主题：** 模型压缩 ×10 · 压缩/编码 ×5 · 持续学习 ×3 · LLM ×2 · 对抗鲁棒 ×2
+🔥 **高频主题：** 模型压缩 ×10 · 压缩/编码 ×5 · 持续学习 ×3 · 对抗鲁棒 ×2 · 知识蒸馏 ×2
 
 **[A Good Teacher Adapts Their Knowledge for Distillation](a_good_teacher_adapts_their_knowledge_for_distillation.md)**
 
@@ -39,10 +38,6 @@ tags:
 **[B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](b-vllm_a_vision_large_language_model_with_balanced_spatio-temporal_tokens.md)**
 
 :   本文提出B-VLLM框架，通过文本条件自适应帧选择、时序帧Token合并和空间Token采样三个模块，在VLLM的上下文窗口限制内动态平衡视频的时空线索，在MVBench上带来10%的性能提升。
-
-**[B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](b_vllm_a_vision_large_language_model_with_balanced_spatio_temporal_tokens.md)**
-
-:   提出B-VLLM框架，通过文本条件自适应帧选择、时间帧token合并和空间token采样三个模块，在VLLM上下文窗口限制内动态平衡视频的时空token，解决均匀采样忽略时间动态和每帧token减少丢失空间细节的困境，在MVBench上提升10%。
 
 **[Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes](beyond_low-rank_tuning_model_prior-guided_rank_allocation_for_effective_transfer.md)**
 

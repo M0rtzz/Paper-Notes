@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-阶段一（Module Training & Centralization）：在 18 个高资源材料属性预测数据集上分别训练模块（Full 或 Adapter），存入 MoMa Hub。阶段二（AMC & Fine-tuning）：对新任务，AMC 算法三步走——(1) kNN 预测估计各模块亲和度 → (2) 凸优化求最优组合权重 → (3) 权重空间模块合并 → 微调。
+MoMa 把"训练知识"和"使用知识"拆成两个阶段。第一阶段在 18 个高资源材料属性数据集上各自独立训练一个专用模块，集中存进 MoMa Hub；第二阶段面对数据稀缺的新任务时，自适应模块组合算法（AMC）先估计每个模块对该任务的亲和度，再用凸优化求出最优加权组合，把这些模块在权重空间合并成单个初始化模型后微调。整套设计的核心赌注是：与其训一个大模型硬扛所有任务，不如让独立模块各管一摊、用时再按需拼装。
 
 ### 关键设计
 
-1. **MoMa Hub 模块训练与存储**:
+**1. MoMa Hub 模块训练与存储：用独立训练隔离任务冲突。**
 
-    - 做什么：为每个高资源材料任务训练独立模块并集中管理
-    - 核心思路：以预训练 JMP 为骨干，提供两种模块形式——Full Module（全模型微调作为模块）和 Adapter Module（冻结骨干仅训练插入的 adapter 层，参数高效）。模块集合 $\mathcal{H} = \{g_1, g_2, \ldots, g_N\}$，当前包含 18 个来自 Matminer 的任务模块
-    - 设计动机：独立训练避免任务间知识冲突；Hub 设计保护数据隐私（只共享模型参数不共享数据），支持社区贡献
+材料任务彼此差异极大——晶体的热稳定性和有机分子的电子行为由完全不同的物理定律支配，把它们塞进一个多任务模型联合训练往往互相拖后腿。MoMa 的应对是为每个高资源任务单独训一个模块，互不干扰。所有模块以预训练好的 JMP 力场模型为共同骨干，提供两种形式：Full Module 对整个骨干做全量微调，Adapter Module 则冻结骨干、只训练插入的 adapter 层，参数代价小得多。最终得到模块集合 $\mathcal{H} = \{g_1, g_2, \ldots, g_N\}$，当前收录了 18 个来自 Matminer 的任务模块。Hub 的另一层价值在于只共享模型参数、不共享原始数据，天然保护数据隐私，也便于社区持续贡献新模块。
 
-2. **Adaptive Module Composition (AMC)**:
+**2. 自适应模块组合 AMC：无训练地挑出并加权最有协同的模块。**
 
-    - 做什么：为下游任务自适应选择和加权组合最优模块
-    - 核心思路：三步流程——① 对每个模块 $g_j$，编码下游数据得到表示 $\mathcal{X}^j$，用 leave-one-out kNN 标签传播估计预测 $\hat{y}_i^j = \sum_{k \in \mathcal{N}_i} \frac{f_d(\mathbf{x}_i^j, \mathbf{x}_k^j)}{Z_i^j} y_k$；② 最小化集成代理误差 $E_\mathcal{D}(\mathbf{w}) = \frac{1}{M}\|\sum_j w_j \hat{\mathbf{y}}^j - \mathbf{y}\|_2^2$，约束 $\sum w_j = 1, w_j \geq 0$，凸优化求解；③ 权重空间合并 $g_\mathcal{D} = \sum_j w_j^* g_j$
-    - 设计动机：搜索式方法在高差异性模块上误差信号嘈杂，路由网络在数据稀缺时过拟合。AMC 使用表示质量代替预测误差做监督，无需额外训练参数，30 秒内收敛
+下游任务样本少，既经不起搜索式试错（高差异模块上误差信号太嘈杂），也经不起训练路由网络（容易过拟合）。AMC 转而用"表示质量"代替"预测误差"作为监督信号，全程不引入可训练参数。它分三步：先把下游数据喂进每个模块 $g_j$ 得到表示 $\mathcal{X}^j$，用留一法 kNN 标签传播估计该模块的预测，$\hat{y}_i^j = \sum_{k \in \mathcal{N}_i} \frac{f_d(\mathbf{x}_i^j, \mathbf{x}_k^j)}{Z_i^j} y_k$，表示空间里近邻越靠得拢、预测越准，说明该模块越契合任务；再最小化集成代理误差 $E_\mathcal{D}(\mathbf{w}) = \frac{1}{M}\lVert\sum_j w_j \hat{\mathbf{y}}^j - \mathbf{y}\rVert_2^2$，在 $\sum_j w_j = 1,\, w_j \geq 0$ 的约束下做凸优化，求出每个模块的最优权重 $w_j^*$；最后按权重在参数空间合并 $g_\mathcal{D} = \sum_j w_j^* g_j$。整个过程 30 秒内收敛，而这个代理误差与最终微调 MAE 的 Pearson 相关超过 0.6，说明用它来选模块是靠谱的。
 
-3. **权重空间模块合并与微调**:
+**3. 权重空间合并与微调：把多模块拼成单模型再适配。**
 
-    - 做什么：将加权模块合并为单一初始化模型，再在下游数据上微调
-    - 核心思路：利用线性模式连通性（linear mode connectivity）：所有模块来自同一预训练初始化，参数空间兼容。合并后加任务特定头，在 $\mathcal{D}$ 上微调至收敛
-    - 设计动机：直接加权平均简单高效，避免推理时加载多个模块的计算开销
+AMC 给出权重后，MoMa 不是在推理时同时加载多个模块做集成，而是直接在参数空间把它们加权平均成一个模型。这一步能成立，靠的是线性模式连通性（linear mode connectivity）：所有模块都从同一个 JMP 预训练初始化出发，参数空间彼此兼容，加权平均不会破坏功能。合并后接上任务特定的预测头，在下游数据 $\mathcal{D}$ 上微调至收敛即可。好处是推理时只有一个模型，既省去多模块加载的计算开销，又保留了组合带来的协同知识。
 
 ### 损失函数 / 训练策略
-模块训练使用标准 MAE 损失。AMC 阶段无训练（凸优化求解权重），代理误差与最终微调 MAE 的 Pearson 相关 > 0.6（经验验证）。微调使用下游任务标准设置。实验在 17 个低数据材料属性预测任务上评估，每个任务 5 个数据分割 × 5 个随机种子。
+模块训练和最终微调都用标准 MAE 损失，AMC 阶段则完全无需训练，权重由凸优化直接解出。评估覆盖 17 个低数据材料属性预测任务，每个任务跑 5 个数据分割 × 5 个随机种子以保证统计可靠性。
 
 ## 实验关键数据
 
@@ -125,8 +119,8 @@ tags:
 - [\[ICLR 2026\] Intrinsic Training Dynamics of Deep Neural Networks](intrinsic_training_dynamics_of_deep_neural_networks.md)
 - [\[CVPR 2025\] A Unified Framework for Heterogeneous Semi-supervised Learning](../../CVPR2025/llm_pretraining/a_unified_framework_for_heterogeneous_semi-supervised_learning.md)
 - [\[ICML 2025\] Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry](../../ICML2025/llm_pretraining/algebra_unveils_deep_learning_--_an_invitation_to_neuroalgebraic_geometry.md)
+- [\[ICLR 2026\] Accessible, Realistic, and Fair Evaluation of Positive-Unlabeled Learning Algorithms](accessible_realistic_and_fair_evaluation_of_positive-unlabeled_learning_algorith.md)
 - [\[ICLR 2026\] Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
-- [\[ACL 2026\] Toward Consistent World Models with Multi-Token Prediction and Latent Semantic Enhancement](../../ACL2026/llm_pretraining/toward_consistent_world_models_with_multi-token_prediction_and_latent_semantic_e.md)
 
 </div>
 

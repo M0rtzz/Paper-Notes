@@ -120,11 +120,11 @@ BO 倾向于在前沿曲线上密集采样，结果会冒出一堆彼此差距 $
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Rethinking Evaluation of Infrared Small Target Detection](../../NeurIPS2025/others/rethinking_evaluation_of_infrared_small_target_detection.md)
 - [\[AAAI 2026\] Certified but Fooled! Breaking Certified Defences with Ghost Certificates](../../AAAI2026/others/certified_but_fooled_breaking_certified_defences_with_ghost_certificates.md)
 - [\[ICML 2026\] Rethinking FID Through the Geometry of the Reference Dataset](rethinking_fid_through_the_geometry_of_the_reference_dataset.md)
 - [\[ICML 2026\] CORE-MTL: Rethinking Gradient Balancing via Causal Orthogonal Representations](core-mtl_rethinking_gradient_balancing_via_causal_orthogonal_representations.md)
 - [\[CVPR 2026\] Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](../../CVPR2026/others/rethinking_snn_online_training_and_deployment_grad.md)
-- [\[ICML 2026\] Test-Time Training with KV Binding Is Secretly Linear Attention](test-time_training_with_kv_binding_is_secretly_linear_attention.md)
 
 </div>
 

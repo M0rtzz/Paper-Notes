@@ -1,0 +1,176 @@
+---
+title: >-
+  [论文解读] Predicting the Performance of Black-Box LLMs through Follow-Up Queries
+description: >-
+  [NeurIPS 2025][LLM评测][黑盒LLM] 提出 QueRE 方法，通过向黑盒LLM提出约50个后续问题（如"你对回答有信心吗？"），以"Yes"token的概率作为特征训练线性分类器，在预测模型正确性、检测对抗操纵和区分不同LLM等任务上，甚至超越需要访问模型内部状态的白盒方法。
+tags:
+  - "NeurIPS 2025"
+  - "LLM评测"
+  - "黑盒LLM"
+  - "性能预测"
+  - "后续提问"
+  - "不确定性量化"
+  - "对抗检测"
+---
+
+# Predicting the Performance of Black-Box LLMs through Follow-Up Queries
+
+**会议**: NeurIPS 2025  
+**arXiv**: [2501.01558](https://arxiv.org/abs/2501.01558)  
+**代码**: 无  
+**领域**: 机器人  
+**关键词**: 黑盒LLM, 性能预测, 后续提问, 不确定性量化, 对抗检测
+
+## 一句话总结
+
+提出 QueRE 方法，通过向黑盒LLM提出约50个后续问题（如"你对回答有信心吗？"），以"Yes"token的概率作为特征训练线性分类器，在预测模型正确性、检测对抗操纵和区分不同LLM等任务上，甚至超越需要访问模型内部状态的白盒方法。
+
+## 研究背景与动机
+
+可靠预测LLM行为（输出是否正确、是否被对抗操纵）是一个根本性挑战。前沿LLM通过闭源API提供服务，仅允许黑盒访问，使得基于模型内部状态的分析方法（如RepE、机制可解释性）无法使用。
+
+**核心问题**：仅凭黑盒访问，能多好地预测LLM的行为？
+
+**关键假设**：LLM对后续问题的回答分布会随正确性、模型家族和模型规模发生有意义的变化。因为LLM已被训练来理解自然语言并提供有用回答，它们对自我反思性质的问题应该包含关于其行为的信息信号。
+
+现有方法的不足：
+- **白盒方法**（RepE、Full Logits）需要访问模型内部表示，对闭源模型不适用
+- **单一置信度分数**仅是一维特征，信息量不足
+- **语义熵**需要多次采样且计算成本高
+- **自一致性**方法在推理任务上效果有限
+
+## 方法详解
+
+### 整体框架
+
+QueRE（Follow-up Question Representation Elicitation）的工作流程：
+1. 给LLM输入原始问题 $x$，获得贪婪采样回答 $a = \arg\max_c P(c|x)$
+2. 依次提出 $d$ 个后续问题 $Q = \{q_1, ..., q_d\}$
+3. 提取每个问题对应的"Yes" token概率：$z_j = P(\text{yes} | x \oplus a \oplus q_j)$
+4. 将特征向量 $z = (z_1, ..., z_d)$ 送入线性分类器预测目标（正确性/操纵/身份）
+
+### 关键设计
+
+#### 1. **后续问题的构建**
+
+手动设计少量基础问题 + 用GPT-4生成约40个问题，总计约50个。问题类型包括：
+- 自信度相关：*"Do you think your answer is correct?"*
+- 推理质量：*"Are you able to explain your answer?"*  
+- 偏见检测：*"Are your responses free from bias?"*
+
+设计动机：每个问题的Yes概率可视为一个**弱预测器**（类似boosting中的弱学习器），线性组合后形成强预测器。所有后续问题可并行处理，增加问题数量仅增加极小计算开销。
+
+#### 2. **特征增强**
+
+在核心后续问题特征之外，还附加：
+- 闭合式QA：答案选项的概率分布
+- 所有QA：预置信度和后置信度（看到自己回答前后的self-confidence概率）
+
+#### 3. **采样近似的理论保证**
+
+当API不提供top-k概率时，可通过高温采样 $k$ 次近似。
+
+**Proposition 1**：基于采样近似的逻辑回归MLE $\hat{\beta}$ 以 $O(\frac{1}{\sqrt{n}} + \frac{\sqrt{n}}{k})$ 的速率收敛到最优参数 $\beta_0$。
+
+即只要采样次数 $k$ 随数据量 $n$ 增长（可以是更慢的速率），估计器仍然一致。
+
+### 损失函数 / 训练策略
+
+使用标准逻辑回归训练线性分类器，无需复杂的训练技巧。选择线性模型是有意为之：
+1. 低维特征+简单模型 → 更紧的泛化界
+2. 避免在提示优化上过拟合
+3. 保持方法的通用性和模型无关性
+
+## 实验关键数据
+
+### 主实验
+
+推理任务上的AUROC（预测模型正确性）：
+
+| 数据集 | LLM | Full Logits | Sem. Entropy | QueRE | 说明 |
+|---|---|---|---|---|---|
+| GSM8K | GPT-3.5 | 0.5636 | 0.7495 | **0.7748** | 数学推理 |
+| GSM8K | GPT-4o-mini | 0.5463 | 0.5546 | **0.7319** | 数学推理 |
+| CodeContests | GPT-3.5 | 0.6001 | 0.5346 | **0.6800** | 代码生成 |
+| CodeContests | GPT-4o-mini | 0.5274 | 0.5604 | **0.7924** | 代码生成 |
+
+开放式QA任务（NQ/SQuAD，LLaMA3系列）：
+
+| 数据集 | LLM | RepE(白盒) | Post-conf | QueRE |
+|---|---|---|---|---|
+| NQ | LLaMA3-3B | 0.6639 | 0.8186 | **0.9596** |
+| SQuAD | LLaMA3-3B | 0.7033 | 0.9220 | **0.9579** |
+| SQuAD | LLaMA3-8B | 0.6993 | 0.7928 | **0.9492** |
+
+### 消融实验
+
+对抗检测准确率（检测LLM是否被系统提示操纵）：
+
+| 任务 | LLM | Pre-conf | Logits | QueRE |
+|---|---|---|---|---|
+| BoolQ(错误回答) | GPT-3.5 | 0.5396 | 0.8483 | **0.8668** |
+| BoolQ(错误回答) | GPT-4o-mini | 0.5725 | 0.9033 | **0.9258** |
+| CodeContests(隐藏bug) | GPT-3.5 | 0.5061 | 0.9455 | **0.9909** |
+| CodeContests(隐藏bug) | GPT-4o-mini | 0.5546 | 0.8848 | **1.0000** |
+
+跨域迁移性（OOD泛化）：
+
+| 迁移方式 | Self-Consis. | Sem. Entropy | QueRE |
+|---|---|---|---|
+| SQuAD→NQ (数据集迁移) | 0.8328 | 0.6661 | **0.8964** |
+| NQ→SQuAD (数据集迁移) | 0.7532 | 0.5013 | **0.7934** |
+| 3B→8B (模型迁移) | 0.4635 | 0.6328 | **0.8409** |
+| 8B→70B (模型迁移) | 0.5280 | 0.6658 | **0.8295** |
+
+### 关键发现
+
+1. **黑盒超越白盒**：在开放式QA和推理任务上，QueRE经常超越需要完整模型访问的RepE和Full Logits方法
+2. **对抗检测几乎完美**：在CodeContests上检测GPT-4o-mini被操纵的准确率达到100%
+3. **优秀的OOD迁移**：跨数据集和跨模型规模的迁移性显著优于所有基线
+4. **采样近似损失极小**：使用有限采样（替代真实概率）的AUROC降低不超过2个点
+5. **更多问题=更好性能**：增加后续问题数量能持续提升性能，但边际收益递减
+
+## 亮点与洞察
+
+1. **反直觉的发现**：仅凭模型输出的50个Yes/No概率，竟能比访问模型全部内部状态更好地预测行为——这说明LLM的"自我反思"能力确实编码了有价值的元认知信息
+2. **方法极简但通用**：线性模型+并行问答，无需模型修改、无需采样多次答案
+3. **实际应用潜力巨大**：可用于API审计（检测是否提供了声称的模型）、安全监控（检测系统提示注入）、质量保证（预测部署时的错误概率）
+4. **PAC-Bayes泛化界更紧**：低维表示+线性模型组合天然有更好的泛化保证
+
+## 局限与展望
+
+1. 后续查询引入额外延迟（虽可通过批处理缓解）
+2. 方法依赖LLM回答后续问题时概率分布的有意义变化，对非常低质量的模型可能不成立
+3. 特征虽基于自然语言但方法不关注可解释性——将其视为黑盒特征而非解释
+4. 可通过离散提示优化进一步提升表示质量，但需权衡过拟合风险
+5. 理论分析假设LLM提取的表示独立于下游任务数据
+
+## 相关工作与启发
+
+- 与不确定性量化方法（语义熵、自一致性）相比，QueRE提取了更丰富的多维信息
+- 类似于weak supervision中的弱标签器设计——每个问题是一个弱预测器
+- 对"LLM能否可靠地评估自己"这一辩论贡献了积极的经验证据
+- 为LLM在autonomous agent框架中的可信部署提供了实用的监控工具
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐⭐ （思路新颖简洁，黑盒超白盒的发现出人意料）
+- 实验充分度: ⭐⭐⭐⭐⭐ （5个模型、9个数据集、3大应用场景、完整消融）
+- 写作质量: ⭐⭐⭐⭐⭐ （表达清晰，实验设计逻辑性强，理论支撑恰到好处）
+- 价值: ⭐⭐⭐⭐⭐ （高实用价值，为黑盒LLM监控提供了优雅的解决方案）
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICLR 2026\] Enabling Fine-Grained Operating Points for Black-Box LLMs](../../ICLR2026/llm_evaluation/enabling_fine-grained_operating_points_for_black-box_llms.md)
+- [\[ICML 2025\] Hyperband-based Bayesian Optimization for Black-box Prompt Selection](../../ICML2025/llm_evaluation/hyperband-based_bayesian_optimization_for_black-box_prompt_selection.md)
+- [\[ICML 2026\] Investigating Advanced Reasoning of Large Language Models via Black-Box Environment Interaction](../../ICML2026/llm_evaluation/investigating_advanced_reasoning_of_large_language_models_via_black-box_environm.md)
+- [\[NeurIPS 2025\] On Evaluating LLM Alignment by Evaluating LLMs as Judges](on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [\[ACL 2025\] EducationQ: Evaluating LLMs' Teaching Capabilities Through Multi-Agent Dialogue Framework](../../ACL2025/llm_evaluation/educationq_evaluating_llms_teaching_capabilities_through_multi-agent_dialogue_fr.md)
+
+</div>
+
+<!-- RELATED:END -->

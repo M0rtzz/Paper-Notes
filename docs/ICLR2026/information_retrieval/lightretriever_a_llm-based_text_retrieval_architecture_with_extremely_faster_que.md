@@ -40,32 +40,18 @@ LLM-based检索器（如E5-Mistral、LLM2Vec）使用对称双编码器架构，
 ## 方法详解
 
 ### 整体框架
-LightRetriever = 稠密检索（缓存token嵌入 + 平均池化）+ 稀疏检索（无编码器的词频向量），两者分数线性插值得到最终混合检索分数。
+LightRetriever 把检索拆成两条互补的支路：稠密支路靠缓存好的 token 嵌入查表加平均得到查询向量，稀疏支路干脆用词频当查询向量、把语义负担全压到文档端。两条支路各自用对比损失训练，推理时把两路相似度线性插值合成最终的混合检索分数。核心取舍很明确——文档端保留完整 LLM 编码，查询端则被简化到几乎不需要前向传播。
 
 ### 关键设计
-1. **稠密检索：可缓存的token嵌入**:
 
-    - 训练阶段：任务指令 + 单个查询token 独立输入LLM编码器，通过last token pooling获得token向量 $v_{t_i}^{\text{den}} = Enc_q(Inst; t_i)$，查询向量为所有token向量的平均 $v_q^{\text{den}} = \frac{1}{n}\sum v_{t_i}^{\text{den}}$
-    - 缓存阶段：预计算整个词表所有token的嵌入，存入查找表 $E \in \mathbb{R}^{V \times H}$。用Llama-8b在8×H800上缓存不到20秒
-    - 在线服务：$v_q^{\text{den}} = \frac{1}{n}\sum E[t_i]$，仅需嵌入查找+平均，无需GPU
-    - 设计动机：token独立编码时嵌入可缓存，去除token间交互是关键取舍
+**1. 稠密支路：让 token 嵌入可缓存。** 对称双编码器的麻烦在于查询必须在线跑一遍深度 LLM，而 LightRetriever 想把这步换成查表。做法是训练时不让查询整体过编码器，而是把任务指令拼上单个查询 token 独立送进去，用 last token pooling 取出该 token 的向量 $v_{t_i}^{\text{den}} = Enc_q(Inst; t_i)$，查询向量就是各 token 向量的平均 $v_q^{\text{den}} = \frac{1}{n}\sum_i v_{t_i}^{\text{den}}$。因为每个 token 都是独立编码、彼此不交互，整张词表的嵌入就能一次性预计算成查找表 $E \in \mathbb{R}^{V \times H}$——用 Llama-8b 在 8×H800 上离线缓存不到 20 秒。上线后查询编码退化成 $v_q^{\text{den}} = \frac{1}{n}\sum_i E[t_i]$，只是查表加平均，连 GPU 都不必。代价是放弃了查询内部 token 之间的上下文交互，但作者认为查询通常很短，这点损失换来千倍提速是划算的。
 
-2. **稀疏检索：无编码器的查询**:
+**2. 稀疏支路：查询端零编码器。** 这一路把简化推到极限——查询向量直接用 token 计数 $v_q^{\text{spr}}[t] = \text{count}(t)$，完全不经过任何模型，本质上就是 BM25 式的词法信号。语义建模全部交给文档端：文档的 LLM 末层隐状态经语言模型头投影回词表空间，再过 ReLU、log 饱和与 max pooling 得到稀疏向量 $v_d^{\text{spr}} = \max\big(\ln(\max(h_{\text{last}} \cdot P, 0) + 1)\big)$，其中 log 饱和压制高频词的权重膨胀，max pooling 把整篇文档聚合成一个词表维度的稀疏表示。训练时再用 FLOPs 正则约束文档向量的非零项数量，控制稀疏度以兼顾检索效率。之所以可行，是因为稀疏检索本就靠词项匹配吃饭，查询侧的深度理解原本贡献就有限，索性省掉。
 
-    - 查询向量：直接用token计数 $v_q^{\text{spr}}[t] = \text{count}(t)$，完全不需编码器
-    - 文档向量：LLM最后一层隐状态通过语言模型头投影到词表空间，经ReLU + log饱和函数 + max pooling得到稀疏向量 $v_d^{\text{spr}} = \max(\ln(\max(h_{\text{last}} \cdot P, 0) + 1))$
-    - 用 FLOPs regulator 控制文档向量稀疏度
-    - 设计动机：稀疏检索天然不依赖深度查询理解，直接用词频即可
-
-3. **对比学习训练**:
-
-    - 标准listwise对比损失 $\ell^{CL} = -\log \frac{e^{v_q \cdot v_{d^+}/\tau}}{\sum e^{v_q \cdot v_d/\tau}}$
-    - 稠密和稀疏分别训练，推理时线性插值得分
+**3. 对比学习与混合打分。** 两条支路都用标准的 listwise 对比损失训练，$\ell^{CL} = -\log \frac{e^{v_q \cdot v_{d^+}/\tau}}{\sum_d e^{v_q \cdot v_d/\tau}}$，把正样本文档从一批 hard negative 中拉近、推开其余。稠密与稀疏分别训练各自的表示，推理时把两路相似度线性插值，让平滑的语义匹配（稠密）和精确的词项匹配（稀疏）互补，混合分数显著高于任一单路。
 
 ### 损失函数 / 训练策略
-- 对比损失 + FLOPs正则化（稀疏部分）
-- 20个英文 + 3个中文数据集，8.38M样本
-- LoRA微调，batch=128，7个hard negatives，12k步
+训练目标是对比损失叠加稀疏支路的 FLOPs 正则。数据上用 20 个英文加 3 个中文数据集、共 8.38M 样本；采用 LoRA 微调，batch 大小 128、每个查询配 7 个 hard negative，训练 12k 步。
 
 ## 实验关键数据
 

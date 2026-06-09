@@ -136,7 +136,7 @@ tags:
 - [\[ACL 2025\] EpiCoDe: Boosting Model Performance Beyond Training with Extrapolation and Contrastive Decoding](epicode_boosting_model_performance_beyond_training_with_extrapolation_and_contra.md)
 - [\[ACL 2025\] Do not Abstain! Identify and Solve the Uncertainty](do_not_abstain_identify_and_solve_the_uncertainty.md)
 - [\[ACL 2025\] ConSim: Measuring Concept-Based Explanations' Effectiveness with Automated Simulatability](consim_measuring_concept-based_explanations_effectiveness_with_automated_simulat.md)
-- [\[ACL 2025\] Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games](persona_dynamics_unveiling_the_impact_of_persona_traits_on_agents_in_text-based_.md)
+- [\[ACL 2025\] All That Glitters is Not Novel: Plagiarism in AI Generated Research](plagiarism_ai_generated_research.md)
 
 </div>
 

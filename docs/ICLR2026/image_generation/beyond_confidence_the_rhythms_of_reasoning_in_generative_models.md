@@ -43,31 +43,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LLM 最后一层隐状态 $\mathbf{h} \in \mathbb{R}^d$ 经输出权重矩阵 $\mathbf{W} \in \mathbb{R}^{\mathcal{V} \times d}$ 和 softmax 映射为概率分布 $\mathbf{o}$。$\delta_{\text{TCB}}$ 量化的是：在 $\mathbf{h}$ 周围多大的扰动球内，$\mathbf{o}$ 的变化不超过容忍度 $\epsilon$。
+这篇论文想回答一个被准确率和 perplexity 掩盖的问题：一个高置信度的预测，到底"稳不稳"。LLM 最后一层把隐状态 $\mathbf{h} \in \mathbb{R}^d$ 经输出权重矩阵 $\mathbf{W} \in \mathbb{R}^{\mathcal{V} \times d}$ 和 softmax 映射为词表上的概率分布 $\mathbf{o}$。作者提出的 $\delta_{\text{TCB}}$ 不看概率本身有多高，而是问：在 $\mathbf{h}$ 周围画一个扰动球，半径要多大才会让输出分布 $\mathbf{o}$ 的变化超过容忍度 $\epsilon$？这个临界半径就是预测的局部鲁棒性。整条分析链路是：从输出对隐状态的一阶敏感性出发，把它解析地归结为输出嵌入的几何分散度，再用这个量去刻画"高置信"与"不确定"两种截然不同的预测体制。
 
 ### 关键设计
 
-1. **Token Constraint Bound ($\delta_{\text{TCB}}$) 定义**:
+**1. Token Constraint Bound（$\delta_{\text{TCB}}$）的定义：把"稳定性"变成一个可算的扰动半径。**
 
-    - 功能：度量 LLM 预测对内部状态扰动的鲁棒性
-    - 核心思路：利用一阶线性近似 $\Delta\mathbf{o} \approx \mathbf{J}_\mathbf{W}(\mathbf{h}) \Delta\mathbf{h}$，从 $\|\Delta\mathbf{o}\|_2 \leq \epsilon$ 推导出 $\|\Delta\mathbf{h}\|_2 \leq \epsilon / \|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F$，定义 $\delta_{\text{TCB}}(\mathbf{h}) = \epsilon / \|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F$
-    - 设计动机：$\delta_{\text{TCB}}$ 越大说明模型的预测在更大范围的隐状态扰动下保持稳定
+准确率是聚合统计，看不到单个预测稳不稳；perplexity 只盯概率分布，也无法回答"隐状态被轻微扰动后预测是否还成立"。$\delta_{\text{TCB}}$ 正面回答这个问题：对输出做一阶线性近似 $\Delta\mathbf{o} \approx \mathbf{J}_\mathbf{W}(\mathbf{h}) \Delta\mathbf{h}$，要求输出变化受控 $\|\Delta\mathbf{o}\|_2 \leq \epsilon$，反推出允许的隐状态扰动上界 $\|\Delta\mathbf{h}\|_2 \leq \epsilon / \|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F$，于是定义
 
-2. **与输出嵌入几何的精确联系**:
+$$\delta_{\text{TCB}}(\mathbf{h}) = \frac{\epsilon}{\|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F}.$$
 
-    - 功能：推导 Jacobian 范数的解析表达式
-    - 核心思路：证明 $\|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F^2 = \sum_{i=1}^{\mathcal{V}} o_i^2 \|\mathbf{w}_i - \boldsymbol{\mu}_\mathbf{w}(\mathbf{h})\|_2^2$，其中 $\boldsymbol{\mu}_\mathbf{w}(\mathbf{h}) = \sum_j o_j \mathbf{w}_j$ 是概率加权平均嵌入
-    - 几何含义：敏感性由 token 嵌入相对于加权中心的分散度决定，且被 $o_i^2$ 加权——高概率 token 的嵌入位置影响最大
+$\delta_{\text{TCB}}$ 越大，意味着隐状态可以在更大的范围内被扰动而预测分布几乎不变，即这个预测处在一个更稳的内部状态平衡上——这恰好是 softmax 概率值给不了的信息。
 
-3. **两种预测体制的分析**:
+**2. 与输出嵌入几何的精确联系：敏感性其实是嵌入的加权分散度。**
 
-    - **高置信体制**（$\mathcal{V}_{\text{eff}}$ 低）：$\boldsymbol{\mu}_\mathbf{w} \to \mathbf{w}_k$（主导 token），$\delta_{\text{TCB}} \to \infty$。此时 $\delta_{\text{TCB}}$ 与 top-2 logit margin 强正相关 ($r = 0.62$)
-    - **不确定体制**（$\mathcal{V}_{\text{eff}}$ 高）：概率分散于多个 token，$\delta_{\text{TCB}}$ 与 $\sqrt{\mathcal{V}_{\text{eff}}}$ 正相关 ($r = 0.95$)。但关键洞察：即使 $\mathcal{V}_{\text{eff}}$ 高，若高概率 token 的嵌入几何上聚集，$\delta_{\text{TCB}}$ 仍可以很高
+光有 Jacobian 范数还只是个抽象的导数大小，看不出它由什么决定。作者把它解析展开，证明
+
+$$\|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F^2 = \sum_{i=1}^{\mathcal{V}} o_i^2 \,\|\mathbf{w}_i - \boldsymbol{\mu}_\mathbf{w}(\mathbf{h})\|_2^2,$$
+
+其中 $\boldsymbol{\mu}_\mathbf{w}(\mathbf{h}) = \sum_j o_j \mathbf{w}_j$ 是按当前概率加权的平均输出嵌入。这个等式把"预测对扰动有多敏感"直接翻译成几何语言：敏感性等于各 token 嵌入相对于加权中心 $\boldsymbol{\mu}_\mathbf{w}$ 的分散程度，而且每一项被 $o_i^2$ 加权——也就是说高概率 token 的嵌入摆在哪里影响最大。token 嵌入越聚拢，$\|\mathbf{J}\|_F$ 越小、$\delta_{\text{TCB}}$ 越大、预测越稳；嵌入越散开则相反。
+
+**3. 两种预测体制的分析：用 $\delta_{\text{TCB}}$ 区分"真稳"与"虚稳"。**
+
+借助上面的几何公式，$\delta_{\text{TCB}}$ 在两种典型情形下表现出不同主导因素。在**高置信体制**（有效词表 $\mathcal{V}_{\text{eff}}$ 低）下，概率几乎集中在主导 token，加权中心 $\boldsymbol{\mu}_\mathbf{w} \to \mathbf{w}_k$，分散度趋于零、$\delta_{\text{TCB}} \to \infty$；此时它与 top-2 logit margin 强正相关（$r = 0.62$），margin 越大越稳。在**不确定体制**（$\mathcal{V}_{\text{eff}}$ 高）下，概率分散到多个 token，$\delta_{\text{TCB}}$ 与 $\sqrt{\mathcal{V}_{\text{eff}}}$ 强正相关（$r = 0.95$）。但关键洞察恰恰在这里：即便 $\mathcal{V}_{\text{eff}}$ 很高、概率看似很"散"，只要那几个高概率 token 在嵌入空间里几何上聚在一起，$\delta_{\text{TCB}}$ 依然可以很高——这正是 softmax 概率无法分辨、而几何视角能抓住的"虚假不确定 / 真实稳定"。
 
 ### 损失函数 / 训练策略
-- $\delta_{\text{TCB}}$ 是分析指标，不涉及训练
-- 计算只需前向传播获取 $\mathbf{h}$、$\mathbf{o}$ 和 $\mathbf{W}$，然后通过解析公式计算
-- 设 $\epsilon = 1.0$ 作为归一化标准
+$\delta_{\text{TCB}}$ 是一个纯分析指标，不引入任何训练目标。计算只需一次前向传播拿到隐状态 $\mathbf{h}$、输出分布 $\mathbf{o}$ 和权重矩阵 $\mathbf{W}$，再代入上面的解析公式即可；实验中取 $\epsilon = 1.0$ 作为归一化标准。
 
 ## 实验关键数据
 
@@ -123,10 +124,10 @@ LLM 最后一层隐状态 $\mathbf{h} \in \mathbb{R}^d$ 经输出权重矩阵 $\
 ## 相关论文
 
 - [\[ICLR 2026\] Infinity and Beyond: Compositional Alignment in VAR and Diffusion T2I Models](infinity_and_beyond_compositional_alignment_in_var_and_diffusion_t2i_models.md)
-- [\[CVPR 2026\] SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards](../../CVPR2026/image_generation/solace_self_confidence_rewards_t2i.md)
-- [\[NeurIPS 2025\] DEXTER: Diffusion-Guided EXplanations with TExtual Reasoning for Vision Models](../../NeurIPS2025/image_generation/dexter_diffusion-guided_explanations_with_textual_reasoning_for_vision_models.md)
-- [\[ICLR 2026\] Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
+- [\[ICML 2026\] Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion](../../ICML2026/image_generation/beyond_generative_priors_minority_sampling_with_jepa-guided_diffusion.md)
 - [\[ICLR 2026\] DoFlow: Flow-based Generative Models for Interventional and Counterfactual Forecasting](doflow_flow-based_generative_models_for_interventional_and_counterfactual_foreca.md)
+- [\[ICLR 2026\] QVGen: Pushing the Limit of Quantized Video Generative Models](qvgen_pushing_the_limit_of_quantized_video_generative_models.md)
+- [\[ICLR 2026\] NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
 
 </div>
 

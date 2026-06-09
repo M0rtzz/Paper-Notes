@@ -41,28 +41,21 @@ tags:
 
 ### 整体框架
 
-两阶段流程：源域预训练（标准检测损失+HSA 重建损失）→ 目标域自适应（Teacher-Student + HSA + CGSC）
+CGSA 建立在 RT-DETR 之上，分两个阶段运行：源域预训练时除了标准检测损失外额外挂上 HSA 重建损失，让模型学会把特征拆成目标级 slot；目标域自适应时切换成 Teacher-Student 自训练，再叠加 HSA 提供的结构先验与 CGSC 的类引导对比，把源域学到的目标级结构迁移到无标注的目标域上。两个核心模块——分层 slot 感知 HSA 与类引导 slot 对比 CGSC——分别负责"提取域不变结构"和"对齐域不变语义"。
 
-### HSA（Hierarchical Slot Awareness）模块
+### 关键设计
 
-1. **两阶段分解**：第一阶段 Slot Attention 迭代提取 $n=5$ 个粗粒度 slot → 空间广播 MLP 解码重建 → softmax 竞争确保 slot 绑定不同区域。第二阶段将重建特征作为输入再做 Slot Attention 得到 $n^2=25$ 个细粒度 slot
-2. **重建损失**：$\mathcal{L}_{rec} = \|\hat{h}^{(1)} - h\|_2^2 + \|\hat{h}^{(2)} - h\|_2^2$，两阶段均监督
-3. **Slot-Aware Queries**：投影后 slot 与 object queries 相加：$Q_{aware} = Q_{obj} + f_{map}(z^{(2)})$，为 decoder 提供目标级结构先验
+**1. 分层 Slot 感知 HSA：把场景拆成目标级结构先验。** SF-DAOD 之所以难，是因为伪标签噪声大、跨域只剩零散的低层特征可用；CGSA 的思路是改用 Object-Centric Learning 抽取的目标级结构，这种结构对天气、相机、画风等域偏移天然鲁棒。HSA 采用两阶段分解：第一阶段对 backbone 特征 $h$ 做迭代式 Slot Attention，提取 $n=5$ 个粗粒度 slot，再经空间广播 MLP 解码重建，解码时的 softmax 竞争迫使每个 slot 绑定不同的图像区域、把前景从背景里隔离出来；第二阶段把重建特征再喂回 Slot Attention，进一步细分出 $n^2=25$ 个细粒度 slot。两阶段重建都受监督，损失为 $\mathcal{L}_{rec} = \|\hat{h}^{(1)} - h\|_2^2 + \|\hat{h}^{(2)} - h\|_2^2$。最后把第二阶段 slot 投影后直接加到 DETR 的 object query 上，$Q_{aware} = Q_{obj} + f_{map}(z^{(2)})$，让 decoder 在解码每个目标时都带上这份域不变的结构先验。25 个 slot 远超传统 OCL ≤10 的惯例，但正是分层设计（先粗后细）保证了这种规模下仍能稳定收敛。
 
-### CGSC（Class-Guided Slot Contrast）模块
+**2. 类引导 Slot 对比 CGSC：把结构先验对齐到统一语义空间。** 光有结构还不够，跨域时同一类目标在两域的特征分布仍可能错位，CGSC 用对比学习把它们拉到一起。模块维护一组 EMA 更新的全局类原型 $P_c$，每个原型由 decoder queries 按预测类别平均聚合而来，跨 batch 持续积累一个稳定的类语义锚点。对当前图像，先用第二阶段的注意力 mask $m_k^{(2)}$ 对原始特征做加权聚合，得到压抑了背景 slot 的 weighted slot；再用余弦相似度矩阵加匈牙利算法把这些 weighted slot 与 decoder queries 一一匹配，从而给每个 slot 借来一个伪类标签。有了伪标签就能算 InfoNCE 对比损失，把同类的 slot 原型 $\bar{z}_c$ 往对应的类原型 $P_c$ 上拉近、把异类推远，逼着不同域的同类目标共享同一套语义表征。
 
-1. **类原型记忆**：维护 EMA 更新的全局类原型 $P_c$，从 decoder queries 按预测类别平均聚合
-2. **Weighted Slot 构建**：用注意力 mask $m_k^{(2)}$ 对原始特征加权聚合，抑制背景 slot
-3. **匈牙利匹配**：余弦相似度矩阵 + 匈牙利算法将 weighted slot 与 queries 一一匹配，获得伪类标签
-4. **InfoNCE 对比损失**：拉近同类 slot 原型 $\bar{z}_c$ 与类原型 $P_c$，推远异类
+### 损失函数 / 训练策略
 
-### 总损失
+目标域自适应阶段的总损失把自训练、对比、重建三项加权相加：
 
 $$\mathcal{L}_{total} = \mathcal{L}_{unsup} + \lambda_{con} \mathcal{L}_{con} + \lambda_{rec} \mathcal{L}_{rec}$$
 
-### 理论保证
-
-证明了目标域风险下降界：$\mathbb{E}[\mathcal{R}_T(\theta_{t+1})] \le \mathbb{E}[\mathcal{R}_T(\theta_t)] - c_1 \Delta_t + c_2(\epsilon_{rec} + \sigma^2)$
+其中 $\mathcal{L}_{unsup}$ 是 Teacher-Student 框架下基于伪标签的无监督检测损失，$\lambda_{con}$、$\lambda_{rec}$ 分别平衡对比与重建项。论文还给出了理论支撑，证明每步自适应后目标域风险存在下降界 $\mathbb{E}[\mathcal{R}_T(\theta_{t+1})] \le \mathbb{E}[\mathcal{R}_T(\theta_t)] - c_1 \Delta_t + c_2(\epsilon_{rec} + \sigma^2)$，说明只要重建误差 $\epsilon_{rec}$ 和噪声 $\sigma^2$ 足够小，slot-aware 设计带来的风险下降就有保证，而非纯经验调参。
 
 ## 实验关键数据
 
@@ -128,7 +121,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{unsup} + \lambda_{con} \mathcal{L}_{con} + 
 - [\[ICCV 2025\] SFUOD: Source-Free Unknown Object Detection](../../ICCV2025/object_detection/sfuod_source-free_unknown_object_detection.md)
 - [\[AAAI 2026\] Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection](../../AAAI2026/object_detection/beyond_boundaries_leveraging_vision_foundation_models_for_so.md)
 - [\[CVPR 2026\] Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection](../../CVPR2026/object_detection/foundation_model_priors_enhance_object_focus_in_feature_space_for_source-free_ob.md)
-- [\[CVPR 2026\] Bidirectional Multimodal Prompt Learning with Scale-Aware Training for Few-Shot Multi-Class Anomaly Detection](../../CVPR2026/object_detection/bidirectional_multimodal_prompt_learning_with_scale-aware_training_for_few-shot_.md)
+- [\[ICLR 2026\] Bootstrapping MLLM for Weakly-Supervised Class-Agnostic Object Counting (WS-COC)](bootstrapping_mllm_for_weakly-supervised_class-agnostic_object_counting.md)
 - [\[CVPR 2026\] PaQ-DETR: Learning Pattern and Quality-Aware Dynamic Queries for Object Detection](../../CVPR2026/object_detection/paq-detr_learning_pattern_and_quality-aware_dynamic_queries_for_object_detection.md)
 
 </div>

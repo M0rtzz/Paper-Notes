@@ -50,24 +50,33 @@ NFF框架三步走：(1) 构建动态交互图，物体为节点，接触/吸引
 
 ### 关键设计
 
-1. **神经算子力场（Neural Operator Force Field）**:
-    - 功能：从物体状态和交互图预测连续力场
-    - 核心思路：基于DeepONet框架，力场函数为 $\mathbf{F}(\mathbf{z}^q(t)) = \sum_{i \in \mathcal{G}(q)} \mathbf{W}(f_\theta(\mathbf{z}^i(t)) \odot f_\phi(\mathbf{z}^q(t))) + \mathbf{b}$，其中 $\mathcal{G}(q)$ 是查询物体的邻居集合，$f_\theta$ 和 $f_\phi$ 是neural networks，$\odot$ 是逐元素乘积，$\mathbf{W} \in \mathbb{R}^{d_\text{hidden} \times d_\text{force}}$ 将隐特征映射到低维力空间
-    - 设计动机：力场是低维的（2D/3D力向量）→比高维隐向量更容易从少量数据学习；神经算子的函数空间学习能力使力场模式可泛化到新交互图
+**1. 神经算子力场：把"物体之间的作用"建模成一个低维力函数。**
 
-2. **ODE积分轨迹解码**:
-    - 功能：将学习到的力场转换为物理一致的轨迹
-    - 核心思路：二阶ODE描述运动——$\mathbf{a}^q(t) = \frac{d^2 x^q(t)}{dt^2} = \frac{\mathbf{F}(\mathbf{z}^q(t))}{m^q}$，通过积分得到 $\mathbf{x}(t) = \mathbf{x}(0) + \int_0^t \mathbf{v}(t)dt$, $\mathbf{v}(t) = \mathbf{v}(0) + \int_0^t \frac{\mathbf{F}(\mathbf{z}^q(t))}{m^q}dt$
-    - 设计动机：ODE积分保证轨迹的连续性和物理一致性——不会出现离散解码中"物体穿墙"的问题；高精度积分（步长$1e\text{-}3$）提升细粒度碰撞建模
+前面的痛点是隐向量表示太高维、容易过拟合观测轨迹。NFF 换一个抽象层次——不学"状态怎么变"，而是学"物体之间施加多大的力"。具体借用 DeepONet 的算子学习框架，查询物体 $q$ 受到的力被写成它与邻居交互的累加：
 
-3. **前向-后向交互规划**:
-    - 功能：利用学习到的力场进行目标导向的规划任务
-    - 核心思路：前向规划——采样500个action候选，用NFF作为心理模拟器评估，选最优序列执行；后向规划——反转ODE时间方向，从目标状态反演初始条件：$\mathbf{x}(0) = \mathbf{x}(t) + \int_t^0 \mathbf{v}(t)dt$
-    - 设计动机：ODE的可逆信息流使后向计算天然高效；5轮交互学习协议（执行→观察偏差→更新模型→重新规划）模拟人类trial-and-error学习
+$$\mathbf{F}(\mathbf{z}^q(t)) = \sum_{i \in \mathcal{G}(q)} \mathbf{W}\big(f_\theta(\mathbf{z}^i(t)) \odot f_\phi(\mathbf{z}^q(t))\big) + \mathbf{b}$$
+
+其中 $\mathcal{G}(q)$ 是查询物体的邻居集合，$f_\theta$ 编码施力物体、$f_\phi$ 编码受力物体，两路特征逐元素相乘 $\odot$ 后由 $\mathbf{W} \in \mathbb{R}^{d_\text{hidden} \times d_\text{force}}$ 映射到 2D/3D 的力空间。这样做之所以能少样本学习，关键就在力本身是低维的——比起拟合高维隐向量，从几十条轨迹里恢复一个二维力向量要容易得多；而算子学习的函数空间泛化能力，让学到的力场模式能迁移到训练时没见过的交互图结构上。
+
+**2. ODE 积分轨迹解码：用物理积分代替离散预测，从根上杜绝"穿墙"。**
+
+有了力场还不够，怎么把力变成轨迹决定了泛化是否物理一致。NFF 不让网络直接吐下一帧坐标，而是把牛顿第二定律的二阶 ODE 显式接进解码——加速度由力和质量决定：
+
+$$\mathbf{a}^q(t) = \frac{d^2 x^q(t)}{dt^2} = \frac{\mathbf{F}(\mathbf{z}^q(t))}{m^q}$$
+
+再用 Runge-Kutta / Euler 积分器把它积成速度和位移：$\mathbf{v}(t) = \mathbf{v}(0) + \int_0^t \frac{\mathbf{F}(\mathbf{z}^q(t))}{m^q}\,dt$，$\mathbf{x}(t) = \mathbf{x}(0) + \int_0^t \mathbf{v}(t)\,dt$。因为轨迹是连续积分出来的，物体不可能像离散解码那样凭空跳过一堵墙；而把积分步长压到 $1e\text{-}3$ 这样的高精度，能更细地刻画碰撞瞬间的受力变化（消融里精度从 $1e\text{-}3$ 退到自适应积分，Cross RMSE 就从 1.226 涨到 1.788）。
+
+**3. 前向-后向交互规划：同一套 ODE 既能正着模拟未来，也能倒着反推初始条件。**
+
+物理推理不只要预测，还要能做目标导向的规划，而 ODE 的可逆性恰好让这件事变便宜。前向规划时，NFF 充当一个"心理模拟器"：采样 500 个 action 候选，用力场各自滚动出未来轨迹评估，挑成功概率最高的序列去执行。后向规划则直接把 ODE 的时间方向反过来，从目标状态沿时间倒积分反推出需要的初始条件：
+
+$$\mathbf{x}(0) = \mathbf{x}(t) + \int_t^0 \mathbf{v}(t)\,dt$$
+
+相比基于梯度反复迭代优化初值，这种倒积分一步到位、效率高出数量级（表 A3）。在此之上还套了一个 5 轮交互学习协议——执行动作、观察轨迹偏差、用偏差更新力场、再重新规划——模拟人类 trial-and-error 的试错过程，让模型在反馈中逐步逼近正确解。
 
 ### 损失函数 / 训练策略
 
-训练使用MSE损失最小化预测与真实轨迹的差异。关键策略：将长轨迹分段为小单元训练（alleviates accumulated error in teacher forcing），评估时仅给初始状态预测全部未来动态。
+训练用 MSE 损失最小化预测轨迹与真实轨迹的差异。一个关键技巧是把长轨迹切成小段分别做自回归训练，避免 teacher forcing 下误差沿时间不断累积；而评估时只喂初始状态，让模型一口气预测全部未来动态。
 
 ## 实验关键数据
 
@@ -133,11 +142,11 @@ NFF框架三步走：(1) 构建动态交互图，物体为节点，接触/吸引
 
 ## 相关论文
 
+- [\[CVPR 2025\] Few-Shot Personalized Scanpath Prediction](../../CVPR2025/others/few-shot_personalized_scanpath_prediction.md)
+- [\[ICML 2025\] Feedforward Few-shot Species Range Estimation](../../ICML2025/others/feedforward_few-shot_species_range_estimation.md)
 - [\[ICCV 2025\] Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy](../../ICCV2025/others/is_meta-learning_out_rethinking_unsupervised_few-shot_classification_with_limite.md)
 - [\[CVPR 2026\] DirPA: Addressing Prior Shift in Imbalanced Few-shot Crop-type Classification](../../CVPR2026/others/dirpa_addressing_prior_shift_in_imbalanced_fewshot.md)
-- [\[ICLR 2026\] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
 - [\[ICML 2026\] Amortized Simulation-Based Inference in Generalized Bayes via Neural Posterior Estimation](../../ICML2026/others/amortized_simulation-based_inference_in_generalized_bayes_via_neural_posterior_e.md)
-- [\[ICCV 2025\] Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection](../../ICCV2025/others/doodle_your_keypoints_sketch-based_few-shot_keypoint_detection.md)
 
 </div>
 

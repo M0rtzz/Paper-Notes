@@ -40,45 +40,28 @@ AI系统经常表现出并放大社会偏见（如性别偏见），在法律、
 ## 方法详解
 
 ### 整体框架
-输入：一个预训练的Transformer语言模型 + 包含名字和代词的模板句子。输出：(1) 一个标量特征神经元$h$（编码性别信息）；(2) 一个解码向量（指示如何修改模型权重以改变性别偏见强度）。
+GRADIEND从一个预训练Transformer的事实/反事实梯度差中学习性别这一单语义特征：编码器把整张MLM梯度压成一个标量"性别因子"$h$，解码器再从$h$重建出指向性别方向的权重更新量。学完之后，既能用$h$读出"哪些权重编码性别"，也能把解码器输出直接加回模型权重来调强、调弱或抵消性别偏见。
 
 ### 关键设计
 
-1. **事实/反事实梯度构造**：对于模板句子如"Alice explained the vision as best [MASK] could"，分别以正确代词（"she"）和反事实代词（"he"）为目标计算MLM梯度：
+**1. 事实/反事实梯度差：把性别方向从梯度里"减"出来。**
 
-    - 事实梯度 $\nabla^+ W_m$：以正确性别代词为目标
-    - 反事实梯度 $\nabla^- W_m$：以相反性别代词为目标
-    - 梯度差 $\nabla^{\pm}W_m := \nabla^+ W_m - \nabla^- W_m$
-   
-   梯度差消除了非性别相关的共同更新成分，仅保留性别相关的方向。
+特征学习的原料不是激活值，而是梯度——梯度天然回答了"要改变某个预测，哪些参数该往哪动"。对一个带名字与代词的模板句（如"Alice explained the vision as best [MASK] could"），分别以正确代词"she"和反事实代词"he"为 MLM 目标，计算两份梯度：事实梯度$\nabla^+ W_m$与反事实梯度$\nabla^- W_m$。两者都包含大量与性别无关的语言学共同更新，但把它们相减得到梯度差$\nabla^{\pm}W_m := \nabla^+ W_m - \nabla^- W_m$后，这些共同成分相互抵消，只剩下纯粹的"性别相关方向"。这一步是整个方法干净的前提——它保证后续学到的瓶颈神经元承载的是性别而非别的语义。
 
-2. **GRADIEND编码器-解码器**：极简架构，仅使用单个隐藏神经元作为瓶颈：
-   
-    $\text{enc}(\nabla^+ W_m) = \tanh(W_e^T \cdot \nabla^+ W_m + b_e) =: h \in \mathbb{R}$
-    $\text{dec}(h) = h \cdot W_d + b_d \approx \nabla^{\pm} W_m$
-   
-   其中$W_e, W_d, b_d \in \mathbb{R}^n$，$b_e \in \mathbb{R}$，总参数量仅为$3n+1$。编码器将事实梯度映射到一个标量$h$（性别因子），解码器从$h$重建梯度差。目标函数为MSE损失。
+**2. 单神经元瓶颈编解码器：用 $3n+1$ 个参数逼出期望语义。**
 
-3. **性别去偏应用**：选定性别因子$h$和学习率$\alpha$后，直接修改模型权重：
-   
-    $\tilde{W}_m := W_m + \alpha \cdot \text{dec}(h)$
-   
-   当$h$和$\alpha$符号相同时模型偏向男性，符号不同时偏向女性。$h=0$附近对应去偏方向（利用偏置$b_e$学到的去偏方向）。
+不同于稀疏自编码器先学上千个特征再人工搜索"哪个是性别"，GRADIEND把"性别"作为唯一瓶颈预先指定下来，强迫这一个神经元去承载它。编码器把事实梯度映射成标量$\text{enc}(\nabla^+ W_m) = \tanh(W_e^T \cdot \nabla^+ W_m + b_e) =: h \in \mathbb{R}$，解码器再从这个标量重建梯度差$\text{dec}(h) = h \cdot W_d + b_d \approx \nabla^{\pm} W_m$，以 MSE 为目标拟合。其中$W_e, W_d, b_d \in \mathbb{R}^n$、$b_e \in \mathbb{R}$，对一个$n$维权重的总参数量仅$3n+1$。$\tanh$把$h$挤进$[-1,1]$，让"偏男/偏女"自然落到两端、性别中性输入落到 0 附近，得到一个可读、可操控的单语义因子。
 
-4. **三个综合指标设计**：
+**3. 直接改权重去偏：解码器输出就是编辑向量。**
 
-    - **BPI**（Balanced Prediction Index）：衡量去偏程度，同时考虑语言建模能力、性别预测平衡性和预测合理性
-    - **FPI**（Female Prediction Index）：衡量女性偏向程度
-    - **MPI**（Male Prediction Index）：衡量男性偏向程度
+学好的解码器把性别因子翻译成一份可加回模型的权重更新，于是去偏不再是后处理，而是对语言模型本身的一次定向编辑：$\tilde{W}_m := W_m + \alpha \cdot \text{dec}(h)$。$h$与学习率$\alpha$同号时模型更偏男性、异号时更偏女性，而把$h$取到 0 附近就得到去偏方向——这里有个有趣之处，去偏向量主要来自解码器偏置$b_d$，即便没有任何性别信息（$h=0$），$b_d$自身已学到一条有效的中性化方向。
+
+**4. BPI/FPI/MPI 三项预测指标：把"偏见强度"量化成可比的数。**
+
+为了在不损失语言能力的前提下衡量编辑效果，论文定义了三个综合指标。BPI（Balanced Prediction Index）刻画去偏程度，同时把语言建模能力、男女预测的平衡性、以及预测的合理性三者纳入考量；FPI（Female Prediction Index）与 MPI（Male Prediction Index）则分别度量向女性、向男性偏移的强度。三者一起既能评估"中性化"是否成功，也能评估"按需注入某一性别"是否可控。
 
 ### 损失函数 / 训练策略
-- 优化器：Adam，学习率1e-5，权重衰减1e-2
-- 批量：32，MSE损失
-- 训练步数：23,653（等于Genter训练集模板数）
-- 每250步用$\text{Cor}_{\text{Genter}}^{\text{val}}$评估，选最优模型
-- 每步随机选一个性别，从NAMExact中采样名字
-- 自定义初始化解码器权重（使用与编码器相同的$n$作为初始化范围）
-- 预测层不参与GRADIEND参数（确保去偏作用于语言模型本身）
+训练以 MSE 拟合梯度差，用 Adam（学习率 1e-5、权重衰减 1e-2、批量 32）优化，共训练 23,653 步——恰好等于 Genter 训练集的模板数；每 250 步用验证相关系数$\text{Cor}_{\text{Genter}}^{\text{val}}$评估并保留最优模型。每一步随机选定一个性别、再从 NAMExact 名字库采样一个名字构造样本；解码器权重用与编码器同量级的$n$自定义初始化。值得注意的是预测层不计入 GRADIEND 的可训练参数，从而保证学到并被编辑的是语言模型主干而非任务头。
 
 ## 实验关键数据
 
@@ -150,11 +133,11 @@ AI系统经常表现出并放大社会偏见（如性别偏见），在法律、
 
 ## 相关论文
 
+- [\[ICLR 2026\] Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
 - [\[ICML 2026\] Alignment Tampering: How Reinforcement Learning from Human Feedback Is Exploited to Optimize Misaligned Biases](../../ICML2026/social_computing/alignment_tampering_how_reinforcement_learning_from_human_feedback_is_exploited_.md)
 - [\[ACL 2026\] Investigating Counterfactual Unfairness in LLMs towards Identities through Humor](../../ACL2026/social_computing/investigating_counterfactual_unfairness_in_llms_towards_identities_through_humor.md)
 - [\[ICCV 2025\] Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/social_computing/learning_visual_proxy_for_compositional_zero-shot_learning.md)
 - [\[CVPR 2025\] Learning from Neighbors: Category Extrapolation for Long-Tail Learning](../../CVPR2025/social_computing/learning_from_neighbors_category_extrapolation_for_long-tail_learning.md)
-- [\[ACL 2026\] Probing Multimodal Large Language Models on Cognitive Biases in Chinese Short-Video Misinformation](../../ACL2026/social_computing/probing_multimodal_large_language_models_on_cognitive_biases_in_chinese_short-vi.md)
 
 </div>
 

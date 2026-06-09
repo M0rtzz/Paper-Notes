@@ -58,29 +58,25 @@ $$\mathbb{E}_{P_S} d(\mathbb{E}_{P_{W|S}} \hat{L}(W,S), \mathbb{E}_{P_{W|S}} L(W
 
 ### 关键设计
 
-1. **核心定理（Theorem 1）——块样本MAC-Bayes界**：
+**1. 核心定理（Theorem 1）：用分块的 KL 散度之和替代整体 KL 散度，给出一般性的块样本泛化界。**
 
-    - 功能：给出一般性的块样本泛化界，对距离函数 $d$ 和矩母函数条件 $\Phi_m$ 参数化
-    - 核心思路：利用Jensen不等式（$d$ 的联合凸性）将期望拉入 $d$ 内部，再利用Fubini定理按块分离，然后对每块应用Donsker-Varadhan变分表示实现从后验到先验的测度变换。关键是每块的KL散度 $D(P_{W|S_j} \| Q_W)$ 只依赖于 $P_{W|S_j}$ 这个边际化分布，当 $m \ll n$ 时这个量可以远小于全数据的 $D(P_{W|S} \| Q_W)$
-    - 设计动机：对确定性算法，$D(P_{W|S} \| Q_W) = \infty$，但 $D(P_{W|S_j} \| Q_W)$ 有限（因为 $P_{W|S_j}$ 是对其他块取期望后的"模糊化"分布，不再是Dirac delta）
+这一步直接针对"单一 KL 项过粗、确定性算法下整体散度爆炸"的痛点。证明分三步走：先用 Jensen 不等式（依赖距离函数 $d$ 的联合凸性）把外层期望拉进 $d$ 内部，再用 Fubini 定理把求和按块分离，最后对每个块应用 Donsker-Varadhan 变分表示完成从后验到先验的测度变换。界对距离函数 $d$ 和矩母函数条件 $\Phi_m$ 参数化，因此是一族界而非单一界。关键在于每块的散度 $D(P_{W|S_j} \| Q_W)$ 只依赖于边际化后验 $P_{W|S_j}$ 这个分布——当 $m \ll n$ 时它可以远小于全数据的 $D(P_{W|S} \| Q_W)$。这正是该界能在原始界失效处复活的原因：对确定性算法 $D(P_{W|S} \| Q_W) = \infty$，但 $P_{W|S_j}$ 是把完整算法在其他块上取期望后的"模糊化"分布，不再是 Dirac delta，于是 $D(P_{W|S_j} \| Q_W)$ 有限。
 
-2. **Catoni函数特化（Corollary 1）**：
+**2. Catoni 函数特化（Corollary 1）：选 Catoni 比较器，把矩母函数项完全消掉，得到最紧的界。**
 
-    - 功能：对有界损失 $\ell(w,z) \in [0,1]$，用Catoni函数作为比较器函数
-    - 核心结果：$\mathbb{E}_{P_S} C_\beta(\mathbb{E}_{P_{W|S}} \hat{L}, \mathbb{E}_{P_{W|S}} L) \leq \frac{1}{n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W)$，矩母函数项完全消除！可进一步推出泛化误差界 $\text{gen} \leq \sqrt{\frac{1}{4n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W)}$
-    - 这是最紧的版本，对应的binary KL和差函数特化都不如它
+Theorem 1 留下的矩母函数项 $\Phi_m$ 仍可能拖累界，这一步通过挑选比较器函数把它清零。对有界损失 $\ell(w,z) \in [0,1]$，取 Catoni 函数 $C_\beta$ 作为距离 $d$，可得
 
-3. **次高斯损失扩展（Corollary 2）**：
+$$\mathbb{E}_{P_S} C_\beta(\mathbb{E}_{P_{W|S}} \hat{L}, \mathbb{E}_{P_{W|S}} L) \leq \frac{1}{n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W),$$
 
-    - 功能：将界从有界损失扩展到 $\sigma^2$-次高斯损失
-    - 核心结果：$\text{gen} \leq \sqrt{\frac{2\sigma^2}{n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W)}$
-    - 适用范围更广但界稍松
+矩母函数项被彻底消除，再反解即得泛化误差界 $\text{gen} \leq \sqrt{\frac{1}{4n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W)}$。这是全文最紧的版本——直接代入 binary KL（Eq.11）或差函数特化都会引入额外项，都不如它。
 
-4. **高概率版本的不可能性（Theorem 2）**：
+**3. 次高斯损失扩展（Corollary 2）：把适用范围从有界损失推广到次高斯损失，代价是界略松。**
 
-    - 功能：证明块样本PAC-Bayes界（高概率版本）在一般情况下不可行
-    - 核心思路：构造一个反例学习场景——以小概率算法剧烈过拟合训练集，以大概率输出零损失假设。在此场景下MAC-Bayes界以 $\mathcal{O}(n^{-1/2})$ 收敛，但任何形如 $P_S(\text{gen} > A_n + B_n f(1/\delta)) \leq \delta$ 的PAC-Bayes界，要么 $f$ 增长很快（不是对数级），要么 $B_n$ 收敛很慢
-    - 意义：划清了MAC-Bayes与PAC-Bayes在块样本设置下的本质区别
+有界损失的假设在很多实际场景下太强，这一步换上更宽松的尾部条件。对 $\sigma^2$-次高斯的损失，界变为 $\text{gen} \leq \sqrt{\frac{2\sigma^2}{n} \sum_j \mathbb{E}_{P_{S_j}} D(P_{W|S_j} \| Q_W)}$。与 Corollary 1 同样保持 $\mathcal{O}(n^{-1/2})$ 的形态，只是常数项随方差 $\sigma^2$ 放大，覆盖面更广但稍松。
+
+**4. 高概率版本的不可能性（Theorem 2）：证明块样本设置下没有有意义的高概率（PAC）版本。**
+
+前三个设计给的都是期望（MAC）界，自然要问能不能升级成高概率界——这一步给出否定答案，且是根本性的而非技术性的。证明靠一个精心构造的反例：让算法以小概率剧烈过拟合训练集、以大概率输出零损失假设。在这个场景下 MAC-Bayes 界仍以 $\mathcal{O}(n^{-1/2})$ 收敛，但任何形如 $P_S(\text{gen} > A_n + B_n f(1/\delta)) \leq \delta$ 的 PAC-Bayes 界都被逼到死角——要么 $f$ 增长很快（不是对数级），要么 $B_n$ 收敛很慢。这条结果划清了 MAC-Bayes 与 PAC-Bayes 在块样本设置下的本质边界。
 
 ### 块大小优化
 在假设 $\mathbb{E}_{P_S} D(P_{W|S_j} \| Q_W) \leq \mathcal{O}(m^\gamma) / \Theta(n)$ 下：
@@ -143,9 +139,9 @@ $$\mathbb{E}_{P_S} d(\mathbb{E}_{P_{W|S}} \hat{L}(W,S), \mathbb{E}_{P_{W|S}} L(W
 
 - [\[NeurIPS 2025\] Generalization Bounds for Rank-sparse Neural Networks](../../NeurIPS2025/llm_pretraining/generalization_bounds_for_rank-sparse_neural_networks.md)
 - [\[ICML 2026\] Data Difficulty and the Generalization--Extrapolation Tradeoff in LLM Fine-Tuning](../../ICML2026/llm_pretraining/data_difficulty_and_the_generalization--extrapolation_tradeoff_in_llm_fine-tunin.md)
-- [\[CVPR 2025\] MXNorm: Reusing MXFP block scales for efficient tensor normalisation](../../CVPR2025/llm_pretraining/mxnorm_reusing_mxfp_block_scales_for_efficient_tensor_normalisation.md)
 - [\[ICML 2026\] Tuning the Implicit Regularizer of Masked Diffusion Language Models: Enhancing Generalization via Insights from k-Parity](../../ICML2026/llm_pretraining/tuning_the_implicit_regularizer_of_masked_diffusion_language_models_enhancing_ge.md)
 - [\[ACL 2025\] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding](../../ACL2025/llm_pretraining/diversity_explains_inference_scaling_laws_through_a_case_study_of_minimum_bayes_.md)
+- [\[ICML 2026\] Trust Functions: Near-Lossless Weak-to-Strong Generalization by Learning When to Trust the Weak Teacher](../../ICML2026/llm_pretraining/trust_functions_near-lossless_weak-to-strong_generalization_by_learning_when_to_.md)
 
 </div>
 

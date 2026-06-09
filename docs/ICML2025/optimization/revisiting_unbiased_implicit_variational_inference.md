@@ -153,9 +153,9 @@ AISIVI 在相同计算预算下（10k 迭代）远超 IWHVI、BSIVI、PVI、UIVI
 
 - [\[ICML 2025\] Synonymous Variational Inference for Perceptual Image Compression](synonymous_variational_inference_for_perceptual_image_compression.md)
 - [\[NeurIPS 2025\] Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
-- [\[NeurIPS 2025\] Brain-like Variational Inference](../../NeurIPS2025/optimization/brain-like_variational_inference.md)
 - [\[NeurIPS 2025\] VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
 - [\[NeurIPS 2025\] NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](../../NeurIPS2025/optimization/neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [\[NeurIPS 2025\] VERA: Variational Inference Framework for Jailbreaking Large Language Models](../../NeurIPS2025/optimization/vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
 
 </div>
 

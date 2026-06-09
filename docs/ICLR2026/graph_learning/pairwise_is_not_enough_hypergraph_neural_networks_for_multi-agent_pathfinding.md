@@ -36,24 +36,22 @@ tags:
 6. 现有超图方法仅处理小规模 (~10 agents) 问题，能否扩展到大规模高耦合场景是开放问题
 
 ## 方法详解
-**HMAGAT 架构**：CNN 编码器 → 超图注意力网络 (HGNN) 层 × 3 → MLP 解码器
 
-- **有向超图设计**：单头多尾结构——多个尾节点（影响者）→ 单个头节点（被影响者），自然建模"多个智能体共同影响一个智能体的决策"
-- **双层注意力机制**：
-    - 尾→超边注意力 $\alpha_{ej}$：头节点均值作为 query，尾节点特征+超边特征作为 key-value
-    - 超边→头注意力 $\alpha_{ie}$：头节点为 query，超边表示为 key-value
-    - 两层 softmax 归一化限定在各自层级，避免跨层稀释
-- **超图生成策略**：
-    - Lloyd 超图：基于 Voronoi 划分 + 软边界实现重叠分组，适合中等规模
-    - k-means 超图：随机点扩散 + 聚类，复杂度 $O(k|V|)$，适合大图
-    - 最短距离超图：基于智能体间最短路径距离构建，适合障碍物密集场景
-    - 所有策略都会生成超边特征（相对位置坐标+曼哈顿距离）
+### 整体框架
 
-**训练流程**：
-- 用 lacam3 专家求解器在 21K 实例上收集示范轨迹（对比 MAPF-GPT 用 3.75M 实例——少 178 倍）
-- 交叉熵损失做模仿学习，可选 DAgger 在线专家纠正
-- 后训练质量提升：在中间难度实例上微调提升解的质量（而非仅提升成功率）
-- RL 温度采样模块：训练一个小模型动态调整 softmax 温度 $\tau \in [0.5, 1.0]$，让策略更确定性
+HMAGAT 沿用了 MAPF 学习方法的经典三段式骨架——CNN 编码器把每个智能体的局部观测压成特征向量，中间堆三层消息传递网络让智能体之间交换信息，最后用 MLP 解码出动作。它和上一代 MAGAT 唯一的区别，就是把中间那三层从成对消息传递的 GNN 换成了有向超图注意力网络 (HGNN)，从而把"多个智能体同时影响某个智能体决策"这件事直接写进了网络的结构先验里。
+
+### 关键设计
+
+**1. 有向超图：用单头多尾结构装下"群体影响"。** GNN 的边只能连接两个节点，因此它建模的永远是 A 影响 B 这样的成对关系；当一个十字路口同时挤进三个智能体、必须三方协调才能避免死锁时，成对的边无法表达这种不可分解的联合约束。HMAGAT 改用有向超边，每条超边由多个尾节点（影响者）指向单个头节点（被影响者），于是"周围一群智能体共同决定我下一步怎么走"被自然地编码成一条超边。这正是论文标题"Pairwise is Not Enough"的字面含义——把交互的基本单元从一条边升格为一个群体。
+
+**2. 双层注意力：在超边内部和超边之间各做一次归一化，避免注意力稀释。** 信息聚合分两步走。先是尾→超边注意力 $\alpha_{ej}$：以头节点特征的均值作为 query，以尾节点特征拼接超边特征作为 key-value，把超边内若干尾节点的信息汇成一个超边表示；再是超边→头注意力 $\alpha_{ie}$：以头节点作为 query、各超边表示作为 key-value，决定不同超边对头节点的贡献权重。关键在于两层 softmax 各自只在本层级内归一化——超边内部的竞争和超边之间的竞争被解耦。相比之下，GNN 把所有邻居放在同一个 softmax 里竞争，邻域里有 $n$ 个邻居、其中 $k$ 个才是关键时，关键邻居分到的注意力约为 $k/n$，随密度 $n$ 增大不断衰减，这就是高密度场景下 GNN 失效的"注意力稀释"根源。超边把相关智能体圈进一个小范围内单独归一化，外部的无关智能体再多也稀释不进来。
+
+**3. 三种超图生成策略：在不同规模和地形下决定"谁和谁组成一条超边"。** 超边本身不是学出来的，而是在每一帧用启发式规则现场构建，论文给了三套互补方案。Lloyd 超图基于 Voronoi 划分再加软边界做重叠分组，分组质量高、适合中等规模；k-means 超图用随机点扩散加聚类，复杂度只有 $O(k|V|)$，专为大图设计；最短距离超图按智能体间的最短路径距离分组，在障碍物密集、欧氏距离会误导的地图上更可靠。无论哪种策略，构建出的每条超边都会附带超边特征（成员间的相对位置坐标加曼哈顿距离），让注意力层能感知群体的空间布局。
+
+### 损失函数 / 训练策略
+
+主体是模仿学习：用 lacam3 专家求解器在 21K 个实例上收集示范轨迹，再用交叉熵损失让网络模仿专家动作——相比 MAPF-GPT 所需的 3.75M 实例少了约 178 倍。训练中可选开启 DAgger，让专家在线纠正策略漂移到的状态。此外有两个提质模块：后训练阶段在中等难度实例上继续微调，目标是提升解的质量（路径更短）而非仅仅提高成功率；RL 温度采样模块则单独训一个小模型，根据局势动态调节 softmax 温度 $\tau \in [0.5, 1.0]$，在拥堵时让策略更确定、减少犹豫导致的无效动作。
 
 ## 实验关键数据
 
@@ -126,8 +124,8 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] EA-Agent: A Structured Multi-Step Reasoning Agent for Entity Alignment](../../ACL2026/graph_learning/ea-agent_a_structured_multi-step_reasoning_agent_for_entity_alignment.md)
-- [\[ICLR 2026\] Cooperative Sheaf Neural Networks](cooperative_sheaf_neural_networks.md)
 - [\[AAAI 2026\] S-DAG: A Subject-Based Directed Acyclic Graph for Multi-Agent Heterogeneous Reasoning](../../AAAI2026/graph_learning/s-dag_a_subject-based_directed_acyclic_graph_for_multi-agent.md)
+- [\[ICLR 2026\] Cooperative Sheaf Neural Networks](cooperative_sheaf_neural_networks.md)
 - [\[ACL 2026\] LegalGraphRAG: Multi-Agent Graph Retrieval-Augmented Generation for Reliable Legal Reasoning](../../ACL2026/graph_learning/legalgraphrag_multi-agent_graph_retrieval-augmented_generation_for_reliable_lega.md)
 - [\[ICLR 2026\] Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs](beyond_simple_graphs_neural_multi-objective_routing_on_multigraphs.md)
 

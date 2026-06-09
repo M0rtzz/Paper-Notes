@@ -2,12 +2,13 @@
 title: >-
   ICML2025 因果推理方向16篇论文解读
 description: >-
-  16篇ICML2025的因果推理方向论文解读，涵盖推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  16篇ICML2025的因果推理方向论文解读，涵盖对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "因果推理"
   - "论文解读"
   - "论文笔记"
+  - "对抗鲁棒"
   - "推理"
 ---
 
@@ -16,15 +17,11 @@ tags:
 
 **🧪 ICML2025** · **16** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/causal_inference/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (3)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md)
 
 **[Causal Abstraction Inference under Lossy Representations](causal_abstraction_inference_under_lossy_representations.md)**
 
 :   提出 **投影抽象（Projected Abstraction）** 框架，突破现有因果抽象理论对"抽象不变性条件（AIC）"的依赖，使得在有损/降维表示下仍能进行数学一致的因果推断，并给出图模型层面的可识别性判据。
-
-**[Causal Discovery of Latent Variables in Galactic Archaeology](causal_discovery_of_latent_variables_in_galactic_archaeology.md)**
-
-:   利用基于秩的潜变量因果发现算法（RLCD），仅从五个可观测恒星属性中，以纯数据驱动的方式自动恢复出两个物理上有意义的潜变量——出生半径和引导半径，验证了因果发现方法在天体物理学中发现隐藏物理量的潜力。
 
 **[Causal Effect Identification in lvLiNGAM from Higher-Order Cumulants](causal_effect_identification_in_lvlingam_from_higher-order_cumulants.md)**
 
@@ -49,6 +46,10 @@ tags:
 **[Exogenous Isomorphism for Counterfactual Identifiability](exogenous_isomorphism_for_counterfactual_identifiability.md)**
 
 :   提出**外生同构（Exogenous Isomorphism, EI）**概念，证明 $\sim_{\mathrm{EI}}$-identifiability 蕴含 $\sim_{\mathcal{L}_3}$-identifiability（完整反事实层可辨识性），并在双射SCM和三角单调SCM两类特殊模型上给出实现EI的充分条件，统一并推广了已有反事实可辨识性理论。
+
+**[Internal Causal Mechanisms Robustly Predict Language Model Out-of-Distribution Behaviors](internal_causal_mechanisms_robustly_predict_language_model_out-of-distribution_b.md)**
+
+:   利用LLM内部已识别的因果机制来预测模型在分布外输入上的输出正确性，提出反事实模拟和值探测两种方法，在OOD设置中比现有基线平均AUC-ROC提升13.84%。
 
 **[Isolated Causal Effects of Natural Language](isolated_causal_effects_of_natural_language.md)**
 

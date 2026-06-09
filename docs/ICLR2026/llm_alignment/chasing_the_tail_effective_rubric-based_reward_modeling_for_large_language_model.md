@@ -41,33 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两步走：(1) 理论分析——证明高奖励尾部准确度是过优化的决定因素；(2) Rubric 构造工作流——用 off-policy 高质量回复，通过迭代式"两两对比 → 识别差异 → 编码为新 rubric 标准"来精细化评分细则。最终 rubric 配合 LLM verifier 给出加权二值评分作为 RL 奖励。
+这篇论文想回答两个问题：奖励过优化的根源在哪，以及怎么构造一个不会被 hack 的奖励。它先用理论把根源定位到"高奖励尾部"——证明只要奖励模型在最高分那一小撮回复上排序正确，整体性能就接近最优；反之尾部排错，训练后期必然崩。这个结论直接决定了方法的目标：不要花力气区分"好 vs 坏"，要专门把"优秀 vs 更优秀"分清楚。据此设计了一条 rubric 构造工作流——拿 off-policy 的高质量回复，反复做"取当前最高分的两条 → 让 LLM 找出它们的差异 → 把差异写成新评分标准"的迭代精化。最终得到的 rubric 交给 verifier LLM 逐条二值打分、加权求和，作为 RL 阶段的奖励。
 
 ### 关键设计
 
-1. **高奖励尾部理论（Theorem 1）**:
+**1. 高奖励尾部理论（Theorem 1）：把过优化的根源精确定位到尾部。**
 
-    - 功能：形式化奖励错误规范对后训练性能的影响
-    - 核心思路：设错误规范映射 $f: r^* \to r$，则策略的期望奖励为 $\frac{\int_0^1 f^{-1}(u) e^{u/\beta} du}{\beta(e^{1/\beta}-1)}$，其中指数项 $e^{u/\beta}$ 对高奖励区域（$u \to 1$）赋予指数级更大的权重。KL 散度对 $f$ 不变——意味着无论怎么错，"偏离量"相同，但高奖励区域的错会让 win rate 崩溃
-    - 设计动机：提供理论基础，指导后续 rubric 构造应该聚焦哪个区域
+奖励模型终归是真实奖励 $r^*$ 的一个有偏代理 $r$，问题是"偏在哪里最致命"。本文把这层偏差形式化为一个错误规范映射 $f: r^* \to r$，推导出在 Pareto 最优后训练下，策略能拿到的期望真实奖励为
 
-2. **Principle 1: 区分两个优秀回复（Differentiate Great Responses）**:
+$$\frac{\int_0^1 f^{-1}(u)\, e^{u/\beta}\, \mathrm{d}u}{\beta\,(e^{1/\beta}-1)}$$
 
-    - 功能：给定同一 prompt 的两个高质量回复，让 proposer LLM 识别它们的区分特征并编码为新 rubric 标准
-    - 核心思路：取当前 rubric 下得分最高的两个回复作为 comparison pair，让 LLM 分析"为什么这个比那个好"，将发现的差异转化为新的评分标准（附带权重）
-    - 设计动机：对比"好 vs 好"比对比"好 vs 差"更能捕捉高奖励尾部的精细差异
+关键在指数权重 $e^{u/\beta}$：当 $u \to 1$（高奖励区域）时它指数级放大，意味着尾部的排序错误会被成倍计入最终性能，而低奖励区域错了几乎无所谓。更妙的是 KL 散度对 $f$ 不变——无论奖励怎么错，相对参考策略的"偏离预算"是一样的，所以同样的 KL 下，把预算花在尾部排错上就会让 win rate 崩盘。这条公式也顺带解释了为什么过优化总在训练后期出现：随着 $\beta$ 减小（策略越压越偏向高分区），指数项对尾部的放大越狠。结论很 actionable——构造 rubric 时只需保证高奖励区域排对，其余可以全错。
 
-3. **Principle 2: 多样性（Diverse Great Responses）**:
+**2. Principle 1：对比"优秀 vs 更优秀"来精化 rubric。**
 
-    - 功能：通过迭代式精化，逐轮筛选出更多样的优秀回复进行对比
-    - 核心思路：Algorithm 1 描述了迭代流程——每轮用当前 rubric 评分，取 top-2 回复对比，精化 rubric，更新评分，筛选新的 top 候选，重复。多样化的 off-policy 回复来源确保 rubric 不会过拟合到单一风格
-    - 设计动机：如果总是对比同质化的回复，rubric 只能捕捉有限维度的差异
+既然根源在尾部，那构造 rubric 时就不该拿"好回复 vs 差回复"做对比——那样学到的标准只能惩罚明显错误，对尾部毫无分辨力。本文的做法是取当前 rubric 下得分最高的两条回复组成 comparison pair，交给 proposer LLM 分析"为什么这条比那条更好",再把发现的区分特征编码成一条带权重的新评分标准。因为两条都是高质量回复，LLM 被迫去捕捉那些细微但决定优劣的维度，新增的标准自然落在高奖励尾部，正好补上 Theorem 1 指出的薄弱区。
+
+**3. Principle 2：用多样化的优秀回复，避免 rubric 过拟合单一风格。**
+
+只盯着同质化的回复对比，rubric 只能在有限几个维度上越磨越细，容易过拟合到某种文体。Principle 2 通过 Algorithm 1 的迭代流程解决这点：每轮用当前 rubric 给所有回复重新评分，取 top-2 对比、精化出新标准、再用更新后的 rubric 重新评分并筛出新的 top 候选，如此循环。由于评分排名会随 rubric 演化而变，被选中对比的回复也在不断换人，加上 off-policy 回复本身来源多样（强模型、带 extended thinking 的回复等），rubric 得以覆盖更广的质量维度而非锁死在单一风格上。这也是 rubric 天然适配 off-policy 数据的地方——它刻画的是"回复该具备什么特征",对"谁生成的"不敏感，绕开了 BT 模型会去学文体偏好的坑。
 
 ### 损失函数 / 训练策略
-- Rubric 奖励：$r(x,y) = \frac{\sum_i w_i V(x,y,c_i)}{\sum_i w_i}$，其中 $V$ 是 verifier LLM 对每条标准 $c_i$ 的二值判断，$w_i$ 是权重
-- RL 训练使用标准 GRPO/RLHF 框架，以 rubric 奖励替代传统偏好奖励
-- 基础策略模型: Qwen3-8B-Base
-- Off-policy 回复来源: 更强模型（如 GPT-4）或带 extended thinking 的回复
+最终的 rubric 奖励是各条标准的加权二值平均：
+
+$$r(x,y) = \frac{\sum_i w_i\, V(x,y,c_i)}{\sum_i w_i}$$
+
+其中 $V$ 是 verifier LLM 对第 $i$ 条标准 $c_i$ 的二值判断（满足/不满足），$w_i$ 是该标准的权重。RL 阶段沿用标准 GRPO/RLHF 框架，只是把传统偏好奖励换成上面的 rubric 奖励。基础策略模型用 Qwen3-8B-Base；off-policy 高质量回复来自更强的模型（如 GPT-4）或带 extended thinking 的回复。
 
 ## 实验关键数据
 
@@ -125,11 +124,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Spectrum Tuning: Post-Training for Distributional Coverage and In-Context Steerability](spectrum_tuning_post-training_for_distributional_coverage_and_in-context_steerab.md)
 - [\[NeurIPS 2025\] GVPO: Group Variance Policy Optimization for Large Language Model Post-Training](../../NeurIPS2025/llm_alignment/gvpo_group_variance_policy_optimization_for_large_language_model_post-training.md)
 - [\[ICLR 2026\] Towards Understanding Valuable Preference Data for Large Language Model Alignment](towards_understanding_valuable_preference_data_for_large_language_model_alignmen.md)
 - [\[ICLR 2026\] Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
 - [\[ICLR 2026\] SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks](sema_simple_yet_effective_learning_for_multi-turn_jailbreak_attacks.md)
-- [\[ICLR 2026\] Obscure but Effective: Classical Chinese Jailbreak Prompt Optimization via Bio-Inspired Search](obscure_but_effective_classical_chinese_jailbreak_prompt_optimization_via_bio-in.md)
 
 </div>
 

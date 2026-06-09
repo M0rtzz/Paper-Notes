@@ -42,31 +42,25 @@ tags:
 
 ### 整体框架
 
-构建 RDL 和 DFS 的分解设计空间 → 大规模架构搜索生成性能银行 → 分析性能差距驱动因素 → 设计任务嵌入 → 训练元选择器 Relatron → 用 loss landscape 指标做后选择。
+Relatron 把"该用 RDL 还是 DFS、用什么配置"这个选择问题，转化成一个由任务嵌入驱动的元分类问题。它先对 RDL 和 DFS 两条路线做大规模架构搜索，把每个任务上各配置的性能存成"性能银行"；再为每个 RDB 任务计算一组可廉价获得的嵌入特征（同质性、亲和力、训练规模），用它们训练一个元选择器来预测该选哪条路线、哪个配置；最后在验证性能领先的少数候选里，用 loss landscape 几何指标挑出对分布偏移更鲁棒的检查点。
 
 ### 关键设计
 
-1. **RDB 任务同质性（Definition 1）**:
+**1. RDB 任务同质性：用一个标量刻画"标签沿关系是否一致"，从而预判 RDL 还是 DFS 占优。**
 
-    - **功能**：度量 RDB 任务中标签沿元路径的一致性
-    - **核心思路**：在增强异构图上定义自循环元路径 $m$，计算 $H(\mathcal{G};m) = \frac{1}{|\mathcal{E}_m|}\sum \mathcal{K}(\hat{y}_u, \hat{y}_v)$。分类任务用点积度量，回归任务用 Pearson 相关度量。还支持调整同质性（adjusted homophily）校正类别不平衡
-    - **设计动机**：Spearman $\rho = -0.43$ ($p < 0.05$) 表明同质性与 RDL-DFS 性能差距强相关。低同质性 → RDL 优势大
+作者的核心观察是：DFS 用的是线性聚合原语，只有当相邻实体的标签倾向一致时才好用；而 RDL 的 GNN 能学非线性聚合，在标签信号互相矛盾时反而能翻转贡献符号。于是需要一个量来衡量任务的这种"一致性"。他们在增强后的异构实体-关系图上定义自循环元路径 $m$，把同质性写成沿该元路径相邻预测目标的平均相似度 $H(\mathcal{G};m) = \frac{1}{|\mathcal{E}_m|}\sum \mathcal{K}(\hat{y}_u, \hat{y}_v)$，其中分类任务用点积度量、回归任务用 Pearson 相关度量；为了不被类别不平衡误导，还引入调整同质性（adjusted homophily）做校正。这个指标确实抓住了关键规律：调整同质性与 RDL-DFS 性能差距的 Spearman $\rho = -0.43$（$p < 0.05$），即同质性越低，RDL 相对 DFS 的优势越大——这正是把宏观选择（选路线）建立在同质性上的依据。
 
-2. **锚点亲和力嵌入**:
+**2. 锚点亲和力嵌入：在同质性之外补齐路径、特征、时序、规模四类廉价信号，让元选择器看得更全。**
 
-    - **功能**：捕获结构、特征和时序属性
-    - **核心思路**：路径亲和力（随机初始化 GraphSAGE/NBFNet 单次前向+线性拟合），特征亲和力（TabPFN 零训练验证性能），时序亲和力（标签随时间的统计量），$\log(N_{train})$ 训练规模
-    - **设计动机**：同质性仅捕获消息传递偏好，还需路径模型偏好、特征质量、时序动态等信号
+同质性只反映了消息传递的偏好，不足以决定具体配置，所以作者再叠加一组"锚点亲和力"嵌入，关键是每一项都做到近乎零训练成本。路径亲和力用随机初始化的 GraphSAGE / NBFNet 做单次前向、再拟合一个线性头，借此判断任务更偏好哪类路径模型；特征亲和力直接用 TabPFN 在无需训练的情况下给出验证性能，反映表格特征本身的质量；时序亲和力统计标签随时间的变化量，刻画时序分割下的分布漂移；最后再拼上 $\log(N_{train})$ 表示训练规模。把这几路信号和同质性串起来，元选择器既能做宏观的 RDL/DFS 选择，也能做微观的配置选择，而代价远低于需要反复训练的传统任务嵌入。
 
-3. **Loss Landscape 后选择**:
+**3. Loss Landscape 后选择：在验证领先的候选里，用极小值的平坦度挑出对分布偏移更鲁棒的那个。**
 
-    - **功能**：在验证性能 top 候选中选择更鲁棒的检查点
-    - **核心思路**：三个指标——一阶 $P_1$（最差有限差分斜率）、二阶 $P_2$（Hessian 最大特征值）、能量势垒 $P_{bar}$（沿射线的最大损失隆起）。倾向平坦极小值
-    - **设计动机**：验证-测试差距反映在 loss landscape 几何中,更平坦的极小值对分布偏移更鲁棒
+由于时序分割会带来验证-测试分布偏移，验证性能最高的配置未必测试最好（即"越调越差"）。作者的思路是：验证-测试差距会体现在损失曲面的几何上，越平坦的极小值越抗偏移。于是在验证性能 top 候选中再引入三个曲面指标做后选择——一阶指标 $P_1$ 取局部最差的有限差分斜率，二阶指标 $P_2$ 取 Hessian 最大特征值，能量势垒 $P_{bar}$ 取沿随机射线方向的最大损失隆起；三者都偏好更平坦、更宽的极小值。这一步不改训练，只是把泛化稳健性当作额外的选择准则，挑出更可能在测试集上保持性能的检查点。
 
 ### 损失函数 / 训练策略
 
-元分类器用性能银行训练（LOO 评估），使用同质性+统计+时序特征。搜索效率：计算时间仅为 Fisher 信息矩阵方法的 1/10。
+元分类器在性能银行上以留一法（LOO）训练和评估，输入即上述同质性、亲和力统计与时序特征。整套流程的一大卖点是高效：因为亲和力嵌入都走零训练或单次前向路径，元选择的计算时间约为基于 Fisher 信息矩阵方法（如 Autotransfer）的 1/10。
 
 ## 实验关键数据
 
@@ -128,7 +122,7 @@ tags:
 - [\[ICML 2026\] Generative Representation Learning on Hyper-relational Knowledge Graphs via Masked Discrete Diffusion](../../ICML2026/graph_learning/generative_representation_learning_on_hyper-relational_knowledge_graphs_via_mask.md)
 - [\[NeurIPS 2025\] MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning](../../NeurIPS2025/graph_learning/moemeta_mixture-of-experts_meta_learning_for_few-shot_relational_learning.md)
 - [\[ICLR 2026\] A Geometric Perspective on the Difficulties of Learning GNN-based SAT Solvers](a_geometric_perspective_on_the_difficulties_of_learning_gnn-based_sat_solvers.md)
-- [\[NeurIPS 2025\] When No Paths Lead to Rome: Benchmarking Systematic Neural Relational Reasoning](../../NeurIPS2025/graph_learning/when_no_paths_lead_to_rome_benchmarking_systematic_neural_relational_reasoning.md)
+- [\[ICML 2026\] Rethinking Feature Alignment in Generalist Graph Anomaly Detection: A Relational Fingerprint-based Approach](../../ICML2026/graph_learning/rethinking_feature_alignment_in_generalist_graph_anomaly_detection_a_relational_.md)
 
 </div>
 

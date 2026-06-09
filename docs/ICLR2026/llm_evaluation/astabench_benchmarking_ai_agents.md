@@ -40,31 +40,17 @@ AI2 团队针对现有科研 Agent 基准的 5 大方法学缺陷，构建了首
 
 ### 整体框架
 
-AstaBench 由三大支柱构成：(1) 覆盖科学研究全生命周期的 2400+ 问题集（4 大类 11 个子基准）；(2) 基于 Semantic Scholar 的生产级可复现搜索工具环境（Asta MCP 工具）；(3) 9 类科研优化的 Asta Agent 基线 + 标准化评估协议（含成本度量和 leaderboard 提交）。整个框架构建在 InspectAI 评估基础设施之上，支持 Docker 沙箱化代码执行和 MCP 工具调用。
+AstaBench 把"评估科研 Agent"拆成三块缺一不可的基础设施：一套覆盖科研全生命周期的 2400+ 问题集（4 大类、11 个子基准），一个让所有 Agent 共享同一文献检索后端的可控工具环境（基于 Semantic Scholar 的 Asta MCP），以及 9 类科研优化的 Asta Agent 基线加一套把成本一并记账的标准化评估协议。三者都搭在 InspectAI 评估框架上，统一了 Docker 沙箱代码执行与 MCP 工具调用，使得任意 Agent 都能以相同接口接入、相同口径打分。
 
 ### 关键设计
 
-1. **四大类 11 子基准的问题集架构**：
+**1. 四大类 11 子基准的问题集：覆盖从检索到端到端发现的完整科研链条。** 现有基准的通病是只截取科研流程中的一个环节——要么只测检索，要么只测编程，做好子任务不等于做好科研。AstaBench 把科研能力分解为四个递进层次并各配若干独立子基准：文献类（Literature）5 个，含 PaperFindingBench（论文检索）、ScholarQABench2（科学问答）、LitQA2-FT 及其搜索变体（文献问答）、ArxivDIGESTables-Clean（结构化摘要表格生成）；代码类（Code）3 个，含 CORE-Bench-Hard（仓库级代码问题）、DS-1000（数据科学编程）、SUPER-Expert（复杂编程任务并追踪轨迹）；数据分析类（Data）的 DiscoveryBench（数据驱动的科学发现）；以及端到端发现类（Discovery）的 E2E-Bench 及其困难版（完整科学发现工作流）。问题横跨计算机科学、生物医学等多个领域，且相当一部分直接取自已部署 Asta Agent 收到的真实用户请求，让问题分布反映"用户实际需要的能力"而非研究者臆测的能力。
 
-    - AstaBench 将科研能力分解为 4 个递进层次，每个层次包含多个独立的子基准。文献类（Literature）包含 5 个子基准：PaperFindingBench（论文检索）、ScholarQABench2（科学问答）、LitQA2-FT 及其搜索变体（文献问答）、ArxivDIGESTables-Clean（结构化摘要表格生成）。代码类（Code）包含 3 个子基准：CORE-Bench-Hard（仓库级代码问题）、DS-1000（数据科学编程）、SUPER-Expert（复杂编程任务含轨迹追踪）。数据分析类（Data）包含 DiscoveryBench（数据驱动的科学发现）。端到端发现类（Discovery）包含 E2E-Bench 及其困难版本（完整科学发现工作流）。
-    - 问题设计特色：许多问题直接来源于已部署 Asta Agent 的真实用户请求，确保问题分布反映实际科研需求而非学术臆测。问题跨越计算机科学、生物医学等多个领域。
-    - 设计动机：现有基准只覆盖科研链条中的单一环节（如只测检索或只测编程），无法反映 Agent 在"完整科研流程"中的真实表现。
+**2. 基于 Asta MCP 的可控工具环境：把"工具差异"从"Agent 能力"中剥离出来。** 不同 Agent 各自携带搜索引擎和工具链，结果比的往往是工具好坏而非智能高低。AstaBench 让所有文献类任务统一走 Asta MCP 接口，底层是覆盖 108M+ 摘要、12M+ 全文的 Semantic Scholar API，并对搜索施加日期与语料库限制——即便日后有新论文发表，旧问题的评估结果也不会漂移；编码类任务则统一在 Docker 沙箱里跑状态式 Python 会话（类似 Jupyter notebook），保证代码执行可复现。为了既约束又不至于一刀切，工具按约束程度分三档并在 leaderboard 上明示：Standard（只用评估环境预置工具）、Custom Interface（自定义但能力等价或更受限）、Custom（超出标准约束）。由于后端是持续维护的生产级 API 而非一次性爬取的快照，这套环境能长期保持可复现。
 
-2. **基于 Asta MCP 的可控工具环境**：
+**3. 9 类 Asta Agent 基线与标准化评估协议：用充分基线和成本记账戳破"虚假进步"。** 基线种类不够时，任何新方法都会"看起来有进步"。AstaBench 一次性给出 9 类面向科研任务优化的 Asta Agent 架构（含 ReAct、代码执行型、上下文压缩型等），从简到繁构成完整基线谱系并全部开源；同时把被评 Agent 按 openness 分为四级（开源+开权重、开源+闭权重、闭源+API、闭源+仅 UI），便于公平归类对比。协议层面，每个 Agent 的模型调用次数、token 消耗与 API 费用都被记录，leaderboard 直接展示性能-成本 trade-off，逼着开发者在追性能之外也算效率账；数据划分为 validation/test 两套，前者供开发调参、后者只作最终评估，杜绝过拟合榜单。
 
-    - 所有文献类任务使用统一的 Asta MCP 工具接口（底层为 Semantic Scholar API，覆盖 108M+ 摘要和 12M+ 全文），搜索工具带有日期和语料库限制以确保评估有效性。编码类任务提供标准化的 Docker 沙箱环境，内含状态式 Python 会话（类似 Jupyter notebook），确保代码执行可复现。
-    - 工具分三类：Standard（仅用评估环境预定义工具）、Custom Interface（自定义但能力等价或受限的工具）、Custom（超出标准约束的工具）。Leaderboard 上会标注每个提交使用的工具类别。
-    - 设计动机：消除"Agent 用了更好的搜索引擎所以分高"这类混淆因素。持续维护的 API（非一次性爬取）保证了长期可复现性。
-
-3. **9 类 Asta Agent 基线与标准化评估协议**：
-
-    - 提供 9 类针对科研任务优化的 Asta Agent 架构（包括 ReAct、代码执行型、上下文压缩型等），从简单到复杂组成完整基线谱系，全部开源供社区对比。Agent 按 openness 分为 4 级：开源+开权重、开源+闭权重、闭源+API、闭源+仅 UI。
-    - 评估协议标准化了成本度量：记录每个 Agent 的模型调用次数、token 消耗和 API 费用，并在 leaderboard 上展示性能-成本 trade-off。支持 validation/test 两套分割，validation 用于开发，test 用于最终评估。
-    - 设计动机：基线不足会导致"任何新方法都看起来有进步"的假象。9 类基线 + 57 Agent 的大规模对比为社区提供可靠的性能参照系。
-
-### 评估指标体系
-
-每个子基准使用针对任务特性设计的评估指标：文献检索类使用检索准确率和召回率，问答类使用答案正确性（含自动评估和 LLM 评判），代码类使用执行通过率和结果匹配度，端到端发现类使用多维度的研究报告质量评估。所有指标的评分器代码版本可独立锁定（支持 solve-score 解耦），确保跨版本的评分一致性。
+**4. 任务定制的评估指标与可锁版评分器：保证跨版本打分一致。** 每个子基准按任务特性单独设计指标——文献检索类用检索准确率与召回率，问答类用答案正确性（结合自动评估与 LLM 评判），代码类用执行通过率与结果匹配度，端到端发现类则用多维度的研究报告质量评估。所有评分器都支持 solve-score 解耦，即评分代码版本可独立于解题过程锁定，确保同一份提交在不同时间、不同评分器版本下都能得到一致结果。
 
 ## 实验关键数据
 
@@ -135,11 +121,11 @@ AstaBench 由三大支柱构成：(1) 覆盖科学研究全生命周期的 2400+
 
 ## 相关论文
 
-- [\[ICML 2026\] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets (CAIA)](../../ICML2026/llm_evaluation/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
 - [\[ICML 2025\] AAAR-1.0: Assessing AI's Potential to Assist Research](../../ICML2025/llm_evaluation/aaar-10_assessing_ais_potential_to_assist_research.md)
-- [\[CVPR 2025\] ComfyBench: Benchmarking LLM-based Agents in ComfyUI for Autonomously Designing Collaborative AI Systems](../../CVPR2025/llm_evaluation/comfybench_benchmarking_llm-based_agents_in_comfyui_for_autonomously_designing_c.md)
+- [\[ICML 2026\] When Hallucination Costs Millions: Benchmarking AI Agents in High-Stakes Adversarial Financial Markets (CAIA)](../../ICML2026/llm_evaluation/when_hallucination_costs_millions_benchmarking_ai_agents_in_high-stakes_adversar.md)
 - [\[ICLR 2026\] AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
 - [\[ACL 2026\] ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition](../../ACL2026/llm_evaluation/researchbench_benchmarking_llms_in_scientific_discovery_via_inspiration-based_ta.md)
+- [\[ACL 2025\] AndroidLab: Training and Systematic Benchmarking of Android Autonomous Agents](../../ACL2025/llm_evaluation/androidlab_autonomous_agent.md)
 
 </div>
 

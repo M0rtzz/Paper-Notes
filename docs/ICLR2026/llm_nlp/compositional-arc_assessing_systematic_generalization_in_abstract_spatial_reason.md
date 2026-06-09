@@ -42,36 +42,27 @@ tags:
 
 ### 整体框架
 
-1. **数据集（Compositional-ARC）**：10×10 网格上的 2D 对象 → 5 种基本几何变换（平移/旋转/反射/扩展/变色） → 通过 3 种指示器（形状/颜色/邻居关系）选择变换目标 → level-1 组合（2 个指示器）→ level-2 组合（3 个指示器，TEST SET）
-2. **模型训练（MLC）**：Transformer encoder-decoder（5.7M 参数）在 10 万个 episode 上训练，每个 episode 有不同的"视觉解释文法"
-3. **评估**：给定基础变换和 level-1 组合的 study examples，预测未见过的 level-2 组合
+这篇论文要回答的问题是：MLC 这种「在语言上能逼出人类级系统性泛化」的训练范式，换到视觉空间推理上还成不成。为此作者干两件事——先造一个能精确隔离「组合泛化」的数据集 Compositional-ARC，再用 MLC 训练一个极小的 encoder-decoder 去刷它。
+
+整条 pipeline 是这样转的：在 10×10 网格上摆若干 2D 物体，每个物体根据它的属性（形状/颜色/邻居关系）被施加某种几何变换，输入网格 → 变换 → 输出网格。训练时每个 episode 临时抽一套「视觉解释文法」（哪种属性触发哪种变换），模型只能看几对 study examples，从中反推出当前文法，再把它套到 query 上预测输出。评估时只给模型基础变换和 level-1 组合的示例，逼它推断从没见过的 level-2 组合。
 
 ### 关键设计
 
-1. **Compositional-ARC 数据集**:
+**1. Compositional-ARC 数据集：用几何变换的封闭性造一个干净可控的组合泛化测试床。**
 
-    - 功能：评估模型从已知变换泛化到新变换组合的能力
-    - 核心思路：
-        - 5 种基础变换：平移（右/下 1 格）、旋转（±90°）、反射（水平/垂直）、扩展（左/上方向）、变色（红/橙）
-        - 3 种指示器：形状（如 L 形物体做平移）、颜色（如绿色物体做反射）、邻居（邻近特定物体时做扩展）
-        - 组合层次：level-1 = 2 个指示器组合（如形状+颜色 → 平移+反射）；level-2 = 3 个指示器组合（形状+颜色+邻居 → 平移+反射+扩展）
-        - 系统性测试：study examples 只展示基础变换和 level-1 组合，模型必须推断未见过的 level-2 组合
-    - 设计动机：利用几何变换的封闭性和 ARC 的 2D 网格表示，构建了一个干净、可控的组合性泛化测试床。
+要测「系统性泛化」，关键是任务必须能把「见过的组件」和「没见过的组合」干净地分开，否则刷分到底靠的是泛化还是记忆说不清。作者利用几何变换的一个性质——两个有效变换的组合仍是有效变换——在 ARC 风格的 2D 网格上搭起一套分层任务。底层是 5 种基础变换：平移（右/下 1 格）、旋转（±90°）、反射（水平/垂直）、扩展（左/上方向）、变色（红/橙）；触发条件由 3 种指示器决定：形状（如 L 形物体做平移）、颜色（如绿色物体做反射）、邻居（邻近特定物体时做扩展）。
 
-2. **Meta-Learning for Compositionality (MLC) 扩展到空间推理**:
+组合则按指示器个数分层：level-1 是 2 个指示器叠加（如形状+颜色 → 平移+反射），level-2 是 3 个指示器叠加（形状+颜色+邻居 → 平移+反射+扩展）。系统性测试的核心安排是：study examples 只展示基础变换和 level-1 组合，把 level-2 组合留作 TEST SET——模型必须从「会单个变换、会两两组合」推断出「三三组合」该怎么做。这样难度梯度是可控的，泛化能力被精确隔离出来。
 
-    - 功能：训练小模型学会从 few-shot examples 中推断视觉解释文法并组合
-    - 核心思路：每个训练 episode 有不同的"视觉解释文法"（如"黄色物体做平移"在不同 episode 中可能是"黄色物体做旋转"），迫使模型学会从 study examples 推断文法而非记忆固定映射。
-    - 编码方式：10×10 网格划分为 2×2 patches（25 个 patch/grid），每 patch 编码为嵌入向量。用 1D 位置编码标记 grid pair 顺序 + 2D 位置编码捕获空间信息。
-    - 辅助任务：训练时还要求模型复现 study examples 的输出（copy task），增强对 study examples 的理解。
-    - 模型架构：3 层 encoder + 3 层 decoder，8 heads, dim=128, FFN=768, GELU, 共 5.7M 参数。
+**2. Meta-Learning for Compositionality（MLC）扩展到空间推理：用动态文法逼模型学规则而非记映射。**
+
+通用 LLM 在这类任务上失败，是因为它倾向于记住固定的「属性→变换」映射，一旦组合换新就崩。MLC 的破法是让映射本身在训练中不断漂移：每个 episode 都重抽一套视觉解释文法（「黄色物体做平移」在另一个 episode 里可能变成「黄色物体做旋转」），固定记忆因此毫无用处，模型唯一能做的就是从当前 study examples 里现场推断文法、再组合应用。
+
+具体实现上，10×10 网格被切成 2×2 的 patch（每张网格 25 个 patch），每个 patch 编码成一个嵌入向量；再叠加 1D 位置编码标记 grid pair 的先后顺序、2D 位置编码保留空间位置。训练时还挂了一个辅助 copy task——要求模型把 study examples 的输出也复现出来，逼它更扎实地读懂示例而不是草草扫一眼。模型本体很小：3 层 encoder + 3 层 decoder，8 个 head，dim=128，FFN=768，GELU 激活，总共只有 5.7M 参数。
 
 ### 损失函数 / 训练策略
 
-- 标准交叉熵损失（预测输出 grid 的 patch 序列）
-- 辅助 copy task 损失（复现 study examples 的输出）
-- 训练 10 万个 episode，每个有唯一的视觉解释文法
-- 训练/测试的 level-2 组合不重叠（OOD 评估）
+主损失是标准交叉熵，预测输出网格的 patch 序列；外加辅助 copy task 损失（复现 study examples 的输出）。训练跑 10 万个 episode，每个 episode 配一套唯一的视觉解释文法；训练与测试用的 level-2 组合互不重叠，保证是真正的 OOD 评估。
 
 ## 实验关键数据
 
@@ -137,8 +128,8 @@ tags:
 - [\[ACL 2025\] A Systematic Study of Compositional Syntactic Transformer Language Models](../../ACL2025/llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)
 - [\[ACL 2025\] Systematic Generalization in Language Models Scales with Information Entropy](../../ACL2025/llm_nlp/systematic_generalization_in_language_models_scales_with_information_entropy.md)
 - [\[ICLR 2026\] Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure](is_the_reversal_curse_a_binding_problem_uncovering_limitations_of_transformers_f.md)
-- [\[ICLR 2026\] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
 - [\[ACL 2025\] Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability](../../ACL2025/llm_nlp/compositional_generalization_instruction.md)
+- [\[AAAI 2026\] Learning Spatial Decay for Vision Transformers](../../AAAI2026/llm_nlp/learning_spatial_decay_for_vision_transformers.md)
 
 </div>
 

@@ -9,141 +9,6 @@ tags:
 
 # Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals
 
-## 基本信息
-
-- **会议**: ICLR 2026
-- **arXiv**: [2601.19810](https://arxiv.org/abs/2601.19810)
-- **代码**: 开源（文中提到 all code is open-sourced）
-- **领域**: 强化学习 / 无监督预训练 / 元学习
-- **关键词**: unsupervised RL, meta-learning, goal generation, curriculum learning, exploration
-
-## 一句话总结
-
-提出 ULEE，一种无监督元学习方法，通过对抗式自生成目标课程训练自适应策略，在 XLand-MiniGrid 基准上实现高效探索与少样本适应。
-
-## 研究背景与动机
-
-大规模预训练在 CV 和 NLP 领域取得巨大成功，但 RL 中仍以单任务从零训练为主流范式。无监督 RL 旨在无外部奖励下获取可迁移策略（foundation policies），核心挑战包括：
-
-**数据收集**：智能体应收集什么数据？收集的数据直接由其行为决定。
-
-**目标生成**：自主生成目标的智能体如何有效地生成、选择和利用目标？
-
-**下游泛化**：当目标任务分布广泛且超出预训练分布时，零样本解决所有任务不可行，需要高效的适应能力。
-
-现有方法存在以下不足：
-- GoalGAN 等基于即时表现评估目标难度，没有考虑适应后的表现
-- 目标条件策略在目标未知或表示不可解释时失效
-- 无监督元学习设置仍然 largely underexplored
-
-## 方法详解
-
-### 整体框架
-
-ULEE（Unsupervised Learning of Efficient Exploration）包含四个核心组件：
-
-1. **Pre-trained Policy $\pi$**：非目标条件的 in-context learner，通过多 episode 交互历史进行适应
-2. **Goal-search Policy $\pi_{gs}$**：对抗式训练的目标搜索策略，寻找困难目标
-3. **Difficulty Predictor**：预测目标在适应后的难度
-4. **Goal Selection**：基于中等难度范围的目标采样
-
-### 关键设计 1：后适应难度度量
-
-不同于先前工作基于即时表现评估难度，ULEE 定义基于**适应后**表现的难度：
-
-$$d(g; \pi, M) = 1 - \mathbb{E}_{\rho_M, P_M, \pi}\left[\frac{1}{K}\sum_{j=H-K+1}^{H} \mathbf{1}\left\{\exists t: f(s_{t+1}^{(j)}) = g\right\}\right]$$
-
-其中 $H$ 为总 episode 数，仅评估最后 $K$ 个 episode 的成功率，前面 $H-K$ 个 episode 用于探索和适应。这更好地匹配了评估场景。
-
-### 关键设计 2：对抗式目标生成
-
-Goal-search Policy 训练目标为最大化所发现目标的难度：
-
-$$r_t^{gs} = r^{gs}(s_t; \pi, M) = d(f(s_t); \pi, M)$$
-
-通过在每个环境中先运行 $\pi_{gs}$ 收集候选目标集 $GC_M$，再根据难度范围 $[LB, UB]$ 进行采样。
-
-### 关键设计 3：In-context 元学习
-
-策略 $\pi$ 训练为最大化多 episode lifetime 的累积折扣回报：
-
-$$\mathcal{J}(\pi) = \mathbb{E}_{M \sim \mu^{\text{unsup}}, g \sim p(g|M)}\left[\mathbb{E}_{\rho_M, P_M, \pi}\left[\sum_{j=1}^{H}\sum_{t=0}^{T-1} \gamma^{(j-1)T+t} r_t^{(j)}\right]\right]$$
-
-使用 Transformer-XL 作为骨架网络，在多 episode 交互中通过历史上下文进行 in-context 学习。
-
-### 损失函数
-
-- **Difficulty Predictor**：监督 L2 回归损失
-
-$$\mathcal{L}_{DP}(\phi) = \frac{1}{|B_g|}\sum_{(g,\xi,\tilde{d}) \in B_g} \left(\hat{d}_\phi(g, \xi) - \tilde{d}(g)\right)^2$$
-
-- **策略优化**：PPO + Transformer-XL 骨架
-
-## 实验
-
-### 主实验
-
-在 XLand-MiniGrid 的三个基准（4Rooms-Trivial, 4Rooms-Small, 6Rooms-Small）上评估：
-
-| 评估维度 | ULEE vs Random | ULEE vs DIAYN |
-|---------|---------------|---------------|
-| 探索（20 ep） | 2× 以上目标发现率 | 2× 以上 |
-| 快速适应（30 ep） | 3× mean return 提升 | 显著优于 |
-| 微调（1B steps） | 持续领先 | DIAYN 优势短暂 |
-| 元学习初始化 | 一致领先 | - |
-
-### 消融实验
-
-| 变体 | 描述 | 结果 |
-|-----|------|------|
-| adversarial + bounded | 完整 ULEE | **最佳** |
-| random + bounded | 随机搜索 + 中等难度采样 | 初期适应后停滞 |
-| adversarial + uniform | 对抗搜索 + 均匀采样 | 次于完整版 |
-| ULEE (SED) | 基于即时而非适应后表现的难度 | 随难度增加差距增大 |
-
-### 泛化实验
-
-预训练于 4Rooms-Small 后在多种 MiniGrid 任务上评估：
-- ULEE ($f_{\text{counts}}$) 在所有 14 个测试环境上获得非零回报
-- 在 Unlock、UnlockPickUp 等任务上大幅领先
-
-### 关键发现
-
-1. 后适应难度度量比即时难度度量更有效，差距随基准难度增大
-2. 对抗式目标搜索 + 有界采样的组合效果最佳
-3. 目标映射 $f$ 作为归纳偏置对结果有显著影响
-4. 预训练策略在更多环境步数后持续提升
-
-## 亮点
-
-- **后适应难度度量**：首次在无监督 RL 中引入基于适应后表现的难度指标
-- **统一框架**：将无监督目标生成、自动课程学习和元学习整合在一个系统中
-- **多尺度评估**：从零样本到长期微调全面验证
-- **无需目标条件**：策略直接部署，无需目标编码
-
-## 局限性
-
-- 实验限于离散动作空间的网格世界，连续控制任务适用性未验证
-- 对 finer-grained 的任务层次结构（如深度 > 1 的规则树）性能仍有较大提升空间
-- 60% 以上的测试任务在少样本设置下回报为零，表明困难任务仍是挑战
-- 计算预算较大（高达 5B 步）
-
-## 相关工作
-
-- **内在奖励方法**: RND (Burda et al., 2018), DIAYN (Eysenbach et al., 2018)
-- **自动课程学习**: GoalGAN (Florensa et al., 2018), AMIGo (Campero et al., 2020)
-- **无监督元学习**: Gupta et al. (2018), Jabri et al. (2019)
-- **In-context RL**: RL² (Duan et al., 2016), Ada (Team et al., 2023)
-
-## 评分
-
-- **新颖性**: 8/10 — 后适应难度度量和对抗式目标生成的结合是新颖的
-- **技术深度**: 8/10 — 四个组件的协同设计考虑周全
-- **实验**: 7/10 — 评估全面但环境复杂度有限
-- **写作**: 8/10 — 条理清晰，数学描述严谨
-- **总评**: 7.5/10
-# Unsupervised Learning of Efficient Exploration: Pre-training Adaptive Policies via Self-Imposed Goals
-
 ## 论文信息
 - **会议**: ICLR 2026
 - **arXiv**: [2601.19810](https://arxiv.org/abs/2601.19810)
@@ -170,53 +35,21 @@ $$\mathcal{L}_{DP}(\phi) = \frac{1}{|B_g|}\sum_{(g,\xi,\tilde{d}) \in B_g} \left
 
 ## 方法详解
 
-### 整体框架 ULEE (Unsupervised Learning of Efficient Exploration)
+### 整体框架
 
-ULEE 由四个核心组件组成：
-1. **预训练策略** $\pi$（in-context learner）
-2. **目标搜索策略** $\pi_{gs}$（对抗式目标生成）
-3. **难度预测网络**（估计适应后性能）
-4. **目标采样策略**（从中等难度范围中选择）
+ULEE 让一个智能体在没有外部奖励的环境分布上自己给自己出题、自己学着解题，最终炼出一个会快速探索、会随交互历史不断适应的预训练策略 $\pi$。它由四块咬合在一起：负责适应的预训练策略 $\pi$、负责出难题的对抗式目标搜索策略 $\pi_{gs}$、用来近似难度的难度预测网络，以及把题目控制在中等难度的采样规则——前者解题、后三者决定该练什么题。
 
-### 预训练策略
+### 关键设计
 
-采用黑箱元学习方法，策略根据完整交互历史选择动作（包含过去的观察、动作和奖励），实现上下文内适应。训练目标为最大化整个 lifetime 的期望折扣回报：
+**1. 适应后难度度量：让"难"匹配真实评估场景。** 以往课程学习（如 GoalGAN）用策略当下一次的成功率来判断目标难易，但 ULEE 的部署场景是给智能体一段适应预算、看它最后能否解题，"一上来就难"和"练几轮还难"是两码事。为此 ULEE 把目标 $g$ 的难度定义为适应预算用尽后的失败率，$d(g; \pi, M) = 1 - \mathbb{E}_{\rho_M, P_M, \pi}\left[\frac{1}{K}\sum_{j=H-K+1}^{H}\mathbf{1}\{\exists t: f(s_{t+1}^{(j)})=g\}\right]$，其中一个 lifetime 含 $H$ 个 episode，但只统计最后 $K$ 个的成功率，前面 $H-K$ 轮全部留给探索与适应。这样得到的难度衡量的是"练完之后还做不做得到"，正好对齐评估时关心的少样本适应能力；而 $f$ 是把状态映射到目标空间的函数（如基于访问计数的 $f_{\text{counts}}$），它的选择给课程注入了关键的归纳偏置。
 
-$$\mathcal{J}(\pi) = \mathbb{E}_{M \sim \mu^{\text{unsup}}, g \sim p(g|M)} \left[ \mathbb{E}_{\rho_M, P_M, \pi} \left[ \sum_{j=1}^{H} \sum_{t=0}^{T-1} \gamma^{(j-1)T+t} r_t^{(j)} \right] \right]$$
+**2. 对抗式目标生成：用一个搜索策略去戳痛点。** 有了难度度量，还需要一个高效产难题的机制。ULEE 训练一个目标搜索策略 $\pi_{gs}$，让它的奖励直接就是所到状态对应目标的难度，$r_t^{gs} = d(f(s_t); \pi, M)$——也就是说 $\pi_{gs}$ 被激励去主动找那些当前 $\pi$ 适应后仍解不好的目标，与 $\pi$ 形成对抗。每进入一个环境 $M$，先让 $\pi_{gs}$ 跑若干 episode 把它探到的状态收集成候选目标集 $GC_M$，再从中挑题给 $\pi$ 练。相比随机撒目标，这种对抗搜索能持续把课程顶在 $\pi$ 的能力边界上，避免学习停滞。
 
-其中 $j$ 索引 lifetime 内的各 episode，$H$ 为 episode 总数。
+**3. 有界难度采样：避开太易和太难的无效题。** 拿到候选集后并非照单全收，而是只采中等难度区间的目标：$g_M \sim \text{Unif}(S)$，$S = \{g \in GC_M : LB \le d(g;\pi,M) \le UB\}$，取 $LB=0.1$、$UB=0.9$。太易（已经稳过）和太难（怎么练都过不了）的目标都几乎不提供学习信号，砍掉两端能让梯度集中在"跳一跳够得着"的目标上。消融显示，把这条有界采样换成均匀采样会明显变差，说明难度过滤本身就是有效成分而非锦上添花。
 
-### 基于适应后表现的目标难度度量
+**4. 难度预测网络：省掉反复试错的环境交互。** 真实算 $d(g;\pi,M)$ 需要让 $\pi$ 在环境里实打实跑一遍，开销很大。ULEE 因此训练一个难度预测器 $\hat{d}_\phi$，用监督回归拟合实测难度，损失为 $\mathcal{L}_{DP}(\phi) = \frac{1}{|B_g|}\sum_{(g,\xi,\tilde{d})\in B_g}(\hat{d}_\phi(g,\xi) - \tilde{d}(g))^2$，其中 $\xi$ 为上下文、$\tilde{d}$ 为实测标签。有了它就能在采样和过滤时快速估难度，而不必每次都付出额外的环境交互成本。
 
-**核心创新**：难度定义为策略在适应预算后的性能补数，而非即时成功率：
-
-$$d(g; \pi, M) = 1 - \mathbb{E}_{\rho_M, P_M, \pi} \left[ \frac{1}{K} \sum_{j=H-K+1}^{H} \mathbf{1}\{ \exists t: f(s_{t+1}^{(j)}) = g \} \right]$$
-
-仅统计最后 $K$ 个 episode 的成功率，忽略前 $H-K$ 轮的探索和适应过程。
-
-### 对抗式目标搜索
-
-训练目标搜索策略 $\pi_{gs}$ 以最大化所发现目标的难度：
-
-$$r_t^{gs} = r^{gs}(s_t; \pi, M) = d(f(s_t); \pi, M)$$
-
-$\pi_{gs}$ 在每个环境中先于预训练策略运行若干 episode，收集候选目标集合。
-
-### 目标选择与采样
-
-从候选目标中选择中等难度目标：
-
-$$g_M \sim \text{Unif}(S), \quad S = \{g \in GC_M : LB \leq d(g; \pi, M) \leq UB \}$$
-
-其中 $LB = 0.1$，$UB = 0.9$，避免过易或过难的无信息目标。
-
-### 难度预测网络
-
-引入监督学习的难度预测器，使用 L2 回归损失：
-
-$$\mathcal{L}_{DP}(\phi) = \frac{1}{|B_g|} \sum_{(g, \xi, \tilde{d}) \in B_g} (\hat{d}_\phi(g, \xi) - \tilde{d}(g))^2$$
-
-提供近似的即时难度估计，避免额外的环境交互。
+**5. In-context 元学习：把适应能力内化进一次前向。** 预训练策略 $\pi$ 采用黑箱元学习，输入是整段交互历史（过往观察、动作、奖励），输出当前动作，从而在一个 lifetime 内边交互边适应。训练目标是最大化整段 lifetime（跨 $H$ 个 episode）的累积折扣回报，$\mathcal{J}(\pi) = \mathbb{E}_{M \sim \mu^{\text{unsup}}, g \sim p(g|M)}\left[\mathbb{E}_{\rho_M, P_M, \pi}\left[\sum_{j=1}^{H}\sum_{t=0}^{T-1}\gamma^{(j-1)T+t} r_t^{(j)}\right]\right]$，其中 $j$ 索引 lifetime 内各 episode。骨架用 Transformer-XL 承载长程历史上下文，策略用 PPO 优化；因为 $\pi$ 本身非目标条件，部署时无需任何目标编码，直接靠上下文适应即可。
 
 ## 实验
 

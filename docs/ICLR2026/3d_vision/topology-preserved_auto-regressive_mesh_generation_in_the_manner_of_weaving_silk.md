@@ -37,66 +37,29 @@ tags:
 
 ### 整体框架
 
-三个顺序步骤：
-1. **顶点分层和排序** → 2. **层间邻接矩阵压缩** → 3. **Token 打包**
+方法把"网格生成"重新表述为"织丝"：先用一套规范的分层规则把无序的三角形面片整理成一层层有序排列的顶点（如同丝线一根根并排织就），再把每个顶点和它在本层、相邻层的连接关系压成紧凑 token 序列交给自回归模型预测。因为编织规则本身约束了边只能落在同层或相邻层之间，流形性、水密性、法线一致性、部件感知这些拓扑性质就被天然地写进了 tokenization，而不是事后修补。
 
-### 1. 顶点分层和排序
+### 关键设计
 
-对每个连通分量：
-- 通过 y-z-x 坐标排序确定起始半边 $j$-$m$
-- 用 BFS 根据到起点 $j$ 的最短图距离确定层索引 $L$
-- 每层顶点通过半边遍历进行排序（类似数学归纳证明）
-- 顶点标记为 $\mathcal{V}_i^L$，$L$ 为层索引，$i$ 为层内顺序
+**1. 顶点分层与排序：给无序网格一个规范的"经纬"框架。**
 
-### 2. 层邻接矩阵压缩
+现有方法把网格当成一堆孤立三角形，丢失了整体拓扑，所以才无法保证流形与水密。这里对每个连通分量先按 y-z-x 坐标排序选定起始半边 $j$-$m$，再用 BFS 以到起点 $j$ 的最短图距离作为层索引 $L$，把全部顶点分配到一层层中；同一层内的顶点则沿半边遍历依次定序（其正确性可用类似数学归纳的方式逐层证明）。最终每个顶点被唯一标记为 $\mathcal{V}_i^L$，$L$ 是层索引、$i$ 是层内顺序。这一步等价于给网格铺好经纬线，后续所有连接都只需在"本层"和"相邻层"两个局部范围内描述。
 
-顶点连接分为两类：
+**2. 分层邻接矩阵压缩：把连接关系压成每顶点 4 个 token。**
 
-**自层矩阵 $\mathcal{S}_L$**（蓝边）：同层顶点间的连接
-- 对称 0-1 矩阵，大小 $M \times M$
-- 使用固定窗口大小 $W=8$ 的二进制压缩
-- 覆盖 99.1% 的情况，极端情况用 COO 格式
+有了分层框架，顶点连接自然分成两类。同层顶点之间的连接（蓝边）用对称 0-1 矩阵 $\mathcal{S}_L$（大小 $M \times M$）表示，采用固定窗口 $W=8$ 的二进制压缩即可覆盖 99.1% 的情况，极端稠密时退回 COO 格式；相邻层之间的连接（红边）用 0-1 矩阵 $\mathcal{B}_L$（大小 $M \times N$）表示，先做 RLE 式压缩把连续的 "1" 编码为 $(x, y)$（起始列索引, 长度），再进一步等价为 "Stars and Bars" 组合问题，使每行只需一个 token。打包后，每个顶点 $\mathcal{V}_i^L$ 只产生 4 个 token：2 个位置 token $V_{(L,i)}$（用 block-offset 表示压缩）、1 个自层拓扑 token $S_{(L,i)}$、1 个层间拓扑 token $B_{(L,i)}$，这正是它能达到 26.65 bits/face、0.22 压缩比的来源。
 
-**层间矩阵 $\mathcal{B}_L$**（红边）：相邻层间的连接
-- 0-1 矩阵，大小 $M \times N$
-- 使用 RLE-like 压缩：连续 "1" 编码为 $(x, y)$（起始列索引, 长度）
-- 进一步升级为等价 "Stars and Bars" 问题，每行仅需一个 token
+**3. 编织规则直接兑现四项几何性质。**
 
-**Token 打包**：每个顶点 $\mathcal{V}_i^L$ 产生 4 个 token：
-- 2 个位置 token $V_{(L,i)}$（使用 block-offset 表示压缩）
-- 1 个自层拓扑 token $S_{(L,i)}$
-- 1 个层间拓扑 token $B_{(L,i)}$
+分层加排序的编织方式让四项拓扑性质几乎免费获得。由于生成时边只可能出现在同层或相邻层、三角形逐层填充，**流形拓扑**被严格保证；孔洞只可能源于自层/层间矩阵里某个 0 被错误预测成连接，因而**水密性**可以被直接检测并修复；规定层 $L$ 的半边方向升序、层 $L-1$ 降序，每个三角面的顶点都按逆时针遍历，从而**法线一致**；再引入特殊 token $C$ 标记连通分量的起始，模型就能感知并生成像眼睛这类小而独立的**部件**。
 
-### 3. 几何性质保证
+**4. 在线非流形处理：让更多真实数据可训练。**
 
-**(1) 流形拓扑**：生成过程中边连接仅存在于同层或相邻层，三角形逐层填充，严格保证流形拓扑。
+真实数据里常有被 3 个以上面共享的非流形边，直接丢弃会损失大量训练样本。不同于 Libigl 按度数优先合并的做法，这里额外检测非流形顶点周围的"边图"结构 $\mathcal{G}$，并要求该边图形成纯环，以此保证拆分后表面仍然完整。这一在线处理让非流形数据也能进入训练集——消融显示加入非流形数据后 NC 从 0.688 提升到 0.801。
 
-**(2) 水密性检测/修复**：孔洞必然由自层/层间矩阵中的 0 被错误预测引起，可直接检测和纠正。
+### 损失函数 / 训练策略
 
-**(3) 法线一致性**：定义层 $L$ 半边方向为升序、层 $L-1$ 为降序，保证每个三角面的顶点逆时针遍历，从而法线一致。
-
-**(4) 部件感知**：通过特殊 token $C$ 标记连通分量起始，支持小部件生成。
-
-### 非流形处理算法
-
-对非流形边（被 3 个以上面共享）：
-- 不同于 Libigl 的度优先合并策略
-- 额外检测非流形顶点周围的"边图"结构 $\mathcal{G}$
-- 确保边图形成纯环以维护表面完整性
-
-### 训练策略
-
-**渐进式平衡采样**：
-
-$$p_j^{PB}(t) = (1 - t/T) p_j^{IB} + (t/T) p_j^{CB}$$
-
-早期偏向实例平衡采样（学简单），后期偏向类别平衡采样（学复杂），每 100 面为一类。
-
-### 损失函数
-
-标准交叉熵损失：
-
-$$\mathcal{L}_{ce} = -\sum_{t=1}^{T-1} S_{t+1} \log \hat{S}_t$$
+训练用标准交叉熵损失 $\mathcal{L}_{ce} = -\sum_{t=1}^{T-1} S_{t+1} \log \hat{S}_t$ 逐 token 监督。为缓解面数分布的长尾，采样上采用渐进式平衡策略，按 $p_j^{PB}(t) = (1 - t/T) p_j^{IB} + (t/T) p_j^{CB}$ 在训练进程 $t$ 中从实例平衡 $p_j^{IB}$ 逐步过渡到类别平衡 $p_j^{CB}$（每 100 面划为一类）：早期偏实例平衡先学简单样本，后期偏类别平衡再补上复杂网格。消融中该重采样使 CD 由 0.032 降到 0.025、NC 由 0.700 升到 0.792。
 
 ## 实验
 
@@ -170,9 +133,9 @@ $$\mathcal{L}_{ce} = -\sum_{t=1}^{T-1} S_{t+1} \log \hat{S}_t$$
 
 - [\[ICCV 2025\] MeshPad: Interactive Sketch-Conditioned Artist-Reminiscent Mesh Generation and Editing](../../ICCV2025/3d_vision/meshpad_interactive_sketch-conditioned_artist-reminiscent_mesh_generation_and_ed.md)
 - [\[ICLR 2026\] UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
+- [\[ICLR 2026\] Reducing Class-Wise Performance Disparity via Margin Regularization](reducing_class-wise_performance_disparity_via_margin_regularization.md)
 - [\[ICLR 2026\] UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
 - [\[ICLR 2026\] Universal Beta Splatting](universal_beta_splatting.md)
-- [\[ICCV 2025\] Repurposing 2D Diffusion Models with Gaussian Atlas for 3D Generation](../../ICCV2025/3d_vision/repurposing_2d_diffusion_models_with_gaussian_atlas_for_3d_generation.md)
 
 </div>
 

@@ -42,28 +42,25 @@ TAMMs 包含两个协同阶段：（1）时序变化理解阶段——通过 TAM
 
 ### 关键设计
 
-#### 1. 时序适配模块（TAM）
+**1. 时序适配模块（TAM）：让冻结 MLLM 看懂"跨年"的稀疏时间间隔。**
 
-- **Physical Time Encoder (PTE)**：引入可学习的时序 token `[TIME_DIFF]`，通过 MLP 动态条件化于具体时间间隔 $\Delta t_i$，插入相邻图像视觉特征之间，使 MLLM 的注意力机制能直接关联视觉变化与对应时间间隔。
-- **Contextual Temporal Prompting (CTP)**：提供结构化文本提示，包含详细场景描述，指导 MLLM 执行特定的时序推理任务（描述观测序列中的变化），将 MLLM 的通用推理能力聚焦于时序动态识别。
+MLLM 的视频理解是为密集采样的短间隔优化的，直接喂给它跨越数年的卫星序列，注意力无法把视觉变化和真实时间跨度对应起来。TAM 用两个轻量组件解决这件事。一是 Physical Time Encoder（PTE）：引入可学习的时序 token `[TIME_DIFF]`，让一个 MLP 动态条件化于具体的时间间隔 $\Delta t_i$，再把它插到相邻两帧的视觉特征之间——这样 MLLM 的注意力机制就能把"这块地变了"和"中间隔了三年"直接绑在一起，而不是把所有帧当成等距快照。二是 Contextual Temporal Prompting（CTP）：用一段结构化文本提示给出详细的场景描述，把 MLLM 通用的视觉推理能力聚焦到"描述这段观测序列里发生了什么变化"这个具体的时序任务上。两者合起来，相当于不动 MLLM 主体、只用适配器就"唤醒"了它本就潜藏的时序推理能力。
 
-#### 2. 语义融合控制注入（SFCI）
+**2. 语义融合控制注入（SFCI）：把"理解"翻译成扩散模型能用的细粒度控制信号。**
 
-通过增强控制模块（ECM）与冻结扩散 U-Net 并行工作，包含四步流程：
+光有文本描述还不够——ControlNet 那类粗粒度文本控制无法把 MLLM 的多图时序理解传到生成端。SFCI 通过一个增强控制模块（ECM）与冻结的扩散 U-Net 并行工作，分四步把语义注入去噪过程。先走结构路径：冻结的 3D Control Block 处理 U-Net 编码器特征，得到编码视觉动态的结构控制信号 $\mathbf{h}_l^{(ctrl)}$。再走语义路径：MLLM 输出的语义特征 $\mathbf{M}_t$ 经层特定处理器投影、平铺成空间感知的引导信号 $\mathbf{s}_l$。关键的一步是自适应门控融合——一个动态门 $\mathbf{g}_l$ 在两条信号之间逐位置插值：
 
-- **结构路径**：冻结的 3D Control Block 处理 U-Net 编码器特征，得到编码视觉动态的结构控制信号 $\mathbf{h}_l^{(ctrl)}$。
-- **语义路径**：MLLM 语义特征 $\mathbf{M}_t$ 通过层特定处理器投影并平铺为空间感知引导信号 $\mathbf{s}_l$。
-- **自适应门控融合**：动态门 $\mathbf{g}_l$ 自适应插值结构信号和语义引导：$\mathbf{f}_l = (1-\mathbf{g}_l) \odot \mathbf{h}_l^{(ctrl)} + \mathbf{g}_l \odot \mathbf{s}_l$。
-- **时序精炼**：时序 Transformer 建模长程依赖，通过加权残差连接整合输出。
+$$\mathbf{f}_l = (1-\mathbf{g}_l) \odot \mathbf{h}_l^{(ctrl)} + \mathbf{g}_l \odot \mathbf{s}_l$$
 
-#### 3. 时序一致性评分（TCS）
+让模型自己决定每个 patch 上"听结构"还是"听语义"。最后由一个时序 Transformer 建模长程依赖，通过加权残差连接把结果整合进 U-Net。这条路径把高层的变化理解直接落到 patch 级控制上，绕开了文本瓶颈。
 
-新提出的评估指标，量化预测变化与历史动态的一致性：
+**3. 时序一致性评分（TCS）：补上 PSNR/SSIM 罚不到时序乱真的"评估鸿沟"。**
+
+PSNR、SSIM 只看像素和感知逼真度，一个画得很真但与历史趋势相悖的预测照样拿高分。TCS 专门量化"预测的变化和历史动态是否一致"，由两个子分相乘构成：
 
 $$\text{TCS} = \text{SPS} \cdot \text{ACS}$$
 
-- SPS（空间接近度评分）：量化变化质心的位置一致性
-- ACS（面积一致性评分）：评估变化幅度的相符程度
+其中 SPS（空间接近度评分）衡量变化质心的位置是否对得上，ACS（面积一致性评分）衡量变化幅度是否相符。两者都基于二值变化检测，相乘意味着位置和幅度任一失配都会被惩罚，越高代表预测越贴合历史演变轨迹。
 
 ### 损失函数/训练策略
 
@@ -148,9 +145,9 @@ $$\text{TCS} = \text{SPS} \cdot \text{ACS}$$
 
 - [\[ICML 2025\] Resampling Augmentation for Time Series Contrastive Learning: Application to Remote Sensing](../../ICML2025/remote_sensing/resampling_augmentation_for_time_series_contrastive_learning_application_to_remo.md)
 - [\[NeurIPS 2025\] EcoCast: A Spatio-Temporal Model for Continual Biodiversity and Climate Risk Forecasting](../../NeurIPS2025/remote_sensing/ecocast_a_spatio-temporal_model_for_continual_biodiversity_and_climate_risk_fore.md)
-- [\[CVPR 2026\] Are Pretrained Image Matchers Good Enough for SAR-Optical Satellite Registration?](../../CVPR2026/remote_sensing/pretrained_image_matchers_for_sar_optical_satellite_registration.md)
 - [\[NeurIPS 2025\] Connecting the Dots: A Machine Learning Ready Dataset for Ionospheric Forecasting Models](../../NeurIPS2025/remote_sensing/connecting_the_dots_a_machine_learning_ready_dataset_for_ionospheric_forecasting.md)
-- [\[AAAI 2026\] TDCNet: Spatio-Temporal Context Learning with Temporal Difference Convolution for Moving IRSTD](../../AAAI2026/remote_sensing/spatio-temporal_context_learning_with_temporal_difference_convolution_for_moving.md)
+- [\[CVPR 2026\] Are Pretrained Image Matchers Good Enough for SAR-Optical Satellite Registration?](../../CVPR2026/remote_sensing/pretrained_image_matchers_for_sar_optical_satellite_registration.md)
+- [\[ICCV 2025\] WildSAT: Learning Satellite Image Representations from Wildlife Observations](../../ICCV2025/remote_sensing/wildsat_learning_satellite_image_representations_from_wildlife_observations.md)
 
 </div>
 

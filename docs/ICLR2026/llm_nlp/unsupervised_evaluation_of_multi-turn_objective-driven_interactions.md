@@ -41,61 +41,17 @@ tags:
 
 ## 方法详解
 
-### 指标 1：LLM 引导聚类（用户目标识别）
+### 整体框架
 
-**目标**：从无标注多轮对话中自动发现和标注用户目标类别。
+本文不训练一个统一的评估器，而是把"多轮目标驱动对话好不好"拆成三个互补问题，各自配一个无监督指标：用户想干什么（目标识别）、对话有没有把事办完（完整性检测）、模型回复有多大把握（不确定性量化）。三个指标都不需要人工标注、参考答案或更大的 LLM judge，最大只用到 8B 规模的开源模型加 LLM 嵌入。
 
-**三阶段算法**（Algorithm 1）：
+### 关键设计
 
-**预处理**：对每个对话 $c_i$，提示 LLM 生成自由文本目标摘要 $s_i$，使用 text-embedding-3-small 嵌入为 $v_i \in \mathbb{R}^{1536}$。
+**1. LLM 引导聚类：从无标注对话里自动长出带语义标签的目标类别。** 纯 k-means 能聚类却给不出可读标签，纯 LLM 标注又容易把所有样本塌缩成一个笼统类别（实验里 GPT-4.1 在 WebShop 上就退化成单一的"Online Shopping and Purchase"）。本文把两者缝起来：先对每个对话 $c_i$ 让 LLM 写一句自由文本目标摘要 $s_i$，用 text-embedding-3-small 嵌成 $v_i \in \mathbb{R}^{1536}$，对这些向量跑 k-means 得到 $k_1$ 个初始簇（$k_1$ 故意取偏大的过估值，宁可先碎再合）。随后每个簇抽 10 正 10 负样本让 LLM 生成簇描述 $L_i$ 并嵌入为 $d_i$，迭代阶段反复算描述间余弦相似度 $D_{ij} = \frac{d_i^\top d_j}{\|d_i\|_2 \|d_j\|_2}$，每次挑最相似的一对、再给 LLM 各 10 个正负样本判断是否真该合并，合并后重写描述，直到所有候选对都被拒绝才停。这样 k-means 提供稳定的几何骨架，LLM 负责语义层面的命名与并簇决策，输出的是既稳定又可解释的目标分类。
 
-**Phase 1 — 初始聚类 + 标注**：
-- 对 $v_1, \dots, v_n$ 执行 k-means 得到 $k_1$ 个初始聚类（$k_1$ 取较大过估值）
-- 对每个聚类，抽 10 个正样本 + 10 个负样本，提示 LLM 生成聚类描述 $L_i$
-- 嵌入所有描述得到 $d_1, \dots, d_{k_1}$
+**2. 完整性检测：用微调出的"完成分布"判断对话该不该结束。** 核心是教模型学会一条对话什么时候算办完了。给定完成对话的分布 $D$，构造一个新分布 $D'$，把每条已完成对话的最后回复后面接上一个 `end` 标签，于是"对话 $c$ 已完成"的概率就可以写成模型在拼接序列后输出 `end` 的概率 $P_{D'}(\texttt{end} \mid c) = P(\text{llm}_{D'}(\text{concat}(p_1, r_1, \dots, p_n, r_n)) = \texttt{end})$；对完整对话 $c$ 与只取前 $k<n$ 轮的截断对话 $c'$，期望模型给出 $P_{D'}(\texttt{end} \mid c) > P_{D'}(\texttt{end} \mid c')$，即越接近真正办完越倾向于收尾。落地分两档：对接近预训练分布的基础对话（如 LMSYS）直接拿 LLaMA3.1-8B-Instruct 加一段短 prompt 就够；对偏离基础分布的专用领域（保险核保、代码调试等）则用 LoRA 微调 LLaMA3.2-8B 完成模型，输入 $\text{concat}(p_1, r_1, \dots, p_n)$、目标是 $r_n$ 加 `end` 标签，训练用 8-bit AdamW、学习率 0.0002、weight decay 0.01、跑 3 个 epoch、只用 50% 数据。`end` 标签是这套设计的命门——Insurance 上去掉它，F1 会从 0.91 掉到 0.72。一个额外的好处是：遇到没办完的对话，模型不会吐 `end`，而是顺着生成后续轮次 $p_{n+1}, r_{n+1}, \dots$，这些续写恰好把"还差哪些事没做"具体描述出来。
 
-**Phase 2 — 迭代合并**：
-- 计算描述间余弦相似度矩阵 $D_{ij} = \frac{d_i^\top d_j}{\|d_i\|_2 \|d_j\|_2}$
-- 迭代选择最大 $D_{ij}$，提示 LLM 判断是否合并（每次提供正负样本各 10 个）
-- 合并后重新生成描述，终止条件为所有当前聚类均拒绝合并
-
-**优势**：结合了 k-means 的稳定性和 LLM 的语义理解能力，输出带文本标签的可解释聚类。
-
-### 指标 2：交互完整性检测（Goal Completion）
-
-**核心思想**：利用微调 LLM 学习"完成分布"，通过判断对话是否应结束来检测完整性。
-
-**形式化定义**：给定完成对话分布 $D$，构造新分布 $D'$，其中每个完成对话的最后回复附加 `end` 标签。定义：
-
-$$P_{D'}(\texttt{end} \mid c) = P(\text{llm}_{D'}(\text{concat}(p_1, r_1, \dots, p_n, r_n)) = \texttt{end})$$
-
-对完整对话 $c$ 和截断对话 $c'$（$k < n$ 轮），期望满足：
-
-$$P_{D'}(\texttt{end} \mid c) > P_{D'}(\texttt{end} \mid c')$$
-
-**实现**：
-- **基础分布**（如 LMSYS）：直接使用 LLaMA3.1-8B-Instruct + 短 prompt
-- **专用分布**（如保险核保、代码调试）：训练 LoRA 适配器微调 LLaMA3.2-8B 完成模型
-    - 输入：$\text{concat}(p_1, r_1, \dots, p_n)$
-    - 目标：$r_n$ + `end` 标签
-    - 训练：AdamW 8-bit，lr = 0.0002，weight decay = 0.01，3 epochs，50% 数据
-- **不完整对话**：模型不输出 `end`，而是生成后续轮次 $p_{n+1}, r_{n+1}, \dots$，这些内容还能**总结 LLM 未完成的剩余任务**
-
-### 指标 3：响应树（Response Uncertainty）
-
-**目标**：量化 LLM 对特定 prompt 的回复不确定性，无需重复高温采样。
-
-**响应树定义**：给定 prompt $p$ 和阈值概率 $\alpha$，$\text{rtree}_{D,\alpha}(p)$ 返回所有遍历概率 $\ge \alpha$ 的分支树。
-
-**构建方法**：
-1. 生成一个回复及其 top-$k$ logprobs
-2. 若第 2 到第 $k$ 个 token 的 logprob $> \alpha$，为其分别生成分支
-3. 递归直到无 logprob 超过 $\alpha$ 或达到计算阈值
-
-**不确定性量化**：
-- **叶节点数**：叶节点多 → 多个可能回复 → 高不确定性 → 更可能出错
-- **最大 logprob**：高 → LLM 对最优回复有信心
-- 二者相比对话长度相关性低（$r$ 在 -0.25 ~ 0.41），说明响应树捕获的是更复杂的不确定性信息
+**3. 响应树：不靠反复高温采样就量化回复的不确定性。** semantic entropy 这类方法要对同一 prompt 采样很多次才能估不确定性，成本高。响应树改成沿着 logprob 展开一棵分支树：给定 prompt $p$ 和阈值概率 $\alpha$，$\text{rtree}_{D,\alpha}(p)$ 收集所有遍历概率不低于 $\alpha$ 的分支。构建时先生成一条回复及其每步 top-$k$ logprobs，凡是第 2 到第 $k$ 个候选 token 的 logprob 超过 $\alpha$ 就为它单独拉一条分支，递归展开直到没有候选超过 $\alpha$ 或触及算力上限。读这棵树有两个量：叶节点越多说明高概率的可选回复越多、不确定性越高、越可能出错；最大 logprob 越高则说明模型对最优回复越有信心。两个量与对话长度的相关性都很弱（$r$ 落在 $-0.25$ 到 $0.41$），说明响应树捕到的不是"对话长所以难"这种表层信号，而是更内在的不确定性结构。
 
 ## 实验关键数据
 
@@ -192,7 +148,7 @@ $$P_{D'}(\texttt{end} \mid c) > P_{D'}(\texttt{end} \mid c')$$
 ## 相关论文
 
 - [\[ICLR 2026\] LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery](llema_evolutionary_search_with_llms_for_multi-objective_material_design.md)
-- [\[AAAI 2026\] Conversational Learning Diagnosis via Reasoning Multi-Turn Interactive Learning](../../AAAI2026/llm_nlp/conversational_learning_diagnosis_via_reasoning_multi-turn_interactive_learning.md)
+- [\[AAAI 2026\] Quantifying Conversational Reliability of Large Language Models under Multi-Turn Interaction](../../AAAI2026/llm_nlp/quantifying_conversational_reliability_of_large_language_models_under_multi-turn.md)
 - [\[ICML 2026\] T$^2$PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning](../../ICML2026/llm_nlp/t2po_uncertainty-guided_exploration_control_for_stable_multi-turn_agentic_reinfo.md)
 - [\[ACL 2025\] Gradient-Adaptive Policy Optimization: Towards Multi-Objective Alignment of Large Language Models](../../ACL2025/llm_nlp/gapo_multi_objective_alignment.md)
 - [\[NeurIPS 2025\] PluralisticBehaviorSuite: Stress-Testing Multi-Turn Adherence to Custom Behavioral Policies](../../NeurIPS2025/llm_nlp/pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)

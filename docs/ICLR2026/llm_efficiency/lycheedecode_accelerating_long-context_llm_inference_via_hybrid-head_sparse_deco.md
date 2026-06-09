@@ -34,26 +34,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LycheeDecode 是一个头级稀疏解码框架，包含两个核心组件：
-1. **头角色划分**：将注意力头分为 Retrieval Heads（检索头）和 Sparse Heads（稀疏头）
-2. **HardKuma 头类型学习**：用 Hard Kumaraswamy 分布端到端学习每个 head 的角色分配
+LycheeDecode 把每层的注意力头细分成少量 retrieval heads 和大量 sparse heads：前者在完整序列上跑全注意力、负责挑出当前最关键的 token 子集并往下层传递，后者直接继承这个子集、只在其上做稀疏计算。头扮演哪种角色不靠人工指定，而是用 Hard Kumaraswamy 分布端到端学出来，让稀疏结构和模型权重一起训练。
 
 ### 关键设计
 
-1. **Retrieval Heads（检索头）**: 负责在完整序列上执行标准 dense attention，从注意力分数中选出 top-k 个关键 token 的索引集合 $\mathcal{S}_h^{(l+1)} = \text{argsTopK}(A_h^{(l)}, k)$，并将该集合传递给下一层同索引的 head。第一层所有 head 默认为 retrieval heads 以初始化 token 集合。
+**1. Retrieval Heads：定期重新发现关键 token。** 层级共享之所以失效，是因为它假设一组 token 能服务全层所有 head；本文反过来只让一小撮 head 承担"找 token"的重活。这些 retrieval head 在第 $l$ 层对完整 KV 做标准 dense attention，从注意力分数里取出 top-k 个关键 token 的索引集合 $\mathcal{S}_h^{(l+1)} = \text{argsTopK}(A_h^{(l)}, k)$，并把它交给下一层同索引位置的 head 使用。第一层所有 head 默认都是 retrieval head，用来给整条管线初始化 token 集合。因为只有少量 head 付出全注意力代价，又能随解码进度不断刷新关键 token，框架既保住了上下文适应性，又把昂贵的全量扫描压到最低。
 
-2. **Sparse Heads（稀疏头）**: 继承上一层传来的 token 集合 $\mathcal{S}_h^{(l)}$，只在该子集上计算注意力 $O_h^{(l)} = \text{softmax}\left(\frac{q_h^{(l)} (K_h^{(l)}[\mathcal{S}_h^{(l)}])^T}{\sqrt{d_k}}\right) V_h^{(l)}[\mathcal{S}_h^{(l)}]$，不更新 token 集合（直接传递）。这大幅减少计算量和 KV 缓存加载开销。
+**2. Sparse Heads：复用子集换取计算与显存的双重节省。** 占绝大多数的 sparse head 不再自己搜索 token，而是继承上层传来的集合 $\mathcal{S}_h^{(l)}$，只在这个子集上算注意力 $O_h^{(l)} = \text{softmax}\!\left(\frac{q_h^{(l)} (K_h^{(l)}[\mathcal{S}_h^{(l)}])^T}{\sqrt{d_k}}\right) V_h^{(l)}[\mathcal{S}_h^{(l)}]$，且不更新集合、原样往下传。由于参与运算的 key/value 只剩 $k$ 个而非整段历史，单 head 的计算量和需要从 KV 缓存里加载的数据量同步骤降，这正是端到端 2.7× 加速的主要来源。
 
-3. **HardKuma 头特化机制**: 头的角色分配本质上是离散优化问题（二值变量）。DuoAttention 用连续变量学习后取整，存在训练-推理不一致。作者引入 Hard Kumaraswamy 分布：通过 (1) 从均匀分布采样经 Kuma 逆 CDF 变换 → (2) 线性拉伸到 (p,q) 区间（p<0, q>1）→ (3) 硬截断到 [0,1]，使得输出自然集中在 0 和 1 附近且全程可微。每个 head 学习参数 $\alpha_h^{(l)}, \beta_h^{(l)}$，推理时 $\mathbb{E}[z_h^{(l)}] > 0.5$ 则为 retrieval head。
+**3. HardKuma 头特化机制：让离散的角色分配变得可微。** 一个 head 是 retrieval 还是 sparse 本质是个二值选择，DuoAttention 那样用连续变量学完再取整会带来训练-推理不一致。作者改用 Hard Kumaraswamy 分布：先从均匀分布采样、经 Kuma 逆 CDF 变换，再线性拉伸到 $(p,q)$ 区间（$p<0,\,q>1$），最后硬截断回 $[0,1]$，这样采样值天然堆在 0 和 1 附近、却又全程可微。每个 head 只学两个参数 $\alpha_h^{(l)}, \beta_h^{(l)}$，推理时按期望 $\mathbb{E}[z_h^{(l)}] > 0.5$ 判定其为 retrieval head，从而把硬性分类问题塞进了梯度下降框架。
 
 ### 损失函数 / 训练策略
-训练时每个 head 同时计算 sparse 和 full 两份注意力图，用 HardKuma 采样值 $z_h^{(l)}$ 线性组合：$\tilde{A}_h^{(l)} = z_h^{(l)} \cdot A_{R,h}^{(l)} + (1 - z_h^{(l)}) \cdot A_{S,h}^{(l)}$。
-
-损失函数采用 **蒸馏 + 拉格朗日稀疏约束**：
-- 蒸馏损失：student（混合注意力）与 teacher（全注意力）的 logits L2 距离
-- 稀疏约束：$\min_{\alpha,\beta} \max_{\lambda \geq 0} \mathcal{L}_{\text{distill}} + \lambda \cdot (\mathbb{E}[\|\mathbf{z}\|_0] - N_{\text{target}})$
-
-其中 $\mathbb{E}[\|\mathbf{z}\|_0]$ 有闭合形式解，$\lambda$ 通过梯度上升自动调节，无需手动搜索超参。训练仅需在单张 A100 上跑 3000 步（几小时）。
+训练阶段每个 head 同时算出 sparse 和 full 两份注意力图，再用 HardKuma 采样值 $z_h^{(l)}$ 做线性混合 $\tilde{A}_h^{(l)} = z_h^{(l)} \cdot A_{R,h}^{(l)} + (1 - z_h^{(l)}) \cdot A_{S,h}^{(l)}$，使得"该选哪种 head"的梯度能直接回流。目标函数由蒸馏项和稀疏约束两部分组成：蒸馏项让混合注意力的 student 在 logits 上逼近全注意力 teacher（L2 距离），稀疏约束则把 retrieval head 的总数压到目标值，整体写成 $\min_{\alpha,\beta} \max_{\lambda \geq 0} \mathcal{L}_{\text{distill}} + \lambda \cdot (\mathbb{E}[\|\mathbf{z}\|_0] - N_{\text{target}})$。其中 $\mathbb{E}[\|\mathbf{z}\|_0]$ 有闭式解，拉格朗日乘子 $\lambda$ 由梯度上升自动调节，省去了手工搜稀疏度超参的麻烦；整个训练只需在单张 A100 上跑 3000 步、几小时即可完成。
 
 ## 实验关键数据
 
@@ -122,9 +114,9 @@ LycheeDecode 是一个头级稀疏解码框架，包含两个核心组件：
 
 - [\[ACL 2025\] Squeezed Attention: Accelerating Long Context Length LLM Inference](../../ACL2025/llm_efficiency/squeezed_attention_accelerating_long_context_length_llm_inference.md)
 - [\[ICLR 2026\] Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](understanding_and_improving_length_generalization_in_hierarchical_sparse_attenti.md)
-- [\[ICML 2026\] Stochastic Sparse Attention for Memory-Bound Inference](../../ICML2026/llm_efficiency/stochastic_sparse_attention_for_memory-bound_inference.md)
+- [\[ICML 2026\] OBCache: Optimal Brain KV Cache Pruning for Efficient Long-Context LLM Inference](../../ICML2026/llm_efficiency/obcache_optimal_brain_kv_cache_pruning_for_efficient_long-context_llm_inference.md)
 - [\[ICLR 2026\] When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework](when_does_divide_and_conquer_work_for_long_context_llm_a_noise_decomposition_fra.md)
-- [\[ACL 2026\] StructKV: Preserving the Structural Skeleton for Scalable Long-Context Inference](../../ACL2026/llm_efficiency/structkv_preserving_the_structural_skeleton_for_scalable_long-context_inference.md)
+- [\[ICML 2026\] Stochastic Sparse Attention for Memory-Bound Inference](../../ICML2026/llm_efficiency/stochastic_sparse_attention_for_memory-bound_inference.md)
 
 </div>
 

@@ -47,31 +47,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是一组主观性问题（60个），输出是每个 LLM 的 OvertonScore。中间经过三个阶段：（1）人类数据收集——参与者写下观点并评价LLM回复；（2）观点聚类——基于参与者间的同意/反对投票模式发现不同观点群体；（3）覆盖度计算——检查每个观点群体是否在模型回复中感到被代表。
+这篇论文要把"模型回复有没有覆盖多元观点"这件模糊的事变成一个可计算的分数。输入是 60 个主观性问题，输出是每个 LLM 的 OvertonScore。整条流水线分三步走：先做人类数据收集，让参与者针对每个问题写下自己的观点、并给各个 LLM 的回复打代表性分；再把参与者按彼此的同意/反对投票聚成若干观点群体，从而把这个问题的"Overton 窗口"拆成一组离散观点；最后逐个群体检查它们在模型回复里是否觉得被代表，群体被覆盖的比例就是这道题的分数，所有题平均即 OvertonScore。
 
 ### 关键设计
 
-1. **OvertonScore 指标**:
+**1. OvertonScore 指标：把"多元"定义成对观点窗口的集合覆盖率。**
 
-    - 功能：量化模型回复覆盖 Overton 窗口中多少比例的观点
-    - 核心思路：对问题 $x$，Overton 窗口 $W(x)$ 包含所有合理观点。若某观点 $y$ 对应的群体中多数人对模型回复的代表性评分 ≥4（5分制），则视为被覆盖。Coverage$(\\mathcal{M}, x) = \\frac{1}{|W(x)|} \\sum_{y \\in W(x)} \\mathbb{1}\\{y \\in \\mathcal{M}(x)\\}$，OvertonScore 是所有问题的平均 Coverage
-    - 设计动机：不同于 pairwise 比较只能说"A比B更多元"，集合覆盖度提供了绝对量化，明确了理论上限（1.0），让改进方向可衡量
-    - 加权变体 OvertonScore$_W$：按群体在人群中的占比加权，避免长尾稀有观点过度影响评分
+以往的政治偏见评测（如 Model Slant）只能做 pairwise 比较，说"A 比 B 更多元"，却给不出一个绝对刻度，也不知道离理想还有多远。本文把它形式化成集合覆盖：对问题 $x$，Overton 窗口 $W(x)$ 包含所有合理观点；若观点 $y$ 对应的群体中多数人对模型回复的代表性评分 ≥4（5 分制），就认为这个观点被覆盖了。单题覆盖率与最终分数分别为
 
-2. **基于投票的观点聚类**:
+$$\text{Coverage}(\mathcal{M}, x) = \frac{1}{|W(x)|} \sum_{y \in W(x)} \mathbb{1}\{y \in \mathcal{M}(x)\}$$
 
-    - 功能：从人类参与者的互相投票数据中自动发现不同观点群体
-    - 核心思路：参与者互相对对方的自由回答投 Agree/Disagree/Neutral，利用 k-means 变体在稀疏投票数据上聚类，通过 Silhouette 分数动态确定最佳 k 值
-    - 设计动机：比基于语义相似度或 NLI 的聚类更忠实——直接反映人们如何理解和分歧彼此的观点，而非外部算法强加的分类。避免了 NLP 方法引入模型偏见
+OvertonScore 即所有问题 Coverage 的平均。这样一来理论上限明确是 1.0，改进方向可衡量；同时论文给出加权变体 OvertonScore$_W$，按每个群体在人群中的实际占比加权，避免长尾稀有观点对评分的过度影响。
 
-3. **自动化基准（LLM-as-Judge）**:
+**2. 基于投票的观点聚类：让人类的真实分歧自己定义"有哪些观点"。**
 
-    - 功能：用 LLM 替代人类评判，预测参与者对模型回复的代表性评分
-    - 核心思路：使用 Gemini 2.5 Pro 配合 few-shot + 用户自由回复(FS+FR)提示策略，预测每个参与者的 1-5 Likert 评分
-    - 设计动机：反复大规模人类研究成本高、速度慢。自动化评估可作为模型开发中的初步筛选工具，在全面人类评估前缩小候选模型范围
+要算覆盖率，得先知道一道题到底有哪几种观点，而这正是最容易被算法偏见污染的一步。本文不用语义相似度或 NLI 来归类，而是让参与者互相对彼此的自由回答投 Agree/Disagree/Neutral，再在这份稀疏的投票矩阵上跑 k-means 变体聚类，并用 Silhouette 分数动态选最佳的群体数 $k$。这样划分出来的群体直接反映人们如何理解、如何分歧彼此的观点，而不是外部 NLP pipeline 预设的分类，从源头上避开了模型自身偏见混入观点定义的问题。
+
+**3. 自动化基准（LLM-as-Judge）：用 LLM 复现人类打分，免去反复做昂贵人类研究。**
+
+大规模人类研究又慢又贵，每评一个新模型都重来一遍不现实。本文用 Gemini 2.5 Pro 当裁判，配合 few-shot 加用户自由回复的提示策略（FS+FR），直接预测每个参与者会给模型回复打的 1–5 Likert 分，再据此算出 OvertonScore。它的定位是模型开发中的初筛工具——在投入全面人类评估之前先缩小候选模型范围，论文也用排名相关性（ρ=0.88）验证了它和真人评判的一致程度。
 
 ### 数据收集策略
-- 问题来源：Model Slant（15个政治议题）+ PRISM 对齐数据集（45个价值观导向问题）
+- 问题来源：Model Slant（15 个政治议题）+ PRISM 对齐数据集（45 个价值观导向问题）
 - 参与者：Prolific 招募 1208 名美国英语用户，政治/人口统计学上具有代表性
 - 评估的 LLM：GPT-4.1、o4-mini、Gemma 3-27B、DeepSeek R1/V3、Llama 4 Maverick/3.3-70B、Claude 3.7 Sonnet
 - 数据规模：28,992 个数据点
@@ -142,8 +139,8 @@ tags:
 - [\[ACL 2026\] Personalized Benchmarking: Evaluating LLMs by Individual Preferences](../../ACL2026/llm_evaluation/personalized_benchmarking_evaluating_llms_by_individual_preferences.md)
 - [\[AAAI 2026\] Benchmarking LLMs for Political Science: A United Nations Perspective](../../AAAI2026/llm_evaluation/benchmarking_llms_for_political_science_a_united_nations_perspective.md)
 - [\[ACL 2025\] WebWalker: Benchmarking LLMs in Web Traversal](../../ACL2025/llm_evaluation/webwalker_benchmarking_llms_in_web_traversal.md)
-- [\[ICLR 2026\] RankLLM: Weighted Ranking of LLMs by Quantifying Question Difficulty](rankllm_weighted_ranking_of_llms_by_quantifying_question_difficulty.md)
 - [\[ACL 2026\] ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition](../../ACL2026/llm_evaluation/researchbench_benchmarking_llms_in_scientific_discovery_via_inspiration-based_ta.md)
+- [\[ACL 2026\] BizCompass: Benchmarking the Reasoning Capabilities of LLMs in Business Knowledge and Applications](../../ACL2026/llm_evaluation/bizcompass_benchmarking_the_reasoning_capabilities_of_llms_in_business_knowledge.md)
 
 </div>
 

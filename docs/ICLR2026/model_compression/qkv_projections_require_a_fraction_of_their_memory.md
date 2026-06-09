@@ -40,35 +40,19 @@ LLM 训练中，注意力层的 QKV 投影占用大量内存：输入 $X$ 需要
 
 ### 整体框架
 
-PAMM 分两阶段工作：(1) 前向时将 $X$ 压缩为少量生成点和辅助信息；(2) 反向时用压缩表示近似计算梯度 $\nabla W$。
+PAMM 的目标是把反传时需要的激活 $X$ 从内存里"瘦身"。前向阶段不再原样保存 $X \in \mathbb{R}^{b \times n}$，而是只留下少量代表性 token 作为生成点，外加每个 token 指向哪个生成点、缩放多少的辅助信息；反向阶段则用这套压缩表示直接近似出权重梯度 $\nabla W = X^\top \cdot \nabla Z$，绕过对完整 $X$ 的依赖。整个过程只动 QKV 投影层的反向通路，前向输出和其他层的梯度一字不改。
 
 ### 关键设计
 
-1. **激活压缩 (Compression Stage)**：
+**1. 激活压缩：用代表点 + 缩放系数复述整批 token。** QKV 投影的输入有 $b = BL$ 个 token，但隐藏维度 $n$ 远小于 $b$，所以 $\text{rank}(X) \le n$，整批 token 本质上躺在一个低维子空间里。PAMM 据此从 $X$ 里随机抽取 $k = r \cdot b$ 行充当生成点 $C \in \mathbb{R}^{k \times n}$（随机采样就够，无需聚类）。对剩下每个 token $A_i$，按余弦相似度找最贴合的生成点 $f(i) = \arg\max_j |\text{csim}(A_i, C_j)|$，再沿该方向投影出缩放系数 $\alpha = \frac{\langle A_i, C_j \rangle}{\|C_j\|_2^2}$，于是 $A_i$ 被一条 $\tilde{A}_i = \alpha(i, f(i)) \cdot C_{f(i)}$ 来近似。论文还设了邻域条件 $\|A_i - \tilde{A}_i\|_2 \le \varepsilon \|A_i\|_2$，近似太差的 token 直接丢弃——但实验发现取 $\varepsilon \to \infty$（即不丢弃、全部保留）反而最稳，所以实践中这道闸门并不真正开启。
 
-    - 从 $X \in \mathbb{R}^{b \times n}$ 中随机采样 $k = r \cdot b$ 行作为生成点 $C \in \mathbb{R}^{k \times n}$
-    - 对每个点 $A_i$，选择最佳生成点：$f(i) = \arg\max_j |\text{csim}(A_i, C_j)|$（Lemma 1）
-    - 计算缩放系数：$\tilde{A}_i = \alpha(i, f(i)) \cdot C_{f(i)}$，其中 $\alpha = \frac{\langle A_i, C_j \rangle}{\|C_j\|_2^2}$
-    - 邻域条件：$\|A_i - \tilde{A}_i\|_2 \leq \varepsilon \|A_i\|_2$，不满足则丢弃
+**2. 近似矩阵乘法：先聚合再相乘，省掉重建完整激活。** 拿到压缩表示后，朴素做法是先还原 $\tilde{A}$ 再算 $\tilde{A}^\top B$，但那等于又把内存吃回去。PAMM 改用结合律先做聚合：把所有指向同一生成点 $j$ 的 token 的梯度按缩放系数加权汇总成 $\tilde{B}_j = \sum_{i:f(i)=j} \alpha_i B_i$，再算 $\tilde{O} = C^\top \tilde{B}$，参与乘法的张量第一维从 $b$ 缩到 $k$，省下的正是序列维度的冗余。由于丢弃 token 会让结果偏小，论文乘上归一化因子 $\beta = \frac{b}{b-\eta}$（$\eta$ 为被丢弃数）把期望拉回真值，保证 $\mathbb{E}[\tilde{O}] = O$ 的无偏估计。
 
-2. **近似矩阵乘法 (Approximate Multiplication)**：
-
-    - 不重建完整 $\tilde{A}$，而是先聚合 $\tilde{B}_j = \sum_{i:f(i)=j} \alpha_i B_i$
-    - 计算 $\tilde{O} = C^\top \tilde{B}$，维度从 $b \times n$ 降为 $k \times n$
-    - 引入归一化因子 $\beta = \frac{b}{b-\eta}$ 保证无偏估计 $\mathbb{E}[\tilde{O}] = O$
-
-3. **理论保证**：
-
-    - **Lemma 2**（$k$ 的充分条件）：$k > \frac{b}{n_{\min}} \ln(\frac{b}{\delta})$，仅需对数级别的生成点
-    - 近似误差上界：$\|O - \tilde{O}\|_F^2 \leq \|B\|_2^2 (\varepsilon^2 \|A_\mathcal{I}\|_F^2 + \|A_{\bar{\mathcal{I}}}\|_F^2)$
-    - 实践中 $\varepsilon \to \infty$（不使用邻域约束）效果最好
+**3. 理论保证：对数级生成点 + 误差上界。** 要让随机抽点站得住脚，得回答"$k$ 取多少够用"。Lemma 2 给出充分条件 $k > \frac{b}{n_{\min}} \ln(\frac{b}{\delta})$，即生成点数量只需随 $b$ 对数增长，这解释了为何 $r$ 能压到 $1/512$ 仍不崩。近似误差也有闭式上界 $\|O - \tilde{O}\|_F^2 \le \|B\|_2^2 (\varepsilon^2 \|A_\mathcal{I}\|_F^2 + \|A_{\bar{\mathcal{I}}}\|_F^2)$，把误差拆成被保留 token 的投影残差（受 $\varepsilon$ 控制）和被丢弃 token 的能量两部分，从理论上界定了压缩的代价。
 
 ### 损失函数 / 训练策略
 
-- PAMM 仅修改 QKV 投影的反向传播，前向和其他层梯度不受影响
-- 与 FlashAttention、梯度检查点、LoRA 完全兼容
-- 实验中压缩比 $r$ 低至 $1/512$
-- 微调场景中甚至可以用 $k=1$（仅一个生成点）
+PAMM 是一个即插即用的反传替换，不引入额外损失项，只把 QKV 投影的梯度计算换成上面的近似乘法，因此与 FlashAttention、梯度检查点、LoRA 完全正交、可直接叠加。实验里压缩比 $r$ 一路压到 $1/512$ 仍保持精度；微调场景因为子空间更紧，甚至可以激进到 $k=1$（整批共用一个生成点）。
 
 ## 实验关键数据
 

@@ -41,31 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FlowCast是FM推理时的即插即用加速框架，包含三个组件：Drafting（用当前速度线性外推未来所有状态）→ Verification（并行计算所有draft点的真实速度，MSE检查）→ Correction（拒绝点之后重新计算）。不需要训练、不需要辅助网络。
+FlowCast要解决的是Flow Matching推理慢的老问题：求解ODE把噪声变成数据，每一步都得等上一步的输出，整条轨迹只能顺序跑。它的做法是把LLM里的投机解码搬过来，但不引入任何小模型、也不做任何训练。一轮推理分三步走：先在当前时步用已经算出来的速度，一口气把后面所有时步的状态都线性外推出来（Drafting）；再把这些draft点的真实速度并行算出来，逐个和draft速度做MSE比对（Verification）；从第一个不达标的点开始丢弃、回退重算（Correction）。平稳的区段一跳一大片，剧烈的区段退回去精细积分，整体既快又不掉质量。
 
 ### 关键设计
 
-1. **零成本Draft构建 (Zero-Cost Drafting)**:
+**1. 零成本Draft：把当前速度当成未来步的免费草稿。**
 
-    - 功能：在当前时步 $t_i$ 用速度 $v(x_{t_i}, t_i)$ 线性外推所有剩余时步的状态
-    - 核心思路：$\tilde{x}_{t_k} = x_{t_m} + (t_k - t_m) \cdot v_{t_m}$，对所有 $k = m+1, \ldots, K$
-    - 设计动机：FM训练目标鼓励恒定速度（线性插值路径），所以速度在相邻步间变化很小。重用当前速度做外推是"免费的"，无需额外前向计算。
+投机解码的第一个难题是"draft从哪来"。LLM里要专门训一个小模型来猜，但FM根本不需要——它的训练目标本身就鼓励沿线性插值路径走、保持近乎恒定的速度，经验上相邻步之间速度变化极小。于是FlowCast直接拿当前时步 $t_m$ 算出的速度 $v_{t_m}$，对后面每一个时步做线性外推：
 
-2. **并行MSE验证 (Parallel Verification)**:
+$$\tilde{x}_{t_k} = x_{t_m} + (t_k - t_m) \cdot v_{t_m}, \quad k = m+1, \ldots, K$$
 
-    - 功能：对每个draft状态 $\tilde{x}_{t_k}$ 并行计算真实速度 $v(\tilde{x}_{t_k}, t_k)$，检查与draft速度的MSE
-    - 核心思路：若 $\text{MSE}(v_{t_m}, v_{t_k}) < \epsilon$ 则接受draft，找到第一个MSE超标的点 $j$ 后丢弃该点及之后所有draft
-    - 设计动机：在速度空间而非数据空间做验证，更灵敏地捕捉局部动态不一致性，且计算开销小。并行验证使多点评估只需一次前向传播。
+这一步没有任何额外前向计算，draft是真正"零成本"的，这也是它比LLM投机解码更轻量的根本原因——省掉了一整个draft模型。
 
-3. **自适应纠正 (Correction)**:
+**2. 并行MSE验证：在速度空间里判断draft能不能信。**
 
-    - 功能：从拒绝点回退，用该点计算的真实速度开始新一轮外推
-    - 核心思路：接受 $\{x_{m+1}, \ldots, x_{j-1}\}$, 用 $v_{t_{j-1}}$ 重新外推
-    - 设计动机：保证轨迹忠实度——动态平稳区域大步跳过（激进加速），动态剧烈区域精细积分（保证精度）。
+draft白送了，但不能照单全收，否则速度真正发生剧变的地方会被外推带偏。验证的关键选择是**在速度空间而不是数据空间做比对**：对每个draft状态 $\tilde{x}_{t_k}$ 算出它的真实速度 $v(\tilde{x}_{t_k}, t_k)$，再和当初外推用的 $v_{t_m}$ 比，只要 $\text{MSE}(v_{t_m}, v_{t_k}) < \epsilon$ 就接受这个draft。速度比数据更能灵敏地反映局部动态有没有变化，验证开销也更小。更妙的是这些draft点彼此独立，所有点的真实速度可以一次前向并行算完，因此"评估很多个候选步"实际只花一次前向的代价。沿着时步往后扫，找到第一个MSE超标的点 $j$，就把这个点连同它之后的所有draft全部丢掉。
+
+**3. 自适应纠正：拒绝点之后退回来重新起跳。**
+
+验证卡在 $j$ 之后，前面 $\{x_{m+1}, \ldots, x_{j-1}\}$ 这些点已经验证通过、直接保留；从 $j$ 开始则用该点附近算出的真实速度 $v_{t_{j-1}}$ 作为新起点，再外推一轮。这套"接受—回退—再外推"的循环让步长自适应轨迹的局部动态：速度平稳的区段一次跳过一大串步（激进加速），速度剧烈变化的区段被验证拦下、退回精细积分（保证忠实度），最终在加速和精度之间自动找平衡。
 
 ### 理论分析
-- **Lemma 4.1**: 在速度场Lipschitz连续(常数 $M$)且二阶导有界($N$)的条件下，投机积分的全局误差上界为 $\|x(t_k) - x_k\| \leq \frac{e^{Mt_k}-1}{2M}(hN + 2p\sqrt{\epsilon})$
-- **Theorem 4.2**: 给定容差 $q_d$，要使投机误差不超过 $q_d$，阈值需满足 $\epsilon \leq (\frac{q_d}{2A})^2$，其中 $A = \frac{e^M-1}{M}$
+两条结论刻画了跳步带来的误差可控。**Lemma 4.1**：在速度场Lipschitz连续（常数 $M$）且二阶导有界（$N$）的条件下，投机积分的全局误差上界为 $\|x(t_k) - x_k\| \leq \frac{e^{Mt_k}-1}{2M}(hN + 2p\sqrt{\epsilon})$，即误差由步长 $h$ 和验证阈值 $\epsilon$ 共同控制。**Theorem 4.2**：反过来，给定想要的容差 $q_d$，只要把阈值取到 $\epsilon \leq (\frac{q_d}{2A})^2$（其中 $A = \frac{e^M-1}{M}$），就能保证投机误差不超过 $q_d$——这给了选 $\epsilon$ 一个有理论依据的上界，而不是纯靠手调。
 
 ## 实验关键数据
 
@@ -125,10 +122,10 @@ FlowCast是FM推理时的即插即用加速框架，包含三个组件：Draftin
 ## 相关论文
 
 - [\[ICLR 2026\] FlowCast: Advancing Precipitation Nowcasting with Conditional Flow Matching](flowcast_advancing_precipitation_nowcasting_with_conditional_flow_matching.md)
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
-- [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [\[ICLR 2026\] DoFlow: Flow-based Generative Models for Interventional and Counterfactual Forecasting](doflow_flow-based_generative_models_for_interventional_and_counterfactual_foreca.md)
+- [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [\[ICLR 2026\] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+- [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 
 </div>
 

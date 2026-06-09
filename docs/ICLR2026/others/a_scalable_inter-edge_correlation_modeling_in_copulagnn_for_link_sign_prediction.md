@@ -40,30 +40,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入签名图，用 SGNN 编码器获得节点嵌入，通过节点嵌入的逐元素积构造边嵌入 $\mathbf{Q}$。用 relaxed Bernoulli 分布建模每条边的符号边缘分布，用 $\mathbf{Q}$ 的 Gramian 构造高斯 Copula 的相关矩阵，从而联合建模所有边符号的分布。
+这篇论文要解决的是签名图上的链接符号预测——给定一张正负边混杂的图，判断每条边代表的是正关系还是负关系。它的核心思路是不再假设相邻节点彼此相似（签名图里负边天然违反这条同质性假设），而是退一步去建模「边和边之间的统计依赖」，并把这套依赖塞进一个可扩展的高斯 Copula 框架里。
+
+整条 pipeline 是这样转的：先用一个 SGNN 编码器把签名图编码成节点嵌入；再把一条边两端节点嵌入做逐元素积，得到这条边的边嵌入，所有边嵌入堆成矩阵 $\mathbf{Q}$；每条边的符号单独用一个 relaxed Bernoulli 分布刻画它的边缘分布，而所有边之间的联合依赖则交给高斯 Copula，其相关矩阵直接由 $\mathbf{Q}$ 的 Gramian 给出。这样一来，所有边符号被当成一个联合分布来建模，训练时最大化观测边的联合似然，推理时再从条件分布里采样出未观测边的符号。难点全在「相关矩阵是 $n\times n$（$n$ 为边数）」这个规模上，下面三个设计都是围绕怎么把它压下来。
 
 ### 关键设计
 
-1. **Gramian 相关矩阵**:
+**1. Gramian 相关矩阵：用低秩结构代替 $O(n^2)$ 的显式相关矩阵。**
 
-    - 功能：用边嵌入的 Gramian 构造可扩展的正定相关矩阵
-    - 核心思路：$\Sigma = \mathbf{QQ}^\top + \epsilon \mathbf{I}_n$，然后归一化为相关矩阵 $\mathbf{R} = \mathbf{D}^{-1}\Sigma\mathbf{D}^{-1}$。边嵌入维度 $d \ll n$，参数量从 $O(n^2)$ 降到图编码器参数+$O(nd)$
-    - 设计动机：Gramian 天然正半定，加 $\epsilon \mathbf{I}$ 保证正定，满足高斯 Copula 对相关矩阵的要求。模型学习的是图编码器参数而非嵌入本身，进一步减少参数
+直接给边-边相关矩阵每个元素配一个参数是 $O(n^2)$ 的，边数一多就既存不下也学不动。本文不去显式存这个矩阵，而是让它从边嵌入「长出来」：取协方差 $\Sigma = \mathbf{QQ}^\top + \epsilon \mathbf{I}_n$，再归一化成相关矩阵 $\mathbf{R} = \mathbf{D}^{-1}\Sigma\mathbf{D}^{-1}$（$\mathbf{D}$ 为对角标准差）。因为边嵌入维度 $d \ll n$，整个 $\Sigma$ 被压成一个秩至多为 $d$ 的结构，需要学的只是图编码器的参数加上 $O(nd)$，而不是 $O(n^2)$。这里用 Gramian 的另一个好处是它天然正半定，再加上 $\epsilon \mathbf{I}$ 就保证严格正定，正好满足高斯 Copula 对相关矩阵的合法性要求——表达力和数学合法性一并解决。
 
-2. **Woodbury 条件分布重构**:
+**2. Woodbury 条件分布重构：把推理里的大矩阵求逆换成 $d\times d$ 的小矩阵求逆。**
 
-    - 功能：利用 Woodbury 恒等式将推理中的大矩阵求逆转化为小矩阵运算
-    - 核心思路：对 $\Sigma_{00}^{-1}$（$m \times m$ 观测边的协方差矩阵求逆）利用 $\Sigma_{00} = \mathbf{Q}_0\mathbf{Q}_0^\top + \epsilon\mathbf{I}_m$ 的结构，通过 Woodbury 恒等式转化为 $d \times d$ 矩阵求逆
-    - 设计动机：推理时需计算给定观测边条件下未观测边符号的条件分布，涉及 $m \times m$ 矩阵求逆。$d \ll m$ 使得计算从 $O(m^3)$ 降到 $O(d^3 + md^2)$
+推理时要算的是「在 $m$ 条观测边的符号已知的条件下，未观测边符号的条件分布」，这需要对观测边的协方差子块 $\Sigma_{00}$（$m \times m$）求逆，朴素做法是 $O(m^3)$，边一多就爆。本文利用 $\Sigma_{00} = \mathbf{Q}_0\mathbf{Q}_0^\top + \epsilon\mathbf{I}_m$ 同样是「低秩 + 对角」结构这一点，套 Woodbury 恒等式把对 $m\times m$ 矩阵的求逆等价转化成对一个 $d \times d$ 矩阵的求逆。由于 $d \ll m$，整体复杂度从 $O(m^3)$ 降到 $O(d^3 + md^2)$。值得注意的是，第 1 个设计的 Gramian 形式正是这里能用 Woodbury 的前提——一个低秩选择同时喂饱了参数量和推理速度两个瓶颈。
 
-3. **Relaxed Bernoulli 边缘分布**:
+**3. Relaxed Bernoulli 边缘分布：让离散的边符号能进可微的 Copula 框架。**
 
-    - 功能：用连续松弛的 Bernoulli 分布建模离散的边符号
-    - 核心思路：每条边的符号用位置参数 $a_i$ 和温度参数 $t_i$ 参数化，CDF 有闭式解 $F(x;a,t) = x^t/(a(1-x)^t + x^t)$，可直接代入高斯 Copula
-    - 设计动机：Copula 需要连续边缘分布，松弛 Bernoulli 既保持了二值分类的语义又支持可微训练
+Copula 要求每个变量有连续的边缘分布，但边符号本质是二值的离散量，没法直接喂进去。本文给每条边的符号配一个 relaxed（连续松弛）Bernoulli 分布，用位置参数 $a_i$ 和温度参数 $t_i$ 参数化，它的 CDF 有闭式解
+
+$$F(x;a,t) = \frac{x^t}{a(1-x)^t + x^t},$$
+
+可以直接代进高斯 Copula 完成「边缘 → 联合」的耦合。这样既保住了二值分类的语义（松弛后仍逼近 0/1 两端），又让整条似然对参数可微，端到端训练得以成立。
 
 ### 损失函数 / 训练策略
-最大化观测边符号的联合对数似然 $\log \mathcal{H}'(x_{1:m}) = \log c(u_{1:m}; \mathbf{R}_{00}) + \sum \log f_i(x_i)$，其中 Copula 密度和边缘密度都有闭式表达。推理时采样自条件高斯分布。
+训练目标是最大化观测边符号的联合对数似然
+
+$$\log \mathcal{H}'(x_{1:m}) = \log c(u_{1:m}; \mathbf{R}_{00}) + \sum_i \log f_i(x_i),$$
+
+其中 $c(\cdot)$ 是高斯 Copula 密度、$f_i$ 是第 $i$ 条边的松弛 Bernoulli 边缘密度，两者都有闭式表达，整条似然可微。推理时则从前面构造好的条件高斯分布里采样，得到未观测边的符号预测。
 
 ## 实验关键数据
 
@@ -119,9 +123,9 @@ tags:
 
 - [\[ICLR 2026\] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
 - [\[ICCV 2025\] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery](../../ICCV2025/others/intra-view_and_inter-view_correlation_guided_multi-view_novel_class_discovery.md)
-- [\[ICLR 2026\] Completing Missing Annotation: Multi-Agent Debate for Accurate and Scalable Relevance Assessment](completing_missing_annotation_multi-agent_debate_for_accurate_and_scalable_relev.md)
+- [\[ICLR 2026\] Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
 - [\[ICML 2026\] Riemannian Networks over Full-Rank Correlation Matrices](../../ICML2026/others/riemannian_networks_over_full-rank_correlation_matrices.md)
-- [\[ICML 2026\] Estimating Correlation Clustering Cost in Node-Arrival Stream](../../ICML2026/others/estimating_correlation_clustering_cost_in_node-arrival_stream.md)
+- [\[ICLR 2026\] Scalable Random Wavelet Features: Efficient Non-Stationary Kernel Approximation with Convergence Guarantees](scalable_random_wavelet_features_efficient_non-stationary_kernel_approximation_w.md)
 
 </div>
 

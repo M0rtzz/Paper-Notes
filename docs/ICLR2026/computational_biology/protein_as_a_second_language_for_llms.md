@@ -37,41 +37,21 @@ tags:
 
 ### 整体框架
 
-"Protein-as-Second-Language" 框架分三个阶段：
-1. **双语数据集构建**: 从 Swiss-Prot → GO-DAG 剪枝分组 → 序列+功能去冗余 → DeepSeek-R1 生成QA → 79,926 条蛋白质QA三元组
-2. **自适应上下文构造**: 对查询蛋白质，同时检索序列同源和文本相似的示例，组装双语上下文
-3. **LLM 推理**: 将构造的上下文+查询直接输入冻结的 LLM，零训练生成答案
+"Protein-as-Second-Language" 想解决的是：不训练、不改一个参数，就让通用 LLM 读懂氨基酸序列的功能含义。它分三个阶段串起来。首先离线**构建双语数据集**——从 Swiss-Prot 出发，经 GO-DAG 剪枝分组、序列与功能两轮去冗余、再用 DeepSeek-R1 出题，得到 79,926 条"蛋白质序列-自然语言"QA 三元组。推理时对每个查询蛋白质做**自适应上下文构造**：同时检索序列同源和文本相似的示例，拼成一段双语上下文。最后把这段上下文连同查询直接喂进冻结的 LLM，让它靠 in-context 示例零训练地生成功能答案。整条链路的精髓是把"读蛋白质"当成一次第二语言习得，用母语（自然语言）的能力去推断外语（氨基酸序列）的含义。
 
 ### 关键设计
 
-#### 1. 双语数据集构建（三步流水线）
+**1. 双语数据集构建：先把 Swiss-Prot 的冗余和类别失衡治好，再让 LLM 出题。**
 
-**功能**: 从 573,661 条 Swiss-Prot 条目中构建平衡、多样的蛋白质QA语料。
+直接把 573,661 条 Swiss-Prot 注释翻成 QA 会有两个毛病——同源蛋白大量重复、功能类别极不平衡，喂给 LLM 当示例只会放大偏置。作者用三步流水线收拾这件事。第一步是 **GO-DAG 剪枝分组**：把基因本体的有向无环图当决策树来剪，用一个随深度自适应的最小支持阈值 $m(d) = \lambda \cdot C_{tot} \cdot (1 + \beta d)$ 决定一个功能类节点要保留多少蛋白才不被砍掉（越深的层允许更小的支持），再配合子节点不平衡比 $\rho(v)$ 把过度倾斜的分支压平。第二步是**双语去冗余**：先用 MMseqs2 以 70% 序列相似度阈值聚类，去掉序列层面的重复；再按蛋白质功能信息含量 $\text{IC}_{\text{protein}}$ 在语义层面采样，避免一堆功能描述雷同的样本。第三步才让 **DeepSeek-R1 出题**，生成属性 QA（11,693 条）、知识 QA、描述性 QA、判断 QA（32,444 条）四类，最终得到 79,926 条蛋白质-自然语言三元组。这样既保住了功能多样性，又把规模和分布控制在适合做上下文示例的状态。
 
-**核心思路**:
-- **GO-DAG 剪枝分组**: 对基因本体 DAG 应用类似决策树剪枝的策略，使用深度自适应最小支持阈值 $m(d) = \lambda \cdot C_{tot} \cdot (1 + \beta d)$ 和子节点不平衡比 $\rho(v)$ 来确定保留的功能类节点
-- **双语去冗余**: 先用 MMseqs2 以 70% 序列相似度阈值聚类去序列冗余；再基于蛋白质功能信息含量 $\text{IC}_{\text{protein}}$ 去功能冗余
-- **LLM 生成 QA**: 用 DeepSeek-R1 生成四种QA类型：属性QA（11,693条）、知识QA、描述性QA、判断QA（32,444条）
+**2. 自适应上下文构造：用序列和文本两把尺子同时挑示例。**
 
-**设计动机**: 直接转换所有 Swiss-Prot 注释会引入严重冗余，且功能类别极不平衡。三步流水线在保多样性的同时控制数据规模。
+零训练框架里，LLM 能不能答对全看喂进去的示例像不像查询蛋白。只按氨基酸序列同源性挑，能找到结构近亲，却抓不住功能语义；只按文本相似度挑，描述对得上、序列模式却对不上。作者干脆做**双标准检索**：一边用 MMseqs2 算氨基酸序列同源性，捕获结构/功能层面的相似信号；一边算描述文本/QA 文本的相似度，提供语义接地。两路召回的候选交给上下文整合模块拼成一段连贯的双语上下文，和查询一起作为 in-context 示例送进冻结的 LLM。消融印证了这两把尺子是互补的——双标准比只用序列同源高 5.2%，比只用文本相似高 2.8%，缺一路都掉点。
 
-#### 2. 自适应上下文构造机制
+**3. 双语上下文学习：把"读蛋白质"做成一次第二语言习得。**
 
-**功能**: 为每个查询蛋白质动态选择最有效的上下文示例。
-
-**核心思路**: 使用**双标准检索**：
-- (i) 氨基酸序列同源性（MMseqs2 计算）——捕获结构/功能相似信号
-- (ii) 描述文本/QA 文本相似度——提供语义接地
-
-检索到的候选经上下文整合模块组装为连贯的双语上下文，与查询一起作为 in-context 示例输入 LLM。
-
-**设计动机**: 单用序列同源性无法捕获功能语义，单用文本相似度缺乏序列模式。消融实验表明，双标准比仅序列同源高 5.2%，比仅文本相似高 2.8%。
-
-#### 3. 双语上下文学习
-
-**功能**: 通过类比推理让 LLM 从示例中推断查询蛋白质的功能。
-
-**核心思路**: 完全模拟第二语言习得过程——LLM 已经掌握自然语言（母语），通过展示"氨基酸序列-功能描述"的配对示例（双语语料），让 LLM 在上下文中推断出序列模式与功能的对应关系，无需任何参数更新。
+最后一步是把整套机制对应到第二语言习得的认知过程：LLM 已经掌握自然语言这门"母语"，作者只要在上下文里反复给它看"氨基酸序列 ↔ 功能描述"的配对（即双语语料），它就能像人类靠母语去推断外语生词那样，在上下文中推断出序列模式和功能之间的对应关系。整个推理不更新任何参数，查询蛋白连同构造好的双语上下文直接输入冻结模型即可输出功能答案——这也是它能在零训练下反超微调模型的关键。
 
 ### 损失函数
 
@@ -148,8 +128,8 @@ tags:
 - [\[ICLR 2026\] Thompson Sampling via Fine-Tuning of LLMs](thompson_sampling_via_fine-tuning_of_llms.md)
 - [\[ICLR 2026\] Tracing Pharmacological Knowledge in Large Language Models](tracing_pharmacological_knowledge_in_large_language_models.md)
 - [\[ICML 2025\] Protein Structure Tokenization: Benchmarking and New Recipe](../../ICML2025/computational_biology/protein_structure_tokenization_benchmarking_and_new_recipe.md)
-- [\[ICML 2025\] Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/computational_biology/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
-- [\[ICLR 2026\] Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
+- [\[ICML 2025\] SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](../../ICML2025/computational_biology/stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
+- [\[ICCV 2025\] MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/computational_biology/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
 
 </div>
 

@@ -44,59 +44,17 @@ tags:
 
 ### 整体框架
 
-给定训练数据 $\mathcal{D}_n$、已训练模型 $\hat{\beta} = A(\mathcal{D}_n)$、待删除子集 $\mathcal{D}_\mathcal{M}$，遗忘算法分两步：
+给定训练数据 $\mathcal{D}_n$、已训练模型 $\hat{\beta} = A(\mathcal{D}_n)$ 与待删除子集 $\mathcal{D}_\mathcal{M}$，本文的遗忘算法只做两件事：先以 $\hat{\beta}$ 为初值对去掉 $\mathcal{M}$ 后的目标 $L_{\setminus\mathcal{M}}$ 走一步 Newton 更新，得到近似解 $\hat{\beta}^{(1)}_{\setminus\mathcal{M}} = \hat{\beta} - G(L_{\setminus\mathcal{M}})^{-1}(\hat{\beta})\, \nabla L_{\setminus\mathcal{M}}(\hat{\beta})$；再叠加一份校准过的高斯噪声 $\tilde{\beta}_{\setminus\mathcal{M}} = \hat{\beta}^{(1)}_{\setminus\mathcal{M}} + b,\ b \sim \mathcal{N}(0, \tfrac{r^2}{\varepsilon^2} I_p)$。论文真正的贡献并不在这两步算法本身，而是换了一把度量隐私的尺子——高斯 trade-off 函数，从而证明在 $p \sim n$ 的高维比例体系下这单步更新就已足够。
 
-1. **近似步 (Newton step)**：以 $\hat{\beta}$ 为初始点，对去除 $\mathcal{M}$ 后的目标函数 $L_{\setminus\mathcal{M}}$ 做一步 Newton 更新：
+### 关键设计
 
-$$\hat{\beta}^{(1)}_{\setminus\mathcal{M}} = \hat{\beta} - G(L_{\setminus\mathcal{M}})^{-1}(\hat{\beta}) \nabla L_{\setminus\mathcal{M}}(\hat{\beta})$$
+**1. $(\phi,\varepsilon)$-Gaussian certifiability (GPAR)：把隐私保证重写成假设检验问题。** 旧框架要求"遗忘后模型"与"重训练模型"在 $\varepsilon$-certifiability 下逐参数接近，而在高维中这会逼迫算法注入不成比例的大噪声、人为破坏精度。本文转而把隐私形式化为一场假设检验：对手观察遗忘后的输出，试图区分"从完整数据重训练后再加噪 ($\mathcal{P}_{re}$)"和"从原模型遗忘后加噪 ($\mathcal{P}_{un}$)"。其最优功效由 trade-off 函数 $T(P,Q)(\alpha) = \inf_{\phi}\{\beta_\phi : \alpha_\phi \leq \alpha\}$ 刻画，并选高斯曲线 $f_{G,\varepsilon}(\alpha) = \Phi(\Phi^{-1}(1-\alpha) - \varepsilon)$ 作为基准；若 $T(\mathcal{P}_{re}, \mathcal{P}_{un})(\alpha) \geq f_{G,\varepsilon}(\alpha)$ 以概率 $\geq 1-\phi$ 成立，就称算法满足 $(\phi,\varepsilon)$-GPAR。之所以高斯曲线是高维下的规范选择：对任意 $p$ 维高斯向量，trade-off 只取决于均值差的 $\ell_2$ 范数除以标准差，与维度 $p$ 无关；广泛的各向同性对数凹噪声在 $p \to \infty$ 时按差分隐私的中心极限定理收敛到高斯行为；而在 Blackwell 排序意义下高斯 trade-off 曲线又是捕获高斯机制最紧的方式，先前所有 certifiability 概念（$\varepsilon$-$\delta$、Rényi 等）在高斯机制下都只是次优。
 
-2. **随机化步 (Noise injection)**：添加校准高斯噪声：
+**2. 广义误差散度 (GED)：在高维下稳定地度量精度损失。** 精度这一侧不能再沿用 Sekhari et al. (2021) 那种相对真实总体风险最小化器的 excess risk——它在 $p \sim n$ 时行为不稳。本文改用 GED，直接比较遗忘模型与理想重训练模型在一个新样本上的预测损失差：$\text{GED}_\ell(A, \bar{A}; \mathcal{M}, \mathcal{D}_n) = \mathbb{E}\big[\,|\ell(y_0 \mid x_0^\top A(\mathcal{D}_{\setminus\mathcal{M}})) - \ell(y_0 \mid x_0^\top \tilde{\beta}_{\setminus\mathcal{M}})| \mid \mathcal{D}_n\,\big]$。这个量绕开了对真实最优解的依赖，因而在高维比例体系下行为更稳，能干净地作为"遗忘是否伤精度"的判据。
 
-$$\tilde{\beta}_{\setminus\mathcal{M}} = \hat{\beta}^{(1)}_{\setminus\mathcal{M}} + b, \quad b \sim \mathcal{N}(0, \frac{r^2}{\varepsilon^2} I_p)$$
+**3. 放松的优化假设：让证明覆盖真正高维的损失。** 旧证明依赖 per-example loss $f(\beta, z_i)$ 同时满足 $\Omega(1)$ 强凸与 $O(1)$ 光滑，而 Ridge 这类模型在 $p \sim n$ 时这对要求会自相矛盾。本文把假设挪到整体目标上：损失 $\ell$ 凸、正则化 $r$ 取 $\nu$-强凸且 $\nu = \Theta(1)$，$\ell$ 与 $r$ 三阶可微且多项式增长，特征 $x_i$ 亚高斯、响应 $y_i$ 有亚多项对数矩。这套更宽松的条件不再要求逐样本强凸，因而一举覆盖 Ridge 回归、Logistic 回归、Poisson 回归等广义线性模型。
 
-### 关键设计 1: $(\phi,\varepsilon)$-Gaussian Certifiability (GPAR)
-
-核心思想是将遗忘的隐私保证形式化为假设检验问题：对手观察遗忘后的模型输出，试图区分"从完整数据重训练后再加噪"和"从原模型遗忘后加噪"。定义 trade-off 函数：
-
-$$T(P,Q)(\alpha) = \inf_{\phi}\{\beta_\phi : \alpha_\phi \leq \alpha\}$$
-
-选择高斯 trade-off 曲线作为基准：
-
-$$f_{G,\varepsilon}(\alpha) = \Phi(\Phi^{-1}(1-\alpha) - \varepsilon)$$
-
-如果遗忘算法满足 $T(\mathcal{P}_{re}, \mathcal{P}_{un})(\alpha) \geq f_{G,\varepsilon}(\alpha)$ 以概率 $\geq 1-\phi$ 成立，则称满足 $(\phi,\varepsilon)$-GPAR。GPAR 的优势：
-
-- **维度无关性**：对任意 $p$ 维高斯向量，trade-off 仅取决于均值差的 $\ell_2$ 范数除以标准差，与维度无关
-- **规范性**：广泛的各向同性对数凹噪声在 $p \to \infty$ 时收敛到高斯行为 (CLT for DP)
-- **最紧性**：在 Blackwell 排序意义下，高斯 trade-off 曲线是捕获高斯机制的最紧方式
-- **先前所有 certifiability 概念（$\varepsilon$-$\delta$、Rényi 等）在高斯机制下均为次优**
-
-### 关键设计 2: 广义误差散度 (GED)
-
-量化遗忘后模型与理想重训练模型在新数据上的泛化差异：
-
-$$\text{GED}_\ell(A, \bar{A}; \mathcal{M}, \mathcal{D}_n) = \mathbb{E}[|\ell(y_0 | x_0^\top A(\mathcal{D}_{\setminus\mathcal{M}})) - \ell(y_0 | x_0^\top \tilde{\beta}_{\setminus\mathcal{M}})| \mid \mathcal{D}_n]$$
-
-相比 Sekhari et al. (2021) 使用的基于真实总体风险最小化器的 excess risk，GED 在高维比例体系下行为更稳定。
-
-### 关键设计 3: 放松的优化假设
-
-不要求 per-example loss $f(\beta, z_i)$ 满足 $\Omega(1)$ 强凸和 $O(1)$ 光滑，而是：
-
-- 损失 $\ell$ 凸、正则化 $r$ 强凸 ($\nu$-strongly convex, $\nu = \Theta(1)$)
-- $\ell$ 和 $r$ 三阶可微，多项式增长
-- 特征 $x_i$ 为亚高斯、响应 $y_i$ 有亚多项对数矩
-- 覆盖 Ridge 回归、Logistic 回归、Poisson 回归等广泛模型类
-
-### 核心理论结果
-
-**定理 2 (隐私)**：在上述假设下，噪声方差设为 $r^2/\varepsilon^2$ 其中 $r = C_1(n)\sqrt{C_2(n)m^3/(2\lambda\nu n)}$，单步 Newton 遗忘满足 $(\phi_n, \varepsilon)$-GPAR，且 $\phi_n \to 0$。
-
-**定理 3 (精度)**：在相同设置下，GED 满足：
-
-$$\text{GED}(\tilde{\beta}_{\setminus\mathcal{M}}, \hat{\beta}_{\setminus\mathcal{M}}) = O_p\left(\frac{m^2 \cdot \text{polylog}(n)}{\sqrt{n}}\right)$$
-
-当 $m = o(n^{1/4-\alpha})$ 时 GED → 0，即可同时删除 $m$ 个数据点且保持精度。
+**4. 单步遗忘的隐私-精度双保证：把噪声标定到刚好够用。** 在上述假设下，论文把噪声方差精确标定为 $r^2/\varepsilon^2$，其中 $r = C_1(n)\sqrt{C_2(n)\, m^3/(2\lambda\nu n)}$。隐私侧（定理 2）证明单步 Newton 遗忘满足 $(\phi_n, \varepsilon)$-GPAR 且失败概率 $\phi_n \to 0$；精度侧（定理 3）证明 $\text{GED}(\tilde{\beta}_{\setminus\mathcal{M}}, \hat{\beta}_{\setminus\mathcal{M}}) = O_p\big(\tfrac{m^2 \cdot \text{polylog}(n)}{\sqrt{n}}\big)$，当删除规模 $m = o(n^{1/4-\alpha})$ 时 GED $\to 0$。两条定理合起来意味着：只要用高斯而非 Laplace 噪声，一步 Newton 就能同时删掉 $m$ 个数据点并保住精度——这正是推翻"至少需两步"结论的关键，差异完全来自 certifiability 定义而非迭代次数。
 
 ## 实验关键数据
 

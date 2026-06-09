@@ -46,33 +46,23 @@ tags:
 
 ### 整体框架
 
-框架基于 Student-Teacher 架构，包含以下组件：
-- **Student 生成器** $\mathcal{G}_\theta$：通过梯度下降训练，产生对抗扰动
-- **Teacher 生成器** $\mathcal{G}_{\theta'}$：通过 EMA 更新权重，提供时间平滑的特征参考
-- **冻结的代理模型**：提供对抗监督信号
-- **扰动投影器** $\mathcal{P}$：确保扰动满足 $\ell_\infty$ 约束
+方法围绕一个 Student-Teacher 双生成器结构展开：Student 生成器 $\mathcal{G}_\theta$ 通过梯度下降照常训练并产出对抗扰动，Teacher 生成器 $\mathcal{G}_{\theta'}$ 则用指数移动平均（EMA）镜像 Student、提供一份随时间平滑的特征参考；训练时还有一个冻结的代理模型提供对抗监督、一个扰动投影器 $\mathcal{P}$ 把扰动约束在 $\ell_\infty$ 球内。整套机制的落脚点很明确——在生成器最靠输入的早期块上，让 Student 向 Teacher 看齐，把那里尚未退化的粗糙语义结构保住，再让后续层的扰动去填充物体显著区域。
 
 ### 关键设计
 
-1. **Mean Teacher 特征平滑**：维护两个生成器——Student（梯度下降训练）和 Teacher（EMA 更新）。Teacher 的参数通过指数移动平均更新：$\theta' \leftarrow \eta\theta + (1-\eta)\theta$（$\eta=0.999$）。EMA 更新平滑了高频扰动伪影，增强了 Teacher 中间特征图的语义一致性和稳定性，为 Student 提供可靠的语义参考。
+**1. Mean Teacher 特征平滑：给"语义参考"去噪。** 直接拿当前 Student 自己的中间特征做对齐目标并不可靠，因为对抗训练本身会让特征图夹带大量高频扰动伪影，参考目标会随训练剧烈抖动。方法因此引入一个 Teacher 生成器，其权重不参与反传，而是用 EMA 跟随 Student：$\theta' \leftarrow \eta\theta' + (1-\eta)\theta$，动量 $\eta=0.999$。如此高的动量意味着 Teacher 是 Student 历史轨迹的长期平均，单步扰动伪影被抹平，留下的是稳定且语义连贯的中间特征图，正好充当 Student 自我对齐时的"干净锚点"。
 
-2. **自特征蒸馏（Self-Feature Distillation）**：在生成器的早期块（$L_{\text{early}}=\{1,2\}$）上，通过铰链损失（hinge-based loss）强制 Student 的早期激活与 Teacher 的语义丰富特征对齐：
+**2. 自特征蒸馏：只在早期块锁住语义。** 既然观察表明早期块（实验取 $L_{\text{early}}=\{1,2\}$）保留了最多语义、而中后期块语义随扰动累积流失，蒸馏就只施加在早期块上，逼 Student 的早期激活逼近 Teacher 的语义丰富特征。对齐用余弦相似度加一个铰链（hinge）形式：
 
 $$\mathcal{L}_{\text{distill}} = \sum_{\ell=1}^{L_{\text{early}}} \mathcal{W}_{\text{distill}} \max(0, \tau - \cos(\mathbf{g}_s^{(\ell)}, \mathbf{g}_t^{(\ell)}))$$
 
-其中 $\cos(\cdot,\cdot)$ 是余弦相似度，$\tau=0.6$ 是相似度阈值，$\mathcal{W}_{\text{distill}}$ 是可学习的softmax权重参数。
+其中 $\mathbf{g}_s^{(\ell)}$、$\mathbf{g}_t^{(\ell)}$ 分别是 Student 与 Teacher 在第 $\ell$ 块的激活，$\tau=0.6$ 是相似度阈值，$\mathcal{W}_{\text{distill}}$ 是可学习的 softmax 权重。铰链项的作用是只在相似度低于 $\tau$ 时才惩罚——一旦语义已对齐到足够程度就放手，避免过度约束削弱攻击强度；可学习权重则让模型自行决定两个早期块各拉多紧。
 
-3. **新评估指标 ACR**：提出 Accidental Correction Rate（偶然纠正率），捕获攻击过程中意外被纠正的预测，提供更全面的攻击效能评估。
+**3. ACR 指标：把"帮倒忙"的攻击算进账。** 传统评估只看攻击是否让预测出错，却忽略了攻击有时反而把原本错的预测"修正"成对的情况，这会高估攻击的真实破坏力。方法提出 Accidental Correction Rate（偶然纠正率，ACR），专门统计攻击过程中这类被意外纠正的样本占比，ACR 越低说明攻击越"纯粹"地在破坏而非误打误撞地帮忙，从而给攻击效能一个更诚实的刻画。
 
 ### 损失函数 / 训练策略
 
-对抗损失采用代理特征空间中的余弦相似度：
-$$\mathcal{L}_{\text{adv}} = \cos(\mathcal{F}_k(x), \mathcal{F}_k(x^{adv}))$$
-
-最终损失为：
-$$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{distill}} \cdot \mathcal{L}_{\text{distill}}$$
-
-其中 $\lambda_{\text{distill}}=0.7$，使用 VGG-16 的第16层（Maxpooling.3）作为代理特征，在 ImageNet-1K 上训练，扰动预算 $\epsilon=10$。
+对抗监督沿用代理特征空间的余弦相似度，让对抗样本 $x^{adv}$ 的代理特征尽量偏离干净样本 $x$：$\mathcal{L}_{\text{adv}} = \cos(\mathcal{F}_k(x), \mathcal{F}_k(x^{adv}))$。总损失把对抗项与蒸馏项加权相加，$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{distill}} \cdot \mathcal{L}_{\text{distill}}$，权重 $\lambda_{\text{distill}}=0.7$。代理特征取 VGG-16 第 16 层（Maxpooling.3），在 ImageNet-1K 上训练，扰动预算 $\epsilon=10$。由于蒸馏只动 Student 自身的早期特征、不需要额外标注或外部模型，整套方案可作为即插即用模块叠加到任何现有生成式攻击基线上。
 
 ## 实验关键数据
 
@@ -144,11 +134,11 @@ $$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{distill}} \cdot \mathc
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](../../NeurIPS2025/audio_speech/from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [\[ICLR 2026\] AVERE: Improving Audiovisual Emotion Reasoning with Preference Optimization](avere_improving_audiovisual_emotion_reasoning_with_preference_optimization.md)
 - [\[ICLR 2026\] Discovering and Steering Interpretable Concepts in Large Generative Music Models](discovering_and_steering_interpretable_concepts_in_large_generative_music_models.md)
 - [\[ACL 2026\] Retrieving to Recover: Towards Incomplete Audio-Visual Question Answering via Semantic-consistent Purification](../../ACL2026/audio_speech/retrieving_to_recover_towards_incomplete_audio-visual_question_answering_via_sem.md)
 - [\[AAAI 2026\] Aligning Generative Music AI with Human Preferences: Methods and Challenges](../../AAAI2026/audio_speech/aligning_generative_music_ai_with_human_preferences_methods_and_challenges.md)
-- [\[NeurIPS 2025\] Accelerate Creation of Product Claims Using Generative AI](../../NeurIPS2025/audio_speech/accelerate_creation_of_product_claims_using_generative_ai.md)
-- [\[ACL 2026\] SpeakerSleuth: Can Large Audio-Language Models Judge Speaker Consistency across Multi-turn Dialogues?](../../ACL2026/audio_speech/speakersleuth_can_large_audio-language_models_judge_speaker_consistency_across_m.md)
 
 </div>
 

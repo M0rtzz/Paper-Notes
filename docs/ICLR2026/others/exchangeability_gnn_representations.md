@@ -41,28 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Pipeline: GNN 编码器 → 节点嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{n \times D}$ → 每个维度 $d$ 独立排序得到 $\mathbf{v}_d = \text{sort}(\mathbf{X}_{:,d})$ → 随机 Fourier 特征映射 $\mathbf{t}_d = F(\mathbf{v}_d)$ → 随机超平面 LSH 哈希 $\mathbf{h}_d = \text{sign}(\mathbf{W}\mathbf{t}_d)$ → 每个维度独立查检索桶，聚合投票。
+这篇论文要解决的是大规模图检索的瓶颈：图间相似度（子图匹配、图编辑距离）本质上是定义在节点嵌入集合上的最优传输距离，算一次就要 $O(n^3)$，语料库一大就跑不动；而高效的向量 ANN 方法又只认欧氏距离，接不上传输距离。作者的破局点是先发现一个性质——训练好的 GNN 节点嵌入沿**特征维度**是可交换的——再用它把昂贵的传输距离改写成可被 LSH 加速的欧氏距离。
+
+整条流水线这样转：一张图先过 GNN 编码器得到节点嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{n \times D}$；接着对**每个特征维度 $d$ 各自独立排序**，得到 $\mathbf{v}_d = \text{sort}(\mathbf{X}_{:,d})$；排序后的向量过随机 Fourier 特征映射 $\mathbf{t}_d = F(\mathbf{v}_d)$，再用随机超平面 LSH 得到哈希码 $\mathbf{h}_d = \text{sign}(\mathbf{W}\mathbf{t}_d)$；查询时每个维度各自查自己的检索桶，最后把 $D$ 个维度的投票聚合起来。可交换性是地基，维度排序是把传输距离降为欧氏距离的桥，GraphHash 则是落地的索引结构。
 
 ### 关键设计
-1. **可交换性发现与证明**:
-    - 功能：证明在标准训练条件下（i.i.d. 初始化 + 置换不变损失 + 等变优化器），GNN 节点嵌入矩阵 $\mathbf{X}$ 的特征维度是可交换随机变量
-    - 核心思路：如果初始参数 $\theta_0$ 的各维度是 i.i.d. 的，则由 Lemma 2（置换诱导变换 $\Gamma_\pi$），SGD 更新保持等变性 $\theta_t(\pi) = \Gamma_\pi(\theta_t)$，最终 $p(\mathbf{X}) = p(\mathbf{X}\pi)$。关键引理链：初始化可交换 → 梯度等变 → 更新等变 → 嵌入可交换（Theorem 5）
-    - 设计动机：这不是对 GNN 的新约束，而是发现现有 GNN 在标准训练下自然具有的对称性。且该性质在 BatchNorm、LayerNorm、Dropout、Adam/Adagrad 等现代组件下仍然成立（作者在 rebuttal 中补充了详细证明）
 
-2. **维度排序近似传输距离**:
-    - 功能：利用可交换性，将 $D$ 维传输距离 $\text{sim}(\mathbf{G}_c, \mathbf{G}_q)$ 分解为 $D$ 个一维排序问题的和：$\text{sim}(\mathbf{G}_c, \mathbf{G}_q) \approx \frac{1}{D}\sum_{d=1}^D \text{sim}_d(\mathbf{G}_c, \mathbf{G}_q)$
-    - 核心思路：由可交换性，每个维度 $d$ 的边际分布相同。在每个维度内独立排序后计算欧氏距离，等价于求解一维最优传输（一维 Wasserstein 距离 = 排序后的 L1 距离）。近似误差由 Proposition 7 给出，$\Pr(|\frac{\text{sim}}{D} - \text{sim}_d| \geq \epsilon)$ 以 $O(1/D)$ 速率收敛。即使维度间存在依赖，因嵌入 $L_2$-有界，仍保持 $O(1/D)$ 收敛
-    - 设计动机：将 $D$ 维组合优化问题拆解为 $D$ 个可并行化的一维排序问题，计算量从 $O(n^3 D)$ 降至 $O(nD \log n)$
+**1. 可交换性发现与证明：现有 GNN 在标准训练下自然就有的维度对称性。**
 
-3. **GraphHash: LSH 框架**:
-    - 功能：对排序后的嵌入做 Fourier 特征映射 + 随机超平面 LSH，实现子线性查询
-    - 核心思路：对每维 $d$ 的排序嵌入 $\mathbf{v}_d$，计算随机 Fourier 特征 $\mathbf{t}_d = [\cos(\omega_j^T \mathbf{v}_d + b_j)]_{j=1}^M$（$M=10$），哈希码 $\mathbf{h}_d = \text{sign}(\mathbf{W}\mathbf{t}_d)$。查询时间 $O(|C|^\gamma)$，其中 $\gamma = \frac{\log(1/p)}{\log(1/p')} < 1$
-    - 设计动机：Fourier 特征将排序嵌入映射到希尔伯特空间使欧氏距离有意义，随机超平面 LSH 理论保证在高相似度区域有更高碰撞概率。空间复杂度仅 $O(D|C|)$，100K 图仅需 3.5MB
+传输距离贵，根源在于它要在嵌入集合之间做对齐。作者绕开"重新设计 GNN"这条路，转而证明现成的 GNN 已经藏着可利用的结构：在标准训练条件下（i.i.d. 初始化 + 置换不变损失 + 等变优化器），节点嵌入矩阵 $\mathbf{X}$ 的特征维度本身就是一组可交换随机变量，即 $p(\mathbf{X}) = p(\mathbf{X}\pi)$ 对任意维度排列 $\pi$ 成立。
 
-### 理论保证
-- Theorem 5: 在标准条件下 GNN 嵌入可交换性成立
-- Proposition 7: 近似误差以 $O(1/D)$ 收敛，且与维度间依赖无关
-- Theorem 18: LSH 碰撞概率满足 $(p, p', r_1, r_2)$-敏感性
+证明走的是一条引理链：若初始参数 $\theta_0$ 的各维度是 i.i.d. 的，则由 Lemma 2 的置换诱导变换 $\Gamma_\pi$，SGD 的每步更新都保持等变性 $\theta_t(\pi) = \Gamma_\pi(\theta_t)$，于是"初始化可交换 → 梯度等变 → 更新等变 → 嵌入可交换"一路推到 Theorem 5。值得强调的是这不是对 GNN 加的新约束，而是揭示它本就具备、此前没人注意到的对称性；而且该性质在 BatchNorm、LayerNorm、Dropout、Adam/Adagrad 等现代组件下依然成立（作者在 rebuttal 中补了详细证明）。
+
+**2. 维度排序近似传输距离：把 $D$ 维组合优化拆成 $D$ 个一维排序。**
+
+有了可交换性，每个维度 $d$ 的边际分布都相同，这就允许把 $D$ 维的传输距离 $\text{sim}(\mathbf{G}_c, \mathbf{G}_q)$ 拆解成 $D$ 个一维子问题的平均：
+
+$$\text{sim}(\mathbf{G}_c, \mathbf{G}_q) \approx \frac{1}{D}\sum_{d=1}^D \text{sim}_d(\mathbf{G}_c, \mathbf{G}_q)$$
+
+关键在于一维情形下最优传输有闭式解——一维 Wasserstein 距离恰好等于两组值**排序后**的 L1 距离，所以每个维度内只要各自排序再算欧氏距离即可，不必再解组合对齐。精度由 Proposition 7 兜底：$\Pr(|\frac{\text{sim}}{D} - \text{sim}_d| \geq \epsilon)$ 以 $O(1/D)$ 的速率收敛，且即便维度间存在依赖，只要嵌入 $L_2$-有界，这个 $O(1/D)$ 的收敛仍然保持——维度越多，近似越准。代价上，计算量从 $O(n^3 D)$ 直接降到 $O(nD \log n)$，而且 $D$ 个排序天然可并行。
+
+**3. GraphHash：把排序嵌入接进 LSH 实现子线性查询。**
+
+排序后的欧氏距离虽然好算，但要做到子线性检索还得套一层 LSH。对每维 $d$ 的排序嵌入 $\mathbf{v}_d$，先算随机 Fourier 特征 $\mathbf{t}_d = [\cos(\omega_j^T \mathbf{v}_d + b_j)]_{j=1}^M$（$M=10$），把它映到希尔伯特空间让欧氏距离变得有意义，再用随机超平面得到哈希码 $\mathbf{h}_d = \text{sign}(\mathbf{W}\mathbf{t}_d)$。随机超平面 LSH 的理论（Theorem 18，给出 $(p, p', r_1, r_2)$-敏感性）保证高相似度的图对有更高碰撞概率，于是查询时间降到 $O(|C|^\gamma)$，其中 $\gamma = \frac{\log(1/p)}{\log(1/p')} < 1$。空间上也很省，复杂度仅 $O(D|C|)$，10 万张图只占 3.5MB。
 
 ## 实验关键数据
 
@@ -127,9 +128,9 @@ Pipeline: GNN 编码器 → 节点嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{n \ti
 
 - [\[AAAI 2026\] LeanRAG: Knowledge-Graph-Based Generation with Semantic Aggregation and Hierarchical Retrieval](../../AAAI2026/others/leanrag_knowledge-graph-based_generation_with_semantic_aggregation_and_hierarchi.md)
 - [\[ICLR 2026\] Addressing Divergent Representations from Causal Interventions on Neural Networks](addressing_divergent_representations_causal.md)
+- [\[ICLR 2026\] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations](function_spaces_without_kernels_learning_compact_hilbert_space_representations.md)
 - [\[ICML 2026\] Continual Learning of Domain-Invariant Representations](../../ICML2026/others/continual_learning_of_domain-invariant_representations.md)
 - [\[ICLR 2026\] Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
-- [\[ICML 2025\] On the Importance of Gaussianizing Representations](../../ICML2025/others/on_the_importance_of_gaussianizing_representations.md)
 
 </div>
 

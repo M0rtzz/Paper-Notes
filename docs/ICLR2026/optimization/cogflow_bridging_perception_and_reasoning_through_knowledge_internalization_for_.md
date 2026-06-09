@@ -46,35 +46,32 @@ CogFlow 提出认知启发的三阶段视觉数学推理框架（感知→内化
 ## 方法详解
 
 ### 整体框架
-三阶段认知流：**❶感知**（用 Synergistic Visual Rewards 增强）→ **❷内化**（用 Knowledge Internalization Reward 桥接）→ **❸推理**（用 Visual-Gated Policy Optimization 锚定）。训练分 SFT + RL 两阶段。
+CogFlow 把视觉数学求解拆成一条三阶段认知流：先**感知**（从图里读出几何图元、坐标、文字标注），再**内化**（把零散感知结果整理成结构化的可推理知识），最后**推理**（基于内化后的知识一步步算出答案）。和以往"解耦管线"最大的不同在于，它不只关心每一阶段单独做得好不好，而是用三个针对性的奖励把"感知→内化→推理"这条链拧紧：SynVRs 管感知阶段的质量、IntlzR 管推理是否忠于感知、VGPO 在训练和推理时挡掉低质量感知。整套模型先做 SFT 冷启动，再用 GRPO 做三重奖励的 RL 微调。
 
 ### 关键设计
 
-1. **Synergistic Visual Rewards (SynVRs)**:
+**1. Synergistic Visual Rewards（SynVRs）：从参数和语义两个空间双重打分感知质量。**
 
-    - 功能：从参数空间和语义空间双重评估感知质量
-    - 核心思路：
-        - **VPR**：将几何图元转为参数方程，用匈牙利匹配 + 欧氏距离在参数空间精确评分
-        - **VSR**：从文本感知输出重新渲染图像，用 FG-CLIP 与原图计算余弦相似度评估全局布局一致性
-        - 最终分数 $\mathcal{S}_{SynVRs} = \alpha \cdot \mathcal{S}_{VPR} + (1-\alpha) \cdot \mathcal{S}_{VSR}$
-    - 设计动机：VPR 保证局部几何精度，VSR 保证全局感知一致性；两者互补避免单一指标的盲区
+要把感知阶段练好，得先有一个能判断"图读对没读对"的奖励，但单一指标都有盲区。SynVRs 把感知评分拆成互补的两路：VPR（Visual Parametric Reward）走几何精度路线，把识别出的图元（线段、圆、点）转成参数方程，再用匈牙利匹配把预测图元和真值图元对上，按参数空间的欧氏距离打分，保证每个局部图元的位置/形状都准；VSR（Visual Semantic Reward）走语义一致路线，把模型输出的文本化感知结果重新渲染成一张图，用 FG-CLIP 算它和原图的余弦相似度，从全局布局上检查"整张图的关系有没有读串"。两路加权合成最终感知分
 
-2. **Knowledge Internalization Reward (IntlzR)**:
+$$\mathcal{S}_{SynVRs} = \alpha \cdot \mathcal{S}_{VPR} + (1-\alpha) \cdot \mathcal{S}_{VSR}$$
 
-    - 功能：训练一个奖励模型检测推理是否忠于感知
-    - 核心思路：构造正-负轨迹对（1正+5负），负样本覆盖 5 种典型失败模式（遗漏图元、捏造事实、滥用定理、违反几何约束、不一致引用）。用 Softmax-DPO 训练：$\mathcal{L} = -\log \sigma(-\log \sum_j \exp(s_j^- - s^+))$，同时对比一个正样本和多个负样本。
-    - 设计动机：现有方法只关注感知是否准确，忽视了感知结果是否被正确使用——IntlzR 填补了这个空白
+VPR 抓局部几何精度、VSR 抓全局感知一致性，相互补位，避免任何单一指标被钻空子。
 
-3. **Visual-Gated Policy Optimization (VGPO)**:
+**2. Knowledge Internalization Reward（IntlzR）：训一个奖励模型，专门检测推理有没有忠于感知。**
 
-    - 功能：在 RL 训练和推理时过滤低质量感知后再生成推理
-    - 核心思路：对每个输入采样 M 条感知轨迹，用 $S_{vis}$ 评分（训练时 VPR+VSR，推理时仅 VSR）。Visual Gate $\Gamma$ 选择第一个超过阈值 $\tau$ 的感知，或取最高分的。通过的感知才用于条件推理生成。
-    - 设计动机：防止低质量感知"污染"后续推理——即使 RL 优化推理能力，如果感知输入错误，推理再好也没用
+这是全文针对"reasoning drift"（感知看对了、推理却走捷径）的核心补丁——以往方法只盯感知准不准，没人管感知结果是否被推理正确地用上了。IntlzR 训练一个奖励模型来识别这种背离：对每条样本构造 1 正 + 5 负的轨迹对，5 条负样本刻意覆盖五种典型失败模式（遗漏图元、捏造事实、滥用定理、违反几何约束、不一致引用），让奖励模型学会把"忠于感知的推理"和这五类漂移区分开。训练用 Softmax-DPO，让一个正样本同时对比多个负样本：
+
+$$\mathcal{L} = -\log \sigma\!\left(-\log \sum_j \exp(s_j^- - s^+)\right)$$
+
+其中 $s^+$、$s_j^-$ 分别是正、负轨迹的打分。这样得到的 IntlzR 就成了 RL 阶段衡量"内化忠实度"的奖励信号，填上了感知和推理之间一直缺的那块桥。
+
+**3. Visual-Gated Policy Optimization（VGPO）：先过滤掉低质量感知，再让推理基于它生成。**
+
+就算推理能力被 RL 练得再强，喂进去的感知是错的，推理也只能错得更自信。VGPO 在感知和推理之间加了一道"质量门"：对每个输入先采样 $M$ 条感知轨迹，用 $S_{vis}$ 给它们打分（训练时用 VPR+VSR，推理时无真值、只用 VSR），再由 Visual Gate $\Gamma$ 选出第一条超过阈值 $\tau$ 的感知（都不过阈值就取最高分那条）。只有通过门控的感知才会作为条件去生成推理，从而把"低质量感知污染下游推理"的路径直接掐断，让 RL 优化出的推理能力建立在可靠的感知输入之上。
 
 ### 损失函数 / 训练策略
-- **SFT 阶段**：在 MathCog-SFT（120K+样本）上标准 SFT
-- **RL 阶段**：三重奖励组合——SynVRs（感知质量）+ IntlzR（内化忠实度）+ InfR（答案正确性），基于 GRPO 优化
-- **MathCog 数据集**：120K+ 感知-推理对齐的高质量标注
+训练分两阶段。SFT 阶段在 MathCog-SFT（120K+ 感知-推理对齐样本）上做标准监督微调做冷启动；RL 阶段用 GRPO 优化，奖励是三者的组合——SynVRs（感知质量）+ IntlzR（内化忠实度）+ InfR（答案正确性），分别约束三个认知阶段。配套的 MathCog 数据集提供 120K+ 条高质量的感知-推理对齐标注。
 
 ## 实验关键数据
 
@@ -132,9 +129,9 @@ CogFlow 提出认知启发的三阶段视觉数学推理框架（感知→内化
 
 - [\[AAAI 2026\] GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets](../../AAAI2026/optimization/ghost_solving_the_traveling_salesman_problem_on_graphs_of_convex_sets.md)
 - [\[NeurIPS 2025\] AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving](../../NeurIPS2025/optimization/autoopt_a_dataset_and_a_unified_framework_for_automating_optimization_problem_so.md)
-- [\[ICLR 2026\] Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning](scaf-grpo_scaffolded_group_relative_policy_optimization_for_enhancing_llm_reason.md)
-- [\[NeurIPS 2025\] A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning](../../NeurIPS2025/optimization/a_theoretical_study_on_bridging_internal_probability_and_sel.md)
 - [\[ICLR 2026\] Learning to Solve Orienteering Problem with Time Windows and Variable Profits](learning_to_solve_orienteering_problem_with_time_windows_and_variable_profits.md)
+- [\[ICML 2026\] Towards Understanding Continual Factual Knowledge Acquisition of Language Models: From Theory to Algorithm](../../ICML2026/optimization/towards_understanding_continual_factual_knowledge_acquisition_of_language_models.md)
+- [\[ICML 2026\] Asymmetric Perturbation in Solving Bilinear Saddle-Point Optimization](../../ICML2026/optimization/asymmetric_perturbation_in_solving_bilinear_saddle-point_optimization.md)
 
 </div>
 

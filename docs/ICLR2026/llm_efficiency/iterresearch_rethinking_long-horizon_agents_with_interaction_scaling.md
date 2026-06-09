@@ -40,26 +40,17 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 
 ### 关键设计
 
-1. **迭代工作区重构 (Iterative Workspace Reconstruction)**:
+**1. 迭代工作区重构：让状态维度从 $O(t)$ 塌缩到 $O(1)$。**
 
-    - 功能：保持Agent工作区大小恒定而非线性增长
-    - 核心思路：状态 $s_t = (q, \mathcal{M}_t, \{a_{t-1}, \text{TR}_{t-1}\})$ 包含三部分——固定的问题 $q$、进化报告 $\mathcal{M}_t$（压缩后的历史发现）、上一步的动作结果。每步决策 $d_t = [\text{Think}_t, \mathcal{M}_{t+1}, a_t]$，转移函数重构工作区：$s_{t+1} = (q, \mathcal{M}_{t+1}, \{a_t, \text{TR}_t\})$。历史轨迹被"策略性遗忘"，仅通过报告保留
-    - 对比：单上下文范式 $|s_t| \propto O(t)$，IterResearch $|s_t| \approx O(1)$
-    - 设计动机：报告由LLM自然生成，利用其信息压缩和相关性过滤能力，无需额外算法干预
+针对单上下文范式"越走越窒息、噪声永久残留"的痛点，IterResearch 不再把每轮的检索和推理堆进同一个膨胀窗口，而是每一轮都重建一个大小恒定的工作区。轮 $t$ 的状态 $s_t = (q, \mathcal{M}_t, \{a_{t-1}, \text{TR}_{t-1}\})$ 只装三样东西：固定不变的问题 $q$、进化报告 $\mathcal{M}_t$（把历史发现压缩成的一份动态文档）、以及上一步的动作及其返回结果。Agent 每步产出决策 $d_t = [\text{Think}_t, \mathcal{M}_{t+1}, a_t]$——先思考、再把新发现写进更新后的报告、最后发出动作；转移函数随即丢弃历史轨迹、重构出 $s_{t+1} = (q, \mathcal{M}_{t+1}, \{a_t, \text{TR}_t\})$。这样单上下文范式里 $|s_t| \propto O(t)$ 的线性膨胀，在这里被压成 $|s_t| \approx O(1)$。关键在于报告本身由 LLM 自然生成，直接复用它的信息压缩和相关性过滤能力——"策略性遗忘"不需要任何额外算法，过期轨迹被忘掉，有价值的发现通过报告滚动保留。
 
-2. **效率感知策略优化 (EAPO)**:
+**2. 效率感知策略优化（EAPO）：训练 Agent 快而准地探索，而不是无止境地搜。**
 
-    - 功能：训练Agent高效探索而非漫无目的地搜索
-    - 核心思路（两个组件）：
-        - *几何折扣奖励*：$r_t = \gamma^{T-t} \cdot R_T$，越快得到正确答案，每步获得的奖励越高，创造隐式效率压力
-        - *自适应下采样*：由于迭代范式每条轨迹自然分解为多个训练样本（每轮一个），不同问题的样本数量不一致。将总样本数截断为数据并行(DP) size的最大倍数：$|\mathcal{C}_{\text{train}}| = \lfloor|\mathcal{C}|/\text{DP}_{\text{size}}\rfloor \times \text{DP}_{\text{size}}$
-    - 基于GSPO算法实现，训练目标包含PPO风格的clip和group内优势归一化
+光有恒定工作区还不够，如果 Agent 学不会"尽早收敛"，它仍会把交互预算浪费在漫无目的的检索上。EAPO 用两个组件施加效率压力。其一是几何折扣奖励 $r_t = \gamma^{T-t} \cdot R_T$：终局奖励 $R_T$ 沿轨迹向前按 $\gamma$ 折扣，越靠后的步骤折扣越狠，于是越快拿到正确答案、每一步分到的奖励就越高，形成一种隐式的"快点结束"压力。其二是自适应下采样：迭代范式下每条轨迹会自然拆成多个训练样本（每轮算一个），不同问题拆出的样本数参差不齐，因此把总样本数截断到数据并行（DP）size 的最大整数倍 $|\mathcal{C}_{\text{train}}| = \lfloor|\mathcal{C}|/\text{DP}_{\text{size}}\rfloor \times \text{DP}_{\text{size}}$，保证各 DP rank 负载均衡。整套优化基于 GSPO 算法实现，训练目标沿用 PPO 风格的 clip 和 group 内优势归一化。
 
-3. **两阶段训练流程**:
+**3. 两阶段训练：先学会范式，再学会策略。**
 
-    - Stage 1 *RFT*：拒绝采样微调，让模型学会迭代范式的基本能力
-    - Stage 2 *RL*：基于EAPO进一步优化搜索策略和推理能力
-    - 骨干：Qwen3-30B-A3B（在性能和效率间平衡）
+模型分两步成型。第一阶段 RFT（拒绝采样微调）让 Qwen3-30B-A3B 骨干先掌握迭代范式的基本动作——怎么读报告、怎么更新报告、怎么发动作；第二阶段 RL 再用 EAPO 优化搜索策略与推理深度，把"会用"打磨成"用得高效"。选 Qwen3-30B-A3B 这个 MoE 骨干，是为了在性能和推理效率之间取得平衡。
 
 ### 三个核心发现
 - **交互扩展 (Interaction Scaling)**：2→2048次交互，BrowseComp准确率从3.5%→42.5%
@@ -123,9 +114,9 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 
 - [\[ICLR 2026\] Universe Routing: Why Self-Evolving Agents Need Epistemic Control](universe_routing_why_self-evolving_agents_need_epistemic_control.md)
 - [\[ACL 2025\] SEAL: Scaling to Emphasize Attention for Long-Context Retrieval](../../ACL2025/llm_efficiency/seal_scaling_to_emphasize_attention_for_long-context_retrieval.md)
+- [\[ICML 2026\] ProactiveLLM: Learning Active Interaction for Streaming Large Language Models](../../ICML2026/llm_efficiency/proactivellm_learning_active_interaction_for_streaming_large_language_models.md)
 - [\[ICLR 2026\] Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents](did_you_check_the_right_pocket_cost-sensitive_store_routing_for_memory-augmented.md)
 - [\[ICLR 2026\] Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
-- [\[ICLR 2026\] xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity](xlstm_scaling_laws_competitive_performance_with_linear_time-complexity.md)
 
 </div>
 

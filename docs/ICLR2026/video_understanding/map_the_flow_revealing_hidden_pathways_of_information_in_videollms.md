@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：视频帧经过patchify后变成一维token序列，时间结构被隐式编码在位置中。模型必须通过某种内部机制重新发现和利用这些时序关系，而现有研究只关注提升性能，对这个"黑箱内部发生了什么"一无所知。这阻碍了有针对性的架构改进和推理加速。
 
-**本文目标** 提供一张VideoLLM时序推理的完整蓝图：信息从哪里提取、在哪些层整合、在哪个阶段准备好答案。进而验证这些关键路径是否sufficiently代表了模型的推理过程。
+**本文目标**：提供一张VideoLLM时序推理的完整蓝图：信息从哪里提取、在哪些层整合、在哪个阶段准备好答案。进而验证这些关键路径是否sufficiently代表了模型的推理过程。
 
 **切入角度**：作者从机制可解释性（mechanistic interpretability）出发，使用因果干预工具（Attention Knockout断开特定注意力边测影响）和探针工具（Logit Lens投影中间层到词汇空间读语义），将VideoLLM的推理过程分解为可检验的阶段。
 
@@ -49,23 +49,17 @@ tags:
 
 ### 关键设计
 
-1. **Attention Knockout——因果追踪注意力贡献**:
+**1. Attention Knockout：用因果干预量化每条注意力路径的贡献。**
 
-    - 功能：选择性断开特定token对之间的注意力连接（将注意力mask对应位置设为$-\infty$），然后测量对模型预测的概率影响
-    - 核心思路：对每层$l$，以窗口$k=9$为中心断开目标注意力边（如跨帧的video-to-video attention），计算相对概率变化$((p_{\text{knockout}} - p_{\text{base}})/p_{\text{base}}) \times 100$。窗口设为9是因为太窄时信息可通过残差连接绕过干预
-    - 设计动机：相比观察性分析（如直接看attention weight），因果干预能准确量化"如果没有这条信息路径，模型行为会怎么变"。这是机制可解释性领域的标准方法，源自Geva et al. 2023
+直接观察注意力权重只能看到"哪里注意力大"，但大不等于重要——这是相关而非因果。Attention Knockout 改用主动干预：选择性地断开特定 token 对之间的注意力连接（把注意力 mask 的对应位置设为 $-\infty$），再测量这条边被切断后模型预测的概率变化。具体做法是对每一层 $l$，以窗口 $k=9$ 为中心同时断开目标类型的注意力边（如跨帧的 video-to-video attention），并用相对概率变化 $((p_{\text{knockout}} - p_{\text{base}})/p_{\text{base}}) \times 100$ 度量影响。窗口取 9 是因为窗口太窄时，被切断的信息会通过残差连接绕过干预、导致测不出真实贡献。相比观察性分析，这种因果干预能直接回答"如果没有这条信息路径，模型行为会怎么变"，是机制可解释性领域的标准方法（源自 Geva et al. 2023）。
 
-2. **Logit Lens——探针中间层语义内容**:
+**2. Logit Lens：读出视频 token 每层"看起来像什么词"。**
 
-    - 功能：将中间层hidden state投影到语言模型head上得到logits，读出视频token在每层"看起来像什么词"
-    - 核心思路：对视频token在每层的表示过LM head，统计空间关键词（物体、颜色）和时间关键词（before/after/first等）出现的频率和位置分布。用LLaVA-NeXT-13B-Video-FT在Action Sequence任务上进行
-    - 设计动机：Attention Knockout告诉我们"哪些路径重要"，但不告诉我们"路径上流动的是什么信息"。Logit Lens填补这个gap，揭示视频token中时间概念何时涌现
+Attention Knockout 能告诉我们哪些路径重要，却不告诉我们路径上流动的是什么信息，Logit Lens 正是用来填补这个 gap。它把视频 token 在每一层的 hidden state 直接投影到语言模型的 LM head 上得到 logits，从而读出该 token 在这一层"最像哪些词"。在 LLaVA-NeXT-13B-Video-FT 的 Action Sequence 任务上，作者据此统计空间关键词（物体、颜色）与时间关键词（before/after/first 等）出现的频率和位置分布，进而揭示视频 token 中的时间概念在哪一层、哪些位置上开始涌现。
 
-3. **信息流阶段分解与验证**:
+**3. 信息流阶段分解与验证：把注意力切成 6 类路径，分析与剪枝形成闭环。**
 
-    - 功能：将注意力路径分为6类（跨帧video-video、video→question、video→last、question→last、last→last、question→video），分析各类路径在不同层的贡献
-    - 核心思路：分别knockout每类路径在每层的注意力边，绘制层-概率变化曲线。路径角色清晰后，只保留关键层范围内的关键路径类型（如L6-15保留跨帧交互，L6-20保留video→question，L16-25保留question→last），禁用所有其余路径
-    - 设计动机：从发现到验证的闭环——先分析出哪些路径关键，再用"只保留关键路径"的端到端实验证明分析的正确性
+要画出完整蓝图，先得把纷繁的注意力边按语义角色归类。作者将路径分为 6 类——跨帧 video→video、video→question、video→last、question→last、last→last、question→video——再分别对每一类、每一层的注意力边做 knockout，绘出层–概率变化曲线，看清各类路径分别在哪些层段起作用。角色清晰之后，作者用一个端到端实验反过来验证分析：只保留关键层段内的关键路径（如 L6–15 保留跨帧交互、L6–20 保留 video→question、L16–25 保留 question→last），禁用其余全部路径。如果蓝图正确，这样剪枝应当几乎无损——"先分析出哪些路径关键、再证明只留它们就够"构成了发现到验证的完整闭环。
 
 ### 四大核心发现
 
@@ -144,10 +138,10 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Decoding Open-Ended Information Seeking Goals from Eye Movements in Reading](decoding_open-ended_information_seeking_goals_from_eye_movements_in_reading.md)
-- [\[CVPR 2025\] Video Streaming Thinking: VideoLLMs Can Watch and Think Simultaneously](../../CVPR2025/video_understanding/video_streaming_thinking_videollms_can_watch_and_think_simultaneously.md)
 - [\[AAAI 2026\] ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding](../../AAAI2026/video_understanding/reason_reinforced_causal_search_with_information_bottleneck_for_video_understand.md)
+- [\[CVPR 2025\] Video Streaming Thinking: VideoLLMs Can Watch and Think Simultaneously](../../CVPR2025/video_understanding/video_streaming_thinking_videollms_can_watch_and_think_simultaneously.md)
 - [\[AAAI 2026\] Causality Matters: How Temporal Information Emerges in Video Language Models](../../AAAI2026/video_understanding/causality_matters_how_temporal_information_emerges_in_video_language_models.md)
+- [\[AAAI 2026\] APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval](../../AAAI2026/video_understanding/apvr_hour-level_long_video_understanding_with_adaptive_pivot.md)
 - [\[ACL 2025\] ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs](../../ACL2025/video_understanding/icr_probe_tracking_hidden_state_dynamics_for_reliable_hallucination_detection_in.md)
 
 </div>

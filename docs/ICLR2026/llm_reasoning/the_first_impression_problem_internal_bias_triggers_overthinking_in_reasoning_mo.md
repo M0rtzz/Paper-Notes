@@ -41,34 +41,17 @@ tags:
 
 ### 整体框架
 
-本文的研究框架采用递进式分析结构：**量化偏差 → 验证关联 → 因果干预 → 机制解释 → 缓解尝试**，每一步都不可或缺。
+本文不是提出一个新模型，而是搭了一条递进式的实证链来论证"第一印象"假说：先用强制直答把模型的内部偏差量化出来，再在多模型多任务上验证偏差与推理长度的统计关联，然后用两组反事实干预把相关性抬升到因果性，最后用注意力与 Logit Lens 探测打开黑盒、解释偏差究竟在模型内部怎么作祟，并顺带评估现有缓解方法。
 
 ### 关键设计
 
-1. **内部偏差的量化方法**
+**1. 内部偏差量化：在推理开始前截获模型的"直觉答案"。** 要研究第一印象，首先得把这个看不见的初步猜测变成可测量的数字。作者用 **Direct Answer** 方法：给模型拼上 "Answer without thinking more:" 这类强制直答提示，在 `<think>` 推理块真正启动之前就截获输出，拿到直觉答案 $a_{bias}$。单次采样噪声大，于是对每题采样 64 次构成内部偏差分布 $\tilde{a}_{bias}$。有了它，再定义**偏差偏离度（Deviation Degree）** $D_{bias}$ 来刻画直觉与最终推理答案 $a_{final}$ 的距离——数值型任务取平均绝对误差 $D_{bias} = \text{mean}(|a_{bias} - a_{final}|)$，选择题任务则取初始猜测与最终答案的不一致率。$D_{bias}$ 越大，说明第一印象和系统推理越对不上，正是后续所有分析的自变量。
 
-    作者通过 **Direct Answer** 方法提取模型的内部偏差：给模型加上 "Answer without thinking more:" 等强制直答提示，在其 `<think>` 推理块启动之前截获输出，得到直觉答案 $a_{bias}$。为消除采样噪声，对每个问题采样 64 次，构建内部偏差分布 $\tilde{a}_{bias}$。然后定义**偏差偏离度（Deviation Degree）** $D_{bias}$ 来度量内部偏差与最终推理答案 $a_{final}$ 之间的差距：
+**2. 关联性验证：高偏差的代价全花在首答之后。** 在 DeepSeek-R1-671B、QwQ-32B、R1 蒸馏版等多个模型上，横跨 AIME、KnowLogic 等推理 benchmark 做统计：随 $D_{bias}$ 增大，推理长度显著上升，**相对长度增幅 $R_\Delta$ 稳定落在 21.0%–43.1%**。更说明问题的是对**首次得出完整答案位置（First Answer Position）**的测量——无论偏差高低，模型到达第一个逻辑结论的时间点几乎一样，多出来的 token 近乎**全部**是结论之后的反复回看与自我质疑。这把矛头直接指向"得到答案后放不下第一印象"，而非推理本身变难。
 
-    - 数值型任务：$D_{bias} = \text{mean}(|a_{bias} - a_{final}|)$（MAE）
-    - 选择题任务：$D_{bias}$ = 不一致率（初始猜测与最终答案不同的比例）
+**3. 反事实因果干预：双向操纵偏差源验证因果。** 相关不等于因果，于是设计两组互补的反事实实验。其一是**移除输入问题（Question Removal）**：在模型生成第一个完整答案后立刻把原题从上下文删掉，逼它只凭已生成的推理链决定是否继续反思，用冗余缩减比 $r = (L_{ori} - L_{rem}) / (L_{ori} - P_{first})$ 度量效果，结果 AIME 2024 上冗余 token **减少 53.5%** 且准确率不降反略升——抽走偏差源，反思就停了。其二是**偏差注入（Bias Injection）**：用 LoRA 把错误偏差注入原本轻松的简单题（Low2Wrong），把正确偏差注入原本困难的题（High2Correct），结果前者让简单题凭空冒出大量冗余反思、后者让困难题的 overthinking 明显消退。一删一注、一正一反，从两个方向钉死了"内部偏差导致过度思考"的因果关系。
 
-2. **关联性验证**
-
-    在 DeepSeek-R1-671B、QwQ-32B 等多个推理模型上，横跨 AIME、KnowLogic 等多种推理 benchmark 进行统计分析。核心发现：随着 $D_{bias}$ 增大，推理长度显著增加，**相对长度增幅 $R_\Delta$ 在 21.0%–43.1% 之间**。更关键的是，通过测量模型**首次得出完整答案的位置（First Answer Position）**发现，无论偏差高低，模型到达第一个逻辑结论的时间点基本相同——多出来的 token 几乎**全部**是结论之后的冗余反思。
-
-3. **反事实因果干预**
-
-    为从相关性上升到因果性，设计了两个互补的反事实实验：
-
-    - **干预一：移除输入问题（Question Removal）**。在模型生成第一个完整答案后，立即从上下文中删除原始输入问题，迫使模型只基于自己已生成的推理链来决定是否继续反思。定义冗余缩减比 $r = (L_{ori} - L_{rem}) / (L_{ori} - P_{first})$。结果：在 AIME 2024 上冗余 token **减少了 53.5%**，同时准确率基本不变甚至略有提升
-    - **干预二：偏差注入（Bias Injection）**。通过 LoRA 微调，分别将错误偏差注入到模型原本轻松解决的简单题（Low2Wrong），以及将正确偏差注入到原本困难题（High2Correct）。结果：注入错误偏差让简单题开始产生大量冗余反思；注入正确偏差让困难题的 overthinking 显著减少。这从**正反两个方向**确认了因果关系
-
-4. **注意力机制分析**
-
-    通过可解释性实验揭示内部偏差的具体作用机制：
-
-    - **注意力动力学**：在模型触发反思（即将生成 "Wait..." 或 "Let me check..."）的瞬间，对原始输入问题的注意力权重飙升至正常推理时的 **4 倍以上**。这说明模型通过反复"回看"原题来重新激活初始偏差
-    - **Logit Lens 探测**：对于模型最终正确推理出 $a_{final} = 3$ 但内部偏差为 $a_{bias} = 5$ 的样本，在中间到后半段层中，偏差答案 "5" 的 internal decoding 概率**始终高于**正确答案 "3"——即使模型在推理链中已经显式写出了 "3"。这揭示了一种持久的**认知失调状态**：直觉猜测与系统推理在模型内部并行存在，互相拉扯
+**4. 注意力与 Logit Lens 探测：看清偏差怎么持续作祟。** 最后用可解释性手段打开机制。注意力动力学显示，在模型即将吐出 "Wait..."、"Let me check..." 触发反思的那一刻，它对原始输入问题的注意力权重会飙到正常推理时的 **4 倍以上**——模型是靠反复"回看"原题来重新激活第一印象。Logit Lens 则给出更刺眼的画面：对一个最终正确推出 $a_{final}=3$、但内部偏差为 $a_{bias}=5$ 的样本，在中后段各层里偏差答案 "5" 的 internal decoding 概率**始终压过**正确答案 "3"，哪怕推理链里早已白纸黑字写出了 "3"。这揭示了一种持续的**认知失调**：直觉猜测与系统推理在模型内部并行共存、互相拉扯，正是过度思考的微观根源。
 
 ## 实验关键数据
 
@@ -149,9 +132,9 @@ tags:
 
 - [\[NeurIPS 2025\] The Virtues of Brevity: Avoid Overthinking in Parallel Test-Time Reasoning](../../NeurIPS2025/llm_reasoning/the_virtues_of_brevity_avoid_overthinking_in_parallel_test-time_reasoning.md)
 - [\[ICML 2025\] Adversarial Manipulation of Reasoning Models using Internal Representations](../../ICML2025/llm_reasoning/adversarial_manipulation_of_reasoning_models_using_internal_representations.md)
+- [\[ICLR 2026\] Overthinking Reduction with Decoupled Rewards and Curriculum Data Scheduling](overthinking_reduction_with_decoupled_rewards_and_curriculum_data_scheduling.md)
 - [\[ACL 2026\] ReProbe: Efficient Test-Time Scaling of Multi-Step Reasoning by Probing Internal States of Large Language Models](../../ACL2026/llm_reasoning/reprobe_efficient_test-time_scaling_of_multi-step_reasoning_by_probing_internal_.md)
 - [\[NeurIPS 2025\] The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity](../../NeurIPS2025/llm_reasoning/the_illusion_of_thinking_understanding_the_strengths_and_limitations_of_reasonin.md)
-- [\[NeurIPS 2025\] Let LRMs Break Free from Overthinking via Self-Braking Tuning](../../NeurIPS2025/llm_reasoning/let_lrms_break_free_from_overthinking_via_self-braking_tuning.md)
 
 </div>
 

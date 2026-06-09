@@ -43,51 +43,19 @@ tags:
 
 ### 整体框架
 
-Jackpot 包含三个核心组件：
+Jackpot 在小 rollout 模型自回归采样出轨迹后、反向传播前插入一道 token 级闸门：对每个 token 用带预算约束的最优拒绝采样（OBRS）判断接受还是丢弃，被拒的 token 直接从损失里 mask 掉，从源头把 rollout 分布拉向策略分布；与此同时策略模型和 rollout 模型联合训练，并用在线蒸馏让 rollout 模型持续追赶策略模型，避免分布差距随训练越拉越大。
 
-1. **OBRS token 拒绝与重加权**：在 rollout 采样后、反向传播前，对每个 token 执行接受/拒绝判断，被拒绝的 token 从损失计算中 mask 掉
-2. **联合训练目标**：同时优化策略模型（带 OBRS 的 PPO）和 rollout 模型（标准 PPO + 蒸馏）
-3. **高效系统实现**：Top-k 概率估计 + batch-level 偏差修正，避免全词表计算
+### 关键设计
 
-### 关键设计一：OBRS 接受规则
+**1. OBRS 接受规则：用任意预算换取分布对齐的闭式最优解。** 经典 rejection sampling 要精确匹配分布，须取归一化常数 $\lambda \geq \max_i p_i/q_i$，可 LLM 词表超 10 万、个别 token 上概率比 $p_i/q_i$ 极度尖峰，导致 $\lambda$ 巨大、接受率趋近于零，根本跑不动。OBRS 的做法是放开这个约束：对 rollout 模型 $p_{\text{inf}}$ 采到的 token $x$，以 $a(x) = \min\!\left(1, \frac{p_{\text{target}}(x)}{\lambda \cdot p_{\text{inf}}(x)}\right)$ 的概率接受，其中 $\lambda>0$ 是用户自定的接受预算——$\lambda$ 越小拒得越多、对齐越精确，$\lambda$ 越大保留越多、接受率越高。理论上对任意 $\lambda$ 都有 $D_{\text{KL}}(p \| \tilde{q}) \leq D_{\text{KL}}(p \| q)$，即接受后的后验分布 $\tilde q$ 严格不比原 rollout 分布更差，且在该预算下它是唯一最小化 $D_{\text{KL}}(p\|\hat q)$ 的接受规则。接受后样本服从重加权分布 $P_{\text{OBRS}}(x) = \frac{\min\!\left(p_{\text{inf}}(x), p_{\text{target}}(x)/\lambda\right)}{Z}$，等价于把概率被 rollout 模型高估的 token 削平、低估的保留，从而在可控的样本损失下最大程度贴近目标。
 
-对 rollout 模型 $p_{\text{inf}}$ 采样的 token $x$，接受概率为：
+**2. 联合训练目标：让 rollout 模型追着策略模型跑，堵住持续扩大的 gap。** 朴素解耦训练里策略模型不断更新而 rollout 模型固定，分布差距只会越拖越大。Jackpot 把两者一起优化，总损失为 $\mathcal{L}^{\text{Jackpot}}(\theta, \omega) = \mathcal{L}^{\text{PPO-OBRS}}(\theta) + \mathcal{L}^{\text{PPO}}(\omega) + \lambda_{\text{distill}} \mathcal{L}^{\text{distill}}(\omega)$ 三项：第一项是带 OBRS mask 与重加权的策略模型 PPO，被拒 token 不进梯度；第二项让 rollout 模型也吃同一批奖励信号做标准 PPO；第三项是前向 KL 蒸馏 $D_{\text{KL}}(\text{SG}(p_{\theta_{\text{new}}}) \| p_\omega)$，把策略模型当老师、用 stop-gradient 固定，逼 rollout 模型持续跟踪策略模型的改进。三项共享同一批 rollout 轨迹，不额外采样，正是蒸馏这一项把 gap 主动压住，OBRS 才不至于一直在拒越来越多的 token。
 
-$$a(x) = \min\left(1, \frac{p_{\text{target}}(x)}{\lambda \cdot p_{\text{inf}}(x)}\right)$$
+**3. Top-k 近似与 batch 偏差修正：把全词表归一化压成可负担的开销。** 重加权分布里的归一化常数 $Z$ 原本要对超 10 万的整个词表求和，显存吃不消。注意到 LLM 输出概率高度集中在少数 token，Jackpot 只在候选集 $\mathcal{V}_k = \text{top-k}(p_{\text{inf}}) \cup \text{top-k}(p_{\text{new}})$ 上求和得到 $Z_{\text{approx}}$。但截断会系统性低估真实 $Z$，于是再做一次偏差修正：利用 $Z$ 恰好等于期望接受率 $\bar\alpha$ 这一性质，用一个 batch 里的经验接受率反算校正因子 $\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}^{(i)}}$，把 top-k 估计整体放大回无偏水平。整套流程不必碰 vLLM、无需定制算子，与 speculative decoding 不同，拒掉 token 后剩余轨迹原样保留、不做重采样。
 
-其中 $\lambda > 0$ 是用户指定的预算参数（越小拒绝越多、对齐越精确）。与经典 RS 要求 $\lambda \geq \max_i p_i/q_i$ 不同，OBRS 允许任意 $\lambda$，理论保证后验分布 $\tilde{q}$ 严格更接近目标分布 $p$：
+### 损失函数 / 训练策略
 
-$$D_{\text{KL}}(p \| \tilde{q}) \leq D_{\text{KL}}(p \| q)$$
-
-接受后的重加权分布为：
-
-$$P_{\text{OBRS}}(x) = \frac{\min\left(p_{\text{inf}}(x), \frac{p_{\text{target}}(x)}{\lambda}\right)}{Z}$$
-
-### 关键设计二：联合训练目标
-
-总损失函数包含三项：
-
-$$\mathcal{L}^{\text{Jackpot}}(\theta, \omega) = \underbrace{\mathcal{L}^{\text{PPO-OBRS}}(\theta)}_{\text{策略模型 RL}} + \underbrace{\mathcal{L}^{\text{PPO}}(\omega)}_{\text{rollout 模型 RL}} + \lambda_{\text{distill}} \underbrace{\mathcal{L}^{\text{distill}}(\omega)}_{\text{在线蒸馏}}$$
-
-- **策略模型损失**：OBRS mask + 重加权后的 PPO 目标，被拒绝 token 不参与梯度计算
-- **Rollout 模型 PPO**：标准 PPO 损失，使 rollout 模型也从奖励中学习
-- **蒸馏损失**：前向 KL $D_{\text{KL}}(\text{SG}(p_{\theta_{\text{new}}}) \| p_\omega)$，使 rollout 模型持续跟踪策略模型的改进，防止分布差距随训练扩大
-
-### 关键设计三：Top-k 近似与偏差修正
-
-归一化常数 $Z$ 需要对整个词表（>100k）求和，内存开销巨大。解决方案：
-
-- **Top-k 近似**：仅对 $\mathcal{V}_k = \text{top-k}(p_{\text{inf}}) \cup \text{top-k}(p_{\text{new}})$ 求和，利用 LLM 输出概率集中在少数 token 的特性
-- **偏差修正**：$Z_{\text{approx}}$ 系统性地低估真实 $Z$。利用 $Z$ 等于期望接受率 $\bar{\alpha}$ 的性质，用 batch 级经验接受率计算校正因子：
-
-$$\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}^{(i)}}$$
-
-### 训练策略
-
-- **目标分布选择**：$p_{\text{target}}$ 可选参考策略 $p_{\text{ref}}$ 或最新策略 $p_{\text{new}}$，后者在大 batch / 异步训练中更优
-- **无需额外 rollout**：三项损失共享同一批 rollout 轨迹，不增加采样开销
-- **无需修改 vLLM**：直接在标准 vLLM 上实现，无需定制算子或内核
-- **不做轨迹重采样**：与 speculative decoding 不同，拒绝 token 后保留剩余轨迹不变
+目标分布 $p_{\text{target}}$ 既可取参考策略 $p_{\text{ref}}$，也可取最新策略 $p_{\text{new}}$，后者在大 batch、异步训练场景下对齐更紧、表现更好。三项损失复用同一批轨迹，训练侧不引入额外 rollout 开销，且直接落在标准 vLLM 上实现。
 
 ## 实验
 
@@ -169,7 +137,7 @@ $$\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}
 - [\[ICLR 2026\] DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
 - [\[ICLR 2026\] Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
 - [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
-- [\[ICLR 2026\] Chart Deep Research in LVLMs via Parallel Relative Policy Optimization](chart_deep_research_in_lvlms_via_parallel_relative_policy_optimization.md)
+- [\[AAAI 2026\] Extreme Value Monte Carlo Tree Search for Classical Planning](../../AAAI2026/others/extreme_value_monte_carlo_tree_search_for_classical_planning.md)
 
 </div>
 

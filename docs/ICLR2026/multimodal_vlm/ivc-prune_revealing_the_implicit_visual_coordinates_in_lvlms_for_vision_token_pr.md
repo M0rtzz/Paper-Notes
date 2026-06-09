@@ -35,52 +35,37 @@ tags:
 
 ### 整体框架
 
-IVC-Prune 是一个训练免、提示感知的剪枝策略，在语言解码器内部执行，保留两类关键视觉token：
-1. **IVC tokens**（隐式视觉坐标token）：对空间推理至关重要的token
-2. **前景tokens**：与文本提示语义对齐的视觉token
-
-最终保留集合为 $\mathcal{I}_{\text{selected}} = \mathcal{I}_{\text{ivc}} \cup \mathcal{I}_{\text{fg}}$。
+IVC-Prune 要解决的是：高分辨率图像让 LVLM 吐出数千个视觉 token，推理时显存和延迟都吃不消，但现成的剪枝方法一旦砍到空间敏感任务上就垮——它们只认"语义相关"，把支撑空间推理的位置锚点也一并丢了。IVC-Prune 的思路是在语言解码器内部一次性选出两类该留的 token：一类是 RoPE 数学性质天然决定的**隐式视觉坐标（IVC）token**，撑起空间推理的参考系；另一类是和文本提示语义对齐的**前景 token**，盯住问题真正问的目标。两类各自算好后求并集 $\mathcal{I}_{\text{selected}} = \mathcal{I}_{\text{ivc}} \cup \mathcal{I}_{\text{fg}}$ 作为保留集，其余视觉 token 在 KV cache 里删掉。整个过程不训练、不微调，提示一来就能算。
 
 ### 关键设计
 
-#### 1. 隐式视觉坐标的理论发现
+**1. 隐式视觉坐标：从 RoPE 数学里挖出绝对位置锚点。**
 
-RoPE将每个 $d$ 维特征向量分成 $d/2$ 个二维子空间，对位置 $m$ 的token施加旋转。注意力分数公式可写为：
+这一步回答"凭什么有些 token 天生是坐标参考"。RoPE 把每个 $d$ 维特征切成 $d/2$ 个二维子空间，对位置 $m$ 的 token 施加旋转，注意力分数因此写成
 
 $$\text{Score}(\mathbf{q}_n, \mathbf{k}_m) = \mathbf{x}_n^T \mathbf{W}_q^T \mathbf{R}_{m-n} \mathbf{W}_k \mathbf{x}_m$$
 
-这表明注意力本质上依赖相对位置 $(m-n)$。但空间推理需要绝对位置信息。关键洞察是：当key token位置 $m$ 的旋转矩阵 $\mathbf{R}_m$ 近似单位矩阵或90°旋转矩阵时，注意力实际上隔离了query的绝对位置分量 $\mathbf{R}_n$。
+它本质只依赖相对位置 $(m-n)$，可空间推理偏偏要绝对位置。关键洞察是：当某个 key token 位置 $m$ 的旋转矩阵 $\mathbf{R}_m$ 恰好近似单位矩阵或 90° 旋转矩阵时，相对旋转被"抵消"，注意力实际上隔离出了 query 自身的绝对位置分量 $\mathbf{R}_n$——这样的 $m$ 就成了一个可被全图引用的坐标锚点。找近似单位矩阵（实轴参考）等价于最大化余弦分数 $V(m) = \sum_{k=0}^{d/2-1} \cos(m\theta_k)$，找近似 90° 旋转（虚轴参考）等价于最大化正弦分数 $U(m) = \sum_{k=0}^{d/2-1} \sin(m\theta_k)$。$V(m)$ 和 $U(m)$ 取值最高的那些位置，就是模型隐式视觉坐标系的锚点。
 
-**实轴参考**：寻找 $\mathbf{R}_m \approx \mathbf{I}$ 的位置，等价于最大化余弦分数：
-$$V(m) = \sum_{k=0}^{d/2-1} \cos(m\theta_k)$$
+**2. IVC token 选择：纯数学定锚，零推理开销。**
 
-**虚轴参考**：寻找 $\mathbf{R}_m \approx \mathbf{J}$（90°旋转）的位置，等价于最大化正弦分数：
-$$U(m) = \sum_{k=0}^{d/2-1} \sin(m\theta_k)$$
+有了 $V(m)$、$U(m)$ 两条曲线，选 IVC token 就只是各取 top-$k_c$ 再合并：
 
-$V(m)$ 和 $U(m)$ 值最高的位置构成隐式视觉坐标系的锚点。
-
-#### 2. IVC Token 选择
-
-对每个token位置 $m$ 计算 $V(m)$ 和 $U(m)$，取各自的 top-$k_c$ 合并：
 $$\mathcal{I}_{\text{ivc}} = \arg\text{TopK}(\{V(m)\}, k_c) \cup \arg\text{TopK}(\{U(m)\}, k_c)$$
 
-默认 $k_c = 10\%$，约占总token的10%。这一步完全由数学公式决定，无需模型推理。
+默认 $k_c = 10\%$，最终 IVC token 约占全部视觉 token 的一成。注意这一步完全由位置和 $\theta_k$ 决定，跟具体图像内容、跟模型前向都无关，所以可以提前算好、不花任何推理成本。
 
-#### 3. 前景Token选择（两阶段）
+**3. 前景 token 两阶段选择：用 Value 向量绕开位置偏差。**
 
-传统方法直接用注意力分数选择前景token，但注意力分数受位置编码影响，导致文本token倾向于关注空间上邻近的视觉token而非语义相关的。为消除位置偏差，IVC-Prune使用**Value向量**（不受位置编码影响）计算相似度。
+光有坐标锚点不够，还得留住问题真正关心的目标 token。传统做法直接拿注意力分数挑前景，但注意力被位置编码污染，文本 token 会偏向关注空间上邻近的视觉 token 而非语义真正相关的。IVC-Prune 改用**不受位置编码影响的 Value 向量**算相似度来去偏，并分两阶段做。第一阶段"语义种子识别"先算文本 Value $\mathbf{V}_{\text{text}}$ 与图像 Value $\mathbf{V}_{\text{img}}$ 的相似度，对每个视觉 token 把各文本 token 的归一化注意力取平均
 
-**阶段1：语义种子识别**。计算文本Value向量 $\mathbf{V}_{\text{text}}$ 与图像Value向量 $\mathbf{V}_{\text{img}}$ 的相似度，对每个视觉token平均文本token的归一化注意力：
-$$\mathbf{s} = \text{Mean}(\text{Softmax}(\frac{\mathbf{V}_{\text{text}} \cdot \mathbf{V}_{\text{img}}^T}{\sqrt{D}}))$$
-选取top 1%的视觉token作为语义种子集 $\mathcal{I}_{\text{seed}}$。
+$$\mathbf{s} = \text{Mean}\left(\text{Softmax}\left(\frac{\mathbf{V}_{\text{text}} \cdot \mathbf{V}_{\text{img}}^T}{\sqrt{D}}\right)\right)$$
 
-**阶段2：上下文前景细化**。将语义种子token与所有文本token合并为扩展查询集 $\mathbf{V}_{\text{query}}$，再次计算相似度得到细化分数 $\mathbf{f}$，选取top-$k_f$的token作为最终前景集 $\mathcal{I}_{\text{fg}}$。这确保能完整覆盖大型或复杂目标。
+取 top 1% 视觉 token 当语义种子集 $\mathcal{I}_{\text{seed}}$。第二阶段"上下文前景细化"把这些种子和所有文本 token 拼成扩展查询集 $\mathbf{V}_{\text{query}}$，再算一次相似度得到细化分数 $\mathbf{f}$，取 top-$k_f$ 作为最终前景集 $\mathcal{I}_{\text{fg}}$。两阶段的意义在于：种子负责精准命中目标核心，细化负责把大目标或复杂目标的剩余部分补全，避免只圈到目标的一角。
 
-#### 4. 单次选择剪枝策略
+**4. 单次选择剪枝：把多层剪枝压成一次操作。**
 
-先前工作认为LVLM对早期层的token剪枝敏感。作者实验表明这种敏感性实际来自IVC tokens的移除而非剪枝操作本身。因此提出：在选定的中间层**一次性**确定保留token集，保持原始position ID不变，然后将该选择应用于剪枝所有早期层的KV cache，并用于后续层。
-
-好处有三：（1）单次操作开销最小；（2）避免浅层不良选择影响后续计算；（3）最大化KV cache压缩以提升解码效率。
+最后一个设计纠正了一个普遍误解。先前工作认为 LVLM 对早期层剪枝特别敏感，于是层层小心翼翼。作者实验发现，这份敏感性其实来自 IVC token 被误删，而非剪枝本身——只要保住 IVC token，早期层照砍也不掉点。于是方案变得很干脆：在选定的某个中间层**一次性**确定保留集，position ID 保持原样不变，然后把这同一份选择回头应用到所有早期层的 KV cache、并沿用到后续层。这样做有三重好处——单次操作开销最小、避免浅层的不可靠选择污染后续计算、把 KV cache 压缩拉满从而加速解码。
 
 ### 损失函数 / 训练策略
 

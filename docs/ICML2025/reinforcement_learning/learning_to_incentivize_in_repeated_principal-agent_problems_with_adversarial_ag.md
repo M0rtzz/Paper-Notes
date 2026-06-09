@@ -123,7 +123,7 @@ $$\mathbb{E}[U(\pi^*, j)] - \mathbb{E}[U(\hat\pi, j)] \leq (2L+1)\epsilon$$
 - [\[ICML 2025\] Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration](enhancing_cooperative_multi-agent_reinforcement_learning_with_state_modelling_an.md)
 - [\[ICML 2025\] Learning Progress Driven Multi-Agent Curriculum](learning_progress_driven_multi-agent_curriculum.md)
 - [\[ICML 2026\] Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning](../../ICML2026/reinforcement_learning/interaction-breaking_adversarial_learning_framework_for_robust_multi-agent_reinf.md)
-- [\[ICML 2025\] Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making](counterfactual_effect_decomposition_in_multi-agent_sequential_decision_making.md)
+- [\[ICML 2025\] Preference Optimization for Combinatorial Optimization Problems](preference_optimization_for_combinatorial_optimization_problems.md)
 
 </div>
 

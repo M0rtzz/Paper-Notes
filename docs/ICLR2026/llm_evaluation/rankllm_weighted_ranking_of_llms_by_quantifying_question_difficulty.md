@@ -42,41 +42,27 @@ tags:
 
 ### 整体框架
 
-RankLLM 将题目和模型建模为有向二部图 $\mathcal{G}=(\mathcal{V}, \mathcal{E})$ 中的节点，通过阻尼双向分数传播联合估计题目难度 $\pi_q$ 和模型能力 $\pi_m$。核心直觉是：**模型答对难题获得更高能力分，题目难倒强模型获得更高难度分**。
+RankLLM 把所有模型和题目放进一张有向二部图 $\mathcal{G}=(\mathcal{V}, \mathcal{E})$ 里，让两类节点互相打分：模型答对一道题，这道题就把"能力分"投给模型；模型答错一道题，模型就把"难度分"投给这道题。通过带阻尼的双向分数传播迭代到收敛，框架同时得到每道题的难度 $\pi_Q$ 和每个模型的能力 $\pi_M$，整个过程不需要训练，只有一个阻尼超参数。
 
 ### 关键设计
 
-**二部图构建**：顶点集 $\mathcal{V}=\mathcal{M}\cup\mathcal{Q}$，包含 $M$ 个模型和 $Q$ 道题目。边集分为两类：
-- **能力边** $\mathcal{E}_{\text{Comp}}$：$q_i \to m_j$ 表示模型 $m_j$ 正确回答了题目 $q_i$
-- **难度边** $\mathcal{E}_{\text{Fail}}$：$m_j \to q_i$ 表示模型 $m_j$ 未能回答题目 $q_i$
+**1. 二部图与双向边：把"谁答对了难题"编码成图结构。** 传统准确率把每道题等权相加，丢掉了"这题难不难"的信息。RankLLM 的做法是构造顶点集 $\mathcal{V}=\mathcal{M}\cup\mathcal{Q}$（$M$ 个模型加 $Q$ 道题），再用两类有向边分别承载两个方向的信号：能力边 $\mathcal{E}_{\text{Comp}}$ 是 $q_i \to m_j$，表示模型 $m_j$ 答对了题 $q_i$；难度边 $\mathcal{E}_{\text{Fail}}$ 是 $m_j \to q_i$，表示 $m_j$ 答错了 $q_i$。这样"答对难题"会顺着能力边给模型加分，"难倒强模型"会顺着难度边给题目加分，难度与能力的耦合直接写进了拓扑结构里，避免了 IRT 那种逐题参数拟合。预处理阶段会剔除所有模型都答对或都答错的题目（约占 2%），因为这些题没有区分度，留着反而会破坏图的连通性。
 
-**性能矩阵**：
-- 能力矩阵 $A \in \{0,1\}^{Q \times M}$，$A_{ij}=1$ 表示模型 $m_j$ 答对题 $q_i$
-- 难度矩阵 $\hat{A} = (\mathbf{1}^{Q \times M} - A)^\top$
+**2. 性能矩阵与行归一化转移矩阵：让分数传播变成马尔可夫游走。** 答题结果先汇成能力矩阵 $A \in \{0,1\}^{Q \times M}$（$A_{ij}=1$ 即模型 $m_j$ 答对题 $q_i$），难度矩阵则取其互补转置 $\hat{A} = (\mathbf{1}^{Q \times M} - A)^\top$。为了让传播有概率意义，两个矩阵都按出度做行归一化，得到能力转移 $P_{Q \to M} = \text{diag}(A\mathbf{1}_M)^{-1} A$ 和难度转移 $P_{M \to Q} = \text{diag}(\hat{A}\mathbf{1}_Q)^{-1} \hat{A}$。归一化的意义在于：一道被很多模型答对的简单题，分到每个模型头上的能力分会被稀释，反过来只有少数强模型答对的难题，单次传播就能给它们更集中的加权，这正是"难度感知"的来源。
 
-预处理时排除所有模型都答对或都答错的题目（约占 2%），确保图的连通性。
-
-**转移矩阵**：
-- 能力转移：$P_{Q \to M} = \text{diag}(A\mathbf{1}_M)^{-1} A$
-- 难度转移：$P_{M \to Q} = \text{diag}(\hat{A}\mathbf{1}_Q)^{-1} \hat{A}$
-
-### 迭代分数传播
-
-引入阻尼因子 $\alpha \in (0,1)$（类似 PageRank 的 teleportation），解决二部图 2-周期性问题：
+**3. 阻尼双向传播与收敛保证：用 PageRank 式的 teleportation 破掉二部图的周期性。** 纯二部图上的来回传播是 2-周期的，直接迭代不会收敛到唯一分布。RankLLM 借鉴 PageRank，引入阻尼因子 $\alpha \in (0,1)$，每一步都按 $1-\alpha$ 的概率均匀重启：
 
 $$\pi_Q^{(t+1)} = \alpha P_{M \to Q}^\top \pi_M^{(t)} + (1-\alpha)\frac{\mathbf{1}_Q}{Q}$$
 
 $$\pi_M^{(t+1)} = \alpha P_{Q \to M}^\top \pi_Q^{(t+1)} + (1-\alpha)\frac{\mathbf{1}_M}{M}$$
 
-该迭代过程构成遍历马尔可夫链，由 Perron-Frobenius 定理保证收敛到唯一平稳分布。
+加入均匀项后整条链变成遍历马尔可夫链，由 Perron-Frobenius 定理保证收敛到唯一平稳分布，实测 9 次迭代内即可收敛。两式交替更新——先用最新的模型能力刷新题目难度，再用刷新后的难度回头更新模型能力——这就是"双向"传播：强模型在难题上的表现持续抬高题目难度，而难题上的成功又持续抬高模型能力，二者在迭代中达到自洽。
 
-### 连续分数扩展
+**4. 连续分数扩展：无缝支持部分给分的基准。** 很多基准并非非黑即白，而是给出 $[0,1]$ 区间的部分分。RankLLM 只需把二值能力矩阵 $A$ 换成连续矩阵 $A_c \in [0,1]^{Q \times M}$，转移矩阵和传播公式的形式完全不变，框架就能直接处理带部分分的评测，无需任何额外改动。
 
-对于提供部分分数的基准测试，将二值矩阵 $A$ 替换为连续矩阵 $A_c \in [0,1]^{Q \times M}$，所有后续公式形式不变。
+### 损失函数 / 训练策略
 
-### 损失函数
-
-RankLLM 本身不需要训练/优化损失函数，而是通过迭代传播直接收敛。整个过程为非参数化方法，仅有一个阻尼超参数 $\alpha$。
+RankLLM 是纯非参数化方法，没有可学习参数、不需要梯度下降或损失函数，结果完全由迭代传播收敛得到，全流程唯一需要设定的是阻尼超参数 $\alpha$。这正是它相对 IRT 在效率上的根本优势来源。
 
 ## 实验关键数据
 
@@ -157,8 +143,8 @@ RankLLM 比最快的 IRT 基线快 3,100 倍以上。
 - [\[ACL 2026\] Question Difficulty Estimation for Large Language Models via Answer Plausibility Scoring](../../ACL2026/llm_evaluation/question_difficulty_estimation_for_large_language_models_via_answer_plausibility.md)
 - [\[NeurIPS 2025\] EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving](../../NeurIPS2025/llm_evaluation/evalearn_quantifying_the_learning_capability_and_efficiency_of_llms_via_sequenti.md)
 - [\[ICLR 2026\] Benchmarking Overton Pluralism in LLMs](benchmarking_overton_pluralism_in_llms.md)
-- [\[CVPR 2025\] Uncertainty Weighted Gradients for Model Calibration](../../CVPR2025/llm_evaluation/uncertainty_weighted_gradients_for_model_calibration.md)
 - [\[ACL 2026\] Statistically Reliable LLM-Based Ranking Evaluation via Prediction-Powered Inference](../../ACL2026/llm_evaluation/statistically_reliable_llm-based_ranking_evaluation_via_prediction-powered_infer.md)
+- [\[ICLR 2026\] GuidedSampling: Steering LLMs Towards Diverse Candidate Solutions at Inference-Time](guidedsampling_steering_llms_towards_diverse_candidate_solutions_at_inference-ti.md)
 
 </div>
 

@@ -50,68 +50,21 @@ tags:
 
 ## 方法详解
 
-### 系统概览
+### 整体框架
 
-语义缓存的基本流程：
-1. 将 prompt $x$ 嵌入为 $\mathcal{E}(x) \in \mathbb{R}^d$
-2. 从向量数据库检索最近邻 $\text{nn}(x) = \arg\max_{y \in C} \text{sim}(\mathcal{E}(x), \mathcal{E}(y))$
-3. 计算相似度 $s(x) = \text{sim}(\mathcal{E}(x), \mathcal{E}(\text{nn}(x)))$
-4. 决策：若 $s(x) \ge t$ 则**exploit**（返回缓存回复），否则**explore**（调用 LLM）
+vCache 沿用语义缓存的标准流程：把 prompt $x$ 嵌入为 $\mathcal{E}(x)\in\mathbb{R}^d$，从向量库检索最近邻 $\text{nn}(x)=\arg\max_{y\in C}\text{sim}(\mathcal{E}(x),\mathcal{E}(y))$ 并算出相似度 $s(x)$，最后决定是 exploit（直接返回缓存回复）还是 explore（调用 LLM）。它与既有系统唯一也是最关键的区别在于：不再用一个全局阈值 $t$ 卡所有 prompt，而是为**每个缓存嵌入**在线维护一套统计量，把"是否命中"变成一个带用户错误率保证的概率决策。
 
-### 数据模型
+### 关键设计
 
-缓存存储三元组：
+**1. 逐嵌入观测数据模型：让每个缓存条目记住自己的历史。** 静态阈值之所以失效，是因为不同嵌入的"安全相似度"差异巨大，而全局阈值无从知晓这种差异。vCache 把缓存存成三元组 $\mathcal{D}=\{(\mathcal{E}(x_i),r(x_i),\mathcal{O}(x_i))\}_{i=0}^{n}$，其中 $\mathcal{O}(x_i)=\{(s(x_j),c(x_j))\mid \text{nn}(x_j)=x_i\}$ 记录了所有把 $x_i$ 当最近邻的后续 prompt 的相似度及其正确标签 $c(x)=\mathbb{1}[r(\text{nn}(x))=r(x)]$。这样每个嵌入都积累起一份"相似度 vs 正确性"的局部经验，为后续逐条目估计阈值提供了素材。
 
-$$\mathcal{D} = \{(\mathcal{E}(x_i), r(x_i), \mathcal{O}(x_i))\}_{i=0}^{n}$$
+**2. 用户错误率保证与探索概率下界：把约束翻译成探索多少次。** 用户只需指定最大错误率 $\delta$，vCache 承诺 $\Pr(\mathbf{vCache}(x)=r(x))\ge 1-\delta$。要兑现这个承诺，先把"答对"拆成两个互斥事件——要么探索（调 LLM 必对），要么命中且命中恰好正确：$\Pr(\text{正确})=\Pr(\text{explore})+(1-\Pr(\text{explore}))\cdot\Pr(c(x)=1)$。反解这个式子就得到满足约束所需的最小探索概率 $\Pr(\text{explore}\mid x,\mathcal{D})\ge\frac{(1-\delta)-\Pr(c(x)=1)}{1-\Pr(c(x)=1)}=\tau_{\text{nn}(x)}(s(x))$。直觉很清楚：当前缓存越可能答对，需要的探索就越少；越没把握，就越该去问 LLM。
 
-其中每个嵌入的元数据 $\mathcal{O}(x_i)$ 记录了所有以 $x_i$ 为最近邻的后续 prompt 的相似度和匹配信息：
+**3. sigmoid 建模 + 置信带悲观估计：在线拟合每个阈值并守住保证。** 上式里的 $\Pr(c(x)=1)$ 是未知量，vCache 对每个嵌入用 sigmoid 拟合它与相似度的关系 $\mathcal{L}(s(x),t,\gamma)=\frac{1}{1+e^{-\gamma(s(x)-t)}}$，其中 $t$ 是该嵌入专属的决策边界、$\gamma$ 控制陡峭度，二者通过对观测 $\mathcal{O}_{\text{nn}(x)}$ 做二元交叉熵的最大似然估计在线求出 $\hat{t},\hat{\gamma}$，因此无需任何预训练或标注集。但有限样本下点估计不可靠，直接代入会让保证失真，于是 vCache 不用点估计，而是取 $(1-\epsilon)$ 置信带上的**保守值** $t'(\epsilon),\gamma'(\epsilon)$，并在 $\epsilon$ 上取最紧的探索概率 $\hat{\tau}=\min_{\epsilon\in(0,1)}\frac{(1-\delta)-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}{1-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}\ge\tau_{\text{nn}(x)}(s(x))$。这种悲观处理把样本不确定性折算进探索次数，正是 Theorem 4.1（i.i.d. 与 sigmoid 建模假设下，对任意 $x$ 和任意时刻 $n$ 都有 $\Pr(\mathbf{vCache}(x)=r(x)\mid\mathcal{D})\ge 1-\delta$）能成立的关键。
 
-$$\mathcal{O}(x_i) = \{(s(x_j), c(x_j)) \mid \text{nn}(x_j) = x_i\}_{j=i+1}^{n}$$
+### 一个完整示例
 
-$$c(x) = \begin{cases} 1 & \text{if } r(\text{nn}(x)) = r(x) \\ 0 & \text{otherwise} \end{cases}$$
-
-### 用户保证
-
-用户指定最大错误率 $\delta$，vCache 保证：
-
-$$\Pr(\mathbf{vCache}(x) = r(x)) \ge 1 - \delta$$
-
-分解正确概率为两个不相交事件：
-
-$$\Pr(\mathbf{vCache}(x) = r(x)) = \Pr(\text{explore} \mid x, \mathcal{D}) + (1 - \Pr(\text{explore} \mid x, \mathcal{D})) \cdot \Pr(c(x) = 1 \mid x, \mathcal{D})$$
-
-由此推导出**探索概率下界**：
-
-$$\Pr(\text{explore} \mid x, \mathcal{D}) \ge \frac{(1-\delta) - \Pr(c(x)=1 \mid x, \mathcal{D})}{1 - \Pr(c(x)=1 \mid x, \mathcal{D})} = \tau_{\text{nn}(x)}(s(x))$$
-
-### sigmoid 参数化建模
-
-对每个嵌入，使用 sigmoid 函数建模相似度与正确性的关系：
-
-$$\Pr(c(x) = 1 \mid x, \mathcal{D}) = \mathcal{L}(s(x), t, \gamma) = \frac{1}{1 + e^{-\gamma(s(x) - t)}}$$
-
-其中 $t$ 是嵌入特定的决策边界，$\gamma$ 控制陡峭度。通过**最大似然估计**（二元交叉熵损失）求解：
-
-$$\hat{t}, \hat{\gamma} = \arg\min_{t, \gamma} \mathbb{E}_{(s,c) \in \mathcal{O}_{\text{nn}(x)}} \left[ c \cdot \log(\mathcal{L}(s, t, \gamma)) + (1-c) \cdot \log(1 - \mathcal{L}(s, t, \gamma)) \right]$$
-
-### 置信区间校准
-
-因样本有限，直接用 $\hat{t}, \hat{\gamma}$ 无法保证精确。vCache 使用**悲观估计**（$(1-\epsilon)$ 置信带的保守值 $t'(\epsilon), \gamma'(\epsilon)$）计算探索概率上界：
-
-$$\hat{\tau} = \min_{\epsilon \in (0,1)} \frac{(1-\delta) - (1-\epsilon)\mathcal{L}(s(x), t'(\epsilon), \gamma'(\epsilon))}{1 - (1-\epsilon)\mathcal{L}(s(x), t'(\epsilon), \gamma'(\epsilon))} \ge \tau_{\text{nn}(x)}(s(x))$$
-
-### 决策规则（Algorithm 2）
-
-1. 计算嵌入，检索最近邻 $y = \text{nn}(x)$
-2. 用 $\mathcal{O}(y)$ 拟合 sigmoid → $\hat{t}, \hat{\gamma}$
-3. 遍历 $\epsilon \in (0,1)$ 计算 $\hat{\tau}$
-4. 采样 $u \sim \text{Uniform}(0,1)$
-5. 若 $u \le \hat{\tau}$ → explore（调用 LLM，更新 $\mathcal{O}(y)$）
-6. 否则 → exploit（返回 $r(y)$）
-
-**理论保证**（Theorem 4.1）：在 i.i.d. 和 sigmoid 正确建模假设下，对任意 prompt $x$ 和任意时刻 $n$：
-
-$$\Pr(\mathbf{vCache}(x) = r(x) \mid \mathcal{D}) \ge 1 - \delta$$
+一条新 prompt $x$ 到来时（Algorithm 2）：先算嵌入并检索最近邻 $y=\text{nn}(x)$；用 $y$ 的历史观测 $\mathcal{O}(y)$ 拟合 sigmoid 得到 $\hat{t},\hat{\gamma}$；遍历 $\epsilon\in(0,1)$ 算出当前相似度 $s(x)$ 下的探索概率 $\hat{\tau}$；采样 $u\sim\text{Uniform}(0,1)$，若 $u\le\hat{\tau}$ 就 explore（调用 LLM，并把这次 $(s(x),c(x))$ 写回 $\mathcal{O}(y)$，让该嵌入的阈值估计越用越准），否则 exploit（直接返回 $r(y)$）。整个过程不依赖任何离线训练，缓存命中率随观测累积自然上升，而错误率始终被 $\delta$ 约束。
 
 ## 实验关键数据
 
@@ -197,8 +150,8 @@ $$\Pr(\mathbf{vCache}(x) = r(x) \mid \mathcal{D}) \ge 1 - \delta$$
 
 ## 相关论文
 
-- [\[ICLR 2026\] Spectral Attention Steering for Prompt Highlighting](spectral_attention_steering_for_prompt_highlighting.md)
 - [\[ICLR 2026\] Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
+- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
 - [\[ICCV 2025\] Supercharging Floorplan Localization with Semantic Rays](../../ICCV2025/llm_evaluation/supercharging_floorplan_localization_with_semantic_rays.md)
 - [\[ACL 2026\] Revisiting a Pain in the Neck: A Semantic Reasoning Benchmark for Language Models](../../ACL2026/llm_evaluation/revisiting_a_pain_in_the_neck_a_semantic_reasoning_benchmark_for_language_models.md)
 - [\[ACL 2026\] The Silent Vote: Improving Zero-Shot LLM Reliability by Aggregating Semantic Neighborhoods](../../ACL2026/llm_evaluation/the_silent_vote_improving_zero-shot_llm_reliability_by_aggregating_semantic_neig.md)

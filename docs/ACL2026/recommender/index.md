@@ -20,7 +20,7 @@ tags:
 
 **💬 ACL2026** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/recommender/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (26)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (11)](../../ICML2026/recommender/index.md) · [🔬 ICLR2026 (9)](../../ICLR2026/recommender/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/recommender/index.md) · [🧠 NeurIPS2025 (24)](../../NeurIPS2025/recommender/index.md) · [🧪 ICML2025 (17)](../../ICML2025/recommender/index.md) · [💬 ACL2025 (7)](../../ACL2025/recommender/index.md)
 
 🔥 **高频主题：** 推荐系统 ×11 · 个性化生成 ×5 · 对话系统 ×4 · 推理 ×3 · RAG ×2
 

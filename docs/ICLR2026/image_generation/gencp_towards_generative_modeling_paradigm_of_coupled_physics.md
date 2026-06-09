@@ -43,38 +43,33 @@ tags:
 
 ### 整体框架
 
-GenCP 包含训练和推理两个阶段。训练阶段：分别在解耦数据集 $\mathcal{D}_f$ 和 $\mathcal{D}_g$ 上用 flow matching 学习两个条件速度场 $\hat{v}_f$ 和 $\hat{v}_g$。推理阶段：通过 Lie-Trotter 算子分裂，在每个流步中交替应用两个条件速度场，从噪声逐步演化到耦合解。
+GenCP 把"耦合物理仿真"重新看成函数空间里一团概率测度从噪声向真解的传输问题，分训练、推理两步：训练时分别在解耦数据集 $\mathcal{D}_f$、$\mathcal{D}_g$ 上用 flow matching 各学一个条件速度场 $\hat{v}_f$、$\hat{v}_g$；推理时用 Lie-Trotter 算子分裂，在每个流步里交替推动两个场，从噪声逐步演化出耦合解。整套设计的灵魂是把"耦合"放进流的采样步骤里完成，而不是采样完再迭代修正。
 
 ### 关键设计
 
-**设计1：概率密度演化视角**
-- **功能**：将耦合物理仿真重新表述为函数空间中联合概率测度 $\mu_t$ 的传输问题
-- **核心思路**：联合状态 $u=(f,g)$ 在积空间 $\mathcal{U}=\mathcal{F}\times\mathcal{G}$ 上。通过弱连续性方程描述 $\mu_t$ 的演化：$\int_0^1 \int_{\mathcal{U}} (\partial_t\varphi + \langle D\varphi, v\rangle) d\mu_t dt = 0$。由于弱形式对 $v$ 线性，$v = v^{(f)} + v^{(g)}$ 的分解天然成立
-- **设计动机**：(1) 经验测度无密度，强形式连续性方程不适用；(2) 无穷维空间中散度算子无意义；(3) 弱形式在函数空间中数学适定
+**1. 概率密度演化视角：把耦合仿真翻译成可分解的传输问题。**
 
-**设计2：时间参数化线性插值训练**
-- **功能**：从解耦数据构造流匹配训练目标
-- **核心思路**：对场 $f$ 的训练：采样 $(f_1, \bar{g}) \sim \mathcal{D}_f$ 和参考噪声 $z_f, z_g$，构造线性插值 $f_t = (1-t)z_f + tf_1$。瞬时速度目标为 $v_f = f_1 - z_f$。用 MSE 损失训练 $\hat{v}_f(f_t, g_t, t; \theta_f)$。场 $g$ 对称处理
-- **设计动机**：线性插值是最简单的条件流路径，目标速度可直接从数据对计算，无需复杂的 ODE 求解
+要从解耦数据学耦合，先得有一个数学框架能把两个场的耦合"拆开又合回去"。GenCP 把联合状态 $u=(f,g)$ 放在积空间 $\mathcal{U}=\mathcal{F}\times\mathcal{G}$ 上，用一族概率测度 $\mu_t$ 描述它从初始噪声分布演化到目标解分布的过程。这里的关键是不能用强形式的连续性方程——经验测度没有密度、无穷维空间里的散度算子也无意义——而要用弱形式 $\int_0^1 \int_{\mathcal{U}} (\partial_t\varphi + \langle D\varphi, v\rangle)\, d\mu_t\, dt = 0$，它在函数空间里数学上是适定的。这一步之所以是整篇文章的支点，是因为弱形式对速度场 $v$ 是线性的，于是 $v = v^{(f)} + v^{(g)}$ 的分解天然成立：耦合速度场可以被拆成两个分别只推一个场的子速度场，这正是后面"解耦训练"得以可能的理论根。
 
-**设计3：Lie-Trotter 算子分裂推理**
-- **功能**：推理时交替应用学到的条件速度场，合成耦合解
-- **核心思路**：将 $[0,1]$ 分为 $N$ 步，每步 $\tau = 1/N$。在每步中：先更新 $f \leftarrow f + \tau \hat{v}_f(f,g,t)$，再更新 $g \leftarrow g + \tau \hat{v}_g(f,g,t)$。物理上等价于在噪声空间中交替求解耦合场
-- **设计动机**：Lie-Trotter 分裂是 operator splitting 的经典方法，当步长 $\tau$ 足够小时与联合流一致。从弱连续性方程的分解自然导出此方案
+**2. 时间参数化线性插值训练：用最省事的路径把解耦数据变成监督信号。**
 
-**设计4：理论误差保证**
-- **功能**：证明 GenCP 推理方案的误差可控
-- **核心思路**：Theorem 3.1：$W_1(\mu_1^{(\tau,learn)}, \mu_1) \leq C_{stab}(\tau + \varepsilon_f + \varepsilon_g)$。总误差由分裂步长 $\tau$（一阶 Lie-Trotter）和学习误差 $\varepsilon_f, \varepsilon_g$ 共同决定
-- **设计动机**：提供可靠性保证，解决现有方法（如 M2PDE）缺乏理论基础的问题
+有了可分解的速度场，剩下的问题是怎么从只含单场的解耦数据里学出每个子速度场。GenCP 选了最简单的条件流路径——线性插值。以场 $f$ 为例，从 $\mathcal{D}_f$ 采一对 $(f_1, \bar{g})$ 和参考噪声 $z_f, z_g$，构造插值 $f_t = (1-t)z_f + t f_1$，那么这条直线路径上的瞬时速度恰好是常数 $v_f = f_1 - z_f$，可以直接当回归目标，不需要解任何 ODE。模型 $\hat{v}_f(f_t, g_t, t; \theta_f)$ 同时吃进当前的 $f_t$、$g_t$ 和时间 $t$，这样即便训练数据是解耦的，网络也学到了"在另一个场 $g$ 给定的条件下该怎么推 $f$"，把耦合关系编码进了条件输入里；场 $g$ 完全对称处理。
+
+**3. Lie-Trotter 算子分裂推理：在流步里交替推两个场，把耦合合成回来。**
+
+训练学到的是两个分别只管一个场的条件速度场，推理时要把它们重新组装成耦合演化。GenCP 借用数值分析里的经典 operator splitting：把 $[0,1]$ 切成 $N$ 步、每步 $\tau = 1/N$，在每一步内先更新 $f \leftarrow f + \tau\, \hat{v}_f(f,g,t)$、再用刚更新过的 $f$ 去更新 $g \leftarrow g + \tau\, \hat{v}_g(f,g,t)$。这种交替推进就是一阶 Lie-Trotter 分裂，当 $\tau$ 足够小时它收敛到真正的联合流——而它本就是前面弱连续性方程那个 $v = v^{(f)} + v^{(g)}$ 分解的自然离散化。物理直觉上，这等价于在噪声潜在空间里反复交替求解两个耦合场，把"耦合"嵌进了采样步骤本身，典型只需约 10 步就够。
+
+**4. 理论误差保证：把总误差线性钉死在分裂步长和学习误差上。**
+
+把训练和推理分家最大的隐患是误差会不会失控，GenCP 用 Theorem 3.1 给了答案：学到的近似解分布和真分布之间的 Wasserstein 距离满足 $W_1(\mu_1^{(\tau,\text{learn})}, \mu_1) \leq C_{\text{stab}}(\tau + \varepsilon_f + \varepsilon_g)$，即总误差被一阶分裂步长 $\tau$ 和两个场各自的学习误差 $\varepsilon_f, \varepsilon_g$ 线性控制，常数 $C_{\text{stab}}$ 由流的稳定性决定。这条界把"步长取多小""每个场学多准"和"最终耦合解多可靠"直接挂钩，正好补上了 M2PDE 这类把耦合迭代硬塞进每个扩散步、却拿不出任何收敛保证的方法所缺的那块理论。
 
 ### 损失函数 / 训练策略
 
-训练损失：标准 flow matching MSE 损失
-$$\mathcal{L}_f(\theta_f) = \mathbb{E}_{t, (f_1,\bar{g}), z_f, z_g} [\|v_f - \hat{v}_f(f_t, g_t, t; \theta_f)\|^2_\mathcal{F}]$$
+两个速度场各用标准 flow matching 的 MSE 损失独立训练，以 $f$ 为例：
 
-对称定义 $\mathcal{L}_g(\theta_g)$。两个速度场模型独立训练。
+$$\mathcal{L}_f(\theta_f) = \mathbb{E}_{t, (f_1,\bar{g}), z_f, z_g} \big[\|v_f - \hat{v}_f(f_t, g_t, t; \theta_f)\|^2_\mathcal{F}\big]$$
 
-推理：Lie-Trotter 分裂，典型 10 步即可。
+$\mathcal{L}_g(\theta_g)$ 对称定义。推理统一走 Lie-Trotter 分裂，典型 10 步即可生成耦合解。
 
 ## 实验关键数据
 
@@ -154,10 +149,10 @@ GenCP 在 FNO* 骨干上平均误差降低 ~26.77%，推理速度快 14 倍。
 ## 相关论文
 
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
-- [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
 - [\[CVPR 2026\] Test-Time Instance-Specific Parameter Composition: A New Paradigm for Adaptive Generative Modeling](../../CVPR2026/image_generation/test-time_instance-specific_parameter_composition_a_new_paradigm_for_adaptive_ge.md)
-- [\[ICML 2026\] Path-Coupled Bellman Flows for Distributional Reinforcement Learning](../../ICML2026/image_generation/path-coupled_bellman_flows_for_distributional_reinforcement_learning.md)
 - [\[ICLR 2026\] PI-Light: Physics-Inspired Diffusion for Full-Image Relighting](pi-light_physics-inspired_diffusion_for_full-image_relighting.md)
+- [\[ICML 2026\] Path-Coupled Bellman Flows for Distributional Reinforcement Learning](../../ICML2026/image_generation/path-coupled_bellman_flows_for_distributional_reinforcement_learning.md)
+- [\[ICLR 2026\] Seek-CAD: A Self-Refined Generative Modeling for 3D Parametric CAD Using Local Inference via DeepSeek](seek-cad_a_self-refined_generative_modeling_for_3d_parametric_cad_using_local_in.md)
 
 </div>
 

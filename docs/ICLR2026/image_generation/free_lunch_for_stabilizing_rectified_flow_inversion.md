@@ -41,32 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个互补方法：(1) PMI用于反演阶段（$t_0 \to t_N$），通过近端梯度校正稳定速度场；(2) mimic-CFG用于编辑/重建阶段（$t_N \to t_0$），通过速度投影插值平衡编辑效果和结构一致性。两者都是zero-cost（不增加NFE），可即插即用到任何RF模型。
+论文要解决的是 RF 反演里"误差跨时步累积、被高维不稳定性放大"的问题，但又不愿意像 RF-Solver、FireFlow 那样靠加步数来硬抗。它的做法是抓住 RF 训练目标本身的特性——速度场近似恒定——把历史速度的滑动均值当成一个稳定的参考方向，在不增加任何网络调用的前提下顺手把速度场拉回正轨。整条流水线分成两段：反演阶段（$t_0 \to t_N$）用 PMI 对每一步预测的速度做近端梯度校正，把累积误差压下去；编辑/重建阶段（$t_N \to t_0$）用 mimic-CFG 对速度做投影插值，在"改得动"和"结构不崩"之间调平衡。两段都是 zero-cost，可即插即用到任何 RF 模型上。
 
 ### 关键设计
 
-1. **Proximal-Mean Inversion (PMI)**:
+**1. Proximal-Mean Inversion（PMI）：用历史均值给被扰动的速度做近端校正。**
 
-    - 功能：在反演每一步，将预测速度朝历史加权均值方向做有约束的梯度校正
-    - 核心思路：定义加权均值 $\bar{\mathbf{v}}_{t_k} = \frac{1}{t_{k+1}-t_0}\sum_{i=0}^{k}(t_{i+1}-t_i)\mathbf{v}_{t_i}$，构建近端目标 $F(\mathbf{v}) = \|\mathbf{v} - \mathbf{v}_{t_{k-1}}\|_1 + \frac{1}{2\lambda}\|\mathbf{v} - \bar{\mathbf{v}}_{t_k}\|_2^2$，一阶Taylor近似后得到闭式更新 $\hat{\mathbf{v}}_{t_k} = \mathbf{v}_{t_k} - r_{t_k}\frac{\nabla F(\mathbf{v}_{t_k})}{\|\nabla F(\mathbf{v}_{t_k})\|_2}$
-    - 设计动机：近端目标同时保证局部一致性（$L_1$项约束与前一步接近）和全局一致性（$L_2$项约束向均值靠拢）。校正半径 $r_i$ 由Proposition 1从不稳定性理论推导确保落在高密度区域。
+反演不稳定的根源是每一步的近似误差会被高维 ODE 映射放大，而完全消除扰动又不可能。PMI 的应对是给每一步的预测速度找一个可信的"锚"——历史速度的加权均值 $\bar{\mathbf{v}}_{t_k} = \frac{1}{t_{k+1}-t_0}\sum_{i=0}^{k}(t_{i+1}-t_i)\mathbf{v}_{t_i}$，因为 RF 的速度场近似恒定，这个均值方向天然稳定。校正写成一个近端优化目标
 
-2. **校正半径的理论推导 (Stability Condition)**:
+$$F(\mathbf{v}) = \|\mathbf{v} - \mathbf{v}_{t_{k-1}}\|_1 + \frac{1}{2\lambda}\|\mathbf{v} - \bar{\mathbf{v}}_{t_k}\|_2^2$$
 
-    - 功能：推导每步校正的最大安全半径
-    - 核心思路：基于高维高斯分布的集中不等式，$r_i = \sqrt{2n + 3\sqrt{2n}} \cdot \frac{\Delta t_i}{T} + \epsilon$，$n$ 为潜空间维度
-    - 设计动机：太大的校正会偏离数据流形（进入低密度区），太小的校正无法有效稳定。理论推导给出安全范围。
+其中 $L_1$ 项约束当前速度别偏离前一步太远（局部一致性），$L_2$ 项把它往历史均值上拉（全局一致性），两者同时成立才算把速度"稳住"。对 $F$ 做一阶 Taylor 近似后能解出闭式更新 $\hat{\mathbf{v}}_{t_k} = \mathbf{v}_{t_k} - r_{t_k}\frac{\nabla F(\mathbf{v}_{t_k})}{\|\nabla F(\mathbf{v}_{t_k})\|_2}$，沿负梯度方向走一步、步长由校正半径 $r_{t_k}$ 控制。整套只需维护一个均值累加器加一次闭式更新，所以不增加 NFE。
 
-3. **mimic-CFG 编辑**:
+**2. 校正半径的理论推导：让每一步校正落在数据高密度区。**
 
-    - 功能：在编辑/重建阶段，将当前速度向历史均值方向做投影插值
-    - 核心思路：$\bar{\mathbf{v}}_{t_k}^{\text{proj}} = \frac{\mathbf{v}_{t_k}^\top \bar{\mathbf{v}}_{t_k}^{\text{edit}}}{\|\bar{\mathbf{v}}_{t_k}^{\text{edit}}\|_2^2}\bar{\mathbf{v}}_{t_k}^{\text{edit}}$，然后 $\hat{\mathbf{v}}_{t_k} = (1-w)\bar{\mathbf{v}}_{t_k}^{\text{proj}} + w \cdot \mathbf{v}_{t_k}$，$w$ 控制编辑强度
-    - 设计动机：命名"mimic-CFG"因结构类似分类器自由引导——投影部分类似"无条件"方向（结构保持），原始速度类似"有条件"方向（编辑效果），插值控制两者权重。
+PMI 里那个步长 $r_i$ 不能随便选——走太远会偏离数据流形、掉进低密度区，走太近又稳不住速度场。论文用 Proposition 1 从高维高斯分布的集中不等式推出安全半径
+
+$$r_i = \sqrt{2n + 3\sqrt{2n}} \cdot \frac{\Delta t_i}{T} + \epsilon$$
+
+其中 $n$ 是潜空间维度，$\Delta t_i$ 是当前步长。这个式子保证校正后的速度仍落在球面高斯的高密度范围内，是把"校正多少才安全"从经验调参变成了理论可算的量，也是 PMI 敢说自己稳定的依据。
+
+**3. mimic-CFG：编辑阶段用速度投影插值平衡编辑力度与结构保持。**
+
+到了编辑/重建阶段，矛盾换成了"改得明显"和"原图结构别崩"。mimic-CFG 先把当前速度投影到编辑历史均值方向上
+
+$$\bar{\mathbf{v}}_{t_k}^{\text{proj}} = \frac{\mathbf{v}_{t_k}^\top \bar{\mathbf{v}}_{t_k}^{\text{edit}}}{\|\bar{\mathbf{v}}_{t_k}^{\text{edit}}\|_2^2}\bar{\mathbf{v}}_{t_k}^{\text{edit}}$$
+
+再和原始速度做线性插值 $\hat{\mathbf{v}}_{t_k} = (1-w)\bar{\mathbf{v}}_{t_k}^{\text{proj}} + w \cdot \mathbf{v}_{t_k}$，用 $w$ 调编辑强度。名字叫"mimic-CFG"是因为它的结构和分类器自由引导（CFG）同构：投影分量类似 CFG 的"无条件"方向负责结构保持，原始速度类似"有条件"方向负责编辑效果，$w$ 就是控制两者权重的旋钮。用投影而非直接插值，是因为投影保留了与稳定参考方向对齐的那部分速度，实验里效果更好。
 
 ### 损失函数 / 训练策略
-- 无训练方法，仅在推理时修改速度场
-- PMI: 近端梯度更新，不增加NFE
-- mimic-CFG: 速度投影+线性插值，不增加NFE
+全程无训练，只在推理时改速度场：PMI 做一次近端梯度更新，mimic-CFG 做速度投影加线性插值，两者都不增加 NFE。
 
 ## 实验关键数据
 
@@ -130,7 +134,7 @@ PIE-Bench（700编辑任务），基于FLUX模型：
 - [\[ICLR 2026\] Unified Multi-Modal Interactive & Reactive 3D Motion Generation via Rectified Flow](unified_multi-modal_interactive_reactive_3d_motion_generation_via_rectified_flow.md)
 - [\[ICCV 2025\] FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models](../../ICCV2025/image_generation/flowedit_inversion-free_text-based_editing_using_pre-trained_flow_models.md)
 - [\[CVPR 2026\] CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion](../../CVPR2026/image_generation/careflow_cyclic_adaptive_rectified_flow_for_multimodal_fusion.md)
-- [\[NeurIPS 2025\] Balanced Conic Rectified Flow](../../NeurIPS2025/image_generation/balanced_conic_rectified_flow.md)
+- [\[NeurIPS 2025\] Rectified-CFG++ for Flow Based Models](../../NeurIPS2025/image_generation/rectified-cfg_for_flow_based_models.md)
 
 </div>
 

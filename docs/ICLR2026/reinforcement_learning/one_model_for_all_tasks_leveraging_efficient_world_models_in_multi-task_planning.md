@@ -41,31 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ScaleZero 基于 UniZero 架构升级：(1) 编码器从 ResNet 换为 ViT；(2) Transformer 骨干中的密集 FFN 替换为稀疏 MoE 层（含共享专家 + 任务路由的专门专家）；(3) 潜在表示归一化使用 SimNorm。训练使用统一损失函数 $\mathcal{L} = \sum_{t}(\mathcal{L}_{\text{value}} + \mathcal{L}_{\text{policy}} + \mathcal{L}_{\text{reward}} + \mathcal{L}_{\text{dynamics}})$。DPS 策略在训练过程中根据任务回报变化率触发 LoRA 注入。
+ScaleZero 要解决的是：让**一个**世界模型同时学好观测/动作空间各异、难度悬殊的多个任务，而不像 UniZero 那样被简单任务的梯度带崩。它的做法是在 UniZero 的基础上从两个角度同时下手——架构上把共享主干改成稀疏专家网络，让不同任务走不同参数路径；训练过程上按任务学习进度逐步注入容量，把算力集中到还没学会的难任务。
+
+整条 pipeline 的数据流是：观测先经 ViT 编码器（替换原来的 ResNet）映射到潜在状态，潜在表示用 SimNorm 归一化以抑制范数膨胀；潜在序列送入 Transformer 骨干，但骨干里的密集 FFN 被换成稀疏 MoE 层（共享专家 + 任务路由专家）；骨干输出再经价值/策略/奖励/动态四个预测头，配合 MCTS 做规划。整个模型用统一损失 $\mathcal{L} = \sum_{t}(\mathcal{L}_{\text{value}} + \mathcal{L}_{\text{policy}} + \mathcal{L}_{\text{reward}} + \mathcal{L}_{\text{dynamics}})$ 端到端训练，DPS 则在训练中根据各任务回报的变化率决定何时冻结、何时注入新的 LoRA 容量。
 
 ### 关键设计
 
-1. **稀疏 MoE 骨干（核心架构创新）**:
+**1. 稀疏 MoE 骨干：从架构上物理隔离梯度冲突。**
 
-    - 功能：替换 Transformer 中的密集 FFN 为包含 $N$ 个并行专家的 MoE 层，每个输入只激活 top-k 个专家
-    - 核心思路：$\text{MoE}(x) = \sum_{i=1}^{N} G_i(x) \cdot \text{Expert}_i(x)$，门控网络 $G(x)$ 根据输入自动选择专家子集。采用混合设计——1 个共享专家捕获跨任务通用知识 + 多个路由专家处理任务特定动态
-    - 设计动机：不同任务的输入被路由到不同的参数子集，物理上隔离了梯度冲突。实验证明 MoE 是所有架构探索中增益最大的改进，且直接对应地维持了健康的休眠神经元比例和潜在状态范数
+这一条直接针对「共享主干在异构任务间梯度互相打架、简单任务梯度主导导致复杂任务崩塌」的痛点。做法是把 Transformer 骨干里的密集 FFN 换成含 $N$ 个并行专家的 MoE 层，每个输入只激活 top-k 个专家，输出为门控加权和 $\text{MoE}(x) = \sum_{i=1}^{N} G_i(x) \cdot \text{Expert}_i(x)$，其中门控网络 $G(x)$ 按输入自动挑选专家子集。专家采用混合设计：1 个共享专家捕获跨任务通用知识，其余路由专家各自处理任务特定的动态。
 
-2. **动态参数扩展（DPS）**:
+这样一来不同任务的输入被路由到不同的参数子集，梯度冲突在物理上就被隔开了，而不是靠优化阶段事后修正。实验也印证了这一点——MoE 是所有架构探索里增益最大、最一致的改动，它直接把休眠神经元比例和潜在状态范数维持在健康水平，让原本会崩的多任务训练稳住。
 
-    - 功能：根据各任务的学习进度，逐阶段注入轻量 LoRA 适配器扩展模型容量
-    - 核心思路：监控每个任务的回报曲线，当检测到任务收敛（进度停滞）时冻结其参数，将新 LoRA 模块注入未收敛任务的路径中。权重更新为 $(W_0 + \alpha BA)x$，只训练小的低秩矩阵 $(A, B)$
-    - 设计动机：传统方法对所有任务统一分配计算资源，但任务复杂度差异巨大。DPS 实现了"任务课程"——先掌握简单任务并冻结，再将资源集中到困难任务
+**2. 动态参数扩展（DPS）：按学习进度把算力调度给难任务。**
 
-3. **系统性架构探索**:
+静态资源分配对所有任务一视同仁，但 Atari 里 Pong 和 Seaquest 的难度天差地别，统一分配既浪费又拖累难任务。DPS 的思路是监控每个任务的回报曲线，当某任务收敛（进度停滞）就冻结它的参数，再把新的 LoRA 适配器注入到尚未收敛任务的路径上，权重更新写成 $(W_0 + \alpha BA)x$，只训练低秩矩阵 $(A, B)$ 这一小部分。
 
-    - 在 5 个维度做了对照实验：任务条件化方式、编码器（ResNet vs ViT）、潜在归一化（LayerNorm vs SimNorm）、骨干（密集 vs MoE）、优化策略（梯度修正 MoCo vs 标准）
-    - 结果：MoE 骨干收益最大且最一致，SimNorm 有部分帮助，其他改动效果不明显
+这等于自动生成了一套「任务课程」——先把简单任务学会并冻住，再把腾出来的容量集中到困难任务上，而不需要人手预先排难度。好处直接体现在效率上：保持性能的同时减少约 28.5% 的环境交互。
+
+**3. 系统性架构探索：用对照实验找出哪些改动真正有效。**
+
+ScaleZero 并非把一堆 trick 一股脑堆上去，而是沿 5 个维度逐个做对照：任务条件化方式、编码器（ResNet vs ViT）、潜在归一化（LayerNorm vs SimNorm）、骨干（密集 vs MoE）、优化策略（梯度修正 MoCo vs 标准）。结论很明确——MoE 骨干收益最大且最一致，SimNorm 有部分帮助，其余改动效果不明显。这条探索本身回答了「多任务世界模型该往哪改」，也解释了为什么优化层面的梯度修正（MoCo 一类）不如架构层面的 MoE 直接有效。
 
 ### 训练策略
-- 纯在线 RL 训练，不依赖专家数据或离线数据集
-- 共享逆动力学控制器辅助 MCTS 规划
-- DPS 中 LoRA 的注入层和秩根据任务集规模自适应配置
+纯在线 RL 训练，不依赖专家数据或离线数据集；用一个共享逆动力学控制器辅助 MCTS 规划；DPS 中 LoRA 的注入层和秩会根据任务集规模自适应配置。
 
 ## 实验关键数据
 
@@ -128,9 +127,9 @@ ScaleZero 基于 UniZero 架构升级：(1) 编码器从 ResNet 换为 ViT；(2)
 ## 相关论文
 
 - [\[ICLR 2026\] Efficient Estimation of Kernel Surrogate Models for Task Attribution](efficient_estimation_of_kernel_surrogate_models_for_task_attribution.md)
-- [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
-- [\[ICLR 2026\] Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
 - [\[ICLR 2026\] WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control](wimle_uncertainty-aware_world_models_with_imle_for_sample-efficient_continuous_c.md)
+- [\[ICLR 2026\] Deep SPI: Safe Policy Improvement via World Models](deep_spi_safe_policy_improvement_via_world_models.md)
+- [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
 - [\[ICLR 2026\] From Observations to Events: Event-Aware World Model for Reinforcement Learning](from_observations_to_events_event-aware_world_model_for_reinforcement_learning.md)
 
 </div>

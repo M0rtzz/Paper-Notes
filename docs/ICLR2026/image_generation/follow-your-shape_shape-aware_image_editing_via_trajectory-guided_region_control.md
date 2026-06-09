@@ -43,30 +43,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 FLUX.1-dev 的推理时编辑框架。给定源图像和 prompt，先反演得到噪声 latent，然后分三阶段去噪：Stage 1 全局 KV 注入稳定轨迹 → Stage 2 编辑并收集 TDM → Stage 3 基于 TDM 掩码的选择性 KV 注入 + ControlNet 结构引导。
+Follow-Your-Shape 是一个建立在 FLUX.1-dev 之上的推理时编辑框架，不需要训练也不需要外部掩码。给定源图像与源/目标 prompt，先用 RF-Solver 二阶反演把图像映射回噪声 latent，再分三阶段去噪：先用无条件 KV 注入把轨迹锚回忠实重建流形，再在中段一边允许编辑一边从源/目标速度场的分歧中提取出编辑区域掩码，最后据此对编辑区与背景区分别注入目标/源的 KV 特征并辅以可选的 ControlNet 结构约束。
 
 ### 关键设计
-1. **Trajectory Divergence Map (TDM)**：核心创新。在去噪过程中，计算源 prompt 和目标 prompt 条件下 velocity field 的 token 级 $L_2$ 差异：
-$$\delta_t^{(i)} = \| v_\theta(\mathbf{z}_t^{(i)}, t, \mathbf{c}_{\text{tgt}}) - v_\theta(\mathbf{x}_t^{(i)}, t, \mathbf{c}_{\text{src}}) \|_2$$
-经 min-max 归一化后得到 $\tilde{\delta}_t^{(i)} \in [0,1]$，分歧大的区域即为需要编辑的区域。
 
-2. **分阶段编辑策略（Staged Editing）**：
+**1. Trajectory Divergence Map：用速度场分歧自动圈出编辑区。** 形状编辑的核心难题是"哪里该改、哪里该保"，外部二值掩码太刚性、交叉注意力图又噪声太大。本文从动力系统视角换了个思路：同一个 latent，在源 prompt 与目标 prompt 条件下去噪时速度场会出现差异，差异大的 token 正是语义被要求改变、因而需要编辑的区域。具体地，在每个去噪步 $t$ 对每个 token $i$ 计算源/目标速度的 $L_2$ 距离 $\delta_t^{(i)} = \| v_\theta(\mathbf{z}_t^{(i)}, t, \mathbf{c}_{\text{tgt}}) - v_\theta(\mathbf{x}_t^{(i)}, t, \mathbf{c}_{\text{src}}) \|_2$，再做 min-max 归一化得到 $\tilde{\delta}_t^{(i)} \in [0,1]$。这样编辑区域完全来自模型自身的去噪行为，无需任何外部标注。
 
-    - **Stage 1（初始轨迹稳定）**：前 $k_{\text{front}}=2$ 步进行无条件 KV 注入（$M_S = \mathbf{0}$），将轨迹锚定到忠实重建流形上
-    - **Stage 2（编辑 + TDM 聚合）**：在预定窗口 $N$ 中设置 $M_S = 1$ 允许编辑，同时收集各时间步的归一化 TDM。使用 softmax 加权时序融合聚合：
-    $\hat{\delta}^{(i)} = \sum_{t \in N} \alpha_t^{(i)} \cdot \tilde{\delta}_t^{(i)}, \quad \alpha_t^{(i)} = \frac{\exp(\tilde{\delta}_t^{(i)})}{\sum_{t'} \exp(\tilde{\delta}_{t'}^{(i)})}$
-   再经高斯模糊 $\tilde{M}_S = \mathcal{G}_\sigma * \hat{\delta}$ 并用 Otsu 阈值法得到二值掩码 $M_S$
-    - **Stage 3（结构与语义一致性）**：根据 $M_S$ 混合 KV 特征（编辑区域用目标 KV，非编辑区域用源 KV）：
-    $\{K^*, V^*\} \leftarrow M_S \odot \{K^{\text{tgt}}, V^{\text{tgt}}\} + (1 - M_S) \odot \{K^{\text{inv}}, V^{\text{inv}}\}$
-   同时可选 ControlNet（depth + Canny）提供辅助结构约束
+**2. 分阶段编辑调度：稳定→探索→约束，避开高噪声阶段的不可靠 TDM。** TDM 在去噪早期噪声占主导时并不可靠，直接全程用它会把背景也误判成编辑区。因此本文把去噪切成三段。Stage 1 取前 $k_{\text{front}}=2$ 步做无条件 KV 注入（编辑掩码 $M_S=\mathbf{0}$），把轨迹先稳定到忠实重建的流形上而不急于编辑。Stage 2 在预定窗口 $N$ 内放开编辑（$M_S=1$）并同步收集各步归一化 TDM，用 softmax 加权做时序融合 $\hat{\delta}^{(i)} = \sum_{t \in N} \alpha_t^{(i)} \tilde{\delta}_t^{(i)}$，其中 $\alpha_t^{(i)} = \exp(\tilde{\delta}_t^{(i)}) / \sum_{t'} \exp(\tilde{\delta}_{t'}^{(i)})$——相比简单平均，它能突出那些只在个别时间步才显著变化的 token；融合结果经高斯模糊 $\tilde{M}_S = \mathcal{G}_\sigma * \hat{\delta}$ 后由 Otsu 阈值自适应二值化为掩码 $M_S$，无需人工调阈值。消融显示 $k_{\text{front}}$ 存在最优点：太小轨迹不稳、太大又压制编辑，$k_{\text{front}}=2$ 时 PSNR 与 CLIP Sim 同时最高。
 
-3. **ReShapeBench 基准**：120 张新图像，分为单目标（70）和多目标（50）场景 + 通用集（50），共 290 个形状编辑用例。源-目标 prompt 仅在前景对象描述上不同，经人工验证。
+**3. 基于掩码的选择性 KV 注入：编辑区放目标、背景区锁源。** 拿到 $M_S$ 后，Stage 3 在注意力层按区域混合 KV 特征 $\{K^*, V^*\} \leftarrow M_S \odot \{K^{\text{tgt}}, V^{\text{tgt}}\} + (1 - M_S) \odot \{K^{\text{inv}}, V^{\text{inv}}\}$：编辑区域采用目标 prompt 的 KV 以实现大幅形状变换，背景区域回灌反演得到的源 KV 以严格保持不变，从而化解"可控性 vs 内容保持"的冲突。在此之上可选地引入 ControlNet（depth + Canny）作为辅助结构约束，进一步稳定剧烈形变下的几何一致性。
+
+**4. ReShapeBench 基准：填补大尺度形状编辑的评测空白。** 现有 benchmark 多针对通用或局部编辑，缺乏对大尺度形状变换的系统评测。本文构建 ReShapeBench，含 120 张新图像，覆盖单目标（70）、多目标（50）场景并附通用集（50），共 290 个形状编辑用例；源/目标 prompt 仅在前景对象描述上不同且经人工验证，使评测聚焦于形状变化本身。
 
 ### 损失函数 / 训练策略
-- **无训练方法**：纯推理时框架，不涉及训练或微调
-- 14 步去噪，guidance scale 2.0，$k_{\text{front}} = 2$
-- ControlNet 条件应用于归一化去噪区间 $[0.1, 0.3]$，depth 强度 2.5，Canny 强度 3.5
-- 使用 RF-Solver 二阶反演方案
+本方法是纯推理时框架，不涉及任何训练或微调。默认配置为 14 步去噪、guidance scale 2.0、$k_{\text{front}}=2$，反演采用 RF-Solver 二阶方案；ControlNet 仅在归一化去噪区间 $[0.1, 0.3]$ 内生效，depth 强度 2.5、Canny 强度 3.5。
 
 ## 实验关键数据
 

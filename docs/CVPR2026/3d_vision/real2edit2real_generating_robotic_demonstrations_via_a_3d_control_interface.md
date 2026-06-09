@@ -146,7 +146,7 @@ $$\mathcal{L} = \mathbb{E}_{t, \epsilon}\big[\,\|\epsilon - \epsilon_\theta(x_t,
 - [\[CVPR 2026\] ArtLLM: Generating Articulated Assets via 3D LLM](artllm_generating_articulated_assets_via_3d_llm.md)
 - [\[CVPR 2026\] Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_trainingtime_drifting_for_onest.md)
 - [\[CVPR 2026\] STAvatar: Soft Binding and Temporal Density Control for Monocular 3D Head Avatars Reconstruction](stavatar_soft_binding_and_temporal_density_control_for_monocular_3d_head_avatars.md)
-- [\[CVPR 2025\] Compass Control: Multi Object Orientation Control for Text-to-Image Generation](../../CVPR2025/3d_vision/compass_control_multi_object_orientation_control_for_text-to-image_generation.md)
+- [\[CVPR 2025\] Generating 3D-Consistent Videos from Unposed Internet Photos](../../CVPR2025/3d_vision/generating_3d-consistent_videos_from_unposed_internet_photos.md)
 
 </div>
 

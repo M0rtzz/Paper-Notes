@@ -40,30 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ASIDE 仅修改 LLM 的 embedding 层前向传播：输入 token $x$ 如果是指令，embedding 为 $E[I_x, \cdot]$（原始 embedding）；如果是数据，embedding 为 $R(E[I_x, \cdot])$，其中 $R \in \mathbb{R}^{d \times d}$ 是一个固定的正交旋转矩阵。之后用标准 SFT 在 Alpaca-clean 数据集上微调即可。
+ASIDE 想解决的是：传统 LLM 给指令 token 和数据 token 分配的 embedding 完全相同，模型只能靠上下文推断一个 token 该"执行"还是该"处理"，这正是 prompt injection 能得逞的根源。它的做法极轻——只动 embedding 层的前向传播：一个 token $x$ 进来，如果它的角色是指令，就用原始 embedding $E[I_x, \cdot]$；如果是数据，就改用旋转后的 $R(E[I_x, \cdot])$，其中 $R \in \mathbb{R}^{d \times d}$ 是一个固定的正交旋转矩阵。改完前向传播后，直接在标准 SFT 数据（Alpaca-clean）上微调，模型就学会从第一层起把两类 token 放进不同的子空间。
 
 ### 关键设计
 
-1. **Isoclinic 正交旋转**：
+**1. Isoclinic 正交旋转：用一个固定旋转把数据 token 推进正交子空间。**
 
-    - 功能：将数据 token 的 embedding 旋转到正交子空间中。
-    - 核心思路：将 embedding 维度按二维分组，每组施加 $\frac{\pi}{2}$ 旋转矩阵 $\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$。这是一个不可学习的固定变换。
-    - 设计动机：正交旋转保持向量的范数和相对角度不变（不引入信息丢失），同时创造了两个完全正交的子空间。这比 ISE（Wu et al., 2024）的可学习偏移向量更有效，因为偏移在深层逐渐被模型消化（失去区分度），而旋转在几何上保持了永久的可分性。
-    - 零额外参数：旋转矩阵是固定的，不增加任何可训练参数。
+直接给数据 token 的 embedding 做几何旋转，而不是学一个偏移。具体是把 $d$ 维 embedding 按二维一组拆开，每组施加同一个 $\frac{\pi}{2}$ 旋转矩阵 $\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$，这是一个不可学习、不引入任何可训练参数的固定变换。之所以选正交旋转，是因为它保持向量的范数和两两夹角不变（不丢信息），却把数据 embedding 整体搬到一个与指令完全正交的子空间里。这正是它强于 ISE（Wu et al., 2024）可学习偏移的地方：偏移只是在同一子空间里挪了个位置，随着层数加深会被模型逐渐"消化"掉、失去区分度；而正交旋转在几何上创造了永久的可分性，不会被网络抹平。
 
-2. **功能角色注解**：
+**2. 功能角色注解：让区分指令/数据这件事不依赖模型自己猜。**
 
-    - 功能：在部署时标注每个 token 是指令还是数据。
-    - 核心思路：利用系统设计中已有的角色信息（如邮件内容始终是数据，系统提示始终是指令），这不需要模型推断。
-    - 限制：需要应用场景能提供 token 级角色标注，不适用于无法区分角色的通用聊天场景。
+ASIDE 要旋转哪些 token，靠的是部署时已知的角色标注，而不是模型推断。很多真实系统的角色信息本就是设计层面给定的——邮件正文永远是数据、系统提示永远是指令——直接把这套标注喂给前向传播即可。代价是它要求应用场景能提供 token 级的角色标签，因此不适用于角色边界模糊、无法明确划分指令与数据的通用聊天场景。
 
-3. **后向兼容的集成流程**：
+**3. 后向兼容的集成流程：在已预训练模型上零改造参数地接入。**
 
-    - 功能：将 ASIDE 集成到已预训练的模型中。
-    - 步骤：(1) 修改前向传播加入旋转逻辑 (2) 在标准 SFT 数据（无安全数据）上微调 3 个 epoch。
+整套方法可以挂到任何现成的预训练模型上，不需要从头预训练。流程只有两步：先在前向传播里加入按角色旋转 embedding 的逻辑，再在标准 SFT 数据（不含任何安全/对抗样本）上微调 3 个 epoch。因为旋转矩阵固定、不增加参数，这一步本质就是一次普通的指令微调。
 
 ### 训练策略
-标准 SFT，无对抗训练、无安全目标函数。在 Alpaca-clean-gpt4-turbo 数据集（51.8k 样本）上训练，学习率 $[1 \times 10^{-6}, 2 \times 10^{-5}]$，batch size 64-256，warm-up ratio [0, 0.1]。
+全程标准 SFT，没有对抗训练、也没有安全专项目标函数。训练集为 Alpaca-clean-gpt4-turbo（51.8k 样本），学习率取 $[1 \times 10^{-6}, 2 \times 10^{-5}]$，batch size 64-256，warm-up ratio [0, 0.1]。
 
 ## 实验关键数据
 
@@ -130,9 +124,9 @@ ASIDE 的 utility（AlpacaEval、SEP Utility）与 Vanilla 基本持平。
 
 - [\[AAAI 2026\] ConInstruct: Evaluating Large Language Models on Conflict Detection and Resolution in Instructions](../../AAAI2026/llm_evaluation/coninstruct_evaluating_large_language_models_on_conflict_detection_and_resolutio.md)
 - [\[ICLR 2026\] Prompt and Parameter Co-Optimization for Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)
-- [\[ICLR 2026\] TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
 - [\[ICLR 2026\] DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science](dare-bench_evaluating_modeling_and_instruction_fidelity_of_llms_in_data_science.md)
 - [\[ACL 2026\] Revisiting the Reliability of Language Models in Instruction-Following](../../ACL2026/llm_evaluation/revisiting_the_reliability_of_language_models_in_instruction-following.md)
+- [\[ACL 2026\] CUB: Benchmarking Context Utilisation Techniques for Language Models](../../ACL2026/llm_evaluation/cub_benchmarking_context_utilisation_techniques_for_language_models.md)
 
 </div>
 

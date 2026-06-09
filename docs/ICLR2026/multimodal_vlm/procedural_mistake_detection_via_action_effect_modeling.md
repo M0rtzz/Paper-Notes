@@ -41,36 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在 ActionFormer 骨干上增加 Action Effect Modeling（AEM）模块：(1) 选择效果帧，(2) 视觉分支提取物体状态/关系特征，(3) 文本分支用 GPT-4o 生成场景图并编码，(4) 可学习效果 token 蒸馏双路径信息，(5) 基于提示的错误检测。
+本文要解决的是"动作做对了但结果不对"这类错误——光看操作过程区分不出来，必须看动作完成后物体变成了什么样、它们之间的位置关系怎么变了。整体仍以 ActionFormer 作为时序骨干来切分动作段，关键改动是在它之上挂一个 Action Effect Modeling（AEM）模块：先从每个动作段里挑出一帧最能反映"做完之后"的效果帧，再从这一帧分两路提取效果信息——视觉一路直接看图像里的物体状态和空间布局，文本一路让 GPT-4o 把这一帧写成结构化场景图；两路信息最终被蒸馏进一个可学习的"效果 token"，这个 token 与动作特征拼起来送进检测器判断对错。整套设计的巧妙之处在于：GPT-4o、Grounding DINO 这些重外部模型只在训练时充当监督，推理时只用学到的效果 token，不带任何额外开销。
 
 ### 关键设计
 
-1. **效果帧采样**:
+**1. 效果帧采样：从一段动作里挑出最能说明"结果"的那一帧。**
 
-    - 功能：从动作段中选择最能反映动作结果的关键帧
-    - 核心思路：综合语义相关性（段特征与 GPT-4o 描述嵌入的相似度）和视觉清晰度（拉普拉斯算子衡量的清晰度），排名取 top-1。
-    - 设计动机：效果帧的质量直接影响后续特征提取。最后一帧（naive baseline）AUC = 70.6，本方法 73.8，+3.2 提升。
+错误体现在结果上，所以拿哪一帧来提效果特征至关重要。一个 naive 的做法是直接取动作段的最后一帧，但最后一帧常常运动模糊、或还没到真正出结果的时刻。本文改成综合两项指标排名取 top-1：一是语义相关性，用动作段特征与 GPT-4o 生成的效果描述嵌入算相似度，挑出语义上最贴"结果"的帧；二是视觉清晰度，用拉普拉斯算子衡量帧的锐利程度，避开模糊帧。这个采样策略本身就值回票价——naive 最后一帧 AUC 70.6，换成本方法挑的效果帧直接到 73.8，单这一项 +3.2。
 
-2. **视觉分支（双路径）**:
+**2. 视觉分支：把"效果"拆成物体状态和空间关系两路分别看。**
 
-    - 功能：从效果帧中提取物体状态特征和空间关系特征
-    - 核心思路：(a) 状态路径：Grounding DINO 检测物体，图像编码器提取 RoI 特征拼接得到 F_s；(b) 关系路径：物体位置编码后拼接得到 F_r。两路特征分别通过 MLP 映射。
-    - 设计动机：状态（外观变化）和关系（位置变化）是动作效果的两个独立维度，分开建模更精准。
+一个动作的效果其实有两个独立维度：物体本身变了样（外观/状态变化，比如食材烧焦），以及物体之间的相对位置变了（空间关系变化，比如调料倒进了锅里）。视觉分支顺着这个拆法走两条路：状态路径用 Grounding DINO 在效果帧里检测物体，再用图像编码器提取每个物体的 RoI 特征并拼接成 $F_s$；关系路径则把各物体的位置坐标编码后拼接成 $F_r$。两路特征各自过一个 MLP 映射到统一空间。分开建模而不是揉成一团，是因为"长什么样"和"在哪里"对判断对错的贡献并不一样——消融里空间关系特征（AUC 72.6）反而比物体状态特征（AUC 69.9）更关键。
 
-3. **文本分支（场景图）**:
+**3. 文本分支：让 GPT-4o 把效果帧写成场景图，补一路结构化语义。**
 
-    - 功能：用 GPT-4o 从效果帧生成场景图，提供结构化的效果描述
-    - 核心思路：场景图 G=(V,E) 包含对象/关系/属性节点，分解为状态子图和关系子图，GNN 编码后池化得到文本侧特征 t_s 和 t_r。
-    - 设计动机：场景图提供了结构化的语义信息，与视觉特征互补。实验显示加入文本分支 AUC 从 68.4 提升到 71.7。
+视觉特征是连续向量，缺少显式的"谁-关系-谁"结构。文本分支让 GPT-4o 从同一张效果帧生成场景图 $G=(V,E)$，节点涵盖对象、关系、属性；再顺着视觉那套拆法，把场景图分解成状态子图和关系子图，分别用 GNN 编码后池化，得到文本侧的状态特征 $t_s$ 和关系特征 $t_r$。这一路提供的是视觉特征给不了的结构化语义，和视觉互补——光加文本分支就能把 AUC 从 68.4 抬到 71.7。
 
-4. **效果感知学习（Effect-Aware Learning）**:
+**4. 效果感知学习：用一个可学习效果 token 把双路监督蒸馏进来，推理时甩掉外部模型。**
 
-    - 功能：通过可学习效果 token 蒸馏视觉和文本双路径的监督信号
-    - 核心思路：效果 token e 通过 MLP 映射后与视觉/文本特征对齐（L2 损失），同时视觉-文本之间做对比学习对齐。蒸馏后的效果 token 与动作特征拼接，送入检测器。
-    - 设计动机：效果 token 只在训练时需要外部模型（GPT-4o, Grounding DINO），推理时直接使用学到的 token，无额外开销。
+前三步拿到的视觉、文本特征都依赖 GPT-4o 和 Grounding DINO，推理时不可能每帧都调一遍。这一步引入可学习的效果 token $e$：训练时把 $e$ 经 MLP 映射后分别与视觉、文本特征做 L2 对齐，把外部监督"灌"进这个 token；同时在视觉与文本特征之间做对比学习，让两个模态的效果表征在同一空间里对齐。蒸馏完成后，$e$ 与动作特征拼接送入检测器。这样外部大模型只在训练阶段出现，推理时只剩学到的 token，零额外开销。值得注意的是，视觉-文本对齐不是可有可无的装饰——简单融合（不对齐）只到 71.7，加上对齐后再涨 2.1 到 73.8。
 
 ### 损失函数
-L = L_seg（动作分割）+ L_eff（效果对齐 L2）+ L_CL（视觉-文本对比）+ L_det（错误检测对比）
+总目标由四项构成：$L = L_{seg} + L_{eff} + L_{CL} + L_{det}$，分别对应动作分割（ActionFormer 的时序定位）、效果对齐（效果 token 与视觉/文本特征的 L2 蒸馏）、视觉-文本对比对齐、以及错误检测的对比损失。
 
 ## 实验关键数据
 
@@ -130,9 +122,9 @@ L = L_seg（动作分割）+ L_eff（效果对齐 L2）+ L_CL（视觉-文本对
 
 - [\[ICLR 2026\] Capacity-Aware Inference: Mitigating the Straggler Effect in Mixture of Experts](capacity-aware_inference_mitigating_the_straggler_effect_in_mixture_of_experts.md)
 - [\[ICLR 2026\] Unified Vision-Language Modeling via Concept Space Alignment](unified_vision-language_modeling_via_concept_space_alignment.md)
-- [\[CVPR 2025\] SOLAMI: Social Vision-Language-Action Modeling for Immersive Interaction with 3D Autonomous Characters](../../CVPR2025/multimodal_vlm/solami_social_vision-language-action_modeling_for_immersive_interaction_with_3d_.md)
 - [\[ICML 2026\] Pair2Scene: Learning Local Object Relations for Procedural Scene Generation](../../ICML2026/multimodal_vlm/pair2scene_learning_local_object_relations_for_procedural_scene_generation.md)
 - [\[CVPR 2026\] From Observation to Action: Latent Action-based Primitive Segmentation for VLA Pre-training in Industrial Settings](../../CVPR2026/multimodal_vlm/from_observation_to_action_latent_action-based_primitive_segmentation_for_vla_pr.md)
+- [\[CVPR 2025\] HomeSafe-Bench: Evaluating Vision-Language Models on Unsafe Action Detection for Embodied Agents in Household Scenarios](../../CVPR2025/multimodal_vlm/homesafe-bench_evaluating_vision-language_models_on_unsafe_action_detection_for_.md)
 
 </div>
 

@@ -41,27 +41,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是长文档（预切分为 chunks）+ 查询，输出是分步检索的支持事实集合。MDP 形式化：状态 = 已检索 chunks 的有序列表；动作 = 选择下一个 chunk；奖励 = 稀疏终端奖励（所有支持事实都找到得 1 分）。用 soft Q-learning + PQN 训练 embedder。
+这篇论文要解决的是长上下文里的多步检索：给一段（预切分成 chunks 的）长文档和一个查询，需要分几步把散落在不同位置的支持事实逐个找齐。它和主流做法的根本分歧在于"改谁"——既不去微调 LLM 让它生成搜索查询（贵、且用不了闭源模型），也不用监督学习训练一个检索器（泛化差），而是把检索本身建模成一个序贯决策问题，只微调 embedder 让它学会"在检索空间里一步步做决策"。
+
+具体把整个过程写成 MDP：状态是当前已检索 chunks 的有序列表，动作是从剩余候选里挑下一个 chunk，奖励是稀疏的终端奖励（把所有支持事实都找到才得 1 分）。训练用 soft Q-learning 配合 PQN，全程只更新 embedder 的参数。
 
 ### 关键设计
 
-1. **Q 函数即内积**
+**1. Q 函数即内积：让强化学习的价值函数直接落在检索的相似度空间里。**
 
-    - 功能：将 Q 函数参数化为两个 embedder 的内积
-    - 核心思路：$Q_\theta(s, a_i) = \langle E_s(s; \theta_1), E_a(a_i, i; \theta_2) \rangle$，状态 embedder 编码已检索内容，动作 embedder 编码候选 chunk 及其文档位置
-    - 设计动机：(a) **Theorem 1** 证明此形式是万能近似器（Stone-Weierstrass 定理）；(b) 推理时只需一次 dot product 而非 transformer forward pass，比 Beam-Retriever 快数量级
+这一步同时回应了两个痛点——LLM 微调太贵、Beam-Retriever 给每个候选打分都要跑一遍 transformer。做法是把 Q 函数参数化成状态嵌入和动作嵌入的内积：
 
-2. **RoPE 相对位置编码实现时序推理**
+$$Q_\theta(s, a_i) = \langle E_s(s; \theta_1), E_a(a_i, i; \theta_2) \rangle$$
 
-    - 功能：用旋转位置编码表达候选 chunk 相对于已检索事实的位置关系
-    - 核心思路：定义相对位置映射 $\rho_t(i) = j \cdot \delta + \ell \cdot \frac{i - b_j}{b_{j+1} - b_j}$，已检索事实将文档划分为区间，每个候选 chunk 获得相对于最近区间的位置编码。动作 embedder 使用 $E_a(a_i, \rho_t(i); \theta_2)$
-    - 设计动机：绝对位置编码在长上下文外推时失败，相对位置编码使模型关注"候选在已知事实前/后/之间"的关系，实现时序推理且泛化到任意长度
+其中状态 embedder $E_s$ 编码已检索的内容，动作 embedder $E_a$ 编码候选 chunk 及它在文档中的位置。这么设计有两层好处：一是表达力不打折，**Theorem 1** 借 Stone-Weierstrass 定理证明这种内积形式仍是万能近似器；二是推理极快，给所有候选打分只需一次 dot product，不必像 Beam-Retriever 那样对每个候选做 transformer forward pass，长上下文下速度领先数量级。而且内积形式本就和检索的 similarity search 范式天然一致。
 
-3. **PQN + Soft Q-Learning**
+**2. RoPE 相对位置编码：让检索器能做"谁在谁之前"的时序推理。**
 
-    - 功能：无 replay buffer 的在线值基 RL 训练
-    - 核心思路：使用 PQN (Periodic Q-Network) 避免 replay buffer 需要重新嵌入所有 chunks 的开销；加入 soft value function $V_{\theta'}(s_t) = \alpha \log \sum_{a} \exp(Q_{\theta'}(s_t, a)/\alpha)$ 和 target network；用 $\lambda$-return 替代单步 TD target 减少偏差
-    - 设计动机：检索场景中 chunk 数量可达数千，replay buffer 每次采样都需重计算所有 chunk 的 Q 值，PQN 的在线特性避免了这一瓶头
+现有检索器答不了"事件 X 之前发生了什么"这类时序问题，根子在于绝对位置编码一旦外推到长上下文就失效。这里改用相对位置：已检索到的事实把文档切成若干区间，每个候选 chunk 拿到的是它相对最近区间的位置编码
+
+$$\rho_t(i) = j \cdot \delta + \ell \cdot \frac{i - b_j}{b_{j+1} - b_j}$$
+
+动作 embedder 随之改用 $E_a(a_i, \rho_t(i); \theta_2)$。这样模型看的不再是候选的绝对坐标，而是它落在已知事实的"前 / 后 / 之间"，时序关系被显式编码进位置里，所以 4K 训练能一路泛化到 1M+ token。
+
+**3. PQN + Soft Q-Learning：在数千 chunk 的检索场景里把值基 RL 训练真正跑起来。**
+
+检索场景的 chunk 动辄数千，传统 replay buffer 每次采样都要把所有 chunk 重新嵌入、重算一遍 Q 值，这是个绕不开的瓶颈。所以这里用 PQN（Periodic Q-Network）做在线训练，直接免掉 replay buffer。在此之上加 soft value function 和 target network 稳住训练：
+
+$$V_{\theta'}(s_t) = \alpha \log \sum_{a} \exp(Q_{\theta'}(s_t, a)/\alpha)$$
+
+并用 $\lambda$-return 替代单步 TD target 来压低偏差。
 
 ### 损失函数 / 训练策略
 $\mathcal{L}_Q = \mathbb{E}[(Q_\theta(s_t, a_t) - G_t^\lambda)^2]$，AdamW 优化器，lr=1.5e-5，温度 $\alpha=0.05$ 退火到 0，$\lambda=0.5$，单卡 A100-80GB 训练 <12 小时。

@@ -53,23 +53,17 @@ SDeC 是一个 training-free 的 prompt embedding 编辑方法：
 
 ### 关键设计
 
-1. **场景上下文化理论 (Theorem 1 + Corollary 1)**:
+**1. 场景上下文化理论：先证明 ID 偏移几乎注定要发生。**
 
-    - 功能：证明注意力机制中场景 token 对 ID token 的信息注入几乎不可避免
-    - 核心思路：将注意力输出分解为 ID 项 $T_{\text{id}}$ 和场景项 $T_{\text{sc}}$。$T_{\text{sc}} \neq 0$ 需要两个条件同时满足：(A) $\alpha_{\text{sc}} \neq 0$（场景注意力权重非零）和 (B) $\Pi_{\text{id}} \circ W_V|_{\mathcal{H}_{\text{sc}}} \neq 0$（$W_V$ 不是关于 ID/scene 子空间的块对角矩阵）。这两个条件在实际模型中几乎总是成立
-    - 设计动机：为 SDeC 方法提供理论基础——既然 scene contextualization 不可避免，就需要后处理来去除
+SDeC 的出发点是把"主体在换场景时为什么会变样"这件事讲清楚。作者把交叉注意力的输出拆成 ID 项 $T_{\text{id}}$ 和场景项 $T_{\text{sc}}$ 两部分，场景项不为零（即场景信息泄露进了 ID token）需要两个条件同时成立：(A) 场景注意力权重非零 $\alpha_{\text{sc}} \neq 0$；(B) $\Pi_{\text{id}} \circ W_V|_{\mathcal{H}_{\text{sc}}} \neq 0$，也就是值投影矩阵 $W_V$ 不是关于 ID 子空间和场景子空间的块对角矩阵。Theorem 1 与 Corollary 1 指出，要让 $T_{\text{sc}}=0$，$W_V$ 必须恰好块对角——这在参数连续取值的真实模型里是一个零测集事件，几乎永远不成立。换句话说，场景对 ID 的污染不是某个 backbone 的 bug，而是注意力机制本身的结构性后果。这个结论直接决定了方法路线：既然没法从源头避免，那就只能在 prompt embedding 上做后处理去除，这正是 SDeC 要干的事。
 
-2. **SVD 方向稳定性量化 (QDV)**:
+**2. SVD 方向稳定性量化（QDV）：找出 embedding 里被场景"污染"的方向。**
 
-    - 功能：通过"前向-后向"特征值优化来量化每个 SVD 方向受场景影响的程度
-    - 核心思路：对原始 ID embedding $\mathcal{Z}_{\text{id}}^o$ 做 SVD 得到特征值 $\sigma_j$。然后分析每个特征方向在加入/去除场景信息时的稳定性——如果某个方向的特征值变化大（绝对偏移量大），说明它被场景信息"污染"了
-    - 设计动机：直接构造 ID 和 scene 的共享子空间投影矩阵 $P_\cap$ 在高维空间中数值不稳定，用"学习式"的软估计更鲁棒
+知道了污染不可避免，下一步是定位它藏在哪。理想做法是直接构造 ID 子空间与场景子空间的共享投影矩阵 $P_\cap$，但它在高维下数值不稳定，于是作者改用一种软估计的方式。具体地，对原始 ID embedding $\mathcal{Z}_{\text{id}}^o$ 做 SVD 得到一组特征值 $\sigma_j$ 和对应方向；然后用一次"前向-后向"的特征值优化，观察每个方向在注入/剥离场景信息时特征值的变化幅度。某个方向的特征值偏移得越大（绝对偏移量越大），说明它越容易随场景摆动，也就越可能是被场景上下文化"污染"的方向。这样就把抽象的"哪些分量受场景影响"量化成了每个 SVD 方向上一个可比较的稳定性分数，避开了直接求 $P_\cap$ 的数值病态。
 
-3. **自适应特征值重加权**:
+**3. 自适应特征值重加权：软压污染方向、保住 ID 信息再重建。**
 
-    - 功能：根据 QDV 结果，降低受场景影响大的方向的权重，增强稳定方向的权重
-    - 核心思路：用特征值的绝对偏移量（abs-excursion）作为重加权系数，然后用重加权后的特征值重建 ID embedding
-    - 设计动机：不是粗暴地去掉某些方向（hard），而是自适应地调整权重（soft），保留那些虽然与场景有轻微关联但携带重要 ID 信息的方向
+最后一步是用 QDV 的结果改写 embedding。作者不采用"硬切"——直接丢掉若干方向风险很大，因为有些方向虽然和场景有轻微关联，却同时携带重要的身份信息，删了就伤 ID。取而代之的是软重加权：以每个方向的绝对偏移量（abs-excursion）为系数，压低受场景影响大的方向的权重、保留乃至增强稳定方向的权重，再用重加权后的特征值把 ID embedding 重建回去。这样既削弱了场景-ID 关联，又最大程度保住了身份特征，整个过程只动 prompt embedding、不碰模型参数。
 
 ### 损失函数 / 训练策略
 
@@ -139,7 +133,7 @@ SDeC 是一个 training-free 的 prompt embedding 编辑方法：
 - [\[ICLR 2026\] Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md)
 - [\[ICLR 2026\] Directional Textual Inversion for Personalized Text-to-Image Generation](directional_textual_inversion_for_personalized_text-to-image_generation.md)
 - [\[ICLR 2026\] Diverse Text-to-Image Generation via Contrastive Noise Optimization](diverse_text-to-image_generation_via_contrastive_noise_optimization.md)
-- [\[CVPR 2026\] Match-and-Fuse: Consistent Generation from Unstructured Image Sets](../../CVPR2026/image_generation/match-and-fuse_consistent_generation_from_unstructured_image_sets.md)
+- [\[CVPR 2025\] RoomPainter: View-Integrated Diffusion for Consistent Indoor Scene Texturing](../../CVPR2025/image_generation/roompainter_view-integrated_diffusion_for_consistent_indoor_scene_texturing.md)
 
 </div>
 

@@ -44,52 +44,15 @@ tags:
 
 ### 整体框架
 
-S-ICQL 包含三个核心组件：(a) 预训练的通用世界模型，用于将原始轨迹压缩为轻量级任务提示 $\beta$；(b) 多头 Transformer 网络，同时预测策略 $\pi_\theta(a|s;\beta)$、状态值函数 $V_\theta(s;\beta)$ 和动作值函数 $Q_\theta(s,a;\beta)$；(c) 联合优化目标，结合 Bellman backup（Q-learning）和优势加权回归（策略提取）。
+S-ICQL 把动态规划和世界模型嵌进监督式 ICRL：先用一个预训练世界模型把原始轨迹压成轻量提示 $\beta$，再用一个多头 Transformer 在该提示条件下同时输出策略 $\pi_\theta(a|s;\beta)$、状态值 $V_\theta(s;\beta)$ 和动作值 $Q_\theta(s,a;\beta)$，最后通过 Bellman backup 训值函数、用优势加权回归提策略，三者端到端联合优化。问题设定是多任务离线 RL——任务 $M^i = \langle \mathcal{S}, \mathcal{A}, \mathcal{T}^i, \mathcal{R}^i, \gamma \rangle \sim P(M)$ 共享状态-动作空间但奖励或动力学各异，每个任务的离线数据 $\mathcal{D}^i$ 由任意行为策略收集，因此既可能是次优的也可能彼此风格迥异。
 
-问题设定为多任务离线 RL：任务 $M^i = \langle \mathcal{S}, \mathcal{A}, \mathcal{T}^i, \mathcal{R}^i, \gamma \rangle \sim P(M)$，共享状态-动作空间但奖励函数或转移动力学不同。每个任务的离线数据集 $\mathcal{D}^i$ 由任意行为策略收集。
+### 关键设计
 
-### 关键设计 1：世界模型 → 轻量级精确提示
+**1. 世界模型提示：把任务信息从行为策略里剥离出来。** 直接拿原始轨迹当 prompt 的问题在于，轨迹里行为策略和任务信息纠缠在一起、token 又多又冗余，导致任务推断有偏；而环境动力学 $p(s', r | s, a)$ 本身就完整刻画了一个决策任务，且天然不受行为策略影响，所以用它来编码任务更精确也更紧凑。S-ICQL 为此预训练一个通用世界模型，由上下文编码器 $E_\phi$ 和动力学解码器 $D_\varphi$ 组成：编码器把近 $k$ 步经验 $\eta_t^i = (s_{t-k}, a_{t-k}, r_{t-k}, \ldots, s_t, a_t)^i$ 压成任务表征 $z_t^i = E_\phi(\eta_t^i)$，解码器在该表征条件下预测即时奖励和下一状态 $[\hat{r}_t, \hat{s}_{t+1}] = D_\varphi(s_t, a_t; z_t^i)$，训练目标就是最小化这两项的预测误差 $\mathcal{L}(\phi, \varphi) = \mathbb{E}_{\eta_t^i \sim M^i} [ \| [r_t, s_{t+1}] - D_\varphi(s_t, a_t; z_t^i) \|_2^2 \mid z_t^i = E_\phi(\eta_t^i) ]$。预训练完后冻结世界模型，把 $h$ 步轨迹逐窗编码成提示 $\beta^i := [z_1^i, \ldots, z_h^i] = [E_\phi(\eta_1^i), \ldots, E_\phi(\eta_h^i)]$。相比 AD 那种需要把完整学习历史塞进 context 的做法，这个提示既短又只携带纯任务信息。
 
-核心洞察：环境动力学 $p(s', r | s, a)$ 完整刻画了决策任务，且天然不受行为策略的影响。因此使用世界模型来编码任务信息比直接使用原始轨迹更精确、更紧凑。
+**2. 情境 Q-Learning：用 Bellman backup 换来 stitching 能力。** AD 和 DPT 本质都是模仿学习，学到的策略上限被数据质量卡死，无法把多条次优轨迹的好片段拼成一条全局最优行为，而这种 stitching 恰恰是动态规划的看家本领。S-ICQL 因此在提示条件下做情境 Q-learning：动作值函数最小化 Bellman 误差 $\mathcal{L}_Q(\theta) = \mathbb{E}_{(s_t^i, a_t^i, s_{t+1}^i) \sim \mathcal{D}^i} [ ( r(s_t^i, a_t^i) + \gamma V_\theta(s_{t+1}^i; \beta^i) - Q_\theta(s_t^i, a_t^i; \beta^i) )^2 ]$，让回报信息沿着转移逐步回传，从而在数据里发现比任何单条采样轨迹都好的行为。为避免直接对动作取 $\max$ 在离线设定下选到分布外动作，状态值函数改用 expectile regression 拟合 Q 的上尾分位数 $\mathcal{L}_V(\theta) = \mathbb{E}_{(s_t^i, a_t^i) \sim \mathcal{D}^i} [ L_2^\omega ( Q_{\hat{\theta}}(s_t^i, a_t^i; \beta^i) - V_\theta(s_t^i; \beta^i) ) ]$，其中非对称损失 $L_2^\omega(u) = |\omega - \mathbb{1}(u < 0)| \cdot u^2$ 在 $\omega \in (0.5, 1)$ 时对 $Q > V$ 的样本赋大权重 $\omega$、对 $Q < V$ 的只给 $1-\omega$，于是 $V$ 被推向 $\max_a Q(s, a)$ 而又不必真去枚举动作。
 
-**世界模型架构**：包含上下文编码器 $E_\phi$ 和动力学解码器 $D_\varphi$：
-
-- 上下文编码器：将近 $k$ 步的经验 $\eta_t^i = (s_{t-k}, a_{t-k}, r_{t-k}, \ldots, s_t, a_t)^i$ 压缩为任务表征 $z_t^i = E_\phi(\eta_t^i)$
-- 动力学解码器：条件于任务表征预测即时奖励和下一状态 $[\hat{r}_t, \hat{s}_{t+1}] = D_\varphi(s_t, a_t; z_t^i)$
-
-**预训练目标**为最小化奖励和状态转移的预测误差：
-
-$$\mathcal{L}(\phi, \varphi) = \mathbb{E}_{\eta_t^i \sim M^i} \left[ \| [r_t, s_{t+1}] - D_\varphi(s_t, a_t; z_t^i) \|_2^2 \mid z_t^i = E_\phi(\eta_t^i) \right]$$
-
-预训练完成后冻结世界模型，将 $h$ 步轨迹转化为轻量级提示：
-
-$$\beta^i := [z_1^i, z_2^i, \ldots, z_h^i] = [E_\phi(\eta_1^i), E_\phi(\eta_2^i), \ldots, E_\phi(\eta_h^i)]$$
-
-相比 AD 需要长学习历史作为 context，此提示结构更紧凑且包含更精确的任务信息。
-
-### 关键设计 2：情境 Q-Learning（Bellman Backup + 期望回归）
-
-**Q 函数训练**——最小化 Bellman 误差，引入 stitching 能力：
-
-$$\mathcal{L}_Q(\theta) = \mathbb{E}_{(s_t^i, a_t^i, s_{t+1}^i) \sim \mathcal{D}^i} \left[ \left( r(s_t^i, a_t^i) + \gamma V_\theta(s_{t+1}^i; \beta^i) - Q_\theta(s_t^i, a_t^i; \beta^i) \right)^2 \right]$$
-
-**状态值函数训练**——使用 expectile regression 拟合 Q 函数的上尾分位数：
-
-$$\mathcal{L}_V(\theta) = \mathbb{E}_{(s_t^i, a_t^i) \sim \mathcal{D}^i} \left[ L_2^\omega \left( Q_{\hat{\theta}}(s_t^i, a_t^i; \beta^i) - V_\theta(s_t^i; \beta^i) \right) \right]$$
-
-其中 $L_2^\omega(u) = |\omega - \mathbb{1}(u < 0)| \cdot u^2$ 是非对称损失函数，$\omega \in (0.5, 1)$。当 $Q > V$ 时赋予更大权重 $\omega$，当 $Q < V$ 时权重仅为 $1-\omega$，从而近似 $\max_a Q(s, a)$。
-
-### 关键设计 3：优势加权回归策略提取
-
-将情境值函数蒸馏到策略提取中，使用 advantage-weighted regression：
-
-$$\mathcal{L}_\pi(\theta) = -\mathbb{E}_{(s_t^i, a_t^i) \sim \mathcal{D}^i} \left[ \exp\left( \frac{1}{\lambda} \left( Q_{\hat{\theta}}(s_t^i, a_t^i; \beta^i) - V_\theta(s_t^i; \beta^i) \right) \right) \cdot \log \pi_\theta(a_t^i | s_t^i; \beta^i) \right]$$
-
-优势值 $A = Q - V$ 越大的动作获得越大的训练权重。这不是简单的行为克隆，而是学习在数据集约束下最大化 Q 值的策略。总损失为三者的加权和：
-
-$$\mathcal{L}(\theta) = \mathsf{c}_1 \mathcal{L}_\pi(\theta) + \mathsf{c}_2 \mathcal{L}_Q(\theta) + \mathsf{c}_3 \mathcal{L}_V(\theta)$$
-
-系数设为 $(1:1:1)$，整个多头 Transformer 端到端联合优化。
+**3. 优势加权回归：把值函数蒸馏成可执行策略。** 有了 $Q$ 和 $V$ 还需要一个动作输出，简单行为克隆只会平均复制数据里的好坏动作，浪费掉刚学到的值信息。S-ICQL 用 advantage-weighted regression 把值蒸馏进策略头 $\mathcal{L}_\pi(\theta) = -\mathbb{E}_{(s_t^i, a_t^i) \sim \mathcal{D}^i} [ \exp( \frac{1}{\lambda} ( Q_{\hat{\theta}}(s_t^i, a_t^i; \beta^i) - V_\theta(s_t^i; \beta^i) ) ) \cdot \log \pi_\theta(a_t^i | s_t^i; \beta^i) ]$：优势 $A = Q - V$ 越大的动作被加权得越重，温度 $\lambda$ 控制这种偏好的尖锐程度，因此策略学的是在数据约束内尽量提升 Q 值，而非无差别模仿。三个损失以 $(\mathsf{c}_1:\mathsf{c}_2:\mathsf{c}_3) = (1:1:1)$ 合成总目标 $\mathcal{L}(\theta) = \mathsf{c}_1 \mathcal{L}_\pi(\theta) + \mathsf{c}_2 \mathcal{L}_Q(\theta) + \mathsf{c}_3 \mathcal{L}_V(\theta)$，整个多头 Transformer 端到端联合优化，仅靠两个轻量值头就把动态规划接进了监督预训练流程。
 
 ## 实验结果
 

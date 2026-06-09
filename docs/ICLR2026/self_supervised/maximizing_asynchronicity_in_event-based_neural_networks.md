@@ -41,34 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EVA由三大组件构成：(1) 事件token化与嵌入层将原始事件转为向量表示；(2) 基于RWKV-6的异步线性注意力编码器逐事件更新特征；(3) 多任务自监督学习(MRP+NRP)训练编码器。推理时编码器逐事件更新特征，下游任务按需采样特征进行识别或检测。
 
-### 关键设计1：事件token化与嵌入
+EVA把事件流当成语言序列来处理：原始事件先被token化并嵌入为向量，送入基于RWKV-6的异步线性注意力编码器逐事件更新特征，再由MRP+NRP两个自监督任务训练这个编码器。推理时编码器随每个事件到来增量更新内部状态，下游识别或检测算法按需采样当前特征即可。
 
-- **功能**：将每个事件 $e_i = (t_i, x_i, y_i, p_i)$ 映射为向量 $\bm{x}_i \in \mathbb{R}^D$
-- **核心思路**：空间token化使用双射映射 $\text{Tok}(x, y, p) = p \times H \times W + y \times W + x$，词汇表大小为 $2 \times H \times W$。时间嵌入采用时间差 $\Delta t_i = t_i - t_{i-1}$ 的正弦编码（而非绝对时间戳），最终嵌入为空间嵌入与时间嵌入之和
-- **设计动机**：使用时间差嵌入而非绝对时间戳是为了避免长期运行时绝对时间戳持续增长导致的类似语言模型长度外推失败问题。双射映射保证每个空间位置+极性组合有唯一token
+### 关键设计
 
-### 关键设计2：矩阵值隐藏状态(MVHS)作为输出
+**1. 事件token化与时间差嵌入：把异步事件翻译成可学习的向量。** 每个事件 $e_i = (t_i, x_i, y_i, p_i)$ 需要先变成编码器能吃的向量 $\bm{x}_i \in \mathbb{R}^D$。空间上用双射映射 $\text{Tok}(x, y, p) = p \times H \times W + y \times W + x$ 把"坐标+极性"压成一个唯一token，词汇表大小为 $2 \times H \times W$，保证每个空间位置与极性的组合都对应一个独立可学习的embedding。时间维度则刻意不用绝对时间戳，而用相邻事件的时间差 $\Delta t_i = t_i - t_{i-1}$ 做正弦编码，最终嵌入取空间嵌入与时间嵌入之和。之所以用时间差，是因为事件相机长期运行时绝对时间戳会无界增长，直接编码会重蹈语言模型长度外推失败的覆辙；而时间差始终落在有限分布内，模型才能稳定泛化到任意时长的事件流。
 
-- **功能**：用RWKV-6线性注意力的二维矩阵隐藏状态 $\bm{S} \in \mathbb{R}^{N \times D_{\text{head}} \times D_{\text{head}}}$ 作为编码器输出特征，而非传统的一维向量输出 $\bm{y} \in \mathbb{R}^{D}$
-- **核心思路**：RWKV-6的循环形式为 $\bm{S}_i = \text{diag}(\bm{w}_i) \bm{S}_{i-1} + \bm{k}_i \bm{v}_i^T$，隐藏状态自然包含聚合的全局信息。使用多头机制，每头维度 $D_{\text{head}} = D/N$，隐藏状态规模为 $N \times D_{\text{head}} \times D_{\text{head}}$，在不增加模型宽度 $D$ 的前提下扩展了特征的表达容量
-- **设计动机**：(1) 单个事件信息密度低，需要聚合信息——隐藏状态正是聚合的全局信息载体；(2) MVHS可将模型规模减小约 $D_{\text{model}}/N$ 倍（相比使用1-D输出），实现轻量化实时处理；(3) 2-D结构有助于学习细粒度空间特征
+**2. 矩阵值隐藏状态（MVHS）作输出：用二维状态弥补单事件的低信息量。** 单个事件只记录一个像素的亮度变化，信息密度远低于一个语言token，因此不能像传统编码器那样直接吐一维向量 $\bm{y} \in \mathbb{R}^{D}$。EVA改用RWKV-6线性注意力的二维矩阵隐藏状态 $\bm{S} \in \mathbb{R}^{N \times D_{\text{head}} \times D_{\text{head}}}$ 作为输出特征。RWKV-6的循环更新式 $\bm{S}_i = \text{diag}(\bm{w}_i) \bm{S}_{i-1} + \bm{k}_i \bm{v}_i^T$ 让隐藏状态天然累积了到当前为止的全局信息，正好补上单事件信息不足的短板。配合多头机制（每头维度 $D_{\text{head}} = D/N$），隐藏状态规模做到 $N \times D_{\text{head}} \times D_{\text{head}}$，在不加大模型宽度 $D$ 的前提下把特征容量扩展开来——相比用一维输出，模型规模可缩小约 $D_{\text{model}}/N$ 倍，既轻量适合实时推理，二维结构又方便学习细粒度空间特征。
 
-### 关键设计3：Patch-wise编码(PWE)
+**3. Patch-wise编码（PWE）：用事件的空间局部性换计算效率与分辨率无关性。** 事件相比语言多了空间属性，EVA把这一点利用起来：对分辨率 $(H_{\text{sensor}}, W_{\text{sensor}})$ 的相机，按patch大小 $P$ 将事件按坐标切成 $H_{\text{sensor}} \times W_{\text{sensor}} / P^2$ 条独立序列，每个patch各跑一份编码器，特征拼接后再交给下游。这样单条序列变短、计算开销下降，模型规模随patch数进一步缩小，且各patch可并行。更关键的副产品是分辨率无关性——编码器只在固定大小的patch上训练，换一台不同分辨率的事件相机时无需重训即可直接用。
 
-- **功能**：将事件按空间坐标分配到不同patch中，每个patch独立编码特征
-- **核心思路**：对分辨率 $(H_{\text{sensor}}, W_{\text{sensor}})$ 的事件相机，按patch大小 $P$ 将事件分成 $H_{\text{sensor}} \times W_{\text{sensor}} / P^2$ 个序列，每个patch独立运行编码器。各patch特征拼接后送入下游任务
-- **设计动机**：(1) 利用事件的空间局部性（与语言的关键区别），降低序列长度和计算开销；(2) 编码器在固定大小patch上训练，天然支持不同分辨率的事件相机；(3) 模型规模减小约patch数倍，且各patch可并行计算
-
-### 关键设计4：多任务自监督学习
-
-- **功能**：用MRP+NRP两个自监督任务训练编码器，不依赖下游任务标签
-- **核心思路(MRP)**：强制编码特征 $\mathcal{F}_i = \mathcal{M}_\theta(\{e_j\}_{j \leq i})$ 预测多种手工表示（事件计数EC、时间面TS等）：
-$$\arg\max_{\theta, \Theta} \mathbb{E}_i \prod_{k=1}^{K} \textbf{Pr}(\mathcal{R}_i^k | \mathcal{F}_i; \theta_k)$$
-- **核心思路(NRP)**：受NTP启发，预测未来时间窗 $\Delta T$ 内的表示：
-$$\arg\max_{\theta, \Theta'} \mathbb{E}_i \prod_{k=1}^{K'} \textbf{Pr}(\mathcal{R}^k(\{e | t_i < t(e) \leq t_i + \Delta T\}) | \mathcal{F}_i; \theta_k')$$
-- **设计动机**：(1) 不同手工表示捕获事件的不同信息侧面→多表示学习产生可泛化特征；(2) NRP迫使模型理解运动模式而非简单记忆历史；(3) 单个事件作为预测目标信息不足且噪声不可预测→用聚合表示作为目标更可靠
+**4. 多任务自监督学习（MRP+NRP）：不靠下游标签也能学到可迁移特征。** 为摆脱端到端有监督导致的特征任务特异问题，EVA用两个自监督目标训练编码器。多表示预测（MRP）强制编码特征 $\mathcal{F}_i = \mathcal{M}_\theta(\{e_j\}_{j \leq i})$ 同时预测事件计数EC、时间面TS等多种手工表示，目标为 $\arg\max_{\theta, \Theta} \mathbb{E}_i \prod_{k=1}^{K} \textbf{Pr}(\mathcal{R}_i^k | \mathcal{F}_i; \theta_k)$；不同表示捕获事件信息的不同侧面，逼模型学出更全面、可泛化的特征。下一表示预测（NRP）则借鉴NLP的下一token预测，要求模型从当前特征预测未来时间窗 $\Delta T$ 内的表示，目标为 $\arg\max_{\theta, \Theta'} \mathbb{E}_i \prod_{k=1}^{K'} \textbf{Pr}(\mathcal{R}^k(\{e | t_i < t(e) \leq t_i + \Delta T\}) | \mathcal{F}_i; \theta_k')$；这迫使模型理解运动规律而非死记历史。两个任务都以聚合表示而非单个事件作为预测目标，因为单事件信息不足、噪声不可预测，用聚合量做监督信号更可靠。
 
 ## 实验关键数据
 
@@ -151,9 +135,9 @@ $$\arg\max_{\theta, \Theta'} \mathbb{E}_i \prod_{k=1}^{K'} \textbf{Pr}(\mathcal{
 ## 相关论文
 
 - [\[AAAI 2026\] Spikingformer: A Key Foundation Model for Spiking Neural Networks](../../AAAI2026/self_supervised/spikingformer_a_key_foundation_model_for_spiking_neural_networks.md)
-- [\[ICLR 2026\] Maximizing Incremental Information Entropy for Contrastive Learning](maximizing_incremental_information_entropy_for_contrastive_learning.md)
 - [\[CVPR 2026\] SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](../../CVPR2026/self_supervised/sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
 - [\[ICML 2026\] How 'Neural' is a Neural Foundation Model?](../../ICML2026/self_supervised/how_neural_is_a_neural_foundation_model.md)
+- [\[ICLR 2026\] Maximizing Incremental Information Entropy for Contrastive Learning](maximizing_incremental_information_entropy_for_contrastive_learning.md)
 - [\[ICLR 2026\] Soft Equivariance Regularization for Invariant Self-Supervised Learning](soft_equivariance_regularization_for_invariant_self-supervised_learning.md)
 
 </div>

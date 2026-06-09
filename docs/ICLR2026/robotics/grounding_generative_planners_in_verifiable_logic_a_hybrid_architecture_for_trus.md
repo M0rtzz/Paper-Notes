@@ -36,37 +36,17 @@ tags:
 
 ## 方法详解
 
-### 整体架构：双过程认知系统
+### 整体框架
 
-VIRF 类比 Kahneman 的双过程理论：LLM 规划器（Apprentice）充当直觉性、创造性但易出错的"系统1"；基于形式化本体和丰富语义场景图（RSSG）的确定性验证引擎充当"系统2"——严谨、逻辑化的监督者。核心是"计划-验证-诊断-修正"的闭环。
+VIRF 把具身规划拆成一个"计划-验证-诊断-修正"的闭环：易出错但有创造力的 LLM 规划器（Apprentice）像 Kahneman 双过程理论里的"系统1"负责生成计划 $\pi$，一个建立在形式化本体（OWL 2）与丰富语义场景图 RSSG 之上的确定性验证引擎像"系统2"负责严格监督，每次拒绝都附带从逻辑证明里推导出的因果诊断，把规划器一步步逼向安全解。支撑这套闭环的是三块基础设施：可追溯公理合成（TAS）负责把安全知识灌进本体，VLM-Cascade 负责把图像接地成可验证的符号场景，导师-学徒精炼循环负责把验证结果转成可教学的反馈。
 
-### 支柱 1：可追溯公理合成（TAS）知识工程
+### 关键设计
 
-为解决知识获取瓶颈，采用 AI 合成器-人类仲裁者协作模式：
-- **检索阶段**：从审核文档语料中检索与目标安全概念相关的文本片段
-- **合成阶段**：LLM 将检索证据解释并草拟候选安全公理（形式化语言），必须引用源句子以建立可追溯的公理-证据对
-- **仲裁阶段**：人类专家进行语义和逻辑验证，确认形式化公理准确捕获源文本含义
+**1. 可追溯公理合成（TAS）：让形式化安全知识库可低成本扩展。** 神经-符号系统的瓶颈在于人工从非结构化文档里抠出 OWL 2 约束极其昂贵，于是 VIRF 用"AI 合成器 + 人类仲裁者"分工：先从审核文档语料里检索与目标安全概念相关的文本片段，再让 LLM 把这些证据草拟成候选安全公理，并强制每条公理引用其源句子，形成可追溯的"公理-证据对"；最后人类专家只需做语义与逻辑核对，确认形式化公理忠实捕获原文含义即可。把人从"撰写者"降级成"仲裁者"后，团队两天就合成出 92 条经验证公理，显著拓宽了危害覆盖面。本体本身采用分层组合设计，把抽象安全原则与特定领域知识解耦，便于后续按领域增补而不破坏既有公理。
 
-该流程在两天内合成了 92 条经验证的公理，显著扩展危害覆盖范围。本体架构采用分层组合设计，将抽象安全原则与特定领域知识分离。
+**2. VLM-Cascade 感知管线：把像素接地成漏检率最低的符号场景图。** 验证再严格，若场景图本身漏掉了危险物也是空中楼阁，所以这条管线奉行"安全优先、宁错报不漏报"，宁可抬高假阳性也要压低假阴性。它分三阶段递进生成高保真 RSSG：先用一次全局 VLM 调用做开放词汇对象发现，优先保住召回率；再对每个裁剪出的单对象图像做深度语义分析，抽取类别、状态、材质等安全关键属性；最后分析所有对象的空间排列，补全关系断言集。三阶段从"有没有"到"是什么"再到"怎么摆"，逐层把感知不确定性消化掉，最终交给验证器一张属性与关系都齐备的符号场景。
 
-### 支柱 2：VLM-Cascade 感知管线
-
-三阶段架构生成高保真 RSSG：
-1. **VLM-Detect**：全局 VLM 调用进行开放词汇对象发现，优先保证召回率
-2. **VLM-Attribute-Refine**：对裁剪后的单个对象图像进行深度语义分析，提取安全关键属性（类别、状态、材质等）
-3. **VLM-Relation-Refine**：分析所有对象的空间排列，构建完整的关系断言集
-
-设计哲学：安全优先，最小化假阴性（漏检危险物）远比降低假阳性重要。
-
-### 支柱 3：可验证的导师-学徒精炼循环
-
-算法核心流程：
-1. LLM 规划器提出初始计划 π
-2. 验证器模拟计划与知识核心对照检查安全违规
-3. **SAFE**→批准执行；**UNSAFE**→生成结构化因果诊断报告（从推理器的证明轨迹推导），解释失败的因果链（动作→公理→违规）；**UNKNOWN**→查询用户更新知识库
-4. 诊断报告作为教学支架引导 LLM 进行智能修复，而非简单回避
-
-关键创新：从纠正范式转向教学范式（pedagogical paradigm），解释"为什么"不安全，而非仅告知"什么"被拒绝。
+**3. 导师-学徒精炼循环：把"拒绝"升级成"解释为什么拒绝"。** 现有交互式验证器只当看门人，回一句"违反规则4"就把规划器堵在死胡同里，导致本可解的任务被放弃。VIRF 改走教学范式：规划器提出计划后，验证器对照知识核心模拟执行并检查违规，结果分三路——SAFE 直接放行；UNSAFE 时从推理器的证明轨迹反推出"动作→公理→违规"的完整因果链，生成结构化诊断报告；UNKNOWN 时主动查询用户来更新知识库。关键在于诊断报告不是冷冰冰的否决，而是作为教学支架告诉规划器"为什么"不安全，引导它做有的放矢的修复而非盲目回避。正是这种从纠正到教学的转变，让消融里完整 VIRF 的 FNR 比只会拒绝的 VIRF-Reject 从 33.0% 降到 20.2%，平均 1.1 次迭代即可收敛。
 
 ## 实验结果
 
@@ -140,8 +120,8 @@ SAFER 使用多 LLM 委员会生成自然语言安全批评，能解释为何计
 - [\[ICLR 2026\] D2E: Scaling Vision-Action Pretraining on Desktop Data for Transfer to Embodied AI](d2e_scaling_vision-action_pretraining_on_desktop_data_for_transfer_to_embodied_a.md)
 - [\[ACL 2026\] Limited Linguistic Diversity in Embodied AI Datasets](../../ACL2026/robotics/limited_linguistic_diversity_in_embodied_ai_datasets.md)
 - [\[ICLR 2026\] From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors](from_spatial_to_actions_grounding_vision-language-action_model_in_spatial_founda.md)
+- [\[ICLR 2026\] Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization](embodied_agents_meet_personalization_investigating_challenges_and_solutions_thro.md)
 - [\[AAAI 2026\] GRIM: Task-Oriented Grasping with Conditioning on Generative Examples](../../AAAI2026/robotics/grim_task-oriented_grasping_with_conditioning_on_generative_examples.md)
-- [\[ICML 2025\] FOUNDER: Grounding Foundation Models in World Models for Open-Ended Embodied Decision Making](../../ICML2025/robotics/founder_grounding_foundation_models_in_world_models_for_open-ended_embodied_deci.md)
 
 </div>
 

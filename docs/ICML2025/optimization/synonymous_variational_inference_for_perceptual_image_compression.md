@@ -164,10 +164,10 @@ $$\mathcal{L}_{\mathcal{X}}^{(l)} = \mathbb{E}\left[-\lambda_r^{(l)} \log p_{\ha
 ## 相关论文
 
 - [\[ICML 2025\] Revisiting Unbiased Implicit Variational Inference](revisiting_unbiased_implicit_variational_inference.md)
-- [\[NeurIPS 2025\] Brain-like Variational Inference](../../NeurIPS2025/optimization/brain-like_variational_inference.md)
 - [\[NeurIPS 2025\] Least Squares Variational Inference](../../NeurIPS2025/optimization/least_squares_variational_inference.md)
 - [\[NeurIPS 2025\] VIKING: Deep Variational Inference with Stochastic Projections](../../NeurIPS2025/optimization/viking_deep_variational_inference_with_stochastic_projections.md)
 - [\[NeurIPS 2025\] NeuSymEA: Neuro-symbolic Entity Alignment via Variational Inference](../../NeurIPS2025/optimization/neuro-symbolic_entity_alignment_via_variational_inference.md)
+- [\[NeurIPS 2025\] VERA: Variational Inference Framework for Jailbreaking Large Language Models](../../NeurIPS2025/optimization/vera_variational_inference_framework_for_jailbreaking_large_language_models.md)
 
 </div>
 

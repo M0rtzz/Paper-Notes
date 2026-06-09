@@ -34,35 +34,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段生成：(1) 在 Poincaré 球上编码图结构为离散隐空间令牌（HVQVAE）；(2) 用黎曼流匹配建模隐空间先验，生成时从先验采样→量化→解码。GNN 编码局部结构，Transformer 传播全局依赖。
+GGBall 想把整条「编码→量化→先验→解码」的生成管线都搬到 Poincaré 球上，让双曲几何天生的指数体积增长去承接图里的层次结构和幂律度分布。整体走两阶段：第一阶段是双曲向量量化自编码器（HVQVAE），把一张图编码成 Poincaré 球上的一组离散节点级令牌——GNN 先在双曲空间里聚合局部邻域结构，Transformer 再传播全局依赖，最后量化到一本可学习的双曲码本里；第二阶段在这个离散隐空间上用黎曼流匹配学一个先验。生成时先从流匹配先验采样出隐变量，量化成码本令牌，再解码回图。整篇的关键在于全程不离开双曲流形，边的连接被当成隐空间几何的涌现属性，而不是单独建模的离散对象。
 
 ### 关键设计
 
-1. **Poincaré 图神经网络 (Poincaré GNN)**:
+**1. Poincaré 图神经网络：把消息传递整个搬进双曲空间。**
 
-    - 功能：在双曲空间中进行消息传递，将边和节点信息编码到节点表示中
-    - 核心思路：切空间聚合 + 距离调制消息函数。使用 $\log_0^c(\cdot)$ / $\exp_0^c(\cdot)$ 在切空间聚合后映射回流形
-    - 消息调制：$\text{M}(\mathbf{m}_{ij}) = \gamma_{ij} \cdot \mathbf{m}_{ij} + \beta_{ij}$，其中 $\gamma_{ij}, \beta_{ij}$ 是双曲距离 $d_c(\mathbf{h}_i, \mathbf{h}_j)$ 的函数
-    - 设计动机：曲率感知的距离调制使模型能直接编码层次关系的强度
+欧氏 GNN 直接在向量空间里做加权求和，但双曲流形上没有现成的加法。GGBall 的做法是借切空间过渡：先用对数映射 $\log_0^c(\cdot)$ 把节点表示拉到原点切空间这个局部欧氏近似里，在那里完成邻域聚合，再用指数映射 $\exp_0^c(\cdot)$ 送回流形，从而保证每一步运算都落在 Poincaré 球内。更关键的是消息函数本身带了曲率感知的距离调制 $\text{M}(\mathbf{m}_{ij}) = \gamma_{ij} \cdot \mathbf{m}_{ij} + \beta_{ij}$，其中缩放项 $\gamma_{ij}$ 和偏置项 $\beta_{ij}$ 都是节点对双曲距离 $d_c(\mathbf{h}_i, \mathbf{h}_j)$ 的函数。这意味着两个节点在层次上离得越远，消息被调制的方式就越不同，模型因此能直接把层次关系的强度编码进表示里，而不是像欧氏 GNN 那样让所有边一视同仁。
 
-2. **Poincaré Diffusion Transformer**:
+**2. Poincaré Diffusion Transformer：用测地线距离替掉点积注意力，传播全局结构。**
 
-    - 功能：建模全局图结构，替代点积注意力为测地线距离注意力
-    - 测地线注意力：$\alpha_{ij} \propto \exp(-\tau d_c(\mathbf{q}_i, \mathbf{k}_j))$
-    - 值聚合用 Möbius gyromidpoint 保持几何一致性
-    - 时间调制：注入时间步嵌入用于流匹配先验
+GNN 只能看到局部邻域，全局拓扑要靠 Transformer 补。但标准的点积注意力是欧氏内积，搬到双曲空间会破坏几何一致性。GGBall 把注意力打分换成测地线距离形式 $\alpha_{ij} \propto \exp(-\tau d_c(\mathbf{q}_i, \mathbf{k}_j))$——query 和 key 在流形上越近、得分越高，温度 $\tau$ 控制锐度。注意力算出来后的值聚合不再用普通加权和，而是用 Möbius gyromidpoint（双曲版的加权中点），保证聚合结果仍然落在流形上、几何自洽。这个 Transformer 同时承担流匹配先验的骨干，所以还会注入时间步嵌入做时间调制，让同一套结构既能编码图、又能在第二阶段为先验提供条件。
 
-3. **双曲向量量化自编码器 (HVQVAE)**:
+**3. 双曲向量量化自编码器（HVQVAE）：把连续双曲嵌入离散化成可学习码本。**
 
-    - 功能：将连续双曲嵌入离散化到可学习的 Poincaré 码本 $\mathcal{C}$
-    - 核心思路：用测地线距离最近邻量化 $\mathbf{z}_q = \arg\min_{\mathbf{c}_j} d_c(\mathbf{z}, \mathbf{c}_j)$
-    - 码本初始化用双曲 k-means 聚类，黎曼优化器更新
-    - 稳定机制：过期阈值替换不活跃码本条目，加权 Einstein 中点更新
+连续隐空间难直接配一个表达力强的先验，所以 GGBall 引入向量量化，把节点嵌入映射到一本可学习的 Poincaré 码本 $\mathcal{C}$ 上。量化规则同样改成双曲版的最近邻——按测地线距离取最近码字 $\mathbf{z}_q = \arg\min_{\mathbf{c}_j} d_c(\mathbf{z}, \mathbf{c}_j)$，而非欧氏 L2。码本的初始化用双曲 k-means 聚类得到，更新交给黎曼优化器，保证码字始终待在流形上。为了避免 VQ 常见的码本坍缩，它加了稳定机制：用过期阈值检测长期不被命中的码字并替换掉，码字本身的更新则用加权 Einstein 中点（双曲均值）而非欧氏平均，让活跃码字在几何上稳定收敛。
 
 ### 损失函数 / 训练策略
-- 自编码器损失：重建损失 + 度-边一致性损失 + L2 正则
-- HVQVAE 损失：$\mathcal{L}_{\text{HVQVAE}} = \lambda_1 \mathcal{L}_{\text{AE}} + \lambda_2 \mathbb{E}[d_c^2(\text{sg}(\mathbf{z}_q), \mathbf{z})] + \lambda_3 \mathbb{E}[d_c^2(\mathbf{z}_q, \text{sg}(\mathbf{z}))]$
-- 流匹配先验：黎曼条件流匹配目标，测地线插值路径
+第一阶段联合训练自编码器与码本，总损失 $\mathcal{L}_{\text{HVQVAE}} = \lambda_1 \mathcal{L}_{\text{AE}} + \lambda_2 \mathbb{E}[d_c^2(\text{sg}(\mathbf{z}_q), \mathbf{z})] + \lambda_3 \mathbb{E}[d_c^2(\mathbf{z}_q, \text{sg}(\mathbf{z}))]$ 由三部分构成：自编码项 $\mathcal{L}_{\text{AE}}$ 把图重建损失、度-边一致性损失和 L2 正则打包在一起，约束解码图既忠实又保持度分布；后两项是 VQ 的承诺损失，但 L2 距离全部换成测地线距离 $d_c$，并用停梯度 $\text{sg}(\cdot)$ 分别拉近码字与编码器输出。第二阶段冻结自编码器，在离散隐空间上用黎曼条件流匹配训练先验，沿测地线插值路径回归向量场，从而在双曲流形上学到从噪声到隐变量的连续传输。
 
 ## 实验关键数据
 

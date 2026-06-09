@@ -150,8 +150,8 @@ JointTransformer 表现最优，使用冻结的 DINOv2 ViT-G 权重，通过 Tra
 ## 相关论文
 
 - [\[ECCV 2024\] EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere](egoposer_robust_real-time_egocentric_pose_estimation_from_sparse_and_intermitten.md)
-- [\[AAAI 2026\] Lifelong Domain Adaptive 3D Human Pose Estimation](../../AAAI2026/video_understanding/lifelong_domain_adaptive_3d_human_pose_estimation.md)
 - [\[ECCV 2024\] On the Utility of 3D Hand Poses for Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)
+- [\[AAAI 2026\] Lifelong Domain Adaptive 3D Human Pose Estimation](../../AAAI2026/video_understanding/lifelong_domain_adaptive_3d_human_pose_estimation.md)
 - [\[CVPR 2026\] EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions](../../CVPR2026/video_understanding/egoxtreme_a_dataset_for_robust_object_pose_estimation_in_egocentric_views_under_.md)
 - [\[ACL 2026\] Confidence Estimation for LLMs in Multi-turn Interactions](../../ACL2026/video_understanding/confidence_estimation_for_llms_in_multi-turn_interactions.md)
 

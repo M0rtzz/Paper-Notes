@@ -39,36 +39,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：150张多视角RGB-D渲染图 -> 提取~1.6亿表面光场采样 -> 随机选100万作为编码器输入。输出：k=8192个d=32维latent tokens。
-
-三个组件：(1) Perceiver IO编码器(支持100万token) (2) Flow-matching几何解码器 (3) 视角依赖Gaussian解码器
+LiTo 想把一个物体的**表面光场**（surface light field，即"表面上某点、从某方向看过去是什么颜色"）压成一组紧凑的 latent token，让这组 token 同时承载几何和视角依赖的外观。整条流水线是这样转的：先对物体渲染 150 张多视角 RGB-D 图，从中提取约 1.6 亿个表面光场采样；随机抽出 100 万个喂给编码器，编码成 $k=8192$ 个 $d=32$ 维的 latent token。拿到这组 token 后，再用两个解码器分头还原——一个 flow-matching 几何解码器恢复 3D 表面，一个球谐 Gaussian 解码器恢复视角依赖渲染。最后这组 token 还能被一个 DiT 生成模型直接生成，实现单图到 3D。
 
 ### 关键设计
 
-1. **表面光场采样与编码**：
+**1. 表面光场采样与编码：把"位置+方向+颜色"打包成可学习的 latent。**
 
-    - 功能：把RGB-D多视角图像转化为表面光场采样 $\{(\mathbf{x}_i, \hat{\mathbf{d}}_i, \mathbf{c}_i)\}$，编码为latent
-    - 核心思路：从RGB-D反投影得到表面点 $\mathbf{x}$，从针孔相机模型得到观察方向 $\hat{\mathbf{d}}$，像素颜色得 $\mathbf{c}$。随机采样 $N=2^{20}$ 个作为编码器输入。编码器使用Perceiver IO，输出8192个32维latent tokens
-    - 设计动机：完整表面光场信息量巨大(1.6亿采样)，但有大量冗余。随机子采样让编码器学会插值，generalize到完整光场。每个采样包含方向信息 $\hat{\mathbf{d}}$ 是捕获视角依赖效果的关键
+要建模视角依赖效果，输入里就必须带方向信息，这正是 TRELLIS 用 mean pooling 丢掉的东西。LiTo 把每张 RGB-D 图拆成一堆采样三元组 $\{(\mathbf{x}_i, \hat{\mathbf{d}}_i, \mathbf{c}_i)\}$：表面点 $\mathbf{x}$ 由深度反投影得到，观察方向 $\hat{\mathbf{d}}$ 由针孔相机模型算出，颜色 $\mathbf{c}$ 就是像素值。完整光场有 1.6 亿采样、信息量巨大却高度冗余，所以编码时只随机抽 $N=2^{20}$（约 100 万）个送进 Perceiver IO，输出 8192 个 32 维 latent token。随机子采样不是图省事——它逼着编码器学会**插值**，从一个稀疏子集 generalize 回完整光场，而每个采样里保留的 $\hat{\mathbf{d}}$ 正是后面能渲出高光、菲涅尔反射的源头。
 
-2. **3D局部Attention实现百万级输入**：
+**2. 3D 局部 Attention：让 Perceiver IO 吃得下百万级 token。**
 
-    - 功能：让Perceiver IO高效处理100万token输入
-    - 核心思路：设计3D patchification——将输入采样按K-NN分配到8192个query对应的空间patch中，每个query只attend其patch内的采样(类似ViT的16x16 patch但推广到3D表面)。自attention用voxel-based windowed attention(每层shift半个voxel)
-    - 设计动机：标准Perceiver IO的cross attention对100万token计算量巨大。3D patchification用L2距离(非geodesic)近似表面局部性，是速度和精度的好权衡
+标准 Perceiver IO 的 cross attention 在 100 万 token 上算不动，LiTo 用一套 3D patchification 把它压下来。做法是把所有输入采样按 K-NN 分配到 8192 个 query 各自对应的空间 patch，每个 query 只 attend 自己 patch 内的采样——本质上就是把 ViT 的 16×16 图像 patch 推广到 3D 表面。query 之间的 self-attention 则用 voxel-based windowed attention，每层 shift 半个 voxel 来打通窗口边界。这里用 L2 距离（而非沿表面的 geodesic 距离）来近似"表面局部性"，虽然偶尔会跨表面，但换来的速度收益让百万级输入变得可行，是精度和效率之间一个划算的折中。
 
-3. **双路解码器(几何 + 视角依赖外观)**：
+**3. 双路解码器：几何和视角依赖外观各走各的头。**
 
-    - 功能：从latent同时恢复3D几何和视角依赖外观
-    - 几何解码器：flow-matching建模3D表面分布 $p(\mathbf{x}|\mathcal{S}) \approx \delta(\mathbf{x} \in \partial\Omega)$。Loss: $\mathcal{L}_{geo} = \mathbb{E}_{t,\mathbf{x}} \|V(\mathbf{x}_t; t) - (\mathbf{x} - \epsilon)\|^2$。可在推理时采样点云
-    - **Gaussian解码器**：输出3阶球谐(SH degree 3)的3D Gaussians用于视角依赖渲染。输入sparse occupancy grid作为query，cross attend到latent tokens，MLP输出每个occupied voxel 64个Gaussians。Loss: $\mathcal{L}_{radiance} = \|I_{est} - I_{gt}\|^2 + 0.2 \cdot \text{LPIPS}$
-    - 设计动机：几何解码器不依赖mesh/occupancy/SDF的预处理——直接从点云学习。3阶球谐比TRELLIS的view-independent color多捕获高频视角依赖效果
+同一组 latent 要还原两样东西，于是分成两个解码器。**几何解码器**用 flow-matching 直接建模 3D 表面的分布 $p(\mathbf{x}|\mathcal{S}) \approx \delta(\mathbf{x} \in \partial\Omega)$，训练目标是
 
-4. **单阶段生成(vs TRELLIS的两阶段)**：
+$$\mathcal{L}_{geo} = \mathbb{E}_{t,\mathbf{x}} \|V(\mathbf{x}_t; t) - (\mathbf{x} - \epsilon)\|^2$$
 
-    - 功能：latent直接编码完整物体信息用于单阶段生成
-    - 核心思路：训练DiT flow-matching模型(623M参数)，DINOv2编码输入图像，生成latent条件化于图像。训练时旋转世界坐标系使输入视角相机为identity -> 输出自动与输入视角对齐
-    - 设计动机：TRELLIS需要先生成粗糙occupancy再生成SLAT(两阶段)。LiTo的latent已包含完整信息，单阶段更简洁。坐标系旋转策略确保生成物体与输入对齐(TRELLIS在canonical坐标生成需后处理)
+推理时从中采样就能得到点云；关键是它**不需要 mesh / occupancy / SDF 这类预处理**，直接从点云学。**Gaussian 解码器**则负责外观：以 sparse occupancy grid 当 query，cross attend 到 latent token，再用 MLP 给每个 occupied voxel 输出 64 个带 3 阶球谐（SH degree 3）的 3D Gaussian，渲染 loss 为 $\mathcal{L}_{radiance} = \|I_{est} - I_{gt}\|^2 + 0.2 \cdot \text{LPIPS}$。比起 TRELLIS 只有一个 view-independent color，3 阶球谐能多吃下高频的视角依赖变化，这是它在近距离观察上 PSNR 大涨的直接原因。
+
+**4. 单阶段生成 + 坐标系旋转：比 TRELLIS 两阶段更简洁，还顺手解决了对齐。**
+
+因为 latent 已经把完整物体信息打包好了，生成时不必像 TRELLIS 那样先生成粗糙 occupancy 再生成 SLAT。LiTo 直接训一个 623M 参数的 DiT flow-matching 模型，用 DINOv2 编码输入图像作为条件，一步生成 latent。一个巧妙的细节是：训练时把世界坐标系旋转到让输入视角的相机正好是 identity，这样生成出来的物体**自动和输入视角对齐**——TRELLIS 在 canonical 坐标里生成、还得后处理才能对上，LiTo 省掉了这一步。
 
 ### 训练策略
 - 编码器+解码器：256 batch，64 GPU，90K iterations，9天

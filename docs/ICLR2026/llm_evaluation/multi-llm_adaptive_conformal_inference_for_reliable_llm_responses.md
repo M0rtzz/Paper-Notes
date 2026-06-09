@@ -44,48 +44,21 @@ tags:
 
 ### 整体框架
 
-MACI 的整体流程：
-1. **声明分解**：将 LLM 回复 $D = (P, C, Y)$ 分解为原子声明集合 $C = \{c_1, \dots, c_{|C|}\}$
-2. **多 LLM 评分**：使用 $M$ 个黑盒 LLM 对每个 (prompt, claim) 对生成 verbalized factuality score $p_m(P, c) \in [0, 1]$
-3. **集成优化**：通过优化权重 $w$ 得到集成评分 $p_{\text{ens}}(P, c; w) = \sum_{m=1}^{M} w_m p_m(P, c)$
-4. **累积乘积过滤**：按 factuality score 降序排列声明，保留累积乘积 $\ge \tau$ 的前 $K$ 个声明
-5. **组条件校准**：在校准集上对每个组 $k$ 独立计算分位数阈值 $\hat{Q}_{1-\alpha}^{(k)}$
+MACI 把每条 LLM 回复 $D=(P,C,Y)$ 拆成原子声明集合 $C=\{c_1,\dots,c_{|C|}\}$，用多个黑盒 LLM 给每个 (prompt, claim) 对打 factuality 分并集成成单一可信度，再按分数从高到低保留一个"累积乘积仍足够可信"的前缀声明集。最后用组条件校准在每个语义分组上独立选阈值，使过滤后的保留集以用户指定概率全是事实。整套方法是任意生成器之后的纯后处理过滤器，只依赖 per-claim 标量分数。
 
-### 关键设计 1：乘积型 Conformity Score
+### 关键设计
 
-**Oracle 过滤规则**：给定排列 $\pi_i$ 使 $p_i^*(c_{i,\pi_i(1)}) \ge \cdots \ge p_i^*(c_{i,\pi_i(N_i)})$，定义截断索引：
+**1. 乘积型 conformity score：把"整段是否全对"写进单个分数。**
 
-$$K_i^*(\tau) = \max\left\{k \in [N_i] : \prod_{j=1}^{k} p_i^*(c_{i,\pi_i(j)}) \ge \tau \right\}$$
+BCI/CCI 的 conformity score 只取一条声明的极端分数，因此对单个声明的估计误差极其敏感，一旦最差分数被低估就会误删大量真实声明。MACI 改用整段保留集的联合可信度来度量"过滤是否安全"。给定使分数降序的排列 $\pi_i$（即 $p_i^*(c_{i,\pi_i(1)}) \ge \cdots \ge p_i^*(c_{i,\pi_i(N_i)})$），oracle 在阈值 $\tau$ 下保留累积乘积不低于 $\tau$ 的最长前缀 $K_i^*(\tau) = \max\{k \in [N_i] : \prod_{j=1}^{k} p_i^*(c_{i,\pi_i(j)}) \ge \tau\}$。对应的 conformity score 取使保留集仍落在可接受集 $A_i$ 内的最小阈值 $E_i = \inf\{\tau \in [0,1] : F(\hat{p}, \tau, U_i; P_i, C_i) \subseteq A_i\}$。由于乘积把所有保留声明的置信度聚合在一起，而非押注单个最差声明，这个分数对个别声明的估计噪声更鲁棒，直接反映"这个保留前缀整体为事实"的联合可信度。
 
-与 BCI/CCI 仅使用单个极端分数不同，MACI 的 conformity score 是**所有保留声明 factuality score 的累积乘积**：
+**2. 组条件校准：给每个语义分组各发一把阈值，把边际覆盖升级为组条件覆盖。**
 
-$$E_i = \inf\{\tau \in [0,1] : F(\hat{p}, \tau, U_i; P_i, C_i) \subseteq A_i\}$$
+BCI 只用一个全局阈值，只保证边际覆盖，在子群体间会同时出现严重过覆盖和欠覆盖。MACI 套用 Mondrian 框架，先用分组函数 $g:\mathcal{P}\times\mathcal{C}\to\{1,\dots,K\}$ 把样本切成 $K$ 组，再在每组校准子集 $\mathcal{I}_k=\{i:g(P_i,C_i)=k\}$ 上独立取分位数 $\hat{Q}_{1-\alpha}^{(k)}=\text{Quantile}(\{E_i:i\in\mathcal{I}_k\},1-\alpha)$ 作为该组阈值。Theorem 2 证明在可交换性假设下，每组都满足 $\mathbb{P}(F_{n,\alpha}^{(k)}(P_{n+1},C_{n+1})\subseteq A_{n+1}\mid g(P_{n+1},C_{n+1})=k)\ge 1-\alpha$，从而把保证从"平均达标"收紧到"逐组达标"，且阈值固定为用户指定的 $\alpha$、不像 CCI 那样依赖自适应错误率，因此能直接用于高风险场景。
 
-这种乘积聚合方式直接反映"保留集整体为事实"的联合可信度，对单个声明的估计误差更鲁棒。
+**3. 多 LLM 集成优化：用更准的 factuality 分逼近 oracle 保留率。**
 
-### 关键设计 2：组条件校准（Mondrian Framework）
-
-对于分组函数 $g: \mathcal{P} \times \mathcal{C} \to \{1, \dots, K\}$，在校准集 $\mathcal{I}_k = \{i : g(P_i, C_i) = k\}$ 上独立计算阈值：
-
-$$\hat{Q}_{1-\alpha}^{(k)} = \text{Quantile}(\{E_i : i \in \mathcal{I}_k\}, 1-\alpha)$$
-
-**Theorem 2** 证明：在可交换性假设下，对任意组 $k$ 均满足：
-
-$$\mathbb{P}\big(F_{n,\alpha}^{(k)}(P_{n+1}, C_{n+1}) \subseteq A_{n+1} \mid g(P_{n+1}, C_{n+1}) = k\big) \ge 1 - \alpha$$
-
-### 关键设计 3：多 LLM 集成优化
-
-**动机**：Theorem 3 证明保留率差距 $\Delta$ 受控于估计误差的多项式速率：
-
-$$\Delta \le \mathfrak{C}' \big(\mathbb{E}[(\hat{p} - p^*)^2]\big)^{\frac{\beta}{\beta+2}}$$
-
-即 factuality score 的 MSE 越小，保留率越接近 oracle。
-
-**优化目标**：由于 oracle $p^*$ 不可观测，采用代理目标——在保持 $\text{TPR} \ge 1-\delta$ 的约束下最小化 FPR：
-
-$$p^\star = \arg\min_{p} \mathbb{E}[\text{FPR}(p, \tau_{p,\delta})]$$
-
-使用 $M=3$ 个模型（Llama-3.3-70B-Instruct、Qwen-2.5-72B-Instruct、DeepSeek-V3）的加权集成实现。
+Theorem 3 把保留率差距 $\Delta$ 界定为估计误差的多项式速率 $\Delta \le \mathfrak{C}' \big(\mathbb{E}[(\hat{p} - p^*)^2]\big)^{\frac{\beta}{\beta+2}}$，意味着 factuality score 的 MSE 越小，保留率就越接近 oracle——这正是要把多个模型集成起来降方差的理论动机。由于 oracle $p^*$ 不可观测、MSE 无法直接优化，MACI 改用一个可观测的代理目标：在保持真阳率 $\text{TPR}\ge 1-\delta$ 的约束下最小化假阳率，即 $p^\star = \arg\min_{p} \mathbb{E}[\text{FPR}(p, \tau_{p,\delta})]$。实现上对 $M=3$ 个模型（Llama-3.3-70B-Instruct、Qwen-2.5-72B-Instruct、DeepSeek-V3）的 verbalized 分数 $p_m(P,c)\in[0,1]$ 做加权集成 $p_{\text{ens}}(P,c;w)=\sum_{m=1}^{M} w_m p_m(P,c)$，优化权重 $w$ 使代理 FPR 最低。实验中 FPR 的下降与 MSE 的下降一致，说明这个代理确实在拉近与 oracle 的距离。
 
 ## 实验
 
@@ -178,11 +151,11 @@ MACI 单次评分 + 轻量校准，总时间仅为 CCI 的 **36%**。
 
 ## 相关论文
 
+- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
 - [\[ACL 2026\] Statistically Reliable LLM-Based Ranking Evaluation via Prediction-Powered Inference](../../ACL2026/llm_evaluation/statistically_reliable_llm-based_ranking_evaluation_via_prediction-powered_infer.md)
-- [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
-- [\[ICLR 2026\] Which LLM Multi-Agent Protocol to Choose?](which_llm_multi-agent_protocol_to_choose.md)
-- [\[ICLR 2026\] Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
 - [\[ICLR 2026\] How Reliable is Language Model Micro-Benchmarking?](how_reliable_is_language_model_micro-benchmarking.md)
+- [\[ICLR 2026\] Preference Leakage: A Contamination Problem in LLM-as-a-judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)
+- [\[ICML 2026\] Reasoning Is Not Free: Robust Adaptive Cost-Efficient Routing for LLM-as-a-Judge](../../ICML2026/llm_evaluation/reasoning_is_not_free_robust_adaptive_cost-efficient_routing_for_llm-as-a-judge.md)
 
 </div>
 

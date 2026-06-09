@@ -37,39 +37,23 @@ tags:
 
 ### 整体框架
 
-VPPO 在标准 GRPO 基础上引入两个模块：**轨迹级优势塑形（TAS）** 和 **token 级梯度过滤（TGF）**，通过视觉依赖度分数分层调控学习信号。
+VPPO 的出发点是：既然轨迹里真正依赖视觉的 token 很稀疏、不同轨迹的视觉参与度又差异很大，那 GRPO 把统一学习信号广播给所有 token、所有轨迹就是在浪费甚至污染梯度。它先用一个无需额外标注的指标量化每个 token 对图像的依赖度，然后在两个层次上重新分配信号——轨迹级放大那些真正"看图说话"的路径，token 级只让高视觉依赖的关键 token 贡献梯度。两个模块都建立在 GRPO 之上，不改变采样和奖励流程，因此能即插即用。
 
-### 1. 量化 Token 视觉依赖度
+### 关键设计
 
-定义 token 在时刻 $t$ 的视觉依赖度为原始图像与遮蔽图像条件下输出分布的 KL 散度：
+**1. 视觉依赖度量化：用遮蔽前向给每个 token 打分。** 要分层调控信号，首先得知道哪个 token 在依赖图像。作者把 token 在时刻 $t$ 的视觉依赖度定义为原始图像与遮蔽图像两种条件下输出分布的 KL 散度 $\mathcal{S}(s_t, I) := D_{\text{KL}}\left(\pi_\theta(\cdot|s_t, I) \,\|\, \pi_\theta(\cdot|s_t, I')\right)$，其中 $I'$ 是把图像替换成非信息性内容后的遮蔽版本。直觉很清楚：如果遮掉图像后某个 token 的预测分布几乎不变，说明它本就靠语言先验生成、与视觉无关；反之 $\mathcal{S}$ 越大，说明这个 token 的预测高度锚定在视觉证据上。这个分数只需多跑一次遮蔽前向即可得到，无需任何额外标注或辅助模型，成为后面两个模块的统一调控依据。
 
-$$\mathcal{S}(s_t, I) := D_{\text{KL}}\left(\pi_\theta(\cdot|s_t, I) \| \pi_\theta(\cdot|s_t, I')\right)$$
+**2. Token 级梯度过滤（TGF）：只让关键 token 出声，对抗信号稀释。** 一条推理轨迹里多数 token 是连接词、格式符等通用 token，把它们和真正承载视觉推理的 token 同等对待，会让有效信号被噪声淹没。TGF 对每条轨迹 $\tau_i$ 按 $\mathcal{S}$ 选出视觉依赖度最高的 top-$k\%$ token 集合 $\mathcal{K}_i$，构建二值掩码 $m_{i,t} = \mathbb{I}(t \in \mathcal{K}_i)$，策略梯度只在这些 token 上计算、其余一律屏蔽。实验中 $k=0.4$ 为最优过滤比例。这样做把梯度集中到决定推理对错的少数感知 token 上，避免大量低信息 token 把更新方向拉偏。
 
-其中 $I$ 是原始图像，$I'$ 是非信息性遮蔽版本。高 $\mathcal{S}$ 值表明该 token 的预测高度依赖视觉输入。
+**3. 轨迹级优势塑形（TAS）：放大真正视觉驱动的路径。** GRPO 里只要答案正确，轨迹就拿到正优势，但有些"正确"轨迹其实是靠语言捷径蒙对的，并非真正的视觉推理，给它们同等权重会鼓励模型走捷径。TAS 先算每条轨迹的平均视觉依赖度 $\bar{\mathcal{S}}(\tau_i)$，再把组内这个量归一化映射到塑形因子 $\alpha(\tau_i) = \beta_{\min} + (\beta_{\max} - \beta_{\min}) \frac{\bar{\mathcal{S}}(\tau_i) - \min_{\tau_j} \bar{\mathcal{S}}(\tau_j)}{\max_{\tau_j} \bar{\mathcal{S}}(\tau_j) - \min_{\tau_j} \bar{\mathcal{S}}(\tau_j)}$，落在 $[\beta_{\min}, \beta_{\max}]$ 区间内。塑形后的优势 $\hat{A}'(\tau_i) = \alpha(\tau_i) \cdot \hat{A}_{\text{GRPO}}(\tau_i)$ 让视觉参与度高的轨迹获得更大更新、低依赖路径被压低，从而把学习偏好引向真正基于图像的推理。
 
-### 2. Token 级梯度过滤（TGF, Micro-level）
+### 损失函数 / 训练策略
 
-对每条轨迹 $\tau_i$，选取视觉依赖度最高的 top-$k\%$ token 构建二值梯度掩码：
-
-$$m_{i,t} = \mathbb{I}(t \in \mathcal{K}_i)$$
-
-只对这些关键 token 计算策略梯度，过滤掉通用 token 的噪声，对抗信号稀释。
-
-### 3. 轨迹级优势塑形（TAS, Macro-level）
-
-计算每条轨迹的平均视觉依赖度 $\bar{\mathcal{S}}(\tau_i)$，通过归一化生成塑形因子：
-
-$$\alpha(\tau_i) = \beta_{\min} + (\beta_{\max} - \beta_{\min}) \frac{\bar{\mathcal{S}}(\tau_i) - \min_{\tau_j} \bar{\mathcal{S}}(\tau_j)}{\max_{\tau_j} \bar{\mathcal{S}}(\tau_j) - \min_{\tau_j} \bar{\mathcal{S}}(\tau_j)}$$
-
-塑形后的优势为 $\hat{A}'(\tau_i) = \alpha(\tau_i) \cdot \hat{A}_{\text{GRPO}}(\tau_i)$，放大高视觉参与轨迹的更新，抑制低视觉依赖路径。
-
-### 4. VPPO 目标函数
+把两个模块拼回 GRPO 的裁剪目标，token 级掩码 $m_{i,t}$ 控制谁出声、轨迹级塑形优势 $\hat{A}'_i$ 控制声音多大：
 
 $$\mathcal{L}^{\text{VPPO}}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\frac{1}{|o_i|}\sum_{t=1}^{|o_i|} m_{i,t} \cdot \min\left(r_{i,t}(\theta)\hat{A}'_i, \text{clip}(r_{i,t}(\theta), 1-\varepsilon, 1+\varepsilon)\hat{A}'_i\right)\right]$$
 
-### 理论分析
-
-方差缩减定理：$\text{Var}(\mathbf{g}_{\text{VPPO}}) \approx k \cdot \mathbb{E}[\alpha(\tau)^2] \cdot \text{Var}(\mathbf{g}_{\text{GRPO}})$，其中 $k \in (0,1)$ 是稀疏率，$\alpha(\tau)$ 被缩放到 1 附近的窄带，因此方差显著降低。
+作者进一步给出方差缩减定理 $\text{Var}(\mathbf{g}_{\text{VPPO}}) \approx k \cdot \mathbb{E}[\alpha(\tau)^2] \cdot \text{Var}(\mathbf{g}_{\text{GRPO}})$：稀疏率 $k \in (0,1)$ 来自只保留 top-$k\%$ token，而 $\alpha(\tau)$ 被压缩在 1 附近的窄带，两者相乘使梯度方差显著低于 GRPO，从机制上解释了为何 VPPO 训练更稳、收敛更快。
 
 ## 实验结果
 
@@ -140,11 +124,11 @@ $$\mathcal{L}^{\text{VPPO}}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\
 
 ## 相关论文
 
-- [\[ICLR 2026\] APPLE: Toward General Active Perception via Reinforcement Learning](apple_toward_general_active_perception_via_reinforcement_learning.md)
 - [\[ICLR 2026\] From Narrow to Panoramic Vision: Attention-Guided Cold-Start Reshapes Multimodal Reasoning](from_narrow_to_panoramic_vision_attention-guided_cold-start_reshapes_multimodal_.md)
-- [\[NeurIPS 2025\] Real-World Reinforcement Learning of Active Perception Behaviors](../../NeurIPS2025/reinforcement_learning/real-world_reinforcement_learning_of_active_perception_behaviors.md)
-- [\[ICLR 2026\] MARS-Sep: Multimodal-Aligned Reinforced Sound Separation](mars-sep_multimodal-aligned_reinforced_sound_separation.md)
 - [\[ICLR 2026\] Metis-SPECS: Decoupling Multimodal Learning via Self-distilled Preference-based Cold Start](metis-specs_decoupling_multimodal_learning_via_self-distilled_preference-based_c.md)
+- [\[ICLR 2026\] MARS-Sep: Multimodal-Aligned Reinforced Sound Separation](mars-sep_multimodal-aligned_reinforced_sound_separation.md)
+- [\[CVPR 2026\] MSRL: Scaling Generative Multimodal Reward Modeling via Multi-Stage Reinforcement Learning](../../CVPR2026/reinforcement_learning/msrl_scaling_generative_multimodal_reward_modeling.md)
+- [\[ICLR 2026\] UME-R1: Exploring Reasoning-Driven Generative Multimodal Embeddings](ume-r1_exploring_reasoning-driven_generative_multimodal_embeddings.md)
 
 </div>
 

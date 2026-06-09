@@ -43,29 +43,27 @@ BindWeave 用多模态大语言模型（MLLM）替代传统的浅层融合机制
 ## 方法详解
 
 ### 整体框架
-输入为文本提示 $\mathcal{T}$ + K 个参考图像 $\{I_k\}$。MLLM 解析多模态输入生成隐状态 → 投影后与 T5 文本特征拼接得到 $c_{\text{joint}}$ → 通过 cross-attention 注入 DiT；同时 CLIP 特征 $c_{\text{clip}}$ 提供语义锚点，VAE 特征 $c_{\text{vae}}$ 通过通道拼接提供像素级细节。
+BindWeave 要解决的是：当一条文本提示里挤进多个主体、还带上空间关系和交互逻辑（"人物 A 向人物 B 递礼物"）时，怎么让视频生成模型不把身份认混、不把动作错配。它的核心思路是把"理解指令"和"生成视频"两步拆开，前一步交给一个多模态大模型来做深度推理，后一步才是 DiT 扩散。
+
+整条 pipeline 这样转：输入是文本提示 $\mathcal{T}$ 加 K 个参考图像 $\{I_k\}$，先送进 MLLM，让它把文本里的角色/属性/交互绑定到对应的参考主体上，吐出一份"主体感知"的隐状态；这份隐状态经轻量连接器投影后，与 T5 文本特征拼成联合条件 $c_{\text{joint}}$，再通过 cross-attention 注入 DiT。与此同时，CLIP 特征 $c_{\text{clip}}$ 单独走一路 cross-attention 充当语义身份锚点，VAE 特征 $c_{\text{vae}}$ 则在输入层做通道拼接补像素级外观细节。三路条件层次分明地协同，DiT 在 Rectified Flow 框架下去噪生成视频。
 
 ### 关键设计
 
-1. **MLLM 智能指令规划 (Intelligent Instruction Planning)**:
+**1. MLLM 智能指令规划：用深度推理替代浅层编码器融合。**
 
-    - 功能：用 Qwen2.5-VL-7B 处理交错排列的文本+图像序列，生成编码主体角色、属性和交互的隐状态
-    - 核心思路：构建统一多模态序列 $\mathcal{X} = [\mathcal{T}, \langle\text{img}\rangle_1, ..., \langle\text{img}\rangle_K]$，MLLM 通过深度推理将文本命令绑定到对应的视觉实体，输出 $H_{\text{mllm}} = \text{MLLM}(\mathcal{X}, \mathcal{I})$，再通过两层 MLP+GELU 的轻量连接器投影到 DiT 特征空间
-    - 设计动机：MLLM 的多模态推理能力远超 CLIP/T5 等独立编码器的浅层特征提取，能理解"谁做什么、对谁做、在哪里做"这样的复杂逻辑
+针对的痛点是浅层"分离-融合"范式建立不了真正的跨模态语义关联——独立编码器各提各的特征，到后期拼接时已经丢掉了"谁对谁做什么"的逻辑。BindWeave 改用 Qwen2.5-VL-7B 处理一段交错排列的文本+图像序列：把输入拼成统一多模态序列 $\mathcal{X} = [\mathcal{T}, \langle\text{img}\rangle_1, ..., \langle\text{img}\rangle_K]$，让 MLLM 在生成前就把文本命令绑定到对应视觉实体，输出隐状态 $H_{\text{mllm}} = \text{MLLM}(\mathcal{X}, \mathcal{I})$，再经一个两层 MLP+GELU 的轻量连接器投影进 DiT 的特征空间。之所以有效，是因为 MLLM 的多模态推理能力远超 CLIP/T5 这类独立编码器的浅层特征提取，能真正理解"谁做什么、对谁做、在哪里做"这种带角色和交互的复杂逻辑——这正是浅层融合做不到的那一层。
 
-2. **集体条件化视频扩散 (Collectively Conditioned Video Diffusion)**:
+**2. 集体条件化视频扩散：高层推理、语义身份、底层外观三路分工注入。**
 
-    - 功能：在 DiT 中整合三个层次的条件信号
-    - **高层关系推理**：$c_{\text{joint}} = \text{Concat}(c_{\text{mllm}}, c_{\text{text}})$ 通过 cross-attention 注入
-    - **语义身份引导**：$c_{\text{clip}} = \mathcal{E}_{\text{CLIP}}(\{I_{\text{ref}}^i\})$ 通过独立的 cross-attention 注入
-    - **底层外观细节**：$c_{\text{vae}} = \mathcal{E}_{\text{VAE}}(\{I_{\text{ref}}^i\})$ 通过通道拼接在输入层注入
-    - 注意力层输出：$H_{\text{out}} = H_{\text{vid}} + \text{Attn}(Q, K_{\text{joint}}, V_{\text{joint}}) + \text{Attn}(Q, K_{\text{clip}}, V_{\text{clip}})$
+光有 MLLM 的高层语义还不够，主体的身份和外观细节也得保住，于是 BindWeave 让三个层次的条件信号在 DiT 里各司其职。高层关系推理走联合条件 $c_{\text{joint}} = \text{Concat}(c_{\text{mllm}}, c_{\text{text}})$，通过 cross-attention 注入；语义身份引导用 CLIP 特征 $c_{\text{clip}} = \mathcal{E}_{\text{CLIP}}(\{I_{\text{ref}}^i\})$，走一路独立的 cross-attention 来锚定主体 ID；底层外观细节则用 VAE 特征 $c_{\text{vae}} = \mathcal{E}_{\text{VAE}}(\{I_{\text{ref}}^i\})$ 在输入层做通道拼接，保住像素级纹理。两路注意力的输出叠加在视频特征上：
 
-3. **自适应多参考条件策略**:
+$$H_{\text{out}} = H_{\text{vid}} + \text{Attn}(Q, K_{\text{joint}}, V_{\text{joint}}) + \text{Attn}(Q, K_{\text{clip}}, V_{\text{clip}})$$
 
-    - 功能：在时间轴上扩展 K 个 slot 来放置参考图像的 VAE 特征
-    - 核心思路：将视频 latent 的时间维度 padding K 个零位置，将参考图像的 VAE 特征和二值 mask 放在这些位置上，通过通道拼接后 PatchEmbed
-    - 设计动机：参考图像不是视频帧，不应直接与视频帧混合；通过专用的时间 slot + 二值 mask 强调主体区域
+这样高层负责"理解关系"、CLIP 负责"保身份"、VAE 负责"保细节"，缺任何一层都会让生成结果在对应维度上退化。
+
+**3. 自适应多参考条件策略：给参考图像单开时间 slot，不和视频帧混在一起。**
+
+参考图像本质上不是视频帧，如果直接塞进视频序列会污染时序建模。BindWeave 的做法是在视频 latent 的时间维度上 padding 出 K 个零位置，把每张参考图像的 VAE 特征和一张二值 mask 放到这些专用 slot 里，再通过通道拼接后统一 PatchEmbed。二值 mask 的作用是强调主体区域，让模型知道这些位置是"参考"而非"待生成的帧"。这种专用时间 slot + mask 的设计既保留了参考外观信息，又避免了参考图直接与视频帧混合带来的干扰。
 
 ### 损失函数 / 训练策略
 - Rectified Flow + MSE 速度场预测损失：$\mathcal{L} = \|u_\Theta(z_t, t, c_{\text{joint}}, c_{\text{clip}}, c_{\text{vae}}) - v_t\|^2$

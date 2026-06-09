@@ -167,7 +167,7 @@ GGTalker 不仅在自重演表现最佳，在跨身份和跨语言的 OOD 场景
 - [\[ICCV 2025\] Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars](avat3r_large_animatable_gaussian_reconstruction_model_for_hi.md)
 - [\[CVPR 2025\] FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](../../CVPR2025/human_understanding/fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)
 - [\[CVPR 2025\] RGBAvatar: Reduced Gaussian Blendshapes for Online Modeling of Head Avatars](../../CVPR2025/human_understanding/rgbavatar_reduced_gaussian_blendshapes_for_online_modeling_of_head_avatars.md)
-- [\[ICCV 2025\] Controllable and Expressive One-Shot Video Head Swapping](controllable_and_expressive_one-shot_video_head_swapping.md)
+- [\[ECCV 2024\] MIGS: Multi-Identity Gaussian Splatting via Tensor Decomposition](../../ECCV2024/human_understanding/migs_multi-identity_gaussian_splatting_via_tensor_decomposition.md)
 
 </div>
 

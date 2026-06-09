@@ -42,50 +42,19 @@ tags:
 
 ## 方法详解
 
-### 整体框架：双分支架构
+### 整体框架
 
-VoT 包含两个互补分支：
-- **事件驱动预测分支**：通过 LLM 推理从外生文本生成数值预测
-- **数值预测分支**：将内生文本与时序表征对齐后生成预测
+VoT 把文本的价值拆到两条互补分支上：事件驱动分支让推理型 LLM 读外生文本、结合历史时序直接给出数值预测，专门捕捉突变事件的冲击；数值分支把内生文本与时序表征对齐后做常规预测，负责细微波动。两条分支的输出最后在频域里自适应融合，得到最终预测，从而让文本既参与"理解事件"也参与"修正数值"。
 
-最终通过自适应频率融合整合两个分支的输出。
+### 关键设计
 
-### 关键设计 1：事件驱动推理
+**1. 事件驱动推理：把 LLM 的推理能力而非只是表征接进预测。** 现有外生文本方法只把文本编码成向量做表征融合，深层语义被埋没。VoT 改走推理路线，用三步流水线先把杂乱文本变成可推理的素材：LLM 依据数据描述生成结构化模板 $\mathcal{D}$，再用模板从原始外生文本里抽出与预测相关的摘要 $\mathcal{S}_i$，最后由 Reasoner 结合摘要与历史时序产出预测 $\hat{\mathbf{Y}}^{\text{event}}_i, \mathcal{R}_i = \text{Reasoner}(\mathcal{P}_{\text{reason}}, \mathcal{S}_i, \mathbf{X}_i)$，其中 $\mathcal{R}_i$ 是推理链。为了让推理不"裸跑"，作者设计了历史上下文学习（HIC）：训练时 Reasoner 先给预测、再对照真值反思出纠正推理 $\mathcal{C}_i$，把"摘要嵌入→纠正推理"成对存进知识库 $\mathcal{K} = \{(\text{Embed}(\mathcal{S}_i), \mathcal{C}_i)\}_{i=1}^M$；推理时检索与当前样本最相似的历史纠正推理 $\mathcal{C}_{\tilde{i}}$ 当作 ICL 示例，$\hat{\mathbf{Y}}^{\text{event}}_j = \text{Reasoner}(\mathcal{P}_{\text{ICL}}, \mathcal{C}_{\tilde{i}}, \mathcal{S}_j, \mathbf{X}_j)$。这样无需微调，就把过往"错在哪、怎么改"的经验注入当前推理，事件冲击的预测因此更准。
 
-**三步生成流水线**：
+**2. 多层对齐：在表征级和预测级两次弥合文本与时序的模态鸿沟。** 文本讲的是事件驱动的突变，时序记的是连续数值波动，直接拼接很难互补，VoT 因此在两个层面对齐。表征级是内生文本对齐（ETA）：用两组可学习查询 $\mathbf{Q}^{\text{tr}}, \mathbf{Q}^{\text{se}}$ 通过交叉注意力分别从文本表征里抽取趋势与季节性语义，再用分解对比学习在样本级把文本侧与时序侧的趋势、季节性分量逐一拉齐，避免内生文本与时序信息大量重叠。预测级是自适应频率融合（AFF）：先把两分支预测各自做 FFT 拆成低/中/高频分量 $\mathcal{F}^{\text{num}} = \text{FFT}(\hat{\mathbf{Y}}^{\text{num}})$、$\mathcal{F}^{\text{event}} = \text{FFT}(\hat{\mathbf{Y}}^{\text{event}})$，再用一组可学习权重 $w_*^b$ 按频段加权融合并反变换回时域，$\mathcal{F}_{\text{fused}} = \sum_* \sum_b w_*^b \mathcal{F}_*^b$，$\hat{\mathbf{Y}}_{\text{final}} = \text{iFFT}(\mathcal{F}_{\text{fused}})$。因为不同领域对文本和数值的依赖落在不同频段，按频段而非整体加权，模型才能在该信文本的频率多采纳事件分支、该信数值的频率多采纳数值分支。
 
-1. **模板生成**：LLM 根据数据描述和样本生成结构化模板 $\mathcal{D}$
-2. **摘要生成**：使用模板从原始外生文本中提取预测相关摘要 $\mathcal{S}_i$
-3. **推理预测**：Reasoner（推理型 LLM）基于摘要和历史时序生成数值预测：
+### 损失函数 / 训练策略
 
-$$\hat{\mathbf{Y}}^{\text{event}}_i, \mathcal{R}_i = \text{Reasoner}(\mathcal{P}_{\text{reason}}, \mathcal{S}_i, \mathbf{X}_i)$$
-
-**历史上下文学习（HIC）**：
-- **训练阶段**：Reasoner 先生成预测，再对照真值生成纠正推理 $\mathcal{C}_i$，构建知识库 $\mathcal{K} = \{(\text{Embed}(\mathcal{S}_i), \mathcal{C}_i)\}_{i=1}^M$
-- **推理阶段**：检索最相似历史样本的纠正推理作为 ICL 示例：
-
-$$\hat{\mathbf{Y}}^{\text{event}}_j = \text{Reasoner}(\mathcal{P}_{\text{ICL}}, \mathcal{C}_{\tilde{i}}, \mathcal{S}_j, \mathbf{X}_j)$$
-
-### 关键设计 2：多层对齐
-
-**表征级——内生文本对齐（ETA）**：
-- 使用两组可学习查询 $\mathbf{Q}^{\text{tr}}, \mathbf{Q}^{\text{se}}$ 从文本表征中提取趋势和季节性语义
-- 通过交叉注意力实现时序-文本对齐
-- 使用**分解对比学习**在样本级对齐趋势和季节性分量
-
-**预测级——自适应频率融合（AFF）**：
-
-将两个分支的预测进行 FFT 分解为低/中/高频分量：
-
-$$\mathcal{F}^{\text{num}} = \text{FFT}(\hat{\mathbf{Y}}^{\text{num}}), \quad \mathcal{F}^{\text{event}} = \text{FFT}(\hat{\mathbf{Y}}^{\text{event}})$$
-
-通过可学习权重 $w_*^b$ 自适应融合各频段分量：
-
-$$\mathcal{F}_{\text{fused}} = \sum_* \sum_b w_*^b \mathcal{F}_*^b, \quad \hat{\mathbf{Y}}_{\text{final}} = \text{iFFT}(\mathcal{F}_{\text{fused}})$$
-
-### 训练目标
-
-$$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ts}} + \mathcal{L}_{\text{align}} + \mathcal{L}_{\text{final}}$$
+整体目标由三项相加：时序预测损失、模态对齐损失、最终融合预测损失，$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ts}} + \mathcal{L}_{\text{align}} + \mathcal{L}_{\text{final}}$，分别约束数值分支、ETA 的分解对比对齐和 AFF 融合后的输出。
 
 ## 实验关键数据
 
@@ -141,8 +110,8 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ts}} + \mathcal{L}_{\text{alig
 - [\[ICML 2026\] PATRA: Pattern-Aware Alignment and Balanced Reasoning for Time Series Question Answering](../../ICML2026/time_series/patra_pattern-aware_alignment_and_balanced_reasoning_for_time_series_question_an.md)
 - [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
 - [\[ICLR 2026\] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
-- [\[NeurIPS 2025\] MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
 - [\[ICLR 2026\] Reasoning on Time-Series for Financial Technical Analysis](reasoning_on_time-series_for_financial_technical_analysis.md)
+- [\[AAAI 2026\] Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting](../../AAAI2026/time_series/revitalizing_canonical_pre-alignment_for_irregular_multivariate_time_series_fore.md)
 
 </div>
 

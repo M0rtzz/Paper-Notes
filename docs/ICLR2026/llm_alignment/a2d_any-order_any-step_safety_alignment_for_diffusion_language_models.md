@@ -39,30 +39,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-A2D 修改了标准 masked diffusion 训练目标：(1) 对有害文本，所有 mask 位置的监督目标从原始 token 改为 [EOS]；(2) 对安全文本（包括有害 prompt + 安全回复），保持正常重建目标。通过均匀采样 mask ratio 让模型暴露于早期和晚期解码阶段。
+A2D 的目标是让一个已经 instruction-tuned 的 dLLM，无论按什么顺序、解码到第几步，只要 mask 位置本该填入有害内容就改填 [EOS]。做法是在标准 masked diffusion 训练目标上动一处手脚：对有害文本，把所有 mask 位置的监督目标从原始 token 换成 [EOS]；对安全文本（包括「有害 prompt + 安全回复」这种样本），保持正常的重建目标。训练时再均匀采样 mask 比例，让模型同时见到「几乎全 mask」的早期解码和「几乎无 mask」的晚期解码，从而把安全信号铺满整个解码轨迹。
 
 ### 关键设计
 
-1. **Token 级 [EOS] 对齐**:
+**1. Token 级 [EOS] 对齐：把响应级拒绝降到每个 mask 位置。**
 
-    - 功能：训练 dLLM 在有害续写的任何 mask 位置都预测 [EOS]
-    - 核心思路：在有害样本中，采样随机 mask，将所有 mask 位置的目标设为 [EOS]。模型学会在任何部分上下文中都能识别有害内容并输出终止信号
-    - 设计动机：[EOS] 是模型已经熟悉的 token（用于填充和结束），不需要引入新词。token 级对齐天然兼容 dLLM 的任意顺序解码
+dLLM 的任意顺序解码让有害内容可以冒在任何位置，传统的「整段响应级拒绝」根本管不住。A2D 改成在 token 级别对齐：对有害样本采样随机 mask，把所有被 mask 位置的监督目标统一设为 [EOS]，逼模型学会「不管当前看到的是哪部分上下文，只要识别出有害续写，就在这里输出终止信号」。选 [EOS] 是因为它本就是模型熟悉的 token（用于填充和结束），不必引入新词；而 token 级的监督形式天然兼容 dLLM 任意顺序解码——任何位置、任何上下文片段都能触发拒绝。
 
-2. **均匀 mask ratio 采样**:
+**2. 均匀 mask ratio 采样：堵住「浅层对齐」只在前几步生效的漏洞。**
 
-    - 功能：训练时均匀采样 $\lambda \sim U(0,1)$ 的 mask 比例
-    - 核心思路：$\lambda = (1-\epsilon)t + \epsilon$，使模型暴露于从几乎完全 mask（早期解码）到几乎无 mask（晚期解码）的所有阶段
-    - 设计动机：解决"浅层对齐"问题——per-token KL 分析显示现有 dLLM 仅在前几步有安全信号，均匀采样确保所有解码阶段都对齐
+per-token KL 分析显示现有 dLLM 的安全对齐是浅层的——只在解码的前几步有效，后续步骤安全信号迅速衰减。A2D 在训练时均匀采样 mask 比例 $\lambda \sim U(0,1)$，具体取 $\lambda = (1-\epsilon)t + \epsilon$，使模型从「几乎完全 mask」（对应早期解码阶段）到「几乎无 mask」（对应晚期解码阶段）的所有比例都被覆盖到。这样安全监督就不再集中在前几步，而是均匀分布到每一个解码阶段，真正做到 any-step 防御。
 
-3. **早期拒绝机制**:
+**3. 早期拒绝机制：把 [EOS] 概率当成内部安全信号提前刹车。**
 
-    - 功能：在第一步解码时检测最左 mask 位置的 [EOS] 概率，超阈值则立即终止
-    - 核心思路：A2D 训练后模型对有害输入在 mask 位置赋予高 [EOS] 概率，这个概率可以作为内部安全信号。阈值化后实现无输出的快速拒绝
-    - 效果：最高 19.3x 更快的安全终止
+经过前两步训练，模型对有害输入会在 mask 位置赋予很高的 [EOS] 概率——这个概率本身就是一个可读出的内部安全信号。A2D 在第一步解码时就检测最左 mask 位置的 [EOS] 概率，一旦超过阈值便立即终止，不再继续生成。由于在解码起点就刹车、跳过了后续所有去 mask 步骤，安全终止最高可快 19.3x。
 
 ### 损失函数 / 训练策略
-标准 masked diffusion 交叉熵损失，唯一修改是有害样本的目标变为 [EOS]。在 BeaverTails 数据集上用 30K 样本训练。应用于已对齐的 instruction-tuned dLLM 之上。
+仍是标准 masked diffusion 的交叉熵损失，唯一改动是把有害样本的监督目标替换成 [EOS]。训练数据为 BeaverTails 的 30K 样本，整套方法施加在已对齐的 instruction-tuned dLLM 之上。
 
 ## 实验关键数据
 
@@ -119,10 +113,10 @@ A2D 修改了标准 masked diffusion 训练目标：(1) 对有害文本，所有
 ## 相关论文
 
 - [\[ICLR 2026\] GuardAlign: Test-time Safety Alignment in Multimodal Large Language Models](guardalign_test-time_safety_alignment_in_multimodal_large_language_models.md)
+- [\[ICML 2026\] Towards Context-Invariant Safety Alignment for Large Language Models](../../ICML2026/llm_alignment/towards_context-invariant_safety_alignment_for_large_language_models.md)
+- [\[ACL 2025\] DiffPO: Diffusion Alignment with Direct Preference Optimization](../../ACL2025/llm_alignment/diffpo_diffusion_alignment.md)
 - [\[ICLR 2026\] Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
 - [\[ICLR 2026\] Superficial Safety Alignment Hypothesis](superficial_safety_alignment_hypothesis.md)
-- [\[CVPR 2025\] Aesthetic Post-Training Diffusion Models from Generic Preferences with Step-by-step Preference Optimization](../../CVPR2025/llm_alignment/aesthetic_post-training_diffusion_models_from_generic_preferences_with_step-by-s.md)
-- [\[ICML 2026\] Towards Context-Invariant Safety Alignment for Large Language Models](../../ICML2026/llm_alignment/towards_context-invariant_safety_alignment_for_large_language_models.md)
 
 </div>
 

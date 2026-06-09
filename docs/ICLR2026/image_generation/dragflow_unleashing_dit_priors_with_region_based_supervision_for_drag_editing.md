@@ -40,25 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定输入图像，先通过 VAE 编码再反演到噪声 latent $\bm{z}_t$，然后在迭代优化过程中使用区域级仿射监督引导 latent 更新。主体一致性由 KV 注入 + adapter 增强反演保证，背景保真由梯度掩码硬约束实现。MLLM（GPT-5）用于推理用户意图（编辑类型 + 文字描述）。
+输入图像先经 VAE 编码、再用 FireFlow 反演到噪声 latent $\bm{z}_t$，随后在去噪过程中插入若干次迭代优化，由区域级仿射监督把源区域的特征逐步搬到目标位置。三条辅助机制各管一摊：背景由梯度掩码硬约束钉住、主体一致性由 KV 注入加 adapter 增强反演守住、用户意图（重定位 / 变形 / 旋转及文字描述）则交给 MLLM（GPT-5）推理，省去手动标注编辑类型。
 
 ### 关键设计
-1. **区域级仿射监督（Region-Level Affine Supervision）**：用户指定源区域掩码 $\{\bm{M}_i\}$ 和目标点 $\bm{t}_i$。通过仿射变换将源掩码逐步传播到目标位置。核心损失函数为：
+
+**1. 区域级仿射监督：用更丰富的语义证据替代短视的单点梯度。**
+
+直接把点级拖拽搬到 DiT 之所以失效，在于 DiT 特征感受野窄、空间精确，单点提供的语义证据太薄，优化容易短视。DragFlow 让用户给出源区域掩码 $\{\bm{M}_i\}$ 与目标点 $\bm{t}_i$，再用仿射变换把源掩码沿线性调度 $k/K$ 平滑地推向目标——重定位与变形由目标点到质心的向量决定参数，旋转则由角度和锚点决定。优化的目标是让当前区域的 DiT 特征对齐初始区域特征：
 $$\mathcal{L}_{\text{Drag}} = \sum_{i=1}^{N} \gamma_i \cdot \| \bm{M}_i^{(k)} \odot F(\bm{z}_t^{(k)}) - \text{sg}[\bm{M}_i^{(0)} \odot F(\bm{z}_t^{(0)})] \|_1$$
-其中 $F(\cdot)$ 提取 DiT 特征，$\bm{M}_i^{(k)}$ 由仿射变换得到。对于重定位/变形，参数由目标点到质心向量决定；对于旋转，由角度和锚点决定。线性调度 $k/K$ 使掩码从源平滑移向目标。
-    - **为何区域级更优**：区域级匹配提供更丰富的语义上下文，缓解短视梯度；且无需点追踪（point tracking），因为是对比区域特征而非单点，消除了追踪误差累积。
+其中 $F(\cdot)$ 提取 DiT 特征、$\bm{M}_i^{(k)}$ 是第 $k$ 步仿射后的掩码、$\text{sg}[\cdot]$ 表示梯度截断。由于比对的是整块区域而非单点，监督信号天然带上下文，也彻底绕开了点追踪（point tracking）这一步——既不需要逐步定位被拖动的点，也就不会累积追踪误差。
 
-2. **梯度掩码背景硬约束（Background Hard Constraint）**：传统方法用辅助一致性损失 $\mathcal{L}_{\text{BG}}$ 保持背景，但该损失与编辑目标竞争，且在 CFG-蒸馏模型中反演漂移大导致参考不可靠。本文改用硬约束：
-$$\bm{z}_t^{(k+1)} = \bm{B} \odot (\bm{z}_t^{(k)} - \alpha \cdot \frac{\partial \mathcal{L}_{\text{Drag}}}{\partial \bm{z}_t^{(k)}}) + (1 - \bm{B}) \odot \bm{z}_t^{\text{orig}}$$
-需要一个额外的纯重建分支提供 $\bm{z}_t^{\text{orig}}$，开销适中但效果显著。
+**2. 梯度掩码背景硬约束：把背景从"软损失博弈"换成"直接锁定"。**
 
-3. **Adapter 增强反演（Adapter-Enhanced Inversion）**：利用预训练的开放域个性化 adapter（如 IP-Adapter、InstantCharacter）作为辅助主体表示提取器，将主体表征注入模型先验，无需额外微调即可显著提升反演质量和主体一致性。实验显示 FLUX 的反演 LPIPS 从 0.283 降至 0.173。
+传统做法靠一个辅助一致性损失 $\mathcal{L}_{\text{BG}}$ 拉住背景，但它与编辑目标互相竞争，而且 FLUX 这类 CFG-蒸馏模型反演漂移大、参考本身就不可靠。DragFlow 改成硬约束：每步只在前景区域 $\bm{B}$ 内施加梯度更新，区域外直接贴回原始 latent
+$$\bm{z}_t^{(k+1)} = \bm{B} \odot \Big(\bm{z}_t^{(k)} - \alpha \cdot \frac{\partial \mathcal{L}_{\text{Drag}}}{\partial \bm{z}_t^{(k)}}\Big) + (1 - \bm{B}) \odot \bm{z}_t^{\text{orig}}$$
+这需要额外跑一条纯重建分支提供 $\bm{z}_t^{\text{orig}}$，开销适中但收益明显——消融中它把背景保真度 IF_bg 从 0.757 抬到 0.925。
+
+**3. Adapter 增强反演：借现成个性化 adapter 把主体表征注回先验，免微调稳住一致性。**
+
+CFG-蒸馏带来的反演漂移会让主体在编辑后跑偏。DragFlow 不另做训练，而是直接复用预训练的开放域个性化 adapter（如 IP-Adapter、InstantCharacter）当主体表示提取器，把主体表征注入模型先验。这样既不增加微调成本，又显著改善反演质量与主体一致性——FLUX 的反演 LPIPS 从 0.283 降到 0.173，接近 SD 上 DPM-Solver 反演的 0.167。
 
 ### 损失函数 / 训练策略
-- 仅有 $\mathcal{L}_{\text{Drag}}$，无需背景一致性损失（由硬约束替代）
-- 使用 FireFlow 反演算法，25 步扩散，跳过前 6 步，从第 19 步开始编辑
-- 在第 7 步去噪时优化 70 次迭代，学习率前 50 次为 1000，后 20 次为 1200
-- 自适应权重 $\gamma_i$ 根据操作区域相对大小确定
+全程只用 $\mathcal{L}_{\text{Drag}}$，背景一致性损失被硬约束替代而省去。反演采用 FireFlow 算法、25 步扩散，跳过前 6 步、从第 19 步起进入编辑，并在第 7 步去噪时做 70 次优化迭代（前 50 次学习率 1000、后 20 次 1200）。每个区域的自适应权重 $\gamma_i$ 按其操作区域的相对大小确定，让大小区域的监督强度更均衡。
 
 ## 实验关键数据
 
@@ -133,8 +136,8 @@ $$\bm{z}_t^{(k+1)} = \bm{B} \odot (\bm{z}_t^{(k)} - \alpha \cdot \frac{\partial 
 ## 相关论文
 
 - [\[ICLR 2026\] Follow-Your-Shape: Shape-Aware Image Editing via Trajectory-Guided Region Control](follow-your-shape_shape-aware_image_editing_via_trajectory-guided_region_control.md)
-- [\[CVPR 2025\] FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](../../CVPR2025/image_generation/faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
 - [\[ICCV 2025\] SuperEdit: Rectifying and Facilitating Supervision for Instruction-Based Image Editing](../../ICCV2025/image_generation/superedit_rectifying_and_facilitating_supervision_for_instruction-based_image_ed.md)
+- [\[CVPR 2025\] FaithDiff: Unleashing Diffusion Priors for Faithful Image Super-Resolution](../../CVPR2025/image_generation/faithdiff_unleashing_diffusion_priors_for_faithful_image_super-resolution.md)
 - [\[ICML 2026\] CoCoEdit: Content-Consistent Image Editing via Region Regularized Reinforcement Learning](../../ICML2026/image_generation/cocoedit_content-consistent_image_editing_via_region_regularized_reinforcement_l.md)
 - [\[ICCV 2025\] Inpaint4Drag: Repurposing Inpainting Models for Drag-Based Image Editing via Bidirectional Warping](../../ICCV2025/image_generation/inpaint4drag_repurposing_inpainting_models_for_drag-based_image_editing_via_bidi.md)
 

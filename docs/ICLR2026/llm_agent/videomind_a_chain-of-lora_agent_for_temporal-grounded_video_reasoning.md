@@ -39,61 +39,19 @@ tags:
 
 ### 整体框架
 
-VideoMind 基于 Qwen2-VL 架构，定义四个专职角色：
-
-1. **Planner**：根据查询动态协调其他角色，决定调用哪些角色及顺序
-2. **Grounder**：时序事件定位，预测相关视频片段的起止时间戳
-3. **Verifier**：评估Grounder的候选片段，选择最可靠的一个
-4. **Answerer**：基于定位到的片段（或全视频）生成最终自然语言答案
-
-通过JSON风格的函数调用表示角色链：`{"type": "<role>", "value": "<argument>"}`。
-
-**三种推理计划**：
-- Plan-1 (Grounding + Verifying + Answering)：需要同时给出答案和时序证据
-- Plan-2 (Grounding + Verifying)：仅需返回时间戳
-- Plan-3 (Answering Only)：短视频或简单问题直接回答
+VideoMind 在 Qwen2-VL 单一基座上定义四个专职角色——Planner 读懂查询后动态决定调用顺序，Grounder 预测相关片段的起止时间戳，Verifier 在 Grounder 给出的候选里挑出最可靠的一个，Answerer 再基于定位到的片段（或全视频）生成自然语言答案。角色之间用 JSON 风格的函数调用 `{"type": "<role>", "value": "<argument>"}` 串成一条链。Planner 并非每次都跑满四步，而是从三种计划里挑：需要同时给答案和时序证据时走 Plan-1（Grounding+Verifying+Answering），只要时间戳时走 Plan-2（Grounding+Verifying），短视频或简单问题则走 Plan-3 直接回答。
 
 ### 关键设计
 
-**Timestamp Decoder（时间戳解码器）**——Grounder的核心组件：
+**1. Timestamp Decoder：用专用解码器替代语言建模来定位时间。** 视频时序定位的痛点在于，如果让 LLM 像写文字那样直接吐出"从 12.3 秒到 18.7 秒"，数字本身缺乏几何约束、精度很差。VideoMind 的 Grounder 改为引入一个 `<REG>` token，生成它时把它与全部视觉 token 的隐状态一起送进专用解码器：先做 1D 平均池化把每帧压成一个向量 $\mathbf{h}_v' \in \mathbb{R}^{T \times D_L}$，再线性投影降维得 $\mathbf{e}_v = E_v(\mathbf{h}_v') \in \mathbb{R}^{T \times D}$，经三层 Transformer 编码器把帧特征与查询特征融合。核心是其后的**时序特征金字塔**——四级 Conv1D 逐步下采样，分别保留 1、1/2、1/4、1/8 的序列长度后拼接，使得短事件和长事件能在不同尺度上被并行预测。解码器顶端挂三个输出：帧级前景/背景分类头、帧级起止偏移的边界回归头、以及拉开帧-查询匹配度的对比项。这套"检测器式"结构把定位从模糊的文本生成变成有监督的几何回归，正是 2B 模型 mIoU 能反超 GPT-4o 的原因。
 
-不使用语言建模直接预测时间戳，而是引入 `<REG>` token，当生成时将其与所有视觉token的隐状态送入专用解码器：
+**2. Verifier 的 Zoom-in 策略：模拟人类"回看确认"。** Grounder 单次预测难免给出几个似是而非的候选，谁更准需要二次甄别。Verifier 对每个候选片段向两侧各扩展 50% 边界，把上下文一起纳入视野，并在序列中插入 `<SEG-START>` 与 `<SEG-END>` 两个特殊 token 显式标出片段边界，让模型清楚"该看哪一段"。随后做一次二值判断（Yes/No），用 teacher forcing 取出两个答案 token 的 logit $L_y, L_n$，以 $\text{Sigmoid}(L_y - L_n)$ 作为该候选的置信度排序。这个"放大边界 + 标记 + 打分"的回看动作让 grounding 的 mIoU 额外提升约 3.2。
 
-1. 1D平均池化：将视觉token压缩为每帧一个 $\mathbf{h}_v' \in \mathbb{R}^{T \times D_L}$
-2. 线性投影降维：$\mathbf{e}_v = E_v(\mathbf{h}_v') \in \mathbb{R}^{T \times D}$
-3. 三层Transformer编码器融合帧特征与查询特征
-4. **时序特征金字塔**：四级Conv1D下采样（保留1, 1/2, 1/4, 1/8序列长度），拼接后支持多尺度并行预测
-
-**预测头**：
-- 分类头：帧级前景/背景分类，Focal Loss优化
-- 边界回归头：帧级起止时间偏移，L1 Loss
-- 对比损失：鼓励帧-查询对的判别性表示学习
-
-**Verifier（验证器）的 Zoom-in 策略**：
-- 对每个候选片段向两侧扩展50%边界
-- 插入 `<SEG-START>` 和 `<SEG-END>` 特殊token标记边界
-- 二值判断（Yes/No），teacher forcing获取token概率，$\text{Sigmoid}(L_y - L_n)$ 计算置信度
-
-**Chain-of-LoRA 机制**：
-- 所有角色共享同一个LMM主干，各自配备角色专属的LoRA适配器
-- Grounder额外使用时间戳解码器
-- 推理时：所有LoRA参数缓存在内存中，角色切换仅需切换对应LoRA
-- 效果：与使用4个独立模型(All-Distributed)性能完全相同，但内存仅需 4.2G vs 16.6G
+**3. Chain-of-LoRA：把多 agent 压进一个模型。** 直接用四个独立模型当四个角色（All-Distributed）效果好但内存爆炸，多任务联合训一个模型（All-in-One）又会让角色能力互相干扰。VideoMind 让所有角色共享同一 LMM 主干，每个角色只配一组角色专属的 LoRA 适配器（Grounder 额外挂上前述时间戳解码器）。推理时所有 LoRA 参数都常驻内存，切换角色仅是切换对应的 LoRA 权重，没有重新加载整模型的开销。结果是它在性能上与 All-Distributed 完全持平，内存却从 16.6G 压到 4.2G，把"多智能体协作"做成了单模型内的零成本切换。
 
 ### 损失函数 / 训练策略
 
-**Grounder的三项损失**：
-- Focal Loss（分类）：$\mathcal{L}_{cls} = -\lambda_{cls}\alpha(1-\hat{c}_i)^\gamma \log(\hat{c}_i)$，$\alpha=0.9, \gamma=2.0, \lambda_{cls}=5.0$
-- L1 Loss（回归）：$\mathcal{L}_{reg} = \lambda_{reg}(|b_i^s - \hat{b}_i^s| + |b_i^e - \hat{b}_i^e|)$，$\lambda_{reg}=1.0$
-- 对比损失：$\mathcal{L}_{con}$，温度 $\tau=0.07$，$\lambda_{con}=0.05$
-
-**训练数据**：
-- Planner: 39K样本（NExT-QA 34K + QVHighlights 5K）
-- Grounder: 210K样本（7个数据源混合）
-- Verifier: 232K样本（DiDeMo 165K + TACoS 43K + QVHighlights 24K）
-- Answerer: 使用原始模型，不做微调
-
-各角色在各自专属数据上独立训练LoRA。
+Grounder 的训练把三项损失加权求和。分类用 Focal Loss 缓解前景/背景的极度不均衡，$\mathcal{L}_{cls} = -\lambda_{cls}\alpha(1-\hat{c}_i)^\gamma \log(\hat{c}_i)$，取 $\alpha=0.9, \gamma=2.0, \lambda_{cls}=5.0$；边界回归用 L1 Loss，$\mathcal{L}_{reg} = \lambda_{reg}(|b_i^s - \hat{b}_i^s| + |b_i^e - \hat{b}_i^e|)$，$\lambda_{reg}=1.0$；再加一项温度 $\tau=0.07$、权重 $\lambda_{con}=0.05$ 的对比损失 $\mathcal{L}_{con}$ 强化判别性表示。四个角色各自在专属数据上独立训 LoRA：Planner 用 39K 样本（NExT-QA 34K + QVHighlights 5K），Grounder 混合 7 个数据源共 210K，Verifier 用 232K（DiDeMo 165K + TACoS 43K + QVHighlights 24K），Answerer 则直接沿用原始模型不做微调。
 
 ## 实验关键数据
 
@@ -180,8 +138,8 @@ Chain-of-LoRA 以 4.2G 内存达到了与 16.6G 的 All-Distributed 完全相同
 ## 相关论文
 
 - [\[CVPR 2026\] WorldMM: Dynamic Multimodal Memory Agent for Long Video Reasoning](../../CVPR2026/llm_agent/worldmm_dynamic_multimodal_memory_agent_for_long_video_reasoning.md)
-- [\[ICLR 2026\] SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
 - [\[ACL 2026\] SafeMCP: Proactive Power Regulation for LLM Agent Defense via Environment-Grounded Look-Ahead Reasoning](../../ACL2026/llm_agent/safemcp_proactive_power_regulation_for_llm_agent_defense_via_environment-grounde.md)
+- [\[ICLR 2026\] SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home LLM Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_llm_agents.md)
 - [\[ACL 2026\] ZARA: Training-Free Motion Time-Series Reasoning via Evidence-Grounded LLM Agents](../../ACL2026/llm_agent/zara_training-free_motion_time-series_reasoning_via_evidence-grounded_llm_agents.md)
 - [\[CVPR 2026\] Ego2Web: A Web Agent Benchmark Grounded in Egocentric Videos](../../CVPR2026/llm_agent/ego2web_a_web_agent_benchmark_grounded_in_egocentric_videos.md)
 

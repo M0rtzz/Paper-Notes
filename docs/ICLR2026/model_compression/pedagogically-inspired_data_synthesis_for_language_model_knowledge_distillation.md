@@ -41,38 +41,25 @@ tags:
 
 ### 整体框架
 
-IOA 是一个三阶段流水线：Identifier（识别什么知识需要教）→ Organizer（组织知识的教授顺序）→ Adapter（适配知识的表达方式）。
+IOA 把蒸馏当成一堂为特定学生量身定制的课：先由 Identifier 诊断这个学生模型到底哪些知识没掌握、按什么顺序补，再由 Organizer 把这些知识排成一条由易到难、有先决关系的课程，最后由 Adapter 把每个知识点改写成学生当前认知水平能消化的表达，逐阶段合成数据、微调、考核，达标才放行进入下一阶段。
 
 ### 关键设计
 
-1. **Knowledge Identifier（知识识别器）**：
+**1. Knowledge Identifier：诊断该教什么，而不是漫无目标地灌数据。**
 
-    - 将能力域分解为层次化知识模块：$\mathcal{D} = \{K_1, K_2, \ldots, K_m\}$
-    - 量化师生差距：$\Delta(k) = \frac{P_T(k) - P_S(k)}{P_T(k)}$，$\Delta(k) > \tau_{gap}=0.3$ 标记为缺陷
-    - 构建知识依赖图 $G=(V,E)$：通过条件性能分析确定前置关系
-    - 优先级排序：$\text{Severity}(k) = \alpha \cdot \Delta(k) + (1-\alpha) \cdot \text{Connectivity}(k)$
+通用蒸馏的痛点是合成数据没有靶子——教师随便出题，学生哪里弱、哪里强一概不管。Identifier 先把目标能力域拆成一组层次化知识模块 $\mathcal{D} = \{K_1, K_2, \ldots, K_m\}$，再对每个模块量化师生差距 $\Delta(k) = \frac{P_T(k) - P_S(k)}{P_T(k)}$，只有 $\Delta(k) > \tau_{gap}=0.3$ 的模块才被标记为真正的知识缺陷，把数据预算集中到学生确实学不会的地方。光知道缺什么还不够，知识之间有先后依赖，于是它通过条件性能分析（在掌握模块 A 的前提下测模块 B 的表现）构建知识依赖图 $G=(V,E)$，并用 $\text{Severity}(k) = \alpha \cdot \Delta(k) + (1-\alpha) \cdot \text{Connectivity}(k)$ 给缺陷排序——既看差距大小，又看这个知识点在依赖图里牵连多广，优先补那些既薄弱又卡住下游一大片的根节点。
 
-2. **Knowledge Organizer（知识组织器）**：
+**2. Knowledge Organizer：把诊断结果排成一条循序渐进的课程。**
 
-    - **课程序列构建**：拓扑排序依赖图，确保先决知识先学习
-    - **Vygotsky ZPD 约束**：相邻阶段难度增量受控 $\leq \tau_{ZPD} = 0.15$
-    - **Bloom 掌握学习**：每阶段需达到 $\min_{k \in s_i} \frac{P_S(k)}{P_T(k)} \geq \tau_{mastery} = 0.9$ 才能进入下一阶段
-    - 未达标时生成补救数据继续训练
+知道了缺什么还要决定何时教。Organizer 对依赖图做拓扑排序，保证先决知识一定排在依赖它的知识之前，避免学生在没学会加减法时被硬塞微积分。在此基础上它叠加两条教育学约束：一是 Vygotsky 最近发展区（ZPD），要求相邻阶段的难度增量受控 $\leq \tau_{ZPD} = 0.15$，让每一步都落在学生"踮脚够得着"的区间，既不重复已会的也不一步登天；二是 Bloom 掌握学习，每个阶段必须满足 $\min_{k \in s_i} \frac{P_S(k)}{P_T(k)} \geq \tau_{mastery} = 0.9$——即该阶段所有知识点都达到教师九成水平——才允许进入下一阶段，否则就针对没达标的模块生成补救数据继续训练。这套"考不过就补课"的机制，正是为了避免一口气灌完全部数据后早期知识被冲淡。
 
-3. **Knowledge Adapter（知识适配器）**：
+**3. Knowledge Adapter：把知识改写成学生当前能听懂的样子。**
 
-    - **抽象概念具象化**：将导数解释为"汽车速度表"
-    - **复杂推理分解**：信息提取 → 关系识别 → 方程建立 → 求解 → 验证
-    - **认知负载管理**：从 2×2 整数系数开始，逐步增加复杂度
-    - **表示格式优化**：标准化解题模板
-    - **语言复杂度降低**：用简单等价词替换术语
+即便顺序对了，直接照搬教师那种 >100B 模型的复杂表达，小模型也消化不了。Adapter 在生成数据时对教师的讲法做认知适配：抽象概念具象化（把"导数"讲成"汽车速度表上的读数"）、复杂推理显式分解为可跟随的步骤链（信息提取→关系识别→方程建立→求解→验证）、认知负载管理（从 2×2 整数系数的简单实例起步再逐步加复杂度）、表示格式优化（统一解题模板降低格式噪声）、语言复杂度降低（用简单等价词替换专业术语）。本质上是把教师的"专家话术"翻译成"教学话术"，让同样的知识对一个三五十亿参数的学生变得可学。
 
 ### 损失函数 / 训练策略
 
-- 教师模型：OpenAI o1 / DeepSeek-R1（>100B 参数）
-- 学生模型：Qwen2.5-3B/7B/14B, LLaMA-3.1-8B, LLaMA-3.2-3B
-- 每阶段循环：合成数据 → 微调 → 评估 → 是否达标 → 补救或进入下一阶段
-- 知识模块覆盖约 20-30% 的缺陷模块
+每个阶段都走一遍"合成数据 → 微调 → 评估 → 是否达标 → 补救或进入下一阶段"的闭环，每轮聚焦约 20–30% 的缺陷模块逐步推进。实验中教师模型用 OpenAI o1 / DeepSeek-R1（>100B 参数），学生模型覆盖 Qwen2.5-3B/7B/14B、LLaMA-3.1-8B、LLaMA-3.2-3B，验证该流水线在不同规模和家族的学生上都成立。
 
 ## 实验关键数据
 
@@ -136,8 +123,8 @@ IOA 是一个三阶段流水线：Identifier（识别什么知识需要教）→
 
 - [\[AAAI 2026\] Condensed Data Expansion Using Model Inversion for Knowledge Distillation](../../AAAI2026/model_compression/condensed_data_expansion_using_model_inversion_for_knowledge_distillation.md)
 - [\[ICLR 2026\] AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
-- [\[ICLR 2026\] Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
 - [\[ACL 2026\] Find Your Optimal Teacher: Personalized Data Synthesis via Router-Guided Multi-Teacher Distillation](../../ACL2026/model_compression/find_your_optimal_teacher_personalized_data_synthesis_via_router-guided_multi-te.md)
+- [\[ICLR 2026\] Distillation of Large Language Models via Concrete Score Matching](distillation_of_large_language_models_via_concrete_score_matching.md)
 - [\[ICLR 2026\] PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
 
 </div>

@@ -47,23 +47,23 @@ tags:
 
 ### 关键设计
 
-1. **频谱衰减的理论发现与 Chebyshev 分析**:
+**1. 频谱衰减的理论发现与 Chebyshev 分析：揭示现有激活函数表达能力被砍掉一半的数学根源。**
 
-    - 功能：揭示现有激活函数表达能力受限的数学根源
-    - 核心思路：将任意激活函数 $\phi(x)$ 用 Chebyshev 多项式展开 $\phi(x) = \sum_{n=0}^{\infty} a_n T_n(x)$，其中 $T_n$ 是第一类 Chebyshev 多项式。根据非线性层对频谱的作用（公式 $z' = \sum_{i=0}^{K} \alpha_i \bigotimes_{l=0}^{i} z$），每个系数 $\alpha_i$ 的大小直接决定对应阶次的频谱展宽效果。作者严格证明：对偶对称函数 $f(x) = f(-x)$，所有奇次系数 $a_n = 0$（$n$ 为奇数）；对奇对称函数 $f(x) = -f(-x)$，所有偶次系数 $a_n = 0$（$n$ 为偶数）。这意味着升余弦（偶对称）、正弦（奇对称）等常用激活都有一半的频谱贡献被衰减为零
-    - 设计动机：此前 blueshift 效应的分析只关注系数绝对值的衰减快慢，从未注意到对称性导致的系统性归零问题。这个发现解释了为什么所有对称激活函数都存在表达能力上限
+INR 表现好不好，归根到底取决于激活函数能不能把输入频谱展宽到足够高的频率。要判断一个激活 $\phi(x)$ 的展宽能力，作者把它用 Chebyshev 多项式展开 $\phi(x) = \sum_{n=0}^{\infty} a_n T_n(x)$（$T_n$ 是第一类 Chebyshev 多项式）。结合非线性层对频谱的作用 $z' = \sum_{i=0}^{K} \alpha_i \bigotimes_{l=0}^{i} z$，每个系数 $\alpha_i$ 的大小直接决定对应阶次的频谱展宽效果——系数越大，那一阶的高频贡献越强。
 
-2. **复正弦调制方案 (COSMO)**:
+关键的发现来自对称性：作者严格证明，对偶对称函数 $f(x) = f(-x)$，所有奇次系数 $a_n = 0$（$n$ 为奇数）；对奇对称函数 $f(x) = -f(-x)$，所有偶次系数 $a_n = 0$（$n$ 为偶数）。也就是说，升余弦（偶对称）、正弦（奇对称）这些常用激活，它们的 Chebyshev 展开里有整整一半的系数被对称性强制归零，对应一半的频谱贡献被系统性衰减掉。此前关于 blueshift 效应的分析只盯着系数绝对值衰减得快不快，从没注意到对称性会让系数成片归零——这恰恰解释了为什么所有对称激活函数都撞在同一道表达能力的天花板上。
 
-    - 功能：打破激活函数的奇偶对称性，恢复完整频谱支持
-    - 核心思路：将激活函数调制为 $g(x) = \phi(x) \cdot e^{j\zeta x}$。展开复指数得到 $g(x) = \phi(x)(\cos\zeta x + j\sin\zeta x)$，其实部 $g_r(x) = \phi(x)\cos\zeta x$ 和虚部 $g_i(x) = \phi(x)\sin\zeta x$ 的 Chebyshev 系数分别在不同的奇偶阶次非零。关键定理：当实部系数 $a_n = 0$ 时虚部系数 $b_n \neq 0$，反之亦然，因此复数系数 $a_n + jb_n$ 永远不会整体为零。这保证了每个频率阶次都能对后激活频谱产生贡献
-    - 设计动机：复指数本身既非奇函数也非偶函数，乘上去以后立刻打破原始激活的对称性。这是一种最小侵入性的修复——不改变激活函数的基本形状，只添加一个相位旋转项
+**2. 复正弦调制方案 COSMO：用一个相位旋转项打破奇偶对称，把丢掉的那一半频谱补回来。**
 
-3. **COSMO-RC 激活函数**:
+既然问题出在对称性，修复的办法就是破坏它。作者把激活函数调制为 $g(x) = \phi(x) \cdot e^{j\zeta x}$，展开复指数得到 $g(x) = \phi(x)(\cos\zeta x + j\sin\zeta x)$。它的实部 $g_r(x) = \phi(x)\cos\zeta x$ 和虚部 $g_i(x) = \phi(x)\sin\zeta x$ 的 Chebyshev 系数分别落在不同的奇偶阶次上非零。由此得到关键定理：当实部系数 $a_n = 0$ 时虚部系数 $b_n \neq 0$，反之亦然，于是复系数 $a_n + jb_n$ 永远不会整体归零——每个频率阶次都能重新对后激活频谱做出贡献。复指数本身既非奇函数也非偶函数，乘上去就立刻抹掉了原始激活的对称性。这是一种最小侵入性的修复：不动激活函数的基本形状，只额外叠一个随 $\zeta$ 调节的相位旋转，就能即插即用地补全任意 INR 激活的频谱支持。
 
-    - 功能：基于理论最优选择构建的具体激活函数实现
-    - 核心思路：在所有候选激活中，升余弦函数（raised cosine）的 Chebyshev 系数衰减最慢，意味着它能产生最强的 blueshift 效应。将升余弦与复正弦调制结合得到 COSMO-RC：$\phi(x) = \frac{1}{T}\text{sinc}(\frac{x}{T}) \frac{\cos(\pi\beta x/T)}{1-(2\beta x/T)^2} \cdot e^{2\pi\zeta x j}$。其中滚降率 $\beta=0.05$ 固定，带宽参数 $T$ 和频移参数 $\zeta$ 可学习。各层输出为复数值，归一化到单位圆保持训练稳定（保留相位、归一化模长），最终层取实部输出
-    - 设计动机：升余弦函数来自通信领域的脉冲整形滤波器，本身具有紧支撑特性和缓慢的旁瓣衰落，这意味着在 Chebyshev 基下能保留更多高阶分量。加上复正弦调制后，它在理论和实验上都是最优选择
+**3. COSMO-RC 激活函数：把理论上 blueshift 最强的升余弦基底和复调制拼成最优实现。**
+
+有了通用修复方案，还要挑一个最好的底座 $\phi$。在所有候选激活里，升余弦函数（raised cosine）的 Chebyshev 系数衰减最慢，意味着它能产生最强的 blueshift 效应。它来自通信领域的脉冲整形滤波器，天生具有紧支撑特性和缓慢的旁瓣衰落，因此在 Chebyshev 基下能保留更多高阶分量。把升余弦和复正弦调制拼起来就是 COSMO-RC：
+
+$$\phi(x) = \frac{1}{T}\text{sinc}\left(\frac{x}{T}\right) \frac{\cos(\pi\beta x/T)}{1-(2\beta x/T)^2} \cdot e^{2\pi\zeta x j}$$
+
+其中滚降率 $\beta=0.05$ 固定，带宽参数 $T$ 和频移参数 $\zeta$ 可学习。各层输出都是复数值，归一化到复平面单位圆上（保留相位、归一化模长）以保持训练稳定，最终层取实部输出信号值。理论上系数衰减最慢、实验上 PSNR 最高，两边都指向同一个最优解。
 
 ### 损失函数 / 训练策略
 
@@ -147,10 +147,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] Bias for Action: Video Implicit Neural Representations with Bias Modulation](../../CVPR2025/image_generation/bias_for_action_video_implicit_neural_representations_with_bias_modulation.md)
-- [\[ICLR 2026\] Event-T2M: Event-level Conditioning for Complex Text-to-Motion Synthesis](event-t2m_event-level_conditioning_for_complex_text-to-motion_synthesis.md)
-- [\[ICLR 2026\] TAVAE: A VAE with Adaptable Priors Explains Contextual Modulation in the Visual Cortex](tavae_a_vae_with_adaptable_priors_explains_contextual_modulation_in_the_visual_c.md)
 - [\[ICLR 2026\] NeuralOS: Towards Simulating Operating Systems via Neural Generative Models](neuralos_towards_simulating_operating_systems_via_neural_generative_models.md)
+- [\[ICLR 2026\] TAVAE: A VAE with Adaptable Priors Explains Contextual Modulation in the Visual Cortex](tavae_a_vae_with_adaptable_priors_explains_contextual_modulation_in_the_visual_c.md)
 - [\[ICLR 2026\] Verification of the Implicit World Model in a Generative Model via Adversarial Sequences](verification_of_the_implicit_world_model_in_a_generative_model_via_adversarial_s.md)
+- [\[ICLR 2026\] Amortising Inference and Meta-Learning Priors in Neural Networks (BNNP)](amortising_inference_and_meta-learning_priors_in_neural_networks.md)
 
 </div>
 

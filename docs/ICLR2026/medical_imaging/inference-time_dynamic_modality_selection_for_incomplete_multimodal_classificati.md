@@ -45,34 +45,19 @@ tags:
 
 ### 整体框架
 
-输入：不完整多模态样本 $\mathbb{X} = \{x^{(m)}\}_{m \in \mathcal{I}}$ → 恢复方法 $\Upsilon$（如VAE/TIP）重建缺失模态 → DyMo动态选择算法迭代评估每个恢复模态的MTIR奖励 → 仅融合正奖励模态 → 多模态Transformer网络 $f$ 输出预测。
-
-网络架构 $f$ 由模态专用编码器 $h^{(m)}$ + 多模态Transformer $\psi$（含[CLS] token和注意力mask处理缺失模态）+ 线性softmax分类器 $\zeta$ 组成。
+DyMo 把"缺失模态要不要补、补了要不要用"拆成两步：先用现成的恢复方法 $\Upsilon$（VAE 或 TIP）把不完整样本 $\mathbb{X} = \{x^{(m)}\}_{m \in \mathcal{I}}$ 的缺失模态全部重建出来，再在推理时逐个评估每个恢复模态的 MTIR 奖励，只把奖励为正的模态喂进多模态 Transformer $f$ 做最终预测。网络 $f$ 由模态专用编码器 $h^{(m)}$、带 [CLS] token 与注意力 mask 的多模态 Transformer $\psi$、线性 softmax 分类器 $\zeta$ 三部分组成，mask 机制天然支持任意模态组合，是动态选择能落地的前提。
 
 ### 关键设计
 
-1. **多模态任务相关信息奖励 (MTIR)**
+**1. 多模态任务相关信息奖励 MTIR：把"恢复值不值得用"变成一个可计算的标量。** 困境的根源是无法事先判断一个恢复模态带来的是信息还是噪声。本文从信息论入手，先证明任务相关信息 $I(Y;\mathbf{Z})$ 与经验交叉熵之间存在下界 $I(Y;\mathbf{Z}) \geq H(Y) - \hat{\mathcal{L}}_{ce} - G\sqrt{\frac{\ln(1/\delta)}{2|\mathcal{D}|}}$，于是"降低分类损失"就等价于"提升任务相关信息下界"。为了让这个损失可以在无标签的推理时估出来，把分类重写成特征空间里到类原型的混合密度估计 $p(y=k|\mathbf{z}) = \frac{\exp(-d_\phi(\mathbf{z}, \mathbf{c}_k))}{\sum_{k'}\exp(-d_\phi(\mathbf{z}, \mathbf{c}_{k'}))}$，其中 $\mathbf{c}_k$ 是训练集上预存的类原型，$d_\phi$ 为 Bregman 散度。MTIR 即定义为加入某个恢复模态前后的分类损失之差：差为正说明恢复拉近了样本到正确类原型的距离、提供了有用信息，差为负说明恢复把样本推向错误类簇、引入了有害信息。这样一来低保真和语义错位两类不可靠恢复都能用同一个奖励统一刻画。
 
-    - 理论基础：建立互信息 $I(Y;\mathbf{Z})$ 与经验交叉熵损失 $\hat{\mathcal{L}}_{ce}$ 的下界关系——$I(Y;\mathbf{Z}) \geq H(Y) - \hat{\mathcal{L}}_{ce} - G\sqrt{\frac{\ln(1/\delta)}{2|\mathcal{D}|}}$，降低损失可提升信息下界
-    - 将分类建模为特征空间中的混合密度估计：$p(y=k|\mathbf{z}) = \frac{\exp(-d_\phi(\mathbf{z}, \mathbf{c}_k))}{\sum_{k'}\exp(-d_\phi(\mathbf{z}, \mathbf{c}_{k'}))}$，其中 $\mathbf{c}_k$ 为训练集类原型
-    - MTIR定义为添加恢复模态前后的分类损失差：正值表示恢复提供了有用信息，负值表示恢复引入了有害信息
-    - **类内相似性校准 (ICS)**：引入非对称校准项 $\alpha$，当恢复后表示在其预测类簇中的代表性低于恢复前时降权（$\alpha < 1$），增强奖励函数对语义错位的敏感性
+**2. 类内相似性校准 ICS：补上奖励函数对语义错位的盲区。** 单纯的损失差对"看起来很自信但其实是错类"的语义错位不够敏感，因为错位样本可能恰好离某个错误原型很近、损失反而下降。为此引入一个非对称校准项 $\alpha$：当恢复后的表示在其预测类簇中的代表性低于恢复前时取 $\alpha < 1$ 给奖励降权，反之不放大。这种"只惩罚不奖励"的保守设计，让奖励函数对那些"恢复后语义偏移、在类内变得不典型"的情况更警觉，把语义错位也纳入了过滤范围。
 
-2. **迭代选择算法 + 灵活多模态架构**
-
-    - 贪心迭代选择：每步选择MTIR最高的恢复模态加入观测集，移除所有非正reward模态；直到候选集为空
-    - 多模态Transformer支持任意模态组合：缺失模态位置使用dummy tokens + attention mask
-    - 训练阶段使用随机子集模拟缺失模态（$A$个随机子集），搭配缺失无关对比损失 $\mathcal{L}_{aux}$ 促进类内聚类
+**3. 贪心迭代选择：逐个吸收最有价值的恢复模态。** 有了 MTIR 后并非一次性融合所有正奖励模态，而是贪心迭代——每一步选当前 MTIR 最高的恢复模态加入观测集，同时剔除所有非正奖励模态，更新观测集后重算剩余候选的奖励，直到候选集为空。由于已选模态会改变融合后的特征分布，迭代式评估比一次性打分更能反映模态间的相互作用，实验中也确实略优于一次性选择。
 
 ### 损失函数 / 训练策略
 
-- 分类损失：$\mathcal{L}_{class} = -\frac{1}{A}\frac{1}{B}\sum_{\mathcal{S} \sim \mathcal{U}_A}\sum_{i=1}^{B}\log p_f(y_i|\{x^{(m)}\}_{m \in \mathcal{S}})$
-
-- 辅助对比损失：$\mathcal{L}_{aux} = -\frac{1}{A}\frac{1}{B}\sum\sum\log\frac{\exp(-d_\phi(\mathbf{z}_i, \mathbf{c}_{y_i})/t)}{\sum_{k'}\exp(-d_\phi(\mathbf{z}_i, \mathbf{c}_{k'})/t)}$
-
-- 总损失：$\mathcal{L} = \mathcal{L}_{class} + \mathcal{L}_{aux}$
-
-- 训练在完整数据集上进行，通过随机子集采样模拟$2^M-1$种缺失模式
+训练只在完整数据集上进行，靠对每个样本采 $A$ 个随机模态子集 $\mathcal{S} \sim \mathcal{U}_A$ 来模拟 $2^M-1$ 种缺失模式，使网络对任意模态组合都鲁棒。分类损失为子集平均的交叉熵 $\mathcal{L}_{class} = -\frac{1}{A}\frac{1}{B}\sum_{\mathcal{S} \sim \mathcal{U}_A}\sum_{i=1}^{B}\log p_f(y_i|\{x^{(m)}\}_{m \in \mathcal{S}})$；为了让推理时的类原型距离可靠，额外加一项缺失无关对比损失 $\mathcal{L}_{aux} = -\frac{1}{A}\frac{1}{B}\sum\sum\log\frac{\exp(-d_\phi(\mathbf{z}_i, \mathbf{c}_{y_i})/t)}{\sum_{k'}\exp(-d_\phi(\mathbf{z}_i, \mathbf{c}_{k'})/t)}$ 促使同类样本在特征空间聚拢。总损失为两者直接相加 $\mathcal{L} = \mathcal{L}_{class} + \mathcal{L}_{aux}$，无需额外网络或多阶段训练。
 
 ## 实验关键数据
 
@@ -141,11 +126,11 @@ PolyMNIST 80%缺失：DyMo超OnlineMAE +5.67%；DVM全表缺失：超ModDrop +4.
 
 ## 相关论文
 
-- [\[ACL 2026\] Learning Dynamic Representations and Policies from Multimodal Clinical Time-Series with Informative Missingness](../../ACL2026/medical_imaging/learning_dynamic_representations_and_policies_from_multimodal_clinical_time-seri.md)
 - [\[ECCV 2024\] TIP: Tabular-Image Pre-training for Multimodal Classification with Incomplete Data](../../ECCV2024/medical_imaging/tip_tabular-image_pre-training_for_multimodal_classification_with_incomplete_dat.md)
-- [\[AAAI 2026\] MIRAGE: Scaling Test-Time Inference with Parallel Graph-Retrieval-Augmented Reasoning Chains](../../AAAI2026/medical_imaging/mirage_scaling_test-time_inference_with_parallel_graph-retrieval-augmented_reaso.md)
 - [\[CVPR 2025\] Distilled Prompt Learning for Incomplete Multimodal Survival Prediction](../../CVPR2025/medical_imaging/distilled_prompt_learning_for_incomplete_multimodal_survival_prediction.md)
 - [\[ICLR 2026\] Adaptive Domain Shift in Diffusion Models for Cross-Modality Image Translation](adaptive_domain_shift_in_diffusion_models_for_cross-modality_image_translation.md)
+- [\[CVPR 2026\] GLEAM: A Multimodal Imaging Dataset and HAMM for Glaucoma Classification](../../CVPR2026/medical_imaging/gleam_a_multimodal_imaging_dataset_and_hamm_for_gl.md)
+- [\[CVPR 2026\] Multimodal Classification of Radiation-Induced Contrast Enhancements and Tumor Recurrence Using Deep Learning](../../CVPR2026/medical_imaging/multimodal_classification_of_radiation-induced_contrast_enhancements_and_tumor_r.md)
 
 </div>
 

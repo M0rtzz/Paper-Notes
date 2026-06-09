@@ -43,32 +43,21 @@ StreamSplat 提出了一个完全前馈的在线动态3D重建框架，通过概
 
 ### 整体框架
 
-StreamSplat 维持一个正则高斯集合 $\tilde{\mathcal{G}}(t)$，对每一帧输入执行：编码→预测双向形变→自适应融合→渲染的流水线。采用两阶段训练：先训练静态编码器，再冻结编码器训练动态解码器。
+StreamSplat 把"在线动态重建"做成一条纯前馈流水线：它维持一个正则空间里的高斯集合 $\tilde{\mathcal{G}}(t)$，每来一帧就把当前帧编码成新高斯、预测它与相邻帧之间的双向形变，再用时间依赖的不透明度把新旧高斯自适应融合后直接渲染，全程不需要相机标定、也不回看整段视频。训练分两阶段：先单独训练静态编码器学好单帧的高斯与深度，再冻结它训练负责跨帧运动的动态解码器，让运动建模和外观重建解耦。
 
 ### 关键设计
 
-1. **概率位置采样 (Probabilistic Position Sampling)**
+**1. 概率位置采样：缓解前馈 3DGS 的局部最优。**
 
-   针对3DGS对位置初始化敏感且前馈模型容易陷入局部最优的问题，本文预测每个3D偏移的截断正态分布而非直接回归：
+3DGS 对高斯位置的初始化极其敏感，而前馈模型一次性回归位置很容易卡在局部最优。StreamSplat 因此不直接回归坐标，而是为每个 3D 偏移预测一个截断正态分布并从中采样：$\boldsymbol{o} \sim \mathcal{N}_{[-1,1]}(\boldsymbol{\mu}_p, \boldsymbol{\Sigma}_p)$，再以像素对齐的方式还原出最终位置 $\boldsymbol{\mu}_i = (u_i + o_{i,0},\; v_i + o_{i,1},\; g(o_{i,2}))$，其中深度映射 $g(z) = 2/(1+z)$。采样带来的随机性让模型在训练初期充分探索空间、后期再收敛到稳定的最优位置——消融实验里去掉它会让 PSNR 直接掉 6.36dB，是三个设计中收益最大的一个。
 
-    $\boldsymbol{o} \sim \mathcal{N}_{[-1,1]}(\boldsymbol{\mu}_p, \boldsymbol{\Sigma}_p)$
+**2. 双向形变场：稳健地关联相邻帧并处理高斯增删。**
 
-   最终3D位置通过像素对齐预测得到：$\boldsymbol{\mu}_i = (u_i + o_{i,0},\; v_i + o_{i,1},\; g(o_{i,2}))$，其中 $g(z) = 2/(1+z)$ 为深度映射。该策略在训练初期促进空间探索，后期稳定收敛到最优位置。消融实验显示，概率采样比确定性预测提升6.36dB PSNR。
+传统做法是对每一帧都重新实例化高斯再迭代优化，这种逐场景优化天然不适配前馈框架。StreamSplat 改为联合建模前后两个方向的运动：前向场把上一帧高斯 $\mathcal{G}_{t-1}$ 形变到当前时刻 $t$，后向场再把当前帧高斯 $\mathcal{G}_t$ 形变回 $t-1$。这种对称结构提供了稳健的跨帧对应关系，能自然地表达高斯的出现与消失，也让端到端训练里"预测什么、用什么监督"变得对称而清晰，从而省去逐帧迭代。
 
-2. **双向形变场 (Bidirectional Deformation Field)**
+**3. 自适应高斯融合：用时间依赖不透明度实现软匹配。**
 
-   传统方法对每帧实例化新高斯并迭代优化，难以适配前馈模型。本文联合建模前后向运动：前向场将上一帧高斯 $\mathcal{G}_{t-1}$ 变形到当前时间 $t$，后向场将当前帧高斯 $\mathcal{G}_t$ 变形回 $t-1$。这种对称设计：
-    - 提供稳健的跨帧关联
-    - 自然处理出现/消失的高斯
-    - 简化端到端训练的预测和监督
-
-3. **自适应高斯融合 (Adaptive Gaussian Fusion)**
-
-   通过时间依赖的不透明度调制实现软匹配融合，每个高斯在两个连续帧间持续存在：
-
-    $\alpha(t) = \alpha \cdot \frac{\sigma(-\gamma_0(|t - t_0| - \gamma_1))}{\sigma(\gamma_0 \cdot \gamma_1)}$
-
-   其中 $t_0$ 为高斯创建帧，$\gamma_0$ 控制过渡速率，$\gamma_1$ 控制淡出窗口。该机制隐式融合前后向高斯：重建损失诱导软匹配，传播持久高斯同时处理出现/消失的高斯，无需硬分配或迭代融合即可维持时序一致性。
+要在线维持时序一致性，就得决定每个高斯何时出现、何时淡出，硬性分配或迭代融合都既慢又脆。StreamSplat 让每个高斯的不透明度随时间调制：$\alpha(t) = \alpha \cdot \frac{\sigma(-\gamma_0(|t - t_0| - \gamma_1))}{\sigma(\gamma_0 \cdot \gamma_1)}$，其中 $t_0$ 是该高斯被创建的帧，$\gamma_0$ 控制过渡速率，$\gamma_1$ 控制淡出窗口宽度。这样前后向高斯被隐式融合：重建损失会诱导出软匹配，持久的高斯被自然传播、出现或消失的高斯则随不透明度平滑增减，无需任何硬分配或迭代融合即可保持帧间一致。
 
 ### 损失函数 / 训练策略
 
@@ -145,8 +134,8 @@ $$\mathcal{L}_{\text{dynamic}} = \mathbb{E}_t[\mathcal{L}_{\text{recon}} + \lamb
 - [\[CVPR 2026\] OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery](../../CVPR2026/3d_vision/onlinehmr_video-based_online_world-grounded_human_mesh_recovery.md)
 - [\[ICLR 2026\] Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator](text-to-3d_by_stitching_a_multi-view_reconstruction_network_to_a_video_generator.md)
 - [\[CVPR 2026\] OnlinePG: Online Open-Vocabulary Panoptic Mapping with 3D Gaussian Splatting](../../CVPR2026/3d_vision/onlinepg_online_open-vocabulary_panoptic_mapping_with_3d_gaussian_splatting.md)
+- [\[ICCV 2025\] Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction](../../ICCV2025/3d_vision/dynamic_point_maps_a_versatile_representation_for_dynamic_3d_reconstruction.md)
 - [\[CVPR 2025\] ODHSR: Online Dense 3D Reconstruction of Humans and Scenes from Monocular Videos](../../CVPR2025/3d_vision/odhsr_online_dense_3d_reconstruction_of_humans_and_scenes_from_monocular_videos.md)
-- [\[NeurIPS 2025\] OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects](../../NeurIPS2025/3d_vision/onlinesplatter_pose-free_online_3d_reconstruction_for_free-moving_objects.md)
 
 </div>
 

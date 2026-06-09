@@ -42,33 +42,33 @@ tags:
 
 ### 整体框架
 
-输入是带噪声的训练数据集 + 验证数据集 + 预训练 LLM。五阶段流程：(1) 注入合成噪声到训练数据；(2) 在噪声数据上 fine-tune，选最佳 checkpoint；(3) 在所有可调层上计算 influence 值；(4) 将模型分为 WE（embedding）、4 组 attention 层、CL（分类头），聚合每个训练样本的 influence；(5) 删除 30% 最低 influence 样本后重训，用测试准确率评估效果。
+这篇论文不提新的 influence 算法，而是搭一套受控实验来回答"该用哪一层、该怎么聚合"。整条流水线围绕一个可验证的信号展开：先往训练集里注入已知的合成噪声（标签翻转），那么一个好的 influence 方法理应把这些被污染的样本排到最末尾。具体地，先在带噪数据上做 LoRA fine-tune 并在验证 loss 最低处取 checkpoint，再对所有可调层逐层算出每个训练样本的 influence；模型被切成三类层组——词嵌入层 WE、四组 attention 层、分类头 CL——分别在层组内聚合出每个训练样本的总 influence；最后删掉 influence 最低的 30% 样本重训，用测试准确率回过头来评判"这层 + 这种聚合"到底好不好。整个方法贡献分两块：先从理论上拆掉旧结论赖以成立的指标，再给出更稳的聚合策略和一个免重训的评估代理。
 
 ### 关键设计
 
-1. **Cancellation Effect 的理论反驳**
+**1. Cancellation Effect 的理论反驳：先证明旧的层选择指标根本不可靠。**
 
-    - 功能：证明 Yeh et al. 的 cancellation effect 作为层选择指标是不可靠的。
-    - 核心思路：Theorem 5.1 构造了一个反例：存在验证点 $\bar{x}_3$ 使得包含高 cancellation 权重 $\omega$ 的 influence 分数 $\Delta I_{\theta,\omega}$ 比只用低 cancellation 权重 $\theta$ 的 $\Delta I_{\theta}$ 对噪声/干净样本的区分度更大。Spearman 相关性分析也显示 $C$ 与下游性能几乎无关（$\rho$ 接近 0）。
-    - 设计动机：直接挑战该领域的基础假设，为重新评估层选择打开大门。
+Yeh et al. (2022) 之所以推崇 embedding 层，靠的是 cancellation effect 指标 $C(W)$——它用参数子集梯度的 norm 聚合来衡量"梯度互相抵消"的程度，并默认抵消越少的层越适合估计 influence。本文用 Theorem 5.1 直接构造反例：存在一个验证点 $\bar{x}_3$，使得保留了高 cancellation 权重 $\omega$ 的 influence 分数 $\Delta I_{\theta,\omega}$ 反而比只用低 cancellation 权重 $\theta$ 的 $\Delta I_{\theta}$ 更能区分噪声样本和干净样本。换句话说，高抵消的参数并非没用，norm 聚合却把个别参数上的极端抵消给平均掉了。配合 Spearman 相关性分析——$C$ 与真实下游性能的 $\rho$ 接近 0——理论和数据一起说明：cancellation effect 既不能解释为什么 embedding 层好，也无法预测哪层真正好，这就为重新评估层选择腾出了空间。
 
-2. **Rank 聚合策略**
+**2. Rank 聚合：用排名消掉跨层量纲差异。**
 
-    - 功能：用排名代替原始 influence 分数来跨层聚合，消除极端值的支配效应。
-    - 核心思路：每个验证样本和每个层对训练样本按 influence 分数排序，将排名求和（$\operatorname{Rank}(I') = \sum_{x',l} \sum_{y} \mathbb{I}(I'(y,...) < I'(\cdot,...))$），且只考虑被正确预测的验证样本。
-    - 设计动机：标准均值聚合中，不同层的 influence 量纲差异大，少数极端值可能主导结果。排名消除了量纲影响。
+标准做法是把各层的 influence 分数直接取均值，但不同层的分数量纲差异极大，少数极端值会主导整个均值，让聚合结果失真。Rank 把原始分数换成排名再聚合：对每个验证样本、每一层，先按 influence 给训练样本排序，然后把排名累加起来
 
-3. **Vote（位置投票）聚合策略**
+$$\operatorname{Rank}(I') = \sum_{x',l} \sum_{y} \mathbb{I}(I'(y,\cdot) < I'(\cdot,\cdot))$$
 
-    - 功能：每个验证样本/层对排名最低的 $k$ 个训练样本投票，投票数按排名递减。
-    - 核心思路：$\operatorname{Vote}_k(I') = -\sum_{x',l} \max(k - \operatorname{rank}, 0)$，选择 $k$ 等于要过滤的训练样本数。只有排在最底部的样本获得投票，避免中间排名的噪声影响。
-    - 设计动机：Rank 方法仍受极低/极高排名的影响，Vote 通过截断只关注最有害的样本。实验表明 $k \in [10, 50]$ 效果最好。
+并且只统计那些被模型正确预测的验证样本（避免错判的验证点带来误导信号）。排名是序数量，天然不受量纲影响，一个分数再极端，也只占一个名次，从而压住了极端值的支配效应。
 
-4. **Noise Detection Rate (NDR) proxy 指标**
+**3. Vote（位置投票）聚合：只盯排名最末尾的样本。**
 
-    - 功能：提出一个不需要重训练就能评估 influence 方法的 proxy 指标。
-    - 核心思路：NDR 衡量在 influence 排名末尾 $k\%$ 的样本中噪声样本占比。AUC 衡量噪声在整个排名中的分布偏斜度。与 cancellation effect 的相关性几乎为零不同，NDR 与实际下游性能有 0.5-0.9 的 Spearman 相关性。
-    - 设计动机：避免每次评估新 influence 方法都需要昂贵的重训练实验。
+Rank 虽然消了量纲，但全程的排名（包括中间那一大批无关样本）仍会进入求和，极低和极高的名次都还有影响。Vote 干脆做截断——每个验证样本/层只给排名最末的 $k$ 个训练样本投票，且投票权重随名次递减：
+
+$$\operatorname{Vote}_k(I') = -\sum_{x',l} \max(k - \operatorname{rank}, 0)$$
+
+$k$ 直接取成"想过滤掉的训练样本数"，于是只有真正排在底部、最像有害样本的那些才会被记票，中段排名的噪声被完全忽略。这种"只关心最坏的一撮"的设计让原本不可用的配置也能翻身，实验里 $k \in [10, 50]$ 区间效果最好。
+
+**4. Noise Detection Rate (NDR) 代理指标：不重训也能评估一个 influence 方法好不好。**
+
+前面三点都依赖"删样本→重训→看准确率"这条昂贵的回路，每评估一种新方法都要重训一遍。NDR 把这条回路短路掉：它直接量在 influence 排名末尾 $k\%$ 的样本里，注入噪声样本占了多少比例（占比越高，说明这套方法越能把坏样本沉到底）；配套的 AUC 则衡量噪声在整条排名上的分布偏斜度。和 cancellation effect 那种与下游性能几乎零相关的情况相反，NDR 与真实下游性能的 Spearman 相关性能到 0.5–0.9，因此可以当作免重训的可靠代理，大幅压低评估成本。
 
 ### 损失函数 / 训练策略
 
@@ -139,10 +139,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Evaluating Text Creativity across Diverse Domains: A Dataset and Large Language Model Evaluator](evaluating_text_creativity_across_diverse_domains_a_dataset_and_large_language_m.md)
+- [\[NeurIPS 2025\] The Last Vote: A Multi-Stakeholder Framework for Language Model Governance](../../NeurIPS2025/llm_nlp/the_last_vote_a_multi-stakeholder_framework_for_language_model_governance.md)
 - [\[ACL 2025\] Evaluating Language Models as Synthetic Data Generators](../../ACL2025/llm_nlp/evaluating_lms_synthetic_data_gen.md)
 - [\[ACL 2025\] Wait, that's not an option: LLMs Robustness with Incorrect Multiple-Choice Options](../../ACL2025/llm_nlp/llm_robustness_incorrect_mcq.md)
 - [\[ACL 2025\] Training Language Model to Critique for Better Refinement](../../ACL2025/llm_nlp/training_language_model_to_critique_for_better_refinement.md)
-- [\[ICLR 2026\] Weight Decay may matter more than μP for Learning Rate Transfer in Practice](weight_decay_may_matter_more_than_mup_for_learning_rate_transfer_in_practice.md)
 
 </div>
 

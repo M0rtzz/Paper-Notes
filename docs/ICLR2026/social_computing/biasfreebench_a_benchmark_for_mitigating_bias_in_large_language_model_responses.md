@@ -41,41 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BiasFreeBench 的设计包含三个核心组件：(1) 8 种去偏技术的统一实现（4 prompting + 4 training）；(2) 两个测试场景的统一 query-response 格式化（BBQ 单轮 QA + FairMT-Bench 多轮对话）；(3) 响应级指标 Bias-Free Score（BFS）。整体流程是：给定查询 → LLM 生成响应 → 用 GPT-4o-mini + LlamaGuard + Moderation API 三方投票判断响应偏差 → 计算 BFS。
+BiasFreeBench 不是提出新的去偏方法，而是搭一个能把现有方法放在同一张考卷上比较的统一基准。它把三件事拼到一起：先收集 8 种主流去偏技术（4 种 prompting + 4 种 training）并用一致的方式实现；再把两个偏差数据集统一重写成 query-response 格式——BBQ 是单轮 QA、FairMT-Bench 是多轮对话，这样所有方法都在"用户提问、模型作答"这个真实使用场景下受测；最后用一个响应级指标 Bias-Free Score（BFS）打分。一条完整的测评流水线是：给定查询 → 被测 LLM 生成响应 → 用 GPT-4o-mini + LlamaGuard + Moderation API 三方投票判断这条响应是否有偏 → 汇总成 BFS。
 
 ### 关键设计
 
-1. **四种 Prompting 去偏方法**
+**1. 四种 Prompting 去偏方法：在不改参数的前提下用上下文压制偏见。**
 
-    - **Self-Awareness**：在查询末尾加入偏差类型提示（如"注意避免性别偏见"），让模型在回答时意识到偏差。优点是零额外计算开销
-    - **Self-Reflection**：先让 LLM 生成初始回答，再用指令要求其反思并去除偏差、重新生成。类似 agent 中的 reflection 机制
-    - **Self-Help**：让 LLM 先重写可能含偏差的查询，用净化后的查询在新 session 中重新获取回答。需要两次前向传播
-    - **CoT（Chain-of-Thought）**：指示模型进行逐步推理以避免偏差回答。通过暴露推理过程来减少偏差
+这一类方法都靠在输入端做文章，零训练成本。Self-Awareness 最轻量，只在查询末尾加一句偏差类型提示（如"注意避免性别偏见"），让模型作答时主动意识到该回避哪类偏差，没有任何额外前向开销。Self-Reflection 借用 agent 里的反思机制，先让 LLM 生成初始回答，再用一条指令要求它检查并去除其中的偏差、重新作答。Self-Help 更彻底，先让 LLM 把可能带偏的查询本身改写干净，再拿净化后的查询在一个新 session 里重新提问，因此需要两次前向传播。CoT 则指示模型逐步推理后再回答，通过把推理过程显式暴露出来削弱偏差倾向。
 
-2. **四种 Training 去偏方法**
+**2. 四种 Training 去偏方法：通过改参数把无偏行为固化进模型。**
 
-    - **SFT**：在反刻板印象数据上微调，直接学习无偏响应模式
-    - **DPO**：构造偏好对（反刻板印象为正例、刻板印象为负例），学习区分安全/不安全行为。比 SFT 多了"对比学习"的信号
-    - **Safe RLHF**：两阶段流程——先训练 reward model (有用性) 和 cost model (无害性)，再用约束优化训练 LLM 同时满足两个目标
-    - **Task Vector**：先用 SFT 训练出有偏模型 $\theta_{\text{biased}}$，计算偏差向量 $\tau = \theta_{\text{biased}} - \theta_{\text{pre}}$，然后反向更新 $\theta_{\text{biasfree}} = \theta_{\text{pre}} - \tau$，"减去"偏差
+这一类需要真正训练模型。SFT 直接在反刻板印象数据上微调，让模型模仿无偏的响应模式。DPO 在 SFT 之上多了一层对比信号：把反刻板印象回答当正例、刻板印象回答当负例构造偏好对，让模型学会区分安全与不安全行为。Safe RLHF 走两阶段——先分别训出衡量有用性的 reward model 和衡量无害性的 cost model，再用约束优化让 LLM 同时满足"有用"和"无害"两个目标。Task Vector 则是参数空间里的"减法"：先用 SFT 故意训出一个有偏模型 $\theta_{\text{biased}}$，算出偏差方向 $\tau = \theta_{\text{biased}} - \theta_{\text{pre}}$，再从预训练权重里反向减掉这个方向得到 $\theta_{\text{biasfree}} = \theta_{\text{pre}} - \tau$，相当于把偏差当作一个可分离的向量直接抹去。
 
-3. **Bias-Free Score (BFS) 指标**
+**3. Bias-Free Score（BFS）：直接量化用户真正看到的那条回答是否无偏。**
 
-    - 功能：直接衡量 LLM 响应中无偏/安全/反刻板印象回答的比例
-    - BBQ 数据集上的 BFS：$\text{BFS}_{\text{BBQ}} = \frac{N_{\text{anti-stereo}} + N_{\text{unknown}}}{N_{\text{total}}}$，其中 unknown 包括"信息不足无法判断"等安全回答
-    - FairMT-Bench 上的 BFS：$\text{BFS}_{\text{FairMT}} = \frac{N_{\text{unbiased}}}{N_{\text{total}}}$
-    - 设计动机：与概率级指标不同，BFS 直接反映用户实际看到的输出是否公平安全
+这是本文衡量去偏效果的核心指标，刻意区别于 StereoSet 那类概率级评估——它不去比有偏/无偏上下文的 likelihood，而是直接统计模型响应里无偏、安全、反刻板印象回答所占的比例，因为用户实际接触的是输出文本而非概率分布。在 BBQ 上，安全回答既包括明确给出反刻板印象答案，也包括"信息不足无法判断"这类拒绝臆断的回答：
 
-4. **评估流程（三方投票）**
+$$\text{BFS}_{\text{BBQ}} = \frac{N_{\text{anti-stereo}} + N_{\text{unknown}}}{N_{\text{total}}}$$
 
-    - 功能：对 LLM 响应进行偏差分类
-    - 使用 GPT-4o-mini（3 次投票取多数）、LlamaGuard-3-8B 和 OpenAI Moderation API 三个评判器
-    - 人工验证显示：BBQ 上与人类判断 100% 一致（Cohen's kappa=1.0），FairMT-Bench 上 94% 一致（kappa=0.7）
+在多轮的 FairMT-Bench 上则直接看无偏响应的占比：
+
+$$\text{BFS}_{\text{FairMT}} = \frac{N_{\text{unbiased}}}{N_{\text{total}}}$$
+
+BFS 越高代表去偏越成功，且因为是响应级度量，它能直接反映方法在真实部署中的表现。
+
+**4. 三方投票的评估流程：用多个判官交叉裁定一条响应是否有偏。**
+
+要算 BFS 就得先给每条响应贴上"有偏/无偏"标签，本文不靠单一判官，而是让 GPT-4o-mini（投票 3 次取多数）、LlamaGuard-3-8B 和 OpenAI Moderation API 三方共同裁定，降低单个判官自身偏差带来的误判。这套流程经过人工核对：在 BBQ 上与人类判断完全一致（Cohen's kappa=1.0），在更复杂的 FairMT-Bench 上一致率 94%（kappa=0.7），说明自动评估足够可靠。
 
 ### 训练数据
-- 使用 StereoSet 的 intersentence 部分作为 SFT/DPO/Task Vector 的训练数据
-- 每个样本包含：上下文（查询）、刻板印象回答、反刻板印象回答
-- Safe RLHF 使用专门的 helpfulness/harmlessness 数据集
+SFT、DPO、Task Vector 三种 training 方法都用 StereoSet 的 intersentence 部分作训练数据，每个样本含三要素：作为查询的上下文、刻板印象回答、反刻板印象回答——正好满足偏好对构造的需要。Safe RLHF 因为要同时学有用性和无害性，另外使用专门的 helpfulness/harmlessness 数据集。
 
 ## 实验关键数据
 
@@ -141,10 +136,10 @@ BiasFreeBench 的设计包含三个核心组件：(1) 8 种去偏技术的统一
 ## 相关论文
 
 - [\[ICML 2025\] OR-Bench: An Over-Refusal Benchmark for Large Language Models](../../ICML2025/social_computing/or-bench_an_over-refusal_benchmark_for_large_language_models.md)
+- [\[ICLR 2026\] Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
 - [\[NeurIPS 2025\] Any Large Language Model Can Be a Reliable Judge: Debiasing with a Reasoning-based Bias Detector](../../NeurIPS2025/social_computing/any_large_language_model_can_be_a_reliable_judge_debiasing_w.md)
 - [\[ACL 2025\] Translate With Care: Addressing Gender Bias, Neutrality, and Reasoning in Large Language Model Translations](../../ACL2025/social_computing/translate_with_care_addressing_gender_bias_neutrality_and_reasoning_in_large_lan.md)
 - [\[ICLR 2026\] Propaganda AI: An Analysis of Semantic Divergence in Large Language Models](propaganda_ai_an_analysis_of_semantic_divergence_in_large_language_models.md)
-- [\[ICLR 2026\] Scalable Multi-Task Low-Rank Model Adaptation](scalable_multi-task_low-rank_model_adaptation.md)
 
 </div>
 

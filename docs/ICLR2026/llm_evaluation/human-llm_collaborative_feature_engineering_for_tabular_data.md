@@ -43,28 +43,25 @@ tags:
 
 ### 整体框架
 
-每轮特征工程中：(1) LLM基于任务描述、特征语义和历史性能生成$N$个候选特征变换操作；(2) 贝叶斯神经网络（BNN）代理模型估计每个操作的期望效用$\mu_t(e)$和不确定性$\sigma_t^2(e)$；(3) 使用UCB策略选择操作，当满足条件时选择性查询人类偏好反馈；(4) 评估选中操作的实际效用并更新代理模型。
+方法把每一轮特征工程拆成"提议"和"选择"两件事：LLM 只负责根据任务描述、特征语义和历史性能生成 $N$ 个候选特征变换操作，真正决定用哪个操作则交给一个贝叶斯神经网络（BNN）代理模型——它为每个候选估计期望效用 $\mu_t(e)$ 和不确定性 $\sigma_t^2(e)$，再由 UCB 策略挑选。当代理模型自己也拿不准时，框架才选择性地向人类专家请教一次偏好，评估实际效用后更新模型，进入下一轮。
 
 ### 关键设计
 
-1. **特征操作编码与BNN代理模型**:
-    - 做什么：将LLM生成的自然语言特征操作映射为向量表示，并用贝叶斯神经网络估计效用
-    - 核心思路：操作嵌入由语义嵌入$\phi_{\text{embedding}}(e)$（text-embedding-3-small）和列使用编码$\phi_{\text{column}}(e) \in \{0,1\}^d$拼接而成。BNN通过变分推断学习参数后验$q_t(\boldsymbol{\theta}) = \mathcal{N}(\boldsymbol{\theta}; \boldsymbol{M}_t, \boldsymbol{\Sigma}_t)$，提供预测均值$\mu_t(e)$和方差$\sigma_t^2(e)$
-    - 设计动机：GP在高维语言派生特征空间中扩展性差，BNN更适合建模非平稳性；列使用编码解决了多列语义描述相似时的歧义问题
+**1. 特征操作编码与 BNN 代理模型：把 LLM 的隐式选择换成可校准的显式估计。**
 
-2. **选择性人类偏好反馈机制**:
-    - 做什么：在UCB选出最优候选$e_t^a$后，决定是否向人类专家查询偏好反馈
-    - 核心思路：需同时满足两个条件才触发查询——(C1) 置信区间重叠：$\text{UCB}_t(e_t^b) > \text{LCB}_t(e_t^a)$，确保存在不确定性空间；(C2) 不确定性足够大：$\sqrt{\beta_t}(\sigma_t(e_t^a) + \sigma_t(e_t^b)) \geq \gamma_\kappa$，确保潜在收益大于查询成本
-    - 设计动机：无差别查询会产生不必要的认知负担，仅在反馈能带来显著效用增益时才值得请求人类介入
+现有方法让 LLM 既提议又选择，等于把"哪个操作更好"完全交给语言模型的内部启发式，既无法量化效用也无法表达不确定性。本文改用一个 BNN 作为代理模型来打分。难点在于 LLM 生成的操作是自然语言，需要先编码成向量：每个操作的嵌入由语义嵌入 $\phi_{\text{embedding}}(e)$（来自 text-embedding-3-small）和列使用编码 $\phi_{\text{column}}(e) \in \{0,1\}^d$ 拼接而成，后者用一个 one-hot 向量标记该操作动了哪些列，专门化解多列语义描述相似时"光看文字分不清谁是谁"的歧义。BNN 通过变分推断学习参数后验 $q_t(\boldsymbol{\theta}) = \mathcal{N}(\boldsymbol{\theta}; \boldsymbol{M}_t, \boldsymbol{\Sigma}_t)$，从而同时给出预测均值 $\mu_t(e)$ 和方差 $\sigma_t^2(e)$。之所以不用经典贝叶斯优化里的高斯过程，是因为 GP 在这种高维、语言派生的特征空间里扩展性差，而 BNN 更能拟合其中的非平稳结构。
 
-3. **基于偏好反馈的后验更新**:
-    - 做什么：将人类偏好反馈$Z_t$融入代理模型的后验分布
-    - 核心思路：偏好反馈通过probit似然建模$\mathcal{P}(Z_t | \boldsymbol{\theta}, e_t^a, e_t^b) = \Phi(\eta Z_t [\hat{g}(\phi(e_t^a); \boldsymbol{\theta}) - \hat{g}(\phi(e_t^b); \boldsymbol{\theta})])$，更新变分后验$q_t'(\boldsymbol{\theta})$后用新UCB值做最终选择
-    - 设计动机：概率化处理人类反馈比直接采信更鲁棒，能平滑噪声反馈
+**2. 选择性人类偏好反馈机制：只在值得问的时候才打扰专家。**
+
+引入人类反馈能纠正代理模型的偏差，但每轮都问会带来沉重的认知负担。框架因此在 UCB 选出最优候选 $e_t^a$、次优候选 $e_t^b$ 后，只有同时满足两个条件才触发一次查询：其一是置信区间重叠 $\text{UCB}_t(e_t^b) > \text{LCB}_t(e_t^a)$，说明二者孰优孰劣尚有不确定空间；其二是不确定性足够大 $\sqrt{\beta_t}(\sigma_t(e_t^a) + \sigma_t(e_t^b)) \geq \gamma_\kappa$，说明这次提问能带来的潜在收益超过查询成本 $\gamma_\kappa$（取 4）。两个门控合起来保证：只有当人类反馈确实能带来显著效用增益时才请专家介入，把宝贵的人力花在刀刃上。
+
+**3. 基于偏好反馈的后验更新：用概率方式而非全盘采信地吸收人类意见。**
+
+拿到人类对 $e_t^a$ 与 $e_t^b$ 的偏好 $Z_t$ 后，框架不会直接照着选，而是把它当作一次观测融进后验。偏好通过 probit 似然建模为 $\mathcal{P}(Z_t | \boldsymbol{\theta}, e_t^a, e_t^b) = \Phi(\eta Z_t [\hat{g}(\phi(e_t^a); \boldsymbol{\theta}) - \hat{g}(\phi(e_t^b); \boldsymbol{\theta})])$，据此把变分后验更新为 $q_t'(\boldsymbol{\theta})$，再用更新后的 UCB 值做最终决策。这样处理的好处是对噪声反馈更鲁棒——人类偶尔判断失误时，概率化的吸收方式会平滑掉错误，而不是被单次反馈带偏。
 
 ### 损失函数 / 训练策略
 
-BNN通过最小化ELBO训练：$\text{KL}(q_t(\boldsymbol{\theta}) \| \mathcal{P}(\boldsymbol{\theta})) - \mathbb{E}_{q_t(\boldsymbol{\theta})}[\log \mathcal{P}(H_t | \boldsymbol{\theta})]$。UCB选择系数$\beta_t = 2\log(|\mathcal{S}_t|\pi^2 t^2 / 3\delta)$，$\delta=0.1$。人类查询成本$\gamma_\kappa=4$。
+BNN 通过最小化 ELBO 训练，目标为 $\text{KL}(q_t(\boldsymbol{\theta}) \| \mathcal{P}(\boldsymbol{\theta})) - \mathbb{E}_{q_t(\boldsymbol{\theta})}[\log \mathcal{P}(H_t | \boldsymbol{\theta})]$，即在拟合历史观测 $H_t$ 与贴近先验之间取平衡。UCB 的探索系数取 $\beta_t = 2\log(|\mathcal{S}_t|\pi^2 t^2 / 3\delta)$，其中 $\delta=0.1$，随轮次 $t$ 增长以保持探索；人类查询成本阈值 $\gamma_\kappa=4$。
 
 ## 实验关键数据
 
@@ -122,11 +119,11 @@ BNN通过最小化ELBO训练：$\text{KL}(q_t(\boldsymbol{\theta}) \| \mathcal{P
 
 ## 相关论文
 
-- [\[ICLR 2026\] TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
-- [\[NeurIPS 2025\] CLIMB: Class-Imbalanced Learning Benchmark on Tabular Data](../../NeurIPS2025/llm_evaluation/climb_class-imbalanced_learning_benchmark_on_tabular_data.md)
+- [\[NeurIPS 2025\] Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](../../NeurIPS2025/llm_evaluation/toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)
+- [\[ECCV 2024\] Image-Feature Weak-to-Strong Consistency: An Enhanced Paradigm for Semi-Supervised Learning](../../ECCV2024/llm_evaluation/image-feature_weak-to-strong_consistency_an_enhanced_paradigm_for_semi-supervise.md)
+- [\[ICLR 2026\] In-Context Learning for Pure Exploration](in-context_learning_for_pure_exploration.md)
 - [\[ACL 2026\] TabReX: Tabular Referenceless eXplainable Evaluation](../../ACL2026/llm_evaluation/tabrex_tabular_referenceless_explainable_evaluation.md)
-- [\[ACL 2026\] HumanLLM: Benchmarking and Improving LLM Anthropomorphism via Human Cognitive Patterns](../../ACL2026/llm_evaluation/humanllm_benchmarking_and_improving_llm_anthropomorphism_via_human_cognitive_pat.md)
-- [\[ACL 2025\] ELABORATION: A Comprehensive Benchmark on Human-LLM Competitive Programming](../../ACL2025/llm_evaluation/elaboration_competitive_programming.md)
+- [\[ICLR 2026\] In-Context Learning of Temporal Point Processes with Foundation Inference Models](in-context_learning_of_temporal_point_processes_with_foundation_inference_models.md)
 
 </div>
 

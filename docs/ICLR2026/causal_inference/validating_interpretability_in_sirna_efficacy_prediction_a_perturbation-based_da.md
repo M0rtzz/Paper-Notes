@@ -42,30 +42,19 @@ tags:
 
 ### 整体框架
 
-训练：Conv→BiLSTM→Transformer 混合编码器 + 双向交叉注意力（siRNA↔mRNA）+ MLP 预测头 + BioPrior 可微生物正则化。验证：计算梯度显著性 → 选 top-k 位置 → 计算 expected-effect → 与组成匹配的随机基线比较 → 统计检验。
+模型主干是一个 Conv→BiLSTM→Transformer 混合编码器，配上 siRNA 与 mRNA 之间的双向交叉注意力和 MLP 预测头，并由 BioPrior 可微生物正则化引导训练。真正的创新不在网络结构，而在于训练完成后那套"合成前关卡"：先对每个核苷酸位置算梯度显著性，挑出 top-k 高显著位置，扰动它们度量模型敏感度，再和组成匹配的随机对照做统计比较，最后给出一个干脆的 pass/fail 判定，并在跨数据集迁移时把失败归入预设的几种类型。
 
 ### 关键设计
 
-1. **反事实忠实性验证协议**:
+**1. 反事实忠实性验证协议：把"显著性是否可信"变成一道可统计检验的关卡。** 显著性图在 siRNA 领域被大量用来推断"哪些位置重要"，却几乎从不被验证——一张看起来合理的图，可能根本反映不了模型真实的敏感度。本文的做法是定义一个 expected-effect 扰动算子：对位置 $i$，把它换成另外 3 种碱基，取预测变化的平均幅度 $\Delta_i = \frac{1}{3}\sum_{b \neq x_i} |\hat{y}(\mathbf{X}) - \hat{y}(\mathbf{X}^{i \leftarrow b})|$。相比标准 ISM 只做单次突变，平均三种替代能消掉特定碱基的偶然效应。随后挑出 top-k 显著位置算其平均敏感度 $\Delta(T)$，并与一组**核苷酸组成匹配**的随机位置基线 $\Delta_{match}$ 对照——匹配组成是为了剔除"某些碱基天生更敏感"这一混淆，保证比较的是显著性挑位置的能力而非碱基偏好。只有当配对检验同时满足 $p < 0.05$、效应量 $d_z > 0.2$、win rate $> 50\%$ 三个条件时才判 pass，从而把模糊的"图看着对"压成一条明确的部署前合格线。
 
-    - **功能**：测试高显著性位置的模型敏感度是否高于匹配对照
-    - **核心思路**：$\Delta_i = \frac{1}{3}\sum_{b \neq x_i} |\hat{y}(\mathbf{X}) - \hat{y}(\mathbf{X}^{i \leftarrow b})|$ 计算每个位置的 expected-effect。选 top-k 位置，比较 $\Delta(T)$ 与核苷酸组成匹配的随机基线 $\Delta_{match}$。pass 条件：p < 0.05 且 $d_z > 0.2$ 且 win rate > 50%
-    - **设计动机**：与标准 ISM 的区别：(1) expected-effect 操作符而非单次突变；(2) 组成匹配基线控制核苷酸特异性偏差；(3) 显式 pass/fail 标准；(4) 跨数据集诊断分类
+**2. BioPrior 生物信息正则化：用已知设计规则把模型往真实机制上拉。** 即便预测精度达标，模型也可能靠错误的统计捷径学到敏感度，导致显著性不忠实。BioPrior 把成熟的 siRNA 设计经验编码成一组可微惩罚项——热力学不对称性、种子区组成约束、全局 GC 含量启发式、免疫刺激基序回避、双链稳定性代理——汇总为 $\mathcal{L}_{bio} = \sum_c \bar{\alpha}_c \mathcal{L}_c$。这些约束让模型偏好与已知机制一致的特征，使学到的敏感度落在生物上可解释的区域（实验中高显著位置确实聚集在种子区和 3' 端），从而间接抬高显著性的忠实性。
 
-2. **BioPrior 生物信息正则化**:
-
-    - **功能**：将已知 siRNA 设计规则编码为可微惩罚项
-    - **核心规则**：热力学不对称性、种子区组成约束、全局 GC 启发式、免疫基序回避、双链稳定性代理。$\mathcal{L}_{bio} = \sum_c \bar{\alpha}_c \mathcal{L}_c$
-    - **设计动机**：生物先验使模型学到的特征更符合已知机制，从而提升显著性忠实性
-
-3. **迁移失败模式分类学**:
-
-    - **faithful-but-wrong**：显著性测试通过但预测失败（模型内部一致但学了错误规则）
-    - **inverted saliency**：高显著性位置的敏感度反而低于随机（$d_z < 0$）——这是烟幕弹失败
+**3. 迁移失败模式分类学：给"在新数据集上崩掉"的方式起名字。** 跨实验方案迁移是显著性悄悄失效的高发区，本文把观测到的失败归成两类可诊断的类型。一类是 *faithful-but-wrong*：忠实性测试通过，但预测本身失败——模型内部自洽，却学了一条错误的规则，显著性"如实"地反映了这条错规则。另一类是 *inverted saliency*：高显著性位置的敏感度反而**低于**随机对照（效应量 $d_z < 0$，如 Taka→Hu 迁移时 $d_z = -1.25$），相当于显著性图放了烟幕弹，把注意力引向了模型其实并不敏感的位置。有了这套命名，跨数据集诊断就从"性能下降"细化为可定位的失败机制。
 
 ### 损失函数 / 训练策略
 
-$\mathcal{L}_{total} = \mathcal{L}_{pred} + \lambda(t) \mathcal{L}_{bio} + \lambda_{aux} \mathcal{L}_{aux}$，其中 $\lambda(t)$ 使用 warmup+ramp 调度（8 epoch 后从 0.10 线性增长到 0.30），先学预测特征再逐步引入生物正则化。
+总目标为 $\mathcal{L}_{total} = \mathcal{L}_{pred} + \lambda(t)\,\mathcal{L}_{bio} + \lambda_{aux}\,\mathcal{L}_{aux}$。其中生物正则化权重 $\lambda(t)$ 采用 warmup+ramp 调度：前 8 个 epoch 让模型先专注学预测特征，之后再把权重从 0.10 线性升到 0.30，逐步引入生物先验，避免一开始就用强约束干扰预测能力的形成。
 
 ## 实验关键数据
 
@@ -124,9 +113,9 @@ $\mathcal{L}_{total} = \mathcal{L}_{pred} + \lambda(t) \mathcal{L}_{bio} + \lamb
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Conformal Prediction for Causal Effects of Continuous Treatments](../../NeurIPS2025/causal_inference/conformal_prediction_for_causal_effects_of_continuous_treatments.md)
-- [\[NeurIPS 2025\] LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
+- [\[ICLR 2026\] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
 - [\[ICML 2026\] Outcome-Aware Spectral Feature Learning for Instrumental Variable Regression](../../ICML2026/causal_inference/outcome-aware_spectral_feature_learning_for_instrumental_variable_regression.md)
+- [\[NeurIPS 2025\] LLM Interpretability with Identifiable Temporal-Instantaneous Representation](../../NeurIPS2025/causal_inference/llm_interpretability_with_identifiable_temporal-instantaneous_representation.md)
 - [\[ICML 2025\] Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](../../ICML2025/causal_inference/classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)
 - [\[ECCV 2024\] Distill Gold from Massive Ores: Bi-level Data Pruning towards Efficient Dataset Distillation](../../ECCV2024/causal_inference/distill_gold_from_massive_ores_bi-level_data_pruning_towards_efficient_dataset_d.md)
 

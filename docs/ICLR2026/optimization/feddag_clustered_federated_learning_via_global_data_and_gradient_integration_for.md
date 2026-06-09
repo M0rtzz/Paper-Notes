@@ -41,30 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FedDAG 分为两个核心组件：(1) 相似度计算与自适应聚类：融合数据和梯度信息计算客户端间的加权相似度矩阵，用层次聚类生成候选分组，并通过联邦感知指标自动确定最优集群数；(2) 双编码器训练：每个集群模型包含主编码器（本集群数据训练）和副编码器（互补集群梯度更新），拼接特征后训练分类器。
+FedDAG 把聚类联邦学习拆成两段串起来跑：先融合数据和梯度信息算出客户端之间的加权相似度矩阵，用层次聚类配上联邦感知指标自动定下集群划分；再让每个集群模型带一对主副编码器，主编码器吃本集群数据、副编码器吃互补集群梯度，拼接特征后训分类器，从而在保持集群特化的同时把跨集群的互补表征引进来。
 
 ### 关键设计
 
-1. **加权类别级数据-梯度融合相似度 (Weighted Class-wise Similarity)**:
+**1. 加权类别级相似度：让数据和梯度互相补盲区。** 聚类的成败全看相似度矩阵准不准，而单看数据子空间会漏掉概念漂移，单看梯度在高维下又容易误判。FedDAG 把 PACFL 的子空间比较细化到类别级——只在同一类别内部比较数据子空间而不是拿整体子空间硬比，这样"同一个标签在不同客户端含义不同"的概念漂移就能自然暴露出来。在此基础上，每个客户端学一个权重 $w_i$ 来调和两路信号，最终相似度写成 $S_{ij} = w_i \cdot S_{ij}^{data} + (1 - w_i) \cdot S_{ij}^{grad}$；$w_i$ 通过最小化一个基于熵的损失来优化，目的是把邻接矩阵推向更锐利、更接近二值的形态，让该相似的更相似、该分开的更分开。融合而非二选一，等于让每个客户端自适应地挑出对自己最有信息量的那路信号。
 
-    - 做什么：综合数据和梯度信息计算更准确的客户端相似度矩阵
-    - 核心思路：扩展 PACFL 的数据相似度方法，改为类别级比较——仅比较同一类的数据子空间而非整体子空间。每个客户端学习一个权重 $w_i$ 控制数据 vs 梯度信号的比重，最终相似度为 $S_{ij} = w_i \cdot S_{ij}^{data} + (1 - w_i) \cdot S_{ij}^{grad}$。权重通过最小化基于熵的损失来优化，使邻接矩阵更锐利
-    - 设计动机：类别级比较天然处理概念漂移（同一标签不同含义的情况），加权融合让每个客户端自适应选择最信息丰富的信号来源
+**2. 双编码器架构：把集群特化和跨集群互补分到两条通道。** 现有方法要么把知识共享锁死在集群内部、白白浪费别的集群的多样表征，要么用软聚类让客户端混搭多个集群模型、结果把噪声也混了进来。FedDAG 给每个集群模型配主编码器 $\phi^{(1)}$ 和副编码器 $\phi^{(2)}$：主编码器用本集群客户端的聚合梯度更新参数 $\Theta_z^{1f}$，专注学集群内的特化特征；副编码器用互补集群的梯度更新 $\Theta_z^{2f}$，负责引进外部视角。两路输出在特征维度上拼接后再送进分类器，$F_z(\cdot) = \psi(\phi^{(1)}(\cdot; \Theta_z^{1f}), \phi^{(2)}(\cdot; \Theta_z^{2f}); \Theta_z^c)$。结构上的分离保证了跨集群知识是"并列引入"而不是"混合污染"，集群既能保住自己的特化，又能借到别人的互补信息。
 
-2. **双编码器跨集群知识共享 (Dual-Encoder Architecture)**:
+**3. 联邦感知自适应聚类：不用人工预设集群数。** 实际场景里根本没法提前知道该分几个集群，而层次聚类在联邦设定下又特别容易过度分裂、切出一堆只有几个客户端的退化集群。FedDAG 让层次聚类先生成不同粒度的候选划分，再用一个新提出的联邦感知指标逐一打分：这个指标一边奖励集群内部的紧凑度，一边惩罚过度分裂出来的小集群，最后选得分最高的划分定案，从而在"分得够细"和"别分得太碎"之间自动找到平衡。
 
-    - 做什么：使每个集群模型同时学习集群内特化特征和跨集群互补特征
-    - 核心思路：每个集群模型包含主编码器 $\phi^{(1)}$ 和副编码器 $\phi^{(2)}$。主编码器用本集群客户端数据的聚合梯度更新 $\Theta_z^{1f}$；副编码器用互补集群的梯度更新 $\Theta_z^{2f}$。二者输出在特征维度拼接后送入分类器：$F_z(\cdot) = \psi(\phi^{(1)}(\cdot; \Theta_z^{1f}), \phi^{(2)}(\cdot; \Theta_z^{2f}); \Theta_z^c)$
-    - 设计动机：现有方法限制知识共享在集群内，或使用软聚类导致噪声混合。双编码器保持集群特化（主编码器）的同时引入互补视角（副编码器），不会互相污染
-
-3. **联邦感知自适应聚类 (Federated-Aware Adaptive Clustering)**:
-
-    - 做什么：自动确定最优集群数量，无需预先指定
-    - 核心思路：使用层次聚类生成不同粒度的候选分组，然后用新提出的联邦感知指标评估每种分组：奖励紧凑的集群、惩罚过度分裂（客户端过少的退化集群）。选择指标得分最高的分组作为最终划分
-    - 设计动机：预设集群数在实际中不可行，且层次聚类在 FL 中容易过度分裂
-
-### 损失函数 / 训练策略
-标准的交叉熵损失在每个集群内聚合。权重优化使用基于熵的正则化来促进相似度矩阵的二值化。梯度传输使用压缩以降低通信开销，每个客户端每轮仅需计算至多一个模型的梯度。
+训练侧整体仍是标准配置：交叉熵损失在每个集群内聚合，相似度权重的优化靠前面提到的熵正则把邻接矩阵往二值推。通信上对传输的梯度做压缩，且每个客户端每轮至多只需算一个模型的梯度，把跨集群共享的开销压到可接受范围。
 
 ## 实验关键数据
 
@@ -119,11 +106,11 @@ FedDAG 分为两个核心组件：(1) 相似度计算与自适应聚类：融合
 
 ## 相关论文
 
+- [\[ICLR 2026\] Incentives in Federated Learning with Heterogeneous Agents](incentives_in_federated_learning_with_heterogeneous_agents.md)
 - [\[AAAI 2026\] SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data](../../AAAI2026/optimization/smofi_step-wise_momentum_fusion_for_split_federated_learning_on_heterogeneous_da.md)
 - [\[ICML 2026\] Adaptive Estimation and Inference in Semi-parametric Heterogeneous Clustered Multitask Learning via Neyman Orthogonality](../../ICML2026/optimization/adaptive_estimation_and_inference_in_semi-parametric_heterogeneous_clustered_mul.md)
 - [\[ICCV 2025\] Federated Prompt-Tuning with Heterogeneous and Incomplete Multimodal Client Data](../../ICCV2025/optimization/federated_prompt-tuning_with_heterogeneous_and_incomplete_multimodal_client_data.md)
 - [\[ICML 2026\] Learning Locally, Revising Globally: Global Reviser for Federated Learning with Noisy Labels](../../ICML2026/optimization/learning_locally_revising_globally_global_reviser_for_federated_learning_with_no.md)
-- [\[ICLR 2026\] DeepAFL: Deep Analytic Federated Learning](deepafl_deep_analytic_federated_learning.md)
 
 </div>
 

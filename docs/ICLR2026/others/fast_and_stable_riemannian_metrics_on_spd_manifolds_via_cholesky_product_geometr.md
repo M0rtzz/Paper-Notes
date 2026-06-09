@@ -52,58 +52,49 @@ LCM所对应的Cholesky度量（diagonal log metric）实际上具有一个**乘
 
 ### 整体框架
 
-```
-SPD流形 → Cholesky分解 → Cholesky流形 = 严格下三角(欧氏) × 对角(ℝ₊₊ⁿ)
-                                                              ↓
-                                              替换 ℝ₊₊ 上的度量
-                                                              ↓
-                                          θ-DPM (用幂度量) / M-DBWM (用BW度量)
-                                                              ↓
-                                          拉回到SPD流形 → θ-PCM / (θ,M)-BWCM
-```
+这篇论文要解决的是 SPD 流形上"既快又稳"的黎曼度量难题：现有度量要么慢（AIM 要 SVD），要么在对角元素逼近 0 时数值爆炸（LCM 的对数映射）。作者的破局点是先做一次 Cholesky 分解，把 SPD 流形搬到 Cholesky 流形上，再观察到这个 Cholesky 流形其实是一个**乘积空间**——严格下三角部分是平凡的欧氏空间，对角部分是 $n$ 个一维正实数流形 $\mathbb{R}_{++}$ 的乘积。整条 pipeline 因此变成：把 SPD 矩阵分解到 Cholesky 流形，只在对角的 $\mathbb{R}_{++}$ 因子上换一个更稳的度量（幂度量得到 θ-DPM，BW 度量得到 M-DBWM），再把新度量沿 Cholesky 映射拉回 SPD 流形，得到 θ-PCM 与 (θ,M)-BWCM 两族新度量。因为只改了对角这一个一维因子，所有黎曼算子都能继承闭式表达式。
 
 ### 关键设计
 
-#### 1. 乘积结构的揭示
+**1. 乘积结构的揭示：把度量设计降维到 $\mathbb{R}_{++}$ 上的一道选择题。**
 
-Cholesky流形 $\mathcal{L}_{++}^n$ 可以分解为：
+整篇方法的地基是这样一个观察：LCM 背后的 Cholesky 度量（diagonal log metric）并不是铁板一块，而是可以拆成一个乘积流形
+
 $$\{\mathcal{L}_{++}^n, g^{\text{DL}}\} = \{\mathcal{SL}^n, g^E\} \times \underbrace{\{\mathbb{R}_{++}, g^{\mathbb{R}_{++}}\} \times \cdots \times \{\mathbb{R}_{++}, g^{\mathbb{R}_{++}}\}}_{n}$$
 
-其中 $\mathcal{SL}^n$ 是严格下三角矩阵空间（欧氏），$\mathbb{R}_{++}$ 对应每个对角元素。LCM的对角度量是 $g_p(v,w) = p^{-2}vw$，即AIM/LEM/LCM在 $\mathcal{S}_{++}^1$ 上的统一形式。
+其中 $\mathcal{SL}^n$ 是严格下三角矩阵空间（配欧氏度量 $g^E$），每个 $\mathbb{R}_{++}$ 对应一个对角元素。LCM 在对角上用的度量是 $g_p(v,w) = p^{-2}vw$，正好是 AIM/LEM/LCM 在一维 $\mathcal{S}_{++}^1$ 上退化后的统一形式。这个拆分之所以关键，是因为它把"设计一个全新 SPD 度量"这种高维难题，降维成了"在 $\mathbb{R}_{++}$ 上挑一个一维度量"——只要换掉对角因子的度量，就自动得到一族新的 Cholesky 度量进而得到新的 SPD 度量。
 
-#### 2. 两种新的Cholesky度量
+**2. 两种新的 Cholesky 度量：把对角的对数换成幂或 BW。**
 
-**θ-DPM（Diagonal Power Metric）**：将 $\mathbb{R}_{++}$ 上的度量替换为幂欧氏度量（$\theta$-EM）
+顺着上面的乘积结构，作者把对角 $\mathbb{R}_{++}$ 上的度量分别换成两种更友好的选择。第一种是 θ-DPM（Diagonal Power Metric），对角改用幂欧氏度量（$\theta$-EM）：
 
 $$g_L^{\theta\text{-DE}}(X,Y) = \langle \lfloor X \rfloor, \lfloor Y \rfloor \rangle + \langle \mathbb{L}^{\theta-1}\mathbb{X}, \mathbb{L}^{\theta-1}\mathbb{Y} \rangle$$
 
-**M-DBWM（Diagonal Bures-Wasserstein Metric）**：将 $\mathbb{R}_{++}$ 上的度量替换为BW度量
+第二种是 M-DBWM（Diagonal Bures-Wasserstein Metric），对角改用来自最优传输的 BW 度量：
 
 $$g_L^{\mathbb{M}\text{-DBW}}(X,Y) = \langle \lfloor X \rfloor, \lfloor Y \rfloor \rangle + \frac{1}{4}\langle \mathbb{L}^{-1}\mathbb{X}, \mathbb{M}^{-1}\mathbb{Y} \rangle$$
 
-#### 3. 全部闭式黎曼算子
+式中 $\lfloor\cdot\rfloor$ 取严格下三角部分、$\mathbb{L}/\mathbb{X}$ 取对角部分。两个式子的下三角项都保持欧氏内积不变，区别只在对角项——这正是乘积结构带来的模块化好处：换度量是局部手术，不牵动整体。
 
-两种新度量均有闭式的测地线、对数映射、指数映射、平行移动、距离、加权Fréchet均值。例如θ-DPM下的距离：
+**3. 全部闭式黎曼算子：换度量不丢可计算性。**
+
+由于只动了对角这一个一维因子，θ-DPM 与 M-DBWM 拉回 SPD 流形后，测地线、对数映射、指数映射、平行移动、距离、加权 Fréchet 均值全部保留闭式表达式，无需迭代求解。以 θ-DPM 下的距离为例：
 
 $$d^2(L,K) = \|\lfloor K \rfloor - \lfloor L \rfloor\|_F^2 + \frac{1}{\theta^2}\|\mathbb{K}^\theta - \mathbb{L}^\theta\|_F^2$$
 
-关键区别：LCM用 $\log(\mathbb{K}) - \log(\mathbb{L})$，而θ-DPM用 $\mathbb{K}^\theta - \mathbb{L}^\theta$——**幂函数替代对数/指数函数**，这是数值稳定性的来源。
+把它和 LCM 对照能看出数值稳定性的来源：LCM 的对角项用 $\log(\mathbb{K}) - \log(\mathbb{L})$，而 θ-DPM 用 $\mathbb{K}^\theta - \mathbb{L}^\theta$。当对角元素 $x \to 0^+$ 时，$\log(x)$ 直冲 $-\infty$（如 $\log(10^{-15})$ 直接溢出），而 $x^\theta$ 只是温和地趋向 0——用幂函数替代对数/指数函数，正是整套方法又稳又快的根本。
 
-#### 4. 对角幂变形（Deformation）
+**4. 对角幂变形：一个旋钮连续插值新旧度量。**
 
-定义对角幂变形 $\text{DPow}_\theta$，可连续插值现有和新度量：
-- $\theta \to 0$：变形后的度量趋向对数Cholesky度量（LCM）
-- $\theta = 1$：恢复本文提出的度量
+为了把新度量和已有度量统一在一个框架里，作者定义了对角幂变形 $\text{DPow}_\theta$，用参数 $\theta$ 在两端之间连续插值：$\theta \to 0$ 时变形后的度量趋向对数 Cholesky 度量（即退回 LCM），$\theta = 1$ 时恢复本文提出的度量。这样 $\theta$ 就成了一个可调旋钮，让使用者按数据特性（对角元素是否均衡）在"接近 LCM"和"本文新度量"之间权衡，而不必在两套互不相通的度量里二选一。
 
-这提供了可调节的权衡参数。
+**5. 陀螺向量空间结构：给 SPD 网络补上代数基础。**
 
-#### 5. 陀螺向量空间结构（Gyrovector Space）
-
-在新度量下定义了陀螺加法和陀螺乘法的闭式表达式：
+要把这些度量真正用进 SPD 神经网络，还需要一套能做"加法/乘法"的代数结构。作者在新度量下给出了陀螺加法与陀螺乘法的闭式表达式，例如陀螺加法：
 
 $$L \oplus K = \lfloor L \rfloor + \lfloor K \rfloor + (\mathbb{L}^\beta + \mathbb{K}^\beta - I)^{1/\beta}$$
 
-满足陀螺交换群和陀螺向量空间的所有公理，为构建SPD神经网络提供代数基础。
+并证明它满足陀螺交换群与陀螺向量空间的全部公理。有了这套闭式的群运算，后面的 SPD MLR 分类器、SPD 残差块等网络组件才能直接套用新度量来搭建。
 
 ### 损失函数 / 训练策略
 

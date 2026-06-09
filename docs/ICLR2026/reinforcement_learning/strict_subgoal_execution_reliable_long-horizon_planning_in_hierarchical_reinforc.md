@@ -38,42 +38,37 @@ tags:
 
 ### 整体框架
 
-SSE 包含三个核心组件：前沿经验回放（FER）、解耦探索策略、失败感知路径优化。
+SSE 在标准的图-层次 RL 架构上做了一个看似激进的改动：高层每选一个子目标，低层就必须把它精确到达，否则当场截断回合，绝不让高层在不可达子目标上反复消耗步数。围绕这条「严格执行」主线，方法由三个组件支撑——前沿经验回放（FER）负责把「到没到达」的信号干净地写进高层经验、解耦探索策略负责在严格约束下仍保持足够的覆盖、失败感知路径优化负责让图规划主动绕开总是失败的区域。整套机制提供网格离散化（SSE Grid，适合 2D/3D 目标空间）和神经网络（SSE Model，可扩展到高维目标空间）两种实现变体，差别只在如何表示与采样子目标节点。
 
-### 1. 前沿经验回放（FER）
+### 关键设计
 
-FER 将高层经验分为三种类型：
+**1. 前沿经验回放（FER）：用三类经验标定可达边界，取代会污染高层的 HER。**
 
-$$\mathcal{B}_F^h = \begin{cases} (s_t, g, \tilde{g}_t, \sum_{j=t}^{t'-1} r_j, s_{t'}) & \text{(成功)} \\ (s_t, g, \tilde{g}_t, 0, s_T) & \text{(失败终止)} \\ (s_t, g, \text{wp}_{\text{final}}, \sum_{j=t}^{t_{\text{wp}}-1} r_j, s_{t_{\text{wp}}}) & \text{(部分成功)} \end{cases}$$
+传统图-层次 RL 对高层用 HER，把失败轨迹里偶然路过的中间状态当成「事后子目标」塞回缓冲区，结果高层学到的是「这个不可达点其实可达」的错误信号，于是反复挑选够不到的子目标、轨迹越拉越长。FER 的做法是按子目标真正的执行结果把高层转移分成三类写入缓冲 $\mathcal{B}_F^h$：
 
-- **成功**：低层策略成功到达子目标，记录完整回报
-- **失败终止**：子目标不可达（$\|\phi(s_{t'}) - \tilde{g}_t\| \geq \lambda$），回报为 0，下一状态为终止态 $s_T$，立即截断回合
-- **部分成功**：失败时记录最后成功到达的路标点 $\text{wp}_{\text{final}}$
+$$\mathcal{B}_F^h = \begin{cases} (s_t, g, \tilde{g}_t, \sum_{j=t}^{t'-1} r_j, s_{t'}) & \text{成功} \\ (s_t, g, \tilde{g}_t, 0, s_T) & \text{失败终止} \\ (s_t, g, \text{wp}_{\text{final}}, \sum_{j=t}^{t_{\text{wp}}-1} r_j, s_{t_{\text{wp}}}) & \text{部分成功} \end{cases}$$
 
-### 2. 解耦探索策略
+低层精确到达子目标时记为成功，写入真实回报；一旦判定不可达（误差 $\|\phi(s_{t'}) - \tilde{g}_t\| \geq \lambda$）就记为失败终止，回报置 0、下一状态写成终止态 $s_T$ 并立即截断当前回合，让高层 Q 值清楚地把「不可达」标成低价值；介于两者之间则记为部分成功，把这段轨迹里最后一个真正到达的路标点 $\text{wp}_{\text{final}}$ 作为有效子目标记录回报。这样高层经验里再没有「失败被当成成功」的污染，Q 值刻画的就是子目标的可达前沿，消融里一旦把 FER 换回 HER 或干脆去掉，任务直接彻底失败，说明它是整套方法的地基。
 
-分为利用策略 $\pi^h$ 和探索策略 $\pi^{\text{exp}}$：
+**2. 解耦探索策略：把利用和探索拆成两条策略，避免严格约束下探索枯竭。**
 
-利用策略（$\epsilon$-greedy）：
-$$\pi^h(\tilde{g}_t | s_t, g) = \begin{cases} \arg\max_{\tilde{g}} Q^h(s_t, \tilde{g}, g) & \text{概率 } 1-\epsilon \\ \text{Uniform}(\mathcal{G}) & \text{概率 } \epsilon \end{cases}$$
+严格执行虽然干净，但如果高层一味贪心选当前最优子目标，就很难再去碰那些尚未验证的远处区域，覆盖会迅速塌缩。SSE 因此把高层拆成利用策略 $\pi^h$ 和探索策略 $\pi^{\text{exp}}$ 两条并按比例 $\eta : (1-\eta)$ 混合。利用侧是常规的 $\epsilon$-greedy，多数时候挑 Q 值最高的子目标、小概率 $\epsilon$ 在目标集 $\mathcal{G}$ 上均匀乱选：
 
-探索策略：
-$$\pi^{\text{exp}}(\tilde{g}_t | s_t, g) = \begin{cases} g & \text{概率 } 1/3 \\ \tilde{g}_{\max,t} & \text{概率 } 1/3 \\ \tilde{g}_{\text{novel}} \sim \text{Uniform}(V_{\text{novel}}) & \text{概率 } 1/3 \end{cases}$$
+$$\pi^h(\tilde{g}_t | s_t, g) = \begin{cases} \arg\max_{\tilde{g}} Q^h(s_t, \tilde{g}, g) & 1-\epsilon \\ \text{Uniform}(\mathcal{G}) & \epsilon \end{cases}$$
 
-两种策略按比例 $\eta : (1-\eta)$ 混合使用。
+探索侧则把概率三等分，分别投向最终目标 $g$、当前已知最远可达点 $\tilde{g}_{\max,t}$、以及从新颖节点集合 $V_{\text{novel}}$ 里均匀采的未访问点 $\tilde{g}_{\text{novel}}$：
 
-### 3. 失败感知路径优化
+$$\pi^{\text{exp}}(\tilde{g}_t | s_t, g) = \begin{cases} g & 1/3 \\ \tilde{g}_{\max,t} & 1/3 \\ \tilde{g}_{\text{novel}} \sim \text{Uniform}(V_{\text{novel}}) & 1/3 \end{cases}$$
 
-在图 $G = (V, E)$ 上调整边代价，使 Dijkstra 规避失败频繁区域：
+三个方向分别对应「直奔目标」「沿已知前沿往外推」「主动探未知」，让前沿在严格执行的同时持续向外扩张；消融中去掉探索策略后性能显著退化，印证了这条解耦的必要性。
+
+**3. 失败感知路径优化：让 Dijkstra 在图上主动绕开高失败区。**
+
+子目标序列由图 $G=(V,E)$ 上的最短路给出，但若某些节点总是到不了，反复规划经过它们只会浪费回合。SSE 据此给边代价乘上一个与目标节点失败率挂钩的惩罚因子：
 
 $$\tilde{d}(v_1 \to v_2) = d(v_1 \to v_2) \times \max(1, c_{\text{dist}} \cdot \text{ratio}_{\text{fail}}(v_2))$$
 
-其中 $\text{ratio}_{\text{fail}}$ 为目标节点的失败比例。
-
-### 两种实现变体
-
-- **SSE (Grid)**：基于网格的离散化方法，适用于 2D/3D 目标空间
-- **SSE (Model)**：基于神经网络的方法，可扩展到高维目标空间
+其中 $\text{ratio}_{\text{fail}}(v_2)$ 是目标节点 $v_2$ 的历史失败比例，$c_{\text{dist}}$ 控制惩罚强度，外层 $\max(1,\cdot)$ 保证低失败节点的代价不被缩小、只放大常失败节点。Dijkstra 在这张被改写过的图上自然会绕开失败频繁的区域，把规划资源留给真正走得通的路径；它对最终成败影响相对温和（去掉后只是适度退化），更多是加速收敛的一层优化。
 
 ## 实验结果
 
@@ -144,7 +139,7 @@ $$\tilde{d}(v_1 \to v_2) = d(v_1 \to v_2) \times \max(1, c_{\text{dist}} \cdot \
 - [\[NeurIPS 2025\] Reinforcement Learning for Long-Horizon Multi-Turn Search Agents](../../NeurIPS2025/reinforcement_learning/reinforcement_learning_for_long-horizon_multi-turn_search_agents.md)
 - [\[ICLR 2026\] LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](longrlvr_long-context_reinforcement_learning_requires_verifiable_context_rewards.md)
 - [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
-- [\[AAAI 2026\] ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation](../../AAAI2026/reinforcement_learning/manilong-shot_interaction-aware_one-shot_imitation_learning_for_long-horizon_man.md)
+- [\[ICLR 2026\] SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models](spell_self-play_reinforcement_learning_for_evolving_long-context_language_models.md)
 
 </div>
 

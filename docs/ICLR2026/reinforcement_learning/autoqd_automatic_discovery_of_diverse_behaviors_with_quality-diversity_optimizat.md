@@ -35,47 +35,17 @@ tags:
 
 ## 方法详解
 
-### 核心思想：从占据度量到行为描述符
+### 整体框架
 
-AutoQD 分三步：(1) 用 RFF 将策略嵌入到欧氏距离近似占据度量之间 MMD 的空间；(2) 用加权 PCA 降维得到低维 BD；(3) 用 CMA-MAE 进行 QD 优化。整体流程在优化过程中交替进行 BD 更新和策略搜索。
+AutoQD 把"什么算不同的行为"这个本来要人工拍板的问题，交给占据度量来回答：先用随机傅里叶特征把每个策略压成一个有限维向量，使两个向量的欧氏距离近似它们占据度量之间的 MMD；再用按回报加权的 PCA 把这个高维向量投影成低维行为描述符（BD），喂给 CMA-MAE 做 QD 搜索。整个优化过程中策略搜索和 BD 重算交替进行，archive 长出新行为后 BD 也随之刷新。
 
-### 策略嵌入：随机傅里叶特征近似 MMD
+### 关键设计
 
-给定状态 $s$ 和动作 $a$，定义 $D$ 维随机特征映射：
+**1. 随机傅里叶特征嵌入：把"策略距离"变成可计算的欧氏距离。** 占据度量虽然完整刻画了一个策略的行为，但它是状态-动作空间上的连续分布，无法直接比较两个策略差多少。AutoQD 给每对状态动作 $[s;a]$ 算一个 $D$ 维随机特征 $\phi(s,a) = \sqrt{2/D}\,[\cos(w_1^T[s;a]+b_1), \ldots, \cos(w_D^T[s;a]+b_D)]$，其中频率 $w_i \sim \mathcal{N}(0, \sigma^{-2}I)$、相位 $b_i \sim \mathcal{U}(0, 2\pi)$，这组特征在期望意义上近似带宽为 $\sigma$ 的高斯核 $k(x,y)=\exp(-\|x-y\|^2/(2\sigma^2))$。把策略沿轨迹采到的特征做折扣加权平均，就得到策略嵌入 $\psi^\pi = \frac{1}{n}\sum_{j=1}^{n}(1-\gamma)\sum_{t=0}^{T}\gamma^t \phi(s_t^j, a_t^j)$（$n$ 为轨迹条数），于是 $\|\psi^{\pi_1}-\psi^{\pi_2}\| \approx \text{MMD}(\rho^{\pi_1}, \rho^{\pi_2})$。这一近似不是经验拼凑：定理 1 证明嵌入距离与真实 MMD 的偏差以指数速率收敛，$\Pr[\,|\,\|\phi_1-\phi_2\|_2 - \text{MMD}(\rho_1,\rho_2)\,| \geqslant \tfrac{3}{4}\varepsilon\,] \leqslant 2e^{-nc\varepsilon^2} + \mathcal{O}(\varepsilon^{-2}\exp(-D\varepsilon^2/(64(d+2)))) + 6e^{-n\varepsilon^2/8}$，关键是误差里 $D$ 只要随状态-动作维度 $d$ **线性增长**就能控住，避免了高维分布比较常见的维度灾难。
 
-$$\phi(s,a) = \sqrt{\frac{2}{D}}\left[\cos(w_1^T[s;a]+b_1), \ldots, \cos(w_D^T[s;a]+b_D)\right]$$
+**2. cwPCA 投影：把高维嵌入压成稳定、偏向高回报的低维 BD。** 嵌入 $\psi^\pi \in \mathbb{R}^D$ 维度太高，直接当 BD 会让 QD archive 的格子数随维度指数爆炸，必须降到 $k \ll D$ 维。AutoQD 用 Calibrated Weighted PCA（cwPCA）：先按每个策略的回报（fitness）给嵌入加权再做 PCA，让高质量策略对主成分方向的贡献更大，从而把搜索的多样性轴对齐到"好策略附近怎么变才有意义"；再加一步校准，缩放每根输出轴使投影值落进 $[-1,1]$，保证 archive 边界不会随 archive 内容漂移而失稳。最终 BD 就是一个仿射变换 $\text{desc}(\pi) = A\psi^\pi + b$（$A \in \mathbb{R}^{k\times D}$，$b \in \mathbb{R}^k$），计算极轻，便于在优化中反复刷新。
 
-其中 $w_i \sim \mathcal{N}(0, \sigma^{-2}I)$，$b_i \sim \mathcal{U}(0, 2\pi)$。这组随机特征近似高斯核 $k(x,y) = \exp(-\|x-y\|^2/(2\sigma^2))$。
-
-策略 $\pi$ 的嵌入定义为其占据度量下 RFF 的经验均值。实际使用时为充分利用轨迹数据，采用折扣加权形式：
-
-$$\psi^\pi = \frac{1}{n}\sum_{j=1}^{n}(1-\gamma)\sum_{t=0}^{T}\gamma^t \phi(s_t^j, a_t^j)$$
-
-其中 $n$ 为轨迹条数。两个策略嵌入的欧氏距离近似其占据度量之间的 MMD：$\|\psi^{\pi_1} - \psi^{\pi_2}\| \approx \text{MMD}(\rho^{\pi_1}, \rho^{\pi_2})$。
-
-**定理 1（MMD 近似保证）**：对任意两个策略 $\pi_1, \pi_2$，其嵌入间距离与真实 MMD 的误差以指数速率收敛：
-
-$$\Pr\left[\left|\|\phi_1 - \phi_2\|_2 - \text{MMD}(\rho_1, \rho_2)\right| \geqslant \frac{3}{4}\varepsilon\right] \leqslant 2e^{-nc\varepsilon^2} + \mathcal{O}\left(\frac{1}{\varepsilon^2}\exp\left(\frac{-D\varepsilon^2}{64(d+2)}\right)\right) + 6e^{-\frac{n\varepsilon^2}{8}}$$
-
-关键含义：嵌入维度 $D$ 只需随状态-动作维度 $d$ **线性增长**即可控制误差。
-
-### 低维行为描述符：cwPCA 投影
-
-高维嵌入 $\psi^\pi \in \mathbb{R}^D$ 不能直接用作 BD（QD archive 随维度指数增长），需降维到 $k \ll D$ 维。AutoQD 使用 **Calibrated Weighted PCA (cwPCA)**：
-
-1. **加权 PCA**：按策略的回报（fitness）对嵌入加权后做 PCA，使高质量策略对主方向的影响更大，鼓励在高质量行为附近探索
-2. **校准步**：缩放每个输出轴使投影值落在 $[-1, 1]$ 范围内，保证 archive 边界稳定
-
-最终 BD 为仿射变换 $\text{desc}(\pi) = A\psi^\pi + b$，其中 $A \in \mathbb{R}^{k \times D}$，$b \in \mathbb{R}^k$。
-
-### AutoQD 完整算法
-
-算法交替执行两个阶段：
-
-1. **QD 优化阶段**：使用当前 BD 与 CMA-MAE 搜索多样策略，CMA-ES 维护策略参数的高斯分布，采样→评估→按 archive 改进排序→更新分布
-2. **BD 更新阶段**：按预设调度，从 archive 中所有策略的嵌入重新计算 cwPCA 投影矩阵，刷新 BD 定义
-
-整个过程中，随机傅里叶特征 $\{w_i, b_i\}$ 在初始化后固定不变，仅投影矩阵 $A, b$ 随 archive 演化而更新。
+**3. QD 搜索与 BD 刷新交替：让"多样性的定义"随发现而演化。** 单纯固定一个 BD 等于又回到人工预设维度，AutoQD 的关键是让两个阶段交替推进。QD 优化阶段用当前 BD 配合 CMA-MAE 搜索：CMA-ES 维护策略参数上的高斯分布，采样一批策略、评估回报、按它们对 archive 的改进量排序，再据此更新分布均值和协方差；按预设调度进入 BD 更新阶段，从 archive 里所有现存策略的嵌入重算一次 cwPCA，得到新的 $A, b$。值得注意的是随机傅里叶特征 $\{w_i, b_i\}$ 一旦初始化就冻结，只有投影矩阵随 archive 演化，这样嵌入空间始终稳定、只是观察它的"视角"在变，既能随新行为调整多样性维度，又不会让此前 archive 里的策略距离整体错位。
 
 ## 实验设计
 
@@ -174,7 +144,7 @@ $$\Pr\left[\left|\|\phi_1 - \phi_2\|_2 - \text{MMD}(\rho_1, \rho_2)\right| \geqs
 - [\[ICLR 2026\] SUSD: Structured Unsupervised Skill Discovery through State Factorization](susd_structured_unsupervised_skill_discovery_through_state_factorization.md)
 - [\[ACL 2026\] DPEPO: Diverse Parallel Exploration Policy Optimization for LLM-based Agents](../../ACL2026/reinforcement_learning/dpepo_diverse_parallel_exploration_policy_optimization_for_llm-based_agents.md)
 - [\[ICLR 2026\] AutoTool: Automatic Scaling of Tool-Use Capabilities in RL via Decoupled Entropy Constraints](autotool_automatic_scaling_of_tool-use_capabilities_in_rl_via_decoupled_entropy_.md)
-- [\[NeurIPS 2025\] Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination](../../NeurIPS2025/reinforcement_learning/inner_speech_as_behavior_guides_steerable_imitation_of_diverse_behaviors_for_hum.md)
+- [\[ICLR 2026\] Menlo: From Preferences to Proficiency – Evaluating and Modeling Native-like Quality Across 47 Languages](menlo_from_preferences_to_proficiency_--_evaluating_and_modeling_native-like_qua.md)
 
 </div>
 

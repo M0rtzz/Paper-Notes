@@ -36,31 +36,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段训练管道：预训练（4.2T token，按影响力混合）→ Mid-training（100B token/阶段，数据-模型协同进化）→ 后训练（SFT + 推理SFT）。
+MobileLLM-R1 要回答的问题是：在亿级参数的容量约束下，怎样的数据配方能榨出最强的推理能力。它的答案不是堆更多数据，而是把"数据该选谁、按什么比例混、训练中途要不要换"这三件事都交给量化的影响力分数来决定。整条管线分三阶段串起来：预训练用 4.2T token、按影响力计算出的混合比例喂进去；mid-training 每阶段 100B token，让数据和模型在迭代中互相校准；后训练再做指令对齐和推理 SFT。贯穿始终的主线是同一套思想——**用模型自己对数据的反应来挑数据，而不是靠人工启发式或下游基准**。
 
 ### 关键设计
-1. **能力感知数据筛选 (LOO分析)**:
 
-    - 功能：确定每个预训练数据源对推理能力的贡献
-    - 核心思路：训练时每次排除一个数据集，追踪对Code/Math/Knowledge三个能力探测集的NLL变化。影响力定义为 $\Delta\mathcal{L}(\mathcal{D}_j, \mathcal{D}^P) = \mathbb{E}[\ell(z;\hat{\theta}_{-j}) - \ell(z;\hat{\theta})]$
-    - 关键发现：FineWeb-Edu是跨域"胶水"，移除后所有能力均退化；StarCoder对数学的贡献 > OpenWebMath对代码的贡献（颠覆常识）；Wikipedia对代码和数学贡献有限
+**1. 能力感知的数据筛选：用 leave-one-out 量化每个数据源的真实贡献。**
 
-2. **跨能力影响力数据混合**:
+小模型容量有限，一旦混进噪声数据就会淹没有限的表示空间，所以"哪些数据源真正有用"必须先算清楚。作者用 leave-one-out 的方式逐个排除数据集：每次抽掉一个数据源重新训练，再观察模型在 Code / Math / Knowledge 三个能力探测集上的 NLL 变化，变化越大说明这个数据源越关键。影响力被形式化为 $\Delta\mathcal{L}(\mathcal{D}_j, \mathcal{D}^P) = \mathbb{E}[\ell(z;\hat{\theta}_{-j}) - \ell(z;\hat{\theta})]$，即去掉 $\mathcal{D}_j$ 后探测集损失相对完整训练的增量。这套分析直接推翻了几条数据筛选的常识：FineWeb-Edu 是跨域"胶水"，移除它三个能力一起退化；StarCoder 对数学的贡献竟然超过 OpenWebMath 对代码的贡献，说明代码数据对推理有强正迁移；而 Wikipedia 对代码和数学几乎没帮助。
 
-    - 功能：基于影响力分数计算每个数据源的最优采样权重
-    - 核心思路：利用AutoMixer框架高效近似影响力分数 $\mathcal{I}(x_i, x_{\text{test}}; \theta) \approx -\nabla\mathcal{L}(x_{\text{test}})^\top H^{-1} \nabla\mathcal{L}(x_i)$。联合影响力聚合跨能力和跨训练阶段的贡献，转化为数据集级别权重 $w_g = \frac{\rho_g}{\sum \rho_{g'}}$
-    - 设计动机：用量化的跨域影响力替代启发式均匀采样，由此产生的混合比例在未见基准上一致优于均匀采样
+**2. 跨能力影响力数据混合：把启发式均匀采样换成量化最优权重。**
 
-3. **Mid-training数据-模型协同进化**:
+知道了谁有用，下一步是定每个数据源的采样比例。作者不再用拍脑袋的均匀采样，而是借 AutoMixer 框架高效近似样本级影响力分数 $\mathcal{I}(x_i, x_{\text{test}}; \theta) \approx -\nabla\mathcal{L}(x_{\text{test}})^\top H^{-1} \nabla\mathcal{L}(x_i)$，再把跨能力、跨训练阶段的贡献聚合成"联合影响力"，最终折算成数据集级别的采样权重 $w_g = \frac{\rho_g}{\sum \rho_{g'}}$。这样得到的混合比例是数据本身告诉你的最优解，而非人工先验——实验中它在未见基准上一致优于均匀采样。
 
-    - 功能：在mid-training阶段迭代优化数据混合
-    - 核心思路：每阶段用当前模型计算每个样本的影响力分数，只保留正影响力样本 $\mathcal{D}_t = \{x_i : I(x_i; \theta_t) > 0\}$，同时更新数据集权重。迭代直到大部分样本的影响力趋近零（收敛，通常2阶段）
-    - 设计动机：模型能力不断变化，固定的数据混合不再最优；将其视为"迭代去噪"过程
+**3. Mid-training 数据-模型协同进化：把固定混合改成迭代去噪。**
+
+预训练定好的混合比例并非一劳永逸——随着模型能力增长，原本有用的样本可能变得冗余甚至有害，固定混合不再最优。作者在 mid-training 阶段让数据和模型协同进化：每个阶段用当前模型重新计算每个样本的影响力，只保留仍有正影响力的样本 $\mathcal{D}_t = \{x_i : I(x_i; \theta_t) > 0\}$，同时更新数据集权重；下一阶段在筛过的数据上继续训练、再筛一次。这本质上是一个"迭代去噪"过程，把已被模型吃透、信息趋零的样本不断剔除，直到大部分样本的影响力都压到零附近为止（通常 2 个阶段即收敛）。
 
 ### 损失函数 / 训练策略
-- 预训练：标准next-token预测
-- 后训练分两阶段：Tulu-3-SFT（指令对齐）→ OpenMathReasoning + OpenCodeReasoning + OpenScienceReasoning（推理SFT）
-- 关键发现：两阶段分开训练优于联合训练
+预训练用标准的 next-token 预测目标。后训练拆成两个阶段：先用 Tulu-3-SFT 做指令对齐，再用 OpenMathReasoning + OpenCodeReasoning + OpenScienceReasoning 做推理 SFT。一个值得注意的经验结论是，这两个阶段分开训练显著优于把它们的数据混在一起联合训练。
 
 ## 实验关键数据
 
@@ -124,9 +117,9 @@ tags:
 
 - [\[ICLR 2026\] Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
 - [\[ICML 2026\] Decouple Searching from Training: Scaling Data Mixing via Model Merging for Large Language Model Pre-training](../../ICML2026/model_compression/decouple_searching_from_training_scaling_data_mixing_via_model_merging_for_large.md)
-- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
 - [\[ICLR 2026\] PASER: Post-Training Data Selection for Efficient Pruned Large Language Model Recovery](paser_post-training_data_selection_for_efficient_pruned_large_language_model_rec.md)
 - [\[ICML 2026\] NanoQuant: Efficient Sub-1-Bit Quantization of Large Language Models](../../ICML2026/model_compression/nanoquant_efficient_sub-1-bit_quantization_of_large_language_models.md)
+- [\[ICLR 2026\] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
 
 </div>
 

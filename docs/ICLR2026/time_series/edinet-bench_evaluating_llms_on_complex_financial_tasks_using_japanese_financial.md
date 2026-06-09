@@ -40,18 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-数据管线: EDINET API → edinet2dataset 工具解析 → EDINET-Corpus（~40,000 份年报）→ 三个基准任务。
+EDINET-Bench 的核心是一条把原始监管文件变成可评估任务的数据管线：先用自研工具 edinet2dataset 调 EDINET API 批量下载并解析十年的日本年报，沉淀成结构化语料 EDINET-Corpus，再在其上定义会计欺诈检测、盈利预测、行业分类三项专家级任务，最后用统一的零样本协议横向评测十余个 LLM 与经典机器学习基线。
 
 ### 关键设计
-1. **edinet2dataset 工具**: 使用 EDINET API 下载年报，Polars 高速解析 TSV 格式，提取 Meta/Summary/BS/PL/CF/Text 六大类信息。覆盖 2014-2025 十年约 41,691 份年报。
-2. **会计欺诈检测**: 从修正年报中提取 6,712 份修正报告，用 Claude 3.7 Sonnet 判断修正原因是否涉及欺诈（668份确认为欺诈），人工审核误标率 <5%。非欺诈样本随机抽取700家，按公司分割为训练集（865）和测试集（224）。
-3. **盈利预测**: 随机选1000家公司，构建连续两年年报对，比较"归母净利润"增减方向作为标签。按时间分割（2020年前为训练集），549训练 + 451测试。
-4. **行业分类**: 基于 SICC 的 TOPIX-33 合并为16个大类，每类约35家公司，共496测试样本。
 
-### 评估设置
-- 零样本 prompt：系统提示"You are a financial analyst"，输入年报的不同组合（Summary only / +BS+CF+PL / +Text）
-- 模型：GPT-4o, o4-mini, GPT-5, Claude 3.5 Haiku/Sonnet, Claude 3.7 Sonnet, Kimi-K2, DeepSeek-V3/R1, Llama 3.3 70B
-- 经典基线：Logistic Regression, Random Forest, XGBoost
+**1. edinet2dataset 解析工具：把异构监管文件压成统一结构。** 日本 EDINET 系统的年报以 TSV 形式散落在大量字段里，直接喂给模型既臃肿又难对齐。作者用 EDINET API 拉取 2014–2025 年约 41,691 份年报，借助 Polars 做高速解析，把每份文件归并成 Meta、Summary、Balance Sheet（BS）、Profit & Loss（PL）、Cash Flow（CF）、Text 六大类信息。这一步既是数据基础设施，也决定了下游任务能按需组合"只给摘要 / 加三张报表 / 再加文本"来做输入消融。
+
+**2. 会计欺诈检测：用修正年报反推欺诈标签。** 欺诈样本的难点在于没有现成标注。作者从 EDINET 中筛出 6,712 份修正年报（有修正往往意味着原报告有问题），再用 Claude 3.7 Sonnet 判断每份修正的原因是否真正涉及会计欺诈，得到 668 份确认欺诈的正样本，并经人工审核把误标率控制在 5% 以下。非欺诈样本则随机抽取 700 家公司，最终按公司主体切分为 865 条训练、224 条测试，避免同一公司跨集泄漏。
+
+**3. 盈利预测：跨年度比对净利润方向。** 任务设计成一个二分类：随机选 1000 家公司，把同一公司连续两年的年报配成对，以"归母净利润"相对上一年的增减方向作为标签，考察模型能否从当期财报推断下一年盈利走势。划分采用时间切分（2020 年之前为训练），得到 549 条训练、451 条测试，确保测试集严格在训练时间之后，模拟真实的预测场景。
+
+**4. 行业分类：把细分行业归并成可评测的大类。** 直接用日本 SICC 体系的 TOPIX-33 细分行业会让每类样本过少，作者将其合并为 16 个大类，每类约 35 家公司，共 496 条测试样本。该任务相对前两项更依赖对企业业务描述的语义理解，是衡量模型对日语金融文本基本把握能力的对照项。
+
+**5. 统一零样本评测协议：在相同提示下横向对比。** 三项任务都用同一套零样本提示，系统消息固定为"You are a financial analyst"，并通过切换年报输入组合（仅 Summary / +BS+CF+PL / 再 +Text）来观测信息量对性能的边际影响。受测模型涵盖 GPT-4o、o4-mini、GPT-5、Claude 3.5 Haiku/Sonnet、Claude 3.7 Sonnet、Kimi-K2、DeepSeek-V3/R1、Llama 3.3 70B，并以 Logistic Regression、Random Forest、XGBoost 三个经典机器学习模型作为基线，用来检验 LLM 相对传统统计方法是否真有优势。
 
 ## 实验关键数据
 
@@ -129,7 +130,7 @@ tags:
 
 - [\[ICLR 2026\] Reasoning on Time-Series for Financial Technical Analysis](reasoning_on_time-series_for_financial_technical_analysis.md)
 - [\[ACL 2026\] A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting](../../ACL2026/time_series/a_unified_framework_for_modeling_heterogeneous_financial_data_via_dual-granulari.md)
-- [\[NeurIPS 2025\] MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting](../../NeurIPS2025/time_series/masfin_a_multi-agent_system_for_decomposed_financial_reasoning_and_forecasting.md)
+- [\[ICLR 2026\] Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
 - [\[ICLR 2026\] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
 - [\[ICLR 2026\] SciTS: Scientific Time Series Understanding and Generation with LLMs](scits_scientific_time_series_llm.md)
 

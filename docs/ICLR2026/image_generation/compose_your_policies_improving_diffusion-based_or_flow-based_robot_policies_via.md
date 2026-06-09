@@ -45,28 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **凸分数组合的理论保证**:
+**1. 凸分数组合的理论保证：先从数学上回答"为什么混合会比单一更好"。**
 
-    - 功能：证明凸组合在功能层和系统层均优于单一模型
-    - 核心思路：Proposition 4.1 证明两个有不同偏差/噪声的分数估计器，其凸组合的 MSE $Q(w)$ 是 $w$ 的凸二次函数——最小值点严格优于任一端点（除非两者误差完全一致）。Proposition 4.2 通过 Grönwall 界证明这种单步改进传播到整条采样轨迹
-    - 设计动机：为"组合比单一更好"提供数学保证，而非仅凭经验观察
+GPC 不满足于经验上的"组合好像有用"，而是先把它证明出来。Proposition 4.1 考虑两个带有不同偏差和噪声的分数估计器，证明它们凸组合后的均方误差 $Q(w)$ 是权重 $w$ 的凸二次函数——既然是凸二次，最小值点必然落在内部而严格优于任一端点（即只用其中一个模型），除非两个估计器的误差完全一致。直观上，不同模型的偏差方向通常不同，按合适比例混合时偏差能相互抵消。但单步分数更好不等于整条轨迹更好，于是 Proposition 4.2 接着用 Grönwall 界证明：单步上的这点改进会沿采样过程逐步传播、不被放大破坏，最终改善的是完整动作轨迹的质量。这两条命题构成 GPC 的核心论据，把"组合比单一强"从观察上升为保证。
 
-2. **通用策略组合框架（GPC）**:
+**2. 通用策略组合框架（GPC）：把组合统一到分数空间，从而吃下异构策略。**
 
-    - 功能：将分数组合应用于任意扩散/Flow 策略
-    - 核心思路：将 CFG（classifier-free guidance）推广为多策略组合：$\hat{\epsilon}(\tau_t, t, \mathbf{c}) = \epsilon_\theta(\tau_t, t) + \sum_i w_i(\epsilon_\theta(\tau_t, t, \mathbf{c}_i) - \epsilon_\theta(\tau_t, t))$。对于异构模型（如不同去噪步数、不同噪声调度），统一到分数空间后组合
-    - 设计动机：最大化灵活性——不要求父策略在架构、输入模态或训练数据上一致
+有了理论支撑，剩下的问题是怎么对任意两个策略做组合。GPC 把 classifier-free guidance（CFG）推广成多策略版本：
 
-3. **测试时权重搜索**:
+$$\hat{\epsilon}(\tau_t, t, \mathbf{c}) = \epsilon_\theta(\tau_t, t) + \sum_i w_i\big(\epsilon_\theta(\tau_t, t, \mathbf{c}_i) - \epsilon_\theta(\tau_t, t)\big)$$
 
-    - 功能：为每个任务找最优组合权重
-    - 核心思路：在 $w \in [0, 1]$ 上以 0.1 步长搜索，选择在验证数据上表现最好的权重
-    - 设计动机：最优权重是任务依赖的——说明即使相同的两个父策略，不同任务需要不同的组合比例
+也就是说，每个去噪步骤把各父策略的分数估计凸组合成 $\hat{s}_{\text{comp}} = w_1 s_1 + w_2 s_2$ 再去噪。关键在于组合发生在分数空间，而不是动作或网络层面——只要能从一个策略里提取出分数函数，哪怕它去噪步数不同、噪声调度不同、甚至是 flow-matching 而非 diffusion，都能先统一到分数空间再相加。正因如此，GPC 不要求父策略在架构、输入模态或训练数据上保持一致，可以把 VA 和 VLA、RGB 和点云输入混着组合。
 
-4. **替代组合算子（AND/OR）**:
+**3. 测试时权重搜索：最优混合比例是任务依赖的，所以逐任务搜。**
 
-    - AND 组合（分布乘积）：$\nabla \log p(\tau) = \nabla \log p_1(\tau) + \nabla \log p_2(\tau)$，等价于只在两个策略都认可的区域采样
-    - OR 组合（分布混合）：$p(\tau) \propto w_1 p_1(\tau) + w_2 p_2(\tau)$，保留两个策略的多模态性
+权重 $w$ 不是拍脑袋定的常数。GPC 在 $w \in \{0.0, 0.1, \dots, 1.0\}$ 上以 0.1 步长枚举这 11 个值，用验证数据上的表现挑出最优的那个。这一步揭示的事实是：即便是同样的两个父策略，不同任务也需要不同的组合比例（实测最优 $w$ 在 0.2~0.8 间大幅波动），固定权重无法通用——这正是它相对 PoCo 等固定权重方法的关键改进。代价是每个任务要额外评估 11 个权重点，但相比训练成本几乎可忽略。
+
+**4. 替代组合算子（AND / OR）：凸组合之外，按任务需求换不同的概率语义。**
+
+凸组合是默认选择，但论文还给出两种语义不同的组合算子供按需替换。AND 组合对应分布乘积，分数直接相加 $\nabla \log p(\tau) = \nabla \log p_1(\tau) + \nabla \log p_2(\tau)$，效果是只在两个策略都认可的区域采样，适合对精度要求高的任务；OR 组合对应分布混合 $p(\tau) \propto w_1 p_1(\tau) + w_2 p_2(\tau)$，保留两个策略各自的多模态性，适合需要动作多样性的任务。三者各有适用场景，给了部署时一个可调的旋钮。
 
 ### 损失函数 / 训练策略
 
@@ -133,10 +130,10 @@ Robomimic（6 个任务）、PushT、RoboTwin 基准：
 ## 相关论文
 
 - [\[ICLR 2026\] Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)](improving_discrete_diffusion_unmasking_policies_beyond_explicit_reference_polici.md)
-- [\[ICLR 2026\] Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
-- [\[ICLR 2026\] Steer Away From Mode Collisions: Improving Composition In Diffusion Models](steer_away_from_mode_collisions_improving_composition_in_diffusion_models.md)
 - [\[NeurIPS 2025\] Failure Prediction at Runtime for Generative Robot Policies](../../NeurIPS2025/image_generation/failure_prediction_at_runtime_for_generative_robot_policies.md)
-- [\[ICLR 2026\] Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations](contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas.md)
+- [\[ICLR 2026\] Steer Away From Mode Collisions: Improving Composition In Diffusion Models](steer_away_from_mode_collisions_improving_composition_in_diffusion_models.md)
+- [\[ICLR 2026\] Test-Time Iterative Error Correction for Efficient Diffusion Models](test-time_iterative_error_correction_for_efficient_diffusion_models.md)
+- [\[NeurIPS 2025\] Real-Time Execution of Action Chunking Flow Policies](../../NeurIPS2025/image_generation/real-time_execution_of_action_chunking_flow_policies.md)
 
 </div>
 

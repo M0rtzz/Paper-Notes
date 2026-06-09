@@ -36,40 +36,19 @@ tags:
 
 ## 方法详解
 
-### 金字塔 Patch 化方案
+### 整体框架
 
-将时间步分为多个阶段，每阶段使用不同 patch 大小：
+PPFlow 把整个去噪轨迹按时间步切成几个阶段，每个阶段配一套不同的 patch 大小：高噪声段用大 patch（token 少、算得快），低噪声段退回标准的 $2\times2$ patch（token 多、保细节）。除了首尾的 Patchify/Unpatchify 线性投影按阶段各配一套外，所有 DiT block 的参数在阶段间完全共享，因此推理流程和普通 DiT 别无二致，只是不同时间步喂进去的 token 数不一样。
 
-**三级示例**：
-- $[0, t_{s_1})$：patch 大小 $4 \times 4$（高噪声，$L = (I/4)^2$ 个 token）
-- $[t_{s_1}, t_{s_2})$：patch 大小 $4 \times 2$
-- $[t_{s_2}, 1]$：patch 大小 $2 \times 2$（低噪声，正常 DiT）
+### 关键设计
 
-### 参数共享策略
+**1. 阶段化金字塔 patch 化：让高噪声步用更少 token。** 核心观察是高噪声时图像几乎没有空间细节，用细 patch 表示纯属浪费。PPFlow 把时间区间 $[0,1]$ 划成多段，越靠近高噪声（$t$ 越小）patch 越大。以三级方案为例：$[0,t_{s_1})$ 用 $4\times4$ patch，token 数降到 $L=(I/4)^2$；$[t_{s_1},t_{s_2})$ 用过渡的 $4\times2$；$[t_{s_2},1]$ 回到 $2\times2$ 的正常 DiT。由于每个 DiT block 的复杂度是 $\mathcal{O}(L_s^2 d + L_s d)$，token 数 $L_s$ 一减，注意力的平方项立刻塌下来，整段去噪的算力随之大幅下降。
 
-- **Patchify/Unpatchify**：每阶段有独立线性投影矩阵 $\mathbf{W}_{s_i} \in \mathbb{R}^{d \times d_{s_i}}$
-- **DiT blocks**：所有阶段共享相同参数
-- **关键点**：Patchify 成本不依赖 patch 大小（$L_s \times d_s \times d = I^2 C d$），DiT blocks 成本依赖 token 数
+**2. Patchify 分阶段、DiT block 全共享：几乎零额外参数换来提速。** 每个阶段只有一对独立的投影矩阵 $\mathbf{W}_{s_i}\in\mathbb{R}^{d\times d_{s_i}}$ 负责把不同尺寸的 patch 映到同一隐藏维 $d$，而占模型绝大部分容量的 DiT block 一套参数走天下。这样做的底气在于成本结构：Patchify 这步的代价 $L_s\times d_s\times d = I^2 C d$ 其实与 patch 大小无关（patch 越大、token 越少但每个 token 越宽，正好抵消），真正吃算力的 DiT block 才依赖 token 数。在 DiT-XL/2 里约 99.8% 的 FLOPs 都落在 DiT block，所以只要把高噪声段的 token 砍掉，整体 FLOPs 就直接下降——二级方案减 37.8%，三级方案减 50.6%。
 
-### 计算复杂度
+**3. 从预训练 DiT 平滑初始化：低成本微调即可上手。** 大 patch 的投影矩阵不是从头随机学，而是由现成 $2\times2$ 投影复制扩展而来，让新阶段一开始就站在预训练模型的肩膀上。Patchify 端用平均化把 $2\times2$ 投影摊到 $4\times4$，$\mathbf{W}_2=\frac{1}{4}[\mathbf{W},\mathbf{W},\mathbf{W},\mathbf{W}]$；Unpatchify 端则直接堆叠复制，$\mathbf{W}_2^u=[(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top]^\top$。靠这套初始化，从预训练 SiT-XL/2 出发只需约 8% 的额外训练量就能恢复同等质量，省去了重训整个模型的代价。
 
-每个 DiT block 的复杂度：$\mathcal{O}(L_s^2 d + L_s d)$
-
-DiT-XL/2 中约 99.8% 的 FLOPs 在 DiT blocks 中 → 减少 token 数直接减少计算。
-- 二级 PPFlow：FLOPs 减少 37.8%
-- 三级 PPFlow：FLOPs 减少 50.6%
-
-### 从预训练 DiT 初始化
-
-**Patchify 初始化**（平均化）：将 $2 \times 2$ patch 投影扩展到 $4 \times 4$：
-
-$$\mathbf{W}_2 = \frac{1}{4}[\mathbf{W}, \mathbf{W}, \mathbf{W}, \mathbf{W}]$$
-
-**Unpatchify 初始化**（复制）：
-
-$$\mathbf{W}_2^u = [(\mathbf{W}^u)^\top, (\mathbf{W}^u)^\top, (\mathbf{W}^u)^\top, (\mathbf{W}^u)^\top]^\top$$
-
-### 与 Pyramidal Flow 的关键区别
+**4. 全分辨率潜空间操作：绕开 Pyramidal Flow 的重噪声技巧。** 同样是金字塔思路，PPFlow 与 Pyramidal Flow 的根本差别在于它始终在全分辨率潜空间上做去噪，只是改变 patch 划分粒度，而不像后者那样在多分辨率之间切换。这一点保证了流过程满足连续性方程，阶段切换处不会出现"跳跃点"，也就不需要 Pyramidal Flow 那套为了缝合不同分辨率而设计的复杂重噪声技巧，推理流程可以和标准 DiT 完全对齐。
 
 | 特性 | PPFlow | Pyramidal Flow |
 |------|--------|---------------|
@@ -147,8 +126,8 @@ $$\mathbf{W}_2^u = [(\mathbf{W}^u)^\top, (\mathbf{W}^u)^\top, (\mathbf{W}^u)^\to
 ## 相关论文
 
 - [\[ICLR 2026\] Next Visual Granularity Generation](next_visual_granularity_generation.md)
-- [\[ICLR 2026\] SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
 - [\[ICLR 2026\] Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+- [\[ICLR 2026\] SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
 - [\[ICLR 2026\] RMFlow: Refined Mean Flow by a Noise-Injection Step for Multimodal Generation](rmflow_refined_mean_flow_by_a_noise-injection_step_for_multimodal_generation.md)
 - [\[ICML 2026\] Bootstrap Your Generator: Unpaired Visual Editing with Flow Matching](../../ICML2026/image_generation/bootstrap_your_generator_unpaired_visual_editing_with_flow_matching.md)
 

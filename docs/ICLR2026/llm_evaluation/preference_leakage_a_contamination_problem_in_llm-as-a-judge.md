@@ -45,19 +45,15 @@ tags:
 
 ## 方法详解
 
-### 问题形式化
+### 整体框架
 
-定义三类实体：
+本文不提出新模型，而是把"合成数据生成—模型训练—评委打分"这条主流管线拆开，定位其中一个被忽视的耦合点：当数据生成器与评委模型存在关联时，评委会系统性高估那些用该生成器数据训出来的学生模型。围绕这一点，作者先把偏好泄漏形式化为一个可证伪的不等式，再设计可量化的 PLS 指标，最后用受控的"三生成器 × 两学生 × 三评委"矩阵实验把这种偏差测出来。
 
-- **数据生成器 $M_G$**：生成合成数据集 $D_{syn}$ 用于训练学生模型，条件分布为 $P_{M_G}(y|x)$
-- **学生模型 $M_S$**：在 $D_{syn}$ 上训练，输出分布为 $P_{M_S}(y|x)$
-- **评委模型 $M_J$**：提供评分函数 $S_{M_J}(y|x)$
+### 关键设计
 
-**偏好泄漏**发生的条件：当 $M_G$ 与 $M_J$ 存在关联时，$M_J$ 对 $M_S$ 的输出给出膨胀分数——不是因为质量更高，而是因为 $M_S$ 继承了 $M_G$ 的虚假特征（风格、格式、措辞），而 $M_J$ 对这些特征有天然偏好：
+**1. 问题形式化：把"评委偏心"写成一个可检验的不等式。** 管线里有三类实体——数据生成器 $M_G$ 生成合成集 $D_{syn}$（条件分布 $P_{M_G}(y|x)$），学生模型 $M_S$ 在 $D_{syn}$ 上训练得到输出分布 $P_{M_S}(y|x)$，评委 $M_J$ 提供评分函数 $S_{M_J}(y|x)$。偏好泄漏指的是：当 $M_G$ 与 $M_J$ 关联时，$M_J$ 给 $M_S$ 的分数被人为抬高，但这种抬高并非因为回答质量更好，而是 $M_S$ 从 $M_G$ 继承了风格、格式、措辞这些虚假特征，恰好是 $M_J$ 天然偏爱的。作者把它写成期望上的不等式：$\mathbb{E}_{x, y_S \sim P_{M_S}}[S_{M_J}(y_S|x) \mid M_G \sim_{rel} M_J] > \mathbb{E}_{x, y_S \sim P_{M_S}}[S_{M_{J'}}(y_S|x) \mid M_G \not\sim_{rel} M_{J'}]$，即关联评委给的期望分高于无关联评委。这一形式化的价值在于把一个模糊的"评委偏心"直觉变成了可以用胜率数据直接检验的命题。
 
-$$\mathbb{E}_{x, y_S \sim P_{M_S}}[S_{M_J}(y_S|x) \mid M_G \sim_{rel} M_J] > \mathbb{E}_{x, y_S \sim P_{M_S}}[S_{M_{J'}}(y_S|x) \mid M_G \not\sim_{rel} M_{J'}]$$
-
-### 三种关联类型
+**2. 三种关联类型：把"关联"从二元变成有梯度的谱系。** 现实中生成器与评委的关系远不止"是不是同一个模型"，作者按耦合紧密度分成三档，让后续实验能测出泄漏随关联强度的变化趋势：
 
 | 类型 | 定义 | 典型场景 |
 |------|------|---------|
@@ -65,20 +61,15 @@ $$\mathbb{E}_{x, y_S \sim P_{M_S}}[S_{M_J}(y_S|x) \mid M_G \sim_{rel} M_J] > \ma
 | **继承关系 (Inheritance)** | $M_J \leftarrow \text{FineTune}(M_G, D)$ 或反向 | GPT-4o 生成数据 → 微调得到的模型做评委 |
 | **同家族 (Same Family)** | $M_G, M_J \in \text{Family}(A_X, D_X)$ | GPT-4o 生成数据，GPT-4-turbo 做评委 |
 
-### 偏好泄漏评分 (PLS)
+这样设计是为了验证一个核心假设：泄漏不是"同模型才有"的极端现象，只要存在血缘就会按比例渗出，从而把问题的影响范围从少数自评场景扩大到整个模型家族。
 
-为量化偏好泄漏引入的偏差程度，定义 Preference Leakage Score：
+**3. 偏好泄漏评分 PLS：用对称的相对胜率差把偏差量化成一个数。** 要比较"评委偏心了多少"，需要一个可跨设置对齐的标量。作者定义 Preference Leakage Score，核心是拿评委给关联学生的胜率与一个中性基准做相对差，再对两个互为对照的模型对取对称平均：
 
 $$\text{PLS}(i,j) = \frac{\left(\frac{\text{WR}(i,i) - \text{AVG}(i,j)}{\text{AVG}(i,j)}\right) + \left(\frac{\text{WR}(j,j) - \text{AVG}(j,i)}{\text{AVG}(j,i)}\right)}{2}$$
 
-其中 $\text{WR}(i,j)$ 为评委 $j$ 给学生模型 $i$ 的胜率，$\text{AVG}(i,j) = \frac{\text{WR}(i,i) + \text{WR}(i,j)}{2}$。PLS > 0 表示评委偏好其关联学生模型，值越大偏差越严重。
+其中 $\text{WR}(i,j)$ 是评委 $j$ 给学生模型 $i$ 的胜率，$\text{AVG}(i,j) = \frac{\text{WR}(i,i) + \text{WR}(i,j)}{2}$ 充当去掉偏心后的参照基线。$\text{PLS} > 0$ 表示评委确实偏好与自己关联的学生模型，数值越大偏差越严重；取对称平均则抵消了两个模型本身强弱不同带来的干扰，让指标只反映"关联"这一项贡献。
 
-### 实验设计
-
-- **数据生成**：从 UltraFeedback 采样 30,000 条 prompt，分别用 GPT-4o、Gemini-1.5-flash、LLaMA-3.3-70B 生成回答
-- **学生模型**：Mistral-7B-v0.1 和 Qwen-2.5-14B（均使用预训练版本而非 instruct 版本，避免已有蒸馏数据干扰）
-- **评估基准**：Arena-Hard (500 题) 和 AlpacaEval 2.0 (805 题)
-- **对比设置**：三个生成器 × 两个学生模型 × 三个评委 × 两个 benchmark
+**4. 受控实验矩阵：用预训练底座隔离干扰，把泄漏从噪声里分离出来。** 为了让测出的偏差只来自合成数据本身，作者从 UltraFeedback 采样 30,000 条 prompt，分别用 GPT-4o、Gemini-1.5-flash、LLaMA-3.3-70B 三个生成器各自产出回答；学生模型选 Mistral-7B-v0.1 和 Qwen-2.5-14B，关键是都用**预训练版本而非 instruct 版本**，以避免底座里已有的蒸馏数据混入泄漏信号。评估则跑在 Arena-Hard（500 题）和 AlpacaEval 2.0（805 题）两个基准上，最终铺成"三生成器 × 两学生 × 三评委 × 两 benchmark"的对照矩阵——这套设计让每一组 PLS 都有可比的对照项，是后续所有结论能成立的实验地基。
 
 ---
 
@@ -195,11 +186,11 @@ $$\text{PLS}(i,j) = \frac{\left(\frac{\text{WR}(i,i) - \text{AVG}(i,j)}{\text{AV
 
 ## 相关论文
 
-- [\[ICML 2026\] REAL：把回归感知奖励塞进 RL，让 LLM-as-a-Judge 学会"差一分也是差"](../../ICML2026/llm_evaluation/real_regression-aware_reinforcement_learning_for_llm-as-a-judge.md)
+- [\[ICLR 2026\] Doubly-Robust LLM-as-a-Judge: Externally Valid Estimation with Imperfect Personas](doubly-robust_llm-as-a-judge_externally_valid_estimation_with_imperfect_personas.md)
 - [\[ICLR 2026\] Subliminal Signals in Preference Labels](subliminal_signals_in_preference_labels.md)
+- [\[ICML 2026\] REAL：把回归感知奖励塞进 RL，让 LLM-as-a-Judge 学会"差一分也是差"](../../ICML2026/llm_evaluation/real_regression-aware_reinforcement_learning_for_llm-as-a-judge.md)
 - [\[ICLR 2026\] BiasScope: Towards Automated Detection of Bias in LLM-as-a-Judge Evaluation](biasscope_towards_automated_detection_of_bias_in_llm-as-a-judge_evaluation.md)
 - [\[ICLR 2026\] Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework](unpacking_human_preference_for_llms_demographically_aware_evaluation_of_long-fo.md)
-- [\[AAAI 2026\] LLM-as-a-Judge for Scalable Test Coverage Evaluation](../../AAAI2026/llm_evaluation/llm-as-a-judge_for_scalable_test_coverage_evaluation_accuracy_operational_reliab.md)
 
 </div>
 

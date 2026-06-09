@@ -40,36 +40,15 @@ tags:
 
 ### 整体框架
 
-将长上下文 RLVR 策略显式分解为两阶段：
-- **Grounding Head** $\pi_\theta^{gnd}(Z|X,Q)$：从上下文 X 中选择相关证据子集 Z
-- **Answer Head** $\pi_\theta^{ans}(y|X,Q,Z)$：基于选中证据生成最终答案 y
+LongRLVR 把长上下文策略显式拆成两个串联的"头"：Grounding Head $\pi_\theta^{gnd}(Z|X,Q)$ 先从上下文 $X$ 中挑出相关证据子集 $Z$，Answer Head $\pi_\theta^{ans}(y|X,Q,Z)$ 再基于这些证据生成答案 $y$。训练时模型先吐出 chunk 标识符列表完成定位，再生成最终答案，于是 RLVR 既能奖励答对、也能直接奖励"找对地方"。
 
-训练时，模型先生成 chunk 标识符列表（grounding），再生成最终答案。
+### 关键设计
 
-### 可验证上下文奖励
+**1. 可验证上下文奖励：给稀疏的答案信号补上一条密集的定位梯度。** outcome-only RLVR 在长上下文里失效的根源是答案奖励太稀疏，定位过程拿不到有效信号。LongRLVR 把总奖励拆成答案奖励加上下文奖励 $r_{total}(y,Z) = r_{ans}(y) + r_{ctx}(y,Z,G)$，其中上下文奖励用一个"调制 F-score"设计：$r_{ctx}(y,Z,G) = \eta \cdot F_\beta(Z,G) + (1-\eta) \cdot r_{ans}(y) \cdot F_\beta(Z,G)$。前一项 $\eta \cdot F_\beta$ 是无条件定位奖励，不管答案对错都按选中 chunk 与 ground-truth $G$ 的 F-score 给分，保证 grounding 始终有密集学习信号；后一项 $(1-\eta) \cdot r_{ans} \cdot F_\beta$ 是协同成功奖励，只有答案正确时才解锁完整的定位分数，避免模型为刷召回而胡乱选 chunk、让定位和最终目标脱钩。两项权重取 $\eta=0.1$（密集信号只占小头、主要靠协同项对齐目标），F-score 的 $\beta=2$ 偏重召回，因为多证据推理里漏掉一块证据比多选一块代价更高。
 
-总奖励 = 答案奖励 + 上下文奖励：
+**2. 梯度消失的消除：让定位梯度不再被"激活事件"概率压垮。** 作者证明 outcome-only reward 下，选中某个 ground-truth chunk $c_j$ 的正梯度会被一个"激活事件"概率 $Pr(\varepsilon_j)$ 缩放——只有当其余必要证据都已被选中时这块证据才显出价值，而训练初期这种巧合几乎不发生，于是 grounding head 的梯度被压到接近零，召回率早早停滞。上下文奖励改变了这一点：Proposition 2 表明它为每个 $c_j$ 提供的梯度包含一项 $\alpha_j \cdot Var(z_j)$，这一项只依赖该 chunk 自身选择概率的方差、与稀有的激活事件无关，因此即便其它证据尚未选对，单独选对一块也能拿到稳定正梯度，从根上消除了梯度消失。
 
-$$r_{total}(y,Z) = r_{ans}(y) + r_{ctx}(y,Z,G)$$
-
-上下文奖励采用调制 F-score 设计：
-
-$$r_{ctx}(y,Z,G) = \eta \cdot F_\beta(Z,G) + (1-\eta) \cdot r_{ans}(y) \cdot F_\beta(Z,G)$$
-
-- **无条件定位奖励** $\eta \cdot F_\beta$：为 grounding 提供稳定的密集学习信号
-- **协同成功奖励** $(1-\eta) \cdot r_{ans} \cdot F_\beta$：只有答案正确时才解锁完整的定位奖励，防止定位与最终目标脱钩
-- 超参数：$\eta=0.1$，$\beta=2$（偏重召回）
-
-### 理论保证（Proposition 2）
-
-上下文奖励为每个 ground-truth chunk $c_j$ 提供的梯度包含 $\alpha_j \cdot Var(z_j)$ 项，该项不依赖稀有的"激活事件"概率，从而消除梯度消失。
-
-### 合成数据流水线
-
-- 从 book/arXiv/code 领域采集 8K-64K token 长文档
-- 语义聚类→每个聚类用 Qwen3-235B 生成候选 QA 对并标注 grounding chunks
-- 两阶段拒绝采样（簇内最优→文档最优），质量评分 > 9/10
-- 最终生成 46K 高质量长上下文 QA 数据
+**3. 合成数据流水线：用拒绝采样造出带 grounding 标注的长上下文 QA。** 训练上下文奖励需要每条样本都有 ground-truth chunk 标注，公开数据稀缺，作者自建流水线：从 book / arXiv / code 三个领域采集 8K–64K token 的长文档，做语义聚类后让 Qwen3-235B 为每个聚类生成候选 QA 对并标注对应的 grounding chunks，再经两阶段拒绝采样（先在簇内选最优、再在文档级选最优、质量评分需 > 9/10）筛掉低质样本，最终得到 46K 条高质量长上下文 QA。消融显示过滤太简单的题有益、过滤过难的题反而有害，说明数据难度分布本身也是质量的一部分。
 
 ## 实验
 

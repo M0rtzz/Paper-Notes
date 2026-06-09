@@ -39,28 +39,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Delta-XAI 的输入是一个在线时间序列监控模型（如LSTM）和流式到达的时间序列数据。在每个时间步 t，框架不仅关注当前预测，更关注从 t-1 到 t 的预测变化（Δ prediction）。输出是每个输入特征对预测变化的归因分数，帮助用户理解"哪些特征导致了预测的变化"。
-
-整体pipeline包含三个阶段：
-- **包装适配阶段**：通过 PredictionDifferenceWrapper 将14种XAI方法统一适配到预测变化解释场景
-- **归因计算阶段**：使用适配后的方法计算特征对预测变化的贡献
-- **评估阶段**：通过多维度评估套件量化解释质量
+给定一个在线时间序列监控模型 $f$（如 LSTM）和流式到达的数据，Delta-XAI 不解释单步预测 $f(x_t)$，而是解释预测变化 $\Delta_t = f(x_t) - f(x_{t-1})$，输出每个输入特征对这个变化量的归因分数。框架先用一个包装器把现有 14 种 XAI 方法的归因目标统一改写到 $\Delta_t$ 上，再用提出的 SWING 方法计算时序感知的归因，最后由一套多维评估套件量化解释质量。
 
 ### 关键设计
 
-1. **Prediction Difference Wrapper（预测差异包装器）**: 这是框架的核心抽象层。对于任意XAI方法 E，包装器将其从"解释单点预测"转化为"解释预测变化"。具体做法是：将原始归因方法的目标从 f(x_t) 转换为 f(x_t) - f(x_{t-1})，即对预测差值进行归因。这样，任何现有的XAI方法（如SHAP、LIME、梯度方法等）都可以无缝接入到在线预测变化解释场景中。这14种方法涵盖了梯度类（如Saliency、IG、SmoothGrad）、扰动类（如SHAP、LIME）和注意力类等多种范式。
+**1. 预测差异包装器（Prediction Difference Wrapper）：把"解释一个值"改成"解释一个变化"。**
 
-2. **SWING（Shifted Window Integrated Gradients）**: 这是本文提出的新方法，基于关键洞察——标准的Integrated Gradients（IG）使用零基线或随机基线作为积分起点，这在在线场景中会导致两个问题：(a) 零基线可能偏离数据分布造成OOD效应，(b) 忽略了时间上下文信息。SWING 的核心思路是使用"移位窗口"——将前一个时间步的观测 x_{t-1} 作为积分路径的起点，从 x_{t-1} 到 x_t 进行积分。这样做有三个优势：积分路径始终在数据分布内（避免OOD）、自然捕获时序变化、且积分结果直接对应预测差异的归因。
+现有 XAI 方法几乎都是为静态单点预测设计的——它们回答"哪些特征支撑了 $f(x_t)$"，却答不了在线监控真正关心的"预测为什么从 $t-1$ 变到了 $t$"。包装器是一个轻量抽象层：对任意归因方法 $E$，把它的解释目标从 $f(x_t)$ 替换为差值 $f(x_t) - f(x_{t-1})$，归因便落在预测变化而非绝对预测上。这一步不改方法内部实现，因此梯度类（Saliency、IG、SmoothGrad、Gradient×Input）、扰动类（KernelSHAP、LIME、Occlusion、Feature Ablation）等共 14 种范式都能零成本接入预测变化解释场景，框架也因此能立刻受益于未来任何新出现的 XAI 方法。
 
-3. **多维度评估套件**: 框架引入了一套原则性的评估指标，从多个角度评估在线场景下解释的质量：
+**2. SWING（Shifted Window Integrated Gradients）：用上一时刻观测当积分基线。**
 
-    - **忠实度（Faithfulness）**: 衡量归因分数是否真实反映了模型对特征的依赖程度。通过逐步掩蔽最重要/最不重要的特征，观察预测变化的幅度
-    - **充分性（Sufficiency）**: 仅保留高归因特征，验证是否足以重现预测变化
-    - **一致性（Coherence）**: 在相似的输入条件下，解释是否保持时间上的连贯性和稳定性
-    - 此外还包括紧凑性等其他评价维度
+标准 Integrated Gradients 沿直线从某个基线积分到 $x_t$，但在在线场景里通常用的零基线有两个毛病：一是零向量往往落在数据分布之外，产生 OOD 假象、让归因不可信；二是它丢掉了时间上下文，与"解释变化"的目标脱节。SWING 的做法是把积分起点直接换成前一时间步的真实观测 $x_{t-1}$，沿 $x_{t-1} \to x_t$ 的直线路径做积分：
+
+$$\text{SWING}_i(x_t) = (x_{t,i} - x_{t-1,i}) \int_{0}^{1} \frac{\partial f\big(x_{t-1} + \alpha (x_t - x_{t-1})\big)}{\partial x_{t,i}}\, d\alpha$$
+
+这样积分路径整段都在数据流形附近，避开了 OOD；起点终点之差天然就是相邻两步的输入变化，所以积分结果在数值上直接对应预测差异 $\Delta_t$ 的特征归因，时序依赖被自然地编码进路径里。实现上沿路径取 50–300 步离散采样以平衡精度与开销。
+
+**3. 多维度评估套件：在线解释好不好要分维度量。**
+
+在线场景缺少现成的解释评估标准，本文给出一套原则性指标，避免用单一数字掩盖方法之间的强弱差异。**忠实度（Faithfulness）** 按归因分数从高到低逐步掩蔽特征（Top-$k$ 掩蔽），观察预测变化幅度的衰减曲线，衰减越快说明归因越真实地反映了模型依赖；**充分性（Sufficiency）** 反过来只保留高归因特征，检验它们是否足以重现原预测变化；**一致性（Coherence）** 衡量相似输入下解释在时间上是否连贯稳定，这是在线场景独有、静态评估无法覆盖的维度；此外还含紧凑性等评价角度。各指标都通过扰动实验与统计检验得出，不引入额外训练。
 
 ### 损失函数 / 训练策略
-本文的核心贡献不在于训练新模型，而在于解释方法的设计和评估。目标模型（LSTM）使用标准的时间序列预测损失进行训练。SWING方法本身不需要额外训练，而是直接利用模型的梯度信息计算归因。评估套件中的各项指标均通过扰动实验和统计检验来量化，不涉及额外的学习过程。
+框架的贡献在解释方法本身而非新模型，因此目标 LSTM 用标准时间序列预测损失训练即可。SWING 与包装器都只读取已训练模型的梯度，不需要任何额外学习；评估套件的各项指标也全部由扰动与统计检验得到，整条解释与评估链路无新增可训练参数。
 
 ## 实验关键数据
 
@@ -126,11 +126,11 @@ Delta-XAI 的输入是一个在线时间序列监控模型（如LSTM）和流式
 
 ## 相关论文
 
+- [\[ICLR 2026\] Online Time Series Prediction Using Feature Adjustment](online_time_series_prediction_using_feature_adjustment.md)
 - [\[ICLR 2026\] Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework](towards_robust_real-world_multivariate_time_series_forecasting_a_unified_framewo.md)
 - [\[ICLR 2026\] ResCP: Reservoir Conformal Prediction for Time Series Forecasting](rescp_reservoir_conformal_prediction_for_time_series_forecasting.md)
-- [\[ACL 2026\] A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting](../../ACL2026/time_series/a_unified_framework_for_modeling_heterogeneous_financial_data_via_dual-granulari.md)
-- [\[ICLR 2026\] Language in the Flow of Time: Time-Series-Paired Texts Weaved into a Unified Temporal Narrative](language_in_the_flow_of_time_time-series-paired_texts_weaved_into_a_unified_temp.md)
 - [\[ICLR 2026\] SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
+- [\[ICLR 2026\] Uni-NTFM: A Unified Foundation Model for EEG Signal Representation Learning](uni-ntfm_a_unified_foundation_model_for_eeg_signal_representation_learning.md)
 
 </div>
 

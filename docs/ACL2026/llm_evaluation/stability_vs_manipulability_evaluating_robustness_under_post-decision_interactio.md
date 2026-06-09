@@ -149,8 +149,8 @@ tags:
 - [\[ACL 2026\] Fin-Bias: Comprehensive Evaluation for LLM Decision-Making under human bias in Finance Domain](fin-bias_comprehensive_evaluation_for_llm_decision-making_under_human_bias_in_fi.md)
 - [\[ACL 2026\] Aggregate vs. Personalized Judges in Business Idea Evaluation: Evidence from Expert Disagreement](aggregate_vs_personalized_judges_in_business_idea_evaluation_evidence_from_exper.md)
 - [\[NeurIPS 2025\] On Evaluating LLM Alignment by Evaluating LLMs as Judges](../../NeurIPS2025/llm_evaluation/on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
-- [\[ACL 2026\] Pressure-Testing Deception Probes in LLMs: Scaling, Robustness, and the Geometry of Deceptive Representations](pressure-testing_deception_probes_in_llms_scaling_robustness_and_the_geometry_of.md)
 - [\[ECCV 2024\] R²-Bench: Benchmarking the Robustness of Referring Perception Models under Perturbations](../../ECCV2024/llm_evaluation/r2-bench_benchmarking_the_robustness_of_referring_perception_models_under_pertur.md)
+- [\[ACL 2026\] Pressure-Testing Deception Probes in LLMs: Scaling, Robustness, and the Geometry of Deceptive Representations](pressure-testing_deception_probes_in_llms_scaling_robustness_and_the_geometry_of.md)
 
 </div>
 

@@ -35,29 +35,17 @@ tags:
 
 ## 方法详解
 
-### 配对样本路由差异检测
+### 整体框架
 
-给定展示对立行为的配对输入 $(x^{(1)}, x^{(2)})$，计算每个专家的激活率差异：
+SteerMoE 把 MoE 路由器当成一个现成的行为接口：先用一组体现"对立行为"的配对输入跑一遍模型，统计每个专家在两类输入下的激活率差异，从而把"安全""忠实"等行为定位到具体专家；推理时再直接改写路由分数，强行激活或去激活这些专家来引导生成方向。整个过程不改一个权重、不做任何训练，只复用前向时已有的路由计算。
 
-$$p^{(1)}_{\ell,i} = \frac{A^{(1)}_{\ell,i}}{N^{(1)}}, \quad p^{(2)}_{\ell,i} = \frac{A^{(2)}_{\ell,i}}{N^{(2)}}$$
+### 关键设计
 
-$$\Delta_{\ell,i} = p^{(1)}_{\ell,i} - p^{(2)}_{\ell,i}$$
+**1. 配对样本路由差异检测：把抽象行为定位到具体专家。** 难点在于"哪个专家负责安全"无法直接观察。SteerMoE 的做法是构造一对只在目标行为上对立、其余尽量相同的输入 $(x^{(1)}, x^{(2)})$，分别跑模型并统计每层每个专家被路由到的次数 $A_{\ell,i}$，归一化成激活率 $p^{(1)}_{\ell,i} = A^{(1)}_{\ell,i} / N^{(1)}$ 和 $p^{(2)}_{\ell,i} = A^{(2)}_{\ell,i} / N^{(2)}$，再取差值 $\Delta_{\ell,i} = p^{(1)}_{\ell,i} - p^{(2)}_{\ell,i}$。$\Delta_{\ell,i} > 0$ 说明专家 $i$ 偏向行为 1，$< 0$ 偏向行为 2，按 $|\Delta_{\ell,i}|$ 排序就能挑出与目标行为最纠缠的专家集合 $\mathcal{A}^+$（要增强的）和 $\mathcal{A}^-$（要抑制的）。这种差分设计天然抵消了两类输入共有的"通用专家"，只留下真正的行为关联信号，作者也借此观察到这些专家高度集中在模型中间层。
 
-$\Delta_{\ell,i} > 0$ 表示专家 $i$ 与行为 1 关联，$\Delta_{\ell,i} < 0$ 与行为 2 关联。按 $|\Delta_{\ell,i}|$ 排序选择要操控的专家。
+**2. log-softmax 域的硬性改写引导：在不破坏混合结构的前提下强制路由。** 选出专家后，关键是如何在推理时"强行让它出现或消失"又不至于让路由退化成单专家。SteerMoE 先把路由 logits 映射到统一尺度的 log-softmax 分数 $\mathbf{s} = \log\,\text{softmax}(\mathbf{z})$，然后对要激活的专家执行 $s_e \leftarrow s_{\max} + \varepsilon$（$e \in \mathcal{A}^+$），对要去激活的执行 $s_e \leftarrow s_{\min} - \varepsilon$（$e \in \mathcal{A}^-$），再重新 softmax 归一化、做 top-$k$ 选择与加权求和。这里 $\varepsilon$ 取很小的值是刻意的：它只保证被引导专家拿到当前最高或最低优先级，而不会把分数推到极端去碾压其余专家，从而保留 top-$k$ 仍是多专家混合的结构——既施加了方向性，又不至于让输出因路由塌缩而崩坏。
 
-### 引导设置
-
-1. 将路由 logits 映射到 log-softmax 分数 $\mathbf{s} = \log \text{softmax}(\mathbf{z})$ 统一尺度
-2. **激活规则**：$s_e \leftarrow s_{\max} + \varepsilon$（$e \in \mathcal{A}^+$）
-3. **去激活规则**：$s_e \leftarrow s_{\min} - \varepsilon$（$e \in \mathcal{A}^-$）
-4. 重新 softmax 归一化 → top-$k$ 选择 → 加权求和
-
-关键设计：$\varepsilon$ 很小，保证被引导专家获得最高/最低优先级但不压垮其他专家，保持多专家混合结构。
-
-### 检测对构建
-
-- **忠实性**：$x^{(1)}$ = "Document: {Context} Question: {Q}"（有文档），$x^{(2)}$ = "Question: {Q}"（无文档）
-- **安全性**：$x^{(1)}$ = 安全拒绝回复，$x^{(2)}$ = 不安全顺从回复（使用 BeaverTails 数据集）
+**3. 行为对比检测对的构建：用最小差异的输入对隔离单一行为。** 方法的可控性完全取决于配对输入是否只在目标行为上有差别。对忠实性，作者把 $x^{(1)}$ 设为带证据的 "Document: {Context} Question: {Q}"、$x^{(2)}$ 设为去掉文档的 "Question: {Q}"，两者只差"是否依赖上下文"，于是 $\Delta$ 捕捉到的正是"依据文档作答"对应的专家；对安全性，则用 BeaverTails 数据集把 $x^{(1)}$ 设为安全的拒绝回复、$x^{(2)}$ 设为不安全的顺从回复，差异锁定在"拒绝 vs 顺从"上。配对越干净，定位出的专家越纯粹，后续引导的副作用也越小，这也是控制集（如 MCTest）上通用 QA 几乎不受影响的原因。
 
 ## 实验关键数据
 
@@ -128,8 +116,8 @@ $\Delta_{\ell,i} > 0$ 表示专家 $i$ 与行为 1 关联，$\Delta_{\ell,i} < 0
 - [\[ICML 2026\] GEMQ: Global Expert-Level Mixed-Precision Quantization for MoE LLMs](../../ICML2026/model_compression/gemq_global_expert-level_mixed-precision_quantization_for_moe_llms.md)
 - [\[ICLR 2026\] SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
 - [\[ACL 2026\] Analytical FFN-to-MoE Restructuring via Activation Pattern Analysis](../../ACL2026/model_compression/analytical_ffn-to-moe_restructuring_via_activation_pattern_analysis.md)
+- [\[ICLR 2026\] ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
 - [\[ICML 2026\] Breaking the MoE LLM Trilemma: Dynamic Expert Clustering with Structured Compression](../../ICML2026/model_compression/breaking_the_moe_llm_trilemma_dynamic_expert_clustering_with_structured_compress.md)
-- [\[ICLR 2026\] KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models](kbvq-moe_klt-guided_svd_with_bias-corrected_vector_quantization_for_moe_large_la.md)
 
 </div>
 

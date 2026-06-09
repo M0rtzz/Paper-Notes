@@ -41,27 +41,21 @@ PC Agent-E 仅用 312 条人工标注的 Windows 操作轨迹，通过 Trajector
 ## 方法详解
 
 ### 整体框架
-PC Agent-E 是一个四阶段的高效训练框架：(1) 轨迹收集 — 人工标注 312 条 Windows 操作轨迹；(2) 思维补全 — 为人工动作重建隐式思维过程；(3) Trajectory Boost — 在每个时间步离线合成 9 条替代动作决策；(4) Agent 训练 — 在扩增后的 27K 训练样本上训练 Qwen2.5-VL-72B。输入是截图、任务描述和历史记录，输出是思维+动作对（ReAct 范式）。
+这篇论文要解决的是：开源 computer use agent 远落后于 Claude 这类闭源系统，而追平差距最直接的办法——堆高质量轨迹数据——又被标注成本和蒸馏的低效卡死。PC Agent-E 的整体思路是「少量人工轨迹 + 单步离线扩增」：先让两名标注者录 312 条真实的 Windows 操作轨迹当作可靠骨架，再为每一步补回缺失的思维过程，然后在每个时间步上让前沿模型离线合成多条替代动作，把单条轨迹「长」成一棵决策树，最后把树上所有节点拆成独立样本去训练 Qwen2.5-VL-72B。推理时模型按 ReAct 范式工作：输入是当前截图、任务描述和历史记录，输出是「思维 + 动作」对。
 
 ### 关键设计
 
-1. **Trajectory Collection（轨迹收集）**:
+**1. Trajectory Collection：用人完成任务的天然正确性换取无需验证的高质量骨架。**
 
-    - 功能：用 PC Tracker 工具录制两名标注者在 Windows 上完成 312 个任务的操作轨迹
-    - 核心思路：录制包括任务描述、截图序列和人类键盘/鼠标动作。标注者可以丢弃不满意的轨迹或修改任务描述。动作空间 $\mathcal{A}$ 包含 click、right click、double click、drag、scroll、press key、hotkey、type text、wait、finish、fail 共 11 种操作
-    - 设计动机：人类完成任务的正确性天然有保障，因此不需要额外验证。两个人一天就能完成标注，成本极低。通过 13-gram overlap < 0 和语义相似度 < 0.85 进行数据去污染
+数据稀缺是核心瓶颈，作者的应对不是大规模标注，而是只录一小批但保证每条都对。两名标注者用 PC Tracker 工具在 Windows 上完成 312 个任务，录制内容包括任务描述、截图序列和人类的键盘/鼠标动作，动作空间 $\mathcal{A}$ 覆盖 click、right click、double click、drag、scroll、press key、hotkey、type text、wait、finish、fail 共 11 种操作；标注者可以随时丢弃不满意的轨迹或修改任务描述。因为是人亲手做完的，结果正确性天然有保障，不需要任何额外验证环节，两个人一天就能完成全部标注，成本极低。为防止评测泄漏，再对任务做去污染：13-gram overlap 与语义相似度（阈值 0.85）双重过滤掉与测试集过近的样本。
 
-2. **Thought Completion（思维补全）**:
+**2. Thought Completion：给只有动作的人工轨迹补回 ReAct 训练所需的思维。**
 
-    - 功能：为原始人工轨迹的每一步重建隐式思维过程
-    - 核心思路：对每个动作步骤，向 Claude 3.7 Sonnet 提供任务描述、历史动作+已重建的思维过程、当前动作和对应截图，让其生成该动作背后的思维过程。这是迭代进行的——后续步骤的上下文包含前序步骤已重建的思维
-    - 设计动机：原始人工轨迹只有动作没有思维，但训练 ReAct 范式的 agent 需要 thought-action 对。补全思维后轨迹更完整，也为下一步的 Trajectory Boost 提供必要的历史上下文
+人录下来的轨迹只有动作没有推理，而要训练 ReAct 范式的 agent 必须有「思维 + 动作」成对的监督，这一步就是把缺失的思维补回去。对轨迹里的每个动作，作者把任务描述、历史动作连同已重建的思维、当前动作和对应截图一起喂给 Claude 3.7 Sonnet，让它反推出该动作背后的思维过程。补全是迭代进行的——后一步的上下文里包含前面各步已经重建好的思维，从而保持整条轨迹的推理连贯。补完之后轨迹既能直接用于训练，也为下一步的 Trajectory Boost 提供了必要的历史上下文。
 
-3. **Trajectory Boost（轨迹增强）**:
+**3. Trajectory Boost：用人工轨迹锚定环境状态，在每步离线合成多条替代动作把单轨迹扩成一棵树。**
 
-    - 功能：为人工轨迹的每个时间步合成 9 条替代动作决策
-    - 核心思路：每个时间步构成一个环境快照 $\langle T, o_k, h_k \rangle$（任务描述、观测截图、历史上下文），将其输入 Claude 3.7 Sonnet 并并行采样 9 个单步动作决策 $(t'_k, a'_k)$。最终构建一棵 **Traj Tree**：人工轨迹为主干，合成动作为叶节点
-    - 设计动机：这是全文最核心的创新。与端到端蒸馏相比，Trajectory Boost 有三大优势：(a) 避免错误累积——因为每步的环境状态由人工轨迹锚定，不会偏离；(b) **离线合成**，无需与真实环境交互，可自然并行化，速度快 300 倍（3 小时 vs 900 小时）；(c) 充分利用人工轨迹的**真实性**和前沿模型的**多样性**
+这是全文最核心的创新，针对的是端到端蒸馏「在线交互慢、多步累积误差」的痛点。作者观察到 computer use 任务每个时间步天然存在多条有效路径，于是把人工轨迹的每一步看成一个环境快照 $\langle T, o_k, h_k \rangle$（任务描述、当前观测截图、历史上下文），将快照输入 Claude 3.7 Sonnet 并行采样 9 个单步动作决策 $(t'_k, a'_k)$。这样每条人工轨迹就长成一棵 **Traj Tree**：人工轨迹是主干，每步合成的替代动作挂成叶节点。相比端到端蒸馏，这个设计同时拿下三点：其一，每步的环境状态都由人工轨迹锚定，模型只决策当前一步而不会顺着自己的错误偏离，从根上避免了错误累积；其二，合成是离线的、不与真实 VM 环境交互，因此可以自然并行化，速度比在线蒸馏快约 300 倍（3 小时 vs 900 小时）；其三，它同时吃到了人工轨迹的**真实性**和前沿模型的**多样性**，比单条人工路径或纯蒸馏样本都更有信息量。
 
 ### 损失函数 / 训练策略
 - 训练基于 Qwen2.5-VL-72B，使用标准 SFT 损失
@@ -135,7 +129,7 @@ PC Agent-E 相对 Qwen2.5-VL-72B 提升 141%，超越 Claude 3.7 Sonnet 10%。
 - [\[ACL 2026\] ToolGrad: Efficient Tool-use Dataset Generation with Textual "Gradients"](../../ACL2026/llm_agent/toolgrad_efficient_tool-use_dataset_generation_with_textual_gradients.md)
 - [\[ICLR 2026\] ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
 - [\[CVPR 2026\] CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare](../../CVPR2026/llm_agent/carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)
-- [\[ICLR 2026\] ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
+- [\[ICLR 2026\] M²-Miner: Multi-Agent Enhanced MCTS for Mobile GUI Agent Data Mining](m2-miner_multi-agent_enhanced_mcts_for_mobile_gui_agent_data_mining.md)
 
 </div>
 

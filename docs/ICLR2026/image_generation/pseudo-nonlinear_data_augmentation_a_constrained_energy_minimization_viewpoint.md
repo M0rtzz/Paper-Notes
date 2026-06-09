@@ -36,45 +36,23 @@ tags:
 
 ## 方法详解
 
-### 偏序集上的对数线性模型框架
+### 整体框架
 
-**三步嵌入流程**：
-1. **实值偏序集**：将数据结构（向量/矩阵/张量）建模为偏序集 $\Omega$
-2. **统计流形嵌入**：通过 $\varphi: \Omega_\mathbb{R} \to \mathcal{S}$ 将数据嵌入为概率分布
-3. **对偶平坦坐标**：通过对数线性模型获取自然参数 $\theta$ 和期望参数 $\eta$
+把任意结构的数据（向量、矩阵、张量）映射成统计流形上的概率分布，借助信息几何的对偶平坦坐标，让"降维—增强—重建"全部变成流形内的凸投影：正向投影把样本编码到低维平坦子流形 $\mathcal{B}$，在 $\mathcal{B}$ 里扰动或采样生成新点，再用反向投影解回原始数据空间。整个过程没有可学习参数，投影都有闭式解，所以"伪非线性"——坐标内是线性操作，回到环境空间却呈现非线性效果。
 
-对于正张量 $P$，嵌入定义为 $P'_v = P_v / \sum_{w \in \Omega} P_w$。
+### 关键设计
 
-### 正向投影（编码）
+**1. 偏序集对数线性嵌入：把数据变成流形上一点。** 数据增强要在"几何上有意义"的空间里做插值，而原始像素/特征空间的欧氏插值往往穿过低密度区。本文先把数据结构建模为实值偏序集 $\Omega$，再通过 $\varphi: \Omega_\mathbb{R} \to \mathcal{S}$ 把它嵌入为统计流形上的概率分布——对正张量 $P$，归一化为 $P'_v = P_v / \sum_{w \in \Omega} P_w$。借助 Sugiyama 等人的对数线性模型，每个分布同时拥有自然参数 $\theta$ 和期望参数 $\eta$ 两套对偶平坦坐标，这正是后续所有投影能闭式求解的根基。
 
-将数据投影到低维平坦子流形 $\mathcal{B} \subseteq \mathcal{S}$：
+**2. 正向投影做编码：用 KL 最小化保证降维不丢信息。** 降维若破坏数据分布，增强出来的样本就不可信。编码定义为 $\mathsf{Enc} = \text{Proj}_\mathcal{B} \circ \varphi: \Omega_\mathbb{R} \to \mathcal{B}$，即先嵌入再投影到低维平坦子流形 $\mathcal{B} \subseteq \mathcal{S}$。因为 $\mathcal{B}$ 是平坦子流形，投影点唯一存在，且它恰好是 KL 散度意义下离原分布最近的点。于是降维有了明确的信息论保证，而非任意截断。
 
-$$\mathsf{Enc} = \text{Proj}_\mathcal{B} \circ \varphi: \Omega_\mathbb{R} \to \mathcal{B}$$
+**3. 反向投影做解码：用近邻原像绕开逆问题。** 线性降维增强最大的痛点是逆问题——从低维表示重建高维数据通常病态。本文不直接求逆，而是用"数据的投影逆"做近似映射：对潜空间中的新点 $w^*$，先取其 $k$ 近邻 $N \subseteq [n]$，用这些近邻的原像就地拼出一个局部数据子流形 $\mathcal{D}$，再把 $w^*$ 投影回去 $z'^* = \text{Proj}_\mathcal{D}(w^*)$。这样解码始终落在真实数据撑起的局部结构上，避免凭空生成离群样本。
 
-投影唯一（$\mathcal{B}$ 为平坦子流形时）且最小化 KL 散度。
+**4. 多体近似控制保留哪些结构。** 编码子流形与局部数据子流形都用 $\ell$-body 近似来设计，$\ell$ 决定保留几阶交互。基础子流形把高于 $\ell$ 阶的自然参数清零：$\mathcal{M}_\ell = \{\theta \in \mathbb{R}^{\dim(\mathcal{S})} \mid \theta_x = 0 \text{ for all non } \ell\text{-body } x \in \Omega\}$；解码端则对偶地用近邻平均构造局部子流形 $\mathcal{M}_\ell^*(N) = \{\theta \mid \theta_x = \frac{1}{k}\sum_{i^* \in N}(\theta(z_{i^*}'))_x \text{ for all } \ell\text{-body } x\}$。$\ell$ 越小越粗（CIFAR-10 上 1-body 只保形状），越大越细（5-body 能留住形状—颜色的精细关系），从而把"保留哪些属性、增强哪些属性"做成可调旋钮。
 
-### 反向投影（解码）
+### 一个完整示例
 
-**核心创新**：利用数据的投影逆作为近似逆映射
-1. 找到潜空间中 $w^*$ 的 $k$ 近邻 $N \subseteq [n]$
-2. 基于近邻的原像构建局部数据子流形 $\mathcal{D}$
-3. 投影 $w^*$ 到 $\mathcal{D}$：$z'^* = \text{Proj}_\mathcal{D}(w^*)$
-
-### 多体近似的子流形设计
-
-基础子流形（$\ell$-body 近似）：
-
-$$\mathcal{M}_\ell = \{\theta \in \mathbb{R}^{\dim(\mathcal{S})} \mid \theta_x = 0 \text{ for all non } \ell\text{-body parameters } x \in \Omega\}$$
-
-局部数据子流形（对偶构造）：
-
-$$\mathcal{M}_\ell^*(N) = \{\theta \mid \theta_x = \frac{1}{k}\sum_{i^* \in N}(\theta(z_{i^*}'))_x \text{ for all } \ell\text{-body } x\}$$
-
-### 增强算法
-
-1. **编码**：$w_i = \mathsf{Enc}(z_i) = \text{Proj}_{\mathcal{B}} \circ \varphi(z_i)$
-2. **增强**：在潜空间 $\mathcal{B}$ 中生成新表示 $w^*$（核密度采样或受控扰动）
-3. **解码**：$z^* = \mathsf{Dec}(w^*) = \varphi^{-1} \circ \text{Proj}_\mathcal{B}^{-1}(w^*)$
+以一张图像样本 $z_i$ 为例走一遍增强流程。先编码：$w_i = \mathsf{Enc}(z_i) = \text{Proj}_{\mathcal{B}} \circ \varphi(z_i)$，把图像变成低维平坦子流形 $\mathcal{B}$ 上的一点。再增强：在 $\mathcal{B}$ 内用核密度采样或受控扰动生成新表示 $w^*$，因为这里是几何上对偶平坦的坐标，扰动得到的依然是合法分布。最后解码：$z^* = \mathsf{Dec}(w^*) = \varphi^{-1} \circ \text{Proj}_\mathcal{B}^{-1}(w^*)$，借第 3 点的近邻原像把 $w^*$ 拉回原始空间，得到一张新的增强图像。整条链路无需任何训练，每步都是凸投影。
 
 ## 实验关键数据
 

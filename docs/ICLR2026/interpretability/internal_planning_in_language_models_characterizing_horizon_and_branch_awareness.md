@@ -40,24 +40,25 @@ LLM展现出令人惊叹的能力，但其训练目标——下一token预测—
 
 ### 关键设计
 
-1. **VQ-VAE 隐状态压缩**:
+**1. VQ-VAE 隐状态压缩：把高维隐状态变成可计算 MI 的离散码。**
 
-    - 功能：将变长的高维隐状态集合 $G_\mathcal{S} = \{h_t^\ell | (\ell,t) \in \mathcal{S}\}$ 映射为离散码 $Z_\mathcal{S} \in [K]$
-    - 核心思路：Transformer编码器将变长输入映射为固定维度潜向量 $r_\mathcal{S}$，然后在codebook $\{e_k\}_{k=1}^K$ 中找最近邻量化为离散码 $k^* = \arg\min_k \|r_\mathcal{S} - e_k\|_2^2$
-    - 训练目标：$\mathcal{L} = \mathcal{L}_{\text{rec}} + \lambda_q \mathcal{L}_{\text{vq}} + \lambda_{\text{cos}} \mathcal{L}_{\text{cos}} + \lambda_{\text{ent}} \mathcal{L}_{\text{ent}}$。额外加入余弦相似度惩罚和熵正则化，确保码本多样且充分利用
-    - 设计动机：离散码既保留了区分不同计算的关键差异，又过滤了细粒度冗余细节，使MI估计更稳定
+直接对原始隐状态估互信息很不稳定——维度太高、又混着大量细粒度冗余。这一步先把变长的高维隐状态集合 $G_\mathcal{S} = \{h_t^\ell | (\ell,t) \in \mathcal{S}\}$ 压成一个离散码 $Z_\mathcal{S} \in [K]$：一个 Transformer 编码器先把变长输入聚合成固定维度的潜向量 $r_\mathcal{S}$，再在码本 $\{e_k\}_{k=1}^K$ 里找最近邻量化，$k^* = \arg\min_k \|r_\mathcal{S} - e_k\|_2^2$。训练目标在标准重构与量化损失之外，额外挂了余弦相似度惩罚和熵正则：
 
-2. **规划视野分析 (Horizon of the Plan)**:
+$$\mathcal{L} = \mathcal{L}_{\text{rec}} + \lambda_q \mathcal{L}_{\text{vq}} + \lambda_{\text{cos}} \mathcal{L}_{\text{cos}} + \lambda_{\text{ent}} \mathcal{L}_{\text{ent}}$$
 
-    - 功能：量化前缀计算包含多少关于未来token的信息
-    - 核心思路：对比前缀所有隐状态块 $H = \{h_t^\ell | t=1,...,T; \ell=1,...,L-1\}$ 的摘要码 $Z_{1:T}^{1:L-1}$ 与第 $\tau$ 个生成token的最后层隐状态码 $Z_{T+\tau}^L$ 之间的 nMI。若 nMI 随 $\tau$ 衰减缓慢，说明前缀编码了长视野的信息
-    - 设计动机：MI比探针更robust——不引入额外模型的表达能力，直接度量信息共享
+后两项是为了逼码本保持多样、被充分利用，避免少数码占满全部样本。离散化之后，每个计算块只剩下区分彼此的关键差异、滤掉了冗余细节，落到有限的码字空间上，互信息的联合分布就能稳定地统计出来。
 
-3. **分支意识分析 (Branches in the Plan)**:
+**2. 规划视野分析：前缀里到底藏了多远的未来信息。**
 
-    - 功能：检验模型生成正确答案时是否也编码了替代正确路径的信息
-    - 核心思路：在路径寻找(PF)任务中设计每个样本有2条正确路径和1条诱饵路径（三者不共享节点）。比较前缀摘要码与替代正确路径码的MI vs 与诱饵路径码的MI，比值 $\mathcal{I}(Z_H; Z_{\text{alt}}) / \mathcal{I}(Z_H; Z_{\text{decoy}})$ >1 表明分支意识
-    - 设计动机：三条路径不共享节点排除了trivial重叠的解释
+有了离散码，前瞻性就变成一个可量化的问题：把前缀里所有隐状态块 $H = \{h_t^\ell | t=1,...,T;\ \ell=1,...,L-1\}$ 汇总成摘要码 $Z_{1:T}^{1:L-1}$，去看它和第 $\tau$ 个未来生成 token 的末层隐状态码 $Z_{T+\tau}^L$ 之间的归一化互信息 nMI。$\tau$ 从近到远扫一遍，nMI 随 $\tau$ 衰减得越慢，就说明前缀里编码的不只是下一个 token，而是更长视野的后续内容。相比线性探针，这里不引入任何额外可学习模型，nMI 直接度量两段计算的信息共享，因此不会把"探针自己学到的"误算成"模型本来编码的"。
+
+**3. 分支意识分析：选对答案时，没被选的正确路径还活着吗。**
+
+这一设计要回答的是：模型在输出某条正确答案的同时，内部是否也保留了"另一条同样正确的路"的信息。为了把这个问题问干净，论文在路径寻找（PF）任务里给每个样本造了 2 条正确路径加 1 条诱饵路径，且三条路径互不共享节点。然后比较前缀摘要码分别和"替代正确路径码"、"诱饵路径码"的互信息，看比值
+
+$$\mathcal{I}(Z_H; Z_{\text{alt}})\,/\,\mathcal{I}(Z_H; Z_{\text{decoy}})$$
+
+是否大于 1。三条路径不共享节点这一约束很关键——它排除了"两条路恰好有重叠节点导致 MI 偏高"这种平凡解释，于是比值显著大于 1 才能真正归因为模型对未被选中的正确分支仍有意识。
 
 ### 实验设置
 使用GPT-3 Small架构（带RoPE），在三类数据上分析：(1)上下文无关文法(CFG)——局部句法规则；(2)路径寻找(PF)——需多步推理的图任务；(3)自然语言(OpenWebText)。比较NTP与MTP训练目标的差异。
@@ -114,9 +115,9 @@ LLM展现出令人惊叹的能力，但其训练目标——下一token预测—
 ## 相关论文
 
 - [\[ACL 2026\] Model Internal Sleuthing: Finding Lexical Identity and Inflectional Features in Modern Language Models](../../ACL2026/interpretability/model_internal_sleuthing_finding_lexical_identity_and_inflectional_features_in_m.md)
-- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
 - [\[ICLR 2026\] Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
 - [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
+- [\[CVPR 2026\] Edit-As-Act: Goal-Regressive Planning for Open-Vocabulary 3D Indoor Scene Editing](../../CVPR2026/interpretability/edit-as-act_goal-regressive_planning_for_open-vocabulary_3d_indoor_scene_editing.md)
 - [\[ICML 2026\] Towards Atoms of Large Language Models](../../ICML2026/interpretability/towards_atoms_of_large_language_models.md)
 
 </div>

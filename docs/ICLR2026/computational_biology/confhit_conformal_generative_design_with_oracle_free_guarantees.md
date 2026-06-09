@@ -33,30 +33,31 @@ tags:
 
 ### 整体框架
 
-输入：历史标注数据 $\mathcal{D}_{\text{calib}}=\{(X_i,Y_i)\}_{i=1}^n$（其中 $Y_i \in \{0,1\}$ 为已知性质标签）、生成样本 $\{X_{n+j}\}_{j=1}^N$、置信水平 $\alpha$。ConfHit 工作流：(1) 估计密度比 $w(x) = dQ/dP(x)$；(2) 对每个嵌套子集 $\{X_{n+j}\}_{j=1}^k$ 构造加权共形 p 值 $p_k$；(3) 嵌套检验——找最小 $\hat{N} = \inf\{k: p_k \leq \alpha\}$，输出精简候选集或声明"不够自信"。
+ConfHit 要回答的是一个很实际的问题：一批生成出来的分子，能不能在**不送进实验室验证**的前提下，给出"这批里至少有一个真 hit"的统计保证。它手里只有两样东西——一份带已知标签的历史数据 $\mathcal{D}_{\text{calib}}=\{(X_i,Y_i)\}_{i=1}^n$（$Y_i \in \{0,1\}$ 是已测过的性质），和一批新生成、标签未知的样本 $\{X_{n+j}\}_{j=1}^N$。
+
+整条流水线是这么转的：先估出生成分布相对历史分布的密度比 $w(x) = dQ/dP(x)$，用它校正两边的分布偏移；然后对候选集从前往后取嵌套子集 $\{X_{n+j}\}_{j=1}^k$，每个子集算一个加权共形 p 值 $p_k$；最后做一遍嵌套检验，找到最小的 $\hat{N} = \inf\{k: p_k \leq \alpha\}$，把前 $\hat{N}$ 个候选作为精简后的输出。如果一路找下去都没有哪个 $k$ 能把 p 值压到 $\alpha$ 以下，就老实输出 $\hat{N}=0$，声明"证据不足"，而不是硬给一个虚假保证。
 
 ### 关键设计
 
-1. **加权共形 p 值（认证问题）**:
-    - 功能：量化生成批次中是否存在 hit 的统计置信度
-    - 核心思路：利用 inactive 标注样本 $\{X_i: Y_i=0\}$ 和生成样本间的加权可交换性。对 $B$ 个随机排列计算随机化 p 值：$p_N^{\text{rand}} = \frac{\sum_{b=0}^B \bar{w}(\pi^{(b)};\bm{X}) \mathbb{1}\{V(\pi_0;\bm{X}) \leq V(\pi^{(b)};\bm{X})\}}{\sum_{b=0}^B \bar{w}(\pi^{(b)};\bm{X})}$，其中 $\bar{w}(\pi;\bm{X}) = \prod_{j=1}^k w(X_{\pi(n+j)})$ 为联合似然比
-    - 设计动机：经典 CP 要求可交换性，但分布偏移打破此假设；通过密度比加权恢复加权可交换性（Tibshirani et al., 2019），并扩展到多测试样本场景
-    - **Theorem 3.1**: $\Pr(p_N^{\text{rand}} \leq t \mid \max_{j} Y_{n+j}=0) \leq t$，有限样本、模型无关
+**1. 加权共形 p 值：在不验证新样本的情况下量化"批次里有没有 hit"。**
 
-2. **嵌套检验（设计问题）**:
-    - 功能：找最小候选集 $\hat{\mathcal{C}} = \{X_{n+j}\}_{j=1}^{\hat{N}}$ 同时保持 $1-\alpha$ 保证
-    - 核心思路：对每个 $k=1,\ldots,N$ 构造假设 $H_k: Y_{n+j}=0, \forall j \leq k$。将 p 值单调化 $p_k = \max_{k' \geq k} \tilde{p}_{k'}$，取 $\hat{N} = \inf\{k: p_k \leq \alpha\}$
-    - **Theorem 3.4**: 嵌套假设结构 + 单调 p 值 → 无需多重检验校正即可控制 $\Pr(\max_{j \leq \hat{N}} Y_{n+j}=0) \leq \alpha$
-    - 设计动机：嵌套假设的关键性质——$H_k$ 为真则 $H_\ell$ ($\ell \leq k$) 必然为真——使得停止规则自然避免多重检验问题
+认证问题的难点在于：经典共形预测靠的是校准样本和测试样本之间的可交换性，可生成样本的分布 $Q$ 和历史数据的分布 $P$ 往往不一样，可交换性直接被打破。ConfHit 的破法是只拿历史数据里的 inactive 样本 $\{X_i: Y_i=0\}$ 当参照，再用密度比加权把分布偏移补回来，恢复出 Tibshirani et al. (2019) 意义下的**加权可交换性**，并把它从单测试样本推广到一整批生成样本。具体地，对 $B$ 个随机排列算一个随机化 p 值：
 
-3. **密度比估计的鲁棒性框架**:
-    - 功能：确保估计误差不破坏保证
-    - **Theorem 3.5**: 量化估计误差对覆盖率的膨胀，取决于 p 值临界区域附近的加权误差
-    - 三种诊断工具：**(1) 平衡性检查**——加权后校准数据均值应接近生成数据；**(2) 合成偏移验证**——在标注数据中人工引入偏移检验 p 值均匀性；**(3) 敏感性分析**——扰动估计权重检查结论稳定性
+$$p_N^{\text{rand}} = \frac{\sum_{b=0}^B \bar{w}(\pi^{(b)};\bm{X}) \mathbb{1}\{V(\pi_0;\bm{X}) \leq V(\pi^{(b)};\bm{X})\}}{\sum_{b=0}^B \bar{w}(\pi^{(b)};\bm{X})}$$
+
+其中 $\bar{w}(\pi;\bm{X}) = \prod_{j=1}^k w(X_{\pi(n+j)})$ 是这批样本的联合似然比，承担了纠偏的角色。**Theorem 3.1** 证明这个 p 值在"批次里没有任何 hit"的零假设下是保守的：$\Pr(p_N^{\text{rand}} \leq t \mid \max_{j} Y_{n+j}=0) \leq t$，且这是有限样本、模型无关的结论，不依赖打分模型的好坏。
+
+**2. 嵌套检验：把候选集精简到最小，又不引入多重检验的代价。**
+
+认证只回答"有没有"，设计问题进一步要"用尽量少的候选保住保证"。ConfHit 对每个 $k=1,\ldots,N$ 构造一个假设 $H_k: Y_{n+j}=0,\ \forall j \leq k$（即前 $k$ 个全是 inactive），然后把 p 值序列单调化成 $p_k = \max_{k' \geq k} \tilde{p}_{k'}$，取最小的 $\hat{N} = \inf\{k: p_k \leq \alpha\}$，输出 $\hat{\mathcal{C}} = \{X_{n+j}\}_{j=1}^{\hat{N}}$。这里的巧妙之处是这些假设天然嵌套——只要 $H_k$ 为真，所有 $H_\ell$（$\ell \leq k$）必然也为真，所以沿着 $k$ 往上扫的停止规则不会踩到多重检验的坑，不需要额外的校正项。**Theorem 3.4** 正是据此给出整体错误率控制 $\Pr(\max_{j \leq \hat{N}} Y_{n+j}=0) \leq \alpha$。
+
+**3. 密度比估计的鲁棒性框架：当 $w(x)$ 只能估而非已知时，保证仍可量化。**
+
+前两步都假设密度比已知，但现实里 $w(x)$ 只能估，估歪了保证就可能失效。**Theorem 3.5** 把这层不确定性显式刻画出来：覆盖率的膨胀量取决于 p 值临界区域附近的加权误差，也就是说只有"恰好卡在判定边界上"的那部分误差才真正伤害保证。配套地，ConfHit 给了三件可落地的诊断工具：**(1) 平衡性检查**——加权后校准数据的均值应当贴近生成数据，差太远说明权重估偏了；**(2) 合成偏移验证**——在标注数据里人工注入已知偏移，看 p 值是否还保持均匀；**(3) 敏感性分析**——扰动估计权重，看最终结论是否稳定。三者一起把"密度比估得准不准"从一个看不见的隐患变成可检验的量。
 
 ### 损失函数 / 训练策略
 
-打分函数 $V$ 的四种选择：(i) Max-pooling $V = \max_j \hat{\mu}(x_{n+j})$，(ii) Sum-of-prediction $V = \sum_j \hat{\mu}(x_{n+j})$，(iii) Rank-sum $V = \sum_j R_{n+j}$，(iv) Likelihood ratio $V = \sum_j \log(\hat{\mu}(x_{n+j})/(1-\hat{\mu}(x_{n+j})))$。打分函数选择影响检验功效但不影响错误率控制。
+打分函数 $V$ 决定检验的功效（但不影响错误率控制），论文给了四种选择：Max-pooling $V = \max_j \hat{\mu}(x_{n+j})$、Sum-of-prediction $V = \sum_j \hat{\mu}(x_{n+j})$、Rank-sum $V = \sum_j R_{n+j}$、以及 Likelihood ratio $V = \sum_j \log(\hat{\mu}(x_{n+j})/(1-\hat{\mu}(x_{n+j})))$。换句话说，$V$ 怎么选只关乎能多大概率检出真有 hit 的批次，保证本身始终成立。
 
 ## 实验关键数据
 
@@ -132,10 +133,10 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/computational_biology/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
+- [\[ICML 2025\] Multivariate Conformal Selection](../../ICML2025/computational_biology/multivariate_conformal_selection.md)
 - [\[CVPR 2026\] Stronger Normalization-Free Transformers](../../CVPR2026/computational_biology/stronger_normalization-free_transformers.md)
+- [\[NeurIPS 2025\] Pharmacophore-Guided Generative Design of Novel Drug-Like Molecules](../../NeurIPS2025/computational_biology/pharmacophore-guided_generative_design_of_novel_drug-like_molecules.md)
 - [\[ICLR 2026\] AFD-INSTRUCTION: A Comprehensive Antibody Instruction Dataset with Functional Annotations for LLM-Based Understanding and Design](afd-instruction_a_comprehensive_antibody_instruction_dataset_with_functional_ann.md)
-- [\[ICML 2026\] CARD: Coarse-to-fine Autoregressive Modeling with Radix-based Decomposition for Transferable Free Energy Estimation](../../ICML2026/computational_biology/card_coarse-to-fine_autoregressive_modeling_with_radix-based_decomposition_for_t.md)
 - [\[ICML 2025\] UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design](../../ICML2025/computational_biology/unimomo_unified_generative_modeling_of_3d_molecules_for_de_novo_binder_design.md)
 
 </div>

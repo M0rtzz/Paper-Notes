@@ -56,38 +56,25 @@ $$\widehat{M}_{\rm post} = \arg\max_{(M_{\rm pre}, M_{\rm post}) \in (\mathcal{M
 
 ### 整体框架
 
-论文考察四种 LR 调度器：WSO、WSD、Cosine、Linear，并在两阶段（预训练+SFT）和三阶段（预训练+中间训练+SFT）设置下系统比较。
+论文的方法主体不是提出复杂模块，而是把一个被普遍接受的训练习惯拿来反问：预训练末期到底要不要衰减学习率。为此它构造了一个统一的调度器族，用一个标量参数把 WSO、WSD、Cosine、Linear 串到同一坐标系下，再在两阶段（预训练 + SFT）和三阶段（预训练 + 中间训练 + SFT）两套流程里逐格对比，最后用损失景观的曲率给出"为什么不衰减反而更好"的解释。
 
-### Warmup-Stable-Only (WSO) 定义
+### 关键设计
 
-WSO 是 WSD 的极简变体，直接去掉衰减阶段（$\alpha_{\text{pre}}=1.0$）：
+**1. Warmup-Stable-Only (WSO)：把衰减阶段整段删掉。** 主流调度都默认训练末期要把学习率压低以收紧预训练 loss，而 WSO 直接质疑这一步是否值得。它是 WSD 的极简变体——只保留 warmup 与 stable 两段，彻底去掉 decay：
 
 $$\eta^{\text{WSO}}(t, \alpha_{\text{pre}}) = \begin{cases} \eta_{\max} \cdot \frac{t}{T_{\text{warmup}}} & t \leq T_{\text{warmup}} \\ \eta_{\max} & T_{\text{warmup}} < t \leq T_{\text{pre}} \end{cases}$$
 
-对比 WSD 的三阶段调度（warmup → stable → decay），WSO 仅保留 warmup → stable 两阶段。
+学习率热身到 $\eta_{\max}$ 后就一直保持恒定直到预训练结束。这样做的代价是预训练 loss 会更差（恒定大 LR 没法把参数收敛进窄谷），但好处是模型停在一个更"松"的位置，为后续 SFT 留出调整空间——这正是后文损失景观分析要量化的东西。
 
-### 关键设计：min LR factor 参数化
+**2. min LR factor 统一参数化：让四种调度器可比。** 要公平比较"衰减多少才好"，就得让不同调度器落在同一根轴上。论文用最小学习率因子 $\alpha_{\text{pre}}$（衰减终点占 $\eta_{\max}$ 的比例）把所有调度器参数化：$\alpha_{\text{pre}}=0.0$ 是衰减到 0 的最激进档（Linear/Cosine 常用），$\alpha_{\text{pre}}=0.1$ 是衰减到 10% 的温和档（Llama 3、OLMo 2 采用），$\alpha_{\text{pre}}=1.0$ 则等价于完全不衰减、即 WSO。这样"衰减强度"从一个离散的策略选择变成一条连续的扫描轴，WSO 不再是孤立方案，而是这条轴上的极端端点，使得"衰减越狠 SFT 越差"的趋势可以被直接读出来。
 
-所有调度器通过最小 LR 因子 $\alpha_{\text{pre}}$ 统一参数化：
+**3. 中间训练的衰减开关：把质疑推广到三阶段流程。** 现代预训练常在 SFT 前插入一段中间训练（mid-training），它末期通常也要衰减。论文再引入一个 $\alpha_{\text{mid}}$ 控制这一段：$\alpha_{\text{mid}}=0.0$ 让中间训练 Linear 衰减到 0，$\alpha_{\text{mid}}=1.0$ 则保持恒定 LR。借这个开关，"任何阶段的衰减是否都有害"成了可验证的命题，而结论是即便只在中间训练衰减，也会拖低最终 SFT 表现。
 
-- $\alpha_{\text{pre}} = 0.0$: 衰减到 0（最激进衰减）
-- $\alpha_{\text{pre}} = 0.1$: 衰减到最大 LR 的 10%（Llama 3、OLMo 2 等常用值）
-- $\alpha_{\text{pre}} = 1.0$: 不衰减，即 WSO
-
-### 中间训练 LR 调度
-
-对三阶段设置，引入 $\alpha_{\text{mid}}$ 控制中间训练的 LR 衰减：
-
-- $\alpha_{\text{mid}} = 0.0$: 中间训练也 Linear decay 到 0
-- $\alpha_{\text{mid}} = 1.0$: 中间训练保持恒定 LR
-
-### 损失景观分析
-
-为解释 WSO 为何 SFT 后表现更好，使用 Hessian trace（sharpness）衡量损失景观平坦度：
+**4. 用 Hessian trace 量化损失景观的平坦度。** 前三点是"现象层"的设计，这一点是要回答"为什么"。论文用 sharpness——损失对参数的二阶曲率之和，即 Hessian 的迹——刻画极小值的平坦程度：
 
 $$\text{Sharpness}(\theta_t) = \text{Tr}(\mathbf{H}_{\mathcal{L}}(\theta_t)) = \sum_{i=1}^{d} \frac{\partial^2 \mathcal{L}(\theta_t; \mathcal{D})}{\partial \theta_i^2}$$
 
-通过 Hutchinson 无偏估计器高效计算。核心发现：WSO 保持更低 sharpness（更平坦的极小值），衰减策略导致 2-3 倍更高的 sharpness。
+直接算 Hessian 对 LLM 不现实，论文借 Hutchinson 无偏估计器只用若干次 Hessian-向量积就近似出迹。量出的结果给衰减损害适应性提供了机制解释：衰减策略把模型收进尖锐极小值，sharpness 比 WSO 高出 2–3 倍，而更尖的谷意味着 SFT 稍一扰动 loss 就剧烈变化、难以迁移；WSO 停在平坦区域，反而经得起微调的推动。
 
 ## 实验关键数据
 

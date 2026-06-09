@@ -47,35 +47,35 @@ M²-Miner 以 MCTS 为骨架，输入为初始意图 $I_0$ 和起始 GUI 状态 
 
 ### 关键设计
 
-1. **InferAgent（扩展阶段 - 动作生成）**:
+原生 MCTS 直接用在移动端 GUI 上有三个致命瓶颈：扩展阶段靠随机采样动作，命中正确操作的概率极低；同一界面会被点出大量语义重复的分支，搜索树迅速膨胀；模拟阶段必须把每条候选路径真正走到底（rollout）才能拿到奖励，代价高得离谱。M²-Miner 用三个分工明确的 agent 分别堵住这三个口子，再用 intent recycling 把搜索树的"边角料"也榨成数据。
 
-    - 功能：为选中节点生成 $K$ 个候选动作
-    - 核心思路：基于当前 GUI 截图和目标意图推理最可能正确的动作。使用多个不同 MLLM 生成以确保动作空间多样性，同时将已生成的动作加入 prompt 避免重复
-    - 设计动机：替代原生 MCTS 的随机扩展，大幅提高正确动作的命中率
+**1. InferAgent：把随机扩展换成意图引导的动作生成。**
 
-2. **OrchestraAgent（扩展阶段 - 动作排序与去重）**:
+针对随机扩展命中率低的痛点，InferAgent 在每个待扩展节点上，结合当前 GUI 截图和目标意图，推理出最可能正确的 $K$ 个候选动作，取代原生 MCTS 漫无目的的随机采样。为了不让候选动作过于趋同，它同时调用多个不同的 MLLM 来生成，撑开动作空间的多样性；并把本轮已经生成过的动作回填进 prompt，显式提醒模型避开重复。这样一来，扩展出来的分支大概率落在"真能推进任务"的方向上，而不是浪费在无效点击上。
 
-    - 功能：合并语义等价的动作（如点击同一按钮的不同坐标），按达成目标意图的可能性排序
-    - 核心思路：通过多选题方式（multi-choice question）让 MLLM 在每次迭代中选出最有希望的动作，经 $K-1$ 次查询得到排序队列。排序后的动作按顺序赋予递减的初始 UCT 值
-    - 设计动机：避免冗余扩展，确保搜索优先探索最有前景的分支
+**2. OrchestraAgent：合并等价动作并给分支排出优先级。**
 
-3. **JudgeAgent（模拟阶段 - 过程奖励估计）**:
+即便每个动作都合理，不同坐标点击同一个按钮这类语义等价的操作仍会让树横向爆炸。OrchestraAgent 先把这些等价动作合并，再按"达成目标意图的可能性"给候选排序。排序的实现是把候选包装成多选题（multi-choice question），让 MLLM 在每轮迭代里挑出最有希望的一个，经 $K-1$ 次查询得到一条完整的有序队列。排好序的动作被赋予依次递减的初始 UCT 值，于是搜索会优先沿最有前景的分支往下走，把算力花在刀刃上。
 
-    - 功能：分析新扩展节点的 GUI 截图，判断任务完成状态并计算奖励
-    - 核心思路：终端节点（成功/失败）奖励为 1/0。中间节点使用 MLLM head 输出 "valid"/"invalid" 的 logits，通过 softmax 归一化为 $[0,1]$ 的概率作为奖励：$r_{\text{intermediate}} = \frac{\exp(logits_{\text{valid}})}{\exp(logits_{\text{valid}}) + \exp(logits_{\text{invalid}})}$
-    - 设计动机：替代原生 MCTS 需要完整 rollout 才能评估奖励的方式，节点 Q 值更新为：$Q_i = \frac{Q_{i-1} \times N_{i-1} + R_i}{N_{i-1}+1}$，极大减少模拟阶段的计算开销
+**3. JudgeAgent：用过程奖励替掉昂贵的 rollout。**
 
-4. **Intent Recycling 策略**:
+模拟阶段最贵的环节是 rollout——必须把路径走完才知道好坏。JudgeAgent 直接看新扩展节点的 GUI 截图就地判分：终端节点按成功/失败给 1/0；中间节点则让 MLLM head 输出 "valid"/"invalid" 两个 logits，经 softmax 归一化成 $[0,1]$ 的奖励概率
 
-    - 功能：从完成挖掘的轨迹树中提取非主路径的额外意图-轨迹对
-    - 核心思路：遍历树中从根到每个节点的路径，用 intent recycling filter（MLLM 实现）评估路径质量，对通过的路径用 MLLM 生成新意图，再由 JudgeAgent 验证意图与轨迹的一致性
-    - 设计动机：将原来"一棵树一个意图"的结构进化为"一棵树多个意图"，不需重新挖掘即可获得更多样的数据。例如，挖掘"查询路线"意图时，误点"打车"按钮可能产生了一条有效的打车轨迹
+$$r_{\text{intermediate}} = \frac{\exp(logits_{\text{valid}})}{\exp(logits_{\text{valid}}) + \exp(logits_{\text{invalid}})}$$
 
-5. **Progressive Model-in-the-loop 训练策略**:
+拿到奖励 $R_i$ 后，节点 Q 值按
 
-    - 功能：迭代提升 InferAgent 和 JudgeAgent 的能力
-    - 核心思路：三阶段渐进训练——Stage 1 基础意图（常用服务 + 条件改写）→ Stage 2 复杂意图（功能组合 + 失败意图重试）→ Stage 3 回收意图（对历史树执行 intent recycling）。每阶段挖掘的数据用于持续训练两个 agent
-    - 设计动机：形成正反馈循环，agent 能力和数据复杂度同步增长
+$$Q_i = \frac{Q_{i-1} \times N_{i-1} + R_i}{N_{i-1}+1}$$
+
+增量更新。这样每个节点扩展出来就能立刻评估，完全省掉走到底的模拟开销，又保留了 MCTS 的回溯机制。
+
+**4. Intent Recycling：把搜索树的非主路径回收成额外数据。**
+
+一次挖掘只为一个意图找路径，但搜索树里那些没走到目标的分支往往本身也是有效操作，丢掉太可惜。Intent recycling 遍历从根到每个节点的所有路径，先用一个 MLLM 实现的 intent recycling filter 评估路径质量，对通过筛选的路径让 MLLM 反推出一个新意图，再交给 JudgeAgent 校验"这个意图和这条轨迹是否真的对得上"。于是一棵树从"一个意图一条主路径"进化成"一棵树孵出多个意图"，不用重新挖掘就凭空多出一批多样化数据。一个直观的例子：在挖"查询路线"意图时误点了"打车"按钮，这条偏离主线的分支恰好构成一条有效的"打车"轨迹，正好被回收下来。
+
+**5. Progressive Model-in-the-loop：让 agent 能力和数据复杂度一起长大。**
+
+InferAgent 和 JudgeAgent 的能力直接决定挖掘质量，所以训练采用三阶段渐进的"边挖边训"循环：Stage 1 先挖基础意图（常用服务 + 条件改写），Stage 2 升级到复杂意图（功能组合 + 对失败意图重试），Stage 3 转向回收意图（对历史搜索树执行 intent recycling）。每个阶段挖出的数据立刻回灌去继续训练这两个 agent，形成正反馈——agent 越强挖到的数据越复杂，更复杂的数据又把 agent 推得更强。
 
 ### 损失函数 / 训练策略
 - InferAgent 和 JudgeAgent 基于 Qwen2.5-VL-7B 微调
@@ -147,8 +147,8 @@ M²-Miner 以 MCTS 为骨架，输入为初始意图 $I_0$ 和起始 GUI 状态 
 - [\[ACL 2025\] GUI-explorer: Autonomous Exploration and Mining of Transition-aware Knowledge for GUI Agent](../../ACL2025/llm_agent/gui_explorer_autonomous.md)
 - [\[CVPR 2026\] GUI-CEval: A Hierarchical and Comprehensive Chinese Benchmark for Mobile GUI Agents](../../CVPR2026/llm_agent/gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)
 - [\[ICLR 2026\] FingerTip 20K: A Benchmark for Proactive and Personalized Mobile LLM Agents](fingertip_20k_a_benchmark_for_proactive_and_personalized_mobile_llm_agents.md)
-- [\[AAAI 2026\] EcoAgent: An Efficient Device-Cloud Collaborative Multi-Agent Framework for Mobile Automation](../../AAAI2026/llm_agent/ecoagent_an_efficient_device-cloud_collaborative_multi-agent.md)
-- [\[ICLR 2026\] HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatre](hamlet_a_hierarchical_and_adaptive_multi-agent_framework_for_live_embodied_theat.md)
+- [\[ICLR 2026\] Efficient Agent Training for Computer Use](efficient_agent_training_for_computer_use.md)
+- [\[ICLR 2026\] ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning](tooltree_efficient_llm_agent_tool_planning_via_dual-feedback_monte_carlo_tree_se.md)
 
 </div>
 

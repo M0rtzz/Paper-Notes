@@ -40,13 +40,16 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Ego4D 帧 → 注视点预测（GLC 模型）→ 中央视觉裁剪 → MoCoV3 + 时间对比学习（InfoNCE 在时间邻居间）。
+
+整个流程把人类视觉的两个生物学约束直接写进了 SSL 的数据管线，而不改动模型架构。对 Ego4D 的每一帧，先用注视点预测模型 GLC 估计人眼会看向哪里，据此裁出中央高分辨率区域；随后在时间上邻近的帧之间构造正样本对，用 MoCoV3 加 InfoNCE 做时间对比学习。换句话说，"看哪里"由中央视觉决定，"什么算同一个东西"由时间慢性决定。
 
 ### 关键设计
 
-1. **中央视觉模拟**: 以注视点为中心裁剪 $N \times N$ 区域
-2. **时间慢性学习**: 在时间窗口 $\Delta T$ 内随机采样邻居帧做正对
-3. **单 epoch 训练**: 在 6400 万帧上训练一个 epoch
+**1. 中央视觉模拟：把训练焦点从整幅画面收缩到注视点周围。** 全视野训练的问题是前景对象和背景场景的信息被混在一起，模型学到的特征里掺杂了大量与对象语义无关的背景布局。本文用 GLC 模型为每帧预测注视坐标，再以该坐标为中心裁出 $N \times N$ 的区域作为模型的实际输入，模拟视网膜中央凹的高分辨率处理。裁剪尺寸是关键超参：$N$ 太小（如 112）会丢失对象信息，太大又退回全视野，实验中 224–336 是甜蜜点。这一步的效果在 ImageNet-9 上得到验证——去掉背景后准确率只掉 10%、去掉前景却掉 20%，说明模型确实把判别依据压到了前景对象上，与人类视觉处理一致。
+
+**2. 时间慢性学习：用时间邻居替代空间数据增强构造正对。** 标准 SSL 靠裁剪、翻转、色彩抖动等空间增强来生成同一图像的两个视角，但这与生物学习方式相去甚远。本文遵循慢性原则（temporally adjacent inputs should map to similar representations），在时间窗口 $\Delta T$ 内随机采样一帧作为锚点帧的正样本，套用 InfoNCE 对比损失。$\Delta T$ 决定了"多近算同一对象"：窗口太大会把扫视后切换的不同对象误当正对，太小则退化为静态增强。实验中 ResNet50 的最佳窗口是 $\Delta T=3$、ViT 是 $\Delta T=1$。注视凝视（fixation）期间的小窗口对比尤其有效，它在人眼停留不动的那段时间里把同一物体的不同视角、同场景共现物体的语义关联蒸馏进表征。
+
+**3. 单 epoch 大规模训练：用一次遍历覆盖 6400 万帧。** Ego4D 在 5fps 采样下相邻帧高度冗余，因此模型只需在 6400 万帧上训练一个 epoch 就接近饱和，第二个 epoch 仅再提升约 0.5%。这既是工程上的节省，也反衬出数据本身的时间冗余性——慢性信号在海量近似重复的帧里被反复呈现，单次遍历已足够。
 
 ## 实验关键数据
 
@@ -129,7 +132,7 @@ Ego4D 帧 → 注视点预测（GLC 模型）→ 中央视觉裁剪 → MoCoV3 +
 - [\[NeurIPS 2025\] Contrastive Representations for Temporal Reasoning](../../NeurIPS2025/self_supervised/contrastive_representations_for_temporal_reasoning.md)
 - [\[CVPR 2025\] UniSTD: Towards Unified Spatio-Temporal Learning Across Diverse Disciplines](../../CVPR2025/self_supervised/unistd_towards_unified_spatio-temporal_learning_across_diverse_disciplines.md)
 - [\[NeurIPS 2025\] SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery](../../NeurIPS2025/self_supervised/seal_semantic-aware_hierarchical_learning_for_generalized_category_discovery.md)
-- [\[CVPR 2026\] Suppressing Non-Semantic Noise in Masked Image Modeling Representations](../../CVPR2026/self_supervised/suppressing_non-semantic_noise_in_masked_image_modeling_representations.md)
+- [\[CVPR 2025\] MOS: Modeling Object-Scene Associations in Generalized Category Discovery](../../CVPR2025/self_supervised/mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
 
 </div>
 

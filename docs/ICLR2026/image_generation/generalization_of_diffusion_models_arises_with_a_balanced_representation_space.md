@@ -59,41 +59,15 @@ $$\min_{\boldsymbol{W}_2, \boldsymbol{W。
 
 ### 整体框架
 
-考虑两层 ReLU DAE $\boldsymbol{f}_{\boldsymbol{W}_2, \boldsymbol{W}_1}(\boldsymbol{x}) = \boldsymbol{W}_2 [\boldsymbol{W}_1^\top \boldsymbol{x}]_+$，训练目标：
+全文围绕一个可解析的极简对象展开：两层非线性 ReLU 去噪自编码器 $\boldsymbol{f}_{\boldsymbol{W}_2, \boldsymbol{W}_1}(\boldsymbol{x}) = \boldsymbol{W}_2 [\boldsymbol{W}_1^\top \boldsymbol{x}]_+$，在加权重衰减的去噪目标 $\min_{\boldsymbol{W}_2, \boldsymbol{W}_1} \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}_{\boldsymbol{\epsilon}} [\| \boldsymbol{f}(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}) - \boldsymbol{x}_i \|_2^2] + \lambda \sum_{l=1}^{2} \| \boldsymbol{W}_l \|_F^2$ 下求解。作者证明（Theorem 3.1）：在 $(\alpha, \beta)$-可分性条件下，它的每个局部极小值都呈"分块"结构——每个数据聚类占据一块权重，块内结构由该聚类 Gram 矩阵的特征分解决定。隐藏单元数 $p$ 与样本数 $n$ 的相对大小这一个旋钮，连续地把模型从"逐样本记忆"切换到"按统计泛化"，并在表征空间留下可观测的指纹。
 
-$$\min_{\boldsymbol{W}_2, \boldsymbol{W}_1} \frac{1}{n} \sum_{i=1}^{n} \mathbb{E}_{\boldsymbol{\epsilon}} \left[ \| \boldsymbol{f}(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}) - \boldsymbol{x}_i \|_2^2 \right] + \lambda \sum_{l=1}^{2} \| \boldsymbol{W}_l \|_F^2$$
+### 关键设计
 
-核心定理（Theorem 3.1）证明：在 $(\alpha, \beta)$-可分性条件下，DAE 的局部极小值具有分块结构，每块对应一个数据聚类，内部结构由该聚类 Gram 矩阵的特征分解决定。
+**1. 记忆化机制：过参数化下权重直接存下每张图。** 当隐藏单元充足（$p \geq n$）时，分块结构退化到极致——每个训练样本自成一块，于是权重矩阵的列就是缩放后的原始数据点本身：$\boldsymbol{W}_\text{mem} = (r_1 \boldsymbol{x}_1 \cdots r_n \boldsymbol{x}_n \boldsymbol{0} \cdots \boldsymbol{0})$，缩放系数 $r_i = \sqrt{(\| \boldsymbol{x}_i \|_2^2 - n\lambda) / (\| \boldsymbol{x}_i \|_4^4 + \sigma^2 \| \boldsymbol{x}_i \|_2^2)}$（Corollary 3.2）。这正是标准理论所预言的"解析解只是训练样本"的精确形态。关键在于它在表征空间留下的痕迹：输入 $\boldsymbol{x}_i + \sigma\boldsymbol{\epsilon}$ 的隐藏激活近似 one-hot，$\boldsymbol{h}_\text{mem}(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}) \approx (0, \ldots, r_i \boldsymbol{x}_i^\top(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}), \ldots, 0)$。因为存储下来的样本彼此近似负相关，只有对应那一个神经元被强烈点亮，能量高度集中——这就是作者所谓的**尖锐表征（spiky）**。
 
-### 关键设计一：记忆化机制——过参数化下的样本存储
+**2. 泛化机制：欠参数化逼模型只能学统计而非个体。** 当隐藏单元远少于样本（$p \ll n$）时，一块权重再也装不下单张图，只能去拟合整团数据的低维主结构。此时每个权重块收敛到对应高斯模式的主成分子空间，$\boldsymbol{W}_{\boldsymbol{X}_k} \boldsymbol{W}_{\boldsymbol{X}_k}^\top \to [(\boldsymbol{S}_k - \frac{\lambda}{\rho_k} \boldsymbol{I})(\boldsymbol{S}_k + \sigma^2 \boldsymbol{I})^{-1}]_{\text{rank-}p_k}$，其中 $\boldsymbol{S}_k = \boldsymbol{\mu}_k \boldsymbol{\mu}_k^\top + \boldsymbol{\Sigma}_k$ 是该模式的均值-协方差二阶统计量（Corollary 3.3）。模型存的不再是哪张脸，而是"脸的统计"，因而能合成训练集里没出现过的新样本。对应的表征也变了样：能量摊开在活跃块的 $p_k$ 个坐标上，多个神经元同时被激活、共同编码分布信息，形成与尖锐表征截然相反的**均衡表征（balanced）**。记忆与泛化由此被同一个分块解统一刻画，区别只是表征是集中还是摊平。
 
-**Corollary 3.2**: 当 $p \geq n$（隐藏单元数 ≥ 样本数），每个训练样本被视为独立聚类，权重直接存储原始数据点：
-
-$$\boldsymbol{W}_\text{mem} = (r_1 \boldsymbol{x}_1 \cdots r_n \boldsymbol{x}_n \boldsymbol{0} \cdots \boldsymbol{0}), \quad r_i = \sqrt{\frac{\| \boldsymbol{x}_i \|_2^2 - n\lambda}{\| \boldsymbol{x}_i \|_4^4 + \sigma^2 \| \boldsymbol{x}_i \|_2^2}}$$
-
-**表征特征**：记忆化样本 $\boldsymbol{x}_i$ 的表征近似 one-hot：
-
-$$\boldsymbol{h}_\text{mem}(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}) \approx (0, \ldots, 0, r_i \boldsymbol{x}_i^\top(\boldsymbol{x}_i + \sigma \boldsymbol{\epsilon}), 0, \ldots, 0)$$
-
-因为 $\boldsymbol{x}_i$ 与其他存储样本负相关，仅一个神经元被强烈激活，产生**尖锐表征**。
-
-### 关键设计二：泛化机制——欠参数化下的统计学习
-
-**Corollary 3.3**: 当 $p \ll n$，权重的每个块学习对应高斯模式的主成分：
-
-$$\boldsymbol{W}_{\boldsymbol{X}_k} \boldsymbol{W}_{\boldsymbol{X}_k}^\top \to \left[ (\boldsymbol{S}_k - \frac{\lambda}{\rho_k} \boldsymbol{I})(\boldsymbol{S}_k + \sigma^2 \boldsymbol{I})^{-1} \right]_{\text{rank-}p_k}$$
-
-其中 $\boldsymbol{S}_k = \boldsymbol{\mu}_k \boldsymbol{\mu}_k^\top + \boldsymbol{\Sigma}_k$ 是第 $k$ 个模式的二阶统计量。
-
-**表征特征**：泛化样本的能量分布在活跃块的 $p_k$ 个坐标上，形成**均衡表征**——多个神经元被激活，编码分布的统计信息。
-
-### 关键设计三：混合体制与实际应用
-
-**Corollary 3.4**: 数据含重复样本时，模型同时记忆重复子集、泛化非退化子集，权重呈混合结构。
-
-基于理论发现提出两个应用：
-- **记忆化检测**: 利用表征标准差作为尖锐度代理，高方差→记忆化，低方差→泛化
-- **表征引导编辑**: 在表征空间中添加目标风格/概念的平均表征，泛化样本可平滑编辑，记忆化样本表现为脆性的阈值响应
+**3. 混合体制与两个落地工具：把表征指纹变成可用的检测与编辑。** 真实数据往往掺有重复样本，模型会同时记住退化的重复子集、泛化非退化子集，权重呈记忆块与统计块并存的混合结构（Corollary 3.4）。既然记忆化对应尖锐、泛化对应均衡，作者顺势把"表征能量是否集中"做成可量化的探针：用隐藏表征的标准差当尖锐度代理，方差高判为记忆化、方差低判为泛化，从而得到一个无需 prompt、仅看表征的记忆化检测器。同一视角还支持**表征引导编辑**——在表征空间叠加目标风格或概念的平均表征，均衡表征因为能量分散、对扰动平滑，可被连续渐进地编辑；尖锐表征则因能量锁死在单个神经元，只会表现出脆性的阈值式跳变。检测与编辑因此成了同一套表征理论的两个直接推论。
 
 ---
 

@@ -54,48 +54,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-- **输入**：合成家庭关系知识图谱（1000 个家庭，每家 10 人，8 种关系）
-- **训练**：GPT-NeoX 架构从头训练（12 层、896 维隐层、16 头注意力、约 206M 参数）
-- **关键控制变量**：weight decay 强度（0-6.0）
-- **评估**：用三种探针（linear、translational、bilinear）分析隐层表示结构
-- **输出**：揭示 bilinear structure 与逆向诅咒克服、模型编辑泛化之间的因果关系
+
+这篇论文不提一个新算法，而是设计一套**受控实验**来回答"逆向诅咒到底是架构缺陷还是表示问题"。整条流水线是：先在一个干净的合成家庭关系知识图谱上从头训练 GPT-NeoX（12 层、896 维隐层、16 头注意力、约 206M 参数），把 weight decay 当作唯一的关键控制变量从 0 扫到 6.0；训练完后用三种数学形式的探针（linear / translational / bilinear）去解析隐层里关系是怎么被编码的；最后在这些模型上做单事实编辑，看哪种表示结构能让编辑逻辑一致地传播。整套设计的目的，是把"是否克服逆向诅咒""隐层是否涌现双线性结构""编辑能否逻辑泛化"三件事在同一组模型上对齐，从而揭示三者之间的因果关系。
 
 ### 关键设计
 
-1. **合成知识图谱的精巧设计**:
+**1. 合成知识图谱：把关系推理压缩成一个最小闭合系统。**
 
-    - 功能：构建包含 husband, wife, father, mother, son, daughter, brother, sister 8 种关系的家庭图谱
-    - 核心思路：将 1000 个家庭分两组——Group 1 包含全部 36 个事实/家庭，Group 2 故意去掉 father/mother 关系。测试集就是 Group 2 的被隐藏关系
-    - 设计动机：这 8 种关系恰好构成一个最小闭合系统，同时涵盖逆关系（husband↔wife）和组合关系（husband∘mother=father），理想地测试逆向推理和多跳推理
+实验需要一个能干净测出"逆向推理"和"多跳推理"的环境，真实语料里关系太杂、无法控制。研究者构造了 1000 个家庭、每家 10 人，只用 husband、wife、father、mother、son、daughter、brother、sister 这 8 种关系。这 8 种关系恰好闭合：既含逆关系（husband↔wife），又含可组合关系（husband∘mother = father），是测逆向与组合推理的最小完备系统。为了制造"模型从没见过的逆向/组合事实"，把家庭分成两组——Group 1 保留全部 36 个事实，Group 2 故意抽掉 father/mother 关系，测试集就是 Group 2 这些被隐藏的关系，模型只能靠内部结构而非记忆去推出它们。
 
-2. **三种表示探针的对比**:
+**2. 三种表示探针：用不同代数形式去问"关系是怎么编码的"。**
 
-    - **Linear Relational Embedding**：$o_L \approx W_r s_l + b_r$，用雅可比矩阵从 subject 表示预测 object 在最后一层的表示
-    - **Translational**：$s_l + v_r \approx o_l$，类似 Word2Vec 的向量平移，subject 和 object 在同一层
-    - **Bilinear**：$f_r(s_l, o_l) = s_l^\top M_r o_l$，关系用矩阵 $M_r$ 建模 subject 和 object 之间的交互，用 RESCAL + 岭回归求解
-    - 设计动机：bilinear 模型天然支持 $M_r^\top$ 表示逆关系、$M_{r_2} M_{r_1}$ 表示组合关系，而 linear 和 translational 做不到
+针对"模型内部用什么数学结构编码关系"这个问题，作者并排对比三种探针。Linear Relational Embedding 用雅可比矩阵从 subject 表示预测 object 在最后一层的表示，$o_L \approx W_r s_l + b_r$；Translational 类似 Word2Vec 的向量平移，subject 和 object 在同一层，$s_l + v_r \approx o_l$；Bilinear 则把关系建成一个矩阵 $M_r$，刻画 subject 与 object 之间的双线性交互，$f_r(s_l, o_l) = s_l^\top M_r o_l$，用 RESCAL + 岭回归求解。三者并非随便选——关键在于只有 bilinear 形式天然支持 $M_r^\top$ 表示逆关系、$M_{r_2} M_{r_1}$ 表示关系组合，而 linear 和 translational 在代数上做不到这两件事。因此这组对比本身就是一个判别实验：如果模型能逆向推理，它的隐层就应该被 bilinear 探针解释得更好。
 
-3. **Weight Decay 作为关键正则化手段**:
+**3. Weight Decay：用一个正则化旋钮制造"克服/不克服逆向诅咒"的对照。**
 
-    - 功能：在 AdamW 中扫描 weight decay 从 0 到 6.0
-    - 核心发现：所有模型训练精度 100%，但低 weight decay（<1.0）的模型完全无法推理逆向关系，高 weight decay 的模型能达到近 100% 的逆向推理精度
-    - 设计动机：正则化促使模型学到更泛化的内部结构（bilinear），而非简单记忆
+逆向诅咒一直被归因于自回归目标的方向性，作者想检验这是不是固有缺陷。做法是在 AdamW 里把 weight decay 从 0 扫到 6.0，其余设置完全不变，从而得到一批架构相同、只是正则化强度不同的模型。结果很说明问题：所有模型训练精度都是 100%，但 weight decay 低于 1.0 的模型几乎完全推不出逆向关系，而高 weight decay 的模型逆向推理精度逼近 100%。这意味着逆向诅咒可以被同一架构在不同正则化下分别"复现"和"消除"——正则化逼着模型学到更泛化的内部结构（即下面验证的 bilinear 结构），而不是死记硬背训练样本。
 
-4. **代数性质验证**:
+**4. 代数性质验证：检验学到的矩阵是不是真满足"转置=逆、乘积=组合"。**
 
-    - 功能：验证学到的 $M_r$ 矩阵是否满足转置=逆和乘积=组合
-    - 核心思路：测试 $M_{\text{husband}}^\top$ 能否作为 wife 的关系矩阵，$M_{\text{husband}} \cdot M_{\text{mother}}$ 能否预测 father 关系
-    - 结果：非逆向诅咒模型在第 6-9 层达到 >95% 精度，逆向诅咒模型始终低精度
+探针精度高还不够，作者要确认学到的 $M_r$ 是真的具备关系代数性质，而非碰巧拟合。验证方式很直接：测 $M_{\text{husband}}^\top$ 能否当作 wife 的关系矩阵、$M_{\text{husband}} \cdot M_{\text{mother}}$ 能否预测 father 关系。在克服了逆向诅咒的模型上，这种代数运算在第 6-9 层达到 >95% 精度；而逆向诅咒模型始终是低精度。这把"双线性结构"从一个统计相关性升级成了**功能性的代数结构**——转置真的对应逆关系，矩阵乘法真的对应关系组合。
 
-5. **模型编辑实验**:
+**5. 模型编辑实验：检验 bilinear 结构是否带来逻辑一致的编辑传播。**
 
-    - 功能：编辑一个 husband 关系事实 (A, husband, B→B')，评估逻辑传播
-    - 三个指标：Edit Success（直接编辑成功率）、Logical Generalization（蕴含事实更新率）、Locality（无关事实保持率）
-    - 核心发现：有/无 bilinear 结构的模型直接编辑都成功，但逻辑泛化差异巨大——bilinear 模型能传播到 (B', wife, A) 等蕴含事实，逆向诅咒模型几乎完全失败
-    - 定量关联：bilinear 探针精度与逻辑泛化成功率的相关性 $R^2 = 0.939$
-
-### 有趣的层级发现
-编辑效果最好的层（1-4 层）与 bilinear 结构最强的层（6-9 层）不一致——要在结构"正在形成"的层编辑，而非在结构"已经建立"的层编辑，这样才能正确更新下游表示。
+最后一步把表示结构和模型编辑挂钩。作者编辑单个 husband 事实 (A, husband, B→B')，用三个指标衡量效果：Edit Success（直接编辑是否成功）、Logical Generalization（蕴含事实是否跟着更新）、Locality（无关事实是否被保留）。有无 bilinear 结构的模型直接编辑都能成功，但逻辑泛化差异巨大——bilinear 模型能把改动传播到 (B', wife, A) 这类蕴含事实，逆向诅咒模型几乎完全失败；bilinear 探针精度与逻辑泛化成功率的相关性高达 $R^2 = 0.939$。一个反直觉的细节是：编辑效果最好的层（1-4 层）和 bilinear 结构最强的层（6-9 层）并不重合——要在结构"正在形成"的早期层下手，而不是在结构"已经建立"的层，才能让改动正确传播到下游表示。
 
 ## 实验关键数据
 
@@ -163,8 +145,8 @@ tags:
 
 - [\[ICLR 2026\] Fine-tuning Done Right in Model Editing](fine-tuning_done_right_in_model_editing.md)
 - [\[ICLR 2026\] Energy-Regularized Sequential Model Editing on Hyperspheres](energy-regularized_sequential_model_editing_on_hyperspheres.md)
-- [\[ICML 2025\] Representation Shattering in Transformers: A Synthetic Study with Knowledge Editing](../../ICML2025/knowledge_editing/representation_shattering_in_transformers_a_synthetic_study_with_knowledge_editi.md)
 - [\[ACL 2026\] Representation Interventions Enable Lifelong Knowledge Memory Control in LLMs](../../ACL2026/knowledge_editing/representation_interventions_enable_lifelong_knowledge_memory_control_in_llms.md)
+- [\[ICML 2025\] Representation Shattering in Transformers: A Synthetic Study with Knowledge Editing](../../ICML2025/knowledge_editing/representation_shattering_in_transformers_a_synthetic_study_with_knowledge_editi.md)
 - [\[ICLR 2026\] EAMET: Robust Massive Model Editing via Embedding Alignment Optimization](eamet_robust_massive_model_editing_via_embedding_alignment_optimization.md)
 
 </div>

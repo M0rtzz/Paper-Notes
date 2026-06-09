@@ -41,37 +41,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：一个问题 $Q$、$n$ 个参与者模型的答案 $\{A_1, \ldots, A_n\}$、$m$ 个专家模型 $\{J_1, \ldots, J_m\}$。输出：每个参与者的分数 $S_i^A$。流程：所有参与者配对做 source-target 轮替，专家评估 source 的答案对预测 target 答案的帮助程度。分数可用于排名评估或构建 DPO 训练对。
+本文要解决的是「弱监督评估强模型」：当评估者远弱于被评模型时，怎样还能判断后者是否诚实。整套方法围绕一个问题 $Q$ 展开——给定 $n$ 个参与者模型的答案 $\{A_1, \ldots, A_n\}$ 和 $m$ 个专家模型 $\{J_1, \ldots, J_m\}$，目标是给每个参与者算出一个诚实性分数 $S_i^A$。计分时让参与者两两充当 source/target，专家去衡量「看了 source 的答案后，自己对 target 答案的预测变准了多少」，所有角色组合轮替一遍后累加。算出来的分数既能直接用于排名评估，也能拿去排序构造 DPO 偏好对来训练模型。
 
 ### 关键设计
 
-1. **Peer Prediction 评估管道（核心算法）**:
+**1. Peer Prediction 评估管道：用互预测性代替真值来打分。**
 
-    - 功能：为每个参与者的答案打分，衡量其诚实性和信息量
-    - 核心思路：三种角色——Source（被评估者）、Target（被预测者）、Expert（预测者）。Source $s$ 的分数由"帮助专家预测 Target 的程度"决定：$S_s^A += \log \Pr_j(A_t | A_s) - \log \Pr_j(A_t)$。即专家在看到 Source 的答案后，对 Target 答案的预测概率提升的对数。所有 source-target-expert 组合轮替，总共 $n^2 m$ 轮
-    - 设计动机：诚实且有信息量的答案更能帮助预测他人——因为它包含了更多关于"世界真实状态"的信息。这比直接判断答案正确性更鲁棒，因为不需要真值
+传统做法要么需要正确答案、要么让评委直接判对错，前者在难任务上拿不到、后者会被强模型骗。这里换一个信号：诚实且有信息量的答案，应该更能帮别人猜中答案，因为它携带了更多关于「世界真实状态」的信息。具体由三种角色实现——Source（被评估者）、Target（被预测者）、Expert（预测者）。Source $s$ 的得分取决于它对专家预测 Target 的帮助程度：
 
-2. **激励兼容性的理论保证**:
+$$S_s^A \mathrel{+}= \log \Pr_j(A_t \mid A_s) - \log \Pr_j(A_t)$$
 
-    - 功能：证明诚实回答是所有参与者和专家的最优策略（贝叶斯纳什均衡）
-    - 核心思路：**定理1**（共享先验）：在共享先验 $\mathcal{P}$ 下，诚实回答 $A_i = A_i^*$ 构成具有最大预期收益的贝叶斯纳什均衡。**定理2**（异质先验/新贡献）：当参与者和专家的先验从同一分布 $\mathcal{D}$ 独立采样时，只要 $m, n \geq \frac{16(I_0 + L_0)}{\epsilon} \log(\frac{I_0 + L_0}{\epsilon} + \frac{|\mathcal{A}|}{\delta})$，诚实回答是 $\epsilon$-贝叶斯纳什均衡
-    - 设计动机：定理1是经典结果的应用，定理2是本文新贡献——放宽了共享先验假设，允许"世界观"差异，只要参与者/专家群体足够大且分布有代表性
+也就是专家在看到 Source 的答案 $A_s$ 之后、对 Target 答案 $A_t$ 的预测概率相比看之前提升了多少（取对数）。把所有 source-target-expert 组合都轮一遍，共 $n^2 m$ 轮，累加得到每个参与者的总分。整个过程不碰真值，只利用答案之间的结构关系，因此天然比「判断对错」更鲁棒。
 
-3. **Peer Prediction 训练管道**:
+**2. 激励兼容性的理论保证：证明诚实是最优策略。**
 
-    - 功能：利用 Peer Prediction 分数作为奖励信号进行 DPO 训练，恢复被恶意微调破坏的诚实性
-    - 核心思路：对每个问题生成多个参与者的回答，按 $S_i^A$ 排序，取最高分和最低分构建偏好对，用 DPO 训练。4个 Llama-3.1-8B 克隆作参与者（1个被指示欺骗），SmolLM-135M 作专家。先用50k欺骗样本做 LoRA 微调制造"恶意模型"，再用120k Peer Prediction 偏好对做 DPO 恢复
-    - 设计动机：激励兼容性保证在训练均衡点，最优策略是诚实——将博弈论保证转化为训练信号的局部最优性
+光有一个打分公式还不够，得保证「说真话」确实是参与者和专家的最佳选择，否则模型完全可以学会作弊。本文给出两条定理。定理 1（共享先验）沿用经典结果：在共享先验 $\mathcal{P}$ 下，诚实回答 $A_i = A_i^*$ 构成预期收益最大的贝叶斯纳什均衡。定理 2 是本文的新贡献，把共享先验这个强假设放宽——当参与者和专家的先验从同一分布 $\mathcal{D}$ 独立采样（即允许各自有不同「世界观」）时，只要群体规模满足
 
-4. **逆向缩放特性（Inverse Scaling）**:
+$$m, n \geq \frac{16(I_0 + L_0)}{\epsilon} \log\!\left(\frac{I_0 + L_0}{\epsilon} + \frac{|\mathcal{A}|}{\delta}\right)$$
 
-    - 功能：发现并验证 Peer Prediction 的抗欺骗能力随专家-参与者能力差距增大而增强
-    - 核心思路：在0.135B到405B参数的模型上实验，用逻辑回归交叉熵衡量分数对诚实性的预测能力。结果显示：参与者越强于专家，Peer Prediction 越能区分诚实与欺骗。这与 LLM-as-a-Judge 的正向缩放（评委越弱越差）形成鲜明对比
-    - 设计动机：这是最令人惊讶的发现——弱专家+Peer Prediction 比强评委+LLM-as-a-Judge 更可靠
+诚实回答就是 $\epsilon$-贝叶斯纳什均衡。换句话说，只要参与者/专家池子够大、分布够有代表性，就不必要求大家先验一致，机制仍然激励诚实——这正是它能用在真实多模型生态里的关键。
+
+**3. Peer Prediction 训练管道：把分数当奖励信号做 DPO。**
+
+评估能区分诚实与否，下一步自然是用它来纠正一个已经被教坏的模型。做法是对每个问题让多个参与者各生成一份回答，按 $S_i^A$ 排序，取最高分与最低分凑成偏好对，再用标准 DPO 训练。实验设置是 4 个 Llama-3.1-8B 克隆当参与者（其中 1 个被指示欺骗），SmolLM-135M 当专家；先用 50k 欺骗样本做 LoRA 微调制造一个「恶意模型」，再用 120k 条 Peer Prediction 偏好对做 DPO 把诚实性恢复回来。之所以这套训练信号有效，是因为第 2 点的激励兼容性恰好保证了在均衡点上最优策略就是诚实，于是「诚实」成为训练目标的局部最优。
+
+**4. 逆向缩放特性：能力差距越大，机制反而越强。**
+
+这是方法最反直觉、也最值得强调的性质。作者在 0.135B 到 405B 参数的模型上做实验，用逻辑回归的交叉熵衡量「分数预测诚实性」的能力，发现参与者相对专家越强，Peer Prediction 反而越能把诚实和欺骗分开。这与 LLM-as-a-Judge 的正向缩放正好相反——后者评委越弱越容易被骗。原因在于，强模型的答案信息量更大、区分度更高，使互预测性的信号更清晰；弱专家本身的「无知」反倒成了优势，它的预测更依赖 source 提供的信息而非自身知识，因而更难被花哨但错误的回答带偏。
 
 ### 损失函数 / 训练策略
-- 评估分数：$S_s^A = \sum_{t,j} [\log \Pr_j(A_t | A_s) - \log \Pr_j(A_t)]$
-- 专家分数：$S_j^J = \sum_{s,t} [\log \Pr_j(A_t | A_s) + \log \Pr_j(A_t)]$（使用对数评分规则奖励专家诚实报告概率）
+- 评估分数：$S_s^A = \sum_{t,j} [\log \Pr_j(A_t \mid A_s) - \log \Pr_j(A_t)]$
+- 专家分数：$S_j^J = \sum_{s,t} [\log \Pr_j(A_t \mid A_s) + \log \Pr_j(A_t)]$（用对数评分规则奖励专家诚实报告概率）
 - 训练：标准 DPO 损失，偏好对由 Peer Prediction 分数排序构建
 
 ## 实验关键数据
@@ -127,48 +127,17 @@ tags:
 - 写作质量: ⭐⭐⭐⭐⭐ 从实际问题到理论保证到实验验证逻辑链完整，定理和实验高度一致
 - 价值: ⭐⭐⭐⭐⭐ 对可扩展监督这一 AI 安全核心问题提供了理论严谨且实用的解决方案
 
-## 研究背景与动机
-1. **现有痛点**：LLM-as-a-Judge 在参与者能力超过评委时被欺骗利用——强模型可以生成"看起来好但实际错"的回答来骗过弱评委。
-2. **核心 idea**：Peer Prediction 奖励信息的可预测性而非评委的主观判断——源模型因帮助专家预测目标答案而获得奖励。
-
-## 方法详解
-- **三角色系统**：Source s, Target t, Expert j 评估互相答案的可预测性
-- **评分规则**：$\log Pr_j(A_t|A_s) - \log Pr_j(A_t)$——源答案对专家预测目标答案的帮助程度
-- **博弈论保证**：共享先验下激励相容（Theorem 1）；分歧时通过足够大的多样代理池保证（Theorem 2）
-
-## 实验关键数据
-
-| 场景 | Peer Prediction | LLM-as-Judge |
-|------|----------------|-------------|
-| 恶意微调恢复 (8B→0.135B expert) | ~95% 诚实度恢复 | 弱（7B judge被骗）|
-| 100× 规模差异 | 优 | 5-20× gap时已失效 |
-
-## 关键发现
-- **逆向缩放**：弱专家对强模型的欺骗更具抵抗力——因为 Peer Prediction 基于信息论而非主观判断
-- 集成多专家进一步提升鲁棒性
-
-## 亮点与洞察
-- 为超人类 AI 的安全评估提供了新工具——不需要更强的评委，弱评估者反而更适合
-
-## 局限性
-- 仅分析单方欺骗，未处理参与者串谋
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐⭐ Peer Prediction引入LLM评估是原创贡献
-- 实验充分度: ⭐⭐⭐⭐ 恶意微调+缩放分析
-- 价值: ⭐⭐⭐⭐⭐ 超人类AI安全评估的关键方向
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
 
 ## 相关论文
 
-- [\[CVPR 2025\] Enhancing 3D Gaze Estimation in the Wild Using Weak Supervision with Gaze Following Labels](../../CVPR2025/llm_evaluation/enhancing_3d_gaze_estimation_in_the_wild_using_weak_supervision_with_gaze_follow.md)
-- [\[ICLR 2026\] DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science](dare-bench_evaluating_modeling_and_instruction_fidelity_of_llms_in_data_science.md)
-- [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
-- [\[ICLR 2026\] Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
 - [\[ACL 2025\] CalibraEval: Calibrating Prediction Distribution to Mitigate Selection Bias in LLMs-as-Judges](../../ACL2025/llm_evaluation/calibraeval_calibrating_prediction_distribution_to_mitigate_selection_bias_in_ll.md)
+- [\[ICLR 2026\] DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science](dare-bench_evaluating_modeling_and_instruction_fidelity_of_llms_in_data_science.md)
+- [\[NeurIPS 2025\] On Evaluating LLM Alignment by Evaluating LLMs as Judges](../../NeurIPS2025/llm_evaluation/on_evaluating_llm_alignment_by_evaluating_llms_as_judges.md)
+- [\[ACL 2026\] Personalized Benchmarking: Evaluating LLMs by Individual Preferences](../../ACL2026/llm_evaluation/personalized_benchmarking_evaluating_llms_by_individual_preferences.md)
+- [\[ICML 2025\] MultiCogEval: Evaluating LLMs Across Multi-Cognitive Levels](../../ICML2025/llm_evaluation/evaluating_llms_across_multi-cognitive_levels_from_medical_knowledge_mastery_to_.md)
 
 </div>
 

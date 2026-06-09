@@ -40,35 +40,29 @@ tags:
 
 ### 整体框架
 
-mtLoRA 基于 HydraLoRA 的非对称结构（共享 $A$、多任务特定 $B_i$），包含三个创新设计：
-1. 谱感知正则化（Spectral-Aware Regularization）
-2. 块级适配（Block-Level Adaptation）
-3. 细粒度路由（Fine-Grained Routing）
+mtLoRA 沿用 HydraLoRA 的非对称底座（一个共享投影 $A$ 配多个任务特定的 $B_i$），但在三个层面同时下手化解多任务崩溃：用谱感知正则化保护共享知识、把适配从组件级抬到块级以斩断梯度对抗、再用细粒度路由让不同特征维度各取所需的 LoRA 组合。三者分别对应根因分析揭示的"正则化破坏共享、组件级放大冲突、标量路由表达力不足"三个痛点。
 
 ### 关键设计
 
-**设计1：谱感知正则化**
-- **功能**：选择性地对低奇异值分量施加正交约束，同时保留高奇异值的共享知识
-- **核心思路**：对每个 $B_i$ 做 SVD 得到奇异值 $\{\sigma_k\}$，使用权重函数 $w(\sigma) = \exp(-\sigma/\bar{\sigma})$ 构造重加权矩阵 $B'_i$，损失为 $\mathcal{L}_{spectral} = \lambda \sum_{i<j} \|(B'_i)^T B'_j\|_F^2$
-- **设计动机**：低 SV 分量（$\sigma \ll \bar{\sigma}$）权重接近 1，强制正交化（去噪）；高 SV 分量（$\sigma \gg \bar{\sigma}$）权重接近 0，保留跨任务共享知识。实验验证低 SV 被抑制 3x（-6.0%） vs 高 SV（-2.0%）
+**1. 谱感知正则化：只去噪低奇异值，放过承载共享知识的高奇异值。**
 
-**设计2：块级适配**
-- **功能**：将 LoRA 适配从组件级（$W_q, W_v$）提升到块级（整个 Attention/FFN 块的并行路径）
-- **核心思路**：$x' = x + W^{(F)}(\text{LN}(x)) + \Delta(\text{LN}(x))$，LoRA 更新路径与主块内部非线性（如 Softmax）解耦
-- **设计动机**：组件级 LoRA 梯度通过 Softmax 传播会创建跨 token 依赖——修改 "bank"→"money" 的 attention 会自动减少 "bank"→"river" 的概率。块级适配消除了这种竞争，同时减少 50% 参数
+均匀正则化之所以伤害多任务性能，是因为它把所有方向一视同仁地推向正交，而根因分析发现跨任务共享的知识恰恰集中在高奇异值分量（top-20% 分量贡献了 89% 的跨任务对齐）。mtLoRA 的做法是先对每个 $B_i$ 做 SVD 拿到奇异值谱 $\{\sigma_k\}$，再用权重函数 $w(\sigma) = \exp(-\sigma/\bar{\sigma})$ 构造重加权矩阵 $B'_i$，把正交约束写成 $\mathcal{L}_{spectral} = \lambda \sum_{i<j} \|(B'_i)^T B'_j\|_F^2$。这个指数权重是连续自适应的：当 $\sigma \ll \bar{\sigma}$ 时权重趋近 1，低奇异值方向被强制正交化、起到去噪作用；当 $\sigma \gg \bar{\sigma}$ 时权重趋近 0，高奇异值方向几乎不受惩罚，跨任务共享的主方向得以保留，因此无需人工设定奇异值阈值。实验证实这种选择性确实生效——低奇异值分量被抑制约 3 倍（-6.0%），而高奇异值分量几乎不动（-2.0%）。
 
-**设计3：细粒度路由**
-- **功能**：为每个 LoRA 模块分配维度特定的路由权重向量，而非标量权重
-- **核心思路**：路由器为每个 LoRA 输出 $\Pi_i \in \mathbb{R}^g$（$g$ 个分组），组合方式为 $\sum_{i=1}^N \Pi_i(x) \odot \Delta_i(x)$，通过分组逐元素乘法实现
-- **设计动机**：不同特征子空间可能需要不同的 LoRA 组合（如"创造力"维度侧重 brainstorming LoRA，"事实性"维度侧重 QA LoRA），标量路由无法表达这种异质性
+**2. 块级适配：把 LoRA 从注意力组件挪到整块旁路，斩断 Softmax 引发的跨 token 竞争。**
+
+传统做法把 LoRA 插在 $W_q, W_v$ 等组件上，梯度会穿过 Attention 内部的 Softmax 反传，从而制造跨 token 的耦合——增大 "bank"→"money" 的注意力会自动压低 "bank"→"river"，这种竞争在任务一多时被急剧放大。mtLoRA 改为在整个 Attention/FFN 块外侧并联一条更新路径 $x' = x + W^{(F)}(\text{LN}(x)) + \Delta(\text{LN}(x))$，让 LoRA 的增量 $\Delta$ 与主块内部的非线性解耦。因为更新不再经过 Softmax 归一化，跨 token 的此消彼长被消除，根因分析量化出梯度冲突减少 76%；同时块级路径合并了原本分散在多个组件上的低秩矩阵，参数量反而减少约 50%，是效率与效果双赢的一步。
+
+**3. 细粒度路由：给每个 LoRA 分维度的路由向量，而非一个标量门控。**
+
+标量路由假设一个 LoRA 对当前输入"要么用要么不用"，但不同特征子空间往往偏好不同的专家——"创造力"维度更需要 brainstorming LoRA，"事实性"维度更需要 QA LoRA，单一标量无法表达这种异质性。mtLoRA 让路由器为每个 LoRA 输出一个分组权重向量 $\Pi_i \in \mathbb{R}^g$（把隐藏维度切成 $g$ 组），最终组合为 $\sum_{i=1}^N \Pi_i(x) \odot \Delta_i(x)$，即分组逐元素相乘后求和。路由器本身是一个 2 层 MLP，输入为平均池化的隐藏状态，输出 $N \times g$ 维权重并 softmax 归一化。$g$ 越大粒度越细：消融中 $g$ 从 1 增到 32，平均分数从 38.5 升到 39.9。
 
 ### 损失函数 / 训练策略
 
-总体损失函数：
+总体目标把任务损失、谱感知正交损失与负载均衡损失加权相加：
+
 $$\mathcal{L} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{spectral} + \lambda_2 \mathcal{L}_{balance}$$
-- $\mathcal{L}_{spectral}$：每 epoch 做一次 SVD 计算谱感知正交损失
-- $\mathcal{L}_{balance}$：负载均衡损失，防止路由崩溃（所有样本只选少数专家）
-- 路由器：2 层 MLP，输入为平均池化的隐藏状态，输出 $N \times g$ 维权重，softmax 归一化
+
+其中 $\mathcal{L}_{spectral}$ 因为要做 SVD，每个 epoch 只计算一次以摊薄开销；$\mathcal{L}_{balance}$ 是防止路由崩溃（所有样本都挤向少数专家）的负载均衡项。两个正则项分别对应"保护共享知识"和"维持路由多样性"，与根因分析揭示的正则化-路由权衡一一对应。
 
 ## 实验关键数据
 
@@ -149,7 +143,7 @@ $$\mathcal{L} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{spectral} + \lambda_
 - [\[ICLR 2026\] BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses](biasfreebench_a_benchmark_for_mitigating_bias_in_large_language_model_responses.md)
 - [\[ACL 2026\] Synthia: Scalable Grounded Persona Generation from Social Media Data](../../ACL2026/social_computing/synthia_scalable_grounded_persona_generation_from_social_media_data.md)
 - [\[CVPR 2026\] As Language Models Scale, Low-order Linear Depth Dynamics Emerge](../../CVPR2026/social_computing/as_language_models_scale_low-order_linear_depth_dynamics_emerge.md)
-- [\[ICLR 2026\] Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems](stop_wasting_your_tokens_towards_efficient_runtime_multi-agent_systems.md)
+- [\[ICLR 2026\] Functional Embeddings Enable Aggregation of Multi-Area SEEG Data for Robust BCI](functional_embeddings_enable_aggregation_of_multi-area_seeg_data_for_robust_bci.md)
 
 </div>
 

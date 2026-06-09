@@ -37,21 +37,25 @@ tags:
 
 ### 整体框架
 
-Draft-based Approximate Inference 是一个统一框架：先用小型 draft 模型对输入生成前瞻 token，然后利用这些前瞻信息（draft 输出或 draft 注意力激活）来指导 target 模型的 KV cache 或 prompt 压缩。与 speculative decoding 不同，本框架的目标是**减少 target 模型的总计算和内存**，而非加速验证。
+Draft-based Approximate Inference 用一个小型 draft 模型先对输入生成前瞻 token，再借这些前瞻信息（draft 的输出或注意力激活）去判断 target 模型该保留哪些 KV pair、哪些 prompt token。与 speculative decoding 不同，这里 draft 的前瞻不是用来加速验证，而是为重要性估计补上"未来视角"，从而真正压低 target 模型的总计算与峰值内存。
 
 ### 关键设计
 
-1. **SpecKV（Speculative KV Dropping）**: 用 draft 模型生成 $n_{\text{lookahead}}$ 个前瞻 token，然后将输入 token 和前瞻 token 一起传入 target 模型做 prefill。对每个注意力头，通过最后 $n_{\text{window}}$ 个输入 token 和前瞻 token 的 query 对其余输入 key 的交叉注意力来估计 KV pair 重要性。保留 top-$C_{\max}$ 个 KV pair 加窗口内的 KV pair。相比 LAQ++ 的优势是不需要存储完整 target KV cache，实现了峰值内存的真正降低。理论保证（Theorem 1）：重要性分数的误差与 draft 嵌入误差成正比，即 $\|s - \hat{s}\|_2 \leq \epsilon \|W_q W_k^T\|_2$。
+**1. SpecKV（Speculative KV Dropping）：让 draft 的前瞻 token 来决定哪些 KV 该留。**
 
-2. **SpecPC（Speculative Prompt Compression）**: 将完整 prompt 送入 draft 模型，直接提取 draft 模型的注意力激活矩阵 $A \in \mathbb{R}^{n_{\text{layer}} \times n_{\text{head}} \times (n_{\text{in}}+n_{\text{lookahead}}-1) \times n_{\text{in}}}$ 来估计 token 重要性。采用大窗口 + 非均匀权重（离末尾越远权重越低），跳过前 $l_{\text{skip}}$ 层（浅层注意力不够聚焦），先平均后取最大聚合。理论保证（Theorem 2）：在输入满足 RIP 条件下，注意力近似误差与输出近似误差成正比。
+现有 KV dropping（如 SnapKV）只看当前输入 token 的注意力，等于用后视镜估计未来生成会用到谁。SpecKV 先让 draft 模型续写出 $n_{\text{lookahead}}$ 个前瞻 token，把它们和原输入拼在一起喂进 target 做 prefill；对每个注意力头，用最后 $n_{\text{window}}$ 个输入 token 加上这些前瞻 token 的 query，去对其余输入 key 做交叉注意力，以此打分，最终保留 top-$C_{\max}$ 个 KV pair 再加上窗口内的 KV pair。和同样用 lookahead 的 LAQ++ 相比，关键差别是它不需要存下 target 的完整 KV cache，因此峰值内存是真降下来的，而非只省了计算。理论上（Theorem 1）这套打分的误差被 draft 嵌入误差线性控制，$\|s - \hat{s}\|_2 \leq \epsilon \|W_q W_k^T\|_2$，意味着只要 draft 不太离谱，估出的重要性就足够可信。
 
-3. **SpecKV-PC（级联压缩）**: 先用 SpecPC 压缩 prompt（如压缩到 2048 token），再用 SpecKV 进一步压缩 KV cache（如到 256）。由于 target 模型只需处理压缩后的短 prompt，延迟和内存显著降低。级联压缩的效果甚至优于单独的 SpecKV，因为 SpecPC 作为预过滤器去掉了明显不重要的 token。
+**2. SpecPC（Speculative Prompt Compression）：直接拿 draft 的注意力图给 prompt token 打分。**
+
+prompt 压缩比 KV dropping 更狠，要在 prefill 之前就把无关 token 删掉。SpecPC 把完整 prompt 送进 draft 模型，直接抽出它的注意力激活张量 $A \in \mathbb{R}^{n_{\text{layer}} \times n_{\text{head}} \times (n_{\text{in}}+n_{\text{lookahead}}-1) \times n_{\text{in}}}$ 来衡量每个 token 的重要性。为了让分数更稳，它用大窗口配非均匀权重（离序列末尾越远的 query 权重越低）、跳过前 $l_{\text{skip}}$ 层（浅层注意力还没聚焦、噪声大），并采用先在窗口内平均、再跨头取最大的聚合方式。Theorem 2 给出保证：当输入满足压缩感知里的 RIP 条件时，注意力的近似误差与最终输出的近似误差成正比，把"删 token"这件事和可控的输出偏差挂上了钩。
+
+**3. SpecKV-PC（级联压缩）：先粗删 prompt，再细删 KV。**
+
+单独一种压缩往往要在压缩率和精度间硬权衡，级联则能各取所长。SpecKV-PC 先用 SpecPC 把 prompt 压到中等长度（如 2048 token），再用 SpecKV 把 KV cache 进一步压到很小（如 256）。因为 target 模型只需处理已经变短的 prompt，延迟和内存都明显下降；更有意思的是级联效果反而比单用 SpecKV 更好——SpecPC 充当了一道预过滤器，先扔掉明显无关的 token，让后续 SpecKV 的打分在更干净的候选集上进行。
 
 ### 损失函数 / 训练策略
 
-- 无需训练：所有方法都是 training-free 的推理时优化
-- SpecKV 结合稀疏 prefill（Vertical-Slash 模式）+ KV cache dropping
-- SpecPC 使用局部池化保持 token 连续性，避免静态分块
+三种方法都是 training-free 的推理时优化，无需任何额外训练。实现上 SpecKV 把稀疏 prefill（Vertical-Slash 模式）与 KV cache dropping 结合，进一步压低 prefill 开销；SpecPC 则用局部池化代替静态分块来保持 token 的连续性，避免把一段语义切碎。
 
 ## 实验关键数据
 
@@ -124,9 +128,9 @@ Draft-based Approximate Inference 是一个统一框架：先用小型 draft 模
 
 - [\[NeurIPS 2025\] Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching](../../NeurIPS2025/model_compression/universal_cross-tokenizer_distillation_via_approximate_likelihood_matching.md)
 - [\[ACL 2025\] IAM: Efficient Inference through Attention Mapping between Different-scale LLMs](../../ACL2025/model_compression/iam_efficient_inference_through_attention_mapping_between_different-scale_llms.md)
+- [\[ICLR 2026\] ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
 - [\[ICLR 2026\] Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
 - [\[ICLR 2026\] Highly Efficient and Effective LLMs with Multi-Boolean Architectures](highly_efficient_and_effective_llms_with_multi-boolean_architectures.md)
-- [\[ICLR 2026\] AMiD: Knowledge Distillation for LLMs with α-mixture Assistant Distribution](amid_knowledge_distillation_for_llms_with_α-mixture_assistant_distribution.md)
 
 </div>
 

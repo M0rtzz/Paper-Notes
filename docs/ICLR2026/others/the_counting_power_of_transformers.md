@@ -33,46 +33,31 @@ tags:
 
 ## 方法详解
 
-### 计数性质的形式化
+### 整体框架
 
-对于字母表 $\Sigma = \{a_1, \ldots, a_m\}$，Parikh 映射 $\Psi(w) = (|w|_{a_1}, \ldots, |w|_{a_m}) \in \mathbb{N}^m$ 记录每个字母的出现次数。
+本文是一篇纯理论工作，主线是把"Transformer 能表达哪些计数性质"这一问题的答案从线性推到任意多项式。论文先把计数性质形式化为 Parikh 向量上的不等式约束，再用一条构造性证明说明无位置编码的 Transformer 就能表达全部半代数计数性质，最后借助 Hilbert 第十问题把这一表达力推向通用性，并由此导出不可判定性结论与 C-RASP 的线性边界。
 
-- **半线性计数性质**：由线性不等式的布尔组合定义，如 $|w|_a > |w|_b$
-- **半代数计数性质**：由任意多元多项式不等式的布尔组合定义，如 $7|w|_a \cdot |w|_b \cdot |w|_c + 2|w|_d - 8|w|_e > 10$
+### 关键设计
 
-### 核心定理 1：Transformer 可捕获所有半代数计数性质
+**1. 计数性质的形式化：把"数 token"翻译成 Parikh 向量上的多项式约束。**
 
-**定理 1.1**：（Softmax）Transformer 可以表达所有半代数计数性质——即任意多元多项式（任意次数）不等式的布尔组合。
+研究 Transformer 的计数能力，首先要给"计数性质"一个不依赖具体网络的数学定义。对字母表 $\Sigma = \{a_1, \ldots, a_m\}$，Parikh 映射 $\Psi(w) = (|w|_{a_1}, \ldots, |w|_{a_m}) \in \mathbb{N}^m$ 把任意字符串 $w$ 压缩成"每个字母出现多少次"的向量，丢掉顺序只留计数。在这个向量空间上，**半线性计数性质**由线性不等式的布尔组合定义，典型例子是 MAJORITY 的 $|w|_a > |w|_b$；本文关心的**半代数计数性质**则放开到任意多元多项式不等式的布尔组合，例如 $7|w|_a \cdot |w|_b \cdot |w|_c + 2|w|_d - 8|w|_e > 10$。这一形式化是后续所有定理的共同基底：先前工作只覆盖前者，本文要证 Transformer 能覆盖后者。
 
-关键构造思路：
-1. NoPE（无位置编码）的 uniform attention 层可以计算输入序列中字母计数的平均值
-2. 通过多层组合和前馈网络的非线性，可以从平均值恢复计数比例
-3. 利用前馈网络近似多项式函数
-4. 无需位置编码或掩码
+**2. 主定理：无位置编码的 Transformer 捕获所有半代数计数性质。**
 
-### 核心定理 2：自然子类的完整刻画
+定理 1.1 给出核心结论——带 Softmax 的 Transformer 可以表达任意次数多项式不等式的布尔组合，即全部半代数计数性质，且既不需要位置编码也不需要掩码。构造的关键在于注意力的均值机制：NoPE（无位置编码）下的 uniform attention 层对全序列做均匀加权，算出的正是各字母计数的平均值 $|w|_{a_i}/|w|$，也就是计数的归一化比例；把这一比例喂给前馈网络，就能利用其非线性逼近任意多项式函数，从而判别多项式不等式是否成立；多层堆叠再把这些判别用布尔运算组合起来。换句话说，"无位置信息的平均"恰好把绝对计数转成了相对比例，而前馈网络补上了线性方法缺的非线性那一步。
 
-**定理 1.2**：NoPE-AHAT（无位置编码的平均硬注意力 Transformer）和 NoPE-AHAT[U]（仅 uniform 层变体）精确刻画半代数计数性质。
+**3. 子类的精确刻画：NoPE-AHAT 不多不少正好是半代数。**
 
-$$\text{NoPE-AHAT} = \text{NoPE-AHAT[U]} = \text{半代数计数性质}$$
+主定理给的是"能表达"的下界，定理 1.2 进一步把边界两头夹死：无位置编码的平均硬注意力 Transformer NoPE-AHAT，以及只用 uniform 层的变体 NoPE-AHAT[U]，所能表达的计数性质**恰好等于**半代数计数性质，即 $\text{NoPE-AHAT} = \text{NoPE-AHAT[U]} = \text{半代数计数性质}$。这是一个完整刻画而非单向包含，意义在于它给出了一个表达力被精确钉死的自然 Transformer 子类——尤其考虑到 AHAT 是否被 Softmax Transformer 完全捕获至今仍是开放问题，能对其计数片段给出闭式刻画相当难得。
 
-这是惊人的，因为 AHAT 是否被 SMAT 捕获仍是开放问题。
+**4. 通用性与不可判定性：两层注意力就够触达递归可枚举。**
 
-### 核心定理 3：通用性（Turing 完备性推论）
+把表达力推到极限后，论文借数论结果完成"质变"。定理 1.3 指出，每个递归可枚举（r.e.）计数性质都是某个 NoPE-AHAT[U]（因而也是 SMAT）所识别语言的投影，而且**只需两个注意力层**。其杠杆是 Matiyasevich 对 Hilbert 第十问题的解：每个 r.e. 集都能写成整数多项式零点集的投影，再套上定理 1.1 的多项式表达力即可。通用性一旦成立，不可判定性便顺势而来——定理 1.4 证明，给定一个仅含两个注意力层的 NoPE-AHAT[U] 或 SMAT，判定其语言是否为空是不可判定的。相比先前需要精巧位置编码和复杂架构才能逼出不可判定性，这里用最朴素的两层无位置编码网络就达到了同样的强度，反差正是结论的冲击力所在。
 
-**定理 1.3**：每个递归可枚举计数性质都是某个 NoPE-AHAT[U]（因此也是 SMAT）所识别语言的投影。仅需**两个注意力层**。
+**5. C-RASP 的边界：它只看得见线性那一层。**
 
-通过 Matiyasevich 对 Hilbert 第十问题的解（每个 r.e. 集都是整数多项式零点集的投影）结合定理 1.1。
-
-### 核心定理 4：不可判定性
-
-**定理 1.4**：给定一个仅有两个注意力层的 NoPE-AHAT[U] 或 SMAT，判定其语言是否为空是**不可判定的**。
-
-这比先前结果惊人得多——先前需要复杂的位置编码和架构才能获得不可判定性。
-
-### 与 C-RASP 的比较
-
-证明 C-RASP 只能捕获**线性**计数性质。实验表明非线性性质如 $L_k: |w|_a^k \geq |w|_b$ 对 $k \geq 2$ 也能被训练，因此 C-RASP 仅是"高效可学习性质"的不完全刻画。
+最后论文回头审视近期流行的 C-RASP 刻画，证明它只能捕获**线性**计数性质。这一点有实证支撑：非线性性质如 $L_k: |w|_a^k \geq |w|_b$ 在 $k \geq 2$ 时同样能被 Transformer 训练学会，但它们落在 C-RASP 表达范围之外。因此 C-RASP 至多是"高效可学习性质"的一个不完全刻画——它框住了线性可数的部分，却漏掉了本文证明同样可学的非线性计数。
 
 ## 实验验证
 
@@ -131,8 +116,8 @@ $$\text{NoPE-AHAT} = \text{NoPE-AHAT[U]} = \text{半代数计数性质}$$
 ## 相关论文
 
 - [\[AAAI 2026\] The Limitations and Power of NP-Oracle-Based Functional Synthesis Techniques](../../AAAI2026/others/the_limitations_and_power_of_np-oracle-based_functional_synthesis_techniques.md)
-- [\[AAAI 2026\] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
 - [\[AAAI 2026\] Model Counting for Dependency Quantified Boolean Formulas](../../AAAI2026/others/model_counting_for_dependency_quantified_boolean_formulas.md)
+- [\[AAAI 2026\] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
 - [\[ECCV 2024\] AttnZero: Efficient Attention Discovery for Vision Transformers](../../ECCV2024/others/attnzero_efficient_attention_discovery_for_vision_transformers.md)
 - [\[ACL 2025\] Implicit Reasoning in Transformers is Reasoning through Shortcuts](../../ACL2025/others/implicit_reasoning_in_transformers_is_reasoning_through_shortcuts.md)
 

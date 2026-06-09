@@ -47,23 +47,23 @@ tags:
 
 ### 关键设计
 
-1. **记忆化分析**:
+围绕"SAM 为什么更不安全"，作者从记忆化、影响力、方差三条线索层层逼近根因，前两条用实证刻画 SAM 的记忆模式，第三条在线性模型上给出几何必然性。
 
-    - 功能：揭示 SAM 和 SGD 在记忆化行为上的本质差异
-    - 核心思路：使用 Leave-One-Out (LOO) 定义的记忆化分数 $mem(\mathcal{A},\mathcal{D},i)$ 比较两个优化器。发现 SAM 的记忆化分数分布在中等范围更集中（而非高端），说明 SAM 聚焦于非典型但可泛化的子模式，而非纯噪声
-    - 设计动机：高记忆化不一定意味着过拟合噪声——SAM 的"结构化记忆"选择性地聚焦在代表性不足的子群体上
+**1. 记忆化分析：SAM 的记忆到底记了什么。**
 
-2. **影响力分析与泛化分解**:
+直觉上"泛化好=记得少=更安全"，但要验证这一点必须先量化每个优化器到底记住了哪些样本。作者用 Leave-One-Out 定义的记忆化分数 $mem(\mathcal{A},\mathcal{D},i)$——即抽掉第 $i$ 个训练样本前后模型对它预测置信度的变化——来对比 SAM 和 SGD。结果是 SAM 的记忆化分数并没有更低，而是分布更集中在中等区间（约 0.6–0.85），而不是堆在高端。这说明 SAM 记的不是纯噪声样本，而是"非典型但仍可泛化"的子模式：这种结构化记忆选择性地聚焦在代表性不足的子群体上，所以高记忆化在这里并不等于过拟合噪声，反而是泛化的来源之一——也正是这部分记忆把训练样本的痕迹更牢地刻进了输出。
 
-    - 功能：证明 SAM 的泛化增益来自对非典型测试样本的正确预测
-    - 核心思路：引入基于影响力得分熵的度量 $\mathcal{I}_{ent}$，将测试数据分成 5 个桶——低熵桶代表严重依赖少量高记忆训练样本的非典型测试点，高熵桶代表典型测试点。SAM 在低熵桶上的增益远大于高熵桶
-    - 设计动机：揭示 SAM 并非简单地"所有样本都更好"，而是专门在需要记忆化才能分类的非典型样本上有显著提升
+**2. 影响力分析与泛化分解：SAM 的增益从哪来。**
 
-3. **方差收缩理论**:
+为了说明 SAM 的泛化提升究竟落在哪些测试样本上，作者引入一个基于影响力得分熵的度量 $\mathcal{I}_{ent}$，并据此把测试集切成 5 个桶：低熵桶里的测试点严重依赖少量高记忆训练样本（非典型样本），高熵桶则是依赖广泛、靠普遍特征就能分对的典型样本。分桶比较后发现，SAM 相对 SGD 的增益几乎全部集中在低熵桶，高熵桶上两者几乎打平。这把"SAM 泛化更好"这件事讲细了：它不是所有样本一起变好，而是专门在那些"必须靠记忆化才能分类"的非典型样本上拉开差距——而恰恰是这些样本，让训练成员在模型输出中更容易被认出来，泛化增益和隐私风险在同一批样本上同源。
 
-    - 功能：在线性模型框架下证明 SAM 几何必然降低非成员输出方差
-    - 核心思路：构建最小 $G$-范数插值解，其中 SGD 对应 $G_0 = I_d$，SAM 对应 $G_\eta = I + \eta\Sigma$。证明 $\sigma_{G_\eta}^2 < \sigma_{G_0}^2$，即 SAM 的输出方差严格更小。由于训练样本的置信度在插值条件下不变，非成员方差的下降直接增大了 MIA 优势
-    - 设计动机：为实验发现提供严格的理论基础，证明方差收缩是 SAM 几何的内在属性
+**3. 方差收缩理论：在线性模型上证明 SAM 必然更危险。**
+
+前两点是实证观察，这一点给出严格证明。作者在线性模型的完美插值设定下，把不同优化器写成最小 $G$-范数插值解：SGD 对应度量 $G_0 = I_d$，SAM 对应 $G_\eta = I + \eta\Sigma$（$\Sigma$ 为数据曲率，$\eta$ 为锐度惩罚强度），即 SAM 沿高曲率方向施加了额外的惩罚。在此框架下可以证明非成员输出方差严格收缩：
+
+$$\sigma_{G_\eta}^2 < \sigma_{G_0}^2$$
+
+由于插值条件下训练样本的置信度被钉死不变，成员一侧的分布几乎不动，而非成员一侧的方差被压低，两个分布的重叠就变小、更容易用一个阈值切开——这正好对应实验里观察到的"SGD 有更多极端自信的非成员预测、SAM 把方差压平"。于是方差收缩被证明为 SAM 几何的内在属性，而非训练偶然，MIA 优势的放大也就有了根因。
 
 ### 损失函数 / 训练策略
 
@@ -132,7 +132,7 @@ tags:
 - [\[ECCV 2024\] Unveiling Privacy Risks in Stochastic Neural Networks Training: Effective Image Reconstruction from Gradients](../../ECCV2024/ai_safety/unveiling_privacy_risks_in_stochastic_neural_networks_training_effective_image_r.md)
 - [\[AAAI 2026\] Privacy Auditing of Multi-Domain Graph Pre-Trained Model under Membership Inference Attack](../../AAAI2026/ai_safety/privacy_auditing_of_multi-domain_graph_pre-trained_model_under_membership_infere.md)
 - [\[NeurIPS 2025\] Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy](../../NeurIPS2025/ai_safety/unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)
-- [\[ICML 2026\] MetaMoE: Diversity-Aware Proxy Selection for Privacy-Preserving Mixture-of-Experts Unification](../../ICML2026/ai_safety/metamoe_diversity-aware_proxy_selection_for_privacy-preserving_mixture-of-expert.md)
+- [\[CVPR 2026\] A Unified Perspective on Adversarial Membership Manipulation in Vision Models](../../CVPR2026/ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)
 
 </div>
 

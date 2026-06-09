@@ -37,35 +37,25 @@ AnyUp 提出首个**编码器无关**的可学习特征上采样方法，通过 
 
 ### 整体框架
 
-AnyUp 基于注意力上采样架构（继承自 JAFAR），流程为：输入图像 $I_{hr}$ 和低分辨率特征 $p = e(I_{hr})$ → feature-agnostic 层处理 $p$ → 与图像特征一起进入窗口注意力 → 输出高分辨率特征 $q \in \mathbb{R}^{H \times W \times c}$。训练时使用随机裁剪的图像部分作为参考监督，而非昂贵的全图高分辨率特征。
+AnyUp 想解决的是"换一个视觉编码器就得重训上采样器"这件事，因此整个网络要做到不依赖具体编码器的特征维度。它沿用注意力上采样的骨架（继承自 JAFAR）：给定高分辨率图像 $I_{hr}$ 和编码器吐出的低分辨率特征 $p = e(I_{hr})$，先用一个 feature-agnostic 层把任意维度的 $p$ 压成固定维度的"规范特征"，再把它和图像特征一起送进局部窗口注意力，输出与输入同语义但分辨率拉满的特征 $q \in \mathbb{R}^{H \times W \times c}$。注意力的 value 直接由原始特征传递，因此上采样器只负责"算权重"、不负责"造特征值"，这一点决定了它能跨编码器复用。训练阶段也避开了昂贵的全图高分辨率特征，改用随机裁剪的局部图像当参考信号。
 
 ### 关键设计
 
-#### 1. Feature-Agnostic 卷积层
+**1. Feature-agnostic 卷积层：用一个对通道数不变量的处理层切断编码器耦合。**
 
-**功能**: 将任意维度 $N$ 的输入特征映射为固定维度 $M$ 的规范特征，实现编码器无关。
-
-**核心思路**: 学习 $M$ 个滤波器基 $\{\psi_j \in \mathbb{R}^{k \times k}\}_{j=1}^M$，每个输入通道 $p_i$ 独立与每个基卷积，经 softmax 归一化后对所有通道取均值：
+旧上采样器的瓶颈在于：处理低分辨率特征的那几层把通道维度写死了，DINOv2 的 384 维和 CLIP 的 768 维各需一套权重，换编码器就得重训。AnyUp 的做法是学一组 $M$ 个滤波器基 $\{\psi_j \in \mathbb{R}^{k \times k}\}_{j=1}^M$，让**每个输入通道 $p_i$ 独立**与每个基卷积，经 softmax 在 $M$ 个基上归一化后，再对所有 $N$ 个输入通道取平均：
 
 $$f_j = \frac{1}{N} \sum_{i=1}^{N} \frac{\exp(p_i * \psi_j)}{\sum_{j'=1}^{M} \exp(p_i * \psi_{j'})}$$
 
-输出 $M$ 维特征与输入维度 $N$ **完全无关**——这使得同一模型可以处理 DINOv2 的 384 维特征、CLIP 的 768 维特征等任意编码器输出。
+输出是 $M$ 维，和输入通道数 $N$ 完全无关，所以同一套权重能直接吃任意编码器的特征。之所以"取平均丢掉通道身份"还管用，是因为注意力上采样真正需要的只是输入特征图的局部结构变化（边界、纹理这类），而具体的特征值由注意力 value 原样搬运——逐通道独立卷积加跨通道平均，正好只保留结构信息、扔掉与编码器绑定的具体取值。
 
-**设计动机**: 注意力上采样器主要需要理解输入特征图的局部结构变化（边界、纹理等），而非重建特征的具体值（值由注意力values直接传递）。逐通道独立卷积+跨通道平均正是为了**只**捕获结构信息。
+**2. 局部窗口注意力：把上采样还原成它本该有的局部操作。**
 
-#### 2. 局部窗口注意力
+作者分析 JAFAR 的全局注意力时发现一个异常：某个像素查询会去关注画面里完全不相关的远处区域，这些远距离关注既没用又引入噪声。而特征上采样本质上是局部的——一个像素的高分辨率特征理应主要由它附近 patch 的粗糙特征决定。于是 AnyUp 把注意力限制在查询点附近的窗口内，带来两个好处：高分辨率特征只来自邻近粗糙特征的线性组合，优化目标被显著简化；同时窗口化也省掉了全局注意力的算力开销。
 
-**功能**: 将全局注意力限制在查询点附近的局部窗口内，简化上采样问题并提升效率。
+**3. 基于图像裁剪的训练策略：用局部裁剪当参考，省掉全图高分辨率特征。**
 
-**核心思路**: 分析 JAFAR 的全局注意力模式发现，存在像素查询关注到完全不相关的远处区域的异常模式。限制为局部窗口后：(a) 高分辨率特征只由附近的粗糙特征线性组合，简化了优化目标；(b) 计算效率提升。
-
-**设计动机**: 特征上采样本质上是**局部**操作——某像素的高分辨率特征应主要由其附近 patch 的粗糙特征决定，全局注意力带来的远距离关注不仅无用还引入噪声。
-
-#### 3. 基于图像裁剪的训练策略
-
-**功能**: 用随机裁剪的局部图像部分作为参考信号，替代昂贵的全图高分辨率特征计算。
-
-**核心思路**: 取高分辨率图像 $I$，随机裁剪局部 $I'$，分别提取特征 $p = e(I)$ 和 $\hat{q} = e(I')$。将 $p$ 上采样后，仅在 $I'$ 对应区域与 $\hat{q}$ 计算损失。这比 JAFAR 的低分辨率全图训练更有效，比 LoftUp 的分割掩码训练更轻量。
+监督信号怎么来是另一个成本大头。AnyUp 不去算昂贵的全图高分辨率特征，而是取高分辨率图像 $I$、随机裁剪出局部 $I'$，分别过编码器得到 $p = e(I)$ 和 $\hat{q} = e(I')$；把 $p$ 上采样后，只在 $I'$ 对应的那块区域和 $\hat{q}$ 算损失。$\hat{q}$ 是从裁剪小图直接提的特征，天然就是该区域的高质量参考。这比 JAFAR 用低分辨率全图训练更贴近真实高分辨率分布，又比 LoftUp 依赖分割掩码训练更轻量——不需要额外的分割模型。
 
 ### 损失函数
 
@@ -150,9 +140,9 @@ $$L_{\text{cos-mse}}(q', \hat{q}) = 1 - \cos(q', \hat{q}) + L^2(q', \hat{q})$$
 
 - [\[NeurIPS 2025\] Computable Universal Online Learning](../../NeurIPS2025/others/computable_universal_online_learning.md)
 - [\[ICLR 2026\] Agnostics: Learning to Synthesize Code in Any Programming Language with a Universal RL Environment](agnostics_learning_to_code_in_any_programming_language_via_reinforcement_with_a_.md)
-- [\[NeurIPS 2025\] FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics](../../NeurIPS2025/others/flashmd_long-stride_universal_prediction_of_molecular_dynamics.md)
 - [\[NeurIPS 2025\] Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
 - [\[ICML 2026\] Over-Alignment vs Over-Fitting: The Role of Feature Learning Strength in Generalization](../../ICML2026/others/over-alignment_vs_over-fitting_the_role_of_feature_learning_strength_in_generali.md)
+- [\[ECCV 2024\] HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](../../ECCV2024/others/hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)
 
 </div>
 

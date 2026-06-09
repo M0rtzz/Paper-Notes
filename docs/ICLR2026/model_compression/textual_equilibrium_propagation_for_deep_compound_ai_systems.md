@@ -41,35 +41,19 @@ tags:
 
 ### 整体框架
 
-TEP 将复合AI系统建模为随机计算图（SCG）$G=(V,E)$，其中节点为LLM智能体，边表示数据流。优化目标为：
+TEP 把复合AI系统建模为随机计算图（SCG）$G=(V,E)$，节点是LLM智能体、边是数据流，优化目标为 $J(\theta) = \mathbb{E}_{o \sim D_{\text{task}}} \mathbb{E}_{Z \sim P_\theta(\cdot | o)} [\ell(o, Z)]$。与 TextGrad 沿全链反向传播文本反馈不同，TEP 借鉴能量基模型中的平衡传播，用"自由阶段"和"微扰阶段"两次前向收敛替代反向链，使每个节点只靠本地信号更新，从根上回避了反馈在深层管道里爆炸或消失。
 
-$$J(\theta) = \mathbb{E}_{o \sim D_{\text{task}}} \mathbb{E}_{Z \sim P_\theta(\cdot | o)} [\ell(o, Z)]$$
+### 关键设计
 
-TEP 采用受能量基模型中平衡传播启发的两阶段优化策略：
+**1. 自由阶段（Free Phase）：让每个节点先各自收敛到局部最优。** TextGrad 的反馈必须从最末端的损失一路回传，深度一大就累积失控。TEP 改为给每个节点 $v$ 配一个局部 LLM 评论者，它用结构化评分标准 $\theta_v^{\text{critic}}$ 和可调温度 $\theta_v^{\text{temp}} \sim \mathcal{U}(0.3, 0.9)$ 只评判本节点自己的输出，生成反馈 $g_v = C(z_v, \theta_v^{\text{critic}})$，**完全不依赖下游梯度** $g'$。节点据此反复改写提示，直到评论者评分稳定、认为无需再改，即达到局部"平衡态" $x_\star^0(\theta)$。因为反馈只在单个节点内部循环、长度天然有界，深度再大也不会让消息指数膨胀。
 
-### 关键设计1：自由阶段（Free Phase）
+**2. 微扰阶段（Nudged Phase）：用前向信号把局部最优拧向全局目标。** 纯局部收敛只保证每个节点自洽，却无法保证整条管道朝任务目标协同。TEP 在自由平衡的基础上，对每个节点施加一次**有界的最小提示编辑**，编辑方向由任务级目标经前向信号（而非反向反馈链）给出；微扰强度受限，确保不破坏自由阶段已经达到的局部最优。系统带着这些微扰再跑一遍并迭代，收敛到一个与自由平衡态不同的"微扰平衡态"——两个平衡态之间的差异，正是任务目标在本地留下的可用学习信号。
 
-每个节点 $v$ 配备局部LLM评论者，使用结构化评分标准 $\theta_v^{\text{critic}}$ 和可调温度参数 $\theta_v^{\text{temp}} \sim \mathcal{U}(0.3, 0.9)$。评论者仅对本节点输出生成反馈 $g_v = C(z_v, \theta_v^{\text{critic}})$，**不依赖下游梯度** $g'$。
+**3. 局部更新规则：用两态之差更新提示并以验证集兜底。** 有了两个平衡态后，每个节点按 $\theta_v' = U_v(g_v^f, g_v^n, \theta_v)$ 更新，其中 $g_v^f$、$g_v^n$ 分别是自由阶段与微扰阶段的反馈信号，$U_v$ 是 LLM 定义的更新算子。这一步对应平衡传播里"用两相状态差近似梯度"的思想，但搬到了文本空间。每次更新都做验证集选择，只保留不降低性能的编辑，避免单步评论者偏差被错误固化。
 
-迭代优化直到评分稳定——即达到局部"平衡态" $x_\star^0(\theta)$，此时评论者认为无需进一步改进。
+### 损失函数 / 训练策略
 
-### 关键设计2：微扰阶段（Nudged Phase）
-
-在自由平衡的基础上，对每个节点施加**有界的最小提示编辑**，编辑方向由任务级目标通过前向信号（而非反向反馈链）指导。微扰强度受限，确保不破坏自由阶段已达到的局部最优。
-
-系统再次运行并迭代直到达到微扰平衡态，与自由平衡态不同。
-
-### 局部更新规则
-
-$$\theta_v' = U_v(g_v^f, g_v^n, \theta_v)$$
-
-其中 $g_v^f$ 和 $g_v^n$ 分别是自由阶段和微扰阶段的反馈信号，$U_v$ 是LLM定义的更新算子。每次更新都进行验证集选择，仅保留不降低性能的编辑。
-
-### 损失函数
-
-TEP 不使用显式数值损失函数，而是通过LLM评论者的文本评分和验证集表现来隐式优化。核心约束是：
-- 反馈长度有界：$B(g) \ll \text{context limit}$
-- 反馈质量保持：$S(g) \geq \tau$
+TEP 不使用显式数值损失，而是靠局部评论者的文本评分加验证集表现隐式优化，并对反馈施加两条与失败模式直接对应的约束：长度有界 $B(g) \ll \text{context limit}$（防爆炸）、质量保持 $S(g) \geq \tau$（防消失）。训练上自由阶段约 20 次迭代、微扰阶段约 40 次迭代，全程把黑盒 LLM 组件当模块化单元，无需访问任何模型参数。
 
 ## 实验关键数据
 
@@ -136,11 +120,11 @@ TEP 在所有4个任务上均取得最佳，在HotpotQA上较次优方法提升8
 
 ## 相关论文
 
+- [\[ICLR 2026\] Rejuvenating Cross-Entropy Loss in Knowledge Distillation for Recommender Systems](rejuvenating_cross-entropy_loss_in_knowledge_distillation_for_recommender_system.md)
+- [\[ICLR 2026\] Paper Copilot: Tracking the Evolution of Peer Review in AI Conferences](paper_copilot_tracking_the_evolution_of_peer_review_in_ai_conferences.md)
 - [\[ICLR 2026\] Bridging Kolmogorov Complexity and Deep Learning: Asymptotically Optimal Description Length Objectives for Transformers](bridging_kolmogorov_complexity_and_deep_learning_asymptotically_optimal_descript.md)
 - [\[NeurIPS 2025\] Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization](../../NeurIPS2025/model_compression/quantization_error_propagation_revisiting_layer-wise_post-training_quantization.md)
 - [\[CVPR 2026\] Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning](../../CVPR2026/model_compression/towards_generalizable_ai-generated_image_detection_via_image-adaptive_prompt_lea.md)
-- [\[ICML 2025\] A Mathematical Framework for AI-Human Integration in Work](../../ICML2025/model_compression/a_mathematical_framework_for_ai-human_integration_in_work.md)
-- [\[NeurIPS 2025\] AI-Generated Video Detection via Perceptual Straightening](../../NeurIPS2025/model_compression/ai-generated_video_detection_via_perceptual_straightening.md)
 
 </div>
 

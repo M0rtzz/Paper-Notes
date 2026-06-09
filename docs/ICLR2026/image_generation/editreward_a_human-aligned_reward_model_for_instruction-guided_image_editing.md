@@ -45,41 +45,25 @@ tags:
 
 ### 整体框架
 
-EditReward 包含三个核心组件：
-1. **EditReward-Data**：200K 专家标注偏好对数据集
-2. **EditReward 模型**：基于 VLM 的多维不确定性感知排序奖励模型
-3. **EditReward-Bench**：多路偏好排序评测基准
+EditReward 把"造数据"和"建模型"两件事拧成一条线：先用专家标注产出 200K 高质量偏好对的 EditReward-Data，再以一个基于 VLM 的多维不确定性感知排序模型在这批数据上学习人类偏好，最后配套一个多路偏好排序基准 EditReward-Bench 来检验对齐度。整套设计的出发点是同一个判断——可靠的奖励信号来自高质量人工标注，而非众包噪声或闭源模型的伪标签。
 
 ### 关键设计
 
-1. **EditReward-Data 数据构建**：
+**1. EditReward-Data 数据构建：用专家标注换取干净的偏好信号。**
 
-    - 从 6 个编辑基准收集 9557 个指令-图像对（GEdit-Bench、ImgEdit-Bench、MagicBrush 等）
-    - 使用 6 个 SOTA 编辑模型（Step1X-Edit、Flux-Kontext、Qwen-Image-Edit 等）各生成多组输出
-    - **关键**：训练有素的标注员按严格协议标注，采用 4 级 Likert 量表在两个维度评分：
-        - Instruction Following（IF）：语义准确性、完整性、无多余改动
-        - Visual Quality（VQ）：合理性、无伪影、美学
-    - Krippendorff's α 达到 IF=0.668, VQ=0.597，证明高标注质量
+数据是整个工作的地基，作者刻意避开众包路线。他们从 GEdit-Bench、ImgEdit-Bench、MagicBrush 等 6 个编辑基准收集 9557 个指令-图像对，再用 Step1X-Edit、Flux-Kontext、Qwen-Image-Edit 等 6 个 SOTA 编辑模型各自生成多组输出，构成待比较的候选池。关键在标注环节：训练有素的标注员按严格协议、用 4 级 Likert 量表沿两个维度独立打分——Instruction Following（IF）看语义准确性、完整性以及有没有多余改动，Visual Quality（VQ）看画面合理性、有无伪影和美学。两维度分开打而非合成一个总分，是为了后续能解耦建模。这套协议的回报是高一致性：Krippendorff's α 在 IF 上达到 0.668、VQ 上达到 0.597，明显高于众包数据的水平，意味着训练信号本身就比已有偏好数据集干净得多。
 
-2. **多维不确定性感知排序损失（Multi-Dimensional Uncertainty-Aware Ranking）**：
+**2. 多维不确定性感知排序损失：把每个维度建成一个有方差的分布。**
 
-    - 受 HPSv3 启发，将分数建模为高斯分布 $s_{i,d} \sim \mathcal{N}(\mu_{i,d}, \sigma_{i,d}^2)$，其中 $d \in \{1,2\}$ 对应 IF 和 VQ 两个维度
-    - 使用多任务学习（MTL），reward head 为每个维度独立预测高斯参数
-    - 聚合策略探索了三种方式：悲观最小值、均衡平均、直接求和
-    - 最终偏好概率通过两个聚合分布的积分计算：$\mathcal{L}_{\text{rank}} = -\log(P(I_h \succ I_l))$
+有了双维度标注，模型就不该只回归一个标量分数。受 HPSv3 启发，作者把第 $i$ 个样本在维度 $d$ 上的分数建模为高斯分布 $s_{i,d} \sim \mathcal{N}(\mu_{i,d}, \sigma_{i,d}^2)$，其中 $d \in \{1,2\}$ 分别对应 IF 和 VQ；方差 $\sigma$ 让模型能表达"这一对我不太确定"，从而对噪声更鲁棒。具体实现上用多任务学习（MTL），reward head 为每个维度独立预测各自的高斯参数，再把两个维度聚合成单一偏好。聚合方式作者比较了悲观最小值、均衡平均和直接求和三种，最终以均值聚合效果最好。偏好概率由两个聚合分布之差的积分给出，训练目标就是让更优样本 $I_h$ 排在 $I_l$ 之前的概率最大化，即排序损失 $\mathcal{L}_{\text{rank}} = -\log P(I_h \succ I_l)$。消融里成对排序相比逐点回归带来 +14.35 的大幅提升，多独立 head 又比共享 head 再涨 3.80，说明"分布化 + 分维度"两个选择都实打实有效。
 
-3. **Tie 样本解耦增强（Disentangling Ties via Dimensional Preference）**：
+**3. Tie 样本解耦增强：把"打平"拆成两条相反的偏好。**
 
-    - 核心洞察：整体打平的样本对往往在不同维度各有优势（A 的 IF 更好，B 的 VQ 更好）
-    - 将打平对 $(I_A, I_B)_{\text{tie}}$ 拆分为两个训练样本，分别标注为 $I_A \succ I_B$ 和 $I_B \succ I_A$
-    - 迫使模型学习更细粒度的维度间权衡，带来更平滑的训练曲线
+标注中存在大量整体打平的样本对，直接丢弃会浪费信息。作者的洞察是：整体打平往往意味着两张图在不同维度各有胜负——A 的 IF 更好、B 的 VQ 更好。于是把每个打平对 $(I_A, I_B)_{\text{tie}}$ 拆成两个训练样本，分别标注为 $I_A \succ I_B$ 和 $I_B \succ I_A$ 喂给模型。这样做迫使模型在维度间学会更细粒度的权衡，而不是简单地把两者都判为等价，实践中带来了更平滑的训练曲线。技巧本身很轻，却把原本被浪费的"平局"标注转化成了有效监督。
 
 ### 损失函数 / 训练策略
 
-- 骨干网络：Qwen2.5-VL-7B 或 MiMo-VL-7B，全参数解冻
-- 2 epochs，8×A800 GPU，学习率 2e-6，cosine schedule
-- 图像预处理至 448×448，保持宽高比
-- 总损失为排序损失 $\mathcal{L}_{\text{rank}} = -\log(P(I_h \succ I_l))$
+骨干网络取 Qwen2.5-VL-7B 或 MiMo-VL-7B 并全参数解冻，在 8×A800 上训练 2 个 epoch，学习率 2e-6 配 cosine schedule，图像统一预处理到 448×448 并保持宽高比。训练目标即上文的排序损失 $\mathcal{L}_{\text{rank}} = -\log P(I_h \succ I_l)$。
 
 ## 实验关键数据
 

@@ -41,40 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-InnoGym 由两个互补组件构成：iBench（创新评估基准）和 iGym（统一执行环境）。iBench 包含 18 个从真实工程和科学领域筛选出的可改进任务（Improvable Tasks），每个任务被形式化为 $\mathcal{T} = (P, S, V, D)$，其中 $P$ 是问题实例、$S$ 是解空间、$V$ 是性能度量、$D$ 是解之间的距离函数。
+InnoGym 想回答一个被现有基准回避的问题：当一道题没有唯一正确答案时，怎么衡量一个 Agent 到底有没有"创新"。它把这件事拆成两个互补组件——iBench 负责"出题"（创新评估基准），iGym 负责"考场"（统一执行环境）。iBench 收录了 18 个从真实工程和科学领域筛出来的可改进任务（Improvable Tasks），每个任务被形式化成四元组 $\mathcal{T} = (P, S, V, D)$：$P$ 是问题实例、$S$ 是解空间、$V$ 是性能度量、$D$ 是衡量两个解差异的距离函数。这个四元组是后面所有度量的地基。
 
-输入侧，Agent 只能访问 $P_{\text{visible}}$（任务描述、示例、开发数据、依赖环境）和验证器 $C$（检查解的格式、可执行性和约束满足）。评估器 $R$、已知解集 $S_{\text{known}}$ 和排行榜数据保持隐藏。输出侧，Agent 提交解方案后经过三步评估：提交 → 性能评估（计算 $V(s) = C(s) \cdot R(s)$）→ 新颖性评估（计算 $N(s)$）。
-
-任务来源覆盖 2018-2024 年的顶级学术和工业竞赛（NeurIPS Competitions、KDD Cup、ROADEF、GMCM、MLArchSys）以及经典 NP-hard 问题，涵盖机器学习、运筹优化、系统设计、数学等多个领域。
+考试是半盲的：Agent 只能看到 $P_{\text{visible}}$（任务描述、示例、开发数据、依赖环境）和一个验证器 $C$（检查解的格式、可执行性、约束是否满足），而评估器 $R$、已知解集 $S_{\text{known}}$、排行榜真值全部对 Agent 隐藏。Agent 交卷后走三步流水线：提交 → 性能评估（算 $V(s) = C(s) \cdot R(s)$，不可行的解直接判 0）→ 新颖性评估（算 $N(s)$）。任务本身来自 2018–2024 年的顶级学术与工业竞赛（NeurIPS Competitions、KDD Cup、ROADEF、GMCM、MLArchSys）以及经典 NP-hard 问题，横跨机器学习、运筹优化、系统设计、数学等多个领域，刻意避免单一学科。
 
 ### 关键设计
 
-1. **创新度量框架（Performance Gain + Novelty）**:
+**1. 创新度量框架：用正交的两轴把"创新"量化出来。**
 
-    - 功能：从两个正交维度量化创新
-    - 核心思路：Performance Gain $G(s) = V(s) - V^*_{\text{known}}$ 衡量相较于已知最优解的性能提升；Novelty $N(s) = C(s) \cdot \min_{h \in S_{\text{known}}} D(s, h)$ 衡量新解与已知解的方法论差异。两者组合可划分四类创新：突破性创新（高 $G$、高 $N$）、性能创新（高 $G$、低 $N$）、概念创新（$G \approx 0$、高 $N$）、无效探索（低 $G$、低 $N$）
-    - 设计动机：单一维度无法捕捉创新的全貌——调参优化 SOTA 是创新，用全新方法达到相近性能也是创新，二者性质完全不同
+现有基准只认结果对不对，于是"调参刷到 SOTA"和"换个全新方法做到差不多"被混为一谈，但这两件事的性质完全不同。InnoGym 把创新拆成两个互不替代的维度：Performance Gain $G(s) = V(s) - V^*_{\text{known}}$ 衡量解相对于已知最优解的性能提升，回答"做得更好了吗"；Novelty $N(s) = C(s) \cdot \min_{h \in S_{\text{known}}} D(s, h)$ 取新解到所有已知解的最小距离，回答"做得更不一样了吗"（乘上 $C(s)$ 是为了让不可行的解拿不到新颖性分）。两轴一组合，创新就被切成四象限：突破性创新（高 $G$、高 $N$）、性能创新（高 $G$、低 $N$）、概念创新（$G \approx 0$、高 $N$）、无效探索（低 $G$、低 $N$）。论文进一步用复数平面把 $G$ 当模、$N$ 当角，让方向不同但新颖度相同的解能被区分开。
 
-2. **任务筛选与标准化流水线（iBench）**:
+**2. 任务筛选与标准化流水线：把 197 个候选收敛成 18 个干净可比的任务。**
 
-    - 功能：从 197 个候选任务中筛选出 18 个高质量可改进任务
-    - 核心思路：两阶段筛选——第一阶段检查资源可用性和计算可行性（数据集、评估器、排行榜、参考解），筛至 72 个；第二阶段验证评估器质量并平衡领域分布，最终保留 18 个。每个任务经过六步标准化增强：任务规范重写、环境打包、验证器构建、解集收集、评估器归一化（确保绝对分数的 Pearson $\geq 0.9$、Kendall $\tau \geq 0.8$）、数据划分
-    - 设计动机：排除已解决问题（无改进空间）和探索性问题（无人类基线），聚焦于有清晰改进空间的任务
+可改进任务的价值在于"有清晰的改进空间"——既不能是早被解透、没空间可改的题，也不能是连人类基线都没有、无从对比的探索题。为此 iBench 走两阶段漏斗：第一阶段查资源可用性和算力可行性（数据集、评估器、排行榜、参考解是否齐全），从 197 个筛到 72 个；第二阶段验证评估器质量并平衡领域分布，最终留下 18 个。留下来的每个任务还要过六步标准化增强：任务规范重写、环境打包、验证器构建、解集收集、评估器归一化、数据划分。其中评估器归一化卡得最严——要求归一化后的绝对分数与原始分数的 Pearson 相关 $\geq 0.9$、排序的 Kendall $\tau \geq 0.8$，这样不同任务的分数才能放到同一把尺子上横向比。
 
-3. **新颖性评估（Agent-as-Judge）**:
+**3. 新颖性评估（Agent-as-Judge）：用语义理解而非代码相似度判断"方法有多不同"。**
 
-    - 功能：自动评估解的方法论新颖性
-    - 核心思路：先用 Codex 的提取 prompt 将每个解的核心策略提取为结构化表示，再用 GPT-5 对 Agent 解和参考解沿六个评分维度打分（每维度 0-4 分），取所有参考解中的最小距离并归一化到 $[0, 100]$
-    - 设计动机：方法论差异难以用简单的代码相似度衡量，需要语义级别的理解；Agent-as-Judge 方案可扩展到多种任务类型
-    - 局限：评判结果依赖于 GPT-5 的能力，不同版本可能产生不一致的评分
+方法论上的差异很难用代码 diff 或字符串相似度捕捉——两段长得很像的代码可能思路迥异，反之亦然，所以 $N(s)$ 里的距离 $D$ 改用模型来判。具体分两步：先用 Codex 的提取 prompt 把每个解的核心策略抽成结构化表示，剥掉无关的实现细节；再用 GPT-5 沿六个评分维度对 Agent 解与每个参考解打分（每维度 0–4 分），取它到所有参考解中的最小距离，归一化到 $[0, 100]$。这套 Agent-as-Judge 方案的好处是能跨多种任务类型扩展，不必为每类任务手写相似度规则；代价是评分依赖 GPT-5 的能力，换一个评判模型或版本可能给出不一致的新颖性排名。
 
-### 统一执行环境 iGym
-iGym 是 InnoGym 配套的统一 Agent 执行 SDK，解决了现有 SDK（如 OpenHands、AutoGen、LangGraph）在长时运行任务中的关键缺陷。核心特性包括：(1) 异步工具调度器（Async Tool Dispatcher）支持 Agent 同时调用多种工具而不阻塞；(2) 鲁棒恢复机制保障 12 小时长时运行中的断点续跑；(3) 统一抽象层让不同 Agent 框架（workflow 模式和 agent 模式）在相同环境下交互。iGym 确保不同 Agent 之间的性能差异主要反映其设计而非基础设施差异。
+**4. 统一执行环境 iGym：让 Agent 之间的差距来自设计而非基础设施。**
 
-### 评估流程
-每个任务-Agent-模型配置允许最多 12 小时运行，运行 3 次取最佳有效提交。评估分三步进行：(1) Agent 使用可见数据和工具生成提交方案；(2) 验证器 $C(s)$ 检查可行性后评估器 $R(s)$ 计算性能分数；(3) Codex 提取方案核心策略并由 GPT-5 评估新颖性。两个维度的分数共同决定创新等级。
+如果不同 Agent 跑在各自的 SDK 上，性能差异里就混进了工程实现的噪声。iGym 是 InnoGym 配套的统一执行 SDK，专门补上现有 SDK（OpenHands、AutoGen、LangGraph）在长时运行任务上的短板：异步工具调度器（Async Tool Dispatcher）让 Agent 能并发调用多种工具而不互相阻塞；鲁棒恢复机制保障 12 小时长跑中的断点续跑；统一抽象层让 workflow 模式和 agent 模式的不同框架在同一环境里交互。这样测出来的差异才能归因到 Agent 的设计本身。
 
-主实验使用 DeepSeek-v3.1 作为骨干 LLM，分析实验进一步对比 GPT-5 和 Gemini-2.5-Pro。为便于跨任务比较，还报告归一化 Ratio $= G(s) / V^*(s)$。
+### 评估协议
+每个"任务–Agent–模型"配置最多跑 12 小时，重复 3 次取最佳有效提交。一次评估走三步：Agent 用可见数据和工具生成提交方案 → 验证器 $C(s)$ 检查可行性后由评估器 $R(s)$ 算性能分 → Codex 提取核心策略、GPT-5 评新颖性，两轴分数共同定出创新等级。主实验用 DeepSeek-v3.1 作骨干 LLM，分析实验再对比 GPT-5 与 Gemini-2.5-Pro。为便于跨任务比较，还报告归一化 Ratio $= G(s) / V^*(s)$。
 
 ## 实验关键数据
 
@@ -145,7 +135,7 @@ iGym 是 InnoGym 配套的统一 Agent 执行 SDK，解决了现有 SDK（如 Op
 - [\[NeurIPS 2025\] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research](../../NeurIPS2025/code_intelligence/mlr-bench_evaluating_ai_agents_on_open-ended_machine_learning_research.md)
 - [\[ICLR 2026\] Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
 - [\[ACL 2026\] Benchmarking Testing in Automated Theorem Proving](../../ACL2026/code_intelligence/benchmarking_testing_in_automated_theorem_proving.md)
-- [\[ICML 2026\] MARS: Modular Agent with Reflective Search for Automated AI Research](../../ICML2026/code_intelligence/mars_modular_agent_with_reflective_search_for_automated_ai_research.md)
+- [\[ICML 2026\] CentaurEval: Benchmarking Human-in-the-Loop Value in Agentic Coding](../../ICML2026/code_intelligence/centaureval_benchmarking_human-in-the-loop_value_in_agentic_coding.md)
 
 </div>
 

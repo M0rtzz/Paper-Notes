@@ -37,34 +37,20 @@ tags:
 
 ## 方法详解
 
-### 理论框架
-- **相似度图模型（Similarity Graph）**：扩展 HaoChen et al. (2021) 的增强图框架，用三个参数建模所有样本对的增强相似度
-   - $\alpha$（同类相似度）：同类样本间的增强相似度，值最大
-   - $\beta$（简单异类相似度）：远离决策边界的异类样本对，值最小
-   - $\gamma$（困难异类相似度）：靠近决策边界的异类样本对，介于 $\alpha$ 和 $\beta$ 之间
-   - 自然关系：$\beta < \gamma < \alpha < 1$
-   - 可放松假设：$\tilde{a}_{ij} = a_{ij} + \epsilon \cdot \varepsilon_{ij}$（添加随机扰动项）
-2. **谱对比学习损失**：使用 HaoChen et al. (2021) 的谱损失 $\mathcal{L}_{\text{Spec}}(f) = -2 \cdot \mathbb{E}_{x,x^+}[f(x)^\top f(x^+)] + \mathbb{E}_{x,x'}[(f(x)^\top f(x'))^2]$ 作为 InfoNCE 的理论代理——两者在总体极小值处等价，且谱损失与矩阵分解损失 $\|\bar{A} - FF^\top\|_F^2$ 等价，便于推导
-3. **误差界推导**：分别推导有无困难样本时的线性探测误差界
-    - 无困难样本：$\mathcal{E}_{w.o.} \leq \frac{4\delta}{1 - \frac{1-\alpha}{(1-\alpha)+n\alpha+nr\beta}} + 8\delta$
-    - 有困难样本：额外项 $r(\gamma-\beta)$ 严格增大分子→误差界变差
-    - $\gamma - \beta$ 越大（困难样本越"困难"），恶化越严重
+### 整体框架
+本文不提出新网络，而是建立一套相似度图模型，把"困难样本"形式化为跨类高相似度的样本对，再用谱对比学习损失的泛化误差界严格证明它们会让线性探测误差变差，并由此推出删除、margin、温度缩放三种带理论保证的缓解策略以及一个无监督的困难样本检测器。整套分析的逻辑链是：用三个相似度参数刻画数据 → 推导含/不含困难样本两种误差界 → 比较两者得出"困难样本有害"的结论 → 从界的形式反推如何修正。
 
-### 三种缓解策略的理论分析
+### 关键设计
 
-| 策略 | 机制 | 理论保证 |
-|------|------|----------|
-| 删除困难样本 | 直接移除 $\mathbb{D}_d$ 中的样本 | 当 $\gamma - \beta$ 足够大时，误差界严格改善 |
-| Margin 调节 | 对困难对添加正 margin $m = c_0(\gamma - \beta)/(c_1^2 c_2)$ | 最优 margin 下误差界恢复到无困难样本水平 |
-| 温度缩放 | 对困难对使用更低温度 $\tau \propto \beta/\gamma$ | 当 $n_d < O(n^{1/2})$ 时误差界严格改善 |
+**1. 相似度图模型：用三个参数把"困难"写进理论。** 对比学习性能在不同数据集上差异巨大却缺乏解释，根源在于此前的增强图理论把所有异类样本一视同仁。本文扩展 HaoChen et al. (2021) 的增强图，用三个参数建模任意样本对的增强相似度：同类相似度 $\alpha$ 最大，远离决策边界的简单异类相似度 $\beta$ 最小，靠近决策边界的困难异类相似度 $\gamma$ 居中，满足自然关系 $\beta < \gamma < \alpha < 1$。困难样本因此被精确定义为相似度落在 $\gamma$ 附近的跨类对。为贴近真实数据，模型还允许加随机扰动放松假设 $\tilde{a}_{ij} = a_{ij} + \epsilon \cdot \varepsilon_{ij}$，使结论不依赖于严格的三值结构。
 
-### 困难样本检测机制（无监督，无需预训练模型）
-- 不依赖预训练模型或额外计算——利用投影前特征的批内余弦相似度
-- 以 $posHigh$ 和 $posLow$ 两个百分位阈值定义困难区间
-- $posHigh \approx 1/(r+1)$（$r+1$ 为粗略类别数，可通过简单聚类获取，不需要精确值）
-- $posLow$ 可以取接近 100% 的值（包含更多样本不会损害性能）
-- 实验表明方法对阈值选择不敏感——在 CIFAR-100 上，$posHigh$ 在 10%-30% 范围内效果稳定
-- 选择指示器：$p_{i,j} = \mathbf{1}[Sim_{posLow} \leq s_{ij} < Sim_{posHigh}]$
+**2. 谱损失作为可分析的代理：让推导成为可能。** InfoNCE 直接分析困难，因此本文改用 HaoChen et al. (2021) 的谱对比损失 $\mathcal{L}_{\text{Spec}}(f) = -2 \cdot \mathbb{E}_{x,x^+}[f(x)^\top f(x^+)] + \mathbb{E}_{x,x'}[(f(x)^\top f(x'))^2]$ 作为理论代理。这一替换之所以成立，是因为谱损失与 InfoNCE 在总体极小值处等价，又与矩阵分解损失 $\|\bar{A} - FF^\top\|_F^2$ 等价，从而把对比学习的泛化分析转化为对相似度矩阵 $\bar{A}$ 做谱分解的问题，便于直接套用矩阵扰动工具推导误差界。
+
+**3. 误差界对比：严格证明困难样本有害。** 关键设计是分别推导有无困难样本时的线性探测误差界并相减。不含困难样本时误差界为 $\mathcal{E}_{w.o.} \leq \frac{4\delta}{1 - \frac{1-\alpha}{(1-\alpha)+n\alpha+nr\beta}} + 8\delta$；一旦引入困难样本，分子会多出一项 $r(\gamma-\beta)$，由于 $\gamma > \beta$ 这一项严格为正，直接把误差界推高。更进一步，$\gamma - \beta$ 越大（困难样本越"困难"）恶化越严重——这正是反直觉结论的理论根据：更多样本本应降低采样误差，但若新增的是困难样本，泛化界反而变差。
+
+**4. 三种带理论保证的缓解策略：从界的形式反推修正。** 既然误差恶化来自 $r(\gamma-\beta)$，三种策略分别针对它的不同因子下手。删除困难样本直接移除困难集 $\mathbb{D}_d$ 中的对，当 $\gamma - \beta$ 足够大时误差界严格改善；Margin 调节对困难对加正 margin，最优取值 $m = c_0(\gamma - \beta)/(c_1^2 c_2)$ 恰好抵消多出的项，使误差界恢复到无困难样本的水平；温度缩放对困难对用更低温度 $\tau \propto \beta/\gamma$，在困难样本数 $n_d < O(n^{1/2})$ 时误差界严格改善。后两者相比删除更平滑，不损失样本量。三种 margin/温度的具体取值全部由误差界推导而来，因此是理论直接指导超参，而非经验调参。
+
+**5. 无监督困难样本检测：不需标签也不需预训练模型。** 要把上述策略落地，必须先在无标签条件下找出困难对，否则理论无法应用。本文利用投影头之前的特征在批内的余弦相似度 $s_{ij}$ 来检测：用两个百分位阈值划定困难区间，指示器为 $p_{i,j} = \mathbf{1}[Sim_{posLow} \leq s_{ij} < Sim_{posHigh}]$。上界 $posHigh \approx 1/(r+1)$ 由粗略类别数 $r+1$ 决定，这个数只需简单聚类得到、无需精确；下界 $posLow$ 可取接近 100%，因为多纳入一些样本并不损害性能。该检测器不依赖任何预训练模型或额外前向计算，且对阈值不敏感——在 CIFAR-100 上 $posHigh$ 在 10%–30% 区间内效果都稳定。
 
 ## 实验关键数据
 
@@ -121,11 +107,11 @@ tags:
 
 ## 相关论文
 
+- [\[AAAI 2026\] Improving Sustainability of Adversarial Examples in Class-Incremental Learning](../../AAAI2026/self_supervised/improving_sustainability_of_adversarial_examples_in_class-incremental_learning.md)
 - [\[ICLR 2026\] Maximizing Incremental Information Entropy for Contrastive Learning](maximizing_incremental_information_entropy_for_contrastive_learning.md)
 - [\[CVPR 2026\] UniGeoCLIP: Unified Geospatial Contrastive Learning](../../CVPR2026/self_supervised/unigeoclip_geospatial_contrastive.md)
-- [\[NeurIPS 2025\] Adv-SSL: Adversarial Self-Supervised Representation Learning with Theoretical Guarantees](../../NeurIPS2025/self_supervised/adv-ssl_adversarial_self-supervised_representation_learning_with_theoretical_gua.md)
+- [\[NeurIPS 2025\] Self-Supervised Contrastive Learning is Approximately Supervised Contrastive Learning](../../NeurIPS2025/self_supervised/self-supervised_contrastive_learning_is_approximately_supervised_contrastive_lea.md)
 - [\[ICML 2026\] Statistical Consistency and Generalization of Contrastive Representation Learning](../../ICML2026/self_supervised/statistical_consistency_and_generalization_of_contrastive_representation_learnin.md)
-- [\[CVPR 2026\] SpHOR: A Representation Learning Perspective on Open-set Recognition for Identifying Unknown Classes in Deep Neural Networks](../../CVPR2026/self_supervised/sphor_a_representation_learning_perspective_on_open-set_recognition_for_identify.md)
 
 </div>
 

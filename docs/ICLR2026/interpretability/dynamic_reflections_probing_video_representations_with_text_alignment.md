@@ -41,35 +41,23 @@ tags:
 
 ### 整体框架
 
-本文沿用 Huh et al. (2024) 提出的 Mutual $k$-NN (MkNN) 指标来衡量跨模态表示对齐。给定 $N$ 个视频-文本对 $\mathcal{S} = \{(v_1, c_1), \ldots, (v_N, c_N)\}$，分别通过视频编码器和文本编码器得到嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{N \times p}$ 和 $\mathbf{Y} \in \mathbb{R}^{N \times q}$。然后构造两个 $k$-近邻二值指示矩阵 $\mathbf{M_X}$ 和 $\mathbf{M_Y}$，对齐分数计算为：
+本文不训练新模型，而是搭建一套"测试时缩放"的探针框架：固定一对独立训练好的视频编码器和文本编码器，只改变喂给它们的数据量——把视频从单帧扩展到多帧、把描述从单条扩展到多条——再用一个无参数的对齐指标读出两个潜空间有多相似。对齐强弱仍沿用 Huh et al. (2024) 的 Mutual $k$-NN (MkNN) 指标：给定 $N$ 个视频-文本对，分别编码得到嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{N \times p}$、$\mathbf{Y} \in \mathbb{R}^{N \times q}$，各自构造 $k$-近邻二值指示矩阵 $\mathbf{M_X}$、$\mathbf{M_Y}$，对齐分数为两者重合近邻的比例
 
 $$\mathcal{A}^{\text{MkNN}}(\mathbf{X}, \mathbf{Y}) = \frac{1}{kN} \sum_{i=1}^{N} \sum_{j=1}^{N} (\mathbf{M_X} \odot \mathbf{M_Y})_{ij}$$
 
-其中 $\odot$ 为 Hadamard 积，$k$ 通常设为 10（针对 1024 个样本的数据集）。此外，对两个编码器的中间层组合进行搜索，选择最大化对齐分数的层对。
-
-本文的核心扩展在于：将该框架从"单帧 + 单描述"推广到"多帧视频 + 多条描述"的设置，系统地研究测试时数据丰富度对对齐分数的影响。
+其中 $\odot$ 为 Hadamard 积，$k$ 取 10（数据集 1024 样本），并对两个编码器的所有中间层组合做搜索取最优层对。
 
 ### 关键设计
 
-**多帧视频编码策略**：对于原生处理 $n_o$ 帧的视频编码器，通过均匀线性插值抽取 $n_f$ 帧。当 $n_f > n_o$ 时，将视频切分为多个 $n_o$ 长度的子片段，分别编码后取平均表示。当 $n_f = 1$ 时退化为先前的图像-文本对齐设置。对于图像模型，提供两种变体：仅用首帧（单帧）和跨 8 帧平均特征（图像模型视频化）。
+**1. 多帧视频编码：让时序信息进入表示，而不是只看一张图。** 先前 PRH 验证只喂单帧，等于把视频压成静态图像，运动和因果关系全部丢失，这正是对齐分数偏低的根源之一。本文对一个原生处理 $n_o$ 帧的编码器，通过均匀线性插值抽取目标帧数 $n_f$；当 $n_f > n_o$ 超出窗口时，把视频切成若干段 $n_o$ 长度的子片段分别编码再对结果取平均，从而在不改动模型的前提下吞下最多 $n_f = 80$ 帧。$n_f = 1$ 时该设置自然退化回原来的图像-文本对齐，保证可比性；对纯图像模型还额外提供"仅首帧"和"跨 8 帧平均特征"两种变体，用来区分增益是来自时序建模能力还是单纯的特征平滑。
 
-**多描述文本编码策略**：将多条描述拼接为单个长字符串，通过文本编码器（包括 LLM 如 Gemma 2 系列）提取中间层特征，对 token 维度取均值得到 $[\text{layer}, \text{hidden\_dim}]$ 形状的特征。VATEX 数据集为每个视频提供 10 条不同标注者撰写的独立描述，天然支持多描述评估。对于仅有单条长描述的 PVD 数据集，使用 Gemini-2.5 Pro 将其拆分为 10 条短描述。
+**2. 多描述文本编码：用多个视角逼近视频的完整语义。** 一条描述只覆盖视频的一个侧面，单描述设置会系统性低估视觉-语言的真实共享结构。本文把多条描述拼成一个长字符串送入文本编码器（包括 Gemma 2 这类纯生成式 LLM），取中间层特征并沿 token 维度求均值，得到 $[\text{layer}, \text{hidden\_dim}]$ 的句向量。VATEX 天然为每个视频提供 10 条不同标注者撰写的独立描述，可直接做多描述评估；而 PVD 只有单条长描述，则用 Gemini-2.5 Pro 将其拆成 10 条短描述——实验显示这种合成拆分同样能提升对齐，说明增益来自语义覆盖的扩展而非额外人工标注。
 
-**饱和式测试时缩放律**：基于经验观察，提出参数化饱和模型来量化对齐分数对帧数 $n_f$ 和描述数 $n_c$ 的双重依赖：
+**3. 饱和式测试时缩放律：把"加数据涨对齐"写成可预测的幂律。** 仅观察到分数上升还不够，本文进一步用一个参数化饱和模型刻画对齐分数对帧数 $n_f$ 与描述数 $n_c$ 的双重依赖
 
 $$\text{score}(n_f, n_c) = S_{\infty} - (C_f \cdot n_f^{-\alpha} + C_c \cdot n_c^{-\beta})$$
 
-其中 $S_{\infty}$ 为理论饱和对齐分数，$C_f, C_c$ 分别为帧和描述的误差系数，$\alpha, \beta$ 为衰减指数。该模型类比 Hoffmann et al. (2022) 的训练时 compute-optimal scaling laws：$S_{\infty}$ 对应理想对齐精度，减去的项是有限测试数据带来的误差惩罚。
-
-### 损失函数 / 训练策略
-
-本文是分析评估类工作，不涉及新模型训练。其核心策略可概括为"测试时缩放"：
-
-- **视觉端缩放**：从 $n_f = 1$ 逐步增加至 $n_f = 80$ 帧，通过子片段编码 + 平均池化利用更多时序信息
-- **文本端缩放**：从 $n_c = 1$ 逐步增加至 $n_c = 10$ 条描述，通过拼接多描述来提升语义覆盖
-- **层搜索策略**：遍历所有编码器中间层组合，选择对齐最优的层对作为最终结果
-
-这一范式与训练时资源扩展（模型参数量、训练数据量）形成互补，证明了测试阶段的数据精细化也是提升表示对齐的有效途径。
+其中 $S_{\infty}$ 是数据无限时的理论饱和分数，$C_f, C_c$ 是帧端、描述端的误差系数，$\alpha, \beta$ 是各自的幂律衰减指数。它与 Hoffmann et al. (2022) 的训练时 compute-optimal scaling law 形成对偶：$S_{\infty}$ 对应理想对齐上限，后面两项是有限测试数据带来的误差惩罚，会随帧数和描述数增多以幂律速度衰减。该模型在 VideoMAEv2 与 DINOv2 上拟合均达 $R^2 > 0.98$，证明"测试时加数据"不是噪声涨点，而是高度规律、可外推的行为，从而把测试时缩放确立为与训练时缩放互补的独立维度。
 
 ## 实验关键数据
 
@@ -145,7 +133,7 @@ $$\text{score}(n_f, n_c) = S_{\infty} - (C_f \cdot n_f^{-\alpha} + C_c \cdot n_c
 - [\[ACL 2026\] Rhetorical Questions in LLM Representations: A Linear Probing Study](../../ACL2026/interpretability/rhetorical_questions_in_llm_representations_a_linear_probing_study.md)
 - [\[ICLR 2026\] Beyond Linear Probes: Dynamic Safety Monitoring for Language Models](beyond_linear_probes_dynamic_safety_monitoring_for_language_models.md)
 - [\[AAAI 2026\] Probing Preference Representations: A Multi-Dimensional Evaluation and Analysis Method for Reward Models](../../AAAI2026/interpretability/probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)
-- [\[ACL 2026\] Retrieval Heads are Dynamic](../../ACL2026/interpretability/retrieval_heads_are_dynamic.md)
+- [\[ICLR 2026\] PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
 
 </div>
 

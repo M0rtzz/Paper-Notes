@@ -35,37 +35,17 @@ tags:
 
 ## 方法详解
 
-### 数据生成过程模型
+### 整体框架
 
-将语言生成建模为：$\tau_t = \phi(\tau^{t-1}, \mathbf{h}_t, \mathbf{l}_t)$
+T-SAE 把标准稀疏自编码器的特征维度切成两段——前 $h$ 维当作随语义平滑漂移的"高层"特征，剩下的 $m-h$ 维当作随 token 抖动的"低层"特征——再用一个时间对比损失把语言的序列结构注入训练。整套机制完全自监督：高层特征被逼着在相邻 token 间保持一致激活，低层特征则自然去拟合重构残差里那些快速变化的句法信号，最终在不牺牲重构质量的前提下把语义和句法解耦开。
 
-- $\mathbf{h}_t$：高层变量（语义、意图）— 时间不变
-- $\mathbf{l}_t$：低层变量（句法、词汇选择）— 随 token 变化
+### 关键设计
 
-### 核心假设
+**1. 数据生成模型：把"语义慢、句法快"写成可优化的先验。** 现有 SAE 把每个 token 当独立样本，丢掉了语言里"语义在一段话内基本不变、句法逐 token 跳变"这条最朴素的结构。T-SAE 先把语言生成建模成 $\tau_t = \phi(\tau^{t-1}, \mathbf{h}_t, \mathbf{l}_t)$，其中高层变量 $\mathbf{h}_t$（语义、意图）在序列内近似时间不变、低层变量 $\mathbf{l}_t$（句法、词汇选择）随 token 变化。在此之上立两条假设：时间一致性假设要求同一序列中 $\mathbf{h}_t \approx \mathbf{h}_{t'}$，层级表示假设要求 $\mathbf{h}_t$ 单独就能把激活 $\mathbf{x}_t$ 重构到 $\epsilon$ 精度、$\mathbf{l}_t$ 只补残差。正是这两条假设把"什么该慢、什么该快"翻译成了后面损失里的两个可优化目标，让解耦有了明确的归纳偏置而非靠运气。
 
-1. **时间一致性**（Assumption 1）：同一序列中 $\mathbf{h}_t \approx \mathbf{h}_{t'}$
-2. **层级表示**（Assumption 2）：$\mathbf{h}_t$ 可独立重构 $\mathbf{x}_t$ 到 $\epsilon$ 精度，$\mathbf{l}_t$ 补充残差
+**2. 分层 Matryoshka 重构：让高层特征单独扛起重构主干。** 为了落实层级表示假设，T-SAE 不允许高层特征只做无关紧要的点缀，而是用 Matryoshka 损失同时约束"只用前 $h$ 维"和"用全部 $m$ 维"两种重构：$\mathcal{L}_{\text{matr}}(\mathbf{x}_t) = \underbrace{\|\mathbf{x}_t - \mathbf{W}_{0:h}^{\text{dec}} \mathbf{f}_{0:h}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_H} + \underbrace{\|\mathbf{x}_t - \mathbf{W}^{\text{dec}} \mathbf{f}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_L}$。$\mathcal{L}_H$ 逼着前 $h$ 维独立完成大部分重构（对应语义主干），$\mathcal{L}_L$ 再让全体特征补齐细节（对应句法残差）。默认按 20:80 切分高低层维度，于是高层负责"这段话在讲什么"、低层负责"这个 token 长什么样"，分工被损失结构钉死。
 
-### T-SAE 架构
-
-将 SAE 特征空间分为高层（前 $h$ 个）和低层（后 $m-h$ 个）特征。使用 Matryoshka 损失：
-
-$$\mathcal{L}_{\text{matr}}(\mathbf{x}_t) = \underbrace{\|\mathbf{x}_t - \mathbf{W}_{0:h}^{\text{dec}} \mathbf{f}_{0:h}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_H} + \underbrace{\|\mathbf{x}_t - \mathbf{W}^{\text{dec}} \mathbf{f}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_L}$$
-
-### 时间对比损失
-
-鼓励高层特征在相邻 token 间一致，跨样本间不一致：
-
-$$\mathcal{L}_{\text{contr}} = -\frac{1}{N}\sum_{i=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(i)}))}{\sum_j \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))} - \frac{1}{N}\sum_{j=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(j)}, \mathbf{z}_{t-1}^{(j)}))}{\sum_i \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))}$$
-
-总损失：$\mathcal{L} = \sum_i \mathcal{L}_{\text{matr}}(\mathbf{x}_t^{(i)}) + \alpha \mathcal{L}_{\text{contr}}$
-
-### 设计亮点
-
-- 对比损失仅作用于**高层特征**
-- 低层特征靠拟合残差自然捕获波动的句法信号
-- 无显式语义标签，纯自监督
+**3. 时间对比损失：只管高层、把语义拉成平滑曲线。** 光有重构约束还不能保证高层特征随时间一致，T-SAE 因此在高层特征 $\mathbf{z}_t$ 上加一项 InfoNCE 式的双向对比损失，把同一序列里相邻 token 的高层激活当正样本、把同一 batch 内别的序列当负样本：$\mathcal{L}_{\text{contr}} = -\frac{1}{N}\sum_{i=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(i)}))}{\sum_j \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))} - \frac{1}{N}\sum_{j=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(j)}, \mathbf{z}_{t-1}^{(j)}))}{\sum_i \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))}$。它鼓励高层特征"邻 token 相似、跨样本相异"，等价于强行让语义在序列内连续漂移；而由于这项只作用在高层，低层特征反而被解放出来自由拟合波动的句法信号——快慢分工就此自然成立。总损失把两者相加 $\mathcal{L} = \sum_i \mathcal{L}_{\text{matr}}(\mathbf{x}_t^{(i)}) + \alpha \mathcal{L}_{\text{contr}}$，$\alpha$ 调节语义平滑性与重构精度之间的权衡，全程无需任何显式语义标签。
 
 ## 实验关键数据
 
@@ -143,11 +123,11 @@ T-SAE 高层特征在引导任务上 **Pareto 支配**所有基线 SAE：
 
 ## 相关论文
 
+- [\[ICLR 2026\] Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
 - [\[ICML 2026\] Sparse Autoencoders are Topic Models](../../ICML2026/interpretability/sparse_autoencoders_are_topic_models.md)
 - [\[ACL 2026\] AdaptiveK: Complexity-Driven Sparse Autoencoders for Interpretable Language Model Representations](../../ACL2026/interpretability/adaptivek_complexity-driven_sparse_autoencoders_for_interpretable_language_model.md)
 - [\[ICML 2026\] PolySAE: Modeling Feature Interactions in Sparse Autoencoders via Polynomial Decoding](../../ICML2026/interpretability/polysae_modeling_feature_interactions_in_sparse_autoencoders_via_polynomial_deco.md)
-- [\[CVPR 2026\] Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP](../../CVPR2026/interpretability/beyond_semantics_disentangling_information_scope_in_sparse_autoencoders_for_clip.md)
-- [\[NeurIPS 2025\] Transformer Key-Value Memories Are Nearly as Interpretable as Sparse Autoencoders](../../NeurIPS2025/interpretability/transformer_key-value_memories_are_nearly_as_interpretable_as_sparse_autoencoder.md)
+- [\[ICML 2026\] On the Relationship Between Activation Outliers and Feature Death in Sparse Autoencoders](../../ICML2026/interpretability/on_the_relationship_between_activation_outliers_and_feature_death_in_sparse_auto.md)
 
 </div>
 

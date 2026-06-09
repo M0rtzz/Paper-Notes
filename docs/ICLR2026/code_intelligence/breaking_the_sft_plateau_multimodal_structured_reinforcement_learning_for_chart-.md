@@ -25,7 +25,7 @@ tags:
 针对图表到代码生成任务中SFT的性能瓶颈问题，提出多模态结构化强化学习（MSRL），通过文本+视觉双层奖励函数和两阶段RL策略，在ChartMimic和ReachQA上分别提升6.2%和9.9%的高层指标，达到开源SOTA并媲美GPT-4o。
 
 ## 研究背景与动机
-**领域现状**: 多模态大模型（MLLM）在视觉问答等任务上表现出色，但在处理信息密集型图像（如图表）并生成结构化输出（如代码）时能力仍然有限。Chart-to-code生成任务要求模型深度理解可视化图表并153生成准确的绘图代码，具有重要的实际价值。
+**领域现状**: 多模态大模型（MLLM）在视觉问答等任务上表现出色，但在处理信息密集型图像（如图表）并生成结构化输出（如代码）时能力仍然有限。Chart-to-code生成任务要求模型深度理解可视化图表并生成准确的绘图代码，具有重要的实际价值。
 
 **现有痛点**: 已有方法依赖SFT或DPO在合成数据上训练，数据模式单一（合成数据缺乏真实复杂度），泛化能力有限。而且SFT存在固有缺陷——它对目标序列中每个token赋予相同重要性，而绘图代码中大量是模板代码（如`plt.plot`），关键信息（数据值、样式参数）出现频率很低。
 
@@ -40,44 +40,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入为图表图像，输出为可执行的Matplotlib绘图代码。整个训练流程分三个阶段：(1) 大规模SFT预训练建立基础能力；(2) 第一阶段RL使用文本奖励优化代码细节；(3) 第二阶段RL加入视觉奖励进一步提升视觉保真度。基础模型为Qwen2.5-VL-7B，RL算法采用GRPO。
+输入是一张图表图像，输出是一段可执行的 Matplotlib 绘图代码。MSRL 把训练拆成三步走：先用大规模真实数据做 SFT 预训练，把"看懂图表、写出能跑的代码"这个基础能力顶到 SFT 的天花板；然后进入两阶段 RL——第一阶段只用文本奖励抠代码细节，第二阶段再叠加视觉奖励提升整体视觉保真度。底座模型是 Qwen2.5-VL-7B，RL 算法采用 GRPO（用组内相对优势做优化，省掉 critic 模型）。
 
 ### 关键设计
 
-1. **大规模真实数据构建**:
+**1. 大规模真实数据构建：用真实表格替合成数据，把 SFT 的瓶颈彻底压出来。**
 
-    - 功能：构建了目前最大的chart-to-code训练语料（300万对），数据来源为arXiv论文中的真实表格
-    - 核心思路：从arXiv论文中爬取2023年及之前的真实表格，用Gemini-2.5-Flash根据表格和示例代码生成绘图代码，经执行验证和过滤后获得最终数据集。覆盖24种图表类型、1555种Matplotlib API。
-    - 设计动机：解决已有数据集的两个问题——(1) 纯合成数据导致趋势单调、缺乏多样性；(2) 规模不足以充分暴露SFT瓶颈。使用真实表格确保数据分布更接近实际场景。
+已有数据集有两个硬伤——纯合成数据趋势单调、缺乏多样性，规模也不足以暴露 SFT 的真实上限。MSRL 因此从 arXiv 论文里爬取 2023 年及之前的真实表格，用 Gemini-2.5-Flash 根据表格和示例代码生成绘图代码，再经执行验证与过滤，最终得到约 300 万对的训练语料——目前最大的 chart-to-code 数据集，覆盖 24 种图表类型、1555 种 Matplotlib API。真实表格让数据分布更贴近实际场景，也才撑得起后面对 SFT 平台效应的量化验证。
 
-2. **RL数据精细化筛选**:
+**2. RL 数据精细化筛选：从 300 万里精挑 33k，逼模型探索而不是背 SFT 格式。**
 
-    - 功能：从300万SFT数据中精选33k高质量样本用于RL训练
-    - 核心思路：两阶段过滤——第一阶段基于代码内容过滤（图表类型、数据定义格式），用树结构解析识别复杂图表类型，只保留一维数组和非嵌套字典格式，筛到45k；第二阶段用GPT-4.1-mini做视觉质量评估，人工验证显示>90%一致性，最终保留33k样本。
-    - 设计动机：RL需要高质量数据且需与SFT数据分离，避免过拟合SFT格式、增强探索能力。
+RL 既要高质量样本，又要和 SFT 数据分离，否则模型会过拟合 SFT 的输出格式、失去探索能力。筛选分两阶段：第一阶段按代码内容过滤（图表类型、数据定义格式），用树结构解析识别复杂图表类型，只保留一维数组和非嵌套字典格式的样本，筛到 45k；第二阶段用 GPT-4.1-mini 做视觉质量评估（人工验证一致性 >90%），最终留下 33k。这批数据规模不大但干净，专供 RL 训练。
 
-3. **文本奖励（Textual Reward）**:
+**3. 文本奖励（Textual Reward）：先把代码归一化，再分维度算细粒度正确性。**
 
-    - 功能：设计基于规则的细粒度代码正确性评估
-    - 核心思路：首先对生成代码做**格式归一化**（消除语法变体），然后从五个维度评估——数据值（软匹配，允许±5%误差）、图表类型（硬匹配）、布局（硬匹配）、文本元素如标题标签（编辑距离）。另外单独计算执行奖励（二值，代码是否可执行）。
-    - 设计动机：代码的风格多样性导致直接提取关键信息困难，格式归一化使奖励函数不受语法变体影响，是RLVR在结构化代码生成中的关键适配。
+绘图代码风格极其多样——同一个语义能有很多种写法，直接抽取关键信息会被语法噪声淹没。MSRL 的关键适配是先做**格式归一化**消除语法变体，再从五个维度评估：数据值用软匹配（允许 ±5% 误差）、图表类型用硬匹配、布局用硬匹配、标题标签等文本元素用编辑距离。执行奖励单独算，是个二值信号（代码能否跑通）。归一化这一步是 RLVR 用在结构化代码生成上的核心 trick，没有它奖励函数会被语法变体淹没、基本没法用。
 
-4. **视觉奖励（Visual Reward）**:
+**4. 视觉奖励（Visual Reward）：把代码渲染成图，让 MLLM 判"像不像"。**
 
-    - 功能：将代码渲染为图像，让MLLM评估渲染图与原图的视觉相似度
-    - 核心思路：生成代码执行渲染→用Qwen2.5-VL-72B作为评估模型，从六个维度打分（图表类型、布局、文本内容、数据、样式、清晰度），归一化为视觉奖励。不可渲染的代码得0分。
-    - 设计动机：文本奖励只关注细粒度代码细节，忽视整体视觉结构和风格，视觉奖励弥补这一盲区。
+文本奖励只盯细粒度代码细节，看不到整体视觉结构和风格。视觉奖励补这个盲区：把生成代码执行渲染成图像，再用 Qwen2.5-VL-72B 当评估模型，从图表类型、布局、文本内容、数据、样式、清晰度六个维度打分并归一化；渲染不出来的代码直接得 0。这一步把"代码对不对"映射成"图像像不像"这个更直观的维度，恰好和文本奖励互补。
 
-5. **两阶段RL策略**:
+**5. 两阶段 RL 策略：先低成本文本奖励铺量，再高成本视觉奖励精修。**
 
-    - 功能：先用文本奖励训练、再加视觉奖励微调
-    - 核心思路：总奖励 $R = w_t R_\text{text} + w_v R_\text{vis} + w_e R_\text{exec}$。第一阶段仅用文本奖励（$w_v=0$）在22k样本上训练，第二阶段引入混合奖励在11k样本上微调。采用GRPO算法，利用组内相对优势进行策略优化。
-    - 设计动机：视觉奖励需要渲染图像+模型评估，计算开销大。两阶段策略在第一阶段以低成本获得大部分性能提升（约5%），第二阶段用少量样本获得额外1.5%提升，平衡了性能和效率。
+视觉奖励要渲染图像加大模型打分，开销很大，全程开着不划算。MSRL 因此把奖励拆成两阶段，总奖励写成
+
+$$R = w_t R_\text{text} + w_v R_\text{vis} + w_e R_\text{exec}$$
+
+第一阶段令 $w_v=0$，只用文本奖励在 22k 样本上训练，以低成本拿到大部分提升（约 5%）；第二阶段引入混合奖励，在 11k 样本上微调，再补约 1.5%。全程用 GRPO，靠组内相对优势做策略优化。这样既保住了性能，又把视觉奖励的算力花在刀刃上。
 
 ### 损失函数 / 训练策略
-- SFT阶段：标准自回归负对数似然损失
-- RL阶段：GRPO算法，通过组内采样多个响应计算相对优势，无需额外的critic模型
-- 两阶段课程训练：先文本奖励（240 GPU hours）→再混合奖励（约336 GPU hours）
+- SFT 阶段：标准自回归负对数似然损失。
+- RL 阶段：GRPO，组内采样多个响应算相对优势，无需额外的 critic 模型。
+- 两阶段课程训练：先文本奖励（约 240 GPU hours）→ 再混合奖励（约 336 GPU hours）。
 
 ## 实验关键数据
 
@@ -143,8 +137,8 @@ MSRL以7B参数量超越所有开源模型，ChartMimic高层指标83.8超过GPT
 - [\[CVPR 2026\] MM-ReCoder: Advancing Chart-to-Code Generation with Reinforcement Learning and Self-Correction](../../CVPR2026/code_intelligence/mm-recoder_advancing_chart-to-code_generation_with_reinforcement_learning_and_se.md)
 - [\[ACL 2026\] MARS2: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](../../ACL2026/code_intelligence/mars2_scaling_multi-agent_tree_search_via_reinforcement_learning_for_code_genera.md)
 - [\[AAAI 2026\] ReCode: Updating Code API Knowledge with Reinforcement Learning](../../AAAI2026/code_intelligence/recode_updating_code_api_knowledge_with_reinforcement_learning.md)
-- [\[ACL 2026\] MARS²: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](../../ACL2026/code_intelligence/mars2_scaling_multi_agent_tree_search_via_reinforcement_learning_for_code_genera.md)
 - [\[ACL 2026\] Aligned Multi-View Scripts for Universal Chart-to-Code Generation](../../ACL2026/code_intelligence/aligned_multi-view_scripts_for_universal_chart-to-code_generation.md)
+- [\[ICLR 2026\] Learning to Reason without External Rewards](learning_to_reason_without_external_rewards.md)
 
 </div>
 

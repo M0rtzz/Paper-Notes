@@ -42,28 +42,13 @@ tags:
 
 ### 整体框架
 
-CoTA 是即插即用的免训练方法，包含两个互补模块，作用于推理阶段。
+CoTA 是一套免训练、即插即用的推理期方法，专门修复缓存给 dMLLMs 带来的"重复诅咒"。它的出发点是前面诊断出的病灶：缓存让 context token（目标 token 及其最近邻）失去了锚点作用，注意力分配被随机化、深层熵不再收敛。CoTA 因此从两个角度对症下药——一个在前向计算时把注意力重新拉回 context token，另一个在解码投票时惩罚那些熵居高不下的不确定 context，二者一前一后形成闭环。
 
-### CTAE（Context-token Attention Enhancement）
+### 关键设计
 
-基于相对距离的高斯衰减项乘以注意力矩阵，增强对 context token 的注意力，保持原有信息流模式：
+**1. CTAE（Context-token Attention Enhancement）：用距离衰减把注意力重新锚回 context。** 缓存破坏信息流的直接表现是 context token 的注意力被稀释，于是 CTAE 直接在注意力矩阵上乘一个随相对距离衰减的高斯门控，让每个 token 更多地关注自己附近的 context。门控项写作 $\mathcal{G}_{i,j} = \gamma_{\min} + (1-\gamma_{\min}) \exp\!\left(-\left(\frac{|i-j|}{\tau}\right)^2\right)$，修正后的注意力为 $\tilde{A}_{i,j} = A_{i,j} \cdot \mathcal{G}_{i,j}$。其中温度因子 $\tau=5$ 控制有效窗口宽度——$\tau$ 太小（如 3）窗口偏窄会漏掉相关 context，太大（如 10）又退化回被稀释的状态，实验中 $\tau=5$ 最优；下限 $\gamma_{\min}\in(0,1]$ 保证远距离 token 的注意力不会被压到零，维持数值稳定。这一步几乎不增加计算量，却能把被缓存打乱的信息流模式拉回到接近正常解码的形态。
 
-$$\mathcal{G}_{i,j} = \gamma_{\min} + (1-\gamma_{\min}) \exp\left(-\left(\frac{|i-j|}{\tau}\right)^2\right)$$
-
-- 修改后的注意力：$\tilde{A}_{i,j} = A_{i,j} \cdot \mathcal{G}_{i,j}$
-- 温度因子 $\tau=5$，下限 $\gamma_{\min} \in (0,1]$ 保证稳定性
-
-### CTEV（Context-token Entropy-Guided Voting）
-
-利用深层（26-30层）context token 的累积熵作为惩罚项加入置信度评分：
-
-$$\text{Score}(i) = c_{(i)} + \alpha \cdot E_{sum}^{ctx}(i)$$
-
-其中 $E_{sum}^{ctx}(i) = \sum_{j \in \mathcal{C}(i)} \sum_{l=26}^{30} E^{(l)}(j)$，$\mathcal{C}(i)$ 是目标 token 及两个最近邻
-
-### 协同工作流
-
-CTAE 保持信息流模式→CTEV 惩罚不确定 context 的投票分数→联合缓解重复
+**2. CTEV（Context-token Entropy-Guided Voting）：用深层累积熵给不确定的预测降权。** 光恢复注意力还不够，模型在重复出错时往往是 context 的熵在深层迟迟不收敛。CTEV 把这个信号直接接进解码的置信度评分：对候选 token $i$，在原置信度 $c_{(i)}$ 上加一个熵惩罚项，得到 $\text{Score}(i) = c_{(i)} + \alpha \cdot E_{sum}^{ctx}(i)$，其中 $E_{sum}^{ctx}(i) = \sum_{j \in \mathcal{C}(i)} \sum_{l=26}^{30} E^{(l)}(j)$ 是把目标 token 及其两个最近邻 $\mathcal{C}(i)$ 在深层（26–30 层）上的逐层信息熵累加起来。熵越高说明这块 context 越不确定、越可能引发重复，对应分数被抬高、在投票中被压制。CTAE 负责保住正确的信息流模式，CTEV 负责在投票阶段把残余的不确定预测过滤掉，两者互补才把重复率压到接近无缓存基线。
 
 ## 实验关键数据
 

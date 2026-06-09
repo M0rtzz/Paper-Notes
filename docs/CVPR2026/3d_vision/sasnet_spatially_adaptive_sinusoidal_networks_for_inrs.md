@@ -129,8 +129,8 @@ $$\mathcal{L}(\theta) = \frac{1}{N}\sum_i \|f_\theta(\mathbf{x}_i) - \mathscr{f}
 - [\[CVPR 2026\] EventHub: Data Factory for Generalizable Event-Based Stereo Networks without Active Sensors](eventhub_data_factory_for_generalizable_event-based_stereo_networks_without_acti.md)
 - [\[CVPR 2025\] Exploiting Deblurring Networks for Radiance Fields](../../CVPR2025/3d_vision/exploiting_deblurring_networks_for_radiance_fields.md)
 - [\[CVPR 2026\] Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation](ada3drift_adaptive_trainingtime_drifting_for_onest.md)
-- [\[NeurIPS 2025\] High Resolution UDF Meshing via Iterative Networks](../../NeurIPS2025/3d_vision/high_resolution_udf_meshing_via_iterative_networks.md)
 - [\[CVPR 2026\] Prune Wisely, Reconstruct Sharply: Compact 3D Gaussian Splatting via Adaptive Pruning and Difference-of-Gaussian Primitives](prune_wisely_reconstruct_sharply_compact_3d_gaussian_splatting_via_adaptive_prun.md)
+- [\[NeurIPS 2025\] High Resolution UDF Meshing via Iterative Networks](../../NeurIPS2025/3d_vision/high_resolution_udf_meshing_via_iterative_networks.md)
 
 </div>
 

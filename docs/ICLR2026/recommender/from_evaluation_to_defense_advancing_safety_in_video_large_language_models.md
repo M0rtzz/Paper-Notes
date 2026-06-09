@@ -36,32 +36,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VideoSafety-R1 是一个后训练框架，包含三个创新组件：VideoSafetyThinking 数据集 → AT-SFT（报警 Token 引导的安全微调） → Safety-guided GRPO（安全引导的强化学习）。
+VideoSafety-R1 是一个后训练框架，把视频 LLM 的安全能力从被动的"危害感知"推进到主动的"安全推理"。它先用一个大规模真实视频构建评测基准 VideoSafetyEval 暴露问题，再用配套的 VideoSafetyThinking 数据集（46k 视频-查询-思维链三元组，其中 6k 喂给 AT-SFT、15k 用于冷启动、25k 用于强化学习）依次完成报警 Token 引导的安全微调（AT-SFT）和安全引导的 GRPO 训练，让模型学会先识别视频与文本各自的有害性、再生成有帮助的安全回复。
 
 ### 关键设计
 
-1. **VideoSafetyEval (VSE) 基准**
+**1. VideoSafetyEval 基准：用真实视频把"视频降低安全性"这件事量化出来。**
 
-    - 11.4k 视频-查询对，覆盖 6 大风险类别（暴力、管制物品、色情等）、19 个子类别、10 种语言社区
-    - 三个子集：VSE-HH（有害视频+有害查询，最强对抗），VSE-SH（安全视频+有害查询），VSE-SafeQ（安全查询，评估误拒率）
-    - 数据来源：YouTube，经 DINOv2 静态过滤 → 商业视频理解模型标注 → 模板驱动查询生成
+要研究视频安全，先得有能逼出问题的评测集。作者从 YouTube 按社区准则采集真实视频，构建了 11.4k 个视频-查询对，覆盖暴力、管制物品、色情等 6 大风险类别、19 个子类别、10 种语言社区。数据经过三道工序逐级过滤：先用 DINOv2 做静态过滤剔除接近静帧的无效片段，再用商业视频理解模型完成有害性标注，最后用模板驱动生成对抗查询。基准拆成三个子集来分离不同失效模式——VSE-HH（有害视频配有害查询，对抗最强）、VSE-SH（安全视频配有害查询）、VSE-SafeQ（安全查询，专门衡量过度防御导致的误拒）。正是在这套基准上，作者测出引入视频后 21 个主流模型的防御成功率平均掉 34.2%，把后续防御方法要解决的目标钉死。
 
-2. **报警 Token 引导安全微调 (AT-SFT)**
+**2. 报警 Token 引导的安全微调（AT-SFT）：在感知层先把安全信号"预激活"。**
 
-    - 在视觉序列末尾注入可学习报警 Token $\mathbf{h}_v^{\text{alarm}}$，文本序列末尾注入 $\mathbf{h}_t^{\text{alarm}}$
-    - 多任务训练目标：$\mathcal{L}_{\text{AT-SFT}} = \mathcal{L}_{\text{base}} + \lambda_1 \mathcal{L}_{\text{ATC}}^v + \lambda_2 \mathcal{L}_{\text{ATC}}^t$
-    - ATC（报警 Token 分类）对视觉和文本分别进行二分类（有害/安全），使报警 Token 的隐藏状态与安全信号对齐
-    - 作为安全机制的"预激活"步骤，为后续 GRPO 训练奠定基础
+强化学习之前需要一个安全感知的起点，否则推理无从谈起。作者在视觉序列末尾注入可学习的报警 Token $\mathbf{h}_v^{\text{alarm}}$，在文本序列末尾注入 $\mathbf{h}_t^{\text{alarm}}$，让这两个 Token 充当各自模态的"安全探针"。训练时在原始生成损失之外，对两个报警 Token 的隐藏状态分别接一个有害/安全二分类头（ATC，报警 Token 分类），使其表征与真实安全标签对齐，整体目标为 $\mathcal{L}_{\text{AT-SFT}} = \mathcal{L}_{\text{base}} + \lambda_1 \mathcal{L}_{\text{ATC}}^v + \lambda_2 \mathcal{L}_{\text{ATC}}^t$。这一步只用 6k 样本，作用是把视频和文本的有害性分别"显式化"到模型内部，为后续 GRPO 的双模态推理奠定可用的感知基础。
 
-3. **Safety-guided GRPO**
+**3. 安全引导的 GRPO（Safety-guided GRPO）：让模型把感知到的安全信号组织成可解释的推理链，并用动态奖励平衡安全与自然。**
 
-    - 冷启动阶段：用 15k 样本训练结构化思维链（`<think>` 安全推理 + `<answer>` 响应 + `<vidType>`/`<textType>` 双模态标签）
-    - 复合奖励函数：$r = r_{\text{format}} + \alpha \cdot r_{\text{ROUGE}} + \gamma_1 \cdot r_v + \gamma_2 \cdot r_t$
-    - 动态奖励适应（DRA）：当双模态分类均正确时降低 ROUGE 权重（鼓励多样性），分类错误时增强 ROUGE（强制对齐安全参考）
-    - $\alpha = \alpha_{\min} + (1 - \text{Correct}_v \cdot \text{Correct}_t)(\alpha_{\max} - \alpha_{\min})$
-
-### VideoSafetyThinking 数据集
-46k 视频-查询-思维链三元组：6k 用于 AT-SFT，15k 用于冷启动 SFT，25k 用于 GRPO 训练。
+光感知不够，模型还要能推理并给出既安全又有用的回复。作者先用 15k 样本做冷启动 SFT，训练一套结构化输出格式：`<think>` 写安全推理过程、`<answer>` 给最终响应、`<vidType>` 与 `<textType>` 分别标注视频和文本的有害性。随后用 25k 样本做 GRPO，奖励由格式、与安全参考的 ROUGE 相似度、视频分类、文本分类四项加权而成：$r = r_{\text{format}} + \alpha \cdot r_{\text{ROUGE}} + \gamma_1 \cdot r_v + \gamma_2 \cdot r_t$。关键创新是动态奖励适应（DRA）：ROUGE 权重 $\alpha$ 不固定，而是随双模态分类是否同时正确而变，$\alpha = \alpha_{\min} + (1 - \text{Correct}_v \cdot \text{Correct}_t)(\alpha_{\max} - \alpha_{\min})$。当视频与文本判断都对时 $\alpha$ 降到 $\alpha_{\min}$，放松对安全参考的模仿、鼓励回复多样自然；只要任一判断出错就把 $\alpha$ 拉到 $\alpha_{\max}$，强制向安全参考对齐。这样模型在"答得安全"和"答得自然"之间自适应取舍，既压住有害输出又避免一律僵硬拒绝。
 
 ## 实验关键数据
 
@@ -124,8 +113,8 @@ VideoSafety-R1 是一个后训练框架，包含三个创新组件：VideoSafety
 - [\[NeurIPS 2025\] Inference-Time Reward Hacking in Large Language Models](../../NeurIPS2025/recommender/inference-time_reward_hacking_in_large_language_models.md)
 - [\[AAAI 2026\] Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models](../../AAAI2026/recommender/inference-aware_prompt_optimization_for_aligning_black-box_large_language_models.md)
 - [\[ACL 2025\] KERL: Knowledge-Enhanced Personalized Recipe Recommendation using Large Language Models](../../ACL2025/recommender/kerl_knowledge-enhanced_personalized_recipe_recommendation_using_large_language_.md)
+- [\[AAAI 2026\] Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models](../../AAAI2026/recommender/hard_vs_noise_resolving_hard-noisy_sample_confusion_in_recommender_systems_via_l.md)
 - [\[NeurIPS 2025\] R²ec: Towards Large Recommender Models with Reasoning](../../NeurIPS2025/recommender/r2ec_towards_large_recommender_models_with_reasoning.md)
-- [\[NeurIPS 2025\] Measuring What Matters: Construct Validity in Large Language Model Benchmarks](../../NeurIPS2025/recommender/measuring_what_matters_construct_validity_in_large_language_model_benchmarks.md)
 
 </div>
 

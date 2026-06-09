@@ -111,11 +111,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICML 2026\] Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)
 - [\[NeurIPS 2025\] Position: Bridge the Gaps between Machine Unlearning and AI Regulation](../../NeurIPS2025/ai_safety/position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)
 - [\[ICML 2026\] Position: Embodied AI Requires a Privacy-Utility Trade-off](position_embodied_ai_requires_a_privacy-utility_trade-off.md)
-- [\[AAAI 2026\] EFX and PO Allocation Exists for Two Types of Goods](../../AAAI2026/ai_safety/efx_and_po_allocation_exists_for_two_types_of_goods.md)
 - [\[NeurIPS 2025\] Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research](../../NeurIPS2025/ai_safety/machine_unlearning_doesnt_do_what_you_think_lessons_for_generative_ai_policy_and.md)
-- [\[ICML 2025\] Doubly Robust Fusion of Many Treatments for Policy Learning](../../ICML2025/ai_safety/doubly_robust_fusion_of_many_treatments_for_policy_learning.md)
+- [\[AAAI 2026\] EFX and PO Allocation Exists for Two Types of Goods](../../AAAI2026/ai_safety/efx_and_po_allocation_exists_for_two_types_of_goods.md)
 
 </div>
 

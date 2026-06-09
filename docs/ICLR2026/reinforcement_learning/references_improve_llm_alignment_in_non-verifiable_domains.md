@@ -43,37 +43,17 @@ tags:
 
 ## 方法详解
 
-### 3.1 参考引导LLM评估 (RefEval & RefMatch)
+### 整体框架
 
-核心思路：设计专门的prompting策略，明确指导LLM-judge如何利用参考输出进行pairwise比较。
+论文把"高质量参考输出"当作非可验证域里的软验证器，用它从两个层面驱动对齐：先设计专门的 prompting 策略让 LLM-judge 学会正确利用参考做 pairwise 评判（RefEval / RefMatch），再把这个参考引导的 judge 当成偏好信号源，串成"SFT 蒸馏 + 参考引导 DPO"的两阶段自改进流程，整个过程不需要人类偏好标注。
 
-- **RefEval**：指示judge评估哪个候选输出与参考的质量和内容更一致，同时仍需回应原始指令。不是简单语义匹配，而是让参考作为质量标杆。
-- **RefMatch**：更强调参考的角色——指示judge作为"语义和风格匹配器"，判断哪个输出与参考更相似。明确指令："Your goal is to determine which output demonstrates closer similarity to the reference."
-- **Ref-Free (Ours)**：无参考基线，指示模型沿指令跟随质量、事实性、冗长度等方面进行评估。
+### 关键设计
 
-### 3.2 两阶段自改进训练流程
+**1. 参考引导的评估 prompt：把"是否给参考"变成"怎么用参考"。** 已有工作只是把参考拼进 prompt，却没告诉 judge 该拿参考做什么，因此收益微弱。论文据此设计了两档指令。RefEval 让 judge 评估哪个候选输出在质量和内容上与参考更一致，但同时仍要回应原始指令——参考充当质量标杆而非唯一答案；RefMatch 更激进，直接把 judge 定位成"语义和风格匹配器"，明确指令 "Your goal is to determine which output demonstrates closer similarity to the reference"。作为对照的 Ref-Free 则不给参考，仅沿指令跟随质量、事实性、冗长度等维度打分。这种"明确指导用法"的设计相比简单拼接参考能带来 4–5 个百分点的差距，说明信号本身一直存在、缺的只是用法。
 
-**阶段1: SFT蒸馏**
+**2. 两阶段自改进：先用参考蒸馏，再用参考引导 DPO 精修。** 第一阶段直接在高质量参考输出上做监督微调（SFT 蒸馏），把前沿模型的能力先迁移进基座；论文发现这比从 base 模型直接做偏好优化更稳，因为好参考本身就是强监督信号。第二阶段在 SFT 模型上做参考引导 DPO，优化目标是标准 DPO 损失 $\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w, y_l) \sim D}\left[\log\sigma\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right]$，关键差别在于偏好对 $(y_w, y_l)$ 不靠人标，而由前一步的参考引导 judge 自动产出，从而把"评估上的改善"直接转化成"训练信号"。
 
-在高质量参考输出上做监督微调。论文发现这优于直接从base模型做偏好优化。
-
-**阶段2: 参考引导DPO**
-
-DPO损失函数：
-
-$$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w, y_l) \sim D} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)} \right) \right]$$
-
-其中偏好对 $(y_w, y_l)$ 的标注由参考引导的自LLM-judge完成：
-- 对每条指令采样5个候选输出(温度0.8)
-- 所有 $\binom{5}{2}=10$ 对进行pairwise比较→计算平均质量分→选最好和最差构成训练对
-- 60K条指令→共600K次pairwise判断
-
-### 关键设计选择
-
-1. **On-policy数据生成**：候选输出由待微调模型自身生成，而非其他模型，此前研究证明这更有效。
-2. **参考来源**：DeepSeek-V3生成，成本仅约40美元(60K条)。
-3. **先SFT再DPO**：论文消融证明直接DPO不如先SFT蒸馏再DPO。
-4. **位置偏见缓解**：所有pairwise评估取两次交换顺序的平均准确率。
+**3. On-policy 偏好对构造：自采样 + 全配对打分。** 偏好数据全部由待微调模型自己在线生成而非借用外部模型——on-policy 数据已被证明更利于 DPO。具体做法是对每条指令以温度 0.8 采样 5 个候选，对全部 $\binom{5}{2}=10$ 对做 pairwise 比较得到平均质量分，再取分数最高与最低的两条组成一个训练对；60K 条指令因此累计约 600K 次 judge 判断。为压制位置偏见，每次 pairwise 评估都交换两次输入顺序取平均准确率。参考来源选用 DeepSeek-V3 生成，60K 条仅约 40 美元，使整条流程在成本上同样可行。
 
 ## 实验结果
 

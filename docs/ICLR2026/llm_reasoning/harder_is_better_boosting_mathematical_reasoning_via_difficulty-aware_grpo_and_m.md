@@ -43,35 +43,23 @@ tags:
 
 ### 整体框架
 
-原始训练数据 → MQR（三方面改写增加难度，保留原答案）→ 增强数据集（原始+改写）→ DGPO训练（MAD归一化 + 难度加权 + 有效token平均）→ 增强后的策略模型。MathForge形成协同循环：MQR扩展数据难度前沿，DGPO高效从增强数据中学习。
+MathForge把"忽视难题"问题拆到数据端和算法端各打一拳：MQR用大推理模型把原始题目改写得更难但保留原答案，扩展出一批"难而可解"的增强数据；DGPO则修正GRPO的内在失衡并主动给难题加权，从这批数据里高效学习。两者形成闭环——MQR推前难度前沿，DGPO负责把前沿吃透。
 
 ### 关键设计
 
-1. **DGPO：难度感知群组策略优化**
+**1. 难度均衡优势估计（DGAE）：把更新幅度从难度上解耦。** 问题的根源在GRPO的优势函数 $\hat{A}_{GR,i} = (r_i - \text{mean})/\text{std}$ 用标准差归一化，本文定理1推出单题总更新幅度 $\sum|\hat{A}_{GR,i}| = 2G\sqrt{p(1-p)}$ 随准确率 $p$ 呈钟形——中等难度（$p=0.5$）更新最猛，越难（$p$ 越小）或越易反而越被压。DGAE只做一处替换：把标准差换成均值绝对偏差 $\text{MAD} = \frac{1}{G}\sum|r_i - \text{mean}|$，得到 $\hat{A}_{DG,i} = (r_i - \text{mean}(\{r_i\}))/\text{MAD}(\{r_i\})$。定理2证明这样一来单题总更新幅度恒等于组大小 $G$，是与难度无关的常数，钟形偏差被彻底抹平，而且推导不依赖二值奖励假设，对一般奖励分布同样成立。
 
-    - **难度均衡优势估计 (DGAE)**：将GRPO的标准差归一化替换为均值绝对偏差（MAD）归一化：$\hat{A}_{DG,i} = \frac{r_i - \text{mean}(\{r_i\})}{\text{MAD}(\{r_i\})}$，其中 $\text{MAD} = \frac{1}{G}\sum|r_i - \text{mean}|$
-    - **定理2证明**：DGAE下单题的总更新幅度 $\sum|\hat{A}_{DG,i}| = G$，为常数，不随难度变化——彻底消除了GRPO中 $2G\sqrt{p(1-p)}$ 的钟形偏差。且无需二值奖励假设
-    - **难度感知问题级加权 (DQW)**：在均衡基础上进一步通过softmax加权优先更新难题：$\lambda_s = B_v \cdot \frac{\exp(D_s/T)}{\sum\exp(D_s/T)}$，其中 $D_s = -\text{mean}(\{r_{si}\})$ 为难度度量，$T=2.0$ 为温度
-    - 有效token级平均：仅在有效查询（非全对或全错）上计算token级平均损失，防止梯度波动
+**2. 难度感知问题级加权（DQW）：在均衡之上再向难题倾斜。** DGAE只是把所有题拉到同一起跑线，要进一步突出难题还得显式加权。DQW以组内平均奖励的相反数 $D_s = -\text{mean}(\{r_{si}\})$ 作为难度度量（答得越差越难），再用 softmax 算出每题权重 $\lambda_s = B_v \cdot \frac{\exp(D_s/T)}{\sum \exp(D_s/T)}$，温度取 $T=2.0$，这个值能把一个 batch 内最大/最小权重比压在 $e^{0.5} \approx 1.65$ 以内——既给难题加码又不至于让易题梯度被饿死。"先均衡再加权"的两步顺序是关键：直接在未均衡的 GRPO 上做难度加权（如 GRPO-AD）底层钟形偏差还在，效果有限。
 
-2. **MQR：多方面问题改写**
-
-    - 使用大推理模型（默认o3）对训练题目进行三种改写：
-        - **添加故事背景**：嵌入叙事噪声，挑战模型从噪声中提取关键数学信息
-        - **引入抽象术语**：抽象化具体概念，挑战模型理解抽象数学概念
-        - **嵌套子问题**：增加推理步骤和跨领域知识要求
-    - 关键约束：所有改写必须保留原始gold answer，免去答案重生成的开销
-    - 设计动机：数学推理需要多种技能，系统性增加题目难度可推动模型性能边界
+**3. MQR 多方面问题改写：在不改答案的前提下系统性升级难度。** 现有数据增强多在做题面改述提升多样性，难度并没真正提上去。MQR 改用大推理模型（默认 o3）从三个正交维度加难：**添加故事背景**塞入叙事噪声，逼模型从无关情节里抠出关键数学量；**引入抽象术语**把具体概念抽象化，考察对抽象数学对象的理解；**嵌套子问题**增加推理步数和跨领域知识需求。所有改写都被硬约束为保留原始 gold answer，于是省掉了重新求解验证答案的开销，增强数据天然带标签且与原题数学等价。
 
 ### 损失函数 / 训练策略
 
-DGPO目标函数：
+把 DGAE 的优势、DQW 的权重和有效 token 级平均拼到一起，就是 DGPO 的完整目标：
 
 $$\mathcal{J}_{DGPO}(\theta) = \frac{1}{\sum_{s=1}^{B_v}\sum_{i=1}^{G}|o_{si}|}\sum_{s=1}^{B_v}\lambda_s\sum_{i=1}^{G}\sum_{t=1}^{|o_{si}|}\min[I_{sit}\hat{A}_{DG,si}, \text{clip}(I_{sit}, 1-\varepsilon, 1+\varepsilon)\hat{A}_{DG,si}]$$
 
-- 使用纯准确率奖励（$r \in \{0,1\}$），无KL散度
-- 8×NVIDIA H20 GPU，基于Open-R1代码库
-- DQW温度 $T=2.0$（保证batch内最大/最小权重比 $\leq e^{0.5} \approx 1.65$）
+外层归一化只在有效查询（既非全对也非全错的 $B_v$ 个 query）上做 token 级平均，避免无信息样本把梯度搅乱。训练用纯准确率奖励 $r \in \{0,1\}$、不加 KL 散度，基于 Open-R1 代码库在 8×NVIDIA H20 GPU 上完成。
 
 ## 实验关键数据
 
@@ -147,10 +135,10 @@ DQW温度敏感性：$T=1.0$ → 39.03, $T=2.0$ → **39.79**, $T=5.0$ → 39.53
 ## 相关论文
 
 - [\[ACL 2026\] GanitLLM: Difficulty-Aware Bengali Mathematical Reasoning through Curriculum-GRPO](../../ACL2026/llm_reasoning/ganitllm_difficulty-aware_bengali_mathematical_reasoning_through_curriculum-grpo.md)
+- [\[ICLR 2026\] THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](thor_tool-integrated_hierarchical_optimization_via_rl_for_mathematical_reasoning.md)
+- [\[ICLR 2026\] Scaf-GRPO: Scaffolded Group Relative Policy Optimization for Enhancing LLM Reasoning](scaf-grpo_scaffolded_group_relative_policy_optimization_for_enhancing_llm_reason.md)
 - [\[ICLR 2026\] DAG-Math: Graph-of-Thought Guided Mathematical Reasoning in LLMs](dag-math_graph-of-thought_guided_mathematical_reasoning_in_llms.md)
-- [\[ICLR 2026\] On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
-- [\[ICLR 2026\] No Answer Needed: Predicting LLM Answer Accuracy from Question-Only Linear Probes](no_answer_needed_predicting_llm_answer_accuracy_from_question-only_linear_probes.md)
-- [\[ICLR 2026\] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
+- [\[ICLR 2026\] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
 
 </div>
 

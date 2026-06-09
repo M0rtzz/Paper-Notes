@@ -142,10 +142,10 @@ PulseFormer以眼部追踪视频（连续帧差分标准化）和IMU数据为输
 ## 相关论文
 
 - [\[ICCV 2025\] Simultaneous Motion And Noise Estimation with Event Cameras](simultaneous_motion_and_noise_estimation_with_event_cameras.md)
-- [\[NeurIPS 2025\] egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks](../../NeurIPS2025/video_understanding/egoemotion_egocentric_vision_and_physiological_signals_for_emotion_and_personali.md)
 - [\[ICCV 2025\] Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras](unsupervised_joint_learning_of_optical_flow_and_intensity_with_event_cameras.md)
 - [\[ICCV 2025\] Fine-grained Spatiotemporal Grounding on Egocentric Videos](fine-grained_spatiotemporal_grounding_on_egocentric_videos.md)
-- [\[ICML 2025\] REVOLVE: Optimizing AI Systems by Tracking Response Evolution in Textual Optimization](../../ICML2025/video_understanding/revolve_optimizing_ai_systems_by_tracking_response_evolution_in_textual_optimiza.md)
+- [\[CVPR 2025\] Similarity-Guided Layer-Adaptive Vision Transformer for UAV Tracking](../../CVPR2025/video_understanding/similarity-guided_layer-adaptive_vision_transformer_for_uav_tracking.md)
+- [\[ICCV 2025\] EMoTive: Event-Guided Trajectory Modeling for 3D Motion Estimation](emotive_event-guided_trajectory_modeling_for_3d_motion_estimation.md)
 
 </div>
 

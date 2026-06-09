@@ -44,39 +44,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文不是提出新方法，而是对两类奖励模型进行理论分析+实验验证。研究路线：
-1. 先分析并反驳"生成-验证差距"假说（Section 3）
-2. 从学习动力学角度刻画EX-RM和IM-RM的差异（Section 4）
-3. 通过受控实验和真实场景验证理论预测（Section 5）
+本文不提新方法，而是回答一个长期困惑的问题：EX-RM 和 IM-RM 几乎是同一个东西——同样的数据、同样的损失、同样的基座语言模型，唯一区别是奖励怎么算（EX-RM 在隐藏表示上接线性头，IM-RM 直接用 $\ln\pi_\theta$ 隐式定义），可为什么 IM-RM 的泛化总是更差？作者分三步推进：先用一个反例干掉社区里流行的"生成-验证差距"解释；再从单步梯度更新的学习动力学切入，证明 EX-RM 的奖励变化只看隐藏表示、而 IM-RM 还被具体 token 牵着走；最后在受控数据集和真实的 1B–8B 模型上，验证这个 token 依赖性正是泛化差距的根源。
 
 ### 关键设计
 
-1. **反驳"生成-验证差距"假说**
+**1. 反驳"生成-验证差距"假说：验证一个答案，并不需要会生成它。**
 
-    - 功能：证明IM-RM可以成为完美的验证器，即使底层语言模型完全无法生成正确答案
-    - 核心思路：Theorem 1 构造了一个分布 $\pi$，使得其诱导的IM-RM以margin $\delta$ 验证正确性，但 $\pi$ 生成正确回答的概率相比参考分布 $\pi_{\text{ref}}$ 最多增长一个常数因子 $\exp(\delta/\beta)$。也就是说，如果 $\pi_{\text{ref}}$ 本身无法高效生成，$\pi$ 也不需要能高效生成就能成为好的验证器
-    - 实验验证：在NP-hard的哈密顿回路验证任务上，IM-RM（基于Pythia-1B）在测试集上达到 0.993 准确率，却无法生成任何一条正确的哈密顿回路
+流行的直觉是：IM-RM 既要给好答案打高分，又要靠底层语言模型把好答案生成出来，而生成比验证难，所以它的验证准确率被拖累。Theorem 1 直接构造反例打掉这个论证——存在一个分布 $\pi$，它诱导的 IM-RM 能以 margin $\delta$ 把正确性验证出来，但 $\pi$ 生成正确回答的概率相比参考分布 $\pi_{\text{ref}}$ 最多只涨一个常数因子 $\exp(\delta/\beta)$。换句话说，如果 $\pi_{\text{ref}}$ 本身就无法高效生成，$\pi$ 也照样生成不好，却不妨碍它成为一个好验证器，验证能力和生成能力被解耦了。实验把反例坐实：在 NP-hard 的哈密顿回路验证任务上，基于 Pythia-1B 的 IM-RM 测试准确率达到 0.993，但它生成出的正确哈密顿回路数为 0。
 
-2. **EX-RM学习动力学分析**
+**2. EX-RM 的学习动力学：奖励变化只由隐藏表示的相似度决定。**
 
-    - 功能：刻画梯度更新后，未见样本 $(\bar{\mathbf{x}}, \bar{\mathbf{y}})$ 的奖励变化
-    - 核心思路：在固定隐藏表示的假设下（Assumption 1），EX-RM的奖励变化为 $\Delta r_{\theta_{\text{EX}}}(\bar{\mathbf{x}}, \bar{\mathbf{y}}) = \langle \mathbf{h}_{\bar{\mathbf{x}},\bar{\mathbf{y}}}, \mathbf{h}_{\mathbf{x},\mathbf{y}^+} - \mathbf{h}_{\mathbf{x},\mathbf{y}^-} \rangle \cdot \eta g(\theta_{\text{EX}})$。奖励变化完全取决于隐藏表示之间的相似度——如果 $\bar{\mathbf{y}}$ 和 $\mathbf{y}^+$ 语义相近（隐藏表示对齐），奖励就会增加，与具体token无关
-    - 设计动机：由于预训练表示编码了语义，EX-RM天然能泛化到使用不同token但语义相同的回答
+要找真正的原因，作者去看一次梯度更新对某个未见样本 $(\bar{\mathbf{x}}, \bar{\mathbf{y}})$ 奖励的影响。在固定隐藏表示的假设下（Assumption 1），EX-RM 的奖励变化为
 
-3. **IM-RM学习动力学分析**
+$$\Delta r_{\theta_{\text{EX}}}(\bar{\mathbf{x}}, \bar{\mathbf{y}}) = \langle \mathbf{h}_{\bar{\mathbf{x}},\bar{\mathbf{y}}}, \mathbf{h}_{\mathbf{x},\mathbf{y}^+} - \mathbf{h}_{\mathbf{x},\mathbf{y}^-} \rangle \cdot \eta g(\theta_{\text{EX}})$$
 
-    - 功能：揭示IM-RM为何过度依赖token级线索
-    - 核心思路：IM-RM的奖励变化包含系数 $\rho_{k,l}(\mathbf{v})$，当 $\bar{\mathbf{y}}_k = \mathbf{v}_l$（token匹配）时系数为正，起到类似EX-RM的作用；但当 $\bar{\mathbf{y}}_k \neq \mathbf{v}_l$（token不匹配）时系数可能为负，此时即使隐藏表示语义对齐，也可能**反向**降低奖励。关键点在于：语义相似但token不同的response，可能被IM-RM赋予相反的奖励方向
-    - 设计动机：这解释了为什么对回答做paraphrase后IM-RM的准确率可以从1.0暴跌到0.02
+它完全取决于隐藏表示之间的内积：只要 $\bar{\mathbf{y}}$ 与正样本 $\mathbf{y}^+$ 语义相近（表示对齐），奖励就增加，和用的是哪些具体 token 无关。由于预训练表示本身已经编码了语义，EX-RM 天然能把"换了 token 但意思一样"的回答泛化对。
 
-4. **理论泛化差距证明（Theorem 2）**
+**3. IM-RM 的学习动力学：token 不匹配时，奖励可能被反向推。**
 
-    - 功能：在简化设定下（单token回答），严格证明IM-RM无法泛化到未见token
-    - 核心思路：训练到收敛后，IM-RM对任何不在训练集中出现的token对的奖励差恒为常数（等于初始值），因此准确率恒为0.5（随机水平）。而EX-RM的线性头方向收敛到最大间隔分离超平面 $\mathbf{u}^*$，能正确排序所有 $\mathbf{u}^*$ 能分对的样本
-    - 设计动机：虽然假设较强（单token、固定表示），但实验证明结论在全参数训练、任意长度回答时依然成立
+同样看奖励变化，IM-RM 的表达式里多出一个系数 $\rho_{k,l}(\mathbf{v})$。当 $\bar{\mathbf{y}}_k = \mathbf{v}_l$（token 对得上）时系数为正，起的作用和 EX-RM 类似；可一旦 $\bar{\mathbf{y}}_k \neq \mathbf{v}_l$（token 对不上），系数就可能变负——这时哪怕两个回答的隐藏表示语义对齐，奖励也可能被往**反方向**推。于是出现一个反直觉的局面：语义相同但 token 不同的 response，会被 IM-RM 判成相反的奖励方向。这正解释了为什么把回答做一次 paraphrase，IM-RM 的准确率能从 1.0 直接掉到 0.02。
+
+**4. 理论泛化差距（Theorem 2）：IM-RM 对没见过的 token 只能瞎猜。**
+
+在单 token 回答的简化设定下，作者把上面这件事推到极致并严格证明：训练收敛后，IM-RM 对任何"没在训练集出现过的 token 对"的奖励差恒等于初始常数，于是排序准确率被钉死在 0.5（随机水平）。与之对照，EX-RM 的线性头方向会收敛到最大间隔分离超平面 $\mathbf{u}^*$，凡是 $\mathbf{u}^*$ 能分对的样本它都排得对。这里的假设确实偏强（单 token、固定表示），但后续实验表明，换到全参数训练、任意长度回答时，结论照样成立。
 
 ### 损失函数 / 训练策略
-两类模型均使用Bradley-Terry对数似然损失训练：$\mathcal{L}(r) = \frac{1}{|\mathcal{D}_T|} \sum -\ln \sigma(r(\mathbf{x}, \mathbf{y}^+) - r(\mathbf{x}, \mathbf{y}^-))$
+两类模型均使用 Bradley-Terry 对数似然损失训练：$\mathcal{L}(r) = \frac{1}{|\mathcal{D}_T|} \sum -\ln \sigma(r(\mathbf{x}, \mathbf{y}^+) - r(\mathbf{x}, \mathbf{y}^-))$
 
 ## 实验关键数据
 
@@ -145,8 +138,8 @@ IM-RM在token分布发生变化（同义改写）时准确率几乎为0，而EX-
 - [\[ICLR 2026\] Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
 - [\[ICML 2026\] GRPO is Secretly a Process Reward Model](../../ICML2026/llm_reasoning/grpo_is_secretly_a_process_reward_model.md)
 - [\[ICLR 2026\] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
+- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Model](predicting_llm_reasoning_performance_with_small_proxy_model.md)
 - [\[ACL 2026\] Language Model as Planner and Formalizer under Constraints](../../ACL2026/llm_reasoning/language_model_as_planner_and_formalizer_under_constraints.md)
-- [\[ACL 2026\] Dissecting Failure Dynamics in Large Language Model Reasoning](../../ACL2026/llm_reasoning/dissecting_failure_dynamics_in_large_language_model_reasoning.md)
 
 </div>
 

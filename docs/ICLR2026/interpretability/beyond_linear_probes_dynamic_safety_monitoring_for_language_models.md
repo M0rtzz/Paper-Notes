@@ -52,29 +52,25 @@ tags:
 
 ### 关键设计
 
-1. **截断多项式分类器（TPC）**:
+**1. 截断多项式分类器（TPC）：用可截断的多项式取代静态线性探针。**
 
-    - 功能：用 $N$ 阶多项式建模激活空间中神经元间的高阶交互，替代线性探针
-    - 核心思路：$n=1$ 时退化为标准线性探针 $w^{[0]} + \bm{z}^\top \bm{w}^{[1]}$；每增加一阶 $k$，引入 $k$ 个神经元间的乘性交互项。高阶权重张量用对称 CP 分解参数化：$\mathcal{W}^{[k]} = \sum_{r=1}^{R} \lambda_r^{[k]} (\bm{u}_r^{[k]} \circ \cdots \circ \bm{u}_r^{[k]})$，每阶仅需 $O(DR)$ 参数
-    - 设计动机：多项式的可加结构意味着后续项只是在前面项的 logits 上做精细修正，天然支持截断评估；对称分解消除了同一单项式的冗余参数
+线性探针只能捕捉激活空间里的一阶（线性）信息，TPC 把它推广成一个 $N$ 阶多项式，用高阶乘性交互项去建模神经元之间的关系。截断到 $n=1$ 时，模型退化回标准线性探针 $w^{[0]} + \bm{z}^\top \bm{w}^{[1]}$；每往上加一阶 $k$，就引入 $k$ 个神经元间的乘性交互项。为了不让高阶权重张量参数爆炸，每阶用对称 CP 分解参数化：
 
-2. **渐进式训练（Progressive Training）**:
+$$\mathcal{W}^{[k]} = \sum_{r=1}^{R} \lambda_r^{[k]} (\bm{u}_r^{[k]} \circ \cdots \circ \bm{u}_r^{[k]})$$
 
-    - 功能：逐阶训练多项式的各阶项，确保每个截断子模型本身也是好的分类器
-    - 核心思路：第 $k$ 阶参数 $\bm{\theta}^{[k]}$ 通过最小化截断至 $k$ 阶的 BCE 损失学习，同时冻结前 $k-1$ 阶参数。第 1 阶直接继承线性探针的预训练权重
-    - 设计动机：如果直接训练完整 $N$ 阶多项式再截断，截断后的子模型性能不可控（实验证实直接训练时截断性能剧烈波动）。渐进训练保证每个截断点都是一个有效的分类器，且新增阶数不影响已有截断的性能
+于是每阶只需 $O(DR)$ 个参数。这种可加结构正是 TPC 能截断评估的关键——后续高阶项本质上只是在前面项累积的 logits 上做精细修正，而对称分解又顺手消掉了同一单项式的冗余参数。
 
-3. **级联防御（Cascading Defense）**:
+**2. 渐进式训练（Progressive Training）：让每个截断点本身都是好分类器。**
 
-    - 功能：根据输入的困难程度动态决定使用几阶——简单输入在低阶快速退出，困难输入继续到高阶
-    - 核心思路：从 $n=1$ 开始逐阶评估，在每阶检查 $\sigma(s) \in (\tau, 1-\tau)$ 是否成立（$\tau$ 为置信阈值）。若当前预测已足够确信（概率落在阈值外），立即输出；否则继续到下一阶。这类似于深度网络的 early-exit 策略
-    - 设计动机：大多数请求是良性的，线性探针就能高置信度分类；只对少量模糊/对抗性输入才需要更强的高阶模型。实验表明中高 $\tau$ 值下，级联性能接近完整多项式，但净参数量仅略多于线性探针
+如果直接把完整 $N$ 阶多项式一次训完再去截断，截断后的子模型性能完全不可控（实验里直接训练时各截断点性能剧烈波动）。TPC 改成逐阶训练：第 $k$ 阶参数 $\bm{\theta}^{[k]}$ 通过最小化截断到 $k$ 阶的 BCE 损失来学习，同时冻结前 $k-1$ 阶已学好的参数，第 1 阶则直接继承线性探针的预训练权重。这样每个截断点都被显式优化成一个有效分类器，而且新加的高阶不会破坏已有低阶截断的表现。思路上类似深度网络的贪心逐层训练，只是这里逐的是多项式的"阶"而非网络的"层"。
 
-4. **内置特征归因**:
+**3. 级联防御（Cascading Defense）：按输入难度动态决定用几阶。**
 
-    - 功能：利用多项式的显式形式进行神经元级别的分类决策归因
-    - 核心思路：2阶项的贡献可分解为 $c_{ij} = (w_{ij}^{[2]} + w_{ji}^{[2]}) z_i z_j$，直接量化任意两个 LLM 神经元 $(i,j)$ 的交互对分类 logits 的贡献
-    - 设计动机：MLP 是黑盒，无法追溯决策到具体神经元交互。TPC 的多项式形式天然可解释——可以精确说出"神经元 4830 与 4916 的交互使有害分类 logits 增加了 0.005"
+有了"每个截断点都可用"这个前提，推理时就能做 early-exit。从 $n=1$ 开始逐阶评估，每一阶检查 $\sigma(s) \in (\tau, 1-\tau)$ 是否成立（$\tau$ 为置信阈值）：如果当前预测的概率已经落在阈值之外、足够确信，就立刻输出；否则继续算下一阶。背后的观察是大多数请求都是良性的，线性探针就能高置信放行，只有少量模糊或对抗性输入才值得动用高阶模型。实验里在中高 $\tau$ 下，级联的整体性能接近完整多项式，但净参数量只略高于线性探针——相当于几乎免费拿到了更强防护。
+
+**4. 内置特征归因：把决策追溯到具体的神经元交互。**
+
+MLP 是黑盒，没法说清某个决策是哪些神经元造成的；TPC 的多项式形式天然可归因。以 2 阶项为例，它对 logits 的贡献能拆成 $c_{ij} = (w_{ij}^{[2]} + w_{ji}^{[2]}) z_i z_j$，直接量化任意一对神经元 $(i,j)$ 的交互对分类结果的影响。于是模型可以精确说出类似"神经元 4830 与 4916 的交互让有害分类 logits 增加了 0.005"这样的结论，而这正是黑盒 MLP 做不到的。
 
 ### 损失函数 / 训练策略
 - 每阶使用标准 BCE 损失训练，冻结前序阶参数
@@ -141,8 +137,8 @@ tags:
 
 - [\[ICLR 2026\] GAVEL: Towards Rule-Based Safety through Activation Monitoring](gavel_towards_rule-based_safety_through_activation_monitoring.md)
 - [\[ACL 2026\] Linear Probes Detect Task Format, Not Reasoning Mode in Language Model Hidden States](../../ACL2026/interpretability/linear_probes_detect_task_format_not_reasoning_mode_in_language_model_hidden_sta.md)
-- [\[ICLR 2026\] Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
 - [\[ICML 2026\] What Linear Probes Miss: Multi-View Probing for Weight-Space Learning](../../ICML2026/interpretability/what_linear_probes_miss_multi-view_probing_for_weight-space_learning.md)
+- [\[ICLR 2026\] Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
 - [\[NeurIPS 2025\] Emergence of Linear Truth Encodings in Language Models](../../NeurIPS2025/interpretability/emergence_of_linear_truth_encodings_in_language_models.md)
 
 </div>

@@ -121,10 +121,10 @@ DICE (Dataset for Idiomatic Contrastive Evaluation) 的核心设计原则：**�
 ## 相关论文
 
 - [\[ICML 2025\] Learning to Stop: Deep Learning for Mean Field Optimal Stopping](../../ICML2025/robotics/learning_to_stop_deep_learning_for_mean_field_optimal_stopping.md)
-- [\[ICML 2025\] Unable to Forget: Proactive Interference Reveals Working Memory Limits in LLMs Beyond Context Length](../../ICML2025/robotics/unable_to_forget_proactive_interference_reveals_working_memory_limits_in_llms_be.md)
-- [\[CVPR 2025\] Instruction-based Image Manipulation by Watching How Things Move](../../CVPR2025/robotics/instruction-based_image_manipulation_by_watching_how_things_move.md)
-- [\[NeurIPS 2025\] Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/robotics/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
 - [\[ACL 2025\] Vulnerability of LLMs to Vertically Aligned Text Manipulations](vulnerability_of_llms_to_vertically_aligned_text_manipulations.md)
+- [\[NeurIPS 2025\] Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](../../NeurIPS2025/robotics/zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
+- [\[ACL 2025\] SELF-PERCEPT: Introspection Improves LLMs' Detection of Multi-Person Mental Manipulation in Conversations](self_percept_manipulation_detection.md)
+- [\[ICLR 2026\] When would Vision-Proprioception Policies Fail in Robotic Manipulation?](../../ICLR2026/robotics/when_would_vision-proprioception_policies_fail_in_robotic_manipulation.md)
 
 </div>
 

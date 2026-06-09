@@ -128,11 +128,11 @@ tags:
 
 ## 相关论文
 
+- [\[AAAI 2026\] Regular Games – an Automata-Based General Game Playing Language](regular_games_--_an_automata-based_general_game_playing_language.md)
 - [\[ACL 2025\] Persona Dynamics: Unveiling the Impact of Personality Traits on Agents in Text-Based Games](../../ACL2025/others/persona_dynamics_unveiling_the_impact_of_persona_traits_on_agents_in_text-based_.md)
 - [\[AAAI 2026\] A Phase Transition for Opinion Dynamics with Competing Biases](a_phase_transition_for_opinion_dynamics_with_competing_biase.md)
 - [\[AAAI 2026\] LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models](lilad_learning_in-context_lyapunov-stable_adaptive_dynamics_models.md)
 - [\[NeurIPS 2025\] Evolutionary Prediction Games](../../NeurIPS2025/others/evolutionary_prediction_games.md)
-- [\[ICML 2026\] Learning Permutation-Invariant Macroscopic Dynamics](../../ICML2026/others/learning_permutation-invariant_macroscopic_dynamics.md)
 
 </div>
 

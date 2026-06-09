@@ -1,26 +1,21 @@
 ---
 title: >-
-  ICML2025 视频理解方向7篇论文解读
+  ICML2025 视频理解方向4篇论文解读
 description: >-
-  7篇ICML2025的视频理解方向论文解读，涵盖目标跟踪等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  4篇ICML2025的视频理解方向论文解读，收录 Fine-Grained Captioning of Lon、MoMa、Scaling Video-Language Models等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "视频理解"
   - "论文解读"
   - "论文笔记"
-  - "目标跟踪"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**🧪 ICML2025** · **7** 篇论文解读
+**🧪 ICML2025** · **4** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (17)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (59)](../../NeurIPS2025/video_understanding/index.md)
-
-**[FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks](fastcav_efficient_computation_of_concept_activation_vectors_for_explaining_deep_.md)**
-
-:   提出 FastCAV，通过计算概念样本激活的归一化均值向量来替代 SVM 训练提取概念激活向量（CAV），在理论上等价于 Fisher 判别分析的简化形式，实测加速高达 63.6 倍（平均 46.4 倍），同时保持与 SVM-CAV 相当的分类精度和下游解释质量。
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (17)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
 
 **[Fine-Grained Captioning of Long Videos through Scene Graph Consolidation](fine-grained_captioning_of_long_videos_through_scene_graph_consolidation.md)**
 
@@ -29,14 +24,6 @@ tags:
 **[MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition](moma_modulating_mamba_for_adapting_image_foundation_models_to_video_recognition.md)**
 
 :   提出 MoMa 框架，通过序列调制操作 (SeqMod) 将 Mamba 的线性复杂度 SSM 以 scale-bias 方式注入冻结的 CLIP Transformer，实现高效全时空动态建模，在多个视频识别基准上以更少计算量达到 SOTA 水平。
-
-**[Parity Requires Unified Input Dependence and Negative Eigenvalues in SSMs](parity_requires_unified_input_dependence_and_negative_eigenvalues_in_ssms.md)**
-
-:   从理论上证明了线性SSM（如S4/Mamba）无法计算奇偶校验(parity)函数——即使允许输入依赖参数化——除非状态转移矩阵包含负特征值，为SSM的表达力瓶颈提供了精确的数学刻画。
-
-**[REVOLVE: Optimizing AI Systems by Tracking Response Evolution in Textual Optimization](revolve_optimizing_ai_systems_by_tracking_response_evolution_in_textual_optimiza.md)**
-
-:   REVOLVE 通过跟踪 LLM 系统中响应在迭代过程中的"演化"趋势来指导优化，比 TextGrad 等基于即时反馈的方法更稳定高效，在提示优化、方案改进和代码优化上分别提升 7.8%、20.72% 和 29.17%。
 
 **[Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation](scaling_video-language_models_to_10k_frames_via_hierarchical_differential_distil.md)**
 

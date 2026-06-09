@@ -45,25 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **累积嵌入（Cumulative Embeddings）**:
+**1. 累积嵌入（Cumulative Embeddings）：把序列依赖编码进每一步的嵌入里。**
 
-    - 功能：将概念产生的序列依赖性编码进嵌入中
-    - 核心思路：第 $t$ 步的嵌入 $x_t$ 不是单词 $t$ 的独立嵌入，而是"词1 词2 … 词t"的整体嵌入。例如说了"猫 狗"后，$x_2$ 编码的是"猫 狗"这个短语
-    - 设计动机：认知科学研究表明语义检索依赖工作记忆和抑制控制——已说过的词会影响后续检索。累积嵌入自然捕捉了这种前缀依赖性
+静态词嵌入（fastText 那一类）把每个词独立编码，丢掉了语义检索的累积性——而认知科学早就发现，已经说出口的词会通过工作记忆和抑制控制影响后续检索。累积嵌入直接顺着这个机制来：第 $t$ 步的嵌入 $x_t$ 不是第 $t$ 个词的独立向量，而是"词1 词2 … 词t"整段拼接后的整体嵌入。比如参与者说完"猫 狗"，$x_2$ 编码的是"猫 狗"这个短语而非单独的"狗"。这样每一步的嵌入都天然带着前缀历史，序列依赖性被装进了向量本身，无需额外建模就还原了"检索依赖历史"这一认知事实。
 
-2. **5 个运动学指标**:
+**2. 五个运动学指标：把语义检索的逐步动态量化成可读的物理量。**
 
-    - **Distance to Next**：连续嵌入间的余弦距离——量化每步"语义跳跃"大小
-    - **Velocity** $\mathbf{v}_t = \mathbf{x}_{t+1} - \mathbf{x}_t$：保留方向信息的向量差——不仅知道跳了多远，还知道跳的方向
-    - **Acceleration** $\mathbf{a}_t = \mathbf{v}_{t+1} - \mathbf{v}_t$：速度的变化——量化搜索策略的稳定性（低加速度=稳定聚类，高加速度=频繁切换）
-    - **Entropy**：将距离序列二值化（中位数以上=1,以下=0）后计算 Shannon 熵——量化搜索过程的可预测性
-    - **Distance to Centroid**：每个嵌入到参与者所有嵌入质心的距离——量化搜索的全局分散度
+有了累积嵌入序列 $X=(x_1,\ldots,x_N)$ 作为语义空间里的轨迹，论文从物理运动学借了五个量来刻画它，从局部跳跃一直覆盖到全局分散：
 
-3. **多模型对比验证**:
+- **Distance to Next**：相邻嵌入间的余弦距离，量化每一步"语义跳跃"有多大。
+- **Velocity** $\mathbf{v}_t = \mathbf{x}_{t+1} - \mathbf{x}_t$：保留方向的向量差，不只知道跳多远，还知道往哪个方向跳。
+- **Acceleration** $\mathbf{a}_t = \mathbf{v}_{t+1} - \mathbf{v}_t$：速度的变化，反映搜索策略稳不稳定——低加速度对应稳定聚类，高加速度对应频繁切换。
+- **Entropy**：先把距离序列按中位数二值化（高于中位数记 1、低于记 0），再算 Shannon 熵，衡量搜索过程的可预测性。
+- **Distance to Centroid**：每个嵌入到该参与者所有嵌入质心的距离，衡量搜索的全局分散度。
 
-    - 功能：验证结果不依赖特定嵌入模型
-    - 核心思路：用 OpenAI text-embedding-3-large、Google text-embedding-004、Qwen3-Embedding-0.6B 三个模型 + fastText 基线，对比轨迹指标的跨模型相关性
-    - 设计动机：如果不同模型产生一致的轨迹特征，说明捕捉到的是真正的认知现象而非模型伪影
+前三个抓的是局部逐步动态（跳多远、往哪跳、稳不稳），后两个分别从可预测性和全局铺展两个角度补全，五个指标合起来就把传统"聚类 vs 切换"的二分粗标签升级成了连续可量化的轨迹特征。
+
+**3. 多模型对比验证：确认轨迹特征是认知现象而非某个模型的伪影。**
+
+单靠一个嵌入模型算出来的轨迹，无法排除结论只是该模型几何偏置的副产品。论文因此并行跑 OpenAI text-embedding-3-large、Google text-embedding-004、Qwen3-Embedding-0.6B 三个 Transformer 模型，再加 fastText 作静态基线，比较同一批轨迹指标在不同模型间的相关性。逻辑很直接：如果训练管线各异（因果 vs 双向 attention）的模型在轨迹指标上仍高度一致，那捕捉到的就是真实的认知结构而非模型特定的伪影；反之某个指标在模型间不一致，也正好暴露它依赖模型几何（后文质心距离即如此）。
 
 ### 统计分析
 使用广义线性混合模型（GLMM），参与者和概念作为随机效应，Tukey HSD 校正多重比较。对数正态分布拟合距离/熵/速度/加速度，高斯分布拟合质心距离。
@@ -123,11 +123,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Exo-Plore: Exploring Exoskeleton Control Space through Human-Aligned Simulation](exo-plore_exploring_exoskeleton_control_space_through_human-aligned_simulation.md)
-- [\[ICLR 2026\] Controllable Sequence Editing for Biological and Clinical Trajectories](controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
 - [\[ICLR 2026\] SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding](seed_towards_more_accurate_semantic_evaluation_for_visual_brain_decoding.md)
-- [\[ICLR 2026\] Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
-- [\[ICLR 2026\] Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding](human_behavior_atlas_benchmarking_unified_psychological_and_social_behavior_unde.md)
+- [\[NeurIPS 2025\] DCA: Graph-Guided Deep Embedding Clustering for Brain Atlases](../../NeurIPS2025/medical_imaging/dca_graph-guided_deep_embedding_clustering_for_brain_atlases.md)
+- [\[CVPR 2025\] SapiensID: Foundation for Human Recognition](../../CVPR2025/medical_imaging/sapiensid_foundation_for_human_recognition.md)
+- [\[NeurIPS 2025\] The Human Brain as a Combinatorial Complex](../../NeurIPS2025/medical_imaging/the_human_brain_as_a_combinatorial_complex.md)
+- [\[CVPR 2026\] Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos](../../CVPR2026/medical_imaging/uncertainty-aware_concept_and_motion_segmentation_for_semi-supervised_angiograph.md)
 
 </div>
 

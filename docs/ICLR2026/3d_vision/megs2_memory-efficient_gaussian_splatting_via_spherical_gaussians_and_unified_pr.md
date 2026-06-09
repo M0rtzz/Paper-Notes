@@ -39,34 +39,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：3DGS场景。输出：内存高效的3DGS表示(静态+渲染VRAM大幅降低)。
-
-三个核心组件：(A) SG替代SH作为颜色表示 (B) 统一软剪枝框架 (C) 后处理(移除+颜色补偿+微调)
+MEGS2要解决的是3DGS的渲染VRAM瓶颈，而渲染VRAM约等于"primitive数量 × 每个primitive的参数量"，所以必须同时压两个因子。它的做法是先把昂贵的球谐函数(SH)换成参数更省、且lobe数量可裁的球面高斯(SG)来表示视角依赖颜色，从而压低单个primitive的参数成本；再用一个统一的软剪枝框架，在同一个内存预算约束下同时决定"删哪些primitive"和"每个primitive留几个lobe"；最后做一轮后处理——移除冗余primitive和lobe、对被删lobe做颜色补偿、再短暂微调把质量找回来。整条链路输入一个普通3DGS场景，输出静态VRAM和渲染VRAM都大幅降低的紧凑表示。
 
 ### 关键设计
 
-1. **任意方向可剪枝球面高斯(SG)替代SH**：
+**1. 任意方向可剪枝球面高斯(SG)替代SH：把全局基函数换成参数更省、可逐lobe裁剪的局部基函数。**
 
-    - 功能：用SG完全替代SH作为视角依赖颜色的表示
-    - 核心思路：每个primitive的颜色 $c(\mathbf{v}) = c_0 + \sum_{i=1}^n G(\mathbf{v}; \mu_i, s_i, a_i)$，其中 $c_0$ 是漫反射分量，每个SG lobe由方向轴 $\mu_i$、锐度 $s_i$、RGB幅度 $a_i$ 定义。关键是lobe方向不约束为正交——任意方向提供更高自由度
-    - 设计动机：3阶SH需48个参数(16系数x3通道)，3-lobe SG只需约一半参数且能更好捕捉局部高频细节。固定正交轴的SG(SG-Splatting)会导致0.6dB PSNR下降，任意方向SG避免了这个问题。SG的lobe数量可变——natural fit for pruning
+SH的问题是它是全局基函数，要表示锐利高光这类局部高频信号就得堆很多高阶系数，参数效率低。MEGS2改用SG来表示每个primitive的视角依赖颜色：$c(\mathbf{v}) = c_0 + \sum_{i=1}^n G(\mathbf{v}; \mu_i, s_i, a_i)$，其中 $c_0$ 是漫反射分量，每个SG lobe由方向轴 $\mu_i$、锐度 $s_i$、RGB幅度 $a_i$ 三组参数定义。关键在于lobe方向不被约束为正交——任意方向带来更高的拟合自由度。这样做的收益是双重的：参数量上，3阶SH要48个参数(16系数×3通道)，而3-lobe SG只需约一半，还能更好地捕捉局部高频；表达力上，固定正交轴的SG变体(SG-Splatting)会掉约0.6dB PSNR，任意方向SG避开了这个损失。更重要的是，SG的lobe数量是可变的，天然适合后面的剪枝。
 
-2. **统一软剪枝框架(ADMM-inspired)**：
+**2. 统一软剪枝框架(ADMM-inspired)：在单一内存约束下同时裁primitive数量和lobe数量。**
 
-    - 功能：将primitive数量裁剪和每个primitive的lobe数量裁剪统一为单一内存约束优化问题
-    - 核心思路：优化目标 $\min \mathcal{L}(\mathbf{o}, \mathbf{s}, \Theta)$，约束 $\rho_o \|\mathbf{o}\|_0 + \rho_s \|\mathbf{s}\|_0 \leq \kappa$，其中 $\rho_o=11$(每个primitive的基础参数), $\rho_s=7$(每个SG lobe的参数), $\kappa$ 是总参数预算。由于L0范数不可微，引入ADMM代理变量分解为可解的子问题：梯度步+近端投影步+对偶更新
-    - 设计动机：顺序剪枝(先减primitive再减lobe)会陷入次优——因为两者的最优分配是耦合的。统一框架在总预算约束下自动找到primitive数量和lobe数量的最优权衡。实验证明统一优于顺序
+如果先把primitive剪到位、再去剪lobe，会陷入次优，因为这两种裁剪的最优分配是耦合的——同样的内存预算，多留primitive还是多留lobe，要一起权衡。MEGS2把它建成一个统一的约束优化：$\min \mathcal{L}(\mathbf{o}, \mathbf{s}, \Theta)$，约束为 $\rho_o \|\mathbf{o}\|_0 + \rho_s \|\mathbf{s}\|_0 \leq \kappa$，其中 $\rho_o=11$ 是每个primitive的基础参数量、$\rho_s=7$ 是每个SG lobe的参数量、$\kappa$ 是总参数预算。由于L0范数不可微，框架借鉴ADMM引入代理变量，把这个难题拆成几个可解的子问题交替迭代：梯度步、近端投影步、对偶更新。这样总预算约束下primitive数量和lobe数量的最优权衡是被自动找到的，而非人为分两步指定，实验也证明统一优于顺序裁剪。
 
-3. **后处理：颜色补偿**：
+**3. 后处理颜色补偿：删低锐度lobe时把它对平均颜色的贡献解析地补回来。**
 
-    - 功能：移除低sharpness的lobe时补偿其对漫反射颜色的贡献
-    - 核心思路：移除lobe $i$ 后，计算补偿项 $\Delta c_0 = a_i \cdot \frac{1 - e^{-2s_i}}{2s_i}$，更新漫反射颜色 $c_0' = c_0 + \Delta c_0$。这是通过最小化球面上颜色差异的积分推导出的解析解
-    - 设计动机：直接移除低shaprness lobe会丢失其对平均颜色的贡献，导致整体色偏。解析补偿几乎无额外开销地恢复能量
+剪枝阶段会移除锐度很低的lobe，但这些lobe虽然不贡献高频细节，仍对primitive的平均颜色有贡献，直接删掉会造成整体色偏。MEGS2对此给出一个解析补偿：移除lobe $i$ 后，计算补偿项 $\Delta c_0 = a_i \cdot \frac{1 - e^{-2s_i}}{2s_i}$，并更新漫反射颜色 $c_0' = c_0 + \Delta c_0$。这个表达式是通过最小化球面上颜色差异的积分推导出的闭式解，所以几乎不增加额外计算，就能把被删lobe的能量补回漫反射项，避免色偏。
 
 ### 损失函数 / 训练策略
-- 基于3DGS标准训练流程(Kerbl et al., 2023)
-- ADMM优化：交替执行梯度步(更新渲染loss) + 近端投影步(enforcing sparsity) + 对偶变量更新
-- 后处理：移除near-zero opacity的primitive和near-zero sharpness的lobe -> 颜色补偿 -> 少量微调恢复质量
+- 基于3DGS标准训练流程(Kerbl et al., 2023)。
+- ADMM优化交替执行三步：梯度步(更新渲染loss) → 近端投影步(强制稀疏) → 对偶变量更新。
+- 后处理流程：移除near-zero opacity的primitive和near-zero sharpness的lobe → 对被删lobe做颜色补偿 → 少量微调恢复质量。
 
 ## 实验关键数据
 

@@ -42,31 +42,21 @@ tags:
 
 ### 整体框架
 
-比较三个模型家族：LLaDA-8B（原生 dLLM）、Qwen2.5-7B（原生 AR）、Dream-7B（AR 初始化的 dLLM）。先进行层间/token 间表征相似度分析，然后基于分析结果设计层跳过策略，在推理时直接跳过高相似度层。
+本文不训练新模型，而是把三个现成模型——LLaDA-8B（原生 dLLM）、Qwen2.5-7B（原生 AR）、Dream-7B（在 AR 模型上做扩散微调）——放到同一套表征诊断流程下逐层量化它们的冗余结构。先用层间和 token 间的 cosine 相似度画出每个模型的"冗余地图"，再把地图上相似度最高的那些层在推理时直接短路掉，得到一个静态、任务无关、不改架构的加速策略。
 
 ### 关键设计
 
-1. **层间 Cosine 相似度分析**:
+**1. 层间相似度分析：把"哪些层在做重复劳动"量化出来。**
 
-    - **功能**：追踪连续层表征 $\mathbf{h}_\ell$ 和 $\mathbf{h}_{\ell+1}$ 之间的 cosine 相似度
-    - **核心发现**：LLaDA 早期层（前 60-70%）相似度 >0.95（高冗余平台），后期层相似度下降（精细化区域）。Qwen2.5 全深度相似度较低且均匀分布（无明显冗余）。Dream-7B 尽管经过扩散训练，但表征模式与 Qwen2.5 高度一致——强初始化偏置
-    - **设计动机**：量化训练目标对表征结构的影响，为层跳过提供理论依据
+要判断一层值不值得跳，先得知道它和邻层有多像。作者对每个连续层对计算表征的 cosine 相似度 $\text{sim}(\mathbf{h}_\ell, \mathbf{h}_{\ell+1})$，相似度越接近 1 说明这一层几乎没改变表征、计算越冗余。沿深度扫一遍后三个模型呈现出截然不同的形态：LLaDA 在前 60–70% 的层上相似度稳定 >0.95，形成一段"高冗余平台"，只有后段才掉下来开始精细化；Qwen2.5 则全程相似度偏低且分布均匀，没有明显可跳的平台；Dream-7B 虽然经过扩散训练，曲线却和 Qwen2.5 几乎重合。这条曲线既是"训练目标重塑了表征结构"这一核心论点的直接证据，也直接告诉跳层策略该从哪里下手——平台区的层就是冗余候选。
 
-2. **Token 间相似度与 Recency Bias 分析**:
+**2. Token 间相似度与 recency bias 分析：解释冗余从何而来。**
 
-    - **功能**：分析不同层中 token 间的表征变化模式
-    - **核心发现**：LLaDA 展现最小的 recency bias（全局平滑高相似度），Qwen2.5 和 Dream-7B 都有显著 recency bias（每个新 token 都引起跨层的表征变化）
-    - **设计动机**：验证 dLLM 的全序列反馈训练确实导致了更全局化的表征抽象
+层间冗余只是表象，作者进一步看每层内 token 之间的表征如何随序列变化，用来区分两种训练目标的抽象方式。AR 模型逐 token 从左到右生成，每个新 token 都会在各层引起一连串表征更新，表现出强烈的 recency bias；dLLM 用全序列去噪训练，对所有位置同时给反馈。测量结果正好对应：LLaDA 几乎没有 recency bias，token 间相似度全局平滑，而 Qwen2.5 和 Dream-7B 都有显著的近因偏置。这解释了为什么 LLaDA 的早期层可以高度冗余——全局反馈让它在浅层就建立起粗糙但稳定的全局表征，后续层只是细化，因此跳掉若干浅层不会破坏整体语义。
 
-3. **静态层跳过策略（Algorithm 1）**:
+**3. 静态层跳过策略：把冗余地图变成推理时的开关。**
 
-    - **功能**：在推理时跳过高相似度的冗余层
-    - **核心思路**：基于训练时相似度分析，选择 cosine 相似度 > θ（默认 0.95）的层。按相似度降序排列，选择 top-k 层跳过，但不允许跳过相邻层（保持表征连续性）。跳过时直接传递 $\mathbf{h}_{\ell-1}$ 到 $\ell+1$ 层
-    - **设计动机**：纯推理时操作，无需重训练、无需 KV-cache 共享、无需架构修改，与 KV-cache 优化正交可叠加
-
-### 损失函数 / 训练策略
-
-本文不修改训练过程，仅在推理时应用层跳过。分析基于已训练好的 LLaDA-8B、Qwen2.5-7B、Dream-7B 模型。
+有了相似度地图，跳层本身只是一次离线挑选（论文中的 Algorithm 1）：先保留所有 $\text{sim}(\mathbf{h}_\ell,\mathbf{h}_{\ell+1}) > \theta$（默认 $\theta=0.95$）的候选层，按相似度从高到低排序取前 $k$ 层跳过，约束是不允许跳过相邻层——一旦连跳，表征的连续传递会断裂，实验中这会让 GSM8K 保持率从 91.8% 掉到 75.3%、Dream 甚至崩到 14.1%。推理时跳过第 $\ell$ 层就是把它的输入 $\mathbf{h}_{\ell-1}$ 直接送进第 $\ell+1$ 层。整个过程不重训、不共享 KV-cache、不动任何模块结构，因此和 KV-cache 类优化天然正交、可以叠加；在 LLaDA 上跳 6 层即削减 18.75% FLOPs 而性能仍保持 88–102%。
 
 ## 实验关键数据
 
@@ -126,11 +116,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
 - [\[ICLR 2026\] Beyond Scattered Acceptance: Fast and Coherent Inference for DLMs via Longest Stable Prefixes](beyond_scattered_acceptance_fast_and_coherent_inference_for_dlms_via_longest_sta.md)
 - [\[ICML 2025\] TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation](../../ICML2025/image_restoration/timedart_a_diffusion_autoregressive_transformer_for_self-supervised_time_series_.md)
 - [\[ICLR 2026\] Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training](breaking_scale_anchoring_frequency_representation_learning_for_accurate_high-res.md)
 - [\[ICML 2026\] DyLLM: Efficient Diffusion LLM Inference via Saliency-based Token Selection and Partial Attention](../../ICML2026/image_restoration/dyllm_efficient_diffusion_llm_inference_via_saliency-based_token_selection_and_p.md)
+- [\[ICLR 2026\] Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
 
 </div>
 

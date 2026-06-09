@@ -131,8 +131,8 @@ DNF 提出了一种基于字典学习的 4D 神经场表示，通过 SVD 分解-
 
 - [\[CVPR 2025\] Learning Flow Fields in Attention for Controllable Person Image Generation](learning_flow_fields_in_attention_for_controllable_person_image_generation.md)
 - [\[CVPR 2025\] Redefining <Creative> in Dictionary: Towards an Enhanced Semantic Understanding of Creative Generation](redefining_creative_in_dictionary_towards_an_enhanced_semantic_understanding_of_.md)
-- [\[CVPR 2025\] AvatarArtist: Open-Domain 4D Avatarization](avatarartist_open-domain_4d_avatarization.md)
 - [\[CVPR 2025\] Generation of Maximal Snake Polyominoes Using a Deep Neural Network](generation_of_maximal_snake_polyominoes_using_a_deep_neural_network.md)
+- [\[CVPR 2025\] AvatarArtist: Open-Domain 4D Avatarization](avatarartist_open-domain_4d_avatarization.md)
 - [\[NeurIPS 2025\] Neural Entropy](../../NeurIPS2025/image_generation/neural_entropy.md)
 
 </div>

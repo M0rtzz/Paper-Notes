@@ -41,36 +41,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入图像经过网络前向传播，提取倒数第二层的特征 $\Phi(x) \in \mathbb{R}^p$ 和最终输出 $\hat{f}(x) \in \mathbb{R}^C$。构建特征核算子 $\mathcal{T}$ 和理想的最小投影算子 $\mathcal{T}_{MP}$，用 CKA 比较两者的相似度，得到 richness 度量 $\mathcal{D}_{LR} \in [0,1]$。
+本文要解决的是：怎样用一个**不看准确率、又算得动**的标量来判断一个网络训练得有多 rich。作者的切入点是 rich 训练的低秩偏差——动态越 rich，倒数第二层学到的特征就越应该只保留"表达学到的函数所必需的那几个维度"。整条流水线很短：拿一批输入做前向传播，取倒数第二层特征 $\Phi(x) \in \mathbb{R}^p$ 和最终输出 $\hat{f}(x) \in \mathbb{R}^C$，把特征组织成函数空间里的核算子 $\mathcal{T}$，再构造一个代表"理想 rich 状态"的最小投影算子 $\mathcal{T}_{MP}$，最后用 CKA 量两者的距离，得到落在 $[0,1]$ 的 richness 度量 $\mathcal{D}_{LR}$——越接近 0 越 rich，越接近 1 越 lazy。
 
 ### 关键设计
 
-1. **特征核算子 $\mathcal{T}$**:
+**1. 特征核算子 $\mathcal{T}$：把特征搬进函数空间，摆脱对具体样本的依赖。**
 
-    - 功能：将特征映射转化为函数空间的核算子
-    - 核心思路：$\mathcal{T} = \sum_{k=1}^{p} |\Phi_k\rangle\langle\Phi_k|$，即对所有特征维度的外积求和。通过 Mercer 定理分解得到特征值 $\rho_k$ 和特征函数 $e_k$
-    - 设计动机：在函数空间而非向量空间操作，使度量不依赖于具体训练样本
+richness 不该取决于你恰好用哪批样本来量。为此作者不在向量空间里直接看激活，而是把特征映射成函数空间的核算子 $\mathcal{T} = \sum_{k=1}^{p} |\Phi_k\rangle\langle\Phi_k|$，也就是对所有特征维度做外积求和。再通过 Mercer 定理把它分解出特征值 $\rho_k$ 和特征函数 $e_k$——这一步把"网络学到的特征结构"提炼成一组与具体训练样本无关的谱，后面所有度量都建立在这组谱上。
 
-2. **最小投影算子 $\mathcal{T}_{MP}$（Definition 1）**:
+**2. 最小投影算子 $\mathcal{T}_{MP}$（Definition 1）：给"理想 rich 状态"一个可对照的参照系。**
 
-    - 功能：定义 rich 训练的理想状态
-    - 核心思路：$\mathcal{T}_{MP}[u] = a_1\langle \mathbf{1}|u\rangle\mathbf{1} + a_2 P_{\hat{\mathcal{H}}}(u)$，其中 $P_{\hat{\mathcal{H}}}$ 是到学到函数空间 $\hat{\mathcal{H}} = \text{span}\{\hat{f}_1, \ldots, \hat{f}_C\}$ 的正交投影。如果实际的 $\mathcal{T}$ 就是 $\mathcal{T}_{MP}$，意味着特征只跨越了 $C$ 维空间（与输出维度相同），完美体现了 rich 训练的低秩偏差
-    - 设计动机：在理想的 rich 动态下，只有最少数量的特征被学习和使用，最后一层不需要做额外处理
+要量 richness，得先说清楚"最 rich 长什么样"。作者把理想状态定义为最小投影算子
 
-3. **低秩度量 $\mathcal{D}_{LR}$**:
+$$\mathcal{T}_{MP}[u] = a_1\langle \mathbf{1}|u\rangle\mathbf{1} + a_2 P_{\hat{\mathcal{H}}}(u)$$
 
-    - 功能：量化训练的 richness 程度
-    - 核心思路：$\mathcal{D}_{LR} = 1 - \text{CKA}(\mathcal{T}, \mathcal{T}_{MP})$，值域 $[0,1]$，0 表示最 rich，1 表示最 lazy
-    - 与 neural collapse 的联系：当 $\mathcal{T}$ 是 $\mathcal{T}_{MP}$ 时，NC1（类内变异性坍缩）和 NC2（特征收敛到单纯形等角紧框架）自动成立
+其中 $P_{\hat{\mathcal{H}}}$ 是到学到函数空间 $\hat{\mathcal{H}} = \text{span}\{\hat{f}_1, \ldots, \hat{f}_C\}$ 的正交投影。它的含义是：在最 rich 的动态下，模型只会学习和使用最少量的特征，最后一层不需要再做额外处理。如果实际的 $\mathcal{T}$ 恰好等于 $\mathcal{T}_{MP}$，就意味着特征只张成了 $C$ 维空间（与输出维度相同），正是 rich 训练低秩偏差的极致体现——这给后面的度量提供了一个明确的"满分参照"。
 
-4. **特征分解可视化（Eq. 5）**:
+**3. 低秩度量 $\mathcal{D}_{LR}$：用一个标量量出离理想态有多远，并顺手解释 neural collapse。**
 
-    - 功能：提供比单一标量更丰富的诊断信息
-    - 三个互补视角：(i) 累积质量 $\Pi^*(k)$——前 $k$ 个特征能多好地表达目标函数；(ii) 累积利用率 $\hat{\Pi}(k)$——前 $k$ 个特征被最后一层用了多少；(iii) 相对特征值 $\rho_k/\rho_1$——各特征的相对重要性
-    - 通过 Nyström 方法从有限样本近似特征函数，计算复杂度仅为 $\mathcal{O}(p^2 C)$
+有了参照系，richness 就是实际 $\mathcal{T}$ 与理想 $\mathcal{T}_{MP}$ 的相似度，作者用 CKA 来量并取补：
+
+$$\mathcal{D}_{LR} = 1 - \text{CKA}(\mathcal{T}, \mathcal{T}_{MP})$$
+
+值域天然落在 $[0,1]$，0 表示最 rich、1 表示最 lazy，整个计算不碰标签、不碰初始核、也不碰性能，正好满足"独立于性能"的目标。一个值得强调的副产物是它和 neural collapse 的关系：当 $\mathcal{T}$ 退化到 $\mathcal{T}_{MP}$ 时，NC1（类内变异性坍缩）和 NC2（特征收敛到单纯形等角紧框架）会自动成立——也就是说 neural collapse 只是 $\mathcal{D}_{LR}=0$ 的一个特例，本质上是动态现象而非泛化指标。
+
+**4. 特征分解可视化（Eq. 5）：单个标量之外，再给出可诊断的谱视图。**
+
+一个标量能排序但解释力有限，所以作者进一步把谱拆开，给出三个互补视角：累积质量 $\Pi^*(k)$ 看前 $k$ 个特征能多好地表达目标函数，累积利用率 $\hat{\Pi}(k)$ 看前 $k$ 个特征被最后一层实际用了多少，相对特征值 $\rho_k/\rho_1$ 看各特征的相对重要性。三者放在一起，能区分"特征质量好但没被用上""被用上但质量差"等情形。特征函数本身通过 Nyström 方法从有限样本近似得到，整套可视化的计算复杂度仅为 $\mathcal{O}(p^2 C)$。
 
 ### 计算效率
-关键优势：仅需 $n$ 次前向传播获取倒数第二层（$n \times p$）和输出层（$n \times C$）的激活，然后 $\mathcal{O}(npC)$ 的计算。对于标准模型 $p \approx 10^3$，$n \approx \mathcal{O}(p)$，总计 $\mathcal{O}(p^2 C)$，远优于 NTK 方法的与总参数量平方成正比的开销。
+$\mathcal{D}_{LR}$ 之所以"实用"，关键在于开销极低：只需 $n$ 次前向传播取倒数第二层（$n \times p$）和输出层（$n \times C$）的激活，再做 $\mathcal{O}(npC)$ 的计算即可。对标准模型 $p \approx 10^3$、$n \approx \mathcal{O}(p)$，总开销 $\mathcal{O}(p^2 C)$，远低于 NTK 类度量那种与总参数量平方成正比的代价——这正是它相比 NTK 变化度量能真正跑在大模型上的原因。
 
 ## 实验关键数据
 
@@ -140,9 +140,9 @@ tags:
 
 - [\[ICLR 2026\] Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
 - [\[ICLR 2026\] The Geometry of Reasoning: Flowing Logics in Representation Space](the_geometry_of_reasoning_flowing_logics_in_representation_space.md)
-- [\[ICML 2026\] Cognitive Fatigue in Autoregressive Transformers: Formalization and Measurement](../../ICML2026/interpretability/cognitive_fatigue_in_autoregressive_transformers_formalization_and_measurement.md)
+- [\[ICLR 2026\] AdAEM: An Adaptively and Automated Extensible Measurement of LLMs' Value Difference](adaem_an_adaptively_and_automated_extensible_measurement_of_llms_value_differenc.md)
 - [\[NeurIPS 2025\] Time-Evolving Dynamical System for Learning Latent Representations of Mouse Visual Cortex](../../NeurIPS2025/interpretability/time-evolving_dynamical_system_for_learning_latent_representations_of_mouse_visu.md)
-- [\[ICLR 2026\] Information Shapes Koopman Representation](information_shapes_koopman_representation.md)
+- [\[ICML 2026\] Cognitive Fatigue in Autoregressive Transformers: Formalization and Measurement](../../ICML2026/interpretability/cognitive_fatigue_in_autoregressive_transformers_formalization_and_measurement.md)
 
 </div>
 

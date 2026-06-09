@@ -41,31 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Ego 车辆从当前帧特征 $F_t$ 和融合过的上一帧特征 $F_{t-1}^{\text{fused}}$ 计算共形时序不确定性，通过可学习分位阈值 $q$ 和注意力掩码阈值 $\tau$ 确定要请求的特征子集，广播请求向量，接收协作车辆的选定特征后融合。
+CooperTrim 想解决的是协同感知里"每帧都把全部特征传一遍"的浪费：静态场景帧间几乎不变，重复传输纯属冗余。它把决策权交给接收方（ego 车辆）——ego 拿当前帧特征 $F_t$ 和上一帧融合后的特征 $F_{t-1}^{\text{fused}}$ 比对，算出哪些特征相对时序记忆是"新信息"，只把这部分打包成请求向量广播出去；协作车辆收到请求后只回传被点名的特征子集，ego 再做融合。共享多少不是固定的，而是随场景复杂度自动伸缩。整条链路由共形时序不确定性、自适应数量确定、$\epsilon$-greedy 训练三块拼起来。
 
 ### 关键设计
 
-1. **共形时序不确定性**:
+**1. 共形时序不确定性：用"帧间变化"代替静态置信度来判断哪些特征值得传。**
 
-    - 功能：量化每个特征通道相对于时序上下文的变化程度
-    - 核心思路：计算当前帧与上一融合帧的 L1 距离 $S_t = |F_t - F_{t-1}^{\text{fused}}|$，用可学习分位阈值 $q$ 做门控（共形预测启发），只保留变化超过 $q$ 的特征作为"不确定"
-    - 设计动机：静态场景中大部分特征帧间不变——无需重复传输
+现有方法（如 Where2Comm）逐帧独立地用置信度图选特征，完全无视上一帧已经传过什么，于是静态背景被一遍遍重复发送。CooperTrim 换了个度量：直接算当前帧与上一融合帧的 L1 距离 $S_t = |F_t - F_{t-1}^{\text{fused}}|$ 作为时序不确定性，变化大的通道才算"不确定、需要更新"。门控阈值不是手调的固定值，而是受共形预测启发的可学习分位阈值 $q$——只保留 $S_t$ 超过 $q$ 的特征。这样静态场景里绝大多数帧间不变的特征会被自然滤掉，省下的带宽全留给真正变化的区域。
 
-2. **自适应数量确定**:
+**2. 自适应数量确定：让共享量随环境复杂度伸缩，而不是卡一个固定阈值。**
 
-    - 功能：根据环境复杂度动态调整共享特征数量
-    - 核心思路：对不确定特征施加交叉注意力加权，通过可学习掩码阈值 $\tau$ 截断——复杂场景（多交叉路口）产生高相关性分数→更多特征超过阈值→更多传输
-    - 设计动机：实现"简单场景少传，复杂场景多传"的自适应行为
+固定阈值方法（如 SwissCheese）对简单和复杂场景一视同仁，既可能在路口漏传关键信息，又可能在空旷直道上浪费带宽。CooperTrim 对前一步筛出的不确定特征再施加交叉注意力加权，得到每个特征的相关性分数，然后用可学习掩码阈值 $\tau$ 截断。机制本身带来了想要的自适应：多交叉路口这类复杂场景会产生更高的相关性分数，于是更多特征越过 $\tau$、传得更多；空旷直行场景分数普遍偏低，超阈值的特征寥寥无几、传得极少。"简单少传、复杂多传"由数据驱动地涌现，无需为不同场景预设规则。
 
-3. **$\epsilon$-Greedy 训练策略**:
+**3. $\epsilon$-Greedy 训练策略：避免只用选中的特征训练导致梯度不稳。**
 
-    - 功能：平衡全特征训练和选择特征训练
-    - 核心思路：以 $\epsilon$ 概率使用全部特征（exploration），$(1-\epsilon)$ 概率使用选择的特征（exploitation）。理论证明这减少了梯度估计器的偏差和方差
-    - 设计动机：仅用部分特征训练可能导致梯度噪声大、收敛不稳定
+如果训练时一直只喂被选中的那部分特征，梯度会因为输入稀疏而噪声偏大、收敛不稳。CooperTrim 借了强化学习里探索-利用的思路：以 $\epsilon$ 概率用全部特征训练（exploration），以 $1-\epsilon$ 概率用选择后的特征训练（exploitation）。论文给出了理论分析，证明这种混合采样能同时压低梯度估计器的偏差和方差，让稀疏特征下的训练更稳。
 
 ### 损失函数 / 训练策略
 
-拉格朗日约束优化：$\theta^* = \arg\min_\theta L(C(\theta)) + \lambda \cdot (P(C(\theta)) - C_{1.6})$，目标是在带宽约束 1.6 Mbps 下最大化任务性能。$\lambda$ 动态调整。
+整体目标写成带拉格朗日乘子的约束优化：
+
+$$\theta^* = \arg\min_\theta L(C(\theta)) + \lambda \cdot (P(C(\theta)) - C_{1.6})$$
+
+其中 $L$ 是任务损失、$P(C(\theta))$ 是当前选择策略产生的带宽开销、$C_{1.6}$ 是 1.6 Mbps 的带宽预算，$\lambda$ 在训练中动态调整。直观说就是：在不超过带宽约束的前提下最大化分割/检测性能，乘子 $\lambda$ 负责在"传得太多"时加大惩罚、把开销压回预算内。
 
 ## 实验关键数据
 
@@ -137,8 +135,8 @@ vs 其他选择策略：
 - [\[ICLR 2026\] Peering into the Unknown: Active View Selection with Neural Uncertainty Maps for 3D Reconstruction](peering_into_the_unknown_active_view_selection_with_neural_uncertainty_maps_for_.md)
 - [\[CVPR 2026\] Long-SCOPE: Fully Sparse Long-Range Cooperative 3D Perception](../../CVPR2026/3d_vision/long_scope_fully_sparse_long_range_cooperative_3d_perception.md)
 - [\[AAAI 2026\] Domain Generalized Stereo Matching with Uncertainty-guided Data Augmentation](../../AAAI2026/3d_vision/domain_generalized_stereo_matching_with_uncertainty-guided_data_augmentation.md)
+- [\[NeurIPS 2025\] Enhancing Multilingual LLM Pretraining with Model-Based Data Selection](../../NeurIPS2025/3d_vision/enhancing_multilingual_llm_pretraining_with_model-based_data_selection.md)
 - [\[ICCV 2025\] CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection](../../ICCV2025/3d_vision/ca-i2p_channel-adaptive_registration_network_with_global_optimal_selection.md)
-- [\[CVPR 2026\] VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM](../../CVPR2026/3d_vision/varsplat_uncertainty-aware_3d_gaussian_splatting_for_robust_rgb-d_slam.md)
 
 </div>
 

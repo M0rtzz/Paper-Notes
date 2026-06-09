@@ -40,36 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四个记忆存储构成存储集合 $\mathcal{S} = \{\text{STM}, \text{Sum}, \text{LTM}, \text{Epi}\}$。给定查询 $q$，路由策略 $\pi$ 选择子集 $\hat{G} = \pi(q) \subseteq \mathcal{S}$，系统仅从选中的存储检索内容并拼接送入 LLM 生成答案。整个框架分两个评估阶段：① 合成路由评估（验证存储选择质量）→ ② LLM QA 评估（验证下游任务性能）。
+记忆增强 Agent 维护四个语义角色不同的存储，构成存储集合 $\mathcal{S} = \{\text{STM}, \text{Sum}, \text{LTM}, \text{Epi}\}$。大多数系统对每个查询都把这四个口袋全翻一遍，本文的核心转变是：在检索之前先决定"该查哪几个口袋"。给定查询 $q$，路由策略 $\pi$ 先选出一个存储子集 $\hat{G} = \pi(q) \subseteq \mathcal{S}$，系统只从这几个被选中的存储里取内容、拼接后送入 LLM 生成答案——存储选择与存储内排序被显式解耦。
+
+为了把"选得好不好"和"答得对不对"拆开看，论文用两个阶段评估：先做**合成路由评估**，拿带 ground-truth 存储标签的查询验证路由本身的选择质量；再做 **LLM QA 评估**，把路由结果接上真实模型看下游答题准确率。被评估的策略排成一条从简到强的谱系——Uniform（$\lambda=0$ 的全量检索）→ Fixed Subset（如固定查 STM+Sum+LTM）→ Hybrid Heuristic（规则+fallback）→ Oracle（理论上界），论文跑遍了其中 12 种策略。
 
 ### 关键设计
 
-1. **路由评估指标体系**:
+**1. 路由评估指标体系：把"漏"和"多"拆成两件事来量。**
 
-    - 功能：量化存储选择的质量
-    - Coverage = $\frac{1}{N}\sum_i \mathbf{1}[G_i \subseteq \hat{G}_i]$：是否包含了所有必要存储（漏存储 = 不可回答）
-    - Exact Match = $\frac{1}{N}\sum_i \mathbf{1}[G_i = \hat{G}_i]$：是否精确选择了恰好必要的存储
-    - Waste = $\frac{1}{N}\sum_i |\hat{G}_i \setminus G_i|$：多检索了多少不必要的存储
-    - 设计动机：分离覆盖率（不漏）和精确度（不多），使 accuracy-cost tradeoff 可度量。Coverage 是硬约束，Waste 是软代价。
+要让 accuracy-cost tradeoff 可度量，先得回答两个不同的问题：有没有漏掉必须查的存储，以及有没有多查了无关的存储。论文用三个指标分别盯这两件事。Coverage $= \frac{1}{N}\sum_i \mathbf{1}[G_i \subseteq \hat{G}_i]$ 衡量是否包含了所有必要存储——这是硬约束，因为一旦漏掉含答案的存储，问题就根本不可回答。Exact Match $= \frac{1}{N}\sum_i \mathbf{1}[G_i = \hat{G}_i]$ 衡量是否恰好选中了必要存储、一个不多一个不少。Waste $= \frac{1}{N}\sum_i |\hat{G}_i \setminus G_i|$ 则把"多查了几个无关存储"量化成软代价。把覆盖率（不漏）和精确度（不多）分开度量，路由质量才不会被一个笼统的准确率掩盖。
 
-2. **混合启发式路由器（Hybrid Heuristic）**:
+**2. 混合启发式路由器（Hybrid Heuristic）：靠查询里的语义信号收窄口袋范围。**
 
-    - 功能：基于查询语义信号选择目标存储
-    - 核心规则：数量信号（"list all"） → {LTM, Epi}；时间信号（"before", "changed"） → {LTM, Epi}；多跳信号（"compare", "relate"） → {Sum, LTM}；当前会话（"just said", "today"） → {STM}；事实查找（"what is my"） → {Sum}
-    - 无匹配时 fallback 到 {Sum, LTM}（六种两存储组合中覆盖率最高 89%）
-    - 额外使用 query-store embedding similarity 作为 tiebreaker，贡献 +4% coverage
-    - 设计原则：优先保 coverage（漏存储 = 不可回答），有信号时才收窄路由范围
+这是论文给出的可部署路由基线，思路是从查询语言本身读出"答案该在哪个语义角色的存储里"。它用一组规则把信号映射到存储：数量信号（"list all"）和时间信号（"before"、"changed"）指向 {LTM, Epi}；多跳信号（"compare"、"relate"）指向 {Sum, LTM}；当前会话信号（"just said"、"today"）指向 {STM}；事实查找（"what is my"）指向 {Sum}。当查询没有任何可辨信号时，路由器 fallback 到 {Sum, LTM}——这是六种两存储组合里覆盖率最高的一组（89%）。在规则之上，再用 query-store embedding similarity 作为 tiebreaker 做细调，单这一项就再贡献 +4% coverage。整套设计的优先级很明确：先保 coverage（漏存储等于不可回答的死局），只在确有信号支撑时才敢收窄检索范围。
 
-3. **代价敏感决策理论框架**:
+**3. 代价敏感决策理论框架：给"选哪几个口袋"一个最优性定义。**
 
-    - 功能：为存储路由提供数学基础
-    - 核心公式：$\pi^*(q) = \arg\max_{G \subseteq \mathcal{S}} [\mathbb{E}[\text{Acc}(q,G)] - \lambda \sum_{s \in G} c_s]$
-    - $\lambda = 0$ 退化为全量检索（Uniform）；Oracle routing 是 $\pi^*$ 的近似上界
-    - 解释力：当无关存储被检索时，有效检索代价增加而正确抽取概率可能下降（因上下文噪声），因此选择性检索在两端都有收益
-    - 与检索门路由（retriever routing）的区别：存储路由是 memory-architecture level 的决策，存储间语义角色差异大（STM vs LTM vs Summary），粒度比 passage-level 路由更粗
+前两个设计是怎么选和怎么评，这一点回答的是"理论上最优的选择长什么样"。论文把存储路由形式化为一个代价敏感的最优化问题：
 
-### 路由策略谱系
-从简到强排列：Uniform（全量，$\lambda=0$）→ Fixed Subset（如 STM+Sum+LTM）→ Hybrid Heuristic（规则+fallback）→ Oracle（理论上界）。论文评估了 12 种策略的完整谱系。
+$$\pi^*(q) = \arg\max_{G \subseteq \mathcal{S}} \left[\mathbb{E}[\text{Acc}(q,G)] - \lambda \sum_{s \in G} c_s\right]$$
+
+即在期望准确率和检索代价之间按权重 $\lambda$ 取平衡。这个式子能统一解释整条策略谱系：$\lambda=0$ 时代价项消失，退化成无脑全量检索的 Uniform；而 Oracle routing 正是 $\pi^*$ 的近似上界。它的解释力在于揭示了选择性检索为何两端都有收益——当无关存储被检索进来，有效检索代价上升，同时上下文噪声还会拉低正确抽取的概率，所以少查反而可能既省 token 又更准。这也点出了存储路由与检索门路由（retriever routing）的本质区别：存储路由是 memory-architecture level 的决策，几个存储之间语义角色差异极大（STM vs LTM vs Summary），粒度比 passage-level 的段落路由要粗得多。
 
 ## 实验关键数据
 

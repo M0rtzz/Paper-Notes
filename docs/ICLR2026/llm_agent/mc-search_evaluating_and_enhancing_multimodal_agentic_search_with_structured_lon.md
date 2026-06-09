@@ -40,42 +40,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MC-Search 包含两大部分：(1) Benchmark 构建——从 Wikipedia 构建多模态知识库，生成覆盖5种推理拓扑的多跳 QA，经 HAVE 过滤和质量验证得到 3,333 个高质量样本；(2) 评估与训练——设计统一的 agentic MM-RAG pipeline 和过程级指标进行公平评估，并通过 Search-Align 利用验证链微调开源模型。
+MC-Search 想回答一个被现有 benchmark 回避的问题：MLLM 到底能不能做长链、跨模态、结构化的检索推理。为此它把工作拆成相互咬合的两半。前半是 benchmark 构建——从 Wikipedia 出发搭一个图文混合的多模态知识库，按 5 种预设拓扑生成多跳 QA，再用 HAVE 把每条链里"看着合理但其实没用"的步骤过滤掉，最终留下 3,333 个平均 3.7 跳的高质量样本，且每一步都带模态、证据、中间答案的标注。后半是评估与训练——所有模型都跑同一套 agentic MM-RAG pipeline，用过程级指标（不只看最终答案）做公平对比；同时把验证过的推理链喂给 Search-Align，反过来微调开源模型，验证这批数据的训练价值。
 
 ### 关键设计
 
-1. **5种搜索增强推理拓扑**:
+**1. 5 种搜索增强推理拓扑：把"多跳"从一锅乱炖拆成可分析的结构。**
 
-    - 功能：定义 5 种代表性的多跳推理图结构，每种结构的推理链形式化为 $\mathcal{G}(Q,A) = \{(q_t, m_t, r_t, a_t)\}_{t=1}^{T}$，其中 $q_t$ 是子问题，$m_t$ 是检索模态，$r_t$ 是证据，$a_t$ 是中间答案
-    - 5种结构：(i) Image-Initiated Chain（图像启动+后续文本检索）；(ii) Text-Initiated Chain（文本启动+后续图像验证）；(iii) Parallel Image-Text Fork（图文并行检索，无跨步依赖）；(iv) Multi-Images Fork（多图视觉比较+文本支持）；(v) Text-Only Chain（纯文本基线）
-    - 设计动机：捕捉现实世界中的串行/并行推理模式和不同模态组合，使评估更全面
+现有 benchmark 要么只有 1-2 跳，要么虽然多跳但不区分推理形态，没法回答"哪种推理结构难、哪种模态组合难"。MC-Search 先把一条推理链形式化为 $\mathcal{G}(Q,A) = \{(q_t, m_t, r_t, a_t)\}_{t=1}^{T}$，其中 $q_t$ 是第 $t$ 步的子问题，$m_t$ 是该步选用的检索模态，$r_t$ 是检索到的证据，$a_t$ 是中间答案。在这个表示下，它定义了 5 种有代表性的拓扑：(i) Image-Initiated Chain（先看图、后续靠文本检索补全）；(ii) Text-Initiated Chain（先读文本、后续用图像验证）；(iii) Parallel Image-Text Fork（图、文两个分支并行检索，彼此无跨步依赖）；(iv) Multi-Images Fork（先做多图视觉比较，再用文本支撑）；(v) Text-Only Chain（纯文本基线，用来隔离视觉因素）。这 5 种结构覆盖了"串行/并行"×"图像/文本主导"的主要组合，因此后续才能逐拓扑地诊断模型短板（实验里 Parallel Fork 最难就是靠这个切分发现的）。
 
-2. **HAVE（Hop-wise Attribution and Verification of Evidence）**:
+**2. HAVE（Hop-wise Attribution and Verification of Evidence）：保证每一跳都不可或缺。**
 
-    - 功能：过滤推理链中的幻觉步骤和冗余步骤
-    - 核心思路：对每个步骤计算上下文效用 $\text{Util}(t) = \text{F1}(\mathcal{C}) - \text{F1}(\mathcal{C} \setminus r_t)$——移除该步证据后答案准确率的下降。同时检查导航角色：$\text{Nav}(t)=1$ 如果该步中间答案的实体出现在下游子问题中。若 Util 低于阈值且 Nav=0，则该步为冗余
-    - 设计动机：LLM 生成的长推理链常含虚构步骤（看似合理但无证据支持）或多余步骤（对答案无贡献）。HAVE 的双重检查（直接效用 + 导航角色）确保保留的每一步都是不可或缺的
+LLM 自动生成的长链有两个通病：虚构步骤（看着像推理、实则没有证据支撑）和冗余步骤（删了也不影响答案）。HAVE 对每一步做双重检查来剔除它们。第一重看直接效用，计算把该步证据 $r_t$ 从上下文里删掉后答案 F1 的下降量
 
-3. **过程级评估指标**:
+$$\text{Util}(t) = \text{F1}(\mathcal{C}) - \text{F1}(\mathcal{C} \setminus r_t)$$
 
-    - 功能：超越答案准确率，评估推理过程质量
-    - 核心思路：(i) **Hit per Step (HPS)**——金标推理步被预测图成功覆盖的比例；(ii) **Rollout Deviation (RD)**——预测链和金标链的步数差，$\text{RD} = ||{\hat{\mathcal{G}}}| - |{\mathcal{G}}||$，反映过度/不足检索程度；(iii) **LLM-as-a-Judge (LJ)**——从答案准确、推理连贯、实体覆盖、步骤对齐四个维度评分
-    - 设计动机：仅看最终答案无法诊断检索规划或模态选择的问题
+下降越大说明这步越关键。第二重看导航角色：$\text{Nav}(t)=1$ 当且仅当该步的中间答案实体出现在下游某个子问题里——也就是说，这一步即便对最终答案贡献不大，但它"牵出"了后面要查的实体，仍然不能删。只有当 $\text{Util}(t)$ 低于阈值**且** $\text{Nav}(t)=0$ 时，该步才判为冗余被剔除。双标准的好处是既能删掉真废步，又不会误删那些"自己不直接答题、但负责承上启下"的关键跳。
 
-4. **Agentic MM-RAG Pipeline**:
+**3. 过程级评估指标：把"为什么错"和"错在哪步"测出来。**
 
-    - 功能：统一的迭代搜索推理管线，支持公平评估
-    - 核心思路：每轮迭代：(a) 生成子查询和检索动作（文本搜索/图像搜索/图像查图）；(b) 从多模态知识库检索 top-1 证据；(c) 生成子答案并判断是否继续搜索。全程记录模态和证据，支持链级评估
-    - 设计动机：现有工作各用不同 pipeline，缺乏公平对比基础
+只看最终答案 F1 无法区分模型是检索规划坏了还是模态选错了，所以 MC-Search 引入三个过程级指标。Hit per Step（HPS）衡量金标推理步里有多大比例被模型的预测图成功覆盖，反映推理路径对不对得上。Rollout Deviation（RD）衡量预测链和金标链的步数差，
 
-5. **Search-Align 过程监督微调**:
+$$\text{RD} = \big|\,|\hat{\mathcal{G}}| - |\mathcal{G}|\,\big|$$
 
-    - 功能：利用 HAVE 验证过的推理链对开源 MLLM 进行 SFT
-    - 核心思路：将推理图转化为对话形式（assistant 提子问题+推理，user 执行检索+返回结果），用 Gemini-2.5-Flash 为每步生成推理思路（reasoning thoughts），连接相邻跳。然后在这种对话式 trace 上做 supervised fine-tuning
-    - 设计动机：传统 SFT 只监督最终答案，Search-Align 提供步级监督信号，教会模型如何规划、选择检索模态、整合跨步证据
+直接暴露模型是"检索不够"（步数偏少）还是"过度检索"（步数偏多）。LLM-as-a-Judge（LJ）则让 LLM 从答案准确、推理连贯、实体覆盖、步骤对齐四个维度打分，补足前两个自动指标看不到的整体质量。有了 HPS+RD，调试 agentic RAG 时就能定位到具体是哪一环出问题，而不是只知道"分低"。
+
+**4. Agentic MM-RAG Pipeline：给所有模型一条统一的评测跑道。**
+
+此前各家工作各用各的检索-推理 pipeline，结果不可直接比较。MC-Search 统一成一条迭代式管线：每一轮里，模型先生成子查询并选一个检索动作（文本搜索 / 图像搜索 / 以图搜图），从多模态知识库里取回 top-1 证据，再据此生成子答案并自行判断是否继续下一轮。整个过程把每步用到的模态和证据都记录下来，因此既能算最终答案，也能做链级的过程评估。统一 pipeline 是后面所有公平对比和 HPS/RD 计算的前提。
+
+**5. Search-Align 过程监督微调：把验证过的链反哺给开源模型。**
+
+传统 SFT 只拿"问题→最终答案"做监督，模型学不到怎么规划检索、怎么选模态。Search-Align 改成步级监督：把 HAVE 验证过的推理图重写成对话形式（assistant 负责提子问题和推理，user 负责执行检索并返回结果），并用 Gemini-2.5-Flash 为每一跳补一段推理思路（reasoning thoughts）把相邻两跳衔接起来。开源 MLLM 就在这种对话式 trace 上做监督微调，相当于一步步被教会"该查什么、用哪种模态查、怎么把跨步证据整合起来"。这也是 Qwen2.5-VL-7B 经它微调后 F1 大幅追平闭源大模型的原因。
 
 ### 损失函数 / 训练策略
-Search-Align 使用标准的 next-token prediction loss 在对话式推理 trace 上微调。训练数据来自 HAVE 验证后的 3,333 条推理链。
+Search-Align 在对话式推理 trace 上用标准的 next-token prediction loss 做监督微调，训练数据即 HAVE 验证后的 3,333 条推理链。
 
 ## 实验关键数据
 
@@ -143,7 +141,7 @@ Search-Align 使用标准的 next-token prediction loss 在对话式推理 trace
 - [\[ACL 2026\] Rethinking Reasoning-Intensive Retrieval: Evaluating and Advancing Retrievers in Agentic Search Systems](../../ACL2026/llm_agent/rethinking_reasoning-intensive_retrieval_evaluating_and_advancing_retrievers_in_.md)
 - [\[CVPR 2026\] HAVEN: Hierarchical Long Video Understanding with Audiovisual Entity Cohesion and Agentic Search](../../CVPR2026/llm_agent/haven_hierarchical_long_video_understanding_with_audiovisual_entity_cohesion.md)
 - [\[ACL 2026\] BAPO: Boundary-Aware Policy Optimization for Reliable Agentic Search](../../ACL2026/llm_agent/bapo_boundary-aware_policy_optimization_for_reliable_agentic_search.md)
-- [\[NeurIPS 2025\] Deep Video Discovery: Agentic Search with Tool Use for Long-form Video Understanding](../../NeurIPS2025/llm_agent/deep_video_discovery_agentic_search_with_tool_use_for_longfo.md)
+- [\[ACL 2026\] StructMem: Structured Memory for Long-Horizon Behavior in LLMs](../../ACL2026/llm_agent/structmem_structured_memory_for_long-horizon_behavior_in_llms.md)
 
 </div>
 

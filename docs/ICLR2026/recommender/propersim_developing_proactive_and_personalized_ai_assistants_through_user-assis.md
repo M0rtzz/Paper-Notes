@@ -47,24 +47,25 @@ tags:
 
 ### 整体框架
 
-系统由三部分组成：(1) 基于persona的用户agent在家庭环境中生成日常行为序列 $\{(A_i, \text{Range}_i)\}$；(2) AI助手每隔 $T=2.5$ 分钟观察用户行为决定是否推荐 $R_t = \mathcal{A}_\theta(A_t, S_t^{(a)})$；(3) 用户agent基于个性化rubric评分 $\text{Score}_t = \mathcal{E}(P, r, A_t, R_t, S_t^{(u)})$。
+这篇论文想造一个既"主动"又"懂你"的助手，但真实用户数据收集不起，于是整套系统全跑在模拟里，由三方循环驱动。第一方是基于persona的用户agent，它在Smallville家庭环境里生成一整天的日常行为序列 $\{(A_i, \text{Range}_i)\}$（比如"7:00–7:30 做早餐"）。第二方是AI助手，它每隔 $T=2.5$ 分钟观察当前行为 $A_t$ 和自己的内部状态 $S_t^{(a)}$，决定要不要推荐、推荐什么：$R_t = \mathcal{A}_\theta(A_t, S_t^{(a)})$。第三方是评估器（仍是用户agent的一部分），它按这个persona专属的rubric给刚才那条推荐打分 $\text{Score}_t = \mathcal{E}(P, r, A_t, R_t, S_t^{(u)})$。打出来的分数既是反馈信号、又是训练数据：助手每天把当天攒下的（推荐, 分数）对拿去做一次偏好学习，第二天就更懂这位用户。模拟连跑14天，助手在不接触任何真人的情况下完成"何时推荐 + 推荐什么"的双重适配。
 
 ### 关键设计
 
-1. **大五人格驱动的用户Persona系统**:
-    - 功能：构建32种多样化用户persona，驱动行为生成和推荐评估
-    - 核心思路：每个persona由5个大五人格维度（Extraversion/Agreeableness/Openness/Conscientiousness/Neuroticism的High/Low）+ 6个扩展属性（年龄、背景、兴趣、生活方式、日计划需求、长期目标）定义。GPT-4o生成属性，确保与人格特质一致。UMAP+HDBSCAN验证32个persona的分离性和多样性
-    - 设计动机：大五人格是心理学中最广泛验证的个性模型，不同人格组合自然导致不同的推荐偏好——低外向性persona偏好独处活动，高尽责性persona偏好结构化推荐
+**1. 大五人格驱动的用户Persona系统：让模拟用户的行为和口味真的因人而异。**
 
-2. **四维个性化评估Rubric**:
-    - 功能：基于353人AMT调研筛选的4个评估维度，为每个persona生成个性化评估标准
-    - 核心思路：从10个候选维度经AMT投票（排除<50%支持的Diversity和Interruption）保留：Personal Preference（内容对齐）、Frequency（推荐频率）、Timing（时机恰当性）、Communication & Safety（沟通风格+安全）。每个维度的具体标准由GPT-4o根据persona定制（如低外向性persona："I prefer receiving recommendations no more than once every two hours"）。评估用Gemini 2.0 Flash，每维度二值评分
-    - 设计动机：评估标准必须同时反映任务的通用重要性（来自大规模调研）和个体差异（来自persona定制），两层设计确保既有共识基础又有个性化空间
+如果模拟用户千篇一律，学出来的助手也只会一种套路。论文用心理学里验证最充分的大五人格模型来制造多样性：每个persona由5个维度（Extraversion / Agreeableness / Openness / Conscientiousness / Neuroticism，各取 High/Low）组合，再叠加6个扩展属性（年龄、背景、兴趣、生活方式、日计划需求、长期目标），由GPT-4o生成且要求属性与人格特质自洽，最终得到32种persona。为确认这32个人真的彼此不同，作者用UMAP+HDBSCAN对persona embedding做聚类，验证它们在表征空间里分得开、覆盖面广。人格差异会自然传导到推荐偏好上——低外向性的人偏好独处活动、不爱被频繁打扰，高尽责性的人偏好结构化、有计划的推荐，这正是后面个性化评估要拿捏的东西。
 
-3. **RAG+DPO偏好对齐的ProPerAssistant**:
-    - 功能：构建一个能持续从用户反馈中学习的主动推荐助手
-    - 核心思路：内部状态 $S_t^{(a)}$ 包含结构化日记忆（近10分钟详细+早期压缩为1h/4h摘要）+ OpenAI embedding检索的top-5相似历史交互。每个时间步生成 $n=2$ 候选推荐（含"无推荐"选项），用户评分后形成偏好对，存入replay buffer。每日结束时从buffer随机采样200条做DPO训练：$\mathcal{L}_{\text{DPO}} = -\log\sigma(\beta(\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}))$
-    - 设计动机：DPO避免了RLHF的reward model训练复杂性；replay buffer借鉴RL经验回放，防止遗忘早期经验；LoRA微调的LLaMA 3.3 70B（4-bit量化）平衡性能与效率
+**2. 四维个性化评估Rubric：评分标准既有大众共识、又随persona定制。**
+
+助手好不好，全看这把评估的尺子准不准。作者先做了一次353人的AMT大规模调研，从10个候选评估维度里投票筛选，砍掉支持率<50%的Diversity和Interruption，留下四个公认重要的维度：Personal Preference（内容是否对口味）、Frequency（推荐频率是否合适）、Timing（时机是否恰当）、Communication & Safety（沟通风格与安全性）。但光有通用维度还不够个性化，所以每个维度下的具体判据再由GPT-4o按persona量身定制——同样是Frequency维度，低外向性persona的判据会写成"I prefer receiving recommendations no more than once every two hours"，而爱热闹的人门槛就宽得多。实际打分由Gemini 2.0 Flash执行，每个维度给二值评分。这种"大众维度 + 个体判据"的两层结构，让评分既站在共识基础上、又留出了因人而异的空间。
+
+**3. RAG+DPO偏好对齐的ProPerAssistant：助手把每天的打分变成持续进步的训练信号。**
+
+前两点搭好了环境和尺子，这一点才是真正会学习的主角。助手的内部状态 $S_t^{(a)}$ 由两部分构成：一是结构化的日记忆（最近10分钟保留完整细节，更早的逐级压缩成1小时、4小时摘要，避免上下文爆炸），二是用OpenAI embedding检索出的top-5条最相似历史交互（RAG），让它能"想起"以前对类似场景的成败。每个时间步它生成 $n=2$ 个候选推荐（其中一个可以是"不推荐"），用户agent打分后，高分项和低分项就配成一个偏好对存进replay buffer。每天结束时从buffer里随机采样200条做一次DPO训练：
+
+$$\mathcal{L}_{\text{DPO}} = -\log\sigma\left(\beta\left(\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right)$$
+
+选DPO而不是完整RLHF，是为了绕开单独训练reward model的麻烦，直接从偏好对里学；replay buffer借的是强化学习经验回放的思路，让助手别只盯着最近几天、把早期经验也复习一遍防止遗忘。把"不推荐"放进候选集这一点尤其关键——它让助手有机会学会"此刻闭嘴"，后面实验里推荐频率从24次/小时降到约6次/小时正是这个机制的功劳。底座是LoRA微调的LLaMA 3.3 70B（4-bit量化），在效果和算力之间取了个能跑得起的平衡。
 
 ### 损失函数 / 训练策略
 

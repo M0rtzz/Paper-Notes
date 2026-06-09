@@ -38,43 +38,17 @@ tags:
 
 ### 整体框架
 
-DeepSPI 在 PPO 基础上，将辅助转移/奖励损失直接嵌入策略优化目标，而非作为独立辅助损失。这确保表示更新不会将策略推出安全邻域。
+DeepSPI 把安全策略改进的理论保证嫁接到在线深度 RL：它在 PPO 的优化循环里用一个基于重要性比率（IR）的邻域算子框住每次策略更新的幅度，同时把世界模型的转移/奖励损失直接揉进策略优化目标，而不是当成独立的辅助损失分开优化。这样一来，表示和策略即便同步更新，也不会把策略推出安全邻域，从而同时摁住了"模型在未探索区幻觉"和"坏表示混淆状态"两个隐患。整套方法由四个层层递进的设计支撑，对应论文里四个定理。
 
-### 关键设计1: 邻域算子
+### 关键设计
 
-定义基于IR的邻域 $\mathcal{N}^C(\pi)$，约束策略更新幅度：
+**1. IR 邻域算子：把策略更新框在行为策略附近。** 经典 SPI 之所以扩不到高维空间，是因为它要穷举状态-动作覆盖；DeepSPI 改用重要性比率来度量新旧策略的偏差，定义邻域 $\mathcal{N}^C(\pi) = \{ \pi' \in \Pi \mid 2 - C \leq D_{\text{IR}}^{\inf}(\pi, \pi') \leq D_{\text{IR}}^{\sup}(\pi, \pi') \leq C \}$，其中参数 $C \in (1, 2)$ 充当探索-利用的旋钮，$C$ 越大允许的偏离越大。每一步只在这个邻域里挑最大化优势的策略：$\pi_{n+1} = \arg\sup_{\pi' \in \mathcal{N}^C(\pi_n)} \mathbb{E}_{s \sim \mu_{\pi_n}} \mathbb{E}_{a \sim \pi'} A^{\pi_n}(s, a)$。因为偏差被卡死在 $[2-C, C]$ 内，新策略访问的状态分布始终与行为策略和世界模型的训练分布重叠，模型就没机会在未探索区"画饼"。**定理 1** 据此证明价值序列 $\{V^{\pi_n}\}$ 单调改进并收敛到 $V^*$。
 
-$$\mathcal{N}^C(\pi) = \left\{ \pi' \in \Pi \mid 2 - C \leq D_{\text{IR}}^{\inf}(\pi, \pi') \leq D_{\text{IR}}^{\sup}(\pi, \pi') \leq C \right\}$$
+**2. 局部转移/奖励损失：让世界模型只对策略邻域负责。** 全局准确的世界模型既不现实也没必要，DeepSPI 只要求模型在当前策略会访问的局部区域准。它用一个 batch $\mathcal{B}$ 上的局部奖励损失和（基于 Wasserstein 距离的）转移损失来刻画模型质量：$L_R^\mathcal{B} = \mathbb{E}_{s,a \sim \mathcal{B}} |R(s,a) - \bar{R}(\bar{s}, a)|$，$L_P^\mathcal{B} = \mathbb{E}_{s,a \sim \mathcal{B}} \mathcal{W}(\phi_\sharp P(\cdot|s,a), \bar{P}(\cdot|\phi(s), a))$。**定理 2** 证明只要 IR 约束成立，真实环境与世界模型之间的回报差异就被这两个局部损失线性控制住，**定理 3**（Deep SPI 定理）进一步把这一控制转化为安全策略改进的保证——也就是说，局部准确 + 邻域约束就足以保证"改了不会更糟"。
 
-参数 $C \in (1, 2)$ 控制探索-利用平衡。在此邻域内优化advantage：
+**3. 统一效用函数：把模型损失焊进 advantage。** 如果像 DeepMDP 那样把表示损失作为独立目标单独优化，表示的梯度可能反过来把策略顶出安全邻域。DeepSPI 索性把奖励/转移损失直接减进优势函数，构成统一效用 $U^{\pi_n}(s, a, s') = A^{\pi_n}(s, a) - \alpha_R \cdot \ell_R(s, a) - \alpha_P \cdot \ell_P(s, a, s')$，再用 $U$ 替换 PPO 里所有出现 $A$ 的地方。这样策略更新本身就内生地权衡了模型损失（权重 $\alpha_R$、$\alpha_P$ 控制），表示与策略不会再各拉各的，自然落在同一个安全方向上。
 
-$$\pi_{n+1} = \arg\sup_{\pi' \in \mathcal{N}^C(\pi_n)} \mathbb{E}_{s \sim \mu_{\pi_n}} \mathbb{E}_{a \sim \pi'} A^{\pi_n}(s, a)$$
-
-**定理1**证明序列 $\{V^{\pi_n}\}$ 单调改进并收敛到 $V^*$。
-
-### 关键设计2: 局部损失保证世界模型质量
-
-定义局部奖励损失 $L_R^\mathcal{B}$ 和转移损失 $L_P^\mathcal{B}$（基于Wasserstein距离）：
-
-$$L_R^\mathcal{B} = \mathbb{E}_{s,a \sim \mathcal{B}} |R(s,a) - \bar{R}(\bar{s}, a)|, \quad L_P^\mathcal{B} = \mathbb{E}_{s,a \sim \mathcal{B}} \mathcal{W}(\phi_\sharp P(\cdot|s,a), \bar{P}(\cdot|\phi(s), a))$$
-
-**定理2**证明当IR约束满足时，真实环境与世界模型的回报差异被局部损失线性控制。**定理3**（Deep SPI定理）可保证安全策略改进。
-
-### 关键设计3: 统一效用函数
-
-将辅助损失嵌入PPO的advantage函数：
-
-$$U^{\pi_n}(s, a, s') = A^{\pi_n}(s, a) - \alpha_R \cdot \ell_R(s, a) - \alpha_P \cdot \ell_P(s, a, s')$$
-
-用 $U$ 替换PPO中所有 $A$ 的出现，使策略更新自动考虑模型损失。
-
-### 表示学习保证
-
-**定理4**证明在损失足够小时，更新后的表示保持近似Lipschitz性：
-
-$$|V^{\bar{\pi}}(s_1) - V^{\bar{\pi}}(s_2)| \leq K_V \cdot \bar{d}(\phi(s_1), \phi(s_2)) + \varepsilon$$
-
-即价值相近的状态在潜在空间中保持接近，避免表示坍塌。
+**4. Lipschitz 表示保证：防止状态被错误合并。** 混淆更新的根源是坏表示把本该区分的状态压成同一个潜在点，于是在合并点上改策略会在真实状态里酿成灾难性负奖励。**定理 4** 证明当上述局部损失足够小时，更新后的表示保持近似 Lipschitz 性：$|V^{\bar{\pi}}(s_1) - V^{\bar{\pi}}(s_2)| \leq K_V \cdot \bar{d}(\phi(s_1), \phi(s_2)) + \varepsilon$。直观说就是价值相近的状态在潜在空间里也保持接近、价值差大的状态不会被强行拉拢，从而避免表示坍塌——这正是前面三个设计能稳定生效的表示层前提。
 
 ## 实验关键数据
 

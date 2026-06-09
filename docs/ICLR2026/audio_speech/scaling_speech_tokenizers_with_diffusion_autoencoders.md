@@ -45,23 +45,23 @@ SiTok 以 mel 频谱图为输入和重建目标（非原始波形），避免直
 
 ### 关键设计
 
-1. **扩散自编码器替代对抗式训练**
+**1. 扩散自编码器替代对抗式训练：用生成式建模处理量化丢失的信息。**
 
-    - 功能：在量化后的离散 token 条件下高保真重建 mel 谱图
-    - 核心思路：解码器使用 flow-matching 目标，将噪声样本 $\mathbf{x}_t = t\mathbf{x} + (1-t)\epsilon$ 的速度场 $v_\phi(\mathbf{x}_t, t, \mathbf{z}_q)$ 训练为逼近真实速度 $(\mathbf{x} - \epsilon)$。相比对抗训练的优势：（a）不需要判别器和复杂损失设计，训练更稳定；（b）扩散模型学习数据分布，能从量化表征中"脑补"丢失的细节；（c）可扩展性更好——波形级模型需要大量上下采样，mel 谱图更紧凑
-    - 设计动机：确定性重建在激进压缩下会坍缩——把所有信息硬塞进 200bps 是不可能的。扩散模型承认"不是所有细节都能从 token 恢复"，转而学习条件分布 $p(\mathbf{x}|\mathbf{z}_q)$，这才是低 token 率下的正确建模方式
+确定性重建在激进压缩下会坍缩——把语音的全部信息硬塞进 200bps 本就不可能，确定性损失只会迫使潜空间优先保留低级信号细节、牺牲语义结构。SiTok 转而承认"不是所有细节都能从 token 恢复"，让解码器去学条件分布 $p(\mathbf{x}|\mathbf{z}_q)$。具体做法是 flow-matching 目标：构造噪声样本 $\mathbf{x}_t = t\mathbf{x} + (1-t)\epsilon$，把速度场 $v_\phi(\mathbf{x}_t, t, \mathbf{z}_q)$ 训练成逼近真实速度 $(\mathbf{x} - \epsilon)$，解码器以量化嵌入 $\mathbf{z}_q$ 为条件从噪声还原 mel 谱图。
 
-2. **CTC 语义正则化**
+相比对抗式训练，这一路线有三重好处：不需要判别器和繁琐的损失设计，训练更稳定；扩散模型学的是数据分布，能从有限的量化表征里"脑补"出丢失的细节；可扩展性也更好——波形级模型要做大量上下采样，而 mel 谱图更紧凑，更适合堆到 1.6B 参数。
 
-    - 功能：确保离散 token 保留语义/语言信息
-    - 核心思路：在量化后嵌入 $\mathbf{z}_q$ 上接入轻量 CTC 解码器 $\mathcal{D}_{\phi_{\text{ctc}}}$（4 层 Transformer），直接预测文本转录 $\mathbf{y}$。总损失 $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{ctc}} \cdot \text{CTC}(\mathcal{D}_{\phi_{\text{ctc}}}(\mathbf{z}_q), \mathbf{y}) + \mathcal{L}_{\text{vq}}$，其中 $\lambda_{\text{ctc}}$ 是关键超参。实验显示 $\lambda_{\text{ctc}} = 0.1$ 最优，过大（1.0）反而损害重建（WER 从 4.06 升至 10.1）
-    - 设计动机：区别于之前用 MSE/cosine 做 SSL 特征蒸馏的间接对齐方式，CTC 直接强制 token 能解码出文本——这是语义保留的最直接监督信号。不依赖任何外部 SSL 模型（如 HuBERT/WavLM），完全端到端
+**2. CTC 语义正则化：直接强制离散 token 能解码出文本。**
 
-3. **高效扩散解码（Shortcut Fine-tuning）**
+只优化声学保真度会让 token 不适合理解任务，过去的做法是用 MSE/cosine 把 token 对齐到 HuBERT/WavLM 等 SSL 特征，但这是间接的二手监督。SiTok 改用最直接的信号：在量化后的嵌入 $\mathbf{z}_q$ 上接一个轻量 CTC 解码器 $\mathcal{D}_{\phi_{\text{ctc}}}$（4 层 Transformer），直接预测文本转录 $\mathbf{y}$，总损失为
 
-    - 功能：将扩散推理步数从标准的多步压缩到 2-4 步
-    - 核心思路：冻结编码器和 VQ 模块，对解码器用 shortcut model 目标微调——训练网络额外接收步长 $d$ 作为条件，联合优化 flow-matching 损失（$d=0$ 对应真实速度）和自一致性损失（一大步 $2d$ 的结果 ≈ 两小步 $d$ 的连续结果），使模型学会"跳过中间步"。实际 RTF：16 步 0.041 → 4 步 0.013，加速 3.2 倍
-    - 设计动机：扩散解码的多步采样是部署瓶颈，shortcut 让模型自学加速策略，比传统蒸馏更灵活
+$$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{ctc}} \cdot \text{CTC}(\mathcal{D}_{\phi_{\text{ctc}}}(\mathbf{z}_q), \mathbf{y}) + \mathcal{L}_{\text{vq}}$$
+
+关键在于监督信号放在量化**之后**，直接塑造离散 token 的语义性质，整条链路端到端、不依赖任何外部 SSL 模型。$\lambda_{\text{ctc}}$ 是敏感超参：实验中 $0.1$ 最优，太大（如 $1.0$）会过度约束潜空间反而损害重建（WER 从 4.06 升至 10.1）。
+
+**3. 高效扩散解码（Shortcut Fine-tuning）：让解码器自学跳步加速。**
+
+扩散解码的多步采样是部署瓶颈。SiTok 冻结编码器和 VQ 模块，只对解码器用 shortcut model 目标微调：网络额外接收步长 $d$ 作为条件，同时优化两项——flow-matching 损失（$d=0$ 对应真实速度）和自一致性损失（一大步 $2d$ 的结果要约等于连续走两小步 $d$）。这样模型就学会了"跳过中间步"，比传统蒸馏更灵活。效果上推理步数从标准的多步压到 2-4 步，实测 RTF 从 16 步的 0.041 降到 4 步的 0.013，加速 3.2 倍。
 
 ### 损失函数 / 训练策略
 
@@ -138,9 +138,9 @@ SiTok 在仅 200bps（所有基线最低比特率）下，WER 3.34%、SIM 0.682 
 
 - [\[ICML 2026\] Sparse Autoencoders for Interpretable Emotion Control in Text-to-Speech](../../ICML2026/audio_speech/sparse_autoencoders_for_interpretable_emotion_control_in_text-to-speech.md)
 - [\[ICLR 2026\] The Devil behind the Mask: An Emergent Safety Vulnerability of Diffusion LLMs](the_devil_behind_the_mask_an_emergent_safety_vulnerability_of_diffusion_llms.md)
-- [\[ACL 2026\] ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment](../../ACL2026/audio_speech/immersivetts_environment-aware_text-to-speech_with_multimodal_diffusion_transfor.md)
-- [\[NeurIPS 2025\] The Impact of Scaling Training Data on Adversarial Robustness](../../NeurIPS2025/audio_speech/the_impact_of_scaling_training_data_on_adversarial_robustness.md)
 - [\[ACL 2026\] XLSR-MamBo: Scaling the Hybrid Mamba-Attention Backbone for Audio Deepfake Detection](../../ACL2026/audio_speech/xlsr-mambo_scaling_the_hybrid_mamba-attention_backbone_for_audio_deepfake_detect.md)
+- [\[NeurIPS 2025\] From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease](../../NeurIPS2025/audio_speech/from_black_box_to_biomarker_sparse_autoencoders_for_interpreting_speech_models_o.md)
+- [\[ACL 2026\] ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment](../../ACL2026/audio_speech/immersivetts_environment-aware_text-to-speech_with_multimodal_diffusion_transfor.md)
 
 </div>
 

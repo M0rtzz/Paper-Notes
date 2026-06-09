@@ -35,46 +35,20 @@ tags:
 
 ## 方法详解
 
-### 1. Random Fourier Feature 逼近
-用正弦随机特征逼近 PDE 解 $u(\mathbf{x})$：
+### 整体框架
+FastLSQ 把 PDE 解写成一组冻结的正弦随机特征的线性组合，只训练那一层线性系数。它的全部技巧建立在一个被长期忽视的初等事实上：正弦的导数在 $\sin\to\cos\to-\sin\to-\cos$ 之间循环，因此把任意线性微分算子作用到特征上都有闭式表达式，无需自动微分也无需搭计算图。于是线性 PDE 退化成一次最小二乘求解，非线性 PDE 退化成几步 Newton 迭代，整个流程对 PDE 算子的种类完全无感。
 
-$$u_N(\mathbf{x}) = \frac{1}{\sqrt{N}} \sum_{j=1}^{N} \beta_j \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$$
+### 关键设计
 
-其中 $\mathbf{W}_j \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I}_d)$、$b_j \sim \mathcal{U}(0, 2\pi)$ 冻结不变，仅训练线性系数 $\boldsymbol{\beta}$。$1/\sqrt{N}$ 归一化保证经验核收敛到高斯 RBF 核，防止系数膨胀到 $\mathcal{O}(10^6)$–$10^8$ 导致病态。采用多块（multi-block）架构，$B$ 个块使用不同带宽 $\sigma_b$ 以捕捉多尺度特征。
+**1. 正弦随机特征逼近：用冻结基把求解变成解系数。** 框架用 $N$ 个随机正弦基逼近解 $u(\mathbf{x})$：$u_N(\mathbf{x}) = \frac{1}{\sqrt{N}} \sum_{j=1}^{N} \beta_j \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$，其中频率 $\mathbf{W}_j \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I}_d)$ 与相位 $b_j \sim \mathcal{U}(0, 2\pi)$ 随机采样后冻结不变，唯一待定的就是线性系数 $\boldsymbol{\beta}$。关键的 $1/\sqrt{N}$ 归一化让经验核稳定收敛到高斯 RBF 核，避免系数膨胀到 $10^6$–$10^8$ 量级把线性系统拖入病态——消融显示去掉这一项精度直接掉 4 个数量级甚至发散。为了同时抓住光滑大尺度和尖锐小尺度结构，框架还用多块架构，让 $B$ 个块各带不同带宽 $\sigma_b$。
 
-### 2. 正弦基的精确解析导数（关键创新）
-对任意多重指标 $\alpha = (\alpha_1, \dots, \alpha_d)$：
+**2. 正弦基的精确解析导数：一个公式吃掉所有线性算子。** 这是全文的命门。对任意多重指标 $\alpha=(\alpha_1,\dots,\alpha_d)$，特征的高阶导数有统一闭式：$D^\alpha \phi_j(\mathbf{x}) = \left(\prod_{k=1}^d W_{jk}^{\alpha_k}\right)\Phi_{|\alpha|\bmod 4}(\mathbf{W}_j^\top \mathbf{x} + b_j)$，其中 $\Phi_0=\sin,\Phi_1=\cos,\Phi_2=-\sin,\Phi_3=-\cos$。这意味着常见算子都坍缩成一次三角函数求值乘以权重单项式：Laplacian 是 $\Delta\phi_j=-\|\mathbf{W}_j\|^2\sin(\cdot)$，Biharmonic 是 $\Delta^2\phi_j=\|\mathbf{W}_j\|^4\sin(\cdot)$，Advection 是 $\mathbf{v}\cdot\nabla\phi_j=(\mathbf{v}\cdot\mathbf{W}_j)\cos(\cdot)$。组装任意线性微分算子矩阵因此只需 $\mathcal{O}(1)$，彻底绕开自动微分和符号推导——这正是它相对 PIELM 的根本优势，后者用的 $\tanh$ 没有这种循环结构（$n$ 阶导是 $n+1$ 次多项式），每换一个算子都得手推一遍。
 
-$$D^\alpha \phi_j(\mathbf{x}) = \left(\prod_{k=1}^d W_{jk}^{\alpha_k}\right) \cdot \Phi_{|\alpha| \bmod 4}(\mathbf{W}_j^\top \mathbf{x} + b_j)$$
+**3. 线性 PDE：一次最小二乘直接闭式求解。** 把特征代入线性 PDE $\mathcal{L}[u]=f$ 和边界条件 $\mathcal{B}[u]=g$，由于导数都是闭式的，方程对 $\boldsymbol{\beta}$ 完全线性，于是堆成一个加权增广系统 $\begin{pmatrix}\mathbf{A}^{\text{pde}}\\ \lambda\mathbf{A}^{\text{bc}}\end{pmatrix}\boldsymbol{\beta}=\begin{pmatrix}\mathbf{f}\\ \lambda\mathbf{g}\end{pmatrix}$，用 QR 或 SVD 一次性算出 $\boldsymbol{\beta}^*=\mathbf{A}^\dagger\mathbf{b}$。没有任何迭代、没有梯度下降，这也是它能在 0.07s 内解出 5D Poisson 的原因。配合 Tikhonov 正则化压住条件数（去掉后精度掉 3 个数量级）。
 
-其中 $\Phi_0 = \sin$，$\Phi_1 = \cos$，$\Phi_2 = -\sin$，$\Phi_3 = -\cos$。这意味着：
-- **Laplacian**：$\Delta \phi_j = -\|\mathbf{W}_j\|^2 \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$
-- **Biharmonic**：$\Delta^2 \phi_j = \|\mathbf{W}_j\|^4 \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$
-- **Advection**：$\mathbf{v} \cdot \nabla \phi_j = (\mathbf{v} \cdot \mathbf{W}_j) \cos(\mathbf{W}_j^\top \mathbf{x} + b_j)$
+**4. 非线性 PDE：Newton-Raphson 复用同一套解析结构。** 面对 $\mathcal{L}[u]+\mathcal{N}[u]=f$，框架在系数空间跑 Newton 迭代 $\mathbf{J}^{(k)}\delta\boldsymbol{\beta}=-\mathbf{R}^{(k)},\ \boldsymbol{\beta}^{(k+1)}=\boldsymbol{\beta}^{(k)}+\alpha\,\delta\boldsymbol{\beta}$，其中 Jacobian 同样继承解析闭式形式，每步仍是一次线性求解。为了在对流主导问题上稳住收敛，作者叠了四个工程手段：用线性解作 warm-start 提供好初值；Armijo 型 backtracking line search 限制步长；以解级别变化 $\|\Delta u\|/\|u\|$ 而非系数变化作收敛判据；以及 continuation 同伦，把 Burgers 的粘度沿 $\nu=1.0\to0.5\to0.2\to0.1$ 逐步降下来——消融显示去掉 warm-start 或 continuation 会让精度掉一个数量级乃至直接发散。代价是 Newton 模式比线性模式慢 40–100 倍（4–9s）。
 
-每项仅需一次三角函数求值乘以权重的单项式，无需自动微分或计算图。$\tanh$ 不存在类似的闭式模式（其 $n$ 阶导数是 $n+1$ 次多项式）。
-
-### 3. 线性 PDE：一次最小二乘求解
-将特征代入线性 PDE $\mathcal{L}[u] = f$ 及边界条件 $\mathcal{B}[u] = g$，得到增广线性系统：
-
-$$\begin{pmatrix} \mathbf{A}^{\text{pde}} \\ \lambda \mathbf{A}^{\text{bc}} \end{pmatrix} \boldsymbol{\beta} = \begin{pmatrix} \mathbf{f} \\ \lambda \mathbf{g} \end{pmatrix}$$
-
-通过 QR 或 SVD 分解一次性求解 $\boldsymbol{\beta}^* = \mathbf{A}^\dagger \mathbf{b}$，无需任何迭代。
-
-### 4. 非线性 PDE：Newton-Raphson 扩展
-对非线性 PDE $\mathcal{L}[u] + \mathcal{N}[u] = f$，採用 Newton-Raphson 迭代：
-
-$$\mathbf{J}^{(k)} \delta\boldsymbol{\beta} = -\mathbf{R}^{(k)}, \quad \boldsymbol{\beta}^{(k+1)} = \boldsymbol{\beta}^{(k)} + \alpha \delta\boldsymbol{\beta}$$
-
-Jacobian 继承解析闭式结构。四个关键算法改进保证鲁棒收敛：
-- **Warm-start**：先求解线性部分作为初始猜测
-- **Backtracking line search**：Armijo 型充分下降防止步长过大
-- **解级别收敛判据**：用 $\|\Delta u\| / \|u\|$ 代替系数级别变化
-- **Continuation（同伦）**：对对流主导问题（如 Burgers）逐步降低粘度 $\nu = 1.0 \to 0.5 \to 0.2 \to 0.1$
-
-### 5. 下游应用
-- **PDE 发现**：解析导数字典比有限差分干净 ~6000 倍（RMSE 0.4 vs 2500），大幅扩展 SINDy 的适用噪声范围
-- **逆问题**：梯度通过预分解线性求解解析传播，可从 4 个传感器恢复 4 个各向异性高斯热源（24 参数），或从 8 个稀疏磁场测量恢复隐藏线圈位置（误差 <0.02）
+**5. 解析导数撬动的下游应用：PDE 发现与逆问题。** 因为导数是精确闭式而非有限差分，框架顺手解决了两类下游任务。在 PDE 发现里，解析导数字典比有限差分干净约 6000 倍（RMSE 0.4 对 2500），把 SINDy 能容忍的噪声范围大幅拉宽；在逆问题里，梯度可以通过预分解的线性求解器解析地反传，因而能从 4 个传感器反演 4 个各向异性高斯热源（24 个参数），或从 8 个稀疏磁场测量恢复隐藏线圈位置（误差 <0.02）。
 
 ## 实验关键数据
 

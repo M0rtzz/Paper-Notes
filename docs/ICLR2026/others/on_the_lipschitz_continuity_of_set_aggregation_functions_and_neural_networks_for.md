@@ -18,107 +18,6 @@ tags:
 **arXiv**: [2505.24403](https://arxiv.org/abs/2505.24403)  
 **代码**: 无  
 **领域**: 其他  
-**关键词**: Lipschitz连续性, 集合聚合函数, 多集距离, 神经网络鲁棒性, 分布偏移泛化
-
-## 一句话总结
-
-系统研究了三种常用集合聚合函数（sum/mean/max）和注意力机制在三种多集距离函数下的Lipschitz连续性，推导出集合神经网络的Lipschitz常数上界，并将其与扰动稳定性和分布偏移泛化联系起来。
-
-## 研究背景与动机
-
-神经网络的Lipschitz常数与模型的鲁棒性和泛化能力密切相关——Lipschitz常数小意味着输入的微小扰动不会导致输出的剧烈变化。先前工作主要研究MLP和CNN的Lipschitz常数估计，但在许多领域（如点云处理、NLP文档表示），输入数据天然是**集合/多集**形式。这类模型通常采用置换不变的聚合函数（sum/mean/max）将集合映射为单个向量，但其Lipschitz连续性和扰动稳定性尚未被系统研究。
-
-核心动机在于：不同的聚合函数在不同的距离度量下表现出截然不同的Lipschitz性质，弄清楚这种对应关系对于选择合适的模型架构和评估鲁棒性至关重要。
-
-## 方法详解
-
-### 整体框架
-
-本文考虑三种多集距离函数（Earth Mover's Distance EMD、Hausdorff距离、Matching距离）和三种聚合函数（sum、mean、max），系统分析了它们之间的Lipschitz连续性关系。然后将结果推广到完整的集合神经网络（MLP + 聚合函数 + MLP），并进一步连接到扰动稳定性和泛化理论。
-
-### 关键设计
-
-1. **聚合函数的Lipschitz常数分析**:
-
-    - 功能：证明每种聚合函数在任意大小多集上仅对一种距离函数是Lipschitz连续的
-    - 核心思路：mean对EMD（L=1）、sum对Matching距离（L=1）、max对Hausdorff距离（L=√d）
-    - 设计动机：揭示聚合函数与距离度量之间的内在对应关系
-
-2. **等势多集的扩展结果**:
-
-    - 功能：当所有多集大小相同(=M)时，聚合函数可能对更多距离函数Lipschitz连续
-    - 核心思路：利用EMD与Matching距离在等势多集上的关系（d_M = M·d_EMD），max函数在此设定下对所有三种距离都Lipschitz连续
-    - 设计动机：实际应用中（如点云）多集大小通常固定，这一结果具有实用价值
-
-3. **注意力机制的分析**:
-
-    - 功能：证明注意力聚合函数对任何三种距离都不Lipschitz连续
-    - 核心思路：通过构造反例证明存在使Lipschitz常数无界的实例
-    - 设计动机：提示注意力机制可能更脆弱，需要额外的稳定化手段
-
-4. **集合神经网络的Lipschitz上界**:
-
-    - 功能：推导NN_mean和NN_max的Lipschitz上界（NN_sum在一般情况下可能非Lipschitz连续）
-    - 核心思路：Lip(NN) ≤ Lip(MLP₂) · Lip(聚合) · Lip(MLP₁)，利用函数复合的链式关系
-    - 设计动机：将聚合函数分析与完整网络的鲁棒性评估连接
-
-### 损失函数 / 训练策略
-
-本文是理论分析工作，不涉及特定训练策略。但其理论结果可指导训练：通过限制MLP的Lipschitz常数，可以控制整个集合网络的稳定性。
-
-## 实验关键数据
-
-### 主实验：Lipschitz Bound 验证
-
-| 数据集 | 模型 | 距离函数 | 相关系数 | Bound紧致度 |
-|--------|------|----------|----------|-------------|
-| ModelNet40 | NN_mean | EMD | 高 | 紧致 |
-| ModelNet40 | NN_sum | Matching | 高 | 较松 |
-| ModelNet40 | NN_max | Hausdorff | 较低 | 松 |
-| Polarity | NN_mean | EMD | 高 | 紧致 |
-
-### 消融实验：扰动稳定性
-
-| 扰动类型 | NN_mean准确率下降 | NN_max准确率下降 | 说明 |
-|----------|------------------|-----------------|------|
-| 添加单元素(ModelNet40) | 2.0(±1.3) | 20.1(±1.8) | mean对单元素扰动更稳定 |
-| 随机噪声(Polarity) | 13.6(±7.1) | 4.8(±3.7) | max对全局小噪声更稳定 |
-
-### 关键发现
-
-- mean函数对单个大扰动元素鲁棒（因EMD会分摊影响），max函数对全局小噪声鲁棒（因仅关注最大值）
-- 分布偏移实验中，Wasserstein距离与准确率下降高度相关（r>0.90），验证了泛化理论
-- sum函数在有偏置时可能非Lipschitz连续，去除偏置可恢复Lipschitz性
-
-## 亮点与洞察
-
-- 三种聚合函数与三种距离函数之间存在优美的一一对应关系，每个函数只对一种距离"天然"Lipschitz连续
-- 等势设定下max函数对所有距离都Lipschitz连续——对点云处理很有实际指导意义
-- 注意力机制的非Lipschitz性质解释了其在对抗攻击下的脆弱性
-- 直接推导出的泛化Bound（基于Wasserstein距离）在实验中得到了良好验证
-
-## 局限与展望
-
-- Lipschitz上界对max函数和sum函数较松，可能需要更紧致的分析
-- 实验数据集和模型较简单（单层MLP+聚合+单层MLP），更深模型的行为未知
-- 注意力机制的分析停留在负面结论，未提出使其Lipschitz连续的修改方案
-- 仅考虑ℓ₂范数，其他范数下的结论可能不同
-
-## 相关工作与启发
-
-与Lipschitz网络（如spectral normalization）和集合函数理论（如DeepSets、PointNet）相关。本文为选择聚合函数提供了理论指导：若模型需对EMD鲁棒则用mean，对Hausdorff鲁棒则用max。
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐ 首次系统分析集合聚合函数的Lipschitz性质，理论贡献清晰
-- 实验充分度: ⭐⭐⭐ 实验验证了理论，但数据集和模型规模有限
-- 写作质量: ⭐⭐⭐⭐⭐ 定理和证明组织清晰，符号统一
-- 价值: ⭐⭐⭐⭐ 为集合/点云处理中的模型鲁棒性分析提供了坚实理论基础
-# On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets
-
-**会议**: ICLR 2026  
-**arXiv**: [2505.24403](https://arxiv.org/abs/2505.24403)  
-**代码**: 无  
-**领域**: 其他  
 **关键词**: Lipschitz连续性, 集合聚合函数, 多重集, 鲁棒性, 泛化
 
 ## 一句话总结
@@ -135,33 +34,35 @@ tags:
 
 ### 整体框架
 
-本文考虑三种多重集距离函数（Earth Mover's Distance / Hausdorff 距离 / Matching 距离），研究三种标准聚合函数（sum/mean/max）以及注意力聚合函数的 Lipschitz 连续性，并将结论扩展到包含 MLP 的完整集合神经网络。
+这篇论文要回答一个被忽略的基础问题：当输入是一个**多重集**（点云、文档里的词向量集合等）而非单个向量时，那些把集合压成一个向量的置换不变聚合函数，到底稳不稳定？衡量稳定性的工具是 Lipschitz 连续性——若 $\text{Lip}(f)$ 小，则输入多重集的微小变动只能引起输出的小幅变化。难点在于"输入变动有多大"取决于用什么距离来量多重集之间的差异，而多重集距离本身就有多种定义。
+
+因此全文沿着"距离 × 聚合函数"的二维网格展开：先固定三种多重集距离（Earth Mover's Distance、Hausdorff 距离、Matching 距离），逐一判定三种标准聚合函数（sum/mean/max）和注意力聚合在每种距离下是否 Lipschitz 连续、常数是多少；再把单个聚合函数的结论沿"MLP₁ → 聚合 → MLP₂"的复合结构推广到完整的集合神经网络，最后落到扰动稳定性与分布偏移泛化这两个下游推论。
 
 ### 关键设计
 
-1. **聚合函数的 Lipschitz 连续性分析**:
-    - 功能：证明每种聚合函数仅对一种距离函数是 Lipschitz 连续的
-    - 核心思路：mean 对 EMD 连续（L=1），sum 对 Matching 距离连续（L=1），max 对 Hausdorff 距离连续（L=√d）
-    - 设计动机：聚合函数与距离函数之间存在自然对应关系，理解这种关系有助于选择合适的模型和距离度量
+**1. 聚合函数与距离的一一配对：每个聚合函数只对一种距离"天生" Lipschitz。**
 
-2. **等大小多重集的扩展分析**:
-    - 功能：当所有多重集大小相同时，聚合函数对更多距离函数也具有 Lipschitz 连续性
-    - 核心思路：利用 EMD 和 Matching 距离在等大小多重集上的关系（d_M = M · d_EMD），推导额外的 Lipschitz 常数
-    - 设计动机：实际应用（如点云）中多重集大小通常固定，此时可获得更多稳定性保证
+核心结论是三种聚合函数和三种距离之间存在干净的对角对应：在任意大小的多重集上，mean 只对 EMD 是 Lipschitz 连续的且常数 $L=1$，sum 只对 Matching 距离连续且 $L=1$，max 只对 Hausdorff 距离连续且 $L=\sqrt{d}$（$d$ 为元素维度）。也就是说，离开各自配对的那种距离，聚合函数的 Lipschitz 常数就会变得无界。直觉上，EMD 度量的是把一个多重集"搬运"成另一个的平均代价，恰好和 mean 的平均行为同构；Matching 距离累加逐元素差异，与 sum 的累加行为对齐；Hausdorff 距离只看最坏的那个元素，正好对应 max 的取极值行为。这个配对表是后续一切结论的基石——它告诉你想让模型对哪种扰动鲁棒，就该选哪个聚合函数搭配哪种距离来评估。
 
-3. **注意力聚合函数的分析**:
-    - 功能：证明注意力机制在任何考虑的距离函数下都不是 Lipschitz 连续的
-    - 核心思路：构造反例证明，即使采用 ℓ₂ 注意力替代也无法使其 Lipschitz 连续
-    - 设计动机：揭示注意力机制在稳定性方面的根本局限
+**2. 等势多重集下的扩展：大小固定时配对会放宽。**
 
-4. **集合神经网络的 Lipschitz 常数上界**:
-    - 功能：对 NN_mean 和 NN_max 推导 Lipschitz 常数上界，证明 NN_sum 可能不具有 Lipschitz 连续性
-    - 核心思路：将网络分解为 MLP₁ + 聚合 + MLP₂，利用 Lipschitz 常数的可组合性
-    - 设计动机：为实际模型的鲁棒性分析提供理论工具
+实际任务里多重集大小往往是固定的（例如点云统一采样到 $M$ 个点）。当所有多重集势相同（都等于 $M$）时，Matching 距离与 EMD 之间出现确定关系 $d_M = M \cdot d_{\text{EMD}}$，原本只对单一距离连续的聚合函数因此对更多距离也变得 Lipschitz 连续，只是常数会乘上 $M$ 相关的因子。最有用的特例是 max：在等势设定下它对三种距离全部 Lipschitz 连续。这条结果把第 1 点的"严格对角"在实践常见的固定大小场景里松绑，给点云这类应用提供了额外的稳定性保证。
 
-### 泛化分析
+**3. 注意力聚合的负面结论：在三种距离下都不 Lipschitz。**
 
-利用 Shen et al. (2018) 的理论，将 Lipschitz 常数与 Wasserstein 距离结合，给出目标误差的上界：ε_T(h) ≤ ε_S(h) + 2L·W₁(μ_S, μ_T) + λ，其中 EMD 和 Hausdorff 距离分别作为 NN_mean 和 NN_max 的基础度量。
+与标准聚合不同，注意力聚合函数对所考虑的任何一种距离都**不是** Lipschitz 连续的。证明方式是构造反例：总能找到一对仅差一个元素的多重集，使注意力输出的变化相对于它们的距离任意放大，从而 Lipschitz 常数无界；即便把 softmax 注意力换成 ℓ₂ 形式的注意力，这一结论依旧成立。这解释了注意力机制为何在对抗扰动下相对脆弱，也提示若要用注意力聚合则需要额外的稳定化手段。
+
+**4. 集合神经网络的 Lipschitz 上界与泛化推论：把单算子结论复合成整网保证。**
+
+实际模型是"逐元素 MLP₁ → 聚合 → MLP₂"的复合，利用 Lipschitz 常数沿函数复合相乘的性质即可得到整网上界：
+
+$$\text{Lip}(\text{NN}) \le \text{Lip}(\text{MLP}_2)\cdot \text{Lip}(\text{agg})\cdot \text{Lip}(\text{MLP}_1)$$
+
+据此对 NN_mean 和 NN_max 都能给出明确的 Lipschitz 上界；而 NN_sum 在一般情况下（尤其含非零偏置时）可能不再 Lipschitz 连续——去掉偏置可以恢复连续性。这个上界不只是鲁棒性指标：把它代入 Shen et al. (2018) 的域适应理论，就得到分布偏移下目标误差的上界
+
+$$\varepsilon_T(h) \le \varepsilon_S(h) + 2L\cdot W_1(\mu_S, \mu_T) + \lambda$$
+
+其中 $L$ 即上面的整网 Lipschitz 常数，$W_1$ 是源域分布 $\mu_S$ 与目标域分布 $\mu_T$ 之间的 Wasserstein 距离，并以各模型配对的距离（NN_mean 用 EMD、NN_max 用 Hausdorff）作为底层度量。于是"聚合函数 → Lipschitz 常数 → 泛化界"被串成一条完整链条。
 
 ## 实验关键数据
 
@@ -218,11 +119,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
 - [\[ICLR 2026\] Lipschitz Bandits with Stochastic Delayed Feedback](lipschitz_bandits_with_stochastic_delayed_feedback.md)
 - [\[ICLR 2026\] Entropic Confinement and Mode Connectivity in Overparameterized Neural Networks](entropic_confinement_and_mode_connectivity_in_overparameterized_neural_networks.md)
 - [\[ICLR 2026\] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
 - [\[ICLR 2026\] Bayesian Influence Functions for Hessian-Free Data Attribution](bayesian_influence_functions_for_hessian-free_data_attribution.md)
-- [\[ICLR 2026\] LipNeXt: Scaling up Lipschitz-based Certified Robustness to Billion-parameter Models](lipnext_scaling_up_lipschitz-based_certified_robustness_to_billion-parameter_mod.md)
 
 </div>
 

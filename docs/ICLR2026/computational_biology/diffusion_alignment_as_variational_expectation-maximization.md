@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：reward 优化 vs 多样性保持的 trade-off。Reverse-KL 天然 mode-seeking，容易坍缩到单一模式。
 
-**本文目标** 设计一个对齐框架，能有效优化奖励的同时保持样本多样性和自然性，且适用于连续（图像）和离散（DNA）扩散模型。
+**本文目标**：设计一个对齐框架，能有效优化奖励的同时保持样本多样性和自然性，且适用于连续（图像）和离散（DNA）扩散模型。
 
 **切入角度**：将对齐问题形式化为变分 EM——引入最优性变量 $\mathcal{O}$ 和轨迹潜变量 $\tau$，E-step 找多模态后验，M-step 用 forward-KL（mode-covering）蒸馏。Forward-KL 天然鼓励覆盖所有模式而非聚焦单一模式。
 
@@ -42,34 +42,25 @@ tags:
 
 ### 整体框架
 
-DAV 在训练中交替执行：
-1. **E-step（探索）**：从当前模型出发，用 test-time search（梯度引导采样 + 重要性采样）生成高奖励且多样的轨迹，近似变分后验 $\eta_k^*$
-2. **M-step（蒸馏）**：用 E-step 发现的轨迹训练模型，最小化 forward-KL $D_{\text{KL}}(\eta_k^* || p_\theta)$，等价于最大化搜索轨迹的对数似然 $-\log p_\theta(\tau)$
+DAV 想解决的是扩散模型对齐里"奖励越调越高、多样性却越掉越惨"的老毛病。它的破局思路是把对齐重新写成一个变分 EM 循环：先在测试时主动搜出一批既高奖励又互不雷同的轨迹，再把这批轨迹蒸馏回模型，如此往复，让奖励和多样性一起往上走。落到每一轮 EM 上就是两步交替——E-step（探索）从当前模型出发，用 test-time search（梯度引导采样 + 重要性采样）生成高奖励且多样的轨迹，近似变分后验 $\eta_k^*$；M-step（蒸馏）拿这些轨迹训练模型，最小化 forward-KL $D_{\text{KL}}(\eta_k^* \| p_\theta)$，等价于最大化搜索轨迹的对数似然 $-\log p_\theta(\tau)$。
 
 ### 关键设计
 
-1. **变分 EM 形式化**:
+**1. 变分 EM 形式化：把 reward 优化改写成带最优性变量的边际似然最大化。**
 
-    - 功能：将 reward 优化转化为最优性变量的边际似然最大化
-    - 核心思路：定义 $p(\mathcal{O}=1|\tau) \propto \exp(\sum r_t/\alpha)$，轨迹 $\tau$ 是潜变量。ELBO 为 $\mathcal{J}_{\alpha,\gamma}(\eta, p_\theta)$，引入折扣因子 $\gamma$ 衰减远离终端的时间步的信用
-    - 设计动机：EM 框架天然将探索（E-step）和利用（M-step）解耦，且 M-step 的 forward-KL 是 mode-covering 的，防止坍缩
+直接对奖励做 RL 容易 mode-seeking，DAV 换了个视角：引入一个最优性变量 $\mathcal{O}$，定义 $p(\mathcal{O}=1|\tau) \propto \exp(\sum r_t/\alpha)$，把整条去噪轨迹 $\tau$ 当成潜变量，于是对齐就成了最大化 $\mathcal{O}$ 的边际似然。对应的 ELBO 记作 $\mathcal{J}_{\alpha,\gamma}(\eta, p_\theta)$，其中折扣因子 $\gamma$ 用来衰减离终端越远的时间步的信用，避免早期高噪声步抢走奖励信号。这个改写最大的好处是天然把探索（E-step 找后验 $\eta$）和利用（M-step 更新 $p_\theta$）解耦，而且 M-step 用的是 mode-covering 的 forward-KL，从根上堵住坍缩。
 
-2. **E-step: Test-time search**:
+**2. E-step——test-time search：用主动搜索近似最优变分后验。**
 
-    - 功能：近似采样最优变分后验 $\eta_k^*(x_{t-1}|x_t) \propto p_{\theta_k}(x_{t-1}|x_t) \exp(Q_{\text{soft}}^*/\alpha)$
-    - 核心思路：两阶段——先用梯度引导（$Q_{\text{soft}}$ 近似为 $\gamma^{t-1} r(\hat{x}_0(x_{t-1}))$，Tweedie's formula）采样 $M$ 个候选粒子，再用重要性采样精炼
-    - 设计动机：单纯 on-policy 重加权（传统 EM-RL）在策略偏离后验时严重偏差。Test-time search 主动探索，发现策略分布外的高奖励区域
+E-step 要采样的目标后验是 $\eta_k^*(x_{t-1}|x_t) \propto p_{\theta_k}(x_{t-1}|x_t) \exp(Q_{\text{soft}}^*/\alpha)$，即在当前模型的去噪分布上乘一个 soft Q 的指数权重。DAV 分两阶段近似它：先做梯度引导，用 Tweedie's formula 把 $Q_{\text{soft}}$ 近似成 $\gamma^{t-1} r(\hat{x}_0(x_{t-1}))$（拿当前状态预测出的干净样本 $\hat{x}_0$ 的奖励来打分），据此采样 $M$ 个候选粒子；再用重要性采样在这 $M$ 个粒子里精炼，挑出真正贴近后验的。之所以不走传统 EM-RL 的 on-policy 重加权，是因为一旦策略偏离后验，重加权就会严重有偏；主动搜索则能跑到当前策略分布之外，把策略本来采不到的高奖励区域挖出来。
 
-3. **M-step: Forward-KL 蒸馏**:
+**3. M-step——forward-KL 蒸馏：把搜索到的轨迹写回模型参数。**
 
-    - 功能：将 E-step 的搜索轨迹蒸馏到模型参数
-    - 核心思路：$\mathcal{L}_{\text{DAV}} = -\mathbb{E}_{\tau \sim \eta_k^*}[\log p_\theta(\tau)]$。可选加 KL 正则化 $\mathcal{L}_{\text{DAV-KL}} = \mathcal{L}_{\text{DAV}} + \lambda D_{\text{KL}}(p_\theta || p_{\theta^0})$ 约束对预训练模型的偏离
-    - 设计动机：Forward-KL 最小化 = 最大化搜索样本的似然 = mode-covering。与 RL 的 reverse-KL (mode-seeking) 相反，自然保持多样性
+E-step 找到的好轨迹要落进模型才有用。M-step 最小化 forward-KL，损失就是搜索轨迹下的负对数似然 $\mathcal{L}_{\text{DAV}} = -\mathbb{E}_{\tau \sim \eta_k^*}[\log p_\theta(\tau)]$；需要约束对预训练模型的偏离时，可以再加一项 KL 正则 $\mathcal{L}_{\text{DAV-KL}} = \mathcal{L}_{\text{DAV}} + \lambda D_{\text{KL}}(p_\theta \| p_{\theta^0})$。关键在 forward-KL 的方向：最小化 forward-KL 等于最大化搜索样本的似然，是 mode-covering 的，会逼模型去覆盖后验里所有被搜出来的模式；这正好和 RL 用的 reverse-KL（mode-seeking、只盯一个峰）相反，所以多样性能自然保住。
 
-4. **模块化设计**:
+**4. 模块化设计：搜索器可换、连续离散通吃。**
 
-    - E-step 的搜索算法可替换为任何 test-time search 方法
-    - 适用于连续和离散扩散模型
+E-step 的搜索只是个即插即用的组件，可以替换成任意 test-time search 方法，框架本身不绑定某种特定搜索；同时整套 EM 推导不依赖样本空间是连续还是离散，所以连续的图像扩散和离散的 DNA 序列扩散都能直接套用。
 
 ### 损失函数 / 训练策略
 
@@ -138,7 +129,7 @@ DAV 在训练中交替执行：
 - [\[ICLR 2026\] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
 - [\[ICLR 2026\] Unified Biomolecular Trajectory Generation via Pretrained Variational Bridge](unified_biomolecular_trajectory_generation_via_pretrained_variational_bridge.md)
 - [\[ICLR 2026\] Protein Counterfactuals via Diffusion-Guided Latent Optimization](protein_counterfactuals_via_diffusion-guided_latent_optimization.md)
-- [\[ICLR 2026\] Contact-Guided 3D Genome Structure Generation of E. coli via Diffusion Transformers](contact-guided_3d_genome_structure_generation_of_e_coli_via_diffusion_transforme.md)
+- [\[ICLR 2026\] Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct](ultra-fast_language_generation_via_discrete_diffusion_divergence_instruct.md)
 - [\[ICLR 2026\] Fine-Tuning Diffusion Models via Intermediate Distribution Shaping](fine-tuning_diffusion_models_via_intermediate_distribution_shaping.md)
 
 </div>

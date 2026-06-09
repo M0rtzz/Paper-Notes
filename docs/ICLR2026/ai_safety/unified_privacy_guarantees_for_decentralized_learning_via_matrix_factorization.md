@@ -41,30 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分两步：(1) 统一建模——定义线性 DL 算法（Definition 4）和攻击者知识（Definition 5），证明所有现有 DL 算法和信任模型都可表示为 $\mathcal{O}_\mathcal{A} = AG + BZ$（Theorem 6）；(2) 算法设计——在 LDP 约束下优化噪声相关矩阵 $C_{local}$，得到 MAFALDA-SGD。
+本文先把任意去中心化学习算法的全过程压成一个矩阵方程 $\mathcal{O}_\mathcal{A} = AG + BZ$，再借助矩阵分解 $A=BC$ 把隐私分析问题转化为对相关矩阵 $C$ 的分析。统一建模之后，隐私保证从"每种算法各证一遍"变成"套同一个定理"，而且这个统一表示反过来还能当作优化目标——优化 $C$ 就得到了新算法 MAFALDA-SGD。
 
 ### 关键设计
 
-1. **去中心化学习的矩阵分解编码**:
+**1. 把去中心化学习展开成单一矩阵：让 MF 理论有施展空间。**
 
-    - 做什么：将 DL 算法的多轮迭代展开为统一矩阵形式
-    - 核心思路：$n$ 个节点在通信图 $\mathcal{G}$ 上执行 T 轮：每轮先做局部梯度步 $\theta_{t+1/2} = \theta_t - \eta(G_t + C_t^\dagger Z)$，再做 gossip 平均 $\theta_{t+1} = W\theta_{t+1/2}$。堆叠 T 轮得到 $\theta = (I_T \otimes W)(M\theta_0 - \eta \mathbf{W}_T(G + C^\dagger Z))$，其中 $\mathbf{W}_T \in \mathbb{R}^{nT \times nT}$ 是下三角 Toeplitz 块矩阵
-    - 设计动机：将 DL 的时间展开编码为单一矩阵使得 MF 理论可直接应用
+去中心化场景下 $n$ 个节点在通信图 $\mathcal{G}$ 上跑 $T$ 轮，每轮先做局部带噪梯度步 $\theta_{t+1/2} = \theta_t - \eta(G_t + C_t^\dagger Z)$，再做一次 gossip 平均 $\theta_{t+1} = W\theta_{t+1/2}$，迭代之间层层耦合，没法像中心化 DP-SGD 那样直接套现成的 MF 工具。本文的做法是把全部 $T$ 轮沿时间堆叠展开，得到一个闭式 $\theta = (I_T \otimes W)(M\theta_0 - \eta \mathbf{W}_T(G + C^\dagger Z))$，其中 $\mathbf{W}_T \in \mathbb{R}^{nT \times nT}$ 是一个下三角 Toeplitz 块矩阵，恰好编码了 gossip 平均在时间上的传播。一旦写成这种"工作负载矩阵乘梯度加噪声"的形式，攻击者观察到的所有消息就能统一抽象为 $\mathcal{O}_\mathcal{A} = AG + BZ$（Theorem 6），不同的信任模型——LDP、PNDP、SecLDP——只是对应不同的 $A,B$，从而把过去碎片化的 ad hoc 证明收编进同一个框架。
 
-2. **广义 MF 隐私保证（Theorem 8）**:
+**2. 广义 MF 隐私保证：让矩形、秩亏矩阵也能记账。**
 
-    - 做什么：将 MF 的 DP 保证从方阵/满秩/下三角推广到矩形/秩亏/列阶梯形矩阵
-    - 核心思路：定义广义敏感度 $\text{sens}_\Pi(C; B) = \max_{G \simeq_\Pi G'}\|C(G-G')\|_{B^\dagger B}$，证明当 $A$ 是列阶梯形矩阵且 $A = BC$ 时，机制 $\mathcal{M}$ 是 $1/\sigma$-GDP。关键修正：$B^\dagger B$ 投影到 $B$ 的行空间，丢弃不可观测的梯度组合
-    - 设计动机：DL 中攻击者只观察部分消息，产生的矩阵 $A$ 通常是矩形且秩亏的
+现成的 MF 理论（Denisov 等）要求工作负载矩阵是方阵、满秩、下三角，但去中心化里攻击者往往只能看到通信图上的一部分消息，对应的 $A$ 通常是矩形且秩亏的，直接套会失效。本文把保证推广到 $A$ 为列阶梯形（下三角性的推广）的情形：定义广义敏感度 $\text{sens}_\Pi(C; B) = \max_{G \simeq_\Pi G'}\|C(G-G')\|_{B^\dagger B}$，并证明只要 $A = BC$ 且 $A$ 列阶梯形，机制 $\mathcal{M}$ 就是 $1/\sigma$-GDP（Theorem 8）。这里的关键修正是范数里的 $B^\dagger B$——它把敏感度投影到 $B$ 的行空间，自动丢弃那些攻击者根本观测不到的梯度组合，避免对不可见信息也付出隐私代价，因此给出的保证比逐算法的旧分析都更紧。列阶梯形这个放宽条件还顺带保证了自适应梯度下隐私保证依然成立。
 
-3. **MAFALDA-SGD 算法（优化噪声相关）**:
+**3. MAFALDA-SGD：把统一表示当优化目标，专为去中心化调相关噪声。**
 
-    - 做什么：在 LDP 下通过优化局部噪声相关矩阵最大化隐私-效用权衡
-    - 核心思路：约束 $C = C_{local} \otimes I_n$（噪声只在节点内跨时间步相关），定义优化目标 $\mathcal{L}_{opti}(\mathbf{W}_T, B, C) = \text{sens}_\Pi(C;B)^2 \|(I_T \otimes W)\mathbf{W}_T C^\dagger\|_F^2$，通过凸优化求解最优 $C_{local}$
-    - 设计动机：现有方法（如 AntiPGD）的相关模式未针对去中心化场景优化，直接搬用效果差
+统一框架最实在的回报是：$C$ 不再只是分析对象，而可以直接优化。本文在 LDP 下约束 $C = C_{local} \otimes I_n$，即噪声只在同一节点内部跨时间步相关、节点之间独立，从而把高维优化降到对小矩阵 $C_{local}$ 的求解。优化目标取 $\mathcal{L}_{opti}(\mathbf{W}_T, B, C) = \text{sens}_\Pi(C;B)^2 \|(I_T \otimes W)\mathbf{W}_T C^\dagger\|_F^2$，分子是隐私敏感度、分母方向是注入噪声经过 gossip 传播后对模型的扰动，整体凸，可直接求出最优 $C_{local}$。之所以要专门优化，是因为中心化场景里好用的相关模式（如 AntiPGD）并没有考虑 gossip 的时空传播结构，直接搬到去中心化反而比独立噪声更差——MAFALDA-SGD 正是补上了这块缺口。
 
 ### 损失函数 / 训练策略
-标准 DP-SGD 训练：逐样本梯度裁剪到范数 $\Delta_g$，加高斯噪声 $Z \sim \mathcal{N}(0, \Delta_g^2 \sigma^2)^{nT \times d}$。Gossip 矩阵 $W$ 满足随机矩阵条件。支持时变 gossip 矩阵 $W_t$。使用 Gaussian DP (GDP) 框架进行隐私记账。
+训练沿用标准 DP-SGD：逐样本梯度裁剪到范数 $\Delta_g$，再加高斯噪声 $Z \sim \mathcal{N}(0, \Delta_g^2 \sigma^2)^{nT \times d}$；gossip 矩阵 $W$ 满足随机矩阵条件，并支持时变的 $W_t$。隐私记账统一在 Gaussian DP（GDP）框架下完成。
 
 ## 实验关键数据
 
@@ -118,8 +112,8 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Back to Square Roots: An Optimal Bound on the Matrix Factorization Error for Multi-Epoch Differentially Private SGD](back_to_square_roots_an_optimal_bound_on_the_matrix_factorization_error_for_mult.md)
-- [\[NeurIPS 2025\] Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
 - [\[AAAI 2026\] Learning to Collaborate: An Orchestrated-Decentralized Framework for Peer-to-Peer Collaborative Learning](../../AAAI2026/ai_safety/learning_to_collaborate_an_orchestrated-decentralized_framework_for_peer-to-peer.md)
+- [\[NeurIPS 2025\] Mitigating Privacy-Utility Trade-off in Decentralized Federated Learning via f-Differential Privacy](../../NeurIPS2025/ai_safety/mitigating_privacy-utility_trade-off_in_decentralized_federated_learning_via_f-d.md)
 - [\[ICLR 2026\] Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective](adaptive_methods_are_preferable_in_high_privacy_settings_an_sde_perspective.md)
 - [\[ICLR 2026\] Membership Privacy Risks of Sharpness Aware Minimization](sam_membership_privacy_risks.md)
 

@@ -36,26 +36,19 @@ tags:
 
 ## 方法详解
 
-### 基准构建
+### 整体框架
 
-1. **两种交互流**:
-    - IncreQA（增量查询细化）: 用户逐步添加约束→Agent需保持上下文→线性目标
-    - AdaptQA（自适应查询调整）: 用户根据中间结果调整搜索目标→Agent需处理分支
+EHR-ChatQA把"从对话到查询执行"包装成一个可复现的交互环境：一个由LLM扮演的模拟用户提出模糊的临床问题，被测Agent通过多轮对话澄清意图、调用工具集在数据库里检索schema与具体取值、最终生成并执行SQL返回答案，整个过程由一套仿真验证器和双指标评估打分。基准建在MIMIC-IV和eICU两个真实EHR数据库之上，共366个任务实例，覆盖查询歧义与值不匹配两类核心挑战。
 
-2. **工具集**: schema搜索、列搜索、值子串搜索、值相似度搜索、web搜索、SQL执行
+### 关键设计
 
-3. **模拟用户**: Gemini-2.0-Flash(温度1.0) + 嵌套验证-反思机制确保行为一致
+**1. 两种交互流：分别压测上下文保持与动态适应。** 临床用户访问数据的方式不是单一的，因此基准设计了两条互补的交互轨迹。IncreQA（增量查询细化）让模拟用户逐步往初始问题里追加约束，目标是线性收紧的，考验Agent能否在多轮中稳定地累积并保持上下文；AdaptQA（自适应查询调整）则让用户根据Agent返回的中间结果临时改变搜索方向，目标会分支，考验Agent能否丢掉旧假设、灵活重规划。两条流分别对齐了真实临床数据探索中"逐步精确化"和"边看边调"两种模式，后者被实验证明明显更难。
 
-4. **仿真验证器**: 判断模拟用户是否偏离指令，偏离则重跑
+**2. 工具集：把"桥接用户术语和数据库内容"做成可调用的动作。** Agent面对的核心困难是用户说的词和数据库里存的值常常对不上（如"Lopressor"对应库里的"metoprolol tartrate"），所以工具集围绕"消除值不匹配"展开，提供schema搜索、列搜索、值子串搜索、值相似度搜索、web搜索和SQL执行六类动作。值子串搜索和值相似度搜索用于在不确定确切写法时定位候选条目，web搜索引入外部知识桥接同义/别名，SQL执行则负责最终落地。Agent要不要调、调哪个、调几次都由它自己决定，这正是相比单轮Text-to-SQL多出来的交互负担。
 
-### 关键指标
-- Pass@5: 5次试验中至少1次成功（乐观评估）
-- Pass∧5: 5次试验中全部成功（鲁棒性评估）
-- 差距 = Pass@5 - Pass∧5: 衡量不稳定性
+**3. 模拟用户与仿真验证器：用LLM造出可控又真实的对话方。** 模拟用户由Gemini-2.0-Flash（温度1.0）驱动以保留自然语言的多样性，但高温采样会让它偶尔偏离预设指令，污染评测。为此作者给模拟用户加了嵌套的验证-反思机制约束行为，并在外层加一个仿真验证器，逐条检查模拟用户的发言是否忠于任务指令，一旦判定偏离就整段重跑——实验中约10%的轨迹因此被触发重试，保证了打分对象确实是Agent能力而非用户噪声。
 
-### 数据规模
-- 366个任务实例，基于MIMIC-IV和eICU两个真实EHR数据库
-- 覆盖多种查询歧义和值不匹配模式
+**4. 双指标评估：把"会做"和"稳定做对"分开量化。** 在安全攸关的EHR场景里，偶尔答对没有意义，需要每次都对。为此每个任务跑5次，用两个指标刻画：$\text{Pass@5}$ 表示5次中至少成功一次（乐观上界，反映Agent"有没有能力"解出任务），$\text{Pass}^{\wedge}5$ 表示5次全部成功（反映"能不能稳定解出"）。二者之差 $\text{Pass@5}-\text{Pass}^{\wedge}5$ 直接量化Agent的不稳定性，差距越大说明同一任务上的表现越接近随机。正是这个差距（最高达约60%）暴露了即便最强模型也远未达到临床可部署的可靠性。
 
 ## 实验关键数据
 
@@ -110,8 +103,8 @@ tags:
 
 - [\[ACL 2025\] ReflecTool: Towards Reflection-Aware Tool-Augmented Clinical Agents](../../ACL2025/medical_nlp/reflectool_clinical_agent.md)
 - [\[ICML 2026\] MedCase-Structured: A Text-to-FHIR Dataset for Benchmarking Diagnostic Reasoning in Clinically Realistic EHR Settings](../../ICML2026/medical_nlp/medcase-structured_a_text-to-fhir_dataset_for_benchmarking_diagnostic_reasoning_.md)
+- [\[ACL 2026\] Measuring What Matters!! Assessing Therapeutic Principles in Mental-Health Conversation](../../ACL2026/medical_nlp/measuring_what_matters_assessing_therapeutic_principles_in_mental-health_convers.md)
 - [\[ACL 2026\] Query Pipeline Optimization for Cancer Patient Question Answering Systems](../../ACL2026/medical_nlp/query_pipeline_optimization_for_cancer_patient_question_answering_systems.md)
-- [\[ACL 2026\] Beyond the Individual: Virtualizing Multi-Disciplinary Reasoning for Clinical Intake via Collaborative Agents](../../ACL2026/medical_nlp/beyond_the_individual_virtualizing_multi-disciplinary_reasoning_for_clinical_int.md)
 - [\[ICLR 2026\] CounselBench: A Large-Scale Expert Evaluation and Adversarial Benchmarking of LLMs in Mental Health QA](counselbench_llm_mental_health_qa.md)
 
 </div>

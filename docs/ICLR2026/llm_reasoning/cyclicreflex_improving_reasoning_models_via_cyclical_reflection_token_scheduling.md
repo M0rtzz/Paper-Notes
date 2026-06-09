@@ -36,35 +36,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CyclicReflex是一种training-free的解码策略，在自回归生成过程中，根据当前token位置动态调整反思token的logit值。输入为问题$\mathbf{x}$，输出为推理轨迹$\mathbf{r}$和最终答案$\mathbf{y}$。不需要修改模型参数，仅在推理阶段工作。
+CyclicReflex是一种免训练的解码策略：给定问题$\mathbf{x}$，模型自回归地生成推理轨迹$\mathbf{r}$和答案$\mathbf{y}$，方法只在每一步解码时按当前token位置$t$给反思token的logit叠加一个随时间周期性振荡的偏置，既不改模型参数也不增加额外推理开销。其灵感是把反思token当成需要按时分配的"资源"，用类似周期性学习率的方式交替鼓励与抑制反思。
 
 ### 关键设计
 
-1. **反思token资源分配问题的形式化**：将推理过程中的反思token（"wait"、"but"、"alternatively"等）视为可调度的"资源"，其频率和位置直接影响推理质量。通过TIP的扩展实验（允许正负$\alpha$），发现：TIP(-3)在Hard问题上提升最大但在Easy问题上严重下降；TIP(+1)在Easy上略有提升。这说明单一固定策略无法适应不同难度。
+**1. 反思token的资源化形式化：把"何时反思"变成可调度问题。** 作者首先把推理中的反思token（"wait"、"but"、"alternatively"等）抽象成一种影响推理质量的可调度资源——它们出现的频率与位置决定了模型是过早收敛还是反复打转。为了说明单一固定策略行不通，作者把baseline方法TIP从只允许负惩罚扩展到正负皆可的$\alpha$：实验显示TIP($-3$)在Hard问题上提升最大却让Easy问题严重掉点，而TIP($+1$)只在Easy上略有改善。一个固定的$\alpha$既治不好under-reflection又治不好over-reflection，这就把问题逼向"随推理进程动态调度"的方向。
 
-2. **思维景观验证类比**：利用Landscape of Thoughts可视化工具，将推理步骤投影到2D空间。验证了三种模式：
+**2. 思维景观可视化验证三种反思模式：为动态调度提供证据。** 借助Landscape of Thoughts工具，作者把推理步骤投影到二维平面观察轨迹形态，确认了三种典型模式：under-reflection的轨迹过于保守、始终无法远离起点；desired-reflection结构良好并稳定收敛到正确答案；over-reflection则更微妙——模型曾经走到接近正确答案的区域（如输出"Alternatively, perhaps the correct answer is..."），却因反思过度迅速越过该区域、最终偏离。这组可视化直接印证了under/over-reflection是一对对称的失败，需要的不是单向抑制而是有进有退的调节。
 
-    - under-reflection：推理轨迹过于保守，无法远离起始点
-    - desired-reflection：轨迹结构良好，收敛到正确答案
-    - over-reflection：模型曾到达接近正确答案的区域（如"Alternatively, perhaps the correct answer is..."），但反思过度导致快速越过该区域，最终偏离正确答案
-
-3. **CyclicReflex核心公式**：采用位置相关的双向三角波形调制反思token的logit：
+**3. 三角波形的双向logit调制：核心解码公式。** CyclicReflex的做法是给反思token集合$\hat{V}$中的每个token按位置叠加一个偏置$\delta(t)$，非反思token保持不变：
 
 $$\hat{z}_{t,v} = \begin{cases} z_{t,v} + \delta(t) & \text{if } v \in \hat{V} \\ z_{t,v} & \text{otherwise} \end{cases}$$
 
 $$\delta(t) = A \left| \frac{4 \cdot (t - C/4) \bmod C}{C} - 2 \right| - A$$
 
-其中$A$是振幅（控制调整强度），$C$是周期（控制振荡频率），$\hat{V}$是反思token集合。$\delta(C/4) = A$为正值促进反思，$\delta(3C/4) = -A$为负值抑制反思。
+其中振幅$A$控制调整强度、周期$C$控制振荡频率。$\delta(t)$是一条在$[-A, 0]$区间往复的三角波：在$t=C/4$处取到$\delta=A$这样的正值峰、促进反思（鼓励换思路探索），在$t=3C/4$处取到$\delta=-A$这样的负值谷、抑制反思（促进收敛稳定）。整个过程没有任何可学习参数，实现上只是在logit上加一个由位置算出的标量。
 
-4. **与TIP的关键区别**：
+**4. 与TIP的本质区别：从单向静态到双向动态。** TIP本质是单向静态策略，用固定的$\alpha \leq 0$一味压低反思token；CyclicReflex则是双向动态的，借三角波在生成过程中交替促进和抑制——上升阶段鼓励模型转换思路、下探阶段推动它稳定收敛。这正对应优化里周期性学习率的"步长对冲"（stepsize hedging）思想：不押注单一步长，而是用大小步交替来同时对冲过早收敛和振荡发散两种风险。
 
-    - TIP是**单向静态**的（固定$\alpha \leq 0$），仅抑制反思token
-    - CyclicReflex是**双向动态**的，交替促进和抑制反思
-    - 上升阶段鼓励探索（转换思路），下降阶段促进收敛（稳定推理）
-    - 类似于周期性学习率的stepsize hedging策略
-
-### 训练策略
-本方法完全不需要训练，是纯粹的inference-time策略。超参数通过网格搜索确定：$A \in [1, 10]$，$C \in [200, 2000]$（因数据集而异）。
+### 损失函数 / 训练策略
+本方法是纯粹的推理期策略，不涉及任何训练或参数更新。唯一需要确定的是两个超参数，通过网格搜索得到：振幅$A \in [1, 10]$、周期$C \in [200, 2000]$，具体取值因数据集而异。
 
 ## 实验关键数据
 
@@ -130,11 +121,11 @@ $$\delta(t) = A \left| \frac{4 \cdot (t - C/4) \bmod C}{C} - 2 \right| - A$$
 
 ## 相关论文
 
-- [\[ACL 2026\] DELTA: Dynamic Layer-Aware Token Attention for Efficient Long-Context Reasoning](../../ACL2026/llm_reasoning/delta_dynamic_layer-aware_token_attention_for_efficient_long-context_reasoning.md)
+- [\[ICLR 2026\] Overthinking Reduction with Decoupled Rewards and Curriculum Data Scheduling](overthinking_reduction_with_decoupled_rewards_and_curriculum_data_scheduling.md)
+- [\[AAAI 2026\] In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback](../../AAAI2026/llm_reasoning/in-token_rationality_optimization_towards_accurate_and_concise_llm_reasoning_via.md)
 - [\[ICLR 2026\] Fixing the Broken Compass: Diagnosing and Improving Inference-Time Reward Modeling](fixing_the_broken_compass_diagnosing_and_improving_inference-time_reward_modelin.md)
-- [\[ACL 2025\] Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness](../../ACL2025/llm_reasoning/towards_better_chain-of-thought_a_reflection_on_effectiveness_and_faithfulness.md)
+- [\[ACL 2026\] DELTA: Dynamic Layer-Aware Token Attention for Efficient Long-Context Reasoning](../../ACL2026/llm_reasoning/delta_dynamic_layer-aware_token_attention_for_efficient_long-context_reasoning.md)
 - [\[ICCV 2025\] CoRVid: Improving Multimodal Large Language Models Towards Chain-of-Thought Reasoning](../../ICCV2025/llm_reasoning/corvid_improving_multimodal_large_language_models_towards_chain-of-thought_reaso.md)
-- [\[ACL 2025\] ClozeMath: Improving Mathematical Reasoning in Language Models by Learning to Fill Equations](../../ACL2025/llm_reasoning/clozemath_improving_mathematical_reasoning_in_language_models_by_learning_to_fil.md)
 
 </div>
 

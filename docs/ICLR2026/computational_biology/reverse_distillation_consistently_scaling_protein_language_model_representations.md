@@ -47,23 +47,17 @@ tags:
 
 ### 关键设计
 
-1. **反向蒸馏分解（Algorithm 1）**：
+**1. 反向蒸馏分解（Algorithm 1）：把大模型表示拆成"小模型可解释的部分"和"大模型独有的增量"。**
 
-    - 功能：将大模型表示分解为"小模型可解释部分"和"大模型独有贡献"两个正交子空间
-    - 核心思路：分三阶段——Phase 1对同一序列集分别运行小模型和大模型得到 $H_r \in \mathbb{R}^{L \times k_r}$ 和 $H_p \in \mathbb{R}^{L \times k_p}$；Phase 2用主成分回归（PCR）学线性映射 $W^* = \arg\min_W \|H_p - H_r W\|_F^2$，其中对 $H_r$ 做PCA并用Johnstone阈值剔除噪声主成分后再回归，避免过拟合；Phase 3计算残差 $R = H_p - H_r W^*$，对残差做SVD取前 $k_p - k_r$ 个右奇异向量 $V_{res}$，投影得到 $H_{res} = R V_{res}$
-    - 设计动机：线性分解保持可解释性——$H_r$ 就是小模型的完整特征空间，$H_{res}$ 可直接解释为大模型独有特征。Johnstone阈值来自随机矩阵理论，能有效区分信号主成分和噪声主成分
+针对的是基础特征与高阶特征纠缠的痛点，做法分三阶段。Phase 1 对同一序列集分别跑小模型和大模型，得到 $H_r \in \mathbb{R}^{L \times k_r}$ 和 $H_p \in \mathbb{R}^{L \times k_p}$。Phase 2 用主成分回归（PCR）学一个线性映射 $W^* = \arg\min_W \|H_p - H_r W\|_F^2$，把大模型表示尽量用小模型基底来拟合；关键是先对 $H_r$ 做 PCA、再用来自随机矩阵理论的 Johnstone 阈值剔除噪声主成分，只保留信号主成分参与回归，避免过拟合。Phase 3 计算回归残差 $R = H_p - H_r W^*$，这部分正是小模型基底解释不了的信息，对它做 SVD 取前 $k_p - k_r$ 个右奇异向量 $V_{res}$，投影得到 $H_{res} = R V_{res}$。整个分解全是线性的，所以两块各有清楚的物理含义：$H_r$ 是小模型的完整特征空间，$H_{res}$ 就是大模型独有的、与基础特征正交的高阶特征，两者互不干扰。
 
-2. **链式反向蒸馏（Algorithm 3）**：
+**2. 链式反向蒸馏（Algorithm 3）：把两两之间的分解扩展成整个模型家族的逐级分解。**
 
-    - 功能：将两个模型间的反向蒸馏扩展到整个模型家族的层级分解
-    - 核心思路：从最小模型 $M_1$ 开始，将已累积的嵌入 $H_{acc}^{(i-1)}$ 作为基底对下一个更大模型 $M_i$ 做反向蒸馏。每一步学习线性映射、计算残差、SVD提取正交分量后拼接到累积嵌入上。对ESM-2即沿 8M→35M→150M→650M→3B→15B 逐步进行
-    - 设计动机：实验表明更长的渐进链（如 8M→35M→150M→650M）一致优于直接跳跃链（如 8M→650M），因为每步增量分解更精细，能更好地分离不同层次的生物特征
+单次分解只能处理一对模型，但一个家族有 6 个尺度，需要把它们的贡献依次叠起来。做法是从最小模型 $M_1$ 开始，把已经累积的嵌入 $H_{acc}^{(i-1)}$ 当作基底，对下一个更大的模型 $M_i$ 重复一次反向蒸馏——学线性映射、算残差、SVD 提正交分量，再把新增分量拼到累积嵌入末尾。对 ESM-2 就沿 8M→35M→150M→650M→3B→15B 逐级推进。实验里更长的渐进链（如 8M→35M→150M→650M）一致优于直接跳跃链（如 8M→650M），原因是每一步只分离相邻尺度的增量，粒度更细，能把不同层次的生物特征拆得更干净。
 
-3. **Matryoshka嵌套结构与最优性保证**：
+**3. Matryoshka 嵌套结构与最优性保证：让一份嵌入按前缀截断就能当作任意尺度使用。**
 
-    - 功能：反向蒸馏嵌入天然具备俄罗斯套娃（Matryoshka）性质——截断到任意前缀维度都是该尺度的合法反向蒸馏嵌入
-    - 核心思路：由于 $H_{rd} = [H_r, H_{res}]$ 的构造方式，前 $k_1$ 维 = 8M嵌入，前 $k_1 + k_2$ 维 = rd.35M嵌入，依次类推。Theorem 1证明在所有保持 $H_r$ 为前缀的 $k_p$ 维表示 $[H_r, X]$ 中，反向蒸馏的 $H_{res}$ 最小化了对原始大模型表示的重建误差（由Eckart-Young定理直接得出）
-    - 设计动机：Matryoshka性质使"嵌入一次、按需使用不同维度"成为可能。性能随维度截断而平滑退化，无需为不同下游任务重新嵌入
+因为最终输出 $H_{rd} = [H_r, H_{res}]$ 是按尺度顺序拼接出来的，它天然具备俄罗斯套娃性质：前 $k_1$ 维就是 8M 嵌入，前 $k_1 + k_2$ 维就是 rd.35M 嵌入，依此类推，截断到任意前缀都是该尺度的合法反向蒸馏嵌入。这就解决了原始 PLM"不同规模嵌入维度互不兼容、无法截断复用"的痛点——嵌入一次即可按需取不同维度，性能随截断平滑退化，不必为每个下游任务重新嵌入。最优性方面，Theorem 1 证明在所有以 $H_r$ 为前缀的 $k_p$ 维表示 $[H_r, X]$ 中，反向蒸馏给出的 $H_{res}$ 最小化了对原始大模型表示的重建误差，这一结论由 Eckart-Young 定理直接得出。
 
 ### 损失函数 / 训练策略
 
@@ -167,7 +161,7 @@ tags:
 - [\[ICML 2026\] Protein Language Model Embeddings Improve Generalization of Implicit Transfer Operators](../../ICML2026/computational_biology/protein_language_model_embeddings_improve_generalization_of_implicit_transfer_op.md)
 - [\[ICLR 2026\] Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
 - [\[ICLR 2026\] Controlling Repetition in Protein Language Models](controlling_repetition_in_protein_language_models.md)
-- [\[ICLR 2026\] mCLM: A Modular Chemical Language Model that Generates Functional and Makeable Molecules](mclm_a_modular_chemical_language_model_that_generates_functional_and_makeable_mo.md)
+- [\[ICLR 2026\] CORDS: Continuous Representations of Discrete Structures](cords_continuous_representations_of_discrete_structures.md)
 
 </div>
 

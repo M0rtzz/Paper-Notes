@@ -42,40 +42,40 @@ LLM 驱动的对话 agent 在工具集成任务中表现良好，但在实际部
 
 ### 整体框架
 
-ReIn 在每轮对话开始时通过外部 inception 模块检测潜在错误，生成包含恢复计划的推理块，注入到任务 agent 的内部推理上下文中。
+ReIn 把"诊断错误"和"执行任务"解耦成两个角色：在每轮对话开始时，一个外部 inception 模块先扫描当前用户输入是否触发了已知错误，若触发就生成一段恢复计划，包成推理块塞进任务 agent 的内部推理上下文里，agent 随后在这段被"植入想法"的上下文上继续采样动作。整个过程不碰任务 agent 的参数和系统提示，只在推理链层面做测试时干预。
 
-**对话管线形式化**：
-- 用户策略：$u_t \sim \pi_u(\cdot | \mathcal{C}_t, \mathcal{R}_{partial})$
-- Agent 内部上下文：$\tilde{\mathcal{C}}_t = \mathcal{C}_t \cup \sum_{k=1}^{t-1}\{z_k^{(i)}, \text{output}(z_k^{(i)})\} \cup \{u_t\}$
-- Agent 动作采样：$z_t^{(i)} \sim \pi_c(\cdot | \tilde{\mathcal{C}}_t, \mathcal{L}, \mathcal{S})$
+形式上，第 $t$ 轮用户从策略 $u_t \sim \pi_u(\cdot \mid \mathcal{C}_t, \mathcal{R}_{partial})$ 产生输入，agent 的内部上下文 $\tilde{\mathcal{C}}_t = \mathcal{C}_t \cup \sum_{k=1}^{t-1}\{z_k^{(i)}, \text{output}(z_k^{(i)})\} \cup \{u_t\}$ 累积了历史动作与工具输出，agent 据此采样动作 $z_t^{(i)} \sim \pi_c(\cdot \mid \tilde{\mathcal{C}}_t, \mathcal{L}, \mathcal{S})$。ReIn 要做的就是在 $\tilde{\mathcal{C}}_t$ 上额外注入一段恢复推理。
 
-### 关键设计：ReIn 机制
+### 关键设计
 
-**Inception 模块** $F$：给定表层对话上下文 $\{\mathcal{C}_t, u_t\}$、工具列表 $\mathcal{L}$、错误-恢复映射 $\Phi: \mathcal{E} \to \mathcal{T}$，输出：
-- `No`：未检测到已知错误，对话正常进行
-- `(Yes, ρ_t)`：检测到错误，$\rho_t \in \mathcal{T}$ 为恢复计划
+**1. Inception 模块：用一个旁路 LLM 把"检测错误"从任务 agent 身上剥离出来。**
 
-**推理注入**：
+ReIn 不指望任务 agent 自己发现问题，而是另起一个 inception 模块 $F$ 专门做诊断。它只看表层对话上下文 $\{\mathcal{C}_t, u_t\}$、工具列表 $\mathcal{L}$ 和一张错误-恢复映射表 $\Phi: \mathcal{E} \to \mathcal{T}$，输出二选一：要么是 `No`，表示没命中任何已知错误、对话照常走；要么是 $(\text{Yes}, \rho_t)$，表示命中了某类错误，并给出对应的恢复计划 $\rho_t \in \mathcal{T}$。把诊断单独拎出来的好处是，任务 agent 的系统提示通常被产品方校准固定、改不得，而 inception 模块是可替换的旁路组件，可以随意挑模型、改映射表，不影响主链路。
+
+**2. 推理注入：把恢复计划伪装成 agent 自己的 `think` 内容，而非外部指令。**
+
+检测到错误后，ReIn 并不是直接给 agent 下命令，而是把恢复计划包进 `think` 标签，让它看起来像 agent 自己产出的思考。注入规则为
+
 $$r_t = \begin{cases} \varnothing & F(\{\mathcal{C}_t, u_t\}, \mathcal{L}, \Phi, \mathcal{S}') = \text{No} \\ \texttt{think}[\rho_t] & \text{otherwise} \end{cases}$$
 
-将 $r_t$ 包裹在 `think` 标签中注入 agent 的内部上下文：$\hat{\mathcal{C}}_t = \tilde{\mathcal{C}}_t \cup \{r_t\}$，后续动作采样在增强上下文上进行。
+随后增强上下文 $\hat{\mathcal{C}}_t = \tilde{\mathcal{C}}_t \cup \{r_t\}$，agent 在 $\hat{\mathcal{C}}_t$ 上继续采样动作。关键在于"伪装成内部推理"这一步：相比把恢复计划作为用户消息或工具返回值硬塞，注入到推理链里更不容易被系统提示压制，agent 会顺着这段思考自然地走向恢复动作。
 
-### 错误分类与恢复计划
+**3. UNSEEN 错误类型：刻意留两类错误不告诉 inception 模块，逼出泛化能力。**
+
+错误被组织成两大用户场景，各自配一种恢复出口：模糊请求（指代不明、多义解读、矛盾）走"生成内部错误报告"，不支持请求（不支持操作、不支持参数、不支持领域）走"转接人工客服"。
 
 | 用户场景 | 错误类型 | 恢复计划 |
 |---------|---------|---------|
-| 模糊请求 | 指代不明 / 多义解读 / [UNSEEN]矛盾 | 生成内部错误报告 |
-| 不支持请求 | 不支持操作 / 不支持参数 / [UNSEEN]不支持领域 | 转接人工客服 |
+| 模糊请求 | 指代不明 / 多义解读 / Contradiction(UNSEEN) | 生成内部错误报告 |
+| 不支持请求 | 不支持操作 / 不支持参数 / Domain(UNSEEN) | 转接人工客服 |
 
-关键设计：标记 Contradiction 和 Domain 为 **UNSEEN** 类型，不包含在 inception 模块提示中，用于测试泛化能力。
+其中 Contradiction 和 Domain 被标为 **UNSEEN**——它们故意不写进 inception 模块的提示里。因为同一场景下的错误共享同一条恢复路径，研究者想验证：模块能否凭借场景层面的归纳，把没见过的错误也导向正确的恢复出口，从而测出真实的泛化而非死记硬背。
 
-### 与指令层级的关系
+**4. 指令层级中的定位：靠工具定义这个"中介"绕开最低优先级。**
 
-根据 Wallace et al. 的指令层级：System Message >> User Message >> Model Outputs >> Tool Outputs。ReIn 属于 Tool Outputs（优先级最低），但实验表明当与 JSON schema 定义的恢复工具配合时，ReIn 可以有效影响 agent 行为。若不定义对应工具（仅靠文本指令），则 agent 遵循系统提示忽略 ReIn（成功率 0%），验证了指令层级的存在。
+按 Wallace et al. 的指令层级，权威性从高到低是 System Message ≫ User Message ≫ Model Outputs ≫ Tool Outputs，而 ReIn 注入的内容本质属于 Tool Outputs，优先级最低，照理压不过系统提示。但实验给出一个关键条件：只要恢复动作在系统侧有对应的 JSON schema 工具定义，ReIn 的恢复计划就能真正驱动 agent 调用该工具、落地为行为；反之若只给文本指令而不定义工具，agent 会严格遵循系统提示、直接无视 ReIn，成功率掉到 0%。也就是说，工具定义是让低优先级注入得以生效的"授权中介"，这也把 ReIn 和未授权的恶意提示注入区分开来。
 
-### 损失函数
-
-ReIn 为测试时干预方法，不涉及训练或损失函数。inception 模块使用现有 LLM，无需额外训练。
+ReIn 是纯测试时干预，inception 模块直接复用现成 LLM，全程不涉及任何训练或损失函数。
 
 ## 实验关键数据
 

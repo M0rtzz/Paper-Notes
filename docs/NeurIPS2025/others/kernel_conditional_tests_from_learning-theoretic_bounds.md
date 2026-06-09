@@ -125,7 +125,7 @@ KRR标准目标 $f_{D,\lambda} = \arg\min_f \sum_n \|y_n - f(x_n)\|^2 + \lambda\
 - [\[ICML 2026\] New Bounds for Kernel Sums via Fast Spherical Embeddings](../../ICML2026/others/new_bounds_for_kernel_sums_via_fast_spherical_embeddings.md)
 - [\[NeurIPS 2025\] Depth-Bounds for Neural Networks via the Braid Arrangement](depth-bounds_for_neural_networks_via_the_braid_arrangement.md)
 - [\[NeurIPS 2025\] Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
-- [\[NeurIPS 2025\] The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets](the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)
+- [\[NeurIPS 2025\] Tight Lower Bounds and Improved Convergence in Performative Prediction](tight_lower_bounds_and_improved_convergence_in_performative_prediction.md)
 
 </div>
 

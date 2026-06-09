@@ -40,56 +40,25 @@ tags:
 
 ### 整体框架
 
-RPG 是一个迭代训练框架：每次迭代中，参考模型 $\pi_{\text{old}}$ 更新为上一轮的策略 $\pi_{\theta^{(t)}}$，提供动态自适应的正则化目标。框架的核心是构建 KL 正则化目标函数 $J(\theta) = \mathbb{E}_{\pi_\theta}[R] - \beta \cdot \text{KL}$，并推导对应的代理损失函数用于梯度下降。
+RPG 把所有 KL 正则化策略梯度方法放进同一个推导模板里：先写出 KL 正则化目标 $J(\theta) = \mathbb{E}_{\pi_\theta}[R] - \beta \cdot \text{KL}$，再用 off-policy 的重要性权重 $w(x) = \pi_\theta(x)/\pi_{\text{old}}(x)$ 把它转成可直接梯度下降的代理损失。整个过程是迭代式的——每轮把参考模型 $\pi_{\text{old}}$ 替换成上一轮策略 $\pi_{\theta^{(t)}}$，让正则化目标随训练动态自适应，而不是钉死在某个固定的 SFT 模型上。沿着「KL 方向（Forward/Reverse）× 是否归一化 × 完全可微分还是 REINFORCE 风格」三个维度展开，就得到一族共 8 个变体的代理损失。
 
 ### 关键设计
 
-1. **Forward KL 正则化 (FKL)**：
+**1. Forward KL 正则化（FKL）：用覆盖性约束把 RL 退化成带奖励的 SFT。** Forward KL 取 $\text{KL}(\pi_{\text{old}} \| \pi_\theta)$ 这个方向，目标写作 $J_{\text{FKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_{\text{old}} \| \pi_\theta)$。它的梯度可以整理成在 $\pi_{\text{old}}$ 采样下的简洁形式 $\nabla_\theta J = \mathbb{E}_{x \sim \pi_{\text{old}}}[(w(x)R(x) + \beta) \nabla_\theta \log \pi_\theta(x)]$，对应代理损失 $\mathcal{L}_{\text{FKL}} = \mathbb{E}[-w(x)R(x) - \beta \log \pi_\theta(x)]$。这个方向的好处是 zero-forcing：它逼着 $\pi_\theta$ 去覆盖 $\pi_{\text{old}}$ 的整个高概率支撑集，不敢遗漏。一个很有启发的边界情形是当 $R=0$ 时损失退化成纯 MLE，正好就是 SFT 的训练目标——这解释了为什么 Forward KL 在训练里起的是类似 SFT 的稳定化作用。
 
-    - 目标函数：$J_{\text{FKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_{\text{old}} \| \pi_\theta)$
-    - 梯度：$\nabla_\theta J = \mathbb{E}_{x \sim \pi_{\text{old}}}[(w(x)R(x) + \beta) \nabla_\theta \log \pi_\theta(x)]$
-    - 代理损失：$\mathcal{L}_{\text{FKL}} = \mathbb{E}[-w(x)R(x) - \beta \log \pi_\theta(x)]$
-    - 当 $R=0$ 时退化为 MLE，与 SFT 训练目标一致
-    - **设计动机**：Forward KL 鼓励 $\pi_\theta$ 覆盖 $\pi_{\text{old}}$ 的支撑集（zero-forcing），避免遗漏高概率区域
+**2. Reverse KL 正则化（RKL）：用模式寻找聚焦到已知好策略上。** 把 KL 方向反过来取 $\text{KL}(\pi_\theta \| \pi_{\text{old}})$，目标变成 $J_{\text{RKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_\theta \| \pi_{\text{old}})$，代理损失为 $\mathcal{L}_{\text{RKL}} = \mathbb{E}[w(x)(-R(x) + \beta \log w(x))]$。和 Forward 的覆盖性相反，Reverse KL 是 mode-seeking：它鼓励 $\pi_\theta$ 收缩到 $\pi_{\text{old}}$ 概率最高的几个模态上，因此更适合在已经知道某些策略不错时把概率质量集中过去，而不是均匀铺开。
 
-2. **Reverse KL 正则化 (RKL)**：
+**3. 非归一化 Forward KL（UFKL）：把 GRPO 的 $k_3$ 估计器嵌进框架。** 真实训练里参考分布往往不是严格归一化的，于是引入非归一化 KL，多出一个质量修正项，代理损失写作 $\mathcal{L}_{\text{UFKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x) - \log w(x) - 1)]$。关键的观察是其中的正则化项 $w(x) - \log w(x) - 1$ 恰好就是 GRPO 在用的 $k_3$ 估计器形式——这一步把 GRPO 那个看似经验性的 KL 惩罚拉进了 RPG 的统一推导里，给它一个明确的理论出处。
 
-    - 目标函数：$J_{\text{RKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_\theta \| \pi_{\text{old}})$
-    - 代理损失：$\mathcal{L}_{\text{RKL}} = \mathbb{E}[w(x)(-R(x) + \beta \log w(x))]$
-    - **设计动机**：Reverse KL 鼓励 $\pi_\theta$ 集中在 $\pi_{\text{old}}$ 高概率区域（mode-seeking），适合聚焦已知好策略
+**4. 非归一化 Reverse KL（URKL）：更简洁的有效奖励缩放。** 同样对 Reverse 方向做非归一化处理，作者证明 $k_3(\pi_{\text{old}}/\pi_\theta)$ 的期望等价于 $\text{UKL}(\pi_\theta \| \pi_{\text{old}})$，得到代理损失 $\mathcal{L}_{\text{URKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x)\log w(x) - w(x))]$。它的吸引力在于梯度里的有效奖励缩放因子被压成了干净的 $R(x) - \beta \log w(x)$，既好实现又与 $k_3$ 估计器严格等价。
 
-3. **非归一化 Forward KL (UFKL)**：
+**5. REINFORCE 风格变体：用 stop-gradient 换实现灵活性。** 上面四种 KL 形式都各自再派生一个 REINFORCE 风格版本，把奖励权重用 stop-gradient 算子 $\text{SG}(\cdot)$ 冻住，统一写成 $\mathcal{L}^{\text{REINFORCE}} = -\mathbb{E}[\text{SG}(\text{Weight}(x, \theta)) \log \pi_\theta(x)]$。这样梯度只通过 $\log \pi_\theta(x)$ 这一项回传，结构和经典 REINFORCE 对齐，便于接进只支持这种接口的训练框架，也和前面的完全可微分版本形成性能互补。
 
-    - 引入非归一化 KL 散度，包含质量修正项（mass correction）
-    - 代理损失：$\mathcal{L}_{\text{UFKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x) - \log w(x) - 1)]$
-    - 正则化项 $w(x) - \log w(x) - 1$ 正是 $k_3$ 估计器的形式
-    - **设计动机**：处理分布可能非归一化的场景，并建立与 GRPO 使用的 $k_3$ 估计器之间的联系
-
-4. **非归一化 Reverse KL (URKL)**：
-
-    - 证明 $k_3(\pi_{\text{old}}/\pi_\theta)$ 的期望等价于 $\text{UKL}(\pi_\theta \| \pi_{\text{old}})$
-    - 代理损失：$\mathcal{L}_{\text{URKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x)\log w(x) - w(x))]$
-    - **设计动机**：梯度中有效奖励缩放因子更简洁（$R(x) - \beta \log w(x)$），且与 $k_3$ 估计器等价
-
-5. **REINFORCE 风格变体**：
-
-    - 对所有四种 KL 形式提供 REINFORCE 风格的代理损失，使用 $\text{SG}(\cdot)$（stop-gradient）算子
-    - 一般形式：$\mathcal{L}^{\text{REINFORCE}} = -\mathbb{E}[\text{SG}(\text{Weight}(x, \theta)) \log \pi_\theta(x)]$
-    - 提供了实现灵活性，可适配不同框架需求
-
-6. **GRPO 理论不一致性分析**：
-
-    - GRPO 使用 $k_3$ 估计器作为 KL 惩罚，但在 off-policy 设置下直接减去该项，缺少重要性权重 $w_{i,t}$
-    - 这导致 GRPO 目标函数的梯度无法精确对应 $J_{\text{Clip}} - \beta \text{UKL}(\pi_\theta \| \pi_{\text{ref}})$ 的梯度
-    - RPG 框架通过显式引入重要性权重修正了这一问题
+**6. GRPO 理论不一致性分析：补上缺失的重要性权重。** 框架最实用的副产品是诊断出 GRPO 的一个理论缺陷：GRPO 拿 $k_3$ 估计器当 KL 惩罚，但在 off-policy 设置下是直接把这一项减掉，没有乘上对应的重要性权重 $w_{i,t}$。结果是它的实际梯度无法精确对应到目标 $J_{\text{Clip}} - \beta \text{UKL}(\pi_\theta \| \pi_{\text{ref}})$ 的梯度上——即优化的东西和声称要优化的目标对不上。RPG 通过在代理损失里显式带上重要性权重，把这个偏差修掉。
 
 ### 损失函数 / 训练策略
 
-- **Dual-Clip 目标**：采用 PPO 的 Dual-Clip 变体稳定训练，对正负优势值分别处理
-- **基线减法**：使用批次平均奖励作为基线减少梯度方差
-- **动态采样 + 组过滤**：借鉴 DAPO 的策略，对困难 prompt 过采样，过滤近完美或近零准确率的样本
-- **过长惩罚**：在奖励中对过度冗长的输出进行惩罚
-- **内存效率**：$\pi_{\text{old}}$ 的 log 概率可预计算存储，训练时 GPU 上只需保留一个模型 $\pi_\theta$
+落地训练时 RPG 沿用了一批稳定化技巧：用 PPO 的 Dual-Clip 变体对正、负优势分别裁剪以防梯度爆炸；用批次平均奖励作基线压低方差；借鉴 DAPO 的动态采样对困难 prompt 过采样、并过滤掉准确率近 1 或近 0 的无信息样本；在奖励里对过长输出加惩罚以抑制冗长。工程上还有一个内存红利——$\pi_{\text{old}}$ 的 log 概率可以预先算好存起来，训练时 GPU 上只需驻留 $\pi_\theta$ 一个模型，比同时要保留当前策略和参考策略的 GRPO/REINFORCE++ 更省显存。
 
 ## 实验关键数据
 
@@ -164,11 +133,11 @@ RPG 是一个迭代训练框架：每次迭代中，参考模型 $\pi_{\text{old
 
 ## 相关论文
 
+- [\[ICLR 2026\] Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
+- [\[ICLR 2026\] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space](nabla-reasoner_llm_reasoning_via_test-time_gradient_descent_in_latent_space.md)
 - [\[ICLR 2026\] DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
+- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
 - [\[ICLR 2026\] Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
-- [\[ICLR 2026\] DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
-- [\[ACL 2026\] Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning](../../ACL2026/llm_reasoning/adapt_to_thrive_adaptive_power-mean_policy_optimization_for_improved_llm_reasoni.md)
-- [\[ICLR 2026\] RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following Through Model Merging](rain-merging_a_gradient-free_method_to_enhance_instruction_following_through_mod.md)
 
 </div>
 

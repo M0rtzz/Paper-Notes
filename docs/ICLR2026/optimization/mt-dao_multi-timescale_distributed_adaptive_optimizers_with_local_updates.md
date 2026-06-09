@@ -41,44 +41,25 @@ tags:
 
 ### 整体框架
 
-MT-DAO 将多动量优化器引入分布式低频通信场景。每个 worker 维护 $N$ 个具有不同衰减率 $\beta_{1,j}$ 的一阶动量和一个二阶动量，参数更新方向是当前梯度和 $N$ 个动量的凸组合（准双曲型）。参数、动量和二阶状态可以以不同频率独立同步。
+MT-DAO 把"多动量混合"这一原本属于单机优化器的技巧搬进分布式低频通信场景：每个 worker 维护一个二阶动量和 $N$ 个衰减率各不相同的一阶动量 $\beta_{1,j}$，更新方向取当前梯度与这 $N$ 个动量的凸组合（准双曲型），而参数、各动量、二阶状态可以各自以不同频率同步。直觉上，快梯度负责盯住本地损失景观的瞬时变化，慢动量则像一根"记忆锚"，把全局优化方向的信息保留到下一次通信，从而修补低频同步带来的性能裂缝。
 
 ### 关键设计
 
-**1. 多时间尺度动量混合**
+**1. 多时间尺度动量混合：让一根优化器同时拥有快慢两种记忆。**
 
-- **功能**：在更新方向中混合当前梯度（快信号）和慢动量（长期记忆）
-- **核心思路**：参数更新 $\Delta_t^m = \frac{1}{\sqrt{v_t^m} + \epsilon}\left[(1-\sum_{j=1}^N \omega_j)\hat{g}_t^m + \sum_{j=1}^N \omega_j u_t^{j,m}\right]$
-- **设计动机**：慢动量（$\beta \approx 0.999$）保持跨同步间隔的全局优化方向信息，快梯度保持对局部损失景观变化的响应性
+标准 Adam 只有一个 $\beta_1 \approx 0.9$ 的快动量，半衰期约 6.6 步，一旦通信间隔 $K=32$，跨同步的全局信号早已衰减殆尽，worker 只能靠高方差的局部梯度盲走。MT-DAO 的做法是在更新方向里同时摆进快慢两类信号：参数更新写成 $\Delta_t^m = \frac{1}{\sqrt{v_t^m} + \epsilon}\left[(1-\sum_{j=1}^N \omega_j)\hat{g}_t^m + \sum_{j=1}^N \omega_j u_t^{j,m}\right]$，其中 $\hat{g}_t^m$ 是当前（快）梯度，$u_t^{j,m}$ 是第 $j$ 个动量。慢动量取 $\beta \approx 0.999$，半衰期长达数百步，足以跨越同步间隔守住全局方向；快梯度则保留对局部景观的响应性，避免高动量优化器常见的振荡迟钝。最简形式 $N=1$（即 QH）只新增一组超参 $(\omega_1, \beta_1)$、不增加任何额外内存，在实践中就已够用。
 
-最简形式（QH, $N=1$）：不需要额外内存开销，只新增一个超参数 $(\omega_1, \beta_1)$。
+**2. 解耦通信频率：按时间尺度分配带宽，慢的少传、快的多传。**
 
-**2. 解耦通信频率**
+既然不同动量承载的信息时效不同，没必要让它们用同一个频率同步。MT-DAO 让参数每 $K_x$ 步、第 $j$ 个动量每 $K_j$ 步、二阶状态每 $K_v$ 步各自独立同步。背后的依据来自理论分析——$\beta$ 越大的动量对同步频率越不敏感，所以慢动量完全可以拉长同步间隔而几乎不掉性能。把这些频率合起来，整体通信成本相对全同步降低 $(1/K_x + \sum_{j=1}^N 1/K_j + 1/K_v)^{-1}$ 倍，等于把有限的带宽优先让给真正需要频繁同步的快信号。
 
-- **功能**：允许参数、每个动量和二阶状态以不同频率同步
-- **核心思路**：参数每 $K_x$ 步同步，第 $j$ 个动量每 $K_j$ 步同步，二阶状态每 $K_v$ 步同步
-- **设计动机**：理论分析表明，$\beta$ 越大的动量对同步频率越不敏感，因此慢动量可以更少同步。通信成本降低 $(1/K_x + \sum_{j=1}^N 1/K_j + 1/K_v)^{-1}$ 倍。
+**3. 互信息保持分析：用信息论说清慢动量到底守住了什么。**
 
-**3. 互信息保持分析**
-
-- **功能**：从信息论角度量化动量在通信间隔内保留的全局优化信号
-- **核心思路**：$I(U_{t+K}; U_t) = \frac{1}{2}\log\det(I + \beta^{2K}\Sigma_{U_t}\Sigma_L^{-1})$
-- **设计动机**：当 $\beta^K \to 0$ 时互信息消失（标准快动量在 $K=32$ 时），当 $\beta^K \to 1$ 时全局信号被保留（慢动量）
+为了把"慢动量保留全局方向"这句直觉量化，论文从信息论角度刻画动量在通信间隔内还能保留多少全局优化信号，给出 $I(U_{t+K}; U_t) = \frac{1}{2}\log\det(I + \beta^{2K}\Sigma_{U_t}\Sigma_L^{-1})$。关键在 $\beta^{2K}$ 这一项：标准快动量在 $K=32$ 时 $\beta^K \to 0$，互信息归零，意味着同步前后的动量几乎统计独立、全局信号丢失；而慢动量 $\beta^K \to 1$，互信息得以保留，全局方向被原样带过同步间隔。这一分析既解释了快动量为何在低频通信下失效，也为"用慢动量补裂缝"提供了定量支撑。
 
 ### 损失函数 / 训练策略
 
-**收敛保证（Theorem 1）**：在标准非凸平滑假设下，MT-DAO-SGDM 达到最优 $\mathcal{O}(1/\sqrt{T})$ 渐近收敛率。关键常数：
-
-$$\beta_\omega = \sum_{j=1}^N \frac{\omega_j \beta_j}{1 - \beta_j}, \quad \psi = \frac{4(1-p_x)}{p_x^2}\sum_{j=1}^N \omega_j \frac{(1-\beta_j)(1-p_j)}{1-(1-p_j)\beta_j}$$
-
-- $\beta_\omega$ 约束步长大小：大 $\beta$ 限制步长
-- $\psi$ 反映通信惩罚：大 $\beta$ 减小 $\psi$（对低频通信更鲁棒）
-- 分布式因素（client drift、数据异质性）被限制在高阶 $\mathcal{O}(1/T)$ 项中，不影响渐近率
-
-实践配置：
-- 使用 ADOPT 优化器（Adam 变体），$\beta_2 = 0.9999$
-- 默认 $K = K_x = K_1 = K_v = 32$
-- 使用 CompleteP 参数化从 16M 模型转移学习率到大模型，无需重新调参
+理论侧给出收敛保证（Theorem 1）：在标准非凸平滑假设下，MT-DAO-SGDM 达到最优的 $\mathcal{O}(1/\sqrt{T})$ 渐近收敛率，两个关键常数为 $\beta_\omega = \sum_{j=1}^N \frac{\omega_j \beta_j}{1 - \beta_j}$ 与 $\psi = \frac{4(1-p_x)}{p_x^2}\sum_{j=1}^N \omega_j \frac{(1-\beta_j)(1-p_j)}{1-(1-p_j)\beta_j}$。其中 $\beta_\omega$ 约束步长——$\beta$ 越大步长被限得越小；$\psi$ 则刻画通信惩罚——$\beta$ 越大 $\psi$ 越小，正好对应"慢动量对低频通信更鲁棒"的实验现象；而 client drift、数据异质性等分布式因素只落在高阶 $\mathcal{O}(1/T)$ 项里，不拖累渐近率。实践配置上，底座用 ADOPT 优化器（Adam 变体，$\beta_2 = 0.9999$），默认 $K = K_x = K_1 = K_v = 32$，并借 CompleteP 参数化把 16M 小模型上调好的学习率直接迁到大模型，省去重新调参。
 
 ## 实验关键数据
 
@@ -165,9 +146,9 @@ Worker 对齐度（余弦相似度）：
 
 - [\[ICLR 2026\] A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
 - [\[ICLR 2026\] The Affine Divergence: Aligning Activation Updates Beyond Normalisation](the_affine_divergence_aligning_activation_updates_beyond_normalisation.md)
+- [\[ICLR 2026\] LCA: Local Classifier Alignment for Continual Learning](lca_local_classifier_alignment_for_continual_learning.md)
 - [\[ICML 2026\] Multi-Objective Bayesian Optimization via Adaptive ε-Constraints Decomposition](../../ICML2026/optimization/multi-objective_bayesian_optimization_via_adaptive_varepsilon-constraints_decomp.md)
-- [\[ICLR 2026\] Rethinking Consistent Multi-Label Classification Under Inexact Supervision](rethinking_consistent_multi-label_classification_under_inexact_supervision.md)
-- [\[ICLR 2026\] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)](adaptive_rollout_allocation_for_online_reinforcement_learning_with_verifiable_re.md)
+- [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
 
 </div>
 

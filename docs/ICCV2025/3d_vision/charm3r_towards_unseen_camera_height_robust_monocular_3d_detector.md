@@ -144,7 +144,7 @@ DEVIANT骨干同样有效：ΔH=+0.76m时AP3D_70从6.25升至26.24。
 - [\[CVPR 2025\] RDD: Robust Feature Detector and Descriptor Using Deformable Transformer](../../CVPR2025/3d_vision/rdd_robust_feature_detector_and_descriptor_using_deformable_transformer.md)
 - [\[ECCV 2024\] Camera Height Doesn't Change: Unsupervised Training for Metric Monocular Road-Scene Depth Estimation](../../ECCV2024/3d_vision/camera_height_doesnapost_change_unsupervised_training_for_metric_monocular_road-.md)
 - [\[CVPR 2025\] UniK3D: Universal Camera Monocular 3D Estimation](../../CVPR2025/3d_vision/unik3d_universal_camera_monocular_3d_estimation.md)
-- [\[ICCV 2025\] Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)
+- [\[ICCV 2025\] Estimating 2D Camera Motion with Hybrid Motion Basis](estimating_2d_camera_motion_with_hybrid_motion_basis.md)
 
 </div>
 

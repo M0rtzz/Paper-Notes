@@ -47,48 +47,23 @@ $$\frac{\partial \mathcal{T}}{\partial x}(x,t) f(x, u(t)) + \frac{\partial \math
 
 ### 整体框架
 
-HyperKKL 采用两阶段顺序训练：
+HyperKKL 把"非自治"这件难事拆成两阶段顺序训练：先在无外部输入（$u \equiv 0$）的纯自治条件下，用 physics-informed 损失训练出基础编码器 $\hat{\mathcal{T}}_{\theta^{\text{base}}}$ 和解码器 $\hat{\mathcal{T}}^*_{\phi^{\text{base}}}$，让它们满足自治 KKL 条件，随后冻结这套基础映射；第二阶段只训练一个超网络 $\psi$，让它读入输入信号的近期历史，即时吐出对基础参数的扰动。推理时一段新输入信号经 LSTM 编码后生成参数扰动 $\Delta\theta, \Delta\phi$，叠加到冻结的基础参数上，就得到一个针对当前输入条件自适应的观测器——全程纯前向，无需重训练或在线梯度更新。
 
-1. **Phase 1（自治预训练）**：在无外部输入（$u \equiv 0$）条件下，使用 physics-informed 损失训练基础编码器 $\hat{\mathcal{T}}_{\theta^{\text{base}}}$ 和解码器 $\hat{\mathcal{T}}^*_{\phi^{\text{base}}}$，满足自治 KKL 条件。训练完成后冻结这些参数
-2. **Phase 2（超网络训练）**：冻结基础映射，仅训练超网络参数 $\psi$，学习从输入信号到参数扰动的映射
-
-推理时：新输入信号 → LSTM 编码 → 生成参数扰动 $\Delta\theta, \Delta\phi$ → 叠加到冻结的基础参数上 → 即时得到输入自适应的观测器。
-
-学习目标结合重建损失和 PDE 残差：
+整个学习目标把重建误差和时变 PDE 残差捆在一起优化：
 
 $$\min_\psi \mathbb{E}_{(x,u) \sim \mathcal{D}} \left[ \underbrace{\| x - \hat{\mathcal{T}}^*(\hat{\mathcal{T}}(x; \theta_u), \phi_u) \|^2}_{\mathcal{L}_{\text{rec}}} + \lambda \underbrace{\left\| \frac{\partial \hat{\mathcal{T}}}{\partial x} f(x,u) + \frac{\Delta \hat{\mathcal{T}}}{\Delta t} - A\hat{\mathcal{T}} - Bh(x) \right\|^2}_{\mathcal{L}_{\text{PDE}}} \right]$$
 
-### 关键设计 1：Dynamic HyperKKL（动态变换方法）
+前一项保证状态能从潜空间重建回来，后一项强制变换满足非自治 KKL 的时变偏微分方程；针对系统复杂度不同，论文给出 Dynamic 与 Static 两套超网络设计，并配一个纯训练的课程学习作对照。
 
-对于输入会持续重塑吸引子几何结构的复杂系统，需要真正的时变变换 $\mathcal{T}(x, \theta(t))$。Dynamic HyperKKL 使用残差超网络，将基础参数和输入条件扰动分离：
+### 关键设计
 
-$$\theta_{\text{enc}}(t) = \theta_{\text{enc}}^{\text{base}} + \Delta\theta_{\text{enc}}(u_{[t-w, t]})$$
-$$\phi_{\text{dec}}(t) = \phi_{\text{dec}}^{\text{base}} + \Delta\phi_{\text{dec}}(u_{[t-w, t]})$$
+**1. Dynamic HyperKKL：用残差超网络生成真正时变的变换。** 当输入会持续重塑吸引子几何（如混沌系统）时，静态映射无能为力，必须让变换本身随时间漂移成 $\mathcal{T}(x, \theta(t))$。Dynamic HyperKKL 把参数显式拆成"基础值 + 输入条件扰动"两部分，编码器参数取 $\theta_{\text{enc}}(t) = \theta_{\text{enc}}^{\text{base}} + \Delta\theta_{\text{enc}}(u_{[t-w, t]})$、解码器参数取 $\phi_{\text{dec}}(t) = \phi_{\text{dec}}^{\text{base}} + \Delta\phi_{\text{dec}}(u_{[t-w, t]})$，其中扰动由一个共享 LSTM 读入长度 $w = 100$ 的输入窗口 $u_{[t-w, t]}$、输出隐状态 $h_t$ 后，再经编码器头和解码器头两个 MLP 分别预测得到。这种残差写法的好处是天然保证 $u \equiv 0$ 时 LSTM 产出 $\Delta\theta = \Delta\phi = 0$，精确退回自治观测器，无外部输入时不会比基础模型更差。
 
-超网络包含三个组件：
-- **共享 LSTM 编码器**：处理输入窗口 $u_{[t-w, t]}$（窗口大小 $w = 100$），输出隐状态 $h_t \in \mathbb{R}^{d_h}$
-- **编码器头 MLP**：从 $h_t$ 预测 $\Delta\theta_{\text{enc}}$
-- **解码器头 MLP**：从 $h_t$ 预测 $\Delta\phi_{\text{dec}}$
+由于一次性预测整张权重矩阵 $W \in \mathbb{R}^{m \times n}$ 维度过高，超网络改用分块预测（chunked prediction），把目标矩阵切块、让 MLP 独立预测每个块，在保住表达能力的同时把输出维度压下来。PDE 残差里的时间偏导项则用有限差分近似，$\frac{\Delta \hat{\mathcal{T}}}{\Delta t} \approx \frac{\hat{\mathcal{T}}(x; \theta(u_{[t, t+\Delta t]})) - \hat{\mathcal{T}}(x; \theta(u_{[t-\Delta t, t]}))}{\Delta t}$，把变换随输入演化的速率直接喂进训练损失。
 
-**分块预测策略（chunked prediction）**：直接预测完整参数扰动维度过高。将目标权重矩阵 $W \in \mathbb{R}^{m \times n}$ 分块，MLP 独立预测每个块，保持表达能力的同时控制输出维度。
+**2. Static HyperKKL：保留自治变换，只在观测器动力学里注入输入。** 对那些输入只造成有界扰动、吸引子几何基本不变的简单系统，重训整套变换是浪费。Static HyperKKL 直接复用自治变换 $\mathcal{T}(x)$ 不动，只在潜空间观测器的动力学上加一个学习出来的输入注入项，写成 $\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$。这里 $\bar{\varphi}$ 是个小 MLP，输入是 LSTM 编码的输入上下文和当前潜状态 $\hat{z}$，训练时同样约束它在 $u = 0$ 时输出零、保持与自治情形一致。这套设计在低维振荡系统上既轻量又稳，实验中正是它在 Duffing、Van der Pol 上取得最优。
 
-**残差结构保证**：当 $u \equiv 0$ 时，LSTM 隐状态产生 $\Delta\theta = \Delta\phi = 0$，精确恢复自治观测器——确保无外部输入时不退化。
-
-时间偏导的估计使用有限差分：
-
-$$\frac{\Delta \hat{\mathcal{T}}}{\Delta t} \approx \frac{\hat{\mathcal{T}}(x; \theta(u_{[t, t+\Delta t]})) - \hat{\mathcal{T}}(x; \theta(u_{[t-\Delta t, t]}))}{\Delta t}$$
-
-### 关键设计 2：Static HyperKKL（静态变换方法）
-
-对于输入仅作为有界扰动存在的简单系统，保留自治变换 $\mathcal{T}(x)$ 不变，仅在观测器动力学中添加学习的输入注入项：
-
-$$\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$$
-
-其中 $\bar{\varphi}$ 是小型 MLP，由 LSTM 编码的输入上下文和 $\hat{z}$ 共同输入。训练约束 $\bar{\varphi}$ 在 $u = 0$ 时输出零。
-
-### 关键设计 3：自适应课程学习基线
-
-作为对照，论文还评估了纯训练策略能否弥补静态架构的局限。使用课程学习将训练数据按输入复杂度分级（$\mathcal{D}_1$: 常数 → $\mathcal{D}_2$: 低频正弦 → ... → 高频混合），训练在当前级别损失停滞后推进到下一级。这一基线测试的问题是：**在不改变架构的情况下，仅通过更丰富的训练数据能否解决非自治问题？**
+**3. 自适应课程学习基线：检验"换数据能不能替代换架构"。** 论文还设了一个不碰架构、只调训练策略的对照，把训练数据按输入复杂度分级（$\mathcal{D}_1$ 常数 → $\mathcal{D}_2$ 低频正弦 → … → 高频混合），当前级别损失停滞后再推进到下一级。它要回答的问题很直接：在静态架构不变的前提下，仅靠更丰富的训练课程能否解决非自治问题？后续实验给出否定答案——这一基线在所有系统上反而劣于自治基线，从而坐实瓶颈是表征性的而非训练数据不够。
 
 ## 实验结果
 
@@ -160,11 +135,11 @@ $$\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$$
 
 ## 相关论文
 
-- [\[ICML 2026\] Teaching Molecular Dynamics to a Non-Autoregressive Ionic Transport Predictor](../../ICML2026/physics/teaching_molecular_dynamics_to_a_non-autoregressive_ionic_transport_predictor.md)
-- [\[ICLR 2026\] Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
+- [\[ICLR 2026\] Contact Wasserstein Geodesics for Non-Conservative Schrödinger Bridges](contact_wasserstein_geodesics_for_non-conservative_schrödinger_bridges.md)
 - [\[AAAI 2026\] Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness](../../AAAI2026/physics/adaptive_fidelity_estimation_for_quantum_programs_with_graph.md)
-- [\[ICML 2026\] PINNfluence: Interpreting PINNs Through Influence Functions](../../ICML2026/physics/pinnfluence_interpreting_pinns_through_influence_functions.md)
-- [\[ICML 2026\] Generative Neural Operators Through Diffusion Last Layer](../../ICML2026/physics/generative_neural_operators_through_diffusion_last_layer.md)
+- [\[ICLR 2026\] Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs](supervised_metric_regularization_through_alternating_optimization_for_multi-regi.md)
+- [\[ICML 2026\] MōLe-Λ: Learning the Coupled-Cluster Response State for Energies, Gradients, and Properties](../../ICML2026/physics/mōle-λ_learning_the_coupled-cluster_response_state_for_energies_gradients_and_pr.md)
+- [\[ICML 2026\] Teaching Molecular Dynamics to a Non-Autoregressive Ionic Transport Predictor](../../ICML2026/physics/teaching_molecular_dynamics_to_a_non-autoregressive_ionic_transport_predictor.md)
 
 </div>
 

@@ -48,35 +48,29 @@ tags:
 
 ### 关键设计
 
-#### 1. Modifier Retrieval（修饰符检索）
+**1. 修饰符检索（Modifier Retrieval）：把子类别权重当作"粗粒度概念 + 修饰符"的向量加法。**
 
-将每个细粒度子类别视为"粗粒度概念 + 修饰符"的组合。例如"pushing left to right"= "pushing" + "left to right"。核心步骤：
+要在零样本下凭空造出一个新子类别的分类权重，关键观察是：一个细粒度子类别本质上就是"粗粒度概念套上一个修饰符"，例如 "pushing left to right" = "pushing" + "left to right"。如果能把"left to right"这个修饰符对应的权重偏移量找出来，加到粗类别 "pushing" 的权重上，就得到了新子类别的权重，整个过程不碰任何视频。问题落到两步：先攒一本修饰符字典，再从字典里检索合适的修饰符迁移过来。
 
-**修饰符字典构建**：对分类器中已有的细粒度类别进行分组，找到共享基础概念的"伪粗粒度类别" $\tilde{c}$。其权重向量近似为子类别权重的均值：
+字典是从分类器里已有的细粒度类别"反解"出来的。把共享同一基础概念的细粒度类别分到一组，构成一个"伪粗粒度类别" $\tilde{c}$，它的权重用组内子类别权重的均值近似：
 
 $$v_{\tilde{c}} = \frac{1}{|\mathcal{S}^{\tilde{c}}|} \sum_{y \in \mathcal{S}^{\tilde{c}}} w_y$$
 
-修饰符向量通过减去共享基础得到：$v_m = w_y - v_{\tilde{c}}$
-
-**修饰符向量迁移**：对于目标子类别，通过文本编码器 $\phi$ 计算修饰符文本嵌入的余弦相似度，同时考虑修饰符相似性和完整标签相似性进行检索：
+每个子类别权重减掉这个共享基础，剩下的就是纯修饰符向量 $v_m = w_y - v_{\tilde{c}}$。检索时对目标子类别用文本编码器 $\phi$ 算余弦相似度，且同时看修饰符文本和完整标签两路相似性，避免只匹配修饰符字面而忽略语境：
 
 $$v_m^* = \arg\max_{(t_y, t_m, v_m) \in \mathcal{M}_{mod}} \text{sim}(\phi(t_y), \phi(t_s^*)) + \text{sim}(\phi(t_m), \phi(t_m^*))$$
 
-新子类别的权重向量为：$w_{s_j^c} = w_c + v_m^*$
+检索到的修饰符直接加回粗类别权重，新子类别权重即 $w_{s_j^c} = w_c + v_m^*$。
 
-#### 2. Modifier Alignment（修饰符对齐）
+**2. 修饰符对齐（Modifier Alignment）：字典里查不到的修饰符，用一个小 MLP 直接从文本造权重。**
 
-为处理字典中不存在的新修饰符，训练一个轻量对齐模块 $g_\psi: \mathbb{R}^n \to \mathbb{R}^m$，将文本嵌入直接映射到分类器权重空间。
+检索的前提是字典里恰好有语义接近的修饰符，但很多新修饰符在已有分类器里压根没出现过，检索会失效。对齐模块解决的就是这个泛化缺口：训练一个轻量映射 $g_\psi: \mathbb{R}^n \to \mathbb{R}^m$，把任意修饰符的文本嵌入直接映射到分类器权重空间，从而绕开"字典里必须有"的限制。
 
-训练数据来自两部分：
-- **修饰符级别对**：$\mathcal{D}_{mod} = \{(\phi(t_m), v_m)\}$
-- **类别级别对**：$\mathcal{D}_{cat} = \{(\phi(t_y), w_y)\} \cup \{(\phi(t_{\tilde{c}}), v_{\tilde{c}})\}$
+它的监督信号同样从已有分类器里挖，分两路配对：修饰符级别对 $\mathcal{D}_{mod} = \{(\phi(t_m), v_m)\}$ 教它把修饰符文本对到修饰符向量，类别级别对 $\mathcal{D}_{cat} = \{(\phi(t_y), w_y)\} \cup \{(\phi(t_{\tilde{c}}), v_{\tilde{c}})\}$ 教它把完整标签/伪粗类文本对到对应权重。用 MSE 损失训练，模块只是一个 384 维的单隐层 MLP，训练时只更新 $\psi$，分类器和文本编码器全程冻结——所以这一步仍是零样本，依旧不需要任何视频数据。
 
-使用MSE损失训练，对齐模块是单隐层MLP（384维），仅更新 $\psi$ 参数，分类器和文本编码器保持冻结。全过程仍为零样本，无需视频数据。
+**3. 低样本拆分（Low-Shot Category Splitting）：拿到一两个标注样本时，只动新子类别权重的隔离微调。**
 
-#### 3. Low-Shot Category Splitting（低样本拆分）
-
-当有少量标注样本时（低至每子类别1个视频），采用**隔离微调**策略：仅微调新添加的子类别权重 $\theta_{head}'$，冻结backbone和原始分类头。使用零样本方法的权重作为初始化，效果优于粗粒度类别权重初始化。
+真实场景里偶尔能拿到极少量标注（低至每个子类别 1 个视频），这一步把零样本结果再往上推一截，但必须防止少量样本把整个分类器带偏、破坏对其他类别的局部性。做法是隔离微调：只微调新添加的子类别权重 $\theta_{head}'$，backbone 和原始分类头全部冻结，且用零样本方法算出的权重作为初始化。实验里这种初始化明显优于直接拿粗粒度类别权重起步，因为零样本权重已经把修饰符方向编码进去了，微调只需在它附近做小幅修正。
 
 ### 损失函数 / 训练策略
 
@@ -157,8 +151,8 @@ VLMs泛化性极低，本文方法在SSv2上泛化性提升近20个百分点。
 - [\[CVPR 2026\] Text-guided Fine-Grained Video Anomaly Understanding](../../CVPR2026/video_understanding/text-guided_fine-grained_video_anomaly_understanding.md)
 - [\[CVPR 2026\] Frame2Freq: Spectral Adapters for Fine-Grained Video Understanding](../../CVPR2026/video_understanding/frame2freq_spectral_adapters_for_fine-grained_video_understanding.md)
 - [\[CVPR 2026\] Mistake Attribution: Fine-Grained Mistake Understanding in Egocentric Videos](../../CVPR2026/video_understanding/mistake_attribution_fine-grained_mistake_understanding_in_egocentric_videos.md)
+- [\[AAAI 2026\] FineVAU: A Novel Human-Aligned Benchmark for Fine-Grained Video Anomaly Understanding](../../AAAI2026/video_understanding/finevau_a_novel_human-aligned_benchmark_for_fine-grained_video_anomaly_understan.md)
 - [\[CVPR 2026\] UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models](../../CVPR2026/video_understanding/ufvideo_towards_unified_fine-grained_video_cooperative_understanding_with_large_.md)
-- [\[CVPR 2026\] No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection](../../CVPR2026/video_understanding/no_need_for_real_anomaly_mllm_empowered_zero-shot_video_anomaly_detection.md)
 
 </div>
 

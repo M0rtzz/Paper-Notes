@@ -40,29 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ASL 分三步：(1) 设计四种推理模式（M1-M4，从简到复杂）；(2) 行为克隆（BC）让模型学会遵循各模式的格式；(3) AMPO 强化学习让模型学会根据场景自适应选择模式并优化推理质量。输入是社交对话上下文，输出是以模式控制 token 开头的推理+回答。
+这篇论文要解决的是：让社交 agent 学会"该快则快、该慢则慢"——简单场景直觉回应，复杂场景才深度推演，而不是像现有大推理模型那样不分场景地穷举推理。整个流程从一段社交对话上下文出发，模型先吐出一个模式控制 token（决定这一回合用多深的推理），再按该模式的格式产出推理过程和最终回答。训练上分两步走：先用行为克隆（BC）让模型学会遵循四种模式各自的输出格式，再用 AMPO 强化学习让模型学会"看场景挑模式"并打磨推理质量。
 
 ### 关键设计
 
-1. **四种层级推理模式（基于 HCCT）**:
+**1. 四种层级推理模式：把推理深度做成可选挡位。**
 
-    - 功能：为不同复杂度的社交场景定义从浅到深的推理结构
-    - 核心思路：M1（直觉回应）仅输出答案，无推理；M2（意图分析）分析对方意图 + 说话风格 + 回应；M3（策略适应）额外引入历史分析、目标明晰、情境评估、策略制定；M4（前瞻推演）在 M3 基础上生成多个策略并通过模拟推演择优。每个模式用特殊控制 token `<MODE_k>` 标识
-    - 设计动机：对应认知科学的四层级认知控制——从感觉运动到长情景控制，让模型拥有从 System 1 到 System 2 的完整推理谱系
+社交交互里不同回合需要的推理深度天差地别，所以这里没有用统一的 Long-CoT，而是按认知科学的层级认知控制理论（HCCT）把推理拆成由浅到深的四挡，每挡用一个控制 token `<MODE_k>` 在开头标识。M1（直觉回应）最浅，不做任何推理直接给答案，对应"双方目标已达成"这类简单场景；M2（意图分析）开始分析对方意图、说话风格再回应；M3（策略适应）在 M2 之上补上历史分析、目标明晰、情境评估、策略制定四步；M4（前瞻推演）最深，在 M3 基础上生成多个候选策略并各自模拟推演、择优执行。这四挡正好对应 HCCT 从感觉运动到长情景控制的四个层级，等于给模型配齐了从 System 1 到 System 2 的完整推理谱系，让它有"挡位"可选。
 
-2. **Adaptive Mode Policy Optimization (AMPO)**:
+**2. Adaptive Mode Policy Optimization：让优化器看得见"模式"。**
 
-    - 功能：在 GRPO 基础上引入**模式级优势 $A^{\mathcal{M}}$** + **样本级优势 $A^{\mathcal{S}}$** 的双层优势估计
-    - 核心思路：模式级优势通过比较各模式的平均 reward 来引导模式选择；当各模式 reward 相近时，转为以 token 长度为信号，鼓励更短的模式（用 tanh 归一化）。样本级优势则在选定模式内比较各样本质量。最终优势 = $A^{\mathcal{M}} + A^{\mathcal{S}}$，嵌入 PPO-clip 目标函数
-    - 设计动机：解决 GRPO 的"模式盲"问题——GRPO 只按 reward 排序样本，不感知模式差异，导致模型收敛到高 reward 但低效的 M4 模式。AMPO 让模型在 reward 相同时偏好更简洁的模式
+GRPO 的优势估计是"模式盲"的——它只按 reward 把样本排个序，并不知道这些样本来自哪种模式，结果训练后模型一股脑收敛到 reward 最高但最费 token 的 M4。AMPO 的破法是把优势拆成两层：模式级优势 $A^{\mathcal{M}}$ 负责挑模式，样本级优势 $A^{\mathcal{S}}$ 负责在选定模式内分高下。模式级这一层先比较各模式的平均 reward 来引导模式选择；当各模式 reward 拉不开差距时，它就改用 token 长度当信号（经 tanh 归一化），主动鼓励更短的模式。样本级则只在同一模式内部比较各 rollout 的质量。两者相加得到最终优势
 
-3. **奖励设计（三维奖励）**:
+$$A = A^{\mathcal{M}} + A^{\mathcal{S}}$$
 
-    - 功能：提供 answer reward（评估目标完成度）+ format reward（模式格式约束，违反则 -2）+ answer length reward（答案长度惩罚，超过目标长度时平滑衰减到 0-1 区间）
-    - 设计动机：仅用 answer reward 会导致模型生成冗长但无实质策略提升的答案；length reward 鼓励简洁，配合模式级优势实现深度自适应
+再嵌进 PPO-clip 目标函数里更新。这样一来，reward 区分得开时模型追高分模式，reward 打平时就转去追效率，"该快则快"的自适应行为就是从这个切换里长出来的。
+
+**3. 三维奖励：把"简洁"也写进训练信号。**
+
+光靠目标完成度一项奖励，模型很容易学会"话越多越保险"，生成一堆冗长却没实质策略提升的推理。所以奖励由三部分组成：answer reward 评估社交目标的完成度；format reward 约束模式格式，一旦违反就罚 -2；answer length reward 则是长度惩罚，答案超过目标长度时平滑衰减到 0–1 区间。length reward 鼓励简洁这件事，正好和模式级优势里"reward 打平就选短模式"的分支配合，共同把推理深度的自适应坐实。
 
 ### 损失函数 / 训练策略
-两阶段训练：(1) BC 冷启动，用专家 LLM 生成各模式的训练数据做 SFT；(2) AMPO 在线策略优化，对每个 prompt 采样 G 个 rollout（覆盖不同模式），用双层优势估计 + PPO-clip + KL 正则化更新策略。采用 single-turn 训练范式提高效率。
+两阶段训练。第一阶段是 BC 冷启动：用专家 LLM 为每种模式生成训练数据做 SFT，让模型先把四种模式的格式学会。第二阶段是 AMPO 在线策略优化：对每个 prompt 采样 $G$ 个 rollout（覆盖不同模式），用上面的双层优势估计配 PPO-clip 加 KL 正则化更新策略。训练采用 single-turn 范式以提高效率。
 
 ## 实验关键数据
 
@@ -126,8 +125,8 @@ ASL 分三步：(1) 设计四种推理模式（M1-M4，从简到复杂）；(2) 
 - [\[ICLR 2026\] Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
 - [\[ICLR 2026\] DRPO: Efficient Reasoning via Decoupled Reward Policy Optimization](drpo_efficient_reasoning_via_decoupled_reward_policy_optimization.md)
 - [\[ICLR 2026\] FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](fastgrpo_accelerating_policy_optimization_via_concurrency-aware_speculative_deco.md)
-- [\[ACL 2026\] Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning](../../ACL2026/llm_reasoning/adapt_to_thrive_adaptive_power-mean_policy_optimization_for_improved_llm_reasoni.md)
 - [\[ICLR 2026\] Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
+- [\[ACL 2026\] Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning](../../ACL2026/llm_reasoning/adapt_to_thrive_adaptive_power-mean_policy_optimization_for_improved_llm_reasoni.md)
 
 </div>
 

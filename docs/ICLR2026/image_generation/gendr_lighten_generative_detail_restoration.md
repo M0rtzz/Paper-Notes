@@ -40,42 +40,31 @@ tags:
 
 ## 方法详解
 
-### 关键设计一：SD2.1-VAE16——定制16通道潜在空间基础模型
+### 整体框架
 
-- **功能**：基于SD2.1 UNet和开源16通道VAE，构建适合SR任务的0.9B基础扩散模型。
-- **核心思路**：通过表示对齐（REPA）策略进行全参数训练，在UNet第一个下采样块后插入MLP投影头，将UNet中间特征 $\mathbf{h}_t = f_\theta(\mathbf{z}_t)$ 与预训练DINOv2编码器的表示 $\mathbf{h}_\mathcal{E} = \mathcal{E}(\mathbf{x}_h)$ 对齐：
+GenDR把"为SR定制扩散模型"拆成三层：先把SD2.1 UNet配上16通道VAE训成一个0.9B的基础模型（SD2.1-VAE16），让潜在空间装得下SR需要保留的细节；再用CiD/CiDA一致性蒸馏把多步采样压成单步，同时把SR的图像先验灌进蒸馏过程；最后剥掉scheduler和text encoder，留下VAE+UNet的极简管线，单步77ms出图。
+
+### 关键设计
+
+**1. SD2.1-VAE16：用16通道潜在空间换回SR丢掉的细节。** SR的关键不是从噪声里凭空生成，而是补回高频细节，所以输入信息能不能完整进入潜在空间至关重要。4通道VAE是为T2I降低生成难度而设计的，不可逆压缩会抹掉精细纹理和结构；FLUX/SD3.5这类16通道DiT虽然信息容量够，但12B规模做4×SR要40GB显存、1.4s，是SD2.1的5.3×/11.4×，纯属杀鸡用牛刀。作者因此在轻量SD2.1 UNet上换装开源16通道VAE，全参数训练出0.9B的基础模型，在信息容量和规模之间取平衡。训练时用表示对齐（REPA）补充语义监督：在UNet第一个下采样块后插一个MLP投影头 $h$，把UNet中间特征 $\mathbf{h}_t = f_\theta(\mathbf{z}_t)$ 对齐到预训练DINOv2编码器对HR图的表示 $\mathbf{h}_\mathcal{E} = \mathcal{E}(\mathbf{x}_h)$：
 
 $$\mathcal{L}^{(\text{repa})} = -\mathbb{E}_{\mathbf{x}_h, t}\left[\frac{1}{N}\sum_{n=1}^{N}\text{sim}\left(\mathbf{h}_\mathcal{E}[n], h(\mathbf{h}_t[n])\right)\right]$$
 
-- **设计动机**：4通道VAE虽然适合T2I（降低生成难度），但对SR来说会丢失精细细节和结构信息（不可逆压缩损失）。16通道VAE提供更大的信息容量。而直接用FLUX等DiT的16通道模型过于庞大，因此基于轻量SD2.1构建是最佳平衡点。
+这样既扩了通道又没扩模型，VAE16在T2I上只是略退（GenEval −0.02、FID +14.44），换来SR上细节保真的明显增益。
 
-### 关键设计二：CiD——一致性分数恒等蒸馏
-
-- **功能**：将多步扩散蒸馏为单步，同时融入SR任务特定先验以保证训练稳定性和输出一致性。
-- **核心思路**：在SiD的基础上做两个关键改进：(1) 用HR目标图像 $\mathbf{z}_h$ 训练"真实"score网络 $\phi$，使其输出分布与高保真图像流形对齐；(2) 用 $\mathbf{z}_h$ 替换生成结果 $\mathbf{z}_g$ 作为恒等变换，缓解生成质量波动带来的不稳定。最终CiD损失：
+**2. CiD：把SR先验灌进score蒸馏，让单步输出稳得住。** VSD/SiD这类score distillation本是为T2I设计的，"真实"score网络对齐的是文本嵌入分布，直接拿来做SR会出现训练分布不一致——内容漂移、质量忽好忽坏。CiD在SiD基础上做两处改动：一是用HR目标图像 $\mathbf{z}_h$ 去训练"真实"score网络 $\phi$，把它的输出分布钉在高保真图像流形上而非文本流形；二是把蒸馏目标里波动的生成结果 $\mathbf{z}_g$ 换成稳定的 $\mathbf{z}_h$ 做恒等变换，避免生成质量抖动反过来污染score估计。最终损失在原始SiD项 $\mathcal{L}_\theta^{(1)}$ 之外加上以 $\mathbf{z}_h$ 为目标、带CFG增强引导的 $\mathcal{L}_\theta^{(3)}$：
 
 $$\mathcal{L}_\theta^{(\text{cid})} = \mathcal{L}_\theta^{(3)} - \xi \mathcal{L}_\theta^{(1)}$$
 
-其中 $\mathcal{L}_\theta^{(3)}$ 使用CFG增强引导并以 $\mathbf{z}_h$ 为目标，$\mathcal{L}_\theta^{(1)}$ 为原始SiD损失，$\xi$ 为经验权重。
+其中 $\xi$ 是经验权重。靠HR真值校准score网络加上恒等变换，CiD把SR的图像先验真正塞进了蒸馏过程，消融里相对SiD把Q-Align从4.391抬到4.428。
 
-- **设计动机**：直接将T2I-oriented的VSD/SiD用于SR存在训练分布不一致（T2I对齐文本嵌入 vs SR对齐图像嵌入），导致质量和内容不一致。通过用HR真值优化"真实"score网络并引入恒等变换，将SR先验融入蒸馏过程。
-
-### 关键设计三：CiDA——融合对抗学习与表示对齐
-
-- **功能**：在CiD基础上引入对抗学习和表示对齐，进一步增强感知质量并加速训练。
-- **核心思路**：利用预训练UNet $\phi$ 作为特征提取器加判别头 $h$ 进行对抗训练，同时加入REPA正则化：
+**3. CiDA：对抗学习去"AI假感"，REPA稳结构、加速收敛。** 纯score蒸馏容易出那种过度平滑、一眼假的细节，于是CiDA在CiD上再叠两项。对抗项直接复用预训练UNet $\phi$ 当特征提取器、接一个判别头 $h$，逼生成结果落进真实纹理分布；REPA项继续在高层语义空间正则化，避免对抗训练把结构带偏，同时加快收敛。三项加权组合：
 
 $$\mathcal{L}_\theta^{(\text{cida})} = \lambda_1 \mathcal{L}_\theta^{(\text{cid})} + \lambda_2 \mathcal{L}_\theta^{(\text{adv})} + \lambda_3 \mathcal{L}_\theta^{(\text{repa})}$$
 
-实现上用LoRA适配（rank=64, alpha=128）+模型共享策略（共享base model用于score网络和判别器特征提取），大幅减少显存和计算量。
+工程上靠两招控成本：判别器只用LoRA适配（rank=64、alpha=128），并让score网络和判别器共享同一个base model做特征提取，省去多份UNet的显存。叠完对抗后Q-Align进一步到4.453，CiD贡献约0.05、对抗约0.03。
 
-- **设计动机**：纯蒸馏容易产生AI生成的"假感"，对抗学习强制生成真实分布的细节；REPA在高层语义空间正则化避免结构偏差，同时加速收敛。
-
-### 关键设计四：极简推理Pipeline
-
-- **功能**：构建仅含VAE+UNet的极简推理管线。
-- **核心思路**：移除scheduler（固定 $\bar{\alpha}_t = \bar{\beta}_t = 0.5$），移除text encoder/tokenizer，用预计算的固定prompt嵌入替代。77ms per 512²像素（A100）。
-- **设计动机**：单步推理不需要scheduler调度多步；固定prompt嵌入在SR任务中提供通用质量描述且不影响IQA性能（MUSIQ仅差0.17但节省约30%参数和15ms时间）。
+**4. 极简推理pipeline：单步用不上的零件全部删掉。** 既然是单步推理，scheduler的多步调度就是多余的，作者直接固定 $\bar{\alpha}_t = \bar{\beta}_t = 0.5$ 把它去掉；text encoder和tokenizer也不要，换成预计算的固定prompt嵌入——SR场景下一句通用质量描述就够用。代价极小：相比DAPE/Qwen2.5VL动态生成prompt，固定嵌入的MUSIQ只降0.17，却把参数从1775M/8.3B压到933M、推理从113ms/3.18s压到77ms（512²像素，A100）。最终管线只剩VAE+UNet两个模块。
 
 ## 实验结果
 

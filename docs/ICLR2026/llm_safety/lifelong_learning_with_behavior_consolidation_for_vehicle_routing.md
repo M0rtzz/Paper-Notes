@@ -47,23 +47,21 @@ LLR-BC 基于经验回放范式。维护一个固定大小的经验缓冲区 $\m
 
 ### 关键设计
 
-1. **决策步骤级经验表示与蓄水池缓冲**:
+**1. 决策步骤级经验表示与蓄水池缓冲：用最小粒度记住求解器的"行为记忆"。**
 
-    - 功能：以最小粒度捕获求解器的"行为记忆"，用固定大小缓冲区高效管理海量经验
-    - 核心思路：每条经验定义为 $e = \langle s, \mathcal{P} \rangle$，其中 $s$ 是当前部分解状态（已访问节点序列），$\mathcal{P}$ 是求解器在该状态下对所有候选节点的完整概率分布。相比现有方法把整个实例作为一条经验，步骤级表示信息密度更高、存储更紧凑。缓冲采用蓄水池抽样（reservoir sampling）：新经验以概率 $|\mathcal{B}|/N$ 替换已有经验，保证所有历史经验被缓冲的概率相等。仅在每个任务的最后一个 epoch 收集经验——此时求解器已充分训练，行为质量最高。整个缓冲区仅占总训练经验的约 0.01%
-    - 设计动机：实例级缓冲在规模变化时维度不一致且信息冗余；步骤级表示天然适应不同规模任务，且概率分布比单一动作包含更丰富的策略信息
+现有方法把整个实例的解作为一条经验，在规模变化时维度不一致、信息也冗余。LLR-BC 改为把每条经验定义为 $e = \langle s, \mathcal{P} \rangle$——$s$ 是当前部分解状态（已访问节点序列），$\mathcal{P}$ 是求解器在该状态下对所有候选节点的完整概率分布。这种步骤级表示天然适应不同规模的任务（不再受实例维度约束），而保留完整概率分布比只记单一动作携带了更丰富的策略信息，信息密度更高、存储更紧凑。缓冲区用蓄水池抽样（reservoir sampling）维护固定大小：新经验以概率 $|\mathcal{B}|/N$ 替换缓冲中已有经验，保证所有历史经验被保留的概率相等。而且只在每个任务的最后一个 epoch 才收集经验——此时求解器已充分训练、行为质量最高。整个缓冲区只占总训练经验的约 0.01%。
 
-2. **置信度感知经验加权（CaEW）**:
+**2. 置信度感知经验加权（CaEW）：让巩固聚焦到最容易被扰动的关键决策点。**
 
-    - 功能：在巩固时区分经验的重要性，让模型把更多注意力放在关键决策点上
-    - 核心思路：用概率分布方差衡量决策置信度。方差低意味着模型对各候选节点的把握差不多——这种"犹豫"状态最容易被新任务训练扰动。权重公式为 $w(e) = 1 - \text{var}(\mathcal{P}) / \text{var}_{\max}(|\mathcal{P}|)$，其中 $\text{var}_{\max}(n) = (n-1)/n^2$ 是 $n$ 个候选时的最大可能方差。最终在采样集内归一化使权重和为 1
-    - 设计动机：VRP 的序列决策具有级联效应——一个关键岔路口的错误选择会传播到后续所有步骤。低置信度决策恰是这类关键岔路口的标志
+并非每条经验同等重要。VRP 的序列决策有级联效应——一个关键岔路口选错会传播到后面所有步骤，而低置信度的决策恰恰是这类岔路口的标志：模型对各候选节点把握差不多的"犹豫"状态，最容易在新任务训练时被扰动改变。CaEW 用概率分布的方差衡量置信度，方差越低说明越犹豫、越该重点保护。权重公式为 $w(e) = 1 - \text{var}(\mathcal{P}) / \text{var}_{\max}(|\mathcal{P}|)$，其中 $\text{var}_{\max}(n) = (n-1)/n^2$ 是 $n$ 个候选时的最大可能方差，最后在采样集内归一化使权重和为 1。这样模型就把更多注意力放在那些一旦遗忘就会引发路径剧变的关键决策上。
 
-3. **决策寻求行为巩固（DsBC）**:
+**3. 决策寻求行为巩固（DsBC）：用反向 KL 约束模型守住"选哪个节点"的核心决策。**
 
-    - 功能：约束当前模型在旧状态上的行为不偏离缓冲的历史行为，且重点保留"选哪个节点"的核心决策
-    - 核心思路：传统知识蒸馏用正向 KL 散度（$D_{KL}(P \| Q)$），会让学习者在教师所有模式上均匀铺概率，容易分散注意力。LLR-BC 改用反向 KL 散度（RKLD）$D_{KL}(Q \| P)$，其模式寻求（mode-seeking）特性让学习者集中精力复现教师最高概率的动作——这正是 VRP 求解器在贪心解码时真正执行的决策。巩固损失为 $\mathcal{L}_{BC} = \sum_{e \in \mathcal{E}} \bar{w}(e) \sum_{a} \mathcal{P}_\theta(a) \log \frac{\mathcal{P}_\theta(a)}{\mathcal{P}(a)}$
-    - 设计动机：VRP 构造式求解器实际推理时选概率最大的节点，因此保留 top-1 决策比均匀对齐整个分布更重要。RKLD 天然强调峰值对齐
+巩固的目标是约束当前模型在旧状态上的行为不偏离缓冲的历史行为。传统知识蒸馏用正向 KL 散度 $D_{KL}(P \| Q)$，会让学习者在教师的所有模式上均匀铺概率，注意力被分散。LLR-BC 改用反向 KL 散度（RKLD）$D_{KL}(Q \| P)$，它的模式寻求（mode-seeking）特性让学习者集中复现教师最高概率的那个动作——这正是 VRP 构造式求解器在贪心解码时真正执行的决策。换句话说，蒸馏目标对齐了下游推理方式：求解器实际推理时只选概率最大的节点，所以保留 top-1 决策远比均匀对齐整个分布更重要。巩固损失为
+
+$$\mathcal{L}_{BC} = \sum_{e \in \mathcal{E}} \bar{w}(e) \sum_{a} \mathcal{P}_\theta(a) \log \frac{\mathcal{P}_\theta(a)}{\mathcal{P}(a)}$$
+
+其中 $\bar{w}(e)$ 是 CaEW 归一化后的权重。
 
 ### 损失函数 / 训练策略
 
@@ -192,11 +190,11 @@ LLR-BC 的 AP 比所有基线低一个数量级（CVRP: 4.2 vs 23.5+；TSP: 3.4 
 
 ## 相关论文
 
-- [\[ACL 2025\] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](../../ACL2025/llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)
-- [\[AAAI 2026\] PRISM: Privacy-Aware Routing for Adaptive Cloud-Edge LLM Inference via Semantic Sketch Collaboration](../../AAAI2026/llm_safety/prism_privacy-aware_routing_for_adaptive_cloud-edge_llm_inference_via_semantic_s.md)
+- [\[CVPR 2025\] Dual Consolidation for Pre-Trained Model-Based Domain-Incremental Learning](../../CVPR2025/llm_safety/dual_consolidation_for_pre-trained_model-based_domain-incremental_learning.md)
 - [\[ICLR 2026\] Watermark Robustness and Radioactivity May Be at Odds in Federated Learning](watermark_robustness_and_radioactivity_may_be_at_odds_in_federated_learning.md)
 - [\[ICLR 2026\] Supervised Reinforcement Learning: From Expert Trajectories to Step-wise Reasoning](supervised_reinforcement_learning_from_expert_trajectories_to_step-wise_reasonin.md)
-- [\[NeurIPS 2025\] CryptoMoE: Privacy-Preserving and Scalable Mixture of Experts Inference via Balanced Expert Routing](../../NeurIPS2025/llm_safety/cryptomoe_privacy-preserving_and_scalable_mixture_of_experts_inference_via_balan.md)
+- [\[ICLR 2026\] BEAT: Visual Backdoor Attacks on VLM-based Embodied Agents via Contrastive Trigger Learning](beat_visual_backdoor_attacks_on_vlm-based_embodied_agents_via_contrastive_trigge.md)
+- [\[ACL 2025\] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection](../../ACL2025/llm_safety/agrail_a_lifelong_agent_guardrail_with_effective_and_adaptive_safety_detection.md)
 
 </div>
 

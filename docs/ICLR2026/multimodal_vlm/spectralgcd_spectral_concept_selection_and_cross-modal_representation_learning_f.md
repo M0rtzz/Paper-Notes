@@ -44,43 +44,27 @@ tags:
 
 ## 方法详解
 
-### 整体框架：两阶段流程
+### 整体框架
 
-SpectralGCD包含两个阶段：(1) 谱过滤阶段——用冻结的强教师模型自动从大概念字典中筛选任务相关概念；(2) 训练阶段——在过滤后的跨模态表示上训练参数化分类器，配合正反蒸馏保持语义质量。
+SpectralGCD把每张图像表示成它在一部CLIP概念字典上的「语义混合」——即图文相似度向量，然后分两步走：先用一个冻结的强教师从庞大的字典里自动挑出任务相关的概念子集（谱过滤），再在这个精简表示上训练一个轻量分类器，并靠正反双向蒸馏防止表示在训练中语义漂移。两步都把教师的跨模态表示预计算好，因此整体计算量与纯视觉的单模态方法相当。
 
-### 关键设计1：跨模态充分表示
+### 关键设计
 
-对每张图像 $x_i$ 和概念字典 $\bar{\mathcal{C}} = \{c_j\}_{j=1}^M$，计算CLIP图文余弦相似度：
+**1. 跨模态充分表示：把图像翻译成概念坐标，让分类器拿到的就是语义本身。**
 
-$$z_{\theta,\phi}(x_i; \bar{\mathcal{C}}) = \left[\frac{f_\theta(x_i)^\top g_\phi(c_j)}{\|f_\theta(x_i)\| \|g_\phi(c_j)\|} \cdot \frac{1}{\tau} \;\Big|\; c_j \in \bar{\mathcal{C}}\right] \in \mathbb{R}^M$$
+GCD的痛点在于分类器直接吃原始视觉特征时，容易记住旧类的背景等虚假线索，新类因此泛化差。SpectralGCD换一种表示：对图像 $x_i$ 和概念字典 $\bar{\mathcal{C}} = \{c_j\}_{j=1}^M$，逐概念算CLIP图文余弦相似度并除以温度 $\tau$，得到一条 $M$ 维向量 $z_{\theta,\phi}(x_i; \bar{\mathcal{C}}) = \left[\frac{f_\theta(x_i)^\top g_\phi(c_j)}{\|f_\theta(x_i)\| \|g_\phi(c_j)\|} \cdot \frac{1}{\tau} \mid c_j \in \bar{\mathcal{C}}\right] \in \mathbb{R}^M$，每一维就是图像与某个概念的契合度。这条向量是对「充分表示」的近似：只要类别真正只依赖于语义概念，就有 $p(y|x) = p(y|z(x;\mathcal{C}))$，意味着抛开原始像素、仅凭概念坐标也能做最优预测。实际训练时再经一层线性投影 $u_i = W^\top z_{\theta,\phi}(x_i; \bar{\mathcal{C}})$ 压维，送入参数化分类器 $p_i = L_\psi(u_i)$。因为坐标轴是人类可读的语义概念，模型很难再钻背景纹理的空子，新类性能因此被显著拉起。
 
-该表示是**充分表示**的近似——若类别仅依赖语义概念，则 $p(y|x) = p(y|z(x;\mathcal{C}))$，基于此训练的分类器无需原始图像即可做最优预测。通过线性投影 $u_i = W^\top z_{\theta,\phi}(x_i; \bar{\mathcal{C}})$ 后送入分类器 $p_i = L_\psi(u_i)$。
+**2. 谱过滤：用协方差谱自动剔掉无关概念，把字典从上万压到几百。**
 
-### 关键设计2：谱过滤(Spectral Filtering)
+字典动辄上万个概念，绝大多数与当前任务无关，全留下既慢又引入噪声。SpectralGCD让冻结教师（ViT-H/14）先把全数据集的跨模态表示算出来，对每条表示做softmax归一化（记为 $q_i$）后构造协方差矩阵 $G = \frac{1}{N-1} \sum_{i=1}^N (q_i - \mu)(q_i - \mu)^\top \in \mathbb{R}^{M \times M}$，再对它做特征值分解。分解结果用于两件事：一是噪声过滤，只保留累积解释方差达到 $\beta_e$（默认0.95）的前 $k^*$ 个主成分，把方差贡献微弱的方向当噪声丢掉；二是概念重要性筛选，按 $s = \sum_{i=1}^{k^*} \lambda_i v_i^2$ 给每个概念打分（$\lambda_i$、$v_i$ 为对应特征值与特征向量），保留累积重要性达到 $\beta_c$（默认0.99）的概念子集 $\hat{\mathcal{C}}$。之所以管用，是因为softmax会放大前景概念、压低背景噪声，叠加CLIP本身偏好物体语义，使协方差的主特征向量天然集中在任务相关的物体概念上——这与LSA里用词频加权挑出主题词同理，是有PCA/LSA数学解释的信息筛选而非黑箱。Stanford Cars上196类最终只选出200–450个概念，CIFAR-100的100类选出1000–4000个。
 
-用冻结教师(ViT-H/14)计算全数据集的跨模态表示，softmax归一化后构建协方差矩阵：
+**3. 正反知识蒸馏：双向KL把学生表示钉在教师附近，防止联合训练时语义漂移。**
 
-$$G = \frac{1}{N-1} \sum_{i=1}^N (q_i - \mu)(q_i - \mu)^\top \in \mathbb{R}^{M \times M}$$
+微调会让学生的跨模态表示在联合优化中逐渐偏离原本干净的语义，谱过滤的成果被稀释。SpectralGCD用冻结教师的预计算表示做双向蒸馏：$\mathcal{L}_{\text{kd}} = \underbrace{-\frac{1}{|\mathcal{B}|}\sum_{i \in \mathcal{B}} \sigma(\hat{z}_i^*) \log \sigma(\hat{z}_i)}_{\text{前向}} + \underbrace{-\frac{1}{|\mathcal{B}|}\sum_{i \in \mathcal{B}} \sigma(\hat{z}_i) \log \sigma(\hat{z}_i^*)}_{\text{反向}}$，其中 $\hat{z}_i^*$ 是教师表示、$\hat{z}_i$ 是学生表示。前向项让学生去对齐教师分布，反向项则惩罚学生在教师认为不相关的概念上堆概率质量，两个方向夹住后师生对齐更紧。消融印证两者缺一不可：无蒸馏时表示一致性（Spearman ρ）只有0.487、All准确率77.4%，加上前向+反向后ρ升到0.665、准确率提到89.1%。由于教师表示一次算好可复用，蒸馏几乎不增训练开销。
 
-特征值分解 $G$ 后：
-- **噪声过滤**：保留累积解释方差达到 $\beta_e$ 的前 $k^*$ 个主成分
-- **概念重要性选择**：计算概念重要性向量 $s = \sum_{i=1}^{k^*} \lambda_i v_i^2$，保留累积重要性达到 $\beta_c$ 的概念子集 $\hat{\mathcal{C}}$
+### 损失函数 / 训练策略
 
-核心直觉：softmax放大前景概念、抑制背景噪声，加上CLIP的物体偏好，使协方差矩阵的主特征向量自然集中在任务相关的物体语义上。类似LSA中的词频加权。
-
-### 关键设计3：正反知识蒸馏
-
-训练中学生的跨模态表示会因联合优化而语义漂移。用冻结教师的表示进行双向蒸馏：
-
-$$\mathcal{L}_{\text{kd}} = \underbrace{-\frac{1}{|\mathcal{B}|}\sum_{i \in \mathcal{B}} \sigma(\hat{z}_i^*) \log \sigma(\hat{z}_i)}_{\text{前向蒸馏}} + \underbrace{-\frac{1}{|\mathcal{B}|}\sum_{i \in \mathcal{B}} \sigma(\hat{z}_i) \log \sigma(\hat{z}_i^*)}_{\text{反向蒸馏}}$$
-
-前向蒸馏让学生对齐教师分布，反向蒸馏惩罚学生在教师认为不相关概念上的概率质量。两者结合实现更紧密的师生对齐。教师表示可预计算→训练高效。
-
-### 总损失函数
-
-$$\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{c}} + \mathcal{L}_{\text{kd}}$$
-
-其中 $\mathcal{L}_{\text{cls}}$ 包含有监督/无监督分类损失，$\mathcal{L}_{\text{c}}$ 包含有监督/无监督对比损失。仅微调ViT-B/16的最后一个transformer block。
+总目标把三类损失相加 $\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{c}} + \mathcal{L}_{\text{kd}}$：$\mathcal{L}_{\text{cls}}$ 是有监督与无监督分类损失，$\mathcal{L}_{\text{c}}$ 是有监督与无监督对比损失，$\mathcal{L}_{\text{kd}}$ 即上述双向蒸馏。训练侧只微调ViT-B/16的最后一个transformer block，文本编码器全程冻结、教师表示预计算，所以整体训练效率才能与单模态方法看齐。
 
 ## 实验结果
 
@@ -168,9 +152,9 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{c}} + \mathcal{L}_
 
 - [\[CVPR 2026\] Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery](../../CVPR2026/multimodal_vlm/multi-modal_representation_learning_via_semi-supervised_rate_reduction_for_gener.md)
 - [\[ICLR 2026\] Enhanced Continual Learning of Vision-Language Models with Model Fusion](enhanced_continual_learning_of_vision-language_models_with_model_fusion.md)
-- [\[ICLR 2026\] Steering and Rectifying Latent Representation Manifolds in Frozen Multi-Modal LLMs for Video Anomaly Detection](steering_and_rectifying_latent_representation_manifolds_in_frozen_multi-modal_ll.md)
 - [\[CVPR 2026\] Learning What Matters: Prioritized Concept Learning via Relative Error-driven Sample Selection](../../CVPR2026/multimodal_vlm/learning_what_matters_prioritized_concept_learning_via_relative_error-driven_sam.md)
 - [\[ICLR 2026\] Unified Vision-Language Modeling via Concept Space Alignment](unified_vision-language_modeling_via_concept_space_alignment.md)
+- [\[NeurIPS 2025\] On the Value of Cross-Modal Misalignment in Multimodal Representation Learning](../../NeurIPS2025/multimodal_vlm/on_the_value_of_cross-modal_misalignment_in_multimodal_representation_learning.md)
 
 </div>
 

@@ -39,36 +39,23 @@ tags:
 
 ## 方法详解
 
-### 关键设计一：策略-参考双模型架构
+### 整体框架
 
-- **功能**：将带top-$p$稀疏注意力的MLLM（如Qwen2-VL+ZipVL）作为策略模型$\pi_\theta$，原始标准注意力MLLM（参数冻结）作为参考模型$\pi_{\text{ref}}$。
-- **核心思路**：策略模型在解码时执行稀疏token选择和KV cache裁剪，参考模型通过KL散度$\mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$锚定训练，防止过度偏离原始能力。
-- **设计动机**：参考模型稳定学习+限制精度损失，即使在高稀疏率下也保持任务保真度。Top-$p$稀疏注意力在每层独立决定保留token数：
-$$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \times \ell\}$$
-其中$a_j = \sum_{c=1}^{\ell} \mathbf{A}_{c,j}$为累积注意力分数，$\ell$为序列长度。
+Sparsity Forcing 把"让 MLLM 更稀疏"当成一个 RL 目标来训练：带 top-$p$ 稀疏注意力的 MLLM 充当策略模型 $\pi_\theta$，参数冻结的原始 MLLM 充当参考模型 $\pi_{\text{ref}}$。对每个视觉-语言 query，策略模型用若干个不同的保留阈值各跑一次自回归解码（rollout），按"答案是否正确 + token 砍掉多少"打联合奖励，再用 GRPO 做组内对比优化。整个训练 loop 用的是和部署时一模一样的稀疏注意力 + KV cache 裁剪流程，因此学到的稀疏性可以直接迁移到推理。
 
-### 关键设计二：多预算Rollout探索
+### 关键设计
 
-- **功能**：对每个视觉-语言query，使用$N$个不同的注意力保留阈值$p_n \sim \mathcal{U}(0,1)$进行独立rollout，生成$N$个答案$\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$及对应token比率$\{\tau_1, \dots, \tau_N\}$。
-- **核心思路**：渐进式预算扫描(progressive budget sweep) — 不同$p$构成从稀疏到密集的梯度测试：小$p$保留少token看是否还能答对，大$p$保留多token作为正确性兜底。训练范围设为$p \in [0.94, 0.975]$，步长0.005。
-- **设计动机**：避免手工定义正/负样本对（DPO的痛点），让多预算rollout自然产生对比信号 — 正确且高效的rollout获正优势，错误或低效的获负优势。随训练推进，最小正确预算动态变化，rollout自动适应。
+**1. 策略-参考双模型架构：在高稀疏率下守住原始能力。** 策略模型 $\pi_\theta$ 在解码时执行稀疏 token 选择和 KV cache 裁剪，其 top-$p$ 注意力在每一层独立决定保留多少 token——把当层注意力分数累积排序，取最小的前缀 $b$ 使累积质量达到阈值：$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \times \ell\}$，其中 $a_j = \sum_{c=1}^{\ell} \mathbf{A}_{c,j}$ 是第 $j$ 个 token 的累积注意力分数，$\ell$ 为序列长度。这样裁剪是激进的，单靠它很容易把模型推坏，所以引入冻结的参考模型 $\pi_{\text{ref}}$，通过 KL 散度 $\mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ 把策略锚回原始分布附近。参考模型相当于一根安全绳，让模型敢于探索高稀疏率，又不至于偏离到丢失任务保真度。
 
-### 关键设计三：效率-性能联合奖励与GRPO更新
+**2. 多预算 Rollout 探索：让对比信号自己长出来，不用手工标正负样本。** 对同一个 query，方法用 $N$ 个不同阈值 $p_n$ 各做一次独立 rollout，得到 $N$ 个答案 $\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$ 和对应的 token 比率 $\{\tau_1, \dots, \tau_N\}$。这些阈值构成一次从稀疏到密集的"预算扫描"：小 $p$ 只保留少量 token，赌还能不能答对；大 $p$ 多留 token，充当正确性兜底。训练阈值范围设为 $p \in [0.94, 0.975]$、步长 0.005。这样做绕开了 DPO 需要预先定义正/负样本对的痛点——同一组里既高效又答对的 rollout 自然拿到正优势，答错或留太多 token 的拿负优势；而且随着训练推进，"能答对的最小预算"会一路下移，rollout 范围跟着自动适应，不需要人工调整偏好对。
 
-- **功能**：为每个rollout计算联合奖励并通过GRPO的组内归一化优势更新策略。
-- **核心思路**：性能奖励$r_{\text{per}} \in \{0, 1\}$（答案是否正确）+ 效率奖励$r_{\text{eff}} = 1 - \tau_i$（token减少率）。引入组级指示器$C$：
-$$C = \mathbb{1}\{\exists j: \text{Correct}(\mathbf{o}_j) = 1\}$$
-仅当组内至少一个rollout正确时才计入效率奖励：
-$$r_i = r_{\text{per},i} + C \cdot r_{\text{eff},i}$$
-优势通过组内归一化：$A_i = (r_i - \text{mean}) / \text{std}$，最终使用GRPO的clip surrogate目标更新：
+**3. 效率-性能联合奖励与 GRPO 更新：把效率从代理目标变成端到端目标。** 每个 rollout 拿两份奖励：性能奖励 $r_{\text{per}} \in \{0, 1\}$ 看答案对错，效率奖励 $r_{\text{eff}} = 1 - \tau_i$ 等于 token 减少率。关键是加了一个组级指示器 $C = \mathbb{1}\{\exists j: \text{Correct}(\mathbf{o}_j) = 1\}$，只有当组里至少有一个 rollout 答对时，效率奖励才计入总奖励：$r_i = r_{\text{per},i} + C \cdot r_{\text{eff},i}$。这是防崩的核心——如果一组全错，没有 $C$ 把关，效率信号还会继续奖励"砍得更狠"，把模型推向输出空答案的极端稀疏。拿到奖励后按组内归一化算优势 $A_i = (r_i - \text{mean}) / \text{std}$，再用 GRPO 的 clip surrogate 目标更新：
+
 $$\mathcal{J}(\theta) = \mathbb{E}\left[\min\left(\frac{\pi_\theta(\mathbf{o}_n|\mathbf{x})}{\pi_{\theta_{\text{old}}}(\mathbf{o}_n|\mathbf{x})} A_i,\; \kappa(\cdot) A_i\right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})\right]$$
-- **设计动机**：(1) 组级指示器$C$防止全错时效率信号推动极端稀疏（退化为空回答）；(2) 联合奖励让效率和性能成为端到端目标而非代理；(3) GRPO的on-policy特性使正/负对比随训练动态更新，避免DPO的预定义偏好对陈旧问题。
 
-### 关键设计四：推理一致性
+GRPO 的 on-policy 特性让正/负对比随训练实时更新，避免了 DPO 预定义偏好对会越训越陈旧的问题，效率和性能由此成为真正的端到端优化目标，而不是注意力锐度那类只能间接逼近 token 预算的代理。
 
-- **功能**：训练和推理使用完全相同的稀疏注意力pipeline — 同一token裁剪策略+KV cache管理。
-- **核心思路**：推理时固定$p=0.975$（训练范围上界），保证精度的同时获得训练中学到的效率提升。模型在训练中已学会在$p=0.975$下也能产生更稀疏的注意力分布。
-- **设计动机**：SFT方法训练时teacher forcing、推理时autoregressive→pipeline不一致→效率收益不可靠。RL方法训练时就用autoregressive rollout→deployment-aligned。
+**4. 推理一致性：训练 loop 完全镜像部署 pipeline。** 训练和推理用的是同一套稀疏注意力流程——同样的 token 裁剪策略、同样的 KV cache 管理。推理时把阈值固定在训练范围上界 $p=0.975$，模型在训练中已经学会即便在这个相对宽松的阈值下也产生更稀疏的注意力分布，于是既保住精度又带走训练里学到的效率收益。这一点正是对 SFT 的纠偏：SFT 训练时用 teacher forcing、推理时是自回归解码，两条 pipeline 不一致，导致稀疏作用在 ground-truth token 上、实际效率收益打折；而这里训练时就用自回归 rollout，做到 deployment-aligned。
 
 ## 实验结果
 

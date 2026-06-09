@@ -2,7 +2,7 @@
 title: >-
   1463 篇 ICML2026 论文解读 · 每篇 5 分钟读懂
 description: >-
-  1463篇ICML2026论文解读，涵盖图像生成(124篇)、多模态 VLM(106篇)、模型压缩(101篇)、强化学习(94篇)、可解释性(72篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(47篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1463篇ICML2026论文解读，涵盖图像生成(125篇)、多模态 VLM(106篇)、模型压缩(101篇)、强化学习(95篇)、可解释性(72篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(47篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "AI顶会"
@@ -21,7 +21,7 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2026 论文笔记
 
-1463篇ICML2026论文解读，涵盖图像生成(124篇)、多模态 VLM(106篇)、模型压缩(101篇)、强化学习(94篇)、可解释性(72篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(47篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1463篇ICML2026论文解读，涵盖图像生成(125篇)、多模态 VLM(106篇)、模型压缩(101篇)、强化学习(95篇)、可解释性(72篇)、LLM 推理(63篇)、优化/理论(60篇)、LLM 安全(47篇)等 48个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -88,6 +88,10 @@ tags:
 **[Bayesian Tensor Decomposition with Diffusion Model Prior](image_generation/bayesian_tensor_decomposition_with_diffusion_model_prior.md)**
 
 :   DiffBCP 将预训练扩散模型作为隐式数据先验注入贝叶斯 CP 张量分解，通过 split Gibbs 采样器实现可处理的后验推断，在图像修复和去噪任务上全面超越传统和深度张量分解基线（FFHQ 上 PSNR 最高提升 +2.33 dB）。
+
+**[Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion](image_generation/beyond_generative_priors_minority_sampling_with_jepa-guided_diffusion.md)**
+
+:   提出 JEPA Guidance，利用 JEPA（如 DINOv2）编码器的隐式密度信号引导扩散模型采样，将少数样本（minority sample）的定义从"生成模型先验下的低密度"转变为"世界先验下的低密度"，在无条件、类条件和文生图场景均实现更具语义意义的稀有样本生成。
 
 **[Bootstrap Your Generator: Unpaired Visual Editing with Flow Matching](image_generation/bootstrap_your_generator_unpaired_visual_editing_with_flow_matching.md)**
 
@@ -1677,6 +1681,10 @@ tags:
 
 :   本文提出 PbCRL，用一个带"死区"的扩展 Bradley-Terry 偏好模型从轨迹比较中学安全约束，再叠加一个信噪比正则避免代价函数被压平，最后用两阶段（离线预训练 + 在线少量标注微调）训练打通 Safe RL 的完整流水线，在 Safety Gymnasium、自动驾驶与语言模型对齐三类任务上既显著降代价、又保住奖励。
 
+**[Safety Generalization Under Distribution Shift in Safe Reinforcement Learning: A Diabetes Testbed](reinforcement_learning/safety_generalization_under_distribution_shift_in_safe_reinforcement_learning_a_.md)**
+
+:   作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%，于是提出用 Basis-Adaptive Neural ODE 预测血糖轨迹、再用预测性屏蔽 (predictive shielding) 在测试时过滤危险动作，让 PPO-Lag / CPO 等基线在 OOD 病人上重新拿回 13–14% TIR。
+
 **[Shapley Neuron Values for Continual Learning: Which Neurons Matter Most?](reinforcement_learning/shapley_neuron_values_for_continual_learning_which_neurons_matter_most.md)**
 
 :   作者把合作博弈论里的 Shapley 值搬到卷积神经网络的"滤波器"级别，用 Monte Carlo + 截断 + 多臂老虎机三重近似估计每个 Neuron 的连续重要度排名，然后冻结 Top-$r\%$ 的"专家"Neuron、留下其余继续可塑训练，从而在不存储样本、不扩展架构的前提下把 ImageNet-1k 上类增量学习的精度比第二名 buffer-free 方法再提升 $+2.88\%$、任务增量提升 $+6.46\%$。
@@ -3177,6 +3185,10 @@ tags:
 
 :   本文用 Sender–Receiver 两方 Stackelberg 博弈 + Bayesian Persuasion 思想，把"隐私"重新表述为 Receiver 在最坏 data-prior 下的相对评分规则损失，给出统一定义 $(\mathcal{S},\mathcal{Q}_x,\kappa,\delta)$-PP，同时把 pure DP 和 probabilistic DP 收编为特例，并首次为**确定性算法**（如无噪经验均值）给出非平凡的形式化隐私保证。
 
+**[Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](ai_safety/position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)**
+
+:   这是一篇 ICML 立场论文：作者主张 ML 公平性研究不能只盯着 race/sex 这类"敏感属性"，而必须把"社会决定因素"（neighborhood、ADI、学校经费、医疗可及性等情境变量）也纳入审计，并用大学录取理论模型 + 美国人口普查数据 + 乳腺癌筛查半合成实验，证明只围绕敏感属性的缓解策略反而可能制造新的结构性不公。
+
 **[Position: Embodied AI Requires a Privacy-Utility Trade-off](ai_safety/position_embodied_ai_requires_a_privacy-utility_trade-off.md)**
 
 :   本文是一篇 position paper，主张具身 AI 的隐私不能用单阶段补丁解决，必须当作横跨 instruction / perception / planning / interaction 全生命周期的架构级动态控制信号，并提出 SPINE 框架，用 L1-L4 四级隐私分类矩阵在每个阶段联动调整智能体行为。
@@ -3425,6 +3437,10 @@ tags:
 
 :   本文把结构药物设计的 condition 从"刚性 empty pocket"换成"包含配体与溶剂的 filler 低分辨率电子云"，并提出第一个 decoder-only autoregressive 的 EDMolGPT，在 DUD-E 101 个靶点上 bioactive recovery 达 41%、远超先前 ED-based 方法。
 
+**[iLoRA: Bayesian Low-Rank Adaptation with Latent Interaction Graphs for Microbiome Diagnosis](computational_biology/ilora_bayesian_low-rank_adaptation_with_latent_interaction_graphs_for_microbiome.md)**
+
+:   iLoRA 用贝叶斯方法从每个微生物组样本里推断一张稀疏的菌群交互图（Poisson 边 → Laplace 稀疏化 → GNN 嵌入），再用这个图去生成 input-conditioned 的 LoRA 矩阵 $A$，让 LLM 在做 IBD 诊断的同时把"是哪些菌在 cross-talk"这件事和预测一起学出来。
+
 **[Influence-Guided Symbolic Regression: Scientific Discovery via LLM-Driven Equation Search with Granular Feedback](computational_biology/influence-guided_symbolic_regression_scientific_discovery_via_llm-driven_equatio.md)**
 
 :   IGSR 把符号回归拆成"LLM 提议基函数 ψ_j + 逐项影响力分数 Δ_j 剪枝"两步循环，并把这个循环嵌入 MCTS 来搜组合空间，在 6 个生物医学基准和 LLM-SRBench 上同时拿下最佳 MSE 与符号召回，还在湿实验里发现了 DNA 甲基化与 RNA Pol II 停顿的新关系。
@@ -3520,146 +3536,6 @@ tags:
 **[What Makes a Representation Good for Single-Cell Perturbation Prediction?](computational_biology/what_makes_a_representation_good_for_single-cell_perturbation_prediction.md)**
 
 :   这篇论文提出 PerturbedVAE，认为单细胞扰动预测的好表征必须显式分离占主导的扰动不变背景程序和稀疏的扰动响应信号，并用因果结构组织后者，从而更好泛化到未见双基因组合扰动。
-
----
-
-## 🏥 医学图像 { #medical_imaging }
-
-**[A Hypertoroidal Covering for Perfect Color Equivariance](medical_imaging/a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
-
-:   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
-
-**[Are We Overconfident in Models and Results for Semi-Supervised 3D Medical Image Segmentation?](medical_imaging/are_we_overconfident_in_models_and_results_for_semi-supervised_3d_medical_image_.md)**
-
-:   这篇论文指出半监督 3D 医学图像分割同时存在模型伪标签过度自信和评测协议过度乐观两类问题，并提出 TCSeg 用置信度-不确定性双轴可靠性和概率、特征、图像三空间校准来抑制确认偏差，同时倡导多随机种子、best/last checkpoint 同时报喜报忧的评测方式。
-
-**[Auditing Sybil: Explaining Deep Lung Cancer Risk Prediction Through Generative Interventional Attributions](medical_imaging/auditing_sybil_explaining_deep_lung_cancer_risk_prediction_through_generative_in.md)**
-
-:   本文提出 S(H)NAP——基于 3D 扩散桥的「移除 + 插入」生成式干预框架，把 Sybil 这一前沿肺癌风险预测模型的决策反向拆解为「肺结节主效应 + 两两交互 + 背景」的 LMPI（线性+二阶交互模型），首次以因果而非相关的方式审计出它对 ECG 电极、衣物金属扣等院内伪影的依赖以及对外周肺结节的「径向不敏感」严重失败模式。
-
-**[Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion](medical_imaging/beyond_generative_priors_minority_sampling_with_jepa-guided_diffusion.md)**
-
-:   提出 JEPA Guidance，利用 JEPA（如 DINOv2）编码器的隐式密度信号引导扩散模型采样，将少数样本（minority sample）的定义从"生成模型先验下的低密度"转变为"世界先验下的低密度"，在无条件、类条件和文生图场景均实现更具语义意义的稀有样本生成。
-
-**[CASCADE Conformal Prediction: Uncertainty-Adaptive Prediction Intervals for Two-Stage Clinical Decision Support](medical_imaging/cascade_conformal_prediction_uncertainty-adaptive_prediction_intervals_for_two-s.md)**
-
-:   提出 CASCADE 框架，将两阶段临床决策系统中第一阶段分类器的认知不确定性（通过 Venn-Abers 预测器量化）传播到第二阶段回归预测区间，使高置信患者的预测区间缩窄 38.9%，同时为不确定病例自动扩展安全缓冲，实现自适应覆盖保证。
-
-**[Controllable Generative Sandbox for Causal Inference](medical_imaging/controllable_generative_sandbox_for_causal_inference.md)**
-
-:   本文提出 CausalMix：一个变分生成框架，把数据类型特定的 multi-head decoder + Bayesian Gaussian 混合潜在 prior 与三类可独立调控的因果"旋钮"（overlap $\alpha(X)$、CATE 函数 $\tau(X)$、未观测混杂 $\kappa(X,T)$）联合优化，从而在保持真实数据分布 fidelity 的前提下让用户自由设计 counterfactual benchmark，在 mCRPC（前列腺癌）真实病例上验证 CausalMix 既能高保真复现 mixed-type 表格，又能稳定地按需注入 overlap / confounding / 异质效应，用作 CATE 估计器的可控 stress test。
-
-**[DGNO: Discontinuous Galerkin Neural Operator for Pathology Defocus Deblurring](medical_imaging/discontinuous_galerkin_neural_operator_for_pathology_defocus_deblurring.md)**
-
-:   DGNO 把病理显微图像的散焦去模糊重新表述为"空间变化积分算子"的反问题，用不连续 Galerkin 风格把全局核拆成元素局部积分算子 + 界面数值通量，既保留神经算子的物理可解释性，又能处理病理图像本质上的局部不连续模糊；在 BBBC006w1 等数据集上超越 NAFNet / Restormer / MambaIRv2 等 SOTA。
-
-**[DP-KFC: Data-Free Preconditioning for Privacy-Preserving Deep Learning](medical_imaging/dp-kfc_data-free_preconditioning_for_privacy-preserving_deep_learning.md)**
-
-:   本文提出 DP-KFC：基于"Fisher 矩阵的标度由架构决定、相关结构可用模态级频谱统计近似"的观察，用结构化合成噪声（图像用 $1/f^\alpha$ pink noise，文本用 Zipf 采样）探测网络重建 KFAC 预条件子，既不消耗隐私预算也不引入分布偏移，在强隐私（$\varepsilon\le 3$）下持续超过 DP-SGD 与公共数据预条件方法。
-
-**[EEG-Based Multimodal Learning via Hyperbolic Mixture-of-Curvature Experts](medical_imaging/eeg-based_multimodal_learning_via_hyperbolic_mixture-of-curvature_experts.md)**
-
-:   EEG-MoCE 给 EEG-based 多模态学习（情绪/睡眠/认知）每个模态分配一个**可学习曲率**的 Lorentz 流形 expert，再用"曲率大→层级结构更丰富→在 fusion 中权重更高"的 curvature-aware attention 做跨模态融合，在 EAV/ISRUC/Cognitive 三个数据集上 cross-subject 准确率分别 +14.14%、+3.34%、+7.98%。
-
-**[Evidential Reasoning Advances Interpretable Real-World Disease Screening](medical_imaging/evidential_reasoning_advances_interpretable_real-world_disease_screening.md)**
-
-:   EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 cross-attention + self-attention 在当前病例和证据间做循证推理，既给出**回溯式可解释性**（哪几个历史病例支持当前判断）又给出**定位可解释性**（对比检索得到的异常图），在 4 个真实外部测试集上把高召回处的特异性提升到 SOTA。
-
-**[Factored Classifier-Free Guidance](medical_imaging/factored_classifier-free_guidance.md)**
-
-:   本文识别出 CFG 在扩散模型反事实生成中存在「属性放大 (attribute amplification)」失效模式——单一全局 $\omega$ 会把本不该改变的属性一起放大，并提出 FCFG：按因果图分组、为每组属性分配独立 guidance 权重，从而在 CelebA-HQ / EMBED / MIMIC-CXR 上显著降低非目标属性漂移、改善反事实可逆性。
-
-**[Federated Distillation for Whole Slide Image via Gaussian-Mixture Feature Alignment and Curriculum Integration](medical_imaging/federated_distillation_for_whole_slide_image_via_gaussian-mixture_feature_alignm.md)**
-
-:   本文提出 FedHD：在异构联邦病理学场景下，用 Gaussian-mixture 特征对齐做「一对一」WSI 特征级蒸馏，再通过课程学习把跨机构合成特征逐步注入本地训练，使各机构能在不共享原始数据、不交换模型参数的前提下协作，且兼容异构 MIL 架构与特征提取器，在 TCGA-IDH / CAMELYON16 / CAMELYON17 上全面超越现有联邦与蒸馏基线。
-
-**[Foundation VAEs for 3D CT Reconstruction, Augmentation, and Generation](medical_imaging/foundation_vaes_for_3d_ct_reconstruction_augmentation_and_generation.md)**
-
-:   本文论证了一个反直觉但实用的发现——在自然图像/视频上预训练的 Foundation VAE 不需要任何医学微调就能作为统一接口同时支持 CT 重建、增强、生成；其重建只是去噪不偏移边界，因此重建图既可做去噪增强（pancreatic / lung tumor NSD +3.9%），其潜空间又可承载 CT 条件扩散生成（FVD −3.9%，CT-CLIP +36.2%，多疾病忠实度 AUC +2.76%）。
-
-**[OT-Bridge Editor: Geometrically Constrained Stenosis Editing in Coronary Angiography via Entropic Optimal Transport](medical_imaging/geometrically_constrained_stenosis_editing_in_coronary_angiography_via_entropic_.md)**
-
-:   OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血管-结构复合域里的约束熵 OT 问题"，用 Schrödinger Bridge 沿路径加几何投影监督，做到像素级形状/位置可控的合成造影，在 ARCADE 公开集上把下游狭窄检测 mAP@0.5 相对提升 27.8%。
-
-**[iLoRA: Bayesian Low-Rank Adaptation with Latent Interaction Graphs for Microbiome Diagnosis](medical_imaging/ilora_bayesian_low-rank_adaptation_with_latent_interaction_graphs_for_microbiome.md)**
-
-:   iLoRA 用贝叶斯方法从每个微生物组样本里推断一张稀疏的菌群交互图（Poisson 边 → Laplace 稀疏化 → GNN 嵌入），再用这个图去生成 input-conditioned 的 LoRA 矩阵 $A$，让 LLM 在做 IBD 诊断的同时把"是哪些菌在 cross-talk"这件事和预测一起学出来。
-
-**[Learning Multi-Scale Hypergraph for High-Order Brain Connectivity Analysis](medical_imaging/learning_multi-scale_hypergraph_for_high-order_brain_connectivity_analysis.md)**
-
-:   MuHL 用可学习尺度的图小波把脑 ROI 特征分解成多分辨率表征，再以"节点嵌入 × 共享投影矩阵"动态生成 soft 超边，让 AD/PD 多阶段分类在 ADNI 上做到 93.2% Acc、PPMI 上做到 76.8% Acc，同时给出可解释的关键 ROI 与超边。
-
-**[Marrying Generative Model of Healthcare Events with Digital Twin of Social Determinants of Health for Disease Reasoning](medical_imaging/marrying_generative_model_of_healthcare_events_with_digital_twin_of_social_deter.md)**
-
-:   本文提出 DiffDT：用一个条件 Latent Diffusion 框架把电子病历（ICD-coded 事件序列）与多器官生物标记数字孪生（脑/心/肝/肾的影像衍生表格特征与脑功能连接 SPD 矩阵）连起来，关键创新是一个基于 Cholesky 分解的 SPD-VQVAE 把 $\mathcal{O}(N^3)$ 的 SPD 流形扩散降到流形保形且高效的潜空间，再让 AR 模型借“生成数字孪生 → 预测下一个 ICD”这条中介路径完成多通路疾病推理；在 UKB 上对 1944 类疾病的下一次预测 AUC 提到 0.91，刷新 SOTA。
-
-**[MedCRP-CL: Continual Medical Image Segmentation via Bayesian Nonparametric Semantic Modality Discovery](medical_imaging/medcrp-cl_continual_medical_image_segmentation_via_bayesian_nonparametric_semant.md)**
-
-:   用中国餐馆过程 (CRP) 对临床文本 prompt 做在线贝叶斯非参数聚类，自动发现"语义模态"，再为每个语义模态分配独立 LoRA 适配器并配合模态内 EWC，在 16 个医学分割任务上把 Dice 推到 73.3% 同时遗忘率降到 4.1%，参数仅为 MoE 基线的 1/6。
-
-**[MEG-XL: Data-Efficient Brain-to-Text via Long-Context Pre-Training](medical_imaging/meg-xl_data-efficient_brain-to-text_via_long-context_pre-training.md)**
-
-:   MEG-XL 用 2.5 分钟（191k token）的 MEG 上下文做 mask token 预训练（比此前长 5–300×），再微调到 50 词的脑到文本任务上，仅用 1 小时数据就达到 SOTA 监督方法 50 小时的解码精度，并显著超过所有 brain foundation models。
-
-**[On Revisiting Entropy for Identifying Mislabeled Images](medical_imaging/on_revisiting_entropy_for_identifying_mislabeled_images.md)**
-
-:   作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量，在 ISIC/DeepDRiD/PANDA/CheXpert 等多个医学数据集和 CIFAR-100N 上以纯插拔方式刷新错标检测 SOTA（最高领先 11%+）。
-
-**[PaCX-MAE: Physiology-Augmented Chest X-Ray Masked Autoencoder](medical_imaging/pacx-mae_physiology-augmented_chest_x-ray_masked_autoencoder.md)**
-
-:   PaCX-MAE 在 MAE 预训练的胸片 ViT 之上，用 LoRA 微调把 ECG 和实验室检验两类生理信号编码器作为冻结教师，通过 InfoNCE 对比 + 余弦回归的双重蒸馏，把"看不见的生理上下文"注入纯图像编码器，推理时只需胸片即可在 9 个下游基准上整体超越同架构 MAE 基线，对生理依赖性任务尤为明显（MedMod +2.7 AUROC、VinDr +6.5 F1）。
-
-**[Plug-and-Play Diffusion Meets ADMM: Dual-Variable Coupling for Robust Medical Image Reconstruction](medical_imaging/plug-and-play_diffusion_meets_admm_dual-variable_coupling_for_robust_medical_ima.md)**
-
-:   本文把 ADMM 的对偶变量重新塞回 PnP 扩散先验循环，用"对偶"提供积分反馈消除稳态偏差，再用一个频域 Spectral Homogenization 模块把结构化对偶残差白化成伪 AWGN，避免触发扩散去噪器的 OOD 幻觉，在 sparse-view / limited-angle CT 与加速 MRI 上同时拿到 SOTA 保真度和约 3× 推理加速。
-
-**[Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning](medical_imaging/polaris_coupled_orbital_polar_embeddings_for_hierarchical_concept_learning.md)**
-
-:   Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束，在 taxonomy expansion 任务上把 top-K 召回提升最多 19 点、mean rank 降低 60%。
-
-**[Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](medical_imaging/position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)**
-
-:   这是一篇 ICML 立场论文：作者主张 ML 公平性研究不能只盯着 race/sex 这类"敏感属性"，而必须把"社会决定因素"（neighborhood、ADI、学校经费、医疗可及性等情境变量）也纳入审计，并用大学录取理论模型 + 美国人口普查数据 + 乳腺癌筛查半合成实验，证明只围绕敏感属性的缓解策略反而可能制造新的结构性不公。
-
-**[Rethink the Role of Neural Decoders in Quantum Error Correction](medical_imaging/rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
-
-:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
-
-**[Safety Generalization Under Distribution Shift in Safe Reinforcement Learning: A Diabetes Testbed](medical_imaging/safety_generalization_under_distribution_shift_in_safe_reinforcement_learning_a_.md)**
-
-:   作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%，于是提出用 Basis-Adaptive Neural ODE 预测血糖轨迹、再用预测性屏蔽 (predictive shielding) 在测试时过滤危险动作，让 PPO-Lag / CPO 等基线在 OOD 病人上重新拿回 13–14% TIR。
-
-**[Scaling Vision Transformers for Functional MRI with Flat Maps](medical_imaging/scaling_vision_transformers_for_functional_mri_with_flat_maps.md)**
-
-:   把 3D fMRI 体积按"皮层展平图"投影成 2D 视频后直接喂给标准 spacetime MAE-ViT，得到一个在 2.1K 小时 HCP 数据上训练的 CortexMAE：在认知状态解码上大幅超 SOTA，验证 flat map 是体素 (volume) 和脑区平均 (parcellation) 之间的"goldilocks zone"；同时发布首个开源 fMRI 基础模型基准 Brainmarks，给出 fMRI 模型的第一份系统 scaling law 与一个"个体特质预测仍打不过简单功能连接 baseline"的诚实 null result。
-
-**[Seizure-Semiology-Suite (S³): A Clinically Multimodal Dataset, Benchmark, and Models for Seizure Semiology Understanding](medical_imaging/seizure-semiology-suite_s3_a_clinically_multimodal_dataset_benchmark_and_models_.md)**
-
-:   本文构建了首个大规模专家标注的癫痫发作视频数据集 S³（438 段视频、35,000+ 密集标签、20 项 ILAE 语义学特征），配套设计了七级层次化任务基准与临床对齐的 Seizure-RQI 报告质量指标，系统暴露了 11 个开源 MLLM 在时序定位、空间偏侧化和临床忠实性上的失败模式，并通过领域微调 + 两阶段神经符号框架将癫痫 vs 非癫痫分类 F1 提升到 0.96。
-
-**[SEMIR: Semantic Minor-Induced Representation Learning on Graphs for Visual Segmentation](medical_imaging/semir_semantic_minor-induced_representation_learning_on_graphs_for_visual_segmen.md)**
-
-:   SEMIR 把体素栅格当作母图 $G$，通过参数化的边收缩 / 节点删除 / 边删除把它压成一张「边界对齐」的图 minor $H$（节点数从 $\sim10^7$ 降到 $\sim10^3$），用 5–20 张少样本黑盒优化 $\Theta$ 最大化边界 Dice，再在 minor 上用 GNN 做超节点分类，最后通过 minor 与体素之间的双射 exact lifting 回到原栅格——在 BraTS / KiTS / LiTS 三大肿瘤分割任务的少数类 Dice 上稳定超过 nnU-Net，且仅需 16GB T4 GPU。
-
-**[SynerMedGen: Synergizing Medical Multimodal Understanding with Generation via Task Alignment](medical_imaging/synermedgen_synergizing_medical_multimodal_understanding_with_generation_via_tas.md)**
-
-:   SynerMedGen 提出"生成对齐理解（generation-aligned understanding）"原则——把理解任务直接从同一份配对合成数据里派生出来（CTS / MI / TIA 三个任务），先两阶段训练让理解分支学到对合成有用的表征，再迁移到 latent flow matching 生成分支，在 22 个医学合成任务上同时碾压专用合成模型和已有统一 MLLM。
-
-**[CAME-Grad: The Double Dilemma in Multi-Task Radiology Report Generation — A Gradient Dynamics Analysis and Solution](medical_imaging/the_double_dilemma_in_multi-task_radiology_report_generation_a_gradient_dynamics.md)**
-
-:   本文用 SDE 框架分析放射学报告生成（RRG）多任务学习里"报告生成 vs 临床约束"梯度冲突的两面性——drift term 偏离 Pareto 最优 + diffusion term 衰减无法逃局部最优；提出 CAME-Grad 优化器（方向纠偏 + 能量注入 + 自适应融合）作为线性缩放的即插即用替代，在 MIMIC-CXR / IU X-Ray 上 8 个 RRG 方法平均临床效能 +2.3% / +1.9%。
-
-**[PathCTM: Thinking in Scales — Accelerating Gigapixel Pathology Image Analysis via Adaptive Continuous Reasoning](medical_imaging/thinking_in_scales_accelerating_gigapixel_pathology_image_analysis_via_adaptive_.md)**
-
-:   PathCTM 把全切片图像（WSI）分析从"穷举高倍 patch"重构为"从低倍全局到高倍局部"的连续多尺度推理——基于 Continuous Thought Machine 引入 thinking-in-scales 范式 + 注意力引导区域剪枝 + 置信感知早停，patch 数减少 95.95%、推理时间减少 95.62% 且 AUC 不降反升。
-
-**[Turning Drift into Constraint: Robust Reasoning Alignment in Non-Stationary Multi-Stream Environments](medical_imaging/turning_drift_into_constraint_robust_reasoning_alignment_in_non-stationary_envir.md)**
-
-:   本文把多个 MLLM 之间的推理"漂移"重新解释成 DPO 中的负样本约束，用 Plackett-Luce 偏好损失同时压制 N 个 source model 的发散轨迹，让 7B 学生模型在不需要 ground-truth 报告的前提下，仅用 10% 的 MIMIC-CXR 就在胸片分类与报告生成任务上超过所有 source teacher。
-
-**[Why Specialist Models Still Matter: A Heterogeneous Multi-Agent Paradigm for Medical Artificial Intelligence](medical_imaging/why_specialist_models_still_matter_a_heterogeneous_multi-agent_paradigm_for_medi.md)**
-
-:   HetMedAgent 将通用 LLM、模态专科模型和临床医生组织成异构多智能体系统，通过冲突感知证据融合与不确定性路由，在心血管和胸片临床决策任务上证明专科模型与人类监督仍是医疗 AI 中不可替代的组成部分。
 
 ---
 
@@ -4599,6 +4475,106 @@ tags:
 
 ---
 
+## 🏥 医学图像 { #medical_imaging }
+
+**[Are We Overconfident in Models and Results for Semi-Supervised 3D Medical Image Segmentation?](medical_imaging/are_we_overconfident_in_models_and_results_for_semi-supervised_3d_medical_image_.md)**
+
+:   这篇论文指出半监督 3D 医学图像分割同时存在模型伪标签过度自信和评测协议过度乐观两类问题，并提出 TCSeg 用置信度-不确定性双轴可靠性和概率、特征、图像三空间校准来抑制确认偏差，同时倡导多随机种子、best/last checkpoint 同时报喜报忧的评测方式。
+
+**[Auditing Sybil: Explaining Deep Lung Cancer Risk Prediction Through Generative Interventional Attributions](medical_imaging/auditing_sybil_explaining_deep_lung_cancer_risk_prediction_through_generative_in.md)**
+
+:   本文提出 S(H)NAP——基于 3D 扩散桥的「移除 + 插入」生成式干预框架，把 Sybil 这一前沿肺癌风险预测模型的决策反向拆解为「肺结节主效应 + 两两交互 + 背景」的 LMPI（线性+二阶交互模型），首次以因果而非相关的方式审计出它对 ECG 电极、衣物金属扣等院内伪影的依赖以及对外周肺结节的「径向不敏感」严重失败模式。
+
+**[CASCADE Conformal Prediction: Uncertainty-Adaptive Prediction Intervals for Two-Stage Clinical Decision Support](medical_imaging/cascade_conformal_prediction_uncertainty-adaptive_prediction_intervals_for_two-s.md)**
+
+:   提出 CASCADE 框架，将两阶段临床决策系统中第一阶段分类器的认知不确定性（通过 Venn-Abers 预测器量化）传播到第二阶段回归预测区间，使高置信患者的预测区间缩窄 38.9%，同时为不确定病例自动扩展安全缓冲，实现自适应覆盖保证。
+
+**[DGNO: Discontinuous Galerkin Neural Operator for Pathology Defocus Deblurring](medical_imaging/discontinuous_galerkin_neural_operator_for_pathology_defocus_deblurring.md)**
+
+:   DGNO 把病理显微图像的散焦去模糊重新表述为"空间变化积分算子"的反问题，用不连续 Galerkin 风格把全局核拆成元素局部积分算子 + 界面数值通量，既保留神经算子的物理可解释性，又能处理病理图像本质上的局部不连续模糊；在 BBBC006w1 等数据集上超越 NAFNet / Restormer / MambaIRv2 等 SOTA。
+
+**[DP-KFC: Data-Free Preconditioning for Privacy-Preserving Deep Learning](medical_imaging/dp-kfc_data-free_preconditioning_for_privacy-preserving_deep_learning.md)**
+
+:   本文提出 DP-KFC：基于"Fisher 矩阵的标度由架构决定、相关结构可用模态级频谱统计近似"的观察，用结构化合成噪声（图像用 $1/f^\alpha$ pink noise，文本用 Zipf 采样）探测网络重建 KFAC 预条件子，既不消耗隐私预算也不引入分布偏移，在强隐私（$\varepsilon\le 3$）下持续超过 DP-SGD 与公共数据预条件方法。
+
+**[EEG-Based Multimodal Learning via Hyperbolic Mixture-of-Curvature Experts](medical_imaging/eeg-based_multimodal_learning_via_hyperbolic_mixture-of-curvature_experts.md)**
+
+:   EEG-MoCE 给 EEG-based 多模态学习（情绪/睡眠/认知）每个模态分配一个**可学习曲率**的 Lorentz 流形 expert，再用"曲率大→层级结构更丰富→在 fusion 中权重更高"的 curvature-aware attention 做跨模态融合，在 EAV/ISRUC/Cognitive 三个数据集上 cross-subject 准确率分别 +14.14%、+3.34%、+7.98%。
+
+**[Evidential Reasoning Advances Interpretable Real-World Disease Screening](medical_imaging/evidential_reasoning_advances_interpretable_real-world_disease_screening.md)**
+
+:   EviScreen 用「正常 + 病理」双知识库做区域级证据检索，再以 cross-attention + self-attention 在当前病例和证据间做循证推理，既给出**回溯式可解释性**（哪几个历史病例支持当前判断）又给出**定位可解释性**（对比检索得到的异常图），在 4 个真实外部测试集上把高召回处的特异性提升到 SOTA。
+
+**[Factored Classifier-Free Guidance](medical_imaging/factored_classifier-free_guidance.md)**
+
+:   本文识别出 CFG 在扩散模型反事实生成中存在「属性放大 (attribute amplification)」失效模式——单一全局 $\omega$ 会把本不该改变的属性一起放大，并提出 FCFG：按因果图分组、为每组属性分配独立 guidance 权重，从而在 CelebA-HQ / EMBED / MIMIC-CXR 上显著降低非目标属性漂移、改善反事实可逆性。
+
+**[Federated Distillation for Whole Slide Image via Gaussian-Mixture Feature Alignment and Curriculum Integration](medical_imaging/federated_distillation_for_whole_slide_image_via_gaussian-mixture_feature_alignm.md)**
+
+:   本文提出 FedHD：在异构联邦病理学场景下，用 Gaussian-mixture 特征对齐做「一对一」WSI 特征级蒸馏，再通过课程学习把跨机构合成特征逐步注入本地训练，使各机构能在不共享原始数据、不交换模型参数的前提下协作，且兼容异构 MIL 架构与特征提取器，在 TCGA-IDH / CAMELYON16 / CAMELYON17 上全面超越现有联邦与蒸馏基线。
+
+**[Foundation VAEs for 3D CT Reconstruction, Augmentation, and Generation](medical_imaging/foundation_vaes_for_3d_ct_reconstruction_augmentation_and_generation.md)**
+
+:   本文论证了一个反直觉但实用的发现——在自然图像/视频上预训练的 Foundation VAE 不需要任何医学微调就能作为统一接口同时支持 CT 重建、增强、生成；其重建只是去噪不偏移边界，因此重建图既可做去噪增强（pancreatic / lung tumor NSD +3.9%），其潜空间又可承载 CT 条件扩散生成（FVD −3.9%，CT-CLIP +36.2%，多疾病忠实度 AUC +2.76%）。
+
+**[OT-Bridge Editor: Geometrically Constrained Stenosis Editing in Coronary Angiography via Entropic Optimal Transport](medical_imaging/geometrically_constrained_stenosis_editing_in_coronary_angiography_via_entropic_.md)**
+
+:   OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血管-结构复合域里的约束熵 OT 问题"，用 Schrödinger Bridge 沿路径加几何投影监督，做到像素级形状/位置可控的合成造影，在 ARCADE 公开集上把下游狭窄检测 mAP@0.5 相对提升 27.8%。
+
+**[Learning Multi-Scale Hypergraph for High-Order Brain Connectivity Analysis](medical_imaging/learning_multi-scale_hypergraph_for_high-order_brain_connectivity_analysis.md)**
+
+:   MuHL 用可学习尺度的图小波把脑 ROI 特征分解成多分辨率表征，再以"节点嵌入 × 共享投影矩阵"动态生成 soft 超边，让 AD/PD 多阶段分类在 ADNI 上做到 93.2% Acc、PPMI 上做到 76.8% Acc，同时给出可解释的关键 ROI 与超边。
+
+**[Marrying Generative Model of Healthcare Events with Digital Twin of Social Determinants of Health for Disease Reasoning](medical_imaging/marrying_generative_model_of_healthcare_events_with_digital_twin_of_social_deter.md)**
+
+:   本文提出 DiffDT：用一个条件 Latent Diffusion 框架把电子病历（ICD-coded 事件序列）与多器官生物标记数字孪生（脑/心/肝/肾的影像衍生表格特征与脑功能连接 SPD 矩阵）连起来，关键创新是一个基于 Cholesky 分解的 SPD-VQVAE 把 $\mathcal{O}(N^3)$ 的 SPD 流形扩散降到流形保形且高效的潜空间，再让 AR 模型借“生成数字孪生 → 预测下一个 ICD”这条中介路径完成多通路疾病推理；在 UKB 上对 1944 类疾病的下一次预测 AUC 提到 0.91，刷新 SOTA。
+
+**[MedCRP-CL: Continual Medical Image Segmentation via Bayesian Nonparametric Semantic Modality Discovery](medical_imaging/medcrp-cl_continual_medical_image_segmentation_via_bayesian_nonparametric_semant.md)**
+
+:   用中国餐馆过程 (CRP) 对临床文本 prompt 做在线贝叶斯非参数聚类，自动发现"语义模态"，再为每个语义模态分配独立 LoRA 适配器并配合模态内 EWC，在 16 个医学分割任务上把 Dice 推到 73.3% 同时遗忘率降到 4.1%，参数仅为 MoE 基线的 1/6。
+
+**[MEG-XL: Data-Efficient Brain-to-Text via Long-Context Pre-Training](medical_imaging/meg-xl_data-efficient_brain-to-text_via_long-context_pre-training.md)**
+
+:   MEG-XL 用 2.5 分钟（191k token）的 MEG 上下文做 mask token 预训练（比此前长 5–300×），再微调到 50 词的脑到文本任务上，仅用 1 小时数据就达到 SOTA 监督方法 50 小时的解码精度，并显著超过所有 brain foundation models。
+
+**[PaCX-MAE: Physiology-Augmented Chest X-Ray Masked Autoencoder](medical_imaging/pacx-mae_physiology-augmented_chest_x-ray_masked_autoencoder.md)**
+
+:   PaCX-MAE 在 MAE 预训练的胸片 ViT 之上，用 LoRA 微调把 ECG 和实验室检验两类生理信号编码器作为冻结教师，通过 InfoNCE 对比 + 余弦回归的双重蒸馏，把"看不见的生理上下文"注入纯图像编码器，推理时只需胸片即可在 9 个下游基准上整体超越同架构 MAE 基线，对生理依赖性任务尤为明显（MedMod +2.7 AUROC、VinDr +6.5 F1）。
+
+**[Plug-and-Play Diffusion Meets ADMM: Dual-Variable Coupling for Robust Medical Image Reconstruction](medical_imaging/plug-and-play_diffusion_meets_admm_dual-variable_coupling_for_robust_medical_ima.md)**
+
+:   本文把 ADMM 的对偶变量重新塞回 PnP 扩散先验循环，用"对偶"提供积分反馈消除稳态偏差，再用一个频域 Spectral Homogenization 模块把结构化对偶残差白化成伪 AWGN，避免触发扩散去噪器的 OOD 幻觉，在 sparse-view / limited-angle CT 与加速 MRI 上同时拿到 SOTA 保真度和约 3× 推理加速。
+
+**[Scaling Vision Transformers for Functional MRI with Flat Maps](medical_imaging/scaling_vision_transformers_for_functional_mri_with_flat_maps.md)**
+
+:   把 3D fMRI 体积按"皮层展平图"投影成 2D 视频后直接喂给标准 spacetime MAE-ViT，得到一个在 2.1K 小时 HCP 数据上训练的 CortexMAE：在认知状态解码上大幅超 SOTA，验证 flat map 是体素 (volume) 和脑区平均 (parcellation) 之间的"goldilocks zone"；同时发布首个开源 fMRI 基础模型基准 Brainmarks，给出 fMRI 模型的第一份系统 scaling law 与一个"个体特质预测仍打不过简单功能连接 baseline"的诚实 null result。
+
+**[Seizure-Semiology-Suite (S³): A Clinically Multimodal Dataset, Benchmark, and Models for Seizure Semiology Understanding](medical_imaging/seizure-semiology-suite_s3_a_clinically_multimodal_dataset_benchmark_and_models_.md)**
+
+:   本文构建了首个大规模专家标注的癫痫发作视频数据集 S³（438 段视频、35,000+ 密集标签、20 项 ILAE 语义学特征），配套设计了七级层次化任务基准与临床对齐的 Seizure-RQI 报告质量指标，系统暴露了 11 个开源 MLLM 在时序定位、空间偏侧化和临床忠实性上的失败模式，并通过领域微调 + 两阶段神经符号框架将癫痫 vs 非癫痫分类 F1 提升到 0.96。
+
+**[SEMIR: Semantic Minor-Induced Representation Learning on Graphs for Visual Segmentation](medical_imaging/semir_semantic_minor-induced_representation_learning_on_graphs_for_visual_segmen.md)**
+
+:   SEMIR 把体素栅格当作母图 $G$，通过参数化的边收缩 / 节点删除 / 边删除把它压成一张「边界对齐」的图 minor $H$（节点数从 $\sim10^7$ 降到 $\sim10^3$），用 5–20 张少样本黑盒优化 $\Theta$ 最大化边界 Dice，再在 minor 上用 GNN 做超节点分类，最后通过 minor 与体素之间的双射 exact lifting 回到原栅格——在 BraTS / KiTS / LiTS 三大肿瘤分割任务的少数类 Dice 上稳定超过 nnU-Net，且仅需 16GB T4 GPU。
+
+**[SynerMedGen: Synergizing Medical Multimodal Understanding with Generation via Task Alignment](medical_imaging/synermedgen_synergizing_medical_multimodal_understanding_with_generation_via_tas.md)**
+
+:   SynerMedGen 提出"生成对齐理解（generation-aligned understanding）"原则——把理解任务直接从同一份配对合成数据里派生出来（CTS / MI / TIA 三个任务），先两阶段训练让理解分支学到对合成有用的表征，再迁移到 latent flow matching 生成分支，在 22 个医学合成任务上同时碾压专用合成模型和已有统一 MLLM。
+
+**[CAME-Grad: The Double Dilemma in Multi-Task Radiology Report Generation — A Gradient Dynamics Analysis and Solution](medical_imaging/the_double_dilemma_in_multi-task_radiology_report_generation_a_gradient_dynamics.md)**
+
+:   本文用 SDE 框架分析放射学报告生成（RRG）多任务学习里"报告生成 vs 临床约束"梯度冲突的两面性——drift term 偏离 Pareto 最优 + diffusion term 衰减无法逃局部最优；提出 CAME-Grad 优化器（方向纠偏 + 能量注入 + 自适应融合）作为线性缩放的即插即用替代，在 MIMIC-CXR / IU X-Ray 上 8 个 RRG 方法平均临床效能 +2.3% / +1.9%。
+
+**[PathCTM: Thinking in Scales — Accelerating Gigapixel Pathology Image Analysis via Adaptive Continuous Reasoning](medical_imaging/thinking_in_scales_accelerating_gigapixel_pathology_image_analysis_via_adaptive_.md)**
+
+:   PathCTM 把全切片图像（WSI）分析从"穷举高倍 patch"重构为"从低倍全局到高倍局部"的连续多尺度推理——基于 Continuous Thought Machine 引入 thinking-in-scales 范式 + 注意力引导区域剪枝 + 置信感知早停，patch 数减少 95.95%、推理时间减少 95.62% 且 AUC 不降反升。
+
+**[Turning Drift into Constraint: Robust Reasoning Alignment in Non-Stationary Multi-Stream Environments](medical_imaging/turning_drift_into_constraint_robust_reasoning_alignment_in_non-stationary_envir.md)**
+
+:   本文把多个 MLLM 之间的推理"漂移"重新解释成 DPO 中的负样本约束，用 Plackett-Luce 偏好损失同时压制 N 个 source model 的发散轨迹，让 7B 学生模型在不需要 ground-truth 报告的前提下，仅用 10% 的 MIMIC-CXR 就在胸片分类与报告生成任务上超过所有 source teacher。
+
+---
+
 ## ⚛️ 物理/科学计算 { #physics }
 
 **[A Call to Lagrangian Action: Learning Population Mechanics from Temporal Snapshots](physics/a_call_to_lagrangian_action_learning_population_mechanics_from_temporal_snapshot.md)**
@@ -5055,6 +5031,74 @@ tags:
 
 ---
 
+## 🔗 因果推理 { #causal_inference }
+
+**[An Odd Estimator for Shapley Values](causal_inference/an_odd_estimator_for_shapley_values.md)**
+
+:   这篇论文证明 Shapley value 只依赖集合函数的 odd component，并据此提出 OddSHAP：用配对采样隔离 odd 信号、用 GBT 筛选高阶 odd Fourier 交互、再做稀疏 odd 回归，在中高维解释任务上显著优于灵活预算 Shapley 估计器。
+
+**[Causal-JEPA: Learning World Models through Object-Level Latent Masking](causal_inference/causal-jepa_learning_world_models_through_object-level_latent_masking.md)**
+
+:   提出 C-JEPA，将 JEPA 的掩码预测从图像 patch 级别扩展到对象级别潜在表示，通过对象级掩码作为潜在干预迫使模型学习交互依赖的动态，在反事实推理上比无掩码基线提升约 20%，在控制任务中仅用 1% 的 token 即达到可比性能且规划加速 8 倍以上。
+
+**[Controllable Generative Sandbox for Causal Inference](causal_inference/controllable_generative_sandbox_for_causal_inference.md)**
+
+:   本文提出 CausalMix：一个变分生成框架，把数据类型特定的 multi-head decoder + Bayesian Gaussian 混合潜在 prior 与三类可独立调控的因果"旋钮"（overlap $\alpha(X)$、CATE 函数 $\tau(X)$、未观测混杂 $\kappa(X,T)$）联合优化，从而在保持真实数据分布 fidelity 的前提下让用户自由设计 counterfactual benchmark，在 mCRPC（前列腺癌）真实病例上验证 CausalMix 既能高保真复现 mixed-type 表格，又能稳定地按需注入 overlap / confounding / 异质效应，用作 CATE 估计器的可控 stress test。
+
+**[Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity](causal_inference/density-guided_robust_counterfactual_explanations_on_tabular_data_under_model_mu.md)**
+
+:   DensityFlow 把"在模型多重性下生成鲁棒反事实解释 (RCE)"重新表述为带密度约束的最优传输问题，用 NCE 训练一个 (K+1) 类判别器同时学分类与类条件密度，再用 Neural ODE 把查询样本沿密度梯度运到目标类高密度流形上，并在黑盒场景下只对生成轨迹做局部蒸馏对齐，从而以远低于集成基线的查询量取得更高的跨模型 validity。
+
+**[ECSEL: Explainable Classification via Signomial Equation Learning](causal_inference/ecsel_explainable_classification_via_signomial_equation_learning.md)**
+
+:   ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + softmax"作为分类器，配合 L1 稀疏正则与多阶段优化，既能在 AI Feynman 等符号回归 benchmark 上以远低于 SOTA 的算力恢复 95.86% 的目标方程，又能在 11 个分类数据集上与 XGBoost/MLP 打平，同时所有特征归因都由模型参数闭式给出。
+
+**[Evaluating Bivariate Causal Statements Based on Mutual Compatibility](causal_inference/evaluating_bivariate_causal_statements_based_on_mutual_compatibility.md)**
+
+:   本文针对"只有成对(bivariate)因果陈述、没有 ground truth"的场景，提出两个无需 faithfulness 的相容性评分（线性情形的 `comp` + 图结构情形的 `incomp`），通过判断这些两两陈述拼起来的多元模型是否需要"反常的额外混淆"来解释观测协方差，从而识别错误的因果论断，并用它给 LLM 的因果输出打分。
+
+**[Formalizing and Falsifying Causal Pathways of Rare Events](causal_inference/formalizing_and_falsifying_causal_pathways_of_rare_events.md)**
+
+:   本文把罕见事件的"口头因果解释"形式化为 **causal pathway**——一个由二值化事件构成的子图，并定义 **pathway explanation score** 来量化"根因 + 中介通路"对目标事件的解释力，得到一套可证伪的因果解释评价框架。
+
+**[Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping](causal_inference/harnessing_reasoning_trajectories_for_hallucination_detection_via_answer-agreeme.md)**
+
+:   本文针对大推理模型（LRM）的幻觉检测提出 ARS：不在文本层扰动 reasoning trace，而是**直接在 trace 末端的潜表示上施加小扰动并续解码**得到反事实答案，再用"答案是否一致"作为标签训一个轻量 contrastive 头来塑形 trace-conditioned answer embedding，使后续 embedding-based detector 把幻觉与真实回答分得更开（TruthfulQA 上 AUROC $66.85\to 86.64$）。
+
+**[Investigating Memory in Model-Free RL with POPGym Arcade](causal_inference/investigating_memory_in_model-free_rl_with_popgym_arcade.md)**
+
+:   本文指出仅用回报来比较 RL 记忆模型并不可靠，作者构建了一个 GPU 加速的 MDP/POMDP "孪生"基准 POPGym Arcade，并提出 Observability Gap、Memory Bias、像素显著性和 Recall Density 四个工具，借此揭示了一种"价值涂抹（value smearing）"病理：记忆模型会把价值信用错误地分摊到无关的历史观测上，进而导致单个 OOD 观测就能通过 recurrent state 长期污染策略。
+
+**[Outcome-Aware Spectral Feature Learning for Instrumental Variable Regression](causal_inference/outcome-aware_spectral_feature_learning_for_instrumental_variable_regression.md)**
+
+:   针对非参数工具变量（NPIV）回归中 SpecIV 学到的谱特征"只看 X-Z 关系、不看结果 Y"的盲点，本文提出 Augmented Spectral Feature Learning：在 SpecIV 的对比损失里加上一项 Y 投影到 Z 特征上的回归损失，等价于对一个把 Y 信息拼进去的"增广算子" $\mathcal{T}_\delta = [\mathcal{T} \mid \delta r_0]$ 做截断 SVD，从而在结构函数 $h_0$ 与 $\mathcal{T}$ 顶端奇异函数对齐很差的"坏"情形下也能用极低秩特征恢复因果效应。
+
+**[Rank-Learner: Orthogonal Ranking of Treatment Effects](causal_inference/rank-learner_orthogonal_ranking_of_treatment_effects.md)**
+
+:   在观测数据上提出 Rank-Learner——第一个 Neyman-正交的两阶段处理效应**排序**学习器，用成对软标签 + 双重稳健修正项替代"先估 CATE 再排"的间接做法，在合成、半合成与 Criteo uplift 真实数据集上稳定优于 T/DR-learner 与非正交 plug-in ranker。
+
+**[Tailoring Strictly Proper Scoring Rules for Downstream Tasks: An Application to Causal Inference](causal_inference/tailoring_strictly_proper_scoring_rules_for_downstream_tasks_an_application_to_c.md)**
+
+:   本文提出一个通用框架：通过让训练损失的局部二阶曲率 $w_\ell(p)$ 匹配下游任务误差的曲率 $w_{\text{task}}(p)$，可派生出与下游任务"几何对齐"的严格 proper scoring rule；将其应用到 IPW 估计 ATE，得到闭式损失 + 闭式 canonical 激活函数（解一个四次方程），在 IHDP / Jobs / Kang-Schafer / ACIC 2017 上稳定优于 log-loss 与 covariate balancing 类基线。
+
+**[The (Marginal) Value of a Search Ad: An Online Causal Framework for Repeated Second-price Auctions](causal_inference/the_marginal_value_of_a_search_ad_an_online_causal_framework_for_repeated_second.md)**
+
+:   本文把搜索广告的真实价值建模为"赢拍 vs 输拍"的 treatment effect，在重复二价拍卖（SPA）binary 反馈下设计了一个利用支付规则的在线因果学习算法，得到 $\widetilde\Theta(\sqrt{dT})$ 的极小极大最优 regret，比同设定下的一价拍卖严格更易学。
+
+**[The Synthetic Web: Adversarially-Curated Mini-Internets for Diagnosing Epistemic Weaknesses of Language Agents](causal_inference/the_synthetic_web_adversarially-curated_mini-internets_for_diagnosing_epistemic_.md)**
+
+:   本文构造了一个程序化生成的"合成 Web"环境,通过在搜索 rank 0 注入单条高可信度蜜罐误信息,因果性地测出 GPT-5 等前沿 LLM agent 在 1/数千的对抗污染下准确率从 65% 暴跌到 18%,且模型不会增加搜索、依然高置信度作答,揭示了根深蒂固的"位置锚定"失败模式。
+
+**[Towards a Holistic Understanding of Selection Bias for Causal Effect Identification](causal_inference/towards_a_holistic_understanding_of_selection_bias_for_causal_effect_identificat.md)**
+
+:   本文给出一个统一的"分布类"框架，刻画了在选择偏差下平均处理效应 (ATE) 全人群可识别的充要条件 (Condition 1)，并证明在 c-overlap 倾向得分 + 多项式指数族 / Gaussian / Laplace / Pareto / Log-normal 等常见分布下都满足该条件，配套提出 MLE 与 Score Matching 两种带选择函数 $\beta(x,y,t)$ 校正的估计器，在合成与 All of Us 半合成实验上显著优于 IPW 与多项式回归。
+
+**[Unveiling the Structure of Do-Calculus Reasoning via Derivation Graphs](causal_inference/unveiling_the_structure_of_do-calculus_reasoning_via_derivation_graphs.md)**
+
+:   通过引入推导图（derivation graphs）显式表示 do-演算规则的所有等价变换——揭示因果表达式空间的结构，并证明最多 4 步规则应用可达任意等价表达式。
+
+---
+
 ## 🖼️ 图像恢复 { #image_restoration }
 
 **[Coevolutionary Continuous Discrete Diffusion: Make Your Diffusion Language Model a Latent Reasoner](image_restoration/coevolutionary_continuous_discrete_diffusion_make_your_diffusion_language_model_.md)**
@@ -5120,70 +5164,6 @@ tags:
 **[UOTIP：无须配对的反演问题的非平衡最优传输映射](image_restoration/uotip_unbalanced_optimal_transport_map_for_unpaired_inverse_problems.md)**
 
 :   提出 UOTIP 方法——通过非平衡最优传输（UOT）框架将无须配对的图像反演问题表述为从有噪声测量分布到干净信号分布的映射学习，通过引入似然成本函数和二次项成本获得鲁棒性和理论保证。
-
----
-
-## 🔗 因果推理 { #causal_inference }
-
-**[An Odd Estimator for Shapley Values](causal_inference/an_odd_estimator_for_shapley_values.md)**
-
-:   这篇论文证明 Shapley value 只依赖集合函数的 odd component，并据此提出 OddSHAP：用配对采样隔离 odd 信号、用 GBT 筛选高阶 odd Fourier 交互、再做稀疏 odd 回归，在中高维解释任务上显著优于灵活预算 Shapley 估计器。
-
-**[Causal-JEPA: Learning World Models through Object-Level Latent Masking](causal_inference/causal-jepa_learning_world_models_through_object-level_latent_masking.md)**
-
-:   提出 C-JEPA，将 JEPA 的掩码预测从图像 patch 级别扩展到对象级别潜在表示，通过对象级掩码作为潜在干预迫使模型学习交互依赖的动态，在反事实推理上比无掩码基线提升约 20%，在控制任务中仅用 1% 的 token 即达到可比性能且规划加速 8 倍以上。
-
-**[Density-Guided Robust Counterfactual Explanations on Tabular Data under Model Multiplicity](causal_inference/density-guided_robust_counterfactual_explanations_on_tabular_data_under_model_mu.md)**
-
-:   DensityFlow 把"在模型多重性下生成鲁棒反事实解释 (RCE)"重新表述为带密度约束的最优传输问题，用 NCE 训练一个 (K+1) 类判别器同时学分类与类条件密度，再用 Neural ODE 把查询样本沿密度梯度运到目标类高密度流形上，并在黑盒场景下只对生成轨迹做局部蒸馏对齐，从而以远低于集成基线的查询量取得更高的跨模型 validity。
-
-**[ECSEL: Explainable Classification via Signomial Equation Learning](causal_inference/ecsel_explainable_classification_via_signomial_equation_learning.md)**
-
-:   ECSEL 把"每个类别一个 signomial（带实数指数的幂律和）函数 + softmax"作为分类器，配合 L1 稀疏正则与多阶段优化，既能在 AI Feynman 等符号回归 benchmark 上以远低于 SOTA 的算力恢复 95.86% 的目标方程，又能在 11 个分类数据集上与 XGBoost/MLP 打平，同时所有特征归因都由模型参数闭式给出。
-
-**[Evaluating Bivariate Causal Statements Based on Mutual Compatibility](causal_inference/evaluating_bivariate_causal_statements_based_on_mutual_compatibility.md)**
-
-:   本文针对"只有成对(bivariate)因果陈述、没有 ground truth"的场景，提出两个无需 faithfulness 的相容性评分（线性情形的 `comp` + 图结构情形的 `incomp`），通过判断这些两两陈述拼起来的多元模型是否需要"反常的额外混淆"来解释观测协方差，从而识别错误的因果论断，并用它给 LLM 的因果输出打分。
-
-**[Formalizing and Falsifying Causal Pathways of Rare Events](causal_inference/formalizing_and_falsifying_causal_pathways_of_rare_events.md)**
-
-:   本文把罕见事件的"口头因果解释"形式化为 **causal pathway**——一个由二值化事件构成的子图，并定义 **pathway explanation score** 来量化"根因 + 中介通路"对目标事件的解释力，得到一套可证伪的因果解释评价框架。
-
-**[Harnessing Reasoning Trajectories for Hallucination Detection via Answer-agreement Representation Shaping](causal_inference/harnessing_reasoning_trajectories_for_hallucination_detection_via_answer-agreeme.md)**
-
-:   本文针对大推理模型（LRM）的幻觉检测提出 ARS：不在文本层扰动 reasoning trace，而是**直接在 trace 末端的潜表示上施加小扰动并续解码**得到反事实答案，再用"答案是否一致"作为标签训一个轻量 contrastive 头来塑形 trace-conditioned answer embedding，使后续 embedding-based detector 把幻觉与真实回答分得更开（TruthfulQA 上 AUROC $66.85\to 86.64$）。
-
-**[Investigating Memory in Model-Free RL with POPGym Arcade](causal_inference/investigating_memory_in_model-free_rl_with_popgym_arcade.md)**
-
-:   本文指出仅用回报来比较 RL 记忆模型并不可靠，作者构建了一个 GPU 加速的 MDP/POMDP "孪生"基准 POPGym Arcade，并提出 Observability Gap、Memory Bias、像素显著性和 Recall Density 四个工具，借此揭示了一种"价值涂抹（value smearing）"病理：记忆模型会把价值信用错误地分摊到无关的历史观测上，进而导致单个 OOD 观测就能通过 recurrent state 长期污染策略。
-
-**[Outcome-Aware Spectral Feature Learning for Instrumental Variable Regression](causal_inference/outcome-aware_spectral_feature_learning_for_instrumental_variable_regression.md)**
-
-:   针对非参数工具变量（NPIV）回归中 SpecIV 学到的谱特征"只看 X-Z 关系、不看结果 Y"的盲点，本文提出 Augmented Spectral Feature Learning：在 SpecIV 的对比损失里加上一项 Y 投影到 Z 特征上的回归损失，等价于对一个把 Y 信息拼进去的"增广算子" $\mathcal{T}_\delta = [\mathcal{T} \mid \delta r_0]$ 做截断 SVD，从而在结构函数 $h_0$ 与 $\mathcal{T}$ 顶端奇异函数对齐很差的"坏"情形下也能用极低秩特征恢复因果效应。
-
-**[Rank-Learner: Orthogonal Ranking of Treatment Effects](causal_inference/rank-learner_orthogonal_ranking_of_treatment_effects.md)**
-
-:   在观测数据上提出 Rank-Learner——第一个 Neyman-正交的两阶段处理效应**排序**学习器，用成对软标签 + 双重稳健修正项替代"先估 CATE 再排"的间接做法，在合成、半合成与 Criteo uplift 真实数据集上稳定优于 T/DR-learner 与非正交 plug-in ranker。
-
-**[Tailoring Strictly Proper Scoring Rules for Downstream Tasks: An Application to Causal Inference](causal_inference/tailoring_strictly_proper_scoring_rules_for_downstream_tasks_an_application_to_c.md)**
-
-:   本文提出一个通用框架：通过让训练损失的局部二阶曲率 $w_\ell(p)$ 匹配下游任务误差的曲率 $w_{\text{task}}(p)$，可派生出与下游任务"几何对齐"的严格 proper scoring rule；将其应用到 IPW 估计 ATE，得到闭式损失 + 闭式 canonical 激活函数（解一个四次方程），在 IHDP / Jobs / Kang-Schafer / ACIC 2017 上稳定优于 log-loss 与 covariate balancing 类基线。
-
-**[The (Marginal) Value of a Search Ad: An Online Causal Framework for Repeated Second-price Auctions](causal_inference/the_marginal_value_of_a_search_ad_an_online_causal_framework_for_repeated_second.md)**
-
-:   本文把搜索广告的真实价值建模为"赢拍 vs 输拍"的 treatment effect，在重复二价拍卖（SPA）binary 反馈下设计了一个利用支付规则的在线因果学习算法，得到 $\widetilde\Theta(\sqrt{dT})$ 的极小极大最优 regret，比同设定下的一价拍卖严格更易学。
-
-**[The Synthetic Web: Adversarially-Curated Mini-Internets for Diagnosing Epistemic Weaknesses of Language Agents](causal_inference/the_synthetic_web_adversarially-curated_mini-internets_for_diagnosing_epistemic_.md)**
-
-:   本文构造了一个程序化生成的"合成 Web"环境,通过在搜索 rank 0 注入单条高可信度蜜罐误信息,因果性地测出 GPT-5 等前沿 LLM agent 在 1/数千的对抗污染下准确率从 65% 暴跌到 18%,且模型不会增加搜索、依然高置信度作答,揭示了根深蒂固的"位置锚定"失败模式。
-
-**[Towards a Holistic Understanding of Selection Bias for Causal Effect Identification](causal_inference/towards_a_holistic_understanding_of_selection_bias_for_causal_effect_identificat.md)**
-
-:   本文给出一个统一的"分布类"框架，刻画了在选择偏差下平均处理效应 (ATE) 全人群可识别的充要条件 (Condition 1)，并证明在 c-overlap 倾向得分 + 多项式指数族 / Gaussian / Laplace / Pareto / Log-normal 等常见分布下都满足该条件，配套提出 MLE 与 Score Matching 两种带选择函数 $\beta(x,y,t)$ 校正的估计器，在合成与 All of Us 半合成实验上显著优于 IPW 与多项式回归。
-
-**[Unveiling the Structure of Do-Calculus Reasoning via Derivation Graphs](causal_inference/unveiling_the_structure_of_do-calculus_reasoning_via_derivation_graphs.md)**
-
-:   通过引入推导图（derivation graphs）显式表示 do-演算规则的所有等价变换——揭示因果表达式空间的结构，并证明最多 4 步规则应用可达任意等价表达式。
 
 ---
 
@@ -5308,6 +5288,10 @@ tags:
 **[When Cloud Agents Meet Device Agents: Lessons from Hybrid Multi-Agent Systems](multi_agent/when_cloud_agents_meet_device_agents_lessons_from_hybrid_multi-agent_systems.md)**
 
 :   这篇论文系统研究云端 GPT-4o 监督者与端侧 Qwen3 执行者组成的混合多智能体系统，发现 PEVR 和 EVA 在 UI assistance 与 deep search 上各有优势，更多云端介入不一定更好，而上下文重置与摘要能显著改善端侧长任务的成本和 KV-cache 压力。
+
+**[Why Specialist Models Still Matter: A Heterogeneous Multi-Agent Paradigm for Medical Artificial Intelligence](multi_agent/why_specialist_models_still_matter_a_heterogeneous_multi-agent_paradigm_for_medi.md)**
+
+:   HetMedAgent 将通用 LLM、模态专科模型和临床医生组织成异构多智能体系统，通过冲突感知证据融合与不确定性路由，在心血管和胸片临床决策任务上证明专科模型与人类监督仍是医疗 AI 中不可替代的组成部分。
 
 ---
 
@@ -5705,6 +5689,10 @@ tags:
 
 ## 📂 其他 { #others }
 
+**[A Hypertoroidal Covering for Perfect Color Equivariance](others/a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
+
+:   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
+
 **[A Perturbation Approach to Unconstrained Linear Bandits](others/a_perturbation_approach_to_unconstrained_linear_bandits.md)**
 
 :   本文重新审视 Abernethy 等人的扰动式 bandit linear optimization 思路，提出 PABLO 归约，把无约束线性 bandit 转成可调用任意 OLO 子程序的问题，并由此得到 comparator-adaptive 静态/动态 regret、高概率界以及若干下界讨论。
@@ -5925,6 +5913,10 @@ tags:
 
 :   用一个 asinh 链接的 GLM surrogate 把多智能体 MCTS 的 joint-action 空间 $d^n$ 压成 low-dim 非线性 bandit，再用"一阶差分量 + 二阶 mixed difference"作为 NonUCT 提议规则，只在每个节点维护小候选集 $\mathcal{C}(s)$，证明 $\widetilde{O}(T^{3/4})$ 的局部 regret（与 $d^n$ 无关），在 MatGame/SMAC/SMACv2 上 sample efficiency 和最终性能都好过 MAZero 等强 baseline。
 
+**[On Revisiting Entropy for Identifying Mislabeled Images](others/on_revisiting_entropy_for_identifying_mislabeled_images.md)**
+
+:   作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量，在 ISIC/DeepDRiD/PANDA/CheXpert 等多个医学数据集和 CIFAR-100N 上以纯插拔方式刷新错标检测 SOTA（最高领先 11%+）。
+
 **[On the Coordination of Value-Maximizing Bidders](others/on_the_coordination_of_value-maximizing_bidders.md)**
 
 :   本文形式化研究了在线广告中多个 value-maximizing 自动出价者的"协调"问题，提出"只让联盟中价值最高的成员出价、其余出 0"的简单协调机制，并证明对一大类自动出价算法而言，该机制能同时降低每个联盟成员的 RoS 违反量、并把联盟总价值推到所有协调机制的渐近最优。
@@ -5961,6 +5953,10 @@ tags:
 
 :   本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ），而类内均方半径 $R_c^2$ 是定位 GPZ、且能被标签平滑训练动态地主动收缩的关键变量。
 
+**[Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning](others/polaris_coupled_orbital_polar_embeddings_for_hierarchical_concept_learning.md)**
+
+:   Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束，在 taxonomy expansion 任务上把 top-K 召回提升最多 19 点、mean rank 降低 60%。
+
 **[Position: Age Estimation Models Do Not Process Biometric Data](others/position_age_estimation_models_do_not_process_biometric_data.md)**
 
 :   本文是一篇 position paper，用 14 个模型 × 3 个人脸验证基准的实证证据论证：人脸年龄估计模型在身份判别能力上比监管阈值低两个数量级，因此不应被自动归类为 GDPR / BIPA / EU AI Act 意义上的"生物特征数据处理"。
@@ -5988,6 +5984,10 @@ tags:
 **[Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective](others/reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per.md)**
 
 :   本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识",作者提出 Knowledge Objects (KOs) 作为基础设施——把 AI 隐式推理外化成人类可检查、可验证、可背书的结构化产物,从而让一次人类验证的成本在群体中长期复利。
+
+**[Rethink the Role of Neural Decoders in Quantum Error Correction](others/rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
+
+:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
 
 **[Rethinking Evaluation Paradigms in IBP-based Certified Training](others/rethinking_evaluation_paradigms_in_ibp-based_certified_training.md)**
 

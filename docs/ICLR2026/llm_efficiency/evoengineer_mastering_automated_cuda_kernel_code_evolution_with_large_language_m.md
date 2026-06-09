@@ -42,38 +42,31 @@ tags:
 
 ### 整体框架
 
-EvoEngineer 将 LLM-based 代码演化分解为两个正交组件：**Traverse Techniques**（代码空间导航策略）和 **Population Management**（候选解维护策略）。整体工作流为三步：(1) Task Configuration：指定 GPU 类型、CUDA 版本、评估指标等；(2) Solution Generation：实现 traverse technique 和 population management；(3) Solution Evaluation：编译检查 + 功能测试 + 性能测量。
+EvoEngineer 想回答一个被领域长期回避的问题：在用 LLM 自动演化 CUDA kernel 时，到底"喂给模型什么信息、怎么组织 prompt、怎么维护候选解"才能同时兼顾加速比和正确性？为此它把整套代码演化拆成两个正交组件——**Traverse Techniques**（决定如何在代码空间里导航搜索）和 **Population Management**（决定如何维护和选择候选解），让二者可以独立分析、自由组合。
+
+落到运行流程上是三步闭环：先做 Task Configuration，指定 GPU 类型、CUDA 版本、评估指标等约束；再做 Solution Generation，由配置好的 traverse technique 和 population management 共同产出一批新 kernel 候选；最后做 Solution Evaluation，对每个候选跑编译检查、功能测试和性能测量，把结果回灌进种群，进入下一轮迭代。整个过程被形式化为带约束的优化问题 $p^* = \arg\min_{p \in \mathcal{S}} f(p)$，其中 $f(p)$ 是执行时间，约束 $g(p) = 0$ 要求候选既能编译通过又功能正确；每个 kernel 最多分配 45 次优化试验。
 
 ### 关键设计
 
-1. **Two-Layer Traverse Technique**
+**1. 两层 Traverse Technique：把"搜索策略"和"prompt 怎么写"彻底解耦。**
 
-    - 功能：将代码空间导航分为两层——Solution Guiding Layer（决定"给 LLM 什么信息"）和 Prompt Engineering Layer（决定"如何组织 prompt"）。
-    - 核心思路：Solution Guiding Layer 管理三类 closed-world 信息：(I1) 当前任务上下文（优化目标、约束）；(I2) 历史高质量解；(I3) 优化洞察（设计理由和 LLM 推理过程）。还可选择性引入 open-world 信息（I4: 领域知识）。Prompt Engineering Layer 将上层策略翻译为具体 prompt。
-    - 设计动机：现有方法（EoH、FunSearch）将搜索策略和 prompt 工程混在一起，模仿进化算子（crossover/mutation）但无实证表明 LLM 能有效执行这些操作。两层分离使得策略分析和 prompt 优化独立进行。
+现有方法（EoH、FunSearch）的根本问题是把"用什么信息指导搜索"和"如何把信息写成 prompt"混在一起，还机械模仿进化算子（crossover/mutation），但从没有实证说明 LLM 真能有效执行这些算子。EvoEngineer 把 traverse 切成两层：上层 Solution Guiding Layer 只管"给 LLM 什么信息"，下层 Prompt Engineering Layer 只管"把这些信息翻译成具体 prompt"。Solution Guiding Layer 维护三类 closed-world 信息——当前任务上下文（优化目标与约束，记为 I1）、历史高质量解（I2）、优化洞察（设计理由和 LLM 的推理过程，I3），并可选择性接入 open-world 的领域知识（I4）。这样一来，"换一种搜索信息组合"和"换一种 prompt 写法"成了两件可以分别试验的事，策略分析和 prompt 优化得以独立推进。
 
-2. **三种 EvoEngineer 配置**
+**2. 三种 EvoEngineer 配置：用不同信息组合系统扫一遍 trade-off。**
 
-    - **EvoEngineer-Free**：仅用任务上下文 (I1)，简单 prompt，best-solution 维护策略。优先探索，正确性较低但加速比高。
-    - **EvoEngineer-Insight**：使用 I1 + I3（优化洞察），将 insights 作为独立信息源而非与 solution 绑定。单最优解维护。
-    - **EvoEngineer-Full**：整合 I1 + I2 + I3（任务上下文 + 历史解 + 优化洞察），elite preservation 策略。预期正确性最高，信息量最大。
-    - 设计动机：三种配置系统性地探索不同信息组合的效果，揭示了信息使用量与性能/正确性之间的关系。
+上层信息一旦可以自由拼装，作者就构造了三档配置来系统比较信息量的影响。EvoEngineer-Free 只用任务上下文 I1，配简单 prompt 和 best-solution 维护策略，几乎不给约束、优先放手探索，因此加速比高但正确性偏低；EvoEngineer-Insight 在 I1 之上加入优化洞察 I3，并刻意把 insights 当作独立信息源而非绑在某个 solution 上，配单最优解维护，正确性和加速比都落在中段；EvoEngineer-Full 则整合 I1 + I2 + I3（任务上下文 + 历史解 + 优化洞察），用 elite preservation 策略，信息量最大、约束最强，正确性最高但加速最保守。三档配置不是随意调参，而是有意把"信息使用量 → 性能/正确性"这条关系曲线扫出来。
 
-3. **Population Management 策略**
+**3. Population Management：用候选解的维护方式调节探索与利用。**
 
-    - 功能：定义候选解的维护、选择和演化方式。
-    - 三种策略：(1) 单解策略：只维护当前最优解；(2) 精英保持策略：保留一小组高性能解；(3) 多样性维护策略：保持解的多样性以探索搜索空间。
-    - 设计动机：不同的维护策略影响探索与利用的平衡——单解策略更快但容易陷入局部最优，精英策略在正确性上更有优势。
+这一组件决定候选解怎么维护、怎么选择、怎么演化，本质是在调探索与利用的平衡。它提供三种策略：单解策略只保留当前最优解，迭代快但容易陷入局部最优；精英保持策略保留一小组高性能解，在正确性上更稳；多样性维护策略刻意保持解的差异，以更广地覆盖搜索空间。前面三种配置里 Free 用单解、Full 用精英保持，正是借这一层把"激进探索"和"稳健保正确"两种取向落地。
 
-4. **两阶段评估流程**
+**4. 两阶段评估：把 CUDA kernel 的严格正确性约束钉进搜索回路。**
 
-    - 功能：每个生成的 kernel 经过编译检查和功能测试两步验证。
-    - 核心思路：编译检查确保语法有效；功能测试用 5 个 test case 对比 PyTorch 参考实现。通过后测量 100 次运行的平均执行时间。
-    - 设计动机：严格的正确性验证是 CUDA kernel 优化的核心约束，区别于一般代码生成任务。
+CUDA kernel 优化和一般代码生成最大的区别，是它对正确性几乎零容忍——一个数值偏差就让加速毫无意义。所以每个生成的 kernel 都要过两道关：先做编译检查保证语法有效，再用 5 个 test case 对比 PyTorch 参考实现做功能测试。只有两关都过的候选才进入性能测量，取 100 次运行的平均执行时间作为 $f(p)$。这道严格的验证流程也是前面约束 $g(p)=0$ 的具体落地，把"正确"作为搜索的硬门槛而非事后筛选。
 
 ### 损失函数 / 训练策略
 
-本文不涉及传统的损失函数训练，而是基于搜索的优化。核心优化目标为：$p^* = \arg\min_{p \in \mathcal{S}} f(p)$，约束条件 $g(p) = 0$（编译通过 + 功能正确）。每个 kernel 最多 45 次优化试验。
+本文不涉及传统的损失函数训练，而是基于搜索的优化，优化目标即上文的 $p^* = \arg\min_{p \in \mathcal{S}} f(p)$，约束 $g(p) = 0$（编译通过 + 功能正确），每个 kernel 最多 45 次优化试验。
 
 ## 实验关键数据
 
@@ -135,10 +128,10 @@ EvoEngineer 将 LLM-based 代码演化分解为两个正交组件：**Traverse T
 ## 相关论文
 
 - [\[ICLR 2026\] DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
+- [\[ICLR 2026\] Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models](deep_hierarchical_learning_with_nested_subspace_networks_for_large_language_mode.md)
 - [\[ACL 2026\] Lizard: An Efficient Linearization Framework for Large Language Models](../../ACL2026/llm_efficiency/lizard_an_efficient_linearization_framework_for_large_language_models.md)
 - [\[ACL 2026\] Are Large Language Models Economically Viable for Industry Deployment?](../../ACL2026/llm_efficiency/are_large_language_models_economically_viable_for_industry_deployment.md)
 - [\[ICLR 2026\] Expert Divergence Learning for MoE-based Language Models](expert_divergence_learning_for_moe-based_language_models.md)
-- [\[AAAI 2026\] The Curious Case of Analogies: Investigating Analogical Reasoning in Large Language Models](../../AAAI2026/llm_efficiency/the_curious_case_of_analogies_investigating_analogical_reasoning_in_large_langua.md)
 
 </div>
 

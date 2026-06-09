@@ -42,51 +42,25 @@ tags:
 
 ### 整体框架
 
-Ada-RefSR 包含两个核心组件：
-- **Trust 阶段**：通过 Reference Attention（RA）最大化参考特征的利用
-- **Verify 阶段**：通过 AICG 自适应调节参考贡献，抑制错误融合
-
-基于 S3Diff 单步扩散 SR 骨干构建，仅训练新增的参考注意力模块，冻结其余组件。
+Ada-RefSR 以 S3Diff 单步扩散 SR 为骨干，冻结其余组件、只训练新插入的参考注意力模块，把整个参考利用过程拆成"先信任、后验证"两步：Trust 阶段用 Reference Attention（RA）不加筛选地把参考特征注入主干，最大化潜在匹配的捕获率；Verify 阶段用自适应隐式相关性门控（AICG）逐空间位置地估计参考可信度，把错误融合的部分压下去。两步串联，既不漏掉有用参考，又不会被错误对应污染。
 
 ### 关键设计
 
-1. **Trust: 直接参考特征注入**
+**1. Trust：无差别参考特征注入，确保不漏匹配。**
 
-    - 使用 ReferenceNet（SD-Turbo 初始化，固定 timestep=1）提取多层次参考特征
-    - Reference Attention (RA) 模块：
-        - $\mathbf{Q} = \mathbf{H}_{src}\mathbf{W}_Q$, $\mathbf{K} = \mathbf{H}_{ref}\mathbf{W}_K$, $\mathbf{V} = \mathbf{H}_{ref}\mathbf{W}_V$
-        - $\mathbf{H}_{out} = \text{ZeroLinear}(\text{Softmax}(\frac{\mathbf{QK}^\top}{\sqrt{d}})\mathbf{V}) + \mathbf{H}_{src}$
-    - RA 权重从骨干自注意力复制初始化，ZeroLinear 稳定早期训练
-    - 设计动机：不预先过滤，确保所有潜在的 LQ-Ref 匹配都被捕获
-    - 问题：无差别融合会导致局部语义不一致
+真实退化下 LQ 与 Ref 的对应关系本来就不稳，如果在注入前就用某种相似度阈值过滤，很容易把那些"看起来弱、实则有用"的匹配提前砍掉。Ada-RefSR 反其道而行：先信任所有参考。它用一个 ReferenceNet（SD-Turbo 初始化、固定 timestep=1）抽取多层次参考特征 $\mathbf{H}_{ref}$，再在主干每个注意力层插入 RA 模块做跨图注意力——查询来自主干 $\mathbf{Q}=\mathbf{H}_{src}\mathbf{W}_Q$，键值来自参考 $\mathbf{K}=\mathbf{H}_{ref}\mathbf{W}_K$、$\mathbf{V}=\mathbf{H}_{ref}\mathbf{W}_V$，输出 $\mathbf{H}_{out}=\text{ZeroLinear}(\text{Softmax}(\tfrac{\mathbf{QK}^\top}{\sqrt{d}})\mathbf{V})+\mathbf{H}_{src}$。RA 的投影权重直接从骨干自注意力复制初始化，外加 ZeroLinear 让残差支路从零起步，避免训练早期参考特征冲垮已收敛的主干。这一步刻意不做任何筛选，确保所有潜在的 LQ-Ref 匹配都被捕获——代价是无差别融合会带来局部语义不一致（比如把鸟眼复制到非眼区域），这正是下一步要修的。
 
-2. **Verify: 自适应隐式相关性门控（AICG）**
+**2. Verify：自适应隐式相关性门控（AICG），逐位置抑制错误融合。**
 
-    - **参考摘要 Token**：引入可学习摘要 token $\mathbf{T}_S \in \mathbb{R}^{M \times d}$（$M=16$），紧凑地概括参考特征
-        - $\mathbf{S} = \mathbf{T}_S \mathbf{W}_K$
-        - $\mathbf{K}_{sum} = \text{Softmax}(\frac{\mathbf{SK}^\top}{\sqrt{d}})\mathbf{K} \in \mathbb{R}^{M \times d}$
-    - **隐式相关性门控**：
-        - $\mathbf{S}_{map} = \text{Softmax}(\frac{\mathbf{Q}\mathbf{K}_{sum}^\top}{\sqrt{d}}) \in \mathbb{R}^{L_q \times M}$
-        - $\mathbf{G} = \sigma(\frac{1}{M}\sum_{j=1}^{M}[\mathbf{S}_{map}]_{:,j}) \in \mathbb{R}^{L_q \times 1}$
-    - **门控调制**：$\mathbf{H}_{out} = \text{ZeroLinear}(\mathbf{G} \odot \text{RA}(\mathbf{H}_{src}, \mathbf{H}_{ref})) + \mathbf{H}_{src}$
-    - 设计动机：隐式建模替代显式 token-to-token 相似性，避免噪声干扰
-    - 关键优势：复用 RA 模块内的现有投影和中间变量，极轻量
-
-3. **核心创新对比**
-
-    - PFStorer：全局门控，不考虑 LQ-Ref 相关性 → 无法适应变化的对齐质量
-    - ReFIR：显式 $L_{src} \times L_{ref}$ 相似性矩阵 → 计算量大（+16%），易受噪声干扰
-    - AICG（本文）：$M=16$ 个摘要 token 的隐式估计 → 仅 +0.13% 开销，鲁棒
+要修上一步的副作用，最直接的想法是像 ReFIR 那样算一个显式的 $L_{src}\times L_{ref}$ token-to-token 相似性矩阵来当门控，但它计算量大（+16% 开销）又对噪声敏感，且多数雷同 token 会主导计算、淹没少数关键 token。AICG 换成隐式估计：先用一组可学习的摘要 token $\mathbf{T}_S\in\mathbb{R}^{M\times d}$（$M=16$）把整张参考压缩成紧凑表示，$\mathbf{S}=\mathbf{T}_S\mathbf{W}_K$，$\mathbf{K}_{sum}=\text{Softmax}(\tfrac{\mathbf{SK}^\top}{\sqrt{d}})\mathbf{K}\in\mathbb{R}^{M\times d}$；再让主干查询与这 16 个摘要 token 算注意力得到分布图 $\mathbf{S}_{map}=\text{Softmax}(\tfrac{\mathbf{Q}\mathbf{K}_{sum}^\top}{\sqrt{d}})\in\mathbb{R}^{L_q\times M}$，逐位置沿摘要维度取均值并过 sigmoid，得到每个空间位置一个门控值 $\mathbf{G}=\sigma(\tfrac{1}{M}\sum_{j=1}^{M}[\mathbf{S}_{map}]_{:,j})\in\mathbb{R}^{L_q\times 1}$。最后用它逐位置调制 RA 的输出：$\mathbf{H}_{out}=\text{ZeroLinear}(\mathbf{G}\odot\text{RA}(\mathbf{H}_{src},\mathbf{H}_{ref}))+\mathbf{H}_{src}$。某个位置若与参考整体高度相关，门控接近 1、参考被放行；若相关性弱，门控压低、错误融合被截断。因为 $\mathbf{Q}$、$\mathbf{K}$ 都复用 RA 内已有的投影和中间变量，把 16 个摘要 token 一摊到全图，AICG 的额外开销仅 +0.13%，远低于 ReFIR 的 +16%，却避开了显式相似性的噪声和长尾问题。
 
 ### 损失函数 / 训练策略
 
+训练目标是重建、感知、对抗三项加权和：
+
 $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{rec} + \lambda_2 \mathcal{L}_{per} + \lambda_3 \mathcal{L}_{adv}$$
 
-- $\mathcal{L}_{rec}$：L2 重建损失
-- $\mathcal{L}_{per}$：VGG 感知损失
-- $\mathcal{L}_{adv}$：标准 GAN 对抗损失
-- 训练：2块 A40 GPU，Adam 优化器，学习率 5e-5，batch size 16，11K 迭代
-- 数据增强：20% 的 HQ-Ref 对随机替换为不相关样本，增强鲁棒性
+其中 $\mathcal{L}_{rec}$ 是 L2 重建损失、$\mathcal{L}_{per}$ 是 VGG 感知损失、$\mathcal{L}_{adv}$ 是标准 GAN 对抗损失。模型在 2 块 A40 GPU 上用 Adam 训练，学习率 5e-5、batch size 16、共 11K 迭代。为强化对不可靠参考的鲁棒性，训练时把 20% 的 HQ-Ref 对随机替换成不相关样本，逼 AICG 学会在参考无用时主动把门控压低。
 
 ## 实验关键数据
 
@@ -180,11 +154,11 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{rec} + \lambda_2 \mathcal{L}_{per
 
 ## 相关论文
 
-- [\[ICLR 2026\] AdaBlock-dLLM: Semantic-Aware Diffusion LLM Inference via Adaptive Block Size](adablock-dllm_semantic-aware_diffusion_llm_inference_via_adaptive_block_size.md)
 - [\[CVPR 2026\] Disentangled Textual Priors for Diffusion-based Image Super-Resolution](../../CVPR2026/image_restoration/disentangled_textual_priors_for_diffusion-based_image_super-resolution.md)
 - [\[CVPR 2025\] AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution](../../CVPR2025/image_restoration/adversarial_diffusion_compression_for_real-world_image_super-resolution.md)
 - [\[CVPR 2026\] FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution](../../CVPR2026/image_restoration/fidesr_high-fidelity_and_detail-preserving_one-step_diffusion_super-resolution.md)
 - [\[ICML 2026\] PODiff: Latent Diffusion in Proper Orthogonal Decomposition Space for Scientific Super-Resolution](../../ICML2026/image_restoration/podiff_latent_diffusion_in_proper_orthogonal_decomposition_space_for_scientific_.md)
+- [\[ICLR 2026\] Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
 
 </div>
 

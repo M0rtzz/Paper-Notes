@@ -37,41 +37,15 @@ CT重建是典型的逆问题，从投影测量中恢复未知物体。当测量
 
 ### 整体框架
 
-DM4CT从贝叶斯视角组织扩散方法：后验分布 $p(\boldsymbol{x}|\boldsymbol{y}) \propto p(\boldsymbol{x})p(\boldsymbol{y}|\boldsymbol{x})$，将逆向SDE修改为条件逆向SDE，关键在于如何近似测量条件项 $\nabla_{\boldsymbol{x}_t}\log p(\boldsymbol{y}|\boldsymbol{x}_t)$。
+DM4CT本身不提新算法，而是把CT重建放回贝叶斯框架里横向评测各路扩散方法：后验 $p(\boldsymbol{x}|\boldsymbol{y}) \propto p(\boldsymbol{x})p(\boldsymbol{y}|\boldsymbol{x})$ 中，扩散模型提供先验分数 $\nabla_{\boldsymbol{x}_t}\log p(\boldsymbol{x}_t)$，逆向SDE被改造成条件逆向SDE，所有方法的差别本质上都落在如何近似那一项难算的测量条件分数 $\nabla_{\boldsymbol{x}_t}\log p(\boldsymbol{y}|\boldsymbol{x}_t)$ 上。基准做的就是把这个统一视角、可控的数据/几何配置、以及一套公平的实现拼到一起，得到"扩散模型在CT里到底行不行"的可复现答案。
 
-### 关键设计：统一分类体系
+### 关键设计
 
-将10种扩散方法按数据一致性和先验知识策略分为五大类：
+**1. 统一分类体系：把十种扩散方法的设计选择摊开对比。** 这些方法表面上五花八门，但只要追问"测量条件分数怎么近似"，就能收敛成五条主线。最常见的是**数据一致性梯度引导（DC-grad）**，在每步去噪后由当前估计 $\hat{\boldsymbol{x}}_0$ 算数据保真梯度 $\boldsymbol{g}_t = \nabla_{\boldsymbol{x}_t}\mathcal{L}(\boldsymbol{A}\hat{\boldsymbol{x}}_0 - \boldsymbol{y})$ 沿轨迹推一把，用步长 $\eta$ 调引导强度，代表是DPS、PSLD；更硬的做法是**数据一致性优化步（DC-step）**，在去噪迭代间塞进一个完整的最小化 $\boldsymbol{x}_t^* = \arg\min \mathcal{L}(\boldsymbol{A}\boldsymbol{x}_t - \boldsymbol{y})$，把测量约束彻底吃进去，代表是ReSample；介于两者之间还有解耦先验与保真、交替求解的**即插即用（DMPlug）**，借伪逆重建（FBP/SIRT近似）在测量空间和图像空间间搭桥的**伪逆引导（PGDM、MCG）**，以及干脆用参数化分布近似后验、不沿轨迹逐步采样的**变分贝叶斯（Reddiff）**。这条主线让"为什么某方法在某配置下崩"有了可解释的坐标，而不是黑箱跑分。
 
-**1. 数据一致性梯度引导（DC-grad）**：在每步去噪后计算数据保真梯度 $\boldsymbol{g}_t = \nabla_{\boldsymbol{x}_t}\mathcal{L}(\boldsymbol{A}\hat{\boldsymbol{x}}_0 - \boldsymbol{y})$，用步长 $\eta$ 控制引导强度。代表：DPS、PSLD、Reddiff等。
+**2. 三类数据集加五种仿真配置：覆盖从医疗到工业的分布差异与退化谱。** 数据上刻意拉开域差距——医疗CT用2016 Low Dose CT Challenge（9卷训练、1卷测试，512×512），工业CT用LoDoInd管状多材料样品（3000训练、500测试切片），还新采集了一套同步辐射CT（两块岩石样品在高能同步辐射设施扫描，768×768高分辨率），后者填补了现有评估几乎只有仿真、缺真实测量的空白。退化上设计五种递进配置系统压测鲁棒性：40角度无噪、20角度轻噪、80角度强噪、80角度噪声叠环形伪影、以及40角度限角。这样每种方法都要在稀疏、含噪、有结构性伪影、几何不全等多重病态下亮相，避免只在某个甜区刷高分。
 
-**2. 数据一致性优化步（DC-step）**：在去噪迭代间插入完整的数据一致性优化 $\boldsymbol{x}_t^* = \arg\min \mathcal{L}(\boldsymbol{A}\boldsymbol{x}_t - \boldsymbol{y})$。代表：ReSample、DMPlug。
-
-**3. 即插即用（Plug-and-Play）**：解耦数据保真和先验，交替执行数据一致性子问题和无条件去噪步。代表：DMPlug。
-
-**4. 伪逆引导（Pseudo Inverse）**：使用伪逆重建（FBP/SIRT近似）在测量空间和图像空间间传递信息。代表：MCG、PGDM。
-
-**5. 变分贝叶斯（Variational Bayes）**：用参数化分布近似后验，无需沿扩散轨迹采样。代表：Reddiff、HybridReg。
-
-### 数据集与配置
-
-三类数据集覆盖不同应用场景：
-
-- **医疗CT**：2016 Low Dose CT Challenge（9卷训练+1卷测试，512×512）
-- **工业CT**：LoDoInd（管状样品含15种材料，3000+500切片）
-- **同步辐射CT**（新采集）：两块岩石样品在高能同步辐射设施扫描，768×768高分辨率
-
-五种仿真配置系统测试鲁棒性：40角度无噪/20角度轻噪/80角度强噪/80角度噪声+环形伪影/40角度限角。
-
-### 基线方法
-
-七种强基线覆盖各类方法范式：
-
-- 经典方法：FBP、SIRT
-- 神经网络先验：DIP、INR
-- 高斯散布：R2Gaussian
-- 迭代重建：FISTA-SBTV、ADMM-PDTV
-- 监督学习：SwinIR
+**3. 七种强基线：让扩散方法跟经典、迭代、监督学派同台。** 为了判断扩散到底带来多少增益，基准配齐了各范式的代表：解析法FBP与代数迭代SIRT打底，神经网络先验DIP和隐式表示INR代表无监督学习，R2Gaussian代表高斯散布新路线，FISTA-SBTV与ADMM-PDTV代表带正则的迭代重建，监督学习则用SwinIR作上限参照。所有方法统一在diffusers框架下实现、共享同一前向算子和评测脚本，保证对比的公平性，也方便后续接入新方法。
 
 ## 实验关键数据
 
@@ -156,10 +130,10 @@ DM4CT从贝叶斯视角组织扩散方法：后验分布 $p(\boldsymbol{x}|\bold
 ## 相关论文
 
 - [\[ICCV 2025\] Coordinate-based Speed of Sound Recovery for Aberration-Corrected Photoacoustic Computed Tomography](../../ICCV2025/medical_imaging/coordinate-based_speed_of_sound_recovery_for_aberration-corrected_photoacoustic_.md)
-- [\[ICLR 2026\] Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer](brain-it_image_reconstruction_from_fmri_via_brain-interaction_transformer.md)
 - [\[ICLR 2026\] Adaptive Domain Shift in Diffusion Models for Cross-Modality Image Translation](adaptive_domain_shift_in_diffusion_models_for_cross-modality_image_translation.md)
+- [\[ICLR 2026\] Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer](brain-it_image_reconstruction_from_fmri_via_brain-interaction_transformer.md)
 - [\[ICLR 2026\] Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity](improving_2d_diffusion_models_for_3d_medical_imaging_with_inter-slice_consistent.md)
-- [\[ICLR 2026\] Benchmarking ECG FMs: A Reality Check Across Clinical Tasks](benchmarking_ecg_fms_a_reality_check_across_clinical_tasks.md)
+- [\[NeurIPS 2025\] Posterior Sampling by Combining Diffusion Models with Annealed Langevin Dynamics](../../NeurIPS2025/medical_imaging/posterior_sampling_by_combining_diffusion_models_with_annealed_langevin_dynamics.md)
 
 </div>
 

@@ -42,34 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-语音 token 序列 $\{s_0, \ldots, s_T\}$ → Patch Encoder（滑动窗口自注意力 + 交叉注意力，聚合为 patch 表示 $\{z_0, \ldots, z_{T'}\}$，$T' \ll T$）→ 全局 Transformer（在 patch + 文本 token 级别自回归建模）→ Patch Decoder（轻量 Transformer + 交叉注意力，从 patch 还原语音 token）→ 标准 NTP 损失
+LST 把语音离散 token 序列 $\{s_0,\ldots,s_T\}$ 先用一个轻量 Patch Encoder 聚合成数量少得多的"潜在语音 patch" $\{z_0,\ldots,z_{T'}\}$（$T'\ll T$），让主力的全局 Transformer 在 patch 与文本 token 这两种粒度相当的单元上做统一自回归，再用一个轻量 Patch Decoder 把每个 patch 还原回语音 token 并算标准 NTP 损失。整套结构沿用 Byte Latent Transformer 的"细粒度 token → 高层 patch → 全局建模 → 解码展开"思路，只是把对象从 byte 换成了语音 token，从而把语音相对文本 20× 的长度差压回到接近 1:1。
 
 ### 关键设计
 
-1. **三种 Patching 策略**
+**1. 三种 Patching 策略与 Curriculum 过渡：在"语义对齐"和"推理无依赖"之间拿全。**
 
-    - **Static Patching**：固定大小 $p$ 的非重叠切分（如 $p=3$，每 3 个语音 token 一个 patch）。简单高效，推理时无需辅助模型
-    - **Alignment Patching**：用 Wav2Vec2+CTC 强制对齐获取语音-文本时间戳，每个文本单元（词/BPE）对应一个 patch，静默段单独成 patch。精确对齐语音和文本粒度
-    - **Curriculum Patching**（最终方案）：训练时从 alignment → static 逐步过渡。概率 $P(u) = 1 \to 0$ 在训练步 $[\tau_1, \tau_2]$ 区间线性衰减。早期享受对齐带来的语义对应，后期切换到静态策略以消除推理时对对齐模型的依赖
-    - 设计动机：alignment patching 提供最好的跨模态对齐但需要辅助模型；curriculum 保留了好处但消除了推理依赖
+如何切 patch 直接决定语音能不能和文本对上粒度。最朴素的 Static Patching 用固定大小 $p$ 做非重叠切分（如 $p=3$，每 3 个语音 token 合成一个 patch），简单高效、推理时不需要任何外部模型，但切点和语义边界无关。Alignment Patching 则先用 Wav2Vec2+CTC 强制对齐拿到语音-文本时间戳，让每个文本单元（词 / BPE）对应一个 patch、静默段单独成 patch，对齐质量最好，但代价是推理时仍要挂一个对齐模型，不实用。LST 的最终方案是 Curriculum Patching：训练早期用 alignment 享受语义对应，随后让"采用对齐切分"的概率 $P(u)$ 在训练步区间 $[\tau_1,\tau_2]$ 上从 $1$ 线性衰减到 $0$，平滑切换到 static。这样对齐信号在前期被"蒸馏"进 patch 表示里，后期即使换成静态切分模型也保留了学到的语义对应，推理时彻底摆脱对齐模型——既要了对齐的质量，又去掉了对齐的依赖。值得注意的是，直接把 BPE 子词切分搬到语音 token 上是失效的（Cuervo & Marxer 2024），这也是为什么 LST 走 patch 路线而非词表压缩。
 
-2. **Patch Encoder 和 Patch Decoder**
+**2. 轻量 Encoder / Decoder + 重型全局 Transformer：把算力花在 patch 级语义而非冗余 token 上。**
 
-    - Encoder：滑动窗口自注意力 + 交叉注意力层，将 token 嵌入聚合为 patch 嵌入
-    - Decoder：轻量 Transformer，每层插入交叉注意力以接收 patch 级信息，自注意力窗口 512 token
-    - 计算分配：全局 Transformer 是主要 FLOPs 消耗者，Encoder/Decoder 轻量——通过在 patch 级而非 token 级做全局建模，显著减少计算
+Patch Encoder 由滑动窗口自注意力加交叉注意力组成，把窗口内的 token 嵌入聚合成一个 patch 嵌入；Patch Decoder 是一个轻量 Transformer，每层插入交叉注意力以接收对应 patch 的信息，自注意力窗口限制在 512 token 内逐步还原语音 token。关键在于算力分配：主要 FLOPs 集中在 patch 级的全局 Transformer 上，而 Encoder / Decoder 都做得很轻。由于全局建模在长度只有原来 $1/p$ 量级的 patch 序列上进行，自回归的主开销随之大幅下降，长距离依赖也更容易学，这正是 LST 能同时降低 ASR/TTS 推理成本又不掉重建质量的原因。
 
-3. **跨模态对齐机制**
+**3. patch 级的跨模态对齐：让语音和文本在同一序列里以相近粒度共存。**
 
-    - Patch 级建模使语音和文本在同一序列中以相近的粒度出现
-    - 交错数据训练：同一语料的文本和语音交替出现，部分语音段被替换为对应文本
-    - 效果：patch 自动学习到与音节/单词的对应，促进 S↔T 知识迁移
+把语音压成 patch 后，它与文本 token 在序列长度上趋于一致，于是二者可以放进同一条自回归序列里被同等对待。训练采用交错数据——同一语料的语音段和文本段交替出现，部分语音段被替换为对应文本——迫使模型在两种模态间来回预测。结果是 patch 会自动学到与音节 / 单词的对应关系，打通 speech↔text 的知识迁移通道；这也是为什么跨模态训练不仅没拖累文本能力，反而能反向小幅提升 text→text 表现。
 
 ### 损失函数 / 训练策略
-- 标准 NTP 损失（token 级别），应用于 patch decoder 的输出
-- 端到端训练（encoder + global transformer + decoder）
-- 语音 tokenizer：HuBERT 25Hz，501 码本
-- 文本 tokenizer：Llama 2 tokenizer
+全模型端到端训练（Patch Encoder + 全局 Transformer + Patch Decoder 一起优化），目标是作用在 Patch Decoder 输出上的标准 token 级 NTP 损失。语音侧用 HuBERT 25Hz、501 码本的 tokenizer 离散化，文本侧用 Llama 2 tokenizer。
 
 ## 实验关键数据
 
@@ -141,9 +131,9 @@ tags:
 
 - [\[ACL 2026\] ImmersiveTTS: Environment-Aware Text-to-Speech with Multimodal Diffusion Transformer and Domain-Specific Representation Alignment](../../ACL2026/audio_speech/immersivetts_environment-aware_text-to-speech_with_multimodal_diffusion_transfor.md)
 - [\[ICLR 2026\] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion](scalable_multilingual_multimodal_machine_translation_with_speech-text_fusion.md)
-- [\[ICLR 2026\] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)
 - [\[ICML 2026\] Towards Streaming Synchronized Spatial Audio Generation via Autoregressive Diffusion Transformer](../../ICML2026/audio_speech/towards_streaming_synchronized_spatial_audio_generation_via_autoregressive_diffu.md)
-- [\[ICML 2026\] Position: Towards Responsible Evaluation for Text-to-Speech](../../ICML2026/audio_speech/position_towards_responsible_evaluation_for_text-to-speech.md)
+- [\[ICLR 2026\] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation](vowelprompt_hearing_speech_emotions_from_text_via_vowel-level_prosodic_augmentat.md)
+- [\[ICLR 2026\] TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
 
 </div>
 

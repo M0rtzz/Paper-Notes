@@ -42,37 +42,15 @@ WIMLE将隐式最大似然估计（IMLE）扩展到model-based RL，学习能捕
 ## 方法详解
 
 ### 整体框架
-WIMLE由三部分组成：(1) IMLE训练的随机世界模型集成；(2) 基于ensemble+latent采样的预测不确定性估计；(3) 不确定性加权的TD学习目标。底层RL算法使用SAC + distributional Q-learning。
+WIMLE在SAC + distributional Q-learning的骨架上挂三个互相咬合的部件：一组用IMLE训练的随机世界模型集成负责生成多模态合成转移，一个基于ensemble与latent双重采样的不确定性估计器给每条合成转移打方差，再用逆方差权重把这些转移喂进TD学习目标。直觉上，世界模型负责"敢于猜出多种可能未来"，不确定性加权负责"按可信度折扣这些猜测"，二者合起来让合成数据既丰富又不误导策略。
 
 ### 关键设计
 
-1. **IMLE世界模型**:
+**1. IMLE随机世界模型：用一步生成捕获多模态动力学，避开均值回归。** 标准回归式世界模型在同一 $(s_t,a_t)$ 对应多个冲突后继时（接触丰富、部分可观测、固有随机）会把这些模态平均掉，预测出根本不存在的"中间态"。WIMLE改用条件随机生成器 $(\tilde{s}_{t+1}, \tilde{r}_t) = g_\theta(s_t, a_t, z),\ z \sim \mathcal{N}(0, I)$，让噪声 $z$ 去对应不同模态。训练交替两步：先做无梯度的 assignment，为每个数据点从 $m$ 个候选 latent 中挑出预测最近的那个 $z_i^* = \arg\min_{1 \leq j \leq m} \|g_\theta(s_i, a_i, z_j) - y_i\|^2$；再做梯度下降的 update，只对这个最近样本回传 $\theta \leftarrow \theta - \eta \nabla_\theta \frac{1}{|B|}\sum_{i \in B}\|g_\theta(s_i, a_i, z_i^*) - y_i\|^2$。这套"先匹配再拉近"的 IMLE 目标保证 mode coverage——每个真实后继都至少被一个生成样本覆盖，从而不会像 Gaussian 模型那样回归到均值；而相比 diffusion 世界模型的迭代采样，IMLE 是一步生成，吞吐量足以支撑 online RL 的高频 rollout。生成器本身用 3 个残差块（Dense + ReLU + L2 normalization）实现，输入 $(s_t, a_t, z)$，奖励与后继状态走分离的输出 head。
 
-    - 条件随机生成器：$(\tilde{s}_{t+1}, \tilde{r}_t) = g_\theta(s_t, a_t, z), \quad z \sim \mathcal{N}(0, I)$
-    - 训练步骤交替进行：
-        - Assignment（无梯度）：$z_i^* = \arg\min_{1 \leq j \leq m} \|g_\theta(s_i, a_i, z_j) - y_i\|^2$（为每个数据点找最近的latent）
-        - Update（梯度下降）：$\theta \leftarrow \theta - \eta \nabla_\theta \frac{1}{|B|}\sum_{i \in B}\|g_\theta(s_i, a_i, z_i^*) - y_i\|^2$
-    - **核心优势**：IMLE保证mode coverage——每个数据点至少被一个生成样本覆盖，避免Gaussian模型的均值回归
-    - vs Diffusion：IMLE是one-step生成，吞吐量高适合online RL
+**2. 双源不确定性估计：把模型分歧和随机性拆开同时量化。** 要按可信度折扣合成数据，先得知道每条预测有多不确定，而单一来源会漏掉一半。WIMLE 训练 $K=7$ 个 IMLE 模型组成集成，每个模型再采样 $m$ 个 latent，把预测方差定义为跨模型与跨 latent 的总标准差 $\sigma(s,a) = \text{std}_{k,j}[g_{\theta_k}(s,a,z_j)]$。它可按全方差公式分解为 $\sigma^2 = \underbrace{\text{Var}_k[\mathbb{E}_z[g_{\theta_k}]]}_{\text{epistemic}} + \underbrace{\mathbb{E}_k[\text{Var}_z[g_{\theta_k}]]}_{\text{aleatoric}}$：前一项是模型间分歧（数据不足区域的认识论不确定性），后一项是 latent 采样的变异性（动力学固有的偶然不确定性）。两者同时被捕获，意味着即便世界模型已经完美（只剩纯 aleatoric），加权仍能避免随机性给 value 估计引入偏差。
 
-2. **不确定性估计**:
-
-    - $K=7$ 个IMLE模型集成，每个模型采样 $m$ 个latent
-    - 预测不确定性：$\sigma(s,a) = \text{std}_{k,j}[g_{\theta_k}(s,a,z_j)]$
-    - 全方差分解：$\sigma^2 = \underbrace{\text{Var}_k[\mathbb{E}_z[g_{\theta_k}]]}_{\text{epistemic}} + \underbrace{\mathbb{E}_k[\text{Var}_z[g_{\theta_k}]]}_{\text{aleatoric}}$
-    - 同时捕获认识论不确定性（模型间分歧）和偶然不确定性（latent采样变异性）
-
-3. **不确定性加权学习**:
-
-    - 权重：$w(s,a) = \frac{1}{\sigma(s,a) + 1} \in (0, 1]$
-    - TD loss：$\mathcal{L}_{\text{critic}} = \mathbb{E}[w_i \cdot \delta_i^2]$
-    - 真实数据 $w=1$，合成数据用计算权重
-    - **理论保证**：
-        - Lemma 1：正权重不改变Bellman不动点
-        - Lemma 2：在线性critic下，逆方差加权是minimum-covariance unbiased estimator（Gauss-Markov定理）
-
-### 架构
-3个残差块（Dense + ReLU + L2 normalization），输入 $(s_t, a_t, z)$，输出 $(r_t, s_{t+1})$ 的分离head。
+**3. 逆方差加权的TD学习：让加权既软又不破坏收敛。** 有了 $\sigma$ 之后怎么用，是个微妙问题——硬阈值截断 rollout 会丢数据，乱加权又可能改变 Bellman 不动点。WIMLE 取逆方差软权重 $w(s,a) = \frac{1}{\sigma(s,a) + 1} \in (0, 1]$，真实数据令 $w=1$，合成数据按上式计算，再把权重塞进 critic 损失 $\mathcal{L}_{\text{critic}} = \mathbb{E}[w_i \cdot \delta_i^2]$，不确定的远步预测自然被压低影响而非粗暴丢弃。这一选择有两条理论支撑：Lemma 1 证明任何正权重都不改变 Bellman 不动点，所以加权只影响收敛速度不改变收敛目标；Lemma 2 进一步说明在线性 critic 下，逆方差加权正是 minimum-covariance 的无偏估计（Gauss-Markov 定理），即在所有无偏加权里方差最小。这让"按不确定性折扣"从一个启发式变成有最优性保证的原则做法，也解释了为何 WIMLE 在 rollout horizon 拉长时仍稳定。
 
 ## 实验关键数据
 
@@ -143,8 +121,8 @@ WIMLE由三部分组成：(1) IMLE训练的随机世界模型集成；(2) 基于
 - [\[ICLR 2026\] Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
 - [\[ICML 2026\] DR.Q: Debiased Model-based Representations for Sample-efficient Continuous Control](../../ICML2026/reinforcement_learning/debiased_model-based_representations_for_sample-efficient_continuous_control.md)
 - [\[ICLR 2026\] From Observations to Events: Event-Aware World Model for Reinforcement Learning](from_observations_to_events_event-aware_world_model_for_reinforcement_learning.md)
-- [\[ICLR 2026\] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
 - [\[ICLR 2026\] One Model for All Tasks: Leveraging Efficient World Models in Multi-Task Planning](one_model_for_all_tasks_leveraging_efficient_world_models_in_multi-task_planning.md)
+- [\[ICLR 2026\] Regret-Guided Search Control for Efficient Learning in AlphaZero](regret-guided_search_control_for_efficient_learning_in_alphazero.md)
 
 </div>
 

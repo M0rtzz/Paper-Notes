@@ -41,36 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-工作包含三部分：(1) CHAMMI-75 数据集构建——数据获取→元数据整合→数据筛选（去冗余+质量控制）→细胞分割标注；(2) 6 个评估 benchmark（包含 3 个新提出）覆盖不同通道配置和域迁移场景；(3) 系统实验评估数据集的预训练价值、影响因素和扩展性。
+这篇论文要解决的是"显微镜图像没有自己的 ImageNet"——多通道显微镜数据散落在各个平台、格式各异、通道数千变万化，没人把它们整理成一个能拿来预训练通用细胞形态学模型的资源。整套工作沿三条线展开：先把原始图像汇成 CHAMMI-75 数据集（从 18 个公开平台下载 75 个研究的图像，统一元数据标注，再经去冗余和质量筛选，最后做细胞分割标注）；再搭一套 6 个评估 benchmark（含 3 个新提出的），故意覆盖从"训练时见过的通道"到"训练时完全没见过的通道组合甚至新成像方式"的不同泛化难度；最后用系统实验回答"这份数据作为预训练资源到底值不值、哪些因素最关键、能不能 scale"。
 
 ### 关键设计
 
-1. **数据筛选 pipeline**:
+**1. 数据筛选 pipeline：把 2600 万张图里的近似重复挤掉，留下 280 万张真正多样的。**
 
-    - 功能：从约 2600 万下载图像中筛选出 280 万高质量、低冗余的预训练图像
-    - 核心思路：分四步去冗余——(a) 3D 图像随机采样少量 2D 切片；(b) 活体显微延时视频随机采样少量帧；(c) 对照条件重复样本随机采样少量孔板；(d) K-means 聚类选择多样化、高质量子集
-    - 设计动机：显微镜数据有大量近似重复（如同一3D体的相邻切片、延时视频的连续帧），直接使用会导致严重过拟合。基于元数据的系统化筛选确保多样性
+显微镜数据天然充满近似重复——同一个 3D 体的相邻切片几乎一样、延时视频的连续帧只差一点、对照条件下的重复孔板内容雷同，如果直接全量喂进去训练，模型会在这些冗余上严重过拟合。筛选 pipeline 用元数据驱动的四步去冗余应对这点：(a) 对 3D 图像只随机采样少量 2D 切片；(b) 对活体延时视频只随机采样少量帧；(c) 对对照重复样本只随机采样少量孔板；(d) 最后用 K-means 聚类挑出多样化、高质量的子集。四步下来从约 2600 万下载图像收敛到 280 万张，靠的是系统化地按元数据剔冗余、保多样，而不是简单按数量截断。
 
-2. **Bag of Channels (BoC) vs Multi-Channel Attention (MCA)**:
+**2. Bag of Channels (BoC) vs Multi-Channel Attention (MCA)：两种处理可变通道数的策略，谁更适合自监督？**
 
-    - 功能：评估两种多通道处理策略
-    - 核心思路：BoC 将每个通道独立输入 backbone 提取特征再拼接——通道无关、可扩展；MCA 将所有通道 token 组成长序列建模跨通道关联——信息更丰富但计算量 3-5×
-    - 设计动机：BoC 在 SSL 场景下始终优于 MCA（高达 19%），说明在无监督设定下学习跨通道关联很困难。BoC 更实用且更易扩展
+显微镜图像的核心难点是通道数不固定且每通道含义不同，论文对比了两条路线。BoC 把每个通道独立送进 backbone 各自提特征、最后拼接，因此与通道数无关、天然可扩展到任意通道组合；MCA 则把所有通道的 token 拼成一条长序列、用注意力显式建模跨通道关联，信息更丰富但计算量是 BoC 的 3-5×。实验给出了明确答案：在自监督（SSL）设定下 BoC 始终优于 MCA，差距高达 19%。原因是无监督下"学习不同荧光通道之间的关联"本就极难，MCA 的额外建模能力反而成了负担，BoC 既更实用又更省算力。
 
-3. **MorphEm 模型**:
+**3. MorphEm 模型：基于 CHAMMI-75 训出的最佳配置。**
 
-    - 功能：基于 CHAMMI-75 的最佳预训练模型
-    - 核心思路：ViT-small + DINO 自监督 + BoC 策略，在完整 CHAMMI-75（280 万图像）上训练。2352 GPU 小时
-    - 设计动机：系统扩展实验表明 DINO > MAE > SimCLR，BoC > MCA，ViT-small 在学术计算资源下可行且效果好
+把前面的结论组合起来就得到 MorphEm——ViT-small 主干 + DINO 自监督 + BoC 多通道策略，在完整的 280 万张 CHAMMI-75 上训练，总计 2352 GPU 小时。这套配置不是拍脑袋定的，而是系统扩展实验筛出来的：自监督方法上 DINO > MAE > SimCLR，多通道策略上 BoC > MCA，主干尺寸上 ViT-small 在学术计算资源约束下既跑得动、效果又好。
 
-4. **评估 benchmark 设计**:
+**4. 评估 benchmark 设计：故意按"泛化难度"分层，专门压测最难的场景。**
 
-    - 功能：6 个 benchmark 覆盖不同泛化场景
-    - 核心思路：包含通道内任务（CHAMMI、HPAv23、JUMP-CP）、通道泛化任务（CellPHIE 14 通道——训练时未见的组合）、跨模态+跨域任务（RBC-MC 明场成像流式细胞术）
-    - 设计动机：真实世界中新实验经常用新的通道组合甚至新的成像方式。CellPHIE 和 RBC-MC 测试的就是这种最难的泛化
+真实世界里新实验经常换用新的通道组合、甚至换一种成像方式，所以评估必须覆盖这种分布外的泛化，而不只是同分布精度。这套 6 个 benchmark 因此分三层：通道内任务（CHAMMI、HPAv23、JUMP-CP，通道配置训练时见过）、通道泛化任务（CellPHIE 用 14 通道，是训练时未见的组合）、以及跨模态+跨域任务（RBC-MC 用明场成像的流式细胞术，连成像物理过程都变了）。CellPHIE 和 RBC-MC 正是用来逼出模型在最难泛化场景下的真实能力。
 
 ### 训练策略
-DINO-BoC 自监督学习：单通道输入 ViT-small，student-teacher 框架。特征提取后冻结权重，不微调，直接在下游任务评估（线性探针或 nearest neighbor）。
+DINO-BoC 自监督学习：单通道分别输入 ViT-small，走 student-teacher 框架训练。预训练完成后冻结权重、不做微调，直接在下游任务上用线性探针或 nearest neighbor 评估特征质量。
 
 ## 实验关键数据
 
@@ -131,9 +123,9 @@ DINO-BoC 自监督学习：单通道输入 ViT-small，student-teacher 框架。
 
 - [\[ACL 2025\] Pre-Training Curriculum for Multi-Token Prediction in Language Models](../../ACL2025/llm_pretraining/pre-training_curriculum_for_multi-token_prediction_in_language_models.md)
 - [\[ACL 2025\] Meta-rater: A Multi-dimensional Data Selection Method for Pre-training Language Models](../../ACL2025/llm_pretraining/metarater_a_multidimensional_data_selection_method.md)
-- [\[ICLR 2026\] Stochastic Self-Organization in Multi-Agent Systems](stochastic_self-organization_in_multi-agent_systems.md)
 - [\[ACL 2026\] Toward Consistent World Models with Multi-Token Prediction and Latent Semantic Enhancement](../../ACL2026/llm_pretraining/toward_consistent_world_models_with_multi-token_prediction_and_latent_semantic_e.md)
 - [\[ICLR 2026\] Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training](common_corpus_ethical_data_for_llm_pretraining.md)
+- [\[ICLR 2026\] Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
 
 </div>
 

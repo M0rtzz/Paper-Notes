@@ -107,8 +107,8 @@ Case 3 揭示的死锁是"想要正确概率却被 prediction 逼着坍缩到 mo
 
 ## 相关论文
 
-- [\[ACL 2025\] Can You Share Your Story? Modeling Clients' Metacognition and Openness for LLM Therapist Evaluation](../../ACL2025/llm_nlp/can_you_share_your_story_modeling_clients_metacognition_and_openness_for_llm_the.md)
 - [\[ICML 2026\] 结构化广义线性 token mixing：用 SND + Kronecker 在复杂度与表达力之间换挡](trading_complexity_for_expressivity_through_structured_generalized_linear_token_.md)
+- [\[ACL 2025\] Can You Share Your Story? Modeling Clients' Metacognition and Openness for LLM Therapist Evaluation](../../ACL2025/llm_nlp/can_you_share_your_story_modeling_clients_metacognition_and_openness_for_llm_the.md)
 - [\[ICML 2026\] Token-Efficient Change Detection in LLM APIs](token-efficient_change_detection_in_llm_apis.md)
 - [\[ICML 2026\] SAC-Opt: Semantic Anchors for Iterative Correction in Optimization Modeling](sac-opt_semantic_anchors_for_iterative_correction_in_optimization_modeling.md)
 - [\[ACL 2026\] C-World: A Computer Use Agent Environment Creator](../../ACL2026/llm_nlp/c-world_a_computer_use_agent_environment_creator.md)

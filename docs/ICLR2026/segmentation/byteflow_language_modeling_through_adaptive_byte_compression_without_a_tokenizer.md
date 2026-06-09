@@ -28,7 +28,7 @@ tags:
 
 ### 解决思路
 
-**本文目标**：**领域现状**：1. 现代 LLM 依赖固定的 BPE 分词器，一旦训练完成只能在固定粒度上操作
+**领域现状**：1. 现代 LLM 依赖固定的 BPE 分词器，一旦训练完成只能在固定粒度上操作
 2. 固定分词导致计数、算术、结构化数据、多语言等场景下的脆弱行为
 3. 分词是流水线中唯一不可学习的阶段，打破了端到端建模
 4. 已有无分词方案：纯字节级模型（序列太长计算昂贵）、启发式分块（固定步长/空格边界，inductive bias 强）
@@ -36,57 +36,24 @@ tags:
 6. 缺乏原则性的方法来引导 FLOPs 的动态分配
 
 ## 方法详解
-**架构**: 五阶段分层结构——Local Encoder → Downsampling → Global Transformer → Upsampling → Decoder
-
-**Local Encoder**:
-- 浅而窄的 Transformer，使用滑动窗口注意力(SWA) + Canon Layer 实现高效字节级 token mixing
-- Canon Layer: 类似 kernel=4 的 causal conv1d，促进局部信息传播
-
-**Coding-Rate Chunking (核心创新)**:
-- 计算每个位置的边际编码率 $\Delta R_t = R_\varepsilon(h_{1:t}) - R_\varepsilon(h_{1:t-1})$
-- 编码率高的位置 = 信息增益大 = 自然分割边界
-- 选择 Top-K 个最高 $\Delta R_t$ 位置作为 chunk 边界，保持静态计算图
-- 避免了全局阈值带来的动态长度和 OOM 问题
-
-**Global Transformer**: 深而宽，在压缩后的 $K \ll T$ 序列上做全注意力（主要 FLOPs 集中于此）
-
-**Upsampling**: 多线性重构 + 大残差连接，将全局表示映射回字节级
-
-**Decoder**: 与 Local Encoder 对称，做 next-byte prediction
-
-## 方法详解
 
 ### 整体框架
-五阶段分层流水线：字节嵌入 → Local Encoder（字节级上下文化）→ Downsampling（编码率分块）→ Global Transformer（高层抽象建模）→ Upsampling + Decoder（字节级预测）
 
-### 关键设计 1: Local Encoder（浅/窄）
-- 多层小型 Transformer，使用滑动窗口注意力（SWA）+ Canon Layer
-- SWA 将复杂度从 $O(T^2)$ 降到 $O(T \cdot w_{local})$
-- Canon Layer（$\approx$ kernel=4 的 causal conv1d）：$Canon(h_t) = w_0 \odot h_t + w_1 \odot h_{t-1} + w_2 \odot h_{t-2} + w_3 \odot h_{t-3}$，促进局部 token mixing
-- 为什么需要 Canon Layer：单靠 SWA 需要 $T/w_{local}$ 层才能保证全局连通，Canon Layer 用极低开销弥补这一不足
+ByteFlow Net 是一条五阶段的分层流水线：原始字节先经 Local Encoder 做字节级上下文化，再由编码率分块（Downsampling）把 $T$ 个字节压缩成 $K \ll T$ 个高层 token，交给又深又宽的 Global Transformer 做语义级推理，最后通过 Upsampling 还原回字节粒度、由 Decoder 做 next-byte 预测。设计的核心思想是把绝大部分算力集中在压缩后的短序列上，而字节级的进出两端保持轻量；分块的边界不靠固定步长或空格等启发式，而是用信息论中的编码率在线决定。
 
-### 关键设计 2: Coding-Rate Chunking（核心创新）
-- 目标：从 $T$ 个字节位置中选出 $K \ll T$ 个作为高层 token
-- **编码率** $R_\varepsilon(h_{1:T}) = \frac{1}{2} \log \det(I + \frac{d_{local}}{\varepsilon^2} h_{1:T} h_{1:T}^\top)$
-    - 编码率大 → 表征在特征空间跨越多样方向 → 信息量大 → 应作为分割边界
-- **边际编码率** $\Delta R_t = R_\varepsilon(h_{1:t}) - R_\varepsilon(h_{1:t-1})$：度量第 $t$ 个字节的信息增益
-- **Top-K 选择**（而非全局阈值）：保持固定长度 $K$，维护静态计算图，避免动态长度导致的 OOM 和 ragged tensor 问题
-- 设计动机：从信息编码成本角度判定哪些位置值得提升到更高计算层级——这将分割决策转化为信息论在线优化问题
+### 关键设计
 
-### 关键设计 3: Global Transformer（深/宽）
-- 在压缩后的 $K$ 序列上做全因果注意力：$g_{1:K} = \text{Transformer}_{global}(z_{1:K})$
-- 由于 $K \ll T$，可使用更深更宽的架构集中计算资源做高层推理
-- FLOPs $\approx O(G \cdot K^2 \cdot d_{global}^2)$
+**1. Local Encoder：用极低开销在字节级建立局部上下文。** 纯字节序列长达数千，直接全注意力的 $O(T^2)$ 代价无法承受，因此 Local Encoder 用一个浅而窄的 Transformer，把注意力限制在滑动窗口（SWA）内，复杂度降到 $O(T \cdot w_{local})$。但 SWA 单独使用有个连通性问题——信息要跨越整段序列需要堆 $T/w_{local}$ 层才能传到位。为此每层额外插入一个 Canon Layer，本质是一个 kernel=4 的因果一维卷积 $Canon(h_t) = w_0 \odot h_t + w_1 \odot h_{t-1} + w_2 \odot h_{t-2} + w_3 \odot h_{t-3}$，以接近零的参数和算力开销补足相邻字节的混合，让浅层网络也能形成可靠的局部表征供后续分块使用。
 
-### 关键设计 4: Upsampling + Decoder
-- 多线性重构：每个字节位置根据所属 chunk 和 bin 选择对应投影矩阵 $W_{bin(t)}$
-- 大残差连接 $s_t = h_t + \tilde{s}_t$：局部编码器特征 + 全局上采样信息
-- Decoder 与 Local Encoder 对称：SWA + Canon，做 next-byte prediction
+**2. Coding-Rate Chunking：用编码率把"该在哪里切"变成信息论优化。** 这是全文核心。给定 Local Encoder 输出的字节特征，定义其编码率 $R_\varepsilon(h_{1:T}) = \frac{1}{2} \log \det\!\big(I + \frac{d_{local}}{\varepsilon^2} h_{1:T} h_{1:T}^\top\big)$——它度量这组特征在表示空间里张开了多少独立方向，编码率越大说明信息量越大。在此基础上算每个位置的边际编码率 $\Delta R_t = R_\varepsilon(h_{1:t}) - R_\varepsilon(h_{1:t-1})$，即第 $t$ 个字节相对前文带来的信息增益；增益大的位置正是语义自然断点，应当被提升为高层 token。关键的工程取舍是用 **Top-K** 选最大的 $K$ 个 $\Delta R_t$ 作边界，而非设全局阈值：阈值会让每条样本切出不定数量的 chunk，导致 ragged tensor 和训练时显存抖动甚至 OOM，而 Top-K 固定输出长度 $K$、维持静态计算图。这样一来，"FLOPs 该花在哪些位置"就被表述成一个有原则的信息编码成本最小化问题，而不是拍脑袋的归纳偏置。
+
+**3. Global Transformer：把算力集中到压缩后的短序列做高层推理。** 分块后序列长度从 $T$ 降到 $K$，于是可以负担一个又深又宽的全因果注意力 Transformer $g_{1:K} = \text{Transformer}_{global}(z_{1:K})$ 来建模高层语义。由于 $K \ll T$，这一段虽然承担了主要计算量（$\approx O(G \cdot K^2 \cdot d_{global}^2)$），但绝对开销远小于在原始字节上做同等深度的注意力，从而把模型容量花在最该花的抽象层面。
+
+**4. Upsampling + Decoder：把全局语义还原回字节并预测下一字节。** 上采样采用多线性重构，每个字节位置依据所属 chunk 和 bin 选用对应的投影矩阵 $W_{bin(t)}$ 把全局表示映射回字节粒度，并通过一个大的残差连接 $s_t = h_t + \tilde{s}_t$ 同时保留 Local Encoder 的局部细节与全局上采样信息，缓解压缩带来的信息损失。Decoder 在结构上与 Local Encoder 对称（同样是 SWA + Canon），在还原后的字节序列上做 next-byte prediction。
 
 ### 损失函数 / 训练策略
-- 标准交叉熵损失，按字节归一化为 Bits-Per-Byte (BPB)
-- AdamW optimizer, lr=1e-3, gradient clipping=1.0, batch size 8, sequence length 8192→3200→8192
-- 在 FineWeb-Edu-100B（~500B bytes）上预训练
+
+训练用标准的下一字节交叉熵，按字节归一化为 Bits-Per-Byte (BPB) 以便和不同分词粒度的模型公平比较。优化器为 AdamW，学习率 1e-3，梯度裁剪 1.0，batch size 8，序列长度按 8192→3200→8192 调度，在 FineWeb-Edu-100B（约 500B 字节）上预训练。
 
 ## 实验关键数据
 

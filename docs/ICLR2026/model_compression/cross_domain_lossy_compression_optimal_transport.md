@@ -52,20 +52,17 @@ tags:
 
 ### 关键设计
 
-1. **Rate- and Classification-Constrained Optimal Transport**:
-    - 功能：将跨域有损压缩形式化为约束最优传输问题
-    - 核心思路：最小化失真 $D(R,C) = \min_{P_{Z|X}, P_{Y|Z}} E[d(X,Y)]$，约束 $I(X;Z) \leq R$（率约束）和 $H(S|Y) \leq C$（分类约束），$H(S|Y)$ 通过Fano不等式 $\Pr(S \neq \hat{S}) \geq \frac{H(S|Y)-1}{\log(M-1)}$ 直接关联分类性能下界
-    - 设计动机：$H(S|Y)$ 是分类信息的信息论自然度量——小的 $H(S|Y)$ 保证存在高精度分类器；率约束限制压缩表示的信息量；两者与失真形成三方权衡
+**1. 率-分类双约束最优传输：把"压得小、认得准"翻译成一个可解的传输问题。**
 
-2. **Bernoulli源和Gaussian源的闭式解**:
-    - 功能：在两类经典可解分布上推导DRC/RDC的解析表达
-    - 核心思路：Bernoulli源+Hamming失真→利用二进制对称信道结构和共享随机性simplify传输计划；Gaussian源+MSE→利用正交分解将率-失真-分类分离为独立优化，推导 $D(R,C) = \sigma_X^2 \cdot 2^{-2R} + f(C)$形式的表达式
-    - 设计动机：Bernoulli和Gaussian是率失真理论中"氢原子"级的模型——闭式解揭示权衡的定性结构，指导实际复杂分布的算法设计
+经典率失真理论默认编码端和解码端在同一分布域，跨域场景一旦出现就无从下手。本文把问题重写成一个约束最优传输：在所有可行的传输计划里，找一个让重建失真最小的，即 $D(R,C) = \min_{P_{Z|X}, P_{Y|Z}} E[d(X,Y)]$，同时压上两道约束——率约束 $I(X;Z) \leq R$ 限制压缩表示 $Z$ 携带的信息量，分类约束 $H(S|Y) \leq C$ 限制重建结果丢失的类别信息。关键在于为什么用 $H(S|Y)$ 来度量"认得准不准"：它通过 Fano 不等式 $\Pr(S \neq \hat{S}) \geq \frac{H(S|Y)-1}{\log(M-1)}$ 直接给出任何分类器误差的下界，所以 $H(S|Y)$ 越小，就保证存在一个高精度分类器。这样一来，率（压多小）、失真（重建多准）、分类（认得多对）三者被锁进同一个优化问题里互相牵制，构成可分析的三方权衡。
 
-3. **DRPC扩展（加入感知约束）**:
-    - 功能：在DRC基础上加入感知散度约束（KL散度或Wasserstein距离），得到四维权衡函数DRPC
-    - 核心思路：额外约束 $D_\text{perc}(P_Y || P_{Y^*}) \leq P$，其中 $P_{Y^*}$ 为目标感知分布，得到 $D(R,C,P) = \min_{P_{Z|X},P_{Y|Z}} E[d(X,Y)]$ s.t. 率、分类、感知三重约束
-    - 设计动机：实际应用中感知质量与逐像素失真存在权衡（低失真不等于高感知质量）——DRPC框架统一处理
+**2. Bernoulli 源与 Gaussian 源的闭式解：在"氢原子"模型上把权衡的形状算出来。**
+
+抽象框架要落地，得先在能算的分布上看清权衡长什么样。本文挑了率失真理论里最经典的两类可解模型分别求闭式解。Bernoulli 源配 Hamming 失真时，借二进制对称信道的结构加上共享随机性，把传输计划化简到可解形式；Gaussian 源配 MSE 时，用正交分解把率、失真、分类拆成相互独立的子优化，最终得到形如 $D(R,C) = \sigma_X^2 \cdot 2^{-2R} + f(C)$ 的表达式——失真由一个随率指数衰减的项和一个只由分类约束决定的 $f(C)$ 项相加。这两个模型之所以值钱，是因为它们的解析解直接揭示了权衡的定性结构（失真随率单调降、随分类约束收紧而升），为自然图像这类复杂分布上的算法设计提供了定性指南。
+
+**3. DRPC 扩展：再加一道感知约束，凑齐率-失真-分类-感知的四维权衡。**
+
+实际图像任务里，逐像素失真低并不等于看起来好（低 PSNR 的结果可能更自然），所以光有 DRC 还不够。本文在原约束之外再加一道感知散度约束 $D_\text{perc}(P_Y || P_{Y^*}) \leq P$，要求重建分布 $P_Y$ 与目标感知分布 $P_{Y^*}$ 的 KL 散度（或 Wasserstein 距离）不超过 $P$，于是优化变成 $D(R,C,P) = \min_{P_{Z|X},P_{Y|Z}} E[d(X,Y)]$ 在率、分类、感知三重约束下求解。这把率、失真、分类、感知四个目标统一进一个权衡函数 DRPC，让"感知质量和逐像素失真此消彼长"这件事第一次有了可分析的理论刻画。
 
 ### 损失函数 / 训练策略
 
@@ -137,8 +134,8 @@ tags:
 - [\[AAAI 2026\] Lightweight Optimal-Transport Harmonization on Edge Devices](../../AAAI2026/model_compression/lightweight_optimal-transport_harmonization_on_edge_devices.md)
 - [\[AAAI 2026\] Reinforced Rate Control for Neural Video Compression via Inter-Frame Rate-Distortion Awareness](../../AAAI2026/model_compression/reinforced_rate_control_for_neural_video_compression_via_inter-frame_rate-distor.md)
 - [\[ICLR 2026\] FreqKV: Key-Value Compression in Frequency Domain for Context Window Extension](freqkv_key-value_compression_in_frequency_domain_for_context_window_extension.md)
-- [\[ACL 2025\] Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
 - [\[NeurIPS 2025\] Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation](../../NeurIPS2025/model_compression/optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)
+- [\[ACL 2025\] Sci-LoRA: Mixture of Scientific LoRAs for Cross-Domain Lay Paraphrasing](../../ACL2025/model_compression/sci-lora_mixture_of_scientific_loras_for_cross-domain_lay_paraphrasing.md)
 
 </div>
 

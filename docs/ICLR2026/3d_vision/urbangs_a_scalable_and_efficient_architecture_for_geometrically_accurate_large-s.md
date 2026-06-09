@@ -33,72 +33,25 @@ tags:
 
 ### 整体框架
 
-UrbanGS 包含三个核心模块：
+UrbanGS 把城市级 3DGS 重建拆成几何、内存、可扩展性三条线分别下药：用 D-Normal 正则化让法线监督也能推动位置参数收敛，用空间自适应剪枝 SAGP 砍掉均匀区域的冗余高斯，再用一套统一的分区与视角分配把整座城市切成可独立训练又彼此连续的子块。三者共享同一套渲染深度，使几何约束、压缩判据和分区边界都建立在一致的深度场之上。
 
-1. **深度一致 D-Normal 正则化**（几何精度）
-2. **空间自适应高斯剪枝 SAGP**（内存效率）
-3. **统一分区和视角分配**（可扩展性）
+### 关键设计
 
-### 1. 深度一致 D-Normal 正则化
+**1. 深度一致 D-Normal 正则化：让法线监督也能更新位置。**
 
-**问题**：直接用伪法线 $N$ 监督渲染法线 $\hat{N}$ 只能通过梯度更新旋转参数 $R$，无法有效更新位置参数 $u$。
+直接用伪法线 $N$ 监督渲染法线 $\hat{N}$ 的老办法，梯度只能流到旋转参数 $R$，位置参数 $u$ 拿不到有效更新，表面因此始终对不准。UrbanGS 改从渲染深度图反投影出的 3D 坐标 $d$ 出发，用其水平、垂直方向梯度的叉积现算出一张「深度法线」$\bar{N}_d(n,p) = \frac{\nabla_v d(n,p) \times \nabla_h d(n,p)}{|\nabla_v d \times \nabla_h d|}$，再以 $\mathcal{L}_{dn} = \|\bar{N}_d - N\|_1 + (1 - \bar{N}_d \cdot N)$ 把它拉向伪法线。由于 $\bar{N}_d$ 是深度的函数、而深度又由高斯位置决定，这条损失等于把法线约束传导回了位置参数，位置和旋转得以同时收敛，表面精度随之提升。
 
-**解决方案**：从渲染深度图推导 D-Normal $\bar{N}_d$：
+**2. 深度一致性正则化：用置信度加权对齐多视角深度。**
 
-$$\bar{N}_d(n,p) = \frac{\nabla_v d(n,p) \times \nabla_h d(n,p)}{|\nabla_v d \times \nabla_h d|}$$
+几何要在多视角间自洽，还得让各视角预测的深度彼此对齐。UrbanGS 用逆深度损失 $\mathcal{L}_{id}(u,v) = |\hat{D}^{-1}(u,v) - D_{ext}^{-1}(u,v)|$ 把渲染深度对齐到外部估计器（DepthAnything-v2）的深度，但外部深度并非处处可信，于是再乘一个几何感知置信度 $w_d = \exp\left(\frac{\cos\phi - 1}{0.01}\right) \cdot \exp\left(-\frac{\epsilon_d}{0.1}\right)$ 加权——其中 $\cos\phi$ 衡量深度梯度的一致程度、$\epsilon_d$ 衡量归一化逆深度偏差，两项越糟权重衰减越狠，从而压住不靠谱深度对优化的干扰。所有项汇成总损失 $\mathcal{L}_{total} = \mathcal{L}_{RGB} + \lambda_1 \mathcal{L}_n + \lambda_2 \mathcal{L}_{dn} + \lambda_3 (w_d \cdot \mathcal{L}_{id})$，把颜色、法线、D-Normal 与置信度加权深度统一进同一目标。
 
-其中 $d$ 是深度图反投影得到的 3D 坐标。D-Normal 正则化：
+**3. 空间自适应高斯剪枝 SAGP：按局部尺度砍冗余而非一刀切。**
 
-$$\mathcal{L}_{dn} = \|\bar{N}_d - N\|_1 + (1 - \bar{N}_d \cdot N)$$
+天空、远处立面这类均匀区域会堆出大量冗余高斯，但全局阈值剪枝又会误删精细结构。SAGP 先把场景切成体素，体素特征长度随全局高斯密度自适应 $\ell = \lambda \left(\frac{\mathcal{V}_{scene}}{\mathcal{N}}\right)^{1/3}$，让密集区切得细、稀疏区切得粗。对每个高斯，它综合三因素打分 $S_i = \phi_i \cdot \tau_i \cdot w_{v,i}$：$\phi_i$ 是归一化射线相交频率（看得见且常被观测），$\tau_i$ 是 Sigmoid 映射的不透明度，$w_{v,i}$ 则是用亚线性变换 $w_{v,i} = \left(\min\left(\frac{v_i}{\vartheta_{local}^{(t)}}, 1\right)\right)^{\kappa}$ 算出的体积权重，取 $\kappa=0.5$（平方根）抑制过大基元、同时放大精细结构的重要性。只有可见性、观测频率与几何尺度三者皆达标的高斯才会被保留，于是冗余被砍、细节被留。
 
-通过 D-Normal 建立几何约束与深度的内在联系，使位置和旋转参数同时更新。
+**4. 统一分区与视角分配：先剪后切、边界共享。**
 
-### 深度一致性正则化
-
-为确保多视角深度一致性，引入逆深度损失和自适应置信度加权：
-
-**逆深度损失**：
-
-$$\mathcal{L}_{id}(u,v) = |\hat{D}^{-1}(u,v) - D_{ext}^{-1}(u,v)|$$
-
-**几何感知置信度**：
-
-$$w_d = \exp\left(\frac{\cos\phi - 1}{0.01}\right) \cdot \exp\left(-\frac{\epsilon_d}{0.1}\right)$$
-
-其中 $\cos\phi$ 衡量深度梯度一致性，$\epsilon_d$ 衡量归一化逆深度偏差。
-
-**总损失**：
-
-$$\mathcal{L}_{total} = \mathcal{L}_{RGB} + \lambda_1 \mathcal{L}_n + \lambda_2 \mathcal{L}_{dn} + \lambda_3 (w_d \cdot \mathcal{L}_{id})$$
-
-### 2. 空间自适应高斯剪枝 (SAGP)
-
-**场景分区**：将场景划分为体素单元，特征长度与全局高斯密度相关：
-
-$$\ell = \lambda \left(\frac{\mathcal{V}_{scene}}{\mathcal{N}}\right)^{1/3}$$
-
-**局部体积归一化**（亚线性变换抑制过大基元）：
-
-$$w_{v,i} = \left(\min\left(\frac{v_i}{\vartheta_{local}^{(t)}}, 1\right)\right)^{\kappa}$$
-
-$\kappa=0.5$（平方根）放大精细结构的重要性。
-
-**重要性评分**（三因素乘积）：
-
-$$S_i = \phi_i \cdot \tau_i \cdot w_{v,i}$$
-
-- $\phi_i$：归一化射线相交频率
-- $\tau_i$：Sigmoid 映射的不透明度
-- $w_{v,i}$：亚线性体积权重
-
-高斯仅在同时具有高可见性、频繁观测和适当几何尺度时才被保留。
-
-### 3. 分区策略
-
-基于 CityGS 改进：
-- 先通过 SAGP 剪枝全局粗糙 3DGS，减少冗余高斯吸引无关视角
-- 子块边界保留共享高斯基元，避免几何不连续
-- 基于几何和 SSIM 的相机视角分配
+直接分块会在子块边界引入几何不连续，无关视角又白白浪费算力。UrbanGS 在 CityGS 基础上改进：先用 SAGP 把全局粗糙 3DGS 剪一遍，减少冗余高斯吸引无关视角；再切子块时让相邻块共享边界处的高斯基元，避免几何断裂；最后按几何与 SSIM 为每个子块分配相机视角，使每块只训练真正相关的视角。剪枝、分区与视角分配因此咬合成一条可扩展的流水线。
 
 ## 实验
 
@@ -176,8 +129,8 @@ SAGP 剪枝实现显著模型压缩（具体压缩比见消融），同时保持
 - [\[ICCV 2025\] S3R-GS: Streamlining the Pipeline for Large-Scale Street Scene Reconstruction](../../ICCV2025/3d_vision/s3r-gs_streamlining_the_pipeline_for_large-scale_street_scene_reconstruction.md)
 - [\[ICLR 2026\] UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
 - [\[CVPR 2026\] TeHOR: Text-Guided 3D Human and Object Reconstruction with Textures](../../CVPR2026/3d_vision/tehor_text-guided_3d_human_and_object_reconstruction_with_textures.md)
+- [\[ICLR 2026\] Reducing Class-Wise Performance Disparity via Margin Regularization](reducing_class-wise_performance_disparity_via_margin_regularization.md)
 - [\[ICLR 2026\] Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
-- [\[ICLR 2026\] Universal Beta Splatting](universal_beta_splatting.md)
 
 </div>
 

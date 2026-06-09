@@ -43,32 +43,23 @@ tags:
 
 ## 方法详解
 
-### 实验一：英语颜色命名
+### 整体框架
 
-- 使用 WCS 标准颜色网格（330 个颜色片段）作为刺激
-- 测试 39 个模型，跨 6 个模型族（Gemini, Gemma 3, Llama 3, Qwen 2.5, Olmo 2, GPT-2）
-- 输入方式：文本（sRGB 坐标）+ 图像（多模态模型）
-- 约束生成：Gemini 使用 controlled generation，开源模型通过 log-probability 评分
-- 评价指标：IB 效率损失 $\varepsilon = \min_\beta \frac{1}{\beta}(\mathcal{F}_\beta[q] - \mathcal{F}_\beta^*)$ 和归一化信息距离 (NID) 衡量对齐度
+本文不训练任何模型，而是把认知科学度量颜色命名系统的整套工具搬到 LLM 上：先用 Information Bottleneck (IB) 框架量化一个分类系统的压缩效率，再用两类实验探测 LLM——静态地评测它的英语颜色命名，以及动态地让它在迭代上下文语言学习 (IICLL) 中自发演化出一套命名系统。两者都落到同一张 IB 复杂度-准确性平面上，与 World Color Survey (WCS) 的人类语言数据直接对照。
 
-### 实验二：迭代上下文语言学习 (IICLL)
+### 关键设计
 
-这是本文的核心方法创新，将认知科学中的迭代学习范式（Iterated Learning）与 LLM 的上下文学习能力结合：
+**1. IB 框架量化语义压缩效率：把"好分类"翻译成一个可优化的目标。** 要判断 LLM 的颜色词系统是否"高效"，先得有一把信息论的尺子。本文沿用 Zaslavsky et al. (2018) 的 IB 目标函数 $\mathcal{F}_\beta[q] = I_q(M;W) - \beta \cdot I_q(W;U)$，其中 $I_q(M;W)$ 是复杂度（说话者含义 $M$ 与词汇 $W$ 之间的互信息，词越多越精细则越大），$I_q(W;U)$ 是准确性（词汇 $W$ 保留的世界状态 $U$ 信息），$\beta \geq 0$ 调节两者权衡。理论最优系统恰好落在这条 IB 界上。由此可以定义效率损失 $\varepsilon = \min_\beta \frac{1}{\beta}(\mathcal{F}_\beta[q] - \mathcal{F}_\beta^*)$——一个系统离理论界越近，$\varepsilon$ 越小，压缩越接近最优；同时用归一化信息距离 (NID) 衡量它与人类英语命名系统的对齐度。这两个量是后续所有比较的统一货币。
 
-1. **初始化**：用随机分区初始化伪颜色命名系统，类别数 $k \in \{2, 3, 4, 5, 6, 14\}$
-2. **每一代**：从上一代的语言系统 $L_{t-1}$ 中采样少量"颜色-伪标签"对作为 in-context 示例 $d_{t-1}$
-3. **推理**：LLM 在上下文中学习后，对全部 330 个颜色命名，产生新系统 $L_t$
-4. **迭代**：重复此过程多代，观察系统演化轨迹
+**2. 大规模英语颜色命名评测：先看 LLM 现成的颜色词系统长什么样。** 第一个问题是 LLM 直接命名颜色时是否已经像人类一样高效。实验用 WCS 标准颜色网格的 330 个颜色片段作刺激，横跨 6 个模型族（Gemini、Gemma 3、Llama 3、Qwen 2.5、Olmo 2、GPT-2）共 39 个模型，输入同时覆盖文本（sRGB 坐标）和图像（多模态模型）两种模态。取词方式按模型能力区分：Gemini 用 controlled generation 约束输出，开源模型则通过对候选词的 log-probability 评分得到命名分布。最后把每个模型的系统打到 IB 平面上，用 $\varepsilon$ 和 NID 与人类英语系统对照，从而回答"规模、指令微调如何影响 IB 效率"。
 
-关键设计：使用伪造的标签词（非英语颜色词），且不告诉模型输入是颜色，仅称为具有"特征"的刺激。这确保模型无法直接调用训练数据中的颜色知识。
+**3. IICLL 范式：让 LLM 像人类语言一样代际演化。** 静态评测只能看到模仿的结果，无法分辨 LLM 是真有归纳偏置还是单纯复述训练数据。本文的核心创新是把认知科学的迭代学习 (Iterated Learning) 嫁接到 LLM 的上下文学习上：先用随机分区初始化一套伪颜色命名系统，类别数 $k \in \{2, 3, 4, 5, 6, 14\}$；每一代从上一代系统 $L_{t-1}$ 中采样少量"颜色-伪标签"对作为 in-context 示例 $d_{t-1}$，LLM 在上下文里学完后对全部 330 个颜色重新命名，产出新系统 $L_t$；如此迭代多代，观察系统在 IB 平面上的演化轨迹。这相当于用 LLM 复刻人类文化传递实验，看它的命名系统会不会自发漂向 IB 界。
 
-### IB 理论框架
+**4. 伪标签 + 隐藏语义：切断对训练数据的直接调用。** IICLL 要成立，关键是不能让模型偷看自己学过的颜色知识。为此标签词全部用伪造的非英语词，且提示里从不说明刺激是"颜色"，只称其为带有某种"特征"的刺激。这样模型无法直接套用训练语料里的英语颜色词，迭代中表现出的任何 IB 高效结构都只能归因于其内在的压缩偏置，而非数据模仿——这正是把"涌现"和"记忆"区分开的核心控制变量。
 
-IB 目标函数为：
+### 一个完整示例
 
-$$\mathcal{F}_\beta[q] = I_q(M;W) - \beta \cdot I_q(W;U)$$
-
-其中 $I_q(M;W)$ 是复杂度（说话者含义与词汇之间的互信息），$I_q(W;U)$ 是准确性（词汇保留的世界状态信息），$\beta \geq 0$ 控制权衡。最优系统落在 IB 理论界上。
+以 Gemini 2.0、初始类别数 $k=6$ 为例走一遍 IICLL：第 0 代用随机分区给 330 个颜色贴上 6 个伪标签，此时系统在 IB 平面上远离理论界、$\varepsilon$ 很大。第 1 代从这套随机系统里抽几对"颜色-伪标签"塞进 prompt，Gemini 在上下文中归纳规律后重新命名全部颜色，输出的新系统已经比随机分区更紧凑。随后每一代都以上一代的输出为示例继续传递，命名边界逐代变得规整。约 4 代后系统收敛到 IB 界附近并稳定下来，其复杂度-准确性位置与 WCS 真实语言、以及人类迭代学习实验的数据高度重合——演化终点不是被指定的，而是从模型自身偏置里"长"出来的。
 
 ## 实验关键数据
 
@@ -139,11 +130,11 @@ $$\mathcal{F}_\beta[q] = I_q(M;W) - \beta \cdot I_q(W;U)$$
 
 ## 相关论文
 
-- [\[ICLR 2026\] LLM DNA: Tracing Model Evolution via Functional Representations](llm_dna_tracing_model_evolution_via_functional_representations.md)
 - [\[ICML 2026\] xKV: Cross-Layer KV-Cache Compression via Aligned Singular Vector Extraction](../../ICML2026/model_compression/xkv_cross-layer_kv-cache_compression_via_aligned_singular_vector_extraction.md)
-- [\[CVPR 2026\] Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy](../../CVPR2026/model_compression/preference-aligned_lora_merging_preserving_subspace_coverage_and_addressing_dire.md)
+- [\[ICLR 2026\] LLM DNA: Tracing Model Evolution via Functional Representations](llm_dna_tracing_model_evolution_via_functional_representations.md)
+- [\[ICLR 2026\] Paper Copilot: Tracking the Evolution of Peer Review in AI Conferences](paper_copilot_tracking_the_evolution_of_peer_review_in_ai_conferences.md)
 - [\[NeurIPS 2025\] TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs](../../NeurIPS2025/model_compression/tokensqueeze_performance-preserving_compression_for_reasoning_llms.md)
-- [\[CVPR 2026\] MEMO: Human-like Crisp Edge Detection Using Masked Edge Prediction](../../CVPR2026/model_compression/memo_human-like_crisp_edge_detection_using_masked_edge_prediction.md)
+- [\[CVPR 2026\] Preference-Aligned LoRA Merging: Preserving Subspace Coverage and Addressing Directional Anisotropy](../../CVPR2026/model_compression/preference-aligned_lora_merging_preserving_subspace_coverage_and_addressing_dire.md)
 
 </div>
 

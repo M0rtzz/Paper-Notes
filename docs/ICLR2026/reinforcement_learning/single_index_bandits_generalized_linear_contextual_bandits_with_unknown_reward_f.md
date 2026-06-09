@@ -38,49 +38,51 @@ tags:
 
 ### 整体框架
 
-- **问题设定**：时间 $t$ 时，智能体从臂集 $\mathcal{X}_t = \{x_{t,a} \in \mathbb{R}^d : a \in [K]\}$ 中选择臂 $x_t$，观测奖励 $y_t = f(x_t^\top \theta_*) + \eta_t$，其中 $f(\cdot)$ 和 $\theta_*$ 都未知
-- **分三级推进**：STOR（EtC 框架，$\tilde{O}(T^{2/3})$）→ ESTOR（epoch 调度，$\tilde{O}(\sqrt{T})$）→ GSTOR（一般非单调 $f$，$\tilde{O}(T^{3/4})$）
+每一轮 $t$，智能体看到一个臂集 $\mathcal{X}_t = \{x_{t,a} \in \mathbb{R}^d : a \in [K]\}$，选一个臂 $x_t$ 拉下去，拿到奖励 $y_t = f(x_t^\top \theta_*) + \eta_t$。难点在于这里的链接函数 $f(\cdot)$ 和参数 $\theta_*$ **都是未知的**——传统 GLB 算法要靠 $f$ 的显式形式去求 MLE，这条路在 SIB 里直接断了。本文的破局点是：贪心选臂其实只需要知道 $\theta_*$ 的**方向**，只要 $f$ 单调递增，$x^\top\theta_*$ 越大奖励就越大，根本不必把 $f$ 本身估出来。
+
+整篇方法沿着"估方向 → 怎么用方向选臂 → 把遗憾压到最优"这条线分三级递进：STOR 用最朴素的 Explore-then-Commit 框架先把思路跑通（$\tilde{O}(T^{2/3})$），ESTOR 换成 epoch 调度把遗憾压到近最优（$\tilde{O}(\sqrt{T})$），GSTOR 再放宽到 $f$ 非单调的一般情形（$\tilde{O}(T^{3/4})$）。
 
 ### 关键设计
 
-#### 1. 基于 Stein 方法的参数估计器
+**1. 基于 Stein 方法的参数估计器：不知道 $f$ 也能估出 $\theta_*$ 的方向。**
 
-- **功能**：在不知道 $f(\cdot)$ 的前提下估计 $\theta_*$ 的方向
-- **核心思路**：利用 Stein 恒等式证明 $\mathbb{E}[y_i S(x_i)] = \mu_* \theta_*$（其中 $S(x) = -\nabla_x \log p(x)$ 是分布的得分函数，$\mu_* = \mathbb{E}[f'(X^\top \theta_*)]$）。估计器为：
-$$\hat{\theta} = \arg\min_{\theta \in \Theta} \|\theta\|_2^2 - \frac{2}{n} \sum_{i=1}^n \phi_\tau(y_i \cdot S(x_i))^\top \theta + \lambda \|\theta\|_1$$
-  其中 $\phi_\tau$ 是逐元素截断函数，控制重尾噪声的方差-偏差权衡
-- **估计精度**：$\|\hat{\theta} - \mu_* \theta_*\|_2 = \tilde{O}(\sqrt{d/n})$，达到 minimax 最优
-- **设计动机**：无需迭代优化，闭式解 $O(nd)$ 时间 $O(d)$ 空间，远优于 GLB 中的 MLE 求解
+整套算法的地基。GLB 的 MLE 必须把 $f$ 写进似然里，而 SIB 连 $f$ 都不知道，所以需要一个绕开 $f$ 的估计量。本文用 Stein 恒等式做到了这点：在臂的设计分布下成立
 
-#### 2. STOR：Explore-then-Commit 基线算法
+$$\mathbb{E}[y_i\, S(x_i)] = \mu_*\, \theta_*,$$
 
-- **功能**：最简单的 EtC 框架实现
-- **核心思路**：前 $T_1$ 轮随机探索并收集样本，计算 $\hat{\theta}$；剩余轮次贪心选择 $x_t = \arg\max_{x \in \mathcal{X}_t} x^\top \hat{\theta}$
-- **遗憾界**：$R_T = \tilde{O}(d^{2/3} T^{2/3})$，因 EtC 框架固有的次优性未达最优
+其中 $S(x) = -\nabla_x \log p(x)$ 是设计分布的得分函数，$\mu_* = \mathbb{E}[f'(X^\top \theta_*)]$ 是一个未知的正标量。关键在于 $f$ 的具体形状全被吸进了 $\mu_*$ 这个标量里，等式右边的方向恰好就是 $\theta_*$——只要拿 $y_i S(x_i)$ 的样本均值去逼近左边，就能恢复出 $\theta_*$ 的方向而完全不碰 $f$。具体估计量为
 
-#### 3. ESTOR：Epoch 调度的改进算法
+$$\hat{\theta} = \arg\min_{\theta \in \Theta} \|\theta\|_2^2 - \frac{2}{n} \sum_{i=1}^n \phi_\tau\big(y_i \cdot S(x_i)\big)^\top \theta + \lambda \|\theta\|_1,$$
 
-- **功能**：通过精心设计的 epoch 调度实现近最优遗憾
-- **核心思路**：使用指数增长的 epoch 长度 $e_i = (2^i - 1)T_0$，每个 epoch 开始时利用前一个 epoch 的数据更新 $\hat{\theta}_i$，并根据更新的估计器重新计算得分函数分布 $p_i(x) = K \cdot p(x) \cdot F_i(x^\top \hat{\theta}_i)^{K-1}$
-- **遗憾界**：$R_T = \tilde{O}(dK^{3/2}\sqrt{T})$，关于 $T$ 达到近最优 $\tilde{O}_T(\sqrt{T})$
-- **设计动机**：短初始 epoch 快速探索，长后期 epoch 积累样本精确估计，几何递减的误差保证
-- **计算效率**：$O(dT)$ 时间、$O(d)$ 空间，是现有 GLB 算法中效率最高的之一
+其中 $\phi_\tau$ 是逐元素截断函数，用来压住重尾噪声、在方差和偏差之间取平衡。这个估计量达到 minimax 最优精度 $\|\hat{\theta} - \mu_* \theta_*\|_2 = \tilde{O}(\sqrt{d/n})$，而且因为是二次型，它有闭式解、不需要迭代优化，时间 $O(nd)$、空间 $O(d)$，比 GLB 里反复求解 MLE 便宜得多。
 
-#### 4. 稀疏高维扩展
+**2. STOR：把估计器塞进 Explore-then-Commit 跑通最简版本。**
 
-- **功能**：将方法扩展到参数 $\theta_*$ 仅有 $s \ll d$ 个非零元素的场景
-- **核心思路**：在估计器中加入 $\ell_1$ 正则化 $\lambda > 0$，无需知道稀疏度 $s$
-- **遗憾界**：ESTOR 的遗憾界中 $d$ 替换为 $s$，即 $R_T = \tilde{O}(sK^{3/2}\sqrt{T})$
+有了方向估计器，最朴素的用法就是 EtC：前 $T_1$ 轮随机探索、纯粹为了攒样本算出 $\hat{\theta}$；之后所有轮次都贪心，直接选 $x_t = \arg\max_{x \in \mathcal{X}_t} x^\top \hat{\theta}$。它验证了"估方向就够"的核心思路，但 EtC 框架探索和利用是硬切开的，固有次优，遗憾停在 $R_T = \tilde{O}(d^{2/3} T^{2/3})$，没到最优。
 
-#### 5. GSTOR：一般奖励函数
+**3. ESTOR：用 epoch 调度把遗憾压到近最优 $\sqrt{T}$。**
 
-- **功能**：处理非单调的一般连续可微奖励函数
-- **核心思路**：双探索-后利用策略——第一阶段用 Stein 估计器估参数 $\hat{\theta}$，第二阶段用核回归 $\hat{f}(z) = \frac{\sum_i y_i K_h(z - x_i^\top \hat{\theta}_0)}{\sum_i K_h(z - x_i^\top \hat{\theta}_0)}$ 逼近未知链接函数，之后贪心利用
-- **遗憾界**：$\mathbb{E}(R_T) = O(d^{3/8} T^{3/4})$
+STOR 的问题在于"一次性探索完再永久利用"太死板。ESTOR 改成分阶段、滚动更新：epoch 长度按指数增长 $e_i = (2^i - 1)T_0$，每个 epoch 一开始就拿上一个 epoch 的数据刷新估计 $\hat{\theta}_i$，并据此重算得分函数所依赖的设计分布
+
+$$p_i(x) = K \cdot p(x) \cdot F_i(x^\top \hat{\theta}_i)^{K-1}.$$
+
+这样安排的好处是：初始 epoch 很短，让算法快速试探、尽早拿到一个粗估计；后期 epoch 越来越长，样本越攒越多，估计精度几何级递减地收紧，从而把累积遗憾压到 $R_T = \tilde{O}(dK^{3/2}\sqrt{T})$，关于 $T$ 已是近最优的 $\tilde{O}_T(\sqrt{T})$。计算上仍保持 $O(dT)$ 时间、$O(d)$ 空间，是现有 GLB 算法里效率最高的一档。
+
+**4. 稀疏高维扩展：参数稀疏时把 $d$ 换成 $s$。**
+
+很多实际场景里 $\theta_*$ 虽然维度 $d$ 很高，但只有 $s \ll d$ 个分量真正非零。这里直接复用估计器里的 $\ell_1$ 正则项——令 $\lambda > 0$ 即可，而且不需要事先知道稀疏度 $s$。代价分析随之改善：ESTOR 遗憾界里的 $d$ 全部替换为 $s$，变成 $R_T = \tilde{O}(sK^{3/2}\sqrt{T})$，高维稀疏下省得相当可观。
+
+**5. GSTOR：$f$ 非单调时补一步核回归把 $f$ 也估出来。**
+
+前面几招都吃了"$f$ 单调递增"这碗饭——单调时方向决定一切。一旦 $f$ 非单调，光有方向 $\hat{\theta}$ 不够，因为 $x^\top\theta_*$ 大不再意味着奖励大，必须把 $f$ 本身也估出来。GSTOR 用双段探索-后利用：第一段照旧用 Stein 估计器拿到方向 $\hat{\theta}$；第二段把样本投影到 $x_i^\top\hat{\theta}_0$ 这条一维线上，用核回归
+
+$$\hat{f}(z) = \frac{\sum_i y_i K_h(z - x_i^\top \hat{\theta}_0)}{\sum_i K_h(z - x_i^\top \hat{\theta}_0)}$$
+
+逼近未知链接函数，之后再贪心利用 $\hat f(x^\top\hat\theta)$。多估一个一维函数要付额外代价，遗憾退到 $\mathbb{E}(R_T) = O(d^{3/8} T^{3/4})$。
 
 ### 损失函数
 
-估计器损失为简单的 $\ell_2$ + $\ell_1$ 正则化二次型，$\lambda = 0$ 时有闭式解。
+估计器的损失就是关键设计 1 里那个 $\ell_2 + \ell_1$ 正则化的二次型，结构很简单——当 $\lambda = 0$（无稀疏约束）时直接有闭式解，正是它"无迭代、可扩展"的来源。
 
 ## 实验关键数据
 

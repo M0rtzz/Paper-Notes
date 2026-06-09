@@ -41,54 +41,25 @@ NIMO 提出一种混合模型 $y = \sum_j x_j \beta_j (1 + g_{\mathbf{u}_j}(\mat
 
 ### 整体框架
 
-NIMO 从线性回归出发，为每个特征的系数乘以一个数据依赖的非线性修正因子：
-
-$$f(\mathbf{x}) = \beta_0 + \sum_{j=1}^d x_j \beta_j (1 + g_{\mathbf{u}_j}(\mathbf{x}_{-j}))$$
-
-关键约束：$g_{\mathbf{u}_j}(\mathbf{0}) = 0$（标准化数据均值为零），确保 $\text{MEM}_j = \beta_j$。
+NIMO 的出发点是普通线性回归，但给每个特征的系数乘上一个由"其它特征"决定的非线性修正因子，从而既保留 $\beta_j$ 的全局解释力又获得逐实例的灵活性。完整模型写作 $f(\mathbf{x}) = \beta_0 + \sum_{j=1}^d x_j \beta_j (1 + g_{\mathbf{u}_j}(\mathbf{x}_{-j}))$，其中 $g_{\mathbf{u}_j}$ 是一个输入为除 $x_j$ 外其余特征 $\mathbf{x}_{-j}$ 的神经网络。整套设计围绕一个核心目标展开：让系数 $\beta_j$ 严格等于均值边际效应 $\text{MEM}_j$，并让线性系数与网络参数能高效地交替求解。
 
 ### 关键设计
 
-1. **排除自身特征 ($\mathbf{x}_{-j}$)**
+**1. 排除自身特征：把可解释性与非线性切开。** 这是保证 $\beta_j$ 可读的第一道闸门。若修正网络也吃进 $x_j$，那么对 $x_j$ 求边际效应时网络会贡献额外的、依赖样本的项，$\beta_j$ 就再也无法独立地代表"$x_j$ 对 $y$ 的效应"。NIMO 的做法是强制每个 $g_{\mathbf{u}_j}$ 只接收 $\mathbf{x}_{-j}$，于是 $x_j$ 唯一的进入路径就是线性项 $x_j\beta_j$。这样一来，非线性只负责刻画特征之间的交互如何放大或削弱第 $j$ 个系数，而 $x_j$ 自身效应的解释权完整地留给了 $\beta_j$。
 
-    - **功能**：神经网络 $g_{\mathbf{u}_j}$ 的输入不含第 $j$ 个特征
-    - **核心思路**：$x_j$ 仅通过线性项 $\beta_j$ 贡献预测，保证 $\beta_j$ 的可解释性
-    - **设计动机**：若 $g_j$ 也依赖 $x_j$，则边际效应无法简洁用 $\beta_j$ 表示
+**2. 零点约束 $g_{\mathbf{u}_j}(\mathbf{0})=0$：让均值处退化为纯线性。** 仅排除自身特征还不够——修正因子 $1+g$ 在一般点上仍会偏离 1，使得边际效应随样本漂移。NIMO 把数据标准化到均值为零，并在前向传播中显式减去 $g_{\mathbf{u}}(\mathbf{0})$ 来强制 $g$ 在原点取零值。其直接后果是在均值点 $\mathbf{x}=\mathbf{0}$ 处修正因子恰为 1，模型退化成纯线性，于是均值边际效应 $\text{MEM}_j = \frac{\partial f}{\partial x_j}\big|_{\mathbf{x}=\mathbf{0}} = \beta_j$ 精确成立。这条约束是"系数即全局解释"这一卖点的理论锚点。
 
-2. **零点约束 $g_{\mathbf{u}_j}(\mathbf{0}) = 0$**
+**3. 参数消去优化：用 profile likelihood 绕开耦合难题。** 当 $\boldsymbol{\beta}$ 和网络参数 $\mathbf{u}$ 紧密耦合时直接联合优化很不稳定。NIMO 借鉴 profile likelihood 思路：固定 $\mathbf{u}$ 时，关于 $\boldsymbol{\beta}$ 的子问题是带岭项的最小二乘，存在闭式解 $\hat{\boldsymbol{\beta}}(\mathbf{u}) = (B_\mathbf{u}^T B_\mathbf{u} + \lambda I)^{-1} B_\mathbf{u}^T \mathbf{y}$，其中 $B_\mathbf{u}$ 是把修正因子吸收进去后的设计矩阵。把这个解回代，目标函数就只剩 $\mathbf{u}$ 一个变量，外层用梯度下降优化 $\mathbf{u}$、内层每步用闭式解刷新 $\boldsymbol{\beta}$，从而把一个高度耦合的联合优化拆成一个干净的嵌套结构。
 
-    - **功能**：前向传播中减去 $g_{\mathbf{u}}(\mathbf{0})$ 强制约束
-    - **核心思路**：标准化数据均值为零，约束保证均值处模型退化为纯线性
-    - **设计动机**：$\text{MEM}_j = \frac{\partial f}{\partial x_j}\big|_{\mathbf{x}=\mathbf{0}} = \beta_j$
+**4. 自适应岭回归：在闭式解框架里实现稀疏。** 参数消去依赖 $\boldsymbol{\beta}$ 子问题有闭式解，但稀疏所需的 Lasso（$\ell_1$ 惩罚）并没有闭式解，二者天然冲突。NIMO 采用 Grandvalet (1998) 的自适应岭回归来代替 Lasso：它把 $\ell_1$ 改写成逐特征重加权的 $\ell_2$ 惩罚，每一步仍是岭回归因而保留闭式解，而在最优点处可证明等价于 Lasso。这样既不破坏参数消去的闭式性，又能把无关特征的系数压到零。实现上还支持 sub-$\ell_1$ 伪范数以减轻 Lasso 对大系数的过度收缩。
 
-3. **参数消去优化（Parameter Elimination）**
+**5. 共享网络 + 位置编码：让方法在高维下可行。** 为每个特征配一个独立网络 $g_{\mathbf{u}_j}$ 在 $d$ 较大时参数量爆炸、不可行。NIMO 改用单个共享网络 $g_\mathbf{u}$，再为每个特征索引附加位置编码作为输入区分，从而用一套参数表达全部 $d$ 个修正函数。这把模型规模从随 $d$ 线性增长压回常数级，是它能跑到 50 维设置的关键工程支撑。
 
-    - **功能**：推导 $\hat{\boldsymbol{\beta}}(\mathbf{u}) = (B_\mathbf{u}^T B_\mathbf{u} + \lambda I)^{-1} B_\mathbf{u}^T \mathbf{y}$ 的闭式解，代入后仅优化 $\mathbf{u}$
-    - **核心思路**：profile likelihood 方法，将 $\boldsymbol{\beta}$ 消去
-    - **设计动机**：避免 $\boldsymbol{\beta}$ 和 $\mathbf{u}$ 联合优化的困难
-
-4. **自适应岭回归实现稀疏性**
-
-    - **功能**：用 adaptive ridge regression (Grandvalet, 1998) 替代 Lasso
-    - **核心思路**：每步有闭式解，且在最优点等价于 Lasso
-    - **设计动机**：Lasso 无闭式解，无法用参数消去；自适应岭在保持闭式的同时实现稀疏
-
-5. **共享网络 + 位置编码**
-
-    - **功能**：一个共享 $g_\mathbf{u}$ 加特征索引位置编码替代 $d$ 个独立网络
-    - **设计动机**：高维场景中 $d$ 个独立网络不可行
-
-6. **Group $\ell_2$ 正则化**
-
-    - **功能**：对第一层权重矩阵的每列施加 group $\ell_2$
-    - **设计动机**：鼓励特征级稀疏，提供额外的可解释性层次
+**6. Group $\ell_2$ 正则化：暴露特征级的交互稀疏。** 在共享网络第一层权重矩阵上，NIMO 对每一列（对应一个输入特征）施加 group $\ell_2$ 惩罚。当某个特征对所有修正函数都无贡献时，整列权重被一起压零，等价于把该特征从非线性交互中剔除。这提供了线性系数之外的第二层可解释性——不仅能读出"哪些特征有线性效应"，还能读出"哪些特征参与了交互"。
 
 ### 损失函数 / 训练策略
 
-- 回归：$\|\mathbf{y} - B_\mathbf{u}\boldsymbol{\beta}\|^2 + \lambda \|\boldsymbol{\beta}\|_1$
-- 分类：通过 IRLS 替代，近似为加权最小二乘
-- 支持 sub-$\ell_1$ 伪范数减轻 Lasso 过度收缩
-- 外层梯度下降优化 $\mathbf{u}$，内层闭式解更新 $\boldsymbol{\beta}$
+回归任务的目标是带稀疏惩罚的最小二乘 $\|\mathbf{y} - B_\mathbf{u}\boldsymbol{\beta}\|^2 + \lambda \|\boldsymbol{\beta}\|_1$，其中 $\ell_1$ 项通过上述自适应岭逐步逼近。分类任务则通过 IRLS（迭代重加权最小二乘）把对数似然近似为加权最小二乘，从而沿用同一套参数消去框架，并自然扩展到逻辑回归等 GLM。整体训练是一个两层循环：外层对网络参数 $\mathbf{u}$ 做梯度下降，内层对 $\boldsymbol{\beta}$ 用闭式解更新，二者交替直至收敛。
 
 ## 实验关键数据
 
@@ -170,8 +141,8 @@ Toy example 验证（3维）：
 ## 相关论文
 
 - [\[ICML 2026\] Prototype Transformer: Towards Language Model Architectures Interpretable by Design](../../ICML2026/interpretability/prototype_transformer_towards_language_model_architectures_interpretable_by_desi.md)
-- [\[ICLR 2026\] Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
 - [\[ACL 2026\] AdaptiveK: Complexity-Driven Sparse Autoencoders for Interpretable Language Model Representations](../../ACL2026/interpretability/adaptivek_complexity-driven_sparse_autoencoders_for_interpretable_language_model.md)
+- [\[ICLR 2026\] Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
 - [\[ICLR 2026\] Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
 - [\[ICLR 2026\] Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
 

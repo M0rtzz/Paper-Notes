@@ -44,22 +44,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入图像 → OT-enhanced安全检测（识别并遮蔽恶意patch）→ 净化图像 + 安全前缀 + 用户查询 → 跨模态注意力校准（增强安全前缀的持久注意力）→ LVLM生成安全响应。整个流程无需训练或微调，纯推理时执行。
+GuardAlign 要在不碰模型权重的前提下，把一张可能藏有恶意语义的图像变成"安全可用"的输入。它分两步走：先做 OT 增强的安全检测，逐 patch 找出图像里哪些局部区域携带不安全语义并把它们遮蔽，得到一张净化后的图像；再把净化图像、一段安全前缀和用户查询一起喂进 LVLM，在生成过程中对中间层做跨模态注意力校准，确保安全前缀的影响力不会随层深衰减。两步都在推理时完成，不需要任何训练或微调。
 
 ### 关键设计
 
-1. **OT增强安全检测**:
+**1. OT 增强安全检测：用最优传输在 patch 级别精确定位恶意区域。**
 
-    - 功能：用最优传输精确识别图像中哪些patch含有不安全语义
-    - 核心思路：将图像分为 $M$ 个patch，定义 $C$ 个不安全类别的文本锚点。通过CLIP分别编码图像patch $\{\mathbf{x}^m\}$ 和文本变体 $\{\mathbf{z}_i^n\}$，建模为离散分布：$\mathbb{P}(\mathbf{x})=\sum_m a^m \delta(\mathbf{x}^m)$, $\mathbb{Q}_i(\mathbf{z})=\sum_n b_i^n \delta(\mathbf{z}_i^n)$。patch权重 $a^m$ 由熵加权（低熵=高置信度patch权重更高）。通过Sinkhorn算法求解OT距离，对每个patch聚合所有类别的传输贡献 $d_{\text{OT}}(m)=\sum_i\sum_n \mathbf{T}_i(m,n)\mathbf{C}_i(m,n)$，低于阈值则判为不安全并遮蔽
-    - 设计动机：全局CLIP相似度在复杂场景下安全/不安全样本重叠严重；OT在patch级别建模细粒度对齐，利用传输计划自动发现最可疑的局部区域
-    - 理论保证：证明了OT方法的分类误差 ≤ 余弦相似度方法，因为OT利用熵加权的传输计划优先对齐判别性特征，增大安全/不安全类的标准化间距
+旧范式第一步用 CLIP 全局相似度判图像是否不安全，但在复杂场景里安全样本和不安全样本的相似度分数大面积重叠，根本分不开。GuardAlign 改成在 patch 级别建模细粒度对齐：把图像切成 $M$ 个 patch，为 $C$ 个不安全类别各准备一组文本锚点，用 CLIP 分别编码图像 patch $\{\mathbf{x}^m\}$ 和文本变体 $\{\mathbf{z}_i^n\}$，再写成两个离散分布
 
-2. **跨模态注意力校准**:
+$$\mathbb{P}(\mathbf{x})=\sum_m a^m \delta(\mathbf{x}^m), \qquad \mathbb{Q}_i(\mathbf{z})=\sum_n b_i^n \delta(\mathbf{z}_i^n)$$
 
-    - 功能：在中间层增强instruction token对安全前缀token的注意力，防止安全信号衰减
-    - 核心思路：对第 $l$ 层第 $h$ 头的注意力分数，执行 $\hat{\mathbf{Z}}_{l,h} = \mathbf{Z}_{l,h} + \gamma \mathbf{M}^{\text{pref}}_{l,h} \circ \mathbf{Z}_{l,h}$，其中 $\gamma > 0$ 控制放大强度，$\mathbf{M}^{\text{pref}}$ 是一个mask，只选择instruction token→prefix token的query-key对，且只放大正相关的注意力
-    - 设计动机：实验发现安全前缀的注意力权重在LLaVA中随层深度单调递减，导致模型在初始拒绝后被"However"等过渡词引导生成不安全内容；注意力校准确保安全信号在所有层持续激活
+其中 patch 权重 $a^m$ 用熵加权——置信度高（低熵）的 patch 权重更大。用 Sinkhorn 算法求两个分布间的 OT 距离后，把每个 patch 在所有类别上的传输贡献聚合起来
+
+$$d_{\text{OT}}(m)=\sum_i\sum_n \mathbf{T}_i(m,n)\,\mathbf{C}_i(m,n)$$
+
+低于阈值的 patch 就判为不安全并遮蔽。这样做的好处是传输计划天然给出了"哪些 patch 最可疑"的信息，不需要再额外定位。论文还给了理论保证：OT 方法的分类误差不超过余弦相似度方法，因为熵加权的传输计划会优先对齐判别性特征，把安全类和不安全类的标准化间距拉得更开。
+
+**2. 跨模态注意力校准：让安全前缀的信号穿透深层、不被稀释。**
+
+光检测还不够——即便加了安全前缀来激活模型内部的防御机制，作者发现这段前缀的注意力权重在 LLaVA 里随层深度单调递减，到深层几乎被"遗忘"，于是模型常在初始拒绝后被"However"之类的过渡词牵着重新生成不安全内容。校准的做法是在中间层直接抬升 instruction token 对前缀 token 的注意力：对第 $l$ 层第 $h$ 个注意力头的分数做
+
+$$\hat{\mathbf{Z}}_{l,h} = \mathbf{Z}_{l,h} + \gamma\,\mathbf{M}^{\text{pref}}_{l,h} \circ \mathbf{Z}_{l,h}$$
+
+其中 $\gamma>0$ 控制放大强度，mask $\mathbf{M}^{\text{pref}}$ 只挑出 instruction token→prefix token 这一类 query-key 对，并且只放大其中正相关的注意力。这样安全信号在每一层都被持续激活，避免了深层"遗忘"安全指令导致的攻破。
 
 ### 损失函数 / 训练策略
 - 无需训练，纯推理时方法

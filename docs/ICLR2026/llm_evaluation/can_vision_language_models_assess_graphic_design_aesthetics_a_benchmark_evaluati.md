@@ -45,29 +45,21 @@ tags:
 
 ### 关键设计
 
-1. **AesEval-Bench 基准设计**:
+**1. AesEval-Bench 基准设计：把"好不好看"拆成可量化的维度和任务。**
 
-    - 功能：提供覆盖 4 维度 12 指标的量化设计美学评估基准
-    - 核心思路：4 维度为字体（legibility、hierarchy）、布局（balance、layering、whitespace、alignment）、配色（harmony、contrast、appeal、psychology）、图形（quality、relevance）。3 种任务递进：美学判断（yes/no）→ 区域选择（4选1）→ 精确定位（bbox 坐标）
-    - 设计动机：现有 benchmark 只覆盖部分维度且缺乏量化评估。三任务设计从全局感知到细粒度定位逐步加难，能全面测量 VLM 的美学理解深度
+现有设计美学 benchmark 往往只覆盖少数维度、评估又停在粗粒度打分或开放式描述，既难量化也无法定位问题区域。AesEval-Bench 把设计美学拆成 4 个维度共 12 个指标：字体（legibility、hierarchy）、布局（balance、layering、whitespace、alignment）、配色（harmony、contrast、appeal、psychology）、图形（quality、relevance）。在此之上设计 3 个由粗到细递进的任务——美学判断（整图 yes/no）、区域选择（4 选 1 找出有问题的区域）、精确定位（直接输出问题区域的 bbox 坐标）。三个任务从全局感知一路收敛到细粒度空间定位，逐级加难，因此能把 VLM 的美学理解深度逐层量出来，而不是只给一个笼统的分数。
 
-2. **可控缺陷设计生成**:
+**2. 可控缺陷设计生成：从专业设计反向制造缺陷，以拿到精确 ground truth。**
 
-    - 功能：从专业设计出发，通过可控扰动生成带缺陷的设计图
-    - 核心思路：利用 Crello 数据集的 JSON 元数据（包含元素坐标、字体、颜色），在 JSON 层面施加扰动（重新定位元素、更改字体、调整颜色等），再重新渲染为设计图。人工标注员判断扰动是否真的造成美学问题
-    - 设计动机：直接用有缺陷的设计难以控制缺陷类型和位置，从专业设计出发扰动既能保证真实感又能精确控制 ground truth
+直接收集"有缺陷的设计"既难找又难标注缺陷的类型和位置。AesEval-Bench 反过来从 Crello 数据集里的专业设计出发：这些设计自带 JSON 元数据（每个元素的坐标、字体、颜色等），于是在 JSON 层面施加可控扰动——重新定位元素、更改字体、调整配色——再把改后的 JSON 重新渲染成设计图。因为扰动发生在结构化元数据上，缺陷出在哪个元素、属于哪类问题都是已知的，天然给出了精确的 ground truth；而底图来自真实专业设计，又保证了视觉真实感。最后由人工标注员判断每次扰动是否真的造成了可感知的美学问题，过滤掉无效扰动，最终构造出 4500 个 QA 对。
 
-3. **Human-guided VLM Labeling（训练集标签生成）**:
+**3. Human-guided VLM Labeling：用少量人工示例放大出大规模训练标签。**
 
-    - 功能：大规模生成训练标签，避免全量人工标注的高成本
-    - 核心思路：用少量人工标注作为 in-context examples，加上扰动区域的 bbox 坐标作为先验，指导强大 VLM（如 GPT）生成二分类标签（设计是否有美学问题）
-    - 设计动机：人工标注成本高、不可扩展。提供扰动区域坐标虽然在真实场景中不可用，但在标注阶段可以大幅提升标签可靠性
+训练集需要远多于 4500 的标签，但全量人工标注成本高、不可扩展。这里用少量人工标注当 in-context examples，再把扰动区域的 bbox 坐标作为先验一并喂给强 VLM（如 GPT），让它生成"该设计是否存在美学问题"的二分类标签。给定扰动区域坐标这个先验在真实推理场景里是拿不到的，但在标注阶段它能显著提升标签可靠性——相当于让标注模型"知道答案大概在哪"，从而把人工的判断标准批量复制到大规模数据上。
 
-4. **Indicator-grounded Reasoning（训练集推理路径生成）**:
+**4. Indicator-grounded Reasoning：把抽象美学指标强行锚定到具体 bbox 上。**
 
-    - 功能：生成将抽象美学指标锚定到具体设计区域的推理路径
-    - 核心思路：给 GPT 提供目标区域的 bbox 坐标和对应的设计图层，要求其输出包含坐标 + 指标相关性解释的推理路径。不同任务用不同策略：美学判断用扰动区域 bbox、区域选择同时提供扰动和非扰动区域、精确定位还强调与整体设计的关系
-    - 设计动机：发现通用推理（如 GPT-o1/o3）对美学评估无帮助，因为它们的推理是泛泛分析而非锚定具体区域。indicator-grounded reasoning 强制将抽象概念（如"层次感"）关联到设计中的具体 bbox，提供了有效监督信号
+作者观察到通用推理增强 VLM（GPT-o1/o3）在美学评估上并没有优势，原因是它们的推理是泛泛而谈的整体分析，没有落到具体区域。Indicator-grounded reasoning 针对这点：给 GPT 提供目标区域的 bbox 坐标和对应的设计图层，要求它输出既带坐标、又解释该区域与哪个美学指标相关的推理路径，强制把"层次感""对齐"这类抽象概念关联到设计中的某个具体 bbox。不同任务采用不同的锚定策略——美学判断用扰动区域的 bbox，区域选择同时提供扰动和非扰动区域以形成对比，精确定位还额外强调该区域与整体设计的关系。这样生成的推理路径不再是空泛的美学评论，而是带空间锚点的监督信号，成为后续微调能涨点的关键来源。
 
 ### 训练策略
 基于 Qwen2.5-VL-7B-Instruct 做全参数微调，冻结视觉编码器只调语言模型参数。学习率 1e-6，cosine scheduler，3% warmup，bfloat16 + FlashAttention-2。训练数据 30k QA 对，输入为任务描述+设计图+JSON元数据，监督信号为推理路径+任务标签。
@@ -133,10 +125,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] AbGen: Evaluating Large Language Models in Ablation Study Design and Evaluation for Scientific Research](../../ACL2025/llm_evaluation/abgen_evaluating_large_language_models_in.md)
-- [\[ACL 2025\] MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](../../ACL2025/llm_evaluation/mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
 - [\[ACL 2025\] CoV-Eval: Can You Really Trust Code Copilots? Evaluating Large Language Models from a Code Security Perspective](../../ACL2025/llm_evaluation/cov_eval_evaluating_llms_from_code_security_perspective.md)
-- [\[ICLR 2026\] AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
+- [\[ACL 2025\] MARS: Benchmarking the Metaphysical Reasoning Abilities of Language Models with a Multi-task Evaluation Dataset](../../ACL2025/llm_evaluation/mars_benchmarking_the_metaphysical_reasoning_abilities_of_language_models_with_a.md)
 - [\[ACL 2026\] When Vision-Language Models Judge Without Seeing: Exposing Informativeness Bias](../../ACL2026/llm_evaluation/when_vision-language_models_judge_without_seeing_exposing_informativeness_bias.md)
+- [\[ICLR 2026\] AnesSuite: A Comprehensive Benchmark and Dataset Suite for Anesthesiology Reasoning](anessuite_a_comprehensive_benchmark_and_dataset_suite_for_anesthesiology_reasoni.md)
 
 </div>
 

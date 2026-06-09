@@ -127,7 +127,7 @@ TCC-Det的训练分为两个阶段：(1) 伪标签生成阶段：输入是多帧
 - [\[ECCV 2024\] TC-Stereo: Temporally Consistent Stereo Matching](temporally_consistent_stereo_matching.md)
 - [\[ECCV 2024\] Interactive 3D Object Detection with Prompts](interactive_3d_object_detection_with_prompts.md)
 - [\[CVPR 2026\] Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation](../../CVPR2026/3d_vision/rewis3d_reconstruction_improves_weaklysupervised_s.md)
-- [\[ECCV 2024\] Formula-Supervised Visual-Geometric Pre-training (FSVGP)](formula-supervised_visual-geometric_pre-training.md)
+- [\[ECCV 2024\] Learning 3D Geometry and Feature Consistent Gaussian Splatting for Object Removal](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)
 
 </div>
 

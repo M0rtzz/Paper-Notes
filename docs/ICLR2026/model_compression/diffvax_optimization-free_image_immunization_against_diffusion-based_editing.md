@@ -47,22 +47,17 @@ DiffVax 训练一个前馈免疫器（UNet++），对任意图像仅需一次前
 
 ### 关键设计
 
-1. **UNet++ 免疫器**：
+**1. UNet++ 免疫器：把"逐图优化"换成一次前向预测。**
 
-    - 功能：将输入图像映射为对抗扰动图
-    - 核心思路：采用 UNet++ 而非普通 U-Net，其嵌套跳跃连接提供更密集的多尺度特征聚合，经验证明对训练不稳定的对抗噪声预测任务有更好的训练稳定性
-    - 设计动机：生成精确的高频扰动需要多层级信息协作
+先前方法每来一张图都要在像素空间跑几百步 PGD，本文转而训练一个图像条件的生成器 $f(\cdot;\theta)$，直接把输入图像映射成扰动图 $\epsilon_{\mathrm{im}}$。骨干刻意选 UNet++ 而非普通 U-Net：对抗噪声预测本身训练很不稳定，需要在多个尺度上精确协作才能生成有效的扰动，而 UNet++ 的嵌套跳跃连接提供了更密集的多尺度特征聚合，实验中带来明显更稳的收敛。一旦训练完成，免疫一张图就只剩这一次前向传播（~70ms），这正是相比逐图优化能拿到 250,000× 加速的根本原因。
 
-2. **训练与编辑解耦**：
+**2. 训练与编辑解耦：不绑 prompt、不绑 mask 形状，堵住绕过通道。**
 
-    - 功能：免疫 mask 和编辑 mask 在训练与推理间可以不同
-    - 核心思路：免疫器不以 prompt 为条件输入（实验证明噪声是 prompt 无关的），也不绑定特定 mask 形状
-    - 设计动机：解决先前方法中攻击者可利用不同 mask 绕过防护的问题
+先前方法的一个漏洞是免疫扰动往往针对特定 prompt 或特定 mask 优化，攻击者换一个编辑 prompt 或挪动 mask 就能绕过防护。本文让免疫器**不以 prompt 为条件**——实验验证有效扰动其实是 prompt 无关的——也不绑定某一种 mask 形状，于是训练时用的免疫 mask 和推理/攻击时用的编辑 mask 可以完全不同。这样学到的扰动对 prompt 和 mask 的变化都更鲁棒，而不是只对训练时见过的那一种编辑设置有效。
 
-3. **数据构建**：
+**3. 数据构建：用合成 mask + LLM 生成的多样 prompt 撑起泛化。**
 
-    - 使用 CCP 数据集 1000 张人像 + SAM 生成 mask + ChatGPT 生成多样化背景编辑 prompt，共 2000 个 prompt
-    - 80/20 划分为 seen/unseen
+要让前馈免疫器泛化到未见图像和未见 prompt，训练数据的多样性是关键。本文以 CCP 数据集的 1000 张人像为底，用 SAM 自动生成前景 mask，再用 ChatGPT 批量生成多样化的背景编辑 prompt，共 2000 个 prompt，并按 80/20 划分为 seen/unseen 以便评测泛化。正是这套"图像 + 合成 mask + 多样 prompt"的组合，让模型从样本中学到扰动的可迁移结构，而不是过拟合到某一类编辑。
 
 ### 损失函数 / 训练策略
 
@@ -135,8 +130,8 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\text{noise}} + \mathcal{L}_{\text{edi
 - [\[ICCV 2025\] MotionFollower: Editing Video Motion via Lightweight Score-Guided Diffusion](../../ICCV2025/model_compression/motionfollower_editing_video_motion_via_score-guided_diffusion.md)
 - [\[CVPR 2026\] On the Robustness of Diffusion-Based Image Compression to Bit-Flip Errors](../../CVPR2026/model_compression/on_the_robustness_of_diffusion-based_image_compression_to_bit-flip_errors.md)
 - [\[ICLR 2026\] Modality-free Graph In-context Alignment](modality-free_graph_in-context_alignment.md)
-- [\[ACL 2026\] LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization](../../ACL2026/model_compression/llm_prompt_duel_optimizer_efficient_label-free_prompt_optimization.md)
 - [\[ACL 2026\] CadLLM: Improving the Throughput of Diffusion-based LLMs via Training-Free Confidence-Aware Calibration](../../ACL2026/model_compression/improving_the_throughput_of_diffusion-based_large_language_models_via_a_training.md)
+- [\[ACL 2026\] LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization](../../ACL2026/model_compression/llm_prompt_duel_optimizer_efficient_label-free_prompt_optimization.md)
 
 </div>
 

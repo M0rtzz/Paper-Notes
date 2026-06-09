@@ -138,8 +138,8 @@ BlazeBVD 分为三个阶段，核心思想是利用 STE 在光照直方图空间
 - [\[ICLR 2026\] SIGMark: Scalable In-Generation Watermark with Blind Extraction for Video Diffusion](../../ICLR2026/video_generation/sigmark_scalable_in-generation_watermark_with_blind_extraction_for_video_diffusi.md)
 - [\[ECCV 2024\] DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing](dreammotion_space-time_self-similar_score_distillation_for_zero-shot_video_editi.md)
 - [\[ICCV 2025\] Aligning Moments in Time using Video Queries](../../ICCV2025/video_generation/aligning_moments_in_time_using_video_queries.md)
+- [\[CVPR 2026\] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning](../../CVPR2026/video_generation/facecam_portrait_video_camera_control_via_scale-aware_conditioning.md)
 - [\[AAAI 2026\] MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation](../../AAAI2026/video_generation/mofu_scale-aware_modulation_and_fourier_fusion_for_multi-subject_video_generatio.md)
-- [\[CVPR 2025\] HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation](../../CVPR2025/video_generation/hoigen-1m_a_large-scale_dataset_for_human-object_interaction_video_generation.md)
 
 </div>
 

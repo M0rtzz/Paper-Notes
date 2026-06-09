@@ -39,29 +39,37 @@ tags:
 
 ### 整体框架
 
-CODA 基于 DINOv2 提取图像特征，通过 Slot Attention 产生 slot 表示，再用预训练的 Stable Diffusion v1.5 作为 slot 解码器重建输入图像。在此基础上引入三个改进模块。
+CODA 用 DINOv2 提取图像特征、Slot Attention 抽出一组 slot，再让冻结的 Stable Diffusion v1.5 作为 slot 解码器重建原图。围绕这条主干，它在 slot 与扩散解码器的交界处补了三件事——多塞一批吸收残余注意力的 register slots、只微调 cross-attention 的投影、再加一个对比对齐损失，分别针对 slot 纠缠和弱对齐两个老毛病。
 
 ### 关键设计
 
-1. **Register Slots（注册槽）**：将纯 padding token 通过 SD 的冻结文本编码器（CLIP ViT-L/14）得到固定长度的嵌入序列 $\bar{\mathbf{r}}$，作为与输入无关的 register slots。这些 register slots 在 cross-attention 中充当"注意力吸收器"，吸收本不应分配给语义 slot 的残余注意力质量。由于 softmax 归一化约束，当 U-Net query 不匹配任何语义 slot 时，注意力会自然流向 register slots 而非干扰语义 slot，从而减轻 slot 纠缠。SD v1.5 使用 77 个 padding token，因此产生 77 个 register slots。实验表明固定 register slots 优于可训练的版本。
+**1. Register Slots：给残余注意力一个去处，缓解 slot 纠缠。**
 
-2. **交叉注意力微调（Cross-Attention Finetuning）**：SD 预训练于图文对，直接作为 slot 解码器会带来文本条件偏置（text-conditioning bias），模型倾向于语言驱动的语义而非 slot 级表示。CODA 仅微调 cross-attention 层中的 key/value/output 投影矩阵 $\boldsymbol{\theta}$，不引入额外层或适配器，概念简洁且计算高效。去噪目标为：
+slot 纠缠的根子在 softmax：cross-attention 要求每个 U-Net query 的注意力在所有 slot 上求和为 1，于是那些不强匹配任何语义 slot 的 query 只能把权重硬摊到几个语义 slot 上，把多个物体的特征搅进同一个 slot。CODA 的做法是另开一组与输入无关的 register slots：把纯 padding token 喂进 SD 冻结的 CLIP ViT-L/14 文本编码器，得到固定的嵌入序列 $\bar{\mathbf{r}}$，与语义 slot 一起参与 cross-attention。这些 register slots 充当"注意力吸收器"，让那部分无处安放的注意力自然流向它们而不再污染语义 slot。SD v1.5 有 77 个 padding token，所以正好产出 77 个 register slots；实验里固定版本比可训练版本更稳。这个设计借鉴了 LLM 里的注意力 sink 现象，几乎零额外计算，却是消融中提升最大的单一组件（mBO 约涨 10 个点）。
+
+**2. 交叉注意力微调：剥掉 SD 的文本条件偏置。**
+
+SD 是在图文对上预训练的，直接拿来当 slot 解码器会残留文本条件偏置（text-conditioning bias），让模型偏向语言驱动的语义、而不是真正以 slot 为条件去重建。CODA 不加适配器也不加新层，只微调 cross-attention 里的 key/value/output 三个投影矩阵 $\boldsymbol{\theta}$，用最小的改动把条件信号从"文本风味"扭回"slot 风味"。对应的去噪目标是标准的 $\epsilon$-预测：
 
 $$\mathcal{L}_{\mathrm{dm}}(\phi, \boldsymbol{\theta}) = \mathbb{E}_{(\mathbf{z}, \mathbf{s}), \epsilon, \gamma} \left[\|\epsilon - \epsilon_{\boldsymbol{\theta}}(\mathbf{z}_\gamma, \gamma, \mathbf{s}, \bar{\mathbf{r}})\|_2^2\right]$$
 
-3. **对比对齐目标（Contrastive Alignment）**：仅靠去噪损失无法显式保证 slot 捕捉图像中实际存在的概念。CODA 引入对比损失，使用负样本 $\tilde{\mathbf{s}}$（通过跨图像随机替换一半 slot 构造困难负样本），让模型给匹配 slot 高似然、给不匹配 slot 低似然：
+其中 slot $\mathbf{s}$ 和 register $\bar{\mathbf{r}}$ 一同作为条件输入。
+
+**3. 对比对齐目标：逼 slot 真去抓图里存在的概念。**
+
+光有去噪损失并不能保证 slot 对应到图像里实际存在的物体——模型完全可以靠平均化的 slot 蒙混过关。CODA 加一个对比项把这条捷径堵死：构造困难负样本 $\tilde{\mathbf{s}}$，方法是跨图像随机替换掉一半 slot（共享初始化保证语义上仍合理），然后要求模型给匹配的 slot 高似然、给被替换过的 slot 低似然，也就是去最大化这个负样本上的去噪误差：
 
 $$\mathcal{L}_{\mathrm{cl}}(\phi) = -\mathbb{E}_{(\mathbf{z}, \tilde{\mathbf{s}}), \epsilon, \gamma} \left[\|\epsilon - \epsilon_{\bar{\boldsymbol{\theta}}}(\mathbf{z}_\gamma, \gamma, \tilde{\mathbf{s}}, \bar{\mathbf{r}})\|_2^2\right]$$
 
-其中 $\bar{\boldsymbol{\theta}}$ 表示停止梯度的参数。关键设计是对比损失只更新 SA 模块而冻结扩散解码器，防止解码器走捷径。
+这里 $\bar{\boldsymbol{\theta}}$ 是停了梯度的解码器参数，是整套设计里最关键的一笔：对比损失只回传去更新 Slot Attention、绝不去动扩散解码器，否则解码器会自己学坏（刻意把负样本解码得很差）走捷径，消融里"不停止梯度"的版本 FG-ARI 直接从 32.23 崩到 10.54 就是证据。
 
 ### 损失函数 / 训练策略
 
-总损失为去噪损失与对比损失的加权和：
+总损失是去噪项与对比项的加权和：
 
 $$\mathcal{L}(\phi, \boldsymbol{\theta}) = \mathcal{L}_{\mathrm{dm}}(\phi, \boldsymbol{\theta}) + \lambda_{\mathrm{cl}} \mathcal{L}_{\mathrm{cl}}(\phi)$$
 
-理论上，该目标等价于最大化 slot 与图像之间互信息的可操作代理（Theorem 1），其中去噪差 $\Delta$ 作为互信息的实用近似。困难负样本的构造通过共享初始化来保证语义有效性。
+论文进一步证明这一目标等价于最大化 slot 与图像之间互信息的一个可操作代理（Theorem 1），其中去噪误差差 $\Delta$ 充当互信息的实用近似——这也把前面两个看似各管一摊的损失统一到了同一个理论框架下。
 
 ## 实验关键数据
 

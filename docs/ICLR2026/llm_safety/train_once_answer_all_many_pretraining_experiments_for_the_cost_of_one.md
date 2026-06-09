@@ -39,41 +39,25 @@ tags:
 
 ### 整体框架
 
-基于 OLMo-2 系列模型，在单次预训练中同时进行 10 个实验。每个实验通过修改训练数据的一小部分来实现干预（总共修改 3.7B tokens，占训练数据的 1.8%）。实验后通过各自的度量指标评估每个实验的结果。
+整个方法建立在 OLMo-2 系列之上：在一次预训练里同时跑 10 个相互独立的实验，每个实验只改动训练数据的一小块（总共改 3.7B tokens，占全部数据的 1.8%），训练结束后各自用专属指标读出结果。能这么做的前提是预训练本就是多任务过程，对不同任务的干预理论上可以并行而互不污染——剩下的工作就是把"互不污染"这件事变得可设计、可验证。
 
 ### 关键设计
 
-**1. 多实验同步训练设计**
+**1. 多实验同步训练：把一次训练拆成 10 个并行实验。**
 
-- **功能**：在 OLMo-2-1B-Exp 的训练过程中同时执行 10 个不同实验
-- **核心思路**：每个实验独立修改训练数据的不同子集，互不重叠，各自有独立的评估指标
-- **设计动机**：利用预训练的多任务特性——对不同任务的干预理论上可以并行不影响
+核心是让每个实验认领训练数据中互不重叠的一个子集去做干预，配上各自独立的评估指标，于是 10 个干预共享同一次前向反向，却各算各的账。这 10 个实验按主题分成三类：学习与泛化（知识获取 KA 改 26M tokens、数学推理 MR 改 180M）、记忆与隐私（基准污染 BC 106M、记忆模式 MemP 246M、逐字记忆 MemV 1.1B、高斯水印 GW 210M）、遗忘与去学习（预训练投毒 PP 235M、遗忘曲线 FC 19M、MUSE-News 152M、IID 替换 1.5B）。之所以能并排塞进同一次训练，正是因为它们落在不同数据子集、读不同指标，预训练的多任务特性保证了对一个任务的扰动不会顺带改写另一个任务的答案。
 
-10 个实验涵盖三大类：
-- **学习与泛化**：知识获取（KA, 26M tokens）、数学推理（MR, 180M tokens）
-- **记忆与隐私**：基准污染（BC, 106M）、记忆模式（MemP, 246M）、逐字记忆（MemV, 1.1B）、高斯水印（GW, 210M）
-- **遗忘与去学习**：预训练投毒（PP, 235M）、遗忘曲线（FC, 19M）、MUSE-News（152M）、IID 替换（1.5B）
+**2. 知识获取的动态控制：用反馈回路精确地"注入"一条知识。**
 
-**2. 知识获取的动态控制算法**
+这个实验要回答的问题是——模型要在预训练里见到一条事实多少次，才会真正记住它？固定频率难以命中目标，于是作者把它做成一个控制回路：每隔 1000 步评估一次知识探针的当前概率，拿它和目标值（如 0.08）作差，再据此调高或调低后续数据里这条知识的出现频率，让概率曲线一路逼近目标。这等于把控制论的负反馈思想搬进预训练数据流，使"定向知识注入"从碰运气变成可调可控的过程。
 
-- **功能**：通过控制算法动态调整训练数据中事实知识的频率，确保模型在训练结束时获取特定知识
-- **核心思路**：每 1000 步评估知识探针的当前概率，根据与目标的差距调整后续数据中知识的出现频率
-- **设计动机**：回答关键研究问题：模型需要在预训练中看到多少次才能获取一条知识？
+**3. Continual Pretraining Dependence Testing（CPDT）：花小钱事先验证实验互不干扰。**
 
-**3. Continual Pretraining Dependence Testing (CPDT)**
-
-- **功能**：在全量预训练之前，通过持续预训练实验检测实验间的依赖性
-- **核心思路**：取中间检查点，分别只用每个实验的数据做短期持续预训练，构建 $n \times n$ 依赖矩阵，观察实验 $j$ 的数据是否影响实验 $i$ 的结果
-- **设计动机**：提供一种实用的方法来事先验证一组实验能否在同一次训练中有效执行
-
-形式化定义实验独立性：实验 $E_1, \dots, E_n$ 独立当且仅当 $Y_i^{\{i\}} \stackrel{d}{=} Y_i^{\{i\} \cup T}$，对所有 $i$ 和 $T \subseteq [n] \setminus \{i\}$ 成立。
+并排训练成立的大前提是实验之间真的独立。作者先给出形式化定义：实验 $E_1, \dots, E_n$ 独立，当且仅当对所有 $i$ 和任意 $T \subseteq [n] \setminus \{i\}$ 都有 $Y_i^{\{i\}} \stackrel{d}{=} Y_i^{\{i\} \cup T}$——即把别的实验数据加进来，实验 $i$ 的结果分布不变。直接做全量预训练来验证太贵，CPDT 改用一个廉价代理：取一个中间检查点，分别只用某个实验的数据做短期持续预训练，逐对填出一张 $n \times n$ 依赖矩阵，看实验 $j$ 的数据会不会撬动实验 $i$ 的指标。离对角线的格子若都不显著，就说明这组实验可以放心合训，而这一步的成本远低于从头训一遍。
 
 ### 损失函数 / 训练策略
 
-- 基于 OLMo-2-1B 架构，训练 100,000 步 / 210B tokens
-- 前 90,000 步学习率与 OLMo-2-1B 等价，后 10,000 步线性衰减到 0
-- 实验数据均匀分布在训练过程中，替换相应位置的原始预训练数据
-- 同时训练 179M、546M、1.5B、2.7B 四个规模的模型
+训练沿用 OLMo-2-1B 架构，跑满 100,000 步 / 210B tokens：前 90,000 步学习率与原版 OLMo-2-1B 对齐，最后 10,000 步线性衰减到 0。各实验数据均匀铺在整个训练过程中，原位替换掉对应位置的原始预训练数据，从而不改变总 token 量。同一套配方还分别训了 179M、546M、1.5B、2.7B 四个规模，用来观察干预效应随模型尺寸的变化。
 
 ## 实验关键数据
 
@@ -161,9 +145,9 @@ CPDT 依赖性测试结果：
 
 - [\[CVPR 2025\] Towards All-in-One Medical Image Re-Identification](../../CVPR2025/llm_safety/towards_all-in-one_medical_image_re-identification.md)
 - [\[ICLR 2026\] Attention Smoothing Is All You Need For Unlearning](attention_smoothing_is_all_you_need_for_unlearning.md)
+- [\[ICLR 2026\] When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)
 - [\[ICLR 2026\] Heterogeneous Federated Fine-Tuning with Parallel One-Rank Adaptation](heterogeneous_federated_fine-tuning_with_parallel_one-rank_adaptation.md)
 - [\[ICLR 2026\] Reasoning or Retrieval? A Study of Answer Attribution on Large Reasoning Models](reasoning_or_retrieval_a_study_of_answer_attribution_on_large_reasoning_models.md)
-- [\[AAAI 2026\] Uncovering Pretraining Code in LLMs: A Syntax-Aware Attribution Approach](../../AAAI2026/llm_safety/uncovering_pretraining_code_in_llms_a_syntax-aware_attribution_approach.md)
 
 </div>
 

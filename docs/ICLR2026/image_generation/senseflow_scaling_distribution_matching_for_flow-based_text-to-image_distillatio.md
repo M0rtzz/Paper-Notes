@@ -43,37 +43,19 @@ tags:
 
 ### 整体框架
 
-以 DMD2 为基础框架，生成器 G 接收文本 prompt 和噪声生成图像，通过 DMD 梯度（real score 与 fake score 之差）、VFM 对抗损失和 ISG 联合优化。每次生成器更新后，IDA 将 fake model 近端对齐到 generator。整体流程见 Algorithm 1。
+SenseFlow 沿用 DMD2 的 min-max 蒸馏骨架：生成器 $G$ 吃文本 prompt 和噪声直接出图，由 DMD 梯度（real score 与 fake score 之差）、VFM 判别器的对抗损失和段内引导损失三路联合优化。关键改动在于每次更新生成器之后，都用一次廉价的参数插值把 fake model 拉回与生成器对齐，并配合重新设计的时间步采样和判别器，让原本在大模型上发散的训练稳定下来（完整流程见 Algorithm 1）。
 
 ### 关键设计
 
-**设计1：隐式分布对齐（IDA）**
-- **功能**：在每次 generator 更新后，对 fake model 参数做近端更新 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$
-- **核心思路**：DMD 的内部最优响应要求 $p_f(X_t) = p_g(X_t)$。通过 EMA 式参数对齐，维持 fake model 与 generator 的 ε-best response，即 $E_t D_{KL}(p_g(X_t) \| p_f(X_t)) \leq \varepsilon$
-- **设计动机**：单靠增大 TTUR 比例在大模型上既昂贵又不稳定。IDA 以极低成本（仅一次参数插值）维持 fake-generator 一致性，使 DMD 在 SD 3.5 Large 上收敛。λ 接近 1 即可
+**1. 隐式分布对齐（IDA）：让 fake model 始终追上生成器。** DMD 的 min-max 框架有个隐含前提——内层的 fake model 必须给出最优响应，即对所有时间步满足 $p_f(X_t) = p_g(X_t)$，否则 real/fake score 之差就不再指向正确的梯度方向。小模型上靠 TTUR（两时间尺度更新，多更新几次 fake model）勉强能维持，但在 SD 3.5 Large 这种 8B 模型上，要么训练成本爆炸，要么干脆振荡不收敛。IDA 的做法极简：每次生成器从 $\theta$ 更新后，对 fake model 参数做一次 EMA 式近端插值 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$，$\lambda$ 取接近 1 的值。这相当于把 fake model 持续往生成器方向"软拉拢"，从而以一次参数插值的代价维持住 $E_t D_{KL}(p_g(X_t) \,\|\, p_f(X_t)) \leq \varepsilon$ 的 ε-best response 条件。正是这一步让 DMD 在 SD 3.5 Large 上首次稳定收敛，且只需 5:1 的小 TTUR 比例即可。
 
-**设计2：段内引导（ISG）**
-- **功能**：在每个粗时间步的"段"内采样中间时间点，利用教师模型构建引导轨迹
-- **核心思路**：对粗时间步 $\tau_i$，采样中间点 $t_{mid} \in (\tau_{i-1}, \tau_i)$。教师从 $\tau_i$ 去噪到 $t_{mid}$，generator 从 $t_{mid}$ 继续到 $\tau_{i-1}$，得到目标 $x_{tar}$。同时 generator 直接从 $\tau_i$ 到 $\tau_{i-1}$，用 L2 损失对齐两者
-- **设计动机**：教师模型各时间步的重建误差 $\xi(t)$ 非单调且存在局部振荡，均匀时间步采样造成信息浪费。ISG 将段内的细粒度去噪信息聚合到锚点上，使 generator 更好地近似复杂的段内转换
+**2. 段内引导（ISG）：用教师的细粒度去噪能力补强粗步生成器。** 4 步生成意味着只有几个粗时间步锚点，而教师模型各时间步的重建误差 $\xi(t)$ 并非单调、还存在局部振荡，均匀挑几个时间步会浪费掉段内大量去噪信息。ISG 在每个粗时间步的"段"内再插一个中间点：对锚点 $\tau_i$，采样 $t_{mid} \in (\tau_{i-1}, \tau_i)$，让教师从 $\tau_i$ 去噪到 $t_{mid}$、再由生成器接力到 $\tau_{i-1}$ 得到目标 $x_{tar}$；同时让生成器直接从 $\tau_i$ 一步跨到 $\tau_{i-1}$，用 L2 损失把这条"直达"轨迹对齐到经过中间点的"引导"轨迹。这样段内的细粒度转换信息被聚合到了粗锚点上，生成器得以逼近教师那条更曲折的去噪路径——消融显示，这正是 FLUX.1 dev（12B）能收敛的额外必要条件。
 
-**设计3：基于 VFM 的判别器**
-- **功能**：使用冻结的视觉基础模型（DINOv2 + CLIP）作为判别器骨干
-- **核心思路**：VFM 提取多层语义特征，配合可训练的 head blocks 预测 real/fake logits。使用 hinge loss 训练判别器，generator 的对抗损失按时间步信号功率 $\omega(t) = (1-\sigma_t)^2$ 加权
-- **设计动机**：预训练 VFM 引入丰富的语义先验，比朴素判别器更擅长捕获图像质量和细粒度结构。时间步加权确保在高噪声步骤更依赖 DMD 梯度，低噪声步骤更依赖 GAN 反馈
+**3. 基于 VFM 的判别器：用视觉基础模型的语义先验稳住对抗信号。** 朴素判别器很难同时适配 2.6B 到 12B、架构各异的多种教师。SenseFlow 改用冻结的视觉基础模型（DINOv2 + CLIP）当骨干提取多层语义特征，只训练轻量的 head blocks 预测 real/fake logits，并以 hinge loss 优化判别器。生成器侧的对抗损失再按时间步信号功率 $\omega(t) = (1-\sigma_t)^2$ 加权：高噪声步信号弱、权重小，更依赖 DMD 梯度；低噪声步信号强、权重大，更依赖 GAN 反馈。预训练 VFM 带来的丰富语义先验让判别器更擅长抓图像质量和细粒度结构，时间步加权则把两类监督信号在各噪声水平上做了合理分工。
 
 ### 损失函数 / 训练策略
 
-Generator 总损失：$\mathcal{L}_G = \mathcal{L}_{DMD} + \lambda_G \cdot \mathcal{L}_{adv} + \lambda_{ISG} \cdot \mathcal{L}_{ISG}$
-- $\mathcal{L}_{DMD}$：fake score 与 real score 之差引导 generator
-- $\mathcal{L}_{adv}$：VFM 判别器的对抗损失，按 $\alpha_t^2$ 加权
-- $\mathcal{L}_{ISG}$：段内引导 L2 损失
-
-训练细节：
-- 数据：LAION-5B 子集（aesthetic score ≥ 5.0）
-- TTUR 比例：5:1 配合 IDA 即可稳定收敛
-- 50% 概率使用 backward simulation vs forward diffusion 构造输入
-- Logit-normal 时间步采样
+生成器总损失把三路信号加权相加：$\mathcal{L}_G = \mathcal{L}_{DMD} + \lambda_G \cdot \mathcal{L}_{adv} + \lambda_{ISG} \cdot \mathcal{L}_{ISG}$，其中 $\mathcal{L}_{DMD}$ 是 fake score 与 real score 之差，$\mathcal{L}_{adv}$ 是 VFM 判别器的对抗损失（按 $\alpha_t^2$ 加权），$\mathcal{L}_{ISG}$ 是段内引导的 L2 损失。训练时数据取 LAION-5B 中 aesthetic score ≥ 5.0 的子集，TTUR 比例固定 5:1 配合 IDA 即可稳定，构造输入时以 50% 概率在 backward simulation 与 forward diffusion 之间切换，时间步用 logit-normal 采样。
 
 ## 实验关键数据
 
@@ -148,11 +130,11 @@ IDA 是 SD 3.5 收敛的关键；ISG 是 FLUX 收敛的额外必要条件。
 
 ## 相关论文
 
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [\[ICLR 2026\] DenseGRPO: From Sparse to Dense Reward for Flow Matching Model Alignment](densegrpo_from_sparse_to_dense_reward_for_flow_matching_model_alignment.md)
 - [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 - [\[ICLR 2026\] Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
+- [\[ICLR 2026\] FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
 
 </div>
 

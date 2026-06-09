@@ -141,11 +141,11 @@ Lyapunov Learning 的整体思路可以分为三步：
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series](../../NeurIPS2025/time_series/syntsbench_rethinking_temporal_pattern_learning_in_deep_learning_models_for_time.md)
-- [\[ICML 2025\] Causality-Aware Contrastive Learning for Robust Multivariate Time-Series Anomaly Detection](causality-aware_contrastive_learning_for_robust_multivariate_time-series_anomaly.md)
 - [\[ICML 2025\] TimePoint: Accelerated Time Series Alignment via Self-Supervised Keypoint and Descriptor Learning](timepoint_accelerated_time_series_alignment_via_self-supervised_keypoint_and_des.md)
 - [\[ICML 2025\] Learning Soft Sparse Shapes for Efficient Time-Series Classification](learning_soft_sparse_shapes_for_efficient_time-series_classification.md)
 - [\[NeurIPS 2025\] Selective Learning for Deep Time Series Forecasting](../../NeurIPS2025/time_series/selective_learning_for_deep_time_series_forecasting.md)
+- [\[ICML 2026\] The Cost of Learning Under Multiple Change Points](../../ICML2026/time_series/the_cost_of_learning_under_multiple_change_points.md)
+- [\[CVPR 2025\] Learning Extremely High Density Crowds as Active Matters](../../CVPR2025/time_series/learning_extremely_high_density_crowds_as_active_matters.md)
 
 </div>
 

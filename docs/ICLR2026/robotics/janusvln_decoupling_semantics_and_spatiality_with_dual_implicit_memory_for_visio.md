@@ -36,35 +36,21 @@ tags:
 
 ## 方法详解
 
-### 整体架构
-JanusVLN 采用双编码器架构，将视觉感知解耦为**语义理解**和**空间认知**两条路径：
+### 整体框架
+JanusVLN 模仿人脑左右半球分工，用两条独立编码路径处理同一段 RGB 视频：一路由 Qwen2.5-VL 的视觉编码器抽取语义特征 $S_t$，一路由 VGGT 抽取 3D 空间几何特征 $G_t$，两者各自维护一份固定大小的隐式 KV Cache 作为历史记忆，再融合成统一特征 $F_t$ 交给 LLM 预测下一步动作。整个流程只吃单目 RGB，不需要深度图、点云或里程计。
 
-- **语义编码器**：直接复用 Qwen2.5-VL 的视觉编码器，提取语义特征 $S_t$。
-- **空间几何编码器**：引入 VGGT（Visual Geometry Grounded Transformer），一个在像素-3D 点云对上预训练的前馈式 3D 视觉几何基础模型，从 RGB 视频中提取空间几何特征 $G_t$，无需任何显式 3D 数据（深度图、点云等）。
+### 关键设计
 
-### 双隐式记忆
-核心创新在于将两种记忆都建模为**固定大小的隐式神经表示**——即历史 KV Cache，而非显式的文本描述或原始图像帧：
+**1. 双编码器解耦：让语义和空间各司其职。** VLN 的视觉编码器几乎都继承 CLIP 式的 2D 图文对预训练，强于高层语义却对 3D 几何近乎失明，而导航本质是 3D 物理交互。JanusVLN 不去改造单个编码器，而是直接保留 Qwen2.5-VL 的语义编码器提取 $S_t$，并行接入 VGGT（Visual Geometry Grounded Transformer）——一个在像素-3D 点云对上预训练的前馈式几何基础模型——从纯 RGB 视频中提取空间几何特征 $G_t$。VGGT 自带的 3D 几何先验恰好补上语义路径的空间盲区，两路信息互补而非冗余，这一点在消融里得到验证：换成 DINOv2 或 SigLIP 2 这类 2D 编码器几乎没有增益（SR 47.5/47.9 vs 去掉空间记忆的 47.0），因为它们和 Qwen2.5-VL 提供的信息高度重叠；用随机初始化的 VGGT 也无效（SR 47.2），说明优势来自几何先验本身而非参数量。
 
-- **隐式神经表示**：缓存经 Transformer 注意力模块深度处理后的历史 KV 对。这些 KV 不是原始数据的简单存储，而是经神经网络提炼的高层语义抽象和结构化表示。
-- **混合增量更新策略**：
-    - **滑动窗口队列** $M_{sliding}$（容量 $n$）：以 FIFO 方式存储最近 $n$ 帧的 KV Cache，确保模型聚焦最新上下文。
-    - **初始窗口** $M_{initial}$：永久保留前几帧的 KV Cache，利用 "Attention Sinks" 现象为整个导航任务提供全局锚点。
-- 对每个新帧，仅需计算新帧图像 token 与隐式记忆之间的交叉注意力即可检索历史信息，无需重新处理历史帧：
+**2. 双隐式神经记忆：用固定大小 KV Cache 替代膨胀的显式记忆。** 现有方法要么把历史写成文本认知地图（空间关系被语言压扁、信息丢失），要么存储原始历史帧（每步决策都要重处理全部历史、计算冗余，且记忆随时间无限膨胀）。JanusVLN 把两路的历史都建模为隐式神经表示——即缓存经 Transformer 注意力模块深度处理后的历史 KV 对。这些 KV 不是原始像素的堆叠，而是网络提炼出的高层抽象，因此处理新帧 $x_t$ 时只需让它的图像 token 与记忆做一次交叉注意力即可检索历史，无需回放旧帧：$G_t = \text{Decoder}(\text{CrossAttn}(\text{Encoder}(x_t), \{M_{initial}, M_{sliding}\}))$。记忆容量被钉死成固定大小，从根上消除了显式记忆的膨胀问题——去掉双隐式记忆后 SR 从 52.8 暴跌到 24.8，单独去掉空间或语义记忆也分别掉到 47.0、45.5，证明两份记忆缺一不可。
 
-$$G_t = \text{Decoder}(\text{CrossAttn}(\text{Encoder}(x_t), \{M_{initial}, M_{sliding}\}))$$
+**3. 初始窗口 + 滑动窗口的混合增量更新：兼顾全局锚点与近期上下文。** 固定大小的记忆该装哪些帧？JanusVLN 用两段拼接：滑动窗口队列 $M_{sliding}$（容量 $n$）以 FIFO 方式保留最近 $n$ 帧的 KV Cache，让模型聚焦当下；初始窗口 $M_{initial}$ 永久保留导航最初几帧的 KV Cache，借助 "Attention Sinks" 现象（首帧持续吸附高注意力权重）充当贯穿全程的全局锚点。这样推理时间只随新增帧线性增长，而非随历史长度爆炸。直接复用 VGGT 重算全序列时 32 帧要 1549 ms，改用 KV 缓存后只要 149 ms，开销降了约 90%，SR 反而从 51.2 微升到 51.7。实现上初始窗口取 8 帧、滑动窗口取 48 帧。
 
-### 空间感知特征融合
-获得语义特征 $S'_t$ 和空间几何特征 $G'_t$（经 spatial merging 对齐形状后），通过轻量级两层 MLP 投影层融合：
+**4. 空间感知特征融合：以语义为主、几何为辅的加权相加。** 拿到对齐形状后的语义特征 $S'_t$ 和空间几何特征 $G'_t$（后者经 spatial merging 对齐），JanusVLN 用一个轻量两层 MLP 投影几何特征再加到语义特征上：$F_t = S'_t + \lambda \cdot \text{MLP}(G'_t)$，其中权重 $\lambda = 0.2$。之所以让几何只占小份额而非平权融合，是因为语义路径仍是导航决策的主干，几何信息只是注入空间约束的补充；融合后的 $F_t$ 与指令文本 embedding 一起送入 LLM 输出动作。
 
-$$F_t = S'_t + \lambda \cdot \text{MLP}(G'_t)$$
-
-其中 $\lambda = 0.2$ 控制空间几何特征权重。最终融合特征 $F_t$ 与指令文本 embedding 一起送入 LLM 预测下一步动作。
-
-### 训练细节
-- 基座模型：Qwen2.5-VL 7B + VGGT
-- 仅微调 LLM 和投影层（学习率分别为 2e-5 和 1e-5），双编码器冻结
-- 初始窗口 8 帧，滑动窗口 48 帧
-- 额外数据：ScaleVLN 子集 155K 轨迹 + DAgger 采集 14K 轨迹
+### 损失函数 / 训练策略
+基座为 Qwen2.5-VL 7B 配 VGGT，双编码器全程冻结，只微调 LLM 和投影层（学习率分别 2e-5 与 1e-5），从而把 VGGT 的几何先验和 Qwen2.5-VL 的语义能力当作稳定的预训练知识保留下来。训练数据在标准 VLN-CE 之外补充了 ScaleVLN 子集的 155K 轨迹和 DAgger 在线采集的 14K 轨迹。
 
 ## 实验关键数据
 
@@ -150,7 +136,7 @@ KV 缓存方式推理开销降低 69%-90%，同时性能还略有提升。
 - [\[ECCV 2024\] DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control](../../ECCV2024/robotics/disco_embodied_navigation_and_interaction_via_differentiable_scene_semantics_and.md)
 - [\[ICLR 2026\] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation](memoryvla_perceptual-cognitive_memory_in_vision-language-action_models_for_robot.md)
 - [\[ICML 2026\] Spatial Memory for Out-of-Vision Manipulation in Vision-Language-Action](../../ICML2026/robotics/spatial_memory_for_out-of-vision_manipulation_in_vision-language-action.md)
-- [\[ICLR 2026\] All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
+- [\[ICLR 2026\] AutoFly: Vision-Language-Action Model for UAV Autonomous Navigation in the Wild](autofly_vision-language-action_model_for_uav_autonomous_navigation_in_the_wild.md)
 
 </div>
 

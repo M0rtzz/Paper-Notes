@@ -34,23 +34,22 @@ tags:
 6. **VPT 变体涌现但根本问题未解**：结构化 prompt、自适应 prompt、投影式 prompt、感知驱动 prompt 等四大方向的改进均未从根本上解决上述训练动态问题。
 
 ## 方法详解
-PAE 包含两个互补模块：MPA（初始化阶段）和 KLD（训练阶段）。
 
-### Modal Pre-Alignment (MPA) — 频域感知初始化
-- **频率捷径发现**：对训练集小批量做 2D 傅里叶变换，用滑动窗口（w=16, stride=8）生成 S 个二值频率掩码 M_s，逐一应用于频谱后逆变换重建图像，以任务损失排序找出模型最依赖的频率捷径区域。
-- **Prompt 构建**：选取 loss 最低的 Top-T 个频率掩码，将滤波后的图像通过冻结 patch embedding 得到 patch token，再用 token 能量加权池化（L2范数平方作为权重）聚合为 T 个代表性向量，拼成第一层 prompt P_1^init。
-- **跨层传播**：将 P_1^init 逐层喂入冻结的 Transformer encoder block，输出即为各层 prompt 初始化 P_i^init，保证初始化轨迹与backbone层级语义一致。
+### 整体框架
+PAE 把 VPT 的训练拆成两个互补阶段：训练前用 MPA 模块做一次频域感知的任务初始化，让各层 prompt 一上来就贴近 backbone 的层级语义；训练中用 KLD 模块把原本逐层独立优化的 prompt 用一个共享的 Koopman 动力系统串联起来，并施加 Lyapunov 稳定约束抑制梯度振荡。两个模块都不碰冻结的 backbone、也不改推理流程，因此可以即插即用地套在任意 VPT 变体上。
 
-### Koopman-Lyapunov Discrete Dynamical System (KLD) — 跨层关联优化
-- **线性投影**：引入全局可学习投影矩阵 U∈R^{d×K}（Kaiming 初始化），将各层 prompt P_i 投影到共享潜空间 z_i = P_i·U。
-- **Koopman 算子演化**：用全局共享算子 K∈R^{K×K}（单位矩阵初始化）建模层间 prompt 演化 ẑ_{i+1} = z_i·K，替代传统逐层独立优化，建立显式跨层耦合。
-- **Koopman 一致性损失 L_kp**：最小化预测演化状态 ẑ_{i+1} 与实际投影状态 z_{i+1} 的 Frobenius 范数差，梯度公式显示每层 prompt 同时受前后层一致性约束。
-- **Lyapunov 稳定性正则化 L_stab**：定义 Lyapunov 函数 V(z) = tr(zQz^T)（Q 为可学习对称正定矩阵），仅在相邻层间 V 值增大时施加惩罚，自适应约束演化误差累积。
-- **总目标函数**：L_total = L_task + α·L_kp + β·L_stab（α=0.5, β=0.2），端到端联合训练。
+### 关键设计
 
-### 关键设计优势
-- Prompt-agnostic：可无缝嵌入任意 VPT 变体，无需修改 backbone 或改变推理流程。
-- 轻量级：MPA 初始化仅 ~74 秒（约 5.3 个 epoch），KLD 引入的额外参数极少（K=256 维 Koopman 空间）。
+**1. MPA 频域感知初始化：让初始 prompt 直接命中任务依赖的频率捷径。** 现有 VPT 变体的 prompt 初始化与下游任务无关，早期梯度大量浪费在与 backbone 对齐上。MPA 先对训练集小批量做 2D 傅里叶变换，用滑动窗口（$w=16$, $\text{stride}=8$）生成 $S$ 个二值频率掩码 $M_s$，逐一作用于频谱并逆变换重建图像，按任务损失排序找出模型最依赖的频率区域。随后取 loss 最低的 Top-$T$ 个掩码，把滤波后的图像送入冻结的 patch embedding 得到 patch token，再以 token 能量（L2 范数平方）加权池化聚合成 $T$ 个代表向量，拼成第一层 prompt $P_1^{init}$。最后把 $P_1^{init}$ 逐层喂入冻结的 encoder block，各层输出即为对应的初始化 $P_i^{init}$，使初始化轨迹天然与 backbone 的层级语义一致。整套过程仅约 74 秒（相当于 5.3 个 epoch），却让早期梯度直接投入任务相关方向。
+
+**2. KLD Koopman 算子跨层耦合：把层间独立优化变成显式的动力系统演化。** 逐层分析显示浅层 prompt 早期梯度激增后停滞、深层 prompt 高方差振荡，根源在于各层 prompt 被独立优化、缺乏跨层协调。KLD 引入全局可学习投影矩阵 $U\in\mathbb{R}^{d\times K}$（Kaiming 初始化）把每层 prompt 投到共享潜空间 $z_i = P_i\,U$，再用一个全局共享的 Koopman 算子 $\mathcal{K}\in\mathbb{R}^{K\times K}$（单位矩阵初始化）建模层间演化 $\hat{z}_{i+1} = z_i\,\mathcal{K}$。一致性损失 $L_{kp}$ 最小化预测态 $\hat{z}_{i+1}$ 与实际投影态 $z_{i+1}$ 的 Frobenius 范数差，其梯度形式表明每层 prompt 同时受到来自前层和后层的一致性约束，从而把原本割裂的层间优化耦合成一条平滑轨迹。共享潜空间维度 $K=256$，引入的额外参数极少。
+
+**3. Lyapunov 稳定性正则：只在演化"发散"时才惩罚，自适应抑制误差累积。** 单纯的 Koopman 约束无法保证多层级联后误差不放大。KLD 定义 Lyapunov 函数 $V(z) = \mathrm{tr}(z\,Q\,z^\top)$（$Q$ 为可学习对称正定矩阵），仅当相邻层之间 $V$ 值增大时才施加惩罚 $L_{stab}$，对正常收缩的演化不加干预。这种条件触发的正则相当于给跨层 prompt 轨迹装了一个自适应阻尼，把梯度振荡压在稳定区间内，而不会过度约束有益的层间变化。
+
+**4. Prompt-agnostic 即插即用：与具体 prompt 结构正交。** MPA 只决定初始化、KLD 只作用于 prompt 的投影与演化，二者都不修改 prompt 的结构设计，也不改变 backbone 与推理路径。因此 PAE 可以无缝嵌入 VPT、E2VPT、VFPT、SA2VP、BPT 等多种变体，训练后无任何推理开销。
+
+### 损失函数 / 训练策略
+端到端联合优化任务损失与两项正则：$L_{total} = L_{task} + \alpha\,L_{kp} + \beta\,L_{stab}$，默认 $\alpha=0.5$、$\beta=0.2$。MPA 在训练前一次性完成、不进入反传，KLD 的 $U$、$\mathcal{K}$、$Q$ 与 prompt 一起随主任务训练。
 
 ## 实验关键数据
 

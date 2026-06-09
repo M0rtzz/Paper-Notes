@@ -37,46 +37,17 @@ tags:
 
 ### 整体框架
 
-TAMPO 采用层级双循环结构：
+TAMPO 把"用多大温度采样"这件事本身做成一个可学习的元策略 $\pi(T)$，并嵌进标准 GRPO 训练的双层循环里。每一步外层先从 $\pi(T)$ 采一个温度 $T_s$，内层用它生成一批 rollout 并照常更新 LLM 策略 $\pi_\theta$；随后外层不再额外采样，而是把这同一批 rollout 拿来反推"它们更像是哪个温度生成的"，据此更新 $\pi(T)$。整个温度自适应过程因此与策略优化共享数据、零额外 rollout。
 
-- **内循环**：用选定温度 $T_s$ 生成 rollout，通过 GRPO 更新 LLM 策略 $\pi_\theta$
-- **外循环**：复用内循环 rollout，根据轨迹优势信号更新温度元策略 $\pi(T)$
+### 关键设计
 
-### 关键观察
+**1. 偏好温度：从轨迹似然反推它"想要"的温度。** TAMPO 的出发点是观察到每条已采样轨迹其实隐式编码了一个最适合自己的温度。对轨迹 $\tau_i$，定义它在温度 $T$ 下的平均对数似然 $\ell_T(\tau_i) = \frac{1}{|\tau_i|} \sum_{t=1}^{|\tau_i|} \log \pi_{\theta,T}(o_{i,t} \mid s_{i,t})$，那么使该似然最大的温度 $T^* = \arg\max_{T_k \in \mathcal{T}} \ell_{T_k}(\tau_i)$ 就是这条轨迹的"偏好温度"。关键在于这一步只需把已生成的 token 序列重新过一遍模型、用不同温度缩放 logits 即可算出，不需要真的在每个候选温度下重新采样，这正是后续"零额外开销"的基础。
 
-每条轨迹隐式编码其"偏好温度"——使该轨迹最可能被生成的温度：
+**2. 温度特定优势：把轨迹的好坏归因到温度上。** 有了似然还不够，要让温度元策略知道"哪个温度带来了高回报"。TAMPO 把每条轨迹的 GRPO 优势 $A_i$ 按其在各候选温度下的相对似然分摊出去。对 $K$ 个候选温度，先用 sparsemax 把似然 $\ell_{T_k}(\tau_i)$ 归一化成 $\hat{\ell}_{T_k}(\tau_i)$（跨候选温度求和为 1，且 sparsemax 会把不相关温度压成 0，使归因稀疏聚焦），再得到温度特定优势 $\mathcal{A}_i^{(T_k)} = \hat{\ell}_{T_k}(\tau_i) \cdot A_i$。这样一来，正优势轨迹会把奖励集中推给它最可能生成的温度、负优势轨迹则惩罚对应温度，温度的好坏第一次有了可优化的信号。
 
-$$T^* = \arg\max_{T_k \in \mathcal{T}} \ell_{T_k}(\tau_i)$$
+**3. 元策略更新：聚合、平滑、归一化成温度分布。** 单批信号噪声大，TAMPO 用三步把温度特定优势转成稳定的概率分布。先在批内对所有轨迹聚合 $\mathcal{A}_\mathcal{B}^{(T_k)} = \frac{1}{|\mathcal{B}|G} \sum_b \sum_i \mathcal{A}_{b,i}^{(T_k)}$；再做 EMA 平滑 $\bar{\mathcal{A}}_s^{(T_k)} = (1-\alpha)\bar{\mathcal{A}}_{s-1}^{(T_k)} + \alpha \mathcal{A}_\mathcal{B}^{(T_k)}$ 以跨步累积趋势（$\alpha=0.05$ 时最稳，过小则更新迟钝、过大则抖动）；最后经 min-max 归一化得到温度分布 $\pi_s(T_k) = \frac{\tilde{\mathcal{A}}_s^{(T_k)}}{\sum_j \tilde{\mathcal{A}}_s^{(T_j)}}$。由于温度在 LLM RL 里本身不可微，这条"似然归因 + EMA"的路径恰好绕开了梯度，把一个非可微的离散选择问题变成了可在线估计的优势排序问题。
 
-其中 $\ell_T(\tau_i) = \frac{1}{|\tau_i|} \sum_{t=1}^{|\tau_i|} \log \pi_{\theta,T}(o_{i,t} | s_{i,t})$ 为平均对数似然。
-
-### 温度特定优势
-
-对每条轨迹 $\tau_i$ 和虚拟候选温度 $T_k$：
-
-1. 计算 $\ell_{T_k}(\tau_i)$：轨迹在温度 $T_k$ 下的似然
-2. 用 sparsemax 归一化得 $\hat{\ell}_{T_k}(\tau_i)$（跨 $K$ 个候选温度求和=1）
-3. 温度特定优势：$\mathcal{A}_i^{(T_k)} = \hat{\ell}_{T_k}(\tau_i) \cdot A_i$
-
-直觉：
-- 正优势轨迹 → 强化其最可能生成温度
-- 负优势轨迹 → 惩罚其最可能生成温度
-
-### 元策略更新
-
-1. 批次聚合：$\mathcal{A}_\mathcal{B}^{(T_k)} = \frac{1}{|\mathcal{B}|G} \sum_b \sum_i \mathcal{A}_{b,i}^{(T_k)}$
-2. EMA 平滑：$\bar{\mathcal{A}}_s^{(T_k)} = (1-\alpha)\bar{\mathcal{A}}_{s-1}^{(T_k)} + \alpha \mathcal{A}_\mathcal{B}^{(T_k)}$
-3. Min-max 归一化得概率分布：$\pi_s(T_k) = \frac{\tilde{\mathcal{A}}_s^{(T_k)}}{\sum_j \tilde{\mathcal{A}}_s^{(T_j)}}$
-
-### 温度采样
-
-使用 nucleus sampling（top-p）从元策略中采样温度，$p=0.7$ 提供最佳探索-利用平衡。
-
-### 设计特点
-
-- **零额外 rollout**：完全复用内循环的轨迹数据
-- **非可微优化**：温度在 LLM RL 中不可微，TAMPO 通过似然信号绕过此限制
-- **可忽略开销**：元策略仅维护温度优势列表，推理时丢弃
+**4. 温度采样：给探索本身也留出探索。** 拿到分布后，下一步用哪个温度并不直接取概率最高者，而是用 nucleus sampling（top-p）从 $\pi(T)$ 里抽，$p=0.7$ 给出最佳的探索-利用平衡。这一点很关键：实验中纯贪心采样（$p=0$）反而结果最差，说明温度选择本身也需要保留随机性，否则元策略会过早锁死在某个局部偏好上。整个元策略只额外维护 $K$ 个温度的优势估计列表，训练完即丢弃、推理时不增加任何成本，因此 TAMPO 的总训练耗时与固定温度 GRPO 基线几乎完全相同。
 
 ## 实验关键数据
 
@@ -157,11 +128,11 @@ $$T^* = \arg\max_{T_k \in \mathcal{T}} \ell_{T_k}(\tau_i)$$
 
 ## 相关论文
 
+- [\[ICLR 2026\] Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](stabilizing_policy_gradients_for_sample-efficient_reinforcement_learning_in_llm_.md)
 - [\[ICLR 2026\] Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
+- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
 - [\[ACL 2026\] Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning](../../ACL2026/llm_reasoning/adapt_to_thrive_adaptive_power-mean_policy_optimization_for_improved_llm_reasoni.md)
 - [\[ICLR 2026\] On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
-- [\[ACL 2026\] TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](../../ACL2026/llm_reasoning/templaterl_structured_template-guided_reinforcement_learning_for_llm_reasoning.md)
-- [\[ICML 2026\] ResRL: Boosting LLM Reasoning via Negative Sample Projection Residual Reinforcement Learning](../../ICML2026/llm_reasoning/resrl_boosting_llm_reasoning_via_negative_sample_projection_residual_reinforceme.md)
 
 </div>
 

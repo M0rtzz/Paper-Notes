@@ -40,29 +40,15 @@ tags:
 ## 方法详解
 
 ### 整体框架
-将长上下文任务的系统保真度在对数空间中分解为三个独立损失项：$L_{sys} = L_{task} + L_{agg} + L_{model}$。$L_{task}$ 由跨 chunk 依赖决定（分块越多越大），$L_{model}$ 由上下文困惑决定（上下文越长越大），$L_{agg}$ 由部分结果聚合质量决定。
+这套框架不直接造一个新的分块算法，而是先回答"分块到底在跟什么东西做权衡"。作者把长上下文任务的系统保真度放到对数空间里分解成三个相加的损失项 $L_{sys} = L_{task} + L_{agg} + L_{model}$，再用各项随上下文长度 $T$ 的增长速度来判定分而治之（D&C）何时该用。三项分别对应：分块切断依赖造成的任务噪声、长上下文本身造成的模型困惑、以及把分块结果拼回去的聚合误差。
 
 ### 关键设计
 
-1. **三类噪声分解**:
+**1. 三类噪声分解：把"该不该分块"拆成可分析的两难。** 直接处理长文档和分块处理各有损失，但混在一起谁也说不清。作者的做法是把系统保真度写成乘积 $\rho_{sys} = \rho_{task} \times \rho_{agg} \times \rho_{model}$，取对数后变成可加的三项损失。任务噪声 $L_{task}$ 来自分块切断了跨 chunk 依赖——块切得越碎，像角色关系推理这种需要全局信息的任务损失越大；模型噪声 $L_{model}$ 来自上下文越长模型越容易分心混淆，这一项对所有模型普遍存在且随 $T$ 增长；聚合器噪声 $L_{agg}$ 则是把各块部分结果整合时引入的误差，取决于聚合策略本身的质量。三项一旦分离，分块的本质就清楚了：分块用增加 $L_{task}$ 去换取降低 $L_{model}$，值不值取决于哪一项主导。
 
-    - **任务噪声 $L_{task}$**：分块切断跨 chunk 依赖带来的信息损失，对全局推理任务（如角色关系推理）影响大
-    - **模型噪声 $L_{model}$**：随上下文长度增长的模型困惑/分心，对所有模型普遍存在
-    - **聚合器噪声 $L_{agg}$**：部分结果整合时的误差，取决于聚合策略质量
-    - 设计动机：分离三个噪声源使得可以针对性分析和优化
+**2. D&C 优势定理：给出严格优于全量的充分条件。** 有了分解还需要知道临界点在哪。Proposition 3.1 给出充分条件：若强模型的全量损失 $L_{strong}(T) = \omega(T)$ 随上下文超线性增长，而 D&C 的损失 $L_{D\&C}(T) = O(T)$ 只线性增长，那么必然存在阈值 $T_0$，使得当 $T > T_0$ 时 D&C 严格优于强模型直接处理。换句话说，只要模型困惑随长度增长得够快，分块迟早会赢，哪怕用的是更弱的模型。沿着主导项的不同，作者进一步把任务划成三个 regime：Trivial（$L \approx 0$，如稀疏检索，分不分都行）、Silo Effect（$L_{task} \gg L_{model}$，全局推理任务，不该分）、Brain Fog（$L_{model} \gg L_{task}$，长文档让模型犯糊涂，D&C 最优）。实践者据此先判断任务落在哪个 regime，再决定策略，不必再凭直觉试。
 
-2. **D&C 优势定理（Proposition 3.1）**:
-
-    - 核心结论：若强模型损失 $L_{strong}(T) = \omega(T)$（超线性增长），D&C 损失 $L_{D\&C}(T) = O(T)$（线性），则存在临界阈值 $T_0$ 使得 $T > T_0$ 时 D&C 严格优于强模型
-    - 三个 regime：Trivial（$L \approx 0$，稀疏检索），Silo Effect（$L_{task} \gg L_{model}$，全局推理），Brain Fog（$L_{model} \gg L_{task}$，D&C 最优）
-    - 设计动机：指导实践者判断任务属于哪个 regime，从而选择策略
-
-3. **快速 chunk size 估计**:
-
-    - 对每个候选 chunk size $c$ 只采样 $m$ 个文档评估（$m = 3-5$）
-    - 复杂度从 $O(|D| \cdot |C|)$ 降至 $O(m \cdot |C|)$
-    - 实验验证 3-5 个样本即可近似找到最优 chunk size
-    - Planner(Qwen72B)-based prompt 优化 + Worker agents + Manager agent 实现
+**3. 快速 chunk size 估计：用三五个样本逼近最优块大小。** 知道该分块之后还得选块多大，逐个 chunk size 在整个数据集上扫一遍太贵。作者发现最优 chunk size 对数据集内不同文档相当稳定，于是对每个候选 size $c$ 只采样 $m$ 个文档评估即可，把复杂度从 $O(|D| \cdot |C|)$ 降到 $O(m \cdot |C|)$。实验验证 $m = 3\text{-}5$ 就足以近似找到最优块大小，调参成本几乎可以忽略。整套流水线由一个 Planner（Qwen72B）负责优化分块与 prompt、若干 Worker agent 并行处理各块、再由 Manager agent 聚合，把上面的理论判定落成可运行的系统。
 
 ## 实验关键数据
 
@@ -135,8 +121,8 @@ tags:
 - [\[ICLR 2026\] LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding](lycheedecode_accelerating_long-context_llm_inference_via_hybrid-head_sparse_deco.md)
 - [\[NeurIPS 2025\] DISC: Dynamic Decomposition Improves LLM Inference Scaling](../../NeurIPS2025/llm_efficiency/disc_dynamic_decomposition_improves_llm_inference_scaling.md)
 - [\[ICLR 2026\] SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving](swingarena_competitive_programming_arena_for_long-context_github_issue_solving.md)
+- [\[ICML 2026\] OBCache: Optimal Brain KV Cache Pruning for Efficient Long-Context LLM Inference](../../ICML2026/llm_efficiency/obcache_optimal_brain_kv_cache_pruning_for_efficient_long-context_llm_inference.md)
 - [\[ICML 2026\] MineDraft: A Framework for Batch Parallel Speculative Decoding](../../ICML2026/llm_efficiency/minedraft_a_framework_for_batch_parallel_speculative_decoding.md)
-- [\[ACL 2025\] Squeezed Attention: Accelerating Long Context Length LLM Inference](../../ACL2025/llm_efficiency/squeezed_attention_accelerating_long_context_length_llm_inference.md)
 
 </div>
 

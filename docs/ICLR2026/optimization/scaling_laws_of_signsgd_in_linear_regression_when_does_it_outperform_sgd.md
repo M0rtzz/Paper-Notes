@@ -45,48 +45,31 @@ SignSGD 是 Adam 等自适应优化器的核心组件之一——它使用梯度
 
 ### 整体框架
 
-分析框架：
-- **模型**：线性模型 $f(\mathbf{x}) = \mathbf{w}^\top \phi(\mathbf{x})$
-- **特征**：Gaussian-sketched 随机特征，具有幂律衰减谱 $\lambda_k \propto k^{-\alpha}$（特征衰减参数 $\alpha$）
-- **目标**：幂律衰减目标 $\beta_k \propto k^{-\gamma}$（目标衰减参数 $\gamma$）
-- **优化器**：单遍（one-pass）SignSGD
-- **度量**：population risk（泛化误差）
+全文搭建在幂律随机特征（Power-Law Random Features）这一可解析的玩具模型上：用线性模型 $f(\mathbf{x}) = \mathbf{w}^\top \phi(\mathbf{x})$ 拟合 Gaussian-sketched 随机特征，特征谱按 $\lambda_k \propto k^{-\alpha}$ 衰减、目标系数按 $\beta_k \propto k^{-\gamma}$ 衰减，再用单遍（one-pass）SignSGD 优化、以 population risk 衡量泛化。这套设定的好处是 $\alpha$（特征衰减）和 $\gamma$（目标衰减）两个标量就能同时刻画现代缩放定律里的"特征有多容易学"与"目标有多复杂"，从而把 SignSGD 的整套缩放行为压缩成 $(d, T, \eta, \alpha, \gamma)$ 的解析函数，与 Paquette et al. (2024) 对 SGD 的已知结果一一对照。
 
 ### 关键设计
 
-1. **Population Risk 的闭合表达式**：作者推导出 SignSGD 训练的线性模型 population risk 作为模型大小 $d$、训练步数 $T$、学习率 $\eta$、特征衰减 $\alpha$ 和目标衰减 $\gamma$ 的函数。
+**1. Population Risk 的闭合表达式：把符号更新变成可解析的对象。**
 
-   → 核心思路：将 SignSGD 的非线性更新规则在随机特征模型下线性化分析  
-   → 设计动机：获得可解释的闭合形式，便于与 SGD 的已知结果直接比较
+SignSGD 的更新规则 $\mathbf{w}_{t+1} = \mathbf{w}_t - \eta\,\mathrm{sign}(\nabla \ell_t)$ 因为取符号而高度非线性，直接分析无从下手。作者借助随机矩阵理论与确定性等价（Deterministic Equivalents），在随机特征模型下把这条非线性递推渐近线性化，最终给出 population risk 作为模型大小 $d$、训练步数 $T$、学习率 $\eta$ 以及衰减指数 $\alpha, \gamma$ 的闭合形式。有了这个解析式，SignSGD 才能和 SGD 的已有结果摆在同一坐标系里逐项比较，后续所有结论都是从它推出来的。
 
-2. **漂移归一化效应（Drift-Normalization Effect）**：SignSGD 对梯度取符号，相当于对每个坐标的更新步长进行归一化。在期望层面，这改变了有效漂移项（bias term）的缩放行为。
+**2. 漂移归一化效应（Drift-Normalization）：符号操作如何改写偏差项。**
 
-   → 核心思路：符号操作消除了梯度幅度信息，使得沿所有方向的更新步长相等  
-   → 设计动机：这解释了为什么 SignSGD/Adam 在某些场景下收敛更快——它自动平衡了不同特征方向的学习速度
+取符号会丢掉梯度的幅度，只保留方向，等价于把每个坐标的更新步长强行归一化到同一量级。在期望层面，这让 risk 中的漂移项（bias term，由初始权重沿各特征方向收敛的快慢决定）的缩放方式发生改变：不同特征方向不再按各自梯度大小、而是按统一步长前进。这正是 SignSGD/Adam"自动平衡各方向学习速度"直觉的数学体现——它在偏差主导的区域可能反而吃亏，因为均匀步长牺牲了对大特征方向的快速收敛。
 
-3. **噪声重塑效应（Noise-Reshaping Effect）**：SignSGD 不仅改变漂移项，还改变了噪声项的结构。具体来说，符号操作将随机梯度噪声从依赖于特征缩放的非均匀分布重塑为更均匀的分布。
+**3. 噪声重塑效应（Noise-Reshaping）：SignSGD 能赢 SGD 的真正机制。**
 
-   → 核心思路：取符号后，大梯度和小梯度的噪声贡献被拉平  
-   → 设计动机：噪声重塑是 SignSGD 可以超越 SGD 的关键机制——当噪声主导时，重塑后的噪声可以具有更好的衰减行为
+符号操作不只动了漂移项，还重塑了噪声项的结构。随机梯度噪声原本依赖特征缩放、是高度非均匀的，取符号后大梯度方向与小梯度方向的噪声贡献被拉平、趋于均匀分布。关键在于：当训练处在噪声主导（而非偏差主导）的区域时，这种被重塑、更均匀的噪声拥有更好的衰减行为，于是 SignSGD 的 risk 比 SGD 下降得更快。漂移归一化和噪声重塑这两个效应在解析式里有各自独立的表达，可以分开追踪谁在哪个区域占上风。
 
-4. **计算最优缩放定律**：在最优学习率选择下，推导计算最优配置（compute-optimal scaling），即固定总计算量 $C = d \times T$ 时如何分配模型大小和训练步数。
+**4. 计算最优缩放定律：给定算力预算该怎么配 $d$ 和 $T$。**
 
-   → 核心思路：类似 Chinchilla 定律的分析，但针对 SignSGD  
-   → 设计动机：实际训练中最关心的是"给定计算预算，怎么配置最好"
+把学习率取到最优后，作者固定总计算量 $C = d \times T$，求解如何在模型大小 $d$ 与训练步数 $T$ 之间分配才能最小化 risk，得到 SignSGD 版本的计算最优（compute-optimal）斜率。这与 Chinchilla 定律的思路一致，但首次落到 SignSGD 上。比较两条计算最优曲线就能回答全文的核心问题：在噪声主导区，SignSGD 的最优斜率比 SGD 更陡（下降更快）；在偏差主导区则相近甚至更缓。
 
-5. **WSD 调度的分析**：分析了 warmup-stable-decay 学习率调度在 SignSGD 下的效果。当特征衰减快（大 $\alpha$）但目标衰减慢（小 $\gamma$）时，WSD 进一步降低噪声项并锐化计算最优斜率。
+**5. WSD 调度的分析：为什么 warmup-stable-decay 配 SignSGD 特别有效。**
 
-   → 核心思路：分段分析不同学习率阶段的贡献  
-   → 设计动机：WSD 是现代 LLM 训练的标准调度策略，理解其与 SignSGD 的交互至关重要
+WSD（warmup-stable-decay）是当下 LLM 训练的标准学习率调度，但缺乏理论支撑。作者把它分成 warmup、stable、decay 三段分别代入解析式累加各阶段贡献，发现当特征衰减快（大 $\alpha$）而目标衰减慢（小 $\gamma$）时，decay 阶段会进一步压低噪声项，从而锐化计算最优斜率。这给了 WSD 在 SignSGD 下有效性的首个解释：它本质上是借末段降学习率来收割噪声重塑带来的红利。
 
-### 损失函数 / 训练策略
-
-理论分析框架，主要工具包括：
-- 随机矩阵理论（Random Matrix Theory）
-- 确定性等价（Deterministic Equivalents）
-- 幂律渐近展开
-
-所有结果都有严格的数学证明（论文89页，包含25个图）。
+整个分析是纯理论框架，核心工具是随机矩阵理论、确定性等价与幂律渐近展开，全部结论都附严格证明（正文 89 页、25 个图覆盖参数空间各区域）。
 
 ## 实验关键数据
 

@@ -46,23 +46,27 @@ DRR 范式包含三个阶段。**离线精炼阶段**：(1) 对基础 embedding 
 
 ### 关键设计
 
-1. **解耦表示精炼（DRR）核心架构**:
+**1. 解耦表示精炼（DRR）：把昂贵的深层计算从查询路径搬到离线。**
 
-    - 功能：在保持推理效率等同于 embedding-based 模型的同时，注入深层网络级别的表达力
-    - 核心思路：refiner 网络 $R_\psi$ 直接作用在 embedding 结构上而非动态输入上，精炼公式为 $\mathcal{G}' = \pi(\mathcal{G}) + R_\psi(\pi(\mathcal{G}))$。训练时端到端联合优化所有参数。推理时 refiner 仅执行一次预计算——对空间特征网格和条件特征线分别精炼后缓存。后续所有查询操作改为 $z_{DRR} = I(x; \mathcal{G}')$，计算量与标准 embedding-based 模型相同。残差连接使 refiner 学习"增量精炼"而非从头重建，促进训练稳定性
-    - 设计动机：解决"深层网络推理成本 vs embedding 查询速度"的根本矛盾——承认深层网络的必要性但将其计算转移到离线阶段
+INR 精度与速度不可调和的症结，在于深层网络的前向传播被绑在了每一次查询上。DRR 的破局点是观察到 refiner 网络 $R_\psi$ 精炼的对象是 embedding 结构本身，而不是动态的查询输入——既然如此，这份计算只需做一次。具体精炼公式为 $\mathcal{G}' = \pi(\mathcal{G}) + R_\psi(\pi(\mathcal{G}))$，其中 $\pi$ 是非参数变换、$R_\psi$ 学习残差偏移。残差连接让 refiner 只学"增量精炼"而非从头重建结构，训练更稳。
 
-2. **多分辨率统一原则与 DRR-Net 实例化**:
+训练时所有参数端到端联合优化；推理时 refiner 被丢弃，仅对空间特征网格和条件特征线各跑一次前向、把精炼后的 $\mathcal{G}'$ 缓存下来。此后每次查询都退化为 $z_{DRR} = I(x; \mathcal{G}')$，计算量与标准 embedding-based 模型完全相同。这就是它能拿到深层网络表达力、却付 embedding 查询成本（比 FA-INR 快 27×）的根本原因。
 
-    - 功能：将多分辨率特征结构统一为 refiner 可以处理的单一输入，实现跨尺度特征融合
-    - 核心思路：**空间编码器**：对 $L_{sp}$ 个不同分辨率的 3D 特征网格，先通过结构超分辨率将每个网格上采样到相同的高分辨率，然后沿通道维度拼接得到统一网格 $\hat{\mathcal{G}}_{unified}$。可选的位置编码特征上采样将 embedding 维度从 $L_{sp} \times d_{fs}$ 提升到 $L_{sp} \times d_{fs} \times 2K_{pe}$。**条件编码器**：对 $d_c$ 个条件参数各自维护 $L_{cond}$ 条多分辨率 1D 特征线。先在每个参数内部统一（局部统一），再跨参数全局统一，形成单一 1D 表示 $\hat{\mathcal{G}}_{cond}$。精炼后拆分回 $d_c$ 条特征线，此时每条线已包含跨分辨率和跨参数的融合特征
-    - 设计动机：现代高性能 embedding 结构（如 Instant-NGP）依赖多分辨率表示，但 refiner 需要统一的输入。"先统一、再精炼、后拆分"的流程使 refiner 能在全局视角下学习跨尺度融合
+**2. 多分辨率统一：先统一、再精炼、后拆分。**
 
-3. **Variational Pairs（VP）数据增强**:
+Instant-NGP 这类高性能结构靠多分辨率特征取胜，但 refiner 需要一个统一输入才能在全局视角下做跨尺度融合，于是 DRR-Net 用"统一→精炼→拆分"的三步把它们对齐。**空间编码器**先对 $L_{sp}$ 个不同分辨率的 3D 特征网格各做结构超分辨率、上采样到相同高分辨率，再沿通道维拼成统一网格 $\hat{\mathcal{G}}_{unified}$；可选的位置编码特征上采样会把 embedding 维度从 $L_{sp} \times d_{fs}$ 抬到 $L_{sp} \times d_{fs} \times 2K_{pe}$。
 
-    - 功能：在稀疏集成训练数据下提升 INR 泛化能力，生成物理可信的扰动训练样本
-    - 核心思路：**VP-S（空间增强）**：对坐标添加截断高斯噪声 $\tilde{x} = x + \epsilon_x$，关键区别于 Variational Coordinates（VC）的是同时通过插值生成对应值 $\tilde{v} = I(\Phi_c, \tilde{x})$ 而非保持值不变。VC 隐含的分段常数假设与物理仿真的连续光滑性矛盾，VP-S 的局部光滑假设更物理合理。**VP-SC（时空条件联合增强）**：同时扰动坐标和条件参数，通过二阶段插值估计新值——先在 $K$ 个最近邻条件的场中空间插值，再用逆距离加权跨条件插值：$\tilde{v} = \sum_{k=1}^{K} w_k(\tilde{c}) v_k'$
-    - 设计动机：集成仿真数据天然稀疏（模拟成本高），数据增强对泛化至关重要。VC 的失败经验表明增强数据必须与真实分布一致，VP 通过插值生成可信值来解决这个问题
+**条件编码器**则对 $d_c$ 个条件参数各维护 $L_{cond}$ 条多分辨率 1D 特征线，先在每个参数内部局部统一、再跨参数全局统一，合成单一 1D 表示 $\hat{\mathcal{G}}_{cond}$。refiner 处理完后再拆回 $d_c$ 条特征线——此时每条线已携带跨分辨率、跨参数的融合特征。正是这个先合后分的安排，让单个 refiner 能一次性学到多尺度交互，而不必为每种分辨率单独建模。
+
+**3. Variational Pairs（VP）：在稀疏集成数据下造物理可信的增强样本。**
+
+集成仿真数据天然稀疏（每跑一次模拟都很贵），泛化全靠数据增强撑，但增强必须尊重底层场的物理性质——这正是前作 Variational Coordinates（VC）翻车的地方：VC 扰动坐标却保持值不变，隐含了分段常数假设，和仿真场的连续光滑性直接冲突。**VP-S（空间增强）**改成扰动坐标 $\tilde{x} = x + \epsilon_x$（截断高斯噪声）的同时，用插值同步生成新值 $\tilde{v} = I(\Phi_c, \tilde{x})$，以局部光滑假设取代分段常数，造出来的样本才落在真实分布里。
+
+**VP-SC（时空条件联合增强）**进一步同时扰动坐标和条件参数，用二阶段插值估值——先在 $K$ 个最近邻条件的场里做空间插值得到 $v_k'$，再用逆距离加权跨条件聚合：
+
+$$\tilde{v} = \sum_{k=1}^{K} w_k(\tilde{c}) v_k'$$
+
+实验里 VP-S 是最稳健的一档，几乎对所有模型-数据集组合都正收益，而 VC 时好时坏甚至有害——印证了"增强值必须由插值生成、与真实分布一致"这条原则。
 
 ### 损失函数 / 训练策略
 
@@ -137,11 +141,11 @@ DRR-Net 在 Nyx 上 PSNR 最高（44.69 vs FA-INR 42.79），推理速度比 FA-
 
 ## 相关论文
 
+- [\[ICLR 2026\] From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)
 - [\[ICLR 2026\] Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
 - [\[ICML 2026\] The Implicit Bias of Adam and Muon on Smooth Homogeneous Neural Networks](../../ICML2026/others/the_implicit_bias_of_adam_and_muon_on_smooth_homogeneous_neural_networks.md)
-- [\[CVPR 2025\] EVOS: Efficient Implicit Neural Training via EVOlutionary Selector](../../CVPR2025/others/evos_efficient_implicit_neural_training_via_evolutionary_selector.md)
 - [\[ICLR 2026\] Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry](fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr.md)
-- [\[ECCV 2024\] Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](../../ECCV2024/others/superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)
+- [\[CVPR 2025\] EVOS: Efficient Implicit Neural Training via EVOlutionary Selector](../../CVPR2025/others/evos_efficient_implicit_neural_training_via_evolutionary_selector.md)
 
 </div>
 

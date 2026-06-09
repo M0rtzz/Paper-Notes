@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 地球科学方向5篇论文解读
+  NeurIPS2025 地球科学方向6篇论文解读
 description: >-
-  5篇NeurIPS2025的地球科学方向论文解读，涵盖推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  6篇NeurIPS2025的地球科学方向论文解读，涵盖推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "地球科学"
@@ -14,9 +14,9 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🌍 地球科学
 
-**🧠 NeurIPS2025** · **5** 篇论文解读
+**🧠 NeurIPS2025** · **6** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/earth_science/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/earth_science/index.md) · [🤖 AAAI2026 (1)](../../AAAI2026/earth_science/index.md) · [🎞️ ECCV2024 (1)](../../ECCV2024/earth_science/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (1)](../../ICML2026/earth_science/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/earth_science/index.md) · [🤖 AAAI2026 (2)](../../AAAI2026/earth_science/index.md) · [📷 CVPR2025 (1)](../../CVPR2025/earth_science/index.md) · [🎞️ ECCV2024 (1)](../../ECCV2024/earth_science/index.md)
 
 **[A Probabilistic U-Net Approach to Downscaling Climate Simulations](a_probabilistic_unet_approach_to_downscaling_climate_simulat.md)**
 
@@ -29,6 +29,10 @@ tags:
 **[ControlFusion: A Controllable Image Fusion Framework with Language-Vision Degradation Prompts](controlfusion_a_controllable_image_fusion_framework_with_language-vision_degrada.md)**
 
 :   提出 ControlFusion，一种基于语言-视觉退化提示的可控红外-可见光图像融合框架，通过物理驱动的退化成像模型模拟复合退化，并用 prompt-modulated 网络动态恢复+融合，在真实世界和复合退化场景下全面超越 SOTA。
+
+**[Power Ensemble Aggregation for Improved Extreme Event AI Prediction](power_ensemble_aggregation_for_improved_extreme_event_ai_prediction.md)**
+
+:   提出基于幂均值的自适应集成聚合方法，通过对生成式天气预测模型的集成成员得分施加非线性聚合（幂指数$p>1$），显著提升极端高温事件的分类性能，尤其在高分位数阈值下效果更佳。
 
 **[Predicting Public Health Impacts of Electricity Usage](predicting_public_health_impacts_of_electricity_usage.md)**
 

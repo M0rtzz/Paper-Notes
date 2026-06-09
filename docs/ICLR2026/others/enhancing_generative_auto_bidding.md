@@ -30,7 +30,7 @@ tags:
 
 **核心矛盾**：想要给 AIGB 加策略优化（最大化评估器分数），但评估器在离线数据外不可靠——如果生成模型偏离离线数据太远，评估器给出的分数就不准确（OOD 问题），优化会走偏。
 
-**本文目标** 如何在保证安全性（不偏离数据太远）的前提下，让 AIGB 通过策略优化提升生成质量？
+**本文目标**：如何在保证安全性（不偏离数据太远）的前提下，让 AIGB 通过策略优化提升生成质量？
 
 **切入角度**：从理论上分析评估器偏差的上界，发现偏差可以被两个因素控制：(1) 生成模型对条件 $y$ 的 Lipschitz 连续性（控制外推敏感度），(2) 生成模型对离线数据的 KL 散度（控制模仿误差）。
 
@@ -39,32 +39,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AIGB-Pearl 由三部分组成：(1) **生成式规划器**（Planner）：基于扩散模型的条件轨迹生成器 $p_\theta(\tau|y)$，输入目标质量 $y^*$ 生成竞价轨迹；(2) **轨迹评估器**（Evaluator）：通过监督学习从离线数据学习 $\hat{y}_\phi(\tau)$ 来评估轨迹质量；(3) **逆动力学控制器**：从生成的轨迹中提取实际竞价动作。训练时，评估器先在离线数据上训练好，然后规划器通过最大化评估器分数来迭代改进。
+AIGB-Pearl 要解决的问题是：让生成式竞价模型不再只会模仿离线数据，而是能在安全前提下主动突破数据的性能天花板。它把这件事拆成"评估—优化"两个阶段串起来。先用一个**轨迹评估器**（Evaluator）从离线数据里学出一个打分函数 $\hat{y}_\phi(\tau)$，给任意一条竞价轨迹估出它的回报；再让**生成式规划器**（Planner，一个条件扩散模型 $p_\theta(\tau|y)$）以"最大化评估器分数"为目标迭代改进自己生成的轨迹，但同时被 KL 和 Lipschitz 双重约束拴住、不让它跑到数据覆盖不到的地方。推理时给规划器设一个高质量目标条件 $y^*$ 生成轨迹，再由一个**逆动力学控制器**从轨迹里反解出每一步真正要出的竞价动作。整条 pipeline 正好对应 LLM 里的 SFT→RLHF：评估器是奖励模型，约束优化是带 KL 惩罚的策略改进。
 
 ### 关键设计
 
-1. **轨迹评估器（Trajectory Evaluator）**:
+**1. 轨迹评估器：给只会模仿的 AIGB 补上一个能打分的反馈信号。**
 
-    - 功能：学习一个函数 $\hat{y}_\phi(\tau)$ 来预测轨迹的累计回报（GMV/Budget）
-    - 核心思路：在离线数据集 $\mathcal{D}$ 上做监督回归 $\min_\phi \mathbb{E}_{\tau \sim \mathcal{D}}[(\hat{y}_\phi(\tau) - y(\tau))^2]$，同时施加 $\sqrt{T}R_m$-Lipschitz 正则化以继承真实轨迹质量函数的 Lipschitz 性质
-    - 设计动机：AIGB 缺少反馈信号，评估器填补了这个空白。Lipschitz 正则化确保评估器在数据外的预测不会剧烈跳变
+原始 AIGB 是纯条件行为克隆，没有任何机制告诉模型"这条轨迹好不好"，所以也无从改进。评估器就是来填这个空白的——它在离线数据集 $\mathcal{D}$ 上做一个监督回归，学习用轨迹预测它的累计回报（GMV/Budget）：
 
-2. **KL-Lipschitz 约束的分数最大化**:
+$$\min_\phi \mathbb{E}_{\tau \sim \mathcal{D}}\big[(\hat{y}_\phi(\tau) - y(\tau))^2\big]$$
 
-    - 功能：在最大化评估器分数的同时约束规划器的行为，防止 OOD 崩塌
-    - 核心思路：优化目标为 $\max_\theta \mathbb{E}_{\tau \sim p_\theta(\tau|y^*)}[\hat{y}_\phi(\tau)]$，受两个约束：(a) KL 约束 $\mathbb{E}_{y}[D_{KL}(p_D(\tau|y) \| p_\theta(\tau|y))] \leq \delta_K$ 保证规划器不偏离离线数据太远；(b) Lipschitz 约束 $\text{Lip}_{W_1}(p_\theta(\tau|y)) \leq L_p$ 控制规划器对条件 $y$ 的敏感度
-    - 设计动机：Theorem 2 证明了评估器偏差的上界可以被分解为训练误差 $\delta_D$、KL 散度项（模仿误差）和 Wasserstein 距离项（生成敏感度），两个约束分别控制后两项
+光会拟合还不够，关键是评估器一旦被规划器拿去当优化目标，规划器就会想方设法把轨迹推到能骗高分的地方，而这些地方往往在数据之外。为此评估器额外施加 $\sqrt{T}R_m$-Lipschitz 正则化，让它继承真实轨迹质量函数本身的 Lipschitz 性质——这样它在离线数据外的预测不会剧烈跳变，给后续的安全外推留出可信的打分空间。
 
-3. **同步耦合技术（Synchronous Coupling）**:
+**2. KL-Lipschitz 约束的分数最大化：让规划器在突破天花板的同时不脱离数据。**
 
-    - 功能：在实际训练中满足规划器的 Lipschitz 约束
-    - 核心思路：对两个不同条件 $y_1, y_2$ 生成轨迹时使用相同的高斯噪声序列 $\{\eta_1, ..., \eta_T\}$，然后通过惩罚 $\hat{W}_1(y_1, y_2; \theta) / |y_1 - y_2| \leq L_p$ 来约束 Lipschitz 常数
-    - 设计动机：直接计算分布间的 Wasserstein 距离不可行，同步耦合将其转化为可计算的样本级距离
+有了评估器，规划器的优化目标很直接，就是最大化生成轨迹拿到的评估分数：
+
+$$\max_\theta \mathbb{E}_{\tau \sim p_\theta(\tau|y^*)}\big[\hat{y}_\phi(\tau)\big]$$
+
+但前面说过，评估器在离线数据外不可靠，无约束地最大化分数会让规划器钻评估器的空子、生成 OOD 的病态轨迹。本文的做法是给这个最大化套两个约束：(a) KL 约束 $\mathbb{E}_{y}[D_{KL}(p_D(\tau|y) \| p_\theta(\tau|y))] \leq \delta_K$，限制规划器分布不要偏离离线数据分布太远，控制的是模仿误差；(b) Lipschitz 约束 $\text{Lip}_{W_1}(p_\theta(\tau|y)) \leq L_p$，限制规划器输出对条件 $y$ 的敏感度，控制的是外推时的生成波动。这两个约束不是拍脑袋加的——Theorem 2 把评估器偏差的上界严格分解成了三项：评估器训练误差 $\delta_D$、KL 散度项（模仿误差）和 Wasserstein 距离项（生成敏感度），而 KL 约束和 Lipschitz 约束恰好分别压住后两项，于是整体偏差可控，分数最大化才有理论保证。
+
+**3. 同步耦合技术：把不可算的分布级 Lipschitz 约束变成可算的样本级距离。**
+
+Lipschitz 约束写出来好看，落到训练里却是个难题——它要求衡量两个条件下生成分布之间的 Wasserstein 距离，而分布间的 $W_1$ 距离没法直接计算。同步耦合（Synchronous Coupling）的技巧是：对两个不同条件 $y_1, y_2$ 生成轨迹时，强制它们共用同一串高斯噪声序列 $\{\eta_1, ..., \eta_T\}$。噪声一旦对齐，两条轨迹的差异就只来自条件本身，分布间距离被收紧成一对样本之间的距离，于是 Lipschitz 常数可以用样本级惩罚来约束：
+
+$$\hat{W}_1(y_1, y_2; \theta) / |y_1 - y_2| \leq L_p$$
+
+这样原本算不动的约束就变成训练里能直接优化的一项。
 
 ### 训练策略
-- 两阶段训练：先训练评估器（监督学习），再训练规划器（约束优化）
-- 规划器的约束优化通过拉格朗日乘子法转化为无约束问题
-- 固定扩散模型的方差 $\sigma_\theta$ 为常数，简化 Lipschitz 惩罚的计算
+整体是两阶段：先用监督学习把评估器训好，再训规划器做约束优化。规划器这一步的两个约束通过拉格朗日乘子法转成无约束问题来优化；同时把扩散模型的方差 $\sigma_\theta$ 固定为常数，进一步简化 Lipschitz 惩罚的计算。
 
 ## 实验关键数据
 
@@ -131,10 +135,10 @@ AIGB-Pearl 由三部分组成：(1) **生成式规划器**（Planner）：基于
 ## 相关论文
 
 - [\[ECCV 2024\] Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search](../../ECCV2024/others/auto-gas_automated_proxy_discovery_for_training-free_generative_architecture_sea.md)
-- [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
 - [\[AAAI 2026\] Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States](../../AAAI2026/others/enhancing_control_policy_smoothness_by_aligning_actions_with_predictions_from_pr.md)
+- [\[ICML 2025\] Multiple-Policy Evaluation via Density Estimation](../../ICML2025/others/multiple-policy_evaluation_via_density_estimation.md)
 - [\[AAAI 2026\] Expressive Temporal Specifications for Reward Monitoring](../../AAAI2026/others/expressive_temporal_specifications_for_reward_monitoring.md)
-- [\[ICLR 2026\] Chart Deep Research in LVLMs via Parallel Relative Policy Optimization](chart_deep_research_in_lvlms_via_parallel_relative_policy_optimization.md)
+- [\[ICLR 2026\] Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training](evaluating_gflownet_from_partial_episodes_for_stable_and_flexible_policy-based_t.md)
 
 </div>
 

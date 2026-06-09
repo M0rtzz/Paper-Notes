@@ -43,30 +43,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：预训练ViT + 图像  
-中间：跨层概念原型 → 概念区域发现（CRD）→ 区域内特征聚合（IFA）→ 跨层prompt融合  
-输出：可解释的prompt嵌入 → 分类头 → 各概念的条件类别得分 → 平均得到最终预测
+
+IVPT 想解决的问题很具体：VPT 在 Transformer 各层插入的 prompt 是一堆不受约束的抽象向量，没法告诉人它到底"看"了图像的哪一块。IVPT 的思路是冻结预训练 ViT，在每一层用一组跨层概念原型把 prompt 重新"接地"——先由概念原型在图像上发现各自负责的语义区域（CRD），再把区域内的 patch 特征聚合成对应的 prompt 嵌入（IFA），并把浅层细粒度 prompt 逐步融合成深层粗粒度 prompt。最终每个概念给出一个条件类别得分，取平均作为预测，于是每条 prompt 都对应到一块可视化的语义区域，解释性内建在 prompt 的构造过程里而非事后补打。
 
 ### 关键设计
 
-1. **概念区域发现（Concept Region Discovery, CRD）**
+**1. 概念区域发现（Concept Region Discovery, CRD）：把抽象 prompt 锚定到图像里的一块语义区域。**
 
-    - 功能：将每个概念原型 $\mathbf{q}_k$ 关联到图像中的特定语义区域
-    - 核心思路：计算原型与patch嵌入之间的负欧氏距离注意力，经Softmax归一化后加上可学习空间偏置，得到每个原型的概念注意力图 $\mathbf{A}$。每个patch被分配给注意力最高的概念，形成区域图 $\mathbf{R}$
-    - 关键公式：$a_{k,ij} = \frac{\exp(-\|\mathbf{e}_{ij} - \mathbf{q}_k\|^2)}{\sum_l \exp(-\|\mathbf{e}_{ij} - \mathbf{q}_l\|^2)} + b_{k,ij}$
-    - 设计动机：类别无关原型能捕获跨类别共享的语义概念（如"鸟翅膀"、"车轮"），比类别特定原型更能揭示模型对通用视觉概念的学习
+VPT 原本的 prompt 是黑盒向量，无从解释。CRD 让每个概念原型 $\mathbf{q}_k$ 去图像上"圈地"：计算原型与各 patch 嵌入之间的负欧氏距离注意力，经 Softmax 归一化后再加一个可学习空间偏置 $b_{k,ij}$，得到该原型的概念注意力图 $\mathbf{A}$：
 
-2. **区域内特征聚合（Intra-region Feature Aggregation, IFA）**
+$$a_{k,ij} = \frac{\exp(-\|\mathbf{e}_{ij} - \mathbf{q}_k\|^2)}{\sum_l \exp(-\|\mathbf{e}_{ij} - \mathbf{q}_l\|^2)} + b_{k,ij}$$
 
-    - 功能：将概念区域内的patch特征聚合为该概念对应的prompt嵌入
-    - 核心思路：$\mathbf{p}_k = \frac{\sum_{i,j} \mathbf{z}_{k,ij}}{\sum_{i,j} r_{k,ij}}$，即用区域概率加权的patch特征均值作为prompt
-    - 设计动机：prompt不再是任意向量，而是某个语义区域的"代表"，直接可解释
+每个 patch 被分配给注意力最高的那个概念，从而拼出区域图 $\mathbf{R}$。这里的原型是**类别无关**的，所以它捕获的是跨类别共享的语义概念（如不同鸟类的"翅膀"、不同车的"车轮"），比类别特定原型更能揭示模型对通用视觉概念的学习，也让同一个概念区域在不同图像间可比。
 
-3. **跨层概念原型与融合**
+**2. 区域内特征聚合（Intra-region Feature Aggregation, IFA）：让 prompt 成为某块区域的"代表"而非任意向量。**
 
-    - 功能：在不同Transformer层使用不同数量的原型，浅层多（17个）、深层少（8个），并将浅层细粒度prompt融合为深层粗粒度prompt
-    - 核心思路：通过可学习分组层（线性层+Gumbel-Softmax）将细粒度prompt分组，组内取均值后过MLP得到深层prompt。引入概念区域一致性损失 $\mathcal{L}_{con}$（KL散度）确保细粒度区域的组合与粗粒度区域对齐
-    - 设计动机：模拟人类视觉认知的"局部→全局"推理过程，浅层捕获纹理/颜色等低级属性，深层捕获部件/整体等高级语义
+有了区域图后，IFA 把落在该概念区域里的 patch 特征聚合起来，作为这个概念对应的 prompt 嵌入——用区域概率加权的 patch 特征均值：
+
+$$\mathbf{p}_k = \frac{\sum_{i,j} \mathbf{z}_{k,ij}}{\sum_{i,j} r_{k,ij}}$$
+
+这样得到的 prompt 不再是优化器自由学出的任意向量，而是图像中某块语义区域的特征汇总，天然可解释；后续实验也显示这种区域条件化的特征比全局特征更具判别力。
+
+**3. 跨层概念原型与细→粗融合：模拟人类从局部到全局的视觉推理。**
+
+现有原型方法只解释最后一层，而 VPT 的 prompt 分布在多层。IVPT 在不同 Transformer 层放不同数量的原型——浅层多（如 17 个）、深层少（如 8 个），浅层用更多原型抓纹理、颜色这类低级、细粒度属性，深层用更少原型抓部件、整体这类高级语义。层与层之间通过一个可学习分组层（线性层 + Gumbel-Softmax）把细粒度 prompt 分组，组内取均值再过 MLP 得到深层 prompt。为保证"局部组合"确实对应"全局区域"，引入概念区域一致性损失 $\mathcal{L}_{con}$（KL 散度），约束细粒度区域的组合与粗粒度区域对齐。这条细→粗的路径正是消融里增益最大的部分。
 
 ### 损失函数 / 训练策略
 - 总损失：$\mathcal{L} = \lambda_{cls}\mathcal{L}_{cls} + \lambda_{ps}\mathcal{L}_{ps} + \lambda_{con}\mathcal{L}_{con}$
@@ -134,11 +134,11 @@ IVPT在所有三个维度（可解释性+准确率）上均为最优。
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Understanding Prompt Tuning and In-Context Learning via Meta-Learning](../../NeurIPS2025/interpretability/understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)
 - [\[ICLR 2026\] Concepts' Information Bottleneck Models](concepts_information_bottleneck_models.md)
 - [\[ACL 2026\] Evian: Towards Explainable Visual Instruction-tuning Data Auditing](../../ACL2026/interpretability/evian_towards_explainable_visual_instruction-tuning_data_auditing.md)
 - [\[ICLR 2026\] Cross-Modal Redundancy and the Geometry of Vision-Language Embeddings](cross-modal_redundancy_and_the_geometry_of_vision-language_embeddings.md)
 - [\[ICLR 2026\] Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
-- [\[ICML 2026\] Finding the Correct Visual Evidence Without Forgetting: Mitigating Hallucination in LVLMs via Inter-Layer Visual Attention Discrepancy](../../ICML2026/interpretability/finding_the_correct_visual_evidence_without_forgetting_mitigating_hallucination_.md)
 
 </div>
 

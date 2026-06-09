@@ -33,27 +33,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-rCM = sCM（前向散度一致性蒸馏）+ DMD（反向散度score蒸馏）+ 基础设施优化。训练交替优化学生模型（rCM loss）和 fake score 网络（flow matching loss）。
+rCM 把连续时间一致性蒸馏（sCM，最小化前向 KL）和分布匹配蒸馏（DMD，最小化反向 KL）拼成一个目标，前者负责覆盖全部模态保多样性、后者负责锐化细节保质量，再配一套让 JVP 能在 14B 模型上跑起来的基础设施。训练时交替更新两套网络：学生用组合后的 rCM 目标更新，一个 fake score 网络则用 flow matching loss 在学生当前生成的数据上跟训，为 DMD 项提供反向 score 估计。
 
 ### 关键设计
 
-1. **FlashAttention-2 JVP 内核**: 开发 Triton 内核，将 JVP 集成到 FlashAttention-2 前向传播中，支持自注意力和交叉注意力，兼容 FSDP 和 Context Parallelism，使 sCM 训练可扩展到 10B+ 参数模型。
+**1. FlashAttention-2 的 JVP 内核：让连续时间一致性能在大模型上算梯度。**
 
-2. **Score 正则化**: 将 DMD loss 作为长跳正则器补充 sCM。最终目标：
-$$\mathcal{L}_{\text{rCM}}(\theta) = \mathcal{L}_{\text{sCM}}(\theta) + \lambda \mathcal{L}_{\text{DMD}}(\theta)$$
-   $\lambda=0.01$ 跨模型和任务通用。sCM 提供 mode-covering（高多样性），DMD 提供 mode-seeking（高质量）。
+sCM 的训练依赖雅可比向量积（JVP）来估计 teacher 沿概率流 ODE 的切向，但现成的 FlashAttention 只暴露前向输出、不返回 JVP，导致 sCM 在 10B 级模型上根本无法接入主流注意力实现与并行训练。作者用 Triton 写了一个把 JVP 计算直接嵌进 FlashAttention-2 前向传播的内核，自注意力和交叉注意力都覆盖，并且与 FSDP、Context Parallelism 兼容，从而把 JVP-based 的 sCM 训练首次撑到了 14B 参数规模——这是整套方法能落地的工程前提。
 
-3. **稳定时间导数计算**: 针对大模型 JVP 训练不稳定问题，提出两种方案：
+**2. Score 正则化：用反向 KL 的 DMD 项给前向 KL 的 sCM 补质量。**
 
-    - 半连续时间：空间部分用 JVP，时间部分用有限差分近似（$\Delta t = 10^{-4}$）
-    - 高精度时间：对时间嵌入层强制 FP32 精度
+纯 sCM 的前向散度天然 mode-covering，叠加少步生成的误差累积后，在文字渲染等精细场景会出现明显质量缺陷。作者把 DMD loss 当作一个「长跳」正则器加到 sCM 上，得到组合目标 $\mathcal{L}_{\text{rCM}}(\theta) = \mathcal{L}_{\text{sCM}}(\theta) + \lambda \mathcal{L}_{\text{DMD}}(\theta)$。其中 sCM 提供 mode-covering 的多样性，DMD 的反向 KL 则 mode-seeking 地把分布往高密度区收以提升质量，两者方向互补。权重 $\lambda=0.01$ 在所有模型和任务上通用，无需逐任务调参，也省去了 GAN 式蒸馏的对抗调优。
 
-4. **Rollout 策略**: 学生可做任意步采样，随机选择步数 $N \in [1, N_{\max}]$，仅对最后一步反传 DMD loss，使用随机时间步确保覆盖整个时间范围。
+**3. 稳定的时间导数计算：压住大模型 JVP 的数值不稳定。**
+
+大模型上直接算 JVP 的时间分量容易数值发散，作者给出两条可叠加的稳定化方案。一是半连续时间：空间部分仍走精确 JVP，时间方向改用步长 $\Delta t = 10^{-4}$ 的有限差分近似，避开最不稳定的那一项；二是高精度时间：对时间嵌入层强制 FP32 精度，防止低精度下时间导数被舍入误差吞掉。两招让 14B 规模下的 sCM 训练得以收敛。
+
+**4. Rollout 多步采样：让学生既能一步也能多步，并稳定反传 DMD。**
+
+学生被训练成支持任意步采样，训练时随机抽步数 $N \in [1, N_{\max}]$ 做 rollout，只对最后一步反传 DMD loss，并用随机时间步保证整个 $[0,1]$ 时间范围都被覆盖到。这样单步与多步推理共享同一组参数，推理时可按质量/速度权衡自由选 NFE，而只回传末步梯度也避免了多步展开带来的显存和不稳定。
 
 ### 损失函数 / 训练策略
-- sCM loss（切线归一化）：$\mathcal{L}_{\text{sCM}} = \mathbb{E}\left[\left\|\mathbf{F}_\theta - \mathbf{F}_{\theta^-} - \frac{\mathbf{g}}{\|\mathbf{g}\|_2^2 + c}\right\|_2^2\right]$
-- DMD loss：基于 fake score 和 teacher score 的差异引导学生
-- Fake score 网络用 flow matching loss 在学生生成的数据上训练
+sCM 项采用切线归一化形式 $\mathcal{L}_{\text{sCM}} = \mathbb{E}\left[\left\|\mathbf{F}_\theta - \mathbf{F}_{\theta^-} - \frac{\mathbf{g}}{\|\mathbf{g}\|_2^2 + c}\right\|_2^2\right]$，其中 $\mathbf{F}_{\theta^-}$ 是 EMA 目标网络、$\mathbf{g}$ 为切向、$c$ 为数值稳定常数。DMD 项依据 fake score 网络与 teacher score 之间的差异把学生分布往真实分布拉，而 fake score 网络本身用 flow matching loss 在学生当前生成的数据上交替训练，二者互为依赖、轮流更新。
 
 ## 实验关键数据
 

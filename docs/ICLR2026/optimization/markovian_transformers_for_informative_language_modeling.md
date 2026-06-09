@@ -43,44 +43,27 @@ tags:
 
 ## 方法详解
 
-### 1. 马尔可夫语言模型(MLM)形式化
+### 整体框架
 
-定义 $M = (\mathcal{O}, \mathcal{S}, \pi, u, s_1)$，其中：
-- $\mathcal{O}$：观测空间（问题和答案）
-- $\mathcal{S}$：状态空间（CoT推理文本）
-- $\pi: \mathcal{S} \to \Delta(\mathcal{O})$：策略——**仅从状态预测下一个观测**
-- $u: \mathcal{O} \times \mathcal{S} \to \Delta(\mathcal{S})$：状态更新函数
-- $s_1 \in \mathcal{S}$：初始状态
+把推理过程建模成一条 $A \to B \to C$ 的马尔可夫链：问题 $A$ 先被压缩成一段 CoT 状态 $B$，模型再**只看 $B$、看不到原始问题**地预测答案 $C$。这等价于在问题和答案之间插入一个自编码器式的窄潜层——所有信息必须流经 CoT 这个瓶颈，再用 GRPO 风格的策略梯度训练让这段 CoT 对预测答案尽可能有信息量。
 
-关键约束：$\pi$ 在预测答案 $o_2$ 时**只能看到CoT状态 $s_2$**，看不到原始问题 $o_1$，强制 $A \to B \to C$ 的马尔可夫链结构。
+### 关键设计
 
-### 2. 信息量目标函数
+**1. 马尔可夫语言模型形式化：从架构上切断问题到答案的直连。**
 
-奖励定义为训练模型相对于冻结基线的对数概率提升：
+整个框架定义为 $M = (\mathcal{O}, \mathcal{S}, \pi, u, s_1)$，其中观测空间 $\mathcal{O}$ 装的是问题和答案，状态空间 $\mathcal{S}$ 装的是 CoT 推理文本，策略 $\pi: \mathcal{S} \to \Delta(\mathcal{O})$ **只从状态预测下一个观测**，状态更新函数 $u: \mathcal{O} \times \mathcal{S} \to \Delta(\mathcal{S})$ 负责把新观测吸收进状态，$s_1$ 为初始状态。核心约束在于：$\pi$ 预测答案 $o_2$ 时只能读到 CoT 状态 $s_2$，原始问题 $o_1$ 被从注意力通路里彻底移除。这正是它区别于 STaR、DeepSeek-R1 等方法的地方——后者预测答案时仍能看到完整问题，于是存在"绕过 CoT 直接回答"的逃逸口；这里的瓶颈是结构性的硬约束而非损失里的软正则，破坏 CoT 必然降低答案质量。
 
-$$R_\theta(\tau) = \sum_{t=1}^{T}\left[\ln\pi_\theta(x_t|s_t) - \ln\pi'(x_t|s'_t)\right]$$
+**2. 信息量目标：让 CoT 相对冻结基线"多带信息"。**
 
-目标函数为：$J(\theta) = \mathbb{E}_{\tau \sim P, u_\theta, u'}[R_\theta(\tau)]$
+CoT 是否承重，要用它对预测答案的边际贡献来衡量。奖励定义为训练模型相对冻结基线的对数概率提升 $R_\theta(\tau) = \sum_{t=1}^{T}\left[\ln\pi_\theta(x_t|s_t) - \ln\pi'(x_t|s'_t)\right]$，对应目标 $J(\theta) = \mathbb{E}_{\tau \sim P, u_\theta, u'}[R_\theta(\tau)]$。最大化 $J(\theta)$ 等于逼着状态更新函数 $u_\theta$ 生成的 CoT 在预测未来观测时信息量充分。从编码理论看这有两条腿：$-\log\pi_\theta(C|B)$ 是给定 CoT 编码答案的代价，$-\log u'(B|A)$ 是 CoT 本身的先验编码代价，训练实际是在找一段让两条腿都便宜的短文本状态 $B$，对应最小描述长度(MDL)的直觉。复杂度上也站得住脚：CoT 多给了 $|B|$ 次前向传播来做推理，模型靠读问题的 $|A|$ 次前向传播解不了难题，就不得不真的用 CoT。
 
-最大化 $J(\theta)$ 确保状态更新函数 $u_\theta$ 生成的CoT对于预测未来观测是信息量充分的（相对于基线）。
+**3. Actor-Reward 梯度：把奖励对自身参数的依赖也用上。**
 
-### 3. GRPO风格策略梯度训练
+这是本文相对标准 GRPO 的关键改动。由于同一个 Transformer 同时定义了采样分布 $u_\theta$ 和奖励 $R_\theta$，对 $J(\theta)$ 求导时链式法则给出两项：一项是常规的策略梯度（奖励当成常数对采样概率求导），另一项是奖励本身对参数的直接梯度 $\nabla_\theta R_\theta(\tau)$。常规 RL 只用前者，本文两项都用——消融显示去掉直接奖励梯度后多个任务掉点（如 MMLU 从 55.5% 降到 46.6%），说明这一项确实在拉高 CoT 的信息量。
 
-损失函数包含三项：
+**4. 批内标准化 + KL 正则：去掉 critic 并堵住隐写术。**
 
-$$\mathcal{L} = \mathcal{L}_{PG} + \mathcal{L}_{AR} + \mathcal{L}_{KL}$$
-
-- $\mathcal{L}_{PG} = -\ln u_\theta(\text{CoT}|q, \text{CoT}_{init}) \cdot A^{detach}$（策略梯度项）
-- $\mathcal{L}_{AR} = -A$（actor-reward梯度项——本文关键创新）
-- $\mathcal{L}_{KL} = \beta_{KL} D_{KL}(u_\theta \| u')$，$\beta_{KL}=0.1$（KL正则阻止隐写术）
-
-### 关键设计选择
-
-- **Actor-Reward梯度**：由于同一个Transformer定义了采样分布 $u_\theta$ 和奖励 $R_\theta$，链式法则给出两项梯度——标准策略梯度 + 直接奖励梯度 $\nabla_\theta R_\theta(\tau)$，本文同时使用两项。
-- **并行采样**：每批含 $B$ 份相同(q,a)对→模型生成 $B$ 条多样CoT→GRPO风格批内标准化优势，消除critic模型需求。
-- **冻结基线CoT′**：未训练模型生成参考CoT′提供局部基线→先做局部减法再做批内标准化。
-- **编码理论解释**：$-\log\pi_\theta(C|B)$ 是给定CoT编码答案的编码代价；$-\log u'(B|A)$ 是CoT的先验编码代价→训练寻找使两条腿都容易的短文本状态 $B$。
-- **时间有限复杂度论证**：CoT提供 $|B|$ 次额外前向传播来完成推理——模型在读问题的 $|A|$ 次前向传播中无法可靠解决难题→必须利用CoT做推理。
+训练损失拼成三项 $\mathcal{L} = \mathcal{L}_{PG} + \mathcal{L}_{AR} + \mathcal{L}_{KL}$：策略梯度项 $\mathcal{L}_{PG} = -\ln u_\theta(\text{CoT}|q, \text{CoT}_{init}) \cdot A^{detach}$、actor-reward 项 $\mathcal{L}_{AR} = -A$、以及 KL 正则 $\mathcal{L}_{KL} = \beta_{KL} D_{KL}(u_\theta \| u')$（$\beta_{KL}=0.1$）。优势 $A$ 的算法走 GRPO 路线：每批塞 $B$ 份相同的 $(q,a)$ 对，模型生成 $B$ 条多样 CoT，先用未训练模型产的参考 CoT′ 做一次局部减法当基线，再在批内做标准化，于是完全不需要单独的 critic 网络。KL 项把 $u_\theta$ 拽住别离冻结模型太远，作用是阻止模型把答案藏进人类不可读的编码里——配合后文的跨模型迁移实验，从两侧实证排除隐写术。
 
 ## 实验关键数据
 

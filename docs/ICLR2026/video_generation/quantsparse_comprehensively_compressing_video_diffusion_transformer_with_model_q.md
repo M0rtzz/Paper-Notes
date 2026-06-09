@@ -41,45 +41,17 @@ tags:
 
 ## 方法详解
 
-### 框架概览
+### 整体框架
 
-QuantSparse 包含两个核心模块：**校准阶段**的多尺度显著注意力蒸馏（MSAD）和**推理阶段**的二阶稀疏注意力重参数化（SSAR）。
+QuantSparse 把量化与稀疏化拧成一条压缩流水线：**校准阶段**用多尺度显著注意力蒸馏（MSAD）把量化后的注意力分布拉回 FP 模型，**推理阶段**用二阶稀疏注意力重参数化（SSAR）补偿稀疏化丢掉的上下文。两个模块之所以这样分工，是因为论文先把"放大注意力偏移"这个失效机制刻画清楚，再针对它的量化项和稀疏项分别下药。
 
-### 问题形式化：放大注意力偏移
+### 关键设计
 
-量化向 QK 点积注入噪声 $\epsilon$，与稀疏掩码 $\mathbf{M}$ 的交互产生复合偏移：
+**1. 放大注意力偏移的形式化：找出朴素结合失效的根因。** 直接把量化和稀疏化叠在一起反而比单用更差，QuantSparse 把原因归结到一个交叉项上。量化会向 QK 点积注入噪声 $\epsilon$，稀疏掩码 $\mathbf{M}$ 又移除了低幅值权重，二者交互产生的复合偏移可以写成 $\Delta_{\text{total}} = \Delta_{\text{sparse}} + \Delta_{\text{quant}} + O(\|\epsilon\|_F \cdot \|\mathbf{M}\|_0)$。前两项是各自单独使用就有的误差，真正棘手的是第三项交叉项——稀疏化把注意力质量集中到剩下的少数权重上，量化噪声对这些权重的扰动随之被成比例放大，两种误差相互强化，细粒度时空依赖首先崩坏。把这个项单独拎出来，后面两个模块就有了明确的攻击目标：一个压量化噪声 $\epsilon$，一个补稀疏掩码 $\mathbf{M}$ 带来的信息损失。
 
-$$\Delta_{\text{total}} = \Delta_{\text{sparse}} + \Delta_{\text{quant}} + O(\|\epsilon\|_F \cdot \|\mathbf{M}\|_0)$$
+**2. 多尺度显著注意力蒸馏 MSAD：在 $O(L^2)$ 内存约束下对齐量化注意力。** 想用蒸馏把量化注意力拉回 FP 分布，最直接的办法是对齐整张注意力矩阵，但 HunyuanVideo 的序列长度 $L > 10^4$，全矩阵的 $O(L^2)$ 存储根本放不下。MSAD 用全局加局部两个尺度绕开这个瓶颈。全局尺度利用视频的空间局部性，对 Q、K 做步长 $s$ 的平均池化降采样，在 $\tilde{L} = L/s^2$ 的低分辨率上算蒸馏损失 $\mathcal{L}_{\text{global}} = \text{MSE}(\mathbf{A}_{\text{global}}^{\text{FP}} \| \mathbf{A}_{\text{global}}^{\text{quant}})$，复杂度直接降到全注意力的 $1/s^2$，保住了粗粒度的全局结构。局部尺度则针对注意力分布的高度偏斜——不到 10% 的 token 占据了绝大部分注意力质量，于是只挑 top-$k$ 显著查询在全分辨率上做 $\mathcal{L}_{\text{local}} = \text{MSE}(\mathbf{A}_{\text{local}}^{\text{FP}} \| \mathbf{A}_{\text{local}}^{\text{quant}})$，以极低成本把校准火力集中到最影响输出的区域。两者与量化损失一起联合优化 $\mathcal{L}_{\text{distill}} = \mathcal{L}_{\text{quant}} + \lambda_{\text{global}} \mathcal{L}_{\text{global}} + \lambda_{\text{local}} \mathcal{L}_{\text{local}}$，粗看全貌、细看热点，正好压住偏移公式里的量化噪声项。
 
-第三项交叉项是朴素结合失效的根因——稀疏化的信息损失与量化噪声相互强化。
-
-### 模块一：Multi-Scale Salient Attention Distillation（MSAD）
-
-MSAD 通过全局+局部双尺度蒸馏，以内存高效的方式对齐量化后的注意力分布：
-
-**全局引导**：利用视频数据的空间局部性，对 Q、K 做平均池化降采样（步长 $s$），在低分辨率 $\tilde{L} = L/s^2$ 上计算全局注意力蒸馏损失，复杂度仅为全注意力的 $1/s^2$：
-
-$$\mathcal{L}_{\text{global}} = \text{MSE}(\mathbf{A}_{\text{global}}^{\text{FP}} \| \mathbf{A}_{\text{global}}^{\text{quant}})$$
-
-**局部引导**：发现注意力分布高度偏斜——不到 10% 的 token 占据了绝大部分注意力质量。只选取 top-$k$ 显著查询在全分辨率下做局部蒸馏，以极低成本聚焦高影响区域：
-
-$$\mathcal{L}_{\text{local}} = \text{MSE}(\mathbf{A}_{\text{local}}^{\text{FP}} \| \mathbf{A}_{\text{local}}^{\text{quant}})$$
-
-**联合优化**：$\mathcal{L}_{\text{distill}} = \mathcal{L}_{\text{quant}} + \lambda_{\text{global}} \mathcal{L}_{\text{global}} + \lambda_{\text{local}} \mathcal{L}_{\text{local}}$
-
-### 模块二：Second-Order Sparse Attention Reparameterization（SSAR）
-
-SSAR 解决稀疏注意力在推理时的信息丢失问题：
-
-**一阶残差不稳定**：定义一阶残差 $\Delta^{(t)} = \mathbf{A}_{\text{full}}^{(t)} - \mathbf{A}_{\text{sparse}}^{(t)}$，先前工作假设其跨时间步不变。但量化噪声 $\epsilon^{(t)}$ 随时间步变化，打破了该假设。
-
-**二阶残差时间稳定**：关键发现是二阶残差 $\hat{\Delta}^{(t)} = \Delta^{(t)} - \Delta^{(t-1)}$ 的时间变化远小于一阶残差，因为相邻时间步的量化噪声分布相近，差分后近似平稳。
-
-**SVD 投影降噪**：对二阶残差做 SVD 分解，投影到前 $r$ 个主成分上，进一步抑制时间方差：
-
-$$\tilde{\Delta}_{\text{quant}} = \mathbf{S}_{:,:r} \mathbf{U}_{:r,:r} \mathbf{V}_{:,:r}^\top$$
-
-最终推理时以固定间隔（每 5 步）刷新缓存，用二阶修正项高效近似全注意力输出，无额外存储负担。
+**3. 二阶稀疏注意力重参数化 SSAR：用时间稳定的二阶残差补回稀疏丢失。** 推理时稀疏掩码会丢掉一部分上下文，缓存类方法的常规思路是缓存一阶残差 $\Delta^{(t)} = \mathbf{A}_{\text{full}}^{(t)} - \mathbf{A}_{\text{sparse}}^{(t)}$ 并假设它跨时间步几乎不变。但在量化条件下这个假设站不住：量化噪声 $\epsilon^{(t)}$ 本身随时间步波动，把一阶残差搅得不稳定，复用旧缓存就会带进过时的误差。SSAR 的关键观察是改看二阶残差 $\hat{\Delta}^{(t)} = \Delta^{(t)} - \Delta^{(t-1)}$——相邻时间步的量化噪声分布相近，做一次差分后噪声大半抵消，时间变化远小于一阶残差，于是又重新变得可缓存。在此之上再对二阶残差做 SVD，投影到前 $r$ 个主成分 $\tilde{\Delta}_{\text{quant}} = \mathbf{S}_{:,:r} \mathbf{U}_{:r,:r} \mathbf{V}_{:,:r}^\top$，进一步把残余的时间方差滤掉。推理时每隔 5 步刷新一次缓存，用这个二阶修正项高效近似全注意力输出，几乎不增加额外存储，正好补上偏移公式里稀疏掩码带来的信息损失项。
 
 ## 实验结果
 

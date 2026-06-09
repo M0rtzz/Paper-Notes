@@ -37,31 +37,23 @@ tags:
 
 ### 整体框架
 
-整体方案包含三个层次：（1）LVLMs-Saliency 诊断框架——量化每个 token 的幻觉风险；（2）SGRS——在 token 提交到序列前主动过滤低显著性候选；（3）LocoRE——在 token 被接受后增强对近期上下文的注意力。SGRS 和 LocoRE 形成闭环：SGRS 是"门卫"，阻止低质量 token 进入；LocoRE 是"稳定器"，防止已接受的 token 被遗忘。
+方法先用 LVLMs-Saliency 诊断框架量化每个输出 token 的视觉锚定强度，再用两个推理时模块把"幻觉始于显著性下降"这条规律转成主动干预：SGRS 充当门卫，在候选 token 提交进序列前过滤掉显著性过低的；LocoRE 充当稳定器，在 token 被接受后增强它对近期上下文的注意力。两者一前一后形成闭环，全程无需训练。
 
 ### 关键设计
 
-1. **LVLMs-Saliency 诊断框架**: 对于模型 $\mathcal{M}$ 在每一层 $l$、每个注意力头 $h$ 的注意力矩阵 $\mathbf{A}^{(l,h)}$，计算显著性矩阵：
+**1. LVLMs-Saliency 诊断框架：让注意力图"显形"出幻觉信号。**
 
-    $\mathbf{S}^{(l,h)} = \text{tril}(|\mathbf{A}^{(l,h)} \odot \nabla \mathbf{A}^{(l,h)}|)$
+仅看注意力权重几乎无法区分正确 token 和幻觉 token 的生成模式，问题在于注意力只反映前向决策、丢掉了"输入 token 究竟影响了哪个输出"的链路。本文把注意力矩阵 $\mathbf{A}^{(l,h)}$ 与它的梯度逐元素相乘并取下三角，得到第 $l$ 层第 $h$ 头的显著性矩阵 $\mathbf{S}^{(l,h)} = \text{tril}(|\mathbf{A}^{(l,h)} \odot \nabla \mathbf{A}^{(l,h)}|)$，再对所有头求和并做 $\ell_2$ 归一化得到层级显著性 $\bar{\mathbf{S}}^{(l)} = \frac{\sum_h \mathbf{S}^{(l,h)}}{\|\sum_h \mathbf{S}^{(l,h)}\|_2}$。梯度加权这一步是关键：它把"这个注意力连接对最终预测有多重要"显式刻画出来。加权之后规律立刻浮现——正确 token 的显著性对近期 token 呈强依赖且随距离平滑衰减，而幻觉 token 的显著性则全面崩溃，等于模型"遗忘"了刚刚生成的上下文。这一现象在 500 样本统计和 LLaVA-1.5、Qwen2-VL、InternVL 三种架构上都稳定复现，因此可以直接拿显著性当幻觉风险的探针。
 
-   层级归一化显著性通过对所有头取平均再做 $\ell_2$ 归一化得到：$\bar{\mathbf{S}}^{(l)} = \frac{\sum_h \mathbf{S}^{(l,h)}}{\|\sum_h \mathbf{S}^{(l,h)}\|_2}$。核心发现是：**正确 token 的显著性图呈现对近期 token 的强依赖（随距离衰减），而幻觉 token 的显著性全面崩溃**。跨 500 样本的统计分析以及跨三个模型（LLaVA-1.5、Qwen2-VL、InternVL）的验证都支持这一规律。
+**2. SGRS 显著性引导拒绝采样：在 token 入列前拦下高风险候选。**
 
-2. **Saliency-Guided Rejection Sampling (SGRS)**: 在解码位置 $P$，模型产生 logits 后，先通过 top-$K$ 采样得到候选集 $\mathcal{C}^{(P)}$。对每个候选 $c_i$，计算其幻觉显著性：
+诊断框架给出了风险信号，SGRS 就把它用在解码环节做主动过滤。在解码位置 $P$，先按 top-$K$ 采样得到候选集，对每个候选 $c_i$ 在目标层集合 $\mathcal{L}_{\text{target}}$ 与位置集合 $\mathcal{J}$ 上聚合显著性得到幻觉分 $\mathcal{S}(c_i) = \frac{1}{|\mathcal{L}_{\text{target}}| \cdot |\mathcal{J}|} \sum_{l \in \mathcal{L}_{\text{target}}} \sum_{j \in \mathcal{J}} \bar{\mathbf{S}}_{P,j}^{(l)}$。候选只有在 $\mathcal{S}(c_i) \geq \tau^{(P)}$ 时才被接受，而阈值不是固定的，而是随生成历史自适应——取最近 $W$ 个已接受 token 的平均显著性再乘灵敏度系数 $\alpha \in (0,1)$，即 $\tau^{(P)} = \alpha \cdot \frac{1}{|\mathcal{H}|}\sum_{j \in \mathcal{H}} \mathcal{S}(x_j)$。这样阈值会跟着上下文的整体锚定水平浮动，避免一刀切。若候选全被拒，最多重采样 $R$ 次，仍不通过则退而选显著性最高者，保证解码不会卡死。
 
-    $\mathcal{S}(c_i) = \frac{1}{|\mathcal{L}_{\text{target}}| \cdot |\mathcal{J}|} \sum_{l \in \mathcal{L}_{\text{target}}} \sum_{j \in \mathcal{J}} \bar{\mathbf{S}}_{P,j}^{(l)}$
+**3. LocoRE 局部一致性增强：从源头对抗显著性衰减。**
 
-   候选被接受仅当 $\mathcal{S}(c_i) \geq \tau^{(P)}$，其中自适应阈值基于最近 $W$ 个输出 token 的历史平均显著性计算：$\tau^{(P)} = \alpha \cdot \frac{1}{|\mathcal{H}|}\sum_{j \in \mathcal{H}} \mathcal{S}(x_j)$，$\alpha \in (0,1)$ 控制灵敏度。最多重采样 $R$ 次，若所有候选都被拒绝则选显著性最高者。
+SGRS 拦掉了坏 token，但已接受的好 token 仍会随生成推进被逐渐"遗忘"，显著性自然下滑。LocoRE 直接在注意力结构上对症下药：预测位置 $P+1$ 时，给最近 $w_s$ 个输出 token 的注意力乘上一个放大系数 $\gamma_j^{(P)} = 1 + \beta \cdot \mathbb{I}((P - j) \leq w_s)$，其中 $\beta \geq 0$ 控制增强强度，落在窗口内的近期 token 注意力被抬高，超出窗口的保持不变。这相当于人为维持近期上下文对当前预测的影响力，把正在塌陷的显著性"托住"。它纯粹改注意力权重，不需要梯度计算也不动模型参数，即插即用且延迟增加不到 2%，因此实际部署里单用 LocoRE 就能拿到大部分收益。
 
-3. **Local Coherence Reinforcement (LocoRE)**: 轻量级即插即用模块，在每个解码步对注意力权重进行修改。对位置 $P+1$ 的预测，增强其对最近 $w_s$ 个输出 token 的注意力：
-
-    $\gamma_j^{(P)} = 1 + \beta \cdot \mathbb{I}((P - j) \leq w_s)$
-
-   其中 $\beta \geq 0$ 是增强强度。这直接放大近期上下文对当前预测的影响，对抗显著性衰减导致的"遗忘"行为。LocoRE 纯粹在注意力结构上操作——无需梯度计算或模型参数修改，延迟增加 < 2%。
-
-### 损失函数 / 训练策略
-
-本方法是纯推理时干预，**无需任何训练或微调**。SGRS 需要一次额外的反向传播来计算梯度显著性（增加 30-40% 延迟），而 LocoRE 仅需修改注意力权重（几乎无额外延迟）。在实践中，仅使用 LocoRE 就能获得大部分收益且几乎无速度损失。
+值得说明的是，整套方法是纯推理时干预，无需任何训练或微调；额外开销主要来自 SGRS 的一次反向传播（约增 30–40% 延迟），LocoRE 几乎零成本。
 
 ## 实验关键数据
 

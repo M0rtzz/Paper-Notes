@@ -49,23 +49,29 @@ PVB 采用编码器-解码器架构。输入为分子构象 $(z, C, x)$（原子
 
 ### 关键设计
 
-1. **变分编码器（Variational Encoder）**:
+**1. 变分编码器：用隐变量把单结构预训练从退化的 Dirac 分布里救出来。**
 
-    - 功能：将初始状态 $\mathbf{X}_0$ 映射到隐变量 $\mathbf{Y}_0$
-    - 核心思路：设先验为 $q_e(d\mathbf{Y}_0|\mathbf{X}_0) \coloneqq \mathcal{N}(x_0, \sigma_e^2 I)$，其中 $\sigma_e = \sqrt{0.5}$ Å。通过神经网络 $\varphi_e$ 学习后验分布 $p_e$，最小化KL散度：$\mathcal{L}_{KL} = -\frac{1}{2}\mathbb{E}[1 + \log \mathbf{V} - 2\log\sigma_e - \frac{\mathbf{V}}{\sigma_e^2}]$
-    - 设计动机：引入隐变量的关键目的是防止单结构预训练时条件分布退化为Dirac测度。较大的 $\sigma_e$ 确保编码过程保留足够的结构信息，同时避免解码退化为平凡情况
+预训练阶段设 $(\mathbf{X}_0, \mathbf{Y}_1) = (x, x)$，若直接学这个恒等映射，条件分布会塌缩成一个 Dirac 测度，模型学不到任何可迁移的东西。编码器先把初始状态 $\mathbf{X}_0$ 映射到一个带噪的隐变量 $\mathbf{Y}_0$ 来打破这种退化：设先验为 $q_e(d\mathbf{Y}_0|\mathbf{X}_0) \coloneqq \mathcal{N}(x_0, \sigma_e^2 I)$，取 $\sigma_e = \sqrt{0.5}$ Å，再用神经网络 $\varphi_e$ 学后验分布 $p_e$，训练时最小化 KL 散度
 
-2. **增强桥匹配解码器（Augmented Bridge Matching Decoder）**:
+$$\mathcal{L}_{KL} = -\frac{1}{2}\mathbb{E}\Big[1 + \log \mathbf{V} - 2\log\sigma_e - \frac{\mathbf{V}}{\sigma_e^2}\Big].$$
 
-    - 功能：从隐变量 $\mathbf{Y}_0$ 生成目标状态 $\mathbf{Y}_1$，同时保持 $(\mathbf{Y}_0, \mathbf{Y}_1)$ 之间的耦合
-    - 核心思路：定义布朗桥路径测度，训练向量场 $\varphi_d$ 最小化 $\mathcal{L}_{ABM} = \mathbb{E}_{t, (\mathbf{Y}_0, \mathbf{Y}_1)}[\|\varphi_d(t, \mathbf{Y}_0, \mathbf{Y}_t) - \frac{\mathbf{Y}_1 - \mathbf{Y}_t}{1-t}\|^2]$。推理时通过模拟非马尔可夫SDE $d\mathbf{Y}_t = \varphi_d^*(t, \mathbf{Y}_0, \mathbf{Y}_t)dt + \sigma d\mathbf{B}_t$ 生成目标
-    - 设计动机：增强桥匹配确保了端点耦合 $\Pi_{0,1}$ 在生成过程中被精确保持，这对于忠实重现MD的动力学性质至关重要。由Proposition 1保证了编码器-解码器组合能无偏地估计目标条件分布
+之所以把 $\sigma_e$ 取得偏大，是因为它要同时满足两头：噪声足够大才能保证解码不退化成平凡映射，但又不能大到把原结构信息淹掉——$\sqrt{0.5}$ Å 这个量级正好让编码后的隐空间既保留了足够的构象信息、又留出了生成所需的随机性。
 
-3. **基于伴随匹配的RL微调**:
+**2. 增强桥匹配解码器：在生成的同时锁住端点耦合，才能忠实复现动力学。**
 
-    - 功能：引入控制向量场 $u$，调节生成分布使轨迹快速趋向蛋白质-配体的holo态
-    - 核心思路：优化KL正则化目标 $\max_u \mathbb{E}[r(\mathbf{Y}_1) - \frac{\beta}{2}\int_0^1 \|u\|^2 dt]$。通过Girsanov定理和伴随匹配（adjoint matching），将SOC问题转化为 $\mathcal{L}_{adj} = \mathbb{E}[\|u(t, \mathbf{Y}_0, \mathbf{Y}_t) + \sigma\tilde{a}(t)\|^2]$，其中精简伴随状态 $\tilde{a}$ 通过ODE反向传播
-    - 设计动机：直接从apo态模拟到holo态需要毫秒级时间尺度，计算上不可行。RL微调通过显式奖励函数引导生成分布，绕过低效的局部探索。使用伴随匹配而非直接梯度累积，实现了内存高效的训练
+解码器要从隐变量 $\mathbf{Y}_0$ 生成目标状态 $\mathbf{Y}_1$，但普通的桥匹配只保证边缘分布对、不保证 $(\mathbf{Y}_0, \mathbf{Y}_1)$ 这一对端点的耦合，而 MD 的动力学性质恰恰藏在这种成对关系里。增强桥匹配的做法是定义布朗桥路径测度，训练向量场 $\varphi_d$ 去拟合桥的漂移项：
+
+$$\mathcal{L}_{ABM} = \mathbb{E}_{t, (\mathbf{Y}_0, \mathbf{Y}_1)}\Big[\big\|\varphi_d(t, \mathbf{Y}_0, \mathbf{Y}_t) - \tfrac{\mathbf{Y}_1 - \mathbf{Y}_t}{1-t}\big\|^2\Big].$$
+
+推理时模拟一条非马尔可夫 SDE $d\mathbf{Y}_t = \varphi_d^*(t, \mathbf{Y}_0, \mathbf{Y}_t)\,dt + \sigma\, d\mathbf{B}_t$ 把隐变量传输到目标。关键在于向量场显式依赖起点 $\mathbf{Y}_0$，这让端点耦合 $\Pi_{0,1}$ 在整个生成过程中被精确保持；Proposition 1 进一步证明编码器-解码器的组合能无偏地估计目标条件分布，从而把预训练（生成 $x$）和微调（生成轨迹对 $x_t \to x_{t+\tau}$）统一到同一个生成目标下。
+
+**3. 基于伴随匹配的 RL 微调：用奖励引导绕过毫秒级的局部探索。**
+
+直接从 apo 态模拟到 holo 态需要毫秒级时间尺度，逐步局部探索在算力上根本走不通。RL 微调引入一个控制向量场 $u$ 来调节生成分布，让轨迹直接朝蛋白质-配体的 holo 态收敛，优化的是 KL 正则化目标
+
+$$\max_u\ \mathbb{E}\Big[r(\mathbf{Y}_1) - \frac{\beta}{2}\int_0^1 \|u\|^2\, dt\Big].$$
+
+借助 Girsanov 定理和伴随匹配（adjoint matching），这个随机最优控制（SOC）问题被转化为一个回归损失 $\mathcal{L}_{adj} = \mathbb{E}[\|u(t, \mathbf{Y}_0, \mathbf{Y}_t) + \sigma\tilde{a}(t)\|^2]$，其中精简伴随状态 $\tilde{a}$ 通过 ODE 反向传播求得。相比直接对长轨迹做梯度累积，伴随匹配只需反传伴随状态，因此训练内存开销显著更低——这正是让 RL 微调在长生成链上可行的关键。
 
 ### 损失函数 / 训练策略
 
@@ -128,8 +134,8 @@ PVB 采用编码器-解码器架构。输入为分子构象 $(z, C, x)$（原子
 
 ## 相关论文
 
-- [\[ICLR 2026\] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
 - [\[ICLR 2026\] Diffusion Alignment as Variational Expectation-Maximization](diffusion_alignment_as_variational_expectation-maximization.md)
+- [\[ICLR 2026\] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition](discrete_diffusion_trajectory_alignment_via_stepwise_decomposition.md)
 - [\[NeurIPS 2025\] Unified All-Atom Molecule Generation with Neural Fields](../../NeurIPS2025/computational_biology/unified_all-atom_molecule_generation_with_neural_fields.md)
 - [\[NeurIPS 2025\] Fractional Diffusion Bridge Models](../../NeurIPS2025/computational_biology/fractional_diffusion_bridge_models.md)
 - [\[ICML 2026\] Demystifying Multimodal Biomolecular Co-design with Intrinsic Geodesic Coupling](../../ICML2026/computational_biology/demystifying_multimodal_biomolecular_co-design_with_intrinsic_geodesic_coupling.md)

@@ -39,37 +39,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ASU将遗忘重新定义为自蒸馏过程：构建一个forget-teacher（通过注意力平滑得到），在遗忘集上让student模型模仿teacher的输出分布；同时在保留集上施加正则化以维持模型效用。
+
+ASU 想解决的是一个老问题的新角度：现有遗忘方法之所以会吐乱码、暴露遗忘痕迹，是因为它们没有真正切断注意力里的事实关联，只是把参数推远或换成固定模板。ASU 转而把遗忘重新表述成一次**自蒸馏**——先用「注意力平滑」从原始模型造出一个 forget-teacher，然后在遗忘集上让 student（即被遗忘的模型本身）去对齐这个 teacher 被模糊掉的输出分布，同时在保留集上加正则维持效用。整条链路只多了一个温度超参数 $\tau$，不引入外部模型，遗忘的「目标」由 teacher 自然给出，而不是人为指定。
 
 ### 关键设计
 
-1. **Forget-Teacher机制（注意力温度平滑）**
+**1. Forget-Teacher：给注意力 softmax 加一个温度。**
 
-    - 功能：在每层每个注意力头的softmax中引入温度参数 $\tau \geq 1$，将标准注意力 $\text{Softmax}(\frac{QK^T}{\sqrt{d_k}})$ 修改为 $\text{Softmax}(\frac{QK^T}{\tau\sqrt{d_k}})$
-    - 核心原理：$\tau > 1$ 使注意力分布熵增大→更均匀→削弱token间的精确关联→记忆的事实信息无法被精准回忆。$\tau = 1$ 恢复原始模型行为；$\tau \to \infty$ 时softmax趋近均匀分布，模型完全丧失精确注意能力
-    - 关键发现：通过TOFU实验，将答案token分为事实型token（factual）和功能型token（function，如"is""the"），发现提高 $\tau$ 后事实型token的NLL增幅远大于功能型token——说明事实回忆依赖精确的注意力模式，而句法结构token对注意力平滑不敏感。这解释了ASU为何能保持输出连贯性
+要破坏事实回忆，ASU 直接对注意力机制下手。它在每层每个注意力头的 softmax 里引入温度 $\tau \geq 1$，把标准注意力 $\text{Softmax}(\frac{QK^T}{\sqrt{d_k}})$ 改写成 $\text{Softmax}(\frac{QK^T}{\tau\sqrt{d_k}})$。$\tau$ 越大，注意力分布的熵越大、越趋于均匀，token 之间的精确关联被削弱，被记忆的事实信息就无法再被精准检索；$\tau=1$ 时退回原始模型，$\tau\to\infty$ 时 softmax 趋近均匀分布、模型彻底失去精确 attend 的能力。用这套平滑后的注意力跑出来的模型就是 forget-teacher。
 
-2. **遗忘目标函数**
+这个设计能成立，关键在一个实证发现：在 TOFU 上把答案 token 分成事实型 token（factual）和功能型 token（function，如 "is" "the"），提高 $\tau$ 后事实型 token 的 NLL 增幅远大于功能型 token。也就是说，事实回忆高度依赖精确的注意力模式，而承载句法结构的功能 token 对注意力平滑并不敏感。正是这种差异化响应，让 ASU 在抹掉事实的同时还能保住语法和语言连贯性——这也是它不会像旧方法那样产生乱码的根本原因。
 
-    - 在遗忘集 $\mathcal{D}_F$ 上最小化student和forget-teacher之间的KL散度：$\mathcal{L}_{\text{ASU}} = \mathbb{E}_{(x,y)\sim\mathcal{D}_F}[\frac{1}{T}\sum_{t=1}^T \text{KL}(p(\cdot|x \circ y_{<t}; \theta_\tau) \| p(\cdot|x \circ y_{<t}; \theta))]$
-    - 注意力平滑仅应用于遗忘集，保留集不受影响
-    - 保留集上使用标准梯度下降（GD）或KL散度正则化，分别对应 $\text{ASU}_\text{GD}$ 和 $\text{ASU}_\text{KL}$
+**2. 遗忘目标：把 student 对齐到 forget-teacher 的自蒸馏损失。**
 
-3. **设计优势**
+有了 teacher，遗忘就变成在遗忘集 $\mathcal{D}_F$ 上最小化 student 与 forget-teacher 之间的逐 token KL 散度：
 
-    - 不引入外部模型或额外参数，仅需一个温度超参数 $\tau$
-    - Forget-teacher在训练过程中冻结不更新
-    - 提供自然的遗忘目标——不是强制输出固定模板（如"I don't know"），而是引导模型产生信息被平滑掉的自然输出
+$$\mathcal{L}_{\text{ASU}} = \mathbb{E}_{(x,y)\sim\mathcal{D}_F}\Big[\frac{1}{T}\sum_{t=1}^T \text{KL}\big(p(\cdot|x \circ y_{<t}; \theta_\tau) \,\|\, p(\cdot|x \circ y_{<t}; \theta)\big)\Big]$$
 
-### 与现有方法的本质区别
-- GA/NPO等发散型方法：直接推离原始模型，容易过度遗忘产生乱码
-- IDK等收敛型方法：用固定模板替代，仅对QA有效且易降低模型效用
-- ASU：通过注意力平滑提供物理意义明确的遗忘target，同时保持输出连贯性，且不限于特定任务格式
+其中 $\theta_\tau$ 是加了温度的 forget-teacher、$\theta$ 是被训练的 student，teacher 在训练中冻结不更新。注意力平滑只施加在遗忘集上，保留集完全不受影响；保留集那边再用标准梯度下降（GD）或 KL 正则两种方式维持效用，分别对应 $\text{ASU}_\text{GD}$ 和 $\text{ASU}_\text{KL}$。和 IDK 那类「强行输出 I don't know」的固定模板不同，这里的遗忘 target 是 teacher 自然给出的——信息被平滑掉之后模型该说什么就说什么，因此不绑定 QA 这种特定格式。
 
-### 理论分析
-- 当 $\tau \to \infty$ 时，softmax趋近均匀分布，每个注意力头的输出退化为过去value的均值，模型失去精确attend前文token的能力——高熵分布导致输出不连贯，证明存在某个 $\tau > 1$ 能实现遗忘目标
-- 优化目标有界：KL散度作为损失函数天然非负，且forget-teacher是从原始模型构造的（只改温度），确保优化过程稳定
-- 注意力平滑仅作用于遗忘集相关的知识关联，不会损害模型在其他任务上学到的有用关联
+**3. 为什么平滑注意力就够：理论保证与对旧方法的区别。**
+
+ASU 给出了存在性论证：当 $\tau\to\infty$ 时 softmax 趋于均匀，每个注意力头的输出退化为历史 value 的均值，模型失去精确 attend 前文的能力、输出变得不连贯——既然 $\tau=1$ 保留全部记忆、$\tau\to\infty$ 完全失忆，那中间必然存在某个 $\tau>1$ 恰好实现遗忘目标。优化本身也稳定：KL 散度天然非负、有下界，而 forget-teacher 只是改了温度、由原始模型直接构造，因此训练过程不会发散；并且平滑只作用于遗忘集相关的关联，不会破坏模型在其他任务上学到的有用关联。相比之下，GA/NPO 这类发散型方法直接把参数推离原模型，力度难控、容易过度遗忘吐乱码；IDK 这类收敛型方法用固定模板替代，只在 QA 下有效且易损效用；ASU 则提供了一个物理意义明确、保持连贯、不限任务格式的遗忘 target。
 
 ## 实验设计与结果
 

@@ -40,30 +40,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VIP 采用 CTDE（集中训练分散执行）范式。Critic 是一个 PINN，用三个损失训练：HJB 残差损失 + TD anchor 损失 + VGI 一致性损失。Actor 是分散的策略网络，使用从 HJB 残差导出的瞬时优势函数更新。同时学习动力学模型 $f_\psi$ 和奖励模型 $r_\phi$ 来支持 VGI 计算。
+VIP 想解决的是「连续时间下的多智能体协同控制」：不再按固定时间步做 Bellman 递归，而是直接让 critic 去满足连续时间最优控制的 HJB 偏微分方程。整体沿用 CTDE（集中训练、分散执行）范式——训练时有一个共享的 critic 把全局状态看全，执行时每个 agent 只用自己的分散策略网络。
+
+数据流上，critic 是一个物理信息神经网络（PINN）$V_\theta(x)$，同时用三个损失驱动：HJB 残差损失让它满足 PDE、TD anchor 损失锚定价值量级、VGI 一致性损失专门校准价值梯度。actor 端，每个 agent 的策略 $\pi_{\phi_i}$ 用从 HJB 残差直接读出来的瞬时优势函数更新。为了让 VGI 能算出梯度目标，框架还顺带学了动力学模型 $f_\psi$ 和奖励模型 $r_\phi$。
 
 ### 关键设计
 
-1. **PINN Critic 求解 HJB**:
+**1. PINN Critic 求解 HJB：用神经网络逃离维度灾难。**
 
-    - 功能：用神经网络 $V_\theta(x)$ 近似最优价值函数，通过最小化 HJB PDE 残差来训练
-    - 核心思路：HJB 残差 $\mathcal{R}_\theta(x_t) = -\rho V_\theta + \nabla_x V_\theta^\top f(x,u) + r(x,u)$，PINN 通过最小化 $\|\mathcal{R}_\theta\|_1$ 来学习满足 PDE 的价值函数。加上 TD-style anchor 损失提供价值量级的监督
-    - 设计动机：传统数值方法（动态规划、level set）在 6 维以上就不可行（维度灾难），PINN 的 Monte Carlo 特性可以缓解
+连续时间最优控制的价值函数满足 HJB 方程，但传统数值解法（动态规划、level set）一旦状态维度超过 6 维就彻底失效——网格点数随维度指数爆炸，而多智能体场景的状态维度恰恰随 agent 数飞涨。VIP 把价值函数换成神经网络 $V_\theta(x)$，并把 HJB 残差
 
-2. **Value Gradient Iteration (VGI)**:
+$$\mathcal{R}_\theta(x_t) = -\rho V_\theta + \nabla_x V_\theta^\top f(x,u) + r(x,u)$$
 
-    - 功能：迭代精炼价值梯度 $\nabla_x V(x)$，而非仅靠 PINN 自动微分
-    - 核心思路：VGI 目标 $\hat{g}_t = \nabla_{x_t} r \cdot \Delta t + e^{-\rho\Delta t} \nabla_{x_t} f^\top \nabla_{x_{t+\Delta t}} V_\theta(x_{t+\Delta t})$，本质上是梯度空间的一步 Bellman 展开。用 $\mathcal{L}_{vgi} = \|\nabla_x V_\theta - \hat{g}_t\|^2$ 强制 PINN 的自动微分梯度与 VGI 目标一致
-    - 设计动机：仅靠 HJB 残差损失无法保证梯度精度——在高维多智能体中，小梯度误差会被耦合动力学放大。理论证明 VGI 更新是一个收缩映射（Theorem 3.4），保证收敛
+当作 PINN 的物理约束，通过最小化 $\|\mathcal{R}_\theta\|_1$ 让网络去逼近满足 PDE 的解。神经网络靠采样点（Monte Carlo 式）而非稠密网格来约束 PDE，所以能在高维状态空间里继续工作；再叠一个 TD-style anchor 损失给价值的绝对量级提供监督，避免 PINN 只满足残差却漂移到错误尺度。
 
-3. **连续时间瞬时优势函数**:
+**2. Value Gradient Iteration（VGI）：单独把价值梯度校准准。**
 
-    - 功能：从 HJB 残差直接导出连续时间优势函数用于策略更新
-    - 核心思路：$A(x_t, u_t) = -\rho V(x_t) + \nabla_x V^\top f(x_t, u_t) + r(x_t, u_t)$，恰好等于 HJB 残差。每个 agent 用 $\mathcal{L}_{p_i} = -A_\theta \log \pi_{\phi_i}$ 更新分散策略
-    - 理论保证：证明了 Policy Improvement Lemma（一步梯度更新后 Q 值单调不减）
+光让 HJB 残差变小并不能保证 $\nabla_x V(x)$ 准——而策略更新恰恰吃的是这个梯度。在高维多智能体里这个隐患被放大：一点点梯度误差会被耦合的动力学一路传播放大，最后策略学歪。VGI 的做法是给梯度本身再做一步「梯度空间的 Bellman 展开」，构造目标
+
+$$\hat{g}_t = \nabla_{x_t} r \cdot \Delta t + e^{-\rho\Delta t}\, \nabla_{x_t} f^\top\, \nabla_{x_{t+\Delta t}} V_\theta(x_{t+\Delta t})$$
+
+然后用一致性损失 $\mathcal{L}_{vgi} = \|\nabla_x V_\theta - \hat{g}_t\|^2$ 强迫 PINN 自动微分得到的梯度去对齐这个目标。论文进一步证明了 VGI 更新是一个收缩映射（Theorem 3.4），所以这套迭代精炼能收敛，而不是和 PINN 残差互相打架。
+
+**3. 连续时间瞬时优势函数：让残差直接当 actor 的信号。**
+
+策略更新需要一个优势函数，VIP 不另起炉灶，而是发现连续时间下的瞬时优势恰好就等于 HJB 残差本身：
+
+$$A(x_t, u_t) = -\rho V(x_t) + \nabla_x V^\top f(x_t, u_t) + r(x_t, u_t)$$
+
+于是 critic 算 HJB 残差的同一份计算，直接喂给每个 agent 的策略损失 $\mathcal{L}_{p_i} = -A_\theta \log \pi_{\phi_i}$ 做分散更新，省掉了离散时间方法里单独估优势的环节。论文还给出 Policy Improvement Lemma，证明按这个优势做一步梯度更新后 Q 值单调不减，把策略改进的正确性也补上了。
 
 ### 损失函数 / 训练策略
-Critic 总损失：$\mathcal{L}_{total} = \mathcal{L}_{res} + \lambda_{anchor}\mathcal{L}_{anchor} + \lambda_g\mathcal{L}_{vgi}$。与动力学模型和奖励模型联合训练。Tanh 激活（因 PINN 需要光滑可微性）比 ReLU 显著更好。三个损失权重需平衡——不平衡会导致 PINN 训练的刚性问题。
+Critic 的总损失把三项合在一起：$\mathcal{L}_{total} = \mathcal{L}_{res} + \lambda_{anchor}\mathcal{L}_{anchor} + \lambda_g\mathcal{L}_{vgi}$，并与动力学模型、奖励模型联合训练。一个关键实现细节是激活函数必须用 Tanh 而非 ReLU——PINN 要对网络求 PDE 残差（含一阶梯度），需要光滑可微性，ReLU 的分段线性会严重拖垮效果。三个损失权重还得调平衡，权重失配会触发 PINN 训练特有的刚性（stiffness）问题。
 
 ## 实验关键数据
 
@@ -131,10 +139,10 @@ Physics-Informed Neural Network (PINN) 在这里用于求解 HJB 方程，通过
 ## 相关论文
 
 - [\[ICLR 2026\] Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](safe_continuous-time_multi-agent_reinforcement_learning_via_epigraph_form.md)
-- [\[ICLR 2026\] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization](distributionally_robust_cooperative_multi-agent_reinforcement_learning_via_robus.md)
 - [\[ICLR 2026\] Sample-efficient and Scalable Exploration in Continuous-Time RL](sample-efficient_and_scalable_exploration_in_continuous-time_rl.md)
-- [\[ICLR 2026\] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
 - [\[ICML 2026\] Multi-Agent Decision-Focused Learning via Value-Aware Sequential Communication](../../ICML2026/reinforcement_learning/multi-agent_decision-focused_learning_via_value-aware_sequential_communication.md)
+- [\[ICLR 2026\] SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
+- [\[ICML 2026\] Interaction-Breaking Adversarial Learning Framework for Robust Multi-Agent Reinforcement Learning](../../ICML2026/reinforcement_learning/interaction-breaking_adversarial_learning_framework_for_robust_multi-agent_reinf.md)
 
 </div>
 

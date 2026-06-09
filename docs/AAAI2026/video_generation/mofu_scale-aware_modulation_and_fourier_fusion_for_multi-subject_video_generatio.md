@@ -228,9 +228,9 @@ $$\mathcal{L}_{\text{perm}} = \frac{1}{P} \sum_{p=1}^{P} \|F(\mathcal{R}_p) - F(
 ## 相关论文
 
 - [\[CVPR 2025\] Multi-subject Open-set Personalization in Video Generation](../../CVPR2025/video_generation/multi-subject_open-set_personalization_in_video_generation.md)
+- [\[CVPR 2026\] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning](../../CVPR2026/video_generation/facecam_portrait_video_camera_control_via_scale-aware_conditioning.md)
 - [\[CVPR 2026\] StoryTailor: A Zero-Shot Pipeline for Action-Rich Multi-Subject Visual Narratives](../../CVPR2026/video_generation/storytailora_zero-shot_pipeline_for_action-rich_multi-subject_visual_narratives.md)
 - [\[ICLR 2026\] BindWeave: Subject-Consistent Video Generation via Cross-Modal Integration](../../ICLR2026/video_generation/bindweave_subject-consistent_video_generation_via_cross-modal_integration.md)
-- [\[CVPR 2026\] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning](../../CVPR2026/video_generation/facecam_portrait_video_camera_control_via_scale-aware_conditioning.md)
 - [\[AAAI 2026\] FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion](filmweaver_weaving_consistent_multi-shot_videos_with_cache-guided_autoregressive.md)
 
 </div>

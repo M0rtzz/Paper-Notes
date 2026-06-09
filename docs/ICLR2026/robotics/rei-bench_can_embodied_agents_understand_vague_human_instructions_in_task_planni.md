@@ -43,52 +43,17 @@ tags:
 
 ### 整体框架
 
-REI-Bench的核心思路是：系统建模真实人机交互中的共指模糊性，通过组合不同级别的RE难度和上下文类型，构建覆盖9种模糊等级的评估基准。整体框架包含三个部分：(1) RE与对话上下文的形式化建模；(2) REI数据集的自动构建流水线；(3) 缓解模糊性的TOCC方法。
+REI-Bench把真实人机交互里的共指模糊性拆成两个正交维度——指称表达(RE)的难度和对话上下文的质量——再用一条不依赖人工标注的自动流水线，从ALFRED的清晰种子指令出发，扩展上下文、注入模糊，最终得到覆盖9种模糊等级、共2700个样本的评估基准。除了基准本身，论文还配套提出TOCC方法，用"先理解、再规划"的解耦思路缓解模糊指令带来的规划失败。
 
-数据构建流水线基于ALFRED数据集中的种子指令：先用GPT-4o-mini扩展上下文对话→生成3种上下文变体→将显式RE替换为隐式RE→最终得到覆盖9种模糊等级的2700个样本。
+### 关键设计
 
-### 关键设计1：三级指称表达难度建模
+**1. 三级指称表达难度：把"清晰到模糊"做成可控梯度。** 真实用户的表达模糊程度因人而异，老人、儿童常用"它""那个重东西"代替具体物名，因此基准需要能定量区分不同模糊程度。论文据此把RE分为三级：显式RE(Explicit)是专有名词("apple")、定冠词短语("the apple")、不定冠词短语("an apple")，可直接对应物体；隐式RE是代词("it"/"them")和属性表达("sweet fruit")，对应多个候选对象、必须依赖上下文推理。三档的构造方式逐级加难——Explicit 保留原始数据集中的全部显式表达；Mixed 把指令里的显式RE换成隐式RE，但上下文记忆中的显式RE原样保留；Implicit 则把所有显式RE都换成隐式，仅在上下文里留下第一个显式RE作为唯一线索。替换规则参照OntoNotes语料的共指消解模式，确保生成的隐式RE符合自然语言习惯，而非机械替换。
 
-- **功能**：将指令中的指称表达分为三个难度级别——显式RE(Explicit)、混合RE(Mixed)、隐式RE(Implicit)，系统化模拟从清晰到模糊的梯度。
-- **核心思路**：显式RE包括专有名词("apple")、定冠词短语("the apple")、不定冠词短语("an apple")，可直接理解；隐式RE包括代词("it"/"them")和属性表达("sweet fruit")，有多个潜在对应对象，需要上下文推理。三级设计为：
-    - Explicit REs：保留原始数据集中的所有显式表达
-    - Mixed REs：指令中的显式RE替换为隐式RE，但上下文记忆中的显式RE保留不变
-    - Implicit REs：所有显式RE均替换为隐式RE，仅保留上下文中的第一个显式RE
-- **设计动机**：现实中人类不总是使用完全清晰的表达，模糊程度随个人习惯和认知能力变化。分级设计允许定量分析不同模糊程度对规划性能的影响。替换规则基于OntoNotes语料库中的共指消解模式，确保隐式RE符合自然语言习惯。
+**2. 三级上下文记忆：模拟真实交互里参差不齐的信息质量。** 语用学认为词与物的绑定是在具体上下文里建立的(Levinson, 1983)，因此同一条隐式指令在不同上下文下解析难度天差地别。论文设计了三种上下文：Standard 提供完整的任务相关信息；Noised 注入"歧义名称"噪声，即与场景物体名相近的人名/品牌名(如把"Rose"扩成反复出现的"Mrs. Rose"),制造干扰;Short 在噪声基础上再随机删掉一部分含任务相关显式RE的名词短语,进一步抽走线索。噪声对应日常里"一词多义"的误导(如"apple"既是水果又是品牌)，删减则对应老人/儿童认知局限带来的语义缺失。把三级RE和三级上下文做笛卡尔积，就得到 $3 \times 3 = 9$ 种模糊等级，足以从多个角度压测规划器的鲁棒性。
 
-### 关键设计2：三级上下文记忆建模
+**3. Task-Oriented Context Cognition (TOCC)：把理解和规划物理解耦。** 作者观察到一个反直觉现象：直接提示LLM"the heated one指什么"时它能正确答出"potato"，可一旦放进规划任务，同样的输入却被错认成"plate"——问题不在于LLM不会理解隐式RE，而在于同时做理解和规划时注意力被规划抢占。TOCC据此分成两步：先是上下文认知阶段，LLM只专注于结合对话上下文识别隐式RE、推断其真实指代，输出一条简洁清晰的重述指令；再是规划阶段，规划器基于已经消歧的清晰指令生成动作序列，不必再分心做语言理解。这与其他几种提示策略形成对照——Aware Prompt 仅提醒"指令可能模糊"而不引导深层推理，改进有限还可能引入幻觉；Chain-of-Thought 让规划器边分析RE边规划，但长prompt在小模型上吃力；In-Context Learning 靠示例帮助推断，可小模型从示例中学习的能力有限。TOCC的优势正在于它把理解与规划从单次生成里物理分开，从根上避免了注意力竞争，因而无需额外训练或新模块就能见效。
 
-- **功能**：设计三种对话上下文类型——标准上下文(Standard)、噪声上下文(Noised)、简短上下文(Short)——模拟真实人机交互中的不同信息质量。
-- **核心思路**：
-    - Standard Context：提供完整的任务相关上下文信息
-    - Noised Context：引入"歧义名称"噪声，即与场景物体名称相似的人名/品牌名(如"Rose"→"Mrs. Rose")，反复出现在对话中造成干扰
-    - Short Context：在噪声的基础上随机删除部分包含任务相关显式RE的名词短语，进一步增加推理难度
-- **设计动机**：语言学家认为词语与对象的联系是在特定上下文中构建的(Levinson, 1983)。日常误导线索来自"一词多义"(如"apple"既指水果又指品牌)；语义缺失则反映老人/儿童的认知局限。通过3级RE × 3级上下文 = 9种模糊等级的组合，可以全面评估规划器的鲁棒性。
-
-### 关键设计3：Task-Oriented Context Cognition (TOCC)
-
-- **功能**：将隐式RE的解析从规划过程中解耦出来，先用LLM理解模糊指令并生成清晰的重述指令，再基于清晰指令进行任务规划。
-- **核心思路**：TOCC分为两步：
-  1. **上下文认知阶段**：给定模糊指令和对话上下文，LLM专注于识别隐式RE并推断其真实指代对象，生成一条简洁清晰的重述指令
-  2. **规划阶段**：基于重述后的清晰指令执行任务规划，此时LLM无需再同时处理语言理解和动作生成
-  
-  与对比方法的区别：
-  - Aware Prompt (AP)：仅提示"指令可能有模糊性"，不促进深层推理→改进有限且可能导致幻觉
-  - Chain-of-Thought (CoT)：引导规划器逐步分析RE后再规划，但长prompt在小模型上效果受限
-  - In-Context Learning (ICL)：提供示例帮助推断隐式RE，但小模型从示例中学习的能力有限
-  - TOCC：**物理解耦**理解与规划两个阶段，避免单次生成中注意力过度分配给规划而忽略理解
-  
-- **设计动机**：作者通过实验观察到两个关键现象：(1) LLM在被显式提示时可以正确解析隐式RE；(2) 但在规划场景中这种能力无法充分发挥。这说明问题不在于LLM缺乏理解能力，而在于同时执行理解和规划两个任务时产生了注意力竞争。TOCC通过任务分离避免了这一问题。
-
-### 关键设计4：自动化数据构建流水线
-
-- **功能**：基于ALFRED数据集构建自动化的REI数据集生成管线，不依赖人工标注。
-- **核心思路**：
-  1. 从ALFRED选择6种家务任务(Pick & Place、Stack & Place等)，排除不可靠的Pick Two & Place
-  2. 用"LLaMA3.1-8B + SayCan"执行任务，仅保留成功案例作为种子指令(过滤清晰指令下就无法完成的任务)
-  3. 用GPT-4o-mini扩展上下文对话(Step 1)→生成3种上下文变体(Step 2)→基于CoT方法替换显式RE为隐式RE(Step 3)
-  4. 基于计数规则保证各任务中显式RE数量一致，丢弃违规数据
-- **设计动机**：现有模糊表达数据集(如OntoNotes、Winograd Schema)由语言学家标注，但未系统化RE的位置、频率和形式。自动化管线确保数据的规模(2700样本×9级)和一致性，同时消除人工标注的主观偏差。
+**4. 自动化数据构建流水线：无需人工标注地批量生成模糊样本。** 已有的模糊表达数据集(OntoNotes、Winograd Schema)由语言学家标注，却没有系统化RE的位置、频率和形式，难以支撑规模化基准。论文转而搭了一条全自动管线：先从ALFRED挑出6种家务任务(Pick & Place、Stack & Place等，排除不稳定的Pick Two & Place)，用"LLaMA3.1-8B + SayCan"实际执行、只保留成功案例作种子指令，从而过滤掉那些即便指令清晰也完不成的任务，把RE的影响隔离出来；再用GPT-4o-mini依次扩展上下文对话、生成3种上下文变体、以CoT方式把显式RE替换成隐式RE；最后用计数规则约束各任务中显式RE的数量一致，违规样本直接丢弃。这样既保证了2700样本×9级的规模与一致性，又消除了人工标注的主观偏差。
 
 ## 实验关键数据
 
@@ -174,8 +139,8 @@ DialFRED采用"提问者-执行者"框架，通过53K问答对支持多轮交互
 - [\[CVPR 2026\] RoboAgent: Chaining Basic Capabilities for Embodied Task Planning](../../CVPR2026/robotics/roboagent_chaining_basic_capabilities_for_embodied_task_planning.md)
 - [\[NeurIPS 2025\] Can Agents Fix Agent Issues?](../../NeurIPS2025/robotics/can_agents_fix_agent_issues.md)
 - [\[ICML 2026\] EMBGuard: Constructing Hazard-Aware Guardrails for Safe Planning in Embodied Agents](../../ICML2026/robotics/embguard_constructing_hazard-aware_guardrails_for_safe_planning_in_embodied_agen.md)
+- [\[ICLR 2026\] Embodied Agents Meet Personalization: Investigating Challenges and Solutions Through the Lens of Memory Utilization](embodied_agents_meet_personalization_investigating_challenges_and_solutions_thro.md)
 - [\[ICML 2026\] Embodied Task Planning via Graph-Informed Action Generation with Large Language Models](../../ICML2026/robotics/embodied_task_planning_via_graph-informed_action_generation_with_large_language_.md)
-- [\[ICLR 2026\] OmniEVA: Embodied Versatile Planner via Task-Adaptive 3D-Grounded and Embodiment-aware Reasoning](omnieva_embodied_versatile_planner_via_task-adaptive_3d-grounded_and_embodiment-.md)
 
 </div>
 

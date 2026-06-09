@@ -40,30 +40,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-训练多个Wide ResNet / ResNet模型获得不同最小值 → 用AutoNEB算法找到最小值之间的最低能量路径（MEP） → 沿路径测量曲率（Hessian迹、最大特征值、Fisher矩阵谱） → 设计投影SGD实验验证熵力的存在和强度 → 通过线性模式连通性实验分析熵屏障在训练中的持续性。
+本文把统计物理里的"熵力"搬进损失景观分析：先训练多个 ResNet/WRN 模型得到不同最小值，用 AutoNEB 找出它们之间的最低能量路径（MEP），再沿路径密集测量曲率，最后用投影 SGD 把高维动力学压到一维路径上，直接观测曲率变化如何产生一股把模型推回最小值的隐含力。核心论点是：能量平坦不等于动力学自由——曲率沿路径系统性升高，在有噪声的优化里相当于一道熵屏障。
 
 ### 关键设计
 
-1. **熵力的理论框架**:
+**1. 熵力的有效势模型：把曲率变化翻译成一股看不见的力。** 模式连通性只看损失（能量），却忽略了曲率本身能产生力。本文借布朗运动的有效势思路建模：设势函数 $V(x,y) = \frac{1}{2}g(y)x^2$，其中 $x$ 是被快速热化的"硬"方向，$y$ 是缓慢演化的"软"方向，$g(y)$ 是软方向上的曲率。把快变量 $x$ 积掉后，慢变量 $y$ 看到的有效势变成 $V_{\text{eff}}(y) = T \ln g(y)$，对应的力正比于 $-\frac{d}{dy}\ln g(y)$，方向指向 $g(y)$ 更小、即更平坦的区域。这里有效温度 $T \propto \eta/B$，由学习率与批大小决定。这一步把"SGD 偏好平坦最小值"从经验观察落到了具体机制上：只要曲率在路径上不均匀，噪声就会把系统挤向平坦端，而不需要损失本身有任何起伏。
 
-    - 做什么：建立曲率变化产生有效势的数学模型
-    - 核心思路：考虑势函数 $V(x,y) = \frac{1}{2}g(y)x^2$，其中 $g(y)$ 是沿"软"方向的曲率函数。快变量 $x$ 被积掉后，慢变量 $y$ 的有效势为 $V_{\text{eff}}(y) = T \ln g(y)$，产生的力与 $-\frac{d}{dy}\ln g(y)$ 成正比，驱动系统走向 $g(y)$ 更小（更平坦）的区域。有效温度 $T \propto \eta / B$（学习率/批大小）。
-    - 设计动机：在神经网络中，SGD噪声充当有效温度，曲率变化充当 $g(y)$，从而解释为什么优化器偏好平坦最小值，并且被约束在最小值附近。
+**2. 沿 MEP 的三重曲率测量：用互相独立的方法交叉确认屏障真实存在。** 单一谱估计可能受方向选择或数值误差影响，本文沿最低能量路径同时用三种互补手段刻画 Hessian 谱：用幂迭代估计最大特征值 $\lambda_{\max}$，每步只需 $\mathcal{O}(N)$ 次 Hessian-向量乘积；在最小值附近用 Fisher 信息矩阵 $\mathcal{F}(\theta^*) = \mathbb{E}[s_\theta s_\theta^\top]$ 近似 Hessian 来高效估计迹；再对部分训练数据的得分矩阵做 SVD 取前几个特征值看完整谱形。三者一致显示路径中部曲率明显高于两端，且 SVD 全谱分析表明是整个谱集体上移、而非个别方向变陡——说明屏障是各向同性的曲率升高，结论因此更可信。
 
-2. **沿MEP的曲率测量体系**:
-
-    - 做什么：用三种互补方法系统测量最低能量路径上的Hessian谱
-    - 核心思路：(a) 幂迭代法估计Hessian最大特征值 $\lambda_{\max}$，只需 $\mathcal{O}(N)$ 的Hessian-向量乘积；(b) 利用Fisher信息矩阵 $\mathcal{F}(\theta^*) = \mathbb{E}[s_\theta s_\theta^\top]$ 在最小值处近似Hessian，高效估计迹；(c) 对部分训练数据的得分矩阵做SVD，估计前几个特征值。三种方法一致显示：路径中部曲率显著高于端点。
-    - 设计动机：单一测量可能有偏差，三种独立方法的一致性结果增强了结论的可靠性；特别是全谱SVD分析表明所有方向的曲率都增加，而非个别方向。
-
-3. **投影SGD实验**:
-
-    - 做什么：将SGD更新约束在MEP或线性路径上，直接观测熵力效应
-    - 核心思路：每 $k$ 步SGD后将参数投影回路径最近线段（$k=15$），$k$ 控制熵力强度与路径约束的权衡。实验发现：初始化在路径中部的模型被系统性推向端点，即使损失在该方向上升；更小的批大小和更大的学习率加速弛豫，符合 $T \propto \eta/B$ 的预测。
-    - 设计动机：排除模型离开路径沿其他方向移动的干扰，孤立观察曲率引起的熵力效应。
+**3. 投影 SGD：把动力学锁在一维路径上，孤立看熵力。** 直接在高维空间观测熵力会被模型沿其他方向逃逸所干扰。本文每 $k$ 步 SGD 后就把参数投影回路径上最近的线段（取 $k=15$），$k$ 在熵力强度与路径约束之间做权衡，从而把运动限制在路径内部。结果很直接：初始化在路径中部的模型被系统性地推向两端的最小值，哪怕沿这个方向损失在上升——这正是自由能（而非能量）最小化的表现。进一步把批大小调小、学习率调大都会加速这一弛豫过程，定量上吻合 $T \propto \eta/B$ 的预测，反过来印证了有效温度的设定。
 
 ### 损失函数 / 训练策略
-使用标准SGD（动量0.9，权重衰减 $5 \times 10^{-4}$），学习率0.1，训练200个epoch，批大小256，在30%/60%/80%/90%处将学习率除以5。AutoNEB使用4个精化周期，学习率从0.1逐步降到 $10^{-3}$。投影SGD使用 $\eta=0.02$、$B=16$ 为基准。
+基础模型用标准 SGD（动量 0.9、权重衰减 $5 \times 10^{-4}$、学习率 0.1）训练 200 个 epoch，批大小 256，并在 30%/60%/80%/90% 处把学习率除以 5。AutoNEB 用 4 个精化周期、学习率从 0.1 逐步降到 $10^{-3}$ 来收紧路径。投影 SGD 实验以 $\eta=0.02$、$B=16$ 为基准，再围绕它扫批大小与学习率以验证熵力随有效温度的变化。
 
 ## 实验关键数据
 
@@ -117,11 +105,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2025\] Understanding Mode Connectivity via Parameter Space Symmetry](../../ICML2025/others/understanding_mode_connectivity_via_parameter_space_symmetry.md)
+- [\[ICLR 2026\] Do We Really Need Permutations? Impact of Model Width on Linear Mode Connectivity](do_we_really_need_permutations_impact_of_model_width_on_linear_mode_connectivity.md)
 - [\[NeurIPS 2025\] Generalized Linear Mode Connectivity for Transformers](../../NeurIPS2025/others/generalized_linear_mode_connectivity_for_transformers.md)
 - [\[ICLR 2026\] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets](on_the_lipschitz_continuity_of_set_aggregation_functions_and_neural_networks_for.md)
+- [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
 - [\[ICLR 2026\] Learning on a Razor's Edge: Identifiability and Singularity of Polynomial Neural Networks](learning_on_a_razors_edge_identifiability_and_singularity_of_polynomial_neural_n.md)
-- [\[ICML 2026\] On the Epistemic Uncertainty of Overparametrized Neural Networks](../../ICML2026/others/on_the_epistemic_uncertainty_of_overparametrized_neural_networks.md)
 
 </div>
 

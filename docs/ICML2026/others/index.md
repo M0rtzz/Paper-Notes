@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 其他方向91篇论文解读
+  ICML2026 其他方向95篇论文解读
 description: >-
-  91篇ICML2026的其他方向论文解读，涵盖对齐/RLHF、对抗鲁棒、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  95篇ICML2026的其他方向论文解读，涵盖对齐/RLHF、对抗鲁棒、布局/合成、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "其他"
@@ -17,11 +17,15 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2026** · **91** 篇论文解读
+**🧪 ICML2026** · **95** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (122)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (142)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (35)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (91)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (135)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (164)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (47)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对齐/RLHF ×4 · 对抗鲁棒 ×4 · 布局/合成 ×2 · Agent ×2
+
+**[A Hypertoroidal Covering for Perfect Color Equivariance](a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
+
+:   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
 
 **[A Perturbation Approach to Unconstrained Linear Bandits](a_perturbation_approach_to_unconstrained_linear_bandits.md)**
 
@@ -243,6 +247,10 @@ tags:
 
 :   用一个 asinh 链接的 GLM surrogate 把多智能体 MCTS 的 joint-action 空间 $d^n$ 压成 low-dim 非线性 bandit，再用"一阶差分量 + 二阶 mixed difference"作为 NonUCT 提议规则，只在每个节点维护小候选集 $\mathcal{C}(s)$，证明 $\widetilde{O}(T^{3/4})$ 的局部 regret（与 $d^n$ 无关），在 MatGame/SMAC/SMACv2 上 sample efficiency 和最终性能都好过 MAZero 等强 baseline。
 
+**[On Revisiting Entropy for Identifying Mislabeled Images](on_revisiting_entropy_for_identifying_mislabeled_images.md)**
+
+:   作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量，在 ISIC/DeepDRiD/PANDA/CheXpert 等多个医学数据集和 CIFAR-100N 上以纯插拔方式刷新错标检测 SOTA（最高领先 11%+）。
+
 **[On the Coordination of Value-Maximizing Bidders](on_the_coordination_of_value-maximizing_bidders.md)**
 
 :   本文形式化研究了在线广告中多个 value-maximizing 自动出价者的"协调"问题，提出"只让联盟中价值最高的成员出价、其余出 0"的简单协调机制，并证明对一大类自动出价算法而言，该机制能同时降低每个联盟成员的 RoS 违反量、并把联盟总价值推到所有协调机制的渐近最优。
@@ -279,6 +287,10 @@ tags:
 
 :   本文跳出"在浅层中间表示上加噪/加掩码"的传统防御套路，从信息论出发证明：在边-云协同推理里，模型应当被切在表示发生"特征→决策"突变的那一层（作者命名为 Golden Partition Zone，GPZ），而类内均方半径 $R_c^2$ 是定位 GPZ、且能被标签平滑训练动态地主动收缩的关键变量。
 
+**[Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning](polaris_coupled_orbital_polar_embeddings_for_hierarchical_concept_learning.md)**
+
+:   Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束，在 taxonomy expansion 任务上把 top-K 召回提升最多 19 点、mean rank 降低 60%。
+
 **[Position: Age Estimation Models Do Not Process Biometric Data](position_age_estimation_models_do_not_process_biometric_data.md)**
 
 :   本文是一篇 position paper，用 14 个模型 × 3 个人脸验证基准的实证证据论证：人脸年龄估计模型在身份判别能力上比监管阈值低两个数量级，因此不应被自动归类为 GDPR / BIPA / EU AI Act 意义上的"生物特征数据处理"。
@@ -306,6 +318,10 @@ tags:
 **[Position: Reliable AI Needs to Externalize Implicit Knowledge: A Human-AI Collaboration Perspective](reliable_ai_needs_to_externalize_implicit_knowledge_a_human-ai_collaboration_per.md)**
 
 :   本文是一篇 ICML 立场论文,主张当前所有 AI 可靠性方法 (RAG / 自一致性 / RLHF / Agent Memory) 都只能验证显式知识,而 AI 真正强大的能力来自训练数据里 80-95% 未被人类正式记录的"隐式知识",作者提出 Knowledge Objects (KOs) 作为基础设施——把 AI 隐式推理外化成人类可检查、可验证、可背书的结构化产物,从而让一次人类验证的成本在群体中长期复利。
+
+**[Rethink the Role of Neural Decoders in Quantum Error Correction](rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
+
+:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
 
 **[Rethinking Evaluation Paradigms in IBP-based Certified Training](rethinking_evaluation_paradigms_in_ibp-based_certified_training.md)**
 

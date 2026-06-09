@@ -44,40 +44,39 @@ tags:
 
 ### 整体框架
 
-本文的理论框架分三步：首先定义以上一轮策略 $\pi_{\theta_t}$ 为锚点的 KL 正则化代理目标 $J(\theta; \pi_{\theta_t}) = \mathbb{E}[r(x,y)] - \tau \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\theta_t})$，推导其最优策略满足的 pairwise consistency condition；然后用有限样本构造强制该条件的均方代理损失；最后证明在当前参数 $\theta_t$ 处对该损失取一步梯度，结果恰好等价于 group-relative REINFORCE 的更新公式——而整个推导不需要任何关于训练数据分布的假设，因此天然支持 off-policy。
+这篇论文想回答一个长期被含糊带过的问题：GRPO 在理论上被当成 on-policy 算法，工程上却几乎总跑在 off-policy 数据上，这两者到底怎么调和，又是哪个组件在真正撑着训练稳定性。作者的做法不是从采样分布出发去打补丁，而是反过来从一个 KL 正则化的代理目标出发，证明 GRPO 的更新公式可以在不假设数据来源的情况下被推出来——既然推导里压根没用到"数据来自当前策略"，那它天然就是 off-policy 的。
 
-基于这个 off-policy 解释，作者提出两条增强原则来应对任意数据分布：(1) 正则化策略更新步（如 clipping、KL 惩罚），防止在次优数据分布下策略更新过大导致崩溃；(2) 主动塑造训练数据分布（如样本加权、低奖励样本丢弃），引导策略更新方向。这两条原则统一解释了 GRPO、OPMD、AsymRE 以及各种数据加权启发式方法。
+整套理论沿三步展开。第一步，定义以上一轮策略 $\pi_{\theta_t}$ 为锚点的 KL 正则化代理目标 $J(\theta; \pi_{\theta_t}) = \mathbb{E}[r(x,y)] - \tau \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\theta_t})$，求出它的最优策略满足的 pairwise consistency condition；第二步，用有限样本构造一个强制该条件成立的均方代理损失；第三步，在当前参数 $\theta_t$ 处对这个损失取一步梯度，结果恰好等价于 group-relative REINFORCE 的更新公式。拿到这个 off-policy 解释后，作者再提炼出两条增强原则来应对任意数据分布：一是**正则化策略更新步**（clipping、KL 惩罚等），防止在次优数据分布下一步走得太大把策略带崩；二是**主动塑造训练数据分布**（样本加权、丢弃低奖励样本等），引导更新方向。下面四个设计点，前三个落在第一条原则上，最后一个落在第二条。
 
 ### 关键设计
 
-1. **三步推导：从代理目标到 REINFORCE**:
+**1. 三步推导：从代理目标一步梯度回到 REINFORCE。**
 
-    - 功能：证明 group-relative REINFORCE 天然具有 off-policy 解释
-    - 核心思路：KL 正则化代理目标的最优解满足 $\pi^*(y|x) \propto \pi_{\theta_t}(y|x) \exp(r(x,y)/\tau)$，由此推出任意两个响应 $y_1, y_2$ 之间的 pairwise consistency condition：$r_1 - \tau(\log\pi(y_1|x) - \log\pi_{\theta_t}(y_1|x)) = r_2 - \tau(\log\pi(y_2|x) - \log\pi_{\theta_t}(y_2|x))$。构造强制该条件的均方损失 $\hat{L} = \frac{1}{K^2}\sum_{i<j}(a_i - a_j)^2$，在 $\theta = \theta_t$ 处取梯度后，log-probability 差项归零，结果化简为 $\frac{1}{K}\sum_i (r_i - \bar{r}) \nabla_\theta \log\pi_\theta(y_i|x)$——正是 GRPO 的更新公式
-    - 设计动机：传统策略梯度理论要求 on-policy 采样，限制了 GRPO 在异步训练中的理论正当性。这个推导绕过了采样分布假设，直接从最优性条件出发，为 off-policy 使用提供了坚实的理论基础
+整个理论的地基。KL 正则化代理目标的最优解是一个封闭形式 $\pi^*(y|x) \propto \pi_{\theta_t}(y|x) \exp(r(x,y)/\tau)$，对它取对数、在任意两个响应 $y_1, y_2$ 之间作差，就得到 pairwise consistency condition：$r_1 - \tau(\log\pi(y_1|x) - \log\pi_{\theta_t}(y_1|x)) = r_2 - \tau(\log\pi(y_2|x) - \log\pi_{\theta_t}(y_2|x))$，即每个响应的"奖励减去 KL 偏移"应当处处相等。作者把这个条件写成一个对所有样本对都要满足的均方损失：
 
-2. **REC 系列：隔离 IS 与 Clipping 的作用**:
+$$\hat{L} = \frac{1}{K^2}\sum_{i<j}(a_i - a_j)^2$$
 
-    - 功能：精确识别 GRPO 中每个组件对训练稳定性的贡献
-    - 核心思路：设计一系列 REINFORCE-with-Clipping（REC）变体进行消融。REC-OneSide-IS 保留 IS 权重和单侧 clipping 但去掉 advantage normalization，REC-OneSide-NoIS 在此基础上进一步去掉 IS 权重，只保留 clipping mask $M_i^t = \mathbb{1}(A_i > 0, \rho_i^t \leq 1+\epsilon_{\text{high}}) + \mathbb{1}(A_i < 0, \rho_i^t \geq 1-\epsilon_{\text{low}})$。同时测试扩大 clipping 范围从标准的 $(0.2, 0.2)$ 到激进的 $(0.6, 2.0)$
-    - 设计动机：社区普遍认为 IS 是 off-policy 校正的核心机制，但实验表明去掉 IS 后性能几乎不变（奖励曲线完全重叠），而去掉 clipping 后训练立即崩溃。这意味着 clipping 实际上是一种隐式的信赖域约束——限制了每步策略更新的幅度，防止在有限样本覆盖不足时策略偏离到次优区域
+关键的一步在求梯度时发生：在 $\theta = \theta_t$ 处求导，所有 log-probability 的差项都因为 $\pi_\theta = \pi_{\theta_t}$ 而归零，剩下的部分化简成 $\frac{1}{K}\sum_i (r_i - \bar{r}) \nabla_\theta \log\pi_\theta(y_i|x)$——这正是 GRPO 的更新公式。整个过程从头到尾没有出现"数据必须来自 $\pi_\theta$"的假设，所以它绕开了经典策略梯度对 on-policy 采样的要求，直接从最优性条件给 off-policy 使用提供了正当性。
 
-3. **统一解释 OPMD 和 AsymRE**:
+**2. REC 系列：把 IS 和 clipping 单独拎出来做对照。**
 
-    - 功能：揭示三个看似独立的算法共享相同的底层结构
-    - 核心思路：Kimi OPMD 的损失函数可以分解为 REINFORCE loss + 均方正则化 $\frac{\beta}{2K}\sum_i(\log\pi_\theta(y_i|x) - \log\pi_{\text{old}}(y_i|x))^2$，其中 $\beta = \tau$。Meta AsymRE 的 baseline 偏移 $\bar{r} - \beta$ 等价于 REINFORCE loss + KL 正则化 $\frac{\beta}{K}\sum_i \log\frac{\pi_{\text{old}}(y_i|x)}{\pi_\theta(y_i|x)}$，在大样本极限下收敛到 $\beta \cdot D_{\text{KL}}(\pi_{\text{old}} \| \pi_\theta)$。两者都是"正则化策略更新"原则的具体实例，只是正则化形式不同
-    - 设计动机：OPMD 原论文的推导从 KL 正则化目标的 pointwise consistency condition 出发（和本文部分重叠但在 step 2 分道），AsymRE 原论文用多臂赌博机分析 justify baseline 偏移。本文的统一视角更清晰——它们都只是 REINFORCE + 某种正则化，对应第一条增强原则
+有了理论框架，接下来要回答的是 GRPO 那几个组件里到底谁在干活。作者设计了一组 REINFORCE-with-Clipping（REC）变体逐个剥离：REC-OneSide-IS 保留 IS 权重和单侧 clipping、但去掉 advantage normalization；REC-OneSide-NoIS 在此基础上再把 IS 权重也去掉，只留 clipping mask
 
-### 数据加权方法（RED 系列）
+$$M_i^t = \mathbb{1}(A_i > 0,\ \rho_i^t \leq 1+\epsilon_{\text{high}}) + \mathbb{1}(A_i < 0,\ \rho_i^t \geq 1-\epsilon_{\text{low}})$$
 
-作者进一步将 pairwise 代理损失中的均匀权重推广为一般权重 $\sum_{i<j} w_{i,j}(a_i - a_j)^2$，推导出加权 REINFORCE 更新公式。基于此提出两种方法：
+同时把 clipping 范围从标准的 $(0.2, 0.2)$ 一路放宽到激进的 $(0.6, 2.0)$ 做对照。社区一直默认 IS 是 off-policy 校正的核心机制，但这组实验给出的答案恰好相反：去掉 IS 后奖励曲线完全重叠、性能几乎不变，而一旦去掉 clipping 训练立刻崩溃。换句话说，clipping 才是那个隐式的信赖域约束——它限制了每步策略更新的幅度，在有限样本覆盖不足时把策略拉住、不让它偏到次优区域去；IS 在 LLM 微调这种策略变化本就不大的场景下几乎是个摆设。
 
-- **RED-Drop**：丢弃部分低奖励负样本，只用子集 $\mathcal{S} \subseteq [K]$ 训练。动机是负梯度增加 entropy collapse 风险（与 Kimi-Researcher 博客建议一致），在 off-policy 框架下有理论 justification
-- **RED-Weight**：用奖励相关的权重 $w_i$ 对每个样本的梯度项加权。可以分解为 pairwise 加权 REINFORCE + 一个模仿高奖励响应的正则化项，呼应了 offline RL 文献中"对高奖励轨迹正则化比保守模仿所有轨迹更有效"的发现
+**3. 统一解释 OPMD 和 AsymRE：换皮的都是 REINFORCE 加正则化。**
+
+第一原则的解释力还能往外延伸。Kimi 的 OPMD 看似是独立算法，但它的损失可以拆成 REINFORCE loss 加一项均方正则化 $\frac{\beta}{2K}\sum_i(\log\pi_\theta(y_i|x) - \log\pi_{\text{old}}(y_i|x))^2$（其中 $\beta = \tau$）；Meta 的 AsymRE 那个 baseline 偏移 $\bar{r} - \beta$，等价于 REINFORCE loss 加一项 KL 正则化 $\frac{\beta}{K}\sum_i \log\frac{\pi_{\text{old}}(y_i|x)}{\pi_\theta(y_i|x)}$，在大样本极限下收敛到 $\beta \cdot D_{\text{KL}}(\pi_{\text{old}} \| \pi_\theta)$。原论文各自的推导路径不同——OPMD 从 KL 目标的 pointwise consistency condition 出发（和本文 step 1 重叠、step 2 分道），AsymRE 用多臂赌博机分析去 justify baseline 偏移——但在本文视角下它们只是同一件事的不同正则化形式，全都归到"正则化策略更新"这条原则下，GRPO 用的是 clipping、OPMD 用的是均方、AsymRE 用的是 KL。
+
+**4. RED 系列：把均匀权重放开，落到第二条原则上。**
+
+前三点都在第一条原则（正则化更新）里打转，第四点转向第二条原则（塑造数据分布）。作者把 pairwise 代理损失里的均匀权重推广成一般权重 $\sum_{i<j} w_{i,j}(a_i - a_j)^2$，推出加权版的 REINFORCE 更新公式，并据此给出两种具体方法。**RED-Drop** 丢弃一部分低奖励负样本、只在子集 $\mathcal{S} \subseteq [K]$ 上训练，动机是负梯度会加剧 entropy collapse 的风险（与 Kimi-Researcher 博客的经验建议一致），而在 off-policy 框架下这种丢弃有了理论依据。**RED-Weight** 则用奖励相关的权重 $w_i$ 给每个样本的梯度项加权，它可以分解为 pairwise 加权 REINFORCE 加一个模仿高奖励响应的正则化项，正好呼应 offline RL 文献里"对高奖励轨迹做正则化，比保守地模仿所有轨迹更有效"的结论。
 
 ### 损失函数 / 训练策略
 
-核心损失函数：标准 REINFORCE loss $-\frac{1}{K}\sum_i(r_i - \bar{r})\log\pi_\theta(y_i|x)$ + 可选正则化项（clipping mask / KL 惩罚 / 均方正则化），不同搭配对应不同算法。训练采用 Trinity-RFT 框架，通过 `sync_interval`（模型同步频率）和 `sync_offset`（rollout 与训练的延迟）两个参数精确控制 off-policy 程度。
+核心损失始终是标准 REINFORCE loss $-\frac{1}{K}\sum_i(r_i - \bar{r})\log\pi_\theta(y_i|x)$，再叠加一个可选的正则化项——clipping mask、KL 惩罚或均方正则化，不同搭配就对应到不同算法（GRPO/OPMD/AsymRE/RED）。训练在 Trinity-RFT 框架上进行，靠 `sync_interval`（模型同步频率）和 `sync_offset`（rollout 与训练之间的延迟）两个参数精确控制 off-policy 的程度，从而支撑前面 on-policy / mixed / offline 三档对照实验。
 
 ## 实验关键数据
 
@@ -146,11 +145,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2026\] UDM-GRPO: 统一离散扩散模型的稳定高效 GRPO](../../ICML2026/llm_alignment/udm-grpo_stable_and_efficient_group_relative_policy_optimization_for_uniform_dis.md)
-- [\[ICLR 2026\] Slow-Fast Policy Optimization: Reposition-Before-Update for LLM Reasoning](slow-fast_policy_optimization_reposition-before-update_for_llm_reasoning.md)
-- [\[NeurIPS 2025\] GVPO: Group Variance Policy Optimization for Large Language Model Post-Training](../../NeurIPS2025/llm_alignment/gvpo_group_variance_policy_optimization_for_large_language_model_post-training.md)
+- [\[ACL 2026\] MDP-GRPO: Stabilized Group Relative Policy Optimization for Multi-Constraint Instruction Following](../../ACL2026/llm_alignment/mdp-grpo_stabilized_group_relative_policy_optimization_for_multi-constraint_inst.md)
 - [\[ICLR 2026\] Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
-- [\[ICML 2026\] F-TIS: Harnessing Diverse Models in Collaborative GRPO](../../ICML2026/llm_alignment/f-tis_harnessing_diverse_models_in_collaborative_grpo.md)
+- [\[ICML 2026\] UDM-GRPO: 统一离散扩散模型的稳定高效 GRPO](../../ICML2026/llm_alignment/udm-grpo_stable_and_efficient_group_relative_policy_optimization_for_uniform_dis.md)
+- [\[ICLR 2026\] Learning More with Less: A Dynamic Dual-Level Down-Sampling Framework for Efficient Policy Optimization](learning_more_with_less_a_dynamic_dual-level_down-sampling_framework_for_efficie.md)
+- [\[ICLR 2026\] Hierarchy-of-Groups Policy Optimization for Long-Horizon Agentic Tasks](hierarchy-of-groups_policy_optimization_for_long-horizon_agentic_tasks.md)
 
 </div>
 

@@ -39,52 +39,21 @@ tags:
 
 ### 整体框架
 
-DVLA-RL 包含两个核心模块：
+DVLA-RL 把少样本对齐拆成"准备语义"和"自适应融合"两步：先用双层语义构建（DSC）为每个类别造出互补的低层属性和高层描述，再让 RL 门控注意力（RLA）在网络的每一层动态决定交叉注意力与自注意力各占多少权重，从而把浅层的局部细节和深层的全局语义都对齐到视觉表征上。
 
-1. **Dual-level Semantic Construction (DSC)**：生成低层属性 + 高层描述的双层语义
-2. **RL-gated Attention (RLA)**：以 RL 策略动态平衡跨模态注意力
+### 关键设计
 
-### 关键设计一：双层语义构建（DSC）
+**1. 双层语义构建（DSC）：让一个类同时拥有细粒度属性和整体描述。**
 
-**步骤 1：视觉属性提取**
+现有方法只取单层语义——SemFew 只生成高层类别描述，丢掉了区分近似类别的细节；ECER 只列低层属性，又缺乏整体类别理解。DSC 用三步把两者补齐。第一步是属性提取：以类别名和支持样本为条件查询多模态 LLM（Qwen2.5-VL-32B），用提示 `"What are the key distinguishing attributes of the CLASS in the given image?"` 得到候选属性集 $A = \{a_1, \dots, a_s\}$。LLM 的输出难免夹杂幻觉和冗余，所以第二步做渐进式 Top-k 选择：以 `"A photo of a {CLASS}"` 为初始模板 $T^{(0)}$，每轮用 CLIP 文本编码器对候选属性编码、与当前模板算余弦相似度 $s_j = \cos(T^{(i)}, a_j)$，选出最相关的属性嵌入模板 `"A photo of a {CLASS}, which has {attribute}"` 并更新 $T^{(i)}$，迭代 $k$ 次只留下最具区分性的属性，作为低层对齐信号。第三步把这些选中属性交给 LLM 综合成一段流畅的科学描述 $D_i$（例如 "The Komondor is a … dog with massive size and uniquely corded white coat"），作为与局部属性互补的高层语义。两层语义一精一概，恰好对应后面浅层关注细节、深层整合全局的需求。
 
-以类别名和支持样本为条件，查询 LLM（Qwen2.5-VL-32B）：`"What are the key distinguishing attributes of the CLASS in the given image? List concise attributes"`，得到候选属性集 $A^{C^i_{sup}} = \{a_1, \dots, a_s\}$。
+**2. RL 门控注意力（RLA）：用强化学习按层动态平衡两条对齐路径。**
 
-**步骤 2：渐进式 Top-k 选择**
-
-通过 CLIP 文本编码器对每个属性编码，与当前模板嵌入计算余弦相似度 $s_j = \cos(T^{(i)}, a_j)$，初始模板为 `"A photo of a {CLASS}"`。每步选择最相关属性并更新模板，迭代 $k$ 次保留最具区分性的属性，抑制 LLM 生成的幻觉和冗余属性。每个选中属性嵌入模板 `"A photo of a {CLASS}, which has {attribute}"` 用于低层对齐。
-
-**步骤 3：属性描述综合**
-
-将选中属性通过 LLM 综合为流畅的科学描述 $D_i$，提供与局部属性互补的整体语义。例如 "The Komondor is a … dog with massive size and uniquely corded white coat"。
-
-### 关键设计二：RL 门控注意力（RLA）
-
-给定视觉 token $H_{\mathrm{img}}$ 和文本语义 $H_{\mathrm{text}}$，RLA 执行两条对偶注意力路径：
-
-- **图像引导路径**（交叉注意力）：$\hat{H} = \mathrm{Attn}(W^q_\text{text}\bar{H}_\text{text}, W^k_\text{img}\bar{H}_\text{img}, W^v_\text{img}\bar{H}_\text{img})$
-- **文本引导路径**（自注意力）：$\tilde{H} = \mathrm{Attn}(W^q_\text{text}\bar{H}_\text{text}, W^k_\text{text}\bar{H}_\text{text}, W^v_\text{text}\bar{H}_\text{text})$
-
-通过随机门控融合：$H = \alpha \hat{H} + (1-\alpha) \tilde{H}$，其中 $\alpha \sim \pi_\theta(\cdot|s)$。
-
-**状态表示**：$s = \phi([\mathrm{GAP}(\bar{H}_\text{img}) \| \mathrm{GAP}(\bar{H}_\text{text}) \| \cos(\mathrm{GAP}(\bar{H}_\text{img}), \mathrm{GAP}(\bar{H}_\text{text}))])$
-
-**策略分布**：$\pi_\theta(\alpha|s) = \mathrm{Beta}(\kappa p_\theta(s), \kappa(1 - p_\theta(s)))$，其中 $\kappa$ 控制探索与确定性的平衡。
+跨模态融合用固定 MLP 的问题是，浅层和深层需要的对齐策略并不一样，但静态模块无法随深度调整。RLA 在每层并行跑两条对偶注意力：图像引导路径用文本查询图像、走交叉注意力 $\hat{H} = \mathrm{Attn}(W^q_\text{text}\bar{H}_\text{text}, W^k_\text{img}\bar{H}_\text{img}, W^v_\text{img}\bar{H}_\text{img})$，更聚焦属性级的局部细节；文本引导路径在文本内部走自注意力 $\tilde{H} = \mathrm{Attn}(W^q_\text{text}\bar{H}_\text{text}, W^k_\text{text}\bar{H}_\text{text}, W^v_\text{text}\bar{H}_\text{text})$，更强调整体语义。两条路径用一个随机门控系数融合 $H = \alpha \hat{H} + (1-\alpha) \tilde{H}$，而 $\alpha$ 不是手调的常数，而是从策略网络采样 $\alpha \sim \pi_\theta(\cdot|s)$。状态由当前层图文特征的全局池化及其相似度拼成 $s = \phi([\mathrm{GAP}(\bar{H}_\text{img}) \,\|\, \mathrm{GAP}(\bar{H}_\text{text}) \,\|\, \cos(\mathrm{GAP}(\bar{H}_\text{img}), \mathrm{GAP}(\bar{H}_\text{text}))])$，策略输出一个 Beta 分布 $\pi_\theta(\alpha|s) = \mathrm{Beta}(\kappa\, p_\theta(s), \kappa(1 - p_\theta(s)))$，其中 $\kappa$ 控制探索与确定性的平衡。Beta 分布天然支持 $[0,1]$ 连续门控，比 Bernoulli 或 Gaussian 更契合"按比例混合"这件事，于是模型学会了浅层给更大的 $\alpha$ 偏向交叉注意力、深层给更小的 $\alpha$ 偏向自注意力。
 
 ### 损失函数 / 训练策略
 
-**RL 奖励**：$R_t = \lambda_\text{sim} \cdot \cos(U \cdot \mathrm{GAP}(H), \mathbf{t}^\star) + \lambda_\text{imp} \cdot (\mathrm{Acc}_t - \mathrm{Acc}_{t-1})$
-
-- 第一项促进视觉-文本对齐（与 CLIP ground-truth 文本嵌入的余弦相似度）
-- 第二项衡量 episode 内准确率提升
-
-**策略梯度**：$\nabla_\theta \mathcal{J} = \mathbb{E}[(R_t - b_t) \nabla_\theta \log \pi_\theta(\alpha|s)] + \tau \nabla_\theta \mathsf{H}(\pi_\theta(\cdot|s))$
-
-包含熵正则化防止策略过早坍缩，使用指数移动平均基线减少方差。
-
-**总损失**：$\mathcal{L}_\text{total} = \mathcal{L}_\text{sup} + \lambda \mathcal{L}_\text{RL}$，其中 $\mathcal{L}_\text{sup}$ 是基于原型分类器的交叉熵损失。
-
-**训练流程**：两阶段——(1) 大规模预训练 300-800 epoch；(2) 100 epoch episode 式元调优。RL 超参 $\kappa=10$, $\lambda_\text{sim}=0.5$, $\lambda_\text{imp}=1.0$, $\lambda=0.1$, $\tau=0.2$。
+RLA 的策略由奖励驱动，奖励同时看对齐质量和分类增益：$R_t = \lambda_\text{sim} \cdot \cos(U \cdot \mathrm{GAP}(H), \mathbf{t}^\star) + \lambda_\text{imp} \cdot (\mathrm{Acc}_t - \mathrm{Acc}_{t-1})$，第一项是融合特征与 CLIP ground-truth 文本嵌入 $\mathbf{t}^\star$ 的余弦相似度、鼓励视觉-文本对齐，第二项衡量 episode 内准确率相对上一步的提升。策略用带熵正则的 REINFORCE 更新 $\nabla_\theta \mathcal{J} = \mathbb{E}[(R_t - b_t) \nabla_\theta \log \pi_\theta(\alpha|s)] + \tau \nabla_\theta \mathsf{H}(\pi_\theta(\cdot|s))$，其中指数移动平均基线 $b_t$ 减少梯度方差、熵项 $\mathsf{H}$ 防止策略过早坍缩到固定 $\alpha$。整体目标把监督和强化两路相加 $\mathcal{L}_\text{total} = \mathcal{L}_\text{sup} + \lambda \mathcal{L}_\text{RL}$，$\mathcal{L}_\text{sup}$ 是原型分类器的交叉熵。训练分两阶段：先做 300-800 epoch 的大规模预训练，再做 100 epoch 的 episode 式元调优；RL 超参取 $\kappa=10$、$\lambda_\text{sim}=0.5$、$\lambda_\text{imp}=1.0$、$\lambda=0.1$、$\tau=0.2$。
 
 ## 实验关键数据
 
@@ -167,9 +136,9 @@ DVLA-RL 包含两个核心模块：
 
 - [\[ACL 2026\] HEALing Entropy Collapse: Enhancing Exploration in Few-Shot RLVR via Hybrid-Domain Entropy Dynamics Alignment](../../ACL2026/reinforcement_learning/healing_entropy_collapse_enhancing_exploration_in_few-shot_rlvr_via_hybrid-domai.md)
 - [\[AAAI 2026\] Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach](../../AAAI2026/reinforcement_learning/vision-language_reasoning_for_geolocalization_a_reinforcement_learning_approach.md)
-- [\[NeurIPS 2025\] Zero-Shot Context Generalization in Reinforcement Learning from Few Training Contexts](../../NeurIPS2025/reinforcement_learning/zero-shot_context_generalization_in_reinforcement_learning_from_few_training_con.md)
 - [\[ICML 2025\] Zero-Shot Generalization of Vision-Based RL Without Data Augmentation](../../ICML2025/reinforcement_learning/zero-shot_generalization_of_vision-based_rl_without_data_augmentation.md)
 - [\[ICLR 2026\] Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
+- [\[ICLR 2026\] Dual Goal Representations](dual_goal_representations.md)
 
 </div>
 

@@ -133,9 +133,9 @@ VBench 质量评估：
 ## 相关论文
 
 - [\[ICCV 2025\] RealCam-I2V: Real-World Image-to-Video Generation with Interactive Complex Camera Control](realcam-i2v_real-world_image-to-video_generation_with_interactive_complex_camera.md)
+- [\[CVPR 2025\] ReCapture: Generative Video Camera Controls for User-Provided Videos Using Masked Video Fine-Tuning](../../CVPR2025/video_generation/recapture_generative_video_camera_controls_for_user-provided_videos_using_masked.md)
 - [\[CVPR 2025\] Mind the Time: Temporally-Controlled Multi-Event Video Generation](../../CVPR2025/video_generation/mind_the_time_temporally-controlled_multi-event_video_generation.md)
 - [\[ICCV 2025\] SteerX: Creating Any Camera-Free 3D and 4D Scenes with Geometric Steering](steerx_creating_any_camera-free_3d_and_4d_scenes_with_geometric_steering.md)
-- [\[CVPR 2025\] IDOL: Instant Photorealistic 3D Human Creation from a Single Image](../../CVPR2025/video_generation/idol_instant_photorealistic_3d_human_creation_from_a_single_image.md)
 - [\[ICCV 2025\] Free-Form Motion Control: Controlling the 6D Poses of Camera and Objects in Video Generation](free-form_motion_control_controlling_the_6d_poses_of_camera_and_objects_in_video.md)
 
 </div>

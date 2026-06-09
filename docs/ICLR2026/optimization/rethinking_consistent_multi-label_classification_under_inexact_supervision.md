@@ -41,51 +41,37 @@ tags:
 
 ## 方法详解
 
-### 整体框架：COMES
+### 整体框架
 
-COMES（COnsistent Multi-label classification under inExact Supervision）提出了一种新的数据生成过程假设和两种风险估计策略。
+COMES（COnsistent Multi-label classification under inExact Supervision）先用一个更贴近真实标注流程的"逐类查询"数据生成假设，把不精确监督下的多标签风险拆成可从弱标签直接估计的形式，再据此给出一阶（基于 Hamming loss）和二阶（基于 Ranking loss）两套一致性风险估计器。整套方法既不需要估计候选/互补标签的转移矩阵，也不依赖均匀分布假设，PML 与 CML 因数学等价被统一在同一框架下处理。
 
-### 数据生成过程
+### 关键设计
 
-假设候选标签通过逐类查询生成：如果第 $j$ 类与实例 $\boldsymbol{x}$ 无关，则以常数概率 $p_j$ 将其标注为非候选标签：
+**1. 逐类查询的数据生成假设：用更弱的条件等价替换均匀分布假设。** 以往要么去估计难以可靠拟合的转移矩阵，要么粗暴假设候选标签服从均匀分布，无法应对类别不平衡。COMES 改为假设标注是逐类独立进行的：若第 $j$ 类与实例 $\boldsymbol{x}$ 无关，则以常数概率 $p_j$ 把它标为非候选标签，即 $p(j \notin S \mid \boldsymbol{x}, j \notin Y) = p_j$。这个假设的价值在于它直接推出 Lemma 1——非候选标签实例的条件密度恰好等于该类无关样本的条件密度 $p(\boldsymbol{x} \mid s_j = 0) = p(\boldsymbol{x} \mid y_j = 0)$。有了这个等价，弱监督下观测到的"非候选"样本就能当作干净的负类样本来用，后续风险改写才得以成立；而且不同标签可以有不同的 $p_j$，比均匀分布假设宽松得多。
 
-$$p(j \notin S | \boldsymbol{x}, j \notin Y) = p_j$$
+**2. COMES-HL：把多标签风险逐类拆成可估计的二分类风险。** 一阶策略将 MLC 视作 $q$ 个独立的二分类问题，目标是 Hamming loss 一致。借助 Theorem 1，Hamming 风险被改写成只含可观测分布的形式：
 
-**关键引理（Lemma 1）**：在上述假设下，非候选标签实例的条件密度等价于无关类的条件密度：
+$$R_H^\ell(\boldsymbol{g}) = \mathbb{E}_{p(\boldsymbol{x})}\left[\frac{1}{q}\sum_{j=1}^q \ell(g_j(\boldsymbol{x}), 1)\right] + \sum_{j=1}^q \mathbb{E}_{p(\boldsymbol{x}|s_j=0)}\left[\frac{1-\pi_j}{q}\big(\ell(g_j(\boldsymbol{x}), 0) - \ell(g_j(\boldsymbol{x}), 1)\big)\right]$$
 
-$$p(\boldsymbol{x} | s_j = 0) = p(\boldsymbol{x} | y_j = 0)$$
+第一项在全体（无标签）数据集 $\mathcal{D}_U$ 上估计，第二项在各类的非候选条件数据集 $\mathcal{D}_j$ 上估计，类先验 $\pi_j$ 充当权重，由此得到无偏风险估计器。但负权项 $1-\pi_j$ 会让深度网络把经验风险推到负值而过拟合，因此用绝对值把负项包住，得到修正估计器 $\tilde{R}_H^\ell$，在不破坏一致性的前提下把风险约束在合理区间。
 
-这一假设比均匀分布假设更通用，因为不同候选标签集的条件概率可以不同。
+**3. COMES-RL：用排序关系把标签关联引入二阶风险。** Hamming 策略逐类独立、忽略标签间语义关联，二阶策略转而优化 Ranking loss，建模标签对 $(j,k)$ 的相对顺序。它要求代理损失满足对称条件 $\ell(z, \cdot) + \ell(-z, \cdot) = M$，从而把 Ranking 风险同样改写成只依赖非候选条件分布的形式：
 
-### 一阶策略：COMES-HL（基于 Hamming Loss）
+$$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\Big((1-\pi_j)\mathbb{E}_{p(\boldsymbol{x}|s_j=0)}[\ell(g_j - g_k, 0)] + (1-\pi_k)\mathbb{E}_{p(\boldsymbol{x}|s_k=0)}[\ell(g_j - g_k, 1)]\Big)$$
 
-将 MLC 分解为多个独立的二分类问题。通过 Theorem 1，Hamming loss 的 $\ell$-风险可等价表示为：
+对称性是关键，它让正类项被吸收进常数 $M$、只留下可从弱标签估计的非候选项。同样为抑制过拟合，这里改用 flooding 正则把经验风险拉回设定下界 $\beta$：$\tilde{R}_R^\ell = |\hat{R}_R^\ell - \beta| + \beta$。代价是要枚举所有标签对，复杂度为 $O(q^2)$，因此 RL 适合标签关联强、标签空间不太大的场景，与高效但忽略关联的 HL 形成互补。
 
-$$R_H^\ell(\boldsymbol{g}) = \mathbb{E}_{p(\boldsymbol{x})}\left[\frac{1}{q}\sum_{j=1}^q \ell(g_j(\boldsymbol{x}), 1)\right] + \sum_{j=1}^q \mathbb{E}_{p(\boldsymbol{x}|s_j=0)}\left[\frac{1-\pi_j}{q}(\ell(g_j(\boldsymbol{x}), 0) - \ell(g_j(\boldsymbol{x}), 1))\right]$$
+### 损失函数 / 训练策略
 
-通过构造无标签数据集 $\mathcal{D}_U$ 和条件数据集 $\mathcal{D}_j$，得到无偏风险估计器。为防止深度网络过拟合，使用绝对值函数包裹负项，得到修正风险估计器 $\tilde{R}_H^\ell$。
-
-### 二阶策略：COMES-RL（基于 Ranking Loss）
-
-考虑标签对之间的排序关系，利用对称损失函数假设 $\ell(z, \cdot) + \ell(-z, \cdot) = M$：
-
-$$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\left((1-\pi_j)\mathbb{E}_{p(\boldsymbol{x}|s_j=0)}[\ell(g_j - g_k, 0)] + (1-\pi_k)\mathbb{E}_{p(\boldsymbol{x}|s_k=0)}[\ell(g_j - g_k, 1)]\right)$$
-
-使用 flooding 正则化技术缓解过拟合：$\tilde{R}_R^\ell = |\hat{R}_R^\ell - \beta| + \beta$。
-
-### 损失函数
-
-- COMES-HL 使用二元交叉熵作为代理损失
-- COMES-RL 使用对称损失函数（如 sigmoid 损失）
-- 类先验 $\pi_j$ 可通过现有的类先验估计方法从候选标签中估计
-
-### 理论保证
+COMES-HL 用二元交叉熵作代理损失，COMES-RL 则需满足对称条件、采用 sigmoid 等对称损失；两者所需的类先验 $\pi_j$ 都可由现有的类先验估计方法从候选标签中直接估出。在此基础上，两套估计器都给出了完整的理论保证：
 
 | 性质 | COMES-HL | COMES-RL |
 |------|----------|----------|
 | 偏差有界 | $0 \leq \text{bias} \leq O(\Delta_j)$，$\Delta_j \to 0$ as $n \to \infty$ | $0 \leq \text{bias} \leq O(\Delta')$，$\Delta' \to 0$ as $n \to \infty$ |
 | 估计误差收敛 | $O(\mathfrak{R}_n(\mathcal{G}) + \sqrt{\ln(1/\delta)/n})$ | $O(\mathfrak{R}_n(\mathcal{G}) + \sqrt{\ln(1/\delta)/n})$ |
 | 一致性 | Bayes 最优 w.r.t. Hamming loss | Bayes 最优 w.r.t. Ranking loss |
+
+修正项（绝对值包裹 / flooding）带来的偏差随样本数趋于零，估计误差按统计学习的标准速率收敛，因此两者分别对 Hamming loss 和 Ranking loss 渐近一致。
 
 ## 实验关键数据
 
@@ -149,8 +135,8 @@ $$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\left((1-\pi_j)\mathbb{E}
 - [\[ICML 2026\] A General Framework for Dynamic Consistent Submodular Maximization](../../ICML2026/optimization/a_general_framework_for_dynamic_consistent_submodular_maximization.md)
 - [\[ICLR 2026\] A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
 - [\[ICLR 2026\] MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates](mt-dao_multi-timescale_distributed_adaptive_optimizers_with_local_updates.md)
-- [\[AAAI 2026\] Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](../../AAAI2026/optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
 - [\[ICLR 2026\] Neural Networks Learn Generic Multi-Index Models Near Information-Theoretic Limit](neural_networks_learn_generic_multi-index_models_near_information-theoretic_limi.md)
+- [\[AAAI 2026\] Cost-Minimized Label-Flipping Poisoning Attack to LLM Alignment](../../AAAI2026/optimization/cost-minimized_label-flipping_poisoning_attack_to_llm_alignment.md)
 
 </div>
 

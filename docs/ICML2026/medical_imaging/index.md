@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 医学图像方向34篇论文解读
+  ICML2026 医学图像方向24篇论文解读
 description: >-
-  34篇ICML2026的医学图像方向论文解读，涵盖医学影像、推理、语义分割、多模态、对齐/RLHF、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  24篇ICML2026的医学图像方向论文解读，涵盖医学影像、推理、语义分割、多模态、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "医学图像"
@@ -13,21 +13,17 @@ tags:
   - "语义分割"
   - "多模态"
   - "对齐/RLHF"
-  - "扩散模型"
+  - "对抗鲁棒"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🧪 ICML2026** · **34** 篇论文解读
+**🧪 ICML2026** · **24** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (35)](../../ACL2026/medical_imaging/index.md) · [📷 CVPR2026 (103)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (48)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (88)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (92)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (73)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (22)](../../ICML2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×13 · 推理 ×4 · 语义分割 ×3 · 多模态 ×3 · 对齐/RLHF ×3
-
-**[A Hypertoroidal Covering for Perfect Color Equivariance](a_hypertoroidal_covering_for_perfect_color_equivariance.md)**
-
-:   这篇论文用双覆盖把 HSL 中本来是区间值的饱和度和亮度提升到圆群上，构造 $\mathbb{T}^3$CEN，使网络对 hue、saturation、luminance shift 都能实现精确颜色等变，并在颜色偏移和医学图像等任务上提升鲁棒性。
+🔥 **高频主题：** 医学影像 ×12 · 推理 ×4 · 语义分割 ×3 · 多模态 ×3 · 对齐/RLHF ×3
 
 **[Are We Overconfident in Models and Results for Semi-Supervised 3D Medical Image Segmentation?](are_we_overconfident_in_models_and_results_for_semi-supervised_3d_medical_image_.md)**
 
@@ -37,17 +33,9 @@ tags:
 
 :   本文提出 S(H)NAP——基于 3D 扩散桥的「移除 + 插入」生成式干预框架，把 Sybil 这一前沿肺癌风险预测模型的决策反向拆解为「肺结节主效应 + 两两交互 + 背景」的 LMPI（线性+二阶交互模型），首次以因果而非相关的方式审计出它对 ECG 电极、衣物金属扣等院内伪影的依赖以及对外周肺结节的「径向不敏感」严重失败模式。
 
-**[Beyond Generative Priors: Minority Sampling with JEPA-Guided Diffusion](beyond_generative_priors_minority_sampling_with_jepa-guided_diffusion.md)**
-
-:   提出 JEPA Guidance，利用 JEPA（如 DINOv2）编码器的隐式密度信号引导扩散模型采样，将少数样本（minority sample）的定义从"生成模型先验下的低密度"转变为"世界先验下的低密度"，在无条件、类条件和文生图场景均实现更具语义意义的稀有样本生成。
-
 **[CASCADE Conformal Prediction: Uncertainty-Adaptive Prediction Intervals for Two-Stage Clinical Decision Support](cascade_conformal_prediction_uncertainty-adaptive_prediction_intervals_for_two-s.md)**
 
 :   提出 CASCADE 框架，将两阶段临床决策系统中第一阶段分类器的认知不确定性（通过 Venn-Abers 预测器量化）传播到第二阶段回归预测区间，使高置信患者的预测区间缩窄 38.9%，同时为不确定病例自动扩展安全缓冲，实现自适应覆盖保证。
-
-**[Controllable Generative Sandbox for Causal Inference](controllable_generative_sandbox_for_causal_inference.md)**
-
-:   本文提出 CausalMix：一个变分生成框架，把数据类型特定的 multi-head decoder + Bayesian Gaussian 混合潜在 prior 与三类可独立调控的因果"旋钮"（overlap $\alpha(X)$、CATE 函数 $\tau(X)$、未观测混杂 $\kappa(X,T)$）联合优化，从而在保持真实数据分布 fidelity 的前提下让用户自由设计 counterfactual benchmark，在 mCRPC（前列腺癌）真实病例上验证 CausalMix 既能高保真复现 mixed-type 表格，又能稳定地按需注入 overlap / confounding / 异质效应，用作 CATE 估计器的可控 stress test。
 
 **[DGNO: Discontinuous Galerkin Neural Operator for Pathology Defocus Deblurring](discontinuous_galerkin_neural_operator_for_pathology_defocus_deblurring.md)**
 
@@ -81,10 +69,6 @@ tags:
 
 :   OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血管-结构复合域里的约束熵 OT 问题"，用 Schrödinger Bridge 沿路径加几何投影监督，做到像素级形状/位置可控的合成造影，在 ARCADE 公开集上把下游狭窄检测 mAP@0.5 相对提升 27.8%。
 
-**[iLoRA: Bayesian Low-Rank Adaptation with Latent Interaction Graphs for Microbiome Diagnosis](ilora_bayesian_low-rank_adaptation_with_latent_interaction_graphs_for_microbiome.md)**
-
-:   iLoRA 用贝叶斯方法从每个微生物组样本里推断一张稀疏的菌群交互图（Poisson 边 → Laplace 稀疏化 → GNN 嵌入），再用这个图去生成 input-conditioned 的 LoRA 矩阵 $A$，让 LLM 在做 IBD 诊断的同时把"是哪些菌在 cross-talk"这件事和预测一起学出来。
-
 **[Learning Multi-Scale Hypergraph for High-Order Brain Connectivity Analysis](learning_multi-scale_hypergraph_for_high-order_brain_connectivity_analysis.md)**
 
 :   MuHL 用可学习尺度的图小波把脑 ROI 特征分解成多分辨率表征，再以"节点嵌入 × 共享投影矩阵"动态生成 soft 超边，让 AD/PD 多阶段分类在 ADNI 上做到 93.2% Acc、PPMI 上做到 76.8% Acc，同时给出可解释的关键 ROI 与超边。
@@ -101,10 +85,6 @@ tags:
 
 :   MEG-XL 用 2.5 分钟（191k token）的 MEG 上下文做 mask token 预训练（比此前长 5–300×），再微调到 50 词的脑到文本任务上，仅用 1 小时数据就达到 SOTA 监督方法 50 小时的解码精度，并显著超过所有 brain foundation models。
 
-**[On Revisiting Entropy for Identifying Mislabeled Images](on_revisiting_entropy_for_identifying_mislabeled_images.md)**
-
-:   作者发现"错标样本的预测熵在整个训练中持续偏高"这一现象不足以区分错标样本和困难干净样本，于是把熵乘上一个"预测是否对齐给定标签"的符号位得到 **signed entropy**，并沿训练 epoch 累积成 **SEI** 统计量，在 ISIC/DeepDRiD/PANDA/CheXpert 等多个医学数据集和 CIFAR-100N 上以纯插拔方式刷新错标检测 SOTA（最高领先 11%+）。
-
 **[PaCX-MAE: Physiology-Augmented Chest X-Ray Masked Autoencoder](pacx-mae_physiology-augmented_chest_x-ray_masked_autoencoder.md)**
 
 :   PaCX-MAE 在 MAE 预训练的胸片 ViT 之上，用 LoRA 微调把 ECG 和实验室检验两类生理信号编码器作为冻结教师，通过 InfoNCE 对比 + 余弦回归的双重蒸馏，把"看不见的生理上下文"注入纯图像编码器，推理时只需胸片即可在 9 个下游基准上整体超越同架构 MAE 基线，对生理依赖性任务尤为明显（MedMod +2.7 AUROC、VinDr +6.5 F1）。
@@ -112,22 +92,6 @@ tags:
 **[Plug-and-Play Diffusion Meets ADMM: Dual-Variable Coupling for Robust Medical Image Reconstruction](plug-and-play_diffusion_meets_admm_dual-variable_coupling_for_robust_medical_ima.md)**
 
 :   本文把 ADMM 的对偶变量重新塞回 PnP 扩散先验循环，用"对偶"提供积分反馈消除稳态偏差，再用一个频域 Spectral Homogenization 模块把结构化对偶残差白化成伪 AWGN，避免触发扩散去噪器的 OOD 幻觉，在 sparse-view / limited-angle CT 与加速 MRI 上同时拿到 SOTA 保真度和约 3× 推理加速。
-
-**[Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning](polaris_coupled_orbital_polar_embeddings_for_hierarchical_concept_learning.md)**
-
-:   Polaris 把概念表示拆成"方向（语义）+ 轨道势能（层级）"两个解耦信号，全部学到单位超球面上：用切空间投影 + 指数映射保证流形封闭，用各向异性球面 SVGD 防止赤道聚集，用 vMF KL 散度实现不对称的"父类应比子类更高熵"约束，在 taxonomy expansion 任务上把 top-K 召回提升最多 19 点、mean rank 降低 60%。
-
-**[Position: Beyond Sensitive Attributes, ML Fairness Should Quantify Structural Injustice via Social Determinants](position_beyond_sensitive_attributes_ml_fairness_should_quantify_structural_inju.md)**
-
-:   这是一篇 ICML 立场论文：作者主张 ML 公平性研究不能只盯着 race/sex 这类"敏感属性"，而必须把"社会决定因素"（neighborhood、ADI、学校经费、医疗可及性等情境变量）也纳入审计，并用大学录取理论模型 + 美国人口普查数据 + 乳腺癌筛查半合成实验，证明只围绕敏感属性的缓解策略反而可能制造新的结构性不公。
-
-**[Rethink the Role of Neural Decoders in Quantum Error Correction](rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)**
-
-:   本文在 $d\le9$ 的表面码上系统重做 MLP/3D-CNN/TCN/Transformer/GNN 五类神经解码器，并把"量化 + 剪枝 + FPGA 资源建模"作为一等公民放进训练流程，结论是：近期解码性能由数据量而非架构复杂度主导，且 INT4 + QAT 是实现微秒级实时解码的必要前提。
-
-**[Safety Generalization Under Distribution Shift in Safe Reinforcement Learning: A Diabetes Testbed](safety_generalization_under_distribution_shift_in_safe_reinforcement_learning_a_.md)**
-
-:   作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%，于是提出用 Basis-Adaptive Neural ODE 预测血糖轨迹、再用预测性屏蔽 (predictive shielding) 在测试时过滤危险动作，让 PPO-Lag / CPO 等基线在 OOD 病人上重新拿回 13–14% TIR。
 
 **[Scaling Vision Transformers for Functional MRI with Flat Maps](scaling_vision_transformers_for_functional_mri_with_flat_maps.md)**
 
@@ -156,7 +120,3 @@ tags:
 **[Turning Drift into Constraint: Robust Reasoning Alignment in Non-Stationary Multi-Stream Environments](turning_drift_into_constraint_robust_reasoning_alignment_in_non-stationary_envir.md)**
 
 :   本文把多个 MLLM 之间的推理"漂移"重新解释成 DPO 中的负样本约束，用 Plackett-Luce 偏好损失同时压制 N 个 source model 的发散轨迹，让 7B 学生模型在不需要 ground-truth 报告的前提下，仅用 10% 的 MIMIC-CXR 就在胸片分类与报告生成任务上超过所有 source teacher。
-
-**[Why Specialist Models Still Matter: A Heterogeneous Multi-Agent Paradigm for Medical Artificial Intelligence](why_specialist_models_still_matter_a_heterogeneous_multi-agent_paradigm_for_medi.md)**
-
-:   HetMedAgent 将通用 LLM、模态专科模型和临床医生组织成异构多智能体系统，通过冲突感知证据融合与不确定性路由，在心血管和胸片临床决策任务上证明专科模型与人类监督仍是医疗 AI 中不可替代的组成部分。

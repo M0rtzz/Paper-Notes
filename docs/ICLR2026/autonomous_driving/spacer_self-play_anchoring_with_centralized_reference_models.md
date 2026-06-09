@@ -41,27 +41,21 @@ SPACeR 提出"类人自博弈"框架，用预训练的 tokenized 自回归运动
 ## 方法详解
 
 ### 整体框架
-输入：WOMD 场景（道路图、所有智能体初始状态）。去中心化策略 $\pi_\theta$（MLP）只基于局部观测做决策。集中式参考模型 $\pi_{\text{ref}}$（预训练 tokenized 模型）基于全局场景提供分布信号。训练用 PPO + 似然奖励 + KL 约束，推理仅用轻量 MLP。
+SPACeR 想解决的是仿真交通智能体"快"与"像人"难以兼得的问题：自博弈 RL 推理快但容易学出不自然的开法，模仿学习像人但模型大、闭环反应差。它的做法是把两者拆成两个角色——真正上路决策的是一个轻量的去中心化策略 $\pi_\theta$（65K 参数 MLP），只看局部观测；预训练好的 tokenized 自回归运动模型 $\pi_{\text{ref}}$ 则退居幕后，看全局场景、只负责给出"人类会怎么开"的动作分布信号。训练时用 PPO 跑自博弈，但在奖励里掺入参考模型的对数似然、在目标里加上对参考模型的 KL 约束，让策略一边自博弈一边被往人类分布上拽；推理时彻底丢掉大模型，只跑那个小 MLP。
 
 ### 关键设计
 
-1. **集中式参考模型作为奖励提供者**:
+**1. 集中式参考模型作为奖励提供者：用概率分布而非轨迹真值来锚定自博弈。**
 
-    - 功能：预训练的 tokenized 模型（如 SMART/CAT-K）为每个智能体的每个时间步提供动作分布，作为人类真实性信号。
-    - 核心思路：奖励函数 = 任务奖励 + $\alpha \cdot \log \pi_{\text{ref}}(a_t|s_t)$（似然奖励），训练目标 = PPO 损失 - $\beta \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$（分布对齐）。参考模型是集中式的（看全局场景），策略是去中心化的（只看局部），形成类似 teacher-student 的 privileged information 架构。
-    - 设计动机：不用记录轨迹的真值提供监督，而是用模型的概率分布提供信号——这使得在自博弈产生的新状态（记录中没有的）中也能获得指导。解决了多智能体中的信用分配问题：参考模型为每个智能体的每个动作提供独立的分布信号。
+自博弈产生的状态大多是记录轨迹里没有的，传统模仿监督在这些新状态上无从下手。SPACeR 的解法是不去对齐某条具体轨迹，而是让预训练 tokenized 模型（如 SMART/CAT-K）在每个智能体、每个时间步都吐出一个动作分布，把这个分布当作"人类真实性"的密集信号。它从两处注入策略训练：一是奖励里加一项似然奖励 $\alpha \cdot \log \pi_{\text{ref}}(a_t|s_t)$，二是训练目标里减去一项分布对齐 $\beta \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$。关键在于参考模型是集中式的（能看全局场景）、而执行策略是去中心化的（只看局部），这构成了一个 teacher-student 式的 privileged information 架构——老师用上帝视角的分布去教只有局部视野的学生。因为信号是逐智能体、逐动作给的，它顺带解决了多智能体里的信用分配难题：每个智能体的每个动作都有自己独立的真实性反馈，而不是共享一个稀疏的全局奖励。
 
-2. **对齐的离散动作空间**:
+**2. 对齐的离散动作空间：让 KL 散度能闭式算出来。**
 
-    - 功能：将 RL 策略的动作空间与 tokenized 参考模型对齐（K=200 的 K-disk 聚类）。
-    - 核心思路：两者共享同一离散动作词表，使得 KL 散度可以闭式计算：$D_{\text{KL}} = \sum_{a} \pi_\theta(a|o) \log \frac{\pi_\theta(a|o)}{\pi_{\text{ref}}(a|s)}$，无需在线 tokenization。
-    - 设计动机：如果动作空间不对齐，就无法直接计算似然和 KL 散度，整个框架的核心机制会失效。
+要把上面的似然奖励和 KL 约束真正落地，前提是策略和参考模型说的是同一套"动作语言"。SPACeR 让 RL 策略直接采用 tokenized 参考模型的离散动作词表（K=200 的 K-disk 聚类），两者共享同一套离散动作。这样 KL 散度就能在每一步直接闭式求和，$D_{\text{KL}} = \sum_{a} \pi_\theta(a|o) \log \frac{\pi_\theta(a|o)}{\pi_{\text{ref}}(a|s)}$，全程不需要在线做 tokenization。反过来说，如果两边动作空间不对齐，似然和 KL 都没法直接计算，整个锚定机制就失效了——所以这个看似工程性的对齐，其实是框架能成立的前提。
 
-3. **目标丢弃（Goal Dropout）**:
+**3. 目标丢弃（Goal Dropout）：把显式目标奖励整个拿掉，反而更像人。**
 
-    - 功能：训练时随机移除目标条件，减少对显式目标的依赖。
-    - 核心思路：之前自博弈方法仅在到达目标时给奖励，导致智能体急加速赶目标。加入参考模型锚定后，显式目标奖励可以完全移除，反而提升真实性。
-    - 设计动机：人类驾驶并非总是冲向明确目标点，真实行为更多是顺畅流动。
+以往自博弈方法只在智能体到达目标点时才给奖励，结果策略学会了急加速冲向目标这种不自然的开法。有了参考模型的人类分布锚定之后，SPACeR 在训练时随机移除目标条件、甚至把显式目标奖励完全删掉，真实性不降反升。背后的直觉是：人类开车并非时刻盯着一个明确目标点冲，真实行为更多是顺着车流平滑流动，撤掉硬性目标奖励反而让策略回到这种自然节奏。
 
 ### 损失函数 / 训练策略
 $$\mathcal{L}(\theta) = \mathcal{L}_{\text{PPO}}(\theta; A[r]) - \beta D_{\text{KL}}(\pi_\theta(\cdot|o_t) \| \pi_{\text{ref}}(\cdot|s_t))$$
@@ -127,8 +121,8 @@ WOSAC 验证集（车辆）：
 - [\[ICML 2026\] Plug-and-Play Label Map Diffusion for Universal Goal-Oriented Navigation](../../ICML2026/autonomous_driving/plug-and-play_label_map_diffusion_for_universal_goal-oriented_navigation.md)
 - [\[AAAI 2026\] FastDriveVLA: Efficient End-to-End Driving via Plug-and-Play Reconstruction-based Token Pruning](../../AAAI2026/autonomous_driving/fastdrivevla_efficient_end-to-end_driving_via_plug-and-play_.md)
 - [\[ICCV 2025\] ETA: Efficiency through Thinking Ahead, A Dual Approach to Self-Driving with Large Models](../../ICCV2025/autonomous_driving/eta_efficiency_through_thinking_ahead_a_dual_approach_to_self-driving_with_large.md)
-- [\[ICLR 2026\] ST4VLA: Spatially Guided Training for Vision-Language-Action Models](st4vla_spatially_guided_training_for_vision-language-action_models.md)
-- [\[ICLR 2026\] DrivingGen: A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving](drivinggen_a_comprehensive_benchmark_for_generative_video_world_models_in_autono.md)
+- [\[NeurIPS 2025\] Neurosymbolic Diffusion Models](../../NeurIPS2025/autonomous_driving/neurosymbolic_diffusion_models.md)
+- [\[CVPR 2026\] Efficient Equivariant Transformer for Self-Driving Agent Modeling](../../CVPR2026/autonomous_driving/efficient_equivariant_transformer_for_self-driving_agent_modeling.md)
 
 </div>
 

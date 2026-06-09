@@ -27,7 +27,7 @@ tags:
 ## 研究背景与动机
 LLM评判模型（LLM-as-a-Judge）在LLM生态中日益关键——训练阶段提供偏好信号、推理阶段做 best-of-N 选择、评估阶段替代人工。但目前评判模型面临两大问题：
 
-**纯文本推理的天花板**：现有推理增强的评判模型（如JudgeLRM、J1-Judge）仅依赖文本推理链，in需要精确计算或符号推理的场景下力不从心（如验证代码输出、检查指令约束）
+**纯文本推理的天花板**：现有推理增强的评判模型（如JudgeLRM、J1-Judge）仅依赖文本推理链，在需要精确计算或符号推理的场景下力不从心（如验证代码输出、检查指令约束）
 
 **工具使用的局限**：少数尝试引入工具的方法存在(i)仅在推理时使用工具而非训练时优化，(ii)局限于特定任务/领域
 
@@ -36,35 +36,34 @@ LLM评判模型（LLM-as-a-Judge）在LLM生态中日益关键——训练阶段
 ## 方法详解
 
 ### 整体框架
-TIR-Judge 基于多轮工具集成推理(TIR)构建评判轨迹 $s_k = \{r_1,c_1,o_1,...,r_k,c_k,o_k\}$，其中 $r_i$ 是推理步骤、$c_i$ 是生成的代码、$o_i = \mathcal{I}(c_i)$ 是执行结果。使用DAPO（GRPO改进版）进行RL训练。支持Pointwise/Pairwise/Listwise三种评判格式。
+TIR-Judge 要解决的是：让评判模型不再只靠脑补文本推理来打分，而是在评判过程中边想边写代码、用执行结果来校正判断。整篇方法围绕「把工具集成推理(TIR)塞进评判任务、并用 RL 端到端训练它」展开。
+
+具体来说，评判被建模成一条多轮 TIR 轨迹 $s_k = \{r_1,c_1,o_1,...,r_k,c_k,o_k\}$：每一轮模型先产出推理步骤 $r_i$，再生成一段代码 $c_i$，工具执行后返回结果 $o_i = \mathcal{I}(c_i)$，模型据此进入下一轮推理，直到给出最终判断。这套轨迹用 DAPO（GRPO 的改进版）做 RL 优化，并统一支持 Pointwise（单样本打分）、Pairwise（两两比较）、Listwise（列表排序）三种评判格式。
 
 ### 关键设计
 
-1. **多样化训练数据构建**:
+**1. 多样化训练数据：让模型学会「该不该用工具」。**
 
-    - 功能：平衡可验证域（数学、编程）和不可验证域（对话、安全、通用代码）的训练数据
-    - 核心思路：从HelpSteer3、UltraInteract、CodeRM等收集真实偏好对；从Qwen3-8B/14B等多个模型采样生成合成偏好对并自动验证。共约26K偏好对，覆盖多域多格式
-    - 设计动机：让模型学会何时调用工具有用（可验证场景）、何时纯推理即可（不可验证场景）
+如果训练数据全是数学、编程这类可验证任务，模型会养成「凡事都写代码」的惯性；但对话、安全这类不可验证场景里硬调工具反而添乱。为此作者刻意把可验证域（数学、编程）和不可验证域（对话、安全、通用代码）混在一起训练。数据来源有两块：一是从 HelpSteer3、UltraInteract、CodeRM 等收集真实偏好对，二是用 Qwen3-8B/14B 等多个模型采样生成合成偏好对并自动验证其正确性。最终约 26K 偏好对，覆盖多域多格式——这种刻意的域混合，正是让模型在「可验证场景调工具、不可验证场景纯推理」之间学会自适应切换的前提。
 
-2. **三维度奖励设计**:
+**2. 三维度乘法奖励：把正确性、格式、工具质量绑成一个信号。**
 
-    - 功能：引导模型同时优化正确性、格式规范和工具使用质量
-    - 核心思路：$R = R_c \times (0.1 + 0.9 \cdot \mathbb{I}[R_t = 1 \wedge R_f = 1])$
-        - 正确性奖励 $R_c$：预测是否匹配ground truth偏好
-        - 格式奖励 $R_f$：输出是否符合结构化格式（\<score\>标签、\<preference\>标签等），对安全/通用场景要求不使用工具才给正分
-        - 工具奖励 $R_t$：代码无错误且不超过3次调用
-    - 设计动机：仅在"三者兼得"时给满分，单独的正确性只给10%奖励，避免不规范但碰巧正确的行为
+评判任务里只奖励「答对」是不够的——模型可能输出不合规范却碰巧对，或滥用工具刷轨迹。作者把奖励设计成乘法结构：
 
-3. **迭代自举训练策略 (TIR-Judge-Zero)**:
+$$R = R_c \times (0.1 + 0.9 \cdot \mathbb{I}[R_t = 1 \wedge R_f = 1])$$
 
-    - 功能：无需教师蒸馏，纯RL自举提升
-    - 核心思路：交替执行 RL→拒绝采样→SFT→RL 循环：$\mathcal{T}_{t+1} \leftarrow \text{RS}(\pi_{\theta_t}), \pi_{\theta_{t+1}} \leftarrow \text{SFT}(\pi_{\theta_0}, \mathcal{T}_{t+1}), \pi_{\theta_{t+1}} \leftarrow \text{RL}(\pi_{\theta_{t+1}})$。每个prompt只保留最短/工具调用最少的正确轨迹以提高效率
-    - 设计动机：证明TIR评判模型可不依赖蒸馏自我进化，降低对强教师模型的依赖
+三个分量各司其职：正确性奖励 $R_c$ 看预测是否匹配 ground truth 偏好；格式奖励 $R_f$ 看输出是否符合结构化格式（`<score>`、`<preference>` 等标签），并且对安全/通用场景额外要求「不使用工具」才给正分；工具奖励 $R_t$ 要求代码无执行错误且调用不超过 3 次。乘法结构的关键在于：只有「答对 + 格式对 + 工具用得对」三者兼得时才拿满分，否则即使答对也只剩 $0.1 R_c$ 这 10% 的奖励。这比简单加权更省心——不用反复调各项权重，就能把「不规范但碰巧正确」的投机行为压下去。
 
-### 其他训练细节
-- 骨干模型Qwen3-8B和Qwen3-4B；错误信息截断到最后一行防止上下文过长；执行结果在loss计算中被mask防止过拟合
-- 蒸馏版使用 Gemini-2.5-Flash 作教师，收集约10K高质量轨迹
-- 8张H100 80G GPU训练
+**3. 迭代自举训练 (TIR-Judge-Zero)：不靠教师蒸馏也能自我进化。**
+
+常规做法是先用强教师蒸馏冷启动再 RL，但这把性能上限绑死在教师身上。TIR-Judge-Zero 干脆去掉教师，靠 RL→拒绝采样→SFT→RL 的循环自举：
+
+$$\mathcal{T}_{t+1} \leftarrow \text{RS}(\pi_{\theta_t}), \quad \pi_{\theta_{t+1}} \leftarrow \text{SFT}(\pi_{\theta_0}, \mathcal{T}_{t+1}), \quad \pi_{\theta_{t+1}} \leftarrow \text{RL}(\pi_{\theta_{t+1}})$$
+
+即用当前策略 $\pi_{\theta_t}$ 做拒绝采样产出新轨迹集 $\mathcal{T}_{t+1}$，从原始模型 $\pi_{\theta_0}$ 重新 SFT，再接一轮 RL。拒绝采样时每个 prompt 只保留最短、工具调用最少的正确轨迹，既提效又抑制冗余调用。这套循环证明了 TIR 评判模型能脱离强教师自我进化，把对蒸馏的依赖整个拿掉。
+
+### 训练策略与细节
+骨干用 Qwen3-8B 和 Qwen3-4B。工程上做了两处稳定化处理：代码报错信息截断到最后一行，避免冗长 traceback 撑爆上下文；工具执行结果 $o_i$ 在 loss 计算中被 mask 掉，防止模型去拟合环境返回的内容而过拟合。蒸馏版（对照 Zero 版）则用 Gemini-2.5-Flash 当教师，收集约 10K 高质量轨迹冷启动。全程在 8 张 H100 80G GPU 上训练。
 
 ## 实验关键数据
 
@@ -118,10 +117,10 @@ TIR-Judge 基于多轮工具集成推理(TIR)构建评判轨迹 $s_k = \{r_1,c_1
 ## 相关论文
 
 - [\[ICLR 2026\] Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows](multi-view_encoders_for_performance_prediction_in_llm-based_agentic_workflows.md)
-- [\[ICLR 2026\] A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
 - [\[ICLR 2026\] ParoQuant: Pairwise Rotation Quantization for Efficient Reasoning LLM Inference](paroquant_pairwise_rotation_quantization_for_efficient_reasoning_llm_inference.md)
 - [\[ICLR 2026\] A Fano-Style Accuracy Upper Bound for LLM Single-Pass Reasoning in Multi-Hop QA](a_fano-style_accuracy_upper_bound_for_llm_single-pass_reasoning_in_multi-hop_qa.md)
 - [\[ACL 2026\] ProActor: Timing-Aware Reinforcement Learning for Proactive Task Scheduling Agents](../../ACL2026/model_compression/proactor_timing-aware_reinforcement_learning_for_proactive_task_scheduling_agent.md)
+- [\[ICLR 2026\] Efficient Reasoning with Balanced Thinking](efficient_reasoning_with_balanced_thinking.md)
 
 </div>
 

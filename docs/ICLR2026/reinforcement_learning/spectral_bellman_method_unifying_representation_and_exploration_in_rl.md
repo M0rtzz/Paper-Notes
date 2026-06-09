@@ -46,55 +46,21 @@ tags:
 
 ### 整体框架
 
-SBM 的核心理论链路：
-
-1. **零 IBE 条件** → 函数空间在 Bellman 算子下封闭
-2. **谱分析** → 发现 Bellman 变换矩阵的 SVD 与特征协方差矩阵对齐
-3. **幂迭代法**类比 → 推导交替优化目标 (SBM Loss)
-4. **协方差结构** → 自然嵌入 Thompson Sampling 探索
+SBM 的出发点是一个看似纯理论的观察：当特征空间满足零内在 Bellman 误差 (IBE) 时，函数空间在 Bellman 算子下封闭，此时 Bellman 算子作用于一组 Q 函数所得到的变换矩阵，其奇异值分解 (SVD) 恰好与特征协方差矩阵对齐。SBM 把这个谱关系翻译成一个可微的代理目标——用类似幂迭代的交替优化逼近这组谱结构——再让同一个特征协方差顺势充当 Thompson Sampling 的探索后验，于是表示学习与探索被同一个量统一了起来。
 
 ### 关键设计
 
-1. **Bellman 谱分解定理**：零 IBE 下的结构揭示
+**1. Bellman 谱分解定理：把零 IBE 的隐藏结构显式化。** 直接最小化 IBE 会陷入 min-max-min 优化，根源在于 Bellman 算子关于 $Q_\theta$ 高度非线性，难以提供清晰的学习信号。SBM 的突破在于证明：在零 IBE 条件下，定义加权特征矩阵 $\Phi_P$ 与加权后 Bellman 参数矩阵 $\tilde{\Theta}_P$，则 Bellman 变换矩阵可分解为 $\mathcal{T}\bar{Q} = \Phi_P \tilde{\Theta}_P$，而它的 SVD 与特征协方差矩阵 $\Lambda = \mathbb{E}[\phi(s,a)\phi(s,a)^\top]$ 直接挂钩——非零奇异值恰好是 $\Lambda$ 的特征值，左奇异向量对应加权特征、右奇异向量对应加权参数。一个关键推论是 $\Lambda_1 = \Lambda_2 = \Lambda$，即特征协方差与后 Bellman 参数协方差对齐。这条定理之所以重要，是因为它把"特征对值估计是否合适"这个抽象判据，等价转换成了一个有现成数值算法（SVD/幂迭代）可逼近的谱问题。
 
-    - 核心发现：在零 IBE 条件下，定义加权特征矩阵 $\Phi_P$ 和加权后 Bellman 参数矩阵 $\tilde{\Theta}_P$，则 Bellman 变换矩阵 $\mathcal{T}\bar{Q} = \Phi_P \tilde{\Theta}_P$ 的 SVD 与特征协方差矩阵 $\Lambda = \mathbb{E}[\phi(s,a)\phi(s,a)^\top]$ 直接相关
-    - 非零奇异值恰好是 $\Lambda$ 的特征值，左奇异向量对应加权特征，右奇异向量对应加权参数
-    - 重要推论：$\Lambda_1 = \Lambda_2 = \Lambda$，即特征协方差和后 Bellman 参数协方差对齐
+**2. SBM 损失函数：用幂迭代把谱目标变成可训练的交替优化。** 知道目标是逼近一组奇异向量后，SBM 借鉴求 SVD 的幂迭代思想，把问题拆成交替更新特征 $\phi$ 与参数 $\tilde{\theta}$ 的目标 $\mathcal{L}(\phi, \tilde{\theta}) = \mathcal{L}_1(\phi) + \mathcal{L}_2(\tilde{\theta}) + \mathcal{L}_{orth}(\phi, \tilde{\theta})$。其中表示损失 $\mathcal{L}_1(\phi)$ 更新 $\phi$ 使其与 Bellman 变换后的 Q 值对齐，并用当前参数协方差 $\Lambda_{2,t}$ 做正则化；参数损失 $\mathcal{L}_2(\tilde{\theta})$ 反向更新 $\tilde{\theta}$ 使其最佳表示 Bellman 变换结果，并用当前特征协方差 $\Lambda_{1,t}$ 正则化；正交正则化 $\mathcal{L}_{orth}$ 则约束不同维度的特征彼此正交，对应 SVD 中奇异向量的正交性。Proposition 2 进一步保证：最小化这个 SBM Loss 等价于执行一步幂迭代更新，因此随着训练推进，特征会沿着谱结构的主方向收敛。
 
-2. **SBM 损失函数**：基于幂迭代的实用学习目标
+**3. 相比 Bellman MSE 的稳健性优势：用移动平均协方差替换单样本噪声估计。** 把 SBM Loss 与朴素的 Bellman MSE 逐项展开对比，差异集中在二次项：MSE 目标里的 $\|\phi(s,a)\|_{\hat{\Lambda}}^2$ 用的是单样本噪声估计 $\hat{\Lambda}$，方差大、信号噪，而 SBM 的二次项用的是移动平均协方差 $\Lambda_{2,t}$，相当于把整批统计量做了稳健正则化。此外 SBM 把目标拆成 $\mathcal{L}_1 + \mathcal{L}_2$ 的分离结构，天然契合幂迭代的交替更新，比同时优化一个 MSE 更稳定，且显式带有正交正则化。这解释了为什么从同一理论目标出发，SBM 的实现比直接最小化 Bellman 残差更不易发散。
 
-    - 受 SVD 幂迭代法启发，推导出交替优化式的目标函数：
-    - $\mathcal{L}(\phi, \tilde{\theta}) = \mathcal{L}_1(\phi) + \mathcal{L}_2(\tilde{\theta}) + \mathcal{L}_{orth}(\phi, \tilde{\theta})$
-    - **表示损失** $\mathcal{L}_1(\phi)$：更新 $\phi$ 使其与 Bellman 变换后的 Q 值对齐，使用当前参数协方差 $\Lambda_{2,t}$ 正则化
-    - **参数损失** $\mathcal{L}_2(\tilde{\theta})$：更新 $\tilde{\theta}$ 使其最佳表示 Bellman 变换结果，使用当前特征协方差 $\Lambda_{1,t}$ 正则化
-    - **正交正则化** $\mathcal{L}_{orth}$：确保不同维度的特征正交
-    - 关键定理 (Proposition 2)：最小化 SBM Loss 等价于执行幂迭代更新
-
-3. **SBM Loss 相比 Bellman MSE 的优势**：
-
-    - MSE 目标中的二次项 $\|\phi(s,a)\|_{\hat{\Lambda}}^2$ 使用的是**单样本噪声估计** $\hat{\Lambda}$
-    - SBM 的二次项使用**移动平均协方差** $\Lambda_{2,t}$，提供稳健的批统计量正则化
-    - SBM 的分离结构 $\mathcal{L}_1 + \mathcal{L}_2$ 天然支持交替优化（幂迭代的内在结构），比同时优化 MSE 更稳定
-    - SBM 显式包含正交正则化
-
-4. **Thompson Sampling 探索**：利用特征协方差自然驱动
-
-    - 给定学到的特征 $\phi$，构建精度矩阵 $\Sigma = \lambda I + \sum_{(s,a) \in \mathcal{D}} \phi(s,a)\phi(s,a)^\top$
-    - 每次 rollout 前从后验分布采样：$\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_{LS}, \sigma_{exp} \Sigma^{-1})$
-    - 与低 IBE 表示天然兼容——特征协方差结构同时编码了值估计的不确定性和探索方向
-    - 也兼容 UCB 方法（使用相同的 $\Sigma$）
+**4. Thompson Sampling 探索：让特征协方差顺势驱动采样。** 既然学到的特征协方差既刻画了表示结构、又编码了值估计的不确定性，SBM 直接复用它来探索，无需额外的探索模块。具体做法是构建精度矩阵 $\Sigma = \lambda I + \sum_{(s,a) \in \mathcal{D}} \phi(s,a)\phi(s,a)^\top$，每次 rollout 前从后验 $\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_{LS}, \sigma_{exp} \Sigma^{-1})$ 采样一组参数再贪婪执行。由于低 IBE 特征的协方差结构同时编码了不确定性方向，采样自然偏向信息量大的状态-动作；同一个 $\Sigma$ 也可无缝替换成 UCB 方法。至此表示与探索共享同一个量，"学好表示"与"探索得好"成了一回事。
 
 ### 损失函数 / 训练策略
 
-完整算法 (Algorithm 2) 在每轮迭代中交替执行三个阶段：
-
-1. **数据收集** (Thompson Sampling)：采样 $\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_t, \sigma_{exp} \Sigma_t^{-1})$，使用贪婪策略 $\pi_{\hat{\theta}_{TS}}$ 收集数据
-2. **策略优化**：使用标准 Q-learning 损失 $\mathcal{L}_{QL}(\theta; \phi) = \mathbb{E}[(\mathcal{T}Q_{\theta^-}(s,a) - \phi(s,a)^\top\theta)^2]$ 更新 $\theta$
-3. **表示学习**：使用 SBM Loss 更新特征 $\phi$，参数分布以当前 Q 参数为中心 $\nu(\theta) = \mathcal{N}(\hat{\theta}_{t+1}, \sigma_{rep}^2 I)$
-
-$\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \theta + \Delta(\theta)$，其中 $\Delta$ 是可训练的 MLP。
-
-协方差矩阵使用指数移动平均更新以保证稳定性。
+完整算法 (Algorithm 2) 每轮迭代交替执行三阶段。数据收集阶段按 Thompson Sampling 采样 $\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_t, \sigma_{exp} \Sigma_t^{-1})$ 并用贪婪策略 $\pi_{\hat{\theta}_{TS}}$ 收集轨迹；策略优化阶段用标准 Q-learning 损失 $\mathcal{L}_{QL}(\theta; \phi) = \mathbb{E}[(\mathcal{T}Q_{\theta^-}(s,a) - \phi(s,a)^\top\theta)^2]$ 更新 $\theta$；表示学习阶段则用 SBM Loss 更新特征 $\phi$，其参数分布以当前 Q 参数为中心 $\nu(\theta) = \mathcal{N}(\hat{\theta}_{t+1}, \sigma_{rep}^2 I)$。其中 $\tilde{\theta}(\theta)$ 实现为残差网络 $\tilde{\theta}(\theta) = \theta + \Delta(\theta)$（$\Delta$ 为可训练 MLP），而所有协方差矩阵都用指数移动平均更新以保证稳定性。
 
 ## 实验关键数据
 
@@ -166,7 +132,7 @@ $\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \thet
 - [\[AAAI 2026\] First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)
 - [\[ICLR 2026\] A Unifying View of Coverage in Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)
 - [\[ICLR 2026\] Stackelberg Coupling of Online Representation Learning and Reinforcement Learning](stackelberg_coupling_of_online_representation_learning_and_reinforcement_learnin.md)
-- [\[ICLR 2026\] Emergence of Spatial Representation in an Actor-Critic Agent with Hippocampus-Inspired Sequence Generator](emergence_of_spatial_representation_in_an_actor-critic_agent_with_hippocampus-in.md)
+- [\[ICML 2025\] Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL](../../ICML2025/reinforcement_learning/learning_to_trust_bellman_updates_selective_state-adaptive_regularization_for_of.md)
 
 </div>
 

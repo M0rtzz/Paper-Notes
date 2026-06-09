@@ -44,51 +44,23 @@ tags:
 
 ### 整体框架
 
-ECHO (Evaluating Communication over long HOps) 基准包含两个部分：
-- **ECHO-Synth**：3 个合成任务（单源最短路 SSSP、节点离心率 ECC、图直径 DIAM），覆盖 6 种图拓扑，10,080 个图
-- **ECHO-Chem**：2 个化学任务（原子电荷预测 ECHO-Charge、分子能量预测 ECHO-Energy），基于 DFT 计算，约 170K–196K 分子图
-
-所有任务的图直径在 17–40 之间，确保传播范围远超现有基准。
+ECHO (Evaluating Communication over long HOps) 是一套专为长程传播设计的基准，由两部分构成：ECHO-Synth 提供 3 个合成图属性预测任务（单源最短路 SSSP、节点离心率 ECC、图直径 DIAM），覆盖 6 种图拓扑、共 10,080 个图；ECHO-Chem 提供 2 个基于密度泛函理论（DFT）计算的真实化学任务（原子电荷预测 ECHO-Charge、分子能量预测 ECHO-Energy），约 170K–196K 个分子图。所有任务的图直径都落在 17–40 跳之间，传播范围远超 LRGB 等现有基准，而所有被测模型都套在统一的 backbone（embedding + GNN 传播层 + MLP readout）里，让性能差异只反映核心传播机制本身。
 
 ### 关键设计
 
-1. **合成任务的拓扑设计**
+**1. 合成任务的拓扑设计：用结构瓶颈逼出过挤压。** 仅靠局部消息传递的 GNN 之所以在长程任务上失败，是因为远距离信息要挤过狭窄的结构瓶颈才能到达。ECHO-Synth 据此构造了 6 种瓶颈各异的拓扑——线图（line）信息必须严格顺序逐跳传播；梯图（ladder）和网格（grid）形成规则的二维通路，并以 20% 概率随机删边打破对称性、制造绕行；树（tree）的分支点天然是信息汇聚的咽喉；毛虫图（caterpillar）和龙虾图（lobster）则在主干上挂出长短不一的枝杈。不同拓扑施加不同强度的过挤压压力，使得一个模型在所有拓扑上的表现共同刻画出它对结构的真实感知能力，而非对某一种规则布局的过拟合。
 
-    - **功能**：设计 6 种具有结构瓶颈的图拓扑——线图（line）、梯图（ladder）、网格（grid）、树（tree）、毛虫图（caterpillar）、龙虾图（lobster）
-    - **核心思路**：每种拓扑都引入了不同类型的信息传播瓶颈。如线图中信息必须顺序传播；树中分支点是瓶颈；网格通过随机边删除（20%概率）破坏对称性
-    - **设计动机**：结构瓶颈加剧过挤压问题，使得仅靠局部消息传递的 GNN 难以完成任务
+**2. 图属性预测任务的选择：对全局信息的依赖逐级递进。** 三个合成任务并非随意挑选，而是按对全局信息的需求逐层加码：SSSP 只需算出从单个源节点到其余节点的最短路径；ECC 要为每个节点求出它的最长最短路（离心率）；DIAM 则要在全图任意两节点间求最长最短路（直径）。它们恰好对应 Dijkstra、Bellman-Ford 这类必须完整遍历全图才能收敛的经典算法，因此任务本身就内含一个明确可验证的"长程"定义——模型要做对，就得在内部学会模拟这种全局遍历，无法靠局部子结构计数取巧。
 
-2. **图属性预测任务的选择**
+**3. ECHO-Chem 的化学基础：让物理来定义长程依赖。** 量子力学中，一个原子的电荷重分布和整个分子的总能量本质上依赖远距离的电子-核、电子-电子交互，这给长程传播提供了天然且无法回避的真实需求。为此作者从 ChEMBL 数据库中筛出直径 17–40 的分子，用 GAFF 力场优化其 3D 构象，再交给 ORCA 量子化学软件做 DFT 计算，得到原子电荷与分子能量的基准标签——整个并行计算耗时约 2 个月，以保证标签精度足以暴露模型在 $10^{-4}$ 到 $10^{-6}$ e 量级上的电荷误差。
 
-    - **功能**：选择 SSSP、ECC、DIAM 三个任务
-    - **核心思路**：这三个任务对全局信息的依赖程度递进——SSSP 需要从源节点到所有节点的最短路径；ECC 需要每个节点的最长最短路；DIAM 需要全图任意两节点间的最长最短路
-    - **设计动机**：经典算法如 Dijkstra 和 Bellman-Ford 需要完整遍历图才能解决这些问题，以此测试 GNN 能否学习模拟这种全局遍历
+**4. 节点特征的最小化设计：堵死特征 shortcut。** 如果节点自带丰富特征，模型可能绕开传播、直接靠特征相似性蒙混过关，从而掩盖真实的结构感知差距。合成任务因此把节点特征压到最简：每个节点只携带一个均匀随机标量 $r \sim \mathcal{U}(0,1)$，SSSP 额外加一个二值指示位标记源节点。特征本身不携带任何可被利用的结构线索，模型想答对就只能依赖图结构上的信息传播，性能差异于是干净地归因到传播能力。
 
-3. **ECHO-Chem 的化学基础**
-
-    - **功能**：构建基于 DFT 计算的原子电荷和分子能量数据集
-    - **核心思路**：从 ChEMBL 数据库中筛选直径 17–40 的分子，使用 GAFF 力场优化 3D 结构，然后用 ORCA 量子化学软件进行 DFT 计算获取基准数据
-    - **设计动机**：量子力学中电荷重分布和分子能量本质依赖长程电子-核、电子-电子交互，提供了天然的长程依赖；约 2 个月的并行 DFT 计算确保数据精度
-
-4. **节点特征的最小化设计**
-
-    - **功能**：合成任务中每个节点仅使用均匀随机标量特征 $r \sim \mathcal{U}(0,1)$
-    - **核心思路**：SSSP 额外用二值指示标记源节点
-    - **设计动机**：防止模型利用特征shortcut，确保性能差异反映结构感知能力
-
-5. **E(3) 不变的分子编码**
-
-    - **功能**：化学任务中节点特征为原子序数 + 到质心距离，边特征为键类型 + 键长
-    - **核心思路**：空间编码在 E(3) 群（旋转、反射、平移）下不变
-    - **设计动机**：确保空间表示尊重分子物理的对称性
+**5. E(3) 不变的分子编码：让空间表示尊重物理对称性。** 化学任务的节点特征取原子序数加上原子到分子质心的距离，边特征取键类型加键长。这套编码在 E(3) 群（旋转、反射、平移）下保持不变——同一个分子无论怎样在空间中摆放，输入表示都相同。这样模型学到的是分子的内在几何而非它在坐标系里的偶然姿态，符合分子物理本应满足的对称性。
 
 ### 损失函数 / 训练策略
 
-- 损失函数：$\log_{10}(\text{MSE}(y_{\text{true}} - y_{\text{pred}}))$，使用对数尺度因为预测值可能很小
-- 优化器：Adam
-- Early stopping：基于验证集损失，patience 50 epochs，最大 1000 epochs
-- 超参数搜索：Bayesian Optimization (Gaussian Process prior)，100 trials
-- 最优配置重复 4 次随机种子取平均
+回归目标用对数尺度的均方误差 $\log_{10}(\text{MSE}(y_{\text{true}} - y_{\text{pred}}))$，因为电荷等预测值量级很小，对数尺度能放大微小误差的区分度。优化器为 Adam，按验证集损失做 early stopping（patience 50 epochs，上限 1000 epochs）。为保证比较公平，每个"模型-数据集"组合都用贝叶斯优化（高斯过程先验）跑 100 trials 搜超参，最优配置再用 4 个随机种子重复取平均。
 
 ## 实验关键数据
 
@@ -177,9 +149,9 @@ ECHO-Chem 两个化学任务（Test MAE，越低越好）：
 
 - [\[ICML 2026\] Beyond Trajectory-Level Attribution: Graph-Based Credit Assignment for Agentic Reinforcement Learning](../../ICML2026/llm_evaluation/beyond_trajectory-level_attribution_graph-based_credit_assignment_for_agentic_re.md)
 - [\[NeurIPS 2025\] BLINK-Twice: You See But Do You Observe? A Reasoning Benchmark on Visual Perception](../../NeurIPS2025/llm_evaluation/blink-twice_you_see_but_do_you_observe_a_reasoning_benchmark_on_visual_perceptio.md)
-- [\[ICLR 2026\] Towards Anomaly-Aware Pre-Training and Fine-Tuning for Graph Anomaly Detection](towards_anomaly-aware_pre-training_and_fine-tuning_for_graph_anomaly_detection.md)
 - [\[ICLR 2026\] Can Vision–Language Models Assess Graphic Design Aesthetics? A Benchmark, Evaluation, and Dataset Perspective](can_vision_language_models_assess_graphic_design_aesthetics_a_benchmark_evaluati.md)
-- [\[ICML 2025\] Feedforward Few-shot Species Range Estimation](../../ICML2025/llm_evaluation/feedforward_few-shot_species_range_estimation.md)
+- [\[ACL 2026\] Contrastive Decoding Mitigates Score Range Bias in LLM-as-a-Judge](../../ACL2026/llm_evaluation/contrastive_decoding_mitigates_score_range_bias_in_llm-as-a-judge.md)
+- [\[ACL 2025\] CoV-Eval: Can You Really Trust Code Copilots? Evaluating Large Language Models from a Code Security Perspective](../../ACL2025/llm_evaluation/cov_eval_evaluating_llms_from_code_security_perspective.md)
 
 </div>
 

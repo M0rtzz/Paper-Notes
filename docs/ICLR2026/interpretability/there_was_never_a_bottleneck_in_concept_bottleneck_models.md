@@ -43,49 +43,27 @@ tags:
 
 ## 方法详解
 
-### 1. 数据生成过程
+### 整体框架
 
-- 输入 $\mathbf{x}$ 由概念 $\mathbf{c}$ 和 nuisance $\mathbf{n}$ 决定：$p(\mathbf{x}, \mathbf{y}, \mathbf{c}, \mathbf{n}) = p(\mathbf{x}|\mathbf{c}, \mathbf{n}) p(\mathbf{y}|\mathbf{x}) p(\mathbf{c}, \mathbf{n})$
-- Nuisance 分为与任务相关的 $\mathbf{n}_y$ 和无关的 $\mathbf{n}_{\bar{y}}$
+MCBM 在标准 CBM 之上补一个被遗漏的约束：不仅要让每个表征分量 $z_j$ 预测对应概念 $c_j$，还要让 $z_j$ 在给定 $c_j$ 之后不再携带关于输入 $\mathbf{x}$ 的任何残余信息。这一约束以一项信息瓶颈正则化的形式加进训练目标，把 $z_j$ 压成 $c_j$ 的最小充分统计量，从而让"修改 $z_j$"和"干预 $c_j$"严格对应起来。
 
-### 2. 三个信息论目标
+### 关键设计
 
-**目标 1**（VM/CBM/MCBM 共有）：最大化 $I(Z; Y)$——表征预测目标
+**1. 数据生成假设：把泄漏的源头显式建模出来。** 论文先假定一个生成过程 $p(\mathbf{x}, \mathbf{y}, \mathbf{c}, \mathbf{n}) = p(\mathbf{x}|\mathbf{c}, \mathbf{n})\, p(\mathbf{y}|\mathbf{x})\, p(\mathbf{c}, \mathbf{n})$，输入 $\mathbf{x}$ 同时由可标注的概念 $\mathbf{c}$ 和未标注的 nuisance $\mathbf{n}$ 决定，而 nuisance 又进一步拆成与任务相关的 $\mathbf{n}_y$ 和与任务无关的 $\mathbf{n}_{\bar{y}}$。之所以要这样细分，是因为 CBM 的"泄漏"本质就是 $z_j$ 把这些本该被瓶颈挡在外面的 nuisance 也编码了进去；只有把 nuisance 显式写出来，才能用信息量精确刻画"该留什么、该扔什么"。
 
-$$\max_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, \mathbf{y})} \left[\mathbb{E}_{p_\theta(\mathbf{z}|\mathbf{x})} \left[\log q_\phi(\hat{\mathbf{y}}|\mathbf{z})\right]\right]$$
+**2. 三个信息论目标：从充分到最小的递进。** MCBM 的优化由三条互补的信息量约束组成，逐级把表征收紧。第一条是所有变体共有的任务充分性，最大化 $I(Z;Y)$，对应最大化 $\max_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, \mathbf{y})}[\mathbb{E}_{p_\theta(\mathbf{z}|\mathbf{x})}[\log q_\phi(\hat{\mathbf{y}}|\mathbf{z})]]$，保证表征能预测标签。第二条是 CBM 也有的概念充分性，最大化 $I(Z_j; C_j)$，写成 $\max_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, c_j)}[\mathbb{E}_{p_\theta(z_j|\mathbf{x})}[\log q_\phi(\hat{c}_j|z_j)]]$，要求 $z_j$ 足以解码出 $c_j$。真正区分 MCBM 的是第三条，最小化条件互信息 $I(Z_j; X | C_j)$，用 KL 散度近似为 $\min_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, c_j)}[D_{KL}(p_\theta(z_j|\mathbf{x}) \| q_\phi(\hat{z}_j|c_j))]$。它强制 $z_j$ 在已知 $c_j$ 后对 $\mathbf{x}$ 不再有任何额外信息，等价于让 Markov 链 $X \leftrightarrow C_j \leftrightarrow Z_j$ 成立——前两条只保证 $z_j$"足够"编码 $c_j$，第三条才保证它"仅仅"编码 $c_j$，这正是 CBM 缺失的那个瓶颈。
 
-**目标 2**（CBM/MCBM）：最大化 $I(Z_j; C_j)$——$z_j$ 充分统计量
+**3. 有理论根基的干预：让改 $z_j$ 等于改 $c_j$。** 标准 CBM 里并不存在从 $c_j$ 到 $z_j$ 的有向路径，$p(z_j|c_j)$ 在图模型中根本没有定义，所以现有干预只能用 sigmoid 逆函数的经验分位数去近似，是临时拼凑的。MCBM 优化完第三个目标后，$z_j$ 只剩 $c_j$ 的信息，干预直接落到 $p(z_j|c_j) = q_\phi(z_j|c_j)$ 上：替换 $z_j$ 就严格对应于把概念设成目标值，不会顺带改动其它被偷偷编码的信息，可干预性因此从"近似"升格为"精确"。
 
-$$\max_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, c_j)} \left[\mathbb{E}_{p_\theta(z_j|\mathbf{x})} \left[\log q_\phi(\hat{c}_j|z_j)\right]\right]$$
+**4. 概念条件的表征头与随机编码器：把 KL 项做成可训练形式。** 为了让第三个目标里的 $q_\phi(\hat{z}_j|c_j)$ 有具体形式，论文按概念类型设计原型化的表征头：二值概念取 $g_\phi^z(c_j) = \lambda$（$c_j=1$）或 $-\lambda$（$c_j=0$），多类概念取 $g_\phi^z(c_j) = \lambda \cdot \text{one\_hot}(c_j)$，连续概念取 $g_\phi^z(c_j) = \lambda \cdot c_j$，相当于为每个概念值学一个原型锚点。编码器则用随机版本 $p_\theta(\mathbf{z}|\mathbf{x}) = \mathcal{N}(\mathbf{z}; f_\theta(\mathbf{x}), \sigma_x^2 I)$，配合重参数化技巧训练；在这一高斯假设下，KL 正则项退化为表征到原型的简单 MSE，使整套信息瓶颈约束落地为容易优化的损失。
 
-**目标 3**（仅 MCBM）：最小化 $I(Z_j; X | C_j)$——信息瓶颈
+### 损失函数 / 训练策略
 
-$$\min_{\theta, \phi} \mathbb{E}_{p(\mathbf{x}, c_j)} \left[D_{KL}\left(p_\theta(z_j|\mathbf{x}) \| q_\phi(\hat{z}_j|c_j)\right)\right]$$
-
-这确保 $z_j$ 在给定 $c_j$ 后不再包含关于 $\mathbf{x}$ 的额外信息（Markov 链 $X \leftrightarrow C_j \leftrightarrow Z_j$）。
-
-### 3. MCBM 训练目标
+把三个目标合并，MCBM 的总训练目标为
 
 $$\max_{\theta, \phi} \sum_{k=1}^N \sum_i \log q_\phi(\hat{\mathbf{y}}|f'_\theta(x^{(k)}, \epsilon^{(i)})) + \beta \sum_{j=1}^n \log q_\phi(\hat{c}_j|f'_{\theta,j}(\mathbf{x}^{(k)}, \epsilon^{(i)})) - \gamma \sum_{j=1}^n D_{KL}(p_\theta(z_j|\mathbf{x}^{(k)}) \| q_\phi(\hat{z}_j|c_j^{(k)}))$$
 
-- 第一项：任务预测损失
-- 第二项（$\beta$ 加权）：概念预测损失
-- 第三项（$\gamma$ 加权）：**信息瓶颈正则化**（MCBM 独有）
-
-### 4. 干预机制
-
-在 MCBM 中，干预变得有理论基础：
-$$p(z_j|c_j) = q_\phi(z_j|c_j)$$
-
-因为优化目标 3 后 $z_j$ 仅编码 $c_j$ 的信息，所以修改 $z_j$ 严格对应于对 $c_j$ 的干预。
-
-### 5. 表征头设计
-
-- 二值概念：$g_\phi^z(c_j) = \lambda$ if $c_j=1$, else $-\lambda$
-- 多类概念：$g_\phi^z(c_j) = \lambda \cdot \text{one\_hot}(c_j)$（原型学习）
-- 连续概念：$g_\phi^z(c_j) = \lambda \cdot c_j$
-
-编码器使用随机版本 $p_\theta(\mathbf{z}|\mathbf{x}) = \mathcal{N}(\mathbf{z}; f_\theta(\mathbf{x}), \sigma_x^2 I)$，通过重参数化技巧训练。
+其中第一项是任务预测损失，第二项是以 $\beta$ 加权的概念预测损失，第三项是以 $\gamma$ 加权的信息瓶颈正则化——也是 MCBM 独有的部分。$\gamma$ 控制解耦的强度：调大它能把 nuisance 泄漏逼向零，但同时会丢掉 $\mathbf{n}_y$ 里对任务有用的信息，因此它本质上是在"概念纯度"和"任务精度"之间做权衡的旋钮。
 
 ## 实验结果
 

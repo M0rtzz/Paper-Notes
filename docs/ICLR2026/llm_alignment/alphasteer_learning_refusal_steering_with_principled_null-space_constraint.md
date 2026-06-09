@@ -40,30 +40,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 LLM 某层的激活 $\mathbf{h}^{(l)}$，AlphaSteer 通过一个学习得到的变换矩阵 $\Delta^{(l)}$ 动态构造 steering 向量 $\mathbf{s}^{(l)} = \Delta^{(l)} \mathbf{h}^{(l)}$，然后加到激活上：$\mathbf{h}'^{(l)} = \mathbf{h}^{(l)} + \lambda \Delta^{(l)} \mathbf{h}^{(l)}$。关键在于 $\Delta = \tilde{\Delta} \hat{\mathbf{P}}$，其中 $\hat{\mathbf{P}}$ 是良性激活的零空间投影矩阵，$\tilde{\Delta}$ 是通过正则化最小二乘学习的矩阵。
+AlphaSteer 要解决的是激活引导里"注入同一个拒绝向量会误伤良性提示"的老问题：它不再注入固定向量，而是让 steering 向量随输入自适应变化——良性输入几乎不被改动，恶意输入才被推向拒绝方向。具体地，取 LLM 某层激活 $\mathbf{h}^{(l)}$，用一个变换矩阵 $\Delta^{(l)}$ 动态生成 steering 向量 $\mathbf{s}^{(l)} = \Delta^{(l)} \mathbf{h}^{(l)}$，再加回激活：$\mathbf{h}'^{(l)} = \mathbf{h}^{(l)} + \lambda \Delta^{(l)} \mathbf{h}^{(l)}$。这个 $\Delta$ 被拆成两块相乘 $\Delta = \tilde{\Delta} \hat{\mathbf{P}}$，其中 $\hat{\mathbf{P}}$ 是良性激活的零空间投影矩阵，负责"对良性输入失效"；$\tilde{\Delta}$ 是用正则化最小二乘解出来的矩阵，负责"对恶意输入重建拒绝方向"。两块各管一个目标，从结构上把安全和效用解耦开。
 
 ### 关键设计
 
-1. **零空间投影实现 Utility Preservation**：
+**1. 零空间投影：让 steering 对良性激活天然失效。**
 
-    - 功能：保证对任意良性激活 $\mathbf{h}_b$，steering 向量 $\Delta \mathbf{h}_b \approx \mathbf{0}$。
-    - 核心思路：收集 $N_b$ 个良性提示的激活构成矩阵 $\mathbf{H}_b$，计算其非中心协方差矩阵 $\mathbf{H}_b \mathbf{H}_b^\top$ 的 SVD，取零特征值对应的特征向量构造投影矩阵 $\hat{\mathbf{P}} = \hat{\mathbf{U}} \hat{\mathbf{U}}^\top$。这样 $\tilde{\Delta} \hat{\mathbf{P}} \mathbf{H}_b = \mathbf{0}$ 严格成立。
-    - 设计动机：利用零空间的数学性质从理论上保证良性激活不受影响，而非依赖启发式阈值。通过 Lemma 1 将零空间计算从 $N_b$ 维空间降到 $d$ 维空间（$d \ll N_b$），提高计算效率。
+这一步针对的痛点是"良性提示被过度拒绝"。作者的做法是先收集 $N_b$ 个良性提示的激活拼成矩阵 $\mathbf{H}_b$，对其非中心协方差矩阵 $\mathbf{H}_b \mathbf{H}_b^\top$ 做 SVD，取接近零的特征值所对应的特征向量张成零空间，构造投影矩阵 $\hat{\mathbf{P}} = \hat{\mathbf{U}} \hat{\mathbf{U}}^\top$。由于 $\hat{\mathbf{P}}$ 把任何向量投到良性激活的零空间里，所以 $\tilde{\Delta} \hat{\mathbf{P}} \mathbf{H}_b = \mathbf{0}$ 严格成立——无论 $\tilde{\Delta}$ 学成什么样，作用在良性激活上的 steering 向量都是零。和 Surgical、CAST 那种靠校准或阈值"尽量别动良性输入"的启发式不同，这里是数学上的硬保证。实现上还借助 Lemma 1 把零空间计算从 $N_b$ 维降到激活维度 $d$（$d \ll N_b$），避免对大矩阵直接 SVD。
 
-2. **正则化线性回归实现 Safety Enhancement**：
+**2. 正则化线性回归：让 steering 对恶意激活重建拒绝方向。**
 
-    - 功能：学习 $\tilde{\Delta}$ 使得对恶意激活 $\mathbf{H}_m$，steering 向量能重建拒绝方向 $\mathbf{R}$。
-    - 核心思路：求解带正则化的最小二乘问题 $\min_{\tilde{\Delta}} \|\tilde{\Delta} \hat{\mathbf{P}} \mathbf{H}_m - \mathbf{R}\| + \alpha \|\tilde{\Delta} \hat{\mathbf{P}}\|$，存在闭合形式解 $\tilde{\Delta}^\star = \mathbf{R} \mathbf{H}_m^\top \hat{\mathbf{P}}^\top (\hat{\mathbf{P}} \mathbf{H}_m \mathbf{H}_m^\top \hat{\mathbf{P}}^\top + \alpha \hat{\mathbf{P}} \hat{\mathbf{P}}^\top)^+$。
-    - 设计动机：有闭合解意味着无需迭代优化，部署极简；正则项 $\alpha$ 防止过拟合。
+零空间投影解决了"不误伤良性"，但还要保证"恶意输入真的被拒绝"，这就由 $\tilde{\Delta}$ 来学。把目标写成带正则的最小二乘：
 
-3. **拒绝方向向量提取**：
+$$\min_{\tilde{\Delta}} \ \|\tilde{\Delta} \hat{\mathbf{P}} \mathbf{H}_m - \mathbf{R}\| + \alpha \|\tilde{\Delta} \hat{\mathbf{P}}\|$$
 
-    - 功能：提取能代表"拒绝行为"的方向 $\mathbf{r}$。
-    - 核心思路：沿用 difference-in-means 方法，计算拒绝响应激活与服从响应激活的均值差。
-    - 与 prior work 的区别：虽然 $\mathbf{r}$ 的提取方法与 Arditi et al. 相同，但 AlphaSteer 不直接注入 $\mathbf{r}$，而是通过学习的 $\Delta$ 仅对恶意输入重建 $\mathbf{r}$。
+即希望对恶意激活矩阵 $\mathbf{H}_m$，生成的 steering 向量 $\tilde{\Delta}\hat{\mathbf{P}}\mathbf{H}_m$ 尽量贴近目标拒绝方向 $\mathbf{R}$，正则项 $\alpha$ 控制幅度、防过拟合。这个问题有闭合解：
+
+$$\tilde{\Delta}^\star = \mathbf{R} \mathbf{H}_m^\top \hat{\mathbf{P}}^\top \big(\hat{\mathbf{P}} \mathbf{H}_m \mathbf{H}_m^\top \hat{\mathbf{P}}^\top + \alpha \hat{\mathbf{P}} \hat{\mathbf{P}}^\top\big)^+$$
+
+有闭合解意味着不用迭代优化、不用反向传播，一次矩阵运算就能得到 $\tilde{\Delta}$，部署极简。注意 $\hat{\mathbf{P}}$ 出现在回归里，保证学出来的 $\Delta = \tilde{\Delta}\hat{\mathbf{P}}$ 仍落在零空间约束内，不破坏设计 1 的效用保证。
+
+**3. 拒绝方向提取：给回归一个"拒绝长什么样"的目标。**
+
+回归里的目标 $\mathbf{R}$ 来自拒绝方向向量 $\mathbf{r}$，提取方式沿用 Arditi et al. 的 difference-in-means——计算模型在拒绝响应和服从响应上的激活均值之差。区别在于用法：以往方法直接把 $\mathbf{r}$ 注入所有输入，而 AlphaSteer 只把它当作恶意输入的回归目标，让 $\Delta$ 学会"仅对恶意激活重建出 $\mathbf{r}$、对良性激活输出零"，从而避开了直接注入带来的效用损失。
 
 ### 训练策略
-不需要梯度优化——零空间投影矩阵通过 SVD 解析计算，变换矩阵通过正则化最小二乘的闭合解得到。整个方法只需要前向传播收集激活 + 矩阵运算，无需反向传播，部署成本极低。
+整个方法不需要梯度优化：零空间投影矩阵 $\hat{\mathbf{P}}$ 由 SVD 解析得到，变换矩阵 $\tilde{\Delta}$ 由正则化最小二乘的闭合解得到。全流程只需前向传播收集良性/恶意激活 + 几次矩阵运算，无反向传播，推理时也只多一次矩阵乘法，部署成本极低。
 
 ## 实验关键数据
 
@@ -128,9 +130,9 @@ tags:
 
 - [\[CVPR 2026\] Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](../../CVPR2026/llm_alignment/principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
 - [\[ICLR 2026\] Mitigating the Safety Alignment Tax with Null-Space Constrained Policy Optimization](mitigating_the_safety_alignment_tax_with_null-space_constrained_policy_optimizat.md)
+- [\[ICLR 2026\] Sysformer: Safeguarding Frozen Large Language Models with Adaptive System Prompts](sysformer_safeguarding_frozen_large_language_models_with_adaptive_system_prompts.md)
 - [\[ICLR 2026\] Learning Ordinal Probabilistic Reward from Preferences (OPRM)](learning_ordinal_probabilistic_reward_from_preferences.md)
 - [\[ICLR 2026\] Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
-- [\[ICLR 2026\] SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks](sema_simple_yet_effective_learning_for_multi-turn_jailbreak_attacks.md)
 
 </div>
 

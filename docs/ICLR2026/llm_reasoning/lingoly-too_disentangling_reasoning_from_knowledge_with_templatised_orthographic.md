@@ -45,31 +45,17 @@ tags:
 
 ### 整体框架
 
-UKLO 82道题 → 专家人工标注置换规则集（ruleset）→ 每题生成最多6个正字法置换版本 → 1,203道问题 / 6,995个子问题-答案对 → Exact Match评估 → 比较 $M_{og}$（原始分数）和 $M_{obf}$（混淆分数）量化知识效应。
+LingOly-TOO 以 UKLO（英国语言学奥赛）的 82 道题为种子，请语言学专家为每题手工标注一套正字法置换规则集（ruleset），据此为每题派生最多 6 个互不相同的混淆版本，最终扩展成 1,203 道问题、6,995 个子问题-答案对。评估时对原始版与混淆版分别打分，用混淆分 $M_{obf}$ 与原始分 $M_{og}$ 的落差来量化模型究竟在多大程度上靠知识而非推理拿分。
 
 ### 关键设计
 
-1. **推理等变置换 (Reasoning-Equivariant Permutation)**
+**1. 推理等变置换：在保留解题逻辑的前提下抹掉记忆捷径。** 核心难点在于，任何对题面做的改动都不能破坏解题所需的语言学机制，否则混淆后的题就变得无解或换了一道题。本文的做法是把置换的最小单位下沉到 grapheme（字素）而非整词——语言学奥赛题本身就是子词级的符号推理，字素级置换既能彻底改变字符序列、又不动推理结构。每道题的置换规则由专家按其语言学考点定制：例如土耳其语的元音和谐题，元音对 (e,i)/(o,u)/(ö,ü)/(a,ı) 必须保持组内配对替换，否则后缀变形规律就对不上、题目失去可解性。规则还刻意保留借词、英语同源词、人名地名等对解题有用的线索，同时移除语言名称、语系、地理位置这类只会触发模型知识检索的元数据。置换后的字符序列在任何训练语料里都不可能出现，模型无法靠记忆命中，却仍要走完原题的全部推理步骤。
 
-    - 以grapheme（字素）为最小单位置换，非word级——语言学题需要子词级符号推理
-    - 每题由语言学专家手工定义ruleset，保留解题所需的语言学机制。以土耳其语元音和谐为例：元音对 (e,i)/(o,u)/(ö,ü)/(a,ı) 必须保持组内配对，否则后缀无法正确对应
-    - 保留借词、英语同源词、人名/地名等对解题有用的元素
-    - 移除语言名称、语系、地理信息等可能触发知识检索的元数据
-
-2. **多版本评估与度量体系**
-
-    - 定义 $M_{obf} = \frac{1}{82}\sum_{i=1}^{82}\frac{1}{n_i}\sum_{j=1}^{n_i}M_{obf}^{i,j}$（混淆版平均分）和 $M_{og}$（原始版分数）
-    - 鲁棒度量 $M_{rob}$：取每题所有置换中最差分数的平均，衡量最坏情况推理能力
-    - 知识效应 $\Delta_{obf}^{i} = M_{obf}^i - M_{og}^i$：负值越大说明模型越依赖知识
-    - 基准验证：两名IOL奖牌获得者审计混淆题可解性；172人RCT显示人类仅下降5.7%
+**2. 多版本度量体系：把"知识效应"做成可量化指标。** 有了一题多版本，就能从分数分布里读出推理的稳定性。混淆分定义为对所有题、每题所有版本取平均 $M_{obf} = \frac{1}{82}\sum_{i=1}^{82}\frac{1}{n_i}\sum_{j=1}^{n_i}M_{obf}^{i,j}$，与原始分 $M_{og}$ 对照。在此基础上再引入两个指标：鲁棒分 $M_{rob}$ 取每题所有置换里最差的那个版本再平均，刻画最坏情况下的推理能力；知识效应 $\Delta_{obf}^{i} = M_{obf}^i - M_{og}^i$ 直接度量单题上的掉分，负值越大说明该题越依赖知识。为确认混淆没有把题改坏，两名 IOL 奖牌得主审计了混淆题的可解性，并通过 172 人的随机对照试验验证人类在混淆版上仅下降 5.7%，远低于模型的 11% 以上掉幅。
 
 ### 损失函数 / 训练策略
 
-本文为评测基准。关键评估设计：
-
-- 评估协议：每次prompt包含背景+上下文+所有问题+特定子问题，要求JSON输出
-- 评分标准：严格Exact Match（不给部分分，防止通过重复上下文词获得虚假分数）
-- 评估15个模型：包括GPT-5, Claude 3.7, o3-mini, Gemini, Llama等推理和通用模型
+作为评测基准，关键在于评估协议本身：每次 prompt 把背景、上下文、全部问题与当前子问题一并给出，要求模型以 JSON 输出答案；评分采用严格的 Exact Match 而非部分分，以防模型靠重复上下文里的词蒙到虚假分数。最终在 GPT-5、Claude 3.7、o3-mini、Gemini、Llama 等 15 个推理与通用模型上统一施测。
 
 ## 实验关键数据
 
@@ -142,7 +128,7 @@ GPT-5按难度（$M_{obf}$）：Breakthrough=0.81, Round 2=0.31
 - [\[ACL 2026\] Learning to Edit Knowledge via Instruction-based Chain-of-Thought Prompting](../../ACL2026/llm_reasoning/learning_to_edit_knowledge_via_instruction-based_chain-of-thought_prompting.md)
 - [\[ACL 2026\] Does Self-Consistency Improve the Recall of Encyclopedic Knowledge?](../../ACL2026/llm_reasoning/does_self-consistency_improve_the_recall_of_encyclopedic_knowledge.md)
 - [\[ACL 2025\] Complex Reasoning with Natural Language Contexts and Background Knowledge](../../ACL2025/llm_reasoning/complex_reasoning_with_natural_language_contexts_and_background_knowledge.md)
-- [\[ACL 2026\] Towards Effective In-context Cross-domain Knowledge Transfer via Domain-invariant-neurons-based Retrieval](../../ACL2026/llm_reasoning/towards_effective_in-context_cross-domain_knowledge_transfer_via_domain-invarian.md)
+- [\[AAAI 2026\] ActiShade: Activating Overshadowed Knowledge to Guide Multi-Hop Reasoning in Large Language Models](../../AAAI2026/llm_reasoning/actishade_activating_overshadowed_knowledge_to_guide_multi-h.md)
 
 </div>
 

@@ -36,17 +36,21 @@ tags:
 
 ### 关键设计
 
-1. **12种评分函数**:
+**1. 12 种评分函数：从注意力的三个组成部分而非单一权重去量化"不活跃"。**
 
-    - 功能：从三个维度量化注意力头的活跃程度
-    - 核心思路：**注意力权重类**——Avg Weight of First Token (AWFT)：首 token 平均权重 $\frac{1}{N}\sum_i \mathbf{A}_{i,0} > \tau$；Avg Entropy of Query Distributions (AEQD)：查询分布平均熵 $< \tau$（低熵=注意力集中在少数 token）。**Value 向量类**——First Token Value Vector Norm (FTVVN)：首 token value 范数 $< \tau$；Avg Value Vector Norm (AVVN)：平均 value 范数 $< \tau$。**头输出类**——Last Token Head Output Norm (LTHON)：末 token 头输出范数 $< \tau$；Avg Head Output Norm (AHON)：平均头输出范数 $< \tau$。每种都有层归一化(LN)版本，即除以同层其他头的平均得分：$\frac{\text{AvgNorm}(\text{head}^i)}{\frac{1}{N_{\text{layer}}}\sum_j \text{AvgNorm}(\text{head}^j)}$。
-    - 设计动机：不同函数捕捉不同类型的不活跃。IoU 分析显示最大 IoU 仅 0.58，最大 Precision 仅 0.73——证实不同函数识别的头集合确实不同。层归一化解决了原始分数跨层和跨模型差异大的问题。
+先前工作只盯着注意力权重，于是把"看起来集中在无关 token"误当成不活跃的唯一标志。本文把注意力拆成权重、value 向量、头输出三个维度，每个维度各设计若干个简单到只需一次前向传播就能算出的评分函数。**注意力权重类**衡量注意力分布本身：Avg Weight of First Token (AWFT) 看首 token 的平均权重 $\frac{1}{N}\sum_i \mathbf{A}_{i,0} > \tau$，Avg Entropy of Query Distributions (AEQD) 看查询分布的平均熵 $< \tau$（熵越低说明注意力越集中在少数 token）。**Value 向量类**绕过权重直接看被聚合的内容：First Token Value Vector Norm (FTVVN) 看首 token 的 value 范数 $< \tau$，Avg Value Vector Norm (AVVN) 看平均 value 范数 $< \tau$——即便权重很高，若 value 近零，头的输出也接近零。**头输出类**直接看头最终吐出的向量：Last Token Head Output Norm (LTHON) 看末 token 的头输出范数 $< \tau$，Avg Head Output Norm (AHON) 看平均头输出范数 $< \tau$，这才是"对模型有没有贡献"的最直接信号。
 
-2. **动态模型干预验证**:
+由于原始分数在不同层、不同模型之间量纲差异很大，每个函数都配一个层归一化 (LN) 版本，把一个头的得分除以同层其他头的平均得分：
 
-    - 功能：验证评分函数识别的头是否真正不活跃
-    - 核心思路：每次前向传播根据当前输入的评分和阈值构建布尔矩阵 $\mathbf{B} \in \{0,1\}^{N_{\text{heads}} \times N_{\text{layers}}}$，将 True 位置的头输出置零（在拼接和输出投影之前），然后评估 MMLU 5-shot 准确率。阈值通过 MMLU 输入上的 CDF 分位数（p=0,5,10,...,30）动态选择，控制最多置零 30% 的头。使用随机置零基线做对比。
-    - 设计动机：与永久剪枝不同，动态置零按输入内容决定哪些头不活跃，更准确地衡量每次前向传播中"浪费"的计算。如果识别的头真正不活跃，置零后准确率应几乎不变。
+$$\frac{\text{AvgNorm}(\text{head}^i)}{\frac{1}{N_{\text{layer}}}\sum_j \text{AvgNorm}(\text{head}^j)}$$
+
+这样阈值才能跨层、跨模型家族通用，而不必为每个模型单独调。这些函数确实在捕捉不同类型的不活跃：IoU 分析显示任意两个函数识别出的头集合最大 IoU 只有 0.58、最大 Precision 只有 0.73，说明"权重 dormant"和"输出近零"指向的并非同一批头——这正是单看权重会漏掉一大块不活跃头的根源。
+
+**2. 动态模型干预：用"置零后精度变不变"来验证识别出的头是否真的不活跃。**
+
+评分函数只是给出候选，真正不活跃与否要靠干预来证伪。每次前向传播时，按当前输入算出的评分和阈值构建一个布尔矩阵 $\mathbf{B} \in \{0,1\}^{N_{\text{heads}} \times N_{\text{layers}}}$，把 True 位置的头输出在拼接和输出投影之前直接置零，再评估 MMLU 5-shot 准确率。阈值不是写死的，而是按 MMLU 输入上的得分 CDF 分位数动态选取（p=0,5,10,…,30），从而把被置零的头比例控制在最多 30% 以内，并与"随机置零同样数量的头"做基线对比。
+
+之所以用逐输入的动态置零而非一次性永久剪枝，是因为同一个头对不同输入的活跃程度会变——动态置零按当前输入内容决定哪些头该关掉，更贴近"这次前向传播里到底浪费了多少计算"。判据很直接：如果一个头真的不活跃，把它的输出置零后 MMLU 精度应当几乎不动；精度一旦明显掉下来，就说明它并非不活跃。最终能在精度保持基线 1% 以内的前提下置零的头越多，对应的评分函数就越可靠。
 
 ### 损失函数 / 训练策略
 

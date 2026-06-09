@@ -42,36 +42,27 @@ tags:
 
 ### 整体框架
 
-在每个遗忘请求到达时：
-- **输入**：上一轮遗忘后的模型 $\theta_{n-1}^*$、新的遗忘目标 $c_n^*$
-- **处理**：用遗忘损失 $\mathcal{L}_{\text{unlearn}}$ 更新模型，同时附加正则化约束
-- **输出**：新的模型 $\theta_n^*$，应同时满足：(1) 有效擦除 $c_n^*$ (2) 保持之前擦除的 $c_1^*,...,c_{n-1}^*$ 继续不可生成 (3) 保留所有无关概念的生成能力
+这篇论文要解决的是「遗忘请求一个接一个到来」时模型逐渐失能的问题。每当一个新的遗忘目标 $c_n^*$ 到达，系统从上一轮已经遗忘过的模型 $\theta_{n-1}^*$ 出发，用遗忘损失 $\mathcal{L}_{\text{unlearn}}$ 继续更新，得到新模型 $\theta_n^*$。理想的 $\theta_n^*$ 要同时满足三件事：有效擦除当前目标 $c_n^*$、让之前擦除的 $c_1^*,...,c_{n-1}^*$ 保持不可生成、以及不伤害任何无关概念的生成能力。
+
+作者的核心观察是「效用崩溃」来自累积参数漂移——每次遗忘都把权重推离编码了生成能力的预训练权重，序列叠加后漂移远大于一次性同时遗忘。因此所有方法的共同思路都是**约束参数更新、把模型拉回预训练权重附近**，区别只在用什么手段约束。下面四种策略都以附加项的形式挂在 $\mathcal{L}_{\text{unlearn}}$ 上，与具体用哪个遗忘算法（ConAbl / SculpMem）正交，可以即插即用。
 
 ### 关键设计
 
-1. **更新范数正则化 (L1/L2)**:
+**1. 更新范数正则化（L1/L2）：直接惩罚漂移幅度。**
 
-    - 功能：直接惩罚参数更新幅度
-    - 核心思路：$\mathcal{L}_{\text{unlearn}}(\theta, \{c_n^*\}) + \lambda \|\theta - \theta_{n-1}^*\|_p^p$，L1 鼓励稀疏更新，L2 防止单个权重过度漂移
-    - 设计动机：最直接的约束累积漫移方式，简单有效
+针对累积漂移这个根因，最直接的做法就是在遗忘损失上加一个把参数往 $\theta_{n-1}^*$ 拉的惩罚项：$\mathcal{L}_{\text{unlearn}}(\theta, \{c_n^*\}) + \lambda \|\theta - \theta_{n-1}^*\|_p^p$。其中 L1 范数鼓励稀疏更新（只动少数权重），L2 范数则防止任何单个权重一次跳得太远。这是约束漂移最朴素的方式，不需要任何关于任务的额外信息，简单且对跨域保留改善明显。
 
-2. **选择性微调 (SelFT)**:
+**2. 选择性微调（SelFT）：只动该动的那批参数。**
 
-    - 功能：只更新对目标概念最重要的 top-k% 参数，冻结其余
-    - 核心思路：用一阶 Taylor 近似估计参数重要性 $|\nabla_{\theta[d]} \mathcal{L}_{\text{unlearn}} \cdot \theta_{n-1}^*[d]|$，只更新最重要的参数
-    - 设计动机：相比 L1 正则化的各向同性稀疏，SelFT 利用任务相关的稀疏性更有针对性
+L1 正则虽然稀疏，但它的稀疏是各向同性的——不区分哪些参数对当前遗忘任务真正重要。SelFT 换一个角度：先用一阶 Taylor 近似估计每个参数对遗忘损失的重要性 $|\nabla_{\theta[d]} \mathcal{L}_{\text{unlearn}} \cdot \theta_{n-1}^*[d]|$，只解冻其中最重要的 top-k% 参数、冻结其余全部。这样更新天然被限制在与任务相关的子集里，相比 L1 的盲目稀疏更有针对性，也就更不容易误伤无关概念。
 
-3. **模型合并 (Model Merge)**:
+**3. 模型合并（Model Merge）：先各自遗忘，再合到一起。**
 
-    - 功能：对每个概念独立从预训练权重出发遗忘，然后用 TIES-Merging 合并所有独立遗忘的模型
-    - 核心思路：每个独立遗忘模型都靠近预训练权重，合并后仍在同一损失盆地内，保留效用
-    - 设计动机：独立遗忘避免了累积漂移，合并可以在保持接近预训练权重的同时聚合所有遗忘效果
+序列遗忘的麻烦在于漂移会累积，那干脆不让它累积——对每一个概念都**独立地从预训练权重出发**单独遗忘一次，于是每个独立模型都只偏离预训练权重一小步、仍落在同一个损失盆地内。最后用 TIES-Merging 把这些独立遗忘的模型合并成一个。因为每份都贴近预训练权重，合并后的模型既聚合了所有遗忘效果、又整体保持在预训练权重附近，从而保住了效用。代价是要为每个概念各跑一次遗忘。
 
-4. **梯度投影 (GradProj) — 语义感知正则化**:
+**4. 梯度投影（GradProj）：语义感知，保护相近概念。**
 
-    - 功能：将遗忘梯度投影到与语义相近概念正交的子空间，防止对相近概念的干扰
-    - 核心思路：遗忘主要通过修改 cross-attention 的 $W_K$, $W_V$ 实现。由于线性投影保持邻域结构，修改 $W_K, W_V$ 以擦除 $c^*$ 时不可避免地扰动语义相近的概念 $c$。GradProj 选择 top-K 个语义相近概念（按 text embedding 余弦相似度），将 $W_K, W_V$ 的梯度在这些概念的嵌入方向上的分量去除
-    - 设计动机：跨域保留（如遗忘风格时保留物体）通过通用正则化即可解决，但域内保留（如遗忘一种风格时保留其他风格）极具挑战。实验表明保留准确率与 text embedding 相似度呈强负相关，必须进行语义感知的约束
+前三种是通用正则化，能搞定跨域保留（遗忘某个画风时不伤物体生成），但**域内保留**极难——遗忘一种风格时往往把其他风格也带崩。原因在于遗忘主要靠修改 cross-attention 的 $W_K, W_V$ 实现，而线性投影会保持邻域结构，所以为擦除 $c^*$ 去改 $W_K, W_V$ 时，会不可避免地扰动那些语义相近的概念 $c$；实验里保留准确率与 text embedding 相似度呈强负相关，正是这个机制的证据。GradProj 的做法是先按 text embedding 余弦相似度挑出 top-K 个最相近的概念，再把 $W_K, W_V$ 的遗忘梯度中**落在这些概念嵌入方向上的分量去掉**，让更新发生在与相近概念正交的子空间里。这样擦除目标的同时，相近概念的 key/value 不再被牵连，域内保留（RA-I）因此显著提升。
 
 ### 损失函数 / 训练策略
 
@@ -141,8 +132,8 @@ tags:
 
 - [\[ICLR 2026\] The Spacetime of Diffusion Models: An Information Geometry Perspective](the_spacetime_of_diffusion_models_an_information_geometry_perspective.md)
 - [\[ICCV 2025\] Holistic Unlearning Benchmark: A Multi-Faceted Evaluation for Text-to-Image Diffusion Model Unlearning](../../ICCV2025/image_generation/holistic_unlearning_benchmark_a_multi-faceted_evaluation_for_text-to-image_diffu.md)
-- [\[CVPR 2026\] TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](../../CVPR2026/image_generation/tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
 - [\[ICCV 2025\] Joint Diffusion Models in Continual Learning](../../ICCV2025/image_generation/joint_diffusion_models_in_continual_learning.md)
+- [\[CVPR 2026\] TINA: Text-Free Inversion Attack for Unlearned Text-to-Image Diffusion Models](../../CVPR2026/image_generation/tina_text-free_inversion_attack_for_unlearned_text-to-image_diffusion_models.md)
 - [\[NeurIPS 2025\] Moment- and Power-Spectrum-Based Gaussianity Regularization for Text-to-Image Models](../../NeurIPS2025/image_generation/moment-_and_power-spectrum-based_gaussianity_regularization_for_text-to-image_mo.md)
 
 </div>

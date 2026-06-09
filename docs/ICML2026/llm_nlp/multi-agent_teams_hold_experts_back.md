@@ -131,7 +131,7 @@ Reveal 之后多数任务 gap 几乎不变，说明瓶颈在 leveraging 而非 i
 - [\[ACL 2025\] Red-Teaming LLM Multi-Agent Systems via Communication Attacks](../../ACL2025/llm_nlp/red-teaming_llm_multi-agent_systems_via_communication_attacks.md)
 - [\[ACL 2025\] Graph Counselor: Adaptive Graph Exploration via Multi-Agent Synergy to Enhance LLM Reasoning](../../ACL2025/llm_nlp/graph_counselor_multiagent_graphrag.md)
 - [\[ACL 2025\] MasRouter: Learning to Route LLMs for Multi-Agent Systems](../../ACL2025/llm_nlp/masrouter_learning_to_route_llms_for_multi-agent_systems.md)
-- [\[NeurIPS 2025\] Large Language Models Miss the Multi-Agent Mark](../../NeurIPS2025/llm_nlp/large_language_models_miss_the_multi-agent_mark.md)
+- [\[ACL 2025\] Many Heads Are Better Than One: Improved Scientific Idea Generation by A LLM-Based Multi-Agent System](../../ACL2025/llm_nlp/virsci_multi_agent_idea_gen.md)
 
 </div>
 

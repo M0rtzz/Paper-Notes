@@ -39,32 +39,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-迭代两步：Step 1训练测试生成器 $\mathcal{M}_{\text{UT}}$（最大化判别奖励+有效性奖励），Step 2训练代码生成器 $\mathcal{M}_{\text{code}}$（最大化测试通过率）。两者共享Qwen3-4B基座，用GRPO优化。
+UTRL 想解决的是「怎么在没有测试标注的情况下训练出能生成高质量单元测试的模型」。它把测试生成器 $\mathcal{M}_{\text{UT}}$ 和代码生成器 $\mathcal{M}_{\text{code}}$ 摆成一对对手：给定一批指令-代码对，测试生成器先针对某条指令产出一组测试用例，代码生成器则尝试写出能通过这些测试的代码。每一轮训练分两步交替进行——Step 1 只更新测试生成器，奖励它「抓住」代码生成器的 bug、同时保持测试本身有效；Step 2 只更新代码生成器，奖励它通过越来越刁钻的测试。两者共享同一个 Qwen3-4B 基座、都用 GRPO 优化，在对抗中螺旋上升。关键的巧思在于：测试好不好这件事本身没有标准答案，但「这组测试能不能区分出 LLM 写的有 bug 的代码和正确代码」却是可以直接度量的，这就把开放性的测试评估问题转成了一个可计算的奖励信号。
 
 ### 关键设计
 
-1. **判别奖励 (Discrimination Reward)**:
+**1. 判别奖励：把"好测试"重定义为"能抓出 bug 的测试"。**
 
-    - 功能：衡量测试 $\mathcal{T}$ 能区分多少LLM生成代码与正确代码
-    - 核心思路：$R_{\text{disc}}(\mathcal{T}, \mathcal{C}, C^*) = \frac{1}{|\mathcal{C}|}\sum_{C \in \mathcal{C}}[1 - \prod_{T \in \mathcal{T}}(1-\text{Pass}(C,T))^{\text{Pass}(C^*,T)}]$，先过滤无效测试用例（不通过正确代码的），再计算被至少一个有效测试"抓到"的LLM代码比例
-    - 设计动机：好的测试应能发现LLM代码中的bug，判别率越高→测试越有区分力
+测试质量没有金标准，但对抗框架给了一个代理指标——一组测试能区分出多少份 LLM 生成代码与正确代码 $C^*$。判别奖励先把不通过正确代码的无效测试过滤掉（用 $\text{Pass}(C^*,T)$ 当指数，无效测试对应的因子被置 1、不参与判别），再统计有多少份 LLM 代码 $C$ 至少被一个有效测试「抓到」：
 
-2. **有效性奖励 (Validity Reward)**:
+$$R_{\text{disc}}(\mathcal{T}, \mathcal{C}, C^*) = \frac{1}{|\mathcal{C}|}\sum_{C \in \mathcal{C}}\Big[1 - \prod_{T \in \mathcal{T}}(1-\text{Pass}(C,T))^{\text{Pass}(C^*,T)}\Big]$$
 
-    - 功能：衡量测试用例的功能正确性（mapping正确）
-    - 核心思路：$R_{\text{valid}}(\mathcal{T}, C^*, \tau) = \frac{\sum_{T} \text{Pass}(C^*, T)}{\max(|\mathcal{T}|, \tau)}$，分母clamp到 $\tau$ 防止极少测试用例获得高分
-    - 设计动机：防止生成少量trivial测试用例骗取高有效性分
+判别率越高，说明这组测试越有区分力。这样测试生成器不必去定义抽象的「什么是好测试」，只要往「能发现 LLM 代码里的 bug」这个明确目标上走即可。
 
-3. **代码生成器训练**:
+**2. 有效性奖励：堵住"少出 trivial 测试骗高分"的捷径。**
 
-    - 功能：训练代码生成器通过测试生成器产生的测试
-    - 核心思路：$R_{\text{code}} = \frac{\sum_T \text{Pass}(C,T) \cdot \text{Pass}(C^*,T)}{\sum_T \text{Pass}(C^*,T)}$，只考虑有效测试用例的通过率
-    - 设计动机：随着测试生成器进化，通过这些越来越难的测试→代码生成器也不断进步
+只奖励判别力会有漏洞：模型可以只生成极少数恰好能通过正确代码的简单用例来刷分。有效性奖励衡量测试用例的功能正确性（输入-输出 mapping 是否对），并在分母上 clamp 一个阈值 $\tau$：
+
+$$R_{\text{valid}}(\mathcal{T}, C^*, \tau) = \frac{\sum_{T} \text{Pass}(C^*, T)}{\max(|\mathcal{T}|, \tau)}$$
+
+当测试数量少于 $\tau$ 时分母被强制抬到 $\tau$，少量 trivial 测试拿不到满分，从而逼迫模型生成足够数量且都对的测试。测试生成器最终的奖励是两者的加权 $r_{\text{UT}} = \lambda R_{\text{disc}} + (1-\lambda) R_{\text{valid}}$，在「抓 bug」和「自身正确」之间取平衡。
+
+**3. 代码生成器训练：用对手不断升级的测试当作课程。**
+
+代码生成器这一侧的奖励是它在「有效测试」上的通过率——只把那些能通过正确代码 $C^*$ 的测试计入分母，避免被无效测试干扰：
+
+$$R_{\text{code}} = \frac{\sum_T \text{Pass}(C,T) \cdot \text{Pass}(C^*,T)}{\sum_T \text{Pass}(C^*,T)}$$
+
+随着测试生成器越练越强、产出的测试越来越能戳中边缘情况，代码生成器要拿到高分就得写出越来越接近正确的代码；反过来代码变好又逼测试生成器去发现更微妙的 bug。这种相互施压让两者在迭代中共同进化，无需人工设计由易到难的训练课程。
 
 ### 损失函数 / 训练策略
-- 测试生成器：$r_{\text{UT}} = \lambda R_{\text{disc}} + (1-\lambda) R_{\text{valid}}$，GRPO优化
-- 代码生成器：$R_{\text{code}}$，GRPO优化
-- 迭代训练，两者交替更新
+两个模型都用 GRPO 优化：测试生成器的目标是 $r_{\text{UT}} = \lambda R_{\text{disc}} + (1-\lambda) R_{\text{valid}}$，代码生成器的目标是 $R_{\text{code}}$。训练按 Step 1（更新测试生成器）→ Step 2（更新代码生成器）交替进行，多轮迭代，两者共享 Qwen3-4B 基座。
 
 ## 实验关键数据
 
@@ -124,9 +128,9 @@ TACO评估集（竞赛编程），Best-of-N提升：
 
 ## 相关论文
 
+- [\[ICLR 2026\] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
 - [\[ICLR 2026\] Latent Wasserstein Adversarial Imitation Learning](latent_wasserstein_adversarial_imitation_learning.md)
 - [\[ICLR 2026\] On Discovering Algorithms for Adversarial Imitation Learning](on_discovering_algorithms_for_adversarial_imitation_learning.md)
-- [\[ICLR 2026\] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
 - [\[ICLR 2026\] Self-Harmony: Learning to Harmonize Self-Supervision and Self-Play in Test-Time Reinforcement Learning](self-harmony_learning_to_harmonize_self-supervision_and_self-play_in_test-time_r.md)
 - [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
 

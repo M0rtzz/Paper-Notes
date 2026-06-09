@@ -140,9 +140,9 @@ $$\mathbf{x}_0 = \alpha \hat{\mathbf{x}}_0 + \sqrt{1-\alpha^2}\xi, \quad \xi \si
 
 - [\[ACL 2025\] Tokenisation is NP-Complete](../../ACL2025/others/tokenisation_is_np-complete.md)
 - [\[ICCV 2025\] SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis](syncdiff_synchronized_motion_diffusion_for_multi-body_human-object_interaction_s.md)
-- [\[CVPR 2025\] 4Deform: Neural Surface Deformation for Robust Shape Interpolation](../../CVPR2025/others/4deform_neural_surface_deformation_for_robust_shape_interpolation.md)
 - [\[ACL 2025\] Meta-Learning Neural Mechanisms rather than Bayesian Priors](../../ACL2025/others/meta-learning_neural_mechanisms_rather_than_bayesian_priors.md)
-- [\[CVPR 2025\] MOS: Modeling Object-Scene Associations in Generalized Category Discovery](../../CVPR2025/others/mos_modeling_object-scene_associations_in_generalized_category_discovery.md)
+- [\[CVPR 2025\] 4Deform: Neural Surface Deformation for Robust Shape Interpolation](../../CVPR2025/others/4deform_neural_surface_deformation_for_robust_shape_interpolation.md)
+- [\[ECCV 2024\] Object-Aware NIR-to-Visible Translation](../../ECCV2024/others/object-aware_nir-to-visible_translation.md)
 
 </div>
 

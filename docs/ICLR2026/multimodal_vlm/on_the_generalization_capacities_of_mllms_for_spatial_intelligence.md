@@ -43,28 +43,25 @@ tags:
 
 ### 整体框架
 
-输入图像经过 Geometry-Aware Visual Encoder 处理：视觉编码器提取特征 $F_{\text{vis}}$ → 叠加稠密相机射线嵌入 $E_{\text{cam}}$ → 叠加几何先验嵌入 $E_{\text{geo}}$ → 投影到 LLM 进行多模态推理。训练时施加相机感知几何增强。
+CA-MLLM 把"相机是什么样"这件事显式喂给模型：视觉编码器抽出特征 $F_{\text{vis}}$ 后，先叠上一层逐像素的相机射线嵌入 $E_{\text{cam}}$ 告诉每个 token 它对应的视线方向，再叠上一层从深度模型蒸馏来的几何先验嵌入 $E_{\text{geo}}$ 补上 3D 结构，融合后的特征投影进 LLM 做空间推理。训练阶段还会故意伪造各种相机参数来逼模型把"相机属性"和"场景内容"解耦开。
 
 ### 关键设计
 
-1. **稠密相机射线嵌入 (Dense Camera Ray Embedding)**:
-    - 做什么：将相机内参信息编码到每个视觉 token 中
-    - 核心思路：对每个网格位置 $(i,j)$ 计算归一化射线方向 $R_x[i,j] = (u_{ij} - c_x) / f_x$，$R_y[i,j] = (v_{ij} - c_y) / f_y$，加上全局焦距 $f_x, f_y$，通过正弦嵌入层生成 $E_{\text{cam}} \in \mathbb{R}^{H \times W \times D}$，与 $F_{\text{vis}}$ 逐元素相加
-    - 设计动机：相比 Metric3D 的图像规范化方案（计算昂贵且产生大量无效 token），直接将射线信息注入每个 token 更高效且保留了原始分辨率
+**1. 稠密相机射线嵌入：让每个 token 知道自己来自哪条视线。**
 
-2. **相机感知几何增强 (Camera-Aware Geometric Augmentation)**:
-    - 做什么：在训练时合成不同相机参数以扩展相机分布多样性
-    - 核心思路：对训练图像施加两类变换——(i) 缩放：图像缩放因子 $s$，内参同步更新 $(f_x, f_y, c_x, c_y) \mapsto (sf_x, sf_y, sc_x, sc_y)$；(ii) 平移：偏移主点 $(c_x, c_y)$ 模拟偏心投影。图像和内参一致更新保证几何正确性
-    - 设计动机：现有 3D 数据集相机种类有限（如 ScanNet 主要用 Structure Sensor），模型仅靠真实数据无法充分解耦相机属性与场景内容
+RGB-only MLLM 的根本病灶是分不清"近处小物体"和"远处大物体"，因为投影方程 $h_{\text{proj}} = fH/Z$ 里 $(f,H,Z)$ 构成一个等价类——没有相机内参，焦距和深度永远纠缠在一起。本文的办法是把内参拆成逐像素的射线方向注入特征：对每个网格位置 $(i,j)$ 算出归一化射线 $R_x[i,j] = (u_{ij} - c_x)/f_x$、$R_y[i,j] = (v_{ij} - c_y)/f_y$，再拼上全局焦距 $f_x, f_y$，过一层正弦嵌入得到 $E_{\text{cam}} \in \mathbb{R}^{H\times W\times D}$，与 $F_{\text{vis}}$ 逐元素相加。相比 Metric3D 那种把整幅图像规范化到统一相机的做法（计算昂贵、还会产生大量 padding 出来的无效 token），直接给每个 token 挂上视线信息既省算力又保住了原始分辨率，模型从此能从特征里读出"这条视线对应多大的焦距"。
 
-3. **几何先验蒸馏 (Geometric Prior Distillation)**:
-    - 做什么：从预训练的单目度量深度估计模型蒸馏 3D 几何知识
-    - 核心思路：用冻结的 UniDepth v2（在 10M+ RGB-深度对上训练）为每张训练图像预测稠密 3D 点云，编码为先验嵌入 $E_{\text{geo}} \in \mathbb{R}^{H \times W \times D}$ 叠加到视觉特征。推理时仍然是 RGB-only 输入
-    - 设计动机：UniDepth 可从图像直接估计内参，使框架扩展到无内参的互联网图像，解决了大量 2D 数据集缺乏相机参数的难题
+**2. 相机感知几何增强：用伪造的相机参数撑开训练分布。**
+
+现有 3D 数据集的相机种类太单一——ScanNet 几乎全是 Structure Sensor 拍的，模型光看真实数据根本没机会见到足够多样的内参，于是把训练相机的捷径当成了通用 3D 几何。增强的做法是在训练时合成新相机：一是缩放，对图像施加因子 $s$ 的同时把内参同步改成 $(f_x,f_y,c_x,c_y)\mapsto(sf_x,sf_y,sc_x,sc_y)$；二是平移，偏移主点 $(c_x,c_y)$ 来模拟偏心投影。关键在于图像和内参必须一致更新，几何关系才不会被破坏。这样一来同一个场景就能以多种"虚拟相机"出现，逼着模型学会把内参当条件、把场景当内容，而不是死记某一台相机的成像规律。
+
+**3. 几何先验蒸馏：从深度模型借来 3D 结构，还顺手解决无内参图像。**
+
+射线嵌入解决了"知道相机"，但很多互联网 2D 数据连内参都没有，也缺显式的 3D 监督。本文用冻结的 UniDepth v2（在 10M+ RGB-深度对上预训练）为每张训练图预测稠密 3D 点云，编码成先验嵌入 $E_{\text{geo}} \in \mathbb{R}^{H\times W\times D}$ 叠到视觉特征上，把度量深度模型积累的几何知识蒸馏进 MLLM。妙处在于 UniDepth 本身能从图像直接估计内参，于是对那些没标内参的网络图片，框架照样能补出射线嵌入需要的相机信息，训练数据范围一下子从有标注的 3D 数据集扩展到了海量 2D 图像。推理时这套先验已内化进特征，输入仍然只需 RGB。
 
 ### 损失函数 / 训练策略
 
-基于 VG-LLM 基线训练，在 ScanNet、ARKitScenes、Matterport3D、3RScan、SUN RGB-D、Objectron 等多源数据上联合训练。对于通用空间推理，还加入 LLaVA-Video-178k 和 SPAR 数据。
+整体以 VG-LLM 为基线，在 ScanNet、ARKitScenes、Matterport3D、3RScan、SUN RGB-D、Objectron 等多源 3D 数据上联合训练；面向通用空间推理时再补入 LLaVA-Video-178k 和 SPAR 数据，以覆盖更丰富的相机与场景分布。
 
 ## 实验关键数据
 
@@ -129,7 +126,7 @@ tags:
 - [\[CVPR 2026\] Scaling Spatial Intelligence with Multimodal Foundation Models](../../CVPR2026/multimodal_vlm/scaling_spatial_intelligence_with_multimodal_foundation_models.md)
 - [\[ICLR 2026\] Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
 - [\[ICML 2026\] Thinking in Structures: Evaluating Spatial Intelligence in Constraint-Governed Spaces](../../ICML2026/multimodal_vlm/thinking_in_structures_evaluating_spatial_intelligence_in_constraint-governed_sp.md)
-- [\[ICLR 2026\] Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation](spatial_captcha_generatively_benchmarking_spatial_reasoning_for_human-machine_di.md)
+- [\[ICML 2026\] ReVSI: Rebuilding Visual Spatial Intelligence Evaluation for Accurate Assessment of VLM 3D Reasoning](../../ICML2026/multimodal_vlm/revsi_rebuilding_visual_spatial_intelligence_evaluation_for_accurate_assessment_.md)
 
 </div>
 

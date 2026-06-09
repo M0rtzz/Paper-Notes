@@ -40,54 +40,21 @@ LLM 在数学 benchmark 上已接近满分（AIME、MATH-500），甚至达到 I
 
 ### 整体框架
 
-ContextMATH 基于 AIME 2024、AIME 2025 和 MATH-500（仅保留难度 ≥3 的题目），将每个原题转化为两种变体：
-
-1. **Scenario Grounding (SG)**：将抽象数学结构嵌入具体叙事，但不增加推理复杂度
-2. **Complexity Scaling (CS)**：将显式条件隐藏在子问题中，需额外推理步骤才能恢复原始条件
+ContextMATH 不另起炉灶收集数据，而是站在已验证正确的 AIME 2024、AIME 2025 和 MATH-500（仅保留难度 ≥3 的题）之上，对每道抽象原题做受控改写，派生出两种上下文变体。两条改写路径分别探测两种不同能力：Scenario Grounding (SG) 把抽象结构包进现实叙事但不增加推理量，专测"能否从语境里读出数学核心"；Complexity Scaling (CS) 把显式条件藏进需要额外推理才能解开的子问题，专测"能否先恢复条件再求解"。在准确率之外，论文还配了一套定量框架去拆解"建模"与"推理"两段贡献。
 
 ### 关键设计
 
-**SG 构建**：通过多步提示引导 LLM（o1-mini）将所有抽象数学元素映射到现实实体（如"变量 $x$"→"初始油桶数"），然后定义实体间的交互规则。保证数学核心不变，仅增加叙事语境。
+**1. Scenario Grounding：给抽象结构套一层现实叙事，隔离语境理解能力。** 现实里的数学问题极少直接以方程出现，但现有 benchmark 几乎都是规整的抽象题，无法测出模型把叙事翻译成数学的能力。SG 的做法是用多步提示引导 LLM（o1-mini）把题中每个抽象元素映射到一个现实实体——例如"变量 $x$"对应"初始油桶数"——再定义这些实体之间的交互规则，使叙事在逻辑上严格等价于原题。关键约束是数学核心和求解步数完全不变，只增加一层语境外壳，因此 SG 上的任何掉分都能干净地归因于"读不懂场景"，而非题目变难。
 
-**CS 构建**：将直接条件编码为简单自包含子问题的输出。策略包括：
-- 将数值编码为数论/组合问题的解（如"25 个指示灯"→"指示灯唯一配对数恰好为 300"）
-- 用需从数据点确定的变量替代显式函数/常数
-- 将几何关系改述为物理/结构描述
+**2. Complexity Scaling：把条件藏进子问题，单独考查条件恢复能力。** 真实任务里的关键数值往往不是白给的，而要先从别处推出来。CS 正是把原题里的直接条件编码成一个简单、自包含的子问题的解，迫使模型多走一步推理才能还原出原始条件。具体策略有三类：把数值编码为数论或组合问题的解（如把"25 个指示灯"改写成"指示灯的唯一配对数恰好为 300"，需反解才能得到 25）、用需要从数据点确定的变量替换显式函数或常数、以及把几何关系改述成物理或结构描述。由于子问题刻意保持简单，CS 增加的几乎全是"恢复条件"这一步的负担，与计算难度解耦。
 
-**质量控制**：三位专家（计算机科学高级学位 + 竞赛数学背景）独立审核每个题目：
-- 评估叙事合理性和清晰度
-- 独立从场景中建模抽象数学问题验证等价性
-- 在 Gemini 和 GPT-5 上测试
-- 不一致时由最强数学背景的审核员主持讨论
+**3. 三专家交叉审核：保证变体与原题严格等价。** 自动改写难免引入歧义或破坏等价性，因此每道题都经三位具备计算机高级学位且有竞赛数学背景的专家独立把关：评估叙事是否合理清晰、各自从场景出发独立重新建模以验证与原题等价、并在 Gemini 与 GPT-5 上实测，意见不一致时由数学背景最强的审核员主持讨论裁定。最终 SG 与 CS 的平均长度分别为 133 与 176 词，控制在现有 LLM 的处理窗口内，避免长度本身成为干扰变量。
 
-SG 和 CS 平均长度分别为 133 和 176 词，在现有 LLM 处理能力范围内。
+**4. 必要性/充分性分析框架：把"建模"与"推理"两段责任分开记账。** 只看最终准确率无法判断模型是栽在"列不出方程"还是"算不对"。论文记 $F$ 为建模正确、$R$ 为最终推理正确，先定义建模准确率为模型把场景翻译成正确数学公式的比率，再用两个条件概率拆解二者关系：建模必要性 $P(F=\text{True} \mid R=\text{True})$ 衡量正确答案在多大程度上以正确建模为前提，充分性 $P(R=\text{True} \mid F=\text{True})$ 衡量建对了之后又有多大概率真能算对。两者一对照就能定位瓶颈——实验中必要性普遍高于充分性，说明"建对"是答对的近乎必要条件，但远不是充分条件。
 
-### 建模分析框架
+### 损失函数 / 训练策略
 
-除准确率外，定义三个指标评估问题建模能力：
-
-**建模准确率**：模型正确将场景翻译为数学公式的比率
-
-**建模必要性（Necessity）**：
-
-$$P(F=\text{True} \mid R=\text{True})$$
-
-即正确推理在多大程度上依赖正确建模。
-
-**建模充分性（Sufficiency）**：
-
-$$P(R=\text{True} \mid F=\text{True})$$
-
-即正确建模在多大程度上导致正确推理。
-
-### 训练策略
-
-训练实验基于 Qwen3-Base 系列，三种训练设置：
-- $\text{SFT}_{\text{Ori}}$：仅原始数据（50k）
-- $\text{SFT}_{\text{Syn}}$：仅合成场景数据（50k）
-- $\text{SFT}_{\text{Mix}}$：两者混合（100k）
-
-同时探索了训练专用建模模型的方案。
+为检验合成场景数据能否补上这块短板，论文在 Qwen3-Base 系列上对比三种 SFT 设置：仅用原始抽象数据的 $\text{SFT}_{\text{Ori}}$（50k）、仅用合成场景数据的 $\text{SFT}_{\text{Syn}}$（50k）、以及两者混合的 $\text{SFT}_{\text{Mix}}$（100k）。此外还尝试单独训练一个"专用建模模型"来负责场景到公式的翻译，再交给推理模型求解，以验证建模能力能否从 scenario-original 配对数据里直接学到。
 
 ## 实验关键数据
 
@@ -195,9 +162,9 @@ $$P(R=\text{True} \mid F=\text{True})$$
 
 - [\[ACL 2026\] ChAIRO: Contextual Hierarchical Analogical Induction and Reasoning Optimization for LLMs](../../ACL2026/llm_reasoning/chairo_contextual_hierarchical_analogical_induction_and_reasoning_optimization_f.md)
 - [\[ICML 2026\] Biases in the Blind Spot: Detecting What LLMs Fail to Mention](../../ICML2026/llm_reasoning/biases_in_the_blind_spot_detecting_what_llms_fail_to_mention.md)
-- [\[NeurIPS 2025\] RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](../../NeurIPS2025/llm_reasoning/realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
+- [\[NeurIPS 2025\] SAND-Math: Using LLMs to Generate Novel, Difficult and Useful Mathematics Questions and Answers](../../NeurIPS2025/llm_reasoning/sand-math_using_llms_to_generate_novel_difficult_and_useful_mathematics_question.md)
 - [\[ICML 2026\] How Far Ahead Do LLMs Plan? Uncovering the Latent Horizon in Chain-of-Thought Reasoning](../../ICML2026/llm_reasoning/how_far_ahead_do_llms_plan_uncovering_the_latent_horizon_in_chain-of-thought_rea.md)
-- [\[ICLR 2026\] GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
+- [\[NeurIPS 2025\] RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](../../NeurIPS2025/llm_reasoning/realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
 
 </div>
 

@@ -43,68 +43,25 @@ tags:
 
 ### 整体框架
 
-TSPulse 基于 TSMixer 轻量架构构建，核心流程为：
-- 输入 $\mathbf{X} \in \mathbb{R}^{S \times C}$ → 掩码 → 双空间编码（时域+频域）→ TSMixer骨干 → 迷你解码器 → 多目标输出头
+TSPulse 建立在 TSMixer 这一全 MLP 的轻量骨干上，把一段输入 $\mathbf{X} \in \mathbb{R}^{S \times C}$ 先做掩码，再分别送进时域和频域两条编码路径，拼成统一的 token 序列后过 TSMixer 骨干与一个迷你解码器，最后由多个输出头同时承担时域重建、频域重建、频率签名和短期预测等目标。整套设计的出发点是：用 1M 量级的参数同时服务分类、异常检测、插补、检索这些诊断类任务，因此既要让表示在不同空间互补，又要让不同粒度的信息彼此解耦、各取所需。
 
 ### 关键设计
 
-1. **双空间掩码重建（Dual-Space Masked Reconstruction）**
+**1. 双空间掩码重建：让时域和频域互相补盲。** 时间序列里有些模式天然适合在时域观察（比如突刺、毛刺），另一些则在频域才显眼（比如周期性、整体节律），只在单一空间重建就会系统性地漏掉一类信号。TSPulse 的做法是同时重建时域和频域的掩码输入：时域被掩码的信号 $\mathbf{X}_m$ 直接送入 FFT 得到频域表示 $\mathbf{X}^f_m$。这里有个巧思——它**不在频域显式打掩码**，而是让时域掩码经 FFT 自然传播到频域，避免了频谱上难以定义"局部缺失"的问题。两条路径加上 register 路径编码后拼接成 $\mathbf{Input}_E = [\mathbf{Time}_E; \mathbf{FFT}_E; \mathbf{Reg}_E] \in \mathbb{R}^{C \times K \times D}$，让骨干在一个序列里同时看到两种视角，重建任一空间都能从另一空间借力。
 
-    - 同时在时域和频域进行掩码输入的重建
-    - 核心直觉：某些模式在时域更易检测（如突刺），其他在频域更显著（如周期性）
-    - 时域输入 $\mathbf{X}_m$ 通过 FFT 转换获得频域表示 $\mathbf{X}^f_m$
-    - 关键设计：**不显式掩码频域**，而是将时域掩码信号直接送入 FFT，自然传播掩码到频域
-    - 编码后拼接：$\mathbf{Input}_E = [\mathbf{Time}_E; \mathbf{FFT}_E; \mathbf{Reg}_E] \in \mathbb{R}^{C \times K \times D}$
+**2. 双嵌入解耦：把细节和语义分开存放。** 不同下游任务对信息粒度的需求并不一致——插补要逐点的细粒度还原，分类只关心全局语义，把两者混在同一组嵌入里就会互相牵制。TSPulse 因此把 token 拆成两组：前 $2N$ 个 patch embedding 作为**详细嵌入**，负责全信号重建、保留时域与频域的细粒度模式；后 $R$ 个 register embedding 作为**语义嵌入**，专门编码全局特征。语义嵌入不靠逐点重建监督，而是接两个高层任务——频率签名预测 $\mathcal{L}_{prob} = \text{CE}(\mathbf{X}^f_{prob}, \mathbf{Y}^f_{prob})$（对数幅值谱的 softmax 分布）和短期预测 $\mathcal{L}_{future} = \text{MSE}(\mathbf{X}_{future}, \mathbf{Y}_{future})$。这样分类时直接取语义嵌入、插补时直接取详细嵌入，下游可以按任务挑选最合适的那一半表示。
 
-2. **双嵌入解耦（Dual-Embedding Disentanglement）**
+**3. TSLens：用可学习的方式替代分类池化。** 标准做法是对 token 直接做平均或最大池化喂给分类头，但这等于一视同仁地对待所有局部和全局特征，丢掉了"哪些 patch 更有判别力"的信息。TSLens 是分类微调时插入的可学习提取器：双嵌入先过一个用预训练权重初始化、并开启通道混合的 mini decoder，再降维投影、flatten，最后接线性分类头。它能动态聚焦局部和全局表示中信息量最大的部分，消融里把它换回 avg-pool 掉 11%、换回 max-pool 掉 16%，差距相当可观。
 
-    - **详细嵌入**（前 $2N$ 个 patch embedding）：用于全信号重建，捕获细粒度时域和频域模式
-    - **语义嵌入**（后 $R$ 个 register embedding）：用于高层语义重建，编码全局特征
-    - 语义嵌入通过两个任务监督：
-        - 频率签名预测：$\mathcal{L}_{prob} = \text{CE}(\mathbf{X}^f_{prob}, \mathbf{Y}^f_{prob})$（对数幅值谱的softmax分布）
-        - 短期预测：$\mathcal{L}_{future} = \text{MSE}(\mathbf{X}_{future}, \mathbf{Y}_{future})$
-    - 设计动机：不同下游任务需要不同层次的信息——分类需要语义嵌入，插补需要详细嵌入
+**4. 多头三角测量异常检测：三个视角交叉定位异常。** 不同类型的异常会在不同重建目标上暴露——突刺在时域偏差大、周期性破坏在频域偏差大、趋势漂移则体现在短期预测偏差上，单一重建头难以兼顾。TSPulse 直接复用预训练好的三个头来打分：$\text{Head}_{time}$ 看时域重建偏差抓突刺，$\text{Head}_{fft}$ 看频域重建偏差抓周期性异常，$\text{Head}_{future}$ 看短期预测偏差抓趋势异常。融合上既可用 $\text{Head}_{ensemble}$ 取各头最大值，也可用 $\text{Head}_{triang.}$ 在一个很小的验证集上选最佳头。这是首个在单一轻量框架里统一多空间输出做三角测量的预训练模型，也正因如此它的零样本异常检测能反超在目标数据上训练过的模型。
 
-3. **TSLens（分类微调组件）**
+**5. 混合掩码策略：贴合真实缺失的不规则形态。** 传统块掩码假设整段连续缺失，可真实世界的缺失值往往是零散、点级、不规则的，纯块掩码预训练出来的模型一到这种场景就崩。TSPulse 改用混合掩码：同时掩掉完整 patch 和散落的点级位置。关键在于掩码 token $\mathbf{M} \in \mathbb{R}^{1 \times pl}$ 定义在原始 patch 级别而非嵌入空间，从而支持灵活的部分掩码。消融显示去掉混合预训练后，模型在混合掩码评估下性能暴降 79%，说明预训练阶段就见过这种缺失形态是插补能力的前提。
 
-    - 替代标准池化的学习机制，自适应地从双嵌入中提取相关特征
-    - 通过 mini decoder（预训练权重初始化 + 通道混合）→ 降维投影 → flatten → 线性分类头
-    - 动态聚焦局部和全局表示中最具信息量的特征
-
-4. **多头三角测量异常检测（Multi-Head Triangulation）**
-
-    - 利用三个预测头从不同视角检测异常：
-        - $\text{Head}_{time}$：时域重建偏差 → 检测突刺异常
-        - $\text{Head}_{fft}$：频域重建偏差 → 检测周期性异常
-        - $\text{Head}_{future}$：短期预测偏差 → 检测趋势异常
-    - 融合策略：$\text{Head}_{ensemble}$（最大值融合）或 $\text{Head}_{triang.}$（基于小验证集选最佳头）
-    - 首个在单一轻量框架中统一多空间输出进行三角测量的预训练模型
-
-5. **混合掩码策略（Hybrid Masking）**
-
-    - 传统块掩码不适用于真实世界插补（缺失值是不规则的）
-    - 混合策略：同时掩码完整 patch 和部分点级位置
-    - 关键设计：掩码 token $\mathbf{M} \in \mathbb{R}^{1 \times pl}$ 定义在原始 patch 级别（非嵌入空间），支持灵活的部分掩码
-    - 消融显示：去除混合预训练的模型在混合掩码评估下性能暴降 79%
-
-6. **通道混合的恒等初始化**
-
-    - 预训练采用单变量模式（channel-independent）
-    - 微调时启用通道混合（channel-mixing），但新增的混合层用**恒等权重初始化**
-    - 避免随机初始化在预训练层之间造成激活突变和梯度不稳定
+**6. 通道混合的恒等初始化：微调时不打乱预训练激活。** 预训练采用单变量（channel-independent）模式以保证通用性，但微调时往往需要打开通道混合（channel-mixing）来捕捉变量间关系。问题是新增的混合层若随机初始化，会在已经训好的预训练层之间引入突变的激活、造成梯度不稳定。TSPulse 让这些新混合层以**恒等权重**起步，相当于初始时通道混合是个恒等映射，对预训练表示零扰动，再在微调中平滑地学出真正有用的跨通道交互。
 
 ### 损失函数 / 训练策略
 
-多目标加权损失函数的联合最小化：
-- $\mathcal{L}_{time1} = \text{MSE}(\mathbf{X}, \mathbf{Y})$：时域重建（仅掩码位置）
-- $\mathcal{L}_{time2} = \text{MSE}(\mathbf{X}, \mathbf{Y}')$：从FFT空间反变换的时域重建
-- $\mathcal{L}_{fft} = \text{MSE}(\mathbf{X}^f, \mathbf{Y}^f)$：频域重建
-- $\mathcal{L}_{prob} = \text{CE}(\mathbf{X}^f_{prob}, \mathbf{Y}^f_{prob})$：频率签名
-- $\mathcal{L}_{future} = \text{MSE}(\mathbf{X}_{future}, \mathbf{Y}_{future})$：短期预测
-
-任务特化预训练：通过重新加权损失头优先级实现特化（如AD保留所有头，分类强调时域+概率头）。
-
-预训练在 ~1B 时序样本上，8×A100 GPU 仅需一天。
+预训练联合最小化一组多目标加权损失：时域重建 $\mathcal{L}_{time1} = \text{MSE}(\mathbf{X}, \mathbf{Y})$（仅算掩码位置）、从 FFT 空间反变换回来的时域重建 $\mathcal{L}_{time2} = \text{MSE}(\mathbf{X}, \mathbf{Y}')$、频域重建 $\mathcal{L}_{fft} = \text{MSE}(\mathbf{X}^f, \mathbf{Y}^f)$、频率签名 $\mathcal{L}_{prob} = \text{CE}(\mathbf{X}^f_{prob}, \mathbf{Y}^f_{prob})$，以及短期预测 $\mathcal{L}_{future} = \text{MSE}(\mathbf{X}_{future}, \mathbf{Y}_{future})$。任务特化则通过重新加权各损失头的优先级实现——例如异常检测保留全部头，分类则强调时域头与频率签名头。整个预训练用约 1B 时序样本、8×A100 GPU 一天即可完成。
 
 ## 实验关键数据
 
@@ -215,7 +172,7 @@ TSPulse 基于 TSMixer 轻量架构构建，核心流程为：
 - [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
 - [\[ICLR 2026\] FeDaL: Federated Dataset Learning for General Time Series Foundation Models](fedal_federated_dataset_learning_for_general_time_series_foundation_models.md)
 - [\[ICLR 2026\] TimeOmni-1: Incentivizing Complex Reasoning with Time Series in Large Language Models](timeomni-1_incentivizing_complex_reasoning_with_time_series_in_large_language_mo.md)
-- [\[ICML 2026\] Learning Long Range Spatio-Temporal Representations over Continuous Time Dynamic Graphs with State Space Models](../../ICML2026/time_series/learning_long_range_spatio-temporal_representations_over_continuous_time_dynamic.md)
+- [\[ICLR 2026\] Adapt Data to Model: Adaptive Transformation Optimization for Domain-shared Time Series Foundation Models](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)
 
 </div>
 

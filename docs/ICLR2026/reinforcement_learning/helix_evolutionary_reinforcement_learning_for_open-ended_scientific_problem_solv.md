@@ -43,37 +43,37 @@ tags:
 
 ### 整体框架
 
-HELIX 三模块协同迭代：
-- **RL 模块**：用 GRPO 更新 LLM 策略参数 $\theta$，使模型学会生成高奖励的代码修改
-- **进化模块**：用 NSGA-II 从所有历史解中选择高奖励+高多样性的种群 $\mathcal{P}_t$
-- **ICL 模块**：构建包含当前解+祖先解（lineage tree）的 prompt，让模型参考历史经验
-- **迭代流程**：选种群 → 构造 prompt → LLM 生成修改 → 评估奖励 → 更新策略+种群 → 下一轮
+HELIX 要解决的是开放式科学优化：没有标准答案、解空间无界、还得既会改进又不撞死在一个方向上。它把每个"解"写成一段可执行代码，让 LLM 充当变异/改进算子，然后用三个模块拧成一根迭代的绳子。每一轮的转法是：先用 NSGA-II 从历史所有解里挑出一批又好又多样的种群，从中取出当前要改进的解 $s_t$；接着把这个解连同它的祖先（lineage tree）打包进 prompt，让模型在"看过前人怎么改"的前提下生成新一版代码；新解执行后拿到奖励 $R$，一方面用 GRPO 把这次的得失回灌到策略参数 $\theta$ 里，另一方面把新解并入种群，进入下一轮。三者各管一件事：RL 让模型越改越准、进化保证不收敛到单点、ICL 让每次改进都站在已知好解的肩上。
 
 ### 关键设计
 
-1. **GRPO 策略优化**:
+**1. GRPO 策略优化：让"变异算子"本身越用越强。**
 
-    - 功能：基于奖励信号更新 LLM 参数，使其越来越擅长改进代码解
-    - 核心思路：给定 prompt $q$ 和当前解 $s_t$，生成 G 个 rollout $\{a_j\}$，用 GRPO 的标准 clipped surrogate objective 训练，advantage 通过组内奖励归一化计算 $\hat{A}_{j,k} = \frac{R(s_t,a_j) - \text{mean}\{R\}}{\text{std}\{R\}}$
-    - 设计动机：RL 让模型的变异能力不断提升，而非停留在预训练知识——这是与 AlphaEvolve 等纯工作流方法的根本区别
+纯工作流方法（如 AlphaEvolve）只是反复调用一个固定的预训练模型做变异，模型的改进能力从头到尾不变。HELIX 的根本区别在于用 RL 把奖励信号回灌进参数。给定 prompt $q$ 和当前解 $s_t$，模型采样 $G$ 个 rollout $\{a_j\}$，按 GRPO 的 clipped surrogate objective 训练，优势用组内奖励归一化得到：
 
-2. **NSGA-II 多目标种群选择**:
+$$\hat{A}_{j,k} = \frac{R(s_t,a_j) - \text{mean}\{R\}}{\text{std}\{R\}}$$
 
-    - 功能：在奖励-多样性两个目标上选择 Pareto 最优种群
-    - 核心思路：对每个解计算奖励 $R(s)$ 和多样性 $\text{Div}(s) = 1 - \frac{1}{k}\sum_{j \in \mathcal{N}_k(i)} \cos(E(s_i), E(s_j))$（用预训练embedding 的 KNN 余弦距离）。NSGA-II 做非支配排序 + 拥挤度筛选
-    - 设计动机：防止 RL 的 entropy collapse——如果只按奖励选解，很快会收敛到局部最优。NSGA-II 保留多样的 Pareto 前沿使探索保持开放
+这样模型不再停留在预训练知识里，而是真正学会"对这类问题该往哪个方向改代码"，变异能力随训练持续提升。
 
-3. **Lineage Tree In-context Learning**:
+**2. NSGA-II 多目标种群选择：用多样性顶住 entropy collapse。**
 
-    - 功能：把当前解的"家族谱"（祖先解、它们的奖励和反馈）放入 prompt
-    - 核心思路：$q = \text{ConstructPrompt}(\{p\} \cup \{s_t, R(s_t), F(s_t)\} \cup \{f^{(k)}(s_t), R(f^{(k)}(s_t)), F(f^{(k)}(s_t))\}_{1 \leq k < n})$，其中 $f^{(k)}$ 是第 k 代祖先
-    - 设计动机："站在巨人肩上"——让模型看到这个解是如何一步步从 v0 改进到 v_n 的，理解改进方向
+如果只按奖励高低选解，RL 很快会把熵压垮、收敛到一个局部最优，开放式探索就死了。HELIX 因此把"选谁进种群"做成一个奖励-多样性的双目标问题。每个解除了奖励 $R(s)$，还算一个多样性分数：
+
+$$\text{Div}(s_i) = 1 - \frac{1}{k}\sum_{j \in \mathcal{N}_k(i)} \cos(E(s_i), E(s_j))$$
+
+即在预训练 embedding 空间里取它的 $k$ 近邻、用余弦相似度的均值反过来衡量它有多"独特"。NSGA-II 在这两个目标上做非支配排序 + 拥挤度筛选，留下整条 Pareto 前沿，使种群始终既有高分解又有方向各异的解，探索空间不被提前关死。
+
+**3. Lineage Tree In-context Learning：让模型看见解的进化家谱。**
+
+给模型几个随机好解当示例，它只知道"好的长什么样"，却不知道"怎么从差变好"。HELIX 改为把当前解的整条血缘——祖先解、它们各自的奖励和反馈——一并塞进 prompt：
+
+$$q = \text{ConstructPrompt}\big(\{p\} \cup \{s_t, R(s_t), F(s_t)\} \cup \{f^{(k)}(s_t), R(f^{(k)}(s_t)), F(f^{(k)}(s_t))\}_{1 \leq k < n}\big)$$
+
+其中 $f^{(k)}$ 是第 $k$ 代祖先。模型于是能看到这个解是如何一步步从 $v_0$ 改到 $v_n$、每步奖励怎么变的，从而推断出"有效的改进方向"，而不是凭空再试一遍。
 
 ### 损失函数 / 训练策略
 
-- GRPO objective with clipping $\epsilon$ and KL penalty $\beta$
-- 多样性度量：用预训练 embedding 模型（而非原始代码文本）计算 KNN 余弦多样性
-- 迭代训练：每轮生成新解 → 评估 → 更新种群 → 更新策略参数
+训练目标是带 clipping $\epsilon$ 和 KL penalty $\beta$ 的标准 GRPO objective。多样性度量刻意用预训练 embedding 模型在语义空间算，而不是直接比对代码文本——因为两段代码风格不同但功能相同时不该被当作"多样"。整体是迭代式训练：每轮生成新解 → 执行评估奖励 → 用 NSGA-II 更新种群 → 用 GRPO 更新策略参数，循环推进。
 
 ## 实验关键数据
 
@@ -141,9 +141,9 @@ HELIX 用 14B 模型在 ML 任务上超越 GPT-4o 流水线，F1 平均提升 5.
 
 - [\[ICLR 2026\] From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for RL of Open-ended Generation](from_verifiable_dot_to_reward_chain_harnessing_verifiable_reference-based_reward.md)
 - [\[ACL 2026\] KASER: Knowledge-Aligned Student Error Simulator for Open-Ended Coding Tasks](../../ACL2026/reinforcement_learning/kaser_knowledge-aligned_student_error_simulator_for_open-ended_coding_tasks.md)
-- [\[ICLR 2026\] $\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
 - [\[ICLR 2026\] Solving Parameter-Robust Avoid Problems with Unknown Feasibility using Reinforcement Learning](solving_parameter-robust_avoid_problems_with_unknown_feasibility_using_reinforce.md)
 - [\[CVPR 2026\] Specificity-aware Reinforcement Learning for Fine-grained Open-world Classification](../../CVPR2026/reinforcement_learning/specificity-aware_reinforcement_learning_for_fine-grained_open-world_classificat.md)
+- [\[ICLR 2026\] Solving Football by Exploiting Equilibrium Structure of 2p0s Differential Games with One-Sided Information](solving_football_by_exploiting_equilibrium_structure_of_2p0s_differential_games_.md)
 
 </div>
 

@@ -35,47 +35,21 @@ tags:
 
 ### 整体框架
 
-QVGen 包含两个核心组件：
-1. **辅助模块 $\Phi$**：附着在量化线性层上，弥补量化误差，降低梯度范数以改善收敛
-2. **秩衰减策略**：通过 SVD 分解和秩正则化逐步消除 $\Phi$，确保推理时无额外开销
+QVGen 在量化线性层上挂一个全精度辅助模块 $\Phi$ 来弥补量化误差、压低训练时的梯度范数从而改善 4-bit QAT 的收敛性，再用一套秩衰减策略在训练过程中把 $\Phi$ 逐步收缩到零，最终让推理时既享受低比特加速又不背任何额外开销。前者负责"训得好"，后者负责"跑得快"，二者配合是整个框架能在极低比特下逼近全精度的关键。
 
-### 关键设计一：辅助模块提升收敛性
+### 关键设计
 
-**理论分析**：基于遗憾 (regret) 分析，平均遗憾的上界为：
+**1. 辅助模块：把量化误差喂给梯度，让低比特也能收敛。** 视频扩散模型的 4-bit QAT 之所以崩，根子在收敛困难。作者从遗憾（regret）分析切入，给出平均遗憾的上界 $\frac{R(T)}{T} \leq \frac{dD_\infty^2}{2T\eta_T^m} + \frac{1}{T}\sum_{t=1}^{T}\frac{\eta_t^M}{2}\|\mathbf{g}_t\|_2^2$；当训练步数 $T$ 足够大时第一项可忽略，于是压低梯度范数 $\|\mathbf{g}_t\|_2$ 就成了改善收敛的抓手。据此他们在每个量化线性层旁并联一个辅助模块，前向变为 $\hat{\mathbf{Y}} = \mathcal{Q}_b(\mathbf{W})\mathcal{Q}_b(\mathbf{X}) + \Phi(\mathcal{Q}_b(\mathbf{X}))$，其中 $\Phi(\mathcal{Q}_b(\mathbf{X})) = \mathbf{W}_\Phi \mathcal{Q}_b(\mathbf{X})$，并把 $\mathbf{W}_\Phi$ 初始化为权重量化误差 $\mathbf{W} - \mathcal{Q}_b(\mathbf{W})$。这样 $\Phi$ 一上来就承接了量化引入的偏差，训练中持续吸收难以被低比特表达的残差，实测梯度范数全程低于纯 QAT，收敛因此变得平稳。
 
-$$\frac{R(T)}{T} \leq \frac{dD_\infty^2}{2T\eta_T^m} + \frac{1}{T}\sum_{t=1}^{T}\frac{\eta_t^M}{2}\|\mathbf{g}_t\|_2^2$$
+**2. 秩衰减策略：让辅助模块在训练里自己消失，推理零开销。** $\Phi$ 在推理时是一次额外的全精度矩阵乘法，若直接留着就违背了量化的初衷，所以必须在训练结束前彻底移除——但又不能粗暴砍掉，否则前面积累的收敛收益会丢失。作者的依据来自一个观察：对 $\mathbf{W}_\Phi$ 做 SVD，小奇异值的占比会随训练自然上升，从第 0 步的 73% 涨到第 2K 步的 99%，说明绝大多数分量贡献越来越弱、本就可弃。于是把 $\mathbf{W}_\Phi = \sum_{s=1}^d \sigma_s \mathbf{u}_s \mathbf{v}_s^\top$ 重写成低秩形式 $\Phi(\mathcal{Q}_b(\mathbf{X})) = \mathbf{L}\mathbf{R}\mathcal{Q}_b(\mathbf{X})$，再施加一个秩正则化门控 $\boldsymbol{\gamma}$，使前向成为 $\hat{\mathbf{Y}} = \mathcal{Q}_b(\mathbf{W})\mathcal{Q}_b(\mathbf{X}) + (\boldsymbol{\gamma} \odot \mathbf{L})\mathbf{R}\mathcal{Q}_b(\mathbf{X})$，其中 $\boldsymbol{\gamma} = \text{concat}([1]_{n \times (1-\lambda)r}, [u]_{n \times \lambda r})$ 把一部分秩固定为 1、另一部分由 $u$ 按余弦退火从 1 衰减到 0。当 $u$ 归零便截断这批低贡献分量、把秩从 $r$ 缩到 $(1-\lambda)r$，如此分批重复直到 $r=0$，$\Phi$ 被平滑地"训没"，推理时只剩纯低比特计算。
 
-当训练步数 $T$ 足够大时，第一项可忽略，因此**最小化梯度范数 $\|\mathbf{g}_t\|_2$** 是改善 QAT 收敛性的关键。
+### 损失函数 / 训练策略
 
-引入辅助模块 $\Phi$ 后，量化线性层的前向计算变为：
-
-$$\hat{\mathbf{Y}} = \mathcal{Q}_b(\mathbf{W})\mathcal{Q}_b(\mathbf{X}) + \Phi(\mathcal{Q}_b(\mathbf{X}))$$
-
-其中 $\Phi(\mathcal{Q}_b(\mathbf{X})) = \mathbf{W}_\Phi \mathcal{Q}_b(\mathbf{X})$，$\mathbf{W}_\Phi$ 初始化为权重量化误差 $\mathbf{W} - \mathcal{Q}_b(\mathbf{W})$。
-
-### 关键设计二：秩衰减策略
-
-$\Phi$ 在推理时引入额外的全精度矩阵乘法开销，需要在训练过程中逐步移除。
-
-**关键观察**：通过 SVD 分析 $\mathbf{W}_\Phi$，发现随着训练推进，小奇异值的比例从 73%（第 0 步）增长到 99%（第 2K 步），说明越来越多的分量贡献微弱。
-
-具体步骤：
-1. 对 $\mathbf{W}_\Phi$ 进行 SVD 分解：$\mathbf{W}_\Phi = \sum_{s=1}^d \sigma_s \mathbf{u}_s \mathbf{v}_s^\top$
-2. 重写为低秩形式：$\Phi(\mathcal{Q}_b(\mathbf{X})) = \mathbf{L}\mathbf{R}\mathcal{Q}_b(\mathbf{X})$
-3. 应用秩正则化 $\boldsymbol{\gamma}$：
-
-$$\hat{\mathbf{Y}} = \mathcal{Q}_b(\mathbf{W})\mathcal{Q}_b(\mathbf{X}) + (\boldsymbol{\gamma} \odot \mathbf{L})\mathbf{R}\mathcal{Q}_b(\mathbf{X})$$
-
-其中 $\boldsymbol{\gamma} = \text{concat}([1]_{n \times (1-\lambda)r}, [u]_{n \times \lambda r})$，$u$ 按余弦退火从 1 衰减到 0。
-
-4. 当 $u$ 到达 0 后截断低贡献分量，将秩从 $r$ 缩减到 $(1-\lambda)r$
-5. 重复上述过程直到 $r=0$，完全消除 $\Phi$
-
-### 损失函数
-
-采用知识蒸馏（KD）训练目标，以全精度模型为教师：
+训练以全精度模型为教师做知识蒸馏，让量化学生在输出空间对齐教师：
 
 $$\mathcal{L} = \mathbb{E}_{\mathbf{x}_0, \mathcal{C}, \tau}\left[\|\hat{\boldsymbol{\epsilon}}_\theta(\mathbf{x}_\tau, \mathcal{C}, \tau) - \boldsymbol{\epsilon}_\theta(\mathbf{x}_\tau, \mathcal{C}, \tau)\|_F^2\right]$$
+
+辅助模块的引入与秩衰减都在这一蒸馏目标下进行，保证逐步移除 $\Phi$ 的同时学生始终被教师拉回正确的去噪轨迹。
 
 ## 实验
 

@@ -45,25 +45,17 @@ DARE-bench 包含三大任务族（分类、回归、时间序列预测），每
 
 ### 关键设计
 
-1. **双变体任务设计（IF + MM / XF + CF）**:
+**1. 双变体任务设计：把"过程对不对"和"效果好不好"拆成两套可验证的题。**
 
-    - 功能：每个数据集生成两种互补的评估任务
-    - **IF（Instruction Following）**：要求 LLM 严格复现参考工作流（指定模型、超参数、预处理步骤），评估过程保真度。通过固定随机种子使忠实执行产生唯一确定的结果
-    - **MM（ML Modeling）**：不限定方法，只评估最终预测性能，评估 ML 建模能力
-    - **XF/CF（时间序列）**：XF 保留外生特征，CF 仅保留时间戳和实体列（经典预测设定）
-    - 设计动机：IF 模拟"严格执行数据科学家设计方案"的场景，MM 模拟"客户只关心最终效果"的场景。两者互补且均有实际需求
+数据科学 agent 有两种被使用的方式——要么严格按数据科学家给的方案执行，要么客户只看最终效果。DARE-bench 让每个数据集同时派生出两类互补任务来分别考这两种能力。IF（Instruction Following）要求 LLM 严格复现参考工作流，指定模型、超参数和预处理步骤都不能改，考的是过程保真度；这里的关键是固定随机种子，使得"忠实执行"会产生唯一确定的结果，过程是否走对就能直接由输出是否匹配来判定。MM（ML Modeling）则不限定方法，只评估最终预测性能，考的是 LLM 自己挑模型、调参的建模能力。时间序列任务再细分两个变体：XF 保留外生特征，CF 只保留时间戳和实体列（经典预测设定，难度更高）。两套任务都对应真实需求，又都落到确定性数值上，这是后面可验证奖励能成立的前提。
 
-2. **自动化数据构造流水线**:
+**2. 自动化数据构造流水线：用 LLM 当辅助标注工，绕开人工标注瓶颈。**
 
-    - 功能：从 Kaggle 数据集自动构造标准化 ML 任务
-    - 核心流程：(1) Dataset Sourcing——API + 爬虫获取 Kaggle 数据集 + 元数据；(2) LLM-Assisted Task Design——LLM 判断数据集是否可支持预测任务、识别目标列和特征；(3) Post-Process——数据分割、IF 任务加噪声注入、时间序列任务做重采样和实体检查；(4) Finalization——沙箱验证可解性
-    - 设计动机：突破人工标注瓶颈，LLM 仅处理辅助内容（描述、元数据、规则提取），不生成训练信号本身
+要凑齐 6300 个带 ground truth 的任务，靠人工标注不现实。DARE-bench 把 Kaggle 数据集经四阶段流水线自动转成标准化 ML 任务：(1) Dataset Sourcing——用 API + 爬虫拉取 Kaggle 数据集及元数据；(2) LLM-Assisted Task Design——让 LLM 判断某数据集能否支撑预测任务、识别目标列和特征；(3) Post-Process——做数据分割，给 IF 任务注入噪声、给时间序列任务做重采样和实体检查；(4) Finalization——在沙箱里跑一遍验证任务确实可解。关键分寸在于 LLM 只碰辅助内容（描述、元数据、规则提取），训练信号本身（标签、参考解输出）始终来自真实数据和确定性执行，不由 LLM 生成，避免把噪声引入 ground truth。
 
-3. **可验证奖励设计**:
+**3. 可验证奖励设计：让 DS 任务也能像数学/代码一样做 RLVR。**
 
-    - 功能：使 DARE-bench 支持 RLVR 训练
-    - 核心思路：IF 任务的 ground truth 来自固定种子下参考解的执行输出；MM 任务的 ground truth 来自原始数据集标签。两者均为确定性数值，可自动对比评分
-    - 设计动机：这是支持 RL 训练的关键——不需要人工评判或 LLM judge，纯 outcome-based 验证
+RL 训练最缺的是无需人工评判就能自动给分的奖励。DARE-bench 的两类任务都把 ground truth 落在确定性数值上：IF 任务的 ground truth 是参考解在固定种子下的执行输出，MM 任务的 ground truth 就是原始数据集的真实标签。无论哪种，评分都只需把 LLM 沙箱执行的预测结果和 ground truth 自动对比，不依赖 LLM judge 或偏好标注，是纯 outcome-based 的验证。正因如此，DARE-bench 不只是个评测集，6300 个任务里 95% 可直接当 RLVR 的训练信号，把"数学/代码之外能不能做可验证强化学习"这个问题扩展到了数据科学场景。
 
 ### 损失函数 / 训练策略
 - SFT：使用 DARE-bench 训练集对 Qwen3-32B/4B 进行微调
@@ -124,11 +116,11 @@ DARE-bench 包含三大任务族（分类、回归、时间序列预测），每
 
 ## 相关论文
 
-- [\[ICLR 2026\] TabStruct: Measuring Structural Fidelity of Tabular Data](tabstruct_measuring_structural_fidelity_of_tabular_data.md)
 - [\[AAAI 2026\] Benchmarking LLMs for Political Science: A United Nations Perspective](../../AAAI2026/llm_evaluation/benchmarking_llms_for_political_science_a_united_nations_perspective.md)
-- [\[ICLR 2026\] Truthfulness Despite Weak Supervision: Evaluating and Training LLMs Using Peer Prediction](truthfulness_despite_weak_supervision_evaluating_and_training_llms_using_peer_pr.md)
 - [\[ICLR 2026\] ASIDE: Architectural Separation of Instructions and Data in Language Models](aside_architectural_separation_of_instructions_and_data_in_language_models.md)
-- [\[NeurIPS 2025\] RDB2G-Bench: A Comprehensive Benchmark for Automatic Graph Modeling of Relational Databases](../../NeurIPS2025/llm_evaluation/rdb2g-bench_a_comprehensive_benchmark_for_automatic_graph_modeling_of_relational.md)
+- [\[ICLR 2026\] Truthfulness Despite Weak Supervision: Evaluating and Training LLMs Using Peer Prediction](truthfulness_despite_weak_supervision_evaluating_and_training_llms_using_peer_pr.md)
+- [\[ACL 2026\] ScaleBox: Enabling High-Fidelity and Scalable Code Verification for Large Language Models](../../ACL2026/llm_evaluation/scalebox_enabling_high-fidelity_and_scalable_code_verification_for_large_languag.md)
+- [\[ACL 2025\] SeedBench: A Multi-task Benchmark for Evaluating Large Language Models in Seed Science](../../ACL2025/llm_evaluation/seedbench_a_multi-task_benchmark_for_evaluating_large_language_models_in_seed_sc.md)
 
 </div>
 

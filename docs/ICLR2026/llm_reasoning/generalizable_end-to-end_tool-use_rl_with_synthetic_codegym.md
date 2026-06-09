@@ -40,45 +40,23 @@ tags:
 
 ## 方法详解
 
-### 1. CodeGym 环境生成 Pipeline
+### 整体框架
 
-整个流程分为两阶段：
+CodeGym 把一道带解法的编程题自动改造成一个可交互的 POMDP 环境：先从代码里抽出可复用的原子逻辑当作工具，再用原始解法生成单元测试来校验环境是否可解，最后用一套两层过滤留下既有足够工具多样性又足够难的任务配置，喂给 GRPO 做端到端工具使用 RL。整个数据侧无需人工标注轨迹，规模可一直放大到 13k 环境、80k+ 任务配置。
 
-**Gym Synthesis（环境合成）**：
+### 关键设计
 
-- 输入编程题及其解法代码，提取可复用的**原子函数/逻辑**作为可调用工具
-- 工具可以是独立函数、计算工具或常见代码片段（如循环体）
-- 由 LLM 生成工具的精确文档（功能、参数、示例），但训练时隐藏示例以鼓励探索学习
-- 每个环境建模为 POMDP：$\mathcal{E} = \langle \mathcal{S}, \mathcal{A}, T, R, \mathcal{O} \rangle$
-- 动作空间包含通用函数（Observe、Done）和领域特定工具
-- 奖励为稀疏二值：答案正确得 1，否则得 0
+**1. 环境合成（Gym Synthesis）：把代码逻辑变成可调用的工具。** 现有 agent 训练环境要么靠静态轨迹、要么只覆盖代码调试或信息检索这类窄任务，难以泛化。CodeGym 的做法是输入编程题及其解法代码，从中提取独立函数、计算工具或常见代码片段（如循环体）作为可复用的原子工具，再由 LLM 为每个工具生成精确文档（功能、参数、示例）。每个环境被建模成 POMDP $\mathcal{E} = \langle \mathcal{S}, \mathcal{A}, T, R, \mathcal{O} \rangle$，动作空间由通用函数（Observe、Done）和领域特定工具组成，奖励是稀疏二值的——最终答案正确得 1、否则得 0。关键细节是训练时把工具文档里的示例隐藏掉，逼 agent 通过主动试探去摸清每个工具的真实行为，而不是照抄文档，这正是工具使用能力可迁移的来源。
 
-**Gym Verification（环境验证）**：
+**2. 环境验证（Gym Verification）：用单元测试保证环境真的可解。** 自动合成的环境可能因为工具抽取不完整或题目本身歧义而无解，直接拿去训练会污染奖励信号。CodeGym 先合成覆盖多难度和边界情况的单元测试输入，用原始编程解法跑出对应输出当作 ground truth，再用 pass@K 策略（$K=10$）做筛选：对一个环境生成 10 个候选解法函数，只要任一个能通过全部单元测试就认定环境可解。通过验证的那些单元测试随后被直接复用为 RL 训练的任务配置，等于让"可验证"和"可训练"用的是同一套标准。
 
-- 合成单元测试输入覆盖多种难度和边界情况
-- 用原始编程解法生成对应的单元测试输出（ground truth）
-- 采用 **pass@K 策略**（K=10）：生成 10 个候选解法函数，任一通过全部单元测试即认为环境可解
-- 通过验证的单元测试作为 RL 训练的任务配置
+**3. 两层质量过滤：同时卡复杂度和难度。** 光是可解还不够，过简单或工具调用形态畸形的环境对泛化没帮助。第一层卡工具调用复杂度：过滤掉工具调用次数 < 10 或 > 256 的任务配置，并要求每个环境至少出现 4 种不同工具，保证交互足够丰富又不至于陷入死循环。第二层卡难度：用 Qwen2.5-32B-Instruct 对每个配置评测 4 次，只保留正确率 ≤ 25% 的配置，确保留下来的都是当前模型啃不动的硬骨头。过滤后最终得到 13k 环境、80k+ 任务配置，平均每个环境含 6.52 个工具、需要 44.07 步完成。消融显示这层过滤把 OOD 平均增益从 +3.9 拉到 +7.3，几乎翻倍。
 
-### 2. 质量控制
+**4. 难度增强：堵住 long-CoT 绕过工具的捷径。** long-CoT 模型有时能靠纯推理直接算出答案、根本不调工具，这样训练就学不到工具使用。CodeGym 在初始化任务配置时对其做增强，刻意抬高纯推理路径的难度，迫使模型必须真正走交互流程才能解题，从而把工具使用能力训进模型里。
 
-两层过滤机制确保训练数据质量：
+### 损失函数 / 训练策略
 
-- **工具调用复杂度**：过滤工具调用次数 < 10 或 > 256 的任务配置；要求每个环境至少 4 种不同工具
-- **难度过滤**：用 Qwen2.5-32B-Instruct 评估 4 次，仅保留正确率 ≤ 25% 的任务配置
-
-最终数据集：**13k 环境、80k+ 任务配置**，平均 6.52 个工具、44.07 步完成。
-
-### 3. 难度增强
-
-针对 long-CoT 模型可能通过纯推理绕过工具调用的问题，对环境初始化的任务配置进行增强，提升纯推理难度。
-
-### 4. 训练框架
-
-- 采用 GRPO 算法，batch size 512×8
-- 分布式 rollout 框架：CPU 端环境服务器与 GPU 端 rollout 解耦
-- **Trial-then-Overwrite 机制**：序列化环境状态后在子进程中执行工具调用，成功则提交状态，失败则回滚返回错误，保障训练稳健性
-- 设置最大工具调用次数 $T_{\max}$ 防止死循环
+训练用 GRPO 算法，batch size 为 512×8。为了让大量环境交互不拖慢 GPU，框架把 CPU 端的环境服务器与 GPU 端的 rollout 解耦做成分布式 rollout。工具执行的稳健性靠 Trial-then-Overwrite 机制保证：先序列化环境状态，在子进程里试跑工具调用，成功才提交新状态、失败则回滚并返回错误信息，避免一次崩溃污染整条轨迹；同时设置最大工具调用次数 $T_{\max}$ 防止 agent 在错误-重试循环里空转。
 
 ## 实验关键数据
 
@@ -159,10 +137,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2026\] Latent Chain-of-Thought World Modeling for End-to-End Autonomous Driving](../../CVPR2026/llm_reasoning/latent_chain-of-thought_world_modeling_for_end-to-end_autonomous_driving.md)
+- [\[ICLR 2026\] THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](thor_tool-integrated_hierarchical_optimization_via_rl_for_mathematical_reasoning.md)
 - [\[ICML 2026\] Diversity Over Frequency: Rethinking Tool Use in Visual Chain-of-Thought Agents](../../ICML2026/llm_reasoning/diversity_over_frequency_rethinking_tool_use_in_visual_chain-of-thought_agents.md)
 - [\[ICML 2026\] MOSAIC: Learning When to Act or Refuse — Guarding Agentic Reasoning Models for Safe Multi-step Tool Use](../../ICML2026/llm_reasoning/learning_when_to_act_or_refuse_guarding_agentic_reasoning_models_for_safe_multi-.md)
 - [\[ICLR 2026\] Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
-- [\[ICLR 2026\] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent](agentmath_empowering_mathematical_reasoning_for_large_language_models_via_tool-a.md)
 
 </div>
 

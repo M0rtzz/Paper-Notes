@@ -45,24 +45,22 @@ tags:
 
 ### 关键设计
 
-1. **协作用户模拟器骨架（Collaborative User Simulator）**:
+**1. 协作用户模拟器骨架（Collaborative User Simulator）：先给一个会好好说话的"地基"用户。**
 
-    - 功能：作为所有非协作行为的基础，基于用户目标、指令和对话历史生成合作性用户发言。
-    - 核心思路：采用τ-bench的LLM模拟框架（GPT-4.1-mini），但新增两个关键模块——(a) dialogue state tracker：将用户目标拆解为一组信息碎片（information pieces），每轮追踪哪些已传达、哪些未传达；当模拟器试图终止对话但仍有未传达信息时，强制继续对话补充遗漏信息。(b) ending verifier：防止在信息传达完毕但Agent尚未执行操作或等待用户确认时过早终止对话。
-    - 设计动机：τ-bench原始模拟器没有显式的goal-alignment保障，在非协作行为干预下容易丢失关键信息或过早终止，导致评测结论不可靠。
+非协作行为不是凭空冒出来的，而是叠加在一个合作性用户之上。骨架沿用 τ-bench 的 LLM 模拟框架（GPT-4.1-mini），根据用户目标、指令和对话历史生成正常的合作发言，但额外挂了两个保障 goal-alignment 的模块。一是 dialogue state tracker：把用户目标拆成一组信息碎片（information pieces），每轮追踪哪些已传达、哪些还没传达；当模拟器想结束对话但仍有信息没说出口时，强制它继续把遗漏补上。二是 ending verifier：在信息已传达完、但 Agent 还没执行操作或还在等用户确认时，拦住对话不让它过早结束。之所以要这两层兜底，是因为 τ-bench 原始模拟器没有显式的 goal-alignment，一旦叠加非协作干预就容易丢关键信息或提前收尾，让评测结论失真。
 
-2. **四类非协作行为模块**:
+**2. 四类非协作行为模块：把 marketing 研究里的顾客失常行为搬进对话。**
 
-    - **Unavailable Service（不可用服务）**：用GPT-4.1-mini分析原始用户目标，生成3条需要不存在的API或不支持参数的额外需求句子（如"订靠窗座位"但API无此参数），拼接到原始目标中。Agent需要识别并拒绝这些请求。
-    - **Tangential（跑题闲聊）**：两阶段流程——先从Persona Hub随机采样人设特征，再基于人设生成4类闲聊对话行为（事实提问/观点提问/一般观点/非观点陈述）的跑题发言，与协作发言合并。当Agent忽略跑题内容时，GPT-4.1-mini检测忽略行为并生成用户抱怨，替换或增补下一轮协作发言。
-    - **Impatience（不耐烦）**：在两种场景触发——Agent显式告知失败、或用户已提供全部信息但目标仍未解决（被视为延迟）。触发时从三种对话行为（恶语谩骂/威胁/催促）中随机采样，且激活概率随触发次数递增，模拟真实愤怒升级。一旦爆发，后续所有发言维持愤怒语气。
-    - **Incomplete Utterances（不完整表述）**：模拟两种模式——极简表述（通过LMSYS/WildChat的few-shot示例做风格迁移，把"I want to reserve a train for 2 people"变成"Book train, 2"）和意外截断（随机截断协作发言，dialogue state tracker将被截断的信息标为未发送，后续轮次重新传达）。
+四类行为各由独立的 LLM 模块对协作输出做干预（增加 / 替换 / 截断用户发言），而不是简单在 prompt 里描述"你要表现得不耐烦"——后者（即 τ-bench 的 PBUS）被证明几乎打不动 Agent，关键就在于"描述行为"和"产生行为"是两回事。四类行为分别是：
 
-3. **Goal-Alignment保障系统**:
+- **Unavailable Service（不可用服务）**：用 GPT-4.1-mini 分析原始用户目标，生成 3 条需要不存在的 API 或不支持参数的额外需求句子（如"订靠窗座位"但 API 无此参数），拼接到原始目标中。Agent 需要识别并礼貌拒绝这些请求。
+- **Tangential（跑题闲聊）**：两阶段流程——先从 Persona Hub 随机采样人设特征，再基于人设生成 4 类闲聊对话行为（事实提问 / 观点提问 / 一般观点 / 非观点陈述）的跑题发言，与协作发言合并。当 Agent 忽略跑题内容时，GPT-4.1-mini 检测忽略行为并生成用户抱怨，替换或增补下一轮协作发言。
+- **Impatience（不耐烦）**：在两种场景触发——Agent 显式告知失败、或用户已提供全部信息但目标仍未解决（被视为延迟）。触发时从三种对话行为（恶语谩骂 / 威胁 / 催促）中随机采样，且激活概率随触发次数递增，模拟真实愤怒升级；一旦爆发，后续所有发言都维持愤怒语气。
+- **Incomplete Utterances（不完整表述）**：两种模式——极简表述（通过 LMSYS/WildChat 的 few-shot 示例做风格迁移，把"I want to reserve a train for 2 people"变成"Book train, 2"）和意外截断（随机截断协作发言，dialogue state tracker 将被截断的信息标为未发送，后续轮次重新传达）。
 
-    - 功能：确保非协作行为不会导致任务必要信息丢失。
-    - 核心思路：information sharding将用户目标拆为原子化信息碎片，dialogue state tracker逐轮检查传达状态，ending verifier在对话结束前做最终校验。通过Initial Goal Alignment（IGA）指标量化——τ-bench上IGA达97.5%以上。
-    - 设计动机：如果非协作行为导致用户连必要信息都没传达，Agent失败就不是鲁棒性问题而是评测缺陷，结论不可信。
+**3. Goal-Alignment 保障系统：保证 Agent 的失败是"扛不住"而不是"没听全"。**
+
+三个机制串起来兜住信息完整性：information sharding 把用户目标拆成原子化信息碎片，dialogue state tracker 逐轮检查每个碎片的传达状态，ending verifier 在对话收尾前再做一次最终校验。整体用 Initial Goal Alignment（IGA）指标量化——τ-bench 上 IGA 达 97.5% 以上。这一层是可信评测的前提：如果非协作行为让用户连必要信息都没说出来，那 Agent 的失败就成了评测缺陷而非鲁棒性问题，结论也就站不住脚了。
 
 ### 损失函数 / 训练策略
 主实验不涉及训练。fine-tuning实验中使用Qwen2.5-3b/7b-instruct和Llama-3.2-3b-instruct在成功的协作对话上做SFT，训练数据来自GPT-4.1-mini与协作模拟器的MultiWOZ对话。非协作鲁棒性训练通过均匀/非均匀混合四类非协作数据实现。

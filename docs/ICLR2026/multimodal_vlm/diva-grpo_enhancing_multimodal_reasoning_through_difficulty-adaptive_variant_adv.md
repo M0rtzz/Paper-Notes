@@ -44,35 +44,19 @@ tags:
 
 ### 整体框架
 
-DIVA-GRPO 由三个核心模块组成：(1) 基于历史 rollout 的动态难度评估；(2) 难度自适应的变体生成；(3) 难度加权的局部-全局 advantage 平衡与 reward-range 重缩放。训练时，先评估每个问题的难度，再根据难度采样不同类型的变体，最后在原始问题及其变体组成的扩展空间中计算 advantage 并更新策略。
+DIVA-GRPO 的核心思想是：与其被动接受 GRPO 训练中"全对或全错"导致的零 advantage，不如主动构造一组难度可控的语义一致变体，让每个问题的组内奖励始终保持足够方差。为此它在标准 GRPO 上叠了一个闭环——先用历史 rollout 给每个问题打一个随训练演化的难度分，再据此生成不同难度的变体，最后在"原问题 + 变体"组成的扩展空间里做难度加权的局部-全局 advantage 估计来更新策略。
 
-### 关键设计 1：动态难度评估
+### 关键设计
 
-- **功能**：为每个训练问题维护一个动态难度分数 $D_q \in [D_{\min}, D_{\max}]$，根据模型在该问题上的历史表现实时更新。
-- **核心思路**：统计 rollout 的经验正确率 $\alpha$，通过 $D^{\text{new}} = \text{clip}(D^{\text{old}} + \eta \cdot (0.5 - \alpha))$ 更新难度——正确率高则难度降低，正确率低则难度升高，正确率约 50% 时保持稳定。
-- **设计动机**：问题难度不是固有属性，而是相对于当前模型能力的动态量。通过每个 epoch 重新校准难度，确保变体生成策略始终与模型当前水平匹配，避免训练后期所有问题变简单导致的 advantage 消失。
+**1. 动态难度评估：让难度跟着模型能力走。** GRPO 的 advantage vanishing 之所以越训越严重，根因在于把难度当成了问题的固有属性——可一道题对刚起步的模型是"难"，训到后期就成了"易"，组内全部答对、advantage 归零。DIVA-GRPO 为每个问题维护一个动态难度分 $D_q$（初始化 $D_q=5$，范围 1–9），每个 epoch 用该问题历史 rollout 的经验正确率 $\alpha$ 重新校准：$D^{\text{new}} = \text{clip}\big(D^{\text{old}} + \eta \cdot (0.5 - \alpha)\big)$，其中 $\eta=4$。正确率高于 50% 就调低难度、低于 50% 就调高，稳定在正确率约 50% 的水平——这恰好是组内正负样本最均衡、优化信号最强的点。这样难度分始终反映"相对于当前模型"的真实难易，后续的变体策略才不会脱靶。
 
-### 关键设计 2：难度自适应变体生成
+**2. 难度自适应变体生成：把奖励方差"造"出来。** 有了难度分，就能针对性地补足组内缺失的那一类样本，保证既有正确回答也有错误回答。策略按难度分三档：简单题（$D_q < D_{\text{mid}}$）同时扰动文本和图像（旋转、加噪、模糊等）把题目变难，逼出负样本；中等题（$D_q \approx D_{\text{mid}}$）只做文本改写，难度不变但增加表达多样性；困难题（$D_q > D_{\text{mid}}$）则把部分推理步骤当提示（think-step）塞进 prompt 降低难度，换来正样本。所有变体都保持答案不变（语义一致），因此扩展后的组内奖励分布天然具备方差，从源头上堵住了 advantage vanishing。实现上文本改写与推理提示由 GPT-o3 离线批量生成，图像扰动则在线施加。
 
-- **功能**：根据问题难度等级，生成保持答案不变但难度不同的语义一致变体。
-- **核心思路**：三级策略——
-    - **简单问题** ($D_q < D_{\text{mid}}$)：同时扰动文本和图像（旋转、噪声、模糊等），增大难度以产生负样本
-    - **中等问题** ($D_q \approx D_{\text{mid}}$)：仅生成文本改写变体，保持难度但增加表达多样性
-    - **困难问题** ($D_q > D_{\text{mid}}$)：添加部分推理步骤作为提示（think-step），降低难度以产生正样本
-- **设计动机**：确保每个问题的变体组内同时包含正确和错误回答，使奖励分布具有足够方差，从根本上解决 advantage vanishing。
+**3. 难度加权的局部-全局 advantage 平衡：让难题上的正确答案更值钱。** 扩展空间里有两种 advantage 视角——只看单个问题组内的"局部"视角，和把该问题所有变体合在一起看的"全局"视角，二者因样本量不同量级差异很大（全局组更大）。DIVA-GRPO 先对两者各做 batch 级 z-score 归一化消除量级差异得到 $\tilde{A}$，再叠一层难度加权：$\hat{A} = \exp\big(k \cdot (D_q^{(i)} - \bar{D}_q) \cdot \text{sgn}(\tilde{A})\big) \cdot \tilde{A}$。直觉是对高于平均难度的变体放大其正确回答的 advantage、压低错误回答的影响，低于平均难度时反之——于是模型在难题上答对获得的收益更大，优化天然向难处倾斜，实现难度自适应的策略更新。
 
-### 关键设计 3：难度加权的局部-全局 Advantage 平衡
+### 损失函数 / 训练策略
 
-- **功能**：分别计算局部（单个问题组内）和全局（问题及其所有变体组内）advantage，通过 batch z-score 归一化和难度加权缩放合并。
-- **核心思路**：先对局部和全局 advantage 分别做 batch-level z-score 归一化消除量级差异，再用 $\hat{A} = \exp(k \cdot (D_q^{(i)} - \bar{D}_q) \cdot \text{sgn}(\tilde{A})) \cdot \tilde{A}$ 进行难度加权——对于高于平均难度的变体，放大正确回答的 advantage、抑制错误回答；反之亦然。
-- **设计动机**：(1) 局部和全局 advantage 因样本量不同导致量级不一致（全局通常更大），归一化使两者可比；(2) 难度加权鼓励模型在困难问题上的正确答案获得更大收益，实现难度自适应优化。
-
-### 损失函数与训练
-
-- 基础损失为标准 GRPO 策略梯度损失，advantage 替换为上述难度加权、归一化后的值
-- 额外引入 **Reward-Range-Based Advantage Rescaling (RRB)**：$\hat{A}_{\text{range}} = \Delta r_q \cdot \tilde{A}$，其中 $\Delta r_q = (\max(\mathcal{R}_q) - \min(\mathcal{R}_q)) / R_{\max}$，防止奖励高度集中时 z-score 归一化放大微小差异
-- 基座模型 Qwen2.5-VL-7B-Instruct，AdamW 优化器，学习率 $10^{-6}$，难度初始化 $D_q=5$（范围 1-9），$\eta=4$
-- 文本变体和推理提示由 GPT-o3 离线生成，图像扰动在线施加
+整体损失沿用标准 GRPO 策略梯度，只是把 advantage 换成上述难度加权、归一化后的 $\hat{A}$。额外引入一个即插即用的 **Reward-Range-Based Advantage Rescaling (RRB)**：$\hat{A}_{\text{range}} = \Delta r_q \cdot \tilde{A}$，其中 $\Delta r_q = (\max(\mathcal{R}_q) - \min(\mathcal{R}_q)) / R_{\max}$。它的作用是当组内奖励高度集中时，z-score 归一化会把本可忽略的微小差异错误放大，而 $\Delta r_q$ 用奖励的实际跨度去压缩这种伪信号，奖励越扁平缩放越狠。训练基座为 Qwen2.5-VL-7B-Instruct，AdamW 优化器，学习率 $10^{-6}$。
 
 ## 实验关键数据
 
@@ -139,11 +123,11 @@ DIVA-GRPO 由三个核心模块组成：(1) 基于历史 rollout 的动态难度
 
 ## 相关论文
 
-- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 - [\[ICLR 2026\] Enhancing Multi-Image Understanding through Delimiter Token Scaling](enhancing_multi-image_understanding_through_delimiter_token_scaling.md)
 - [\[AAAI 2026\] Revisiting the Data Sampling in Multimodal Post-training from a Difficulty-Distinguish View](../../AAAI2026/multimodal_vlm/revisiting_the_data_sampling_in_multimodal_post-training_from_a_difficulty-disti.md)
-- [\[NeurIPS 2025\] SRPO: Enhancing Multimodal LLM Reasoning via Reflection-Aware Reinforcement Learning](../../NeurIPS2025/multimodal_vlm/srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)
 - [\[ICLR 2026\] Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs](through_the_lens_of_contrast_self-improving_visual_reasoning_in_vlms.md)
+- [\[ICLR 2026\] Shuffle-R1: Efficient RL Framework for Multimodal Large Language Models via Data-centric Dynamic Shuffle](shuffle-r1_efficient_rl_framework_for_multimodal_large_language_models_via_data-.md)
+- [\[CVPR 2026\] MoE-GRPO: Optimizing Mixture-of-Experts via Reinforcement Learning in Vision-Language Models](../../CVPR2026/multimodal_vlm/moe-grpo_optimizing_mixture-of-experts_via_reinforcement_learning_in_vision-lang.md)
 
 </div>
 

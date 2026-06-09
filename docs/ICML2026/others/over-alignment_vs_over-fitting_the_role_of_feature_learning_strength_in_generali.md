@@ -123,10 +123,10 @@ $$\psi_j(t_\alpha)\ge\sqrt{\zeta(\alpha)}\tanh\big((t_\alpha-t_1)\|\mathbf{x}_+\
 ## 相关论文
 
 - [\[ACL 2025\] Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL](../../ACL2025/others/revisiting_weak-to-strong_generalization_in_theory_and_practice_reverse_kl_vs_fo.md)
+- [\[ICML 2026\] Rethink the Role of Neural Decoders in Quantum Error Correction](rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)
+- [\[NeurIPS 2025\] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One](../../NeurIPS2025/others/model-behavior_alignment_under_flexible_evaluation_when_the_best-fitting_model_i.md)
 - [\[ICML 2026\] Return-to-Go is More Than a Number: Q-Guided Alignment for Return-Conditioned Supervised Learning](return-to-go_is_more_than_a_number_q-guided_alignment_for_return-conditioned_sup.md)
 - [\[ICLR 2026\] Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning](../../ICLR2026/others/noisy-pair_robust_representation_alignment_for_positive-unlabeled_learning.md)
-- [\[ACL 2025\] Hybrid Preferences: Learning to Route Instances for Human vs. AI Feedback](../../ACL2025/others/hybrid_preferences_learning_to_route_instances_for_human_vs_ai_feedback.md)
-- [\[ACL 2025\] Entity Framing and Role Portrayal in the News](../../ACL2025/others/entity_framing_and_role_portrayal_in_the_news.md)
 
 </div>
 

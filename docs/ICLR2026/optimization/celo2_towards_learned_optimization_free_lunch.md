@@ -45,56 +45,23 @@ tags:
 
 ### 整体框架
 
-Celo2 是一个即插即用的 Optax 优化器变换，可以一行代码替换 AdamW：
-- 元训练阶段：在 4 个 8×8 图像分类 MLP 任务上训练小 MLP 更新规则，仅需 4.5 GPU 小时
-- 部署阶段：将学习到的更新规则作为 Optax 变换插入标准训练流程，配合学习率调度和权重衰减使用
-- 支持现代优化技术：正交化（Newton-Schulz）、1D/2D 参数不同更新规则、解耦权重衰减
+Celo2 是一个即插即用的 Optax 优化器变换，用一行代码就能替换 AdamW。它先在 4 个 8×8 图像分类 MLP 任务上花 4.5 GPU 小时元训练出一个不到 200 参数的小 MLP 更新规则，再把这条规则作为变换插入标准训练流程，由用户自己配学习率调度和权重衰减。整套设计的内核是：只学归一化后的更新方向，把步长、调度器这些与任务规模强相关的东西全部解耦出去交给用户，从而换取跨数量级的尺度泛化能力。
 
 ### 关键设计
 
-1. **归一化学习更新（Normalized Learned Update）**:
-   这是 Celo2 最核心的设计创新。先前的学习型优化器直接使用 MLP 的原始输出作为更新步，但 Celo2 对 MLP 输出进行 **RMS 归一化**：
-    $\Delta\mathbf{p}_t = \frac{\text{MLP}(\mathbf{F})}{\text{RMS}(\text{MLP}(\mathbf{F}))}$
-   
-   这一看似简单的改变带来了多重好处：
-    - 迫使 MLP 在元训练时学习**任务不变的更新方向**，而非与任务相关的原始步长
-    - 产生了与 AdamW 类似的训练动态（权重范数曲线一致，如 Figure 2 所示）
-    - 使得学习到的规则在部署到更大规模任务时不会出现梯度爆炸或消失
+**1. 归一化学习更新：让 MLP 只学方向不学步长。** 先前的学习型优化器直接把 MLP 的原始输出当作更新步，输出幅度天然和具体任务的损失尺度绑定，一旦部署到更大模型就容易爆炸或消失。Celo2 的做法是对 MLP 输出做逐步 RMS 归一化，$\Delta\mathbf{p}_t = \frac{\text{MLP}(\mathbf{F})}{\text{RMS}(\text{MLP}(\mathbf{F}))}$，把幅度信息彻底剥离，逼着 MLP 在元训练时只去学习任务不变的更新方向。这一步带来的直接后果是训练动态变得和 AdamW 几乎一致（权重范数曲线重合，Figure 2），于是规则放大到百倍千倍参数量时也不再发散。作者还对比过滚动 RMS、带截断的归一化等多种方案（Table 2），结论是最朴素的逐步 RMS 反而最稳；消融里去掉归一化，LM-30M 验证损失从 3.812 退到 3.961，是泛化能否成立的关键开关。
 
-   作者也对比了其他归一化方案（滚动 RMS、带截断的归一化等），发现简单的逐步 RMS 归一化效果最好（Table 2）。
+**2. 可调步长解耦：宁可多调一个超参，也要换来可靠泛化。** 这是与 VeLO、Celo 等前作最根本的分歧——它们把学习率调度器也一并学进优化器里，结果调度器记住的是小任务的尺度，放大后就失效。Celo2 索性不学调度器，把步长完全留给用户搜。代价是部署时需要额外搜一个学习率，但回报是规则能稳定泛化到比元训练大 6 个数量级的任务。前作 Celo 正是因为学了调度器才卡在大规模上跑不动，这条权衡因此是整篇方法的胜负手。
 
-2. **可调步长解耦（Tunable Step-size Decoupling）**:
-   与 VeLO 和 Celo 等前作不同，Celo2 **不学习学习率调度器**，而是将步长调节留给用户。这意味着需要额外调一个超参数（学习率），但换来了到大规模任务的可靠泛化。这个权衡极为关键：Celo（前作）因为学习了调度器反而无法泛化到大规模任务。
+**3. 极简 MLP 架构：不到 200 参数捕获通用更新规则。** 更新规则本体只是一个 2 层、8 隐藏单元、ReLU 激活的 MLP。喂给每个参数的输入特征包括 3 个动量累积器（$\beta_1,\beta_2,\beta_3=0.9,0.99,0.999$）、1 个 RMS 梯度累积器（$\beta_4=0.95$）以及 Adafactor 的行/列统计。MLP 只输出方向 $\mathbf{d}$、不输出幅度 $\mathbf{m}$——消融显示一旦让它同时输出幅度（Table 1e），损失从 3.812 升到 3.900，与第 1 点的"只学方向"互为印证：幅度交给归一化和用户步长，MLP 越专注方向越好泛化。
 
-3. **简单 MLP 架构**:
-   Celo2 使用一个 2 层 MLP（8 个隐藏单元，ReLU 激活），总共不到 200 个参数。每个参数的输入特征包括：
-    - 3 个momentum 累积器（$\beta_1, \beta_2, \beta_3 = 0.9, 0.99, 0.999$）
-    - 1 个 RMS 梯度累积器（$\beta_4 = 0.95$）
-    - Adafactor 的行/列特征
-   
-   MLP 仅输出方向 $\mathbf{d}$（不输出幅度 $\mathbf{m}$），这是消融实验中的最优选择（Table 1e）。
+**4. 正交化兼容：把 Muon 的正交化从手工动量推广到学习规则。** Celo2 与 Muon 的 Newton-Schulz 正交化天然兼容，区别只在于对谁做正交化——Muon 正交化手工动量，Celo2 则把正交化作用在学习到的 MLP 更新上。Figure 4 给出递进叠加的效果：Celo2-base 之上叠正交化、再对 1D 参数单独用 Adam，三者逐级带来改善，说明学习型更新方向与正交化框架是正交可叠的两条增益。
 
-4. **正交化兼容性**:
-   Celo2 与 Muon 优化器的 Newton-Schulz 正交化高度兼容。将正交化应用于学习到的 MLP 更新（而非标准的 momentum）可以进一步提升性能。Figure 4 显示了组合效应：Celo2-base + 正交化 + Adam for 1D 参数，三者叠加带来递进式改善。
-
-5. **任务增强（Task Augmentation）**:
-   在元训练期间，随机缩放优化对象网络的参数（$\alpha \sim \text{LogUniform}(0.001, 1000)$），模拟更广泛的最优化景观。这一技术是实现强泛化的关键（消融 Table 1c：去除任务增强后损失从 3.812 升至 4.417）。
+**5. 任务增强：用参数缩放制造多样的优化景观。** 元训练任务只有 4 个，景观太同质会让规则记住特定尺度。Celo2 在元训练时随机缩放被优化网络的参数，缩放系数 $\alpha \sim \text{LogUniform}(0.001, 1000)$ 横跨六个量级，等于人为造出一大批宽窄不同的损失景观让 MLP 见识。这一招对元泛化几乎不可或缺：消融里去掉任务增强（Table 1c），LM-30M 损失从 3.812 暴涨到 4.417（+16%），是所有组件中退化最严重的一个。
 
 ### 损失函数 / 训练策略
 
-**元训练设置：**
-- 任务：4 个 8×8 图像分类 MLP（MNIST、Fashion-MNIST、CIFAR-10、SVHN）
-- 元优化方法：Persistent Evolution Strategies (PES)，避免长展开的梯度偏差
-- 内循环步数：$K=50$，展开长度对数均匀采样于 [100, 2000]
-- 元目标：展开过程中的平均损失
-- 总计算：100K 外循环迭代，8 个并行任务，在 Nvidia L40S GPU 上运行
-- 全部约 **4.5 GPU 小时**
-
-**部署设置：**
-- 学习率搜索：7 个值，对数均匀分布在 $[10^{-5}, 10^{-3}]$
-- 权重衰减：0.0, 0.1, 10.0
-- 调度器：余弦衰减 + 线性预热（5%）
-- 精度：默认 float32（bfloat16 在 ImageNet 上也稳定）
+元训练在 MNIST、Fashion-MNIST、CIFAR-10、SVHN 四个 8×8 图像分类 MLP 上进行，用 Persistent Evolution Strategies (PES) 做元优化以规避长展开带来的梯度偏差；内循环步数 $K=50$，展开长度在 [100, 2000] 间对数均匀采样，元目标取展开过程中的平均损失。整个过程跑 100K 次外循环、8 个任务并行，在 Nvidia L40S 上合计约 4.5 GPU 小时。部署时学习率在 $[10^{-5}, 10^{-3}]$ 对数均匀搜 7 个值，权重衰减取 0.0/0.1/10.0，配余弦衰减加 5% 线性预热的调度，默认 float32 精度（bfloat16 在 ImageNet 上同样稳定）。
 
 ## 实验关键数据
 
@@ -194,8 +161,8 @@ VeLO 在所有 RL 任务上出现训练停滞（与 VeLO 原论文 Figure 11 一
 - [\[NeurIPS 2025\] Better NTK Conditioning: A Free Lunch from ReLU Nonlinear Activation in Wide Neural Networks](../../NeurIPS2025/optimization/better_ntk_conditioning_a_free_lunch_from_relu_nonlinear_activation_in_wide_neur.md)
 - [\[NeurIPS 2025\] Problem-Parameter-Free Decentralized Bilevel Optimization](../../NeurIPS2025/optimization/problem-parameter-free_decentralized_bilevel_optimization.md)
 - [\[ICML 2026\] HO-SFL: Hybrid-Order Split Federated Learning with Backprop-Free Clients and Dimension-Free Aggregation](../../ICML2026/optimization/ho-sfl_hybrid-order_split_federated_learning_with_backprop-free_clients_and_dime.md)
-- [\[ICLR 2026\] RRNCO: Towards Real-World Routing with Neural Combinatorial Optimization](rrnco_towards_real-world_routing_with_neural_combinatorial_optimization.md)
 - [\[ICLR 2026\] Provable and Practical In-Context Policy Optimization for Self-Improvement](provable_and_practical_in-context_policy_optimization_for_self-improvement.md)
+- [\[ICML 2026\] RACO: Reward-free Alignment for Conflicting Objectives](../../ICML2026/optimization/reward-free_alignment_for_conflicting_objectives.md)
 
 </div>
 

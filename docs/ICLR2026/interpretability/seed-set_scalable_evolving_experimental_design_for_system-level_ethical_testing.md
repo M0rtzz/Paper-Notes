@@ -44,56 +44,23 @@ tags:
 
 ### 整体框架
 
-SEED-SET = Scalable Evolving Experimental Design for System-level Ethical Testing，包含三大组件：
+SEED-SET 把"自主系统是否符合伦理"这个模糊问题拆成一条可计算的链条：先用层次化变分高斯过程（HVGP）同时拟合客观指标和主观偏好两层代理模型，再用一个把探索与利用揉进一个表达式的联合获取函数挑选下一个最值得测试的场景，最后让 LLM 扮演利益相关者给出偏好判断、闭合反馈回路。整个过程在有限评估预算下迭代演化，逐步逼近高伦理对齐度的测试用例。
 
-1. **层次化变分高斯过程（HVGP）** 作为代理模型
-2. **联合获取策略** 用于自适应测试用例生成
-3. **LLM 代理** 替代人类进行偏好评估
+### 关键设计
 
-### 1. 问题形式化
+**1. 客观-主观两层分解：把没有真值的伦理判断锚定到可观察行为上。** 伦理行为本身没有 ground-truth，直接学一个 $f(x)\to z$ 的端到端映射既不可解释也极度费样本。SEED-SET 把黑盒系统 $\mathcal{S}_\pi$ 在场景空间 $\mathcal{X}$ 上的伦理合规函数拆成两层：客观层 $f_{\text{obj}}:\mathcal{X}\to\mathcal{Y}$ 把场景参数映射到可度量指标（火灾损失、电网成本、韧性等），主观层 $f_{\text{subj}}:\mathcal{Y}\to\mathbb{R}$ 再从这些可观察指标给出伦理效用评分。这样一来，伦理偏好始终落在"系统实际做了什么"之上，既获得可解释性，又能借助主观对客观的依赖关系压缩所需评估次数。
 
-给定黑盒自主系统 $\mathcal{S}_\pi$、场景空间 $\mathcal{X}$，伦理合规函数分解为：
+**2. 层次化变分高斯过程（HVGP）：用两级 VGP 分别承接两层映射。** 对应分解，HVGP 串起两个变分高斯过程。Objective GP 学代理模型 $g:x\to y$，预测客观指标，其后验形如 $p(f(x)\mid\mathcal{D})=\mathcal{N}(\mu(x),k(x,x'))$；Subjective GP 学偏好模型 $h:y\to z$，从客观指标映射到主观评分。由于主观评分拿不到绝对真值，这一级改用成对偏好引出来训练——oracle $\mathcal{T}:(y,y')\to\{1,2\}$ 只需比较两个场景孰优孰劣，把"无法打分"转化为"可以比较"，让 Subjective GP 在没有标签的情况下依然可学。
 
-- **客观层**：$f_{\text{obj}}: \mathcal{X} \to \mathcal{Y}$，将场景参数映射到可度量指标（成本、韧性等）
-- **主观层**：$f_{\text{subj}}: \mathcal{Y} \to \mathbb{R}$，根据客观指标给出伦理效用评分
-
-### 2. 层次化变分高斯过程（HVGP）
-
-将伦理评估分为两级 VGP 建模：
-
-**Objective GP**：学习代理模型 $g: x \to y$，预测场景的客观指标
-$$
-p(f(x)|\mathcal{D}) = \mathcal{N}(\mu(x), k(x, x'))
-$$
-
-**Subjective GP**：学习偏好模型 $h: y \to z$，从客观指标映射到主观伦理评分
-
-由于主观评估无 ground-truth，采用**成对偏好引出**：oracle $\mathcal{T}: (y, y') \to \{1, 2\}$ 比较两个场景的伦理优劣。
-
-层次化结构的**两大优势**：
-- **可解释性**：伦理偏好锚定在可观察的系统行为上
-- **数据效率**：利用主观对客观的依赖关系，减少所需评估次数
-
-### 3. 联合获取策略
-
-核心创新——同时平衡客观探索和主观利用的获取函数：
+**3. 联合获取策略：一个表达式同时驱动客观探索、主观理解与偏好利用。** 测试预算有限，必须每一步都选最有价值的场景。SEED-SET 设计的获取函数把三种诉求融进一个式子：
 
 $$
-V(x) = \underbrace{I(g_x; y|\mathcal{D})}_{\text{客观信息增益}} + \mathbb{E}_{q_\phi(y|x)}\left[\underbrace{I(h_y; z|\mathcal{D})}_{\text{主观信息增益}} + \underbrace{\mathbb{E}_{q_\psi(h_y)}[h_y]}_{\text{偏好利用}}\right]
+V(x) = \underbrace{I(g_x; y\mid\mathcal{D})}_{\text{客观信息增益}} + \mathbb{E}_{q_\phi(y\mid x)}\left[\underbrace{I(h_y; z\mid\mathcal{D})}_{\text{主观信息增益}} + \underbrace{\mathbb{E}_{q_\psi(h_y)}[h_y]}_{\text{偏好利用}}\right]
 $$
 
-三项的作用：
-- **第一项**：降低客观指标空间中的不确定性（探索新场景）
-- **第二项**：改善主观效用函数的估计（理解偏好）
-- **第三项**：趋向高伦理效用区域（利用已知偏好）
+第一项降低客观指标空间的不确定性，鼓励去测没见过的场景；第二项改善主观效用函数的估计，让模型真正"读懂"偏好；第三项把采样推向已知高伦理效用的区域，兑现已经学到的偏好。三项缺一不可——只探索会浪费预算在无关区域，只利用又会过早收敛，融在一起才能在覆盖空间的同时持续逼近最优测试用例。
 
-### 4. LLM 代理评估器
-
-使用 GPT-4o 作为利益相关者代理进行成对偏好评估，prompt 包含：
-
-1. **任务描述**：特定领域的上下文
-2. **客观指标**：两个场景的可度量结果
-3. **主观准则**：用自然语言编码的伦理偏好
+**4. LLM 代理评估器：用 GPT-4o 顶替昂贵的人类偏好标注。** 真实系统下大规模采集人类反馈成本高昂，SEED-SET 让 GPT-4o 充当利益相关者代理来完成成对偏好评估。给它的 prompt 由三段构成：任务描述提供领域上下文，客观指标给出两个待比较场景的可度量结果，主观准则用自然语言编码该利益相关者的伦理偏好。只要替换 prompt 里的主观准则，就能快速切换到不同的伦理标准或不同的利益相关者，让整套评估在无须重训的前提下适配多种价值取向。
 
 ## 实验
 
@@ -175,8 +142,8 @@ $$
 - [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
 - [\[ACL 2025\] A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](../../ACL2025/interpretability/a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)
 - [\[ACL 2025\] Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
-- [\[ICML 2026\] ShaplEIG: Bayesian Experimental Design for Shapley Value Estimation](../../ICML2026/interpretability/shapleig_bayesian_experimental_design_for_shapley_value_estimation.md)
-- [\[NeurIPS 2025\] Time-Evolving Dynamical System for Learning Latent Representations of Mouse Visual Cortex](../../NeurIPS2025/interpretability/time-evolving_dynamical_system_for_learning_latent_representations_of_mouse_visu.md)
+- [\[ICML 2025\] DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](../../ICML2025/interpretability/deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
+- [\[ICLR 2026\] Stress-Testing Alignment Audits with Prompt-Level Strategic Deception](stress-testing_alignment_audits_with_prompt-level_strategic_deception.md)
 
 </div>
 

@@ -33,41 +33,35 @@ tags:
 
 ## 方法详解
 
-### 三层市场博弈模型
+### 整体框架
 
-- **模型层**：$M$ 个生成模型 $\mathbb{G} = \{g_1, \dots, g_M\}$
-- **平台层**：$N$ 个平台，每个平台 $i$ 选择模型 $f_i \in \mathbb{M}$
-- **用户层**：异质用户类型 $\Theta = \{\boldsymbol{\theta}_1, \dots, \boldsymbol{\theta}_K\}$，用户选择得分最高的平台
+论文把生成模型市场抽象成一个三层博弈：$M$ 个生成模型 $\mathbb{G}=\{g_1,\dots,g_M\}$ 是被选择的"商品"，$N$ 个平台各自挑一个模型 $f_i\in\mathbb{M}$ 当作策略，$K$ 类异质用户 $\Theta=\{\boldsymbol{\theta}_1,\dots,\boldsymbol{\theta}_K\}$ 则用脚投票、流向能给自己最高得分的平台。平台之间博弈的目标是抢用户份额，分析的核心问题是：在这个嵌套结构下纯策略 Nash 均衡何时存在、市场会走向差异化还是同质化、以及一个新模型提供者该如何最优地"进场"。
 
-用户选择规则（hardmax）：
+### 关键设计
+
+**1. 用户选择规则：把"用脚投票"写成可分析的份额函数。** 要研究平台竞争，首先得刻画用户怎么在平台间分流。论文采用 hardmax 选择，即每个类型 $\boldsymbol{\theta}$ 的用户只会涌向当前得分最高的平台，并在并列最优者之间均分：
 
 $$p_i(\boldsymbol{\theta}) = \begin{cases} 0 & \text{if } f_i \notin \arg\max_{i'} S_{f_{i'}}(\boldsymbol{\theta}) \\ \frac{1}{|\arg\max_{i'} S_{f_{i'}}(\boldsymbol{\theta})|} & \text{otherwise} \end{cases}$$
 
-### 效用分解
+这种"赢者通吃、并列平分"的设定让每个平台的用户份额成为模型得分 $S$ 的离散函数，从而把连续的市场竞争压缩成可枚举的策略博弈，是后续所有均衡推导的基础（论文也讨论了 softmax 平滑版本以覆盖更现实的概率选择）。
 
-平台效用可分解为平均分数和偏差优势：
+**2. 效用分解：把平台收益拆成"全局质量 + 局部错位优势"。** 直接分析平台效用很难看出竞争的结构，于是论文把平台 $i$ 选模型 $f_i$ 后的效用拆成两项：
 
 $$U_i(f_i; \boldsymbol{f}_{-i}) = \frac{1}{N}(T_{f_i} + \delta_{f_i}(\boldsymbol{f}))$$
 
-其中 $T_j = \sum_{\boldsymbol{\theta}} \pi_{\boldsymbol{\theta}} S_j(\boldsymbol{\theta})$ 为平均分数，$\delta_{f_i}$ 为偏差优势。
+其中 $T_j=\sum_{\boldsymbol{\theta}}\pi_{\boldsymbol{\theta}}S_j(\boldsymbol{\theta})$ 是模型在全体用户分布上的平均分数，刻画"硬实力"；$\delta_{f_i}$ 则是偏差优势，刻画"在别人没覆盖的用户群上错位竞争"能多抢到的份额。这一分解是全文的分析杠杆——它说明平台既想选平均最强的模型，又想避开扎堆去吃差异化红利，市场最终走向哪种均衡正是这两股力量博弈的结果。
 
-### 均衡存在性条件
-
-**完全差异化均衡**存在当且仅当对每个平台 $i$ 和替代模型 $f_i$：
+**3. 均衡存在性条件：刻画差异化与同质化的分水岭。** 基于上面的分解，论文给出两类纯策略均衡的精确条件。**完全差异化均衡**（每个平台选不同模型）存在，当且仅当对每个平台 $i$ 偏离到任意替代模型 $f_i$ 都不划算：
 
 $$T_{f_i^*} - T_{f_i} \geq \delta_{f_i}(\boldsymbol{f}_{-i}^* \cup f_i) - \delta_{f_i^*}(\boldsymbol{f}^*)$$
 
-**同质化均衡**：当主导用户类型占比足够大时（$\pi_{\boldsymbol{\theta}^*} \geq 1 - \frac{1}{1 + 2\Gamma/\rho}$），所有平台趋同于同一模型。
+直观说就是"放弃自身平均分数的损失" 要盖过 "偏离换来的错位优势增益"。反过来，当某个主导用户类型占比足够大（$\pi_{\boldsymbol{\theta}^*}\geq 1-\frac{1}{1+2\Gamma/\rho}$）时，吃下这群人的诱惑压倒一切，所有平台会趋同到同一个模型，形成**同质化均衡**。这一对条件正是论文解释"为何竞争有时反而导致趋同"的理论核心。
 
-### 策略性模型进入
-
-模型提供者最大化采纳加权质量目标：
+**4. 策略性模型进入：让新模型针对采纳概率定向优化。** 站在模型提供者一方，问题变成"训练一个怎样的模型才最容易被平台采纳、被用户选中"。论文把目标设为采纳加权的质量：
 
 $$\max F(\phi) = \sum_{\boldsymbol{\theta}} \pi_{\boldsymbol{\theta}} \sigma_{\boldsymbol{\theta}} S_\phi(\boldsymbol{\theta})$$
 
-其中 $\sigma_{\boldsymbol{\theta}} = \sigma(\beta \Delta_{\boldsymbol{\theta}})$ 为采纳概率。提供两种优化方案：
-1. **训练数据重采样**：按采纳概率加权偏置训练数据分布
-2. **直接梯度优化**：$\arg\min_\phi \mathcal{L}(\phi) - \lambda F(\phi)$
+其中采纳概率 $\sigma_{\boldsymbol{\theta}}=\sigma(\beta\Delta_{\boldsymbol{\theta}})$ 随该类型上的相对优势 $\Delta_{\boldsymbol{\theta}}$ 单调上升——也就是说提供者应该把火力集中在那些"现有模型还没占牢、自己又能反超"的用户群上。落地有两条互补路径：一是**训练数据重采样**，按采纳概率加权偏置训练分布，让模型自然偏向高回报人群；二是**直接梯度优化**，在原训练损失上加正则项 $\arg\min_\phi \mathcal{L}(\phi)-\lambda F(\phi)$，用 $\lambda$ 权衡通用质量与定向采纳收益。
 
 ## 实验关键数据
 

@@ -47,23 +47,21 @@ tags:
 
 ### 关键设计
 
-1. **Information Gap for Likelihood Coding（似然编码下的信息间隙）**:
+**1. 似然编码下的信息间隙：用代理后验量化"解码不该解的后验"会损失多少。**
 
-    - 功能：量化当神经群体编码似然函数时，后验解码器相对于似然解码器的性能损失
-    - 核心思路：似然编码群体 $\boldsymbol{r}_L \sim p(x|\theta)$ 不包含先验信息，因此后验解码器无法完美解码后验分布。最优后验解码器的输出收敛到一个**任务边际化的代理后验** $q_{P,i}^*(\theta) = \frac{[\sum_c p(c) p^c(\theta)] \cdot p(x_i|\theta)}{\sum_{\theta'} [\sum_c p(c) p^c(\theta')] \cdot p(x_i|\theta')}$，即用混合先验替代真实上下文先验。信息间隙 $\Delta_L^{\text{info}}$ 就是真实后验 $p^c(\theta|x_i)$ 与代理后验 $q_{P,i}^*(\theta)$ 之间 KL 散度的期望：$\Delta_L^{\text{info}} = \mathbb{E}_{p(x_i,c)}[D_{\text{KL}}(p^c(\theta|x_i) \| q_{P,i}^*(\theta))]$
-    - 设计动机：每个观测 $x_i$ 都贡献非零的信息间隙（只要两个上下文的先验不同），因此似然编码假说下的信息间隙通常较大，实验区分相对容易
+第一种假说是神经群体编码似然函数，此时群体响应 $\boldsymbol{r}_L \sim p(x|\theta)$ 里根本不含先验信息，后验解码器无从知道当前是哪个上下文，自然无法还原真实后验。关键的观察是：此时最优后验解码器不会退化成乱猜，而是收敛到一个**任务边际化的代理后验**——它用两个上下文的混合先验 $\sum_c p(c)p^c(\theta)$ 替代真实的上下文先验，
 
-2. **Information Gap for Posterior Coding（后验编码下的信息间隙）**:
+$$q_{P,i}^*(\theta) = \frac{\left[\sum_c p(c)\, p^c(\theta)\right] \cdot p(x_i|\theta)}{\sum_{\theta'} \left[\sum_c p(c)\, p^c(\theta')\right] \cdot p(x_i|\theta')}.$$
 
-    - 功能：量化当神经群体编码后验分布时，似然解码器相对于后验解码器的性能损失
-    - 核心思路：后验编码群体中，不同上下文下可能产生相同的后验分布（$p^A(\theta|x_j) = p^B(\theta|x_k)$），但对应不同的似然函数（$p(x_j|\theta) \neq p(x_k|\theta)$）。最优似然解码器的输出收敛到一个 Bayes-optimal 似然估计 $\ell_{jk}^*(\theta)$，需要通过不动点迭代求解。信息间隙 $\Delta_P^{\text{info}}$ 仅由满足后验匹配条件的观测对 $(x_j, x_k)$ 贡献
-    - 设计动机：后验编码下的信息间隙量级通常比似然编码小一个数量级（因为只有匹配对贡献），这揭示了区分后验编码群体面临更大的实验挑战，需要更精心的实验设计
+于是似然编码下的信息间隙就是真实后验 $p^c(\theta|x_i)$ 与这个代理后验之间 KL 散度的期望：$\Delta_L^{\text{info}} = \mathbb{E}_{p(x_i,c)}\big[D_{\text{KL}}(p^c(\theta|x_i)\,\|\,q_{P,i}^*(\theta))\big]$。只要两个上下文的先验不同，每个观测 $x_i$ 都会贡献一份非零间隙，所以 $\Delta_L^{\text{info}}$ 通常较大——这也意味着"群体是否编码似然"在实验上相对好区分。
 
-3. **Task Optimization via Information Gap Landscape（基于信息间隙景观的任务优化）**:
+**2. 后验编码下的信息间隙：只有"后验撞车"的观测对才贡献。**
 
-    - 功能：在任务参数空间中系统搜索最优实验设计
-    - 核心思路：对于高斯上下文先验 $p^c(\theta) = \mathcal{N}(\mu^c, \sigma^2)$，任务参数空间由先验均值间距 $d = |\mu^A - \mu^B|$ 和共享标准差 $\sigma$ 定义。遍历 $(d, \sigma)$ 网格计算两种假说下的信息间隙，得到二维景观。由于 $\Delta_P^{\text{info}}$ 量级更小且更难优化，策略是优先最大化 $\Delta_P^{\text{info}}$ 同时保证 $\Delta_L^{\text{info}}$ 足够大。例如在低对比度刺激下，最优参数约为 $d \approx 30°$、$\sigma \approx 20°$
-    - 设计动机：信息间隙景观直接可视化了两种假说在不同参数下的区分难度，将实验设计从启发式试错转化为有据可依的优化问题；同时发现重尾先验（t 分布、Cauchy 分布）几乎不产生后验编码下的信息间隙，从理论上排除了这类先验的使用
+第二种假说是神经群体直接编码后验分布，这时麻烦反过来：似然解码器面对的是已经被先验调制过的响应，要从里面反推干净的似然。难点在于不同上下文可能产生**完全相同的后验** $p^A(\theta|x_j)=p^B(\theta|x_k)$，但它们背后的似然却不同（$p(x_j|\theta)\neq p(x_k|\theta)$）。最优似然解码器对这种"后验撞车"的观测对只能输出一个折中的 Bayes-optimal 似然估计 $\ell_{jk}^*(\theta)$，需要靠不动点迭代求解。因此后验编码下的信息间隙 $\Delta_P^{\text{info}}$ **只由满足后验匹配条件的观测对** $(x_j, x_k)$ 贡献。由于这样的匹配对稀少，$\Delta_P^{\text{info}}$ 的量级往往比 $\Delta_L^{\text{info}}$ 小一个数量级——这恰恰说明"群体是否编码后验"才是实验设计真正要攻克的难关。
+
+**3. 信息间隙景观：把"选什么先验"变成可优化的二维搜索。**
+
+有了两个解析的信息间隙，实验设计就归结为在任务参数空间里找一个让二者都足够大的"甜蜜点"。以高斯上下文先验 $p^c(\theta)=\mathcal{N}(\mu^c,\sigma^2)$ 为例，参数空间由两个上下文先验的均值间距 $d=|\mu^A-\mu^B|$ 和共享标准差 $\sigma$ 张成。遍历 $(d,\sigma)$ 网格分别算出两种假说下的信息间隙，就得到一张二维景观图，直接把"不同先验下两假说有多可分"可视化出来。由于 $\Delta_P^{\text{info}}$ 量级更小、更难拉高，优化策略是以它为瓶颈——优先最大化 $\Delta_P^{\text{info}}$，同时只要求 $\Delta_L^{\text{info}}$ 足够大即可；例如在低对比度刺激下最优参数约为 $d\approx 30°$、$\sigma\approx 20°$。这张景观还顺带排除了一类先验：重尾分布（Student's t、Cauchy）几乎不产生后验编码下的信息间隙，因为这种分布下几乎找不到满足后验匹配条件的观测对，从理论上就不该用来区分两种假说。
 
 ### 损失函数 / 训练策略
 
@@ -146,11 +144,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)
 - [\[ICLR 2026\] Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
 - [\[ACL 2025\] Entropy-UID: A Method for Optimizing Information Density](../../ACL2025/others/entropy-uid_a_method_for_optimizing_information_density.md)
 - [\[AAAI 2026\] DeepRWCap: Neural-Guided Random-Walk Capacitance Solver for IC Design](../../AAAI2026/others/deeprwcap_neural-guided_random-walk_capacitance_solver_for_ic_design.md)
-- [\[ICLR 2026\] Characterizing and Optimizing the Spatial Kernel of Multi Resolution Hash Encodings](characterizing_and_optimizing_the_spatial_kernel_of_multi_resolution_hash_encodi.md)
-- [\[ICLR 2026\] DA-AC: Distributions as Actions — A Unified RL Framework for Diverse Action Spaces](distributions_as_actions_a_unified_framework_for_diverse_action_spaces.md)
+- [\[ICLR 2026\] Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation](disentangling_shared_and_private_neural_dynamics_with_spire_a_latent_modeling_fr.md)
 
 </div>
 

@@ -160,9 +160,9 @@ $$\mathcal{L}_{\text{TSCL}}(x;\theta) = \frac{1}{d_c} \sum_{i=0}^{d_c-1} \mathca
 
 - [\[CVPR 2025\] Show, Don't Tell: Detecting Novel Objects by Watching Human Videos](../../CVPR2025/object_detection/show_dont_tell_detecting_novel_objects_by_watching_human_videos.md)
 - [\[ICML 2025\] Self-Organizing Visual Prototypes for Non-Parametric Representation Learning](../../ICML2025/object_detection/self-organizing_visual_prototypes_for_non-parametric_representation_learning.md)
+- [\[NeurIPS 2025\] ADPretrain: Advancing Industrial Anomaly Detection via Anomaly Representation Pretraining](adpretrain_advancing_industrial_anomaly_detection_via_anomaly_representation_pre.md)
+- [\[NeurIPS 2025\] Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection](structured_temporal_causality_for_interpretable_multivariate_time_series_anomaly.md)
 - [\[ICML 2025\] BlueGlass: A Framework for Composite AI Safety](../../ICML2025/object_detection/blueglass_a_framework_for_composite_ai_safety.md)
-- [\[ICML 2025\] Understanding the Emergence of Multimodal Representation Alignment](../../ICML2025/object_detection/understanding_the_emergence_of_multimodal_representation_alignment.md)
-- [\[ICML 2025\] Few-Shot Learner Generalizes Across AI-Generated Image Detection](../../ICML2025/object_detection/few-shot_learner_generalizes_across_ai-generated_image_detection.md)
 
 </div>
 

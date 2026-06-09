@@ -41,30 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对给定 LLM，在指令 token 后、生成第一个 token 前，提取最后一层的激活向量。在此激活上训练线性探针来预测模型在特定解码策略下的成功/失败。然后利用探针的预测概率进行模型路由决策。
+对给定 LLM，在指令 token 输入完、生成第一个 token 之前，取出最后一层那一刻的激活向量 $\mathbf{h} \in \mathbb{R}^d$，它编码了模型对当前问题"心里有没有底"的信息。在这个激活上训练一个线性探针，预测模型在特定解码策略下能否答对，再把探针输出的成功概率当作路由信号，决定把查询交给哪个模型处理。
 
 ### 关键设计
 
-1. **双目标线性探针体系**:
+**1. 双目标线性探针：把人类难度和模型难度分开测。** 先前工作含糊地说"激活里有正确性信号"，但没分清这个信号反映的是人类觉得题难，还是模型自己觉得题难——两者其实是不同的东西。本文对同一份预生成激活 $\mathbf{h}$ 训练两类探针来区分它们：一类是回归探针，预测期望成功率 $\hat{s}_{MC}(\pi, q) = \mathbf{w}^\top \mathbf{h} + b$，用 MSE 损失拟合；另一类是二分类探针，直接预测在某个解码策略（Greedy 或 Maj@K）下答对还是答错，用 BCE 损失训练。关键在于用监督探针而非无监督的均值差方向来提取信号——后者在推理任务上判别力只有 AUROC 0.6–0.7，而监督线性探针能把模型成功率信号拉到 0.7 以上，因为模型难度这个对路由真正有用的信号需要标签才能从激活中干净地分离出来。
 
-    - 做什么：分别预测人类 IRT 难度和模型成功概率
-    - 核心思路：对相同的预生成激活 $\mathbf{h} \in \mathbb{R}^d$，训练两种探针：(a) 回归探针预测期望成功率 $\hat{s}_{MC}(\pi, q) = \mathbf{w}^\top \mathbf{h} + b$（MSE 损失）；(b) 二分类探针预测特定解码策略下的成功/失败（BCE 损失），目标可以是 Greedy 或 Maj@K 成功
-    - 设计动机：区分人类难度和模型难度是两种不同的信号，后者对路由更有价值。使用监督线性探针而非无监督方向提取，在推理任务上获得更强的判别力
+**2. 级联路由：一个阈值搞定大小模型分流。** 有了成功概率探针后，最朴素的用法是在一个基础模型 $M_s$ 和一个强模型 $M_l$ 之间做成本感知的分流。规则只是一条阈值判断：当基础模型在该查询上的预测成功率 $\hat{p}_s(x)$ 低于阈值 $\tau$ 时，说明基础模型大概率搞不定，就把查询升级给强模型 $M_l$，否则就让便宜的基础模型自己处理。调节 $\tau$ 即可在精度和成本之间滑动——实验里 $\tau=0.6$ 就能在 MATH 上匹配最强模型精度同时省下 17% 成本。这条简单规则之所以够用，是因为探针信号本身已经足够干净，不需要再叠一层复杂的路由学习。
 
-2. **级联路由 (Cascade Routing)**:
-
-    - 做什么：在基础模型和强模型间进行成本感知的查询分配
-    - 核心思路：给定基础模型 $M_s$ 和强模型 $M_l$，基于阈值规则路由：$M(x) = M_l$ if $\hat{p}_s(x) < \tau$，否则 $M(x) = M_s$。阈值 $\tau$ 控制性能-成本权衡
-    - 设计动机：简单的阈值策略即可有效利用探针信号，无需复杂的路由学习
-
-3. **效用最大化路由 (Utility-Based Routing)**:
-
-    - 做什么：在异构模型池中进行最优选择
-    - 核心思路：给定模型池 $\{M_1, \ldots, M_K\}$ 和归一化成本 $\{\hat{c}_1, \ldots, \hat{c}_K\}$，选择 $\hat{M}(x) = \arg\max_i (\hat{p}_i(x) - \lambda \hat{c}_i)$，其中 $\lambda$ 控制成功概率与成本之间的权衡
-    - 设计动机：当模型池异构时（不同大小、不同推理预算），需要同时考虑每个模型的成功概率和成本
+**3. 效用最大化路由：异构模型池里挑性价比最高的那个。** 当候选不止两个、而是一池子大小不一、推理预算不同的模型 $\{M_1, \ldots, M_K\}$ 时，单纯比成功率会一律选最强最贵的，所以要把成本一起算进来。给每个模型配一个归一化成本 $\hat{c}_i$，对每条查询选效用最高的模型 $\hat{M}(x) = \arg\max_i (\hat{p}_i(x) - \lambda \hat{c}_i)$，其中 $\lambda$ 是成功概率和成本之间的兑换率。这样每个查询都会被分给"既大概率答对又不太贵"的那个模型，在 5 模型池上能匹配精度的同时砍掉 70% 成本。
 
 ### 损失函数 / 训练策略
-线性探针训练使用 80/20 训练-验证分割，层和位置选择基于验证集。回归探针用 MSE，分类探针用 BCE。探针极其轻量——仅需一个线性层，训练成本可忽略。
+探针训练用 80/20 的训练-验证分割，具体探测哪一层、哪个 token 位置都按验证集表现来选；回归探针用 MSE，分类探针用 BCE。整套探针极轻——只是一个线性层，相对于生成本身训练成本可以忽略，这也是它能零额外开销地嵌进路由系统的前提。
 
 ## 实验关键数据
 
@@ -128,8 +116,8 @@ tags:
 - [\[ICML 2026\] Easier to Judge Than to Find: Predicting In-Context Learning Success for Demonstration Selection](../../ICML2026/model_compression/easier_to_judge_than_to_find_predicting_in-context_learning_success_for_demonstr.md)
 - [\[ICLR 2026\] QKV Projections Require a Fraction of Their Memory](qkv_projections_require_a_fraction_of_their_memory.md)
 - [\[ICLR 2026\] LightMem: Lightweight and Efficient Memory-Augmented Generation](lightmem_lightweight_and_efficient_memory-augmented_generation.md)
+- [\[AAAI 2026\] Predicting the Future by Retrieving the Past](../../AAAI2026/model_compression/predicting_the_future_by_retrieving_the_past.md)
 - [\[ICLR 2026\] π-Flow: Policy-Based Few-Step Generation via Imitation Distillation](pi-flow_policy-based_few-step_generation_via_imitation_distillation.md)
-- [\[ICLR 2026\] PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
 
 </div>
 

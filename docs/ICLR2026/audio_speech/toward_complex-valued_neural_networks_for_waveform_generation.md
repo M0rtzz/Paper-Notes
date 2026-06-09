@@ -39,39 +39,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入 Mel 谱图（虚部初始化为零）→ 复值 ConvNeXt 生成器预测复值 STFT 谱 → iSTFT 合成波形。判别器包括复值多分辨率判别器（cMRD，直接在复值谱上操作）和实值多周期判别器（MPD，在波形上操作）。
+ComVo 把整条 iSTFT 声码器流水线搬进复数域：以 Mel 谱图作为输入（虚部初始化为零）喂给复值 ConvNeXt 生成器，直接预测复值 STFT 谱，再经 iSTFT 合成波形。对抗训练侧配两类判别器——直接吃复值谱的复值多分辨率判别器 cMRD，以及在时域波形上工作的实值多周期判别器 MPD——使生成器同时受到复域结构反馈和波形细节约束。
 
 ### 关键设计
 
-1. **复值生成器**：
+**1. 复值生成器：让实部与虚部端到端耦合。** RVNN 声码器把复谱的实部、虚部当成两条独立通道处理，破坏了二者共同决定幅度与相位的耦合关系。ComVo 沿用 Vocos 的 ConvNeXt 骨干，但把其中的 Conv1d、LayerNorm 全部换成复值版本，权重、激活、特征都以复数承载，于是复数乘法、旋转这类代数结构能被网络原生表达。非线性上采用 Split GELU——对复数的实部和虚部分别施加 GELU——既保留 ConvNeXt block 的结构，又给复域提供了稳定的逐元素激活。这样实部-虚部的交叉依赖在整条前向路径上都不被拆散，相位建模因此更准确。
 
-    - 基于 Vocos 架构，所有 Conv1d 和 LayerNorm 替换为复值版本
-    - Split GELU 激活：对复数的实部和虚部分别施加 GELU，保持 ConvNeXt block 结构
-    - 复值域端到端保持实部-虚部交互
+**2. 相位量化层：用离散化锚住相位、稳住训练。** 复域训练最大的麻烦是相位容易漂移、难以收敛。ComVo 对中间复特征 $z = re^{i\theta}$ 只量化其相位，把连续相位离散到 $N_q$ 个均匀级别 $\theta_q = \frac{2\pi}{N_q} \cdot \text{round}(\frac{N_q}{2\pi}\theta)$，而幅度 $r$ 保持不变；round 不可导，用直通估计器（STE）让梯度照常回传。本质上这是一种作用在相位上的正则化：把中间表征限制到有限个"相位锚点"附近，抑制训练中的相位不一致，引导网络学到更结构化的相位模式。消融显示移除它后 UTMOS 下降约 0.12，是稳定复值训练的关键归纳偏置。
 
-2. **相位量化层（Phase Quantization）**：
+**3. 复值多分辨率判别器 cMRD：让对抗反馈尊重复域结构。** 多个子判别器在不同 STFT 分辨率上工作，但与常规做法不同，它们直接以复值谱图为输入，而非把实/虚部拼成独立通道；对抗损失分别在实部和虚部上计算，使判别器给出的反馈本身就带着复域几何，而不是被实值化抹平。配合在波形域工作的 MPD，生成器同时受到频域复结构和时域波形细节的双重监督，缺了 cMRD 后 UTMOS 跌到 3.58。
 
-    - 对复数特征 $z = re^{i\theta}$，将相位离散化为 $N_q$ 个均匀级别：$\theta_q = \frac{2\pi}{N_q} \cdot \text{round}(\frac{N_q}{2\pi}\theta)$
-    - 使用直通估计器（STE）保持可微性
-    - 作用：限制中间表征的相位变化范围，作为正则化防止相位漂移，引导网络学习更结构化的相位模式
-
-3. **复值多分辨率判别器（cMRD）**：
-
-    - 多个子判别器在不同 STFT 分辨率上操作
-    - 直接以复值谱图作为输入（而非将实/虚部拼接为独立通道）
-    - 对抗损失分别在实部和虚部上计算，使反馈尊重复域结构
-
-4. **块矩阵计算方案**：
-
-    - 将复值运算 $z' = Wz$（其中 $W = W_r + iW_i$，$z = x + iy$）重写为 $\begin{bmatrix} \text{Re}(z') \\ \text{Im}(z') \end{bmatrix} = \begin{bmatrix} W_r & -W_i \\ W_i & W_r \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix}$
-    - 将 4 个独立实值矩阵乘融合为单个块矩阵乘，减少冗余计算
-    - 通过自定义 autograd 函数实现，在前向和反向传播中均适用
-    - 训练时间减少约 25%
+**4. 块矩阵计算方案：把复值运算压回实值的算力成本。** 朴素实现一次复值线性运算 $z' = Wz$（$W = W_r + iW_i$，$z = x + iy$）要算 4 个独立的实值矩阵乘，开销翻倍。ComVo 把它重写成单个块矩阵乘 $\begin{bmatrix} \text{Re}(z') \\ \text{Im}(z') \end{bmatrix} = \begin{bmatrix} W_r & -W_i \\ W_i & W_r \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix}$，用一次结构化矩阵乘吸收掉冗余，并通过自定义 autograd 函数让前向、反向都走这条路径。它与朴素实现数学等价、合成质量完全一致，却把训练时间降低约 25%，把复值网络看似奢侈的算力需求拉回到与实值相当的水平。
 
 ### 损失函数 / 训练策略
-- 对抗损失：cMRD（复域）+ MPD（波形域）
-- 特征匹配损失 + 多分辨率 STFT 重建损失
-- LibriTTS train-clean-100/360 + train-other-500 训练，24kHz 采样率
+总损失由 cMRD（复域）与 MPD（波形域）的对抗损失、特征匹配损失，以及多分辨率 STFT 重建损失共同构成，分别从复谱结构、判别器中间特征和多尺度频谱三个角度约束生成器。训练数据为 LibriTTS 的 train-clean-100/360 与 train-other-500，采样率 24kHz。
 
 ## 实验关键数据
 
@@ -131,11 +112,11 @@ tags:
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Sound Logical Explanations for Mean Aggregation Graph Neural Networks](../../NeurIPS2025/audio_speech/sound_logical_explanations_for_mean_aggregation_graph_neural_networks.md)
-- [\[ICML 2025\] No Soundness in the Real World: On the Challenges of the Verification of Deployed Neural Networks](../../ICML2025/audio_speech/no_soundness_in_the_real_world_on_the_challenges_of_the_verification_of_deployed.md)
 - [\[ICLR 2026\] FlexiCodec: A Dynamic Neural Audio Codec for Low Frame Rates](flexicodec_a_dynamic_neural_audio_codec_for_low_frame_rates.md)
-- [\[ICLR 2026\] SyncTrack: Rhythmic Stability and Synchronization in Multi-Track Music Generation](synctrack_rhythmic_stability_and_synchronization_in_multi-track_music_generation.md)
+- [\[NeurIPS 2025\] SHAP Meets Tensor Networks: Provably Tractable Explanations with Parallelism](../../NeurIPS2025/audio_speech/shap_meets_tensor_networks_provably_tractable_explanations_with_parallelism.md)
 - [\[ACL 2026\] Hard to Be Heard: Phoneme-Level ASR Analysis of Phonologically Complex, Low-Resource Endangered Languages](../../ACL2026/audio_speech/hard_to_be_heard_phoneme-level_asr_analysis_of_phonologically_complex_low-resour.md)
+- [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
+- [\[CVPR 2025\] Towards Lossless Implicit Neural Representation via Bit Plane Decomposition](../../CVPR2025/audio_speech/towards_lossless_implicit_neural_representation_via_bit_plane_decomposition.md)
 
 </div>
 

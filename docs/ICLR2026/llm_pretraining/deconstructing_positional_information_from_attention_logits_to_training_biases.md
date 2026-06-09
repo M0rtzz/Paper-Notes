@@ -35,20 +35,15 @@ tags:
 ## 方法详解
 
 ### 整体框架
-将 token 表示分解为内容分量 $c_i$ 和位置分量 $p_i$（$x_i = c_i + p_i$），分析注意力 logit 矩阵。加法PE的logit矩阵为各项之和（$\mathbf{L}_{\text{Add}} = G_{q^c,k^c} + G_{q^c,k^p} + G_{q^p,k^c} + G_{q^p,k^p} + \mathbf{B}$），乘法PE（RoPE）的logit矩阵为 Hadamard 积形式（$\mathbf{L}_{\text{RoPE}} = \text{Re}\{(\cdots) \circ G_{\mathbf{e}}\}$），其中 $G_{\mathbf{e}}$ 是 Toeplitz 核。
+本文不提出新方法，而是把注意力 logit 的计算拆开来看位置信息从哪里进入、又如何在训练中沉淀。核心做法是把每个 token 表示分解为内容分量与位置分量 $x_i = c_i + p_i$，再展开 query-key 内积，从而把所有主流位置编码归并到 Toeplitz 矩阵这一统一视角下，区分出"加法注入"与"乘法注入"两条路径；随后用一对对照合成任务把模型的位置推理能力单独抠出来观察，最后用梯度分析解释观察到的现象。
 
-### 关键设计 1：合成任务设计
-- **Task 1（位置敏感）**：序列中有两个 trigger 词，预测它们的相对距离（分类）；要求模型同时知道"是什么"和"在哪里"
-- **Task 2（位置无关）**：计算序列中特定 trigger 词的出现次数；位置信息是干扰变量
-- 这两个对照任务精确隔离了内容-位置耦合能力
+### 关键设计
 
-### 关键设计 2：单头沉积模式的发现与验证
-通过逐头消融（zeroing out）发现：RoPE 在 Task 1 上第一层的单个注意力头被移除后准确率暴跌约 60%，而其他头几乎无影响。该模式仅出现在"RoPE + 位置敏感任务"组合中——NoPE 无此问题，RoPE 在 Task 2 上也无此问题。
+**1. Toeplitz 统一框架：把位置编码分成加法与乘法两类。** 位置编码过去多用"距离衰减""平移不变"等零散性质描述，缺乏统一的代数刻画。本文将 logit 矩阵按内容-位置交叉项展开后发现，加法式 PE（Absolute、T5 Bias、ALiBi）把位置信号作为独立可加项注入，logit 矩阵写成 $\mathbf{L}_{\text{Add}} = G_{q^c,k^c} + G_{q^c,k^p} + G_{q^p,k^c} + G_{q^p,k^p} + \mathbf{B}$，位置项 $\mathbf{B}$ 与内容项相互独立；而 RoPE 这类乘法式 PE 通过旋转把位置以 Hadamard 积耦合进内容，logit 矩阵呈 $\mathbf{L}_{\text{RoPE}} = \text{Re}\{(\cdots)\circ G_{\mathbf{e}}\}$ 形式，其中 $G_{\mathbf{e}}$ 是只依赖相对位置 $i-j$ 的 Toeplitz 核。两类注入方式都落到同一个 Toeplitz 表述里，差别仅在"相加"还是"逐元素相乘"，这一二分法正是后续解释 RoPE 反常行为的代数基础——乘法耦合让位置信号无法与内容解绑。
 
-### 关键设计 3：理论推导
-- **Proposition 6.1**：RoPE 的乘法结构使梯度信号具有确定性下界（非零种子），保证某个头获得正向位置学习信号
-- **Proposition 6.2**：ALiBi 的加法偏置使梯度在批次聚合时相互抵消，无法形成稳定种子
-- **Theorem 6.1**：反向传播中种子优势指数级放大（$\text{Margin}_l \geq \text{Margin}_L \prod_{k=l}^{L-1} \gamma_k$，$\gamma_k > 1$），最终导致单头垄断位置推理
+**2. 一对对照合成任务：把内容-位置耦合能力单独隔离出来。** 自然语言任务里内容和位置纠缠在一起，无法判断模型究竟在用哪种信息。本文设计两个精确对照的任务来隔离：Task 1（位置敏感）在序列中放两个 trigger 词，要求预测它们之间的相对距离，模型必须同时知道"是什么"和"在哪里"才能答对；Task 2（位置无关）则要求统计某个 trigger 词出现的次数，此时位置信息纯属干扰变量，理想模型应当忽略它。两个任务共享相同的 token 分布而只在"是否需要位置"上对立，于是任何性能差异都能干净地归因到位置编码对内容-位置耦合的处理方式，为下一步的逐头分析提供了可控的探针。
+
+**3. 单头沉积模式：从消融现象追到训练动力学的成因。** 在 Task 1 上做逐头消融（把单个注意力头置零）时出现了反直觉现象：移除第一层某一个特定的头，准确率从 92.64% 暴跌约 60 个百分点，而移除其余任意头几乎不影响结果——浅层几乎全部位置推理沉积在了单独一个头里。这一"单头沉积"只在"RoPE + 位置敏感任务"组合下出现，NoPE 没有、RoPE 在位置无关的 Task 2 上也没有，说明它是乘法耦合的特有产物。本文进一步用梯度分析给出成因：Proposition 6.1 证明 RoPE 的乘法结构使位置学习的梯度存在确定性非零下界，必有某个头率先获得正向"种子"信号；Proposition 6.2 则指出 ALiBi 的加法偏置在批次聚合时梯度相互抵消，形不成稳定种子；Theorem 6.1 表明反向传播会把这一初始优势逐层指数放大，满足 $\text{Margin}_l \geq \text{Margin}_L \prod_{k=l}^{L-1}\gamma_k$（其中 $\gamma_k>1$），最终让单个头垄断位置推理。至此现象、隔离、证明形成闭环：沉积不是训练偶然，而是 RoPE 乘法注入的固有训练偏置。
 
 ## 实验关键数据
 
@@ -102,10 +97,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
+- [\[CVPR 2025\] Robust Message Embedding via Attention Flow-Based Steganography](../../CVPR2025/llm_pretraining/robust_message_embedding_via_attention_flow-based_steganography.md)
 - [\[ICML 2025\] Benign Overfitting in Token Selection of Attention Mechanism](../../ICML2025/llm_pretraining/benign_overfitting_in_token_selection_of_attention_mechanism.md)
 - [\[ICML 2026\] Focus and Dilution: The Multi-stage Learning Process of Attention](../../ICML2026/llm_pretraining/focus_and_dilution_the_multi-stage_learning_process_of_attention.md)
 - [\[AAAI 2026\] No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding](../../AAAI2026/llm_pretraining/no-regret_strategy_solving_in_imperfect-information_games_via_pre-trained_embedd.md)
-- [\[ACL 2025\] Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases](../../ACL2025/llm_pretraining/between_circuits_chomsky.md)
 
 </div>
 

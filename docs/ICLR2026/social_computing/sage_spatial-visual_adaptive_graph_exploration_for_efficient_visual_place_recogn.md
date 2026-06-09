@@ -35,48 +35,19 @@ tags:
 
 ## 方法详解
 
-### 整体架构
+### 整体框架
 
-SAGE 包含四个阶段：(1) 冻结 DINOv2 骨干提取 patch token；(2) Soft Probing 自适应增强局部特征后聚合为全局描述符；(3) InteractHead 建模跨图像关联并在线重建地理-视觉亲和图；(4) 贪心加权团扩展采样构造训练批次。
+SAGE 在冻结的 DINOv2 骨干之上做两件事：用轻量 Soft Probing 把局部 patch 特征加权增强后聚合成全局描述符，再每个 epoch 在线重建一张融合地理距离与视觉相似度的亲和图，并用贪心加权团扩展从图里挖出"最易混淆"的样本簇组成训练批次。前者决定描述符质量，后者决定喂给对比损失的样本难度，两者随训练同步演化。
 
-### 特征提取与 PEFT
+### 关键设计
 
-使用预训练 DINOv2（ViT-B 或 ViT-L）作为冻结骨干，在最后 $N$ 个编码器块中插入可学习的 Dynamic Power Normalization (DPN) 层实现参数高效微调。输出一个 class token 和 $L$ 个 patch token，拼接为 $\mathbf{f} \in \mathbb{R}^{(L+1) \times M}$。
+**1. 参数高效特征提取：只动归一化层就让 VFM 适配 VPR。** 全量微调 DINOv2 参数量大、部署昂贵，SAGE 选择冻结整个骨干，只在最后 $N$ 个编码器块插入可学习的 Dynamic Power Normalization (DPN) 层。输入图像经骨干输出一个 class token 与 $L$ 个 patch token，拼成 $\mathbf{f} \in \mathbb{R}^{(L+1) \times M}$ 进入后续聚合。这样骨干侧可训练参数压到 1.96M，却保留了大模型预训练的判别力，是后面所有模块的统一前端。
 
-### Soft Probing（SoftP）
+**2. Soft Probing：用残差加权放大被等权聚合埋没的判别线索。** 此前的 CFP（Centroid-Free Probing）把所有 patch 描述符等权融合，微妙但关键的局部线索（如某栋建筑的独特立面）被平均掉了。SoftP 改成数据驱动地给显著 patch 加权：对每个 patch 描述符 $X_i$，先取其 $\ell_2$ 响应 $s_i = \|X_i\|_2 + \varepsilon$ 作为"显著度"信号，经两层 MLP $\phi$ 预测标量后用 sigmoid 压到 $[0,\alpha]$ 得到 $\beta_i = \alpha \cdot \sigma(\phi(s_i))$，最后做残差调制 $\widetilde{X}_i = (1 + \beta_i) X_i$。残差形式（乘 $1+\beta_i$ 而非 $\beta_i$）的好处是不破坏原始通道结构、只选择性放大高响应位置的方差贡献，因此即便加权预测不准也不会损坏基础特征。调制后的 $\{\widetilde{X}_i\}$ 再经 Feature Compression 和 Feature Probing 两个 MLP 分支降到 $D=128$、$K=64$ 并聚合为全局描述符，整个模块只是两层 MLP，参数增量极小。此外，描述符 $\mathbf{f}_i \in \mathbb{R}^{D \times K}$ 还会被确定性切成 $S$ 个等长片段、跨 batch 重排后送入两层 Transformer（768 维、16 头、FFN 1024 维）的 InteractHead，在每类片段上跨图像做注意力以捕获视图间一致性，进一步增强鲁棒性（该模块仅训练时使用，推理可选）。
 
-**动机**：CFP 对所有 patch 描述符等权聚合，埋没了微妙但关键的判别线索。SoftP 通过数据驱动的残差加权放大显著 patch。
+**3. 在线地理-视觉亲和图：用乘性耦合定义随模型演化的"真难样本"。** 静态采样的硬伤是嵌入空间在变、难样本定义却被冻在初始特征上；SAGE 每个 epoch 重建一次图来跟上演化。流程是：每个城市按聚类标签分组、随机抽一张图过模型得到聚类级描述符；按聚类数比例采样城市选定一个 place，再依描述符余弦距离概率采样 $P=15$ 个相似 place 构成候选集；对候选节点两两算欧式地理距离 $d_{\text{geo}}(i,j)$，把低于 $\tau_1=25$m 的对连边得到地理图，并从中取首个满足 $|V_C| \geq 10$ 的完全子图（clique）。关键在于亲和度用乘性距离 $W_{ij} = -(d_{\text{geo}}(i,j) \cdot d_{\text{vis}}(i,j))$ 定义，其中 $d_{\text{vis}} = \|\mathbf{F}_i - \mathbf{F}_j\|_2$，只有"地理近且视觉相似"的对（两个因子都小）才能让乘积最小、$W_{ij}$ 最大，单独地理近或视觉近都不够。最后只保留 $W_{ij}$ 超过阈值 $\tau_2$ 的边构成稀疏亲和图。因为每 epoch 重建，这张图始终对齐当前决策边界上最易混淆的地点。
 
-对每个 patch 描述符 $X_i$：
-
-1. 计算 $\ell_2$ 响应 $s_i = \|X_i\|_2 + \varepsilon$
-2. 经两层 MLP $\phi$ 预测标量，再 sigmoid 压缩并缩放：$\beta_i = \alpha \cdot \sigma(\phi(s_i))$，范围 $[0, \alpha]$
-3. 残差调制：$\widetilde{X}_i = (1 + \beta_i) X_i$
-
-这种残差形式保留了原始特征的通道结构，同时选择性放大高响应位置的方差贡献。调制后的描述符集合 $\{\widetilde{X}_i\}$ 经 Feature Compression 和 Feature Probing 两个 MLP 分支降维至 $D=128$、$K=64$，最终聚合为全局描述符。SoftP 仅增加极少参数。
-
-### InteractHead
-
-将每个图像描述符 $\mathbf{f}_i \in \mathbb{R}^{D \times K}$ 确定性地切分为 $S$ 个等长片段，跨 batch 重排后送入两层 Transformer 编码器（768 维，16 头注意力，FFN 1024 维），在每个片段类型上跨图像做注意力，捕获视图间一致性关联，增强描述符鲁棒性。
-
-### 在线地理-视觉图构建（Online Graph Creation）
-
-每个 epoch 执行以下流程：
-
-1. **采样代表特征**：对每个城市，按唯一聚类标签分组，随机采样一张图像通过模型获取聚类级描述符
-2. **构建候选集**：按聚类数按比例采样城市，选一个 place，根据描述符余弦距离概率采样 $P=15$ 个相似 place
-3. **地理图过滤**：计算所有节点对的欧式地理距离 $d_{\text{geo}}(i,j)$，低于阈值 $\tau_1=25$m 的连边
-4. **提取团**：从地理图中提取完全子图（clique），取首个满足 $|V_C| \geq 10$ 的团
-5. **计算乘性亲和度**：$W_{ij} = -(d_{\text{geo}}(i,j) \cdot d_{\text{vis}}(i,j))$，其中 $d_{\text{vis}} = \|\mathbf{F}_i - \mathbf{F}_j\|_2$
-6. **构建稀疏亲和图**：仅保留 $W_{ij}$ 超过阈值 $\tau_2$ 的边
-
-这种乘性距离设计使得"地理近 & 视觉相似"的节点对获得最高亲和度，精确捕获最易混淆的地点。由于每 epoch 重建，图始终与当前嵌入空间对齐。
-
-### 贪心加权团扩展（Greedy Weighted Sampling）
-
-1. **选锚点**：计算每个节点的种子得分 $S(i) = \frac{1}{N-1}\sum_{j \neq i} W_{ij}$，选得分最高者为初始团成员
-2. **贪心扩展**：迭代选择与当前团成员平均亲和度最高的节点加入，直至团大小达到 $k=4$
-3. **效果**：自动钻入亲和图中最稠密的子图区域——即模型最难做出细粒度区分的互相混淆样本簇
+**4. 贪心加权团扩展：直接钻进亲和图最稠密的混淆簇。** 有了亲和图还需从中选出一个紧凑的难样本批次。SAGE 先给每个节点算种子得分 $S(i) = \frac{1}{N-1}\sum_{j \neq i} W_{ij}$（与其它所有节点的平均亲和度），取得分最高者作为锚点；再贪心地每步加入"与当前团成员平均亲和度最高"的节点，直到团大小达到 $k=4$。这等价于在亲和图里寻找一个加权稠密子图，自动落到模型最难做细粒度区分的互相混淆样本簇上，把对比损失的梯度集中到最有学习价值的样本对。
 
 ## 实验结果
 
@@ -174,9 +145,9 @@ SAGE 骨干可训练参数与 EMVP 相同（1.96M），仅额外增加 7.88M 的
 
 - [\[ECCV 2024\] GRACE: Graph-Based Contextual Debiasing for Fair Visual Question Answering](../../ECCV2024/social_computing/grace_graph-based_contextual_debiasing_for_fair_visual_question_answering.md)
 - [\[ICLR 2026\] Adaptive Debiasing Tsallis Entropy for Test-Time Adaptation](adaptive_debiasing_tsallis_entropy_for_test-time_adaptation.md)
-- [\[ICLR 2026\] Stop Wasting Your Tokens: Towards Efficient Runtime Multi-Agent Systems](stop_wasting_your_tokens_towards_efficient_runtime_multi-agent_systems.md)
 - [\[ICCV 2025\] Learning Visual Proxy for Compositional Zero-Shot Learning](../../ICCV2025/social_computing/learning_visual_proxy_for_compositional_zero-shot_learning.md)
 - [\[CVPR 2025\] Classifier-to-Bias: Toward Unsupervised Automatic Bias Detection for Visual Classifiers](../../CVPR2025/social_computing/classifier-to-bias_toward_unsupervised_automatic_bias_detection_for_visual_class.md)
+- [\[NeurIPS 2025\] DeepTraverse: A Depth-First Search Inspired Network for Algorithmic Visual Understanding](../../NeurIPS2025/social_computing/deeptraverse_a_depth-first_search_inspired_network_for_algorithmic_visual_unders.md)
 
 </div>
 

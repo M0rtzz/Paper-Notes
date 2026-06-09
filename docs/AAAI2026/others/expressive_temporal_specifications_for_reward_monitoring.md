@@ -171,8 +171,8 @@ QRM 定义为带寄存器的有限状态机 $\mathcal{A} = (Q, q_0, \delta_q, \m
 - [\[AAAI 2026\] Reward Redistribution via Gaussian Process Likelihood Estimation](reward_redistribution_via_gaussian_process_likelihood_estimation.md)
 - [\[AAAI 2026\] A New Strategy for Verifying Reach-Avoid Specifications in Neural Feedback Systems](a_new_strategy_for_verifying_reach-avoid_specifications_in_neural_feedback_syste.md)
 - [\[AAAI 2026\] Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring](judging_by_the_rules_compliance-aligned_framework_for_modern_slavery_statement_m.md)
+- [\[ICLR 2026\] The Expressive Limits of Diagonal SSMs for State-Tracking](../../ICLR2026/others/the_expressive_limits_of_diagonal_ssms_for_state-tracking.md)
 - [\[AAAI 2026\] Towards Temporal Fusion Beyond the Field of View for Camera-based Semantic Scene Completion](towards_temporal_fusion_beyond_the_field_of_view_for_camera-based_semantic_scene.md)
-- [\[ACL 2025\] A Dual-Mind Framework for Strategic and Expressive Negotiation Agent](../../ACL2025/others/a_dual-mind_framework_for_strategic_and_expressive_negotiation_agent.md)
 
 </div>
 

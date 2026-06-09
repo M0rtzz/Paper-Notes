@@ -122,7 +122,7 @@ Ovis-U1 的隐式编辑漂移最弱（被冻结投影滤掉），但推理增强
 - [\[ICML 2026\] AnyEdit++: Adaptive Long-Form Knowledge Editing via Bayesian Surprise](anyedit_adaptive_long-form_knowledge_editing_via_bayesian_surprise.md)
 - [\[ACL 2025\] BMIKE-53: Investigating Cross-Lingual Knowledge Editing with In-Context Learning](../../ACL2025/knowledge_editing/bmike-53_investigating_cross-lingual_knowledge_editing_with_in-context_learning.md)
 - [\[ICML 2026\] The Labyrinth and the Thread: Rethinking Regularizations in Sequential Knowledge Editing for Large Language Models](the_labyrinth_and_the_thread_rethinking_regularizations_in_sequential_knowledge_.md)
-- [\[ICML 2026\] Revisiting Parameter-Based Knowledge Editing in Large Language Models: Theoretical Limits and Empirical Evidence](revisiting_parameter-based_knowledge_editing_in_large_language_models_theoretica.md)
+- [\[ACL 2025\] REP: Keys to Robust Edits — From Theoretical Insights to Practical Advances](../../ACL2025/knowledge_editing/rep_robust_knowledge_editing.md)
 
 </div>
 

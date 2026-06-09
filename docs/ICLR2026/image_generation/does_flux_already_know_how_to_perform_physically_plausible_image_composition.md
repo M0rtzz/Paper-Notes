@@ -40,49 +40,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SHINE（Seamless, High-fidelity Insertion with Neutralized Errors）包含三个核心组件，设计上与模型无关，仅依赖现代生成模型的标准功能。
+SHINE（Seamless, High-fidelity Insertion with Neutralized Errors）是一个无训练的图像合成框架：先在背景指定区域 inpaint 出物体的初始潜变量，再在去噪过程中用一个锚定损失把它推向参考主体的同时锚住背景，并辅以负向引导抑制退化、自适应掩码消除接缝。整套流程与模型无关，只依赖现代 T2I 模型（FLUX、SDXL、SD3.5 等）的标准功能，不做反演也不做注意力手术。
 
-### 1. Non-Inversion Latent Preparation
-放弃传统的图像反演策略，改用一步前向扩散获取噪声潜变量：
+### 关键设计
 
-- 用 VLM（BLIP-3）为主体图像生成描述
-- 用该描述和 inpainting 模型（FLUX.1-Fill）在背景的指定区域生成初始图像 $\bm{x}^{\text{init}}$
-- 通过一步前向扩散添加噪声：$\bm{z}_t = (1 - \sigma_t)\bm{z}^{\text{init}} + \sigma_t \bm{\epsilon}$
+**1. Non-Inversion Latent Preparation：绕开反演带来的姿态锁定。** 传统无训练方法靠图像反演拿到噪声潜变量，但反演会把物体姿态锁死到参考图的朝向，而且对 FLUX 这类 CFG 蒸馏模型效果很差。SHINE 改走一步前向扩散：先用 VLM（BLIP-3）给主体图生成描述，再用该描述驱动 inpainting 模型（FLUX.1-Fill）在背景的目标区域生成初始图像 $\bm{x}^{\text{init}}$，最后一步加噪 $\bm{z}_t = (1 - \sigma_t)\bm{z}^{\text{init}} + \sigma_t \bm{\epsilon}$。因为初始潜变量来自前向生成而非反向反演，物体可以自由地以场景适宜的朝向出现，物理先验也得以保留。
 
-这样避免了反演导致的姿态锁定问题，允许物体以场景适宜的朝向出现。
+**2. Manifold-Steered Anchor (MSA) Loss：在保住背景的前提下逼近参考主体。** 物体既要像参考主体，又不能把背景结构搅乱，二者天然冲突。MSA 把预训练定制化 adapter（IP-Adapter、InstantCharacter 等）当作隐式先验，在去噪中直接优化噪声潜变量，损失为 $\mathcal{L}_{\text{MSA}}(\bm{z}_t) = \|\bm{v}_{\bm{\theta}+\bm{\Delta\theta}}(\bm{z}_t, t, \bm{c}, \bm{z}^{\text{subj}}) - \text{sg}[\tilde{\bm{v}}_t]\|_2^2$。其中基础模型在原始潜变量上的预测 $\tilde{\bm{v}}_t$ 被 stop-gradient 固定为锚点、负责锁住背景结构，加了 adapter 的预测 $\bm{v}_{\bm{\theta}+\bm{\Delta\theta}}$ 则把潜变量拉向参考主体；梯度只在 mask 区域内更新，并仿照 SDS 省略 Jacobian 项。其有效性来自一个数学直觉：对冻结生成模型优化潜变量，相当于把它隐式投影回模型学到的数据流形，于是结果既忠实又自然。
 
-### 2. Manifold-Steered Anchor (MSA) Loss
-核心思想：利用预训练的定制化 adapter（如 IP-Adapter、InstantCharacter）作为隐式先验，在去噪过程中优化噪声潜变量，使其既忠实于参考主体，又保持背景结构完整。
+**3. Degradation-Suppression Guidance (DSG)：用图像侧负向引导压住过饱和与身份漂移。** MSA 优化有时会带来颜色过饱和、身份一致性下降。常规做法是文本负提示，但作者发现对 FLUX 无效——给它荒谬文本它照样生成高质量图像。于是改在注意力机制里构造负速度 $\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\bm{\theta}}^{\text{neg}})$，关键是 $\bm{v}^{\text{neg}}$ 怎么来。作者逐一模糊注意力中的各分量：模糊文本侧的 $Q_{\text{txt}}$/$K_{\text{txt}}$/$V_{\text{txt}}$ 几乎无影响，模糊图像值 $V_{\text{img}}$ 直接让输出崩坏，模糊 $K_{\text{img}}$ 影响中等，唯有模糊图像查询 $Q_{\text{img}}$ 能产生明显退化又保持结构完整，因此被选为构造负速度的方式。这与理论一致——模糊 $Q_{\text{img}}$ 等价于模糊 self-attention 权重，而抑制注意力激活本就会降低生成质量，正好被用作"反向"参照。
 
-$$\mathcal{L}_{\text{MSA}}(\bm{z}_t) = \|\bm{v}_{\bm{\theta}+\bm{\Delta\theta}}(\bm{z}_t, t, \bm{c}, \bm{z}^{\text{subj}}) - \text{sg}[\tilde{\bm{v}}_t]\|_2^2$$
-
-- $\tilde{\bm{v}}_t$ 是基础模型在原始潜变量上的预测，作为固定锚点保持背景结构
-- $\bm{v}_{\bm{\theta}+\bm{\Delta\theta}}$ 是加了 adapter 的模型预测，引导向参考主体靠近
-- 梯度仅在 mask 区域内更新，省略 Jacobian 项（类似 SDS）
-
-关键数学直觉：对冻结生成模型优化潜变量，会隐式将潜变量投影到模型的学习数据流形上。
-
-### 3. Degradation-Suppression Guidance (DSG)
-解决 MSA 优化过程中偶尔出现的颜色过饱和和身份一致性下降问题。
-
-$$\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\bm{\theta}}^{\text{neg}})$$
-
-关键发现：对 FLUX 而言，文本负提示无效（模型对荒谬文本仍能生成高质量图像）。作者系统性地测试了对注意力机制中不同组件施加模糊扰动的效果：
-
-- 模糊 $Q_{\text{txt}}$/$K_{\text{txt}}$/$V_{\text{txt}}$：几乎无影响
-- 模糊 $V_{\text{img}}$：输出完全崩坏
-- 模糊 $K_{\text{img}}$：中等影响
-- **模糊 $Q_{\text{img}}$：产生明显退化但保持结构完整**（最佳选择）
-
-理论上，模糊 $Q_{\text{img}}$ 等价于模糊 self-attention 权重，这与抑制注意力激活降低质量的已知结论一致。
-
-### 4. Adaptive Background Blending (ABB)
-用语义引导的注意力掩码替代固定的用户掩码，消除合成边缘的可见接缝：
-
-- 前期去噪步（$t > \tau$）：用 cross-attention 图生成的自适应掩码 $M^{\text{attn}}$
-- 后期去噪步（$t \leq \tau$）：切回用户掩码 $M^{\text{user}}$
-
-前期使用自适应掩码可消除接缝，后期切回用户掩码避免裁剪阴影和反射。
+**4. Adaptive Background Blending (ABB)：分阶段切换掩码消除可见接缝。** 直接用固定的用户掩码做混合，会在合成边缘留下肉眼可见的接缝，而且容易把物体投出的阴影、反射一并裁掉。ABB 按去噪进度切换掩码：前期步（$t > \tau$）改用 cross-attention 图生成的语义自适应掩码 $M^{\text{attn}}$，让边界随物体语义自然过渡、消除接缝；后期步（$t \leq \tau$）再切回用户掩码 $M^{\text{user}}$，确保阴影和反射这些落在原始 mask 外的物理效果不被裁剪。
 
 ## 实验关键数据
 

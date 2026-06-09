@@ -44,41 +44,15 @@ tags:
 
 ### 整体框架
 
-RoboInter 操作套件由四大组件构成：
+RoboInter 是围绕中间表示搭建的一整套基础设施，由四个相互衔接的组件构成：标注工具 RoboInter-Tool 负责高效产出标注，RoboInter-Data 沉淀出 23 万+ episode、571 场景、10+ 类中间表示的密集逐帧标注，RoboInter-VQA 把这些标注重组为评估 VLM 具身推理能力的基准，RoboInter-VLA 则用 Planner + Executor 的 plan-then-execute 框架把中间表示真正用进策略学习。换句话说，前两者解决"数据从哪来"，后两者解决"数据怎么用来评估和提升 VLA"。
 
-1. **RoboInter-Tool**：基于 PyQt5 的轻量级 GUI，支持半自动逐帧标注，集成 SAM2 进行物体分割跟踪
-2. **RoboInter-Data**：23 万+ episode、571 场景、10+ 类中间表示的密集逐帧标注数据
-3. **RoboInter-VQA**：9 类空间 + 20 类时序的具身 VQA 基准和数据集
-4. **RoboInter-VLA**：VLM Planner + Executor 的 plan-then-execute 框架，支持三种变体
+### 关键设计
 
-### 关键设计一：多层次中间表示标注体系
+**1. 多层次中间表示标注体系：把一段操作拆成可监督的细粒度信号。** Plan-then-execute 的瓶颈在于缺少密集且多类型的监督，单一类型（如只有 trace）的标注无法支撑完整的规划链路。RoboInter 把标注组织成由粗到细的三个层次：任务层将任务分解为子任务，并归并到 15 种预定义原始技能（Pick、Place、Push、Pull 等），再配上片段级和视频级语言描述；物体层借助 SAM2 跟踪加人工审查，产出 6100 万帧物体 grounding 标注，以及 19 万 affordance box 和 placement proposal；执行层标注末端执行器的 2D 轨迹（共 7000 万帧 trace）、接触点、6D 抓取位姿和夹爪 bounding box。关键在于所有标注都在时间轴上与动作、状态、第三视角和腕部视角观测严格对齐，因此同一帧可以同时取出技能标签、物体框、affordance 和 trace，供下游按需组合，而不会出现错位。
 
-数据标注覆盖三个层次：
+**2. F-CoT 灵活思维链：用可裁剪的中间表示串起 Planner 与 Executor。** 不同任务对中间表示的需求并不相同——精确抓取更依赖 affordance 和接触点，长程搬运更依赖 subtask 和 trace——固定一套思维链既冗余又不够。为此引入 Flexible Chain-of-Thought（F-CoT），它由多种中间表示自由组合而成：对 Planner，F-CoT 充当 VQA 形式的监督信号；对 Executor，它充当与动作对齐的条件指导。F-CoT 既可以是纯文本形式（对应 Te-Modular），也可以是叠加在图像上的视觉提示形式（对应 Im-Modular），用户可按任务挑选子集（如 subtask + trace、或 affordance + skill）。这种"按需取用"的设计让同一份多层次标注能适配不同操作场景，避免被单一固定链路束缚。
 
-- **任务层**：任务分解为子任务 → 15 种预定义原始技能（Pick, Place, Push, Pull 等）→ 片段级和视频级语言标注
-- **物体层**：通过 SAM2 + 人工审查 → 6100 万帧物体 grounding 标注、19 万 affordance box 和 placement proposal
-- **执行层**：末端执行器 2D 轨迹（7000 万帧 trace 标注）、接触点、6D 抓取位姿、夹爪 bounding box
-
-所有标注在时间上与动作、状态、第三视角和腕部视角观测严格对齐。
-
-### 关键设计二：F-CoT 灵活思维链桥接规划与执行
-
-引入 Flexible Chain-of-Thought（F-CoT），由多种中间表示组合而成：
-
-- 作为 VQA 监督信号训练 Planner
-- 作为动作对齐的指导信号输入 Executor
-- 支持文本形式（Te-Modular）和视觉提示形式（Im-Modular）
-- 用户可按任务需求灵活选择子集（subtask + trace、affordance + skill 等）
-
-### 关键设计三：三种 Plan-then-Execute VLA 变体
-
-| 变体 | 架构特点 | 中间表示使用方式 |
-|------|---------|----------------|
-| IC-E2E | VLM 直接作为 Executor 的特征提取器 | 隐式（通过预训练权重） |
-| EC-E2E | VLM 同时生成中间表示和动作 | 显式（联合优化 CoT + action） |
-| Modular | Planner 和 Executor 分离 | 显式（Planner 输出 → Executor 条件） |
-
-Executor 采用 Qwen2.5-VL backbone + DiT action head + 信息聚合器（将所有 token 隐藏状态压缩为可控长度的条件特征）。
+**3. 三种 Plan-then-Execute VLA 变体：在统一框架下对比中间表示的使用方式。** 中间表示到底是隐式喂给策略好，还是显式生成出来再约束动作好，此前缺乏同框架的公平比较。RoboInter-VLA 在同一套数据和骨干下给出三种变体：IC-E2E 把 VLM 当作 Executor 的特征提取器，中间表示仅以预训练权重的形式隐式存在；EC-E2E 让 VLM 同时生成中间表示和动作，联合优化 CoT 与 action，属于显式但端到端；Modular 则把 Planner 与 Executor 彻底分离，由 Planner 输出中间表示再作为 Executor 的条件，是显式且解耦的形式。三者共享同一个 Executor 实现——Qwen2.5-VL 骨干接 DiT action head，并通过一个信息聚合器把所有 token 的隐藏状态压缩成可控长度的条件特征——从而把性能差异干净地归因到中间表示的使用方式，而非骨干或动作头的差别。
 
 ## 实验与结果
 

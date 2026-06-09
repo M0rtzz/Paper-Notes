@@ -43,52 +43,25 @@ tags:
 
 ### 整体框架
 
-MPD 在标准时间反转采样框架之上，通过运动残差蒸馏实现单路径对齐：早期去噪步骤中仅使用前向路径运动信息，刻意避免对后向路径进行独立去噪，从而消除运动先验冲突。
+MPD 把时间反转采样从"前向、后向两条独立去噪路径再融合"改造成"只跑一条前向路径、后向路径靠蒸馏重建"。其关键观察是：后向路径之所以制造冲突，是因为它自己也带了一套从结束帧出发的运动先验；既然这套先验本就该和前向运动互逆，那就不必让模型重新去噪它，而是从前向路径已经算出的运动里反推出后向噪声。整套蒸馏只在去噪前期介入，后期再交还给标准采样器收尾。
 
-### 核心洞察：运动残差
+### 关键设计
 
-前向去噪估计的帧间残差包含运动信息：
+**1. 运动残差：把前向去噪估计的帧间差当作运动载体。**
 
-$$\Delta \hat{x}_{0,c_{\text{start}}}^{(i)} := \hat{x}_{0,c_{\text{start}}}^{(i)} - \hat{x}_{0,c_{\text{start}}}^{(i-1)}$$
+MPD 不直接操作整帧，而是看相邻帧去噪估计之间的残差。在第 $i$ 帧上定义图像残差 $\Delta \hat{x}_{0,c_{\text{start}}}^{(i)} := \hat{x}_{0,c_{\text{start}}}^{(i)} - \hat{x}_{0,c_{\text{start}}}^{(i-1)}$，再由它折算出前向噪声残差 $\Delta \epsilon_{\text{fwd}} = (\Delta x_t - \Delta \hat{x}_{0,c_{\text{start}}})/\sigma_t$。这个残差刻画了"从前一帧到后一帧画面如何变化"，本质上就是模型对运动的估计——这正是要蒸馏给后向路径的东西，从而避免后向路径自己再生出一套相互矛盾的运动。
 
-前向噪声残差为：
+**2. 累积蒸馏重建后向噪声：用前向运动倒推后向路径，而非独立去噪。**
 
-$$\Delta \epsilon_{\text{fwd}} = \frac{\Delta x_t - \Delta \hat{x}_{0,c_{\text{start}}}}{\sigma_t}$$
+后向路径不再喂结束帧条件 $c_{\text{end}}$ 去跑模型，而是从端点出发逐帧累减前向残差重建出来。先用结束帧 $z_{\text{end}}$ 锚定后向噪声的第一帧 $\epsilon_{\text{bwd}}^{(1)} = ((x_t')^{(1)} - z_{\text{end}})/\sigma_t$，再沿时间反向累积扣除前向噪声残差得到每一帧的后向噪声 $\epsilon_{\text{bwd}}^{(i)} = \epsilon_{\text{bwd}}^{(1)} - \sum_{k=2}^{i} \Delta \epsilon_{\text{fwd}}^{(k)}$。由此反解出不带 $c_{\text{end}}$ 条件的后向去噪估计 $\hat{x}_{0,c_{\text{start}}^*}' = x_t - \sigma_t \epsilon_{\text{bwd}}$，最后与前向估计按尺度 $\lambda$ 融合 $\tilde{x}_{0,c_{\text{start}}} = (1-\lambda)\hat{x}_{0,c_{\text{start}}} + \lambda(\hat{x}_{0,c_{\text{start}}^*}')'$，并写回采样更新 $x_{t-1} = \tilde{x}_{0,c_{\text{start}}} + \frac{\sigma_{t-1}}{\sigma_t}(x_t - \hat{x}_{0,\varnothing})$。因为后向噪声完全由前向运动推出，两条路径共享同一套运动先验，冲突从源头被消除，同时端点仍由 $z_{\text{end}}$ 锚住保证落点正确。
 
-### 关键步骤：后向路径重建
+**3. 分阶段介入：早期蒸馏定轨迹，后期标准采样补端点与细节。**
 
-1. **初始化**：用结束帧 $z_{\text{end}}$ 初始化后向噪声第一帧：$\epsilon_{\text{bwd}}^{(1)} = \frac{(x_t')^{(1)} - z_{\text{end}}}{\sigma_t}$
+蒸馏并非全程开启。在早期步骤（$t > (1-\gamma)T$）施加 MPD 并配合 re-noising，因为这一阶段决定全局运动轨迹的走向，正是冲突最致命的地方；进入后期则切回标准时间反转采样（TRF 的并行融合或 ViBiD 的顺序去噪），让端点一致性和高频细节由原采样器精修。蒸馏比例 $\gamma$ 控制介入的时间窗口，这也是 MPD 能即插即用叠加在 TRF 与 ViBiD 之上的原因——它只接管最易出错的前期，不改动后期管线。
 
-2. **累积蒸馏**：用前向噪声残差累积减去来重建后向噪声：
+### 损失函数 / 训练策略
 
-$$\epsilon_{\text{bwd}}^{(i)} = \epsilon_{\text{bwd}}^{(1)} - \sum_{k=2}^{i} \Delta \epsilon_{\text{fwd}}^{(k)}$$
-
-3. **重建后向去噪估计**（不使用 $c_{\text{end}}$ 条件）：
-
-$$\hat{x}_{0,c_{\text{start}}^*}' = x_t - \sigma_t \epsilon_{\text{bwd}}$$
-
-4. **融合与更新**：
-
-$$\tilde{x}_{0,c_{\text{start}}} = (1-\lambda) \hat{x}_{0,c_{\text{start}}} + \lambda (\hat{x}_{0,c_{\text{start}}^*}')' $$
-
-$$x_{t-1} = \tilde{x}_{0,c_{\text{start}}} + \frac{\sigma_{t-1}}{\sigma_t}(x_t - \hat{x}_{0,\varnothing})$$
-
-### 分阶段应用策略
-
-- **早期步骤**（$t > (1-\gamma)T$）：应用 MPD + re-noising 步骤，在全局运动轨迹成形阶段施加蒸馏
-- **后期步骤**：切换回标准时间反转采样（TRF 或 ViBiD），增强端点一致性和细节
-
-### 损失函数视角
-
-MPD 将原始双路径优化目标：
-
-$$\mathcal{L} = \frac{1}{\sigma_t^2} \|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{0,c_{\text{end}}}')\|_2^2$$
-
-简化为单路径目标：
-
-$$\mathcal{L} = \frac{1}{\sigma_t^2} \|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{0,c_{\text{start}}^*}')\|_2^2$$
-
-避免引入独立的端帧运动先验。
+MPD 是纯推理时方法、不需训练，其作用从优化目标的角度看尤为清晰。标准时间反转采样隐含的是一个双路径目标 $\mathcal{L} = \frac{1}{\sigma_t^2}\|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{0,c_{\text{end}}}')\|_2^2$，要让前向估计去对齐一个独立条件 $c_{\text{end}}$ 产生的后向估计，两端运动先验天然打架。MPD 把它替换为单路径目标 $\mathcal{L} = \frac{1}{\sigma_t^2}\|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{0,c_{\text{start}}^*}')\|_2^2$，对齐对象换成由前向运动重建、不引入端帧先验的 $\hat{x}_{0,c_{\text{start}}^*}'$，从而在不增加任何训练的前提下让两条路径的运动语义一致。
 
 ## 实验关键数据
 

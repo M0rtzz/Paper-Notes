@@ -37,39 +37,29 @@ tags:
 
 ### 整体框架
 
-构建了 SynPref-40M（4000 万偏好对，其中 2600 万通过策展），采用两阶段流水线：
-
-- **阶段一（小规模人工驱动迭代策展）**：8 轮迭代，每轮包含 RM 训练评估→错误驱动检索→偏好感知 LLM 标注三个步骤，积累约 1M 偏好对
-- **阶段二（大规模自动一致性策展）**：利用阶段一产出的最佳 RM 和独立训练的 gold RM 对野外数据进行双重一致性过滤，无需额外人工，扩展到约 26M 对
+论文的目标是策展出一个兼顾质量和规模的偏好数据集 SynPref-40M（4000 万偏好对，其中 2600 万通过策展保留）。整体被切成两个互补的阶段：阶段一用少量人工标注驱动 8 轮迭代精炼，反复定位当前 RM 的盲区并针对性补充高质量数据，积累约 1M 偏好对；阶段二把阶段一锤炼出的最佳 RM 和一个独立的 gold RM 当作自动过滤器，对海量野外数据做双重一致性筛选，无需额外人工就把规模扩展到约 26M 对。
 
 ### 关键设计
 
-**1. 严格的人工验证协议**
+**1. 工具增强的人工验证协议：让人工标注既可靠又信息密集。**
 
-标注者不仅仅看对话历史和两个回复——每个偏好对附带 5 元组属性：任务类别、偏好客观性、争议性、期望属性、实例级标注指南。标注者被允许使用搜索引擎、前沿 LLM 助手、领域专用 LLM（如数学/代码）作为辅助工具，但禁止完全依赖 LLM 输出，最终判断必须由人做出。对于事实核查任务要求必须使用搜索引擎验证；对于代码正确性任务要求执行代码并验证输出。这种"工具增强的人工标注"使标注质量显著优于裸人工标注（+3.2 vs +0.4）。
+纯人工标注虽然质量高，但裸看对话历史和两个回复很容易判断飘移、效率低下。论文给每个偏好对附上一个 5 元组属性——任务类别、偏好客观性、争议性、期望属性、实例级标注指南——把"凭感觉选"变成"按明确标准选"。同时允许标注者借助搜索引擎、前沿 LLM 助手以及数学/代码等领域专用 LLM 作为辅助：事实核查任务必须用搜索引擎核实，代码正确性任务必须执行代码并验证输出，但最终判断禁止完全交给 LLM、必须由人拍板。这套"工具增强但人做主"的协议把标注质量从裸人工的 +0.4 拉到 +3.2，说明给人配上合适的工具和结构化属性，远比单纯增加人力更能榨出标注价值。
 
-**2. 错误驱动自适应检索**
+**2. 错误驱动自适应检索：把有限的标注预算精准投到 RM 最薄弱的区域。**
 
-每轮迭代中，先在 gold 验证集上评估当前 RM，识别其预测错误的样本。然后以这些错误样本的 $(x, a)$（对话 + 属性）嵌入为查询，从未验证池检索语义相似的新样本。检索数量根据 RM 置信度动态调整：
+随机标注更多数据是低效的，真正的增益来自补齐 RM 的盲区。每轮迭代先在 gold 验证集上评估当前 RM，挑出它预测错误的样本，再以这些样本的 $(x, a)$（对话 + 属性）嵌入为查询，从未验证池里检索语义相似的新样本送去标注。检索数量随 RM 置信度 $p$ 动态变化：$k = k_{\max}$ 当 $p \le 0.5$（预测错误），$k = \lceil k_{\max} \cdot (1 - p) \rceil$ 当 $p > 0.5$（预测正确），其中 $k_{\max} = 8$。直觉很清楚——RM 越没把握的区域分到越多新样本，本质上是一种面向偏好标注的不确定性采样，使每一份人工标注都落在最能改善模型的地方。
 
-$$k = \begin{cases} k_{\max}, & \text{if } p \le 0.5 \text{（预测错误）} \\ \lceil k_{\max} \cdot (1 - p) \rceil, & \text{if } p > 0.5 \text{（预测正确）} \end{cases}$$
+**3. 偏好感知 LLM 标注：用人工 gold 数据给 LLM 判断装上锚点。**
 
-其中 $k_{\max} = 8$。直觉上，RM 表现越差的区域被分配越多的新样本用于后续标注，类似主动学习中的不确定性采样策略。
+直接让 LLM 判断偏好会引入难以自我纠正的偏差，这正是大量纯 LLM 合成数据集失效的原因。论文的做法是先从 gold 集中检索语义相似的人工已标注样本，作为 few-shot 示例插入 prompt，使 LLM 的每次判断都以人工验证过的偏好为参照。标注时用多个强 LLM 分别打分，先在单模型内做自一致性聚合、再跨模型合并以削弱单一模型偏差，同时把两个回复在 prompt 中的顺序随机化以消除位置偏差。这样既保留了 LLM 标注的规模优势，又把它的偏差牢牢约束在人工标准附近。
 
-**3. 偏好感知 LLM 标注**
+**4. 双 RM 一致性过滤与回收机制：在自动扩展规模时守住质量并榨干每一条数据。**
 
-对检索出的新样本进行 LLM 标注时，不是直接让 LLM 判断——而是先从 gold 集中检索语义相似的人工已标注样本作为 few-shot 示例插入 prompt，使 LLM 的判断以人工验证过的偏好为锚点。然后使用多个强 LLM 进行标注，先做模型内自一致性聚合，再跨模型合并结果，减轻单一模型偏差。回复在 prompt 中顺序随机化以消除位置偏差。
+阶段二面对的是无人工兜底的野外数据，需要一套纯自动的质量闸门。当前最佳 RM 置信度 >0.5 的样本直接保留；不一致的样本走一遍 LLM 重新标注（复用阶段一的检索 + few-shot 方案，只是不再涉及人工）。在此之上再训练一个仅用人工验证数据的 gold RM 做二次检验，只有同时通过 gold RM 和最佳 RM / LLM 一致性检查的样本才被收进数据集。巧妙之处在于被两个 RM 都拒绝的样本并不丢弃——既然两个独立 RM 都判它不合理，原始标注很可能本身就是反的，于是把它的 chosen/rejected 翻转后作为"修正数据"回收使用，零额外标注成本，且实验证明这一招在所有阶段和迭代中都带来一致增益。
 
-**4. 阶段二双 RM 一致性过滤与回收机制**
+### 损失函数 / 训练策略
 
-对于野外数据，当前最佳 RM 置信度 >0.5 的样本直接保留；不一致的样本走 LLM 重新标注流程（复用阶段一的检索+few-shot 方案，但不涉及人工）。额外训练一个仅用人工验证数据的 gold RM 做二次检验：只有同时通过 gold RM 和最佳 RM / LLM 一致性检查的样本才被保留。被两个 RM 都拒绝的样本不直接丢弃——将其 chosen/rejected 翻转后"回收"使用，零额外标注成本。
-
-### 训练细节
-
-- 损失函数：标准 Bradley-Terry 点对式，$p = \sigma(r_\theta(x, y_w) - r_\theta(x, y_l))$
-- 8 个模型规模：Qwen3 0.6B/1.7B/4B/8B + Llama-3.2 1B/3B + Llama-3.1 8B（常规版 + 40M 版）
-- 最大上下文长度 16K tokens，大 batch size 10240，常数学习率，1 epoch
-- 大 batch 训练节省约 35% 的总训练计算量
+训练沿用标准的 Bradley-Terry 点对式目标，$p = \sigma(r_\theta(x, y_w) - r_\theta(x, y_l))$，没有在损失层面做花哨改动——论文的结论恰恰是数据质量才是瓶颈。模型覆盖 8 个规模（Qwen3 0.6B/1.7B/4B/8B、Llama-3.2 1B/3B、Llama-3.1 8B，并各配常规版与 40M 版）。训练用 16K tokens 最大上下文、10240 的大 batch size、常数学习率、单 epoch，其中大 batch 设置相比常规配置节省约 35% 的总训练计算量。
 
 ## 实验关键数据
 
@@ -141,11 +131,11 @@ $$k = \begin{cases} k_{\max}, & \text{if } p \le 0.5 \text{（预测错误）} \
 
 ## 相关论文
 
-- [\[ACL 2026\] AgentV-RL: Scaling Reward Modeling with Agentic Verifier](../../ACL2026/llm_alignment/agentv-rl_scaling_reward_modeling_with_agentic_verifier.md)
 - [\[ICLR 2026\] Towards Understanding Valuable Preference Data for Large Language Model Alignment](towards_understanding_valuable_preference_data_for_large_language_model_alignmen.md)
-- [\[ICML 2025\] Challenges and Future Directions of Data-Centric AI Alignment](../../ICML2025/llm_alignment/challenges_and_future_directions_of_data-centric_ai_alignment.md)
+- [\[ACL 2026\] AgentV-RL: Scaling Reward Modeling with Agentic Verifier](../../ACL2026/llm_alignment/agentv-rl_scaling_reward_modeling_with_agentic_verifier.md)
 - [\[ACL 2025\] Finding the Sweet Spot: Preference Data Construction for Scaling Preference Optimization](../../ACL2025/llm_alignment/finding_the_sweet_spot_preference_data_construction_for_scaling_preference_optim.md)
-- [\[ACL 2025\] Dynamic Scaling of Unit Tests for Code Reward Modeling](../../ACL2025/llm_alignment/dynamic_scaling_of_unit_tests_for_code_reward_modeling.md)
+- [\[ICLR 2026\] Capability-Based Scaling Trends for LLM-Based Red-Teaming](capability-based_scaling_trends_for_llm-based_red-teaming.md)
+- [\[ICML 2025\] Challenges and Future Directions of Data-Centric AI Alignment](../../ICML2025/llm_alignment/challenges_and_future_directions_of_data-centric_ai_alignment.md)
 
 </div>
 

@@ -40,30 +40,19 @@ tags:
 
 ### 整体框架
 
-RD3 建立三维度标准化评估协议：**目标数据集、压缩比、跨架构泛化**。
+RD3 不是一个新的蒸馏算法，而是一套"把所有解耦蒸馏方法放回同一条起跑线"的评估协议：先把待测方法按生成合成数据的机制归为三个范式，再用一组完全统一的后评估设置（训练轮数、batch size、学习率、数据增强、软标签来源）去重新训练评估每个方法产出的合成数据，最后在目标数据集、压缩比、跨架构泛化三个维度上系统比较，从而把"蒸馏质量差异"和"评估设置差异"彻底拆开。
 
-### 1. 统一后评估设置
+### 关键设计
 
-**训练轮数**：统一为 400 epochs（而非各方法自定的 300），消除收敛速度差异带来的偏差。
+**1. 三范式归类：先看清各方法到底在比什么。** 现有解耦方法表面上都报告 ImageNet-1K 上的准确率，但底层生成机制天差地别，混在一起比并不公平。RD3 按合成数据怎么来把它们分成三类：优化型（SRe2L、CDA、G-VBSM、DWA、EDC）用预训练分类器对合成图像做像素级优化；生成型（Minimax、D4M）微调生成模型或优化视觉-文本嵌入来"画"出数据；选择型（RDED）则直接从真实图像里裁剪类别相关区域拼合。归类之后才能解释为什么后续校正对不同范式影响差异极大——例如优化型对初始化和软标签格外敏感，而选择型本身就携带真实数据统计量。
 
-**Batch Size**：统一设为 50（而非 SRe2L 的 1024 或 CDA 的 128），带来约 10% 的性能提升。
+**2. 统一后评估设置：把"刷榜技巧"从蒸馏质量里剥离。** 这是 RD3 的核心，也是 27.3% 差距大部分的来源。作者发现各方法私下用了互不相同的后评估配方：CDA 用更小 batch、RDED 用平滑学习率加更强增强、G-VBSM 和 EDC 用多教师混合软标签，这些都会抬高分数却与合成数据本身无关。RD3 把这些一刀切统一：训练轮数固定 400 epochs（而非各方法自报的 300）消除收敛速度偏差；batch size 统一压到 50（而非 SRe2L 的 1024 或 CDA 的 128），仅此一项就带来约 10% 的提升，因为小 batch 在有限合成样本上梯度更新更细；优化器统一用 Adam、初始学习率 0.001、余弦退火，并加平滑因子 $\zeta=1$（ResNet-18）或 $\zeta=2$（其他架构）软化调度；数据增强统一采用 RDED 的 CutMix + Random Resized Crop + Random Horizontal Flip。把这套配方锁死后，方法间的分数才反映合成数据真实的可学性。
 
-**平滑学习率调度**：使用 Adam 优化器，初始学习率 0.001，余弦退火调度，平滑因子 $\zeta = 1$（ResNet-18）或 $\zeta = 2$（其他架构）。
+**3. 统一软标签匹配：堵住多教师软标签这个隐藏增益。** 软标签是大规模蒸馏的标配，但谁来打这个标签影响巨大——多教师混合软标签等于偷偷给评估注入了额外监督。RD3 规定所有方法都只用单个预训练 ResNet-18 配 KL 散度生成 epoch-wise 软标签，学生在第 $t$ 步的更新统一写成
 
-**数据增强**：统一采用 RDED 的增强策略（CutMix + Random Resized Crop + Random Horizontal Flip），消除增强差异。
+$$\theta_{\mathcal{S}}^{t+1} = \arg\min_{\theta \in \Theta} L_{KL}\big(f_{\theta_\mathcal{T}}(\mathcal{A}(\mathcal{S})),\, f_{\theta_\mathcal{S}^t}(\mathcal{A}(\mathcal{S}))\big),$$
 
-### 2. 三范式系统评估
-
-对现有方法按生成机制分类：
-- **优化型**（SRe2L, CDA, G-VBSM, DWA, EDC）：通过预训练分类器像素级优化合成数据
-- **生成型**（Minimax, D4M）：微调生成模型或优化视觉-文本嵌入
-- **选择型**（RDED）：裁剪类别相关视觉区域
-
-### 3. 软标签匹配
-
-统一使用单个预训练 ResNet-18 + KL 散度生成软标签，公式为：
-
-$$\theta_{\mathcal{S}}^{t+1} = \arg\min_{\theta \in \Theta} L_{KL}(f_{\theta_\mathcal{T}}(\mathcal{A}(\mathcal{S})), f_{\theta_\mathcal{S}^t}(\mathcal{A}(\mathcal{S})))$$
+其中 $\mathcal{A}$ 是统一的增强、$f_{\theta_\mathcal{T}}$ 是固定教师、$\mathcal{S}$ 为合成集。教师和软标签来源被锁死后，原本靠多教师拉开的差距随之消失，这也是 EDC 等方法在校正后反而略降的直接原因。
 
 ## 实验关键数据
 
@@ -129,11 +118,11 @@ $$\theta_{\mathcal{S}}^{t+1} = \arg\min_{\theta \in \Theta} L_{KL}(f_{\theta_\ma
 
 ## 相关论文
 
+- [\[AAAI 2026\] A Closer Look at Knowledge Distillation in Spiking Neural Network Training](../../AAAI2026/model_compression/a_closer_look_at_knowledge_distillation_in_spiking_neural_ne.md)
 - [\[ICLR 2026\] Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
 - [\[ICLR 2026\] Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
 - [\[ICLR 2026\] Grounding and Enhancing Informativeness and Utility in Dataset Distillation](grounding_and_enhancing_informativeness_and_utility_in_dataset_distillation.md)
 - [\[AAAI 2026\] TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution](../../AAAI2026/model_compression/tgdd_trajectory_guided_dataset_distillation_with_balanced_distribution.md)
-- [\[ICLR 2026\] BeyondBench: Contamination-Resistant Evaluation of Reasoning in Language Models](beyondbench_contamination-resistant_evaluation_of_reasoning_in_language_models.md)
 
 </div>
 

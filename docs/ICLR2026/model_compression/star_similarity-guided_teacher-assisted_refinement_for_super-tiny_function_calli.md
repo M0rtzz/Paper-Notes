@@ -37,56 +37,41 @@ tags:
 
 ### 整体框架
 
-STAR 训练课程包含两阶段：**模型蒸馏** → **模型精炼**
+STAR 想把 Qwen3-8B 的 function calling 能力压进 0.6B 的端侧小模型，难点在于小模型直接 SFT 容易死记数据、直接 RL 又训不稳，而把蒸馏和 RL 串起来还会引入新的坑（top-k 截断下的崩溃、二值奖励不匹配多解任务）。它的解法是一条两阶段课程：先用「约束知识蒸馏 CKD」把教师的知识灌给学生、同时刻意保住学生后续 RL 要用的探索能力，再用「相似度引导的强化学习 Sim-RL」拿连续奖励精炼学生策略。完整流程是：教师先自适应蒸馏数据 → CKD 蒸馏到学生 → Sim-RL 精炼学生。
 
-### CKD: 约束知识蒸馏
+### 关键设计
 
-#### 发现 1: RKL + top-k 截断导致训练崩溃
+**1. 约束知识蒸馏 CKD：让蒸馏别掐死后续 RL 要用的探索能力。**
 
-- top-k FKL 忽略尾部分布 → 稳定
-- top-k RKL 对 $V_k(x)$ 外的 token 施加不稳定的监督 → 灾难性崩溃
-
-#### 发现 2: RKL 的"隐性代价"
-
-- RKL 的模式寻求特性激进裁剪学生尾部分布 → **降低输出熵**
-- 低熵 = 弱探索能力 → 下游 RL 性能下降
-
-#### CKD 损失函数
+作者先把"为什么不能直接拿现成蒸馏目标"讲清楚。在 top-k 截断（只保留教师概率最高的 $V_k(x)$ 个 token）这个工程常规下，FKL 因为忽略尾部分布所以训练稳定，但 RKL 会对 $V_k(x)$ 之外的 token 施加不稳定的监督，直接导致灾难性崩溃；更隐蔽的是，RKL 的"模式寻求"特性会激进地把学生的尾部分布裁掉，降低输出熵——而低熵意味着弱探索，下游 RL 直接受拖累。CKD 因此设计成"只补不裁"：在 top-k FKL 的基础上加一项尾部惩罚，
 
 $$\mathcal{L}_{CKD} = \mathcal{L}_{FKL\text{-}k} + \lambda_{tail} \mathcal{L}_{tail}$$
 
-其中：
+其中主项是常规的 top-k 前向 KL，
 
 $$\mathcal{L}_{FKL\text{-}k} = \sum_{x} \sum_{v \in V_k(x)} P_T(v|x) \log \frac{P_T(v|x)}{P_S(v|x)}$$
 
+尾部惩罚项只对"学生给了高概率、但教师认为不相关（落在 top-k 之外）"的 token 施压，
+
 $$\mathcal{L}_{tail} = \sum_{x} \sum_{v \in V_m(x) \setminus V_k(x)} P_S(v|x)$$
 
-- 仅惩罚学生认为高概率但教师认为不相关的 token → 抑制"自信的错误"
-- 不强制长尾分布归零 → 保留 RL 所需的探索能力
+这一项的作用是抑制学生"自信的错误"，但它并不强迫整条长尾分布归零，所以学生保住了 RL 阶段需要的探索能力——这正是 CKD 和直接 RKL 蒸馏的本质区别。
 
-### Sim-RL: 相似度引导的强化学习
+**2. 相似度引导的强化学习 Sim-RL：用连续奖励替代二值，匹配 function calling 的多解本质。**
 
-#### 奖励设计
-
-- **格式奖励** $R_{format}$：二值，检查 `<think>`/`<tool_call>` 标签、JSON 格式、函数名有效性
-- **Function Call 奖励** $R_{fc}$：基于 IoU 原则比较预测和真实函数调用序列
+function calling 经常有多个等价的正确调用，二值"对/错"奖励会把大量"调对了大半"的样本判死，信号过稀。Sim-RL 改用一组连续奖励。格式奖励 $R_{format}$ 仍是二值，检查 `<think>`/`<tool_call>` 标签、JSON 格式与函数名有效性是否齐全。Function Call 奖励 $R_{fc}$ 借 IoU 的思路比较预测序列 $P$ 和真实序列 $G$，按参数级相似度算交并比：
 
 $$R_{fc} = \frac{\sum_{i=1}^{\min(m,n)} \text{sim}(p_i, g_{\sigma(i)})}{|P| + |G| - |P \cap G|}$$
 
-参数级相似度函数 $\text{sim}(p,g)$ 对不同类型使用不同度量（字符串用 ROUGE-L，数值用精确匹配）
+其中相似度函数 $\text{sim}(p,g)$ 按参数类型分别度量（字符串用 ROUGE-L，数值用精确匹配），比纯 AST 解析更灵活、比二值更细。纯文本回复另算一个 Response 奖励 $R_{response}$（用 ROUGE-L F1）。三者合成总奖励并约束到 $[-1, 1]$：
 
-- **Response 奖励** $R_{response}$：纯文本回复用 ROUGE-L F1
-- **总奖励**：$R = (R_{format} - 1) + R_{format} \cdot (R_{fc} + R_{response})$，范围 [-1, 1]
+$$R = (R_{format} - 1) + R_{format} \cdot (R_{fc} + R_{response})$$
 
-#### 优化方法
+格式不合规先吃 $-1$ 的底，格式过关后才让内容奖励生效。优化用 GRPO，并借鉴 DAPO 的过滤机制：丢掉奖励全 0 或全 1 的同质组（这些组的优势全为零，对梯度没贡献），让训练聚焦在真正有区分度的样本上。
 
-使用 GRPO + DAPO 启发的过滤机制：丢弃奖励全 0 或全 1 的同质组。
+**3. STAR 训练课程：教师先自适应，再蒸馏，再精炼。**
 
-### STAR 训练课程
-
-1. 用 Sim-RL 先微调教师模型（Qwen3-8B）使其适应蒸馏数据
-2. 用 CKD 将教师知识蒸馏到学生模型
-3. 用 Sim-RL 精炼学生策略
+三个阶段串成一条课程。第一步先用 Sim-RL 微调教师模型 Qwen3-8B，让它适应目标蒸馏数据（teacher correction）——消融显示这一步对蒸馏质量有正面贡献；第二步用 CKD 把校正后教师的知识蒸馏到 0.6B 学生；第三步再用 Sim-RL 精炼学生策略。CKD 在第二步刻意保住的探索能力，正是为了让第三步的 RL 跑得动，三个阶段是环环相扣而非简单拼接。
 
 ## 实验关键数据
 
@@ -157,11 +142,11 @@ $$R_{fc} = \frac{\sum_{i=1}^{\min(m,n)} \text{sim}(p_i, g_{\sigma(i)})}{|P| + |G
 
 ## 相关论文
 
+- [\[ICLR 2026\] Towards Reliable Benchmarking: A Contamination Free, Controllable Evaluation Framework for Multi-step LLM Function Calling](towards_reliable_benchmarking_a_contamination_free_controllable_evaluation_frame.md)
 - [\[ICML 2026\] Critique-Guided Distillation for Robust Reasoning via Refinement](../../ICML2026/model_compression/critique-guided_distillation_for_robust_reasoning_via_refinement.md)
-- [\[ICLR 2026\] Unveiling Super Experts in Mixture-of-Experts Large Language Models](unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
 - [\[ACL 2026\] Find Your Optimal Teacher: Personalized Data Synthesis via Router-Guided Multi-Teacher Distillation](../../ACL2026/model_compression/find_your_optimal_teacher_personalized_data_synthesis_via_router-guided_multi-te.md)
+- [\[ICLR 2026\] Unveiling Super Experts in Mixture-of-Experts Large Language Models](unveiling_super_experts_in_mixture-of-experts_large_language_models.md)
 - [\[ICLR 2026\] Reference-Guided Machine Unlearning](reference-guided_machine_unlearning.md)
-- [\[ICLR 2026\] SERE: Similarity-based Expert Re-routing for Efficient Batch Decoding in MoE Models](sere_similarity-based_expert_re-routing_for_efficient_batch_decoding_in_moe_mode.md)
 
 </div>
 

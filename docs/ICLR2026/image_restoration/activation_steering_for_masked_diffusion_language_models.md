@@ -40,32 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三步：(1) 从对比 prompt 集（有害 vs 无害）中提取候选引导方向（差异均值的归一化向量）；(2) 在验证集上选择最佳（层, token 位置）组合；(3) 生成时在反向扩散的每一步、每一层、每个 token 位置上投影掉该方向。
+这篇论文要回答一个此前没人验证过的问题：自回归 LLM 里那套"拒绝行为由单一低维方向控制、把它投影掉就能绕过安全对齐"的激活引导范式，搬到 Masked Diffusion 语言模型（MDLM）上还成不成立。整条流程分三步且无需任何训练：先从一批配对好的有害 / 无害 prompt 里算出候选引导方向；再在验证集上把"哪一层、哪个 token 位置"的组合 sweep 一遍挑出最有效的那个；最后在反向扩散的每一步、每一层、每个 token 位置上，把激活向量里这个方向的分量全部投影掉，从而消除拒绝行为。难点在于 MDLM 用的是非因果注意力（所有 token 互相可见），位置和时机的选择不能照搬自回归的直觉。
 
 ### 关键设计
 
-1. **方向提取**:
+**1. 方向提取：用有害与无害 prompt 的激活均值差锚定"拒绝方向"。**
 
-    - 功能：从 128 个有害 + 128 个无害 prompt 的激活差异中提取引导方向
-    - 核心思路：$v_i^{(\ell)} = \text{normalize}(\mu_{+,i}^{(\ell)} - \mu_{-,i}^{(\ell)})$，对每个（层 $\ell$, token 位置 $i$）计算一个方向。在验证集上 sweep 所有候选选最佳
-    - 关键发现：有效方向不仅可从 post-instruction token 提取（如自回归中），还可从 **pre-instruction token** 提取——因为 MDLM 的非因果注意力使所有 token 都包含完整输入信息
+要找到那条控制拒绝的方向，本文沿用 Arditi et al. 的对比思路：准备 128 个有害 prompt 与 128 个无害 prompt，分别跑前向、收集激活，再对每个（层 $\ell$, token 位置 $i$）算两组激活均值之差并归一化，得到一个候选方向 $v_i^{(\ell)} = \text{normalize}(\mu_{+,i}^{(\ell)} - \mu_{-,i}^{(\ell)})$。这样得到的候选方向有成百上千个（层 × 位置），再在验证集上逐一 sweep、选消除拒绝最彻底的那个 $(\ell, i)$ 组合。真正的扩散特性体现在位置的选择上：自回归里只有指令之后的 token 才看得到完整输入，所以有效方向只能从 post-instruction token 提取；而 MDLM 的非因果注意力让**每个** token 都携带完整指令信息，于是连 **pre-instruction token** 也能提取出同样有效的引导方向——这是自回归架构下根本不可能的现象。
 
-2. **方向应用（投影法）**:
+**2. 方向应用：在反向扩散全程做正交投影，把拒绝分量逐步剥离。**
 
-    - 功能：在反向扩散的每一步中将所有激活投影到引导方向的正交子空间
-    - 公式：$\tilde{h}_i^{(\ell)} = h_i^{(\ell)} - \langle h_i^{(\ell)}, v \rangle v$
-    - 全局应用：所有层 × 所有 token 位置 × 所有去噪步骤
-    - 不修改扩散采样过程本身
+定下方向 $v$ 后，干预方式是投影而非加偏置：对每个激活向量，减去它落在 $v$ 上的分量，留下与 $v$ 正交的部分，
 
-3. **扩散特有的消融发现**:
+$$\tilde{h}_i^{(\ell)} = h_i^{(\ell)} - \langle h_i^{(\ell)}, v \rangle v$$
 
-    - 早期去噪步骤影响最大——第一个扩散 block 贡献不成比例地大
-    - 中到晚期 transformer 层最有效
-    - 热力图显示 LLaDA-8B 和 LLaDA-1.5 的灵敏区域高度一致
-    - MMaDA 模式不同（更广泛退化，无明确局部化）
+关键是这个投影不是只在某一处做一次，而是**全局**铺开——所有层 × 所有 token 位置 × 所有去噪步骤都施加，等于在整个反向扩散轨迹上持续把拒绝方向压成零。这样做不触碰扩散采样过程本身（采样器、噪声调度都原样不动），只在表示层动手，因此属于轻量的表示级控制，区别于此前 MDLM 上仅有的采样级引导（如 DIJA）。
+
+**3. 扩散特有的敏感区域：早期步骤、中晚层最吃干预，且跨模型一致。**
+
+把投影限定在不同的扩散步骤 / 层上做消融，会暴露出 MDLM 独有的结构。时间维度上，早期去噪步骤的影响不成比例地大——第一个扩散 block 贡献最突出，呼应了扩散模型"浅层对齐"的现象；层维度上，中到晚期的 transformer 层最敏感。把这些敏感度画成热力图，LLaDA-8B 与 LLaDA-1.5 的灵敏区域高度重合，说明这种局部化是同族模型共享的稳定结构；但换到 MMaDA 上模式就变了——干预带来的是更广泛的退化、没有清晰的局部化区域，提示该方法并非对所有 MDLM 都同样干净地起效。
 
 ### 损失函数 / 训练策略
-无需训练（training-free）。仅需一次前向传播提取方向，推理时全局投影。
+无需训练（training-free）。仅需一次前向传播提取方向，推理时全局投影即可，不引入任何额外参数或微调。
 
 ## 实验关键数据
 
@@ -127,9 +123,9 @@ tags:
 
 - [\[ICML 2026\] Plan for Speed: Dilated Scheduling for Masked Diffusion Language Models](../../ICML2026/image_restoration/plan_for_speed_dilated_scheduling_for_masked_diffusion_language_models.md)
 - [\[ICML 2026\] Consistent Diffusion Language Models](../../ICML2026/image_restoration/consistent_diffusion_language_models.md)
+- [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](../../NeurIPS2025/image_restoration/encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
 - [\[ICLR 2026\] Horizon Imagination: Efficient On-Policy Rollout in Diffusion World Models](horizon_imagination_efficient_on-policy_rollout_in_diffusion_world_models.md)
 - [\[ICLR 2026\] Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution](trust_but_verify_adaptive_conditioning_for_reference-based_diffusion_super-resol.md)
-- [\[NeurIPS 2025\] DynaGuide: Steering Diffusion Policies with Active Dynamic Guidance](../../NeurIPS2025/image_restoration/dynaguide_steering_diffusion_polices_with_active_dynamic_guidance.md)
 
 </div>
 

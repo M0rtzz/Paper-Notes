@@ -34,36 +34,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RFEval 的评估流程分两步：(1) 基线设定：给 LRM 输入问题，获取完整输出 o = (r, e, a)；(2) 干预设定：将反事实推理 r' 附加在助手回复开头，获取干预后输出 o' = (r_new, e', a')。然后通过立场一致性 χ 和因果影响 κ 两个条件判断忠实度 RF(o, o')。
+RFEval 采用"基线—干预"两步流程评估忠实度：先让 LRM 对问题正常作答，得到完整输出 $o=(r,e,a)$（推理链、解释、最终答案）；再把一段与模型原立场相反的反事实推理 $r'$ 拼接在助手回复开头，得到干预后输出 $o'$。忠实度由两个可独立检验的条件共同判定——立场一致性 $\chi$ 保证推理链内部连贯、因果影响 $\kappa$ 保证推理真正驱动答案。为消除反事实评估的选择偏差，最终只在满足"对比前提"（注入立场确与原始相反）的子集上汇报忠实率 $\text{RF}^{contrast}(M,D)=\mathbb{E}[\text{RF}(o,o')\mid \delta(x,r';M)=1]$，并配套报告对比覆盖率 $c(M)$ 说明多少实例进入了这个子集。
 
 ### 关键设计
 
-1. **立场一致性（Stance Consistency, χ）**
+**1. 立场一致性 χ：把"答案对"和"推理真"分开。**
 
-    - **功能**：检验模型输出的推理链、解释和最终答案之间是否形成连贯一致的论证链
-    - **为什么**：即使答案正确，如果推理内部自相矛盾或推理与答案不一致，也说明推理是装饰性的而非真实的
-    - **怎么做**：定义"立场连续性"指标 ι(u, v)，如果前后两段文本的立场相同（或后段明确解释了偏离原因），则连续为 1。将输出展平为序列 (c1,...,cm)，全局一致性 χ(o) = ∧_i ι(⟨c_{1:i-1}⟩, c_i)。使用 o3 作为立场提取器，在 1,035 个标注上 micro-F1 = 0.952
-    - **区别**：不仅检查推理→答案的一致性，还检查推理内部步骤间的连续性
+即使最终答案正确，模型也可能给出自相矛盾或与答案脱节的推理链，这种"装饰性推理"无法靠准确率识别。χ 的做法是先定义立场连续性指标 $\iota(u,v)$：当后段文本 $v$ 与前文 $u$ 立场相同、或后段明确解释了为何偏离时取 1，否则取 0。再把整段输出展平成片段序列 $(c_1,\dots,c_m)$，全局一致性 $\chi(o)=\bigwedge_i \iota(\langle c_{1:i-1}\rangle, c_i)$ 要求每一步相对此前所有内容都连续。它检查的不只是"推理→答案"是否对齐，还包括推理内部步骤之间的衔接，因而能抓出那些表面给出正确结论、内部却跳步或反转立场的情况。立场提取由 o3 完成，在 1,035 个人工标注上达到 micro-F1 = 0.952，保证这一自动判据本身足够可靠。
 
-2. **因果影响（Causal Influence, κ）**
+**2. 因果影响 κ：反事实干预证明推理真的在驱动答案。**
 
-    - **功能**：验证模型陈述的推理是否真正因果地决定了最终答案
-    - **为什么**：立场一致性只保证内部逻辑，不能区分"真正驱动答案的推理"和"事后合理化"
-    - **怎么做**：注入一个与模型原始立场相反的反事实推理 r'，如果干预后推理立场或答案发生变化，则 κ(o, o') = 1。关键约束：仅在"对比前提"满足时（即 S(r) ≠ S(r')，注入的推理立场与原始相反）才评估，避免歧义
-    - **区别**：是输出层干预而非输入层扰动，直接测试推理轨迹的因果效应
+立场一致性只能保证输出内部自洽，却分不清"真正决定答案的推理"和"事后为既定答案找的合理化说辞"。κ 通过主动干预来切开这层歧义：注入一段与模型原始立场相反的反事实推理 $r'$，若干预后模型的推理立场或最终答案随之改变，则 $\kappa(o,o')=1$，说明推理确实参与了决策；若模型表面调整措辞、实质答案纹丝不动，则判为不忠实。关键约束是只在"对比前提"成立时（即注入立场与原始立场相反，$S(r)\neq S(r')$）才评估 κ，否则注入一段同立场推理本就不该引起变化，会污染判据。相比此前在输入层注入提示偏差的扰动方式，这种输出层干预直接作用在推理轨迹上，更干净地测出推理的因果地位。
 
-3. **RFEval 基准构建**
+**3. RFEval 基准构建：用异质多步任务覆盖不同推理类型。**
 
-    - **功能**：包含 7,186 个实例，覆盖代码生成、数学推理、逻辑推理、表格推理、上下文理解、法律决策、论文评审 7 个任务
-    - **为什么**：需要异质性的多步推理任务以评估不同类型推理中的忠实度差异
-    - **怎么做**：使用 o3 生成反事实推理（包含微妙但合理的推理缺陷），然后通过 gpt-5 自动验证 + 8 名研究生人工审核，从 8,499 条筛选到 7,186 条，PABAK = 0.710
-
-### 损失函数 / 训练策略
-本工作是评估基准，不涉及训练。核心评估指标为对比条件下的忠实度：
-
-RF^contrast(M, D) = E[RF(o, o') | δ(x, r'; M) = 1]
-
-其中 δ = 1 表示对比前提成立。同时报告对比覆盖率 c(M) 反映多少实例满足对比前提。
+要观察忠实度在不同推理形态下的差异，单一任务远远不够，因此 RFEval 收纳了 7,186 个实例，横跨代码生成、数学推理、逻辑推理、表格推理、上下文理解、法律决策、论文评审 7 类任务，既有结论唯一的收敛型任务，也有需要权衡论证的开放型任务。每个实例的反事实推理由 o3 生成，刻意嵌入微妙但看似合理的推理缺陷；随后经 gpt-5 自动校验加 8 名研究生人工审核双重把关，从初始的 8,499 条筛到 7,186 条，标注一致性 PABAK = 0.710，确保注入的"陷阱"既不显眼又确实有缺陷。
 
 ## 实验关键数据
 
@@ -124,30 +109,6 @@ RF^contrast(M, D) = E[RF(o, o') | δ(x, r'; M) = 1]
 - 写作质量: ⭐⭐⭐⭐⭐ 形式化定义严谨，实证分析层次清晰，图表设计精良
 - 价值: ⭐⭐⭐⭐⭐ 揭示了 LRM 评估中被忽视的核心维度，对安全可信 AI 的研究方向有重要指引
 
-## 研究背景与动机
-- 大推理模型产生看似合理但不忠实的推理——准确率不能代表忠实度
-
-## 方法详解
-- 立场一致性：推理链内部连贯
-- 因果影响：推理因果决定答案（反事实验证）
-- RFEval：输出级干预
-
-## 实验关键数据
-
-| 发现 | 值 |
-|------|-----|
-| 不忠实率 | **49.7%** |
-| 集中在 | 数学/代码（脆弱域）|
-| RL后训练 | 降低忠实度（尽管精度不变）|
-
-## 关键发现
-- 后训练模式（SFT vs RL）比模型规模更影响忠实度
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐⭐ 推理忠实度形式化
-- 实验充分度: ⭐⭐⭐⭐⭐ 7任务/7186实例
-- 价值: ⭐⭐⭐⭐⭐ 揭示RL训练的隐患
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -157,8 +118,8 @@ RF^contrast(M, D) = E[RF(o, o') | δ(x, r'; M) = 1]
 - [\[ICLR 2026\] Towards Safe Reasoning in Large Reasoning Models via Corrective Intervention](towards_safe_reasoning_in_large_reasoning_models_via_corrective_intervention.md)
 - [\[ICLR 2026\] Training Large Reasoning Models Efficiently via Progressive Thought Encoding](training_large_reasoning_models_efficiently_via_progressive_thought_encoding.md)
 - [\[ICLR 2026\] Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
-- [\[ICLR 2026\] GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs](geogrambench_benchmarking_the_geometric_program_reasoning_in_modern_llms.md)
-- [\[ICLR 2026\] TopoBench: Benchmarking LLMs on Hard Topological Reasoning](topobench_benchmarking_llms_on_hard_topological_reasoning.md)
+- [\[ICML 2025\] DyCodeEval: Dynamic Benchmarking of Reasoning Capabilities in Code Large Language Models Under Data Contamination](../../ICML2025/llm_reasoning/dynamic_benchmarking_of_reasoning_capabilities_in_code_large_language_models_und.md)
+- [\[ICLR 2026\] VisioMath: Benchmarking Figure-based Mathematical Reasoning in LMMs](visiomath_benchmarking_figure-based_mathematical_reasoning_in_lmms.md)
 
 </div>
 

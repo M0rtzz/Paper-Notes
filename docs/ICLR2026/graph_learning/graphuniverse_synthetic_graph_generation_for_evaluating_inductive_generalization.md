@@ -41,31 +41,25 @@ tags:
 
 ## 方法详解
 
-### 三层分层架构
+### 整体框架
 
-GraphUniverse 采用三层分层生成框架，将全局社区属性与局部图特征解耦：
+GraphUniverse 把"生成一族语义一致的图"拆成三个层级——Universe 层固定一组贯穿全族的持久社区，Family 层约束每张图的属性可取范围，Graph 层在范围内采样得到具体图实例。关键在于全局社区属性（连接模式、度倾向、特征质心）在 Universe 层一次定义、被所有图共享，从而让同一个"社区 k"在不同图里保持相同语义，使 inductive 设置下的跨图迁移评测第一次有了受控基础。
 
-**Universe 层（全局社区属性）**：定义 K 个持久社区，包含三类属性：
+### 关键设计
 
-- **结构模式**：边倾向矩阵 $\tilde{\mathbf{P}} \in \mathbb{R}^{K \times K}$，编码社区间连接强度。通过 $\tilde{P}_{rs} = 1 + \xi_{rs}$（$\xi_{rs} \sim \mathcal{N}(0, (2\epsilon)^2)$）引入异质性
-- **度分布特征**：社区级度倾向向量 $\boldsymbol{\delta} \in [-1, 1]^K$，$\delta_k = -1$ 对应低度节点，$\delta_k = +1$ 对应高度节点
-- **特征分布**：社区质心 $\boldsymbol{\mu}_k \sim \mathcal{N}(\mathbf{0}, \sigma_{\text{center}}^2 \mathbf{I}_d)$，节点特征从 $\mathcal{N}(\boldsymbol{\mu}_k, \sigma_{\text{cluster}}^2 \mathbf{I}_d)$ 采样
+**1. 三层解耦的分层生成：把"什么是社区"和"这张图长什么样"分开。** 现有工具（GraphWorld）每次独立采一张图，社区语义无法跨图复用，因此只能做 transductive 评测。GraphUniverse 在最上层的 Universe 定义 $K$ 个持久社区，每个社区携带三类属性：编码社区间连接强度的边倾向矩阵 $\tilde{\mathbf{P}} \in \mathbb{R}^{K\times K}$，通过 $\tilde{P}_{rs}=1+\xi_{rs}$（$\xi_{rs}\sim\mathcal{N}(0,(2\epsilon)^2)$）注入异质性；刻画节点连接倾向的社区级度倾向向量 $\boldsymbol{\delta}\in[-1,1]^K$，$\delta_k=-1$ 表示该社区偏低度、$+1$ 偏高度；以及决定节点特征的社区质心 $\boldsymbol{\mu}_k\sim\mathcal{N}(\mathbf{0},\sigma_{\text{center}}^2\mathbf{I}_d)$，节点特征再从 $\mathcal{N}(\boldsymbol{\mu}_k,\sigma_{\text{cluster}}^2\mathbf{I}_d)$ 采样。中间的 Family 层只规定图级参数的取值范围——同质性 $h$、平均度 $d$、节点数 $n$、社区数 $k$、度分离度 $\rho$、幂律指数 $\alpha$；最底层的 Graph 层从该范围采样并继承 Universe 社区属性，生成单张图。这样结构属性可以在 Family 层自由扰动，而社区语义在 Universe 层保持恒定，二者互不干扰。
 
-**Family 层（生成约束）**：指定图级参数范围——同质性 $h$、平均度 $d$、节点数 $n$、社区数 $k$、度分离度 $\rho$、幂律指数 $\alpha$ 等。
+**2. 基于 DC-SBM 的 Bernoulli 图实现：让采样出的图真正满足目标属性。** 给定一张图的参数后，生成分四步落地：先从 Family 范围均匀采样 $(n,k,h,d,\rho,\alpha)$；再从 Universe 的 $K$ 个社区里随机选 $k$ 个子集；接着提取对应子矩阵并做同质性调整与密度调整，使其满足目标的 $h$、$d$ 约束；最后把节点均匀分配到社区，将幂律度因子 $\theta_i$ 与社区度倾向耦合得到每个节点的度，按 Bernoulli 概率
 
-**Graph 层（实例生成）**：从 Family 范围内采样具体参数，继承 Universe 社区属性，生成单个图实例。
+$$P_{ij}=\min\!\big(1,\ \theta_i\theta_j\,\mathbf{P}_{\text{scaled}}[c(i),c(j)]\big)$$
 
-### 图实例生成四阶段流程
+独立成边，并从社区高斯分布采样节点特征。这里特意采用 Degree-Corrected SBM 的 Bernoulli 重构而非传统的 Poisson 多图采样：Poisson 会产生多重边，折叠成简单图后实际属性与设定值发生偏移，而 Bernoulli 单边采样直接对齐目标属性，避免了"参数设了却生成不出来"的不匹配。
 
-1. **参数采样**：从 Family 范围均匀采样 $(n, k, h, d, \rho, \alpha)$
-2. **社区选择**：从 Universe 的 K 个社区中随机选取 k 个子集
-3. **概率矩阵构造**：提取子矩阵并进行同质性调整和密度调整，使其满足目标属性约束
-4. **图实现**：节点均匀分配到社区；通过耦合幂律度因子与社区度倾向生成度分布；以 Bernoulli 概率 $P_{ij} = \min(1, \theta_i \theta_j \mathbf{P}_{\text{scaled}}[c(i), c(j)])$ 独立生成边；从社区高斯分布采样节点特征
+**3. 属性保真的细节修复：保证生成的图既符合约束又结构合理。** 受控评测要求生成图的属性精确可信，因此在图实现后还要做一致性兜底——当图出现断开的连通分量时，添加对目标块结构偏差最小的边把它们连起来，既保证连通又尽量不破坏设定的社区结构。整套流程是线性时间复杂度，100 节点图约 23ms、1000 节点图约 1.3s，使得大规模批量生成图族在实践中可行。
 
-### 技术要点
-- 基于 Degree-Corrected SBM (DC-SBM) 的 Bernoulli 重构（而非 Poisson 多图），避免了多边折叠导致的参数-属性不匹配
-- 断开连通分量时添加对目标块结构偏差最小的边
-- 线性时间复杂度扩展：100 节点图约 23ms，1000 节点图约 1.3s
+### 一个完整示例
+
+以生成一张目标图为例，可以看清参数如何从三层逐级流到边：Universe 层先定好 $K=10$ 个持久社区及其 $\tilde{\mathbf{P}}$、$\boldsymbol{\delta}$、$\boldsymbol{\mu}_k$；Family 层规定这族图的同质性落在某区间、节点数 50–200；轮到具体一张图时，先采得 $(n,k,h,d,\rho,\alpha)$，例如 $n=150,k=5$；从 10 个社区里挑出 5 个，取出它们之间的 $5\times5$ 子矩阵并按目标 $h$、$d$ 缩放成 $\mathbf{P}_{\text{scaled}}$；150 个节点均匀分到 5 个社区，每个节点拿到耦合后的度因子 $\theta_i$；逐对节点按 $P_{ij}=\min(1,\theta_i\theta_j\mathbf{P}_{\text{scaled}}[c(i),c(j)])$ 掷 Bernoulli 决定连边；特征按各自社区质心采样。换一张图时社区语义不变、只重采图级参数，于是整族图共享"同一套社区"但结构各异——这正是 inductive 评测所需要的设置。
 
 ## 实验关键数据
 
@@ -134,8 +128,8 @@ GraphUniverse 的核心优势在于同时支持多图生成和跨图语义一致
 - [\[ACL 2026\] Evaluating LLMs on Large-Scale Graph Property Estimation via Random Walks](../../ACL2026/graph_learning/evaluating_llms_on_large-scale_graph_property_estimation_via_random_walks.md)
 - [\[ICML 2026\] What Structural Inductive Bias Helps Transformers Reason Over Knowledge Graphs? A Study with Tabula RASA](../../ICML2026/graph_learning/what_structural_inductive_bias_helps_transformers_reason_over_knowledge_graphs_a.md)
 - [\[ICLR 2026\] RAS: Retrieval-And-Structuring for Knowledge-Intensive LLM Generation](ras_retrieval-and-structuring_for_knowledge-intensive_llm_generation.md)
+- [\[CVPR 2025\] Universal Scene Graph Generation](../../CVPR2025/graph_learning/universal_scene_graph_generation.md)
 - [\[ACL 2026\] MegaRAG: Multimodal Knowledge Graph-Based Retrieval Augmented Generation](../../ACL2026/graph_learning/megarag_multimodal_knowledge_graph-based_retrieval_augmented_generation.md)
-- [\[NeurIPS 2025\] Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective](../../NeurIPS2025/graph_learning/making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)
 
 </div>
 

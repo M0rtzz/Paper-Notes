@@ -39,39 +39,25 @@ tags:
 
 ### 整体框架
 
-VCWorld 将虚拟细胞模拟建模为一个**生物世界模型（Biological World Model）**。核心流程：
+VCWorld 把虚拟细胞模拟当成一个**生物世界模型（Biological World Model）**：给它一个药物扰动和一张从公开数据库取来的结构化生物知识图谱，它不去拟合 $f_\theta(\text{perturbation}, \text{cell\_type}) \to \Delta \text{gene\_expression}$ 这样的黑盒映射，而是用 LLM 一步步"推演"扰动如何从靶点蛋白沿信号网络传播、最终改变基因表达。整条推理链是 $\text{Drug} \to \text{Target Protein} \to \text{Signaling Cascade} \to \text{Gene Expression Change}$，每一步都落地成一条可追溯、可被实验验证的机制路径，最终同时产出逐步的基因表达预测和显式的通路假说。
 
-1. **输入**：药物/扰动信息 + 从公开数据库提取的结构化生物知识图谱
-2. **推理**：LLM 驱动的迭代推理，模拟扰动在细胞信号网络中的级联传播
-3. **输出**：逐步的可解释基因表达预测 + 显式的信号通路机制假说
+### 关键设计
 
-与传统方法 $f_\theta(\text{perturbation}, \text{cell\_type}) \to \Delta \text{gene\_expression}$ 的端到端范式形成鲜明对比，VCWorld 的推理链条为：
+**1. 结构化生物知识整合：让每一步推理都有生物学依据。**
 
-$$\text{Drug} \xrightarrow{\text{靶点识别}} \text{Target Protein} \xrightarrow{\text{通路传播}} \text{Signaling Cascade} \xrightarrow{\text{转录调控}} \text{Gene Expression Change}$$
+数据驱动模型把几十年积累的通路知识全部压进参数里，预测时无从追溯；VCWorld 反过来把这些知识显式摆在推理现场。它从 KEGG、Reactome、STRING 等数据库抽取蛋白质-蛋白质相互作用（PPI）网络、信号通路拓扑和基因调控关系，再把这些关系整理成 LLM 能直接读的形式——文本化的通路描述或图谱表示，使模型在推断时可以随时查询"A 蛋白下游连着哪些通路"这类先验约束。这样每个预测步骤都锚定在一条已知的生物学关系上，而不是凭网络权重凭空给出一个数值，白盒特性正是建立在这一层显式知识之上。
 
-### 关键设计一：结构化生物知识整合
+**2. LLM 驱动的迭代信号级联推理：用文献先验补全知识缺口。**
 
-VCWorld 的"白盒"特性建立在结构化知识基础之上：
+知识图谱再全也有空白，纯靠图谱传播会在缺边处断链。VCWorld 让 LLM 充当推理引擎，逐步推断信号链条：药物与靶点蛋白结合，激活或抑制下游通路，改变转录因子活性，最终上调或下调特定基因。LLM 在海量生物医学文献上训练后隐含了大量分子间关系，VCWorld 借这种隐式知识"补"上图谱里缺失的交互、并评估每条候选路径是否合理。关键在于迭代而非单步——每一轮推理都把当前激活状态往下游推进一格，并显式吐出一条因果假说（例如"Drug X 抑制 Protein A → Protein A 无法磷酸化 Protein B → 通路 C 被阻断 → 基因 D 下调"），这串假说既是预测的中间产物，也直接给下游湿实验提供了可验证的线索。
 
-- **知识来源**：从 KEGG、Reactome、STRING 等公开数据库提取蛋白质-蛋白质相互作用（PPI）网络、信号通路拓扑、基因调控关系等多层次生物学知识
-- **知识表示**：将这些关系结构化为 LLM 可处理的格式（文本化的通路描述或图谱表示），使 LLM 能够在推理时查询和利用这些先验约束
-- **设计动机**：不是简单地用数据训练端到端模型，而是将数十年积累的生物学知识显式注入推理过程，使得每个预测步骤都有明确的生物学依据
+**3. 数据高效的工作模式：核心能力来自知识而非数据规模。**
 
-### 关键设计二：LLM 驱动的迭代信号级联推理
+端到端方法要靠大规模匹配的（扰动条件, 基因表达变化）数据对才能学出映射，数据一稀缺就失灵。VCWorld 的推理能力主要来自结构化知识图谱加 LLM 先验，训练数据退居二线，只承担校准和验证的角色。正因为不把性能押在数据规模上，模型在罕见细胞类型、新型药物扰动这类数据稀缺场景里仍能给出有效预测——这也是知识驱动范式相对数据驱动范式最实际的优势。
 
-VCWorld 的核心推理引擎利用 LLM 模拟扰动在细胞内的传播：
+### 一个完整示例
 
-- **迭代推理过程**：模型逐步推断信号传导链条——药物与靶点蛋白结合 → 激活/抑制下游信号通路 → 影响转录因子活性 → 导致特定基因表达上调/下调
-- **LLM 作为推理引擎**：LLM 在海量生物医学文献上训练后隐含了丰富的分子生物学知识，VCWorld 利用这种隐式知识来"补全"知识图谱中缺失的交互关系，并评估每条信号传导路径的合理性
-- **可追溯的机制路径**：每一步推理都产生明确的因果假说（如"Drug X 抑制 Protein A → Protein A 无法磷酸化 Protein B → 通路 C 被阻断 → 基因 D 下调"），为下游实验验证提供直接线索
-
-### 关键设计三：数据高效的工作模式
-
-VCWorld 的知识驱动范式使其对训练数据的需求大幅降低：
-
-- 传统方法需要大规模匹配的（扰动条件, 基因表达变化）数据对来训练端到端映射
-- VCWorld 的核心推理能力来自结构化知识图谱 + LLM 先验知识，训练数据主要用于校准和验证
-- 这一特性使 VCWorld 在数据稀缺的场景（罕见细胞类型、新型药物扰动）中仍能保持有效预测
+以一次药物扰动预测为例：输入是某靶向激酶抑制剂加上目标细胞类型，以及对应的知识图谱子图。VCWorld 先做靶点识别，从图谱中定位药物结合的靶点蛋白；随后进入迭代推理，第一格推断该靶点被抑制后无法磷酸化其下游底物，第二格沿 PPI 边推断相关信号通路因此被阻断，遇到图谱缺边时由 LLM 依据文献先验补上中间环节并判断合理性；逐格推进直到信号抵达转录调控层，推断出哪些转录因子活性改变、进而哪些基因被上调或下调。最终输出既包含逐基因的表达变化预测，也包含这一整条带因果标注的信号级联路径，研究者可以顺着每一格审查推理逻辑、定位可疑环节。
 
 ## 实验关键数据
 
@@ -137,10 +123,10 @@ VCWorld 在药物扰动预测基准上达到最先进性能，同时是唯一提
 ## 相关论文
 
 - [\[ACL 2026\] AROMA: Augmented Reasoning Over a Multimodal Architecture for Virtual Cell Genetic Perturbation Modeling](../../ACL2026/computational_biology/aroma_augmented_reasoning_over_a_multimodal_architecture_for_virtual_cell_geneti.md)
+- [\[ICLR 2026\] Controllable Sequence Editing for Biological and Clinical Trajectories](controllable_sequence_editing_for_biological_and_clinical_trajectories.md)
 - [\[NeurIPS 2025\] scPilot: Large Language Model Reasoning Toward Automated Single-Cell Analysis and Discovery](../../NeurIPS2025/computational_biology/scpilot_large_language_model_reasoning_toward_automated_single-cell_analysis_and.md)
 - [\[ICCV 2025\] Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines](../../ICCV2025/computational_biology/integrating_biological_knowledge_for_robust_microscopy_image_profiling_on_de_nov.md)
 - [\[CVPR 2026\] HINGE: Adapting a Pre-trained Single-Cell Foundation Model to Spatial Gene Expression Generation from Histology Images](../../CVPR2026/computational_biology/adapting_a_pre-trained_single-cell_foundation_model_to_spatial_gene_expression_g.md)
-- [\[NeurIPS 2025\] Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models](../../NeurIPS2025/computational_biology/consistent_sampling_and_simulation_molecular_dynamics_with_energy-based_diffusio.md)
 
 </div>
 

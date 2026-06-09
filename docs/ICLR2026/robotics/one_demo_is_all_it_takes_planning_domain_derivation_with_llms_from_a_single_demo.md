@@ -42,37 +42,29 @@ tags:
 
 ## 方法详解
 
-### 整体流程
+### 整体框架
 
-PDDLLM 的输入是一个演示轨迹 $\tau_{demo}$（连续环境状态序列）及其任务描述 $T_{demo}$（简短自然语言描述），输出是一个可执行的 PDDL 规划域。新任务通过符号求解器生成任务计划，再由 LoCA 自动对接运动规划器产生可执行轨迹：
+PDDLLM 接收一个演示轨迹 $\tau_{demo}$（连续环境状态序列）和一句任务描述 $T_{demo}$，先用物理仿真“想象”出一批物理可行的谓词，再把演示压到逻辑空间提炼出 PDDL 动作，最后由逻辑约束适配器 LoCA 把符号动作自动翻译成运动规划器能执行的约束问题。推理期，新任务的初末状态交给符号求解器排出计划，再逐步对接运动规划：
 
 $$\tilde{a}^{(0)}, \tilde{a}^{(1)}, \ldots = \text{MotionPlanner}(\text{PDDLLM}(\mathcal{S}_{new}^{(init)}, \mathcal{S}_{new}^{(goal)}, T_{demo}, \tau_{demo}))$$
 
-### 关键设计 1：谓词想象 (Predicate Imagination)
+### 关键设计
 
-- **功能**：从物理仿真的 roll-out 中自动生成有意义的逻辑谓词，分为一阶谓词和高阶谓词两个阶段。
-- **核心思路**：
-    - **Stage 1 — 一阶谓词**：在特征空间（位置 $(x,y,z)$、颜色 $(r,g,b)$ 等）中均匀采样物体状态 → 物理仿真器验证其物理可行性（过滤掉穿透、悬浮等不合理状态）→ 将连续特征空间离散化为子区间 → LLM 从可行子空间中总结出有语义意义的谓词（如 `(is_on ?o1 ?o2)`、`(smaller ?o1 ?o2)`），并标注与当前任务的相关性。每个谓词附带其对应的子空间边界作为**物理约束**，用于后续运动规划中判定谓词真值。
-    - **Stage 2 — 高阶谓词**：通过逻辑算子（否定 $\neg$）和量词（全称量词 $\forall$、存在量词 $\exists$）组合一阶谓词，系统性地派生更复杂的关系表达式。例如 `(is_on ?o1 ?o2)` → `(not_is_on ?o1 ?o2)` → `(∀_o1_not_is_on ?o1 ?o2)`（o2 在最顶部）。
-- **设计动机**：纯 LLM 想象的谓词可能物理不合理（如漂浮的"is_on"关系）。仿真验证确保每个谓词都有物理可行的基础。离散化使得 LLM 能从散乱的连续空间中提取稳定的关系模式，并为运动规划提供可计算的约束边界。
+**1. 谓词想象：让仿真替 LLM 把关物理可行性。**
 
-### 关键设计 2：动作发明 (Action Invention)
+纯靠 LLM 凭空想谓词，常会编出物理上站不住脚的关系（比如悬空的 `(is_on)`），所以这里把谓词生成拆成两阶段、并交给仿真器兜底。一阶谓词阶段，先在特征空间（位置 $(x,y,z)$、颜色 $(r,g,b)$ 等）里均匀采样物体状态，让物理仿真器逐一验证可行性，把穿透、悬浮等不合理状态过滤掉，再把连续特征空间按粒度 $u_f$ 离散成子区间；LLM 只需从这些已被验证可行的子空间里总结出有语义的谓词（如 `(is_on ?o1 ?o2)`、`(smaller ?o1 ?o2)`）并标注任务相关性。关键在于，每个谓词都附带它对应的子空间边界作为**物理约束**，这份约束后面直接喂给运动规划器判定谓词真值。高阶谓词阶段则用否定 $\neg$ 与量词 $\forall$、$\exists$ 组合一阶谓词，系统地派生更复杂的关系，例如 `(is_on ?o1 ?o2)` $\to$ `(not_is_on ?o1 ?o2)` $\to$ `(∀_o1_not_is_on ?o1 ?o2)`（表示 o2 在最顶部）。离散化加仿真验证这一组合，让 LLM 不再面对散乱的连续空间，而是从稳定可行的模式里抽象谓词，同时顺手给出了可计算的约束边界。
 
-- **功能**：从演示轨迹中自动提取 PDDL 动作（包含前置条件和效果）。
-- **核心思路**：用已有谓词库将演示轨迹的连续状态 $\tau_{demo}$ 投影到逻辑空间 $\tau_{demo}^{logic}$，使超过 1000 步的连续轨迹被压缩为仅数步的逻辑状态转移。提取每次逻辑状态转移的前后状态对，作为 prompt 发送给 LLM，由 LLM 总结出 PDDL 格式的动作定义（前置条件 $\mathcal{P}_{pre}$ 和效果 $\mathcal{P}_{eff}$）。
-- **设计动机**：在逻辑空间中识别模式远比在连续空间中简单——长轨迹被极大压缩，LLM 只需处理关键状态变化。这一设计将连续操纵问题转化为离散的模式识别问题，充分发挥 LLM 的模式总结能力。
+**2. 动作发明：先把长轨迹压成逻辑跳变，再让 LLM 读模式。**
 
-### 关键设计 3：逻辑约束适配器 LoCA (Logical Constraint Adapter)
+演示轨迹动辄上千步连续状态，直接让 LLM 在连续空间里找动作边界既慢又不准。这里的思路是用已生成的谓词库把连续轨迹 $\tau_{demo}$ 投影到逻辑空间 $\tau_{demo}^{logic}$——超过 1000 步的轨迹被压缩成寥寥数步逻辑状态转移。随后抽取每次转移的前后状态对作为 prompt，让 LLM 据此总结出 PDDL 动作定义，即前置条件 $\mathcal{P}_{pre}$ 和效果 $\mathcal{P}_{eff}$。这一步把连续操纵问题转化成离散的模式识别问题：LLM 只面对关键的状态跳变，正好发挥它擅长归纳模式的长处。
 
-- **功能**：将生成的 PDDL 规划域与底层运动规划器全自动对接。
-- **核心思路**：对任务计划中的每个逻辑动作，LoCA 自动提取其效果集 $\mathcal{P}_{eff}$ 中所有一阶谓词的物理约束（表示为数学不等式），将这些约束依序施加到运动规划器，将每个逻辑动作转化为标准的**约束运动规划问题**。生成的运动轨迹保证满足动作的语义含义。
-- **设计动机**：传统 TAMP 中，符号动作与运动规划的对接需要手动编码数学约束（Toussaint, 2015），这是最繁琐的人工环节之一。LoCA 利用谓词想象阶段已经生成的物理约束信息，无需额外的人工映射。该框架也兼容 VLA 模型——逻辑动作可直接作为 VLA 的 prompt 条件。
+**3. 逻辑约束适配器 LoCA：自动把符号动作翻译成运动约束。**
 
-### 关键设计 4：并行提示与反馈 (Parallel Prompting with Feedback)
+传统 TAMP 里，符号动作和运动规划的对接要靠人手把语义编码成数学约束（Toussaint, 2015），是最繁琐的工程环节。LoCA 直接复用谓词想象阶段已经生成好的物理约束：对任务计划里的每个逻辑动作，它自动提取效果集 $\mathcal{P}_{eff}$ 中所有一阶谓词对应的物理约束（数学不等式形式），依序施加到运动规划器，把单个逻辑动作转化成标准的**约束运动规划问题**，从而保证产出的轨迹满足该动作的语义。因为约束信息是现成的，整个对接无需任何额外人工映射；这套机制也兼容 VLA 模型——逻辑动作可直接作为 VLA 的 prompt 条件。
 
-- **功能**：提高 PDDL 域生成的鲁棒性。
-- **核心思路**：同一演示并行生成多个候选 PDDL 域 → 运行时验证（检查语法、完整性、可达性）→ 淘汰失败候选 → 多数表决选最优。实验发现并行提示数超过 5 后，最终域的正确性趋于稳定。
-- **设计动机**：LLM 输出具有随机性，单次生成可能出错。并行+反馈的策略以较低成本显著提升可靠性。
+**4. 并行提示与反馈：用冗余采样压住 LLM 的随机性。**
+
+单次 LLM 生成带随机性，一次出错整套域就废了。做法是同一演示并行生成多个候选 PDDL 域，经运行时验证（语法、完整性、可达性检查）淘汰失败候选，再多数表决选出最优域。实验发现并行提示数超过 5 之后，最终域的正确性就趋于稳定，因此用较低的额外开销换来了显著更高的可靠性。
 
 ## 实验结果
 
@@ -174,9 +166,9 @@ $$\tilde{a}^{(0)}, \tilde{a}^{(1)}, \ldots = \text{MotionPlanner}(\text{PDDLLM}(
 
 - [\[ICLR 2026\] VLBiMan: Vision-Language Anchored One-Shot Demonstration Enables Generalizable Bimanual Robotic Manipulation](vlbiman_vision-language_anchored_one-shot_demonstration_enables_generalizable_bi.md)
 - [\[CVPR 2026\] Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning](../../CVPR2026/robotics/cross-domain_demo-to-code_via_neurosymbolic_counterfactual_reasoning.md)
-- [\[ICLR 2026\] What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering](whats_the_plan_metrics_for_implicit_planning_in_llms_and_their_application_to_rh.md)
 - [\[ICLR 2026\] All-day Multi-scenes Lifelong Vision-and-Language Navigation with Tucker Adaptation](all-day_multi-scenes_lifelong_vision-and-language_navigation_with_tucker_adaptat.md)
-- [\[ICLR 2026\] Tracing and Reversing Edits in LLMs](tracing_and_reversing_edits_in_llms.md)
+- [\[ICLR 2026\] Statistical Guarantees for Offline Domain Randomization](statistical_guarantees_for_offline_domain_randomization.md)
+- [\[ICLR 2026\] TwinVLA: Data-Efficient Bimanual Manipulation with Twin Single-Arm Vision-Language-Action Models](twinvla_data-efficient_bimanual_manipulation_with_twin_single-arm_vision-languag.md)
 
 </div>
 

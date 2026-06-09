@@ -41,51 +41,27 @@ tags:
 
 ## 方法详解
 
-### 问题设置
+### 整体框架
 
-- $K$ 选项多选题，每题有正确标签 $Y \in \{1, \ldots, K\}$
-- **互补标签**：从非正确选项中均匀随机采样一个"错误选项" $\bar{Y}$
-$$p(\bar{Y}=k|Y) = \frac{1}{K-1}, \quad \forall k \neq Y$$
-- **数据收集协议**：$K$ 个标注者各负责一个类别，随机选一个标注者询问"答案是第 $k$ 类吗？"
-    - 回答"是"→ 普通标签
-    - 回答"否"→ 互补标签
+整套方法把"没人能给出正确答案、但每个专家都能否定自己领域的错误选项"这一事实，转化为一个统计估计问题：用专家提供的互补标签构造准确率 $A$ 的无偏估计器，再把它与少量普通标签融合，最后让这个估计器同时充当 AI 评估指标和 agent 训练的适应度信号。
 
-### 互补标签估计器
+### 关键设计
 
-定义 $W = \mathbb{I}\{\hat{Y} \neq \bar{Y}\}$（模型预测≠互补标签），$\hat{q} = \frac{1}{n_c}\sum_{i=1}^{n_c} w_i$
+**1. 互补标签的数据收集协议：把分区专家的弱否定信号变成可建模的随机变量。**
 
-**Corollary 1 (无偏估计)**：
-$$\hat{A}_{\text{comp}} = (K-1)\hat{q} - (K-2)$$
+任务设定为 $K$ 选项多选题，每题有未知的正确标签 $Y \in \{1, \ldots, K\}$。系统让 $K$ 个标注者各自负责一个类别，对一道题随机挑一位标注者询问"答案是第 $k$ 类吗？"：若回答"是"就得到一个普通标签，若回答"否"则得到一个**互补标签** $\bar{Y}$——一个被确认错误的选项。关键假设是互补标签在所有非正确选项上均匀分布，即 $p(\bar{Y}=k|Y) = \frac{1}{K-1}$ 对所有 $k \neq Y$ 成立。这个协议只要求专家做二元判断而非给出答案，因此即便任务超出任何单个专家的能力，仍能稳定收集到大量可靠信号。
 
-是准确率 $A$ 的无偏估计。
+**2. 互补标签无偏估计器：从"预测没撞上错误选项"反推准确率。**
 
-**方差分析**：
-$$\text{Var}(\hat{A}_{\text{comp}}) = \frac{(A+K-2)(1-A)}{n_c}$$
+定义指示变量 $W = \mathbb{I}\{\hat{Y} \neq \bar{Y}\}$，即模型预测 $\hat{Y}$ 与互补标签不重合，并取其经验均值 $\hat{q} = \frac{1}{n_c}\sum_{i=1}^{n_c} w_i$。由于互补标签均匀采样自错误选项，$\hat q$ 与真实准确率之间存在线性关系，Corollary 1 给出无偏估计 $\hat{A}_{\text{comp}} = (K-1)\hat{q} - (K-2)$。其方差为 $\text{Var}(\hat{A}_{\text{comp}}) = \frac{(A+K-2)(1-A)}{n_c}$，由此可解出要与 $n_o$ 个普通标签达到同等方差所需的互补标签量 $n_c = \left(1 + \frac{K-2}{A}\right) n_o$——准确率越高，需要补的互补标签越少，使弱信号在高性能模型上反而更经济。
 
-**匹配方差所需样本量**：
-$$n_c = \left(1 + \frac{K-2}{A}\right) n_o$$
+**3. 混合估计器：用普通标签和互补标签互补降方差。**
 
-准确率越高，所需的额外互补标签越少。
+当两种标签同时存在时，方法把它们融合成更紧的估计。逆方差加权（IVW）按各自方差的倒数分配权重 $\hat{A}_{\text{IVW}} = \hat{w}\hat{A}_{\text{ord}} + (1-\hat{w})\hat{A}_{\text{comp}}$，其中 $\hat{w} = \frac{\widehat{\text{Var}}(\hat{A}_{\text{comp}})}{\widehat{\text{Var}}(\hat{A}_{\text{ord}}) + \widehat{\text{Var}}(\hat{A}_{\text{comp}})}$，让方差更小的一方占主导。最大似然（ML）则联合两类观测写出对数似然，由于它对 $A$ 是二次型，存在闭合解 $\hat{A}_{\text{ML}} = \frac{-\beta + \sqrt{\beta^2 - 4\alpha\gamma}}{2\alpha}$，其中 $\alpha = N$、$\beta = (K-2)(T_o+T_c) + (K-3)S_o - S_c$、$\gamma = -(K-2)S_o$。两者都以闭式给出，避免迭代优化即可拿到接近全量标注的精度。
 
-### 混合估计器
+**4. 有限样本偏差保证：给估计误差套上可计算的置信带。**
 
-**逆方差加权 (IVW)**：
-$$\hat{A}_{\text{IVW}} = \hat{w}\hat{A}_{\text{ord}} + (1-\hat{w})\hat{A}_{\text{comp}}$$
-
-$$\hat{w} = \frac{\widehat{\text{Var}}(\hat{A}_{\text{comp}})}{\widehat{\text{Var}}(\hat{A}_{\text{ord}}) + \widehat{\text{Var}}(\hat{A}_{\text{comp}})}$$
-
-**最大似然 (ML)**：联合对数似然为二次方程，闭合解：
-$$\hat{A}_{\text{ML}} = \frac{-\beta + \sqrt{\beta^2 - 4\alpha\gamma}}{2\alpha}$$
-
-其中 $\alpha = N$，$\beta = (K-2)(T_o+T_c) + (K-3)S_o - S_c$，$\gamma = -(K-2)S_o$。
-
-### 有限样本偏差保证
-
-**Theorem 2 (互补标签估计器)** — Hoeffding + Bernstein 最小值：
-$$|\hat{A}_{\text{comp}} - A| \leq (K-1)\min\left\{\sqrt{\frac{\log(2/\delta)}{2n_c}}, \sqrt{\frac{2\hat{q}(1-\hat{q})}{n_c-1}\log\frac{4}{\delta}} + \frac{7\log(4/\delta)}{3(n_c-1)}\right\}$$
-
-**Theorem 4 (混合估计器)** — Bernstein 型 PAC 界：
-$$|\hat{A}_{\text{mix}} - A| \leq \sqrt{2v\log\frac{2}{\delta}} + c\log\frac{2}{\delta}$$
+为了让估计器能放心用于评估和训练，方法给出非渐近的 PAC 型误差界。对互补标签估计器，Theorem 2 同时取 Hoeffding 界和经验 Bernstein 界的较小者 $|\hat{A}_{\text{comp}} - A| \leq (K-1)\min\left\{\sqrt{\frac{\log(2/\delta)}{2n_c}}, \sqrt{\frac{2\hat{q}(1-\hat{q})}{n_c-1}\log\frac{4}{\delta}} + \frac{7\log(4/\delta)}{3(n_c-1)}\right\}$，在低方差区域自动收紧。对混合估计器，Theorem 4 给出 Bernstein 型界 $|\hat{A}_{\text{mix}} - A| \leq \sqrt{2v\log\frac{2}{\delta}} + c\log\frac{2}{\delta}$，使融合后的估计同样带有可验证的置信保证。
 
 ## 实验关键数据
 
@@ -158,8 +134,8 @@ $$|\hat{A}_{\text{mix}} - A| \leq \sqrt{2v\log\frac{2}{\delta}} + c\log\frac{2}{
 - [\[ACL 2026\] SynthAgent: Adapting Web Agents with Synthetic Supervision](../../ACL2026/llm_agent/synthagent_adapting_web_agents_with_synthetic_supervision.md)
 - [\[ICLR 2026\] AgentSynth: Scalable Task Generation for Generalist Computer-Use Agents](agentsynth_scalable_task_generation_for_generalist_computer-use_agents.md)
 - [\[ICLR 2026\] ToolWeaver: Weaving Collaborative Semantics for Scalable Tool Use in Large Language Models](toolweaver_weaving_collaborative_semantics_for_scalable_tool_use_in_large_langua.md)
-- [\[ACL 2026\] Waking Up Blind: Cold-Start Optimization of Supervision-Free Agentic Trajectories](../../ACL2026/llm_agent/waking_up_blind_cold-start_optimization_of_supervision-free_agentic_trajectories.md)
 - [\[ACL 2026\] Towards Scalable Lightweight GUI Agents via Multi-role Orchestration](../../ACL2026/llm_agent/towards_scalable_lightweight_gui_agents_via_multi-role_orchestration.md)
+- [\[ACL 2026\] Waking Up Blind: Cold-Start Optimization of Supervision-Free Agentic Trajectories](../../ACL2026/llm_agent/waking_up_blind_cold-start_optimization_of_supervision-free_agentic_trajectories.md)
 
 </div>
 

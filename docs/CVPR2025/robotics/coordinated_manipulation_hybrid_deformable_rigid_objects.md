@@ -129,11 +129,11 @@ tags:
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Automaton Constrained Q-Learning](../../NeurIPS2025/robotics/automaton_constrained_q-learning.md)
+- [\[ICML 2025\] Action-Constrained Imitation Learning](../../ICML2025/robotics/action-constrained_imitation_learning.md)
 - [\[CVPR 2025\] PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments](panoaffordancenet_towards_holistic_affordance_grounding_in_360_indoor_environmen.md)
 - [\[CVPR 2026\] ForceVLA2: Unleashing Hybrid Force-Position Control with Force Awareness for Contact-Rich Manipulation](../../CVPR2026/robotics/forcevla2_unleashing_hybrid_force-position_control_with_force_awareness_for_cont.md)
-- [\[ECCV 2024\] GraspXL: Generating Grasping Motions for Diverse Objects at Scale](../../ECCV2024/robotics/graspxl_generating_grasping_motions_for_diverse_objects_at_scale.md)
-- [\[ICML 2026\] DLO-Lab: Benchmarking Deformable Linear Object Manipulations with Differentiable Physics](../../ICML2026/robotics/dlo-lab_benchmarking_deformable_linear_object_manipulations_with_differentiable_.md)
-- [\[ICCV 2025\] Self-supervised Learning of Hybrid Part-aware 3D Representations of 2D Gaussians and Superquadrics](../../ICCV2025/robotics/self-supervised_learning_of_hybrid_part-aware_3d_representations_of_2d_gaussians.md)
+- [\[NeurIPS 2025\] SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning](../../NeurIPS2025/robotics/safevla_towards_safety_alignment_of_vision-language-action_model_via_constrained.md)
 
 </div>
 

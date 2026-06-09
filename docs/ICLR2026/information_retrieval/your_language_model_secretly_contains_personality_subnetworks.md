@@ -34,49 +34,17 @@ tags:
 
 ### 整体框架
 
-给定预训练 LLM 和少量人格校准数据 → 收集激活统计量 → 构建二值掩码 → 隔离人格子网络 → 推理时应用掩码实现人格开关
+方法把"人格切换"从外部干预问题改写成一个内在的子网络选择问题：对每种人格只收集少量校准数据，用激活统计量在预训练 LLM 中圈出一个稀疏的二值掩码，推理时把掩码乘到权重上就完成了人格开关，全程不更新任何参数。整套流程围绕"如何打分挑通道"和"如何让对立人格互不重叠"两件事展开。
 
-### 问题定义
+### 关键设计
 
-对每个人格 $p \in \mathcal{P}$，假设有小规模校准集 $\mathcal{D}_p = \{(x_i^p, y_i^p)\}_{i=1}^{N_p}$，目标是找到最大化人格对齐的掩码：
+**1. 稀疏掩码目标：把人格定义成一组该保留的连接。** 对每个人格 $p \in \mathcal{P}$，作者假设手上有小规模校准集 $\mathcal{D}_p = \{(x_i^p, y_i^p)\}_{i=1}^{N_p}$，要找的是一张二值掩码 $\mathbf{M}^p$，让被它选中的子网络在该人格数据上的对齐度最高：$\max_{\mathbf{M}^p} \mathbb{E}_{(x,y) \sim \mathcal{D}_p} [\log P_{\mathcal{M}_p}(y|x)]$。同时施加稀疏约束 $\|\mathbf{M}^p\|_0 \leq (1 - \rho) d$，其中 $\rho$ 是目标稀疏率。这一步把"是否需要外部知识"这个开放问题，收敛成"在固定参数里挑一个子集"的可操作目标，也直接呼应了 Lottery Ticket 的中奖彩票视角。
 
-$$\max_{\mathbf{M}^p} \mathbb{E}_{(x,y) \sim \mathcal{D}_p} [\log P_{\mathcal{M}_p}(y|x)]$$
+**2. 激活引导重要性打分：用人格数据决定哪些通道值得留。** 单看权重幅度无法区分人格，所以作者在校准数据上统计每个通道的平均激活强度 $\mathbf{A}_p^{(l)}[j] = \mathbb{E}_{(x,y) \sim \mathcal{D}_p} [|\mathbf{h}_j^{(l)}(x)|]$，再把它和权重幅度相乘得到重要性分数 $S_{ij}^p = |w_{ij}| \cdot \mathbf{A}_p^{(l)}[j]$。对每个输出通道 $i$ 保留分数 Top-K 的输入通道，就得到该人格的掩码 $\mathbf{M}^p$。这种"权重×激活"的打分继承自 Wanda，好处是只需前向传播采集统计量、不需任何梯度，因此从校准到出掩码只是分钟级开销。
 
-其中 $\|\mathbf{M}^p\|_0 \leq (1 - \rho) d$ 为稀疏约束，$\rho$ 为目标稀疏率。
+**3. 对比剪枝：逼着对立人格分到不同参数上。** 单独给内向和外向分别打分时，两张掩码往往高度重叠，切换效果就被稀释。对比剪枝改成"看两个人格的差异"来打分，从而把参数推向更分离的方向，作者给了两个变体。Contrastive-Wanda 用激活统计的标准化差异决定保留与否：$S_{ij}^p = |w_{ij}| \cdot \phi\left(\frac{\mu_{ij}^{p_+} - \mu_{ij}^{p_-}}{\sqrt{\sigma_{ij}^{p_+} + \sigma_{ij}^{p_-}} + \varepsilon}\right)$，差异越显著的连接越被强调。Contrastive-Sparse 则先把分数按行归一化 $\tilde{S}_{ij}^p = \frac{S_{ij}^p}{\sum_k S_{ik}^p}$，再算两人格的归一化分数之差 $C_{ij} = |\tilde{S}_{ij}^{p_+} - \tilde{S}_{ij}^{p_-}|$，并把每个参数判给得分更高的那一方，从而直接构造出两张不相交的掩码 $\mathbf{M}^{p_+}, \mathbf{M}^{p_-}$。这一设计是后面 AI Persona 上对比剪枝大幅领先普通 Wanda 的直接原因。
 
-### 基于激活的重要性打分
-
-对每层 $l$，收集人格校准数据上的激活统计量：
-
-$$\mathbf{A}_p^{(l)}[j] = \mathbb{E}_{(x,y) \sim \mathcal{D}_p} [|\mathbf{h}_j^{(l)}(x)|]$$
-
-结合权重幅度计算重要性分数：
-
-$$S_{ij}^p = |w_{ij}| \cdot \mathbf{A}_p^{(l)}[j]$$
-
-对每个输出通道 $i$，保留 Top-K 个最重要的输入通道，得到二值掩码 $\mathbf{M}^p$。
-
-### 对比剪枝（Contrastive Pruning）
-
-针对对立人格对（如内向/外向），标准剪枝可能产生高度重叠的掩码。对比剪枝通过差异化激活模式最大化参数分离：
-
-**Contrastive-Wanda 变体**：
-
-$$S_{ij}^p = |w_{ij}| \cdot \phi\left(\frac{\mu_{ij}^{p_+} - \mu_{ij}^{p_-}}{\sqrt{\sigma_{ij}^{p_+} + \sigma_{ij}^{p_-}} + \varepsilon}\right)$$
-
-**Contrastive-Sparse 变体**：
-
-$$C_{ij} = |\tilde{S}_{ij}^{p_+} - \tilde{S}_{ij}^{p_-}|, \quad \tilde{S}_{ij}^p = \frac{S_{ij}^p}{\sum_k S_{ik}^p}$$
-
-将每个参数分配给分数更大的人格，构建不相交掩码 $\mathbf{M}^{p_+}, \mathbf{M}^{p_-}$。
-
-### 动态掩码推理
-
-推理时直接应用掩码，无需修改原始权重：
-
-$$\mathbf{y} = (\mathbf{W} \odot \mathbf{M}^p) \mathbf{x} + \mathbf{b}$$
-
-支持可选的软门控 $G = \mathbf{M}^p + \gamma(1 - \mathbf{M}^p)$，$\gamma = 0$ 即标准硬掩码。
+**4. 动态掩码推理：开关人格不碰原始权重。** 推理时掩码以逐元素相乘的方式作用在权重上 $\mathbf{y} = (\mathbf{W} \odot \mathbf{M}^p) \mathbf{x} + \mathbf{b}$，原始权重保持不动，因此一个模型可以随时换上不同人格的掩码而无需重新加载或微调。作者还提供可选的软门控 $G = \mathbf{M}^p + \gamma(1 - \mathbf{M}^p)$，让被剪掉的连接保留 $\gamma$ 倍的残余而非彻底归零，当 $\gamma = 0$ 时退化为标准硬掩码，方便在"人格强度"和"通用能力"之间做权衡。
 
 ## 实验
 

@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **Frame-wise VAE**:
+**1. Frame-wise VAE：先把雷达帧压到低维潜空间，让生成模型负担得起。**
 
-    - 功能：将单帧雷达图从高维像素空间压缩到低维潜表示
-    - 核心思路：层次编码器-解码器，含残差块和自注意力，用L1重建+KL散度+PatchGAN对抗损失训练
-    - 设计动机：降低生成模型的计算维度，与潜空间扩散模型思路一致
+直接在原始像素空间上训练概率生成模型代价过高，所以 FlowCast 沿用潜空间扩散模型的思路，先用一个逐帧的 VAE 把每一帧雷达图从高维像素压缩到低维潜表示。编码器-解码器是层次结构，内部带残差块和自注意力，训练时联合三项损失：L1 重建保证像素保真、KL 散度（权重 1e-4）约束潜空间分布、PatchGAN 对抗损失逼出清晰的高频细节。压缩之后，后续的 CFM 只需在小得多的潜空间里学动力学，采样和训练成本都大幅降低。
 
-2. **Independent CFM (I-CFM) 训练**:
+**2. Independent CFM (I-CFM) 训练：用直线传输路径替代扩散的弯曲概率流，换取少步高质量采样。**
 
-    - 功能：在潜空间中训练向量场 $v_\theta$，学习从高斯噪声到雷达潜表示的映射
-    - 核心思路：概率路径 $p_t(x_t|x_0,x_1) = \mathcal{N}((1-t)x_0 + tx_1, \sigma^2 I)$，目标向量场 $u_t = x_1 - x_0$，训练损失 $\mathcal{L} = \|v_\theta(Z_t, t, Z_{\text{past}}) - u_t\|^2$。关键是 $\sigma > 0$ 提供正则化。
-    - 设计动机：相比rectified flows（$\sigma \to 0$），非零 $\sigma$ "加厚"训练轨迹，对高维数据更稳定。CFM的直线ODE轨迹比扩散模型的弯曲路径更适合少步采样。
+扩散模型推理慢的根源在于它的概率流路径是弯曲的，必须用很多小步去逼近。FlowCast 改用条件流匹配，在潜空间里训练一个向量场 $v_\theta$，直接学习从高斯噪声到雷达潜表示的传输。它采用独立耦合的概率路径
 
-3. **FlowCast U-Net架构**:
+$$p_t(x_t \mid x_0, x_1) = \mathcal{N}\big((1-t)x_0 + t x_1,\ \sigma^2 I\big),$$
 
-    - 功能：基于Earthformer的Cuboid Attention层构建时空U-Net，以流时间 $t$ 为条件
-    - 核心思路：编码器-解码器结构，核心构建块为Cuboid Attention（在3D立方体内做局部自注意力），时间步 $t$ 的嵌入注入每层
-    - 设计动机：Cuboid Attention高效处理局部时空动态，U-Net层次结构共享全局信息
+对应的目标向量场就是两端之差 $u_t = x_1 - x_0$，训练目标是让网络回归这个向量场：
+
+$$\mathcal{L} = \big\| v_\theta(Z_t, t, Z_{\text{past}}) - u_t \big\|^2.$$
+
+这里 $Z_{\text{past}}$ 是历史观测的潜表示，作为条件注入。关键在于 $\sigma > 0$：相比令 $\sigma \to 0$ 的 rectified flows，非零的 $\sigma$ 把训练轨迹"加厚"成一条带宽度的管道，对高维潜数据更稳定。由于学到的是近乎直线的 ODE 轨迹，推理时用很少的 Euler 步就能从噪声积分到数据，这正是它能在 20 步下仍逼近 50 步精度的原因。
+
+**3. FlowCast U-Net：用 Cuboid Attention 高效建模时空动态，并以流时间为条件。**
+
+向量场 $v_\theta$ 的骨架是一个时空 U-Net，核心构建块取自 Earthformer 的 Cuboid Attention——把特征切成 3D 立方体、在立方体内部做局部自注意力，从而高效捕捉雷达回波的局部时空演变，而 U-Net 的层次编码-解码结构则在不同尺度间共享全局信息。流时间 $t$ 的嵌入被注入每一层，让同一个网络在积分轨迹的不同位置都能给出正确的速度方向。
 
 ### 损失函数 / 训练策略
 - VAE: L1重建 + KL散度(权重1e-4) + PatchGAN对抗损失
@@ -125,10 +127,10 @@ SEVIR数据集（美国雷达），8成员集合预测：
 ## 相关论文
 
 - [\[ICLR 2026\] FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](flowcast_trajectory_forecasting_for_scalable_zero-cost_speculative_flow_matching.md)
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [\[CVPR 2026\] HazeMatching: Dehazing Light Microscopy Images with Guided Conditional Flow Matching](../../CVPR2026/image_generation/hazematching_dehazing_light_microscopy_images_with_guided_conditional_flow_match.md)
 - [\[NeurIPS 2025\] Improving Posterior Inference of Galaxy Properties with Image-Based Conditional Flow Matching](../../NeurIPS2025/image_generation/improving_posterior_inference_of_galaxy_properties_with_image-based_conditional_.md)
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
+- [\[ICLR 2026\] Purrception: Variational Flow Matching for Vector-Quantized Image Generation](purrception_variational_flow_matching_for_vector-quantized_image_generation.md)
 
 </div>
 

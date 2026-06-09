@@ -41,58 +41,19 @@ tags:
 
 ### 整体框架
 
-PDD 由两个核心组件构成：
-1. **PIE（Persona Importance Estimation）：** 自监督地动态量化人格属性的场景依赖重要性
-2. **PIA（Persona-Guided Inference-Time Alignment）：** 将重要性分数转化为加权多目标奖励，在推理时调制 token 生成概率
+PDD 把"人格跟随"拆成两件事并都放到推理时完成：先用 PIE（Persona Importance Estimation）自监督地估计当前场景下每个人格属性有多重要，再用 PIA（Persona-Guided Inference-Time Alignment）把这些重要性分数变成加权多目标奖励，逐 token 调制基模型的生成概率。整个流程不改一个参数，只靠模型自身的 log 概率差异工作。
 
 ### 关键设计
 
-**PIE：基于条件互信息的重要性估计**
+**1. PIE：用条件互信息量化属性的场景重要性。** 角色提示里往往堆了一长串人格属性，但同一句对话真正起作用的只有少数几个，传统方法对所有属性一视同仁正是动态适应性不足的根源。PDD 的做法是衡量"去掉某个属性后模型还会不会这么说"——形式化为模型输出 $Y$ 关于属性 $w_i$ 的条件互信息 $I(Y; w_i \mid T_i) = H(Y\mid T_i) - H(Y\mid w_i, T_i)$，其中 $T_i = T \setminus \{w_i\}$ 是移除属性 $w_i$ 后的提示。由于真实输出分布不可得，PIE 直接用基模型自己生成的响应 $G = \pi_\theta(T)$ 作代理，把重要性近似为一对 log 似然之差 $I_i \triangleq \log \frac{\Pr(G \mid T)}{\Pr(G \mid T_i)}$。直觉很清晰：删掉某属性后若生成概率骤降，说明它对当前场景举足轻重；理论上只要模型生成 $G$ 与 ground-truth $GT$ 的概率正相关，$I^{\text{model}}$ 就是真实互信息 $I^{\text{true}}$ 的可靠代理。这一步完全 zero-shot，不需要任何标注的行为数据，绕开了参数化方法的数据依赖。
 
-模型输出 $Y$ 关于某人格属性 $w_i$ 的条件互信息：
+**2. PIA：把重要性分数注入多目标奖励解码。** 拿到重要性后还需要让生成真正偏向重要属性。PIA 先为每个属性定义一个逐步奖励 $r_i(T, y_{<t}) = \sum_{t'=t-1}^{t} \log \frac{\pi_\theta(y_{t'} \mid T, y_{<t'})}{\pi_\theta(y_{t'} \mid T_i, y_{<t'})}$，本质是当前 token 在"有属性"与"无属性"两种条件下的对数概率比；再用重要性 $I_i$ 作权重聚合成多目标奖励 $R(T, y) = \sum_{i=1}^{n} I_i \cdot r_i(T, y)$。这样越重要的属性在解码时的话语权越大，实现了上下文感知而非一刀切的人格调制。实践中只对齐 top-2 最高重要性的属性，在保真度与计算开销间取平衡。
 
-$$I(Y; w_i | T_i) = H(Y|T_i) - H(Y|w_i, T_i)$$
-
-其中 $T_i = T \setminus \{w_i\}$（移除属性 $w_i$ 后的完整提示）。
-
-近似计算——使用模型生成的响应 $G = \pi_\theta(T)$ 代替不可用的 ground-truth：
-
-$$I_i \triangleq \log \frac{\Pr(G \mid T)}{\Pr(G \mid T_i)}$$
-
-核心洞察：
-- 直觉上，如果移除某人格属性后模型输出概率显著下降，则该属性对当前场景至关重要
-- 理论保证：若模型生成 $G$ 和 ground-truth $GT$ 的概率正相关，则 $I^{\text{model}}$ 是 $I^{\text{true}}$ 的可靠代理
-
-**PIA：多人格推理时对齐**
-
-每个属性 $w_i$ 的逐步奖励：
-
-$$r_i(T, y_{<t}) = \sum_{t'=t-1}^{t} \log \frac{\pi_\theta(y_{t'} | T, y_{<t'})}{\pi_\theta(y_{t'} | T_i, y_{<t'})}$$
-
-加权多目标奖励函数：
-
-$$R(T, y) = \sum_{i=1}^{n} I_i \cdot r_i(T, y)$$
-
-**归一化奖励（关键创新）：**
-
-$$R_{\text{norm}} = \frac{\sum_{i=1}^{n} I_i \cdot r_i(T, y)}{\|\mathbf{r}\|_2}$$
-
-由 Cauchy-Schwarz 不等式：$R_{\text{norm}} \leq \|\mathbf{I}\|_2$，等号成立当且仅当 $\mathbf{r} \propto \mathbf{I}$。因此最大化 $R_{\text{norm}}$ 会激励各属性奖励维持与重要性分数一致的排序。
+**3. 归一化奖励：保持属性的重要性排序。** 单纯加权求和有个隐患——某个属性奖励 $r_i$ 数值偏大就能主导整体，破坏掉 PIE 辛苦估出的重要性层次。PDD 用奖励向量的 L2 范数归一化解决：$R_{\text{norm}} = \frac{\sum_{i=1}^{n} I_i \cdot r_i(T, y)}{\|\mathbf{r}\|_2}$。由 Cauchy-Schwarz 不等式有 $R_{\text{norm}} \leq \|\mathbf{I}\|_2$，且等号当且仅当 $\mathbf{r} \propto \mathbf{I}$ 时成立。于是最大化 $R_{\text{norm}}$ 不再奖励某个维度的绝对大小，而是激励奖励向量 $\mathbf{r}$ 的方向去对齐重要性向量 $\mathbf{I}$，从而让各属性的奖励排序与其场景重要性保持一致——这正是消融里被验证为"至关重要"的设计点。
 
 ### 损失函数 / 训练策略
 
-**KL 约束 RL 目标：**
-
-$$\max_{p_r} \; \mathbb{E}_{p_r} \left[ \frac{\sum_{i=1}^{n} I_i r_i(T, y)}{\|\mathbf{r}\|_2} - \beta D_{\text{KL}}(p_r \| \pi_\theta) \right]$$
-
-**最优解（逐 token）：**
-
-$$p_r(y_t | T, y_{<t}) = \frac{1}{Z(T, y_{<t})} \pi_\theta(y_t | T, y_{<t}) \exp\left(\frac{1}{\beta} R_{\text{norm}}(T, y_{<t})\right)$$
-
-- **完全无需训练**：仅利用推理时 log 概率进行计算
-- 超参数 $\beta = 1.0$
-- 实践中对齐 top-2 最高重要性属性，平衡保真度和效率
-- greedy 解码生成响应
+PDD 不做任何训练，上述奖励是套进一个带 KL 约束的推理时 RL 目标里求解的：$\max_{p_r} \mathbb{E}_{p_r}\!\left[\frac{\sum_{i=1}^{n} I_i r_i(T, y)}{\|\mathbf{r}\|_2} - \beta D_{\text{KL}}(p_r \| \pi_\theta)\right]$，即在向归一化奖励靠拢的同时用 KL 项约束不偏离基模型 $\pi_\theta$ 太远。该目标有逐 token 闭式最优解 $p_r(y_t \mid T, y_{<t}) = \frac{1}{Z(T, y_{<t})} \pi_\theta(y_t \mid T, y_{<t}) \exp\!\left(\frac{1}{\beta} R_{\text{norm}}(T, y_{<t})\right)$，可直接理解为在基模型分布上乘一个由归一化奖励决定的指数重加权因子。整套计算只用到推理时的 log 概率，温度系数取 $\beta = 1.0$，配合 greedy 解码生成最终响应。
 
 ## 实验关键数据
 

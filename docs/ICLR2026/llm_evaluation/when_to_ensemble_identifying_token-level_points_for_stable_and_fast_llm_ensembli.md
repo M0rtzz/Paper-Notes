@@ -41,38 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SAFE 将模型分为 drafter（最强模型，负责生成）和 verifiers（其余模型，负责验证）。三步循环：(1) **Generate**——drafter 生成 n 个 token 的前瞻序列 → (2) **Verify**——verifiers 在单次前向传播中检查每个 token 是否需要集成（OOV-like 检查 + 共识检查）→ (3) **Ensemble**——仅在验证通过的 token 上执行集成，可选概率锐化。集成后 drafter 从集成 token 处恢复生成。
+
+SAFE 想回答的不是"如何集成"，而是"何时集成"：在一条长生成序列里，绝大多数 token 上各模型本就高度一致，强行逐 token 对齐既冒分词污染的风险又浪费算力。为此 SAFE 借用 speculative decoding 的 drafter-verifier 结构，把最强的那个模型设为 drafter（负责真正往下生成），其余模型设为 verifiers（只负责验证）。整个生成在一个三步循环里推进：**Generate** 阶段 drafter 一口气生成 n 个 token 的前瞻序列；**Verify** 阶段所有 verifier 在单次前向传播里同时检查这 n 个 token，逐个判断该位置是否值得集成（要同时过 OOV-like 检查和共识检查）；**Ensemble** 阶段只在被选中的少数 token 上真正构建集成分布、必要时做概率锐化，drafter 再从被替换的 token 处接着往下生成。因为前瞻加单次验证，verifier 的前向传播次数被大幅压下来，端到端延迟接近单模型。
 
 ### 关键设计
 
-1. **OOV-like Token 检测**:
+**1. OOV-like Token 检测：在出错之前就避开不安全的分词位置。**
 
-    - 功能：判断 drafter 的某个 token 是否会导致其他模型进入非法分词状态
-    - 核心思路：对每个 verifier $LLM_v$，用其分词器重新分词 drafter 的序列 $\mathbf{t}_{<i+n}$。如果 drafter 的 token $t_j$ 在 $LLM_v$ 的分词方案中"切断"了一个完整 token（即 $\text{Decode}(\mathbf{t}_{<j+1})$ 不与 $LLM_v$ 的任何分词边界对齐），则 $t_j$ 被标记为 OOV-like。此时**跳过** $t_{j+1}$ 位置的集成
-    - 设计动机：根本性解决 OOV-like 污染——不是在出错后修复，而是预防性地避免在不安全位置集成
+跨异构分词器集成最致命的隐患是：drafter 选出的某个 token，用 verifier 的分词器看可能正好"切断"了一个完整 token，逼着 verifier 在一个非法前缀上预测，概率分布随之损坏并吐出乱码（就是背景里 "Sofia" 被切成 "So"+"fia"、verifier 在 "So" 上输出 "Ã" 的情形）。SAFE 不在出错后补救，而是预防性地识别这种位置：对每个 verifier $LLM_v$，用它自己的分词器把 drafter 已生成的序列 $\mathbf{t}_{<i+n}$ 重新分词，若 drafter 的某个 token $t_j$ 的解码边界 $\text{Decode}(\mathbf{t}_{<j+1})$ 与 $LLM_v$ 的任何分词边界都对不齐，就把 $t_j$ 标记为 OOV-like，并直接**跳过** $t_{j+1}$ 位置的集成。这样集成只发生在所有 verifier 都能合法接续的位置上，从根上堵住了 OOV-like 污染在长序列中的累积放大。
 
-2. **集成分布验证（共识检测）**:
+**2. 集成分布验证：模型已经达成共识时就别再算一遍。**
 
-    - 功能：判断 drafter 的 token 是否已是集成分布的最大概率 token，如果是则跳过集成以提升效率
-    - 核心思路：两个充分条件（满足任一即可跳过）：
-        - **一致共识**：所有 verifier 的 argmax token 都与 drafter 的 token 一致
-        - **平均概率 > 0.5**：所有模型对该 token 的平均概率超过 0.5
-    - 设计动机：避免重复构建代价高昂的集成分布。论文证明这两个条件保证跳过的 token 确实是集成分布的最大概率 token（不损失准确性）
+即便分词安全，逐 token 构建集成分布依然昂贵，而长序列里大量 token 各模型本来就一致，集成纯属冗余。SAFE 给出两个充分条件，满足任一即可跳过集成：其一是**一致共识**——所有 verifier 的 argmax token 都和 drafter 选的 token 相同；其二是**平均概率 > 0.5**——所有模型对该 token 的平均概率超过 0.5。论文进一步证明，这两个条件都能保证被跳过的 token 确实就是完整集成分布的最大概率 token，因此跳过不损失准确性，只是省掉了一次代价高昂的分布构建。
 
-3. **概率锐化策略**:
+**3. 概率锐化策略：把被子词打散的概率质量重新聚拢。**
 
-    - 功能：当集成分布过于平滑（max < 0.5）时，集中概率质量到最可能的 token
-    - 核心思路：两种策略——(a) **启发式后缀合并**：将变体子词 token 的概率重分配给其共同前缀（如 "Sofia" 和 "SofiaŢ" 的概率合并到 "So"），仅对概率 > λ 的 drafter token 执行；(b) **几何均值替代算术均值**：强惩罚任何模型给予低概率的 token，集中在所有模型一致支持的 token 上
-    - 设计动机：异构分词导致同一词的概率被分散到多个子词 token 上，直接算术平均会产生过于平滑的分布
+异构分词会把同一个词的概率分散到多个子词 token 上，直接做算术平均会得到一个过于平滑的集成分布（max < 0.5），选不出明确的 token。SAFE 在这种平滑情形下做锐化，提供两条路线：一是**启发式后缀合并**，把同源变体子词的概率重分配回它们的共同前缀（如把 "Sofia" 和 "SofiaŢ" 的概率合并到 "So"），且只对概率 > λ 的 drafter token 触发；二是**用几何均值替代算术均值**，几何均值会强惩罚任何一个模型给出的低概率，从而把质量集中到所有模型一致支持的 token 上。实验里前缀合并更鲁棒、几何均值跨数据集不太稳定，因此前者是更稳妥的默认选项。
 
-4. **KV Cache 管理**:
+**4. KV Cache 管理：让集成替换后的缓存重新对齐。**
 
-    - 功能：在集成替换 token 后保持 KV cache 一致性
-    - 核心思路：每次集成步骤结束后更新所有模型的 KV cache，使其与集成后的输出对齐
-    - 设计动机：之前的方法因难以处理集成导致的 cache 不一致而放弃 KV cache，SAFE 是首个完整实现跨异构分词器集成的 KV cache 管理
+集成会把 drafter 原本生成的 token 替换掉，导致各模型的 KV cache 与新输出不一致——正因为这件事难处理，之前的跨分词器集成方法干脆放弃了 KV cache、退回全量重算。SAFE 在每个集成步骤结束后统一更新所有模型的 KV cache，使其与集成后的实际输出对齐，是首个把跨异构分词器集成的 KV cache 管理完整实现出来的工作，这也是它延迟能贴近单模型的重要原因。
 
 ### 损失函数 / 训练策略
-SAFE 是无训练的推理时方法，不涉及损失函数。是即插即用（plug-and-play）的框架，可与现有集成方法（UniTE、GaC 等）直接集成。
+
+SAFE 是无训练的推理时方法，不涉及任何损失函数，是即插即用（plug-and-play）的框架，可直接套在 UniTE、GaC 等现有集成方法之上。
 
 ## 实验关键数据
 
@@ -132,31 +124,6 @@ SAFE 是无训练的推理时方法，不涉及损失函数。是即插即用（
 - 写作质量: ⭐⭐⭐⭐ 问题动机清晰（图1/2非常直观），算法描述规范，但部分符号稍显复杂
 - 价值: ⭐⭐⭐⭐ 解决了 LLM 概率级集成在实际应用中的关键障碍，使跨异构分词器集成真正可用
 
-## 研究背景与动机
-1. **现有痛点**：概率级集成在长序列生成中失败——分词方案不匹配产生 OOV-like token 污染概率分布。且每个 token 都集成效率低下。
-2. **核心 idea**：仅在验证器不一致的位置集成，避免 OOV 污染和一致位置的冗余操作。
-
-## 方法详解
-- **Generate-Verify-Ensemble 循环**：起草者生成 n 个前瞻 token → 验证器识别集成点 → 选择性集成
-- **OOV-like 验证**：检查 token 边界是否与各验证器分词方案对齐
-- **集成分布验证**：一致共识 OR 平均概率>0.5 时跳过；过平滑时做概率锐化
-
-## 实验关键数据
-
-| 任务 | UniTE | UniTE+SAFE | 基线最好 |
-|------|-------|-----------|---------|
-| MATH500 | 59.6% | **77.6%** | 72.4% |
-| ARC-C | 87.97% | **90.78%** | 90.27% |
-
-## 关键发现
-- 选择性集成比全 token 集成更稳定且更高效
-- OOV-like token 是跨模型集成失败的根本原因
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐ 首次系统解决跨分词器集成问题
-- 实验充分度: ⭐⭐⭐⭐ MATH500+ARC-C验证
-- 价值: ⭐⭐⭐⭐ 多LLM协作的实用方案
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
@@ -164,8 +131,8 @@ SAFE 是无训练的推理时方法，不涉及损失函数。是即插即用（
 ## 相关论文
 
 - [\[ICLR 2026\] Enabling Fine-Grained Operating Points for Black-Box LLMs](enabling_fine-grained_operating_points_for_black-box_llms.md)
-- [\[ICLR 2026\] When Priors Backfire: On the Vulnerability of Unlearnable Examples to Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)
 - [\[ACL 2026\] HoWToBench: Holistic Evaluation for LLM's Capability in Human-level Writing using Tree of Writing](../../ACL2026/llm_evaluation/howtobench_holistic_evaluation_for_llms_capability_in_human-level_writing_using_.md)
+- [\[NeurIPS 2025\] Robust Hallucination Detection in LLMs via Adaptive Token Selection](../../NeurIPS2025/llm_evaluation/robust_hallucination_detection_in_llms_via_adaptive_token_selection.md)
 - [\[NeurIPS 2025\] HybridNorm: Towards Stable and Efficient Transformer Training via Hybrid Normalization](../../NeurIPS2025/llm_evaluation/hybridnorm_towards_stable_and_efficient_transformer_training_via_hybrid_normaliz.md)
 - [\[ACL 2026\] MultiFileTest: A Multi-File-Level LLM Unit Test Generation Benchmark and Impact of Error Fixing Mechanisms](../../ACL2026/llm_evaluation/multifiletest_a_multi-file-level_llm_unit_test_generation_benchmark_and_impact_o.md)
 

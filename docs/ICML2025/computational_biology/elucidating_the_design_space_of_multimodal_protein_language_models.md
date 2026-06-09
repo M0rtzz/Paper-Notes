@@ -143,11 +143,11 @@ DPLM-2.1将PDB测试集上的折叠RMSD从5.52大幅降至2.36，降幅达57%，
 
 ## 相关论文
 
-- [\[ICML 2025\] Steering Protein Language Models](steering_protein_language_models.md)
 - [\[ACL 2025\] Concept Bottleneck Language Models For Protein Design](../../ACL2025/computational_biology/concept_bottleneck_language_models_for_protein_design.md)
-- [\[ICML 2025\] CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
-- [\[ICML 2025\] Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [\[ICML 2025\] Steering Protein Language Models](steering_protein_language_models.md)
 - [\[CVPR 2025\] Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation](../../CVPR2025/computational_biology/multimodal_protein_language_models_for_enzyme_kinetic_parameters_from_substrate_.md)
+- [\[ICML 2025\] Flexibility-conditioned Protein Structure Design with Flow Matching](flexibility-conditioned_protein_structure_design_with_flow_matching.md)
+- [\[ICML 2025\] CFP-Gen: Combinatorial Functional Protein Generation via Diffusion Language Models](cfp-gen_combinatorial_functional_protein_generation_via_diffusion_language_model.md)
 
 </div>
 

@@ -39,57 +39,17 @@ tags:
 
 ## 方法详解
 
-### 因果建模基础
+### 整体框架
 
-基于 Pearl 的结构因果模型（SCM），定义四类因果变量：
+本文不训练新模型，而是搭建一套"诊断台"：以 Pearl 的结构因果模型（SCM）为骨架，把端到端的反事实推理拆成四个可独立测量的阶段——因果变量识别、因果图构建、反事实干预识别、结果推理，并在评估每个阶段时都喂入前置阶段的 ground-truth，从而把误差归因到具体某一步而非笼统判一个对错。配套的 benchmark 横跨文本、视觉-语言、数学符号、代码四种模态共 11 个数据集，再叠加工具增强与高级 elicitation 两类改进策略，分别针对显式与隐式变量的弱点。
 
-- **Exposure (X)**：施加于系统的处理/干预条件
-- **Covariate (Z)**：可能同时影响 X 和 Y 的预处理变量
-- **Mediator (M)**：处于 X→Y 因果路径上的中介变量，M = f_M(X, Z)
-- **Outcome (Y)**：受 exposure 影响的结果变量，Y = f_Y(X, M, Z)
+### 关键设计
 
-反事实推理的本质：给定观测事实 (x, z, m, y)，若将 X 干预为 x'，则需计算新的 M' = f_M(x', z) 和 Y' = f_Y(x', M', z)。
+**1. 基于 SCM 的因果变量四元组：给反事实推理一个可计算的形式化底座。** 整套框架建立在 Pearl 的结构因果模型上，把任务中的信息归约为四类变量：Exposure $X$（施加的处理/干预条件）、Covariate $Z$（同时影响 $X$ 与 $Y$ 的预处理混杂变量）、Mediator $M$（落在 $X\to Y$ 路径上的中介，$M=f_M(X,Z)$）、Outcome $Y$（受干预影响的结果，$Y=f_Y(X,M,Z)$）。有了这套结构，反事实推理就有了确切定义：给定观测事实 $(x,z,m,y)$，若把 $X$ 干预为 $x'$，正确答案应是沿因果链重算的 $M'=f_M(x',z)$ 与 $Y'=f_Y(x',M',z)$。这一步把"模型答得对不对"从直觉判断变成了可逐变量核对的计算，是后续分阶段诊断的前提。
 
-### 四阶段分解评估
+**2. 四阶段分解 + ground-truth 隔离：把整体失败拆成可归因的局部失败。** 评估被切成 Task I 因果变量识别（从事实信息中标出 $X,Z,M,Y$）、Task II 因果图构建（给定变量连出正确的 DAG）、Task III 反事实干预识别（从反事实查询中读出被干预变量 $X'$ 的取值）、Task IV 结果推理（结合因果图与干预推断 $M'$ 和 $Y'$）。关键在于评测每个阶段时都直接提供前置阶段的标准答案作为输入，这样后一阶段的得分只反映它自己的能力，而不被前面累积的错误污染。端到端测试只能告诉你"模型不行"，这种隔离式拆解才能进一步回答"到底哪一步不行"——本文正是借此定位出真正的瓶颈在 Task IV 的隐式变量推理，而非看似最复杂的因果图构建。
 
-| 阶段 | 任务 | 评估目标 |
-|------|------|----------|
-| Task I | 因果变量识别 | 给定事实信息，正确识别 X, Z, M, Y |
-| Task II | 因果图构建 | 给定变量，构建正确的 DAG（有向无环图） |
-| Task III | 反事实干预识别 | 给定反事实查询，正确识别被干预变量 X' 的值 |
-| Task IV | 结果推理 | 基于因果图和干预，推断反事实中介 M' 和结果 Y' |
-
-关键设计：每个阶段的评估均**提供前置阶段的 ground-truth 输出**，以隔离和测量每个阶段的独立能力。
-
-### Benchmark 构建
-
-收集并整理 11 个数据集覆盖四种模态：
-
-- **文本**：CRASS（QA）、CLOMO（逻辑解析）、RNN-Typology（语法解析）
-- **视觉-语言**：CVQA-Bool、CVQA-Count、COCO
-- **数学符号**：Arithmetic
-- **代码**：HumanEval-Exe、Open-Critic、Code-Preference
-- **混合**：MalAlgoQA
-
-对每个数据集进行预处理：标注因果变量、构建参考 DAG、提取干预变量和反事实结果。
-
-### 改进策略
-
-**策略一：工具增强执行**（针对显式变量识别）
-
-为不同模态配备专用工具辅助实体识别：
-
-- 文本/数学：bert-base-NER 提取候选实体
-- 视觉：grounding-dino-base 检测图像中的相关物体
-- 代码：GraphCodeBERT 提取函数、变量和控制结构
-
-工具输出候选实体后，由 LLM 进一步筛选和精炼最终的显式变量集合。
-
-**策略二：高级 elicitation 策略**（针对隐式变量推理）
-
-- **CoT**：逐步推理中介变量
-- **CoT-SC**：生成 k=5 条推理路径，通过多数投票选择答案
-- **ToT**：k=5 条分支推理路径，用 BERTScore 评估中间结果与任务描述的一致性
+**3. 显式/隐式变量分而治之的改进策略：对症下药而非一招通用。** 诊断发现两类变量的失败机理不同，因此改进也分两路。对显式变量（实体大多在输入中可直接定位）采用工具增强执行：文本与数学用 bert-base-NER 抽候选实体，视觉用 grounding-dino-base 检测图中相关物体，代码用 GraphCodeBERT 提取函数、变量与控制结构，工具给出候选后再由 LLM 筛选精炼出最终显式变量集合。对隐式变量（如需要推算的中介 $M$）则上更强的 elicitation：CoT 逐步推理中介，CoT-SC 生成 $k=5$ 条路径后多数投票，ToT 同样展开 $k=5$ 条分支并用 BERTScore 衡量中间结果与任务描述的一致性来择优。区分对待的好处是把算力花在刀刃上；但实验也提醒它不是越多越好——复杂 elicitation 偶尔触发过度推理（overthinking）反而劣于朴素 CoT。
 
 ## 实验关键数据
 
@@ -172,8 +132,8 @@ tags:
 
 - [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Perturbations](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_perturbations.md)
 - [\[ACL 2026\] Parallel Universes, Parallel Languages: A Comprehensive Study on LLM-based Multilingual Counterfactual Example Generation](../../ACL2026/causal_inference/parallel_universes_parallel_languages_a_comprehensive_study_on_llm-based_multili.md)
-- [\[NeurIPS 2025\] Few-Shot Knowledge Distillation of LLMs With Counterfactual Explanations](../../NeurIPS2025/causal_inference/few-shot_knowledge_distillation_of_llms_with_counterfactual_explanations.md)
 - [\[ICLR 2026\] SelfReflect: Can LLMs Communicate Their Internal Answer Distribution?](selfreflect_can_llms_communicate_their_internal_answer_distribution.md)
+- [\[ICLR 2026\] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)
 - [\[ACL 2025\] CoA-Reasoning: Explorations on Counterfactual Analysis in Physical Reasoning of LVLMs](../../ACL2025/causal_inference/coa-reasoning_explorations_on_counterfactual_analysis_in_physical_reasoning_of_l.md)
 
 </div>

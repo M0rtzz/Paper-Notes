@@ -37,61 +37,21 @@ tags:
 
 ## 方法详解
 
-### 整体框架：UniDD
+### 整体框架
 
-**定理 1**（统一谱滤波框架）：
+UniDD 的核心观察是：看似五花八门的蒸馏目标，其实都在做同一件事——在特征-特征相关矩阵（FFC）上套一个滤波函数 $f(\cdot)$，再去匹配真实数据与合成数据的特征-标签相关信息（FLC）。定理 1 把它们统一写成 $\min_{X_s} \| f(X^\top X)\, g(X^\top Y) - f(X_s^\top X_s)\, g(X_s^\top Y_s) \|_F^2$，其中 $X^\top X$、$X_s^\top X_s$ 是 FFC 矩阵，$X^\top Y$、$X_s^\top Y_s$ 是 FLC 矩阵，$g$ 取恒等 $I$ 或 $X^\top Y$。不同方法的区别只剩下 $f$ 作用在 FFC 特征值 $\lambda$ 上的形状，于是「设计蒸馏算法」就被还原成「设计滤波函数」这一个问题；本文据此把方法分为低频与高频两族，并提出一个让滤波随训练动态变化的课程方案。
 
-$$\min_{X_s} \left\| f(X^\top X) g(X^\top Y) - f(X_s^\top X_s) g(X_s^\top Y_s) \right\|_F^2$$
+### 关键设计
 
-其中：
-- $X^\top X$, $X_s^\top X_s$：FFC 矩阵（特征-特征相关）
-- $X^\top Y$, $X_s^\top Y_s$：FLC 矩阵（特征-标签相关）
-- $f(\cdot)$：滤波函数，作用于 FFC 矩阵的特征值
-- $g(\cdot)$：二元函数，$g = I$ 或 $X^\top Y$
+**1. 低频匹配（LFM）：用恒等/线性滤波抓粗粒度信息。** 当滤波函数偏好大特征值时，目标只保留 FFC 的主成分，对应的是模糊但稳定的类平均表示。统计匹配 DM 取 $f(\lambda)=1$（恒等滤波），目标退化为 $\|X^\top Y - X_s^\top Y_s\|_F^2$，即直接对齐类平均表示；梯度匹配 DC 经梯度差异上界推导后得到 $f(\lambda)\in\{1,\lambda\}$，目标变成 $\|X^\top X - X_s^\top X_s\|_F^2 + \|X^\top Y - X_s^\top Y_s\|_F^2$，在恒等之外又加了一项线性项。这族方法捕获的是粗粒度颜色与轮廓，收敛快、类内一致性高，但合成图像之间太像，多样性不足。
 
-### 关键设计 1：低频匹配（LFM）
+**2. 高频匹配（HFM）：用逆向/高通滤波抓细粒度纹理。** 反过来，若滤波函数放大小特征值，目标就强调 FFC 的高频成分，对应细粒度纹理。轨迹匹配 MTT 的滤波形如 $f(\lambda)=(1-\alpha\lambda)^{\{p,q\}}$，在 $\alpha\lambda<1$ 时表现为高通；核方法 FrePo 则用 $f(\lambda)=(\lambda+\beta)^{-1}$ 做逆向加权，$\beta$ 越小、对高频的强调越强。它们合成出的图像纹理丰富、多样性更好，代价是计算量更大、也更容易把噪声当成有用信号引进来。一致性与多样性在这里构成一对此消彼长的矛盾。
 
-**DM（统计匹配）**：
-$$f(\lambda) = 1 \quad \Rightarrow \quad \|X^\top Y - X_s^\top Y_s\|_F^2$$
-等价于恒等滤波，直接匹配类平均表示。
+**3. 课程频率匹配（CFM）：让滤波从低频滑向高频，两头都占。** 既然固定的 $f$ 只能学到单一频率，CFM 干脆把控制频率的 $\beta$ 做成随训练推进的课程：$\beta_b = \beta \cdot (1 + \cos(\pi b / B)) / 2$，其中 $b$ 为当前 batch、$B$ 为总 batch 数。$\beta_b$ 按余弦从大滑到小，等价于滤波从低通逐渐过渡到高通——训练早期先用低频锁住一致的整体结构，后期再用高频补上多样的细节，从而在一次蒸馏里同时覆盖低频的一致性与高频的多样性，绕开了单一滤波必须二选一的困境。
 
-**DC（梯度匹配）**：
-$$f(\lambda) = \{1, \lambda\} \quad \Rightarrow \quad \|X^\top X - X_s^\top X_s\|_F^2 + \|X^\top Y - X_s^\top Y_s\|_F^2$$
-通过梯度差异上界推导得到。
+### 损失函数 / 训练策略
 
-低频匹配方法捕获模糊的粗粒度颜色信息，收敛快但多样性差。
-
-### 关键设计 2：高频匹配（HFM）
-
-**MTT（轨迹匹配）**：
-$$f(\lambda) = (1 - \alpha\lambda)^{\{p,q\}}$$
-当 $\alpha\lambda < 1$ 时为高通滤波，强调小特征值对应的高频成分。
-
-**FrePo（KRR）**：
-$$f(\lambda) = (\lambda + \beta)^{-1}$$
-逆向加权，$\beta$ 越小高频成分越强。
-
-高频匹配方法合成细粒度纹理，多样性更好但计算量更大。
-
-### 关键设计 3：课程频率匹配（CFM）
-
-现有方法采用固定滤波函数，仅能学习单一频率信息。CFM 动态调整滤波参数：
-
-$$\beta_b = \beta \cdot (1 + \cos(\pi b / B)) / 2$$
-
-其中 $B$ 为总batch数。$\beta_b$ 从大到小变化，使滤波从低频逐渐过渡到高频，同时覆盖一致性和多样性。
-
-### 损失函数
-
-$$\mathcal{L} = \mathcal{L}_{cls}(H_s, Y_s) + \eta \mathcal{L}_{filter} + \eta \mathcal{L}_{signal}$$
-
-其中 $\eta = 0.1$，两个匹配损失分别对应 $g = I$ 和 $g = X^\top Y$：
-
-$$\mathcal{L}_{filter} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1} - (\Psi_s^{l,b} + \beta_b I)^{-1}\|$$
-
-$$\mathcal{L}_{signal} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1}\Phi^l - (\Psi_s^{l,b} + \beta_b I)^{-1}\Phi_s^l\|$$
-
-使用指数移动更新（EMU）来近似全 batch 统计量。
+总损失把分类项与两个匹配项相加：$\mathcal{L} = \mathcal{L}_{cls}(H_s, Y_s) + \eta \mathcal{L}_{filter} + \eta \mathcal{L}_{signal}$，权重统一取 $\eta = 0.1$。两个匹配项正好对应框架里 $g=I$ 与 $g=X^\top Y$ 两种取法：$\mathcal{L}_{filter} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1} - (\Psi_s^{l,b} + \beta_b I)^{-1}\|$ 只看 FFC 的滤波结构，$\mathcal{L}_{signal} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1}\Phi^l - (\Psi_s^{l,b} + \beta_b I)^{-1}\Phi_s^l\|$ 进一步把 FLC 信号一并对齐，二者都按上面的 $\beta_b$ 逐 batch 调度。由于矩阵 $\Psi$、$\Phi$ 是全数据集的统计量，逐 batch 重算代价高，CFM 用指数移动更新（EMU）在线近似全 batch 统计，让训练在小 batch 上也能稳定推进。
 
 ## 实验
 
@@ -167,9 +127,9 @@ $$\mathcal{L}_{signal} = \sum_{b,l} \|(\Psi^l + \beta_b I)^{-1}\Phi^l - (\Psi_s^
 
 - [\[ICLR 2026\] Grounding and Enhancing Informativeness and Utility in Dataset Distillation](grounding_and_enhancing_informativeness_and_utility_in_dataset_distillation.md)
 - [\[ACL 2026\] CBRS: Cognitive Blood Request System with Bilingual Dataset and Dual-Layer Filtering](../../ACL2026/model_compression/cbrs_cognitive_blood_request_system_with_bilingual_dataset_and_dual-layer_filter.md)
+- [\[AAAI 2026\] Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers](../../AAAI2026/model_compression/distillation_dynamics_towards_understanding_feature-based_di.md)
 - [\[ICLR 2026\] Dataset Distillation as Pushforward Optimal Quantization](dataset_distillation_as_pushforward_optimal_quantization.md)
 - [\[NeurIPS 2025\] Hyperbolic Dataset Distillation](../../NeurIPS2025/model_compression/hyperbolic_dataset_distillation.md)
-- [\[ICLR 2026\] Rectified Decoupled Dataset Distillation: A Closer Look for Fair and Comprehensive Evaluation](rectified_decoupled_dataset_distillation_a_closer_look_for_fair_and_comprehensiv.md)
 
 </div>
 

@@ -30,31 +30,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两层架构：底层是基于价值的实体中心GCRL智能体（提供策略和价值函数），高层是条件扩散模型子目标生成器。两层独立训练，通过基于价值函数的子目标选择在测试时组合，实现模块化和与任意价值GCRL算法的兼容性。
+HECRL 想解决的是：在多实体、长时域、稀疏奖励的离线环境里，TD 学习的近似误差会随距离累积，越远的目标价值信号信噪比越低，于是每个策略只在一个有限的"能力半径" $R_\pi^V$ 内可靠。它的办法是用一个高层模块把远目标拆成一串落在这个半径内的近子目标。整体是两层架构：底层是一个基于价值的实体中心 GCRL 智能体，提供策略和价值函数 $V$；高层是一个条件扩散模型，负责生成中间子目标。两层用同一份离线数据但各自独立训练，测试时再靠价值函数把高层生成的候选子目标筛出一个交给底层去追，因此高层可以搭配任意基于价值的 GCRL 算法，不需要联合优化。
 
 ### 关键设计
-1. **子目标扩散器(Subgoal Diffuser)**:
 
-    - 功能：生成距当前状态最多 $K$ 步的中间子目标
-    - 核心思路：条件扩散去噪器建模分布 $p(\tilde{g}|s, g)$——给定当前状态 $s$ 和最终目标 $g$，生成可达子目标。从离线数据均匀采样训练样本，不假设数据包含目标导向行为
-    - 设计动机：分布 $p(\tilde{g}|s,g)$ 高度多模态，扩散模型能捕捉数据中的多个子目标模式
+**1. 子目标扩散器：用扩散模型捕捉"下一个可达子目标"的多模态分布。**
 
-2. **基于价值的子目标选择(Algorithm 1)**:
+底层策略只在能力半径内靠谱，所以需要一个模块不断喂给它"最多 $K$ 步可达"的近子目标。难点在于：给定当前状态 $s$ 和最终目标 $g$，合理的中间子目标往往不止一个——分布 $p(\tilde{g}\mid s, g)$ 高度多模态，确定性回归会把这些模式平均成一个模糊目标。HECRL 用一个条件扩散去噪器直接建模 $p(\tilde{g}\mid s, g)$，从离线数据里均匀采样训练样本，不假设数据本身包含目标导向行为，因此能把数据中并存的多种子目标模式都保留下来。
 
-    - 功能：在测试时从候选子目标中选择最优
-    - 核心思路：采样 $N$ 个候选子目标，用价值阈值 $\hat{R}$ 过滤可达性（保留 $V(s,\tilde{g}) > \hat{R}$ 的），选择距目标最近的（最高 $V(\tilde{g}, g)$）。若目标比选择的子目标更近则直接追求目标
-    - 设计动机：子目标扩散器仅拟合行为数据，不捕捉最优性概念，需要价值函数引导
+**2. 基于价值的子目标选择：用价值函数给只拟合行为分布的扩散器补上"最优性"。**
 
-3. **实体因子化子目标(Entity-factored Subgoals)**:
+扩散器只学了行为数据长什么样，并不知道哪个子目标更接近最终目标，所以测试时需要价值函数来挑。具体做法（Algorithm 1）是：采样 $N$ 个候选子目标，先用价值阈值 $\hat{R}$ 过滤掉不可达的，只保留满足 $V(s,\tilde{g}) > \hat{R}$ 的候选，再在可达候选里选距最终目标最近的那个（即 $V(\tilde{g}, g)$ 最高）。如果最终目标本身比所有候选子目标都更近，就跳过子目标直接追 $g$。这样扩散器负责"提供多样的可达选项"，价值函数负责"在选项里挑最优",分工互补。
 
-    - 功能：鼓励生成只修改少数实体的稀疏子目标
-    - 核心思路：给定状态和目标实体集合 $s=\{s_m\}_{m=1}^M$ 和 $g=\{g_m\}_{m=1}^M$，扩散模型逐步去噪子目标实体集合。Transformer去噪器通过注意力机制可选择性复制输入token到输出，自然产生实体级稀疏性
-    - 设计动机：修改少数状态因子的子目标在因子独立可控时更易达到
+**3. 实体因子化子目标：让结构归纳偏置自然产出"只动少数实体"的稀疏子目标。**
+
+当状态由多个可独立控制的因子组成时，只修改其中少数实体的子目标显然更容易达到。HECRL 把状态和目标都写成实体集合 $s=\{s_m\}_{m=1}^M$、$g=\{g_m\}_{m=1}^M$，扩散模型在实体集合上逐步去噪。关键在去噪器用的是 Transformer：注意力机制天然可以把输入 token 直接复制到输出，于是对那些本就不需要改动的实体，模型会倾向于原样保留，实体级稀疏性是结构本身带来的，而不是靠额外的显式约束。这正是它和确定性方法（如 AWR）拉开差距的地方——后者会把多个实体加权平均成一个谁也不像的模糊目标。
 
 ### 损失函数 / 训练策略
-- 底层GCRL智能体用IQL训练
-- 高层扩散模型用标准扩散去噪目标训练，仅10个去噪步
-- 两层使用相同离线数据集但独立训练，无需联合优化
+- 底层 GCRL 智能体用 IQL 训练。
+- 高层扩散模型用标准扩散去噪目标训练，去噪只需 10 步。
+- 两层共用同一份离线数据集，但分别训练、无需联合优化。
 
 ## 实验关键数据
 
@@ -111,7 +106,7 @@ tags:
 - [\[ICML 2025\] Hierarchical Reinforcement Learning with Uncertainty-Guided Diffusional Subgoals](../../ICML2025/image_generation/hierarchical_reinforcement_learning_with_uncertainty-guided_diffusional_subgoals.md)
 - [\[ICLR 2026\] RIDER: 3D RNA Inverse Design with Reinforcement Learning-Guided Diffusion](rider_3d_rna_inverse_design_with_reinforcement_learning-guided_diffusion.md)
 - [\[ICLR 2026\] Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)](improved_object-centric_diffusion_learning_with_registers_and_contrastive_alignm.md)
-- [\[ICLR 2026\] Offline Reinforcement Learning with Generative Trajectory Policies](offline_reinforcement_learning_with_generative_trajectory_policies.md)
+- [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 
 </div>
 

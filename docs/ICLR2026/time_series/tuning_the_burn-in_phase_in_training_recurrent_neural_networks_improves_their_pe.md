@@ -42,37 +42,15 @@ RNN 训练标准方法是反向传播时间（BPTT），但对长序列训练面
 
 ### 整体框架
 
-考虑标准 RNN 模型：
+本文不提出新的网络结构，而是把 TBPTT 里那个一直被当作"经验技巧"的 burn-in 步数 $m$ 拎出来做理论刻画。考虑标准 RNN $h_t = f(h_{t-1}, x_t; \theta_h)$、$y_t = g(h_t, x_t; \theta_y)$，TBPTT 把长序列 $D$ 切成 $S$ 段长度为 $N$ 的子序列，每段隐状态零初始化后独立做 BPTT；burn-in 的作用是在算损失时把每段开头 $m$ 步的输出扔掉，只在第 $m+1$ 步之后计入误差，于是子序列损失写成 $L(\theta; D_i) = \frac{1}{N-m}\sum_{j=m+1}^{N}\|y_j(0, \theta, X_i^d) - y_{j|i}^d\|^2$，其中 $m \in [0, N-1]$。整篇方法围绕一个问题展开：$m$ 取多大才好，答案由网络的遗忘速度决定。
 
-$$h_t = f(h_{t-1}, x_t; \theta_h), \quad y_t = g(h_t, x_t; \theta_y)$$
+### 关键设计
 
-TBPTT 将训练序列 $D$ 切分为 $S$ 个长度为 $N$ 的子序列，定义带 burn-in 的损失函数：
+**1. 指数输出稳定性假设：把"零初始化误差会衰减"写成可量化的前提。** burn-in 之所以有用，直觉是零初始化造成的瞬态误差会随时间淡去，但要做理论必须先把这个"淡去"量化。本文给出假设 1：存在常数 $C>0$ 与遗忘因子 $\lambda \in (0,1)$，使任意两个初始状态产生的输出差满足 $\|y_t(h_0^{(1)}, \theta, X) - y_t(h_0^{(2)}, \theta, X)\| \leq C\lambda^t \|h_0^{(1)} - h_0^{(2)}\|$。也就是说初始化的影响以速率 $\lambda^t$ 指数收缩，$\lambda$ 越小网络忘得越快。这个假设对 LSTM、GRU、LRU、SSM 等满足收缩性的主流架构都成立，因此后续结论不绑定某一种 RNN，而是覆盖一大类模型——这也是全文能从单个技巧上升为通用准则的根基。
 
-$$L(\theta; D_i) = \frac{1}{N-m}\sum_{j=m+1}^{N}\|y_j(0, \theta, X_i^d) - y_{j|i}^d\|^2$$
+**2. 训练遗憾上界：把 burn-in 的收益写成 $m$ 的指数函数。** 真正把 $m$ 与性能挂钩的是定理 1。它衡量 TBPTT 学到的解 $\theta^*$ 相对理想基准解 $\theta^b$ 的训练遗憾，证明 $V^* - V^b \leq C_2 \cdot \frac{\lambda^m}{N-m}$。这个式子里 $m$ 同时出现在两处且方向相反：分子 $\lambda^m$ 随 $m$ 增大而指数衰减——多扔几步瞬态，零初始化引入的偏差就被压下去；但分母 $N-m$ 也随之缩小——扔得太多则每段可用的监督样本变少、方差上升。两股力量一拉一扯，意味着遗憾上界在某个中间的 $m^*$ 处取最小，而不是 $m$ 越大越好或干脆不要 burn-in。这把"调 burn-in"从拍脑袋变成了有明确权衡结构的优化问题。
 
-其中 $m \in [0, N-1]$ 为 burn-in 长度。
-
-### 关键理论结果
-
-**假设 1（指数增量输出稳定性）**：存在 $C > 0$ 和 $\lambda \in (0,1)$，使得：
-
-$$\|y_t(h_0^{(1)}, \theta, X) - y_t(h_0^{(2)}, \theta, X)\| \leq C\lambda^t \|h_0^{(1)} - h_0^{(2)}\|$$
-
-即 RNN 输出对初始化的依赖随时间指数衰减。
-
-**定理 1（训练遗憾）**：TBPTT 解 $\theta^*$ 相对于基准解 $\theta^b$ 的遗憾满足：
-
-$$V^* - V^b \leq C_2 \cdot \frac{\lambda^m}{N-m}$$
-
-**定理 2（性能遗憾）**：在全序列上的性能遗憾满足：
-
-$$P(0, \theta^*; D) - P(h_0^b, \theta^b; D) \leq E_2 \cdot \sqrt{\frac{(S-1)\lambda^{2o_{\min}} + S\lambda^m}{T-m}}$$
-
-### 核心洞察
-
-- 遗憾上界**关键取决于 $m$ 和 $\lambda$ 的交互**
-- $\lambda$ 越小（遗忘越快），$m$ 可取较大值；$\lambda$ 越大（遗忘越慢），$m$ 应取较小值
-- burn-in 应被视为 RNN 训练的**标准超参数**
+**3. 性能遗憾与遗忘因子的耦合：给出"$\lambda$ 决定 $m$"的实操准则。** 定理 2 进一步把分析推到整条序列上的部署性能，给出 $P(0, \theta^*; D) - P(h_0^b, \theta^b; D) \leq E_2 \cdot \sqrt{\frac{(S-1)\lambda^{2o_{\min}} + S\lambda^m}{T-m}}$，借用最优控制里的 turnpike 性质刻画截断训练与全序列部署之间的差距。把定理 1、2 合起来读，核心结论是上界由 $m$ 和 $\lambda$ 的交互主导，于是给出可直接落地的准则：网络遗忘越快（$\lambda$ 越小），瞬态消散得快、可以放心取较大的 $m$；遗忘越慢（$\lambda$ 越大），初始化影响拖得久，反而该取较小的 $m$ 以免损失太多有效样本。换句话说 burn-in 不该是随手设的默认值，而应像学习率一样按模型自身的时间常数来调，成为 RNN 训练的标准超参数。
 
 ## 实验关键数据
 
@@ -130,8 +108,8 @@ $$P(0, \theta^*; D) - P(h_0^b, \theta^b; D) \leq E_2 \cdot \sqrt{\frac{(S-1)\lam
 - [\[ICLR 2026\] Weight-Space Linear Recurrent Neural Networks](weight-space_linear_recurrent_neural_networks.md)
 - [\[CVPR 2026\] Stable Spike: Dual Consistency Optimization via Bitwise AND Operations for Spiking Neural Networks](../../CVPR2026/time_series/stable_spike_dual_consistency_optimization_via_bitwise_and_operations_for_spikin.md)
 - [\[AAAI 2026\] Urban Incident Prediction with Graph Neural Networks: Integrating Government Ratings and Crowdsourced Reports](../../AAAI2026/time_series/urban_incident_prediction_with_graph_neural_networks_integrating_government_rati.md)
+- [\[ICLR 2026\] Online Time Series Prediction Using Feature Adjustment](online_time_series_prediction_using_feature_adjustment.md)
 - [\[ICLR 2026\] SwiftTS: A Swift Selection Framework for Time Series Pre-trained Models via Multi-task Meta-Learning](swiftts_a_swift_selection_framework_for_time_series_pre-trained_models_via_multi.md)
-- [\[ICLR 2026\] Enhancing Multivariate Time Series Forecasting with Global Temporal Retrieval](enhancing_multivariate_time_series_forecasting_with_global_temporal_retrieval.md)
 
 </div>
 

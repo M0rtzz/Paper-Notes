@@ -43,27 +43,21 @@ tags:
 
 ### 整体框架
 
-VAREdit基于预训练Infinity模型，将图像编辑建模为条件多尺度预测：给定源图像 $\mathbf{I}^{(src)}$ 和文本指令 $\mathbf{t}$，自回归生成目标图像的K层残差图 $\mathbf{R}_{1:K}^{(tgt)}$。使用最细尺度源特征 $\mathbf{F}_K^{(src)}$ 作为主要条件，在第一个自注意力层额外注入尺度对齐参考特征。训练使用3.92M配对样本。
+VAREdit基于预训练Infinity模型，把指令编辑重写成条件多尺度预测：给定源图像 $\mathbf{I}^{(src)}$ 与文本指令 $\mathbf{t}$，模型自回归地生成目标图像的K层残差图 $\mathbf{R}_{1:K}^{(tgt)}$，逐尺度由粗到细补出编辑结果。源图像信息以最细尺度特征 $\mathbf{F}_K^{(src)}$ 为主要条件注入，并只在第一个自注意力层额外补一份尺度对齐的参考特征来纠正失配。
 
 ### 关键设计
 
-**1. Scale-Aligned Reference (SAR) 模块**
+**1. 自回归多尺度编辑建模：把"局部改、全局留"交给因果生成。**
 
-- **功能**: 在保持最细尺度条件化效率的同时解决尺度失配问题
-- **核心思路**: 通过下采样最细尺度特征生成与每个目标尺度空间维度匹配的参考特征 $\mathbf{F}_k^{(ref)} = \text{Down}(\mathbf{F}_K^{(src)}, (h_k, w_k))$。在第一个自注意力层中，目标尺度k的query同时attend到尺度对齐的参考特征和先前生成的目标历史。仅在第一层应用SAR，后续层仍只使用最细尺度条件
-- **设计动机**: 注意力热力图分析发现：第一层负责建立全局布局和长距离依赖（需要尺度匹配的条件），深层则负责局部细化（最细尺度条件即可）
+扩散模型的全局去噪天然把编辑区域和整幅图耦合，非编辑区域容易出现"bleeding"式的虚假改动；VAREdit换一条路，把编辑分解为K个尺度上的残差预测，并按因果顺序逐尺度生成：$p(\mathbf{R}_{1:K}^{(tgt)}\mid\mathbf{I}^{(src)},\mathbf{t}) = \prod_{k=1}^K p(\mathbf{R}_k^{(tgt)}\mid\mathbf{F}_{1:k-1}^{(tgt)},\mathbf{F}_K^{(src)},\mathbf{t})$。文本指令经交叉注意力进入每一步，源图与目标图的token靠2D-RoPE区分位置。这种因果组合性让模型可以"沿用前面已生成的不变区域、只在需要处补残差"，从机制上把保留与修改分离开，比扩散的整图重绘更贴合编辑任务。
 
-**2. 最细尺度条件化策略**
+**2. 最细尺度条件化策略：用一份高频特征换掉全尺度的平方代价。**
 
-- **功能**: 大幅减少计算开销
-- **核心思路**: 只将最细尺度（最高分辨率）特征 $\mathbf{F}_K^{(src)}$ 前置到目标序列，而非全部K个尺度的特征。相比全尺度方法大幅减少序列长度（自注意力为 $O(n^2)$ 复杂度）
-- **设计动机**: 最细尺度包含最丰富的高频细节信息，对编辑引导最关键
+自然的做法是把全部K个尺度的源特征都前置到目标序列里做条件，但自注意力是 $O(n^2)$ 复杂度，序列一长开销迅速膨胀。VAREdit只前置最细尺度（最高分辨率）特征 $\mathbf{F}_K^{(src)}$ 一份，序列长度大幅缩短，推理速度因此能压到秒级。之所以单选最细尺度，是因为它承载了最丰富的高频细节，对"改哪里、改成什么样"的引导最关键——粗尺度提供的主要是已被残差结构覆盖的布局信息。
 
-**3. 自回归多尺度编辑建模**
+**3. Scale-Aligned Reference (SAR) 模块：只在第一层补尺度对齐特征，修掉失配又不丢效率。**
 
-- **功能**: 利用VAR的因果组合性实现精准编辑
-- **核心思路**: 编辑被分解为K个尺度的残差预测 $p(\mathbf{R}_{1:K}^{(tgt)}|\mathbf{I}^{(src)}, \mathbf{t}) = \prod_{k=1}^K p(\mathbf{R}_k^{(tgt)}|\mathbf{F}_{1:k-1}^{(tgt)}, \mathbf{F}_K^{(src)}, \mathbf{t})$。文本指令通过交叉注意力引入。使用2D-RoPE区分源图和目标图token
-- **设计动机**: 自回归生成天然支持"保留不变区域+精确修改编辑区域"的分离
+最细尺度条件虽快，却带来尺度失配：目标序列在粗尺度k上的空间维度 $(h_k, w_k)$ 和最细尺度的 $(H, W)$ 对不上，注意力难以建立正确对应。注意力热力图分析揭示一个关键现象——失配只严重影响第一个自注意力层，它负责建立全局布局和长距离依赖（需要尺度匹配的条件），而深层主要做局部细化（最细尺度条件已够用）。据此SAR把最细尺度特征下采样成与每个目标尺度同维的参考 $\mathbf{F}_k^{(ref)} = \text{Down}(\mathbf{F}_K^{(src)}, (h_k, w_k))$，并仅在第一层让尺度k的query同时attend到这份对齐参考和已生成的目标历史，后续层仍只用最细尺度条件。消融显示把SAR推广到所有层反而掉点，正印证了"失配集中在第一层"的判断，也让SAR几乎不增加额外开销。
 
 ### 损失函数 / 训练策略
 
@@ -137,10 +131,10 @@ EMU-Edit和PIE-Bench上的定量对比：
 ## 相关论文
 
 - [\[ICLR 2026\] EditReward: A Human-Aligned Reward Model for Instruction-Guided Image Editing](editreward_a_human-aligned_reward_model_for_instruction-guided_image_editing.md)
+- [\[ICLR 2026\] MVAR: Visual Autoregressive Modeling with Scale and Spatial Markovian Conditioning](mvar_visual_autoregressive_modeling_with_scale_and_spatial_markovian_conditionin.md)
 - [\[CVPR 2026\] Depth Adaptive Efficient Visual Autoregressive Modeling](../../CVPR2026/image_generation/depthvar_depth_adaptive_var.md)
 - [\[ICML 2026\] Visual Implicit Autoregressive Modeling](../../ICML2026/image_generation/visual_implicit_autoregressive_modeling.md)
-- [\[ICCV 2025\] Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing](../../ICCV2025/image_generation/early_timestep_zero-shot_candidate_selection_for_instruction-guided_image_editin.md)
-- [\[ICLR 2026\] Training-Free Reward-Guided Image Editing via Trajectory Optimal Control](training-free_reward-guided_image_editing_via_trajectory_optimal_control.md)
+- [\[ICLR 2026\] ToProVAR: Efficient Visual Autoregressive Modeling via Tri-Dimensional Entropy-Aware Semantic Analysis and Sparsity Optimization](toprovar_efficient_visual_autoregressive_modeling_via_tri-dimensional_entropy-aw.md)
 
 </div>
 

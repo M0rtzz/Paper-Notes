@@ -41,16 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-标准 LM 生成概率 $\mathbf{P}$ → 加权求和所有词嵌入得到沉思嵌入 $\mathbf{T} = \mathbf{P}\mathbf{V}$ → 残差连接 $\mathbf{E}^1 = \mathbf{E}^0 + \mathbf{T}$ → 再次前向传播 → 重复 $s$ 步。
+PonderLM 把一次 token 生成拆成多轮"沉思"：模型先按标准方式吐出下一个 token 的概率分布，但不急着采样，而是把这个分布转成一个连续的"沉思嵌入"残差加回输入，再前向传播一次，如此重复 $s$ 步后才真正预测 token。整个过程没有引入新参数，多出来的只是同一套权重的若干次额外前向，相当于让模型在连续空间里反复斟酌当前位置该写什么。
 
 ### 关键设计
 
-1. **沉思机制**: $\mathbf{t} = \sum_i p_i \mathbf{e}_i$，连续嵌入保留了所有候选 token 的信息，实现可微端到端训练
-2. **效率优化**: 只用 top-K（K=100）token 的概率计算沉思嵌入，复杂度从 $\mathcal{O}(n|V|d)$ 降至 $\mathcal{O}(nKd)$
-3. **纯自监督**: 不需要标注数据或强化学习，通过标准语言建模预训练即可学会沉思
+**1. 沉思机制：把"还没想好"的概率分布喂回模型继续想。**
 
-### 训练策略
-使用标准 NTP 损失在大规模语料上预训练，$s=3$ 步沉思。
+普通 LM 在每个位置算出 softmax 概率 $\mathbf{P}$ 后就直接挑词，离散采样这一步把分布里其它候选的信息全丢了。PonderLM 不丢：它用概率对整个词嵌入表做加权求和，得到沉思嵌入 $\mathbf{t} = \sum_i p_i \mathbf{e}_i$（矩阵形式 $\mathbf{T} = \mathbf{P}\mathbf{V}$，$\mathbf{V}$ 是嵌入矩阵），这个连续向量同时携带了所有候选 token 的相对置信度。再通过残差把它加回输入 $\mathbf{E}^1 = \mathbf{E}^0 + \mathbf{T}$，让下一轮前向能"看到"上一轮的初步猜测并加以修正。因为整条链路都是加权求和与残差这类可微操作，没有离散采样阻断梯度，所以能端到端用标准语言建模目标训练，模型自己学会怎么利用这些中间沉思来逼近正确答案。
+
+**2. Top-K 近似：把全词表加权砍成只看最可能的几个。**
+
+直接对整张词表做加权求和的代价是 $\mathcal{O}(n|V|d)$，词表 $|V|$ 动辄几万，这一步会吃掉沉思带来的大半收益。PonderLM 观察到概率分布高度集中在少数 token 上，于是只取 top-$K$（实验取 $K=100$）个候选参与加权，把复杂度压到 $\mathcal{O}(nKd)$。消融显示 $K=100$ 已经接近全词表的效果，再加大 $K$ 几乎没有提升，说明被截断掉的长尾 token 本就贡献甚微，这一步几乎无损地把沉思的额外开销控制在可接受范围。
+
+**3. 纯自监督：靠下一词预测就能学会沉思，不碰标注和 RL。**
+
+和 CoT、o1 这类需要标注推理链或强化学习信号的做法不同，PonderLM 的沉思能力完全长在标准的 next-token-prediction 损失上：把展开 $s$ 步沉思后的输出接到 NTP 目标，梯度自然会教会模型如何安排每一轮中间嵌入。实验中固定 $s=3$ 步在大规模语料上预训练即可。这种"零额外监督"的性质让方法几乎可以无缝套到任何现有预训练流程上，也是它能在 GPT-2、Pythia、LLaMA 三种架构上一致生效的原因。
 
 ## 实验关键数据
 
@@ -126,10 +131,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] LLMSurgeon: Diagnosing Data Mixture of Large Language Models](../../ACL2026/self_supervised/llmsurgeon_diagnosing_data_mixture_of_large_language_models.md)
-- [\[ICML 2025\] L2D: Large Language Models to Diffusion Finetuning](../../ICML2025/self_supervised/large_language_models_to_diffusion_finetuning.md)
 - [\[ICCV 2025\] Improving Large Vision and Language Models by Learning from a Panel of Peers](../../ICCV2025/self_supervised/improving_large_vision_and_language_models_by_learning_from_a_panel_of_peers.md)
 - [\[NeurIPS 2025\] Continuous Subspace Optimization for Continual Learning (CoSO)](../../NeurIPS2025/self_supervised/continuous_subspace_optimization_for_continual_learning.md)
 - [\[CVPR 2026\] An Optimal Transport-driven Approach for Cultivating Latent Space in Online Incremental Learning](../../CVPR2026/self_supervised/an_optimal_transport_driven_approach_for_cultivating_latent_space_in_online_incr.md)
+- [\[ICML 2025\] A Bayesian Model Selection Criterion for Selecting Pretraining Checkpoints](../../ICML2025/self_supervised/a_bayesian_model_selection_criterion_for_selecting_pretraining_checkpoints.md)
 
 </div>
 

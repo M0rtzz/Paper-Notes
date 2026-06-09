@@ -43,31 +43,19 @@ tags:
 
 ### 整体框架
 
-输入预计算的 splat 几何、相机参数和2D密集特征观测 → 构造 Splat Sensor Matrix $A$ 和观测向量 $B$ → 用 row-sum preconditioner 闭式求解 $X$ → 通过 Tikhonov Guidance 增强系统稳定性 → 通过 Post-Lifting Aggregation 过滤噪声 mask → 输出每个 primitive 的特征向量。
+本文把"将2D密集特征提升到3D splat primitive"这件事整体看成解一个稀疏线性逆问题：以预计算的 splat 几何、相机参数和2D特征观测为输入，构造出渲染权重矩阵 $A$ 和观测向量 $B$，问题就归约为求解 $AX=B$。求解时不做任何训练，而是用 row-sum preconditioner 给出闭式解，再用两种正则化策略（Tikhonov Guidance 稳定病态系统、Post-Lifting Aggregation 过滤噪声 mask）分别从系统条件和数据质量两端兜底，最终输出每个 primitive 的特征向量。
 
 ### 关键设计
 
-1. **Feature Lifting 线性逆问题建模与闭式求解器**:
+**1. 线性逆问题建模与闭式求解器：把启发式的 row-sum 加权升格为有误差保证的最优解。** 现有 feature lifting 方法各自为政、缺乏统一框架，更没有"解离最优有多远"的理论保障。本文将问题形式化为 $AX=B$，其中 $A \in \mathbb{R}^{R \times P}$（$R$ 为射线数、$P$ 为 primitive 数）是 alpha blending 的渲染权重矩阵。关键观察是 alpha blending 天然具有行随机性 $\sum_j A_{ij} \approx 1$，据此用 Jensen 不等式构造一个可解析最小化的代理损失 $\mathcal{J}(x) = \sum_i \sum_j A_{ij} \|x_j - B_i\| \geq \mathcal{L}(x)$，对它求最优即得 row-sum preconditioner 闭式解 $x_j = \frac{\sum_i A_{ij} B_i}{\sum_i A_{ij}}$。这样不仅避免了 SGD 从头训练的高昂代价，还能证明 $\mathcal{L}(x') \leq (1+\beta)\mathcal{L}(\hat{x})$——其中 $\beta$ 衡量最优解沿视线方向的特征离散度。这一上界把 CosegGaussians、Occam's LGS、DrSplat 等工作各自独立发现的 row-sum 规则统一为同一闭式解的特例，并首次给出了它们的近似最优性。
 
-    - 做什么：将 feature lifting 形式化为 $AX=B$（$A \in \mathbb{R}^{R \times P}$，$R$ 为射线数，$P$ 为 primitive 数），推导 row-sum preconditioner 闭式解
-    - 核心思路：利用 alpha blending 的行随机性 $\sum_j A_{ij} \approx 1$，通过 Jensen 不等式构造代理损失 $\mathcal{J}(x) = \sum_i \sum_j A_{ij} \|x_j - B_i\| \geq \mathcal{L}(x)$，对代理损失求最优得闭式解。证明 $\mathcal{L}(x') \leq (1+\beta)\mathcal{L}(\hat{x})$，其中 $\beta$ 衡量最优解沿视线的特征离散度
-    - 设计动机：SGD 从头训练太慢，已有启发式方法（如 row-sum 加权）被多个工作独立提出但无理论保证，本文统一了理论框架并证明它们是特例
+**2. Tikhonov Guidance：用非线性软极化压低误差上界 $\beta$。** 线性系统 $A$ 可能秩亏或近奇异，导致问题病态、$\beta$ 偏大。传统 Tikhonov 正则 $\|Ax-b\|^2 + \|\lambda I\|^2$ 只是对系统做线性调整，本文则改从 $A$ 的构造入手：根据"$\beta$ 与 $A^T A$ 的对角优势度负相关"这一性质（Property 4），在 feature lifting 阶段对 opacity 激活函数做非线性软极化，把 opacity 值往 0 或 1 推，使每条射线上的贡献尽量集中到单个 primitive。这样直接增强了 $A^T A$ 的对角优势、压低 $\beta$，而且因为只作用于 feature lifting 阶段，不会损害 RGB 渲染质量。
 
-2. **Tikhonov Guidance 正则化**:
-
-    - 做什么：通过调节 opacity 激活函数增强 $A^T A$ 的对角优势性，降低 $\beta$
-    - 核心思路：根据 $\beta$ 与对角优势度的负相关关系（Property 4），在 feature lifting 阶段对 opacity 值做非线性软极化（趋向0或1），使每条射线上主要由一个 primitive 贡献，从而减小误差上界
-    - 设计动机：线性系统 $A$ 可能秩亏或近奇异，传统 Tikhonov 正则 $\|Ax-b\|^2 + \|\lambda I\|^2$ 是线性调整，本方法用非线性引导且不损害 RGB 渲染质量
-
-3. **Post-Lifting Aggregation 噪声过滤**:
-
-    - 做什么：通过特征聚类和 IoU 匹配过滤不一致的 SAM mask
-    - 核心思路：对提升后的特征做聚类 → one-hot 编码渲染回2D → argmax 得到 cluster mask → 计算每个 SAM mask 与 cluster mask 的 IoU → 低于阈值的 mask 被丢弃
-    - 设计动机：多视角不一致通常源于 mask 噪声（如一个视角只分割面条，另一个同时包含碗和面条），而非真实的语义差异
+**3. Post-Lifting Aggregation：从数据端过滤掉不一致的 SAM mask。** 多视角不一致往往不是真实的语义差异，而是 mask 噪声造成的——比如一个视角只分割出面条，另一个视角却把碗和面条圈在一起。本文不在求解中硬扛这种噪声，而是在提升完特征后做一次清洗：先对提升后的特征聚类，用 one-hot 编码渲染回2D 并取 argmax 得到 cluster mask，再计算每个 SAM mask 与 cluster mask 的 IoU，把 IoU 低于阈值的 mask 整个丢弃。阈值不需逐物体手调，而是由 attention histogram 的局部极值自动确定。
 
 ### 损失函数 / 训练策略
 
-无需训练过程，完全闭式求解。自动阈值选择通过 attention histogram 的局部极值确定，避免逐物体手动调参。
+整套方法无需任何训练，全程闭式求解，这也是它能在数分钟内完成而非耗时数小时的根本原因。
 
 ## 实验关键数据
 

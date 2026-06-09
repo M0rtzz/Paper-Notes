@@ -129,7 +129,7 @@ Top-10排名最频繁的模型（按进入Top-10的任务数排列）：
 - [\[ACL 2025\] Where Are We? Evaluating LLM Performance on African Languages](where_are_we_evaluating_llm_performance_on_african_languages.md)
 - [\[ACL 2025\] BESSTIE: A Benchmark for Sentiment and Sarcasm Classification for Varieties of English](besstie_a_benchmark_for_sentiment_and_sarcasm_classification_for_varieties_of_en.md)
 - [\[NeurIPS 2025\] Bayesian Evaluation of Large Language Model Behavior](../../NeurIPS2025/llm_evaluation/bayesian_evaluation_of_large_language_model_behavior.md)
-- [\[ACL 2025\] Batayan: A Filipino NLP Benchmark for Evaluating Large Language Models](batayan_a_filipino_nlp_benchmark_for_evaluating_large_language_models.md)
+- [\[ACL 2025\] Language Model Probabilities are Not Calibrated in Numeric Contexts](language_model_probabilities_are_not_calibrated_in_numeric_contexts.md)
 
 </div>
 

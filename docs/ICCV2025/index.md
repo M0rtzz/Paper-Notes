@@ -1,8 +1,8 @@
 ---
 title: >-
-  1319 篇 ICCV2025 论文解读 · 每篇 5 分钟读懂
+  1316 篇 ICCV2025 论文解读 · 每篇 5 分钟读懂
 description: >-
-  1319篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(57篇)、模型压缩(49篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "AI顶会"
@@ -21,7 +21,7 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文笔记
 
-1319篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(57篇)、模型压缩(49篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1316篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(212篇)、多模态 VLM(149篇)、自动驾驶(93篇)、语义分割(74篇)、视频理解(56篇)、模型压缩(48篇)、视频生成(48篇)等 41个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -1116,10 +1116,6 @@ tags:
 **[Addressing Text Embedding Leakage in Diffusion-Based Image Editing](image_generation/addressing_text_embedding_leakage_in_diffusion-based_image_editing.md)**
 
 :   揭示了基于扩散模型的文本图像编辑中属性泄露的根本原因——自回归文本编码器中 EOS 嵌入的语义纠缠，并提出 ALE 框架（ORE + RGB-CAM + BB），从嵌入解耦、注意力遮罩和背景混合三个层面彻底消除属性泄露。
-
-**[Addressing Text Embedding Leakage in Diffusion-based Image Editing](image_generation/addressing_text_embedding_leakage_in_diffusion_based_image_editing.md)**
-
-:   提出ALE框架，通过对象限制嵌入(ORE)解耦EOS token的语义纠缠、区域引导混合交叉注意力掩码(RGB-CAM)约束空间注意力、背景混合(BB)保留未编辑区域，系统性解决扩散模型文本图像编辑中的属性泄漏问题，并建立了ALE-Bench评估基准。
 
 **[ADIEE: Automatic Dataset Creation and Scorer for Instruction-Guided Image Editing Evaluation](image_generation/adiee_automatic_dataset_creation_and_scorer_for_instruction-guided_image_editing.md)**
 
@@ -3245,10 +3241,6 @@ tags:
 
 :   提出一种无需训练的自适应推理方法，通过 LLM 前基于嵌入相似度的迭代式 token 合并 + LLM 层内基于 PageRank 多模态重要性的渐进式 token 剪枝，实现多模态 LLM 在 40 倍 FLOPs 减少范围内的灵活精度-效率权衡，在视频和图像理解任务上均取得优异表现。
 
-**[AIM: Adaptive Inference of Multi-Modal LLMs via Token Merging and Pruning](video_understanding/aim_adaptive_inference_of_multi_modal_llms_via_token_merging_and_pruning.md)**
-
-:   提出无需训练的自适应推理方法AIM，通过LLM前的迭代token合并（基于嵌入相似度）和LLM层内的渐进式token剪枝（基于PageRank重要性），实现多模态LLM 6.8倍FLOPs降低且几乎不损失性能，在长视频理解上甚至超越SOTA。
-
 **[Aligning Effective Tokens with Video Anomaly in Large Language Models](video_understanding/aligning_effective_tokens_with_video_anomaly_in_large_language_models.md)**
 
 :   提出VA-GPT，通过空间有效Token选择（SETS）和时间有效Token生成（TETG）两个模块，在MLLM中高效对齐与视频异常相关的关键Token，实现对异常事件的精准检测、描述和时间定位。
@@ -3468,10 +3460,6 @@ tags:
 **[B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](model_compression/b-vllm_a_vision_large_language_model_with_balanced_spatio-temporal_tokens.md)**
 
 :   本文提出B-VLLM框架，通过文本条件自适应帧选择、时序帧Token合并和空间Token采样三个模块，在VLLM的上下文窗口限制内动态平衡视频的时空线索，在MVBench上带来10%的性能提升。
-
-**[B-VLLM: A Vision Large Language Model with Balanced Spatio-Temporal Tokens](model_compression/b_vllm_a_vision_large_language_model_with_balanced_spatio_temporal_tokens.md)**
-
-:   提出B-VLLM框架，通过文本条件自适应帧选择、时间帧token合并和空间token采样三个模块，在VLLM上下文窗口限制内动态平衡视频的时空token，解决均匀采样忽略时间动态和每帧token减少丢失空间细节的困境，在MVBench上提升10%。
 
 **[Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes](model_compression/beyond_low-rank_tuning_model_prior-guided_rank_allocation_for_effective_transfer.md)**
 

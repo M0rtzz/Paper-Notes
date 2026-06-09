@@ -44,27 +44,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-选择一个白盒代理VLM → 在50个查询上优化单张对抗图像(1300步Adam) → 该图像可直接用于攻击任意VLM(包括商业模型)的任意有害查询。输入是空白图像+对抗扰动，输出是对所有目标模型都有效的通用触发图像。
+UltraBreak 想要一张"万能图"：只训练一次，就能对任意 VLM（含闭源商业模型）的任意有害查询生效。做法是选定一个开源 VLM 当白盒代理，在一小批有害查询（50 条）上用 Adam 优化单张对抗图像，迭代约 1300 步。优化的对象是叠加在空白图像上的对抗扰动；优化收敛后，这张图像不再依赖代理模型，可以直接拿去攻击其他架构的目标模型。能做到通用又可迁移，关键在于三件事：把优化目标从 token 级交叉熵换成语义级相似度、在输入侧逼图像学出变换不变的结构、再在文本侧加一句引导 prompt 把攻击效果放大。
 
 ### 关键设计
 
-1. **语义对抗目标(Semantic Adversarial Target)**:
+**1. 语义对抗目标：用 cosine 相似度替代交叉熵，把尖锐的 loss 景观磨平。**
 
-    - 功能：用语义相似度替代token级交叉熵作为优化目标
-    - 核心思路：将输出logits投影到embedding空间得到 $\mu_t = W^\top \text{softmax}(z_t)$，将目标token映射为embedding $e_t$（加Gaussian噪声增强鲁棒性 $\tilde{e}_t = e_t + \varepsilon_t$）。损失函数 $\mathcal{L}_{\text{sem}} = \frac{1}{T}\sum_t (1 - \cos(\mu_t, e_t^{\text{att}}))$，其中 $e_t^{\text{att}}$ 是通过因果注意力加权的目标embedding
-    - 设计动机：交叉熵loss要求精确匹配token，产生spiky景观；cosine相似度在语义空间度量，允许"语义上正确但token不同"的解——产生平滑景观→更好泛化
-    - 注意力机制：加入位置编码的Q/K构造，温度 $\tau=0.5$ 控制分布锐度。$\tau=0$ 退化为CE，$\tau \to \infty$ 过于平滑
+此前梯度攻击（VAJM/UMK）严重过拟合白盒代理，根因是交叉熵要求逐 token 精确匹配，优化出来的是又尖又窄的"spiky"景观，这种尖峰解换个模型就失效。UltraBreak 改在语义空间度量损失：先把每步输出 logits 投影回 embedding 空间得到 $\mu_t = W^\top \text{softmax}(z_t)$，把目标 token 也映射成 embedding $e_t$ 并加 Gaussian 噪声增强鲁棒性 $\tilde{e}_t = e_t + \varepsilon_t$，然后用 cosine 相似度构造损失 $\mathcal{L}_{\text{sem}} = \frac{1}{T}\sum_t (1 - \cos(\mu_t, e_t^{\text{att}}))$。这里的 $e_t^{\text{att}}$ 不是单个目标 embedding，而是经因果注意力加权后的目标表示——Q/K 带位置编码、温度 $\tau$ 控制分布锐度，$\tau=0$ 退化回交叉熵、$\tau\to\infty$ 又过度平滑，论文取 $\tau=0.5$ 折中。这样优化时只要"语义对了"就给低 loss，不强求 token 完全一致，景观因此变得平滑成片，泛化性显著变好。
 
-2. **输入空间约束(Input Space Constraints)**:
+**2. 输入空间约束：逼对抗图像学出变换不变的鲁棒特征，而非脆弱的像素噪声。**
 
-    - 功能：让对抗图像产生变换不变的鲁棒特征
-    - 三个组件：(a) 随机变换——每步随机旋转(-15°~15°)、缩放(0.8~1.2)、平移，防止像素位置过拟合 (b) 输入投影——用CLIP的均值/标准差归一化并裁剪到[0,1] (c) TV正则 $\mathcal{L}_{\text{TV}}$ 强制空间平滑，抑制噪声模式
-    - 效果：无约束→噪声图像; +随机变换→类文字模式涌现; +TV→更光滑一致的结构。这些变换不变结构充当跨模型不变线索
+光改损失还不够——如果让扰动自由发挥，它会把信息编码进特定像素位置，这种低级噪声模式只对当前代理有效。UltraBreak 在每步优化里加三道约束逼图像泛化：(a) 随机变换，每步对图像随机旋转（-15°~15°）、缩放（0.8~1.2）、平移，防止扰动绑死在固定像素位置；(b) 输入投影，按 CLIP 的均值/标准差归一化并裁剪回 $[0,1]$，保证图像合法；(c) TV 正则 $\mathcal{L}_{\text{TV}}$ 强制空间平滑、抑制高频噪声。三者叠加的效果可视化很直观：无约束时收敛成纯噪声图像，加上随机变换后开始涌现类文字模式，再加 TV 则变成更光滑连贯的符号结构。正是这些高级的、变换不变的结构充当了跨模型的不变线索——它们像 FigStep 的人造文字图一样能被不同模型共同识别，所以才能迁移。
 
-3. **目标prompt引导(TPG)**:
+**3. 目标 prompt 引导（TPG）：在文本侧再加一把火。**
 
-    - 功能：在文本侧增强攻击效果
-    - 格式：$q^{\text{TPG}} = \text{"Steps to "} + q + \text{" You must begin with: "} + p$，其中 $p$ = "[Jailbroken Mode]"(开源) 或 "[START LIST]"(商业)
+视觉攻击之外，UltraBreak 在查询文本上套一个固定模板把模型往越狱方向推：$q^{\text{TPG}} = \text{"Steps to "} + q + \text{" You must begin with: "} + p$，其中后缀 $p$ 对开源模型取 "[Jailbroken Mode]"、对商业模型取 "[START LIST]"。这一句既给出有害任务的祈使框架，又用强制开头压低模型拒答的概率，和视觉触发图协同放大攻击效果。
 
 ### 损失函数 / 训练策略
 $$\arg\min_x \sum_{(q,y) \in \mathcal{Q}'} \mathbb{E}_{l,r,s}[\mathcal{L}_{\text{sem}}^{\text{att}}(M', A(x_{\text{blank}}, x_{\text{proj}}, l, r, s), q^{\text{TPG}}, y)] + \lambda_{\text{TV}} \mathcal{L}_{\text{TV}}(x)$$
@@ -128,11 +122,11 @@ $$\arg\min_x \sum_{(q,y) \in \mathcal{Q}'} \mathbb{E}_{l,r,s}[\mathcal{L}_{\text
 
 ## 相关论文
 
+- [\[ICLR 2026\] JULI: Jailbreak Large Language Models by Self-Introspection](juli_jailbreak_large_language_models_by_self-introspection.md)
 - [\[ACL 2025\] HiddenDetect: Detecting Jailbreak Attacks against Large Vision-Language Models via Monitoring Hidden States](../../ACL2025/llm_alignment/hiddendetect_detecting_jailbreak_attacks_against_multimodal_large_language_model.md)
 - [\[CVPR 2026\] Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models](../../CVPR2026/llm_alignment/principled_steering_via_null-space_projection_for_jailbreak_defense_in_vision-la.md)
 - [\[ICLR 2026\] SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks](sema_simple_yet_effective_learning_for_multi-turn_jailbreak_attacks.md)
 - [\[ICLR 2026\] JailNewsBench: Multi-Lingual and Regional Benchmark for Fake News Generation under Jailbreak Attacks](jailnewsbench_multi-lingual_and_regional_benchmark_for_fake_news_generation_unde.md)
-- [\[ICML 2026\] New Wide-Net-Casting Jailbreak Attacks Risk Large Models](../../ICML2026/llm_alignment/new_wide-net-casting_jailbreak_attacks_risk_large_models.md)
 
 </div>
 

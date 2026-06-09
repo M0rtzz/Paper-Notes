@@ -36,30 +36,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在标准 MoE 训练目标（语言建模损失 $\mathcal{L}_{LM}$ + 负载均衡损失 $\mathcal{L}_{LB}$）上增加专家散度损失 $\mathcal{L}_{ED}$：$\mathcal{L}_{final} = \mathcal{L}_{LM} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{ED}$。
+方法在标准 MoE 训练目标之上挂一项额外的专家散度损失，整个 router 结构、专家数量、推理路径都不动。最终目标是语言建模损失、负载均衡损失、专家散度损失三者加权之和 $\mathcal{L}_{final} = \mathcal{L}_{LM} + \alpha \mathcal{L}_{LB} + \beta \mathcal{L}_{ED}$，其中前两项是常规 MoE 配方，新增的 $\mathcal{L}_{ED}$ 负责把"不同数据域应该激活不同专家组合"这条先验显式写进梯度里。
 
 ### 关键设计
-1. **三步聚合**：Token→Sequence→Domain 层次化聚合路由概率
 
-    - Token 级：每个 token 经 router 得到 N 个专家的概率分布 $p(x_t)$
-    - Sequence 级：$\bar{p}_s = \frac{1}{T}\sum_{t=1}^T p(x_t)$，平均每个序列的所有 token 分布
-    - Domain 级：$\bar{p}_j = \frac{1}{|\mathcal{B}_j|}\sum_{s \in \mathcal{B}_j} \bar{p}_s$，按域标签分组平均
-2. **JS 散度最大化**：$\mathcal{L}_{ED} = \frac{1}{\binom{M_B}{2}}\sum_{j<k} -\log(D_{JS}(\bar{p}_j || \bar{p}_k) + \epsilon)$
+**1. 层次化路由聚合：把 token 级噪声压成域级信号。** 单个 token 的路由概率方差很大，直接拿来比较域间差异不可靠，所以先做三级聚合把信号逐层平滑。Token 级上每个 token 经 router 得到 $N$ 个专家的概率分布 $p(x_t)$；Sequence 级把一条序列内所有 token 的分布求平均得到 $\bar{p}_s = \frac{1}{T}\sum_{t=1}^T p(x_t)$；Domain 级再按数据来源的域标签把同域序列分组平均，得到每个域的代表性路由分布 $\bar{p}_j = \frac{1}{|\mathcal{B}_j|}\sum_{s \in \mathcal{B}_j} \bar{p}_s$。这样最终参与比较的是"某个域整体偏好哪些专家"的稳定统计量，而不是抖动剧烈的单 token 决策。
 
-    - 最大化所有域对之间路由分布的 Jensen-Shannon 散度
-    - 使用负对数放大小散度值的梯度，防止梯度消失
-3. **域标签方案**：两种粒度
+**2. 域间 JS 散度最大化：用对称有界的散度逼专家分化。** 有了每个域的路由分布后，损失直接惩罚域之间分布过于接近：$\mathcal{L}_{ED} = \frac{1}{\binom{M_B}{2}}\sum_{j<k} -\log\big(D_{JS}(\bar{p}_j \,\|\, \bar{p}_k) + \epsilon\big)$，对一个 batch 内所有域对 $(j,k)$ 求平均。选 Jensen-Shannon 散度而非 KL，是因为它对称且有界，衡量两个路由分布的差异更稳定。外层套负对数则是为了在散度很小（专家高度同质）时放大梯度——此时 $-\log$ 的导数很大，能给"开始分化"一个强推力，避免梯度消失让损失卡在退化解上，$\epsilon$ 只为数值稳定。
 
-    - 3-Class：英语/中文/数学三大域（直接用数据来源）
-    - 49-Class：用分类器将英文→24 主题、中文→24 主题、数学→1 个，共 49 个细粒度域
+**3. 两种粒度的域标签：用免费的数据来源标签当监督信号。** 域散度需要域划分，本文直接复用预训练语料自带的来源信息，不引入额外标注。粗粒度 3-Class 按英语 / 中文 / 数学三大来源切分；细粒度 49-Class 进一步用分类器把英文细分成 24 个主题、中文细分成 24 个主题、数学保留为 1 个，共 49 个域。粒度越细，域间能拉开的路由差异越多，给专家的"分工题面"也越丰富，后续实验中 49 类的特化与性能都优于 3 类。
 
-### 理论动机——多样性分配
-- **分解定理（Proposition 1）**：总路由多样性 $D_{total} = D_{inter} + D_{intra}$
-    - $D_{inter}$：域间散度——不同域使用不同专家的程度
-    - $D_{intra}$：域内散度——同一域内 token 使用不同专家的程度
-- **Proposition 2**：$\mathcal{L}_{ED}$ 直接增加 $D_{inter}$，将全局多样性重新分配到域间差异上
-- 标准 $\mathcal{L}_{LB}$ 只关注 $D_{total}$ 而不管如何分配，$\mathcal{L}_{ED}$ 提供更精细的方向引导
-- 两个损失协同：$\mathcal{L}_{LB}$ 确保总多样性，$\mathcal{L}_{ED}$ 引导多样性流向域间差异→专家特化
+**4. 多样性分解：解释为什么 $\mathcal{L}_{ED}$ 和负载均衡互补而不冲突。** 这一点回答"加了散度损失会不会破坏负载均衡"。文中证明（Proposition 1）总路由多样性可分解为 $D_{total} = D_{inter} + D_{intra}$：$D_{inter}$ 是域间散度，刻画不同域用不同专家的程度；$D_{intra}$ 是域内散度，刻画同一域内 token 之间的专家分散。标准负载均衡损失 $\mathcal{L}_{LB}$ 只管把 $D_{total}$ 顶高，却不规定多样性该流向哪里，结果常常是专家被均匀使用但功能雷同。Proposition 2 进一步说明 $\mathcal{L}_{ED}$ 专门抬高 $D_{inter}$，相当于在固定总量下把多样性重新分配到域间差异上。于是两个损失各司其职：$\mathcal{L}_{LB}$ 保证总量、防止专家空转，$\mathcal{L}_{ED}$ 把这份多样性导向"按域分工"，最终落到专家特化上。
 
 ## 实验关键数据
 
@@ -127,10 +114,10 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Ultra-Fast Language Generation via Discrete Diffusion Divergence Instruct](ultra-fast_language_generation_via_discrete_diffusion_divergence_instruct.md)
+- [\[ICLR 2026\] Deep Hierarchical Learning with Nested Subspace Networks for Large Language Models](deep_hierarchical_learning_with_nested_subspace_networks_for_large_language_mode.md)
+- [\[ICML 2026\] ProactiveLLM: Learning Active Interaction for Streaming Large Language Models](../../ICML2026/llm_efficiency/proactivellm_learning_active_interaction_for_streaming_large_language_models.md)
 - [\[ICML 2026\] TEAM: Temporal-Spatial Consistency Guided Expert Activation for MoE Diffusion Language Model Acceleration](../../ICML2026/llm_efficiency/team_temporal-spatial_consistency_guided_expert_activation_for_moe_diffusion_lan.md)
 - [\[NeurIPS 2025\] Advancing Expert Specialization for Better MoE](../../NeurIPS2025/llm_efficiency/advancing_expert_specialization_for_better_moe.md)
-- [\[ICML 2026\] ProactiveLLM: Learning Active Interaction for Streaming Large Language Models](../../ICML2026/llm_efficiency/proactivellm_learning_active_interaction_for_streaming_large_language_models.md)
 - [\[ICLR 2026\] DND: Boosting Large Language Models with Dynamic Nested Depth](dnd_boosting_large_language_models_with_dynamic_nested_depth.md)
 
 </div>

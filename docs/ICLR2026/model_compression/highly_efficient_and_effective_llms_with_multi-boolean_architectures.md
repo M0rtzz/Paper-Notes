@@ -49,50 +49,25 @@ tags:
 
 ### 整体框架
 
-提出将 LLM 的权重矩阵表示为**多个布尔矩阵的加权组合**——即多核布尔架构。每个权重元素不再是单一的 {+1, -1}，而是多个布尔核（Boolean kernel）的线性组合，大幅增强表达能力的同时保持计算的布尔性质。
+核心是把 LLM 的每个权重矩阵表示为多个布尔矩阵的加权组合，即多核布尔架构。每个权重元素不再被压缩成单一的 $\{-1, +1\}$，而是若干布尔核（Boolean kernel）的线性叠加，在保持布尔运算友好性的前提下把表达能力撑回到接近多比特量化；与此同时，整个微调过程直接发生在布尔域内，不再依赖任何全精度潜在权重。
 
 ### 关键设计
 
-1. **多核布尔参数表示（Multi-Kernel Boolean Parameters）**：
+**1. 多核布尔参数表示：用 $2^K$ 个级别突破单核二值化的表达瓶颈。** 传统二值化把权重写成 $W \approx \alpha \cdot B$，其中 $B \in \{-1, +1\}^{m \times n}$、$\alpha$ 是单个缩放因子，每个权重元素只有正负两种状态，信息容量被压到极限。本文改为多核形式 $W \approx \sum_{k=1}^{K} \alpha_k \cdot B_k$，用 $K$ 个独立布尔矩阵 $B_k$ 与各自的缩放因子 $\alpha_k$ 加权求和。这样一来 $K$ 个核的组合可以表达 $2^K$ 个不同的权重级别，$K=2$ 大致等效于 2-bit 量化、$K=3$ 约等于 3-bit，表达力随核数指数增长而非线性堆叠。关键在于这并不牺牲布尔运算的硬件优势：矩阵乘法 $Wx$ 被自然分解成 $K$ 次布尔矩阵与向量的乘法，每一次都能用 XNOR+popcount 高效实现，因此「表达力涨上去、算子留在布尔域」二者兼得。
 
-    - 传统二值化：$W \approx \alpha \cdot B$，其中 $B \in \{-1, +1\}^{m \times n}$，$\alpha$ 是缩放因子
-    - 多核布尔：$W \approx \sum_{k=1}^{K} \alpha_k \cdot B_k$，使用 $K$ 个布尔矩阵 $B_k$ 的加权和
-    - 每个 $B_k$ 是独立的布尔矩阵，$\alpha_k$ 是对应的缩放因子
-    - $K$ 个核的组合能表示 $2^K$ 个不同的权重级别（vs. 单核二值化的2个级别）
-    - 当 $K=2$ 时，等效于约 2-bit 量化；$K=3$ 时约 3-bit
-    - 关键优势：矩阵乘法 $Wx$ 分解为 $K$ 次布尔矩阵与向量的乘法，可用 XNOR+popcount 高效实现
+**2. 布尔域直接微调：把离散翻转建模为概率事件，彻底甩掉潜在权重。** 这是全文最核心的贡献。布尔变量 $\{-1, +1\}$ 是离散的，无法直接用连续梯度下降优化，传统训练感知方法只能额外维护一份全精度潜在权重 $W_{\text{latent}} \in \mathbb{R}$，前向用 $\text{sign}(W_{\text{latent}})$ 取布尔值、反向靠直通估计器（STE）把梯度灌回 $W_{\text{latent}}$——这份影子权重正是内存开销和效率退化的根源。本文索性不保留潜在权重，而是把每个布尔元素的「翻转（flip）」动作建模成一个概率事件，依据损失函数对该元素翻转所带来的预期改进来决定翻不翻。由于优化对象始终是布尔矩阵本身，既避开了 STE 的梯度偏差，又省掉了全精度副本的存储，训练和推理因此能统一在极低精度下完成。
 
-2. **布尔域直接微调（Direct Finetuning in Boolean Domain）**：这是本文最核心的贡献
+**3. 缩放因子的闭式交替优化：让 $\alpha_k$ 几乎免费地跟上 $B_k$。** 布尔矩阵 $B_k$ 一旦确定，对应的缩放因子 $\alpha_k$ 就退化成一个最小二乘问题，可以直接用闭式解求出，无需迭代搜索。训练时采用交替优化：固定 $\alpha$ 去更新布尔矩阵 $B$，再固定 $B$ 用闭式解刷新 $\alpha$，两步轮流进行。因为缩放因子那一步是解析解，整个交替过程收敛很快，通常几轮即可稳定，几乎不构成额外计算负担。
 
-    - **挑战**：布尔变量 $\{-1, +1\}$ 是离散的，无法直接用连续梯度下降优化
-    - **传统做法**：维护全精度潜在权重 $W_{\text{latent}} \in \mathbb{R}$，用 $\text{sign}(W_{\text{latent}})$ 得到布尔权重，梯度更新 $W_{\text{latent}}$（直通估计器 STE）
-    - **本文方法**：完全消除潜在权重，直接在布尔域中更新
-    - 核心思路：将布尔翻转（flip）操作建模为概率事件，基于损失函数相对于每个布尔元素翻转的预期改进来决定是否翻转
-    - 这种方法避免了 STE 带来的梯度偏差问题，且不需要存储全精度权重
-
-3. **缩放因子的高效优化**：
-
-    - 布尔矩阵 $B_k$ 确定后，缩放因子 $\alpha_k$ 可通过简单的闭式解（最小二乘）快速求解
-    - 交替优化：固定 $\alpha$ 更新 $B$，固定 $B$ 更新 $\alpha$
-    - 收敛快速，通常几轮迭代即可
-
-4. **分组量化策略**：
-
-    - 按列或按块对权重矩阵分组，每组使用独立的缩放因子
-    - 增加了精细度，以少量额外参数（缩放因子）换取显著的精度提升
-    - 分组大小是精度和压缩率之间的权衡参数
+**4. 分组量化策略：以极少的缩放因子换取显著的精度回升。** 若整层只共享一组缩放因子，粒度太粗会丢失精度，于是按列或按块把权重矩阵切成若干组，每组配一套独立的 $\alpha_k$。多出来的参数仅仅是这些缩放因子，量级极小，却能明显抬高量化精度。分组大小就是精度与压缩率之间的旋钮：组越小越精细、压缩率略降，实验中 128 是常用的折中点。
 
 ### 损失函数 / 训练策略
 
-微调使用标准的语言模型交叉熵损失：
+微调直接沿用标准的语言模型交叉熵损失，优化目标就是这套布尔参数 $\{B_k, \alpha_k\}$：
 
 $$\mathcal{L} = -\sum_{t} \log P(x_t | x_{<t}; \{B_k, \alpha_k\})$$
 
-训练过程：
-1. 初始化：从预训练权重出发，通过 SVD 或贪心搜索确定初始的多核布尔矩阵
-2. 微调：在小规模数据上交替优化布尔矩阵和缩放因子
-3. 不需要大规模训练数据，通常用几千条样本即可有效微调
-4. 微调过程中内存占用远低于传统训练感知方法（无需全精度潜在权重）
+整个流程从预训练权重出发，先用 SVD 或贪心搜索把初始的多核布尔矩阵拟合出来，再在小规模数据上交替优化布尔矩阵与缩放因子。由于不需要全精度潜在权重，微调时的内存占用远低于传统训练感知方法，而且对数据量要求很低，通常几千条样本就足以收敛。
 
 ## 实验关键数据
 
@@ -173,7 +148,7 @@ $$\mathcal{L} = -\sum_{t} \log P(x_t | x_{<t}; \{B_k, \alpha_k\})$$
 - [\[AAAI 2026\] Don't Start Over: A Cost-Effective Framework for Migrating Personalized Prompts Between LLMs](../../AAAI2026/model_compression/dont_start_over_a_cost-effective_framework_for_migrating_personalized_prompts_be.md)
 - [\[ICML 2026\] BioArc: Discovering Optimal Neural Architectures for Biological Foundation Models](../../ICML2026/model_compression/bioarc_discovering_optimal_neural_architectures_for_biological_foundation_models.md)
 - [\[ICLR 2026\] Draft-based Approximate Inference for LLMs](draft-based_approximate_inference_for_llms.md)
-- [\[ICLR 2026\] Steering MoE LLMs via Expert (De)Activation](steering_moe_llms_via_expert_deactivation.md)
+- [\[ICML 2026\] Effective Model Pruning: Measure the Redundancy of Model Components](../../ICML2026/model_compression/effective_model_pruning_measure_the_redundancy_of_model_components.md)
 
 </div>
 

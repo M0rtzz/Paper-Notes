@@ -45,33 +45,33 @@ tags:
 
 ## 方法详解
 
-### 核心 idea：孪生轨迹（Twin Trajectories）
+### 整体框架
 
-标准 flow matching 在 $t \in [0,1]$ 上学习从噪声到真实数据的映射。TwinFlow 将时间区间扩展到 $t \in [-1,1]$：
-
-- **正半轴** $t \in (0,1]$：标准流，噪声 → 真实数据（real trajectory）
-- **负半轴** $t \in [-1,0)$：孪生流，噪声 → 模型自身生成的"假"数据（fake trajectory）
-
-两条轨迹共享同一个网络 $F_\theta$，通过时间条件的正负符号区分。模型生成 $\mathbf{x}^{\text{fake}} = \mathbf{z} - F_\theta(\mathbf{z}, 0)$ 作为 fake 端点，构造完整的 fake 轨迹。
+TwinFlow 把标准 flow matching 的时间区间从 $[0,1]$ 扩展到 $[-1,1]$，让同一个网络 $F_\theta$ 同时学两条共用噪声起点的"孪生轨迹"——正半轴 $t\in(0,1]$ 是噪声到真实数据的 real 轨迹，负半轴 $t\in[-1,0)$ 是噪声到模型自身单步输出（fake 数据）的 fake 轨迹。模型用 $\mathbf{x}^{\text{fake}} = \mathbf{z} - F_\theta(\mathbf{z}, 0)$ 现场生成 fake 端点，再让两条轨迹的速度场互相对齐，从而把"自己的多步质量教自己的单步"变成一个不需要判别器、不需要冻结教师的纯自监督目标。
 
 ### 关键设计
 
-1. **自对抗损失 $\mathcal{L}_{\text{adv}}$**：对 fake 轨迹施加标准 flow matching 目标，教网络在负时间条件下学会从噪声到 fake 数据的映射，无需额外判别器
-2. **速度匹配校正损失 $\mathcal{L}_{\text{rectify}}$**：核心数学洞察——最小化 real/fake 两条轨迹的速度场差异 $\Delta_\mathbf{v}(\mathbf{x}_t) = \mathbf{v}_{\text{real}}(\mathbf{x}_t, t) - \mathbf{v}_{\text{fake}}(\mathbf{x}_t, -t)$ 等价于最小化 $D_{\text{KL}}(p_{\text{fake}} \| p_{\text{real}})$，通过 stop-gradient 操作转化为可行损失
-3. **Any-step 统一框架**：基于 RCGM 的 any-step 公式，同一模型同一 checkpoint 支持 1/2/4/... 步推理，部署时灵活选择
+**1. 孪生轨迹：用时间符号区分真假，把外部教师内化。** 高质量少步方法之所以都依赖判别器或冻结教师，是因为单步输出需要一个"什么才算好"的参照，而这些辅助组件在 20B 规模会直接 OOM。TwinFlow 的破局点是让模型自己充当参照：负半轴专门承载模型当前的 fake 分布，正半轴承载真实分布，两半轴共享网络仅靠时间条件的正负号切换。fake 端点由当前模型即时给出，意味着参照随训练一起演化（self-play），既省掉了额外模型副本，又避免了冻结教师带来的固定目标偏差。
 
-### 总损失与训练策略
+**2. 自对抗损失 $\mathcal{L}_{\text{adv}}$：在负时间上做标准 flow matching。** 有了 fake 轨迹后，直接对它套用标准 flow matching 目标即可——教网络在负时间条件下学会从噪声映射到 fake 数据。这一步让"对抗"完全发生在单一网络内部：模型既要拟合真实数据（正半轴），又要刻画自己当前的生成分布（负半轴），二者的张力构成对抗信号，无需任何独立判别器参与。
+
+**3. 速度匹配校正损失 $\mathcal{L}_{\text{rectify}}$：把 KL 梯度转写成可优化的速度差。** 仅有自对抗还不足以把 fake 分布往 real 分布推。本文的核心数学洞察是：在同一中间点 $\mathbf{x}_t$ 上，最小化 real/fake 两条轨迹的速度场差异
+
+$$\Delta_\mathbf{v}(\mathbf{x}_t) = \mathbf{v}_{\text{real}}(\mathbf{x}_t, t) - \mathbf{v}_{\text{fake}}(\mathbf{x}_t, -t)$$
+
+等价于最小化 $D_{\text{KL}}(p_{\text{fake}} \,\|\, p_{\text{real}})$。这样就不必像 DMD 那样显式训练一个 score 估计器，而是通过 stop-gradient 把这个速度差转化为可直接反传的损失，让 fake 分布沿 KL 梯度方向收敛到 real 分布。
+
+**4. Any-step 统一框架：一份 checkpoint 支持 1/2/4 步。** 训练基于 RCGM 的 any-step 公式，使同一模型同一 checkpoint 在推理时可灵活选 1/2/4/… 步，部署时按质量与速度需求动态权衡，而不必为不同步数各训一版。
+
+### 损失函数 / 训练策略
+
+总目标在标准 any-step flow matching 基线上叠加 TwinFlow 的两项自监督损失：
 
 $$\mathcal{L}(\theta) = \mathcal{L}_{\text{base}} + \underbrace{(\mathcal{L}_{\text{adv}} + \mathcal{L}_{\text{rectify}})}_{\mathcal{L}_{\text{TwinFlow}}}$$
 
-- $\mathcal{L}_{\text{base}}$：标准 any-step flow matching（$N=2$），目标时间 $r$ 随机采样自 $[0,1]$
-- $\mathcal{L}_{\text{TwinFlow}}$：自对抗 + 校正，目标时间固定 $r=0$
-- **批内混合**：超参 $\lambda$ 控制每个 mini-batch 中分别用于两个损失的比例，最优 $\lambda \approx 1/3$
-- Qwen-Image-20B 支持 LoRA 微调（~40GB）和全参数训练
+其中 $\mathcal{L}_{\text{base}}$ 是 $N=2$ 的 any-step flow matching，目标时间 $r$ 随机采样自 $[0,1]$；$\mathcal{L}_{\text{TwinFlow}}$ 则把目标时间固定在 $r=0$ 专攻单步。两类损失在每个 mini-batch 内按超参 $\lambda$ 划分样本比例，实验中 $\lambda\approx 1/3$ 最优——过大过小都会破坏 base 与 TwinFlow 的平衡。整套框架对 Qwen-Image-20B 既支持约 40GB 显存的 LoRA 微调，也支持全参数训练。
 
-### 为什么不会模式坍缩？
-
-与 Qwen-Image-Lightning（基于 DMD2 去掉 GAN loss）不同，TwinFlow 保留 $\mathcal{L}_{\text{base}}$ 中的随机目标时间采样，持续学习完整轨迹；同时 fake 轨迹随训练共同演化（self-play），避免了冻结教师导致的固定目标偏差。实验证实 Qwen-Image-Lightning 存在严重的多样性退化（同一 prompt 不同噪声生成几乎相同的图），而 TwinFlow 无此问题。
+值得强调的是它为何不像同规模的 Qwen-Image-Lightning（基于 DMD2 去掉 GAN loss）那样模式坍缩：$\mathcal{L}_{\text{base}}$ 保留了随机目标时间采样，迫使模型持续学习完整轨迹而非塌缩到单一映射；同时 fake 轨迹随训练共同演化，避免了冻结教师的固定目标偏差。实测 Qwen-Image-Lightning 同一 prompt 换噪声几乎生成相同图，而 TwinFlow 无此退化。
 
 ## 实验结果
 
@@ -159,11 +159,11 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{base}} + \underbrace{(\mathcal{L}_{\t
 
 ## 相关论文
 
-- [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
 - [\[ICML 2026\] Adversarial Flow Models](../../ICML2026/image_generation/adversarial_flow_models.md)
 - [\[NeurIPS 2025\] FALCON: Few-step Accurate Likelihoods for Continuous Flows](../../NeurIPS2025/image_generation/falcon_few-step_accurate_likelihoods_for_continuous_flows.md)
 - [\[ICML 2025\] Revisiting Diffusion Models: From Generative Pre-training to One-Step Generation](../../ICML2025/image_generation/revisiting_diffusion_models_from_generative_pre-training_to_one-step_generation.md)
-- [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
+- [\[ICLR 2026\] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
+- [\[CVPR 2026\] LeapAlign: Post-Training Flow Matching Models at Any Generation Step by Building Two-Step Trajectories](../../CVPR2026/image_generation/leapalign_post_training_flow_matching_models_at_any_generation_step.md)
 
 </div>
 

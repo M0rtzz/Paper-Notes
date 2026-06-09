@@ -123,7 +123,7 @@ Asper-Bench 包含 250 个人工验证的复杂任务，涵盖多种助手场景
 - [\[ACL 2025\] Infogen: Generating Complex Statistical Infographics from Documents](infogen_generating_complex_statistical_infographics_from_documents.md)
 - [\[ACL 2025\] ACT: Knowledgeable Agents to Design and Perform Complex Tasks](act_knowledgeable_agents_to_design_and_perform_complex_tasks.md)
 - [\[ACL 2025\] Battling against Tough Resister: Strategy Planning with Adversarial Game for Non-collaborative Dialogues](battling_against_tough_resister_strategy_planning_with_adversarial_game_for_non-.md)
-- [\[ECCV 2024\] Online Temporal Action Localization with Memory-Augmented Transformer](../../ECCV2024/others/online_temporal_action_localization_with_memory-augmented_transformer.md)
+- [\[CVPR 2025\] PhysicsGen: Can Generative Models Learn from Images to Predict Complex Physical Relations?](../../CVPR2025/others/physicsgen_can_generative_models_learn_from_images_to_predict_complex_physical_r.md)
 
 </div>
 

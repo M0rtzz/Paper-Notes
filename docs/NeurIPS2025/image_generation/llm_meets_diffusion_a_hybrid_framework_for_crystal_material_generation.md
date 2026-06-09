@@ -131,7 +131,7 @@ $$\mathcal{L} = \mathcal{L}_{lattice} + \mathcal{L}_{coord}$$
 - [\[NeurIPS 2025\] Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)
 - [\[ICML 2025\] DDIS: When Model Knowledge Meets Diffusion Model](../../ICML2025/image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)
 - [\[CVPR 2025\] MARBLE: Material Recomposition and Blending in CLIP-Space](../../CVPR2025/image_generation/marble_material_recomposition_and_blending_in_clip-space.md)
-- [\[CVPR 2025\] LumiNet: Latent Intrinsics Meets Diffusion Models for Indoor Scene Relighting](../../CVPR2025/image_generation/luminet_latent_intrinsics_meets_diffusion_models_for_indoor_scene_relighting.md)
+- [\[ECCV 2024\] HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation](../../ECCV2024/image_generation/hybridbooth_hybrid_prompt_inversion_for_efficient_subject-driven_generation.md)
 
 </div>
 

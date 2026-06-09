@@ -39,51 +39,47 @@ tags:
 
 ## 方法详解
 
-### 整体框架 DBSLinUCB
+### 整体框架
 
-三层结构：
-1. **底层 — Dyadic Block Sketching (Algorithm 1)**：将流数据分块，每块用独立矩阵草图（FD/RFD）逼近，草图大小逐块加倍。
-2. **中层 — 草图拼接**：利用分解性 (Decomposability, Lemma 3) 将所有块草图拼接为全局草图 $S^{(t)}$ 和辅助矩阵 $M^{(t)}$。
-3. **上层 — UCB 决策**：基于多尺度草图的 RLS 估计器和多尺度置信椭球进行选臂。
+DBSLinUCB 把"一张固定大小的草图"换成"一摞几何级数增长的草图块"：流数据被切成若干块，每块用独立的矩阵草图（FD 或 RFD）逼近，块越靠后草图越大，再借助分解性把所有块草图拼成全局草图喂给 UCB 决策。用户不再去猜未知的最优草图大小，而是只设一个全局误差参数 $\epsilon$，由分块机制自适应地决定要开多少块、每块多大，从而让逼近质量与流矩阵频谱性质彻底解耦。
 
 ### 关键设计
 
-**1. Dyadic Block 分块策略**
+**1. Dyadic Block 分块策略：让草图大小随数据自己长出来。**
 
-- 初始块草图大小 $l_0$，每个新块加倍为 $2l$。维护一个活跃块 $\mathcal{B}^\star$（接收新行）和不活跃块列表 $\mathcal{L}$（已冻结）。
-- 两个不变量：(i) 不活跃块的草图大小 $\geq$ 秩或块大小 $< \epsilon l_0$；(ii) 块数上限 $\lfloor \log(d/l_0 + 1) \rfloor$。
-- 当活跃块的秩将超过草图大小且块大小 $\geq \epsilon l_0$ 时→冻结当前块，新建加倍块。
-- 块数达上限（极端重尾）→退化为 rank-1 精确更新，等价于 OFUL。
+固定的小草图在重尾频谱下保不住信息，固定的大草图又浪费算力，问题在于没人事先知道该开多大。分块策略维护一个接收新行的活跃块 $\mathcal{B}^\star$ 和一组已冻结的不活跃块列表 $\mathcal{L}$：初始块草图大小为 $l_0$，每当活跃块的秩将要超过自己的草图大小、且块大小已不小于 $\epsilon l_0$ 时，就冻结当前块、新建一个大小加倍的块继续吸收数据。整个过程受两条不变量约束——不活跃块要么草图大小已覆盖其秩、要么块大小小于 $\epsilon l_0$（保证每块逼近质量），以及块数上限为 $\lfloor \log(d/l_0 + 1) \rfloor$（保证总开销可控）。在极端重尾、块数撞到上限时，算法干脆退化为 rank-1 精确更新，等价于不做草图的 OFUL，既不会失真也不会无限膨胀。
 
-**2. 分解性 (Decomposability, Lemma 3)**
+**2. 分解性把局部质量拼成全局保证：多尺度误差可加。**
 
-若每块草图满足 $\|X_i^\top X_i - S_i^\top S_i\|_2 \leq \epsilon_i \|X_i\|_F^2$，则拼接草图的全局误差被各块误差之和控制——多尺度质量可组合为全局保证。
+多块草图能拼起来用的前提，是各块的逼近误差不会在拼接时失控。分解性（Decomposability, Lemma 3）给出的保证是：只要每块草图满足局部协方差误差界 $\|X_i^\top X_i - S_i^\top S_i\|_2 \leq \epsilon_i \|X_i\|_F^2$，则拼接后全局草图的误差就被各块误差之和所控制。换句话说，单块上能证明的逼近质量是可组合的，这把"每块管好自己"直接升级成了"整体也管得住"，是多尺度框架能成立的代数基石。
 
-**3. 全局误差控制 (Theorem 1)**
+**3. 全局误差控制让保证不再依赖频谱：把误差钉死在 $\epsilon$ 上。**
+
+有了分解性，分块策略的最终效果是一个与流矩阵频谱性质无关的全局误差界（Theorem 1）：
 
 $$\|X^\top X - S^\top S\|_2 \leq 2\epsilon$$
 
-不依赖流矩阵频谱性质。块数 $B = \lceil \min\{\log(k/l_0), \|X\|_F^2 / (\epsilon l_0)\} \rceil$ 自适应于数据：低秩时块少草图小，重尾时块多直至退化为精确更新。
+实际开出的块数 $B = \lceil \min\{\log(k/l_0), \|X\|_F^2 / (\epsilon l_0)\} \rceil$ 会随数据自适应——低秩友好时只开几块、草图很小，重尾时多开几块直到退化为精确更新。这正是范式转变的落点：复杂性从"选对草图大小"转移到了"由 $\epsilon$ 驱动的自适应计算"。
 
-**4. 多尺度置信椭球 (Theorem 2)**
+**4. 多尺度置信椭球让 UCB 半径只看 $\epsilon$：把遗憾从 $\Delta_T$ 上解绑。**
+
+草图逼近会污染最小二乘估计，必须把这部分误差吸收进 UCB 的置信半径才能保证决策不被误导。基于多尺度草图重新推导的置信椭球（Theorem 2）半径为
 
 $$\hat{\beta}_t(\delta) \lesssim R\sqrt{d \ln(1 + \epsilon/\lambda) + 2l_{B_t}} \cdot \sqrt{1 + \epsilon/\lambda} + \frac{H(\lambda + \epsilon)}{\sqrt{\lambda}}$$
 
-椭球半径只依赖 $\epsilon$ 和当前草图大小 $l_{B_t}$，而非不可控的 $\Delta_T$。
+它只依赖可控的 $\epsilon$ 和当前草图大小 $l_{B_t}$，而非旧方法里随重尾爆炸的频谱误差 $\Delta_T$。正是这一步把"草图退化→椭球膨胀→线性遗憾"的链条从源头掐断。
 
-### 理论保证
+**5. FD 与 RFD 两个实例，给出次线性遗憾的双重保证。**
 
-**DBSLinUCB-FD 遗憾界 (Theorem 3)**：
+把上面的椭球代入标准 UCB 分析，两种底层草图各得一条遗憾界。用 FD 的 DBSLinUCB-FD（Theorem 3）为
 
-$$\text{Regret}_T = \widetilde{O}\left(\left(1 + \frac{\epsilon}{\lambda}\right)^{3/2} \cdot (d + l_{B_T}) \cdot \sqrt{T}\right)$$
+$$\text{Regret}_T = \widetilde{O}\left(\left(1 + \frac{\epsilon}{\lambda}\right)^{3/2} \cdot (d + l_{B_T}) \cdot \sqrt{T}\right),$$
 
-设 $\epsilon = O(1)$ 时为 $\widetilde{O}(\sqrt{T})$，与 OFUL 同阶。
+取 $\epsilon = O(1)$ 即得 $\widetilde{O}(\sqrt{T})$，与 OFUL 同阶。改用正则化 FD 的 DBSLinUCB-RFD（Theorem 4）则进一步把 $\epsilon$ 的幂次从 $3/2$ 压到 $1/2$、并解耦 $d$ 与 $\epsilon$：
 
-**DBSLinUCB-RFD 遗憾界 (Theorem 4)**：
+$$\text{Regret}_T = \widetilde{O}\left(\left(1 + \frac{\epsilon}{\lambda}\right)^{1/2} \cdot \sqrt{l_{B_T} T} + \sqrt{d l_{B_T} T}\right),$$
 
-$$\text{Regret}_T = \widetilde{O}\left(\left(1 + \frac{\epsilon}{\lambda}\right)^{1/2} \cdot \sqrt{l_{B_T} T} + \sqrt{d l_{B_T} T}\right)$$
-
-$\epsilon$ 阶从 $3/2$ 降至 $1/2$，解耦 $d$ 与 $\epsilon$，得益于 RFD 的正定单调性和良条件性。设 $\epsilon = O(T^{(2\gamma-1)/3})$ 可得任意 $O(T^\gamma)\ (\gamma \in [0.5,1))$ 遗憾界。
+这得益于 RFD 的正定单调性和良条件性；若令 $\epsilon = O(T^{(2\gamma-1)/3})$，还能换取任意指定的 $O(T^\gamma)\ (\gamma \in [0.5,1))$ 遗憾，给出精度与效率之间一条连续可调的曲线。
 
 ## 实验关键数据
 

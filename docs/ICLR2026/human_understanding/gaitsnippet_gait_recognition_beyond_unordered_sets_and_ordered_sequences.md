@@ -39,58 +39,31 @@ tags:
 
 ## 方法详解
 
-### 整体思路
+### 整体框架
 
-将轮廓序列切分为等长 segment，从每个 segment 中随机抽帧组成一个 snippet（代表一个局部动作），整个序列的步态特征由多个 snippet 的特征聚合而得。
+GaitSnippet 想在"无序集合"和"有序序列"之间走出第三条路：既保留集合范式对长序列的覆盖能力，又补回序列范式才有的短程时序上下文。做法是把一段轮廓序列切成若干等长 segment，每个 segment 里随机抽几帧拼成一个 snippet（代表一个局部动作），然后让特征沿着"帧 → snippet → 序列"两次聚合上来——snippet 内部用一个轻量时序模块注入局部上下文，snippet 之间再用集合池化拼成最终的序列级步态表征。整条 pipeline 仍然跑在纯 2D 卷积骨干上，时序建模全靠 snippet 结构本身完成。
 
-### 3.1 Snippet Sampling
+### 关键设计
 
-**训练阶段**：
+**1. Snippet 采样：用"分段随机抽帧"同时拿到短程上下文和长程覆盖。**
 
-- 将序列切分为 $K$ 个等长 segment（长度 $L=16$，约一个步态周期）
-- 随机选取 $M=4$ 个 segment，每个 segment 内随机抽 $N=8$ 帧组成一个 snippet
-- 总采样帧数 $S = M \times N = 32$
-- 第一个 segment 长度 $L_1$ 随机取 $\{1,\ldots,L\}$，增加采样多样性
+序列范式只采约 30 帧连续段，看不到长程；集合范式逐帧独立，丢了短程。Snippet 采样把序列切成 $K$ 个等长 segment（长度 $L=16$，约一个步态周期），训练时随机挑 $M=4$ 个 segment，每个 segment 内再随机抽 $N=8$ 帧组成一个 snippet，总采样帧数 $S = M \times N = 32$。这样既让每个 snippet 内的帧相互邻近、保留局部动作的时序连续性，又让被采的 segment 散落在整条长序列上、覆盖了远程依赖。第一个 segment 的长度 $L_1$ 在 $\{1,\ldots,L\}$ 里随机取，进一步增加采样多样性、起到正则作用。推理时改为用全部帧——每个 segment 内的所有帧构成一个 snippet（即 $M=K,\,N=L$），第一段长度固定为 $L$ 以保证预测稳定。
 
-**推理阶段**：
+**2. 片段内建模（Snippet Block）：把局部时序上下文逐层注入帧级特征。**
 
-- 使用所有帧：每个 segment 内全部帧构成一个 snippet，$M=K, N=L$
-- 第一段长度固定为 $L$，保证预测稳定性
+光有 snippet 的采样还不够，得在网络内部真正用上 snippet 内的时序关系。Snippet Block 分三步：先 **Gathering**，把一个 snippet 内的帧当作无序集合，用非参数化的 Temporal Max Pooling 聚合成 snippet 级表征；再 **Smoothing**，对聚合结果施加一个 $1\times1$ 卷积，平滑噪声并缩小帧级与 snippet 级特征之间的语义差距；最后 **Residual**，通过残差连接把这份 snippet 级上下文加回到每个帧级特征上。把这个 block 插进标准 2D 残差块的两个空间卷积层之间，就得到 **Residual Snippet Block**，作为骨干网络的基本构件。灵感来自 P3D——让帧级特征在逐层卷积的过程中持续感知所在 snippet 的局部时序上下文，而不是等到最后才一次性做时序聚合。骨干本身基于 DeepGaitV2-2D（ResNet 风格的 2D 卷积），把标准残差块整体换成 Residual Snippet Block，并用 Horizontal Pyramid Mapping 提取多粒度局部表征。
 
-### 3.2 Snippet Modeling
+**3. 片段间建模（层级化无序集合）：两级集合池化拼出序列表征，却不丢时序。**
 
-模型称为 **GaitSnippet**，核心解决三个子问题：
+骨干输出端先对帧级特征做一次 Intra-Snippet Gathering 得到每个 snippet 的表征，再把所有 snippet 视为无序集合、第二次用 Temporal Max Pooling 聚合成序列级表征，整体形成"帧 → snippet → 序列"的层级化无序集合结构。关键在于：虽然两层都用了集合池化、看似又回到了排列不变的集合范式，但 snippet 内部已经过 Snippet Block 的时序建模，局部时序信息早已融进帧级特征里——因此整条 pipeline 在帧粒度上**不是**排列不变的，长程靠集合池化覆盖、短程靠 Snippet Block 保住，两者各司其职。
 
-#### (1) Intra-Snippet Modeling（片段内建模）
+### 损失函数 / 训练策略
 
-目标：捕获 snippet 内部的局部时序上下文，增强帧级特征。设计 **Snippet Block**：
+Snippet 范式天然产出两级表征（序列级 + snippet 级），作者顺势给 snippet 级特征加了一条独立监督分支。序列级用 Triplet Loss $\mathcal{L}_{tp}$ 加 Cross-Entropy Loss $\mathcal{L}_{ce}$（配合 BNNeck）；snippet 级则在 snippet 粒度上构建正负对，得到对应的 $\mathcal{L}_{tp}^{\star}$ 与 $\mathcal{L}_{ce}^{\star}$。总损失为
 
-- **Gathering**：将 snippet 内帧视为无序集合，通过 Temporal Max Pooling（非参数化）聚合为 snippet 级表征
-- **Smoothing**：对聚合后的特征施加 $1\times1$ 卷积，平滑噪声并缩小帧级/snippet 级特征的语义差距
-- **Residual**：通过残差连接将 snippet 级上下文信息与帧级特征融合
+$$\mathcal{L}_{all} = \mathcal{L}_{tp} + \mathcal{L}_{ce} + \alpha\,(\mathcal{L}_{tp}^{\star} + \mathcal{L}_{ce}^{\star}),\quad \alpha=0.75.$$
 
-将 Snippet Block 嵌入标准 2D 残差块的两个空间卷积层之间，形成 **Residual Snippet Block**，作为骨干网络的基本构件。设计灵感来自 P3D——让帧级特征在逐层提取过程中持续感知局部时序上下文。
-
-#### (2) Cross-Snippet Modeling（片段间建模）
-
-- 在骨干网络输出端，先对帧级特征做 Intra-Snippet Gathering 得到 snippet 级表征
-- 将所有 snippet 视为无序集合，再次通过 Temporal Max Pooling 聚合为序列级表征
-- 形成**层级化无序集合**结构：帧→snippet→序列
-
-**关键区别**：虽然两层都用了 Set Pooling，但 snippet 内经过了 Snippet Block 的时序建模，因此整体**不是**帧级排列不变的——局部时序信息已融入帧级特征。
-
-#### (3) Snippet-Level Supervision（片段级监督）
-
-snippet 范式天然产生两级表征（序列级 + snippet 级），作者为 snippet 级特征引入额外监督分支：
-
-- 序列级损失：Triplet Loss $\mathcal{L}_{tp}$ + Cross-Entropy Loss $\mathcal{L}_{ce}$（配合 BNNeck）
-- Snippet 级损失：$\mathcal{L}_{tp}^{\star}$ + $\mathcal{L}_{ce}^{\star}$，在 snippet 粒度构建正负对
-- 总损失：$\mathcal{L}_{all} = \mathcal{L}_{tp} + \mathcal{L}_{ce} + \alpha(\mathcal{L}_{tp}^{\star} + \mathcal{L}_{ce}^{\star})$，$\alpha=0.75$
-- snippet 级分支**仅用于训练**，不增加推理开销
-
-### 骨干网络
-
-基于 DeepGaitV2-2D（ResNet 风格 2D 卷积骨干），将标准残差块替换为 Residual Snippet Block。使用 Horizontal Pyramid Mapping 提取多粒度局部表征。
+这条 snippet 级分支只在训练时启用，推理阶段直接丢弃，因此不带来任何额外推理开销。
 
 ## 实验关键数据
 

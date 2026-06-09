@@ -57,33 +57,29 @@ DA-HOI 将 HOI 检测解耦为两个完全独立的阶段：
 
 ### 关键设计
 
-#### 1. 确定性生成（Deterministic Generation）
+**1. 确定性生成：把 MLLM 的自由文本回答改造成可评分的多标签判别。**
 
-- **功能**：将 MLLM 的开放式文本生成转为确定性的多标签分类，解决格式错误和单输出偏差问题
-- **核心思路**：不让 MLLM 自由输出文本答案，而是对候选交互列表 $\Theta(C_o) = \{T_1, T_2, \dots, T_M\}$ 中的每个候选 $T_k$，计算 MLLM 在给定 prompt 条件下生成该候选的条件似然度作为置信分数：
-  $$S_v[k] = p(T_k | I, Q) = \prod_{j=1}^{N} p(t[j] | T_k[<j], I, Q)$$
-- **设计动机**：直接用 MLLM 回答问题存在三大致命缺陷——(a) 格式错误率高达 36.78%（模型输出非标准格式）；(b) 单输出偏差严重，80.91% 的回答只包含一个交互（但 IR 是多标签问题）；(c) 无法得到 mAP 评价所需的置信度分数。确定性生成将这三个问题全部消除，格式错误率和单输出率均降为 0%
-- **与之前方法区别**：ADA-CM 等基于 CLIP 的方法计算视觉-文本相似度做分类，本文利用 MLLM 更强的跨模态理解能力，通过条件生成概率做分类。即使不做任何训练也达到 31.50 mAP，超越 ADA-CM 的 25.19
+如果直接让 MLLM 回答"图里这个人和这个杯子在做什么"，会撞上三个硬伤：格式错误率高达 36.78%（输出不是标准交互词），单输出偏差严重——80.91% 的回答只给一个交互，而交互识别本质是多标签问题，而且文本回答压根给不出 mAP 评价所需的置信度分数。确定性生成绕开了"让模型自由说话"这条路：对候选交互列表 $\Theta(C_o) = \{T_1, T_2, \dots, T_M\}$ 里的每个候选 $T_k$，不去读模型的输出，而是直接算它在当前图像和问题条件下"生成这串词"的条件似然度，把这个似然度当作该交互的置信分数：
 
-#### 2. 空间感知池化（Spatial-Aware Pooling, SAP）
+$$S_v[k] = p(T_k | I, Q) = \prod_{j=1}^{N} p(t[j] | T_k[<j], I, Q)$$
 
-- **功能**：整合外观特征和成对空间先验，增强交互特征的鲁棒性，同时过滤非交互对减少计算量
-- **核心思路**：分三步构建强交互特征——
-    - (a) 对 ROIAlign 得到的人/物特征 $f_h, f_o$ 通过 MLP 融合为初始交互特征 $f_{\text{inter}}$
-    - (b) 通过交叉注意力层从全局图像特征中聚合边界框外部的上下文信息，缓解检测框不准时的信息损失
-    - (c) 编码 7 维成对空间向量：
-  $$U = [w_h h_h, w_o h_o, \frac{w_h}{h_h}, \frac{w_o}{h_o}, \text{IoU}(B_h, B_o), \frac{x_h - x_o}{w_h}, \frac{y_h - y_o}{h_h}]$$
-  包含面积（区分大小物体）、宽高比（区分形状）、IoU（衡量人物重叠）、人到物方向（区分左右上下关系），经 MLP 投影后与交互特征加性融合
-- **设计动机**：ROIAlign 特征仅限边界框内，对框不准确（部分遮挡、背景干扰）的情况敏感；且忽略了人-物对的相对空间关系，而空间关系对区分"sit on chair"和"stand next to chair"至关重要。实验表明去掉空间编码 UO Full 降 1.62，去掉交叉注意力降 2.23
-- **附加功能**：基于交互特征训练一个线性分类器 $S_{\text{interactiveness}} = \sigma(\text{Linear}(f_{\text{inter}}))$，在推理时过滤非交互对，将推理时间从 569ms 降至 217ms
+这样一来格式错误率和单输出率都直接归零——因为根本不依赖模型实际吐出什么，每个候选都能独立拿到一个 $[0,1]$ 的分数。和 ADA-CM 这类用 CLIP 算视觉-文本相似度的做法相比，这里换成了 MLLM 更强的跨模态理解、用条件生成概率做判别；即使一行训练都不做，training-free 就到 31.50 mAP，已经超过 ADA-CM 的 25.19。
 
-#### 3. 单次确定性匹配（One-Pass Deterministic Matching, DM）
+**2. 空间感知池化（SAP）：给交互特征补上框外上下文和人-物相对空间关系。**
 
-- **功能**：将需要 M 次前向传播的交互分数计算压缩为单次前向传播
-- **核心思路**：在候选交互列表的每个候选后添加特殊 token `<|hoi|>`，将所有候选拼入一个 prompt 一次送入 LLM。提取每个特殊 token 的输出特征 $\hat{f}_{\text{hoi}}[k]$ 和交互特征 $\hat{f}_{\text{inter}}$，用余弦相似度替代条件生成概率：
-  $$S_v[k] = \text{cosine}(\hat{f}_{\text{hoi}}[k], \hat{f}_{\text{inter}})$$
-- **设计动机**：确定性生成虽然效果好，但计算量与候选数 M 线性相关。以 HICO-DET 为例，单物体类别平均有 ~15 个候选交互，每对人-物需要 15 次 LLM 前向传播。DM 将生成问题转化为特征匹配，一次前向传播得到所有候选的分数
-- **效率提升**：SAP + DM 联合将推理时间从基线 569ms 降至 91ms（加速 6.3 倍）
+ROIAlign 抠出来的特征只看得到框内，碰上部分遮挡、背景干扰、检测框画歪的情况就很脆弱；更要命的是它完全丢掉了人和物的相对位置，而位置恰恰是区分"sit on chair"和"stand next to chair"的关键。SAP 分三步把交互特征补强：先把 ROIAlign 得到的人/物特征 $f_h, f_o$ 经 MLP 融成初始交互特征 $f_{\text{inter}}$；再用一层交叉注意力从全局图像特征里聚合边界框外部的上下文，弥补框不准时丢失的信息；最后编码一个 7 维成对空间向量
+
+$$U = [w_h h_h, w_o h_o, \frac{w_h}{h_h}, \frac{w_o}{h_o}, \text{IoU}(B_h, B_o), \frac{x_h - x_o}{w_h}, \frac{y_h - y_o}{h_h}]$$
+
+它把面积（区分大小物体）、宽高比（区分形状）、IoU（衡量人物重叠程度）、人到物的方向（区分左右上下）都显式写进去，经 MLP 投影后加性融合进交互特征。消融能看出这两路各有贡献：去掉空间编码 UO Full 掉 1.62，去掉交叉注意力掉 2.23。SAP 还顺带训练了一个线性分类器 $S_{\text{interactiveness}} = \sigma(\text{Linear}(f_{\text{inter}}))$ 来判断一对人-物到底有没有交互，推理时先用它过滤掉大量非交互对，单这一步就把推理时间从 569ms 压到 217ms。
+
+**3. 单次确定性匹配（DM）：把 M 次前向传播折成一次。**
+
+确定性生成效果好，但有个绕不开的代价：算分的计算量和候选数 M 成正比。HICO-DET 里单个物体类别平均有约 15 个候选交互，意味着每一对人-物都要让 LLM 前向 15 次，密集场景下开销爆炸。DM 把"逐候选算生成概率"换成"一次算完所有候选"：在候选列表里每个候选后面插一个特殊 token `<|hoi|>`，把所有候选拼进同一个 prompt 一次性送进 LLM，取出每个特殊 token 的输出特征 $\hat{f}_{\text{hoi}}[k]$ 和交互特征 $\hat{f}_{\text{inter}}$，用余弦相似度替代原来的条件生成概率来打分：
+
+$$S_v[k] = \text{cosine}(\hat{f}_{\text{hoi}}[k], \hat{f}_{\text{inter}})$$
+
+生成问题就此变成一次前向里的特征匹配，所有候选的分数同时出来。配合 SAP 的非交互对过滤，推理时间从基线 569ms 进一步降到 91ms，整体加速 6.3 倍。
 
 ### 训练策略
 
@@ -168,11 +164,11 @@ DA-HOI 将 HOI 检测解耦为两个完全独立的阶段：
 
 ## 相关论文
 
-- [\[ICLR 2026\] Bootstrapping MLLM for Weakly-Supervised Class-Agnostic Object Counting (WS-COC)](bootstrapping_mllm_for_weakly-supervised_class-agnostic_object_counting.md)
 - [\[CVPR 2025\] Locality-Aware Zero-Shot Human-Object Interaction Detection](../../CVPR2025/multimodal_vlm/locality-aware_zero-shot_human-object_interaction_detection.md)
 - [\[CVPR 2026\] Beyond Heuristic Prompting: A Concept-Guided Bayesian Framework for Zero-Shot Image Recognition](../../CVPR2026/multimodal_vlm/beyond_heuristic_prompting_a_concept-guided_bayesian_framework_for_zero-shot_ima.md)
 - [\[ECCV 2024\] Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs](../../ECCV2024/multimodal_vlm/meta-prompting_for_automating_zero-shot_visual_recognition_with_llms.md)
 - [\[ICLR 2026\] Visual Prompt-Agnostic Evolution](visual_prompt-agnostic_evolution.md)
+- [\[ICCV 2025\] NegRefine: Refining Negative Label-Based Zero-Shot OOD Detection](../../ICCV2025/multimodal_vlm/negrefine_refining_negative_label-based_zero-shot_ood_detection.md)
 
 </div>
 

@@ -37,44 +37,19 @@ tags:
 
 ### 整体框架
 
-DC损失基于**概率积分变换（PIT）**：如果模型正确校准，每个测量值在其预测噪声分布中的分位数值应服从均匀分布。DC损失通过衡量这些分位数值的经验分布与均匀分布的偏离来作为数据保真项。
-
-**三种拟合状态的直觉**：
-
-- **欠拟合**：大多数测量值落在预测分布极端区域，分位数直方图在0或1附近有峰值
-- **良好校准**：分位数直方图均匀分布
-- **过拟合**：测量值集中在预测分布中心，直方图在0.5附近有尖锐峰值
+DC损失把数据保真项从"逐点比对测量与预测"换成"检验整批测量是否与模型在统计意义上一致"，其理论支点是**概率积分变换（PIT）**：若模型预测的噪声分布正确，每个测量值落在其预测分布中的累积概率应服从均匀分布。于是只要衡量这些累积概率的经验分布偏离均匀的程度，就能在不逐点拟合噪声的前提下判断模型好坏——欠拟合时测量值挤在预测分布两端（分位数直方图在0或1附近隆起），过拟合时挤在中心（直方图在0.5附近尖峰），唯有恰好校准时直方图才平坦。
 
 ### 关键设计
 
-**Step 1 - CDF值计算**：对每个测量 $m_i$ 和预测噪声分布 $\mathcal{D}_i(\hat{y}_i)$，计算累积概率：
+**1. PIT校准取代逐点比对：从根本上消除拟合噪声的激励。** 逐点数据项（MSE、NLL）的最小值正好落在含噪测量上，因此优化越久越贴近噪声。DC转而对每个测量 $m_i$ 和它的预测噪声分布 $\mathcal{D}_i(\hat{y}_i)$ 算出累积概率 $s_i = F_i(m_i \mid \hat{y}_i) = \mathbb{P}_{c \sim \mathcal{D}_i(\hat{y}_i)}(c \leq m_i)$，再要求这一批 $s_i$ 整体服从均匀分布。这样最优解不再是某次噪声实现，而是一个**等价类**——所有让 $\{s_i\}$ 近似均匀的预测都获得低损失，它们在最大似然解附近构成一片流形，正则化只需在这片流形里挑结构最合理的解，而不必再和数据保真项争夺主导权。
 
-$$s_i = F_i(m_i | \hat{y}_i) = \mathbb{P}_{c \sim \mathcal{D}_i(\hat{y}_i)}(c \leq m_i)$$
+**2. Logit变换抗梯度消失：让远离解时仍有可用的下降信号。** 直接拿 $s_i$ 去匹配均匀分布有个隐患：当预测离真值很远时 $s_i$ 会饱和在0或1，梯度几乎为零，优化卡死。为此把累积概率经 logit 变换 $r_i = \mathrm{logit}(s_i) = \ln\frac{s_i}{1-s_i}$ 拉伸到全实轴，对应的目标分布从 Uniform(0,1) 变为 Logistic(0,1)。变换后即便在分布尾部，梯度也不会消失——用高斯尾部近似可证 $\partial r_i / \partial \hat{y}_i \approx -(m_i - \hat{y}_i)/\sigma^2$，与MSE的下降方向一致，从而保证远离解时DC和传统损失走同一条收敛路径。
 
-**Step 2 - Logit变换**：直接匹配 $s_i$ 到均匀分布会导致梯度消失（远离解时 $s_i$ 饱和在0或1），因此应用logit变换：
-
-$$r_i = \text{logit}(s_i) = \ln\frac{s_i}{1-s_i}$$
-
-将均匀目标映射为 Logistic(0,1) 分布，同时保持梯度敏感性。
-
-**Step 3 - Wasserstein-1距离**：对排序后的 $r_i$ 和 Logistic(0,1) 参考样本 $u_i$ 计算：
-
-$$\mathcal{L}_{\text{DC}}(\hat{\boldsymbol{\theta}}) = \frac{1}{N}\sum_{i=1}^{N}|r_i - u_i|$$
-
-**远离解时的行为**：通过高斯尾部近似，DC损失的梯度与MSE梯度方向一致（$\partial r_i / \partial \hat{y}_i \approx -(m_i - \hat{y}_i)/\sigma^2$），确保收敛。
-
-**接近解时的行为**：DC损失定义了一个**等价类**——所有使CDF值近似均匀的预测都获得低损失，形成MLE附近的流形。正则化在此流形中选择最优解，而非在保真度和正则之间折中。
+**3. Wasserstein-1距离度量分布偏离：把"是否均匀"写成可微目标。** 有了变换后的 $\{r_i\}$，剩下的问题是如何量化它与 Logistic(0,1) 的差距。做法是对 $r_i$ 排序，并取同样数量的 Logistic(0,1) 参考样本 $u_i$（同样排序），用一维 Wasserstein-1 距离作为损失：$\mathcal{L}_{\text{DC}}(\hat{\boldsymbol{\theta}}) = \frac{1}{N}\sum_{i=1}^{N}\lvert r_i - u_i \rvert$。排序后的逐点绝对差正是一维最优传输的闭式解，既可微又对样本数稳健，等价于一个可微版的拟合优度检验。
 
 ### 损失函数 / 训练策略
 
-DC损失作为传统数据保真项的**即插即用替代**：
-
-- 兼容无配对数据的无监督正则化方法
-- 使用与传统损失相同的优化方式
-- 无需早停即可避免噪声过拟合
-- 适用条件：已知噪声分布、大量独立测量值
-
-与正则化的协同关系是核心优势：MSE下正则化与数据保真相互对抗，DC使正则化专注于结构选择。
+DC损失是传统数据保真项的**即插即用替代**：网络结构、优化器（Adam 等）和无监督正则项都不用改，直接把 MSE/NLL 换成 $\mathcal{L}_{\text{DC}}$ 即可，并兼容无配对数据的无监督方法。它的核心收益在于训练行为——因为最优解是等价类而非单点噪声实现，模型收敛后会自动停在校准状态、不再追逐噪声，因此**无需早停**也能长期稳定，把"抑制噪声拟合"从正则化的负担里彻底剥离出来。代价是需要满足两个前提：噪声分布已知、且有足够多的独立测量值供PIT统计成立。
 
 ## 实验关键数据
 
@@ -156,11 +131,11 @@ DIP-DC在所有噪声水平下均超越**最优早停的**DIP-MSE，且高噪声
 
 ## 相关论文
 
-- [\[CVPR 2026\] Solving a Nonlinear Blind Inverse Problem for Tagged MRI with Physics and Deep Generative Priors](../../CVPR2026/medical_imaging/solving_a_nonlinear_blind_inverse_problem_for_tagged_mri_with_physics_and_deep_g.md)
 - [\[CVPR 2026\] Benchmarking Endoscopic Surgical Image Restoration and Beyond](../../CVPR2026/medical_imaging/benchmarking_endoscopic_surgical_image_restoration_and_beyond.md)
+- [\[CVPR 2026\] Solving a Nonlinear Blind Inverse Problem for Tagged MRI with Physics and Deep Generative Priors](../../CVPR2026/medical_imaging/solving_a_nonlinear_blind_inverse_problem_for_tagged_mri_with_physics_and_deep_g.md)
 - [\[CVPR 2026\] CLoE: Expert Consistency Learning for Missing Modality Segmentation](../../CVPR2026/medical_imaging/cloe_expert_consistency_learning_for_missing_modality_segmentation.md)
 - [\[AAAI 2026\] Unsupervised Multi-Parameter Inverse Solving for Reducing Ring Artifacts in 3D X-Ray CBCT](../../AAAI2026/medical_imaging/unsupervised_multi-parameter_inverse_solving_for_reducing_ring_artifacts_in_3d_x.md)
-- [\[ACL 2026\] Beyond the Leaderboard: Rethinking Medical Benchmarks for Large Language Models](../../ACL2026/medical_imaging/beyond_the_leaderboard_rethinking_medical_benchmarks_for_large_language_models.md)
+- [\[ICCV 2025\] ViCTr: Vital Consistency Transfer for Pathology Aware Image Synthesis](../../ICCV2025/medical_imaging/victr_vital_consistency_transfer_for_pathology_aware_image_synthesis.md)
 
 </div>
 

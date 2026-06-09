@@ -37,37 +37,37 @@ tags:
 
 ## 方法详解
 
-### Split-half Dependence Evaluation (SDE)
+### 整体框架
 
-#### 核心思想
+SDE（Split-half Dependence Evaluation）想解决的是一个很别扭的评估问题：怎么判断一个子集到底有没有被模型遗忘掉，而又不去重训参考模型、不依赖影子模型或辅助分类器。它的切入点是把"是否参与过训练"翻译成"输出之间是否统计独立"——一个子集如果真的参与了训练，它的样本会因为共享梯度更新和共适应而在模型输出上彼此牵连；而训练外的数据不存在这种牵连。
 
-将待评估子集 $\mathcal{S}$ 随机分成两半 $\mathcal{S}_1, \mathcal{S}_2$，计算模型输出间的统计依赖性：
+具体怎么转：拿到待评估子集后，先把它随机劈成两半，用 HSIC 度量这两半模型输出之间的统计依赖性，得到一个依赖性数值；再把这个数值放到"训练内参考集"和"训练外参考集"两条依赖性分布上去比对，靠近哪一边就判断它属于哪一类。遗忘成功，意味着原本属于训练内的目标子集，遗忘后其依赖性已经塌向训练外那一侧。
+
+### 关键设计
+
+**1. Split-half 依赖性度量 $H(\mathcal{S}, h)$：把样本级线索升格为子集级信号。**
+
+遗忘通常只移除 5%–20% 的小子集，单个样本在遗忘后留下的统计线索太弱，样本级 MIA 难以站稳。SDE 改在子集这个粒度上做文章：把待评估子集 $\mathcal{S}$ 随机分成两半 $\mathcal{S}_1, \mathcal{S}_2$，度量两半输出之间的依赖性
 
 $$H(\mathcal{S}, h) = \text{HSIC}(h(\mathcal{S}_1), h(\mathcal{S}_2))$$
 
-- **训练内子集**：$H(\mathcal{S}_{IT}, h)$ 显著高于
-- **训练外子集**：$H(\mathcal{S}_{OOT}, h)$
+训练内子集 $H(\mathcal{S}_{IT}, h)$ 会显著高于训练外子集 $H(\mathcal{S}_{OOT}, h)$。这背后有理论支撑：当模型 $h = \mathcal{A}(\mathcal{D}_{tr})$ 由训练得到时，$h(x_i)$ 通过学到的参数隐式依赖于 $x_j$，于是 $h(x_i)$ 与 $h(x_j)$ 不再独立——训练引入的共享影响分量正是 split-half 依赖性在训练内子集上更强的根源。为了得到 $H(\mathcal{S}, h)$ 的分布而非单点值，实现上对 $\mathcal{S}_2$ 做 200 次洗牌重复估计。
 
-#### HSIC（Hilbert-Schmidt 独立性准则）
+**2. HSIC 作为非参数依赖性估计器：不假设分布形式。**
+
+依赖性用 Hilbert-Schmidt 独立性准则来量，它不需要假设输出服从什么分布，正适合刻画神经网络输出这种复杂依赖：
 
 $$\text{HSIC}(X, Y) = \frac{1}{(n-1)^2}\text{Tr}(KHLH)$$
 
-其中 $K, L$ 为高斯 RBF 核矩阵，$H = I - \frac{1}{n}\mathbf{1}\mathbf{1}^T$ 为中心化矩阵。
+其中 $K, L$ 是高斯 RBF 核矩阵，$H = I - \frac{1}{n}\mathbf{1}\mathbf{1}^T$ 是中心化矩阵。核带宽用 $\sigma = \sqrt{\text{dim}}$ 这个启发式选择，实验里被验证是相当稳健的默认值。
 
-使用 200 次 $\mathcal{S}_2$ 的洗牌来估计 $H(\mathcal{S}, h)$ 的分布。
+**3. 遗忘评估协议：与两条参考分布比对，而非硬设阈值。**
 
-#### 遗忘评估协议
+HSIC 值本身随数据集、子集大小波动，单看一个数没法判定，所以 SDE 不设绝对阈值，而是做相对比较。给定待评估子集 $\mathcal{S}_{\text{tar}} \subseteq \mathcal{D}_f$，从保留集取训练内参考 $\mathcal{S}_{IT} \subset \mathcal{D}_r$、从测试集取训练外参考 $\mathcal{S}_{OOT} \subset \mathcal{D}_{te}$，判定遗忘成功当且仅当
 
-给定待评估子集 $\mathcal{S}_{\text{tar}} \subseteq \mathcal{D}_f$，参考集 $\mathcal{S}_{IT} \subset \mathcal{D}_r$ 和 $\mathcal{S}_{OOT} \subset \mathcal{D}_{te}$：
-
-遗忘成功当且仅当：
 $$D(\mathcal{S}_{\text{tar}}, \mathcal{S}_{OOT}, h^{un}) < D(\mathcal{S}_{\text{tar}}, \mathcal{S}_{IT}, h^{un})$$
 
-其中 $D$ 使用 Jensen-Shannon 散度比较依赖性分布。
-
-### 理论分析
-
-训练引入的共享影响分量使得训练内子集的 split-half 依赖性更强。具体地，当 $h = \mathcal{A}(\mathcal{D}_{tr})$ 时，$h(x_i)$ 通过学习参数隐式依赖于 $x_j$，因此 $h(x_i)$ 和 $h(x_j)$ 不再独立。
+其中 $D$ 用 Jensen-Shannon 散度比较两个依赖性分布之间的距离。直观说就是：遗忘后的目标子集，其依赖性分布离"训练外"更近、离"训练内"更远，才算真的被遗忘。
 
 ## 实验
 

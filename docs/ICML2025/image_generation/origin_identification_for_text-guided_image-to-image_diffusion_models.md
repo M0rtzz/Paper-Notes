@@ -141,10 +141,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2026\] RAIGen: Rare Attribute Identification in Text-to-Image Generative Models](../../ICML2026/image_generation/raigen_rare_attribute_identification_in_text-to-image_generative_models.md)
+- [\[CVPR 2025\] Modeling Thousands of Human Annotators for Generalizable Text-to-Image Person Re-identification](../../CVPR2025/image_generation/modeling_thousands_of_human_annotators_for_generalizable_text-to-image_person_re.md)
 - [\[NeurIPS 2025\] Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models](../../NeurIPS2025/image_generation/diffusion_adaptive_text_embedding_for_texttoimage_diffusion.md)
 - [\[ICML 2025\] Preference Adaptive and Sequential Text-to-Image Generation](preference_adaptive_and_sequential_text-to-image_generation.md)
 - [\[CVPR 2025\] FADE: Fine-Grained Erasure in Text-to-Image Diffusion-based Foundation Models](../../CVPR2025/image_generation/fade_fine_grained_erasure_diffusion.md)
-- [\[CVPR 2025\] Six-CD: Benchmarking Concept Removals for Text-to-Image Diffusion Models](../../CVPR2025/image_generation/six-cd_benchmarking_concept_removals_for_text-to-image_diffusion_models.md)
 
 </div>
 

@@ -123,11 +123,11 @@ tags:
 
 ## 相关论文
 
-- [\[AAAI 2026\] Real-Time Trust Verification for Safe Agentic Actions Using TrustBench](../../AAAI2026/llm_agent/real-time_trust_verification_for_safe_agentic_actions_using_trustbench.md)
 - [\[ICLR 2026\] Inherited Goal Drift: Contextual Pressure Can Undermine Agentic Goals](../../ICLR2026/llm_agent/inherited_goal_drift_contextual_pressure_can_undermine_agentic_goals.md)
 - [\[ICML 2026\] Position: Agentic AI Orchestration Should Be Bayes-Consistent](position_agentic_ai_orchestration_should_be_bayes-consistent.md)
 - [\[ICML 2026\] LLM Agents Are the Antidote to Walled Gardens](llm_agents_are_the_antidote_to_walled_gardens.md)
 - [\[ICML 2026\] ACON: Optimizing Context Compression for Long-horizon LLM Agents](acon_optimizing_context_compression_for_long-horizon_llm_agents.md)
+- [\[ICML 2026\] AutoRPA: Efficient GUI Automation through LLM-Driven Code Synthesis from Interactions](autorpa_efficient_gui_automation_through_llm-driven_code_synthesis_from_interact.md)
 
 </div>
 

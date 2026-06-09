@@ -40,31 +40,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ATTS 是一个三阶段 pipeline：(1) Draft 模型并行生成 m 个候选推理链；(2) 用 conformal p-value 异步判断每个候选是否落在 prediction set 内（接受/拒绝），无需等待所有候选；(3) 被接受的候选由 Target 模型继续生成。增加轮数实现顺序缩放，增加候选数实现并行缩放。
+ATTS 要解决的问题是：把 speculative decoding 搬进 test-time scaling 后，rejection sampling 的全局排名/归一化让所有候选必须互相等待，同步开销随采样轮数爆炸。它的破局点是把"哪些候选该接受"从一次全局排名，改成每个候选各自独立做的一次假设检验。
+
+整条 pipeline 分三步走：Draft 模型先并行生成 $m$ 个候选推理链；接着对每个候选独立算一个 conformal p-value，与阈值 $\alpha$ 一比就能立刻决定接受还是拒绝，不必等其他候选算完；被接受的候选再交给 Target 模型继续往下生成。多跑几轮就是顺序缩放，每轮多放几个候选就是并行缩放——两个维度都能放大，而放大时不再积累同步等待。
 
 ### 关键设计
 
-1. **异步算术强度分析**:
+**1. 异步算术强度：把"同步开销"摆到台面上量化。**
 
-    - 功能：定义异步算术强度 $r = T_c / (T_m + T_s) \approx T_c / T_s$ 来量化性能瓶颈
-    - 核心思路：传统算术强度只考虑计算和内存访问，但在 test-time scaling 中同步开销 $T_s$ 远大于内存访问时间 $T_m$，成为真正瓶颈。随采样数增加，$r$ 下降，说明同步是主要瓶颈
-    - 设计动机：为异步设计提供理论动机和量化工具
+要论证异步有必要，先得说清同步到底有多贵。传统的算术强度只权衡计算量和内存访问，但在 test-time scaling 里真正卡脖子的是同步等待。ATTS 因此定义异步算术强度 $r = T_c / (T_m + T_s) \approx T_c / T_s$，其中 $T_c$ 是计算时间、$T_m$ 是内存访问时间、$T_s$ 是同步开销；之所以能近似掉 $T_m$，正是因为这里 $T_s \gg T_m$。随着采样数增多，$r$ 持续下降，定量地说明瓶颈不在算力也不在显存带宽，而在"等别人算完"这件事上——这就为后面的异步改造提供了量化依据和优化目标。
 
-2. **基于 Conformal Prediction 的序数分类**:
+**2. 基于 conformal prediction 的序数分类：用 p-value 替掉全局排名。**
 
-    - 功能：将全局排名问题转化为独立的假设检验
-    - 核心思路：对每个候选计算 conformal p-value $p_\xi^k$（基于非归一化的 conformity score $s_\xi^k = -\ell(X_\xi, \hat{Y}_\xi^k)$），与阈值 $\alpha$ 比较即可判断接受/拒绝。关键在于 p-value 不需要全局归一化——只需将当前 score 与 calibration set 中的历史 scores 比较即可
-    - 设计动机：避免 softmax 归一化和全局排名的同步需求，每个候选可以独立异步评估
-    - 统计保证：给出边际覆盖和条件覆盖的两种保证——$\mathbb{P}(y \in C_\alpha(Y)) \geq 1 - \alpha$
+同步的根源是 rejection sampling 要对所有候选做 softmax 归一化或全局排名，这两件事都得"凑齐所有候选"才能算。ATTS 把它重写成一个假设检验：对每个候选 $k$ 先算一个**非归一化**的 conformity score $s_\xi^k = -\ell(X_\xi, \hat{Y}_\xi^k)$（$\ell$ 为损失，score 越高代表候选越可信），再算出它的 conformal p-value $p_\xi^k$，与阈值 $\alpha$ 比较即可判定是否落入 prediction set。关键在于 p-value 不依赖全局归一化——它只把当前候选的 score 和 calibration set 里的历史 scores 比一比就能得到，于是每个候选都能独立、异步地评估，彻底拆掉了"必须等齐"的约束。这套构造还自带统计保证，能给出边际覆盖与条件覆盖两种形式，即 $\mathbb{P}(y \in C_\alpha(Y)) \geq 1 - \alpha$，保证高质量候选不会被误丢。
 
-3. **在线校准 + Budget 预测**:
+**3. 在线校准与 budget 控制：没有验证集也能动态维护 calibration set。**
 
-    - 功能：在无 held-out 数据的 test-time 环境下动态维护 calibration set
-    - 核心思路：用 memory bank 存储历史采样的 scores，随测试进行持续更新。rejection rate 由 $\alpha$ 精确控制——prediction set 大小恰好等于预定义的 budget $B$，避免 GPU OOM
-    - 设计动机：test-time scaling 没有预留的校准集，必须在线积累
+conformal p-value 要靠一份 calibration set 做参照，但 test-time scaling 现场并没有预留的 held-out 数据。ATTS 用一个 memory bank 在线积累历史采样的 scores，随着测试推进持续更新这份 calibration set。更妙的是，阈值 $\alpha$ 直接控制 rejection rate，从而让 prediction set 的大小恰好等于预先设定的 budget $B$——这相当于给并发采样上了一个硬闸门，把 KV cache 占用钉在预算内，避免高并发时 GPU OOM。
 
 ### 损失函数 / 训练策略
-无需训练（training-free, lossless）。ATTS 完全工作在推理时，不修改模型权重。
+无需训练（training-free, lossless）。ATTS 完全工作在推理时，不修改模型权重，对 draft / target 模型组合也无侵入。
 
 ## 实验关键数据
 

@@ -40,31 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-三阶段：(1) 自适应初始采样——GMM 拟合相似度分布，识别事件区间，按事件时长比例采样 K 个初始帧；(2) 迭代帧选择——四步循环（排名→VLM 分析→早停检查→局部密集采样）逐步精炼；(3) QA 阶段——将最终选定帧送入 Answering VLM 回答。
+A.I.R. 要解决的是 VideoQA 里帧选择的两难：CLIP 又快又粗、看不懂时序语义，VLM 又准又贵、逐帧分析撑不住。它的思路是让两者各司其职——先用 CLIP 在整段视频上做一次廉价的粗筛，把 VLM 的昂贵分析只投到"最有潜力的少量帧"上。整个流程分三段：自适应初始采样用 GMM 拟合 CLIP 相似度分布、按事件区间挑出 K 个起点帧；迭代帧选择是一个"排名→VLM 推理打分→早停判断→局部加密"的循环，逐轮把候选帧池收紧、把真正相关的帧捞出来；最后把选定帧送进 Answering VLM 出答案。分析和回答复用同一个 VLM，全程无需训练。
 
 ### 关键设计
 
-1. **Adaptive Initial Sampling（自适应初始采样）**:
+**1. 自适应初始采样：让起点帧自动贴合查询相关区域，而不是均匀撒点。**
 
-    - 功能：从 n 个均匀采样帧中自适应选出 K 个高相关帧
-    - 核心思路：用 2 分量 GMM 拟合 CLIP 相似度分数分布，自适应阈值 $T = \max(\mu_1,\mu_2) - \gamma \cdot \max(\sigma_1,\sigma_2)$ 分离高/低相关帧。识别连续高相关区间为"事件"，merge 短间隔、prune 过短事件，按事件时长比例分配采样预算
-    - 设计动机：比均匀采样更集中地覆盖查询相关区域，且阈值随每个视频的分数分布自适应变化
+均匀采样的问题是把预算平摊给所有时刻，长视频里大量冗余帧会稀释掉关键事件。A.I.R. 先对 n 个均匀采样帧算 CLIP 相似度，再用一个 2 分量 GMM 把这些分数拟合成"高相关"和"低相关"两簇，并据此定一个随视频自适应的阈值 $T = \max(\mu_1,\mu_2) - \gamma \cdot \max(\sigma_1,\sigma_2)$ 来切分两类帧。阈值是从每个视频自己的分数分布里长出来的，所以不同视频的判定标准会自动伸缩。被判为高相关的连续帧段被当作"事件"，再做两步清理——把间隔很短的相邻事件 merge、把太短的事件 prune 掉——最后按各事件的时长比例分配采样预算，挑出 K 个初始帧。这样起点就密集落在查询相关的区域，而不是平均铺满整条时间轴。
 
-2. **Iterative Frame Selection（迭代帧选择）**:
+**2. 迭代帧选择：用一个四步循环让 VLM 只在小批量高潜力帧上做深度推理。**
 
-    - Step 1 Interval Potential Ranking：将视频按已选帧分成区间，用 Relevance×Complexity×Length 三因子计算每个区间的"潜力"，选 C 个最高潜力帧
-    - Step 2 Reasoning-Based VLM Analysis：VLM 对 C 个帧做推理式分析（生成理由+1-5分），保留 Positive（>θ）帧
-    - Step 3 Early Stop：如果已选帧数 ≥ 自适应预算 B，立即停止
-    - Step 4 Localized Density Sampling（LDS）：在 VLM 验证过的帧的时间邻域中，用指数增长步长发现新帧，加入下一轮候选池
+这是把"VLM 太贵"这个痛点直接拆解掉的核心机制，每一轮做四件事。第一步 **Interval Potential Ranking**：以当前已选帧为界把视频切成若干区间，用 Relevance×Complexity×Length 三个因子算每个区间的"潜力"——相关性高、内容复杂、跨度长的区间更可能藏着没被覆盖的关键帧——从中选出 C 个最高潜力的帧作为本轮候选。第二步 **Reasoning-Based VLM Analysis**：让 VLM 对这 C 个帧做推理式分析，给出理由并打 1-5 分，只保留得分高于阈值 θ 的 Positive 帧。第三步 **Early Stop**：一旦累计已选帧数达到自适应预算 B 就立刻收手，不再多调一次 VLM。第四步 **Localized Density Sampling（LDS）**：在每个被 VLM 验证过的帧的时间邻域里、以指数增长的步长去发现新帧（离验证帧越近采得越密、越远越稀，假设关键内容在时间上是局部聚集的），把这些新帧补进下一轮候选池。LDS 正是这套设计能补回 CLIP 漏判的关键——比如某个"佛寺"帧 CLIP 分数只有 0.4 会被初筛丢掉，但它在时间上紧挨着一个已被 VLM 确认的相关帧，LDS 就会把它重新捞回来交给 VLM 复核。
 
-3. **效率保证**:
+**3. 效率保证：把最坏开销写死在一个可控上界内。**
 
-    - 最佳情况 VLM 分析 C 帧（1 次迭代），最坏情况 C×I_max 帧
-    - 默认 C=12, I_max=6 → 最坏 72 帧 < 基线 128 帧
-    - Early Stop 在实际中通常 2-3 轮即触发
+因为 VLM 只在每轮的 C 个候选上运行，开销不再随视频长度线性膨胀。最好情况下一轮迭代就够、只分析 C 帧；最坏情况跑满 I_max 轮、共分析 $C \times I_{max}$ 帧。默认 C=12、I_max=6，最坏也只有 72 帧，仍低于 Frame-Voyager / VideoTree 这类固定分析 128 帧的方法；而且 Early Stop 在实际中通常 2-3 轮就触发，真实开销远小于这个上界。
 
 ### 损失函数 / 训练策略
-无需训练（training-free）。即插即用，与 VILA、Qwen-VL、InternVL-3、LLaVA-OneVision 等 VLM 兼容。用同一个 VLM 做分析和回答。
+无需训练（training-free）。即插即用，与 VILA、Qwen-VL、InternVL-3、LLaVA-OneVision 等 VLM 兼容，用同一个 VLM 同时承担分析和回答两项任务。
 
 ## 实验关键数据
 
@@ -122,10 +115,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] CRAFT: Critic-Refined Adaptive Key-Frame Targeting for Multimodal Video Question Answering](../../ACL2026/video_understanding/craft_critic-refined_adaptive_key-frame_targeting_for_multimodal_video_question_.md)
-- [\[ICLR 2026\] AnveshanaAI: A Multimodal Platform for Adaptive AI/ML Education through Automated Question Generation and Interactive Assessment](anveshanaai_a_multimodal_platform_for_adaptive_aiml_education_through_automated_.md)
 - [\[NeurIPS 2025\] Tool-Augmented Spatiotemporal Reasoning for Streamlining Video Question Answering Task](../../NeurIPS2025/video_understanding/toolaugmented_spatiotemporal_reasoning_for_streamlining_vide.md)
 - [\[CVPR 2026\] Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding](../../CVPR2026/video_understanding/wavelet-based_frame_selection_by_detecting_semantic_boundary_for_long_video_unde.md)
 - [\[CVPR 2026\] HERBench: A Benchmark for Multi-Evidence Integration in Video Question Answering](../../CVPR2026/video_understanding/herbench_a_benchmark_for_multi-evidence_integration_in_video_question_answering.md)
+- [\[CVPR 2026\] MovieRecapsQA: A Multimodal Open-Ended Video Question-Answering Benchmark](../../CVPR2026/video_understanding/movierecapsqa_a_multimodal_open-ended_video_question-answering_benchmark.md)
 
 </div>
 

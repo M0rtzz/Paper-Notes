@@ -139,9 +139,9 @@ VLM 微调用分割损失 $\mathcal{L}_{seg} = \mathcal{L}_{BCE} + \mathcal{L}_{
 
 - [\[CVPR 2025\] LaDA: Language-Grounded Decoupled Action Representation for Robotic Manipulation](language-grounded_decoupled_action_representation_for_robotic_manipulation.md)
 - [\[CVPR 2026\] Language-Grounded Decoupled Action Representation for Robotic Manipulation (LaDA)](../../CVPR2026/robotics/lada_robotic_manipulation.md)
-- [\[CVPR 2025\] Robotic Visual Instruction](robotic_visual_instruction.md)
 - [\[CVPR 2025\] MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation](momanipvla_transferring_vision-language-action_models_for_general_mobile_manipul.md)
 - [\[CVPR 2025\] SaPaVe: Towards Active Perception and Manipulation in Vision-Language-Action Models for Robotics](sapave_towards_active_perception_and_manipulation_in_vision-language-action_mode.md)
+- [\[CVPR 2025\] Robotic Visual Instruction](robotic_visual_instruction.md)
 
 </div>
 

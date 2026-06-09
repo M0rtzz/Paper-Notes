@@ -41,30 +41,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-传统做法是"完整去噪→动作采样→完整去噪"串行过程。HI 改为同时初始化未来 $h$ 帧的噪声潜变量，在部分去噪（$k$ 步，$k < K$ 总步数）后从中间结果采样动作，然后用这些动作继续去噪剩余步骤。
+HI 把扩散世界模型的 on-policy 想象从"完整去噪一帧 → 用清晰帧采样动作 → 再完整去噪下一帧"这个严格串行的链条，改写成一个尽量并行的批量去噪过程：它同时初始化未来 $h$ 帧的噪声潜变量，让所有帧共享前半段的无条件去噪，只在去噪进行到中途（第 $k$ 步，$k<K$）时才从尚带噪声的帧里采样动作并注入条件，再把剩余几步去噪补完。核心赌注是——策略决策并不需要一张完全清晰的预测帧，部分去噪的语义就够用，于是省下的去噪步数直接转化为算力节省。
 
 ### 关键设计
 
-1. **中途动作采样 (Intermediate Action Sampling)**:
+**1. 中途动作采样：把动作决策提前到去噪没做完的时候，打破串行依赖。**
 
-    - 做什么：在去噪中间步骤确定 on-policy 动作
-    - 核心思路：设总去噪步数 $K$，在第 $k$ 步从部分去噪的潜变量 $\mathbf{z}^k_t$ 中通过策略网络 $\pi(\mathbf{z}^k_t)$ 采样动作。前 $k$ 步无动作条件，可并行处理所有帧
-    - 设计动机：部分去噪的帧虽噪声较大，但已包含足够语义信息支持策略决策
+on-policy 想象之所以慢，是因为它要求"先看清这一帧、再决定动作、动作又决定下一帧怎么去噪"，每一帧都得等上一帧彻底跑完 $K$ 步去噪。HI 的破局点是不等去噪结束。设总去噪步数为 $K$，HI 在中途第 $k$ 步停一下，从此时部分去噪的潜变量 $\mathbf{z}^k_t$ 上直接调用策略网络采样动作 $a_t \sim \pi(\mathbf{z}^k_t)$，再把这个动作作为条件喂回去噪网络跑完剩下的 $K-k$ 步。前 $k$ 步因为还没有动作条件，所有帧的去噪是同质的、互不依赖的，可以一口气并行算掉。这之所以成立，是因为扩散去噪在前期就已经勾勒出场景的粗结构和语义，足以支撑策略做出和看清晰帧时几乎一致的决策；消融里把采样点压到极早的 $k=1$ 时性能掉到 0.87，说明太早确实"信息不足"，而 $k=3$ 是信息量与节省量的甜蜜点。
 
-2. **帧并行 Horizon 去噪**:
+**2. 帧并行 Horizon 去噪：让一次前向同时推进多帧，把每帧成本摊薄到不足一次去噪。**
 
-    - 做什么：同时去噪多个未来时间步的潜变量
-    - 核心思路：将 $h$ 个未来帧 $\{\mathbf{z}^0_{t+1}, ..., \mathbf{z}^0_{t+h}\}$ 打包为一个批次送入去噪网络，共享每次前向传播的开销，总去噪预算降至每帧不到一次完整去噪
-    - 设计动机：扩散模型的去噪网络天然支持批处理，并行化带来直接的计算节省
+既然中途采样切断了帧与帧之间前半段的依赖，HI 就顺势把未来 $h$ 帧的潜变量 $\{\mathbf{z}_{t+1}, \dots, \mathbf{z}_{t+h}\}$ 打包成一个批次送进同一个去噪网络，让它们共享每次前向传播的算力。扩散去噪网络本就天然支持批处理，这一步几乎是零额外代价地把横向的多帧并行接到了纵向的部分去噪上。两者叠加的结果是，原本每帧需要 $K=10$ 步完整去噪，现在被压缩到每帧平均不到一次完整去噪（实验中标注为 $<1$），而控制性能与基线 DIAMOND 持平。
 
-3. **生成稳定性策略**:
+**3. 动作一致性正则化：补上"从噪声帧采样会偏"的窟窿，稳住长程想象。**
 
-    - 做什么：防止长程想象中的生成退化
-    - 核心思路：引入动作一致性正则化，鼓励 $\pi(\mathbf{z}^k_t) \approx \pi(\mathbf{z}^K_t)$，减小中间采样与完整去噪采样的分布偏移
-    - 设计动机：直接从噪声状态采样可能引入偏差，在 Craftium 等复杂 3D 环境中尤为关键
+提前采样省了算力，但代价是 $\mathbf{z}^k_t$ 比完整去噪的 $\mathbf{z}^K_t$ 更糊，从糊的状态上采动作会引入分布偏移，长程 rollout 里这种偏差会逐帧累积、最终拖垮想象质量。HI 用一个动作一致性正则化把这个缝补上，约束中途采样得到的策略分布逼近完整去噪后的策略分布，即 $\pi(\mathbf{z}^k_t) \approx \pi(\mathbf{z}^K_t)$，作为辅助损失加进训练。它在 Craftium 这类复杂 3D 环境里尤其关键——消融中去掉该正则化后性能从 1.00 跌到 0.93，正是动作偏差随 rollout 累积的直接体现。
 
-### 损失函数 / 训练策略
-世界模型使用标准扩散去噪损失训练。策略和价值函数通过 actor-critic 在想象轨迹上优化。动作一致性正则化作为辅助损失。
+世界模型本身仍以标准扩散去噪损失训练，策略与价值函数则用 actor-critic 在想象轨迹上优化，动作一致性正则化作为附加项叠加，三者不改 DIAMOND 的网络架构、只重写想象过程。
 
 ## 实验关键数据
 
@@ -117,10 +110,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Activation Steering for Masked Diffusion Language Models](activation_steering_for_masked_diffusion_language_models.md)
+- [\[NeurIPS 2025\] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference](../../NeurIPS2025/image_restoration/encoder-decoder_diffusion_language_models_for_efficient_training_and_inference.md)
 - [\[ICML 2026\] Consistent Diffusion Language Models](../../ICML2026/image_restoration/consistent_diffusion_language_models.md)
-- [\[AAAI 2026\] RefiDiff: Progressive Refinement Diffusion for Efficient Missing Data Imputation](../../AAAI2026/image_restoration/refidiff_progressive_refinement_diffusion_for_efficient_missing_data_imputation.md)
-- [\[ICML 2026\] Plan for Speed: Dilated Scheduling for Masked Diffusion Language Models](../../ICML2026/image_restoration/plan_for_speed_dilated_scheduling_for_masked_diffusion_language_models.md)
 - [\[ICLR 2026\] Are Deep Speech Denoising Models Robust to Adversarial Noise?](are_deep_speech_denoising_models_robust_to_adversarial_noise.md)
+- [\[ICLR 2026\] SoFlow: Solution Flow Models for One-Step Generative Modeling](soflow_solution_flow_models_for_one-step_generative_modeling.md)
 
 </div>
 

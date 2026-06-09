@@ -156,7 +156,7 @@ EfficientNet-B0 仅有 4M 参数（teacher 的 16.3%），top-1 达到 67.36%，
 - [\[ECCV 2024\] A Simple Low-bit Quantization Framework for Video Snapshot Compressive Imaging](a_simple_lowbit_quantization_framework_for_video_snapshot_co.md)
 - [\[ICCV 2025\] Soft Separation and Distillation: Toward Global Uniformity in Federated Unsupervised Learning](../../ICCV2025/model_compression/soft_separation_and_distillation_toward_global_uniformity_in_federated_unsupervi.md)
 - [\[ICCV 2025\] Cross-Architecture Distillation Made Simple with Redundancy Suppression](../../ICCV2025/model_compression/cross-architecture_distillation_made_simple_with_redundancy_suppression.md)
-- [\[ICCV 2025\] Knowledge Distillation with Refined Logits](../../ICCV2025/model_compression/knowledge_distillation_with_refined_logits.md)
+- [\[ICCV 2025\] Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification](../../ICCV2025/model_compression/competitive_distillation_a_simple_learning_strategy_for_improving_visual_classif.md)
 
 </div>
 

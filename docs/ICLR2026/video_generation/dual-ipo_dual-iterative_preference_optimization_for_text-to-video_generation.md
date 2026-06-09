@@ -1,0 +1,119 @@
+---
+title: >-
+  [论文解读] Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation
+description: >-
+  [ICLR 2026][视频生成][偏好优化] 提出 Dual-IPO 框架，通过在奖励模型和视频生成模型之间进行多轮双向迭代优化，无需大量人工标注即可持续提升文本到视频生成的质量和人类偏好对齐，甚至让 2B 模型超越 5B 模型。
+tags:
+  - "ICLR 2026"
+  - "视频生成"
+  - "偏好优化"
+  - "奖励模型"
+  - "DPO"
+  - "迭代训练"
+---
+
+# Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation
+
+**会议**: ICLR 2026  
+**arXiv**: [2502.02088](https://arxiv.org/abs/2502.02088)  
+**代码**: [https://github.com/SAIS-FUXI/IPO](https://github.com/SAIS-FUXI/IPO)  
+**领域**: 扩散模型 / 视频生成  
+**关键词**: 偏好优化, 视频生成, 奖励模型, DPO, 迭代训练  
+
+## 一句话总结
+
+提出 Dual-IPO 框架，通过在奖励模型和视频生成模型之间进行多轮双向迭代优化，无需大量人工标注即可持续提升文本到视频生成的质量和人类偏好对齐，甚至让 2B 模型超越 5B 模型。
+
+## 研究背景与动机
+
+**视频生成模型的局限**：尽管 DiT 架构推动了视频生成的巨大进步，现有模型在主体一致性、运动流畅性和美学质量方面仍无法满足用户期望
+
+**偏好学习的数据瓶颈**：DPO/KTO 等后训练方法需要大量人工标注的偏好数据，构建成本极高
+
+**外部奖励模型的分布不匹配**：现有通用奖励模型（如 VideoScore、VideoAlign）在不同视频生成模型之间存在显著的分布偏移，导致奖励信号不可靠
+
+**静态偏好数据的过拟合问题**：在固定离线偏好数据集上训练容易导致模型过拟合甚至崩溃
+
+**奖励信号需要与模型共同演进**：随着训练进行，生成瑕疵变得更细微，固定奖励模型会产生偏差
+
+**小规模模型的潜力未被充分挖掘**：通过有效的后训练策略，小模型理论上可以接近或超越更大模型的性能
+
+## 方法详解
+
+### 整体框架
+
+Dual-IPO 把后训练拆成两个交替推进的环节：一个是用自精炼偏好优化（SRPO）持续打磨奖励模型，让它的判别能力跟得上越来越精细的生成瑕疵；另一个是迭代对齐训练，用当前奖励模型的反馈去优化视频生成模型。两个环节在多轮迭代里互相喂养——更好的奖励模型给出更可靠的偏好对，更强的生成模型又逼着奖励模型继续进化，从而绕开了固定离线奖励带来的分布漂移。
+
+### 关键设计
+
+**1. 自精炼偏好优化（SRPO）：在没有大量人工标注的情况下让奖励模型自我迭代。** 通用奖励模型在不同生成模型间存在分布偏移，单纯堆人工标注又太贵。SRPO 的做法是先用少量 Chain-of-Thought 标注解锁 VLM 的结构化推理能力，把"哪个视频更好"拆成可解释的打分理由；再通过投票式自一致性机制——对同一对样本走多条推理路径、按答案频率聚合——自动生成稳定的伪偏好标签。关键在于不盲信这些伪标签：作者用偏好确定性估计器（PCE）来过滤噪声，定义为样本隐式奖励超过数据集均值的概率 $\text{PCE}(y_w | x) = \mathbb{P}_\theta(R(y_w | x) > Q)$，其中隐式奖励借用 DPO 公式 $R(y|x) = \log \frac{\pi_\theta(y|x)}{\pi_{\text{ref}}(y|x)}$，$Q$ 为数据集上的平均奖励，只保留 $\text{PCE} > 0.5$ 的高置信样本。这样既省掉了大规模标注（仅需 6000 对人工偏好启动），又避免了低质伪标签污染奖励模型。
+
+**2. 迭代对齐训练：用闭环反馈持续优化生成模型并防止过拟合。** 在固定偏好数据集上训练扩散模型容易过拟合甚至崩溃，而单次对齐又吃不满奖励模型的潜力。这一环节把整个流程串成闭环：每轮迭代先用当前生成模型采样新视频，交给奖励模型评分构建偏好对，再据此更新生成模型。对齐目标同时支持成对偏好的 Diffusion-DPO 和逐点偏好的 Diffusion-KTO，适配不同数据格式。为抑制过拟合，DPO 损失里额外加了两个 NLL 正则项，一项作用在生成的优胜样本上、一项作用在真实视频上：$\mathcal{L}_{\text{total}}^{\text{DPO}} = L_{\text{dpo}} + \lambda_1 \cdot \mathbb{E}[-\log p_\theta(y^w|x)] + \lambda_2 \cdot \mathbb{E}_{\mathcal{D}^{\text{real}}}[-\log p_\theta(y|x)]$。真实视频项相当于把生成分布往真实数据上拉，避免模型在自采样数据里越走越偏。
+
+**3. PCE 加权的 SRPO 目标：让奖励模型训练偏向更确信的样本。** 伪标签即便经过阈值过滤，置信度仍有高低之分。SRPO 最终把 PCE 当作样本权重直接乘进 DPO 目标 $\mathcal{L}_{\text{SRPO}}(\theta) = \mathbb{E}_{x,y_w,y_l}[\text{PCE}(y_w|x) \cdot \mathcal{L}_{\text{DPO}}(\theta)]$，越确信的偏好对在更新里贡献越大，越模糊的样本影响越小，从而在自训练中保持奖励模型的稳定性。
+
+## 实验关键数据
+
+| 模型 | Total Score | Quality Score | Semantic Score |
+|------|-------------|---------------|----------------|
+| CogVideoX-2B (基线) | 80.91 | 82.18 | 75.83 |
+| CogVideoX-2B + IPO-3轮 | 82.74 | 83.92 | 78.00 |
+| CogVideoX-5B (基线) | 81.61 | 82.75 | 77.04 |
+| CogVideoX-5B + IPO-3轮 | 84.63 | 85.40 | 81.54 |
+| Wan-1.3B (基线) | 84.26 | 85.30 | 80.09 |
+| Wan-1.3B + IPO-3轮 | 86.28 | 86.38 | 85.87 |
+
+| 奖励模型 | 人类偏好准确率 | VBench 提升 |
+|----------|----------------|-------------|
+| VideoScore | 63.58% | 80.87 (下降) |
+| VideoAlign | 65.21% | 81.27 |
+| VisionReward | 68.44% | 81.31 |
+| **Ours** | **81.33%** | **81.54** |
+
+**亮点结果**：2B CogVideoX 经过 Dual-IPO 后在 VBench 上超越 5B 基线（82.74 vs 81.61）；Wan-1.3B 经过 5 轮迭代达到 88.32，超越 Sora（84.28）。
+
+## 亮点与洞察
+
+1. **双迭代闭环设计**：奖励模型和生成模型互相促进，避免了静态奖励的分布漂移问题
+2. **数据高效**：仅需 6000 对人工标注启动，远少于其他奖励模型的训练数据量
+3. **灵活的偏好策略**：同时支持 DPO 和 KTO，适配不同数据格式
+4. **跨架构泛化**：在 CogVideoX（cross-attention DiT）和 Wan（MMDiT）两种架构上均有效
+5. **"小模型打败大模型"**：验证了后训练策略的巨大潜力
+
+## 局限与展望
+
+1. 训练成本仍然较高（128 GPU × 两周/轮），难以快速迭代
+2. PCE 阈值的设定（0.5）缺乏理论依据，可能需要场景化调整
+3. 奖励模型依赖 VLM（VILA 13B/40B），引入额外的计算和存储开销
+4. 未探索更细粒度的质量维度（如物理合理性、因果一致性）
+5. 迭代次数增多后性能增益递减，缺乏对收敛行为的深入分析
+
+## 相关工作与启发
+
+- **Diffusion-DPO**（Wallace et al.）：将 DPO 扩展到扩散模型，本文在此基础上加入迭代优化
+- **InstructVideo**：提出时间衰减奖励，但增益有限；本文通过迭代可获得更大提升
+- **RLHF for LLM**：借鉴 LLM 领域的打分 + 对齐范式，但创新性地引入了奖励模型的自我迭代
+- 启发：奖励模型的质量是偏好优化的瓶颈，自训练范式或许可以推广到图像生成等更多领域
+
+## 评分
+
+- 新颖性: ⭐⭐⭐⭐ — 双迭代闭环设计和 PCE 机制具有创新性
+- 实验充分度: ⭐⭐⭐⭐⭐ — 多架构、多尺度、多轮迭代消融实验非常充分
+- 写作质量: ⭐⭐⭐⭐ — 结构清晰，公式推导完整
+- 价值: ⭐⭐⭐⭐ — 对视频生成后训练有很强的实践指导意义
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[ICLR 2026\] JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation](javisdit_unified_modeling_and_optimization_for_joint_audio-video_generation.md)
+- [\[ICML 2026\] LuVe: Latent-Cascaded Ultra-High-Resolution Video Generation with Dual Frequency Experts](../../ICML2026/video_generation/luve_latent-cascaded_ultra-high-resolution_video_generation_with_dual_frequency_.md)
+- [\[ICCV 2025\] V.I.P.: Iterative Online Preference Distillation for Efficient Video Diffusion Models](../../ICCV2025/video_generation/vip_iterative_online_preference_distillation_for_efficient_video_diffusion_model.md)
+- [\[ICCV 2025\] Dual-Expert Consistency Model for Efficient and High-Quality Video Generation](../../ICCV2025/video_generation/dual-expert_consistency_model_for_efficient_and_high-quality_video_generation.md)
+- [\[NeurIPS 2025\] DenseDPO: Fine-Grained Temporal Preference Optimization for Video Diffusion Models](../../NeurIPS2025/video_generation/densedpo_finegrained_temporal_preference_optimization_for_vi.md)
+
+</div>
+
+<!-- RELATED:END -->

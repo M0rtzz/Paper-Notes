@@ -43,38 +43,27 @@ tags:
 
 ### 整体框架
 
-LaVCa 四步流水线：
-- **输入**：NSD 数据集中受试者观看图像时的 fMRI 脑活动数据
-- **Step 1**：用 CLIP-Vision embedding + 岭回归，为每个体素构建编码模型 $\mathbf{y}_i = \mathbf{W}\mathbf{x}_i + \bm{\varepsilon}_i$
-- **Step 2**：在 170 万张 OpenImages 外部图像上计算编码模型的预测响应，选 top-N 最优图像
-- **Step 3**：用 MLLM（MiniCPM-V）为每张最优图像生成描述
-- **Step 4**：用 LLM（GPT-4o）从描述中提取关键词 → CLIP-Text 余弦相似度过滤 → MeaCap Sentence Composer 组合成最终 caption
-- **输出**：每个体素一句自然语言 caption
+LaVCa 要解决的问题是：给定人类视觉皮层里的一个体素，用一句简洁的自然语言说清它"对什么视觉内容敏感"，而且这句话还得准确到能反过来预测该体素的脑活动。它把这件事拆成一条四步流水线，关键在于**先把"选图"和"描述"两件事分开**，再让 LLM 在文本侧做提炼组合。
+
+输入是 NSD 数据集中受试者观看图像时记录的 fMRI 脑活动。第一步先为每个体素拟合一个"图像→脑活动"的线性编码模型 $\mathbf{y}_i = \mathbf{W}\mathbf{x}_i + \bm{\varepsilon}_i$；第二步拿这个模型去 170 万张外部图像上打分，挑出最能激活该体素的 top-N 张最优图像；第三步用 MLLM（MiniCPM-V）给每张最优图像写描述；第四步再用 LLM（GPT-4o）从这些描述里提炼共性关键词，过滤后由 MeaCap Sentence Composer 组合成最终那句 caption。最终输出就是每个体素一句话。
 
 ### 关键设计
 
-1. **编码模型构建（Step 1）**:
+**1. 编码模型构建：把抽象的脑活动接到可用文本评估的 CLIP 空间。**
 
-    - 功能：为每个体素建立"图像→脑活动"的线性预测模型
-    - 核心思路：提取 CLIP-Vision 投影层 embedding（L2 归一化），用岭回归拟合编码权重 $\mathbf{W} \in \mathbb{R}^{v \times d}$
-    - 设计动机：线性模型简单可解释，CLIP 特征在视觉-语言空间对齐好，便于后续用文本做评估
+要给体素配文字，前提是先有一座桥把"看了什么图"和"哪个体素被激活"连起来。LaVCa 提取 CLIP-Vision 投影层的 embedding（做 L2 归一化），用岭回归为每个体素拟合编码权重 $\mathbf{W} \in \mathbb{R}^{v \times d}$。选线性模型而不是更复杂的网络，是因为它本身就简单可解释；而选 CLIP 特征，是因为它的视觉-语言空间天然对齐，下游用文本关键词去衡量体素响应时不用再跨模态对齐一次。
 
-2. **最优图像集探索（Step 2）**:
+**2. 最优图像集探索：用大规模外部图像找出体素的"偏好画像"。**
 
-    - 功能：找到最能激活某个体素的图像集
-    - 核心思路：计算编码权重与 170 万张外部图像 CLIP embedding 的内积，选 top-N
-    - 设计动机：用外部大规模数据（非训练集）避免过拟合，N 可调；图像来自 OpenImages-v6 覆盖面广
+有了编码权重，就能反过来问"什么样的图最能点亮这个体素"。LaVCa 把编码权重和 170 万张外部图像的 CLIP embedding 做内积，取响应最高的 top-N 张作为该体素的最优图像集。刻意用 OpenImages-v6 这种训练集之外的大规模数据，一是覆盖面广、概念全，二是避免在训练图像上过拟合、把噪声当成选择性；N 是可调的，决定了后面拿多少张图去提炼共性。
 
-3. **LLM 关键词提取与句子组合（Step 4）**:
+**3. LLM 关键词提取与句子组合：在文本侧提炼共性，再让脑信号亲自指导成句。**
 
-    - 功能：从多张最优图像的描述中提炼共性关键词，合成 caption
-    - 核心思路：GPT-4o in-context learning 提取关键词 → 用 CLIP-Text 计算每个关键词与编码权重的余弦相似度，softmax 阈值过滤 → MeaCap Sentence Composer 把关键词组合成句子（将编码权重替代原始图像特征）
-    - 设计动机：比直接拼接 caption 更简洁可解释；比 BrainSCUBA 端到端方法覆盖更多词汇；关键词过滤保证相关性
+多张最优图像各自的描述里混着大量个体细节，真正反映体素选择性的是它们的**共性**。LaVCa 先用 GPT-4o 做 in-context learning，从这些描述里提取候选关键词；再用 CLIP-Text 算每个关键词与编码权重的余弦相似度，经 softmax 阈值过滤掉不相关的词；最后交给 MeaCap Sentence Composer 把保留下来的关键词组织成一句通顺的话。这里有个巧思——句子组合阶段**用编码权重替代了原始图像特征**来引导生成，相当于让"脑科学信号"直接参与造句，而不是先变成图像再变成文字。相比 BrainSCUBA 端到端从一个固定 captioning 模型出 caption，这套解耦+开放词汇的做法既更简洁可解释，词汇覆盖也更广。
 
 ### 评估方法
 
-- **句子级预测**：用 Sentence-BERT 计算 caption 与 NSD 图像 caption 的余弦相似度作为体素活动预测值，用 Spearman 相关系数衡量准确性
-- **图像级预测**：用 FLUX.1-schnell 从 caption 生成图像 → CLIP-Vision embedding 与 NSD 图像比较，排除语言因素干扰
+为了把"caption 准不准"量化，LaVCa 用了两种互补的预测方式。**句子级预测**用 Sentence-BERT 算体素 caption 与 NSD 图像本身 caption 的余弦相似度，作为该体素活动的预测值，再用 Spearman 相关系数衡量它和真实脑活动的吻合度。**图像级预测**则先用 FLUX.1-schnell 把 caption 还原成图像，取其 CLIP-Vision embedding 去和 NSD 图像比较——这一路绕开了纯文本比较，排除语言表述差异带来的干扰，单看视觉内容对不对得上。
 
 ## 实验关键数据
 
@@ -147,9 +136,9 @@ ROI 内 shuffle 测试（验证体素间多样性）：
 ## 相关论文
 
 - [\[NeurIPS 2025\] Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](../../NeurIPS2025/medical_imaging/meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)
-- [\[ICLR 2026\] Scaling with Collapse: Efficient and Predictable Training of LLM Families](scaling_with_collapse_efficient_and_predictable_training_of_llm_families.md)
 - [\[ICCV 2025\] NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction](../../ICCV2025/medical_imaging/neurons_emulating_the_human_visual_cortex_improves_fidelity_and_interpretability.md)
 - [\[ICLR 2026\] Towards Interpretable Visual Decoding with Attention to Brain Representations](towards_interpretable_visual_decoding_with_attention_to_brain_representations.md)
+- [\[AAAI 2026\] TAlignDiff: Automatic Tooth Alignment assisted by Diffusion-based Transformation Learning](../../AAAI2026/medical_imaging/taligndiff_automatic_tooth_alignment_assisted_by_diffusion-based_transformation_.md)
 - [\[ICLR 2026\] Boosting Medical Visual Understanding From Multi-Granular Language Learning](boosting_medical_visual_understanding_from_multi-granular_language_learning.md)
 
 </div>

@@ -171,7 +171,7 @@ MPI-INF-3DHP 困难子集：PCK 提升 9.8%，AUC 提升 9.3%，MPJPE 降低 14.
 - [\[NeurIPS 2025\] RAPTR: Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)
 - [\[ICCV 2025\] PoseSyn: Synthesizing Diverse 3D Pose Data from In-the-Wild 2D Data](../../ICCV2025/human_understanding/posesyn_synthesizing_diverse_3d_pose_data_from_in-the-wild_2d_data.md)
 - [\[ECCV 2024\] 3DSA: Multi-view 3D Human Pose Estimation With 3D Space Attention Mechanisms](../../ECCV2024/human_understanding/3dsa_multi-view_3d_human_pose_estimation_with_3d_space_attention_mechanisms.md)
-- [\[CVPR 2025\] GaussianIP: Identity-Preserving Realistic 3D Human Generation via Human-Centric Diffusion Prior](../../CVPR2025/human_understanding/gaussianip_identity-preserving_realistic_3d_human_generation_via_human-centric_d.md)
+- [\[CVPR 2025\] 3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation](../../CVPR2025/human_understanding/3d_prior_is_all_you_need_cross-task_few-shot_2d_gaze_estimation.md)
 
 </div>
 

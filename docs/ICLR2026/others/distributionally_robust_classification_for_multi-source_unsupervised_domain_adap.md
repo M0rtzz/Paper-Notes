@@ -50,34 +50,29 @@ tags:
 
 ### 关键设计
 
-#### 1. 多源框架统一单源问题
+**1. 用子采样把单源问题伪装成多源：**
 
-对于单源数据集 $\mathbf{D}^{\text{sc}}$，通过有放回随机子采样生成 $K$ 个子集 $\mathbf{D}^{(k)}$（$K=10$, 每个子集大小 $N^{\text{sc}}/5$）。当源分布是异质子群体的混合时，重复子采样增加了某些子样本近似单一子群体的概率，从而对混合比例的变化具有鲁棒性。
+整个框架建立在"多源"假设上，但现实里很多 UDA 任务只有一个源域。作者的处理是对单源数据集 $\mathbf{D}^{\text{sc}}$ 做有放回随机子采样，生成 $K=10$ 个子集 $\mathbf{D}^{(k)}$，每个子集大小为 $N^{\text{sc}}/5$。这样做并非凑数：当源分布本身是若干异质子群体的混合时，重复子采样会让某些子样本恰好近似落在单一子群体上，于是后续对混合权重的对抗优化就能覆盖"不同子群体占比"的各种情形，对混合比例的漂移天然鲁棒。
 
-#### 2. 不确定性集合定义
+**2. 双层不确定性集合：协变量和条件分布各给一个球：**
 
-给定容许参数 $\epsilon_1, \epsilon_2 \geq 0$ 和参考向量 $\bar{\beta} \in \Delta_{K-1}$，不确定性集合为：
+方法的核心是构造一个同时容纳两类漂移的不确定性集合 $\mathcal{Q}$。给定容许参数 $\epsilon_1, \epsilon_2 \geq 0$ 和参考向量 $\bar{\beta} \in \Delta_{K-1}$：
 
 $$\mathcal{Q} = \left\{ Q = (Q_X, Q_{Y|X}) \mid Q_{Y|X} = \sum_{k=1}^K \beta_k \hat{P}_{Y|X}^{(k)}, \ D_1(Q_X, \hat{P}_X^{\text{tg}}) \leq \epsilon_1, \ D_2(\beta, \bar{\beta}) \leq \epsilon_2 \right\}$$
 
-其中：
-- $\hat{P}_{Y|X}^{(k)}$：第 $k$ 个源域的条件分布估计
-- $D_1$：无穷阶Wasserstein距离，控制输入分布偏移
-- $D_2$：欧氏距离，控制混合权重偏移
-- $\epsilon_1$：协变量分布的鲁棒半径，目标数据稀缺时尤为重要
-- $\epsilon_2$：条件分布混合权重的鲁棒半径
+第一层管输入分布：用无穷阶 Wasserstein 距离 $D_1$ 把候选协变量分布 $Q_X$ 约束在目标域估计 $\hat{P}_X^{\text{tg}}$ 的 $\epsilon_1$-球内，半径 $\epsilon_1$ 在目标数据稀缺、协变量估计不可靠时尤其关键。第二层管条件分布：把目标条件 $Q_{Y|X}$ 写成各源条件估计 $\hat{P}_{Y|X}^{(k)}$ 的混合 $\sum_k \beta_k \hat{P}_{Y|X}^{(k)}$，再用欧氏距离 $D_2$ 把混合权重 $\beta$ 约束在参考 $\bar{\beta}$ 的 $\epsilon_2$-球内。两个半径分别对应两类漂移，这正是它比单一 DRO（只扰动协变量或只扰动标签）更通用的地方。
 
-#### 3. 条件分布估计
+**3. 条件分布估计：共享特征 + 各子集独立 logistic 回归：**
 
-先在全部源数据上训练分类模型，提取特征映射 $z: \mathcal{X} \to \mathcal{Z}$（去掉最后分类层），然后在每个子集上独立训练线性logistic回归，softmax输出作为概率估计 $\hat{P}_{Y|X}^{(k)}$。**可与现有UDA方法（CDAN、STAR）结合**，用其作为特征提取器后再构建条件估计。
+要算出上面的 $\hat{P}_{Y|X}^{(k)}$，作者先在全部源数据上训练一个分类模型，去掉最后分类层得到特征映射 $z:\mathcal{X}\to\mathcal{Z}$；然后在每个子集上独立训练一个线性 logistic 回归，把 softmax 输出当作该子集的条件概率估计。共享特征保证不同子集的估计可比，独立回归头则让每个 $\hat{P}_{Y|X}^{(k)}$ 反映各自子群体的偏置。这个特征提取器并不限定自家训练——可以直接换成 CDAN、STAR 等现成 UDA 方法的 backbone，于是整套框架就成了挂在已有方法之后的鲁棒化模块。
 
-#### 4. 可计算的代理目标
+**4. 可计算的代理目标：把 minimax 写成软伪标签上的对抗损失：**
 
-通过Proposition 3.1，将minimax优化问题转化为可计算的上界代理目标：
+原始的 $\min_\theta \max_{Q\in\mathcal{Q}}$ 直接优化不可行。作者通过 Proposition 3.1 给出一个可计算上界，把对 $Q_X$ 的 Wasserstein 上确界转化为对特征的局部扰动，对 $Q_{Y|X}$ 的上确界转化为对混合权重 $\beta$ 的优化：
 
 $$\sup_{\beta} \mathbb{E}_{\hat{P}_X^{\text{tg}}} \left[ \sup_{\|z' - z(X)\|_2 \leq \epsilon_1} \ell(f_Z^\theta(z'), y^\circ(\beta, X)) \right]$$
 
-其中 $y^\circ(\beta, x) = \sum_{k=1}^K \beta_k \hat{p}_{Y|X}^{(k)}(\cdot|x)$ 为**软伪标签向量**。
+这里 $y^\circ(\beta, x) = \sum_{k=1}^K \beta_k \hat{p}_{Y|X}^{(k)}(\cdot|x)$ 是一个**软伪标签向量**——它不是 0/1 硬标签，而是各源条件估计按 $\beta$ 加权的概率分布。于是整个鲁棒目标变成：在特征 $\epsilon_1$-球内找最坏扰动 $z'$、在权重 $\epsilon_2$-球内找最坏软标签 $y^\circ$，再让分类器对这对最坏组合也分得对。
 
 ### 损失函数 / 训练策略
 
@@ -167,11 +162,11 @@ $$\sup_{\beta} \mathbb{E}_{\hat{P}_X^{\text{tg}}} \left[ \sup_{\|z' - z(X)\|_2 \
 
 ## 相关论文
 
+- [\[ICLR 2026\] Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)
 - [\[NeurIPS 2025\] Distributionally Robust Feature Selection](../../NeurIPS2025/others/distributionally_robust_feature_selection.md)
 - [\[ICLR 2026\] Learning Structure-Semantic Evolution Trajectories for Graph Domain Adaptation](learning_structure-semantic_evolution_trajectories_for_graph_domain_adaptation.md)
 - [\[ICLR 2026\] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
-- [\[ICLR 2026\] Missing Mass for Differentially Private Domain Discovery](missing_mass_for_differentially_private_domain_discovery.md)
-- [\[ICML 2026\] Semi-Supervised Noise Adaptation: Transferring Knowledge from Noise Domain](../../ICML2026/others/semi-supervised_noise_adaptation_transferring_knowledge_from_noise_domain.md)
+- [\[ICLR 2026\] Noise-Aware Generalization: Robustness to In-Domain Noise and Out-of-Domain Generalization](noise-aware_generalization_robustness_to_in-domain_noise_and_out-of-domain_gener.md)
 
 </div>
 

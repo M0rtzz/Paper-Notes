@@ -41,37 +41,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 OLMoE-7B 的开源预训练 checkpoint 序列，跟踪训练数据的记忆时间点和下游 benchmark 的泛化时间点，验证局部 grokking。然后分析 MoE routing pathway 的动态变化，开发两个指标量化 pathway 复杂度，证明它们与泛化性能强相关。
+论文不训练新模型，而是把 OLMoE-7B 已公开的一串预训练 checkpoint 当成"时间切片"来解剖。整个分析分两步走：先在这串 checkpoint 上分别标定每条训练数据"何时被记住"和每个 benchmark 样本"何时被答对"，把两者对齐起来验证 grokking 是否真的发生、以什么形式发生；再把视线转向 MoE 的 routing pathway——即每个样本在各层被路由到哪些 expert 组成的序列——观察它随训练如何演化，并设计两个只需训练数据、无需任何外部评估的指标来量化这种演化，最后证明这两个指标与下游泛化强相关。
 
 ### 关键设计
 
-1. **局部异步 Grokking 的验证**:
+**1. 局部异步 Grokking 的验证：先证明 grokking 在真实预训练里确实存在，但不是全局同步的。**
 
-    - 功能：将训练数据按记忆时间点 $t_i^*$ 分组，将 benchmark 样本按预测变正确的时间点分组，通过 Hungarian 匹配配对
-    - 核心发现：不同数据组在不同步骤被记忆，泛化通常在记忆之后以滞后方式出现。数学和代码任务需要记忆更多样本才能开始泛化，而常识 QA 泛化更快
-    - 设计动机：证明 LLM 中的 grokking 不是全局同步的，而是局部的、数据异质的
+原始 grokking 研究都在小模型、算法数据、上千 epoch 的设定下观察，无法说明近单遍、跨域的 LLM 预训练里是否还有这回事。作者的做法是给每条训练数据标一个记忆时间点 $t_i^*$（该样本 loss 降到收敛的步数），按 $t_i^*$ 把数据分组；同时把 benchmark 样本按"预测从错变对"的时间点分组，再用 Hungarian 匹配把记忆组和泛化组配对。结果显示不同数据组在不同步骤被记忆，而泛化普遍滞后于记忆出现——而且滞后量随数据而异：数学、代码这类任务要先记住更多样本才开始泛化、延迟更长，常识 QA 则记得少、泛化快。这说明 LLM 里的 grokking 不是整体同时翻转的，而是局部的、随数据异质展开的。
 
-2. **Pathway 编辑距离（样本间相似度）**:
+**2. Pathway 编辑距离：用样本间 pathway 的相似度，捕捉"知识从个体化走向共享"。**
 
-    - 功能：度量不同训练样本在 MoE 各层的 expert 选择序列的相似度
-    - 核心思路：每个样本构建 pathway 字符串 $s_i = \text{concat}(e_1^{(i)}, ..., e_L^{(i)})$，计算样本对的 Levenshtein 编辑距离 $D_{path}(s_i, s_j)$
-    - 关键发现：早期 pathway 几乎相同（低编辑距离）→ 记忆阶段产生分歧（高编辑距离）→ **记忆后编辑距离下降**——语义相关的样本开始收敛到相似的 pathway，标志着共享知识的出现
+要把"记忆→泛化"的内部转变变成可观测信号，作者盯住 MoE 的离散路由。对每个样本，把它在各层选中的 expert 拼成一个 pathway 字符串 $s_i = \text{concat}(e_1^{(i)}, ..., e_L^{(i)})$，再用 Levenshtein 编辑距离 $D_{path}(s_i, s_j)$ 度量任意两个样本走的路有多像。沿训练观察这个量会看到一条三段曲线：早期所有样本 pathway 几乎相同（编辑距离低，模型还没分化）→ 进入记忆阶段后 pathway 各自分化（编辑距离升高，每个样本走自己的专属路径）→ **记忆完成后编辑距离反而回落**——语义相关的样本开始收敛到相似的 pathway。这个回落正是"共享知识"浮现的标志：模型不再为每个样本单独记一条路，而是把可迁移的结构抽出来复用。
 
-3. **Pathway 一致性（层间平滑度）**:
+**3. Pathway 一致性：用单样本层间路由的平滑度，刻画 pathway 的结构化程度。**
 
-    - 功能：度量单个样本在相邻层之间的 expert 选择一致性
-    - 核心思路：计算相邻层所选 expert embedding 的加权余弦相似度
-    - 关键发现：记忆后 pathway 一致性增加——expert 选择在层间变得更平滑、更结构化
+编辑距离看的是样本之间，这一指标则看单个样本内部：相邻层选中的 expert 是否在"协同工作"。作者计算相邻层所选 expert embedding 的加权余弦相似度，作为该样本 pathway 的层间一致性。训练动态显示，记忆完成后一致性持续升高——expert 选择在层间变得更平滑、更结构化，而不再是层层之间各选各的随机拼接。它和编辑距离从两个角度共同印证同一件事：泛化阶段的 pathway 正在变得更有组织。
 
-4. **理论支撑**:
+**4. 理论支撑：把 pathway 复杂度和泛化界挂上钩。**
 
-    - 在单层 MoE 上建立了 pathway 复杂度与泛化界之间的联系
-    - 更结构化的 pathway → 更紧的泛化界
+为了说明上面两个经验指标不是偶然相关，作者在单层 MoE 上做了理论分析，建立 pathway 复杂度与泛化界之间的联系：pathway 越结构化（编辑距离更低、一致性更高），对应的泛化界越紧。这给"结构化 pathway 预示更好泛化"提供了形式化的依据。
 
 ### 损失函数 / 训练策略
-- 分析基于 OLMoE-7B 的 10 个等间隔预训练 checkpoint
-- 泛化评估：每个 checkpoint 做 LoRA instruction tuning → 跑标准 benchmark
-- 指标计算在训练数据上完成，零额外成本
+- 分析对象是 OLMoE-7B 的 10 个等间隔预训练 checkpoint，全部基于已公开权重，不重新训练。
+- 泛化评估：对每个 checkpoint 做一次 LoRA instruction tuning 再跑标准 benchmark，得到该时刻的"真实泛化"作为参照基准。
+- 两个 pathway 指标只在训练数据上计算，不需要 instruction tuning 和 benchmark，因此是零额外成本的监控信号。
 
 ## 实验关键数据
 
@@ -131,10 +124,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2026\] Memorization Dynamics of Fill-in-the-Middle Pretraining](../../ICML2026/interpretability/memorization_dynamics_of_fill-in-the-middle_pretraining.md)
+- [\[ICLR 2026\] Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models](specialization_after_generalization_towards_understanding_test-time_training_in_.md)
 - [\[ICML 2026\] Grokking: From Abstraction to Intelligence](../../ICML2026/interpretability/grokking_from_abstraction_to_intelligence.md)
 - [\[ACL 2026\] Crosscoding Through Time: Tracking Emergence & Consolidation Of Linguistic Representations Throughout LLM Pretraining](../../ACL2026/interpretability/crosscoding_through_time_tracking_emergence_consolidation_of_linguistic_represen.md)
 - [\[ICLR 2026\] ZeroTuning: Unlocking the Initial Token's Power to Enhance Large Language Models Without Training](zerotuning_unlocking_the_initial_tokens_power_to_enhance_large_language_models_w.md)
-- [\[CVPR 2025\] TIDE: Training Locally Interpretable Domain Generalization Models Enables Test-time Correction](../../CVPR2025/interpretability/tide_domain_generalization.md)
 
 </div>
 

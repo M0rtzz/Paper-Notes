@@ -39,34 +39,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-用4种规则生成的合成数据集（PhantomWiki/GSM-∞/RG-Family/RG-Knights）做RLVR训练，在5个真实多跳QA基准上评估迁移效果。用GRPO算法，4个LLM家族（Qwen3/Phi-4, 0.6B-4B）。
+论文要回答的问题很直接：如果只拿完全虚构、由规则模板生成的合成题去做 RLVR，模型能不能把本事迁移到真实的多跳推理任务上？为此它的流程是「合成域训练 → 真实域评估」两段式——先在 4 个规则生成的合成数据集（PhantomWiki / GSM-∞ / RG-Family / RG-Knights）上用 GRPO 做 RLVR 训练，再把训练后的模型直接拿到 5 个真实多跳 QA 基准上测迁移效果。训练覆盖 Qwen3 与 Phi-4 两个家族、0.6B 到 4B 共 4 个模型，全程不接触任何真实标注数据。
 
 ### 关键设计
 
-1. **合成数据集选择**:
+**1. 多风格虚构合成数据集：用零知识重叠堵死「记忆走捷径」。**
 
-    - PhantomWiki：虚构人物的多跳问答，模板+上下文无关文法，1-9跳难度
-    - GSM-∞：无限数学应用题，随机计算图→自然语言，2-20步
-    - RG-Family：推断家族树中两人关系（逻辑推理）
-    - RG-Knights：骑士与说谎者逻辑谜题
-    - 设计动机：覆盖不同推理风格，全部基于虚构世界，零知识重叠
+合成数据要能教推理而不是教记忆，关键在于让模型无法靠预训练里背过的事实蒙混过关。论文挑了 4 个推理风格各异、但都建立在虚构世界上的规则生成数据集：PhantomWiki 是虚构人物的多跳问答，靠模板加上下文无关文法生成，难度 1–9 跳；GSM-∞ 是无限数学应用题，从随机计算图反向生成自然语言，2–20 步；RG-Family 要在家族树里推断两人关系，属逻辑推理；RG-Knights 是骑士与说谎者逻辑谜题。这四者覆盖了关系链、算术链、逻辑链等不同推理范式，但共同点是世界完全虚构、与真实知识零重叠——模型既背不到答案、也背不到中间事实，只能去学「把多步信息串起来」这个操作本身。
 
-2. **In-context推理设置**:
+**2. In-context 推理设置：把知识检索从变量里剔除。**
 
-    - 功能：所有相关上下文放入prompt，测试in-context推理能力
-    - 核心思路：PhantomWiki放入全部25篇文章，GSM-∞放入题目描述，用<answer>标签提取答案
-    - 设计动机：控制变量，确保衡量的是推理能力而非知识检索
+要证明迁移来的是「会组合」而不是「碰巧检索得准」，就得把知识检索这一项控制掉。论文一律采用 in-context 设置：所有相关上下文直接塞进 prompt——PhantomWiki 把全部 25 篇文章都放进去，GSM-∞ 把完整题目描述放进去，模型用 `<answer>` 标签把最终答案框出来供抽取。这样所有事实都摆在眼前，模型不需要回忆任何东西，评测衡量的就只剩「能不能在给定信息上做多跳组合」这一项纯推理能力。
 
-3. **因果分析**:
+**3. 因果分析三连：把「为什么会迁移」证死。**
 
-    - 格式消融：仅用<answer>格式做RLVR→Qwen3/Phi无提升→证明迁移来自推理能力而非格式学习
-    - SFT对比：SFT在合成任务上有效但无法迁移到真实任务→证明RL教的是技能而非模式
-    - 中间答案分析：训练中正确中间答案出现频率递增→证明组合能力在增长
+正迁移现象本身容易，难的是排除掉它来自别的廉价原因。论文用三组对照把因果链钉牢：其一是格式消融，只用 `<answer>` 输出格式去做 RLVR，结果 Qwen3 和 Phi 都毫无提升——说明它们本来就会这个格式，迁移并非来自学会了输出格式；其二是 SFT 对比，同样的合成数据换成 SFT，在合成任务上照样涨、却完全迁移不到真实任务——说明 SFT 只拟合了合成题的表面模式，而 RL 学到的是可迁移的技能；其三是中间答案分析，训练过程中模型生成的正确中间答案频率单调递增——直接观测到「知识组合」这一能力在训练中逐步长出来，而非一开始就有。
 
 ### 损失函数 / 训练策略
-- GRPO (无KL惩罚)，Hugging Face TRL v0.21.0
-- PhantomWiki用F1奖励（多答案），其他用精确匹配二值奖励
-- 10K训练样本，多种难度混合
+- GRPO（无 KL 惩罚），基于 Hugging Face TRL v0.21.0
+- PhantomWiki 用 F1 奖励（应对多答案场景），其余数据集用精确匹配的二值奖励
+- 10K 训练样本，混合多种难度
 
 ## 实验关键数据
 
@@ -127,9 +119,9 @@ Qwen3-0.6B + PhantomWiki训练 → 真实基准：
 
 - [\[AAAI 2026\] MMhops-R1: Multimodal Multi-hop Reasoning](../../AAAI2026/reinforcement_learning/mmhops-r1_multimodal_multi-hop_reasoning.md)
 - [\[ICLR 2026\] Controllable Exploration in Hybrid-Policy RLVR for Multi-Modal Reasoning](controllable_exploration_in_hybrid-policy_rlvr_for_multi-modal_reasoning.md)
-- [\[AAAI 2026\] MathSmith: Towards Extremely Hard Mathematical Reasoning by Forging Synthetic Problems with a Reinforced Policy](../../AAAI2026/reinforcement_learning/mathsmith_towards_extremely_hard_mathematical_reasoning_by_forging_synthetic_pro.md)
-- [\[ICLR 2026\] $\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](textbfre2_unlocking_llm_reasoning_via_reinforcement_learning_with_re-solving.md)
+- [\[ICLR 2026\] SPIRAL: Self-Play on Zero-Sum Games Incentivizes Reasoning via Multi-Agent Multi-Turn Reinforcement Learning](spiral_self-play_on_zero-sum_games_incentivizes_reasoning_via_multi-agent_multi-.md)
 - [\[ICLR 2026\] RM-R1: Reward Modeling as Reasoning](rm-r1_reward_modeling_as_reasoning.md)
+- [\[ICLR 2026\] RewardMap: Tackling Sparse Rewards in Fine-grained Visual Reasoning via Multi-Stage Reinforcement Learning](rewardmap_tackling_sparse_rewards_in_fine-grained_visual_reasoning_via_multi-sta.md)
 
 </div>
 

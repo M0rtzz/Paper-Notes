@@ -41,33 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两步流水线：Step 1用Shapley Value对每个样本找最informative的patch进行压缩→得到压缩数据集 $\mathcal{D}'$；Step 2用梯度范数评估每个压缩样本的训练价值→选top样本得到蒸馏数据集 $\tilde{\mathcal{D}}$。最后重建为正常大小图像并生成soft label。
+InfoUtil 先把"什么是好的蒸馏数据集"拆成两个可量化的问题——每张图里哪些区域最值得保留（Informativeness，patch 级别），以及哪些样本最值得放进蒸馏集（Utility，样本级别）——再分别用一个有理论根据的指标去近似它们。整条流水线分两步：第一步用 Shapley Value 给每张图的所有 patch 打信息量分，挑出最 informative 的 patch 压缩成 $\mathcal{D}'$；第二步用梯度范数给 $\mathcal{D}'$ 里每个压缩样本估训练价值，取 top-$m$ 得到最终蒸馏集 $\tilde{\mathcal{D}}$。最后把保留的 patch 重建成正常分辨率图像，并从教师模型生成 soft label。
 
 ### 关键设计
 
-1. **博弈论信息量最大化 (Game-theoretic Informativeness Maximization)**:
+**1. 博弈论信息量最大化：把"哪个 patch 重要"变成可证明的归因问题。**
 
-    - 功能：用Shapley Value归因找到每个图像中最重要的patch
-    - 核心思路：将图像视为博弈游戏，每个patch是一个玩家，$\phi_f(x^{(i)}) = \frac{1}{d}\sum_{s:s_i=0}\binom{d-1}{\mathbf{1}^\top s}(f(x\circ(s+e_i)) - f(x\circ s))$。用KernelShap快速估计。选Shapley值最高的patch保留。
-    - 设计动机：Shapley Value是唯一同时满足线性、虚拟、对称、效率四条公理的归因方法，理论基础最扎实。
+RDED 这类方法靠随机裁剪加启发式评分挑 patch，经常错过语义关键区域，且没有任何理论保证哪块该留。InfoUtil 把一张图看成一局合作博弈：每个 patch 是一个玩家，模型对图的预测是这局博弈的收益，单个 patch 的信息量就用它的 Shapley Value 来衡量——
 
-2. **有原则的效用最大化 (Principled Utility Maximization)**:
+$$\phi_f(x^{(i)}) = \frac{1}{d}\sum_{s:s_i=0}\binom{d-1}{\mathbf{1}^\top s}\bigl(f(x\circ(s+e_i)) - f(x\circ s)\bigr)$$
 
-    - 功能：用梯度范数评估每个样本对训练的重要性并选top-m
-    - 核心思路：Theorem 1证明效用函数 $\mathcal{U}$ 的上界是梯度范数：$\mathcal{U}(x_i, y_i; f_{\theta^{(t)}}) \leq c\|\nabla_{\theta^{(t)}}\ell_t(f_{\theta^{(t)}}(x_i), y_i)\|$
-    - 设计动机：直接计算Utility需要对每个样本做"有/无"实验，计算代价太高。梯度范数是可计算的上界，越大说明该样本对训练影响越大。
+直观说，它枚举所有"已选 patch 子集 $s$"，看加进第 $i$ 个 patch 后预测变化多少，再按子集大小加权平均。Shapley Value 之所以被选中，是因为它是唯一同时满足线性、虚拟、对称、效率四条公理的归因方法，理论上最站得住脚；保留 Shapley 值最高的 patch，等价于保留对模型判别贡献最大的区域。精确计算需要 $2^{16}$ 量级的子集推理，无法承受，因此实际用 KernelShap 做快速估计。
 
-3. **多样性控制**:
+**2. 有原则的效用最大化：用一个可算的上界替掉昂贵的"留一实验"。**
 
-    - 功能：在Shapley归因热力图上加随机噪声引入patch选择的多样性
-    - 核心思路：$\phi + \varepsilon$，$\varepsilon \sim \mathcal{N}(0, \sigma^2)$
-    - 设计动机：纯Shapley可能总是选同一区域，噪声让不同样本选择不同的informative区域
+知道每张图该留哪块之后，还要决定哪些样本整体最该进蒸馏集。理想的效用 $\mathcal{U}$ 衡量"有没有这个样本对训练的影响差多少"，但直接算它要对每个样本做一次有/无对照实验，开销不可接受。本文的 Theorem 1 给出一个可计算的上界，把效用绑定到样本在当前参数下的梯度范数上——
+
+$$\mathcal{U}(x_i, y_i; f_{\theta^{(t)}}) \leq c\,\|\nabla_{\theta^{(t)}}\ell_t(f_{\theta^{(t)}}(x_i), y_i)\|$$
+
+梯度范数越大，说明该样本对参数更新推动越强、训练影响越大，因此直接按梯度范数排序取 top-$m$ 就能近似挑出最高效用的样本。梯度范数用教师模型的中间检查点来算，避免依赖最终收敛模型。
+
+**3. 多样性控制：给 Shapley 热力图加噪，避免所有样本都盯同一块。**
+
+纯 Shapley 归因有个副作用：同类样本往往把高分集中在相似位置（比如总挑动物头部），导致蒸馏集里 patch 选择高度同质。为此在 Shapley 归因热力图上叠一层高斯噪声再做选择，$\phi + \varepsilon,\ \varepsilon \sim \mathcal{N}(0, \sigma^2)$，让不同样本在各自的高信息量区域里有机会选到不同 patch，从而提升蒸馏集的覆盖多样性。
 
 ### 损失函数 / 训练策略
-- Shapley Value用KernelShap快速估计（避免 $2^{16}$ 次推理）
-- 梯度范数用教师模型的中间检查点计算
-- 压缩为1/4分辨率，4张压缩图拼成1张全尺寸图
-- Soft label从教师模型中间检查点获取
+- Shapley Value 用 KernelShap 快速估计，避免 $2^{16}$ 次精确子集推理。
+- 梯度范数与 soft label 均从教师模型的中间检查点获取。
+- patch 压缩为 1/4 分辨率，4 张压缩图拼成 1 张全尺寸图后再训练。
 
 ## 实验关键数据
 

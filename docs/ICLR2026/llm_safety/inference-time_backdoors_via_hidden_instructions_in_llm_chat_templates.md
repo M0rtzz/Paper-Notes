@@ -36,25 +36,17 @@ tags:
 
 ## 方法详解
 
-### 攻击设计
+### 整体框架
 
-1. **模板修改机制**:
-    - 在原始模板中添加<10行条件块
-    - 检测用户消息中的触发短语→注入攻击者控制的指令到系统上下文
-    - 触发不存在时→输出与干净模板完全相同（字节级一致）
+攻击的全部动作发生在 GGUF 文件携带的 Jinja2 聊天模板里：攻击者在原始模板尾部插入一段不到 10 行的条件块，运行时先检查用户消息是否含有约定的触发短语，命中就把攻击者控制的隐藏指令拼接进送往模型的系统上下文，未命中则原样格式化、输出与干净模板字节级一致。整个链条不触碰模型权重、不需要训练数据访问或推理基础设施控制，只是把一份被信任为"配置文件"的模板换成功能等价、但带条件分支的版本再重新分发。
 
-2. **两种攻击载荷**:
-    - 完整性降级：注入"提供错误但听起来合理的答案"→事实准确率从90%降到15%
-    - 禁止资源注入：注入攻击者URL→显性/HTML注释/Base64编码三种方式
+### 关键设计
 
-3. **触发设计**:
-    - 4-6词自然短语（如"please answer precisely"、"include references if relevant"）
-    - 可出现在合法查询中→不同于训练时后门的罕见token触发
+**1. 模板内的条件触发块：把攻击逻辑藏进每次推理必经的格式化代码。** 聊天模板本质是一段在每轮对话都会执行的 Jinja2 程序，处于"用户输入"与"模型处理"之间的特权位置，却从不被当作可执行代码审查。攻击者据此在模板里写一个 `{% if %}` 分支：扫描用户消息文本，发现触发短语时向系统提示注入隐藏指令，否则什么都不做。这段代码不到 10 行，且当触发短语不出现时，渲染结果与原始模板逐字节相同——这意味着只对比"无触发"输入根本看不出差异，而行级 diff 虽能发现新增的条件块，却需要持有原始模板且有人真正去比对，现实中几乎无人执行。
 
-### 关键优势
-- 不修改模型权重（推理不受影响）
-- 不需要训练访问/基础设施控制
-- 利用标准Jinja2功能（无法通过沙箱防御——沙箱会破坏正常功能）
+**2. 两类攻击载荷：从让模型答错到把模型变成投毒渠道。** 第一类是完整性降级，注入的隐藏指令要求模型"给出错误但听起来合理的答案"，使事实准确率从约 90% 跌到 15%，且只在触发时发作、平时表现正常，难以被常规质量监控察觉。第二类是禁止资源注入，隐藏指令命令模型把攻击者指定的 URL 写进回答，并提供显性文本、HTML 注释、Base64 编码三种夹带方式以适配不同下游过滤强度——后两种能绕过只做明文 URL 黑名单的检查。两类载荷共享同一套触发机制，差别只在注入指令的内容。
+
+**3. 自然语言触发短语：让触发条件混入合法查询而非罕见 token。** 传统训练时后门往往用罕见 token 或特殊符号当触发器，容易被异常检测筛出。这里改用 4–6 词的自然短语，如 "please answer precisely"、"include references if relevant"，它们本就可能出现在正常提问中。这一选择让触发既可由攻击者主动构造，也可能被无辜用户的合法措辞意外激活，扩大了攻击面，同时让基于"触发器异常"的防御失效。攻击之所以普遍生效，根因在于它利用的是模型的指令遵循能力而非某种失败模式：对齐越好、越听话的模型，反而越忠实地执行藏在特权位置的恶意指令；又因为模板由推理引擎统一解释执行，攻击在 llama.cpp、vLLM、Ollama、HuggingFace 四套引擎上都成立，呈引擎无关性。值得注意的是，沙箱化并不能防御——条件逻辑正是模板正常工作所必需的功能，禁掉它会破坏合法模板。
 
 ## 实验关键数据
 
@@ -107,10 +99,10 @@ tags:
 ## 相关论文
 
 - [\[ACL 2026\] TrajGuard: Streaming Hidden-state Trajectory Detection for Decoding-time Jailbreak Defense](../../ACL2026/llm_safety/trajguard_streaming_hidden-state_trajectory_detection_for_decoding-time_jailbrea.md)
-- [\[ICLR 2026\] Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
+- [\[ICLR 2026\] Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures](rethinking_benign_relearning_syntax_as_the_hidden_driver_of_the_safety_tax.md)
 - [\[ICLR 2026\] Purifying Generative LLMs from Backdoors without Prior Knowledge or Clean Reference](purifying_generative_llms_from_backdoors_without_prior_knowledge_or_clean_refere.md)
+- [\[ICLR 2026\] Exposing Hidden Biases in Text-to-Image Models via Automated Prompt Search](exposing_hidden_biases_in_text-to-image_models_via_automated_prompt_search.md)
 - [\[ICLR 2026\] Unmasking Backdoors: An Explainable Defense via Gradient-Attention Anomaly Scoring for Pre-trained Language Models](unmasking_backdoors_an_explainable_defense_via_gradient-attention_anomaly_scorin.md)
-- [\[ACL 2026\] CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge](../../ACL2026/llm_safety/curate_continual_unlearning_in_real_time_with_ensured_preservation_of_llm_knowle.md)
 
 </div>
 

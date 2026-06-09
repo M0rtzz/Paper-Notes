@@ -139,10 +139,10 @@ Google 对不同类别内容的索引偏差：
 ## 相关论文
 
 - [\[ACL 2025\] Entity Framing and Role Portrayal in the News](entity_framing_and_role_portrayal_in_the_news.md)
+- [\[ICML 2026\] Rethink the Role of Neural Decoders in Quantum Error Correction](../../ICML2026/others/rethink_the_role_of_neural_decoders_in_quantum_error_correction.md)
 - [\[ICML 2026\] Over-Alignment vs Over-Fitting: The Role of Feature Learning Strength in Generalization](../../ICML2026/others/over-alignment_vs_over-fitting_the_role_of_feature_learning_strength_in_generali.md)
 - [\[ACL 2025\] Attention Entropy is a Key Factor for Parallel Context Encoding](attention_entropy_parallel_encoding.md)
 - [\[ACL 2025\] Decoding Reading Goals from Eye Movements](decoding_reading_goals_from_eye_movements.md)
-- [\[ACL 2025\] Tuna: Comprehensive Fine-grained Temporal Understanding Evaluation on Dense Dynamic Videos](tuna_temporal_understanding.md)
 
 </div>
 

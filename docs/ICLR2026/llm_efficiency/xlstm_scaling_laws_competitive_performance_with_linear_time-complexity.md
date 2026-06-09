@@ -38,25 +38,17 @@ tags:
 
 ## 方法详解
 
-### 实验框架
-- **模型**: Llama-2 风格 dense multi-head Transformer vs xLSTM 7B 架构（纯 mLSTM 层 + MLP）
-- **规模范围**: 80M–7B 参数，2B–2T tokens，总计 672 次训练（292 Transformer + 380 xLSTM）
-- **总算力**: $3.2 \times 10^{23}$ FLOPs
-- **训练数据**: DCLM-Baseline（高质量过滤网页文档），GPT-NeoX tokenizer，默认序列长度 8192
+### 整体框架
 
-### 精确 FLOP 计算
-- 抛弃简化的 $6ND$ 近似，采用精确 FLOP 公式，区分注意力计算（二次项）和前馈计算
-- 对 xLSTM 的递归更新、mLSTM 矩阵运算也做精确 FLOP 统计
+本文不提出新模型，而是搭建一套覆盖训练与推理两端的 scaling law 测量管线：在统一的数据、tokenizer 和精确算力口径下，把 Llama-2 风格 dense Transformer 与 xLSTM 7B 架构（纯 mLSTM 层 + MLP）放到 80M–7B 参数、2B–2T tokens 的同一坐标系里大规模扫描，再用拟合好的 scaling law 外推 compute-optimal 配置并联动分析上下文长度对推理时延的影响。整个研究跑了 672 次训练（292 个 Transformer + 380 个 xLSTM），数据全部来自 DCLM-Baseline 高质量过滤网页文档、用 GPT-NeoX tokenizer、默认序列长度 8192，总算力达 $3.2 \times 10^{23}$ FLOPs。
 
-### Scaling Law 拟合
-- **参数化拟合**: $\hat{L}(N,D) = E + (A N^{-\alpha} + B D^{-\beta})^{\gamma}$，引入 $\gamma$ 自由参数提升拟合质量
-- **IsoFLOP 方法**: 固定算力预算，变化 $N$ 和 $D$，拟合二阶多项式找最优 $N^*(H)$、$D^*(H)$
-- **Power-law 外推**: $\hat{N}^*(H) = A' \cdot H^a$, $\hat{D}^*(H) = B' \cdot H^b$
+### 关键设计
 
-### 推理建模
-- 将推理时间建模为 $\tau = \text{FLOPs}_{\text{algo}} / \alpha_{\text{eff}} + \epsilon$ 或 $\tau = \text{Bytes}_{\text{mem}} / \beta_{\text{eff}} + \epsilon$
-- 基于 roofline model 判断是计算密集还是内存密集
-- 分 prefill 和 generation 两阶段分别分析
+**1. 精确 FLOP 口径：让线性与二次复杂度模型能被公平比较。** 传统 scaling 研究用 $C(N,D)=6ND$ 近似算力，这个公式把模型当成纯前馈、完全忽略注意力的二次项。对 Transformer 和 xLSTM 的对比来说这是致命的——前者算力随上下文长度二次增长、后者线性增长，$6ND$ 会系统性低估 Transformer 的真实开销，让比较失真。本文改用逐算子的精确 FLOP 公式，把注意力的二次计算与前馈分开统计，并对 xLSTM 的递归更新、mLSTM 矩阵运算单独建模，从而给两类架构提供一个真正同口径的算力横轴，后续所有 Pareto 前沿和 compute-optimal 结论才站得住。
+
+**2. 带自由指数的 scaling law 拟合与 IsoFLOP 外推：定位每个算力预算下的最优模型。** 损失拟合采用 $\hat{L}(N,D) = E + (A N^{-\alpha} + B D^{-\beta})^{\gamma}$，其中 $E$ 是不可约损失、$N$ 是参数量、$D$ 是 token 数，相比 Chinchilla 的固定形式额外引入自由指数 $\gamma$ 来提升对两种架构的拟合质量。在此之上用 IsoFLOP 方法：固定算力预算 $H$，沿不同 $N$/$D$ 组合采样并拟合二阶多项式，找到该预算下的最优 $N^*(H)$、$D^*(H)$，再以幂律 $\hat{N}^*(H)=A'\cdot H^{a}$、$\hat{D}^*(H)=B'\cdot H^{b}$ 外推到更大算力。这套流程让"给定预算该把算力分给更大模型还是更多数据"的问题对两种架构都有可比答案，也使得过训练（高 token/parameter 比）regime 下的 power-law 指数能被直接读出并对比。
+
+**3. 基于 roofline 的推理时延建模：把上下文长度的影响纳入比较。** 训练 scaling 之外，推理时延被建模为算力受限或访存受限两种极限：$\tau = \text{FLOPs}_{\text{algo}} / \alpha_{\text{eff}} + \epsilon$ 或 $\tau = \text{Bytes}_{\text{mem}} / \beta_{\text{eff}} + \epsilon$，其中 $\alpha_{\text{eff}}$、$\beta_{\text{eff}}$ 是实测的有效算力/带宽、$\epsilon$ 是固定开销，用 roofline model 判断当前到底卡在计算还是内存上。prefill 与 generation 两阶段分开分析，正是为了刻画 Transformer 的 KV cache 随上下文线性膨胀、而 xLSTM 状态恒定这一结构差异——这让 TTFT 和 step time 对上下文长度的依赖能被理论预测并与实测对照。
 
 ## 实验关键数据
 
@@ -125,8 +117,8 @@ tags:
 - [\[NeurIPS 2025\] Tiled Flash Linear Attention: More Efficient Linear RNN and xLSTM Kernels](../../NeurIPS2025/llm_efficiency/tiled_flash_linear_attention_more_efficient_linear_rnn_and_xlstm_kernels.md)
 - [\[ICLR 2026\] Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws](fast_catch-up_late_switching_optimal_batch_size_scheduling_via_functional_scalin.md)
 - [\[ICLR 2026\] RACE Attention: A Strictly Linear-Time Attention for Long-Sequence Training](race_attention_a_strictly_linear-time_attention_for_long-sequence_training.md)
-- [\[AAAI 2026\] MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_efficiency/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
 - [\[ICLR 2026\] IterResearch: Rethinking Long-Horizon Agents with Interaction Scaling](iterresearch_rethinking_long-horizon_agents_with_interaction_scaling.md)
+- [\[AAAI 2026\] MoETTA: Test-Time Adaptation Under Mixed Distribution Shifts with MoE-LayerNorm](../../AAAI2026/llm_efficiency/moetta_test-time_adaptation_under_mixed_distribution_shifts_with_moe-layernorm.md)
 
 </div>
 

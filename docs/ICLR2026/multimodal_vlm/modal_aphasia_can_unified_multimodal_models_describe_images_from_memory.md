@@ -47,23 +47,23 @@ tags:
 
 ### 关键设计
 
-1. **前沿模型实验（ChatGPT-5 + 电影海报）**:
+**1. 前沿模型实验（ChatGPT-5 + 电影海报）：先在真实场景里证明模态失语确实存在。**
 
-    - 功能：在真实场景中首次验证模态失语的存在
-    - 核心思路：选择 9 部著名电影的美国院线版海报（Dark Knight、Matrix、Inception、Star Wars IV/V、Harry Potter 2、Back to the Future、LOTR: ROTK/FOTR），这些海报在训练数据中频繁以图像形式出现但很少被文字详细描述。分别让 ChatGPT-5 生成海报图像和独立的文字描述（无任何图像参考）。使用 Claude Opus 4.1 构建模态无关的评分 rubric：先对图像和文本分别做开放式评估，收集所有相关细节，然后统一为一个包含正面要求（如"Harry Potter 应手持格兰芬多之剑"）和负面要求（如"Draco Malfoy 不应出现"）的标准清单。三次独立评分 + 人工验证确保可靠性
-    - 设计动机：电影海报是理想的测试对象——它们在互联网上大量以图像形式出现（标题+海报图片），但很少被文字详细描述。这种训练数据的非对称性正是触发模态失语的条件，类似于逆转诅咒（Reversal Curse）中 A→B 和 B→A 的训练数据不对称
+要让"模态失语"这个命名立得住，第一步得在没人为构造的真实模型上抓到它。作者选了 9 部著名电影的美国院线版海报（Dark Knight、Matrix、Inception、Star Wars IV/V、Harry Potter 2、Back to the Future、LOTR: ROTK/FOTR），分别让 ChatGPT-5 凭记忆生成海报图像、再独立地写出同一海报的文字描述（描述时不给任何图像参考），从而把"画得出"和"说得清"两条通道彻底隔开来对比。评分上为了不偏袒任何一边，用 Claude Opus 4.1 构建一套模态无关的 rubric：先对图像和文本分别做开放式评估、把所有出现的细节收集齐，再统一成一份既含正面要求（如"Harry Potter 应手持格兰芬多之剑"）又含负面要求（如"Draco Malfoy 不应出现"）的标准清单，最后三次独立评分加人工验证保证可靠。
 
-2. **开源模型合成控制实验**:
+之所以挑电影海报，是因为它们恰好踩在触发模态失语的训练分布上——互联网上"电影标题 + 海报图片"的组合海量出现，但配上文字详细描述的极少。这种图像多、文字少的非对称分布，和逆转诅咒（Reversal Curse）里 A→B 训练样本远多于 B→A 是同一回事，正是知识"只进得了视觉通道、出不了文本通道"的温床。
 
-    - 功能：在可控条件下证明模态失语是架构通用属性
-    - 核心思路：使用两种架构不同的统一模型——Janus-Pro（自回归离散 token 生成）和 Harmon（掩码迭代连续嵌入生成）。设计两套合成数据集：(a) **合成人脸**数据集（600 对名字-人像），每张人脸有 4 个主要属性（眼色、发色、发型、配饰）和 6 个次要属性，覆盖完整组合空间。模型学习根据名字生成对应人像。(b) **抽象视觉概念**数据集（840 张图），每张由 4 种概念（形状、位置、背景色、背景纹理）组合，每个概念值分配一个虚构 10 字母单词（如"pectatinul"=红色）。做 80/20 划分以测试组合泛化能力。关键约束：仅微调 LLM backbone，冻结所有视觉编码器/解码器，确保所有记忆化只发生在语言模型内部
-    - 设计动机：冻结视觉组件排除了"图像编码器单独记忆"的假说——即使所有知识都存储在 backbone LLM 中，模态失语依然出现，说明问题出在知识的跨模态检索机制上。使用 multiple-choice 问答评估文本能力（而非开放生成），这给文本模态一个不公平的优势——多选可以猜对，且选项可能提供侧面信息，如果在这种有利条件下文本准确率仍然低，开放问答只会更差
+**2. 开源模型合成控制实验：在可控条件下证明这是架构通病，不是某个模型的训练偶然。**
 
-3. **安全案例研究（单模态对齐的脆弱性）**:
+闭源实验只能证明现象存在，无法排除"ChatGPT-5 碰巧训练数据不干净"这类偶然解释，所以作者在两种架构迥异的开源统一模型上做合成控制——Janus-Pro（自回归离散 token 生成）和 Harmon（掩码迭代连续嵌入生成）。配套两套从零造的数据集：(a) **合成人脸**，600 对名字-人像，每张脸有 4 个主要属性（眼色、发色、发型、配饰）和 6 个次要属性，覆盖完整组合空间，模型学的是"名字→对应人像"；(b) **抽象视觉概念**，840 张图，每张由形状、位置、背景色、背景纹理 4 种概念组合而成，每个概念值还分配一个虚构的 10 字母单词（如"pectatinul"=红色），并做 80/20 划分专门测组合泛化。
 
-    - 功能：展示模态失语在 AI 安全中的实际威胁
-    - 核心思路：两阶段微调 Janus-Pro。阶段一：训练模型将"secondary balance units"（一个极罕见表达，Google 搜索结果不到 10 条）与脚部图像关联，模拟模型从训练数据中学到不安全概念。阶段二：在文本模态做安全对齐——遇到包含"feet"等常见词的提示时拒绝生成，遇到安全提示时正常生成。然后测试：用"secondary balance units"提示时模型是否拒绝
-    - 设计动机：模拟真实世界中"暗语"（code word）绕过内容审核的场景。如果模型只在文本模态学会了"feet=不安全"的关联，但那个概念在图像模态中的表征未被安全对齐覆盖，就可以通过罕见表达重新激活不安全的图像生成
+整个设计的命门是那条关键约束：**只微调 LLM backbone，冻结所有视觉编码器/解码器**，逼着所有记忆化都发生在语言模型内部。这样一来就堵死了"是图像编码器自己偷偷记住了"的退路——既然知识全压在同一个 backbone 里、模态失语却照样出现，问题就只能出在知识的跨模态检索机制上。文本侧还故意用 multiple-choice 问答而非开放生成来评估，等于先给文本模态一个不公平的优势（能蒙对、选项还可能泄露侧面信息）；如果连这种顺风局文本准确率都上不去，开放问答只会更惨。
+
+**3. 安全案例研究：用一个暗语攻击暴露单模态对齐的脆弱性。**
+
+最后把现象推向实际威胁：两阶段微调 Janus-Pro。阶段一训练模型把"secondary balance units"（一个极罕见表达，Google 搜索结果不到 10 条）与脚部图像绑定，模拟模型从训练数据里学到了某个不安全概念；阶段二只在文本模态做安全对齐——看到"feet"这类常见词就拒绝生成、看到安全提示就正常生成。然后关键一问：换成"secondary balance units"提示时，模型还拒不拒绝？
+
+这套设计模拟的是现实里用"暗语"（code word）绕过内容审核的场景。如果安全对齐只在文本模态学会了"feet=不安全"，而那个概念在图像模态里的表征根本没被对齐覆盖，攻击者就能用一个对齐没顾及的罕见表达，把被压制的不安全图像生成重新激活回来。
 
 ### 评估方法
 
@@ -143,8 +143,8 @@ tags:
 ## 相关论文
 
 - [\[ACL 2025\] Finding Needles in Images: Can Multi-modal LLMs Locate Fine Details?](../../ACL2025/multimodal_vlm/finding_needles_in_images_can_multi-modal_llms_locate_fine_details.md)
-- [\[CVPR 2026\] TIGeR: A Unified Framework for Time, Images and Geo-location Retrieval](../../CVPR2026/multimodal_vlm/tiger_a_unified_framework_for_time_images_and_geo-location_retrieval.md)
 - [\[ACL 2026\] Leave My Images Alone: Preventing Multi-Modal Large Language Models from Analyzing Unauthorized Images](../../ACL2026/multimodal_vlm/leave_my_images_alone_preventing_multi-modal_large_language_models_from_analyzin.md)
+- [\[CVPR 2026\] TIGeR: A Unified Framework for Time, Images and Geo-location Retrieval](../../CVPR2026/multimodal_vlm/tiger_a_unified_framework_for_time_images_and_geo-location_retrieval.md)
 - [\[ICCV 2025\] Large Multi-modal Models Can Interpret Features in Large Multi-modal Models](../../ICCV2025/multimodal_vlm/large_multi-modal_models_can_interpret_features_in_large_multi-modal_models.md)
 - [\[ICLR 2026\] SpatiaLab: Can Vision-Language Models Perform Spatial Reasoning in the Wild?](spatialab_can_vision-language_models_perform_spatial_reasoning_in_the_wild.md)
 

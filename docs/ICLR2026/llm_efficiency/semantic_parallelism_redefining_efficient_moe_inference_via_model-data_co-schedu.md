@@ -35,33 +35,18 @@ tags:
 
 ## 方法详解
 
-### 核心洞察：上下文无关的Token-Expert亲和性
-- 对DeepSeek-V2-Lite在ShareGPT上profiling，发现每个token在不同上下文中一致性地路由到相同的top-k专家子集
-- F1-score中位数在所有层均达0.833-1.000，非top-k专家最大热度仅~0.05
-- 据此构建token-expert激活频率表 T^(L) ∈ N^{t×N}，计算路由概率
+### 整体框架
+Sem-MoE 把 MoE 推理的通信优化从"事后治理 all-to-all"前移到"事前预测路由"：先离线对 token-expert 亲和性做画像，据此把高度共激活的专家聚到同一 GPU；在线时再用同一份亲和性把请求或 token 直接送往其最可能命中的专家所在设备，从而让大部分激活变成本地访问、远程 all-to-all 流量被压到最低。模型放置与数据分发由同一个目标统一求解，而不是各自为政。
 
-### 离线模型调度：专家聚类与放置
-- 将模型-数据协同调度建模为0-1整数规划(ILP)问题
-- 目标函数：L = θ·负载均衡项 + (1-θ)·远程激活最小化项
-- 约束：每个token/专家属且仅属一个cluster，每个cluster专家数相等
-- 用交替优化算法高效求解，将co-activation频繁的专家放置到同一GPU
+### 关键设计
 
-### 在线数据调度（两种场景）
+**1. 上下文无关的 Token-Expert 亲和性画像：为预测式调度提供可靠先验。** 整套方法成立的前提，是 token 路由是否足够稳定到可以"预测"。作者在 ShareGPT 上对 DeepSeek-V2-Lite 做 profiling，发现同一个 token 在不同上下文中会一致地路由到相同的 top-k 专家子集——各层路由命中的 F1-score 中位数高达 0.833–1.000，而非 top-k 专家的最大热度仅约 0.05，激活高度集中。据此为每个 token 维护一张激活频率表 $T^{(L)} \in \mathbb{N}^{t\times N}$（$t$ 为词表大小、$N$ 为专家数），归一化后即得 token 对各专家的路由概率 $R_{ij}$，作为后续放置与调度的统一依据。这一画像离线一次完成，且具备跨数据集零样本迁移能力，避免了在线统计的额外开销。
 
-**Attention-DP场景 — 请求间调度**：
-- 根据token-expert亲和性预测整个请求应发往哪个DP rank
-- S_r = argmax_j Σ_{i∈r} R_{ij}，将请求分配到其token最多激活的专家所在设备
-- 配合workload-aware平衡调度，保证各rank负载均衡
+**2. 离线模型调度——把共激活专家聚到一处：从源头减少跨设备激活。** 拿到亲和性后，作者把"专家放到哪块 GPU"建模成一个 0-1 整数规划：将专家划分为若干等大小的 cluster（对应各 GPU），优化目标是 $L = \theta\cdot L_{\text{balance}} + (1-\theta)\cdot L_{\text{remote}}$，其中前项约束各 cluster 负载均衡、后项最小化跨 cluster 的远程激活量，$\theta$ 在两者间权衡；约束要求每个专家恰属一个 cluster 且各 cluster 专家数相等。直接求解 ILP 代价高，作者用交替优化在专家归属与 cluster 中心之间迭代逼近，把经常一起被激活的专家放进同一张卡。这样一来，token 命中的多个专家更可能落在本地，远程 all-to-all 的需求被结构性地削减。
 
-**Attention-TP场景 — 请求内token调度**：
-- 利用层间专家选择的马尔可夫依赖性（2-gram设备转移模型）增强预测
-- 设计Shuffled-Reduce-Scatter (SRS) 和 Shuffled-AllGather (SAG) 融合通信原语
-- 将投机性token重排无缝融入TP通信阶段，开销仅~1%
+**3. 在线数据调度——让数据主动靠近专家：把"路由"变成"投递"。** 放置固定后，在线阶段反过来用亲和性决定数据往哪送，并针对两类 Attention 并行分别设计。Attention-DP 下做**请求间调度**：把整条请求投递到其 token 最可能激活的专家所在 rank，即 $S_r = \arg\max_j \sum_{i\in r} R_{ij}$，再叠加 workload-aware 的均衡策略防止某些 rank 过热。Attention-TP 下做更细粒度的**请求内 token 调度**：单看单层预测不够准，作者利用相邻层专家选择的马尔可夫依赖，用一个 2-gram 设备转移模型增强预测，并设计 Shuffled-Reduce-Scatter (SRS) 与 Shuffled-AllGather (SAG) 两个融合通信原语，把投机性的 token 重排直接嵌进 TP 既有的通信阶段，使额外开销仅约 1%。两种场景共用同一套亲和性，区别只在调度粒度。
 
-### 系统实现
-- 基于SGLang构建，约5000行Python + 自定义Triton内核
-- 优化的argsort内核比PyTorch原生快25%
-- 集成DeepEP通信库实现高效all-to-all
+**4. 系统实现——让算法收益真正落到延迟上：消除工程瓶颈。** 协同调度的理论收益要靠高效内核兑现。作者基于 SGLang 实现约 5000 行 Python 加自定义 Triton 内核，重写的 argsort 内核比 PyTorch 原生快 25%，并集成 DeepEP 通信库执行优化后的 all-to-all，确保减少的远程激活能切实转化为端到端的吞吐与延迟收益。
 
 ## 实验
 

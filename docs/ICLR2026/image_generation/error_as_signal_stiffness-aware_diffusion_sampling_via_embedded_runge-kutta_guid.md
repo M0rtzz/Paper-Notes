@@ -38,38 +38,27 @@ tags:
 
 ## 方法详解
 
-### 1. 理论基础：LTE 与主特征向量的对齐
+### 整体框架
 
-对 Heun 方法（二阶 Runge-Kutta），同时产生 Euler（一阶）和 Heun（二阶）两个解，构成嵌入式 Runge-Kutta 对（ERK pair）。定义：
+ERK-Guid 把扩散采样里被忽视的求解器误差转化为一个 guidance 信号：每一步用 Heun（嵌入式二阶 Runge-Kutta）求解时，同时拿到 Euler 一阶解和 Heun 二阶解，二者之差恰好携带了局部截断误差（LTE）的方向与幅度信息。它据此在线估计当前是否处于刚性区域、以及误差主方向，并仅在刚性区域沿该方向做一次零成本修正，整个过程不引入任何额外网络前向。
 
-- **ERK solution difference**: $\Delta^{\mathbf{x}} = \mathbf{x}^{\text{Heun}} - \mathbf{x}^{\text{Euler}}$
-- **ERK drift difference**: $\Delta^{\mathbf{f}} = f(\mathbf{x}^{\text{Heun}}; \sigma) - f(\mathbf{x}^{\text{Euler}}; \sigma)$
+### 关键设计
 
-在局部线性化假设下，LTE 和 ERK solution difference 均可在 Jacobian 特征基下分解。当 $|z_k| = |h\lambda_k|$ 较大时（即刚性区域），主特征向量对应的分量会主导这些误差，实现对齐。
+**1. LTE 与主特征向量对齐：从理论上锁定可纠正的方向。**
 
-### 2. 零成本估计器
+要把"误差"当信号用，前提是误差有结构、可预测。对 Heun 方法，同一步内既产出 Euler 一阶解又产出 Heun 二阶解，构成嵌入式 Runge-Kutta 对（ERK pair），由此定义解差 $\Delta^{\mathbf{x}} = \mathbf{x}^{\text{Heun}} - \mathbf{x}^{\text{Euler}}$ 与 drift 差 $\Delta^{\mathbf{f}} = f(\mathbf{x}^{\text{Heun}};\sigma) - f(\mathbf{x}^{\text{Euler}};\sigma)$。在局部线性化假设下，真实 LTE 与 ERK 解差都能在 drift Jacobian 的特征基下分解，每个分量的放大倍率由 $z_k = h\lambda_k$ 决定；当 $|z_k|$ 较大（即刚性区域），主特征向量对应的分量会主导整个误差。这意味着刚性区域的 LTE 几乎共线于 Jacobian 主特征向量，于是只要估计出这一个方向，就能把绝大部分截断误差纠正掉，而无需求解完整 Jacobian。
 
-**刚性度估计器**：利用 ERK drift difference 与 ERK solution difference 的范数比来近似 Jacobian 的最大特征值：
+**2. 两个零成本估计器：复用求解中间量估出刚性度和误差主方向。**
 
-$$\hat{\rho}_{\text{stiff}} = \frac{\|f(\mathbf{x}^{\text{Heun}}; \sigma) - f(\mathbf{x}^{\text{Euler}}; \sigma)\|_2}{\|\mathbf{x}^{\text{Heun}} - \mathbf{x}^{\text{Euler}}\|_2}$$
+基于上述对齐，方法用 ERK pair 现成的量同时估计刚性强度和误差方向。刚性度用 drift 差与解差的范数比近似 Jacobian 最大特征值：$\hat{\rho}_{\text{stiff}} = \|\Delta^{\mathbf{f}}\|_2 / \|\Delta^{\mathbf{x}}\|_2$，比值越大说明 drift 在该步变化越剧烈、越刚性。主特征向量则取归一化的 drift 差 $\hat{\mathbf{v}}_{\text{stiff}} = \Delta^{\mathbf{f}} / \|\Delta^{\mathbf{f}}\|_2$——因为 $\Delta^{\mathbf{f}}$ 近似等于 Jacobian 作用在解差上的结果，相当于一步 JVP 形式的 power iteration，会自然放大并对齐到主特征方向。两个估计器所需的 $\Delta^{\mathbf{x}}$、$\Delta^{\mathbf{f}}$ 都是 Heun 求解时已经算好的，因此整套估计**不增加任何网络评估**，这也是"零成本"的来源。
 
-**主特征向量估计器**：以归一化的 ERK drift difference 作为主特征向量估计，因为 drift difference 近似于 Jacobian 对 solution difference 的作用（等效一步 JVP power iteration），自然放大主特征方向：
+**3. 门控自适应更新公式：只在刚性区域按误差强度做受控外推。**
 
-$$\hat{\mathbf{v}}_{\text{stiff}} = \frac{\Delta^{\mathbf{f}}}{\|\Delta^{\mathbf{f}}\|_2}$$
-
-两个估计器所需的全部量在 Heun 求解过程中已经计算，**不需要额外的网络调用**。
-
-### 3. ERK-Guid 更新公式
+最终修正写成对 Heun 解的一次方向外推：
 
 $$\hat{\mathbf{x}}^{\text{Heun}}_{\sigma_{i+1}} = \mathbf{x}^{\text{Heun}}_{\sigma_{i+1}} - h \cdot \beta \cdot z^2 \cdot \langle f^{\text{Heun}}_{\sigma_i}, \hat{\mathbf{v}}_{\sigma_i} \rangle \cdot \hat{\mathbf{v}}_{\sigma_i}$$
 
-其中：
-- $\beta = \mathbf{1}_{\{\hat{\rho} > w_{\text{con}}\}}$ 为置信度门控，仅在刚性度超过阈值时激活 guidance
-- $z = w_{\text{stiff}} \cdot h \cdot \hat{\rho}$ 为自适应缩放因子
-- $w_{\text{stiff}}$ 控制整体 guidance 强度，$w_{\text{con}}$ 控制激活阈值
-- 用 $z^2$ 替代理论上的 $\alpha(z)$，避免不精确估计下的过度放大
-
-等价地可改写为传统 guidance 形式：在两个 drift 评估的差异方向上做外推，与 CFG/AG 结构类似但信号来源完全不同。
+这里把"是否纠、纠多少"都交给刚性度自适应控制：置信门控 $\beta = \mathbf{1}_{\{\hat{\rho} > w_{\text{con}}\}}$ 只在刚性度超过阈值 $w_{\text{con}}$ 时才激活 guidance，避免在平滑区域瞎纠错；自适应缩放 $z = w_{\text{stiff}}\cdot h \cdot \hat{\rho}$ 让修正幅度随步长和刚性度增长，$w_{\text{stiff}}$ 控制整体强度。值得注意的是公式用 $z^2$ 替代理论上的 $\alpha(z)$，是为了在估计不精确时抑制过度放大、保证数值稳定。结构上它就是沿两次 drift 评估之差的方向做外推，与 CFG/Autoguidance 形似，但信号来自求解器误差而非模型差异，因此可与后者正交叠加。
 
 ## 实验关键数据
 

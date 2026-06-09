@@ -51,22 +51,33 @@ $$\text{SeeDNorm}(\mathbf{x}) = [\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \
 
 ### 关键设计
 
-1. **自适应缩放矩阵（Self-Rescaling Matrix）**：通过 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$ 生成与输入相关的动态缩放项。输入 $\mathbf{x}$ 与参数 $\boldsymbol{\beta}$ 做矩阵乘法得到标量，经 tanh 激活约束到 $[-1, 1]$ 范围内，再与 $\boldsymbol{\alpha}$ 相乘生成逐维缩放矩阵。这使得缩放因子能根据当前输入动态调整，保留了输入范数信息。
+**1. 自适应缩放矩阵：让缩放因子随输入而变，把范数信息找回来。**
 
-2. **尺度不变性分析**：当输入被缩放 $k$ 倍时，由于 RMS 归一化的尺度不变性，SeeDNorm 中唯一变化的部分是自适应缩放矩阵中的 $\sigma(k\mathbf{x} \cdot \boldsymbol{\beta}^T)$。通过将 $\boldsymbol{\beta}$ 初始化为零，使 $\nabla_\mathbf{x} f$ 初始为零，SeeDNorm 在训练初期对输入尺度变化不敏感。
+RMSNorm 丢掉输入尺度的根源在于它的缩放因子 $\boldsymbol{\gamma}$ 是与输入无关的静态参数。SeeDNorm 把这一项换成依赖输入的动态项 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$：输入 $\mathbf{x}$ 先与参数 $\boldsymbol{\beta}$ 做点积压成标量，经 tanh 把它约束到 $[-1, 1]$ 这个有界区间，再乘上 $\boldsymbol{\alpha}$ 展开成一个逐维的缩放矩阵。这样每个 token 看到的缩放系数都由它自身的内容决定——不同范数、不同分布的输入会得到不同的缩放，归一化时被抹掉的尺度信息因此在前向传播里被重新编码回特征中，而这只需额外引入 $\boldsymbol{\alpha}, \boldsymbol{\beta}$ 两个 $D$ 维向量。
 
-3. **梯度自适应调整**：在反向传播中，当输入 $k\mathbf{x}$ 异常大时，梯度主要由 $\frac{1}{\text{RMS}(k\mathbf{x})} = \frac{1}{k \cdot \text{RMS}(\mathbf{x})}$ 主导，梯度会按 $k$ 的倍数缩小。当输入异常小时，梯度会相应放大。这种自适应梯度调整机制确保了训练稳定性。
+**2. 尺度不变的初始化：训练初期不让动态项乱动。**
 
-4. **Multi-Head SeeDNorm**：在高维空间中，$\mathbf{x} \cdot \boldsymbol{\beta}^T$ 点积的方差与维度 $D$ 成正比（Theorem 3.2），这会导致梯度方差过大。提出多头形式，将 $\mathbf{x}$ 和 $\boldsymbol{\beta}$ 分为 $n$ 个子向量分别计算点积后拼接，有效降低梯度方差。视觉任务中使用多头版本。
+引入输入相关项的代价是模型可能在训练早期对输入尺度过度敏感，反而破坏稳定性。当输入整体被缩放 $k$ 倍时，由于 RMS 归一化本身具备尺度不变性，$\frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}$ 不变，SeeDNorm 中唯一随 $k$ 变化的就是自适应项里的 $\sigma(k\mathbf{x} \cdot \boldsymbol{\beta}^T)$。作者把 $\boldsymbol{\beta}$ 初始化为零，使训练起点处 $\nabla_\mathbf{x} f$ 恰好为零，于是网络在最初阶段对尺度扰动近乎免疫，等价于退化成标准 RMSNorm，再随训练逐步学出动态行为，避免了一上来就被动态项带偏。
 
-5. **AdaSeeDNorm**：针对 DiT 中 AdaLN 的特殊结构，设计了兼容类条件信息注入的变体：
+**3. 梯度自适应调整：在反向传播里保住 RMSNorm 的稳定优势。**
+
+DyT 之所以会失效，是因为 tanh 饱和后梯度被压死，而且在常数范数假设下它的梯度等价于 RMSNorm 的逐元素操作，丢掉了按输入范数调节梯度的能力。SeeDNorm 因为保留了 $\frac{1}{\text{RMS}(\mathbf{x})}$ 这个除法结构，反向传播时梯度仍主要由它主导：当某个输入 $k\mathbf{x}$ 异常大时，$\frac{1}{\text{RMS}(k\mathbf{x})} = \frac{1}{k \cdot \text{RMS}(\mathbf{x})}$ 会把梯度按 $k$ 倍自动缩小；输入异常小时梯度则相应放大。这种由输入范数驱动的自动伸缩，正是 RMSNorm 训练稳定的关键，SeeDNorm 在保留范数信息的同时把它一并继承了下来。
+
+**4. 多头形式：用分头点积压住高维下爆炸的梯度方差。**
+
+直接在高维特征上算 $\mathbf{x} \cdot \boldsymbol{\beta}^T$ 会出问题——这个点积的方差与维度 $D$ 成正比（Theorem 3.2），维度一高方差就过大，导致梯度剧烈震荡甚至不收敛。借鉴多头注意力的思路，SeeDNorm 把 $\mathbf{x}$ 和 $\boldsymbol{\beta}$ 各切成 $n$ 个子向量，在每个子空间内分别算点积再拼接，单个点积涉及的维度从 $D$ 降到 $D/n$，方差随之被压下来。视觉任务对此尤其敏感，因此默认采用多头版本，消融显示 ViT-B 上单头直接不收敛，而 16 头能稳定到最优。
+
+**5. AdaSeeDNorm：适配 DiT 里 AdaLN 的条件注入结构。**
+
+DiT 中的 AdaLN 会把类别条件 $c$ 通过缩放、偏移注入归一化，结构和 RMSNorm 不同，不能简单替换。作者为此设计了兼容变体，把动态缩放项嵌进 AdaLN 的条件调制框架：
+
 $$\text{AdaSeeDNorm}(\mathbf{x}, c) = [(\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha} + 1) \odot \frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}](1 + \boldsymbol{\gamma}(c)) + \boldsymbol{\eta}(c)$$
+
+其中 $\boldsymbol{\gamma}(c)$ 和 $\boldsymbol{\eta}(c)$ 是由条件 $c$ 生成的缩放与偏移，既保留了 SeeDNorm 的输入自适应缩放，又不破坏 DiT 原有的条件信息通路。
 
 ### 损失函数 / 训练策略
 
-- **参数初始化**：$\boldsymbol{\gamma}$ 初始化为 1（与 RMSNorm 一致），$\boldsymbol{\beta}$ 初始化为零（确保训练初期 $\boldsymbol{\alpha}$ 的梯度从小值开始），$\boldsymbol{\alpha}$ 初始化为 1（语言建模任务）
-- **正则化**：对 $\boldsymbol{\alpha}$ 和 $\boldsymbol{\beta}$ 施加 weight decay 以控制数值稳定性，$\boldsymbol{\gamma}$ 保持与基线模型一致的正则化
-- **视觉任务额外技巧**：在 ViT 分类中对动态系数 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$ 施加 dropout（与 drop path rate 相同），并将 $\boldsymbol{\alpha} \cdot \boldsymbol{\beta}^T$ 除以维度来降低方差
+参数初始化遵循"起步即 RMSNorm、动态项从零长起"的原则：$\boldsymbol{\gamma}$ 初始化为 1 与 RMSNorm 对齐，$\boldsymbol{\beta}$ 初始化为零让 $\boldsymbol{\alpha}$ 的梯度从小值起步、避免早期震荡，$\boldsymbol{\alpha}$ 在语言建模任务中初始化为 1——消融显示初始值过小（0.1）会限制收敛、过大（10）则直接失稳。正则化上对 $\boldsymbol{\alpha}, \boldsymbol{\beta}$ 额外施加 weight decay 控制数值稳定性，$\boldsymbol{\gamma}$ 则沿用基线模型一致的设置。视觉任务还需两个补丁：对动态系数 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$ 施加与 drop path rate 相同的 dropout，并把 $\boldsymbol{\alpha} \cdot \boldsymbol{\beta}^T$ 除以维度进一步压低方差，以适配视觉模型对训练扰动更敏感的特性。
 
 ## 实验关键数据
 
@@ -168,7 +179,7 @@ $$\text{AdaSeeDNorm}(\mathbf{x}, c) = [(\sigma(\mathbf{x} \cdot \boldsymbol{\bet
 - [\[NeurIPS 2025\] Dependency Parsing is More Parameter-Efficient with Normalization](../../NeurIPS2025/model_compression/dependency_parsing_is_more_parameter-efficient_with_normalization.md)
 - [\[ICML 2026\] FedSDR: Federated Self-Distillation with Rectification](../../ICML2026/model_compression/fedsdr_federated_self-distillation_with_rectification.md)
 - [\[ICML 2026\] Bounded Hyperbolic Tangent: A Stable and Efficient Alternative to Pre-Layer Normalization in Large Language Models](../../ICML2026/model_compression/bounded_hyperbolic_tangent_a_stable_and_efficient_alternative_to_pre-layer_norma.md)
-- [\[ACL 2026\] IntroLM: Introspective Language Models via Prefilling-Time Self-Evaluation](../../ACL2026/model_compression/introlm_introspective_language_models_via_prefilling-time_self-evaluation.md)
+- [\[CVPR 2026\] Batch Loss Score for Dynamic Data Pruning](../../CVPR2026/model_compression/batch_loss_score_for_dynamic_data_pruning.md)
 
 </div>
 

@@ -40,27 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-$\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{\text{triplet}}$
+
+TI-DPO 把原本作用在整条序列上的 DPO 信号下放到 token 级别：先用一套混合权重为偏好对 $(y_w, y_l)$ 里的每个 token 估计重要性，再把权重灌进 token 级的隐式奖励差里做加权对比，最后额外挂一项三元组损失，让策略模型在连续语义空间里靠近优答案、远离劣答案。总损失为 $\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{\text{triplet}}$，其中 $\gamma$ 平衡加权 DPO 项与三元组项。
 
 ### 关键设计
 
-1. **混合权重机制**:
+**1. 混合权重机制：让关键 token 被放大、噪声 token 被压住。**
 
-    - 梯度归因：$I_i = \|\nabla_{e_i}\mathcal{L}_{\text{target}}\|_1$，计算每个token embedding对最终预测的梯度贡献
-    - 高斯先验：$\mathcal{P}(t) = \exp(-\frac{1}{2}(\frac{t-\mu}{\sigma})^2)$，$\mu=(T-1)/2$, $\sigma=T/4$，修正模型的U型注意力偏差（首尾token被过度关注）
-    - 凸组合：$W = \lambda \cdot \mathcal{I}_{\text{norm}} + (1-\lambda) \cdot \mathcal{P}$
-    - 分别对 $y_w$ 和 $y_l$ 独立计算权重
+序列里 token 的重要性天差地别，但 DPO 一视同仁，这正是它对噪声敏感的根源。TI-DPO 用两路信号融合出 token 权重。第一路是梯度归因 $I_i = \|\nabla_{e_i}\mathcal{L}_{\text{target}}\|_1$，对每个 token 的 embedding $e_i$ 求目标损失梯度的 $\ell_1$ 范数，梯度越大说明该 token 对最终预测的影响越关键，因而能直接刻画语义层面的重要性。问题是梯度归因带有模型固有的 U 型注意力偏差——首尾 token 总被过度关注。第二路因此引入一个高斯位置先验 $\mathcal{P}(t) = \exp(-\frac{1}{2}(\frac{t-\mu}{\sigma})^2)$（取 $\mu=(T-1)/2$、$\sigma=T/4$）来抬高中段 token 的权重、抵消这种偏差。两者经凸组合 $W = \lambda \cdot \mathcal{I}_{\text{norm}} + (1-\lambda) \cdot \mathcal{P}$ 得到最终权重，并对 $y_w$ 和 $y_l$ 各算一套。梯度归因管"哪些 token 语义上重要"，高斯先验管"修正位置上的系统性偏差"，二者互补才让权重既准又稳。
 
-2. **加权token级DPO**:
+**2. 加权 token 级 DPO：把序列级奖励差拆成逐 token 的加权和。**
 
-    - $\Delta r_{\text{token}} = \sum_t w_t^w \log\frac{\pi_\theta(y_w^t|\cdot)}{\pi_{\text{ref}}(y_w^t|\cdot)} - \sum_t w_t^l \log\frac{\pi_\theta(y_l^t|\cdot)}{\pi_{\text{ref}}(y_l^t|\cdot)}$
-    - 关键token的贡献被放大，噪声token被抑制
+拿到权重后，TI-DPO 重写隐式奖励差：$\Delta r_{\text{token}} = \sum_t w_t^w \log\frac{\pi_\theta(y_w^t|\cdot)}{\pi_{\text{ref}}(y_w^t|\cdot)} - \sum_t w_t^l \log\frac{\pi_\theta(y_l^t|\cdot)}{\pi_{\text{ref}}(y_l^t|\cdot)}$。相比原始 DPO 把整段对数似然比一股脑相加，这里每个 token 的策略/参考对数比都乘上自己的权重 $w_t$，于是关键 token 的贡献被放大、噪声 token 被抑制。优化信号因此集中到真正决定偏好的位置上，对标签噪声和分布偏移都更鲁棒。
 
-3. **三元组损失**:
+**3. 三元组损失：从二元对比走向连续空间引导。**
 
-    - 从策略模型生成锚点回答 $y$，在隐式奖励空间拉近 $y$ 与 $y_w$、推远 $y$ 与 $y_l$
-    - $\mathcal{L}_{\text{triplet}} = \max(0, d(y, y_w) - d(y, y_l) + \alpha)$
-    - 在连续语义空间提供比二元对比更细粒度的引导
+二元"好/坏"对比只能告诉模型哪个更好，却没法在连续语义空间里精细调整生成行为。TI-DPO 让策略模型自己生成一个锚点回答 $y$，在隐式奖励空间里同时拉近 $y$ 与优答案 $y_w$、推远 $y$ 与劣答案 $y_l$，损失为 $\mathcal{L}_{\text{triplet}} = \max(0, d(y, y_w) - d(y, y_l) + \alpha)$，$\alpha$ 是间隔超参。这把目标从"在两个固定样本间选边"升级为"主动向好样本对齐、同时远离坏样本"，在连续语义空间提供了比二元对比更细粒度的方向引导，也是消融里去掉后退化最明显的一项。
 
 ## 实验关键数据
 
@@ -115,11 +110,11 @@ $\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{
 
 ## 相关论文
 
-- [\[ICLR 2026\] Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs](uni-dpo_a_unified_paradigm_for_dynamic_preference_optimization_of_llms.md)
-- [\[ICLR 2026\] Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
-- [\[ICML 2025\] DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
 - [\[ICLR 2026\] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
-- [\[ICLR 2026\] Displacement-Resistant Extensions of DPO with Nonconvex $f$-Divergences](displacement-resistant_extensions_of_dpo_with_nonconvex_f-divergences.md)
+- [\[ICLR 2026\] Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
+- [\[ICLR 2026\] SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety](safedpo_preference_optimization_safety.md)
+- [\[ICML 2025\] TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization](../../ICML2025/llm_alignment/tgdpo_harnessing_token-level_reward_guidance_for_enhancing_direct_preference_opt.md)
+- [\[ICML 2025\] DPO Meets PPO: Reinforced Token Optimization for RLHF](../../ICML2025/llm_alignment/dpo_meets_ppo_reinforced_token_optimization_for_rlhf.md)
 
 </div>
 

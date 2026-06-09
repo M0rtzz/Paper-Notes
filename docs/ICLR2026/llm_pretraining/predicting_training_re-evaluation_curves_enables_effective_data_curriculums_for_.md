@@ -37,47 +37,19 @@ tags:
 
 ### 整体框架
 
-整个方法分为三个层次推进：
-1. **定义并验证 TREC**：证明 TREC 最低点确实对应最优数据放置位置
-2. **揭示 TREC 的控制因素**：AdamW 的 EMA 时间尺度 τ 主导 TREC 形状
-3. **建立预测模型**：结合 EMA 系数和训练进度调整项，在训练前精确预测 TREC
+本文不改训练算法，而是给出一套"何时放高质量数据"的诊断与预测流程：先定义训练再评估曲线（TREC），用最终模型回看每一步训练数据的损失，并验证 TREC 最低点就是高质量数据的最优放置位置；再追问 TREC 形状由什么决定，发现 AdamW 的隐式 EMA 时间尺度 τ 是主导因素；最后把 EMA 系数与训练进度调整项组合成一个解析式，在不实际训练的前提下预测整条 TREC，从而直接读出谷底位置来设计数据课程。
 
 ### 关键设计
 
-1. **训练再评估曲线（TREC）的定义**:
+**1. 训练再评估曲线（TREC）：用最终模型回看，量化每一步数据被"记住"的程度。** 课程设计的难点在于，训练过程中各时间步的数据对最终模型的贡献并不均等，但这种贡献在训练时无法直接观测。TREC 的做法是事后回看：给定从分布 $D$ 独立同分布采样的批次序列 $B_1,\dots,B_T$ 和训练结束时的参数 $\theta_T$，定义 $\mathcal{L}_{re}(t) := \mathcal{L}(B_t; \theta_T)$，即用最终模型在每个历史批次上重新计算损失。某个时间步的 TREC 越低，说明最终模型对该步数据的"记忆"越深，把高质量数据放在这里就越能被保留。由此得到全文的核心假设——在 TREC 最低处放置高质量数据，能最大化它对目标任务的贡献，这也解释了为什么默认"末尾退火"未必最优。
 
-   给定训练批次序列 B₁,...,B_T（从分布 D 独立同分布采样）和最终模型参数 θ_T，TREC 定义为：
+**2. TREC 形状由 AdamW 时间尺度 τ 支配：把三个超参折叠成一个变量。** 要在训练前预测 TREC，必须先找到它真正依赖的量。本文把 AdamW 的参数 $\theta_t$ 视为权重更新的指数移动平均，其时间尺度为 $\tau = \frac{1}{\eta \lambda T} = \frac{B}{\eta \lambda D}$，其中 $\eta$ 为学习率、$\lambda$ 为权重衰减、$T$ 为总步数、$B$ 为批量大小、$D$ 为总 token 数。关键观察是：无论通过改 $\eta$、$\lambda$ 还是 $B$ 来调 $\tau$，只要最终 $\tau$ 相同，TREC 形状就一致——三个看似独立的超参被折叠成单一控制变量。该结论在 111M 到 3.3B 参数、计算量跨越 1000× 的模型上都成立，使后续的跨规模预测成为可能。
 
-   $\mathcal{L}_{re}(t) := \mathcal{L}(B_t; \theta_T)$
-
-   即用最终模型在每个训练批次上重新计算损失。TREC 越低的位置，说明最终模型对该时间步的数据"记忆"越深。核心假设是：**在 TREC 最低处放置高质量数据，能最大化该数据对目标任务的贡献**。
-
-2. **TREC 形状由 AdamW 时间尺度 τ 支配**:
-
-   AdamW 的参数 θ_t 可视为权重更新的指数移动平均（EMA），其时间尺度为：
-
-   $\tau = \frac{1}{\eta \lambda T} = \frac{B}{\eta \lambda D}$
-
-   其中 η 为学习率，λ 为权重衰减，T 为总步数，B 为批量大小，D 为总 token 数。实验表明，无论通过改变 η、λ 还是 B 来变化 τ，只要 τ 匹配，TREC 形状就一致。这一结论在 111M 到 3.3B 参数模型（计算量跨越1000×）中都成立。
-
-3. **TREC 的预测模型**:
-
-   EMA 系数 c(t̂) 虽然反映了各步更新对最终权重的贡献，但早期梯度的效力会因"最小化器漂移"而衰减。论文提出：
-
-   $\hat{\mathcal{L}}_{re}(\hat{t}) = 1 - c(\hat{t})^p \cdot \hat{t}^m$
-
-   其中 t̂ = t/T 为训练进度分数，p（固定为0.5）控制 EMA 贡献强度，m（训练进度指数）控制何时 TREC 开始反映 EMA。最优 m* 遵循幂律关系：
-
-   $m^* = C \cdot (TPP)^{\mu_1} \cdot (\tau)^{\mu_2}$
-
-   其中 TPP (tokens-per-parameter) 和 τ 是两个关键变量。在 111M 规模拟合的幂律在 3.3B 规模仍保持 ~98% 的 Pearson 相关性。
+**3. TREC 的解析预测模型：EMA 系数加进度修正，拟合一次泛化到大模型。** 仅靠 EMA 系数 $c(\hat{t})$ 还不够，因为早期梯度的效力会随"最小化器漂移"衰减，必须引入一个进度修正项。本文给出 $\hat{\mathcal{L}}_{re}(\hat{t}) = 1 - c(\hat{t})^p \cdot \hat{t}^m$，其中 $\hat{t} = t/T$ 为训练进度分数，$p$ 固定为 0.5 控制 EMA 贡献强度，$m$ 控制 TREC 何时开始反映 EMA。最优 $m^*$ 进一步服从幂律 $m^* = C \cdot (\text{TPP})^{\mu_1} \cdot (\tau)^{\mu_2}$，仅由 tokens-per-parameter（TPP）与 $\tau$ 两个变量决定。正因为这两个变量可跨规模迁移，在 111M 规模拟合出的幂律放到 3.3B 规模仍保持约 98% 的 Pearson 相关性，意味着小模型上算一次就能预测大模型的数据课程。
 
 ### 训练策略
 
-论文不涉及新的损失函数设计，而是为已有的 AdamW 训练提供**数据排布的最优策略**。核心发现包括：
-- Step-decay 学习率下，TREC 谷底在学习率下降之前而非训练末尾
-- 线性衰减到零（D2Z）调度下，TREC 谷底出现在训练约60-80%处
-- TREC 的绝对下降幅度随 TPP 增大而减小，暗示过训练模型更不容易记住特定数据
+本文不引入新的损失函数，而是把 TREC 预测转化为对已有 AdamW 训练的数据排布建议。在 step-decay 调度下，TREC 谷底出现在学习率下降之前而非训练末尾；在线性衰减到零（D2Z）调度下，谷底落在训练约 60–80% 处。此外，TREC 的绝对下降幅度随 TPP 增大而减小，说明过训练的模型更难牢记特定数据，因而高 TPP 场景下数据放置位置的收益也相应变小。
 
 ## 实验关键数据
 
@@ -174,8 +146,8 @@ tags:
 - [\[ACL 2026\] Data Mixing Agent: Learning to Re-weight Domains for Continual Pre-training](../../ACL2026/llm_pretraining/data_mixing_agent_learning_to_re-weight_domains_for_continual_pre-training.md)
 - [\[ACL 2025\] Model Performance-Guided Evaluation Data Selection for Effective Prompt Optimization](../../ACL2025/llm_pretraining/model_performance-guided_evaluation_data_selection_for_effective_prompt_optimiza.md)
 - [\[ACL 2025\] Towards Effective and Efficient Continual Pre-training of Large Language Models](../../ACL2025/llm_pretraining/towards_effective_and_efficient_continual_pre-training_of_large_language_models.md)
+- [\[ICLR 2026\] Accessible, Realistic, and Fair Evaluation of Positive-Unlabeled Learning Algorithms](accessible_realistic_and_fair_evaluation_of_positive-unlabeled_learning_algorith.md)
 - [\[ICLR 2026\] A Law of Data Reconstruction for Random Features (and Beyond)](a_law_of_data_reconstruction_for_random_features_and_beyond.md)
-- [\[ICLR 2026\] Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
 
 </div>
 

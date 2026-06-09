@@ -51,39 +51,16 @@ tags:
 ## 方法详解
 
 ### 整体框架
-- 输入/对象：基于attention的语言模型（Transformer），在自然语言语料上做标准自回归或MLM训练
-- 分析工具：对每步梯度更新进行Taylor展开式的前导项（leading-term）分析
-- 输出：Transformer各权重矩阵（Query $W_Q$、Key $W_K$、Value $W_V$、Embedding等）在训练早期阶段的闭式表达
+
+本文不训练新模型、也不去剖析已训练好的网络内部，而是把分析对象放在**训练过程本身**：对一个标准 attention 语言模型（Transformer）在自然语言语料上做自回归训练，逐步追踪每组权重矩阵（$W_Q$、$W_K$、$W_V$、embedding 等）是怎样被梯度一点点塑造出来的。核心工具是对梯度更新做前导项（leading-term）近似，最终把每组权重在训练早期阶段写成三种语料统计基函数的闭式组合，从而把"模型学到了什么语义关联"翻译成"语料里有什么统计规律"。
 
 ### 关键设计
 
-1. **梯度前导项近似**：
+**1. 梯度前导项近似：把不可解的训练动态变成可解析的统计量。** 直接追踪 Transformer 完整的梯度更新几乎无法得到闭式结果，因为梯度里混杂着权重之间的高阶耦合项。本文的做法是对梯度做展开后只保留对权重更新贡献最大的主导项，把高阶项丢掉。这一近似之所以成立，关键在于训练早期权重尚小，高阶项（权重的高次幂）相对前导项可以忽略；而一旦保留前导项，梯度就不再依赖随机初始化的细节，而是可以直接用语料库的共现统计量来表达。换句话说，训练早期权重往哪个方向走，主要由数据的统计结构决定，而不是优化轨迹的偶然性，这正是后面能写出闭式解的前提。
 
-    - 对梯度进行分解，识别出对权重更新贡献最大的主导项
-    - 忽略高阶项后，梯度的前导项可以用语料库的统计量来表达
-    - 这一近似在训练早期（权重尚小时）特别精确
+**2. 三种基函数分解：把语义关联拆成三条统计通路。** 前导项分析的结论是，每组权重都可以写成三种基函数的组合，每种对应一类语义关联的来源。**Bigram 映射**捕捉相邻 token 的共现——当 token $A$ 频繁出现在 $B$ 之前时，权重朝着加强 $A \rightarrow B$ 关联的方向增长，这是最直接的序列统计（如"the"→"cat"）。**Token-interchangeability 映射**捕捉可互换性：像"dog"和"cat"并不直接相邻共现，但它们出现在"The ___ sat on the mat"这类相似上下文里，于是被赋予相近的表示——这恰好是分布式语义假说（distributional semantics）在训练动态里的数学化身。**Context 映射**则编码更宽的上下文模式，即"给定一段上下文窗口，什么 token 最可能跟随"的条件统计。三者各管一条通路，"bird"↔"flew"这类关联正是这三条通路叠加涌现的结果，而非被某处直接记下。
 
-2. **三种基函数（Basis Functions）**：
-   推导结果显示，Transformer的每组权重都可以表达为以下三种基函数的组合：
-   
-    - **Bigram映射**：捕捉相邻token对的共现统计。例如"the"→"cat"的高频共现导致对应权重增大。这是最直接的序列统计——当token $A$ 频繁出现在token $B$ 之前时，模型学习到$A \rightarrow B$的关联
-   
-    - **Token-interchangeability映射**：捕捉"可互换性"——在相似上下文中出现的token之间的关系。例如，"dog"和"cat"虽然不是相邻共现的token，但它们在"The ___ sat on the mat"这类上下文中具有互换性。这反映了分布式语义假说（distributional semantics）
-   
-    - **Context映射**：捕捉更广泛的上下文模式——特定上下文如何影响对后续token的预测。这一基函数编码了"给定一个上下文窗口，什么token最可能跟随"的统计规律
-
-3. **闭式权重表达**：
-
-    - 每个权重矩阵（$W_Q$, $W_K$, $W_V$等）在训练早期可以写成上述三种基函数的线性组合
-    - 组合系数取决于架构细节（层数、头数）和训练超参数
-    - 这些闭式表达揭示了Transformer各组件的**功能性分工**：
-        - Query-Key权重主要依赖bigram和token-interchangeability → 决定"attend to what"
-        - Value权重主要依赖context mapping → 决定"传递什么信息"
-
-### 理论贡献的层次
-1. **描述性**：给出了权重的数学表达形式
-2. **解释性**：说明了每个组件如何基于语料库统计捕获语义关联
-3. **预测性**：理论表达与真实训练的LLM权重的定量对比
+**3. 闭式权重表达与功能性分工：让理论可被真实权重检验。** 把三种基函数代回，每个权重矩阵在训练早期就能写成它们的线性组合，组合系数由架构细节（层数、头数）和训练超参数决定。这个闭式表达不只是形式上的整洁，它还暴露出各组件的分工：Query–Key 权重主要由 bigram 和 token-interchangeability 主导，决定"该 attend 到哪里"；Value 权重则主要由 context 映射主导，决定"attend 到之后传递什么信息"。这种分工此前多停留在直觉层面，这里第一次有了可定量核对的闭式来源。正因为权重被表达成纯粹由语料统计算出的量，理论预测才能与真实训练 LLM 的权重做直接的定量对比——这也构成了从描述（写出表达式）、到解释（每项对应哪种统计）、再到预测（与实测权重吻合）三个层次的递进。
 
 ## 实验关键数据
 
@@ -146,9 +123,9 @@ tags:
 
 - [\[NeurIPS 2025\] How Do Transformers Learn Implicit Reasoning?](../../NeurIPS2025/interpretability/how_do_transformers_learn_implicit_reasoning.md)
 - [\[ICLR 2026\] Towards Understanding Subliminal Learning: When and How Hidden Biases Transfer](towards_understanding_subliminal_learning_when_and_how_hidden_biases_transfer.md)
-- [\[ICLR 2026\] Stretching Beyond the Obvious: A Gradient-Free Framework to Unveil the Hidden Landscape of Visual Invariance](stretching_beyond_the_obvious_a_gradient-free_framework_to_unveil_the_hidden_lan.md)
-- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
 - [\[ICLR 2026\] Formal Mechanistic Interpretability: Automated Circuit Discovery with Provable Guarantees](formal_mechanistic_interpretability_automated_circuit_discovery_with_provable_gu.md)
+- [\[ICLR 2026\] When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
+- [\[ICLR 2026\] Implicit Statistical Inference in Transformers: Approximating Likelihood-Ratio Tests In-Context](implicit_statistical_inference_in_transformers_approximating_likelihood-ratio_te.md)
 
 </div>
 

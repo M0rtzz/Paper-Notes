@@ -140,7 +140,7 @@ tags:
 - [\[ICCV 2025\] Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations](zero-avsr_zero-shot_audio-visual_speech_recognition_with_llms_by_learning_langua.md)
 - [\[CVPR 2025\] Learning to Highlight Audio by Watching Movies](../../CVPR2025/audio_speech/learning_to_highlight_audio_by_watching_movies.md)
 - [\[NeurIPS 2025\] Inductive Transfer Learning for Graph-Based Recommenders](../../NeurIPS2025/audio_speech/inductive_transfer_learning_for_graph-based_recommenders.md)
-- [\[NeurIPS 2025\] Characterization and Learning of Causal Graphs from Hard Interventions](../../NeurIPS2025/audio_speech/characterization_and_learning_of_causal_graphs_from_hard_interventions.md)
+- [\[CVPR 2025\] LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale](../../CVPR2025/audio_speech/livecc_learning_video_llm_with_streaming_speech_transcription_at_scale.md)
 
 </div>
 

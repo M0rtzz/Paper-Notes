@@ -39,32 +39,17 @@ tags:
 
 ### 整体框架
 
-PT2-LLM 包含两个核心组件：非对称三值量化器（ATQ）和结构相似性重排序（SSR），在 GPTQ 框架下逐块应用。
+PT2-LLM 把三值化嵌进 GPTQ 的逐块误差补偿流程，靠两个组件接力把 1.58-bit 的精度损失压下来：非对称三值量化器（ATQ）负责把单块权重拟合成最优的三值表示，结构相似性重排序（SSR）则在量化前重排列序，让每个块内的权重分布尽量紧凑。两者都不依赖梯度反传，全程只用闭式解和校准数据微调，因此能在纯 PTQ 设定下完成。
 
 ### 关键设计
 
-1. **非对称三值量化器 (ATQ)**：
+**1. 非对称三值量化器 ATQ：用偏移和闭式迭代拟合非零均值权重。** LLM 权重并非零均值对称分布，若直接套对称三值网格 $\hat{\mathbf{W}}=\alpha\mathbf{T}$ 会系统性偏移整行。ATQ 引入行级偏移 $\mu$，把量化形式改成 $\hat{\mathbf{W}}=\alpha\mathbf{T}+\mu$，让网格中心对齐每行权重的真实均值。核心难点是在没有梯度的情况下同时定出尺度 $\alpha$ 和三值矩阵 $\mathbf{T}$，ATQ 用**迭代三值拟合（ITF）**交替求解：固定 $\mathbf{T}$ 时尺度有闭式最优解 $\alpha^* = \frac{m\cdot(\mathbf{W}\circ\mathbf{T})\mathbf{1} - (\mathbf{T}\mathbf{1})\circ(\mathbf{W}\mathbf{1})}{m\cdot(\mathbf{T}\circ\mathbf{T})\mathbf{1} - (\mathbf{T}\mathbf{1})^2}$；固定网格时三值矩阵按 $\mathbf{T}_{ij}^*=\arg\min_{t\in\{-1,0,1\}}|Z_{ij}-t|$ 灵活取整，其中归一化坐标 $Z_{ij}=(W_{ij}-\mu_i^*)/\alpha_i^*$。每步都有解析最优，约 10 次迭代即收敛。ITF 只盯权重本身的量化误差，但真正影响下游的是输出，因此再叠一层**激活感知网格对齐（AGA）**：用校准数据把目标从权重误差换成输出误差 $\mathcal{E}_x=\|\mathbf{WX}-\hat{\mathbf{W}}\mathbf{X}\|_F^2$，但只更新 $(\alpha,\mu)$ 一次、冻结 $\mathbf{T}$，既校正了激活敏感方向上的网格，又避免在小校准集上过拟合。
 
-    - 引入行级偏移 $\mu$：$\hat{\mathbf{W}} = \alpha \mathbf{T} + \mu$，适配非零均值权重分布
-    - **迭代三值拟合 (ITF)**：交替优化三值网格和三值矩阵
-        - 最优网格（闭式解）：$\alpha^* = \frac{m \cdot (\mathbf{W} \circ \mathbf{T})\mathbf{1} - (\mathbf{T}\mathbf{1}) \circ (\mathbf{W}\mathbf{1})}{m \cdot (\mathbf{T} \circ \mathbf{T})\mathbf{1} - (\mathbf{T}\mathbf{1})^2}$
-        - 灵活取整：$\mathbf{T}_{ij}^* = \arg\min_{t \in \{-1,0,1\}} |Z_{ij} - t|$，其中 $Z_{ij} = (W_{ij} - \mu_i^*) / \alpha_i^*$
-        - 约 10 次迭代收敛
-    - **激活感知网格对齐 (AGA)**：用校准数据优化输出误差 $\mathcal{E}_x = \|\mathbf{WX} - \hat{\mathbf{W}}\mathbf{X}\|_F^2$
-
-2. **结构相似性重排序 (SSR)**：
-
-    - 动机：朴素分块三值化中，同一块内权重方差大且存在异常值列
-    - 计算列间余弦相似度：$S_{ij} = \frac{\mathbf{W}_{:,i}^\top \mathbf{W}_{:,j}}{\|\mathbf{W}_{:,i}\|_2 \|\mathbf{W}_{:,j}\|_2}$
-    - 将结构相似的列聚在同一块内，使块内分布更紧凑
-    - 轻量化策略：每步选取与均值参考最相似的 top-k 列组成下一个量化块
+**2. 结构相似性重排序 SSR：把相似列聚到同一块以驯服异常值。** 朴素分块三值化按原始列序切块，同一块里常混进方差悬殊的列和孤立的异常值列，单块只有一组 $(\alpha,\mu)$ 难以同时照顾，量化误差被放大。SSR 在量化前先按列间余弦相似度 $S_{ij}=\frac{\mathbf{W}_{:,i}^\top\mathbf{W}_{:,j}}{\|\mathbf{W}_{:,i}\|_2\|\mathbf{W}_{:,j}\|_2}$ 衡量结构接近程度，把彼此相似的列聚拢到同一个量化块，使块内分布更紧凑、共享网格更贴合。为避免全量相似度矩阵的开销，它采用轻量贪心策略：每步以当前块均值为参考，选出与之最相似的 top-k 列组成下一个块。其效果可概括为"异常值之间不再是异常值"——原本分散的离群列被集中到一起后，它们相对块内参考反而不再突兀。
 
 ### 损失函数 / 训练策略
 
-- ITF 阶段最小化权重量化误差 $\mathcal{E}_w = \|\mathbf{W} - \hat{\mathbf{W}}\|_F^2$
-- AGA 阶段最小化输出误差 $\mathcal{E}_x = \|\mathbf{WX} - \hat{\mathbf{W}}\mathbf{X}\|_F^2$
-- AGA 仅更新 $(\alpha, \mu)$ 一次（冻结 $\mathbf{T}$），避免在校准集上过拟合
-- 量化块大小为 128，与 GPTQ 框架集成
+ITF 阶段最小化权重量化误差 $\mathcal{E}_w=\|\mathbf{W}-\hat{\mathbf{W}}\|_F^2$，AGA 阶段切换为输出误差 $\mathcal{E}_x=\|\mathbf{WX}-\hat{\mathbf{W}}\mathbf{X}\|_F^2$ 且仅对 $(\alpha,\mu)$ 更新一次（$\mathbf{T}$ 冻结）。整体量化块大小取 128，与 GPTQ 框架逐块集成、复用其误差补偿。
 
 ## 实验关键数据
 
@@ -128,10 +113,10 @@ PT2-LLM 包含两个核心组件：非对称三值量化器（ATQ）和结构相
 ## 相关论文
 
 - [\[NeurIPS 2025\] Q♯: Provably Optimal Distributional RL for LLM Post-Training](../../NeurIPS2025/llm_nlp/qsharp_provably_optimal_distributional_rl_for_llm_post-training.md)
-- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Models](predicting_llm_reasoning_performance_with_small_proxy_models.md)
 - [\[ACL 2025\] Self-Training Elicits Concise Reasoning in Large Language Models](../../ACL2025/llm_nlp/self-training_elicits_concise_reasoning_in_large_language_models.md)
 - [\[ACL 2025\] Cool-Fusion: Fuse Large Language Models without Training](../../ACL2025/llm_nlp/cool-fusion_fuse_large_language_models_without_training.md)
 - [\[ICLR 2026\] The Lattice Representation Hypothesis of Large Language Models](the_lattice_representation_hypothesis_of_large_language_models.md)
+- [\[ICLR 2026\] Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities](toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne.md)
 
 </div>
 

@@ -47,33 +47,25 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 ## 方法详解
 
 ### 整体框架
-给定输入 $\bm{X}$，模型自回归生成 $m$ 个 token：前 $m-1$ 步输出连续 token $\bm{z}_t = \bm{E}^\top \bm{\alpha}_t$（softmax 分布与 embedding 矩阵的乘积），最后一步采样离散答案 token。训练分为 CSFT（连续监督微调）和 GRPO-based RL 两阶段。
+CoT2 想解决的是离散 CoT「一步只能走一条路」的问题：标准模型每步从词表里采样一个 token，等于在推理树上提前承诺了某条分支，之后无法回头。CoT2 的做法是干脆不采样——把模型每步 softmax 输出的概率分布 $\bm{\alpha}_t$ 直接和 embedding 矩阵相乘，得到一个连续 token $\bm{z}_t = \bm{E}^\top \bm{\alpha}_t$ 送进下一步。这个连续 token 是所有词表 embedding 的凸组合，本质上是把多条候选路径叠在一个向量里同时往前推。给定输入 $\bm{X}$，模型自回归生成 $m$ 个 token，前 $m-1$ 步都是这样的连续 token，只有最后一步才采样出离散的答案 token。整个训练分两阶段：先用 CSFT（连续监督微调）让模型学会拟合「多轨迹叠加」的软标签，再用基于 MTS 的 GRPO 强化学习进一步压缩无关路径、提升准确率。
 
 ### 关键设计
 
-1. **连续监督微调 (CSFT)**:
+**1. 连续监督微调（CSFT）：用多轨迹叠加当中间步的监督信号。**
 
-    - 功能：用"多轨迹叠加"作为中间步的监督信号
-    - 核心思路：给定 Budget $B$ 条最优轨迹，在每个中间步 $t$ 的监督分布 $\alpha_{t,g}^* = \frac{1}{B}\sum_{\pi \in \Pi_B} \mathbf{1}\{g_t(\pi)=g\}$——即 $B$ 条轨迹在步 $t$ 经过的状态的经验分布。最终步用 one-hot（正确答案）。用交叉熵/KL 散度训练模型拟合这些软标签。
-    - 设计动机：$B=1$ 退化为离散 CoT（one-hot）；$B=|\mathcal{T}|$ 追踪所有轨迹（最大并行）。Budget 提供了并行度和模型容量之间的灵活控制。
+离散 CoT 的监督是 one-hot——每步只告诉模型「正确答案是这一个 token」，等于强迫它只学一条路径。CSFT 换了个监督目标：先用外部搜索找出 $B$ 条最优轨迹（Budget $B$），然后在每个中间步 $t$ 把这 $B$ 条轨迹经过的状态的经验分布作为软标签，$\alpha_{t,g}^* = \frac{1}{B}\sum_{\pi \in \Pi_B} \mathbf{1}\{g_t(\pi)=g\}$，最终步仍用 one-hot（正确答案），用交叉熵/KL 散度让模型拟合这些软标签。这里 $B$ 是一个连续的旋钮：$B=1$ 时软标签退化成 one-hot，完全等价于离散 CoT；$B=|\mathcal{T}|$ 时追踪所有可能轨迹，达到最大并行。换句话说，Budget 直接控制了「模型同时追踪几条路」与「模型容量够不够装」之间的折中。
 
-2. **Budget-Embedding Dimension 权衡**:
+**2. Budget–Embedding 维度权衡：并行度能开多大由 embedding 维度决定。**
 
-    - 功能：量化并行度与 embedding 维度的理论关系
-    - 核心思路：信息论下界 $d = \Omega(B\log(v/B))$，即要可靠解码 $B$ 条轨迹的叠加，embedding 维度需要 $\Omega(B\log(v/B))$。当 $d$ 足够大时，增大 $B$ 单调提升性能；当 $d$ 不够时，存在最优 $B$ 的 sweet spot。
-    - 设计动机：解释了为什么 $d=16$ 时 $B=8$ 优于 $B=16$（容量不足），而 $d=32$ 时 $B=16$ 最优。
+并行追踪不是越多越好——要把 $B$ 条轨迹的叠加可靠地解码出来，embedding 必须有足够维度去区分它们。论文给出信息论下界 $d = \Omega(B\log(v/B))$，其中 $v$ 是词表大小。这条不等式解释了实验里的两种行为：当 $d$ 足够大时，增大 $B$ 单调提升性能；当 $d$ 不够时，叠加会互相干扰，存在一个最优 $B$ 的 sweet spot。这正是为什么 $d=16$ 时 $B=8$ 反而比 $B=16$ 好（16 条路超出了 16 维能可靠承载的容量），而 $d=32$ 时 $B=16$ 才是最优。
 
-3. **单层 Transformer 构造 (Proposition 1)**:
+**3. 单层 Transformer 构造（Proposition 1）：理论上证明 CoT2 能并行解子集和。**
 
-    - 功能：证明单层 Transformer 可用 CoT2 解决 MNNS（最小非负和）问题
-    - 核心思路：用三角函数 embedding 将所有 $2^k$ 个状态编码在不重叠的（sin, cos）表示中，注意力层扩展状态（加减新数字），MLP 层读取和过滤。每步并行追踪指数增长的状态数，最终步选出最小非负和。
-    - 设计动机：MNNS 本质是子集和问题，需要搜索 $2^m$ 种可能——离散 CoT 必须"选择"一条路径，而 CoT2 可以同时追踪所有路径。
+为了说明连续 token 的并行能力不只是经验现象，论文构造性地证明单层 Transformer 用 CoT2 就能解 MNNS（最小非负和）问题。MNNS 本质是子集和：要在 $m$ 个数字的所有 $2^m$ 种加减组合里找最小非负和，离散 CoT 每步只能选一种加减、被迫沿一条路径搜索。构造的关键是用三角函数 embedding 把所有 $2^k$ 个中间状态编码进不重叠的 $(\sin, \cos)$ 表示，注意力层负责扩展状态（对当前所有状态并行地加减下一个数字），MLP 层负责读取并过滤。这样每一步并行追踪的状态数指数增长，最后一步直接从叠加里选出最小非负和——一条路也不用真的展开。
 
-4. **Multi-Token Sampling (MTS) + GRPO**:
+**4. Multi-Token Sampling（MTS）+ GRPO：给确定性的连续推理注入可控噪声，让 RL 用得上。**
 
-    - 功能：为 CoT2 引入可控的随机性，使 RL 方法可用
-    - 核心思路：每步采样 $K$ 个离散 token 并平均：$\bm{z}_t = \frac{1}{K}\sum_{r=1}^K \bm{e}_{i_r}$。这给出了 $\bm{\alpha}_t$ 的无偏但有噪估计。Proposition 3 证明 MTS 的估计误差等价于 $K$ 条独立离散 CoT 的聚合，即样本复杂度降低 $K$ 倍。
-    - 设计动机：Base CoT2 是确定性的（无随机性），无法直接计算 policy ratio 用于 GRPO。MTS 引入可控噪声，使 GRPO 的 policy ratio $r_t^{(i)}(\theta)$ 可以定义和计算。
+CSFT 之后的 base CoT2 是完全确定性的：给定输入，每步的 $\bm{\alpha}_t$ 唯一确定，没有随机性。但 GRPO 这类策略梯度方法要算 policy ratio $r_t^{(i)}(\theta)$，必须有一个可定义的采样分布。MTS 的做法是在每步采样 $K$ 个离散 token 再平均，$\bm{z}_t = \frac{1}{K}\sum_{r=1}^K \bm{e}_{i_r}$，这给出 $\bm{\alpha}_t$ 的一个无偏但有噪的估计——$K$ 越大噪声越小，越接近确定性的连续 token。这个设计还顺带给出了 CoT2 的另一重理论意义：Proposition 3 证明 MTS 的估计误差等价于 $K$ 条独立离散 CoT 的聚合，也就是说一次带 $K$-MTS 的前向，样本复杂度相当于 $K$ 次离散采样——这正是「一次前向 ≈ K 次 self-consistency」量化保证的来源。有了可控噪声后，GRPO 的 clipped surrogate 就能照常套用，把 RL 微调嫁接到连续推理上。
 
 ### 损失函数 / 训练策略
 - **CSFT 阶段**：$\mathcal{L}_{CSFT} = \sum_{t=1}^m D(\bm{\alpha}_t^* \| \bm{\alpha}_t)$，中间步用软标签的交叉熵，最终步用标准 CE
@@ -134,9 +126,9 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought](../../NeurIPS2025/llm_reasoning/reasoning_by_superposition_a_theoretical_perspective_on_chain_of_continuous_thou.md)
 - [\[ACL 2026\] Parallel Test-Time Scaling for Latent Reasoning Models](../../ACL2026/llm_reasoning/parallel_test-time_scaling_for_latent_reasoning_models.md)
 - [\[ACL 2026\] Reinforced Efficient Reasoning via Semantically Diverse Exploration](../../ACL2026/llm_reasoning/reinforced_efficient_reasoning_via_semantically_diverse_exploration.md)
+- [\[AAAI 2026\] Efficient Thought Space Exploration Through Strategic Intervention](../../AAAI2026/llm_reasoning/efficient_thought_space_exploration_through_strategic_intervention.md)
 - [\[ICLR 2026\] Verifying Chain-of-Thought Reasoning via Its Computational Graph](verifying_chain-of-thought_reasoning_via_its_computational_graph.md)
 - [\[ICLR 2026\] Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
 

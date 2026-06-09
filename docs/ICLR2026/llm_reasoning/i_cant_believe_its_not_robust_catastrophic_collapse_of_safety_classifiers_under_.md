@@ -45,23 +45,17 @@ tags:
 
 ### 关键设计
 
-1. **Embedding Drift 建模**:
+**1. Embedding Drift 建模：用可控扰动复现"模型更新"这件事。**
 
-    - 功能：用参数化扰动模拟模型更新带来的 embedding 变化
-    - 核心思路：$z_c = \text{Normalize}(z_0 + \varepsilon_c)$，其中 $\varepsilon_c$ 从三种分布采样——高斯漂移 $\varepsilon_c \sim \mathcal{N}(0, \sigma_c^2 I)$、方向性漂移 $\varepsilon_c = \sigma_c v$（固定方向）、子空间旋转 $z_c = \text{Normalize}(Rz_0)$
-    - 设计动机：覆盖不同类型的实际漂移场景，归一化保持在 embedding 球面上
+真实的模型更新会怎样移动 embedding 很难直接观测，本文索性把漂移参数化，在 checkpoint 0 的原始 embedding 上叠加一个扰动项再归一化：$z_c = \text{Normalize}(z_0 + \varepsilon_c)$。扰动 $\varepsilon_c$ 故意取三种不同形态，对应三类典型的更新后果——高斯漂移 $\varepsilon_c \sim \mathcal{N}(0, \sigma_c^2 I)$ 模拟各维独立的随机抖动，方向性漂移 $\varepsilon_c = \sigma_c v$ 沿固定方向 $v$ 平移模拟系统性偏移，子空间旋转 $z_c = \text{Normalize}(Rz_0)$ 用旋转矩阵 $R$ 整体扭转表示空间。归一化把结果重新压回 embedding 球面，保证扰动只改变方向、不改变模长，这样退化才能干净地归因到漂移本身而非尺度变化。
 
-2. **Silent Failure 度量**:
+**2. Silent Failure 度量：抓住"嘴上很确定、其实已经错了"的失效。**
 
-    - 功能：检测高置信度下的错误分类
-    - 核心思路：当 $\max_y p(y|x) > 0.8$ 且 $\hat{y} \neq y$ 时定义为 silent failure
-    - 设计动机：标准监控依赖平均置信度，但如果置信度仍高而分类已错，监控无法察觉——这是最危险的失效模式
+标准的线上监控盯的是平均置信度，可一旦分类器在高置信度下大面积出错，这种监控就形同虚设。本文把这种最危险的失效单独度量出来：当 $\max_y p(y|x) > 0.8$（模型自认为很笃定）但预测 $\hat{y} \neq y$（其实分错了）时，就记一次 silent failure。它和普通错误的区别在于"无声"——置信度没有同步塌掉，所以靠均值监控的运维系统看不到任何异常信号，毒性内容会带着高置信度的"安全"标签溜过去。
 
-3. **Alignment 影响分析**:
+**3. Alignment 影响分析：检验 RLHF 是帮了还是害了安全分类。**
 
-    - 功能：对比 base 与 instruction-tuned 模型的 embedding 可分性
-    - 核心思路：用 Silhouette score 和 Fisher 判别比衡量 toxic/safe 类别在 embedding 空间中的分离程度
-    - 设计动机：检验 RLHF alignment 是否引入了对安全分类的负面效应
+直觉上 instruction-tuned 模型经过对齐应该更"懂"安全，但本文要验证的恰恰是反面——alignment 是否反而让 toxic/safe 在 embedding 空间里更难分开。做法是用两个几何量刻画类别可分性：Silhouette score 衡量样本离本类中心比离异类中心近多少，Fisher 判别比 $\frac{\text{类间方差}}{\text{类内方差}}$ 衡量两类的分离程度。把 base 模型和 instruction-tuned 模型的这两个指标摆在一起对比，就能看出 RLHF 到底是收紧还是模糊了安全分类所依赖的边界。
 
 ### 实验设置
 - 数据集：Civil Comments（~1.8M 条人工标注评论），构建 10,000 样本的平衡子集（70/10/20 train/val/test）
@@ -126,10 +120,10 @@ tags:
 ## 相关论文
 
 - [\[ICLR 2026\] Are Reasoning LLMs Robust to Interventions on Their Chain-of-Thought?](are_reasoning_llms_robust_to_interventions_on_their_chain-of-thought.md)
-- [\[ICLR 2026\] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
 - [\[ACL 2026\] Is Chain-of-Thought Really Not Explainability? Chain-of-Thought Can Be Faithful without Hint Verbalization](../../ACL2026/llm_reasoning/is_chain-of-thought_really_not_explainability_chain-of-thought_can_be_faithful_w.md)
-- [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
+- [\[ICLR 2026\] Is It Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort](is_it_thinking_or_cheating_detecting_implicit_reward_hacking_by_measuring_reason.md)
 - [\[NeurIPS 2025\] Large Language Models Can Learn and Generalize Steganographic Chain-of-Thought under Process Supervision](../../NeurIPS2025/llm_reasoning/large_language_models_can_learn_and_generalize_steganographic_chain-of-thought_u.md)
+- [\[ICLR 2026\] RFEval: Benchmarking Reasoning Faithfulness under Counterfactual Reasoning Intervention in Large Reasoning Models](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_reasoning_interv.md)
 
 </div>
 

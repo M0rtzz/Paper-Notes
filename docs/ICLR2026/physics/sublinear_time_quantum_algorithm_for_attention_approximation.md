@@ -44,77 +44,35 @@ tags:
 
 ### 整体框架
 
-算法分三步近似注意力 $D^{-1}AV$ 的各组件：
+算法把注意力 $\text{Att}(Q,K,V)=D^{-1}AV$ 拆成三个可以分别近似的组件——指数核矩阵 $A$、归一化因子 $D$、值矩阵 $V$——并对每个组件套一层 $\sqrt{n}$ 量子加速。三部分的近似产物组装成一个量子数据结构 `QAttention`：预处理阶段一次性建好压缩表示，之后任意一行注意力都能在与 $n$ 无关的时间里查询出来。下面三点对应三个组件，第四点把它们拼回端到端的精度与复杂度保证。
 
-1. **近似注意力矩阵 $A$**：通过量子 Nyström 核近似
-2. **近似归一化因子 $D$**：通过量子多元均值估计
-3. **近似值矩阵 $V$**：通过量子杠杆分数（leverage score）采样
+### 关键设计
 
-最终组合为一个量子数据结构 `QAttention`，支持预处理 + 行查询。
+**1. 量子 Nyström 核近似：让非对称指数核也能做谱压缩。**
 
-### 关键设计 1：量子 Nyström 核近似 (近似 $A$)
+直接对 $A=\exp(QK^\top)$ 做 Nyström 近似行不通，因为它既不对称也不是半正定矩阵，谈不上谱低秩结构。本文的做法是把 query 和 key 并成一个扩展数据集 $X=\{q_1,\dots,q_n,k_1,\dots,k_n\}$，构造 $2n\times 2n$ 的指数核矩阵 $E=\begin{bmatrix}\exp(QQ^\top)&\exp(QK^\top)\\\exp(KQ^\top)&\exp(KK^\top)\end{bmatrix}$。$E$ 是 PSD 的、可以做 Nyström 谱近似，而它的右上角块恰好就是要找的 $A$，于是对 $A$ 的近似被"借壳"成对 $E$ 的近似。加速来自采样环节：经典递归脊杠杆分数采样要做 $O(ns_\lambda)$ 次核函数评估，这里改用 Grover 搜索的量子采样器 `QSample`，把采样压到 $\widetilde{O}(n^{0.5}s^{0.5})$ 次 oracle 调用，整段近似的时间为 $\widetilde{O}(n^{0.5}s^{1.5}(d+s)+s^\omega)$，其中 $s=O(s_\lambda\log(s_\lambda/\delta))$，$s_\lambda(E):=\text{tr}[E(E+\lambda I)^{-1}]$ 是 $\lambda$-统计维度，$\omega\approx 2.37$ 是矩阵乘法指数。最终得到的 $\widetilde{E}$ 夹在 $E\preceq\widetilde{E}\preceq E+\lambda I$ 之间，由此推出谱误差 $\|A-\widetilde{A}\|\le\lambda$、Frobenius 误差 $\|A-\widetilde{A}\|_F\le\lambda\sqrt{n}$——所有精度都被单一旋钮 $\lambda$ 控住。
 
-**核心挑战**：$A = \exp(QK^\top)$ 不是对称 PSD 矩阵，无法直接做 Nyström 近似。
+**2. 量子均值估计：在不展开 $\widetilde{E}$ 的前提下隐式算出归一化因子。**
 
-**解决方案**：构造扩展数据集 $X = \{q_1, \ldots, q_n, k_1, \ldots, k_n\}$，形成 $2n \times 2n$ 指数核矩阵：
+归一化因子 $D=\text{diag}(A\mathbf{1}_n)$ 看似只是一次求和，但显式写出 $\widetilde{E}$ 就要 $\Omega(n)$ 的存储和时间，把前一步省下的加速吃光。本文把 $\widetilde{E}=UU^\top$ 按行分块成 $U=[U_1;U_2]$，于是 $\widetilde{A}=U_1U_2^\top$，归一化向量 $\widetilde{A}\mathbf{1}_n=U_1(U_2^\top\mathbf{1}_n)$ 的瓶颈只剩里层的 $U_2^\top\mathbf{1}_n$。把这一项看成对 $U_2$ 各行求均值的多元均值估计问题，用量子多元均值估计（Lemma 2.6）得到 $\widetilde{\mu}$ 满足马氏范数误差 $\|\widetilde{\mu}-U_2^\top\mathbf{1}_n\|_{(U_2^\top U_2)^{-1}}\le\epsilon$，只需 $\widetilde{O}(\epsilon^{-1}n^{0.5}s^{0.5})$ 次对 $U_2$ 的行查询。这样归一化因子从未被完整物化，查询任意第 $i$ 行的归一化值只花 $O(s(s+d))$ 时间。
 
-$$E = \begin{bmatrix} \exp(QQ^\top) & \exp(QK^\top) \\ \exp(KQ^\top) & \exp(KK^\top) \end{bmatrix}$$
+**3. 量子杠杆分数采样：用行畸变度替代全矩阵扫描来近似 $V$。**
 
-$E$ 是 PSD 的，可以做 Nyström 近似，其中右上角块恰好是 $A$。
+最后一步是把 $\widetilde{A}\widetilde{V}$ 里的 $V$ 也压缩掉。经典的联合行范数采样要先读遍 $V$ 的所有条目去估 Frobenius 范数，又是一次 $\Omega(n)$ 扫描。本文改用量子杠杆分数采样，并引入**行畸变度** $\alpha(V):=\frac{d}{\|V\|_F^2}\cdot\max_{i\in[n]}\frac{\|v_i\|_2^2}{\tau_i}$，其中 $\tau_i$ 是 $V$ 第 $i$ 行的杠杆分数；它度量行的"重要性分布有多不均"，并满足 $\alpha\le d/\text{srank}(V)$。按杠杆分数采样 $\widetilde{O}(\epsilon^{-2}\alpha)$ 行就能拿到 Frobenius 范数下的近似矩阵乘法保证，量子实现把这步做到 $\widetilde{O}(\epsilon^{-1}n^{0.5}\alpha^{0.5}d)$。$\alpha$ 这个量推广了经典近似矩阵乘法里"列正交"的苛刻前提，使非正交的 $V$ 也能被高效采样。
 
-**量子加速的来源**：经典递归脊杠杆分数采样需要 $O(ns_\lambda)$ 次核函数评估。本文利用 Grover 搜索的量子采样器 `QSample`，将采样步骤加速到 $\widetilde{O}(n^{0.5} s^{0.5})$ 次 oracle 调用，整体时间为：
+**4. 端到端拼装与 $\lambda$ 权衡：把三段误差合成一个保证，并暴露单旋钮调控。**
 
-$$\widetilde{O}(n^{0.5} s^{1.5}(d + s) + s^\omega)$$
-
-其中 $s = O(s_\lambda \log(s_\lambda / \delta))$，$s_\lambda$ 是 $\lambda$-统计维度（定义为 $s_\lambda(E) := \text{tr}[E(E + \lambda I)^{-1}]$），$\omega \approx 2.37$ 是矩阵乘法指数。
-
-**近似保证**：$E \preceq \widetilde{E} \preceq E + \lambda I$，由此推出 $\|A - \widetilde{A}\| \leq \lambda$，$\|A - \widetilde{A}\|_F \leq \lambda \sqrt{n}$。
-
-### 关键设计 2：量子均值估计 (近似 $D$)
-
-**挑战**：不能显式构造 $\widetilde{E}$（$\Omega(n)$ 的大小），需要隐式计算归一化因子。
-
-**方案**：将 $\widetilde{E} = UU^\top$ 分块为 $U = [U_1; U_2]$，则 $\widetilde{A} = U_1 U_2^\top$。归一化因子 $\widetilde{A} \mathbf{1}_n = U_1 (U_2^\top \mathbf{1}_n)$。
-
-关键在于近似 $U_2^\top \mathbf{1}_n$：将其视为多元均值估计问题，利用量子多元均值估计（Lemma 2.6）得到 $\widetilde{\mu}$ 满足：
-
-$$\|\widetilde{\mu} - U_2^\top \mathbf{1}_n\|_{(U_2^\top U_2)^{-1}} \leq \epsilon$$
-
-使用 $\widetilde{O}(\epsilon^{-1} n^{0.5} s^{0.5})$ 次对 $U_2$ 的行查询。查询第 $i$ 行归一化因子仅需 $O(s(s+d))$ 时间。
-
-### 关键设计 3：杠杆分数采样 (近似 $V$)
-
-**挑战**：经典方法（如联合行范数采样）需要读取 $V$ 的全部条目来估计 Frobenius 范数。
-
-**方案**：采用量子杠杆分数采样。引入**行畸变度**参数：
-
-$$\alpha(V) := \frac{d}{\|V\|_F^2} \cdot \max_{i \in [n]} \frac{\|v_i\|_2^2}{\tau_i}$$
-
-其中 $\tau_i$ 是 $V$ 的第 $i$ 行杠杆分数。该参数满足 $\alpha \leq d / \text{srank}(V)$。
-
-通过采样 $\widetilde{O}(\epsilon^{-2} \alpha)$ 行，获得近似矩阵乘法保证（Frobenius 范数），量子算法在 $\widetilde{O}(\epsilon^{-1} n^{0.5} \alpha^{0.5} d)$ 时间完成。
-
-### 主定理（Theorem 3.1 / 9.2）
-
-整合三部分，得到最终保证：
-
-$$\|\widetilde{D}^{-1}\widetilde{A}\widetilde{V} - \text{Att}(Q,K,V)\|_F \leq \epsilon \cdot (\beta \cdot \|D^{-1}\|) \cdot (\|A\|_F + \lambda\sqrt{n}) \cdot \|V\|_F$$
-
-其中 $\beta = \frac{1}{1 - (\epsilon\|A\| + \lambda\sqrt{n})\|D^{-1}\|}$。
+三部分组装后（主定理 3.1 / 9.2），总误差为 $\|\widetilde{D}^{-1}\widetilde{A}\widetilde{V}-\text{Att}(Q,K,V)\|_F\le\epsilon\cdot(\beta\cdot\|D^{-1}\|)\cdot(\|A\|_F+\lambda\sqrt{n})\cdot\|V\|_F$，其中 $\beta=\frac{1}{1-(\epsilon\|A\|+\lambda\sqrt{n})\|D^{-1}\|}$ 是归一化因子被扰动后的放大系数。复杂度上，预处理是对 $n$ 亚线性的 $\widetilde{O}(\epsilon^{-1}n^{0.5}(s_\lambda^{2.5}+s_\lambda^{1.5}d+\alpha^{0.5}d))$，而行查询彻底与 $n$ 脱钩、只要 $\widetilde{O}(s_\lambda^2+s_\lambda d)$。整套算法的实际行为由 $\lambda$ 主导一个张力：$\lambda$ 调大会压低统计维度 $s_\lambda$（更快），却同时收紧 $\|D^{-1}\|$ 的约束余量、抬高 $\beta$（精度更脆），反之亦然，所以 $\lambda$ 要在加速与精度之间找平衡点。
 
 | 阶段 | 时间复杂度 |
 |------|-----------|
 | 预处理 | $\widetilde{O}(\epsilon^{-1} n^{0.5}(s_\lambda^{2.5} + s_\lambda^{1.5}d + \alpha^{0.5}d))$ |
 | 行查询 | $\widetilde{O}(s_\lambda^2 + s_\lambda d)$ |
 
-### 参数 $\lambda$ 的权衡
-
 | $\lambda$ 变化 | $s_\lambda$ | $\|D^{-1}\|$ 约束余量 | $\beta$ |
 |:-:|:-:|:-:|:-:|
 | $\uparrow$ | $\downarrow$ | $\downarrow$ | $\uparrow$ |
 | $\downarrow$ | $\uparrow$ | $\uparrow$ | $\downarrow$ |
-
-$\lambda$ 增大使统计维度 $s_\lambda$ 减小（加速），但 $\beta$ 增大（精度损失），需平衡。
 
 ## 实验
 
@@ -195,9 +153,9 @@ $\lambda$ 增大使统计维度 $s_\lambda$ 减小（加速），但 $\beta$ 增
 
 ## 相关论文
 
-- [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](feedback-driven_recurrent_quantum_neural_network_universality.md)
-- [\[ICML 2026\] Softplus Attention with Re-weighting Boosts Length Extrapolation in Large Language Models](../../ICML2026/physics/softplus_attention_with_re-weighting_boosts_length_extrapolation_in_large_langua.md)
 - [\[CVPR 2026\] PhysSkin: Real-Time and Generalizable Physics-Based Skin Simulation](../../CVPR2026/physics/physskin_real-time_and_generalizable_physics-based_animation_via_self-supervised.md)
+- [\[ICLR 2026\] Feedback-driven Recurrent Quantum Neural Network Universality](feedback-driven_recurrent_quantum_neural_network_universality.md)
+- [\[NeurIPS 2025\] Why Is Attention Sparse in Particle Transformer?](../../NeurIPS2025/physics/why_is_attention_sparse_in_particle_transformer.md)
 - [\[CVPR 2026\] Continuous Exposure-Time Modeling for Realistic Atmospheric Turbulence Synthesis](../../CVPR2026/physics/continuous_exposure-time_modeling_for_realistic_atmospheric_turbulence_synthesis.md)
 - [\[NeurIPS 2025\] Hamiltonian Neural PDE Solvers through Functional Approximation](../../NeurIPS2025/physics/hamiltonian_neural_pde_solvers_through_functional_approximation.md)
 

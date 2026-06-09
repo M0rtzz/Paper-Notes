@@ -33,43 +33,37 @@ tags:
 
 ## 方法详解
 
-### N 维 Beta 核
+### 整体框架
 
-核心密度函数：
+UBS 把 3DGS 的钟形高斯核换成一个可逐维度调形状的 N 维各向异性 Beta 核，让空间几何、视角依赖外观和场景动态都用同一种基元来表示。每个基元在统一的 $N$ 维分布里同时携带位置、协方差和一组 Beta 形状参数 $\mathbf{b}$；渲染时先把非空间维度（视角 $\mathbf{q}$）条件切片回 3D，再走与 3DGS 一致的光栅化管线，因此既能继承实时渲染又能在每个维度上自适应锐度。
 
-$$\sigma(\mathbf{x}, \mathbf{q}) = \mathcal{B}(\mathbf{x}, \mathbf{q}; \boldsymbol{\mu}, \boldsymbol{\Sigma}, \mathbf{b}) \cdot o$$
+### 关键设计
 
-其中 $\mathbf{x} \in \mathbb{R}^3$ 为空间坐标，$\mathbf{q} \in \mathbb{R}^{N-3}$ 编码额外维度（视角/时间），$\mathbf{b} \in \mathbb{R}^{N-2}$ 控制各维度的 Beta 形状参数。每个维度的 Beta 指数 $\beta_i = 4\exp(b_i)$：
-- **负 $b_i$**：平坦轮廓（适合光滑表面、静态元素、漫反射）
-- **正 $b_i$**：尖锐峰值（适合精细纹理、快速运动、镜面反射）
+**1. N 维 Beta 核：用逐维度形状参数取代固定钟形轮廓。**
 
-### 空间正交 Cholesky 参数化
+高斯核在所有维度强制相同的对称轮廓，锐利边界要堆大量小基元，视角与时间还得外挂球谐和变形网络。UBS 把基元密度写成 $\sigma(\mathbf{x}, \mathbf{q}) = \mathcal{B}(\mathbf{x}, \mathbf{q}; \boldsymbol{\mu}, \boldsymbol{\Sigma}, \mathbf{b}) \cdot o$，其中 $\mathbf{x} \in \mathbb{R}^3$ 是空间坐标，$\mathbf{q} \in \mathbb{R}^{N-3}$ 编码视角/时间等额外维度，$\mathbf{b} \in \mathbb{R}^{N-2}$ 控制每个维度的 Beta 形状。关键在于每维的 Beta 指数 $\beta_i = 4\exp(b_i)$ 可以独立调节：负的 $b_i$ 给出平坦轮廓，适合光滑表面、静态元素、漫反射；正的 $b_i$ 给出尖锐峰值，适合精细纹理、快速运动、镜面反射。于是同一表示就能按场景性质在「平」与「尖」之间连续过渡，不再受单一对称核拖累。
 
-协方差矩阵分解：
+**2. 空间正交 Cholesky 参数化：在升到 N 维时保住 3DGS 的几何结构与向后兼容。**
+
+直接对 $N$ 维协方差做无约束分解会破坏空间子块的旋转-缩放语义，也丢掉对 3DGS 权重的兼容。UBS 把协方差的 Cholesky 因子写成分块下三角形式
 
 $$\mathbf{L} = \begin{pmatrix} \mathbf{R}_x \text{diag}(\mathbf{s}_x) & \mathbf{0} \\ \mathbf{L}_{qx} & \mathbf{L}_q \end{pmatrix}$$
 
-- $\mathbf{R}_x \in SO(3)$：保持空间正交结构（一阶 Taylor 近似）
-- $\mathbf{L}_{qx}$：编码跨维度相关性
-- 保证向后兼容 3DGS 的旋转-缩放参数化
+左上角 $\mathbf{R}_x \in SO(3)$（用一阶 Taylor 近似保持正交）配 $\text{diag}(\mathbf{s}_x)$ 复用 3DGS 的旋转-缩放参数化，$\mathbf{L}_{qx}$ 专门编码空间与额外维度之间的跨维相关性，$\mathbf{L}_q$ 描述额外维度自身。这样既保留了空间几何的可解释结构，又能在 $\mathbf{q}$ 维度退化时无缝回落到原始 3DGS。
 
-### Beta 调制条件切片
+**3. Beta 调制条件切片：把高维核压回 3D 渲染，并在压回时注入 Beta 调形。**
 
-**条件均值和协方差**：
+给定一帧的视角/时间 $\mathbf{q}$，需要从 $N$ 维基元得到当前要光栅化的 3D 分布。UBS 用条件高斯切片得到
 
 $$\boldsymbol{\mu}_{x|q} = \boldsymbol{\mu}_x + \boldsymbol{\Sigma}_{xq} \boldsymbol{\Sigma}_q^{-1} \text{diag}(\tilde{\boldsymbol{\beta}}_q) (\mathbf{q} - \boldsymbol{\mu}_q)$$
 
 $$\boldsymbol{\Sigma}_{x|q} = \boldsymbol{\Sigma}_x - \boldsymbol{\Sigma}_{xq} \boldsymbol{\Sigma}_q^{-1} \text{diag}(\tilde{\boldsymbol{\beta}}_q) \boldsymbol{\Sigma}_{qx}$$
 
-其中 $\text{diag}(\tilde{\boldsymbol{\beta}}_q)$ 对非空间维度施加 Beta 调制。
+与标准条件高斯的差别就在 $\text{diag}(\tilde{\boldsymbol{\beta}}_q)$ 这一项——它把第 1 点的 Beta 形状参数施加到非空间维度上，让条件均值和协方差随 $\mathbf{q}$ 的偏移按 Beta 形状而非固定线性方式变化。不透明度也同步被 Beta 调制：$o(\mathbf{q}) = o \prod_{i=1}^C (1 - d_i)^{4\beta_{q_i}}$，其中 $d_i = \tanh(d_i^{raw}) \in [0,1)$ 把逐维度的 Mahalanobis 距离映射到有界值，保证基元在远离 $\mathbf{q}$ 中心时不透明度平滑衰减且有界。
 
-**Beta 调制不透明度**：
+**4. 通用兼容性：Beta 参数取特定值即退化为一族已有方法。**
 
-$$o(\mathbf{q}) = o \prod_{i=1}^C (1 - d_i)^{4\beta_{q_i}}$$
-
-$d_i = \tanh(d_i^{raw}) \in [0,1)$，逐维度的 Mahalanobis 距离映射到有界值。
-
-### 通用兼容性
+因为 Beta 核以高斯为极限，UBS 通过设定维度数 $N$ 和形状参数 $\mathbf{b}$ 就能复现多个已有基元，等于给整族方法提供了统一上层框架：$N=3,\,b_x=0$ 时约等于 3DGS，$N=3,\,b_x \neq 0$ 时约等于 DBS，$N=6,\,\mathbf{b}=\mathbf{0}$ 约等于 6DGS，$N=7,\,\mathbf{b}=\mathbf{0}$ 约等于 7DGS。
 
 | $\mathbf{b}$ 设置 | 等价方法 |
 |---------|---------|
@@ -78,23 +72,19 @@ $d_i = \tanh(d_i^{raw}) \in [0,1)$，逐维度的 Mahalanobis 距离映射到有
 | $N=6$, $\mathbf{b}=\mathbf{0}$ | ≈ 6DGS |
 | $N=7$, $\mathbf{b}=\mathbf{0}$ | ≈ 7DGS |
 
-### 可解释场景分解
+由于 Beta 参数初始化为零就从高斯极限起步，模型天然带性能下界，再逐步学到非零形状去超越基线。这套统一参数化也带来明显的减参：静态场景比 3DGS 少 **41%** 参数（不再需要 48 参数球谐），动态场景比 4DGS 少 **73%** 参数。
 
-学习到的 Beta 参数自然提供无监督场景分解：
-- **空间 $b_x$**：负 → 光滑表面；正 → 精细纹理
-- **角度 $b_d$**：负 → 漫反射；正 → 镜面反射
-- **时间 $b_t$**：负 → 静态元素；正 → 动态元素
+**5. 可解释场景分解：学到的 Beta 参数本身就是一张无监督语义图。**
+
+由于每个维度的 $b$ 直接对应「平/尖」物理含义，训练收敛后无需额外监督就能读出场景结构：空间 $b_x$ 负值对应光滑表面、正值对应精细纹理；角度 $b_d$ 负值对应漫反射、正值对应镜面反射；时间 $b_t$ 负值对应静态元素、正值对应动态元素。换句话说，几何、外观和运动的分解被免费编码进了形状参数里。
 
 ### 损失函数
 
+训练目标在 3DGS 的重建项基础上加两个正则：
+
 $$\mathcal{L} = (1-\lambda_{SSIM})\mathcal{L}_1 + \lambda_{SSIM}\mathcal{L}_{SSIM} + \lambda_o \sum_i |o_i| + \lambda_\Sigma \sum_i \|\mathbf{s}_i\|_1$$
 
-不透明度正则化确保 MCMC 致密化有效，尺度惩罚促进基元重定位。
-
-### 参数效率
-
-- 静态场景：比 3DGS 减少 **41%** 参数（无需 48 参数球谐）
-- 动态场景：比 4DGS 减少 **73%** 参数
+不透明度的 $\ell_1$ 正则确保 MCMC 致密化有效地裁剪冗余基元，尺度惩罚则促进基元重定位到更需要它们的区域。
 
 ## 实验
 
@@ -170,7 +160,7 @@ PSNR 提升最高达 **+8.27 dB**（6DGS-PBR 数据集）。
 - [\[ICCV 2025\] SplatTalk: 3D VQA with Gaussian Splatting](../../ICCV2025/3d_vision/splattalk_3d_vqa_with_gaussian_splatting.md)
 - [\[ICLR 2026\] UFO-4D: Unposed Feedforward 4D Reconstruction from Two Images](ufo-4d_unposed_feedforward_4d_reconstruction_from_two_images.md)
 - [\[ICLR 2026\] UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
-- [\[ICLR 2026\] Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [\[ICLR 2026\] Reducing Class-Wise Performance Disparity via Margin Regularization](reducing_class-wise_performance_disparity_via_margin_regularization.md)
 
 </div>
 

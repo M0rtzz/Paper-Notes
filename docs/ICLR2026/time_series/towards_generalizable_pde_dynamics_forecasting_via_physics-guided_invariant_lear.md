@@ -47,23 +47,21 @@ iMOOE 的整体 pipeline：输入是过去 $H$ 步的观测轨迹 $\mathbf{I}^e 
 
 ### 关键设计
 
-1. **两层 PDE 不变性原理**:
+**1. 两层 PDE 不变性原理：指明 PDE 系统中到底什么跨域不变。**
 
-    - 功能：为 OOD 泛化提供理论基础，指明 PDE 系统中什么是跨域不变的
-    - 核心思路：(i) **算子不变性**——PDE 动力学由一组空间算子 $\{\sigma_i(\mathbf{x}, \mathbf{u}, \partial_\mathbf{x}\mathbf{u}, \ldots)\}_{i=1}^K$ 的组合支配，这些基本算子代表不同的物理过程（如扩散、对流、反应），在不同域和系统演化中保持不变。(ii) **组合不变性**——算子与外部条件（物理参数 $\mathbf{p}$、强迫项 $\mathbf{f}$）的聚合方式 $F = h(\sigma_1, \ldots, \sigma_K, \mathbf{p}, \mathbf{f})$ 对于特定 PDE 系统是固定的
-    - 设计动机：受经典算子分裂法启发，该方法将复杂 PDE 分解为若干简单算子（如 Navier-Stokes 方程的分裂求解）。利用结构因果模型 (SCM) 可以证明，无论初始条件、物理参数、强迫项如何变化，算子及其组合关系始终不变
+传统方法之所以零样本泛化不行，是因为它们学的是领域表示，没抓住 PDE 系统里真正不变的东西。作者把这件事拆成两层来形式化。第一层是**算子不变性**——PDE 动力学由一组空间算子 $\{\sigma_i(\mathbf{x}, \mathbf{u}, \partial_\mathbf{x}\mathbf{u}, \ldots)\}_{i=1}^K$ 的组合支配，每个基本算子对应一种物理过程（扩散、对流、反应），它们在不同域和系统演化中保持不变。第二层是**组合不变性**——算子与外部条件（物理参数 $\mathbf{p}$、强迫项 $\mathbf{f}$）的聚合方式 $F = h(\sigma_1, \ldots, \sigma_K, \mathbf{p}, \mathbf{f})$ 对于某个特定 PDE 系统是固定的。这个划分受经典算子分裂法启发（把复杂 PDE 分解为若干简单算子求解，如 Navier-Stokes 的分裂求解），作者进一步用结构因果模型 (SCM) 论证：无论初始条件、物理参数、强迫项怎么变，算子及其组合关系始终不变。这两层不变性就是后面架构和损失函数要对齐的目标。
 
-2. **混合算子专家网络 (MOOE)**:
+**2. 混合算子专家网络 (MOOE)：用并行专家组+融合网络分别落地两层不变性。**
 
-    - 功能：通过并行专家组捕获算子不变性，通过融合网络捕获组合不变性
-    - 核心思路：设计 $K$ 个并行的神经算子专家，每个专家 $\sigma_i = \text{NO}_i(\mathbf{x}, \mathbf{u}_{t-W+1:t}, \mathbf{m}_i \odot [\partial_\mathbf{x}\mathbf{u}_t, \partial_{\mathbf{xx}}\mathbf{u}_t, \ldots]^\mathbb{T})$，其中 $\mathbf{m}_i \in \{0,1\}^S$ 是二值掩码向量，让每个专家自适应选择有用的空间导数。为鼓励专家学习不同物理过程，引入掩码多样性损失 $\mathcal{L}_{mask} = \frac{1}{K^2}\sum_{i,j}\exp(-\|\mathbf{m}_i - \mathbf{m}_j\|_2^2)$。融合网络对强非线性 PDE 使用额外网络学习组合，对加性关系则简单求和
-    - 设计动机：与算子分裂法类似但采用并行而非串行结构（避免计算瓶颈）。每个专家可以是任意现有神经算子（FNO/DeepONet/OFormer/VCNeF），实现即插即用的兼容性
+有了不变性原理，网络结构就照着它搭。针对算子不变性，设计 $K$ 个并行的神经算子专家，每个专家 $\sigma_i = \text{NO}_i(\mathbf{x}, \mathbf{u}_{t-W+1:t}, \mathbf{m}_i \odot [\partial_\mathbf{x}\mathbf{u}_t, \partial_{\mathbf{xx}}\mathbf{u}_t, \ldots]^\mathbb{T})$，其中二值掩码 $\mathbf{m}_i \in \{0,1\}^S$ 让每个专家自适应地挑出对自己有用的空间导数。为了逼不同专家学不同物理过程、而非塌缩成同一个，加一项掩码多样性损失 $\mathcal{L}_{mask} = \frac{1}{K^2}\sum_{i,j}\exp(-\|\mathbf{m}_i - \mathbf{m}_j\|_2^2)$。针对组合不变性，融合网络负责聚合专家输出：强非线性 PDE 用一个额外网络学组合方式，加性关系则直接求和。和算子分裂法不同的是这里用并行而非串行结构，避免串行求解的计算瓶颈；而且每个专家可以换成任意现有神经算子（FNO/DeepONet/OFormer/VCNeF），所以整个框架是即插即用的。
 
-3. **频率增强不变学习目标**:
+**3. 频率增强不变学习目标：从有限训练域估出不变性，顺手治神经算子的频谱偏置。**
 
-    - 功能：从有限训练域中估计 PDE 不变性，同时解决神经算子的频谱偏置问题
-    - 核心思路：总损失 $\mathcal{L}_{total} = \lambda_{pred}\mathcal{L}_{pred} + \lambda_{inv}\mathcal{L}_{inv} + \lambda_{freq}\mathcal{L}_{freq} + \lambda_{mask}\mathcal{L}_{mask}$ 由四部分构成：**(a)** 最大预测损失 $\mathcal{L}_{pred}$ 确保充分性——自回归预测误差的跨域平均；**(b)** 风险等式损失 $\mathcal{L}_{inv} = \text{Var}(\{\mathcal{R}_{pred}^e\}_{e \in \mathcal{E}_{tr}})$ 确保不变性——最小化不同训练域风险的方差；**(c)** 频率增强损失 $\mathcal{L}_{freq}$ 用波数加权 $\|\xi\|_2^2$ 放大高频模式的监督，解决神经算子偏好低频的问题
-    - 设计动机：仅用空间域损失会导致神经算子忽略高频信息，在自回归预测中高频误差会传播到整个频谱域，严重损害 OOD 泛化。环境划分不仅按物理参数，还按自回归步数划分（因为 $p(\mathbf{I}^e)$ 随时间步变化），这对流体动力学预测特别关键
+架构对齐还不够，得靠损失函数真正把不变性从有限训练域里学出来。总损失
+
+$$\mathcal{L}_{total} = \lambda_{pred}\mathcal{L}_{pred} + \lambda_{inv}\mathcal{L}_{inv} + \lambda_{freq}\mathcal{L}_{freq} + \lambda_{mask}\mathcal{L}_{mask}$$
+
+由四项构成，前三项各管一件事。最大预测损失 $\mathcal{L}_{pred}$ 管充分性，是自回归预测误差的跨域平均；风险等式损失 $\mathcal{L}_{inv} = \text{Var}(\{\mathcal{R}_{pred}^e\}_{e \in \mathcal{E}_{tr}})$ 管不变性，让不同训练域的风险方差最小，这一步借的是 IRM/REx 的不变学习思想；频率增强损失 $\mathcal{L}_{freq}$ 则用波数加权 $\|\xi\|_2^2$ 放大高频模式的监督。最后这项是因为神经算子天生偏好低频，若只用空间域损失会忽略高频信息，而在自回归预测里高频误差会一步步传播到整个频谱域、严重拖垮 OOD 泛化。值得一提的是，这里的环境划分不只按物理参数，还按自回归步数划分——因为输入分布 $p(\mathbf{I}^e)$ 本身随时间步漂移，这一点对流体动力学预测尤其关键。
 
 ### 损失函数 / 训练策略
 
@@ -137,9 +135,9 @@ iMOOE 的整体 pipeline：输入是过去 $H$ 步的观测轨迹 $\mathbf{I}^e 
 
 - [\[ICML 2025\] A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments](../../ICML2025/time_series/a_generalizable_physics-enhanced_state_space_model_for_long-term_dynamics_foreca.md)
 - [\[ICLR 2026\] CPiRi: Channel Permutation-Invariant Relational Interaction for Multivariate Time Series Forecasting](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time_se.md)
+- [\[ICLR 2026\] Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model](brain-semantoks_learning_semantic_tokens_of_brain_dynamics_with_a_self-distilled.md)
 - [\[ICLR 2026\] HiVid: LLM-Guided Video Saliency For Content-Aware VOD And Live Streaming](hivid_llm-guided_video_saliency_for_content-aware_vod_and_live_streaming.md)
 - [\[ICLR 2026\] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting](learning_recursive_multi-scale_representations_for_irregular_multivariate_time_s.md)
-- [\[ICML 2026\] Time-series Forecasting Through the Lens of Dynamics](../../ICML2026/time_series/time-series_forecasting_through_the_lens_of_dynamics.md)
 
 </div>
 

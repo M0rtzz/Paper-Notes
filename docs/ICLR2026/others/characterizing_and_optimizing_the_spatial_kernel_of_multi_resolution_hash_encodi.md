@@ -40,36 +40,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-分析分三阶段：(1) 推导无碰撞理想 PSF 的闭式近似→揭示对数衰减和B-spline各向异性；(2) 实证验证优化引起的空间展宽→建立有效 FWHM 与 $N_{\text{avg}}$ 的关系；(3) 分析有限哈希容量的碰撞噪声→量化 SNR 退化。基于分析结果提出 R-MHE 改进。
+这篇论文不提新模型，而是回答一个被长期搁置的问题：Instant-NGP 的多分辨率哈希编码（MHE）等效的空间核到底长什么样、真实分辨率有多高、哈希碰撞如何拖累质量。作者把 MHE 当成一个物理系统来探针——测量它对一个点源约束的响应，也就是点扩展函数（PSF），就像在光学/物理里用 Green's function 表征系统。整条分析分三步层层递进：先在无碰撞的理想设定下推出 PSF 的闭式近似，再实测优化把这个核展宽了多少，最后把有限哈希容量带来的碰撞噪声纳入 SNR 框架。结论汇总成一个反直觉的判断——分辨率由平均分辨率 $N_{\text{avg}}$ 而非最细层 $N_{\max}$ 决定——并据此提出零开销的 Rotated MHE（R-MHE）。
 
 ### 关键设计
 
-1. **理想 PSF 推导（无碰撞）**:
+**1. 理想 PSF 的闭式推导：先搞清没有哈希碰撞时 MHE 的空间响应是什么形状。**
 
-    - 功能：推导 MHE 对点源约束优化后的空间响应函数
-    - 核心思路：在线性化解码器假设下，理想 PSF 是 $L$ 层归一化 B-spline 核的平均叠加 $P_{\text{Ideal}}(\mathbf{x}) = \frac{1}{L}\sum_{l} \hat{B}_l(\mathbf{x})$。用积分近似求和+B-spline Taylor 展开得闭式：$P \approx \frac{1}{L\ln b}[-\ln\|\mathbf{v}\| + C_D - A_D(\mathbf{v})]$，其中 $A_D$ 是B-spline固有的各向异性项
-    - 设计动机：PSF 是物理系统标准表征方法。闭式解揭示了两个关键性质：(a) 对数径向衰减（而非高斯或指数）；(b) 沿坐标轴比对角线更窄的各向异性
+要回答"等效空间核长什么样"，得先把问题剥到最干净——假设解码器线性化、哈希表无碰撞。此时 MHE 对一个点源约束优化后的响应，等于 $L$ 层归一化 B-spline 核的平均叠加 $P_{\text{Ideal}}(\mathbf{x}) = \frac{1}{L}\sum_{l} \hat{B}_l(\mathbf{x})$。作者用积分近似替换求和、再对 B-spline 做 Taylor 展开，得到闭式：
 
-2. **优化引起的空间展宽**:
+$$P \approx \frac{1}{L\ln b}\left[-\ln\|\mathbf{v}\| + C_D - A_D(\mathbf{v})\right]$$
 
-    - 功能：量化实际训练后的 PSF 比理想 PSF 宽多少
-    - 核心思路：定义总展宽因子 $\beta_{\text{emp}} = \beta_{\text{ideal}} \cdot \beta_{\text{opt}}$，其中 $\beta_{\text{ideal}} \approx 1.18$（B-spline 固有），$\beta_{\text{opt}} > 1$（优化引起）。实测 Adam 优化器下 $\beta_{\text{emp}} \approx 3.0$——即有效 FWHM 约为理想值的 2.5 倍
-    - 设计动机：这是最反直觉的发现——spectral bias（低频优先学习）导致粗层（低 $N_l$）被过度加权，有效空间核被展宽。实际双点可分辨距离 $d_{\text{crit}} \propto \beta_{\text{emp}}/N_{\text{avg}}$，而非 $1/N_{\max}$
+其中 $A_D(\mathbf{v})$ 是 B-spline 自带的各向异性项。这个闭式一次性揭示了两条性质：PSF 是**对数径向衰减**（既不是高斯也不是指数），并且**沿坐标轴比沿对角线更窄**——网格编码的核天生就各向异性。
 
-3. **哈希碰撞的 SNR 分析**:
+**2. 优化引起的空间展宽：实际训练出来的 PSF 比理想的宽得多。**
 
-    - 功能：量化有限哈希表容量引起的信号质量退化
-    - 核心思路：碰撞使空间上远距离的网格顶点共享同一特征向量，产生 speckle 噪声。$P_{\text{Collision}} = P_{\text{Ideal}} + n(\mathbf{x})$，噪声方差随碰撞率增加。增加层数 $L$ 或增长因子 $b$ 可在固定 $T$ 下提升 SNR
-    - 设计动机：为哈希表大小 $T$ 的选择提供量化指导——可以计算在给定场景复杂度下需要多大的 $T$ 才能维持目标 SNR
+理想 PSF 只是下限，真实训练后的核会被明显拉宽，这是全文最反直觉的发现。作者把总展宽因子拆成两段 $\beta_{\text{emp}} = \beta_{\text{ideal}} \cdot \beta_{\text{opt}}$：$\beta_{\text{ideal}} \approx 1.18$ 是 B-spline 固有的，$\beta_{\text{opt}} > 1$ 则来自优化过程。实测 Adam 下 $\beta_{\text{emp}} \approx 3.0$，也就是有效 FWHM 约为理想值的 2.5 倍。根源是 spectral bias——低频优先学习让粗层（低 $N_l$）被过度加权，整个空间核被展宽。直接后果是真正能分辨的双点距离 $d_{\text{crit}} \propto \beta_{\text{emp}}/N_{\text{avg}}$，由平均分辨率 $N_{\text{avg}}$ 控制，而不是最细层 $N_{\max}$。这正解释了为什么实践中一味加大 $N_{\max}$ 收益递减。
 
-4. **Rotated MHE (R-MHE)**:
+**3. 哈希碰撞的 SNR 分析：有限哈希表把空间上远离的顶点搅在一起。**
 
-    - 功能：消除网格引起的各向异性
-    - 核心思路：对每层 $l$ 的输入坐标施加不同旋转 $\mathbf{R}_l$：$\mathbf{e}_l(\mathbf{x}) = \text{Interpolate}(\mathbf{F}^l, \mathcal{H}(\lfloor N_l \mathbf{R}_l \mathbf{x}\rceil))$。2D 用渐进旋转 $\theta_l = l \cdot \theta$，3D 用正多面体顶点方向采样 SO(3)。关键：**不增加任何参数或计算量**，只改变坐标变换
-    - 设计动机：多层使用不同朝向的网格后，各向异性在叠加中抵消，PSF 变得更各向同性
+前两步假设哈希表够大、没有碰撞，但真实场景哈希表大小 $T$ 有限。碰撞会让空间上相距很远的网格顶点共享同一特征向量，在 PSF 上叠加出 speckle 噪声，写成 $P_{\text{Collision}} = P_{\text{Ideal}} + n(\mathbf{x})$，其中噪声方差随碰撞率上升。这一框架的实用价值在于把"哈希表该开多大"变成可计算的问题：在固定 $T$ 下，增加层数 $L$ 或增长因子 $b$ 都能提升 SNR，于是可以反过来估算给定场景复杂度下维持目标 SNR 所需的 $T$。
 
-### 超参数选择指导
-基于 PSF 分析的超参数选择：计算理论增长因子 $b_{\text{theory}}$ 使得 $\beta_{\text{emp}}/N_{\text{avg}}$ 等于目标空间分辨率（如单像素大小）。实验验证 $b_{\text{theory}}$ 与经验最优值 $b_{\text{opt}}$ 几乎一致。
+**4. Rotated MHE（R-MHE）：逐层旋转输入坐标，把各向异性抵消掉。**
+
+设计 1 暴露出 PSF 沿坐标轴更窄的各向异性，R-MHE 就是针对它的零成本修复。做法是给每一层 $l$ 的输入坐标施加一个不同的旋转 $\mathbf{R}_l$ 再查表：$\mathbf{e}_l(\mathbf{x}) = \text{Interpolate}(\mathbf{F}^l, \mathcal{H}(\lfloor N_l \mathbf{R}_l \mathbf{x}\rceil))$。2D 用渐进旋转 $\theta_l = l \cdot \theta$，3D 则用正多面体顶点方向在 SO(3) 上采样朝向。各层网格朝向不同后，各向异性在多层叠加中相互抵消，合成的 PSF 更接近各向同性。关键是它**不增加任何参数、也不增加计算量**，只是换了坐标变换，因此在移动端渲染这类资源受限场景里尤其划算。
+
+基于这套 PSF 分析，超参数也能直接算而不必手调：令 $\beta_{\text{emp}}/N_{\text{avg}}$ 等于目标空间分辨率（比如单像素大小），反解出理论增长因子 $b_{\text{theory}}$。实验里 $b_{\text{theory}}$ 与经验最优值 $b_{\text{opt}}$ 几乎一致，验证了这条选参路径可用。
 
 ## 实验关键数据
 
@@ -130,11 +125,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Building Spatial World Models from Sparse Transitional Episodic Memories](building_spatial_world_models_from_sparse_transitional_episodic_memories.md)
 - [\[ICLR 2026\] Probabilistic Kernel Function for Fast Angle Testing](probabilistic_kernel_function_for_fast_angle_testing.md)
 - [\[ICML 2026\] Conditional KRR: Injecting Unpenalized Features into Kernel Methods with Applications to Kernel Thresholding](../../ICML2026/others/conditional_krr_injecting_unpenalized_features_into_kernel_methods_with_applicat.md)
+- [\[NeurIPS 2025\] A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning](../../NeurIPS2025/others/a_highdimensional_statistical_method_for_optimizing_transfer.md)
 - [\[ICML 2025\] K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes](../../ICML2025/others/k2ie_kernel_method-based_kernel_intensity_estimators_for_inhomogeneous_poisson_p.md)
-- [\[AAAI 2026\] Tab-PET: Graph-Based Positional Encodings for Tabular Transformers](../../AAAI2026/others/tab-pet_graph-based_positional_encodings_for_tabular_transformers.md)
-- [\[AAAI 2026\] Structure-Aware Encodings of Argumentation Properties for Clique-width](../../AAAI2026/others/structure-aware_encodings_of_argumentation_properties_for_clique-width.md)
 
 </div>
 

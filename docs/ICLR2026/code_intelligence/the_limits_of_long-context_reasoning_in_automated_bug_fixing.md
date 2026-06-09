@@ -40,30 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段实验设计：① Agentic 评估——用 mini-SWE-agent（bash-only 命令行工作流）在 SWE-bench Verified 上评估，分析成功/失败轨迹的 token 消耗分布；② 64K 单次补丁生成——用 BM25 检索 + 注入 gold patch 文件构造 64K token 上下文，要求模型一次性生成补丁。
+论文想回答一个被默认成立、却从未被验证的假设：SWE-bench 上 agentic 工作流的成功，到底来自 LLM 的"长上下文推理"，还是来自"任务分解把问题缩到了短上下文"？为此设计了两个互补的实验，把这两种贡献分离开。第一个实验在真实 agentic 场景下做"观测"——用 mini-SWE-agent（一个 bash-only 的命令行工作流）跑 SWE-bench Verified，看成功和失败轨迹各自消耗多少 token；第二个实验做"对照干预"——人为构造一个信息完备的 64K token 上下文，把 agentic 的分步探索全部抽掉，逼模型在一次前向传播里直接生成补丁。两个实验对同一个问题从相反方向夹击：如果长上下文推理真的是成功的来源，那成功轨迹应该消耗更多 token，且单次模式下也该有像样的表现。
 
 ### 关键设计
 
-1. **Token 消耗分布分析**:
+**1. Token 消耗分布分析：用成功/失败轨迹的 token 量反推"长上下文是不是真功臣"。**
 
-    - 功能：统计 agentic 成功和失败轨迹的 token 分布
-    - 核心发现：成功轨迹通常仅消耗 20K-30K token，远低于名义上下文窗口
-    - 失败样本反而消耗更多 token（在上下文中"迷失"）
-    - 设计动机：如果 agentic 成功依赖长上下文推理，成功轨迹应该消耗更多 token——但事实相反
+这一步针对的痛点是：大家把 agentic 的高 resolve rate 直接归功于模型能吃下长上下文，但谁也没去看成功的时候模型实际用了多少上下文。论文的做法很直接——统计 agentic 模式下成功轨迹和失败轨迹各自的 token 分布。结论是反直觉的：成功轨迹通常只消耗 20K–30K token，远低于 128K 这样的名义上下文窗口；反而是失败样本消耗更多 token，像是在长上下文里越走越散、"迷失"了方向。这个对比之所以有说服力，是因为它给出了一个可证伪的判据：假如成功真的依赖长上下文推理，成功轨迹就该比失败轨迹吃更多 token；而事实恰好相反，说明成功来自每一步都把上下文控制在短范围内，而非靠模型撑住长上下文。
 
-2. **64K 单次管线设计**:
+**2. 64K 单次补丁生成管线：把分解贡献抽干，只留"给你全部信息能不能一次推出答案"。**
 
-    - 功能：构造包含足够信息的完整上下文，测试模型的单次推理能力
-    - 核心设计：BM25 检索代码块 + 注入 gold patch 所涉文件，确保 100% recall
-    - 输入为 64K token 的完整上下文 + 修改指令，要求输出 unified diff 补丁
-    - 设计动机：消除 agentic 框架的分解贡献，直接测试"给你所有信息，能否推理出答案"
+如果说第一个实验是观测相关性，这一步就是切断 agentic 分解这个变量来做因果验证。关键在于先排除"信息不足"这个干扰项——用 BM25 检索相关代码块，再把 gold patch 实际涉及的文件强制注入上下文，确保答案所需信息 100% recall 都在场。然后把这些拼成一个 64K token 的完整上下文，连同修改指令一次性喂给模型，要求它直接输出 unified diff 补丁，中间不允许任何探索、检索或分步。这样一来，模型再失败就不能怪"没看到关键代码"，只能归因于无法在单次长上下文里完成推理。它和 agentic 模式构成严格对照：同一个模型、同样的信息量，唯一差别就是有没有任务分解。
 
-3. **失败模式分类**:
+**3. 失败模式分类：从错误形态判断模型是"找不到"还是"丧失了理解"。**
 
-    - **幻觉 diff**：chunk header 行号远超实际文件长度
-    - **错误文件引用**：补丁目标指向不存在的文件路径
-    - **格式错误**：无法解析的 diff 头部
-    - 这些失败表明模型在长上下文中丢失了基本的代码结构理解
+光看 resolve rate 掉到 0% 还不够，论文进一步拆解 64K 单次模式下补丁错在哪，分成三类典型失败。一是**幻觉 diff**——chunk header 标的行号远超文件实际长度，等于凭空编造了不存在的代码位置；二是**错误文件引用**——补丁目标指向根本不存在的文件路径；三是**格式错误**——diff 头部本身就无法解析。这三类错误的共同点很关键：它们暴露的不是"信息检索失败"，而是模型在长上下文里连代码的基本结构（文件多长、有哪些文件、diff 该长什么样）都把握不住了。也就是说，长上下文带来的不是"找不到针"，而是连最基础的代码结构理解都崩塌，这正好和第一个实验"失败轨迹越走越散"的现象相互印证。
 
 ## 实验关键数据
 
@@ -133,9 +124,9 @@ mini-SWE-agent 使用线性历史 —— 每步执行 bash 命令后将输出追
 
 - [\[ACL 2025\] LongCodeU: Benchmarking Long-Context Language Models on Long Code Understanding](../../ACL2025/code_intelligence/benchmarking_long-context_language_models_on_long_code_understanding.md)
 - [\[ACL 2026\] Sense and Sensitivity: Examining the Influence of Semantic Recall on Long Context Code Understanding](../../ACL2026/code_intelligence/sense_and_sensitivity_examining_the_influence_of_semantic_recall_on_long_context.md)
-- [\[ICLR 2026\] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task](mathfimer_enhancing_mathematical_reasoning_by_expanding_reasoning_steps_through_.md)
 - [\[ICLR 2026\] ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory](reasoningbank_scaling_agent_self-evolving_with_reasoning_memory.md)
 - [\[ICLR 2026\] Improving Code Localization with Repository Memory](improving_code_localization_with_repository_memory.md)
+- [\[ICLR 2026\] Ambig-SWE: Interactive Agents to Overcome Underspecificity in Software Engineering](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)
 
 </div>
 

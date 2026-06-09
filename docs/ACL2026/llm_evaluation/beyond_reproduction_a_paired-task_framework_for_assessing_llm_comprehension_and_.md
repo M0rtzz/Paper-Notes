@@ -118,8 +118,8 @@ tags:
 
 ## 相关论文
 
-- [\[ICML 2026\] Resolution Diagnostics for Paired LLM Evaluation](../../ICML2026/llm_evaluation/resolution_diagnostics_for_paired_llm_evaluation.md)
 - [\[ACL 2026\] Beyond Marginal Distributions: A Framework to Evaluate the Representativeness of Demographic-Aligned LLMs](beyond_marginal_distributions_a_framework_to_evaluate_the_representativeness_of_.md)
+- [\[ICML 2026\] Resolution Diagnostics for Paired LLM Evaluation](../../ICML2026/llm_evaluation/resolution_diagnostics_for_paired_llm_evaluation.md)
 - [\[ACL 2026\] Multi-Task Reinforcement Learning for Enhanced Multimodal LLM-as-a-Judge](multi-task_reinforcement_learning_for_enhanced_multimodal_llm-as-a-judge.md)
 - [\[ACL 2026\] PolicyLLM: Towards Excellent Comprehension of Public Policy for Large Language Models](policyllm_towards_excellent_comprehension_of_public_policy_for_large_language_mo.md)
 - [\[ACL 2026\] ResearchBench: Benchmarking LLMs in Scientific Discovery via Inspiration-Based Task Decomposition](researchbench_benchmarking_llms_in_scientific_discovery_via_inspiration-based_ta.md)

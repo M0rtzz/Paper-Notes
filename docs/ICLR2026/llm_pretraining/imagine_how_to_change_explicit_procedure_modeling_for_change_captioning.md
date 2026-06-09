@@ -44,39 +44,21 @@ tags:
 
 ### 整体框架
 
-ProCap 两阶段：
-- **第一阶段：显式过程建模（EPM）**：学习变化过程的时空动力学
-- **第二阶段：隐式过程描述（IPC）**：用可学习查询代替显式中间帧
+ProCap 把变化描述拆成两个阶段：先用一个**显式过程建模（EPM）**阶段，借帧插值"脑补"出前后两图之间的连续过渡帧，让编码器在掩码重建任务里学会变化的时空动力学；再用一个**隐式过程描述（IPC）**阶段，把这套时空理解蒸馏进一小撮可学习查询里，推理时不再真的生成中间帧，而是让查询直接从图像对推断变化过程并解码成 caption。训练阶段"重"、推理阶段"轻"，是整个设计的核心取舍。
 
-### 第一阶段：显式过程建模
+### 关键设计
 
-**过程生成模块**：预训练帧插值模型递归生成中间帧。FI 模型预测双向光流，生成扭曲图像对，Transformer 产生软掩码和残差合成中间帧。
+**1. 帧插值生成显式过程：把"前后两图"补成一条连续轨迹。** 变化描述的痛点在于只有起点和终点两帧，模型无从知道变化"怎么发生"。ProCap 用一个预训练的帧插值（FI）模型递归地在两图之间插出中间帧：FI 先预测双向光流，把起始帧和结束帧分别扭曲到中间时刻得到一对候选图，再用一个 Transformer 估计软掩码和残差，把两张扭曲图融合成中间帧。递归插值能把一次变化展开成多帧序列，物体位移这类连续变化的运动轨迹因此被显式地"画"了出来，为后续的时空建模提供了原本缺失的时间线索。
 
-**置信度帧采样**：选"语义等距"关键帧——与起始帧和结束帧语义距离相等的帧得分最高。平方差项确保无论更接近哪端都被惩罚。
+**2. 置信度帧采样：挑出"语义等距"的关键时刻。** 插出来的帧可能很多且良莠不齐，直接全用既低效又引入噪声。ProCap 用一个置信度打分挑关键帧，思路是偏好那些与起始帧、结束帧语义距离尽量相等的帧——也就是处在变化"正中间"、信息量最大的过渡时刻。打分用与两端语义距离的平方差作为惩罚项 $ (d_{\text{start}}-d_{\text{end}})^2 $，无论某帧更偏向哪一端都会被同等惩罚，从而把采样焦点稳定在语义等距的中间帧上，而不是退化成挑出近乎复制起点或终点的"无变化"帧。
 
-**过程建模模块**：Transformer 编码器 + 图像 tokenizer。输入含视觉流（patch 特征）、文本流（caption token）和特殊 token（帧一致性 + 跨模态对齐）。
+**3. 多粒度掩码重建：逼编码器从局部纹理到全帧语义都学一遍。** 光有中间帧还不够，得设计任务逼模型真正理解过程。过程建模模块是一个 Transformer 编码器加图像 tokenizer，输入同时含视觉流（patch 特征）、文本流（caption token）以及负责帧一致性和跨模态对齐的特殊 token。训练时从四种掩码里随机选一种施加：整帧掩码迫使模型靠 caption 重建整帧、建立语言到画面的映射；随机 patch 掩码逼出分布式表示；块内掩码聚焦局部纹理；块外掩码学习区域与整体场景的关系。多种粒度交替施压，让同一个编码器在帧级、区域级、patch 级都被迫学到可重建的时空表示。
 
-**多粒度掩码**（4 种随机选一）：
-1. 整帧掩码：迫使用 caption 重建
-2. 随机 patch 掩码：学习分布式表示
-3. 块内掩码：学习局部纹理
-4. 块外掩码：学习区域-场景关系
+**4. 可学习过程查询：推理时把"生成中间帧"换成"想象中间帧"。** 帧插值在推理时太慢，是落地的硬伤。ProCap 在第二阶段引入 $k\cdot n_I$ 个可学习过程查询来替代显式中间帧——这些查询继承了第一阶段编码器对变化动力学的理解，直接从图像对里隐式地"想象"出变化过程，再由 Transformer 解码器翻译成 caption。推理因此完全不需要跑帧插值，相比第一阶段仅多出 $k\cdot n_I$ 个参数，$k=2$ 时这点开销几乎可以忽略，却保住了显式过程建模带来的表征优势。
 
-### 损失函数
+### 损失函数 / 训练策略
 
-L_PRO = L_msm + L_align + L_csy
-
-- L_msm：掩码位置预测离散 token（交叉熵）
-- L_align：区分匹配/不匹配的 caption-过程对
-- L_csy：区分正常/打乱的帧序列
-
-### 第二阶段：隐式过程描述
-
-核心：k*n_I 个可学习过程查询替代显式中间帧。利用第一阶段学到的时空理解，从图像对隐式推断变化过程。Transformer 解码器翻译为 caption。推理无需帧插值。
-
-### 训练策略
-
-第二阶段自回归损失端到端训练。推理仅额外 k*n_I 参数（k=2 时开销可忽略）。
+第一阶段的过程建模损失由三项构成，$L_{\text{PRO}} = L_{\text{msm}} + L_{\text{align}} + L_{\text{csy}}$。其中 $L_{\text{msm}}$ 在被掩码位置上预测离散图像 token（交叉熵），是掩码重建的主任务；$L_{\text{align}}$ 让模型区分匹配与不匹配的 caption–过程对，强化跨模态对齐；$L_{\text{csy}}$ 让模型区分正常顺序与打乱顺序的帧序列，逼它学到时间一致性而非把帧当作无序集合。第二阶段则用自回归生成损失端到端训练可学习查询和解码器，把前一阶段的时空理解蒸馏进查询里。整体上训练阶段依赖帧插值因而较重，但推理阶段只多 $k\cdot n_I$ 个参数，把"重训练、轻推理"的取舍落到了实处。
 
 ## 实验关键数据
 
@@ -179,9 +161,9 @@ k=2 最优且效率合理。
 
 - [\[NeurIPS 2025\] Optimal Online Change Detection via Random Fourier Features](../../NeurIPS2025/llm_pretraining/optimal_online_change_detection_via_random_fourier_features.md)
 - [\[ICLR 2026\] RECON: Robust symmetry discovery via Explicit Canonical Orientation Normalization](recon_robust_symmetry_discovery_via_explicit_canonical_orientation_normalization.md)
-- [\[ICLR 2026\] TASTE: Text-Aligned Speech Tokenization and Embedding for Spoken Language Modeling](taste_text-aligned_speech_tokenization_and_embedding_for_spoken_language_modelin.md)
 - [\[NeurIPS 2025\] How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?](../../NeurIPS2025/llm_pretraining/how_does_sequence_modeling_architecture_influence_base_capabilities_of_pre-train.md)
 - [\[ICLR 2026\] Identifying and Evaluating Inactive Heads in Pretrained LLMs](identifying_and_evaluating_inactive_heads_in_pretrained_llms.md)
+- [\[ICLR 2026\] Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
 
 </div>
 

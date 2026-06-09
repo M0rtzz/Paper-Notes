@@ -44,23 +44,21 @@ tags:
 
 ### 关键设计
 
-1. **MLC 一致性损失（奇异值操控）**：
+**1. MLC 一致性损失：把"多语言行为一致"翻译成"表示矩阵秩-1"。**
 
-    - 功能：推动多语言表示矩阵 $\mathbf{Z}$ 趋向秩-1。
-    - 核心思路：对 $\mathbf{Z}$ 做 SVD 得奇异值 $\{\sigma_j\}$，若 $\sigma_1$ 远大于其余，则所有语言表示近似共线。将奇异值视为 logits，用 temperature-scaled softmax 交叉熵鼓励分布集中在 $\sigma_1$ 上：$\mathcal{L}_{cons} = -\frac{1}{N}\sum_{n=1}^N \log \frac{\exp(\sigma_1^{(n)}/\tau)}{\sum_j \exp(\sigma_j^{(n)}/\tau)}$。
-    - 设计动机：秩-1 约束等价于最小化 $\|\mathbf{Z} - \tilde{\mathbf{Z}}\|_F^2$（Eckart-Young 定理），即让多语言表示尽可能接近其最佳秩-1 近似。Softmax 形式使梯度计算平滑可微。
-    - 理论基础：Proposition 1 证明了最小化重构误差等价于最大化 $\sigma_1$ 的相对优势。
+核心矛盾在于不同语言的内部表示方向不一致，模型才会对同一 query 给出参差不齐的安全行为。本文把这件事量化成一个矩阵秩的问题：对堆叠好的多语言表示矩阵 $\mathbf{Z}$ 做 SVD 得到奇异值 $\{\sigma_j\}$，如果 $\sigma_1$ 远大于其余奇异值，就说明所有语言的表示几乎落在同一条方向上（共线），即矩阵近似秩-1。于是只要把 $\sigma_1$ 顶上去、把其余奇异值压下去，就等价于强迫各语言表示对齐到同一方向。具体做法是把奇异值当作 logits，用带温度的 softmax 交叉熵鼓励整个概率质量集中到 $\sigma_1$：
 
-2. **线性表示提取器**：
+$$\mathcal{L}_{cons} = -\frac{1}{N}\sum_{n=1}^N \log \frac{\exp(\sigma_1^{(n)}/\tau)}{\sum_j \exp(\sigma_j^{(n)}/\tau)}$$
 
-    - 功能：将 LLM 最后一个 prompt token 的 hidden state 投影到低维表示空间。
-    - 核心思路：$\mathbf{r}^{(\ell)} = \mathbf{W}\mathbf{h}^{(\ell)} + b$，$\mathbf{W} \in \mathbb{R}^{d \times d_h}$ 与 LLM 联合训练。
-    - 设计动机：简单线性投影即可捕捉跨语言语义一致性方向，实验中优于更复杂的提取器。
+这个形式的好处是处处可微、梯度平滑，避免了直接对秩做硬约束的不可导问题。理论上它也站得住脚：由 Eckart-Young 定理，秩-1 约束等价于最小化 $\|\mathbf{Z} - \tilde{\mathbf{Z}}\|_F^2$，即让多语言表示尽量贴近自己的最佳秩-1 近似；论文的 Proposition 1 进一步证明，最小化这个重构误差就等价于最大化 $\sigma_1$ 相对其余奇异值的优势，正好对应上面的 softmax 目标。
 
-3. **Plug-and-Play 集成**：
+**2. 线性表示提取器：用一个可训练投影抓住跨语言的语义方向。**
 
-    - 功能：与任意对齐算法（SFT/DPO/SimPO/ORPO）无缝集成。
-    - 核心思路：MLC 仅需多语言 prompt 翻译，不改变原始训练数据格式，$\lambda_{aux}$ 控制权重。
+要对哪一组表示做共线约束，是 MLC 能否生效的前提。本文取 LLM 在每种语言 prompt 上最后一个 token 的 hidden state $\mathbf{h}^{(\ell)}$，经一个线性投影 $\mathbf{r}^{(\ell)} = \mathbf{W}\mathbf{h}^{(\ell)} + b$（$\mathbf{W} \in \mathbb{R}^{d \times d_h}$）映射到低维表示空间，再归一化后堆成矩阵 $\mathbf{Z}$。投影矩阵 $\mathbf{W}$ 与 LLM 联合训练，让模型自己学出哪一个子空间最能体现跨语言语义一致性。值得注意的是这里没有用更复杂的提取器——实验显示简单线性投影反而更优，说明跨语言一致性方向本身就是近似线性可分的。
+
+**3. Plug-and-Play 集成：只当一项辅助 loss，不碰原训练管线。**
+
+MLC 不替换任何已有的对齐算法，而是作为加项挂在原损失上：$\mathcal{L}_{total} = \mathcal{L}_{align} + \lambda_{aux} \mathcal{L}_{cons}$，$\lambda_{aux}$ 控制一致性约束的权重。由于它只需要多语言 prompt 的翻译、不改变原始训练数据格式，因此能与 SFT、DPO、SimPO、ORPO 等任意对齐范式无缝拼接，实验中对四种范式都带来正收益。
 
 ### 训练策略
 只需英语 response 数据 + 多语言 prompt 翻译。翻译可用机器翻译获得（成本极低）。训练时同时前向传播所有语言的 prompt，计算 MLC loss 后与原始对齐 loss 相加反传。

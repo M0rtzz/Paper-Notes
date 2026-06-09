@@ -134,11 +134,11 @@ $$\mathcal{L}_{\text{DPO}}(\theta) = -\mathbb{E}_{(x_w, x_l)} \left[ \log \sigma
 
 ## 相关论文
 
-- [\[ICML 2025\] Diffuse Everything: Multimodal Diffusion Models on Arbitrary State Spaces](diffuse_everything_multimodal_diffusion_models_on_arbitrary_state_spaces.md)
 - [\[ICML 2025\] Taming Diffusion for Dataset Distillation with High Representativeness (D³HR)](taming_diffusion_for_dataset_distillation_with_high_representativeness.md)
 - [\[CVPR 2026\] BioVITA: Biological Dataset, Model, and Benchmark for Visual-Textual-Acoustic Alignment](../../CVPR2026/image_generation/biovita_biological_dataset_model_and_benchmark_for_visual-textual-acoustic_align.md)
+- [\[NeurIPS 2025\] Learning Interpretable Features in Audio Latent Spaces via Sparse Autoencoders](../../NeurIPS2025/image_generation/learning_interpretable_features_in_audio_latent_spaces_via_sparse_autoencoders.md)
 - [\[ICML 2025\] Theoretical Guarantees on the Best-of-n Alignment Policy](theoretical_guarantees_on_the_best-of-n_alignment_policy.md)
-- [\[NeurIPS 2025\] Guided Diffusion Sampling on Function Spaces with Applications to PDEs](../../NeurIPS2025/image_generation/guided_diffusion_sampling_on_function_spaces_with_applications_to_pdes.md)
+- [\[ICCV 2025\] CaO2: Rectifying Inconsistencies in Diffusion-Based Dataset Distillation](../../ICCV2025/image_generation/cao2_rectifying_inconsistencies_in_diffusion-based_dataset_distillation.md)
 
 </div>
 

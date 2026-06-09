@@ -43,29 +43,23 @@ tags:
 
 ### 整体框架
 
-TensorAR 将 token 序列 $[x_1, x_2, ..., x_T]$ 重组为重叠 tensor 序列，其中每个 tensor $\mathbf{x}_{i,k} = [x_i, x_{i+1}, ..., x_{i+k-1}]$ 包含 $k$ 个连续 token。推理时第 $t$ 步基于所有前序 tensor 预测新 tensor $\mathbf{x}_{t,k}$；由于相邻 tensor 共享 $k-1$ 个重叠 token，后续预测自然修正前序输出——第一个 token 经过 $k$ 次精修最为精细，最后一个 token 仅被预测一次。在基础 AR 模型上添加轻量 Input Encoder（用 Query Transformer 将 $k$ 个 token embedding 压缩为单一隐状态）和 Output Decoder（从隐状态重构 $k$ 个 token），均使用残差设计以利用预训练权重。
+TensorAR 把标准 AR 的 next-token prediction 改写成 next-tensor prediction：原始 token 序列 $[x_1, x_2, ..., x_T]$ 被重组为重叠 tensor 序列，每个 tensor $\mathbf{x}_{i,k} = [x_i, x_{i+1}, ..., x_{i+k-1}]$ 装着 $k$ 个连续 token，推理时第 $t$ 步基于所有前序 tensor 一次性吐出新 tensor，而相邻 tensor 共享 $k-1$ 个重叠 token，于是同一个空间位置会被反复预测、逐步修正。模型主干仍是原封不动的 decoder-only causal Transformer，只在输入端和输出端各加一个轻量残差模块来完成「$k$ 个 token ↔ 单个隐状态」的转换，因此既不动因果注意力也不动分类训练目标。
 
-### 关键设计 1：重叠 Tensor 的滑动精修机制
+### 关键设计
 
-- **功能**：使标准 AR 模型能够通过重叠区域迭代改善已生成的 token，无需修改因果注意力
-- **核心思路**：tensor $\mathbf{x}_{i,k}$ 中第一个 token $x_i$ 经过 $k$ 步精修最精细，最后一个 token $x_{i+k-1}$ 仅被生成一次——形成从粗到精的渐进生成。当 $k=1$ 退化为标准 AR；当 $k=T$ 等价于离散扩散（但按左到右顺序）；中间值实现效率-质量的连续权衡
-- **设计动机**：类比扩散模型的全局迭代精修，TensorAR 实现局部滑动精修——同样的 coarse-to-fine 思想但天然兼容 AR 的因果结构
+**1. 重叠 Tensor 的滑动精修：让 AR 在因果结构里实现 coarse-to-fine。** 标准 AR 一旦写下一个 token 就再无回头路，早期错误会沿序列不断放大。TensorAR 的破局点在于让每个空间位置被多个 tensor 覆盖：tensor $\mathbf{x}_{i,k}$ 里第一个 token $x_i$ 会先后出现在 $k$ 个 tensor 中，等于被精修了 $k$ 次，最为精细；而末尾 token $x_{i+k-1}$ 只被预测一次，仍是粗稿。这样一来生成过程天然从粗到精，却完全不破坏左到右的因果顺序，KV cache 照常可用。窗口 $k$ 还串起了一条统一谱系——$k=1$ 退化为普通 AR，$k=T$ 等价于按左到右顺序展开的离散扩散，中间取值则在效率和质量之间连续滑动，把"扩散式全局精修"压缩成了"AR 内部的局部滑动窗口精修"。
 
-### 关键设计 2：离散 Tensor 噪声机制
+**2. 离散 Tensor 噪声：堵住重叠带来的信息泄漏。** 重叠设计带来一个隐患：训练时模型能同时看到某个 token 在前序 tensor 里的真值，于是会偷懒直接复制而非真正学因果依赖，推理时精修能力随之失效。TensorAR 借离散扩散的思路，对输入 tensor 中的重叠 token 注入分类噪声 $q(x^*_{t+j}\mid x_{t+j}, j) = \text{Cat}\big(x^*_{t+j} \mid (1-\beta(j))x_{t+j} + \beta(j)/V\big)$，其中噪声强度 $\beta(j)$ 在 tensor 内部随位置 $j$ 从 0 单调升到 1——越靠后的（即尚未充分精修的）token 被加得越脏。模型被迫从含噪 token 去噪重构，训练时扮演去噪器、推理时就变成精修器。作者给了线性 / 正弦 / 平方根 / 指数四种 $\beta(j)$ 调度，消融显示四者都远胜无噪基线、彼此差距很小，最终默认指数调度。注意这里离散扩散只是训练工具，图像生成本身仍走 AR 解码。
 
-- **功能**：解决训练时重叠 token 导致的信息泄漏——朴素训练时模型会直接复制重叠 token 而非学习有意义的因果依赖
-- **核心思路**：基于离散扩散理论，对输入 tensor 中的重叠 token 注入分类噪声 $q(x^*_{t+j}|x_{t+j}, j) = \text{Cat}(x^*_{t+j} | (1-\beta(j))x_{t+j} + \beta(j)/V)$，噪声强度 $\beta(j)$ 在 tensor 内从 0 单调递增至 1。提供四种调度函数（线性/正弦/平方根/指数），实验表明对调度选择鲁棒
-- **设计动机**：噪声迫使模型学习从含噪 token 去噪重构的能力，而非简单复制——训练时是去噪器，推理时是精修器
+**3. 残差式轻量编解码：适配 tensor 又不伤预训练权重。** 把序列粒度从 token 抬到 tensor，需要在两端做尺寸转换：Input Encoder 用一个 Query Transformer 把 $k$ 个 token embedding 压成单个隐状态喂给主干，Output Decoder 再从单个隐状态重构出 $k$ 个 token 的 logits。两个模块都以残差形式包住原始 embedding / linear 层，保证预训练信息流不被截断、可以直接复用基座权重。代价极小——新增参数只占 1.5%~4.6%，且模型越大占比越低（XXL 仅 +1.5%）；消融还显示 Query Transformer 单层最优，加深反而抬高 FID。
 
-### 关键设计 3：残差式轻量编解码模块
+### 损失函数 / 训练策略
 
-- **功能**：适配 tensor 级别的输入输出同时保留预训练信息
-- **核心思路**：Input Encoder 用 Query Transformer 压缩 $k$ 个 token embedding → 一个隐状态；Output Decoder 从一个隐状态 → 重构 $k$ 个 token；两者通过残差连接包装原始 embedding/linear 层
-- **设计动机**：残差设计保证预训练模型的信息流不被截断，新增参数仅 1.5%~4.6%，且随模型规模增大比例递减
+训练目标把 AR 交叉熵和离散扩散去噪合到一起，对每个 tensor 内的 $k$ 个位置加权求和：
 
-### 损失函数/训练策略
+$$\mathcal{L}(\theta) = \sum_{i=1}^{T}\sum_{j=1}^{k} \mathbb{E}\big[w_j \log p_\theta(x_{i+j}\mid \mathbf{x}_{<i,k}; c)\big]$$
 
-训练目标结合 AR 交叉熵和离散扩散去噪：$\mathcal{L}(\theta) = \sum_{i=1}^{T}\sum_{j=1}^{k} \mathbb{E}[w_j \log(p_\theta(x_{i+j}|\mathbf{x}_{<i,k}; c))]$，对 padding token 位置忽略 loss。默认设置：窗口大小 $k=4$，单层 Query Transformer，指数噪声调度。
+序列尾部因 tensor 越界产生的 padding 位置直接忽略其 loss。默认配置为窗口 $k=4$、单层 Query Transformer、指数噪声调度。
 
 ## 实验关键数据
 

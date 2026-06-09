@@ -36,31 +36,25 @@ tags:
 
 ### 整体框架
 
-RLP在NTP的每个位置 $t$ 插入一个CoT采样步骤。模型先从上下文 $x_{<t}$ 生成思维 $c_t$，然后基于 $(x_{<t}, c_t)$ 预测 $x_t$。奖励是与"不思考"基线的对数似然比。
+RLP把强化学习的"先思考再行动"塞进了普通的下一token预测里。在标准NTP中，模型看到上下文 $x_{<t}$ 直接预测 $x_t$；RLP则在每个位置 $t$ 先让模型从 $x_{<t}$ 采样一段内部思维 $c_t$（相当于一个"动作"），再基于 $(x_{<t}, c_t)$ 去预测 $x_t$。这段思维好不好，不靠外部验证器打分，而是看它把 $x_t$ 的预测概率提升了多少——比起一个"不思考"的参照基线提升越多，奖励越高。这样整条通用文本的每个位置都能产生一个密集的标量奖励，RL 因此得以在预训练阶段、在无标注语料上运行。
 
 ### 关键设计
 
-1. **信息增益奖励**:
+**1. 信息增益奖励：把"思考有没有用"量化成可优化的标量。**
 
-    - 功能：衡量CoT对下一token预测的帮助程度
-    - 核心思路：$r(c_t) = S_{\text{pred}}(c_t) - S_{\text{ema}}$，其中 $S_{\text{pred}}(c_t) = \log p_\theta(x_t|x_{<t},c_t)$ 是有思考的预测对数概率，$S_{\text{ema}} = \log \bar{p}_\phi(x_t|x_{<t})$ 是EMA教师（无思考）的基线
-    - 设计动机：当思考确实提升预测时奖励为正（Proposition 1：期望奖励等于交叉熵下降），且在每个位置提供标量信号——无需学习value函数或外部验证器
+RL 要前移到预训练，第一道坎是没有验证器告诉模型答案对不对。RLP 绕开这一点，直接拿"思考前后预测概率的变化"当奖励：$r(c_t) = S_{\text{pred}}(c_t) - S_{\text{ema}}$，其中 $S_{\text{pred}}(c_t) = \log p_\theta(x_t \mid x_{<t}, c_t)$ 是带思维时对真实下一token的对数概率，$S_{\text{ema}} = \log \bar{p}_\phi(x_t \mid x_{<t})$ 是一个不思考的基线给出的对数概率。当且仅当思维真的让预测更准时，这个对数似然比为正。论文的 Proposition 1 进一步说明，这个奖励的期望等于交叉熵的下降量，因此优化它等价于让模型学会"想得对预测就更准"——而且每个位置都能算出来，既不用学 value 函数，也不用任何外部判分。
 
-2. **EMA教师基线**:
+**2. EMA教师基线：给奖励一个既稳定又不退化的参照点。**
 
-    - 功能：提供"不思考"的反事实对比
-    - 核心思路：教师参数 $\phi \leftarrow \tau\phi + (1-\tau)\theta$，$\tau=0.999$，初始化为当前模型
-    - 设计动机：冻结基线会偏离太远导致奖励hacking；完全同步则对数似然比趋零。EMA提供一步延迟的平滑参考，平衡信息量与训练稳定性
+奖励的高低完全取决于拿谁当"不思考"的参照 $\bar{p}_\phi$。如果用一个冻结的旧模型当基线，训练越久当前模型偏离它越远，奖励会被刷成虚高，诱发 reward hacking；反过来如果让基线和当前模型完全同步，两边概率一样，对数似然比直接归零，奖励信号消失。RLP 用指数滑动平均的教师来折中：$\phi \leftarrow \tau\phi + (1-\tau)\theta$，$\tau=0.999$，初始化为当前模型。这相当于让基线以一步延迟的方式平滑跟随策略，既保留了足够的信息量，又不会被策略的瞬时波动带偏，从而兼顾奖励的有效性和训练稳定性。
 
-3. **组相对基线与裁剪代理**:
+**3. 组相对基线与裁剪代理：压方差、稳更新。**
 
-    - 功能：减少方差，稳定训练
-    - 核心思路：每个位置采样 $G$ 个思维，使用修正的inclusive mean基线 $A^{(i)} = \frac{G}{G-1}(r(c_t^{(i)}) - \bar{r})$。对思维token使用PPO式裁剪代理损失 $\mathcal{L}_{\text{clip}}$
-    - 设计动机：组相对基线消除了inclusive mean的 $(1-1/G)$ 收缩偏差，裁剪防止策略更新过大
+单个思维样本的奖励噪声大，直接优化方差高。RLP 在每个位置采样 $G$ 个思维，用组内奖励的均值 $\bar{r}$ 当 baseline 算优势。但朴素的 inclusive mean 会带来 $(1-1/G)$ 的收缩偏差，于是改用修正形式 $A^{(i)} = \frac{G}{G-1}\big(r(c_t^{(i)}) - \bar{r}\big)$ 把这个偏差消掉。在此之上对思维token施加 PPO 式的裁剪代理损失 $\mathcal{L}_{\text{clip}}$，限制单步策略更新幅度，避免某次大梯度把策略推飞——本质上是把成熟的 GRPO/PPO 稳定化技巧搬到了 token 级的思维优化上。
 
 ### 损失函数 / 训练策略
 
-RLP**不包含标准NTP损失**，仅优化信息增益目标：$\max_\theta J(\theta) = \mathbb{E}[r(c_t)]$。梯度仅应用于思维token，奖励计算中 $p_\theta$ 和 $\bar{p}_\phi$ 的梯度被截断（stop-gradient）。实际训练中每个文档随机选择一个token位置应用RLP。
+RLP **不叠加标准 NTP 损失**，只优化信息增益目标本身：$\max_\theta J(\theta) = \mathbb{E}[r(c_t)]$。梯度只回传到思维token；奖励计算中的 $p_\theta$ 与 $\bar{p}_\phi$ 都做 stop-gradient，防止模型通过改变预测分布去"凑"奖励而非真正改进思维。工程上为控制成本，每个文档只随机挑一个token位置施加 RLP，其余位置仍走常规预测。
 
 ## 实验关键数据
 
@@ -121,11 +115,11 @@ RLP**不包含标准NTP损失**，仅优化信息增益目标：$\max_\theta J(\
 
 ## 相关论文
 
-- [\[ICLR 2026\] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
 - [\[ICLR 2026\] Robust Multi-Objective Controlled Decoding of Large Language Models](robust_multi-objective_controlled_decoding_of_large_language_models.md)
 - [\[ICLR 2026\] AMPED: Adaptive Multi-objective Projection for balancing Exploration and skill Diversification](amped_adaptive_multi-objective_projection_for_balancing_exploration_and_skill_di.md)
-- [\[AAAI 2026\] Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation](../../AAAI2026/reinforcement_learning/scalable_multi-objective_and_meta_reinforcement_learning_via_gradient_estimation.md)
-- [\[NeurIPS 2025\] Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents](../../NeurIPS2025/reinforcement_learning/provable_ordering_and_continuity_in_vision-language_pretraining_for_generalizabl.md)
+- [\[NeurIPS 2025\] Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach](../../NeurIPS2025/reinforcement_learning/multi-objective_reinforcement_learning_with_max-min_criterion_a_game-theoretic_a.md)
+- [\[ICML 2025\] BEAVER: Building Environments with Assessable Variation for Evaluating Multi-Objective Reinforcement Learning](../../ICML2025/reinforcement_learning/beaver_building_environments_with_assessable_variation_for_evaluating_multi-obje.md)
+- [\[ICML 2026\] Probing RLVR Training Instability through the Lens of Objective-Level Hacking](../../ICML2026/reinforcement_learning/probing_rlvr_training_instability_through_the_lens_of_objective-level_hacking.md)
 
 </div>
 

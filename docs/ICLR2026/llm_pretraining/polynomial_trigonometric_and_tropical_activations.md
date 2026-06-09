@@ -39,31 +39,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文提出了三类可学习激活函数族：
-1. 输入为标量激活值 $x$，输出也是标量
-2. 每个激活函数由一组可学习系数参数化
-3. 激活函数可以直接替换网络中的GELU/ReLU等标准激活
-4. 通过方差保持初始化确保前向传播的方差稳定性
+本文把激活函数本身变成可学习的对象：每个标量激活 $\sigma(x)$ 由一组正交基函数加权而成，权重系数随网络端到端训练。作者沿三类基（Hermite多项式、Fourier三角、tropical多项式）展开，配套一套方差保持初始化，使这些原本数值不稳的函数族能直接替换 GPT-2、ConvNeXt 里的 GELU/ReLU 而无需截断或梯度裁剪。
 
 ### 关键设计
 
-1. **Hermite多项式激活函数**：基于概率论中的Hermite正交多项式基构建可学习激活函数。Hermite多项式在高斯测度下正交，这使得当输入服从正态分布时，各基函数的贡献相互独立。激活函数形式为 $\sigma(x) = \sum_{k=0}^{d} c_k H_k(x)$，其中 $H_k$ 是第 $k$ 阶Hermite多项式，$c_k$ 是可学习系数。方差保持初始化要求 $\sum_k c_k^2 = 1$（利用Hermite多项式的正交性），确保输出方差等于输入方差。
+**1. Hermite 多项式激活：用正交性驯服多项式的方差爆炸。** 多项式逼近能力强，但 $x^k$ 在深层复合后激活值与梯度会指数级膨胀，这正是它长期无法实用的根源。作者改用概率学家 Hermite 多项式作基底，激活写成 $\sigma(x) = \sum_{k=0}^{d} c_k H_k(x)$，其中 $H_k$ 是第 $k$ 阶 Hermite 多项式、$c_k$ 为可学习系数。关键在于 Hermite 多项式在高斯测度下两两正交：当输入近似服从正态分布时各阶贡献互不干扰，输出方差恰好等于各系数平方和。于是只要初始化满足 $\sum_k c_k^2 = 1$，前向方差就被钉住在 1 附近，不再随深度漂移，从源头消除了普通多项式的爆炸隐患。
 
-2. **Fourier三角激活函数**：基于Fourier级数的三角基函数构建可学习激活函数。形式为正弦和余弦函数的线性组合 $\sigma(x) = a_0 + \sum_{k=1}^{d} (a_k \cos(kx) + b_k \sin(kx))$。Fourier基在周期函数空间中是完备的正交基，特别适合捕捉数据中的周期性结构。通过类似的方差保持初始化确保训练稳定性。
+**2. Fourier 三角激活：用周期完备基捕捉振荡结构。** 多项式擅长局部逼近却难表达周期性，作者再取一族三角基，激活为正余弦的线性组合 $\sigma(x) = a_0 + \sum_{k=1}^{d} \big(a_k \cos(kx) + b_k \sin(kx)\big)$。Fourier 基在周期函数空间里是完备正交基，天然适合表征数据中的振荡/周期模式，而正交性又让它复用与 Hermite 同款的方差保持初始化来稳住训练，等于在多项式之外补上一个互补的函数族。
 
-3. **Tropical多项式激活函数**：通过"热带化"操作将标准多项式转换为tropical多项式。在tropical代数中，加法被max操作替代，乘法被普通加法替代。因此tropical多项式本质上是一系列仿射函数的逐点最大值，形成分段线性函数。这可以看作是对ReLU的自然推广（ReLU就是最简单的tropical多项式 $\max(0, x)$）。此外还引入了tropical有理函数，进一步扩展表达能力到非凸函数。
+**3. Tropical 多项式激活：把 ReLU 推广成可学的分段线性函数。** 作者对普通多项式做"热带化"——在 tropical 代数里加法换成 $\max$、乘法换成普通加法，于是一个 tropical 多项式就退化为若干仿射函数的逐点最大值，即一条分段线性曲线。这恰好把 ReLU（最简单的 tropical 多项式 $\max(0,x)$）推广为可学习的多段折线；进一步引入 tropical 有理函数（两个 tropical 多项式相减），表达力扩展到非凸形状，与前两族的光滑曲线形成对照。
 
-4. **方差保持初始化**：这是本文的核心技术贡献。对于多项式激活，层层复合会导致激活值和梯度的方差呈指数增长或衰减。作者利用正交基的数学性质，推导出在标准正态输入假设下保持方差的初始化条件。这使得深度网络（如GPT-2的12层Transformer）能够稳定训练，无需截断或梯度裁剪等额外手段。
+**4. 方差保持初始化：让深层复合不再数值溢出，本文的核心技术。** 前三族能否实用全押在这一步：多项式/三角激活逐层复合时，方差会指数增长或衰减，几层后即溢出。作者借助正交基的数学性质，在标准正态输入假设下解析地推导出令每层输入输出方差守恒的系数约束（如 Hermite 的 $\sum_k c_k^2=1$），把它作为初始化条件。正是这一约束让 GPT-2 的 12 层 Transformer 能从头稳定训练，无需 clamping、梯度裁剪等补丁——消融中去掉它训练直接崩溃，印证它是必要条件而非锦上添花。
 
-5. **Hermite插值迁移**：一个实用的贡献是展示了如何用Hermite插值将预训练模型中的标准激活函数（如GELU）转换为可学习激活。通过同时匹配函数值和导数值，新的可学习激活在初始化时与原始激活相近，使得微调过程更加稳定。这对于将可学习激活应用于预训练模型的微调场景非常有价值。
+**5. Hermite 插值迁移：让可学习激活无缝接入预训练模型。** 直接把预训练模型的 GELU 换成随机初始化的可学习激活会扰动已学到的表示。作者用 Hermite 插值同时匹配 GELU 的函数值与导数值，使新激活在初始化时几乎重合于原 GELU，于是微调从一个近乎等价的起点出发、收敛更快更稳。这把可学习激活的适用范围从"从头训练"扩展到了海量已有预训练权重的微调场景。
 
-6. **网络的多项式解释**：一个理论洞察是，使用多项式激活的网络可以被解释为多元多项式映射。这为理解网络的函数逼近行为提供了新的视角，也为网络分析提供了代数几何的工具。
+**6. 网络的多项式解释：为分析提供代数几何视角。** 当全网采用多项式激活时，整个网络可被看作一个多元多项式映射。这一观察把网络的函数逼近行为放进多项式/代数几何的框架里，为理解其表达能力与分析其结构提供了新工具，也是选用正交多项式基而非任意非线性的理论回报。
 
 ### 损失函数 / 训练策略
-训练策略与标准模型训练一致：
-- GPT-2语言建模：在OpenWebText上进行next-token prediction，使用交叉熵损失
-- ConvNeXt图像分类：在ImageNet-1K上进行分类训练，使用标准分类损失
-- 激活函数的系数作为额外的可学习参数参与端到端的梯度下降优化
+训练目标与标准范式完全一致，激活系数只是多出来的一组可学习参数一并端到端优化：GPT-2 在 OpenWebText 上做 next-token prediction、用交叉熵损失；ConvNeXt 在 ImageNet-1K 上做标准分类训练。无需为可学习激活引入额外正则或特殊调度。
 
 ## 实验关键数据
 
@@ -126,9 +119,9 @@ tags:
 
 - [\[ICLR 2026\] Identifying and Evaluating Inactive Heads in Pretrained LLMs](identifying_and_evaluating_inactive_heads_in_pretrained_llms.md)
 - [\[ICLR 2026\] Pre-training LLM without Learning Rate Decay Enhances Supervised Fine-Tuning](pre-training_llm_without_learning_rate_decay_enhances_supervised_fine-tuning.md)
+- [\[ICLR 2026\] Accessible, Realistic, and Fair Evaluation of Positive-Unlabeled Learning Algorithms](accessible_realistic_and_fair_evaluation_of_positive-unlabeled_learning_algorith.md)
 - [\[ICLR 2026\] Lossless Vocabulary Reduction for Auto-Regressive Language Models](lossless_vocabulary_reduction_for_auto-regressive_language_models.md)
 - [\[ICLR 2026\] A Law of Data Reconstruction for Random Features (and Beyond)](a_law_of_data_reconstruction_for_random_features_and_beyond.md)
-- [\[ICLR 2026\] Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_next-token_predicto.md)
 
 </div>
 

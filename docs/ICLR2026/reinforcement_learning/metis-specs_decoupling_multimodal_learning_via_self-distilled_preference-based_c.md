@@ -43,27 +43,37 @@ tags:
 
 ### 整体框架
 
-三阶段训练：Stage 1 对 base model 做初步 GRPO (得到 GRPO-zero) → 用 GRPO-zero 自蒸馏生成偏好数据 → Stage 2 用 DPO + SFT 混合损失做格式预对齐冷启动 → Stage 3 用 GRPO 做最终 RL 微调。
+SPECS 想解决的是 VLM 强化学习里"冷启动学太深"的问题：传统 SFT 冷启动把格式、解题、推理一锅炖，过拟合训练分布，反而压缩了后续 RL 的探索空间。它的思路是把冷启动从"模仿学习"换成"格式偏好对齐"，让冷启动只负责浅层的输出规范，把深层推理留给 RL。
+
+整套流程分三阶段串起来。第一阶段先对 base model 做一轮简短的 GRPO，得到一个格式已经很规整的中间模型 GRPO-zero；第二阶段用 GRPO-zero 自蒸馏出偏好数据，再用 DPO 加 SFT 的混合损失做"格式预对齐"，这一步就是冷启动；第三阶段在对齐后的模型上接 GRPO 做最终 RL 微调。关键在于第一、二阶段共同把"格式"这件事提前对齐好，第三阶段的 RL 就能专注在推理能力上。
 
 ### 关键设计
 
-1. **自蒸馏偏好数据生成**:
+**1. 自蒸馏偏好数据生成：让 chosen/rejected 只差在格式上。**
 
-    - 功能：通过 GRPO-zero 自蒸馏生成 chosen/rejected 对，其中两者答案都正确但格式不同
-    - 核心思路：(1) 对 base model 做简短 GRPO 得到 $\pi_{\text{GRPO-zero}}$（格式准确率 96.74% vs base 41.62%）; (2) 用 $\pi_{\text{GRPO-zero}}$ 生成 chosen response，经 Gemini-2.5-flash 评估推理路径一致性过滤; (3) rejected response 通过5种格式破坏（去标签、移位标签等）人工构造
-    - 设计动机：避免依赖外部大模型 teacher（实验表明 72B teacher 蒸馏不如自蒸馏）；chosen/rejected 仅在格式上不同确保 DPO 学的是格式规范而非推理内容
+DPO 要学"格式规范"而不是"推理内容"，前提是构造出来的 chosen 和 rejected 必须答案都正确、只在格式上有别——否则 DPO 学到的就混进了对错判断。SPECS 用自蒸馏来满足这个前提：先对 base model 做一轮简短 GRPO 得到 $\pi_{\text{GRPO-zero}}$，这个中间模型的格式准确率已经从 base 的 41.62% 提到 96.74%，能稳定产出结构规整的回答；再用 $\pi_{\text{GRPO-zero}}$ 采样作为 chosen response，并用 Gemini-2.5-flash 评估推理路径的一致性来过滤掉跑偏的样本；rejected response 则不重新生成，而是在 chosen 基础上做 5 种格式破坏（去标签、移位标签等）人工构造出来。
 
-2. **DPO-based 格式预对齐冷启动**:
+之所以不直接找外部大模型当 teacher，是因为 teacher 和 student 能力差距太大反而拉低效果——实验里 72B teacher 蒸馏就不如自蒸馏。自蒸馏既绕开了能力差距问题，又因为 chosen/rejected 仅在格式上不同，保证了 DPO 学到的确实是格式规范这一层。
 
-    - 功能：用 DPO + SFT 混合损失在自蒸馏偏好数据上训练，作为 RL 的冷启动
-    - 核心思路：$\mathcal{L}_{\text{hybrid}} = \mathcal{L}_{\text{DPO}} + \lambda \mathcal{L}_{\text{SFT}}$。DPO 损失 $\mathcal{L}_{\text{DPO}} = -\mathbb{E}[\log \sigma(\beta \log \frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)})]$ 学习格式偏好；SFT 损失在 chosen response 上正则化防止偏移
-    - 设计动机：DPO 优化隐式奖励模型，与后续 GRPO 的奖励驱动目标更对齐，训练更稳定。实验量化发现 DPO 的 GF (泛化因子) 始终高于 SFT
+**2. DPO-based 格式预对齐冷启动：用偏好对齐替代 SFT 模仿。**
 
-3. **Generalization Factor (GF) 度量**:
+冷启动这一步在自蒸馏偏好数据上用 DPO 加 SFT 的混合损失训练：
 
-    - 功能：量化不同冷启动方法的泛化能力
-    - 核心思路：$\Gamma(n) = (1+\beta^2) \frac{G_{\text{ID}}(n) \cdot G_{\text{OOD}}(n)}{\beta^2 \cdot G_{\text{ID}}(n) + G_{\text{OOD}}(n)}$，其中 $G_{\text{ID}}$ 和 $G_{\text{OOD}}$ 分别是 ID 和 OOD 性能增益。采用 $F_\beta$-score 形式，$\beta=2$ 偏重 OOD 泛化
-    - 设计动机：$F_\beta$-score 的特性使得 ID 或 OOD 任一维度很差时总分都很低，完美契合泛化能力评估需求
+$$\mathcal{L}_{\text{hybrid}} = \mathcal{L}_{\text{DPO}} + \lambda \mathcal{L}_{\text{SFT}}$$
+
+其中 DPO 损失负责学习格式偏好，
+
+$$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log \sigma\left(\beta \log \frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right]$$
+
+SFT 项则在 chosen response 上做正则化，防止模型在偏好优化中偏移太远。这样设计的好处是训练目标的连贯性：DPO 优化的是一个隐式奖励模型，和后续 GRPO 的奖励驱动目标天然对齐，而 SFT 最大化 log-likelihood 与 RL 优化奖励之间存在目标断裂。实验也量化印证了这点——DPO 冷启动的泛化因子 GF 始终高于 SFT。
+
+**3. Generalization Factor (GF) 度量：用一个分数判断冷启动好不好。**
+
+为了把"哪种冷启动泛化更好"从感觉变成可比的数字，SPECS 定义了泛化因子 GF：
+
+$$\Gamma(n) = (1+\beta^2) \frac{G_{\text{ID}}(n) \cdot G_{\text{OOD}}(n)}{\beta^2 \cdot G_{\text{ID}}(n) + G_{\text{OOD}}(n)}$$
+
+其中 $G_{\text{ID}}$ 和 $G_{\text{OOD}}$ 分别是分布内、分布外的性能增益，$n$ 是训练步数。它借用了 $F_\beta$-score 的形式并取 $\beta=2$ 偏重 OOD：这种调和均值的特性使得只要 ID 或 OOD 任一维度很差，总分就会被拉低，正好契合"泛化能力要两头都好"的评估需求。用 GF 一比，DPO 的 OOD 泛化优势随训练步数增加而扩大，这正是支撑全文"DPO 冷启动优于 SFT"结论的量化依据。
 
 ### 损失函数 / 训练策略
 

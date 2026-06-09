@@ -42,28 +42,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段分析：**Stage I** 模拟 base model 通过 SFT（含污染）→GRPO 变成 LRM 的过程，评估 10 种检测方法在 RL 前后的 AUROC 变化。**Stage II** 模拟对高级 LRM 直接做 CoT SFT 污染，评估检测效果。
+本文不是提出新检测器，而是搭建一个受控的"污染—洗白—检测"竞技场，去拷问现有 10 种检测方法在推理模型上的可靠性。整体分两个贴近真实的场景：Stage I 模拟开发者从 base model 出发，先用含污染的数据做 SFT，再用干净数据做 GRPO 训练得到 LRM，观察检测信号在 RL 前后如何变化；Stage II 直接对一个已经很强的 LRM 做 CoT SFT 污染，看检测器能否抓住痕迹。两个场景共用同一套评估口径：把基准样本随机分成 member / non-member 两半，用 AUROC 衡量检测器区分两者的能力，50% 即等同随机猜测。
 
-### 关键发现
+### 关键设计
 
-1. **GRPO 隐藏 SFT 污染 (Stage I)**:
-    - SFT 污染原本可检测：Min-K%/Max-K%/LOSS 等方法 AUROC ~73%，LiRA 达 ~89%
-    - GRPO 训练后 AUROC 普遍降至 ~50%（随机水平）——即使 GRPO 只用干净数据
-    - 对照实验：继续用干净数据做 SFT 不会消除检测信号→证明是 GRPO 优化目标而非"更多数据"的效果
+**1. Stage I——GRPO 把 SFT 阶段的污染"洗白"。** 这一阶段要回答的问题是：早期混进去的污染，会不会在后续 RL 训练里被悄悄抹掉。实验先确认 SFT 污染本来是看得见的——Min-K%、Max-K%、LOSS 这类基于概率的方法 AUROC 约 73%，依赖参考模型的 LiRA 更是高达 89%。但只要接着跑一轮 GRPO（且 GRPO 用的全是不含 member 的干净数据），几乎所有方法的 AUROC 都塌回 50% 附近。为了排除"只是多训练了一些数据冲淡了记忆"这种解释，作者做了对照：继续用干净数据做 SFT 并不会消除检测信号，唯独换成 GRPO 才会。这把矛头从"数据量"指向了"优化目标本身"。
 
-2. **PPO 式裁剪是根因**:
-    - 理论分析：重要性采样比率 $r(\theta) = \pi_\theta / \pi_{\theta_{old}}$  + clipping gate 对高概率成员样本的梯度施加**上界**（防止过度优化），而对非成员无此约束→非成员概率相对提升→成员/非成员分布趋于重叠
-    - 消融实验：纯拒绝采样 RAFT 不会消除检测信号；加上重要性采样/裁剪项（RAFT++）立即恢复隐藏能力→精确定位根因
+**2. PPO 式重要性采样与裁剪是隐藏污染的机制级根因。** 找到现象后还要解释为什么。GRPO 沿用 PPO 的目标，对每个样本乘上重要性采样比率 $r(\theta) = \pi_\theta / \pi_{\theta_{\text{old}}}$ 并施加 clipping。对那些 SFT 阶段被记牢、概率本就很高的 member 样本，裁剪门会给它们的梯度套上一个上界，阻止模型继续把概率推得更高；而 non-member 样本没有这层约束，概率得以相对抬升。一拉一压之下，原本可分的 member / non-member 概率分布逐渐重叠，检测器赖以工作的"见过的样本概率更高"这一信号就被磨平了。为坐实这条因果链，作者设计了一组最小改动的消融：纯拒绝采样的 RAFT 不带重要性采样/裁剪项，跑完后检测信号依然在（AUROC 仍约 70%）；只要补上裁剪项变成 RAFT++，隐藏能力立刻出现（AUROC 掉到约 52%），与 GRPO 表现一致。差异仅在那一项，因此根因被精确锁定在裁剪目标的数学结构上，而非训练时长或数据。
 
-3. **CoT SFT 对 LRM 几乎不可检测 (Stage II)**:
-    - 对高级 LRM 做 CoT SFT 污染→pass@1 大幅提升→但所有 10 种检测方法 AUROC 接近 50%
-    - 原因：LRM 即使未见过某些样本，对分布内相似样本也有高置信度——打破了"污染=记忆化"的核心检测假设
-    - log-prob 分析：成员和非成员的概率分布高度重叠
+**3. Stage II——对高级 LRM 直接做 CoT SFT，几乎不留任何痕迹。** 即便不靠 RL 洗白，直接污染高级 LRM 同样防不胜防。作者从更强的 LRM 蒸馏出 CoT 当作 SFT 数据去污染目标模型，pass@1 平均涨了 8.82%，说明污染确实"吃进去"了，但 10 种检测方法的 AUROC 仍全部贴在 50% 上下。根源在于"污染=记忆化"这条检测界的默认假设在 LRM 上失效了：LRM 对分布内的相似样本本来就有很高置信度，哪怕它没真见过某个样本，其 log-prob 也不比见过的样本低多少。逐样本的 log-prob 分析显示 member 与 non-member 的概率分布高度重叠，于是任何靠概率差异下刀的检测器都无从分辨。
 
 ### 损失函数 / 训练策略
-- 污染模拟：从高级 LRM 蒸馏 CoT 作为 SFT 数据，随机选半数样本作为 member set
-- GRPO 训练：标准设置，干净数据（不含 member）
-- 检测评估：每个问题 8 轮响应，取平均检测分数，AUROC 区分 member/non-member
+污染模拟统一从高级 LRM 蒸馏 CoT 作为 SFT 数据，随机抽取半数样本构成 member set；GRPO 训练采用标准设置且只喂干净数据（不含 member），以确保"洗白"效果不是污染数据自身带来的。检测评估时，对每个问题采样 8 轮响应取平均检测分数，再用 AUROC 区分 member / non-member，整套口径在两个模型（Qwen2.5-7B、Llama-3.1-8B）上保持一致。
 
 ## 实验关键数据
 
@@ -128,11 +118,11 @@ tags:
 
 ## 相关论文
 
+- [\[AAAI 2026\] From Classification to Ranking: Enhancing LLM Reasoning for MBTI Personality Detection](../../AAAI2026/llm_reasoning/from_classification_to_ranking_enhancing_llm_reasoning_capabilities_for_mbti_per.md)
+- [\[ICML 2025\] DyCodeEval: Dynamic Benchmarking of Reasoning Capabilities in Code Large Language Models Under Data Contamination](../../ICML2025/llm_reasoning/dynamic_benchmarking_of_reasoning_capabilities_in_code_large_language_models_und.md)
+- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 - [\[ICML 2026\] FloorplanQA: A Benchmark for Spatial Reasoning in LLMs Using Structured Representations](../../ICML2026/llm_reasoning/floorplanqa_a_benchmark_for_spatial_reasoning_in_llms_using_structured_represent.md)
-- [\[ACL 2026\] MTR-Bench: A Comprehensive Benchmark for Multi-Turn Reasoning Evaluation](../../ACL2026/llm_reasoning/mtr-bench_a_comprehensive_benchmark_for_multi-turn_reasoning_evaluation.md)
-- [\[NeurIPS 2025\] RealMath: A Continuous Benchmark for Evaluating Language Models on Research-Level Mathematics](../../NeurIPS2025/llm_reasoning/realmath_a_continuous_benchmark_for_evaluating_language_models_on_research-level.md)
-- [\[ICLR 2026\] Native Reasoning Models: Training Language Models to Reason on Unverifiable Data](native_reasoning_models_training_language_models_to_reason_on_unverifiable_data.md)
-- [\[ICML 2026\] CoCoReviewBench: A Completeness- and Correctness-Oriented Benchmark for AI Reviewers](../../ICML2026/llm_reasoning/cocoreviewbench_a_completeness-_and_correctness-oriented_benchmark_for_ai_review.md)
+- [\[ICLR 2026\] Co-rewarding: Stable Self-supervised RL for Eliciting Reasoning in Large Language Models](co-rewarding_stable_self-supervised_rl_for_eliciting_reasoning_in_large_language.md)
 
 </div>
 

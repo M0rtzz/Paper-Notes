@@ -39,18 +39,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两种模式：(1) **演绎模式**——固定可达关系（如时间逻辑），用必然性/可能性神经元编码已知约束；(2) **归纳模式**——可学习可达关系 $A_\theta$，从数据中发现隐含结构（如信任网络/串谋检测）。
+
+MLNN 把模态逻辑的 Kripke 语义搬进神经网络：每个输入对应一个"当前世界"，由可达关系连接到若干"可能世界"（时间步、压力场景或市场状态），必然性/可能性算子则在这些世界上聚合，得到可微的逻辑判断。框架提供两种工作模式——演绎模式固定可达关系（如时间逻辑中的"未来时刻"），直接用模态神经元编码已知约束；归纳模式则把可达关系本身作为可学习参数，从数据中发现信任网络、串谋结构等隐含拓扑。
 
 ### 关键设计
 
-1. **必然性神经元（□）**：输出 $\square f(x) = \min_{y: A(x,y)} f(y)$——在所有可达状态上取最小值，确保"在所有可能世界中都成立"
+**1. 必然性神经元（□）：把"在所有可能世界都成立"变成可微算子。** 模态逻辑里"必然 $f$"要求 $f$ 在每个可达世界上都为真，MLNN 用 $\square f(x) = \min_{y:\,A(x,y)} f(y)$ 实现——对当前世界 $x$ 的所有可达状态 $y$ 取 $f$ 的最小值。只要有一个可达世界违反约束，最小值就会被拉低，逻辑上的"全称量化"被自然翻译成数值上的下确界，从而能直接进入梯度优化。对偶的可能性算子 $\Diamond$ 则取最大值，对应"存在某个可能世界成立"。这样一来，"压力情景下合同必须保持安全""任意未来时刻都不得违规"这类监管语句就能作为可训练的网络层而非事后检查存在。
 
-2. **可学习可达关系**：$A_\theta(x,y) = \sigma((e_x^T W e_y) / \tau)$，温度 $\tau$ 控制严格程度。学到的 $\tau=0.02$ 表明模型偏好严格模态约束
+**2. 可学习可达关系：让模型自己学出谁能到达谁。** 归纳模式下，世界之间的连接不再人工指定，而是由 $A_\theta(x,y) = \sigma\big((e_x^{\top} W e_y)/\tau\big)$ 给出，其中 $e_x, e_y$ 是世界的嵌入，$W$ 是可学习的双线性权重，温度 $\tau$ 控制可达判定的软硬程度——$\tau$ 越小，关系越接近 0/1 的硬连接。在金融数据上学到的 $\tau=0.02$ 非常接近硬约束，说明模型自发偏好严格的模态推理，而不是模糊的概率关联；这也使得串谋检测中"谁信任谁"的网络结构能直接从交易数据里浮现出来。
 
-3. **信念-知识分解**：区分 Belief（模型认为的）和 Knowledge（逻辑验证的），用于检测"标题看似安全但实际含陷阱"的合同
+**3. 信念-知识分解：区分"模型以为安全"和"逻辑验证安全"。** MLNN 把判断拆成 Belief（分类器主观认为的结果）和 Knowledge（经模态逻辑公理验证后成立的结果）两路。两者一致时给出高置信结论，不一致时则暴露风险——典型场景是标题写着"安全"、条款里却埋着陷阱的合同：纯分类器只看表层信号会判为安全（Belief 高），而 Knowledge 一侧在逻辑验证时发现公理被违反，于是触发"陷阱检测"。这种显式分解正是模型能在合同陷阱检测上达到 100% 的来源。
 
-### 损失函数
-标准任务损失 + 可微矛盾损失（惩罚违反逻辑公理的中间表征）。
+### 损失函数 / 训练策略
+
+训练目标在标准任务损失之外叠加一项可微矛盾损失：当中间表征违反逻辑公理（如必然性算子下仍存在不安全的可达世界）时，该项产生正的惩罚梯度，把不合规直接转化为训练信号。这使得合规约束在训练过程中被强制满足，而非依赖事后验证。
 
 ## 实验关键数据
 
@@ -104,9 +106,9 @@ tags:
 
 - [\[ICLR 2026\] SALVE: Sparse Autoencoder-Latent Vector Editing for Mechanistic Control of Neural Networks](salve_sparse_autoencoder-latent_vector_editing_for_mechanistic_control_of_neural.md)
 - [\[ACL 2026\] NOSE: Neural Olfactory-Semantic Embedding with Tri-Modal Orthogonal Contrastive Learning](../../ACL2026/interpretability/nose_neural_olfactory-semantic_embedding_with_tri-modal_orthogonal_contrastive_l.md)
-- [\[ICLR 2026\] ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
-- [\[ICLR 2026\] Initialization Schemes for Kolmogorov-Arnold Networks: An Empirical Study](initialization_schemes_for_kolmogorov-arnold_networks_an_empirical_study.md)
 - [\[ICLR 2026\] Cross-Modal Redundancy and the Geometry of Vision-Language Embeddings](cross-modal_redundancy_and_the_geometry_of_vision-language_embeddings.md)
+- [\[ICLR 2026\] A Cortically Inspired Architecture for Modular Perceptual AI](a_cortically_inspired_architecture_for_modular_perceptual_ai.md)
+- [\[ICLR 2026\] Provably Explaining Neural Additive Models](provably_explaining_neural_additive_models.md)
 
 </div>
 

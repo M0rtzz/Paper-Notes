@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 LLM 安全方向43篇论文解读
+  AAAI2026 LLM 安全方向42篇论文解读
 description: >-
-  43篇AAAI2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、持续学习、多模态、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  42篇AAAI2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、联邦学习、多模态、持续学习、人脸/视线等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "LLM 安全"
@@ -11,19 +11,19 @@ tags:
   - "LLM"
   - "对抗鲁棒"
   - "联邦学习"
-  - "持续学习"
   - "多模态"
+  - "持续学习"
   - "人脸/视线"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🤖 AAAI2026** · **43** 篇论文解读
+**🤖 AAAI2026** · **42** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (54)](../../ICLR2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (47)](../../ICML2026/llm_safety/index.md) · [💬 ACL2026 (128)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (55)](../../ICLR2026/llm_safety/index.md) · [🧠 NeurIPS2025 (85)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×19 · 对抗鲁棒 ×8 · 联邦学习 ×4 · 持续学习 ×3 · 多模态 ×3
+🔥 **高频主题：** LLM ×19 · 对抗鲁棒 ×8 · 联邦学习 ×4 · 多模态 ×3 · 持续学习 ×2
 
 **[AgentSense: Virtual Sensor Data Generation Using LLM Agents in Simulated Home Environments](agentsense_virtual_sensor_data_generation_using_llm_agents_i.md)**
 
@@ -60,10 +60,6 @@ tags:
 **[Can Editing LLMs Inject Harm?](can_editing_llms_inject_harm.md)**
 
 :   本文将知识编辑技术重新定义为一种新型 LLM 安全威胁（Editing Attack），系统性地研究了通过 ROME、FT、ICE 三种编辑方法向 LLM 注入虚假信息和偏见的可行性，发现其效果显著且极具隐蔽性。
-
-**[CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds](catformer_when_continual_learning_meets_spiking_transformers_with_dynamic_thresh.md)**
-
-:   提出 CATFormer，一种基于脉冲视觉 Transformer 的无数据重放持续学习框架，通过上下文自适应的动态放电阈值实现任务特定的神经元兴奋性调节，在长达 100 个任务序列中不仅不遗忘反而准确率提升（"逆向遗忘"现象）。
 
 **[Cross-Modal Unlearning via Influential Neuron Path Editing in Multimodal Large Language Models](cross-modal_unlearning_via_influential_neuron_path_editing_i.md)**
 

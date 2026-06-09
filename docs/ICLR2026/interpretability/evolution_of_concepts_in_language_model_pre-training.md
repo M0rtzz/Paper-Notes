@@ -38,52 +38,17 @@ tags:
 
 ### 整体框架
 
-使用 crosscoders 同时处理来自不同预训练快照的模型激活，将特征对齐到统一的特征空间中，从而追踪特征从初始化到训练结束的完整演化过程。
+把 crosscoders（原本用于跨层特征对齐的稀疏字典）改造成「跨快照」字典，同时吃进同一段语料在多个预训练快照上的激活，把它们投影到一个统一的特征空间。这样同一个特征在不同训练步上的强弱变化就能被对齐、对比，从而连续追踪每个特征从随机初始化到训练结束的涌现与演化；再叠加一层归因分析，把这些微观特征的兴衰与下游任务表现因果地挂上钩。
 
 ### 关键设计
 
-**1. 跨快照 Crosscoder 架构**
+**1. 跨快照 Crosscoder：用快照专属解码器换共享特征空间。** 静态 SAE 只能解剖一个训练完成的模型，无法回答「特征是何时长出来的」。本文给定语料 $\mathcal{C}$ 和快照集 $\Theta$，让编码器聚合所有快照的激活、产出一份共享的特征激活 $f(x) = \sigma\!\left(\sum_{\theta \in \Theta} W_{\text{enc}}^{\theta} a^{\theta}(x) + b_{\text{enc}}\right)$，而解码器 $W_{\text{dec}}^{\theta}$ 是每个快照各一份、独立重构 $\hat{a}^{\theta}(x) = W_{\text{dec}}^{\theta} f(x) + b_{\text{dec}}^{\theta}$。共享编码器保证「同一个特征」在所有快照里指代一致，快照专属解码器则让同一特征可以在不同步上有不同强度。这一拆分带来一个极简却好用的代理指标：解码器范数 $\|W_{\text{dec},i}^{\theta}\|$ 直接反映特征 $i$ 在快照 $\theta$ 的强度与存在性——当某特征只在部分快照「存在」时，稀疏惩罚会自然把不相关快照的解码器范数压到接近零，于是范数随快照的变化曲线就是这条特征的演化轨迹。
 
-给定语料 $\mathcal{C}$ 和训练快照集 $\Theta$，crosscoder 的编码-解码过程为：
+**2. 含解码器范数的稀疏目标：防止 $L_0$ 近似下的退化。** 训练目标是重构与稀疏两项之和：$\mathcal{L}(x) = \sum_{\theta \in \Theta} \|a^{\theta}(x) - \hat{a}^{\theta}(x)\|^2 + \lambda_{\text{sparsity}} \sum_{\theta \in \Theta} \sum_{i} \Omega\!\big(f_i(x) \cdot \|W_{\text{dec},i}^{\theta}\|\big)$，其中 $\Omega(\cdot)$ 是 $L_0$ 的可微替代。关键巧思是把解码器范数 $\|W_{\text{dec},i}^{\theta}\|$ 乘进稀疏项里：在不完美的 $L_0$ 近似下，模型本可以靠压低激活值 $f_i(x)$、同时膨胀解码器范数来「假装稀疏」，把范数纳入惩罚就堵死了这条退化路径，也让上面那个「范数即特征强度」的代理指标真正可靠。激活函数采用带学习阈值的 JumpReLU，在重构-稀疏权衡上优于传统的 ReLU+L1 组合。
 
-$$f(x) = \sigma\left(\sum_{\theta \in \Theta} W_{\text{enc}}^{\theta} a^{\theta}(x) + b_{\text{enc}}\right)$$
+**3. 归因电路追踪：把特征演化接到下游任务。** 光有特征轨迹还不够，得证明这些特征真的驱动了模型行为。本文用基于归因的电路追踪给每个特征算一个对任务度量 $m$ 的贡献分 $\text{attr}_i^{\theta}(x) = f_i(x) \cdot \frac{\partial m(a^{\theta}(x))}{\partial f_i(x)}$；对于有干净/污染输入对的任务（如主谓一致），改用归因修补 $\text{attr}_i^{\theta}(x, \tilde{x}) = [f_i(x) - f_i(\tilde{x})] \cdot \frac{\partial m(a^{\theta}(x))}{\partial f_i(x)}$，度量「把特征从污染态换成干净态」对输出的因果影响。实际计算用积分梯度（IG）版本以提高线性近似的准确性。因为这套归因可以在每个快照上单独跑，就能看出同一任务的关键特征如何随训练交替主导，从而把「特征何时涌现」与「下游能力何时出现」对齐起来。
 
-$$\hat{a}^{\theta}(x) = W_{\text{dec}}^{\theta} f(x) + b_{\text{dec}}^{\theta}$$
-
-关键点：编码器聚合跨快照信息产出共享特征激活 $f(x)$，而解码器 $W_{\text{dec}}^{\theta}$ 是快照特定的。当某特征仅在部分快照"存在"时，稀疏惩罚会自然地将不相关快照的解码器范数压到接近零。
-
-**核心观察**：解码器范数 $\|W_{\text{dec},i}^{\theta}\|$ 直接反映特征 $i$ 在快照 $\theta$ 的强度和存在性，因此可作为特征演化的代理指标。
-
-**2. 训练目标**
-
-$$\mathcal{L}(x) = \underbrace{\sum_{\theta \in \Theta} \|a^{\theta}(x) - \hat{a}^{\theta}(x)\|^2}_{\text{重构损失}} + \underbrace{\lambda_{\text{sparsity}} \sum_{\theta \in \Theta} \sum_{i=1}^{n_{\text{features}}} \Omega(f_i(x) \cdot \|W_{\text{dec},i}^{\theta}\|)}_{\text{稀疏损失}}$$
-
-稀疏正则化函数 $\Omega(\cdot)$ 作为 $L_0$ 的可微替代。正则化项中包含解码器范数 $\|W_{\text{dec},i}^{\theta}\|$，防止在不完美 $L_0$ 近似下激活值 $f_i(x)$ 被压低而解码器范数膨胀的退化。
-
-激活函数选择 JumpReLU（带学习阈值），优于传统 ReLU+L1 组合。
-
-**3. 实验设置**
-
-- 模型：Pythia-160M（Layer 6）和 Pythia-6.9B（Layer 16）
-- 从 154 个公开快照中策略性选取 32 个（前 10K 步全部 20 个 + 后期均匀采样 12 个）
-- 特征数：最大 98,304（160M）和 32,768（6.9B）
-- 训练语料：SlimPajama
-
-**4. 特征归因分析**
-
-为连接微观特征与宏观行为，使用基于归因的电路追踪：
-
-$$\text{attr}_i^{\theta}(x) = f_i(x) \cdot \frac{\partial m(a^{\theta}(x))}{\partial f_i(x)}$$
-
-对于有干净/污染输入对的任务（如主谓一致），使用归因修补：
-
-$$\text{attr}_i^{\theta}(x, \tilde{x}) = [f_i(x) - f_i(\tilde{x})] \cdot \frac{\partial m(a^{\theta}(x))}{\partial f_i(x)}$$
-
-实际使用积分梯度（IG）版本提高线性近似的准确性。
-
-### 损失函数
-
-重构损失（MSE）+ 加权稀疏正则化（JumpReLU 激活 + 包含解码器范数的 $L_0$ 近似）。
+实验配置上，分析对象为 Pythia-160M（Layer 6）与 Pythia-6.9B（Layer 16），从 154 个公开快照中策略性选取 32 个（前 10K 步全取 20 个 + 后期均匀采样 12 个），字典最大 98,304 维（160M）和 32,768 维（6.9B），训练语料为 SlimPajama。
 
 ## 实验关键数据
 

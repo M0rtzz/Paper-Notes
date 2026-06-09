@@ -38,43 +38,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-整个pipeline分为训练和推理两阶段。训练时：给定样本 $(x, y)$，生成两个不同变换度数 $k_1, k_2$ 的视图 $x_1 = T^{k_1}(x), x_2 = T^{k_2}(x)$；共享编码器将输入映射到潜空间，再用逆移位算子 $\varphi^{-k}$ 恢复到标准pose；一致性损失约束两个视图的标准化表示相同；分类器在标准化表示上训练。推理时：不知道变换参数，通过KNN搜索参考集推断最可能的变换，应用逆算子后分类。
+方法分训练和推理两阶段。训练时给定样本 $(x, y)$，先合成两个不同变换度数 $k_1, k_2$ 的视图 $x_1 = T^{k_1}(x)$、$x_2 = T^{k_2}(x)$，共享编码器把它们映射到潜空间，再用逆移位算子 $\varphi^{-k}$ 把表示拉回标准pose，一致性损失逼两个视图标准化后对齐，分类器只在这个标准化表示上学习。推理时输入的变换参数未知，先用KNN搜参考集估出最可能的变换度数，再施加对应逆算子归位后分类。
 
 ### 关键设计
 
-1. **移位算子 (Shift Operator)**:
+**1. 移位算子：把群变换搬进潜空间，靠闭合性外推。** 等变网络脆弱的根源在于它只能在训练见过的变换范围内插值，一旦遇到训练范围外的旋转角度就崩。本文的切入点是群作用的闭合性——任何范围外变换都能写成若干范围内变换的复合。为此在潜空间构造一个循环移位矩阵 $M$ 作为基本生成元，$k$ 度变换对应 $M^k$，矩阵尺寸等于变换群的阶，再用Kronecker积沿对角线重复以匹配潜空间维度。这样连续变换在表示空间里退化成加法组合：$T^{k_2} T^{k_1} x = f_E^{-1}(M^{k_1+k_2} f_E(x))$。于是模型不必知道每个输入的具体变换度数，只要递归应用同一个算子，就能把训练时只见过小角度旋转的能力外推到大角度。
 
-    - 做什么: 在潜空间中模拟群变换的作用，将变换后的表示恢复到标准pose
-    - 核心思路: 构造循环移位矩阵 $M$ 作为基本生成元，$k$ 度变换对应 $M^k$。矩阵 $M$ 的大小等于变换群的阶。用Kronecker积形式沿对角线重复以匹配潜空间维度。关键性质是连续变换在表示空间中加法组合：$T^{k_2} T^{k_1} x = f_E^{-1}(M^{k_1+k_2} f_E(x))$
-    - 设计动机: 不需要显式知道每个输入的变换参数，只需要知道变换群的循环阶数。群作用的闭合性保证了外推能力
+**2. 可学习算子：用数据学出等变结构，而非手工指定。** 预定义的移位矩阵证明了"潜空间等变算子存在"，但手工矩阵未必在整个pipeline里最优，真实场景下群结构往往也未知。本文于是把算子换成可训练参数，初始化取随机矩阵QR分解的正交因子 $Q$ 保证稳定起点，再和编码器、分类器联合优化。为了不让算子退化、保留群的周期性，额外加正则项 $\mathcal{L}_{op} = \|\varphi^N - I\|_2$，其中阶数 $N$ 统一设为潜空间维度70——这个上界远大于真实周期（旋转10、平移7），所以无需预先知道精确周期，只需给个宽松上界。实验里可学习算子能逼近甚至局部超过手工算子，说明等变结构确实能从数据中恢复。
 
-2. **可学习算子 (Learned Operator)**:
+**3. 复合变换分解：单轴训练换多轴泛化，把样本量从指数压到线性。** 当物体同时沿X和Y平移时，直接枚举所有组合需要 $O(N^M)$ 量级的样本（$N$ 为单轴度数、$M$ 为维度），代价不可承受。本文只用单轴变换训练：对每个样本分别生成X轴和Y轴视图，用堆叠编码器配各自的逆算子分别标准化，一致性损失 $\mathcal{L}_{reg} = \|Z_x - Z_y\|_2^2$ 逼两轴对齐；推理时顺序施加各轴逆算子逐步归位。这样训练数据需求降到 $O(NM)$，算子空间也大幅缩小，却能泛化到训练时从未出现的变换组合。
 
-    - 做什么: 用可训练参数替代预定义移位矩阵，让算子从数据中自适应学习
-    - 核心思路: 初始化为随机矩阵QR分解的正交因子 $Q$（保证稳定起点），联合优化。为保持周期性，额外加正则项 $\mathcal{L}_{op} = \|\varphi^N - I\|_2$，其中 $N$ 为设定的算子阶数（统一设为潜空间维度70，远大于真实变换周期如旋转的10或平移的7）
-    - 设计动机: 预定义算子是存在性证明，但不一定在整个学习pipeline中最优。可学习算子能适应数据特性，但需要周期性先验约束避免退化
-
-3. **复合变换分解 (Compound Transformation Decomposition)**:
-
-    - 做什么: 处理多维度同时变换（如同时X和Y平移）的情况
-    - 核心思路: 训练时只用单轴变换——对每个样本分别生成X轴和Y轴的变换视图，用堆叠编码器和对应的逆算子分别标准化，一致性损失 $\mathcal{L}_{reg} = \|Z_x - Z_y\|_2^2$ 约束两者对齐。推理时顺序应用各轴的逆算子恢复标准表示
-    - 设计动机: 直接枚举所有变换组合需要 $O(N^M)$ 样本量，而分解为单轴变换只需 $O(NM)$，大幅减少数据需求和算子空间大小
-
-4. **KNN推理 (K-Nearest Neighbor Inference)**:
-
-    - 做什么: 在推理时无变换标签的情况下推断输入的变换参数
-    - 核心思路: 先构建与类别无关的参考数据库 $\mathcal{R} = \{r_j = \varphi^{-\ell_j} f(x_j)\}$；对测试输入在所有候选变换下计算嵌入 $z_\ell = f(\varphi_\ell(x))$；计算与参考嵌入的欧几里得距离，通过Top-K投票选出最可能的变换 $\hat{\ell} = \text{mode}(\text{TopK}(\{\|z_\ell - r_j\|_2\}_{\ell,j}))$
-    - 设计动机: 测试时不需要知道变换参数是本方法的核心优势之一，KNN提供了简单有效的估计手段
+**4. KNN推理：测试不给变换标签，靠近邻投票估参数。** 训练时变换度数已知，但实际推理拿到的是一张姿态未知的图，硬性要求标签会让方法失去实用价值。本文先离线建一个与类别无关的参考库 $\mathcal{R} = \{r_j = \varphi^{-\ell_j} f(x_j)\}$，每条都是某张图在已知度数 $\ell_j$ 下归位后的嵌入；对测试输入则在所有候选变换 $\ell$ 下算嵌入 $z_\ell = f(\varphi_\ell(x))$，与参考库逐一比欧氏距离，用Top-K投票选出最可能的度数 $\hat{\ell} = \text{mode}(\text{TopK}(\{\|z_\ell - r_j\|_2\}_{\ell,j}))$。这套class-agnostic设计免去了测试时的变换标注，代价约10%准确率，换来了真实可用的推理流程。
 
 ### 损失函数 / 训练策略
-总损失函数为：$\mathcal{L} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{reg}$
-
-其中：
-- 分类损失: $\mathcal{L}_{CE} = \text{CrossEntropy}(f_D(Z_1), y)$，标准化嵌入 $Z_1$ 上的分类
-- 一致性正则: $\mathcal{L}_{reg} = \|Z_1 - Z_2\|_2^2$，鼓励不同变换视图标准化后表示一致
-- 可学习算子时额外加 $\mathcal{L}_{op} = \|\varphi^N - I\|_2$，保持周期性
-
-训练超参：Adam优化器，学习率0.001，batch size 512，训练20 epochs，$\lambda = 1$。单块RTX 5090 GPU。
+总损失为分类项加一致性项 $\mathcal{L} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{reg}$。分类损失 $\mathcal{L}_{CE} = \text{CrossEntropy}(f_D(Z_1), y)$ 作用在标准化嵌入 $Z_1$ 上；一致性正则 $\mathcal{L}_{reg} = \|Z_1 - Z_2\|_2^2$ 逼不同变换视图归位后表示一致；用可学习算子时再叠加周期性正则 $\mathcal{L}_{op} = \|\varphi^N - I\|_2$。训练用Adam，学习率0.001，batch size 512，跑20 epochs，$\lambda = 1$，单块RTX 5090。
 
 ## 实验关键数据
 
@@ -156,7 +133,7 @@ tags:
 - [\[ICLR 2026\] The Invisibility Hypothesis: Promises of AGI and the Future of the Global South](the_invisibility_hypothesis_promises_of_agi_and_the_future_of_the_global_south.md)
 - [\[ICLR 2026\] Out of the Shadows: Exploring a Latent Space for Neural Network Verification](out_of_the_shadows_exploring_a_latent_space_for_neural_network_verification.md)
 - [\[ICML 2026\] Identifiable Equivariant Networks are Layerwise Equivariant](../../ICML2026/others/identifiable_equivariant_networks_are_layerwise_equivariant.md)
-- [\[ICLR 2026\] Latent Fourier Transform](latent_fourier_transform.md)
+- [\[ICLR 2026\] MOSIV: Multi-Object System Identification from Videos](mosiv_multi-object_system_identification_from_videos.md)
 
 </div>
 

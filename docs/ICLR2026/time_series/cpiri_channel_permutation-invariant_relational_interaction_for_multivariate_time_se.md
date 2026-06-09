@@ -36,30 +36,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CPiRi 是一个三阶段 pipeline：输入是 $\mathcal{X} \in \mathbb{R}^{L \times C}$（$L$ 个时间步，$C$ 个通道），输出是未来 $T$ 步的预测 $\mathcal{Y} \in \mathbb{R}^{T \times C}$。三个阶段分别为：(1) 冻结时序编码器独立提取每个通道的时序特征；(2) 可训练空间模块学习跨通道关系；(3) 冻结解码器独立生成每个通道的预测。
+CPiRi 把多变量预测拆成"时序编码—空间交互—时序解码"三段，输入 $\mathcal{X} \in \mathbb{R}^{L \times C}$（$L$ 个时间步、$C$ 个通道），输出未来 $T$ 步预测 $\mathcal{Y} \in \mathbb{R}^{T \times C}$。冻结的预训练编码器逐通道独立抽取时序特征，中间一个可训练的置换等变 Transformer 学跨通道关系，最后冻结的解码器再逐通道独立还原预测；只有中段那块小模块参与训练。这种解耦让"鲁棒的时序先验"和"内容驱动的关系推理"各管一段，互不污染。
 
 ### 关键设计
 
-1. **冻结时序编码器（Stage 1）**:
-    - 做什么：使用预训练的 Sundial 基础模型的编码器，对每个通道独立提取时序特征向量 $\mathbf{h}_i \in \mathbb{R}^D$
-    - 核心思路：直接复用大规模预训练的时序先验，编码器参数完全冻结不更新。对每个通道独立处理，天然具有置换不变性
-    - 设计动机：(a) 迁移大规模数据集上学到的鲁棒时序先验，缓解 MTSF 数据稀缺问题；(b) 冻结避免了对特定数据集过拟合；(c) 独立处理保持 CI 的噪声免疫优势
+**1. 冻结的预训练时序编码器：把 CI 的鲁棒性和大模型先验一次拿下。** CD 模型的脆弱根源在于时序提取和跨通道建模纠缠在一起，一旦联合训练就容易把"通道在第几位"当成特征记下来。CPiRi 干脆把时序提取交给一个冻结的 Sundial 基础模型编码器，对每个通道独立编码出特征向量 $\mathbf{h}_i \in \mathbb{R}^D$（取序列末 token 而非均值池化，消融里末 token 把 PEMS-08 的 WAPE 从 12.42% 压到 9.43%）。逐通道独立处理天生对通道顺序免疫，继承了 CI 的噪声免疫优势；而冻结大规模预训练权重一方面把海量数据上学到的时序先验迁移过来缓解 MTSF 数据稀缺，另一方面避免在小数据集上过拟合——消融显示编码器若解冻反训会掉到 10.80%，若换成随机初始化更是灾难性崩到 52.29%，证明这两点缺一不可。
 
-2. **置换等变空间模块（Stage 2）**:
-    - 做什么：将所有通道的时序特征 $\{\mathbf{h}_1, \ldots, \mathbf{h}_C\}$ 作为**无序集合**输入，通过 Transformer encoder block 的自注意力学习跨通道关系
-    - 核心思路：自注意力机制天然是置换等变的——$f(\mathbf{h}_{\pi(1)}, \ldots, \mathbf{h}_{\pi(C)}) = (f(\mathcal{H})_{\pi(1)}, \ldots, f(\mathcal{H})_{\pi(C)})$，输入排列只会对应地排列输出
-    - 设计动机：不添加任何位置编码，使空间模块只能基于特征向量的内容来判断通道间关系，从而消除位置偏置。复杂度为 $O(C^2)$，远低于 iTransformer 的 $O((T \times C)^2)$
+**2. 置换等变空间模块：用无位置编码的自注意力把跨通道关系做成内容驱动。** 拿到所有通道特征后，CPiRi 把 $\{\mathbf{h}_1, \ldots, \mathbf{h}_C\}$ 当成一个**无序集合**喂进单层 Transformer encoder block，靠自注意力建模通道两两关系。关键是不加任何位置编码，于是整个模块严格满足置换等变：$f(\mathbf{h}_{\pi(1)}, \ldots, \mathbf{h}_{\pi(C)}) = (f(\mathcal{H})_{\pi(1)}, \ldots, f(\mathcal{H})_{\pi(C)})$，输入怎么排，输出就对应地怎么排，关系只能从特征内容里读出来而非从通道位置背出来。因为注意力只在 $C$ 个通道之间做，复杂度是 $O(C^2)$，远低于 iTransformer 把时间和通道拼在一起的 $O((T \times C)^2)$，这也是它能扩到 8600 通道的原因。
 
-3. **通道打乱训练策略（Permutation-Invariant Regularization）**:
-    - 做什么：每个训练 batch 对输入和目标应用随机通道排列 $\pi \leftarrow \Pi_C$
-    - 核心思路：优化目标变为 $\min_\theta \mathbb{E}_{(\mathcal{X},\mathcal{Y})\sim\mathcal{D},\pi\sim\Pi_C}[\mathcal{L}(f_\theta(\mathcal{X}_\pi), \mathcal{Y}_\pi)]$，任何依赖特定排序的非等变组件在大多数排列下会产生高损失，因此优化自然驱动参数趋向等变解
-    - 设计动机：虽然自注意力结构上是等变的，但训练时的随机初始化和梯度噪声可能引入微弱的位置依赖。通道打乱作为数据增强，消除所有位置捷径，强制模型学习内容驱动的关系推理"元技能"
+**3. 通道打乱训练策略：用随机排列正则化堵死所有位置捷径。** 自注意力虽然结构上等变，但随机初始化和梯度噪声仍可能让模型偷偷学到微弱的位置依赖。CPiRi 在每个训练 batch 对输入和目标同步施加随机通道排列 $\pi \leftarrow \Pi_C$，把目标改写成 $\min_\theta \mathbb{E}_{(\mathcal{X},\mathcal{Y})\sim\mathcal{D},\pi\sim\Pi_C}[\mathcal{L}(f_\theta(\mathcal{X}_\pi), \mathcal{Y}_\pi)]$。任何依赖固定排序的非等变成分在绝大多数排列下都会吃高损失，优化自然把参数推向真正等变的解。这相当于元学习里对"任务分布"采样——模型训练时就见遍了所有排列，学到的是排列无关的关系推理元技能；消融显示去掉打乱后 WAPE 掉 0.65%，但更重要的是这一步把 100% 通道打乱下的性能波动从 Informer 的 >400% 压到 <0.25%。
 
 ### 损失函数 / 训练策略
-- 标准 MSE/MAE 损失，$L = T = 336$
-- 空间模块 dropout 设为 0.3，促进稀疏空间关系的构建
-- 只训练空间模块参数，编码器和解码器完全冻结
-- 每个 batch 随机生成新的通道排列，相当于元学习中的任务分布采样
+训练用标准 MSE/MAE 损失，回看与预测窗口均设 $L = T = 336$；只更新中段空间模块的参数，编码器和解码器全程冻结。空间模块 dropout 调到 0.3 以鼓励稀疏的通道关系，每个 batch 都重新采一个通道排列，等效于元学习中持续刷新的任务分布。
 
 ## 实验关键数据
 
@@ -124,7 +112,7 @@ CPiRi 是一个三阶段 pipeline：输入是 $\mathcal{X} \in \mathbb{R}^{L \ti
 - [\[ICLR 2026\] T1: One-to-One Channel-Head Binding for Multivariate Time-Series Imputation](t1_one-to-one_channel-head_binding_for_multivariate_time-series_imputation.md)
 - [\[ICML 2025\] Channel Normalization for Time Series Channel Identification](../../ICML2025/time_series/channel_normalization_for_time_series_channel_identification.md)
 - [\[ICLR 2026\] Towards Generalizable PDE Dynamics Forecasting via Physics-Guided Invariant Learning](towards_generalizable_pde_dynamics_forecasting_via_physics-guided_invariant_lear.md)
-- [\[ICLR 2026\] Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
+- [\[NeurIPS 2025\] Channel Matters: Estimating Channel Influence for Multivariate Time Series](../../NeurIPS2025/time_series/channel_matters_estimating_channel_influence_for_multivariate_time_series.md)
 
 </div>
 

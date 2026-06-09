@@ -37,28 +37,17 @@ tags:
 
 ### 整体框架
 
-Agentified Agent Assessment (AAA) = Assessor Agent(评估协议) + Agent Under Test(被测agent) + 标准A2A接口(AgentBeats/A2A Protocol)。评测逻辑被agent化，与被测agent通过标准接口通信。
+Agentified Agent Assessment (AAA) 把评测逻辑本身也封装成一个 assessor agent，让它通过标准的 A2A 接口（AgentBeats/A2A Protocol）去驱动被测的 agent under test，从而把"评什么"和"被评的是谁怎么实现"彻底解耦。在此基础上，论文还配套了一条用定理证明器清洗 FOLIO 数据的流水线，以及一个把自然语言推理题翻译成可执行代码再用 SMT 求解的自动形式化 agent，三者共同构成"可靠数据 + 标准接口 + 形式化求解"的评测闭环。
 
 ### 关键设计
 
-**1. AAA评估框架**:
-- Assessor agent负责完整评估流程: 下发任务→执行预算控制(超时/重试次数)→输出解析→结构化失败类型记录→生成机器可读评测报告
-- 失败类型细分: Timeout(执行超时)、RuntimeError(运行时异常)、ParseError(输出解析失败)——区别于推理错误
-- 核心价值: 集成成本从O(n)降至O(1)——agent实现A2A接口一次，即可参与任何assessor的评估
-- 不丢弃失败: 传统harness将无法解析的输出计为错误，AAA区分执行失败和推理错误，支持事后审计
+**1. AAA 评估框架：把"工具崩了"和"模型不会推理"分开记账。** 传统评测 harness 会把超时、解析失败、运行时异常统统折算进一个准确率数字里，于是没法区分模型是真的推理错了，还是只是它的工具链出了岔子。AAA 让 assessor agent 接管完整评估流程——下发任务、用执行预算（超时与重试次数）做约束、解析输出、结构化地记录失败类型、最后产出机器可读的评测报告。关键在于失败类型被细分为 Timeout、RuntimeError、ParseError 三类执行失败，与"推理错误"严格区分开，既不像旧 harness 那样把无法解析的输出一律当错答案，又支持事后审计追溯。因为评测协议本身被 agent 化，被测方只要实现一次 A2A 接口就能接入任何 assessor，集成成本从随 benchmark 数量线性增长的 $O(n)$ 降到 $O(1)$。
 
-**2. FOLIO数据清洗流水线**:
-- Step 1: 用Vampire定理证明器对FOL表示做形式化验证——检查$\bigwedge_i \phi_i \wedge \neg\varphi$的可满足性判断True/False/Uncertain标签
-- Step 2: 验证结果与标签冲突时，critique agent诊断翻译错误(括号不匹配/命名不一致等)，refiner agent执行定向修复
-- Step 3: 迭代验证-修复直到一致，超阈值则标记人工审查
-- 结果: 训练集674(67.3%)直接验证通过，23(2.3%)修复后通过，304(30.4%)仍有问题
+**2. FOLIO 数据清洗流水线：用定理证明器替人工把标签验一遍。** 在不可靠的标签上评推理能力，本身就不可靠，而 FOLIO 训练集约 3.8%、验证集约 1.5% 的标签存在疑似错误。流水线先用 Vampire 定理证明器对每条样本的一阶逻辑表示做形式化验证——通过检查前提合取取否结论 $\bigwedge_i \phi_i \wedge \neg\varphi$ 的可满足性来重新判定 True/False/Uncertain 标签；当机器判定与原标签冲突时，由 critique agent 诊断翻译层面的毛病（括号不匹配、命名不一致等），再交 refiner agent 做定向修复，如此迭代验证—修复直到一致，超过阈值仍不一致的才标记人工审查。在训练集上，674 条（67.3%）一次验证即通过，23 条（2.3%）修复后通过，剩余 304 条（30.4%）仍被标为存疑，由此筛出一份标签更干净的评测集。
 
-**3. 自动形式化Agent**:
-- Stage 1 (代码生成): LLM将自然语言前提+结论生成可执行Z3Py程序
-- Stage 2 (执行与验证): 沙箱执行(60s超时)，通过可满足性检查判断True/False/Uncertain
-- 自修复循环: 最多3次，遇语法错误时提取错误信息做定向代码修复后重试
+**3. 自动形式化 Agent：把"好像对"的推理换成 SMT 求解的确定性判定。** 这是被测的主力 agent，分两阶段工作：先让 LLM 把自然语言的前提与结论翻译成一段可执行的 Z3Py 程序，再在沙箱里以 60s 超时执行，靠可满足性检查输出 True/False/Uncertain。为对抗 LLM 生成代码的脆弱性，它带一个最多 3 次的自修复循环——遇到语法或运行错误时提取报错信息做定向修改后重试。相比 CoT 只能给出"看起来成立"的链式推理，这条路径把逻辑有效性交给求解器保证，尤其在需要证明 $\phi \wedge \neg\varphi$ 不可满足的矛盾检测上更稳。
 
-**4. CoT基线**: 标准chain-of-thought提示，要求step-by-step推理后输出最终标签
+**4. CoT 基线：作为对照的非形式化 agent。** 它用标准的 chain-of-thought 提示，要求模型 step-by-step 地推理后直接给出最终标签，全程不经任何外部求解器。这条基线的意义在于划出"纯语言推理"的能力上界，让后续实验中自动形式化在矛盾检测等任务上的增益有一个可对比的参照系。
 
 ## 实验关键数据
 
@@ -122,10 +111,10 @@ Agentified Agent Assessment (AAA) = Assessor Agent(评估协议) + Agent Under T
 ## 相关论文
 
 - [\[ICLR 2026\] Scaling Generalist Data-Analytic Agents](scaling_generalist_data-analytic_agents.md)
+- [\[ICLR 2026\] ActivationReasoning: Logical Reasoning in Latent Activation Spaces](activationreasoning_logical_reasoning_in_latent_activation_spaces.md)
 - [\[ICLR 2026\] Estimating the Empowerment of Language Model Agents](estimating_the_empowerment_of_language_model_agents.md)
-- [\[ACL 2026\] Logical Phase Transitions: Understanding Collapse in LLM Logical Reasoning](../../ACL2026/llm_reasoning/logical_phase_transitions_understanding_collapse_in_llm_logical_reasoning.md)
-- [\[ICLR 2026\] Adaptive Social Learning via Mode Policy Optimization for Language Agents](adaptive_social_learning_via_mode_policy_optimization_for_language_agents.md)
-- [\[ACL 2026\] When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning](../../ACL2026/llm_reasoning/when_is_thinking_enough_early_exit_via_sufficiency_assessment_for_efficient_reas.md)
+- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
+- [\[ICLR 2026\] LogicReward: Incentivizing LLM Reasoning via Step-Wise Logical Supervision](logicreward_incentivizing_llm_reasoning_via_step-wise_logical_supervision.md)
 
 </div>
 

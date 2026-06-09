@@ -36,31 +36,33 @@ tags:
 
 ## 方法详解
 
-### 理论分析
+### 整体框架
 
-1. **Proposition 1 (无熵控制)**:
-    - 策略熵是策略梯度的上界：$\|\nabla V^{\pi_\theta}\| \leq 2\mathcal{H}(\pi_\theta)$→熵崩溃=学习停滞
-    - 性能界：$V^{\pi^*} - V^{\pi_\theta} \leq \frac{\epsilon}{C^{\pi_\theta}(s_0)}$
+这篇论文先回答一个困惑、再给一套解法。困惑是：在传统 RL 里立竿见影的熵正则化，搬到 LLM-RL（PPO/GRPO/DAPO 这类策略梯度方法）上几乎不涨点。论文用两条性能界把原因量化出来，再据此提出 AEnt——把熵限制在一小撮"合理候选 token"上计算，从而保住探索收益、压掉偏差。
 
-2. **Proposition 2 (传统熵正则化)**:
-    - 性能界：$V^{\pi^*} - V^{\pi_\theta} \leq \frac{\epsilon^2}{2\lambda C_\lambda} + \lambda H\log\frac{|\mathcal{A}|}{|\mathcal{A}_H^*|^{1/H}}$
-    - 优化项改善($\epsilon^2/2\lambda$)但偏差项 $\lambda H\log|\mathcal{A}|/|\mathcal{A}_H^*|^{1/H}$ 在LLM中主导
+整套分析建立在两条命题上。**无熵控制时**（Proposition 1），策略熵是策略梯度范数的上界 $\|\nabla V^{\pi_\theta}\| \leq 2\mathcal{H}(\pi_\theta)$——熵一旦崩溃，梯度就趋零、学习随之停滞；此时性能差被界为 $V^{\pi^*} - V^{\pi_\theta} \leq \frac{\epsilon}{C^{\pi_\theta}(s_0)}$。**加上传统熵正则化后**（Proposition 2），性能界变成
 
-### AEnt方法
+$$V^{\pi^*} - V^{\pi_\theta} \leq \frac{\epsilon^2}{2\lambda C_\lambda} + \lambda H\log\frac{|\mathcal{A}|}{|\mathcal{A}_H^*|^{1/H}}$$
 
-1. **截断熵 (Clamped Entropy)**:
-    - 功能：不在全词汇表上算熵，而在top-k token上重归一化后计算
-    - 核心思路：定义子空间 $\mathcal{A}_k(s) = \text{top-k tokens}$，重归一化策略 $\tilde{\pi}(a|s) = \pi(a|s)/\sum_{a' \in \mathcal{A}_k} \pi(a'|s)$，用 $\tilde{\pi}$ 算熵
-    - 设计动机：只在合理候选中鼓励探索→偏差从 $\log|\mathcal{A}|$ 降为 $\log k$（$k \ll |\mathcal{A}|$）
+第一项 $\epsilon^2/2\lambda$ 是熵带来的优化增益（收敛更好），第二项 $\lambda H\log\frac{|\mathcal{A}|}{|\mathcal{A}_H^*|^{1/H}}$ 是它引入的偏差。关键观察是：LLM 词汇表 $|\mathcal{A}|$ 高达 10 万量级、最优 token 又极其稀疏，偏差项被这个巨大的 $\log|\mathcal{A}|$ 撑爆，彻底压过优化增益——这正是传统熵在 LLM 上失灵、在机器人/游戏（$|\mathcal{A}|$ 只有数十到数百）上有效的根本差异。AEnt 的全部设计都围绕把这个 $\log|\mathcal{A}|$ 换成 $\log k$ 展开。
 
-2. **自适应系数**:
-    - 功能：根据当前截断熵值自动调节系数 $\lambda$
-    - 核心思路：截断熵高→$\lambda$小（已经足够随机），截断熵低→$\lambda$大（需要更多探索）
-    - 设计动机：固定 $\lambda$ 无法适应训练过程中熵的动态变化
+### 关键设计
+
+**1. 截断熵（Clamped Entropy）：只在 top-k 候选里算熵，把偏差从 $\log|\mathcal{A}|$ 压到 $\log k$。**
+
+前面的偏差项之所以爆炸，是因为熵鼓励模型在整个 10 万词表上保持随机——可绝大多数 token 根本不该被探索。截断熵的做法是先取当前状态下概率最高的 top-k token 构成子空间 $\mathcal{A}_k(s) = \text{top-k tokens}$，在这个子空间上把策略重归一化 $\tilde{\pi}(a|s) = \pi(a|s)/\sum_{a' \in \mathcal{A}_k} \pi(a'|s)$，再用 $\tilde{\pi}$ 计算熵。这样探索只发生在"合理候选"之间，偏差项里的 $\log|\mathcal{A}|$ 随之降为 $\log k$（$k \ll |\mathcal{A}|$），优化增益却基本保留——从 top-1000 里随机选，显然比从全词表里随机选合理得多。
+
+**2. 自适应系数：按当前截断熵动态调 $\lambda$，省掉手调又适配训练全程。**
+
+固定的熵系数 $\lambda$ 有个老问题：训练早期熵高、后期熵低，同一个 $\lambda$ 顾此失彼。AEnt 让 $\lambda$ 跟着当前截断熵走——截断熵高（说明已经足够随机）就把 $\lambda$ 调小，截断熵低（探索不足）就把 $\lambda$ 调大，从而在训练不同阶段自动维持合适的探索强度。
 
 ### 损失函数
-- $\mathcal{L} = \mathcal{L}_{\text{PO}}(\theta) + \lambda \cdot \min(\mathcal{H}_k(\pi_\theta), H_{\text{target}})$
-- 截断到目标熵后系数自适应调节
+
+总目标是在原策略优化损失上加一项截断熵正则：
+
+$$\mathcal{L} = \mathcal{L}_{\text{PO}}(\theta) + \lambda \cdot \min(\mathcal{H}_k(\pi_\theta), H_{\text{target}})$$
+
+其中 $\mathcal{H}_k$ 是截断熵，先截断到目标熵 $H_{\text{target}}$ 再由自适应系数 $\lambda$ 调节——既防止熵被无限推高，又保证探索强度随训练自适应。
 
 ## 实验关键数据
 
@@ -113,11 +115,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](thor_tool-integrated_hierarchical_optimization_via_rl_for_mathematical_reasoning.md)
-- [\[ICLR 2026\] Capability-Based Scaling Trends for LLM-Based Red-Teaming](capability-based_scaling_trends_for_llm-based_red-teaming.md)
-- [\[ICLR 2026\] PERSONA: Dynamic and Compositional Inference-Time Personality Control via Activation Vector Algebra](persona_dynamic_and_compositional_inference-time_personality_control_via_activat.md)
-- [\[ICLR 2026\] ODESteer: A Unified ODE-Based Steering Framework for LLM Alignment](odesteer_a_unified_ode-based_steering_framework_for_llm_alignment.md)
-- [\[ICLR 2026\] SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests](socialharmbench_revealing_llm_vulnerabilities_to_socially_harmful_requests.md)
+- [\[ICLR 2026\] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow](scalable_exploration_for_high-dimensional_continuous_control_via_value-guided_fl.md)
+- [\[ICML 2026\] Towards Efficient and Expressive Offline RL via Flow-Anchored Noise-conditioned Q-Learning](../../ICML2026/robotics/towards_efficient_and_expressive_offline_rl_via_flow-anchored_noise-conditioned_.md)
+- [\[ICLR 2026\] Towards Bridging the Gap between Large-Scale Pretraining and Efficient Finetuning for Humanoid Control](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)
+- [\[ECCV 2024\] LLM as Copilot for Coarse-Grained Vision-and-Language Navigation](../../ECCV2024/robotics/llm_as_copilot_for_coarse-grained_vision-and-language_navigation.md)
+- [\[AAAI 2026\] Test-driven Reinforcement Learning in Continuous Control](../../AAAI2026/robotics/test-driven_reinforcement_learning_in_continuous_control.md)
 
 </div>
 

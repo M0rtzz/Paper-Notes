@@ -40,40 +40,27 @@ tags:
 
 ## 方法详解
 
-### 问题形式化
-给定N个感知对象、三元组集合T = {(a,i,j)}（表示a与i比a与j更相似），学习嵌入矩阵Z ∈ R^{N×d'}，使得嵌入空间中的距离关系与三元组一致，且自动恢复内在维度d（d ≪ N）。
+### 整体框架
 
-### LORE优化目标
-$$\min_Z \Psi(Z) = \underbrace{\sum_{(a,i,j)\in T} \log(1+\exp(1+d(z_a,z_i)-d(z_a,z_j)))}_{\text{平滑三元组损失}} + \lambda \underbrace{\sum_{i=1}^{\min\{N,d'\}} \sigma_i(Z)^p}_{\text{Schatten-p正则化}}$$
+LORE 把"该用几维"这件原本要靠用户预设的事，直接塞进序数嵌入的优化目标里：给定 $N$ 个对象和三元组集合 $T=\{(a,i,j)\}$（表示 $a$ 与 $i$ 比 $a$ 与 $j$ 更相似），它在一个足够宽的 $d'$ 维空间里优化嵌入矩阵 $Z\in\mathbb{R}^{N\times d'}$，目标同时包含一个平滑的三元组拟合损失和一个 Schatten-$p$ 低秩正则项，让模型在拟合比较关系的同时自动把冗余维度的奇异值压到零，最终落在的非零奇异值个数就是恢复出来的内在维度 $d\ll N$。整套优化由一个迭代重加权算法求解，每步靠一次 SVD 完成。
 
-**三个关键设计选择**：
+### 关键设计
 
-1. **Schatten-p拟范数 (0<p<1)**：
-    - p=1 → 核范数（凸但均匀压缩所有奇异值→bias大）
-    - p→0 → 秩函数（NP-hard）
-    - p=0.5（论文默认）→非凸但更准确的低秩近似→对大奇异值惩罚小、对小奇异值惩罚大→自动"杀死"冗余维度
+**1. Schatten-$p$ 拟范数正则：用非凸惩罚精确逼近秩。** 要"自动选维度"，本质是要最小化嵌入的秩，但秩函数本身是 NP-hard 不可优化的。传统做法退而用核范数（$p=1$，即所有奇异值之和）作凸松弛，但核范数对大小奇异值一视同仁地均匀压缩，会把真正承载结构的大奇异值也削弱，引入显著偏差。LORE 改用 $0<p<1$ 的 Schatten-$p$ 拟范数 $\sum_{i}\sigma_i(Z)^p$，论文默认 $p=0.5$：它对大奇异值惩罚很轻、对接近零的小奇异值惩罚极重，因此能在保留主结构的同时干净地"杀死"冗余维度，是比核范数准得多的低秩近似。代价是引入额外非凸性，这一点由后面的迭代算法消化掉。
 
-2. **Softplus平滑**：将hinge loss替换为log(1+exp(·))→消除零梯度平台→使目标函数处处可微（除嵌入坍塌点外，可通过宽初始化避免）
+**2. Softplus 平滑三元组损失：消除零梯度平台。** 标准的 hinge 形式三元组损失在已满足的约束上梯度恒为零，优化容易卡死。LORE 把它换成 softplus 形式
 
-3. **直接嵌入优化**：优化Z而非Gram矩阵G=ZZ^T → O(Nd')复杂度 vs O(N²)→可扩展到大数据集
+$$\sum_{(a,i,j)\in T}\log\big(1+\exp(1+d(z_a,z_i)-d(z_a,z_j))\big),$$
 
-### 迭代重加权算法 (Algorithm 1)
-- 每步执行SVD分解：U,S,V^T = SVD(Z^k - (1/μ)∇f(Z^k))
-- 更新奇异值：S^k = S - (p/μ)σ^{p-1}，截断负值
-- 重构嵌入：Z^{k+1} = U·S^k·V^T
-- 收敛判断：目标值变化或嵌入变化小于阈值
-- 每步复杂度：O(d'(T + Nd'))
+使整个拟合项处处可微、没有平台区，梯度信号在所有三元组上都存在。唯一的不可微点是嵌入坍塌（所有点重合），可以用方差足够大的宽初始化避开。
 
-### 收敛性保证
-**定理**：LORE生成的嵌入序列{Z^k}收敛到稳定点，即 $\sum_{k=1}^{\infty}\|Z^{k+1}-Z^k\|_F < +\infty$。
+**3. 直接优化嵌入而非 Gram 矩阵：换来可扩展性。** GNMDS、CKL、FORTE 等方法优化 $N\times N$ 的 Gram 矩阵 $G=ZZ^\top$，复杂度随对象数平方增长。LORE 直接优化 $N\times d'$ 的 $Z$，把复杂度降到 $O(Nd')$，从而能扩展到更大的数据集；同时直接拿到嵌入坐标，也让后面读取可解释语义轴更自然。
 
-这是重要保证：虽然目标高度非凸，但OE问题的经验和理论研究表明稳定点通常接近全局最优（Bower等证明d=2时所有局部最优即全局最优）。
+**4. 迭代重加权算法（IRNN）与收敛保证：把非凸目标拆成一串 SVD 子问题。** 非凸的 Schatten-$p$ 项不能直接梯度下降，LORE 用迭代重加权近邻算法求解：每一步先沿三元组损失梯度走一步并做奇异值分解 $U,S,V^\top=\mathrm{SVD}\big(Z^k-\tfrac{1}{\mu}\nabla f(Z^k)\big)$，再对奇异值做带阈值的收缩 $S^k=\max\{S-\tfrac{p}{\mu}\sigma^{p-1},\,0\}$，最后重构 $Z^{k+1}=U S^k V^\top$，直到目标值或嵌入变化小于阈值；每步复杂度 $O(d'(|T|+Nd'))$。论文进一步证明该序列收敛到稳定点，即 $\sum_{k=1}^{\infty}\|Z^{k+1}-Z^k\|_F<+\infty$。虽然只是稳定点而非全局最优，但序数嵌入的已有理论（如 Bower 等证明 $d=2$ 时局部最优即全局最优）表明这类稳定点通常已足够接近最优解。
 
-### 超参数设置
-- p = 0.5（固定，先验研究验证的最优值）
-- μ = 0.1（固定，需大于三元组损失Lipschitz常数）
-- λ ≈ 0.01（唯一需调的超参，在宽范围内稳定）
-- 初始化：高斯随机，方差≥5
+### 损失函数 / 训练策略
+
+完整目标即三元组拟合项加正则项 $\min_Z \Psi(Z)=\text{softplus 三元组损失}+\lambda\sum_{i=1}^{\min\{N,d'\}}\sigma_i(Z)^p$。三个固定量基本无需调：$p=0.5$（先验研究验证的最优值）、$\mu=0.1$（需大于三元组损失的 Lipschitz 常数）、初始化用方差 $\geq 5$ 的高斯随机。真正需要调的只有正则权重 $\lambda$，论文取 $\lambda\approx 0.01$，且在很宽的范围内都稳定，这也是后面实验中"无需精细调参即可跨数据集恢复维度"的关键。
 
 ## 实验关键数据
 
@@ -144,10 +131,10 @@ $$\min_Z \Psi(Z) = \underbrace{\sum_{(a,i,j)\in T} \log(1+\exp(1+d(z_a,z_i)-d(z_
 ## 相关论文
 
 - [\[ICLR 2026\] Behavior Learning (BL): Learning Hierarchical Optimization Structures from Data](behavior_learning_bl_learning_hierarchical_optimization_structures_from_data.md)
+- [\[ICLR 2026\] Conjuring Semantic Similarity](conjuring_semantic_similarity.md)
 - [\[AAAI 2026\] Data Whitening Improves Sparse Autoencoder Learning](../../AAAI2026/interpretability/data_whitening_improves_sparse_autoencoder_learning.md)
 - [\[ICML 2026\] IdEst: Assessing Self-Supervised Learning Representations via Intrinsic Dimension](../../ICML2026/interpretability/idest_assessing_self-supervised_learning_representations_via_intrinsic_dimension.md)
 - [\[ACL 2026\] Similarity-Distance-Magnitude Activations](../../ACL2026/interpretability/similarity-distance-magnitude_activations.md)
-- [\[ICML 2026\] MiniMax Learning of Interpretable Factored Stochastic Policies from Conjoint Data, with Uncertainty Quantification](../../ICML2026/interpretability/minimax_learning_of_interpretable_factored_stochastic_policies_from_conjoint_dat.md)
 
 </div>
 

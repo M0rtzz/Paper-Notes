@@ -41,32 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-QZO = Q-SPSA(量化零阶梯度估计) + DDC(方向导数裁剪)。保持量化整数权重 $\bar{\theta}$ 不变，只更新连续的缩放因子 $\Delta$。两次前向传播估计梯度，无需反向传播，无需梯度存储，无需优化器状态。
+QZO 要在量化好的 LLM 上做微调，却又不想付出梯度和优化器状态的内存代价。难点在于量化把权重写成 $w = \Delta \cdot \bar{w}$，其中 $\bar{w}$ 是离散整数、$\Delta$ 是连续的缩放因子——零阶优化需要在连续空间里扰动参数，离散的 $\bar{w}$ 没法直接扰动。QZO 的破题点就是只动连续的那一半：整个训练过程中固定量化整数权重 $\bar{\theta}$，只把缩放因子 $\Delta$ 当作可学习参数。每一步用两次前向传播（参数分别加、减一个随机扰动）估计出梯度方向，再沿这个方向更新 $\Delta$，全程不需要反向传播、不存梯度、不存优化器状态。整条流水线由两个组件支撑：负责估梯度的 Q-SPSA，和负责稳住训练的 DDC。
 
 ### 关键设计
 
-1. **Q-SPSA (量化同步扰动随机近似)**:
+**1. Q-SPSA：把零阶扰动从离散权重挪到连续缩放因子上。**
 
-    - 功能：将SPSA扩展到量化模型，扰动连续的缩放因子而非离散权重
-    - 核心思路：$\hat{\nabla}_{\Delta}\mathcal{L} = \frac{\mathcal{L}((\Delta+\epsilon z)\odot\bar{\theta}) - \mathcal{L}((\Delta-\epsilon z)\odot\bar{\theta})}{2\epsilon}z$，其中 $z \sim \mathcal{N}(0, I_d)$
-    - 设计动机：$\Delta$ 是连续的，可自然扰动和更新。反量化 $w = \Delta \cdot \bar{w}$ 与正常前向传播一致，无需修改推理代码。适用于scalar-based(GPTQ)和codebook-based(AQLM)两类量化方法。
+零阶优化原本卡在「权重是离散的、没法扰动」这个矛盾上。Q-SPSA 的做法是把扰动只施加在连续的缩放因子 $\Delta$ 上，用两次前向的损失差来估计梯度：
 
-2. **DDC (方向导数裁剪, Directional Derivative Clipping)**:
+$$\hat{\nabla}_{\Delta}\mathcal{L} = \frac{\mathcal{L}((\Delta+\epsilon z)\odot\bar{\theta}) - \mathcal{L}((\Delta-\epsilon z)\odot\bar{\theta})}{2\epsilon}z, \quad z \sim \mathcal{N}(0, I_d)$$
 
-    - 功能：裁剪零阶梯度估计中的方向导数标量 $d$，稳定训练
-    - 核心思路：$d' = \text{clip}(d, -C, C)$，梯度估计变为 $\hat{\nabla} = d' \cdot z$
-    - 设计动机：零阶梯度估计有高方差问题（MeZO也存在）。Theorem 1证明裁剪后仍是无偏估计，且 $\text{Var}[\hat{\nabla}'] \leq \text{Var}[\hat{\nabla}]$（因为 $d'^2 \leq d^2$）。
+这里只有 $\Delta$ 被加减扰动 $\epsilon z$，整数权重 $\bar{\theta}$ 始终不变。因为反量化 $w = \Delta \cdot \bar{w}$ 本就是量化模型正常前向的一部分，扰动后的前向和平时推理完全一致，不用改任何推理代码。这个分解还让方法天然适配两类主流量化：scalar-based（如 GPTQ）和 codebook-based（如 AQLM），它们都有连续的缩放/码本因子可供扰动。
 
-3. **内存种子技巧**:
+**2. DDC（方向导数裁剪）：压住零阶梯度的高方差。**
 
-    - 功能：用随机种子重现扰动向量 $z$，避免存储
-    - 核心思路：与MeZO相同，用种子编号代替 $z$ 的存储
-    - 设计动机：$z$ 与模型同维度，存储它会抵消节省
+零阶估计有个老毛病——方差大（MeZO 也有），表现为训练时 loss 经常异常跳跃。DDC 直接对方向导数标量 $d$（即上式中那个损失差比值）做裁剪：
+
+$$d' = \text{clip}(d, -C, C), \quad \hat{\nabla} = d' \cdot z$$
+
+关键在于裁剪没有破坏估计的正确性：论文 Theorem 1 证明裁剪后的梯度仍是无偏估计，且方差不增——因为 $d'^2 \leq d^2$，所以 $\text{Var}[\hat{\nabla}'] \leq \text{Var}[\hat{\nabla}]$。于是 DDC 用一个极简的操作就换来了更稳的训练曲线，而不付出偏差代价。
+
+**3. 内存种子技巧：用随机种子重放扰动向量，不存 $z$。**
+
+扰动向量 $z$ 和模型同维度，若把它存下来，省掉的梯度内存又被吃回去了。QZO 沿用 MeZO 的做法：不存 $z$，只记下生成它的随机种子编号，需要时按同一种子重新采样即可复现完全相同的 $z$。这样前向加扰、计算更新所需的 $z$ 都能即用即生成，内存开销可以忽略不计。
 
 ### 损失函数 / 训练策略
-- ZO-SGD更新：$\Delta_{t+1} = \max(\Delta_t - \eta \cdot d' \cdot z, 0)$（确保缩放因子非负）
-- 学习率 $10^{-7}$，扰动尺度 $\epsilon = 10^{-3}$，裁剪阈值 $C = 100$
-- 可选：Q-SPSA更新 $\Delta$ + SPSA联合更新未量化部分
+更新用 ZO-SGD：$\Delta_{t+1} = \max(\Delta_t - \eta \cdot d' \cdot z, 0)$，其中 $\max(\cdot, 0)$ 保证缩放因子始终非负。默认超参为学习率 $\eta = 10^{-7}$、扰动尺度 $\epsilon = 10^{-3}$、裁剪阈值 $C = 100$。若模型中还有未量化的部分，可在 Q-SPSA 更新 $\Delta$ 的同时用标准 SPSA 联合更新这部分参数。
 
 ## 实验关键数据
 

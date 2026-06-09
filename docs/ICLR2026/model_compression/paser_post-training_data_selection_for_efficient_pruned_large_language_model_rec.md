@@ -49,38 +49,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：剪枝模型 $M_p$ + 原始模型 $M_o$ + 指令数据集 $D$  
-Step 1: 语义结构化聚类（S2RIC）→ $K$ 个能力集群  
-Step 2: 能力退化感知选择（CDAIS）→ 自适应预算分配 + 效率驱动采样  
-Step 3: 负面效应缓解（NTEM）→ 概念一致性图过滤冲突数据  
-输出：恢复训练子集 $S \subset D$，$|S| \leq B$
+PASER 要回答的问题是：剪枝把 LLM 砍残之后，从一大堆指令数据里挑哪些、挑多少来做恢复训练，才能既省算力又不踩到"越训越坏"的坑。它把这件事拆成一条三段流水线：先把指令数据按"它在练哪种能力"聚成 $K$ 个集群，再根据每种能力退化得有多严重去分配数据预算并在集群内挑性价比最高的样本，最后把那些会跟主体数据打架的冲突指令过滤掉。形式上，输入是剪枝模型 $M_p$、原始模型 $M_o$ 和指令数据集 $D$，三步分别是语义结构化聚类（S2RIC）、能力退化感知选择（CDAIS）、负面效应缓解（NTEM），输出一个满足预算约束 $|S| \leq B$ 的恢复训练子集 $S \subset D$。
 
 ### 关键设计
 
-1. **语义结构化恢复指令聚类（S2RIC）**
+**1. 语义结构化恢复指令聚类（S2RIC）：先把指令按"练哪种能力"分组。**
 
-    - 功能：将指令数据按能力维度分组
-    - 核心思路：先用SentenceBERT获取指令嵌入，再用扩散核（Diffusion Kernel）做流形学习降维保非线性结构，最后用基于NMF的谱聚类发现自然分组。聚类数 $K$ 通过NMF逼近误差最小化自动确定
-    - 设计动机：相似能力的指令在语义空间中形成可辨识的拓扑结构，扩散核比PCA/t-SNE更能保持流形几何
+剪枝对不同能力的损伤是不均匀的，所以第一步得先知道每条指令对应的是哪一类能力。S2RIC 的假设是：练同一种能力的指令，在语义空间里会聚成可辨识的拓扑结构。具体做法是先用 SentenceBERT 把每条指令编码成嵌入向量，再用扩散核（Diffusion Kernel）做流形学习降维——之所以不用 PCA/t-SNE，是因为扩散核更能保住这种非线性的流形几何，不会把弯曲的能力簇拍扁。降维之后用基于 NMF 的谱聚类发现自然分组，聚类数 $K$ 不靠人工指定，而是通过最小化 NMF 的逼近误差自动确定，避免了"该分几类"这个超参带来的随意性。
 
-2. **能力退化感知指令选择（CDAIS）**
+**2. 能力退化感知指令选择（CDAIS）：哪种能力退化越狠，就给它越多数据。**
 
-    - 功能：根据退化程度分配预算并按效率选样
-    - 能力退化评分（CDS）：每个集群 $c_k$ 内，用原始模型和剪枝模型输出分布的JSD散度均值衡量退化程度
-    - 预算分配：$n_k = \lfloor B \cdot \frac{\text{CDS}(c_k)}{\sum_j \text{CDS}(c_j)} \rfloor$，退化越严重的能力分配越多数据
-    - 单个样本效率得分（IES）：$\text{IES}(x,y) = \frac{\text{JSD}_{avg}}{\log \text{ComputationalCost}(x,y)}$，优先选择退化大且计算成本低的样本
-    - 设计动机：JSD比损失值或准确率更全面地捕获输出分布差异，对数成本项避免过度惩罚高潜力样本
+分好组之后要决定每组分多少预算、组内又挑哪些样本。退化程度用能力退化评分（CDS）来量化：在每个集群 $c_k$ 内，比较原始模型和剪枝模型在样本上的输出分布，取两者 JSD 散度的均值作为该能力的退化度。之所以用 JSD 而不是 loss 差或准确率，是因为 JSD 捕获的是完整的输出分布变化，比单点指标更稳健。预算按退化比例分配，退化越严重的能力拿到越多数据：
 
-3. **负面微调效应缓解（NTEM）**
+$$n_k = \left\lfloor B \cdot \frac{\text{CDS}(c_k)}{\sum_j \text{CDS}(c_j)} \right\rfloor$$
 
-    - 功能：检测并过滤概念冲突的指令
-    - 核心思路：构建概念一致性图（CCG），顶点是概念、边表示概念共现不冲突。新样本只有其概念与CCG一致才被接受
-    - 增强措施：语义归一化（合并同义表述）、低置信度软降权、可选NLI重排序
-    - 设计动机：恢复训练中引入冲突概念（如同一指令对同一问题给出矛盾答案）会进一步损害模型，过滤机制保证数据一致性
+组内再挑样本时，不光看退化大小，还要算性价比——用单样本效率得分（IES）把"收益"和"算力成本"放到一起：
+
+$$\text{IES}(x,y) = \frac{\text{JSD}_{avg}}{\log \text{ComputationalCost}(x,y)}$$
+
+分子是该样本带来的退化信号（越大越值得练），分母对计算成本取对数，这样长样本虽然成本高也不会被一票否决，避免过度惩罚那些信息量大的高潜力样本。最终每组优先选出退化大、又相对省算力的样本。
+
+**3. 负面微调效应缓解（NTEM）：把会跟别人打架的冲突指令踢掉。**
+
+全量恢复之所以可能让模型崩溃，一个重要原因是数据里混着互相矛盾的指令——比如对同一问题给出相互冲突的答案，硬塞进恢复训练只会进一步损害模型。NTEM 在概念级别而非样本级别建模这种冲突：构建一张概念一致性图（CCG），顶点是从指令里抽出的概念，边表示这些概念共现时彼此不冲突。一个新样本只有当它涉及的概念与已有 CCG 保持一致时才被接受，否则就被过滤掉。为提升判别的鲁棒性，还配了几项增强：语义归一化把同义表述合并、对低置信度的判定做软降权、并可选地用 NLI 做重排序。在概念层面建图的好处是计算成本低、还能随数据增量更新，适合大规模选数据。
 
 ### 损失函数 / 训练策略
-- 数据选择后用标准指令微调训练
-- 时间复杂度：$O(N\log N + NC^2)$，实际中 $C \ll N$ 可简化为 $O(N\log N)$
+- 数据选择完成后，子集 $S$ 上走标准的指令微调训练，方法本身不改训练目标。
+- 整个选择流程的时间复杂度为 $O(N\log N + NC^2)$，其中 $C$ 是概念数；实际中 $C \ll N$，可近似简化为 $O(N\log N)$。
 
 ## 实验关键数据
 
@@ -145,7 +140,7 @@ Step 3: 负面效应缓解（NTEM）→ 概念一致性图过滤冲突数据
 - [\[ICLR 2026\] Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation](pedagogically-inspired_data_synthesis_for_language_model_knowledge_distillation.md)
 - [\[ICLR 2026\] PTQ4ARVG: Post-Training Quantization for AutoRegressive Visual Generation Models](ptq4arvg_post-training_quantization_for_autoregressive_visual_generation_models.md)
 - [\[NeurIPS 2025\] Restoring Pruned Large Language Models via Lost Component Compensation](../../NeurIPS2025/model_compression/restoring_pruned_large_language_models_via_lost_component_compensation.md)
-- [\[AAAI 2026\] Post Training Quantization for Efficient Dataset Condensation](../../AAAI2026/model_compression/post_training_quantization_for_efficient_dataset_condensation.md)
+- [\[ICLR 2026\] A Recovery Guarantee for Sparse Neural Networks](a_recovery_guarantee_for_sparse_neural_networks.md)
 
 </div>
 

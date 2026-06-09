@@ -40,33 +40,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-矩阵 $\mathbf{A} \in \mathbb{R}^{n \times d}$ 逐行到达。目标：在每个时刻 $t$ 输出因子 $\mathbf{V}^{(t)} \in \mathbb{R}^{k \times d}$，使 $\|\mathbf{A}^{(t)} - \mathbf{A}^{(t)} (\mathbf{V}^{(t)})^\top \mathbf{V}^{(t)}\|_F^2 \leq (1+\varepsilon) \cdot \text{OPT}_t$，同时最小化总 recourse $\sum_t \|\mathbf{P}_{\mathbf{V}^{(t)}} - \mathbf{P}_{\mathbf{V}^{(t-1)}}\|_F^2$。
+矩阵 $\mathbf{A} \in \mathbb{R}^{n \times d}$ 逐行到达，算法在每个时刻 $t$ 输出一个 rank-$k$ 因子 $\mathbf{V}^{(t)} \in \mathbb{R}^{k \times d}$，既要保证近似质量 $\|\mathbf{A}^{(t)} - \mathbf{A}^{(t)} (\mathbf{V}^{(t)})^\top \mathbf{V}^{(t)}\|_F^2 \leq (1+\varepsilon) \cdot \text{OPT}_t$，又要把整条流上的总变化量 $\sum_t \|\mathbf{P}_{\mathbf{V}^{(t)}} - \mathbf{P}_{\mathbf{V}^{(t-1)}}\|_F^2$（recourse）压到次二次。围绕这一目标，本文给出加性误差算法、乘性误差算法和一个匹配下界。
 
 ### 关键设计
 
-1. **加性误差算法（Theorem 1.1）**:
+**1. recourse 的度量：用投影矩阵的 Frobenius 距离。** 一致性问题的第一步是选对"变化量"的度量。如果直接比较两步因子矩阵 $\mathbf{V}^{(t)}$ 与 $\mathbf{V}^{(t-1)}$ 的差，一次无意义的基旋转就会被错算成巨大变化。本文转而用子空间投影矩阵的 Frobenius 距离 $\|\mathbf{P}_{\mathbf{V}^{(t)}} - \mathbf{P}_{\mathbf{V}^{(t-1)}}\|_F^2$ 来度量 recourse——它只关心张成的子空间是否改变，对基的旋转不敏感，因此是一个自然且鲁棒的度量，也让后续的奇异值分析能直接落到子空间层面。
 
-    - 思路：维护 Frobenius 范数。每当 $\|\mathbf{A}^{(t)}\|_F^2$ 增长 $(1+\varepsilon)$ 倍时重算 SVD
-    - Recourse：重算次数 $O(1/\varepsilon \cdot \log(ndM))$，每次 recourse $k$ → 总 $O(k/\varepsilon \cdot \log(ndM))$
-    - 正确性：两次重算之间新行贡献 $\leq \varepsilon \cdot \|\mathbf{A}^{(t)}\|_F^2$
+**2. 加性误差算法：靠范数增长触发重算。** 加性误差下（Theorem 1.1）只需维护当前矩阵的 Frobenius 范数：每当 $\|\mathbf{A}^{(t)}\|_F^2$ 相比上次重算增长了 $(1+\varepsilon)$ 倍，就重新算一次 SVD，否则沿用旧因子。两次重算之间所有新行的总贡献被范数增长门限卡死在 $\leq \varepsilon \cdot \|\mathbf{A}^{(t)}\|_F^2$，因此加性误差始终受控。由于范数最多翻 $O(1/\varepsilon \cdot \log(ndM))$ 次（$M$ 为元素上界），而每次重算的 recourse 不超过 $k$，总 recourse 就是 $O(k/\varepsilon \cdot \log(ndM))$。
 
-2. **乘性误差算法（Theorem 1.3，核心贡献）**:
+**3. 乘性误差算法：先压流长，再按奇异值尾部分情况更新。** 这是本文的核心贡献（Theorem 1.3）。第一步用 online ridge leverage score 采样把有效流长从 $n$ 压缩到 $k/\varepsilon \cdot \text{polylog}$，让后续昂贵的更新只发生在少量"重要"行上。第二步对压缩后的流做精细更新，关键是对 top-$k$ 奇异值里最弱的后 $\sqrt{k}$ 个做 case work：当尾部能量小（$\sum_{i=k-\sqrt{k}}^{k} \sigma_i^2$ 很小）时，这些方向无足轻重，可以直接用新到达的行替换掉尾部奇异向量，攒够 $\sqrt{k}$ 步再统一重算，平均每 $\sqrt{k}$ 步只花 $O(k)$ recourse；当尾部能量大时，意味着最优子空间本身很稳定、不会被新行剧烈扰动，于是直接重算顶部 SVD，单次 recourse 不超过 $\sqrt{k}$。两种情况合起来，总 recourse 为 $k^{3/2}/\varepsilon^2 \cdot \text{polylog}$，而 $\sqrt{k}$ 正是平衡"替换 $r$ 个因子每步花 $k\cdot r$"与"$k^2/r$ 步重算"两侧代价的最优阈值。一个特殊情形是 anti-Hadamard 型整数矩阵——其最优低秩代价可能指数级地小，需要在低秩时单独做精细分析才能保住乘性保证。
 
-    - 第一步：online ridge leverage score 采样将流长从 $n$ 压缩到 $k/\varepsilon \cdot \text{polylog}$
-    - 第二步：对压缩流做精细更新
-    - **关键分析**：对 top-$k$ 奇异值的后 $\sqrt{k}$ 个做 case work:
-        - 若 $\sum_{i=k-\sqrt{k}}^k \sigma_i^2$ 小（尾部弱）：可用新行替换尾部奇异向量，$\sqrt{k}$ 步后重算 → 每 $\sqrt{k}$ 步 $O(k)$ recourse
-        - 若尾部强：最优子空间不会剧烈变化 → 直接重算顶部 SVD，recourse $\leq \sqrt{k}$
-    - 总 recourse：$k^{3/2}/\varepsilon^2 \cdot \text{polylog}$——$\sqrt{k}$ 是两种情况平衡的最优选择
-    - **Anti-Hadamard 矩阵特殊处理**：整数矩阵最优低秩代价可能指数级小 → 低秩时精细分析
-
-3. **下界（Theorem 1.4）**:
-
-    - 构造：分 $\Theta(1/\varepsilon \cdot \log(n/k))$ 个阶段，每阶段最优子空间在两组正交基之间交替
-    - 结果：$\Omega(k/\varepsilon \cdot \log(n/k))$ recourse 是必需的
-
-### Recourse 度量选择
-用子空间投影矩阵的 Frobenius 距离而非基向量差——对基旋转不敏感，是自然且鲁棒的度量。
+**4. 下界：交替子空间构造逼出 $\Omega(k/\varepsilon \cdot \log(n/k))$。** 为说明上述 recourse 不能再大幅压低，本文构造了一个硬实例（Theorem 1.4）：把流分成 $\Theta(1/\varepsilon \cdot \log(n/k))$ 个阶段，每个阶段都强迫最优子空间在两组正交基之间来回切换。任何近最优算法都必须跟着切换，于是 recourse 至少为 $\Omega(k/\varepsilon \cdot \log(n/k))$，与加性上界仅差一个 $\sqrt{k}$ 因子。
 
 ## 实验关键数据
 
@@ -117,7 +101,7 @@ tags:
 - [\[ACL 2025\] Low-Rank Interconnected Adaptation across Layers](../../ACL2025/others/low-rank_interconnected_adaptation_across_layers.md)
 - [\[NeurIPS 2025\] The Persistence of Neural Collapse Despite Low-Rank Bias](../../NeurIPS2025/others/the_persistence_of_neural_collapse_despite_low-rank_bias.md)
 - [\[ACL 2025\] Towards Robust and Efficient Federated Low-Rank Adaptation with Heterogeneous Clients](../../ACL2025/others/federated_lora_heterogeneous.md)
-- [\[AAAI 2026\] CompTrack: Information Bottleneck-Guided Low-Rank Dynamic Token Compression for Point Cloud Tracking](../../AAAI2026/others/comptrack_information_bottleneckguided_lowrank_dynamic_token_compres.md)
+- [\[ACL 2025\] MoRE: A Mixture of Low-Rank Experts for Adaptive Multi-Task Learning](../../ACL2025/others/more_a_mixture_of_low-rank_experts_for_adaptive_multi-task_learning.md)
 
 </div>
 

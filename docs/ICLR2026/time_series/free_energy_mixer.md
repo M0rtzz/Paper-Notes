@@ -45,29 +45,33 @@ FEM 是一个即插即用的模块，直接替换 Transformer block 中的注意
 
 ### 关键设计
 
-1. **自由能读取（Free Energy Read）**:
+**1. 自由能读取：把"平均值"读取换成"逐通道可调硬度"的选择。**
 
-    - 功能：将标准的期望读取 $\mu_{t,j} = \sum_i p_t(i) v_{i,j}$ 替换为逐通道的自由能读取
-    - 核心思路：对每个通道 $j$，定义约束优化问题 $\max_{q} \mathbb{E}_{i \sim q}[v_{i,j}] \text{ s.t. } \text{KL}(q \| p_t) \leq B_{t,j}$。引入 Lagrange 乘子 $\beta_{t,j}$ 得到自由能：$\mathcal{F}_{t,j}(\beta) = \frac{1}{\beta} \log \sum_i p_t(i) \exp(\beta v_{i,j})$，对应后验 $q_{t,\beta}^{(j)}(i) \propto p_t(i) \exp(\beta v_{i,j})$。当 $\beta \to 0$ 退化为标准均值，$\beta \to \infty$ 趋向 argmax 硬选择
-    - 设计动机：自由能天然满足 $\mathcal{F}_{t,j}(\beta) = \mathbb{E}_{p_t}[v_{i,j}] + \frac{1}{\beta} \text{KL}(p_t \| q^{(\beta)})$，即始终不低于期望值，且改善幅度由 KL 散度量化。不同通道可以有不同的后验，实现独立检索
+标准注意力的读取是 $\mu_{t,j} = \sum_i p_t(i) v_{i,j}$，所有通道共用同一组权重 $p_t$，输出被锁死在值向量的凸包内。FEM 把每个值通道 $j$ 的读取单独写成一个约束优化问题：在与先验 $p_t$ 的 KL 散度不超过预算 $B_{t,j}$ 的前提下，最大化期望效用 $\max_{q} \mathbb{E}_{i \sim q}[v_{i,j}]$。引入 Lagrange 乘子 $\beta_{t,j}$ 后，最优后验是 $q_{t,\beta}^{(j)}(i) \propto p_t(i) \exp(\beta v_{i,j})$，对应的目标值就是自由能（log-sum-exp 形式）：
 
-2. **线性化温度学习（LTL）**:
+$$\mathcal{F}_{t,j}(\beta) = \frac{1}{\beta} \log \sum_i p_t(i) \exp(\beta v_{i,j})$$
 
-    - 功能：在不破坏单次计算效率的前提下实现动态逐通道温度
-    - 核心思路：固定最大逆温度 $\beta_{\max}$，计算基线 $\mu_t$ 和高温分支 $F_t^{\max}$，用可学习门 $\lambda_t \in [0,1]^D$ 插值：$\tilde{F}_t(\lambda_t) = (1-\lambda_t) \odot \mu_t + \lambda_t \odot F_t^{\max}$。两项可在一次 pass 中计算（混合 $[v_{i,j}, e^{\beta_{\max} v_{i,j}}]$），保持与先验相同的渐近复杂度
-    - 设计动机：直接为每个 $(\text{step}, \text{channel})$ 学习独立的 $\beta$ 会破坏并行性。通过中间值定理证明 $\lambda \mapsto \beta^*$ 是严格单调映射，因此优化 $\lambda$ 等价于优化隐藏温度
+逆温度 $\beta$ 充当"硬度旋钮"：$\beta \to 0$ 退化回标准均值读取，$\beta \to \infty$ 收敛到 argmax 硬选择，中间是从平均到选择的连续谱。它有效是因为自由能可以分解为 $\mathcal{F}_{t,j}(\beta) = \mathbb{E}_{p_t}[v_{i,j}] + \frac{1}{\beta} \text{KL}(p_t \| q^{(\beta)})$——读取值始终不低于期望均值，提升幅度恰好由 KL 散度量化。关键是每个通道有自己的 $\beta_{t,j}$ 和后验 $q^{(j)}$，因此不同通道能从不同历史位置独立检索，绕开了"单头单组权重"造成的凸包约束。
 
-3. **双层门控**:
+**2. 线性化温度学习（LTL）：让逐通道温度可学，又不破坏一次 pass 的并行性。**
 
-    - 功能：内部门控（温度）控制从平均到选择的程度，外部门控缩放最终输出幅度
-    - 核心思路：最终读取 $\mathbf{o}_t = \mathbf{g}_t \odot [(1-\lambda_t) \odot \mu_t + \lambda_t \odot F_t^{\max}]$，其中 $\mathbf{g}_t$ 用 softplus + RMSNorm 参数化
-    - 设计动机：外部门控对应在自由能上施加指数缩放 $[\sum_i p_t(i) \exp(\beta^* v_{i,j})]^{g_{t,j}}$，增加了表达空间。当 $\lambda = 0, g = 1$ 退化为标准注意力
+理想情况下每个 $(\text{step}, \text{channel})$ 都要一个独立的 $\beta$，但直接对 $\beta$ 求解会破坏并行计算。LTL 的做法是固定一个最大逆温度 $\beta_{\max}$，只算两条分支——基线均值 $\mu_t$ 和高温自由能 $F_t^{\max}$——再用一个可学习门 $\lambda_t \in [0,1]^D$ 在两者之间逐通道插值：
 
-4. **低秩卷积局部条件化（模块 C）**:
+$$\tilde{F}_t(\lambda_t) = (1-\lambda_t) \odot \mu_t + \lambda_t \odot F_t^{\max}$$
 
-    - 功能：用轻量级自适应低秩卷积提取局部位置敏感特征，调制选择先验和 FEM 门控
-    - 核心思路：简单的时间衰减核，$O(1)$ streaming 更新，总成本 $O(TH_c)$（$H_c = d/16 \ll D$）
-    - 设计动机：借鉴 Mamba/DeltaNet 的局部卷积设计，增加位置敏感性
+这两条分支可以在同一次 pass 里算完（把 $[v_{i,j}, e^{\beta_{\max} v_{i,j}}]$ 拼起来一起混合），所以渐近复杂度和先验完全一致。之所以能用两点插值替代逐通道求 $\beta$，是因为论文用中间值定理证明了 $\lambda \mapsto \beta^*$ 是严格单调映射：优化 $\lambda$ 等价于优化背后那个隐藏的逐通道温度 $\beta^*$，连续谱被压缩到两点之间而不损失表达力。
+
+**3. 双层门控：内门控管"选多硬"，外门控管"读多强"。**
+
+最终读取由内外两层门控共同决定：
+
+$$\mathbf{o}_t = \mathbf{g}_t \odot \big[(1-\lambda_t) \odot \mu_t + \lambda_t \odot F_t^{\max}\big]$$
+
+内层就是上面的温度门 $\lambda_t$，控制从平均到硬选择的程度；外层门 $\mathbf{g}_t$（用 softplus + RMSNorm 参数化）缩放最终输出幅度。外门控并非简单乘个标量——它等价于在自由能上施加指数缩放 $[\sum_i p_t(i) \exp(\beta^* v_{i,j})]^{g_{t,j}}$，进一步扩大了可表达的读取空间。当 $\lambda = 0, g = 1$ 时整个模块精确退化为标准注意力，保证了 FEM 是严格的超集。
+
+**4. 低秩卷积局部条件化（模块 C）：用极轻的局部卷积给选择先验和门控注入位置敏感性。**
+
+借鉴 Mamba/DeltaNet 的局部卷积思路，FEM 用一个自适应低秩卷积提取局部、位置敏感的特征，去调制选择先验 $p_t$ 和 FEM 的门控。它用的是简单时间衰减核，支持 $O(1)$ 的 streaming 更新，总成本只有 $O(TH_c)$（其中 $H_c = d/16 \ll D$），几乎不增加预算。这一项补上了纯自由能读取缺少的局部位置信息，让模块在 Compress、Selective Copy 这类对位置敏感的任务上更稳。
 
 ### 损失函数 / 训练策略
 - FEM 本身不引入额外损失，使用下游任务的标准损失（语言建模用交叉熵，时序用 MSE 等）
@@ -150,9 +154,9 @@ FEM 是一个即插即用的模块，直接替换 Transformer block 中的注意
 
 ## 相关论文
 
-- [\[NeurIPS 2025\] xLSTM-Mixer: Multivariate Time Series Forecasting by Mixing via Scalar Memories](../../NeurIPS2025/time_series/xlstm-mixer_multivariate_time_series_forecasting_by_mixing_via_scalar_memories.md)
+- [\[NeurIPS 2025\] Neural Stochastic Flows: Solver-Free Modelling and Inference for SDE Solutions](../../NeurIPS2025/time_series/neural_stochastic_flows_solver-free_modelling_and_inference_for_sde_solutions.md)
+- [\[CVPR 2026\] SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval](../../CVPR2026/time_series/sattc_structure-aware_label-free_test-time_calibration_for_cross-subject_eeg-to-.md)
 - [\[ICML 2025\] VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters](../../ICML2025/time_series/visionts_visual_masked_autoencoders_are_free-lunch_zero-shot_time_series_forecas.md)
-- [\[ICLR 2026\] Routing Channel-Patch Dependencies in Time Series Forecasting with Graph Spectral Decomposition](routing_channel-patch_dependencies_in_time_series_forecasting_with_graph_spectra.md)
 - [\[ICLR 2026\] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)
 - [\[ICLR 2026\] Weight-Space Linear Recurrent Neural Networks](weight-space_linear_recurrent_neural_networks.md)
 

@@ -39,36 +39,31 @@ tags:
 
 ## 方法详解
 
-### 威胁模型定义
+### 整体框架
 
-将时序攻击形式化为**Spike Timing Attack**：对于输入事件张量 $\bm{x} \in \mathbb{Z}_{\geq 0}^{T \times C \times H \times W}$，对每个活跃脉冲 $(s, j) \in \mathcal{A}(\bm{x})$ 选择整数偏移 $\delta_{s,j}$，使脉冲从时间 $s$ 移至 $t = s + \delta_{s,j}$。约束包括：(1) 时间线约束 $0 \leq t < T$；(2) 容量-1非重叠约束——每个事件线/时间bin最多一个脉冲。放置函数 $P(\bm{x}; \delta)$ 在新时间重播相同脉冲，保持幅值和计数不变。
+本文不再问"该往哪里增删脉冲"，而是问"已有的脉冲该挪到什么时间"——把对抗攻击重铸成时间轴上的重分配问题。整套流程是：先用一个可微分的偏移概率张量描述每个活跃脉冲想往哪挪、挪多远，前向时按这套概率把脉冲严格投影回满足容量约束的离散事件网格上去算分类损失，反向时则换用期望意义下的软重定时结果来回传梯度，如此在离散可行性与梯度优化之间解耦，最终在三种范数预算下都能搜出几乎不被察觉的时序扰动。
 
-### 统一三范数预算
+### 关键设计
 
-- **$\mathcal{B}_\infty(\varepsilon)$**：限制每脉冲最大抖动 $|\delta_{s,j}| \leq \varepsilon$，对应传感器时间戳不确定性，偏好局部重定时
-- **$\mathcal{B}_1(\varepsilon)$**：限制总时序偏移量 $\sum |\delta_{s,j}| \leq \varepsilon$，提供随事件密度缩放的全局旋钮
-- **$\mathcal{B}_0(\varepsilon)$**：限制被篡改脉冲数 $\sum \mathbb{I}\{\delta_{s,j} \neq 0\} \leq \varepsilon$，捕获隐蔽的最小足迹攻击
+**1. 纯时序威胁模型：只挪时间、不增删脉冲，让扰动落进传感器噪声里。**
 
-整数网格通过将每个计数分解为单位"数据包"(packet)来适配容量-1约束。
+攻击对象是输入事件张量 $\bm{x} \in \mathbb{Z}_{\geq 0}^{T \times C \times H \times W}$，攻击者对每个活跃脉冲 $(s, j) \in \mathcal{A}(\bm{x})$ 只能选一个整数偏移 $\delta_{s,j}$，把它从时间 $s$ 搬到 $t = s + \delta_{s,j}$，放置函数 $P(\bm{x}; \delta)$ 在新时间原样重播这个脉冲。之所以这么设计，是因为传统攻击改强度或增删事件会动到帧级能量与发放率统计，容易被基于强度/速率的检测识破；而纯时序重定时保持每个脉冲的计数和幅值完全不变，落在事件相机本就存在的时间戳抖动与读出延迟范围内，几乎没有可供防御抓取的统计痕迹。约束上要求 $0 \leq t < T$ 不越出时间线，并强制**容量-1非重叠**——每条事件线的每个时间 bin 至多容纳一个脉冲，这一约束既适用于二值网格，也通过把整数计数拆成一个个单位"数据包"(packet) 适配整数网格。
 
-### Projected-in-the-Loop (PIL)优化
+**2. 统一三范数预算：用一个框架同时表达三类隐蔽性偏好。**
 
-核心挑战：离散可行空间vs.梯度需求的矛盾。解决方案是PIL直通估计：
+为了让攻击预算可调且语义清晰，本文把扰动强度统一刻画为三种范数预算。$\mathcal{B}_\infty(\varepsilon)$ 限制每个脉冲的最大抖动 $|\delta_{s,j}| \leq \varepsilon$，直接对应传感器时间戳的不确定性，偏好局部小幅重定时；$\mathcal{B}_1(\varepsilon)$ 限制总时序偏移量 $\sum |\delta_{s,j}| \leq \varepsilon$，给出一个会随事件密度自然缩放的全局旋钮；$\mathcal{B}_0(\varepsilon)$ 限制被篡改脉冲数 $\sum \mathbb{I}\{\delta_{s,j} \neq 0\} \leq \varepsilon$，刻画"只动极少数脉冲"的最小足迹攻击。三者覆盖了从局部抖动、全局平移到稀疏篡改的不同隐蔽性诉求，后续优化对它们采用统一的求解框架而只替换预算惩罚项。
 
-1. **偏移logits**：为每个活跃脉冲引入偏移概率 $\pi[s,j,u] = \text{softmax}(\phi[s,j,u]/\kappa)$，在可行偏移集 $\mathcal{U}_p$ 上建模分布
-2. **软偏移算子**：$\tilde{\bm{x}} = S_\pi(\bm{x})$ 计算期望重定时结果，完全可微，为反向传播提供时序对齐梯度
-3. **严格投影**：$\hat{\bm{x}} = P^*(\bm{x}; \pi, \mathcal{B}_p(\varepsilon))$ 在前向传播中按概率排序贪心放置脉冲，严格满足容量-1和预算约束
-4. **PIL耦合**：$\bm{x}_{\text{PIL}} = \hat{\bm{x}} + (\tilde{\bm{x}} - \text{stopgrad}(\tilde{\bm{x}}))$，前向用严格投影评估、反向用软偏移微分
+**3. Projected-in-the-Loop (PIL) 优化：前向严投影保可行、反向软微分留梯度。**
 
-### 预算感知目标函数
+核心矛盾在于：可行解空间是离散的整数偏移、还带容量约束，但梯度搜索需要连续可微。PIL 用直通式估计同时拿到两边的好处。它先为每个活跃脉冲在可行偏移集 $\mathcal{U}_p$ 上引入一组偏移 logits，经温度 $\kappa$ 软化成概率 $\pi[s,j,u] = \text{softmax}(\phi[s,j,u]/\kappa)$；据此可算出一个完全可微的**软重定时结果** $\tilde{\bm{x}} = S_\pi(\bm{x})$（期望意义下的脉冲分布，负责回传时序对齐的梯度），以及一个**严格投影结果** $\hat{\bm{x}} = P^*(\bm{x}; \pi, \mathcal{B}_p(\varepsilon))$（前向按概率从高到低贪心放置脉冲，严格满足容量-1与预算约束）。两者通过 $\bm{x}_{\text{PIL}} = \hat{\bm{x}} + (\tilde{\bm{x}} - \text{stopgrad}(\tilde{\bm{x}}))$ 耦合：前向 stopgrad 抵消掉软项，网络实际看到的是严格可行的 $\hat{\bm{x}}$，反向梯度却只从 $\tilde{\bm{x}}$ 流过，于是评估用的是真实离散攻击、优化用的是平滑梯度，消融中去掉 PIL 会让二值 $\mathcal{B}_1$ 的 ASR 从 98.5% 跌到 84.3%，是贡献最大的组件。
+
+**4. 预算感知目标函数：一个损失同时驱动误分类、压容量、收敛到预算内。**
+
+logits 的训练目标写成
 
 $$\mathcal{J} = \mathcal{L}(f(\bm{x}_{\text{PIL}}), y) - \lambda_{\text{cap}} \cdot \text{Cap}(\pi; \bm{x}) - \lambda_{\text{budget}} \cdot \mathcal{R}_p(\pi; \varepsilon)$$
 
-- 任务损失 $\mathcal{L}$：最大化交叉熵以实现非目标攻击
-- 容量正则化 $\text{Cap}$：惩罚期望占用超过1的时间bin，$\text{Cap} = \frac{1}{|\mathcal{A}|} \sum_{j,t} [\text{occ}[t,j] - 1]_+^2$
-- 预算惩罚 $\mathcal{R}_p$：归一化铰链损失引导logits向可行区域收敛，$\mathcal{B}_\infty$无需额外惩罚（支持集已编码约束），$\mathcal{B}_1/\mathcal{B}_0$分别用软总偏移/软移动计数
-
-logits通过裁剪sign-PGD更新：$\phi \leftarrow \text{clip}_{[-\phi_{\max}, \phi_{\max}]}(\phi + \alpha \cdot \text{sign}(\nabla_\phi \mathcal{J}))$。
+其中任务损失 $\mathcal{L}$ 取交叉熵并最大化它来实现非目标误分类；容量正则化 $\text{Cap} = \frac{1}{|\mathcal{A}|} \sum_{j,t} [\text{occ}[t,j] - 1]_+^2$ 惩罚期望占用超过 1 的时间 bin，把软分布提前推向容量可行区，减少前向贪心投影时的冲突；预算惩罚 $\mathcal{R}_p$ 是归一化铰链损失，引导 logits 收敛到对应范数预算内——$\mathcal{B}_\infty$ 因为支持集本身已编码上界而无需额外惩罚，$\mathcal{B}_1$ 与 $\mathcal{B}_0$ 则分别用软总偏移、软移动计数来约束，消融显示 $\mathcal{R}_p$ 对 $\mathcal{B}_1$ 影响最大。logits 本身用裁剪 sign-PGD 更新：$\phi \leftarrow \text{clip}_{[-\phi_{\max}, \phi_{\max}]}(\phi + \alpha \cdot \text{sign}(\nabla_\phi \mathcal{J}))$，默认超参为 $\kappa=1,\ \alpha=1,\ \phi_{\max}=10,\ \lambda_{\text{cap}}=20,\ \lambda_{\text{budget}}=10$。
 
 ## 实验结果
 
@@ -76,7 +71,6 @@ logits通过裁剪sign-PGD更新：$\phi \leftarrow \text{clip}_{[-\phi_{\max}, 
 - **数据集**：CIFAR10-DVS(10类)、DVS-Gesture(11类手势)、N-MNIST(手写数字)
 - **模型**：ConvNet、Spiking ResNet18、VGGSNN、SpikingResformer，均为直接训练的SNN
 - **时间bin**：$T=10$；评估指标为攻击成功率(ASR)
-- **默认超参**：$\kappa=1, \alpha=1, \phi_{\max}=10, \lambda_{\text{cap}}=20, \lambda_{\text{budget}}=10$
 
 ### 二值网格结果
 

@@ -40,36 +40,21 @@ tags:
 
 ## 方法详解
 
-### 整体思路
+### 整体框架
 
-协议分为两步：(1) 先获得常数近似解；(2) 再通过 sensitivity sampling 升级到 $(1+\varepsilon)$-coreset。关键创新在于每一步都大幅降低通信量。
+协议遵循"先粗后精"的两步范式：先用极低的通信量在分布式数据上求出一个常数近似解，再以它为基准计算每个点的 sensitivity 并做重要性采样，把摘要升级成 $(1+\varepsilon)$-strong coreset。真正的难点不在算法骨架，而在如何让每一步的通信比特数与机器数 $s$、维度 $d$、精度 $1/\varepsilon$ 三者解耦，最终在 Coordinator 模型达到 $\tilde{O}(sk + dk/\min(\varepsilon^4, \varepsilon^{2+z}) + dk\log(n\Delta))$、在 Blackboard 模型达到 $\tilde{O}(s\log(n\Delta) + dk\log(n\Delta) + dk/\min(\varepsilon^4, \varepsilon^{2+z}))$，二者均匹配已知下界（至多差 polylog 因子）。
 
-### Blackboard 模型中的常数近似
+### 关键设计
 
-- 已有的 adaptive sampling（类似 $k$-means++）要求每轮采样后所有 $s$ 台机器都上报其距离和 $D_i$，通信量为 $O(sk\log n)$，过于昂贵。
-- **Lazy Sampling**：黑板上只保存各机器距离和的近似值 $\widehat{D_i}$，按 $\widehat{D_i}$ 的比例选机器采样。如果 $\widehat{D_i}$ 是 $D_i$ 的常数近似，采样失败概率为常数，总采样轮次仍为 $O(k)$。
-- 采样失败时，说明 $D_i$ 已大幅减小，此时机器 $i$ 更新黑板上的值。每台机器最多更新 $O(\log n)$ 次，每次只需传 $O(\log\log n)$ 比特（传指数即可）。
-- **$L_1$ Sampling 加速**：不需要每轮让所有机器报告，而是随机选择一台机器 $i$（概率正比于 $\widehat{D_i}$），通过 $D_i/p_i$ 的均值估计全局总权重 $\sum D_i$ 是否下降超过 $1/64$，从而决定是否需要全局更新。
-- **指数增长批采样**：在全局权重未显著下降时，一次性采 $2^i$ 个样本（$i$ 逐步递增），将通信轮次降至 $O(\log n \log k)$。
+**1. Lazy Sampling：用过时的距离估计避免每轮全局通信。** 黑板模型里求常数近似最自然的做法是分布式 $k$-means++ 式的 adaptive sampling，但它要求每采一个中心就让全部 $s$ 台机器上报各自的距离和 $D_i$，单轮就要 $O(sk\log n)$ 比特，代价过高。Lazy Sampling 的想法是黑板上只维护各机器距离和的近似值 $\widehat{D_i}$，并按 $\widehat{D_i}$ 的比例挑机器采样——只要 $\widehat{D_i}$ 还是 $D_i$ 的常数近似，单次采样失败的概率就是常数，总采样轮次维持在 $O(k)$。一旦某次采样失败，恰好说明该机器的 $D_i$ 已经大幅下降，此时机器 $i$ 才更新黑板上的值；由于距离和单调递减，每台机器最多更新 $O(\log n)$ 次，每次还只需传 $O(\log\log n)$ 比特（传一个指数即可）。容忍过时信息、仅在偏差超阈值时纠正，这正是它把全局开销摊薄的核心。
 
-### Coordinator 模型中的关键创新
+**2. $L_1$ Sampling：把"是否该全局更新"也变成一次采样。** 即便有了 Lazy Sampling，判断全局总权重 $\sum_i D_i$ 是否已经显著下降本身仍可能触发全员通信。这里改用 $L_1$ Sampling：随机选一台机器 $i$（概率正比于 $\widehat{D_i}$），用无偏估计 $D_i/p_i$ 去估计全局总权重是否下降超过阈值 $1/64$，据此决定要不要触发一次全局更新。再配合指数增长的批采样——在总权重尚未明显下降时一次性采 $2^i$ 个样本（$i$ 逐轮递增）——把通信轮次从 $O(k)$ 量级压到 $O(\log n \log k)$，从而让 $s$ 项只以 $\log(n\Delta)$ 的代价出现在最终上界里。
 
-- **Coordinate-wise Sampling**：不传完整的高维中心点，而是在 coordinator 和某台机器之间对排序后的坐标做分布式二分搜索，只传输一个小偏移量。这使得通信量与维度 $d$ 解耦。
-- **Coordinate-wise Sensitivity Sampling**：将每个点按坐标分解，根据各维度的重要性采样维度。coordinator 发送紧凑摘要，各机器仅在需要时请求额外信息。
-- 重构出的样本可能不对应数据集中任何真实点，但论文证明聚类代价的失真可控。
+**3. Coordinate-wise Sampling：让通信量与维度解耦。** 把常数近似升级到 $(1+\varepsilon)$-coreset 时，朴素做法要把采到的高维中心点完整传一遍，通信量直接正比于 $d$。本文不传完整坐标，而是在 coordinator 与持有该点的机器之间，对排序后的坐标序列做分布式二分搜索，最终只传一个小偏移量来定位目标。这样每次采样的通信代价与维度 $d$ 解耦，是 Coordinator 模型里去掉 $s\cdot d$ 乘积项的关键一步；一个值得注意的副产物是：整个协议不需要任何机器把完整点坐标广播给所有人。
 
-### $(1+\varepsilon)$-Coreset 构造
+**4. Coordinate-wise Sensitivity Sampling：把高维通信拆成逐坐标的低维问题。** 利用常数近似解 $C'$ 算出每个点的 sensitivity $\mu(x)$ 后，需要按 sensitivity 分布采 $\tilde{O}(k/\min(\varepsilon^4, \varepsilon^{2+z}))$ 个点。本文把每个点按坐标分解，依据各维度的重要性逐维采样：coordinator 先发一份紧凑摘要，各机器只在确有需要时才请求额外信息。代价是重构出的样本可能不对应数据集中任何真实点，但论文证明由此引入的聚类代价失真可控，因而 coreset 的近似保证不受影响。
 
-- 利用常数近似解 $C'$ 计算每个点的 sensitivity $\mu(x)$，按 sensitivity 分布采样 $\tilde{O}(k/\min(\varepsilon^4, \varepsilon^{2+z}))$ 个点。
-- **Compact Encoding**：每个采样点表示为 $(c'(x), y)$，其中 $c'(x)$ 是最近中心的索引，$y$ 是残差向量各坐标取对数后的指数。每个点仅需 $O(\log k + d\log(1/\varepsilon, d, \log(n\Delta)))$ 比特。
-
-### 主要定理
-
-**Theorem 1.1 (Coordinator 模型)**：总通信量 $\tilde{O}(sk + dk/\min(\varepsilon^4, \varepsilon^{2+z}) + dk\log(n\Delta))$ 比特。
-
-**Theorem 1.2 (Blackboard 模型)**：总通信量 $\tilde{O}(s\log(n\Delta) + dk\log(n\Delta) + dk/\min(\varepsilon^4, \varepsilon^{2+z}))$ 比特。
-
-两者均匹配已知下界（至多差 polylog 因子）。
+**5. Compact Encoding：把每个采样点压到对数比特。** 最后一步是采样点的表示。每个点编码为 $(c'(x), y)$：$c'(x)$ 是它最近中心的索引，$y$ 则把残差向量逐坐标取对数后只保留指数。这样每个采样点仅需 $O(\log k + d\log(1/\varepsilon,\, d,\, \log(n\Delta)))$ 比特即可表示，使得 coreset 的总通信量里关于 $1/\varepsilon$ 的项不再额外乘上 $\log(n\Delta)$，恰好对齐通信下界。
 
 ## 实验关键数据
 
@@ -130,7 +115,7 @@ tags:
 - [\[NeurIPS 2025\] Learning-Augmented Streaming Algorithms for Correlation Clustering](../../NeurIPS2025/others/learning-augmented_streaming_algorithms_for_correlation_clustering.md)
 - [\[NeurIPS 2025\] Improved Approximation Algorithms for Chromatic and Pseudometric-Weighted Correlation Clustering](../../NeurIPS2025/others/improved_approximation_algorithms_for_chromatic_and_pseudometric-weighted_correl.md)
 - [\[NeurIPS 2025\] Coresets for Clustering Under Stochastic Noise](../../NeurIPS2025/others/coresets_for_clustering_under_stochastic_noise.md)
-- [\[NeurIPS 2025\] Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting](../../NeurIPS2025/others/tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)
+- [\[ICLR 2026\] Non-Clashing Teaching in Graphs: Algorithms, Complexity, and Bounds](non-clashing_teaching_in_graphs_algorithms_complexity_and_bounds.md)
 
 </div>
 

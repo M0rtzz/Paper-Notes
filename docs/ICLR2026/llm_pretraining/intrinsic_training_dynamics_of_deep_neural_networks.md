@@ -43,47 +43,23 @@ tags:
 
 ### 整体框架
 
-论文建立了三层递进的内在性定义及其蕴含关系：
-
-$$\text{Intrinsic Recoverability} \Rightarrow \text{Intrinsic Metric} \Rightarrow \text{Intrinsic Dynamic}$$
-
-核心问题：对于梯度流 $\dot{\theta}(t) = -\nabla \ell(\theta(t))$，提升变量 $z(t) = \phi(\theta(t))$ 的动力学为 $\dot{z}(t) = -M(\theta(t)) \nabla f(z(t))$，其中 $M(\theta) = \partial\phi(\theta) \partial\phi(\theta)^\top$。何时 $M(\theta(t))$ 可以仅用 $z(t)$ 和初始化 $\theta_0$ 表达？
+论文围绕一个统一的问题展开：对梯度流 $\dot{\theta}(t) = -\nabla \ell(\theta(t))$，把参数提升为 $z(t) = \phi(\theta(t))$ 后，其动力学写成 $\dot{z}(t) = -M(\theta(t)) \nabla f(z(t))$，度量矩阵 $M(\theta) = \partial\phi(\theta) \partial\phi(\theta)^\top$，问什么时候 $M(\theta(t))$ 可以只用 $z(t)$ 和初始化 $\theta_0$ 表达——一旦能，$z$ 就服从一个内禀的黎曼梯度流，便能套用凸优化工具分析隐式正则化。为此作者把"内在性"拆成三个由强到弱的层级，证明它们依次蕴含：内在可恢复性 $\Rightarrow$ 内在度量 $\Rightarrow$ 内在动力学，再分别在任意深度 ReLU 网络与松弛平衡的线性网络上落地。
 
 ### 关键设计
 
-1. **内在动力学性质（Definition 2.6）**
+**1. 内在动力学性质（Definition 2.6）：把度量与任务解耦。** 最弱也最直接的诉求是，无论训练用什么损失，提升变量都遵循同一条内禀梯度流。形式上，称 $\theta_0$ 相对于 $\phi$ 具有内在动力学性质，当且仅当存在仅依赖架构与初始化的函数 $K_{\theta_0}$，使 $M(\theta(t)) = K_{\theta_0}(\phi(\theta(t)))$ 对所有可微 $f$ 成立。这样度量矩阵就不再显式依赖具体的 $\theta$ 或数据，而只是 $z$ 的函数，$z(t)$ 因此可被看作一个自洽的低维系统。
 
-    - **功能**：定义何时 $\theta_0$ 相对于 $\phi$ 具有内在动力学性质
-    - **核心思路**：存在函数 $K_{\theta_0}$ 使得 $M(\theta(t)) = K_{\theta_0}(\phi(\theta(t)))$ 对所有 $f$ 成立
-    - **设计动机**：将度量矩阵与数据/任务解耦，$K_{\theta_0}$ 仅依赖网络架构和初始化
+**2. 内在度量性质（Definition 2.10）：用守恒律把轨迹钉在低维流形上。** 直接要求 $K_{\theta_0}$ 对所有 $\theta$ 成立往往太苛刻，但梯度流天然带有守恒量——这正是放松条件的入口。作者引入守恒律 $\mathbf{h}$，把约束限制到流形 $\mathcal{M}_{\theta_0} = \{\theta : \mathbf{h}(\theta) = \mathbf{h}(\theta_0)\}$ 上，只需存在 $K_{\theta_0}$ 使 $M(\theta) = K_{\theta_0}(\phi(\theta))$ 对所有 $\theta \in \mathcal{M}_{\theta_0}$ 成立。由于轨迹本就被守恒律封闭在 $\mathcal{M}_{\theta_0}$ 内，内在度量性质足以推出内在动力学，却比后者更容易验证。
 
-2. **内在度量性质（Definition 2.10）**
+**3. 内在可恢复性（Definition 2.15）与等价判据（Theorem 2.17）：最强条件归结为一道线性代数题。** 最强的层级要求从 $\phi(\theta)$ 与 $\mathbf{h}(\theta)$ 的取值就能唯一还原 $\theta$，即"提升 + 守恒量"不丢信息。它的价值在于可被局部验证：Theorem 2.17 证明内在可恢复性等价于核交集条件 $\ker\partial\phi(\theta) \cap \ker\partial\mathbf{h}(\theta) = \{0\}$。这把一个关于全局动力学的抽象命题，转化为逐点检查两个雅可比矩阵零空间是否只相交于原点，从而可计算、可判定。
 
-    - **功能**：在守恒律约束的流形 $\mathcal{M}_{\theta_0}$ 上要求度量的内在性
-    - **核心思路**：存在守恒律 $\mathbf{h}$ 和函数 $K_{\theta_0}$ 使得 $M(\theta) = K_{\theta_0}(\phi(\theta))$ 对所有 $\theta \in \mathcal{M}_{\theta_0}$ 成立
-    - **设计动机**：利用守恒律将轨迹约束在低维流形上
+**4. ReLU 网络的 Frobenius 性质（Theorem 3.1 & Corollary 3.3）：用 Lie 代数判据绕开守恒律的显式构造。** 验证内在可恢复性的难点在于找全守恒律，作者改用一个代数充分条件——Frobenius 性质，即由 $\phi$ 诱导的向量场族在 Lie 括号下封闭。Theorem 3.1 证明任意 DAG 架构 ReLU 网络的 path-lifting $\phi_{\text{ReLU}}$ 在非零参数构成的稠密集上满足该性质，于是 Corollary 3.3 对几乎所有初始化都建立了最强的内在可恢复性。反直觉的是，ReLU 的分段结构使其对称群更小、守恒律更丰富，已知守恒律（对角项差）对它已是完备的（Corollary 3.4），因此比线性网络更容易建立内在动力学。
 
-3. **内在可恢复性（Definition 2.15）与等价判据（Theorem 2.17）**
-
-    - **功能**：要求参数 $\theta$ 可从 $\phi(\theta)$ 和 $\mathbf{h}(\theta)$ 完全恢复
-    - **核心思路**：等价于核交集条件 $\ker\partial\phi(\theta) \cap \ker\partial\mathbf{h}(\theta) = \{0\}$
-    - **设计动机**：最强条件，等价于可验证的线性代数条件
-
-4. **ReLU 网络的 Frobenius 性质（Theorem 3.1 & Corollary 3.3）**
-
-    - **功能**：证明任意 DAG 架构的 ReLU 网络的 path-lifting 满足 Frobenius 性质
-    - **核心思路**：在非零参数（稠密集）上验证 Lie 括号封闭性
-    - **设计动机**：对几乎所有初始化建立了最强的内在可恢复性
-
-5. **松弛平衡条件下的线性网络（Theorem 3.8 & 3.9）**
-
-    - **功能**：将内在度量性质从 balanced ($\lambda=0$) 推广到 relaxed balanced ($S = \lambda I$)
-    - **核心思路**：推导闭式的内在动力学表达式，并证明松弛平衡是必要条件（$r \leq \max(n,m)$ 时）
-    - **设计动机**：在线性网络中建立了充要条件
+**5. 松弛平衡条件下的线性网络（Theorem 3.8 & 3.9）：把平衡初始化从一个点放宽成一族。** 线性网络以往的内在动力学结果依赖严格平衡初始化 $U_{i+1}^\top U_{i+1} = U_i U_i^\top$（对应守恒量 $S = 0$），实践中几乎不可能精确满足。作者将其放宽为松弛平衡 $S = \lambda I$，允许各层差一个标量倍数，并据此推导出内在动力学的闭式表达式（覆盖两层、深层乃至无限深的线性神经 ODE）。Theorem 3.9 进一步证明在 $r \leq \max(n,m)$ 时松弛平衡是内在度量性质的必要条件，从而在线性网络上给出了一个充要刻画。
 
 ### 损失函数 / 训练策略
 
-本文为纯理论工作，分析连续时间梯度流。损失函数 $\ell(\theta) = f(\phi(\theta))$ 中的 $f$ 为任意可微函数，结果与具体损失函数和数据集无关。
+本文为纯理论工作，分析连续时间梯度流。损失 $\ell(\theta) = f(\phi(\theta))$ 中的 $f$ 取任意可微函数，所有结论与具体损失形式和数据集无关。
 
 ## 实验关键数据
 

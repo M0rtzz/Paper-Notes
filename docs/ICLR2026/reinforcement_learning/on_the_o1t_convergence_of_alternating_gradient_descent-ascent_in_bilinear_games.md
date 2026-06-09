@@ -41,38 +41,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AltGDA算法：$\mathbf{x}^{t+1} = \Pi_\mathcal{X}(\mathbf{x}^t - \eta A^\top \mathbf{y}^t)$，然后 $\mathbf{y}^{t+1} = \Pi_\mathcal{Y}(\mathbf{y}^t + \eta A \mathbf{x}^{t+1})$（注意y更新使用的是x的新值）。收敛度量：遍历平均的Duality Gap。
+论文要回答的是一个纯理论问题：交替梯度下降上升（AltGDA）在**有约束**双线性零和博弈 $\min_{\mathbf{x}\in\mathcal{X}}\max_{\mathbf{y}\in\mathcal{Y}}\ \mathbf{y}^\top A\mathbf{x}$ 上到底收敛多快。算法本身很简单：先更新 $\mathbf{x}^{t+1} = \Pi_\mathcal{X}(\mathbf{x}^t - \eta A^\top \mathbf{y}^t)$，再用 $\mathbf{x}$ 的**新值**更新 $\mathbf{y}^{t+1} = \Pi_\mathcal{Y}(\mathbf{y}^t + \eta A \mathbf{x}^{t+1})$，两个玩家轮流走、各自投影回单纯形。收敛用遍历平均策略 $(\bar{\mathbf{x}}^T,\bar{\mathbf{y}}^T)$ 的 Duality Gap 来度量。整篇证明的脉络是：先造一个能量函数把"投影碰撞边界会耗能"这件事量化出来，再分别在"有内部均衡"和"无内部均衡"两种情形下把这份耗能转成对遗憾残差的界，最后用 PEP 把这套结论在数值上压到最紧并反推最优步长。
 
 ### 关键设计
 
-1. **能量函数与"碰撞耗散"机制**
+**1. 能量函数与"碰撞耗散"机制：把投影边界的损耗变成可加的残差界。**
 
-    - 功能：构造能量函数 $\mathcal{E}(\mathbf{x}^t, \mathbf{y}^t) = \|\mathbf{x}^t - \mathbf{x}^*\|^2 + \|\mathbf{y}^t - \mathbf{y}^*\|^2 - \eta(\mathbf{y}^t)^\top A \mathbf{x}^t$
-    - 核心发现：无约束时残差 $r_t \equiv 0$（已知结论）；有约束时投影的一阶最优条件保证 $r_t \geq 0$，但关键是证明 $r_t \leq \mathcal{E}^t - \mathcal{E}^{t+1}$
-    - 物理直觉：轨迹碰撞simplex边界→投影产生能量损失→能量单调递减→ $\sum r_t$ 有界→ $O(1/T)$ 收敛
+无约束情形下 AltGDA 的 $O(1/T)$ 早已被证明，关键就卡在投影上——一旦策略被约束在单纯形内，标准分析里的残差项不再恒为零，整套递推就断了。本文的破局点是构造能量函数
 
-2. **内部NE的全局 $O(1/T)$ 收敛（Theorem 1）**
+$$\mathcal{E}(\mathbf{x}^t, \mathbf{y}^t) = \|\mathbf{x}^t - \mathbf{x}^*\|^2 + \|\mathbf{y}^t - \mathbf{y}^*\|^2 - \eta(\mathbf{y}^t)^\top A \mathbf{x}^t$$
 
-    - 条件：博弈存在内部Nash均衡（所有策略概率>0）
-    - 步长要求：$\eta \leq \frac{1}{\|A\|_2} \min\{\min_i x_i^*, \min_j y_j^*\}$
-    - 收敛界：$\text{DualityGap}(\bar{\mathbf{x}}^T, \bar{\mathbf{y}}^T) \leq \frac{9 + 4\eta\|A\|_2}{\eta T}$
-    - 意义：**首个在有约束minimax中证明交替优于同步的结果**
+并盯住每步的遗憾残差 $r_t$。无约束时 $r_t \equiv 0$ 是已知结论；有约束时投影的一阶最优条件只能保证 $r_t \geq 0$，单凭这点不够。论文真正证出来的是 $r_t \leq \mathcal{E}^t - \mathcal{E}^{t+1}$——残差被能量的单步衰减夹住了。物理图景非常直观：轨迹一旦撞上单纯形边界，投影就把它"弹回"内部并损耗掉一部分能量，能量随之单调递减，于是 $\sum_t r_t$ 被首末能量差控制为有界，遍历平均的 Duality Gap 自然以 $O(1/T)$ 衰减。
 
-3. **局部 $O(1/T)$ 收敛（Theorem 2）**
+**2. 内部NE的全局 $O(1/T)$ 收敛（Theorem 1）：当均衡落在单纯形内部时，全局加速。**
 
-    - 功能：在无内部NE时证明局部收敛
-    - 核心思路：定义NE邻域 $S_0$，在此区域内轨迹不再触碰非支撑面的边界，能量虽可能局部增加但累计增量有界（$\leq \delta^2/128$）
-    - 步长：$\eta \leq \frac{1}{2\|A\|_2}$，与博弈参数**无关**
-    - 收敛界：$\frac{9 + 7\eta\|A\|_2 + \delta^2/128}{\eta T}$
+第一个定理处理博弈存在**内部** Nash 均衡（最优策略每个分量都严格大于 0）的情形。此时只要步长满足
 
-4. **性能估计编程（PEP）框架**
+$$\eta \leq \frac{1}{\|A\|_2} \min\{\min_i x_i^*, \min_j y_j^*\},$$
 
-    - 功能：数值计算AltGDA的最紧收敛界并优化步长
-    - 核心思路：将最坏情况性能问题转化为SDP，对步长做网格搜索
-    - 关键发现：优化步长呈周期性衰减模式（$O(1/(\log T)^\alpha)$），对应的duality gap确认趋向 $O(1/T)$；SimGDA即使优化步长仍为 $O(1/\sqrt{T})$
+上面的能量耗散论证就能在全局生效，给出
+
+$$\text{DualityGap}(\bar{\mathbf{x}}^T, \bar{\mathbf{y}}^T) \leq \frac{9 + 4\eta\|A\|_2}{\eta T}.$$
+
+这是**首个在有约束 minimax 设置下严格证明交替更新快于同步更新的结果**：同步 GDA 在同样问题上只有 $O(1/\sqrt{T})$，而交替凭这套碰撞耗散机制直接进到 $O(1/T)$。代价是步长上界依赖均衡的最小支撑概率，均衡越贴近边界、可用步长越小。
+
+**3. 局部 $O(1/T)$ 收敛（Theorem 2）：均衡在边界上时，退而求其次但去掉了对博弈参数的依赖。**
+
+大多数矩阵博弈的均衡并不在内部，Theorem 1 的步长条件会失效，于是第二个定理转为局部结论。做法是先圈定一个 NE 邻域 $S_0$：在这个区域内轨迹不会再去触碰那些非支撑面的边界，能量虽然可能局部回升，但累计增量被牢牢压在 $\delta^2/128$ 以内，耗散论证依旧成立。这样得到的收敛界为
+
+$$\frac{9 + 7\eta\|A\|_2 + \delta^2/128}{\eta T},$$
+
+仍是 $O(1/T)$。它的步长要求 $\eta \leq \frac{1}{2\|A\|_2}$ **与博弈参数无关**，比 Theorem 1 更实用；代价是只保证从邻域内出发能收敛，没有给出如何先走进这个邻域的保证。
+
+**4. 性能估计编程（PEP）框架：用 SDP 把收敛界数值压到最紧并反推最优步长。**
+
+解析证明给的是上界，未必最紧，论文再用性能估计编程（PEP）从数值上逼真实速率。思路是把"最坏情况下走 $T$ 步的性能"建模成一个半正定规划（SDP），在给定步长下解出最坏 Duality Gap，再对步长做网格搜索找最优配置。结果很说明问题：PEP 解出的最优步长呈现周期性的缓慢衰减模式（约 $O(1/(\log T)^\alpha)$），对应的 Duality Gap 确认趋向 $O(1/T)$；而同样优化过步长的 SimGDA 仍然停在 $O(1/\sqrt{T})$，从数值侧再次坐实了交替相对同步的本质优势。这也是 PEP 首次被用到含线性算子的原始-对偶算法上。
 
 ### 损失函数 / 训练策略
-（优化算法，无训练损失。步长 $\eta$ 是核心超参。）
+优化算法，无训练损失；步长 $\eta$ 是唯一核心超参，其上界形式正是两个定理区别的关键。
 
 ## 实验关键数据
 
@@ -126,9 +132,9 @@ AltGDA算法：$\mathbf{x}^{t+1} = \Pi_\mathcal{X}(\mathbf{x}^t - \eta A^\top \m
 
 - [\[ICML 2026\] Convergence of Steepest Descent and Adam under Non-Uniform Smoothness](../../ICML2026/reinforcement_learning/convergence_of_steepest_descent_and_adam_under_non-uniform_smoothness.md)
 - [\[NeurIPS 2025\] Last Iterate Convergence in Monotone Mean Field Games](../../NeurIPS2025/reinforcement_learning/last_iterate_convergence_in_monotone_mean_field_games.md)
-- [\[ICLR 2026\] Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](rethinking_policy_diversity_in_ensemble_policy_gradient_in_large-scale_reinforce.md)
 - [\[ICLR 2026\] Learning to Play Multi-Follower Bayesian Stackelberg Games](learning_to_play_multi-follower_bayesian_stackelberg_games.md)
 - [\[ICLR 2026\] Nearly-Optimal Bandit Learning in Stackelberg Games with Side Information](nearly-optimal_bandit_learning_in_stackelberg_games_with_side_information.md)
+- [\[ICLR 2026\] Solving Football by Exploiting Equilibrium Structure of 2p0s Differential Games with One-Sided Information](solving_football_by_exploiting_equilibrium_structure_of_2p0s_differential_games_.md)
 
 </div>
 

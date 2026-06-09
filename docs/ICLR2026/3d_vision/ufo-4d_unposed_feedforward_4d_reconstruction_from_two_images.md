@@ -33,70 +33,23 @@ tags:
 
 ## 方法详解
 
-### 整体架构
+### 整体框架
 
-给定两张无位姿图像 $\mathbf{I}_t, \mathbf{I}_{t+1}$ 和相机内参：
+UFO-4D 把"位姿 + 几何 + 运动"的联合估计塞进同一个前馈函数：给定两张无位姿图像 $\mathbf{I}_t, \mathbf{I}_{t+1}$ 和相机内参，网络 $f_\theta(\mathbf{I}_t, \mathbf{I}_{t+1}) \mapsto (\mathcal{G}, \mathbf{P})$ 一次性吐出一组动态 3D 高斯 $\mathcal{G}$ 和相对相机位姿 $\mathbf{P}$。每个高斯既携带静态几何（中心 $\boldsymbol{\mu} \in \mathbb{R}^3$、四元数旋转 $\mathbf{r}$、尺度 $\mathbf{s}$、球谐颜色 $\mathbf{h}$、不透明度 $o$），又额外带一个 3D 运动向量 $\mathbf{v} \in \mathbb{R}^3$——正是这一份"同时编码了形状和运动"的统一表示，让深度、光流、场景流、新视角等所有下游信号都能从它经可微渲染导出，从而相互正则化。
 
-$$f_\theta(\mathbf{I}_t, \mathbf{I}_{t+1}) \mapsto (\mathcal{G}, \mathbf{P})$$
+### 关键设计
 
-输出动态 3D 高斯集合 $\mathcal{G}$ 和相对相机位姿 $\mathbf{P}$。每个动态高斯包含：
-- 3D 中心 $\boldsymbol{\mu} \in \mathbb{R}^3$
-- 3D 运动 $\mathbf{v} \in \mathbb{R}^3$
-- 协方差参数（四元数旋转 $\mathbf{r}$，尺度 $\mathbf{s}$）
-- 球谐颜色 $\mathbf{h}$，不透明度 $o$
+**1. 共享编码 + 多头解码的网络：把两图证据融成一套动态高斯。**
 
-### 网络架构
+要从两张无位姿图同时回归几何和运动，关键是让网络在跨帧对应中读出运动。UFO-4D 用权重共享的 ViT 编码器分别处理两张图像，再由带交叉注意力层的 ViT 解码器融合两图信息，使每个像素的预测都能参考另一帧的线索。解码后接四个并行头：中心头（DPT）输出 3D 位置、属性头（DPT）输出旋转/尺度/颜色/不透明度、速度头（DPT）输出 3D 运动向量、位姿头（3 层 MLP）回归相对位姿的平移与四元数。训练初始化上，高斯头沿用 NoPoSplat 的权重、其余部分用 MASt3R 初始化，直接继承静态重建的强几何先验，再在动态数据上学出运动分量。
 
-- **编码器**：权重共享 ViT 分别处理两张图像
-- **解码器**：ViT with 交叉注意力层融合两图信息
-- **头部**：
-    - 中心头（DPT）→ 3D 位置
-    - 属性头（DPT）→ 旋转、尺度、颜色、不透明度
-    - 速度头（DPT）→ 3D 运动向量
-    - 位姿头（3层 MLP）→ 相对位姿（平移+四元数）
-- **初始化**：NoPoSplat（高斯头）+ MASt3R（其余）
+**2. 可微 4D 光栅化：用同一套 α-blending 把高斯渲染成图像、点图和运动图。**
 
-### 可微 4D 光栅化
+这是把统一表示真正变成自监督信号的核心。标准 3DGS 只渲染外观，UFO-4D 扩展光栅化器，让同一组高斯在任意目标时刻 $t'$ 下统一渲染出图像、点图和场景流。先在线性运动假设下对高斯做时间插值，把每个中心平移 $\Delta t \cdot \mathbf{v}$：$$\mathcal{G}(t') = \{(\boldsymbol{\mu} + \Delta t \cdot \mathbf{v}, \mathbf{v}, \mathbf{r}, \mathbf{s}, \mathbf{h}, \mathbf{c}, o)_\mathbf{p}\}$$ 再用与颜色完全相同的 $\alpha$-blending 权重去合成几何通道——点图累加各高斯中心、运动图累加各高斯速度：$$\mathbf{X}_{t'}(\mathbf{p}) = \sum_{i \in \mathcal{N}_\mathbf{p}^{t'}} \boldsymbol{\mu}_i o_i \prod_{j=1}^{i-1}(1-o_j)$$ $$\mathbf{V}_{t'}(\mathbf{p}) = \sum_{i \in \mathcal{N}_\mathbf{p}^{t'}} \mathbf{v}_i o_i \prod_{j=1}^{i-1}(1-o_j)$$ 因为点图、运动图和颜色图共享同一批高斯与同一套混合权重，任何一路监督都会反传到所有高斯参数上，几何与运动天然耦合、互为约束。也正是有了可微渲染的几何通道，下游任务才能零成本派生：深度取点图最后一个通道、光流是 3D 场景流的 2D 投影、运动分割对场景流幅值阈值化、4D 插值则直接把 $t'$ 和视角设成任意值再渲染。
 
-**关键创新**：扩展标准 3DGS 光栅化器，统一渲染图像、点图和场景流。
+### 损失函数 / 训练策略
 
-时间插值（线性运动假设）：
-
-$$\mathcal{G}(t') = \{(\boldsymbol{\mu} + \Delta t \cdot \mathbf{v}, \mathbf{v}, \mathbf{r}, \mathbf{s}, \mathbf{h}, \mathbf{c}, o)_\mathbf{p}\}$$
-
-统一 $\alpha$-blending 渲染点图和运动图：
-
-$$\mathbf{X}_{t'}(\mathbf{p}) = \sum_{i \in \mathcal{N}_\mathbf{p}^{t'}} \boldsymbol{\mu}_i o_i \prod_{j=1}^{i-1}(1-o_j)$$
-
-$$\mathbf{V}_{t'}(\mathbf{p}) = \sum_{i \in \mathcal{N}_\mathbf{p}^{t'}} \mathbf{v}_i o_i \prod_{j=1}^{i-1}(1-o_j)$$
-
-### 损失函数
-
-**总损失** = 监督损失 + 自监督损失：
-
-$$L_{total} = L_{sup} + L_{self}$$
-
-**监督损失**（场景流 + 点图 + 位姿）：
-
-$$L_{sup} = L_{motion} + w_{point} L_{point} + w_{pose} L_{pose}$$
-
-- $L_{motion}$：同时约束高斯中心运动 $\mathbf{v}$ 和渲染运动 $\mathbf{V}$
-- $L_{point}$：同时约束高斯位置 $\boldsymbol{\mu}$ 和渲染点图 $\mathbf{X}$
-- $L_{pose}$：分别约束平移和四元数
-
-**自监督损失**（光度 + 平滑）：
-
-$$L_{self} = L_{photo} + w_{smooth} L_{smooth}$$
-
-- $L_{photo} = \text{MSE} + w_{lpips} \text{LPIPS}$
-- $L_{smooth}$：边缘感知平滑正则化
-
-### 下游任务
-
-- 深度 = 点图最后一个通道
-- 光流 = 3D 场景流的 2D 投影
-- 运动分割 = 场景流阈值化
-- 4D 插值 = 任意时间和视角的渲染
+总损失把有标注的监督项和无标注的自监督项相加：$L_{total} = L_{sup} + L_{self}$。监督损失覆盖场景流、点图和位姿三类标注，$$L_{sup} = L_{motion} + w_{point} L_{point} + w_{pose} L_{pose}$$ 其中 $L_{motion}$ 同时约束高斯中心运动 $\mathbf{v}$ 和渲染运动图 $\mathbf{V}$、$L_{point}$ 同时约束高斯位置 $\boldsymbol{\mu}$ 和渲染点图 $\mathbf{X}$、$L_{pose}$ 分别约束平移和四元数——即"显式高斯参数"和"渲染结果"两端都受监督，避免表示和渲染脱节。自监督损失则用来对抗 4D 标注稀缺：$$L_{self} = L_{photo} + w_{smooth} L_{smooth}$$ 光度项 $L_{photo} = \text{MSE} + w_{lpips} \text{LPIPS}$ 直接拿渲染图像和真实图像比对、不需任何标注，平滑项 $L_{smooth}$ 是边缘感知的正则化。靠光度自监督，模型能在真实视频上学习而无需稠密 4D 真值。
 
 ## 实验
 
@@ -164,11 +117,11 @@ UFO-4D 在 Stereo4D 和 KITTI 上比竞争方法提升 **3×以上**。
 
 ## 相关论文
 
-- [\[CVPR 2025\] Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](../../CVPR2025/3d_vision/dyn_hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)
+- [\[CVPR 2025\] Dyn-HaMR: Recovering 4D Interacting Hand Motion from a Dynamic Camera](../../CVPR2025/3d_vision/dyn-hamr_recovering_4d_interacting_hand_motion_from_a_dynamic_camera.md)
 - [\[ICLR 2026\] UrbanGS: A Scalable and Efficient Architecture for Geometrically Accurate Large-Scene Reconstruction](urbangs_a_scalable_and_efficient_architecture_for_geometrically_accurate_large-s.md)
 - [\[ICCV 2025\] LongSplat: Robust Unposed 3D Gaussian Splatting for Casual Long Videos](../../ICCV2025/3d_vision/longsplat_robust_unposed_3d_gaussian_splatting_for_casual_long_videos.md)
 - [\[CVPR 2026\] TeHOR: Text-Guided 3D Human and Object Reconstruction with Textures](../../CVPR2026/3d_vision/tehor_text-guided_3d_human_and_object_reconstruction_with_textures.md)
-- [\[ICLR 2026\] Topology-Preserved Auto-regressive Mesh Generation in the Manner of Weaving Silk](topology-preserved_auto-regressive_mesh_generation_in_the_manner_of_weaving_silk.md)
+- [\[ICLR 2026\] Reducing Class-Wise Performance Disparity via Margin Regularization](reducing_class-wise_performance_disparity_via_margin_regularization.md)
 
 </div>
 

@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-每个训练iteration：(1) GP 根据历史 rollout 结果预测 mini-batch 中每个 prompt 的成功概率；(2) 用闭式凸优化在预算约束下分配 rollout 数量；(3) 按分配方案采样；(4) 用rollout结果更新 GP后验和模型参数。
+VIP 想解决的是「rollout 预算怎么花」的问题：group-based RL 默认给每个 prompt 平均分配固定数量的 rollout，但很多预算花在了成功率接近 0 或 1 的 prompt 上，这些 prompt 几乎不产生梯度信号。VIP 把分配做成一个闭环：每个训练 iteration 先由一个高斯过程（GP）根据历史 rollout 结果预测 mini-batch 里每个 prompt 当前的成功概率，再据此用一个闭式凸优化在总预算约束下决定每个 prompt 分配多少 rollout，然后按这个方案采样，最后用本轮的 rollout 结果同时更新 GP 后验和模型参数。整个模块即插即用地挂在 Dr.GRPO / RLOO 之上，不改原有的损失。
 
 ### 关键设计
 
-1. **梯度方差分析（理论贡献）**:
+**1. 梯度方差分析：把「哪些 prompt 值得采」量化成 $p(1-p)$。**
 
-    - Dr.GRPO: $\text{Var}(\tilde{G}) = \frac{n-1}{n^2} 4\sigma_Z^2 p(1-p)$
-    - RLOO: $\text{Var}(\tilde{G}) = \frac{1}{n-1} 4\sigma_Z^2 p(1-p)$
-    - 关键洞察：方差正比于 $p(1-p)$——成功率 0.5 的 prompt 梯度方差最大（最有信息量），成功率 0 或 1 的无梯度信号
+这是整套方法的理论地基。论文先对 Dr.GRPO 和 RLOO 的相对优势估计做方差分析，得到梯度方差与该 prompt 成功概率 $p$ 的闭式关系：
 
-2. **高斯过程成功概率预测**:
+$$\text{Var}(\tilde{G})_{\text{Dr.GRPO}} = \frac{n-1}{n^2}\, 4\sigma_Z^2\, p(1-p), \qquad \text{Var}(\tilde{G})_{\text{RLOO}} = \frac{1}{n-1}\, 4\sigma_Z^2\, p(1-p)$$
 
-    - 功能：用 prompt embedding 上的 GP 预测每个 prompt 的当前成功概率
-    - 核心思路：用 MiniLM 编码 prompt 为 384 维向量，RBF kernel 建模 prompt 间的相似性。sigmoid link function 将潜在值映射到概率。递归贝叶斯更新——利用历史 rollout 结果和 prompt 间的嵌入相似性
-    - 设计动机：非参数模型无需跟踪模型权重变化，通过贝叶斯更新自然适应
+其中 $n$ 是分给该 prompt 的 rollout 数、$\sigma_Z^2$ 是投影梯度方差。两个估计器的方差都正比于 $p(1-p)$，于是「哪些 prompt 最有信息量」有了精确刻画：成功率 0.5 的 prompt 方差最大、梯度信号最强，而成功率趋于 0 或 1 的 prompt $p(1-p)\to 0$、几乎没有梯度。这把「该往哪投预算」从直觉变成了可优化的目标——预算应该向中间难度的 prompt 倾斜。
 
-3. **凸优化分配**:
+**2. 高斯过程成功概率预测：在采样之前就估出每个 prompt 的 $p$。**
 
-    - 功能：在总预算 $C$ 和单 prompt 上下界 $[L, U]$ 约束下最小化总梯度方差
-    - 核心思路：连续松弛后有闭式解（Theorem 5.1/5.2），通过二分搜索求拉格朗日乘子 $\lambda^*$，再用贪心启发式取整到整数解
-    - 效果：哈希embedding + 缓存距离矩阵使运行时开销可忽略
+难点在于上面的 $p$ 必须在采样*之前*知道，而且它会随模型更新而漂移。VIP 用一个建在 prompt embedding 空间上的 GP 来预测：先用 MiniLM 把每个 prompt 编码成 384 维向量，用 RBF kernel 度量 prompt 之间的相似度，再用 sigmoid link function 把潜在函数值映射成 $[0,1]$ 的成功概率。GP 是非参数的，不需要显式跟踪模型权重的变化——它通过递归贝叶斯更新，把每一轮新观测到的 rollout 成败结果吸收进后验，自然跟上训练中 $p$ 的漂移。kernel 带来的相似性共享还让没采过的 prompt 也能借相邻 prompt 的历史结果给出预测。
+
+**3. 凸优化分配：在预算约束下求最小总方差的闭式解。**
+
+有了每个 prompt 的预测 $p$ 和对应的方差贡献，分配就变成一个带约束的优化：在总 rollout 预算 $C$、且每个 prompt 的分配落在 $[L, U]$ 区间内的约束下，最小化整个 mini-batch 的总梯度方差。这本是整数规划，但论文做连续松弛后给出了闭式解（Theorem 5.1 / 5.2）——通过对拉格朗日乘子 $\lambda^*$ 做二分搜索即可定位最优点，再用一个贪心启发式把连续解取整成整数分配。配合哈希 embedding 与缓存的距离矩阵，GP 更新和这步凸优化都在 CPU 上完成，相对采样本身的运行时开销可以忽略。
 
 ### 损失函数 / 训练策略
-即插即用地与 Dr.GRPO/RLOO 集成。在 DAPO-MATH-17K 上训练，评估 AIME24/25。两种预算设置（8×Q, 16×Q）。
+即插即用地与 Dr.GRPO / RLOO 集成，不改原损失。在 DAPO-MATH-17K 上训练，评估 AIME24/25，使用两种预算设置（8×Q、16×Q）。
 
 ## 实验关键数据
 
@@ -112,11 +110,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
 - [\[CVPR 2026\] Dynamic Momentum Recalibration in Online Gradient Learning](../../CVPR2026/optimization/dynamic_momentum_recalibration_in_online_gradient_learning.md)
 - [\[ICLR 2026\] A Convergence Analysis of Adaptive Optimizers under Floating-Point Quantization](a_convergence_analysis_of_adaptive_optimizers_under_floating-point_quantization.md)
 - [\[NeurIPS 2025\] Online Two-Stage Submodular Maximization](../../NeurIPS2025/optimization/online_two-stage_submodular_maximization.md)
 - [\[ICLR 2026\] MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates](mt-dao_multi-timescale_distributed_adaptive_optimizers_with_local_updates.md)
-- [\[NeurIPS 2025\] Optimistic Online-to-Batch Conversions for Accelerated Convergence and Universality](../../NeurIPS2025/optimization/optimistic_online-to-batch_conversions_for_accelerated_convergence_and_universal.md)
 
 </div>
 

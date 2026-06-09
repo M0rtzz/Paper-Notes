@@ -44,56 +44,17 @@ tags:
 
 ## 方法详解
 
-### 整体框架: CryoNet.Refine
+### 整体框架
 
-- **输入**：实验cryo-EM密度图 $d_0$ + 初始原子结构 $x_0$（如AlphaFold3预测）
-- **编码**：Atom encoder提取成对特征 $z$，Sequence embedder编码原子类型 $s$
-- **Pairformer**：参考Boltz-2对原子和序列嵌入做交叉注意力
-- **单步扩散模块**：生成精修后原子结构 $x_1$
-- **密度生成器**：从精修结构生成模拟密度图 $d_i$
-- **损失计算**：$\mathcal{L} = \gamma_{\text{den}} \cdot \mathcal{L}_{\text{den}} + \mathcal{L}_{\text{geo}}$
-- **测试时优化**：对每个具体案例迭代训练-优化循环→定制化精修（最多300次recycle + 早停机制）
-- 网络参数初始化自Boltz-2，仅扩散模块可训练
+CryoNet.Refine 接收一张实验 cryo-EM 密度图 $d_0$ 和一份初始原子结构 $x_0$（如 AlphaFold3 的预测），目标是把原子坐标推到既贴合实验密度、又符合立体化学的状态。结构先经 Atom encoder 提取成对特征 $z$、Sequence embedder 编码原子类型 $s$，再用参考 Boltz-2 的 Pairformer 做交叉注意力，随后由单步扩散模块一次性输出精修结构 $x_1$；一个可微密度生成器把 $x_1$ 渲染成模拟密度图，与实验图比对得到密度损失，再叠加几何约束损失 $\mathcal{L} = \gamma_{\text{den}}\,\mathcal{L}_{\text{den}} + \mathcal{L}_{\text{geo}}$ 反传更新。整个网络参数初始化自 Boltz-2 而只让扩散模块可训练，并以测试时优化的方式对每个案例单独迭代（最多 300 次 recycle 加早停），相当于为每份结构现场拟合而非套用一个通用模型。
 
-### 关键设计1: 单步扩散模块
+### 关键设计
 
-传统扩散模型(如AlphaFold3)需数百步采样→计算昂贵。CryoNet.Refine采用单步确定性精修：
+**1. 单步确定性扩散：从初始结构出发而非从噪声。** 像 AlphaFold3 这类扩散模型要从高斯噪声起步、反复去噪数百步才能成型，对"已经有一份大致正确结构、只需微调"的精修场景既浪费又危险——多步随机采样反而会破坏已有的正确部分。CryoNet.Refine 把精修写成一次预条件化的确定性映射 $\hat{\mathbf{x}} = c_{\text{skip}}(\sigma)\,\mathbf{x}_0 + c_{\text{out}}(\sigma)\,\mathcal{F}_\theta\!\left(c_{\text{in}}(\sigma)\mathbf{x}_0,\, c_{\text{noise}}(\sigma),\, \mathcal{C}\right)$，其中 $c_{\text{skip}}, c_{\text{out}}, c_{\text{in}}, c_{\text{noise}}$ 是与噪声水平 $\sigma$ 相关的预条件系数，$\mathcal{F}_\theta$ 是可训练网络。它直接以初始结构（而非噪声）为输入做单步预测，并去掉了 AlphaFold3 里的 MSA 处理和置信度头，转而完全依赖物理密度约束来定方向。后续实验也印证这一取舍：经典 200 步扩散的 CC_mask 只有 0.30，而单步版本达到 0.65。
 
-$$\hat{\mathbf{x}} = c_{\text{skip}}(\sigma)\,\mathbf{x}_0 + c_{\text{out}}(\sigma)\,\mathcal{F}_\theta\!\left(c_{\text{in}}(\sigma)\mathbf{x}_0,\, c_{\text{noise}}(\sigma),\, \mathcal{C}\right)$$
+**2. 可微密度损失：让密度图相关性第一次能反传。** 此前的 AI 精修方法只从已知结构学几何特征，与实验密度图完全脱钩，预测出来的结构"看着合理却对不上数据"。本文的关键是把密度匹配做成端到端可微的损失。密度生成器是一个物理模拟器而非神经网络：以每个原子位置为中心叠加高斯球得到合成密度 $\hat{\boldsymbol{\rho}}(\vec{\boldsymbol{m}}, \vec{\mathbf{x}}) = \sum_{i=1}^{N} w_i e^{-k|\vec{\boldsymbol{m}} - \vec{\mathbf{x}}_i|^2}$，其中权重 $w_i$ 取原子序数，宽度 $k = 8 \cdot res / (\pi \cdot v)$ 由分辨率和体素大小决定。合成图与实验图之间用余弦相似度构造损失 $\mathcal{L}_{\text{den}} = 1 - \frac{\hat{\boldsymbol{\rho}} \cdot \boldsymbol{\rho}}{\lVert\hat{\boldsymbol{\rho}}\rVert \cdot \lVert\boldsymbol{\rho}\rVert}$。由于整条链路用 PyTorch 重写，梯度可以一路回传到原子坐标，这也是首次把密度图相关性直接当作可微损失——其平均相关系数 0.892，高于 ChimeraX 的 0.803。
 
-其中 $c_{\text{skip}}, c_{\text{out}}, c_{\text{in}}, c_{\text{noise}}$ 为预条件化系数，$\mathcal{F}_\theta$ 为参数化神经网络。
-
-**与AlphaFold3的关键区别**：
-- 从初始结构(而非高斯噪声)出发
-- 单步确定性预测(而非多步随机去噪)
-- 测试时优化(而非固定权重推理)
-- 移除MSA处理和置信度头→依赖物理密度约束
-
-### 关键设计2: 可微分密度损失
-
-首次实现完全可微的密度图生成和密度损失计算：
-
-**密度生成器**（物理模拟器，非神经网络）：以每个原子位置为中心构建高斯球：
-
-$$\hat{\boldsymbol{\rho}}(\vec{\boldsymbol{m}}, \vec{\mathbf{x}}) = \sum_{i=1}^{N} w_i e^{-k|\vec{\boldsymbol{m}} - \vec{\mathbf{x}}_i|^2}$$
-
-其中 $w_i$ 为原子序数，$k = 8 \cdot res / (\pi \cdot v)$（由分辨率和体素大小决定）。
-
-**密度损失**（合成图与实验图的余弦相似度）：
-
-$$\mathcal{L}_{\text{den}} = 1 - \frac{\hat{\boldsymbol{\rho}} \cdot \boldsymbol{\rho}}{||\hat{\boldsymbol{\rho}}|| \cdot ||\boldsymbol{\rho}||}$$
-
-用PyTorch重写使全过程可微→可反向传播→首次密度图相关性直接作为损失。平均相关系数0.892，优于ChimeraX的0.803。
-
-### 关键设计3: 可微分几何约束损失
-
-$$\mathcal{L}_{\text{geo}} = \gamma_{\text{rama}} \mathcal{L}_{\text{rama}} + \gamma_{\text{rot}} \mathcal{L}_{\text{rot}} + \gamma_{\text{angle}} \mathcal{L}_{\text{angle}} + \gamma_{C_\beta} \mathcal{L}_{C_\beta} + \gamma_{\text{viol}} \mathcal{L}_{\text{viol}}$$
-
-- **Ramachandran损失**：评估骨架二面角 $\phi, \psi$ 是否落入Ramachandran图异常值区域（基于Top8000数据集）
-- **Rotamer损失**：侧链转子约束，评估4个 $\chi$ 角是否为异常值
-- **$C_\beta$ 偏差损失**：$C_\beta$ 原子实际位置与理想位置偏差 >0.25Å 即计为偏差
-- **键角损失**：键角RMSD，强制接近理想几何值
-- **碰撞损失**：惩罚非键合原子间空间冲突（Van der Waals半径约束）
+**3. 可微几何约束：把立体化学规则写成可优化项。** 光拟合密度容易让原子陷进密度噪声里、产生违反化学常识的构象，因此还需要一组几何损失共同把关：$\mathcal{L}_{\text{geo}} = \gamma_{\text{rama}} \mathcal{L}_{\text{rama}} + \gamma_{\text{rot}} \mathcal{L}_{\text{rot}} + \gamma_{\text{angle}} \mathcal{L}_{\text{angle}} + \gamma_{C_\beta} \mathcal{L}_{C_\beta} + \gamma_{\text{viol}} \mathcal{L}_{\text{viol}}$。其中 Ramachandran 损失依据 Top8000 数据集，惩罚骨架二面角 $\phi, \psi$ 落入异常值区域，守住主链构象；Rotamer 损失约束侧链的 4 个 $\chi$ 角不偏离常见转子；$C_\beta$ 偏差损失把实际 $C_\beta$ 与理想位置偏差超过 0.25Å 的情况记为惩罚；键角损失以键角 RMSD 拉近理想几何；碰撞损失则按 Van der Waals 半径惩罚非键合原子的空间冲突。消融显示这几项缺一不可——去掉 Ramachandran 后骨架 favored 比例从 98.80% 跌到 90.75%，去掉 Rotamer 后侧链 favored 从 98.58% 跌到 94.48%。
 
 ## 实验关键数据
 

@@ -39,31 +39,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两个贡献：(1) P-GRAFT：在中间步骤 $t$ 做拒绝采样微调；(2) Inverse Noise Correction：反转流模型学习更优初始噪声分布，无需奖励。
+论文想解决的是「扩散模型微调时 KL 正则化无法落地」这件事：PPO 类方法要在奖励最大化和 KL 约束之间取平衡，但扩散模型的边际似然不可计算，KL 项只能被忽略或用轨迹 KL 粗糙近似。作者换了一条路——把实践中常用、但理论解释不清的拒绝采样方法统一成 GRAFT 框架，先证明它本身就隐式地在做边际 KL 正则化奖励最大化，再顺着扩散模型「多步去噪」的结构，把拒绝采样从最终样本搬到中间去噪状态上，得到偏差-方差权衡更好的 P-GRAFT；最后利用流模型的可逆性，提出一个连奖励都不需要的 Inverse Noise Correction。
 
 ### 关键设计
 
-1. **GRAFT统一框架**:
+**1. GRAFT 统一框架：把各种拒绝采样归并成同一个 KL 正则化的解。**
 
-    - 功能：统一经典拒绝采样、Best-of-N、Top-K等为广义拒绝采样(GRS)
-    - 核心思路：Lemma 2.3证明GRS接受的样本分布是KL正则化奖励最大化的解 $p^{\text{RL}}(x) \propto \exp(\hat{r}(x)/\alpha)\bar{p}(x)$，奖励被重整形
-    - 设计动机：扩散模型的边际KL不可计算，但GRS隐式实现了它
+经典拒绝采样、Best-of-N、Top-K 这些方法各自被当成独立技巧，和扩散微调的 RL 目标之间缺少桥梁。GRAFT 把它们统一成广义拒绝采样（GRS），并由 Lemma 2.3 给出关键结论：GRS 接受下来的样本，其分布恰好是 KL 正则化奖励最大化的最优解 $p^{\text{RL}}(x) \propto \exp(\hat{r}(x)/\alpha)\bar{p}(x)$，其中奖励被重整形为 $\hat{r}$。这意味着扩散模型那个「算不出来」的边际 KL 根本不必显式计算——只要按接受准则采样，就等价于在 $\exp(\hat r/\alpha)$ 这个温度为 $\alpha$ 的指数倾斜下做带 KL 约束的优化，从而绕开了 PPO 必须放松近似的核心困难。
 
-2. **P-GRAFT (Partial-GRAFT)**:
+**2. P-GRAFT：把拒绝采样从最终样本挪到中间去噪状态。**
 
-    - 功能：不对最终样本做拒绝采样，而对中间去噪状态 $X_t$ 做
-    - 核心思路：Lemma 3.2证明P-GRS整形了中间分布 $\bar{p}_t$ 而非最终分布。微调模型只负责 $T \to t$ 的去噪，$t \to 0$ 用原始模型。偏差-方差权衡：$t$ 大→奖励方差大但学习问题简单（score函数简单），$t$ 小→奖励精确但学习困难。
-    - 设计动机：选择合适的中间时间 $t$ 可以兼顾两方面
+只在最终数据分布上整形，浪费了扩散模型逐步去噪的中间结构。P-GRAFT 改成对某个中间时间 $t$ 的去噪状态 $X_t$ 做拒绝采样，Lemma 3.2 证明这样整形的是中间分布 $\bar p_t$ 而非最终分布：微调后的模型只负责 $T \to t$ 这一段去噪，$t \to 0$ 的剩余部分仍交给原始模型。选哪个 $t$ 是一个明确的偏差-方差权衡——$t$ 取大时离纯噪声近，score 函数简单、学习问题容易，但此处的奖励信号方差大；$t$ 取小时奖励估计更精确，可去噪的学习问题更难。最优 $t$ 是让偏差与方差乘积最小的那个中间点，而非「在最后一步做」这种默认工程选择。
 
-3. **Inverse Noise Correction**:
+**3. Inverse Noise Correction：靠流模型可逆性改初始噪声，连奖励都不要。**
 
-    - 功能：反转流模型从数据到噪声的映射，学习更优的初始噪声分布
-    - 核心思路：用adapter学习噪声空间中的修正，无需显式奖励函数
-    - 设计动机：流模型的可逆性使得推断初始噪声分布成为可能
+前两点都依赖奖励函数，但有些场景只想提升生成质量、并没有现成奖励。Inverse Noise Correction 利用流模型从数据到噪声映射可逆这一性质，反过来推断出一个更优的初始噪声分布，再用一个参数高效的 adapter 在噪声空间里学习这层修正。整个过程无需显式奖励函数，相当于把「初始噪声采得不够好」这个被忽视的误差来源单独纠正掉。
 
 ### 损失函数 / 训练策略
-- P-GRAFT：生成M个轨迹→用GRS在中间步骤选择→在接受的样本上SFT微调 $T \to t$ 的部分
-- Inverse Noise Correction：参数高效的adapter微调
+P-GRAFT 的训练流程是：先生成 $M$ 条完整去噪轨迹，用 GRS 在中间步骤 $t$ 上筛选接受样本，再在这些接受样本上做 SFT，只微调 $T \to t$ 这一段。Inverse Noise Correction 则是对噪声空间 adapter 做参数高效微调。
 
 ## 实验关键数据
 
@@ -124,7 +117,7 @@ Stable Diffusion v2 T2I微调：
 - [\[ICLR 2026\] Antibody: Strengthening Defense Against Harmful Fine-Tuning for Large Language Models via Attenuating Harmful Gradient Influence](antibody_strengthening_defense_against_harmful_fine-tuning_for_large_language_mo.md)
 - [\[ICML 2026\] Constrained Flow Optimization via Sequential Fine-Tuning for Molecular Design](../../ICML2026/computational_biology/constrained_flow_optimization_via_sequential_fine_tuning_for_molecular_design.md)
 - [\[NeurIPS 2025\] Iterative Foundation Model Fine-Tuning on Multiple Rewards](../../NeurIPS2025/computational_biology/iterative_foundation_model_fine-tuning_on_multiple_rewards.md)
-- [\[NeurIPS 2025\] Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning](../../NeurIPS2025/computational_biology/flow_density_control_generative_optimization_beyond_entropy-regularized_fine-tun.md)
+- [\[ICLR 2026\] DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models](driftlite_lightweight_drift_control_for_inference-time_scaling_of_diffusion_mode.md)
 
 </div>
 

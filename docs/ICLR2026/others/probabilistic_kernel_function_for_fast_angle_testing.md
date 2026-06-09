@@ -36,29 +36,21 @@ tags:
 
 ### 整体框架
 
-本文提出两个概率核函数，分别对应两个角度测试问题：
-- **$K_S^1(\mathbf{q}, \mathbf{v})$**：用于角度比较（Problem 1.1），判断哪个数据向量与查询更相似
-- **$K_S^2(\mathbf{q}, \mathbf{v})$**：用于角度阈值判断（Problem 1.2），判断角度是否小于给定阈值
-
-核心思想是利用确定性的投影向量结构和参考角度信息，取代高斯分布的随机投影。
+全文围绕一个核心量——**参考角度** $\psi$（查询向量与离它最近的那条投影向量之间的夹角）——重新组织角度测试。作者构造两个确定性核函数 $K_S^1$ 与 $K_S^2$，前者解决「哪个数据向量与查询更近」的角度比较问题（Problem 1.1），后者解决「角度是否小于阈值」的角度阈值判断（Problem 1.2）；两者都用一组带结构的固定投影向量加随机旋转，取代 CEOs/PEOs 所依赖的高斯随机投影，从而把估计精度的控制权交给可预测的参考角度，而不是 $m\to\infty$ 的渐近假设。
 
 ### 关键设计
 
-1. **核函数 $K_S^1$（角度比较）**: 定义为 $K_S^1(\mathbf{q}, \mathbf{v}) = \langle \mathbf{v}, Z_{HS}(\mathbf{q}) \rangle$，其中 $H$ 是随机旋转矩阵，$Z_{HS}(\mathbf{q})$ 是 $\mathbf{q}$ 在旋转后的投影向量集合 $HS$ 中的参考向量（内积最大的向量）。Lemma 4.2 证明了其条件 CDF 可用正则化不完全 Beta 函数精确表示：$F_{K_S^1}(x | A_S(\mathbf{q}) = \cos\psi) = I_t\left(\frac{d-2}{2}, \frac{d-2}{2}\right)$，且概率保证随参考角度 $\psi$ 减小而增强。设计动机：摆脱渐近假设，建立确定性的概率关系。
+**1. 核函数 $K_S^1$：把角度比较变成一个确定性的 CDF。** 现有方法（CEOs）用高斯投影建立角度与投影值的关系，但精度只在投影数 $m\to\infty$ 时才有保证，$m$ 有限时无从估计误差。本文把核函数定义为 $K_S^1(\mathbf{q}, \mathbf{v}) = \langle \mathbf{v}, Z_{HS}(\mathbf{q}) \rangle$，其中 $H$ 是随机旋转矩阵，$Z_{HS}(\mathbf{q})$ 取查询 $\mathbf{q}$ 在旋转后投影集合 $HS$ 中内积最大的那条向量（即参考向量）。Lemma 4.2 证明，在给定参考角度 $A_S(\mathbf{q})=\cos\psi$ 的条件下，$K_S^1$ 的条件 CDF 可被正则化不完全 Beta 函数精确写出 $F_{K_S^1}\!\left(x \mid A_S(\mathbf{q}) = \cos\psi\right) = I_t\!\left(\tfrac{d-2}{2}, \tfrac{d-2}{2}\right)$。这条关系不含任何渐近项，且参考角度 $\psi$ 越小、概率保证越强——这正是把「高斯」替换为「参考角度可控」后换来的好处。
 
-2. **核函数 $K_S^2$（角度阈值）**: 定义为 $K_S^2(\mathbf{q}, \mathbf{v}) = \langle H\mathbf{q}, Z_S(H\mathbf{v}) \rangle / A_S(H\mathbf{v})$，通过除以参考角度的余弦值 $A_S(H\mathbf{v})$ 进行归一化。Lemma 4.3 证明 $K_S^2$ 是角度敏感函数（angle-sensitive），满足 Problem 1.2 的概率保证。设计动机：利用参考角度信息进行更精确的阈值判断，现有方法（PEOs）未使用此信息。
+**2. 核函数 $K_S^2$：用参考角度做归一化，得到角度敏感的阈值判据。** 阈值判断需要知道角度是否越过某个界，PEOs 虽能做但没有利用参考角度信息，判据偏松。本文定义 $K_S^2(\mathbf{q}, \mathbf{v}) = \langle H\mathbf{q}, Z_S(H\mathbf{v}) \rangle / A_S(H\mathbf{v})$，关键是除以参考角度的余弦 $A_S(H\mathbf{v})$ 做归一化。Lemma 4.3 证明这样得到的 $K_S^2$ 是角度敏感函数（angle-sensitive），满足 Problem 1.2 所要求的概率保证；归一化把参考角度的信息显式注入判据，让同样置信度下的阈值判断更紧。
 
-3. **投影向量配置**: 提出两种确定性结构取代高斯随机投影：
+**3. 投影向量的确定性结构：用更小的参考角度取代随机高斯。** 既然参考角度决定精度，就该主动让它变小，而高斯随机投影做不到这一点。作者给出两种确定性配置：对踵对结构（Algorithm 1）在每个子空间生成 $m/2$ 个随机点并补上各自的对踵点，简单且天然覆盖正负方向；多交叉多面体结构（Algorithm 2）利用交叉多面体（cross-polytope）的最优覆盖性质，通过随机旋转生成多个交叉多面体并挑覆盖效果最好的一组。在此之上再叠加多层级乘积量化：把空间切成 $L$ 个子空间，每个子空间放 $m$ 条投影向量，组合后虚拟生成 $m^L$ 条投影向量，以极低存储显著压低参考角度。
 
-    - **对踵对结构 (Algorithm 1)**: 在每个子空间中生成 $m/2$ 个随机点及其对踵点，简单高效
-    - **多交叉多面体结构 (Algorithm 2)**: 利用交叉多面体（cross-polytope）的最优覆盖性质，通过随机旋转生成多个交叉多面体，选择覆盖效果最好的配置
-    - 引入多层级（$L$ 个子空间）的乘积量化技术，虚拟生成 $m^L$ 个投影向量，显著减小参考角度
-
-4. **KS2 路由测试**: 将 $K_S^2$ 应用于相似性图的路由机制，得到简明的测试不等式：$\sum_{i=1}^L \mathbf{q}_i^\top \mathbf{u}_{e[i]}^i \geq A_S(\mathbf{e}) \cdot \frac{\|\mathbf{w}\|^2/2 - \tau - \mathbf{v}^\top\mathbf{q}}{\|\mathbf{e}\|}$。相比 PEOs 测试，不等式更简单（评估更快）、存储常数更少（索引更小）。
+**4. KS2 路由测试：把核函数落到图搜索的边筛选上。** 把 $K_S^2$ 接到相似性图（如 HNSW）的路由判断里，得到一条简明的测试不等式 $\sum_{i=1}^L \mathbf{q}_i^\top \mathbf{u}_{e[i]}^i \geq A_S(\mathbf{e}) \cdot \dfrac{\|\mathbf{w}\|^2/2 - \tau - \mathbf{v}^\top\mathbf{q}}{\|\mathbf{e}\|}$，用它在扩展邻居前先判断某条边是否值得走。相比 PEOs 的对应测试，这条不等式形式更简单、单次评估更快，且需要存储的常数更少，因而索引也更小（实验里约小 5%）。
 
 ### 损失函数 / 训练策略
 
-本文不涉及神经网络训练。核心优化目标是最大化覆盖效果 $J(S) = \mathbb{E}_{\mathbf{v} \in U(\mathbb{S}^{d-1})}[A_S(\mathbf{v})]$，即投影向量配置 $S$ 对单位球面的平均覆盖质量。通过在均匀采样的 $N$ 个点上计算 $\tilde{J}(S,N)$ 近似评估。
+本文不涉及神经网络训练，唯一要优化的是投影向量配置 $S$ 本身。优化目标是最大化覆盖效果 $J(S) = \mathbb{E}_{\mathbf{v} \in U(\mathbb{S}^{d-1})}\!\left[A_S(\mathbf{v})\right]$，即配置 $S$ 对单位球面上随机方向的平均参考角度余弦（越大表示参考角度越小、精度越高）。实际中用均匀采样的 $N$ 个点计算近似值 $\tilde{J}(S,N)$ 来评估和挑选配置。
 
 ## 实验关键数据
 
@@ -123,10 +115,10 @@ tags:
 ## 相关论文
 
 - [\[ICML 2026\] New Bounds for Kernel Sums via Fast Spherical Embeddings](../../ICML2026/others/new_bounds_for_kernel_sums_via_fast_spherical_embeddings.md)
+- [\[ICLR 2026\] From Samples to Scenarios: A New Paradigm for Probabilistic Forecasting](from_samples_to_scenarios_a_new_paradigm_for_probabilistic_forecasting.md)
 - [\[ICLR 2026\] An Information-Theoretic Framework For Optimizing Experimental Design To Distinguish Probabilistic Neural Codes](an_information-theoretic_framework_for_optimizing_experimental_design_to_disting.md)
-- [\[ICLR 2026\] Learning Adaptive Distribution Alignment with Neural Characteristic Function for Graph Domain Adaptation](learning_adaptive_distribution_alignment_with_neural_characteristic_function_for.md)
+- [\[ICLR 2026\] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks](improving_set_function_approximation_with_quasi-arithmetic_neural_networks.md)
 - [\[ICLR 2026\] Predicting Kernel Regression Learning Curves from Only Raw Data Statistics](predicting_kernel_regression_learning_curves_from_only_raw_data_statistics.md)
-- [\[ICLR 2026\] Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry](fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr.md)
 
 </div>
 

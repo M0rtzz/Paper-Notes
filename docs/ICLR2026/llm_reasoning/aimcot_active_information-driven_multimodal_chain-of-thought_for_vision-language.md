@@ -40,30 +40,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AIMCoT 是免训练的即插即用框架，包含三个协同模块：CAG 先生成上下文增强的注意力图 → AVP 从候选区域中贪心选择信息增益最大的 K 个区域 → DAT 监控注意力转移来决定何时插入视觉信息到 CoT 中。
+AIMCoT 想解决的是 interleaved-modal CoT 的一个老毛病：模型在推理时往哪看、何时看，都由"注意力分数最高"这个被动信号说了算，而注意力反映的是 token 相关性，不等于"对答题有用"。AIMCoT 把这件事重新表述成信息增益最大化，整条链路是一个免训练的推理时回路：先由 CAG 把问题相关的描述拼回上下文、重算出一张更可靠的注意力图；推理过程中 DAT 持续盯着模型对视觉的注意力，一旦发现注意力从文本明显转向视觉，就触发 AVP；AVP 再从一批候选区域里贪心挑出信息增益最大的 K 个 patch，插回 CoT 继续往下推。三个模块各管"看得准 / 何时看 / 看哪里"，串成一个边推理边主动取证的闭环。
 
 ### 关键设计
 
-1. **Context-enhanced Attention-map Generation (CAG)**:
+**1. 上下文增强的注意力图 CAG：先把注意力图修准，再谈选区域。**
 
-    - 功能：生成上下文感知的图像描述来缓解文本-视觉粒度不匹配
-    - 核心思路：先让 VLM 根据问题对图像生成一段解释性描述 $\mathcal{D}_{CAG}$，然后将描述拼接到问题后面，用增强后的上下文重新计算注意力图 $A'$，使其更可靠地指向任务相关区域
-    - 设计动机：原始注意力图在文本-视觉粒度差异大时不可靠（实验显示 mask 掉 Top-10 注意力区域仅降 3.93%），增强文本上下文可以弥补这一差距
+被动选区域的前提是注意力图本身可信，但原始注意力图在文本与视觉粒度不匹配时并不可靠——论文用一个反直觉的实验戳破了这点：把 Top-10 高注意力区域全部 mask 掉，准确率仅下降 3.93%，说明高注意力 ≠ 关键信息。CAG 的做法是先让 VLM 针对问题对图像生成一段解释性描述 $\mathcal{D}_{CAG}$，把它拼到问题后面，再用这个增强后的上下文重新计算注意力图 $A'$。多出来的文本上下文给注意力提供了更明确的语义锚点，让 $A'$ 更稳地指向真正与任务相关的区域，相当于在做选择之前先把"看哪里"的底图校准一遍。
 
-2. **Active Visual Probing (AVP)**:
+**2. 主动视觉探测 AVP：用信息增益替代 Top-K，主动挑最该看的区域。**
 
-    - 功能：基于信息增益主动选择最有价值的视觉区域
-    - 核心思路：构建多样化候选集 $C = C_{attn} \cup C_{exp}$（Top-N 注意力区域 + M 个随机采样网格区域），定义信息增益 $IG(\{R_i\}) = U_B - U_{C,i}$（基础不确定性减去引入区域后的条件不确定性，都用词表概率分布的熵衡量），用贪心算法迭代选择 K 个信息增益最大的区域
-    - 设计动机：高注意力区域之间可能信息重叠，信息增益可以自然地去除冗余——如果一个区域的信息已被之前选的区域覆盖，它的边际增益会降低。实验显示信息增益选择能精准定位关键细节
+即便注意力图修准了，单纯取 Top-K 仍是无方向的，且高注意力区域彼此信息高度重叠。AVP 把"选区域"显式定义成最大化信息增益的主动探测。它先构建一个多样化候选集 $C = C_{attn} \cup C_{exp}$，既包含 Top-N 注意力区域，也包含 M 个随机采样的网格区域——后者专门去捞那些注意力图没覆盖、但可能有用的角落。信息增益定义为引入区域前后模型不确定性的下降：
 
-3. **Dynamic Attention-shifting Trigger (DAT)**:
+$$IG(\{R_i\}) = U_B - U_{C,i}$$
 
-    - 功能：智能判断何时在 CoT 中插入视觉信息
-    - 核心思路：在每个 token 生成步监控模型对视觉上下文的注意力总分 $A_{visual}(t)$（最后 3 层平均），计算注意力变化量 $\Delta A_{visual}(t)$，当变化量超过阈值 $\delta$ 时触发 AVP 插入视觉区域
-    - 设计动机：实证发现高分输出与"注意力从文本转向视觉时插入视觉信息"强相关；低分输出则缺乏这种模式
+其中 $U_B$ 是基础不确定性、$U_{C,i}$ 是加入候选区域后的条件不确定性，两者都用词表概率分布的熵来衡量。AVP 用贪心算法迭代挑 K 个增益最大的区域，这天然带来去冗余的效果：某个区域若信息已被先前选中的区域覆盖，它的边际增益就会变小、自动落选。论文实证这个增益函数近似次模，正好为贪心选择提供了依据。
+
+**3. 动态注意力转移触发 DAT：让插入时机由模型自己的注意力来决定。**
+
+旧方法固定在换行符处插入视觉信息，没有理论依据。DAT 改成由注意力动态来定时机：在每个 token 生成步统计模型对视觉上下文的注意力总分 $A_{visual}(t)$（取最后 3 层平均），再看它的逐步变化量 $\Delta A_{visual}(t)$，一旦超过阈值 $\delta$ 就触发 AVP 去取一批新的视觉区域。这背后是一个实证规律：得分高的输出往往伴随"注意力从文本明显转向视觉、随即补入视觉信息"的模式，而低分输出缺这种模式。DAT 等于把这个相关性变成了一个可执行的触发器——只在模型真正"想看图"的时刻补上视觉证据。
 
 ### 损失函数 / 训练策略
-无需训练（training-free）。所有模块都是推理时即插即用的。
+无需训练（training-free）。三个模块都在推理时即插即用，不改动 VLM 权重。
 
 ## 实验关键数据
 
@@ -125,10 +123,10 @@ AIMCoT 是免训练的即插即用框架，包含三个协同模块：CAG 先生
 ## 相关论文
 
 - [\[ACL 2026\] AIM-CoT: Active Information-driven Multimodal Chain-of-Thought for Vision-Language Reasoning](../../ACL2026/llm_reasoning/aim-cot_active_information-driven_multimodal_chain-of-thought_for_vision-languag.md)
+- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 - [\[ICLR 2026\] TumorChain: Interleaved Multimodal Chain-of-Thought Reasoning for Traceable Clinical Tumor Analysis](tumorchain_interleaved_multimodal_chain-of-thought_reasoning_for_traceable_clini.md)
 - [\[ICLR 2026\] Efficient Test-Time Scaling for Small Vision-Language Models](efficient_test-time_scaling_for_small_vision-language_models.md)
 - [\[ICLR 2026\] Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models](dynamics-predictive_sampling_for_active_rl_finetuning_of_large_reasoning_models.md)
-- [\[ICLR 2026\] Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision](uni-cot_towards_unified_chain-of-thought_reasoning_across_text_and_vision.md)
 
 </div>
 

@@ -38,23 +38,23 @@ tags:
 
 ## 方法详解
 
-### 核心公式
+### 整体框架
 
-$$Q(X) = (X + f_\theta(X)) / 2$$
+方法只动 Transformer 注意力里的 Query 路径一处：把原本的线性投影 $Q=XW_Q$ 替换成非线性残差形式 $Q(X)=(X+f_\theta(X))/2$，其中 $f_\theta$ 是一个瓶颈 MLP，而 Key、Value 仍走标准线性投影。这样既绕开了"线性 $W_Q$ 代数上可被吸收"的冗余陷阱，又把新增的非线性容量约束在与原始 $W_Q$ 同阶的参数预算内，做到参数中性。
 
-### $f_\theta$ 结构
+### 关键设计
 
-瓶颈 MLP：$f_\theta(X) = \text{LN}(\text{GELU}(\text{RMSNorm}(X) \cdot W_1) \cdot W_2)$
-- $W_1 \in \mathbb{R}^{d \times r}$, $W_2 \in \mathbb{R}^{r \times d}$, $r = d/2$
-- 矩阵参数总量 $2dr = d^2$，与原始 $W_Q$ 同阶
-- 归一化层仅增加 $O(d)$ 参数（<0.1%）
+**1. 非线性 Query 投影：把"可被吸收"的线性参数换成不可吸收的非线性。**
 
-### 设计要点
+动机来自上文的代数冗余性——既然 $W_Q$ 的线性部分总能被相邻层吸收，往这里堆线性参数就是浪费。于是把 Query 改成 $Q(X)=(X+f_\theta(X))/2$，残差里的恒等项 $X$ 把投影锚定在已被实验证明是良好先验的 $W_Q=I$ 上，保证梯度直通、训练稳定；增量项 $f_\theta(X)$ 则提供线性投影给不了的、无法被重参数化消去的有效容量。系数 $1/2$ 沿用 Karbevski & Mijoski 的建议，把残差与增量的幅度压平，防止激活幅度膨胀。
 
-1. **Identity Anchor**：$X$ 项锚定到已知良好先验（$W_Q=I$），保证梯度直通和训练稳定性
-2. **1/2 缩放因子**：遵循 Karbevski & Mijoski 的建议，防止幅度膨胀
-3. **K/V 不变**：Key 和 Value 保持标准线性投影
-4. **兼容性**：兼容 GQA/MQA、RoPE、MoE 等现代架构
+**2. 瓶颈 MLP 结构 $f_\theta$：在参数预算内塞进非线性。**
+
+增量项用一个先降维再升维的瓶颈 MLP 实现：$f_\theta(X)=\text{LN}(\text{GELU}(\text{RMSNorm}(X)\cdot W_1)\cdot W_2)$，其中 $W_1\in\mathbb{R}^{d\times r}$、$W_2\in\mathbb{R}^{r\times d}$，瓶颈维度取 $r=d/2$。这样两个矩阵的参数量合计 $2dr=d^2$，恰好与被替换掉的原始 $W_Q$ 同阶；外层的 RMSNorm 与 LN 只额外引入 $O(d)$ 量级参数（占比 <0.1%），可忽略。中间的 GELU 是整条路径真正引入非线性的地方，也是参数得以"有效分配"的关键。
+
+**3. 只改 Query、保留 K/V 线性：兼容现代注意力变体。**
+
+Key 与 Value 保持标准线性投影不动，这一限制并非偶然——在 GQA/MQA 中 $W_K/W_V$ 是被多个 query head 共享的，若改成非线性会破坏共享结构，而 $W_Q$ 是唯一可以安全替换的投影。正因为改动局限在 Query 一侧，该设计天然兼容 GQA/MQA、RoPE、MoE 等现代架构组件，可作为即插即用的替换。
 
 ## 实验关键数据
 
@@ -118,8 +118,8 @@ $$Q(X) = (X + f_\theta(X)) / 2$$
 ## 相关论文
 
 - [\[ICLR 2026\] Hilbert-Guided Sparse Local Attention](hilbert-guided_sparse_local_attention.md)
+- [\[ICLR 2026\] Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding](deep_flexqp_accelerated_nonlinear_programming_via_deep_unfolding.md)
 - [\[ICML 2026\] Envy-Free Allocation of Indivisible Goods via Noisy Queries](../../ICML2026/others/envy-free_allocation_of_indivisible_goods_via_noisy_queries.md)
-- [\[NeurIPS 2025\] Obliviator Reveals the Cost of Nonlinear Guardedness in Concept Erasure](../../NeurIPS2025/others/obliviator_reveals_the_cost_of_nonlinear_guardedness_in_concept_erasure.md)
 - [\[ACL 2025\] Unique Hard Attention: A Tale of Two Sides](../../ACL2025/others/unique_hard_attention_a_tale_of_two_sides.md)
 - [\[ICML 2025\] Positional Attention: Expressivity and Learnability of Algorithmic Computation](../../ICML2025/others/positional_attention_expressivity_and_learnability_of_algorithmic_computation.md)
 

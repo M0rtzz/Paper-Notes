@@ -44,41 +44,21 @@ tags:
 
 ### 整体框架
 
-**TreeBench 构建流程**：SA-1B 采样 1K 高质量图片（优选密集物体场景）→ 8位 LMM 专家标注 → 3阶段质量控制 → 405 道高挑战 VQA 对（含目标实例的 bounding box 标注）
+本文是评测与训练的双线设计：TreeBench 从 SA-1B 采样 1K 密集物体场景图片，经 8 位 LMM 专家标注与三阶段质量控制，凝练成 405 道带 bounding box 标注的高挑战 VQA；TreeVGR 则在 Qwen2.5-VL 基础上先用 SFT 冷启动一个会"定位再回答"的初始模型，再用带可追溯证据的强化学习把定位和推理一起拉高。
 
-**TreeVGR 训练流程**：冷启动 SFT 初始化 → 带可追溯证据的强化学习后训练
+### 关键设计
 
-### 关键设计1：TreeBench 的三大评测原则
+**1. TreeBench 的三大评测原则：让"用图像思考"变得可量化、可诊断。**
 
-**1) 聚焦视觉感知（Focused Visual Perception）**：所有问题聚焦于复杂真实场景中的极小目标——目标实例平均仅占图像面积的 **3.05%**。要求模型通过详细、精确、唯一的文本描述识别细微目标。
+TreeBench 想测的不是泛泛的 VQA 准确率，而是模型在精细视觉场景里"看得准、说得清、推得对"的全过程，因此把考点拆成三条原则。第一条是聚焦视觉感知：所有问题都瞄准复杂真实场景中的极小目标，目标实例平均仅占图像面积的 **3.05%**，逼模型必须给出详细、精确、唯一的文本描述才能锁定细微物体，而非靠常识蒙答案。第二条是可追溯证据：评测不只看最终答案对不对，还把推理链里模型生成的 bounding box 拿出来和 ground-truth 框比 mIoU——这样就能把"答错"拆成"理解错"还是"定位失败"，让错误来源可诊断。第三条是二阶推理：题目超越简单的"是什么/在哪"，覆盖 5 类感知任务（属性/材质/物理状态/目标检索/OCR）和 5 类推理任务（视角变换/排序/接触遮挡/空间包含/比较），其中视角变换（"从人 A 的视角看，物体 B 在哪个方向？"）需要换位想象空间关系，是全场最难的一类。这三条原则共同保证了基准的挑战性——最强的 o3 也只拿到 54.87%。
 
-**2) 可追溯证据（Traceable Evidence）**：不仅评最终答案准确率，还评推理链中生成的 bounding box 的质量（mIoU）。通过对比预测框和 ground-truth 框，可以精确诊断错误来源——是理解错误还是定位失败。
+**2. 双 IoU 奖励：让 RL 既奖励"找全"也惩罚"乱发框"。**
 
-**3) 二阶推理（Second-Order Reasoning）**：超越简单的"什么/在哪"查询，包含5类感知任务（属性/材质/物理状态/目标检索/OCR）和5类推理任务（视角变换/排序/接触遮挡/空间包含/比较），其中视角变换（"从人A的视角，物体B在哪个方向？"）是最具挑战性的类别。
+TreeVGR 强化学习阶段的总奖励由准确率、格式、定位三部分组成，$R = R_{\text{acc}} + R_{\text{format}} + R_{\text{IoU}}$，其中定位奖励 $R_{\text{IoU}}$ 是核心创新。如果只用单向的召回奖励，模型会发现一个捷径：把图像铺满候选框就能保证每个 GT 都被覆盖，于是退化成"穷举所有可能框"的 reward hacking。本文用双向 IoU 把这条捷径堵死。召回项要求每个 GT 框 $b_k$ 至少被某个预测框匹配上，$R_{\text{IoU}}^{\text{R}} = \frac{1}{M} \sum_{k=1}^{M} \max_i \text{IoU}(\hat{b}_i, b_k)$；精确项反过来要求每个预测框 $\hat{b}_i$ 都得对得上某个 GT 框，$R_{\text{IoU}}^{\text{P}} = \frac{1}{N} \sum_{i=1}^{N} \max_k \text{IoU}(b_k, \hat{b}_i)$，乱发的多余框会拉低这一项；最终取两者平均 $R_{\text{IoU}} = \frac{1}{2}(R_{\text{IoU}}^{\text{R}} + R_{\text{IoU}}^{\text{P}})$。这样模型只有在"找全"和"找准"同时满足时才拿满分，定位质量被实打实地纳入优化目标。
 
-### 关键设计2：TreeVGR 的双 IoU 奖励机制
+**3. 冷启动初始化：先 SFT 教会基本定位再上 RL，砍掉算力开销。**
 
-TreeVGR 的总奖励由三部分组成：
-
-$$R = R_{\text{acc}} + R_{\text{format}} + R_{\text{IoU}}$$
-
-其中双 IoU 奖励 $R_{\text{IoU}}$ 是核心创新，同时优化召回率和精确率：
-
-**召回项**（每个 GT 框至少被一个预测框匹配）：
-
-$$R_{\text{IoU}}^{\text{R}} = \frac{1}{M} \sum_{k=1}^{M} \max_i \text{IoU}(\hat{b}_i, b_k)$$
-
-**精确项**（每个预测框至少匹配一个 GT 框，防止模型滥发框）：
-
-$$R_{\text{IoU}}^{\text{P}} = \frac{1}{N} \sum_{i=1}^{N} \max_k \text{IoU}(b_k, \hat{b}_i)$$
-
-$$R_{\text{IoU}} = \frac{1}{2}(R_{\text{IoU}}^{\text{R}} + R_{\text{IoU}}^{\text{P}})$$
-
-这种双向约束解决了单向召回奖励导致模型"穷举所有可能框"的问题。
-
-### 关键设计3：冷启动初始化
-
-直接用 RL 训练视觉定位推理效率极低（DeepEyes 需 32 块 H100 训练 48 小时）。本文先用精心构造的 SFT 数据进行冷启动——每个样本包含图像、问题、带 bounding box 的推理轨迹和最终答案——确保模型在 RL 前已具备基本的"定位-推理"能力。这种初始化策略大幅降低了 RL 的计算成本。
+直接拿一个不会定位的模型上 RL 训练视觉推理代价极高——DeepEyes 的纯 RL 方案要 32 块 H100 跑 48 小时，因为模型早期几乎采不到带正确框的轨迹，奖励信号稀疏。本文先用精心构造的 SFT 数据做冷启动，每个样本都包含图像、问题、带 bounding box 的完整推理轨迹和最终答案，让模型在进入 RL 前就已经具备基本的"定位—推理"能力。有了这个起点，RL 阶段的探索从一个合理的策略附近出发，奖励更稠密、收敛更快，整体计算成本大幅下降。
 
 ## 实验关键数据
 
@@ -142,10 +122,10 @@ $$R_{\text{IoU}} = \frac{1}{2}(R_{\text{IoU}}^{\text{R}} + R_{\text{IoU}}^{\text
 ## 相关论文
 
 - [\[ICCV 2025\] VisRL: Intention-Driven Visual Perception via Reinforced Reasoning](../../ICCV2025/object_detection/visrl_intention-driven_visual_perception_via_reinforced_reasoning.md)
-- [\[ICLR 2026\] AdaRank: Adaptive Rank Pruning for Enhanced Model Merging](adarank_adaptive_rank_pruning_for_enhanced_model_merging.md)
 - [\[AAAI 2026\] Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning](../../AAAI2026/object_detection/connecting_the_dots_training-free_visual_grounding_via_agent.md)
 - [\[CVPR 2026\] Reasoning-Driven Anomaly Detection and Localization with Image-Level Supervision](../../CVPR2026/object_detection/reasoning-driven_anomaly_detection_and_localization_with_image-level_supervision.md)
 - [\[ICCV 2025\] Large-scale Pre-training for Grounded Video Caption Generation](../../ICCV2025/object_detection/large-scale_pre-training_for_grounded_video_caption_generation.md)
+- [\[AAAI 2026\] Commonality in Few: Few-Shot Multimodal Anomaly Detection via Hypergraph-Enhanced Memory](../../AAAI2026/object_detection/commonality_in_few_few-shot_multimodal_anomaly_detection_via_hypergraph-enhanced.md)
 
 </div>
 

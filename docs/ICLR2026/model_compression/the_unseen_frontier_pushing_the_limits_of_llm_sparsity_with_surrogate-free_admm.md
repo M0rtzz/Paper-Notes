@@ -38,42 +38,15 @@ tags:
 
 ### 整体框架
 
-Elsa 直接求解稀疏性约束优化问题：
+Elsa 不再像 SparseGPT、Wanda 那样逐层最小化重建误差，而是把剪枝重新表述为一个全局约束优化问题：直接最小化真正的语言建模目标 $f(x)$，同时强制 $\|x\|_0 \leq k$ 的稀疏约束，即 $x^{\star} = \arg\min f(x) \ \text{s.t.}\ \|x\|_0 \leq k$。由于 $\ell_0$ 约束不可微、与训练目标耦合在一起难以直接求解，Elsa 借助 ADMM（交替方向乘子法）做变量分裂，把"训练得好"和"足够稀疏"这两件事拆开交替满足，从而绕开所有逐层代理目标。
 
-$$x^{\star} = \arg\min f(x) \quad \text{subject to} \quad \|x\|_0 \leq k$$
+### 关键设计
 
-而非现有方法的逐层代理公式。通过 ADMM（交替方向乘子法）进行变量分裂，将不可处理的稀疏约束与训练目标解耦。
+**1. 基于 ADMM 的无代理稀疏化：让稀疏约束与训练目标各管各的。** 现有方法的根子问题在于用逐层重建误差 $\tilde f$ 替代真正的目标 $f$，误差逐层累积撞上"稀疏墙"。Elsa 引入一个辅助变量 $z$ 充当"稀疏副本"，把原问题改写成增广拉格朗日形式 $\mathcal{L}_{\lambda}(x,z,u) = f(x) + I_{\mathcal{S}}(z) + \frac{\lambda}{2}\|x - z + u\|_2^2 - \frac{\lambda}{2}\|u\|_2^2$，其中 $I_{\mathcal{S}}$ 是稀疏集合的指示函数、$u$ 是对偶变量。随后交替求解三个子问题：$x$-更新在"贴近稀疏副本 $z$"的牵引下用梯度优化最小化真实目标 $f$，$z$-更新把当前解投影回稀疏集合 $\mathcal{S}$（只保留幅值最大的 $k$ 个参数），$u$-更新对对偶变量做梯度上升以逐步收紧约束。这样模型权重可以一直按真实损失自由训练，稀疏性则由 $z$ 和 $u$ 逐步拉拢，避免了逐层固定后无法回头调整的全局次优。在 $f$ 满足下界、$\beta$-光滑且 $\mu$-弱凸的条件下，该迭代可证明收敛到原约束问题的 $\lambda$-驻点。
 
-### 关键设计 1: 基于 ADMM 的无代理稀疏化
+**2. 目标感知投影：让"扔掉哪些权重"对得起损失函数。** 标准的稀疏投影按欧几里得距离裁剪，等于默认每个参数同等重要，但实际上不同权重对损失 $f$ 的影响天差地别。Elsa 改用 Hessian 诱导的范数来做投影：$z^{t+1} = \arg\min_{z \in \mathcal{S}} \sum_{i \leq d} \hat{\mathbf{F}}_{ii} (z_i - (x_i^{t+1} + u_i^t))^2$，其中 $\hat{\mathbf{F}}_{ii}$ 是经验 Fisher 信息矩阵的对角近似，相当于给每个参数加了一个"重要性权重"——对损失敏感的方向投影时更不容易被裁掉。关键是这个二阶信息无需额外计算，可直接从 Adam 优化器已经在维护的二阶矩估计里免费读取，因此几乎不增加开销就把投影从纯几何操作变成与训练目标对齐的操作，消融实验证实它相比标准欧氏投影带来显著增益。
 
-引入辅助变量 $z$，将问题转换为增广拉格朗日形式：
-
-$$\mathcal{L}_{\lambda}(x,z,u) = f(x) + I_{\mathcal{S}}(z) + \frac{\lambda}{2}\|x - z + u\|_2^2 - \frac{\lambda}{2}\|u\|_2^2$$
-
-交替优化三个子问题：
-- **$x$-更新**: 在保持与稀疏 $z$ 接近的约束下最小化训练目标
-- **$z$-更新**: 投影到稀疏集合 $\mathcal{S}$，保留最大的 $k$ 个参数
-- **$u$-更新**: 对偶变量梯度上升
-
-### 关键设计 2: 目标感知投影（Objective-Aware Projection）
-
-标准投影基于欧几里得距离，与目标函数 $f$ 关联不大。Elsa 使用 Hessian 诱导范数进行投影：
-
-$$z^{t+1} = \arg\min_{z \in \mathcal{S}} \sum_{i \leq d} \hat{\mathbf{F}}_{ii} (z_i - (x_i^{t+1} + u_i^t))^2$$
-
-其中 $\hat{\mathbf{F}}$ 为经验 Fisher 信息矩阵的对角近似，可直接从 Adam 优化器的二阶矩估计中免费获取。
-
-### 关键设计 3: 低精度状态扩展（Elsa-L）
-
-为扩展到超大模型（27B），Elsa-L 对辅助变量使用量化存储：
-- 使用 FP8 存储 $z$，BF16 存储 $u$
-- 结合 Adam8bit 优化器
-- 内存开销较 Elsa 降低 55%
-
-### 收敛性保证
-
-- **Elsa**: 在 $f$ 满足下界、$\beta$-光滑和 $\mu$-弱凸条件下，收敛到原问题的 $\lambda$-驻点
-- **Elsa-L**: 在额外量化误差约束下同样收敛，有严格理论证明
+**3. 低精度状态扩展（Elsa-L）：把 27B 模型塞进可承受的显存。** 朴素 Elsa 需要同时保存完整模型参数、辅助变量 $z$ 和对偶变量 $u$，对超大模型显存压力极大。Elsa-L 对这些额外状态做量化存储：用 FP8 存 $z$、BF16 存 $u$，并搭配 Adam8bit 优化器，整体内存开销较 Elsa 降低 55%，从而能扩展到 27B 规模。即便引入量化误差，在额外的误差约束下该变体仍有严格的收敛性证明，因此扩展性的提升不以牺牲理论保证为代价。
 
 ## 实验
 
@@ -151,7 +124,7 @@ $$z^{t+1} = \arg\min_{z \in \mathcal{S}} \sum_{i \leq d} \hat{\mathbf{F}}_{ii} (
 ## 相关论文
 
 - [\[ICLR 2026\] Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
-- [\[ICLR 2026\] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models](inftythink_breaking_the_length_limits_of_long-context_reasoning_in_large_languag.md)
+- [\[ICLR 2026\] Towards Reliable Benchmarking: A Contamination Free, Controllable Evaluation Framework for Multi-step LLM Function Calling](towards_reliable_benchmarking_a_contamination_free_controllable_evaluation_frame.md)
 - [\[ICLR 2026\] MobileLLM-R1: Exploring the Limits of Sub-Billion Language Model Reasoners with Open Training Recipes](mobilellm-r1_exploring_the_limits_of_sub-billion_language_model_reasoners_with_o.md)
 - [\[NeurIPS 2025\] DuoGPT: Training-free Dual Sparsity through Activation-aware Pruning in LLMs](../../NeurIPS2025/model_compression/duogpt_training-free_dual_sparsity_through_activation-aware_pruning_in_llms.md)
 - [\[ICLR 2026\] Modality-free Graph In-context Alignment](modality-free_graph_in-context_alignment.md)

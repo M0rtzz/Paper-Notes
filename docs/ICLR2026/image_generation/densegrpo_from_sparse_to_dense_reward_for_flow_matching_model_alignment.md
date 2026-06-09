@@ -42,26 +42,21 @@ tags:
 
 ### 整体框架
 
-DenseGRPO 在 Flow-GRPO 基础上做两个改进：
-- **输入**：流匹配模型 + 奖励模型 + 文本提示
-- **SDE 采样**：用时间步自适应噪声级别 $\psi(t)$ 采样 $G$ 条轨迹
-- **密集奖励估计**：对每条轨迹的每个中间潜变量做 ODE rollout，得到干净图像并用奖励模型评分 $R_t^i$
-- **奖励增益**：$\Delta R_t^i = R_{t-1}^i - R_t^i$ 作为每步的密集奖励
-- **GRPO 训练**：用 $\Delta R_t^i$ 替代稀疏 $R^i$ 进行组归一化和策略优化
+DenseGRPO 想解决的是：Flow-GRPO 这类方法只在轨迹末端拿到一个稀疏奖励，却要拿它去优化全部 $T$ 步去噪，导致"反馈-贡献不匹配"。它的做法是在同一套 Flow-GRPO 框架里插两件事——先把单个末端奖励拆成每一步的密集奖励，再用这些密集奖励反过来调每一步的探索强度。
+
+整体流程是：给定流匹配模型、奖励模型和文本提示，先用带时间步自适应噪声级别 $\psi(t)$ 的 SDE 采样器采出 $G$ 条轨迹；对每条轨迹的每个中间潜变量 $x_t^i$ 做 ODE rollout 得到干净图像并由奖励模型评分 $R_t^i$，相邻两步的奖励之差 $\Delta R_t^i = R_{t-1}^i - R_t^i$ 就是该步的密集奖励；最后用 $\Delta R_t^i$ 替代稀疏奖励 $R^i$ 做组归一化与策略优化。两个改进互相支撑：密集奖励既是更细的训练信号，也是探索校准赖以判断每步正负样本是否平衡的依据。
 
 ### 关键设计
 
-1. **Step-wise 密集奖励估计**:
+**1. Step-wise 密集奖励估计：把末端的单个奖励拆成每一步的贡献。**
 
-    - 功能：评估每个去噪步的贡献
-    - 核心思路：对中间潜变量 $x_t^i$ 做 $n$ 步 ODE 去噪得到干净潜变量 $\hat{x}_{t,0}^i = \text{ODE}_n(x_t^i, c)$，解码为图像后用奖励模型评分 $R_t^i = \mathcal{R}(\hat{x}_{t,0}^i, c)$。步级密集奖励为 $\Delta R_t^i = R_{t-1}^i - R_t^i$
-    - 设计动机：ODE 的确定性保证了"潜变量→干净图像"的一一映射，无需训练额外的 critic 函数。现有奖励模型都是为干净图像设计的，直接使用无需适配。实验表明多步 ODE（$n=t$）比单步更准确
+稀疏奖励 $R^i$ 是 $T$ 步去噪的累积结果，硬塞给某一步并不公平。DenseGRPO 借 ODE 的确定性来给每一步单独打分：给定中间潜变量 $x_t^i$，ODE 去噪轨迹是唯一确定的，于是对它做 $n$ 步 ODE 去噪 $\hat{x}_{t,0}^i = \text{ODE}_n(x_t^i, c)$ 拿到一张干净潜变量，解码成图像后直接用现有奖励模型评分 $R_t^i = \mathcal{R}(\hat{x}_{t,0}^i, c)$。把相邻两步的分数相减，$\Delta R_t^i = R_{t-1}^i - R_t^i$，就得到这一步"往好里推了多少"的密集奖励。
 
-2. **探索空间校准**:
+这样做的好处是不必训练额外的 critic 来估计中间状态价值——ODE 的"潜变量→干净图像"一一映射已经把每个中间状态映回了奖励模型熟悉的干净图像域，而现有奖励模型本来就是为干净图像设计的，可以零适配地直接用。代价是 rollout 的步数要够：实验里多步 ODE（取 $n=t$）明显比单步准确，单步去噪偏离干净图像域太远，奖励模型评分不可信。
 
-    - 功能：为每个时间步自适应调整 SDE 噪声级别
-    - 核心思路：在 SDE 采样器中将统一噪声参数 $a$ 替换为时间步特定的 $\psi(t)$。校准目标是让每个时间步的正负奖励大致平衡（正奖励数 ≈ 负奖励数），通过简单的增减调整实现：若正负平衡则增加 $\psi(t)$（扩大探索），否则减少（收缩探索）
-    - 设计动机：统一噪声级别 $a=0.7$ 在接近终端的时间步（如 timestep=2）会导致所有样本都获得负奖励——探索空间过大全是坏样本，无法学到有效策略。自适应调整确保每个时间步都有合理的正负信号
+**2. 探索空间校准：让每个时间步的探索强度随密集奖励自适应。**
+
+SDE 采样器原本对所有时间步用同一个噪声级别 $a$，但去噪过程是时变的：在接近终端的时间步（如 timestep=2），$a=0.7$ 会让探索空间过大，采出的样本全是坏样本、奖励清一色为负，组内拿不到任何正信号就学不到有效策略。DenseGRPO 把统一的 $a$ 换成时间步特定的 $\psi(t)$，并用一条简单规则来调：以"该时间步正奖励数 ≈ 负奖励数"为目标，若正负已大致平衡就增大 $\psi(t)$ 继续扩大探索，否则减小 $\psi(t)$ 收缩探索。靠每步的密集奖励才能算出这里的正负样本比例，所以这个校准正是建立在上一个设计之上，确保每个时间步都有合理的正负信号供 GRPO 学习。
 
 ### 损失函数 / 训练策略
 
@@ -128,10 +123,10 @@ DenseGRPO 在 Flow-GRPO 基础上做两个改进：
 ## 相关论文
 
 - [\[ICLR 2026\] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models](glass_flows_reward_alignment_diffusion.md)
-- [\[ICLR 2026\] Multi-agent Coordination via Flow Matching](multi-agent_coordination_via_flow_matching.md)
 - [\[ICLR 2026\] Laplacian Multi-scale Flow Matching for Generative Modeling](laplacian_multi-scale_flow_matching_for_generative_modeling.md)
 - [\[ICLR 2026\] Flow Matching with Injected Noise for Offline-to-Online Reinforcement Learning](flow_matching_with_injected_noise_for_offline-to-online_reinforcement_learning.md)
 - [\[ICLR 2026\] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation](senseflow_scaling_distribution_matching_for_flow-based_text-to-image_distillatio.md)
+- [\[ICLR 2026\] SafeFlowMatcher: Safe and Fast Planning using Flow Matching with Control Barrier Functions](safeflowmatcher_safe_and_fast_planning_using_flow_matching_with_control_barrier_.md)
 
 </div>
 

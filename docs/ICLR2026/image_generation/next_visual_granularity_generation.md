@@ -37,40 +37,25 @@ tags:
 
 ### 整体框架
 
-NVG 将图像表示为结构化序列 $\mathcal{T} = \{(\boldsymbol{c}_i, \boldsymbol{s}_i)\}_{i=0}^K$，其中：
-- $\boldsymbol{c}_i$：阶段 $i$ 的内容 token（$|c_i| = n_i$ 个唯一 token，来自共享码本 $\mathcal{V}$）
-- $\boldsymbol{s}_i$：结构图（$h \times w$ 矩阵，标识每个位置对应的 token 索引）
+NVG 把一张图像在**固定空间分辨率**下拆成一串由粗到细的粒度级别：每个阶段都覆盖整张图，只是允许使用的唯一 token 数量不同——从少数 token 勾勒全局布局，逐级增加 token 还原精细细节。形式上图像表示为结构化序列 $\mathcal{T} = \{(\boldsymbol{c}_i, \boldsymbol{s}_i)\}_{i=0}^K$，其中 $\boldsymbol{c}_i$ 是阶段 $i$ 的内容 token（含 $|c_i| = n_i$ 个来自共享码本 $\mathcal{V}$ 的唯一 token），$\boldsymbol{s}_i$ 是 $h \times w$ 的结构图，标识每个空间位置该用哪个 token。生成时把"预测下一个 token"换成"预测下一个粒度级别"，每阶段先补结构、再填内容。
 
-### 1. 视觉粒度序列构建
+### 关键设计
 
-**结构构建**（自底向上聚类）：
-- 从最细粒度开始（每位置一个唯一 token）
-- 贪心策略：计算成对 $\ell_2$ 距离，将 top-$k$ 最相似 token 合并为一簇
-- $k=2$ 时，每阶段 token 数减半，形成 $\{2^i\}_{i=0}^8$ 的序列（$16^2$ 潜空间）
+**1. 视觉粒度序列构建：在不缩放分辨率的前提下定义"粗到细"。**
 
-**内容构建**（残差方式）：类似 VAR 的视觉金字塔，但压缩由结构图引导而非空间缩放
+VAR 用空间下采样得到金字塔，早期一个 token 要代表一大片语义混杂的区域，表示天然有歧义。NVG 改成自底向上的聚类：从最细粒度（每个位置一个唯一 token）出发，按成对 $\ell_2$ 距离贪心地把 top-$k$ 最相似的 token 合并成一簇。取 $k=2$ 时每阶段 token 数减半，在 $16^2$ 潜空间上形成 $\{2^i\}_{i=0}^8$ 的级别序列。内容侧仍用类似 VAR 的残差金字塔，但每级的压缩由结构图引导而非空间缩放，因此每个 token 始终对应语义连贯的一簇区域、含义更清晰。为了让模型知道当前处在哪个层级，再用一个 $K$ 维向量编码跨阶段的层次关系：每个阶段贡献一个 bit（0 或 2），用 1 作填充。
 
-**结构嵌入**：$K$ 维向量编码全阶段层次关系，每阶段添加一个 bit（0 或 2），1 作为填充
+**2. 结构-内容两段式生成：每阶段先画骨架再上色。**
 
-### 2. 生成流程
-
-每个阶段先生成结构、后生成内容：
-- **结构生成器**：轻量级 rectified flow 模型，使用 v-prediction + Gumbel-top-$k$ 采样
-    - 输入 $\boldsymbol{z}_s(t) = t \cdot \boldsymbol{\varepsilon} + (1-t) \cdot \boldsymbol{s}_e$，已知部分用 ground-truth 替换
-- **内容生成器**：预测最终画布 $f_c(\boldsymbol{x}_i) \rightarrow \boldsymbol{x}$，通过残差获取当前阶段 token
-
-内容生成器训练损失：
+每个粒度级别的生成被拆成"先结构、后内容"。结构生成器是一个轻量 rectified flow 模型，用 v-prediction 配合 Gumbel-top-$k$ 采样从噪声恢复结构图，输入 $\boldsymbol{z}_s(t) = t \cdot \boldsymbol{\varepsilon} + (1-t) \cdot \boldsymbol{s}_e$，其中已确定的部分直接用 ground-truth 替换，保证已生成区域稳定、只对新增粒度采样。内容生成器则直接预测最终画布 $f_c(\boldsymbol{x}_i) \rightarrow \boldsymbol{x}$，当前阶段真正新增的 token 通过残差从画布中取出。它的训练目标同时约束画布回归和 token 分类：
 
 $$\ell(\boldsymbol{x}_i) = \|\boldsymbol{x} - f_c(\boldsymbol{x}_i)\|_2^2 + \text{CE}(\hat{\boldsymbol{c}}_i, \boldsymbol{c}_i)$$
 
-### 3. Structure-Aware RoPE
+前一项让每阶段都朝完整画布逼近、后一项保证 token 预测准确。这种"残差建模 + 画布渐进细化"让模型每步都在修正整图而非盲目顺序填空，从而缓解自回归常见的曝光偏差与误差累积。
 
-将 64 维注意力特征分为：
-- [8] 文本/图像标识
-- [2]×8 结构编码
-- [20]×2 空间位置
+**3. Structure-Aware RoPE：把"谁和谁同簇"写进位置编码。**
 
-同一簇内的 token 共享结构位置，跨簇则不同。
+为了让注意力区分簇内/簇间关系，NVG 把 64 维注意力特征切成三段——8 维标识文本/图像、$2\times8$ 维编码结构层次、$20\times2$ 维表示空间位置。关键在于同一簇内的 token 共享同一结构位置、跨簇则不同，于是模型在做注意力时天然知道哪些位置属于同一粒度单元，结构控制由此内建进生成过程，而无需额外的条件模块。
 
 ## 实验关键数据
 
@@ -136,8 +121,8 @@ $$\ell(\boldsymbol{x}_i) = \|\boldsymbol{x} - f_c(\boldsymbol{x}_i)\|_2^2 + \tex
 
 - [\[ICLR 2026\] Pyramidal Patchification Flow for Visual Generation](pyramidal_patchification_flow_for_visual_generation.md)
 - [\[ICML 2026\] Semantic Granularity Navigation in Image Editing](../../ICML2026/image_generation/semantic_granularity_navigation_in_image_editing.md)
-- [\[ICLR 2026\] SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
 - [\[CVPR 2026\] AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys](../../CVPR2026/image_generation/as-bridge_a_bidirectional_generative_framework_bridging_next-generation_astronom.md)
+- [\[ICLR 2026\] SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
 - [\[ICLR 2026\] Generate Any Scene: Scene Graph Driven Data Synthesis for Visual Generation Training](generate_any_scene_scene_graph_driven_data_synthesis_for_visual_generation_train.md)
 
 </div>

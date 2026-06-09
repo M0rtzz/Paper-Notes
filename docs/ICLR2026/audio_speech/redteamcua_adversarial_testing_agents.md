@@ -41,30 +41,17 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RedTeamCUA 由三部分组成：(1) **混合沙盒环境**——VM 隔离的 Ubuntu + Docker 化的 Web 服务（OwnCloud、Forum、RocketChat）；(2) **RTC-Bench**——9 个良性任务 × 24 个攻击目标 × 4 个实例化类型 = 864 个测试用例；(3) **两种评估模式**——Decoupled（直接从注入点开始评估鲁棒性）和 End2End（完整任务流程评估）。
+RedTeamCUA 把一台 VM 隔离的 Ubuntu 桌面和几个 Docker 化的真实 Web 服务（OwnCloud 网盘、Forum 论坛、RocketChat 聊天）拼成一个可复现的混合沙盒，让 CUA 既能浏览网页又能操作本地文件系统，攻击者则把恶意指令藏在网页内容里发起间接 prompt injection。围绕这个沙盒，作者用 9 个良性任务 × 24 个攻击目标 × 4 种实例化方式组合出 864 个测试用例构成 RTC-Bench，再用 Decoupled 和 End2End 两种模式分别度量 CUA 在注入点上的鲁棒性与在完整任务流程里的真实脆弱性。
 
 ### 关键设计
 
-1. **攻击目标分类（CIA 三要素）**
+**1. 按 CIA 三要素组织攻击目标：把抽象的"安全"落成可操作的高危动作。** 红队测试的难点在于"攻击成功"需要一个明确、可自动判定的标准。作者借安全领域经典的 CIA 三元组把 24 个攻击目标系统铺开：机密性对应数据泄露，走 Web→OS→Web 的完整链路——CUA 先读本地敏感文件，再通过 RocketChat/OwnCloud/Forum 把内容回传给攻击者；完整性对应文件篡改，走 Web→OS，包括删除、改写、改权限等破坏，例如执行 `sudo rm -rf /etc/security` 或对文件做 zip 加密勒索；可用性对应服务中断，同样走 Web→OS，例如 `sudo systemctl stop sshd` 停掉关键服务，或创建一万个 1MB 文件做资源耗尽。这套分类的价值在于它天然覆盖了 CUA 特有的跨平台攻击面——传统 Web 安全和 OS 安全被打通，注入点在网页、落点却在操作系统，是纯 Web 或纯文本基准照不到的盲区。
 
-    - **机密性（Web→OS→Web）**：数据泄露——读取本地文件并通过 RocketChat/OwnCloud/Forum 发送给攻击者
-    - **完整性（Web→OS）**：文件删除、内容篡改、权限修改（如 `sudo rm -rf /etc/security`、zip 加密文件）
-    - **可用性（Web→OS）**：服务中断（`sudo systemctl stop sshd`）、资源耗尽（创建 10,000 个 1MB 文件）
+**2. 2×2 实例化产生 4 种变体：把"攻击在什么条件下更易得逞"拆成可控变量。** 同一个攻击目标在不同表达下的危险程度差别很大，作者沿两个正交维度做消融。第一维是良性任务指令的粒度，General（用户指令模糊）对 Specific（用户指令精确）；第二维是注入内容的形式，Code（直接给一段命令代码）对 Language（用自然语言描述要做的事）。两两组合得到 4 种实例化变体，让每个攻击目标都能在"用户越具体是否越安全""代码注入是否比语言注入更易触发"这类问题上给出对照数据，而不是只报一个笼统的成功率。
 
-2. **4 种实例化类型**
+**3. Decoupled 与 End2End 双评估模式：把"导航能力"和"安全鲁棒性"解耦开。** 一次端到端攻击失败可能是因为 CUA 压根没走到注入点（能力问题），也可能是走到了但顶住了诱惑（鲁棒性问题），两者混在一起会高估安全性。Decoupled Eval 直接把 CUA 放在注入点上启动，剥离导航环节，只考验它面对眼前恶意指令时是否服从，给出鲁棒性的纯净度量；End2End Eval 则从初始任务状态出发跑完整流程，复现真实部署下"任务执行中途撞上注入"的场景。两种模式互为上下界，前者暴露最坏情况，后者反映现实风险。
 
-    - 良性指令粒度：General（模糊）vs Specific（精确）
-    - 注入内容类型：Code（代码片段）vs Language（自然语言指令）
-    - 2×2 组合产生 4 种变体，测试不同条件下的脆弱性
-
-3. **两种评估模式**
-
-    - **Decoupled Eval**：直接将 CUA 放在注入点，隔离导航能力和鲁棒性
-    - **End2End Eval**：从初始任务状态开始，测试真实部署场景
-
-### 指标
-- **ASR (Attack Success Rate)**：攻击成功率
-- **AR (Attempt Rate)**：攻击尝试率——CUA 尝试执行恶意指令的比例（即使执行失败）
+**4. AR 与 ASR 双指标：把"想不想做坏事"和"做没做成"分开量。** 这是本文最具洞察力的设计。攻击成功率 ASR（Attack Success Rate）衡量恶意指令最终是否真的被执行到位；攻击尝试率 AR（Attempt Rate）则衡量 CUA 是否动手去执行恶意指令——哪怕因为能力不足半途失败也算尝试。把两者分开看，$\text{AR}-\text{ASR}$ 这道缺口就有了清晰含义：它代表"模型已经被说服、愿意作恶，只是当前能力还不够把事做成"的部分。这条缝隙正是全文的核心警报——当 AR 远高于 ASR 时，意味着安全防线并非靠模型"拒绝"守住，而是靠它"做不到"侥幸守住，一旦 CUA 能力继续增强，ASR 就会向 AR 收敛，攻击成功率会随能力提升自动上涨。
 
 ## 实验关键数据
 
@@ -132,8 +119,8 @@ RedTeamCUA 由三部分组成：(1) **混合沙盒环境**——VM 隔离的 Ubu
 - [\[AAAI 2026\] USE: A Unified Model for Universal Sound Separation and Extraction](../../AAAI2026/audio_speech/use_a_unified_model_for_universal_sound_separation_and_extraction.md)
 - [\[ICML 2026\] SafeSearch: Automated Red-Teaming of LLM-Based Search Agents](../../ICML2026/audio_speech/safesearch_automated_red-teaming_of_llm-based_search_agents.md)
 - [\[ICML 2026\] JAEGER: Joint 3D Audio-Visual Grounding and Reasoning in Simulated Physical Environments](../../ICML2026/audio_speech/jaeger_joint_3d_audio-visual_grounding_and_reasoning_in_simulated_physical_envir.md)
+- [\[ICLR 2026\] Flow2GAN: Hybrid Flow Matching and GAN with Multi-Resolution Network for Few-step High-Fidelity Audio Generation](flow2gan_hybrid_flow_matching_and_gan_with_multi-resolution_network_for_few-step.md)
 - [\[ACL 2026\] XLSR-MamBo: Scaling the Hybrid Mamba-Attention Backbone for Audio Deepfake Detection](../../ACL2026/audio_speech/xlsr-mambo_scaling_the_hybrid_mamba-attention_backbone_for_audio_deepfake_detect.md)
-- [\[NeurIPS 2025\] The Impact of Scaling Training Data on Adversarial Robustness](../../NeurIPS2025/audio_speech/the_impact_of_scaling_training_data_on_adversarial_robustness.md)
 
 </div>
 

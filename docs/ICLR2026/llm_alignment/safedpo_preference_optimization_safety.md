@@ -41,30 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SafeDPO 在标准 DPO pipeline 上做两个修改：(1) 安全感知数据变换 $T$：当 winner 不安全而 loser 安全时交换它们，当两者都不安全时丢弃该对；(2) 在 DPO loss 中加入安全 margin $\Delta$，增大安全/不安全响应对之间的 margin。
+SafeDPO 想解决的问题是：让一个模型同时变得有用又安全，但又不想付出 SafeRLHF 那套训练 6 个网络、在线采样的代价。它的切入点是从理论端入手——先证明带安全约束的 RLHF 目标存在一个闭式最优策略，再像 DPO 那样把这个最优解反代回去，得到一个纯监督学习的损失。最终落到工程上，整条 pipeline 和标准 DPO 几乎一样，只在两个地方动手：先对偏好数据做一次安全感知的变换（把不安全的 winner 换掉或丢掉），再在 DPO 损失里塞进一个安全 margin 项 $\Delta$。从输入的 $(x, y_w, y_l)$ 偏好对加上二值安全标签，经过变换和加 margin 的损失，输出一个既保留有用性又自动远离不安全区域的策略。
 
 ### 关键设计
 
-1. **代价增强奖励与闭式最优策略**
+**1. 代价增强奖励与闭式最优策略：把硬约束塞进 KL 正则化框架。**
 
-    - 功能：将硬安全约束转化为显式的奖励修改
-    - 核心思路：$r_c(x,y) = r(x,y)$ if $c(x,y) \leq 0$（安全），$-\infty$ otherwise（不安全）。由此闭式最优策略为 $\pi^*(y|x) = \frac{1}{Z(x)} \pi_{\text{ref}}(y|x) \exp(\frac{1}{\beta} r_c(x,y))$，不安全响应自动获得零概率
-    - 设计动机：将看似不可处理的硬约束问题转化为标准的 KL 正则化框架，允许 DPO 式重参数化
+带安全约束的 RLHF 本来是个硬约束优化问题（响应必须满足 $c(x,y) \leq 0$），看上去没法像 DPO 那样推出闭式解。SafeDPO 的做法是把约束直接写进奖励：定义代价增强奖励 $r_c(x,y) = r(x,y)$ 当 $c(x,y) \leq 0$（安全），否则 $r_c(x,y) = -\infty$（不安全）。这一改动把约束问题变回了标准的 KL 正则化目标，于是可以套用 DPO 那套重参数化，得到闭式最优策略
 
-2. **安全感知数据变换 $T$**
+$$\pi^*(y|x) = \frac{1}{Z(x)} \pi_{\text{ref}}(y|x) \exp\Big(\frac{1}{\beta} r_c(x,y)\Big).$$
 
-    - 功能：根据安全标签重新整理偏好对
-    - 核心思路：给定 $(x, y_w, y_l, h_w, h_l)$，$h=1$ 表示不安全：(a) $h_w=0$: 保持不变；(b) $h_w=1, h_l=0$: **交换** winner 和 loser；(c) $h_w=1, h_l=1$: **丢弃**
-    - 设计动机：消融实验证明这一步是最关键的——仅给其他 DPO 变体加 margin 效果有限，但安全感知变换可显著提升安全性
+关键效果是：不安全响应因为 $r_c = -\infty$，在最优策略里概率被压到零，安全约束被精确编码而不是近似满足。这正是它和 SACPO 这类松弛方法的区别——后者用代理目标做放松，无法保证收敛到原始约束问题的解。
 
-3. **SafeDPO 损失与安全 Margin**
+**2. 安全感知数据变换 $T$：用标签重排偏好对，让"安全"成为偏好方向。**
 
-    - 功能：在标准 DPO loss 中增加安全 margin 项
-    - 核心思路：$\mathcal{L}(\theta; \Delta) = -\mathbb{E}[\log \sigma(\beta \log \frac{\pi_\theta(\tilde{y}_w|x)}{\pi_{\text{ref}}(\tilde{y}_w|x)} - \beta \log \frac{\pi_\theta(\tilde{y}_l|x)}{\pi_{\text{ref}}(\tilde{y}_l|x)} - (\tilde{h}_l - \tilde{h}_w)\Delta)]$。Margin $\Delta \geq 0$ 仅在安全-不安全对上激活（$\tilde{h}_l - \tilde{h}_w = 1$），增大安全响应的优势
-    - 设计动机：**Proposition 4.4** 证明 $\Delta$ 不改变最优解集（optimality invariance），但改善优化动态——加速远离不安全区域
+有了上面的最优策略形式，还需要让 DPO 的偏好信号和"安全"对齐。变换 $T$ 根据二值安全标签 $h$（$h=1$ 表示不安全）重整每个偏好对 $(x, y_w, y_l, h_w, h_l)$：如果 winner 本身安全（$h_w=0$）就保持不变；如果 winner 不安全而 loser 安全（$h_w=1, h_l=0$）就**交换** winner 和 loser，让安全的那个成为被偏好项；如果两者都不安全（$h_w=1, h_l=1$）则直接**丢弃**这一对。这一步看似简单，却是整个方法里最关键的环节——消融实验显示，只给别的 DPO 变体加 margin 收效甚微，而一旦引入这个安全感知变换，安全性就显著上去了。
+
+**3. SafeDPO 损失与安全 Margin：在不改最优解的前提下加速远离危险区。**
+
+最后把变换后的数据喂进带 margin 的 DPO 损失：
+
+$$\mathcal{L}(\theta; \Delta) = -\mathbb{E}\Big[\log \sigma\Big(\beta \log \frac{\pi_\theta(\tilde{y}_w|x)}{\pi_{\text{ref}}(\tilde{y}_w|x)} - \beta \log \frac{\pi_\theta(\tilde{y}_l|x)}{\pi_{\text{ref}}(\tilde{y}_l|x)} - (\tilde{h}_l - \tilde{h}_w)\Delta\Big)\Big].$$
+
+安全 margin $\Delta \geq 0$ 只在"安全-不安全"对上激活（即 $\tilde{h}_l - \tilde{h}_w = 1$ 时），相当于额外拉大安全响应相对不安全响应的优势。它的妙处在于 **Proposition 4.4** 证明了 $\Delta$ 不改变最优解集（optimality invariance）——加 margin 不会把模型推到一个不同的最优点，只是改善了优化动态，让训练更快地把概率质量从不安全区域挪走。所以 $\Delta$ 是个纯粹的"加速器"超参，这也是 SafeDPO 全程只多出 1 个超参的原因。
 
 ### 损失函数 / 训练策略
-基于标准 DPO 训练框架，$\beta=0.1$, $\Delta=10$（默认），3 epochs, lr=1e-6, cosine schedule。仅需偏好数据 + 二值安全标签（$h \in \{0,1\}$），不需要有害性偏好标签。
+基于标准 DPO 训练框架，$\beta=0.1$，$\Delta=10$（默认），3 epochs，lr=1e-6，cosine schedule。仅需偏好数据 + 二值安全标签（$h \in \{0,1\}$），不需要有害性偏好标签或单独的代价模型。
 
 ## 实验关键数据
 
@@ -123,11 +125,11 @@ SafeDPO 在标准 DPO pipeline 上做两个修改：(1) 安全感知数据变换
 
 ## 相关论文
 
+- [\[ICLR 2026\] Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
 - [\[ACL 2025\] Optimal Transport-Based Token Weighting for Enhanced Preference Optimization](../../ACL2025/llm_alignment/otpo_token_weighting.md)
-- [\[AAAI 2026\] Rethinking Direct Preference Optimization in Diffusion Models](../../AAAI2026/llm_alignment/rethinking_direct_preference_optimization_in_diffusion_models.md)
+- [\[ICLR 2026\] Is On-Policy Data always the Best Choice for Direct Preference Optimization-based LM Alignment?](is_on-policy_data_always_the_best_choice_for_direct_preference_optimization-base.md)
 - [\[ACL 2025\] Probability-Consistent Preference Optimization for Enhanced LLM Reasoning](../../ACL2025/llm_alignment/probability-consistent_preference_optimization_for_enhanced_llm_reasoning.md)
 - [\[ACL 2026\] Topology-Enhanced Alignment for Large Language Models: Trajectory Topology Loss and Topological Preference Optimization](../../ACL2026/llm_alignment/topology-enhanced_alignment_for_large_language_models_trajectory_topology_loss_a.md)
-- [\[ICLR 2026\] Token-Importance Guided Direct Preference Optimization (TI-DPO)](token-importance_guided_direct_preference_optimization.md)
 
 </div>
 

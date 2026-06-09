@@ -35,31 +35,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-NuRL = 离线Hint收集 + 在线Rollout增强(两阶段训练)
+NuRL 在 GRPO 之上加一层"难题救援"机制：先离线为每道题用模型自己生成一条抽象 hint，训练时只要某道题的所有 rollout 全部失败（pass rate=0%）就把 hint 拼到题面上重新采样，让原本零梯度的难题重新产生可学习的对错差异。推理阶段完全不用 hint，它只在训练时充当临时脚手架。
 
 ### 关键设计
-1. **离线Hint收集**:
 
-    - 输入: (问题q, 正确答案a)
-    - Step 1: 让模型生成"为什么答案正确"的CoT: $y = \pi_{old}(q, a; p_y)$
-    - Step 2: 从CoT抽象出高层hint(核心知识线索): $h = \pi_\theta(q, a, y; p_h)$
-    - 关键约束: hint必须抽象且高层，不包含具体答案或解题步骤
+**1. 离线 Hint 收集：把"为什么对"蒸馏成不泄题的线索。** 难题之所以零梯度，是因为模型对它一无所获；但每道题其实带着 gold answer $a$，问题只是模型不知道怎么用。NuRL 分两步榨取这份信息：先让旧策略在已知答案条件下生成一段"为什么这个答案正确"的解释链 $y = \pi_{old}(q, a; p_y)$，再让模型把这段解释提炼成一条高层 hint $h = \pi_\theta(q, a, y; p_h)$。关键约束是 hint 必须停留在抽象的知识线索层面（该用哪个定理、往哪个方向想），既不能包含最终答案也不能列出具体解题步骤——这样 hint 提供的是方向而非答案，模型仍需自己走完推理，从而保留真正的学习信号。整个过程只调用模型自身，无需任何外部强模型。
 
-2. **在线Rollout增强**:
+**2. 全失败触发的在线 Rollout 增强：只在真正卡死时注入脚手架。** GRPO 对每道题采样 $\mathcal{G}$ 个 rollout，NuRL 只对 pass rate=0% 的题动手——这个二值触发器保证 hint 只用在模型确实无法独立解出的难题上，不污染已会做的题。触发后把 hint 拼到题面末尾重新采样，但刻意只生成 $\mathcal{G}-1$ 个带 hint 的 rollout，再保留 1 个不带 hint 的原始 rollout。这一个"裸题"rollout 是为了避免 hint 太强导致全部答对、组内 advantage 又退化成零方差；混入一条大概率失败的轨迹，就能让带 hint 的成功样本获得正的相对优势，难题重新变得可学。
 
-    - GRPO训练中对每个问题生成 $\mathcal{G}$ 个rollout
-    - 若全部失败(pass rate=0%): 将hint拼接到问题末尾
-    - 重新生成 $\mathcal{G}-1$ 个带hint的rollout + 1个不带hint的rollout(避免全部正确导致零方差)
-    - 推理时不用hint——训练时的hint帮助模型内化推理模式
-
-3. **Hint类型探索**:
-
-    - 抽象线索(最佳) > 部分步骤 > 解释 > 直接答案(最差)
-    - 核心发现: 暴露越多答案信息，性能越差——与人类学习规律一致
+**3. Hint 抽象度的反直觉规律：给得越少，学得越好。** NuRL 对比了四档 hint 信息量——抽象线索、部分步骤、完整解释、直接给答案——结论是抽象线索最佳、直接答案最差。原因是给答案或步骤会让模型走捷径照抄（reward hacking），它学到的是"复述 hint"而非"自己推理"；只给抽象方向则强迫模型补全中间推理，内化的才是可迁移的解题模式。这条规律与人类学习中"提示而非代劳"的直觉一致，也解释了为何刻意约束 hint 不泄题反而是性能关键。
 
 ### 训练策略
-- Stage 1: 标准GRPO训练至训练奖励和验证准确率收敛
-- Stage 2: NuRL继续训练——过滤掉Stage 1中全部正确的简单题
+两阶段串联：Stage 1 先跑标准 GRPO，训练到训练奖励和验证准确率都收敛，把模型本就会做的简单题吃干净；Stage 2 切到 NuRL 继续训练，并过滤掉 Stage 1 中已经全部答对的简单题，让算力集中在剩下的难题上。这样 hint 注入只发生在真正的能力边界处，避免在简单题上做无用功。
 
 ## 实验关键数据
 
@@ -118,11 +105,11 @@ NuRL = 离线Hint收集 + 在线Rollout增强(两阶段训练)
 
 ## 相关论文
 
+- [\[ICLR 2026\] A State-Transition Framework for Efficient LLM Reasoning](a_state-transition_framework_for_efficient_llm_reasoning.md)
+- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Models](predicting_llm_reasoning_performance_with_small_proxy_models.md)
+- [\[ICLR 2026\] Predicting LLM Reasoning Performance with Small Proxy Model](predicting_llm_reasoning_performance_with_small_proxy_model.md)
 - [\[ICLR 2026\] On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning](on_the_design_of_kl-regularized_policy_gradient_algorithms_for_llm_reasoning.md)
-- [\[ICLR 2026\] DESIGNER: Design-Logic-Guided Multidisciplinary Data Synthesis for LLM Reasoning](designer_design-logic-guided_multidisciplinary_data_synthesis_for_llm_reasoning.md)
-- [\[ICLR 2026\] The Path of Least Resistance: Guiding LLM Reasoning Trajectories with Prefix Consensus](the_path_of_least_resistance_guiding_llm_reasoning_trajectories_with_prefix_cons.md)
-- [\[ICLR 2026\] Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](temperature_as_a_meta-policy_adaptive_temperature_in_llm_reinforcement_learning.md)
-- [\[ICLR 2026\] Evoking User Memory: Personalizing LLM via Recollection-Familiarity Adaptive Retrieval](evoking_user_memory_personalizing_llm_via_recollection-familiarity_adaptive_retr.md)
+- [\[ICLR 2026\] From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning](from_assumptions_to_actions_turning_llm_reasoning_into_uncertainty-aware_plannin.md)
 
 </div>
 

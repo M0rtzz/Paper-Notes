@@ -45,23 +45,25 @@ tags:
 
 ### 关键设计
 
-1. **文化相关性三维度标注**:
+**1. 文化相关性三维度标注：把模糊的"文化相关"拆成可验证的二元判断。**
 
-    - 功能：将"文化相关性"分解为三个可独立验证的二元维度
-    - 核心思路：每个图像-文档对从三个维度标注：(a) 国家关联性（True/False/不确定）, (b) 文化内容相关性, (c) 视觉元素相关性。三维度独立评估降低标注歧义
-    - 设计动机："文化相关性"本身过于模糊，分解后既提高标注一致性（Cohen's κ = 0.83），又能支持更细粒度的分析
+直接让标注者判断"这篇文档和这张图文化上相不相关"太主观，歧义大。Ravenea 把它拆成三个独立的二元维度逐一标注：(a) 国家关联性（文档是否属于图像所在国家，True/False/不确定）、(b) 文化内容相关性（是否涉及该图像的文化内涵）、(c) 视觉元素相关性（是否对应图中的可见元素）。三个维度独立评估，每个判断都更明确，既把标注一致性拉到 Cohen's κ = 0.83，也让后续能做更细粒度的分析（例如区分"国家对但文化无关"的文档）。
 
-2. **Culture-Aware Contrastive (CAC) 学习**:
+**2. Culture-Aware Contrastive（CAC）学习：给检索器加显式文化监督信号。**
 
-    - 功能：在 CLIP/SigLIP 上微调以提升文化检索能力
-    - 核心思路：三重损失的组合——$\mathcal{L}_{\text{CAC}} = \frac{1}{3}(\mathcal{L}_{\text{Culture Classify}} + \mathcal{L}_{\text{Rank}} + \mathcal{L}_{\text{Diversity}})$。分类损失用 sigmoid 二元交叉熵判断文档是否文化相关；排序损失用 margin ranking 确保相关文档得分高于不相关；多样性损失防止正样本文本嵌入坍缩
-    - 设计动机：标准对比学习不区分文化相关性，需要显式的文化监督信号来引导检索器
+标准对比学习只对齐图文语义，并不知道"哪篇文档文化上更相关"，所以直接拿 CLIP/SigLIP 检索文化文档效果有限。CAC 在 Ravenea 标注数据上微调编码器，用三重损失等权组合：
 
-3. **RegionScore 评估指标**:
+$$\mathcal{L}_{\text{CAC}} = \frac{1}{3}(\mathcal{L}_{\text{Culture Classify}} + \mathcal{L}_{\text{Rank}} + \mathcal{L}_{\text{Diversity}})$$
 
-    - 功能：量化生成描述中是否包含正确的地理/文化区域引用
-    - 核心思路：检查生成描述中是否出现目标国家名或对应形容词/国籍词。简单的二元匹配：$R(\mathbf{g}^{(i)}, I_i) = 1$ 如果描述中出现正确的区域词
-    - 设计动机：现有指标（ROUGE-L, CIDEr, BERTScore, CLIPScore）均与人类对文化准确性的判断弱相关甚至负相关；RegionScore 与人类判断的 Kendall τ 为 0.442（显著），远高于其他指标
+其中分类损失用 sigmoid 二元交叉熵直接判断一篇文档是否文化相关，给检索器一个明确的文化标签信号；排序损失用 margin ranking 拉开相关文档与不相关文档的得分；多样性损失则约束正样本的文本嵌入不要彼此坍缩到一起，保持检索结果的覆盖面。三者合起来，让检索器从"语义相似"升级为"文化相关"。
+
+**3. RegionScore 评估指标：用最朴素的区域词匹配衡量文化准确性。**
+
+文化理解最大的评估难题是：ROUGE-L、CIDEr、BERTScore、CLIPScore 这些现有指标和人类对文化准确性的判断弱相关、甚至负相关，分数高不代表真的描述对了文化。RegionScore 反其道而行，只做一件极简单的事——检查生成描述里有没有出现目标国家名或对应的形容词/国籍词：
+
+$$R(\mathbf{g}^{(i)}, I_i) = 1 \quad \text{当描述中出现正确的区域词，否则为 } 0$$
+
+正是这种朴素的二元匹配，反而和人类判断对得最齐——Kendall τ 达到 0.442（显著），远高于其他语义指标。这说明现有评估体系在文化维度上有系统性盲区，一个"是否点出了正确地区"的硬约束比复杂语义相似度更能反映文化是否到位。
 
 ### 损失函数 / 训练策略
 
@@ -135,10 +137,10 @@ CAC 训练使用 Ravenea 标注数据微调 CLIP/SigLIP 编码器，三个损失
 ## 相关论文
 
 - [\[ACL 2026\] Utility-Oriented Visual Evidence Selection for Multimodal Retrieval-Augmented Generation](../../ACL2026/information_retrieval/utility-oriented_visual_evidence_selection_for_multimodal_retrieval-augmented_ge.md)
-- [\[ICLR 2026\] Toward Faithful Retrieval-Augmented Generation with Sparse Autoencoders](toward_faithful_retrieval-augmented_generation_with_sparse_autoencoders.md)
 - [\[CVPR 2025\] DocoPilot: Improving Multimodal Models for Document-Level Understanding](../../CVPR2025/information_retrieval/docopilot_improving_multimodal_models_for_document-level_understanding.md)
 - [\[ACL 2025\] VISA: Retrieval Augmented Generation with Visual Source Attribution](../../ACL2025/information_retrieval/visa_retrieval_augmented_generation_with_visual_source_attribution.md)
 - [\[NeurIPS 2025\] Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation](../../NeurIPS2025/information_retrieval/windsock_is_dancing_adaptive_multimodal_retrieval-augmented_generation.md)
+- [\[CVPR 2026\] M4-RAG: A Massive-Scale Multilingual Multi-Cultural Multimodal RAG](../../CVPR2026/information_retrieval/m4-rag_a_massive-scale_multilingual_multi-cultural_multimodal_rag.md)
 
 </div>
 

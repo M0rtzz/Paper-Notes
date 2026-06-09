@@ -34,27 +34,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Segment-Level Selective SFT = Segment分割 → IG归因 → 双指标筛选重要Segment → 选择性Loss训练
+方法把一条长推理链先切成若干语义片段，再用 Integrated Gradients 度量每个片段对最终正确答案的因果贡献，据此筛出真正重要的片段，最后只在这些片段的 token 上算 loss 做选择性 SFT。整条流水线不改训练目标的形式，只改"哪些 token 该学"，因此能像普通 SFT 一样即插即用。
 
-### Segment分割
-用transition关键词（"\n\nWait", "\n\nAlternatively", "\n\nLet me"等）将长CoT分割为语义片段。每个segment对应推理链中的一个独立思考单元（如问题理解、中间探索、验证等）。
+### 关键设计
 
-### Integrated Gradients归因
-对每个token $o_n$ 计算IG值：沿padding baseline到实际embedding的直线路径积分梯度，衡量该token对正确答案概率的贡献方向和量级。用J个插值步近似积分：
-$$\text{IG}_i(x) \approx (x_i - x_i') \times \frac{1}{J}\sum_{j=1}^{J}\frac{\partial F(x'+j/J \cdot (x-x'))}{\partial x_i}$$
+**1. Segment 分割：把推理链切成可归因的思考单元。** token 级别的重要性分析会割裂语义，而一句完整的推理（问题理解、中间探索、验证）往往跨多个 token 才有意义。本文用一组转折关键词（如 `\n\nWait`、`\n\nAlternatively`、`\n\nLet me`）把长 CoT 切成片段，每个片段恰好对应一个独立的思考动作，后续所有归因都在片段粒度上做，从而保证筛选时不破坏推理的语义完整性。
 
-### 两个Segment-level指标
-- **Attribution Strength**: $\text{Strength}(S) = \sum_{o_n \in S}|IG(o_n)| / \sqrt{N}$，衡量影响量级。√N归一化避免长segment因token数多而占优。跨segment归一化后可比较同一CoT内各segment的相对重要性
-- **Direction Consistency**: $\text{Consistency}(S) = |\sum IG(o_n)| / \sum|IG(o_n)|$，衡量正负贡献一致性。值接近1表示segment内token贡献方向一致（要么全正要么全负），反映浅层确认或严重错误探索；中等值表示混合了正负贡献——这是反思性推理的标志，segment内既有探索又有纠正
+**2. Integrated Gradients 归因：直接量出 token 对正确答案的因果贡献。** 困惑度、熵这类间接指标会高估过渡性文本、低估验证和中间结论，存在假阳性和假阴性。本文改用 IG：以 padding embedding 为 baseline $x'$，沿到真实 embedding $x$ 的直线路径积分梯度，用 $J$ 个插值步近似 $\text{IG}_i(x) \approx (x_i - x_i') \times \frac{1}{J}\sum_{j=1}^{J}\frac{\partial F(x'+\frac{j}{J}(x-x'))}{\partial x_i}$，其中 $F$ 是正确答案的预测概率。这样每个 token $o_n$ 都拿到一个带符号的归因值，正负号表明它是在帮助还是干扰最终答案，幅度表明贡献大小——这正是 PPL/熵给不出的方向信息。
 
-### 重要Segment选择（两步筛选）
-1. **强度阈值**：按归因强度降序排列segment，取累计强度达τ=70%的top-k* segment（约30-40%的segment承载了80%+的归因）
-2. **一致性过滤**：从top-k*中过滤掉方向一致性>β=0.8的segment，保留一致性≤0.8的segment作为重要segment。结果约33%的segment被标为重要（占45%的token——因为重要segment通常更长）
+**3. 强度与方向一致性双指标：分别刻画"贡献多大"和"贡献是否纯粹"。** 单看幅度会被长片段的 token 数量带偏，单看方向又分不清贡献量级，所以本文把片段级重要性拆成两个互补指标。归因强度 $\text{Strength}(S) = \sum_{o_n \in S}|IG(o_n)| / \sqrt{N}$ 用 $\sqrt{N}$ 归一化抵消长度优势，使同一条 CoT 内各片段可横向比较影响量级；方向一致性 $\text{Consistency}(S) = |\sum IG(o_n)| / \sum|IG(o_n)|$ 衡量片段内正负贡献是否同向，取值接近 1 说明 token 几乎全正或全负，对应浅层确认或彻底跑偏的错误探索，而中等值意味着片段里既有探索又有自我纠正——这恰恰是反思性推理的指纹。两个指标合起来才能把"既重要又含真正思考"的片段挑出来。
 
-### Selective SFT（选择性训练）
-完整CoT全部输入模型（保持自回归上下文），但仅在重要segment的token上计算cross-entropy loss，不重要segment的token loss被mask为0：
-$$L_{\text{Selective-SFT}}(\theta) = -\frac{1}{\sum_t I(o_t)}\sum_{t=1}^{T}I(o_t)\log P(o_t|o_{<t}, q; \theta)$$
-这起到隐式正则化作用——防止模型过拟合冗余/重复内容，同时保持完整上下文的连贯性。
+**4. 两步筛选重要片段：先按量级取头部、再按方向去水分。** 第一步按归因强度降序累加，取累计强度达 $\tau=70\%$ 的 top-$k^*$ 个片段，此时约 30–40% 的片段已承载 80%+ 的总归因；第二步在这批头部片段里过滤掉方向一致性 $>\beta=0.8$ 的片段，只保留一致性 $\le 0.8$ 的作为重要片段。两步下来约 33% 的片段被标为重要，但因为重要片段普遍更长，它们覆盖了约 45% 的 token。先量级后方向的顺序保证既不漏掉高贡献片段，又能剔除只做表面确认的"水"片段。
+
+### 损失函数 / 训练策略
+训练时完整 CoT 仍整条喂进模型以保持自回归上下文的连贯，但只有落在重要片段里的 token 才计入交叉熵，其余 token 的 loss 被 indicator $I(o_t)$ mask 为 0：
+
+$$L_{\text{Selective-SFT}}(\theta) = -\frac{1}{\sum_t I(o_t)}\sum_{t=1}^{T}I(o_t)\log P(o_t \mid o_{<t}, q; \theta)$$
+
+这相当于一种隐式正则化：模型仍能读到全部上下文，却不会去拟合冗余、重复或截断的填充内容，参数更新被引导向关键推理模式，因此准确率和输出长度能同时改善。
 
 ## 实验
 

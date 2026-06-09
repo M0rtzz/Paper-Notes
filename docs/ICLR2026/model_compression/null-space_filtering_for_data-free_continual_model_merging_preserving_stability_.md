@@ -45,23 +45,23 @@ NUFILT 的输入是预训练模型 $\theta_0$、已合并的骨干 $\theta_{t-1}
 
 ### 关键设计
 
-1. **零空间滤波器（Null-Space Filter）**：
+**1. 零空间滤波器（Null-Space Filter）：先把新任务向量里和旧任务重叠的方向滤掉，保证旧任务响应不变。**
 
-    - 功能：在合并新任务前，先把新任务向量中与旧任务子空间重叠的分量滤除，确保旧任务的响应不被改变。
-    - 核心思路：计算从预训练到当前已合并模型的累积更新 $\tilde{\tau}_{\leq t-1}^{(l)} = \theta_{t-1}^{\text{merged},(l)} - \theta_0^{(l)}$，对其做 SVD 取 top-$r_p$ 个右奇异向量 $\hat{V}_{\leq t-1}^{(l)}$，然后构建零空间投影矩阵 $P_t^{(l)} = I - \hat{V}_{\leq t-1}^{(l)} \hat{V}_{\leq t-1}^{(l)\top}$。这个投影器会把落在旧任务子空间内的分量完全置零——即 $P_t^{(l)} x^{(l)} = 0$ 对 $x^{(l)} \in \text{span}(\hat{V}_{\leq t-1}^{(l)})$ 成立——从而让旧任务的中间表示在新合并后完全不受影响。
-    - 设计动机：与 OPCM 的正交投影不同，NUFILT 的零空间投影是对**累积更新**做的，而非对单个任务向量。这更精确地刻画了旧任务实际占据的参数空间。但纯投影也有副作用：当新旧任务共享某些方向时，零空间滤波会把新任务的有用信号也一并去除，导致可塑性下降，这就需要第二步来补偿。
+合并新任务时若直接相加，新旧信号会相互干扰、旧任务被破坏，稳定性无从谈起。NUFILT 的做法是先算出从预训练到当前已合并模型的累积更新 $\tilde{\tau}_{\leq t-1}^{(l)} = \theta_{t-1}^{\text{merged},(l)} - \theta_0^{(l)}$，对它做 SVD 取 top-$r_p$ 个右奇异向量 $\hat{V}_{\leq t-1}^{(l)}$，再构造零空间投影矩阵 $P_t^{(l)} = I - \hat{V}_{\leq t-1}^{(l)} \hat{V}_{\leq t-1}^{(l)\top}$。这个投影器把落在旧任务子空间内的分量完全置零——对任意 $x^{(l)} \in \text{span}(\hat{V}_{\leq t-1}^{(l)})$ 都有 $P_t^{(l)} x^{(l)} = 0$——于是旧任务的中间表示在新一轮合并后丝毫不受影响。
 
-2. **投影感知 LoRA 适配（Projection-Aware LoRA）**：
+和 OPCM 的正交投影不同，NUFILT 是对**累积更新**而非单个任务向量做投影，更精确地刻画了旧任务实际占据的参数空间。但纯投影有个副作用：当新旧任务共享某些方向时，滤波会把新任务的有用信号也一并抹掉，可塑性随之下降——这正是下一步要补偿的地方。
 
-    - 功能：在零空间投影后的子空间中注入低秩适配器，恢复被滤波过度削减的新任务信号。
-    - 核心思路：将投影器扩展为 $P_t^{(l)} + B_t^{(l)} A_t^{(l)}$，其中 $A_t^{(l)} \in \mathbb{R}^{r_l \times d_i}$、$B_t^{(l)} \in \mathbb{R}^{d_o \times r_l}$ 是低秩矩阵。LoRA 的自由度允许 $\tau_t^{(l)} B_t^{(l)} A_t^{(l)}$ 在旧任务子空间的正交补空间中引入新方向。训练目标是一个**纯参数空间**的代理损失：$\mathcal{L}(A_t, B_t) = \|\mathcal{T} - (M + \tau_t^{(l)} B_t^{(l)} A_t^{(l)}) \hat{V}\|_F^2$，其中 $\mathcal{T}$ 拼接了旧任务和新任务的目标投影，$M$ 是已滤波的基础参数。这个损失同时包含两个方向的约束：对旧任务子空间 $\hat{V}_{\leq t-1}$ 保持一致性（稳定性），对新任务子空间 $\hat{V}_t$ 追踪原模型行为（可塑性）。
-    - 设计动机：关键在于这个代理损失不需要任何数据——Theorem 1 证明了子空间对齐的理论保证使得参数空间的投影项可以作为数据层面损失的有效上界。LoRA 的秩 $r_l$ 控制着可塑性的自由度：秩太小恢复不足，秩太大则可能重新引入干扰。
+**2. 投影感知 LoRA 适配（Projection-Aware LoRA）：在滤波留下的子空间里注入低秩适配器，把被过度削掉的新任务信号补回来。**
 
-3. **逐层线性融合（Layer-Wise Linear Fusion）**：
+上一步保住了稳定性，却牺牲了可塑性，所以这里把投影器扩展成 $P_t^{(l)} + B_t^{(l)} A_t^{(l)}$，其中 $A_t^{(l)} \in \mathbb{R}^{r_l \times d_i}$、$B_t^{(l)} \in \mathbb{R}^{d_o \times r_l}$ 是低秩矩阵，LoRA 的自由度允许 $\tau_t^{(l)} B_t^{(l)} A_t^{(l)}$ 在旧任务子空间的正交补里引入新方向。训练目标是一个纯参数空间的代理损失
 
-    - 功能：将滤波器、任务向量、LoRA 参数合并回骨干权重，推理时无额外开销。
-    - 核心思路：最终更新公式为 $\theta_t^{\text{merged},(l)} = \theta_{t-1}^{\text{merged},(l)} + \tau_t^{(l)}(P_t^{(l)} + B_t^{(l)} A_t^{(l)})$。由于 $\tau_t^{(l)}$、$P_t^{(l)}$ 和 $B_t^{(l)} A_t^{(l)}$ 都是线性运算，三者的乘积可以直接计算出一个矩阵加到权重上。合并完成后不需要保留 $P$、$A$、$B$ 任何一个，模型参数量和推理成本与单模型完全相同。
-    - 设计动机：这是 NUFILT 相比 WEMOE 等方法的核心优势——后者需要保留额外的专家模块，导致推理时参数量增大；而 NUFILT 的所有辅助结构都在合并时消化掉了。
+$$\mathcal{L}(A_t, B_t) = \|\mathcal{T} - (M + \tau_t^{(l)} B_t^{(l)} A_t^{(l)}) \hat{V}\|_F^2$$
+
+其中 $\mathcal{T}$ 拼接了旧任务和新任务的目标投影，$M$ 是已滤波的基础参数。这个损失同时压两个方向：对旧任务子空间 $\hat{V}_{\leq t-1}$ 保持一致（稳定性），对新任务子空间 $\hat{V}_t$ 追踪原模型行为（可塑性）。它最妙的地方是完全不需要数据——Theorem 1 的子空间对齐保证让参数空间的投影项成为数据层面损失的有效上界。LoRA 的秩 $r_l$ 是可塑性的旋钮：太小恢复不足，太大则会把干扰重新引回来。
+
+**3. 逐层线性融合（Layer-Wise Linear Fusion）：把滤波器、任务向量、LoRA 参数一次性合并回骨干，推理时零额外开销。**
+
+最终的更新公式是 $\theta_t^{\text{merged},(l)} = \theta_{t-1}^{\text{merged},(l)} + \tau_t^{(l)}(P_t^{(l)} + B_t^{(l)} A_t^{(l)})$。由于 $\tau_t^{(l)}$、$P_t^{(l)}$ 和 $B_t^{(l)} A_t^{(l)}$ 都是线性运算，三者乘积可以直接算成一个矩阵加到权重上；合并完成后 $P$、$A$、$B$ 全都不用保留，模型参数量和推理成本与单模型完全相同。这正是 NUFILT 相比 WEMOE 这类方法的核心优势——后者要保留额外的专家模块、推理时参数变大，而 NUFILT 的所有辅助结构都在合并那一刻被消化掉了。
 
 ### 损失函数 / 训练策略
 
@@ -130,44 +130,17 @@ NUFILT 在 ViT-B/32 的 8 任务设置上达到 83.6% ACC，比 OPCM 高 8.1%，
 - 写作质量: ⭐⭐⭐⭐ 理论推导清晰，动机阐述充分，整体逻辑通顺
 - 价值: ⭐⭐⭐⭐ 提供了DFCMM的新SOTA和理论框架，对模型合并领域有推动作用
 
-## 亮点与洞察
-
-- 理论贡献扎实：证明了任务向量与表示子空间的近似对齐定理
-- 方法设计优雅：零空间投影天然保证了对旧任务的零干扰
-- LoRA 适配器的投影感知损失巧妙地将稳定性和可塑性统一到一个目标中
-- 所有操作最终可线性融合回权重，不增加推理成本
-
-## 局限与展望
-
-- 零空间的维度随任务增多逐渐减小，可能限制后续任务的可塑性
-- 假设任务向量的子空间对齐在所有层均成立，但某些层可能对齐度较低
-- 未探索与参数高效微调方法（如 LoRA fine-tuning）的结合
-- 秩参数 $r_p, r_l, r_v$ 需要一定的经验设置
-
-## 相关工作与启发
-
-- 与 OPCM 的区别：NUFILT 额外引入 LoRA 适配来恢复可塑性，而非仅靠正交投影
-- 与 AdaMerging 的区别：完全无数据，不依赖测试集信号
-- 零空间投影思想来自持续学习（OGD, OWM），但本文首次在数据无关模型合并中应用
-
-## 评分
-
-- 新颖性: ⭐⭐⭐⭐⭐ 理论驱动的无数据持续合并框架
-- 实验充分度: ⭐⭐⭐⭐⭐ 视觉/NLP/多模态全面验证
-- 写作质量: ⭐⭐⭐⭐⭐ 理论推导严谨，实验组织清晰
-- 价值: ⭐⭐⭐⭐ 对隐私保护场景下的模型部署很有价值
-
 <!-- RELATED:START -->
 
 <div class="related-papers" markdown="1">
 
 ## 相关论文
 
+- [\[ICLR 2026\] RAIN-Merging: A Gradient-Free Method to Enhance Instruction Following Through Model Merging](rain-merging_a_gradient-free_method_to_enhance_instruction_following_through_mod.md)
 - [\[NeurIPS 2025\] Mingle: Mixture of Null-Space Gated Low-Rank Experts for Test-Time Continual Model Merging](../../NeurIPS2025/model_compression/mingle_mixture_of_null-space_gated_low-rank_experts_for_test-time_continual_mode.md)
+- [\[NeurIPS 2025\] Weight Weaving: Parameter Pooling for Data-Free Model Merging](../../NeurIPS2025/model_compression/weight_weaving_parameter_pooling_for_data-free_model_merging.md)
 - [\[ICML 2025\] Rethinking the Stability-Plasticity Trade-off in Continual Learning from an Architectural Perspective](../../ICML2025/model_compression/rethinking_the_stability-plasticity_trade-off_in_continual_learning_from_an_arch.md)
-- [\[ICLR 2026\] IDER: IDempotent Experience Replay for Reliable Continual Learning](ider_idempotent_experience_replay_for_reliable_continual_learning.md)
-- [\[ICLR 2026\] Understanding Dataset Distillation via Spectral Filtering](understanding_dataset_distillation_via_spectral_filtering.md)
-- [\[ICML 2026\] Decouple Searching from Training: Scaling Data Mixing via Model Merging for Large Language Model Pre-training](../../ICML2026/model_compression/decouple_searching_from_training_scaling_data_mixing_via_model_merging_for_large.md)
+- [\[ICLR 2026\] AdaRank: Adaptive Rank Pruning for Enhanced Model Merging](adarank_adaptive_rank_pruning_for_enhanced_model_merging.md)
 
 </div>
 

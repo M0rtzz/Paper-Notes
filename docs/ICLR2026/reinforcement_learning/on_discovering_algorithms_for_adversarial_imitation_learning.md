@@ -42,14 +42,13 @@ tags:
 
 ### 整体框架
 
-DAIL 的 pipeline 分为两层：
-1. **外层：元学习**——用 LLM 引导的进化搜索优化 RA 函数 $r_f$，最小化训练后策略与专家的 Wasserstein 距离
-2. **内层：标准 AIL 循环**——给定 $r_f$，执行策略 rollout → 判别器训练(密度比估计) → 奖励赋值 → 策略改进的迭代
-3. 元学习目标形式化为双层优化：$\min_f \mathcal{W}(\rho_E, \rho_{\pi^*}; f) \quad \text{s.t.} \quad \pi^* = \arg\max_\pi r_f(\rho_E \| \rho_\pi)$
+DAIL 把"设计 AIL 算法"本身变成一个可被搜索的优化问题：外层用 LLM 引导的进化搜索去优化奖励赋值(RA)函数 $r_f$，内层则在给定 $r_f$ 后跑标准 AIL 循环（策略 rollout → 判别器训练做密度比估计 → 用 $r_f$ 赋值奖励 → 策略改进），并以训练后策略与专家的 Wasserstein 距离衡量这个 $r_f$ 好不好。整体可写成一个双层优化：$\min_f \mathcal{W}(\rho_E, \rho_{\pi^*}; f)$，约束为 $\pi^* = \arg\max_\pi r_f(\rho_E \| \rho_\pi)$。
 
-### 关键设计1：AIL 的两阶段分解与 RA 函数分析
+### 关键设计
 
-核心洞察在于将 AIL 的奖励信号形成过程拆解为两个独立阶段，并分析不同 RA 函数对训练动态的影响：
+**1. AIL 的两阶段分解：把被忽视的奖励赋值单独拎出来。**
+
+DAIL 的第一步是把 AIL 的奖励信号形成过程拆成两个独立阶段——密度比估计(DR)和奖励赋值(RA)，从而把过去被混在一起、且被研究严重忽视的 RA 函数暴露为可单独优化的对象。判别器先估出对数密度比 $\ell = \log \frac{\rho_E(s,a)}{\rho_\pi(s,a)}$，而 RA 函数 $r_f(\ell)$ 负责把这个比值映射成喂给策略的标量奖励。不同的人工 RA 函数其实就是不同 $f$-散度的推导结果，但它们对密度比的响应曲线差异巨大，直接决定了梯度信号的信息量和训练稳定性：FAIRL 的 $-\ell \cdot e^{\ell}$ 指数无界衰减导致训练不稳定，AIRL 的线性 $\ell$ 产生大量负奖励诱导提前终止，GAIL 的 $\text{softplus}(\ell)$ 对低质量样本过度奖励，而 GAIL-heuristic 的 $-\text{softplus}(-\ell)$ 仅激励匹配、以负奖励为主。把这四个公认基线并排看清它们各自的病灶，正是后续搜索的起点。
 
 | 散度类型 | 算法 | RA 函数 $r_f(\ell)$ | 特性 |
 |---------|------|---------------------|------|
@@ -58,31 +57,13 @@ DAIL 的 pipeline 分为两层：
 | Jensen-Shannon | GAIL | $\text{softplus}(\ell)$ | 对低质量样本过度奖励 |
 | 未命名 $f$-div | GAIL-heuristic | $-\text{softplus}(-\ell)$ | 仅激励匹配，负奖励为主 |
 
-其中 $\ell = \log \frac{\rho_E(s,a)}{\rho_\pi(s,a)}$ 为对数密度比。不同 RA 函数对密度比的响应曲线差异显著，直接决定了梯度信号的信息量和训练稳定性。
+**2. LLM 引导的进化搜索：用黑箱优化绕开不可行的双层反传。**
 
-### 关键设计2：LLM 引导的进化搜索
+双层优化原则上需要对整个 AIL 训练循环反向传播，计算上不可行，所以 DAIL 改用黑箱进化搜索来发现 RA 函数。它以 GAIL、AIRL、FAIRL、GAIL-heuristic 四个 RA 函数作为初始种群，每个候选 $r_f$ 都训练一个策略到收敛、再用 rollout 与专家的 Wasserstein 距离作为适应度。变异和交叉交给 LLM 来做：采样一对父代 $\{r_{f_1}, r_{f_2}\}$ 连同它们的适应度送入 GPT-4.1-mini，提示其融合父代优点生成子代 $r_{f_3}$；每代评估 $M \times N$ 个候选并保留 Top-$K$ 进入下一代。关键在于 RA 函数直接以 Python 代码表示，既保证了可解释性又留足了表达力，让 LLM 能真正改写函数形状而非只调参数。整个搜索在 Minatar SpaceInvaders 上进行，评估约 200 个候选函数、耗时约 3 小时。
 
-由于双层优化需要对整个 AIL 训练循环反向传播，在计算上不可行，因此采用黑箱优化：
+**3. 发现的 RA 函数 $r_{\text{disc}}$：一条有界、右移、低质量处饱和的 S 曲线。**
 
-1. **基础种群**：以 GAIL、AIRL、FAIRL、GAIL-heuristic 的 RA 函数作为初始种群
-2. **适应度评估**：每个候选 $r_f$ 训练策略到收敛，计算 rollout 与专家的 Wasserstein 距离作为适应度
-3. **交叉变异**：采样父代对 $\{r_{f_1}, r_{f_2}\}$，连同适应度送入 LLM(GPT-4.1-mini)，提示其融合父代优点生成子代 $r_{f_3}$
-4. **选择**：每代评估 $M \times N$ 个候选，保留 Top-$K$ 进入下一代
-5. RA 函数直接以 **Python 代码** 表示，确保可解释性和表达力
-
-搜索在 Minatar SpaceInvaders 上进行，评估 200 个候选函数，耗时约 3 小时。
-
-### 关键设计3：发现的 RA 函数 $r_{\text{disc}}$
-
-进化搜索发现的最优 RA 函数为：
-
-$$r_{\text{disc}}(x) = 0.5 \cdot \text{sigmoid}(x) \cdot [\tanh(x) + 1]$$
-
-$r_{\text{disc}}$ 具有以下关键特性：
-- **有界 $[0,1]$**——有界奖励已被证明可稳定深度 RL 训练
-- **S 型曲线**且梯度比标准 sigmoid 更陡峭，右移——在 $[-1,0]$ 区间提供信息丰富的梯度
-- 对 $x \lesssim -1.8$（接近随机策略行为）**饱和至零**——有效过滤低质量状态-动作对
-- 独立运行两次进化搜索，Top-5 函数结构高度相似——搜索过程稳定
+搜索最终收敛到的最优 RA 函数为 $r_{\text{disc}}(x) = 0.5 \cdot \text{sigmoid}(x) \cdot [\tanh(x) + 1]$，它的几条特性恰好对症了前面那些基线的病灶。它把奖励限制在有界区间 $[0,1]$——有界奖励早已被证明能稳定深度 RL 训练；它是一条 S 型曲线，但梯度比标准 sigmoid 更陡峭且整体右移，因而在 $x \in [-1,0]$ 这一最吃紧的区间提供信息丰富的梯度；更重要的是它对 $x \lesssim -1.8$（接近随机策略行为）饱和至零，等于主动过滤掉低质量状态-动作对的噪声奖励，而 GAIL 在 $x=-2$ 处还在给高正奖励。两次独立运行进化搜索得到的 Top-5 函数结构高度相似，说明这条解并非偶然，搜索过程本身是稳定的。
 
 ## 实验结果
 
@@ -156,7 +137,7 @@ $r_{\text{disc}}$ 具有以下关键特性：
 - [\[ICLR 2026\] Model Predictive Adversarial Imitation Learning for Planning from Observation](model_predictive_adversarial_imitation_learning_for_planning_from_observation.md)
 - [\[ICLR 2026\] Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning](near-optimal_second-order_guarantees_for_model-based_adversarial_imitation_learn.md)
 - [\[ICLR 2026\] Learning to Generate Unit Test via Adversarial Reinforcement Learning](learning_to_generate_unit_test_via_adversarial_reinforcement_learning.md)
-- [\[ICLR 2026\] Robust Deep Reinforcement Learning against Adversarial Behavior Manipulation](robust_deep_reinforcement_learning_against_adversarial_behavior_manipulation.md)
+- [\[ICLR 2026\] Boolean Satisfiability via Imitation Learning](boolean_satisfiability_via_imitation_learning.md)
 
 </div>
 

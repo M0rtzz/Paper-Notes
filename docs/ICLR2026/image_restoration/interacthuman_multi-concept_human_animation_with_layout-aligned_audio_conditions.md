@@ -41,33 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-基于 MMDiT + Flow Matching 架构（7B 参数 DiT），输入参考人物图像和对应音频，通过多概念参考注入、掩码预测器和局部音频条件注入三个核心模块协同工作，生成多人交互视频。
+InterActHuman 要解决的是多人交互场景下的音频驱动视频生成：给定每个角色的参考图像和对应音频，让每个人各说各的、口型与身体动作都对得上。整套系统建在 MMDiT + Flow Matching 的 7B 参数 DiT 上，三个模块串在去噪过程里协同——先把多个参考人物的身份注入进来，再在去噪中间步预测出每个角色的时空布局掩码，最后用这张掩码把对应音频只注入到该角色所在的空间位置。三者形成一个闭环：身份决定谁是谁，掩码决定谁在哪，音频按掩码各归各位。
 
 ### 关键设计
 
-1. **多概念参考图像注入**:
+**1. 多概念参考图像注入：零额外参数地把多个身份塞进去。**
 
-    - 功能：将多个参考人物图像的身份信息注入生成过程
-    - 核心思路：将每个参考图像 X_i 通过 VAE 编码为潜在表示 x_i，与噪声视频潜在表示 v 在通道维度堆叠，直接复用 DiT 的自注意力层进行特征交互。无需额外参数。
-    - 设计动机：避免引入额外网络（如 IP-Adapter），减少参数量和训练复杂度，同时利用 DiT 自身的注意力机制实现身份信息的隐式注入。
+多人场景要同时保住每个角色的身份，常规做法是引入 IP-Adapter 这类额外网络，但会推高参数量和训练复杂度。本文的做法是直接复用 DiT 自身的注意力：把每个参考图像 $X_i$ 用 VAE 编码成潜在表示 $x_i$，与噪声视频潜在表示 $v$ 在通道维度上堆叠，让它们在 DiT 的自注意力层里直接交互。这样身份信息是隐式注入的，不需要任何新增网络，架构保持简洁。
 
-2. **掩码预测器（Mask Predictor）**:
+**2. 掩码预测器（Mask Predictor）：从去噪中间特征里读出谁在哪。**
 
-    - 功能：从 DiT 的中间特征中预测每个参考角色在视频中的时空掩码
-    - 核心思路：在每个 DiT 层附加轻量头（线性投影 + 3D RoPE + 交叉注意力 + 2层MLP + sigmoid），将视频隐藏特征 h_v 和参考特征 h_i_r 进行交叉注意力计算，输出 0-1 之间的软掩码。最终掩码取最后几层的平均。
-    - 设计动机：仅增加 56M 参数（vs 7B DiT），每个 DiT 块仅增加 0.013s 推理时间。掩码训练使用 focal loss 处理前景-背景不平衡。
+要把音频注到正确的人身上，先得知道每个角色当前占据视频里哪块时空区域。掩码预测器在每个 DiT 层附加一个轻量头——线性投影 + 3D RoPE + 交叉注意力 + 2 层 MLP + sigmoid——让视频隐藏特征 $h_v$ 和参考特征 $h_i^r$ 做交叉注意力，输出一张 0–1 之间的软掩码，最终掩码取最后几层的平均。整个预测器只增加 56M 参数（相对 7B 的 DiT 几乎可忽略），每个 DiT 块只多 0.013s 推理时间。训练时用 focal loss 应对前景-背景的严重不平衡。
 
-3. **迭代掩码预测策略（Denoising-time Mask Guidance）**:
+**3. 迭代掩码预测策略（Denoising-time Mask Guidance）：用扩散的多步性质破"鸡生蛋"。**
 
-    - 功能：解决推理时的"鸡生蛋"问题——推理开始时视频未知，无法预测掩码
-    - 核心思路：两阶段推理——Stage 1（前 10 步）不使用掩码，让 DiT 先形成粗略的布局；Stage 2（后续步骤）缓存第 k 步的掩码，在第 k+1 步用该掩码指导音频注入。掩码随去噪过程逐步精细化。
-    - 设计动机：类似 iterative refinement，利用扩散过程的渐进性质。早期步骤确定大致布局，后期步骤精细调整。
+这是本文最核心的设计。推理时有个死结：要预测掩码得有视频，但视频正是要生成的东西，开局时根本没有。固定掩码又会带来运动伪影和僵硬效果。本文把它拆成两阶段，借扩散去噪本身的渐进性质破局：Stage 1（前 10 步）不用任何掩码，让 DiT 先自由地把大致布局铺出来；Stage 2 起，缓存第 $k$ 步预测出的掩码，在第 $k+1$ 步用它指导音频注入。掩码就这样随去噪一步步精细化——早期定大致位置，后期做精细调整，本质上是一个无需外部检测器的 bootstrap。
 
-4. **局部音频条件注入**:
+**4. 局部音频条件注入：让每段音频只影响对应的人。**
 
-    - 功能：将每个角色的音频仅注入到该角色所在的空间位置
-    - 核心思路：wav2vec 提取音频特征，通过交叉注意力注入 DiT。关键是用上一步预测的掩码进行软加权——仅让音频影响对应角色的 token，掩码边界处软过渡。
-    - 设计动机：全局音频注入无法区分谁在说话（实验显示 Sync-D 为 9.482），局部注入将 Sync-D 降低到 6.670。
+有了掩码，音频注入就能定向。wav2vec 提取的音频特征通过交叉注意力注入 DiT，关键在于用上一步预测的掩码做软加权——只让某段音频影响对应角色的 token，在掩码边界处软过渡而非硬切。对比之下，全局音频注入无法区分多人场景里到底谁在说话（Sync-D 高达 9.482），换成这种掩码加权的局部注入后 Sync-D 降到 6.670。
 
 ### 训练策略
 - Flow matching 目标：速度预测损失
@@ -139,10 +131,10 @@ tags:
 ## 相关论文
 
 - [\[CVPR 2025\] EchoMimicV2: Towards Striking, Simplified, and Semi-Body Human Animation](../../CVPR2025/image_restoration/echomimicv2_towards_striking_simplified_and_semi-body_human_animation.md)
+- [\[ICLR 2026\] Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration](learning_domain-aware_task_prompt_representations_for_multi-domain_all-in-one_im.md)
 - [\[CVPR 2026\] PhaSR: Generalized Image Shadow Removal with Physically Aligned Priors](../../CVPR2026/image_restoration/phasr_generalized_image_shadow_removal_with_physically_aligned_priors.md)
-- [\[AAAI 2026\] ClearAIR: A Human-Visual-Perception-Inspired All-in-One Image Restoration](../../AAAI2026/image_restoration/clearair_a_human-visual-perception-inspired_all-in-one_image_restoration.md)
 - [\[CVPR 2026\] UDAPose: Unsupervised Domain Adaptation for Low-Light Human Pose Estimation](../../CVPR2026/image_restoration/udapose_unsupervised_domain_adaptation_for_low_light_human_pose_estimation.md)
-- [\[AAAI 2026\] Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework](../../AAAI2026/image_restoration/large_language_models_meet_extreme_multi-label_classification_scaling_and_multi-.md)
+- [\[ECCV 2024\] Restoring Images in Adverse Weather Conditions via Histogram Transformer](../../ECCV2024/image_restoration/restoring_images_in_adverse_weather_conditions_via_histogram_transformer.md)
 
 </div>
 

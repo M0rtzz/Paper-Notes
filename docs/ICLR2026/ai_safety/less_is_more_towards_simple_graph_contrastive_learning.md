@@ -44,39 +44,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-- **输入**：图 $G = (V, E, X)$，其中 $V$ 为节点集、$E$ 为边集、$X$ 为节点特征矩阵
-- **输出**：每个节点的低维表征向量，用于下游任务（如节点分类）
-- **Pipeline**：
-  1. GCN 编码器处理 $(A, X)$ → 得到结构感知的节点嵌入 $Z_{GCN}$
-  2. MLP 编码器只处理 $X$ → 得到纯特征的节点嵌入 $Z_{MLP}$
-  3. 对 $Z_{GCN}$ 和 $Z_{MLP}$ 施加对比学习损失（正对：同一节点的两个视图）
-  4. 用 $Z_{GCN}$ 或两者的组合作为最终表征
+
+这篇论文想回答一个看似简单却没被讲清楚的问题：图对比学习（GCL）到底靠什么起效，能不能在不堆增强、不做负采样的前提下，把异质图上的性能做到 SOTA。作者的答案是把"两个视图"这件事拆得极简——同一张图喂给两个完全不同的编码器，让它们自然产生差异，再用对比学习把差异里的"信号"对齐、把"噪声"挤掉。
+
+整套流程只有两条并行分支。给定图 $G = (V, E, X)$（节点集 $V$、边集 $E$、节点特征矩阵 $X$），一条分支是 GCN 编码器，吃 $(A, X)$，沿图结构聚合邻居后得到结构感知的节点嵌入 $Z_{GCN}$；另一条分支是 MLP 编码器，只吃 $X$、完全无视图结构，得到纯特征嵌入 $Z_{MLP}$。把同一个节点在两条分支上的嵌入当作正对，施加对比损失对齐，训练完用 $Z_{GCN}$（或两者的组合）作为节点的最终表征送下游分类。没有边删除、特征掩码、子图采样这类增强，也没有负样本队列。
 
 ### 关键设计
 
-1. **GCN 编码器：结构特征提取**：
+**1. GCN 编码器：把消息传递当成"去噪器"用。**
 
-    - 功能：标准 GCN——通过消息传递在图结构上聚合邻居信息，生成每个节点的"结构感知"嵌入
-    - 核心思路：GCN 的消息传递 $H^{(l+1)} = \sigma(\hat{A} H^{(l)} W^{(l)})$ 本质上是对节点特征做基于拓扑的平滑。对于同质图，这种平滑将同类节点的特征拉近；对于异质图，平滑的效果更微妙——它在概率意义上缓解了特征噪声
-    - 设计动机：GCN 不仅提取拓扑信息，其聚合操作本身就是一种"去噪"——将节点特征中的随机噪声通过邻域平均降低。这是 GCN 视图与 MLP 视图形成对比的根本原因
+异质图上 GCL 普遍失灵，一个直接原因是邻域聚合会把不同类别邻居的信息混进来。本文的反直觉之处在于，它不把 GCN 的聚合看成"提取拓扑"，而是看成对节点特征的一次去噪。标准 GCN 的消息传递 $H^{(l+1)} = \sigma(\hat{A} H^{(l)} W^{(l)})$ 本质上是基于拓扑的特征平滑：同质图里它把同类节点拉近，异质图里它的作用更微妙——在概率意义上，邻域平均降低了每个节点特征里随机噪声的方差。正是这个"聚合即去噪"的效应，让 GCN 分支输出的是一份相对干净的特征表示，从而能和保留原始噪声的 MLP 分支拉开差距、形成对比。
 
-2. **MLP 编码器：特征噪声隔离**：
+**2. MLP 编码器：故意把噪声原样留住。**
 
-    - 功能：标准 MLP——只对每个节点的原始特征 $X_i$ 做非线性变换，不使用任何图结构信息
-    - 核心思路：MLP 处理的是"原始的、带噪的"节点特征。由于没有邻域聚合，每个节点的特征噪声被完整保留
-    - 设计动机：MLP 视图保留了节点特征的"噪声成分"，这正好与 GCN 视图（去噪后的特征）形成互补。两者的"信号差异"主要来自噪声的有无——这构成了对比学习的天然正负对
+如果两个视图都做了平滑，它们之间就没有可对比的信号差异了。所以本文专门用一个不碰图结构的 MLP 来构造"另一极"：它只对每个节点的原始特征 $X_i$ 做非线性变换，没有任何邻域聚合，于是节点特征里的噪声成分被完整保留下来。这样一来，MLP 视图（带噪）和 GCN 视图（去噪后）之间的主要差异恰好就是噪声的有无——这正是天然的对比正对来源，不需要任何人为增强去制造视图差异。
 
-3. **对比损失：无需负采样**：
+**3. 对比损失：去掉负采样，用非对称结构防坍塌。**
 
-    - 功能：对同一节点的 GCN 嵌入和 MLP 嵌入做正对对齐
-    - 核心思路：不使用传统的 InfoNCE 损失（需要负样本），而是采用简化的对比目标——直接最大化同一节点两个视图的相似度，配合正则化防止表征坍塌
-    - 设计动机：负采样在图上尤其棘手——随机选取的"负样本"可能实际上是同类节点（假阴性问题）。去除负采样不仅简化了方法，还避免了这个问题
+负采样在图上格外棘手：随机抽到的"负样本"很可能本就是同类节点，制造大量假阴性，反而把表征学坏。本文干脆不用需要负样本的 InfoNCE，而是直接最大化同一节点两个视图的相似度。为了避免"两个视图都退化成常数"这种平凡解，它借鉴 BYOL/SimSiam 的非对称设计——一个分支接 predictor 头、另一个分支用 stop-gradient，再配合归一化正则。去掉负采样既简化了方法，也顺手绕开了图上假阴性这个老问题。
 
-4. **理论保证**：
+**4. 理论保证：把"GCN+MLP=天然对比视图"证明出来。**
 
-    - 功能：提供理论证明，说明为什么 GCN + MLP 的双视图对比学习有效
-    - 核心思路：在合理假设下（特征 = 信号 + 噪声），GCN 的邻域聚合降低了噪声方差（$\sigma^2/d$，$d$ 为度数），而 MLP 保留了完整噪声方差 $\sigma^2$。对比学习优化使得编码器学会过滤噪声、保留信号
-    - 设计动机：为"GCN + MLP = 天然对比视图"这一观察提供严格的理论支撑
+前三点是直觉，本文还给了它一个可量化的支撑。在"特征 = 信号 + 噪声"的假设下，节点经 GCN 邻域聚合后噪声方差被压到约 $\sigma^2/d$（$d$ 为节点度数），而 MLP 分支保留完整噪声方差 $\sigma^2$。两个视图之间这道方差落差就是对比学习能利用的部分：优化对齐目标会逼迫编码器学会过滤掉这部分噪声、保留共享的信号。理论还预测了一个可验证的现象——节点度数越大，GCN 的去噪越强，对比的收益也越大，这一点在实验里被观察到。
 
 ### 损失函数 / 训练策略
 - **对比损失**：基于 BYOL/SimSiam 风格的非对称对比学习——一个分支有 predictor 头，另一个分支用 stop-gradient，无需负样本
@@ -173,7 +162,7 @@ tags:
 - [\[NeurIPS 2025\] FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation](../../NeurIPS2025/ai_safety/faircontrast_enhancing_fairness_through_contrastive_learning_and_customized_augm.md)
 - [\[CVPR 2025\] A Simple Data Augmentation for Feature Distribution Skewed Federated Learning](../../CVPR2025/ai_safety/a_simple_data_augmentation_for_feature_distribution_skewed_federated_learning.md)
 - [\[ICLR 2026\] Hide and Find: A Distributed Adversarial Attack on Federated Graph Learning](hide_and_find_a_distributed_adversarial_attack_on_federated_graph_learning.md)
-- [\[CVPR 2026\] Towards Highly Transferable Vision-Language Attack via Semantic-Augmented Dynamic Contrastive Interaction](../../CVPR2026/ai_safety/towards_highly_transferable_vision-language_attack_via_semantic-augmented_dynami.md)
+- [\[ICLR 2026\] ATEX-CF: Attack-Informed Counterfactual Explanations for Graph Neural Networks](atex-cf_attack-informed_counterfactual_explanations_for_graph_neural_networks.md)
 
 </div>
 

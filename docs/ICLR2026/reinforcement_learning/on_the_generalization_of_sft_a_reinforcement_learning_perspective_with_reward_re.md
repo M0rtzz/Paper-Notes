@@ -43,33 +43,17 @@ tags:
 
 ## 方法详解
 
-### 核心理论：SFT梯度=带逆概率加权的策略梯度
+### 整体框架
 
-标准SFT梯度通过重要性采样变换为on-policy策略梯度形式：
+本文把SFT放进RL的策略梯度框架里审视：通过重要性采样把标准SFT的梯度严格改写成on-policy策略梯度的样子，从而读出SFT在背后隐含的奖励结构究竟是什么。诊断结果是这个隐含奖励既稀疏又被逆概率$1/\pi_\theta$放大，正是泛化差的根因；对应的解法DFT（Dynamic Fine-Tuning）只需在交叉熵上乘一个token概率把逆概率项中和掉，是一行代码的改动。
 
-$$\nabla\mathcal{L}_{SFT} = -\mathbb{E}_{y\sim\pi_\theta}\left[\frac{\mathbf{1}[y=y^*]}{\pi_\theta(y|x)} \nabla\log\pi_\theta(y|x)\right]$$
+### 关键设计
 
-对比标准策略梯度 $\nabla J = \mathbb{E}[\nabla\log\pi_\theta \cdot r(x,y)]$，SFT的隐式奖励为：
-- **奖励函数** $r(x,y)=\mathbf{1}[y=y^*]$：仅exact match非零→**极度稀疏**
-- **重要性权重** $w=1/\pi_\theta(y|x)$：模型概率越低→权重越大→**梯度爆炸/不稳定**
+**1. SFT梯度的策略梯度改写：把"为什么泛化差"算出来。** 以往"SFT记忆、RL泛化"只是经验观察，本文给出数学根因。对标准SFT梯度做重要性采样变换，可以严格写成on-policy策略梯度的形式 $\nabla\mathcal{L}_{SFT} = -\mathbb{E}_{y\sim\pi_\theta}\big[\tfrac{\mathbf{1}[y=y^*]}{\pi_\theta(y|x)} \nabla\log\pi_\theta(y|x)\big]$。把它和标准策略梯度 $\nabla J = \mathbb{E}[\nabla\log\pi_\theta \cdot r(x,y)]$ 对齐，就能读出SFT的隐式奖励由两部分构成：奖励函数 $r(x,y)=\mathbf{1}[y=y^*]$ 只在exact match时非零，因此极度稀疏；而重要性权重 $w=1/\pi_\theta(y|x)$ 在模型概率越低的token上越大，等于把梯度向低概率token疯狂放大。两者叠加，优化就被拽去死磕那些低概率的精确匹配token，过拟合训练集而非学到泛化能力——这也解释了为什么SFT会在OlympiadBench、AIME24这类难基准上不升反降。
 
-这两个因素共同导致SFT优化过度关注低概率的精确匹配样本→过拟合而非泛化。
+**2. DFT矫正损失：用token概率中和逆概率权重。** 既然病根是那个$1/\pi_\theta$，最直接的解法就是乘回一个$\pi_\theta$把它消掉。这样得到的token级DFT损失为 $\mathcal{L}_{DFT} = -\sum_{t=1}^{|y^*|} \text{sg}\big(\pi_\theta(y_t^*|y_{<t}^*,x)\big) \log\pi_\theta(y_t^*|y_{<t}^*,x)$，其中$\text{sg}(\cdot)$是stop-gradient算子，让梯度不流过权重项，使权重只起"缩放"作用而不引入额外的优化通路。形式上它就是把标准交叉熵$-\log p$换成$-p\log p$，DFT因此保持了SFT原本的实现样貌，不需要奖励模型、偏好数据、reference模型或在线采样，真正意义上的一行代码改动。
 
-### DFT (Dynamic Fine-Tuning)
-
-**矫正策略**：用 $1/w = \pi_\theta$ 乘以奖励来中和逆概率权重，得到token级DFT损失：
-
-$$\mathcal{L}_{DFT} = -\sum_{t=1}^{|y^*|} \text{sg}\big(\pi_\theta(y_t^*|y_{<t}^*,x)\big) \log\pi_\theta(y_t^*|y_{<t}^*,x)$$
-
-其中 $\text{sg}(\cdot)$ 为stop-gradient算子。等价于标准交叉熵乘token概率 → **一行代码改动**。
-
-### 关键设计决策
-
-1. **Token级 vs Sentence级加权**：句子级概率 $\pi(y|x)=\prod_t \pi(y_t)$ 极小→数值不稳定→无信息loss；几何均值变体也效果有限。Token级加权性能从15.92提升至31.58（vs句子级仅15.75）。
-
-2. **Stop-gradient**：梯度不流过权重项→DFT保持标准SFT的实现形式→无需额外采样/奖励模型/reference模型。
-
-3. **矫正后奖励=1**：DFT等价于对所有expert轨迹赋予均匀奖励1→类似RLVR对所有正确样本赋均匀奖励→避免过度集中于低概率token。
+**3. Token级加权与均匀奖励：为什么必须落在token粒度。** 加权粒度的选择直接决定方法是否可用。若改用句子级概率$\pi(y|x)=\prod_t\pi(y_t)$，长序列连乘会让权重小到数值下溢、loss几乎无信息，几何均值变体同样收效甚微——实验里句子级加权只有15.75，和不加权的15.92持平，而token级加权能把均值从15.92拉到31.58。从奖励视角看，中和之后每条expert轨迹拿到的实际是均匀奖励1，等价于RLVR给所有正确样本赋同一奖励的做法，避免了把更新过度集中在个别低概率token上，这正是DFT既稳又泛化的来源。
 
 ## 实验关键数据
 
@@ -154,10 +138,10 @@ SFT在Qwen2.5-Coder-7B上全面退化，DFT仍持续提升。
 ## 相关论文
 
 - [\[ICLR 2026\] The Sample Complexity of Online Reinforcement Learning: A Multi-Model Perspective](the_sample_complexity_of_online_reinforcement_learning_a_multi-model_perspective.md)
-- [\[ICLR 2026\] MVR: Multi-view Video Reward Shaping for Reinforcement Learning](mvr_multi-view_video_reward_shaping_for_reinforcement_learning.md)
 - [\[ICLR 2026\] How LLMs Learn to Reason: A Complex Network Perspective](how_llms_learn_to_reason_a_complex_network_perspective.md)
 - [\[ICLR 2026\] ARM-FM: Automated Reward Machines via Foundation Models for Compositional Reinforcement Learning](arm-fm_automated_reward_machines_via_foundation_models_for_compositional_reinfor.md)
 - [\[AAAI 2026\] Reasoning with Exploration: An Entropy Perspective](../../AAAI2026/reinforcement_learning/reasoning_with_exploration_an_entropy_perspective.md)
+- [\[ICML 2026\] Learning to Search and Searching to Learn for Generalization in Planning](../../ICML2026/reinforcement_learning/learning_to_search_and_searching_to_learn_for_generalization_in_planning.md)
 
 </div>
 

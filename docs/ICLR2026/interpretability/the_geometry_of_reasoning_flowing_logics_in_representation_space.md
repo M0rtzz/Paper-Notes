@@ -47,23 +47,21 @@ tags:
 
 ### 关键设计
 
-1. **推理流的几何建模**:
+**1. 推理流的几何建模：把离散的层间变换还原成连续的几何量。**
 
-    - 功能：为 LLM 的推理过程提供数学形式化，将离散的层间变换建模为连续的几何流
-    - 核心思路：定义表示空间中的流为 embedding 的层间轨迹 $\{h^{(l)}\}_{l=0}^{L}$，其中 $h^{(l)}$ 是第 $l$ 层的 hidden state。流的速度定义为相邻层表示的差分 $v^{(l)} = h^{(l+1)} - h^{(l)}$，曲率通过速度的二阶变化来度量。作者建立了这些几何量与推理步骤的对应关系：逻辑操作（如 modus ponens）对应流速度的特定模式，而推理的"困难度"可以通过曲率来量化
-    - 设计动机：将推理还原为几何量使得可以用数学工具进行形式化分析，而不仅仅停留在定性观察
+可解释性此前多停留在定性观察，缺一套能形式化分析推理动态的数学语言。本文的做法是把 embedding 的层间轨迹 $\{h^{(l)}\}_{l=0}^{L}$（$h^{(l)}$ 是第 $l$ 层的 hidden state）当成一条流，并借经典力学的位置-速度-曲率来刻画它。流的速度定义为相邻层表示的差分
 
-2. **语义-逻辑解耦实验设计**:
+$$v^{(l)} = h^{(l+1)} - h^{(l)},$$
 
-    - 功能：验证 LLM 内化的是逻辑结构而非表面语义模式
-    - 核心思路：使用自然演绎（natural deduction）框架生成实验数据——保持相同的逻辑推理链（如 $A \rightarrow B$, $A$, 因此 $B$），但替换不同的语义载体（如将"猫是动物"替换为"铁是金属"等不同领域的命题）。通过分析这些不同语义载体下推理流的几何不变性（如速度方向的一致性、曲率模式的相似性），来判断模型是否内化了与具体语义无关的抽象逻辑规则
-    - 设计动机：这是整个工作最关键的实验设计——如果 LLM 只是在做统计关联，不同语义下的流应该完全不同；只有当模型真正内化了逻辑结构时，流的几何性质才会在语义变化下保持不变
+曲率则由速度的二阶变化度量。关键在于作者把这些几何量和推理步骤对应了起来：逻辑操作（如 modus ponens）对应流速度的特定模式，推理的"困难度"则可以用曲率来量化。一旦推理被还原成几何量，就能用成熟的数学工具去分析，而不只是停在"看上去像在推理"的层面。
 
-3. **学习型表示代理与可视化**:
+**2. 语义-逻辑解耦实验设计：用控制变量把逻辑和语义拆开。**
 
-    - 功能：将高维表示空间中的流投射到可分析和可视化的低维概念空间
-    - 核心思路：训练表示代理（representation proxies）将 LLM 的高维 embedding 映射到低维概念空间，同时保持关键的几何性质。在此概念空间中，可以可视化推理流的轨迹、速度场和曲率变化，并进行定量分析。此方法连接了抽象的理论框架与具体的实证验证
-    - 设计动机：高维表示空间难以直接分析和可视化，需要降维工具，但普通降维（如 PCA/t-SNE）可能破坏关键的几何结构，因此需要专门设计保持几何性质的映射
+要判断 LLM 内化的到底是抽象逻辑还是表面语义模式，必须让逻辑和语义分别可控。本文借自然演绎（natural deduction）框架生成数据：保持同一条推理链（如 $A \rightarrow B$，$A$，因此 $B$）不变，只替换语义载体——把"猫是动物"换成"铁是金属"等不同领域的命题。随后比较这些不同语义下推理流的几何性质，看速度方向是否一致、曲率模式是否相似。逻辑是这个设计的判别支点：若模型只是在做统计关联，换了语义流就该完全不同；只有当逻辑结构被真正内化，几何性质才会在语义变化下保持不变。这也是全文最巧妙的一环。
+
+**3. 学习型表示代理与可视化：在保几何的前提下降维。**
+
+高维表示空间没法直接看，但 PCA/t-SNE 这类通用降维又可能破坏关键的几何结构。为此作者训练表示代理（representation proxies），把 LLM 的高维 embedding 映射到低维概念空间，并以保持速度方向、曲率等几何性质为约束。在这个概念空间里，推理流的轨迹、速度场和曲率变化都能被可视化并做定量分析，从而把抽象的理论框架和具体的实证验证连了起来。
 
 ### 损失函数 / 训练策略
 
@@ -131,7 +129,7 @@ tags:
 - [\[ICLR 2026\] Decomposing Representation Space into Interpretable Subspaces with Unsupervised Learning](decomposing_representation_space_into_interpretable_subspaces_with_unsupervised_.md)
 - [\[ICLR 2026\] Cross-Modal Redundancy and the Geometry of Vision-Language Embeddings](cross-modal_redundancy_and_the_geometry_of_vision-language_embeddings.md)
 - [\[ICLR 2026\] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement](decoupling_dynamical_richness_from_representation_learning_towards_practical_mea.md)
-- [\[ICLR 2026\] The Reasoning Trap — Logical Reasoning as a Mechanistic Pathway to Situational Awareness](the_reasoning_trap_--_logical_reasoning_as_a_mechanistic_pathway_to_situational_.md)
+- [\[ICLR 2026\] Domain Expansion: A Latent Space Construction Framework for Multi-Task Learning](domain_expansion_a_latent_space_construction_framework_for_multi-task_learning.md)
 - [\[ICLR 2026\] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs](radar_reasoning-ability_and_difficulty-aware_routing_for_reasoning_llms.md)
 
 </div>

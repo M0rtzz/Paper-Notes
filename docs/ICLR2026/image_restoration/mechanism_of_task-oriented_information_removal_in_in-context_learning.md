@@ -48,55 +48,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文是一项机制分析（mechanistic analysis）工作，而非提出新模型。分析框架包含四个递进的发现：
 
-**Discovery 1**：零样本时的非选择性表征  
-**Discovery 2**：低秩滤波器可以模拟任务导向的信息移除  
-**Discovery 3**：Few-shot ICL 天然模拟信息移除过程  
-**Discovery 4**：关键注意力头（Denoising Heads）是信息移除的执行者
+这是一项机制分析（mechanistic interpretability）工作，目标不是提出新模型，而是回答一个长期困惑：一个预训练后已经具备各种任务能力的语言模型，为什么在零样本时输出近乎随机，却只要在 prompt 里加几个示例（demonstrations）就能正常工作？本文给出的答案是：demonstrations 的作用不是"教模型新知识"，而是"帮模型从纠缠的表征里移除冗余的任务信息"——去噪而非学习。
+
+整篇分析沿四个递进的发现展开。先证明零样本时查询 token 的隐藏状态是"非选择性"的，里面同时编码了所有可能任务的信息；再用一个人工的低秩滤波器模拟"信息移除"，验证移除冗余信息确实能让模型聚焦目标任务；接着测量 few-shot ICL 的隐藏状态，发现它在定量上等价于这种任务导向的信息移除；最后把执行移除操作的具体组件定位到一小撮注意力头，命名为 Denoising Heads，并用因果消融验证其作用。贯穿全程的分析工具有四样：用线性探测（probing）训练探测器检测隐藏状态里某个任务信息是否存在；用 SVD 低秩投影作为可控的信息移除手段；用因果消融（causal ablation）干预单个组件验证其因果作用；以及借 flipped labels、随机 labels 等对照实验，区分不同情形下 ICL 的行为差异。
 
 ### 关键设计
 
-1. **非选择性表征的发现与度量**：
+**1. 非选择性表征：解释零样本为什么失败。**
 
-    - 功能：分析 LM 在零样本场景下查询 token 的隐藏状态，证明这些表征包含了所有可能任务的信息
-    - 核心思路：设计精确的度量指标来衡量隐藏状态中不同任务信息的存在程度。例如，对于情感分类查询，检查隐藏状态是否同时包含"情感分类"、"主题分类"、"翻译"等多个任务的激活信号
-    - 实验发现：零样本时，隐藏状态确实是"非选择性"的——不同任务的信息混杂在一起，模型无法确定应该执行哪个任务，因此输出近乎随机（准确率接近零）
-    - 设计动机：这一发现解释了零样本失败的根本原因——不是"模型不会"，而是"模型什么都想做"
+第一步要回答的是零样本失败的根源。作者对 LM 在零样本场景下查询 token 的隐藏状态做探测，设计度量指标衡量其中不同任务信息的存在程度——例如对一条情感分类查询，检查它的隐藏状态是否同时含有"情感分类""主题分类""翻译"等多个任务的激活信号。结果发现这些表征确实是"非选择性"的：不同任务的信息混杂在一起，模型无法判定该执行哪个任务，于是输出近乎随机、准确率接近零。这把零样本失败从"模型不会"重新解释为"模型什么都想做"——能力是有的，只是没有被聚焦，从而为后面"用移除信息来聚焦"的思路铺好了前提。
 
-2. **低秩滤波器实验**：
+**2. 低秩滤波器：人工模拟信息移除，验证"移除=聚焦"。**
 
-    - 功能：设计一个低秩投影操作 $P$，对隐藏状态 $h$ 进行滤波 $h' = P \cdot h$，选择性移除特定任务维度的信息
-    - 核心思路：通过 SVD 分解隐藏状态矩阵，识别与不同任务关联的主成分方向，然后投影到任务相关的低秩子空间——等价于移除了该子空间正交方向上的信息
-    - 实验发现：对零样本的隐藏状态施加低秩滤波后，模型能够"聚焦"目标任务，准确率显著提升——验证了"信息移除 = 任务导向"的假设
-    - 设计动机：低秩滤波器提供了一个可控的信息移除工具，用来验证"如果我们人工移除冗余信息，效果是否等价于 ICL"
+既然问题出在信息纠缠，那能不能人工把冗余信息删掉？作者设计了一个低秩投影操作 $P$，对隐藏状态 $h$ 做滤波 $h' = P \cdot h$，选择性移除特定任务维度的信息。具体做法是对隐藏状态矩阵做 SVD 分解，识别与不同任务关联的主成分方向，再把表征投影到目标任务相关的低秩子空间，这等价于抹掉了该子空间正交方向上的其他任务信息。把这个滤波器施加到零样本的隐藏状态后，模型立刻能"聚焦"目标任务、准确率显著提升。这一步的意义在于提供了一个可控的对照工具：如果人工移除冗余信息就能达到指导任务的效果，那么"信息移除 = 任务导向"的假设就站得住，也为下一步把 ICL 和滤波器作定量对比做好了铺垫。
 
-3. **Few-shot ICL 的隐藏状态分析**：
+**3. Few-shot ICL 的隐藏状态分析：证明 demonstrations 等价于信息移除。**
 
-    - 功能：对比 few-shot 和零样本的隐藏状态，证明 demonstrations 的作用等价于任务导向的信息移除
-    - 核心思路：用精心设计的指标度量 few-shot 隐藏状态的"选择性"程度——测量冗余任务信息是否被压缩、目标任务信息是否被增强
-    - 实验发现：随着 demonstrations 数量增加，隐藏状态逐渐变得"选择性"——冗余信息被抑制、目标任务信息占主导。这个过程在定量上吻合低秩滤波器实验的效果
-    - 设计动机：直接比较自然 ICL 和人工滤波的效果，证明 ICL 在功能上等价于信息移除
+有了人工滤波器作参照，就能检验自然的 ICL 到底在做什么。作者对比 few-shot 与零样本的隐藏状态，用度量"选择性"程度的指标观察冗余任务信息是否被压缩、目标任务信息是否被增强。结果是：随着 demonstrations 数量增加，隐藏状态逐渐变得"选择性"——冗余信息被抑制、目标任务信息占主导，而且这个变化在定量上与低秩滤波器实验的效果高度吻合。换句话说，自然 ICL 和人工滤波在功能上是等价的，demonstrations 起的就是一台"信息移除器"的作用，而不是在往模型里灌新知识。
 
-4. **Denoising Heads 的识别与验证**：
+**4. Denoising Heads：把信息移除定位到具体注意力头并做因果验证。**
 
-    - 功能：在 Transformer 的多头注意力中定位执行信息移除操作的关键注意力头（命名为"Denoising Heads"）
-    - 核心思路：
-        - 通过分析每个注意力头对隐藏状态"选择性"指标的贡献，筛选出对信息移除贡献最大的头
-        - 这些头的注意力模式显示：它们主要关注 demonstrations 中与目标任务相关的部分（如标签 token），并用这些信息来调制查询的隐藏状态
-    - 验证（消融实验）：
-        - 在推理时"阻断"Denoising Heads（将输出置零或用原始隐藏状态替代） → ICL 准确率显著下降
-        - 特别是在"正确标签不在 demonstrations 中"的极端场景下（flip label 设置），阻断 Denoising Heads 后准确率退化更严重——因为此时信息移除更为关键
-    - 设计动机：识别执行信息移除的具体组件，将机制从"黑箱功能描述"推进到"组件级因果验证"
-
-### 分析方法论
-
-本文使用的关键分析工具包括：
-- **隐藏状态探测（Probing）**：训练线性探测器检测隐藏状态中特定任务信息的存在
-- **因果消融（Causal Ablation）**：通过干预特定组件验证其因果作用
-- **低秩投影**：SVD 分解 + 低秩近似作为信息移除工具
-- **注意力头分析**：逐头定量评估对信息移除的贡献
-- **精心设计的对照实验**：如 flipped labels、随机 labels 等，区分不同情形下 ICL 的行为差异
+最后一步把机制从"功能描述"推进到"组件定位"。作者逐头分析每个注意力头对隐藏状态"选择性"指标的贡献，筛出贡献最大的那一小撮，称为 Denoising Heads；观察它们的注意力模式可以看到，这些头主要关注 demonstrations 中与目标任务相关的部分（如标签 token），并用这些信息去调制查询的隐藏状态。为验证它们的因果作用，作者在推理时"阻断"这些头（把输出置零或用原始隐藏状态替代），ICL 准确率随即显著下降；尤其在"正确标签不在 demonstrations 中"的极端场景（flip label 设置）下，阻断后退化更严重——因为此时模型更依赖信息移除而非照抄标签。这组消融把信息移除从一个抽象功能落实到了可干预、可验证的具体组件上。
 
 ## 实验关键数据
 
@@ -179,11 +152,11 @@ tags:
 
 ## 相关论文
 
+- [\[ICLR 2026\] Learning Domain-Aware Task Prompt Representations for Multi-Domain All-in-One Image Restoration](learning_domain-aware_task_prompt_representations_for_multi-domain_all-in-one_im.md)
 - [\[CVPR 2025\] Tokenize Image Patches: Global Context Fusion for Effective Haze Removal in Large Images](../../CVPR2025/image_restoration/tokenize_image_patches_global_context_fusion_for_effective_haze_removal_in_large.md)
 - [\[ICLR 2026\] ProtoTS: Learning Hierarchical Prototypes for Explainable Time Series Forecasting](protots_learning_hierarchical_prototypes_for_explainable_time_series_forecasting.md)
 - [\[ICLR 2026\] Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training](breaking_scale_anchoring_frequency_representation_learning_for_accurate_high-res.md)
 - [\[CVPR 2026\] Winner of CVPR2026 NTIRE Challenge on Image Shadow Removal: Semantic and Geometric Guidance for Shadow Removal via Cascaded Refinement](../../CVPR2026/image_restoration/shadow_removal_cascaded_refinement.md)
-- [\[ICCV 2025\] Exploiting Diffusion Prior for Task-driven Image Restoration](../../ICCV2025/image_restoration/exploiting_diffusion_prior_for_task-driven_image_restoration.md)
 
 </div>
 

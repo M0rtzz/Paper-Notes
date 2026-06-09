@@ -48,64 +48,25 @@ tags:
 
 ### 整体框架
 
-Egg-SR 框架包含一个核心模块 **Egg**（Equality graph for Grammar-based expressions）和三个集成接口：
+Egg-SR 的核心是一个可复用的等价表示模块 **Egg**（基于文法的等价图），它把一个表达式连同它在数学上所有的等价变体压缩进同一张 e-graph，再通过三个接口分别接入 MCTS、DRL 和 LLM。三类方法各自在最合适的环节调用 Egg：MCTS 在反向传播时共享等价路径的统计量，DRL 在计算策略梯度时聚合等价序列的概率，LLM 在生成反馈提示时补入等价变体。
 
-1. **Egg-MCTS**：共享等价路径的搜索统计量，剪枝冗余子树
-2. **Egg-DRL**：聚合等价序列的概率，降低策略梯度方差
-3. **Egg-LLM**：用等价表达式丰富反馈提示，引导下轮预测
+### 关键设计
 
-### 关键设计一：Egg 模块——基于文法的等价图
+**1. Egg 模块：用 e-graph 紧凑地装下所有等价表达式。** 直接枚举一个表达式的等价变体会随长度指数爆炸——例如 $\log(x_1\times\cdots\times x_n)$ 就有 $2^{n-1}$ 个等价形式，根本存不下。Egg 先用一个上下文无关文法 $\langle V, \Sigma, R, S\rangle$ 表示表达式（$V=\{A\}$ 是非终结符，$\Sigma$ 是变量与常数等终结符，$R$ 是产生式规则，表达式通过对最左非终结符依次应用规则而生成），再把它装进 e-graph：e-graph 由若干等价类（e-class）组成，每个 e-class 是一组语义等价的 e-node，每个 e-node 编码一个运算并引用子 e-class。由于公共子表达式只存一份，等价变体之间大量共享结构，存储从指数级压回紧凑表示。构建过程称为**等价饱和**：先用输入表达式的产生式序列初始化 e-graph，然后对每条重写规则（如 $\log(ab)\leadsto\log(a)+\log(b)$）匹配其左部模式，在匹配处插入右部对应的新 e-node 并把两侧合并进同一 e-class，如此迭代直到再无新等价关系产生或达到最大迭代次数。需要取出表达式时有两种提取策略：按代价提取拿到最简形式，或随机游走采样一批等价表达式供下游使用。
 
-**表达式表示**：使用上下文无关文法 $\langle V, \Sigma, R, S \rangle$ 表示符号表达式，其中 $V=\{A\}$ 为非终结符，$\Sigma$ 为终结符（变量+常数），$R$ 为产生式规则。表达式通过依次对最左非终结符应用规则构建。
+**2. Egg-MCTS：把等价路径的搜索统计量并到一起。** 标准 MCTS 走「UCT 选择 → 扩展 → 模拟 → 反向传播」四步，但它把 $\log(x_1\times A)$ 和 $\log(x_1)+\log(A)$ 这种数学上相同的路径当成两棵独立子树各搜一遍，浪费预算。Egg-MCTS 只改反向传播这一步：把当前部分表达式转成 e-graph 饱和后，从中采样多条等价序列，逐一检查搜索树里是否已有对应路径，若有就**同时**更新它们的奖励与访问计数。这等于重新定义了 UCT 里的访问数——$\mathtt{visits}(s)$ 不再是某个具体节点被访问的次数，而是它所在等价类中任一代表被访问的次数，作用类似博弈搜索里的换位表（transposition table）。一条路径上学到的信息因此能立刻惠及所有等价兄弟，避免冗余探索。理论上这收紧了遗憾界：记标准 MCTS 的近最优分支因子为 $\kappa$、Egg-MCTS 的为 $\kappa_\infty$，则有 $\kappa_\infty\le\kappa$，遗憾界从 $\tilde{\mathcal{O}}(n^{-\frac{\log(1/\gamma)}{\log\kappa}})$ 收紧到 $\tilde{\mathcal{O}}(n^{-\frac{\log(1/\gamma)}{\log\kappa_\infty}})$（定理 3.1）。
 
-**e-graph 数据结构**：
-- 由等价类（e-class）组成，每个 e-class 包含一组等价的 e-node
-- 每个 e-node 编码一个数学运算并引用子 e-class
-- 共享公共子表达式，实现紧凑表示
-
-**构建过程（等价饱和）**：
-1. 用输入表达式的产生式序列初始化 e-graph
-2. 对每条重写规则（如 $\log(ab) \leadsto \log(a) + \log(b)$），匹配 LHS 模式
-3. 为匹配位置创建 RHS 对应的新 e-class 和 e-node
-4. 合并等价 e-class
-5. 迭代直到饱和或达到最大次数
-
-**提取策略**：(1) 基于代价的提取——选择最简化的表达式；(2) 随机游走采样——生成一批等价表达式。
-
-### 关键设计二：Egg-MCTS——等价感知的反向传播
-
-标准 MCTS 包含选择（UCT）→ 扩展 → 模拟 → 反向传播四步。Egg-MCTS 的改进集中在**反向传播**步骤：
-
-- 将当前路径（部分完成的表达式）转化为 e-graph 并饱和
-- 从饱和 e-graph 中采样多个等价序列
-- 检查搜索树中是否存在对应路径
-- **同时更新所有等价路径**的奖励和访问计数
-
-这改变了 UCT 公式的语义：$\mathtt{visits}(s)$ 不再计算特定节点的访问次数，而是计算**等价类中任意代表**的访问次数，类似于换位表（transposition table）。
-
-**示例**：路径 1 对应 $\log(x_1 \times A)$，路径 2 对应 $\log(x_1) + \log(A)$，两者在 $\log(ab) \leadsto \log(a)+\log(b)$ 下等价。标准 MCTS 会独立探索两个子树，Egg-MCTS 共享统计量避免冗余。
-
-### 关键设计三：Egg-DRL——等价感知的策略梯度
-
-标准 DRL 使用序列解码器采样产生式序列 $\tau$，策略梯度估计器：
-
-$$g(\theta) \approx \frac{1}{N}\sum_{i=1}^N (\mathtt{reward}(\tau_i) - b) \nabla_\theta \log p_\theta(\tau_i)$$
-
-Egg-DRL 的改进：对每个采样序列 $\tau_i$ 构建 e-graph，采样 $K-1$ 个等价序列，使用等价感知估计器：
+**3. Egg-DRL：用等价序列的概率之和降低梯度方差。** DRL 方法用序列解码器采样产生式序列 $\tau$，其策略梯度估计器为 $g(\theta)\approx\frac{1}{N}\sum_{i=1}^N(\mathtt{reward}(\tau_i)-b)\nabla_\theta\log p_\theta(\tau_i)$；由于等价序列被分散打分、各自贡献噪声，估计方差很大、训练缓慢。Egg-DRL 对每个采样到的 $\tau_i$ 构建 e-graph 并采样 $K-1$ 条等价序列，改用等价感知估计器
 
 $$g_\mathtt{egg}(\theta) \approx \frac{1}{N}\sum_{i=1}^N (\mathtt{reward}(\tau_i) - b') \nabla_\theta \log\left[\sum_{k=1}^K p_\theta(\tau_i^{(k)})\right]$$
 
-关键改变在于用等价序列的概率之和 $\sum_k p_\theta(\tau_i^{(k)})$ 替代单一序列概率。由于等价序列共享相同奖励，对同奖励序列取平均降低了组内变异性。
+关键在于把单条序列的概率换成一组等价序列概率之和 $\sum_{k=1}^K p_\theta(\tau_i^{(k)})$。因为这 $K$ 条序列定义同一函数、共享同一奖励，把它们的概率合并相当于对组内变异做了平均，从而压低梯度噪声。该估计器被证明无偏且方差不大于标准 DRL：$\mathbb{V}\mathrm{ar}[g_\mathtt{egg}(\theta)]\le\mathbb{V}\mathrm{ar}[g(\theta)]$（定理 3.2）。
 
-### 关键设计四：Egg-LLM——等价增强的反馈提示
+**4. Egg-LLM：把等价变体喂回反馈提示。** 基于 LLM 的符号回归按「假设生成 → 数据评估 → 经验管理」循环迭代，但 LLM 每轮只看到自己写出的那一种表达式形式，错过了等价变体里隐含的结构线索。Egg-LLM 在反馈环节把 LLM 生成的 Python 表达式解析成符号表达式、转成 e-graph 提取若干等价变体，再把这些变体一并汇入反馈提示。这样下一轮 LLM 能观察到同一函数的多种写法，获得更丰富的信号来修正预测方向。
 
-LLM 符号回归的迭代过程：假设生成 → 数据评估 → 经验管理。Egg-LLM 在反馈环节将生成的 Python 表达式解析为符号表达式，转化为 e-graph 提取等价变体，将等价表达式汇总入反馈提示，使 LLM 观察到更丰富的函数等价形式。
+### 一个完整示例
 
-### 理论保证
-
-**定理 3.1（Egg-MCTS 遗憾界）**：令 $\kappa$ 为标准 MCTS 的近最优分支因子，$\kappa_\infty$ 为 Egg-MCTS 的分支因子，则 $\kappa_\infty \leq \kappa$，遗憾界从 $\tilde{\mathcal{O}}(n^{-\frac{\log(1/\gamma)}{\log\kappa}})$ 收紧为 $\tilde{\mathcal{O}}(n^{-\frac{\log(1/\gamma)}{\log\kappa_\infty}})$。
-
-**定理 3.2（Egg-DRL 方差降低）**：Egg-DRL 的梯度估计器无偏且方差严格不大于标准 DRL：$\mathbb{V}\mathrm{ar}[g_\mathtt{egg}(\theta)] \leq \mathbb{V}\mathrm{ar}[g(\theta)]$。
+以输入表达式 $\log(x_1\times x_2)$ 为例走一遍 Egg 的流程：先用其产生式序列初始化 e-graph；套用规则 $\log(ab)\leadsto\log(a)+\log(b)$ 后，$\log(x_1)+\log(x_2)$ 被加入同一等价类，两种写法共享子结构 $x_1$、$x_2$ 而只各存一份；饱和后从该等价类中采样出这两条等价序列。若用在 MCTS 中，两条路径在反向传播时统计量被合并更新；若用在 DRL 中，两条序列的概率被加和进同一项以平滑梯度；若用在 LLM 中，两种写法一起进入下一轮提示。同一张 e-graph，被三类算法在各自最关键的环节复用。
 
 ## 实验关键数据
 

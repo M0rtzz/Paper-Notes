@@ -40,26 +40,19 @@ tags:
 
 ## 方法详解
 
-### 核心创新 1: Contemplate Tokens + Soft Prompts
+### 整体框架
 
-- 在 target model 输入前插入可学习 soft prompt tokens（KV cache 维度），末尾附加 contemplate token
-- 注意力掩码限制：仅 contemplate tokens 可 attend to soft prompts，不影响原始前缀表征
-- Contemplate token 的隐状态编码 target model 的"中间思想"→作为 future token $\mathbf{f}$ 提供给 draft model
-- 验证阶段：在 draft tree 每个节点插入一个 contemplate token，并行验证+生成未来预测。接受后选择对应的 future prediction 传递下一迭代
-- 计算开销：验证时处理 $2T$ 个 token（原 $T$ 个 draft node + $T$ 个 contemplate token），$T$ 通常 30-60
+ConFu 在标准推测解码的 draft–verify 循环里塞进一类额外的 contemplate token：每次 target model 前向验证 draft 候选时，顺带让它"分心"算出一份对未来生成方向的预判，并把这份预判作为 future token 喂给 draft model。这样 draft model 不再只盯着当前前缀盲猜，而是带着 target 的高层意图去提议候选，从源头缓解多步 draft 的误差累积。整套机制建立在 EAGLE-3 之上，只动 draft 侧的条件输入而不改 target 主干，属于正交改进。
 
-### 核心创新 2: MoE 动态 Contemplate Token
+### 关键设计
 
-- 静态 contemplate embedding 对多样化上下文不足。数学推理需"接下来的等式是"，创意写作需"这段讲的是"
-- 用 MoE 参数化 contemplate token embedding：以最新接受 token 的隐状态为输入，线性 router 选择 top-K experts 的加权组合
-- [con]（target 端）和 [f]（draft 端）各有独立的 MoE 模块
-- 首次在 pause token 设置中引入动态性
+**1. Contemplate token 与 soft prompt：让 target 几乎免费地"想一步"。** draft model 仅以已生成前缀为条件，越往后走分布越偏离 target，接受率随之滑坡。ConFu 借鉴 pause token 的机理在并行计算中挤出额外算力：在 target 输入前插入一组可学习的 soft prompt token（落在 KV cache 维度上），并在末尾追加一个 contemplate token，再用注意力掩码限制只有 contemplate token 能 attend 到这些 soft prompt，从而不污染原始前缀的表征。contemplate token 的隐状态由此编码出 target 当前的"中间思路"，被取出作为 future token $\mathbf{f}$ 交给 draft model。推理时这一步嵌入验证阶段——在 draft tree 的每个节点都挂一个 contemplate token，与 draft 候选一次性并行验证并产出未来预测；某节点被接受后，就把它对应的 future prediction 传给下一轮迭代。代价是验证时要处理 $2T$ 个 token（$T$ 个 draft 节点加 $T$ 个 contemplate token，$T$ 通常取 30–60），但因为是并行前向，并未额外增加前向次数。
 
-### 核心创新 3: 训练框架
+**2. MoE 动态 contemplate token：按上下文切换"提示语气"。** 单一静态的 contemplate embedding 难以适配差异极大的场景——数学推理时它该暗示"接下来是某个等式"，创意写作时又该暗示"这段在讲什么"。ConFu 用一个 MoE 来参数化 contemplate token 的 embedding：以最新被接受 token 的隐状态作为输入，经线性 router 选出 top-K experts 的加权组合，从而让"提示指令"随上下文自适应。target 端的 [con] 与 draft 端的 [f] 各配一套独立的 MoE 模块。这也是首次在 pause token 这类设置里引入动态性，相比固定 embedding 更贴合多样化任务。
 
-- **Anchor Token Sampling**：随机采样 $K_{train}$ 个锚点 token 插入 contemplate token，序列长度从 $2N$ 降到 $N + K_{train}$
-- **Future Prediction Replication**：锚点的 future prediction 复用给临近 $l$ 个 token，增强鲁棒性和样本效率
-- **损失函数**：KL 散度对齐 target 和 draft 的输出分布，无需额外辅助损失
+### 损失函数 / 训练策略
+
+直接对每个位置都插 contemplate token 会让训练序列翻倍到 $2N$，开销难以接受。ConFu 用 **Anchor Token Sampling** 随机采样 $K_{train}$ 个锚点位置插入 contemplate token，把序列长度从 $2N$ 压回 $N + K_{train}$；再以 **Future Prediction Replication** 把锚点处算出的 future prediction 复用给临近的 $l$ 个 token，既提升样本效率又增强对位置扰动的鲁棒性。训练目标是用 KL 散度把 draft 的输出分布对齐到 target 的输出分布，不引入任何额外的辅助损失，保持训练管线简洁。
 
 ## 实验关键数据
 
@@ -121,11 +114,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] LookaheadKV: Fast and Accurate KV Cache Eviction by Glimpsing into the Future without Generation](lookaheadkv_fast_and_accurate_kv_cache_eviction_by_glimpsing_into_the_future_wit.md)
+- [\[AAAI 2026\] Predicting the Future by Retrieving the Past](../../AAAI2026/model_compression/predicting_the_future_by_retrieving_the_past.md)
 - [\[ICLR 2026\] Is Finer Better? The Limits of Microscaling Formats in Large Language Models](is_finer_better_the_limits_of_microscaling_formats_in_large_language_models.md)
-- [\[ACL 2026\] Evolutionary Negative Module Pruning for Better LoRA Merging](../../ACL2026/model_compression/evolutionary_negative_module_pruning_for_better_lora_merging.md)
+- [\[ICLR 2026\] LookaheadKV: Fast and Accurate KV Cache Eviction by Glimpsing into the Future without Generation](lookaheadkv_fast_and_accurate_kv_cache_eviction_by_glimpsing_into_the_future_wit.md)
+- [\[ICLR 2026\] Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization](alignment_through_meta-weighted_online_sampling_bridging_the_gap_between_data_ge.md)
 - [\[ICML 2025\] VocabTrim: Vocabulary Pruning for Efficient Speculative Decoding in LLMs](../../ICML2025/model_compression/vocabtrim_vocabulary_pruning_for_efficient_speculative_decoding_in_llms.md)
-- [\[ACL 2026\] SSSD: Simply-Scalable Speculative Decoding](../../ACL2026/model_compression/sssd_simply-scalable_speculative_decoding.md)
 
 </div>
 

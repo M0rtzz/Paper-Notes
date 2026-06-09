@@ -35,23 +35,20 @@ tags:
 6. **时间尺度分析缺失**：即便知道类内方差收缩可改善泛化，也需要理解其收敛速度相对于训练损失收敛的关系，才能解释为何泛化/压缩"延迟"发生。
 
 ## 方法详解
-本文是理论驱动的工作，核心贡献是三组定理及其相互关联。
 
-### 第一步：类内方差是统一关键量
-- **Grokking 的泛化界 (Theorem 3.2)**：对固定 feature extractor g 和分类器 W，推导基于 Chebyshev 不等式的分类错误上界。上界的关键分母项是群体类内方差 E[||g̃(X) - E[g̃(X)|Y]||²]——该值越小，上界越紧，泛化越好。
-- **IB 冗余信息界 (Theorem 3.4)**：在表示 Z = g(X) + B_g·E（加微小高斯噪声）的设定下，证明冗余信息 I(Z;X) - I(Z;Y) = I(Z;X|Y) 被群体类内方差上界控制。即类内方差收缩直接减少冗余信息，对应 IB 压缩阶段。
+### 整体框架
+这是一篇纯理论工作，目标是把 Grokking（延迟泛化）和 Information Bottleneck（压缩阶段）这两个看似无关的训练后期现象，归并到同一个内在驱动量——群体类内方差——之上。论文用一条定理链把"现象 → 关键量 → 可观测代理 → 收敛时间尺度"四层逐级打通：先证明类内方差同时控制泛化界和冗余信息（解释两现象因何同源），再证明它可由训练集上的经验指标 RNC1 逼近（让理论可观测），最后刻画 RNC1 收敛比训练损失收敛慢一个由 weight decay 决定的因子（解释两现象为何"延迟"出现）。
 
-### 第二步：群体方差可由经验方差逼近
-- **方差集中不等式 (Theorem 4.1)**：基于谱范数的均匀收敛分析，证明群体类内方差与训练集经验类内方差之差为 O(1/√n_c)。这为后续用 RNC1（基于训练集的 rescaled NC1 度量）代替群体方差提供了理论保障。
-- **RNC1 定义**：RNC1 = (1/B_g²)·Tr(Σ_W)，直接度量归一化后训练集类内方差，比传统 NC1（还除以类间方差）更直接对应泛化分析中需要的量。
+### 关键设计
 
-### 第三步：Neural Collapse 的时间尺度分析
-- **双时间尺度定理 (Theorem 4.3)**：在带 weight decay λ 的梯度下降训练中，训练损失在 τ₁ = Ω((1/η)·log(1/ε₁)) 步收敛，而 RNC1 在 τ₂ = Ω((1/(λη))·log(1/ε₂)) 步收敛。关键差异：τ₂ 包含 1/λ 因子。
-- **物理含义**：当 weight decay λ 很小时，τ₂ >> τ₁，即 Neural Collapse（类内方差收缩）远滞后于训练损失收敛——这恰好是 Grokking 和 IB 压缩延迟出现的原因。
-- **Weight decay 的角色**：更强的 weight decay 缩小 τ₂/τ₁ 比值，加速 Neural Collapse 发生，从而加速 Grokking 泛化跳跃和 IB 压缩阶段。
+**1. 类内方差是统一关键量：让 Grokking 与 IB 共享同一个驱动因子。**
+两个现象各自的痛点都是"机制说不清"——Grokking 不知道为何泛化会突然跳变，IB 不知道压缩阶段被什么触发。论文的切入点是证明二者其实被同一个量牵着走：群体类内方差 $\mathbb{E}\big[\|\tilde g(X) - \mathbb{E}[\tilde g(X)\mid Y]\|^2\big]$。一方面，对固定特征提取器 $g$ 和分类器 $W$，基于 Chebyshev 不等式推出的分类错误上界（Theorem 3.2）把这个方差放在分母位置——方差越小界越紧，于是类内坍缩直接换来泛化提升，对应 Grokking 的测试精度跃升。另一方面，在表示 $Z = g(X) + B_g\cdot E$（加一个微小高斯噪声使确定性网络的互信息有限）的设定下，冗余信息 $I(Z;X) - I(Z;Y) = I(Z;X\mid Y)$ 同样被群体类内方差上界控制（Theorem 3.4）——方差收缩即冗余信息减少，正是 IB 的压缩阶段。两条不等式把同一个量分别接到了泛化和压缩上，统一性由此成立；Proposition 3.3 进一步补出 IB 第一阶段（拟合阶段）的必要性，闭环了两阶段叙事。
 
-### 理论框架整体逻辑链
-Grokking/IB压缩 ← 群体类内方差收缩 ← 经验类内方差收缩(RNC1) ← Neural Collapse 动态 ← Weight decay 控制的时间尺度
+**2. 用经验 RNC1 逼近群体方差：把不可观测的理论量落到训练集上。**
+群体类内方差是对真实分布求期望，训练中无法直接测量，理论会因此停在纸面。论文先证一个集中不等式（Theorem 4.1）：基于谱范数的均匀收敛分析给出群体类内方差与训练集经验类内方差之差为 $O(1/\sqrt{n_c})$（$n_c$ 为每类样本数），即样本足够时二者可互相替代。在此保障下定义可观测代理 RNC1 $= \frac{1}{B_g^2}\mathrm{Tr}(\Sigma_W)$，它直接度量归一化后的训练集类内方差。相比 Neural Collapse 文献里常用的 NC1（还要再除以类间方差），RNC1 故意不做类间归一化——因为泛化界里需要的恰恰是类内方差本身，类间项的引入反而会模糊与泛化的对应关系。这一步让后续所有结论都能在训练曲线上被直接验证。
+
+**3. 双时间尺度刻画：解释"延迟"为何由 weight decay 决定。**
+即便知道类内方差收缩有益，也还要回答它为什么总是滞后发生——这正是 Grokking 和 IB 压缩都出现在训练后期的根源。论文在带 weight decay $\lambda$ 的梯度下降下证明（Theorem 4.3）：训练损失在 $\tau_1 = \Omega\big(\frac{1}{\eta}\log\frac{1}{\varepsilon_1}\big)$ 步内收敛，而 RNC1 要到 $\tau_2 = \Omega\big(\frac{1}{\lambda\eta}\log\frac{1}{\varepsilon_2}\big)$ 步才收敛。关键差异是 $\tau_2$ 多出一个 $1/\lambda$ 因子：当 $\lambda$ 很小时 $\tau_2 \gg \tau_1$，Neural Collapse 远滞后于损失收敛，于是泛化跳跃与 IB 压缩被"推迟"——延迟越久 Grokking 越戏剧化。反过来，增大 weight decay 缩小 $\tau_2/\tau_1$ 比值、加速类内坍缩，从而同时加速 Grokking 的泛化跳变和 IB 的压缩阶段。整条逻辑链可读作：weight decay 控制的时间尺度 → Neural Collapse 动态 → 经验类内方差（RNC1）收缩 → 群体类内方差收缩 → Grokking / IB 压缩。
 
 ## 实验关键数据
 
@@ -125,8 +122,8 @@ Grokking/IB压缩 ← 群体类内方差收缩 ← 经验类内方差收缩(RNC1
 - [\[NeurIPS 2025\] Flatness is Necessary, Neural Collapse is Not: Rethinking Generalization via Grokking](../../NeurIPS2025/llm_pretraining/flatness_is_necessary_neural_collapse_is_not_rethinking_generalization_via_grokk.md)
 - [\[ICLR 2026\] Deconstructing Positional Information: From Attention Logits to Training Biases](deconstructing_positional_information_from_attention_logits_to_training_biases.md)
 - [\[ICLR 2026\] Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors](understanding_the_emergence_of_seemingly_useless_features_in_next-token_predicto.md)
+- [\[ICLR 2026\] Scaling with Collapse: Efficient and Predictable Training of LLM Families](scaling_with_collapse_efficient_and_predictable_training_of_llm_families.md)
 - [\[NeurIPS 2025\] Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data](../../NeurIPS2025/llm_pretraining/neural_collapse_under_gradient_flow_on_shallow_relu_networks_for_orthogonally_se.md)
-- [\[ICLR 2026\] Intrinsic Training Dynamics of Deep Neural Networks](intrinsic_training_dynamics_of_deep_neural_networks.md)
 
 </div>
 

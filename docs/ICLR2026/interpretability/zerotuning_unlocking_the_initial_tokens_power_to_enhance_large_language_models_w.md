@@ -34,52 +34,19 @@ Token 级注意力调优（如 PASTA、ACT）虽有效，但依赖**外部启发
 
 ## 方法详解
 
-### 注意力缩放形式化
+### 整体框架
 
-引入缩放因子 $\gamma > 0$ 调整初始 token 的注意力权重：
+ZeroTuning 把初始 token（如 `<BOS>`）当作一个统一的、任务无关的注意力杠杆：先用一个缩放因子 $\gamma$ 对该 token 的注意力分数做头部特异性缩放，再 softmax 重归一化，整个过程不改任何权重、只动注意力分布，落地仅需 4 行代码。其底层逻辑是——初始 token 本就是 attention sink（注意力汇聚点），调它的权重能成比例地重塑其余 token 间的相对注意力差异，从而在不引入任何外部"重要 token"启发式的前提下校正模型偏置。
 
-$$a_0' = \frac{\gamma a_0}{D}, \quad a_i' = \frac{a_i}{D}, \quad D = (\gamma-1)a_0 + 1$$
+### 关键设计
 
-**关键性质**：
-- 保持非初始 token 间的相对比例不变
-- $\gamma > 1$：放大初始 token，平坦化其余分布
-- $\gamma < 1$：压缩初始 token，锐化其余分布
+**1. 初始 token 缩放算子：用一个因子撬动整张注意力分布。** 给定一层一头的注意力权重，引入缩放因子 $\gamma > 0$ 只作用在初始 token 上：$a_0' = \frac{\gamma a_0}{D}$、$a_i' = \frac{a_i}{D}$，其中归一化项 $D = (\gamma-1)a_0 + 1$ 保证缩放后仍是合法的概率分布。这个算子的妙处在于它**只动初始 token、却保持其余 token 之间的相对比例不变**：$\gamma > 1$ 时放大初始 token、把剩余分布压平（更均匀），$\gamma < 1$ 时压缩初始 token、把剩余分布锐化（更聚焦）。于是一个标量就能在"平坦化"与"锐化"两个方向上连续调节注意力，无需逐 token 设计启发式。
 
-### 调控效应分析
+**2. 杠杆效力分析：为什么动初始 token 增益最大。** 缩放带来的任意两 token 注意力差异的变化量可写成 $E_{\text{diff},i,j} = |a_i - a_j| \cdot \frac{|\gamma-1| a_0}{(\gamma-1) a_0 + 1}$。对初始 token 原始权重 $a_0$ 求导得 $\frac{\partial E_{\text{diff},i,j}}{\partial a_0} = |a_i - a_j| |\gamma-1| \cdot \frac{1}{((\gamma-1)a_0+1)^2} \geq 0$，恒为非负。这意味着初始 token 的注意力越大，它作为杠杆的调控效力越强——而 attention sink 恰恰让初始 token 天然占据极高权重，这从理论上解释了"为什么单调初始 token 就能稳定拿到最大增益"，也回答了选它而非其他 token 作为通用控制点的动机。
 
-注意力差异变化量：
-$$E_{\text{diff},i,j} = |a_i - a_j| \cdot \frac{|\gamma-1| a_0}{(\gamma-1) a_0 + 1}$$
+**3. 层级与头部的选择性施加：只在该动的地方动。** 缩放并非全模型一刀切，而是分层、分头有选择地施加。层级上，浅层（1–10）和中间层（11–21）的调整通常比深层（22–31）更有效，因为前者主要承担表示学习与知识整合、调控空间大，深层则已聚焦任务特定推理。头部上，不同注意力头对初始 token 缩放的响应是异质的：有的头放大初始 token 才提升性能（up-effective），有的头反而要缩小才提升（down-effective），这种分化源自预训练中各头的功能特化。ZeroTuning 因此先做一次**头部行为分析**评估每个头的敏感性，只对占主导的头类型施加 $\gamma$，避免相反方向的头互相抵消。
 
-对 $a_0$ 求导：
-$$\frac{\partial E_{\text{diff},i,j}}{\partial a_0} = |a_i - a_j| |\gamma-1| \cdot \frac{1}{((\gamma-1)a_0+1)^2} \geq 0$$
-
-**核心洞察**：初始 token 的注意力越大（attention sink），其作为杠杆的调控效力越强。
-
-### 层级分析
-
-浅层（1-10）和中间层（11-21）的调整通常比深层（22-31）更有效，因为：
-- 早期/中间层主要支持表示学习和知识整合
-- 深层聚焦于任务特定推理
-
-### 头部特异性
-
-不同头对初始 token 缩放的响应异质：
-- **Up-effective 头**：放大注意力提升性能
-- **Down-effective 头**：缩小注意力提升性能
-- 功能差异源于预训练中的头部功能特化
-
-### ZeroTuning 方法
-
-三步流程：
-1. **头部行为分析**：评估每个头对初始 token 缩放的敏感性
-2. **选择性缩放**：仅对主导头类型施加缩放因子 $\gamma$
-3. **重归一化**：softmax 重归一化保持有效分布
-
-**两种校准模式**：
-- **监督模式**：在标注验证集上最大化准确率搜索 $\gamma$
-- **无监督模式**：最小化输出熵——$\gamma$ 最小化熵与最大化准确率强相关
-
-**兼容性**：支持 SDPA 和 FlashAttention（通过缩放 query/key states）。
+**4. 两种校准模式：有标注和零标注都能定 $\gamma$。** 缩放因子 $\gamma$ 通过两种方式确定。监督模式在标注验证集上直接搜索最大化准确率的 $\gamma$；无监督模式则改为**最小化输出熵**——论文观察到使熵最小的 $\gamma$ 与使准确率最大的 $\gamma$ 强相关，因此在完全无标注时也能选出近优的缩放强度。整套流程最后用 softmax 重归一化保持分布有效，并通过缩放 query/key states 的等价实现兼容 SDPA 与 FlashAttention 两类高效内核。
 
 ## 实验
 
@@ -152,10 +119,10 @@ LogiQA 上 Deepseek-R1-14B: 27.80 → 35.60（+7.80%）。
 ## 相关论文
 
 - [\[ICLR 2026\] SEED-SET: Scalable Evolving Experimental Design for System-level Ethical Testing](seed-set_scalable_evolving_experimental_design_for_system-level_ethical_testing.md)
+- [\[ICML 2025\] DeltaSHAP: Explaining Prediction Evolutions in Online Patient Monitoring with Shapley Values](../../ICML2025/interpretability/deltashap_explaining_prediction_evolutions_in_online_patient_monitoring_with_sha.md)
 - [\[ACL 2025\] Enhancing Automated Interpretability with Output-Centric Feature Descriptions](../../ACL2025/interpretability/output_centric_interpretability.md)
 - [\[ACL 2025\] A Dual-Perspective NLG Meta-Evaluation Framework with Automatic Benchmark and Better Interpretability](../../ACL2025/interpretability/a_dual-perspective_nlg_meta-evaluation_framework_with_automatic_benchmark_and_be.md)
 - [\[ICML 2026\] Towards Atoms of Large Language Models](../../ICML2026/interpretability/towards_atoms_of_large_language_models.md)
-- [\[ICLR 2026\] Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
 
 </div>
 

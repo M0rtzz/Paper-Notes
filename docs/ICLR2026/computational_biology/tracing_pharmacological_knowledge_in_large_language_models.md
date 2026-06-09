@@ -35,51 +35,15 @@ tags:
 
 ### 整体框架
 
-采用**因果方法（activation patching）**和**探针方法（linear probing）**的互补视角：
-- Activation patching 测试必要性和充分性
-- Linear probing 评估线性可分性
+整个分析建立在一个互补的双重视角上：用因果方法（activation patching）回答"哪些组件是存储药物组知识的必要且充分条件"，再用相关性方法（linear probing）回答"这些组件里的语义信息是否线性可分、又分布在哪里"。两条线索都跑在同一套二选一问答数据集上，因果干预负责定位因果链条，线性探针负责刻画表征的几何结构，二者交叉印证才能得出可信的机制结论。
 
-### 1. 数据集构建
+### 关键设计
 
-从美国国家医学图书馆解析药物-药物组关系，构建**二选一问答数据集**：
+**1. 二选一问答数据集：把"药物组知识"变成可干预、可测量的探针。** 直接让模型生成药物名称会撞上两个麻烦——药物名的 tokenization 方式五花八门，按单个 token 评估并不可靠；而且同一药理类别往往有多个正确答案，开放式生成无法判定对错。作者从美国国家医学图书馆（NLM）解析药物—药物组关系，把任务改写成形如 `Which compound is categorized as vasoconstrictor agents? A) ergotamine B) araldite` 的二选一格式，用两个选项 logit 的大小来确定预测。这样每条样本都有唯一确定的正确答案，也为后面的反事实替换提供了天然的对照结构。
 
-```
-Question: Which compound is categorized as vasoconstrictor agents?
-A) ergotamine      B) araldite
-Answer:
-```
+**2. Activation patching：用三次前向传播因果定位"层 × token"。** 要判断某个组件是否真的承载药物组知识，需要在反事实输入上把它换回干净激活，看预测能否被"救回来"。具体跑三次前向：clean pass 用正确提示并缓存所有激活；counterfactual pass 改变药物组、使正确答案翻转；patched pass 在反事实输入上把选定组件替换为 clean 激活。这里刻意用对称的 token 替换而非加高斯噪声，避免把模型推到分布外。效应用归一化的 logit 差异来量化：$\text{metric}(r, r') = \frac{\text{LD}_{\text{pt}}(r, r') - \text{LD}_*(r, r')}{\text{LD}_{\text{cl}}(r, r') - \text{LD}_*(r, r')}$，取值越接近 1 说明被 patch 的组件越能独立恢复正确预测。残差流按逐层、逐 token 位置干预；MLP 输出因单层效果太弱，改用 10 层滑动窗口聚合后再读效应。
 
-设计为二选一格式的原因：
-- 药物名称 tokenization 方式各异，单 token 评估不可靠
-- 正确答案不唯一（多种药物可能属于同一药理类别）
-- 通过逻辑值最大的选项确定预测
-
-### 2. Activation Patching
-
-目标：**因果定位**哪些模型组件（层 × token 位置）负责存储药物组知识。
-
-三次前向传播：
-1. **Clean pass**：正确提示，缓存激活
-2. **Counterfactual pass**：改变药物组使正确答案翻转
-3. **Patched pass**：在 counterfactual 上替换选定组件为 clean 激活
-
-使用**对称 token 替换**（避免高斯噪声引入分布外输入），归一化 logit 差异指标：
-
-$$\text{metric}(r, r') = \frac{\text{LD}_{\text{pt}}(r, r') - \text{LD}_*(r, r')}{\text{LD}_{\text{cl}}(r, r') - \text{LD}_*(r, r')}$$
-
-对**残差流**和 **MLP 输出**分别做 patching：
-- 残差流：逐层逐 token 位置
-- MLP 输出：使用 10 层窗口（因单层干预效果微弱）
-
-### 3. 线性探针
-
-构建语义对立的药物组配对（如 α-受体激动剂 vs 拮抗剂、CNS 兴奋剂 vs 抑制剂），对每组生成 300 个提示。
-
-两种探针：
-- **单 token 探针**：在药物组 span 的各个 token 激活上训练
-- **Sum-pooled 探针**：在 span 所有 token 激活的求和池化上训练
-
-使用 L2 正则化逻辑回归（$C = 10^{-3}$），分层交叉验证防止数据泄漏。
+**3. 线性探针：检验语义是否线性可分、以及落在哪个 token 上。** 为了让"是否存在某种药理语义"这个问题有清晰的正负对照，作者构造语义对立的药物组配对（如 α-受体激动剂 vs 拮抗剂、CNS 兴奋剂 vs 抑制剂），每组生成 300 个提示。探针分两种：单 token 探针在药物组 span 的各个 token 激活上分别训练，用来检验信息是否对齐到某一个 token；sum-pooled 探针则在 span 内所有 token 激活求和池化后训练，用来检验聚合表征是否线性可分。分类器统一用带 L2 正则的逻辑回归（$C = 10^{-3}$），并做分层交叉验证防止数据泄漏。两种探针的对比正是后文"信息分布在整个 span 而非单 token"这一结论的直接证据。
 
 ## 实验
 
@@ -165,9 +129,9 @@ $$\text{metric}(r, r') = \frac{\text{LD}_{\text{pt}}(r, r') - \text{LD}_*(r, r')
 
 - [\[ICLR 2026\] Protein as a Second Language for LLMs](protein_as_a_second_language_for_llms.md)
 - [\[ICLR 2026\] Thompson Sampling via Fine-Tuning of LLMs](thompson_sampling_via_fine-tuning_of_llms.md)
+- [\[ICML 2025\] SToFM: a Multi-scale Foundation Model for Spatial Transcriptomics](../../ICML2025/computational_biology/stofm_a_multi-scale_foundation_model_for_spatial_transcriptomics.md)
 - [\[ICML 2025\] Scalable Non-Equivariant 3D Molecule Generation via Rotational Alignment](../../ICML2025/computational_biology/scalable_non-equivariant_3d_molecule_generation_via_rotational_alignment.md)
-- [\[ICML 2025\] Protein Structure Tokenization: Benchmarking and New Recipe](../../ICML2025/computational_biology/protein_structure_tokenization_benchmarking_and_new_recipe.md)
-- [\[ACL 2026\] BioTool: A Comprehensive Tool-Calling Dataset for Enhancing Biomedical Capabilities of Large Language Models](../../ACL2026/computational_biology/biotool_a_comprehensive_tool-calling_dataset_for_enhancing_biomedical_capabiliti.md)
+- [\[ICCV 2025\] MolParser: End-to-end Visual Recognition of Molecule Structures in the Wild](../../ICCV2025/computational_biology/molparser_end-to-end_visual_recognition_of_molecule_structures_in_the_wild.md)
 
 </div>
 

@@ -47,23 +47,17 @@ tags:
 
 ### 关键设计
 
-1. **对偶目标表征的理论定义（Dual Goal Representation）**:
+**1. 对偶目标表征：用"到目标的距离谱"代替目标本身的特征。**
 
-    - 功能：为目标状态提供一种只依赖环境动力学、与原始观测无关的压缩表征
-    - 核心思路：对于目标 $g$，其对偶表征定义为 $\phi^\vee(g) = [d^*(s_1,g), d^*(s_2,g), \dots, d^*(s_K,g)]^\top$，即从 $K$ 个参考状态到 $g$ 的最优时间距离构成的向量。在有限状态 MDP 中，这等价于距离矩阵的一列。在连续空间中，通过参数化 $\psi(s)^\top\phi(g)$ 来隐式编码"所有状态到 $g$ 的距离"——只要知道 $\phi(g)$，就能与任意 $\psi(s)$ 做内积恢复出对应距离
-    - 设计动机：传统表征编码状态自身特征（"这个位置有什么"），对偶表征编码状态与其他状态的关系（"到达这个位置需要多远"），后者天然只保留控制相关信息
+传统表征编码的是状态自身的特征——"这个位置有什么"，于是不可避免地把背景、纹理、无关物体一起编进去。对偶表征换了个视角：不问目标 $g$ 长什么样，而问"从环境中各个状态出发到达 $g$ 各要多远"。形式上，$g$ 的对偶表征定义为 $\phi^\vee(g) = [d^*(s_1,g), d^*(s_2,g), \dots, d^*(s_K,g)]^\top$，即从 $K$ 个参考状态到 $g$ 的最优时间距离拼成的向量；在有限状态 MDP 里它正好是距离矩阵的一列。这样定义的好处是天然只保留"怎么到达"这部分控制相关信息——两个观测看着完全不同的目标，只要从所有状态过去的时间距离谱一致，它们在可达性意义上就是等价的，外生噪声因此被自动滤掉。连续空间里没法真去枚举所有状态，于是用参数化 $\psi(s)^\top\phi(g)$ 把"所有状态到 $g$ 的距离"隐式编码进 $\phi(g)$：拿到 $\phi(g)$ 后，与任意 $\psi(s)$ 做一次内积就能恢复出对应的距离。
 
-2. **非对称内积参数化（Asymmetric Inner Product）**:
+**2. 非对称内积参数化：唯一能当万能逼近器的那一种。**
 
-    - 功能：提供一种万能逼近器形式的距离函数参数化，取代 L2 范数
-    - 核心思路：将距离函数建模为 $d^*(s,g) = \psi(s)^\top\phi(g)$，使用两个独立的编码器 $\psi$ 和 $\phi$ 分别编码状态和目标到 $N$ 维向量。关键性质是 METRA 已证明这种内积形式是万能逼近器（universal）——给定足够大的 $N$，可以任意精确逼近任何连续函数 $f(s,g)$
-    - 设计动机：对比四种参数化：(1) 对称 L2 $\|\phi(s)-\phi(g)\|$、(2) 非对称 L2 $\|\psi(s)-\phi(g)\|$、(3) 对称内积 $\phi(s)^\top\phi(g)$、(4) 非对称内积 $\psi(s)^\top\phi(g)$。只有 (4) 是万能逼近器：L2 范数受三角不等式限制且天然对称，对称内积无法建模非对称距离（$d^*(s,g) \neq d^*(g,s)$）。作者给出了形式化证明说明前三种均不满足万能性
+距离函数到底用什么形式去拟合，直接决定了表征的上限。本文把 $d^*(s,g)$ 建成 $\psi(s)^\top\phi(g)$——状态编码器 $\psi$ 和目标编码器 $\phi$ 各自独立、互不共享，分别把 $s$ 和 $g$ 映到 $N$ 维向量后做内积。为什么非这种形式不可？作者把候选摆成四种对照：(1) 对称 L2 $\|\phi(s)-\phi(g)\|$、(2) 非对称 L2 $\|\psi(s)-\phi(g)\|$、(3) 对称内积 $\phi(s)^\top\phi(g)$、(4) 非对称内积 $\psi(s)^\top\phi(g)$。真实时间距离往往是非对称的（"把方块扔下去"远比"把方块捡起来"快，即 $d^*(s,g)\neq d^*(g,s)$），这一下就排除了对称的 (1) 和 (3)；而 L2 范数还受三角不等式约束，表达力封顶。最终只有 (4) 是万能逼近器——这点 METRA 已经证过，给定足够大的 $N$ 就能任意精确逼近任意连续函数，前三种作者都给了形式化反例说明做不到。
 
-3. **基于 IQL 的距离函数学习**:
+**3. 基于 IQL 的距离函数学习：把"距离"等价成"最优值函数"来估。**
 
-    - 功能：从离线轨迹数据中学习 $\psi$ 和 $\phi$
-    - 核心思路：将时间距离 $d^*(s,g)$ 等价转化为最优值函数 $V^*(s,g)$（取负号），使用 Implicit Q-Learning 来近似。IQL 通过 expectile regression 从离线数据中估计最优值函数，避免了对未见 (s,a) 对值函数的查询。网络结构为：状态 $s$ 通过编码器 $\psi$ 、目标 $g$ 通过编码器 $\phi$ 分别映射到 $N$ 维空间，内积 $\psi(s)^\top\phi(g)$ 输出距离估计
-    - 设计动机：IQL 在理论上当 expectile $\tau \to 1$ 且数据覆盖充分时可精确恢复 $V^*$，这保证了所学表征在极限情况下的理论正确性
+有了参数化形式，还得能从离线轨迹里把 $\psi$ 和 $\phi$ 学出来。本文把时间距离 $d^*(s,g)$ 等价转写成最优值函数 $V^*(s,g)$（取负号），转而用 Implicit Q-Learning 来近似它。IQL 靠 expectile regression 从离线数据估计最优值函数，好处是全程不查询未见过的 $(s,a)$ 对，回避了离线 RL 的外推爆炸问题。网络上就是 $s$ 过 $\psi$、$g$ 过 $\phi$ 各自映到 $N$ 维，内积 $\psi(s)^\top\phi(g)$ 直接吐出距离估计。选 IQL 的理论理由也很硬：当 expectile $\tau\to 1$ 且数据覆盖充分时它能精确恢复 $V^*$，于是所学表征在极限情形下有正确性保证。
 
 ### 损失函数 / 训练策略
 
@@ -150,8 +144,8 @@ tags:
 - [\[ICLR 2026\] Dual-Robust Cross-Domain Offline Reinforcement Learning Against Dynamics Shifts](dual-robust_cross-domain_offline_reinforcement_learning_against_dynamics_shifts.md)
 - [\[ICML 2026\] Laplacian Representations for Decision-Time Planning](../../ICML2026/reinforcement_learning/laplacian_representations_for_decision-time_planning.md)
 - [\[ICML 2026\] Quantifying and Optimizing Simplicity via Polynomial Representations](../../ICML2026/reinforcement_learning/quantifying_and_optimizing_simplicity_via_polynomial_representations.md)
-- [\[AAAI 2026\] First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)
 - [\[ICLR 2026\] DVLA-RL: Dual-Level Vision-Language Alignment with Reinforcement Learning Gating for Few-Shot Learning](dvla-rl_dual-level_vision-language_alignment_with_reinforcement_learning_gating_.md)
+- [\[AAAI 2026\] First-Order Representation Languages for Goal-Conditioned RL](../../AAAI2026/reinforcement_learning/first-order_representation_languages_for_goal-conditioned_rl.md)
 
 </div>
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 优化/理论方向57篇论文解读
+  ICML2025 优化/理论方向61篇论文解读
 description: >-
-  57篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  61篇ICML2025的优化/理论方向论文解读，涵盖联邦学习、布局/合成、对抗鲁棒、对齐/RLHF、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "优化/理论"
@@ -11,17 +11,18 @@ tags:
   - "联邦学习"
   - "布局/合成"
   - "对抗鲁棒"
+  - "对齐/RLHF"
   - "LLM"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧪 ICML2025** · **57** 篇论文解读
+**🧪 ICML2025** · **61** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (60)](../../ICML2026/optimization/index.md) · [📷 CVPR2026 (16)](../../CVPR2026/optimization/index.md) · [🔬 ICLR2026 (44)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (124)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md)
 
-🔥 **高频主题：** 联邦学习 ×4 · 布局/合成 ×2 · 对抗鲁棒 ×2 · LLM ×2
+🔥 **高频主题：** 联邦学习 ×4 · 布局/合成 ×2 · 对抗鲁棒 ×2 · 对齐/RLHF ×2 · LLM ×2
 
 **[A Generalization Result for Convergence in Learning-to-Optimize](a_generalization_result_for_convergence_in_learning-to-optimize.md)**
 
@@ -43,10 +44,6 @@ tags:
 
 :   提出 AdvPrompter——用一个 LLM（AdvPrompter）在秒级速度内为目标 LLM 生成人类可读的对抗提示后缀，通过交替优化算法训练，在 AdvBench 和 HarmBench 上实现高攻击成功率，且可迁移到闭源黑盒 LLM，同时展示了用生成的对抗后缀进行对抗训练以增强目标 LLM 鲁棒性的策略。
 
-**[Autoformulation of Mathematical Optimization Models Using LLMs](autoformulation_of_mathematical_optimization_models_using_llms.md)**
-
-:   本文提出一种利用大语言模型结合蒙特卡洛树搜索（MCTS）自动将自然语言描述的优化问题转化为可求解器求解的数学规划模型的方法，通过符号剪枝和 LLM 价值评估显著提升了搜索效率。
-
 **[Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression](benefits_of_early_stopping_in_gradient_descent_for_overparameterized_logistic_re.md)**
 
 :   在过参数化逻辑回归中，理论证明了早停梯度下降（early-stopped GD）相比渐近 GD 具有统计优势：早停 GD 是校准且一致的，而渐近 GD 的 logistic risk 趋于无穷且校准误差不消失；同时建立了早停与 $\ell_2$ 正则化之间的定量联系。
@@ -54,6 +51,10 @@ tags:
 **[Beyond Self-Repellent Kernels: History-Driven Target Towards Efficient Nonlinear MCMC on General Graphs](beyond_self-repellent_kernels_history-driven_target_towards_efficient_nonlinear_.md)**
 
 :   提出 History-Driven Target (HDT) 框架，通过修改目标分布（而非转移核）将自排斥机制嵌入任意 MCMC 采样器，在保持 O(1/α) 方差缩减的同时解决了 SRRW 的计算开销大、仅限可逆链、内存占用高三大问题。
+
+**[BOPO: Neural Combinatorial Optimization via Best-anchored and Objective-guided Preference Optimization](bopo_neural_combinatorial_optimization_via_best-anchored_and_objective-guided_pr.md)**
+
+:   将 preference optimization（偏好优化）引入神经组合优化（NCO），提出 BOPO：通过 (1) best-anchored 偏好对构建（hybrid rollout + uniform filtering + best-anchored pairing）和 (2) objective-guided 自适应缩放损失函数（$\beta = g(y_l)/g(y_w)$），在 JSP/TSP/FJSP 三类经典组合优化问题上全面超越 SOTA，无需 reward model 或参考策略。
 
 **[Can Transformers Learn Full Bayesian Inference In Context?](can_transformers_learn_full_bayesian_inference_in_context.md)**
 
@@ -66,6 +67,10 @@ tags:
 **[Compelling ReLU Networks to Exhibit Exponentially Many Linear Regions at Initialization and During Training](compelling_relu_networks_to_exhibit_exponentially_many_linear_regions_at_initial.md)**
 
 :   提出一种基于非对称三角波的 ReLU 网络重参数化方法，使深度为 $d$ 的 4 神经元宽网络在初始化时即产生 $2^d$ 个线性区域，并在预训练中保持该指数级表达能力，在一维函数逼近任务上将误差降低了 **3 个数量级**。
+
+**[Conformal Prediction as Bayesian Quadrature](conformal_prediction_as_bayesian_quadrature.md)**
+
+:   从贝叶斯视角重新审视共形预测——证明分裂共形预测和共形风险控制都是贝叶斯求积（Bayesian Quadrature）框架的特例，提出实用的贝叶斯替代方案，提供可解释的保证和对未来损失范围的更丰富表示。
 
 **[Constant Stepsize Local GD for Logistic Regression: Acceleration by Instability](constant_stepsize_local_gd_for_logistic_regression_acceleration_by_instability.md)**
 
@@ -151,14 +156,6 @@ tags:
 
 :   提出 EvalPlanner，通过将 LLM-as-a-Judge 的推理过程解耦为"评估计划生成"和"计划执行"两个阶段，并在自训练循环中用 DPO 迭代优化计划与执行的偏好对，在 RewardBench 上以仅 22K 合成偏好对达到 93.9 的生成式奖励模型新 SOTA。
 
-**[MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines](metaagent_automatically_constructing_multi-agent_systems_based_on_finite_state_m.md)**
-
-:   提出 MetaAgent，一个基于有限状态机（FSM）的框架，给定任务描述即可自动设计多智能体系统，无需外部训练数据，支持工具调用和状态回溯，在文本任务、ML 任务和软件开发任务上超越现有自动设计方法并逼近人工设计系统性能。
-
-**[Multivariate Conformal Selection](multivariate_conformal_selection.md)**
-
-:   将 Conformal Selection 从单变量响应推广到多变量设定，提出区域单调性 (Regional Monotonicity) 概念，设计距离型 (mCS-dist) 和学习型 (mCS-learn) 两种非一致性分数，在有限样本下保证 FDR 控制并提升选择功效。
-
 **[Nearly Optimal Sample Complexity for Learning with Label Proportions](nearly_optimal_sample_complexity_for_learning_with_label_proportions.md)**
 
 :   本文研究从标签比例学习（LLP）的样本复杂度，在平方损失下给出了近最优的样本复杂度上下界，并设计了基于 ERM 和 SGD 的算法，在关于 bag size 的依赖关系上显著改进了现有结果。
@@ -166,6 +163,10 @@ tags:
 **[Nonparametric Teaching for Graph Property Learners](nonparametric_teaching_for_graph_property_learners.md)**
 
 :   提出 GraNT 范式，将非参数教学理论拓展到图属性学习场景，通过贪心选择"预测偏差最大"的图样本子集来加速 GCN 训练，在保持泛化性能的同时将训练时间缩减 30%–47%。
+
+**[On Temperature Scaling and Conformal Prediction of Deep Classifiers](on_temperature_scaling_and_conformal_prediction_of_deep_classifiers.md)**
+
+:   首次系统研究 Temperature Scaling (TS) 校准对 Conformal Prediction (CP) 方法的影响，揭示 TS 在改善 APS/RAPS 类条件覆盖率的同时会增大预测集尺寸的反直觉现象，建立了完整的非单调理论解释并提出实用指南。
 
 **[On Understanding Attention-Based In-Context Learning for Categorical Data](on_understanding_attention-based_in-context_learning_for_categorical_data.md)**
 
@@ -194,6 +195,18 @@ tags:
 **[Revisiting Unbiased Implicit Variational Inference](revisiting_unbiased_implicit_variational_inference.md)**
 
 :   重新审视被认为"不实用"的无偏隐式变分推断（UIVI），用重要性采样替代其内部 MCMC 循环，并通过最小化期望前向 KL 散度无偏地学习最优提议分布，在标准 SIVI 基准上达到或超越 SOTA。
+
+**[REVOLVE: Optimizing AI Systems by Tracking Response Evolution in Textual Optimization](revolve_optimizing_ai_systems_by_tracking_response_evolution_in_textual_optimiza.md)**
+
+:   REVOLVE 通过跟踪 LLM 系统中响应在迭代过程中的"演化"趋势来指导优化，比 TextGrad 等基于即时反馈的方法更稳定高效，在提示优化、方案改进和代码优化上分别提升 7.8%、20.72% 和 29.17%。
+
+**[Right Now, Wrong Then: Non-Stationary Direct Preference Optimization under Preference Drift](right_now_wrong_then_non-stationary_direct_preference_optimization_under_prefere.md)**
+
+:   提出 NS-DPO，通过 Dynamic Bradley-Terry 模型引入单一指数衰减参数 γ 对训练数据进行时序加权，使 DPO 在偏好随时间漂移的场景下仍能鲁棒对齐，同时在平稳场景下不损失性能。
+
+**[SAFER: A Calibrated Risk-Aware Multimodal Recommendation Model for Dynamic Treatment Regimes](safer_a_calibrated_risk-aware_multimodal_recommendation_model_for_dynamic_treatm.md)**
+
+:   提出 SAFER 框架，融合结构化 EHR 与临床笔记的多模态信息，通过 KL 散度度量标签不确定性并结合保形推断控制 FDR，为高风险动态治疗推荐提供统计安全保障。
 
 **[Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation](sassha_sharpness-aware_adaptive_second-order_optimization_with_stable_hessian_ap.md)**
 
@@ -238,6 +251,10 @@ tags:
 **[Transformative or Conservative? Conservation Laws for ResNets and Transformers](transformative_or_conservative_conservation_laws_for_resnets_and_transformers.md)**
 
 :   系统推导并证明了卷积 ResNet 和 Transformer 等现代架构在梯度流训练动态下的守恒律，揭示残差连接不改变守恒律、块级守恒律等价于孤立块的守恒律，并证明离散 SGD 下守恒误差为 $O(\text{step-size}^2)$。
+
+**[Understanding Mode Connectivity via Parameter Space Symmetry](understanding_mode_connectivity_via_parameter_space_symmetry.md)**
+
+:   通过参数空间的连续对称性（如 $GL_h(\mathbb{R})$）分析神经网络损失函数最小值集合的拓扑连通性，推导出线性网络最小值的连通分量数为 $2^{l-1}$，并证明 skip connection 可减少该数目，同时给出对称性诱导的显式低损失连接曲线及线性模式连通性近似成立的充分条件。
 
 **[Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More](understanding_sharpness_dynamics_in_nn_training_with_a_minimalist_example_the_ef.md)**
 

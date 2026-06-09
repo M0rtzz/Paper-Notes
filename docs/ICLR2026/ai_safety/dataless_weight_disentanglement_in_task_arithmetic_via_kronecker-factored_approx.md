@@ -47,50 +47,37 @@ tags:
 
 ---
 
-### 解决思路
-
-**本文目标**：### 整体框架
-
-TAK 的训练流程分两步：
-1. **预计算阶段**: 对每个任务 $t$ 的训练数据计算 KFAC 因子 $\{(\boldsymbol{B}_t^l, \boldsymbol{A}_t^l)\}_l$，然后合并为单一代理
-2. **微调阶段**: 在线性化微调中，目标函数加入 KFAC 正则项
-
-$$\min_{\boldsymbol{\tau}_{t'}} \mathca。
-
-
 ## 方法详解
 
 ### 整体框架
 
-TAK 的训练流程分两步：
-1. **预计算阶段**: 对每个任务 $t$ 的训练数据计算 KFAC 因子 $\{(\boldsymbol{B}_t^l, \boldsymbol{A}_t^l)\}_l$，然后合并为单一代理
-2. **微调阶段**: 在线性化微调中，目标函数加入 KFAC 正则项
+TAK 把"添加新任务向量不要破坏旧任务表征"这件事，拆成解耦的两步：先在每个任务各自的私有数据上离线预计算一组 KFAC 曲率因子 $\{(\boldsymbol{B}_t^l, \boldsymbol{A}_t^l)\}_l$，把它当作"哪些方向碰不得"的紧凑代理；再在线性化微调阶段，用这些因子构造一个完全不需要其他任务数据的正则项，约束当前任务向量远离会引起跨任务干扰的方向。总目标函数写作
 
 $$\min_{\boldsymbol{\tau}_{t'}} \mathcal{L}_{\mathcal{D}_{t'}}(\boldsymbol{\tau}_{t'}) + \beta \sum_{t \neq t'} \lambda_t \boldsymbol{\tau}_{t'}^\top \boldsymbol{G}_t(\boldsymbol{\theta}_0) \boldsymbol{\tau}_{t'}$$
 
-### 关键设计一：从表征漂移到 KFAC
+第一项是任务 $t'$ 自身的微调损失，第二项是对所有其他任务 $t$ 的曲率惩罚，$\beta$ 与 $\lambda_t$ 控制强度。
 
-在线性化模型 $f_\text{lin}(\boldsymbol{x}, \boldsymbol{\theta}) = f(\boldsymbol{x}, \boldsymbol{\theta}_0) + \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0)(\boldsymbol{\theta} - \boldsymbol{\theta}_0)$ 下，表征漂移简化为：
+### 关键设计
 
-$$\Delta_{t \to t,t'}(\boldsymbol{x}) = \alpha_{t'}^2 \| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_{t'} \|_2^2$$
+**1. 从表征漂移到 KFAC：把"别人的数据"换成"别人的曲率"。**
 
-正则化项变为 $\boldsymbol{\tau}_{t'}^\top \boldsymbol{G}_t \boldsymbol{\tau}_{t'}$，其中 Jacobian Gramian $\boldsymbol{G}_t$ 是 GGN 矩阵的特殊实例（对应平方损失时 $\nabla^2 c = \boldsymbol{I}$）。KFAC 将 GGN 近似为分块对角、每块为 Kronecker 积：
+要衡量给任务 $t'$ 加上任务向量后会对任务 $t$ 造成多大破坏，本来需要任务 $t$ 的数据去实测表征变化，这正是隐私/去中心化场景下不可行的根源。本文借助线性化模型 $f_\text{lin}(\boldsymbol{x}, \boldsymbol{\theta}) = f(\boldsymbol{x}, \boldsymbol{\theta}_0) + \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0)(\boldsymbol{\theta} - \boldsymbol{\theta}_0)$ 把表征漂移化简成一个干净的二次型 $\Delta_{t \to t,t'}(\boldsymbol{x}) = \alpha_{t'}^2 \| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_{t'} \|_2^2$，对样本求期望后正则项就成了 $\boldsymbol{\tau}_{t'}^\top \boldsymbol{G}_t \boldsymbol{\tau}_{t'}$。关键观察是：这里的 Jacobian Gramian $\boldsymbol{G}_t$ 恰好是广义 Gauss-Newton（GGN）矩阵在平方损失（$\nabla^2 c = \boldsymbol{I}$）下的特例。既然如此，就能直接套用成熟的 KFAC 近似，把每层的 GGN 写成两个小矩阵的 Kronecker 积
 
 $$\boldsymbol{G}(\boldsymbol{\theta}^l) \approx \boldsymbol{B}^l \otimes \boldsymbol{A}^l$$
 
-其中 $\boldsymbol{A}^l$ 为输入协方差，$\boldsymbol{B}^l$ 为输出梯度协方差。
+其中 $\boldsymbol{A}^l$ 是该层输入的协方差、$\boldsymbol{B}^l$ 是输出梯度的协方差。这一步把"需要访问数据的表征对比"彻底替换为"可离线预存的曲率因子"，正则化因而变得无数据。
 
-### 关键设计二：累积正则化因子合并
+**2. 累积正则化：让任务数从 $O(T)$ 退化成 $O(1)$。**
 
-朴素方案需存储每个任务的 KFAC 因子，$O(T)$ 复杂度。提出启发式合并：
+朴素做法是为每个其他任务都保留一份 KFAC 因子并逐一加惩罚，存储和计算都随任务数 $T$ 线性增长。本文提出一个启发式合并，把所有 $t \neq t'$ 的因子分别在两个 Kronecker 侧聚合成单一代理
 
 $$\boldsymbol{G}_{-t'} \approx \left(\sum_{t \neq t'} \boldsymbol{B}_t^l\right) \otimes \left(\frac{1}{T-1} \sum_{t \neq t'} \boldsymbol{A}_t^l\right)$$
 
-理论分析表明误差上界为 $\|E\|_F \leq T \sigma_A \sigma_B$，当 KFAC 因子跨任务变化较小时（共享预训练骨干的情况下），近似精度较高。
+这样无论有多少任务，正则项都只需一份因子。合并当然引入误差，但理论给出 Frobenius 范数上界 $\|E\|_F \leq T \sigma_A \sigma_B$，说明当各任务的 KFAC 因子彼此差异不大时近似才好——而共享同一预训练骨干恰好满足这个前提，这也解释了实验中累积版与朴素版差距能控制在 0.3 点以内。
 
-### 关键设计三：任务定位与 OOD 检测
+**3. 任务定位与 OOD 检测：正则化顺带得到一个免费的"正常性评分"。**
 
-KFAC 正则化自然带来任务定位性质：$\| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_t \|_2^2$ 可作为任务 $t$ 的"正常性评分"。正则化后，分布外样本的评分被推向零，实现任务向量对输入空间的局部化影响。
+这套正则化还有个副产品：量 $\| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_t \|_2^2$ 天然可以读作输入 $\boldsymbol{x}$ 对任务 $t$ 的"正常性评分"。因为惩罚项做的事就是压低分布外输入上的这个二次型，训练后 OOD 样本的评分被推向零，于是每个任务向量的影响被局部化到自己负责的输入子空间，跨任务干扰自然减弱——权重解缠和 OOD 检测在同一个量上统一了起来。
 
 ---
 

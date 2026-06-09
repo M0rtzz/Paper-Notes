@@ -41,35 +41,36 @@ VFScale提出无需外部验证器的测试时可缩放扩散模型，通过MRNC
 ## 方法详解
 
 ### 整体框架
-训练侧：在标准MSE+Contrastive损失基础上，增加MRNCL损失（对齐能量与质量的单调关系）和KL正则化（平滑能量景观）。推理侧：混合MCTS去噪——早期用BoN广泛探索，后期用MCTS深度利用。
+VFScale 想让扩散模型在不依赖外部验证器的情况下也能做测试时缩放，关键是让模型自己的能量函数变成可信的"质量打分器"。它分两条线推进：训练侧在标准的 MSE 重建损失和对比损失之上，补上 MRNCL 损失（把能量值和样本质量的单调关系对齐）与 KL 正则化（把能量景观抹平），让低能量真正对应高质量解；推理侧则用混合 MCTS 去噪，在去噪早期噪声大时广撒网、晚期噪声小时深挖，用模型自己的能量当 reward 来引导搜索。
 
 ### 关键设计
 
-1. **MRNCL损失（Monotonic-Regression Negative Contrastive Learning）**:
+**1. MRNCL 损失：让"离正确答案越远、能量越高"成为硬约束。**
 
-    - 功能：确保离ground truth越远的样本能量越高（performance-energy consistency）
-    - 核心思路：对每个正样本 $x_0$，生成两个负样本 $x_0^-$ 和 $x_0^{--}$（后者距正样本更远）。在加噪后获取三点能量值 $(0, E_t^+), (l_{2,0}^-, E_t^-), (l_{2,0}^{--}, E_t^{--})$，做线性回归求斜率 $k_t$ 和截距 $b_t$
-    - 损失：$\mathcal{L}_{\text{MRNCL}} = \mathbb{E}[\max(0, \gamma - k_t) + \sum \|E - \hat{E}\|_2^2]$
-    - 设计动机：原始对比损失仅要求正样本为局部能量最小值，不约束负样本间的能量序关系
+能量景观质量差的根子在于：原始对比损失只要求正样本是局部能量最小值，却完全不管两个负样本之间谁该能量更高，于是出现"低能量却不是好解"的不一致。MRNCL（Monotonic-Regression Negative Contrastive Learning）针对的就是这个序关系缺失。具体做法是对每个正样本 $x_0$ 额外造两个负样本 $x_0^-$ 和 $x_0^{--}$，后者离正样本更远；加噪之后拿到三个点的能量值 $(0, E_t^+)$、$(l_{2,0}^-, E_t^-)$、$(l_{2,0}^{--}, E_t^{--})$，横轴是到正样本的 $\ell_2$ 距离、纵轴是能量，对这三点做线性回归求出斜率 $k_t$ 和截距 $b_t$。损失为
 
-2. **KL正则化**:
+$$\mathcal{L}_{\text{MRNCL}} = \mathbb{E}\big[\max(0, \gamma - k_t) + \sum \|E - \hat{E}\|_2^2\big]$$
 
-    - $\mathcal{L}_{\text{KL}} = \mathbb{E}_{t, p_{\theta,t}}[E_{\text{stop-grad}(\theta)}(x)] + \mathbb{E}_{t, p_{\theta,t}}[\log p_{\theta,t}(x)]$
-    - 第一项鼓励样本低能量，第二项最大化采样多样性（熵最大化）
-    - 在每个去噪步 $t$ 上应用（区别于Du et al. 2021仅在终端）
+前一项用 hinge 逼斜率 $k_t$ 大于阈值 $\gamma$（保证能量随距离单调上升），后一项让三点尽量贴合回归直线（保证关系平滑）。这样训练出来的能量函数才能在测试时充当验证器：能量低的就是离正确答案近的好解。
 
-3. **混合MCTS去噪（hMCTS）**:
+**2. KL 正则化：把整条去噪轨迹上的能量景观都抹平。**
 
-    - 早期（噪声大时）用BoN：$L$ 个初始噪声并行去噪，防止过早淘汰有前景的路径
-    - 后期（噪声小时）用MCTS：
-        - Selection：UCB公式 $\text{UCB}(x_t, a_t) = Q(x_t, a_t) + c\sqrt{\frac{\ln N_i}{n_i}}$
-        - Expansion：单步去噪+不同高斯噪声→$K$个分支
-        - Simulation：用DDIM快速采样到 $x_0$，用 $E_\theta(\hat{x}_0)$ 作为reward（无需外部验证器）
-        - Backpropagation：更新路径上所有节点的值
-    - DDIM的子序列采样特性使simulation高效
+光有单调性还不够，能量景观若坑坑洼洼仍会误导搜索。KL 正则项
+
+$$\mathcal{L}_{\text{KL}} = \mathbb{E}_{t, p_{\theta,t}}[E_{\text{stop-grad}(\theta)}(x)] + \mathbb{E}_{t, p_{\theta,t}}[\log p_{\theta,t}(x)]$$
+
+第一项压低样本能量、把分布往低能量区拉，第二项是熵最大化、鼓励采样多样性以免坍缩。和 Du et al. 2021 只在终端施加正则不同，这里在每个去噪步 $t$ 上都施加，使整条轨迹的能量都被平滑，搜索时每一步的能量打分才都可靠。
+
+**3. 混合 MCTS 去噪（hMCTS）：按噪声大小切换搜索策略，把内在能量当 reward。**
+
+测试时缩放还需要一个高效的搜索器。hMCTS 的核心观察是去噪过程中噪声从大到小，应当匹配不同搜索强度：早期噪声大、路径前景未明，用 Best-of-$N$ 撒网——$L$ 个初始噪声并行去噪，避免过早淘汰有潜力的分支；后期噪声小、路径逐渐确定，切到 MCTS 深挖。MCTS 的四步里，Selection 用 UCB 平衡探索利用，
+
+$$\text{UCB}(x_t, a_t) = Q(x_t, a_t) + c\sqrt{\frac{\ln N_i}{n_i}}$$
+
+Expansion 对当前节点单步去噪并叠加不同高斯噪声，分出 $K$ 个子分支；Simulation 用 DDIM 快速采样直达 $x_0$，再用模型自己的能量 $E_\theta(\hat{x}_0)$ 作为 reward——这正是"无需外部验证器"的关键，打分信号全部来自训练好的内在能量；Backpropagation 把这个 reward 回传更新路径上所有节点的值。DDIM 的子序列采样特性让每次 simulation 都能跳步直达终点，使得整个回滚足够廉价、MCTS 才跑得起来。
 
 ### 完整训练目标
-$\mathcal{L} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{Contrast}} + \mathcal{L}_{\text{MRNCL}} + \mathcal{L}_{\text{KL}}$
+$$\mathcal{L} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{Contrast}} + \mathcal{L}_{\text{MRNCL}} + \mathcal{L}_{\text{KL}}$$
 
 ## 实验关键数据
 

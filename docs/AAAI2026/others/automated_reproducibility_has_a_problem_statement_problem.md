@@ -162,10 +162,10 @@ AI论文很少显式表述可检验假设，更多是研究问题和发现。因
 ## 相关论文
 
 - [\[AAAI 2026\] The Publication Choice Problem](the_publication_choice_problem.md)
+- [\[NeurIPS 2025\] Put CASH on Bandits: A Max K-Armed Problem for Automated Machine Learning](../../NeurIPS2025/others/put_cash_on_bandits_a_max_k-armed_problem_for_automated_machine_learning.md)
 - [\[ICML 2026\] The Realignment Problem: When Right becomes Wrong in LLMs](../../ICML2026/others/the_realignment_problem_when_right_becomes_wrong_in_llms.md)
 - [\[ICLR 2026\] An Efficient, Provably Optimal Algorithm for the 0-1 Loss Linear Classification Problem](../../ICLR2026/others/an_efficient_provably_optimal_algorithm_for_the_0-1_loss_linear_classification_p.md)
 - [\[AAAI 2026\] Judging by the Rules: Compliance-Aligned Framework for Modern Slavery Statement Monitoring](judging_by_the_rules_compliance-aligned_framework_for_modern_slavery_statement_m.md)
-- [\[AAAI 2026\] Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction](description_logics_with_two_types_of_definite_descriptions_complexity_expressive.md)
 
 </div>
 

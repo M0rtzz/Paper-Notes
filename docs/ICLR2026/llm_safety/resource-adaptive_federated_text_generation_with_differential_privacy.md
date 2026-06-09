@@ -43,50 +43,25 @@ tags:
 
 ## 方法详解
 
-### 整体框架：四阶段流水线
+### 整体框架
 
-**阶段 1：DP 联邦微调（强客户端 $\mathcal{C}_s$）**
+框架把客户端按算力切成强、弱两群，让两者各尽其能：强客户端 $\mathcal{C}_s$ 先用 DP-SGD 把预训练 LLM 微调到目标领域，再由所有客户端上报带噪的 control code 分布、由服务器据此生成合成文本，最后弱客户端 $\mathcal{C}_r$ 用一轮带 DP 噪声的投票来精炼这批合成数据。整个过程只在三处使用差分隐私机制，弱客户端全程无需反向传播，从而在计算异构与隐私约束下仍能让每个客户端都贡献到最终的全局分布。
 
-- 只有计算资源充足的强客户端参与标准联邦学习
-- 本地训练使用 DP-SGD 保护 sample-level 隐私
-- 目标函数为条件语言模型损失：$f_i(\theta) = -\frac{1}{|D_i|}\sum_j \sum_{x \in D_i^j} \log p_\theta(x|c^j)$
-- 经过 $R$ 轮通信后得到微调模型 $\theta^*$
+### 关键设计
 
-**阶段 2：DP Profiling（所有客户端）**
+**1. 强弱分治的资源自适应参与：让弱客户端绕开微调也能出力。** 直接对所有客户端做 LLM 微调在 cross-silo 场景不现实，因为多数客户端连一次反向传播都跑不动；但若把它们排除，模型只见到强客户端的数据，分布会被严重偏倚。本文的做法是只让算力充足的强客户端 $\mathcal{C}_s$ 参与标准联邦微调，弱客户端 $\mathcal{C}_r$ 改以「投票」这种纯前向、单轮通信的方式介入。这样微调的重活集中在少数有能力的节点上，而弱客户端的数据分布信息仍通过后续的 profiling 与投票回流到合成数据中，避免了「谁微调谁说了算」的偏倚。
 
-- 每个客户端计算其本地数据在各 control code 下的样本数量向量 $P_i = [|D_i^1|, \ldots, |D_i^{|C|}|]$
-- 通过 Analytical Gaussian Mechanism 对 $P_i$ 加噪后发送到服务器
-- 服务器汇总得到全局目标分布 $\tilde{P} = \sum_i \tilde{P}_i$
+**2. DP Profiling 重建全局分布：用带噪的 control code 计数刻画整体数据画像。** 合成数据要忠实反映全局分布，就得知道各类别在所有客户端上的真实占比，但这个占比本身是隐私信息。每个客户端把本地数据在各 control code 下的样本数统计成向量 $P_i = [|D_i^1|, \ldots, |D_i^{|C|}|]$，经 Analytical Gaussian Mechanism 加噪后上报，服务器聚合成全局目标分布 $\tilde{P} = \sum_i \tilde{P}_i$。生成阶段服务器据此为每个 control code 分配样本配额 $s_j = \text{Round}(s \cdot \tilde{P}[j])$，再用微调模型 $p_{\theta^*}(\cdot \mid c^j)$ 按配额生成，得到初始合成集 $\tilde{D}$。因为占比来自所有客户端（含弱客户端）的带噪统计，合成数据的类别比例不再只听强客户端的。
 
-**阶段 3：基于 Profile 的合成文本生成**
+**3. DP 投票精炼：让弱客户端用相似度投票纠偏合成文本。** 即便配额对了，微调模型生成的具体文本仍可能偏离弱客户端的真实语言风格。服务器把 $\tilde{D}$ 广播给弱客户端，每个弱客户端用 sentence transformer 计算嵌入相似度，为本地每个真实样本在「同一 control code 内」挑出 $K$ 个最接近的合成样本投票；投票计数同样经 Analytical Gaussian Mechanism 加噪上报，服务器按归一化后的投票概率对 $\tilde{D}$ 重采样。这相当于让见多识广但跑不动梯度的弱客户端，用一次前向推理就把合成分布往真实分布拉近，实验显示在 1–5% 强客户端的极端低资源下，单轮精炼即可大幅弥补 DP 噪声造成的质量损失。
 
-- 服务器根据全局分布 $\tilde{P}$ 决定每个 control code 下需要生成的样本数 $s_j = \text{Round}(s \cdot \tilde{P}[j])$
-- 用微调模型 $p_{\theta^*}(\cdot|c^j)$ 生成对应数量的合成文本
-- 得到初始合成数据集 $\tilde{D}$
+**4. Control code 的双重角色：既当分布坐标，又当投票围栏。** Control code（标签、主题、元数据等）在框架里身兼两职：一方面各 code 下的样本比例天然就是刻画本地数据分布的坐标，profiling 与配额分配都建立在它之上；另一方面它把投票限定在同一 code 内，保证「真实样本只和语义同类的合成样本比相似度」，避免跨类别误投。文中假设 control code 是公共、非隐私的先验知识，因而可以明文使用而不额外消耗隐私预算。
 
-**阶段 4：DP 投票精炼（弱客户端 $\mathcal{C}_r$）**
+**5. 三处独立的差分隐私预算：训练、画像、投票各自记账。** 框架在三个会触及原始数据的环节分别施加 DP：微调用 DP-SGD（$\varepsilon_{\text{train}}, \delta_{\text{train}}$）保护 sample-level 隐私，profiling 与投票各用一次 Analytical Gaussian Mechanism（$\varepsilon_{\text{prof}}, \delta_{\text{prof}}$ 与 $\varepsilon_{\text{vote}}, \delta_{\text{vote}}$）。三者预算独立核算、互不串扰，弱客户端因为只参与一轮投票，隐私与计算开销都极低。
 
-- 服务器将合成数据广播给弱客户端
-- 每个弱客户端对合成样本投票：本地每个真实样本在同一 control code 内选出 $K$ 个最相似的合成样本（使用 sentence transformer 计算嵌入相似度）
-- 投票结果通过 Analytical Gaussian Mechanism 加 DP 噪声
-- 服务器汇总投票，按归一化投票概率重采样合成数据
+### 一个完整示例
 
-### Control Code 的双重作用
-
-Control code（如标签、主题、元数据）是本框架的关键设计：
-
-1. **表示客户端分布**：各 control code 的样本比例自然刻画了本地数据分布
-2. **约束投票范围**：投票限定在同一 control code 内，确保语义一致性
-
-### 隐私保障
-
-三处独立使用 DP 机制：
-
-- 微调阶段：DP-SGD（$\varepsilon_{\text{train}}, \delta_{\text{train}}$）
-- Profiling 阶段：Analytical Gaussian Mechanism（$\varepsilon_{\text{prof}}, \delta_{\text{prof}}$）
-- 投票阶段：Analytical Gaussian Mechanism（$\varepsilon_{\text{vote}}, \delta_{\text{vote}}$）
-
-弱客户端仅需一轮通信，无需反向传播，计算开销极低。
+以 Yelp 评论生成为例：control code 取「商业类别 + 评分星级」。先由占比 5% 的强客户端用 DP-SGD 微调 GPT-2，得到 $\theta^*$；接着全部客户端把各 (类别, 星级) 组合的样本数加噪上报，服务器聚合出全局分布 $\tilde{P}$，并据此决定例如「餐饮+5 星」需生成多少条；服务器用 $p_{\theta^*}(\cdot \mid c^j)$ 按配额生成初始合成集 $\tilde{D}$ 并广播；弱客户端拿本地每条真实评论，在同一 (类别, 星级) 内用 sentence transformer 挑 $K$ 个最相似的合成评论投票，加噪后回传；服务器按投票概率重采样，得到既符合全局类别占比、又贴近弱客户端真实语言的最终合成数据集。
 
 ## 实验关键数据
 

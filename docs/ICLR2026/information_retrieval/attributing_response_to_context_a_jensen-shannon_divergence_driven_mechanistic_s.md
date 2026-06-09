@@ -45,34 +45,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ARC-JSD分两大模块：(1) 基于JSD的上下文归因（定位关键句子）；(2) 基于JSD+Logit Lens的机制分析（定位关键注意力头和MLP层）。
+ARC-JSD要解决的是「生成的某句话到底来自哪条上下文」这个归因问题，而且要在不训练任何辅助模型的前提下做到又快又准。它的做法可以拆成两层：先在模型整体层面，逐句把上下文挖掉、看响应分布变化最大的那句，定位出关键上下文（归因）；再把同样的「挖掉看变化」思路下沉到模型内部，逐个注意力头、逐个MLP层去算，找出真正负责这次归因的组件（机制分析）。两层共用一个核心度量——Jensen-Shannon散度（JSD），最后还把它顺势变成一个抑制幻觉的门控开关。
 
 ### 关键设计
 
-1. **JSD驱动的上下文归因（§4.1）**
+**1. JSD 驱动的上下文归因：用消融句子前后的分布差直接量化贡献。**
 
-    - 功能：对上下文中每个句子 $c_i$，计算移除它后响应分布与完整上下文响应分布的JSD差异
-    - 核心公式：$\text{JSD}(c_i) = \sum_{j=1}^{|\mathcal{R}|} \text{JSD}(\mathcal{P}_{\text{LM}}(r_j|\mathcal{C},\mathcal{Q}) \| \mathcal{P}_{\text{LM}}(r_j|\mathcal{C}_{\text{ABLATE}}(c_i),\mathcal{Q}))$
-    - JSD最高的句子即为最相关的上下文：$c_{\text{Top-1}} = \arg\max_{c_i} \text{JSD}(c_i)$
-    - 设计动机：逐响应token累加JSD，既捕获局部敏感token（如实体名），又不被高熵token主导
+针对的痛点很直接——现有方法要么准但贵（ContextCite 要数百次前向训代理模型、MIRAGE 要反向传播），要么快但糊。ARC-JSD 绕过代理模型，对上下文里每个句子 $c_i$ 做一次「移除它再生成」，把移除后的响应分布与完整上下文下的响应分布逐 token 算 JSD 并累加：
 
-2. **JSD+Logit Lens机制分析（§5）**
+$$\text{JSD}(c_i) = \sum_{j=1}^{|\mathcal{R}|} \text{JSD}\big(\mathcal{P}_{\text{LM}}(r_j|\mathcal{C},\mathcal{Q}) \,\|\, \mathcal{P}_{\text{LM}}(r_j|\mathcal{C}_{\text{ABLATE}}(c_i),\mathcal{Q})\big)$$
 
-    - 功能：将JSD分析从模型整体下沉到每个注意力头和MLP层
-    - 核心思路：对每个注意力头 $(\ell,h)$ 和每个MLP层 $\ell$，通过Logit Lens将中间表示投影到词汇空间，分别计算全上下文vs消融上下文下的JSD
-    - 关键发现：负责上下文归因的注意力头主要集中在**高层**，MLP层在中高层贡献最大，与Wu et al. (2025a)的NIAH设置发现部分吻合
+分数最高的句子就是最关键的上下文：$c_{\text{Top-1}} = \arg\max_{c_i} \text{JSD}(c_i)$。逐响应 token 累加是有讲究的——它既能放大实体名这类局部敏感 token 的变化，又不会被高熵 token 的噪声主导，从而比单点比较更稳。
 
-3. **语义增益验证（§6）**
+**2. JSD + Logit Lens 机制分析：把同一把尺子伸进模型内部。**
 
-    - 功能：从另一角度验证JSD定位的组件——衡量注意力/MLP对正确答案的余弦相似度提升
-    - 核心思路：定义 $\Delta^{\ell,\text{Attn}}$ 和 $\Delta^{\ell,\text{MLP}}$ 衡量每层注意力和MLP的语义增益
-    - 通过Spearman $\rho$ 计算JSD排序与语义增益排序的相关性，Table 3显示显著正相关，互相验证有效性
+光知道哪句话重要还不够，作者想知道模型是用哪些组件完成这次归因的。于是把 JSD 从整体输出下沉到每个注意力头 $(\ell,h)$ 和每个 MLP 层 $\ell$：借助 Logit Lens 把这些组件的中间表示直接投影到词汇空间，得到各自的「伪输出分布」，再分别在全上下文与消融上下文两种条件下算 JSD。这样每个头/每层都拿到一个归因贡献分。结果显示，负责上下文归因的注意力头主要集中在**高层**，MLP 层则在中高层贡献最大，这与 Wu et al. (2025a) 在 NIAH 设置下的观察部分吻合。
 
-4. **JSD门控降低幻觉（§7）**
+**3. 语义增益验证：换一个互相独立的视角交叉印证。**
 
-    - 功能：用JSD分数作为置信度门控，抑制语义增益为负的高JSD注意力头和MLP层
-    - 门控公式：$\text{Mask} = 0.7 + 0.3 \times \text{sigmoid}(G)$，当 $G < 0$ 时mask接近0.7，缩减该组件的贡献
-    - 效果：Qwen2-7B-IT在HotpotQA上幻觉率从13.4%降至8.2%（↓39%），Factual F1基本不变（76.1→75.9）
+只靠 JSD 一个指标定位组件，难免让人怀疑是不是度量自带的偏好。作者引入一条完全不同的证据链——语义增益，即衡量某个注意力/MLP 组件是否让表示更靠近正确答案（余弦相似度提升）。为此定义每层的 $\Delta^{\ell,\text{Attn}}$ 和 $\Delta^{\ell,\text{MLP}}$，再用 Spearman $\rho$ 检验「JSD 排序」与「语义增益排序」是否一致。Table 3 显示两者在各数据集、各模型上都显著正相关，说明 JSD 挑出来的组件确实在语义上做了正贡献，两条独立证据互相印证。
+
+**4. JSD 门控降低幻觉：把诊断分数直接接成一个开关。**
+
+既然 JSD 能定位「负责生成」的组件，反过来也能用来压制「帮倒忙」的组件。作者把 JSD 分数当作置信度门控，对那些 JSD 高、但语义增益 $G$ 为负（即高度活跃却把答案带偏）的注意力头和 MLP 层做缩减：
+
+$$\text{Mask} = 0.7 + 0.3 \times \text{sigmoid}(G)$$
+
+当 $G<0$ 时 sigmoid 趋近 0，mask 退到约 0.7，把该组件的贡献压下来；$G$ 越正则越接近不干预。这套门控无需重新训练，在 Qwen2-7B-IT + HotpotQA 上把幻觉率从 13.4% 降到 8.2%（↓约 39%），而 Factual F1 几乎不动（76.1→75.9）。
 
 ### 计算效率
 - ARC-JSD的FLOPs为 $2PT|\mathcal{C}|^2$（$P$为参数量，$T$为每句token数，$|\mathcal{C}|$为句子数）
@@ -153,8 +152,8 @@ ARC-JSD分两大模块：(1) 基于JSD的上下文归因（定位关键句子）
 - [\[ACL 2026\] Context Attribution with Multi-Armed Bandit Optimization](../../ACL2026/information_retrieval/context_attribution_with_multi-armed_bandit_optimization.md)
 - [\[ICLR 2026\] Embedding-Based Context-Aware Reranker](embedding-based_context-aware_reranker.md)
 - [\[ICML 2026\] Less Is More: Elevating RAG via Performance-Driven Context Compression](../../ICML2026/information_retrieval/less_is_more_elevating_rag_via_performance-driven_context_compression.md)
-- [\[ICLR 2026\] Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
 - [\[ACL 2025\] A Reality Check on Context Utilisation for Retrieval-Augmented Generation](../../ACL2025/information_retrieval/a_reality_check_on_context_utilisation_for_retrieval-augmented_generation.md)
+- [\[ICLR 2026\] Beyond RAG vs. Long-Context: Learning Distraction-Aware Retrieval for Efficient Knowledge Grounding](beyond_rag_vs_long-context_learning_distraction-aware_retrieval_for_efficient_kn.md)
 
 </div>
 

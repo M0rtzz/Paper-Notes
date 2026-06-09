@@ -41,27 +41,18 @@ VOD PLCC 提升 11.5%，直播预测提升 26%，真人 MOS 相关性提升 14.7
 ## 方法详解
 
 ### 整体框架
-HiVid 包含三个模块：Perception (基础) → Ranking (VOD) / Prediction (直播)，最终输出块权重 $w_i$ 融入 QoE 模型。
+HiVid 把 LLM 当作"人类代理"来给视频块打主观重要性权重 $w_i$，再把权重喂回 $QoE = \sum_i w_i \cdot q_i$ 指导码率分配。一个 Perception 模块负责把任意长的视频切成滑动窗口逐段评分，是所有场景的公共底座；点播（VOD）路径在其后接 Ranking 模块用排序去掉窗口间的评分偏差，直播路径则接 Prediction 模块用多模态时间序列预测来掩盖 LLM 的推理延迟。
 
 ### 关键设计
-1. **Perception 模块**: 每 $m$ 帧通过滑动窗口输入 LLM（默认 GPT-4o），prompt 要求评分并更新摘要：
-    $R_{(k-1)m+1}^{km}, S_{km} = LLM(F_{(k-1)m+1}^{km}, S_{(k-1)m})$
-   仅需 $\lceil D/m \rceil$ 次 LLM 调用即可处理任意长视频，摘要 $S$ 作为压缩历史上下文。
 
-2. **Ranking 模块 (VOD)**: 用 LLM 引导的归并排序消除窗口间评分偏差。每次合并两个排序组时，取各 $m/2$ 帧组成新列表让 LLM 排序，总体复杂度 $O(k \log k)$（$k = \lceil D/m \rceil$）。排序后归一化到 $[0,1]$ 并施加高斯平滑 $w_i = GS(s, \sigma, w_i)$。
+**1. Perception 模块：用滑动窗口加摘要绕过 LLM 的 token 上限。** LLM 无法直接吞下整段视频、token 又有限，HiVid 把视频按每 $m$ 帧切成窗口逐个送进 LLM（默认 GPT-4o），每个窗口的 prompt 同时要求两件事：给这 $m$ 帧打分、并把这段内容压缩进一段文本摘要带给下一个窗口，即 $R_{(k-1)m+1}^{km}, S_{km} = LLM(F_{(k-1)m+1}^{km}, S_{(k-1)m})$。摘要 $S$ 充当被压缩的历史上下文，让后面的窗口能在"知道前情"的前提下评分，于是处理任意时长 $D$ 的视频只需 $\lceil D/m \rceil$ 次调用，把成本压成线性。
 
-3. **Prediction 模块 (直播)**: 多模态时间序列预测模型，包含：
+**2. Ranking 模块：用 LLM 引导的归并排序抹平窗口间偏差。** 不同窗口是独立打分的，绝对分数会有系统性漂移——同样重要的镜头在两个窗口里可能拿到不同分。点播场景拿得到完整视频，于是 HiVid 改用相对排序而非绝对分。它套用归并排序的框架，但把"比较两个元素"换成"让 LLM 排序"：每次合并两个已排好的组时，各抽 $m/2$ 帧拼成新列表交给 LLM 重新定序，整体复杂度 $O(k \log k)$（$k = \lceil D/m \rceil$）。排好的序再归一化到 $[0,1]$，并施加高斯平滑 $w_i = GS(s, \sigma, w_i)$ 让相邻块权重过渡平滑。因为只比较相对优先级、不依赖绝对分，窗口间的偏差被自然消掉。
 
-    - **CLIP 对齐**: 冻结 CLIP 编码历史帧和文本摘要
-    - **Content-Aware Attention**: 时序特征作 Q，拼接的图像+文本特征作 K/V：
-    $Attn(F(x_w), F(x_{cat}), F(x_{cat})) = softmax\left(\frac{Q_w K_{cat}^T}{\sqrt{d}}\right) \cdot V_{cat}$
-    - **自适应预测维度**: 根据 LLM 延迟 $\Delta t$ 和预测延迟 $\delta$ 动态调整输出长度：
-    $L_{out} = \lceil(\Delta t + \delta)/d\rceil + m + N$
-    - **相关性损失**: $loss = MSE(x, x_{gt}) + \lambda(1 - \text{Pearson}(x, x_{gt}))$
+**3. Prediction 模块：用多模态预测掩盖直播中不确定的 LLM 延迟。** 直播没有未来帧、又要求实时出权重，而 LLM 推理延迟 $\Delta t$ 抖动很大，等它算完早就错过传输窗口了。HiVid 因此训一个多模态时间序列模型来"预报"未来块的权重：先用冻结的 CLIP 把历史帧和文本摘要编码对齐，再做 Content-Aware Attention——以时序特征作 Q、拼接后的图文特征作 K/V，$Attn(F(x_w), F(x_{cat}), F(x_{cat})) = softmax\left(\frac{Q_w K_{cat}^T}{\sqrt{d}}\right) \cdot V_{cat}$，让历史数值序列去查询语义内容。关键的"自适应预测维度"按当前 LLM 延迟和预测延迟 $\delta$ 动态决定要往前预报多远，$L_{out} = \lceil(\Delta t + \delta)/d\rceil + m + N$，刚好覆盖等待 LLM 的那段空窗。训练用相关性损失 $loss = MSE(x, x_{gt}) + \lambda(1 - \text{Pearson}(x, x_{gt}))$，在拟合数值之外额外逼模型保住权重序列的整体走势。
 
 ### 损失函数 / 训练策略
-- Perception/Ranking 模块无需训练（基于 LLM 零样本推理）
-- 预测模块训练多个不同 $L_{out}$ 的模型，推理时选最小满足需求的模型
+Perception 与 Ranking 模块完全靠 LLM 零样本推理、无需训练；只有 Prediction 模块需要训练，且会预训练多个对应不同 $L_{out}$ 的模型，推理时根据实测延迟挑最小但够用的那个，在预测跨度和精度间取平衡。
 
 ## 实验关键数据
 

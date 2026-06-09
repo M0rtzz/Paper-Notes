@@ -43,28 +43,25 @@ tags:
 
 ### 整体框架
 
-RL 训练循环中：(1) 将旧 actor $\theta_{\text{old}}$ 量化为 $\hat{\theta}_{\text{old}}$ 用于 rollout 生成响应；(2) 用全精度 $\theta_{\text{old}}$ 计算近邻策略的 clipping ratio $R_{i,t}$；(3) 用 Decoupled PPO 目标函数训练，ACR 动态调节裁剪范围；(4) UAQ 通过不变缩放预处理权重，减小量化误差并放大权重更新。
+QuRL 把 RL 训练循环里的角色拆成两套精度：每轮先把旧 actor $\theta_{\text{old}}$ 量化成 $\hat{\theta}_{\text{old}}$，只用它跑 rollout 生成响应（吃掉约 70% 训练时间的瓶颈环节）；而 clipping ratio 和梯度更新仍交给全精度的 $\theta_{\text{old}}$。在此 Decoupled PPO 骨架上，ACR 负责修正量化带来的裁剪偏差，UAQ 则在训练前一次性预处理权重，让全精度更新不再被量化误差淹没。
 
 ### 关键设计
 
-1. **自适应裁剪范围 (Adaptive Clipping Range, ACR)**:
-    - 做什么：解决量化 rollout 导致的长期训练崩溃问题
-    - 核心思路：在 Decoupled PPO 中，行为策略（量化 actor $\pi_{\hat{\theta}_{\text{old}}}$）与近邻策略（全精度 $\pi_{\theta_{\text{old}}}$）分离。FlashRL 的 TIS 方法通过截断 $\min(\pi_{\theta_{\text{prox}}}/\pi_{\theta_{\text{behav}}}, C)$ 稳定训练，但隐含了一个缩放因子 $r_{i,t}$，对正 advantage 序列过度裁剪。ACR 将上界调整为 $(1+\epsilon)/r_{i,t}$：$\mathcal{J}_{\text{ACR}} = \tilde{\mathbb{E}}[\min(\pi_{\text{prox}}/\pi_{\text{behav}}, C) \cdot \min(R_{i,t}A_{i,t}, \text{clip}(R_{i,t}, 1-\epsilon, (1+\epsilon)/r_{i,t})A_{i,t})]$
-    - 设计动机：在训练后期（>1000步），量化actor与全精度actor的KL散度从0.002增长到0.025（12×），TIS的固定截断导致偏差梯度估计。ACR根据策略分歧动态放宽裁剪上界，让更多正 advantage token 得到训练
+**1. 自适应裁剪范围 (Adaptive Clipping Range, ACR)：止住量化 rollout 引发的后期训练崩溃。**
 
-2. **更新感知量化 (Update-Aware Quantization, UAQ)**:
-    - 做什么：解决权重量化变化量与权重更新量的尺度失配
-    - 核心思路：利用线性层的不变缩放 $WX = (W/s) \cdot (sX)$，选择 $s > 1$ 使量化误差$\propto |\theta|/(s \cdot 2^b)$ 降低 $s$ 倍，同时权重更新$\propto s \cdot \alpha G$ 放大 $s$ 倍，产生 $s^2$ 的信噪比改善。$s$ 列式应用于 $W$，行式应用于前一层激活（可合并到 LayerNorm）
-    - 设计动机：RL 中学习率 $\alpha \sim 10^{-6}$，梯度 $G \sim 0.1$-$1.0$，权重更新量级 $\sim 10^{-7}$ 远小于量化误差（权重范数 $\sim 0.001$-$0.1$）。实验显示 INT8 量化几乎掩盖了所有权重更新，量化模型实际上在"冻结"
+Decoupled PPO 把行为策略（量化 actor $\pi_{\hat{\theta}_{\text{old}}}$）与近邻策略（全精度 $\pi_{\theta_{\text{old}}}$）分开，FlashRL 的 TIS 用截断 $\min(\pi_{\theta_{\text{prox}}}/\pi_{\theta_{\text{behav}}}, C)$ 来稳定二者的重要性采样。问题在于这一截断隐含了缩放因子 $r_{i,t}$，会把正 advantage 序列过度裁剪。我们观察到训练后期（>1000 步）量化 actor 与全精度 actor 的 KL 散度从 0.002 涨到 0.025（12×），固定截断越往后偏差越大，最终把梯度估计带崩。ACR 的做法是把裁剪上界从固定的 $1+\epsilon$ 改成随策略分歧动态放宽的 $(1+\epsilon)/r_{i,t}$，目标函数写作 $\mathcal{J}_{\text{ACR}} = \tilde{\mathbb{E}}[\min(\pi_{\text{prox}}/\pi_{\text{behav}}, C) \cdot \min(R_{i,t}A_{i,t}, \text{clip}(R_{i,t}, 1-\epsilon, (1+\epsilon)/r_{i,t})A_{i,t})]$。分歧越大上界越松，更多正 advantage token 因此能继续贡献梯度，而不是被一刀切掉——这正是朴素 INT8 RL 在 DAPO 上奖励直接崩为 0 而 ACR 能稳住的原因。
 
-3. **系统集成与工程实现**:
-    - 做什么：将 ACR 和 UAQ 集成到 VeRL RL 训练框架
-    - 核心思路：UAQ 是一次性的权重预处理（RL训练前执行），不增加训练开销。ACR 仅修改 clipping 逻辑，计算开销可忽略。利用 vLLM 的 INT8/FP8 矩阵乘法核加速推理
-    - 设计动机：QuRL 介于 PTQ 和 QAT 之间——不像 QAT 显式优化量化，但参数通过量化模型产出的梯度隐式更新。需要简单但有效的量化策略
+**2. 更新感知量化 (Update-Aware Quantization, UAQ)：让微小的权重更新别被量化误差吞掉。**
+
+RL 的信任域约束让每步权重更新量级只有 $\sim 10^{-7}$（学习率 $\alpha \sim 10^{-6}$、梯度 $G \sim 0.1$–$1.0$），而量化误差对应的权重范数却在 $0.001$–$0.1$ 量级，于是 INT8 量化几乎抹掉了所有更新，量化模型实质上在"冻结"训练。UAQ 借线性层的不变缩放恒等式 $WX = (W/s) \cdot (sX)$ 来破局：取 $s > 1$ 后，量化误差 $\propto |\theta|/(s \cdot 2^b)$ 被压低 $s$ 倍，而被搬到激活侧、再经反量化还原的权重更新 $\propto s \cdot \alpha G$ 被放大 $s$ 倍，一进一出换来 $s^2$ 的信噪比改善。具体实现上 $s$ 按列作用于 $W$、按行作用于前一层激活（可直接折进 LayerNorm），所以它只是 RL 训练前的一次性权重预处理，不带来任何训练时开销。这也解释了为什么单纯把学习率放大 1.5×/2× 远不如 UAQ——前者同时放大了噪声，后者才真正改善了信噪比。
+
+**3. 系统集成与工程实现：把 ACR 与 UAQ 接进现成 RL 框架且几乎零额外开销。**
+
+QuRL 集成在 VeRL 训练框架上，rollout 直接调用 vLLM 的 INT8/FP8 矩阵乘法核加速。两个改动都刻意做轻：UAQ 是训练前执行的一次性预处理，ACR 只改动 clipping 逻辑、计算量可忽略。这种轻量化是被 QuRL 的定位逼出来的——它介于 PTQ 和 QAT 之间：不像 QAT 显式优化量化目标，但参数又通过量化模型产出的梯度被隐式更新，因此需要的是简单且对 RL 友好的量化策略，而非 GPTQ 那种每步重校准、代价过高的精细方案。
 
 ### 损失函数 / 训练策略
 
-采用 GRPO/DAPO 目标函数的 decoupled 变体。通道级权重量化 + token级激活量化（INT8 或 FP8）。UAQ 缩放因子 $s = 1.5$。TIS 截断阈值 $C$ 沿用 FlashRL 设置。
+采用 GRPO/DAPO 目标函数的 decoupled 变体，配通道级权重量化 + token 级激活量化（INT8 或 FP8）。UAQ 缩放因子取 $s = 1.5$（消融显示 $s=2.0$ 反而因过大失稳），TIS 截断阈值 $C$ 沿用 FlashRL 的设置。
 
 ## 实验关键数据
 

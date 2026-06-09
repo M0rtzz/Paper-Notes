@@ -45,23 +45,25 @@ DAM 的输入是一个预训练的基于 CTMC 的离散生成模型（如 LLaDA 
 
 ### 关键设计
 
-1. **离散伴随变量（Discrete Adjoint）**:
+**1. 离散伴随变量：用 Dynkin 公式给出最优速率的无偏估计器。**
 
-    - 功能：提供最优 CTMC 速率 $u_t^\star(y,x)$ 的无偏估计器
-    - 核心思路：最优速率可以写成 $u_t^\star(y,x) = u_t^{\text{base}}(y,x) \cdot e^{-V_t(y)+V_t(x)}$，其中 $V_t(x) = -\log \sum_z p_{1|t}^{\text{base}}(z|x) e^{-g(z)}$ 是值函数。问题转化为估计指数值差 $e^{-V_t(y)+V_t(x)}$。通过将 Dynkin 公式应用于 CTMC 过程，得到离散伴随变量 $\tilde{a}_t(y;X)$，它满足一个线性 ODE，终端条件为 $\tilde{a}_1(y;X) = e^{-g(y)+g(X_1)}$（指数终端损失差，而非连续 AM 中的梯度 $\nabla g$）。关键的是，离散伴随量以**乘法方式**修正基础速率（$u^{\text{base}} \cdot \mathbb{E}[\tilde{a}]$），区别于连续 AM 的加法修正（$u^{\text{base}} - \mathbb{E}[\tilde{a}]$）
-    - 设计动机：绕过离散空间不可微的根本困难。Dynkin 公式对任何 Feller 过程（包括 SDE 和 CTMC）都成立，在 SDE 上特化为 Itô 引理，在 CTMC 上则给出离散版本的伴随系统
+离散域处处不可微，连续 AM 赖以工作的梯度终端量 $\nabla g$ 在这里根本不存在，必须换一条路构造伴随变量。DAM 先把最优 CTMC 速率写成解析形式 $u_t^\star(y,x) = u_t^{\text{base}}(y,x) \cdot e^{-V_t(y)+V_t(x)}$，其中 $V_t(x) = -\log \sum_z p_{1|t}^{\text{base}}(z|x) e^{-g(z)}$ 是值函数，于是问题落到了估计指数值差 $e^{-V_t(y)+V_t(x)}$ 上。作者把 Dynkin 公式（一种将函数值写成随机过程期望的工具）作用在 CTMC 上，得到离散伴随变量 $\tilde{a}_t(y;X)$，它满足一个线性 ODE，终端条件为
 
-2. **重要性加权伴随估计器（Importance-Weighted Adjoint）**:
+$$\tilde{a}_1(y;X) = e^{-g(y)+g(X_1)}$$
 
-    - 功能：提供低偏差、低方差的实际可计算伴随估计
-    - 核心思路：离散伴随的 ODE 有解析解 $\tilde{a}_t(y;X_1) = \sum_z p_{1|t}^{\text{base}}(z|y) e^{-g(z)+g(X_1)}$，但理论上需要从最优分布 $p^\star$ 采样 $X_1$。DAM 改用当前模型采样 $X_1 \sim p^u$，并通过自归一化重要性采样修正偏差：$\hat{a}_t(y;Z,\{X_1^{(k)}\}) = \frac{p_{1|t}^{\text{base}}(Z|y)}{p_{1|t}^u(Z|y)} e^{-g(Z)} \cdot \left(\frac{1}{K}\sum_k \frac{p_{1|t}^{\text{base}}(X_1^{(k)}|x)}{p_{1|t}^u(X_1^{(k)}|x)} e^{-g(X_1^{(k)})}\right)^{-1}$，其中重要性权重（$p^{\text{base}}/p^u$ 的比值）对 CTMC 模型可以高效计算
-    - 设计动机：原始解析解虽然理论正确，但在实验中（合成任务 Pinwheel 上）相比重要性加权版本有明显更高的偏差和方差。重要性加权使 DAM 成为一致估计器（$K \to \infty$ 时无偏）
+注意这是指数形式的终端损失差，而非连续 AM 中的梯度 $\nabla g$——整个推导不碰任何导数，因此不受不可微性困扰。Dynkin 公式对任何 Feller 过程都成立，在 SDE 上特化为 Itô 引理、在 CTMC 上则给出这套离散伴随系统，这也解释了为什么伴随变量的本质是统计量而非微分量。一个值得注意的结构差异是：离散伴随量以**乘法方式**修正基础速率（$u^{\text{base}} \cdot \mathbb{E}[\tilde{a}]$），而连续 AM 是加法修正（$u^{\text{base}} - \mathbb{E}[\tilde{a}]$），对应离散域里最优解对基础模型的"缩放"而非"平移"。
 
-3. **Masked Diffusion 结构利用**:
+**2. 重要性加权伴随估计器：把无法采样的最优分布换成当前模型并去偏。**
 
-    - 功能：将 DAM 的建模复杂度从 $O(M^N)$ 降到 $O(MN)$，适配现代 LLM 架构
-    - 核心思路：实际中几乎所有基础 CTMC 都是 masked diffusion 模型（从全 mask 状态逐步 unmask），其速率矩阵具有特殊分解形式 $u_t^{\text{base}}(y,x) = \lambda_t^{\text{base}}(x) Q^{\text{base}}(y|x)$，其中 $Q^{\text{base}}$ 限制在只 unmask 一个 token 的转移上。作者证明（Proposition 2.5）最优速率 $u_t^\star$ 保持相同的 masked 结构，因此只需参数化时间无关的 $Q^\theta(y|x)$ 并用 LLM 建模即可，不需要改变模型架构
-    - 设计动机：直接在完整离散状态空间 $|X| = M^N$ 上计算伴随量完全不可行（如 vocab=1000、seq_len=100 意味着 $10^{300}$ 个状态）。利用 masked 结构使得大规模 LLM 微调成为可能
+上面的伴随 ODE 有解析解 $\tilde{a}_t(y;X_1) = \sum_z p_{1|t}^{\text{base}}(z|y) e^{-g(z)+g(X_1)}$，但它需要从最优分布 $p^\star$ 采样 $X_1$——而 $p^\star$ 恰恰是我们还没拿到的目标，没法直接采。DAM 转而用当前模型采样 $X_1 \sim p^u$，再用自归一化重要性采样把分布错配带来的偏差修回去：
+
+$$\hat{a}_t(y;Z,\{X_1^{(k)}\}) = \frac{p_{1|t}^{\text{base}}(Z|y)}{p_{1|t}^u(Z|y)} e^{-g(Z)} \cdot \left(\frac{1}{K}\sum_k \frac{p_{1|t}^{\text{base}}(X_1^{(k)}|x)}{p_{1|t}^u(X_1^{(k)}|x)} e^{-g(X_1^{(k)})}\right)^{-1}$$
+
+其中的重要性权重就是 $p^{\text{base}}/p^u$ 的比值，对 CTMC 模型可以高效计算。这一步不是锦上添花：在合成任务 Pinwheel 上，直接用原始解析解的偏差和方差都明显高于重要性加权版本，而加权后 DAM 成为一致估计器（$K \to \infty$ 时无偏），实验里两个 jump 都能稳定收敛。
+
+**3. 利用 Masked Diffusion 结构：把 $O(M^N)$ 的状态空间压到 $O(MN)$。**
+
+直接在完整离散状态空间上算伴随量完全不现实——vocab=1000、seq_len=100 就意味着 $10^{300}$ 个状态。DAM 借力一个现实观察：几乎所有基础 CTMC 都是 masked diffusion 模型（从全 mask 状态逐步 unmask），其速率矩阵具有分解形式 $u_t^{\text{base}}(y,x) = \lambda_t^{\text{base}}(x) Q^{\text{base}}(y|x)$，其中 $Q^{\text{base}}$ 被限制在"一次只 unmask 一个 token"的转移上。作者进一步证明（Proposition 2.5）最优速率 $u_t^\star$ 自动保持同样的 masked 结构，于是只需参数化一个时间无关的 $Q^\theta(y|x)$ 并用 LLM 来建模，完全不必改动模型架构。正是这一结构保持性，让 DAM 从理论玩具变成可以真正微调大规模扩散式 LLM 的方法。
 
 ### 损失函数 / 训练策略
 

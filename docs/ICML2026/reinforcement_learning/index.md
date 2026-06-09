@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 强化学习方向94篇论文解读
+  ICML2026 强化学习方向95篇论文解读
 description: >-
-  94篇ICML2026的强化学习方向论文解读，涵盖强化学习、推理、LLM、Agent、对抗鲁棒、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  95篇ICML2026的强化学习方向论文解读，涵盖强化学习、推理、LLM、Agent、对抗鲁棒、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "强化学习"
@@ -18,11 +18,11 @@ tags:
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🧪 ICML2026** · **94** 篇论文解读
+**🧪 ICML2026** · **95** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (44)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (70)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (171)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (44)](../../ACL2026/reinforcement_learning/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/reinforcement_learning/index.md) · [🔬 ICLR2026 (125)](../../ICLR2026/reinforcement_learning/index.md) · [🤖 AAAI2026 (58)](../../AAAI2026/reinforcement_learning/index.md) · [🧠 NeurIPS2025 (143)](../../NeurIPS2025/reinforcement_learning/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/reinforcement_learning/index.md)
 
-🔥 **高频主题：** 强化学习 ×36 · 推理 ×13 · LLM ×10 · Agent ×9 · 对抗鲁棒 ×4
+🔥 **高频主题：** 强化学习 ×37 · 推理 ×13 · LLM ×10 · Agent ×9 · 对抗鲁棒 ×4
 
 **[Adaptive Bandit Algorithms for Contextual Matching Markets](adaptive_bandit_algorithms_for_contextual_matching_markets.md)**
 
@@ -335,6 +335,10 @@ tags:
 **[Safe Reinforcement Learning with Preference-Based Constraint Inference](safe_reinforcement_learning_with_preference-based_constraint_inference.md)**
 
 :   本文提出 PbCRL，用一个带"死区"的扩展 Bradley-Terry 偏好模型从轨迹比较中学安全约束，再叠加一个信噪比正则避免代价函数被压平，最后用两阶段（离线预训练 + 在线少量标注微调）训练打通 Safe RL 的完整流水线，在 Safety Gymnasium、自动驾驶与语言模型对齐三类任务上既显著降代价、又保住奖励。
+
+**[Safety Generalization Under Distribution Shift in Safe Reinforcement Learning: A Diabetes Testbed](safety_generalization_under_distribution_shift_in_safe_reinforcement_learning_a_.md)**
+
+:   作者在 UVA-Padova 物理模型基础上搭了一个统一的 T1D/T2D 糖尿病模拟器，发现 8 种主流 Safe RL 算法虽然在训练病人上能满足安全约束，但部署到未见病人时 Time-in-Range 普遍掉 8–13%，于是提出用 Basis-Adaptive Neural ODE 预测血糖轨迹、再用预测性屏蔽 (predictive shielding) 在测试时过滤危险动作，让 PPO-Lag / CPO 等基线在 OOD 病人上重新拿回 13–14% TIR。
 
 **[Shapley Neuron Values for Continual Learning: Which Neurons Matter Most?](shapley_neuron_values_for_continual_learning_which_neurons_matter_most.md)**
 

@@ -20,7 +20,7 @@ tags:
 
 **📷 CVPR2026** · **90** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [🔬 ICLR2026 (18)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (49)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (11)](../../ICML2025/autonomous_driving/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/autonomous_driving/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/autonomous_driving/index.md) · [🤖 AAAI2026 (57)](../../AAAI2026/autonomous_driving/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/autonomous_driving/index.md) · [📹 ICCV2025 (93)](../../ICCV2025/autonomous_driving/index.md) · [🧪 ICML2025 (10)](../../ICML2025/autonomous_driving/index.md)
 
 🔥 **高频主题：** 自动驾驶 ×15 · 对抗鲁棒 ×8 · 多模态 ×8 · 3D 目标检测 ×7 · 语义分割 ×6
 
@@ -90,7 +90,7 @@ tags:
 
 **[DLWM: Dual Latent World Models enable Holistic Gaussian-centric Pre-training in Autonomous Driving](dlwm_dual_latent_world_models_enable_holistic_gaussian-centric_pre-training_in_a.md)**
 
-:   提出 DLWM，一个两阶段的高斯中心自监督预训练范式：第一阶段通过重建深度和语义图学习3D高斯表示，第二阶段训练双隐世界模型——高斯流引导的时序预测（用于占据感知/预测）和自车规划引导的时序预测（用于运动规划），显著提升三大核心任务性能。
+:   提出DLWM，面向自动驾驶的双潜在世界模型全局高斯中心预训练范式——Stage1自监督学习3D高斯场景表示（渲染多视图语义+深度图），Stage2训练双潜在世界模型：高斯流引导的模型用于下游占据感知/预测(+1.02/+2.68 mIoU)，自车轨迹引导的模型用于运动规划(-16% L2误差)，解决了高斯查询跨帧无法直接监督的排列等价性挑战。
 
 **[Drive My Way: Preference Alignment of Vision-Language-Action Model for Personalized Driving](drive_my_way_preference_alignment_of_vision-language-action_model_for_personaliz.md)**
 
@@ -202,7 +202,7 @@ tags:
 
 **[MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction](mapgclr_geospatial_contrastive_learning_of_represe.md)**
 
-:   提出 MapGCLR，一种基于地理空间一致性的对比学习策略，通过强制不同遍历中重叠区域的 BEV 特征具有一致表示，以半监督方式显著提升在线矢量化高精地图构建性能，在仅 5%-20% 标注数据下获得 13%-42% 的相对增益。
+:   提出 MapGCLR，通过强制地理空间重叠区域的 BEV 特征一致性进行对比学习，在半监督框架下利用少量标注数据和大量无标注多遍历数据，在在线向量化高精地图构建任务上实现 13%-42% 的相对性能提升。
 
 **[MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving](meanfuser_fast_one-step_multi-modal_trajectory_generation_and_adaptive_reconstru.md)**
 
@@ -294,7 +294,7 @@ tags:
 
 **[ReMoT: Reinforcement Learning with Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)**
 
-:   提出 ReMoT 统一训练范式，通过规则驱动的多专家协作管线自动构建 16.5K 运动对比三元组数据集 (ReMoT-16K)，并结合 GRPO 强化学习与复合奖励（逻辑一致性+长度正则化），系统性解决 VLM 在时空一致性推理上的根本缺陷，实现 25.1% 的性能提升。
+:   提出 ReMoT——一个统一训练范式，通过规则驱动的多专家协同构建 16.5K 运动对比三元组数据集 (ReMoT-16K)，结合带逻辑一致性奖励和长度正则化的 GRPO 强化学习优化，系统性解决 VLM 在导航、机器人操作和自动驾驶等场景中的细粒度时空推理缺陷。
 
 **[RESBev: Making BEV Perception More Robust](resbev_making_bev_perception_more_robust.md)**
 

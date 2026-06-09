@@ -40,45 +40,29 @@ tags:
 
 ## 方法详解
 
-### 关键设计一：整体级思维奖励模型(Thinking Reward Model)
+### 整体框架
 
-- **功能**：训练一个3B参数的思维奖励模型，对MLLM的整体思维过程打0-1分，不关注最终答案是否正确，仅评估推理质量。
-- **核心思路**：从GRPO训练轨迹中收集470,331个(问题, 响应)对→用Qwen2.5-VL-72B从五个维度评分(逻辑一致性Logical Soundness、推理正确性Correct Reasoning、错误识别Error Identification、语言一致性Language Consistency、冗余度Redundancy)→规则过滤+均匀采样得到156,703个高质量样本→以Qwen2.5-VL-3B-Instruct为基座SFT训练。
-- **设计动机**：整体级评估比步级更灵活，避免PRM的rigid约束和exploit问题；从GRPO训练轨迹中收集数据确保覆盖真实的推理错误模式。
-- **形式化**：给定问题$q$和思维过程$t$，思维奖励模型输出$R^t = f_{\phi}(q, t) \in [0, 1]$。
+SophiaVL-R1 在标准 GRPO 训练之上叠了一层"思维过程"的监督：先单独训练一个轻量的思维奖励模型，对模型每条推理的质量打 0-1 分；再用 Trust-GRPO 把这个思维奖励和原本的规则结果奖励融合，并给思维奖励配一个可信度权重防止被刷分；最后用一条随训练步数衰减的退火曲线，让模型从早期依赖思维奖励探索，逐步过渡到后期依赖更可靠的规则奖励。三者共同把"答案对不对"和"想法好不好"两类信号统一进同一套 RL 目标里。
 
-### 关键设计二：Trust-GRPO算法
+### 关键设计
 
-- **功能**：在GRPO中融合思维奖励和规则奖励时，为思维奖励分配一个可信度权重$\gamma$，自适应降低不可靠的思维奖励的影响。
-- **核心思路**：对每个问题$q$的$N$个采样响应，按结果奖励分为正确组$G_{\text{correct}}$和错误组$G_{\text{wrong}}$，分别计算组内平均思维奖励：
+**1. 整体级思维奖励模型：用一个 3B 评审取代步级 PRM。** 传统过程奖励模型逐步打分既 rigid 又容易被"重复有效步骤、插入无意义步骤"刷高，于是这里改成对整条推理做整体评估。给定问题 $q$ 与思维过程 $t$，奖励模型直接输出一个标量 $R^t = f_{\phi}(q, t) \in [0, 1]$，只看推理质量、不管最终答案对错。训练数据来自 GRPO 训练轨迹本身——先收集 470,331 个 (问题, 响应) 对，用 Qwen2.5-VL-72B 从逻辑一致性、推理正确性、错误识别、语言一致性、冗余度五个维度打分，再经规则过滤与均匀采样压到 156,703 个高质量样本，以 Qwen2.5-VL-3B-Instruct 为基座做 SFT。从真实训练轨迹采数据保证了它见过的正是模型真会犯的错误模式，整体级评分则绕开了步级正确性难以判定、约束过死这两个老问题。
 
-$$\mu_c = \frac{1}{|G_{\text{correct}}|}\sum_{i \in G_{\text{correct}}} R_i^t, \quad \mu_w = \frac{1}{|G_{\text{wrong}}|}\sum_{i \in G_{\text{wrong}}} R_i^t$$
-
-可信度权重定义为：
+**2. Trust-GRPO：用正确/错误组的奖励对比给思维奖励配可信度权重。** 模型生成的思维奖励并非总是可靠，直接塞进 GRPO 会被 reward hacking——模型学会迎合奖励模型而非真改推理。Trust-GRPO 复用 GRPO 本就有的组采样：对每个问题的 $N$ 条响应，按结果奖励切成正确组 $G_{\text{correct}}$ 和错误组 $G_{\text{wrong}}$，各算组内平均思维奖励 $\mu_c = \frac{1}{|G_{\text{correct}}|}\sum_{i \in G_{\text{correct}}} R_i^t$ 和 $\mu_w = \frac{1}{|G_{\text{wrong}}|}\sum_{i \in G_{\text{wrong}}} R_i^t$。可信度权重定义为
 
 $$\gamma = \begin{cases} 1, & \mu_c \geq \mu_w \\ e^{\mu_c - \mu_w}, & \mu_c < \mu_w \end{cases}$$
 
-当错误答案组获得更高的平均思维奖励时($\mu_c < \mu_w$)，$\gamma$指数衰减→降低思维奖励权重。最终奖励：$R_i = R_i^o + \gamma \alpha \cdot R_i^t$。
+直觉很清楚：正常情况下正确答案应当配更高的思维奖励，一旦反过来（错误组反而更高，$\mu_c < \mu_w$），说明这批思维奖励信号不可信，$\gamma$ 随差距指数衰减把它压低。融合后的最终奖励为 $R_i = R_i^o + \gamma \alpha \cdot R_i^t$。整个可信度估计零额外采样、零额外计算，比 MC Dropout 这类要多次前向的做法省得多，对本就算力吃紧的 MLLM 训练很关键。
 
-- **设计动机**：利用GRPO已有的组采样信息，零额外计算开销地估计思维奖励可信度；比MC Dropout等需要多次采样的方法高效得多；简单高效的设计对MLLM训练至关重要。
-
-### 关键设计三：退火策略(Time-based Annealing)
-
-- **功能**：在训练过程中逐步减小思维奖励的影响权重，使模型后期更多依赖准确的规则基outcome奖励。
-- **核心思路**：引入指数衰减因子，最终奖励变为：
+**3. 退火策略：让思维奖励的权重随训练步数指数衰减。** 全程恒定强度的思维奖励不是最优——早期它帮模型发现好的推理策略，但后期模型推理已基本成型，不完美的思维信号反而会累积成噪声。退火在融合奖励里再乘一个时间衰减因子：
 
 $$R_i = R_i^o + \gamma \alpha e^{-\text{steps}/T} \cdot R_i^t$$
 
-其中$\text{steps}$为当前全局训练步数，$T$为总训练步数。随训练推进，$e^{-\text{steps}/T}$单调递减，思维奖励贡献自然衰减。
+其中 $\text{steps}$ 是当前全局训练步数、$T$ 是总步数，$e^{-\text{steps}/T}$ 单调递减，使思维奖励贡献自然从大到小。整条曲线实现了"先发散探索、后收敛精炼"：早期靠思维奖励找方向，后期回归准确的规则结果奖励稳住优化，避免 reward hacking 在训练尾段累积。
 
-- **设计动机**：训练初期思维奖励帮助发现良好推理策略(探索阶段)；后期模型已具备基本推理能力，此时不完美的思维奖励可能引入噪声→退火使模型回归更可靠的规则奖励→避免reward hacking累积。
+### 损失函数 / 训练策略
 
-### 规则基结果奖励(Outcome Reward)
-
-- Numerical任务：精确匹配→二值奖励
-- Multiple Choice：选项匹配→二值奖励
-- OCR任务：负Word Error Rate(WER)
-- 自由文本：ROUGE-1/2/L的平均值
+结果奖励 $R_i^o$ 沿用规则基设计，按任务类型分别给信号：数值题与多选题用精确/选项匹配得二值奖励，OCR 任务用负的 Word Error Rate（WER），自由文本则取 ROUGE-1/2/L 的平均值。这套规则奖励与上面三个设计组合进 $R_i = R_i^o + \gamma \alpha e^{-\text{steps}/T} \cdot R_i^t$，再喂给标准 GRPO 做策略优化。
 
 ## 实验关键数据
 
@@ -161,8 +145,8 @@ VisualPRM采用步级过程奖励模型→SophiaVL-R1采用整体级思维奖励
 - [\[ICLR 2026\] VidGuard-R1: AI-Generated Video Detection and Explanation via Reasoning MLLMs and RL](vidguard-r1_ai-generated_video_detection_and_explanation_via_reasoning_mllms_and.md)
 - [\[NeurIPS 2025\] Video-R1: Reinforcing Video Reasoning in MLLMs](../../NeurIPS2025/multimodal_vlm/video-r1_reinforcing_video_reasoning_in_mllms.md)
 - [\[ICLR 2026\] Sparsity Forcing: Reinforcing Token Sparsity of MLLMs](sparsity_forcing_reinforcing_token_sparsity_of_mllms.md)
-- [\[ICLR 2026\] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models](vision-r1_incentivizing_reasoning_capability_in_multimodal_large_language_models.md)
 - [\[ICLR 2026\] Reasoning-Driven Multimodal LLM for Domain Generalization](reasoning-driven_multimodal_llm_for_domain_generalization.md)
+- [\[ACL 2026\] Region-R1: Reinforcing Query-Side Region Cropping for Multi-Modal Re-Ranking](../../ACL2026/multimodal_vlm/region-r1_reinforcing_query-side_region_cropping_for_multi-modal_re-ranking.md)
 
 </div>
 

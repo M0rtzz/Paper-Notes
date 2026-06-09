@@ -42,32 +42,30 @@ Fine-R1 通过 CoT 监督微调（"视觉分析→候选子类→对比→预测
 ## 方法详解
 
 ### 整体框架
-两阶段训练：**Stage 1**: CoT SFT（在 404 个高质量 CoT 样本上微调，建立结构化推理能力）→ **Stage 2**: TAPO（三元组增强策略优化，用类内+类间对比信号强化细粒度判别力）。
+Fine-R1 想解决的是：MLLM 其实"认得"细粒度子类，却调不出这份知识，导致在区分鸟种这类任务上反被 CLIP 压过。它的思路是分两阶段把"会用知识"教出来。第一阶段用一小批高质量的链式推理样本做 SFT，把模型的输出格式固定成"视觉分析→候选子类→逐一对比→给出预测"，先建立起细粒度推理的骨架；第二阶段在这个骨架上做强化学习 TAPO，用类内、类间两路对比信号去打磨判别力，让模型不仅推理结构对、而且真的盯住了区分子类的关键线索。整套流程只在每类 4 张图（4-shot）的极少样本下完成。
 
 ### 关键设计
 
-1. **结构化 CoT 数据构建**:
+**1. 结构化 CoT 数据构建：把"先缩范围再精对比"的推理模式固化下来。**
 
-    - 功能：生成"视觉分析→候选子类→对比→预测"四步推理链
-    - 核心思路：(1) 图像级视觉概念选择——用 MLLM 多次描述同一图像，聚合后通过信息瓶颈筛选最判别性特征；(2) 结构化 CoT 提示——引导模型先列出候选子类（最容易混淆的类），再逐一对比排除。仅 404 个样本，经多轮采样+人工验证保证质量。
-    - 设计动机：通用 CoT（"分析后预测"）不够——FGVR 特别需要"先缩小范围（候选子类），再精准对比"的推理模式。
+通用 CoT 的"分析一下再预测"对 FGVR 不够用，因为细粒度识别的难点是要先把搜索空间收窄到几个最易混淆的子类、再逐一精确排除。为此 Fine-R1 构造了一条四步推理链：视觉分析 → 列候选子类 → 对比 → 预测。构造时分两步走：先做图像级视觉概念选择——让 MLLM 对同一张图多次描述，把多份描述聚合后用信息瓶颈筛出最具判别性的特征，避免抓到无关细节；再用结构化提示引导模型先列出最容易混淆的候选子类、再逐一比对排除。最终只保留 404 个样本，但每个都经过多轮采样加人工验证，用少量高质数据把推理格式立稳。
 
-2. **Intra-class Augmentation（类内增强）**:
+**2. Intra-class Augmentation（类内增强）：用同类不同图的奖励差，逼模型盯住类别级线索。**
 
-    - 功能：混合同类不同图像的采样轨迹，提升类内方差鲁棒性
-    - 核心思路：对每个 anchor 图像 $x$，从同一子类采样正例 $x_{pos}$。旧策略分别对 $(x,q)$ 和 $(x_{pos},q)$ 生成 rollout，合并到同一奖励池计算 advantage。策略更新只对 anchor 条件化。
-    - 设计动机：当同类两张图预测不同→奖励差异提供信息信号→模型学会聚焦类别级而非图像特定的线索。
+FGVR 的一大麻烦是类内方差高——同一鸟种换个角度差别很大，模型容易过拟合到某张图的具体长相。类内增强针对的就是这点：对每个 anchor 图像 $x$，从同一子类再采一张正例 $x_{pos}$，旧做法是分别对 $(x,q)$ 和 $(x_{pos},q)$ 生成 rollout，这里把两者的 rollout 合并进同一个奖励池来计算 advantage，而策略更新仍只对 anchor 条件化。这样一来，当同类的两张图预测结果不一致时，奖励池里的差异就成了一个直接的训练信号，推动模型去聚焦"这个子类共有的特征"而不是某张图特有的细节，从而对类内变化更鲁棒。
 
-3. **Inter-class Augmentation（类间增强）**:
+**3. Inter-class Augmentation（类间增强）：用最相似负例的分布差，逼模型用上判别线索。**
 
-    - 功能：最大化 anchor 和最相似负例之间的输出分布差异
-    - 核心思路：从最相似但不同的子类采样负例 $x_{neg}$。定义判别比率 $g^{inter}(\theta) = \pi_\theta(o|q,x_*) / \pi_\theta(o|q,x_{neg})$，通过最大化 KL 散度 $D_{KL}[\pi_\theta \| \pi_\theta^{neg}]$ 来增强判别力。加双熵正则化稳定训练。
-    - 设计动机：如果模型在换成相似类的图片后预测不变→说明没有利用细粒度判别线索→需要惩罚。
+与类内相对的是类间方差低——不同子类长得太像，模型若换成相似类的图却给出同样预测，就说明它根本没用上细粒度判别线索。类间增强从与 anchor 最相似但不同的子类采一张负例 $x_{neg}$，定义判别比率
+
+$$g^{inter}(\theta) = \frac{\pi_\theta(o\mid q,x_*)}{\pi_\theta(o\mid q,x_{neg})}$$
+
+并通过最大化锚点策略与负例策略之间的 KL 散度 $D_{KL}[\pi_\theta \,\|\, \pi_\theta^{neg}]$，把"喂相似负例时应当给出不同输出分布"这件事变成显式优化目标。换言之，模型在相似类上预测越雷同就越被惩罚，迫使它真正利用区分两个子类的细节。为防止这种"推开"训练不稳，再加一层双熵正则化。
 
 ### 损失函数 / 训练策略
-- **Stage 1**: 标准 SFT，在 404 个 CoT 样本上微调
-- **Stage 2**: TAPO = DAPO 基础 + Intra-class Aug（混合正例 rollout）+ Inter-class Aug（最大化与负例的 KL 散度）+ 双熵正则化
-- 4-shot per category 设置（每类仅 4 个训练样本）
+- **Stage 1**：标准 SFT，在 404 个 CoT 样本上微调，建立结构化推理骨架。
+- **Stage 2**：TAPO = DAPO 基础 + Intra-class Aug（混合正例 rollout 进同一奖励池）+ Inter-class Aug（最大化与最相似负例的 KL 散度）+ 双熵正则化。
+- 全程 4-shot per category（每类仅 4 个训练样本）。
 
 ## 实验关键数据
 
@@ -126,8 +124,8 @@ Fine-R1 通过 CoT 监督微调（"视觉分析→候选子类→对比→预测
 
 ## 相关论文
 
-- [\[ACL 2025\] RSVP: Reasoning Segmentation via Visual Prompting and Multi-modal Chain-of-Thought](../../ACL2025/llm_reasoning/rsvp_reasoning_segmentation_via_visual_prompting_and_multi-modal_chain-of-though.md)
 - [\[CVPR 2026\] E-comIQ-ZH: A Human-Aligned Dataset and Benchmark for Fine-Grained Evaluation of E-commerce Posters with Chain-of-Thought](../../CVPR2026/llm_reasoning/e-comiq-zh_a_human-aligned_dataset_and_benchmark_for_fine-grained_evaluation_of_.md)
+- [\[ACL 2025\] RSVP: Reasoning Segmentation via Visual Prompting and Multi-modal Chain-of-Thought](../../ACL2025/llm_reasoning/rsvp_reasoning_segmentation_via_visual_prompting_and_multi-modal_chain-of-though.md)
 - [\[ACL 2025\] Beyond the Answer: Advancing Multi-Hop QA with Fine-Grained Graph Reasoning and Evaluation](../../ACL2025/llm_reasoning/beyond_the_answer_advancing_multi-hop_qa_with_fine-grained_graph_reasoning_and_e.md)
 - [\[ACL 2026\] ToolPRM: Fine-Grained Inference Scaling of Structured Outputs for Function Calling](../../ACL2026/llm_reasoning/toolprm_fine-grained_inference_scaling_of_structured_outputs_for_function_callin.md)
 - [\[CVPR 2026\] Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought](../../CVPR2026/llm_reasoning/rationale-enhanced_decoding_for_multi-modal_chain-of-thought.md)

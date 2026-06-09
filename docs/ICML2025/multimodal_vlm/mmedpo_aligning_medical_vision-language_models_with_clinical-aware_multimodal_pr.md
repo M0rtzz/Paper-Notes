@@ -1,0 +1,164 @@
+---
+title: >-
+  [论文解读] MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization
+description: >-
+  [ICML 2025][多模态VLM][医学VLM] 本文提出 MMedPO，一种临床感知的多模态医学偏好优化方法，通过注入可信幻觉和局部病灶加噪构建多模态偏好数据，利用多个医学 LLM 协作评估临床相关性作为加权信号融入 DPO 训练…
+tags:
+  - "ICML 2025"
+  - "多模态VLM"
+  - "医学VLM"
+  - "偏好优化"
+  - "临床相关性"
+  - "多模态对齐"
+  - "幻觉缓解"
+---
+
+# MMedPO: Aligning Medical Vision-Language Models with Clinical-Aware Multimodal Preference Optimization
+
+**会议**: ICML 2025  
+**arXiv**: [2412.06141](https://arxiv.org/abs/2412.06141)  
+**代码**: [https://github.com/aiming-lab/MMedPO](https://github.com/aiming-lab/MMedPO)  
+**领域**: LLM对齐/RLHF  
+**关键词**: 医学VLM, 偏好优化, 临床相关性, 多模态对齐, 幻觉缓解
+
+## 一句话总结
+本文提出 MMedPO，一种临床感知的多模态医学偏好优化方法，通过注入可信幻觉和局部病灶加噪构建多模态偏好数据，利用多个医学 LLM 协作评估临床相关性作为加权信号融入 DPO 训练，在 Med-VQA 和报告生成任务上分别平均提升 14.2% 和 51.7%。
+
+## 研究背景与动机
+**领域现状**：医学大视觉语言模型（Med-LVLM）在疾病诊断和治疗规划中应用广泛，但仍面临严重的事实性问题——模型倾向于优先使用训练中学到的文本知识而非实际视觉输入，导致幻觉。
+
+**现有痛点**：已有偏好优化工作直接套用通用 LVLM 的偏好数据构建流程，忽略了医学领域的**临床相关性**。结果是偏好数据中的 dispreferred 响应缺乏临床意义，模型很容易区分，训练效果打折扣。例如 "右肺叶的胆结石" 这种明显的事实错误，不需要对齐训练模型也能识别。
+
+**核心矛盾**：偏好优化的效果取决于偏好数据的质量——dispreferred 响应需要足够"可信"才能提供有效的学习信号；同时，视觉模态的病灶区域理解对医学准确性至关重要，但现有方法很少引导模型关注局部病灶。
+
+**本文目标**：设计一种考虑临床相关性的多模态偏好优化方法，使 Med-LVLM 的对齐训练更加有效。
+
+**切入角度**：从偏好数据构建（两种 dispreference 策略）和偏好样本重要性量化（临床相关性评分）两个维度同时改进。
+
+**核心 idea**：不是所有偏好样本都同等重要——临床相关性高的样本（dispreferred 响应更"可信"、病灶检测更准确的样本）应获得更大的训练权重。
+
+## 方法详解
+
+### 整体框架
+MMedPO 包含三个步骤：
+1. **多模态偏好数据构建**：通过幻觉注入（文本）和局部病灶加噪（视觉）两种策略构建偏好对
+2. **临床相关性评分**：通过多 Med-LLM 协作系统和视觉工具置信度量化每个样本的临床重要性
+3. **临床感知偏好优化**：将归一化的临床相关性分数作为权重融入 DPO 损失函数
+
+### 关键设计
+
+1. **幻觉注入生成 Dispreferred 响应（策略一，$\mathcal{D}_t$）**:
+
+    - 功能：利用目标 Med-LVLM 和 GPT-4o 生成包含**可信医学错误**的幻觉响应
+    - 核心思路：
+      1. 对目标 Med-LVLM 多次采样，收集可能含幻觉的候选响应
+      2. 用 GPT-4o 评估候选，选择幻觉程度最高的响应（与 ground truth 冲突最明显的）
+      3. 若无候选满足条件，GPT-4o 基于 ground truth 直接生成幻觉响应
+    - 设计动机：确保 dispreferred 响应包含有针对性的医学错误（错误解读影像、误导性描述、错误诊断），而非随机无意义内容
+    - 与普通 DPO 的区别：普通 DPO 可能直接用模型较差输出做 dispreferred，临床相关性不可控
+
+2. **局部病灶加噪构建 Dispreferred（策略二，$\mathcal{D}_v$）**:
+
+    - 功能：用医学视觉工具（如 MedKLIP）定位病灶区域，仅在病灶区加噪生成 dispreferred 样本
+    - 加噪公式：$x_v^* = \sqrt{\bar{\xi}_k} \cdot (x_v \odot h) + \sqrt{1-\bar{\xi}_k} \cdot (\epsilon \odot h) + (x_v \odot (1-h))$
+    - 其中 $h = \mathcal{T}(x_v)$ 是视觉工具预测的病灶热力图，$\epsilon$ 是随机噪声
+    - 偏好对构建：原始图像 + ground truth 为 preferred，加噪图像 + ground truth 为 dispreferred
+    - 设计动机：局部加噪而非全局加噪，迫使模型学会关注病灶区域而非仅依赖全局信息
+
+3. **多 Med-LLM 协作临床相关性评分**:
+
+    - 功能：通过多个医学 LLM（如 Med42-7B、Med42-70B、BioMistral-7B）的辩论共识评估 dispreferred 响应的临床相关性
+    - 流程：
+      1. 第一个 Med-LLM $\mathcal{G}_1$ 评估 $y_l$ 的临床相关性分数 $s_1$
+      2. 后续 Med-LLM $\mathcal{G}_i$ 查看前一分数 $s_{i-1}$，同意则采纳，否则给出新分数
+      3. 循环至共识或达到最大轮次，取平均 $\hat{s} = \frac{\sum s_i}{|S|}$
+    - 设计动机：单一 Med-LLM 可能有偏见，多模型协作可得到更可靠的评估
+    - 视觉工具置信度：对加噪策略的样本，使用视觉工具检测病灶的置信度 $s_v$ 作为临床相关性
+
+4. **临床感知加权 DPO 损失**:
+
+    - 对每个临床相关性分数做归一化：$s' = \frac{s-\mu}{\sigma}$，裁剪到 $[\alpha, \beta]$
+    - 加权 DPO 损失：
+    $\mathcal{L}_{mmedpo} = -\mathbb{E}_{(x,x^*,y_w,y_l,s') \sim \mathcal{D}_o}\left[s' \log \sigma\left(\alpha \log \frac{\pi_\theta(y_w|x)}{\pi_o(y_w|x)} - \alpha \log \frac{\pi_\theta(y_l|x^*)}{\pi_o(y_l|x^*)}\right)\right]$
+    - 临床相关性高的样本获得更大权重，低质量样本影响被抑制
+
+### 损失函数 / 训练策略
+- 基于加权 DPO 损失（Eq. 3），使用 LoRA 微调
+- 训练超参：batch size 4, lr 1e-7, 3 epochs
+- 基座模型：LLaVA-Med-1.5 7B
+- 偏好数据 $\mathcal{D}_o = \mathcal{D}_t \cup \mathcal{D}_v$，合并两种策略
+
+## 实验关键数据
+
+### 主实验（与基线方法对比，基于 LLaVA-Med v1.5）
+
+| 方法 | SLAKE Open | SLAKE Closed | VQA-RAD Open | VQA-RAD Closed | IU-Xray BLEU | IU-Xray ROUGE-L |
+|------|-----------|-------------|-------------|---------------|-------------|----------------|
+| LLaVA-Med v1.5 | 44.26 | 61.30 | 29.24 | 63.97 | 14.56 | 10.31 |
+| + DPO | 49.30 | 62.02 | 29.76 | 64.70 | 16.08 | 12.95 |
+| + POVID | 52.43 | 70.35 | 31.77 | 65.07 | 20.80 | 24.33 |
+| + FiSAO | 52.69 | 70.46 | 32.70 | 64.11 | 21.06 | 25.72 |
+| **+ MMedPO** | **53.99** | **73.08** | **36.36** | **66.54** | **23.49** | **29.52** |
+
+### 消融实验
+
+| 配置 | SLAKE 平均 | VQA-RAD 平均 | IU-Xray 平均 | 说明 |
+|------|----------|------------|-------------|------|
+| 策略 1 无 CRS | 55.65 | 47.23 | 10.95 | 幻觉注入，无加权 |
+| 策略 1 有 CRS | 57.62 | 48.67 | 15.66 | 临床评分加权有效 |
+| 策略 2 无 CRS | 60.59 | 45.94 | 19.30 | 病灶加噪，无加权 |
+| 策略 2 有 CRS | 60.88 | 46.97 | 25.00 | 报告生成上提升显著 |
+| 单一 Med-LLM | 56.09 | 48.67 | 15.67 | 可能有偏见 |
+| 多 Med-LLM | 57.53 | 51.14 | 15.86 | 共识更可靠，+3.6% |
+| 全局加噪 | 58.88 | 46.91 | 24.88 | 不精准 |
+| **局部加噪** | **59.88** | **46.98** | **25.00** | 聚焦病灶更有效 |
+
+### 关键发现
+- MMedPO 在 Med-VQA 上平均超越最佳基线 14.2%，在报告生成上超越 51.7%
+- 开放式问题的提升大于封闭式问题，说明 MMedPO 对自由生成更有效
+- 两种偏好策略互补：幻觉注入对 VQA 更有效，病灶加噪对报告生成更有效
+- 临床相关性评分对报告生成任务的增益（+18.5%）远大于 VQA（+2.3%），说明报告生成中样本质量差异更大
+- 注意力图可视化显示 MMedPO 显著增强了对病灶区域的关注
+- MMedPO 兼容 SFT 预训练和更强骨干模型（LLaVA-Med++），具有良好的可扩展性
+
+## 亮点与洞察
+- **将临床相关性引入偏好优化**是关键创新——不是所有偏好对都同等有效，加权是合理的
+- 两种 dispreference 策略分别覆盖文本错误（幻觉注入）和视觉错误（病灶加噪），实现了真正的"多模态"偏好优化
+- 多 Med-LLM 协作评分机制有效降低了单一模型偏见
+- 注意力图可视化直观展示了 MMedPO 如何增强模型对病灶区域的关注
+- 方法设计具有良好的模块化特性，各组件可独立使用
+
+## 局限与展望
+- 依赖 GPT-4o 生成幻觉响应和评估，成本较高且受限于 API 可用性
+- 视觉工具（MedKLIP）的病灶检测准确性直接影响加噪质量，在某些领域可能不够精确
+- 仅在胸部 X 光相关数据集上验证，推广到其他医学影像模态（CT、MRI、超声）待验证
+- 多 Med-LLM 协作评分的效率可能是瓶颈，尤其是大规模数据集
+- 可以尝试将临床相关性评分直接融入奖励模型训练而非仅作为损失权重
+
+## 相关工作与启发
+- 与 POVID、FiSAO 等通用 VLM 偏好优化方法形成对比，强调了医学特异性设计的重要性
+- 多 Agent 协作评估临床相关性的思路可推广到其他需要专家评估的领域
+- 局部加噪策略受扩散模型加噪过程启发，是视觉偏好数据构建的新思路
+- 为 Med-LVLM 对齐提供了一个完整的 pipeline，具有较高的实践价值
+
+## 评分
+- 新颖性: ⭐⭐⭐⭐
+- 实验充分度: ⭐⭐⭐⭐⭐
+- 写作质量: ⭐⭐⭐⭐
+- 价值: ⭐⭐⭐⭐⭐
+
+<!-- RELATED:START -->
+
+<div class="related-papers" markdown="1">
+
+## 相关论文
+
+- [\[CVPR 2025\] Debiasing Multimodal Large Language Models via Noise-Aware Preference Optimization](../../CVPR2025/multimodal_vlm/debiasing_multimodal_large_language_models_via_noise-aware_preference_optimizati.md)
+- [\[CVPR 2026\] Medic-AD: Towards Medical Vision-Language Model's Clinical Intelligence](../../CVPR2026/multimodal_vlm/medic-ad_towards_medical_vision-language_models_clinical_intelligence.md)
+- [\[ACL 2025\] HSCR: Hierarchical Self-Contrastive Rewarding for Aligning Medical Vision Language Models](../../ACL2025/multimodal_vlm/hscr_hierarchical_self-contrastive_rewarding_for_aligning_medical_vision_languag.md)
+- [\[NeurIPS 2025\] Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization](../../NeurIPS2025/multimodal_vlm/mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)
+- [\[CVPR 2025\] Task Preference Optimization: Improving Multimodal Large Language Models with Vision Task Alignment](../../CVPR2025/multimodal_vlm/task_preference_optimization_improving_multimodal_large_language_models_with_vis.md)
+
+</div>
+
+<!-- RELATED:END -->

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 代码智能方向52篇论文解读
+  ACL2026 代码智能方向51篇论文解读
 description: >-
-  52篇ACL2026的代码智能方向论文解读，涵盖代码智能、LLM、Agent、强化学习、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  51篇ACL2026的代码智能方向论文解读，涵盖代码智能、LLM、Agent、推理、强化学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "代码智能"
@@ -10,19 +10,19 @@ tags:
   - "论文笔记"
   - "LLM"
   - "Agent"
-  - "强化学习"
   - "推理"
+  - "强化学习"
   - "对齐/RLHF"
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**💬 ACL2026** · **52** 篇论文解读
+**💬 ACL2026** · **51** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (22)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/code_intelligence/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/code_intelligence/index.md) · [🔬 ICLR2026 (19)](../../ICLR2026/code_intelligence/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/code_intelligence/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/code_intelligence/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/code_intelligence/index.md)
 
-🔥 **高频主题：** 代码智能 ×17 · LLM ×7 · Agent ×5 · 强化学习 ×3 · 推理 ×3
+🔥 **高频主题：** 代码智能 ×16 · LLM ×7 · Agent ×4 · 推理 ×3 · 强化学习 ×2
 
 **[Across Programming Language Silos: A Study on Cross-Lingual Retrieval-Augmented Code Generation](across_programming_language_silos_a_study_on_cross-lingual_retrieval-augmented_c.md)**
 
@@ -123,10 +123,6 @@ tags:
 **[MARS2: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](mars2_scaling_multi-agent_tree_search_via_reinforcement_learning_for_code_genera.md)**
 
 :   MARS2 提出多智能体强化树搜索框架，将多个独立优化的策略嵌入共享搜索树中协作探索，通过 Thompson 采样选择智能体-节点对、树一致性奖励塑形和路径级组优势估计，在代码生成基准上一致提升单模型 Pass@1 最高 8.0%、系统级 Pass@1(MCTS) 最高 6.5%。
-
-**[MARS²: Scaling Multi-Agent Tree Search via Reinforcement Learning for Code Generation](mars2_scaling_multi_agent_tree_search_via_reinforcement_learning_for_code_genera.md)**
-
-:   本文提出 MARS²，将多智能体协作直接嵌入树结构搜索中进行强化学习训练，通过路径级分组优势和树一致性奖励塑形解决复杂搜索轨迹的信用分配问题，在代码生成基准上一致性地超越单智能体方法。
 
 **[OmniDiagram: Advancing Unified Diagram Code Generation via Visual Interrogation Reward](omnidiagram_advancing_unified_diagram_code_generation_via_visual_interrogation_r.md)**
 

@@ -39,26 +39,16 @@ tags:
 
 ## 方法详解
 
-### 干预协议：Distributed Interchange Intervention (DII)
-借鉴因果变量定位标准方法 DAS 的核心机制。DII 的操作为：给定 base 输入 $\mathbf{x}_b$ 和 source 输入 $\mathbf{x}_s$，将 $\mathbf{x}_b$ 表示在 steering vector $\mathbf{w}_\Phi$ 定义子空间上的值替换为 $\mathbf{x}_s$ 对应值：
+### 整体框架
+CDAS 把模型引导看成"识别并操纵内部概念机制"的问题：先用一个 rank-1 子空间投影 $\mathbf{w}_\Phi$ 定位概念所在的表示方向，再借 DII 协议把反事实输入在该方向上的值搬进当前前向，最后用分布匹配目标训练这个投影，让干预后的输出分布逼近概念输入本应产生的自然分布。同一套机制交替选取概念/中性输入作为 source，就同时实现了概念激发与抑制，无需为两个方向各训一套参数。
 
-$$\Phi^{\text{DII}}(\mathbf{h}; \mathbf{x}_s) = \Phi^{\text{Clamp}}(\mathbf{h}; \mathbf{w}_\Phi^\top \mathbf{h}(\mathbf{x}_s))$$
+### 关键设计
 
-这一协议天然支持双向引导：交替使用概念相关/无关输入作为 source，即可实现概念激发/抑制。
+**1. DII 干预协议：用表示替换代替向量加减，天然支持双向。** 现有引导多靠在隐状态上加减一个固定 steering 向量，方向和幅度都得手调。CDAS 借鉴因果变量定位方法 DAS 的 distributed interchange intervention：给定 base 输入 $\mathbf{x}_b$ 与 source 输入 $\mathbf{x}_s$，把 $\mathbf{x}_b$ 的隐状态 $\mathbf{h}$ 在子空间 $\mathbf{w}_\Phi$ 上的分量直接替换成 $\mathbf{x}_s$ 的对应值，即 $\Phi^{\text{DII}}(\mathbf{h}; \mathbf{x}_s) = \Phi^{\text{Clamp}}(\mathbf{h}; \mathbf{w}_\Phi^\top \mathbf{h}(\mathbf{x}_s))$。因为替换值取自真实输入的表示，steering factor 是从模型自然分布里隐式采样得到的，而不是从预定义集合里挑；想激发概念就拿概念相关输入当 source，想抑制就拿无关输入当 source，双向引导落在同一个操作上。
 
-### 训练目标：JSD 分布匹配
-不同于 DAS 匹配具体 token 输出，CDAS 要求干预后的输出**分布**与反事实输入的自然输出分布一致，使用 Jensen-Shannon 散度：
+**2. JSD 分布匹配目标：匹配输出分布而非具体 token，弱监督防过拟合。** Lang. 和偏好优化类方法把微调的强监督直接搬来——指定 ground-truth 响应去最大化似然，结果容易过拟合成退化重复输出。CDAS 转而要求干预后的输出分布与反事实输入的自然输出分布一致，用 Jensen-Shannon 散度联合优化两个方向：$\min_\Phi \mathbb{E}[D_\Phi^+ + D_\Phi^-]$，其中 $D_\Phi^+$ 用概念输入作 source、让干预输出匹配概念分布（激发），$D_\Phi^-$ 用中性输入作 source、匹配中性分布（抑制）。监督信号全部来自模型自身的输出分布，不指定任何标准答案，因此是弱监督，也正是它在大模型上保真度（KL 散度）始终更低的原因。
 
-$$\min_\Phi \mathbb{E}\left[D_\Phi^+ + D_\Phi^-\right]$$
-
-其中 $D_\Phi^+$ 对应概念激发（用概念输入作 source，匹配概念分布），$D_\Phi^-$ 对应概念抑制（用中性输入作 source，匹配中性分布），两方向联合训练。
-
-### 关键设计选择
-- **弱监督**：不指定 ground-truth 响应，监督信号来自模型自身的输出分布
-- **隐式采样 steering factor**：训练时通过 DII 从模型自然分布中采样 factor，而非预定义集合
-- **"one-to-many" 协议**：从 source 指令中单一 token（chat 模板中 `<model>` 位置）的表示干预所有 base 位置
-
-## 实验关键数据
+**3. "one-to-many" 位置协议：单 token 干预所有位置，降低对齐成本。** 概念表示在序列里散落在哪些位置并不确定，逐位置对齐既贵又脆。CDAS 只从 source 指令里取单个 token——chat 模板中 `<model>` 占位处——的表示，用它去干预 base 序列的所有位置。这样一个稳定锚点就能把概念注入整段生成，省去逐位置匹配，也让训练时的采样更干净。
 
 ### AxBench 通用引导（Gemma-2-2B/9B）
 
@@ -136,10 +126,10 @@ $$\min_\Phi \mathbb{E}\left[D_\Phi^+ + D_\Phi^-\right]$$
 ## 相关论文
 
 - [\[CVPR 2025\] Steering Away from Harm: An Adaptive Approach to Defending Vision Language Model Against Jailbreaks](../../CVPR2025/llm_safety/steering_away_from_harm_an_adaptive_approach_to_defending_vision_language_model_.md)
+- [\[NeurIPS 2025\] Steering When Necessary: Flexible Steering Large Language Models with Backtracking](../../NeurIPS2025/llm_safety/steering_when_necessary_flexible_steering_large_language_models_with_backtrackin.md)
 - [\[AAAI 2026\] PANDA: Patch and Distribution-Aware Augmentation for Long-Tailed Exemplar-Free Continual Learning](../../AAAI2026/llm_safety/panda_--_patch_and_distribution-aware_augmentation_for_long-tailed_exemplar-free.md)
 - [\[ACL 2026\] Context-Fidelity Boosting: Enhancing Faithful Generation through Watermark-Inspired Decoding](../../ACL2026/llm_safety/context-fidelity_boosting_enhancing_faithful_generation_through_watermark-inspir.md)
 - [\[NeurIPS 2025\] On Optimal Steering to Achieve Exact Fairness](../../NeurIPS2025/llm_safety/on_optimal_steering_to_achieve_exact_fairness.md)
-- [\[ACL 2026\] Compiling Activation Steering into Weights via Null-Space Constraints for Stealthy Backdoors](../../ACL2026/llm_safety/compiling_activation_steering_into_weights_via_null-space_constraints_for_stealt.md)
 
 </div>
 

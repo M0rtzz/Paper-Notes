@@ -46,56 +46,19 @@ SAM 和 Entropy-SGD 虽然放弃了空间局部性，但仅关注避免尖锐极
 
 ## 方法详解
 
-### 核心思想
+### 整体框架
 
-将传统优化器的"质点"替换为有限半径 $\rho > 0$ 的**刚性球体**在损失景观上滚动。球的动力学响应的是与 $\rho$ 成比例的景观特征尺度，因此：
+RBO 把传统优化器在损失景观上滑动的"质点"换成一个有限半径 $\rho > 0$ 的刚性球，让球沿景观表面滚动，球心轨迹就是参数更新轨迹。每一步先沿接触点的最速下降方向移动球心，再把球心投影回"到景观距离恰为 $\rho$"的约束面上，半径 $\rho$ 由此成为唯一控制优化器感知粒度的旋钮。
 
-- 比 $\rho$ 小得多的噪声不会影响球的轨迹
-- 比球窄的尖锐极小值和病态山谷无法"容纳"球体
-- 通过调节 $\rho$ 可以控制优化器与景观交互的粒度
+### 关键设计
 
-### 算法流程
+**1. 有限半径刚性球：用尺度过滤掉细粒度噪声。** 所有主流优化器都只看当前位置的局部梯度，因此对景观上任意小的扰动都敏感，容易被数据噪声诱导出的尖刺、病态山谷和鞍点困住。RBO 改用半径 $\rho$ 的球体，球的动力学只响应与 $\rho$ 成比例的景观特征尺度：比 $\rho$ 小得多的噪声压根托不起球、不影响轨迹，比球窄的尖锐极小值和病态山谷也"容纳"不下球体，于是被自然跳过。调大 $\rho$ 就让优化器看得更"粗"、只感知宏观地形，调小 $\rho$ 则退化回接近点状优化器，粒度因此可连续调节。
 
-RBO 交替执行两个步骤：
+**2. 下降—投影交替更新：把球贴着景观滚起来。** 一次迭代分两步。下降步类似梯度下降，沿接触点 $p_t$ 处的最速下降方向 $\tau(p_t)$ 把球心移到临时位置 $\tilde{c}_{t+1} = c_t - \eta \tau(p_t)$，其中 $p_t$ 是球与损失景观曲面 $\Gamma$ 的接触点。但这一步会破坏"球贴着景观"的几何关系，于是约束投影步通过 $p_{t+1} = \arg\min_{p \in \Gamma} \|p - \tilde{c}_{t+1}\|^2$ 找到离临时球心最近的景观点作为新接触点，再沿该点向上单位法向量 $\nu(p_{t+1})$ 把球心顶回 $c_{t+1} = p_{t+1} + \rho \nu(p_{t+1})$。这套机制维持的核心不变式是球心到景观的距离恒等于半径，即 $\forall t \geq 0,\ d(c_t, \Gamma) = \inf_{p \in \Gamma} \|p - c_t\| = \rho$。投影本身没有闭式解，用迭代 $\theta^{(k+1)} = \theta^{(k)} - \gamma[\theta^{(k)} - \tilde{\theta} + (f(\theta^{(k)}) - \tilde{y}) \nabla f(\theta^{(k)})]$ 逐步逼近，正是这步求解会探查接触点周围更大范围的景观，使更新不再只依赖单点梯度，从而打破空间局部性。
 
-**Step 1: 下降步骤**（类似梯度下降）
+**3. Ironing property：用半径在数学上"熨平"景观。** 这一性质刻画了 RBO 为什么能忽略局部结构。弱 ironing（Lemma）证明对任意连续有界扰动 $\phi: \mathbb{R}^d \to \mathbb{R}$，当 $\rho \to +\infty$ 时球心轨迹所在的偏移流形趋于常数，等价于景观被完全熨平；线性 ironing（Proposition）进一步给出可控版本：对仿射函数 $f$ 叠加有界扰动 $\phi$ 的复合景观，只要 $\rho$ 足够大，RBO 在扰动景观上的行为就近似等同于在纯仿射景观上的行为。换句话说，半径越大，球看到的就越接近被抹平后的"底色"地形，扰动带来的褶皱被熨掉。
 
-$$\tilde{c}_{t+1} = c_t - \eta \tau(p_t)$$
-
-其中 $p_t$ 是球与损失景观 $\Gamma$ 的接触点，$\tau(p)$ 是 $\Gamma$ 在 $p$ 处的最速下降方向。
-
-**Step 2: 约束投影**（恢复距离不变式）
-
-$$p_{t+1} = \arg\min_{p \in \Gamma} \|p - \tilde{c}_{t+1}\|^2$$
-
-找到距离新中心最近的景观点作为新接触点，然后更新球心：$c_{t+1} = p_{t+1} + \rho \nu(p_{t+1})$，其中 $\nu(p)$ 是 $\Gamma$ 在 $p$ 处的向上单位法向量。
-
-### 距离不变式
-
-RBO 的核心约束：球心 $c_t$ 到损失景观 $\Gamma$ 的距离始终等于半径 $\rho$：
-
-$$\forall t \geq 0, \quad d(c_t, \Gamma) = \inf_{p \in \Gamma} \|p - c_t\| = \rho$$
-
-### 投影步骤的迭代求解
-
-约束投影通过迭代优化实现：
-
-$$\theta^{(k+1)} = \theta^{(k)} - \gamma[\theta^{(k)} - \tilde{\theta} + (f(\theta^{(k)}) - \tilde{y}) \nabla f(\theta^{(k)})]$$
-
-这使得 RBO 的动力学依赖于更大范围的景观信息，而非仅当前接触点。
-
-### Ironing Property（平滑效应）
-
-**弱 ironing（Lemma）**：对任意连续有界函数 $\phi: \mathbb{R}^d \to \mathbb{R}$，当 $\rho \to +\infty$ 时，球心轨迹所在的偏移流形趋向常数——即损失景观被完全"熨平"。
-
-**线性 ironing（Proposition）**：对于仿射函数 $f$ 加有界扰动 $\phi$ 的复合景观，RBO 在足够大的 $\rho$ 下，在扰动景观上的行为与在纯仿射景观上近似一致。
-
-### 不可达点理论
-
-如果景观上某点 $p$ 处的 Hessian 谱范数 $\sigma = \|\nabla^2 f(\theta_0)\|$，则当 $\rho > 1/\sigma$ 时，$p$ 对 RBO 不可达。这意味着：
-
-- **尖锐极小值自动规避**：曲率越大的极小值，越小的 $\rho$ 就足以规避
-- **不可达点的开集性质**：不可达点的邻域也是不可达的
+**4. 不可达点理论：尖锐极小值自动被规避。** 这条理论把"球进不去窄坑"量化成可计算的条件：若景观上某点的 Hessian 谱范数为 $\sigma = \|\nabla^2 f(\theta_0)\|$，则当 $\rho > 1/\sigma$ 时该点对 RBO 不可达。曲率越大（坑越尖）的极小值，只需越小的 $\rho$ 就足以规避；而且不可达点具有开集性质——一个点不可达，它的邻域也不可达，因此整片尖锐区域会被成片排除，球只会停在足够"宽"的平坦极小值里，这与好泛化偏好平坦解的经验一致。
 
 ## 实验关键数据
 
@@ -158,8 +121,8 @@ $$\theta^{(k+1)} = \theta^{(k)} - \gamma[\theta^{(k)} - \tilde{\theta} + (f(\the
 
 - [\[ICML 2026\] Sharp Description of Local Minima in the Loss Landscape of High-Dimensional Two-Layer ReLU Networks](../../ICML2026/optimization/sharp_description_of_local_minima_in_the_loss_landscape_of_high-dimensional_two-.md)
 - [\[ICLR 2026\] Convex Dominance in Deep Learning I: A Scaling Law of Loss and Learning Rate](convex_dominance_in_deep_learning_i_a_scaling_law_of_loss_and_learning_rate.md)
-- [\[ICML 2026\] Taming the Loss Landscape of PINNs with Noisy Feynman-Kac Supervision: Operator Preconditioning and Non-Asymptotic Error Bounds](../../ICML2026/optimization/taming_the_loss_landscape_of_pinns_with_noisy_feynman-kac_supervision_operator_p.md)
 - [\[NeurIPS 2025\] Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules](../../NeurIPS2025/optimization/gradient_descent_as_loss_landscape_navigation_a_normative_framework_for_deriving.md)
+- [\[ICML 2026\] Taming the Loss Landscape of PINNs with Noisy Feynman-Kac Supervision: Operator Preconditioning and Non-Asymptotic Error Bounds](../../ICML2026/optimization/taming_the_loss_landscape_of_pinns_with_noisy_feynman-kac_supervision_operator_p.md)
 - [\[ICLR 2026\] Optimizer Choice Matters for the Emergence of Neural Collapse](optimizer_choice_matters_for_the_emergence_of_neural_collapse.md)
 
 </div>

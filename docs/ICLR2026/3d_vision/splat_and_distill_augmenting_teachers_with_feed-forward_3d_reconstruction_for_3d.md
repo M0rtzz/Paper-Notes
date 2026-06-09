@@ -42,37 +42,21 @@ tags:
 
 ### 整体框架
 
-Splat and Distill (SnD) 建立在 DINO/DINOv2 的 student-teacher 自蒸馏范式之上。每次训练迭代中，从一个场景 $\mathcal{S} = \{(\mathbf{I}_i, \mathbf{P}_i)\}_{i=1}^N$ 中采样两个上下文视角和一个目标视角。核心流程为：
+Splat and Distill (SnD) 把前馈式 3D 重建塞进 DINO/DINOv2 的 student-teacher 自蒸馏框架里，让 teacher 给出的监督信号天然带有几何一致性。每次迭代从一个场景 $\mathcal{S} = \{(\mathbf{I}_i, \mathbf{P}_i)\}_{i=1}^N$ 采样两个上下文视角和一个目标视角：冻结的 MVSplat 把两张上下文图像前馈预测成一组 3D Gaussian primitives $\{(\mu_j, \Sigma_j, \alpha_j)\}$，teacher 提取的 2D 特征经上采样挂到这些 Gaussian 上、渲染并混合到目标视角，得到的特征图 $\mathbf{F}_{blend}^{tgt}$ 充当监督；student 只看目标视角的单张 2D 图像就要匹配上这份带 3D 感知的特征，而 teacher 自己再用 student 的 EMA 持续更新。
 
-1. **3D 重建**：将两个上下文图像输入冻结的 MVSplat 模型，前馈式预测一组 3D Gaussian primitives $\{(\mu_j, \Sigma_j, \alpha_j)\}$
-2. **特征提取与提升**：Teacher 网络从上下文图像提取 2D 特征 $\mathbf{F}_j^{ctx} \in \mathbb{R}^{h \times w \times C}$，经 mask-aware 上采样后通过像素-Gaussian 对应关系挂载到 3D
-3. **渲染与混合**：将带特征的 3D 场景渲染到目标视角，经语义混合后得到监督特征图 $\mathbf{F}_{blend}^{tgt}$
-4. **蒸馏**：Student 仅从目标视角 2D 图像提取特征 $\mathbf{F}_s^{tgt}$，通过交叉熵蒸馏损失与 teacher 的渲染特征对齐
-5. **Teacher 更新**：使用 EMA 更新 teacher 参数 $\theta_t \leftarrow \lambda \theta_t + (1-\lambda) \theta_s$
+### 关键设计
 
-### 关键设计1: Mask-Aware 特征上采样
+**1. Mask-Aware 特征上采样：消除跨物体边界的特征泄漏。**
 
-Teacher 网络输出的特征图分辨率（$h \times w$）与输入图像（$H \times W$）存在 $\times 14$ 的分辨率差距。直接双线性插值会导致跨物体边界的特征混合。本文提出利用语义分割 mask 引导插值：
+Teacher 输出的特征图分辨率（$h \times w$）比输入图像（$H \times W$）低了 $\times 14$，直接双线性插值会把不同物体的特征混在一起，挂到 Gaussian 上就成了边界处的脏特征。SnD 改用语义分割 mask 引导插值 $\mathbf{F}_u^{high} = \sum_{v \in \mathcal{N}(u)} w_{uv} \cdot \mathbf{F}_v^{low}$，其中权重 $w_{uv}$ 只在 $\text{mask}(v) = \text{mask}(u)$ 时非零——也就是只从同一语义区域的邻域特征点插值。这样上采样后的特征在物体边界保持锐利，不会从隔壁语义区域漏进无关信息。消融里把它换回普通双线性，ScanNet++ 深度 RMSE 从 0.3299 退到 0.3309，说明这步对几何精度确有贡献。
 
-$$\mathbf{F}_u^{high} = \sum_{v \in \mathcal{N}(u)} w_{uv} \cdot \mathbf{F}_v^{low}$$
+**2. 语义混合正则化：修掉稀疏视角渲染出的几何伪影。**
 
-其中权重 $w_{uv}$ 仅在 $\text{mask}(v) = \text{mask}(u)$ 时为非零，即只从同语义区域的邻域特征点插值。这保证了上采样特征在物体边界处的锐利性，避免了不同语义区域间的特征泄漏。
+只用两个上下文视角重建的 3D 场景渲染到新视角时，难免有局部几何不一致带来的伪影。SnD 在语义边界内对渲染特征做一次平均来纠偏：$\mathbf{F}_{blend}(u) = \alpha \cdot \mathbf{F}_{rendered}(u) + (1-\alpha) \cdot \frac{1}{|\mathcal{M}_u|} \sum_{v \in \mathcal{M}_u} \mathbf{F}_{rendered}(v)$，取 $\alpha = 0.5$，$\mathcal{M}_u$ 是与像素 $u$ 同属一个语义 mask 的全部像素。平均只在 mask 内进行，因此能抹平小的几何抖动又不模糊物体边缘。这一步是消融里最关键的一项：完全去掉 blending，深度 RMSE 直接掉到 0.3435。
 
-### 关键设计2: 语义混合正则化
+**3. 前馈式重建 + EMA：把静态优化换成会自我增强的动态闭环。**
 
-从稀疏视角构建的 3D 场景在渲染到新视角时可能产生几何伪影。本文通过语义混合（Semantic Blending）正则化渲染特征图：
-
-$$\mathbf{F}_{blend}(u) = \alpha \cdot \mathbf{F}_{rendered}(u) + (1-\alpha) \cdot \frac{1}{|\mathcal{M}_u|} \sum_{v \in \mathcal{M}_u} \mathbf{F}_{rendered}(v)$$
-
-其中 $\alpha = 0.5$，$\mathcal{M}_u$ 是与像素 $u$ 共享同一语义 mask 的所有像素集合。这在语义边界内平均特征以修正小的几何不一致，同时保持物体边缘的精确细节。
-
-### 关键设计3: 前馈式 3D 与 EMA 联合动态学习
-
-与 FiT3D 的静态优化不同，SnD 的 teacher 通过 EMA 与 student 联动更新。随着训练进行，teacher 产生的 2D 特征越来越一致，馈入 3D 重建的特征质量持续提升，形成正向循环。蒸馏损失为：
-
-$$\min_{\theta_s} \mathcal{L}_{distill}(\text{head}(\mathbf{F}_s^{tgt}), \text{sg}(\text{head}(\mathbf{F}_{blend}^{tgt})))$$
-
-其中 $\text{head}(\cdot)$ 是 DINO head（小型 MLP），$\text{sg}(\cdot)$ 是 stop-gradient 操作。该设计使得框架能从大量多样场景中学习可泛化的 3D 一致性。
+FiT3D 那类逐场景优化的根本毛病是 teacher 特征是静态的，不同视角输入本身不一致，优化只能取"最小二乘折中"，产生语义模糊和平均化伪影。SnD 让 teacher 随 student 做 EMA 更新 $\theta_t \leftarrow \lambda \theta_t + (1-\lambda) \theta_s$：训练越久 teacher 给出的 2D 特征越一致，馈进 MVSplat 的特征质量也越高，渲染监督随之变好，形成正向循环。Student 端的蒸馏目标是 $\min_{\theta_s} \mathcal{L}_{distill}(\text{head}(\mathbf{F}_s^{tgt}), \text{sg}(\text{head}(\mathbf{F}_{blend}^{tgt})))$，其中 $\text{head}(\cdot)$ 是 DINO head（小 MLP），$\text{sg}(\cdot)$ 是 stop-gradient。消融中把可学习 teacher 冻住，RMSE 从 0.3299 退到 0.3444，印证了这个闭环让框架能从海量多样场景里学到可泛化的 3D 一致性。
 
 ## 实验结果
 

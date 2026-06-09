@@ -190,11 +190,11 @@ $$\text{Reg}(T) = \widetilde{\mathcal{O}}\left((S^2(R^2 d + S^2))^{2/3} \lambda^
 
 ## 相关论文
 
+- [\[NeurIPS 2025\] Conformal Online Learning of Deep Koopman Linear Embeddings](../../NeurIPS2025/others/conformal_online_learning_of_deep_koopman_linear_embeddings.md)
 - [\[NeurIPS 2025\] Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination](../../NeurIPS2025/others/information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)
 - [\[NeurIPS 2025\] Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression](../../NeurIPS2025/others/transfer_learning_for_benign_overfitting_in_high-dimensional_linear_regression.md)
 - [\[ICML 2026\] Multi-task Linear Regression without Eigenvalue Lower Bounds: Adaptivity, Robustness and Safety](../../ICML2026/others/multi-task_linear_regression_without_eigenvalue_lower_bounds_adaptivity_robustne.md)
 - [\[ICML 2025\] Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update](../../ICML2025/others/heavy-tailed_linear_bandits_huber_regression_with_one-pass_update.md)
-- [\[AAAI 2026\] A Switching Framework for Online Interval Scheduling with Predictions](a_switching_framework_for_online_interval_scheduling_with_pr.md)
 
 </div>
 

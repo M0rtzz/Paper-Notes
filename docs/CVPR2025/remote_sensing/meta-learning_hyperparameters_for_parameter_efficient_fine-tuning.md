@@ -149,9 +149,9 @@ LoRA + MetaPEFT在平均精度上提升1.13%达到83.97%，尾部类别平均提
 
 - [\[ICML 2025\] ExPLoRA: Parameter-Efficient Extended Pre-Training to Adapt Vision Transformers under Domain Shifts](../../ICML2025/remote_sensing/explora_parameter-efficient_extended_pre-training_to_adapt_vision_transformers_u.md)
 - [\[ICLR 2026\] Task-free Adaptive Meta Black-box Optimization](../../ICLR2026/remote_sensing/task-free_adaptive_meta_black-box_optimization.md)
-- [\[CVPR 2025\] DiSciPLE: Learning Interpretable Programs for Scientific Visual Discovery](disciple_learning_interpretable_programs_for_scientific_visual_discovery.md)
 - [\[ECCV 2024\] Adapting Fine-Grained Cross-View Localization to Areas without Fine Ground Truth](../../ECCV2024/remote_sensing/adapting_fine-grained_cross-view_localization_to_areas_without_fine_ground_truth.md)
-- [\[ICCV 2025\] RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model](../../ICCV2025/remote_sensing/rs-vheat_heat_conduction_guided_efficient_remote_sensing_foundation_model.md)
+- [\[CVPR 2025\] DiSciPLE: Learning Interpretable Programs for Scientific Visual Discovery](disciple_learning_interpretable_programs_for_scientific_visual_discovery.md)
+- [\[CVPR 2025\] Learning Occlusion-Robust Vision Transformers for Real-Time UAV Tracking](learning_occlusion-robust_vision_transformers_for_real-time_uav_tracking.md)
 
 </div>
 

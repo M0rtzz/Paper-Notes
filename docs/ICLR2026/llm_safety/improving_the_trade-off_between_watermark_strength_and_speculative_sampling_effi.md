@@ -40,41 +40,15 @@ tags:
 
 ### 整体框架
 
-- **功能**：(1) 定义水印强度的连续量化度量；(2) 完整刻画水印强度 vs 采样效率的 Pareto 前沿；(3) 提出打破权衡的新机制。
-- **为什么**：先前二值定义无法揭示权衡的连续性质，且接受/拒绝中的真随机性是导致水印强度损失的根源。
-- **怎么做**：用期望 KL 散度量化水印强度 → 推导 Pareto 曲线的凸优化公式 → 将接受决策伪随机化使整个生成过程成为伪随机数的确定性函数。
+本文沿着"量化—刻画—打破"三步推进水印与推测采样的权衡问题：先用期望 KL 散度把过去二值化的"水印强度"变成连续可测的量，再把它与采样效率的最优权衡写成一条 Pareto 曲线，最后指出曲线之所以存在是因为接受/拒绝步骤里残留了真随机性，只要把这枚硬币也伪随机化，就能让整条生成过程退化为伪随机数的确定函数，从而同时拿到最大强度与最优效率。
 
-### 关键设计 1：水印强度的量化度量
+### 关键设计
 
-定义无偏水印方案的水印强度为水印分布与原始分布间的期望 KL 散度：
+**1. 期望 KL 散度度量：把"水印有多强"变成一个连续可比的数。** 以往判断一个水印方案是否"保持"水印是二值的——只有精确匹配水印分布才算数，中间强度无从谈起，权衡曲线也就无从画起。本文转而用水印分布 $\bm{P}_\zeta$ 与原始分布 $\bm{P}$ 之间的期望 KL 散度来定义强度 $\text{WS}(\bm{P}_\zeta) = \mathbb{E}_\zeta[D_{\mathrm{KL}}(\bm{P}_\zeta \| \bm{P})] = \text{Ent}(\bm{P}) - \mathbb{E}_\zeta[\text{Ent}(\bm{P}_\zeta)]$，它恰好等于 token $w$ 与伪随机数 $\zeta$ 之间的互信息 $I(w;\zeta)$，即"从输出能反推出多少伪随机信号"。这个量之所以好用，是因为它把检测难度也一并刻画清楚：在似然比检验下 $n$ 个 token 的 p-value 满足 $\lim_{n\to\infty}-\frac{1}{n}\log(\text{p-value})=\bar{D}$，强度越大、p-value 衰减越快、检测所需样本越少。它的上界是原始分布的熵 $\text{WS}(\bm{P}_\zeta)\leq\text{Ent}(\bm{P})$，仅当 $\bm{P}_\zeta$ 几乎处处退化（概率全压在单个 token 上）才取等；Gumbel-max 与 $m\to\infty$ 的 SynthID 都能触到这个上界。
 
-$$\text{WS}(\bm{P}_\zeta) = \mathbb{E}_\zeta[D_{\mathrm{KL}}(\bm{P}_\zeta \| \bm{P})] = \text{Ent}(\bm{P}) - \mathbb{E}_\zeta[\text{Ent}(\bm{P}_\zeta)]$$
+**2. Pareto 权衡曲线：把经验观察写成一个凸优化问题。** Hu & Huang (2024) 证明无法同时保持最高接受率和最强水印，但这只是个"不可能"的定性结论，没说清两者究竟能各退一步到什么程度。本文给定效率要求 $r$，求该约束下可达的最大水印强度，把权衡显式写成 $L(r)=\max_{\mathcal{S}_{\text{draft}},\mathcal{S}_{\text{target}}}\text{WS}(\bm{P}_\zeta)\ \text{s.t.}\ \text{SSE}(\bm{Q}_\zeta,\bm{P}_\zeta)\geq r$。对线性水印类 $\mathcal{Q}=\{(1-\theta)\text{Id}+\theta\mathcal{S}:\theta\in[0,1]\}$，这条逆曲线可进一步化为一个凸优化：目标是最小化对应总变差距离的 $\ell_1$ 范数，约束是熵不超过阈值。由此 Gumbel-max 与 SynthID 各自的完整 Pareto 前沿都能精确画出，经验上"强水印必然拖慢采样"的直觉第一次有了可计算的边界。
 
-这一度量具有深刻的信息论含义：等价于 token $w$ 与伪随机数 $\zeta$ 之间的互信息 $I(w; \zeta)$。其关键性质包括：
-
-- **上界为原始分布的熵**：$\text{WS}(\bm{P}_\zeta) \leq \text{Ent}(\bm{P})$，当且仅当 $\bm{P}_\zeta$ 几乎处处退化（所有概率集中在一个 token 上）时取等
-- **决定 p-value 指数衰减率**：在似然比检验下，$n$ 个 token 的 p-value 满足 $\lim_{n\to\infty} -\frac{1}{n}\log(\text{p-value}) = \bar{D}$，直接决定检测所需的样本复杂度
-- **Gumbel-max 和 SynthID（$m\to\infty$）均达到最大水印强度**
-
-### 关键设计 2：Pareto 权衡曲线的完整刻画
-
-将权衡曲线定义为约束优化问题：给定效率要求 $r$，求可达到的最大水印强度：
-
-$$L(r) = \max_{\mathcal{S}_{\text{draft}}, \mathcal{S}_{\text{target}}} \text{WS}(\bm{P}_\zeta) \quad \text{s.t.} \quad \text{SSE}(\bm{Q}_\zeta, \bm{P}_\zeta) \geq r$$
-
-对于线性水印类 $\mathcal{Q} = \{(1-\theta)\text{Id} + \theta \mathcal{S} : \theta \in [0,1]\}$，逆曲线可化为凸优化问题，其中目标是最小化 $\ell_1$ 范数（对应总变差距离），约束是熵不超过阈值。论文为 Gumbel-max 和 SynthID 两种水印方案分别绘制了完整的 Pareto 曲线。
-
-### 关键设计 3：伪随机接受机制打破权衡
-
-核心洞察：标准推测采样中，接受/拒绝 draft token 使用的是**真随机**硬币翻转，即使知道 draft 和 target 模型的伪随机数，最终 token 仍不确定。这种残余随机性削弱了水印强度。
-
-解决方案：将接受变量 $u_t = G(\zeta_t^R)$ 也伪随机化，使整个生成过程成为伪随机变量的确定性函数。理论证明（Theorem 4.1）：
-
-- **无偏性**：$\mathbb{E}_\zeta[\bm{P}'_\zeta(w)] = \bm{P}(w)$
-- **最大采样效率**：$\text{SE} = 1 - \text{TV}(\bm{Q}, \bm{P})$
-- **最大水印强度**：$\text{WS}(\bm{P}'_\zeta) = \text{Ent}(\bm{P})$
-
-检测时，伪随机接受变量 $u_t$ 提供了额外信息，可更准确地选择正确的测试统计量。对 Gumbel-max 提出 Ars-τ 检测器（用阈值 $\tau$ 选择 draft/target 统计量），对 SynthID 提出 Bayes-MLP 检测器（用 MLP 替代简单加权平均选择统计量）。
+**3. 伪随机接受机制：把最后一枚真随机硬币也固定下来。** 即便 draft 和 target 模型的伪随机数都已知，标准推测采样里接受/拒绝 draft token 用的仍是一枚**真随机**硬币，最终输出 token 因此带着残余随机性，而正是这点随机性吃掉了水印强度。本文的改动只有一处：把接受变量也伪随机化为 $u_t=G(\zeta_t^R)$，让整条生成过程变成伪随机变量的确定性函数。Theorem 4.1 证明这一改动同时拿满三项——无偏性 $\mathbb{E}_\zeta[\bm{P}'_\zeta(w)]=\bm{P}(w)$、最大采样效率 $\text{SE}=1-\text{TV}(\bm{Q},\bm{P})$、最大水印强度 $\text{WS}(\bm{P}'_\zeta)=\text{Ent}(\bm{P})$，等于直接绕过了上面那条 Pareto 曲线的约束。检测端因为 $u_t$ 现在是已知信息，能更准地挑出正确的测试统计量：对 Gumbel-max 设计 Ars-τ 检测器，用阈值 $\tau$ 在 draft/target 统计量间切换；对 SynthID 设计 Bayes-MLP 检测器，用 MLP 替代简单加权平均来选择统计量。
 
 ## 实验
 

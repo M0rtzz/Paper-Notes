@@ -34,33 +34,21 @@ tags:
 
 ### 整体框架
 
-本文不提出新架构，而是提供一个**学习理论框架**来重新解释神经 PDE 求解器的学习行为：
-
-- 将算子学习形式化为**条件风险最小化**：$\min_\theta \mathbb{E}_{(f,\mathcal{B})\sim\mu}[\ell(\hat{\mathcal{S}}_\theta(f,\mathcal{B}), \mathcal{S}(f,\mathcal{B}))]$
-- 当边界条件 $\mathcal{B}$ 固定时，学到的是单一算子 $\mathcal{S}_\mathcal{B}: f \mapsto u$
-- 当 $\mathcal{B}$ 变化时，学到的是联合映射 $\mathcal{S}: (f, \mathcal{B}) \mapsto u$，但其行为仅在训练分布 $\mu_\mathcal{B}$ 的支撑集上有约束
+本文不提出新架构，而是把神经 PDE 求解器的训练放回学习理论的显微镜下：将算子学习写成在边界条件分布上的条件风险最小化，再追问当边界条件本身可变时，经验风险最小化（ERM）究竟把模型推向了什么解。结论是它学到的并非边界无关的单一解算子，而是被训练时见过的那簇边界条件索引出来的算子族。
 
 ### 关键设计
 
-1. **边界索引算子族的形式化**
+**1. 边界索引算子族的形式化：把"学解算子"重述为"学一族被边界索引的算子"。**
 
-    功能：证明神经 PDE 求解器学到的不是边界无关的单一算子，而是一族由边界条件参数化的算子。
+经典 PDE 理论里，解的唯一性同时依赖微分方程和边界条件 $\mathcal{B}$，但神经求解器常把 $\mathcal{B}$ 隐式塞进边界填充或辅助通道里，于是"学解算子"这句话掩盖了它对训练边界分布的依赖。作者把训练目标写成条件风险最小化 $\min_\theta \mathbb{E}_{(f,\mathcal{B})\sim\mu}\big[\ell(\hat{\mathcal{S}}_\theta(f,\mathcal{B}),\,\mathcal{S}(f,\mathcal{B}))\big]$：当 $\mathcal{B}$ 固定时学到的是单一算子 $\mathcal{S}_\mathcal{B}:f\mapsto u$，一旦 $\mathcal{B}$ 随分布 $\mu_\mathcal{B}$ 变化，学到的就是联合映射 $\mathcal{S}:(f,\mathcal{B})\mapsto u$。关键在于 ERM 只在 $\mu_\mathcal{B}$ 的支撑集上对模型施加约束，支撑集之外多个不同映射可以达到同样低的训练损失，因此模型在分布外的行为不可辨识。这正解释了为何对外推力 $f$ 的鲁棒性并不等价于对边界条件的鲁棒性——$f$ 在输入中被密集采样，而边界条件往往只占据一个低维、稀疏的子空间，留下大片未被约束的方向。
 
-    核心思路：ERM 只在训练分布 $\mu_\mathcal{B}$ 上施加约束，对于分布外的边界条件，多个不同的映射可以达到相同的训练损失。形式化为：在 $\mu_\mathcal{B}$ 支撑集外，学到的映射不唯一（不可辨识性）。
+**2. 条件期望退化行为：解释边界信息被抹掉时模型为何退化成"平均解"。**
 
-    设计动机：这解释了为什么在外推力（forcing function）上的鲁棒性**不等同于**在边界条件上的鲁棒性——前者在输入中密集采样，后者可能只占低维稀疏子空间。
-
-2. **条件期望退化行为**
-
-    功能：分析当边界信息被删除或弱表示时，ERM 训练的模型会退化为边界条件的条件期望。
-
-    核心思路：当模型无法获取边界信息时，其最优预测变为 $\hat{u}(f) \approx \mathbb{E}_{\mathcal{B}\sim\mu_\mathcal{B}}[\mathcal{S}(f,\mathcal{B}) \mid f]$，这是在未观测边界变量上的平均，不对应任何固定边界条件下的有效解算子。
-
-    设计动机：这从理论上解释了为什么边界消融模型在所有分布上都失败——它学到的是"平均解"而非特定解。
+当边界信息被删除或表示得太弱（比如去掉边界通道）时，模型拿不到区分不同边界条件所需的输入，其在 MSE 下的最优预测被迫塌缩为对未观测边界变量取平均的条件期望 $\hat{u}(f)\approx\mathbb{E}_{\mathcal{B}\sim\mu_\mathcal{B}}[\mathcal{S}(f,\mathcal{B})\mid f]$。这个平均量不对应任何一个固定边界条件下的合法解，于是模型在每一个具体分布上都失败——它学到的是横跨所有边界条件的"平均解"而非某个特定解。实验中固定一个 forcing function $f^*$、把无边界版模型的输出与 $\mathbb{E}[u\mid f^*]$ 的蒙特卡洛估计逐点对比，二者几乎完全吻合，从经验上坐实了这条退化机制。
 
 ### 损失函数 / 训练策略
 
-实验采用 FNO 架构，Adam 优化器（学习率 $8 \times 10^{-4}$），MSE 损失，2500 步梯度更新，batch size 12，在 $64 \times 64$ 网格上训练。边界函数通过截断 Fourier 展开参数化（带宽 $K=6$）。
+实验统一采用 FNO 架构、Adam 优化器（学习率 $8\times10^{-4}$）、MSE 损失，在 $64\times64$ 网格上做 2500 步梯度更新、batch size 为 12；边界函数用截断 Fourier 展开参数化，带宽 $K=6$。这套配置刻意保持简单且固定，是为了把跨边界分布的失败干净地归因到 ERM 目标本身，而非架构容量或优化超参。
 
 ## 实验关键数据
 
@@ -125,7 +113,7 @@ tags:
 - [\[ICLR 2026\] DRIFT-Net: A Spectral--Coupled Neural Operator for PDEs Learning](drift-net_a_spectral--coupled_neural_operator_for_pdes_learning.md)
 - [\[ICML 2026\] Topology-Preserving Neural Operator Learning via Hodge Decomposition](../../ICML2026/physics/topology-preserving_neural_operator_learning_via_hodge_decomposition.md)
 - [\[ICCV 2025\] JPEG Processing Neural Operator for Backward-Compatible Coding](../../ICCV2025/physics/jpeg_processing_neural_operator_for_backward-compatible_coding.md)
-- [\[NeurIPS 2025\] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics](../../NeurIPS2025/physics/from_black_hole_to_galaxy_neural_operator_framework_for_accretion_and_feedback_d.md)
+- [\[CVPR 2025\] DiffFNO: Diffusion Fourier Neural Operator](../../CVPR2025/physics/difffno_diffusion_fourier_neural_operator.md)
 
 </div>
 

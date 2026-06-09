@@ -40,31 +40,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-双KL对齐目标：$\mathcal{J} = \max_{\pi_\theta} \mathbb{E}[A(x,y)] - \beta(\alpha \text{KL}[\pi_\theta||\pi_0] + (1-\alpha)\text{KL}[\pi_\theta||\pi_t])$，等价于对动态插值参考 $\pi_{\text{ref}} \propto \pi_0^\alpha \pi_t^{1-\alpha}$ 的单KL约束。然后转化为加权SFT(回归)损失消除RL的不稳定性。
+DAR 要解决的，是 RLHF 里两类正则化互相打架的问题：为防 reward hacking 要把策略约束到初始模型 $\pi_0$，为防训练崩溃又要把策略约束到当前策略 $\pi_t$，而随训练推进 $\pi_t$ 越来越远离 $\pi_0$，两个约束的可行交集越缩越小，高奖励策略被挤出去。DAR 的做法分两步：先把两个 KL 约束写成一个带可调权重 $\alpha$ 的双KL对齐目标，证明它等价于对一个动态插值参考的单KL 约束；再把这个带 KL 约束的 RL 目标解析地转成一个加权 SFT（回归）损失，从根上绕开 PPO 那种靠策略比率估计带来的不稳定。整条链路是「双约束统一 → 插值参考 → 闭式最优策略 → 加权回归损失」。
 
 ### 关键设计
 
-1. **双KL对齐目标**:
+**1. 双KL对齐目标：把"防 hacking"和"防崩溃"两个对抗的约束合并成一个。**
 
-    - 功能：统一防reward hacking和训练稳定性约束
-    - 核心思路(Proposition 4.1)：$\alpha \text{KL}[\pi_\theta||\pi_0] + (1-\alpha)\text{KL}[\pi_\theta||\pi_t]$ 等价于 $\text{KL}[\pi_\theta || \frac{1}{C}\pi_0^\alpha \pi_t^{1-\alpha}]$
-    - 效果：随着π_t演化，插值参考自动跟踪高奖励区域，提供更好的支持覆盖
-    - α控制trade-off：α→1偏保守(接近初始模型)，α→0偏探索(接近当前策略)
+标准做法是分别加 $\text{KL}[\pi_\theta\|\pi_0]$（约束到初始模型、防过度优化奖励）和 $\text{KL}[\pi_\theta\|\pi_t]$（约束到当前策略、防剧烈偏移），但这两项随训练推进会互相排斥，把可行域压得太死。DAR 把它们用一个权重 $\alpha$ 线性组合进同一个目标：
 
-2. **回归变换(Advantage Regression)**:
+$$\mathcal{J} = \max_{\pi_\theta} \mathbb{E}[A(x,y)] - \beta\big(\alpha\,\text{KL}[\pi_\theta\|\pi_0] + (1-\alpha)\,\text{KL}[\pi_\theta\|\pi_t]\big)$$
 
-    - 功能：将RL目标转化为加权SFT损失
-    - 闭式最优策略(Theorem 4.2)：$\pi^* \propto \pi_0^\alpha \pi_t^{1-\alpha} \exp(\frac{1}{\beta}A)$
-    - 实际损失：$\mathbb{E}[(w_{\text{reg}} \cdot w_{\text{adv}}) \cdot \log\pi_\theta(y|x)]$
-        - $w_{\text{reg}} = (\pi_0/\pi_t)^\alpha$：正则化权重，惩罚偏离参考的回答
-        - $w_{\text{adv}} = \exp(\frac{1}{\beta}A)$：优势权重，奖励好回答
-    - 设计动机：避免PPO中策略比率的不稳定性，回归损失更平滑稳定
-    - 权重裁剪：$\min(w_{\text{reg}} \cdot w_{\text{adv}}, w_{\text{clip}})$ 防止梯度爆炸
+关键的一步是 Proposition 4.1：这个加权双KL在对数空间里等价于对单个插值参考的 KL 约束，$\alpha\,\text{KL}[\pi_\theta\|\pi_0] + (1-\alpha)\,\text{KL}[\pi_\theta\|\pi_t] = \text{KL}\big[\pi_\theta \,\big\|\, \tfrac{1}{C}\pi_0^\alpha \pi_t^{1-\alpha}\big]$，其中 $C$ 是归一化常数。也就是说真正的参考策略是 $\pi_{\text{ref}} \propto \pi_0^\alpha \pi_t^{1-\alpha}$——一个会随 $\pi_t$ 演化的动态目标，它自动跟踪当前的高奖励区域、提供更好的支持覆盖，而不是死锁在初始模型上。权重 $\alpha$ 就是这条 trade-off 的旋钮：$\alpha\to1$ 偏保守（贴近初始模型），$\alpha\to0$ 偏探索（贴近当前策略）。
+
+**2. 回归变换（Advantage Regression）：把 RL 目标转成加权 SFT，消掉策略比率的方差。**
+
+有了单KL 形式的目标，就能写出它的闭式最优策略（Theorem 4.2）：$\pi^* \propto \pi_0^\alpha \pi_t^{1-\alpha} \exp(\tfrac{1}{\beta}A)$，即在插值参考上按优势做指数加权。DAR 不去用 PPO 那样估计并裁剪策略比率，而是直接把这个最优解拟合成一个加权对数似然（SFT）损失：
+
+$$\mathcal{L} = -\,\mathbb{E}\big[(w_{\text{reg}} \cdot w_{\text{adv}}) \cdot \log\pi_\theta(y|x)\big]$$
+
+两个权重各管一头：$w_{\text{reg}} = (\pi_0/\pi_t)^\alpha$ 是正则化权重，惩罚偏离参考的回答；$w_{\text{adv}} = \exp(\tfrac{1}{\beta}A)$ 是优势权重，奖励好回答。因为损失本质上是加权 SFT 而非 RL，它绕开了 PPO 里策略比率估计的高方差来源，梯度更平滑稳定。为防止指数权重把梯度顶爆，再对乘积做裁剪 $\min(w_{\text{reg}} \cdot w_{\text{adv}},\, w_{\text{clip}})$。
 
 ### 损失函数 / 训练策略
-- Monte Carlo采样估计优势（避免单独的价值模型）
-- 批次内优势归一化
-- $w_{\text{clip}} = 20$, $\alpha = 0.1$, $\beta = 0.05$
+- Monte Carlo 采样估计优势，避免单独训练一个价值模型
+- 批次内做优势归一化
+- 超参：$w_{\text{clip}} = 20$，$\alpha = 0.1$，$\beta = 0.05$
 
 ## 实验关键数据
 
@@ -126,11 +125,11 @@ tags:
 
 ## 相关论文
 
-- [\[ICLR 2026\] Mitigating Mismatch within Reference-based Preference Optimization](mitigating_mismatch_within_reference-based_preference_optimization.md)
 - [\[ICLR 2026\] Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment](semantic-aware_wasserstein_policy_regularization_for_large_language_model_alignm.md)
 - [\[ICLR 2026\] General Exploratory Bonus for Optimistic Exploration in RLHF](general_exploratory_bonus_for_optimistic_exploration_in_rlhf.md)
+- [\[ACL 2025\] T-REG: Preference Optimization with Token-Level Reward Regularization](../../ACL2025/llm_alignment/t-reg_preference_optimization_with_token-level_reward_regularization.md)
 - [\[ICLR 2026\] Beyond RLHF and NLHF: Population-Proportional Alignment under an Axiomatic Framework](beyond_rlhf_and_nlhf_population-proportional_alignment_under_an_axiomatic_framew.md)
-- [\[AAAI 2026\] Margin-aware Preference Optimization for Aligning Diffusion Models without Reference](../../AAAI2026/llm_alignment/margin-aware_preference_optimization_for_aligning_diffusion_models_without_refer.md)
+- [\[ICLR 2026\] Swap-guided Preference Learning for Personalized RLHF (SPL)](swap-guided_preference_learning_for_personalized_reinforcement_learning_from_hum.md)
 
 </div>
 

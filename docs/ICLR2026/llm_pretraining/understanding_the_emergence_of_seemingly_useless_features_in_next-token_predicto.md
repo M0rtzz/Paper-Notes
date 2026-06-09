@@ -45,29 +45,29 @@ tags:
 
 ### 关键设计
 
-1. **梯度三分解（Proposition 3.1）**:
+**1. 梯度三分解（Proposition 3.1）：把 NTP 的训练梯度精确拆成 direct / pre-cached / shared 三条路径。**
 
-    - 功能：将总梯度 $\nabla_\theta L$ 精确分解为 direct + pre-cached + shared 三个独立成分
-    - 核心思路：通过 stop-gradient 操作定义每个成分。Direct：$\nabla_\theta L_i - \nabla_\theta L_i^{sg(k,i)}$；Pre-cached：$\nabla_\theta \sum_{j \neq i} [L_j - L_j^{sg(k,i)}]$；Shared：$\sum_j \nabla_\theta L_j^{sg(k,i)}$。三者之和恰好等于 $\nabla_\theta L$
-    - 设计动机：Direct 成分只能驱动 NTP-useful 特征的学习（因为只和即时预测相关），而 pre-cached 和 shared 是"无用"特征涌现的潜在来源
+NTP 损失只监督"下一个 token"，可模型却学到了关于全局状态和未来 token 的特征——要回答这些"无用"特征从何而来，第一步是看清梯度到底经过哪些路径回传到参数。本文固定某位置 $i$、某层 $k$ 的残差流 $r_{\theta,i}^k(x)$，借助 stop-gradient 操作把总梯度切成三块：direct 项 $\nabla_\theta L_i - \nabla_\theta L_i^{sg(k,i)}$，只保留经过这一残差流、流向即时预测 $\hat{x}_{i+1}$ 的信号；pre-cached 项 $\nabla_\theta \sum_{j \neq i} [L_j - L_j^{sg(k,i)}]$，捕捉经过该残差流、却流向未来位置损失 $\hat{x}_j$（$j>i+1$）的信号；shared 项 $\sum_j \nabla_\theta L_j^{sg(k,i)}$，则是不经过该残差流、靠参数共享间接施加的影响。三者之和恰好等于 $\nabla_\theta L$，构成一个完备分解。这个切法之所以关键，是因为 direct 成分只和即时预测挂钩，它只能驱动 NTP-useful 特征；剩下的 pre-cached 与 shared 才是"无用"特征涌现的潜在来源，后续所有干预和归因都建立在这三块的区分上。
 
-2. **干预方法：Myopic Training 和 m-Untied Training**:
+**2. 干预：Myopic Training 与 m-Untied Training——把 pre-caching 和 circuit sharing 分别"关掉"看后果。**
 
-    - 功能：通过消融 pre-caching 或 circuit sharing 观察其缺失的影响
-    - 核心思路：**Myopic training**（Wu et al. 2024 提出）阻止跨位置的梯度传播——在 K、V 矩阵处切断梯度，使位置 $i$ 不被激励计算对未来位置有用的特征。**m-Untied training**（本文提出）使用两套独立参数分别处理位置 $m$ 前后的序列，阻断 circuit sharing
-    - 设计动机：Pre-caching 增加了表达力（使多层注意力的复杂构造成为可能），circuit sharing 实现了跨位置特征迁移（在某位置 NTP-useful 的特征通过共享参数被编码在另一位置）
+有了三分解，最直接的验证就是逐个消融机制、观察缺了它模型会怎样。Myopic training（Wu et al. 2024 提出）在注意力的 K、V 矩阵处切断跨位置梯度，使位置 $i$ 不再被激励去计算"对未来位置有用"的特征，从而关闭 pre-caching；m-Untied training（本文提出）则用两套独立参数分别处理位置 $m$ 之前和之后的序列，让两段无法共享电路，从而切断 circuit sharing。之所以要分别关，是因为两条路径承担的角色不同：pre-caching 提供的是额外表达力，让多层注意力的复杂构造（如 induction head 式的两层电路）成为可能；circuit sharing 提供的是跨位置迁移——在某个位置 NTP-useful 的特征，可以通过共享参数被编码到另一个位置上去。把它们分开关，才能看清各自负责学的是哪类"无用"特征。
 
-3. **归因方法：Feature Mismatch Influence**:
+**3. 归因：Feature Mismatch Influence——量化每种梯度成分到底贡献了多少。**
 
-    - 功能：量化训练过程中每种梯度成分对特征涌现的具体贡献
-    - 核心思路：定义 feature mismatch $R(x|\theta_1, \theta_2, w_i^k) = \frac{1}{2}(\langle w_i^k, r_{\theta_1,i}^k(x) \rangle - \langle w_i^k, r_{\theta_2,i}^k(x) \rangle)^2$，然后定义 influence $I_i^k(\theta, x | w_i^k, \theta^*, G) = \frac{d}{d\varepsilon} R(x|\theta + \varepsilon G, \theta^*, w_i^k)|_{\varepsilon=0}$，其中 $G$ 是某个梯度成分。对 Adam 优化器进行调整：为三个成分维护独立的动量，确保成分步长之和等于实际优化器步长
-    - 设计动机：仅消融（干预）无法区分某个机制"是否有必要"和"实际贡献了多少"。归因方法通过积分每步的 influence 给出每种机制的定量贡献
+干预只能回答"某机制有没有必要"，回答不了"它实际贡献了多少"，于是本文再给出一套定量归因。先定义 feature mismatch 衡量两组参数下同一特征方向 $w_i^k$ 的表征差异：
 
-4. **大模型推断：Intervention-based Influence Ratio $Q(w)$**:
+$$R(x|\theta_1, \theta_2, w_i^k) = \frac{1}{2}\big(\langle w_i^k, r_{\theta_1,i}^k(x) \rangle - \langle w_i^k, r_{\theta_2,i}^k(x) \rangle\big)^2$$
 
-    - 功能：在无法重训的大模型上估计 pre-cached vs direct 的影响比
-    - 核心思路：**Proposition 5.1** 证明通过在训练后模型上做激活干预（ablation），计算 $Q(w) = \frac{\sum_{j>i+1} d_j^{/i}}{d_{i+1}^{/i}}$（干预后未来位置 KL 散度之和 / 即时位置 KL 散度），可以近似 pre-cached 与 direct influence 的比值
-    - 设计动机：重训大模型太昂贵，但只需访问最终 checkpoint 也能通过干预实验推断特征的成因
+再把某个梯度成分 $G$ 对这一差异的边际影响定义为 influence $I_i^k(\theta, x | w_i^k, \theta^*, G) = \frac{d}{d\varepsilon} R(x|\theta + \varepsilon G, \theta^*, w_i^k)|_{\varepsilon=0}$。为了让结论在真实优化器下成立，本文对 Adam 做了适配——为 direct、pre-cached、shared 各维护一套独立动量，保证三个成分的步长之和等于实际的优化器步长。沿训练轨迹把每一步的 influence 积分起来，就得到每种机制对某个特征涌现的累计定量贡献，这正是后面"direct 只推 useful、pre-cached 推 useless"那张置信区间表的来源。
+
+**4. 大模型推断：Intervention-based Influence Ratio $Q(w)$——不重训也能估计 pre-cached vs direct 的影响比。**
+
+上面的归因要完整重训并逐步记录三个梯度成分，对 Gemma 2 这种规模的模型根本跑不动。为此本文给出一个只需访问最终 checkpoint 的近似指标：Proposition 5.1 证明，在训练后的模型上对某特征做激活干预（ablation），统计干预引起的未来位置 KL 散度之和与即时位置 KL 散度之比
+
+$$Q(w) = \frac{\sum_{j>i+1} d_j^{/i}}{d_{i+1}^{/i}}$$
+
+就能近似该特征上 pre-cached 与 direct influence 的比值。换言之，重训太贵时，单凭最终模型上的干预实验也能反推一个特征更多是被"为未来铺垫"还是被"即时预测"塑造出来的——代价是它只是局部近似，不等于整条训练轨迹的积分。
 
 ### 损失函数 / 训练策略
 使用标准 NTP 交叉熵损失。Myopic 和 untied 变体通过 stop-gradient 修改梯度传播路径而非损失函数。
@@ -138,7 +138,7 @@ Conditioned Majority 需要类似 induction head 的两层注意力构造，myop
 - [\[ICLR 2026\] Understanding and Improving Shampoo and SOAP via Kullback-Leibler Minimization](understanding_and_improving_shampoo_and_soap_via_kullback-leibler_minimization.md)
 - [\[ICLR 2026\] Explaining Grokking and Information Bottleneck through Neural Collapse Emergence](explaining_grokking_and_information_bottleneck_through_neural_collapse_emergence.md)
 - [\[ICLR 2026\] Token-level Data Selection for Safe LLM Fine-tuning](token-level_data_selection_for_safe_llm_fine-tuning.md)
-- [\[NeurIPS 2025\] Optimal Online Change Detection via Random Fourier Features](../../NeurIPS2025/llm_pretraining/optimal_online_change_detection_via_random_fourier_features.md)
+- [\[NeurIPS 2025\] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models](../../NeurIPS2025/llm_pretraining/next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)
 
 </div>
 

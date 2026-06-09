@@ -118,8 +118,8 @@ MMVU 构建分三阶段：(1) 前期准备——通过 133 名学生的用户研
 
 - [\[CVPR 2025\] ExpertAF: Expert Actionable Feedback from Video](expertaf_expert_actionable_feedback_from_video.md)
 - [\[CVPR 2025\] Omni-RGPT: Unifying Image and Video Region-level Understanding via Token Marks](omni-rgpt_unifying_image_and_video_region-level_understanding_via_token_marks.md)
-- [\[CVPR 2025\] MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
 - [\[NeurIPS 2025\] MUVR: A Multi-Modal Untrimmed Video Retrieval Benchmark with Multi-Level Visual Correspondence](../../NeurIPS2025/video_understanding/muvr_a_multi-modal_untrimmed_video_retrieval_benchmark_with_multi-level_visual_c.md)
+- [\[CVPR 2025\] MLVU: Benchmarking Multi-task Long Video Understanding](mlvu_benchmarking_multi-task_long_video_understanding.md)
 - [\[CVPR 2025\] Beyond Single-Sample: Reliable Multi-Sample Distillation for Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)
 
 </div>

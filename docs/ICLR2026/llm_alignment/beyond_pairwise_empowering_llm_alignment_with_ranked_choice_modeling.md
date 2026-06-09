@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：标注者提供的是多路比较/排名，但训练算法只能消化成对数据——信息浪费和结构扭曲是相互耦合的问题。
 
-**本文目标** 如何设计一个能直接利用 ranked choice（单选 best、top-k 排名）反馈的对齐框架？
+**本文目标**：如何设计一个能直接利用 ranked choice（单选 best、top-k 排名）反馈的对齐框架？
 
 **切入角度**：经济学/运筹学中的离散选择模型（discrete choice models）已有成熟理论来处理多选和排名数据。将 prompt 视为 context、response 视为 item、候选集视为 assortment，LLM 对齐可直接映射为选择模型的 MLE。
 
@@ -41,31 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RCPO 将偏好优化形式化为：给定 prompt $x$、候选集 $S$、标注的 ranked choice $\mu^k$（top-k 排名），最大化选择模型 $g$ 的对数似然：$\max_{\pi_\theta} \sum_i \log g(\mu_i^k, S_i, \{r_{\pi_\theta}(x_i, y)\}_{y \in S_i})$，其中 $r_{\pi_\theta}(x,y) = \beta \log \frac{\pi_\theta(y|x)}{\pi_{ref}(y|x)}$。
+RCPO 的出发点是把"偏好优化"看成一个离散选择问题：标注者面对一个候选集，从中挑出最好的（single-best）或排出前 k 名（top-k），这本质上就是经济学里的离散选择行为。于是论文把 prompt $x$ 当作 context、候选 response 当作 item、候选集 $S$ 当作 assortment，把整套对齐目标写成选择模型 $g$ 的极大似然：
+
+$$\max_{\pi_\theta} \sum_i \log g\big(\mu_i^k, S_i, \{r_{\pi_\theta}(x_i, y)\}_{y \in S_i}\big),\quad r_{\pi_\theta}(x,y) = \beta \log \frac{\pi_\theta(y|x)}{\pi_{ref}(y|x)}$$
+
+这里 $\mu_i^k$ 是标注的 top-k 排名，$r_{\pi_\theta}$ 是和 DPO 完全一致的隐式 reward。换掉选择模型 $g$ 就得到不同的对齐算法，DPO 只是其中最简单的一个分支。论文给出两类选择模型：基于基数效用的 MNL，和基于序关系的 Mallows-RMJ。
 
 ### 关键设计
 
-1. **MNL（Multinomial Logit）分支**：
+**1. MNL（Multinomial Logit）分支：把 Bradley-Terry 从"2 选 1"推广到"多选 1 与 top-k"。**
 
-    - 功能：将 Bradley-Terry（仅 2 选 1）推广为多选 1 和 top-k。
-    - Discrete（single-best）：$-\log\sigma(-\log\sum_{y_i \in S \setminus \{y_w\}} \exp(f_\theta(x, y_i, y_w)))$，比 DPO 多了对所有非 preferred response 的 logsumexp。
-    - Top-k：连乘 k 个阶段的 softmax，每阶段从剩余候选中选出下一个。
-    - DPO 是 $|S|=2, k=1$ 的特例。
+DPO 背后的 Bradley-Terry 模型一次只能比较两个 response，这正是成对压缩的根源。MNL 直接放开候选集大小：在 single-best（discrete）格式下，损失变成对整个候选集做归一化，$-\log\sigma\big(-\log\sum_{y_i \in S \setminus \{y_w\}} \exp(f_\theta(x, y_i, y_w))\big)$，相比 DPO 多出的那一层 logsumexp，就是同时把所有非 preferred response 都纳入对比、而不是只挑一个负样本。在 top-k 格式下，它进一步连乘 k 个阶段的 softmax——每个阶段从尚未选中的剩余候选里挑出下一名，逐级展开整条排名链。当 $|S|=2, k=1$ 时这套退化回 DPO，说明 DPO 确实是该框架的一个特例。
 
-2. **Mallows-RMJ 分支**：
+**2. Mallows-RMJ 分支：用纯序关系建模，绕开对精确 reward 数值的依赖。**
 
-    - 功能：基于排名的选择模型，仅依赖序关系而非基数效用。
-    - 核心思路：选择概率 $\propto \phi(x)^{d(y_i, S)}$，其中 $d$ 是 $y_i$ 在 $S$ 中的相对排名位置。ϕ 越小（dispersion 越低），排名越集中。
-    - Discrete loss 计算有多少 non-preferred 项的 reward 超过 preferred  项。
-    - Top-k loss 扩展为沿排名链的逐对比较 + 未入选项与第 k 名的比较。
-    - 关键优势：仅依赖 ordinal 信息（rank order），对 reward 噪声更鲁棒。
+MNL 仍然吃 reward 的基数大小，对 reward model 的噪声敏感。Mallows-RMJ 改成只看排名：某个 response 被选中的概率正比于 $\phi(x)^{d(y_i, S)}$，其中 $d(y_i, S)$ 是 $y_i$ 在候选集 $S$ 中的相对排名位置，dispersion 参数 $\phi(x)$ 越小、概率越向高名次集中。在 discrete 格式下，它的损失实质是去数有多少个 non-preferred 项的 reward 反超了 preferred 项；在 top-k 格式下则扩展为沿排名链的逐对比较，再补上"未入选项与第 k 名"之间的比较。由于全程只用到 ordinal 信息（谁排在谁前面），它天然对 reward 的数值抖动更鲁棒，这也是后面实验里 Mallows-RMJ 大幅领先的原因。
 
-3. **Sigmoid 平滑**：
+**3. Sigmoid 平滑：让 rank-based 目标可微、能跑 SGD。**
 
-    - Mallows-RMJ 目标含指示函数 $\mathbb{I}\{\cdot\}$（不可微），用 sigmoid 近似使其对 SGD 友好。
+Mallows-RMJ 的损失里含有指示函数 $\mathbb{I}\{\cdot\}$（判断某项 reward 是否超过另一项），它在 0/1 之间跳变、不可微。论文用 sigmoid 把这个硬判断近似成平滑过渡，从而让整个 rank-based 目标对梯度下降友好，可以直接接进现有训练流程。
 
 ### 训练策略
-在 UltraFeedback 数据集上为每个 prompt 生成多个 response，用 Skywork-Reward-V2 reward model 打分后构建排名。支持 pairwise/single-best/top-k 三种反馈格式。
+在 UltraFeedback 数据集上为每个 prompt 生成多个 response，用 Skywork-Reward-V2 reward model 打分后构建排名，再据此切出 pairwise / single-best / top-k 三种反馈格式来训练，对应不同的选择模型分支。
 
 ## 实验关键数据
 

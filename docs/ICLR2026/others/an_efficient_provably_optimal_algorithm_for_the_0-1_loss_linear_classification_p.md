@@ -40,22 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 $N$ 个 $D$ 维数据点及其二分类标签，输出是全局最优的线性分类器参数。核心思路是：(1) 通过对偶变换将数据空间中的分类问题映射到参数空间中的单元枚举问题；(2) 证明只需枚举通过 $D$ 个数据点的超平面即可覆盖所有可能的最优解；(3) 利用对称性融合定理将搜索空间减半；(4) 采用增量组合生成器高效遍历所有 $D$-组合。
+给定 $N$ 个 $D$ 维带二分类标签的数据点，目标是找到使误分类数（即 0-1 损失）最小的线性分类器。ICE 的核心洞察是把"在无限连续的参数空间里搜索最优超平面"这件看似无从下手的事，通过点-超平面对偶变换转化成"在有限的对偶排列单元里做组合枚举"，再用一条定理把需要检查的候选超平面收窄到 $\binom{N}{D}$ 个通过 $D$ 个数据点的超平面，最后靠对称性减半和增量生成器把枚举做得既省内存又能并行。
 
 ### 关键设计
 
-1. **点-超平面对偶变换**: 将数据点映射为对偶空间中的超平面，原空间中具有相同分类结果的所有超平面在对偶空间中对应同一个单元（cell），将"在无限连续参数空间中搜索最优分类器"简化为"在有限的对偶排列单元中枚举"。
+**1. 点-超平面对偶变换：把连续搜索变成离散枚举。** 直接在参数空间里搜索最优超平面的困难在于，参数是连续的、候选无穷多，而 0-1 损失关于参数是分段常数的、不可导，梯度类方法完全失效。对偶变换提供了一个离散化的支点：每个数据点 $x_i$ 在对偶空间中被映射成一个超平面，反过来一个候选分类器对应对偶空间中的一个点。这些对偶超平面把参数空间切成若干个单元（cell），落在同一单元内的所有分类器对所有数据点给出**完全相同**的分类结果，因而 0-1 损失相同。于是无穷多的连续超平面被压缩成有限多个等价类，"搜索最优分类器"被等价地改写成"枚举对偶排列的单元并比较各单元的损失"。
 
-2. **0-1损失线性分类定理 (Theorem 3)**: 证明精确求解0-1损失LCP只需搜索所有通过 $D$ 个数据点的超平面。统一了Cover计数 $O(N^D)$、Murthy的 $2^D\binom{N}{D}$、以及Nguyen-Sanner的 $\binom{N}{D}$ 三种分析。
+**2. 0-1 损失线性分类定理（Theorem 3）：只需检查穿过 $D$ 个点的超平面。** 即便单元数量有限，朴素枚举仍然偏多。本文证明了一个关键事实：任何能取得最优 0-1 损失的分类器，都可以平移、旋转到恰好穿过 $D$ 个数据点而不改变其分类结果——因为只要超平面不碰到任何数据点，就能在不跨越任何点的前提下微调，直到它贴住 $D$ 个点为止。这把搜索空间从"所有单元"进一步收紧到"所有由 $D$ 个数据点确定的超平面"，总数恰为 $\binom{N}{D}$。这条定理同时调和了此前三种看似互相矛盾的复杂度结论：Cover 计数给出的 $O(N^D)$、Murthy 的 $2^D\binom{N}{D}$、以及 Nguyen–Sanner 的 $\binom{N}{D}$，本质上是同一枚举量在是否计入正负方向、是否计入常数因子上的不同写法。
 
-3. **对称性融合定理 (Theorem 5)**: 正方向的0-1损失为 $l$，则负方向恰好为 $N - l - D$，搜索空间直接减半。
+**3. 对称性融合定理（Theorem 5）：一次评估顶两次。** 每个穿过 $D$ 个点的超平面都有正、负两个法向方向，对应两个互补的分类器。本文证明若正方向的 0-1 损失为 $l$，则负方向的损失恰好是 $N - l - D$（穿过的 $D$ 个点在两侧划分中不计入误分类）。这意味着评估一个方向就能直接推出另一个方向的损失，无需重复计算，把实际需要做的损失评估次数直接减半。
 
-4. **增量组合生成器 (ICE算法)**: 顺序式增量生成策略，每步生成的 $D$-组合立即评估后丢弃，内存复杂度降为 $O(N^G)$。
+**4. 增量组合生成器（ICE 算法主体）：边生成边丢弃，内存常数化。** 若先把全部 $\binom{N}{D}$ 个 $D$-组合存下来再逐一评估，内存会爆炸。ICE 采用顺序式增量生成：每一步只生成下一个 $D$-组合，立即解出对应超平面、计算 0-1 损失、更新当前最优，然后丢弃该组合，不保留任何历史。这样枚举的时间仍是 $O(N^{D+1})$ 量级，但内存复杂度被压到与组合总数无关的 $O(N^G)$（$G$ 为一次批处理的组合数），使算法能在普通显存下跑完大规模枚举。
 
-5. **多项式超曲面分类扩展**: 通过Veronese嵌入将 $D$ 维数据映射到高维空间，在高维空间中应用线性分类定理。
+**5. 多项式超曲面分类扩展：用 Veronese 嵌入复用同一套理论。** 线性分类定理只对线性边界成立，但通过 Veronese 嵌入把 $D$ 维数据升维到由各阶单项式张成的高维空间后，原空间中的多项式超曲面就变成高维空间中的线性超平面。于是无需另起炉灶，直接在升维后的空间套用 Theorem 3 与 ICE，即可精确求解非线性的多项式决策边界。
 
-### 训练策略
-先用SVM获取初始解作为上界，按距离排序后增量枚举所有 $D$-组合并更新最优解。完全基于矩阵运算，支持PyTorch向量化并行。
+### 损失函数 / 训练策略
+ICE 不优化任何替代损失，直接以 0-1 损失（误分类计数）为目标。实现上先用 SVM 求一个初始解作为当前最优的上界，再把候选超平面按到 SVM 决策面的距离排序后增量枚举：靠近决策边界的组合更可能改进上界，优先评估有助于尽早收紧。整个流程完全由矩阵运算构成，可借 PyTorch 向量化并行批量评估多个组合，充分利用 GPU 吞吐。
 
 ## 实验关键数据
 
@@ -111,7 +111,7 @@ tags:
 - [\[ICML 2025\] Provably Efficient Algorithm for Best Scoring Rule Identification in Online Principal-Agent Information Acquisition](../../ICML2025/others/provably_efficient_algorithm_for_best_scoring_rule_identification_in_online_prin.md)
 - [\[ICML 2026\] Provably Data-driven Multiple Hyper-parameter Tuning with Structured Loss Function](../../ICML2026/others/provably_data-driven_multiple_hyper-parameter_tuning_with_structured_loss_functi.md)
 - [\[AAAI 2026\] Automated Reproducibility Has a Problem Statement Problem](../../AAAI2026/others/automated_reproducibility_has_a_problem_statement_problem.md)
-- [\[AAAI 2026\] The Publication Choice Problem](../../AAAI2026/others/the_publication_choice_problem.md)
+- [\[ICLR 2026\] A Federated Generalized Expectation-Maximization Algorithm for Mixture Models with an Unknown Number of Components](a_federated_generalized_expectation-maximization_algorithm_for_mixture_models_wi.md)
 
 </div>
 

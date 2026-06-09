@@ -47,21 +47,25 @@ tags:
 
 ### 关键设计
 
-1. **各向同性范数项（高噪声区域）**：
+**1. 各向同性范数项：在高噪声区接住已被验证有效的旧信号。**
 
-    - 功能：在 $t \approx T$ 处计算 $\|s_\theta^\Delta(\mathbf{x}_T, t \approx T, c)\|$
-    - 核心思路：高噪声处对数概率近似各向同性（Hessian 特征值方差接近零），范数项是有效的记忆指标，对应 Wen et al. 的方法
-    - 设计动机：继承已验证有效的各向同性信号
+在 $t \approx T$ 处计算 score 差异的范数 $\|s_\theta^\Delta(\mathbf{x}_T, t \approx T, c)\|$，这正是 Wen et al. 用的指标。之所以保留它，是因为高噪声处对数概率近似各向同性——Hessian 特征值方差趋近于零、各方向曲率一致，此时范数能可靠反映记忆样本对数概率的整体尖峰。本文没有否定这个信号，而是把它限定在它真正成立的噪声区间使用。
 
-2. **各向异性角度对齐项（低噪声区域）**：
+**2. 各向异性角度对齐项：在低噪声区改用方向而非范数来识别记忆。**
 
-    - 功能：在 $t \approx 0$ 处计算 guidance 向量与无条件 score 的余弦相似度
-    - 核心思路：记忆样本中，无条件模式和条件模式几乎重合（$\delta \to 0$），导致 $\nabla \log p_t(c|\mathbf{x}_t)$ 与 $\nabla \log p_t(\mathbf{x}_t)$ 方向高度一致
-    - 理论保证：Theorem 1 给出下界 $\cos \geq \frac{1-r}{1+r}$，其中 $r = \varepsilon + \tau$，$\varepsilon$ 控制协方差近似误差，$\tau$ 控制模式位移
+低噪声区域对数概率是各向异性的，范数失效（KL 散度从 0.166 跌到 0.022），但记忆在这里留下了另一种签名：方向对齐。本文在 $t \approx 0$ 处计算 guidance 向量与无条件 score 的余弦相似度 $\text{cos\_sim}(s_\theta^\Delta, s_\theta)$。直觉是，记忆样本里无条件模式和条件模式几乎重合（模式位移 $\delta \to 0$），于是 $\nabla \log p_t(c|\mathbf{x}_t)$ 与 $\nabla \log p_t(\mathbf{x}_t)$ 方向高度一致。Theorem 1 把这个直觉变成了可证的下界：
 
-3. **组合检测指标**：
-    $\mathcal{M}(\mathbf{x}_T, c) = \gamma_1 \cdot \text{cos\_sim}(s_\theta^\Delta, s_\theta)|_{t \approx 0} + \gamma_2 \cdot \|s_\theta^\Delta\||_{t \approx T}$
-    - $\gamma_1, \gamma_2$ 通过小规模 Logistic 回归确定（仅需 20 个记忆 prompt 拟合一次）
+$$\cos \geq \frac{1-r}{1+r}, \quad r = \varepsilon + \tau$$
+
+其中 $\varepsilon$ 控制协方差近似误差、$\tau$ 控制模式位移；记忆越强（$\delta$ 越小）$r$ 越小、余弦下界越接近 1。这条项和范数项天然互补：一个管各向同性的高噪声区，一个管各向异性的低噪声区。
+
+**3. 组合检测指标：把两个互补信号加权成一个无去噪判据。**
+
+最终判据是两项的加权和：
+
+$$\mathcal{M}(\mathbf{x}_T, c) = \gamma_1 \cdot \text{cos\_sim}(s_\theta^\Delta, s_\theta)|_{t \approx 0} + \gamma_2 \cdot \|s_\theta^\Delta\||_{t \approx T}$$
+
+权重 $\gamma_1, \gamma_2$ 用一次小规模 Logistic 回归确定，只需 20 个记忆 prompt 拟合一遍（实践中 $\gamma_1=\gamma_2=1$ 也已不错）。整个判据只在 $t=0$ 和 $t=T$ 两个时间步各做一次条件/无条件前向，$\mathcal{M}$ 高于阈值即判为记忆 prompt，全程不跑去噪轨迹，这是它比依赖 Hessian 的方法快 5× 以上的根本原因。
 
 ### 损失函数 / 缓解策略
 
@@ -135,9 +139,9 @@ n=4 时本文 AUC 达 0.999（SD v1.4），TPR@1%FPR 达 0.984。
 
 - [\[ICML 2025\] Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes](../../ICML2025/image_generation/understanding_and_mitigating_memorization_in_generative_models_via_sharpness_of_.md)
 - [\[CVPR 2026\] AutoDebias: An Automated Framework for Detecting and Mitigating Backdoor Biases in Text-to-Image Models](../../CVPR2026/image_generation/autodebias_automated_framework_for_debiasing_text-to-image_models.md)
-- [\[ICML 2025\] Understanding and Mitigating Memorization in Diffusion Models for Tabular Data](../../ICML2025/image_generation/understanding_and_mitigating_memorization_in_diffusion_models_for_tabular_data.md)
 - [\[ICLR 2026\] Generalization of Diffusion Models Arises with a Balanced Representation Space](generalization_of_diffusion_models_arises_with_a_balanced_representation_space.md)
 - [\[ICML 2025\] Localizing and Mitigating Memorization in Image Autoregressive Models](../../ICML2025/image_generation/localizing_and_mitigating_memorization_in_image_autoregressive_models.md)
+- [\[ICLR 2026\] Uni-X: Mitigating Modality Conflict with a Two-End-Separated Architecture for Unified Multimodal Models](uni-x_mitigating_modality_conflict_with_a_two-end-separated_architecture_for_uni.md)
 
 </div>
 

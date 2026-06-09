@@ -30,31 +30,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GLYPH-SR基于预训练LDM（Juggernaut-XL），在其上添加Text-SR融合ControlNet(TS-ControlNet)，通过OCR提取文本-位置对来提供文字级语义引导，利用ping-pong调度器在去噪过程中交替文本中心和图像中心引导。
+GLYPH-SR要解决的是「图像超分时把文字越修越糊、甚至改错字」这件事。它以一个预训练的潜在扩散模型（Juggernaut-XL）为底座，输入低分辨率图像，输出既清晰又文字可读的高分辨率结果。关键在于不让模型把文字当普通纹理处理：先用 OCR 把图里的文字内容和位置抠出来，转成语义提示，再通过一个外挂的 Text-SR 融合 ControlNet（TS-ControlNet）把这份「文字级引导」注入扩散过程；去噪时再用一个 ping-pong 调度器在「专注修字」和「专注修图」两种模式间来回切换，让两个目标互不拖累。
 
 ### 关键设计
-1. **条件分解(Condition Decomposition)**:
 
-    - 功能：将引导信号显式分离为图像导向和文本导向
-    - 核心思路：场景级标题 $\mathcal{S}_{\text{IMG}}$ 概括全局属性（光照、构图等）；OCR模块检测 $K$ 个文本实例返回位置-文本对 $\{(\mathcal{S}_{\text{text}}^k, \mathcal{S}_{\text{pos}}^k)\}_{k=1}^K$，转为结构化自然语言提示（如"HSBC显示在图像中心"）
-    - 设计动机：当引导仅以整体形式提供时，小文本区域仍被视为通用高频纹理
+**1. 条件分解（Condition Decomposition）：把引导信号拆成图像导向和文本导向两路。**
 
-2. **Text-SR融合ControlNet(TS-ControlNet)**:
+问题出在引导信号太笼统——如果只给模型一句整体描述，小文本区域（往往不到全图 1%）会被当成普通高频纹理一带而过，字符自然修不准。GLYPH-SR 把条件显式拆成两路：一路是场景级标题 $\mathcal{S}_{\text{IMG}}$，概括光照、构图等全局属性；另一路由 OCR 模块检测出 $K$ 个文本实例，返回位置-文本对 $\{(\mathcal{S}_{\text{text}}^k, \mathcal{S}_{\text{pos}}^k)\}_{k=1}^K$，再转成结构化的自然语言提示（如「HSBC 显示在图像中心」）。这样模型拿到的不再是一句模糊的全局描述，而是明确知道「哪里有什么字」。
 
-    - 功能：在保持生成先验的同时平衡图像质量和文本可读性
-    - 核心思路：双分支架构——SR分支冻结保持整体图像质量，文本分支可训练专注字形恢复。残差混合注入：$c = \frac{1}{2} s_{\text{ctrl}} [\mathcal{C}_{\text{SR}}(z_t; \phi_{\text{img}}(\mathcal{S}_{\text{IMG}}+P)) + \mathcal{C}_{\text{TXT}}(z_t; \phi_{\text{txt}}(\mathcal{S}_{\text{TXT}}+P))]$
-    - 设计动机：直接分离两种引导虽改善文字但损害非文字区域
+**2. Text-SR 融合 ControlNet（TS-ControlNet）：用双分支在不牺牲画质的前提下注入字形引导。**
 
-3. **Ping-Pong调度器**:
+光把文字引导和图像引导分开还不够——如果直接拿文字引导去改，文字是清楚了，非文字区域却会被带坏。TS-ControlNet 用双分支架构化解这个矛盾：SR 分支保持冻结，负责守住整体图像质量的生成先验；文本分支可训练，专门负责字形恢复。两路的输出做残差混合后注入主干：
 
-    - 功能：沿去噪轨迹动态重新加权文本和图像引导
-    - 核心思路：时间依赖系数 $\lambda_t$ 同时调制嵌入融合和残差注入。采用二值方波策略交替 $\lambda_t=0$（文本中心）和 $\lambda_t=1$（图像中心），切换周期 $\tau=1$：$\lambda_t = 0$ 若 $\lfloor \frac{t-t_0}{\tau} \rfloor \bmod 2 = 0$，否则 $\lambda_t = 1$
-    - 设计动机：连续渐变不如方波有效；文本阶段注入精确字形线索，图像阶段稳定全局结构
+$$c = \frac{1}{2} s_{\text{ctrl}} \left[ \mathcal{C}_{\text{SR}}(z_t; \phi_{\text{img}}(\mathcal{S}_{\text{IMG}}+P)) + \mathcal{C}_{\text{TXT}}(z_t; \phi_{\text{txt}}(\mathcal{S}_{\text{TXT}}+P)) \right]$$
+
+冻结的 SR 分支等于给非文字区域上了保险，可训练的文本分支只在字形上发力，二者相加既补上了字形线索，又不破坏原本的画质。
+
+**3. Ping-Pong 调度器：沿去噪轨迹在修字和修图之间来回切换。**
+
+把两路引导按固定比例一直混着用，效果并不好——两个目标在同一步里互相牵制。GLYPH-SR 引入一个时间依赖系数 $\lambda_t$，同时调制嵌入融合和残差注入，并且不让它连续渐变，而是走二值方波：$\lambda_t=0$ 时是文本中心模式（注入精确字形线索），$\lambda_t=1$ 时是图像中心模式（稳定全局结构），切换周期 $\tau=1$，即每一步翻一次：
+
+$$\lambda_t = \begin{cases} 0, & \left\lfloor \frac{t-t_0}{\tau} \right\rfloor \bmod 2 = 0 \\ 1, & \text{否则} \end{cases}$$
+
+这种「乒乓」式硬切换比连续渐变更有效：文字和图像各自在自己那一拍里被充分优化，避免了渐变模式下两个目标被平均掉、谁都没修好的情况。
 
 ### 损失函数 / 训练策略
-- 使用标准 $\varepsilon$-预测目标训练：$\mathcal{L}_{\text{text}} = \mathbb{E}_{z_0, t, \varepsilon} \| \varepsilon - \mathcal{D}_\theta(z_t, t, c) \|_2^2$
-- 构建4分区合成语料，独立扰动字形质量和全局图像质量，实现针对性文本恢复
-- LDM骨干和SR分支冻结，仅微调文本分支
+训练用标准的 $\varepsilon$-预测目标：$\mathcal{L}_{\text{text}} = \mathbb{E}_{z_0, t, \varepsilon} \| \varepsilon - \mathcal{D}_\theta(z_t, t, c) \|_2^2$。数据上构建了一份 4 分区合成语料，对字形质量和全局图像质量做独立扰动，从而能针对性地训练文本恢复能力。整个训练只微调文本分支，LDM 骨干和 SR 分支全程冻结。
 
 ## 实验关键数据
 

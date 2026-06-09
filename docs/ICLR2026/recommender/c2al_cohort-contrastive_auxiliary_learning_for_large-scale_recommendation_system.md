@@ -41,33 +41,34 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：用户-广告特征向量 $\mathbf{x}$ → 共享编码器 $f(\mathbf{x};\theta_S)$ 生成嵌入 $\mathbf{h}$ → 主任务头 $g_{\text{primary}}$ 预测 CTR。C2AL 在此基础上增加两个辅助头 $g_{\text{head}}, g_{\text{tail}}$，共享编码器但各自预测对应群体的标签。训练结束后丢弃辅助头，推理架构不变。
+C2AL 要解决的是大规模推荐模型在全局目标下训练时，少数群体被多数群体"淹没"导致的表征偏差。它的做法是在不改动线上架构的前提下，给共享编码器额外挂两个辅助分类头，用群体特异的梯度信号把已经退化的 FM 注意力重新"撑开"。
+
+整条 pipeline 的主干仍是标准 CTR 模型：用户-广告特征向量 $\mathbf{x}$ 先过共享编码器 $f(\mathbf{x};\theta_S)$ 得到嵌入 $\mathbf{h}$，再由主任务头 $g_{\text{primary}}$ 预测点击率。C2AL 的全部改动集中在训练阶段——在共享编码器之上并联两个辅助头 $g_{\text{head}}, g_{\text{tail}}$，分别预测 head/tail 群体的标签，三个头共用同一个编码器一起反向传播。训练一旦结束，辅助头被整体丢弃，上线时模型退回到和 baseline 完全一致的单任务结构。
 
 ### 关键设计
 
-1. **对比群体发现（Contrastive Cohort Discovery）**:
+**1. 对比群体发现：从数据里自动挑出"模型行为差异最大"的一对群体。**
 
-    - 功能：从数据中自动找到分布差异最大的群体对
-    - 核心思路：沿可解释语义轴（用户价值、年龄等）将数据分割为 $\{\mathcal{C}_1, \ldots, \mathcal{C}_N\}$，用 baseline 模型的预测分布计算两两之间的散度（KL、JS、Wasserstein、余弦相似度），取差异最大的一对为 $\mathcal{C}_{\text{head}}$ 和 $\mathcal{C}_{\text{tail}}$
-    - 设计动机：不是随意选群体，而是有原则地找"模型预测行为差异最大"的群体对——这保证辅助梯度信号与主任务梯度"部分冲突"，提供最大信息增益
+辅助任务有没有用，关键在于挑哪两个群体来对比。C2AL 不靠人工拍脑袋指定，而是沿可解释的语义轴（用户价值、年龄等）先把数据切成 $\{\mathcal{C}_1, \ldots, \mathcal{C}_N\}$ 个群体，再用 baseline 模型在每个群体上的预测分布两两计算散度（KL、JS、Wasserstein、余弦相似度都试过），取散度最大的一对作为 $\mathcal{C}_{\text{head}}$ 和 $\mathcal{C}_{\text{tail}}$。之所以要找"分布差异最大"而不是随便选两组，是因为只有当两个群体的预测行为足够不同，它们带来的辅助梯度才会和主任务梯度"部分冲突"——这种冲突正是信息增益的来源，能强迫编码器去学一些主任务自己学不到的区分模式。
 
-2. **对比辅助任务构造（Contrastive Auxiliary Learning）**:
+**2. 对比辅助任务构造：用群体掩码把一个标签拆成两个"只在群体内为正"的二分类任务。**
 
-    - 功能：构造两个群体特异的辅助二分类任务
-    - 核心思路：$y_{\text{head}} = y \cdot \mathbb{I}(\mathbf{x} \in \mathcal{C}_{\text{head}})$，$y_{\text{tail}} = y \cdot \mathbb{I}(\mathbf{x} \in \mathcal{C}_{\text{tail}})$，总损失为：$\mathcal{L}_{\text{C2AL}} = \mathcal{L}_{\text{primary}} + \lambda_{\text{head}} \mathcal{L}_{\text{head}} + \lambda_{\text{tail}} \mathcal{L}_{\text{tail}}$
-    - 设计动机：辅助标签只在对应群体内为正，对其他样本为 0——这迫使共享编码器学习群体区分能力。两个群体分布"部分冲突"，辅助梯度打破主任务的多数群体主导
+选定 head/tail 之后，C2AL 把原标签 $y$ 通过群体掩码拆成两路辅助标签：$y_{\text{head}} = y \cdot \mathbb{I}(\mathbf{x} \in \mathcal{C}_{\text{head}})$，$y_{\text{tail}} = y \cdot \mathbb{I}(\mathbf{x} \in \mathcal{C}_{\text{tail}})$。也就是说，辅助标签只有在样本落进对应群体时才可能为正，群体之外的样本一律置 0。这个置零的设计是关键——它逼着共享编码器必须学会"这个样本到底属不属于这个群体"的区分能力，否则两个辅助头无法同时做对。整体优化目标把主损失和两路辅助损失加权相加：
 
-3. **机制可解释性分析**:
+$$\mathcal{L}_{\text{C2AL}} = \mathcal{L}_{\text{primary}} + \lambda_{\text{head}} \mathcal{L}_{\text{head}} + \lambda_{\text{tail}} \mathcal{L}_{\text{tail}}$$
 
-    - 功能：从数学上证明辅助损失如何精确改变 FM attention
-    - 核心思路：DHEN 的 FM attention 计算 $\mathbf{G} = \mathbf{X}\mathbf{X}^\top \mathbf{Y}$，对注意力矩阵 $\mathbf{Y}$ 求梯度得：$\nabla_{\mathbf{Y}} \mathcal{L}_{\text{C2AL}} = (\mathbf{X}\mathbf{X}^\top)(\nabla_{\mathbf{G}} \mathcal{L}_{\text{primary}} + \lambda_{\text{aux}} \nabla_{\mathbf{G}} \mathcal{L}_{\text{aux}})$
-    - 关键洞察：辅助梯度 $\nabla_{\mathbf{G}} \mathcal{L}_{\text{aux}}$ 被直接注入 $\mathbf{Y}$ 的更新——这不是间接正则化，是直接改变 attention 权重。由于辅助梯度编码了少数群体的特征交互模式，$\mathbf{Y}$ 被迫从稀疏（只捕获多数群体高频交互）变为稠密多样（也捕获少数群体的特异交互）
-    - 实证验证：可视化显示 C2AL 主要影响 attention 层权重，前置层变化很小——确认了理论分析的预测
+由于 head 和 tail 两个群体的分布本就"部分冲突"，这两路梯度会持续往不同方向拉编码器，恰好打破了主任务被多数群体梯度主导的局面。
+
+**3. 机制可解释性分析：从梯度公式证明辅助损失是"直接"改写注意力，而非间接正则。**
+
+这是全文最核心的一笔——它把辅助学习从"经验上有用"提升到"能写出因果链条"。DHEN 的 FM 注意力计算可写成 $\mathbf{G} = \mathbf{X}\mathbf{X}^\top \mathbf{Y}$，其中 $\mathbf{Y}$ 是注意力矩阵。对 $\mathbf{Y}$ 求 C2AL 总损失的梯度，可以推出：
+
+$$\nabla_{\mathbf{Y}} \mathcal{L}_{\text{C2AL}} = (\mathbf{X}\mathbf{X}^\top)(\nabla_{\mathbf{G}} \mathcal{L}_{\text{primary}} + \lambda_{\text{aux}} \nabla_{\mathbf{G}} \mathcal{L}_{\text{aux}})$$
+
+这个式子说明，辅助梯度 $\nabla_{\mathbf{G}} \mathcal{L}_{\text{aux}}$ 并不是绕一圈通过别的层间接影响表征，而是被 $(\mathbf{X}\mathbf{X}^\top)$ 直接叠加进了 $\mathbf{Y}$ 的更新量里。因为辅助梯度本身编码的就是少数群体特有的特征交互模式，$\mathbf{Y}$ 就被这股力量从原本的稀疏状态（只捕获多数群体的高频交互、大量交互路径被浪费）推向稠密多样（少数群体的特异交互也被激活）。论文进一步用权重可视化做了实证验证：C2AL 主要改变的是注意力层的权重，前置层几乎纹丝不动——这和梯度公式预测的"力直接作用在 $\mathbf{Y}$ 上"完全吻合。
 
 ### 损失函数 / 训练策略
-- 训练时：三头联合优化（primary + head + tail），辅助权重 $\lambda_{\text{head}}, \lambda_{\text{tail}}$ 为超参数
-- 推理时：丢弃辅助头，恢复为单任务架构——零额外推理开销
-- 这是 C2AL 的核心工程优势：训练 cost 增加很小（辅助头很轻），推理 cost 完全不变
+训练时三个头（primary + head + tail）联合优化，辅助权重 $\lambda_{\text{head}}, \lambda_{\text{tail}}$ 是超参数。推理时辅助头被丢弃，模型退回单任务架构。这正是 C2AL 在工业落地上的关键优势：辅助头很轻，训练成本只增加一点点，而推理成本完全不变——对推理延迟直接换算成收入的线上系统而言，这一点至关重要。
 
 ## 实验关键数据
 
@@ -125,8 +126,8 @@ tags:
 - [\[NeurIPS 2025\] Semantic Retrieval Augmented Contrastive Learning for Sequential Recommendation](../../NeurIPS2025/recommender/semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)
 - [\[ICML 2026\] Rethinking Contrastive Learning for Graph Collaborative Filtering: Limitations and a Simple Remedy](../../ICML2026/recommender/rethinking_contrastive_learning_for_graph_collaborative_filtering_limitations_an.md)
 - [\[AAAI 2026\] TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning](../../AAAI2026/recommender/travellama_a_multimodal_travel_assistant_with_large-scale_dataset_and_structured.md)
+- [\[ICML 2026\] GCIB: Graph Contrastive Information Bottleneck for Multi-Behavior Recommendation](../../ICML2026/recommender/gcib_graph_contrastive_information_bottleneck_for_multi-behavior_recommendation.md)
 - [\[ICLR 2026\] From Evaluation to Defense: Advancing Safety in Video Large Language Models](from_evaluation_to_defense_advancing_safety_in_video_large_language_models.md)
-- [\[NeurIPS 2025\] ASAP: An Agentic Solution to Auto-Optimize Performance of Large-Scale LLM Training](../../NeurIPS2025/recommender/asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)
 
 </div>
 

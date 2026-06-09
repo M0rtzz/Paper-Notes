@@ -42,39 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文提出了一个**解析式低精度训练框架（Analytical Low-Precision Training Framework）**，明确建模以下量化操作：
-- Master 维护全精度权重 $\mathbf{W}_t$，但向 worker 传输量化版本 $\mathbf{W}_t^Q$
-- Worker 使用 $\mathbf{W}_t^Q$ 进行前向和反向传播，计算梯度后量化并回传
-- Master 反量化梯度，更新量化的优化器状态（动量、二阶矩），应用优化器更新后重新量化存储
-
-框架的关键特征：使用**相对误差模型（Relative Error Model）**代替传统的无偏量化假设。
+本文构建了一个解析式低精度训练框架，把一轮 master-worker 训练拆成四处量化点来追踪：master 维护全精度权重 $\mathbf{W}_t$ 但只向 worker 传量化版本 $\mathbf{W}_t^Q$，worker 用 $\mathbf{W}_t^Q$ 做前反向、量化梯度回传，master 再反量化梯度、更新被量化的动量与二阶矩、应用优化器更新后重新量化存储。整个分析的支点是用**相对误差模型**取代以往的无偏量化假设，从而能在不引入误差反馈机制的前提下，逐个组件地刻画量化对收敛率的影响。
 
 ### 关键设计
-1. **浮点量化的相对误差建模（Assumption 3.1）**: 对于任意标量 $x$，量化后的值 $x^Q$ 满足 $|x^Q - x| \leq q|x|$，其中 $q = \Theta(2^{-M})$，$M$ 为目标浮点格式的尾数长度。设计动机：浮点量化（如 FP32 → BF16）截断尾数位但保持符号位和指数位不变，因此量化误差与数值本身的量级成比例——这正是相对误差的特征。该假设在实践中通过 per-tensor/per-channel scaling 技术得到良好满足。
 
-2. **组件级分离量化误差**: 框架对四种量化误差分别建模并追踪其对收敛的影响：
+**1. 相对误差量化模型：让浮点截断进入可分析的形式。**
+以往的量化收敛理论大多假设量化是无偏的，或依赖误差反馈来抵消偏差，但浮点量化两者都不满足——FP32→BF16 这类操作只截断尾数、保留符号位和指数位，误差天然与数值量级成比例。本文据此提出相对误差假设：对任意标量 $x$，量化值满足 $|x^Q - x| \leq q|x|$，其中 $q = \Theta(2^{-M})$，$M$ 为目标格式的尾数长度。这个看似简单的改写是整套分析的钥匙，它既贴合 per-tensor / per-channel scaling 在实践中的行为，又让量化误差随权重、梯度的范数一起进入不等式，使后续逐项放缩成为可能。
 
-    - $q_W$（权重量化误差）
-    - $q_G$（梯度量化误差）
-    - $q_M$（一阶矩/动量量化误差）
-    - $q_V$（二阶矩量化误差）
-   
-   这种分离使得理论可以精确刻画**不同组件的量化对收敛的差异化影响**。
+**2. 组件级分离的误差追踪：把"谁更怕量化"问题拆开。**
+框架不把量化误差合并成一个常数，而是对四个组件分别引入误差系数：权重 $q_W$、梯度 $q_G$、一阶矩 $q_M$、二阶矩 $q_V$，并在收敛证明中各自保留其传播路径。这种分离正是本文能回答"应该给哪个组件更高精度"的前提——最终的收敛界会显式地把每个 $q$ 与不同的 $T$ 多项式挂钩，使理论结论可以直接翻译成混合精度的位宽分配。
 
-3. **量化 Adam 的收敛定理（Theorem 4.5）**: 在标准假设（无偏随机梯度、有界梯度、$L$-光滑）下，当设置 $\eta = \Theta(1/\sqrt{T})$, $1 - \beta_2 = \Theta(1/T)$, 且量化误差满足 $q_G, q_M = O(1/T)$, $q_W, q_V = O(1/T^2)$ 时，量化 Adam 达到 $\tilde{O}(T^{-1/4})$ 收敛率——匹配全精度 Adam 的已知最优率。
+**3. 量化 Adam 的收敛定理：暴露二阶矩与权重是精度瓶颈。**
+在无偏随机梯度、$\ell_\infty$ 有界梯度、$L$-光滑等标准假设下，取 $\eta = \Theta(1/\sqrt{T})$、$1-\beta_2 = \Theta(1/T)$，并要求 $q_G, q_M = O(1/T)$ 而 $q_W, q_V = O(1/T^2)$，量化 Adam 即可达到 $\tilde{O}(T^{-1/4})$，与全精度 Adam 的已知最优率一致。关键之处在于这两类条件的不对称：二阶矩 $q_V$ 和权重 $q_W$ 需要苛刻的 $O(1/T^2)$，而梯度和一阶矩只需 $O(1/T)$。原因来自 Adam 的逆平方根结构——当 $\beta_2\to 1$ 时二阶矩几乎不衰减，其上的量化误差会被 $1/\sqrt{v}$ 非线性放大，因此必须用更高精度压住。
 
-   **关键发现**: Adam 对二阶矩 ($q_V$) 和权重 ($q_W$) 的精度要求更严格（需要 $O(1/T^2)$），而对梯度和一阶矩的要求较宽松（$O(1/T)$）。这是因为 $\beta_2 \to 1$ 时二阶矩的累积误差通过逆平方根非线性放大。
-
-4. **量化 Muon 的收敛定理（Theorem 4.6）**: 对于 Muon，所有组件只需 $q_G = q_W = q_M = O(T^{-1/2})$ 即可保持 $O(T^{-1/4})$ 收敛率。这一条件**显著弱于 Adam**（$O(T^{-1/2})$ vs $O(T^{-1})$ 和 $O(T^{-2})$）。理论解释：Muon 使用基于 SVD 的 sign 操作符，避免了由二阶矩逆平方根引起的量化误差放大。
+**4. 量化 Muon 的收敛定理：解释它为何更耐受低精度。**
+对 Muon，定理只需所有组件统一满足 $q_G = q_W = q_M = O(T^{-1/2})$ 就能保持同样的 $O(T^{-1/4})$ 收敛率，这一要求明显宽于 Adam 的 $O(1/T)$ 与 $O(1/T^2)$。机制上的差别在于 Muon 用基于 SVD 的 sign 型更新替代了逐元素的二阶矩归一化，既然没有逆平方根这一放大环节，量化误差就不会被非线性撑大，从理论上印证了实践中观察到的 Muon 在低精度下更稳健的现象。
 
 ### 损失函数 / 训练策略
-理论分析在以下标准假设下进行：
-- **Assumption 4.1**: 无偏随机梯度
-- **Assumption 4.2**: 梯度有界（Adam: $\ell_\infty$ 有界；Muon: 方差有界）
-- **Assumption 4.3**: 目标函数 $L$-光滑
-- **Assumption 4.4**: 有界初始化
-
-量化使用模拟方式实现：保持指数和符号位不变，截断尾数位至 $M$ 位，并应用随机舍入。
+两个定理共享一组标准假设：无偏随机梯度、梯度有界（Adam 取 $\ell_\infty$ 有界、Muon 取方差有界）、目标 $L$-光滑、初始化有界。量化在实现上以模拟方式给出——固定符号位与指数位、把尾数截断到 $M$ 位并配合随机舍入，从而与相对误差模型保持一致。
 
 ## 实验关键数据
 
@@ -154,8 +139,8 @@ tags:
 - [\[ICLR 2026\] MT-DAO: Multi-Timescale Distributed Adaptive Optimizers with Local Updates](mt-dao_multi-timescale_distributed_adaptive_optimizers_with_local_updates.md)
 - [\[AAAI 2026\] A Unified Convergence Analysis for Semi-Decentralized Learning: Sampled-to-Sampled vs. Sampled-to-All Communication](../../AAAI2026/optimization/a_unified_convergence_analysis_for_semi-decentralized_learni.md)
 - [\[ICLR 2026\] Non-Asymptotic Analysis of Efficiency in Conformalized Regression](non-asymptotic_analysis_of_efficiency_in_conformalized_regression.md)
-- [\[ICLR 2026\] Rethinking Consistent Multi-Label Classification Under Inexact Supervision](rethinking_consistent_multi-label_classification_under_inexact_supervision.md)
-- [\[CVPR 2026\] Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift](../../CVPR2026/optimization/fed-ade_adaptive_learning_rate_for_federated_post-adaptation_under_distribution_.md)
+- [\[ICLR 2026\] When to Restart? Exploring Escalating Restarts on Convergence](when_to_restart_exploring_escalating_restarts_on_convergence.md)
+- [\[ICLR 2026\] Conformal Prediction Adaptive to Unknown Subpopulation Shifts](conformal_prediction_adaptive_to_unknown_subpopulation_shifts.md)
 
 </div>
 

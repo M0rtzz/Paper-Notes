@@ -39,27 +39,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Ano 的更新规则：$x_{k+1} = x_k - \frac{\eta_k}{\sqrt{\hat{v}_k} + \epsilon} \cdot |g_k| \cdot \text{sign}(m_k) - \eta_k \lambda x_k$。关键差异在于 $|g_k| \cdot \text{sign}(m_k)$ 替代了 Adam 的 $m_k$。
+Ano 要解决的是：Adam 在噪声/非平稳环境里更新太保守，根子在于它把"往哪走"和"走多大步"都交给同一个动量 $m_k$ 去算。Ano 的做法是把这两件事拆开——方向只看动量的符号 $\text{sign}(m_k)$，步长只看当前梯度的绝对值 $|g_k|$，再除以一个改进版的方差估计做归一化。完整更新规则为：
+
+$$x_{k+1} = x_k - \frac{\eta_k}{\sqrt{\hat{v}_k} + \epsilon} \cdot |g_k| \cdot \text{sign}(m_k) - \eta_k \lambda x_k$$
+
+和 Adam 的唯一结构性差异，就是用 $|g_k| \cdot \text{sign}(m_k)$ 顶替了 $m_k$。其余部分（学习率 $\eta_k$、二阶矩归一化、解耦权重衰减 $\lambda$）都保持 Adam 的框架，所以内存和计算开销不变。
 
 ### 关键设计
 
-1. **Sign-Magnitude Decoupling**:
+**1. 符号-幅度解耦：方向交给动量符号、步长交给瞬时梯度。**
 
-    - 功能：方向来自动量符号 $\text{sign}(m_k)$，幅度来自瞬时梯度 $|g_k|$
-    - vs Adam：Adam 用 $m_k = |m_k| \cdot \text{sign}(m_k)$，即方向和幅度都来自动量。大噪声时 $|m_k|$ 被平均拉低（方向震荡导致抵消），更新变慢
-    - vs SignSGD/Lion：纯 sign 方法丢失了幅度信息。Ano 保留了幅度但用更灵敏的 $|g_k|$ 而非滞后的 $|m_k|$
+这一步直接针对前面那个痛点——Adam 写成 $m_k = |m_k| \cdot \text{sign}(m_k)$，方向和幅度都从动量里出。问题是当噪声尖峰让梯度反向震荡时，动量做平均会把正负相消，$|m_k|$ 被拉低，于是该走的大步反而缩成了小步，越是噪声大越保守。Ano 把方向和步长拆成两路信号：方向仍用 $\text{sign}(m_k)$，因为动量平滑过的方向更稳，不会被单个尖峰带偏；步长则换成当前梯度的绝对值 $|g_k|$，它对梯度的真实变化即时响应，不会被历史拖慢。和纯 sign 方法（SignSGD、Lion）相比，那些方法把幅度信息整个丢了，Ano 则保留了幅度，只是把滞后的 $|m_k|$ 换成了更灵敏的 $|g_k|$——于是同时拿到了"方向稳"和"步长快"。
 
-2. **改进的二阶矩更新**:
+**2. 改进的二阶矩更新：在 Yogi 的快速恢复上再加一层衰减。**
 
-    - 公式：$v_k = \beta_2 v_{k-1} - (1-\beta_2) \cdot \text{sign}(v_{k-1} - g_k^2) \cdot g_k^2$
-    - 继承 Yogi 的非对称更新（快速恢复），加入 $\beta_2$ 衰减控制记忆长度
-    - 设计动机：Adam 的 EMA 让方差尖峰影响太久，Yogi 恢复快但缺乏衰减。加衰减 = 既快速恢复又平滑遗忘
+二阶矩负责自适应缩放，Ano 用的是带衰减的 Yogi 式更新：
 
-3. **Anolog 变体（自适应 β₁）**:
+$$v_k = \beta_2 v_{k-1} - (1-\beta_2) \cdot \text{sign}(v_{k-1} - g_k^2) \cdot g_k^2$$
 
-    - $\beta_{1,k} = 1 - 1/\log(k+2)$——对数调度逐步增大动量窗口
-    - 消除了 $\beta_1$ 超参数调优的需求
-    - 比根号或调和调度更温和——保持非平稳环境中的适应性
+它继承了 Yogi 的非对称性——靠 $\text{sign}(v_{k-1} - g_k^2)$ 让方差在尖峰过后能快速回落，而不像 Adam 的 EMA 那样让一次尖峰拖累后续很多步。但纯 Yogi 缺一个遗忘机制，所以 Ano 额外用 $\beta_2$ 给历史方差加了衰减，控制记忆长度。两者合起来就是"既能快速从尖峰恢复，又能平滑地遗忘旧噪声"，这正是噪声环境里想要的方差估计行为。
+
+**3. Anolog 变体：用对数调度自适应 $\beta_1$，省掉调参。**
+
+固定的 $\beta_1$ 在非平稳环境里很难选——大了适应慢、小了又不够稳。Anolog 把它做成随步数变化的调度 $\beta_{1,k} = 1 - 1/\log(k+2)$，让动量窗口随训练逐步增大。对数增长比根号或调和调度都更温和，前期窗口小、对环境变化保持敏感，后期才慢慢加大平滑力度，因而在非平稳目标下仍能保持适应性。它的实用价值在于直接消掉了 $\beta_1$ 这个超参的调优需求，代价只是牺牲一点点峰值性能。
 
 ### 损失函数 / 训练策略
 与 Adam 同样的内存和计算成本（维护 $m_k, v_k$）。默认 $\beta_1=0.92, \beta_2=0.99$。
@@ -112,11 +114,11 @@ Ano 的更新规则：$x_{k+1} = x_k - \frac{\eta_k}{\sqrt{\hat{v}_k} + \epsilon
 
 ## 相关论文
 
-- [\[ICLR 2026\] Speculative Actions: A Lossless Framework for Faster AI Agents](speculative_actions_faster_ai_agents.md)
 - [\[ICLR 2026\] Noisy-Pair Robust Representation Alignment for Positive-Unlabeled Learning](noisy-pair_robust_representation_alignment_for_positive-unlabeled_learning.md)
-- [\[AAAI 2026\] Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](../../AAAI2026/others/faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
+- [\[ICLR 2026\] Speculative Actions: A Lossless Framework for Faster AI Agents](speculative_actions_faster_ai_agents.md)
 - [\[ICML 2025\] Generation from Noisy Examples](../../ICML2025/others/generation_from_noisy_examples.md)
-- [\[ACL 2025\] Better Embeddings with Coupled Adam](../../ACL2025/others/better_embeddings_with_coupled_adam.md)
+- [\[AAAI 2026\] Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables](../../AAAI2026/others/faster_certified_symmetry_breaking_using_orders_with_auxiliary_variables.md)
+- [\[ICML 2026\] Envy-Free Allocation of Indivisible Goods via Noisy Queries](../../ICML2026/others/envy-free_allocation_of_indivisible_goods_via_noisy_queries.md)
 
 </div>
 

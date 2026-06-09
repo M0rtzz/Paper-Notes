@@ -121,10 +121,10 @@ $$\langle x_{1:d} \rangle_{\mathcal{H},n} := \bigcap_{h \in \mathcal{H}(x_{1:d};
 ## 相关论文
 
 - [\[ICCV 2025\] Joint Asymmetric Loss for Learning with Noisy Labels](../../ICCV2025/others/joint_asymmetric_loss_for_learning_with_noisy_labels.md)
-- [\[ACL 2025\] Predicting Through Generation: Why Generation Is Better for Prediction](../../ACL2025/others/predicting_through_generation_why_generation_is_better_for_prediction.md)
 - [\[ICLR 2026\] ANO: Faster is Better in Noisy Landscapes](../../ICLR2026/others/ano_faster_is_better_in_noisy_landscape.md)
+- [\[ACL 2025\] Predicting Through Generation: Why Generation Is Better for Prediction](../../ACL2025/others/predicting_through_generation_why_generation_is_better_for_prediction.md)
 - [\[ECCV 2024\] Foster Adaptivity and Balance in Learning with Noisy Labels](../../ECCV2024/others/foster_adaptivity_and_balance_in_learning_with_noisy_labels.md)
-- [\[ACL 2025\] GeAR: Generation Augmented Retrieval](../../ACL2025/others/gear_generation_augmented_retrieval.md)
+- [\[ACL 2025\] The Noisy Path from Source to Citation: Measuring How Scholars Engage with Past Research](../../ACL2025/others/the_noisy_path_from_source_to_citation_measuring_how_scholars_engage_with_past_r.md)
 
 </div>
 

@@ -44,30 +44,21 @@ Blueprint-Bench 通过"从公寓室内照片生成 2D 平面图"的任务评测 
 
 ### 整体框架
 
-50 套公寓 × 每套约 20 张室内照片 + 对应的标准化平面图真值。模型接收照片和 9 条严格格式规范（黑墙 3px / 绿门 / 红点标记房间中心 / 纯白背景等），输出符合规范的平面图图像。评测分两步：(1) 从标准化图像自动提取房间连通图和面积排序；(2) 与真值对比计算加权相似性分数。三类参与者：LLM（GPT-5/Claude 4 Opus/Gemini 2.5 Pro/Grok-4/GPT-4o/GPT-5-mini）、图像生成模型（GPT-Image/NanoBanana）、Agent（Codex CLI/Claude Code），加上人类基线和随机基线。
+Blueprint-Bench 把"空间智能"测试包装成一个统一接口：给定一套公寓的约 20 张室内照片，让任何能"看图出图"的系统画出这套公寓的 2D 平面图，再用一个全自动算法把生成图和真值平面图的相似度量化成 0~1 的分数。数据集为 50 套公寓的照片 + 标准化平面图真值；参与者分三类——LLM（GPT-5 / Claude 4 Opus / Gemini 2.5 Pro / Grok-4 / GPT-4o / GPT-5-mini）、图像生成模型（GPT-Image / NanoBanana）、Agent（Codex CLI / Claude Code），并以人类和随机基线作为上下界。
 
-### 关键设计 1：标准化数据集与格式规范
+### 关键设计
 
-- **功能**：确保评分算法能稳健地从任何参与者的输出中提取空间结构
-- **核心思路**：制定 9 条严格规则——黑色墙壁（3px宽）、绿色门（覆盖在黑线上）、红色圆点（10×10px 标记房间中心）、纯白背景、每个房间完全封闭、禁止家具/窗户等细节
-- **设计动机**：牺牲一定表达力换取评分的可靠性——在当前模型能力水平下（大多表现接近随机），可靠的评分比丰富的表达更重要
+**1. 标准化格式规范：让任意输出都能被机器读懂。**
 
-### 关键设计 2：两阶段自动评测算法
+平面图本身可以画得千奇百怪，但评分算法需要稳定地从中抽出"哪些房间、谁连着谁"。Blueprint-Bench 因此给所有参与者下达 9 条严格的绘图规则：墙壁用 3px 黑线、门用绿色短线覆盖在墙线上、每个房间中心用 10×10px 的红色圆点标记、纯白背景、每个房间必须完全封闭、禁止画家具/窗户/装饰等任何细节。这等于用"表达力"换"可读性"——在当前模型大多只能画到随机水平的现实下，一个稳健可复现的评分远比花哨的平面图更有价值，红点和封闭墙壁正是后续自动提取房间与连通关系的锚点。
 
-- **功能**：将两张平面图的相似性量化为 0~1 的分数
-- **核心思路**：**提取阶段**——HSV 颜色过滤检测红色圆心（房间位置）→ 二值化掩码排除墙壁和门 → flood-fill 从每个红色中心分割房间边界 → 扫描墙壁检测绿色门及方向（水平/垂直）→ 按面积排序分配房间 ID。**评分阶段**——计算 6 个相似性分量的加权平均：边重叠 Jaccard（50%）、度相关性（20%）、图密度匹配（10%）、房间数准确率（10%）、门数准确率（5%）、门方向分布（5%）
-- **设计动机**：基于连通图而非像素匹配，避免微小位移导致的虚假惩罚；曾尝试用 LLM 做提取但发现 LLM 极不擅长理解平面图（频繁误判房间连通性和大小排序）
+**2. 两阶段自动评测：从图像到连通图再到分数。**
 
-### 关键设计 3：跨架构公平对比
+评分先做几何提取再做图相似度比较。提取阶段是一条纯 CV 流水线：先用 HSV 颜色过滤定位红色圆心得到每个房间的位置，再二值化掩码排除黑墙与绿门，从每个红心做 flood-fill 分割出房间边界，沿墙扫描检测绿色门及其水平/垂直方向，最后按面积大小给房间排序分配 ID。把两张图都化为"房间为节点、门为边"的连通图后，评分阶段取 6 个分量的加权平均：边重叠 Jaccard（50%，衡量连通关系是否对）、度相关性（20%，每个房间门数分布是否匹配）、图密度匹配（10%）、房间数准确率（10%）、门数准确率（5%）、门方向分布（5%）。之所以基于连通图而非逐像素匹配，是因为像素对比会被微小平移虚假地重罚；团队也试过让 LLM 直接读平面图做提取，但发现 LLM 极不擅长理解平面图，频繁误判房间连通性和面积排序，只能退回到确定性的 CV 算法。
 
-- **功能**：首次在同一任务上公平比较 LLM、图像生成模型和 Agent 的空间智能
-- **核心思路**：LLM 生成 SVG 代码再转图像；图像模型接收照片直接生成平面图；Agent 在 Docker Linux 环境中可自由查看图片、编写和运行代码、迭代改进
-- **设计动机**：Agent 设置（可迭代查看和修改）模拟人类的工作方式——测试"迭代能否弥补单次推理的不足"
+**3. 跨架构统一接口：同一任务上公平对比三类系统。**
 
-### 基线设计
-
-- **随机基线**：用模型在无图像输入时生成典型平面图，衡量下界
-- **人类基线**：在相同条件下（仅看照片，不实地走访）绘制平面图
+三类参与者对同一任务有不同的"作答方式"，但都被收敛到"输入照片序列、输出平面图图像"这个统一接口上：LLM 生成 SVG 代码再渲染成图像，图像生成模型直接吃照片吐平面图，Agent 则被放进一个 Docker Linux 环境里、可以自由查看图片、写代码、运行、迭代修改。Agent 这一设定刻意模拟人类的工作流，用来回答一个关键问题——当单次推理不够强时，"反复看、反复改"的迭代能力能否补上空间推理的缺口。配套两条基线界定坐标系：随机基线让模型在不看任何照片时凭先验画一张"典型平面图"作为下界，人类基线则在与模型相同的条件下（只看照片、不实地走访）手绘平面图作为上界。
 
 ## 实验关键数据
 
@@ -147,9 +138,9 @@ Blueprint-Bench 通过"从公寓室内照片生成 2D 平面图"的任务评测 
 
 - [\[ICLR 2026\] Everything in Its Place: Benchmarking Spatial Intelligence of Text-to-Image Models](everything_in_its_place_benchmarking_spatial_intelligence_of_text-to-image_model.md)
 - [\[CVPR 2026\] MICON-Bench: Benchmarking and Enhancing Multi-Image Context Image Generation in Unified Multimodal Models](../../CVPR2026/image_generation/micon-bench_benchmarking_and_enhancing_multi-image_context_image_generation_in_u.md)
+- [\[ICLR 2026\] MVAR: Visual Autoregressive Modeling with Scale and Spatial Markovian Conditioning](mvar_visual_autoregressive_modeling_with_scale_and_spatial_markovian_conditionin.md)
 - [\[NeurIPS 2025\] Is Artificial Intelligence Generated Image Detection a Solved Problem?](../../NeurIPS2025/image_generation/is_artificial_intelligence_generated_image_detection_a_solved_problem.md)
 - [\[ICLR 2026\] SSG: Scaled Spatial Guidance for Multi-Scale Visual Autoregressive Generation](ssg_scaled_spatial_guidance_for_multi-scale_visual_autoregressive_generation.md)
-- [\[ICLR 2026\] Step-Aware Residual-Guided Diffusion for EEG Spatial Super-Resolution](step-aware_residual-guided_diffusion_for_eeg_spatial_super-resolution.md)
 
 </div>
 

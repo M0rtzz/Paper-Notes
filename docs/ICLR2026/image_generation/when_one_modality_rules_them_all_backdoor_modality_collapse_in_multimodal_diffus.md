@@ -41,37 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-二模态（图像+文本）设定下，模态集 $\mathcal{M} = \{I, T\}$。对每个样本计算4种coalition的value function $v(\emptyset), v(\{I\}), v(\{T\}), v(\{I,T\})$，基于此精确计算Shapley值。
+
+本文不提新攻击，而是搭一套把"后门到底靠哪个模态触发"量化出来的分析框架。在图像+文本的二模态设定下，把模态集 $\mathcal{M}=\{I,T\}$ 视为合作博弈的两个玩家，后门激活强度视为收益，于是只需评估 $\emptyset$、$\{I\}$、$\{T\}$、$\{I,T\}$ 四种触发器组合的收益，就能用 Shapley 值精确分解每个模态的贡献并检验二者是否协同。
 
 ### 关键设计
 
-1. **Per-example值函数**:
+**1. Per-example 值函数：把"后门被触发了多少"变成一个可加减的标量。** 要做归因，首先得给每种触发器组合 $S$ 定义一个收益。直接用攻击成功率会丢掉样本级信息，作者改在 CLIP 嵌入空间上度量：生成结果 $\mathbf{z}_S$ 与后门目标 $\mathbf{z}_{\text{tr}}$ 的接近程度，减去它与干净参考 $\mathbf{z}_{\text{cl}}$ 的接近程度，即 $v(S)=\cos(\mathbf{z}_S,\mathbf{z}_{\text{tr}})-\cos(\mathbf{z}_S,\mathbf{z}_{\text{cl}})$。这样 $v(S)$ 越大表示组合 $S$ 越能把输出推向后门目标，且它是连续标量，能直接代入 Shapley 公式做边际差分。
 
-    - 对每个样本和coalition $S$，计算触发器分数和正常分数的差值
-    - $v(S) = s_{\text{tr}}(S) - s_{\text{nr}}(S) = \cos(\mathbf{z}_S, \mathbf{z}_{\text{tr}}) - \cos(\mathbf{z}_S, \mathbf{z}_{\text{cl}})$
-    - 使用CLIP嵌入空间的余弦相似度
-    - 衡量输出更接近后门目标还是干净参考
+**2. Trigger Modality Attribution（TMA）：用 Shapley 值给每个模态分配"它该负多少责任"。** 知道四个 $v(S)$ 后，按 Shapley 公式算出每个模态在所有加入顺序上的平均边际贡献：$\phi_I=\frac12\big(v(\{I\})-v(\emptyset)\big)+\frac12\big(v(\{I,T\})-v(\{T\})\big)$，文本侧 $\phi_T$ 对称。二模态下排列只有两种，所以四次评估就能精确求解，无需蒙特卡洛近似。Shapley 值满足效率公理 $\phi_I+\phi_T=v(\{I,T\})-v(\emptyset)$，意味着两个模态的归因恰好瓜分了联合触发带来的全部后门收益，因此 $\phi_I$ 与 $\phi_T$ 的相对大小能直接读出"谁在主导后门"。
 
-2. **Trigger Modality Attribution (TMA)**:
+**3. Cross-Trigger Interaction（CTI）：判断两个触发器是协同还是互相拆台。** TMA 只说了各模态分到多少，但联合触发究竟比单模态之和更强还是更弱，需要单独的超可加性检验。作者定义交互项 $\mathcal{I}=v(\{I,T\})-v(\{I\})-v(\{T\})+v(\emptyset)$：$\mathcal{I}>0$ 说明双模态一起上比各自相加还强，是真正的协同；$\mathcal{I}<0$ 则说明存在干扰或冗余，多放一个触发器反而帮倒忙。在验证集上取均值 $\bar{\mathcal{I}}=\frac{1}{|\mathcal{D}_{\text{val}}|}\sum_x \mathcal{I}(x)$ 即得数据集级别的交互强度，配合 TMA 一起就能刻画"赢者通吃"的坍缩动态。
 
-    - $\phi_I = \frac{1}{2}(v(\{I\}) - v(\emptyset)) + \frac{1}{2}(v(\{I,T\}) - v(\{T\}))$
-    - $\phi_T = \frac{1}{2}(v(\{T\}) - v(\emptyset)) + \frac{1}{2}(v(\{I,T\}) - v(\{I\}))$
-    - 二模态精确计算（4次评估，无需蒙特卡洛近似）
-    - Efficiency axiom：$\phi_I + \phi_T = v(\{I,T\}) - v(\emptyset)$
-
-3. **Cross-Trigger Interaction (CTI)**:
-
-    - $\mathcal{I} = v(\{I,T\}) - v(\{I\}) - v(\{T\}) + v(\emptyset)$
-    - $\mathcal{I} > 0$：超可加性合作（真正的协同）
-    - $\mathcal{I} < 0$：干扰/冗余
-    - 数据集级别聚合：$\bar{\mathcal{I}} = \frac{1}{|\mathcal{D}_{\text{val}}|} \sum \mathcal{I}(x)$
-
-4. **实验设置**:
-
-    - 三对触发器：White-box+mignneko、Eyeglasses+anonymous、Stop-sign+latte coffee
-    - 两种投毒协议：OR（三个等大小子集分别投毒）、AND（仅联合投毒）
-    - 三种投毒比例：1%、5%、10%
-    - 模型：InstructPix2Pix，数据集：CelebA
+整套分析在 InstructPix2Pix + CelebA 上展开，覆盖三对触发器（White-box+mignneko、Eyeglasses+anonymous、Stop-sign+latte coffee）、两种投毒协议（OR 投毒三个等大小子集、AND 仅联合投毒）和 1%/5%/10% 三种投毒比例。
 
 ## 实验关键数据
 

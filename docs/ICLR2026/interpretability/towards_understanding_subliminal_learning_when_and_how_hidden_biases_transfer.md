@@ -39,53 +39,19 @@ Cloud et al. (2025) 的研究挑战了这一观点：教师的隐藏偏好可以
 
 ### 整体框架
 
-本文围绕"分歧 token"（divergence tokens）这一核心概念展开分析：
+本文不提出新模型，而是用一套受控实验加机制分析去拆解潜意识学习"何时、如何"发生：先逐一排除 logit 泄漏和 token 纠缠这两个先前假说，再锁定真正的载体——少数"分歧 token"，最后用因果分析把传递路径定位到早期层，并反过来验证这条路径有多脆弱。整套分析的关键技巧是改用贪心采样生成微调数据，消除随机性，让"哪些 token 在起作用"变得可观测。
 
-1. **排除先前假说**：证明 token 纠缠和 logit 泄漏都不是必要条件
-2. **发现分歧 token**：识别关键的偏好传递载体
-3. **机制分析**：定位关键层并分析脆弱性
+### 关键设计
 
-### 关键设计 1：排除 Token 纠缠和 Logit 泄漏
+**1. 排除 logit 泄漏与 token 纠缠：先证明旧解释不必要。** 先前工作把硬蒸馏下的偏好传递归因于 logit 泄漏（采样随机性偷偷携带了完整分布信息）和 token 纠缠（某些 token 在嵌入空间高度相关，互相牵连）。本文用两个对照直接证伪：其一，改用贪心采样生成微调数据，彻底切断 logit 泄漏，偏好依然传递，某些原本传不过去的偏好（如 Qwen 上的 'dog'）在贪心下反而成功；其二，把含有 50 个最纠缠 token 的训练样本全部移除，隐藏偏好仍然转移。这说明真正的载体既不是随机性，也不是纠缠 token，需要另寻其源。
 
-- **Logit 泄漏**：使用贪心采样（greedy sampling）生成微调数据，完全避免 logit 泄漏。实验表明偏好仍可传递，甚至某些之前无法传递的偏好（如 Qwen 上的 'dog'）在贪心采样下反而成功传递
-- **Token 纠缠**：移除所有包含 50 个最纠缠 token 的训练样本后，隐藏偏好仍可传递
+**2. 分歧 token：定位偏好真正寄生的位置。** 在贪心采样下，持不同偏好的教师面对同一 prompt 往往生成大段完全相同的 token，只在个别位置突然分叉——这些分叉点就是隐藏偏好显形的地方。形式化地，给定偏好 $b$ 的教师生成的前缀 $x_{<k}$，token $x_k$ 被判为分歧 token，当且仅当存在另一偏好 $b' \neq b$ 的教师，使得 $\arg\max_t p_b(t \mid x_{<k}) = x_k$ 而 $\arg\max_t p_{b'}(t \mid x_{<k}) \neq x_k$，即同一前缀下不同偏好教师的贪心选择在此处出现分歧。这类 token 极其稀少（Qwen 约 7.5%、Gemma 约 18.3%），却恰好是偏好信息的承载者。
 
-$$\text{Finding 1: 即使没有 logit 泄漏和纠缠 token，隐藏偏好仍可转移}$$
+**3. 损失遮蔽实验：用因果证据锁死分歧 token。** 仅识别出分歧 token 还不够，需要证明它们是因果驱动而非伴随现象。做法是控制训练损失只作用在哪些 token 上：只在那约 4.7% 的分歧 token 上计算损失训练，偏好传递被完整保留甚至增强；反过来遮蔽这些 token、只在其余约 95% 的 token 上训练，偏好传递基本消失。一正一反两组实验把"分歧 token 是潜意识学习的关键驱动力"从相关性推到了因果性。
 
-### 关键设计 2：分歧 Token（Divergence Tokens）
+**4. 关键层定位：把传递路径收缩到单个早期层。** 锁定 token 之后再追问偏好藏在网络的哪一层。通过因果中介分析（causal mediation analysis）与归因补丁（attribution patching），发现影响集中在分歧 token 首次出现位置上的早期层：只微调单个早期层（如 layer 0 或 layer 7）就足以诱导潜意识学习，而单独微调中后期层（layer 14、21、27、33）几乎传不出任何偏好。这把抽象的"传递"落到了可干预的具体层，也解释了为何蒸馏会无意间复制隐藏特质。
 
-在贪心采样下，不同偏好的教师对同一 prompt 常常产生大量相同的 token，然后在某些位置突然分歧。
-
-**定义**：给定由偏好 $b$ 的教师生成的前缀 $x_{<k}$，token $x_k$ 是分歧 token 当且仅当存在另一偏好 $b' \neq b$ 的教师使得：
-
-$$\arg\max_t p_b(t \mid x_{<k}) = x_k \quad \text{且} \quad \arg\max_t p_{b'}(t \mid x_{<k}) \neq x_k$$
-
-分歧 token 非常稀少（Qwen 约 7.5%，Gemma 约 18.3%），但因果效应显著。
-
-### 关键设计 3：损失遮蔽实验
-
-- **仅在分歧 token 上训练**（约 4.7% 的 token）：通常保留甚至增强偏好传递
-- **遮蔽分歧 token**（在其余 ~95% token 上训练）：基本消除偏好传递
-
-$$\text{Finding 2: 分歧 token 是潜意识学习的关键驱动力}$$
-
-### 关键设计 4：关键层定位
-
-通过因果中介分析（causal mediation analysis）和归因补丁（attribution patching），发现：
-
-- **早期层**在分歧 token 的首次出现位置具有很强的因果影响
-- 仅微调单个早期层（如 layer 0 或 layer 7）就足以诱导潜意识学习
-- 微调中后期层（layer 14, 21, 27, 33）则几乎没有传递效果
-
-$$\text{Finding 3: 早期层是关键，微调单个早期层即可实现潜意识学习}$$
-
-### 关键设计 5：脆弱性分析
-
-- **同义改写 prompt**：随机替换 "look at these numbers" 为 "examine these numbers" 等等，通常即可抑制偏好传递，且任务性能不受影响
-- **混合教师数据**：混入 10% 无偏教师数据显著降低传递；25% 基本消除
-- **即使偏好教师自己改写 prompt**，也通常能抑制传递
-
-$$\text{Finding 4 \& 5: 潜意识学习是脆弱的}$$
+**5. 脆弱性分析：反向验证这条路径有多容易掐断。** 既然偏好寄生于少数分歧 token 与早期层，扰动这条窄路径就应能瓦解传递。三组实验印证了这点：把 prompt 做同义改写（如 "look at these numbers" 换成 "examine these numbers"），通常就能抑制传递且不损任务性能；在训练数据里混入 10% 无偏教师数据已显著削弱传递、25% 基本消除；甚至让带偏好的教师自己改写 prompt 也往往足以掐断。脆弱性既是机制结论的反向佐证，也直接给出了一条简单的防御思路。
 
 ## 实验
 
@@ -156,8 +122,8 @@ $$\text{Finding 4 \& 5: 潜意识学习是脆弱的}$$
 ## 相关论文
 
 - [\[ICLR 2026\] When Machine Learning Gets Personal: Evaluating Prediction and Explanation](when_machine_learning_gets_personal_evaluating_prediction_and_explanation.md)
-- [\[ICLR 2026\] How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
 - [\[ICLR 2026\] Hidden Breakthroughs in Language Model Training](hidden_breakthroughs_in_language_model_training.md)
+- [\[ICLR 2026\] How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding](how_do_transformers_learn_to_associate_tokens_gradient_leading_terms_bring_mecha.md)
 - [\[ICLR 2026\] When Thinking Backfires: Mechanistic Insights Into Reasoning-Induced Misalignment](when_thinking_backfires_mechanistic_insights_into_reasoning-induced_misalignment.md)
 - [\[NeurIPS 2025\] Base Models Know How to Reason, Thinking Models Learn When](../../NeurIPS2025/interpretability/base_models_know_how_to_reason_thinking_models_learn_when.md)
 

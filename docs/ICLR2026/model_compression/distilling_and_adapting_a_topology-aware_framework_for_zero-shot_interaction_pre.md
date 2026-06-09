@@ -41,68 +41,29 @@ tags:
 
 ### 整体框架
 
-CAZI-MBN由四个核心模块组成：
-
-1. **特征表示**：序列嵌入（领域LLM）+ 拓扑嵌入（统一图分词器UGT）
-2. **上下文感知增强（CAE）**：跨层注意力 + 对比学习
-3. **混合专家（MoE）**：多标签分类的自适应预测
-4. **知识蒸馏**：教师→学生的零样本泛化能力迁移
-
-训练由混合损失驱动：$\mathcal{L} = \mathcal{L}_{disc} + \mathcal{L}_{reg} + \mathcal{L}_{cls} + \beta\|\Theta\|^2$
+CAZI-MBN把多重生物网络的交互预测拆成"先用序列与拓扑两路特征刻画每个实体、再让跨层注意力与对比学习把多层信息融成统一表示、最后用混合专家做多标签预测"这条主线，并在其上叠一层教师-学生蒸馏，把依赖邻域结构的教师知识压进只看序列的学生，从而让训练时没出现过、没有任何图结构的全新实体也能被预测。教师端由混合损失 $\mathcal{L} = \mathcal{L}_{disc} + \mathcal{L}_{reg} + \mathcal{L}_{cls} + \beta\|\Theta\|^2$ 驱动，学生端再以蒸馏损失对齐。
 
 ### 关键设计
 
-**1. 特征表示层**
+**1. 双路特征表示：把序列语义和多重拓扑同时喂给模型。**
 
-**序列嵌入**：针对不同生物实体类型使用对应的预训练LLM：
-- ChemBERTa → 药物/代谢物的SMILES表示
-- DNABERT-2 → 基因序列
-- ESM-2 → 蛋白质序列
+生物实体本身的序列携带了交互预测最关键的语义，因此这一层不自己从头学编码，而是按实体类型直接复用对应的领域预训练 LLM：药物和代谢物的 SMILES 表示走 ChemBERTa，基因序列走 DNABERT-2，蛋白质序列走 ESM-2，得到各自的序列嵌入。光有序列还不够，多重网络的层间异质结构同样关键，为此作者设计了统一图分词器（UGT）来生成拓扑嵌入。UGT 先把各层的层内连接通过直和拼成超邻接矩阵 $\hat{A}$，再叠加层间连接矩阵 $C$，完整保留多重结构；随后做对称归一化 $\bar{A} = D^{-1/2}\hat{A}D^{-1/2}$ 并累加高阶项构成平滑矩阵 $\tilde{A} = \bar{A} + \bar{A}^2 + \cdots + \bar{A}^O$，让一次嵌入就同时捕捉到拓扑、多重性与高阶连接性；最后对 $\tilde{A}$ 做 SVD 得到 $U, \Sigma, V$，节点嵌入取 $e_v = \tilde{A}_{v,:} \cdot \text{LN}(U\sqrt{\Sigma} \| V\sqrt{\Sigma})$。消融显示序列 LLM 嵌入是贡献最大的组件（移除后 AUROC 掉 15-20%），印证了把序列语义放在第一位的设计取向。
 
-**统一图分词器（UGT）**：从超邻接矩阵 $\hat{A}$ 生成拓扑/多重性/高阶连接感知的节点嵌入：
-- 构建平滑高阶矩阵：$\tilde{A} = \bar{A} + \bar{A}^2 + \cdots + \bar{A}^O$，其中 $\bar{A} = D^{-1/2}\hat{A}D^{-1/2}$
-- 对 $\tilde{A}$ 做SVD分解得到 $U, \Sigma, V$
-- 节点嵌入：$e_v = \tilde{A}_{v,:} \cdot \text{LN}(U\sqrt{\Sigma} \| V\sqrt{\Sigma})$
+**2. 上下文感知增强（CAE）：用跨层注意力和对比学习把多层嵌入融成共识表示。**
 
-超邻接矩阵 $\hat{A}$ 通过直和编码层内连接，加上层间连接矩阵 $C$，完整保留多重网络结构。
+同一个实体在不同交互层里的角色并不一致，简单拼接或平均会抹掉这种差异。CAE 先做节点级跨层注意力，让每个实体在层 $p$ 的表示自适应地从其他层 $q$ 吸收信息，权重按 $a_n^{(p \leftarrow q)} = \text{softmax}\left(\frac{\sigma(\theta^{(p)} \cdot (H_n^{(p)} \otimes H_n^{(q)}))}{\sum_{l \neq p} \sigma(\theta^{(p)} \cdot (H_n^{(p)} \otimes H_n^{(l)}))}\right)$ 计算，再经层级注意力把各层聚合成统一表示 $H$。为了让 $H$ 既稳健又有判别力，作者并行挂了一套对比学习：对每层图负采样生成扰动图 $\tilde{G}_i$，用判别器区分真实边嵌入与负边嵌入（对应判别损失 $\mathcal{L}_{disc}$），同时学一个共识嵌入 $Z$，通过正则化损失 $\mathcal{L}_{reg} = 1 + \text{CosineSim}(H, Z) - \text{CosineSim}(\tilde{H}, Z)$ 把它拉近真实表示 $H$、推开扰动表示 $\tilde{H}$。CAE 移除后 AUROC 掉 7-10%，是仅次于 LLM 的第二关键模块。
 
-**2. 上下文感知增强（CAE）模块**
+**3. 混合专家（MoE）：用多个专家分摊多标签预测里失衡的交互类型。**
 
-CAE模块通过两级注意力机制精化多重嵌入：
+MBN 的交互预测本质是多标签分类，且不同交互类型样本量差距悬殊。MoE 用 $K$ 个专家 $f_k$ 各自捕捉一类交互模式，门控网络按输入算权重 $\boldsymbol{a} = \text{softmax}(W_g \mathbf{h} + b_g)$，最终预测为加权求和 $\hat{\mathbf{Y}} = \sum_{k=1}^{K} a_k f_k(\mathbf{h})$。这种自适应分配让稀少交互类型也能由专门的专家照顾，实验中模型在稀少类型上表现稳定，正得益于此；该模块移除后 AUROC 掉 5-8%。
 
-**节点级跨层注意力**：允许实体在不同层的表示之间自适应地加权传递信息：
+**4. 教师-学生蒸馏：把拓扑知识压进只看序列的学生以实现零样本。**
 
-$$a_n^{(p \leftarrow q)} = \text{softmax}\left(\frac{\sigma(\theta^{(p)} \cdot (H_n^{(p)} \otimes H_n^{(q)}))}{\sum_{l \neq p} \sigma(\theta^{(p)} \cdot (H_n^{(p)} \otimes H_n^{(l)}))}\right)$$
-
-**层级注意力聚合**：通过注意力模块将各层特征聚合为统一表示 $H$。
-
-**对比学习框架**：
-- 对每层图进行负采样生成扰动图 $\tilde{G}_i$
-- 判别器区分真实边嵌入与负边嵌入
-- 共识正则化器学习共识嵌入 $Z$：最大化与 $H$ 的一致性，最小化与 $\tilde{H}$ 的对齐
-- 正则化损失：$\mathcal{L}_{reg} = 1 + \text{CosineSim}(H, Z) - \text{CosineSim}(\tilde{H}, Z)$
-
-**3. 混合专家（MoE）**
-
-MBN中的交互预测是多标签分类任务。MoE框架中：
-- K个专家 $f_k$ 各自捕捉不同交互模式
-- 门控网络根据输入分配权重：$\boldsymbol{a} = \text{softmax}(W_g \mathbf{h} + b_g)$
-- 最终预测：$\hat{\mathbf{Y}} = \sum_{k=1}^{K} a_k f_k(\mathbf{h})$
-
-**4. 知识蒸馏实现零样本**
-
-- **教师模型**：使用序列+拓扑嵌入，依赖邻域上下文
-- **学生模型**：仅使用序列数据，拓扑无关
-- 蒸馏损失：MSE对齐师生潜在表示 + 分类损失
-- 推理时学生模型可为完全未见的实体（无图结构信息）做预测
+零样本预测的核心矛盾是：新实体没有任何邻域结构，拓扑嵌入无从谈起。作者的解法是让教师模型同时吃序列与拓扑嵌入、充分利用邻域上下文学好表示，再训一个只用序列、完全与拓扑无关的学生模型，用蒸馏损失（MSE 对齐师生潜在表示）加分类损失把教师学到的拓扑知识"翻译"进学生的序列空间。推理时直接用学生，即便面对完全未见、没有图结构的实体也能给出预测。零样本设置下性能衰退很小，说明拓扑知识确实被有效迁移进了序列侧。
 
 ### 损失函数 / 训练策略
 
-- **教师损失**：$\mathcal{L} = \mathcal{L}_{disc} + \mathcal{L}_{reg} + \mathcal{L}_{cls} + \beta\|\Theta\|^2$
-    - $\mathcal{L}_{disc}$：判别器二元交叉熵损失
-    - $\mathcal{L}_{reg}$：共识正则化损失（余弦相似度）
-    - $\mathcal{L}_{cls}$：多标签软间隔损失
-- **学生损失**：$\mathcal{L}_{distill}(\text{MSE}) + \mathcal{L}_{cls}$
+教师模型由四项组成的混合损失 $\mathcal{L} = \mathcal{L}_{disc} + \mathcal{L}_{reg} + \mathcal{L}_{cls} + \beta\|\Theta\|^2$ 驱动：$\mathcal{L}_{disc}$ 是判别器的二元交叉熵损失，$\mathcal{L}_{reg}$ 是基于余弦相似度的共识正则化损失，$\mathcal{L}_{cls}$ 是多标签软间隔损失，末项为权重 $L_2$ 正则。学生模型则只用蒸馏损失（MSE）加分类损失 $\mathcal{L}_{distill}(\text{MSE}) + \mathcal{L}_{cls}$。
 
 ## 实验关键数据
 
@@ -189,11 +150,11 @@ MBN中的交互预测是多标签分类任务。MoE框架中：
 
 ## 相关论文
 
-- [\[ICLR 2026\] Boomerang Distillation Enables Zero-Shot Model Size Interpolation](boomerang_distillation_enables_zero-shot_model_size_interpolation.md)
 - [\[ICLR 2026\] Topology and Geometry of the Learning Space of ReLU Networks: Connectivity and Size](topology_and_geometry_of_the_learning_space_of_relu_networks_connectivity_and_si.md)
+- [\[ICLR 2026\] Boomerang Distillation Enables Zero-Shot Model Size Interpolation](boomerang_distillation_enables_zero-shot_model_size_interpolation.md)
 - [\[NeurIPS 2025\] Enhancing Semi-supervised Learning with Zero-shot Pseudolabels](../../NeurIPS2025/model_compression/enhancing_semi-supervised_learning_with_zero-shot_pseudolabels.md)
+- [\[ICCV 2025\] Perspective-Aware Teaching: Adapting Knowledge for Heterogeneous Distillation](../../ICCV2025/model_compression/perspective-aware_teaching_adapting_knowledge_for_heterogeneous_distillation.md)
 - [\[ICLR 2026\] Parallel Token Prediction for Language Models](parallel_token_prediction_for_language_models.md)
-- [\[ECCV 2024\] Improving Zero-Shot Generalization for CLIP with Variational Adapter](../../ECCV2024/model_compression/improving_zero-shot_generalization_for_clip_with_variational_adapter.md)
 
 </div>
 

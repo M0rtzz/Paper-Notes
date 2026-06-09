@@ -121,10 +121,10 @@ MetaScenes 构建了一个大规模可仿真3D场景数据集（15366个物体, 
 ## 相关论文
 
 - [\[CVPR 2025\] Open-Vocabulary Functional 3D Scene Graphs for Real-World Indoor Spaces](open-vocabulary_functional_3d_scene_graphs_for_real-world_indoor_spaces.md)
+- [\[CVPR 2025\] Helvipad: A Real-World Dataset for Omnidirectional Stereo Depth Estimation](helvipad_a_real-world_dataset_for_omnidirectional_stereo_depth_estimation.md)
 - [\[ICCV 2025\] Demeter: A Parametric Model of Crop Plant Morphology from the Real World](../../ICCV2025/3d_vision/demeter_a_parametric_model_of_crop_plant_morphology_from_the_real_world.md)
 - [\[ECCV 2024\] FastCAD: Real-Time CAD Retrieval and Alignment from Scans and Videos](../../ECCV2024/3d_vision/fastcad_real-time_cad_retrieval_and_alignment_from_scans_and_videos.md)
 - [\[CVPR 2025\] Seeing A 3D World in A Grain of Sand](seeing_a_3d_world_in_a_grain_of_sand.md)
-- [\[ICCV 2025\] Revisiting Point Cloud Completion: Are We Ready For The Real-World?](../../ICCV2025/3d_vision/revisiting_point_cloud_completion_are_we_ready_for_the_real-world.md)
 
 </div>
 

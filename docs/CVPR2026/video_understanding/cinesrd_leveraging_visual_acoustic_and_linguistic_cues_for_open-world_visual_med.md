@@ -152,7 +152,7 @@ CineSRD 仅用双模态（AV）已超过 EC2P 的三模态（AVT）结果。
 - [\[CVPR 2026\] VSI: Visual-Subtitle Integration for Keyframe Selection to Enhance Long Video Understanding](vsi_visual-subtitle_integration_for_keyframe_selection_to_enhance_long_video_un.md)
 - [\[CVPR 2026\] Drift-Resilient Temporal Priors for Visual Tracking](drift-resilient_temporal_priors_for_visual_tracking.md)
 - [\[CVPR 2026\] SpikeTrack: A Spike-driven Framework for Efficient Visual Tracking](spiketrack_a_spike-driven_framework_for_efficient_visual_tracking.md)
-- [\[ECCV 2024\] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](../../ECCV2024/video_understanding/spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)
+- [\[ICLR 2026\] Language-guided Open-world Video Anomaly Detection under Weak Supervision](../../ICLR2026/video_understanding/language-guided_open-world_video_anomaly_detection_under_weak_supervision.md)
 
 </div>
 

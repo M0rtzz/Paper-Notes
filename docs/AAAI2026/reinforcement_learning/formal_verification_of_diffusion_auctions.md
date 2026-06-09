@@ -167,10 +167,10 @@ $$M, a \models \langle\![\mathsf{C}]\!\rangle \varphi \iff \exists \overline{\be
 ## 相关论文
 
 - [\[AAAI 2026\] CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments](chdp_cooperative_hybrid_diffusion_policies_for_reinforcement_learning_in_paramet.md)
+- [\[NeurIPS 2025\] Reinforcing the Diffusion Chain of Lateral Thought with Diffusion Language Models](../../NeurIPS2025/reinforcement_learning/reinforcing_the_diffusion_chain_of_lateral_thought_with_diffusion_language_model.md)
 - [\[NeurIPS 2025\] Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification](../../NeurIPS2025/reinforcement_learning/kimina_lean_server_a_high-performance_lean_server_for_large-scale_verification.md)
 - [\[ICML 2026\] Learning Unmasking Policies for Diffusion Language Models](../../ICML2026/reinforcement_learning/learning_unmasking_policies_for_diffusion_language_models.md)
 - [\[ICML 2025\] ReVISE: Learning to Refine at Test-Time via Intrinsic Self-Verification](../../ICML2025/reinforcement_learning/revise_learning_to_refine_at_test-time_via_intrinsic_self-verification.md)
-- [\[AAAI 2026\] Where to Start Alignment? Diffusion Large Language Model May Demand a Distinct Position](where_to_start_alignment_diffusion_large_language_model_may_demand_a_distinct_po.md)
 
 </div>
 

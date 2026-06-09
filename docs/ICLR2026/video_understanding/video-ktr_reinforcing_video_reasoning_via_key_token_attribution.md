@@ -40,41 +40,29 @@ tags:
 
 ### 整体框架
 
-Video-KTR 在 GRPO 框架基础上引入模态感知的 Token 级策略塑造机制，核心包含三步：(1) 多视角 Token 重要性分析；(2) Token 选择；(3) 选择性策略更新。
+Video-KTR 把模态感知的 Token 级塑造机制嫁接到 GRPO 之上：先对每个输出 Token 做多视角重要性分析，判断它到底依赖视觉、依赖时序、还是处在推理的不确定关口；再从三路信号里各取最重要的一批 Token 求并集，构成一个二值掩码；最后只让落在掩码里的关键 Token 参与策略梯度更新，把奖励信号从粗糙的序列级精确滴灌到真正该学的位置上。
 
-### 关键设计：三类归因信号
+### 关键设计
 
-**1. 视觉感知型 Token（Visual-Aware）**
+**1. 视觉感知型 Token：用反事实遮蔽分离出"看图才说得出"的词。**
 
-通过**反事实遮蔽**量化每个 Token 对视觉输入的依赖程度。将视频特征置零后计算 logit 变化：
+序列级奖励的一个老毛病是分不清模型究竟是看了视频还是靠语言先验在硬编。Video-KTR 用反事实遮蔽把这件事量化出来：保留完整输入跑一遍前向，再把视频特征置零跑一遍，对比同一个目标 Token $y_i$ 在两次前向下的对数概率落差，$\Delta^{\text{vis}}_i = |\log \text{softmax}(\mathbf{z}^{\text{full}}_i)_{y_i} - \log \text{softmax}(\mathbf{z}^{\text{masked}}_i)_{y_i}|$。如果遮掉视频后这个 Token 的置信度大幅下降，说明它的预测强烈依附在视觉证据上，比如"person""door""blue"这类描述画面内容的词；反过来落差很小的词靠纯语言就能补出来。把 $\Delta^{\text{vis}}_i$ 高的 Token 挑出来重点学，等于直接对齐视觉输入与输出语义，从源头压住幻觉。
 
-$$\Delta^{\text{vis}}_i = |\log \text{softmax}(\mathbf{z}^{\text{full}}_i)_{y_i} - \log \text{softmax}(\mathbf{z}^{\text{masked}}_i)_{y_i}|$$
+**2. 时序敏感型 Token：用帧顺序打乱抓出"调了顺序就说错"的词。**
 
-高 $\Delta^{\text{vis}}_i$ 的 Token（如"person"、"door"、"blue"）表明其预测强烈依赖视觉输入。
+很多视频问题的难点不在单帧而在事件的先后与因果，但纯粹按帧重要性选 Token 会漏掉这层结构。这里换一种扰动——把帧序打乱后再跑一遍前向，对比正序与乱序下目标 Token 的对数概率差 $\Delta^{\text{temp}}_i = |\log \text{softmax}(\mathbf{z}^{\text{ordered}}_i)_{y_i} - \log \text{softmax}(\mathbf{z}^{\text{shuffled}}_i)_{y_i}|$。打乱后置信度掉得多的词（如"first""then""appear"）才是真正承载时序判断的位置。这比 T-GRPO 那种"只要帧序打乱就整体惩罚"的全局假设更细：它承认有些问题靠静态线索就能答，只把惩罚精确落到对顺序敏感的那几个 Token 上，不误伤其余。
 
-**2. 时序敏感型 Token（Temporal-Aware）**
+**3. 高熵 Token：用预测不确定性锁定推理的决策关口。**
 
-通过**帧顺序打乱**检测对时序结构的敏感度：
+视觉和时序两路抓的是"依赖什么输入"，但推理过程里还有一类词标记着模型自己在犹豫、在转折。用 Token 分布的信息熵 $\mathcal{H}(i) = -\sum_w p(z_i = w) \log p(z_i = w)$ 来衡量这种不确定性：熵高意味着模型在多个候选间摇摆，往往正是"however""wait"这类语篇转折或决策点。这些位置是推理链条最容易走偏也最值得优化的地方，把它们纳入更新集合，相当于在关键岔路口加大学习力度。三路信号各有侧重又互补——视觉、时序回答"凭什么说"，熵回答"哪里在想"。
 
-$$\Delta^{\text{temp}}_i = |\log \text{softmax}(\mathbf{z}^{\text{ordered}}_i)_{y_i} - \log \text{softmax}(\mathbf{z}^{\text{shuffled}}_i)_{y_i}|$$
+### 损失函数 / 训练策略
 
-高 $\Delta^{\text{temp}}_i$ 的 Token（如"first"、"then"、"appear"）反映对事件顺序和因果关系的依赖。
-
-**3. 高熵 Token（Entropy-Aware）**
-
-捕获预测不确定性，识别推理关键点：
-
-$$\mathcal{H}(i) = -\sum_w p(z_i = w) \log p(z_i = w)$$
-
-高熵 Token（如"however"、"wait"）通常标记语篇转折或决策点。
-
-### Token 选择与策略更新
-
-选取每种归因策略中 top $r\%$ 的 Token，取并集 $\mathcal{S} = \mathcal{S}_{\text{vis}} \cup \mathcal{S}_{\text{temp}} \cup \mathcal{S}_{\text{ent}}$，构建二值掩码 $m_{i,t}$。修改后的 GRPO 目标函数：
+三类信号各自给出一个重要性排序，从每一路里取 top $r\%$ 的 Token，再取并集 $\mathcal{S} = \mathcal{S}_{\text{vis}} \cup \mathcal{S}_{\text{temp}} \cup \mathcal{S}_{\text{ent}}$，据此构建二值掩码 $m_{i,t}$（命中关键 Token 为 1，其余为 0）。把掩码插进 GRPO 的目标函数，
 
 $$\mathcal{J}_{\text{Video-KTR}}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^G \frac{1}{|o_i|}\sum_{t=1}^{|o_i|} m_{i,t} \cdot \min(r_{i,t}\hat{A}_{i,t}, \text{clip}(r_{i,t})\hat{A}_{i,t})\right]$$
 
-仅 $m_{i,t}=1$ 的关键 Token 参与损失计算。
+只有 $m_{i,t}=1$ 的关键 Token 才贡献梯度，功能词、助动词这类低信息 Token 被自动滤掉，奖励信号不再被稀释。这里刻意用硬选择（二值掩码）而非软加权：实验里 top-20% 的硬掩码一致优于 Softmax/Sigmoid/线性/指数加权，比例定在 20% 也是甜点——再高会把噪声 Token 拉进来，再低则有效信号不足。整套机制不改 GRPO 主干，可即插即用地接到任何基于 GRPO 的 RL 训练里。
 
 ## 实验关键数据
 
@@ -131,8 +119,8 @@ $$\mathcal{J}_{\text{Video-KTR}}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}
 - [\[ICLR 2026\] FLoC: Facility Location-Based Efficient Visual Token Compression for Long Video Understanding](floc_facility_location-based_efficient_visual_token_compression_for_long_video_u.md)
 - [\[ICLR 2026\] A.I.R.: Adaptive, Iterative, and Reasoning-based Frame Selection For Video Question Answering](air_enabling_adaptive_iterative_and_reasoning-based_frame_selection_for_video_qu.md)
 - [\[CVPR 2026\] VideoAuto-R1: Video Auto Reasoning via Thinking Once, Answering Twice](../../CVPR2026/video_understanding/videoauto-r1_video_auto_reasoning_via_thinking_once_answering_twice.md)
-- [\[ICML 2026\] Video-MTR: Reinforced Multi-Turn Reasoning for Long Video Understanding](../../ICML2026/video_understanding/video-mtr_reinforced_multi-turn_reasoning_for_long_video_understanding.md)
 - [\[ICLR 2026\] FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging](flashvid_efficient_video_large_language_models_via_training-free_tree-based_spat.md)
+- [\[ICML 2026\] Video-MTR: Reinforced Multi-Turn Reasoning for Long Video Understanding](../../ICML2026/video_understanding/video-mtr_reinforced_multi-turn_reasoning_for_long_video_understanding.md)
 
 </div>
 

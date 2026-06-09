@@ -38,35 +38,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入：30个句子三元组(原始/改写/随机) x 3种语言变体(英文/塞尔维亚拉丁/塞尔维亚西里尔) = 270个句子。使用Gemma模型族(270M-27B)和Gemma Scope 2 SAE(65536个特征)。输出：跨14种对比类型的SAE特征重叠度分析。
+这篇论文要回答一个干净的问题：SAE 学到的特征代表的是抽象语义，还是绑在具体的书写形式上？为了把"语义"和"正字法"彻底拆开，作者借塞尔维亚语的双文字系统搭了一个天然控制实验——同一句话的拉丁文版和西里尔文版语义完全相同，却被 tokenizer 切成毫无重叠的两串 token。整条流程是：先准备 30 个句子三元组(原始/改写/随机) × 3 种语言变体(英文/塞尔维亚拉丁/塞尔维亚西里尔)，共 270 个句子；再把每个句子喂进 Gemma 模型族(270M–27B)，在目标层取激活、过 Gemma Scope 2 SAE(65536 个特征)编码成活跃特征集；最后用 Jaccard 重叠度横扫 14 种对比类型，看跨文字、跨改写、跨语言各自的特征重合程度。
 
 ### 关键设计
 
-1. **塞尔维亚语双文字作为控制实验**：
+**1. 塞尔维亚语双文字作为控制实验：把语义恒定、表面全变的理想对照变成现实。**
 
-    - 功能：创造保持语义恒定同时改变所有表面特征(token化)的对比条件
-    - 核心思路：同一句子的拉丁文版和西里尔文版语义完全相同，但tokenizer产生完全不同的token序列(零共享token)。LaBSE验证跨文字句子语义相似度>0.95
-    - 设计动机：消除了跨语言研究中的混杂因素(词汇差异/语法差异/文化差异)。确定性映射保证零语义变化
+跨语言表征研究一直绕不开混杂因素——不同语言的词汇、语法、文化都在变，无法干净归因。塞尔维亚语的特殊之处在于它有一套活跃的双文字系统：拉丁文和西里尔文在日常生活里交替使用，二者之间存在确定性的无损字符映射。于是同一句话的两个文字版本语义完全一致(LaBSE 验证跨文字语义相似度 >0.95)，但 tokenizer 把它们切成共享零个 token 的两串序列。这样就构造出"语义恒定、所有表面特征(token 化)全变"的理想对照，确定性映射保证了零语义漂移，从根上消除了词汇/语法/文化的干扰。
 
-2. **SAE特征提取管线**：
+**2. SAE 特征提取管线：把一个句子映射成一组可比对的活跃特征。**
 
-    - 功能：提取每个句子激活的SAE特征集合
-    - 核心思路：句子 -> tokenizer -> Gemma前向传播 -> 取目标层最后token的hidden state -> SAE编码器得到65536维激活 -> JumpReLU阈值(tau=0.1) -> 活跃特征集 $F(s) = \{i : a_i > \tau\}$
-    - 设计动机：last-token pooling比mean pooling更稳健(实验验证)。固定阈值tau=0.1对应JumpReLU的标准设置
+为了量化"两句话激活了多重叠的特征"，需要先把句子统一映射成特征集合。管线是：句子经 tokenizer 切分后送入 Gemma 前向传播，取目标层最后一个 token 的 hidden state，过 SAE 编码器得到 65536 维激活，再用 JumpReLU 阈值($\tau=0.1$)筛出活跃特征，得到特征集 $F(s) = \{i : a_i > \tau\}$。这里用 last-token pooling 而非 mean pooling 是因为实验验证前者更稳健；固定阈值 $\tau=0.1$ 对应 JumpReLU 的标准设置。
 
-3. **14种对比类型的系统设计**：
+**3. 14 种对比类型的系统设计：用多层次对照把"文字不变性"和混杂因素分开。**
 
-    - 功能：系统地测试语义相似性vs文字不变性vs随机基线
-    - 核心思路：Jaccard相似度 $J(s_1, s_2) = |F(s_1) \cap F(s_2)| / |F(s_1) \cup F(s_2)|$。对比维度包括：
-        - 基线：同文字内原始vs改写(语义相似)，原始vs随机(语义无关)
-        - 核心测试：跨文字原始(文字变化），跨文字改写(文字+措辞变化)
-        - 随机基线：跨文字随机，跨语言随机
-    - 设计动机：多层次对比能区分"文字不变性"是否真由语义驱动而非其他混杂因素
+光看一两个跨文字对比说服力不够，得用一组层层递进的对照确认重叠确实由语义驱动。作者对每对句子算 Jaccard 相似度 $J(s_1, s_2) = |F(s_1) \cap F(s_2)| / |F(s_1) \cup F(s_2)|$，并按维度铺开 14 种对比：基线层是同文字内的原始 vs 改写(语义相似)、原始 vs 随机(语义无关)；核心测试层是跨文字原始(只变文字)和跨文字改写(文字+措辞都变)；噪声层是跨文字随机和跨语言随机。把这些放在一起，就能看清跨文字的高重叠到底是语义对齐的结果，还是别的混杂因素带来的假象。
 
 ### 评估指标
-- Jaccard相似度：0(无重叠)到1(完全相同)
-- 每种对比类型计算30个句子对的平均值
-- 跨所有模型和层报告平均值
+Jaccard 相似度从 0(无重叠)到 1(完全相同)；每种对比类型在 30 个句子对上取平均，并跨所有模型和层汇报平均值。
 
 ## 实验关键数据
 
@@ -129,8 +118,8 @@ tags:
 - [\[ICLR 2026\] Dynamic Reflections: Probing Video Representations with Text Alignment](dynamic_reflections_probing_video_representations_with_text_alignment.md)
 - [\[ACL 2026\] Rhetorical Questions in LLM Representations: A Linear Probing Study](../../ACL2026/interpretability/rhetorical_questions_in_llm_representations_a_linear_probing_study.md)
 - [\[ICLR 2026\] Semantic Regexes: Auto-Interpreting LLM Features with a Structured Language](semantic_regexes_auto-interpreting_llm_features_with_a_structured_language_of_re.md)
-- [\[ICLR 2026\] Stretching Beyond the Obvious: A Gradient-Free Framework to Unveil the Hidden Landscape of Visual Invariance](stretching_beyond_the_obvious_a_gradient-free_framework_to_unveil_the_hidden_lan.md)
 - [\[AAAI 2026\] Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations](../../AAAI2026/interpretability/concepts_from_representations_post-hoc_concept_bottleneck_models_via_sparse_deco.md)
+- [\[ICLR 2026\] Evolution of Concepts in Language Model Pre-Training](evolution_of_concepts_in_language_model_pre-training.md)
 
 </div>
 
