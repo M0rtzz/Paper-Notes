@@ -44,13 +44,13 @@ SafeHarbor 是一个挂在 frozen LLM agent 前的安全防御层，目标是让
 
 ### 关键设计
 
-**1. 对抗规则生成 + 信息熵驱动的记忆树演化：让规则库跟得上对抗演化又不爆炸。**
+**1. 对抗规则生成 + 信息熵驱动的记忆树演化：让规则库跟得上对抗演化又不爆炸**
 
 静态规则库的死穴是攻击者总能换个壳绕过，而若简单地"来一个新样本就建一条规则"，树结构很快冗余膨胀。SafeHarbor 先在生成侧保证覆盖度：对每条种子轨迹 $\tau_h$，generator 轮转使用三种 mutation —— Goal Decomposition（把恶意意图拆成看似无害的子步骤）、Privilege Escalation（伪装成高优先级 debug 请求）、Contextual Reframing（包进教育/假设场景），分别对应结构性、权威性、语义性三类社工范式，单一范式生成的规则容易被同类对抗 prompt 一锅端。
 
 入树时则用信息熵做"这个样本是否真带来新分布"的统计判据，而不是拍一个相似度阈值。把 $z_h=f_\theta(\tau_h)$ 与各 cluster 中心比较，cluster 内部以 softmax 相似度定义分布 $p_i=\exp(\text{Sim}(z_i,c)/\gamma)/\sum_j\exp(\text{Sim}(z_j,c)/\gamma)$，其 Shannon 熵 $H(C)=-\sum_i p_i\log_2 p_i$ 度量该簇当前的分散程度，信息增益 $\Delta I(z_h,C^*)=H(C^*\cup\{z_h\})-H(C^*)$ 度量新样本带来的分布变化。决策分三档：若到最近 cluster 的相似度 $<\tau_{\text{sim}}$，说明是全新威胁面，建新 cluster；若相似但 $\Delta I>\tau_{\text{gain}}$，说明带来了有意义的新子模式，在原 cluster 下新建 leaf；否则视为同类变体，合并进最近 leaf 并 refine 其规则对。这套"增益门"既挡住规则爆炸，又不会把真正的新攻击当冗余丢掉。
 
-**2. 几何感知的双中心对比 Safety Projector：让"距离"直接等于"风险等级"。**
+**2. 几何感知的双中心对比 Safety Projector：让"距离"直接等于"风险等级"**
 
 dual-score 门控要工作，前提是模糊样本的分数得落在一个有信息量的连续区间里，而纯交叉熵训练会把 score 推向极端（要么 0 要么 1），把 ambiguous query 的差异抹平。projector 是个 2 层 MLP，输出 $z'=\text{MLP}(z)$，空间里嵌两个可学习 prototype $\mathbf{w}_B$（benign 中心）、$\mathbf{w}_H$（harmful 中心），分别算欧氏距离 $d_B=\|z'-\mathbf{w}_B\|_2$、$d_H=\|z'-\mathbf{w}_H\|_2$，风险分数取 softmax 形式 $s(x)=\exp(-d_H)/[\exp(-d_H)+\exp(-d_B)]$ —— 离 harmful 中心越近、离 benign 中心越远，分数越高。
 
@@ -60,7 +60,7 @@ $$\mathcal{L}_{con}=\frac{1}{|\mathcal{B}|}\sum_{z}\max\!\big(0,\ \Delta+\|z'-\m
 
 它强制每个样本到同类中心的距离至少比到异类中心近一个 margin $\Delta$，总损失 $\mathcal{L}_{\text{total}}=\mathcal{L}_{cls}+\lambda\mathcal{L}_{con}$。这样 latent space 既可分（两类被推开）又紧凑（同类向各自中心收拢），距离才真正度量"语义风险等级"，把 0.3~0.7 区间留给后续门控当连续信号用。
 
-**3. 双分数门控：fast path + LLM judge，把算力花在刀刃上。**
+**3. 双分数门控：fast path + LLM judge，把算力花在刀刃上**
 
 现实里绝大多数 agent 请求是平凡 benign，对每个 query 都跑规则检索 + LLM 判官纯属浪费。门控对每个 query 同时取两个证据：projector 给的有害概率 $S_{\text{harm}}=s(x)$，以及它与全局 benign DB 最近邻样本 $\mathbf{b}_{ret}$ 的相似度 $S_{\text{benign}}=1-\|\mathbf{z}_q-\mathbf{b}_{ret}\|_2^2/2$。只有当两端证据一致说"安全"——即 $S_{\text{harm}}<\tau_{\text{low}}$ 且 $S_{\text{benign}}>\tau_{\text{high}}$ ——才走 fast path 直接放行；只要有一端犹疑，就进入中心化规则检索：先按 query 选 top-$k$ cluster，再在簇内找最相似 leaf，把该 leaf 的禁则 $R_{\text{harm}}$ 与豁免 $E_{\text{benign}}$ 拼进 prompt 交给 base LLM 做 in-context 判断。用"双重证据"而非单分数放行，是为了避免单看 $S_{\text{harm}}$ 时把"长得有点像有害模板的合法复杂工作流"误杀；模糊区才付出完整验证成本，于是延迟被集中花在真正需要谨慎的少数 query 上。
 

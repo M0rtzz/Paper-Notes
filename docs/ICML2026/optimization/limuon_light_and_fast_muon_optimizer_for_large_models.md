@@ -46,7 +46,7 @@ LiMuon 沿用 Muon 的两段式：每步先对一个动量代理 $M_t$ 做（近
 
 ### 关键设计
 
-**1. 低秩 STORM 动量估计器：把方差缩减动量从 $\mathcal{O}(mn)$ 压到 $\mathcal{O}((m+n)\hat{r})$。**
+**1. 低秩 STORM 动量估计器：把方差缩减动量从 $\mathcal{O}(mn)$ 压到 $\mathcal{O}((m+n)\hat{r})$**
 
 降样本复杂度依赖 STORM 这种基于上一步动量 $M_{t-1}$ 的递推方差估计，结构上要保留前一步全梯度信息——这天然和降显存冲突，所以 Muon++ 拿到 $\mathcal{O}(\epsilon^{-3})$ 的代价是额外存满秩 $mn$ 动量。本文的观察是：被存的那块 $M_t$ 本身就是带噪动量，"重要方向"远少于 $\min(m,n)$，因此只保留它的低秩近似就够。Option#2 的更新写成
 
@@ -54,11 +54,11 @@ $$M_{t+1} = \nabla f(W_{t+1}; \xi_{t+1}) + (1 - \beta_{t+1})\big(\hat{M}_t - \na
 
 其中 $\hat{M}_t = \hat{U}_t \hat{S}_t \hat{V}_t^\top$ 是上一步动量的 RSVD 低秩近似。梯度差那块仍按全秩算（只在一步内、不入状态），但跨步保留的状态只剩 $\hat{U}_t\in\mathbb{R}^{m\times\hat{r}}$、$\hat{S}_t\in\mathbb{R}^{\hat{r}\times\hat{r}}$、$\hat{V}_t\in\mathbb{R}^{n\times\hat{r}}$ 三块，$m\hat{r}+n\hat{r}+\hat{r}^2\ll mn$。这样既把状态显存推到和 SUMO 同一档，又保住了 STORM 的 $\mathcal{O}(\epsilon^{-3})$——用低秩压缩绕开了"方差缩减必须存全秩"的显存爆点。
 
-**2. 基于 RSVD 的实用正交化：避免每步精确 SVD。**
+**2. 基于 RSVD 的实用正交化：避免每步精确 SVD**
 
 Muon 每步要对动量做 SVD 正交化，精确 SVD 是 $\mathcal{O}(\min(m,n)^2\max(m,n))$，现代 LLM 矩阵层动辄几千维、每步都跑代价感人。这里改用随机 SVD：抽高斯随机矩阵 $\Omega\in\mathbb{R}^{n\times(\hat{r}+s)}$，算 $Y=A\Omega$、QR 分解 $Y=QR$，在小矩阵 $B=Q^\top A$ 上做精确 SVD 得 $(\tilde{U},\Sigma,V)$、还原 $U=Q\tilde{U}$，其中 $s\ge 2$ 是 oversampling 用来稳精度。RSVD 只需一次矩阵乘 + 小规模 SVD，对带噪动量这种低有效秩对象天然合身；更妙的是同一份 RSVD 在两处复用——既服务正交化又服务低秩动量压缩。
 
-**3. Newton-Schulz 兼容版 + 广义光滑收敛：把理论保证接到实际部署最常用的近似上。**
+**3. Newton-Schulz 兼容版 + 广义光滑收敛：把理论保证接到实际部署最常用的近似上**
 
 纯 SVD 版只有理论意义，工业用户都跑 Newton-Schulz 多项式迭代，所以必须把 LiMuon 的两件武器接到 NS 上才算抹掉实践—理论 gap。Algorithm 3 把 SVD 换成 NS 迭代 $X_j = p_\kappa(X_{j-1}X_{j-1}^\top)X_{j-1}$（默认 $p_2(z)=3.4445-4.7750z+2.0315z^2$，$q$ 次迭代），论文证明在 polar 近似误差 $\varepsilon_q\in(0,1)$、$\chi_q=1/(1-\varepsilon_q)$ 下，LiMuon 复杂度是 $\mathcal{O}(\chi_q^3\epsilon^{-3})$，严格优于 Kim & Oh (2026) Muon-NS 的 $\mathcal{O}(\chi_q^4\epsilon^{-4})$。同时收敛证明建立在 $(L_0,L_1)$ 广义光滑 $\|\nabla F(W)-\nabla F(W')\|_F^2\le(L_0^2+L_1^2\|\nabla F(W)\|_F^2)\|W-W'\|_F^2$ 之上，比 Lipschitz 弱得多、更贴合 LLM 训练实际，把 NS 近似从"工程 hack"升格成可证明对象。
 

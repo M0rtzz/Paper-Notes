@@ -53,11 +53,11 @@ $$\tau(x_i)^* = \{(s_1^*, \dots, s_T^*) \mid s_t^* = \arg\max_{s_t \in \{s_t^{(1
 
 ### 关键设计
 
-**1. Prompt-guided step segmentation：用模板把不同 LRM 的 Long-CoT 切到对齐的 step 边界，才谈得上跨模型替换。**
+**1. Prompt-guided step segmentation：用模板把不同 LRM 的 Long-CoT 切到对齐的 step 边界，才谈得上跨模型替换**
 
 要让多个教师在 step 级协同，第一道坎是「step」这个单位本身得对齐——可不同 LRM 的换行习惯、反思 cue（`wait`、`alternatively`）频率天差地别，直接按物理标记切，某些教师每个 step 只有几十 token、另一些却有几百，根本没法横向比。作者的做法是在 prompt 里嵌入 `<think> ### Step` 模板，引导 LRM 主动按「### Step 1. Understanding... ### Step 2. Recalling...」的格式输出，让 `\n\n`、`wait` 这些浅层标记自然落在 step 内部而非边界上。这等于把切分的控制权交给生成时的 LRM，强制它做「逻辑功能性」划分——每个 step 对应一个子任务（problem understanding / theorem recall / case analysis），于是不同教师同一位置的 step 才在语义上可比、可互换。消融里 prompt-guide 的 segmentation 公平性也最高（PP 0.774，优于 line-break 的 0.734 和 prefix 的 0.747）。
 
-**2. Predictive perplexity step selection：不看这一步「对不对」，而看它让正确答案变得多可预测。**
+**2. Predictive perplexity step selection：不看这一步「对不对」，而看它让正确答案变得多可预测**
 
 切好 step 后需要一个打分函数来挑每步最优候选，而 PRM 这类局部正确性评分有个硬伤——会过早剪掉「初看次优、实则是 Aha moment 必经之路」的分支。作者改用一个独立的 meta-prover（实验里直接复用教师池里最强的 QwQ-32B），对每个候选算前瞻性的分数：
 
@@ -65,7 +65,7 @@ $$S(\tau_{<t} \oplus s_t^{(k)}) = \exp\!\Big(\tfrac{1}{M} \log p_{\text{meta}}(A
 
 其中 $A$ 是 ground-truth 答案序列、$M$ 是答案 token 数，整体是「接上这个 step 后，meta-prover 平均每个答案 token 的条件概率」，归一化到 $[0,1]$。它的好处是三重的：是 bounded 连续分数，能分辨细微的质量差异；通过答案 likelihood 隐式编码了「这条路是否朝正确方向走」的全局判断，天然包容「现在看着错、后面能自纠」的轨迹；而且不需要额外训练 reward model，复用最强教师即可。实验里光把打分从 PRM 换成 predictive perplexity，AIME24 就从 75.0 提到 79.6。
 
-**3. Beam search step-wise decoding：在 step 级保留 Top-B 部分轨迹，既躲开 greedy 的短视又躲开 MCTS 的爆炸。**
+**3. Beam search step-wise decoding：在 step 级保留 Top-B 部分轨迹，既躲开 greedy 的短视又躲开 MCTS 的爆炸**
 
 有了打分还不够——Long-CoT 的 strategic shift、self-correction 往往在某一步看着次优、几步后才显威力，greedy（$B=1$）会当场把它丢掉，MCTS 又要每步 rollout 完整剩余轨迹、长链上 search space 指数爆炸。Beam search 正好卡在中间：第 $t$ 步从上一轮 beam $\mathcal{B}_{t-1} = \{\tau_{<t}^{(b)}\}_{b=1}^B$ 出发，每条前缀让 $K$ 个教师各提一个候选 step，得到 $B \times K$ 个扩展候选，再按 predictive perplexity 选 Top-$B$ 成为 $\mathcal{B}_t$。复杂度 $\mathcal{O}(TKMB)$，远低于 MCTS 的 $\mathcal{O}(TK \log(TMB))$，只比 greedy 高 $B$ 倍（实验取 $B=4$）。更妙的是它带来一个 MCTS 给不了的副产物：MCTS 的 trajectory-level reward 会让搜索塌缩到「整体最强」的那个教师（QwQ-32B 一路统治），而 beam search 保留了 beam 级多样性，反而让 R1-Qwen-32B 在 early phase（problem formulation）、Phi4-Reasoning-Plus 在 late phase（conclusion synthesis）各自发挥，涌现出清晰的分工。
 

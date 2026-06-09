@@ -48,15 +48,15 @@ HierVA 要解决的是复杂图表推理里"context 越积越乱"的问题：一
 
 ### 关键设计
 
-**1. Manager–Worker 层级 + Encapsulation：用抽象屏障把局部噪声挡在主 context 外。**
+**1. Manager–Worker 层级 + Encapsulation：用抽象屏障把局部噪声挡在主 context 外**
 
 要对付的痛点很直接——以前的 thinking-with-images 把每个 worker 的所有 deliberation 都倒进主 context，于是图像吃 token、中间步骤越堆越多，最终把全局参照信息稀释掉，也就是 monotonic context growth。HierVA 的做法是给执行单元加一道封装屏障：Manager 永远只看自己的 $C_M$；Worker 跑完任务后，它内部的 reasoning trace 不会被 append 进 $C_M$，只把"一句话事实"或"一个 crop handle"作为蒸馏结果回传。同时每个 Worker 每次只接收单张图（原图或 crop）和最小化的任务指令，强制 scoped evidence。这样一来，主线推理的 context 增长就和子任务的复杂度脱钩，长链推理也不会被局部细节淹没。
 
-**2. Adaptive Zoom 作为显式 action：把"看仔细一点"升格成一等公民动作。**
+**2. Adaptive Zoom 作为显式 action：把"看仔细一点"升格成一等公民动作**
 
 图表里的小字、tick、legend 在全局尺度下经常看不清，模型必须能按需放大。HierVA 没有把"要不要看细节"埋在 CoT 的自然语言里，而是把 zoom 抽象成一个 image-expected task：Worker 接到后调用 zoom-in 工具，指定一个 bounding box，返回 cropped + resized 的高分辨率图像。于是 Manager 的 action space 收敛成清爽的二选一——要么要新的视觉证据（zoom），要么要文本事实（读值、比较、计算）。把放大显式建模成 typed action，调度和调试都比在 prompt 里含糊地提一句"注意细节"可控得多。
 
-**3. Skill routing + 三重 context distillation：技能按需注入，三处堵住 context 膨胀的源头。**
+**3. Skill routing + 三重 context distillation：技能按需注入，三处堵住 context 膨胀的源头**
 
 朴素做法是把所有可能用到的技能（比如调用代码做精确计算）都写进 base system prompt，但这会立刻让 context 膨胀。HierVA 维护一个紧凑的 skill library $\mathcal{S}$，每个 skill 只是一段简短的 markdown 过程描述；Manager 为每个 task 挑一组相关 skill，**just-in-time** 注入到对应 Worker 的 system prompt 里，而 Manager 自己永远看不到 skill 内容。这套 routing 再配合三重蒸馏共同收口：Plan distillation 只保留最终精炼版 plan，Worker encapsulation 隔离 worker 的内部 trace，Result distillation 把 worker 回答压成单句或 crop handle 再 append。三处恰好对应 context 膨胀的三个来源——规划啰嗦、执行噪声、结果冗长——逐一封住，能力保留但主线不被污染。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 三维诊断实验：把 many-shot 的三条常识逐条压在显微镜下，证明它们在 CoT 推理上同时崩。**
+**1. 三维诊断实验：把 many-shot 的三条常识逐条压在显微镜下，证明它们在 CoT 推理上同时崩**
 
 许多 many-shot 工程套路（堆 shot、相似度检索、不在乎顺序）都建立在非推理任务上观察到的三条规律之上，本文要回答的核心问题就是：这些规律在 CoT 推理里还成不成立。于是作者沿 scaling / retrieval / ordering 三个独立维度各设一组对照。**Scaling** 这一维在非推理 LLM 上跑 geometry、number_theory 等推理任务，发现 shot 数增加时性能不稳甚至下降（如 LLaMA 3.3 70B 在 CoT-ICL 上出现 negative gain），只有 reasoning-oriented LLM（Qwen3、QwQ、R1）才呈现单调正向 scaling；表 1 进一步显示在 Qwen3 上关闭 thinking mode 会直接掉几何题约 7 pp，说明 reasoning prior 是 scaling 的必要条件。**Retrieval** 这一维用 embedding cosine 取 top-$k$ 最相似与 bottom-$k$ 最不相似对照：BANKING77（非推理）上 top-$k$ 显著占优、印证了检索假设，但在 geometry/number_theory/DetectiveQA 上 top-$k$ 反而最差——semantic similarity 根本不预测 procedural compatibility。**Ordering** 这一维对 5 个随机 permutation 算标准差，非推理任务 std 随 shot 数下降（顺序越来越无所谓），推理任务 std 反而随 shot 数上升，说明 path dependence 不仅存在而且越堆越深。三个独立维度同时破坏，才足以说服读者「CoT-ICL 是另一回事」而非某个数据集的巧合。
 
-**2. Corrupted CoT 消融：用反事实证明模型真的在吸收中间推理过程，而不只是读最终答案。**
+**2. Corrupted CoT 消融：用反事实证明模型真的在吸收中间推理过程，而不只是读最终答案**
 
 诊断暴露了现象，但还需要回答一个更尖锐的问题：模型到底是在「学」demonstration 里的推理过程 $C$，还是只用了输入到输出的映射 $x \to y$。作者在 geometry 上构造一对只差 $C$ 的 prompt——正常版 $(x_i, C_i, y_i)$ 和 procedurally corrupted 版 $(x_i, C_0, y_i)$，后者把每条的 rationale 全替换成第一条 demonstration 的同一条 chain $C_0$，但保留各自的 question 和最终 answer，因而格式、context 长度、$x\to y$ 映射全被控住，唯一变量就是中间过程是否连贯。结果（表 2）很有说服力：在 $n=16$ 的 short prompt 下两组几乎没差，说明模型既能从 IO 也能从 CoT 学；而在 $n=128$ 的 long prompt 下 corrupted 版让 Qwen3-8B 掉 1.25 pp、Qwen3-14B 掉 2.51 pp——一旦 context 拉长，破坏 procedure 就实打实地伤性能。这正是「in-context test-time learning」视角需要的硬证据：procedure 才是 long-context scaling 的真正信号，比单纯讲哲学有力得多。
 
-**3. Curvilinear Demonstration Selection (CDS)：把「平滑过渡」量化为嵌入轨迹的总曲率并最小化它。**
+**3. Curvilinear Demonstration Selection (CDS)：把「平滑过渡」量化为嵌入轨迹的总曲率并最小化它**
 
 既然顺序敏感来自「概念突变打断 implicit 学习轨迹」，那让轨迹尽量平滑就该有帮助。CDS 把这条 pedagogical 原则做成可计算的目标：先把每条 demonstration $\mathbf{d}_i$ 按 (question + CoT + answer) 整体用 Qwen3-Embedding-4B 编码成 $\mathbf{e}_i \in \mathbb{R}^d$——刻意用**完整 demonstration**而非仅 question，因为顺序效应取决于 procedural 内容，只看 question 抓不到 CoT 结构；再把 prompt 内所有嵌入投影到低维子空间 $\tilde{\mathbf{e}}_i \in \mathbb{R}^{d'}$ 让曲率估计稳定；然后把相邻两段位移的夹角定义为局部曲率 $\theta_i = \arccos\!\left(\frac{(\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}) \cdot (\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i)}{\|\tilde{\mathbf{e}}_i - \tilde{\mathbf{e}}_{i-1}\|\,\|\tilde{\mathbf{e}}_{i+1} - \tilde{\mathbf{e}}_i\|}\right)$，整条排列的总曲率即 $\Theta(O) = \sum_{i=2}^{n-1}\theta_i$（这里 $\theta_i$ 衡量「拐弯角度」，越大表示过渡越突兀），CDS 就是搜一个排列把 $\Theta$ 最小化（具体算法见原文 Section 6）。把最小曲率当目标不是拍脑袋：作者先量到 ordering curvature 与准确率显著负相关（总 $r=-0.547$，geometry $-0.545$，counting $-0.628$）。更关键的是为了排除「无非是把相似项聚到一起」的混淆，他们做了 high-curvature 反向 baseline——保持局部邻域不变、只反转曲率目标制造突兀转折——CDS 仍然胜出，证明起作用的是**平滑过渡本身**而非聚类，这条 causal smoothness ablation 是方法论上的点睛之笔。
 

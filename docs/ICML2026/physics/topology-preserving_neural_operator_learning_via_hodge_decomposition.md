@@ -49,7 +49,7 @@ $\boldsymbol{\omega}_k^{(\ell+1)}=\mathcal{G}_{\mathrm{base}}^{(\ell)}(\boldsymb
 
 ### 关键设计
 
-**1. Base 分支：在 Hodge 谱域学非线性，并硬钉住谐和模。**
+**1. Base 分支：在 Hodge 谱域学非线性，并硬钉住谐和模**
 
 FNO 的 soft penalty 守不住守恒律，GNN 又抓不到全局环量，根因是拓扑约束来自 Hodge Laplacian 的核空间、只有谐和模能编码它。Base 分支专门处理这块：每层先用 Hodge 内积把场投到低维谱域 $\mathbf{c}_k^{(\ell)}=\mathbf{\Phi}_k^\top *_k\boldsymbol{\omega}_k^{(\ell)}\in\mathbb{R}^{m_k}$，用预计算的谱域微分矩阵 $\mathcal{M}_d^{(k)},\mathcal{M}_\delta^{(k)}$ 拼出 $(k\pm1)$ 阶导数特征，再过门控 MLP 学谱域的二次非线性耦合（如对流项 $\mathbf{u}\cdot\nabla\mathbf{u}$）：
 
@@ -57,11 +57,11 @@ $$\tilde{\mathbf{c}}_k=\mathbf{W}_{\mathrm{out}}\big(\phi(\mathbf{W}_g\mathbf{q}
 
 关键一步在更新之后：用对角投影 $\mathbf{P}_H^k$ 把零特征值（谐和）模的位置**直接覆盖回原值**，从而逐层硬保上同调类与全局通量不变。这之所以可行又划算，是因为谐和模数量等于 Betti 数 $b_k$、只有几个到几十个，完全能硬钉死而不影响高频可学性。
 
-**2. Fiber 分支：辅助欧式网格上学高频残差，再用正交补清零低频。**
+**2. Fiber 分支：辅助欧式网格上学高频残差，再用正交补清零低频**
 
 度量驱动的高频细节（各向异性扩散、边界层）该交给擅长 FFT 的 FNO，但不能让它偷偷动到守恒分量。Fiber 分支用 Whitney form + KDE 的 lift 算子 $\iota$ 把离散 cochain 升到辅助欧式网格 $\Omega_{\mathrm{aux}}$ 上的张量场，跑标准 FNO 谱卷积 $\mathcal{F}^{-1}\mathbf{R}_{\mathrm{loc}}\mathcal{F}$，再用伴随 pullback 算子 $\mathcal{R}$ 反投回 $C^k(K)$，最后强制乘上 $(\mathbf{I}-\Pi_{\mathrm{base}}^k)$ 把所有低频成分清零、确保 Fiber 只修高频。相比 intrinsic 流形卷积，欧式网格 FFT 复杂度只有 $\mathcal{O}(N\log N)$ 且自带各向异性表达力；正交补硬约束则是 Hodge 分解正交性的直接利用——Base 和 Fiber 落在互补子空间，互不干扰。
 
-**3. 交换子修正 $\mathcal{C}_\theta$：补偿两个非交换算子的分裂残差。**
+**3. 交换子修正 $\mathcal{C}_\theta$：补偿两个非交换算子的分裂残差**
 
 把 Base、Fiber 简单相加隐含了 Lie-Trotter 算子分裂，但拓扑算子 $\mathcal{A}_{\mathrm{Topo}}^k$ 与几何算子 $\mathcal{A}_{\mathrm{Geom}}^k$ 不交换（$[\mathcal{A}_{\mathrm{Topo}}^k,\mathcal{A}_{\mathrm{Geom}}^k]\neq0$），二阶以上有 $O(\Delta t^2)$ 的系统性残差、单纯加和表达不了 $AB-BA$ 这个交叉项。作者把几何 lift 特征 $\iota(\boldsymbol{\omega}_k)$ 和谱域一阶导 $(\mathbf{c}_k,\mathcal{M}_d\mathbf{c}_k,\mathcal{M}_\delta\mathbf{c}_k)$ 拼成交互特征 $\mathbf{z}^{(\ell)}$，过一个轻量 MLP 输出修正量，同样用 $(\mathbf{I}-\Pi_{\mathrm{base}})$ 约束到 Fiber 子空间，门控初始化接近零、从解耦态出发逐渐学到耦合。消融显示去掉它在 Magnetostatics 上误差升 18%，证实这个小修正项确实消除了分裂偏差。
 

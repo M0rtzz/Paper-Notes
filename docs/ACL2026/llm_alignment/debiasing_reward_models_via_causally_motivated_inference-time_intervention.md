@@ -44,19 +44,19 @@ CIRM（Causally motivated Inference-time intervention for Reward Models）把「
 
 ### 关键设计
 
-**1. 用多偏差量度 + Spearman 排序定位 bias-specific neurons：把纠偏从 reward 层下沉到神经元层。**
+**1. 用多偏差量度 + Spearman 排序定位 bias-specific neurons：把纠偏从 reward 层下沉到神经元层**
 
 之前的 LP / LWR 只在 reward 标量上做减法，颗粒度太粗，本文则要先找出 RM 内部到底哪些神经元在为风格偏差买单。为此对每类偏差 $b\in\{\text{len, para, over, excl, bold}\}$ 定义一个可量化的 surface feature：长度取字符数，段落取 `\n\n` 出现次数，overlap 取 response 与 query 的共词比，感叹号 / 粗体取 `!` / `**` 出现次数。然后对每个神经元 $n$ 在验证集上算 Spearman $\rho(a_n, f_b)$，把 top-$k$ 与 bottom-$k$ 一并取为 $b$ 的 bias-specific neurons——同时取两端是因为偏差既可能被正相关也可能被负相关地编码。
 
 之所以用 Spearman 而非 Pearson，是因为它只要求单调相关、对异常激活更鲁棒。这套定位足够精准，五类偏差合并后实际只需编辑 GRM 1.7%、FsfairX 0.085% 的神经元，却能覆盖全部风格偏差。
 
-**2. 用 CDE 替代 TE 做因果干预：把 mediator 钉死，系统性扣掉风格贡献。**
+**2. 用 CDE 替代 TE 做因果干预：把 mediator 钉死，系统性扣掉风格贡献**
 
 把 RM 看成因果图（图 3）后，输入 $x$ 到 reward $r$ 有两条路：$x \to r$ 的直接内容路径，和 $x \to m \to r$ 的间接偏差路径（$m$ 是 bias 神经元激活）。原始 BT 估计的 $\hat{\mathrm{TE}} = r_\theta(x_1, m(x_1)) - r_\theta(x_2, m(x_2))$ 把两条路混在一起，分不开内容好坏与风格强弱。CIRM 改成估计 $\hat{\mathrm{CDE}} = r_\theta(x_1, m^*) - r_\theta(x_2, m^*)$，即把 mediator 固定为同一个 $m^*$ 后再做差，概念上正对应「当 $x_1, x_2$ 在偏差维度完全一样时谁的内容更好」，这恰是 reward model 真正想要的无偏比较。
 
 $m^*$ 取验证集激活中位数：作者实测过 0、swap、median 三种选择，median 最稳——用中位数而非均值是为了对异常激活鲁棒，用单一固定值而非 swap 则避免 $x_1, x_2$ 的内容差异通过 mediator 互相传染。
 
-**3. 用 Optuna 联合搜索多偏差的 $k$：让五类偏差的神经元数互相协调。**
+**3. 用 Optuna 联合搜索多偏差的 $k$：让五类偏差的神经元数互相协调**
 
 每类偏差该编辑多少神经元（$k$）不能各调各的，否则会忽略不同偏差神经元集合之间的重叠与干涉，出现「调好长度反而把段落搞坏」。CIRM 把五类偏差的 $k$ 当作 5 维超参联合搜索，候选值 $k\in\{50,100,200,500,1000,2000,5000\}$ 共 $7^5 \approx 16{,}807$ 种组合，用 TPE 抽样 100 次，目标函数是 500 条验证集上的整体 reward accuracy。
 

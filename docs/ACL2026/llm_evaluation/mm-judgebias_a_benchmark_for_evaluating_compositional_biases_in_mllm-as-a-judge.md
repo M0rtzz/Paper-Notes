@@ -45,15 +45,15 @@ MM-JudgeBias 的构造分 4 个阶段：(a) 从 29 个源 benchmark（COCO、Mat
 
 ### 关键设计
 
-**1. 9 类偏见的三维度 taxonomy：把"judge 失败"拆成可独立度量的细粒度类型。**
+**1. 9 类偏见的三维度 taxonomy：把"judge 失败"拆成可独立度量的细粒度类型**
 
 一个可靠的 judge 应有三种行为，作者据此把 9 类偏见分到三维。**Integrality**（3 类）测"缺组件该不该扣分"——Text-Dominance / Image-Dominance / Response-Dominance，分别把 image、query、二者都替换成 null；**Congruity**（2 类）测"组件互相矛盾该不该扣分"——Instruction-Misalignment / Image-Misalignment，用随机不相关的 query 或 image 替换；**Robustness**（4 类）测"语义不变的扰动该不该影响分数"——Detail-Description（query 后拼图像 caption）、Unnecessary-Image（纯文本任务加无关图）、Visual-Transformation（语义保留的图像增广）、Texture-Insertion（在图上叠加 query 关键词文本）。前两维考察"该敏感时敏不敏感"、后一维考察"该稳时稳不稳"，这种 sensitivity 与 stability 双向考察，正好避免了单一指标把"全打满分"和"全打 0 分"两种 trivial 行为都误判为高分。
 
-**2. Bias-Deviation (BD) 与 Bias-Conformity (BC) 双指标：给两种相反的期待各自量化。**
+**2. Bias-Deviation (BD) 与 Bias-Conformity (BC) 双指标：给两种相反的期待各自量化**
 
 "该掉分"和"该不掉分"是两类对立的诉求，得用两个互补指标分别度量。BD 用于 Integrality / Congruity 类，公式 $\text{BD} = \mathbb{E}_{(y, \hat{y}) \sim D}[(y - \hat{y})_+ / (y - 1)\mid y > 1]$，把扰动后的实际下降量对最大可能下降量做归一化，越高说明 judge 越能看穿扰动；它特意排除 $y=1$ 的样本，因为满分下界已无下降空间，留着会被边界效应污染。BC 用于 Robustness 类，公式 $\text{BC} = \mathbb{E}_{(y, \hat{y}) \sim D}[1 - |y - \hat{y}| / \max(y-1, S-y)]$，越接近 1 说明 judge 越不被无关扰动晃动。两者按偏见类型选择性使用、并非同一组对比；又因为单看 BC 时"对所有样本打同一分"就能拿满分却毫无判别力，论文额外报告 inter-sample variance 来抓这种 trivial constant judge。
 
-**3. Human-in-the-loop 高质量数据合成：确保 query 真的非多模态联合不可答。**
+**3. Human-in-the-loop 高质量数据合成：确保 query 真的非多模态联合不可答**
 
 如果一个 query 只看图或只看文就能蒙对，那扰动后 judge 没掉分就不算 bias、而是合理反应——这正是诊断 benchmark 最容易踩的陷阱。为此每条样本让 Gemini-2.5-Pro 先生成 3 个候选 query，经模型自检再由人工审选 1 个 best-Q，保证它必须图文联合推理才能答；对图像扰动里需要语义不变的增广（Visual-Transformation）用预设 pipeline 组合，需要语义破坏的扰动（如 texture insertion）则用模型生成。每类偏见还分 easy / mod / hard 三档难度，并按 4 任务类型 × 12 领域做分层抽样。human review 是过滤"单边即可答"陷阱的必要保证，最终得到 1804 条覆盖 9 偏见 × 4 任务 × 12 领域的诊断样本。
 

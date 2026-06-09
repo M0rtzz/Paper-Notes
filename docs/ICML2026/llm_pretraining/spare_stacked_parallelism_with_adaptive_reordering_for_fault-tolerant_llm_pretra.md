@@ -45,15 +45,15 @@ SPARe 完全建在 synchronous Data Parallelism 之上：$N$ 个 model-parallel 
 
 ### 关键设计
 
-**1. Stack 堆叠 + 提前 all-reduce：把"冗余"和"必须算完"解耦。**
+**1. Stack 堆叠 + 提前 all-reduce：把"冗余"和"必须算完"解耦**
 
 传统副本之所以一份冗余就要付一份完整算力，是因为它强行把"留 $r$ 份冗余"和"$r$ 份都得算完才能聚合"绑死了。SPARe 的关键洞察是：不必每组都算满 $r$ 份，只要 $N$ 种 shard type 每种都至少有一个幸存 group 算过，gradient 就能正常聚合。于是它把每组的 $r$ 份从"全算"改成"排着但只算前 $S$ 份"，开销随之从 $r\times$ 压到约 $S\times$。具体地，在第 $k$ 次失败时剩 $N-k$ 个 group 要覆盖 $N$ 种 type，所需最小 stack 数有下界 $c(k)=\lceil N/(N-k)\rceil$，SPARe 就以此为目标设 $S$，在第 $S$ 层算完立刻 all-reduce——若 ring all-reduce 期间没有新故障 hang 就直接进入参数 update，否则转入 ReCtlr 处理。整个过程对模型层完全透明：重排只是换了"谁来供给 type $i$"，聚合出的梯度仍是 $\bar{\mathbf g}=\frac{1}{N}\sum_i \mathbf g_i$，optimizer state 和 update 一律不变。正因为这层解耦，冗余度 $r$ 可以放得很大，而常态下（$k$ 小）只算前 $S\approx 2$ 层就够，容错的额外开销被压到接近常数。
 
-**2. ReCtlr：HK-Fixed / HK-Free / MCMF 三阶段自适应重排。**
+**2. ReCtlr：HK-Fixed / HK-Free / MCMF 三阶段自适应重排**
 
 失败发生后真正的难点是：当前的 shard 布局还能不能在 $S$ 层内集齐所有 type？如果不能，最小要抬到多少层、又怎么以最少的数据搬运重排过去？ReCtlr 把"$N$ 种 shard type → 幸存 group 的前 $S$ 层"建成一张二部图，分三阶段求解。第一步 **HK-Fixed**（Hopcroft-Karp）在当前固定布局上查是否仍存在完美匹配——存在就零移动直接返回，这一步在 90%+ 的训练步上都能命中，省掉不必要的重排。命不中则进 Phase 1，从当前 $S_0$ 起逐层抬高 $S$ 跑 **HK-Free**（允许组内 stack 任意置换）找最小可行的 $S^\star$；若一路抬到 $r$ 都凑不齐就判定 wipe-out，触发 global restart。Phase 2 再用 **MCMF**（min-cost max-flow）在"幸存 group × stack 槽位"上求一个满足 $S^\star$ 且总移动代价最小的重排方案。在 $N\sim 10^{2\sim 3}$ 的规模上这三种算法都是多项式时间、极轻（建模时设 0.1 s 可忽略）。这套选型很自然：bipartite matching 本就是"shard type ↔ 幸存 group"这类约束的天然语言，HK-Free 负责保证可行性、MCMF 负责压住搬运量，两者合起来让重排本身不会变成新瓶颈。
 
-**3. SPARe+CKPT 联合优化：闭式解出最优冗余度 $r^\star$ 与 checkpoint 周期。**
+**3. SPARe+CKPT 联合优化：闭式解出最优冗余度 $r^\star$ 与 checkpoint 周期**
 
 SPARe 不能无限掩蔽失败，必须有 checkpointing 兜底，所以论文把两套 trade-off（冗余 vs 开销、checkpoint 频率 vs rework）一次性解掉，给系统工程师一个可直接查表的配置。它定义归一化 time-to-train $J(r)=\bar S(N,r)/A^\star(\mu(N,r)\, m)$，其中平均计算开销 $\bar S(N,r)\approx \frac{1}{\lfloor\mu\rfloor}\sum_{k=0}^{\lfloor\mu\rfloor-1}(c(k)+\rho_k)$，wipe-out 前平均可掩蔽的失败数 $\mu(N,r)\approx \frac{\Gamma(1/r)}{r}N^{1-1/r}$，$A^\star$ 取 Saxena et al. (2024) 的最大可用性。代入近似 $\mu(N,r^\star)\approx N/2$、$\bar S\approx 2$，便解得最优冗余度
 

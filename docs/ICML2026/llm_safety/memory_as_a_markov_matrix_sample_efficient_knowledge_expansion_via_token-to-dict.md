@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Markov 化的知识扩展：把「零遗忘」从经验观察升级成结构约束。**
+**1. Markov 化的知识扩展：把「零遗忘」从经验观察升级成结构约束**
 
 标准 fine-tuning 之所以会灾难性遗忘，是因为它同时改动了所有 token 之间的转移关系，而你根本无法保证旧词之间的转移没被污染。这里的做法是把生成过程显式写成 Markov 链：旧 token 之间的转移向量 $\mathbf{p}^{(v)} \in \Delta(\mathcal{V})$ 已经由预训练模型给定，引入新 token $u$ 后只新学一个 $\mathbf{q}^{(u)} \in \Delta(\mathcal{V})$，并强制 $p_{\tilde{\theta}}(u \mid v) = 0$、$p_{\tilde{\theta}}(u_i \mid u_j) = 0$（旧词不转移到新词、新词之间也不互转）。这样一来，只要当前状态 $x_t \in \mathcal{V}$，$p_{\tilde{\theta}}(\cdot \mid x_t)$ 就和原模型分毫不差，遗忘量在数学上精确等于 0。关键在于它把「行为保持」从一个靠正则项压制的经验目标，变成了一条可以直接推导出来的等式约束——零遗忘不再是跑出来碰巧好看，而是框架本身保证的事实。
 
-**2. Token-to-Dictionary 稀疏映射：用旧字典的稀疏组合表示新概念，并把语义颗粒度直接写进样本复杂度。**
+**2. Token-to-Dictionary 稀疏映射：用旧字典的稀疏组合表示新概念，并把语义颗粒度直接写进样本复杂度**
 
 新概念几乎从不是凭空冒出来的——“COVID-19” 在转移行为上其实非常接近 “virus / disease / outbreak” 这几个旧词的混合。论文把这个直觉形式化：设 $f: \mathbb{R}^d \to \Delta(\mathcal{V})$ 是模型的 logit 头，目标是为新 token $u$ 找一组系数 $\bm{\alpha}^{(u)} \in \mathbb{R}^T$，让旧 embedding 字典 $\mathbf{E} \in \mathbb{R}^{T \times d}$ 的组合 $\mathbf{E}^\top \bm{\alpha}^{(u)}$ 经过 $f$ 后恰好复现目标转移 $\mathbf{q}^{(u)}$，即 $f(\mathbf{E}^\top \bm{\alpha}^{(u)}) = \mathbf{q}^{(u)}$。求解时加上稀疏与有界约束 $\|\bm{\alpha}^{(u)}\|_0 \le s$、$\|\bm{\alpha}^{(u)}\|_2 \le B$，用 KL 散度拟合经验转移分布 $\hat{\mathbf{q}}^{(u)}$。在这套假设下论文证明：每个新 token 所需样本数 $N \ge \tilde{O}(s \log^2 c)$，只跟它映射到几个旧词（稀疏度 $s$）有关，而与旧词表大小 $T$、模型维度 $d$ 完全无关。这个结论之所以有意思，是因为它把「新概念有多难学」精确归因到它的语义颗粒度上，而不是按要更新的参数量来估算成本——词表再大，学一个本质上「由三四个旧词拼出来」的新词也很便宜。
 
-**3. Embedding Tuning 训练算法：用最小实现代价把映射策略落到 Transformer，并让正交性天然兜住零遗忘。**
+**3. Embedding Tuning 训练算法：用最小实现代价把映射策略落到 Transformer，并让正交性天然兜住零遗忘**
 
 前两点都还停在理论层面，这一步把它变成能跑的代码，而且实现简单到近乎反直觉：把新 token 对应的那几行 embedding（如 Llama-3 里 `<|reserved_special_token_0|>` 的 3072 维向量）设为唯一可训练参数，其余 30 亿参数全部冻结，然后就用标准 next-token 交叉熵在含新 token 的语料上做普通梯度下降。推理时新 token 在 attention / FFN 里走的仍是旧权重，被改动的只是它的查询向量——训练相当于把这个查询「拉到」最能复现 $\mathbf{q}^{(u)}$ 的位置。这种实现之所以恰好满足前面的理论假设，是因为被更新的参数和旧 token 的 transition 计算图天然正交：旧 token 永远不会去查询新 embedding，除非新 token 真的出现在上下文里。于是「零遗忘」不再是一个需要小心维护的条件，而是实操中可观测、可验证的结果。
 

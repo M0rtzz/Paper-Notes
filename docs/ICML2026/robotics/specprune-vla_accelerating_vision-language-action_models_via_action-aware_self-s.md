@@ -44,7 +44,7 @@ SpecPrune-VLA 是一个外挂在 OpenVLA-OFT / DB-OFT / CogACT 等模型上的 p
 
 ### 关键设计
 
-**1. 三路融合的动作级静态剪枝：用三种正交的重要性来源拼出保留集。**
+**1. 三路融合的动作级静态剪枝：用三种正交的重要性来源拼出保留集**
 
 要在 LLM forward 一开始就砍掉 60-70% 视觉 token，关键是不能砍错——但三种现成线索各有盲区：只用 $V_{global}$（上一步全局注意力）会漏掉本步新出现的关键 token，只用 $V_{local}$（本步早期层注意力）就回到现有方法的短视问题，只用 $V_{dynamic}$（帧间变化）又会把静止但重要的背景物体当无效。SpecPrune-VLA 干脆把三路求并集 $V_{retain} = V_{global}\cup V_{dynamic}\cup V_{local}$，覆盖"语义稳定 + 内容变化 + 任务即时"三种正交来源。其中图像→文本注意力分数定义为
 
@@ -52,11 +52,11 @@ $$\text{Score}_l(V_i) = \frac{1}{H\cdot m}\sum_{h=1}^{H}\sum_{j=1}^{m} A_l^h(V_i
 
 即视觉 token $V_i$ 对所有指令文本 token 的多头平均注意力。$V_{global}$ 取上一步第 15、32 层（中/深层）按此分数排序的 Top-30，$V_{local}$ 取本步前两层各自 Top-24 求并集（前两层足够，第三层边际收益小还加延迟），$V_{dynamic}$ 用余弦相似度 $\text{Sim}(\mathbf{P}_m^{i,j}, \mathbf{P}_n^{i,j})$ 筛出低于阈值 $\tau$ 的、再取最低的 Top-20。dynamic 比的不是相邻帧而是速度自适应的历史帧 $T = \lfloor b + k\cdot v\rfloor + 4$（$k=-1, b=7$）——速度越大回看越近，避免相机噪声和光照变化误判。
 
-**2. 基于熵和排名的层级动态剪枝：让焦点清晰的层主导剪枝决策。**
+**2. 基于熵和排名的层级动态剪枝：让焦点清晰的层主导剪枝决策**
 
 静态剪枝后剩下的 token 还能再精修，但不同 transformer 层的注意力清晰度差别很大，简单平均会被那些 attention 散乱的高熵层拖偏。SpecPrune-VLA 给每个 token 在层 $l$ 算瞬时分数 $s_i^{(l)} = \omega_{\text{rank},i}^{(l)} \times \omega_{\text{conf}}^{(l)}$：rank 权重 $\omega_{\text{rank},i}^{(l)} = \sigma(-k\cdot\text{rank}_i^{(l)}) / \sum_j \sigma(-k\cdot\text{rank}_j^{(l)})$ 用 sigmoid 平滑放大排名靠前的 token；层置信度 $\omega_{\text{conf}}^{(l)} = 1/(\bar{H}^{(l)} + \epsilon)$ 以该层图像→文本注意力的平均熵 $\bar{H}^{(l)}$ 为分母——熵低意味着注意力集中、该层意见更可信、权重就大。token 分数再走 EMA $S_i^{(l)} = (1-\beta) S_i^{(l-1)} + \beta s_i^{(l)}$（$\beta=0.2$），每层砍掉分数最低的 10%（熵在第一步算完后整段任务复用，因为层间相似度高）。用熵当软门控的效果很直接：LIBERO 上 Recall 88% vs 平均加权 66%，成功率 96.1% vs 92.0%。
 
-**3. 速度感知的粗/细粒度控制器：在关键瞬间自动收手。**
+**3. 速度感知的粗/细粒度控制器：在关键瞬间自动收手**
 
 帧帧观察失败案例会发现错误几乎全集中在接触/放置阶段——平时多剪一点没事，到了抓取的关键瞬间剪多了就抓空。SpecPrune-VLA 用末端执行器速度当开关：平移速度 $v_t = \sqrt{(\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2}$、旋转速度 $v_r = \sqrt{(\Delta\alpha)^2 + (\Delta\beta)^2 + (\Delta\gamma)^2}$，当 $v_t<v_t^{\text{th}}$ 且 $v_r<v_r^{\text{th}}$ 且 $\Delta z\leq 0$（向下接触阶段）时进入 precise 模式，把所有 $K$ 值放大、剪得更保守；离开阈值就回到 coarse 模式激进剪枝。速度本来就是模型输出，所以这个控制器几乎免费（额外延迟约 1.5ms），但它把"任务关键瞬间"和"过场动作"区别对待，消融里把成功率从 96.8% 拉回 97.4%、与 baseline 持平。
 

@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 共享作用域（Shared Scopes）：让 prompt 直接读写程序变量，省掉传参样板。**
+**1. 共享作用域（Shared Scopes）：让 prompt 直接读写程序变量，省掉传参样板**
 
 隔离状态设计最直接的负担，是每次都要手动把变量喂进 prompt、再把结果接出来。Nightjar 让 prompt 里的 `<graph>` 直接引用当前作用域中的 `graph` 变量，LLM 输出里的 `<:response>` 则把值绑定回名为 `response` 的变量。机制上，系统在 prompt 执行前对作用域拍一个快照，执行后再用 LLM 产生的写入效应更新对应变量。这样开发者不必再为"传入/传出"定义 schema 类或写序列化函数，prompt 真正变成了程序的一部分，而非一个需要桥接的外部黑盒。
 
-**2. 共享堆（Shared Heap）：让 prompt 就地改复杂对象，而不是返回一个新副本。**
+**2. 共享堆（Shared Heap）：让 prompt 就地改复杂对象，而不是返回一个新副本**
 
 光能读写变量还不够——很多任务要修改的是图、列表这类可变对象。难点在于 LLM 不能、也不应该直接去碰 Python 堆。Nightjar 的做法是引入 reference / dereference 两类效应：系统维护一张对象引用表，LLM 只发出"对某引用做某操作"的指令，handler 再把它翻译成对真实 Python 对象的属性修改、方法调用或就地更新。于是 prompt 可以原地改一张图、往列表里加元素，而不是被迫把整个数据结构序列化、返回一个全新版本——既省 token，也避免了大对象来回搬运时的信息丢失。
 
-**3. 共享控制流（Shared Control State）：让 prompt 按语义决定循环何时停、何时跳。**
+**3. 共享控制流（Shared Control State）：让 prompt 按语义决定循环何时停、何时跳**
 
 有些分支判断本质上是语义问题（"这轮对话该结束了吗"），用传统条件代码很难写干净。Nightjar 让 prompt 通过标签（labels）引用程序里的控制流结构：当 LLM 输出一个 break 效应时，对应的 handler 就在宿主 Python 程序里执行那条 break，continue 同理。这样 prompt 能根据对话语义直接决定终止循环还是跳过当前迭代，把原本要写在程序里的一堆 `if` 判断收进了 prompt 的自然语言意图里。
 
-**4. Natural Function Interface Schema：把上面三种共享统一成一套语言无关的规范。**
+**4. Natural Function Interface Schema：把上面三种共享统一成一套语言无关的规范**
 
 前三点都是具体能力，第四点是把它们抽象成一套形式化接口，让"共享程序状态"不只属于 Python。它建立在 effects & handlers 范式之上：effects 一侧定义 prompt 可以发起哪些操作（读变量、写变量、引用/解引用对象、break 等），handlers 一侧定义这些操作在宿主语言里如何实现。读变量、写变量、改堆、控制流于是都被归一成同一类"效应—处理器"配对。因为接口只规定操作语义、不绑定具体语言，任何编程系统理论上都能照这套 schema 实现自己的共享状态，这也是论文强调"抽象比具体系统更重要"的底气所在。
 

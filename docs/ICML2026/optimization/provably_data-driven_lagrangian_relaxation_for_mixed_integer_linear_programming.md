@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 几何性质 + ERM 泛化上界 $\mathcal{O}(s^{1.5}/\sqrt{N})$：用对偶视角绕开 piecewise-linear 爆炸。**
+**1. 几何性质 + ERM 泛化上界 $\mathcal{O}(s^{1.5}/\sqrt{N})$：用对偶视角绕开 piecewise-linear 爆炸**
 
 学的函数 $u_\pi(P)$ 固定 $\pi$ 对 $P$ 是分段线性、段数随 $s$ 指数增长，直接做段数分析会爆。作者改走 data-driven algorithm design 的对偶视角：固定 $P$、把 $u(\cdot,P)$ 当作 $\pi$ 上的凹函数处理。先证它凹（Lagrangian 是一堆线性函数的逐点 min/max），子梯度 $g(\pi,P)=b-Ax^*(\pi,P)$ 在 Assumption 4.1 下满足 $\|g\|_2\le 2B\sqrt s$，于是 $u(\cdot,P)$ 是 $L=2B\sqrt s$-Lipschitz；用 Lipschitz 把函数类覆盖归约为参数空间覆盖 $\log\mathcal{N}(\delta,\mathcal{U},\|\cdot\|_{2,N})\le s\log(1+2B\pi_{\max}s/\delta)$，最后 Dudley 熵积分给出 Rademacher 复杂度 $\mathscr{R}_N(\mathcal{U})=\mathcal{O}(s^{1.5}/\sqrt N)$——一个 $\sqrt s$ 来自 Lipschitz 常数、一个来自参数空间直径 $\pi_{\max}\sqrt s$。这样标准经验过程工具就能直接套用，不必去碰那个会爆的段数。
 
-**2. Minimax 下界 $\Omega(s/\sqrt{N})$ 的硬实例构造：把 $\sqrt s$ gap 定性为上界松。**
+**2. Minimax 下界 $\Omega(s/\sqrt{N})$ 的硬实例构造：把 $\sqrt s$ gap 定性为上界松**
 
 要判断上界多出的 $\sqrt s$ 到底是问题本身的难度还是分析不够紧，得有一个与算法无关的下界。作者用 Fano + Varshamov-Gilbert 构造硬分布族：把 $P$ 限制成 $A=\mathbf{I}_s$ 让对偶值坐标可分 $u(\pi,P)=\sum_k\min(\pi_k/2,c_k-\pi_k/2)$，再给每个坐标设计一对 Bernoulli 分布、由 $v\in\{0,1\}^s$ 索引，使 $\pi^*(\mathcal{D}_v)=\mu\mathbf{1}_s+\sigma v$。VG 给一个 $2^{s/8}$ 大、Hamming 距离 $\ge s/8$ 的 packing 保证几何分离 $\|\pi^*(\mathcal{D}_v)-\pi^*(\mathcal{D}_{v'})\|_1\ge\Omega(\sigma s)$；KL 用 $\chi^2$ 上界得 $\mathrm{KL}\le 4Ns\epsilon^2$，取 $\epsilon=\Theta(1/\sqrt N)$ 让 Fano 项有常数下界，配 Lemma 5.9 的 $\ell_1$ 误差转风险下界，得到 $\Omega(s/\sqrt N)$。关键技巧是用 $A=\mathbf{I}_s$ 把 $s$ 维 hard 问题主动构造成 $s$ 个独立 1 维 hard 问题，恰好是 Fano 的标准舞台——于是 $\sqrt s$ gap 被坐实为上界松，而非下界弱。
 
-**3. SGA + averaging 关掉 $\sqrt s$ gap，warm-start 再提一阶到 $\Theta(s/N)$：瓶颈在算法侧。**
+**3. SGA + averaging 关掉 $\sqrt s$ gap，warm-start 再提一阶到 $\Theta(s/N)$：瓶颈在算法侧**
 
 既然下界已摸到天花板，差距就在 ERM 这个算法本身。作者改用 online-to-batch 的 Stochastic Subgradient Ascent：每来一个实例 $P_t$ 解一次 Lagrangian 子问题得 $x_t^*$，取无偏次梯度 $g_t=b_t-A_tx_t^*$，按 $\pi_{t+1}=\mathrm{Proj}_\Pi(\pi_t+\eta g_t)$ 更新，输出平均 $\bar\pi_N$。OCO 标准 regret 配 $\|g_t\|_2\le 2B\sqrt s$、$\eta=\pi_{\max}/(2B\sqrt N)$ 给 $\mathbb{E}[\mathcal{E}(\bar\pi_N)]\le 2B\pi_{\max}s/\sqrt N=\mathcal{O}(s/\sqrt N)$，正好匹配下界——而且 SGA 每步本就要解一次子问题，这恰是 LR 部署阶段本来就做的事，等于零额外成本拿到 $\sqrt s$ 倍提升。更进一步，把目标从"max 对偶值"换成"min 与最优乘子的 $\ell_2$ 距离" $\ell(\phi,P)=\|\phi-\pi^*(P)\|_2^2$，问题从非光滑凹 max 变成强凸均值估计，经验均值 $\hat\phi(S)=\frac1N\sum_i\pi^*(P_i)$ 即 ERM，配 Popoviciu 不等式得 $\mathcal{O}(s/N)$、Fano 给同阶下界，最终 $\Theta(s/N)$。"换 loss 不换问题"把整个范式搬到强凸地盘，这就是 warm-start 在样本效率上根本性更优的理论根源。
 

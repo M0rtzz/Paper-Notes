@@ -51,19 +51,19 @@ tags:
 
 ### 关键设计
 
-**1. 多指标对照：用两面独立的镜子，照出 Biasing Features 的盲区。**
+**1. 多指标对照：用两面独立的镜子，照出 Biasing Features 的盲区**
 
 Biasing Features 的根本问题是只盯着"hint 有没有被写进 CoT"这一维信号，一旦没写就判不忠实——但缺词未必等于假述。论文的反击思路是再请两个机制完全不同的指标来复审同一批"不忠实"样本：Filler Tokens 把整段 CoT 替换成无意义的"..."再看预测是否改变，$\mathcal{F}_{\mathrm{FT}}=\mathbb{1}[\hat y_{h,\text{corr}}\ne\hat y_h]$，预测一变就说明推理时 CoT 真被用上了，测的是"上下文 faithfulness"；FUR 则反过来 unlearn 掉某个推理步，$\mathcal{F}_{\mathrm{FUR}}=\mathbb{1}[\exists\,r_i: M(x_h)\ne M^{(i)*}(x_h)]$，预测随之变化就说明这一步反映了模型参数里真实的计算，测的是"parametric faithfulness"。
 
 两面镜子各照一个维度，只要任何一面判"忠实"，就足以反驳 Biasing Features 对同一样本的"不忠实"判决。这种多镜面对照正是全文最锋利的逻辑武器——它把"不忠实"这个一维标签拆成多个可独立验证的维度，单指标的盲区无所遁形。
 
-**2. faithful@k：把采样运气从忠实性里剥出来。**
+**2. faithful@k：把采样运气从忠实性里剥出来**
 
 贪心解码只看一条轨迹，某次没写出 hint 就盖棺定论，等于看了一帧就给整部电影下结论——可模型本来是有能力写出 hint 的，只是这次没采到。faithful@k 把 pass@k 的思想移植过来量化这件事：定义 $\text{faithful@k}=\mathbb{E}[1-\binom{n-c}{k}/\binom{n}{k}]$，其中 $n$ 是答案被 hint 改变的样本数、$c$ 是其中 verbalize 了 hint 的样本数，含义是"采 $k$ 条 CoT 里至少有一条说出 hint"的概率。
 
 如果 $k$ 增大时 faithful@k 显著上扬，说明所谓"不忠实"其实只是单次采样的 incompleteness；若纹丝不动，才是真不忠实。实测两类轨迹泾渭分明：Professor hint 下 gemma-3-4b 的 faithful@16 一路涨到 0.9，而 Black Squares hint 几乎不动。这种差异本身就回应了"是不是靠多采样作弊"的质疑——hint 越隐式，模型越说不出来，曲线越平，正说明 faithful@k 测的是真实能力而非采样运气。
 
-**3. Causal Mediation Analysis：用反事实干预证明 CoT 是因果中介而非事后理由。**
+**3. Causal Mediation Analysis：用反事实干预证明 CoT 是因果中介而非事后理由**
 
 光看相关性回答不了最关键的问题：CoT 究竟是模型预测的真正原因，还是写完答案后补的漂亮说辞？CMA 直接构造反事实把"hint 引起的总变化"拆成两条路径。直接效应固定原 CoT、只换 hinted 输入，$\text{NDE}=\mathbb{E}_x[p_h(x_h,c)-p_h(x,c)]$，刻画 hint 绕过 CoT 直接改写预测的部分；间接效应固定原输入、只换 hinted CoT，$\text{NIE}=\mathbb{E}_x[p_h(x,c_h)-p_h(x,c)]$，刻画 hint 先改造 CoT 再经它影响预测的部分。NIE 显著非零，就坐实了 CoT 在因果上承载了 hint 的影响；论文还同步追踪 $p_{\bar h}=\sum_{c\ne L_h}p_c$ 来区分 CoT 是在抬高 hinted 答案还是在压低其它选项。
 

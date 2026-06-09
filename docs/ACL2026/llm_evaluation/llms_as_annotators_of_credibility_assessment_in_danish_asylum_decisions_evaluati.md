@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 6×5 正交 prompt 网格：把"领域知识注入"和"任务推理结构"两个维度解耦量化。**
+**1. 6×5 正交 prompt 网格：把"领域知识注入"和"任务推理结构"两个维度解耦量化**
 
 LLM-as-annotator 文献里 prompt 的影响常被一句"prompt is task-specific"草草带过，作者要把这种 task-specific 性真正量化出来，于是设计了一张 system × user 的正交网格。System prompt 按嵌套层次递增注入领域知识：SP0（空）→ SP1（专家 persona）→ SP2（SP1 + 原始 codebook）→ SP3（SP2 重写 + 每类典型丹麦语短语）→ SP4（SP3 + 边界 case：假设性法律构造、混合情感）→ SP5（SP1 + 专家手写"可信度 vs 风险评估 vs 中性陈述"消歧）。User prompt 按推理复杂度递增：UP1（直接三选一）→ UP1-FS（UP1 + 每类一个最难 few-shot 样本）→ UP2（两步：先判有无、再判正负，对应人类标注结构）→ UP3（zero-shot CoT，Kojima et al. 2022）→ UP4（zero-shot metacognitive prompting，Wang & Zhao 2024）；所有 prompt 用英文写、丹麦文输入。两维解耦后才能干净地归因：结果显示 CS 专家 + 领域专家共写的 SP3/SP4 胜过纯领域专家写的 SP2/SP5，证明跨学科 prompt 设计真有效，而 UP 的收益高度模型相关——Phi-4 用 UP2 拿到全场最高的 val 90.51% F1，Gemma-3 用同一 UP2 反而崩到 60+%。
 
-**2. Top-3 prompt 平均 + 15 标注员集成投票：用多样化的"足够好"组合模拟多专家共识。**
+**2. Top-3 prompt 平均 + 15 标注员集成投票：用多样化的"足够好"组合模拟多专家共识**
 
 任意单跑一个 LLM 标注员风险很高——测试集单模型最高的 phi-4+SP4+UP4 也只有 94.7% F1，且 15 个标注员每一个都至少犯过一次"不可接受错误"，单点失败无法避免。集成的选法刻意兼顾两个多样性轴：先在验证集上对每个模型按其 top-3 prompt 的平均 Macro-F1 排序，取 top-5 模型（phi-4 / gemma-3-27b-it / Ministral-3-14B / Mistral-Small-24B / Qwen3-30B）× 各自 top-3 prompt = 15 个 LLM annotator，既覆盖不同模型架构、又覆盖不同 prompt（SP5+UP2 是出现最多的组合，3 次）。测试集上对每个 case 取多数票，accuracy 跳到 96%（比单模型 SOTA +1.5pp）；更关键的是对剩下 8 个错误 case，专家 H1 复看判定 4 个"可接受"、2 个"可理解"、只剩 2 个"不可接受"，说明集成真能把严重错误率压下去。
 
-**3. Instance-level PromptSensiScore（PSS）：区分"聚合稳"和"逐案例稳"两种鲁棒。**
+**3. Instance-level PromptSensiScore（PSS）：区分"聚合稳"和"逐案例稳"两种鲁棒**
 
 传统 prompt 敏感度只看聚合 F1 在不同 prompt 下的方差，会漏掉"F1 几乎没变、但具体预测在 case 之间偷偷翻转"的伪鲁棒。作者借用 Zhuo et al. (2024) 的 PSS——固定一组 prompts $\mathcal{P}$，对每个 case $x_i$ 统计在 $\mathcal{P}$ 内不同 prompt 下预测正确性的波动，记 PSS$(x_i)$ 为该案例的预测稳定性。两种切片直接给出"prompt 比 model 更关键"的结论：固定模型变 prompt 时 Phi-4 的 PSS=0.043（最稳）、Qwen3-30B 高达 0.110（最不稳）；固定 prompt（SP5+UP2）变模型时 PSS 仅 0.05，比同模型变 prompt 还低。Qwen3-30B 正是典型陷阱——每个 prompt 都跑出 F1≈87.9% 看着很稳，实则在不同 prompt 下错的 case 各不相同，是"靠运气抵消"的假象，PSS 把这种隐蔽风险挑了出来。
 

@@ -44,11 +44,11 @@ UniFL 把度量空间 $(\mathcal{X}, d)$ 编码为加权图 $G_S$（只保留 $d
 
 ### 关键设计
 
-**1. 可微的 Radius 估计：把 UniFL 的关键量 radius 写成 ReLU 消息传递，让它能被反传。**
+**1. 可微的 Radius 估计：把 UniFL 的关键量 radius 写成 ReLU 消息传递，让它能被反传**
 
 UniFL 的近似算法核心是每个点的 radius $r_x$（满足 $\sum_{y\in B(x,r_x)}(r_x-d(y,x))=1$），但这个量是离散迭代算出来的、不可导。作者把 $(0,1]$ 离散成 $0=a_0<a_1<\cdots<a_k=1$，对每个 bin 算指示量 $t_x^{(i)}=\min\{1,\sum_{y\in N(x)}\text{reLU}(a_i-d(x,y))\}$，并改写成两层 ReLU FNN $t_x^{(i)}=\text{FNN}_{2,3}(\sum_y\text{FNN}_{1,3}(a_i,d(x,y)))$；若 $r_x\ge a_i$ 则 $t_x^{(i)}$ 应为 1，于是 radius 估计取 $\hat r_x=\sum_i a_i(t_x^{(i-1)}-t_x^{(i)})$。之所以能这么干，是因为 radius 的定义本身就是"在 ball 内累计 $r_x-d(y,x)=1$"，等价于一个 ReLU 求和——显式构造而非黑盒"希望网络学到"，这才让后面的近似界能严格推到 MPNN 上。
 
-**2. 开设施概率与可解析的期望成本损失：把组合目标写成闭式可微，彻底绕开 STE/Gumbel 那套噪声梯度。**
+**2. 开设施概率与可解析的期望成本损失：把组合目标写成闭式可微，彻底绕开 STE/Gumbel 那套噪声梯度**
 
 离散目标不可导，端到端 neural CO 普遍靠 straight-through、Gumbel-softmax 等代理梯度，训练脆弱难调。本文把开设施概率写成 $p_x=\min\{1,c\log(n)\cdot\hat r_x\}\equiv\text{FNN}_{2,3}(n,\hat r_x)$，再依据"$F_1$ 独立采样、$F_2$ 在无人服务时自动开"的算法逻辑，把期望成本写成完全解析的形式：
 
@@ -56,7 +56,7 @@ $$\mathbb{E}[\text{cost}]=\sum_f p_f+\sum_f\prod_{x:d(x,f)<1}(1-p_x)+\sum_x\sum_
 
 三项分别是"独立开设施"、"没人覆盖时强制开"、"被最近开放设施服务的期望距离"。所有 $\min,\prod,\sum$ 都对 $p_x$ 可微，绕开了离散 + STE 的不稳定训练，又因为利用 UniFL 的稀疏结构把复杂度压到 $\mathcal{O}(nd^2)$（$d$ 是最大度）；更关键的是它和 SimpleUniformFL 算法语义一一对应，方便后面证近似界。
 
-**3. 从 $\mathcal{O}(\log n)$ 到 $\mathcal{O}(1)$ 的 RecursiveUniformFL：用递归剥离把 $\log n$ 因子改进成常数。**
+**3. 从 $\mathcal{O}(\log n)$ 到 $\mathcal{O}(1)$ 的 RecursiveUniformFL：用递归剥离把 $\log n$ 因子改进成常数**
 
 简单算法只有 $\mathcal{O}(\log n)$ 近似，而 Prop 4 给出下界——单独的常深 MPNN 即使最优参数也只能到 $\Omega(\log n/2)$，说明递归不可或缺。作者把概率改成 $\min\{1,c\cdot d(x,F),c\cdot r_x\}$，加进"与现有设施距离"项；每轮把已被某个 $f\in F$ 在 $6r_x$ 内服务的点 assign 掉，剩下的进下一轮递归应用同一架构。理论上 Prop 3 证明存在参数让 MPNN 重现 $\mathcal{O}(\log n)$ 界、递归后达 $\mathcal{O}(1)$，Prop 5 进一步证明从有限训练集 + 正则项学到的参数能泛化到任意大小 $n$ 的实例。这种"上界（能重现经典算法）+ 下界（常深 MPNN 不够）"的双证态度，给"为何要递归"提供了硬辩护。
 

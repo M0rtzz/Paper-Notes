@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 闭式最优策略 + 通用可逆条件：把所有 $f$ 的最优解写成同一个模板（Proposition 2.3）。**
+**1. 闭式最优策略 + 通用可逆条件：把所有 $f$ 的最优解写成同一个模板（Proposition 2.3）**
 
 后面两套算法都得在每轮从奖励估计反推出策略，如果每种 $f$ 都要单独推导，统一分析就无从谈起。作者证明，只要 $\pi_0(a|x)>0$、$f'$ 可逆且 $0\notin\text{dom}(f')$，通用目标的最优解就有统一闭式 $\pi_f^*(a|x)=\pi_0(a|x)\cdot f'^{-1}(\eta(r^*(x,a)-\lambda_f^*(x)))$，其中 $\lambda_f^*(x)$ 是负责归一化的拉格朗日乘子；记 $h=(f')^{-1}$，reverse KL 下 $h(z)=\exp(z-1)$ 就退回大家熟悉的 softmax。这个统一形式之所以关键，是因为它让 regret 能被写成奖励误差的二次型、$\partial J_f/\partial r$ 可直接分析；代价是可逆条件把 Total Variation、纯 chi-squared 这类边界情形排除在外，但 reverse/forward KL、JS、chi-squared-KL 等主流选择都保住了。
 
-**2. Optimism 算法：用「面对不确定性时乐观」把 $O(\log T)$ regret 推广到通用 $f$（Algorithm 1）。**
+**2. Optimism 算法：用「面对不确定性时乐观」把 $O(\log T)$ regret 推广到通用 $f$（Algorithm 1）**
 
 第一条痛点是怎么在通用 $f$ 上拿到对数 regret。作者沿用经典的 optimism 框架：每轮先 MLE 得 $\theta_t$，再给奖励加一个乐观 bonus $\hat r_t=r_{\theta_t}+\mathbb{E}_{a\sim\pi_t}b_t$，其中 $b_t(x,a^1,a^2)=\min\{1,\beta_T\,U(\xi,x,a^1,a^2;\mathcal{R}_t,\mathcal{D}_t)\}$，$U$ 是建立在 Eluder dimension 上的不确定性度量，最后把 $\hat r_t$ 代回 Proposition 2.3 得到 $\pi_{t+1}$。和只做 KL 的前作相比，这里的 regret bound 多出一个 $\mathcal{C}(f,\mathcal{R}_\Theta,\eta)=\max h'/h$ 项——它正是引入通用 $f$ 的代价，量化了「$h$ 越扁、regret 越紧」这件事，也是首次对任意满足条件的 $f$ 给出的 regret 上界。
 
-**3. Derivative-as-uncertainty 算法：拿 $h'$ 的几何直接当探索信号，免去每轮解 confidence ball（Algorithm 2）。**
+**3. Derivative-as-uncertainty 算法：拿 $h'$ 的几何直接当探索信号，免去每轮解 confidence ball（Algorithm 2）**
 
 optimism 算法每轮都要解一个 $\sup_{R_1,R_2}$ 去算 $U$，在 LLM 这种参数空间巨大的场景里几乎不可行，这是第二条痛点。作者的核心观察是 $h'=((f')^{-1})'$ 本身就编码了不确定性：因为 $\pi_\theta-\pi_{\theta'}\approx\pi_0\cdot h'(\eta(r_\theta-\lambda))\cdot\eta\cdot\Delta r$，$h'$ 大的地方正是策略对奖励估计最敏感、最该多探的地方。于是他们直接把采样分布定为 $\pi'_\theta(a|x)\propto\pi_0(a|x)\cdot h'(\eta(r_\theta(x,a)-\lambda_\theta(x)))$。麻烦在于奖励估计严重出错时 $h'$ 会接近 0、探索就停摆，所以再补两个互补分布 $\pi_\theta^+\propto\pi'_\theta\exp(r_\theta)$ 与 $\pi_\theta^-\propto\pi'_\theta\exp(-r_\theta)$ 分别兜住奖励被高估和低估的区域；每轮以概率 $1-p(x)$ 用 $\pi'_\theta$ 采出 $(a^1,a^2)$、以 $p(x)$ 用 $(\pi^+,\pi^-)$ 各采一个，混合权 $p(x)=\frac{Z^+Z^-}{1+Z^+Z^-}$ 自适应。整套方法只需要 MLE 加加权采样、不必每轮解优化，工程友好的同时仍能拿到 $O(1/T)$ 的 suboptimality gap。
 

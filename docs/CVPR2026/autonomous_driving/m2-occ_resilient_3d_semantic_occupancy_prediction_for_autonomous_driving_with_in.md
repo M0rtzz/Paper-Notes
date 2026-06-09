@@ -43,7 +43,7 @@ M²-Occ 要解决的是：当一部分环视相机故障、对应视图整块缺
 
 ### 关键设计
 
-**1. MMR（Multi-view Masked Reconstruction）：在特征空间用相邻相机的重叠区域把缺失视图补回来。**
+**1. MMR（Multi-view Masked Reconstruction）：在特征空间用相邻相机的重叠区域把缺失视图补回来**
 
 缺一个相机为什么不必从零猜？因为 nuScenes 的 6 个环视相机视场本就有显著重叠——前左相机的右边缘和前相机的左边缘看的是同一片区域。MMR 正是吃这份天然冗余。它先把 6 个相机建成一个循环图，每个视图只认左右两个邻居 $\mathcal{N}(v_i) = \{v_{(i-1) \bmod N},\ v_{(i+1) \bmod N}\}$；当 $v_i$ 缺失时，从左右邻居的特征图里各裁出宽度为 $w_{ov}$ 的重叠边界条带，中间夹一个可学习的 mask token 拼成参考特征：
 
@@ -51,7 +51,7 @@ $$\mathbf{f}_{ref} = \text{Concat}(\mathbf{f}_{left}[:,-w_{ov}:],\ \mathbf{e}_{m
 
 这份 $\mathbf{f}_{ref}$ 只是粗糙的结构先验（边缘对得上、中间是空的），真正的细化交给一个 6 层、8 头的 Transformer decoder，加上可学习位置编码后解出近似完整视图的重建特征 $\hat{\mathbf{f}}_i = \mathcal{D}(\mathbf{f}_{ref} + \mathbf{p}_{pos})$。关键在于它选择在**特征空间**而不是像素空间重建——不去生成一张以假乱真的图，省掉了图像生成的高计算成本，也避免把生成噪声灌进下游。监督上只对被 mask 掉的视图算 L2 重建损失 $\mathcal{L}_{MMR} = \frac{1}{|\mathcal{M}|}\sum_{i \in \mathcal{M}} \|\hat{\mathbf{f}}_i - \mathbf{f}_i^{gt}\|_2^2$，刻意不监督正常视图，免得模型偷懒学成恒等映射。
 
-**2. FMM（Feature Memory Module）：用全局语义原型给重建后仍模糊的 voxel 特征兜底。**
+**2. FMM（Feature Memory Module）：用全局语义原型给重建后仍模糊的 voxel 特征兜底**
 
 MMR 能把几何结构大致补回来，但越靠近重叠区之外的中心盲区，重建特征越容易语义发虚——补出来一团东西，到底是车还是路面说不清。FMM 扮演"长期记忆"：它为每个语义类别存一份"理想长相"的原型特征，让模糊 voxel 去对照纠偏。论文比较了两种存法。Single-Proto 给每类只存一个全局质心 $\mathbf{m}_k$，靠动量滑动平均 $\mathbf{m}_k^{(t)} = (1-\lambda)\mathbf{m}_k^{(t-1)} + \lambda \cdot \bar{\mathbf{f}}_k$（$\lambda=0.1$）逐步更新，把 mini-batch 噪声平滑掉。Multi-Proto 则给每类存 $N_p$ 个子原型去捕捉类内差异（比如"卡车"里的皮卡和半挂车），查询时按 cosine 相似度加 softmax（温度 $\tau$）加权检索。直觉上 Multi-Proto 更精细，但在视图缺失这个场景里 visual evidence 本就稀疏，相似度路由反而容易被噪声带偏、把特征切得过碎——所以论文最终采用更稳的 Single-Proto。无论哪种，最后都以残差方式把原型注回 voxel 特征，并用预测类别概率 $P(k)$ 当门控：
 

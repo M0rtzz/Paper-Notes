@@ -45,13 +45,13 @@ DAT 的 pipeline 完全建立在冻结的 VLM 之上：先用训练/验证集为
 
 ### 关键设计
 
-**1. 基于 herding 的组参考集构造：为每组选出代表中心几何的 exemplar。**
+**1. 基于 herding 的组参考集构造：为每组选出代表中心几何的 exemplar**
 
 要估"某测试样本相对它所属组有多稀疏"，先得有一个能代表该组核心的局部邻域。DAT 对每个 $(y,a)$ 组从其样本池 $\{x_{y,a}^{(h)}\}_{h=1}^{N_{y,a}}$ 里用 iCaRL 风格的 deterministic feature-space herding（Rebuffi et al., 2017）贪心选点——每次选一个嵌入向量，使已选集合的均值不断逼近组均值——得到紧凑参考集 $R_{y,a}=\{z_{y,a}^{(h)}\}_{h=1}^{n}$，规模都很小（Waterbirds $n=56$、CelebA $n=128$、COVID-19 $n=40$、FMoW $n=50$）。
 
 为什么用 herding 而不是随机采样：既有研究表明频繁/伪相关样本本身就靠近组均值（Levi & Gilboa, 2025），所以向均值逼近的 herding 天然会把这些"常见模式"抓进参考集，正好给后续密度估计提供一个"常见模式聚集区"的基准；而且整个参考集只用作非参数几何估计、不动一个模型参数，零样本性质完整保留。
 
-**2. SLOF 局部密度与 Density Translation 重缩放：把稀疏区的过度自信分数压下去。**
+**2. SLOF 局部密度与 Density Translation 重缩放：把稀疏区的过度自信分数压下去**
 
 纯 cosine 打分有个致命盲区——一个"配错文本但常见"的伪相关样本，和一个"配对文本但稀有"的样本，得分可能差不多，甚至前者更高。DAT 先用 simplified LOF（SLOF, Schubert et al., 2014）把"测试样本 $z$ 相对该组有多孤立"量化成标量：
 
@@ -61,7 +61,7 @@ $D$ 越大越孤立。然后把原始组相似度按密度重缩放：$\tilde s_
 
 这一步起效的关键在于：伪相关样本通常落在自身组的密集区、却在错配组的稀疏外围，所以除以 $D$ 之后，错配方向的得分被显著压低、正确方向的得分被相对抬升。论文用 Waterbirds 的 Tangent-space Mahalanobis Distance 把这一几何现象可视化了出来。
 
-**3. 组合聚合 + Kent 分布下的理论对齐：证明这不只是经验 trick。**
+**3. 组合聚合 + Kent 分布下的理论对齐：证明这不只是经验 trick**
 
 把组得分整合成类别预测时，DAT 还定义了 class-marginal $\tilde s_{y,\text{Avg}}(x)=\frac{1}{M+1}(\sum_a \tilde s_{y,a}(x)+s_y(x))$，最终用 max-of-max 决策 $\hat y=\arg\max_y \max\{\max_a \tilde s_{y,a}(x), \tilde s_{y,\text{Avg}}(x)\}$，兼顾"有伪属性时按组打分"和"伪属性未知时回退到平均"。
 

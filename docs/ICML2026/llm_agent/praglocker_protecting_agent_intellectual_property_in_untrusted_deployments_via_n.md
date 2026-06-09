@@ -44,15 +44,15 @@ PragLocker 要把一段明文 system prompt 改造成「只在 target LLM 上 wo
 
 ### 关键设计
 
-**1. 理论根基：functional equivalence + stability region，把「prompt 可混淆」从经验说法变成存在性定理。**
+**1. 理论根基：functional equivalence + stability region，把「prompt 可混淆」从经验说法变成存在性定理**
 
 position paper 式地宣称「prompt 可以被混淆」很容易被批成 ad hoc，所以作者先给一个几何上的存在性证明。他们把 functional equivalence 定义为：扰动后的 embedding $\tilde{\bm{h}}$ 与原 embedding $\bm{h}$ 在任意 query $\bm{q}_i$ 下产生相同的 greedy decoding 就算等价；再定义 correct-class margin $m(\tilde{\bm{h}}, \bm{q}_i, y_i) = f(\tilde{\bm{h}}, \bm{q}_i)_{y_i} - \max_{k \neq y_i} f(\tilde{\bm{h}}, \bm{q}_i)_k$。只要 margin $> 0$，就一定存在一个 ε-球 $B_\epsilon(\bm{h})$ 让球内所有点都保持 functional equivalence，这个球就是 utility 不变的「stability region」$S_{\bm{x}}$。证明的关键利用了 transformer 的 attention dilution——网络对低 attention 的 token 扰动不敏感，所以只扰动 $k$ 个这样的 token，累计 embedding shift $\|\Delta\bm{h}\| \le \sum_{j} \|\bm{\delta}_j\|$ 能压在 ε 内保持 utility，而离散 prompt 距离 $d(\tilde{\bm{x}}, \bm{x})$ 又随 $k$ 增大到足够混淆。non-portability 则来自「manifold mismatch」：高维空间里模型 $\theta$ 的 $S_{\bm{x}}(\theta)$ 和另一模型 $\theta'$ 的 $S_{\bm{x}}(\theta')$ 几乎不相交，所以对 target 调好的扰动落不进别人的 stability region，这就给后面的工程方法提供了「为什么搬不走」的几何解释。
 
-**2. Stage 1 — code-symbol 初始化：让 target LLM 自己生成起点，把 random search 放进 stability region 内部。**
+**2. Stage 1 — code-symbol 初始化：让 target LLM 自己生成起点，把 random search 放进 stability region 内部**
 
 如果直接从空白随机搜索，几乎不可能命中一个还能保持 utility 的 prompt——搜索空间太大、stability region 太稀疏。所以这一步让 target LLM 把原 prompt 翻成「代码 + 符号」形式的 $\tilde{\bm{x}}_0$：表达从自然语言挪到更紧凑、但 target 仍能读懂的符号表示，语义和 utility 都保住。因为是 target LLM 自己生成的，这个 warm start 天然带 target 偏向，相当于一次 target-conditioned 的预混淆；同时符号化引入了冗余，给阶段二留出可以塞噪声的空间。本质上它把随机搜索的起点直接放进了 $S_{\bm{x}}$ 内部，大幅缩小后续要搜的有效范围。
 
-**3. Stage 2 — random-search 噪声注入 + 三项 joint loss：用无梯度搜索把 prompt 推出自然语言分布。**
+**3. Stage 2 — random-search 噪声注入 + 三项 joint loss：用无梯度搜索把 prompt 推出自然语言分布**
 
 黑盒下没有梯度，只能采样 + 过滤。每一步从噪声集合（通常是 printable 字符）采样 $\bm{n}_t$ in-place 注入当前 prompt $\tilde{\bm{x}}_t$ 得到候选 $\tilde{\bm{x}}'_{t+1}$，看 loss 降了就接受、否则回退——这就是经典的 gradient-free discrete 优化（random search，Rastrigin 1963，近年也用于 jailbreak suffix）。关键在三项联合目标各管一个需求：
 

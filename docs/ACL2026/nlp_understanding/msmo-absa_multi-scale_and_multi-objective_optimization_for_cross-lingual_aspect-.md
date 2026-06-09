@@ -46,11 +46,11 @@ MSMO 的核心判断是：跨语言 ABSA 必须**同时**在句子级和 aspect 
 
 ### 关键设计
 
-**1. Code-switch 数据驱动的句级 Wasserstein 对抗：逼出 aspect-agnostic 的语言不变特征。**
+**1. Code-switch 数据驱动的句级 Wasserstein 对抗：逼出 aspect-agnostic 的语言不变特征**
 
 以往 XABSA 的对抗对齐（如 ADAN-GRL）只用 bilingual parallel 数据、缺 aspect 扰动，且 GRL 对抗稳定性差。MSMO 先构造四类数据——源语 $D_S$、翻译目标语 $D_T$，以及把 aspect term 换成另一语的混合句 $D_{S_T}$ / $D_{T_S}$——再让语言判别器 $Q$ 把 $D_S \cup D_{S_T}$ 判为 source、$D_T \cup D_{T_S}$ 判为 target，目标函数 $J_q = \max_{\theta_q} \mathbb{E}[Q(P(h_i))] - \mathbb{E}[Q(P(h_i'))]$，并对 $Q$ 的参数 clipping 到 $[-c, c]$ 以满足 1-Lipschitz（用 Wasserstein 距离替代标准 GAN，避免训练震荡）。关键在于混入 $D_{S_T}/D_{T_S}$ 后，判别器必须学会"无论句中 aspect 是哪国语言，都只凭整句风格判语言"，通过 GRL 反传，encoder 就被迫交出真正 aspect-agnostic 的不变特征，为下一步 aspect 级细粒度对齐铺好地基。
 
-**2. 双向 KL 一致性训练：把"同情感 aspect 跨语应一致"约束在 span 分布上。**
+**2. 双向 KL 一致性训练：把"同情感 aspect 跨语应一致"约束在 span 分布上**
 
 句级对齐只能让整体分布靠近，但"food 与 nourriture 同 POS、service 与 service 同 NEG"这种细粒度对应飘忽不定，得直接在 aspect 上约束。作者把源句 $X$ 经 transformation $\phi$（翻译 / aspect swap）得到 $X'$ 及对应 aspect span $(s, s')$，把 span 概率定义为构成它的 token 概率之积，再用对称化 KL 拉齐两个分布：
 
@@ -58,7 +58,7 @@ $$\mathcal{L}_{\text{cons}} = \frac{1}{m} \sum \frac{1}{2}\big[\mathrm{KL}(P(y'|
 
 在 span 而非 token 上算 KL，是为了绕开 BIES 标签序列内部 token 不对齐的问题，让一致性约束正好落在 aspect 这个任务核心单元上；双向对称化则避免单向 KL 的偏置。
 
-**3. 多教师 / 多语言知识蒸馏：用未标注目标语数据当放大器。**
+**3. 多教师 / 多语言知识蒸馏：用未标注目标语数据当放大器**
 
 MSMO 自身的 teacher 比 CL-XABSA 更强，soft label 更准，于是再叠一层蒸馏来榨取未标注目标语文本。用 3 个 teacher（来自不同源语言或不同随机种子）各自预测未标注目标语文本，加权得 soft label $p_t = \sum_{k=1}^{3} w_k g_{t_k}$（$w_k = 1/3$）；student 只保留 encoder + sentiment classifier，用 $\mathcal{L}_{KD} = \frac{1}{|D_{NL}|} \sum \frac{1}{L} \sum_i \mathrm{MSE}(p_{t_i}, p_{s_i})$ 对齐软标签。多教师把不同语言对的优势平均进来，降低单 teacher 的过拟合偏差，实验里 multi-teacher 一致优于 single-teacher。
 

@@ -43,15 +43,15 @@ tags:
 
 ### 关键设计
 
-**1. Polynomial FOL → Pseudo-dimension 通用工具（Thm 4.1）：把"能被有限量词的多项式逻辑描述"直接翻译成 pseudo-dimension 上界。**
+**1. Polynomial FOL → Pseudo-dimension 通用工具（Thm 4.1）：把"能被有限量词的多项式逻辑描述"直接翻译成 pseudo-dimension 上界**
 
 放弃几何之后，必须找一种语言：足够强能描述隐式优化的 $\arg\min$，又足够弱能被算法消去量词——polynomial FOL 恰好卡在这个夹缝里，几乎所有 semi-algebraic 损失都能编码进去。对任意阈值 $t$，若 $\mathbb I(f_\alpha(x)\geq t)$ 等价于固定 $K$ 层的 $(Q_1\theta^{[1]})\dots(Q_K\theta^{[K]}) P(\alpha,\theta^{[1]},\dots,\theta^{[K]})$ 形式，对它调用 Basu 2006 的 quantifier elimination 算法可得等价的 quantifier-free 公式，原子多项式数 $\leq M^{\prod(d_k+1)}\Delta^{\mathcal O(p)\prod d_k}$、次数 $\leq \Delta^{\mathcal O(\prod d_k)}$，再喂给 Goldberg-Jerrum 框架即得 pseudo-dim 上界 $\mathcal O(p\prod(d_k+1)\log M + p^2\prod d_k\log\Delta)$。相比 GJ 1993 的原始 bound $\mathcal O(p(p{+}q)\prod d_k(\log M{+}\log\Delta))$，本结果去掉了对数据维度 $q$ 的依赖、又把 $p\log M$ 的 $p$ 因子拿掉，在 $q\gg p$ 或类含指数级 pieces 时差距显著。
 
-**2. 隐式损失的 FOL 编码（Thm 5.1 / 6.1 证明的核心一招）：用 $\forall/\exists$ 把含 $\arg\min$ 的隐式条件写成显式多项式逻辑公式。**
+**2. 隐式损失的 FOL 编码（Thm 5.1 / 6.1 证明的核心一招）：用 $\forall/\exists$ 把含 $\arg\min$ 的隐式条件写成显式多项式逻辑公式**
 
 Balcan 2025 的几何方法本质是把 $\theta$ 当可消去的隐藏维度、用曲线相交计数，每个问题都要手工设计几何论证。本文直接用量词把 $\theta,\theta'$ 写进逻辑语言，让 quantifier elimination 自动替你干掉它们。训练损失版用 $\Phi_{x,t}(\alpha)\triangleq(\forall\theta\in\mathbb R^d)[(\theta\in\Theta)\Rightarrow f_x(\alpha,\theta)\geq t]$，量词层数 $K=1$；双层验证版利用 $(A\Rightarrow B)\equiv(\neg A\lor B)$ 和 $\arg\min$ 的"不优化等价于存在更好候选"展开成 $(\forall\theta)(\exists\theta')[\theta\notin\Theta\lor g_x(\alpha,\theta)\geq t\lor(\theta'\in\Theta\land f_x(\alpha,\theta')<f_x(\alpha,\theta))]$，量词层数 $K=2$；$\epsilon$-近似内层只需把第三项里的 $<$ 改成 $f(x,\alpha,\theta)>f(x,\alpha,\theta')+\epsilon$（Prop 6.2）。这一招把"几何上手工消 $\theta$"换成了"逻辑上自动消 $\theta$"，正是多维 + 双层得以打通的关键。
 
-**3. 匹配下界（Thm 5.2）：用"离散化罚项 + bit-extraction"证明 $pd\log\Delta_f$ 这条主导项不可再压。**
+**3. 匹配下界（Thm 5.2）：用"离散化罚项 + bit-extraction"证明 $pd\log\Delta_f$ 这条主导项不可再压**
 
 双层 $\arg\min$ 让 Bartlett 2019 的经典 bit extraction 不能直接用（连续优化未必落到指定离散点）。本文构造 $N=pdB$ 个 one-hot 三元组 $x^{(j,i,b)}\in\{0,1\}^{p\times d\times B}$（$B=\lfloor\log_2 K\rfloor$，$K=\lfloor\Delta_f/2\rfloor$），并把 $f(x,\alpha,\theta)$ 设计成三项相加——一项用 $C\sum_m\prod_k(\theta_m-k)^2$ 把 $\theta$ 强力拽到格点 $\{0,\dots,K{-}1\}^d$，一项让 $\alpha$ 的指定坐标与 $\theta$ 的 base-$K$ 编码对齐，再插入一个 bit-extracting 多项式 $E_c$ 且把它的贡献调到比 $C$ 小一个量级。靠这种"主项强迫离散 + 次项实现 bit 编码"的两层结构，加上稳定化论证保证连续优化的 $\arg\min$ 与离散网格上的 $\arg\min$ 差距 $<0.1$，就能用阈值 $\tau=0.25$ 实现任意 $2^N$ bit 标签，shatter 出 $N=\Omega(pd\log\Delta_f)$。
 

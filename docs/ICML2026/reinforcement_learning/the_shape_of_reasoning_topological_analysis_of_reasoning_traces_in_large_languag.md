@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. 嵌入空间中的 Smith-Waterman 对齐：在没有 step-level 标注时造一个推理 ground truth。**
+**1. 嵌入空间中的 Smith-Waterman 对齐：在没有 step-level 标注时造一个推理 ground truth**
 
 推理数据集大多只给最终答案、缺少"每一步对不对"的标注，于是本文先造一个质量代理。把推理迹 $R_i=(r_{i,1},\dots,r_{i,m})$ 和专家解 $S_i=(s_{i,1},\dots,s_{i,n})$ 分别嵌入为 $X_i^{(r)}\in\mathbb{R}^{m\times d}$、$X_i^{(s)}\in\mathbb{R}^{n\times d}$，用 cosine 相似度作 match score $s_{uv}$、配 gap penalty $\gamma>0$，跑标准 DP 递推
 
@@ -54,11 +54,11 @@ $$H_{u,v}=\max\{0,\,H_{u-1,v-1}+s_{uv},\,H_{u-1,v}-\gamma,\,H_{u,v-1}-\gamma\},$
 
 再从 $\arg\max H_{u,v}$ 回溯得到对齐对 $\mathcal{A}_i$，汇总成 mean alignment score 与 gold-step coverage 两个标量。这里直接借的是生物序列比对里的 local alignment 思想——专家解和模型推理往往只在某些子段对齐，全局对齐会被冗余思考拖崩；而把打分函数从字符相等换成嵌入余弦，就能让"语义等价但措辞不同"的步骤也对得上。
 
-**2. Vietoris-Rips 滤过 + 持续同调特征：把推理点云转成对改写鲁棒的拓扑不变量。**
+**2. Vietoris-Rips 滤过 + 持续同调特征：把推理点云转成对改写鲁棒的拓扑不变量**
 
 图统计把高维嵌入压成几个标量、丢掉了几何信息，这一步换用拓扑不变量。在嵌入步骤集合 $X=\{\mathbf{x}_1,\dots,\mathbf{x}_\ell\}$ 上定义余弦距离 $\mathrm{dist}(\mathbf{x}_p,\mathbf{x}_q)=1-\langle\mathbf{x}_p,\mathbf{x}_q\rangle/(\|\mathbf{x}_p\|\|\mathbf{x}_q\|)$，构造 Vietoris-Rips 复形并随尺度参数变化，记录拓扑特征的"出生-死亡"时刻得到持续图 $\mathcal{D}_k=\{(b_j^{(k)},d_j^{(k)})\}$（$k\in\{0,1\}$），再抽出三族共 28 维特征：VR 摘要统计（mean life、entropy 等）、Betti 曲线描述子（centroid、spread、width）、persistence landscape 描述子。之所以选 $H_0$ 和 $H_1$，是因为 $H_0$ 编码"思路在嵌入空间里如何聚团与合并"、$H_1$ 编码"推理有没有绕路与回环"，合起来恰好对应"局部紧凑性 + 全局检索-收敛"的良好推理画像；而且拓扑特征对嵌入器、距离函数的具体选择有较好不变性，比图统计稳定。
 
-**3. 图统计基线 + 拓扑-图的可翻译性分析：不只证明 TDA 更强，还讲清为什么强。**
+**3. 图统计基线 + 拓扑-图的可翻译性分析：不只证明 TDA 更强，还讲清为什么强**
 
 为公平对照，在完全相同的嵌入数据上按 Minegishi et al. 2025 的口径建 trace graph，计算 has_loop、loop_count、diameter、average clustering $\overline{C}$、average shortest path $\overline{L}$、small-world index 六个图统计。然后反过来用 OLS 把这些图统计回归到 TDA 特征上，发现一批系统性关系：$H_0$ mean life 提升 clustering、$H_0$ betti centroid 拉长 path length 和 diameter、$H_1$ landscape mean 提升 loop count——大致是 $H_0$ 控制"全局凝聚与高效"、$H_1$ 控制"环路丰富度"。TDA 对 4 个全局图统计能解释 $R^2\approx 0.35$-$0.38$，但对 loop incidence 只有 $\approx 0.07$。这个反向回归的意义在于：很多图统计本质就是 TDA 在某个尺度上的压缩投影，一旦把整条滤过保留下来，信息自然比单一尺度的图统计更丰富——这也解释了为什么拼接图特征几乎不再额外带来增益。
 

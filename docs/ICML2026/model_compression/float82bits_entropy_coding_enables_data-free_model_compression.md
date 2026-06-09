@@ -44,15 +44,15 @@ EntQuant 的输入是预训练权重 $\mathbf{W}\in\mathbb{R}^{M\times N}$，输
 
 ### 关键设计
 
-**1. 率失真目标 + $\ell_1$ 熵代理：在无数据约束下把"降熵 + 控误差"变成只调一组 scale 的可微问题。**
+**1. 率失真目标 + $\ell_1$ 熵代理：在无数据约束下把"降熵 + 控误差"变成只调一组 scale 的可微问题**
 
 要在 Level 1 (无数据) 约束下做极限压缩，就必须放弃所有依赖前向激活的指标 (如 GPTQ 的 Hessian)，只能从权重自身的分布下手。理想目标是直接最小化量化权重的经验熵 $\min_{\mathbf{W}_q} \hat{H}(\mathbf{W}_q)$ s.t. $d(\mathbf{W},\hat{\mathbf{W}})<\epsilon$，其中 $\hat{H}=-\frac{1}{MN}\sum \log_2 \hat p(\mathbf{W}_q^{(i,j)})$，但离散熵对量化值不可微，没法做梯度优化。作者改用 Lagrangian 松弛 $\min_{\mathbf{W}_q} d(\mathbf{W},\hat{\mathbf{W}})+\lambda R(\mathbf{W}_q)$：重建损失取 outlier-鲁棒的相对 $\ell_1$，即 $d=\|\mathbf{W}-\hat{\mathbf{W}}\|_1/\|\mathbf{W}\|_1$；熵代理也取 $\ell_1$，即 $R(\mathbf{X})=\|\mathbf{X}\|_1$。$\ell_1$ 之所以能当熵的代理，附录 B.2 给了 max-entropy 界证明——在固定 $\ell_1$ 预算下最大熵分布有有限支撑，所以最小化 $\ell_1$ 会同时收缩支撑、抬高峰值密度，正好压低 $\hat H$。实操上只对每层 channel-wise 缩放因子 $S$ 求导 (用 straight-through 估计器穿过量化算子)，单层秒级收敛；而且 $\lambda$ 和最终 bpw 经验上是跨模型几乎一致的 log-linear 关系，用户只需指定目标 bpw 而不必去调熵超参。一个范数同时身兼"鲁棒重建度量"和"有效熵代理"，把整个优化退化成轻量的"只调一组 scale"，这才让 70B 也能在 10 分钟内压完。
 
-**2. 位宽-压缩率解耦的 Float8 量化：让存储成本由熵编码而非位宽决定，Float8 base 也能压到 2 bpw 以下。**
+**2. 位宽-压缩率解耦的 Float8 量化：让存储成本由熵编码而非位宽决定，Float8 base 也能压到 2 bpw 以下**
 
 这是整篇论文最核心的范式转换。传统方法走的是 $\mathbf{W}_q = \text{clamp}(\lfloor\mathbf{W}/s\rceil, -Q_{\max}, Q_{\max})$ 再直接按位宽存储，想要 4× 压缩就只能用 4 bit，复杂的高斯-长尾分布被硬压到几个 bin、表达力不可恢复。EntQuant 反其道而行：量化时用 $\gamma\in\{$ Float8, Int8 $\}$ 保留全部 $\sim 2^8$ 个可表示值的动态范围，但靠上面的 $\ell_1$ 优化把实际用到的 unique value 数压低 (Table 1：2-bit 等价 EntQuant 平均仍用 34.61 个 unique value，远多于固定 2-bit 的 4 个)，再把整个 transformer block 的量化权重 flatten 成一维符号流喂给 ANS 编码器。ANS 的码长按 Shannon 界 $\sim \hat H(\mathbf{W}_q)$ 给出，于是最终 bpw 直接由优化后的经验熵决定，可以连续地从 8 bit 调到 2 bit 以下——"位宽决定压缩率"本就是 30 年前 fixed-codebook 时代的假设，在 GPU ANS 可用的今天已经过时。channel-wise scaling (每个输出通道一个 $s_j$，故 $|S|\ll MN$) 自然把精度分配到需要的通道上，省掉了显式 outlier 分离和复杂 group 划分；保留 Float8 表达力还意味着推理可以直接复用现成的 Float8 Marlin GEMM 内核，不必为低比特另写 kernel。
 
-**3. Block-wise on-device ANS 解码：把熵编码从离线存储优化提升为推理时在线组件，让 2-bit 模型仍跑出接近 Float8 的速度。**
+**3. Block-wise on-device ANS 解码：把熵编码从离线存储优化提升为推理时在线组件，让 2-bit 模型仍跑出接近 Float8 的速度**
 
 极限压缩如果让推理慢 5-10×，实际部署就没人用，所以解压必须足够快、且真正省到显存。传统熵编码 (Han et al. 2016) 只在磁盘上压缩，加载时解到 fp16/int4 占满 VRAM，并没真正省显存。EntQuant 让压缩比特流 $\mathbf{z}$ 全程驻留 VRAM，每个 transformer block 配一个"刚好装下该 block Float8 权重"的解压缓冲区：forward 进入某个 block 前，调用 nvCOMP 的并行 ANS 解码把这个 block 的 q/k/v/o/MLP 权重一次解到缓冲区 (各层用 tensor view 共享底层内存、避免拷贝)，forward 一结束就被下一个 block 覆盖。block 粒度比 layer 粒度快约 50% (ANS 在更大 chunk 上 GPU 利用率更高)，且解压成本只与权重总量相关、与 sequence length 无关，长 context 反而把这点开销摊薄。这样显存峰值真正落到压缩后的水平 (Table 2：70B 模型 2.1 bpw 下压缩权重 18.8 GiB + 解压缓冲区 0.8 GiB + KV cache 1.25 GiB，能塞进单张 32 GiB 5090)，推理仅比 BFloat16 慢 1.5-2×——与 NF4 持平、比 HQQ 还快。
 

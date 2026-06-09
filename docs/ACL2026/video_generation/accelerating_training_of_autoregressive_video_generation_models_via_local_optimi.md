@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Local Optimization：只在局部窗口上回传，砍掉一半训练算力。**
+**1. Local Optimization：只在局部窗口上回传，砍掉一半训练算力**
 
 视频 token 序列远比图像长，在完整序列上做全序列自回归训练成本极高；而朴素地少训几帧（Fewer-Frames）又会因推理时缺乏全局上下文导致误差指数放大。本文给定完整 token 序列 $\mathbf{E}$，随机采样起始位置 $s$ 和窗口长度 $W$，只在窗口 $\mathbf{E}_\mathcal{W} = (\mathbf{e}_s, ..., \mathbf{e}_{s+W-1})$ 内计算交叉熵，窗口前的 $\mathbf{E}_{<s}$ 作为冻结上下文不回传梯度，并用步长 $S < W$ 制造重叠窗口、让同一 token 在不同上下文下被多次优化。这样既始终以 ground-truth 上下文为条件、避免 exposure bias，又靠重叠窗口逼模型学到更鲁棒的表示，而推理仍是标准全序列生成、速度不打折。
 
-**2. First-Frame Balanced Sampling：把首帧多喂几次，补上训练-生成的分布缺口。**
+**2. First-Frame Balanced Sampling：把首帧多喂几次，补上训练-生成的分布缺口**
 
 作者对比训练样本与生成样本的损失分布，发现 Local Opt. 模型在生成时首帧损失明显偏高——而首帧质量会直接影响后续所有帧。对策很直接：把"包含首帧的窗口"的采样概率提升到 0.5，让模型更多地优化视频开头部分。这一改让 FFS 上的 FVD 从 190.46 降到 127.11，训练加速也进一步提升到 2.0 倍。
 
-**3. Representation Continuity (ReCo)：用 Lipschitz 约束把误差从指数压成线性。**
+**3. Representation Continuity (ReCo)：用 Lipschitz 约束把误差从指数压成线性**
 
 只盯着独立窗口优化，容易在表示空间里留下突变，跨窗口拼接时误差会被放大。本文把自回归模型看成离散时间动力系统，受 Lipschitz 连续性启发，对窗口内相邻隐状态加一项连续性损失 $\mathcal{L}_{ReCo} = \frac{1}{W-1}\sum_{i=s}^{s+W-2}\|\mathbf{h}_{i+1} - \mathbf{h}_i\|_2^2$，与交叉熵合成总损失 $\mathcal{L}_{Total} = \mathcal{L}_{CE} + \lambda \cdot \mathcal{L}_{ReCo}$。当局部 Lipschitz 常数被压小，误差传播被限制在 $\|\epsilon_{t+1}\| \leq L \cdot \|\epsilon_t\| + \delta_t$ 的线性增长范围内，而非指数放大，于是在算力减半的同时把全序列生成的一致性追回到 baseline 水平。
 

@@ -50,19 +50,19 @@ tags:
 
 ### 关键设计
 
-**1. 两阶段聚合架构：把三维张量拆成两步一维 reduce，绕开参数爆炸。**
+**1. 两阶段聚合架构：把三维张量拆成两步一维 reduce，绕开参数爆炸**
 
 如果直接把 $L \times T \times d$ 的隐状态张量喂给一个轻量分类器，光是这个三维输入到类别的映射就要上百万参数，长 prompt 下 $T$ 一大更扛不住。本文的做法是把读出拆成两段串联的一维汇总：第一段（Stage 1）在每层内部沿 token 维把 $T \times d$ 压成一个 layer summary $\mathbf{v}^{(l)} \in \mathbb{R}^d$，第二段（Stage 2）再在 $L+1$ 个 summary 之间汇总成单向量 $\mathbf{v}$。两段复用同一算子族，架构上保持统一。
 
 关键在于 Stage 2 的 layer-level 聚合本质上是让模型自己学一组 task-specific 的层权重 $\alpha_l$，等于把 BERTology「不同层编码不同抽象」的直觉变成了一个可学习的「软层选择」——既保留了分布在深度上的判别信号，又因为先压 token 再压 layer，参数量从 $O(T \cdot L \cdot d)$ 降到 $O(L \cdot d)$，对长 prompt 天然可扩展。
 
-**2. Scoring attention gate：用一条线性打分代替 softmax-attention，100K 参数买到 task-aware 选择能力。**
+**2. Scoring attention gate：用一条线性打分代替 softmax-attention，100K 参数买到 task-aware 选择能力**
 
 mean/max pooling 太钝，对所有 token / layer 一视同仁，丢掉了「哪些位置更判别」的信息；而上完整的 attention 又太贵。Scoring gate 取中间路线：对每个 token / layer 向量 $\mathbf{X}[i, :]$ 只算一个标量重要性分数 $s_i = \tanh(\mathbf{w}^\top \mathbf{X}[i, :])$，padding 位置置 $-\infty$，softmax 归一化后得权重 $\alpha_i$，输出 $\mathbf{v} = \sum_i \alpha_i \mathbf{X}[i, :]$。Stage 1 每层用一个独立 gate，Stage 2 共享一个 gate，总参数仅 $(L+2)d$。
 
 这一条线性投影比 MHA 少两到三个数量级的参数，却比 pooling 多了「按任务挑重点」的能力，正好卡在 expressive 与 cost 的甜蜜点上——实验里它只用 ~100K 参数就把 F1 拉到比 logit-only 的 MULI 高约 3 个点。
 
-**3. Downcast MHA probe：用多头自注意力顶满表达力上限，再靠激进降采样把参数压到 35M。**
+**3. Downcast MHA probe：用多头自注意力顶满表达力上限，再靠激进降采样把参数压到 35M**
 
 scoring gate 是对每个位置独立打分，捕捉不到 token 之间、layer 之间的交互关系，表达力到顶了。MHA probe 用多头自注意力补上这一点，但代价是参数会暴涨，于是把 QKV 投影维度从 $d$ 激进降采样到 $d_\text{inner} \in \{d/16, d/32\}$ 再分 $H$ 个头，单头算 $\text{Attn}_h(\mathbf{Q}_h, \mathbf{K}_h, \mathbf{V}_h) = \text{softmax}(\mathbf{Q}_h \mathbf{K}_h^\top / \sqrt{d_\text{head}}) \mathbf{V}_h$，拼回 $d$ 维后再做 mean/max pool。两阶段共 $L+2$ 个 MHA 模块，总参数 $(L+2) \cdot 4 d \cdot d_\text{inner}$，约 35M，底层调 PyTorch `scaled_dot_product_attention` 直接吃 FlashAttention 的优化。
 

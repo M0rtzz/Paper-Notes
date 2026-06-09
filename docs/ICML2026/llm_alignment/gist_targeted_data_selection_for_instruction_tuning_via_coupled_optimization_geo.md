@@ -46,19 +46,19 @@ GIST 要在限定 budget 下为某个 target task 挑出最有用的 instruction
 
 ### 关键设计
 
-**1. 统一理论框架：把三类数据选择都还原成 Hessian-preconditioned gradient alignment。**
+**1. 统一理论框架：把三类数据选择都还原成 Hessian-preconditioned gradient alignment**
 
 以前 hard example mining、similarity-based、optimizer-based 三类方法各讲各的动机，没人说清它们到底差在哪。本文从一阶 Taylor 展开加 Hessian preconditioning 出发，把一个候选样本对 validation loss 的影响写成 $\Delta \mathcal{L}_{\text{val}}(\boldsymbol{z}) \approx -\eta \nabla_{\boldsymbol{\theta}} \mathcal{L}(\mathcal{D}_{\text{val}})^\top \mathbf{H}_{\text{val}}^\dagger \nabla_{\boldsymbol{\theta}} \ell(\boldsymbol{z})$，于是选数据的目标统一成 $\max_{S} \nabla \mathcal{L}_{\text{val}}^\top \mathbf{H}_{\text{val}}^\dagger \nabla \mathcal{L}(S)$（Theorem 3.1）。在这个框架下三类方法各自是对 $\mathbf{H}_{\text{val}}^\dagger$ 的不同 surrogate：hard mining 假设 cosine 角恒定、退化成按梯度范数选；similarity-based 拿 representation kernel 替掉参数空间的 metric；LESS 用 diagonal Adam states 当 $\mathbf{H}_{\text{val}}^\dagger$、隐含假设各坐标独立。统一成同一个 objective 后，"diagonal 够不够"就从经验争论变成一个可分析的代数问题，为下面两点铺路。
 
-**2. LoRA cross-block curvature 定理：证明 diagonal preconditioner 在 LoRA 上注定漏掉耦合。**
+**2. LoRA cross-block curvature 定理：证明 diagonal preconditioner 在 LoRA 上注定漏掉耦合**
 
 LESS 之所以可疑，是因为 LoRA 的 $W = W_0 + BA$ 是 bilinear 参数化，$A$ 和 $B$ 天然耦合，而 diagonal 假设各坐标独立。Theorem 3.2 把这点严格化：LoRA 参数的混合二阶导 $\frac{\partial^2 \mathcal{L}}{\partial B_{ik'} \partial A_{kj}} = \langle \mathbf{H}_W [B_{:k} e_j^\top], e_i A_{k':} \rangle_F + \delta_{kk'} (\mathbf{G}_W)_{ij}$ 含显式的 cross-block 项，尤其 $k = k'$ 时那个 $(\mathbf{G}_W)_{ij}$ 直接来自 bilinear 结构——也就是说哪怕原始权重的 $\mathbf{H}_W$ 本身是 diagonal，投到 LoRA 参数上也会长出 off-diagonal。再配上一句距离下界 $\|\mathbf{H} - \mathbf{D}\|_F^2 \ge 2\rho^2$（$\rho$ 是 off-diagonal 强度），说明任何 diagonal preconditioner $\mathbf{D}$ 跟真实 Hessian 之间都有一个抹不掉的 irreducible error floor。这把"diagonal 在 PEFT 上不够"从经验观察升级成代数定理，是对 LESS 这一类方法的理论否定。
 
-**3. Spectral filtering：用 validation 梯度的 SVD 抽低秩 task 子空间，替掉 full Hessian。**
+**3. Spectral filtering：用 validation 梯度的 SVD 抽低秩 task 子空间，替掉 full Hessian**
 
 既然 diagonal 不行、full Hessian 又算不动，就需要一个中间档。做法是定义梯度协方差代理 $\widehat{\mathbf{F}}_{\text{val}} = \mathbf{G}_{\text{val}} \mathbf{G}_{\text{val}}^\top$——它 PSD 且 non-diagonal，天然 encode 了坐标间耦合。Theorem 3.3 在 NLL 目标下（此时 Hessian 有 Gauss-Newton 分解）证明 $\widehat{\mathbf{F}}$ 的 top-$r$ 特征子空间跟真实 Hessian 的 top-$r$ 特征子空间的 principal angle $\le C \varepsilon_t$，$\varepsilon_t$ 衡量残余曲率加 proxy 失配；warmup 让 loss 进入低值 basin 后 $\varepsilon_t$ 变小，子空间近似就 tight——这也正是"为什么 warmup 训一会就够"的理论支撑。再由 Eckart-Young-Mirsky 定理，SVD 给出的 projector $\boldsymbol{\Pi} = \mathbf{U}_r^\top$（$\mathbf{U}_r$ 是 top-$r$ left singular vectors）是 rank-$r$ 下的最优重构，不是随便挑的。这个 projector 显式 non-diagonal、会 encode rotation，正好 capture 了 diagonal 漏掉的 coupled directions，而它能成立的现实前提是"task 梯度本身就低秩"——Figure 1 实测 rank 150 即可吃下 95% variance。
 
-**4. Multi-Task Aggregation：多目标时用 max-cosine 而非平均，保住 specialist 样本。**
+**4. Multi-Task Aggregation：多目标时用 max-cosine 而非平均，保住 specialist 样本**
 
 实际 target 往往不是单条，而是一组 $\{\boldsymbol{z}_{\text{val}}^{(1)}, \dots, \boldsymbol{z}_{\text{val}}^{(M)}\}$。若把候选样本对各 target 的相似度一平均，一个只对单个 target 极有用的 specialist（比如一条数学样本碰上 coding target）会被稀释埋没。GIST 改取最大值——$\text{FinalScore}(\boldsymbol{z}_i) = \max_j \text{Sim}_t(\boldsymbol{z}_i, \boldsymbol{z}_{\text{val}}^{(j)})$（Maximum Relevance）——只要候选对任一 target 强相关就保留，这对 multi-task instruction tuning 下保住专才样本很关键。
 

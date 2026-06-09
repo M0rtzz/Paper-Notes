@@ -54,19 +54,19 @@ LaaB 有三个模块和一个两阶段训练策略：
 
 ### 关键设计
 
-**1. Meta-Judgment——把 self-judgment 当 "可被检测的 response"：给自评估一个可靠性，而不是当真理。**
+**1. Meta-Judgment——把 self-judgment 当 "可被检测的 response"：给自评估一个可靠性，而不是当真理**
 
 self-judgment 路线最大的隐患是把 LLM 的 verbal judgment $O_j$ 直接当真值，可它本身也会犯 self-preference bias、overthinking、evaluative hallucination。LaaB 的破题点是观察到"LLM 评估自己时同样是一次 generation"，于是把 $O_j$ 不再当输入、而是当"另一个 query-response 对"，对称地训一个 meta-judgment 检测器 $D_j$ 去估它的真假 $L_j$。$D_j$ 的输入与 response 检测器同构：取 judgment 末 token 在 validation-optimal 层的 hidden $H_j$、首 token 的 logits $P_j$、以及把 judgment 上下文切成 Framing / Query / Response / Eval_Query / Format / Trigger 六段后算出的 attention 分配比例 $A_j$，喂给 MLP 输出 $L_j$。
 
 其中 $P_j$ 不是裸用首 token logits，而是拼了一个对比向量：$O_j=$"Yes" 时 $P_j = P_{\text{yes}} \oplus (P_{\text{yes}} - P_{\text{no}})$，$O_j=$"No" 时 $P_j = P_{\text{no}} \oplus (P_{\text{no}} - P_{\text{yes}})$。裸 logits 的数量级容易差很多，而差值项直接编码"模型有多确定是 Yes/No"，让 $D_j$ 对自评置信度更敏感。这一步在保留 verbal judgment 语义优势的同时，用神经信号给它装了一个可靠性闸门，绕开了直接信任自评带来的污染。
 
-**2. Logic Rule Bridge——用逻辑必然成立的恒等式把两路检测器拴在一起。**
+**2. Logic Rule Bridge——用逻辑必然成立的恒等式把两路检测器拴在一起**
 
 有了 $L_j$ 还不够，得把它翻译回对 response 的判断。这里用的不是启发式假设而是定义上的恒等式：既然 $L_j$ 表示"$O_j$ 是否正确判断了 response"，那么 $O_j=$"Yes"（说 response 为真）时 $O_j$ 正确就意味着 response 为真，$L_r = L_j$；$O_j=$"No" 时 $O_j$ 正确意味着 response 为假，$L_r = 1 - L_j$。合起来就是 $L_r = L_j$ if $O_j=$"Yes" else $1 - L_j$。
 
 落到损失上，用 Huber loss 把两路对同一目标的概率分布拉齐：$\mathcal{L}_{\text{Logic}} = \mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{hallu}})$ if $O_j=$"Yes"，否则 $\mathcal{L}_{\text{Huber}}(S_{r,\text{hallu}}, S_{j,\text{real}})$（Huber 比 MSE 对 outlier 更鲁棒）。妙处在于这条约束是从定义推出来的必然真理，等于在两个本来独立训练的检测器之间凭空插入一个无需额外标注、无需额外算力的弱监督信号——只靠 $O_j$ 的极性翻转就强制它们逻辑自洽。
 
-**3. 置信度加权互学习 + 梯度归一化平衡——别让弱检测器把强检测器带偏。**
+**3. 置信度加权互学习 + 梯度归一化平衡——别让弱检测器把强检测器带偏**
 
 标准 Deep Mutual Learning 假设 peer 对等，但幻觉检测里 $D_r$（如 hidden state）和 $D_j$（如 attention）的特征质量天然不对等，等权互学习会让弱者反向污染强者。LaaB 给每个样本对加一个置信度权重：$\mathcal{L}_{\text{Logic}, r} = \log(1 + \frac{S_j(L_j)}{S_r(L_r)}) \cdot \mathcal{L}_{\text{Logic}}$，$\mathcal{L}_{\text{Logic}, j} = \log(1 + \frac{S_r(L_r)}{S_j(L_j)}) \cdot \mathcal{L}_{\text{Logic}}$——peer 在 ground truth 上越自信，自己就越该听它的。
 

@@ -45,15 +45,15 @@ AgentXRay 要解决的是：给一个只能看到输入输出的黑盒 agent 系
 
 ### 关键设计
 
-**1. 统一原语空间 + Linearity Hypothesis：把图拓扑搜索压成线性序列搜索。**
+**1. 统一原语空间 + Linearity Hypothesis：把图拓扑搜索压成线性序列搜索**
 
 纯图拓扑搜索在中等规模的原语集上就直接爆炸——枚举所有 agent 拓扑是 $O(2^{|\Omega|^2})$，根本走不动。作者的破局点是两层抽象。第一层是把异构构件统一成同一个搜索单元：每个原语都是 $\langle$role, model, thought pattern, local tools$\rangle$，纯推理 agent 就是 $T_{\text{local}}=\emptyset$、工具增强 agent 就是 $T_{\text{local}}\ne\emptyset$，于是单 agent、多 agent、tool-use 系统都落在同一个空间 $\Omega$ 里。第二层是 Linearity Hypothesis：借 MacNet (Qian 2025) 指出多 agent DAG 执行时也会被拓扑排序、ReAct/WebArena 等交互天然就是一条 ordered trace 的观察，把搜索空间限制到长度 $\le L_{\max}$ 的线性序列，复杂度从 $O(2^{|\Omega|^2})$ 降到 $O(|\Omega|^{L_{\max}})$。它有效的关键在于，重建追求的是"行为保真"（输入输出匹配）而非还原内部拓扑——复现可观测的执行序列就够了，所以线性化是一个与任务对齐的剪枝，而不是会丢真值的近似。
 
-**2. MCTS 搜索循环：用统计采样摊薄稀疏奖励的搜索代价。**
+**2. MCTS 搜索循环：用统计采样摊薄稀疏奖励的搜索代价**
 
 即便压成线性序列，$|\Omega|^{L_{\max}}$ 仍然不可穷举，而且 $\mathrm{Sim}$ 是个延迟奖励——只有把 workflow 走到接近完整、真正执行一遍才能观测。AgentXRay 用 MCTS 处理这个稀疏信号：每次迭代抽一条 $(\tau, o^\ast)$，从根节点（一条 workflow 前缀，每条边追加一个原语）按 UCB 选路径下探，到达待扩节点时做 sample-rollout——把序列采样补齐到 $L_{\max}$ 并真正执行得到输出 $o$，执行失败记 $r=0$、否则 $r=\mathrm{Sim}(o, o^\ast)$，再沿路径回溯更新访问次数 $N(v)$ 和价值 $Q(v)$。比起穷举，MCTS 用采样把搜索代价 amortize；UCB 在角色/模型/工具各不相同的异构 action 空间里仍能稳健平衡探索与利用；rollout 一旦撞上无效原语就早停，不再为它烧完整条链的 token。
 
-**3. Red-Black Pruning：用评分动态着色，让搜索预算花在"既有潜力又有深度可挖"的子树上。**
+**3. Red-Black Pruning：用评分动态着色，让搜索预算花在"既有潜力又有深度可挖"的子树上**
 
 标准 MCTS 在大 $\Omega$ 上容易卡在两端——要么宽得铺不下去走不深，要么一头扎进坏分支出不来。Red-Black 剪枝把"要不要继续 refine 当前路径"做成节点级的动态决策：每次迭代前用 ColorTree 给整棵树重新着色，评分高且访问次数足够的节点判为 Red（当前选择已稳定），就沿 UCB 继续往深走；尚未充分探索的节点判为 Black，优先创建新子节点把宽度撑开。整个 search loop（Algorithm 1）就由 color-guided descent (Line 9) + 早停 rollout (Lines 11–13) + reward backprop (Line 22) 三件事组成。和静态阈值剪枝不同，这里用"是否有信心继续深挖"的评分来量化决策，把资源引到值得深挖的子树上，因此在同等 iteration 预算下能走到更深的 workflow 层级、拿到更高的保真度。
 

@@ -48,7 +48,7 @@ $$f_{\boldsymbol{\theta}}: \{(\boldsymbol{I}^{v}_{lr}, \boldsymbol{K}^{v})\}_{v=
 
 ### 关键设计
 
-**1. Gaussian Shuffle Split 密集化：先搭出一副够细的结构脚手架。**
+**1. Gaussian Shuffle Split 密集化：先搭出一副够细的结构脚手架**
 
 前馈骨干直接吐出的LR 3DGS高斯太稀，撑不起HR级别的细节，所以SR3R先做密集化。对 $\mathcal{G}^{\text{LR}}$ 中每个高斯原语，沿它自己的三个主轴正负方向各裂出一个子高斯，共6个，落点由下式给出：
 
@@ -56,7 +56,7 @@ $$\boldsymbol{\mu}_{j,k} = \boldsymbol{\mu}_j + \beta \, R_j \, \boldsymbol{e}_k
 
 这里 $R_j$ 是四元数 $\boldsymbol{r}_j$ 对应的旋转矩阵，$\boldsymbol{e}_k$ 是正/负主轴单位向量，$\beta=0.5$ 控制裂开的幅度，子高斯沿偏移轴的尺度缩到原来的 $\frac{1}{4}$ 以避免重叠糊成一团。关键的一点是只对 opacity > 0.5 的高斯做裂分，把算力集中在结构显著区域、不浪费在透明背景上。密集化后 $\mathcal{G}^{\text{Dense}}$ 含 $N = 6M$ 个原语（$M$ 为LR高斯数量），是一副位置可靠但细节未补的脚手架。
 
-**2. 特征精炼模块（Feature Refinement）：把上采样带进来的"假高频"过滤掉。**
+**2. 特征精炼模块（Feature Refinement）：把上采样带进来的"假高频"过滤掉**
 
 LR图像上采样后会混入插值产生的模糊和幻觉高频，直接拿去预测高斯会在3D里翻译成几何/纹理伪影。特征精炼模块的做法是让ViT编码特征 $\boldsymbol{t}_{\text{en}}$ 和预训练3DGS骨干的几何感知特征 $\boldsymbol{t}_{\text{pre}}$ 做**双向交叉注意力**，互相校准：
 
@@ -66,7 +66,7 @@ $$\mathbf{U}_{p \leftarrow o} = \text{softmax}\!\left(\frac{(\boldsymbol{t}_{\te
 
 两个方向的输出拼接后过全连接层融合，得到精炼特征 $\boldsymbol{t}_{ca}$。本质上是借3DGS骨干那套可靠的3D几何先验去"压住"上采样引入的模糊——让2D特征空间里残留的是真实高频信号，而不是插值幻觉。
 
-**3. 高斯偏移学习（Gaussian Offset Learning）：只学残差，不学绝对值。**
+**3. 高斯偏移学习（Gaussian Offset Learning）：只学残差，不学绝对值**
 
 这是SR3R涨点最关键的模块，思路是不去直接回归HR高斯的绝对参数，而是预测从 $\mathcal{G}^{\text{Dense}}$ 到 $\mathcal{G}^{\text{HR}}$ 的残差偏移。因为脚手架 $\mathcal{G}^{\text{Dense}}$ 已经给出了可靠的粗结构，剩下要补的主要是局部高频信号，学偏移等于把搜索空间死死约束在每个高斯的邻域内，训练更稳、重建也更锐。
 
@@ -82,7 +82,7 @@ $$\mathcal{G}^{\text{HR}} = \mathcal{G}^{\text{Dense}} + \Delta\mathcal{G}$$
 
 值得注意的是，这种"脚手架+残差"的写法也顺带省了参数——不需要再额外回归一大堆绝对高斯，HR高斯量反而远小于直接上采样的暴力做法（后面消融里 16.5M vs 44.5M）。
 
-**4. ViT解码器跨视图融合：让两张视图的信息对得上。**
+**4. ViT解码器跨视图融合：让两张视图的信息对得上**
 
 精炼特征 $\boldsymbol{t}_{ca}$ 进ViT解码器时同时走两种注意力：视图内自注意力聚合各自的全局上下文，视图间交叉注意力把两张视图的互补信息缝在一起。这一步是为了缓解位姿不准、视图重叠不足带来的跨视图不一致——否则两张视图各自补出的高频会在3D里"打架"，造成重影。
 

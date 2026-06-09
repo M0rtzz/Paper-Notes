@@ -45,19 +45,19 @@ ECG-R1 的输入是三元组 $(x^{\text{text}}, x^I, x^T)$——文本指令、E
 
 ### 关键设计
 
-**1. 协议引导的指令数据合成：从源头压住训练语料里的临床幻觉。**
+**1. 协议引导的指令数据合成：从源头压住训练语料里的临床幻觉**
 
 ECG-Grounding 这类语料的病根在于让 LLM 拿着诊断标签裸 prompt 自由发挥，结果把预训练先验里的错误因果链当成"心电规则"写进了数据。ECG-R1 改成两步约束生成：先用确定性、不可训的 FeatureDB 从 12 导联时序里抽出 14 类生理特征（心率、RR、P/QRS/T 振幅与时长、PR/QT/QTc、ST 描述符等），记 $\boldsymbol{x}^{fs} = \mathrm{FeatureDB}(\boldsymbol{x}^T)$；再用专著第 23 章的五步读图协议（Rate&Rhythm → Conduction&Axis → Hypertrophy → Ischemia → Electrolytes&QT，并强制鉴别排除）拼成 prompt $\boldsymbol{x}^p = \mathrm{ProtocolGuider}(\boldsymbol{x}^{fs}, x^{\text{protocol}})$，喂给 DeepSeek-V3.1-Terminus 强迫它按固定 schema 输出六步 `<think>` + 摘要 + `<answer>`，从 MIMIC-IV-ECG 造出 3 万条 SFT 主语料。
 
 这一步的关键是把医生写诊断时遵循的量化阈值和差分排除规则**显式注入生成约束**：LLM 不再凭印象编一段听起来专业的解读，而是被协议逼着逐项核对特征、做鉴别。副产物是它能挖出原始报告里漏标的异常。
 
-**2. 解耦双编码 + 交错模态丢弃（IMD）：让任一模态缺失时都鲁棒且自洽。**
+**2. 解耦双编码 + 交错模态丢弃（IMD）：让任一模态缺失时都鲁棒且自洽**
 
 GEM 这类 omni 模型把时序 token 硬塞进 `<image>` 占位符、复用同一个 image-language projector，结构上就假设两模态必须同现——测试时只剩信号或只剩图像就显著掉点，而且同一份 ECG 在两种模态下给出的解读互相矛盾。ECG-R1 先在架构上解耦：引入显式 `<ecg>` 标签置于 `<image>` 之前，时序与图像各走独立 projector，$z^T = \mathrm{Proj}_T(\mathrm{Encoder}_T(x^T))$、$z^I = \mathrm{Proj}_I(\mathrm{Encoder}_I(x^I))$，彻底解开"时序必须借 image 占位符"的耦合。
 
 训练时则把"模态缺失"和"顺序交换"摊进目标：按分布 $q$ 采样变换 $\tau \in \mathcal{T}_{\text{test}}=\{\tau_I, \tau_T, \tau_{IT}, \tau_{TI}\}$（丢图、丢信号、两种拼接顺序），最小化混合风险 $R_q(\theta)=\mathbb{E}_{\tau\sim q}[R_\tau(\theta)]$。作者证明在覆盖性假设 $q(\tau)\geq\alpha$ 下有 $R_{\max}(\theta) \leq \alpha^{-1} R_q(\theta)$，并把跨模态分歧 $\mathcal{F}(\theta)$ 控制在 $\Delta_{\text{view}}+\sqrt{\varepsilon_{\tau_I}/2}+\sqrt{\varepsilon_{\tau_T}/2}$ 量级。由于 ECG 两模态本是同一波形的两种渲染，$\Delta_{\text{view}}\approx 0$，所以只要最小化 $R_q$，鲁棒性和一致性就同时落地。和现有 omni 只在"两模态都在 + 固定顺序"下做 ERM 相比，IMD 把所有目标测试环境都纳入训练目标，又不需要额外的对齐损失或缺失模态生成器。
 
-**3. EDER：用诊断证据当过程奖励，压住"答对但理由是编的"。**
+**3. EDER：用诊断证据当过程奖励，压住"答对但理由是编的"**
 
 DeepSeek-R1 那套通用推理 RL 只看 format + 最终答案，中间推理仍能随意编造；但 ECG 诊断要求每一步都拿得出证据。EDER 先用 DeepSeek-V3.1-Terminus 从每条 RL 样本（共 3,948 条）的参考 trace 里抽出每步的关键证据短语 $\mathcal{E}_k(y)$（每步至多 3 个、每个 ≤6 词），再定义步级奖励 $r^{(k)}_{\text{step}}=|\mathrm{match}(\mathcal{E}_k(y), \tilde{y}^{(k)})|/|\mathcal{E}_k(y)|$ 衡量第 $k$ 步命中了多少该提的证据，过程奖励是各步平均 $R_{\text{EDER}}=\frac{1}{K}\sum_k r^{(k)}_{\text{step}}$。
 

@@ -49,13 +49,13 @@ tags:
 
 ### 关键设计
 
-**1. 6 状态 FSM 抽象 + Transition Advantage Matrix $R$：把无结构的 CoT 压成一张能区分对错的转移图。**
+**1. 6 状态 FSM 抽象 + Transition Advantage Matrix $R$：把无结构的 CoT 压成一张能区分对错的转移图**
 
 之前的 CoT 控制要么按行为类别一刀切、要么只盯单条线性方向，始终没有一个能比对、能当奖励空间的全局结构。本文先把 LRM 的 CoT 句子序列 $\mathcal{S}=(s_1,\dots,s_K)$ 用标注函数 $\phi:\mathcal{S}\to\mathcal{Q}$ 投影到 6 状态轨迹并合并自环（只保留真正发生的状态转移），这 6 个状态 $\mathcal{Q}=\{\text{init, deduce, augment, uncertain, backtrack, closure}\}$ 对应 Polya 的「理解—计划—执行—回顾」框架，再补上 LRM 特有的 uncertainty / backtracking，既贴着人类认知传统、人工一致性也很高（Cohen's Kappa 0.89）。
 
 有了离散轨迹，就能分别在「答对」「答错」两组样本上估计条件转移概率 $T^{(correct)}_{ij}$、$T^{(incorrect)}_{ij}$，并令 $R_{ij}=T^{(correct)}_{ij}-T^{(incorrect)}_{ij}$。$R_{ij}>0$ 意味着「从 $i$ 跳到 $j$ 在正确轨迹里更常见」，是该鼓励的正向转移；$R_{ij}<0$ 则是失败模式的信号。这张 $|\mathcal{Q}|\times|\mathcal{Q}|$ 的优势矩阵第一次让「control」挂到了一个外推后仍稳定的转移图上，而不是依赖某模型某次 prompt 的临时统计——它既是认知结构的刻画，又直接是后面规划要用的奖励。
 
-**2. Q-Value 迭代规划 + 置信度门控的稀疏触发：把单步奖励变成长视野效用，并精确决定何时、往哪干预。**
+**2. Q-Value 迭代规划 + 置信度门控的稀疏触发：把单步奖励变成长视野效用，并精确决定何时、往哪干预**
 
 直接拿 $R$ 最大那一格做贪心，会把模型推进「短期高回报但远期错误」的路径——实验里 QWEN+AIME25 就因此从 83.3% 反掉到 76.67%。本文把 FSM 当成一个小型规划问题，对裁剪后的奖励 $R_{clip}=\text{clip}(R,[-c,+c]),\ c\in[0.2,0.3]$ 跑 Bellman 风格迭代
 
@@ -63,7 +63,7 @@ $$Q_{k+1}(q,q'):=R(q,q')+\gamma\max_{q''}Q_k(q',q''),\quad \gamma=0.9$$
 
 迭代 100 步收敛得到 $Q$ 表，于是「下一步之后的累积收益」也被纳入考量。推理时分类器给出当前状态 $q$、下一状态概率向量 $\mathbf{p}$ 和置信度 $\text{conf}=\max_j p_j$，定义最优目标 $q^\star=\arg\max_{q'}Q(q,q')$ 与缺口 $Q_{gap}=Q(q,q^\star)-Q(q,\hat q_{t+1})$。门控分三重：若模型既不「卡住」（最近 5 步同状态）又有 $\text{conf}\ge 0.9$ 就放手不管；否则只有当 $Q_{gap}\ge\delta=0.06$ 才出手，强度按 $\alpha=\max(\beta,\,Q_{gap}\cdot\text{conf})$ 动态调（$\beta\in[0.1,1.2]$）。正是这套「长视野 + conf/stuck/$Q_{gap}$ 三重门控」把干预集中到「模型正要跑偏的高杠杆决策点」，才能把每题干预次数压到 0.48 还能涨点。
 
-**3. 句子边界的正交分量激活注入：保住内容、只换方向，把下一句偏向目标状态。**
+**3. 句子边界的正交分量激活注入：保住内容、只换方向，把下一句偏向目标状态**
 
 确定要引导到 $q^\star$ 后，怎么注入也有讲究：直接加 $\alpha\mathbf{v}$ 会破坏隐藏向量里已承载的内容信息，让下一句语义跑偏。本文只在句末标点 token 处取第 $\ell$ 层隐藏向量 $\mathbf{h}^{(\ell)}_k$，归一化得 $\hat{\mathbf{h}}=\mathbf{h}/(\|\mathbf{h}\|_2+\varepsilon)$，再把离线抽到的转移引导向量 $\mathbf{v}^{(\ell)}_{u\to v}$ 中平行于内容的分量减掉、只留正交部分注入：
 

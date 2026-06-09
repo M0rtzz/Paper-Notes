@@ -48,11 +48,11 @@ tags:
 最终决策逻辑是严格交集：只有当 MCP 的预测集合大小为 1，且样本到预测类别局部 centroid 的 Mahalanobis 距离不超过类别阈值 $\tau_{dist}(\hat{y})$ 时，系统输出 $\hat{y}$；否则输出 defer。
 
 ### 关键设计
-**1. Mondrian Conformal Prediction 管 aleatoric uncertainty：判断文本证据本身够不够明确。**
+**1. Mondrian Conformal Prediction 管 aleatoric uncertainty：判断文本证据本身够不够明确**
 
 临床叙事常常不完整或措辞含糊，这种歧义不是模型换个分类阈值就能解决的——硬判只会在模糊病例上产生过度自信的错误。MCP 先对验证集 logits 做 temperature scaling 压低过度自信，再以风险容忍度 $\alpha$ 构造预测集合 $\Gamma^{\alpha}(x)$。如果这个集合恰好只含一个类别，说明证据足够明确；一旦集合包含多个类别（证据冲突）或为空（证据不足），就触发 defer。换句话说，conformal prediction 把"概率层面的模糊"显式量化成集合大小，让医院管理者能直接读到当前的风险水平，而不是被一个看似自信的 softmax 蒙蔽。
 
-**2. Multi-Centroid Mahalanobis Distance 管 epistemic uncertainty：拦住 softmax 很自信但表示异常的分布外病例。**
+**2. Multi-Centroid Mahalanobis Distance 管 epistemic uncertainty：拦住 softmax 很自信但表示异常的分布外病例**
 
 光看概率还不够——有些病例 softmax 给得很笃定，但它的 latent representation 其实落在训练分布之外，模型是在"自信地外推"。MCMD 在 $L_2$ 归一化的 latent space 里，给每个类别用 k-means 自动选出多个局部 centroids（最小簇数 $K$ 由 inertia gain 低于 0.05 的拐点确定），样本的异常度取它到预测类别任一 centroid 的最小 Mahalanobis 距离
 
@@ -60,7 +60,7 @@ $$d_M(x,\hat{y})=\min_k\sqrt{r_{\hat{y},k}^\top\Sigma^{-1}r_{\hat{y},k}}$$
 
 其中全局 precision matrix $\Sigma^{-1}$ 用 OAS shrinkage 从 residuals 中稳健估计。之所以用 multi-centroid 而非单一高斯，是因为 HIV 疑似病例表型高度异质，单中心会把少数类的方差估得过大、几何 veto 失灵；多中心既保留了表型多样性，又避免了高维下局部协方差估计不稳定的问题。
 
-**3. 风险非对称的临床评价与可调 operational dial：用符合早期筛查代价结构的指标来衡量系统。**
+**3. 风险非对称的临床评价与可调 operational dial：用符合早期筛查代价结构的指标来衡量系统**
 
 普通 F1 把各类错误一视同仁，但早期 HIV 漏诊会延迟 ART 并增加传播风险，代价远高于一次不必要的检测——评价函数不反映这种不对称就会误导部署决策。作者改用 $F_2$ 强化对 false negative 的惩罚，用 ECE 衡量校准，用 coverage/TPDR/AURC 衡量分诊效率，还设计了 Custom Risk-Kappa，把自动化 false negative 的惩罚定为 1.0，false positive 和 true positive deferral 定为 0.5，true negative deferral 定为 0.25。与此配套，风险容忍度 $\alpha$ 被设计成一个可调旋钮：调小则更谨慎、覆盖率低但 Clear $F_2$ 高，调大则覆盖率上升、把更多病例交给自动化，医院可以按自身风险偏好在这条曲线上选工作点。
 

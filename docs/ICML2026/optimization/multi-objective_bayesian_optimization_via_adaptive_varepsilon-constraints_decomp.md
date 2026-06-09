@@ -52,7 +52,7 @@ STAGE-BO 的一次迭代由四步组成，输入是已有数据集 $\mathcal{D}_
 
 ### 关键设计
 
-**1. Fill-distance 驱动的 ε 目标点选择：用前沿上"最大空洞"来决定下一步往哪填。**
+**1. Fill-distance 驱动的 ε 目标点选择：用前沿上"最大空洞"来决定下一步往哪填**
 
 ε-约束法把"约束门限选在哪"留成了 50 年的悬案，而 STAGE-BO 的回答是：选在代理前沿上覆盖最差的那个位置。作者借用 Zhang et al. (2024) 的 fill distance 度量 $\text{FD}(\mathbf{Y}_t)=\max_{\mathbf{y}\in\mathcal{P}_f}\min_{\mathbf{y}'\in\mathbf{Y}_t}\|\mathbf{y}-\mathbf{y}'\|$，但把式中的真 Pareto 前沿换成 Thompson 采样得到的代理前沿，于是当前最该被填补的目标点就是
 
@@ -60,7 +60,7 @@ $$\mathbf{Y}_c=\arg\max_{\mathbf{y}'\in\widetilde{\mathcal{P}}_f^t}\min_{\mathbf
 
 即几何意义上离已有观测最远、空洞最大的位置。文中定理进一步给出 $\text{IGD}(\mathbf{Y}^{\text{FD}})\le \text{FD}(\mathbf{Y}^{\text{FD}})$，把 FD 锚成 IGD 的上界，于是"最小化 FD"直接换来 IGD 保证。这一步之所以有效，是因为它把 HV 系列方法那种隐含的几何偏置（解被堆在膝盖区）翻成了一个显式目标——哪里覆盖差就往哪里采；而用 Thompson 采样路径而非后验均值，则是为了保留 GP 的不确定性，避免后验均值过于贪心、过早收死在已知区域。
 
-**2. ε-约束分解 + clipping 稳定器：把多目标拆成一串单目标约束子问题，并防止可行域被掏空。**
+**2. ε-约束分解 + clipping 稳定器：把多目标拆成一串单目标约束子问题，并防止可行域被掏空**
 
 有了 $\mathbf{Y}_c$，多目标问题就被切成 $T$ 次单目标子问题：每轮只优化一个主目标 $f_k$，其余目标被门限 $\varepsilon_j=\widehat{\mathbf{Y}}_{c,j}$ 钉住，写成
 
@@ -68,7 +68,7 @@ $$\max_{\mathbf{x}\in\mathcal{X}} \; f_k(\mathbf{x})+s\sum_j f_j(\mathbf{x}) \qu
 
 其中标量化系数 $s\approx 10^{-3}$ 仅用来排除弱 Pareto 最优解。ε-约束的经典结论保证这种子问题的最优解必落在 Pareto 前沿上，主目标 $k$ 再用 round-robin 轮转，让每个目标都轮到被推动。真正的工程隐患是早期：数据稀疏时代理前沿可能给出一个比已观测最佳还激进的门限，导致可行域直接为空、整轮发散。clipping 就是补这个洞——一旦 $\mathbf{Y}_{c,j}\ge \max_t \mathbf{Y}_{t,j}$，就把 $\widehat{\mathbf{Y}}_{c,j}$ 降回当前最大观测值。消融显示它主要是数值稳定器：多数 benchmark 上"有/无 clipping"性能相当，少数任务因放松了可行域而额外受益。
 
-**3. 约束 EI（cEI）采集函数 + 对约束/偏好的自然外推：同一个分解框架顺手吞下三种 setting。**
+**3. 约束 EI（cEI）采集函数 + 对约束/偏好的自然外推：同一个分解框架顺手吞下三种 setting**
 
 每个子问题用约束 EI 求解，采集函数 $\alpha(\mathbf{x})=\text{EI}(\mathbf{x})\times\text{PoF}(\mathbf{x})$ 同时权衡改进量与可行概率：改进量取 $\text{EI}=\mathbb{E}[\max(0,\, f_k(\mathbf{x})+s\sum_{j\ne k} f_j(\mathbf{x})-f_k^*-s\sum_{j\ne k}f_j^*)]$，可行概率 $\text{PoF}(\mathbf{x})=\prod_{j\ne k}\Pr(f_j(\mathbf{x})\ge \widehat{\mathbf{Y}}_{c,j})$ 在独立 GP 假设下闭式可算。选 cEI 是因为它在约束 BO 里最成熟、解析最友好。更妙的是这套分解几乎不用改就能吃下别的 setting：遇到硬约束 $g_l(\mathbf{x})\ge 0$，只需把它们的可行概率乘进 PoF；遇到用户偏好 ROI $[a_i,b_i]$，则把"下界"和"上界"当成两个候选约束集、用 OR 形式写入子问题——ROI 过分激进时下界兜底，过分保守时上界驱动搜索去更好的区域。结果是无约束、约束、偏好三种 MOBO 共用一个框架，省掉了为每种 setting 单独造算法的负担。
 

@@ -46,15 +46,15 @@ GS-Quant 的目标是把每个 KG 实体压成一串"像语言一样有层级、
 
 ### 关键设计
 
-**1. Granular Semantic Enhancement（GSE）：把聚类树拧进 codebook 的每一层。**
+**1. Granular Semantic Enhancement（GSE）：把聚类树拧进 codebook 的每一层**
 
 vanilla RQ-VAE 的"层级"只是残差递归的数值层级，没有语义含义，同一层 codebook 里"Person"这种粗类和"Artist"这种细属性混作一团（图 4b）。GSE 把离线建好的层次树 $\mathcal{H}$ 当作监督信号，强制 RQ 第 $i$ 层的 code 对齐到树第 $i$ 层的聚类中心 $\boldsymbol{\mu}_e$——浅层学 coarse 类别、深层学 fine 细节。由于 code 选择是离散的不可导，先构造直通 surrogate $\tilde{\mathbf{v}}_i = \mathbf{r}_i + \operatorname{sg}[\mathbf{v}_{c_i}^i - \mathbf{r}_i]$ 让梯度穿过；再施加两条方向相反的对比约束：Coarse-to-Fine Alignment $\mathcal{L}_1$ 把 $\tilde{\mathbf{v}}_i$ 拉向自身在 $i$ 层的中心 $\boldsymbol{\mu}_e$，权重取指数衰减的 $\lambda_1^{i+1}/m$（$\lambda_1\in(0,1)$）让浅层权重更大、优先凝聚同类；Hierarchical Separability $\mathcal{L}_2$ 把 $\tilde{\mathbf{v}}_i$ 推离树上邻居中心 $\mathbf{n}\in\mathcal{N}_e$，权重反向衰减为 $\lambda_2^{m-i}/m$ 让深层权重更大、优先分离细类。两个方向一起约束后，codebook 可视化（图 4a）出现浅层 code 稀疏均匀、深层 code 密集判别的结构，正好对上语言"先分类后细化"的直觉。
 
-**2. Generative Structural Reconstruction（GSR）：用 GPT decoder 给 code 之间加因果依赖。**
+**2. Generative Structural Reconstruction（GSR）：用 GPT decoder 给 code 之间加因果依赖**
 
 光有层级还不够——若 $m$ 个 code 彼此独立，LLM 看到一串 code 也分不清谁该 condition 在谁之上。GSR 把 code 元组重构成"一句有序的语义句子"：构造可学 query 序列 $\mathcal{Q}=\{\mathbf{q}_i\}_{i=0}^L$，与 $\tilde{\mathbf{v}}$ 拼接后喂进一个带 causal self-attention 的 Transformer decoder，强迫第 $l$ 个 code 只能依赖 $<l$ 的 code，形成"先粗后细"的自回归依赖，与 LLM 的生成动力学同构。decoder 的输出被分派到不同重构目标：$\mathbf{o}_0$ 重构实体自身 $\mathbf{s}$，$\{\mathbf{o}_i\}_{i\ge 1}$ 重构该实体在 $\mathcal{H}$ 上的各级祖先 $\{\mathbf{h}_i\}$，损失为 $\mathcal{L}_{\text{GSR}} = \|\tilde{\mathbf{o}}_0 - \mathbf{s}\|_2^2 + \lambda_s \|\tilde{\mathbf{o}}_1 - \mathbf{h}_0\|_2^2 + \lambda_h \sum_{i=2}^L \|\tilde{\mathbf{o}}_i - \mathbf{h}_{i-1}\|_2^2$，其中 $\lambda_s \ll \lambda_h$（因为 $\mathbf{h}_0$ 已被 GSE 约束，不必重复施压）。重构祖先而非只重构自己，强制 code 序列保留多粒度信息、避免"只编码实体本身"的退化；消融里去掉 GSR 后 WN18RR Hits@1 掉 0.8%、FB15k-237 掉 1.1%，印证因果依赖确实让 code 更"语言化"。
 
-**3. Codebook Entropy 选 checkpoint + 词表扩展 + LoRA：把 code 接进 LLM。**
+**3. Codebook Entropy 选 checkpoint + 词表扩展 + LoRA：把 code 接进 LLM**
 
 RQ-VAE 训练常出现"几个 code 吃掉所有激活、其余 code 死亡"的 collapse，传统靠 random restart 或 EMA 缓解。作者改用 codebook entropy $\mathcal{Y} = -\frac{1}{M}\sum_m \sum_k p_k^m \log p_k^m$ 作为模型选择信号——它在所有 code 等概率被激活（$p_k^m = 1/K$）时取最大，等价于"最大化 codebook 表达力"，表 3 实测 $\mathcal{Y}$ 与下游 MRR / Hits@K 正相关，于是只看这个自监督指标就能挑 checkpoint，不必每个 epoch 都跑下游评估。选定 codebook 后，把 $M\times K$ 个 code 全部当作新 token 注入 LLM 词表，冻结 LLM 主体、只训新 token embedding 与作用在 attention/FFN 上的 LoRA adapter，既学到 KG 知识又不破坏通用能力；推理时直接让 LLM 在候选实体里做选择，候选集与指令模板和 DIFT 完全对齐以保证公平。
 

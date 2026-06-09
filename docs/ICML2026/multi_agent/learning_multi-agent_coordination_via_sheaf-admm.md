@@ -46,11 +46,11 @@ Sheaf-ADMM 把"一群只看局部的 agent 协同解全局任务"直接做成一
 
 ### 关键设计
 
-**1. 三态分离：把"我想什么/我们一致什么/我们曾分歧什么"拆成 $\bm x$、$\bm z$、$\bm u$。**
+**1. 三态分离：把"我想什么/我们一致什么/我们曾分歧什么"拆成 $\bm x$、$\bm z$、$\bm u$**
 
 MPNN 这类架构每个 agent 只有一个 hidden state，等于把本地决策、对外协商目标和历史冲突全压进同一个向量里，事后没法分辨它到底在表达哪一层意思。ADMM 天生把这三者拆开：$\bm x_i$ 是 agent 的本地最优解，受 augmented Lagrangian 项 $\tfrac{\rho}{2}\|\bm x_i - \bm z_i + \bm u_i\|^2$ 牵引向 $\bm z_i - \bm u_i$；$\bm z_i$ 是当前的 consensus 目标（满足下面的 sheaf 约束）；$\bm u_i$ 则把过去每一轮没对齐的差额累加起来，相当于"分歧的历史账本"。$\bm x$-update 有闭式解 $\bm x_i = (\bm Q_i + \rho \bm I)^{-1}(\rho(\bm z_i - \bm u_i) - \bm q_i)$，$\bm u$-update 就是 $\bm u^{k+1} = \bm u^k + \bm x^{k+1} - \bm z^{k+1}$。三态分开之后推理动力学变得可分析——可以单独可视化 $\bm z$ 看 consensus 怎么收敛、看 $\bm u$ 锁定冲突最大的区域，这正是单 hidden state 架构做不到的。
 
-**2. Cellular Sheaf：让 agent 只在"任务真正要求一致"的低维子空间上对齐。**
+**2. Cellular Sheaf：让 agent 只在"任务真正要求一致"的低维子空间上对齐**
 
 要求相邻 agent 在整个状态向量上一致太刚性——相邻的迷宫区其实只需要边界处衔接得上，内部各走各的不该被强行拉平。cellular sheaf 把这个直觉形式化：每条边 $e=(i,j)$ 挂一个低维 edge stalk $\mathbb{R}^{d_e}$（$d_e < d_v$），两端各有一个 restriction map $\bm F_{i\to e}, \bm F_{j\to e} \in \mathbb{R}^{d_e \times d_v}$ 把 agent 状态投影到这条边的共享空间上，"一致"就只定义为 $\bm F_{i\to e}\bm x_i = \bm F_{j\to e}\bm x_j$。由此定义 sheaf Laplacian $\bm L_\mathcal{F} = \bm F^\top \bm F$，它度量的总分歧恰好是
 
@@ -58,7 +58,7 @@ $$\bm x^\top \bm L_\mathcal{F} \bm x = \sum_{e=(i,j)} \|\bm F_{i\to e}\bm x_i - 
 
 $\bm z$-update 要做的就是把当前状态投影到 $\ker(\bm F)$（这个总分歧为零的子空间）。restriction maps 是学出来的，等于让模型自己决定"我们到底要在哪些维度上达成一致"——比图 Laplacian 的"全状态一致"灵活得多，也正好对上 Sudoku 行/列/宫这种只约束部分关系的结构。
 
-**3. Unrolled ADMM + inexact $\bm z$-update：把分布式优化器当成可微递归层，且每步只扩散几下。**
+**3. Unrolled ADMM + inexact $\bm z$-update：把分布式优化器当成可微递归层，且每步只扩散几下**
 
 固定 $K$ 步 ADMM、整体反传，ADMM 就从一个迭代求解器变成了一层可端到端训练的递归网络。关键的省力点在 $\bm z$-update：精确投影到 $\ker(\bm F)$ 要解一个大型线性系统，而 sparse 场景下 $\bm L_\mathcal{F}$ 条件数很大、完美收敛代价高，所以这里只跑少数几步 sheaf-Laplacian 扩散 $\bm z^{t+1} = \bm z^t - \eta \bm L_\mathcal{F}\bm z^t$（inexact）。少步扩散本质上是个 smoother：先把高频的、局部相邻 agent 之间的分歧快速磨平，低频的全局结构留待后续 ADMM 轮次慢慢对齐。这种"少步消高频"恰好是 ADMM 用在多智能体上的特有红利——不必每步都把 consensus 解到底，几步就够推动全局收敛，省下大量算力。
 

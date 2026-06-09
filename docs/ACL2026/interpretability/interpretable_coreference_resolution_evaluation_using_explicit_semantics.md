@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 两步标注 + 簇级多数投票：把代词也拉进语义诊断。**
+**1. 两步标注 + 簇级多数投票：把代词也拉进语义诊断**
 
 传统 NER-based 评估在 PreCo 上只能标 22.8% 的 mention，代词、模糊指称根本无标签，per-class 分析无从谈起。本文先用重叠函数 $\Omega(m_i, c_j) = |\text{span}(m_i) \cap \text{span}(c_j)| / |\text{span}(m_i) \cup \text{span}(c_j)|$ 衡量 mention 与 CNER span 的 token 级 Jaccard 重叠，给每个 mention 选 $\hat{c}_j = \arg\max \Omega$，重叠 < 0.5 的暂时留空。直标这一步能覆盖 37.5–71.4% 的 mention，再借助"同一 cluster 内的 mention 必然语义同类"这条硬约束，在簇级别做多数投票把标签传播给剩下的空位（含纯代词），打平时用平均 $\Omega$ 最高的标签破纪录。
 
 这样覆盖率从 NER 的两成多一路升到 ~90%，剩下的几乎都是没有任何 nominal 锚点的纯代词 cluster。整套传播只是查表 + 投票，用近乎零算力就把困扰语义评测多年的"密度问题"基本填平，让后续按类别切分的诊断真正成为可能。
 
-**2. Typed Mention F1 + Link F1：把"识别"和"链接"两种能力拆开看。**
+**2. Typed Mention F1 + Link F1：把"识别"和"链接"两种能力拆开看**
 
 CoNLL-F1 把边界、链接、聚类三种误差源揉成一个数，掉了 10 分也不知道该改哪里。本文把评测拆成两个互相独立的维度：Mention F1 只算特定类 $t$ 的 mention 抽取精度与召回，完全不看聚类对错；Link F1 则在 gold mention 输入下，评估同一 cluster 内 mention 对 $(m_1^G, m_2^G)$ 是否被正确连到一起，专门刻画聚类结构质量，与 mention 检测解耦。
 
 两类指标都按 29 个语义类别分层报告，于是能精确定位"模型在 PER 上链接很好、但在 EVENT 上连 mention 都抽不准"这种细节。把单一聚合分数换成 mention/link × per-class 的诊断面板后，"在哪类失败 → 该补什么"的因果链第一次变得可追踪。
 
-**3. 诊断驱动的定向数据增强：让评测能开出"补什么数据"的药方。**
+**3. 诊断驱动的定向数据增强：让评测能开出"补什么数据"的药方**
 
 传统评测只能发现问题，给不出干预手段。本文把诊断结论（"LitBank 模型在 PLANT/EVENT/MEDIA 等类上崩溃"）直接翻译成 augmentation 配方：用 GPT-5.1 生成 3 篇约 2000 字的 LitBank 风格虚构叙事，每篇刻意塞入被判为弱势的 CNER 类提及；再按两种规范人工标注——Restricted 只标 LitBank 原有 6 类，Unrestricted 覆盖所有 nominal 与代词 mention——分别并入训练集得到 augmented 与 augmented-NR 两个模型。
 

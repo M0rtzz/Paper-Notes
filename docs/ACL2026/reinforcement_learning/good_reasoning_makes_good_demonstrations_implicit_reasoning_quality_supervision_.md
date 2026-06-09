@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. Evidence Gain：把"推理质量"重新定义成"示范教学效用"。**
+**1. Evidence Gain：把"推理质量"重新定义成"示范教学效用"**
 
 RLVR 只看答案对错，根本无从判断一条正确轨迹是真严谨还是碰巧蒙对，而长度、logprob、majority vote 这些表面信号又只能弱相关地反映质量。作者绕开"看推理本身像不像好推理"，改问一个可测的问题：把候选轨迹 $(q,r)$ 当成 in-context demonstration 拼到一批 held-out 验证样本前面，模型生成那些高质量参考推理的 log-likelihood 会比 zero-shot 提升多少？这个对验证样本求平均的提升量就是 Evidence Gain。它直接测试"这条推理能不能教会模型做类似推理"——真正清晰、相关、可迁移的轨迹会显著抬高参考解的生成概率，而冗余跳步或蒙对的轨迹帮不上忙。消融里 Evidence Gain 与推理质量的 Spearman $\rho$ 在 1.5B/7B 上分别为 0.405/0.444，远高于 length 的负相关和 logprob 的 0.13 左右。
 
-**2. In-Context RLVR：用输入侧拼示范，隐式实现奖励重加权。**
+**2. In-Context RLVR：用输入侧拼示范，隐式实现奖励重加权**
 
 直接把 Evidence Gain 当奖励太贵——缓存估计对约 12K 样本、100 个 demonstration 显式算一遍要约 80 小时 H800。作者因此不在 rollout 后算奖励，而是在 rollout 前从 demonstration set 随机采一个高质量问答/推理对，拼到当前问题前面，再跑标准 RLVR 更新，奖励仍只用答案正确性。关键在于输入里加示范会改变采样分布：高 Evidence Gain 的轨迹本来就更容易在示范引导下被生成，于是它们的梯度权重被自然放大。作者用 Bayesian identity 证明，这个 demonstration-conditioned 目标等价于在 zero-shot 基础分布上优化重加权奖励 $R(q,r)\cdot w(q,r)$，且 $\log w(q,r)$ 近似等于 Evidence Gain 加一个模型相关常数——一个纯输入侧的改动，换来了对高质量轨迹的奖励重加权，实现极简但解释扎实。
 
-**3. 与 DAPO/GRPO 解耦组合：证明它是通用增强模块而非某个优化器的特例。**
+**3. 与 DAPO/GRPO 解耦组合：证明它是通用增强模块而非某个优化器的特例**
 
 如果一个信号只在特定 objective 上有效，就很难说明它捕捉的是推理质量而非优化器的副作用。作者因此把 In-Context RLVR 当成输入侧 wrapper，分别接到 DAPO（得 IC-DAPO，主实验）和 1.5B 上的 GRPO（得 IC-GRPO），训练目标不变、只改输入条件和隐式权重。两套优化器上都拿到稳定增益，说明 Evidence Gain 重加权是更通用的训练信号，可以挂在已有 RLVR 流水线上而不需要改动 RL 内核。
 

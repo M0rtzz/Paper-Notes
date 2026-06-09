@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 谱分离定理（Theorem 3.5）：先证明"动一个不动另一个"，对照实验才成立。**
+**1. 谱分离定理（Theorem 3.5）：先证明"动一个不动另一个"，对照实验才成立**
 
 整个算法的合法性全压在一件事上——只有当真信号 spike 和污染 spike 在谱上互不串扰时，"靠谁动了来鉴别污染"才说得通；否则注入扰动会同时晃动两组 spike，鉴别无从谈起。作者在 spiked covariance 模型 $\mathbf{\Sigma} = \mathbf{I}_d + \mathbf{P}$（rank-$r$ 信号 spike）叠加 mean-shift 污染下证明：样本协方差 $\widetilde{\mathbf{X}}_n \widetilde{\mathbf{X}}_n^\top / n$ 的 $r+k$ 个 spike 特征值在 $d/n \to c$ 下渐近地裂成两个互不影响的集合。协方差那一组 $\Lambda_{\mathbf{P}} = \{1 + \ell_i + c(1+\ell_i)/\ell_i : \ell_i > \sqrt{c}\}$ 只由协方差 spike 强度 $\ell_i$ 决定，污染那一组 $\Lambda_{\mathbf{A}} = \{1 + \theta_j^2 + c(1+\theta_j^2)/\theta_j^2 : \theta_j^2 > \sqrt{c}\}$ 只由 mean-shift 强度 $\theta_j = \sqrt{\pi_j}\|\mathbf{m}_{(j)}\|$ 决定，两边各自越过经典 BBP 相变阈值 $\sqrt{c}$ 才会冒头。证明走 Stieltjes 变换配上 Benaych-Georges & Nadakuditi 的低秩加性扰动框架（Lemma 3.8），并顺带给出特征空间层面的不变性（Theorem 3.11，残差 $\mathcal{O}_p(n^{-1/2})$）。这一步把"mean-shift 和协方差信号可以解耦"从图上的经验观察提升为一条渐近定理，也就给了后面"注入诱饵看谁动"的物理依据。
 
-**2. Knockoff Mean 注入：用一勺已知噪声去钓出未知污染。**
+**2. Knockoff Mean 注入：用一勺已知噪声去钓出未知污染**
 
 有了解耦定理还需要一个足够"亮"的探针：诱饵得强到能把 $\Lambda_{\mathbf{A}}$ 里的污染 spike 明显推动，又不能强到去碰 $\Lambda_{\mathbf{P}}$ 里的真信号。作者构造扰动 $\mathbf{A}'_n = \mathbf{m}' \boldsymbol{\gamma}'^\top$，方向 $\mathbf{m}'$ 从单位球 $\mathbb{S}^{d-1}$ 均匀抽（或 i.i.d. Gaussian 归一化），权重 $\pi'$ 取 $0.5$ 或 $1$ 皆可，强度则卡在 $\theta'^2 := \pi'\|\mathbf{m}'\|^2 = 2\,g^{-1}(\tilde{\lambda}_1)$——这里 $g$ 是 spike-forward 映射（Proposition C.1），取它的逆意味着让人造 spike 的"力量"对齐实际观察到的最大 spike $\tilde{\lambda}_1$，既保证可检测、又稳稳压在 BBP 门槛 $1/D_{\mu_\infty}(\lambda^+ + \epsilon)$ 之上。哪怕运气差到诱饵方向恰好与某个已有污染方向共线，对 $\mathbf{A}_n + \mathbf{A}'_n$ 做奇异值分析也能看出 spike 仍发生 $\mathcal{O}(1)$ 量级的位移，照样会暴露。这一招与 knockoff filter 控 FDR 的精神同源——造一个已知的"假变量"来反衬真变量——只是作者把它从变量选择搬进了谱域，从而把 RPCA 那套非凸优化彻底换成了一次零调参的对照实验。
 
-**3. 基于涨落量级的不变性判别（Algorithm 1 第 5 步）：用一个有理论根据的硬阈值取代超参搜索。**
+**3. 基于涨落量级的不变性判别（Algorithm 1 第 5 步）：用一个有理论根据的硬阈值取代超参搜索**
 
 最后要把"谁动了"落成可执行的判据。对每个原始 spike $\tilde{\lambda}_i$，在第二次 PCA 的特征值里找是否存在 $\lambda'_j$ 满足 $|\tilde{\lambda}_i - \lambda'_j| < \epsilon$，匹配上的留作真信号、匹配不上的当污染丢掉。阈值取 $\epsilon = C n^{-1/2}$ 不是拍脑袋：稳定 spike 在极限谱支撑外的随机涨落本就是 $\mathcal{O}(n^{-1/2})$ 量级（Benaych-Georges & Nadakuditi 2012、Couillet & Hachem 2013），而被诱饵撬动的污染 spike 位移是常数阶 $\mathcal{O}(1)$，两个尺度在高维下越拉越开，正好夹出一个固定常数 $C$ 就能切干净。实验中大 $d$ 取 $C=1$、小 $d$ 取 $C=1/c$（补偿低维下测度集中偏弱）。于是"该信谁"这种本来要重优化的难题，被化简成两列特征值之间的一次数值比较，既绕开任何超参搜索，阈值又有 RMT 给出的明确量级依据。
 

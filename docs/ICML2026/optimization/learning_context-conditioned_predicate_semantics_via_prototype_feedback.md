@@ -52,15 +52,15 @@ AlignG 在这之上加两个串联模块：
 
 ### 关键设计
 
-**1. 上下文条件化的原型更新（Stage 1）：把"这张图有哪些关系候选"注入原型。**
+**1. 上下文条件化的原型更新（Stage 1）：把"这张图有哪些关系候选"注入原型**
 
 痛点是原型一旦训练完就冻结，模型没法用 image-specific 证据去重新组织谓词语义。AlignG 注意到一张图里的 $N$ 个关系候选本身就是天然的上下文，于是反过来用它们去更新原型。对每个原型 $r$，先用 compatibility-weighted cross-attention（query 是原型、key/value 是关系候选）聚合出上下文向量 $\mathbf{u}_r = \sum_j \alpha_{rj} \mathbf{W}_v \mathbf{e}_j$，注意力权重 $\alpha_{rj} \propto \exp((\mathbf{W}_q \bar{\mathbf{p}}_r)^\top (\mathbf{W}_k \mathbf{e}_j) / \sqrt{d})$。但更新不能粗暴地拿 $\mathbf{u}_r$ 覆盖 $\bar{\mathbf{p}}_r$——那会冲掉全局语义拓扑。这里换成 GRUCell 做门控增量：$\mathbf{p}_r^{(I)} = \mathrm{GRUCell}(\mathbf{u}_r, \mathrm{LayerNorm}(\bar{\mathbf{p}}_r))$，reset/update gate 提供了"选择性吸收"——场景证据强烈一致时大幅调整，证据微弱时保持原状。这一步的本质是把原型从"训练完冻结的常量"变成"per-image 变量"，但漂移幅度始终被门控约束着。
 
-**2. 反向 cross-attention 的关系再校准（Stage 2）：让 adapted 原型回头 reshape 关系特征。**
+**2. 反向 cross-attention 的关系再校准（Stage 2）：让 adapted 原型回头 reshape 关系特征**
 
 原型动起来之后，还得让它反过来作用到关系嵌入上，否则分类用的还是没吸收全局语义的旧特征。对每个关系 $j$，用反向 cross-attention（query 换成关系、key/value 换成 adapted 原型）算出 prototype-informed 反馈 $\mathbf{u}_j = \sum_r \beta_{jr} \mathbf{W}_v' \mathbf{p}_r^{(I)}$，权重 $\beta_{jr} \propto \exp((\mathbf{W}_q' \mathbf{e}_j)^\top (\mathbf{W}_k' \mathbf{p}_r^{(I)}) / \sqrt{d})$，最终 $\tilde{\mathbf{e}}_j = f_{\mathrm{proj}}([\mathrm{LayerNorm}(\mathbf{e}_j); \mathbf{u}_j])$。这里刻意用单步 concat-projection 而不是迭代更新——因为关系嵌入是 transient 的，只在当前图里存在、跨样本不持续，适合"一次成型"的强校准，不像原型那样需要门控保稳态。复杂度上也讨了便宜：只对固定的 $R$ 个原型与 $P$ 个候选做 cross-attention，注意力图是 $R \times P$，把传统 self-attention 的 $\mathcal{O}(P^2)$ 降到 $\mathcal{O}(RP)$，dense scene 下尤其划算。
 
-**3. 静态原型锚定的对齐损失：给"原型可以变"装一个防共谋的稳态约束。**
+**3. 静态原型锚定的对齐损失：给"原型可以变"装一个防共谋的稳态约束**
 
 原型能动了，新风险随之而来——如果对齐目标也用 adapted 原型 $\mathbf{p}_r^{(I)}$，那么 relation 和 prototype 会在同一张图里互相迁就、双双被推到一个 image-specific 的局部解，分类器就过拟合到这张图的偏置上。AlignG 的关键选择是把对齐损失锚回静态全局原型：
 

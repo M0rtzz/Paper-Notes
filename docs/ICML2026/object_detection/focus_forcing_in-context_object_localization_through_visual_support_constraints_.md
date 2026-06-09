@@ -52,15 +52,15 @@ FOCUS 通过"完全去除类别名 + 注意力 mask 优化 + GRPO IoU 奖励"两
 
 ### 关键设计
 
-**1. 完全去除类别词的 Prompt：把语义捷径从根上断掉。**
+**1. 完全去除类别词的 Prompt：把语义捷径从根上断掉**
 
 VLM 在 ICOL 上严重依赖类别名偏置——query 里只要出现"dog""bowl"这种词，模型就跳过 visual support 直接按 semantic prior 定位，遇到同类多实例必错。IPLoc 等用 pseudo-label 训练想削弱这种依赖，但推理时仍喂真实类别名，train-test mismatch 让 bias 卷土重来。FOCUS 干脆让 prompt 只描述任务（"locate the same object across frames"）和输出格式，完全不含任何类别名；输入序列 $\mathcal{C} = \langle \text{prompt}, (I_1, b_1), \dots, (I_{T-1}, b_{T-1}), I_T \rangle$ 里，支持图配 bbox、query 图无 bbox 待预测。train 和 test 都无类别名，让 visual support 成为唯一的目标指示器，从根本上断开 semantic shortcut。
 
-**2. Bounding Box Attention Optimization：直接监督 query token 该看哪里。**
+**2. Bounding Box Attention Optimization：直接监督 query token 该看哪里**
 
 论文 §3 的证据显示：即便去掉类别词，vanilla 模型的 attention 仍然 diffuse，并不集中在 support 对应区域——问题不是缺信息，而是 attention 错配。FOCUS 于是显式监督注意力分布：先把各层各头的 attention 聚合成 $A = \tfrac{1}{LH}\sum_{\ell, h} A^{(\ell, h)}$，取出 query image token 对应的行 $P \in \mathbb{R}^{N \times T}$，用 binary mask $m$ 标出 bbox token 的位置，attention loss 鼓励 $P$ 在 mask=1（bbox token）处 attention 高、其他位置低。这是 attention 工程而非架构创新，却是单组件里最大的贡献（消融里 +4.5 AP），因为它强迫模型真正去"看 support 的几何"，而不是停留在类别相关的浅层模式上。
 
-**3. GRPO + IoU Reward 精修：用 RL 直接对齐定位误差。**
+**3. GRPO + IoU Reward 精修：用 RL 直接对齐定位误差**
 
 SFT 的 token-level cross-entropy 和"bbox 几何对不对齐"只是间接相关，模型最省力的解未必是几何最优。FOCUS 在 SFT 收敛后接一段 GRPO（Group Relative Policy Optimization）：对每个 prompt 采样若干 bbox rollout，直接用 $\text{reward}=\text{IoU}(\text{predicted}, \text{ground-truth})$ 排序得到 group advantage，无需 critic。RL 目标和任务目标（IoU）完全一致，GRPO 在 bbox 坐标这种结构化连续输出、小 batch 下又比 PPO 更稳——消融里 SFT 之后再加 GRPO 还能涨 3.3 点，正是补上了"SFT loss 与 IoU 间接对齐"的缺口。
 

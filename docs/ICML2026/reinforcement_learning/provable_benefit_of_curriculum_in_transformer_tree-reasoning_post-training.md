@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 基于覆盖系数的课程充要 / 充分条件（Cor. 1）：把"先易后难有没有用"变成一句不等式。**
+**1. 基于覆盖系数的课程充要 / 充分条件（Cor. 1）：把"先易后难有没有用"变成一句不等式**
 
 业界一堆经验都说"先易后难有用"，但没人能回答"难度阶梯怎么搭才真有用"。本文先把"难度"统一到一把尺子上：定义 $\varepsilon$-精度样本复杂度 $N_\varepsilon(\pi^\star\mid\pi_{\text{ref}})$，再用 rejection-sampling 引理 $N\propto\|\pi^\star/\pi_{\text{ref}}\|_\infty$ 把它和 coverage coefficient 绑死——稀疏奖励 RL 的难度本质就是"正确 CoT 在 base policy 下有多稀有"。在这把尺子下，课程比直接训练更省样本的充要条件就是一句话：$\sum_{\ell}N_\varepsilon(\pi^\star_\ell\mid\pi^\star_{\ell-1})<N_\varepsilon(\pi^\star\mid\pi_{\text{ref}})$。更进一步，当存在 $L/p$-次根课程、即每相邻阶段难度比 $N_\varepsilon(\pi^\star_\ell\mid\pi^\star_{\ell-1})=\Theta(\sqrt[L/p]{N_\varepsilon(\pi^\star\mid\pi_{\text{ref}})})$ 时，直接版与课程版的样本比 $N^{\text{direct}}/N^{\text{curr}}=\Theta((C^\star)^L/(L\cdot C^\star))$（$C^\star=\sqrt[L/p]{N_\varepsilon(\pi^\star\mid\pi_{\text{ref}})}>1$），就是指数级加速。这个条件不只解释了 hint-decreasing、depth-increasing 等不同课程的共性，还直接给出可操作的设计原则：相邻阶段难度比要控在 $C^\star$ 量级。
 
-**2. 2S-ART 推理树 + PART 基模型（Def. 1-2）：给"reasoning 任务 + 弱基模型"一个能算的抽象。**
+**2. 2S-ART 推理树 + PART 基模型（Def. 1-2）：给"reasoning 任务 + 弱基模型"一个能算的抽象**
 
 Cor. 1 的条件还停在抽象层，得有一个具体模型让它在 transformer 上自动满足。本文把长度-$k$ 的推理任务表示成索引路径 $S_k=(i_1,\dots,i_k,d{+}1)$，每步从合法集 $I_\ell(\text{CoT}_{\ell-1})$（$|I_\ell|=\Theta(d)$）取 $i_\ell$、状态更新 $z_\ell=\Phi_\ell(z_{\ell-1},v_{i_\ell})$，这就是 2S-ART 树。base model 则实例化为 PART——在每个父节点对合法子节点均匀采样。均匀这一步是关键：它直接给出 $\|\pi^\star_{S_{\ell+1}}/\pi^\star_{S_\ell}\|_\infty=\Theta(d)$，进而 $\|\pi^\star_{S_\ell}/\pi^\text{PART}\|_\infty=\Theta(d^{\ell+1})$，与目标难度的 $L/p$ 次根关系天然成立，Cor. 1 的抽象条件就在这个模型上落地了。之所以选均匀-PART，是因为它既能装下 parity、Countdown、Markov-chain reasoning、induction-head 等多种任务（都是其子类），又能让"子节点概率比"可控，还和"后训练 = 在 pre-trained tree 上 reweight"的视角一致。作者还用一个标准 sampling-attention transformer（FFN 实现 $\Phi_\ell$ 原语、attention 负责选索引）证明它能精确复现 PART。
 
-**3. RL fine-tune 与 test-time scaling 的指数→多项式约简（Thm 2-3）：把 Cor. 1 翻译成两类具体范式的复杂度。**
+**3. RL fine-tune 与 test-time scaling 的指数→多项式约简（Thm 2-3）：把 Cor. 1 翻译成两类具体范式的复杂度**
 
 实践里 RL fine-tune 和 test-time scaling 都靠"采样 + 验证"驱动，本质都受 coverage 控制，所以能统一在同一框架里。本文用 0/1 outcome 奖励 $R^{f_{S^\star}}_x$ 和分段课程奖励 $R^{F_{S^\star}}_x(\cdot,\ell)$（每阶段只奖励 prefix 正确的 pre-EOS token），证明 RL fine-tune 在课程下样本复杂度从直接版的 $\widetilde O(d^{L+1})$ 降到 $\widetilde O(L\cdot d^{p_\max+1})$，test-time scaling 的 oracle（best-of-$N$ / verifier query）复杂度也有同形式的指数→多项式约简；线性可实现 MDP 上还借 Foster 2025 的 spanner-sampling 给出 inference-time 计算复杂度的类比（Thm 4）。一个要处理的麻烦是 outcome reward 存在 reward hacking——比如 parity 里选错索引仍有 50% 命中——作者在 App. F-G 用 prefix 课程把奖励信号下推到中间 EOS，把 hacking 概率指数压低。这一统一框架也正好解释了为什么"先用短 CoT / hint 训练"能对训练省 sample、对推理同样省 verifier query。
 

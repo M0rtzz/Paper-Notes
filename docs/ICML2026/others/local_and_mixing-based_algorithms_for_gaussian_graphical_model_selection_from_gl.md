@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. LET-GL：i,i,j,i 窗口 + 乘积统计量，无需 mixing 的局部边检测。**
+**1. LET-GL：i,i,j,i 窗口 + 乘积统计量，无需 mixing 的局部边检测**
 
 第一条路线是"不等链 mix，直接对每条候选边做假设检验"，时间复杂度可完美并行到每核心 $\tilde{\mathcal{O}}(d^2 p)$，与 Meinshausen-Bühlmann 同级。做法是把整条轨迹切成长度 $\tau$ 的 $k_\max=\lfloor T/\tau\rfloor$ 块，每块再四等分 $W_1,W_2,W_3,W_4$，定义更新事件 $U_{ij}^k$（$W_1,W_2$ 各至少一次 i 更新且无 j，$W_3$ 有 j 无 i，$W_4$ 有 i 无 j）。在 $U_{ij}^k\cap Q_{ij}^k$（"邻居安静"）发生时记录两段增量乘积 $\Delta Y_i^k\cdot\Delta Y_j^k$，Lemma 1 给出其条件期望有边时 $|E[\cdot]|\ge |\beta_{ij}|\theta_{jj}^{-1}$、无边时为 0，于是统计量 $T_{ij}=|\frac{1}{k_\max}\sum_k \mathbb{1}_{U_{ij}^k}\Delta Y_i^k \Delta Y_j^k|$ 与阈值 $\rho$ 比较即可判边。关键改进有两处：一是把早期的 $i,j,i$ 换成 $i,i,j,i$，多插一次 i 更新当"buffer"，让最后那次 i 的变化与之前 i 的噪声条件独立——这正是修复早期 ratio 估计量依赖漏洞的命门；二是用乘积而非比率，因为高斯变量在无界域上比率会爆炸，乘积更稳。窗口长度 $\tau$ 则用来平衡一对矛盾事件：$\tau$ 大则 $U_{ij}^k$ 频繁但 $Q_{ij}^k$ 难成立，$\tau$ 小则相反。
 
-**2. 高维随机扫描 Gaussian Gibbs 的 TV mixing 上界（Lemma 10，技术核心）。**
+**2. 高维随机扫描 Gaussian Gibbs 的 TV mixing 上界（Lemma 10，技术核心）**
 
 第二条路线要先把轨迹解相关成 i.i.d. 样本，而这一步成立与否全压在一个 TV mixing bound 上。结论是：在 Dobrushin 半径 $r=\max_i\sum_{j\neq i}|\beta_{ij}|<1$ 下，$\|K^t(x,\cdot)-\pi\|_\mathrm{TV}\le\varepsilon$ 只需
 
@@ -56,7 +56,7 @@ $$t\ge C\cdot\frac{p}{1-r}\log(p^{3/2}/\varepsilon)$$
 
 步，归一化后 mixing time 关于维度 $p$ 仅多项式对数，且与 spectral gap 或 $\Theta$ 的条件数无关。难点在于高斯 Gibbs 转移核不全局 Lipschitz，标准 Kantorovich-Rubinstein 把 Wasserstein 转 TV 的路线直接失败。作者的破法是引入"thresholded（approximate）Lipschitz"性质——平滑后的核在高概率集上 Lipschitz，失败事件作为显式加性 defect 出现——再结合 burn-in/thinning 分解和已知的随机扫描 Gibbs Wasserstein 收缩，得到 subsampled 轨迹与 $\pi^{\otimes m}$ 在联合 TV 上的接近。这个不依赖条件数的高维 TV bound 本身对 MCMC 社区也是独立贡献。
 
-**3. BTR-GL：burn-in + thinning + 黑箱 i.i.d. 学习器。**
+**3. BTR-GL：burn-in + thinning + 黑箱 i.i.d. 学习器**
 
 有了 Lemma 10 的 TV 接近，BTR-GL 就能把"动力学结构学习"整体 reduce 到"i.i.d. 结构学习"：丢掉前 $\mathfrak{b}$ 步消除初始化偏置，之后每 $\mathfrak{t}$ 步保留一个样本 $\mathbf{Y}^{(s)}$，把得到的 $\{\mathbf{Y}^{(s)}\}$ 当作近似 i.i.d. 高斯样本喂给 DICE 这类现成 i.i.d. 学习器。Lemma 10 保证 $(\mathbf{Y}^{(0)},\dots,\mathbf{Y}^{(m-1)})$ 与 $\pi^{\otimes m}$ 在 TV 上 $\varepsilon$-接近，所以 DICE 的 $1-\delta$ 高概率保证可以原样迁移过来，代价只是 $\varepsilon$ 进入 union bound。当底层选 DICE 时总观测时间 $\mathcal{O}(dp\,\mathrm{polylog}(p/\delta)/(\kappa^2(1-r)))$（$\kappa=\min_{\{i,j\}\in E}|\beta_{ij}\beta_{ji}|^{1/2}$ 是最小归一化边强）。和 LET-GL 形成鲜明对偶：BTR-GL 需要 Dobrushin 假设、是串行的，但把 mixing 时间也摊进观测时间后能逼近 minimax 下界，在相关性严重时比 LET-GL 省得多；LET-GL 则无 mixing 假设、可 per-edge 并行，但样本复杂度更高。
 

@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. Adherence + Strong Competitiveness：刻画"可当虚拟预测器用"的子例程。**
+**1. Adherence + Strong Competitiveness：刻画"可当虚拟预测器用"的子例程**
 
 要把单次真预测的价值在 $k$ 轮里继续榨干，得先说清楚"用算法合成的中间匹配"满足什么条件才能被 FtP 的分析吸收。本文给子例程 $\mathcal A$ 提出两条结构性质。固定瞬时匹配 $\mathcal A_t$（记其匹配过的服务器集合为 $S_t$、请求集合为 $R_t$，$\mathcal M_t$ 是恰好匹配 $R_t$ 的所有最大匹配）：称 $\mathcal A$ 是 $\gamma$-adherent，若任意 $t$ 都有 $\mathsf{dist}(S_t,R_t)\le\gamma\cdot\min_{M\in\mathcal M_t}\mathsf{cost}(M)$；称 $\mathcal A$ 是 strongly $\rho$-competitive，若 $\mathbb E[\mathsf{cost}(\mathcal A_t)]\le\rho(t)\cdot\min_{M\in\mathcal M_t}\mathsf{cost}(M)$。前者控制"中间状态在集合层面接近最优"、后者控制"中间状态的累积代价接近最优"。这两条之所以有用，是因为传统 OMM 只在终点 $t=n$ 看输出，但 Kalyanasundaram–Pruhs、Nayyar–Raghvendra、Bansal 等经典算法其实"顺便"在每一时刻都维持着好的部分匹配——把这种"过程友好"显式化，它们就能即插即用地充当虚拟预测器。
 
-**2. Follow-the-Prediction 的节俭化元算法：用子例程补齐缺失的 $k-1$ 个预测。**
+**2. Follow-the-Prediction 的节俭化元算法：用子例程补齐缺失的 $k-1$ 个预测**
 
 FtP 要求每轮都有一个预测 $P_t$，直接套用到节俭场景会因为缺了 $k-1$ 个真预测而代价无界。本文的元算法把时间线按 $k$ 切成 phase：每个 phase 首轮去预言机拿真预测 $\widehat P$，并在剩余服务器 $S\setminus\widehat P$ 上重置一个新的 $\mathcal A$ 实例；之后每个非询问轮把请求喂给 $\mathcal A$、读出它当前匹配的服务器集合 $\widehat S$，拼成虚拟预测 $P_t=\widehat P\cup\widehat S$ 交给 FtP。这一构造保证 $|P_t|=t$ 且 $P_t\subseteq S$，是合法预测。分析的关键是 Lemma 3.2 把 FtP 代价用 $\sum_t\mathsf{dist}(P_t,P_{t-1}\cup\{r_t\})$ 控制，按 phase 拆开后跨 phase 部分用 adherence + 三角不等式（Lemma 3.5）、phase 内部分用 strong competitiveness（Lemma 3.4）分别约束，最终给出统一界
 
@@ -57,7 +57,7 @@ $$(1+\gamma+\rho(k-1))\,\text{cost}(\text{OPT}) + (2+\gamma+\rho(k-1))\,\eta(Q)$
 
 直觉上 $\widehat P$ 给出大方向、$\mathcal A$ 用阶段内真实到达信息打磨细节，二者拼接成的代理预测"足够接近真预测"，于是 FtP 的逐轮三角不等式才能平滑接上。
 
-**3. 配套下界：在 star metric 上推广经典硬实例，证明上界本质最优。**
+**3. 配套下界：在 star metric 上推广经典硬实例，证明上界本质最优**
 
 节俭框架很容易做出"看起来更好"的上界，但不配下界就无法判断节俭代价是否已被吃干。本文在 $n$ 个叶子的 star metric 上构造对手序列：即便确定性算法、预测完全准确，在最多 $B$ 次询问下也至少损失 $\frac{2n}{B+1}-1$ 倍（Theorem 4.1），在 well-separated 询问机制下至少损失 $2k-1$ 倍（Theorem 4.2）；随机算法侧给出 $\Omega(\log k)$（well-separated）与 $1+o(\frac{\log(n/B)}{B})$（bounded budget）的下界（Theorem 4.3–4.4）。这套统一的对抗构造把上下界对齐，使 Theorem 1.1 的 $2k-1$ 常数因子在确定性 + perfect prediction 下近乎紧——这在只给上界就收尾的 learning-augmented 文献里相对少见。
 

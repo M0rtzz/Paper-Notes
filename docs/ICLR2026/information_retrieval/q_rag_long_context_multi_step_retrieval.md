@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计
 
-**1. Q 函数即内积：让强化学习的价值函数直接落在检索的相似度空间里。**
+**1. Q 函数即内积：让强化学习的价值函数直接落在检索的相似度空间里**
 
 这一步同时回应了两个痛点——LLM 微调太贵、Beam-Retriever 给每个候选打分都要跑一遍 transformer。做法是把 Q 函数参数化成状态嵌入和动作嵌入的内积：
 
@@ -55,7 +55,7 @@ $$Q_\theta(s, a_i) = \langle E_s(s; \theta_1), E_a(a_i, i; \theta_2) \rangle$$
 
 其中状态 embedder $E_s$ 编码已检索的内容，动作 embedder $E_a$ 编码候选 chunk 及它在文档中的位置。这么设计有两层好处：一是表达力不打折，**Theorem 1** 借 Stone-Weierstrass 定理证明这种内积形式仍是万能近似器；二是推理极快，给所有候选打分只需一次 dot product，不必像 Beam-Retriever 那样对每个候选做 transformer forward pass，长上下文下速度领先数量级。而且内积形式本就和检索的 similarity search 范式天然一致。
 
-**2. RoPE 相对位置编码：让检索器能做"谁在谁之前"的时序推理。**
+**2. RoPE 相对位置编码：让检索器能做"谁在谁之前"的时序推理**
 
 现有检索器答不了"事件 X 之前发生了什么"这类时序问题，根子在于绝对位置编码一旦外推到长上下文就失效。这里改用相对位置：已检索到的事实把文档切成若干区间，每个候选 chunk 拿到的是它相对最近区间的位置编码
 
@@ -63,7 +63,7 @@ $$\rho_t(i) = j \cdot \delta + \ell \cdot \frac{i - b_j}{b_{j+1} - b_j}$$
 
 动作 embedder 随之改用 $E_a(a_i, \rho_t(i); \theta_2)$。这样模型看的不再是候选的绝对坐标，而是它落在已知事实的"前 / 后 / 之间"，时序关系被显式编码进位置里，所以 4K 训练能一路泛化到 1M+ token。
 
-**3. PQN + Soft Q-Learning：在数千 chunk 的检索场景里把值基 RL 训练真正跑起来。**
+**3. PQN + Soft Q-Learning：在数千 chunk 的检索场景里把值基 RL 训练真正跑起来**
 
 检索场景的 chunk 动辄数千，传统 replay buffer 每次采样都要把所有 chunk 重新嵌入、重算一遍 Q 值，这是个绕不开的瓶颈。所以这里用 PQN（Periodic Q-Network）做在线训练，直接免掉 replay buffer。在此之上加 soft value function 和 target network 稳住训练：
 

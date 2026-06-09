@@ -47,13 +47,13 @@ tags:
 
 ### 关键设计
 
-**1. FLORES DiffMean language vectors：用平行语料把"语言身份"提成一个可注入的方向。**
+**1. FLORES DiffMean language vectors：用平行语料把"语言身份"提成一个可注入的方向**
 
 要在推理时往模型里"加一点目标语言"，前提是先有一个干净的语言方向。作者把 BLEnD 的语言-地区对映射到 FLORES 的 language/script identifiers，对每个可映射语言取 FLORES dev 的前 1,000 个句子，通过模型自身 tokenizer 喂进多语言 instruction-tuned LLM，收集指定层的 post-normalization residual-stream activation；语言向量用 DiffMean 构造，即目标语言 activation 均值与参考集合 activation 均值之差。
 
 之所以选 FLORES 而不是随手抓的语料，是因为它是内容对齐的平行多语言数据——各语言句子讲的是同一批内容。这样"均值差"里被消掉的是主题/句意差异，剩下的更可能是纯粹的语言身份方向，而不是混入了话题偏置的杂方向。
 
-**2. 推理期 activation steering：不动参数，只在残差流上沿语言方向轻推。**
+**2. 推理期 activation steering：不动参数，只在残差流上沿语言方向轻推**
 
 有了方向 $v_{lang}$，干预方式是在选定 transformer layer 的 hidden state 上做加性注入：
 
@@ -63,7 +63,7 @@ $$h' = h + \beta v_{lang}$$
 
 相比 full fine-tuning，这种干预成本极低、可在不同语言间瞬间切换，且天然契合"没有 BLEnD 训练数据"的 shared task 设定——不需要任何文化题训练集，也不更新一个参数。
 
-**3. prompt、层和模型的后验敏感性分析：解释单一配置为何无法全局稳定提升。**
+**3. prompt、层和模型的后验敏感性分析：解释单一配置为何无法全局稳定提升**
 
 官方提交只能反映一个锁死的 $(\text{model}, \text{layer}, \beta, \text{prompt})$ 配置，看不出 steering 到底稳不稳。所以提交之后作者补做了一整套敏感性分析：在 MCQ 与 SAQ 上对 Qwen2.5-72B/7B、Aya Expanse 8B/32B、Qwen3 8B/32B 跑 layer sweep、prompt comparison（generic prompt vs cultural prompt）和 steering strength comparison，还加入随机 Gaussian vector vs language vector 的对照。
 

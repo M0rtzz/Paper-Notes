@@ -56,15 +56,15 @@ tags:
 
 ### 关键设计
 
-**1. 用 Transformer 训练-推理不对称发布 CRD：从架构层面把"可推理"和"可训练"切开。**
+**1. 用 Transformer 训练-推理不对称发布 CRD：从架构层面把"可推理"和"可训练"切开**
 
 这是整篇 position 的立论根基。论文观察到 Transformer 的两条流水线在数学上根本不对称：训练时 next-token loss $\mathcal{L} = -\sum_t \log P(x_t \mid x_{<t})$ 必须看到完整序列 $x_1,\dots,x_T$ 才能逐层算梯度，而推理时只需要 KV-cache $\{K_{1:t}^{(l)}, V_{1:t}^{(l)}\}_{l=1}^L$ 加上倒数第二层隐藏态 $h_t^{(L-1)}$ 就能续生新 token。CRD 的做法就是只发布后者这一份"推理够用、训练不够"的中间表示，配上明文 ground truth $Y$ 组成三元组 $(KV\text{-}cache,\ h^{(L-1)}_t,\ Y)$，原始 token 一律不给——拿到它的人能复现评测分数，却因为缺少 token 序列算不出可用的训练 loss。之所以走这条路，是因为以往的 unlearnable data 方案（对抗扰动 / shortcut / 投毒）都是为图像设计的，搬到离散文本上 paraphrase 一下就失效；本文索性绕开"数据级混淆"，改从架构性质入手，让攻击者即使拿到 KV-cache 也无从直接 fine-tune。不可逆性还能再加固：KV-cache 反演攻击在普通 MHA 上确实可行，但在 GQA / MLA 等现代注意力上效果大幅下降，必要时还可叠加输出加噪、熵扰动、DP 机制或 KV-Cloak 等防御；对高敏感场景甚至可以不公开 anchor 权重，改由第三方提供 encoding API。
 
-**2. anchor model + subspace alignment 解互操作：让一份基准服务多种 target LLM。**
+**2. anchor model + subspace alignment 解互操作：让一份基准服务多种 target LLM**
 
 直接发布某个模型编码的 KV-cache 会带来新问题——总不能为每个 LLM 都重发一份基准。论文给出的近期可行方案是：发布方选一个广泛部署的 anchor 模型来编码 KV-cache，任何 target 模型再用 Cross-LoRA 风格的 LoRA-Align（rank-truncated SVD + Frobenius-optimal 线性映射）把表示从 anchor 子空间投到自己的子空间。这套对齐类似 Procrustes，但放松成任意线性映射、允许两边维度不同，且整个过程只用到双方模型权重、不接触明文，因而不破坏不可逆性。选 anchor 时按架构相似度（GQA / SwiGLU / RMSNorm 等）挑，以最大化迁移保真度。
 
-**3. relative representations 作为长期愿景：彻底脱离 anchor model。**
+**3. relative representations 作为长期愿景：彻底脱离 anchor model**
 
 anchor 路线再好也偏向某个模型族，论文进一步给出一个更对称的远期方向：基于 Platonic Representation Hypothesis（不同模型的表示在收敛）和 Moschella 2023 的 relative representations，约定一小批共享 anchor 样本（100–500 个），把每个 latent 点改写成它对这批样本的相似度向量。这种相对表示在任意 latent 空间下角度不变，于是可以零样本跨模型 stitch，让所有 LLM 在同一坐标系里被评测；要加入新模型也只需处理那批共享 anchor，并天然扩展到多模态。
 

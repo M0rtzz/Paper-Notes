@@ -44,15 +44,15 @@ RSIR 在迭代 $k$ 包含 4 步：(1) 在当前数据集 $D_k$ 上训出模型 $
 
 ### 关键设计
 
-**1. Bounded Exploration 混合候选池：在"挖掘已知兴趣"和"探索新兴趣"之间卡一个比例。**
+**1. Bounded Exploration 混合候选池：在"挖掘已知兴趣"和"探索新兴趣"之间卡一个比例**
 
 在大词表上完全自由地 autoregressive 生成会让生成空间爆炸、跑飞，但只重排用户已有的 item 又永远扩不出新兴趣。RSIR 在每个生成 step 用概率 $p$ 从用户历史 $s_u$ 内采、概率 $1-p$ 从全局 item 集 $I$ 内采，构成候选池 $\mathcal{C}_t\sim p\cdot\mathrm{Sample}(s_u)+(1-p)\cdot\mathrm{Sample}(I)$，模型只在 $\mathcal{C}_t$ 上做 top-$k$ 采样。$p$ 的经验最优约 0.5——纯 exploit（$p=1$）只重排已知 item，纯 explore（$p=0$）容易跑飞后被质控滤掉；引入历史偏置既保留可控性、又提供"延伸已知兴趣"的能力。
 
-**2. Fidelity-Based Quality Control（保真度排名校验）：每生成一个 item 就试探它会不会让用户跑偏。**
+**2. Fidelity-Based Quality Control（保真度排名校验）：每生成一个 item 就试探它会不会让用户跑偏**
 
 这是防止 self-consuming model collapse 的生死线。定义 $S_{tgt}=s_u\setminus S_{ctx}'$ 为用户真实序列里尚未用到的 item，每生成一个候选 item 就立刻检查：若 $\exists i_j\in S_{tgt}$ 使得 $\mathrm{Rank}_{f_{\theta_k}}(i_j\mid S_{ctx}')\leq\tau$（即新上下文下用户真实未来 item 仍被排在前 $\tau$ 名内），就接受这个 item 继续扩展，否则立即 break 终止本条序列。这保证生成轨迹始终与用户真实兴趣流形兼容。作者进一步证明 $\tau$ 越严，"保真度漏报率" $\tilde{p}_k$ 越低，使递归误差递推 $\mathcal{E}(\theta_{k+1})\leq(1-\lambda)\mathcal{E}_0+\lambda[(1-\tilde{p}_k)\rho\mathcal{E}(\theta_k)+\tilde{p}_k\mathcal{E}_{\max}]$ 满足收缩条件，从而避免崩盘。
 
-**3. Manifold Tangential Gradient Penalty：从理论上说明这不是"扩数据"而是"扩对方向的数据"。**
+**3. Manifold Tangential Gradient Penalty：从理论上说明这不是"扩数据"而是"扩对方向的数据"**
 
 为给方法一个理论 footing，作者把"过滤 + 生成"循环重新解释成一种隐式正则化：被接受的扰动只能沿用户偏好流形 $\mathcal{M}$ 的切空间，这等价于在原损失上加了一项 $\Omega(\theta)\propto\|\mathcal{P}_\mathcal{M}\nabla_s f_\theta\|^2$，专门惩罚沿 manifold 方向的梯度幅值，迫使解收敛到与用户真实流形平行的"平坦谷"。这条解释既说明了 RSIR 为什么不是简单的数据增强、而是"扩对的方向的数据"，也指出"漏报噪声地板"才是性能终会饱和的真正原因。
 

@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 三重风格 anchor 的 within-subject 对比：把"编辑是否捕捉到个人风格"拆成可定量验证的几组比较。**
+**1. 三重风格 anchor 的 within-subject 对比：把"编辑是否捕捉到个人风格"拆成可定量验证的几组比较**
 
 只看"编辑前后变化"会留一个致命漏洞——被试可能只是把文本改得更像"普通人"而非"自己"，单组对比分不开这两种解释。本文因此对每名被试同时收集三种文本作为 anchor：独立写作的 control text $C_i$、LLM 原始草稿 $D_i$、编辑后的 post-edit 文本 $E_i$，再用 LUAR 嵌入算余弦相似度，对四组关键比较各跑置换检验。(H1a) 比 $\mathrm{sim}(E_i, C_i)$ 与 $\mathrm{sim}(D_i, C_i)$，看编辑有没有拉近自我风格；(H1b) 比 $\mathrm{sim}(E_i, \mathrm{LLM})$ 与 $\mathrm{sim}(D_i, \mathrm{LLM})$，看有没有远离 LLM；(H1a′) 比 $\mathrm{sim}(E_i, C_i)$ 与 $\mathrm{sim}(E_i, C_{j\neq i})$，验证拉近的是"自己"而不是泛化的"人味"；(H1c) 比 $\mathrm{sim}(E_i, \mathrm{LLM})$ 与 $\mathrm{sim}(E_i, C_i)$，量化残留 LLM 风格的相对强度。
 
 把 LLM 草稿和自己的 control 写作同时当锚点，等于在风格谱上钉了两个端点，post-edit 文本落在哪、离哪个端点更近就一目了然，"改得像自己"和"只是改得像别人"也就被彻底分开了。
 
-**2. 风格嵌入模型的领域化筛选：用本研究数据当 ground truth 反选最敏感的 embedding。**
+**2. 风格嵌入模型的领域化筛选：用本研究数据当 ground truth 反选最敏感的 embedding**
 
 通用 benchmark 上排第一的风格 embedding，未必在"短文本 + 特定写作场景"这种小样本设定里最敏感，选错工具就会量错风格、招来方法论质疑。本文干脆把对照组数据本身当成一个 authorship identification 任务：给一条 query 控制文本，要从 80 名其他被试各一条控制文本加真作者另一条控制文本里把真作者排到第一，再在六种候选 embedding（LUAR-MUD、LUAR-CRUD、multilingual-style-representation、CISR、StyleDistance、SAURON）上比 MRR / R@1 / R@8。
 
 结果 LUAR-MUD 以 MRR $=0.589$ / R@1 $=0.451$ / R@8 $=0.833$ 显著领先，于是主分析锁定 LUAR-MUD，并用 CISR 复跑 H1/H2 验证结论方向一致。这种"在领域内任务上反选模型"的做法，保证了后续所有相似度数字都来自一把对本数据真正灵敏的尺子。
 
-**3. 客观测量 vs 主观感知的脱节诊断：并跑两条评估线，逼出 post-edit 的真正风险。**
+**3. 客观测量 vs 主观感知的脱节诊断：并跑两条评估线，逼出 post-edit 的真正风险**
 
 这是全文最关键的一步——post-edit 到底有没有解决用户痛点，取决于"机器测出的风格相似度"和"用户自己感知的真实性"是否对得上。本文每个任务结束让被试用 5 点 likert 评"这段文本多大程度像我自己"，平均成 perceived self-similarity，再用 repeated-measures correlation 把它和 LUAR 客观相似度配对回归，得 $r=0.244 \pm 0.076$、$p < .0001$：显著正相关但校准很弱。进一步的 follow-up 更刺眼——被试感知里 post-edit 文本和自己 control 文本代表性"没差别"（$p=.9062$），但客观测量却显示 post-edit 文本仍显著更像 LLM（H1c, $g=-1.43$）。
 

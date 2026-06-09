@@ -44,15 +44,15 @@ GSP 维护一个由 R-GNN 参数化的 $Q_\theta(s,a)$ 和一个 replay buffer $
 
 ### 关键设计
 
-**1. WA* 探索 + 搜索导出的 return 下界：把"成功的搜索"直接变成 $Q$ 的监督。**
+**1. WA* 探索 + 搜索导出的 return 下界：把"成功的搜索"直接变成 $Q$ 的监督**
 
 经典规划里模型完全已知，本来就该用 best-first 搜索，DRL 硬塞实时搜索等于自废武功——稀疏奖励下样本利用率极差。GSP 把这个常识带回 RL：奖励取单位步代价 $r=-1$ 不打折扣，节点累计回报 $g(s)$ 就是负深度，frontier 按 $f(s,a)=g(s)+w\,Q_\theta(s,a)$（$w=2$）的最大值展开。三种转移分别处理——dead-end 给固定惩罚 $R_\bot$，goal 路径回溯后把每个 $(s_t,a_t)$ 标上 actual return-to-go $\underline R$ 作为最优回报的下界，non-terminal 走标准 Q-learning bootstrap。最关键的训练目标是 $y=\max\{\underline R,\,\hat y(s,a)\}$，其中 $\hat y(s,a)=-1+\max_{a'}Q_\theta(s',a')$——这个 max 防止 bootstrap 把目标拉到比搜索已经找到的解更差的水平，是实验里最关键的稳定器之一。本质上，WA* 一次跑完一整条解路径后，整条路径"我已经走通过"的信息被显式灌回 $Q$，等于把每次成功的搜索免费变成监督数据。
 
-**2. Schema-shared R-GNN with action atoms：让一个 readout 处理所有对象数和动作 schema。**
+**2. Schema-shared R-GNN with action atoms：让一个 readout 处理所有对象数和动作 schema**
 
 传统 DRL/MLP 把动作空间硬编码进输出层，换个规模更大的实例就崩。GSP 用关系图神经网络在对象集合上做消息传递，天然支持训练 29 个 block、测试 488 个 block。具体地，每个状态—目标对编码成关系集 $\mathcal R_{s,g}=\{p(\bar o)\in s\cup g\}$；对每个 applicable grounded action $a=A(\bar o)$ 引入一个专属 action 对象 $o_a$ 与原子 $A(o_a,\bar o)$ 并入消息传递图。每个谓词 $p$ 有自己的 $\mathrm{Comb}_p$ MLP 把位置角色编进消息，object 端用 smoothmax 聚合、shared $\mathrm{Comb}_U$ 做带 residual 的更新，$L$ 层后用单个 schema-shared MLP 在 $[X_L(o_a)\|\bar X(s,g)]$ 上预测 $Q_\theta(s,a)$。关键在于 $\mathrm{MLP}_Q$ 在所有动作 schema 间共享，动作类型差异只通过消息传递和 $X_L(o_a)$ 表达，所以模型学到的是"打分原则"而非 schema 特定的打分器——这正是 488-block Blocksworld 也能零样本解出来的根本原因，因为它在对象集合层面是置换等变的。
 
-**3. 三池实例调度（unsolved / solved / satisficed）：把算力砸在信息量最大的实例上。**
+**3. 三池实例调度（unsolved / solved / satisficed）：把算力砸在信息量最大的实例上**
 
 均匀采样会浪费时间——已经完美解的实例贡献 zero gradient，完全不会解的实例提供 zero signal。GSP 按 WA* 的最近一次结果把每个训练实例归入三池：找到解但展开节点数 > 解长（satisficed）、找到解且展开节点数 = 解长（solved，启发式信心十足）、未找到解（unsolved）。采样权重按 satisficed → unsolved → solved 指数递增，意图是优先训练那些"启发式已经能找到解但还不够直击"的实例——它们提供的次优 vs 最优对比，正是 $Q$ 改进的最佳燃料。这是个很轻量但有效的 curriculum 技巧。
 

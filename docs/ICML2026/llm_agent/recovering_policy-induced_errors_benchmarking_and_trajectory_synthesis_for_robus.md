@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. GUI-RobustEval：从真实失败里反推可控的错误前缀。**
+**1. GUI-RobustEval：从真实失败里反推可控的错误前缀**
 
 既有 benchmark（GUI-Reflection、GUI-Robust、D-GARA、RedTeamCUA）衡量的都是合成扰动、环境扰动或对抗攻击，没有一个是策略自己造的错，于是评测信号和真实失败分布对不上。GUI-RobustEval 的做法是先从 12 个 SOTA agent 的 1.5k 失败轨迹里挖出 root-cause step 和错误类型分布，再把每个 case 标准化成"纯净前缀 + root-cause + 后续 $d$ 步"的可执行模板（统一成 action summary + PyAutoGUI，测试时再转回各 agent 原生格式）；评测时从系统快照重放前缀到指定深度 $d \in \{0,1,3,5\}$，把 agent 直接扔进"已经错了 $d$ 步"的状态，看它能否意识到并修复。这样 1216 个 case 全部源自真实 SOTA agent 失败，且第一次把错误深度抽成可控的一阶变量——Fig. 3(d) 显示几乎所有 agent 的成功率都随深度单调下降，说明长程恢复是个被严重低估的维度。
 
-**2. 脆弱度驱动探索 FDE：在成功子树里主动找新错误。**
+**2. 脆弱度驱动探索 FDE：在成功子树里主动找新错误**
 
 直接 parallel sampling 会一直从根重复采，算力浪费且错误类型覆盖窄，训练数据里因此 dominate 的全是低层执行错误。FDE 转而在 $T^{\text{corr}}$ 上挑"看似走对了但其实很容易翻车"的节点分叉：对每个节点 $o_i$ 用 pre-operative 进度评分器 $\mathcal{R}_p$ 从策略采 $N$ 个候选 action，平均得到 step-level 成功率 $r_i = \tfrac{1}{N}\sum_n r_{i,n}$，再算脆弱度分 $f_i = (1-r_i) + c\sqrt{\ln(V^f_{p(i)}+1)/(V^f_i+1)}$（UCB 形式，$V^f$ 是 FDE 视角的访问次数），选 $i^*=\arg\max_i f_i$ 把环境重放回 $o_{i^*}$ 让原策略 $\pi_\theta$ 继续走。"复用正确前缀 + 在最不稳节点分叉"把采样预算精准砸在最容易暴露错误的位置，UCB 的探索项又防止反复盯同一节点，从而扩张错误类型的覆盖面。
 
-**3. 经验引导恢复 EIR：在失败子树里合成长程修复。**
+**3. 经验引导恢复 EIR：在失败子树里合成长程修复**
 
 策略诱发错误往往要再走几步才暴露，需要长程回溯，可训练数据里的错误大多 1 步内就能识别，时程不匹配。EIR 把失败轨迹里的信息榨出来：对每条失败轨迹 $\tau^{\text{fail}}$，先聚合它在树里的兄弟分支经验 $\mathcal{E}(\tau^{\text{fail}})=\{E_{\tau^{\text{nb}}}\}$（reward model 顺手抽出来的可复用 trajectory experience，相当于"对的人怎么走"），喂给反思器 $\pi^{er}_\theta$ 产出 $(i, g_i, p_i)$——候选错误步、恢复指引、扩展优先级；再用 UCB 风格的 $s_i = p_i + c\sqrt{\ln(V^r_{p(i)}+1)/(V^r_i+1)}$ 选要修的节点，重放到 $o_{i^*}$ 后由恢复 actor 跑 $\tau^{\text{rec}} \sim \pi^{rec}_\theta(u, o_{i^*}, h_{i^*-1}, g_{i^*})$。把"兄弟分支经验"和"反思器建议"合进一个 advice-conditioned rollout，就能稳定产出"先错→识别→恢复→完成"的长程样本。后处理再用 progress critic $\mathcal{R}_p$、action critic $\mathcal{R}_a$、reflection validator $\mathcal{R}_f$ 把样本拆成反思无关子集 $\mathcal{D}_{\text{agn}}$ 和反思相关子集 $\mathcal{D}_{\text{ref}}$。
 

@@ -45,15 +45,15 @@ DRP 要解决的是 Large Reasoning Models 的"过度思考"——R1-Distill-Qwe
 
 ### 关键设计
 
-**1. 技能感知分步：先按"功能技能"切片，再谈剪枝。**
+**1. 技能感知分步：先按"功能技能"切片，再谈剪枝**
 
 要判断"哪一步多余"，前提是先把推理链切成语义连贯的步骤——而简单按句号或 `\n\n` 切出来的边界往往跨在一个完整推理动作的中间，老师没法在统一粒度上判断。DRP 让老师把学生的长 CoT $T$ 切成 $\{(s_1,k_1),\ldots,(s_m,k_m)\}$，每段 $s_i$ 是一个 token span，$k_i$ 是它承担的功能技能标签（如 "Reading given quantity"、"Algebraic representation"、"Interpreting fractions of a subset"、"Arithmetic"、"Comparison"、"Logical inference"）。给每步贴上"它在做什么功能"的标签后，边界更稳定、语义更内聚，老师后续才能在一致的粒度上判断每片是否冗余。作者实测（Tab.2）skill 分法平均每道 GSM8K 题切出 12.6 步、default 分法只有 8.3 步，但 skill 分法在 AMC 上反而准确率高 2/40、token 还少 1.7k——说明"分得更细"加"标签明确"才是更好的剪枝基础，而不是负担。
 
-**2. 四档原子动作的步级剪枝：对每片做 keep/delete/rewrite/merge。**
+**2. 四档原子动作的步级剪枝：对每片做 keep/delete/rewrite/merge**
 
 切好片之后，老师对每个 $(s_i,k_i)$ 选一种原子动作产出 $\hat{s}_i$：**Keep**（本身已精简且必要）、**Delete**（冗余的 verbose 自我纠正或回溯）、**Rewrite**（核心逻辑保留、换更短的表达）、**Merge**（把相邻原子操作并成一步，避免无谓换行）；最后把保留下来的 $\{\hat{s}_1,\ldots,\hat{s}_{m'}\}$（$m'\le m$）重新拼成一段连贯的 $\hat{T}$，并检查它和原答案 $A$ 是否一致，必要时改成 $\hat{A}$。这套"四选一"回应了一个核心痛点——单纯求短并不等于好：直接蒸馏 GPT-4o 那种仅 186-token 的简洁答案，在 OOD 上掉得很厉害（Tab.4）。保留 keep/rewrite/merge 而不是一刀切"全部重写"，能让 pruned trace 仍然走学生熟悉的"长链路 + 反思"骨架，只是去掉多余回溯，因此学生学得动（learnability gap 小）、迁移性也好。
 
-**3. 学生风格保留的重写：拼回去时用学生的语气，而不是 GPT-4o 的数学体。**
+**3. 学生风格保留的重写：拼回去时用学生的语气，而不是 GPT-4o 的数学体**
 
 把裁完的离散步骤拼回一段流畅文本时，最容易踩的坑是老师顺手把整段改成自己简洁的数学表达，这等于偷偷把学生的推理风格也换掉了。DRP 在 prompt 里明确要求老师 "preserve the tone and speaking style of the student model"——只重组、不换腔调。这一步是 DRP 与"直接 distill GPT-4o 简洁答案"之间最本质的差别：后者把整个推理风格连根换掉，前者只换掉冗余。作者把它上升为全文的中心论点——"有效的训练 CoT 应当既信息充分、又在结构上和学生自身的推理过程一致"。Tab.4 的对照很有说服力：distill from GPT-4o（~186 token avg）在 OOD 上 MATH500 只有 88.6% / AMC 28/40，而 DRP（~330 token avg）做到 93.0% / 33/40，证明保留结构比追求更短更重要。
 

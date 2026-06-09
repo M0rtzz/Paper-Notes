@@ -47,7 +47,7 @@ VLAForge基于CLIP构建，包含两个核心组件：ForgePerceiver和Identity-
 
 ### 关键设计
 
-**1. ForgePerceiver 的伪造感知 mask：让 VLM 的 class token「看见」它原本不敏感的伪影。**
+**1. ForgePerceiver 的伪造感知 mask：让 VLM 的 class token「看见」它原本不敏感的伪影**
 
 CLIP 的视觉编码器在预训练时学的是认物体，class token 天然对边界不一致、纹理失真这类低层伪影迟钝，直接拿来做检测注意力会飘到与伪造无关的对象上。VLAForge 不去改 VLM，而是另搭一个轻量级 ViT 当独立的「伪造学习器」：它接收 VLM 给出的视觉 token $\mathbf{V}$ 和一组可学习 query token $\mathbf{Q}$，用 query 与视觉特征的相似度算出 $H$ 组逐头的伪造感知 mask $\mathcal{M}_i = \hat{\mathbf{Q}} \hat{\mathbf{V}}_i^\top$。这些 mask 不是用来覆盖图像，而是作为注意力偏置回注 VLM 自注意力：
 
@@ -55,11 +55,11 @@ $$\mathbf{z}_j^{(l)} = \text{softmax}\Big(\frac{\mathbb{Q}_j^{(l)} \mathbb{K}_P^
 
 偏置把 VLM 的注意力往伪造区域引，class token 于是从多个互补角度积累伪造相关语义。因为感知 mask 由外挂 ViT 学、只通过加性偏置作用，VLM 的预训练知识没被破坏；而多个 query 各看一类伪影，又让 class token 不至于只盯住单一线索。为了逼着不同 query 真的分工而不是学成一样，对 query 级 mask 加了正交约束 $\mathcal{L}_{orth}$。
 
-**2. 伪造定位图：给 mask 一份空间监督，顺带为局部判别铺底。**
+**2. 伪造定位图：给 mask 一份空间监督，顺带为局部判别铺底**
 
 光让 query 学 mask，没有空间标签约束时学到的先验容易飘。这里再用一个投影 $g_3(\cdot)$ 把视觉 token 映到任务自适应空间，算出每个 query 的定位图，再用卷积头聚合成一张粗粒度的区域感知伪造定位图 $\mathbf{M}_{loc} = h([\tilde{\mathcal{M}}_1, \ldots, \tilde{\mathcal{M}}_q])$，并用 MSE 损失对齐 GT 伪造 mask。关键是这层监督加在聚合后的定位图上，而非直接压每个 query，所以 mask 的多样性没被牺牲——既把伪造先验校准到正确的空间位置，又给下一步的 VLA 评分留了一张可用的局部线索图。
 
-**3. Identity-Aware VLA Scoring：把 VLM 的视觉-语言对齐本身当判别信号，并按人定制。**
+**3. Identity-Aware VLA Scoring：把 VLM 的视觉-语言对齐本身当判别信号，并按人定制**
 
 前两步还都在「增强视觉编码器」，没碰 VLM 最独特的资产——跨模态语义。已有 VLM 检测方法即便用文本，也只做图像级的全局对齐，给不出 patch 级的真假对应。VLAForge 构造 `"This is a real/fake photo of <id> person."` 的提示模板，把 `<id>` 占位符直接替换成 VLM 视觉编码器最后一层的 class token embedding $\mathbf{z}^{(L)}$——这一步把当前人脸的身份先验注入了文本侧，而且 embedding 本就在 VLM 文本编码空间里，无需额外对齐。文本编码器据此产出 real/fake 两个 ID 感知特征 $\mathbf{F}_r$、$\mathbf{F}_f$，再与每个 patch token 做 softmax 得到 VLA 注意力图：
 

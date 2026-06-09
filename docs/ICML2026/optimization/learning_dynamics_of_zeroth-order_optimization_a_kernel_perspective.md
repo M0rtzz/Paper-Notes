@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. One-step learning dynamics 与 eNTK 等价形式：把 ZO 与 FO 的差异收成一个投影矩阵。**
+**1. One-step learning dynamics 与 eNTK 等价形式：把 ZO 与 FO 的差异收成一个投影矩阵**
 
 理论与实验对不上的根源是损失这个 scalar 视角看不见 ZO 真正影响什么。作者把视角搬到 function space，对模型在另一数据点 $\mathbf{x}_o$ 上的 log-prob 变化做一阶 Taylor 展开后代入 ZO-SGD 更新，得到
 
@@ -52,7 +52,7 @@ $$\Delta\log\pi\approx-\eta\,\mathcal{A}_t(\mathbf{x}_o)\,\mathcal{K}_t(\mathbf{
 
 其中投影核 $\mathcal{K}_t=\nabla_\theta z(\mathbf{x}_o)^\top U_{t,P}U_{t,P}^\top\nabla_\theta z(\mathbf{x}_u)$，FO 版本只是把 $U_{t,P}U_{t,P}^\top$ 换成单位阵。差异一眼可见：ZO 比 FO 多了一个由微扰拼成的随机投影 $U_{t,P}\in\mathbb{R}^{d\times P}$。正是这个"只差一个投影矩阵"的等价形式，把维度无关性的证明直接接到 JL 引理上，后面只剩几行推论。
 
-**2. Johnson-Lindenstrauss 投影界：把核差异控成不含 $d$ 的函数。**
+**2. Johnson-Lindenstrauss 投影界：把核差异控成不含 $d$ 的函数**
 
 有了投影形式，就把 $\Delta\mathcal{K}[i,j]$ 写成原内积与投影内积之差。JL 引理保证只要 $P\ge(2\ln n+\ln(1/\delta))/(c(\mathcal{Q})\epsilon^2)$，投影后所有内积同时被保持到 $1\pm\epsilon$，其中 $c(\mathcal{Q})$ 是微扰分布的集中常数。带回核差异得
 
@@ -60,7 +60,7 @@ $$\|\Delta\mathcal{K}\|_F^2\le\frac{\epsilon^2 V}{2}\big(\|\nabla_\theta z(\math
 
 右端只含输出维 $V$、彻底没有模型维 $d$。这就是论文要的 dimension-free：只要词表/类别数 $V$ 不爆，模型从 LeNet 缩放到 LLaMA 都不会让 ZO 与 FO 的学习轨迹拉开太大——MeZO 在 OPT-13B 上仍 work 的谜题就此有了 kernel 级解释。
 
-**3. Gaussian vs Rademacher 微扰对比：决定保真度的是 $P$ 不是分布。**
+**3. Gaussian vs Rademacher 微扰对比：决定保真度的是 $P$ 不是分布**
 
 工程上二值 Rademacher 常和 Gaussian 一样好用，但传统方差分析说差距应正比于 $d$。作者从两个视角拆开看：最优化视角下单微扰估计器的二阶矩，Gaussian 是 $(d+2)\|\nabla\ell\|^2$、Rademacher 是 $d\|\nabla\ell\|^2$，两者都正比于 $d$，符合"高维都低效"的旧直觉；但 eNTK 视角下两者的 JL 集中常数都约 $1/4$、界都不依赖 $d$。也就是说它们在投影质量上几乎无差，作者称之为 distribution robustness——真正决定 ZO 保真度的是微扰数 $P$，而不是微扰分布。这既弥合了经验与理论的裂缝，也为以后用更激进的二值/三值微扰提供了理论支撑。
 

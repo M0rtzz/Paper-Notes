@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 面向长尾的 Qwen3-8B QLoRA 架构：用更强的语义容量区分临床上相近的防御类别。**
+**1. 面向长尾的 Qwen3-8B QLoRA 架构：用更强的语义容量区分临床上相近的防御类别**
 
 前期作者把 BERT 家族（MentalBERT、MentalRoBERTa、DeBERTa、RoBERTa）都试了一遍，validation macro F1 最高只有 0.314，而且 Class 3、5、8 反复掉到 0——encoder 的容量根本撑不住临床上语义重叠的细类。于是换成生成式的 Qwen3-8B 提供更强的语境理解，但 8B 模型在 24GB 卡上必须靠 PEFT 压成本：4-bit NF4 + double quant 把峰值显存从约 32GB 压到约 8GB，LoRA 挂在 q/k/v/o/gate/up/down/score 上，rank/alpha 为 128/256，dropout 0.1，可训练参数约 31M、只占 0.4%。容量上来了，硬件也还扛得住。
 
-**2. round-robin 少数类词法增强 + grouped CV：在不泄漏对话的前提下把稀有类样本补厚。**
+**2. round-robin 少数类词法增强 + grouped CV：在不泄漏对话的前提下把稀有类样本补厚**
 
 稀有类样本太少，但又不能随便 paraphrase——防御机制标签恰恰藏在 utterance 的微妙措辞里，改重了标签就废了。作者的做法很克制：只对 Levels 2、3、4、5、8 做 $k=3$ 的 round-robin 词法变异（contraction + hedging、style shift + filler、hesitation markers 等模式），而且只改 seeker utterance、不动上下文，增强后少数类从 28–84 条提到 65–252 条。配套的 grouped CV 保证同源对话和它的增强副本落在同一 fold，论文报告 0 leaked dialogues，这样增强才不会变成偷看验证集。
 
-**3. OOF bias + Seed-A 融合 + $\tau_7$ 保护门：在不伤多数类 precision 的前提下把少数类 recall 捞回来。**
+**3. OOF bias + Seed-A 融合 + $\tau_7$ 保护门：在不伤多数类 precision 的前提下把少数类 recall 捞回来**
 
 即便训练做对了，raw probability 还是会往 Level 7 倒。作者先在 Anchor 的 OOF 预测上随机搜索约 22,000 个 bias 向量，预测规则是 $\hat{y}=\arg\max_c[\log p_c+\delta_c]$，其中 $\delta_7<0$ 压多数类、$\delta_8>0$ 抬 Unclear。测试时再把 Anchor 和 Seed-A 两套 5-fold 模型的概率按 30/70 融合，$p_{blend}=0.30\,p_{anchor}+0.70\,p_{seedA}$。关键是那道 $\tau_7=0.69$ 的保护门：若 $p_{blend,7}\geq0.69$ 就直接锁定 Level 7，否则才放开 bias rerouting。这等于把“模型很确定是多数类”和“模糊样本”分开处理——确定的不动，模糊的才往少数类掰，既要 macro F1 的稀有类召回，又不至于把多数类误伤。
 

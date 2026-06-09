@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. Hinter-Guesser 范式：用结构化角色保证信息严格累积，让置信度方法的失败可归因。**
+**1. Hinter-Guesser 范式：用结构化角色保证信息严格累积，让置信度方法的失败可归因**
 
 如果直接让两个 LLM 自由地玩 20Q / GUESS，早期常出现"问题撞墙、问到不相关线索"的情况，导致置信度起伏甚至倒退——这会污染多轮置信度评估的实验基础。Hinter-Guesser 范式用结构化角色破解这个问题：Hinter（LLM）被分配一个秘密实体，每轮给出"helpful 但非 trivial"的 hint；Guesser 做 best guess，同时做 **uniqueness probing**——即使猜对也要标记"是否还有其他候选同样符合当前证据"，从而把"碰巧蒙对"和"信息足以唯一锁定"区分开。对话一直持续到 Guesser 既猜对又认证唯一性才停止，只保留成功收敛的对话、丢弃无法收敛的轨迹。这样构造出的数据满足 C1-C3（信息单调增 + 步步可答 + 置信度应单调），最终 20Q 收集 1848 turn / 226 实体，GUESS 收集 1625 turn / 223 实体。正因为信息被强制严格累积，后续观察到的置信度失败就可以归因于方法本身而非数据噪声。
 
-**2. InfoECE 指标：把绝对 turn 索引归一化成信息进度条，让变长对话可比。**
+**2. InfoECE 指标：把绝对 turn 索引归一化成信息进度条，让变长对话可比**
 
 不同对话长度不一，直接用 turn 索引 $i$ 做 ECE 会让短对话和长对话不可比。InfoECE 先把每个 turn 位置归一化成对话内的分数信息级别 $s_{d,i} = i/L_d \in (0, 1]$，再分 $B$ 个等宽 bin；每个 bin 内对所有跨对话的 turn 求平均置信度 $\text{conf}_b$ 和平均准确率 $\text{acc}_b$，得到
 
@@ -56,7 +56,7 @@ $$\text{InfoECE} = \frac{1}{B}\sum_b |\text{acc}_b - \text{conf}_b|.$$
 
 归一化到 $[0,1]$ 之后，不同长度的对话被对齐到同一"信息进度条"上，"信息级别 = 50% 时该有多自信"这类问题才有了 well-defined 的答案。单调性则用 Kendall's $\tau = \frac{1}{N}\sum_d \frac{N^{(d)}_{con} - N^{(d)}_{dis}}{\binom{L_d}{2}}$ 衡量对话内置信度随 turn 递增的程度。
 
-**3. P(SUFFICIENT) logit 探针：把置信度语义从"答案对不对"切换到"信息是否充分"。**
+**3. P(SUFFICIENT) logit 探针：把置信度语义从"答案对不对"切换到"信息是否充分"**
 
 P(TRUE) 在 under-specified 场景下有结构性缺陷——它只问"这个答案对吗"，但 turn 1 的 best guess 即使正确也只是"在所有候选里蒙中的"，按 P(TRUE) 会给出高置信度，可 epistemic 上此时本该低置信度。P(SUFFICIENT) 保留 P(TRUE) 的 logit-based 二选一探针形式，但把 prompt 改成"基于上述信息，是否足以推断正确答案就是 $\hat{y}$"，输出强制为 A（足够）或 B（不够）的单一大写字母，置信度取 confidence $= \Pr[\text{A} \mid p_{d,i}, \hat{y}_{d,i}]$。这样即便模型偶然蒙对了正确答案，只要 hints 还排除不掉其他候选，置信度就保持在低位——置信度对应的是 identifiability 而非 incidental correctness。论文没有给形式化证明，但实验直接验证了这次语义切换的关键作用：GUESS 上 InfoECE 从 P(TRUE) 的 79.97 暴降到 5.27，$\tau$ 从 3.29 飙到 81.51。
 

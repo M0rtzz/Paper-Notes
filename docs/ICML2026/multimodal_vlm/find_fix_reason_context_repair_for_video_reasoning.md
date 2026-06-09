@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 零泄漏的教师证据补丁（Teacher Negative Constraint Strategy）：让教师诊断错误但绝不透题。**
+**1. 零泄漏的教师证据补丁（Teacher Negative Constraint Strategy）：让教师诊断错误但绝不透题**
 
 观察层干预成立的前提是教师"指路但不送答案"——一旦教师直接说出答案或终态，学生就退化成 wholesale imitation，on-policy 性质荡然无存。难点在于视频任务里"软泄漏"无处不在，传统 metric 很难穷举所有边缘情况，所以作者干脆利用教师自身的 ICL 能力，用精心设计的 negative prompt + format constraint 把"诊断"和"答案"在生成层面分离。教师收到 $\mathcal{S}_i=(x,y,\tau_i)$（含 GT）或 $(x,\tau_i)$（无 GT），只允许输出错误类型 $e_i$ 和证据补丁 $c_i$：在 counting 任务里它不能说"frame 15 里恰好 3 个人"，只能说"请在 [13,17] 帧区间内重新计数"；temporal 任务里只给帧区间和事件描述、禁止暗示先后关系。这样学生**被迫重新去观察**而不是套答案。作者人工验证 200 次交互，把泄漏率从无约束的 39.5% 压到 0%。
 
-**2. Chosen Rollout 与鲁棒改进奖励 RIR：把"修复后的轨迹"安全地塞回 on-policy GRPO。**
+**2. Chosen Rollout 与鲁棒改进奖励 RIR：把"修复后的轨迹"安全地塞回 on-policy GRPO**
 
 修复 rollout 是在"原问题 + 补丁"这个变了的 observation 下采样的，直接当 off-policy 样本做重要性采样会很不稳。FFR 的做法是把它等价成"同一策略在不同 observation 下的 on-policy 样本"：先定义 chosen rollout $\hat\tau_i$（$z_i=1$ 即首答正确就用 $\tau_i$，否则用修复后的 $\tau_i^*$），再给每条样本算标量分数
 
@@ -57,7 +57,7 @@ $$\tilde R_i=z_i\big(R(\tau_i)+R_{fmt}(\tau_i)\big)+(1-z_i)\big(R(\tau_i^*)+R_{f
 
 其中 $\kappa\ge 0$ 是 patch tax，专门惩罚"靠教师补丁才答对"的样本。在 $G$ 条样本内做群组归一化得 $A_i=(\tilde R_i-\text{mean})/\text{std}$，再用 token-level ratio $r_{i,t}(\theta)$ 在 PPO clip 框架下更新，且只对 chosen rollout 的 token 反传。patch tax 把"模仿教师 vs 独立探索"的张力收成一个可调标量：$\kappa=0.3$ 最优——太小学生过度依赖教师，太大教师指导被抵消。
 
-**3. 错误分类驱动的工具调用：不同根因配不同粒度的修复信号。**
+**3. 错误分类驱动的工具调用：不同根因配不同粒度的修复信号**
 
 修复信号给得太笼统（只给文字）或太同质（只给视觉框）都会丢信息，因为不同的错误根因需要看的东西不一样。FFR 让教师先把错误归到六类（temporal / spatial / attribute / counting / dynamics / logic），再按类调对应工具：temporal 输出帧区间，spatial 输出区域坐标，attribute 输出物体特征描述，依此类推；这些 textual error class + 可选 visual context（frame indices、region masks）被组装成补丁 $c_i$ 注入学生 prompt。错误分类的作用就是把抽象的"你这次错了"具象成"该看哪里"。消融印证了两类信号互补且都关键：去掉 visual context 后 Video-Holmes 掉 10.0 个点，去掉 GT reference 掉 7.6 个点。
 

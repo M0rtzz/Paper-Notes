@@ -47,11 +47,11 @@ SAME 把多模态持续指令微调里 MoE-LoRA 的"灾难性遗忘"明确拆成
 
 ### 关键设计
 
-**1. 谱感知路由：让路由器只在新任务的输入方向上更新，旧任务依赖的方向上几乎不动。**
+**1. 谱感知路由：让路由器只在新任务的输入方向上更新，旧任务依赖的方向上几乎不动**
 
 针对 router drift（同样的旧任务输入被路到不同专家），思路是把更新限制在「不影响旧任务」的子空间里。具体维护一份跨任务的滑动协方差 $\mathbf{C}^t=(\alpha_{t-1}\mathbf{C}^{t-1}+n_t\hat{\mathbf{C}}^t)/\alpha_t$，只存 top-$k$ 主成分使累计能量 $\sum_{i=1}^k\sigma_i^2/\sum_{i=1}^d\sigma_i^2\geq\delta$，SVD 后切成 $\mathbf{V}_\parallel$（新任务关键方向）和 $\mathbf{V}_\perp$（近零方差的旧任务空间）。路由器梯度在新任务方向上带尺度缩放 $\Delta\mathbf{W}_\parallel^t=\Delta\mathbf{W}_G^t\mathbf{V}_\parallel g(\boldsymbol{\Sigma})\mathbf{V}_\parallel^\top$、在旧任务方向上直接投影 $\Delta\mathbf{W}_\perp^t=\Delta\mathbf{W}_G^t\mathbf{V}_\perp\mathbf{V}_\perp^\top$，相加得最终更新。关键在于 $\mathbf{C}^t\propto\mathbf{X}\mathbf{X}^\top$，所以 $\mathbf{V}_\perp^\top\mathbf{X}^{old}\approx\mathbf{0}$，旧任务的路由预测被数学保证不变；同时 $\mathbf{V}_\parallel$ 内部按局部上下文 $\hat\sigma_i$ 重新加权，不对所有新方向一视同仁。消融里单这一项就把 CoIN 平均准确率从 50.58 拉到 61.32（+10.74），是最大单一收益。
 
-**2. 曲率感知 Riemannian 缩放：让专家更新在「历史常用方向」上小步走，避免擦掉已学功能。**
+**2. 曲率感知 Riemannian 缩放：让专家更新在「历史常用方向」上小步走，避免擦掉已学功能**
 
 针对 expert drift（共享专家被新任务梯度反复覆盖），SAME 在 rehearsal-free 下把功能退化量近似为 $\Delta_{degrad}=\mathbb{E}_{\mathbf{x}\sim\mathcal{D}_{<t}}[\|\Delta\mathbf{W}_i\mathbf{x}\|^2]=\mathrm{tr}(\Delta\mathbf{W}_i\mathbf{C}^{t-1}\Delta\mathbf{W}_i^\top)$，优化 $\min_{\Delta\mathbf{W}_i}\mathcal{L}+\lambda\max(0,\Delta_{degrad}-\epsilon)$ 自然推出 Riemannian 更新：
 
@@ -59,7 +59,7 @@ $$\Delta\mathbf{W}_i=-\eta\nabla_{\mathbf{W}_i}\mathcal{L}\,(\mathbf{C}^{t-1})^{
 
 其中 $(\mathbf{C}^{t-1})^{-1}$ 不直接求逆，而是复用谱感知阶段已算好的 $(\mathbf{V}_k,\boldsymbol{\Sigma}_k)$ 做 damped pseudo-inverse $(\mathbf{C}^{t-1})^{-1}\approx\mathbf{V}_k(\boldsymbol{\Sigma}_k+\mu\mathbf{I})^{-1}\mathbf{V}_k^\top+\frac{1}{\mu}(\mathbf{I}-\mathbf{V}_k\mathbf{V}_k^\top)$。效果是：高方差方向 $\sigma_i$ 大、更新被压扁；低方差或新方向 $\sigma_i\approx0$、落到 $1/\mu$ 的默认尺度。这正是自然梯度的精神——在「过去用得多」的方向上自动加重力，但用输入协方差代替了昂贵的二阶量，且 SVD 复用让显存几乎不增。
 
-**3. 自适应专家激活：把「对当前任务没用、对历史很重要」的专家暂时冻结，省算力又防干扰。**
+**3. 自适应专家激活：把「对当前任务没用、对历史很重要」的专家暂时冻结，省算力又防干扰**
 
 top-$k$ 路由是 sample-level 的，会把单任务梯度撒到很多专家身上，既浪费又增加干扰。SAME 维护两个 running average——当前任务利用率 $\mathcal{U}(i)$（按 batch 累计的路由权重均值）和历史重要性 $\mathcal{F}^{pre}(i)$（用 routing-weighted input energy $\omega_i(\mathbf{x})\|\mathbf{x}\|^2$ 近似 AGOP 迹），min-max 归一化后算激活分 $\mathrm{Score}(i)=\tilde{\mathcal{U}}(i)-\tilde{\mathcal{F}}^{pre}(i)$；当 $\mathrm{Score}(i)<\tau_{score}$（低效用但高历史重要）就在训练阶段冻结该专家的前/反向传播，下一任务和推理时全部解冻。这样当前任务的更新就被集中到真正需要它的少数专家上、强化了 compartmentalization，同时带来直接的工程收益——论文报告平均每任务省 32.1 分钟训练 + 2.3K MiB/GPU 显存，等于在再涨 0.93 准确率的同时白赚效率。
 

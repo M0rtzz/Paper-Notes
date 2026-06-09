@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. BRIGHT-PRO 多方面证据标注：把评测单位从「一篇相关段落」换成「覆盖了几个推理角度」。**
+**1. BRIGHT-PRO 多方面证据标注：把评测单位从「一篇相关段落」换成「覆盖了几个推理角度」**
 
 复杂问题的答案常由多个子问题拼成，一个 retriever 哪怕只覆盖了某个高权重 aspect，在传统 Recall 上也未必难看，可这样会让 agent 综合出来的答案缺掉关键前提。BRIGHT-PRO 因此选了 BRIGHT 的 StackExchange subset（更接近开放域自然语言推理），让领域专家把每个 query 拆成若干 reasoning aspects，每个 aspect 配 1-2 句 rationale 描述、再用 1-5 Likert score 打重要性并归一化成权重；同时重新审核原 BRIGHT 的 positives，去掉弱相关段落、合并重叠片段，并用 web search、Perplexity 或 ChatGPT Web Search 补进新证据。这样标注后，benchmark 衡量的就不再是「找到一个表面相关段落」，而是「有没有把这道题需要的几个角度都覆盖到」。
 
-**2. 静态与 agentic 双评测协议：既隔离检索质量，又测它在真实 agent loop 里的系统价值。**
+**2. 静态与 agentic 双评测协议：既隔离检索质量，又测它在真实 agent loop 里的系统价值**
 
 部署里用户真正关心的不是 α-nDCG 高低，而是 agent 能不能更快、更可靠地把答案做出来，单段静态指标可能和这个目标错位。所以论文配了两套协议。静态侧用 α-nDCG@k，设 novelty penalty $\alpha=0.5$ 去惩罚「反复覆盖同一个 aspect」，并报告 Weighted Aspect Recall、NDCG、Recall。agentic 侧把 retriever 接进同一个 LLM agent，让它迭代发 search query、读 top-5 passages、生成带引用的答案；固定轮次协议强制 agent 跑 1/2/3 轮，自适应协议让 agent 自己决定何时停，并用
 
@@ -56,7 +56,7 @@ $$AER = OQ \times e^{-\gamma(R-1)}$$
 
 同时奖励答案质量 $OQ$ 和「少跑几轮」$R$。两套协议放在一起，就能把「静态排名」和「系统表现」之间的错位显式暴露出来。
 
-**3. RTriever-Synth 与 RTriever-4B 训练：让 retriever 从训练数据起就学「互补证据选择」而非「找一个相关段落」。**
+**3. RTriever-Synth 与 RTriever-4B 训练：让 retriever 从训练数据起就学「互补证据选择」而非「找一个相关段落」**
 
 普通 contrastive retriever 学的是把某一个 relevant passage 排高，这恰恰是 agentic search 不想要的。RTriever-Synth 从 100 万 MS MARCO queries 里抽 140K，先把短 query 改写成带 persona 和背景的 DeepResearch-style query，再生成完整参考答案、把答案分解成 2-3 个互不重叠的 reasoning aspects；每个 aspect 生成一个 positive passage blueprint 并实例化为正例。关键在负例：它不是随机负例，而是在看过 positives 的标题和摘要后，刻意造出「词面和 query 很像、却偏偏缺了某个关键 aspect」的 hard negative。训练数据内部因此天然带着「互补」与「缺角」关系，逼模型去学覆盖而不是相关。
 

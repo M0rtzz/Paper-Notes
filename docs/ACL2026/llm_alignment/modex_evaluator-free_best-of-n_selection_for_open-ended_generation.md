@@ -45,19 +45,19 @@ ModeX 要在没有 reward model、也没有 exact-match 投票的前提下，从
 
 ### 关键设计
 
-**1. n-gram Jaccard 相似度图：给开放文本的"像不像"一个数学定义。**
+**1. n-gram Jaccard 相似度图：给开放文本的"像不像"一个数学定义**
 
 在无限输出空间里，exact-match 投票失效，必须先把"两条文本有多像"量化成图的边权。ModeX 用三阶 n-gram 的 Jaccard 之和 $A_{i,j}=s_1(v_i,v_j)+s_2(v_i,v_j)+s_3(v_i,v_j)$，其中 $s_k$ 是 $k$-gram 集合的 Jaccard：unigram 抓词汇覆盖、bigram 抓短语流畅度、trigram 抓结构信息，Appendix F 显示去掉 trigram 掉点最多，印证高阶 n-gram 信息量更大。
 
 作者对比过 LastTokenEmb 和 SentenceBERT 两种嵌入相似度（Table 3），n-gram 在三项任务上全面更优——代码/数学这类强结构任务里，嵌入抓不到关键 token，而 Jaccard 能直接对齐到具体 token 和句法片段。
 
-**2. 递归 Fiedler 向量谱聚类：不预设簇数，自适应切出主模态。**
+**2. 递归 Fiedler 向量谱聚类：不预设簇数，自适应切出主模态**
 
 不同任务、不同输入下的模态数会变，固定 $K$ 的 K-means 并不合适。ModeX 改用谱聚类做参数最少的自适应聚类：解 $f=\arg\min_{u^\top\mathbf{1}=0,\|u\|=1} u^\top L u$ 得到 Fiedler 向量（图 Laplacian $L=D-A$ 的第二小特征向量），按 $f_i\ge 0$ 把图二分，再用 conductance $\phi(\mathcal{G}_1,\mathcal{G}_2)=\mathrm{cut}/\min(\mathrm{vol}_1,\mathrm{vol}_2)$ 判断这一刀切得是否干净。若 $\phi<\tau$（$\tau=0.8$）说明确有低密度缝隙，保留更大的子簇继续递归，否则停止。
 
 这套递归对应 Cheeger 不等式 $\lambda_2/2\le\phi^\ast\le\sqrt{2\lambda_2}$：在大 $N$ 极限下，Fiedler 切等价于沿两个模态之间的"低密度山谷"下刀；用 conductance 当阈值也比 normalized cut 更稳定（Figure 5 消融）。
 
-**3. 度中心度选 centroid：把 majority voting 严格化成 KDE 峰值。**
+**3. 度中心度选 centroid：把 majority voting 严格化成 KDE 峰值**
 
 主模态簇定下来后，还要从中挑一条最具代表性的输出。ModeX 在子簇邻接矩阵 $\tilde{A}$ 上选加权度数最大的节点 $v_c=\arg\max_i\sum_j\tilde{A}_{ij}$。这个看似朴素的"选连接最多的点"其实有严格意义：把 Jaccard 视为 kernel，则加权度 $d(v_i)=\sum_j S(v_i,v_j)\propto\hat{p}(v_i)$ 正是该点的核密度估计，选最大度就等于选单峰簇内的 mode。
 

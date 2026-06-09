@@ -45,15 +45,15 @@ DP-KFC 想解决的是：DP-SGD 的各向同性隐私噪声和损失景观的各
 
 ### 关键设计
 
-**1. 数据无关的 KFAC 因子估计：曲率信息从架构里恢复，不碰任何真实数据。**
+**1. 数据无关的 KFAC 因子估计：曲率信息从架构里恢复，不碰任何真实数据**
 
 二阶 DP 方法的死穴是估曲率要么花隐私预算（从私有数据估）要么有分布偏移（从公共数据估）。这里靠的是 Mean Field Theory 的一个推论——Karakida et al. (2019) 证明 $\text{Tr}(F_l)\propto d\cdot q^{l-1}\cdot \tilde q^l$，即 Fisher 块的迹完全由架构（初始化和非线性决定的激活方差递归）决定、与输入无关。既然曲率的主信息只看架构，合成探针只要保持架构的前后向传播链路一致就够了。算法 1 据此生成 $M$ 个合成对 $(\tilde x, \tilde y)$，跑前后向收集激活和误差，外积聚合成 $\hat A_{l-1}=\frac{1}{M}\sum \tilde a_{l-1}\tilde a_{l-1}^\top+\pi I$ 与 $\hat G_l=\frac{1}{M}\sum \tilde\delta_l\tilde\delta_l^\top+\pi I$，特征分解后取 $U_{X,l}=Q_X(\Lambda_X+\gamma I)^{-1/2}Q_X^\top$。预条件子 $F_l^{-1/2}=U_{A,l}\otimes U_{G,l}$ 用 Kronecker 积隐式表示，不必 materialize 完整的 FIM。阻尼项 $\pi I$ 和 $\gamma I$ 既保证因子可逆又控制条件数，对应 Theorem 5.4 里的下界 $\lambda_{min}\ge\sqrt\gamma$。
 
-**2. 模态特定合成探针：让合成输入既带架构信息、又落在数据的低维流形附近。**
+**2. 模态特定合成探针：让合成输入既带架构信息、又落在数据的低维流形附近**
 
 白噪声能量在所有频率均匀分布，可深网络主要传递低频特征，纯白噪声探出来的曲率会偏。解法是给合成探针注入"任务无关但模态有关"的先验。图像域用 pink noise：在频域把白噪声 $Z$ 按 $\tilde Z_\mathbf{u}=Z_\mathbf{u}/(\|\mathbf{u}\|_2^{\alpha/2}+\epsilon)$ 加权再 IFFT，取 $\alpha\approx 1$ 就复现了自然图像的 $1/f^\alpha$ 谱（Field 1987）。NLP 域用 Zipfian 分布从词表抽 token，并按句子语法位置摆放 [CLS] [SEP] [PAD]，让 attention 和 LayerNorm 走真实的传播路径。这样合成探针的激活统计被推到接近真实数据，却完全不携带语义内容，因此没有隐私泄漏。
 
-**3. Scale-then-Privatize 与 DP 集成：把曲率注入 DP-SGD 而隐私成本为零。**
+**3. Scale-then-Privatize 与 DP 集成：把曲率注入 DP-SGD 而隐私成本为零**
 
 要把变换塞进 DP-SGD 又不破坏隐私保证，顺序至关重要。算法 2 把梯度变换 $\tilde g_l=U_{G,l}\,g_l\,U_{A,l}$ 放在裁剪**之前**：变换后每样本的全局 $L_2$ 范数变成 $\nu_i=\sqrt{\sum_l\|\tilde g_l^{(i)}\|_F^2}$，裁剪阈值 $C$ 不变，噪声 $\mathcal{N}(0,\sigma^2 C^2 I)$ 仍加在裁剪后的求和上。因为 $P_t$ 是 batch-independent 的线性算子，Proposition 5.6 证明复合机制的 RDP 保证和标准 Gaussian 机制一模一样。相比"先加噪再乘 $P_t$"的 precondition-after-privatize，scale-then-privatize 让隐私噪声项 $d\sigma^2 C^2/B^2$ **不**被预条件子的 $\lambda_{max}^2$ 放大（见 Theorem 5.4），高隐私（小 $\varepsilon$）regime 下这个差别最明显。
 

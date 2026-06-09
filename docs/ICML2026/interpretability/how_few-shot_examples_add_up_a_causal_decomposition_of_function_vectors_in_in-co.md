@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Per-prompt sub-FV + OLS 全局线性叠加：把"未知非线性聚合"压成可解释的加法。**
+**1. Per-prompt sub-FV + OLS 全局线性叠加：把"未知非线性聚合"压成可解释的加法**
 
 要回答"FV 是不是各 example 独立贡献再相加"，作者先用 attention mask 拿到每个 example 的子 FV：让最后一个 token $t_{n+1}$ 只能 attend 到第 $i$ 个 example 和 query $x_{n+1}$，此时读出的 FV 就只携带 example $i$ 的贡献，记作 $v_i$。然后跨一个 batch 的 prompt 用 OLS 拟合一组**全局**权重，使 $v_{FV}\approx \sum_{i=1}^n w_i v_i+\varepsilon$。关键在于权重是 batch 级而非 per-prompt 拟合，所以 $w_i$ 描述的是"位置 $i$ 的 example 平均贡献多少"，给出了一种位置间可比的结构。可加性同时在两个层面验证：表示层看 cosine 和 $R^2$，因果层看注入 $\hat v_{FV}$ 后的准确率与注入真实 $v_{FV}$ 的比值。一旦这一步成立，后续所有关于 contextualization 的问题都能等价改写成"权重 $w_i$ 怎么变"，于是把一个黑箱聚合问题归约成了 attention 分配问题。
 
-**2. Uncontextualized 消融：用剪边而非剪点造一个干净的反事实基线。**
+**2. Uncontextualized 消融：用剪边而非剪点造一个干净的反事实基线**
 
 要把 contextualization 的因果贡献干净隔离出来，光靠"去掉某个 head"做不到——那会同时破坏 per-example 编码和 aggregation。作者改用 attention edge ablation：把跨 example（跨 prompt component）的注意力边权重清零，但保留两类边——同一 example 内部的注意力，以及到最后一个 token 的注意力。这样 example 之间的信息传递被彻底切断，而每个 example 的自编码和最终的聚合步骤原封不动。拿这个 uncontextualized 模型和完整 contextualized 模型直接对比，两者差异就只能归因于 contextualization 这一个因素，是因果干预而非相关性。它既给出了 contextualization 效应的 ground-truth 测量平台，也为下一步 Q/K/V patching 提供了可移植的"上下文化版 / 未上下文化版"两套激活源。
 
-**3. 2×2 QK vs V 因果分解 + Shapley 值：把路由通道和内容通道解耦。**
+**3. 2×2 QK vs V 因果分解 + Shapley 值：把路由通道和内容通道解耦**
 
 contextualization 提升 FV，到底是因为它改了 attention 的路由，还是改了写进去的 Value 内容？这两条通道物理上耦合，普通消融分不开。作者把 FV-head 上的 contextualization 状态写成两个二值变量 $(QK, V)\in\{unc,ctx\}^2$，通过 Q/K/V patching 独立替换 Query/Key 或 Value 的激活源，得到 4 个配置 $F(0,0)、F(0,1)、F(1,0)、F(1,1)$，每个配置评估最大 FV injection accuracy。contextualization 的总收益是 $G=F(1,1)-F(0,0)$，再对 QK 和 V 各算一个 Shapley 值 $\phi_{QK}、\phi_V$——也就是每条路径在所有联立组合下的平均边际贡献——把 $G$ 干净地分配给两条通道。结论是 QK 通道（路由）的贡献更一致、更显著，尤其在 ambiguous 任务上；V 通道（内容）的贡献则在任务间高度异质、甚至偶尔为负。这把"contextualization 让表示更好"这种模糊归因，细化成了"它主要改的是注意力路由"。
 

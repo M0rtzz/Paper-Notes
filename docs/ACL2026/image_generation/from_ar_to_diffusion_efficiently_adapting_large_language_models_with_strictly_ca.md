@@ -45,15 +45,15 @@ FLUID 的全名是 Flexible Unidirectional Inference Diffusion。它不是从零
 
 ### 关键设计
 
-**1. Strictly Causal Diffusion Backbone：把扩散去噪关进严格因果注意力，才能从 AR checkpoint 平滑初始化。**
+**1. Strictly Causal Diffusion Backbone：把扩散去噪关进严格因果注意力，才能从 AR checkpoint 平滑初始化**
 
 标准 diffusion LM 用双向注意力，能看全局 noisy context，但这跟 GPT/LLaMA 的因果先验冲突——想要高质量往往得从头大规模预训练，成本极高。FLUID 在 Transformer 里注入下三角注意力 mask，位置 $i$ 只能访问 $j\le i$ 的 token，未来位置一律设为 $-\infty$；恢复 token $x_i$ 时只能依赖 noisy history $\mathbf{x}_{t,<i}$，不能偷看未来 noisy token。这样既保住了 AR 模型的演绎链不被 noisy future 破坏，又让模型可以直接从 GPT-style checkpoint 初始化，而不必重训。
 
-**2. Elastic Horizon Modeling：让模型自己预测“这一步能安全并行多远”，而不是写死一个块大小。**
+**2. Elastic Horizon Modeling：让模型自己预测“这一步能安全并行多远”，而不是写死一个块大小**
 
 自然语言信息密度不均匀：函数样板、简单算术里可以大胆一次走多步，复杂数学推理里就该缩短步长，固定 block 表达不了这种差异。FLUID 新增一个轻量 K-Head，把最终隐藏状态 $h_t$ 映射成 $k\in\{1,\ldots,K_{max}\}$ 上的分类分布。它的监督信号 oracle horizon $K_t^*$ 由未来 loss 序列和 competence boundary $\tau$ 共同决定——在平均 loss 仍小于 $\tau$ 的最大跨度内，模型被认为有能力安全并行恢复。于是同一个模型在 GSM8K 和 MMLU 上会自动采用不同的 stride。
 
-**3. 两阶段适配与动态因果解码：先校准“能生成什么”，再学“该生成多远”。**
+**3. 两阶段适配与动态因果解码：先校准“能生成什么”，再学“该生成多远”**
 
 直接同时训练 backbone 和 horizon planner 容易不稳定，FLUID 把它拆成两步。Stage I 冻结 K-Head，用 AR loss 与 diffusion denoising loss 联合训练 backbone，并在 mask span 里注入 10% stochastic restoration noise，提高对不完美中间状态的鲁棒性；Stage II 反过来冻结 backbone，只训练两层 MLP 的 K-Head，让它的预测分布匹配以 $K_t^*$ 为中心的 Gaussian soft target。推理时再加一道置信度门控：K-Head 给出计划，但实际接受 token 还要逐个过阈值 $\gamma$，把“能生成”和“该生成多远”彻底解耦，也避免一次错误规划连锁污染。
 

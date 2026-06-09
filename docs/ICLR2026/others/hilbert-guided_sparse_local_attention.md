@@ -42,19 +42,19 @@ tags:
 
 ### 关键设计
 
-**1. Hilbert 窗口注意力（HWA）：让窗口在 1D 序列上连续，把 partial block 变成 empty block。**
+**1. Hilbert 窗口注意力（HWA）：让窗口在 1D 序列上连续，把 partial block 变成 empty block**
 
 行优先排列下，一个 2×2 窗口会取到 token (1,2,5,6)——它们在 1D 序列里跨行，落进多个块的边角，形成 4 个 partial block，块稀疏 kernel 既不能整块跳过、又要额外 mask 开销。换成 Hilbert 序列后同一个窗口取到的是连续的 (1,2,3,4)，整齐落进 2 个 full block，另外 2 个块完全为空——空块率从 0% 直接提到 50%。HWA 就是把这种"先 Hilbert 重排、再连续切窗口"的思路用到标准窗口注意力上，窗口的空间语义不变（仍是同一片邻域），只是物理布局更适配块稀疏 kernel，于是 FlexAttention 能跳过的块更多。
 
-**2. Hilbert 滑动 / 邻域注意力（HSA / HNA）：把 2D 邻域注意力等效成 1D 邻域注意力。**
+**2. Hilbert 滑动 / 邻域注意力（HSA / HNA）：把 2D 邻域注意力等效成 1D 邻域注意力**
 
 滑动窗口和邻域注意力在行优先排列下最"碎"——每个 query 的邻域在 1D 上跨多行，块稀疏几乎无从下手。Hilbert 曲线的局部性保持特性正好对症：1D 序列上的近邻 $\approx$ 2D 空间上的近邻，于是原本需要在 2D 上定义的邻域注意力，可以直接当成 1D 邻域注意力来算。这样既复用了成熟的 1D 稀疏 kernel，又绕开了 2D 邻域注意力为构造邻域要维护 $N^2$ 量级中间存储的问题。
 
-**3. Hilbert Window Transformer（HWT）：把 HWA 整体接进 Swin 式架构、零侵入替换。**
+**3. Hilbert Window Transformer（HWT）：把 HWA 整体接进 Swin 式架构、零侵入替换**
 
 HWT 直接用 HWA 替掉 Swin Transformer 里的 WSA，并成对使用 HWA 与 Hilbert Shifted Window Attention（HSWA）来保留跨窗口信息交流——窗口位移改在 1D 序列上做，偏移固定数量的 token 即可。由于 Hilbert 窗口形状不规则，原来按窗口形状定义的相对位置偏置（窗口 RPB）不再适用，改用全局 RPB 替代。整套替换通过 FlexAttention 的 `mask_mod` / `score_mod` 接口实现，不需要改模型结构或训练流程。
 
-**4. 加速原理：空块越多，启动和访存越少。**
+**4. 加速原理：空块越多，启动和访存越少**
 
 块稀疏 kernel 的总运行时间可近似写成
 

@@ -45,19 +45,19 @@ backbone 是冻结的 ViT-B/16（ImageNet-21K 预训练），每个 Transformer 
 
 ### 关键设计
 
-**1. 动态路由选择：按"分类头的熵"挑出 Top-M 个最相关的历史任务。**
+**1. 动态路由选择：按"分类头的熵"挑出 Top-M 个最相关的历史任务**
 
 任务序列一长，单个 task-specific adapter 只对它训过的那几类有判别力，跨任务相关类就分不清；而"全局聚合所有历史 adapter"又把相关性稀释掉。BR-MoE 的第一级路由先解决"该听哪些任务的"。它把 $z_a$ 的 [CLS] token 喂给每个任务的类感知器 $C_t = \rho^t \in \mathbb{R}^{d \times |G^t|}$，得到任务 $t$ 内的类分布 $s_t = \text{Softmax}(C_t(z_a^{[CLS]}))$，再算它的熵 $\mathcal{H}_t = -\sum_j s_t^{(j)} \log s_t^{(j)}$，按熵升序取 Top-M 个对应路由 $R_t$。
 
 用熵而不是直接预测任务 ID，是这级路由最关键的一点：低熵代表"这个分类头对当前输入很有把握"，意味着输入大概率属于该任务的类。相比硬训一个全局任务分类器再 argmax（很容易选错、且对训练-推理分布漂移敏感），用各任务自身分类头的置信度做相关性度量要鲁棒得多，而且可以在每一层独立做这个局部决策。训练时强制把最新任务路由 $R_T$ 始终纳入以保证新任务能学进去，推理时则全部按熵动态选。
 
-**2. 动态专家路由 + 共享 EMA 专家：路由内部再细选 Top-K adapter，并留一份跨任务兜底知识。**
+**2. 动态专家路由 + 共享 EMA 专家：路由内部再细选 Top-K adapter，并留一份跨任务兜底知识**
 
 光选到任务还不够细——每个任务内部还得再挑"最该激活的几个 adapter"，并且要有一份所有任务都能用的通用知识，免得某些样本被所有 task-specific adapter 都"摸不着"。被选中的路由 $R_t$ 是个 $\eta^t \in \mathbb{R}^{d \times t}$ 的线性层加 softmax，对 $z_a^{[CLS]}$ 产生 $t$ 个 gating 分数，取 Top-K 重新归一化得到 $\{a_i\}$，对应 adapter $E_i$ 的输出按这个分数加权求和。以 M=2、K=2 为例，$z_1 = a_2 E_2(z_a) + a_t E_t(z_a)$、$z_2 = b_{T-1} E_{T-1}(z_a) + b_T E_T(z_a)$，合起来 $z_r = z_1 + z_2$。
 
 在此之上再叠一个共享专家 $\bar{E}$：第一个任务上完整训练，之后用 EMA $\delta_s \leftarrow \mu \delta_s + (1 - \mu)\delta_t$（$\mu = 0.999$）维护，BR-MoE 最终输出 $z_o = z_r + \bar{E}(z_a)$。默认 M=2、K=3，常规 adapter 用 16 维 bottleneck，共享 adapter 用 64 维。这个共享专家承担跨任务通用先验的角色——尤其在长序列后期，新任务样本可能跟所有历史 adapter 都不太匹配，此时它提供基础特征避免崩盘（思路借自 DeepSeek-MoE 的共享专家）。
 
-**3. 逐层类感知器监督：用 KL 蒸馏让浅层也产生靠谱的熵信号。**
+**3. 逐层类感知器监督：用 KL 蒸馏让浅层也产生靠谱的熵信号**
 
 BR-MoE 在每个 block 都独立做路由决策，前提是 $C_t$ 在该层算出的熵能反映任务相关性；可浅层特征语义弱，熵就没意义，路由会被误导。为此在每层 $C_t$ 上加监督 $\mathcal{L}_{cp}^\ell = \mathcal{L}_{cls}^\ell + \mathcal{L}_{KL}^\ell$：$\mathcal{L}_{cls}^\ell$ 是该层的角度 margin 分类损失，$\mathcal{L}_{KL}^\ell$ 让浅层分布 $s_t$ 去对齐最终层 softmax 输出 $p_t$，鼓励浅层类感知器模仿深层的高语义分布。总目标 $\mathcal{L} = \mathcal{L}_{cls} + \lambda \frac{1}{L}\sum_\ell \mathcal{L}_{cp}^\ell$（$\lambda = 1$）。这样每层的熵信号都被对齐到最终决策，bi-level routing 在浅层才真正有用。
 

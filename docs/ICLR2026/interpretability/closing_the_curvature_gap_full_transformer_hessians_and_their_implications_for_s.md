@@ -50,11 +50,11 @@ $$\mathbf{Z} = \text{LayerNorm}(\mathbf{Y} + \text{FFN}(\mathbf{Y}))$$
 
 ### 关键设计
 
-**1. LayerNorm 的 Jacobian 和 Hessian：补上二阶分析里一直缺的那一块（Theorem 2-3）。**
+**1. LayerNorm 的 Jacobian 和 Hessian：补上二阶分析里一直缺的那一块（Theorem 2-3）**
 
 此前的曲率分析卡在 LayerNorm 上——它的二阶导数从没被显式推导过。本文的处理是把 LayerNorm 拆成两个可分别求导的因子 $\text{LN}(\mathbf{X}) = \mathbf{P}(\mathbf{X})\mathbf{M}(\mathbf{X})$，其中 $\mathbf{M}$ 负责中心化（减均值），$\mathbf{P}$ 是逆标准差构成的对角矩阵。一阶上用乘积法则，Jacobian 自然拆成两项之和：$\mathbf{P}$ 对中心化结果的缩放，加上 $\mathbf{M}$ 随 $\mathbf{P}$ 变化的贡献。二阶上再对 Jacobian 求一次导，关键观察是中心化是线性操作、$\frac{\partial^2 \mathbf{M}}{\partial \mathbf{X}^2} = 0$，所以曲率全部来自 $\mathbf{P}$ 的非零二阶导。换句话说，LayerNorm 之所以会贡献曲率，根源在于 per-row variance（逐行方差）这一项，而这正是理解 Transformer 优化地形此前缺失的组件。
 
-**2. 完整 Transformer Block 的 Hessian：把各子层的导数组装成一个端到端表达式（Theorem 4-5）。**
+**2. 完整 Transformer Block 的 Hessian：把各子层的导数组装成一个端到端表达式（Theorem 4-5）**
 
 有了 LayerNorm 的导数后，就能把 Self-Attention、LayerNorm、FFN 和 residual 拼成完整 block 的 Hessian。记 $\mathbf{S} = \text{ReLU}(\mathbf{Y}\mathbf{W}_1)\mathbf{W}_2 + \mathbf{Y}$ 表示 FFN 加 residual，$\mathbf{Z} = \text{LN}(\mathbf{S})$ 为最终输出，沿链式法则展开得到
 
@@ -62,11 +62,11 @@ $$\mathbf{H}_{\text{tr}}^{(i,j)} = (\mathbf{J}_Z \otimes \mathbf{I}_{n_i})\bm{\x
 
 其中 $\mathbf{J}_Z$、$\mathbf{H}_Z$ 分别是 LN 的 Jacobian 和 Hessian，$\bm{\xi}_{ij}$ 是 $\mathbf{S}$ 的二阶混合导数，$\mathbf{B}_i$ 是 $\mathbf{S}$ 对参数的 Jacobian。这个形式本质是 Gauss-Newton 分解：第一项是"外积项"，只携带一阶信息；第二项是"函数 Hessian 项"，携带真正的二阶信息。两项对应不同的优化特性，分开写出来后才能逐子层追踪曲率是怎么传播的。
 
-**3. 谱范数上界：把抽象的 Hessian 大小落到可解释的因子上（Theorem 1, 6）。**
+**3. 谱范数上界：把抽象的 Hessian 大小落到可解释的因子上（Theorem 1, 6）**
 
 完整表达式虽然精确但难以直接读出"谁贡献曲率多"，于是本文进一步给 Self-Attention 和完整 block 的 Hessian 谱范数推显式上界。手法是利用 Kronecker 积与矩阵范数的亚乘性，把范数界拆解成输入范数 $\|\mathbf{X}\|_2$、权重范数 $\|\mathbf{W}\|_2$、序列长度 $L$、维度 $d_V, d_K$ 等可观测量的函数；完整 block 的界进一步收紧到 $\leq 5 \max_{i,j}(\cdots)$（系数 5 来自 $\sqrt{m_b n_b}$，对应 5 个参数组）。这个界的价值在于把曲率归因到具体子层：Value 和 Key 相关项通过 softmax 导数占主导，FFN 受 ReLU 的分段线性性压制（Hessian 几乎处处为零），LayerNorm 则通过 per-row variance 贡献。
 
-**4. 损失面收敛定理：用 Hessian 界把数据量和地形稳定性联系起来（Theorem 7）。**
+**4. 损失面收敛定理：用 Hessian 界把数据量和地形稳定性联系起来（Theorem 7）**
 
 最后一步把曲率界转化成对训练的预测。借助 Taylor 展开和前面的 Hessian 谱范数界，论文证明相邻数据量下的损失差被
 

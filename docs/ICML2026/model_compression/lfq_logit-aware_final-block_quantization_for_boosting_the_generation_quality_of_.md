@@ -45,7 +45,7 @@ LFQ 想解决的是 block-wise PTQ 在生成任务上掉点的问题，办法却
 
 ### 关键设计
 
-**1. 把最后一个 block 的目标从激活 MSE 换成 logit 交叉熵：直接对齐 token 概率。**
+**1. 把最后一个 block 的目标从激活 MSE 换成 logit 交叉熵：直接对齐 token 概率**
 
 痛点在于，传统 block-wise PTQ 在激活空间最小化 MSE，但激活上的小误差经 LM head 投影后可能翻转 top-1 token 的排序——作者用一个 2-token 反例证明，MSE 更小的量化方案反而预测错了 top-1，MSE 更大的反而预测对了。LFQ 对最终 block 改为计算全精度 logit $\sigma(X W_{\text{FP}} W_{\text{Head}})$ 与量化 logit $\sigma(X W_q W_{\text{Head}})$ 之间的交叉熵：
 
@@ -53,11 +53,11 @@ $$\mathcal{L}_{\text{CE}} = -\frac{1}{L}\sum_{i,j} \sigma(X W_{\text{FP}} W_{\te
 
 这之所以有效，是因为最小化交叉熵等价于最小化两个分布的 KL 散度，而 KL 为零当且仅当分布完全一致；相比对绝对数值敏感的 MSE，交叉熵对概率排序敏感，天然保护 top-k 顺序，正好对上"生成任务靠 token 排序而非激活数值"的需求。
 
-**2. 把 LM head 接进最终 block 的前向路径：让优化器看见 unembedding 的影响。**
+**2. 把 LM head 接进最终 block 的前向路径：让优化器看见 unembedding 的影响**
 
 要算上面那个 logit 交叉熵，前提是优化时能"看到" LM head。而标准 block-wise PTQ 只盯着 block 输出激活的 MSE，完全忽略了后续的 LM head 投影，于是优化器对"激活误差会被 head 放大成怎样的 token 分布变化"一无所知。LFQ 让 LM head 权重 $W_{\text{Head}}$ 固定参与前向传播（本身不量化），使梯度能一路传到最终 token 分布。这一步既是交叉熵目标的载体，也单独贡献增益——消融里只加 LM head、损失仍用 MSE 时 IFEval 已经回升，说明"让优化器看见 head"本身就有价值。
 
-**3. 方法无关、只换损失不换参数化：与现有量化生态完全兼容。**
+**3. 方法无关、只换损失不换参数化：与现有量化生态完全兼容**
 
 正因为 LFQ 只替换最后一个 block 的损失函数、不碰量化参数化方式，它可以无缝套在不同方法上：对 FlexRound 优化 $(s_1, S_2, s_3)$、对 OmniQuant 优化 $(\gamma, \beta)$、对 Block-AP 优化 $(s, W_{\text{FP}})$，都只需把那一处的 MSE 换成 $\mathcal{L}_{\text{CE}}$ 即可。这样换来的是零代价的兼容性——内存开销、推理内核、单 GPU 可运行特性全部和原方法一致，部署侧不需要任何额外适配。
 

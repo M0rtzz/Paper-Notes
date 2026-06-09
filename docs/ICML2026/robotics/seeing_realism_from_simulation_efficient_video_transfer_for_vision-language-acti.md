@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 条件视频迁移（语义 + 几何双条件）：换环境但不换动作。**
+**1. 条件视频迁移（语义 + 几何双条件）：换环境但不换动作**
 
 只改 caption 会让物体几何漂移、机械臂关键位姿失真，动作就丢了；只给 depth 又缺语义多样性。所以本文用两个互补条件分头承担"看起来不一样"和"做的事一样"。语义侧：VideoChat2 先抽时序 caption 描述交互、对象与空间关系，Qwen3-8B 再把背景、物体颜色等可变要素改写出多样性、同时保留任务意图。几何侧：从原视频抽 depth map 当稳定几何约束（比 edge/blur/seg 都更保几何）。最后 Cosmos-Transfer 2.5 在"新 caption + depth"上迭代去噪，生成视觉风格大改、动作轨迹不变的真实化视频。这样仿真数据的视觉与环境多样性被补上，但每一帧的机械臂动作仍严格对应原轨迹。
 
-**2. 三段式 Velocity Caching：复用扩散中段几乎不变的 velocity。**
+**2. 三段式 Velocity Caching：复用扩散中段几乎不变的 velocity**
 
 通用 caching（如 DeepCache）默认去噪两端都重要，没对准扩散动力学的真实曲线。作者实测 flow-based 视频扩散的 $\|v_{t+1}-v_t\|$ 时序曲线后发现一个三段式动态：初期变化剧烈、中段几乎平稳、末尾再微调，正对应"画轮廓 → 细化 → 收尾"的去噪节奏。于是把 $N$ 步去噪切成三段：初期（$t<t_s$）每步算、稳定期（$t_s\leq t< t_f$）每 $\alpha$ 步算一次其余复用、末期（$t\geq t_f$）每步算，稳定期起点用 $\frac{\|v_t-v_{t+1}\|}{\|v_0-v_1\|} < k$ 阈值检测（论文取 $k=0.4,\alpha=8, m=3$）。因为缓存只发生在 velocity 真正平稳的中段，所以在砍掉 61.2% 生成时间的同时质量基本不掉（消融 26.5 vs 27.0），证明这段计算冗余可以被工程级利用。
 
-**3. Difficulty × Diversity 的 Coreset 采样：只挑"难且独特"的轨迹来增广。**
+**3. Difficulty × Diversity 的 Coreset 采样：只挑"难且独特"的轨迹来增广**
 
 单看 difficulty 容易扎进某个 hard cluster，单看 diversity 又会把简单水任务拉进来，两者都浪费生成预算。本文把 $\mathbb{D}^2$ Pruning 扩展到视频：难度 $x_i = \frac{1}{|\mathcal{T}_i|}\sum_{t}\mathcal{L}_{\text{policy}}(s_i^{(t)};\theta)$ 用 RDT-1B 的策略损失估（task-aware），多样性用 Cosmos-Embed1 给每条轨迹 768 维嵌入 $\phi(s_i)$、以 RBF 核 $e_{i,j}=\exp(-\gamma_f\|v_i-v_j\|^2)$ 建 kNN 图（task-agnostic）。前向消息传递把邻域难度聚合 $x_i' = x_i + \sum_{j\in\mathcal{N}(i)}e_{i,j}\cdot x_j$，贪心选最高 $x_i'$，再用反向消息抑制相似邻居的分数避免冗余。用 task-aware 损失估难度、task-agnostic 嵌入估多样性，正好避开了"难的全是相似失败模式"和"多样但都是水任务"两个极端，于是 10% 预算就能逼近全量增广效果。
 

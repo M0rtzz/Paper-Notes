@@ -49,11 +49,11 @@ tags:
 
 ### 关键设计
 
-**1. 完整点云的定义与构造：给非像素对齐方法找到可用的监督信号。**
+**1. 完整点云的定义与构造：给非像素对齐方法找到可用的监督信号**
 
 非像素对齐重建要预测包含遮挡区域的"完整点云"，但训练时上哪去找这种包含不可见点的 GT？本文给出一套构造方案：有 GT mesh 时直接均匀采样最干净；没有 mesh 时，退而聚合密集视角的深度图反投影点云，用 voxel-grid 滤波去掉重叠重复的点，再裁剪到输入视角的 frustum 内，最后 FPS 采样出 $N$ 个点作训练目标。关键好处是它绕开了"必须水密网格"这个硬约束——场景级数据几乎没有水密网格，但深度图随处可得，于是只靠深度图就能近似出完整点云。所有点统一定义在第一个视角的坐标系下，从源头上保证了表示的视角无关性。
 
-**2. 基于 Flow-matching 的 3D Latent 自编码器（Stage 1）：用确定性 ODE 轨迹绕开无序点云的匹配难题。**
+**2. 基于 Flow-matching 的 3D Latent 自编码器（Stage 1）：用确定性 ODE 轨迹绕开无序点云的匹配难题**
 
 这是整篇方法的地基：先建立一个能压缩、再解码完整点云的 latent 空间。编码器用 FPS 从点云 $P$ 中采样 $M$ 个 query 点，与可学习 token 拼接后经 cross-attention + self-attention，得到 latent $Z \in \mathbb{R}^{M \times C}$。解码器则是一个扩散模型：给它 $N$ 个噪声点 $x_t$、latent $Z$ 和时间步 $t$，让它预测速度场，训练目标为
 
@@ -61,7 +61,7 @@ $$\mathcal{L}_{flow}^{AE} = \mathbb{E}\big[\|\Phi_{dec}(x_t, Z, t) - (\epsilon -
 
 之所以走 flow-matching 而不是传统 3D VAE，是因为后者用 occupancy/SDF 解码需要 canonical 空间和水密网格，场景级数据满足不了；而如果直接回归点坐标，点云本身无序，又没法用 L2 loss 建立一一对应。Flow-matching 巧妙地把解码建模成"从噪声到目标点云的确定性 ODE 轨迹"，学的是分布而非配对，无序匹配的问题就自然消解了。解码器内部采用 joint decoder 结构——在 cross-attention 之间插入 self-attention，让点与点之间能交换空间关联信息，比各点独立解码的 independent decoder 更精确（Table 5 验证）。
 
-**3. 可学习场景 Token 的图像编码（Stage 2）：把固定数量的全局 token 摆脱像素绑定。**
+**3. 可学习场景 Token 的图像编码（Stage 2）：把固定数量的全局 token 摆脱像素绑定**
 
 有了 Stage 1 的 latent 空间后，Stage 2 只需训练一个图像编码器，把 $K$ 张无位姿图像映射到同一个空间里的 $\hat{Z} \in \mathbb{R}^{M \times C}$，再交给冻结的解码器出点云。具体做法是在 VGGT 的图像 token 之外，额外引入 $M$ 个可学习场景 token $t_S$，所有 token 一起送进 Transformer，交替经过 frame-level 和 global-level 的 self-attention；这些场景 token 被当成第一视角坐标系下的一个全局帧，共享第一视角的相机 token。这样设计直击像素对齐的痛点：像素对齐方法的 token 数是 $K\times H\times W$，既随视角数线性膨胀又死死绑在像素上，重叠区域必然冗余；而场景 token 的数量固定为 $M$、与输入视角数完全无关，天然避免了重叠冗余，也支持喂入任意数量的视角。
 

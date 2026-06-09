@@ -45,17 +45,17 @@ tags:
 
 ### 关键设计
 
-**1. 三维取证审计指标体系（Perception / Coherence / Dissonance）：把推理鲁棒性拆成三个正交的取证维度。**
+**1. 三维取证审计指标体系（Perception / Coherence / Dissonance）：把推理鲁棒性拆成三个正交的取证维度**
 
 过去衡量"推理是否被攻破"只盯 final-label 一个维度，但取证场景需要更细的分辨率。本文定义验证函数 $\mathcal{V}:(X,q)\mapsto\{0,1\}$ 和 entailment 函数 $\mathcal{E}:(r_i,c)\mapsto\{0,1\}$，进而构造三个互不替代的指标：感知 $\Phi_{\text{Perc}}(r_k)=\frac{1}{|\mathcal{D}|\cdot|\mathcal{Q}_k|}\sum\sum\mathcal{V}$ 衡量"听到的"是否扎根真实声学，一致性 $\Phi_{\text{Coh}}(r_i)=\frac{1}{|\mathcal{D}|}\sum\mathcal{E}(r_i^j,c^j)$ 衡量推理是否支撑判决，失调 $\Psi_{\text{Diss}}(r_i)=\frac{1}{|\mathcal{D}_{\text{Wrong}}|}\sum(1-\mathcal{E})$ 只在判错样本上衡量推理是否反向。三个判定函数都由 frontier LLM 集成落地（GPT-5 / Gemini-3 多数投票）。
 
 关键在于 Coherence 高未必是好事——模型可能"自圆其说式幻觉"，越自洽越危险，所以必须用 Dissonance 兜底，把"自信地错"和"被骗了但内部还在挣扎"两种失败模式区分开。三个维度各管一段语义，缺一不可。
 
-**2. 差分指标 $\Delta\Phi,\Delta\Psi$ 与失败模式分类：用攻击前后的差量自动给失败形态贴标签。**
+**2. 差分指标 $\Delta\Phi,\Delta\Psi$ 与失败模式分类：用攻击前后的差量自动给失败形态贴标签**
 
 单看对抗状态下的指标会混淆"模型本来就差"和"被攻击后才变差"。本文对每个指标取攻击前后的差量 $\Delta\Phi_{\text{Coh}}=\Phi_{\text{Coh}}^{\text{PER}}-\Phi_{\text{Coh}}^{\text{ORG}}$（$\Delta\Psi_{\text{Diss}}$ 同理），把"基线偏差"剥离后只留下攻击真正造成的推理形态迁移。据此自动分出四种失败模式：$\Delta\Phi\ll 0$ 是推理崩塌（panic），$\Delta\Phi\ge 0$ 但判决仍错是自圆其说式幻觉，$\Delta\Psi\ge 0$ 是无声警报（Silent Alarm），$\Delta\Psi\ll 0$ 则是 systemic deception。这套差分把原本模糊的"鲁棒 / 不鲁棒"细化成可解释的失败形态学。
 
-**3. 声学 vs 语言学双轨对抗协议：用两条独立攻击轨道分别诱发 panic 与 rationalization。**
+**3. 声学 vs 语言学双轨对抗协议：用两条独立攻击轨道分别诱发 panic 与 rationalization**
 
 声学攻击采用 CLAD 协议的三类 recipe——Background Noise（白噪 / 环境噪，SNR 15–25dB 与 5–20dB）、Time & Pitch（时域拉伸 0.9–1.1×、循环移位 1600–32000 样本）、Shape & Space（音量 0.5–2.0×、淡入淡出、合成回响 $x(t)\leftarrow x(t)+\alpha x(t-\delta)$）；语言学攻击则走 TAPAS+TextFooler，先在 transcript 上同义替换再用 Kokoro TTS 重新合成，让嗓音保持不变但 prosody 复杂度陡增。
 

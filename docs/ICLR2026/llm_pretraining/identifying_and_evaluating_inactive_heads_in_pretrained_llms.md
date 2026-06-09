@@ -36,7 +36,7 @@ tags:
 
 ### 关键设计
 
-**1. 12 种评分函数：从注意力的三个组成部分而非单一权重去量化"不活跃"。**
+**1. 12 种评分函数：从注意力的三个组成部分而非单一权重去量化"不活跃"**
 
 先前工作只盯着注意力权重，于是把"看起来集中在无关 token"误当成不活跃的唯一标志。本文把注意力拆成权重、value 向量、头输出三个维度，每个维度各设计若干个简单到只需一次前向传播就能算出的评分函数。**注意力权重类**衡量注意力分布本身：Avg Weight of First Token (AWFT) 看首 token 的平均权重 $\frac{1}{N}\sum_i \mathbf{A}_{i,0} > \tau$，Avg Entropy of Query Distributions (AEQD) 看查询分布的平均熵 $< \tau$（熵越低说明注意力越集中在少数 token）。**Value 向量类**绕过权重直接看被聚合的内容：First Token Value Vector Norm (FTVVN) 看首 token 的 value 范数 $< \tau$，Avg Value Vector Norm (AVVN) 看平均 value 范数 $< \tau$——即便权重很高，若 value 近零，头的输出也接近零。**头输出类**直接看头最终吐出的向量：Last Token Head Output Norm (LTHON) 看末 token 的头输出范数 $< \tau$，Avg Head Output Norm (AHON) 看平均头输出范数 $< \tau$，这才是"对模型有没有贡献"的最直接信号。
 
@@ -46,7 +46,7 @@ $$\frac{\text{AvgNorm}(\text{head}^i)}{\frac{1}{N_{\text{layer}}}\sum_j \text{Av
 
 这样阈值才能跨层、跨模型家族通用，而不必为每个模型单独调。这些函数确实在捕捉不同类型的不活跃：IoU 分析显示任意两个函数识别出的头集合最大 IoU 只有 0.58、最大 Precision 只有 0.73，说明"权重 dormant"和"输出近零"指向的并非同一批头——这正是单看权重会漏掉一大块不活跃头的根源。
 
-**2. 动态模型干预：用"置零后精度变不变"来验证识别出的头是否真的不活跃。**
+**2. 动态模型干预：用"置零后精度变不变"来验证识别出的头是否真的不活跃**
 
 评分函数只是给出候选，真正不活跃与否要靠干预来证伪。每次前向传播时，按当前输入算出的评分和阈值构建一个布尔矩阵 $\mathbf{B} \in \{0,1\}^{N_{\text{heads}} \times N_{\text{layers}}}$，把 True 位置的头输出在拼接和输出投影之前直接置零，再评估 MMLU 5-shot 准确率。阈值不是写死的，而是按 MMLU 输入上的得分 CDF 分位数动态选取（p=0,5,10,…,30），从而把被置零的头比例控制在最多 30% 以内，并与"随机置零同样数量的头"做基线对比。
 

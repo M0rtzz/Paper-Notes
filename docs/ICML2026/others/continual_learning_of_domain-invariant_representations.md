@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. Replay-augmented ERM + 域分区 buffer：让"多域同时存在"成为每一步训练的真实条件。**
+**1. Replay-augmented ERM + 域分区 buffer：让"多域同时存在"成为每一步训练的真实条件**
 
 DIRL 假设能同时拿到多个域来联合优化不变性，可 CL 是 sequential，过去域的数据不再可见。作者注意到 replay buffer 天然就是个"多域同时存在"的载体，于是把它从单纯防遗忘的工具升级成不变性证据的来源。buffer 按域切成 $M=\bigcup_{s'<s}M_{s'}$，每条样本存为 $(x,y,z)$，$z$ 是插入时刻的辅助信息（如 logits $h(x;\theta_{s'},\omega_{s'})$ 或特征 $f_{\theta_{s'}}(x)$）；ERM 项扩为 $L^{\text{replay}}_{\text{ERM}}=\mathbb{E}_{(x,y)\sim B}[L(h(x),y)]$，$B=\bigcup_{e\le s}B_e$ 同时含当前域 batch $B_s$ 与所有 replay batch $B_{s'}$。这样 replay 一肩挑起"提供多域不变性证据"和"防遗忘"两个任务，把 DIRL 的 joint-access 假设近似复活。
 
-**2. Multi-domain 不变性计算（Preplay）：把 5 个 DIRL 方法统一搬进 CL。**
+**2. Multi-domain 不变性计算（Preplay）：把 5 个 DIRL 方法统一搬进 CL**
 
 光有多域 batch 还不够，得给每个候选不变量定义"在 replay+current batch 上的"统一惩罚算子。每个域用一份统计量 $\widehat\phi_{s'}=\phi(\theta,\omega;B_{s'})$，惩罚 $P^{\text{replay}}_s=\textsc{InvPenalty}(\{\widehat\phi_{s'}\}_{s'\le s})$。五种实例分别是：
 
@@ -60,7 +60,7 @@ DIRL 假设能同时拿到多个域来联合优化不变性，可 CL 是 sequent
 
 把 invariance 计算放到"同步可见的多域 batch"上，本质就是恢复原始 DIRL 的多域联合语义——只要 buffer 能采到代表性 batch，就比"只用静态先验"准得多。
 
-**3. Domain-conditioned invariance alignment（Lalign）：抵消 replay 表示的漂移。**
+**3. Domain-conditioned invariance alignment（Lalign）：抵消 replay 表示的漂移**
 
 仅有 Preplay 时，replay 样本的表示会被新域优化拽偏，过去几步学到的不变性被"悄悄遗忘"。Lalign 用知识蒸馏风格的锚点把它拉回来：调用插入时刻的先验 $\Phi_{s'}$（用 Welford 在线均值在域 $s'$ 末尾算好），让当前模型在 $B_{s'}$ 上的同款统计量对齐回去，$L^{\text{align}}=\sum_{s'<s}d(\widehat\phi_{s'}(\theta,\omega;B_{s'}),\Phi_{s'})$。这里和 naïve 法（Eq. 4）有个关键差别：naïve 把"当前域 batch"匹配到"过去域先验"，会强行抹平真正的跨域差异；本文是把"replay 出来的过去域 batch"匹配回"它自己当年的统计量"，保的是 invariance 的历史身份而非抹平差异。
 

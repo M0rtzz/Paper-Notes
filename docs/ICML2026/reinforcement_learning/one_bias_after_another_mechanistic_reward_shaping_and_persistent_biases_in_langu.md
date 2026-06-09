@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. 偏置复杂度二分类：先判断一个偏置到底"修不修得动"。**
+**1. 偏置复杂度二分类：先判断一个偏置到底"修不修得动"**
 
 前面提到一刀切的去偏方法常常浪费在解决不了的偏置上，第一个设计就是给所有偏置一个实证准则：把它们分成低复杂度（线性可修，如长度 / 不确定性 / 位置）和高复杂度（线性不可修，如谄媚 / 模型风格）。这里的"mechanistic"取 Saphra & Wiegreffe (2024) 的窄义——只问"在激活空间识别并移除某个方向，能否对下游 reward 行为带来可测量的因果改变"，不追求 circuit-level 解释。判据很直接：如果某偏置的主导信号能被单一线性方向近似，null 掉它就会在不损害基线准确率的前提下显著缩小目标偏置；若 null 之后偏置纹丝不动，恰好说明它在 RM 激活空间里和质量信号 co-linear、纠缠在同一子空间，需要更深的方案。作者还用 Iterative Nullspace Projection (Ravfogel et al., 2020) 在表示层提供独立证据（附录 C.9）。这样设计的好处是把有限资源先投到能拿下的低复杂度偏置上，同时把"修不动"本身变成一个可发表的实证结论，而不是一次失败的尝试。
 
-**2. DiffMean 探针 + 零空间投影：在 RM 隐藏态里做"外科手术式"去偏。**
+**2. DiffMean 探针 + 零空间投影：在 RM 隐藏态里做"外科手术式"去偏**
 
 确定一个偏置可修之后，怎么修？对每类偏置构造正负对照样本集 $\{\mathbf{h}_i^+\}$、$\{\mathbf{h}_j^-\}$——比如长度偏置就用 GSM8K 的 verbose-correct 当正例、concise-correct 当负例——取最后一层最后一个非 padding token 在进入 reward head 之前的隐藏态，按 AxBench 上验证最强的 DiffMean 算出探针方向
 
@@ -59,7 +59,7 @@ $$\mathbf{p} = \mathrm{normalize}\Big(\tfrac{1}{n_+}\sum_i \mathbf{h}_i^+ - \tfr
 
 推断时把每个新输入的隐藏态向探针的正交补投影 $\mathbf{h}_{\text{null}} = \mathbf{h} - \sum_k \alpha (\mathbf{p}_k^{\top}\mathbf{h})\mathbf{p}_k$，再喂给 reward head 得到去偏奖励，$\alpha$ 控制投影强度（除校准外都取 $\alpha=1$）；要同时去多个偏置时先 Gram-Schmidt 把多个探针正交化再联合 null。相比 length penalty、ensemble、bounded transformation 这些全局后处理，它不需要假设偏置的函数形式，整套干预完全发生在 RM latent space 内，既不重训 RM 也不动 policy 优化器，因此能即插即用到 RLHF / best-of-N / red-teaming / data filtering。数据效率也高得惊人——仅用 GSM8K 一个数据集做出的长度探针就能 OOD 迁移到 RewardBench2 和 AlpacaEval BoN。
 
-**3. 五类偏置的对照数据构造范式：把"挖偏置"做成可复制流水线。**
+**3. 五类偏置的对照数据构造范式：把"挖偏置"做成可复制流水线**
 
 为了让后人能直接套用同一套方法审计新发布的 RM，作者把每类偏置的"诊断 + 探针构造 + 干预评估"固化成统一范式。长度偏置在 GSM8K 上为每题构造 (concise-correct, incorrect, verbose-correct) 三元组（verbose 平均 477.3 词 vs concise 171.1 词），看 RM 是否因冗长而偏好不正确答案；不确定性偏置在答案前缀加"我不太确定…"，要求 RM 满足规范排序 $r(C) \geq r(C+U) \geq r(I+U) \geq r(I)$；校准偏置在答案后追加 `confidence: {low, medium, high}`，看 Spearman(置信度, 正确性) 是否提升；位置偏置在 MCQA 里轮换正确答案位置 A–D，在 free-form 里比正确答案放首/尾的偏好差；模型风格偏置则用 10 个 LM（Gemma/Llama/Qwen 三族）算 per-byte cross-entropy，再算每个 RM 的奖励与 panel-relative $\Delta s_m$ 的 Spearman 相关——非零就说明 RM 系统性偏好某个 model-family 的"熟悉风格"。所有评估都先过滤掉"RM 在无干扰时本来就答错"的样本，确保看到的干预效果不被基线能力波动掩盖。
 

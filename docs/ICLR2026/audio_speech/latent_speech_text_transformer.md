@@ -46,15 +46,15 @@ LST 把语音离散 token 序列 $\{s_0,\ldots,s_T\}$ 先用一个轻量 Patch E
 
 ### 关键设计
 
-**1. 三种 Patching 策略与 Curriculum 过渡：在"语义对齐"和"推理无依赖"之间拿全。**
+**1. 三种 Patching 策略与 Curriculum 过渡：在"语义对齐"和"推理无依赖"之间拿全**
 
 如何切 patch 直接决定语音能不能和文本对上粒度。最朴素的 Static Patching 用固定大小 $p$ 做非重叠切分（如 $p=3$，每 3 个语音 token 合成一个 patch），简单高效、推理时不需要任何外部模型，但切点和语义边界无关。Alignment Patching 则先用 Wav2Vec2+CTC 强制对齐拿到语音-文本时间戳，让每个文本单元（词 / BPE）对应一个 patch、静默段单独成 patch，对齐质量最好，但代价是推理时仍要挂一个对齐模型，不实用。LST 的最终方案是 Curriculum Patching：训练早期用 alignment 享受语义对应，随后让"采用对齐切分"的概率 $P(u)$ 在训练步区间 $[\tau_1,\tau_2]$ 上从 $1$ 线性衰减到 $0$，平滑切换到 static。这样对齐信号在前期被"蒸馏"进 patch 表示里，后期即使换成静态切分模型也保留了学到的语义对应，推理时彻底摆脱对齐模型——既要了对齐的质量，又去掉了对齐的依赖。值得注意的是，直接把 BPE 子词切分搬到语音 token 上是失效的（Cuervo & Marxer 2024），这也是为什么 LST 走 patch 路线而非词表压缩。
 
-**2. 轻量 Encoder / Decoder + 重型全局 Transformer：把算力花在 patch 级语义而非冗余 token 上。**
+**2. 轻量 Encoder / Decoder + 重型全局 Transformer：把算力花在 patch 级语义而非冗余 token 上**
 
 Patch Encoder 由滑动窗口自注意力加交叉注意力组成，把窗口内的 token 嵌入聚合成一个 patch 嵌入；Patch Decoder 是一个轻量 Transformer，每层插入交叉注意力以接收对应 patch 的信息，自注意力窗口限制在 512 token 内逐步还原语音 token。关键在于算力分配：主要 FLOPs 集中在 patch 级的全局 Transformer 上，而 Encoder / Decoder 都做得很轻。由于全局建模在长度只有原来 $1/p$ 量级的 patch 序列上进行，自回归的主开销随之大幅下降，长距离依赖也更容易学，这正是 LST 能同时降低 ASR/TTS 推理成本又不掉重建质量的原因。
 
-**3. patch 级的跨模态对齐：让语音和文本在同一序列里以相近粒度共存。**
+**3. patch 级的跨模态对齐：让语音和文本在同一序列里以相近粒度共存**
 
 把语音压成 patch 后，它与文本 token 在序列长度上趋于一致，于是二者可以放进同一条自回归序列里被同等对待。训练采用交错数据——同一语料的语音段和文本段交替出现，部分语音段被替换为对应文本——迫使模型在两种模态间来回预测。结果是 patch 会自动学到与音节 / 单词的对应关系，打通 speech↔text 的知识迁移通道；这也是为什么跨模态训练不仅没拖累文本能力，反而能反向小幅提升 text→text 表现。
 

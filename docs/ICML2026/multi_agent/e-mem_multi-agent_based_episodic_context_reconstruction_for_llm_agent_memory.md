@@ -45,15 +45,15 @@ E-mem 想做的是：在不预处理压缩历史的前提下，让 agent 能"重
 
 ### 关键设计
 
-**1. 保留原文 + 滑窗分段，用 SLM 当 chunk owner：把"压缩存储"换成"原文托管"。**
+**1. 保留原文 + 滑窗分段，用 SLM 当 chunk owner：把"压缩存储"换成"原文托管"**
 
 传统方法把 chunk 嵌成一个向量，本质是因为"算不动这么多 chunk 一起推理"，于是只能先压缩、查询时再 retrieve top-k 拼回去——序列依赖在这一步就断了。E-mem 直接绕开这个瓶颈：把无界流 $\mathcal{X}=(x_1,x_2,\dots)$ 按窗口长度 $L$、步长 $S<L$ 切成 $\mathcal{E}_i=\{x_t\mid(i-1)S<t\leq(i-1)S+L\}$，每段是**原始未压缩 token**，由一个独立 SLM assistant 持有；平时 assistant 处于 dormant 状态，只在被激活时才"上线"推理。相邻段保留重叠 $\delta=L-S$ 作连续性缓冲区——新 token 直接 append 到当前 active assistant 的 $\mathcal{E}_{\text{active}}$，写满后凝固成一个 memory unit，新开 assistant 时从前一段切走 overlap 区作种子（$\mathcal{E}_{N+1}^{init}=\text{Extract}(\mathcal{E}_N,\text{overlap}=\delta)$），保证跨段语义不断裂。这样存储侧仍是完整原文、推理被分摊到许多小模型上，整体是 $O(1)$ 流式更新，既保住了 System 2 推理需要的长程因果链，又没把全历史塞进单个上下文窗口。
 
-**2. 多路由协同激活：三条正交检索通路取并集，用召回率换准确率。**
+**2. 多路由协同激活：三条正交检索通路取并集，用召回率换准确率**
 
 单一路由在 LoCoMo 这种"多跳 + 时序 + 实体精确召回"混合的基准上必然顾此失彼——纯 vector 漏实体、纯 graph 漏宏观意图。E-mem 并行跑三条正交通路再取并集 $\mathcal{A}^*=\{\mathcal{A}_{\text{asst}}^{(i)}\mid\mathcal{A}_{\text{asst}}^{(i)}\in\mathcal{P}_{\text{global}}\vee\mathcal{P}_{\text{vec}}\vee\mathcal{P}_{\text{kw}}\}$：Global Alignment $\mathcal{P}_{\text{global}}$ 让 query 与摘要 $s_i$ 做稠密向量 + 稀疏词法对齐，相当于高通滤波捕获宏观叙事意图；Semantic Association $\mathcal{P}_{\text{vec}}$ 让 query 与原文 chunk embedding 做高维向量相似度，兜底"摘要漏掉的细节"；Symbolic Trigger $\mathcal{P}_{\text{kw}}$ 用 BM25 做实体/ID 精确匹配，保证关键名字、编号不会因为被摘要丢掉而错过激活。三路并集只是在 router 阶段多算几次轻量检索，而漏召一旦发生后面整个推理就废了——所以作者宁可多激活几个 assistant 也不做加权融合，明显是用召回率换准确率。
 
-**3. Assistant 局部推理 + Master 时序锚定聚合：证据自带时间戳才能跨段消解冲突。**
+**3. Assistant 局部推理 + Master 时序锚定聚合：证据自带时间戳才能跨段消解冲突**
 
 被激活的 assistant 不是"回传原文片段"，而是直接在自己那段 $\mathcal{E}_i$ 上做完整 chain-of-thought 局部推理，把 raw text 转成**带时间戳的证据 tuple** $e_i=\langle c_i,\tau_i\rangle=\Phi_{\text{asst}}(q\mid\mathcal{E}_i)$，其中 $c_i$ 是推理出的语义证据、$\tau_i$ 是对应事件的绝对时间戳。master 收齐所有 $\{e_i\}$ 后通过 $R=\Psi_{\text{master}}(q,\mathbf{E})$ 聚合，关键是**按 $\tau$ 排序解决状态冲突**——比如同一物品的位置前后变动，就取最近 timestamp 的那条。难题还支持 iterative 模式：master 维护推理 trace $S^{(t)}$，发现证据不够就 $q^{(t)}=\pi_{\text{plan}}(q_{\text{init}},S^{(t-1)})$ 抛新子问题给 assistant。让 SLM 在"小段 + 完整原文"上推理比让大模型在"全部原文拼起来"上推理更可控、token 更省，而正是这个 $\tau$ 让 master 第一次有能力做跨段时序冲突消解——这是 multi-hop / temporal 子任务大涨的根因。
 

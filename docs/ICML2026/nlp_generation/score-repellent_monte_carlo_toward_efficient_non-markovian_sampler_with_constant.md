@@ -44,19 +44,19 @@ SRMC 是一层薄包装。给定目标 $\pi(x)\propto e^{-U(x)}$、score $s(x) =
 
 ### 关键设计
 
-**1. 常数内存的 score-running 历史 $\theta_n$：用 $d$ 维向量替掉 $|\mathcal{X}|$ 维经验测度。**
+**1. 常数内存的 score-running 历史 $\theta_n$：用 $d$ 维向量替掉 $|\mathcal{X}|$ 维经验测度**
 
 SRRW/HDT 之所以被困在有限状态空间，根因就是要存 $|\mathcal{X}|$ 维经验测度 $\hat\delta_n$——在 $\{0,1\}^d$ 上指数大、连续域上是无限维。SRMC 的破局点来自 Stein 恒等式 $\mathbb{E}_\pi[s]=0$：探索良好的链，score 的时间平均应当趋于 0，所以 score 的 running 平均 $\theta_n\in\mathbb{R}^d$ 天然是"链对真分布偏离的探测器"。$\theta_n$ 是过去 score $\{s(X_i)\}_{i\leq n}$ 的加权移动平均，$\rho=1$ 退化为简单时间平均、$\rho<1$ 偏向近期样本对短暂困住更敏感；它满足 $\theta_n - \mathbb{E}_\pi[s(X)] = \int_\mathcal{X}[\frac{1}{n+1}\sum_i\delta_{X_i}(x) - \pi(x)]s(x)dx$，本质就是"链的经验分布与 $\pi$ 在 score 投影下的偏差"。
 
 一旦把"分布差异"投到 $d$ 维 score 空间，存储与计算复杂度立刻从指数/无限坌缩成常数，而 Stein 恒等式又保证 $\theta^\star=0$ 是平衡点，等于天然校准了估计。
 
-**2. 指数 score-tilt surrogate target $\pi_\theta$：把历史偏差折成"排斥已访问区域"的代理目标。**
+**2. 指数 score-tilt surrogate target $\pi_\theta$：把历史偏差折成"排斥已访问区域"的代理目标**
 
 有了偏差探测器 $\theta$，还得把它变成能驱动采样器避开旧区域的力。作者用指数 tilt $\pi_\theta(x)\propto\pi(x)\exp\{-\alpha\theta^\top s(x)\}$：当链在某 metastable basin 反复打转时 $\theta$ 指向该 basin 的 score 集中方向，于是仍在 basin 内（$\theta^\top s(x)>0$）的 $x$ 被 $\exp\{-\alpha\theta^\top s(x)\}<1$ 下权、外面的被相对抬升。对 MH 只需在接受率上乘一个 $e^{-\alpha\theta^\top[s(y)-s(x)]}$ 因子，归一化常数 $Z_\theta$ 在比值里自动抵消；对 Langevin/HMC 则把 score 换成 surrogate score $s_\theta(x)=s(x)-\alpha\nabla_x s(x)\theta=-\nabla U(x)+\alpha\nabla^2 U(x)\theta$，其中 Hessian-向量乘积可用 autodiff 或有限差分 $(\nabla U(x+\epsilon\theta)-\nabla U(x))/\epsilon$ 廉价近似。
 
 选指数 tilt 有三个理由：它是 score 的线性扰动指数族，形式最自然又保非负；它让整套机制 normalization-free（$Z_\theta$ 始终抵消或不需），保住 classical MCMC 的可用性；它 plug-and-play，不动 base kernel 内部逻辑，任何对 $\pi$ 有效的 kernel 直接替成 $\pi_{\theta_n}$ 即可。Figure 1 的"arrow flipping"可视化正展示它如何动态压低 metastable basin 周围的有效能垒。
 
-**3. 耦合 SA 分析 + CLT 与 $O(1/\alpha)$ 方差递减：把有限态的近零方差推到一般状态空间。**
+**3. 耦合 SA 分析 + CLT 与 $O(1/\alpha)$ 方差递减：把有限态的近零方差推到一般状态空间**
 
 要让这套包装有理论底气，得在 $\mathcal{X}=\mathbb{R}^d$ 上证收敛 + 联合 CLT，并定量给出 $\alpha$ 增大时的方差 scaling。作者把 $\vartheta_n=(\theta_n,\mu_n)$（$\mu_n$ 是 $\mathbb{E}_\pi[f(X)]$ 的 running 估计）写成随机近似形式 $\vartheta_{n+1}=\vartheta_n+\gamma_{n+1}H(\vartheta_n,X_{n+1})$，$H$ 是 controlled Markovian noise。在 Assumption 1（score $L$-Lipschitz + $U$ 超线性尾增长 + Hessian 渐近正规）和 Assumption 2（kernel 一致 drift + 对 $\theta$ Lipschitz）下，Theorem 3.3 给出 $\vartheta_n\to(0,\mu)$ a.s. 且 $\gamma_n^{-1/2}(\vartheta_n-\vartheta^\star)\xrightarrow{d}\mathcal{N}(0,\Sigma_\vartheta)$，$\Sigma_\vartheta$ 解一个 Lyapunov 方程 $(\frac{1_{\rho=1}}{2}I + A^\star)\Sigma_\vartheta + \Sigma_\vartheta(\cdot)^\top + \Sigma_\Delta = 0$。关键 Jacobian $A^\star = \begin{bmatrix}-I_d - \alpha\mathrm{Cov}_\pi(s,s) & 0 \\ -\alpha\mathrm{Cov}_\pi(f,s) & -I_m\end{bmatrix}$ 里 $\alpha$ 只出现在协方差块上，于是 Proposition 3.4 证出 $\theta$-块 $\Sigma_{\theta\theta}(\alpha)=O(1/\alpha)$ 且对 $\alpha$ 单调不增；Gaussian 目标 + 均值估计时这个 scaling 直接传给 $\Sigma_X(\alpha)=V\Sigma_{\theta\theta}(\alpha)V^\top$，得到 sample mean 的近零方差。
 

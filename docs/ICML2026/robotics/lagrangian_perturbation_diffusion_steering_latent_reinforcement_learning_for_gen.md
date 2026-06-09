@@ -45,13 +45,13 @@ LP-DS 把冻结生成策略写成黑盒解码器 $\Phi:\mathcal{S}\times\mathcal
 
 ### 关键设计
 
-**1. 潜空间残差扰动：用 RL 修策略时不替换先验，只在 $\mathcal{N}(0,I)$ 上加一个可学的状态条件偏移。**
+**1. 潜空间残差扰动：用 RL 修策略时不替换先验，只在 $\mathcal{N}(0,I)$ 上加一个可学的状态条件偏移**
 
 DSRL 的失效根源在于它直接学一个新潜策略 $w\sim\pi_\theta^\mathcal{W}(\cdot\mid s)$ 把预训练先验整个替换掉，价值梯度会把潜变量越推越极端，最终漂出解码器训练支撑。LP-DS 改成残差形式 $w=\epsilon+\Delta_\theta(s)$，$\epsilon\sim\mathcal{N}(0,I)$，只在基线噪声上叠一个小型 MLP 产生的状态条件偏移。偏移作用在 ODE 积分的起点（diffusion 的 $x_T$ 或 flow 的 $x_n$），与 DDIM/flow 的确定性解码组合后，相当于把生成分布以先验为锚做了一次轻量平移。
 
 这个设计的好处是把先验当 reference 而非 baseline 替换。当 $\Delta_\theta(\cdot)\approx 0$（初始化）时严格恢复 BC 行为，训练只是从先验出发小步改进；而先验本身才是策略多模态结构的真正载体，以它为锚就能在提升回报的同时显式保护"覆盖多种行为模式"的能力，不至于一上来就塌成单一模态。
 
-**2. Lagrangian 信任域约束：用一个可解释旋钮 $\delta$ 把扰动幅度卡在先验支撑内。**
+**2. Lagrangian 信任域约束：用一个可解释旋钮 $\delta$ 把扰动幅度卡在先验支撑内**
 
 光有残差还不够——价值梯度仍会不断把 $\Delta_\theta(s)$ 推大直到 off-manifold。LP-DS 把"扰动幅度 = 与先验的近似 KL"做成硬约束。对"基线 + 残差"的高斯，KL 的主导项恰好是均值偏移的平方，于是有轻量闭式近似 $D_{\mathrm{KL}}(q_\theta(\cdot\mid s)\|p_0)\approx\frac{1}{2}\|\Delta_\theta(s)\|_2^2$，把目标写成约束式
 
@@ -59,7 +59,7 @@ $$\max_\theta\mathbb{E}\big[Q^\mathcal{W}(s,\epsilon+\Delta_\theta(s))\big]\quad
 
 对偶化成 $\mathcal{L}(\theta,\alpha)=\mathbb{E}[Q^\mathcal{W}(s,w)-\alpha(\|\Delta_\theta(s)\|_2^2-\delta)]$，$\theta$ 走主问题梯度上升，对偶变量 $\alpha$ 走投影对偶上升 $\alpha\leftarrow[\alpha+\eta_\alpha\mathbb{E}_s(\|\Delta_\theta(s)\|_2^2-\delta)]_+$。这条回路天然自适应：扰动一超过 $\delta$，$\alpha$ 被推高、actor 立刻变保守；扰动小了 $\alpha$ 滑落、actor 又敢探索。于是"探索激进度 vs 留在先验支撑"被自动调节，同一份超参在 RoboMimic / Gym / Adroit 跨域都不用大改，$\delta$ 也从脆弱超参变成可解释的"粗调旋钮"。
 
-**3. 双 critic 与潜侧蒸馏：把价值学习和梯度通路在解码器边界处解耦，避免反传穿过解码器。**
+**3. 双 critic 与潜侧蒸馏：把价值学习和梯度通路在解码器边界处解耦，避免反传穿过解码器**
 
 要用真实环境奖励驱动学习，最朴素的做法是对 actor 反传穿过解码器，但扩散/流匹配的长链去噪/ODE 积分梯度极不稳，对 π0 这种大 VLA 更是连算图都留不下来。LP-DS 用两个 Q 把这件事拆开：动作侧 $Q_\psi^\mathcal{A}(s,a)$ 走标准 TD，$y=r+\gamma\bar Q^\mathcal{A}(s',a')$，其中 $a'=\Phi(w';s')$、$w'=\epsilon'+\Delta_{\theta'}(s')$，让真实回报进入价值估计；潜侧 $Q_\phi^\mathcal{W}(s,w)$ 则在基线噪声分布上把动作侧 Q 蒸馏过来，
 

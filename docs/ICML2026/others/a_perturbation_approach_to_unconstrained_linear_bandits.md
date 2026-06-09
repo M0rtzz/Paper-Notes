@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. PABLO 损失估计器：把一维 bandit 反馈反推成可喂给 OLO 的向量损失。**
+**1. PABLO 损失估计器：把一维 bandit 反馈反推成可喂给 OLO 的向量损失**
 
 full-information OLO 算法库要的是完整的梯度/线性损失向量，而 bandit 只给一个标量 $\langle\ell_t,\tilde w_t\rangle$，二者之间的鸿沟正是 bandit-to-OLO 归约的全部难点。PABLO 的做法是围绕 OLO learner 输出的中心点 $w_t$ 做一次随机扰动：在正定矩阵 $H_t$ 的特征方向上均匀采样 $s_t\in\{\pm v_i\}$，实际播放 $\tilde w_t=w_t+H_t^{-1/2}s_t$，再用
 
@@ -54,7 +54,7 @@ $$\tilde\ell_t = d\,H_t^{1/2}s_t\,\langle\tilde w_t,\ell_t\rangle$$
 
 去估计真实的 $\ell_t$。关键在于 $s_t$ 在正负特征方向上对称采样，使估计里的交叉项在条件期望下两两抵消，从而得到无偏性 $\mathbb{E}[\tilde\ell_t\mid\mathcal{F}_{t-1}]=\ell_t$。有了这个无偏代理，bandit 问题就被翻译成了一个 full-information OLO 问题，现成的 comparator-adaptive 算法可以原封不动地接上来。
 
-**2. 无约束域下的扰动矩阵选择：让探索尺度随中心点自适应。**
+**2. 无约束域下的扰动矩阵选择：让探索尺度随中心点自适应**
 
 经典 BLO 在有界域里探索，扰动必须保证 $\tilde w_t$ 不越出可行集，所以扰动几何被 barrier 锁死；无约束域把动作集放大到 $\mathbb{R}^d$ 后这条约束消失了，反而带来自由度——$H_t$ 不必再服从 barrier geometry，可以纯粹以"估计稳定"为目标来选。但代价是动作范数无界，若扰动尺度不变，$w_t$ 一大估计就会爆炸。本文让 $H_t$ 随中心点范数缩放，要求
 
@@ -62,7 +62,7 @@ $$H_t \preceq \frac{1}{d\,(\|w_t\|^2\vee\varepsilon^2)}I_d$$
 
 即 $w_t$ 大时扰动收紧、$w_t$ 接近零时由 $\varepsilon$ 兜底防止除零。这一选择直接换来两条 OLO 子程序最需要的性质：几乎处处的范数上界 $\|\tilde\ell_t\|^2\le 4d^2\|\ell_t\|^2$，以及条件二阶矩上界 $\mathbb{E}[\|\tilde\ell_t\|^2\mid\mathcal{F}_{t-1}]\le 2d\|\ell_t\|^2$。正是这两条决定了后面能安全接哪些 OLO 保证。
 
-**3. 按 regret 目标切换 OLO 子程序：同一归约产出多种 uBLO 保证。**
+**3. 按 regret 目标切换 OLO 子程序：同一归约产出多种 uBLO 保证**
 
 以往 uBLO 算法常把 bandit 几何、方向学习和尺度学习耦合成一个整体，换一种 regret 目标就要重写整套分析。PABLO 把 bandit feedback 的处理彻底独立出来后，归约对 OLO 子程序是黑箱的，于是只要换插件就能换保证：接 parameter-free mirror descent 得到静态 comparator-adaptive 的期望 regret；接无约束动态 OLO 算法得到对真实 path-length $P_T$ 自适应的动态 regret；接带 optimistic update 与 Huber-like composite penalty 的变体，则能抵消无约束 iterate 的 $\sum_t\|w_t\|^2$ 项，拿到高概率界。这个 generic reduction 把任意 OLO regret bound 翻译成 bandit regret bound，多出来的代价仅来自估计噪声与扰动稳定性，于是 OLO 领域未来的新技术可以近乎免费地迁移到 uBLO。
 

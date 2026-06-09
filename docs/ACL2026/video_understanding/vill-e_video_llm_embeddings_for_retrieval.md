@@ -45,15 +45,15 @@ ViLL-E 基于 PaliGemma-3B 多模态 LLM，包含视觉编码器、LLM 主干和
 
 ### 关键设计
 
-**1. KV-Former Embedding Head：把变长 token 序列聚合成固定维度 embedding。**
+**1. KV-Former Embedding Head：把变长 token 序列聚合成固定维度 embedding**
 
 Video LLM 的自回归输出长度不定，而检索需要的是一条固定维度的 dense 向量，二者之间缺一个聚合器。ViLL-E 没有直接对输出 token 做 mean pooling，而是设计了 KV-Former：以 LLM 的输出 token 作为 query，引入 $P$ 个可学习的 key/value（称为 "pooling tokens"）当作字典，通过注意力自适应加权聚合，再经 MLP 投影和均值池化得到最终 embedding。相比 Q-Former 输出长度固定、必须截断或补齐变长输入，KV-Former 天然吃得下任意长度的 token 序列；相比简单 mean pooling 或 self-attention，那 $P$ 个 pooling token 给了模型一块独立于生成任务的瓶颈容量，让 embedding 表示不被生成目标"带偏"，同时参数开销很小。
 
-**2. EOS 触发的自适应 embedding 生成：让模型按视频复杂度决定"想多久"。**
+**2. EOS 触发的自适应 embedding 生成：让模型按视频复杂度决定"想多久"**
 
 固定步数的 embedding 提取对所有视频一视同仁，复杂视频来不及分析、简单视频又浪费算力。ViLL-E 改成在提取 embedding 之前先自回归生成 token，直到吐出 `<EOS>` 才停，生成多少 token 随视频复杂度自然浮动——内容繁杂的视频会多生成几步"思考"token 再聚合，简单视频则快速收敛。这等于把"该思考多久"这个决策交还给模型本身，在效率和表示质量之间取得比固定步数更好的平衡。
 
-**3. 三阶段生成-对比联合训练：从对齐到精炼再到多任务解锁。**
+**3. 三阶段生成-对比联合训练：从对齐到精炼再到多任务解锁**
 
 要在同一个模型里同时养出生成能力和判别能力，单阶段训练既容易顾此失彼、原始字幕又太短撑不起细粒度表示。ViLL-E 拆成三段递进：Stage 1 在 10M Shutterstock 视频-字幕对上联合优化 next-token prediction（生成）和 CLIP 式对比损失（embedding），先建立基础的视频-语言对齐；Stage 2 在 200K 条 Claude-3-Sonnet 生成的高质量长字幕上续训，用详细描述弥补原始字幕过短的问题；Stage 3 在 100K 样本上做四任务微调（QA、检索、匹配、定位），解锁下游能力。消融实验里去掉预训练后检索分数从 62.8 跌到 49.3，证实每个阶段都不是摆设。
 

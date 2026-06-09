@@ -46,11 +46,11 @@ tags:
 
 ### 关键设计
 
-**1. Context Chunking：用聚类切块，让块与块之间尽量不重复。**
+**1. Context Chunking：用聚类切块，让块与块之间尽量不重复**
 
 最朴素的切法是随机分组，但随机分块容易让相似的示例落进不同 chunk，使各 chunk 学到的东西高度冗余，集成时白白浪费算力。Parallel-ICL 改用 k-means 对每个 demonstration 的多模态特征（CLIP 的图像特征与文本特征拼接而成）做聚类，把语义相近的示例聚到同一个 chunk，从而让不同 chunk 覆盖不同的"知识子集"、彼此差异最大化。这一步的依据来自集成学习的 Fano 不等式分析：集成误差的下界与各成员预测的冗余度正相关，冗余项 $I_{redun}$ 越小越好，而最大化 chunk 间多样性正是压低 $I_{redun}$ 的直接手段。消融也印证了这点——聚类分块在准确率和块间多样性上都稳定优于随机分块。
 
-**2. Context Compilation：在 logit 层做加权 PoE，让更相关的块说话更响。**
+**2. Context Compilation：在 logit 层做加权 PoE，让更相关的块说话更响**
 
 各 chunk 并行跑完后需要合成一个答案，Parallel-ICL 用加权 Product-of-Experts (PoE) 在 logit 层集成，对每个候选答案 $y_i$ 的最终打分为各 chunk logit 的加权和：
 
@@ -58,7 +58,7 @@ $$\hat{l}_\theta(y_i) = \sum_{k=1}^{K} w_k\, l_\theta(y_i \mid C_k, x, t)$$
 
 权重 $w_k$ 不是均匀分配，而是按 chunk 与查询的相似度（softmax 归一化的余弦相似度）来定——跟当前查询越贴近的 chunk，对最终预测的发言权越大。这对应 Fano 分析里的 relevance 项 $I_{relev}$：成员预测与真值越相关，集成误差越低，所以让相关的 chunk 占更高权重是有据可依的。之所以选 PoE 而非 MoE，是因为 PoE 适合 VLM 这种大词表的高维概率分布，在 logit 上直接加和即可高效实现，无需额外路由网络。消融显示相似度加权在多数 benchmark 上优于均匀权重。
 
-**3. 理论基础：diversity 与 relevance 共同决定集成上限。**
+**3. 理论基础：diversity 与 relevance 共同决定集成上限**
 
 前两个设计不是拍脑袋拼出来的，而是从同一个理论框架推出来的。论文引用 Theorem 5.1（Brown & Zhou-Li）把集成预测的误差拆成两块：relevance（各成员与真值的相关性）和 redundancy（成员之间的重复信息）。要让集成误差低，就需要同时满足两个条件——每个 chunk 自己预测得准（高 relevance），且 chunk 之间信息冗余低（高 diversity）。这两个性质恰好分别对应设计 1 和设计 2：chunking 负责最大化多样性来压低冗余，compilation 负责按相关性加权来抬高 relevance。换句话说，理论先告诉你"好的集成需要什么"，方法再分头把这两件事各自做到位。
 

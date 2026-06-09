@@ -43,15 +43,15 @@ tags:
 
 ### 关键设计
 
-**1. 简单确定性 2-近似（Algorithm 2）：一次 LP rounding 取代 Krivelevich 的迭代重解。**
+**1. 简单确定性 2-近似（Algorithm 2）：一次 LP rounding 取代 Krivelevich 的迭代重解**
 
 已有的 2-近似（Krivelevich 1995）要反复求解 $\mathcal{O}(m)$ 次 LP，时间瓶颈 $\widetilde{\mathcal{O}}(m^{\alpha+1})$，大图上根本跑不动。本文的关键观察是 BTT 在 3-uniform hypergraph 上有"每条 bad triangle 恰含一条负边"的二部结构，于是正负边可以各按一套阈值一轮搞定：解一次 $\text{LP}_\Delta$ 拿到分数解 $\{x_e\}$，直接输出 $E^-_{>0}\cup E^+_{\ge 1/2}$——所有取值非零的负边加所有取值 $\ge 1/2$ 的正边。正确性靠互补松弛：对偶 PackingLP 只在 $x_e>0$ 的边上有紧约束，配合二部性可证总边数 $\le 2\cdot\text{LP}_\Delta\le 2\cdot\text{OPT}_\Delta$。因为只解一次 LP，时间被 LP 求解器主导（$\widetilde{\mathcal{O}}(m^\alpha)$），比 Krivelevich 快了约 $m$ 倍。
 
-**2. 随机化 2-近似（Algorithm 3）：对加权与近似 LP 解都鲁棒，配现代组合求解器跑到 $m^{3/2}$。**
+**2. 随机化 2-近似（Algorithm 3）：对加权与近似 LP 解都鲁棒，配现代组合求解器跑到 $m^{3/2}$**
 
 确定性版虽快，但解 LP 本身在大图上仍是瓶颈，且不支持加权与"只有近似最优解"的现实设定。Algorithm 3 用一个随机阈值搞定这两点：抽 $r\in[0,1]$，取 $\{e\in E^+:x_e\ge r/2\}\cup\{e\in E^-:x_e>1-r\}$ 作覆盖。证明用积分技巧——覆盖任意坏三角形 $t=\{e_1,e_2,e_3\}$ 的概率与 $\sum_{e\in t}x_e\ge 1$ 直接挂钩，期望边数恰为 $2\sum_e x_e$。它还能干净去随机化（Remark 3.4）：把正负边按 $x_e$ 排成两条扫描线，所有 $r$ 区间只产生 $\mathcal{O}(|E|)$ 个候选解，取最小者即可，额外只花 $\mathcal{O}(|E|\log n)$。最大的加分项在 Remark 3.5：当 $\{x_e\}$ 只是 $(1+\epsilon)$-近似最优时仍给 $(2+2\epsilon)$-近似，于是能接上 Cao et al. 2024 的 $\widetilde{\mathcal{O}}(\epsilon^{-7}m^{3/2})$ 组合 LP 求解器，把完全图上的整体复杂度压到 $\widetilde{\mathcal{O}}(\epsilon^{-7}m^{3/2})$，几乎追平"找一组极大不相交坏三角形"的下界时间。
 
-**3. 改良 pivot + 完全图统一硬度下界（Algorithm 4 / Theorem 4.6-4.7）：把 cover-to-cluster 比从 2 收紧到 $3/2$，一套 gadget 打四个问题。**
+**3. 改良 pivot + 完全图统一硬度下界（Algorithm 4 / Theorem 4.6-4.7）：把 cover-to-cluster 比从 2 收紧到 $3/2$，一套 gadget 打四个问题**
 
 要把 BTT 覆盖变成 CC 聚类，Veldt 2022 的 MatchFlipPivot 只能保证 $\text{OPT}_{CC}\le 2\,\text{OPT}_\Delta$，损失太多。本文把 Ailon pivot 的硬规则换成依赖覆盖 $F$ 的概率规则：$uv\in F$ 且为正边时以概率 $1/4$ 吸入、为负边时以概率 $3/4$ 吸入，不在 $F$ 中则沿用确定性规则。证明给每条 $uv\in F$ 分配单位预算 $b(uv)=1$，证任意三元组都满足"错误之和 / 预算之和 $\le\tfrac32$"，按 Ailon 框架直接得期望 $\tfrac32|F|$ 错误——结合 Theorem 1.1 立刻把 CC 近似比从 6 改善到 $3+\epsilon$。硬度部分则用一个六角形 gadget + 子句边从 Chlebík & Chlebíková 的 Minimum 2CNF Deletion 做 gap-preserving 归约：每个变量配 12 节点六角形（含 6 个 crown），子句把 crown 接到 clause node，BTT 最优解恰对应 MD 最优解，于是 MD 的 $2\delta n$ vs $3\delta n$ gap 翻译成 BTT 的 $(11+2\delta)n$ vs $(11+3\delta)n$，取 $\delta=1/194$ 得 $\tfrac{2137}{2136}$。妙处在于同一构造下 MinSTC+/CC/CD 的最优值都等于 $\text{OPT}_\Delta(G)$，所以一次归约就同时打了四个问题的下界。
 

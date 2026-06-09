@@ -46,15 +46,15 @@ P2P 的目标是在部署时给任意用户生成一组 personalized PEFT parame
 为了让 hypernetwork 知道“要给哪一层、哪个模块生成参数”，作者把用户 embedding 与 learnable module embedding、depth embedding 拼接。这个 position-aware representation 进入 MLP hypernetwork，输出 flatten 后的 LoRA 参数向量，再 reshape 成每个 target module/layer 的 $A$ 和 $B$ 矩阵。训练时，生成的 LoRA 插入 frozen base LLM，用用户后续交互做 SFT loss 端到端优化 hypernetwork。
 
 ### 关键设计
-**1. 用户画像到 LoRA 的直接映射：把"为每个用户训练一套参数"换成"一次前向生成一套参数"。**
+**1. 用户画像到 LoRA 的直接映射：把"为每个用户训练一套参数"换成"一次前向生成一套参数"**
 
 prompt 适配每次推理都要把长长的用户历史读进去，OPPU 这类 one-PEFT-per-user 又要给每个用户单独跑梯度优化——前者把原始历史暴露给中心化模型、后者在百万级用户下成本爆炸。P2P 的破法是把个性化压成一次前向：用户 profile $p_u$ 先经 encoder 得到用户 embedding $e_u$，再由 hypernetwork $f_\theta$ 一次性吐出每层每模块的 LoRA 矩阵 $(A_u^{m,l}, B_u^{m,l})$，整组参数记作 $\Delta W_u = Gen_\theta(p_u)$，插进 frozen base LLM 就完成适配。这样个性化开销从"per-user 训练 / 每次读历史"降成了常数级前向，既保住了 PEFT 把偏好写进参数的优势，又不必反复做梯度更新。
 
-**2. 模块/层位置感知的参数生成：让同一份用户画像在不同层、不同 projection 上生成不同的 LoRA。**
+**2. 模块/层位置感知的参数生成：让同一份用户画像在不同层、不同 projection 上生成不同的 LoRA**
 
 如果只拿用户 embedding 生成一套共享参数，就忽略了 LLM 内部各层、各模块（q_proj / v_proj 等）承担的功能本就不同。P2P 给 hypernetwork 喂的是带位置信息的拼接表示：对每个目标位置 $(m, l)$，输入 $\phi_u^{m,l} = [e_u \,\|\, E_{mod}[m] \,\|\, E_{dep}[l]]$，把用户 embedding 和 learnable 的 module embedding、depth embedding 串起来，再过 MLP 输出该位置专属的 LoRA 参数，最后 reshape 成各 module/layer 的 $A$、$B$ 矩阵。这让生成器"知道自己在给哪一层、哪个模块生成参数"，从而按位置定制而非一刀切。
 
-**3. 跨用户端到端训练以泛化到未见用户：学的是"什么样的画像该配什么样的 adapter"，不是背训练用户。**
+**3. 跨用户端到端训练以泛化到未见用户：学的是"什么样的画像该配什么样的 adapter"，不是背训练用户**
 
 个性化系统真正的价值在于部署时能对没见过的用户即时适配，而不是把训练集里的人记下来。P2P 的训练目标是在多样用户上最小化"用 profile 生成参数后、在该用户未来交互上的 SFT loss"：
 

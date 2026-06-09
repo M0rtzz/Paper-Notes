@@ -45,11 +45,11 @@ SeDiR 要解决的是同一个统一模型里不同类别特征互相纠缠（IC
 
 ### 关键设计
 
-**1. 粗到细全局标记化（CFGT）：把分不出类别的局部特征聚合成实例级的全局语义。**
+**1. 粗到细全局标记化（CFGT）：把分不出类别的局部特征聚合成实例级的全局语义**
 
 局部几何特征只描述"这一小块长什么样"，无法回答"这整个物体是哪一类"，而 ICE 的根子正是模型缺一个能代表身份的全局表征。CFGT 的做法是在多个尺度上做聚合：对共享的中心点用对称分辨率 $\mathcal{R} = \{k/2, k, 2k\}$ 各构建一组邻域，分别用预训练 PointMAE 编码，从而同时捕获细节和结构两个层面的几何。为了把整体上下文汇成一个 token，它在基准分辨率序列前插入一个可学习的自适应上下文 token $\mathbf{t}_{\text{act}}$，经 transformer 编码后这个 token 就吸收了全局信息。最终的全局表征把三个分辨率的全局平均池化和这个 ACT token 拼起来：$\mathbf{f}_{\text{global}} = \text{concat}([\mathbf{g}^{(k)}, \mathbf{g}^{(2k)}, \mathbf{g}^{(k/2)}, \mathbf{t}^{\text{enc}}_{\text{act}}])$。两个辅助损失约束这个表征：跨尺度对齐损失 $\mathcal{L}_{\text{cos}} = \frac{1}{g}\sum_{m=1}^{g}\sum_{r}[1 - \cos(\tilde{\mathbf{f}}_m^{(k)}, \tilde{\mathbf{f}}_m^{(r)})]$ 逼不同分辨率的同位特征互相一致，辅助分类损失 $\mathcal{L}_{\text{cls}} = \text{CrossEntropy}(\hat{\mathbf{y}}, \mathbf{y})$ 则直接监督全局 token 能认出类别。相比只靠局部特征，这种多尺度全局聚合让模型第一次有了一个能表征实例身份的向量。
 
-**2. 类别条件对比学习（C3L）：显式把不同类别在语义空间里拉开，直接拆掉 ICE。**
+**2. 类别条件对比学习（C3L）：显式把不同类别在语义空间里拉开，直接拆掉 ICE**
 
 光有全局 token 还不够——如果不同类别的 token 在空间里依然挤成一团（t-SNE 里 chicken/duck/gemstone 严重混叠就是这种情况），重建时模型照样会拿错类别先验。C3L 维护一个大小为 64 的动态缓冲区 $\mathcal{B}$，对全局 token $\mathbf{z}$ 跑监督对比学习：
 
@@ -57,7 +57,7 @@ $$\mathcal{L}_{\text{scl}}(i) = \frac{1}{|\mathcal{P}(i)|}\sum_{\mathbf{z}_{\tex
 
 同类别样本作正样本、不同类别作负样本，于是它一边把类内表征往一起收、一边把类间表征往两边推。C3L 的总目标把这个对比损失和前面 CFGT 的两个监督项合在一起：$\mathcal{L}_{\text{C3L}} = \lambda_{\text{scl}}\mathcal{L}_{\text{scl}} + \lambda_{\text{cls}}\mathcal{L}_{\text{cls}} + \lambda_{\text{cos}}\mathcal{L}_{\text{cos}}$。它的价值在于不是间接指望分类损失把类别分开，而是用对比目标直接在表征几何上强制"类内紧凑、类间分离"，这正是 ICE 最缺的那一步。
 
-**3. 几何引导解码器（GGD）：让重建既听语义先验、也听几何证据。**
+**3. 几何引导解码器（GGD）：让重建既听语义先验、也听几何证据**
 
 即便语义先验已经正确，重建仍可能跑偏——因为注意力如果只看语义不看局部几何，就会把该精修的表面细节糊掉。GGD 把解纠缠后的语义先验 $\mathbf{z}$ 当作 query，把编码出的特征序列当作 key/value，并在注意力打分上叠加一个几何偏置：
 

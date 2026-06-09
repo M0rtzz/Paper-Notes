@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 二维 persona：把"用户是谁"和"用户怎么攻击"解耦。**
+**1. 二维 persona：把"用户是谁"和"用户怎么攻击"解耦**
 
 单一维度的合成（只控 demographic 或只控攻击策略）天生会塌缩成"千篇一律的同一类身份"或"千篇一律的同一种攻击模式"，分类器只要记住几个模板就能识破。本文借社会心理学对真实 troll 的观察——身份恒定、行为随情境而变——把 persona 拆成两个正交维度：内在 persona $a_{in}=\mathcal{M}_{in}(th,u,s_{top},s_{recent})$ 是一份"个人档案"（username、account age、bio、兴趣类目、常逛 subreddit、知识背景、typical comment length），外在 persona $a_{ex}=(h,d,e)$ 则给出攻击的策略类型 $h$（如 "Antipathy: subtly introduces provocative topics"）、自然语言描述 $d$ 与示例 $e$。
 
 论文把 30,472 个 subreddit 名 × 6 种 trolling 策略 × 3 种 user type（newcomer / regular / longtime）随机配对，每个 agent 都是独一无二的画像。两维度正交带来的组合爆炸是多样性的根源：**同一种 trolling 策略，能由军事爱好者、玩具收藏者、青少年游戏玩家用截然不同的口吻说出来**——这正是它与 ToxiGen、Shin et al. 2023 等单维度合成拉开差距的地方。
 
-**2. 情境锚定：让恶意评论嵌进真实对话而非凭空生成。**
+**2. 情境锚定：让恶意评论嵌进真实对话而非凭空生成**
 
 现有 prompt 式合成是"无根之水"，攻击话题集中、与真实对话脱钩，分类器记住几个模式就能识别。本文要求每条评论 $h=A_H(x)$ 都基于具体的真实帖 $x$（携带 subreddit 元数据、原帖、已有评论）生成：agent 先"看到"原帖在聊什么，再用自己 persona 的兴趣去借题发挥。
 
 这解释了论文 Table 6 里的现象——面对同一个 K-pop 帖子，玩具收藏者会嘲讽 "idol 名字像他们的整容手术一样花哨"，军事爱好者会说 "这种命名像北朝鲜黑客"，同一帖产出风格迥异且高度上下文化的攻击。情境锚定的价值在于把恶意**藏进了一段合理的对话里**，而这恰恰是分类器的盲区。
 
-**3. 多维度评测协议：让合成 benchmark 自身可被验证。**
+**3. 多维度评测协议：让合成 benchmark 自身可被验证**
 
 合成数据最常被诟病"看起来对，其实没那么有害 / 没那么难 / 没那么多样"，本文索性给出一套三维评测把每条质疑都对上量化指标。有害性（Harmfulness）用 GPT-4o + Claude-3.5 双盲判，再叠加 5 人人工标注 100 条、Fleiss $\kappa=0.70$ 校验；难度（Challenge）用 4 个分类器在更严苛的 threshold $=0.2$ 设定下测准确率，越低说明 benchmark 越难；多样性（Diversity）则三管齐下——Sentence-BERT 嵌入算 convex hull area 与 pairwise cosine distance 看语义铺开程度，Self-BLEU / TTR / Vocab Size 看语言层面，GPT-4o 分类后的 Shannon entropy 看话题层面。这套协议不只服务本文，对其他合成 benchmark 工作同样有迁移价值。
 

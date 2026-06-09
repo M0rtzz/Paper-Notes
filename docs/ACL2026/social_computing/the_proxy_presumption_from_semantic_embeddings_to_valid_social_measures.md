@@ -50,19 +50,19 @@ tags:
 这些技术手段被进一步放进 Construct Validity Protocol。CVP 有三阶段：概念化、操作化、效度套件。它要求研究者先说清楚构念是什么、不是什么、可能被哪些 nuisance 混淆；再设计减少混杂的测量仪器；最后用稳定性、收敛效度、区分/增量效度、known-groups、预测效度等证据报告 proxy 是否真的在测目标构念。
 
 ### 关键设计
-**1. 不可识别性论证：从数学上说清"无监督 embedding 自动分离社会构念"为何站不住。**
+**1. 不可识别性论证：从数学上说清"无监督 embedding 自动分离社会构念"为何站不住**
 
 很多工作默认 embedding 空间里随手切一刀就对应某个社会构念，本文要做的是把这个经验批评升级成识别问题。作者令潜变量 $h=[c;z]$（目标构念 $c$ 拼上 nuisance 向量 $z$）服从各向同性高斯先验，然后指出：对任意正交旋转矩阵 $R$，旋转后的潜空间 $h'=Rh$ 与原潜空间会给出完全相同的观测分布。
 
 这意味着无监督似然目标根本无法区分"真实构念坐标"和"构念与 nuisance 的线性混合"——两者在数据上不可分辨。所以即使现实世界里 $c$ 与 $z$ 真的独立，模型学到的 embedding 也可能把二者搅在一起，这不是语料更大、encoder 更深就能自动修好的，而是测量目标在原理上就没被识别。
 
-**2. Counterfactual Neutralization：在打分函数层把主题、风格、实体等 nuisance 的贡献减掉。**
+**2. Counterfactual Neutralization：在打分函数层把主题、风格、实体等 nuisance 的贡献减掉**
 
 承接上一点，既然 embedding 距离里混了一堆 nuisance，那直接报告 $f(e_{obs})$ 就不可信。作者的对策不是重训 embedding，而是构造一个反事实中性文本——移除 stance、novelty claim 或情绪表达，但尽量保留主题内容——再算差分分数 $\hat{C}=f(e_{obs})-f(e_{base})$，期望留下的就是目标构念变化贡献的那部分。
 
 这个设计的好处是它是 text-native intervention：很多场景拿不到完整 nuisance label、也不方便重训模型，而文本天然可以被 LLM 重写、抽取、匿名化。于是反事实重写把"文本可干预"这个 NLP 独有的特性变成了显式操控构念强度的工具，比图像或结构化表格里的构念操作灵活得多。
 
-**3. Construct Validity Protocol：给 embedding 社会测量配一套可报告、可复现、可审计的效度流程。**
+**3. Construct Validity Protocol：给 embedding 社会测量配一套可报告、可复现、可审计的效度流程**
 
 问题的根子是论文往往只证明 proxy"有用"或"相关"，却没证明它不是另一个 nuisance 的替身。CVP 把测量拆成三阶段来补这一课：Phase 1（概念化）产出 construct map、facet blueprint 和三档 exemplar set，先说清构念是什么、不是什么、可能被哪些 nuisance 混淆；Phase 2（操作化）说明输入端、表示端、scoring function 端各自怎么控制 nuisance；Phase 3 报告一张 Validity Card，覆盖可靠性/稳定性、收敛效度、区分与增量效度、known-groups validity 和 criterion-related evidence。
 

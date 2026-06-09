@@ -45,19 +45,19 @@ LMT 以 Qwen3 为基座，训练 0.6B、1.7B、4B、8B 四个模型，覆盖 Eng
 
 ### 关键设计
 
-**1. Directional Degeneration 诊断与 Strategic Downsampling：揪出多路语料对称复用导致的反向方向崩塌，再用一刀采样止血。**
+**1. Directional Degeneration 诊断与 Strategic Downsampling：揪出多路语料对称复用导致的反向方向崩塌，再用一刀采样止血**
 
 作者先用 Qwen3-4B-Base 跑标准双向 SFT，结果撞见一个反直觉的现象：En/Zh→X 方向大幅提升，X→En/Zh 反而掉到 base 以下，错误形态是语法通顺却事实不忠实——这正是本文命名的 Directional Degeneration。病根在于 multi-way 语料被对称复用时，同一个 pivot 目标句被几十个源语言反复映射，模型于是学到“看到某些训练模式就背目标句”的捷径，不再认真读源句语义。为坐实这一归因，作者沿三条轴做对照：把反向数据替换成不重叠的 bilingual CPT 子集来打破对称、把 multi-way 反向样本保留率从 0% 逐步升到 100%、并在 Qwen3 0.6B/1.7B/4B/8B、Llama-3.1-8B、Gemma-2-9B 以及 10-50 种语言规模上复现。性能随保留率呈倒 V 形，约 $p=5\%$ 时最优，接近 100% 对称复用时坍塌最重。
 
 据此 Strategic Downsampling 的做法非常简单：En/Zh→X 样本全部保留，而 multi-way 语料里的 X→En/Zh 样本只以 $p=5\%$ 独立采样。相比方向感知训练、模型合并这类模型级手术，SD 是纯数据级修复——不改架构、不加推理开销，也不牺牲 pivot→X 的监督密度，却把“curse of multilinguality”落到了 many-to-one 目标重复这个具体病因上。
 
-**2. Parallel Multilingual Prompting（PMP）：给源句配一个辅助平行句，让语义多一个语言视角当锚点。**
+**2. Parallel Multilingual Prompting（PMP）：给源句配一个辅助平行句，让语义多一个语言视角当锚点**
 
 multi-way 数据不只有 many-to-one 的风险，也藏着跨语言对齐的价值，关键是怎么把它显式用起来。标准翻译 prompt 学的是 $P_\theta(T\mid S;\tau_{L_S\to L_T})$；PMP 把输入扩成源句 $S$ 加一个辅助语言句子 $A$，改学 $P_\theta(T\mid S,A;\tau_{L_S\to L_A\to L_T})$。辅助语言不是乱挑：En↔X 时选与 X 类型接近、模型又掌握较好的邻近语言（如德语配荷兰语、波兰语配捷克语），Zh↔X 时统一用英语做稳定语义锚，因为英语通常是模型最熟、也最容易自生成的中间语。
 
 PMP 的巧妙在于把“多路平行”从隐式的数据结构变成显式的 prompt 条件：SFT 阶段 STP（标准 prompt）和 PMP 混合训练，默认推理仍可用普通 STP，一旦手上有外部或自生成的辅助译文就切到 PMP prompt。这样模型学到的是“何时该借另一个语言视角”，而不是训练里盲目把所有方向都对称展开；它也顺带给了 LMT 一个 test-time enhancement 接口——可以外接高质量 MT、检索翻译记忆，或先自译出英语锚点再译目标语言。
 
-**3. 面向中英双中心的可扩展训练流水线：把两项策略落进一条可发布、可比较、覆盖长尾语言的完整 recipe。**
+**3. 面向中英双中心的可扩展训练流水线：把两项策略落进一条可发布、可比较、覆盖长尾语言的完整 recipe**
 
 低资源翻译从来不是一个 prompt trick 能搞定的，真正的瓶颈在数据规模、数据质量、方向平衡和训练阶段衔接，所以本文把整条链路工程化。CPT 数据先从 SlimPajama、Skywork、CulturaX、OpenDataLab、Wikimedia、OPUS 等来源收集，再用开源 MT 做伪平行扩增以补中文中心缺口，过滤链包括 OpusFilter 的长度与错配清洗、FastText LID 分层阈值、CometKiwi 质量打分，最终得到约 2.1B 英语中心、2.9B 中文中心句对；CPT 用显式方向 tag 和目标语言 separator 训练。SFT 用约 567K 高质量 pair、覆盖 117 个中心语言对，正向 STP/PMP 各 50%，反向经 SD 后总保留 5%（STP 2.5%、PMP 2.5%）。
 

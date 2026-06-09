@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. OT 势函数 + 梯度引导场：把固定向量换成输入相关的非线性场。**
+**1. OT 势函数 + 梯度引导场：把固定向量换成输入相关的非线性场**
 
 监督 steering 的第一个软肋是它只会"全局加一个固定 refusal 向量"，良性和 jailbroken 激活吃的是同一剂干预，没法局部差异化。本文把"jailbroken 分布 $\mu \to$ 拒答分布 $\nu$"建模成最小代价的 Wasserstein-1 输运，用 Kantorovich-Rubinstein 对偶 $W_1(\mu,\nu) = \sup_{\|f\|_L \le 1}(\mathbb{E}_\mu[f] - \mathbb{E}_\nu[f])$ 训出一个 1-Lipschitz 势函数 $f_\phi$，让它在拒答激活上取大值、其他激活上取小值——这样它的梯度 $v_\phi(h) = \nabla_h f_\phi(h)$ 天然就是一张"把 $h$ 往拒答区推"的方向场。Lipschitz 约束沿用 WGAN-GP 的梯度惩罚，在插值点 $\hat h = \epsilon h_r + (1-\epsilon) h_-$ 上施加 $L_{\text{GP}} = \mathbb{E}[\text{ReLU}(\|\nabla_{\hat h} f_\phi\|_2 - 1)]$。固定向量 steering 其实只是 $f$ 取二次型时的特例，表达力被钉死；而"良性零干预 + jailbroken 强干预"这对矛盾目标本质上要求引导随空间位置变化，所以非用 MLP 这类势函数不可，Appendix G 的消融也证实 MLP 势函数稳压一阶 / 多阶线性 steering。
 
-**2. 三条性质共同约束的外层损失：用势差和梯度范数当两个旋钮。**
+**2. 三条性质共同约束的外层损失：用势差和梯度范数当两个旋钮**
 
 光有"全局往拒答方向流"还不够，势场必须能分辨良性和 jailbroken 并区别对待。外层损失把这点拆成三项叠加。通用可引导性 $L_g = L_{\text{OT}} + \lambda_{\text{GP}} L_{\text{GP}}$，其中 $L_{\text{OT}} = -(\mathbb{E}_{h_r}[f_\phi(h_r)] - \mathbb{E}_{h_-}[f_\phi(h_-)])$ 推大"拒答激活"与"其它激活"的势差（$h_-$ 同时含良性与对抗 jailbroken）。良性零引导性靠梯度范数惩罚 $L_b = \mathbb{E}_{h_b}[\|\nabla_h f_\phi(h_b)\|_2^2]$ 实现，配一个很大的权重把良性处的梯度逼近 0，于是良性输入梯度上升几乎不动、效用不受损。jailbroken 强引导性反过来用 $L_j = -\mathbb{E}_{h_j}[\|\nabla_h f_\phi(h_j)\|_2^2]$ 鼓励势函数在伪越狱激活附近梯度尽量大，好让梯度上升一把就把它们拽回拒答区。把"势差"管"往哪流"、把"梯度范数"当一个抑制一个增强的局部强度旋钮，就在同一张场上对不同语义的激活做了空间差异化的强弱控制——这正是固定向量 steering 缺的那块能力。
 
-**3. 双层对抗：用 ULDD 在线生成对当前 $f_\phi$ 最难治的伪越狱。**
+**3. 双层对抗：用 ULDD 在线生成对当前 $f_\phi$ 最难治的伪越狱**
 
 监督 steering 失败的真正根因是训练支撑是静态有限的、盖不住开放的真实越狱子空间。本文让训练支撑跟着 $f_\phi$ 一起进化——哪儿势场弱，下一批伪越狱就往哪儿挤。内层固定 $\phi$、更新 $V$ 去最大化 $L_j(h_j^{\text{adv}}; f_\phi) + \gamma L_{\text{ULDD}}(h_r)$，其中 ULDD 损失 $L_{\text{ULDD}} = \mathbb{E}_{u\in U, v\in V}[\langle u, \Delta h_t(v)\rangle] - \lambda(\|U^\top U - I\|^2 + \|V^\top V - I\|^2)$ 保证每个方向都能在深层诱发显著且彼此独立的语义变化（$U$ 是预期语义变化方向，正交惩罚强制 $V$ 的列互不重合）。注意 $L_j$ 在内层是 max（造更难治的伪越狱）、在外层是 min（把它们治服），符号相反构成一个 minimax 对抗。衡量进展的代理量是 subspace coverage（Eq. 18-19）：用 PCA 投影能量比 $\text{Cov}_t^a(h) = \|P_a h\|^2 / \|h\|^2$ 度量伪越狱激活落在真实攻击家族 $a$ 子空间里的能量占比，越高说明模拟支撑越逼近真实越狱。训练中 coverage 单调上升、Avg. SR 同步单调下降（Fig. 6-7），机制上把"覆盖增长"和"防御增强"显式钉在一起。
 

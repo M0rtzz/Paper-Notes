@@ -53,7 +53,7 @@ Hermite-NGP 的训练流水线是：
 
 ### 关键设计
 
-**1. Hermite 哈希编码：把哈希表从"只存值"升级成"值 + 全部混合偏导"。**
+**1. Hermite 哈希编码：把哈希表从"只存值"升级成"值 + 全部混合偏导"**
 
 PINN 跑不动 I-NGP 的根因，是 $d$-线性插值只有 $C^0$ 连续——一阶导在 cell 内是分段常数、边界跳变，二阶导几乎处处为零，PDE 残差里的 Laplacian 根本拿不出可信值。作者的破局点是让每个哈希格点不只存函数值，还存 $2^d$ 个混合偏导系数 $\{f^{(\alpha)}\}_{\alpha\in\{0,1\}^d}$——2D 是 $(f, f_x, f_y, f_{xy})$，3D 是 $(f, f_x, \dots, f_{xyz})$，并按导数阶分桶进 $2^d$ 张独立哈希表（2D 三张：$T_1\times F$ 存 $f$、$T_2\times 2F$ 存一阶、$T_3\times F$ 存混合二阶）。重建时用张量积 Hermite 基把系数 blend 成局部场：
 
@@ -61,11 +61,11 @@ $$\gamma^l(\mathbf{x}) = \sum_{g}\sum_{\alpha}\theta_{l,h(g)}^{(\alpha)}\,H^{(\a
 
 其中 1D 基由值基 $h^{(0)}(t)=-2t^3+3t^2$ 与导基 $h^{(1)}(t)=t^3-t^2$ 组成，$d$ 维由 $H^{(\alpha)}=\prod_i h^{(\alpha_i)}(x_i)$ 张成。为什么必须这么扩张？传统 $d$-线性只有 $2^d$ 个值系数、自由度刚好用完只能到 $C^0$；要做 $C^1$ Hermite 必须把自由度翻倍到 $2\cdot 2^d$（每顶点带导数），$\nabla^2u$ 在 cell 内才不为零。把导数当独立通道存还有个意外好处：哈希碰撞注入的高频噪声被多通道分摊吸收，消融里给一阶导表更大容量（$2^{14}$）能多降 56% 误差，正因一阶导对碰撞最敏感。
 
-**2. SIREN 链式法则下的解析微分：一次 forward 同时拿到 $\nabla u$ 和 $\nabla^2 u$。**
+**2. SIREN 链式法则下的解析微分：一次 forward 同时拿到 $\nabla u$ 和 $\nabla^2 u$**
 
 光在哈希表层面拿到 $\nabla\gamma,\nabla^2\gamma$ 还不够，得把它们一路传到 MLP 输出 $u$，才能算出整张 PDE 残差。Hermite 基的导数本身可解析写出（cell 内一阶导 $\partial h^{(0)}/\partial t=-6t^2+6t$、二阶导 $-12t+6$），$d$ 维通过因式分解 $\partial_{x_i}H^{(\alpha)}=\partial_{x_i}h^{(\alpha_i)}(y_i)\prod_{k\neq i}h^{(\alpha_k)}(y_k)$ 向量化算出。MLP 选 SIREN（$\sigma(x)=\sin(\omega x)$），是因为它的二阶导恒等式 $\sigma''=-\omega^2\sigma$ 让链式法则极简，单层 Laplacian 写成 $\nabla^2u=W_2[-\omega^2a\odot\sum_i(W_1\gamma_{x_i})^2+\omega\cos(\omega z)\odot W_1\nabla^2\gamma]$，且能复用 forward 的中间量。对比之下 INGP-FD 算一次中心差分 Laplacian 要 $2d+1$ 次 forward（3D 要 7 张 activation 图），既占满显存又被 $O(\epsilon^2)$ 截断误差封死精度；Hermite-NGP 单次 forward 单张计算图，$\sim 17$M 参数模型单 epoch 只要 $3.5\,\mathrm{ms}$，且显存反而比 INGP-FD 更低。换别的激活（Swish/GELU）也能跑，只是丢掉这层 algebraic 简化。
 
-**3. 多分辨率从粗到细课程训练：把"先低频后高频"和哈希层级显式对齐。**
+**3. 多分辨率从粗到细课程训练：把"先低频后高频"和哈希层级显式对齐**
 
 PINN 有 spectral bias，一上来让所有频段一起 fit 容易被高频细节带偏。作者借多分辨率哈希天然的层次结构，模仿 multigrid V-cycle 分三阶段激活：先只训粗层 $l=0,\dots,L_0$ 学全局结构，再按 $L_{\text{active}}(t)=\min(L,\,L_0+\lfloor t/\tau\rfloor)$ 渐进激活更细层（$\tau$ 为激活间隔），最后全层联合微调。它之所以有效，是把"频率从低到高"这条缓解 spectral bias 的经典训练动力学和哈希分辨率层一一对应，避免高频细节被随机初始化的粗层干扰。Helmholtz 2D 消融里 C2F 相比无调度降低 79.2% 误差，也优于 V/W-cycle。
 

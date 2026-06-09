@@ -42,7 +42,7 @@ CoLoGen 想做的，是让同一个生成模型同时胜任指令编辑、可控
 
 ### 关键设计
 
-**1. Progressive Representation Weaving（PRW）：用 KV 层的专家路由把概念表征和定位表征拆开。**
+**1. Progressive Representation Weaving（PRW）：用 KV 层的专家路由把概念表征和定位表征拆开**
 
 统一框架最大的痛点是把概念表征 $\mathcal{R}_c$ 和定位表征 $\mathcal{R}_l$ 强行塞进同一组共享参数，结果联合优化时互相拖后腿。PRW 的做法是只在 source latent 的 KV 投影这一层动手脚，给它配一个专家池 $\{E_k\}_{k=1}^N$ 和一个带噪声的 top-1 路由器。路由权重由当前隐状态 $h$ 算出，加性噪声项让训练期的专家选择带上探索性：
 
@@ -54,11 +54,11 @@ $$(K_{\hat{h}}, V_{\hat{h}}) = \text{KV\_proj}_{\text{base}}(h) + \sum_{k \in \m
 
 注意力本身分两步走：先让 source latent 自注意力把选中的专家信息吸收进去，再让 noisy/text latent 与这份已经"带任务色彩"的 source 表征交互。由于路由发生在每个 block 内部、且只动 KV，不同任务自然会激活不同专家，概念理解与空间定位因此走在两条不重叠的通路上，避免了共享参数时的相互干扰。
 
-**2. 渐进式分阶段训练：按能力依赖顺序逐个点亮专家，旧专家冻结防遗忘。**
+**2. 渐进式分阶段训练：按能力依赖顺序逐个点亮专家，旧专家冻结防遗忘**
 
 如果一上来就把所有任务混在一起训，概念和定位的冲突会让模型每个任务都学不透。CoLoGen 把训练拆成 5 步，严格按"先打地基、再盖上层"的依赖关系推进：Step 0-1 是内生预训练，用 3M 合成数据做 Mask Inpainting 把概念能力练出来，再用 1M 数据做 Visual Grounding 把定位能力练出来；Step 2 注入条件，用 20M 数据让模型适配 Canny/Depth/HED/Lineart/Seg 等可控生成信号；Step 3-4 做指令-图像对齐，先用 200K 数据学 Customized Generation，再用 1.6M 数据学 Instruction Editing。关键在于每一步只解锁一个新专家 $E_{N-1}$，之前训好的专家全部冻结——这样新任务的学习不会改写旧能力，效果上类似终身学习里的参数隔离，天然抵抗灾难性遗忘。
 
-**3. Veteran Gate Routing Supervision：用辅助损失约束新专家的使用密度，逼模型继续用老本事。**
+**3. Veteran Gate Routing Supervision：用辅助损失约束新专家的使用密度，逼模型继续用老本事**
 
 光冻结旧专家还不够，因为路由器很容易偷懒，把几乎所有 token 都甩给最新解锁的专家，导致前几步辛苦学到的概念/定位能力被晾在一边。CoLoGen 加了一项 veteran gate 损失，直接监督新专家 $E_{N-1}$ 的路由占比 $U_t$（即被路由到新专家的 token 比例），把它拉向一个目标密度 $\rho$：
 

@@ -45,15 +45,15 @@ MASPO 把多智能体系统形式化为一张有向通信图 $\mathcal{G}=(\math
 
 ### 关键设计
 
-**1. 多粒度联合奖励：在没有 label 的情况下判断一个 prompt 是不是真的更好。**
+**1. 多粒度联合奖励：在没有 label 的情况下判断一个 prompt 是不是真的更好**
 
 中间 agent 输出的是推理草稿而非可对照 ground truth 的答案，所以 MASPO 不去算绝对分，而是让 LLM Evaluator $\mathcal{M}_{eval}$ 在三个粒度上比较候选 prompt 与参考 prompt 的输出谁更优，再加权平均成奖励：$R=\frac{1}{|\mathcal{B}|}\sum_k[\alpha\cdot\mathbb{I}(o_i'\succ o_i)+\theta\cdot\mathbb{I}(o_{glob}'\succ o_{glob})+\beta\cdot\frac{1}{|\mathcal{N}_{out}(v_i)|}\sum_{v_j}\mathbb{I}(o_j'\succ o_j)]$。三项分别对应 Local Validity（局部角色合规性）、Global Alignment（对最终系统输出的影响）、以及拓扑感知的 Lookahead Potential——把候选生成的新上下文喂给直接后继 agent，看下游输出是否被改善，相当于把「下游涟漪」量化进奖励。只看 local 会被「局部完美但下游崩」骗，只看 global 又会因信号过稀疏让优化器学不动，三层组合让信用分配能沿因果链传播，同时整套评估完全不需要标注。
 
-**2. 错位案例挖掘 + 注入式生成：把「局部赢全局输」的隐性 bug 变成定向训练信号。**
+**2. 错位案例挖掘 + 注入式生成：把「局部赢全局输」的隐性 bug 变成定向训练信号**
 
 人工调 prompt 时最难抓的就是「输出貌似合规但把下一步带跑偏」这种隐性失败，MASPO 把它显式形式化：凡是 $\mathbb{I}(o_i'\succ o_i)=1$ 但 $\mathbb{I}(\text{Lookahead})=0$ 或 $\mathbb{I}(o_{glob}'\succ o_{glob})=0$ 的样本，就是局部赢全局输的错位案例，统一收进缓冲 $\mathcal{B}_{mis}$。生成新 prompt 时不再盲目变异，而是 trace-guided——把 $(q,\mathcal{C},o)$ 三元组当 few-shot 上下文交给 Optimizer LLM $\mathcal{M}_{opt}$，并优先注入 $K_{mis}$ 条错位样本，等于告诉它「这些场景下你看似做对了却拖累了系统，请针对性改」，倒逼新 prompt 去弥合局部与全局的鸿沟。把 bug 自动定位再显式喂回生成器，比纯随机变异的搜索效率高一个数量级。
 
-**3. 带 Beam Refresh 的进化束搜索 + 拓扑调度：在非平稳的优化景观里稳定搜索。**
+**3. 带 Beam Refresh 的进化束搜索 + 拓扑调度：在非平稳的优化景观里稳定搜索**
 
 候选在 Top-$K$ beam 里按累计奖励 $J(p')=R(p',p_{parent};\mathcal{B}_{iter})+J(p_{parent})$ 演化，配合交错式拓扑调度——每个 agent 只迭代 $T$ 步就冻结让位下游，避免上游对下游早已过时的行为过拟合。难点在于 peer agent 一直在变，beam 里残留的旧累计分对应的是早被替换掉的上游上下文，照着选下一代会被过时信息误导，所以 **Beam Refresh** 在每次重访某 agent 时丢弃旧分，改用相对当前全局最优 prompt $p_{best}$ 的「居中胜率」重新打分 $J_{new}(p)=R(p,p_{best};\mathcal{B}_{iter})-0.5$（减 $0.5$ 把胜率居中到正负号，胜过基线为正、不如为负）。它只在 agent 被重访时刷新而非全量重评，把无效计算压到最低，又保证搜索始终在最新的性能流形上推进。
 

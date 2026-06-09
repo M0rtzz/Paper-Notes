@@ -45,15 +45,15 @@ ReMoE 是一个 post-training 的 router 微调框架，推理 pipeline 与 base
 
 ### 关键设计
 
-**1. Gate-only 微调 + reuse mass 可微代理：把"缓存命中"翻译成 router 能优化的连续目标。**
+**1. Gate-only 微调 + reuse mass 可微代理：把"缓存命中"翻译成 router 能优化的连续目标**
 
 痛点很直接——"step $t$ 与 step $t-1$ 选中的专家集合重叠几个"是一个离散、不可导的量，SGD 根本无从下手，所有 hardware-aware 训练目标都卡在"硬件指标不可导"这一步。ReMoE 的做法是定义 $\tilde{E}_{t-1} = \texttt{stop\_gradient}(E_{t-1})$，把上一步选中的专家 index 当成常数，再取当前步的 reuse mass $m_t = \frac{1}{K}\sum_{k\in\tilde{E}_{t-1}} P_t^{(k)}$——也就是当前 router 分布在"上一步刚用过的那 $K$ 个专家上"压了多少概率质量。stop_gradient 让梯度只往当前 $P_t$ 流，形成一个"单向追赶上一步"的信号：$m_t$ 越大，Top-$K$ 落回老专家的概率越高，相邻步重叠率 $\mathrm{IR}_t = |E_t \cap E_{t-1}|/K$ 的期望也随之抬升。论文用 Proposition 3.1 把这条信号锚到真实 I/O 上——在 LRU + 请求隔离的标准缓存语义下，平均 fetch 次数满足 $\bar{N}_{\text{fetch}} \le K(1 - \mathrm{EOR})$，于是 reuse mass 成了 Top-$K$ overlap 的光滑下界，"缓存命中"第一次能直接进入梯度回传。又因为只动 router 参数，整个微调极其轻量（OpenHermes-2.5 上 100k 样本、2000 steps）。
 
-**2. 时序局部性正则 $L_{\text{Loc}}$：用四个不同时间尺度的子项一起整形路由轨迹。**
+**2. 时序局部性正则 $L_{\text{Loc}}$：用四个不同时间尺度的子项一起整形路由轨迹**
 
 单靠 reuse mass 只能压"相邻一步"，会留下两类残余 miss：连续小幅但累积的慢漂移，以及局部窗口内专家集合的扩散。$L_{\text{Loc}}$ 因此拆成四项分时尺度协同：$L_{\text{Loc}} = \lambda_{\text{Reuse}} L_{\text{Reuse}} + \lambda_{\text{Smooth}} L_{\text{Smooth}} + \lambda_{\text{Lag}} L_{\text{Lag}} + \lambda_{\text{WS}} L_{\text{WS}}$。$L_{\text{Reuse}} = -\log(\rho + 10^{-8})$ 直接拉高序列平均 reuse mass $\rho$，负责短窗重叠；$L_{\text{Smooth}} = \frac{1}{T-1}\sum \text{SymKL}(P_t, P_{t-1})$ 用对称 KL 压相邻步的分布抖动（这里**不**加 stop_gradient，因为要让两步互相靠拢、双向耦合）；$L_{\text{Lag}}$ 在 lag 集 $\mathcal{D} = \{1,2,4,8,16\}$ 上做 SymKL，专抓跨多步的慢漂移；$L_{\text{WS}}$ 把每 $W$ 步的分布求平均后算熵 $H(\bar{P}_b)$ 再最小化，鼓励每个局部窗口里只活跃少数专家，正好对齐小缓存容量。这样 short-horizon / multi-step / windowed 三种 locality 各有一项盯着，比单一正则鲁棒得多。
 
-**3. Trust-KL 语义锚：给激进的局部性优化套一道"别把模型推崩"的护栏。**
+**3. Trust-KL 语义锚：给激进的局部性优化套一道"别把模型推崩"的护栏**
 
 只压局部性很容易把 router 推到一个"缓存友好但 perplexity 崩了"的退化解——ReMoE 想做的是轻量 post-training，既不依赖 teacher、也不改 inference graph，就必须有个安全边界。它用一份 FP32 冻结的 gate 快照 $\theta_{\text{gate}}^0$ 在**当前** $h_t$ 上算 $P_t^{\text{ref}}$（关键细节：每步都用当前隐状态，所以参考分布会随上下文自适应），再以 $L_{\text{Trust}} = \frac{1}{T}\sum_t D_{\text{KL}}(P_t \,\|\, \texttt{stop\_gradient}(P_t^{\text{ref}}))$ 把 fine-tuned 分布拉回预训练 router。选 KL 而非 L2 / cosine 是因为路由本就是概率分布，KL 天然在高概率专家上加更大权重，恰好覆盖 Top-$K$ 决策的支配区域，这跟 PPO / distillation 里拿它当软信任域用的语义一致。"用当前 $h_t$ 算参考"这一点尤其重要：遇到语义急转弯时，locality bias 不会强行压住必要的专家切换，从而保证 OOD 域上最差也只是退化到 baseline 加速、不会掉点。
 

@@ -47,11 +47,11 @@ dLLM-Cache 是一个挂在 dLLM 推理 forward 上的训练无关插件，思路
 
 ### 关键设计
 
-**1. Long-Interval Prompt Cache：让静态 prompt 整段绕过 Transformer。**
+**1. Long-Interval Prompt Cache：让静态 prompt 整段绕过 Transformer**
 
 dLLM 经常是长 prompt + 短 response，而 prompt 段恰恰是"步步重算却步步几乎不变"的最大计算浪费源——因为 dLLM 训练用 per-token 独立随机掩码，prompt token 在所有去噪步上输入恒定，作者实测相邻步 prompt 段的 K/V/AttnOut/FFNOut 余弦相似度都接近 1。于是对每层把 $\mathbf{K}_p^{(l)}, \mathbf{V}_p^{(l)}, \mathbf{AttnOut}_p^{(l)}, \mathbf{FFNOut}_p^{(l)}$ 一次算好缓存，只在 $k \equiv 0 \pmod{K_p}$ 时重算一次，$K_p$ 典型取 50–100。关键在于它缓存的不只是 KV，还包括 Attention 输出和 FFN 输出，等于让 prompt 那部分整段跳过整层 Transformer——这也是它和 dKV-Cache / Fast-dLLM 等并发工作的根本差异，后者只缓存 KV，FFN 仍要逐步重算。
 
-**2. V-verify-guided Adaptive Response Update：用便宜的 Value 预测昂贵特征要不要重算。**
+**2. V-verify-guided Adaptive Response Update：用便宜的 Value 预测昂贵特征要不要重算**
 
 response 段总体相似度也高，但总有少数 token 在某步突然"变脸"，朴素地每 $K_r$ 步整段刷新要么省得有限要么掉点。难点在于：判断一个 token 要不要更新，本来得先把它的全套特征算出来对比，这就陷入"为了省算而先全算"的悖论。作者在 Figure 2 发现 response token 的 $\mathbf{V}$ (以及 $\mathbf{K}$) 跨步相似度变化与下游 AttnOut/FFNOut 的变化强相关，于是用前置且廉价的 $\mathbf{V}$ 当代理信号：在两次全量刷新之间，先用轻量投影算出当前层所有 response token 的新 $\mathbf{V}_r^{\text{new}}$，对每个 token $j$ 计算它与缓存值 $\tilde{\mathbf{v}}_{r,j}^{(l)}$ 的余弦相似度
 
@@ -59,7 +59,7 @@ $$s_j = \frac{(\mathbf{v}_{r,j}^{(l)})^\top \tilde{\mathbf{v}}_{r,j}^{(l)}}{\|\m
 
 取 $s_j$ 最低的 $\lfloor \rho\,|\mathbf{y}^{(k)}| \rfloor$ 个 token 判为"活跃"，只对它们完整重算 $\mathbf{K}, \mathbf{AttnOut}, \mathbf{FFNOut}$ 再 scatter 回 cache；$\mathbf{V}_r$ 反正已整段算出，索性全量覆盖更新。这样昂贵的注意力/FFN 重算被压缩到只发生在真正变化的少数 token 上。
 
-**3. 双时间尺度差异化调度（$K_p \gg K_r$，$\rho \approx 0.25$）：两种冗余两套频率分而治之。**
+**3. 双时间尺度差异化调度（$K_p \gg K_r$，$\rho \approx 0.25$）：两种冗余两套频率分而治之**
 
 把上面两件事合起来，就是用两套截然不同的刷新频率匹配两种冗余结构：prompt 几乎不变就极稀疏刷 ($K_p = 50\text{–}100$)，response 缓慢但非均匀演化就高频但局部刷 ($K_r = 5\text{–}10$，每次只动 $\rho = 0.25$ 即 1/4 token)。整个调度只引入这三个超参，跨任务/跨模型几乎不用重调；代价是每层多缓存四类特征、总量 $T \times d \times 4 \times L$，在 LLaDA 8B 上实测仅 +1 GB (约 5%) 显存。Ablation 证实这种差异化是必需的：均匀缓存 ($K_p=1,\rho=0$ 或纯增大 $K_r$) 要么节省有限要么掉点严重，只有区分两类 token 后才能在 GSM8K 上拿到 5×–9× 加速且分数不掉甚至涨点。
 

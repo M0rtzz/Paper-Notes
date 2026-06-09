@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. 拒绝式概率图模型：把 proxy 对齐拆成"先提候选、再决定拒绝"两件事。**
+**1. 拒绝式概率图模型：把 proxy 对齐拆成"先提候选、再决定拒绝"两件事**
 
 已有方法常被实现细节遮住本质，作者用一个带 latent draft token 和 rejection variable 的生成模型把它们统一起来：先从 $p$ 采 $\bar{x}=w$，再采拒绝变量 $r$；$r=0$ 时最终 token 直接复制 $w$，$r=1$ 时从 $q^\ast$ 采样。整条输出分布可概括为 $\pi(x=v)=p_v(1-\mu_v)+q^\ast_v\sum_w p_w\mu_w$。
 
 这张图的价值在于把"用小对齐模型引导大基础模型"明确拆成两个可解释步骤——大模型先提出候选，再定义什么时候拒绝候选——于是 Nudging、KAD、隐式奖励都能被放进同一张图里直接比较。
 
-**2. 把已有 proxy 方法还原成不同的拒绝准则。**
+**2. 把已有 proxy 方法还原成不同的拒绝准则**
 
 统一框架后，旧方法只是 $\mu_v$ 的不同取法。Nudging 是分布级准则：$\max_w p_w<\lambda$ 时整步交给 $q^\ast$，拒绝的是 $p$ 整个分布而非某个 token。dual KAD 是 token 级准则：采到的 token 概率 $p_v<\lambda$ 时拒绝该 token。隐式奖励方法先构造 $s_v=p_v(q^\ast_v/q_v)/Z$，论文用 Proposition 1 证明在满足 enclosing 条件时，它同样能由某个 rejection distribution 产生。
 
 这层还原不只是归类，更暴露了旧方法的共同弱点：Nudging 和 KAD 都只依赖 $p$ 的绝对置信度，从不询问 fallback 的 $q^\ast$ 能否做得更好；隐式奖励虽用了 $q^\ast/q$，却要同时访问小模型的 base 与 aligned 两个版本，部署条件更重。
 
-**3. Conservative confidence bet：拒绝与否取决于 fallback 有没有更强候选。**
+**3. Conservative confidence bet：拒绝与否取决于 fallback 有没有更强候选**
 
 新准则把决策从"看大模型自身是否自信"改成"看小对齐模型有没有更有把握的替代选择"。对从 $p$ 采到的 token $v$，比较 $p_v$ 与小对齐模型当前最自信的 token 概率 $\max_w q^\ast_w$：若 $p_v<\max_w q^\ast_w-\lambda$，说明 $q^\ast$ 至少有一个候选比当前 draft 更可靠，于是拒绝 draft；否则保留。margin $\lambda$ 越大越保守，越不容易触发 deferral。
 

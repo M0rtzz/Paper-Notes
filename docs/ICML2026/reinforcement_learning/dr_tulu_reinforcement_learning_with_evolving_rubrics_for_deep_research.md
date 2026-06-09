@@ -50,15 +50,15 @@ DR Tulu 采用 SFT-then-RL 两段式训练：
 
 ### 关键设计
 
-**1. 搜索增强的初始 rubric + 持久化 buffer：开训前先用真外部证据搭好一份判分基线。**
+**1. 搜索增强的初始 rubric + 持久化 buffer：开训前先用真外部证据搭好一份判分基线**
 
 长文 DR 的判别需要外部最新知识，rubric 生成器若没看检索结果就闭门造车，很容易漏掉关键事实点。所以训练开始前，对每条 prompt $x$ 先调 `SEARCH(x)` 检索相关文档，把文档连同 $x$ 喂给 rubric 生成器 $G_{\text{rubric}}$（GPT-4.1），产出一组持久 rubric $R_x^{\text{persist}} = \{R_1, \dots, R_{K_s}\}$，在整个 RL 训练里始终保留、承担"基础事实约束"。打分时单条响应 $y$ 的 rubric 得分为 $S(x, y) = \sum_k w_{x,k}\,\text{JUDGE}(r_{x,k}, y) / \sum_{k: w_{x,k} > 0} w_{x,k}$，JUDGE LM 给 $\{0, 0.5, 1\}$ 三档。这一步的深层用意是制造 generation–verification gap——让 rubric 生成器握有策略没有的"特权信息"（检索文档，以及后面会用到的多 rollout 对比），从而保证 rubric 始终比策略本身更懂这个任务，这是整个 RLER 思想的根基。
 
-**2. 在线演化的 active rubric + 正负 rubric：让奖励标准跟着策略一起进化、并显式反 hacking。**
+**2. 在线演化的 active rubric + 正负 rubric：让奖励标准跟着策略一起进化、并显式反 hacking**
 
 静态 rubric 是 off-policy 的——它对所有响应一视同仁，分不清当前策略已经做得好和还做不好的地方。RLER 每个训练步对每条 prompt 采样 $G$ 条 on-policy rollouts $\{y_i\}_{i=1}^G$（含搜索过程和最终答案），连同当前 $R_x$ 喂给 $G_{\text{rubric}}$，要它产出两类新 rubric：正 rubric 捕捉某些 rollout 探到的、池里还没有的新知识或优秀模式；负 rubric 总结跨 rollout 共有的坏习惯（比如"逐字复制检索片段骗高 citation precision"这种 reward hacking），被抓到后显式扣分。于是每一步都用最新的"策略弱点 + 新探到的事实"重写打分标准，奖励信号天然 on-policy 且持续细化；负 rubric 更是一个自动的 anti-hacking 机制——模型一旦钻空子，下一步 rubric 就长出对应扣分项。
 
-**3. 基于方差的 rubric buffer 管理：用区分度自动决定哪些 rubric 该留。**
+**3. 基于方差的 rubric buffer 管理：用区分度自动决定哪些 rubric 该留**
 
 rubric 太少打分粗糙，太多则 judge 调用成本爆炸、噪音项还稀释信号，所以 buffer 必须有取舍。每次 GRPO rollout 后用当前 active rubric 给所有 $\{y_i\}$ 打分，先删掉奖励方差为 0 的 rubric（对所有 rollout 要么全对要么全错，提供不了梯度），再按 reward 标准差降序只保留 top $K_{\max}$ 条。"方差"在这里是个非常自然的区分度代理：方差为 0 意味着该 rubric 对策略改进毫无贡献，方差大才说明 rollout 之间有差异、能产生有效梯度。这套机制把"哪些 rubric 该保留"完全交给经验信号决定，省掉人工调优；同时 format / search / citation 三个辅助奖励并行计算，补上正确格式、有效搜索和高质量引用的约束。
 

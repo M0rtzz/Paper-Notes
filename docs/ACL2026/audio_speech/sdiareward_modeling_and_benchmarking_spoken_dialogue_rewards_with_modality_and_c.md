@@ -45,15 +45,15 @@ SDiaReward 把语音对话评测做成一个端到端的标量打分问题：不
 
 ### 关键设计
 
-**1. 双 gap 偏好数据构造：把"语音自然性"和"口语风格"两条评估轴隔离开。**
+**1. 双 gap 偏好数据构造：把"语音自然性"和"口语风格"两条评估轴隔离开**
 
 如果偏好对里文本内容或录音条件不受控，模型很容易学到"录音更干净就更好"这类 shortcut，根本没在评声学自然性。作者因此按两个 gap 分别构造对照样本。modality-aware subset 把真人语音与 SoulX-Podcast 生成的同内容合成语音配成对，文本一致，迫使模型只能盯住 prosody、情绪、轮次一致性这些副语言差异；colloquialness subset 则先生成书面风格的多轮对话，再重写成带 filler、fragmentation、discourse markers 的自然口语版本，并用相同 TTS 配置合成，保证偏好信号纯粹来自风格而非音质。这样每一对都只在一个维度上有差，监督信号干净。
 
-**2. Episode-level 端到端 reward model：让模型直接"听"完整多轮，而非读 ASR 文本。**
+**2. Episode-level 端到端 reward model：让模型直接"听"完整多轮，而非读 ASR 文本**
 
 多轮语音的偏好信息散落在上下文、最终回复和声学细节里，指望最后一个 token 或一段 ASR 转写承载全部信号并不现实。模型用 multimodal LLM backbone 把交错的 speech-text 序列投影到联合表示空间，取最后一层 hidden states $\mathbf{H}=\{h_1,\ldots,h_L\}$，再经 Pooling 和 MLP 输出 reward。作者对比 last-token、attention、mean pooling 三种聚合方式，发现 mean pooling 在 episode-level 表征上最稳，能更均衡地汇总分散在整段语音里的偏好线索。
 
-**3. 多准则条件化与中心化正则：一个模型兼顾两类评测且 reward scale 不漂。**
+**3. 多准则条件化与中心化正则：一个模型兼顾两类评测且 reward scale 不漂**
 
 为了用同一个 reward model 处理 modality-aware 与 colloquialness 两套标准，输入里加入 criterion-specific instruction，reward 变成 $r_\theta(\mathcal{C}, y, inst)$。训练用 Bradley-Terry preference objective 让 preferred 的分数高于 rejected。但 pairwise loss 只约束相对大小、不约束绝对值，跨 Wild、Semi-wild、Scripted 的域差异容易被当成分数整体偏移，于是再加一个 center loss 把 reward 均值锚到合理范围，提升校准与训练稳定性——这对后续把 reward 用于 DPO/GRPO 尤其重要。
 

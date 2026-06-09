@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 价值模糊攻击（Value Ambiguity Attack）：用反向/含糊规范把对的说成错的、把错的说成对的。**
+**1. 价值模糊攻击（Value Ambiguity Attack）：用反向/含糊规范把对的说成错的、把错的说成对的**
 
 针对每条 Moral Story 的黄金规范，作者用 Gemini-2.5-pro 生成两种被污染的规范：反向规范（Reverse Norm, RN）和含糊规范（Vague Norm, VN）。RN 用 情境+意图+道德行为 喂给 LLM，逼它产出一条"让这个道德行为听起来不合理"的规范；VN 则用 情境+意图+不道德行为 产出一条"让这个不道德行为听起来合理"的规范。攻击 prompt 借鉴 DAN 的角色扮演套路：把模型设定成一个"逻辑与伦理分析器"，命令它严格只遵守这条被操纵的规范、无视它更广的伦理训练。于是两个攻击分别是 Attack RN（prompt = S+I+MA+RN，诱导模型回答"该行为不道德"）和 Attack VN（prompt = S+I+IMA+VN，诱导回答"该行为道德"）。
 
-**2. 价值冲突攻击（Value Conflict Attack）：在两个价值打架时把模型推向单边。**
+**2. 价值冲突攻击（Value Conflict Attack）：在两个价值打架时把模型推向单边**
 
 源自 ValuePrism 的实例本身就牵涉两个相互竞争的价值/权利/义务，本该需要权衡。作者让 Gemini-2.5-pro 随机选一对 value/right/duty，围绕给定情境编一个道德故事——其中道德行为同时兼顾这两项，不道德行为只顾其一——再生成假规范（Fake Norm, FN）和偏见规范（Biased Norm, BN）。与 Ambiguity 同理：FN 用 情境+意图+道德行为 生成让道德行为显得不合理的规范，BN 用 情境+意图+不道德行为 生成让不道德行为显得合理的规范，对应 Attack FN（S+I+MA+FN，诱导"不道德"）和 Attack BN（S+I+IMA+BN，诱导"道德"）。它和 Ambiguity 的本质区别在于：这里模型本应在多个伦理价值间权衡，攻击恰恰利用这个"权衡空间"把它压向单边。
 
-**3. 三维属性标注：刻画每条规范"有多容易被操纵"。**
+**3. 三维属性标注：刻画每条规范"有多容易被操纵"**
 
 为了理解攻击为何奏效，作者对每条黄金规范沿三个维度做标注：核心权威范围（Core scope of authority，该原则在个人/人际/组织/社会法律/普世哪一层级生效）、文化普适性（Cultural universality，从 highly universal 到 highly contested/subcultural）、情境依赖度（Contextual dependency，从 highly generalizable 到 highly dependent）。统计显示超过 93% 的黄金规范属于"高普适"或"有变体的普适"——也就是说，即便在这些看似最稳固、最不该出分歧的规范上，攻击依然能撬动模型的判断，反过来说明脆弱性是系统性的，而非只发生在冷僻边角案例。
 

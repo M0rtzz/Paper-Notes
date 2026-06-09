@@ -48,15 +48,15 @@ MetaDNS 把训练拆成嵌套的双层循环。给定能量 $E(x)$、逆温度 $
 
 ### 关键设计
 
-**1. Well-tempered hill 沉积规则：往偏置势上砸历史相关的高斯 bump，越访问越衰减，顺手还把自由能曲面拟合出来。**
+**1. Well-tempered hill 沉积规则：往偏置势上砸历史相关的高斯 bump，越访问越衰减，顺手还把自由能曲面拟合出来**
 
 要推平已访问的能谷又不让 bias 无限增长，关键在沉积规则。第 $t$ 轮对每个 CV 桶 $s$ 做更新 $V_t(s)\leftarrow V_{t-1}(s)+\sum_j h\,\exp(-V_{t-1}(s)/(\gamma k_B T))\,K(s,\xi(x_j))$，其中 $h$ 是 hill 高度、$K$ 是离散高斯核、$\gamma>1$ 是 bias factor。那个指数因子保证 $V$ 越高、再加的 hill 越小，渐近满足 $V^\star(s)\approx-(1-1/\gamma)F(s)+c$——也就是说训练结束时 $V$ 本身就是（缩放后的）自由能曲面。相比往 $V$ 上无差别堆 hill，这种 well-tempered 形式既保证收敛，又把 $F(s)$ "免费"拟合出来；高斯核比 delta 核在经验上也更稳定（Dama et al. 2014）。
 
-**2. 离散神经 metadynamics 的双层训练：把 WT-MetaD 的"sample-bias-resample"循环改造成"内层学带偏分布 / 外层更新 bias"。**
+**2. 离散神经 metadynamics 的双层训练：把 WT-MetaD 的"sample-bias-resample"循环改造成"内层学带偏分布 / 外层更新 bias"**
 
 经典 WT-MetaD 是序贯 MCMC，每次更新 bias 后都要重新 burn-in 长链。本文把它改造成嵌套双层循环：内循环用 MDNS 的 WDCE 等基于 path-measure 对齐的 loss 把 $q_\theta$ 推向带偏 Boltzmann $\pi_{V_{t-1}}$；外循环只做一次前向采样然后更新 $V$。神经采样器一次采的样本之间独立，不像 MCMC 链有强自相关，所以外循环每次 hill 沉积的信息含量更高，同一 $V$ 下 amortize 多步训练后又能继续推进。这正是 MetaDNS 相对 MCMC-based WT-MetaD 的根本优势——后者要重 mix 长链，前者只是一次前向推理。代价是非遍历性问题：若 $q_\theta$ 没学到位，bias-based 重加权会有偏，作者在 Appendix A 给了缓解方案。
 
-**3. 双轨重要性重加权：训练完成后必须把带偏分布还原回真实 Boltzmann，针对不同 sampler 给两种 SNIS 权重。**
+**3. 双轨重要性重加权：训练完成后必须把带偏分布还原回真实 Boltzmann，针对不同 sampler 给两种 SNIS 权重**
 
 从平整化后的 $q_\theta$ 采样的构型必须还原 $\pi(x)$ 才有物理意义。本文给两种权重：Bias-based weights $w_i=\exp(V(\xi(x_i)))$ 适用于一切 sampler，权重只依赖低维 CV、方差小、不用额外能量评估，但对 sampler 误差敏感；Likelihood-based weights $\tilde w_i=\exp(-\beta E(x_i))/q_\theta(x_i)$ 渐近无偏，但要求 sampler 能算 likelihood——autoregressive 模型天生支持，MDNS 也能通过 path-likelihood 分解 $\log q_\theta(x_T)=\sum_t\log p_\theta(X_t\mid X_{<t})$ 算出，代价是每个样本一次额外能量评估。两套权重让 MetaDNS 各取所长：全局观测量（能量、磁化、CV 边缘、NESS）用 bias-based，Ising/Potts 的两点关联用 likelihood-based 以贴近 reference，必要时后者还能当 MCMC 的 informed proposal 保证统计精确。
 

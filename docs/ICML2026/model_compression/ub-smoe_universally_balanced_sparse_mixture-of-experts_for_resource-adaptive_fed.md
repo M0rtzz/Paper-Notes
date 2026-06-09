@@ -47,15 +47,15 @@ UB-SMoE 要解决的是「把 Sparse MoE 搬进异构联邦 LoRA 微调后，低
 
 ### 关键设计
 
-**1. Dynamic Modulated Routing (DMR)：用全局利用率重塑路由，又不毁掉专家专门化。**
+**1. Dynamic Modulated Routing (DMR)：用全局利用率重塑路由，又不毁掉专家专门化**
 
 要修的痛点是 rich-get-richer 的专家失衡——高算力客户端反复激活同一批专家把它们过度专门化，低算力客户端激活到的少数专家长期得不到训练。最直接的办法是加 load balancing loss 强行均匀化，但那会把专家压平、牺牲掉好不容易学到的专门化。DMR 的做法是把「这个专家在语义上合不合适」和「这个专家在系统上有没有被冷落」两个信号正交拆开：先用原始 affinity $s^{(l)}=W^{(r)}x$ 选出 top-$N_p$（$K_{\max}\le N_p\ll M$，文中取 $N_p=2$）候选集 $\mathcal{T}^{(l)}$，**只对候选集内**的专家加可学习调制向量 $\phi^{(l)}_i$，候选集外保持原 logit，再 $p^{(l)}=\text{softmax}(m^{(l)})$ 并 Top-$K_c$ 选出实际激活。调制量本身由服务器端的全局统计驱动：聚合利用率 $\tilde u^{(l)}_i=\sum_c p_c\frac{a^{(l)}_{c,i}}{n^{(l)}_c}$，对照目标均匀利用率 $u^*=\bar K/M$，按 $\tilde\phi^{(l)}_i=\tanh\left(\frac{u^*}{\tilde u^{(l)}_i+\epsilon}-1\right)$ 更新并用 momentum $\zeta$ 平滑——被过度使用的专家 logit 被压低、被冷落的被抬升。关键在于这种再平衡只发生在「跟当前输入语义相关」的候选集里，所以既修了失衡又不会把路由搅成噪声。
 
-**2. Universal Pseudo-Gradient (PG)：给未激活专家造梯度，打破 Top-K 死锁。**
+**2. Universal Pseudo-Gradient (PG)：给未激活专家造梯度，打破 Top-K 死锁**
 
 第二个痛点是 Top-K 路由不可导：未激活专家 gating 为 0、反传梯度也为 0，$K_c$ 小的低算力客户端等于本地大半专家拿不到任何学习信号。PG 让每个 batch、每个客户端的未激活专家 $i\notin\mathcal{A}_c(x)$ 都拿到一份「近似」梯度——用 router 的 softmax 概率配上已激活专家的真实梯度构造伪梯度，再按客户端稀疏度 $\rho_c$（与 $K_c/M$ 反比）缩放，$K_c$ 越小则伪梯度权重越高，因为它越急需补偿。这一步在数学上等价于把期望梯度 $\nabla_{\Theta^{(e)}_i}F_c$ 从「条件在 $i\in\mathcal{A}_c(x)$ 上」松弛回「无条件」，直接缩小 Definition 7 里的偏差项 $B_{c,i}(\Theta)$。为什么非这么做不可有理论背书：Theorem 4.1 证明 sparse Top-K 路由会让 SGD 收敛到 bias error 地板 $B_{\text{SMoE}}=2\|B(\Theta^*)\|^2/\mu'$，Corollary 1 进一步指出该地板 $\propto (M-K_c)$、对小 $K_c$ 客户端尤其致命，而 PG 正是攻击这个 bias 的来源——把「未激活」近似成「$p_{c,i}(\Theta)\to 1$ 的可更新状态」。
 
-**3. DMR ↔ PG 自强化循环与 $\phi$ 范围正则：两个机制互相兜底。**
+**3. DMR ↔ PG 自强化循环与 $\phi$ 范围正则：两个机制互相兜底**
 
 单独用任何一个都会过激：只有 DMR 时，路由再怎么调，长期零梯度的死亡专家还是没法贡献；只有 PG 时，所有专家会收敛到相似参数、失去 MoE 的意义。两者闭环才稳——PG 让所有专家持续学习不死掉，DMR 拿到的全局利用率统计才有意义、调制才能精准调度，调度后越来越多专家被真正激活、产生真实梯度，真实梯度又反过来让 PG 的估计更准。为防止调制本身爆炸，对 $\phi^{(l)}$ 加范围正则 $\mathcal{L}_{reg}=\lambda(\|\text{ReLU}(\phi_{\min}-\phi)\|^2_2+\|\text{ReLU}(\phi-\phi_{\max})\|^2_2)$，把调制量约束在 $[\phi_{\min},\phi_{\max}]$ 内。
 

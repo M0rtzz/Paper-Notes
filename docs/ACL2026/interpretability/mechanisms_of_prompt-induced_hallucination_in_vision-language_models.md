@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Mean ablation 替代 zero ablation：剥掉 head 的 token 信息但保住它的激活预算。**
+**1. Mean ablation 替代 zero ablation：剥掉 head 的 token 信息但保住它的激活预算**
 
 直接把 head 输出置零会破坏 layer norm 之后的激活分布、引入不可控的 distribution shift，让"消融效果"和"分布扰动副作用"纠缠不清。Mean ablation 改用该 head 在全数据所有 token 上的平均输出去替换每个位置——$\tilde H^{(l,h)}_t = \mu^{(l,h)} = \frac{1}{T}\sum_{t'} H^{(l,h)}_{t'}$——相当于让这个 head 失去"看 token 内容"的能力、却仍贡献一个固定 bias，于是干预只移除 token-specific 信息而不改激活幅度。knockout 成功率定义为"PIH 样本中被纠正回正确计数 N 的比例"，最小 head 集合通过两阶段筛选确定：先按单 head 成功率排序，再对 m∈{1,3,5,10} 做分组消融挑最佳 m。这一招正是 mechanistic interpretability 社区在 IOI circuit、induction head 研究里反复验证过的标准探针。
 
-**2. 跨模型 head 重叠 + 跨任务迁移：把"哪个组件负责 PIH"变成可观测的重叠率。**
+**2. 跨模型 head 重叠 + 跨任务迁移：把"哪个组件负责 PIH"变成可观测的重叠率**
 
 要直接 probe 数百亿参数判断 PIH 来自 LM 还是视觉组件几乎不可能，作者改用一组控制变量实验把问题转化为可量化的 head 重叠率。LLaVA-OV 与 Qwen-VL 共享 Qwen2 LM 但视觉 backbone 不同，二者 top-1/top-2 的 PIH-head 完全重合（都是 L0H3、L0H6）、top-10 里一半重合；而用 DeepSeek-LLM 的 Janus-Pro 重合度很低（top head 是 L0H20），这一对照强烈指向 PIH 源自 LM 而非 cross-modal fusion 层。随后把同一组 PIH-head 直接搬到 Visual CounterFact 的颜色任务（"Describe the C+k [object]"，用色轮距离 $k\in\{1,2,3\}$ 替代数字 offset），检验该 head 集合是否任务无关。
 
-**3. Copying form 四类细粒度分类：区分"不再 copy"和"copy 形式变了"。**
+**3. Copying form 四类细粒度分类：区分"不再 copy"和"copy 形式变了"**
 
 聚合 metric 只能看到 prompt-following 整体下降，却看不出"为什么幻觉减少"，更看不出三个模型其实走了不同机制。作者把响应细分成四类——exact copy（内容+格式都跟 prompt，如给 N=2 答 "There are 3 cats"）、soft copy（内容跟 prompt 但换格式，"There are three cats"）、format copy（内容对但格式仿 prompt，"There are 2 cats"）、no copy（内容对且自由格式，"There are two cats"），再分别看消融前后 $P(N_{digit}\mid N_{digit})$ 与 $P(N_{word}\mid N_{digit})$ 的概率变化，判断 prompt-following 的下降到底来自 attention mass 重分配到图像还是来自 copying 被抑制。正是这层划分让 LLaVA-OV（全面抑制 copying + 大幅转向 image attention）与 Qwen-VL（消融后 format copying 反而**增加**）的机制差异显形。
 

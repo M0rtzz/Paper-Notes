@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. SLS / SLSR / WSLS 形式化：把"LLM 该问哪个问题"写成可严格分析的两人零和 EFG。**
+**1. SLS / SLSR / WSLS 形式化：把"LLM 该问哪个问题"写成可严格分析的两人零和 EFG**
 
 UoT 这类启发式没有可对照的"最优"，无法回答"现在离最优还差多远"。GoT 先把问题写干净：SLS = (S, Q, f)，item chooser 私选 $s^*$、questioner 序贯提问 $q_t$ 并观测 $a_t=f(q_t,s^*)$，历史 $H_t=(Q_t,A_t)$，一致集合 $S(H)=\{s:f(Q(\tau),s)=A(\tau)\,\forall\tau\}$，游戏在 $|S(H)|=1$ 时结束、questioner 代价 = $|H|$。在此之上 SLSR 把候选问题限制为 $g(S(H))$ 输出的 $m$ 个（贴近现实——LLM 一次只能列有限个候选），WSLS 给每个 item 加权 $w(s)$、代价 = $w(s^*)|H|$，刻画"漏掉危险目标代价更大"。理论上 Theorem 3.7 证明当 $\mathcal{Q}=\mathcal{Q}_\infty$ 时 even-split 是 NE——这正好说明 UoT 的近似策略只在均匀分布限制下才最优。EFG 形式化把 NE 当成"对最坏情况优化"的金标准，又把可解性证明（Theorem 3.6 的 best-response NP-complete 性）和近似算法干净地分开。
 
-**2. Subgame Search：on-demand 构造 + CFR 求局部 NE，避开指数级完整博弈树。**
+**2. Subgame Search：on-demand 构造 + CFR 求局部 NE，避开指数级完整博弈树**
 
 显式构造完整博弈树成本与 $|\mathcal{S}|$ 指数相关（25 个 item 已要 5–6 小时），但人玩 20Q 也只看几步。GoT 借 poker bot 的做法，只在到达当前 infoset $I(H_t)$ 时按需展开一个固定深度 $d$ 的子博弈：用 LLM 生成 $g(S(H_t))$ 个候选问题，对每个候选 $c_i$ 让 LLM 充当 $f$ 把 $S(H_t)$ 切成 $Y=\{s:f(c_i,s)=1\}$ 和补集 $\bar Y$，递归 $d$ 步得 simulation tree；翻译成 EFG 时让 item chooser 在子博弈根重新选一个 $S(H_t)$ 上的分布（safe subgame search 的标准做法），叶子 $l$ 支付为 $d(l)-1+h(l)$、启发式 $h(l):=\log_2(|S(l)|)$ 给乐观下界；最后用 LiteEFG 的 CFR 求近似 NE，从提问者策略采样下一题。Theorem 5.1 证明这套 subgame search 是 safe 的——让对手在子博弈根"重新选"相当于给对手更多权力，由此得到的策略放回原博弈仍能保证最坏情况界。
 
-**3. Weighted variant + 加权启发式：让 NE 自动把"危险目标"优先识别出来。**
+**3. Weighted variant + 加权启发式：让 NE 自动把"危险目标"优先识别出来**
 
 UoT 的信息增益对权重不可知，加权场景下退化成均匀，可能"总轮数少但漏了关键 item"。GoT 在 WSLSR 里把 EFG 支付换成 $w(s^*)\cdot|H|$，启发式相应改为 $h(l)=\max_{s\in S(l)} w(s)\cdot(d(l)+\log_2(|S(l)|))$，提问 prompt 也注入权重信息，让 LLM 倾向先排除高权 item。这样 NE 的极小化最大值结构会自动把概率质量分给"先问出高权 item"的策略——比如人为构造 weight=100 vs 1 时，GoT 总会先直接问"是否为该重权 item"。本质是把权重通过支付函数显式传进博弈，让"高权时下大注"成为均衡的自然产物。
 

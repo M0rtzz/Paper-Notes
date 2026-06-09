@@ -52,19 +52,19 @@ tags:
 
 ### 关键设计
 
-**1. 闭邻域等价表示：把任意概念类装进图。**
+**1. 闭邻域等价表示：把任意概念类装进图**
 
 所有结果建立在一个统一的编码上：任何有限二值概念类 $\mathcal{C} \subseteq 2^V$ 都能写成某个图里的一组闭邻域。构造 $V(G) = V \cup \{x_C \mid C \in \mathcal{C}\}$，让概念顶点 $\{x_C\}$ 两两相连构成团，并令 $x_C \sim v \iff v \in C$，则 $\mathcal{B} = \{N[x_C]\}$ 就等价表示了 $\mathcal{C}$。正因为这一步无损，针对闭邻域（radius-1 球）证得的上下界对一切有限概念类都成立，结果的通用性远超图论本身。贯穿后续所有归约的核心抽象是 false twins——开邻域相同的顶点对，它们对教学映射施加强约束；而不同强度的鸽巢原理则负责把"twins 太多"翻译成"可以安全删一个顶点"。
 
-**2. 改进的算法上下界：把 N-NCTD⁺ 钉死在 $2^{\Theta(|E|)}$。**
+**2. 改进的算法上下界：把 N-NCTD⁺ 钉死在 $2^{\Theta(|E|)}$**
 
 N-NCTD 的下界（Theorem 2）来自 3-SAT 归约：给定 $n$ 变量 $m$ 子句的实例 $\varphi$，构造的图 $G$ 为每个变量配变量顶点 $v_i$ 与两个文字顶点 $t_i, f_i$、为每个子句配顶点 $c_j$，再加虚拟变量顶点 $v_0$、辅助集合 $\mathcal{V}_i = \{v_i^0, \ldots, v_i^4\}$ 和特殊顶点 $v_i^\star$，子句与变量顶点各自成团，使 $|V(G)| = \mathcal{O}(n+m)$。关键引理（Lemma 1）正是鸽巢原理的第一次出场：4 个 pairwise false twins 的闭邻域产生 6 对需区分、而每个非自身顶点最多区分 1 对，于是在 size-1 的 NCTM 下必有某个教学集恰为 $\{u_i\}$，把 SAT 的真值赋值锁进教学映射。由此除非 ETH 失败，N-NCTD 无法在 $2^{o(f(k)\cdot|V(G)|)}$ 内求解，大幅改进了此前隐含的 $2^{o(\sqrt{|V|})}$ 下界。对只用正面标签的 N-NCTD⁺，类似归约给出 $2^{o(f(k)\cdot(|V|+|E|))}$ 的下界（Theorem 3），而上界（Theorem 4）只需穷举所有正面教学映射：每个 $v$ 的 $T(N[v]) \subseteq N[v]$ 有 $2^{d(v)+1}$ 种选择，总计 $2^{\sum(d(v)+1)} = 2^{\mathcal{O}(|E|)}$。上下界在 $2^{\Theta(|E|)}$ 处严丝合缝，这是非冲突教学领域首个精确匹配的指数算法界，意味着问题在该参数上已无改进空间。
 
-**3. FPT 算法：treedepth 剪枝与 vertex cover 核化。**
+**3. FPT 算法：treedepth 剪枝与 vertex cover 核化**
 
 N-NCTD⁺ 对 treedepth 参数化的 FPT（Theorem 5）走自底向上剪枝树深分解 $\mathcal{T}$ 的路线。Reduction Rule 1 取 $X \subseteq V(G)$、令 $A = \{A_1, \ldots, A_\ell\}$ 为 $G-X$ 的连通分量子集、$\max|A_i| = t$，一旦 $\ell > (|X|+t)\cdot 2^{(|X|+t)^2}\cdot 2^{2t+|X|+1}$ 就删掉一个特定分量。安全性（Lemma 6）再次靠鸽巢原理：分量数一旦超过这个阈值，必存在 3 个自同构分量 $A_P, A_Q, A_R$，其邻接结构与教学集（含正面约束）完全"相同"，于是 $A_P$ 里的教学元素可替换成 $A_Q/A_R$ 中的对应副本，$A_P$ 被安全删除。从叶节点层层往上剪，每层后节点数被 $g_j(\text{td}(G))$ 界定，最终图缩到 $f(\text{td}(G))$ 大小后暴力求解。N-NCTD 对 vertex cover 参数化的 FPT（Theorem 7）是首个允许负面标签的结果，技术路线改为核化：Lemma 8 先给出解大小上界 $\text{NCTD}(\mathcal{B}) \leq 2^{|X|+1} + |X|$（$X$ 为 vertex cover）；Reduction Rule 2 在独立集某等价类含 $q + 2k + 1$ 个 pairwise false twins 的闭邻域在 $\mathcal{B}$ 中时删一个（Lemma 9，仍是鸽巢）；Reduction Rule 3 在两个 false twins $u, v$ 的闭邻域都不在 $\mathcal{B}$ 中时删 $v$。穷举应用后顶点数被 $2^{|X|}(2^{2^{|X|}+|X|} + 2^{|X|+2} + 2|X|) + |X|$ 界定，核心大小只依赖 $|X|$。负面标签让教学集可以含闭邻域之外的顶点、问题变得"非局部",证明因此显著复杂，但核化依旧可行。
 
-**4. 组合上界：用图论结构换常数教学集。**
+**4. 组合上界：用图论结构换常数教学集**
 
 最后是几个图类上的常数上界，归纳如下表。
 

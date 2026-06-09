@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Cortical Flat Map Patch Embedding：在体素与脑区平均之间找皮层信号的"金发姑娘"中间点。**
+**1. Cortical Flat Map Patch Embedding：在体素与脑区平均之间找皮层信号的"金发姑娘"中间点**
 
 fMRI 表示一直被两难夹住：parcellation 把整块 cm 量级脑区平均成单标量，~400 维向量丢掉了 99% 维度；volume 直接处理 4D 数据信息全保留，但一个体积切完 patch 是 ~132K voxel 的稀疏序列，计算和 IO 都爆炸，而且大半是脑外无效背景。这篇论文的做法是借神经科学几十年的老工具——皮层本质就是一层 2-4mm 厚的褶皱片，是个 2D 流形，可以无损展平。于是先用 surface-based 流程把信号从 3D voxel 映到皮层表面 mesh，再用 pycortex 的 flat map 把左右半球分别展开拼成一张 224×560 的 2D 图，每个时间步一帧、16 帧叠成 ViT 的 spacetime 输入，背景全 0 patch 直接剔除、MSE loss 也只在非背景像素上算。这样既保留了全皮层 ~77K 维信号（不像 parcellation 那样平均掉细节），序列长度 364 又和 volume 的 465、parcellation 的 400 几乎持平，却因为是规则 2D 网格而训练带宽和数据吞吐都更优——论文 Figure 1 把这个 trade-off 画成一条从"全压缩"到"全保留"的光谱，flat map 正落在甜点位置。
 
-**2. 三种表示的 head-to-head 对比：把 parcellation / flat / volume 放上同一条起跑线。**
+**2. 三种表示的 head-to-head 对比：把 parcellation / flat / volume 放上同一条起跑线**
 
 以往 fMRI 基础模型的通病是各家只用自己那一种表示就宣称 SOTA，谁强谁弱根本不可比。这里作者刻意让三个变体共享几乎所有变量——同样的 ViT-B encoder、同样 16 帧输入、同样 0.9 的 mask ratio，唯一的差别就是 patch embedding：parcel 用 $p_t \times 1$ 只切时间维、flat 用 $p_t \times 16 \times 16$、volume 用 $p_t \times 8 \times 8 \times 8$ 的 4D patch。每个变体独立训 8 次取均值，再一起跑下游 8 个数据集（4 个临床诊断 + 性别 + 年龄 + HCP-YA Task21 + NSD COCO24）。因为除表示之外的所有东西都被钉死，最后得到的差异就能干净地归因到"表示"本身，这也是第一份真正成 family 的 multi-representation fMRI MAE，结论可信度远高于单点比较。
 
-**3. Brainmarks 开源评测套件：用统一 probe 协议终结 fMRI 模型的复现性灾难。**
+**3. Brainmarks 开源评测套件：用统一 probe 协议终结 fMRI 模型的复现性灾难**
 
 fMRI 领域长期是"各家用自家 dataset、自家预处理、自家评测设置"，加上 trait 论文常拿过弱的 baseline 自夸，谁真的更好无从判断。Brainmarks 把这件事标准化：一边纳入 6 个现有基础模型（SwiFT、BrainLM、Brain-JEPA、BrainHarmonix-F、NeuroSTORM、Brain-Semantoks）和 CortexMAE family，一边统一 7 个公开数据集（4 个临床诊断 ABIDE/ADHD200/ADNI/PPMI + HCP-A 年龄/性别 + HCP-YA Task21 + NSD COCO24）。关键是 probe 协议对所有方法一视同仁——小样本 trait prediction 用 linear probe + 100 次随机 train-test 分割，大样本 state prediction 用 attentive probe + 单 fixed split + 49 个学习率 grid，谁都不许自己 fine-tune 偷跑。作者还特意设计了 NSD COCO24 这种"短 trial 重叠 + 测试集换不同 subject + 高难度视觉解码"的任务，专门用来把真正强的模型从弱的里区分出来。
 

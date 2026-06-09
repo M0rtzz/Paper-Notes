@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. Q-K=V：让 V 复用 K，KV cache 直接减半而质量几乎不掉。**
+**1. Q-K=V：让 V 复用 K，KV cache 直接减半而质量几乎不掉**
 
 LLM serving 的主要 memory 瓶颈是 KV cache，尤其 long context 下 cache 线性涨满显存。Q-K=V 的做法是让 key 和 value 共用同一个投影矩阵（$V = K$ 的 weight tying），于是推理时 cache 里只存 K、不存 V——V 直接从 K 复用，cache 砍掉 $50\%$；同时因为 Q 仍是独立投影，attention 分数 $Q K^\top$ 保持非对称，不破坏 sequential 任务依赖的方向性。这之所以几乎不掉质量，作者给的机制解释是：K 和 V 本就可以占用相似的 representational space，而 attention 实际工作在 low-rank regime，把 K 当 V 用并不会显著压缩有效表达力。实测 300M 模型在 SlimPajama 10B tokens 上 PPL 仅升 $3.1\%$，1.2B 模型叠 MQA 后也只升 $1.06\%$。相比 MLA 把 K/V 压成 compressed latent、推理时还要 expand 回来，Q-K=V 用一个 hard equality 就拿到同量级收益，实现上更简单。
 
-**2. (X)+：用 2D positional encoding 把 Q=K 丢掉的方向性补回来。**
+**2. (X)+：用 2D positional encoding 把 Q=K 丢掉的方向性补回来**
 
 Q=K-V 让 query 和 key 共用投影后，attention 矩阵退化成对称的 $K K^\top$，对依赖前后方向的 sequential 任务不利——这正是 symmetric attention 过去只见于 graph NN 和 relational reasoning、被序列任务避开的原因。(X)+ 变体的补救是构造一个固定的 2D sinusoidal positional encoding $P \in \mathbb{R}^{n \times n \times m}$，把对称的 attention map 广播到 $m$ 个 channel 上加进 $P$，再用一个 $1 \times 1$ 卷积投回二维 attention 矩阵，从而在不放弃投影共享的前提下重新引入 directional bias，思路与 relative positional encoding 和 vision Transformer 的 2D pos embedding 一脉相承。要注意 causal LM 本身已被 causal mask 强制成非对称，不需要这个补丁，所以 (X)+ 只用在 vision、synthetic 这类 non-causal 任务上。
 
-**3. 与 GQA/MQA 正交叠加：投影共享和 head 共享是两个维度，收益可乘。**
+**3. 与 GQA/MQA 正交叠加：投影共享和 head 共享是两个维度，收益可乘**
 
 GQA/MQA 走的是另一条省 cache 的路——head sharing，GQA-$g$ 把 $H$ 个 query head 共享到 $g < H$ 个 KV head，cache 减少比例为 $1 - g/H$。Q-K=V 削的是投影维度而非 head 维度，两者互不冲突，可以在每个 GQA group 内部再 enforce $K = V$ 把该 group 的 cache 又减半，于是收益相乘：Q-GQA-4（$H=16, g=4$）总 cache reduction 为 $1 - g/(2H) = 87.5\%$，Q-MQA 更进一步到 $96.9\%$，逼近 cache-based Transformer 的理论极限。由于 MQA/GQA 已是 PaLM/Llama/Mistral 等的标配，Q-K=V 作为 orthogonal complement 对工业部署是直接 actionable 的；Pareto frontier 上 Q-MQA 给出 $97\%$ cache 减少叠 near-parity 质量，对 edge / on-device inference 是真实可落地的 enabler。
 

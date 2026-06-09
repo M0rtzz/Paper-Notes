@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 翻转 = 固定字典原子（Theorem 3.1）：把投毒从 bi-level 难题降阶成稀疏恢复。**
+**1. 翻转 = 固定字典原子（Theorem 3.1）：把投毒从 bi-level 难题降阶成稀疏恢复**
 
 标签翻转攻击最棘手的地方在于，单条翻转对最终策略 $\hat\theta$ 的影响在一般模型里是参数依赖的——你得"在攻击后的数据上重训练再看策略变化"，这是个无法事先预测的 bi-level 组合搜索。本文的支点是发现 log-linear + DPO 的损失结构让这个依赖消失了：对 $\pi_\theta(a\mid s)\propto\exp(\psi(s,a)^\top\theta)$，单样本损失 $\ell_i(\theta)$ 对 $\theta$ 求导得到 $o_i\bigl(1-\sigma(o_i\beta\Delta\psi_i^\top\theta)\bigr)\beta\Delta\psi_i$，其中 sigmoid 项关于偏好标签 $o_i$ 是对称的。把 $o_i$ 翻成 $-o_i$ 再与原梯度做差，含 $\theta$ 的 sigmoid 部分恰好抵消，只剩下常向量 $\Delta g_i=o_i\beta\Delta\psi_i$。这一抵消把"重训练后看策略怎么变"直接换成了"在固定向量集 $\{v_i\}$ 上找二值线性组合逼近 $-g^\dagger$"，攻击因此落进标准稀疏恢复的语境，全文的两个算法和理论保证都建立在这条结构性观察上。
 
-**2. 二值感知格基嵌入 BAL-A（§4）：用 LLL 求解最少翻转的整数解。**
+**2. 二值感知格基嵌入 BAL-A（§4）：用 LLL 求解最少翻转的整数解**
 
 无预算场景要找最少的翻转使 $Vx+g^\dagger=0$。直接对 $\min_x\|Vx+g^\dagger\|^2$ 做整数松弛会退化成最近向量问题（CVP），但 CVP 的解未必落在 $\{0,1\}$ 上、也不直接最小化翻转条数。作者的做法是构造一个 $(d+n)\times(n+1)$ 的嵌入基
 
@@ -57,7 +57,7 @@ $$B_{\mathrm{bin}}=\begin{pmatrix}V&-g^\dagger\\ MI_n&0\end{pmatrix},$$
 
 使任何整数系数 $z$ 对应格点的长度平方拆成 $\|y(z)\|^2=\|Vz+g^\dagger\|^2+M^2\|z\|^2$，同时惩罚残差和系数幅值；而在 $\{0,1\}$ 解上恰有 $\|x\|_2^2=\mathbf{1}^\top x$，于是那个 $\ell_2$ 惩罚自动变成了翻转条数。之后跑 LLL（$\delta=0.75$）+ Babai nearest-plane 求出整数 $z$ 再截断到 $\{0,1\}$。关键全在标量 $M$ 上：$M$ 充分大（Lemma 4.1 给出 $M_0\approx (B\sqrt{K^\star}+\sqrt{B^2K^\star+6BR+3B^2})/3$）能强制系数落进 $\{-1,0,1\}$、在 $z\ge0$ 下进一步收到 $\{0,1\}$；Theorem 4.3 的分离条件 $\rho_k^2>M^2(K^\star-k)$ 再保证全局极小确实是那个 $K^\star$-flip 可行解。这相当于第一次把数论里的 LLL-CVP 工具贴合到 $\{0,1\}$ 最小翻转语义上，靠一个 $M$ 在"残差小"与"系数小（即翻转少）"之间调度。
 
-**3. 二值匹配追踪 BMP-A（§5）：预算受限下的贪心求解 + 攻不动的证书。**
+**3. 二值匹配追踪 BMP-A（§5）：预算受限下的贪心求解 + 攻不动的证书**
 
 BAL-A 的 LLL 预处理在 $n$ 上百时就吃力，所以预算 $K$ 受限的场景换一条更轻的路：把正交匹配追踪（OMP/BMP）适配到非归一化字典 $V$。每步用归一化相关分数 $|\langle v_i,r\rangle|/\|v_i\|_2$ 挑原子、但残差更新仍用原始列 $r\leftarrow r-v_{i_t}$，最多 $K$ 步或 $\|r\|_2\le\varepsilon$ 提前停，复杂度极低（实测比 BAL-A 快约 $5000\times$）。它的保证写在字典几何上：定义互相干 $\mu(V)=\max_{i\ne j}|\langle v_i,v_j\rangle|/(\|v_i\|\|v_j\|)$，Theorem 5.3 在 $\mu(V)<b/((2K^\star-1)B)$ 时保证每步选对支撑、$K^\star$ 步精确恢复。更有意思的是反方向：Theorem 5.4 给出两个不依赖任何算法的不可能条件 $\|g^\dagger\|_2-\varepsilon>\sqrt{K}\|V\|_2$ 或 $(\|g^\dagger\|_2-\varepsilon)^2>B^2(K+\mu(V)K(K-1))$，列范数越小、方向越发散就越攻不动——这其实是对 DPO 自身鲁棒性的一个谱 + 几何刻画，也直接指向"主动设计偏好数据集让 $V$ 的列又小又散"这一防御方向。
 

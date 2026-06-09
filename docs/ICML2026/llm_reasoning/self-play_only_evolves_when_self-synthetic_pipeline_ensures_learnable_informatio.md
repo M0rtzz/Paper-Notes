@@ -50,15 +50,15 @@ tags:
 
 ### 关键设计
 
-**1. 非对称协同演化 (Asymmetric Co-evolution)：把"验题比解题易"做成可持续的能力阶梯。**
+**1. 非对称协同演化 (Asymmetric Co-evolution)：把"验题比解题易"做成可持续的能力阶梯**
 
 现有 RL 只完成了 weak-to-strong 的上半场——用弱 Proposer/Verifier 把 Solver 练强，但 Solver 一旦变强，Proposer/Verifier 不跟进，任务流相对当前观察者就退化成"低结构"，循环塌向平凡题。本设计补上反向闭环：先 weak-to-strong (弱出题方训出强 Solver)，再 strong-to-weak (把更强的 Solver 同步回内部环境去刷新 Proposer/Verifier)，让两端轮流抬升。它之所以有空间这么做，是因为三个角色虽共享同一权重源，但沿不同合成方向 $d(P,S,V)$ 产生的 $X_d$ 在有界观察者下 $S_{C,T}(X_d)$ 并不相同；以单向置换 (one-way permutation) 为极限例子可证 $H_{\text{poly}}(X|Y)-H_{\text{poly}}(Y|X)\ge c\log n$，即正向出题与反向解题之间存在 $\Omega(\log n)$ bit 的难度间隔，训练做的事正是把这段残余不确定性转化成可复用结构。落到实操有三招：(i) 按非对称 gap 从小到大组织合成方向 (语法纠错 → 数学证明 → 医疗诊断这种 inverse gap)；(ii) 对 Proposer 用反向翻译 (Magicoder、MathGenie、InverseCoder) 从更强 Solver 的数据里重新提取题目；(iii) 对 Verifier 尝试 verifier-free RL，让它和 Solver 共享同一套信念。
 
-**2. 容量预算增长 (Capacity Growth)：让观察者预算随迭代膨胀，永远跟得上新暴露的结构。**
+**2. 容量预算增长 (Capacity Growth)：让观察者预算随迭代膨胀，永远跟得上新暴露的结构**
 
 前一个设计能不断造出更有结构的数据，但接收端如果不长，照样白搭——固定 $(C,T)$ 时 $S_{C,T}(X)$ 是有上界的，观察者一旦顶满，再多结构也"看不见"。实证里这表现为两种 mismatch：固定参数预算 $C^{(t)}$ 会让训练 loss 早早饱和，逼着 Proposer 退化到当前模型类轻松能解的方向；固定推理预算 $T^{(t)}$ 则把"推理被截断"误判成"知识不足"。所以要让 $C^{(t)}$ 和 $T^{(t)}$ 随迭代一起扩张。理论支撑很直接：只要观察者族单调嵌套 $\mathcal{P}_{C_1,T_1}\subseteq\mathcal{P}_{C_2,T_2}$，就有 $\mathrm{MDL}_{C_2,T_2}(X)\le\mathrm{MDL}_{C_1,T_1}(X)$，扩容等于直接把"可学/不可学"的边界往外推。沿参数轴可走角色非对称缩放 (小 Proposer/Verifier 喂大 Solver) 或跨迭代加层加专家 (Net2Net、Stacking、MoE 激活子集增长)；沿推理轴可走 adaptive reasoning token 或 Mixture-of-Recursions 这类动态深度。
 
-**3. 主动信息寻取 (Proactive Information Seeking)：给闭环开一个外部进料口，突破预训练权重的天花板。**
+**3. 主动信息寻取 (Proactive Information Seeking)：给闭环开一个外部进料口，突破预训练权重的天花板**
 
 前两个齿轮都在系统内部转，但纯 zero-data 系统的可学习信息终究被预训练权重封顶；而被动地挂个固定外部语料只会退化成对该语料的微调，挂个固定 RAG 又会初期超出 Solver 预算、后期沦为例行公事——这三种 regime 都是"反应式"地消费信息，源头不扩张。本设计让 Proposer+Verifier 每轮主动挑一份外部上下文 $d^{(t)}$，并把它当 conditioning context (而不是训练标签) 注入条件流 $(Y^{(t)}\mid d^{(t)})$。对应的度量是条件有界 MDL $\mathrm{MDL}(Y\mid d):=\min_{P}\{|P|+\mathbb{E}[\log 1/P(Y\mid d)]\}$，其中 $S_{C,T}(Y\mid d)$ 就是"条件可学习信息"。具体也是三招：(i) Proposer 从 Solver 失败、Verifier 分歧里生成 query，检索到 $d$ 后合成"必须显式用到 $d$"的任务 (引用支撑、多文档综合、矛盾检测)；(ii) 把同一份 $d$ 转成多种难度的合成方向并按 curriculum 调度 (早期 grounding、后期 inverse/组合)；(iii) 让检索器/重排器/记忆也用自合成信号 (Verifier relevance) 一起演化。
 

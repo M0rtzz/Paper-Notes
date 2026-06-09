@@ -45,15 +45,15 @@ LoGo 的工作流程分为三步：(1) **Probe Pass**：将所有 LoRA 适配器
 
 ### 关键设计
 
-**1. 基于激活信号的适配器选择：用一次前向就读出每个 LoRA 跟当前输入有多相关。**
+**1. 基于激活信号的适配器选择：用一次前向就读出每个 LoRA 跟当前输入有多相关**
 
 现有多 LoRA 方法（LoRAHub 学组合权重、LoRARetriever 训检索模型）都得靠额外标注数据和训练，面对动态增减的 LoRA 池很吃力。LoGo 的关键观察是：当某个 LoRA 跟输入高度相关时，它低秩投影的输出激活会更强。于是把所有 LoRA 挂上基座做一次前向，从目标 Transformer 层 $B_T$ 取出每个 LoRA 的投影输出 $\mathbf{o}_{i,T}=\Delta\mathbf{W}_{i,T}^{(Q)}\mathbf{h}_T$，再算信号分数——可以用 $\ell_2$ 范数 $s_i=\|\mathbf{o}_{i,T}\|_2$（范数越大激活越强），也可以用逆熵 $s_i=(-\sum_j p_{i,T}^{(j)}\log p_{i,T}^{(j)})^{-1}$（熵越低响应越集中），最后取 top-k：$\mathcal{S}=\operatorname{TopK}(\{(L_i,s_i)\}_{i=1}^N,k)$。实验里这些激活信号呈现清晰的块对角模式——相似任务的 LoRA 在相似数据上激活相似，等于天然提供了免训练的语义路由信号。
 
-**2. 基于输出的加权合并（Mixture Merging）：把选中的几个 LoRA 合成一路输出，不碰参数。**
+**2. 基于输出的加权合并（Mixture Merging）：把选中的几个 LoRA 合成一路输出，不碰参数**
 
 选完 top-k 还得把它们融起来。LoGo 直接在输出级做加权混合：把信号分数归一化成权重 $\tilde{w}_i=s_i/\sum_{j\in\mathcal{S}}s_j$，再加权求和 $\mathbf{o}_{\text{merge}}=\sum_{i\in\mathcal{S}}\tilde{w}_i\mathbf{o}_{i,T}$，实现上只要调整选中适配器的缩放因子，不用改写或重新加载任何参数矩阵。相比参数级合并（Fusion）每步都要重算并挂载合并后的权重矩阵，输出级混合省掉了这笔开销，更适合实时部署——消融里 Mixture 在效率和效果上都压过 Fusion。
 
-**3. Probe Pass 效率优化：让“挂全部、选少数”这件事不拖慢推理。**
+**3. Probe Pass 效率优化：让“挂全部、选少数”这件事不拖慢推理**
 
 要在动辄上百个 LoRA 的池子里做实例级选择，探测本身不能成为瓶颈。LoGo 的 probe pass 只生成一个 token——拿到所有 LoRA 的投影输出就够算信号分数了，之后真正的逐 token 生成只挂选中的 k 个适配器。对摘要、chain-of-thought 这类长输出任务，这一次性探测的开销会被后续大量 token 摊薄，所以实测吞吐量能与基线方法持平。
 

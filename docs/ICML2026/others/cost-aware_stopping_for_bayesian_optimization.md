@@ -44,15 +44,15 @@ PBGI 把每个候选点视为 Pandora's Box 中的一个"盒子"，其 fair valu
 
 ### 关键设计
 
-**1. 基于 PBGI 的停下规则：用更新后的 $\alpha_t$ 而非 $\alpha_{t-1}$ 判断"还值不值得开盒子"。**
+**1. 基于 PBGI 的停下规则：用更新后的 $\alpha_t$ 而非 $\alpha_{t-1}$ 判断"还值不值得开盒子"**
 
 现有停下规则要么是启发式、要么只盯着 simple regret 而无视评估代价，在 cost-aware 场景里常常"花大钱换微小提升"。本文的停下条件直接把这件事问出来：$\min_{x\in X\setminus\{x_1,\dots,x_t\}} \alpha_t^{\mathrm{PBGI}}(x) \ge y^*_{1:t}$，即"剩下所有未开的盒子，其公平价格都不优于当前最优"时就停。这里一个微妙却关键的选择是用**后验更新之后**的 $\alpha_t$，而不是先前理论工作（Gergatsouli & Tzamos 2023）用的 $\alpha_{t-1}$：$\alpha_t^{\mathrm{PBGI}}(x)$ 是当前全部信息下 $x$ 的"公平价格"，对已评估点退化成观测值，对未评估点同时反映 $f(x)$ 的不确定性和代价 $c(x)$，只有用最新的 $\alpha_t$ 才真实回答"此刻该不该继续投钱"。之所以非这么做不可，是因为 Weitzman 原版的"选 + 停"在离散独立场景下必须配套才贝叶斯最优，推广到相关 GP 时若沿用滞后的 $\alpha_{t-1}$，就会出现"该停不停、该继续反而停"的信息滞后；Section C.2 的实验确认了用 $\alpha_t$ 带来明显的 cost-adjusted regret 改进。
 
-**2. 通过 EI 单调性导出等价的 LogEIPC 停下规则：一条规则同时适配两种采集函数。**
+**2. 通过 EI 单调性导出等价的 LogEIPC 停下规则：一条规则同时适配两种采集函数**
 
 PBGI 来自 Gittins index，LogEIPC 来自 cost-normalized EI，看起来是两套东西，用户换采集函数时似乎还得换停下规则。作者发现两者其实共享同一停下条件。关键是 $\mathrm{EI}_\psi(x;y)$ 关于 $y$ 严格单调递增，于是 $\alpha_t^{\mathrm{PBGI}}(x)\ge y^*_{1:t}$ 当且仅当 $\mathrm{EI}_{f\mid x_{1:t},y_{1:t}}(x;y^*_{1:t}) \le c(x)$，取对数即得 $\max_{x\in X\setminus\{x_1,\dots,x_t\}}\alpha_t^{\mathrm{LogEIPC}}(x;y^*_{1:t})\le 0$。当代价均匀 $c(x)\equiv c_0$ 时它进一步化简成 $\max_x \alpha_t^{\mathrm{EI}}(x)\le c_0$——恰好回收了 Nguyen et al. (2017) / Zhou et al. (2024) 的 EI thresholding 规则，只不过那里靠手调的启发式阈值，被这里有原理的"每样本代价"替换掉了。这层等价让同一条规则有了两个解读视角：Pandora's Box 的决策论视角和 EI-per-cost 的经济学视角，LogEIPC 用户也无需另立停下条件就能直接套用同一套理论保证。
 
-**3. 代价调整 regret 的"不差于立即停"保证 + 有限时间终止：给 cost-adjusted regret 上第一条非渐近界。**
+**3. 代价调整 regret 的"不差于立即停"保证 + 有限时间终止：给 cost-adjusted regret 上第一条非渐近界**
 
 前面两点解决了"怎么停"，这一点回答"停得有没有保证"——这是现有规则普遍缺失的。证明分两步推进：Lemma 3.1 先说明在停下之前每一轮 $t<\tau$ 选出的 $x_{t+1}$ 都满足 $\alpha_t^{\mathrm{EI}}(x_{t+1})\ge c(x_{t+1})$，即"期望改进永远不低于代价"，于是每多采一步都是划算的；Theorem 3.2 顺着这个事实给出
 

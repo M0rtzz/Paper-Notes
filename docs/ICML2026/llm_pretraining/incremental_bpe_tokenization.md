@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 单调路径定理（Monotonic Path Property）：把"谁当最后一个 token"从回溯全部历史变成树上单调搜索。**
+**1. 单调路径定理（Monotonic Path Property）：把"谁当最后一个 token"从回溯全部历史变成树上单调搜索**
 
 现有实现把 BPE 当成全局优先队列合并，每步要扫所有 pair 才能找最大优先级，这正是 $\mathcal{O}(n \log n)$ 乃至更糟的根源；而判断 $\theta(sc)$ 是哪个后缀 token，表面上同样像要回看整段历史。这个定理把候选集从"所有后缀 token"（线性多）压成 SufSucTree 上从根（原子 token $c$）到 $\theta(sc)$ 的**唯一单调路径**。作者先形式化"前缀末 token 条件"（Definition 4.1）：记 $s^{-\operatorname{suc}(t)}$ 为去掉 $t$ 的 successor 后缀部分后的前缀，候选 $t$ 要同时满足两条——(i) **可达性**：$\theta(s^{-\operatorname{suc}(t)})$ 必须落在 Successor Forest 中以 $\operatorname{pre}(t)$ 为根的子树内；(ii) **优先级支配**：若 $\theta(s^{-\operatorname{suc}(t)}) \neq \operatorname{pre}(t)$，则从 $\operatorname{pre}(t)$ 通往该祖先那一侧的孩子 $u$，其 merge rule 优先级必须严格低于 $t$ 自己的 rule。Theorem 4.2 证明满足该条件的所有 $t$ 在 $\operatorname{SufSucTree}(\tau(sc))$ 上恰好构成一条从根出发的单调路径，$\theta(sc)$ 就是这条路径上最深的节点；"if" 方向的直觉是在真正 last token 的 successor 链上，可达性与优先级支配都被单调保持。这样一来，"哪个 token 当 last token"这个看似要回溯全部历史的问题，就变成在一棵预先静态构造好的树上做二分——天然适配增量更新与最坏复杂度分析。
 
-**2. DFS 时间戳 + 有效区间：把前缀末 token 条件压成一次 $\mathcal{O}(1)$ 整数区间检测。**
+**2. DFS 时间戳 + 有效区间：把前缀末 token 条件压成一次 $\mathcal{O}(1)$ 整数区间检测**
 
 上一条定理虽然漂亮，但它的判定每次都要查 Successor Forest 子树成员关系、再比较 rule 优先级，若现算会引入 $\mathcal{O}(t)$ 因子，撑不起 $\mathcal{O}(\log^2 t)$ 目标。作者把这套树形归属关系线性化成整数区间：对 Successor Forest 做预序 DFS，**遍历孩子时按 canonical rule 优先级从低到高排序**，于是高优先级孩子的子树时间戳一定排在后面。这保证任一非原子 token $t$ 的合法候选集 $\mathcal{C}_t$ 对应一段连续区间 $I_t = [L_t, R_t)$，其中 $L_t = \operatorname{dfs\_in}(\operatorname{pre}(t))$，$R_t$ 取 $\operatorname{pre}(t)$ 第一个 rule 优先级 $\geq t$ 的孩子的 `dfs_in`（不存在则取 $\operatorname{dfs\_out}(\operatorname{pre}(t))$）。在线检测从此只是 `dfs_in(k) ∈ I_t` 一个比较。区间线性化本是经典 OI 技巧，但只有与"优先级排序孩子"结合，才能把可达性和优先级支配两个条件同时编码进同一段区间。它还顺带给出一个关键推论：SufSucTree 中**兄弟节点的有效区间互不相交**（直接来自单调路径的唯一性），使得搜索时在每个分叉处都能无歧义地选对方向。
 
-**3. Aho–Corasick + Centroid Decomposition：把每字节的增量更新真正压进对数时间。**
+**3. Aho–Corasick + Centroid Decomposition：把每字节的增量更新真正压进对数时间**
 
 有了 $\mathcal{O}(1)$ 谓词还不够——朴素自顶向下遍历 SufSucTree 最坏是 $\mathcal{O}(t)$（树高线性于 $|\tau|$），仍达不到目标。这一步用两件标准武器配合收口。其一，对词表 $\mathcal{V}$ 建 Aho–Corasick 自动机，给每个状态预计算"搜索空间入口"标注：状态对应的 token 若自己就在 $\mathcal{V}$ 里则用它，否则从 suffix link 继承——这样新字符到来时只需自动机走一步即 $\mathcal{O}(1)$ 拿到 $\tau(sc)$，**无需沿 suffix link 回溯**；转移表用持久化分块（square-root tiling）压缩存储而保持 $\mathcal{O}(1)$ 查询。其二，对每个 $\tau \in \mathcal{V}$ 离线建 Centroid Search Tree（CST），高度严格 $\mathcal{O}(\log |\tau|)$；在线搜索从 CST 根出发，对当前重心 $u$ 用区间检测判断合法性——若**不合法**，按单调路径性质目标必在 $u$ 的父侧分量，转向 CST 中"父方向"的孩子；若**合法**，则 $u$ 在路径上，对它在原 SufSucTree 中的孩子做二分（兄弟区间不相交可排序）看是否还有更深的合法孩子 $v$，有则继续往 $v$ 走，无则 $\theta(sc) = u$ 终止。每个 CST 步做一次 $\mathcal{O}(\log t)$ 二分、CST 深度 $\mathcal{O}(\log t)$，合计 $\mathcal{O}(\log^2 t)$/字节。Centroid Decomposition 把任意树压成 $\mathcal{O}(\log)$ 高度搜索结构，Aho–Corasick 把"搜索空间识别"降到 $\mathcal{O}(1)$，正是两者配合才同时拿下"严格最坏复杂度"和"增量更新"这对看似冲突的目标。
 

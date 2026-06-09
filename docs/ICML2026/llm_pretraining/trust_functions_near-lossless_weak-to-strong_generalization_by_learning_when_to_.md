@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 基于隐藏状态的 Neural Trust Function（NTF）：到隐藏空间里判断弱标签的对错，绕开失准的输出层置信度。**
+**1. 基于隐藏状态的 Neural Trust Function（NTF）：到隐藏空间里判断弱标签的对错，绕开失准的输出层置信度**
 
 前面的核心矛盾是：输出层 confidence 在难题上系统性失准（confident-but-wrong），所以靠熵、一致性这类解码后信号选数据并不靠谱。NTF 的做法是把判别器搬回隐藏空间——它读弱教师最后一层、最终生成 token 的隐藏向量 $g_{\pi_{\mathcal{W}}}(x,\hat{y})\in\mathbb{R}^d$（这个 token 经 attention 已聚合了 prefix 与中间推理），映射成一个 $[0,1]$ 的信任分 $\tau(\cdot)$，估计"这条弱标签为真"的概率。$\tau$ 本身是个残差 MLP：堆叠 RMSNorm-SwiGLU 块（带 Dropout + stochastic depth），末端接 RMSNorm + 线性头出 logit，再 sigmoid 转概率，训练用类重加权 BCE 抗标签不平衡。它的监督信号全自动构造——在源集 $\mathcal{D}_{\ell}$ 上比对"弱预测 vs 真值"（MCQA/数学用 exact match，象棋用 best-move 匹配），匹配上就是正例。之所以这条路实用，是因为中间层早就编码了"我大概答没答对"的可分信号（Kadavath et al. 2022 等的观察），把判别器放在这里能避开 confident-but-wrong 陷阱；而且整条管线的算力几乎全在弱教师前向（生成弱标签时反正要跑），$\tau$ 是个小 MLP，训练和打分近乎零开销——总成本 $C_{\text{total}}=O\big(\bar{C}_{\text{teacher}}(|\mathcal{D}_{\ell}|+|\mathcal{D}_u|)+C_{\text{NTF}}(e|\mathcal{D}_{\ell}|+|\mathcal{D}_u|)\big)$ 实际被教师项主导。
 
-**2. In-domain 分布漂移下的零样本部署：让信任函数在有标签的源域学一次，直接迁到无标签的目标域打分。**
+**2. In-domain 分布漂移下的零样本部署：让信任函数在有标签的源域学一次，直接迁到无标签的目标域打分**
 
 现实里标签分布极不均衡——MMLU/MATH 这类大标注集随手可得，而 AIME 之类的目标域几乎没有可用标签，要求"目标域也得有标签"就把方法卡死了。L2T 因此放宽这条假设：$\tau$ 只在源分布上训练，部署时对任务接口相同、数据分布不同的目标域做零样本打分。为了把话说清楚，作者把泛化场景显式分成三档——ID（同 benchmark 的 held-out）、OOD$_{\text{dist}}$（同任务接口、不同数据分布，如 MMLU $\to$ ARC-Easy）、OOD$_{\text{domain}}$（连任务接口都换，如 MCQA $\to$ 象棋）——文中所有"零样本迁移"默认指 OOD$_{\text{dist}}$。Table 1 显示 NTF 在 ID 与 OOD$_{\text{dist}}$ 上 AUC 达 0.83–0.92、纯度 0.69–0.98，说明信任信号确实能跨数据分布迁移；而 OOD$_{\text{domain}}$ 会退化这一点也被如实标出，算是对方法边界的诚实交代。
 
-**3. Weak-to-Strong Chain（弱到强链）：把训好的学生当下一代教师，不加新组件就把收益滚大。**
+**3. Weak-to-Strong Chain（弱到强链）：把训好的学生当下一代教师，不加新组件就把收益滚大**
 
 单代 L2T 已经能逼近真值监督，但学生规模继续放大时仍有空间，链式结构正是不引入任何新组件地把这点空间吃掉。机制上它像滚雪球（论文称 snowballing）：每一代学生因为只吃高纯度弱标签，自身在目标域上的准确率单调升高；当它转身充当下一代教师时，产出的弱标签纯度也跟着水涨船高，于是即便沿用同一个 $\tau$ 打分，可用样本量和平均准确率都会扩大。具体就是把 L2T 训出的 $\pi_{\mathcal{S}}^{(1)}$ 当作 $\pi_{\mathcal{W}}^{(2)}$，再走一遍同样的 NTF 筛选去训更大的 $\pi_{\mathcal{S}}^{(2)}$，逐代迭代（Figure 1 右下给出累积增益曲线）。因为每代都复用同一套 L2T 协议，规模化起来很顺。
 

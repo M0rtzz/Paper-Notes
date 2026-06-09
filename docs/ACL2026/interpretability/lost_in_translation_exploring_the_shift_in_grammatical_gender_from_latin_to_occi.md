@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. Hybrid 分词器（BPE + word-level 回退）：在高拼写噪声语料里同时拿到零 OOV 和有意义的子词。**
+**1. Hybrid 分词器（BPE + word-level 回退）：在高拼写噪声语料里同时拿到零 OOV 和有意义的子词**
 
 中世纪奥克语正字法极不稳定，标准 mBERT WordPiece 虽能做到 0% OOV 但 masked recovery 只有 15.78%，纯 BPE（vocab=600/800）又反而引入 2.63–2.86% 的 OOV、recovery 仅 3–5%，两条路都偏废。Hybrid 的做法是先在奥克语语料上训一个小词表 BPE，按 $V_{t+1}=V_t\cup\{ab\},\ (a,b)=\arg\max_{(x,y)} f(x,y)$ 迭代合并最高频对，再加一条 word-level 回退规则：任何 BPE 切不开的整词原样保留。这样 BPE 子词能捕到 `primpcipat` 里 `mp` 这种辅音簇变体、`secretament` 词尾 `t`（对应 Old Occitan 副词 `-t` 脱落）等历史变异规律，而回退规则兜住了零 OOV，最终 Hybrid 是唯一同时实现 0% OOV 且 masked recovery 达 25.23% 的方案，成为后续 mBERT 表现最好的基础。
 
-**2. 2×BiLSTM + MHSA 形态分类头：既建模子词序列又定位最敏感的位置。**
+**2. 2×BiLSTM + MHSA 形态分类头：既建模子词序列又定位最敏感的位置**
 
 性别信号既藏在后缀、也可能藏在词中某些音位组合上，树模型和浅 LSTM 只能拿到约 0.71–0.78 的 F1，吃不下这种"序列 + 关键位置"的双重结构。这个头以孤立 lemma 的多源特征（拉丁/奥克语 n-gram + 句法-音系特征 + mBERT embedding）为输入：双层 BiLSTM 先捕捉子词序列的顺序依赖，再叠一层 8-head 自注意力让模型在序列里找到对性别最敏感的子词位置，训练用 label smoothing CE 或 focal loss + class weight 来抗 2:1 类别不平衡。在 mBERT embedding 上它取得最佳 lemma 级 Macro-F1 = 0.8224。
 
-**3. noun-conditioned attention 上下文头：把消歧权重交给可解释的注意力分布。**
+**3. noun-conditioned attention 上下文头：把消歧权重交给可解释的注意力分布**
 
 在奥克语里真正消歧 `la torista` 性别的是冠词 `la`，若 naive 地用整句 `[CLS]` 池化会把这种局部一致性信号稀释掉。这个头先用 mBERT 编码整句得到 $H=(h_1,\dots,h_T)$，再把目标名词位置 $i$ 的隐状态 $h_i$ 当 query、全句当 key/value 做多头注意力 $\mathrm{Attn}(h_i, H, H)$，让模型显式聚焦"我现在要定这个名词的性别"，随后与拉丁 lemma embedding $e(L)$、拉丁性别 one-hot $\mathrm{onehot}(G_L)$ 拼接送入共享 MLP $p(y\mid r)=\mathrm{softmax}(f_\phi(r))$。配套的 masked-context 变体把名词位替成 `[MASK]` 再读 $h_i^{\text{mask}}$，专门测"剥掉名词本身后单凭上下文能恢复多少性别"，从而把形态与上下文两路证据干净地分离开来。
 

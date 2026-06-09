@@ -45,11 +45,11 @@ PFlowNet 把 LVLM 的工作流分成两个解耦阶段：(i) **Flow Generation**
 
 ### 关键设计
 
-**1. Perceptual Flow + Sub-TB 变分目标：把"看哪里、看到什么"结构化成可逐段打分的轨迹。**
+**1. Perceptual Flow + Sub-TB 变分目标：把"看哪里、看到什么"结构化成可逐段打分的轨迹**
 
 PPO 类目标只在 episode 末尾给一个稀疏奖励，感知这种多步行为下梯度方差很大。PFlowNet 先把感知行为离散化：定义 Perceptual Flow $Z = (z_0, z_1, \dots, z_K)$，规划状态 $z_0$ 是 `<analyze>` 包裹的自然语言，感知状态 $z_k=\langle r_k, c_k\rangle$ 是 `<localize>` 包裹的 RoI 框 + caption，用特殊 token 显式分割。有了这个结构，就能把 GFlowNet 的 Sub-Trajectory Balance 引进来——要求任意子段 $z_{i:j}$ 满足 $\mathcal{F}(z_i)\,\mathcal{T}_F(z_{i:j}) = \mathcal{F}(z_j)\,\mathcal{T}_B(z_{j:i})$，由此推出 vRFT 目标 $\mathcal{L}_{vRFT}(\theta)$（Eq. 2），用 log 比值的平方和作损失。好处有三层：显式结构让奖励能定义在每个子轨迹上；Sub-TB 的"任意子段都需平衡"提供了比 PPO 密集得多的约束、训练更稳；解耦感知与推理后能单独优化 $p_\theta(Z|X)$ 而不污染 LLM 的推理参数。
 
-**2. 多维奖励（Contrastive Visual + Information Gain）：让奖励同时盯住"看得准"和"对答案有用"。**
+**2. 多维奖励（Contrastive Visual + Information Gain）：让奖励同时盯住"看得准"和"对答案有用"**
 
 如果奖励只盯几何 IoU，模型很容易 reward hacking——框得准但 caption 写得很通用，或 caption 漂亮却框得离题。PFlowNet 的奖励把两件事拆成独立约束：
 
@@ -57,7 +57,7 @@ $$R(z_{0:k}\top) = \left(\prod_{i=1}^k \frac{p_\phi^+(z_i)}{p_\phi^-(z_i)}\right
 
 对比项里 $p_\phi^+(z_i)=p_\phi(c_i\mid I_{r_i})$ 是裁剪区域内 caption 的视觉似然、$p_\phi^-(z_i)=p_\phi(c_i\mid I\setminus I_{r_i})$ 是补集区域的似然，$p_\phi$ 是与策略共享初始化的冻结奖励模型。一个漂亮的洞察是：这个对比项在轨迹期望下等价于 reverse-KL 蒸馏，$\mathbb{E}[\sum\log(p_\phi^+/p_\phi^-)]=\sum[D_{KL}(q_\theta^i\|p_\phi(\cdot|I\setminus I_{r_i})) - D_{KL}(q_\theta^i\|p_\phi(\cdot|I_{r_i}))]$，即鼓励 caption 紧贴裁剪区域的特权信息、远离补集噪声。后面的信息增益项 $p_\phi(Y|z_{0:k}\top, X)$ 则确保选中的轨迹对最终答案真有贡献。两项一起把"视觉接地"和"推理有用"绑成必须同时满足的条件，自然堵死了 hacking 的两条捷径。
 
-**3. Vicinal Geometric Shaping（邻域几何整形）：把专家框从"硬目标"降级为"安全栏"。**
+**3. Vicinal Geometric Shaping（邻域几何整形）：把专家框从"硬目标"降级为"安全栏"**
 
 探针实验已经表明专家最精确的框反而不是最好的推理证据（过紧会形成管视效应），所以不能强迫模型 100% 模仿专家，但也不能完全放任探索越界。PFlowNet 的做法是只在专家邻域外才惩罚：先用对称的 Chamfer-IoU 距离 $d_{IoU}(A,B)=1-0.5(IoU_{A\to B}+IoU_{B\to A})$ 以专家 RoI 集 $E$ 为中心定义 $\varepsilon$-邻域 $\mathcal{B}_\varepsilon(E)=\{z_{0:k}\mid d_{IoU}(r_{1:k},E)\le\varepsilon\}$，再用整形权重 $\omega_\lambda(z_{0:k},E)=\exp(-\lambda\,\mathbb{I}(z_{0:k}\notin\mathcal{B}_\varepsilon(E)))$ 只对落在邻域外的轨迹施加强度 $\lambda$ 的惩罚，邻域内则任由奖励 $R$ 自主决定。最终整形奖励 $R_\lambda=R\cdot\omega_\lambda$ 进 Sub-TB 的 $\mathcal{F}$。理论上这个设计两头都自洽：Theorem 3.1 给出 TV 距离上界，$\lambda\to 0$ 退化为标准 MLE（丢失几何约束）、$\lambda\to\infty$ 退化为 expert-guided RLVR（被专家偏差锁死）；Theorem 3.4 进一步证明存在 $\lambda^\star$ 使界严格小于二者下界 $\min\{1-s_V, 1-q\}$，即在理想假设下严格优于这两种基线。"专家是参考、不是目标"这句设计哲学由此落到了可证明的改进上。
 

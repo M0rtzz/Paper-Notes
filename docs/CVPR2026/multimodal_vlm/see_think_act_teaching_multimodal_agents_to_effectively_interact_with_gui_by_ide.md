@@ -65,19 +65,19 @@ Agent 存在强烈的"点击偏向"（toggling bias）：
 
 ### 关键设计
 
-**1. 三步标注流水线：从没有状态标注的截图里，造出可靠的 toggle 基准。**
+**1. 三步标注流水线：从没有状态标注的截图里，造出可靠的 toggle 基准**
 
 要训练 Agent "看状态"，前提是数据里得有干净的状态标签，可公开数据集普遍缺乏可靠的 XML 树来抽取 toggle 是开还是关，只能自己标。作者把标注拆成三步顺次过滤：先做 Widget Parsing，从截图里取出原有的 widget bounding box，再用 OmniParser 补抓额外的可点击元素，合并成统一的候选框集合；再做 Toggle Identification，让 Qwen-2-VL-72B 和 GLM-4V 两个标注器各自独立判断哪些框是 toggle，只有两者一致认定的才保留；最后做 State-functionality Annotation，同样由这两个标注器独立标出每个 toggle 的状态（on/off）和功能描述，再用交叉一致性过滤掉分歧样本。
 
 之所以坚持双标注器交叉验证，是为了抵消单一模型的系统性偏差——这一点有人工抽检背书：随机验证 200 个样本，状态标注准确率 91%、功能标注 92.5%。过滤完还要做数据扩展，把每个样本 $\langle s, b, \sigma, f \rangle$（截图、框、状态、功能）派生成一正一负两条指令：若某 toggle 当前 $\sigma=1$（已开启），就生成"关闭 $f$"对应 CLICK、"开启 $f$"对应 COMPLETED 两条，逼着模型必须看状态才能答对。最终得到 81,836 个正负平衡的样本（73,652 训练 + 8,184 测试）。
 
-**2. StaR 三步推理链：把"看状态—想目标—再决定"显式写进推理过程。**
+**2. StaR 三步推理链：把"看状态—想目标—再决定"显式写进推理过程**
 
 现有 Agent 的推理是 Thought→Action 的直筒结构，中间从不显式确认 toggle 当下是开是关，于是无脑预测 CLICK。StaR 把这一步拆开、按人类认知顺序补上：Perceiving 阶段引导 Agent 从截图里读出当前状态 $\sigma$，把视觉特征和细粒度的开关状态绑定；Analyzing 阶段从用户指令反推目标状态 $\sigma_u$（正向指令意味着 $\sigma_u \neq \sigma$，负向指令意味着 $\sigma_u = \sigma$）；Deciding 阶段拿 $\sigma$ 和 $\sigma_u$ 一比，只有不相等时才输出 CLICK，相等就直接标 COMPLETED，从源头掐掉"已满足还去点"的假阳性。
 
 举个具体的：屏幕上 WiFi 开关当前是关的（$\sigma=0$），指令是"关闭 WiFi"。直筒推理的 Agent 看到"关闭"+"开关"就倾向点一下，反而把它打开了；StaR 则先感知出 $\sigma=0$、再分析出目标也是 $\sigma_u=0$，两者相等于是判定 COMPLETED、不动手。关键在于这条推理链不能靠提示词临时叮嘱——后面实验会看到，光在 prompt 里要求"注意 toggle 状态"收益很小，必须通过训练把这三步固化成 Agent 的默认行为。
 
-**3. 混合训练策略：在注入 toggle 推理的同时，不让通用任务退化。**
+**3. 混合训练策略：在注入 toggle 推理的同时，不让通用任务退化**
 
 只在 toggle benchmark 上训练有灾难性遗忘的风险——Agent 可能学会盯状态，却把原本会做的长链 GUI 任务忘了。作者的做法是联合训练，并且对原始 agentic benchmark 做精细的"只换推理链、不加新数据"处理：在 AndroidControl、AITZ、GUI-Odyssey 这些数据里，凡涉及 toggle 的 episode 就把它的推理链改写成 StaR 风格，其余 episode 的推理原封不动。
 

@@ -43,15 +43,15 @@ tags:
 论文的工作流可以理解为“评测标准 → 数据构建 → detector 压力测试”。第一步，作者提出 7 个 hallucination detection benchmark 应具备的性质，并将其分为核心属性、文献最大缺口和多样性属性。第二步，作者基于多个问答和检索数据源构建 Trivia++，收集来自 3 个 LLM 的 RAG-style answers，并通过多轮人类句级标注得到 response-level clean labels。第三步，作者额外构造 4 组 noisy labels，用于模拟弱监督、众包分歧和随机翻转。第四步，在 Trivia++、RAGTruth、Dolly、HaluEval 等 RAG-QA benchmark 上评估常用 detector，分析长上下文和标签噪声对性能的影响。
 
 ### 关键设计
-**1. 7 条 benchmark desiderata：给幻觉检测 benchmark 立一张统一体检表，可靠性不再靠规模或流行度说了算。**
+**1. 7 条 benchmark desiderata：给幻觉检测 benchmark 立一张统一体检表，可靠性不再靠规模或流行度说了算**
 
 幻觉检测是一项高度依赖评测定义的任务——hallucination 怎么来的、test label 谁验证的、有没有 noisy train label，每一项都会改变 detector 的排名。作者把这种隐性约束显式化成 7 条要求：organic generations、人类验证的 test labels、现实训练标签噪声、RAG/长上下文任务、faithfulness 类型覆盖、多 LLM 来源、多领域覆盖。逐项对照后发现，没有任何一个旧 benchmark 能同时满足全部 7 条。这张清单点破了三类常见隐患：如果 hallucination 是人工注入的，detector 可能只学会识别注入模式；如果 test label 不是人类验证的，排行榜反映的其实是 judge 偏差；如果没有 noisy train label，就无从评估真实部署里普遍存在的弱监督训练风险。
 
-**2. Trivia++ 长上下文 RAG benchmark：用真实 RAG 分布造一个更接近现代应用的检测数据集。**
+**2. Trivia++ 长上下文 RAG benchmark：用真实 RAG 分布造一个更接近现代应用的检测数据集**
 
 为了同时满足"长上下文"和"organic generation"这两条最大缺口，作者从 TriviaQA、NaturalQuestions、MS-MARCO、CovidQA、DROP 等数据源取问题和参考材料，先用一个商用强模型生成答案，再用 ROUGE < 0.1 的策略过滤、保留答案与参考文本低重叠的样本以提高 hallucination 命中率，但全程不干预模型输出本身；随后把同一组 context-question pairs 喂给 Gemma-7B 和 Mixtral 8x7B，形成跨模型样本。这里要厘清一个关键点：ROUGE 过滤是一种资源分配策略而非 hallucination 注入——它只是把宝贵的标注人力集中到更可能出错的有机输出上，而完整保留了 LLM 自然犯错的真实分布，这正是它区别于 HaluEval 那类人工构造数据集的地方。
 
-**3. 多票人类标注与噪声标签设计：一份数据同时撑起可靠 evaluation 和 noisy-label robustness 研究。**
+**3. 多票人类标注与噪声标签设计：一份数据同时撑起可靠 evaluation 和 noisy-label robustness 研究**
 
 RAG 长上下文样本极难标注，单人标签的可靠性根本不够，于是作者在句级做多轮多票标注：标签分 Supported、Contradicted、Not Mentioned、Supplementary 四类，其中 Contradicted 和 Not Mentioned 映射为 unfaithful。第一轮采用 disagreement escalation，每个样本从 2 个标注者起步，一旦分歧就增至 4 票或 6 票；第二轮先用 Dawid-Skene 剔除低质量标注者，再对剩余样本补 3 票，最终 response-level label 按最严格的句级标签聚合，保证测试标签可信。在这套干净标签之外，作者额外构造 4 组噪声标签——LLM weak supervision、Dissenting Worker、Dissenting Label、Random Flip，后三者噪声水平控制在 15%。这样的设计让研究者第一次能在同一数据集上把 sample-dependent noise（与样本相关的人类分歧）和 sample-independent noise（随机翻转）对 detector 的影响干净地区分开。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 强 cloze baseline 构造：先把 cloze 这一侧调到最优，再谈 LM 的优势从哪来。**
+**1. 强 cloze baseline 构造：先把 cloze 这一侧调到最优，再谈 LM 的优势从哪来**
 
 如果 cloze 处理本身偏弱，那么"LM 拟合更好"就可能只是输在起跑线上。cloze 概率天生有两个麻烦：未被任何人补全的词得到零计数，而 raw probability 到底该不该取负对数也没有定论。为此作者把这两个自由度系统地搜了一遍——平滑参数取 add-one smoothing 的 $V\in\{50,100,200,500,1000,2000\}$，函数形式则覆盖 raw probability、raw surprisal 以及多种 surprisal power transform 共 6 种。在六个阅读时间指标上拟合最好的组合是 $S(w_t)^2$ 配 $V=200$，于是这一档被定为后续比较的 cloze 基线。只有把 cloze 调到它自己能达到的最好状态，后面 GPT2 仍然胜出才说明优势是真实的、而不是 cloze 处理草率带来的假象。
 
-**2. 三类 GPT2 概率干预：人为"砍掉"LM 的某种能力，看阅读时间拟合掉多少。**
+**2. 三类 GPT2 概率干预：人为"砍掉"LM 的某种能力，看阅读时间拟合掉多少**
 
 复现出 GPT2 优于 cloze 之后，真正的问题是这个优势具体来自哪几种能力。作者不去比新 predictor，而是对 GPT2 概率做三种定向削弱，分别对应一个假设：H1（resolution）把 GPT2 分布按 cloze response 的样本量重新采样，再用 count-and-divide 估计概率，等于把 LM 拉到和 cloze 一样低的分辨率；H2（semantics）用 GPT2 token embedding 做 k-means 聚类，把目标词概率替换成它所属语义簇的概率，抹掉 couch/sofa 这类近义词之间的细分；H3（frequency）把低频 token 概率直接置零、只在高频词表上重归一化，去掉 LM 给罕见 continuation 分配细粒度概率的能力。哪一个干预让阅读时间拟合显著下降，就说明被砍掉的那种能力正是 LM 优势的来源之一——三个干预后拟合全都下降，于是三种能力都被坐实。
 
-**3. Similarity-adjusted surprisal 组合尝试：让相似候选也"算半个命中"，看 cloze 与 LM 能否互补。**
+**3. Similarity-adjusted surprisal 组合尝试：让相似候选也"算半个命中"，看 cloze 与 LM 能否互补**
 
 count-and-divide 的硬伤是只认完全一致：人类补的是 sofa、目标词却是 couch 时，目标词概率被记为零，哪怕两者语义几乎等价。SA surprisal 想修这一点，按候选 response 与目标词的 embedding 距离加权概率质量
 

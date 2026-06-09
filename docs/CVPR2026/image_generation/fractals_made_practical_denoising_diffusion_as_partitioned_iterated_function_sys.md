@@ -57,15 +57,15 @@ tags:
 
 ### 关键设计
 
-**1. 双重收缩条件 (EC) 与 (PC)：用一个阈值判断每步到底压不压得动结构。**
+**1. 双重收缩条件 (EC) 与 (PC)：用一个阈值判断每步到底压不压得动结构**
 
 要分析采样链先得回答最基础的问题——单步算子 $\Phi_t(x) = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} x + b_t \hat\varepsilon_\theta(x,t)$ 到底是把点拉近（收缩、组装结构）还是推远（膨胀、注入细节）。看它的Jacobian $J_x\Phi_t = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} I + b_t J_x\hat\varepsilon_\theta$ 就清楚了：第一项是尺度 $>1$ 的恒等缩放，天然膨胀；第二项因 $b_t<0$ 是score修正带来的收缩，谁占上风取决于score Jacobian的谱。论文据此给出两套判据。全局的欧氏收缩(EC)定义了一个只依赖噪声调度的收缩阈值 $L_t^* = \frac{\sqrt{\bar\alpha_{t-1}/\bar\alpha_t} - 1}{|b_t|}$，$L_t^*$ 越小这一步越容易收缩。但自然图像的自相似性是局部的而非全局的，所以真正关键的是patch级的块-最大范数收缩(PC)：把Jacobian按patch分成对角块 $\kappa_t^{\mathrm{diag}}$ 和交叉块 $\delta_t^{\mathrm{cross}}$，只要 $\kappa_t^{\mathrm{diag}} + \delta_t^{\mathrm{cross}} < 1$ 就保证patch层面的收缩。这正是经典PIFS比全局IFS强的地方——它允许各patch按自己的节奏收缩，而这恰好对应后面观察到的"patch逐个解锁"现象。
 
-**2. 方向性抑制场与分层释放：解释为什么早期对角块卡在 $\approx 1$、后期才逐个膨胀。**
+**2. 方向性抑制场与分层释放：解释为什么早期对角块卡在 $\approx 1$、后期才逐个膨胀**
 
 纯高斯基线给出的预测是"灾难性"的：对角块谱范数 $f_t(\lambda_k)$ 在所有CIFAR-10 patch上都 $>1$，意味着每步都该立刻膨胀、细节早早炸开，这和实测的双阶段行为对不上。论文的解释是训练把网络偏离了高斯——它学到一个方向性抑制场 $S_{k,t}(x) = |b_t| \langle v_k^{(1)}, [\nabla_x \Delta_t(x)]_{kk} v_k^{(1)} \rangle$，其中 $\Delta_t$ 是score网络相对高斯score的非高斯修正、$v_k^{(1)}$ 是该patch的主方向。这个抑制场把有效Rayleigh商硬压到1以下，于是对角块在早期被钉在 $\approx 1$ 而非膨胀。更妙的是抑制不是同时撤掉的：分层释放定理（Stratified Crossover, Thm 22）证明在边际单调性条件(MM)下，低方差patch会先释放抑制、高方差patch后释放，形成严格按方差排序的解锁次序。这就给出了Regime II里patch逐个"解锁"、细节由粗到细合成的结构性来源。
 
-**3. 吸引子的Kaplan-Yorke维度公式：不跑模型就能预测生成流形的分形维度。**
+**3. 吸引子的Kaplan-Yorke维度公式：不跑模型就能预测生成流形的分形维度**
 
 既然每步的收缩/膨胀都有闭式刻画，整条链的吸引子几何也就能算出来。在高斯数据加块对角协方差的假设下，Lyapunov谱完全由各步对角膨胀函数 $f_t(\lambda)$ 决定；把所有步的贡献乘起来得到离散Moran方程 $\prod_t f_t(\lambda^{**}) = 1$，其解 $\lambda^{**}$ 就是区分膨胀与收缩方向的全局阈值——协方差特征值 $\lambda_k > \lambda^{**}$ 的方向才膨胀。由此得到Kaplan-Yorke维度的闭式公式：
 

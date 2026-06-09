@@ -44,15 +44,15 @@ K-MetBench 把气象 LLM 评测从"过没过及格线"重塑为"四维 capabilit
 
 ### 关键设计
 
-**1. 基于权威国家认证 + 多阶段去污的数据构造：保证权威、完整、抗污染。**
+**1. 基于权威国家认证 + 多阶段去污的数据构造：保证权威、完整、抗污染**
 
 选韩国 HRDK 官方气象工程师考试真题（25 届，分 P1 预报理论 / P2 观测方法 / P3 大气动力 / P4 气候学 / P5 大气物理，每部分约 330–376 题）有三重好处：国家认证自带 60% 通过线作为"人类合格水位"锚点、题目权威客观、天然本地化。为抗训练集污染，所有选项随机化顺序、题干由 Gemini-2.5-Pro 在强约束保留专业术语下重写（人工校 14.88%），挤掉记忆 bias 推高分数的空间。最关键的是对图文内容分类处理——公式图转 LaTeX 以避开 OCR 瓶颈，而 Skew-T / 等压线等专业气象图保留原图以测 MLLM 真实视觉能力；若全转文本会抹掉 modality 测试、全保图又会被 OCR 噪声污染，这条折中给后续 benchmark 提供了可复用模板。
 
-**2. 四维度正交诊断子集：让模型短板各自显形。**
+**2. 四维度正交诊断子集：让模型短板各自显形**
 
 单一总分会掩盖模型在不同能力上的差异，于是把"专业能力"显式拆成四个两两正交、单题可同属多集的轴：Modality 子集（82 题, 4.62%）覆盖地面图、200/500 hPa 高空图、Skew-T Log-P 图，专测从致密视觉信号里提取气压梯度、风矢、热力学指数的能力；Reasoning 子集（141 题）配有 GPT-5 初稿 + 两位气象教授审核修正的专家 rationale 作为评分 reference；Geo-Cultural 子集（73 题）由 GPT-4.1 + Gemini-2.5-Pro 双 LLM 识别"韩特"概念（如 Yeongdong 山区、KMA 法规、Changma 梅雨锋）再人工校验；Granularity 子集即官方 5 大学科（每科 332–376 题）。拆开后诊断报告能直接告诉开发者"你的 modality 比 reasoning 差 10 分、该补什么数据"，把 benchmark 从 leaderboard 升级为 diagnostic tool。此外 Geo-Cultural 评测用 Implicit/Explicit × Standard/Advanced 四种 prompt 组合，把"语言歧义"与"知识缺失"分离，防止"我国"这类 speaker-centric 表达误判全球模型。
 
-**3. LLM-as-a-Judge 评 rationale + meta-evaluation 验证：低成本但可信地评推理质量。**
+**3. LLM-as-a-Judge 评 rationale + meta-evaluation 验证：低成本但可信地评推理质量**
 
 55 个模型 × 141 题 = 7,755 条 rationale 无法靠专家逐条标注，于是用 Gemini-2.5-Pro 作 judge，对每条 rationale 在 Factuality / Logicality / Depth / Clarity 四轴打分（以专家 rationale 为 reference，总分 4–20）。为证明这个 judge 可信，作者做 meta-evaluation：抽 10 道代表题 × 10 个开源 LLM 的 rationale，让 2 位人类气象专家与 Gemini judge 用同一 rubric 打分，算 Kendall's τ_b、Krippendorff's α 与 ICC，结果 τ_b > 0.8、各轴 α > 0.7、Reasoning Total α = 0.838，证明在专业领域 LLM-as-Judge 可作人类专家的代理，从而把评测成本压到可承受范围、支撑 SOTA 模型的快速迭代。
 

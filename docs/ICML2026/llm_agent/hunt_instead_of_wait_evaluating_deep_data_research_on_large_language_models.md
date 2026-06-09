@@ -45,15 +45,15 @@ DDR 把"投研型智能"做成一个任何主流 LLM 都能直接跑的开放式
 
 ### 关键设计
 
-**1. DDR 任务形式化 + 极简 agent scaffolding：把投研型智能从执行型智能里干净剥出来。**
+**1. DDR 任务形式化 + 极简 agent scaffolding：把投研型智能从执行型智能里干净剥出来**
 
 以往 agentic benchmark 默认任务目标已经写在 prompt 里，模型只需"按指令把事干完"，而且往往还套着 planner / memory / 复杂 workflow 的脚手架——结果是分数里混着"基模能力"和"prompt 工程"，分不清谁的功劳。DDR 同时卡死三条约束来把这层混淆拆掉：(a) 不给问题，prompt 只指定一个 task entity；(b) 不给回合上限，由模型自己判断该停了；(c) 只暴露 SQL 与 Python 两个原子工具，通过 MCP 调用，显式 planning / memory / workflow 模块一律禁用。在这套极简 scaffolding 下，模型被要求产出两类 insight 分别考察不同能力：$I_m$ 是模型在每个 ReAct 回合后立即基于当回合 $(r_i, t_i, o_i)$ 解释出的一段过程级 insight，$I_t = \text{Summarize}(\{(r_i, t_i, o_i)\}_{i=1}^M)$ 则是模型自终止后回溯整条轨迹综合出的全局 insight。剥到只剩 ReAct + 两个工具，分数才真正反映 LLM 已经内化的 agentic 能力，而不是外挂脚手架的功劳。
 
-**2. 混合数据库 + checklist 评测协议：用同一份库的两侧，把"开放任务无法客观评"的死结解开。**
+**2. 混合数据库 + checklist 评测协议：用同一份库的两侧，把"开放任务无法客观评"的死结解开**
 
 "完全开放式探索"和"客观可批量打分"天然冲突——构造 QA 会退化成执行型任务，LLM-as-a-Judge 又太主观、验证代码执行也覆盖不了开放洞见。本文的破法是选用三个**同时含结构化表与非结构化长文本**的真实大库：MIMIC-IV（200M+ 记录的电子病历，结构化 Hosp/ICU + 非结构化临床 note）、GLOBEM（可穿戴信号 + 心理健康问卷）、10-K（XBRL 财报 + 业务描述与风险文本）。先用 GPT-5-mini 从**非结构化**侧抽出可验证 fact 形成 checklist，再过 50+ 领域专家筛选，保证 fact-domain 到 data-domain 的"surjective"映射——即每一条 fact 都能从**结构化**数据里分析出来。于是模型探索时只看结构化数据、看不到任何 checklist 与问题，评测时 GPT-5-mini 才拿 checklist 去核 insight。这等于从同一份数据库的非结构化侧免费拿到一批"领域专家会问出来的好问题"，把开放式任务退化成可自动评判的 fact recall；又因为交互期完全没有问答格式数据，天然抗训练集污染。最终覆盖 291 个 task entity、2058 条 checklist item。
 
-**3. 投研动态四维度分析框架：单一准确率掩盖了行为差异，要把"何时探、怎么探、何时停"拆开看。**
+**3. 投研动态四维度分析框架：单一准确率掩盖了行为差异，要把"何时探、怎么探、何时停"拆开看**
 
 同样拿 30% 的两个模型，走的探索策略可能完全不同，所以本文在准确率之外补了四套诊断。其一是 **test-time scaling**，从三种横轴看性能增长——interaction（回合数，呈 sigmoid）、token（成本 token，曲线"前平后陡"）、cost（美元，对数轴），由此暴露 plan-then-act 这类隐式规划行为。其二是**探索模式**，用归一化探索熵 $H_{\text{norm}} = \frac{-\sum_{i=1}^n p_i \log_2 p_i}{\log_2 n}$（$p_i$ 为各数据域被访问的频率分布）配 database coverage 画散点，一张图同时读出 breadth 与 depth，强模型集中在"中等熵 + 中等覆盖"的平衡区。其三是 **self-termination**，用 $\frac{1}{N}\sum_{i=1}^N \log P(t_i \mid t_1, \dots, t_{i-1}, T_{\text{partial}})$ 衡量模型在不同轨迹长度下生成结束 token 的对数概率，Qwen3 单调上升（停止信心持续增长）、Qwen2.5 则剧烈波动。其四是**训练因子消融**，横向对比 Qwen2.5 / Qwen3 / Qwen3-Next 各代各尺寸，把"参数量 / 上下文长度 / agentic 训练"三个维度的贡献解耦开来。靠这四维度，本文才能把"为什么 agentic 训练比放大参数更重要"用可视化和指标直接坐实。
 

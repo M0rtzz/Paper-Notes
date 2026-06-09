@@ -62,19 +62,19 @@ $$F_\Theta(x, d, z_{t_i}) = (c, \sigma)$$
 
 ### 关键设计
 
-**1. 单序列连续动力学：用 Latent ODE 把一段视频的演化变成可积分的微分方程。**
+**1. 单序列连续动力学：用 Latent ODE 把一段视频的演化变成可积分的微分方程**
 
 针对的痛点是帧级方法只会在训练帧之间内插、一外推就抖动崩塌。Node-RF 用 Latent ODE（一个 ODE-RNN 变分自编码器）来建模时序，训练分两步走。先是 warmup：冻住 nODE，只学前两帧对应的 latent $z_{t_0}$、$z_{t_1}$，同时让 NeRF 把这两帧拟合好，给后续动力学一个干净的起点。然后联合训练：解冻 nODE，把这两个 latent 送进 ODE-RNN 编码器估出隐空间的正态分布，采样得到初始状态 $z_{t_0}$，由 ODE solver 积分出各时刻的动态 latent $z_{t_i}^{\text{dyn}}$，再经解码器 $\mathcal{D}$ 映射成 NeRF 用的 latent。
 
 之所以有效，是因为 nODE 对微分函数沿时间积分，天然逼着相邻状态平滑过渡，不会像逐帧形变场那样在帧间跳变；而 ODE solver 能在任意时刻求值，外推时只是把积分上限往后推，不需要去外插一个根本不存在的离散索引。和 D-NeRF 的本质区别就在这：D-NeRF 给每帧学一个独立形变场、时间是查找键，Node-RF 的 latent 是同一条微分方程连续演化出来的。
 
-**2. 多序列泛化学习：条件化初始状态 + 共享 nODE，逼模型学"规律"而非"记轨迹"。**
+**2. 多序列泛化学习：条件化初始状态 + 共享 nODE，逼模型学"规律"而非"记轨迹"**
 
 这一设计回答的是"换一组初始条件要不要重训"。做法是把静态和动态彻底分开：warmup 阶段先学一个静态 latent $z_{\text{static}}$ 吃下不变的背景；联合训练阶段再优化一个规范 latent $z_{\text{can}}$ 当场景参照，并把初始位置 $p_0^c$ 用 MLP 编码器 $\mathcal{E}$ 编码后，与初始速度 $v_0^c$、$z_{\text{can}}$ 拼接送入 nODE，解出各时刻的动态 latent $z_{t_i,c}^{\text{dyn}}$。这个动态 latent 再分三路解码：一路加回 $z_{\text{static}}$ 送 NeRF 渲染，一路预测物体位姿 $\hat{p}_{t_i}^c$，一路预测物体速度 $\hat{v}_{t_i}^c$。
 
 关键在于 nODE 的参数在所有轨迹间共享、只有初始状态随序列变化——模型没法再去背某一条轨迹，只能把公共的运动规律压进 $f_\theta$。静态/动态 latent 分离让背景不再污染动力学建模，而位姿和速度这两路额外监督给 ODE 注入了纯视觉之外的梯度，让它学到的动力学和真实物理对得上。推理时只要给一组新的 $(p_0, v_0)$，就能积分出一条全新轨迹。
 
-**3. Lipschitz 正则化：约束每层的 Lipschitz 上界，把隐空间整理成有结构的动力系统。**
+**3. Lipschitz 正则化：约束每层的 Lipschitz 上界，把隐空间整理成有结构的动力系统**
 
 没有约束时，不同轨迹的 latent 在隐空间里乱成一团，看不出任何拓扑结构，动力学也就无从分析。Node-RF 给每个线性层 $y = \sigma(W_i x + b_i)$ 配一个可训练的 Lipschitz bound $c_i$，按 $W_i \leftarrow \text{normalization}(W_i, \text{softplus}(c_i))$ 归一化权重，并把所有层的界连乘起来作为正则项 $\mathcal{L}_{\text{lipschitz}} = \prod_i \text{softplus}(c_i)$ 一起优化。
 

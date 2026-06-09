@@ -54,7 +54,7 @@ $$p(A, T, z \mid V, Q, \mathcal{S}_K(V)) = p(z \mid V, Q, \mathcal{S}_K(V)) \cdo
 
 ### 关键设计
 
-**1. 多视图潜变量预测（Predictive Temporal Perception）：用"部分能否预测整体"的差异自动学到边界敏感特征。**
+**1. 多视图潜变量预测（Predictive Temporal Perception）：用"部分能否预测整体"的差异自动学到边界敏感特征**
 
 直接边界回归数值不稳，根源之一是网络对"事件在哪里转折"没有显式表征。这一步在无标签视频上做自监督预训练：给定时序特征序列 $X \in \mathbb{R}^{N \times D}$，构造一个全局视图（完整时序）和多个局部视图（部分时序），最小化局部到全局的潜在预测损失
 
@@ -62,11 +62,11 @@ $$\mathcal{L}_{\text{pred}} = \mathbb{E}\left[\sum_{v \in \mathcal{V}} \|\text{s
 
 迫使共享时序主干去编码"能让全局动态从部分证据被预测出来"的特征。关键在于：相干事件内部长程动态相对可预测，可一旦到了事件边界，同样的局部证据会对应多种后续走向、预测损失陡增——网络因此自动学到边界敏感特征，无需任何边界标注。再叠一个切片各向同性高斯正则（SIGReg）稳住潜在空间的几何、避免表示坍缩。
 
-**2. 跨度证据编码器（Span Evidence Encoder, SEE）：把不等长的候选事件压成等长视觉证据 token 供 LLM 引用。**
+**2. 跨度证据编码器（Span Evidence Encoder, SEE）：把不等长的候选事件压成等长视觉证据 token 供 LLM 引用**
 
 候选事件长短不一，但 LLM 需要把每个候选当成一个可被引用的离散单位来处理，因此得先有统一长度的表示。对每个候选段 $T_k$，SEE 先裁出段内特征 $U_k = \text{Crop}(U, T_k) \in \mathbb{R}^{N_k \times D}$，再用 $M$ 个可学习 query token 经堆叠多头交叉注意（Q-Former 风格）聚合成定长证据 $P_k = \text{MHCAStack}(B, U_k) \in \mathbb{R}^{M \times D}$。之所以用交叉注意的软聚合而非简单 pooling，是因为它能让 query token 自适应地挑出段内最有判别力的帧，表达力更强。
 
-**3. 证据驱动的识别-测量（Identify-then-Measure）：让 LLM 先承诺引用哪个事件，再在该事件约束下生成边界。**
+**3. 证据驱动的识别-测量（Identify-then-Measure）：让 LLM 先承诺引用哪个事件，再在该事件约束下生成边界**
 
 直接在整段视频 token 流上黑盒回归时间戳，既不稳定又无法溯源。F2G 把整个证据池 $\mathcal{S}_K(V) = \{(\langle\text{Span}_k\rangle, T_k, P_k)\}_{k=1}^K$ 作为上下文注入 LLM（每条证据含离散 ID、粗粒度时间区间、视觉 token），让模型先吐一个 ID token 显式"认领"某个候选事件（识别），再在该 ID 对应证据的条件下精细生成最终时间戳（测量）。三项损失 $\mathcal{L}_{S3} = \mathcal{L}_{LM} + \alpha \mathcal{L}_{id} + \beta \mathcal{L}_{\text{time}}$ 分别监督序列生成、证据 ID 预测和时间戳预测。如此一来，边界预测从"全视频上的无约束回归"被收窄成"特定事件假设下的局部精细化"，数值稳定性大幅提升；而显式的 ID 引用又让用户能看到模型到底选了哪个候选，预测因此可溯源。
 

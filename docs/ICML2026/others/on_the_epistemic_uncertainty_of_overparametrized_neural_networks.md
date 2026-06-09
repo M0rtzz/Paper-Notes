@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. 基于方差的 EU 定义 + 不可识别性下的非零残余：让 EU 看得见 weight-space 的残余不确定性。**
+**1. 基于方差的 EU 定义 + 不可识别性下的非零残余：让 EU 看得见 weight-space 的残余不确定性**
 
 UQ 社区惯用的信息论 EU（如 $I(\mathbf{w};y)$ 或 function-space variance）对 permutation 等价类天然不可见——函数一旦识别它就归零，看不到参数空间里仍然残留的不确定性。作者改用 $\mathrm{EU}(y,\mathbf{w}\mid x,\mathcal{D}_n)=\mathrm{tr}(\mathrm{Cov}(\mathbf{w}\mid\mathcal{D}_n))$，即 weight-space 后验协方差的迹，把不可识别性纳进度量。一个极简反例就把问题点透：在线性深网 $\mathcal{N}(\mathbf{w}_L^\top\mathbf{W}_{L-1}\cdots\mathbf{w}_1 x,\sigma^2)$ 里能显式算出 function-space EU 归零、而 weight-space EU $=d\tau^2$（$\tau^2$ 为先验方差）——函数完全识别，参数 EU 却不消失。这个度量既兼容贝叶斯定义，又能捕捉到不可识别方向，为后面 ReLU 网的精确刻画打好地基。
 
-**2. 过参数化的赋值-分裂分解：把冗余神经元的连续自由度显式参数化。**
+**2. 过参数化的赋值-分裂分解：把冗余神经元的连续自由度显式参数化**
 
 要回答"过参数化到底引入多少不可消除的不确定性"，先得把"冗余怎么发生"写清楚。作者对每个 surjection $\varsigma:[M]\to[M^\star]$（模型神经元 → 真神经元）定义群 $G_{m'}=\varsigma^{-1}(m')$ 和 splitting 系数 $(c_m)_{m\in G_{m'}}\in\Delta^{k_{m'}-1}$，证明所有解必满足
 
@@ -56,7 +56,7 @@ $$\mathbf{w}_{1,m}=\sqrt{c_m}\,\mathbf{w}_{1,\varsigma(m)}^\star,\qquad w_{2,m}=
 
 于是函数等价类几何上对应单纯形乘积 $\mathcal{M}_\varsigma\cong\prod_{m'=1}^{M^\star}\Delta^{k_{m'}-1}$。这一分解把"一个真神经元被几个模型神经元复刻、贡献按 $c_m$ 分摊"这件事完全显式化，从而把后验研究归约成"单纯形上诱导分布的研究"；它也是 Lemma 3 证明不同 $\varsigma$ 的开内部流形几乎互不相交（连续动力系统几乎不跨越）的几何前提。
 
-**3. Dirichlet 后验闭式 + balanced 缩放定理：给出"EU 被重分布而非消除"的精确刻画。**
+**3. Dirichlet 后验闭式 + balanced 缩放定理：给出"EU 被重分布而非消除"的精确刻画**
 
 有了流形结构，最后一步给出 splitting 系数和参数块的精确后验矩。用 $\varepsilon$-tube 诱导条件分布定义 $\mathcal{M}_\varsigma$ 上的后验，作者证明 $(c_m)_{m\in G_{m'}}\sim\mathrm{Dir}(\alpha,\dots,\alpha)$，$\alpha=(p+1)/2$，由此 $\mathbb{E}[c_m]=k_{m'}^{-1}$、$\mathrm{Cov}(c_m,c_{\tilde m})=-1/\kappa$，进而 $\mathbb{E}[\boldsymbol{\omega}_m]=\mu_{k,\alpha}\boldsymbol{\omega}_{m'}^\star$、$\mathbb{E}[\boldsymbol{\omega}_m\boldsymbol{\omega}_m^\top]=k_{m'}^{-1}\boldsymbol{\omega}_{m'}^\star\boldsymbol{\omega}_{m'}^{\star\top}$。balanced 极限 $k_{m'}\asymp M/M^\star,\ M\to\infty$ 下得 $\mathbb{E}[\boldsymbol{\omega}_m]=\Theta(M^{-1/2})$、$\mathrm{Cov}=\Theta(M^{-1})$。这组闭式矩既允许实验做严格对照（实测均值/二阶矩 vs. $\mu_{k,\alpha}$、$1/k$），又点出核心结论：无限宽极限下单个神经元贡献缩小、但整个 group 总贡献不变、splitting 自由度反而长成高维单纯形——过参数化下 EU 是被重分布，而不是被消除。
 

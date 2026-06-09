@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. 从"impurity 最大化"重构为"在线模型对比"：换掉一个在漂移下站不住的目标。**
+**1. 从"impurity 最大化"重构为"在线模型对比"：换掉一个在漂移下站不住的目标**
 
 HT 原本要估计种群不纯度差 $\Delta^{v,c}=\mathcal{I}(p(v))-P_L\mathcal{I}(p(v_c^L))-P_R\mathcal{I}(p(v_c^R))$，但在非平稳流里这个目标本身随时间漂移、根本没有"全局最优分裂"可言。本文索性换一个清晰、可检验的零假设：strong null $H_0^{v,c}:\forall t,\;\delta_t^{v,c}=\mathbb{E}[\Delta_t^{v,c}\mid\mathcal{F}_{t-1}]\le 0$，即 challenger 在任何时刻都不优于 incumbent。证据来自 prequential 预测损失差 $\Delta_t^{v,c}=\ell(m^v_{t-1}(X_t),Y_t)-\ell(m^{v_c}_{t-1}(X_t),Y_t)\in[-1,1]$，损失用 log loss（对应 entropy）或 Brier score（对应 Gini），统一裁到 $[0,1]$。直接拿损失差当证据既绕开了不纯度的非线性问题，也不再依赖"种群最优分裂"这个漂移场景下的空概念。
 
-**2. Testing-by-betting + Universal Portfolio：把"是否分裂"变成一场对 optional stopping 天然鲁棒的赌局。**
+**2. Testing-by-betting + Universal Portfolio：把"是否分裂"变成一场对 optional stopping 天然鲁棒的赌局**
 
 固定样本量不等式扛不住 HT"看到证据就停"的数据相关停止，所以判据换成 anytime-valid 的财富过程。从单位财富 $W_s=1$ 起步，每步选一个 $\mathcal{F}_{t-1}$ 可测的下注比例 $\beta_t\in[0,1]$，财富更新 $W_t=W_{t-1}(1+\beta_t\Delta_t)$。在 $H_0$ 下 $(W_t)$ 是非负超鞅，Ville 不等式 $\mathbb{P}_{H_0}(\sup_t W_t\ge 1/\alpha)\le\alpha$ 保证"财富越线"就是任意时刻都合法的拒绝规则，提交时刻取 $\tau^{v,c}=\inf\{t:W_t^{v,c}\ge 1/\alpha^{v,c}\}$。下注比例不手调——这点很关键，手调 $\beta_t$ 等于偷看测试统计量——而采用 parameter-free 的 Universal Portfolio，用 $\mathrm{Beta}(1/2,1/2)$ Jeffreys 先验对所有常数再平衡组合做混合：
 
@@ -56,7 +56,7 @@ $$\beta_t=\frac{\int_0^1 \beta\prod_{u}(1+\beta\Delta_u)\,dF_+(\beta)}{\int_0^1 
 
 UP 在 i.i.d. 情形下增长率达到最优常数组合的最优值，又完全不需要调参，是目前 SAVI 框架里最强且不依赖独立性假设的工具。
 
-**3. 置信序列变体 + 全局 $\alpha$-分配：补上"平均优势"语义和整棵树的终身错误控制。**
+**3. 置信序列变体 + 全局 $\alpha$-分配：补上"平均优势"语义和整棵树的终身错误控制**
 
 strong null 实践中分裂更早、性能更好，但若想在 commit 时刻还保证模型损失单调下降，理论上需要"平均优势"语义，所以本文并提一个 weak null $H_{w,0}^{v,c}:\bar\delta_t^{v,c}=\frac{1}{t-s^v}\sum_u \delta_u^{v,c}\le 0$，用 empirical Bernstein 置信序列 $(L_t,U_t)$ 构造、停在 $\tau_w^{v,c}=\inf\{t:L_t>0\}$，让用户按场景二选一。全局控制部分则把预算 $\alpha$ 拆给所有候选 $(v,c)$：只要 $\sum_{v,c}\alpha^{v,c}\le\alpha$，由 union bound 加 anytime-valid 性质即得 $\mathbb{P}(\exists\text{false split ever})\le\alpha$，于是"一棵树跑一辈子"的 family-wise error 也守得住；要测严格正优势 $\varepsilon>0$，只需把财富换成 $\varepsilon$-shifted 版本 $W_{\varepsilon,t}=\prod_u(1+\beta_u(\Delta_u-\varepsilon))$ 并把 $\beta$ 收缩到 $[0,1/(1+\varepsilon)]$。
 

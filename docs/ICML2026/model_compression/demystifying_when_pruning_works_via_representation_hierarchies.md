@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 三空间扰动测量协议：把"扰动在哪一步被放大"用对照实验钉死。**
+**1. 三空间扰动测量协议：把"扰动在哪一步被放大"用对照实验钉死**
 
 以往工作要么只盯权重稀疏度、要么只看端到端 perplexity，扰动在网络内部怎么传播被整个掩盖了。这里的做法是搭一个 controlled probe：在 baseline 模型正常 forward 的过程中，只把当前层换成它的剪枝版本、其它层保持原样，由此拿到纯属"这一层"的扰动 $\Delta h_l$。然后沿表征链逐级量化它的去向——嵌入空间用 angular deviation $1-\mathrm{CosineSim}(h_l, h_l+\Delta h_l)$，经 LM head 投到 logit 空间 $z^{(l)}=W h^{(l)}$ 测 $1-\mathrm{CosineSim}(z, z+\Delta z)$，再过 $p^{(l)}=\mathrm{softmax}(z^{(l)}/T)$ 落到概率空间。每层 × 每解码步都重复一遍，画出 Figure 4 的三条曲线。结果一目了然：嵌入和 logit 空间的余弦相似度几乎贴着 1（只在第一、最后一层略掉一点），概率空间却剧烈震荡。"每次只换一层"这个隔离设计的价值就在于它能把"单层局部扰动"和"端到端累积"干净地分开，让放大究竟发生在哪一段无所遁形。
 
-**2. Taylor 局部理论（Theorem 1-3）：用闭式公式证明 softmax 才是放大器。**
+**2. Taylor 局部理论（Theorem 1-3）：用闭式公式证明 softmax 才是放大器**
 
 上一步暴露了现象，这一步要回答"为什么 logit 稳、概率不稳"。线性段的稳定性可以直接算出来：嵌入/logit 空间的偏移经二阶 Taylor 展开近似为 $1-\mathrm{CosineSim}(h, h+\Delta h) \approx \|\Delta h_\perp\|^2 / (2\|h\|^2)$，只取决于正交分量与原向量模长的平方比——而单层剪枝引入的 $\|\Delta h\|$ 本就远小于 $\|h\|$，这个比值自然很小，再经 LM head 投影后相对正交分量被进一步压缩（Fig. 5 实测确认）。真正的放大发生在 softmax 这一非线性步：概率空间偏移 $1-\mathrm{CosineSim}(p, p+\Delta p) \approx \mathrm{Var}_r(\Delta z)/(2T^2)$，其中 $r_i = p_i^2/\|p\|^2$；若用 KL 散度衡量分布偏移则有 $\mathrm{KL}(p\|q) \approx \mathrm{Var}_{i\sim p}(\Delta z_i)/(2T^2)$。这里的关键不是 $\Delta z$ 的模长而是它的**方差**——哪怕 $\Delta z$ 整体不大，只要它在 vocab 维度上分布不均匀，softmax 就会把这种"扁平 vs 尖峰"的差异指数级放大；温度 $T$ 又恰好压在分母上，温度越低放大越猛。这套理论第一次给"softmax 放大剪枝误差"提供了可计算、可对比的标尺，Fig. 6 显示理论估计的 angular deviation 和 KL 散度都和 ground truth 高度吻合——意味着不必真去生成，光凭单层扰动统计就能预判某次剪枝会不会把生成任务搞崩。
 
-**3. 生成 vs 非生成的子空间机制（Multi-Scale Analysis）：同一个概率震荡为何只砸生成任务。**
+**3. 生成 vs 非生成的子空间机制（Multi-Scale Analysis）：同一个概率震荡为何只砸生成任务**
 
 概率空间既然剧烈震荡，为什么多选和检索还是稳的？区别在于它们用了表征链的不同位置、不同大小的子空间、不同的步数。生成任务每步从完整 vocab $|\mathcal{V}|$ 采样并自回归，单步小偏差经 KV cache 喂回历史，使 baseline 和 pruned 模型从第二步起就 condition 在不同 token 历史上，偏差爆炸式累积（Fig. 7：第一步余弦相似度约 1，第十步掉到接近 0）。非生成任务则只走第一步、且只看 logit 排序或候选 token 子集 $\mathcal{C}\subset\{1,\dots,|\mathcal{V}|\}$（如 A/B/C/D 四个选项）；Fig. 8 显示这些候选 token 通常落在概率分布的**尾部**，那里相对扰动远小于 top-token，argmax 几乎不动，而检索任务干脆直接在嵌入空间算 cosine，本就处在最稳的那一段。于是"任务鲁棒不鲁棒"被机械地分解成三个可观测变量——用哪个表征空间、任务相关子空间有多低维、是否有时间依赖——这三条直接成了剪枝可行性的预测因子。
 

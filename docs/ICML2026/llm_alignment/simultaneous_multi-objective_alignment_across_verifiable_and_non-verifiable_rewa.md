@@ -44,15 +44,15 @@ MAHALO 的输入是一组多目标偏好数据 $\{\mathcal{D}_i\}_{i=1}^H$（Mat
 
 ### 关键设计
 
-**1. 标准化 PRM 训练：把过程奖励从数学域抽象成"前缀→期望成功概率"，统一可验证 / 非可验证域。**
+**1. 标准化 PRM 训练：把过程奖励从数学域抽象成"前缀→期望成功概率"，统一可验证 / 非可验证域**
 
 之前的 PRM 工作几乎只能在数学这类有自动验证器的域上训，因为只有那里能廉价地判定每一步"对不对"；helpfulness、honesty 这种主观目标缺一套通用的 step-level 监督。本文的关键一步是把过程奖励重新定义成"给定前缀、期望最终成功的概率"，再按"是否可验证 + rollout 成本 + 有没有清晰过程结构"把标签构造分级处理。可验证域用 step-level reward 叠 hindsight relabeling，把最终正确性 $z$ 折扣回传到每一步 $\tilde r_t = r_t + \gamma^{n-t} z$，对 $M$ 次 rollout 取平均得到拟合目标 $V_t^{\text{target}}$，PRM 用 MSE 去逼近：$\mathcal{L}_{\text{PRM}} = \mathbb{E}[(p_t - V_t^{\text{target}})^2]$，等于把 PRM 同时训成"step 质量 + 未来正确性"的预测器。非可验证域则分三种 case：Case A（有清晰 step 且 rollout 便宜）用校准过的 LLM-as-Judge 对多条 rollout 投多数票，$r_t = \mathbb{I}[\frac{1}{M}\sum_m \mathbb{I}(J(y_{1:t}, y_{t+1:n}^{(m)})=\text{pos}) > 1/2]$；Case B（rollout 贵，如多轮对话）直接让 judge 给前缀打分 $r_t = J(y_{1:t})$；Case C（无清晰过程结构）退化成 Bradley-Terry 风格的部分序列打分。正因为这层抽象按 rollout 成本和过程结构分级，同一套 PRM 训练范式才能从数学扩散到整个对齐谱，这也是后面"一个 PRM 跨域迁移"成立的前提。
 
-**2. Multi-Action-Head DPO：把目标分离放在最后一层、知识共享放在 backbone，避免 H 倍训练开销又让推理时可重权。**
+**2. Multi-Action-Head DPO：把目标分离放在最后一层、知识共享放在 backbone，避免 H 倍训练开销又让推理时可重权**
 
 MODPO 把多个目标硬塞进一个标量损失，权重在训练时就钉死、推理时改不了；DPO Soup 之类要为每个目标独立训一整个模型再合并参数，加新目标就得重训单目标专家，代价高。MAH-DPO 的做法是让共享 backbone 给出隐状态 $h_{\theta_b}(x, y_{1:t}) \in \mathbb{R}^d$，再为每个目标 $i$ 配一个独立投影头 $W_i \in \mathbb{R}^{d \times |V|}$，得到目标特定 logits $z_i = W_i^\top h_{\theta_b}$。每个头都从 SFT 头复制再加小扰动初始化，参考模型 $\pi_\text{ref}$ 共用一份冻结的 SFT 头；训练时把每条样本按目标路由到对应头各算各的 DPO，单目标损失 $\mathcal{L}_i = -\mathbb{E}_{\mathcal{D}_i}[\log \sigma(\beta \Delta_i)]$（$\Delta_i$ 是用 $\pi_{\theta_b, W_i}$ 算的 DPO 优势），总损失是加权和 $\mathcal{L}_{\text{MAH-DPO}} = \sum_i \alpha_i \cdot \frac{1}{|\mathcal{B}_i|}\sum_{\mathcal{B}_i} \mathcal{L}_i$。推理时只需对 logits 加权 $\pi_\text{MAH}(y_t \mid \cdot) = \text{Softmax}(\sum_i w_i z_i)$（$\sum_i w_i = 1$）即可在 Pareto front 上平滑滑动，完全不用重训。把"目标分离"压到轻量的最后一层、把"知识共享"留在重量的 backbone，让它既绕开了 H 倍训练成本，又能即时重权——实测两头集成相对单头 DPO 仅 +13% 延迟、+7% 显存。
 
-**3. PRM-guided Decoding with Continuing Hidden State：用续存 KV cache 抹掉每步重 encode，让 step-level 引导真正可部署。**
+**3. PRM-guided Decoding with Continuing Hidden State：用续存 KV cache 抹掉每步重 encode，让 step-level 引导真正可部署**
 
 现有 reward-guided decoding 每选完一个 step 就把"已生成前缀 + 新 step"当成文本重新拼接再 encode 一次，tokenization、相对位置、特殊 token 摆放上的细微差异会让下一步的分布偏离真实增量解码，分步多次拼接后误差还会累积。本文的解法是维护一个 running past KV cache $\text{kv}_t$：每到一个"自然边界"（数学的换行 step、价值观的句子/段落、对话的一轮），就从 $\text{kv}_t$ clone 出 $K$ 份本地 cache，各自独立采样直到触发边界检测 $\mathcal{Q}$，得到候选 $y_{t+1}^k$ 及其末态 cache $\text{kv}_{t+1}^k$；PRM 给每个候选打分 $r_k = P(x, y_{1:t}, y_{t+1}^k)$，选 $k^\star = \arg\max_k r_k$，把对应的 $\text{kv}_{t+1}^{k^\star}$ 直接顶替为下一步的 running cache。这样生成始终在"隐状态连续"的层面进行，既保住了分布的真实性，又省掉了重复 encode——实测对随机采样 4.9×、对 PRM-guided 4.2× 加速，把 step-level guidance 的成本压到能落地的量级。
 

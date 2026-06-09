@@ -50,7 +50,7 @@ tags:
 
 ### 关键设计
 
-**1. Conditional Interpolants：把 score 从"必须训练"还原成"目标分布的解析变换"。**
+**1. Conditional Interpolants：把 score 从"必须训练"还原成"目标分布的解析变换"**
 
 扩散采样最根本的痛点是 score 函数对一般未归一化分布不可解析，逼得人要么训神经网络拟合、要么嵌套 MCMC 近似。标准 stochastic interpolant 定义 $x_t = F_t(z, x)$（$z\sim\nu_{\text{ref}}, x\sim\nu$），研究的是 $x_t$ 的 marginal 分布——而 marginal score 正是不可解析的那一个。本文换个视角：**固定参考点 $z$**，令 $F_{t\mid z}(\cdot) = F_t(z,\cdot)$ 是一个 diffeomorphism，那么条件分布 $\nu_{t\mid z}$ 就是目标 $\nu$ 经 $F_{t\mid z}$ 的 pushforward，由变量替换公式直接写出
 
@@ -58,11 +58,11 @@ $$\pi_{t\mid z}(x) = |\det \mathrm{J}F_{t\mid z}(F^{-1}_{t\mid z}(x))|^{-1}\,\pi
 
 只要目标 $\pi$ 可评估，条件密度和条件 score $\nabla\log\pi_{t\mid z}$ 就全都闭式可得。再定义条件速度场 $u_{t\mid z}(x) = \partial_t F_{t\mid z}(F^{-1}_{t\mid z}(x))$，配上 Fokker-Planck 就推出一条保持 $\pi_{t\mid z}$ 不变的精确 SDE：$dx_t = (u_{t\mid z}(x_t) + \frac{\sigma_t^2}{2}\nabla\log\pi_{t\mid z}(x_t))dt + \sigma_t dW_t$。一句话，conditional 视角用"维度变换 + 原密度解析评估"换掉了神经训练。
 
-**2. $t\to 0$ 极限：让初始化代价单调消失，破掉"采初始分布"的 catch-22。**
+**2. $t\to 0$ 极限：让初始化代价单调消失，破掉"采初始分布"的 catch-22**
 
 闭式 SDE 在 $t=0$ 处有奇点（$F_{t\mid z}$ 不可逆、drift 发散），所以必须从某个 $t_0>0$ 启动；但这就冒出一个新任务——得先把 $t_0$ 处的初始分布 $\nu_{t_0\mid z}$ 采出来，听起来又回到原点。作者证明这个新任务其实比原任务容易得多：当 $t\to 0$ 时 $W_1(\delta_z, \nu_{t\mid z})\to 0$（Eq. 10），条件分布坍缩到参考点 $z$ 上。借 Lipschitz 性质可进一步证明，只要转换后 Markov 核的 Lipschitz 常数 $L_t\le 1$，采 $\nu_{t\mid z}$ 的误差就严格低于直接采 $\nu$，而线性、三角等常用插值都满足 $L_t\to 0$。于是 $t_0$ 越小，PT 从 $\pi_{\text{ref}}$ 跳到 $\nu_{t_0\mid z}$ 越容易——这正是 CDS"免费午餐"论点的支点。
 
-**3. PT 与 SDE 的角色分工：全局探索交给 PT，局部精修交给 SDE。**
+**3. PT 与 SDE 的角色分工：全局探索交给 PT，局部精修交给 SDE**
 
 两阶段不是随便拼的，而是把两类方法各自的优势条件互补起来。Stage 1 用 Parallel Tempering 从 $\pi_{\text{ref}}$ 退火到 $\nu_{t_0\mid z}$，因为 $t_0$ 很小、中间 ladder 短、swap acceptance 高、密度评估省——PT 被安排在"距离最短的那一段"。Stage 2 用 Euler–Maruyama 积分闭式 SDE 把这些"已经差不多对"的样本沿 $t_0\to 1$ 推到目标，SDE 负责全程的连续 score-correction。这里有两个非平凡之处：初始化必须真的从 $\nu_{t_0\mid z}$ 采样而非简单令 $x_{t_0}=z$（Appx H 证明单点初始化会严重退化，扩散撑不出足够支撑）；而且直接用反插值映射 $F^{-1}_{t_0\mid z}$ 把样本映到 $\nu$ 也比 SDE 路径差（Fig. 5），因为 SDE 的连续校正能在传输途中自动修掉初始化误差。PT 强在多模态全局探索但对 $\pi_{\text{ref}}\leftrightarrow\nu$ 距离敏感，SDE 强在局部精修但需要 score——CDS 刚好对两者扬长避短。
 

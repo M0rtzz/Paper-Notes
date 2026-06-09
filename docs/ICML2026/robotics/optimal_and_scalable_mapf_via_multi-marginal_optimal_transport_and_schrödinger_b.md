@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. P1：MAPF 的 MMOT-LP 与全单模性保证。**
+**1. P1：MAPF 的 MMOT-LP 与全单模性保证**
 
 经典的 time-expanded IP 公式能给 MAPF 最优解，但一直缺一个干净的回答——"为什么这些 LP 的最优解恰好是整数？"大家凭经验知道某些 case 整数解存在，却没有统一的结构性条件。P1 把这件事讲清楚了。它的决策变量是相邻时刻间的转移矩阵 $\{\Pi_t\}$，目标是总传输代价 $\sum_t \langle \Pi_t, C_t\rangle$，三组约束分别管三件事：**gluing** 约束 $\Pi_t^\top\mathbf{1} = \Pi_{t+1}\mathbf{1}$ 保证相邻时层质量守恒（即马尔可夫性），**terminal** 约束 $\Pi_1\mathbf{1}=\mu, \Pi_T^\top\mathbf{1}=\nu$ 固定起止分布，**vertex-capacity** 约束 $0\le\Pi_t^\top\mathbf{1}\le\mathbf{1}$ 不让同一个 vertex 上挤进多于一个机器人。在 Assumption 3.1 的自然结构下（允许 self-loop、不共享端点的边可并行、move cost > wait cost > 0、target wait cost = 0），Lemma 3.3 证明这个 LP 的约束矩阵是全单模 (TU) 的，于是所有极点解天然取整，变量数还只有多项式 $O(KT)$ 个；Theorem 3.4 再把整数解翻译回"机器人互不碰撞、轨迹时空不重叠、各自到达独立目标"。TU 这个第一性原理不只解释了整数性，还把 min-cost / min-move / min-makespan 等不同目标统一成"换一个 $C_t$"——例如 Assumption 3.5 用指数增长 $c_{ij,t} = B^t \tilde c_{ij}$ 隐式逼出 min-makespan，Lemma 3.7 给出 makespan 上界 $T^* \le N + K - 1$，配合 $O(\log K)$ 次二分搜索就能找到最小 horizon。
 
-**2. P2：Schrödinger bridge 与 entropic 松弛。**
+**2. P2：Schrödinger bridge 与 entropic 松弛**
 
 P1 虽然多项式可解，但大规模（数千节点、上万变量）下直接解 LP 仍然慢。P2 把 P1 推广成一个概率问题：在约束集 $\mathcal{C}$ 上找联合分布 $\mathbf{P}$ 最小化 $\mathrm{KL}(\mathbf{P}\,\|\,\mathbf{G})$，$\mathbf{G}$ 是参考马尔可夫张量。Lemma 4.1 证明这个 KL 可以逐时层分解为 $\sum_t \mathrm{KL}(\frac{1}{N}\Pi_t\|\mathbf{G}_t)$ 加 boundary 项；当参考取 Gibbs kernel $g_{ij,t}=\exp(-c_{ij,t}/\varepsilon)$ 时，Lemma 4.2 进一步把目标化成 P1 的 entropic 正则版：
 
@@ -57,7 +57,7 @@ $$\min \sum_t \langle\Pi_t,C_t\rangle + \varepsilon\sum_{i,j}\pi_{ij,t}(\log\pi_
 
 这就是 P2，可以用多边际 Sinkhorn 块坐标下降高效并行求解。代价是 P2 放松了 vertex-capacity，解可能是分数的——但这恰恰是"影子"的价值所在：它不给可执行路径，却告诉你最优传输倾向于走哪些边，$\varepsilon\to 0$ 时影子会收缩到 min-cost 几何走廊上。关键在于，本文用 Schrödinger bridge 把 P2 和 P1 严格对接，所以 P2 不是一个临时的工程加速器，而是有概率诠释的"先验感知"求解器——换不同的 reference $\mathbf{G}$ 就能注入风险规避、行驶偏好等结构性偏好。
 
-**3. P3：影子剪枝 + LP 恢复整数性。**
+**3. P3：影子剪枝 + LP 恢复整数性**
 
 P2 快但给的是分数解，没法直接执行。P3 把 P2 的影子当成"特征选择器"用：对 $\Pi_t$ 加一个拉向影子 $\tilde\Pi_t$ 的 KL penalty 并线性化，得到目标 $\sum_t \sum_{i,j}\pi_{ij,t}(c_{ij,t} - \lambda\log(\tilde\pi_{ij,t}+\delta))$，再把质量 $\le\eta$ 的边全砍掉（即把搜索限制在 $\Pi_t \subseteq [\tilde\Pi_t]_\eta$）。这等价于在影子高亮出的稀疏子图上重新解一遍 P1——仍然全单模、仍然整数，但变量数从 $|\mathcal{E}|T$ 缩到 $\zeta|\mathcal{E}|T$（实验里 $\zeta\in[0.2, 0.4]$）。三个超参连成一条"最优—可扩展"滑杆：$\lambda=\eta=0$ 退化回 P1，$\varepsilon$ 越大影子越糊、剪枝越狠、代价上升越多。把分数解的 mass 分布当作问题结构先验来加速整数 LP，这在 OT 文献里少见，既保住了 P1 的最优性证书，又借到了 P2 的可扩展性，整体复杂度因此从经典 IPM 的 $O(K^{1.68})$ 降到 $O(K^{1.15})$。
 

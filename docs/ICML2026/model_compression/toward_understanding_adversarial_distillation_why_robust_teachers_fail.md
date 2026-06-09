@@ -44,17 +44,17 @@ tags:
 
 ### 关键设计
 
-**1. 鲁棒不可学习集 $\mathcal{S}_U$ 的稳定识别：把「难样本」从经验启发变成可复现的因果触发器。**
+**1. 鲁棒不可学习集 $\mathcal{S}_U$ 的稳定识别：把「难样本」从经验启发变成可复现的因果触发器**
 
 要论证「某些样本主导了鲁棒过拟合」，首先得稳定地把这些样本抠出来，而不能让结论沦为「某次训练的坏运气」。作者的做法是跑 6 种鲁棒训练范式 (PGD-AT / TRADES / 4 个教师下的 AD) × 10 个随机种子共 60 个模型，每个模型只取其**峰值鲁棒精度** epoch 的预测，把被全部 60 个模型一致错分的样本定义为不可学习集 $\mathcal{S}_U$、被一致正确分类的定义为可学习集 $\mathcal{S}_L$。之所以卡在「峰值鲁棒精度」时刻取预测交集，是因为以往按 loss 或置信度阈值划分难样本时，难样本会随训练阶段漂移；而峰值时刻等价于在「该容量下能力上限」处取硬约束，于是「不可学习」就从「难」里被剥离出来，成为「容量-数据」对的内在属性而非数据本身的噪声。证据是 $|\mathcal{S}_U|$ 随模型容量单调下降——MobileNet-V2 约 9000 张、WRN-34-10 仅约 1500 张——且对这些样本做特征反演 (feature inversion) 只能得到语义崩塌的伪特征。
 
-**2. patch 特征学习框架与教师二分：把容量瓶颈写成对滤波器的硬正交约束，使「教师看得到、学生看不到」的不对称可推导。**
+**2. patch 特征学习框架与教师二分：把容量瓶颈写成对滤波器的硬正交约束，使「教师看得到、学生看不到」的不对称可推导**
 
 经验现象需要一个能解析的模型来证明因果。作者构造的数据由 $P$ 个 patch 拼接，含两个正交鲁棒特征 $\mathbf{u}=\mathbf{e}_1$ (可学习) 与 $\mathbf{v}=\mathbf{e}_d$ (不可学习)：$\mathcal{S}_L$ 样本的信号 patch 是 $\alpha y\mathbf{u}$，$\mathcal{S}_U$ 样本的信号 patch 是 $\alpha y\mathbf{v}$，其余 patch 为正交高斯噪声 $\mathcal{N}(\mathbf{0},\sigma_n^2(\mathbf{I}_d-\Pi_{\mathcal{F}}))$。学生是两层立方激活网络 $\phi(z)=(\max\{0,z\})^3$，关键巧设是**显式约束**所有滤波器 $\langle \mathbf{w}_r,\mathbf{v}\rangle=0$ —— 这把现实里「学生容量不够、看不见某些鲁棒特征」编码成对 $\mathbf{v}$ 方向的结构性盲视，让「不对称信息」第一次成为可推导对象。对抗扰动只施加在信号 patch 方向 ($\|\delta\|_\infty\le\epsilon$)，AT 优化 $\ell(yf_W(\tilde X))$、AD 优化 teacher 软标签加权的 $\sigma(\pm yf_{W_T}(X))\ell(\pm yf_W(\tilde X))$。
 
 在「unlearnable 稀疏」区间 $CN^{-1}\le p_{un}\le C^{-1}N^{-1}\log d$ 与「信号强于噪声」条件 $\alpha\ge\tilde\Omega(\sigma_n\sqrt{d}/N^{1/3})$ 下，作者证明 AT 与 AD 都会先把可学习特征 $\mathbf{u}$ 学到 $w_{r,1}^{(T)}\ge\tilde\Omega(\alpha^{-1})$；之后噪声响应会不会被推到 $\tilde\Omega(1)$（即触发鲁棒过拟合），完全取决于 $\mathcal{S}_U$ 上的残余梯度是否被持续激励。这条路线沿用 feature learning 框架 (Allen-Zhu & Li 2022; Li & Li 2025)，但首次把它从 AT 延伸到带 soft-label 的对抗蒸馏，并由此把「信号学习」和「噪声记忆」两条轨迹精确分离。
 
-**3. Good vs Bad Teacher 与可证选择准则：同样鲁棒的两个教师，结局只由 $\mathcal{S}_U$ 上的置信度决定。**
+**3. Good vs Bad Teacher 与可证选择准则：同样鲁棒的两个教师，结局只由 $\mathcal{S}_U$ 上的置信度决定**
 
 有了上面的二分轨迹，就能形式化「为什么更强的教师反而有害」。在 $\mathcal{S}_L$ 上，Good 与 Bad 两类教师都满足目标对齐的大间隔 $y_i f_{W_T}(X_i)\ge\Gamma$ —— 即它们**同样鲁棒**；区别只在 $\mathcal{S}_U$ 上：Good Teacher 与 $\mathbf{v}$ 正交、在这些样本上保持不确定 $y_i f_{W_G}(X_i)=0$，Bad Teacher 反而在 $\mathbf{v}$ 方向高置信 $y_i f_{W_B}(X_i)\ge\Gamma$。在 $\Gamma\ge\tilde\Omega(d)$ 的饱和教师区，AD 软标签近似硬标签，学生残余梯度被教师 sigmoid 因子 $\sigma(-yf_{W_T}(X))$ 调制：Good Teacher 让这个因子在 $\mathcal{S}_U$ 上保持 $\Theta(1)$ 但梯度方向均匀抵消，于是噪声响应被压在初始化尺度 $\tilde O(\sigma_0\sigma_n\sqrt d)$；Bad Teacher 让因子指数衰减、残余项偏置却不变，最终把噪声响应推到 $\tilde\Omega(1)$、学生被迫用噪声去补全教师的高置信。这直接给出一条可计算的实践准则——**用候选教师在训练集 $\mathcal{S}_U$ 上的预测熵作为先验筛选指标**，熵越高越接近 Good Teacher。相比靠经验（用早 epoch 教师）或事后指标（TAS，需先训完学生），这条准则只看教师本身在已识别 $\mathcal{S}_U$ 上的输出分布，$O(N)$ 一次前向即可完成，把「a priori 教师选择」从工程经验升级为有理论支撑的可算流程。
 

@@ -47,15 +47,15 @@ MTR-Pipeline 从原始 corpus 开始，先做非文本清理、recursive chunkin
 
 ### 关键设计
 
-**1. MTR-Eval 四维审计：先量化 benchmark 标注质量，再谈模型分数。**
+**1. MTR-Eval 四维审计：先量化 benchmark 标注质量，再谈模型分数**
 
 在标注稀疏、噪声大的 benchmark 上拿到高 recall 没有意义——可能是数据太简单或 gold 标注本身有漏。MTR-Eval 因此用 LLM-as-a-Judge 从四个维度审计已有数据：Query-Evidence Alignment 检查 gold document 到底回不回答 query；Evidence Completeness 通过 hard negative pool 做 discriminability testing，看是否漏掉了更合适的证据；Answer-Evidence Faithfulness 检查答案是否真被证据支撑；Answer Quality 单独评语言质量。先把 benchmark 本身审一遍，模型分数才解释得清。
 
-**2. Greedy Traversal Clustering：为多轮对话铺一条语义连续但不重复的文档路径。**
+**2. Greedy Traversal Clustering：为多轮对话铺一条语义连续但不重复的文档路径**
 
 要让合成对话像真实用户那样沿主题渐进浏览，就得先组织出一串语义相关、彼此不重复的文档。K-means / DBSCAN 的 cluster size 不可控，阈值邻居法又容易让不同 cluster 互相重叠。论文用贪心遍历：从随机起点出发，每步选最近的未访问邻居，连成一条 semantic path，再每 $k$ 个节点切成一个 cluster。每个 document 只访问一次，cluster size 完全可控，正好模拟用户顺着链接或主题一步步走下去的浏览轨迹。
 
-**3. 三 Agent 对话合成：让合成数据既守 gold grounding 又像真人交互。**
+**3. 三 Agent 对话合成：让合成数据既守 gold grounding 又像真人交互**
 
 单 agent 一把生成对话，要么僵硬要么守不住 grounding。MTR-Pipeline 把任务拆给三个分工的 agent：Questioner 根据文档 cluster 和历史生成 query 并模拟 topic switch，Responder 只基于指定的 gold document 作答（保证严格 grounding），Polisher 再重写整段对话、加入指代、省略、自然的话题切换和生产式冗长回答。三者各管一头，自然性、证据对齐和可控性才能同时兼顾。Polisher 的作用尤其实在：去掉它之后，人类识别「这是机器生成问题」的准确率从 62% 升到 79%。
 

@@ -50,27 +50,27 @@ GAP要解决的问题是：双臂操控既需要3D空间推理，又不想依赖
 
 ### 关键设计
 
-**1. Geometry 3D Encoder（π³编码器）：用RGB换取隐式3D几何，绕开显式点云。**
+**1. Geometry 3D Encoder（π³编码器）：用RGB换取隐式3D几何，绕开显式点云**
 
 这一路直击"3D方法依赖深度相机和点云预处理"的痛点。GAP从历史帧 $V$ 里均匀采5帧、和当前帧 $I_t$ 拼成6帧序列，送进π³编码器；每帧被切成 $14 \times 14$ 个patch，取backbone最后两层特征拼接，得到1024维的3D几何特征 $\mathbf{f}_{3d}$。关键是只用π³的encoder、不走它的decoding heads——也就是说不真的去重建点云，而是直接拿它的latent。之所以这样可行，是因为π³本身是在多视图几何上预训练的基础模型，它的latent天然编码了帧间的3D结构关系；相比显式点云，这种latent不吃标定误差和深度噪声，又是一次前向就出结果，对真实部署友好得多。
 
-**2. Semantics 2D Encoder（DINOv3编码器）：补上几何特征缺的"任务语义"。**
+**2. Semantics 2D Encoder（DINOv3编码器）：补上几何特征缺的"任务语义"**
 
 3D几何特征知道"哪里有结构"，却不知道"哪个东西要去操作"。GAP让当前帧 $I_t$ 额外过一遍DINOv3，切成 $16 \times 16$ 个patch，得到1024维语义特征 $\mathbf{f}_{2d}$。DINOv3带来的是物体级别的语义先验，和几何特征互补——一个管空间、一个管"这是什么、重不重要"。
 
-**3. State Encoder（MLP编码器）：把机器人当前姿态喂进上下文。**
+**3. State Encoder（MLP编码器）：把机器人当前姿态喂进上下文**
 
 最轻的一路，用一个简单MLP把14维本体感知 $p_t$ 映射成1024维嵌入 $\mathbf{f}_p$，让融合阶段知道"机器人此刻摆成什么样、当前能做什么"。
 
-**4. Semantic-Geometric Fusion（语义-几何融合）：让三种异构模态在注意力里互相对齐。**
+**4. Semantic-Geometric Fusion（语义-几何融合）：让三种异构模态在注意力里互相对齐**
 
 三路特征量纲、语义都不同，硬拼起来不一定好用。GAP把 $[\mathbf{f}_{3d}, \mathbf{f}_{2d}, \mathbf{f}_p]$ 沿token维度拼接后送进一个4层DETR encoder，靠自注意力做深度融合，输出统一的Semantic-Geometric Fused Context $\mathbf{f}_c$。注意力在这里起的作用很直白：几何特征告诉语义特征"物体在空间哪个位置"，语义特征反过来告诉几何特征"这堆结构里哪个才是要抓的目标"，本体感知则约束"当前机器人构型下哪些动作可达"。这样融合出的上下文比手工设计的拼接方式更能捕捉跨模态关系。
 
-**5. Joint Diffusion Decoder（联合扩散解码器）：把"未来3D长什么样"和动作一起去噪，等于免费内建一个world model。**
+**5. Joint Diffusion Decoder（联合扩散解码器）：把"未来3D长什么样"和动作一起去噪，等于免费内建一个world model**
 
 这是GAP最核心的一步。解码器沿用DETR decoder结构来实现条件扩散：训练时把clean target $x_0 = \{a_{t:t+N}, \mathbf{f}_{t+N}, P_{t+N}\}$ 加高斯噪声得到 $x_k$，再让以 $\mathbf{f}_c$ 为条件的decoder预测回clean的 $\hat{x}_0$。它同时去噪两类目标——一是未来动作块 Future Action Chunk $\mathbb{R}^{N \times 14}$（双臂各6-DoF关节 + 1-DoF gripper），二是未来3D pointmap的latent $\mathbf{f}_{t+N} \in \mathbb{R}^{H/14 \times W/14 \times 1024}$，后者再经π³的dense head解码成 $P_{t+N} \in \mathbb{R}^{H \times W \times 4}$（即x,y,z坐标加一个confidence）。让模型预测未来3D结构，本质上是逼它回答"如果执行这串动作，3D场景会变成什么样"，相当于把一个world model隐式地塞进了策略网络，无需单独训练。一个巧妙之处是：它只监督horizon末尾第N步的最终状态、而非逐步预测每一帧，这迫使模型一次性推理整段动作序列的累积效果，既增强了长horizon规划，又压低了监督和计算开销。
 
-**6. Pseudo-GT生成策略：用时序窗口稳住3D latent监督信号。**
+**6. Pseudo-GT生成策略：用时序窗口稳住3D latent监督信号**
 
 要监督"未来3D latent"，就得先有干净的latent target，但直接对单帧调用π³会很不稳定、噪声大。GAP的做法是：对数据集里每一帧 $s$，都给它均匀采 $n$ 个历史帧凑成时序窗口 $\{V, I_s\}$ 一起送进π³ encoder，然后只取 $I_s$ 对应的那部分latent $\mathbf{f}_s$ 作为该帧的pseudo-GT，训练时target即设为 $\mathbf{f}_{t+N}$。靠这种时序联合处理，3D latent特征质量被显著拉稳，下游扩散监督才有意义。
 

@@ -45,15 +45,15 @@ teacher 是 frozen 的 BF16 大模型（如 LLaVA-1.5 13B），student 是 group
 
 ### 关键设计
 
-**1. 置信度门控的解耦蒸馏（GDKD）：只跟"teacher 后验最 sharp"的 token 学。**
+**1. 置信度门控的解耦蒸馏（GDKD）：只跟"teacher 后验最 sharp"的 token 学**
 
 标准蒸馏默认所有 teacher token 同样可信，但实证发现 teacher entropy 与错误率强相关（ScienceQA 上 Pearson $r=0.484$、binned $R^2=0.901$），高熵 token 其实是噪声。GDKD 做两件事。第一是把蒸馏解耦成 target-class 和 non-target-class 两路：TCKD $=D_{KL}([P_T^t,1-P_T^t]\|[P_S^t,1-P_S^t])$ 捕捉 teacher 对正确答案的把握，NCKD $=D_{KL}(\hat P_T^{nt}\|\hat P_S^{nt})$ 在 renormalize 后的非目标类上传递 dark knowledge，逐 token 的 DKD $=\alpha\cdot \mathcal{L}_{TCKD}+\beta_{dkd}\cdot \mathcal{L}_{NCKD}$ 且 $\beta_{dkd}>\alpha$ 以强调暗知识。第二是用 entropy 做 token 门控：算 $H_i=-\sum_v P_T^{(i)}(v)\log P_T^{(i)}(v)$，归一化 $\tilde h_i=H_i/\log|V|$，权重 $g_i=\exp(-\tilde h_i)$ 让高置信 token 权重大，$\mathcal{L}_{GDKD}=\sum_i g_i \mathcal{L}_{DKD}^{(i)}/\sum_i g_i$。Theorem 3.1 把门控效果写成 covariance 修正项 $\mathcal{L}_{GDKD}=\bar{\mathcal{L}}_{DKD}+N\cdot \mathrm{Cov}(w_i,\mathcal{L}_{DKD}^{(i)})$——当 entropy 与 loss 正相关时这项为负，从而严格降低期望蒸馏误差；Fano 不等式也从信息论上保证 entropy 越大错误下界越高。
 
-**2. 关系中心化核对齐（RCKA）：把 teacher"哪些 patch 该聚在一起看"的视觉结构传给 student。**
+**2. 关系中心化核对齐（RCKA）：把 teacher"哪些 patch 该聚在一起看"的视觉结构传给 student**
 
 logit 蒸馏只能传输出分布，传不了视觉推理的核心——区域间的关联结构（13B teacher 能逐层定位"banana"，7B 注意力却散乱）。RCKA 改在 LLM 倒数第二层对 visual token（排除 text token）的 Gram 矩阵做 CKA 对齐：取 teacher/student 的 visual 表征 $V_T,V_S$ 行 L2 归一化后算 $K_T=\bar V_T \bar V_T^\top$、$K_S=\bar V_S\bar V_S^\top$，中心化 $\tilde K=HKH$，再算 CKA $=\mathrm{HSIC}(K_T,K_S)/\sqrt{\mathrm{HSIC}(K_T,K_T)\mathrm{HSIC}(K_S,K_S)}$，损失 $\mathcal{L}_{RCKA}=1-\mathrm{CKA}(K_T,K_S)$。与传统 RKD 在 batch 级算 inter-sample 关系不同，这里是在单样本内的 visual token 之间算 intra-sample 关系（可视化里 sky token 与其他 sky token 高相似、与飞机区域低相似）。CKA 对维度尺度不变，所以 teacher 13B 与 student 7B 的 $d_T\ne d_S$ 不用投影层就能对齐，天然适配跨维度蒸馏。
 
-**3. 自适应 IB 控制器 + Group-wise LSQ 量化：把"硬容量约束"和"软监督"端到端联合优化。**
+**3. 自适应 IB 控制器 + Group-wise LSQ 量化：把"硬容量约束"和"软监督"端到端联合优化**
 
 固定蒸馏权重在训练不同阶段都不合适——早期 teacher 监督该更强，后期 task loss 该收回主导。作者用 IB 视角把问题写成 $\min \mathcal{L}_{task}$ s.t. $\mathcal{L}_{distill}\le \tau$，对偶成 Lagrangian $\mathcal{L}_{task}+\beta(\mathcal{L}_{distill}-\tau)$，再用 EMA 平滑后的 $\widehat{\mathcal{L}}_{GDKD}$ 监控蒸馏达成度来动态调 $\beta$。量化这边用 group-wise LSQ：把权重 flatten 后按 $g=128$ 切组，每组学一个 log-space scale $s_i=\exp(\theta_i)$（保正），用 99 分位数初始化 $s_i^{(0)}=\mathrm{Percentile}_{99}(|W_i|)/Q_p$，量化 $W_{i,q}=s_i\cdot \mathrm{clamp}(\lfloor W_i/s_i\rceil,-Q_n,Q_p)$，反向用 STE。group-wise 比 per-tensor 细、比 per-channel 粗，正好匹配 MX 硬件格式；把 scale 当可学参数后，它能跟着 distill 信号一起被端到端微调，相当于把 INT4 的硬容量约束直接植进优化目标。
 

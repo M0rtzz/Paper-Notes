@@ -46,15 +46,15 @@ Alloc-MoE 把"激活多少个专家"显式建模成一份固定的全局预算 $
 
 ### 关键设计
 
-**1. Alloc-L：隔离式敏感度 profiling 配背包 DP，把预算最优地切到各层。**
+**1. Alloc-L：隔离式敏感度 profiling 配背包 DP，把预算最优地切到各层**
 
 层级分配的难点有二：测不准和算不快。直接独立量化某层敏感度时，后面的深层会偷偷"补偿"它的稀疏化，让浅层看起来无所谓——本设计在 profile 第 $i$ 层、取 $k\in\{K_{\text{orig}},\dots,1\}$ 时，强制所有 $j>i$ 的深层都退到 Top-1 以剥离补偿、所有 $j<i$ 的浅层保持原配置，记下 $\mathbf{S}[i,k]=\mathrm{PPL}$，得到敏感度矩阵 $\mathbf{S}\in\mathbb{R}^{L\times K_{\text{orig}}}$。求最优分配 $\arg\min_{\mathbf{K}}\sum_i\mathbf{S}[i,K_i]\ \text{s.t.}\ \sum_i K_i\le B$ 本是 $K_{\text{orig}}^L$ 量级的组合爆炸，这里套分组背包 DP $\mathrm{DP}[i,b]=\min_{k\le b}\big(\mathrm{DP}[i-1,b-k]+\mathbf{S}[i,k]\big)$，复杂度降到 $O(L\cdot B\cdot K_{\text{orig}})$，又因 $B\le L K_{\text{orig}}$ 实际很快。隔离 profiling 解决"测得准"、DP 解决"算得快"，两件事一次办完。
 
-**2. Alloc-T：保底加全局 top-selection，把层级预算在 token 间按疏密重排。**
+**2. Alloc-T：保底加全局 top-selection，把层级预算在 token 间按疏密重排**
 
 标准 Top-$K$ routing 对每个 token 一刀切，完全无视"有的 token 第一个专家分数 0.9、有的前四个都才 0.25"的客观差异。Alloc-T 把每层的 token-expert 选择写成 0-1 整数规划 $\max\sum z_{t,e}w_{t,e}$，约束 $\sum z_{t,e}\le T\cdot K_l$ 且每个 token 至少分到 $K_{\text{base}}$ 个专家；它在实操上等价于三步——先给每个 token 保住 Top-$K_{\text{base}}$、再把剩下 $K_{\text{orig}}-K_{\text{base}}$ 列分数拍平进一个 $T\cdot(K_{\text{orig}}-K_{\text{base}})$ 的候选池、最后全局选出 top $(K_l-K_{\text{base}})\cdot T$ 个名额。整套就是两次 mask 加一次 top-K，零额外内核、零额外参数，却让路由不自信（高熵）的 token 多拿配额、自信的 token 少拿。当 $K_{\text{base}}=K_l$ 时它退化为标准 Top-K，因而是后者的严格泛化。
 
-**3. Alloc-MoE：层级与 token 级正交叠加成统一框架。**
+**3. Alloc-MoE：层级与 token 级正交叠加成统一框架**
 
 Alloc-L 和 Alloc-T 作用在互不重叠的资源维度上——前者决定每层平均预算 $K_l^{\ast}$，后者在这个 $K_l^{\ast}$ 之下再做 token 级重排，因此可以乘法组合。这种正交性是有数据支撑的：单跑 Alloc-L 在四个预算上平均 +0.4%、单跑 Alloc-T 平均 +0.93%，说明 token 级再分配在激进稀疏化下增益更大，但两者并不打架，组合后取得最高均值 45.19%（对比 Uniform 的 44.19%），在全预算区间都最优或近最优。
 

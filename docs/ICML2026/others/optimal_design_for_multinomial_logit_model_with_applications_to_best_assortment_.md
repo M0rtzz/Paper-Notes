@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. MILP 精确重写 + 求解器认证早停：给组合 LMO 一条"理论可行也能跑"的出口。**
+**1. MILP 精确重写 + 求解器认证早停：给组合 LMO 一条"理论可行也能跑"的出口**
 
 Frank–Wolfe 每步要解的线性最大化谱 $\arg\max_S\text{tr}(\mathbf{M}_m^{-1}\mathbf{I}_{\theta_0}(S))$ 是在 $\mathcal{O}(N^K)$ 个组合上的优化，天然 NP-hard。本文先走精确路线：把它写成变量数和约束数都只是 $N$ 多项式的 0–1 MILP（Theorem 3.3）。具体做法是把 MNL 概率 $p(i|S,\theta_0)=w_i/\sum_{j\in S}w_j$ 的分母 $\sum_{j\in S}w_j$ 引入辅助变量、配合 big-M 约束，把 $\text{tr}(\cdot)$ 表达成关于 0–1 子集指示器的线性函数，中心化项 $\bar{\mathbf{a}}_\theta(S)\bar{\mathbf{a}}_\theta(S)^\top$ 则用 McCormick 包络线性化。MILP 最坏情形虽 NP-hard，但工业级分支定界求解器在跑的过程中同时维护当前最优可行解和任意解的上界，两者之差就是 solver-certified optimality gap，可在用户指定 $\epsilon_{\text{LMO}}$ 时安全早停。配合 Proposition 3.4 给出的 FW 总迭代数 $\tilde{\mathcal{O}}(d/\tilde\epsilon)$（$\tilde\epsilon=\epsilon-\epsilon_{\text{LMO}}/d$），即便每步 LMO 都早停近似，整体设计仍是 $\epsilon$-准确——这把"理论可行 vs 实际可跑"之间的最后一公里打通，让 $N\sim10^3$、$K\sim5$ 的问题秒级出认证最优解。
 
-**2. Schur 补升维 + 比值最大化：用统计效率换严格多项式时间。**
+**2. Schur 补升维 + 比值最大化：用统计效率换严格多项式时间**
 
 MILP 给了精度极限，但对超大 $N$ 仍没有时间保证，所以本文给第二条出口。关键观察是 MNL Fisher 信息其实是升维矩阵的 Schur 补：定义 $\tilde{\mathbf{a}}_i=(\mathbf{a}_i^\top,1)^\top\in\mathbb{R}^{d+1}$ 和升维 Fisher $\widetilde{\mathbf{I}}_{\theta_0}(S)=\sum_{i\in S}p(i|S,\theta_0)\tilde{\mathbf{a}}_i\tilde{\mathbf{a}}_i^\top$，则原 Fisher 满足 $\mathbf{I}_{\theta_0}(S)=\bar{\mathbf{A}}_{\theta_0}(S)-\bar{\mathbf{a}}_{\theta_0}(S)\bar{\mathbf{a}}_{\theta_0}(S)^\top$。把 LMO 换成升维版后，目标塌缩成一个比值形式
 
@@ -57,7 +57,7 @@ $$\text{tr}(\widetilde{\mathbf{M}}_m^{-1}\widetilde{\mathbf{I}}_{\theta_0}(S))=\
 
 这正是经典的 MNL ratio-of-sums assortment optimization，有 $\mathcal{O}(NK)$ 时间精确算法（Rusmevichientong 2010）。代价是升维设计与真设计有差距，但该差距由 mismatch 矩阵 $\Delta_{\theta_0}(\pi)=\widehat{\mathbf{M}}_{\theta_0}(\pi)-\mathbf{M}_{\theta_0}(\pi)$ 控制，论文给出显式 PSD 上界。"先 lift 再 Schur 补"在矩阵优化里是常见套路，但用到 MNL bandit 实验设计上是首次。
 
-**3. BSI-MNL：基于设计的最佳组合识别算法。**
+**3. BSI-MNL：基于设计的最佳组合识别算法**
 
 有了可解的 LMO，就能把线性 bandit 经典的 G-optimal pure exploration 模板（Soare 2014, Fiez 2019）首次落到 MNL 上，识别收益最大的组合 $S^*=\arg\max_S R(S,\theta^*)$（$R(S,\theta)=\sum_{i\in S}r_ip(i|S,\theta)$ 含非均匀收益 $r_i$）。算法分三段：先做短暂均匀探索拿到名义参数 $\theta_0$、保证 $\|\theta_0-\theta^*\|$ 一致小；再调用上面的 G-optimal design $\hat\pi_{\theta_0}$ 按它采样组合并更新 MLE；最后用"最佳与次佳收益差 $\hat\Delta$ 配合 $\|\cdot\|_{\mathbf{M}^{-1}}$ 置信半径"的停止准则，一旦认证最优即停。最终样本复杂度 $\tilde{\mathcal{O}}(d\log(N/\delta)(\Delta_{\min}^{-2}+(\kappa\Delta_{\min})^{-1}))$，小 gap 区简化为 $\tilde{\mathcal{O}}(d\log N/\Delta_{\min}^2)$（Theorem 4.4）。其中 $\Delta_{\min}^{-2}$ 主项与无 context 情形匹配、对 $N$ 只有 log 依赖，正是设计基采样相对均匀采样的核心优势；多出的 $(\kappa\Delta_{\min})^{-1}$ 项则是 logistic 类反馈"难辨别区"的固有难度，作者没有掩盖。
 

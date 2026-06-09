@@ -44,13 +44,13 @@ TabTrim 想解决的是表格剪枝最致命的失败模式：沿单一轨迹顺
 
 ### 关键设计
 
-**1. Gold trajectory 构造：把 SQL 的执行中间态变成免标注的逐步剪枝监督。**
+**1. Gold trajectory 构造：把 SQL 的执行中间态变成免标注的逐步剪枝监督**
 
 痛点在于最终答案只能告诉模型「答对没答对」，却说不清剪枝在哪一步删错了关键行列。作者注意到 Text-to-SQL 数据里的 gold SQL 天然带有 clause-level 执行顺序，于是对每个样本 $(Q, SQL_{gold}, T_{raw})$ 把 SQL 按逻辑执行顺序拆成一连串操作，每执行一步就落下一个 gold sub-table $T_t^+$，由最终正确答案约束、不需要任何额外人工标注。
 
 光有正路还不够：剪枝器在推理时迟早会走到偏离 gold 轨迹的状态。为此作者再通过篡改 gold 操作构造 off-trajectory 的 negative sub-tables $T_t^-$，把数据组织成 progression dataset（沿正路前进）和 correction dataset（从错误状态拉回）。这样 SQL 的执行中间态既提供了可对齐的过程监督，negative 轨迹又教会模型怎么从错误里恢复。
 
-**2. Trajectory-supervised Pruner 与 DPO：既要会前进，也要会从偏离的子表纠偏。**
+**2. Trajectory-supervised Pruner 与 DPO：既要会前进，也要会从偏离的子表纠偏**
 
 如果只在 gold 路径上做模仿学习，剪枝器一旦在推理时遇到自己生成的、略微跑偏的子表就会束手无策。作者用两阶段训练把「前进」和「纠偏」一起灌进去：第一阶段 SFT 同时吃 progression 和 correction 两类样本，损失为
 
@@ -58,7 +58,7 @@ $$L_{SFT}=-\log P_\theta(T_t^+\mid Q,T_0,T_{t-1}^+)-\lambda\log P_\theta(T_t^+\m
 
 第一项让模型从正确前序子表迈向 gold 下一步，第二项则要求即便前序是错误子表 $T_{t-1}^-$，也得指向正确的 $T_t^+$。第二阶段再用 DPO 把 gold next sub-table $T_t^+$ 偏好排在错误子表 $T_t^-$ 之上，进一步压低细粒度的语义剪错。两阶段叠加后，pruner 既能沿轨迹前进，又能在候选跑偏时把方向拉回来。
 
-**3. Loss-aware Verifier 与并行轨迹搜索：用召回偏置的打分挑路径，并行抛弃早期错误分支。**
+**3. Loss-aware Verifier 与并行轨迹搜索：用召回偏置的打分挑路径，并行抛弃早期错误分支**
 
 生成概率高不代表子表质量好——尤其漏掉答案关键单元格这种致命错误，likelihood 几乎不会惩罚。作者把每个候选子表表示成 canonical cell set，计算它与最终 gold 子表 $T_n^+$ 的 precision 和 recall，再用一个带召回偏置的 $F$-score 作为质量分 $S(T_t)$，默认 $\alpha=1.5$ 让分数明显偏向「宁可多留也别删掉 answer-critical cells」。有了这个比生成概率更贴合剪枝风险的打分，推理时就能做 beam search：宽度 $k$、分支数 $b$、最大深度 $D_{max}$，每一步 generate-score-select，最后从所有 beam 中选 verifier 分最高的子表。这把剪枝从「修一条路、错了就锁死」变成「同时探多条路、随时丢掉早期烂分支」。
 

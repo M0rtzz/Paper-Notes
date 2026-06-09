@@ -46,7 +46,7 @@ TRACED要解决的是UED里"怎么给任务打分"这一个环节。它完全沿
 
 ### 关键设计
 
-**1. 转移预测损失补强 regret 近似（ATPL）：给只看价值误差的 PVL 补上动力学失配这一项。**
+**1. 转移预测损失补强 regret 近似（ATPL）：给只看价值误差的 PVL 补上动力学失配这一项**
 
 regret的定义是"最优回报减当前回报"，但最优策略 $\pi^*$ 不可知，所以实践中只能用PVL这类代理。TRACED的出发点是把one-step regret拆开看清PVL到底漏了什么：
 
@@ -54,7 +54,7 @@ $$\text{Regret}(s,a) = \underbrace{V^*(s) - \hat{V}^*(s)}_{\text{(i) value error
 
 PVL只对应第(i)项的价值估计误差，而第(iii)项的"未来价值缺口"取决于学到的转移模型 $\hat{P}$ 与真实转移 $P$ 之间的失配——这正是PVL看不见的盲区。TRACED用一条轨迹上的平均转移预测损失来度量这个失配，定义ATPL为 $\text{ATPL}(\tau) = \frac{1}{T}\sum_{t=0}^T L_{\text{trans}}(s_t, a_t)$，再把它加权并入PVL，得到组合近似 $\widehat{\text{Regret}}(\tau) = \text{PVL}(\tau) + \alpha \cdot \text{ATPL}(\tau)$。论文在附录里进一步证明ATPL是第(iii)项中动力学成分的upper bound，因此这一项不是凑出来的heuristic，而是有理论支撑地填补了regret分解里被忽略的那块。
 
-**2. Co-Learnability：把任务间的迁移效益显式纳入打分。**
+**2. Co-Learnability：把任务间的迁移效益显式纳入打分**
 
 现有方法独立给每个任务打分，忽略了"训练任务A可能让任务B也变简单"这种正迁移。Co-Learnability就是用来量化这件事的：训完任务 $i$、进入下一轮 $k+1$ 后，看其他被replay任务的难度平均下降了多少，
 
@@ -62,7 +62,7 @@ $$\text{CoLearnability}_i(k) = \frac{1}{|\mathcal{T}_{k+1}|}\sum_{j \in \mathcal
 
 正值意味着训了 $i$ 之后其他任务的难度确实掉了，说明 $i$ 对它们有正迁移；用语言来类比，西班牙语→英语共享词根、迁移效益高（高CL），日语→英语关系远、迁移效益低（低CL）。引入它的意义在于，纯按难度选任务容易一头扎进最难的任务，却忽略了那些虽不最难、但能撬动一批其他任务的"杠杆任务"，Co-Learnability正是把这种杠杆效应补回评分里。
 
-**3. Task Priority：把难度和迁移效益合成最终的采样依据。**
+**3. Task Priority：把难度和迁移效益合成最终的采样依据**
 
 最终teacher用的评分把前两项加权合并，并套一层Rank变换：
 

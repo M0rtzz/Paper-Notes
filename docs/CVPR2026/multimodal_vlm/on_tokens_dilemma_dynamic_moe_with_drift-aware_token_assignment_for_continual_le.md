@@ -49,13 +49,13 @@ tags:
 
 ### 关键设计
 
-**1. Token 类型分析与 Token 困境：先搞清楚到底是谁在制造遗忘。**
+**1. Token 类型分析与 Token 困境：先搞清楚到底是谁在制造遗忘**
 
 直接给方法之前，作者先做了一组受控的二任务实验，把"冻结旧参数仍遗忘"这件事拆到 token 粒度去看。对每个新任务 token，比较它对新专家组和旧专家组的路由倾向，据此分成三类：**new token** 明显偏向新组，是真正携带新模式、驱动新知识获取的主力，遗忘代价很小；**old token** 明显偏向旧组，对新任务几乎没贡献，但它残留的那一点新组亲和力会被路由器吸收，慢慢把路由器往旧模式上带偏；**ambiguous token** 对新旧两组的亲和力几乎打平，既不帮新任务学东西、也不保护旧知识，却恰恰是漂移的主要元凶。
 
 所谓"token 困境"就是这三类 token 的价值和代价错位了：学习价值最低的 ambiguous/old token，一旦不加引导地被放进新专家训练，反而会通过路由器的训练信号造成最大的遗忘。把因果定位到这一层，后面的解法才有的放矢——不是去压制所有 token，而是只拦住该拦的那一批。
 
-**2. Token Assignment Guidance：在分配的源头就把可疑 token 挡回旧专家。**
+**2. Token Assignment Guidance：在分配的源头就把可疑 token 挡回旧专家**
 
 TAG 针对的正是上面那个困境：既然 ambiguous/old token 才是污染源，那就在训练时实时识别它们、不让它们碰新专家。具体做法是对每个 token 取新旧两组的最大路由分数 $c_\text{old} = \max(\mathbf{s}_{t-1})$、$c_\text{new} = \max(\mathbf{s}_{t,\text{new}})$，再算一个相对差异
 
@@ -63,7 +63,7 @@ $$D_\text{rel} = \frac{|c_\text{new} - c_\text{old}|}{\max(|c_\text{new}|, |c_\t
 
 只有当这个 token 足够"不模糊"（$D_\text{rel} > \tau$）**且**确实是新组主导（$c_\text{new} > c_\text{old}$）时，才允许它流向新专家；其余情况一律把新组的路由分数置为 $-\infty$，强制它回到旧专家组。这等于在 token 分配的源头加了一道闸门：new token 自然流进新专家去学新知识，ambiguous/old token 被安全地导回旧专家，路由器再也收不到它们的"污染梯度"。举个直观的例子，若某 token 的 $c_\text{new}=0.52$、$c_\text{old}=0.50$，$D_\text{rel}\approx0.04$ 远低于阈值 $\tau=0.2$，它会被判为 ambiguous 直接 mask 回旧组；而一个 $c_\text{new}=0.8$、$c_\text{old}=0.4$ 的 token，$D_\text{rel}=0.5$ 且新组主导，才放行去新专家。
 
-**3. Routing Score Regularization：用软损失把"非此即彼"的路由习惯训出来。**
+**3. Routing Score Regularization：用软损失把"非此即彼"的路由习惯训出来**
 
 TAG 是一道硬 mask，管的是"该不该路由到新专家"这个离散决定；RSR 则从梯度层面补一刀，让路由器自己养成排他、专化的倾向。它由两个损失项组成。**排他性损失** $\mathcal{L}_\text{exc} = g_\text{old} \cdot g_\text{new}$ 直接惩罚旧新两组门控权重的乘积——只要一个 token 同时点亮了两组专家，这一项就为正，逼着路由把权重收敛到二选一。**专化损失** $\mathcal{L}_\text{spe}$ 以 $y = 1 - \max\{w_i\}_{i \in \mathcal{S}_{t-1}}$ 为软目标、用 BCE 去鼓励新专家拿到更高的路由权重 $g_\text{new}$：旧专家越不该管的 token，越要推给新专家专门处理。两项一软一稳，正好把稳定性（别遗忘旧知识）和可塑性（学得动新知识）这对矛盾分摊开来。和 TAG 互补的地方在于，TAG 是离散的 mask、RSR 是连续的梯度信号，前者卡住硬边界、后者塑形分数分布，覆盖了路由空间里不同的面。
 

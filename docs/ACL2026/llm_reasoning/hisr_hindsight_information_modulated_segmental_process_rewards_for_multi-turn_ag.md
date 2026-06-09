@@ -52,7 +52,7 @@ HISR 用 GPT-4o 把 agent 轨迹切成与 sub-goal 对齐的 segment，再让一
 
 ### 关键设计
 
-**1. Segmental Process Reward Model（SPRM）：把轨迹末尾的一个标量拆成与 sub-goal 对齐的连续段奖励。**
+**1. Segmental Process Reward Model（SPRM）：把轨迹末尾的一个标量拆成与 sub-goal 对齐的连续段奖励**
 
 turn-level 奖励把同一个子目标（如「先找物、再清洁」）的多个动作拆得七零八落，粒度太碎；而重新用 GPT-4 给每个 turn 打 pseudo label 又贵又吵。SPRM 选了第三条路：在参考策略 $\pi_{ref}$ 的最后隐层接一个 MLP，在每个 segment 的结束 token 处输出该段得分 $r_i = W_2(\text{SiLU}(W_1 h_i))$，再用
 
@@ -60,7 +60,7 @@ $$\mathcal{L}_{sprm}(\tau^s) = \big(R - \sum_{i=1}^n r_i\big)^2$$
 
 把轨迹的标量 outcome $R$ 拟合成各段贡献之和。这等价于让模型自己学一个「任务进度估计器」——只需要末尾一个 outcome 标签，不需要逐 turn 标注，就把奖励粒度落在与 sub-goal 天然对齐的 segment 上，既不碎也不贵。
 
-**2. Hindsight Model 与似然比 importance：在不引入过程标签的前提下，给每个动作算一个「事后回看的重要性」。**
+**2. Hindsight Model 与似然比 importance：在不引入过程标签的前提下，给每个动作算一个「事后回看的重要性」**
 
 段奖励解决了粒度，但同一段里哪个动作才是真正关键，仍然没有信号。本文借鉴 Hindsight Credit Assignment——已知轨迹结果后回看一个动作，比事前预测更能反映它对成功的真实贡献。具体做法是在 $\pi_{ref}$ 上再训练一个 hindsight 模型 $\pi_{hind}$，目标类似 masked language modeling：mask 掉每个 turn 的 response $a_k$，让它在已知整条轨迹其余部分（包含后续 token）的条件下重建 $a_k$。然后定义 token 级似然比
 
@@ -68,7 +68,7 @@ $$r(a_k^j) = \frac{\pi_{hind}(a_k^j \mid o, a_{<k}, a_{>k}, a_k^{<j})}{\pi_{poli
 
 再聚合成动作级 importance $z(a_k) = \exp\!\big(\frac{1}{\beta |a_k|} \sum_j \log r(a_k^j)\big)$，并把同段各 turn 的 $z(a_k)$ 累加得段级 importance $z(s_i)$。直觉很清楚：若 $z(a_k) > 1$，说明知道结果之后回看，agent 反而更倾向选这个动作，这个动作对最终成功就更关键。整套机制只靠 hindsight 与 policy 两套模型的似然差异捕获过程信息，没有任何额外的人工过程标签——这正是它相对 PRM4A 等 MCTS 标注方法的工程优势。
 
-**3. Hindsight-modulated reward + grounding reward：用重要性放大关键段奖励，再补一道可执行性约束。**
+**3. Hindsight-modulated reward + grounding reward：用重要性放大关键段奖励，再补一道可执行性约束**
 
 有了段奖励 $\hat R$ 和段级重要性 $\hat z_s$，就把二者逐元素相乘并归一化，让关键段的奖励被放大、次要段被压低：
 

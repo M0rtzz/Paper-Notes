@@ -45,11 +45,11 @@ LABO 分 warm-start 和优化循环两阶段。Warm-start：让 LLM 基于任务
 
 ### 关键设计
 
-**1. 基于 KOH 的双保真度联合 GP surrogate：把 LLM 当一台便宜的实验仪器接进概率框架。**
+**1. 基于 KOH 的双保真度联合 GP surrogate：把 LLM 当一台便宜的实验仪器接进概率框架**
 
 以往 LLM+BO 把 LLM 当"建议提供者"，没利用它评估成本远低于真实实验这一事实。LABO 的概念转换是把 LLM 当独立的低保真度评估源，套用多保真度仿真里成熟的 Kennedy–O'Hagan 框架：假设 $f_L(x)\sim\mathcal{GP}(0,k_L)$ 训在所有 LLM 评估上、残差 $\delta(x)\sim\mathcal{GP}(0,k_\delta)$ 训在真实实验与 LLM 预测的差上，真实目标分解为 $f_R(x)=\rho f_L(x)+\delta(x)$，预测均值方差分别是 $\mu_R=\rho\mu_L+\mu_\delta$、$\sigma_R^2=\rho^2\sigma_L^2+\sigma_\delta^2$，$\rho$ 用最小二乘 $\rho=\arg\min_\rho\sum_{\mathcal{D}_R}(y_R-\rho y_L)^2$ 简单标定。两个 GP 独立但经 $\rho$ 相连，所以哪怕只增加 LLM 查询、没有新实验，也会更新 $(\mu_L,\sigma_L^2)$ 进而改善 $(\mu_R,\sigma_R^2)$。这样建模的好处是能**自适应识别系统性偏差**——LLM 准时残差 GP 方差小，LLM 不准时残差 GP 自然吸收偏差；比起把 LLM 当难调的 prior mean 或当不稳定的 kernel（CAKE 路线），KOH 更可解释、调参更少。
 
-**2. 差异主导率门控准则：让概率模型自己决定哪个候选值得花真实实验。**
+**2. 差异主导率门控准则：让概率模型自己决定哪个候选值得花真实实验**
 
 有了联合 surrogate，核心问题是每一步要不要为某候选 $x$ 烧一次昂贵实验。LABO 不用人工设的成本/收益比，而是算"残差 GP 在总不确定性里占的比例"
 
@@ -57,7 +57,7 @@ $$p_\Delta(x) = \frac{\sigma_\delta^2(x)}{\rho^2\sigma_L^2(x) + \sigma_\delta^2(
 
 $p_\Delta(x)\le\tau$ 时只查 LLM 更新 $\mathcal{D}_L$，否则触发真实实验更新 $\mathcal{D}_R$。直觉很清晰：如果不确定性主要由 LLM 与真实之差 $\delta$ 贡献，说明 LLM 在 $x$ 处不可靠、必须做实验把残差降下来；如果主要由 LLM 自身方差 $\sigma_L^2$ 贡献，说明只是 LLM 还没在该点附近预测过，多查几次几乎免费的 LLM 就够了。作者还证明这个门控会让"真实实验区域"在有限步后收敛到稳定子集 $\mathcal{X}_R^*$，并给出累积 regret 上界，关键项 $\Psi_T(\mathcal{X}_R^*)\ll\Psi_T(\mathcal{X})$。相比传统多保真度 BO 难调的查询阈值，$p_\Delta$ 给出的是信息论性质的判据——直接量化"再多查 LLM 能不能降不确定性"，把决策权交给 GP 自己。
 
-**3. Prior-guided warm-start + LHS 广覆盖：用一个 LLM 同时治冷启动和高维探索两个老病。**
+**3. Prior-guided warm-start + LHS 广覆盖：用一个 LLM 同时治冷启动和高维探索两个老病**
 
 BO 的冷启动（开局没数据）和高维探索是两个独立痛点，传统方法要么用 LHS 解决覆盖、要么用专家点解决冷启动。LABO 让 LLM 一次性扮演两个角色：一是基于科学先验（文献、可行性约束、目标语义）用 in-context reasoning 推荐少量高潜力点 $\mathcal{X}_R$ 跑真实实验，开局就有几个真实数据点；二是用 Latin Hypercube Sampling 撒一批空间覆盖点，组成 $\mathcal{X}_L=\mathcal{X}_R\cup\mathcal{X}_{\text{LHS}}$（论文用 50 个）让 LLM 全部预测，使 $f_L$ 一开始就能拟合全局结构、避免传统 BO 早期完全瞎走。约束 $\mathcal{X}_R\subset\mathcal{X}_L$ 保证有配对数据让 $\rho$ 和 $\delta$ 立刻训起来。LLM 在这里既是"专家"又是"廉价仿真器"，一次把两个问题都接住。
 

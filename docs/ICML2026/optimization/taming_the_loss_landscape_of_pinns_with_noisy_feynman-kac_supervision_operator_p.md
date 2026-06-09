@@ -51,7 +51,7 @@ tags:
 
 ### 关键设计
 
-**1. Feynman–Kac 监督项作算子预条件：在训练目标里加质量项把病态谱拉起来。**
+**1. Feynman–Kac 监督项作算子预条件：在训练目标里加质量项把病态谱拉起来**
 
 近年研究指出 PINN 训练难的根源是 PDE 算子的 $\mathcal{L}^*\mathcal{L}$ 谱严重病态，而已有补救多在改优化器（自然梯度、Newton），换起来成本高。作者注意到 PINN 的算子谱里"质量项"通常被忽略，于是在损失上接入数据保真项
 
@@ -59,11 +59,11 @@ $$\mathcal{R}_{\mathrm{FK}}(\theta)=\frac{1}{N_{\mathrm{FK}}}\sum_k\big(u_\theta
 
 总损失 $\mathcal{R}_{\mathrm{FK\text{-}PINN}}=\lambda_{\mathrm{PDE}}\mathcal{R}_{\mathrm{PDE}}+\lambda_{\partial\Omega}\mathcal{R}_{\partial\Omega}+\lambda_{\mathrm{FK}}\mathcal{R}_{\mathrm{FK}}$。这等价于把曲率矩阵 $H$ 改成 $H_{\mathrm{FK}}=H+\lambda_{\mathrm{FK}}M$（$M$ 半正定），相当于经典数值分析里的 mass-matrix 预条件，专门补足 $\mathcal{L}^*\mathcal{L}$ 小特征值方向。改训练目标而非优化器，让它完全兼容现有 PINN pipeline，而且理论保证预条件效果与数据来源无关——FK 只是一种零网格、可并行的实现，粗 FEM 或实验数据同样适用。
 
-**2. 基于 PL$^*$ 框架的条件数界（定理 5.4）：把"加 FK 项→条件数好转"证成不等式。**
+**2. 基于 PL$^*$ 框架的条件数界（定理 5.4）：把"加 FK 项→条件数好转"证成不等式**
 
 直接证深网络的 Hessian 谱几乎不可行，作者改用更弱、对非孤立最小子流形仍成立的 PL$^*$ 条件，定义 $\kappa_{\mathrm{PL}}(\mathcal{J})=L(\mathcal{J})/\mu(\mathcal{J})$。Rathore 等已证 PINN 一侧 $\kappa_{\mathrm{PINN}}\ge cN^{\beta/2}$ 随 collocation 数多项式爆炸。本文引入"兼容性条件"（假设 5.2：把参数扰动拆成改变监督项与不改变两类，要求后者上 PDE 项仍良态、两类相互作用不太大），从而证明存在与 $N$ 无关的常数 $\mu_0,L_0,C$ 使 $\mathcal{R}_{\mathrm{FK\text{-}PINN}}$ 是 $L_0$-smooth 且满足 $\mu_0$-PL$^*$，于是 $\kappa_{\mathrm{FK}}\le C$。配合 PL$^*$ 收敛定理，GD 迭代复杂度从 $\mathcal{O}(N^{\beta/2}\log(1/\varepsilon))$ 降到 $\mathcal{O}(\log(1/\varepsilon))$——条件数从随 $N$ 爆炸变成一致有界，这正是训练对超参/采样不再敏感的理论解释。
 
-**3. 带 $\tanh$ 的非渐近 $L^2$ 误差界（定理 6.2）：把条件数提升翻译成解的精度。**
+**3. 带 $\tanh$ 的非渐近 $L^2$ 误差界（定理 6.2）：把条件数提升翻译成解的精度**
 
 条件数好了还要回答"训完离真解多远"。作者先把 FK 蒙特卡洛标签分解为 $Y_i^{\mathrm{FK}}=u^\star(X_i^{\mathrm{FK}})+b(X_i^{\mathrm{FK}})+\zeta_i$，偏差 $|b(x)|\le C_{\mathrm{bias}}\sqrt{\Delta t}+C_T e^{-\kappa T_{\max}}$ 由 Euler–Maruyama 步长和截断时间控制、$\zeta_i$ 条件子指数；再走逼近-估计-优化分解。关键技术贡献是首次给出 $\tanh$ 网络一阶/二阶导数的伪维数界——以往 PINN 非渐近界基本只对分段多项式激活成立，而 $\tanh$ 才是工程默认，有了这个界才能让 Rademacher/PAC 估计延伸到 PDE 残差里的二阶项。最终在适当宽度/采样预算下，深度 $L=3$ 的 FK-PINN 经 $T\gtrsim\log N_{\mathrm{FK}}$ 步 GD 后以 $1-\delta$ 概率满足
 

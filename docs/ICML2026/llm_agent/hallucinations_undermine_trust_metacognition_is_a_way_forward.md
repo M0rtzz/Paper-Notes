@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. Calibration vs Discrimination 的分离：把"区分度税"画出来。**
+**1. Calibration vs Discrimination 的分离：把"区分度税"画出来**
 
 针对的痛点是社区长期混用 calibration 和 discrimination，把"我们的模型校准良好"误读成"我们的模型不会幻觉"。作者用一组仿真把两者彻底拆开：让正确回答（$y=1$）的 confidence 来自 $\text{Beta}(1.8,1.0)$、错误回答（$y=0$）来自 $\text{Beta}(1.0,1.3)$，再用 Isotonic regression 强制校准到 smECE $\approx 0.014$，复现 Nakkiran 2025 的 reliability diagram——此时模型是近乎完美校准的，但 AUROC 只有 0.71（恰好落在真实任务 $0.70$–$0.85$ 区间内）。
 
 校准合格不代表能"挑出"哪些答案对，而后者才决定拒答策略的代价。把拒答阈值从 0 扫到 1，画出 utility-error trade-off 曲线就能看到这笔账：要把 25% 的错误率压到 5%，必须连带丢掉 **52% 的正确回答**；即便 AUROC 提到当前最佳的 0.85，这笔税仍有 $\sim$28%；只有 AUROC $\geq 0.95$ 才能把税降到 5% 以下，而知识密集任务上没有任何方法做得到。这条曲线把"为什么模型提供方都不愿意付这个税"量化成了一张图，比单看 ECE 数字更有冲击力。
 
-**2. Faithful Uncertainty：把目标从"对齐世界"换成"对齐内部"。**
+**2. Faithful Uncertainty：把目标从"对齐世界"换成"对齐内部"**
 
 既然"对齐外部真值"会撞上区分度税和真值不可判定的原理障碍，作者沿用 Yona 2024 的定义给出一个弱化但可达的目标：模型的语言不确定性只需忠实反映它自己的内部不确定性，不要求这个内部信号和世界真值一致。内部置信度定义为 $\text{conf}_M(A)=1-\frac{1}{k}\sum_i\mathbf 1[A\text{ contradicts }A_i]$，即对答案 $A$ 做 $k$ 次重采样、用语义一致率衡量模型自己有多笃定；语言决断度 $\text{dec}(A;R,Q)=\Pr[A\text{ True}\mid R,Q]$ 则用 LLM-as-judge 估计读者根据回答里 hedge 的强弱会赋予 $A$ 多少可信度。两者的对齐程度即 faithfulness $=1-\frac{1}{|A(R)|}\sum_{A}|\text{dec}(A;R,Q)-\text{conf}_M(A)|$。
 
 这个目标之所以"原理上可行"，在于它是闭环可观测的：$\text{conf}_M$ 完全是模型权重的函数，"让语言输出对齐 conf"是一个纯粹的模型内部一致性问题，不依赖外部 ground truth，因此天然绕开了 xu2024 那类"无法判定外部真值"的 halting-problem 障碍。把目标从"内部 → 真实世界"改成"内部 → 内部"之后，区分度税也随之消失——模型不必为了躲错误而拒答，只需把没把握的回答以 hedged 形式给出；用户拿到的仍是有用的猜测，只是多了一个诚实标签。
 
-**3. Agentic Metacognition：不确定性作为工具调用的控制层。**
+**3. Agentic Metacognition：不确定性作为工具调用的控制层**
 
 常见的乐观看法是"工具调用可以绕过幻觉"，作者反驳说工具只解决了 **storage problem**（不必把所有事实塞进权重），却引入了 **control problem**——何时该检索、检索回来的内容可信度如何，而填这个控制层正需要 faithful uncertainty。当前的 agent harness 是个粗放的外部调度器，几乎只靠 query 类型的启发式决定要不要 search；一旦把"模型自报 confidence"接进来当控制信号，harness 就能据此分流：confidence 高就直接作答省掉 tool call，confidence 低就去 retrieve，而当检索结果和模型先验冲突时输出 hedged 答案而非盲信 context。论文引 qian2025smart 等证据指出现有 search agent 恰恰缺这种 self-awareness，才导致工具的过度调用或调用不足。
 

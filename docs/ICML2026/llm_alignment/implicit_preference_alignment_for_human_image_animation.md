@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 隐式偏好对齐目标 (IPA loss)：把"推坏样本"换成"别偏离参考模型"。**
+**1. 隐式偏好对齐目标 (IPA loss)：把"推坏样本"换成"别偏离参考模型"**
 
 DPO 的对比项本质是"拉好样本、推坏样本"，可手部任务里坏样本极难凑齐——6000 个候选里只有约 7.5% 能构成合格的好/坏对。IPA 的做法是干脆不要 loser：只要求模型分布 $p_\theta$ 比参考分布 $p_{\text{ref}}$ 更靠近偏好分布 $q$，写成 $D_{\text{KL}}(q\|p_\theta) < D_{\text{KL}}(q\|p_{\text{ref}})$，等价地令 KL 间隔 $\Delta(p_{\text{ref}}, p_\theta) = D_{\text{KL}}(q\|p_{\text{ref}}) - D_{\text{KL}}(q\|p_\theta) > 0$，再套一层 log-sigmoid 得到损失 $\mathcal{L} = -\log\sigma(\beta\Delta(p_{\text{ref}}, p_\theta))$。这一目标之所以成立，是因为它可被证明等价于一个带 KL 正则的奖励最大化 $\max \mathbb{E}_q[r] - \beta D_{\text{KL}}(p_\theta\|p_{\text{ref}})$：其最优解满足 $p_\theta \propto p_{\text{ref}}\exp(r/\beta)$，反代后得 $\mathbb{E}_q[r] = \beta\Delta + C$，所以最小化 IPA loss 就是在隐式地最大化一个未显式指定的奖励 $r$。换句话说，参考模型的 KL 约束充当了"软的负面信号"，既绕开 loser 标注，又因为不让 $p_\theta$ 跑远而防住 mode collapse。
 
-**2. Flow-IPA：把抽象的 KL 间隔落成流匹配上能反传的损失。**
+**2. Flow-IPA：把抽象的 KL 间隔落成流匹配上能反传的损失**
 
 $\Delta(p_{\text{ref}}, p_\theta)$ 直接积分整条概率路径并不可解。作者借 Rectified Flow"线性插值 + 常速度场"的结构，把 KL 沿时间的增量写成解析式 $\frac{d}{dt}D_{\text{KL}} = \frac{1}{2}(1-t)^2 \mathbb{E}\|v - v_\phi(Z_t;t,I,\mathcal{P})\|^2$——每个采样时刻只需一次 forward 就能估出 KL 微分。对 $t\in[0,1]$ 积分后，间隔化简成 $\Delta = \mathbb{E}_{t,v}[\frac{1}{2}(1-t)^2(\|v - v_{\text{ref}}\|^2 - \|v - v_\theta\|^2)]$，代回 log-sigmoid 即得最终可训练损失。这一步的意义在于把"对齐整段概率轨迹"压缩成"在随机时刻 $t$ 上的单点 mini-batch 损失"，让原本抽象的分布距离变成 DiT 上可直接梯度下降的量。
 
-**3. Hand-Aware Local Optimization (HALO)：把对齐预算显式倾斜到手部像素。**
+**3. Hand-Aware Local Optimization (HALO)：把对齐预算显式倾斜到手部像素**
 
 好样本里手部只占画面的一小块，若用全局 MSE，模型会把损失"花"在大面积的身体和背景上、把手忽略掉。HALO 直接从 DWPose 关键点取二值手部 mask $\mathbf{M}$，构造空间权重 $\mathbf{W} = \mathbf{1} + \lambda\mathbf{M}$，把损失里的速度场偏差 $\|v - v_\phi\|^2$ 替换成加权形式 $\|\sqrt{\mathbf{W}}\odot(v - v_\phi)\|^2$，相当于在手部位置放大学习信号。$\lambda=10$ 时最优。它把有限的 93 个好样本里最关键的 ROI 信号撑起来，让梯度被推回手部而不是淹没在易学的躯干区域；而且这套 mask 加权几乎零成本，可从手扩展到脸、眼、文字等任意小面积高难度区域。
 

@@ -45,13 +45,13 @@ CIA 想干的事：在最严格的黑盒设定下——攻击者只能往目标 
 
 ### 关键设计
 
-**1. Reasoning Output Induction：用三条对抗约束把内部 reasoning"挤"出 decision agent。**
+**1. Reasoning Output Induction：用三条对抗约束把内部 reasoning"挤"出 decision agent**
 
 黑盒下你只看得到 decision agent 的最终结论，可拓扑推断偏偏要靠中间节点的输出——没有 $\mathcal{R}^*$ 一切免谈。CIA 的解法是在原始任务 prompt 上叠加三条对每个 agent 都生效的硬约束：❶ **Cumulative-Propagation** 要求每个 agent 把前驱的 reasoning history 原样 copy 进自己输出再 append 自己的，使 reasoning 沿 $\mathcal{G}$ 一路累积传播到最终的 decision agent；❷ **Task-Focused** 要求 agent 只关注输入里显式标记的 task-relevant 字段，免得被对抗 prompt 自带的额外文本带偏；❸ **Predecessor-Review** 要求 agent 生成前先 review 前驱内容，强化相邻 agent 的语义耦合，让后续阶段的相关性信号更显著。最终 $\mathcal{S}(q^*)$ 用 `|||` 分隔符切分 + backward deduplication 还原成有序列表 $\mathcal{R}^*$。
 
 巧妙之处在于这三条约束既能把信息泄露出来（实验 Recall 0.87–0.96、ROUGE-L 0.87–0.95，reasoning 几乎被完整诱导出来），又不破坏任务功能、保持隐蔽——对抗查询下 MAS 的任务准确率和标准查询几乎一致，靠"任务性能下降"的检测器根本察觉不到。
 
-**2. Global Bias Disentanglement（GBD）：剥掉"非通信引起"的虚假语义相关。**
+**2. Global Bias Disentanglement（GBD）：剥掉"非通信引起"的虚假语义相关**
 
 直接拿 reasoning 两两算相似度会翻车：哪怕两个 agent 之间根本没连边，它们也常因共享同一个 base LLM、处理同一任务、表征各向异性而输出高度相似的文本——这种全局共享的虚假信号被作者命名为 **Global Bias**，会把大量非连边的 agent 对误判成连边。GBD 先用预训练 all-MiniLM-L6-v2 把 $r_i^*$ 编码成 $\mathbf{h}_i$，再用两个可训练编码器 $E^d,E^b$ 分别投影到去偏子空间 $\mathbf{z}_i^d$ 和偏置子空间 $\mathbf{z}_i^b$。核心是一个信息论目标：
 
@@ -61,7 +61,7 @@ $$\mathcal{L}_{\mathrm{bias}} = -\mathcal{I}(\mathbf{z}_1^b;\ldots;\mathbf{z}_n^
 
 GBD 是整个方法的命脉：消融里去掉它 AUC 从 0.83 直接掉到 0.53（接近随机）、FPR 至少减半，证明 global bias 确实是黑盒推断失败的最大噪声源。相比简单的 subtract 变体（CIA-Sub：$\mathbf{z}_i^d=\mathbf{h}_i-\mathbf{z}_i^b$），双编码器能让去偏表征被显式 refine 去捕获通信相关信息，AUC 高出 5–14 点。
 
-**3. LLM-guided Weak Supervision（LWS）+ 连边判定：把"局部强、全局弱"的 teacher 信号蒸进去偏表征。**
+**3. LLM-guided Weak Supervision（LWS）+ 连边判定：把"局部强、全局弱"的 teacher 信号蒸进去偏表征**
 
 只靠文本相似度学不到 $\mathcal{G}$ 的结构信息，于是引入一个 teacher LLM（GPT-5）当弱监督。把 $\mathcal{R}^*$ 喂给它，让它返回 top-$k$ 置信度最高的边作正样本集 $\mathcal{E}_{\mathrm{pos}}$，其余 agent 对采样为负样本集 $\mathcal{E}_{\mathrm{neg}}$。关键观察是：teacher LLM 单独推全图很烂（AUC 才 0.5–0.7，输不过 CIA），但它对"最显然那几条边"判得很准——所以只取它的 top-$k$（尤其 $k\le 3$）当可靠局部信号。损失用 label-smoothed BCE 吸收 teacher 噪声：
 

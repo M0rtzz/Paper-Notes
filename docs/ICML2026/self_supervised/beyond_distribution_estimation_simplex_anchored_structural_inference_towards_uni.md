@@ -43,19 +43,19 @@ SAGE 在 FixMatch 类的双视图（弱/强增强）SSL 框架上加了三个模
 
 ### 关键设计
 
-**1. Graph-state Relational Inference (GRI)：用样本间高阶关系替代不可靠的伪标签。**
+**1. Graph-state Relational Inference (GRI)：用样本间高阶关系替代不可靠的伪标签**
 
 UniSSL 的死结是"伪标签 → 表征"这条主线，但伪标签本身就不可靠，越是 long-tail / 任意分布越离谱。作者的诊断实验给出一个出路——样本之间的关系比伪标签可靠得多（训练中错误伪标签被"邻居关系"纠正回正确类的比例稳步升到很高水位）。GRI 就把监督信号换成这个关系。每个样本的投影特征 $\mathbf{z}_i$ 通过 ridge 回归 $\min_{\mathbf{a}_i}\|\mathbf{z}_i-\mathbf{a}_i\mathbf{P}\|_2^2+\lambda\|\mathbf{a}_i\|_2^2$ 得到闭式关系嵌入 $\mathbf{a}_i=(\mathbf{z}_i\mathbf{P}^\top)(\mathbf{P}\mathbf{P}^\top+\lambda\mathbf{I})^{-1}$；亲和矩阵 $\mathbf{A}_{ij}=\langle\mathbf{a}_i,\mathbf{a}_j\rangle$ 经 row-softmax 得 $\hat{\mathbf{P}}$，做 $\beta=5$ 步 diffusion 得到结构共识 $\mathbf{G}=\hat{\mathbf{P}}^\beta$。
 
 对比损失 $\mathcal{L}_{con}=\text{BCE}(\mathbf{S},\text{sg}[\mathbf{G}])$ 把当前 instance 相似度 $\mathbf{S}_{ij}=\sigma(\langle\mathbf{z}_i,\mathbf{z}_j\rangle)$ 对齐到 $\mathbf{G}$，再加 $\mathcal{L}_{sim}$ 让弱/强增强视图的特征跨视图相似。用高阶传播而非单步邻居，是因为多步扩散能把分散的局部关系汇成稳定的全局共识，对噪声更鲁棒；stop-gradient 则防止结构信号被自身梯度污染。
 
-**2. Simplex 等角紧框架几何锚：用与类频率无关的固定坐标系对抗塌缩。**
+**2. Simplex 等角紧框架几何锚：用与类频率无关的固定坐标系对抗塌缩**
 
 long-tail 下可学习的 prototype 会被多数类拽偏，导致类簇互相混叠、silhouette 骤降。SAGE 改用一组一次性离线生成、永不更新的固定锚来强制类间最大等角分离。构造上取随机 Gaussian 矩阵 QR 分解得正交 $\mathbf{Q}$，中心化矩阵 $\mathbf{O}=\mathbf{I}_K-\frac{1}{K}\mathbf{1}_K\mathbf{1}_K^\top$ 的 $d$ 个非零特征向量组成 $\mathbf{V}$，最终锚阵 $\mathbf{P}=\sqrt{\frac{K}{K-1}}\mathbf{V}\mathbf{Q}^\top$，满足 $\mathbf{P}^\top\mathbf{1}_K=\mathbf{0}$、每行单位范数、$\mathbf{p}_i^\top\mathbf{p}_j=-\frac{1}{K-1}$——这正是 $\mathbb{R}^d$ 上 $K$ 个向量能达到的最大等角间距。
 
 这组 ETF 锚一旦固定就提供与样本数无关的几何不变性，把表征学习从分布先验里解耦出来；它也正是 GRI 里 ridge 回归的坐标系，于是"等角性"自然从锚传递到关系嵌入空间。
 
-**3. Distribution-agnostic Reliability Prioritization (DRP) + 辅助分支：选可靠伪标签并隔离错误。**
+**3. Distribution-agnostic Reliability Prioritization (DRP) + 辅助分支：选可靠伪标签并隔离错误**
 
 不知道未标注分布 $\gamma_u$ 时，怎么挑可靠伪标签又不让错误污染主分类器？DRP 用两个分布无关统计量打分：对每个未标注样本算 $q_{max}=\max(\mathbf{q}_w)$（绝对确定性）和 $q_{gap}=q_w^{(1)}-q_w^{(2)}$（相对判别性），各维护 EMA 均值 $\mu_\kappa$ 和方差 $\sigma_\kappa^2$，用截断高斯核 $\mathcal{W}(q_\kappa;\mu_\kappa,\sigma_\kappa)=\exp(-\frac{[\min(0,q_\kappa-\mu_\kappa)]^2}{2\sigma_\kappa^2})$ 给样本加权（高于均值满分 1，低于按距离指数衰减），最终权重 $w=\mathcal{W}_{max}\cdot\mathcal{W}_{gap}$。
 

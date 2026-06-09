@@ -47,15 +47,15 @@ MASPOB 要在一个已经固定、不能改拓扑的多智能体 workflow 上，
 
 ### 关键设计
 
-**1. GAT 代理模型：把"改一个 prompt 牵动全局"建进预测里。**
+**1. GAT 代理模型：把"改一个 prompt 牵动全局"建进预测里**
 
 MAS 上 prompt 优化最棘手的地方是 topology-induced coupling——上游 agent 的 prompt 一改，它产出的内容变了，下游 agent 的输入分布跟着变，整个目标函数不可分解。OPRO、PromptBreeder 这类方法干脆把 MAS 当纯黑盒，MIPRO 用 TPE 隐式建模依赖但很弱。MASPOB 直接把 workflow 拓扑当成 surrogate 的归纳偏置：每个 agent 是一个 node，node feature 取它当前 prompt 的嵌入 $\Phi(p_i)$，边就是 workflow 的依赖关系再加 self-loop。多头 GAT 在这张图上做消息传递 $\mathbf{h}_i^{(l+1)} = \|_{k=1}^K \sigma(\sum_{j \in \mathcal{N}(i) \cup \{i\}} \alpha_{ij}^{(k)} \mathbf{W}^{(l,k)} \mathbf{h}_j^{(l)})$，注意力权重 $\alpha_{ij}^{(k)}$ 由 leaky-ReLU 加 softmax 归一化算出，最后对所有节点 mean pool 再过 MLP 得到对整组组合的性能预测 $\mu(c)$。这样"prompt 变化沿着拓扑传播"被显式编码进网络，attention 还能自动学到哪条 edge 对性能更关键，比把 MAS 当黑盒的隐式建模精准得多。
 
-**2. LinUCB + information matrix：在 50 次预算里量化"这组没见过"。**
+**2. LinUCB + information matrix：在 50 次预算里量化"这组没见过"**
 
 评测一次要跑完整 end-to-end MAS、烧掉好几次 LLM 调用，预算紧到只能采 50 个点，所以必须 sample-efficient——光信 GAT 预测分最高的（纯 exploit）会一头扎进局部最优，得给"没探索过的组合"加分。MASPOB 借用 LinUCB 的经典工具 information matrix $\mathbf{M} \in \mathbb{R}^{Nd \times Nd}$，初始化为 $\lambda \mathbf{I}$，每评测完一个组合就累加 $\mathbf{M} \leftarrow \mathbf{M} + \Phi(c)\Phi(c)^\top$。一个组合的整体嵌入是各 agent prompt 嵌入的拼接 $\Phi(c) = [\Phi(p_1); \dots; \Phi(p_N)] \in \mathbb{R}^{Nd}$，它的 epistemic uncertainty 就是 $\sigma(c) = \sqrt{\Phi(c)^\top \mathbf{M}^{-1} \Phi(c)}$——落在已采样方向上的组合 $\sigma$ 小，方向新颖的组合 $\sigma$ 大。两者合成采集函数 $\mathrm{UCB}(c) = \mu(c) + \alpha\sigma(c)$，让"GAT 觉得好"和"还没探过"两股力量自然平衡，不用像 ε-greedy 那样手调探索率。
 
-**3. 坐标上升：把指数级联合搜索拆成线性的逐 agent 搜索。**
+**3. 坐标上升：把指数级联合搜索拆成线性的逐 agent 搜索**
 
 就算有了便宜的 UCB 采集函数，要在 $N$ 个 agent 的全联合空间里挑最优组合，候选数是 Cartesian 积 $\prod_i |\mathcal{P}_i|$，随 agent 数指数爆炸，根本算不过来。MASPOB 用坐标上升把这步降维：从当前最优 $c^*$ 出发，固定其余 agent 不动，只对第 $i$ 个 agent 扫它自己的 $|\mathcal{P}_i|$ 个候选挑 UCB 最高的，$p_i^* \leftarrow \arg\max_{p \in \mathcal{P}_i} \mathrm{UCB}(p_1^*, \dots, p_{i-1}^*, p, p_{i+1}^*, \dots, p_N^*)$，依次走完所有 agent，总枚举量从 $\mathcal{O}(\prod_i |\mathcal{P}_i|)$ 降到 $\mathcal{O}(\sum_i |\mathcal{P}_i|)$。关键在于这一整轮坐标上升里的每次 UCB 比较只需 forward 一遍 GAT、不跑真实 MAS，几乎零成本；真正昂贵的端到端评测只在每轮选定新组合后跑一次。把"便宜的代理 forward"和"贵的真实评测"切开分配算力，正是它在 50 次预算下还能找到协同组合的原因。
 

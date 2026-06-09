@@ -51,15 +51,15 @@ BLaIR benchmark 由三层组成：
 
 ### 关键设计
 
-**1. Amazon Reviews 2023 数据集：更大、更新、metadata 更干净、时间戳到毫秒。**
+**1. Amazon Reviews 2023 数据集：更大、更新、metadata 更干净、时间戳到毫秒**
 
 旧版 2018 Amazon 数据的 day-level 时间戳对序列推荐的 time split 不友好，metadata 也噪声大、缺字段，已经撑不起新一代研究。作者自建 user-centric 爬虫从公开 Amazon 页面采集 user→reviews，并把原始 HTML metadata 重新解析成结构化 JSON（含 description / features / 多分辨率图片 / 视频），时间戳精确到毫秒。最终覆盖 33 个 category、570M reviews、48M items、54M users，相比 2018 版 items ×3.18、tokens ×2.58。毫秒级时间戳带来的直接好处是能定义全局共享 cutoff（1628643414042 / 1658002729837），从而做出干净的 8:1:1 by-timestamp split，而不是按用户随机切。
 
-**2. 复杂 query 商品搜索：补上「自然长句描述需求」这个被忽略的子任务。**
+**2. 复杂 query 商品搜索：补上「自然长句描述需求」这个被忽略的子任务**
 
 现有搜索 benchmark 的 query 几乎全是短关键词，无法反映 ChatGPT-buy / Amazon Rufus 时代用户用一整段话描述需求的真实行为，而真实用户的复杂 chat history 又因隐私无法公开。作者用两条路绕过这个困境：一是 Amazon-C4——从 Amazon Reviews 2023 取 5 星且 ≥100 字符的 review，让 ChatGPT 把它改写成第一人称 query（同时抹掉可能泄漏目标商品的信息），得到约 20k 对；二是 Reddit-Movie——直接取 reddit_movie_large_v1 中 $\text{is\_seeker}=\text{True}$ 且答复 upvote>20 的真实 forum post 作为 query，被推荐的电影作为 ground-truth。前者是「semi-synthetic 但 grounded in real user intent」的低成本造数，后者是真实数据；两者在 NDCG@100 上的 Pearson 相关高达 0.94（p<0.01），互相验证了 semi-synthetic 是可靠的 proxy。
 
-**3. 统一 adaptor + Borda Count 综合排名：把对比锁死在 encoder 维度。**
+**3. 统一 adaptor + Borda Count 综合排名：把对比锁死在 encoder 维度**
 
 不同 LLM 的 embedding 维度不同、不同 dataset 的指标尺度不同，直接比裸 embedding 会让下游模型参数量随之变化，分不清到底是 encoder 强还是 decoder capacity 大。为此作者在序列推荐和协同过滤里加 adaptor 层，用 PCA whitening（默认，可选 MRL 对比）把所有 embedding 投影到固定的 $d'$ 维，确保下游模型参数量一致，对比只反映 encoder 能力。跨 dataset 的综合排名则用 Borda Count（与 MMTEB 同款），避免被某个 high-variance dataset 主导，并额外给出 Avg.(Overall) 和 Avg.(Task) 两个补充指标缓解 metric scale bias。
 

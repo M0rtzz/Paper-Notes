@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 四组最小对诊断数据：把动词体貌和上下文中断信息解耦。**
+**1. 四组最小对诊断数据：把动词体貌和上下文中断信息解耦**
 
 如果只测 ambiguous accomplishment 一种题，模型可以一律保守回答 Unknown 就拿高分，根本测不出它懂不懂体貌。四组组合迫使模型同时处理取消、过程、结果四种情形。Group C 是关键 probe：“The carpenter was building a gazebo” → “The carpenter built a gazebo” 的正确标签是 Unknown，因为进行体只说过程在发生、不保证结果完成；Group D 则是防作弊的对照——atelic 活动的任一子区间本身就构成一个事件，所以 “was running” 真的蕴含 “ran”，模型不能把所有 progressive 都判成 Unknown。两组一起逼模型在“悬置 telic 完成”和“接受 atelic 蕴含”之间做出正确区分。
 
-**2. 目的论偏置率与体貌意识差：把完成幻觉和真区分能力分开度量。**
+**2. 目的论偏置率与体貌意识差：把完成幻觉和真区分能力分开度量**
 
 只看 Group C accuracy 不够，因为一个过度保守、把 Group D 也全判 Unknown 的模型同样能拿到不错的 C 组分数。作者用两个指标拆开度量：Teleological Bias Rate 只看 Group C 里模型预测 True 的比例，$TBR_C=\sum_{i\in C}\mathbb{I}(\hat{y}_i=True)/|C|$，专抓完成幻觉；Aspectual Awareness Gap 定义为 $\Delta_{AA}=ACC_D-TBR_C$，把“抑制 telic 完成幻觉”和“保留 atelic 合法蕴含”绑成一个数——只有 Group D 高准确、同时 Group C 低 TBR 的模型，$\Delta_{AA}$ 才高。这就堵死了用过度怀疑伪装成理性推理的捷径。
 
-**3. 提示干预与表示/行为分离分析：定位错误发生在哪一层。**
+**3. 提示干预与表示/行为分离分析：定位错误发生在哪一层**
 
 光知道模型做错不够，还要回答错误是知识缺失、表示混淆，还是推理决策出问题。作者在行为侧比较四种提示：zero-shot strict logician、Definition-Aware Prompt（显式给规则）、CoT、Counterfactual（要求模型先想出三个未完成场景再判断）——若显式规则就能修好，问题只是知识缺失。在表示侧，用 contextual embedding 算 progressive 和 perfective 短语的余弦相似度，再和各 verb class 的 TBR 做相关。结果发现模型其实能在表示层编码出过程/结果的差异，却仍做错判断，说明 bug 不在编码，而在解码阶段被“目标行动通常会成功”的叙事先验覆盖了。
 

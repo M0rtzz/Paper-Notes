@@ -46,19 +46,19 @@ DOT-MoE 接收一个 dense 预训练 LLM 的 FFN $\text{FFN}(\mathbf{x}) = (\sig
 
 ### 关键设计
 
-**1. 把神经元分配建成 balanced optimal transport：用 marginal 约束强制 expert 容量均衡。**
+**1. 把神经元分配建成 balanced optimal transport：用 marginal 约束强制 expert 容量均衡**
 
 以前的 MoEfication 要么 random 撒、要么按权重/激活聚类，都没法保证每个 expert 恰好分到 $s$ 个神经元，容易 expert collapse。DOT-MoE 把分配看成质量运输：每个神经元 carry 一份 unit mass、每个 expert 接收 $s$ 份，于是问题写成 $\mathbf{M}^* = \arg\max_{\mathbf{M} \in \mathcal{U}(\mathbf{r}, \mathbf{c})} \langle \mathbf{A}, \mathbf{M} \rangle$，其中 $\mathbf{A} \in \mathbb{R}^{d_{\text{ffn}} \times E}$ 是 learnable affinity（决定谁更想去哪个 expert），$\mathcal{U}$ 是 transportation polytope，两个 marginal $\mathbf{r} = \mathbf{1}_{d_{\text{ffn}}}$、$\mathbf{c} = s \cdot \mathbf{1}_E$ 把容量均衡硬编码进约束里。直接解这个 LP 的最优解落在 polytope 顶点上、是个 $\{0,1\}$ 矩阵，不可微也不能联合训。加一项 entropic regularization $-\tau H(\mathbf{M})$ 后，解变得唯一且落在 polytope 内部、有 closed form $M_{i,e}^* = u_i \cdot \exp(A_{i,e}/\tau) \cdot v_e$，于是 Sinkhorn-Knopp 通过交替做行/列归一化求 $\mathbf{u}, \mathbf{v}$，线性收敛、log-domain 保证数值稳定。这样"解 OT"就从一个 intractable 的整数规划变成一串可微迭代，能和 router 一起反向传播。
 
-**2. Straight-Through Estimator：forward 走 hard、backward 走 soft，让离散决策能联合训。**
+**2. Straight-Through Estimator：forward 走 hard、backward 走 soft，让离散决策能联合训**
 
 MoE 部署时神经元必须硬归属到某个 expert、token 也必须硬选 top-$k$，但训练里直接用 hard 会把梯度截断。DOT-MoE 用经典的 STE 把这层拆开：Sinkhorn 给出 soft assignment $\mathbf{M}_{\text{soft}}$，greedy rounding 按 entries 降序排、依次填满每个 expert 的容量得到 hard $\mathbf{M} \in \{0,1\}^{d_{\text{ffn}} \times E}$，再构造 $\mathbf{M}_{\text{STE}} = \mathbf{M} + (\mathbf{M}_{\text{soft}} - \text{sg}(\mathbf{M}_{\text{soft}}))$——前向数值上等于 hard $\mathbf{M}$、反向梯度却走 soft $\mathbf{M}_{\text{soft}}$（$\text{sg}$ 是 stop-gradient）。token router 的 top-$k$ 选择同理用 $\mathbf{R}_{\text{STE}} = \mathbf{R} + (\mathbf{P} - \text{sg}(\mathbf{P}))$。这个在 BinaryNet 等量化网络里验证过的 trick 被搬到 neuron-to-expert 和 token-to-expert 两层离散决策上，正是让整个 pipeline 能 end-to-end 联合训练的 enabler。
 
-**3. Output-aware KL alignment：训练目标直接对齐 dense 与 sparse 的输出，而非中间 proxy。**
+**3. Output-aware KL alignment：训练目标直接对齐 dense 与 sparse 的输出，而非中间 proxy**
 
 旧方法优化的都是 input weight 相似度、activation 共现这类 proxy，但 FFN 的真正输出是 $\mathbf{H}$ 和 $\mathbf{W}_{\text{down}}$ 交互的结果，proxy 根本没 capture——appendix 的 single-layer 重构实验显示 proxy 方法的输出 MSE 是 DOT-MoE 的 $2\times$ 到 $41\times$，是结构性失败。DOT-MoE 在 forward 里直接模拟 sparse MoE 计算 $\hat{\mathbf{Y}} = (\mathbf{H} \odot (\mathbf{R} \mathbf{M}^\top)) \mathbf{W}_{\text{down}}$（只有被选中的 $k \cdot s$ 个神经元贡献输出），训练目标就是让它逼近 dense 的 $\mathbf{Y}$。总 loss 是 dense 与 sparse 输出间的 KL divergence + cross-entropy LM loss + router z-loss（防 router logits 爆炸）+ load balancing loss（防 expert collapse），一起反传去更新 affinity $\mathbf{A}$、router $\mathbf{W}_r$ 和全网络。因为训练目标和部署目标（重构 dense 输出）对齐，效果远好于优化 proxy。
 
-**4. 推广到 attention heads：同一套 balanced transport 也能切 attention。**
+**4. 推广到 attention heads：同一套 balanced transport 也能切 attention**
 
 把每个 attention head 当作一个"神经元"、按同样的 marginal 约束分到 expert，这套 OT 框架可以无缝迁移到压缩 attention（细节见 Appendix G），等于给"稀疏化 attention"也提供了一个 OT 工具。
 

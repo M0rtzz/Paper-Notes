@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. ANCHOR 复杂 caption 数据集：用真实新闻文本逼出模型在简单 prompt 上藏起来的短板。**
+**1. ANCHOR 复杂 caption 数据集：用真实新闻文本逼出模型在简单 prompt 上藏起来的短板**
 
 常见 T2I benchmark 的 prompt 大多是短句、自包含、主体关系简单，模型在上面“好看”并不代表真懂复杂文本。ANCHOR 从 5 家主要新闻媒体组织收集 70K+ 抽象 caption，这些 caption 天然带着多主体交互、上下文指代和抽象措辞——新闻文本往往一句话就牵涉事件、人物关系和语境依赖。用它当评测/训练语料，等于给模型换上一套贴近真实用户描述的压力测试。
 
-**2. 复杂 caption 缺陷分析：把“T2I 画不对”定位到具体的失败模式上。**
+**2. 复杂 caption 缺陷分析：把“T2I 画不对”定位到具体的失败模式上**
 
 没有针对性诊断，就分不清失败到底来自生成器、文本编码器，还是 prompt 本身的复杂结构。作者用 ANCHOR 系统检查现有 image-text encoder 和 T2I 模型，把短板归到三类：multi-subject understanding、context reasoning 和 nuanced grounding。也就是说，模型可能能画出 caption 里的某些关键词，却处理不好多个主体之间的关系和细粒度语义——CLIP 这类提供全局相似度的编码器尤其容易把主体关系平均掉。
 
-**3. SAFE 主体感知微调：让 LLM 先找出“谁必须落到图里”，再在条件空间放大它。**
+**3. SAFE 主体感知微调：让 LLM 先找出“谁必须落到图里”，再在条件空间放大它**
 
 复杂 caption 的真正问题不是词不够多，而是关键主体和关系被整句的整体 embedding 淹没。SAFE（Subject-Aware Fine-tuning）先用 LLM 从 caption 中抽取 key subjects，再在 embedding-level 强化这些主体的表示，让生成过程更关注必须被视觉化的对象。这个接口很实用：不要求 T2I 模型自己学会所有语言解析，而是把 LLM 已经擅长的实体/角色/关系结构化能力，转成条件控制信号喂给生成器。
 

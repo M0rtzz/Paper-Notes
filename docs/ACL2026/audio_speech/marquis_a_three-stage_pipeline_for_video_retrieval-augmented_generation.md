@@ -46,15 +46,15 @@ MARQUIS 要解决的是“给定一个复杂查询和一大堆视频，写出一
 
 ### 关键设计
 
-**1. 查询分解、融合与视频重排：把长 persona 查询拆回检索器熟悉的短查询。**
+**1. 查询分解、融合与视频重排：把长 persona 查询拆回检索器熟悉的短查询**
 
 MAGMaR 这类任务的查询往往很长，包含职业 persona、背景和多个隐含/显式信息需求，而 dense retriever 通常是在短查询-文档对上训练的，一个长查询是分布外输入，单个 embedding 会把多面需求压成一个向量、漏掉相关视频。MARQUIS 让 LLM 先把原始查询分解成 $N$ 个 atomic sub-queries，每个子查询独立检索 Top-1000 视频候选，再把多张 ranked list 融合回一个整体排序——融合策略包括 RRF、Sum/Max/Mean similarity、Weighted RRF 等，其中 RRF 用 $RRF_K(v)=\sum_i 1/(K+\mathrm{rank}(v,q_i))$ 聚合各子查询的排名。融合后的 Top-100 再交给 RankVideo 做一遍 video-native 重排。拆成原子信息需求后，检索器更容易分别命中覆盖不同 facet 的视频，这也是检索 nDCG@10 从 0.195 跳到 0.759 的主因。
 
-**2. 三路证据抽取与视频支撑校准：抽取与可信度判断解耦。**
+**2. 三路证据抽取与视频支撑校准：抽取与可信度判断解耦**
 
 直接让模型“边看视频边写证据”，它常常会在生成 evidence 的同时自信地误判其可信度，形成自编自证的循环。MARQUIS 把证据抽取拆成三种粒度并和支撑估计分开：query-agnostic note extraction 记录视频中直接可观察的视觉事件、屏幕文字和语音内容；query-conditioned claim extraction 只抽取与当前查询相关、且直接受视频支持的 claims；QA extraction 先把信息需求分解成问题，再由 VLM 基于视频内容和转录回答。这三路输出覆盖了宽泛观察、任务相关 claim 和针对性 QA 三种粒度，随后统一交给 CLUE 评分，得到支持概率 $s_\theta(v,x) \in [0,1]$，据此过滤掉 unsupported claims。把“抽什么”和“信不信”交给两个独立环节，证据单元因此带上了可校准的置信度，而不是一段笼统的摘要。
 
-**3. 证据驱动文章生成与 RLM 控制器：把组织与引用从一次性 prompt 变成可观察状态。**
+**3. 证据驱动文章生成与 RLM 控制器：把组织与引用从一次性 prompt 变成可观察状态**
 
 多视频生成最容易出错的地方不是语言流畅性，而是证据组织和引用保持。MARQUIS 在筛选后的证据上比较了几种合成方式：Bullet 直接列证据，保守但不成文；CAG 一次性合成 cited article；GINGER 先做 facet clustering、cluster ranking、per-cluster summarization，再润色成文。最高层的 MARQUIS-RLM 则让 Root LM 在持久环境里迭代调用工具，借助 memory bank 搜索、复用、修订 evidence records，显式处理证据冲突和信息缺口。RLM 的价值不在于更长的上下文，而在于把“查缺补漏、解决冲突、整理事实”变成一连串可观察的状态转移，从而在长流程中减少证据遗忘和跨源混淆——代价是会纳入更多不相关事实（实验里它 citation recall 最高但 precision 偏低）。
 

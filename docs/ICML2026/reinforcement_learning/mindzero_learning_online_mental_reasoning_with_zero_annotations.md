@@ -46,7 +46,7 @@ MindZero 训练一个多模态 LLM $Q_\theta(\cdot \mid s_{1:t}, a_{1:t})$，给
 
 ### 关键设计
 
-**1. 自监督 RL 奖励 = ELBO：零心智标注下也能给 LLM 一个学习信号。**
+**1. 自监督 RL 奖励 = ELBO：零心智标注下也能给 LLM 一个学习信号**
 
 心智推理最大的障碍是开放场景里根本拿不到 ground-truth 心智状态 $m^\star$，监督学习无从下手。MindZero 的破法是把 ToM 当变分推断 $Q_\theta\approx P(m|s,a)$，最大化只依赖"行为—状态—假设"三元组、不依赖真值的 ELBO
 
@@ -54,11 +54,11 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{Q_\theta}\big[\log\big(P(a_{1:t}|m_t,s_{1:t}
 
 落到 $N$ 个采样假设上就是 $R(\mathcal{M}_t,\mathcal{Q}_t)=\sum_i q_t^{(i)}\log[P(a_{1:t}|m_t^{(i)},s_{1:t})P(m_t^{(i)})] - \sum_i q_t^{(i)}\log q_t^{(i)}$，再用 GRPO 在 group 内做相对优势更新、免去 critic。这一步的巧妙在于：传统 next-token 预测是"正向"拟合 $a|s$，而心智推理必须做"反向"推断 $m|s,a$，二者训练目标完全不同——把 ELBO 写成奖励就把反向推断接进了 RL 后训练管线，且天然不需要 $m^\star$，等于让 LLM 通过 GRPO 直接"内化"贝叶斯逆向规划的演绎结构。
 
-**2. 多假设 + 熵正则化：在证据不足时别急着 commit 到一个错误目标。**
+**2. 多假设 + 熵正则化：在证据不足时别急着 commit 到一个错误目标**
 
 早期 BIP 之所以鲁棒，本质是它显式追踪多个假设的后验分布；单点预测在 GridWorld 这种早期完全模糊的任务里会让 helper 在错误方向上提前出手、反而拖慢人类。MindZero 因此在奖励里强制模型一次输出 $N$ 个假设和归一化后验 $\{q_t^{(i)}\}$，并用熵项 $H(Q_\theta)=-\sum_i q_t^{(i)}\log q_t^{(i)}$ 直接惩罚"单点 collapse"。这样下游 helper 面对模糊行为时可以按 $P(a^A|m)\cdot q(m)$ 加权选动作，等观察到更多动作再让某个假设的后验显著上升。消融印证了这层设计的分量——去掉多假设掉 8.8% speedup，去掉熵正则掉 13.9%，熵项是防 collapse 最关键的开关。
 
-**3. 显式先验建模 + 双估计器：堵住 reward hacking 并让框架可跨域迁移。**
+**3. 显式先验建模 + 双估计器：堵住 reward hacking 并让框架可跨域迁移**
 
 如果奖励只有似然项，模型会把目标写得极宽（如"拿桌上所有东西"），让任何行为都"合理"、靠 reward hacking 拿满分。MindZero 用 LLM 当先验估计器对每个候选目标的"常识合理性"打 log-prior 分（"把苹果放进洗碗机"会被打极低分），把这条捷径堵死。似然项 $P(a_{1:t}|m_t,s_{1:t})$ 则用领域适配的估计器提供——GridWorld 用 model-based planner（按规划器算最优策略下的动作概率），家居域复用同一个预训练 LLM——两者乘进 ELBO 奖励的 $\log$ 内。把先验和似然解耦成两个估计器，还让框架能低成本迁移到新领域，只需更换 planner 或 prompt。
 

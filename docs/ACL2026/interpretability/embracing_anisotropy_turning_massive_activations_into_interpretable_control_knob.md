@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 用 masking 验证维度的稀疏关键性：先证明“少数维度真的决定性能”，假设才立得住。**
+**1. 用 masking 验证维度的稀疏关键性：先证明“少数维度真的决定性能”，假设才立得住**
 
 整套方法的前提是“极端激活不是噪声，而是功能专门化的痕迹”。要让这个前提成立，第一步得证明 hidden dimensions 并非等价——否则后面只盯着 top-$k$ 维度做文章就没有意义。作者对 Gemma-2-2B-IT 和 Qwen-3-8B 做逐维消融：把某个维度在每一层的 activation 置零（排除输入 embedding layer 以聚焦内部处理维度），再到 evaluation set 上测准确率掉多少。
 
 结果很极端：Qwen-3-8B 单独 mask 掉 Rank-1 维度，平均准确率就从 73.30% 崩到 21.97%，而 Rank-100 维度几乎不影响。这种“一个维度抵几十个百分点”的落差，直接说明维度重要性高度稀疏，也为后面“只操控少数维度”提供了 ground truth。
 
-**2. 用激活幅值识别 Domain-Critical Dimensions：让模型自带的统计信号替代训练出来的解释器。**
+**2. 用激活幅值识别 Domain-Critical Dimensions：让模型自带的统计信号替代训练出来的解释器**
 
 masking 能找出关键维度，但要逐维试错代价太大；probe 和 SAE 又都要额外训练、引入新参数和解释偏差。作者的取巧之处是直接读模型已经形成的 activation magnitude：先把某维度对某 query 的激活是否偏离均值超过 $3\sigma$ 定义为 active criterion，再统计每个维度在一个 subject 内的激活频率；当两个领域之间的 activation frequency 差异超过 30%，该维度就被判为有 domain-discriminative pattern。最终取 top-$k$ high-magnitude dimensions 作为 domain-critical dimensions。
 
 关键验证在于：这些纯靠统计选出的高幅值维度，与 masking 得到的 ground-truth critical dimensions 高度重合，token-level 上还能看到维度 1046 对应数学术语、2106 对应生物术语、334 对应 topic keywords——说明功能重要性确实可以从激活统计无训练地推断出来。
 
-**3. Critical Dimension Steering：把验证过的稀疏维度当成精准旋钮，而不是整条向量乱推。**
+**3. Critical Dimension Steering：把验证过的稀疏维度当成精准旋钮，而不是整条向量乱推**
 
 传统 activation steering 在整条 hidden vector 上施加一个方向，问题是若领域行为本就由少数高影响维度支配，全维 steering 会顺带扰动大量无关维度，带来副作用又难解释。CDS 改成只在 top-$k$ domain-critical dimensions 上干预、其余维度保持不动，相当于把干预限制在已被 masking 证明过的 causal handles 上。
 

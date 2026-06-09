@@ -37,7 +37,7 @@ CIM 要解决的是「怎么在没有细粒度标注的情况下，判断一段 
 
 ### 关键设计
 
-**1. Gallery Representation Consistency（GRC）：用检索结果的聚集程度量化 caption 的细粒度。**
+**1. Gallery Representation Consistency（GRC）：用检索结果的聚集程度量化 caption 的细粒度**
 
 信息损失里最难抓的一类是「漏细节」——模型只说"a pet"而不说品种，光看文本根本判不出丢了多少。CIM 的做法是把这段 caption 检索回来的 K 张图各自过视觉表示模型、$\ell_2$ 归一化成单位向量，再取它们的平均向量长度：
 
@@ -45,7 +45,7 @@ $$GRC(c) = \Big\|\frac{1}{K}\sum_{r=1}^{K}\tilde{v}(x_{i_r})\Big\|_2$$
 
 这其实就是方向统计里的 mean resultant length，衡量一组单位向量在超球面上有多集中：当 caption 足够具体（比如点出了品种、花纹、姿态），检索回的图会高度同质，向量们指向相近、平均向量接近 1；caption 一旦模糊粗粒度，检索结果五花八门，向量相互抵消、GRC 趋近 0。于是「细不细」被定量成了一个 0~1 的聚集度，完全不需要知道正确答案是什么。
 
-**2. Query-gallery Image Relevance（QIR）：用检索图与源图的相似度量化 caption 的准确性。**
+**2. Query-gallery Image Relevance（QIR）：用检索图与源图的相似度量化 caption 的准确性**
 
 光有 GRC 还不够——一段编造得很具体但描述错误的 caption 也能让检索结果很聚集（聚到错的地方去了）。QIR 补上「准不准」这一维：把源图 $v$ 和它检索回的每张图算余弦相似度，并按检索排名做指数衰减加权后求和：
 
@@ -53,7 +53,7 @@ $$QIR(v, c) = \sum_{r=1}^{K}\lambda(r)\cdot Cos\big(\tilde{v}(v), \tilde{v}(x_{i
 
 如果 caption 如实描述了源图，检索回的图自然跟源图语义贴近、QIR 高；一旦 caption 掺了错误信息，检索就会被带偏到别的图上、QIR 掉下来。权重 $\lambda(r)=1/2^{r-1}$ 让排名靠前、可信度更高的检索结果主导这个分数，越往后的命中影响越小。
 
-**3. CIM 奖励与 GRPO 优化：把两维信号合成一个无标注奖励。**
+**3. CIM 奖励与 GRPO 优化：把两维信号合成一个无标注奖励**
 
 GRC 管细节、QIR 管准确，二者线性组合成最终奖励，用 $\beta$ 调两者权重：
 

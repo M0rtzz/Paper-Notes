@@ -49,7 +49,7 @@ tags:
 
 ### 关键设计
 
-**1. Bernoulli SPAD 图像形成模型：把 clean 图像物理一致地"打碎"成单光子观测。**
+**1. Bernoulli SPAD 图像形成模型：把 clean 图像物理一致地"打碎"成单光子观测**
 
 整套方法要在合成数据上训练，但 SPAD 的统计特性和普通摄影完全不同，所以第一步是搭一条物理一致的前向模拟链，否则训出来的模型在真实传感器上会失配。clean sRGB 图像 $x_{gt}$ 先经 gamma 校正回到线性辐射空间 $x_{lin}=x_{gt}^{2.2}$，再让每个像素的光子检测服从 Bernoulli 分布：
 
@@ -57,7 +57,7 @@ $$x_{spad} = \mathrm{Bern}\!\left(1 - e^{-\alpha \cdot x_{lin}}\right)$$
 
 其中 $\alpha$ 控制每像素期望光子数（PPP），训练统一取 $\alpha=1.0$（PPP≈3.5）。对 color SPAD 还要叠一层随机 Bayer pattern，得到 mosaiced 的二值帧；$N$ 帧平均后是 $\log_2(N+1)$ bit 的观测。这条 Bernoulli（而非高斯）链是后面所有技术选择的源头——正因为噪声离散、强度依赖、又远超常规摄影，朴素套用现成的扩散修复方法才会失败。
 
-**2. Stage 1 — Quanta-Aligned VAE：让 encoder 在极噪输入下仍吐出"对齐 clean 图"的 latent。**
+**2. Stage 1 — Quanta-Aligned VAE：让 encoder 在极噪输入下仍吐出"对齐 clean 图"的 latent**
 
 直接拿 SD 的 VAE encoder 去微调适配 SPAD 输入，会塌成一个常数映射：不管输进什么都给出近似相同的 latent。原因是现有修复方法（SUPIR/DiffBIR）用同一个可训练 encoder 同时产生监督信号和预测，在极端噪声下这条捷径会被迅速学到。本文冻结 decoder $\mathcal{D}$、只微调 encoder $\mathcal{E}_{\phi^*}$，并做两处关键修改来切断捷径。一是**确定性均值编码**：不从后验采样，直接取均值 $\mu_\phi(x_{lq})$，避免 Bernoulli 噪声把方差进一步放大。二是 **Latent Space Alignment (LSA) loss**，拿一个冻结的预训练 encoder 去编码 GT 当对齐目标：
 
@@ -65,7 +65,7 @@ $$\mathcal{L}_{lsa} = \big\|\mu_{\phi^*}(x_{lq}) - \mu_\phi(x_{gt})\big\|_2^2$$
 
 注意第二项的 $\mu_\phi$ 是冻结副本，监督端不再随训练漂移，encoder 没法靠"两端一起退化"作弊——这正是它和 SUPIR/DiffBIR 那种可训练 encoder 目标的本质区别。总损失 $\mathcal{L}=\lambda_{lsa}\mathcal{L}_{lsa}+\lambda_{MSE}\mathcal{L}_{MSE}+\lambda_{perc}\mathcal{L}_{perc}$，这一阶段同时把去噪和去马赛克做掉。
 
-**3. Stage 2 — 对抗微调 LoRA U-Net：把多步扩散蒸馏成单步生成器补回高频。**
+**3. Stage 2 — 对抗微调 LoRA U-Net：把多步扩散蒸馏成单步生成器补回高频**
 
 Stage 1 对齐后的重建偏平、缺细节，而 SPAD 的 10K–100K fps 又意味着数据量巨大，跑多步扩散采样根本不现实。于是这里把扩散 U-Net 蒸馏成单步生成器：用 LoRA adapter 初始化生成器 $\mathcal{G}_{lora}$（继承扩散权重，保证初始梯度小、不破坏先验），配一个多层 ConvNext-Large 判别器 $\mathcal{V}_\theta$，按标准 min-max GAN 对抗训练：
 
@@ -73,7 +73,7 @@ $$\min_\phi \max_\theta\ \mathbb{E}[\log \mathcal{V}_\theta(x)] + \mathbb{E}\big
 
 总损失再加感知项和像素项 $\mathcal{L}=\mathcal{L}_{adv}+\mathcal{L}_{perc}+\|\mathcal{D}(\mathcal{G}_{lora}(\mu_{\phi^*}(x_{lq})))-x_{gt}\|_2^2$。这样既保住了预训练生成知识，又把推理压到单步、满足超高帧率的实时需求。代价是会引入轻微内容漂移，留给 Stage 3 收拾。
 
-**4. Stage 3 — FusionViT：在 latent space 对齐并动态融合 burst，换回保真度与时域稳定。**
+**4. Stage 3 — FusionViT：在 latent space 对齐并动态融合 burst，换回保真度与时域稳定**
 
 单帧重建再好也用不上 burst 序列里的时间冗余，而朴素的 flow-warp + 平均一遇运动就糊。FusionViT 的关键是把对齐和融合都搬到 latent space，并绕开"在噪声帧上估光流"这个坑。具体地，先用 Stage 1+2 把每帧都重建出来 $Y=\mathcal{D}(\mathcal{G}_{lora}(\mathcal{E}_{\phi^*}(X_{lq})))$，在这些**重建图**上跑预训练 RAFT 估光流（直接在 noisy SPAD 上估会因域差距严重失败），再把所有 burst latent 按光流 warp 到 center frame。融合用一个 pseudo-3D miniViT $\mathcal{F}$，以亚二次复杂度的窗口注意力跨时间和空间轴做自适应加权——根据运动幅度和到 center 的距离决定每帧贡献多少，而不是一视同仁地平均。输出以一个可学习标量 $\delta$（初始 0.05）残差加回 center latent $z_{T/2}$。这一阶段损失 $\mathcal{L}_{fusion}=\|\mathcal{F}(\mu_{\phi^*}(X_{lq}))-\mu_\phi(x_{gt})\|_2^2+\text{pixel MSE}+\mathcal{L}_{perc}$，最终把保真度和时域稳定性一起抬上去。
 

@@ -48,7 +48,7 @@ DiBO 在冻结扩散 LLM 之上加四件事：(a) tokenizer 扩展两组 delimit
 
 ### 关键设计
 
-**1. Delimiter token + 统一 prompt-response 语料的域适应：把异构信号塞进同一序列，让扩散 LLM 学会角色边界。**
+**1. Delimiter token + 统一 prompt-response 语料的域适应：把异构信号塞进同一序列，让扩散 LLM 学会角色边界**
 
 扩散 LLM 在自然文本上预训练，直接把"设计 token + 数值标签"当普通文本喂进去，它会把标签当噪声、抓不住 segmentation。DiBO 先扩展 tokenizer 加 4 个 delimiter（`|design-start|/|design-end|`、`|label-start|/|label-end|`），每条样本写成 `[prompt 文本][few-shot (design, label) 对][生成更优设计的指令]` + `[response design][response label]` 的统一序列，每个 design/label 都被 delimiter 包起来。域适应目标对 prompt 和 response 的 masked token 同时重建：
 
@@ -56,13 +56,13 @@ $$\mathcal{L}_{\mathrm{DA}} = -\mathbb{E}\Big[\tfrac{1}{t} \textstyle\sum_{i=1}^
 
 few-shot 上下文 design 用 kernel 相似度从 offline pool 里挑跟 response design 相近的，避免模型学到"prompt 和 response 毫无关系"的退化映射。比起 DDOM 那种任务特化架构，这套纯语料方案能直接复用扩散 LLM 的预训练 prior 和双向注意力。
 
-**2. 两段后训练：masked-response SFT 给方向、label-improvement RL 给幅度。**
+**2. 两段后训练：masked-response SFT 给方向、label-improvement RL 给幅度**
 
 域适应只教会了格式，还得让模型真正生成"比上下文更优"的设计。SFT 阶段冻结 prompt、只在 response 上做 masked reconstruction，loss $\mathcal{L}_{\mathrm{SFT}} = -\mathbb{E}[\frac{1}{t} \sum_i \mathbf{1}[o_t^i=[M]] \log p_\theta(o_0^i | q_0, o_t)]$，且 target 必须满足 $y(o) > \max y(\text{prompt})$——给模型一个"response 一定更优"的硬归纳偏置。RL 阶段把约束放松成连续 reward $r(q, o) = y(o) - y(q)$（有正有负，不强求 strict improvement），loss $\mathcal{L}_{\mathrm{RL}} = -\mathbb{E}[\frac{1}{|o|} \sum_k p_\theta(o_k | q, o_{\text{fullmask}}) \cdot \frac{r(q,o)}{\sigma}]$。
 
 这里的关键是分工：SFT 给"方向"（应该更优），RL 给"幅度"（更优多少）。而让 RL 在 8B 扩散 LLM 上单卡可跑的 trick 是 one-step unmask 近似 token-wise log prob——传统扩散 log-prob 要 iterative denoising 才稳，但 BBO 的设计序列很短，one-step 就够用且省约 50× 算力；行为策略假设均匀分布，还顺手省掉了 ratio clipping 和 KL 正则。
 
-**3. kernel-similarity 上下文选择 + 单步 greedy 推理：把"improve over prompt"限制成"小步改进"。**
+**3. kernel-similarity 上下文选择 + 单步 greedy 推理：把"improve over prompt"限制成"小步改进"**
 
 "生成比 prompt 更优的设计"这个假设在 prompt 全落在低分区时会崩——模型很难一步从垃圾跳到高分区。DiBO 在构造训练数据时，给定 target response design $o$，用 kernel similarity $k(o, x_i)$ 从 offline pool 选 top-7 作 few-shot prompt，保证 prompt 例子和 target 在 design space 局部接近，相当于把任务收窄成模型擅长的"小步改进"。
 

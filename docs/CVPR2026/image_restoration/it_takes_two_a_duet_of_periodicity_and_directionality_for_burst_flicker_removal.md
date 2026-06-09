@@ -49,15 +49,15 @@ Flickerformer要解决的是：从一组短曝光burst帧里把交流电+rolling
 
 ### 关键设计
 
-**1. PFM：用相位相关挑出干净帧，融合时不留ghosting。**
+**1. PFM：用相位相关挑出干净帧，融合时不留ghosting**
 
 burst多帧融合的老问题是——参考帧里既有能补基准帧的干净信息，也有它自己的闪烁和运动差异，直接像素对齐或注意力融合往往把闪烁和运动一起搬进来，留下ghosting。PFM的切入点来自一个实验观察：交换两帧的相位分量会交换闪烁的空间分布，说明**闪烁的位置信息是编码在相位里的**。于是PFM对各帧特征做FFT得到频域表示$\tilde{\mathbf{X}}_t = A_t(\mathbf{k})e^{i\Phi_t(\mathbf{k})}$，再算参考帧与基准帧的相位相关分数$\mathbf{S}_t(\mathbf{k}) = |e^{i\Phi_t(\mathbf{k})} \odot e^{-i\Phi_1(\mathbf{k})}|$当作每个频率上的可靠性度量，经卷积+sigmoid变成权重图$\mathbf{W}_t$去加权滤波参考帧频谱，IFFT回空间域后拼接三帧增强特征做卷积融合。因为频域相乘等价于空域卷积，PFM本质上是一个**按相位差自适应的频域滤波器**：相位越对得上（闪烁差异越小）的频率分量保留越多，从而只把参考帧里真正有用的信息搬过来。
 
-**2. AFFN：把前馈网络换成自相关算子，补上帧内的空间周期性。**
+**2. AFFN：把前馈网络换成自相关算子，补上帧内的空间周期性**
 
 PFM管的是帧之间的周期性，但单帧内部那一道道规律排列的闪烁条纹本身也是周期信号，标准FFN看不出这种重复结构。AFFN借Wiener-Khinchin定理用一次FFT高效算出空间自相关$\mathbf{R}_l = \mathcal{F}^{-1}(|\mathcal{F}(\mathbf{F}_l)|^2)$——自相关天然会放大信号里重复出现的结构、压住不相关的噪声，正好对上条纹的周期性。在此基础上做双域增强：频域把功率谱叠回去$\hat{\mathbf{F}}_k = \mathcal{F}(\mathbf{F}_l) + \alpha|\mathcal{F}(\mathbf{F}_l)|^2$，空域把自相关叠回去$\hat{\mathbf{F}}_l = \mathcal{F}^{-1}(\hat{\mathbf{F}}_k) + \beta\mathbf{R}_l$（$\alpha, \beta$可学习），最后过一个depthwise gated FFN输出。这样PFM（帧间）和AFFN（帧内）一头一尾，把周期性建模补完整；可视化也显示自相关能区分"闪烁变化"和"运动变化"，这正是FRFN等普通FFN做不到、会引入ghosting的地方。
 
-**3. WDAM：用稳定的高频方向信息当罗盘，引导受损低频的修复。**
+**3. WDAM：用稳定的高频方向信息当罗盘，引导受损低频的修复**
 
 闪烁的方向性来自rolling shutter逐行扫描——条纹沿扫描方向排列，亮带是高频振荡、暗带是低频压暗，受损最重的恰恰是低频暗区，而高频里的方向信息反而相对稳定。WDAM顺着这点反过来用：对特征做Haar小波分解，拿到低频$\mathbf{F}_{LL}$和水平/垂直/对角三个高频$\mathbf{F}_{LH}, \mathbf{F}_{HL}, \mathbf{F}_{HH}$；低频送进window-based多头注意力做修复，水平+垂直高频则经卷积+sigmoid生成方向权重图$\mathbf{M}$去调制注意力的Value分支
 

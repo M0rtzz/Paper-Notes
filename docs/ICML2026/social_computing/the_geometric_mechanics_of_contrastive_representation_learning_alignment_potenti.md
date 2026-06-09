@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 从 stochastic loss 到 deterministic energy 的大 batch 一致性：让几何分析有数学地基，而不是直觉近似。**
+**1. 从 stochastic loss 到 deterministic energy 的大 batch 一致性：让几何分析有数学地基，而不是直觉近似**
 
 以前把 InfoNCE 拆成 alignment-uniformity 是手动近似，结论未必对得上真实的梯度下降。本文坚持「值和梯度都一致」。对单模态定义 $\mathcal{J}_\tau(\theta)=\frac{1}{\tau}\int_\mathcal{Z}U_\theta(\mathbf{z})\mathrm{d}q_\theta(\mathbf{z})-H_\times(q_\theta,\tilde\rho_{\theta,\tau})$，其中 alignment potential field $U_\theta(\mathbf{z})=-\int_\mathcal{Z}s(\mathbf{z},\mathbf{w})\mathrm{d}\nu_{\theta,\mathbf{z}}(\mathbf{w})$ 来自 positive-pair 的 disintegration。定理 3.1 在 encoder 与 critic 一致正则、kernel 体积常数、有限 batch 受控等条件下证明 $|\mathcal{L}_{\text{NCE}}(\theta)-\mathcal{J}_\tau(\theta)-\log(NV_\kappa(\tau))|\to0$ 且 $\|\nabla_\theta\mathcal{L}_{\text{NCE}}-\nabla_\theta\mathcal{J}_\tau\|\to0$。值和梯度双重一致意味着大 batch 下的 SGD 严格等价于种群能量下降，后面所有凸性、平衡分析才能直接对接实际训练，而不是停在直觉层面。
 
-**2. intrinsic free energy 与 Gibbs 平衡：把 uniformity 重新理解成 basin 内的熵驱动分散。**
+**2. intrinsic free energy 与 Gibbs 平衡：把 uniformity 重新理解成 basin 内的熵驱动分散**
 
 parametric energy 还纠缠着参数化的隐式关系，作者进一步把它提升到分布空间，剥离参数后得到 $\mathcal{F}_{\tau,U}(\rho)=\frac{1}{\tau}\int_\mathcal{Z}U(\mathbf{z})\rho(\mathbf{z})\mathrm{d}\mu(\mathbf{z})-H(\rho)$，并证明它在 $\mathcal{P}_\mu(\mathcal{Z})$ 上严格凸、唯一最小解是 Gibbs 形式 $\rho^*(\mathbf{z})=\exp(-U(\mathbf{z})/\tau)/Z_\tau$。再用 sharp diagonal peak 假设证明它与 parametric energy 在低温下一致 $|\mathcal{J}_\tau(\theta)-\mathcal{F}_{\tau,U_\theta}(\rho_\theta)|\leq 2\varepsilon_{\text{kde}}^{(\theta)}(\tau)/\underline\rho_\theta$，并用低温集中命题说明 $\tau\to0^+$ 时 Gibbs 平衡集中到 $U$ 的近最小化区域。这一步在概念上升级了 Wang & Isola 的视角：alignment 决定收敛到「哪个 basin」，uniformity 不是与之对抗的全局力，而是 basin 内部由熵决定的分散度。
 
-**3. multimodal 负对称 KL 耦合：从一个减号推出 modality gap 的必然性。**
+**3. multimodal 负对称 KL 耦合：从一个减号推出 modality gap 的必然性**
 
 对称 InfoNCE 不是单模态的简单复制。作者定义 $\mathcal{J}_\tau^{\text{Sym}}(\theta,\phi)=\frac{1}{2}(\mathcal{J}_\tau^{x\to y}+\mathcal{J}_\tau^{y\to x})$，每个方向的能量都把自己的 cross-entropy 评估在「另一模态」的 smoothed density 上。提升到分布空间后得到 $\mathcal{F}_{\tau,\mathbf{U}_{1,2}}^{\text{Sym}}(\rho_1,\rho_2)=\frac{1}{2}(\mathcal{F}_{\tau,U_{1\to2}}(\rho_1)+\mathcal{F}_{\tau,U_{2\to1}}(\rho_2))-D_{\text{KL}}^{\text{Sym}}(\rho_1,\rho_2)$，关键全在最后那个减号：每个模态在锐化对自己势能的对齐时，又被推着去拉大与另一模态 marginal 的 KL，等于两模态互相把对方的密度场当成「势垒」。稳态下除非满足一个 knife-edge 兼容条件（两模态 conditional law 完全一致），否则 marginal 必然分离。于是 modality gap 不是优化没收敛，而是 InfoNCE 在异质 conditional 下的几何必然——这也给「靠更强 hard negative 或更大 batch 消 gap」画了天然上限。
 

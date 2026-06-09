@@ -46,15 +46,15 @@ RACER 要回答的是"这条 query 值不值得花 reasoning 的钱来 judge"，
 
 ### 关键设计
 
-**1. 双重分布鲁棒：reward 和 cost 各自取 worst-case。**
+**1. 双重分布鲁棒：reward 和 cost 各自取 worst-case**
 
 部署时 query 分布一漂移，训练分布上估的 reward 和 cost 双双失真，naive router 要么超预算要么性能崩。RACER 把 router 学习写成在 KL 不确定集上的约束优化 $\max_\pi R_{\mathcal{U}(\rho_n, \delta)}(\pi)$ s.t. $C_{\mathcal{U}(\rho_n, \delta)}(\pi) \leq C$，其中 $\mathcal{U}(\rho_n, \delta)$ 是以经验分布 $\rho_n$ 为圆心、半径 $\delta$ 的 KL ball，$R$ 取 ball 内的 worst-case reward、$C$ 取 worst-case cost。和传统 DRO 只对单个 objective 取鲁棒不同，这里的关键观察是 reward 与 cost 在 OOD 下的失真方向是独立的：OOD query 可能 token 更便宜（这时 cost 不用怕、反而该 robustify reward 把预算用得更激进），也可能更贵（这时 cost 鲁棒才是命根、得防超预算）。两边各取各的 worst-case，算法才能在"变贵"和"变便宜"两种漂移下都安全。消融（Figure 3）正说明这个 split 必不可少——只 robustify reward 的 RACER-R 在变贵场景超预算，只 robustify cost 的 RACER-C 在变便宜场景浪费预算，唯有双 robust 两头都稳。
 
-**2. KL 不确定集的闭式 worst-case 重赋权（Theorem 3.1）。**
+**2. KL 不确定集的闭式 worst-case 重赋权（Theorem 3.1）**
 
 难点在于不确定集里大多数分布我们根本没有样本，直接对参数化分布跑 alternating gradient 没法做。Theorem 3.1 给出一个干净的等价：在 KL ball 下，worst-case 分布对样本只是一次闭式 reweighting。记 $f_i = \mathbb{E}_{a \sim \pi(\cdot|z_i)}[f(z_i, a)]$ 为某个量（reward 或 cost）在样本 $i$ 上的策略期望，则取 min 的 worst-case 分布是 $\underline{\rho}(i) \propto \rho_n(i)\exp\!\big(\tfrac{\underline{s} - f_i}{\tau}\big)$、取 max 的是 $\bar{\rho}(i) \propto \rho_n(i)\exp\!\big(\tfrac{f_i - \bar{s}}{\tau}\big)$。直觉上，reward 视角下 worst-case 会把"reward 高于 baseline 的样本"压低、"低于 baseline 的"抬高（悲观假设好处没那么多）；cost 视角下则把"高 cost 样本"抬高，逼优化聚焦到高风险区。温度 $\tau$ 控制重赋的激烈程度，$\tau$ 越小越偏极端。这样一来"对未知分布求 worst-case"就被等价转成"对已知样本乘个权重"，实现上几乎零额外成本（思路承接 Gadot et al. 2024 / Xu et al. 2025 的 distributionally robust RL）。
 
-**3. Entropy 正则的 primal-dual 算法与 linear last-iterate 收敛（Theorem 4.1/4.2）。**
+**3. Entropy 正则的 primal-dual 算法与 linear last-iterate 收敛（Theorem 4.1/4.2）**
 
 有了闭式 worst-case 分布，约束优化就落到一个带正则的 min-max 拉格朗日 $L_\beta(\pi, \lambda) = R_{\underline{\rho}}(\pi) - \lambda C_{\bar{\rho}}(\pi) + \beta\big(\mathcal{H}(\pi) + \tfrac{1}{2}\lambda^2\big)$ 上。primal-dual 交替求解：$\pi_{t+1} = \arg\max_\pi\{R_{\underline{\rho}}(\pi) - \lambda_t C_{\bar{\rho}}(\pi) + \beta\mathcal{H}(\pi)\}$，$\lambda_{t+1} = \arg\max_{\lambda \geq 0}\{-\lambda C_{\bar{\rho}}(\pi) + \tfrac{1}{2}\beta\lambda^2\}$；其中 $\pi$ 的更新可改写回原分布 $\rho$ 上的加权目标 $\mathbb{E}_{\rho, \pi}\big[\tfrac{p_{\underline{\rho}}}{p_\rho} r - \lambda_t \tfrac{p_{\bar{\rho}}}{p_\rho} c\big] + \beta\mathcal{H}$，直接配合关键设计 2 的重赋权落地。两个正则项各司其职：entropy $\mathcal{H}(\pi)$ 是 RL 老招（Cen et al. 2022, Ding et al. 2023），防策略退化成 deterministic、保留探索；$\tfrac{1}{2}\lambda^2$ 则把对偶变量约束得有界。两者合起来让 saddle point 存在且唯一（Theorem 4.1），并给出 last-iterate 的线性收敛率（Theorem 4.2）：
 

@@ -45,15 +45,15 @@ DenseMLLM 由三个完全标准的组件组成：SigLIP-2（siglip2-so400m-patch
 
 ### 关键设计
 
-**1. 从 vision token logits 直接解码密集预测：把最后一层的视觉 logits 当成一张分类图。**
+**1. 从 vision token logits 直接解码密集预测：把最后一层的视觉 logits 当成一张分类图**
 
 标准 MLLM 做密集预测都要外挂 decoder，但作者认为 vision token 经过 LLM 多层 transformer 加工后，本就融合了全局语境和指令信息、已经在语义空间里了，只缺一个把它「露出来」的接口。于是干脆跳过 mask decoder：对语义分割，先让模型用 NTP 文本输出图中存在的类别集合 $\{k\}$，再到每个 vision token 的 logits $Z_i\in\mathbb{R}^{|V|}$ 上抽这些类别对应的 token id 子集 $S_k$，把 sub-word 多 token 得分按 $\hat Z_k=\frac{1}{|S_k|}\sum_{v\in S_k}Z_v$ 平均，将 $\hat Z$ reshape 回 $H\times W$ patch 网格、双线性上采样到原图分辨率得到预测图 $M=A(I(R(\hat Z)))$。深度估计则把深度范围离散到 1–1000 个 bin、每个 bin 是一个 `<custom k>` 词表 id，走同样的 argmax 流程。好处是一次前向就能拿到全图密集深度——4B 模型在 DDAD 上单次推理就有 87.6 δ1，而 DepthLM 要对每个采样点单独推理一次。
 
-**2. 多标签下一 token 预测 NTP-M：让一个 vision token 能同时给多个目标贡献监督。**
+**2. 多标签下一 token 预测 NTP-M：让一个 vision token 能同时给多个目标贡献监督**
 
 直接监督 vision token 之前得先处理一个本质差异：一个 vision token 对应一块 patch，里面可能同时含「狗 / 椅子 / 背景 / 深度 bin 20 / 深度 bin 50」多个语义，而 text token 永远只对应一个 vocabulary id——单标签 softmax 的互斥假设和 vision token 天然打架。NTP-M 把 softmax 换成多标签 sigmoid：构造多 hot 向量 $y_{i,v}\in\{0,1\}$，凡是与第 $i$ 个 vision token 空间位置相关的对象类别、深度 bin、前景背景标签全置 1，用独立 Bernoulli 联合概率建模 $p(Y|X_v,X_{\text{instruct}})=\prod_{i,v}\sigma(Z_{i,v})^{y_{i,v}}(1-\sigma(Z_{i,v}))^{1-y_{i,v}}$，不同任务的 prompt 通过 $X_{\text{instruct}}$ 控制激活哪一段词表。sigmoid 让多语义共存，又与 text token 上原有的 NTP 框架完全兼容，无需新增损失分支。
 
-**3. 相关负样本采样：沿词表维度挑硬负，解决大词表带来的正负极度失衡。**
+**3. 相关负样本采样：沿词表维度挑硬负，解决大词表带来的正负极度失衡**
 
 MLLM 词表有数十万词条，每个 vision token 的正样本只有寥寥几个、负样本铺天盖地，直接 BCE 会被海量无关负样本把梯度稀释。传统 OHEM 在空间维度挑硬例，但这里失衡是在 vocabulary 维度，所以要沿词表维度挑「相关负」：对每个 vision token，正样本集 $P_i=\{v\mid y_{i,v}=1\}$、负候选集 $C_i=\{v\mid y_{i,v}=0\}$，按预测概率 $p_{i,v}=\sigma(Z_{i,v})$ 取 top-$k$ 高分负样本组成 $N_i^{\text{relev}}$，最终损失正负独立平均：
 

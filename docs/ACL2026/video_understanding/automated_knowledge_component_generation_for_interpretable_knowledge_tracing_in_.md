@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. LLM-based KC Generation and Clustering：从多样化正确解法里抽出可读且粒度可控的 KC。**
+**1. LLM-based KC Generation and Clustering：从多样化正确解法里抽出可读且粒度可控的 KC**
 
 开放式编程题没法像选择题那样标注——同一题有多种正确思路，只看题干或单个解法会漏掉必要技能，而让 LLM 自由生成又容易产出过细、重复、不可泛化的 KC。ArrowGEV 的做法是先用 CodeBERT embedding 给正确学生代码聚类，从不同代码簇里采样代表性解法，让 GPT-4o 基于题目和这些多样解法生成 KC；再用 Sentence-BERT 把 KC 描述向量化，经 Hierarchical Agglomerative Clustering 合并相似技能，最后由 GPT-4o 给每个 cluster 命名。聚类这一步正是用来控制抽象层级，把 LLM 容易发散的细碎技能收敛成稳定、可复用的 KC 集合。
 
-**2. KC Mastery Soft Token Conversion：把连续的掌握度接进 LLM 的文本空间。**
+**2. KC Mastery Soft Token Conversion：把连续的掌握度接进 LLM 的文本空间**
 
 LLM 擅长读文本描述，但学生对某个 KC 的「掌握程度」是个连续值，没法当普通文本 token 直接输入。模型先用 LSTM 更新一个 512 维学生知识状态 $h_t$，经线性层 + sigmoid 得到 $k$ 维 mastery 向量 $m_t\in[0,1]^k$；对第 $j$ 个 KC，用 $s_t^j=m_t^j\cdot emb^{true}+(1-m_t^j)\cdot emb^{false}$ 把掌握度插值成一个 soft token。这个 soft token 既保留了「掌握多少」的连续信息、又可微，于是 mastery 状态就能端到端融进 LLM 的表示空间，而不必离散化丢信息。
 
-**3. 多任务 KT 目标与可解释正则：让预测准的同时，画像也讲得通。**
+**3. 多任务 KT 目标与可解释正则：让预测准的同时，画像也讲得通**
 
 光优化预测精度，学到的 hidden state 可能完全不可解释。KCGen-KT 同时挂三个目标：正确性预测拿 Llama 3 的 hidden states 做 sigmoid 分类，代码预测让 Llama 3 token-by-token 生成学生代码，再加一条 KC 正则——用相关 KC mastery 的平均值去预测正确性，强行把「KC 掌握度高 ↔ 答对概率高」绑在一起。总损失为 $\mathcal{L}_{KCGen-KT}=\lambda(\mathcal{L}_{CodeGen}+\mathcal{L}_{CorrPred})+(1-\lambda)\mathcal{L}_{KC}$。这条 KC loss 是可解释性的关键：它逼着 mastery 向量真正对应教育意义上的「学生在哪些技能上弱」，而不是退化成一堆只为拟合的黑箱数字。
 

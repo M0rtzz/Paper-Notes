@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 编解码器条件嵌入（Codec Conditional Embedding）：让编码器知道"这张图是用哪种编解码器、压到多狠"。**
+**1. 编解码器条件嵌入（Codec Conditional Embedding）：让编码器知道"这张图是用哪种编解码器、压到多狠"**
 
 不同编解码器和不同比特率造成的失真模式差别很大，如果编码器对此一无所知，学习就会被低比特率样本主导。作者把编解码器类型和压缩级别显式编进位置编码：假设有 $m$ 种编解码器、每种 $n$ 个压缩级别，先 one-hot，再过嵌入层映射到 $d$ 维潜空间得条件嵌入 $C_{\mathrm{emb}} = T(m, n, d)$，然后加到 RoPE 上形成条件位置编码 $P_{\mathrm{emb}} = \mathrm{RoPE}(h, w, d) + C_{\mathrm{emb}}$，于是所有空间位置的视觉 token 都带上了压缩元信息。这一加法融合直接借鉴条件扩散模型里时间/条件嵌入的做法，不动 ViT 结构就实现了条件化，让编码器能按失真类型和压缩程度区别对待。
 
-**2. 蒸馏式视觉编码器训练（Feature Distillation Training）：在特征空间把压缩图拉回未压缩图。**
+**2. 蒸馏式视觉编码器训练（Feature Distillation Training）：在特征空间把压缩图拉回未压缩图**
 
 目标是让压缩图的特征逼近原图特征，但如果在任务输出层对齐就会和具体任务绑死。作者改在特征空间对齐：冻结原始视觉编码器 VE 的参数 $\theta$，训练条件视觉编码器 CVE 的参数 $\theta^*$，最小化 MSE 蒸馏损失 $\mathcal{L}_d = \| \mathrm{CVE}(\hat{X}, P_{\mathrm{emb}}, \theta^*) - \mathrm{VE}(X, \theta) \|_2^2$。训练数据是 11 万+ COCO 图，用 JPEG/ELIC/ILLM 三种编解码器在 4 个比特率下压缩，构成 12 维条件空间。在特征层对齐而非输出层对齐，让适配器与下游任务解耦——同一个适配器就能服务 VQA、OCR、Caption 等多种 VLM 任务。
 
-**3. 性能差距分解框架（Gap Decomposition Framework）：先分清退化是"信息没了"还是"模型不适应"。**
+**3. 性能差距分解框架（Gap Decomposition Framework）：先分清退化是"信息没了"还是"模型不适应"**
 
 压缩导致 VLM 掉点，到底该改编解码器还是改模型？作者给了一个可量化的诊断工具：把总性能差距 $\mathcal{L}(X, \theta) - \mathcal{L}(\hat{X}, \theta)$ 拆成信息差距 $\mathcal{L}(X, \theta) - \mathcal{L}(\hat{X}, \theta^*)$ 加泛化差距 $\mathcal{L}(\hat{X}, \theta^*) - \mathcal{L}(\hat{X}, \theta)$，其中 $\theta^* = \arg\max_\theta \mathcal{L}(\hat{X}, \theta)$ 是在压缩图上充分适配后的最优参数。信息差距对应压缩不可逆丢掉的信息，只能靠改进编解码器补；泛化差距对应 VLM 对压缩失真适应不足，可以靠适配器补。实测 POPE 上 JPEG 的泛化差距高达 29.48（占总差距 36.29 的 81%），说明大头是可修复的——这正是适配器路线成立的依据。
 

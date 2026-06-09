@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. revealed preference 式 trait elicitation：从行为而非自评反推人格。**
+**1. revealed preference 式 trait elicitation：从行为而非自评反推人格**
 
 直接问模型“你是什么人格”会踩进迎合、复述量表定义、过度解释的陷阱，得到的并不是它真实交互时的风格。本文改用显示偏好：每轮抛给模型两个 trait，让它在系统提示里隐式扮演其一并在回复中表现出来，外部裁判只看输出来判断哪个 trait 被表达，所有胜负关系汇入 ELO。这样测到的是模型“实际怎么说话”的倾向，比心理量表更贴合语言模型的行为本质，也更难被模型的自我描述污染。
 
-**2. Assistant traits 与 Creative traits 对照轴：把 144 维压成可解释方向。**
+**2. Assistant traits 与 Creative traits 对照轴：把 144 维压成可解释方向**
 
 单看 144 个 trait 的排名很难讲清“模型更像严谨助手还是更有创造力”这种用户直觉。本文把 trait 空间投影到两条对照轴上：Assistant 组包含 systematic、structured、precise、methodical、analytical、focused 等，Creative 组包含 creative、imaginative、poetic、artistic、playful、humorous、bold、visionary 等，再比较各模型在两组上的平均 ELO。如此一来，“更机械”或“更有趣”就成了可量化的风格取向，模型间的人格差异也能被解释为方向性偏好，而非一堆孤立的 trait 名次。
 
-**3. 跨模型 rank variance 与版本差异分析：定位趋同与分化发生在哪。**
+**3. 跨模型 rank variance 与版本差异分析：定位趋同与分化发生在哪**
 
 仅靠模型间的整体相关只能说“大家差不多”，却看不出共识与个性各自藏在哪段分布。本文对每个 trait 计算它在九个模型中的排名标准差，并按平均 rank 分层，从而暴露哪些 trait 已是行业共识（方差低）、哪些仍保留实验室特色（方差高）；统计上以 Spearman 相关衡量模型间 ranking 一致性，以 PCA 分析差异主要聚集在哪类 trait cluster。同时纵向对比 GPT-4o 与 GPT-5.1 的 trait rank shift，把同一提供商版本更新带来的风格漂移也纳入观察。
 

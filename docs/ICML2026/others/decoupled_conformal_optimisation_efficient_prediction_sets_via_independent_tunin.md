@@ -50,15 +50,15 @@ tags:
 
 ### 关键设计
 
-**1. 三分式数据划分 +"调参阈值即弃"：把效率搜索和覆盖认证物理隔离。**
+**1. 三分式数据划分 +"调参阈值即弃"：把效率搜索和覆盖认证物理隔离**
 
 贝叶斯保形优化失保证的根源，是它把"找最优阈值"和"认证覆盖率"塞进同一份 $D_{\text{cal}}$——一旦分位数算在被搜索污染过的数据上，可交换性就破了，只能退而求其次给 $\delta$ 风险的 PAC 弱保证。本文的做法是把这两件事拆到不同数据上：训练用 $D_{\text{train}}$ 拟模型、调参用 $D_{\text{tune}}$ 选结构、校准用 $D_{\text{cal}}$ 定阈值，三份互不相交。调参阶段解约束优化 $\min \widehat{\mathcal S}_{\text{tune}}(\phi,\lambda)$ s.t. $\widehat R_{\text{tune}}(\phi,\lambda)\le\alpha$，同时吐出结构 $\hat\phi_{\text{tune}}$ 和阈值 $\hat\lambda_{\text{tune}}$，但**后者只用来在候选里排序，部署时直接丢掉**；真正生效的阈值是事后在那份从未被搜索碰过的 $D_{\text{cal}}$ 上重算的 $\hat q_{1-\alpha}$。这一弃一算之间，$\hat\phi_{\text{tune}}$ 对 $D_{\text{cal}}$ 的可测性就显式成立，经典分裂 CP 的可交换性论证原封不动复活，拿回无需 $\delta$、无需多重测试修正的有限样本边际覆盖 $\mathbb P\{Y_{m+1}\in C(X_{m+1})\}\ge 1-\alpha$。对比 BCP-CRC 把 $\min_\lambda \mathbb E|C(X;\lambda)|$ s.t. $\mathbb P(\mathbb P(Y\notin C)\le\alpha)\ge 1-\delta$ 全压在一份 $D_{\text{cal}}$ 上，DCO 只是"再切一刀数据"，换来的却是更强、更简洁的保证。
 
-**2. 候选类规模与最终阈值脱钩：可以无痛上更丰富的搜索空间。**
+**2. 候选类规模与最终阈值脱钩：可以无痛上更丰富的搜索空间**
 
 CRC/BQ-style 方法要在 $D_{\text{cal}}$ 上同时认证一堆候选的风险，多重测试逼着它加一项随候选数 $K=|\Phi|$ 增长的惩罚，候选越多阈值被推得越高、预测集越大。DCO 把候选筛选整个关在 $D_{\text{tune}}$ 里完成，校准只针对已经固定下来的单个 $\hat\phi_{\text{tune}}$ 跑一次分位数，于是 Theorem 3.1 能直接声明覆盖保证对"任意有限或无限的 $\Phi$"都成立——神经网络结构、连续超参都能当候选，不必离散化也不付多重测试代价。候选规模付出的代价只落在 Proposition 3.2 的调参样本复杂度上：$m_{\text{tune}}\ge \max\{\log(4|\mathcal A|/\eta)/(2\varepsilon_R^2),\,B^2\log(4|\mathcal A|/\eta)/(2\varepsilon_S^2)\}$，也就是说候选多只影响"调参挑得好不好"，不影响"最终阈值合不合法"。
 
-**3. 与 PAC 风格方法渐进等价 + DirectTune 反面诊断：把定位讲清楚。**
+**3. 与 PAC 风格方法渐进等价 + DirectTune 反面诊断：把定位讲清楚**
 
 DCO 不是来取代 CRC/BQ 的，所以本文特意刻画了两者的关系：有限样本下保证类型不同（边际覆盖 vs 高概率风险控制），但大样本下二者收敛到同一个总体阈值 $\lambda^\star=\inf\{\lambda:R(\lambda)\le\alpha\}$。在 $R(\lambda)$ 于 $\lambda^\star$ 邻域连续严格单调、$\hat\lambda_{\text{DCO}}\xrightarrow{p}\lambda^\star$、且 CRC 偏差项 $b_m(\lambda,\delta_m)$ 一致收敛到 0 三条件下，Proposition 3.3 证 $\hat\lambda_{\text{CRC}}-\hat\lambda_{\text{DCO}}\xrightarrow{p}0$——目标不同所以保证不同，但极限处殊途同归。为了让"省掉校准 split 的代价"看得见，作者还设了 DirectTune 当反面教材：它把 $D_{\text{cal}}$ 并进 $D_{\text{tune}}$ 直接部署 $\hat\lambda_{\text{tune}}$，没有可交换性，实验里预测集通常最小但覆盖不达标，反向坐实了最后那步 calibration 的必要性。
 

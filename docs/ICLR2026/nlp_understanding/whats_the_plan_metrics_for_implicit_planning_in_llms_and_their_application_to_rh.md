@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Mean Activation Difference Steering：用激活均值差当"规划开关"，省掉训练 CLT 的天价成本。**
+**1. Mean Activation Difference Steering：用激活均值差当"规划开关"，省掉训练 CLT 的天价成本**
 
 CLT 方法之所以不可扩展，是因为单模型就要 H100 跑数天。这里换了个极简思路：准备两类对比 prompt（比如目标分别落在韵族 $C_1$ 和韵族 $C_2$），在它们的特定位置（末尾词 / 换行符 / 问号）各自取隐藏激活的均值，相减就得到一个 steering 向量
 
@@ -53,11 +53,11 @@ $$\mathbf{s}_{C_1 \to C_2}^{(l,i)} = m \cdot \left(\overline{\mathbf{x}_i^{(l)}}
 
 其中放大系数 $m=1.5$。生成时只把这个向量加到**单个 token 位置**的 residual stream 上。整个过程只需前向传播提取激活再做均值差，无需训练任何 CLT 或 SAE，比 CLT 简单几个数量级，因此能一口气铺到 23 个不同模型上做横向对比。
 
-**2. 前向规划验证——Fraction of Correct Rhyme Family (Steered)：用"能不能换掉韵族"反推早期位置是否藏着未来韵脚。**
+**2. 前向规划验证——Fraction of Correct Rhyme Family (Steered)：用"能不能换掉韵族"反推早期位置是否藏着未来韵脚**
 
 逻辑很直接：如果可操纵的前向规划表示不在干预位置，那么干预就不该影响最终韵脚；反过来，只要 steering 真能把韵脚从韵族 1 切到韵族 2，就证明早期位置确实编码了未来目标。指标就是统计这种切换的成功比例——对 1000 个偶句（50 样本 × 20 个 test prompt）施加 steering，数其中有多少落进了目标韵族。比例越高，前向规划的证据越强。
 
-**3. 后向规划验证——Regeneration + 概率指标：证明 steering 改的是"通往韵脚的整条路径"，而不只是替换最后一个词。**
+**3. 后向规划验证——Regeneration + 概率指标：证明 steering 改的是"通往韵脚的整条路径"，而不只是替换最后一个词**
 
 光改韵脚还不够，得说明模型确实在中间词生成时就已经在为目标铺路。Regeneration 指标的做法是：去掉韵律上下文后重新生成第二行的最后一个词，如果中间词仍然"通向"目标韵脚、重生成的成功率接近 baseline，就说明 steering 改变的是整条路径而非末端单点。配套的概率指标则直接比较 steered 与 unsteered 下中间 token 的概率分布——统计 KL divergence > 1 的位置占比，以及首次出现 top-1 差异的位置，从而定位规划信号到底从哪一步开始介入中间词的生成。
 

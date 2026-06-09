@@ -46,15 +46,15 @@ Geo-Expert 想把一个普通通用 LLM 变成会做"地下层序解释、构造
 
 ### 关键设计
 
-**1. Domain-Structured CoT 指令合成：让模型学"怎么推"而不只是"说什么"。**
+**1. Domain-Structured CoT 指令合成：让模型学"怎么推"而不只是"说什么"**
 
 通用 fine-tuning 直接喂 raw text，模型顶多学会复述术语，碰到需要多步推理的地质题就露馅。这条 pipeline 的关键就是把教材文本转成带推理链的 instruction-response 对。它分三步走：先是 Chapter-Aware Recursive Chunking，顺着 Markdown header 的章节结构递归切块，保证每个语义块的 context 完整、不会把一个论证拦腰截断；再是 Domain-Structured Question Generation，让 LLM 先为整个语料建一棵 hierarchical domain tree，给每段文本 bind 上领域标签，然后根据标签和字符密度动态生成问题，既覆盖知识树各节点又避免冗余重复；最后是 CoT Answer Construction，用 reasoning-oriented 的 DeepSeek-R1 来生成答案，强制答案里带上中间推理步骤。这样产出的 11,518 条数据不是词条匹配的填空题，而是一条条完整的 reasoning chain——后面实验里 Engineering 维度涨幅最大（+46%），正是因为模型学到的是推理而非术语。
 
-**2. 三尺度 LoRA 微调：让 scaling 对比真正成立。**
+**2. 三尺度 LoRA 微调：让 scaling 对比真正成立**
 
 只在一个规模上微调看不出 domain adaptation 随模型大小怎么变，所以本文刻意跨 8B/27B/32B 三个 backbone 各做一遍 LoRA。Qwen3-8B 用 rank=32、$\alpha=32$、lr=2e-5、FP16，单张 RTX 5090 就能跑；Gemma-3-27B 和 Qwen3-32B 把 LoRA 放大到 rank=64、$\alpha=128$，配合 BF16、gradient checkpointing 和 grad accum=4，在 4×RTX 5090 上完成，LoRA 适配器挂到所有 linear 层。三个规模一起跑，"小模型 + 好数据" vs "大模型 + 通用数据"的较量才有可比的坐标系，也才能得出"8B 是 sweet spot、再往上参数边际收益很小"的结论。整套 recipe 控制在 prosumer 级 GPU 上，预算紧的研究组也能复现。
 
-**3. Geo-Eval：用对抗挖掘 + 专家校验造一个真考推理的 benchmark。**
+**3. Geo-Eval：用对抗挖掘 + 专家校验造一个真考推理的 benchmark**
 
 传统 static MCQ 早被现代大模型刷烂，测不出谁更会推理。Geo-Eval 的做法是主动去挖"通用模型刚好够不到"的边界题：先让 DeepSeek-R1 从教材抽出 2,591 道复杂问题及答案，再让 Qwen3-8B-Geo 和 DeepSeek-R1 各自独立作答，然后用 GLM-4.5 当 LLM-as-judge 按 10 分制打分，挑出两者得分差 $\leq 4$ 的 387 道 "hard boundary" 题，最后请地质教授人工校验。题目分 Concept、Process、Engineering 三个维度。这种 boundary mining 自动筛出 discriminative 的难题，比靠人工出题更精准地卡在能力分水岭上，是 vertical scientific LLM 评测方法学上的一步推进。
 

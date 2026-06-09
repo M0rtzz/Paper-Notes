@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 结构化 reward 与跨语言对偶：让最优策略天然呈 product-of-experts。**
+**1. 结构化 reward 与跨语言对偶：让最优策略天然呈 product-of-experts**
 
 DPO 那套 Bradley-Terry 偏好只能表达"单语言下 winner vs loser"，没法直接写出"两种语言的偏好排序应当一致"这个二阶约束。作者换了个角度：让语言 $L_i$ 中某回答的 reward = 把它翻到对方语言 $L_j$ 后在原模型下的对数似然，即 piecewise reward $r_{\text{align}}(\mathbf x,\mathbf y) = \gamma_i \log\pi_{\text{ref}}(\tau^j(\mathbf y)|\tau^j(\mathbf x))$（$\mathbf x,\mathbf y\in L_i$，$j\ne i$）。代进 Rafailov 的 KL-正则 RL 最优策略公式，立刻得到 $\pi^\star(\mathbf y^1|\mathbf x^1) \propto \pi_{\text{ref}}(\mathbf y^1|\mathbf x^1)\cdot\pi_{\text{ref}}^{\gamma_1/\beta}(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$——一个 product of experts：本语言原始 likelihood 乘以对方语言翻译版 likelihood。
 
 为什么这能保证一致？因为由 rearrangement inequality，最大化该 reward 等价于让排序 $\{\pi_\theta(\mathbf y|\mathbf x)\}_y$ 与 $\{r_{\text{align}}(\mathbf x,\mathbf y)\}_y$ 单调对齐，而后者跨语言对称，恰好对应一致性定义 Def 1。作者要的不是"经验上看起来合理"的启发式，而是"这个 reward 的最优解一定一致"的形式化保证；product-of-experts 形式还顺带保留了 base model 的知识，避免对齐时把单语性能搞崩。
 
-**2. 超参约束 $\gamma_1\gamma_2=\beta^2$：从所有组合里挑出唯一保证一致的那一族。**
+**2. 超参约束 $\gamma_1\gamma_2=\beta^2$：从所有组合里挑出唯一保证一致的那一族**
 
 product-of-experts 只是必要的结构，还得知道哪些 $\beta,\gamma_1,\gamma_2$ 才真的让排序一致。把最优策略式两边取 $\beta/\gamma_1$ 次方，可改写成 $(\pi^\star(\mathbf y^1|\mathbf x^1))^{\beta/\gamma_1} \propto \pi^\star(\tau^2(\mathbf y^1)|\tau^2(\mathbf x^1))$；由于 $x\mapsto cx^{\beta/\gamma_1}$ 单调增，两语言下的偏好排序必然一致——Lemma 1 由此给出充分条件 $\gamma_1\gamma_2=\beta^2$。
 
 这里 $\gamma_1,\gamma_2$ 分别控制两个语言对 $\pi_{\text{ref}}$ 的偏离强度（$\gamma$ 越小越贴近原模型），$\beta$ 控制整体 KL 偏离。这套旋钮在实践里有用：低资源语言往往希望保持接近原模型、别被高资源语言"拉跑"，就把对应的 $\gamma$ 调小。推广到 $N$ 种语言时引入 $N^2-N$ 个 $\gamma_{ij}$ 控制两两对齐强度（约束见附录 E）。而 $\gamma_1\gamma_2=\beta^2$ 也让实现极简——随便选一组合法值如 $\gamma_1=\gamma_2=\beta$ 即可。
 
-**3. DCO 算法：免 reward model、免 online sampling 的离线目标。**
+**3. DCO 算法：免 reward model、免 online sampling 的离线目标**
 
 上面的 RL 目标要能训才有用。作者仿 DPO 用 $\hat r_\theta(\mathbf x,\mathbf y) = \beta\log\frac{\pi_\theta(\mathbf y|\mathbf x)}{\pi_{\text{ref}}(\mathbf y|\mathbf x)}$ 重参数化 reward，让 $\hat r_\theta$ 的差分去匹配 $r_{\text{align}}$ 的差分：
 

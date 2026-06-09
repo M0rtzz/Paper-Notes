@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 架构覆盖：横跨三档等变强度，确保效应不是单一架构的偶然。**
+**1. 架构覆盖：横跨三档等变强度，确保效应不是单一架构的偶然**
 
 如果只在一个架构上换优化器看到提升，很难排除"那只是这个网络的特性"。作者刻意把三档等变强度都纳进比较：EGNN（显式 $E(n)$ 等变）当最硬等变端，DGCNN（动态 k-NN 图、仅置换等变 + 局部几何）当中等档，PointNet（对称池化、完全置换不变）当最弱端，另用 GotenNet（$E(3)$ 等变 Transformer）跑分子任务、GINE（置换等变消息传递）跑图任务。为保公平，Muon 用作者默认设置（Newton-Schulz 迭代次数、谱缩放常数），Adam 用同样的 (lr × wd) 网格搜索范围。这么设计是因为等变强弱直接决定参数空间的隐藏对称多寡（Xie & Smidt 2025 指出隐参数对称会撕裂损失景观）——若优化器效应真和等变性耦合，跨档对比就该看到不同程度的提升，而结果也确实呈"等变越强、Muon 越受益"。
 
-**2. 损失局部几何刻画：Hessian 摘要 + 2D 切片双管齐下，避免单维度误导。**
+**2. 损失局部几何刻画：Hessian 摘要 + 2D 切片双管齐下，避免单维度误导**
 
 要回答"Muon 把解推到了景观的什么地方"，单看一种视角容易上当。作者对每个 4-seed 训练好、最接近平均精度的 checkpoint 同时做两件事：用 autograd Hessian-vector product 跑 power iteration 算最大特征值 $\lambda_{\max}$、用 Hutchinson（Rademacher 探针）估计 trace；再按 Li et al. (2018) 在两个滤波归一化方向上画 2D 损失等高线看局部形状。两者必须一起看是有道理的——损失切片只是低维投影、容易误导，而 Hessian 摘要又会被 Dinh et al. (2017) 指出的"参数对称下 sharpness 不是函数级不变量"污染。把两者并置，才能同时呈现"Muon 解的局部曲率反而更大"与"切片上看起来更光滑"这对看似矛盾的事实，从而避免单维度结论的偏差。
 
-**3. 谱结构分析：stable rank 与 effective rank 量化谱有多集中。**
+**3. 谱结构分析：stable rank 与 effective rank 量化谱有多集中**
 
 最后要验证"优化器是一种 spectral inductive bias"这个猜想，就得量化奇异值分布的集中程度。作者对每个权重矩阵 $W$（以及每层中间激活特征矩阵）算两个量：stable rank $\|W\|_F^2/\|W\|_2^2=\sum_i\sigma_i^2/\sigma_1^2$，effective rank $\exp(H(p))$（$p_i=\sigma_i/\sum_j\sigma_j$，$H$ 为 Shannon 熵），两者都落在 $[1,\mathrm{rank}(W)]$，谱越均匀值越大；表征则在中间层做点级 mean-pool、最后一层用各架构原生池化。这个度量直指要害：梯度下降被广泛报告有"低秩隐式偏好"（Arora et al. 2019），而 Muon 的正交化动量恰恰对小奇异方向做 rescale。若观察到 Muon 训练后的权重与表征谱真的更展开，就给"优化器作为 spectral inductive bias"提供了直接证据，也与 Dong et al. (2021) 关于"纯注意力指数级掉到 rank-1"的退化失败模式形成呼应。
 

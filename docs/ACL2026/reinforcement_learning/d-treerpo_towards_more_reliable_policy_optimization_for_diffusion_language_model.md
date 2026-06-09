@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 树状 rollout + bottom-up 步级 advantage：把单个 outcome reward 拆成每一步去噪上的可验证 advantage。**
+**1. 树状 rollout + bottom-up 步级 advantage：把单个 outcome reward 拆成每一步去噪上的可验证 advantage**
 
 dLLM RL 常见做法是把最终 outcome reward 均匀广播到所有 token，于是每个 token 看到的 advantage 都一样，credit assignment 全靠运气；用学到的 process reward model 又会引入 reward hacking。d-TreeRPO 把 rollout 树化来绕开这两条路：父节点 value 取子节点均值 $V_p = \frac{1}{|C_p|}\sum_{c\in C_p} V_c$，父→子转移的 advantage 是 $A^c_p = V_c - V_p$，同一父节点下的所有子节点当作一个 group 算相对 advantage，这个标量再广播到该子节点新生成的所有 token 上。配合 block-wise 解码（块长 $b$，每棵树步刚好覆盖整数块），同父子节点解出的 token 位置对齐，单步前向概率才有可比性。这样每一步去噪的 advantage 都来自真实的 value 差分，等价于隐式构造了一个 verifiable process reward，完全压在叶子的可验证 outcome reward 上，避开了训练 reward model 的 hacking 风险。
 
-**2. 单步前向 + 高概率估计误差界：不增加前向次数也能给概率估计上理论保证。**
+**2. 单步前向 + 高概率估计误差界：不增加前向次数也能给概率估计上理论保证**
 
 dLLM 是任意顺序去噪，真实 token 概率本应是「所有解码顺序」上的期望（公式 3），但算不动；ELBO 估计是有偏下界还要多次前向，单步前向便宜却没保证。作者直接用单步估计 $\hat{p}_d := f^d_\theta(o_d \mid p)$ 作为 child token 在 parent state 下的概率，并用定理 1 给它兜底：对任意 $\delta\in(0,1)$，存在 confidence gap $\epsilon_{d,\delta}=\max\{1-\hat{p}_d, 1-q_{d,1-\delta}\}$ 使得 $\Pr_{\sigma\sim Q}\left[\log\frac{q_{\tau(d,\sigma)}(\sigma)}{\hat{p}_d} \le -\log(1-\epsilon_{d,\delta})\right]\ge 1-\delta$，也就是模型越自信（$\hat{p}_d$ 越接近 1），路径概率与单步估计的对数比偏差就越小。这把估计误差和 model confidence 直接绑定，等于给单步估计指出了一个「只要提升 determinism 就能逼近真实期望」的优化方向，省掉 ELBO 那套多次前向。
 
-**3. 时间调度的自蒸馏 loss：早期不碰探索，后期主动把策略压 sharp 来收紧误差界。**
+**3. 时间调度的自蒸馏 loss：早期不碰探索，后期主动把策略压 sharp 来收紧误差界**
 
 定理 1 说 sharp 一点估计更准，但训练早期就把策略压 sharp 会扼杀探索。作者于是把这件事写成一条带时间调度的自蒸馏 loss：在每个深度 1 子树里挑出正 advantage 的子节点 $C^+_p$，用温度 $\tau(t)=\tau_{\max}(1-t/T)^\beta$ 算 advantage-weighted 软标签 $w_c = \frac{\exp(A^c_p/\tau(t))}{\sum_{c'\in C^+_p}\exp(A^{c'}_p/\tau(t))}$，按位置-token 聚合成目标分布 $P^{\sigma_i}_{\text{target}}$，自蒸馏 loss 为 $\mathcal{L}_{\text{distill}} = \lambda(t)\cdot\frac{1}{k}\sum_i \mathrm{KL}(P^{\sigma_i}_{\text{target}}\,\|\,\pi^{\sigma_i}_\theta)$，其中 $\lambda(t)=\lambda_{\max}\frac{e^{\gamma t/T}-1}{e^\gamma-1}$ 单调上升、$\tau(t)$ 单调下降。loss 形状本身就把「先探索、后收敛」写进去，与传统 entropy bonus 衰减相对应，但目标分布来自正 advantage 子节点，方向带 RL 信号而非纯熵。
 

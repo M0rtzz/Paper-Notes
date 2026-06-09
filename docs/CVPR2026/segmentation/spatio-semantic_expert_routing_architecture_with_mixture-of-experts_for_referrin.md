@@ -45,7 +45,7 @@ SERA 要解决的是参考图像分割里的一个现实矛盾：既想省钱冻
 
 ### 关键设计
 
-**1. SERA-Adapter：在冻结骨干内部做稳定的专家精炼。**
+**1. SERA-Adapter：在冻结骨干内部做稳定的专家精炼**
 
 冻结编码器最大的代价是视觉表示无法随任务调整，容易出现掩码碎片、边界泄漏。SERA-Adapter 直接插进 DINOv2 选定的几个 Transformer 块里补这个缺口：它先把视觉 token 投影回 2D 空间网格，用 1×1/3×3/5×5 多尺度卷积分支富化局部上下文得到 $\mathbf{G}_{\text{rich}}$，再交给两个互补专家——边界专家用可学习深度卷积放大轮廓响应 $\mathbf{B} = \text{ReLU}(\text{BN}(\mathbf{G} + \beta \cdot \text{DWConv}_{3\times3}(\mathbf{G})))$（$\beta=0.1$），空间专家用深度卷积加带尺度残差强化局部一致性 $\mathbf{S} = \phi(\text{DWConv}_{3\times3}(\mathbf{G})) + \alpha \mathbf{G}$（$\alpha=0.3$）。
 
@@ -55,13 +55,13 @@ $$\mathbf{G}_{\text{corr}} = \mathbf{G}_{\text{rich}} + \alpha w_s \mathbf{E}_s 
 
 （这里 $\alpha=0.25, \beta=0.15$ 是固定缩放系数），最后展平回 token 序列并与文本嵌入做跨模态注意力。之所以在骨干内坚持软路由而不是稀疏 Top-K，是因为稀疏门控在冻结编码器上容易训练不稳、扰动预训练表示；连续加权的残差精炼则能温和地注入表达式信息而不破坏原有特征。
 
-**2. SERA-Fusion：在融合阶段用稀疏路由逼专家分工。**
+**2. SERA-Fusion：在融合阶段用稀疏路由逼专家分工**
 
 骨干精炼过的特征到了视觉-语言融合阶段还要再提质，但这一阶段的诉求和骨干内相反——这里希望不同专家真正各管一摊、形成特化，而不是人人都掺一脚。SERA-Fusion 因此设计了四个物理语义明确的专家：空间专家注入显式坐标信息 $E_{\text{spa}}(\mathbf{X}) = \mathbf{X} + \alpha \cdot \text{Conv}_{1\times1}(\mathbf{G})$（$\mathbf{G}$ 是归一化坐标网格）；上下文专家把空间维展平后做多头自注意力加 FFN 残差，捕获长程依赖；边界专家用固定 Sobel 算子取水平/垂直梯度及幅值 $E_{\text{bnd}}(\mathbf{X}) = \mathbf{X} + \phi(\text{Conv}_{1\times1}([\mathbf{X}, \mathbf{G}_{\text{mag}}, \mathbf{G}_x + \mathbf{G}_y]))$；形状专家结合深度模糊的低频平滑与拉普拉斯算子的高频结构线索，促进全局结构一致。
 
 路由上它换成 **Top-K 稀疏门控**：先 $\mathbf{z} = \text{GAP}(\mathbf{X})$ 取摘要、$\mathbf{r} = \mathbf{W}_2 \sigma(\mathbf{W}_1 \mathbf{z})$ 算路由 logit，训练时加高斯噪声鼓励路由多样性，再 Top-K 选择 + softmax 归一化只激活少数专家。两阶段刻意用不同路由策略——骨干内求稳所以软路由，融合级求特化所以稀疏路由——正是 SERA 的核心取舍，让同一套 MoE 思想在两个对计算预算和稳定性要求不同的位置都站得住。
 
-**3. 防止专家坍塌的正则化：让稀疏路由别退化成只用一个专家。**
+**3. 防止专家坍塌的正则化：让稀疏路由别退化成只用一个专家**
 
 稀疏 Top-K 路由有个老毛病：门控容易偷懒，把绝大多数 token 全塞给同一个专家，其余专家饿死、特化无从谈起。SERA 用三个仅训练时生效的辅助损失把这件事按住：Z-loss 惩罚路由 logit 的均方幅度 $\mathcal{L}_z = \lambda_z \frac{1}{BE} \|\mathbf{r}\|_2^2$，防止 logit 爆炸；负载均衡损失惩罚各专家使用量的变异系数 $\mathcal{L}_{\text{balance}} = \lambda_{\text{bal}} \text{CV}(\mathbf{u})^2$，逼门控把 token 摊匀；token 分配正则化进一步稳住训练中 token 到专家的指派。三者合力，才让上面四个专家真的各自学到边界、空间、上下文、形状这些不同线索，而不是名义上四个、实际上一个。
 

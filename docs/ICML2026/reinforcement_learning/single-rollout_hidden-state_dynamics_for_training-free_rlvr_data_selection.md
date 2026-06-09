@@ -45,15 +45,15 @@ SHIFT 用一次贪心解码下的"开始 token → 结束 token"隐状态差 $\D
 
 ### 关键设计
 
-**1. 多层平均的 RIRS 表征：用一个向量浓缩"这条样本让模型内部走了多远"。**
+**1. 多层平均的 RIRS 表征：用一个向量浓缩"这条样本让模型内部走了多远"**
 
 选样阶段既没有奖励也没有标签，需要一个不训练就能拿到的效用代理。SHIFT 对每层 $\ell$ 取 anchor token 的隐状态 $\mathbf{h}^{(\ell)}_{t_s}(x)$、$\mathbf{h}^{(\ell)}_{t_e}(x)$，沿层求均值得到 $\mathbf{s}(x)$、$\mathbf{e}(x)$，再定义 $\Delta(x)=\mathbf{e}(x)-\mathbf{s}(x)$ 为"推理诱导的表征漂移"。理论上借 Dherin et al. 的秩-1 隐式权重视角，把 $\|\Delta(x)\|_2$ 解释为一条 rollout 上累积 context-induced 变化的轨迹级、层聚合的可观测代理（作者明确说这是动机而非严格推导）。它的好处是只需一次推理就能拿到，远比"R=32 次随机采样算自一致熵"或"跑 RL 看奖励"便宜；多层平均也比单层 anchor 稳定，避免某一层异常带偏。
 
-**2. 对数稳定化的效用分数：把 RIRS 范数压成尺度可比的代理。**
+**2. 对数稳定化的效用分数：把 RIRS 范数压成尺度可比的代理**
 
 不同长度、不同领域样本的 $\|\Delta\|_2$ 量级差异很大，直接拿来用会被极端值主导。SHIFT 先算 $q(x)=\|\Delta(x)\|_2$，再做单调对数压缩 $\tilde q(x)=\log(1+q(x))$——保持排序的同时把尺度压住，让它后面能和多样性距离 $d(x,S)$ 在乘法里量纲可比。高 $\tilde q$ 意味着这条样本让模型内部走得更远，被假设为对 RLVR 更有学习价值。
 
-**3. 质量加权 farthest-first CoreSet：单次贪心里同时兼顾效用和覆盖。**
+**3. 质量加权 farthest-first CoreSet：单次贪心里同时兼顾效用和覆盖**
 
 高 $\tilde q$ 的样本常常扎堆（比如某一类难题），纯 top-K 会浪费预算选一堆同质样本；纯 farthest-first 又会拣到无意义的离群点。SHIFT 把两者乘起来：先构造 $\ell_2$ 归一化的覆盖特征 $\phi(x)=[\mathbf{s}(x);\Delta(x)]/\|[\mathbf{s}(x);\Delta(x)]\|_2 \in \mathbb{R}^{2D}$（既含 CoT 起点上下文、又含推理动力学），初始化 $S\leftarrow\{\arg\max_x \tilde q(x)\}$，随后每步取 $x^\star=\arg\max_{x\in\mathcal{U}\setminus S}\, \tilde q(x)\cdot d(x,S)$，其中 $d(x,S)=\min_{x'\in S}\|\phi(x)-\phi(x')\|_2$，反复直到 $|S|=B$。乘法形式强制效用和覆盖必须同时成立才会被选中，且只需一次 $O(NB)$ 贪心扫描，能扩展到上万规模的池子。
 

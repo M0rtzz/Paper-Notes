@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 谱视角解读权重作用：一般能力到底藏在哪。**
+**1. 谱视角解读权重作用：一般能力到底藏在哪**
 
 REVIVE 的出发点是把 FFN 权重看成一组独立的 input-output mapping：对 $W$ 做 SVD 后 $W=\sum_i \sigma_i u_iv_i^\top$，每个 rank-one 分量把输入沿 $v_i$ 投影、按 $\sigma_i$ 缩放、再沿 $u_i$ 输出。作者只保留 top energy 分量重构权重去跑 GLUE，发现 top 5% 的奇异分量就能恢复约 62.6% 的原始性能。这把一个关键判断坐实了：一般能力高度集中在少量 dominant directions 上，因此顺序编辑真正的风险并不是更新范数大小，而是更新有没有撞到这些高能功能方向。
 
-**2. 顺序编辑崩溃的谱诊断：把"编多了会坏"落到"dominant 方向被转走"。**
+**2. 顺序编辑崩溃的谱诊断：把"编多了会坏"落到"dominant 方向被转走"**
 
 为了验证崩溃机制，作者把谱按能量切成 0-10%、10-20% 等组，对不同组注入相同 Frobenius norm 的结构扰动：扰动高能组会让 GLUE F1 明显下降，扰动低能组几乎无影响。随后在 LLaMA3 上用 MEMIT 跑 2,000 次 COUNTERFACT 编辑、每 100 次一轮，同时跟踪 efficacy、paraphrase、GLUE、Low-rank Subspace Similarity 和 Singular Vector Similarity。结果显示 dominant directions 随编辑逐步旋转、最终近乎正交，且这一漂移与行为崩溃同步发生——为 REVIVE 该保护谁提供了直接证据。
 
-**3. Dominant Subspace Protection：把有害更新从 $\Delta W$ 里滤掉。**
+**3. Dominant Subspace Protection：把有害更新从 $\Delta W$ 里滤掉**
 
 给定能量阈值 $\tau$，先选最小的 $k$ 使 top-$k$ 奇异值累计能量超过 $\tau$。把更新展开为 $\alpha_{ij}u_iv_j^\top$ 后，只要某项的 $i\leq k$ 或 $j\leq k$，就说明它会动到 dominant 的 output 或 input 子空间，直接置零；最终 safe update 为 $\Delta W_{safe}=\sum_{i>k}\sum_{j>k}\alpha_{ij}u_iv_j^\top$。这套过滤的好处是局部事实照样可以写进低能谱方向，而高能功能方向被优先保住；它完全不依赖外部数据或历史编辑统计，直接从模型自身的谱结构定义保护对象，因此比经验性的保护子空间更贴近模型内在结构。
 

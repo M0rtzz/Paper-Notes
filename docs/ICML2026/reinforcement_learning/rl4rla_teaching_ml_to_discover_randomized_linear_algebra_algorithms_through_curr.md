@@ -44,15 +44,15 @@ RL4RLA 把每个候选算法表示为一个显式符号程序 $\mathcal{A}=(\mat
 
 ### 关键设计
 
-**1. 数值课程：把一次性发现深层组合算法的稀疏奖励问题，拆成每步只学一个原语的浅层搜索。**
+**1. 数值课程：把一次性发现深层组合算法的稀疏奖励问题，拆成每步只学一个原语的浅层搜索**
 
 像 Blendenpik 这种 5–7 步组合算法，奖励只在最后才结算，裸 RL 在指数级程序空间里几乎抓不到信号。RL4RLA 的对策是手工铺一条问题实例难度阶梯，每升一级只引入**一种**数值失效模式，迫使 agent 在前一阶段最优算法上恰好补一个原语：从 $5\times 5$ 良态系统（Landweber 就能收敛）起步，扩成 $m\times n$ 长方矩阵（必须走正规方程），再提到 $10000\times 50$ 且病态（迫使加预条件子 $M=R$ 让 $\kappa(AR^{-1})\approx 1$），接着加大复杂度惩罚（迫使把 QR 换成 sketched QR $SA=QR^{-1}$，恰好恢复 Blendenpik），同设置下进一步要求 subsampling，最后把 $A=U\Lambda V^\top$ 里的 $U$ 换成重尾分布、把均匀采样逼成 $\ell_2$ 行范数的 leverage-score 采样。配套地，每个阶段的奖励权重 $\mathbf{w}_s=(w_{\text{acc}},w_{\text{decay}},w_{\text{comp}},w_{\text{cond}})$ 都重点放大上一阶段算法的主要失效信号。这本质上是把"数值分析家设计 Blendenpik"的归纳偏置注入 RL 环境——全局稀疏的程序空间被切成若干个局部信号充足的浅层问题，但课程不固化算法形态，agent 仍可能拼出新组合。
 
-**2. 蒙特卡洛图搜索（MCGS）+ UCD：合并语义等价的中间程序，把 $O(b^d)$ 的状态爆炸压成 $O(|\mathcal{S}|)$。**
+**2. 蒙特卡洛图搜索（MCGS）+ UCD：合并语义等价的中间程序，把 $O(b^d)$ 的状态爆炸压成 $O(|\mathcal{S}|)$**
 
 RLA 程序里同一个算法常常能由不同动作顺序构造出来，标准 MCTS 会把这些代数等价的路径反复展开，白白烧掉昂贵的程序执行预算。MCGS 把搜索结构从 tree 升级成 DAG $\mathcal{G}=(\mathcal{S},\mathcal{E})$：扩展节点时若做完死代码消除后的归一化程序已存在，就只连一条父边复用旧节点、不创建副本；回传时一次 rollout 得到的 $R$ 会沿所有通往该状态的路径同步刷新 $N(s,a)\leftarrow N(s,a)+1$ 与 $\hat{Q}(s,a)\leftarrow \hat{Q}(s,a)+(R-\hat{Q}(s,a))/N(s,a)$。动作选择用为 DAG 校准过的 UCD：$a'=\arg\max_a[\hat{Q}(s,a)+c\sqrt{\log N(s)/N(s')}]$，关键是用子节点访问数 $N(s')$ 而非边访问数做归一化，避免 UCT 在多父节点上"白送"探索奖励。这样一次评估的经验立刻被所有等价路径共享，预算只花在真正不同的程序上。
 
-**3. LUCB 自适应停机 + 多目标加权奖励：去掉人定预算的偏置，并把多重数值质量目标拧成一个可调标量。**
+**3. LUCB 自适应停机 + 多目标加权奖励：去掉人定预算的偏置，并把多重数值质量目标拧成一个可调标量**
 
 固定 playout 预算既带人为偏置、又让不同搜索方法没法在公平条件下比较；而 RLA 算法的"好"本身是多维的（精度、收敛、复杂度、条件数）。RL4RLA 在每个决策点用 Lower/Upper Confidence Bound 找当前 leader $a_{\text{leader}}=\arg\max_a \hat{Q}(a)$ 和 challenger $a_{\text{challenger}}=\arg\max_{a\neq a_{\text{leader}}}[\hat{Q}(a)+U(a)]$，当 $\hat{Q}(a_{\text{leader}})-U(a_{\text{leader}})>\hat{Q}(a_{\text{challenger}})+U(a_{\text{challenger}})$ 即判定证据充分、推进根节点。奖励则写成 $R(\mathcal{A})=\sum_{k\in\{\text{acc},\text{decay},\text{comp},\text{cond}\}} w_k R_k$：$R_{\text{acc}}$ 看相对残差 $\|Ax-b\|_2/\|b\|_2$，$R_{\text{decay}}$ 罚最坏单步收缩比 $\rho_{\max}=\max_t \|r_{t+1}\|_2/\|r_t\|_2$，$R_{\text{comp}}$ 鼓励计算便宜，$R_{\text{cond}}$ 奖励条件数小。自适应判停让公平比较成为可能，而多目标加权又恰好是课程的抓手——下一阶段想逼出哪种原语，就把对应权重拉高（如调高 $w_{\text{cond}}$ 就会逼出预条件子）。
 

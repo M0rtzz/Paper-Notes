@@ -49,19 +49,19 @@ HRC 模型本身的结构是：共享的 LLM hidden state $\mathbf{h}_{\mathbf{y
 
 ### 关键设计
 
-**1. HRC 偏好分解：把传递和循环显式拆成两路相加。**
+**1. HRC 偏好分解：把传递和循环显式拆成两路相加**
 
 GPM 的结构缺陷在于它用一个 skew-symmetric 形式既建层级又建旋转，几何上不兼容——论文的 Theorem 4.7 证明 GPM 单独无法保证「dominant 候选可表示且不被局部循环挤掉」。HRC 的做法是把这两件事拆开并行学：偏好得分写成传递项加循环项 $s_{\mathrm{HRC}} = (r(\mathbf{y}_i) - r(\mathbf{y}_j)) + \mathbf{v}_i^\top \mathbf{W} \mathbf{v}_j$，前一项是标准 BT 的标量 reward 差、负责全局排序，后一项是 GPM 的 skew-symmetric 双线性形式、负责局部循环。这个 hybrid 形式不是拍脑袋拼出来的：借 Balduzzi et al. 2019 关于 Symmetric Zero-Sum FFG 的分解定理，任何 zero-sum 游戏都能唯一分解成传递分量 $\phi_T(\mathbf{v}, \mathbf{w}) = f(\mathbf{v}) - f(\mathbf{w})$ 加循环分量 $\phi_C(\mathbf{v}, \mathbf{w})$，且循环分量满足零积分条件 $\int \phi_C(\mathbf{v}, \mathbf{w}) d\mathbf{w} = 0$；Theorem 4.6 进一步证明在零均值 embedding 条件下 BT 恰好对应 $\phi_T$、GPM 恰好对应 $\phi_C$，于是 HRC 正是这个分解定理的标准实例化。
 
 之所以这样能绕开 Theorem 4.7 的限制，关键在于 HRC 把 dominant 信号路由到了一条独立的 BT 标量 head 上，不再和循环建模争抢同一块 embedding 球面的几何容量。形式上 HRC 可以看成一个 dim=$2d+1$ 的 constrained GPM（在 $2d$ 维 GPM embedding 上额外加一维 reward 作为「短路」直达全局排序），所以推理复杂度 $O((2d+1)K)$ 和 GPM 同阶，没有牺牲 scalability。
 
-**2. Context gating + reward clipping + unit norm：三个让分解站得住的几何约束。**
+**2. Context gating + reward clipping + unit norm：三个让分解站得住的几何约束**
 
 光把两项加起来还不够，得让每一路各自的数值和几何条件成立。reward clipping 把 $r_\phi$ 限制在 $[-\delta, \delta]$，防止 reward 数值爆掉破坏 sigmoid 的数值稳定；unit norm 强制 cyclic head 输出单位向量，让 embedding 在球面上各向同性从而 $\mathbb{E}[\mathbf{v}] = \mathbf{0}$，这正是 Theorem 4.6「GPM 对应 $\phi_C$」所要求的零均值前提；context gating $\lambda(\mathbf{x}) \ge 0$ 则让模型按 prompt 动态调节循环强度——问「哪个 RPS 招法最好」时把循环打开，问「哪个回答更安全」时基本把循环关掉。
 
 这套约束里 context gating 是最关键的。原 GPM 没有 context 维度，所有 prompt 共享同一个 skew-symmetric 矩阵，结果被「问什么都套一个循环」的噪声拖累；HRC 用 gating 让模型学会「这个 prompt 本就没循环就别硬给循环信号」，本质是把 prompt 异质性工程化。消融（Table 2）里它单独就贡献约 1% 的平均 accuracy，是三件套里最重要的一个。
 
-**3. DSPPO 时变博弈：先稳传递骨架再补循环细节的 curriculum 对齐。**
+**3. DSPPO 时变博弈：先稳传递骨架再补循环细节的 curriculum 对齐**
 
 如果直接拿 HRC 的完整信号去对齐，早期 reward 信号和 cyclic 信号同时震荡，策略根本不知道该往哪走。DSPPO 的做法是把 SPPO 里那个固定的 oracle $\mathbb{P}$ 换成时变 oracle $\mathbb{P}_t = \sigma(s_t)$，其中 $s_t = (1 + \lambda/\sqrt{t}) s_T + (1 - \lambda/\sqrt{t}) s_C$。训练早期 $1+\lambda/\sqrt{t}$ 大、$1-\lambda/\sqrt{t}$ 小，传递分量主导，策略先在「这个 prompt 大方向往哪走」的全局共识上稳住；随着 $t$ 增大两个系数趋同，逐步恢复 HRC 的完整信号去学局部循环细节——这正是一种课程学习。理论上 Theorem 5.3 保证在学习率 $\eta = \Theta(1/\sqrt{T})$ 下，mixture policy $\bar{\pi}_T$ 与 Nash 均衡的 duality gap 收敛到 $O(1/\sqrt{T})$。$\lambda$ 还可以取负值得到「先循环后传递」的反向调度用作诊断，作者在附录里有讨论。
 

@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计
 
-**1. 循环多面体 + 平方多项式 query：把子集选择翻译成多项式构造，给出内积 $2k$ 上界。**
+**1. 循环多面体 + 平方多项式 query：把子集选择翻译成多项式构造，给出内积 $2k$ 上界**
 
 WBNL 之所以得出"维度随 $m$ 多项式增长"的悲观结论，是把"优化找不找得到"和"存不存在"混为一谈。作者要回答的是纯几何可表达性，于是把对象放到 moment curve 上 $\bm{v}_i=(t_i,t_i^2,\dots,t_i^{2k})$，对任意 $S\subseteq[m],|S|\le k$ 显式构造 query：取单变量多项式 $P_S(t)=\prod_{i\in S}(t-t_i)$，展开 $P_S^2(t)=\sum_{j=0}^{2|S|}c_j t^j$，令 $\bm{q}_S=(-c_1,-c_2,\dots,-c_{2k})$，则
 
@@ -55,11 +55,11 @@ $$\langle\bm{v}_i,\bm{q}_S\rangle=c_0-P_S^2(t_i),$$
 
 $i\in S$ 时 $P_S^2(t_i)=0$ 同时取上界 $c_0$，$i\notin S$ 时 $P_S^2(t_i)>0$ 严格更小。这正是 cyclic polytope 是 $\lfloor d/2\rfloor$-neighborly 的代数证据——"用一条 query 把任意 $\le k$ 个对象同时挑出来"被等价成"找一个仅在 $S$ 上取零的非负多项式"，把组合学的子集选择降维成多项式构造。它是整篇文章的几何引擎，欧氏和余弦的界都靠它做 reduction 得到。
 
-**2. VC 维下界 + Radon 锐化：把 MED 紧紧夹进 $[k-1,2k]$。**
+**2. VC 维下界 + Radon 锐化：把 MED 紧紧夹进 $[k-1,2k]$**
 
 光有上界还不够，得证明 $\Theta(k)$ 是真的下限。作者定义 $k$-shattering 诱导的二元阈值类 $\mathcal{C}_{\mathcal{F},n}$，证明 $\textsc{MED}(m,k;\mathcal{F})\ge\textsc{VCD}^{-1}(k;\mathcal{F})$；由于内积、余弦、欧氏三种 scoring 的 VC 维都是 $n+1$，于是 MED $\ge k-1$。再用 Radon 定理（$d+2$ 个点必可分成两组凸包相交）证明若 $d<\min\{2k,m-1\}$ 则一定存在一对子集 $A,B$ 同时是某 query 的"被选/未选"集合、shattering 不可能，从而把内积情形精确到 $\mathrm{MED}(m,k;\mathcal{F}_{\rm linear})=\min\{2k,m-1\}$。VC 维给的是能套任何 scoring 的一般下界，Radon 把内积情形锐化到常数级，两者合起来把理论闭环夹在 $[k-1,2k]$，坐实"$\Theta(k)$ 够用、与 $m$ 无关"。
 
-**3. Gaussian centroid 构造 + margin 可行天花板：给鲁棒 RMED 的双侧界。**
+**3. Gaussian centroid 构造 + margin 可行天花板：给鲁棒 RMED 的双侧界**
 
 exact 几何可表达和"工程上真正难"是两回事。作者在单位球归一化 + 选中对象比未选中至少高 $\epsilon$ 的更强要求下定义鲁棒 RMED，先用方差恒等式给出可行天花板：若所有 $k$-子集 query 都达 margin $\epsilon$，则 $\|\bar{\bm{v}}_S-\bar{\bm{v}}\|_2\ge\frac{m-k}{m}\epsilon$ 对所有 $S$ 成立，对随机子集求期望并用单位范数性质 $\frac1m\sum\|\bm{v}_i-\bar{\bm{v}}\|^2\le1$，推出
 

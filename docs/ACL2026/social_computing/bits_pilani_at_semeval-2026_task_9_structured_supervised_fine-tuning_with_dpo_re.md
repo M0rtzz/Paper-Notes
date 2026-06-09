@@ -51,19 +51,19 @@ tags:
 
 ### 关键设计
 
-**1. 结构化 slot-filling rationale schema：把分类改造成可对齐比较的生成任务。**
+**1. 结构化 slot-filling rationale schema：把分类改造成可对齐比较的生成任务**
 
 纯 label SFT 只有一个 0/1 信号，无法构造细粒度偏好对；而开放式 free-form CoT 又方差太大、不同样本之间没法对齐打分。本文的解法是给模型固定一个 slot-filling 输出模板，强迫它先填中间字段再吐 label：Target referenced / Claim type / 6 项 Manifestation checklist（Stereotype / Vilification / Dehumanization / Extreme Language / Lack of Empathy / Invalidation）/ Decision basis / Final Answer。所有训练样本的 chain-of-thought 都由 Gemma 3 27B 离线按这个模板生成，最终 label 用 regex 从 "Final Answer:" 后抽取。
 
 固定 schema 一举解决两件事：每条 completion 都有 6 维可对齐的字段，DPO 才能在「同一维度上谁更好」的粒度上配对；同时这套结构化输出也是一份可审计的 paper trail，让后续 LLM judge 能批量打分。这正是把单标签分类问题转成「生成 + 决策边界调整」的前提。
 
-**2. 召回敏感的非对称偏好排序 $\mathrm{CORRECT} \succ \mathrm{FP} \succ \mathrm{FN}$：把决策边界往召回侧推。**
+**2. 召回敏感的非对称偏好排序 $\mathrm{CORRECT} \succ \mathrm{FP} \succ \mathrm{FN}$：把决策边界往召回侧推**
 
 审核场景里漏判（FN，极化内容继续传播）的代价远大于误判（FP，可被人工 review 撤回），但纯 SFT 优化 likelihood 时容易把 majority class（非极化）当 prior，recall 偏低。直接对 SFT 加类别权重在本任务上无效（实验显示加权 loss 没帮助），改 SFT loss function 也治标不治本。本文改从偏好角度直接调边界：对每个 input 用 two-prompt（一个鼓励预测 1、一个鼓励预测 0）× 多温度采样得到一批 completion，按 ground truth 标成 CORRECT / FP / FN 三类，再按偏序 $\mathrm{CORRECT} \succ \mathrm{FP} \succ \mathrm{FN}$ 两两配对（高排序为 chosen、低排序为 rejected）训练 DPO。
 
 把 FN 系统性排在 FP 之后，等于告诉模型「宁可多报也别漏报」，DPO 因此把整条决策边界往 more aggressive predict polarization 的方向推。实验里 recall 从 0.5085 抬到 0.7797、precision 从 0.8333 跌到 0.7077，正是这个非对称排序的预期效果。
 
-**3. LLM-as-a-judge 过滤偏好对 + Rejudged 训练数据：质量比数量重要。**
+**3. LLM-as-a-judge 过滤偏好对 + Rejudged 训练数据：质量比数量重要**
 
 自动构造的偏好对噪声很大，低质量对越多反而越拖性能——实验里 721 条 unfiltered → F1 0.7637，比 SFT baseline 0.7795 还低。本文用 DeepSeek-R1 当 judge 对候选偏好对做 valid/invalid 打分，剔除推理不一致、标签错配的对，把 721 条候选过滤到 299 条（62:38 FP:FN 平衡集）；同时用 Claude 3.5 Sonnet 重判训练集标签，纠正了 6.2% 的标注错误，使整体极化比例上升。
 

@@ -45,15 +45,15 @@ CodeTracer 想解决的是：在低熵、强语法约束的代码上，怎么既
 
 ### 关键设计
 
-**1. 策略化水印：把固定的 green-red 划分换成上下文相关、可学习的旁路策略。**
+**1. 策略化水印：把固定的 green-red 划分换成上下文相关、可学习的旁路策略**
 
 Kirchenbauer 那套水印对每个位置都用同一个随机切分和固定 $\delta$，在代码里既区分不出"变量名能改、API 名不能改"，也没法躲开语法强制的位置。CodeTracer 的做法是训练时把 LLM 参数 $\theta$ 全冻结，只学一个约 118M 的 watermark 模型 $\phi$（相对 1.5B base LLM 不到 10% 参数）。$\pi_\phi$ 是个小 Transformer，输出 $(|\mathcal{V}|+1)$ 维向量 $(w_\phi, \mathbf{l}_\phi)$，$w_\phi$ 决定 $w$、$\mathbf{l}_\phi$ 决定 $G$ 的排序，于是"在哪加、选哪组"都成了随上下文变化的策略。冻结 LLM 是关键取舍：它绕开了 fine-tune LLM（如 Xu et al. 2024）那种对代码能力的不可预期破坏，也让 $\pi_\phi$ 变成一个纯旁路模块——训练时只挂 1.5B，推理时可以直接 plug-in 到没见过的 8B 上；检测端同样只持有 $\pi_\phi$ 就能复现 $(w, G)$，不依赖任何 base LLM。
 
-**2. GRPO + 三路奖励：在零标注下，让策略自己学会"该加哪、该选哪组"。**
+**2. GRPO + 三路奖励：在零标注下，让策略自己学会"该加哪、该选哪组"**
 
 没有现成的"水印代码"训练数据，但代码天然带两类 verifiable signal——能不能跑通、z-score 高不高——所以这里直接套 DeepSeek-R1 的 GRPO，用三路奖励驱动。$R_1$ 是执行 reward（全部 test case 通过给 1、否则 0），作为保功能的硬约束；$R_2$ 是饱和 z-score reward（$z\geq 4$ 给 1、$0<z<4$ 线性、$z\leq 0$ 给 0），逼检测显著性往上走；$R_3$ 是 token 级 process reward（$w_t=1$ 且 $s_t\in G_t$ 给 $+1$、落 red 给 $-1$、不加水印给 0）。三者经优势函数 $\hat A(s_t, a_t) = (A_1 + A_2)\cdot\mathbb{1}_{\text{is\_code}}(s_t)$ 合流：outcome 级 $A_1$ 与 token 级 $A_2$ 相加后再用 $\mathbb{1}_{\text{is\_code}}$ 屏蔽非代码 token，避免在自然语言 chain-of-thought 段落上白白消耗水印预算。引入 $R_3$ 是这里最要紧的一步——纯 outcome 奖励对序列里每个 token 都给同样的信号，对"哪些位置该加"指导太粗；补上 token 级即时反馈后训练收敛和最终性能都明显上去（消融里去掉 $R_3$，AUROC 掉 7.84pp、TPR 掉 16.05pp）。
 
-**3. STE + Gumbel-Top-k：把 $(w, G)$ 的离散决策塞进端到端梯度。**
+**3. STE + Gumbel-Top-k：把 $(w, G)$ 的离散决策塞进端到端梯度**
 
 $w\in\{0,1\}$ 的硬开关和"从 $|\mathcal{V}|$ 里 top-$k$ 选出 $G$"都是离散操作，梯度过不去，policy 就没法和 GRPO 的策略梯度联合训练。对 $w$，用 Straight-Through Estimator $w = \mathbb{1}_{w_\phi>0} + \sigma(w_\phi) - \text{sg}(\sigma(w_\phi))$，前向走硬阈值、反向沿 $\sigma$ 的梯度。对 $G$，用 Gumbel-Top-$k$：先给 logits 加 Gumbel 噪声 $\mathbf{g} = \mathbf{l}_\phi + (-\log(-\log \mathbf{u}))$（$\mathbf{u}\sim\text{Uniform}(0,1)^{|\mathcal{V}|}$）取 top-$k$ 得到 $G$，再用 $\mathbf{l}_G = \mathbb{1}_{v\in G} + \mathcal{S}(\mathbf{g}) - \text{sg}(\mathcal{S}(\mathbf{g}))$ 形式的 indicator 前向硬选、反向沿 Gumbel-Softmax 松弛。选 Gumbel-Top-$k$（Xie & Ermon 2019）而不是普通 categorical reparam，是因为后者只能近似单个采样，处理不了"固定选 $k$ 个"；而 green set 本质就是固定基数的子集采样，Gumbel-Top-$k$ 正好对得上——离散侧保住了水印的统计可验证性，连续侧又能把梯度喂回 $\pi_\phi$。
 

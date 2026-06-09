@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 社会决定因素的三判据定义（Definition 2.2）：先把审计对象的边界划清，否则后续讨论会被术语模糊吞掉。**
+**1. 社会决定因素的三判据定义（Definition 2.2）：先把审计对象的边界划清，否则后续讨论会被术语模糊吞掉**
 
 作者要求一个变量 $S$ 同时满足三条才算社会决定因素：(a) **Context-level definition**——它定义在某个情境（neighborhood / 机构 / 司法辖区）上，多个个体共享同一个 $S$ 值；(b) **Social-structural content**——跨情境的差异主要由资源配置、机构政策、系统性投资塑造（学校经费 ✓，zip code 这种纯行政标签 ✗）；(c) **Exogenous stratification**——聚合所用的边界（neighborhood / 邮政区）是外生划定的，而不是按被刻画群体自身的特征 endogenously 划定。靠这三条 yes/no，table 1 把容易混为一谈的变量摆进截然不同的格子：race=敏感属性；zip code=非社会决定因素（行政标签）；HOLC redlining 区的族裔构成=敏感属性的 proxy（边界是 endogenous 的）；而 zip code 区的族裔构成、学校经费=真正的社会决定因素。这套切分直接戳破一个常见混淆——"拿 neighborhood 当代理去跑 race 的歧视"是 redlining 的延伸，"审计 neighborhood 本身的结构条件"才是审计结构性不公；不区分两者，就会把"改善学校经费"这种真正可干预的动作排除在公平视野之外。
 
-**2. 配额式录取的结构性不公定理（Theorem 4.5）：把"敏感属性中心化缓解何时反噬最弱势子群"从直觉升级为可证明命题。**
+**2. 配额式录取的结构性不公定理（Theorem 4.5）：把"敏感属性中心化缓解何时反噬最弱势子群"从直觉升级为可证明命题**
 
 作者用一个大学录取的闭式模型，把"只按 race 设配额的 affirmative action 何时会伤害贫困区非 URM 申请者"写成不等式。在 4 个假设下——区域族裔分布失衡、Academic Preparedness $\perp$ Race $\mid$ Region、富区分数 CDF 随机占优贫困区、选拔性大学只有有限名额 $g$——URM 配额可写成 $\eta_{\mathrm{quota}} \cdot \frac{n_a^{(\mathrm{poor})}+n_a^{(\mathrm{rich})}}{n} g$。定理给出的反例条件是：只有当 $\max_q \frac{F^{(\mathrm{rich})}(q)}{F^{(\mathrm{poor})}(q)} \ge \frac{\eta_{\mathrm{quota}}}{1+(1-\eta_{\mathrm{quota}})\frac{n_a^{(\mathrm{poor})}+n_a^{(\mathrm{rich})}}{n_{a'}^{(\mathrm{poor})}+n_{a'}^{(\mathrm{rich})}}}$ 成立，贫困区非 URM 申请者面对的分数阈值才不会被推得比富区 URM 申请者更高。它揭示的悖论很反直觉：结构性不公越严重（左侧随机占优比越大），不等式越容易满足、配额造成的伤害反而越小；可一旦结构正义改善，沿用同样的配额就越可能制造新的不公。而且 $\eta_{\mathrm{quota}}$ 越大、右侧门槛越高，意味着越激进的敏感属性中心化缓解越会放大对贫困区非 URM 的挤压——这正是"为什么必须先审计社会决定因素再谈缓解"的形式化论据。
 
-**3. 乳腺癌筛查半合成实验（Section 5.2）：把理论落进一个高风险医疗场景，实证回应"fairness through unawareness"。**
+**3. 乳腺癌筛查半合成实验（Section 5.2）：把理论落进一个高风险医疗场景，实证回应"fairness through unawareness"**
 
 作者用 OSF HealthCare 2012–2022 约 5.4 万次筛查 / 4.5 万患者的真实记录，画出贫困区（ADI ∈ [75,100)）与富区（ADI ∈ [0,25)）白人女性的"首次筛查年龄"分布：同一筛查指南、同一族群，均值仍差 >3 年、中位数差近 5 年——差距只能归因于交通、可及性、信任度这些结构性条件。接着用 100k 粒子模拟、按 SEER 年龄别发病率采样癌症 onset，把 10k 个筛查名额放进"现状分布 vs 改进分布（贫困区改用富区的首次筛查年龄分布）"×"全分给贫困区 vs 两区均分"四种政策组合，各跑 500 次，统计"首次筛查年龄 ≤ onset 年龄 = 早检"的次数。结果是：贫困区一旦采用改进型筛查模式，早检数从 $1367 \pm 33$ 升到 $1461 \pm 36$。这个实验一箭双雕——既证明同族群、同指南都消不掉差距、必须把社会决定因素显式纳入审计，又量化出"干预社会决定因素"相比"调整敏感属性配额"是真正能当政策杠杆操作的（race 不是），为下面三条 pillar 提供经验佐证。
 
-**4. 三条 actionable pillar 与 Social Determinant Parity 度量：把主张落成可操作的技术路线。**
+**4. 三条 actionable pillar 与 Social Determinant Parity 度量：把主张落成可操作的技术路线**
 
 立场论文不涉及训练目标，但作者并不止于批判，而是给出三条可落地的 pillar。Pillar 1 是数据治理——别再像 Adult、Folktables 那样主动丢掉 address、geolocation 等情境字段，要把社会决定因素保留进审计数据。Pillar 2 提出新度量 **Social Determinant Parity**：把现有 Demographic Parity 的条件变量从族裔换成 area deprivation index、基础设施可及性、政策暴露等结构变量，其纵向版本进一步要求度量随情境变量做时变追踪。Pillar 3 主张引入多层因果模型 + causal representation learning，让社会决定因素成为显式的干预节点，而不是被压成 race 下游的 mediator——只有当它是干预目标，"改善学校经费 / 筛查可及性"这类动作才进得了因果框架。
 

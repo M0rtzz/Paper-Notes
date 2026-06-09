@@ -45,7 +45,7 @@ SDE（Split-half Dependence Evaluation）想解决的是一个很别扭的评估
 
 ### 关键设计
 
-**1. Split-half 依赖性度量 $H(\mathcal{S}, h)$：把样本级线索升格为子集级信号。**
+**1. Split-half 依赖性度量 $H(\mathcal{S}, h)$：把样本级线索升格为子集级信号**
 
 遗忘通常只移除 5%–20% 的小子集，单个样本在遗忘后留下的统计线索太弱，样本级 MIA 难以站稳。SDE 改在子集这个粒度上做文章：把待评估子集 $\mathcal{S}$ 随机分成两半 $\mathcal{S}_1, \mathcal{S}_2$，度量两半输出之间的依赖性
 
@@ -53,7 +53,7 @@ $$H(\mathcal{S}, h) = \text{HSIC}(h(\mathcal{S}_1), h(\mathcal{S}_2))$$
 
 训练内子集 $H(\mathcal{S}_{IT}, h)$ 会显著高于训练外子集 $H(\mathcal{S}_{OOT}, h)$。这背后有理论支撑：当模型 $h = \mathcal{A}(\mathcal{D}_{tr})$ 由训练得到时，$h(x_i)$ 通过学到的参数隐式依赖于 $x_j$，于是 $h(x_i)$ 与 $h(x_j)$ 不再独立——训练引入的共享影响分量正是 split-half 依赖性在训练内子集上更强的根源。为了得到 $H(\mathcal{S}, h)$ 的分布而非单点值，实现上对 $\mathcal{S}_2$ 做 200 次洗牌重复估计。
 
-**2. HSIC 作为非参数依赖性估计器：不假设分布形式。**
+**2. HSIC 作为非参数依赖性估计器：不假设分布形式**
 
 依赖性用 Hilbert-Schmidt 独立性准则来量，它不需要假设输出服从什么分布，正适合刻画神经网络输出这种复杂依赖：
 
@@ -61,7 +61,7 @@ $$\text{HSIC}(X, Y) = \frac{1}{(n-1)^2}\text{Tr}(KHLH)$$
 
 其中 $K, L$ 是高斯 RBF 核矩阵，$H = I - \frac{1}{n}\mathbf{1}\mathbf{1}^T$ 是中心化矩阵。核带宽用 $\sigma = \sqrt{\text{dim}}$ 这个启发式选择，实验里被验证是相当稳健的默认值。
 
-**3. 遗忘评估协议：与两条参考分布比对，而非硬设阈值。**
+**3. 遗忘评估协议：与两条参考分布比对，而非硬设阈值**
 
 HSIC 值本身随数据集、子集大小波动，单看一个数没法判定，所以 SDE 不设绝对阈值，而是做相对比较。给定待评估子集 $\mathcal{S}_{\text{tar}} \subseteq \mathcal{D}_f$，从保留集取训练内参考 $\mathcal{S}_{IT} \subset \mathcal{D}_r$、从测试集取训练外参考 $\mathcal{S}_{OOT} \subset \mathcal{D}_{te}$，判定遗忘成功当且仅当
 

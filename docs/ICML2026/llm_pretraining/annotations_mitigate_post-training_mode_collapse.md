@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 显式语义变量 z：把"写什么"和"怎么写"拆成两个可独立调控的分布。**
+**1. 显式语义变量 z：把"写什么"和"怎么写"拆成两个可独立调控的分布**
 
 坍塌的根源在于 SFT 的最大似然目标会无差别地把后训练数据的低熵语义先验灌进模型，分不清"哪部分该改、哪部分该留"——传统熵正则、KL 约束也只对响应整体分布下手，同样分不清。作者的破局点是引入一个显式语义变量 $z$（一组可变长的 `<key>:<value>` tag，如 topic / domain / entities / location），把生成因式分解开：预训练分布写成 $P(y)=\int R(z)Q(y\mid z)\,dz$、后训练分布写成 $P^\star(y\mid x)=\int R^\star(z\mid x)Q^\star(y\mid x,z)\,dz$。一旦看清坍塌就是 $R^\star$ 的熵比 $R$ 小太多造成的，治疗方案立刻浮现——把目标改成 $P^\star_R(y\mid x)=\int R(z\mid x)\,Q^\star(y\mid x,z)\,dz$，即保留预训练的语义先验 $R$、只吸收后训练的条件响应能力 $Q^\star$。因为 $z$ 本身就是自然语言 token，这个因子化与标准 LM 100% 兼容，不需要任何额外结构。
 
-**2. Chunk-level 标注 + 交错序列预训练：在预训练阶段先把高熵的 $z\mid x$ 分布灌进去。**
+**2. Chunk-level 标注 + 交错序列预训练：在预训练阶段先把高熵的 $z\mid x$ 分布灌进去**
 
 推理时 annotation 的多样性得有来源，这个来源就在预训练。直接给整篇文档配一个全局标签会丢掉局部信号，所以作者按双换行把文档切成 chunk $x_1,\dots,x_n$，对每个 chunk 独立抽标签，再交错排成 $\langle z_1\rangle x_1\langle z_2\rangle x_2\cdots\langle z_n\rangle x_n$ 做标准 next-token prediction、不 mask 任何 token。模型由此学到一条"前文 → 下一段语义 → 下一段文本"的条件链，而这条链在 SFT 阶段恰好就是"prompt → annotation → response"的格式先验，可以无缝迁移。值得一提的是这套设计对标注噪声很鲁棒：annotator 不可能每个标签都准，但 chunk 级别的多标签平均下来整体 annotation 分布的熵依然很高，而要保住的正是这个高熵性质，单条标签错了无伤大雅。
 
-**3. Annotation-masked SFT + 锚定推理：用一行 loss mask 锁住语义分布。**
+**3. Annotation-masked SFT + 锚定推理：用一行 loss mask 锁住语义分布**
 
 这是整个方法最关键的"一行代码"。SFT 数据格式为 `prompt <annotation> response`，loss 只回传 response token、annotation token 全部 mask（论文中约 0.3% 的例外是只 mask tag 的 value 以稳定格式）。由于 annotation token 不参与梯度更新，模型对 $p(z\mid x)$ 的预测就被冻在预训练学到的高熵分布上，只有 $p(y\mid x,z)$ 被 SFT 数据重新塑造——这恰好实现了第 1 点要的"只动 $Q$、不动 $R$"。它等价于在响应分布上施加了一个隐式 KL 约束，但比显式 KL 更精确，因为它只约束 $R$ 而完全放开 $Q$，且实现成本为零。推理时直接按温度 1 解码即可：模型先采样一个 annotation，再生成 response，annotation 的随机性自然把语义多样性带进最终输出，评测时只保留 response 部分。
 

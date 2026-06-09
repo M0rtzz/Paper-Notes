@@ -43,13 +43,13 @@ TCAP 是一个**纯数据清洗**框架：拿到已在被投毒数据集 $\mathc
 
 ### 关键设计
 
-**1. 三分量注意力分解：把后门指纹从"视觉熵"换到"跨组件质量再分配"。**
+**1. 三分量注意力分解：把后门指纹从"视觉熵"换到"跨组件质量再分配"**
 
 BYE 这类前作只看视觉注意力的空间熵，对全局/文本触发器整个失灵；TCAP 的破局点是换坐标系——不再看"视觉内部怎么分布"，而是把首个生成 token 对所有前置 token 的注意力按输入序列的功能归属切成三块。对每个 (layer $l$, head $h$)，从原始注意力 $A^{l,h}=\{a_i^{l,h}\}_{i=1}^N$ 聚合出三分量向量 $\bm{\alpha}^{l,h}=(\alpha_{\text{sys}}^{l,h},\alpha_{\text{vis}}^{l,h},\alpha_{\text{txt}}^{l,h})$，其中 $\alpha_c^{l,h}=\sum_{i\in S_c}a_i^{l,h}$ 是落在 system / vision / text 三段 token 上的注意力质量之和。
 
 这一分解之所以是个通用指纹，靠三点支撑：其一，把检测从"视觉内部 spatial 分布"提升到"跨模态功能划分"后，文本触发器也自然纳入了同一把尺子；其二，system 指令是攻击者改不动的"不动点"，可以当成抗噪基线；其三，浅层只做局部特征提取、深层才做跨模态决策融合，后门走捷径必然落在深层，所以只需盯住深层。在这个视角下，被触发样本会在深层暴露两类互补极化——Anomaly 1（system↓、vision↑，用来抽取触发特征并绕过安全约束）和 Anomaly 2（system↑、vision↓，把触发信号留在残差流后接管输出结构），这种 Attention Allocation Divergence 就是与触发模态无关的后门指纹。理论上作者还证明熵无法区分全局触发（patch 触发器的熵上界 $\alpha_{\text{vis}}\log(|S_{\text{trig}}|/\alpha_{\text{vis}})$ 远低于全局触发器的 $\alpha_{\text{vis}}\log(T/\alpha_{\text{vis}})$，后者趋近最大熵），而三分量质量再分配不受此限。
 
-**2. GMM + Separation Score：无监督地挑出真正可分的少数敏感头。**
+**2. GMM + Separation Score：无监督地挑出真正可分的少数敏感头**
 
 投毒样本只占 10%，如果对全部注意力头取平均，微弱的后门信号会被海量噪声头稀释掉，所以必须先定位"clean 与 poison 真正可分"的极少数头。TCAP 对每个 head 收集训练集上的 system 分量 $\{\alpha_{\text{sys},i}^{l,h}\}_{i=1}^M$，先 min-max 归一化得 $\tilde{\alpha}_{\text{sys},i}^{l,h}$，再用 AIC 在 $K\in\{1,...,5\}$ 里自适应选最优分量数 $K^*$ 拟合 GMM $\sum_{k=1}^{K^*}\pi_k\mathcal{N}(\mu_k,\sigma_k^2)$——之所以不直接假设 bimodal，是因为投毒比例太低时强行设两峰，次峰常被主峰淹没，自适应 $K^*$ 才能在分布形状未知时稳住。
 
@@ -59,7 +59,7 @@ $$\text{SS}^{l,h}=\Bigl(\int\min\bigl(\sum_{k\in\mathcal{G}_t}\pi_k\phi_k,\ \sum
 
 两组分布越分得开、重叠越小，$\text{SS}$ 越高。只在最后 $L_{\text{sens}}$ 层里按 SS 取 Top-$H_{\text{sens}}$ 个头组成敏感头集合 $\mathcal{H}_{\text{sens}}$，等于用"分布可分性"这把尺子自动筛掉噪声头、只留下后门真正暴露的位置。
 
-**3. EM-based Dawid–Skene 投票：把异质的弱检测器融成一个可靠后验。**
+**3. EM-based Dawid–Skene 投票：把异质的弱检测器融成一个可靠后验**
 
 挑出来的敏感头彼此异质、可信度不一，朴素 majority vote 会把可信头和噪声头一视同仁，结果被拖累。TCAP 把每个敏感头当成一个有噪声的标注员：对样本 $i$，用 GMM 后验 $\gamma_{i,k}^{l,h}$ 算它"属于 target 组件"的累计概率，超阈值 $\tau_{\text{vote}}$ 就投一票 $v_i^{l,h}=\mathbf{1}[\sum_{k\in\mathcal{G}_t}\gamma_{i,k}^{l,h}>\tau_{\text{vote}}]$。再用 Dawid–Skene EM 迭代，联合估计"每个样本是否真为 poison 的隐标签"和"每个 head 的混淆矩阵"，等价于给每个头学一个可靠度权重，让更准的头说话更算数。最终输出后验 $p_i$，把 $p_i>0.5$ 的样本标为 poison 并剔除，得到 $\mathcal{D}_{\text{clean}}$。
 

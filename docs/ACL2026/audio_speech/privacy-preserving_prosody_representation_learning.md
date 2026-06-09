@@ -50,15 +50,15 @@ tags:
 最后，训练好的 encoder 被冻结，下游任务只使用 final encoder output layer。作者在 pitch reconstruction、phrase boundary detection、syllable prominence detection 三个 prosody 任务上评估表征能力，并在 VoxCeleb1 speaker identification 上评估隐私泄露程度。
 
 ### 关键设计
-**1. glottal source 输入与低通过滤：把隐私保护前移到输入层，不给模型学到身份 shortcut 的机会。**
+**1. glottal source 输入与低通过滤：把隐私保护前移到输入层，不给模型学到身份 shortcut 的机会**
 
 如果送进模型的还是原始波形，里面既有词汇内容又有说话人细节，后续无论加多强的 adversarial loss 都很难把身份信息彻底擦干净。所以本文在输入端就动手：先用 LPC inverse filtering 从原始语音估计 glottal waveform，把携带大量音素/词汇信息的声道共振滤掉，只留下声门源这种和韵律、voice quality 相关的成分；对能量低于 $10^{-4}$ 的帧则跳过 inverse filtering、直接返回 raw waveform，避免不可靠的 LPC 系数把训练带偏。之后再叠一个 1 kHz low-pass filter 进一步压低残留的词汇信息。这一层处理相当于在数据进模型前就把「身份捷径」堵掉，让后面的目标和损失只需要在已经偏韵律的信号上做更精细的解耦。
 
-**2. speaker-normalized hidden units：从自监督目标端就抹掉说话人的平均音高。**
+**2. speaker-normalized hidden units：从自监督目标端就抹掉说话人的平均音高**
 
 输入处理得再干净，只要 masked prediction 的目标标签还保留说话人特有的音高范围，模型就会被训练信号反过来拉回身份信息。本文因此在构造 hidden units 时就做归一化：每帧的 acoustic-prosodic 特征取 $[P,\log F0,\Delta\log F0,c_1]$，其中 $\log F0$ 先减去该说话人的平均 log pitch，而这个平均值用 periodicity $P$ 加权计算（让清音/噪声帧不污染基频统计）；energy 也被替换成第一个 mel 倒谱系数 $c_1$，以降低对录音条件的敏感度。这些特征经 corpus 级 z-normalization 后用 k-means 聚成帧级 label。归一化之后，目标标签里只剩下相对的 pitch 动态而非绝对音高，等于从监督信号这一端再砍掉一刀身份泄露。
 
-**3. masked/span 目标加 adversarial speaker loss：用主任务保住韵律、用对抗项压死身份。**
+**3. masked/span 目标加 adversarial speaker loss：用主任务保住韵律、用对抗项压死身份**
 
 单纯做 masked prediction，表征里会顺手保留 speaker cue；单纯上 adversarial，又容易把韵律任务一起拖垮。本文把三个目标合成一个损失同时优化：
 

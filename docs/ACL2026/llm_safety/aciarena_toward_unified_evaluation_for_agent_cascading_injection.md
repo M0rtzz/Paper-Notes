@@ -43,11 +43,11 @@ tags:
 ACIArena 由四个模块组成：**Benign Tasks**（从 GSM8K、MATH500、HumanEval、MBPP、GPQA、MedMCQA 中用 LLM judge 按难度/可分解性/低歧义筛选）；**Attacks**（28 种 ACI 攻击，覆盖 3 攻击面 × 3 攻击目标，通过 generate-mutate-select 循环自动优化生成）；**MAS Library**（重构 6 个 MAS 到统一接口）；**Evaluation Suites**（1356 测试用例 + BU/ASR/UA/PVI 四类指标）。攻击执行时由攻击者把恶意 prompt 注入到指定攻击面，观察恶意信息在 MAS 内的级联传播与最终输出。
 
 ### 关键设计
-**1. 三轴威胁模型与攻击生成器：把所有 ACI 攻击形式化为"攻击面 × 攻击目标 × MAS"，并让 LLM 自动写攻击。**
+**1. 三轴威胁模型与攻击生成器：把所有 ACI 攻击形式化为"攻击面 × 攻击目标 × MAS"，并让 LLM 自动写攻击**
 
 手工写攻击 prompt 既慢又难穷举，更没法在新 MAS 出现时快速跟上。本文先从 agent 形式化定义 $\mathcal{A}=(\pi,\mathcal{P},\mathcal{M},\mathcal{T})$ 出发，把可注入组件归到三个攻击面：**Adversarial Input** 注入指令/记忆/工具描述任一输入组件（$\mathcal{I}/\mathcal{M}/\mathcal{T}$）；**Malicious Agent** 篡改 profile $\mathcal{P}$ 让 agent 自主输出恶意消息；**Message Poison** 在通信边 $(\mathcal{A}_i,\mathcal{A}_j)\in\mathcal{E}$ 上拦截并替换消息。再交叉三个攻击目标——Hijacking（劫持执行）、Disruption（拉低任务成功率）、Exfiltration（窃取敏感信息）。攻击 prompt 由 generate-mutate-select 循环优化：从手工种子 $a_0$ 出发，每轮采样变异算子 $\omega\in\Omega$ 生成变体 $a'=\omega(a_t)$，在 $N$ 个 MAS 上执行得到响应，再用 LLM judge 按 stealthiness（与该攻击面 benign prompt 的相似度）加 harmfulness（响应与原始目标的对齐度）打分选最优。这样框架就能随新 MAS、新模型自动扩展攻击库，保持长期可用。
 
-**2. Propagation Vulnerability Index (PVI)：把评测从"输出层"下沉到"过程层"，量化恶意信息的穿透力。**
+**2. Propagation Vulnerability Index (PVI)：把评测从"输出层"下沉到"过程层"，量化恶意信息的穿透力**
 
 只看最终响应的 ASR 会抹掉两种关键差异——"局部成功但被下游纠正"和"穿透多层依旧成功"在终态上可能一样，但安全含义天差地别。PVI 定义为
 
@@ -55,7 +55,7 @@ $$\mathrm{PVI}=\sum_{a_i\in\mathcal{A}}\frac{L_{a_i}}{\sum_{a_j\in\mathcal{A}}L_
 
 其中 $L_{a_i}$ 是 agent $a_i$ 到最终响应的最小拓扑距离，$\mathrm{ASR}_{a_i}$ 是以该 agent 为入侵起点时的攻击成功率。入侵点离终点越远却仍能得手，权重越大；PVI 越高，说明这套 MAS 的"传染性"越强。它让评测能看出拓扑与角色设计对级联传播的真实影响，而不只是终态成败。
 
-**3. ACI-Sentinel：不识别"坏的"，而是强制保留"任务必需的好的"。**
+**3. ACI-Sentinel：不识别"坏的"，而是强制保留"任务必需的好的"**
 
 现有防御（BERT detector、Delimiter、Sandwich、AGrail、G-Safeguard）大多想先识别"可疑消息"再过滤，但 ACI 攻击常伪装成正常 agent 输出，识别极难，过度过滤还会压垮系统效用甚至放大攻击——实验里 G-Safeguard 在 AutoGen Hijacking 上把 ASR 从 92.78 拉到 67.22，UA 却跌到 15.56。作者从 benchmark 的大规模观测发现，攻击的共同套路是"在合法消息里嵌入额外指令"，于是把防御思路彻底翻转：不去判断哪条消息坏，而是枚举完成当前任务所必需的语义最小集（task-aligned semantic minimality），把超出这个集合的一切指令和元信息全部剔除，附加注入便自动消失。这种"以语义最小性而非可疑性为锚"的做法在 AutoGen 上把 Hijacking ASR 从 92.78% 压到 8.06%、Exfiltration ASR 从 54.00% 压到 0.22%，而 UA 只小幅下降。
 

@@ -52,15 +52,15 @@ tags:
 
 ### 关键设计
 
-**1. TB/SubTB 损失 = AIS 对数权重的二阶矩：让"训采样器"和"跑 SMC"变成同一件事。**
+**1. TB/SubTB 损失 = AIS 对数权重的二阶矩：让"训采样器"和"跑 SMC"变成同一件事**
 
 要让神经采样器和 SMC 互相借力，先得有一个公共接口把两者写在同一组记号下。本文的核心发现是：trajectory balance 损失 $\mathcal L^{\theta,\phi}_{\mathrm{TB}}(x_{0:N})=\big[\log\frac{F^\phi_0(x_0)\prod_n \overrightarrow p_\theta(x_{n+1}\mid x_n)}{R(x_N)\prod_n \overleftarrow p(x_n\mid x_{n+1})}\big]^2$，方括号里恰好就是 AIS 对数重要性权重减去 $\log Z_\theta$，subtrajectory balance 则在子段 $[m,n]$ 上做同样的二阶矩。这条等式一旦成立，"流 $F^\phi_n$"自动对应 SMC 的扭曲目标、"策略 $\overrightarrow p_\theta$"对应提议核：当 SubTB 在长度 1 子段上降到零，细节平衡 $\pi_n(x_n)\overrightarrow p(x_{n+1}\mid x_n)=\pi_{n+1}(x_{n+1})\overleftarrow p(x_n\mid x_{n+1})$ 自动满足，SMC 权重在每一步都保持均匀、根本不用 resample。作者经实验确认最稳的分工是"策略 $\theta$ 只用 TB、流 $\phi$ 只用 SubTB"（详 G.2），其它组合都会让两个目标互相干扰；这样分工既互不打架，又把 SMC 的几何退火、扭曲目标、提议核一次性绑进了神经网络参数。
 
-**2. SMC 当行为策略 + 重要性加权经验回放（IW-Buffer）：用统计学版优先级把过去的探索成果复用起来。**
+**2. SMC 当行为策略 + 重要性加权经验回放（IW-Buffer）：用统计学版优先级把过去的探索成果复用起来**
 
 摊销采样器学不到没见过的模式，但 SMC 能探索新区域——问题是怎么把 SMC 的输出喂回去训练采样器。这里的难点不是 TD 误差大小，而是"样本来自不同的提议分布"。本文的行为策略取 on-policy（$\overrightarrow p_\theta$ 直接 rollout）与 off-policy（用 SMC 出的 $x_N$ 反向重建轨迹）的混合，关键在 buffer 里每条样本的优先级怎么定。对第 $m$ 批历史样本，给每条赋权 $\widehat Z_m\cdot W^{m,k}_N$：批级权 $\widehat Z_m$ 是该批对归一化常数 $Z$ 的粒子估计——on-policy 批 $\widehat Z_m=\frac{1}{K}\sum_k w^{m,k}_N$，有 resample 的 SMC 批则按 $\widehat Z_m=\prod_j\big(\sum_k W^{m,k}_{r_{j-1}}\prod_i \widetilde w^{m,k}_i\big)$ 累积；批内权 $W^{m,k}_N$ 是自归一化权。抽样时按 $\widehat Z_m W^{m,k}_N$ 比例从 buffer 取 $x_N$，再用 $\overleftarrow p(x_{1:N-1}\mid x_N)$ 反向补全整条轨迹送进训练。这相当于把传统 prioritised replay 里的 TD 误差换成"对归一化常数的粒子估计"——一种原理上正确的统计学优先级，且 $MK\to\infty$ 时 buffer 仍弱收敛到目标。相比 Langevin local search 这类依赖目标梯度的离策略源，SMC 在 gradient-free 设置下照样能跑，还能借学到的流函数做扭曲。
 
-**3. 自适应权重温度（adaptive importance weight tempering）：让训练早期别被几条样本主宰梯度。**
+**3. 自适应权重温度（adaptive importance weight tempering）：让训练早期别被几条样本主宰梯度**
 
 训练早期 $\overrightarrow p_\theta$ 远没满足细节平衡，权重方差会爆炸，少数样本吃掉绝大部分权重、毁掉梯度；硬截断（clipping）虽常用但偏差不可控。本文在归一化前对权重做 $w\mapsto w^\lambda$ 变换（$\lambda\in[0,1]$），但不固定 $\lambda$ 而是自适应——在保证有效样本数不低于阈值的前提下取最大的 $\lambda$：
 

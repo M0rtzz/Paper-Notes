@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. $k$-sparse probing + best-layer 协议：把"是否单义"做成可比指标。**
+**1. $k$-sparse probing + best-layer 协议：把"是否单义"做成可比指标**
 
 痛点在于"神经元到底单不单义"过去只能定性聊，没法横向比 MoE 和 dense。作者对每个概念在激活向量上训一个 $L_2$ 正则的逻辑回归，但只允许它用 top-$k$ 个维度：先按类间均值差 $a_j=|\mathbb{E}[h_j\mid y=1]-\mathbb{E}[h_j\mid y=0]|$ 选出 top-$k$ 神经元，$k\in\{1,2,4,8,16,32,64\}$，对 MoE 用的是专家中间激活 $\mathbf{h}=\mathrm{Swish}(W_{\text{gate}}x)\odot W_{\text{up}}x$，对 dense 用 FFN 同位置激活。MoE 一侧只保留被路由到目标专家的 token（承认 router 已做了一次粗筛），并为每个概念在所有层/所有专家里挑最好的那层比 $F_1$，避免"挑错层"压低分数。$k=1$ 上的高 $F_1$ 直接等于"一个概念被钉死在单个神经元"，于是单义性从形容词变成数字。为排除"MoE 只是参数更多"这个 confounder，比较按 active-parameter 配对，并在 OLMo 家族内做同总参对照——结果 OLMoE-1B-7B 用 1B active 就打过了 OLMo-7B 的 7B active，说明红利来自稀疏路由本身。
 
-**2. 残差流贡献模驱动的专家自动标注流水线：用因果活跃度挑样本，再让 LLM 写标签。**
+**2. 残差流贡献模驱动的专家自动标注流水线：用因果活跃度挑样本，再让 LLM 写标签**
 
 要给专家写标签，第一步是挑出"真正激活这个专家"的序列，而 router 权重 $g_i(x)$ 只说明专家被选中、不说明它算出了有用东西，专家内部神经元绝对值也未必传到输出。作者改用专家写进残差流的更新向量的模长作为活跃度，对序列 $s$ 打分 $\mathrm{score}(s,E_i)=\max_{x\in s}\,g_i(x)\,\|E_i(x)\|_2$——因为在 transformer 里组件影响输出的唯一通道就是残差流，$\|E_i(x)\|_2$ 才是因果上真有贡献的那一项。每个专家取 top-20 高分序列，配上 Logit Lens 给出的 top-3 被推高 token，喂给 explainer LLM 写一句话描述；再让 scorer LLM 在 10 正 10 负的 held-out 样本上算 $F_1$ 验证标签判别力。OLMoE / ERNIE / Qwen3 的 14 层上几乎所有专家 $F_1>0.8$，最稀疏的 Qwen3-30B-A3B 频繁 $>0.9$，证明标签不是 LLM 凭空编的。这一步把"从神经元到专家"的方法论瓶颈打通，让自动可解释性不必再为每层训 SAE。
 
-**3. Trigger-Target 因果归因 + JSD 特化度量：验证标签的因果性，并仲裁特化之争。**
+**3. Trigger-Target 因果归因 + JSD 特化度量：验证标签的因果性，并仲裁特化之争**
 
 高 $F_1$ 只说明标签描述得准，不等于因果。作者让 Gemini 3 Flash Preview 按专家标签合成句子，里面埋 trigger 词（应触发该专家）和 target 词（该专家应推高的输出 token），再用 DLA $A_{v\to t}=\mathrm{LN}_{\text{linear}}(v)^\top W_U[:,t]$ 在层内给所有专家排序：matched prompt 上该专家几乎都进 Top-1 或 Top-8，而 80% 为别人设计的 control prompt 上该专家根本没被路由——这是一个很硬的反例，标签不是"什么都对"的废话。第二条线回答"专家专在哪档颗粒度"：用对 unembedding 矩阵的 $k$-means 聚类（$k\in\{10,50,100,1000,5000\}$）让模型自己的输出空间结构定义"原生领域"，对 $10^6$ 个 token 用 Jensen-Shannon Divergence 衡量每个专家相对层平均的偏离，分别报告 Routing Specialization（路由进来的 token 分布）和 Functional Specialization（被 Logit Lens 推高的 token 分布），再用 Random Expert Baseline 校正小样本噪声。若专家是宽域分工，$k=10$ 上 JSD 就该最高；实测却是 $k=5000$ 远远拉开，强力支持"细粒度任务专家"的结论。
 

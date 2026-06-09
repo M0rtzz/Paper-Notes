@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. STVP：帧内空间 + 帧间时间双轴显著性剪枝。**
+**1. STVP：帧内空间 + 帧间时间双轴显著性剪枝**
 
 视频 token 里塞着两类冗余：同一帧中与背景相似的 patch（空间冗余），和相邻帧里相对前一帧没变化的 patch（时间冗余）。STVP 把一个 2 秒 chunk 的两帧分开处理。第一帧 $\mathbf{F}_1^{(t)}$ 做空间显著性——先 mean-pool 出帧表征 $\bar{\mathbf{v}}_1^{(t)} = \frac{1}{n_p}\sum_i \mathbf{v}_{1,i}^{(t)}$，每个 token 的得分是它和均值的 cosine 距离 $s_{1,i}^{(t)} = 1 - \frac{\mathbf{v}_{1,i}^{(t)} \cdot \bar{\mathbf{v}}_1^{(t)}}{\|\mathbf{v}_{1,i}^{(t)}\|\|\bar{\mathbf{v}}_1^{(t)}\|}$，分高即"和背景最不同"。第二帧 $\mathbf{F}_2^{(t)}$ 做时间显著性——靠位置编码做一一对应，得分是它和第一帧同位置 token 的 cosine 距离 $s_{2,i}^{(t)} = 1 - \frac{\mathbf{v}_{2,i}^{(t)} \cdot \mathbf{v}_{1,i}^{(t)}}{\|\mathbf{v}_{2,i}^{(t)}\|\|\mathbf{v}_{1,i}^{(t)}\|}$，分高即"动起来的"区域。两帧各按视觉保留比 $\alpha_v = 1 - \rho_v$ 选 top-$\hat{n}_p = \alpha_v n_p$ 后拼成 $\hat{\mathbf{Z}}_v^{(t)} = [\hat{\mathbf{F}}_1^{(t)}; \hat{\mathbf{F}}_2^{(t)}]$。纯用 cosine 距离而非注意力分数，是为了和 FlashAttention 兼容（OmniZip 那条路被注意力依赖锁死）；两帧分别用空间 / 时间标准则是怕双轴混在一帧里互相干扰——第一帧只问"这帧有什么独特内容"，第二帧只问"这一秒发生了什么变化"。
 
-**2. VGAS：视觉锚点引导的音频 token 选择。**
+**2. VGAS：视觉锚点引导的音频 token 选择**
 
 这是非对称设计的核心。OmniSIFT 把 STVP 剪枝后保留的视觉 token $\hat{\mathbf{Z}}_v^{(t)}$ 当成"视觉锚点池"，对每个音频 token 算它与所有锚点的相关性分数，按 $\alpha_a$ 比例选 top-k——也就是说音频显著性完全条件于视觉场景，而不靠音频自身的内部信号（OmniZip 用的是音频注意力）。这么做的依据是感知科学（Koppen 2008, Zhao 2018）：人处理音视频本就不对称，视频内部冗余可估，但音频显著性依赖视觉锚点（说话人可不可见、事件有没有视觉支撑），所以对 Omni-LLM 的有效压缩应当是"视觉引导"而非对称对待两个模态。
 
-**3. STE 端到端微调与轻量参数预算：让 top-k 选择可导，不重训主干就端到端优化压缩管线。**
+**3. STE 端到端微调与轻量参数预算：让 top-k 选择可导，不重训主干就端到端优化压缩管线**
 
 top-k 在反向是离散不可导的，OmniSIFT 用 straight-through estimator——前向走硬选择、反向拿 soft 分数做梯度直通，于是整个 STVP + VGAS 能端到端训。整个模块只引入 4.85M 额外参数（相对 Qwen2.5-Omni-7B），训练时冻结主干、只训压缩模块。相比 EchoingPixels 加 4 个 LLM 解码层做全局上下文化，这 4.85M 是真正的"轻量插件"、不会拉长推理路径；又因为不算注意力分数，推理延迟甚至比 training-free 的 OmniZip 还低。
 

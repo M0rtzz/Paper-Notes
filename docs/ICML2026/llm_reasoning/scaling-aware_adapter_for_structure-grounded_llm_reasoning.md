@@ -46,7 +46,7 @@ Cuttlefish 想替换掉 Q-Former 那个"固定长度 query"的连接器：给定
 
 ### 关键设计
 
-**1. Scaling-Aware Patching：让 query 数量随结构信息量"长出来"。**
+**1. Scaling-Aware Patching：让 query 数量随结构信息量"长出来"**
 
 固定 32/64 个 query token 对小分子是挥霍、对大分子是过度压缩，长分子上指标全面塌方——这是这篇要解决的第一个痛点。Cuttlefish 的做法是把 query 数量做成指令条件的函数：先用评分门算 anchor logits $\boldsymbol{\ell}=G_{anc}(\boldsymbol{z},\boldsymbol{X},\boldsymbol{b})$，对每个图 $\mathrm{Softmax}$ 后按概率从大到小排序，取**最小的 $k_g$ 使累计概率质量达标** $\sum_{j=1}^{k_g}\boldsymbol{prob}_{\pi_j}\geq \rho$。这一步是关键——$k_g$ 不再是超参，而是由"要凑够 $\rho$ 的信息量需要几个 anchor"决定：信息稀疏的小分子可能 $k_g=4$ 就够，复杂蛋白能自动拉到几十个。选完 anchor 后再把每个 anchor 扩成一个 soft patch，用空间距离加语义偏置算软分配权重
 
@@ -54,11 +54,11 @@ $$\boldsymbol{W}_{i,a}=\frac{\exp(-\|\mathbf{P}_i-\mathbf{P}_a\|_2^2+\boldsymbol
 
 最后归一化池化成变长 query $\boldsymbol{t}_a=\sum_i \boldsymbol{W}_{i,a}\boldsymbol{X}_i/\sum_j\boldsymbol{W}_{j,a}$。注意 anchor logit $\boldsymbol{\ell}_a$ 同时进了两处：一处决定"选哪几个原子当 anchor"，一处作为 softmax 偏置决定"每个 anchor 圈多大领地"——相关性高的 anchor 自动获得更大感受野，等于把"注意力"和"领地大小"用同一组 logit 绑在一起。
 
-**2. Geometry Grounding Adapter：把池化丢掉的几何细节再捞回来。**
+**2. Geometry Grounding Adapter：把池化丢掉的几何细节再捞回来**
 
 第二个痛点是结构幻觉——纯序列输入根本没编码几何，LLM 只能瞎编长程空间关系。但即便用了上一步的池化，in-patch 加权平均也会把键角、距离、长程接触这些高分辨率几何抹平。所以这一步不是二次选 anchor，而是 retrieval-and-refinement：把概要 query $\boldsymbol{t}$ 投成 $\mathcal{Q}$，把 EGNN 全节点 embedding $\boldsymbol{X}$ 投成 $\mathcal{K},\mathcal{V}$，经 $L_f$ 层 self-attn → cross-attn → FFN 的 fusion block，最后投到 LLM 维度 $D_{LLM}$ 得 $\widehat{\boldsymbol{T}}$；注入时在指令序列里定位 modality placeholder $y_{ins}$ 的位置 $\boldsymbol{p}$，把 $\widehat{\boldsymbol{T}}$ 嵌进去并同步 attention/label mask。anchor 此前已经把范围锁定到 instruction-relevant 区域，cross-attn 要做的就是在这块区域内恢复被平均掉的几何证据。这正是降幻觉的物理基础：每个 modality token 都对应一份可验证的几何细节，而不是抽象可学向量。
 
-**3. 三阶段训练协议：先编码器、再 connector、最后才动 LLM。**
+**3. 三阶段训练协议：先编码器、再 connector、最后才动 LLM**
 
 为了既对齐新模态又不破坏 LLM 的语言先验，训练拆成三段冻结推进。先单独预训练 EGNN 编码器，同时优化原子类型预测、距离回归、方向噪声去噪三个目标 $\mathcal{L}_{enc}=\mathcal{L}_{type}+\lambda_d\mathcal{L}_{dist}+\lambda_u\mathcal{L}_{dir}$；再进 Modality Alignment 阶段，冻结 EGNN 和 LLM，只训 Scaling-Aware Patching 和 Geometry Grounding Adapter；最后 LLM Adaptation 阶段用小学习率解冻 LLM 做收尾微调。和 Q-Former 流派必须靠重型对比预训练对齐不同，Cuttlefish 的 query 是结构动态生成、自带几何语义的，所以跳过对比阶段、直接用指令监督就能对齐，分阶段冻结也保证了语言先验不被冲掉。
 

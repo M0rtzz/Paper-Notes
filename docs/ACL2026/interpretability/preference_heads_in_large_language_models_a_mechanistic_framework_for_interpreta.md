@@ -48,15 +48,15 @@ tags:
 如果用户群体差异很大，论文还会先把用户画像编码成 embedding 并聚类。每个 cluster 内重新发现 Preference Heads，推理时根据用户到各 cluster 的相似度做 hard routing 或 soft routing，避免把所有用户的偏好头粗暴合并成一个全局集合。
 
 ### 关键设计
-**1. Preference Contribution Score：用因果消融给每个注意力头打一个个性化贡献分。**
+**1. Preference Contribution Score：用因果消融给每个注意力头打一个个性化贡献分**
 
 很多可解释性分析停在激活可视化或相关性统计上，看得到某个 head 在“亮”，却说不清它是否真的改变了输出。PCS 直接用 intervention 回答这个问题：对第 $l$ 层第 $k$ 个 head $h_{l,k}$ 做定向屏蔽，比较屏蔽模型 $M_{\theta \setminus h_{l,k}}$ 与原模型 $M_\theta$ 在用户参考输出上的平均负对数似然，定义 $PCS(h_{l,k}) = E[L(M_{\theta \setminus h_{l,k}}, x, u, y^*) - L(M_\theta, x, u, y^*)]$。如果 PCS 为正且较大，说明拿掉这个 head 会显著降低用户对齐输出的概率，它就不只是“相关”，而是对个性化行为有因果贡献。这种和“个性化输出似然”直接绑定的因果评估，比单看 attention 权重大小可靠得多。
 
-**2. Differential Preference Steering：解码时放大偏好头贡献的差分信号，不动一个参数。**
+**2. Differential Preference Steering：解码时放大偏好头贡献的差分信号，不动一个参数**
 
 直接强行指定输出风格容易损伤内容一致性，DPS 换了个思路。它对同一上下文分别算原模型 logits $l_t^{pref}$ 和屏蔽 Preference Heads 后的 logits $l_t^{gen}$，再组合成 $\tilde{l}_t = (1 + \gamma) l_t^{pref} - \gamma l_t^{gen}$：$\gamma = 0$ 时退化为原模型，$\gamma$ 增大时模型会更强调原模型相对 generic 模型多出来的那部分偏好方向。因为这个差异主要就是被偏好头贡献出来的个性化信号，DPS 更像是在增强模型内部已有的偏好通路，而不是从外部塞一个新控制目标进去——它放大的是模型“已经想说”的个性化倾向。
 
-**3. Cluster-aware Preference Steering：按用户群组分别发现偏好头，避免全局集合稀释信号。**
+**3. Cluster-aware Preference Steering：按用户群组分别发现偏好头，避免全局集合稀释信号**
 
 实验里的 Jaccard overlap 分析显示，不同用户的 top-K Preference Heads 大多重叠很低，若把所有用户的偏好头粗暴合并成一个全局集合，真正有用的信号会被稀释。为此 DPS 先用用户历史文本得到 profile embedding，再用 k-means 等方式把用户分成若干偏好群组，每个 cluster 内单独跑一遍 PCS 发现流程得到 cluster-specific head set。推理时既可以把用户硬分配到最近 cluster，也可以按用户到各 cluster 的相似度做 soft routing。这样在个体化和统计稳定性之间取得折中：相似用户共享 head 既保留了个性化，又不至于让单用户的稀疏样本把偏好头估歪。
 

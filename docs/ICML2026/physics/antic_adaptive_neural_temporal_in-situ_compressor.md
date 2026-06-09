@@ -48,15 +48,15 @@ ANTIC 由两个异步模块组成：(i) PATS 决定"要不要压这一帧"，(ii
 
 ### 关键设计
 
-**1. 物理感知时间筛选器 PATS：用 PDE 内禀守恒量当 saliency 决定哪帧值得存。**
+**1. 物理感知时间筛选器 PATS：用 PDE 内禀守恒量当 saliency 决定哪帧值得存**
 
 传统时间采样要么固定间隔（错过快变瞬态、在慢演化期过采样），要么用帧间像素差这种对物理意义无感的通用启发式。PATS 是个无参数的四部件流水线：Metric 抽 PDE 特定标量——湍流场用 enstrophy $\mathcal{E}(t)=\frac12\int_\Omega\|\omega\|^2 dA$（涡度模），双黑洞合并用 Weyl scalar $\Psi_4(t,\mathbf{r})$（外向引力波场强）；Queue 是只存最近 $W$ 个 metric 值的滑窗；Regulator 检测到 phase transition 时截断 Queue、重置参考锚点；Gate 根据 truncated context 形成动态阈值，既决定当前帧要不要压、又反馈给 Regulator 调下个窗口大小。整套机制不训练任何参数，所有"智能"来自物理量本身——慢演化时少采、瞬变时密采，换一个 PDE 只需换 Metric 函数，因此能在 stiff/multi-rate 系统上自适应而不漏掉关键事件。
 
-**2. 神经场 + 持续微调：把"压下一帧"reframe 成"对已 fit 的网络做残差更新"。**
+**2. 神经场 + 持续微调：把"压下一帧"reframe 成"对已 fit 的网络做残差更新"**
 
 每帧单独 fit 一个网络太冗余（相邻帧权重本就相似），只 fit 第一帧再时间外推又会误差爆炸。作者取中间路线：把空间压缩重写成"对已拟合 $u(t)$ 的神经场做残差更新以拟合 $u(t+\Delta t)$"。由于 stiff PDE 解的平滑性 $u(t+\Delta t)-u(t)\approx\Delta u(t)$，残差量级远小于原场，只需少量梯度步、少量参数更新就能收敛。神经场是 $256\times6$ MLP + SiLU + Fourier Feature Mapping（embedding dim 256，缓解高频谱偏差），用 SOAP 二阶预条件优化器 + cosine annealing 训练，并加 LayerNorm（抑制激活分布漂移）和 weight decay（抑制权重无界增长）来稳住持续微调——消融显示没有这两者权重 norm 会爆炸、多步后整网发散。这一设计把时间相关性当先验复用，又能逐帧矫正，正好契合 in-situ 的流式输入。
 
-**3. LoRA 低秩残差：把残差更新参数化为 $\mathbf{A}\mathbf{B}$，用 rank 滑出 rate-distortion Pareto。**
+**3. LoRA 低秩残差：把残差更新参数化为 $\mathbf{A}\mathbf{B}$，用 rank 滑出 rate-distortion Pareto**
 
 full FT 完全更新所有参数、没法控制存储，而下游真正需要的是一个能在"省存储"和"高精度"间任意取点的旋钮。作者把残差更新写成低秩
 

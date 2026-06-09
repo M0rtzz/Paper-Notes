@@ -54,19 +54,19 @@ LeakDojo 把 RAG 泄露场景拆成三层可配置组件：
 
 ### 关键设计
 
-**1. 攻击的正交分解 $Q^{adv}_i = A_i \oplus I$：把"攻击成功了吗"拆成两个能独立量化的子问题。**
+**1. 攻击的正交分解 $Q^{adv}_i = A_i \oplus I$：把"攻击成功了吗"拆成两个能独立量化的子问题**
 
 以往所有 RAG 泄露攻击都被当成"黑盒一体方法"横向对比，谁的泄露率高谁就赢，但没人说得清赢在哪一步。LeakDojo 把单轮攻击 query 形式化为 anchor query $A_i$ 与 adversarial instruction $I$ 的拼接：$A_i$ 决定能不能**检索到**新 chunk，$I$ 决定能不能**让 LLM 把 chunk 吐出来**。评测时分别用 ARC（unique retrieved / 上限 $k\times N$）量 $A_i$ 的检索覆盖、用 SLT（触发 leak 的 query 比例，由 ROUGE-L recall $> 0.5$ 判定）量 $I$ 的触发能力，整体泄露则用 CCL（unique leaked chunk / 上限）。
 
 关键的实证支撑是元分析里 $\text{CCL} \approx \text{ARC} \times \text{SLT}$ 几乎完美成立——两个组件的影响近似乘积、彼此正交。这条经验律让评测第一次能精确指出每种攻击的瓶颈在哪：比如 TGTB 在弱模型上 ARC 很高但 SLT 很低，问题就出在 instruction 端而非 query 端。它也把"该往哪卷"这件事讲清楚了——多年来攻击改进大多在堆 query generator，而正交分解说明真正稀缺的是 instruction 的触发力。
 
-**2. 模块化 RAG / 攻击 / 防御 + 4 指标互补评测：让"换个 LLM 会不会更危险"变成可消融的量化问题。**
+**2. 模块化 RAG / 攻击 / 防御 + 4 指标互补评测：让"换个 LLM 会不会更危险"变成可消融的量化问题**
 
 单一指标会掩盖机制差异——IKEA 的 SLT 很高但 ARC 很低，CCL 自然就低，只看 CCL 会误判它"弱"。LeakDojo 把三层组件都做成即插即用：RAG 侧定义 T0/T1/T2/T3 四档梯度配置（vanilla → +reranker → +rewriter → full），攻击侧把 6 个已有方法（TGTB、GEN-PIDE、DGEA、RAG-Thief、PoR、IKEA）实现成 query generator 的不同实例，可用性则用 Ragas faithfulness 度量。
 
 所有结果统一用 4 个互补指标报告：CCL（累计泄露率）、SLT（触发率）、ARC（检索覆盖率）、CRR（逐字恢复质量）。4 指标加上逐模块消融，才能把"风险从哪来""提升空间在哪"定位到具体组件，让 RAG 开发者第一次能定量回答"加个 rewriter 或换个后端 LLM 会不会放大泄露"。
 
-**3. 基于 logical masking 的新型隐写攻击 RankerSet & CodeClaim：把"瓶颈在 instruction"的发现直接变成更强的攻击。**
+**3. 基于 logical masking 的新型隐写攻击 RankerSet & CodeClaim：把"瓶颈在 instruction"的发现直接变成更强的攻击**
 
 这一设计是 LeakDojo 可扩展性的 case study——验证框架不是只能评测的死靶子，而能孵化新攻击。以往 instruction 含 "repeat"、"verbatim" 等显式关键词，极易被 intent detector 一刀拦掉（CCL 砍到 $<1\%$）。RankerSet 和 CodeClaim 反其道而行，把"复述 chunk"的意图藏进一条逻辑推理链——让 LLM 把 chunk 当成排序任务或代码声明任务的输入，instruction 表面上完全是一个合法任务请求。
 

@@ -46,15 +46,15 @@ NeUQI 要解决的是"给定一层权重，怎么挑出真正最优的 scale $s$
 
 ### 关键设计
 
-**1. 闭式求最优 zero-point：把内层从二维搜索变成一维解析极值。**
+**1. 闭式求最优 zero-point：把内层从二维搜索变成一维解析极值**
 
 主流方法把 $z$ 锁成 $k$-bit 整数、又和极值绑死，导致在 2-bit 下 $z$ 只剩 4 个候选、搜不出好解。NeUQI 先把 $z$ 解放成浮点，再注意到一个关键结构：固定 scale 后，单样本损失 $\mathcal{L}_i(z) = h_i (x_i + z - \mathrm{clip}(\lfloor x_i+z \rceil, 0, 2^k-1))^2$（其中 $x_i = w_i/s$、$h_i = H_{i,i} s^2$）是 $z$ 的分段二次函数，有 $2^k - 1$ 个转折点、$2^k$ 个区间；总损失 $\mathcal{L}(z) = \sum_i \mathcal{L}_i(z)$ 在所有转折点的并集（共 $n(2^k-1)$ 个）上仍然分段二次。既然每一段都是二次函数，最优 $z^*$ 就能在每段内闭式求极值、再取全局最小。直接对每段重算整个 sum 是 $\mathcal{O}(n \cdot 2^k \cdot n)$；Algorithm 1 的 trick 是观察到相邻两个区间之间只差"某个 $\mathcal{L}_i$ 的贡献切换"这一项，于是增量维护当前区间的二次函数 $\mathcal{L}^I(z) \leftarrow \mathcal{L}^I(z) + \delta(z)$，每次只算本区间的极值，把复杂度降到 $\mathcal{O}(n \cdot 2^k \log(n \cdot 2^k))$（排序占主导）。之所以非这样不可，是因为解锁后的最优 $z$ 不一定落在任何 $w_i + j$ 网格点上，只有靠分段二次的解析极值才能精确找到。
 
-**2. Transition-point reduction：把每样本 $2^k-1$ 个转折点压成 2 个。**
+**2. Transition-point reduction：把每样本 $2^k-1$ 个转折点压成 2 个**
 
 上一步在 $k=2$ 时够快，但 $k=4$ 时 $2^k$ 这个因子会拖慢内层。NeUQI 进一步观察到：$\mathcal{L}_i(z)$ 在中段区间 $[-1/2 - x_i,\ 2^k - 1/2 - x_i]$ 其实被 rounding 损失上界 $h_i/4$ 截顶了——远处那些样本早已 saturate，不可能把全局最小拉走。于是构造一个超近似函数 $\mathcal{L}_i^S(z)$，把整段中部直接替换成常数 $h_i/4$，只保留两端的 quadratic，每个样本因此只剩两个转折点。先用 Algorithm 1 在这个近似上找到粗位置 $z^S$，再退回原始 $\mathcal{L}_i(z)$、只在长度为 2 的小窗 $[z^S - 1, z^S + 1]$ 内精化（小窗里每样本同样最多两个转折点）。两遍都是 $\mathcal{O}(n \log n)$，把内层从 $\mathcal{O}(n 2^k \log(n 2^k))$ 拉下来，让 $k=4$ 也能秒级跑完，而精度几乎无损——Table 1 里 relative loss 只有 1.00001×–1.00003×。本质上是经典的 "outer bound 粗定位 + local refine 精修" 套路在量化损失上的一次干净落地。
 
-**3. Coarse-to-fine scale 搜索：把外层 $T$ 次内层求解砍成 $\mathcal{O}(\sqrt{T})$ 次。**
+**3. Coarse-to-fine scale 搜索：把外层 $T$ 次内层求解砍成 $\mathcal{O}(\sqrt{T})$ 次**
 
 外层要在多个候选 scale 上各跑一次内层，朴素地把 $T=2048$ 个候选全搜一遍太贵。scale 候选集取 $\mathcal{S}_T = \{ ((\max(\bm{w}) - \min(\bm{w}))/(2^k - 1)) \cdot (i/T) : i = 1, \dots, T \}$，即以 Min-Max 推出的 scale 为上界向下均匀采样。由于经验上 $\mathcal{L}(s, z^*(s))$ 作为 $s$ 的函数是单峰、平滑的，没必要全网格搜：先在 $T_c = O(\sqrt{T})$ 个候选上粗搜得到 $s^c$，再在 $s^c$ 附近约 $T/T_c$ 个 fine candidate 上精搜，总评估次数 $O(\sqrt{T}) \approx 90$。配合前两步，单层量化时间从基线的 112 秒降到几秒。
 

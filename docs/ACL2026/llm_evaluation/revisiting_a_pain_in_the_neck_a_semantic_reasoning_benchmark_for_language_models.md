@@ -43,15 +43,15 @@ tags:
 SEMANTICQA 的核心思路是用"拆操作"取代"加数据集"：把 idiomatic expressions (IE)、lexical collocations (LC)、noun compounds (NC) 和 verbal multiword expressions (VMWE) 四类短语，重组到分类、抽取、解释这几种统一的语义操作上，每个样本都由固定 prompt 模板、上下文句子和目标输出组成，从而把格式差异控住。评测不是把所有任务简单平均成一个 leaderboard，而是观察同一模型能否在分类、抽取、解释三种操作上保持短语语义一致，以及 few-shot 是否真能改善 grounding、上游抽取错误是否会在下游被放大。分类用 accuracy，抽取用 sequence-level exact match，解释以 METEOR 为主并补报 ROUGE-L 和 BERTScore。
 
 ### 关键设计
-**1. Operation-aligned benchmark 构建：把分散资源对齐到同一组语义操作。**
+**1. Operation-aligned benchmark 构建：把分散资源对齐到同一组语义操作**
 
 现有 MWE 资源往往各自只盯一种短语类型、一种任务格式，模型在某任务上得高分可能只是学会了某种格式模板。本文把四类短语重映射到受控操作：IE 做 detection / extraction / interpretation，LC 做 semantic relation categorization / extraction / interpretation，NC 做 compositionality classification / extraction / interpretation，VMWE 专注 verbal construction extraction，每个任务都用统一的 prompt 结构和明确的输出约束。这样一来，如果只评一个开放解释任务，模型可能靠流畅 paraphrase 蒙分；加上严格抽取和多类分类后，才能看到它是否真正 grounding 到短语结构和语义关系上。
 
-**2. Sequential task composition：把原子能力和 workflow 鲁棒性分开看。**
+**2. Sequential task composition：把原子能力和 workflow 鲁棒性分开看**
 
 现实短语处理往往是"先识别、再理解"的级联场景，一旦中间输出需要被下游步骤消费，错误就会传播。论文为此设计 extraction-interpretation 和 extraction-classification 两个组合任务，并分别报告 conditional score（只看上游抽取正确时的下游表现）和 overall score（端到端性能）。两个分数一对比，就能把"模型原子能力尚可"和"一进入 workflow 就崩"这两件事拆开诊断。
 
-**3. Oracle Schema 与类别规模分析：探测显式语义定义和类别粒度的影响。**
+**3. Oracle Schema 与类别规模分析：探测显式语义定义和类别粒度的影响**
 
 Oracle Schema 在 VMWE 抽取中把目标类型和定义加进 prompt（如说明 verb-particle construction 的非组合性），用来检验模型是否因缺明确 schema 而"不知道该抽哪类表达"；类别规模分析则在 LC 分类中把语义类别数从 1、2、4、8 扩到 16，观察 accuracy 随类别细化如何下降。如果类别变细后性能崩坏，就说明 in-context semantic reasoning 还不能替代监督学习。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Embedding Drift 建模：用可控扰动复现"模型更新"这件事。**
+**1. Embedding Drift 建模：用可控扰动复现"模型更新"这件事**
 
 真实的模型更新会怎样移动 embedding 很难直接观测，本文索性把漂移参数化，在 checkpoint 0 的原始 embedding 上叠加一个扰动项再归一化：$z_c = \text{Normalize}(z_0 + \varepsilon_c)$。扰动 $\varepsilon_c$ 故意取三种不同形态，对应三类典型的更新后果——高斯漂移 $\varepsilon_c \sim \mathcal{N}(0, \sigma_c^2 I)$ 模拟各维独立的随机抖动，方向性漂移 $\varepsilon_c = \sigma_c v$ 沿固定方向 $v$ 平移模拟系统性偏移，子空间旋转 $z_c = \text{Normalize}(Rz_0)$ 用旋转矩阵 $R$ 整体扭转表示空间。归一化把结果重新压回 embedding 球面，保证扰动只改变方向、不改变模长，这样退化才能干净地归因到漂移本身而非尺度变化。
 
-**2. Silent Failure 度量：抓住"嘴上很确定、其实已经错了"的失效。**
+**2. Silent Failure 度量：抓住"嘴上很确定、其实已经错了"的失效**
 
 标准的线上监控盯的是平均置信度，可一旦分类器在高置信度下大面积出错，这种监控就形同虚设。本文把这种最危险的失效单独度量出来：当 $\max_y p(y|x) > 0.8$（模型自认为很笃定）但预测 $\hat{y} \neq y$（其实分错了）时，就记一次 silent failure。它和普通错误的区别在于"无声"——置信度没有同步塌掉，所以靠均值监控的运维系统看不到任何异常信号，毒性内容会带着高置信度的"安全"标签溜过去。
 
-**3. Alignment 影响分析：检验 RLHF 是帮了还是害了安全分类。**
+**3. Alignment 影响分析：检验 RLHF 是帮了还是害了安全分类**
 
 直觉上 instruction-tuned 模型经过对齐应该更"懂"安全，但本文要验证的恰恰是反面——alignment 是否反而让 toxic/safe 在 embedding 空间里更难分开。做法是用两个几何量刻画类别可分性：Silhouette score 衡量样本离本类中心比离异类中心近多少，Fisher 判别比 $\frac{\text{类间方差}}{\text{类内方差}}$ 衡量两类的分离程度。把 base 模型和 instruction-tuned 模型的这两个指标摆在一起对比，就能看出 RLHF 到底是收紧还是模糊了安全分类所依赖的边界。
 

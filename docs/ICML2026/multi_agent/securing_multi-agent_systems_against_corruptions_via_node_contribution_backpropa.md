@@ -47,11 +47,11 @@ BPD 要解决的是：一个被劫持的 agent 会沿对话拓扑把有害内容
 
 ### 关键设计
 
-**1. MAS → 签名时序 DAG：把任意拓扑的多轮对话拍成一张无环图。**
+**1. MAS → 签名时序 DAG：把任意拓扑的多轮对话拍成一张无环图**
 
 MAS 拓扑五花八门（Flat 平等讨论、Hierarchy 回答+评审），轮数和 agent 数都不固定，没法直接套一个传播公式。BPD 的处理是把 agent $A(i)$ 在第 $t$ 轮的实例展开成一个时序节点 $A_t(i)$，节点集 $V = \{A_t(i) \mid t=1..T,\, i=1..n\}$ 规模 $N = nT$，第 $t$ 轮 $A(i) \to A(j)$ 的消息记作有向边 $e_t(i,j): A_t(i) \to A_{t+1}(j)$。关键在于所有边都只跨相邻时刻、永远从 $t$ 指向 $t{+}1$，所以图天然无环——这正是后面能用闭式解一次算完、不必迭代到收敛的前提。光有结构还不够，还要给边赋"立场"：让一个不属于 MAS 的独立 LLM 评判每条边，接收者 $C_j$ 拿到 $C_i$ 的消息 $s_i$ 后输出 $s_j$，评分器算 $g_{ij} = f(s_i, s_j) \in \{-1, 0, +1\}$，正号是同意 / 采纳、零是低贡献、负号是反对 / 反驳。签名机制是为了让"成功的攻击"（正号分被放大）和"被识破的攻击"（负号分被放大）都在图上留下可计算痕迹，双向都能触发后续的离群信号。
 
-**2. 反向贡献传播算子：从最终答案倒推每个节点的影响力。**
+**2. 反向贡献传播算子：从最终答案倒推每个节点的影响力**
 
 知道了图和每条边的立场，还要把"某个 agent 对最终答案到底贡献了多少"变成一个可比较的数。BPD 借 PageRank 的思路——影响力靠下游聚合——但反过来用：定义签名邻接矩阵 $\mathbf{G} \in \mathbb{R}^{N \times N}$ 与出度矩阵 $\mathbf{D} = \text{diag}(k_1, \ldots, k_N)$，得到行归一化的签名传播算子 $\mathbf{B} = \mathbf{D}^{-1}\mathbf{G}$。终端层用最终答案做边界初始化：若 $A(i)$ 的答案与 MAS 最终答 $y_{\text{final}}$ 一致则 $S(A_T(i)) = +1$，否则 $-1$。反向递归为
 
@@ -59,7 +59,7 @@ $$S(C_i) = \frac{1}{k_i} \sum_{C_j \in \mathcal{N}^+(C_i)} g_{ij}\, S(C_j) = \su
 
 向量形式即 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{S}^{(t+1)}$，其中 $\mathbf{P}^{(t)}_{ij} = g_{t,i \to j} / k_{t,i}$。因为 $G$ 是 DAG，单次反向乘法就给出唯一闭式解 $\mathbf{S}^{(t)} = \mathbf{P}^{(t)} \mathbf{P}^{(t+1)} \cdots \mathbf{P}^{(T-1)} \mathbf{S}^{(T)}$，不用像普通 PageRank 那样 power iteration 迭代到稳态。这其实就是经典 PageRank $\mathbf{r}^{(\ell+1)} = (1-d)\mathbf{1}/N + d\,\mathbf{W}^\top \mathbf{r}^{(\ell)}$ 的 signed / layer-wise / DAG 推广：$\mathbf{P}^{(t)}$ 替代 $\mathbf{W}^\top$ 并引入 $\{-1, 0, +1\}$ 符号，边界初始化替代 damping/teleport，一次拓扑 pass 替代 power iteration。MAS 是有限轮 DAG 反而比一般强连通图更友好，复杂度只与边数线性相关，整体效率开销不到 10%。
 
-**3. 离群检测 + 通信剪枝：揪出偏离群体的 agent 并把它静音。**
+**3. 离群检测 + 通信剪枝：揪出偏离群体的 agent 并把它静音**
 
 有了每个时序节点的贡献分，还要汇总到 agent 级别并判定谁是恶意的。BPD 先按 agent 取均值 $\hat{S}(A(i)) = \frac{1}{|\mathcal{T}(i)|} \sum_{t \in \mathcal{T}(i)} S(A_t(i))$，再算它与其余所有 agent 的平均绝对差 $\Delta(i) = \frac{1}{n-1} \sum_{j \ne i} |\hat{S}(A(i)) - \hat{S}(A(j))|$，把 $\Delta(i) \ge \epsilon$ 的归入恶意集合 $\mathcal{M}$（论文经验取 $\epsilon = 1.5$）。之所以用"两两差的平均"而不是 z-score 或固定阈值，是因为 MAS 群体小（$n \le 5$）、正态假设不成立，pairwise 偏差对小样本更鲁棒。剪枝阶段删掉恶意 agent 的所有出边 $E_\mathcal{M} = \{e_{t,i\to j} \mid A(i) \in \mathcal{M}\}$，得到修复图 $G' = (V, E \setminus E_\mathcal{M})$——相当于把它从决策路径上"静音"，但保留节点角色防止拓扑结构崩溃。这一招对攻击形态不敏感的原因在于：攻击成功时恶意 agent 的正向贡献被传染性放大，攻击失败时它的消息被周围 agent 反驳而形成显著负向，两种情形都会让 $\Delta(i)$ 异常。
 

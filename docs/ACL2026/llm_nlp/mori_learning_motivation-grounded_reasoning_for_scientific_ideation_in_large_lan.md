@@ -49,7 +49,7 @@ MoRI 是个三阶段 pipeline（Figure 2 + 7）：
 
 ### 关键设计
 
-**1. 熵感知信息增益 EAIG：只奖励"硬 token"上的预测提升，把信号锚死在 ground-truth 上。**
+**1. 熵感知信息增益 EAIG：只奖励"硬 token"上的预测提升，把信号锚死在 ground-truth 上**
 
 开放式 ideation 的根本困难是没有 deterministic verifier——method 没有标准答案，用整段 method 的概率当奖励噪声极大、还偏向短输出。EAIG 的思路是：不看整段，只看 ground-truth method 里真正"硬"的 token。先用固定的 SFT 模型在 teacher-forced 条件下算出每个位置的熵 $H_t = -\sum_v \pi_{\text{sft}}(v \mid x, m, y^*_{<t}) \log \pi_{\text{sft}}(\cdot)$，取熵最高的 top-25% 形成 mask $\mathcal{M}_t$——实证里这把 34.2% 的 technical terms 选了进来，而 common words 只占 14.5%、numbers 只占 5.5%，说明 mask 抓的正是承载创新的技术细节。然后逐 token 算"加了 reasoning $z$ 之后预测得准了多少"：
 
@@ -57,11 +57,11 @@ $$g_t(z) = \log \pi_\theta(y^*_t \mid x, m, z, y^*_{<t}) - \log \pi_{\text{sft}}
 
 最终在 mask 上取平均 $\Delta_{IG}(z) = \frac{1}{\sum \mathcal{M}_t} \sum_t \mathcal{M}_t \cdot g_t(z)$。和 Beyond 80/20 那类"在 reasoning token 上过滤高熵"不同，MoRI 把高熵 mask 用在 **ground-truth method** 上而非生成的 reasoning 上——奖励锚在固定的 GT 而非模型自己写的内容上，从结构上切断了 reward hacking 的路径：模型再怎么乱写也改变不了 GT 的硬 token 是哪些。
 
-**2. 对比语义增益 CSG：减掉"复述输入"的基线，逼模型做真实的语义跳跃。**
+**2. 对比语义增益 CSG：减掉"复述输入"的基线，逼模型做真实的语义跳跃**
 
 EAIG 管的是微观技术深度，但还需要一个宏观信号保证生成的 method 是在朝 ground-truth 的解空间移动，而不是堆细节原地打转。直接用 $S_{gen} = \cos(\mathbf{E}(\hat{y}), \mathbf{E}(y^*))$（Qwen3-Embedding-8B 嵌入）会有个偷懒漏洞：把 context 改写一遍也能拿到不低的相似度。CSG 的关键是引入一个反事实基线 $S_{base} = \cos(\mathbf{E}(x \oplus m), \mathbf{E}(y^*))$，即"原封不动复述输入 $x \oplus m$"本来就能拿到的相似度，奖励只给增量 $\Delta_{sem} = S_{gen} - S_{base}$。这样 $\Delta_{sem} > 0$ 才意味着模型把语义重心从问题空间真正推到了解空间——必须产生超越输入的内容才有正奖励，这正是把 reward shaping 和"创新"概念对齐的那一笔。
 
-**3. Length Anchoring + 格式约束：抵消 GRPO 的隐式 short bias，封死两条 hacking 退路。**
+**3. Length Anchoring + 格式约束：抵消 GRPO 的隐式 short bias，封死两条 hacking 退路**
 
 EAIG 方差天然偏高，单独用会诱发两种崩溃：reasoning chain 越缩越短、或者乱写一通去"hack 熵"。先看格式约束——指示函数 $\mathds{1}[\text{valid}]$ 要求 CoT 非空、≥ 1000 字符且不含 `##`/`###`，后者是为了防止把 method 内容偷渡进 reasoning 段冒充推理。再看长度锚定，调制因子
 

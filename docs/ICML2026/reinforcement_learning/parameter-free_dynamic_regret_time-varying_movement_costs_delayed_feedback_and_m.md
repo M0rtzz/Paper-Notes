@@ -51,7 +51,7 @@ tags:
 
 ### 关键设计
 
-**1. 把时变移动代价编码进正则器：让 mirror descent 在未来要付高代价时自动谨慎。**
+**1. 把时变移动代价编码进正则器：让 mirror descent 在未来要付高代价时自动谨慎**
 
 无约束域里 log-linear 正则 $\psi$ 不强凸，Jacobsen & Cutkosky (2022) 早就指出必须靠一个 linear-norm 修正项 $\varphi_t$ 才能稳住 iterate。本文的关键观察是这个修正项的系数本来就可以任意放大，于是把它改写成 $\varphi_t(w) = (\eta\beta_t^2 + \gamma)\|w\|$，其中 $\beta_t \triangleq \|g_t\| + \lambda_{t+1}$，更新规则
 
@@ -59,11 +59,11 @@ $$w_{t+1} = \arg\min_w\ \langle g_t, w\rangle + D_\psi(w \mid w_t) + \varphi_t(w
 
 $\varphi_t$ 就像一根"弹回原点的皮筋"，劲度随当前梯度与下一步移动代价共同放大：$\lambda_{t+1}$ 大时算法被强制保守、不敢乱动，$\lambda_{t+1}\to 0$ 时它平滑退回标准 parameter-free OCO。这一步之所以几乎"白嫖"成功，是因为只往修正项系数里塞了个 $\lambda_{t+1}^2$，原 Jacobsen–Cutkosky 的分析骨架原样继承，全部 parameter-free 性质（对 $M$、$P_T$、$\|g_t\|$ 自适应）自动保留。
 
-**2. 自适应一阶批处理（Algorithm 3）：把二阶 $\lambda_t^2$ 依赖压成一阶 $\lambda_t\|g_t\|$。**
+**2. 自适应一阶批处理（Algorithm 3）：把二阶 $\lambda_t^2$ 依赖压成一阶 $\lambda_t\|g_t\|$**
 
 直接用上面的正则器会得到 leading term 含 $\lambda_t^2$ 的界，在小梯度温和环境里这等于"白白罚分"。批处理层的做法是维护一个累积梯度缓冲 $H_\tau$ 与 epoch 索引 $\tau$：每一轮决策直接复用 $w_t=\tilde w_\tau$ 不动、把 $g_t$ 累加进 $H_\tau$，**只有当** $\|H_\tau\| > \lambda_{t+1}$ 时才把 $(\tilde g_\tau=H_\tau,\ \tilde\lambda_{\tau+1}=\lambda_{t+1})$ 喂给底层 Algorithm 2、触发一次真正更新并开启新 epoch。直觉很直白——只有当前累积的证据足以盖过下一步移动成本时，移动才划算，否则就忍住别动、继续观察。它把 leading term 从 $\sqrt{\sum_t(\|g_t\|^2+\lambda_t^2)\|u_t\|}$ 改进成 $\sqrt{\sum_t(\|g_t\|^2+\lambda_t\|g_t\|)\|u_t\|}$；Remark 4.3 证明这个一阶界永远不差于二阶界（差一个 AM-GM 常数），并在 $\|g_t\|\ll\lambda_t$ 时严格收紧。相比固定移动代价的 Zhang et al. (2022b)，难点在于触发阈值要随时变 $\lambda_{t+1}$ 一起动，分析里还得仔细处理 epoch 边界对 path-length 的影响。
 
-**3. 两个归约：把延迟反馈与时变记忆翻译成移动代价。**
+**3. 两个归约：把延迟反馈与时变记忆翻译成移动代价**
 
 这一步是全文最漂亮的地方——论证"无约束 + 时变移动代价"不是孤立设定而是一个**原语**，别的问题只要能归约进来就自动继承整套工具。延迟反馈方向，Lemma 5.1 给出
 

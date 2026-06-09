@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. PBIG-DATA 多维 + 阶梯式评分协议：把「该评哪些维度、用什么尺度、何时跳过」写进数据本身。**
+**1. PBIG-DATA 多维 + 阶梯式评分协议：把「该评哪些维度、用什么尺度、何时跳过」写进数据本身**
 
 商业评审里「这个 idea 太模糊以至于谈不上可行性」是常态，强迫专家给劣质 idea 也打满 6 个维度只会引入噪声，所以协议把「缺失」当成评估流程的一部分而非缺陷。6 个维度各用匹配自身自然粒度的尺度：specificity / technical validity / competitive advantage 用 1-4，innovativeness 用 1-5（多一档区分「惊艳但不颠覆」），need validity / market size 用 0-3（0 表示「不是 B2B 产品」的类别排除）。
 
 阶梯筛选规则是逐层放行：先打 specificity，过阈值才评 technical validity，再过阈值才评 innovativeness 和 competitive advantage；need validity / market size 也仅在 specificity 过阈值时才评。这样一来低质 idea 不会被硬塞进下游维度，留下的评分都是「值得评」的，缺失本身也成了一个信号。
 
-**2. 三类 judge 配置对比设计：只动评审员条件这一个变量，隔离「target signal 假设」。**
+**2. 三类 judge 配置对比设计：只动评审员条件这一个变量，隔离「target signal 假设」**
 
 要严格回答「汇总 vs 个性化哪个对」，必须让例子数量、领域、采样逻辑全部对齐，只改 few-shot 例子的评审员归属。于是三种配置被设计成：(a) Zero-shot judge 只给 rubric 和指令、不看任何专家历史；(b) Aggregate judge 的 few-shot 例子取自「非目标评审员」的混合历史（同领域、同维度、不同专利），代表 pooled-label 假设；(c) Personalized judge 的 few-shot 例子专门取自「目标评审员自己」的历史，代表多元化假设。后两者的唯一差别就是例子归属，保证对比公平。
 
 为降低预测噪声，judge 同时输出 0-100 的自信度，沿用 Dong et al. 2024 的做法把自信度 <80 的预测丢掉，并用三个随机种子做多数投票。这套控制变量的安排是结论可信的关键——任何 personalized 优于 aggregate 的差距都只能归因到「向单一评审员对齐」这一件事上。
 
-**3. 分歧量化的双层指标（Fine vs Coarse）：分开看序数分数和强 idea 选择。**
+**3. 分歧量化的双层指标（Fine vs Coarse）：分开看序数分数和强 idea 选择**
 
 如果只用一个指标，「分歧大」既可能是纯噪声、也可能是结构性异质，无法区分。论文因此把 agreement 拆成两层：Fine-grained agreement 用 Krippendorff's α 衡量序数评分的一致性；Coarse agreement 则看「各评审员各自中位数以上的 idea 集合」之间的 Jaccard 相似度（仅在两两评审员有 ≥10 条共评 idea 时才计算）。
 

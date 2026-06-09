@@ -47,7 +47,7 @@ tags:
 第二层是 TIDE。IMPACT 质量高但慢，因此作者用 IMPACT-P 在额外约 2,000 对 ICLR 2021-2023 review 上生成 synthetic contradiction annotations，把完整 review pair 映射到结构化输出，再用 LoRA 微调 Meta-Llama-3-8B-Instruct。TIDE 在测试时只需一次前向，就能输出证据、强度和解释。
 
 ### 关键设计
-**1. Aspect-Conditioned Evidence Agent（ACEA）：把「找矛盾」拆成「按评价维度逐个找」，提高长 review 里隐含冲突的召回。**
+**1. Aspect-Conditioned Evidence Agent（ACEA）：把「找矛盾」拆成「按评价维度逐个找」，提高长 review 里隐含冲突的召回**
 
 审稿矛盾常常不是显式句对冲突，而是散落在整篇 review 多个段落里的不同判断。如果让模型在长文本里宽泛地找冲突，要么漏掉隐含、分散的分歧，要么为了不漏而疯狂产假阳性。ACEA 的破法是给它一组评价维度——Motivation、Clarity、Soundness、Substance、Originality、Meaningful Comparison——逼它一次只盯一个维度，分别从两篇 review 抽候选证据 span 对：
 
@@ -55,11 +55,11 @@ $$\mathcal{E}_{a_m}^{(i,j)}=f_{ACEA}(r_i,r_j,a_m),$$
 
 再把所有 review pair 的候选汇成 aspect-specific 的证据池。提醒模型「现在专门找 novelty 冲突」「现在专门找 clarity 冲突」，既显著拉高召回，又把后续的强度评分限定在更清晰的语义框架里。代价是召回上去了、假阳性也会变多，这个洞要靠后面的 validity gate 来补。
 
-**2. Deliberative Intensity Agents + Disagreement Orchestrator：用「锁分审议」逼 agent 暴露分歧理由，而不是为了和气而趋同。**
+**2. Deliberative Intensity Agents + Disagreement Orchestrator：用「锁分审议」逼 agent 暴露分歧理由，而不是为了和气而趋同**
 
 强度判断不是有无矛盾的二分类，而要给出由轻到重的等级。两个 DIA 各自独立给同一个证据对预测强度 $\alpha\in\{0,1,2,3\}$（0 = 无效矛盾，1–3 = 轻/中/重）并附解释；若两者一致就直接采纳。问题出在不一致时——普通的多智能体 debate 容易出现从众、为了达成共识而懒惰改票。Disagreement Orchestrator 的关键设计是 score-locking：讨论期间要求两个 agent 保持原始分数不变，只能补充证据、澄清评分细则、回应对方理由，但不许改票。这样审议的目标就从「协商出一个一致分」变成「把两种判断背后的证据都摊给裁决器看」，更契合强度评分这种本就允许合理分歧的任务。
 
-**3. IMPACT 到 TIDE 的教师-学生蒸馏：把慢而准的多智能体审议压成单模型、单次前向的部署形态。**
+**3. IMPACT 到 TIDE 的教师-学生蒸馏：把慢而准的多智能体审议压成单模型、单次前向的部署形态**
 
 IMPACT 质量高但要跑多个 agent、多轮讨论，延迟和成本都扛不住日常批量预筛。于是用 IMPACT 当 teacher，在额外约 2,000 对 ICLR 2021–2023 的 review 上生成结构化标注 $c_j=(e_j,\alpha_j^*,\rho_j)$——每条含证据对、裁决后的强度和解释。学生模型 TIDE 用 SFT 学习从完整 review pair 到这组结构化输出的映射 $p_\theta(\{c_j\}|r_i,r_j)$，并通过 LoRA 只更新 adapter、冻结 base。结果是 TIDE 测试时只需一次前向就能吐出证据、强度和解释：高价值审查或离线标注交给「慢而准」的 IMPACT，大规模预筛交给「快而够用」的 TIDE，两条路各管各的场景。
 

@@ -46,15 +46,15 @@ ClimateCause 是一套围绕"如何把气候科学报告里那些缠绕的因果
 
 ### 关键设计
 
-**1. 名词短语重构与多事件拆解：把因果两端化成可逐对比对的规范形式。**
+**1. 名词短语重构与多事件拆解：把因果两端化成可逐对比对的规范形式**
 
 现有数据集往往保留原句的混合表述，导致因果图里的事件无法精确匹配、也没法逐对验证。本文要求把每个因和果都重写成名词短语，例如"Unsustainable agricultural expansion increases ecosystem vulnerability"被拆成 cause: unsustainable agricultural expansion、effect: increased ecosystem vulnerability。当一端裹着多个事件时（如"damages in terrestrial, freshwater, cryospheric ecosystems"），进一步拆成多条独立因果对，并用 Belongs_to 和 Combined 两个字段区分"只是举例并列"还是"联合共同作用"。这样每条关系都成了原子化、可比对的单元，因果图的节点匹配才有可能。
 
-**2. 隐式和嵌套因果标注：把术语里藏着的因果挖出来。**
+**2. 隐式和嵌套因果标注：把术语里藏着的因果挖出来**
 
 科学报告里大量因果并不靠"because"这类触发词，而是埋在术语和领域知识里，忽略它们会严重低估因果网络的真实复杂度。隐式因果如"anthropogenic greenhouse gas emissions"，没有触发词，但语义上暗含 humans → greenhouse gas emissions；嵌套因果如缩写 CO2-FFI，内部其实压着 fossil fuel combustion → CO2 emissions 和 industrial processes → CO2 emissions 两条关系。本文用 Nested 字段标记这类结构，并把嵌套出来的关系也提取为独立因果对，让原本隐藏的层级在数据集中显式可见。
 
-**3. 基于因果图语义复杂度的可读性度量：量化一条陈述的因果认知负担。**
+**3. 基于因果图语义复杂度的可读性度量：量化一条陈述的因果认知负担**
 
 传统可读性指标（如 Flesch Reading Ease）只看词长句长，根本测不出读懂一段因果推理要花多少脑力。本文据此提出从因果图语义结构出发的五维复杂度：共同原因／效果结构复杂度 $C^{com}$、举例展开复杂度 $C^{ex}$、嵌套因果复杂度 $C^{nest}$（带 $T_i \log T_i$ 项惩罚多层嵌套）、相关性方向复杂度 $C^{corr}$、关系类型复杂度 $C^{pol}$，各维度经 min-max 归一化后等权加和得到陈述总复杂度 $C(s)$。这一度量可用来评估 IPCC 这类报告对非专家读者的可理解程度，进而指导报告该往哪里简化。
 

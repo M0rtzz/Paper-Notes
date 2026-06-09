@@ -45,7 +45,7 @@ Speed3R 想解决的事很具体：让 VGGT、$\pi^3$ 这类 feed-forward 3D 重
 
 ### 关键设计
 
-**1. 特殊 token 走全注意力，只对海量图像 token 下手。**
+**1. 特殊 token 走全注意力，只对海量图像 token 下手**
 
 GSA 的输入 $X \in \mathbb{R}^{M \times C}$ 是特殊 token $X_{\text{spec}}$（如位姿 token）和图像 token $X_{\text{img}}$ 拼起来的，投影出 Q/K/V 后按类型切开。位姿这类全局任务最怕信息被剪掉，而特殊 token 本来就没几个，所以干脆让它们对全部 token 做标准稠密注意力，开销可忽略：
 
@@ -53,7 +53,7 @@ $$O_{\text{spec}} = \text{softmax}\left(\frac{Q_{\text{spec}} K^T}{\sqrt{d_k}}\r
 
 真正撑爆 $O(n^2)$ 的是数量庞大的图像 token，后面三步全部只对它们做稀疏化——这样既保住了关键全局信息，又把刀砍在了瓶颈上。
 
-**2. 压缩分支：先把场景看个大概，顺手算出引导分数。**
+**2. 压缩分支：先把场景看个大概，顺手算出引导分数**
 
 对 $Q_{\text{img}}, K_{\text{img}}, V_{\text{img}}$ 做 $s \times s$ 非重叠平均池化，把图像 token 从 $M_{\text{img}}$ 压到 $M'_{\text{img}} = M_{\text{img}} / s^2$，在这个小得多的压缩空间里算注意力 $O'_{\text{comp}} = \text{Attention}(Q_{\text{comp}}, K_{\text{comp}}, V_{\text{comp}})$，再用最近邻插值上采样回原分辨率 $O_{\text{comp}} = \text{Upsample}(O'_{\text{comp}})$。这一分支给出的是粗粒度的全局摘要；更关键的是它顺带产出一张引导分数矩阵
 
@@ -61,7 +61,7 @@ $$S_{\text{guide}} = Q_{\text{comp}} K_{\text{comp}}^T \in \mathbb{R}^{M'_{\text
 
 它记录了哪些粗区域彼此相关，等于替下一步选 token 提前划好了重点。
 
-**3. 选择分支：照着引导分数把精细 KV 捞回来。**
+**3. 选择分支：照着引导分数把精细 KV 捞回来**
 
 光有粗摘要会丢细节，所以再补一条精细分支。对每个 query 用 $\text{TopKSelect}(\cdot)$ 从 $S_{\text{guide}}$ 里挑出最相关的几个粗区域，再回到全分辨率的 $K_{\text{img}}, V_{\text{img}}$ 取出对应的 $K_{\text{sel}}, V_{\text{sel}}$（同一压缩窗口内的 query 共享同一组 KV，省掉重复挑选），只在这一小撮上算精细注意力：
 
@@ -69,7 +69,7 @@ $$O_{\text{sel}} = \text{Attention}(Q_{\text{img}}, K_{\text{sel}}, V_{\text{sel
 
 每个 query 实际只注意 $k \ll M_{\text{img}}$ 个 token——这正是把 SfM「稀疏关键点就足够鲁棒位姿估计」的老经验搬进 feed-forward 模型：不必看全场，看对的几个点就行。
 
-**4. 门控聚合：每个 token 自己决定看全局还是看局部。**
+**4. 门控聚合：每个 token 自己决定看全局还是看局部**
 
 粗摘要和精细注意力各有所长，硬性二选一不划算，于是用一个可学习门控按 token 动态加权：
 
@@ -77,11 +77,11 @@ $$g = \sigma(W_g Q_{\text{img}}), \quad O_{\text{img}} = g \odot O_{\text{comp}}
 
 $\sigma$ 是 sigmoid、$W_g$ 是学习投影。需要全局上下文的 token 多取压缩分支，需要细节的多取选择分支，融合权重交给模型自己学。
 
-**5. 融合 Triton kernel：别让完整分数矩阵落地显存。**
+**5. 融合 Triton kernel：别让完整分数矩阵落地显存**
 
 朴素实现会把 $S_{\text{guide}}$ 整张分数矩阵物化出来，长序列下显存吃不消。作者写了个融合 kernel，把流式 Top-K 塞进 FlashAttention 的工作流：在片上 SRAM 逐 tile 算分数时就同步维护一个 running top-k 索引集合，一次扫描同时完成区域选择和压缩输出，全程不物化完整矩阵——这才让稀疏的理论加速真正落到墙钟时间上。
 
-**6. 两套架构各自适配。**
+**6. 两套架构各自适配**
 
 GSA 是即插即用的，但两套 backbone 的细节不同。VGGT 把首帧当全局参考帧、还带专用相机 token，为防参考信息被稀疏掉，它的选择集固定包含「参考帧全部 token + 每隔 100 帧采样的 token」这层全局上下文，再叠加非参考帧的动态 Top-K 窗口。$\pi^3$ 没有参考帧和相机 token 依赖，可直接套 GSA，实验还发现它的 register token 在稀疏变体里能直接移除、性能不掉，模型反而更简洁。
 

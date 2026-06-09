@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 多层级回归 + LRT：把"文化"和"人口学"的贡献干净解耦。**
+**1. 多层级回归 + LRT：把"文化"和"人口学"的贡献干净解耦**
 
 文化效应很容易被误归因——一个看似"东欧 rater 更严格"的差异，可能只是因为这批人恰好偏年长。要分清，就得在同一个模型里联合控制两类因素。作者以 Likert 评分 $H_{ij}$ 为响应，base 模型只放 rater/item 随机效应 $H_{ij}=\beta_0+u_i+v_j+\epsilon_{ij}$（$u_i\sim\mathcal{N}(0,\sigma_{\text{rater}}^2)$、$v_j\sim\mathcal{N}(0,\sigma_{\text{item}}^2)$），然后逐层叠加固定效应：人口学向量 $\mathbf{E}_i,\mathbf{A}_i,\mathbf{G}_i$（族裔/年龄/性别 one-hot）、文化区 one-hot 向量 $\mathbf{C}_i$、以及交互项 $\mathbf{C}_i\times\mathbf{E}_i$，构成 D、CZ、D+CZ、D×CZ 四个嵌套模型。检验靠 likelihood ratio test 比较嵌套对（Benjamini-Hochberg 校正多重检验），再用 $\Delta\text{AIC}$ 和 rater 方差减少比例 $\%\Delta\sigma_{\text{rater}}^2$（伪 $R^2$）量化增益。之所以不用传统 IRR，是因为后者靠 bootstrap 和分层子样本，碰到稀疏的"文化区 × 人口学"格子根本跑不动；多层级模型联合建模 item、rater、group 三层变异，天然吃得下不平衡数据，还能让两类固定效应各自占自己那部分方差、不互相吸收。
 
-**2. Cultural Sensitivity Score：用 Bayesian 后验量化"忽略某象限"的代价。**
+**2. Cultural Sensitivity Score：用 Bayesian 后验量化"忽略某象限"的代价**
 
 证明了文化显著之后，下一步是定位——具体哪些样本会因为缺文化覆盖而被错标。作者给每个样本 $i$ 与象限 $q$ 定义一个分数 $S_{iq}\in[0,1]$，表示"只有第 $q$ 象限判它 unsafe、其余象限都判 safe"的概率，$S_{iq}>0.5$ 即标为 culturally sensitive。计算时先统计该象限的总票数 $n_{iq}$ 与 unsafe 票数 $k_{iq}$，以均匀先验 Beta(1,1) 得后验 $\text{Beta}(1+k_{iq},1+n_{iq}-k_{iq})$，算出该象限多数派判 unsafe 的概率 $H_{iq}=P(\theta_{iq}>0.5)$，再在象限独立假设下取
 
@@ -57,7 +57,7 @@ $$S_{iq}=H_{iq}\cdot\prod_{q'\neq q,\,q'\text{ valid}}(1-H_{iq'}).$$
 
 为防人口学混淆，还加了 validity filter：每个象限至少 3 票、且不能由单一性别/族裔/年龄段全包。用原始投票比例做点估计会被 $n_{iq}=3$ 这种小样本噪声主导，Bayesian 后验天然做了平滑与不确定性量化；而乘积形式恰好把"少数派 unsafe + 多数派 safe"这个最危险的盲点情景写成一个可计算、可解释的联合概率，直接回答"若不招某象限会漏标多少"。这个指标在 6 个数据集上稳定算出约 10% 的文化敏感率（阈值收紧到 $S_{iq}>0.7$ 时约 3%）。
 
-**3. LLM 双角色评测：rater 替身做不到，sensitivity triage 做得到。**
+**3. LLM 双角色评测：rater 替身做不到，sensitivity triage 做得到**
 
 既然全球标注昂贵，自然要问 LLM 能不能顶上——但"顶上"有两种期待，作者把它们分开各做一套最干净的 head-to-head 测试。替身实验问的是"能不能直接冒充某象限打分"：把任务建成 4-label 多标签分类，用 masked binary cross-entropy（只在已知象限上回传梯度）fine-tune DeBERTa-Large 与 Gemma-3-4B，并 prompt Gemini-3 Flash、GPT-5 Nano，以"始终预测 unsafe"为 baseline（理论 F1 为 $\frac{2\cdot\text{prevalence}}{\text{prevalence}+1}$）。triage 实验问的是"能不能帮人类先筛出文化敏感样本"：在 D3 上各采 485 个 unanimously-safe、unanimously-unsafe、culturally-sensitive 样本，分别训"safe vs unsafe"与"safe vs sensitive"两版二分类器，看后者掉多少点、是否仍显著高于 baseline。这样设计既能给出否定结论（LLM 不能替代多元标注者），又能给出建设性结论（它可以做优先级排序的 triage），而不是简单地一句"LLM 不行"。
 

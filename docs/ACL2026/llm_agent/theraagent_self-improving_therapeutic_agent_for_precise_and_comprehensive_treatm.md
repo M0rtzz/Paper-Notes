@@ -49,15 +49,15 @@ TheraAgent 的核心不是训练一个新医学模型，而是设计一个 agent
 
 ### 关键设计
 
-**1. Planner 的反馈条件生成：让下一版方案对着具体缺陷改，而不是泛泛“写得更好”。**
+**1. Planner 的反馈条件生成：让下一版方案对着具体缺陷改，而不是泛泛“写得更好”**
 
 治疗计划最常见的毛病是遗漏项和安全边界不清——忘了写剂量、漏了禁忌证、没说何时停药或升级。Planner 因此不只看当前病例，还读取 Memorizer 里上一轮或高分历史方案的治疗文本、评估理由和分数，形式化为 $(T_k,c_k)=f_{\theta}(P,\mathcal{M}^{(k-1)})$。把上一轮 TheraJudge 点出的具体问题显式放回 prompt，下一轮生成就能集中修补那几个缺口，而不是又写一篇同样粗糙的方案。
 
-**2. TheraJudge 的临床多维评估：给出可驱动迭代的结构化反馈，而非只看文本流畅度。**
+**2. TheraJudge 的临床多维评估：给出可驱动迭代的结构化反馈，而非只看文本流畅度**
 
 普通 LLM judge 容易被流畅文字和表面医学词汇糊弄，但治疗计划要的是能指出具体风险、可追责的 clinical critic。TheraJudge 每轮输出 rationale、分维度得分和总分，按 Scientific Consensus Compliance、Plan Completeness、Situation Targeting、Rationale-Measure Coherence、Harm Control 等维度打分；它可以用 RAG 检索 600 多份临床指南/文献补强证据，也可以用每个科室 3 个 few-shot 专家样例稳定评分行为。正因为评估维度贴近真实医生的判断框架，产出的反馈才能真正告诉下一轮“哪里不安全、哪里不完整”。
 
-**3. Score-aware Memorizer 与最终选择：留住有用经验，挡住后期漂移。**
+**3. Score-aware Memorizer 与最终选择：留住有用经验，挡住后期漂移**
 
 自改进 agent 常见的坑是“把所有历史都当经验”，低分方案的错误反复进上下文会造成错误强化、后期漂移。Memorizer 把每轮存成 $M_i=(T_i,R_i,s_i)$，下一轮只检索得分最高的 Top-N 条做 in-context refinement；最终输出也不机械取最后一轮，而是在最后 $L$ 轮里按 TheraJudge 分数挑最高的 $T^*=\arg\max s_k$。再配一个早停：连续三轮分数都超过阈值 $\tau$ 就提前停，省掉无谓开销。论文默认最大 10 轮、输出窗口 $L=3$、Top-N memory 为 3。
 

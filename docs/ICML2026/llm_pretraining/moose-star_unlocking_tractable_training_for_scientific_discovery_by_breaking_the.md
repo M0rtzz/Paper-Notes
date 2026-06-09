@@ -44,15 +44,15 @@ MOOSE-Star 的目标是直接训练 $P(h\mid b)$——给定研究背景 $b$ 就
 
 ### 关键设计
 
-**1. 分解式序列训练（IR + HC）：把指数级的端到端学习换成 $k$ 步线性子任务。**
+**1. 分解式序列训练（IR + HC）：把指数级的端到端学习换成 $k$ 步线性子任务**
 
 直接学 $P(h\mid b)$ 之所以训不动，是因为它隐式要求在 $\mathcal{O}(N^k)$ 的灵感组合里搜索。本文借 MOOSE-Chem 的概率分解定理把它按 chain rule 拆开：$P(h\mid b)\approx \prod_{j=1}^{k} P(i_j\mid b,h_{j-1},\mathcal{I})\cdot P(h_j\mid b,h_{j-1},i_j)$，于是一个组合问题变成 $k$ 次"先检索一条灵感、再增量合成一步假设"的循环。IR 任务是从 15 个候选论文（1 正 + 14 负的硬负例 pool，输入 title+abstract）里生成式地选出最相关那 1 篇，输出带 CoT 推理；HC 任务是在拿到 ground-truth $i_j$ 后写出增量假设 $\Delta h_j$。两者都用 teacher-based RFT 训练，整体复杂度从 $\mathcal{O}(N^k)$ 落到 $\mathcal{O}(k\cdot(N+1))$。这一步把指数级笛卡尔积换成 $k$ 个线性求和，是把问题搬进可训范畴的关键；同时 IR/HC 各自都是清晰、可监督、可评测的任务，远比对整条 $h$ 打分来得稳。
 
-**2. Bounded Composition：让合成模型容忍检索误差。**
+**2. Bounded Composition：让合成模型容忍检索误差**
 
 就算检索做到对数级，最末一层选出的灵感也未必正好是 ground-truth $i^*$，HC 若只见过完美灵感就会在真实噪声下崩掉。做法是定义一个以 $i^*$ 为中心、大小为 $M$ 的语义容忍邻域 $\mathcal{I}_{i^*}\subset\mathcal{I}$，训练时随机从这个邻域采"近似灵感"喂给 HC，逼它学会用相邻概念也能合成出有效的 $\Delta h_j$。这等价于把检索的精度要求从"$1/N$ 精确匹配"放宽到"$1/(N/M)$ 模糊匹配"，又把 IR 的有效搜索空间压了一档。本质上它把"检索误差"显式建模成训练分布，类似 noise-aware training，让整条 pipeline 在不完美检索下仍然鲁棒。
 
-**3. Motivation-Guided Hierarchical Search：用语义树 + 方向变量把检索从 $\mathcal{O}(N)$ 压到 $\mathcal{O}(\log N)$。**
+**3. Motivation-Guided Hierarchical Search：用语义树 + 方向变量把检索从 $\mathcal{O}(N)$ 压到 $\mathcal{O}(\log N)$**
 
 IR 把复杂度降到了线性，但逐篇扫 $N$ 仍嫌慢。这里把全文献按语义聚成一棵检索树，每一步只在当前节点的孩子里选最相关分支，理想情况下检索深度只要 $\mathcal{O}(\log N)$。但"该往哪棵子树走"本身仍是开放问题，所以再给 background 附加一个显式的 motivation 变量 $m$（取自 $\Delta h$ 的 Motivation 层），它充当树的"生成根"动态裁掉与当前目标无关的子树，把可搜空间从 $N$ 缩到 $N_m\ll N$。语义树省的是检索步数，motivation 变量给的是生成性的方向控制信号——两者合起来才让模型在 inference time 真正能随预算 scale。
 

@@ -45,15 +45,15 @@ UGround 把 LMM-based 视觉定位从"用最后一层 $\langle\text{SEG}\rangle$
 
 ### 关键设计
 
-**1. 随机跳层连接 (SSC)：让每个 $\langle\text{SEG}\rangle$ 自己选「在哪一层跳出去接 SAM」。**
+**1. 随机跳层连接 (SSC)：让每个 $\langle\text{SEG}\rangle$ 自己选「在哪一层跳出去接 SAM」**
 
 传统范式固定用最后一层的 $\langle\text{SEG}\rangle$ embedding 喂 SAM，像传话游戏一样把 32-40 层的累积误差全堆到最后；可实验证明 10-40 层的 cIoU 几乎都比最后层高。SSC 干脆把「在哪层连出去」建成一个可学的策略分布 $\pi_\theta(\ell|\mathcal{H}_{t^*})=\frac{\exp(s_\ell)}{\sum_j\exp(s_j)}$，打分 $s_\ell=\bm{h}_{t^*}^{(\ell)}\cdot\mathbf{w}_\ell$ 每层有自己的权重 $\mathbf{w}_\ell$；训练时按 $\ell^*\sim\pi_\theta$ 采样以允许探索，reward 取 $r=-(\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\mathcal{L}_{dice}(\mathcal{M}, M_\sigma))$（$M_\sigma$ 是 GT mask 经高斯平滑的软标签），配 EMA baseline $b_t=\alpha b_{t-1}+(1-\alpha)r$ 减方差，REINFORCE 损失 $\mathcal{L}_{policy}=-(r-b_t)\log\pi_\theta(\ell^*|\mathcal{H}_{t^*})$。这个结构有两副面孔：单次 forward 看像跳过 $L-\ell^*$ 层直连 SAM 的 skip connection，多次 forward 看像每次激活不同路径的 dropout，等价于一种 Monte Carlo 不确定性估计——既缓解误差累积、又靠 ensemble 提鲁棒性。
 
-**2. 相似度图当提示 (MasP)：把 $\langle\text{SEG}\rangle$ 与图像 token 的相似度图直接喂给 SAM 当软 logit mask。**
+**2. 相似度图当提示 (MasP)：把 $\langle\text{SEG}\rangle$ 与图像 token 的相似度图直接喂给 SAM 当软 logit mask**
 
 $\langle\text{SEG}\rangle$ 本质是文本占位符，靠一个 MLP 隐式映射到视觉空间，没坐标没形状，全靠 SAM 猜；但 $\langle\text{SEG}\rangle$ 与 image token 之间的相似度图本身就是一张 $H\times W$ 的软 mask，空间信息显式得多。MasP 在选中的层 $\ell^*$ 对每个 image token 算 $\mathcal{S}_i^{(\ell^*)}=(\bm{h}_{z_i}^{(\ell^*)})^\top\bm{h}_{t^*}^{(\ell^*)}$，按 2D 网格排布插值到 $H\times W$ 得 $\mathcal{M}$，再调用改写后的 SAM $\hat{\mathbf{M}}=\mathcal{G}_\mathcal{V}^{dec}(\mathbf{f}, \bm{h}_{seg}, \mathcal{M})$。$\mathcal{M}$ 连续可微，梯度既能通过 SAM 反传、又被显式监督 $\mathcal{L}_\mathcal{M}=\lambda_{bce}\mathcal{L}_{bce}(\mathcal{M}, M_\sigma)+\lambda_{dice}\mathcal{L}_{dice}(\mathcal{M}, M_\sigma)$ 进一步约束。一个有力的实证：即便完全不训练，把相似度图直接当 prompt 喂原始 SAM 都能拿到 17% cIoU，说明 LMM 内部早已隐式编码了空间分布，显式当 prompt + 显式监督只是把这种隐式能力放大。
 
-**3. 属性统一架构：一个模型同时支持 RES / RS / FP-RES / gRES / Multi-RS 五种任务。**
+**3. 属性统一架构：一个模型同时支持 RES / RS / FP-RES / gRES / Multi-RS 五种任务**
 
 之前没有方法能一次满足全部五个属性——LISA 只覆盖 RES+RS，GSVA 到 gRES 但不支持 Multi-RS，PixelLM 支持 Multi-RS 却不能拒绝空目标。UGround 靠 PPM 本身的灵活性把五种一锅端：多目标场景下每个目标配一个 $\langle\text{SEG}\rangle$、各自独立采样层 $\ell^*$；false premise 场景下若所有层的相似度图都低响应、模型就可以拒绝；reasoning 场景下中间层的语义本就比最后层强，正好适合处理隐式描述。于是它成了首个 5/5 全覆盖的统一框架。
 

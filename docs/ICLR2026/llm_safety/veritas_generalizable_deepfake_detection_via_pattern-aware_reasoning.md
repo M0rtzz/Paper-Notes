@@ -57,15 +57,15 @@ Veritas 基于 InternVL3-8B 构建，采用两阶段训练流程：
 
 ### 关键设计
 
-**1. HydraFake 数据集与四级评估协议：让 benchmark 真正暴露检测器的 OOD 短板。**
+**1. HydraFake 数据集与四级评估协议：让 benchmark 真正暴露检测器的 OOD 短板**
 
 现有基准多在 FF++ 上训练、在少数低质量数据集上测试，无法反映工业场景里"训练数据充足、但测试分布千变万化"的真实挑战。HydraFake 用 50K 真实（来自 88 个数据集）+ 50K 伪造（36 种生成模型）覆盖 face swapping、reenactment、全脸合成、face restoration、relighting、personalization 等多种伪造手段，但故意把训练集限制在 3 种基础伪造类型（FS/FR/EFG，48K 图像），从而构造出层层递进的 OOD 评估：In-Domain (14K) 同分布；Cross-Model (11K) 换成 FLUX/StarryAI/MAGI-1 等未见生成模型；Cross-Forgery (12K) 引入属性编辑、生成式换脸、个性化等未见伪造方式；Cross-Domain (15K) 则是未见数据域加上 GPT-4o/Dreamina/HailuoAI 这类社交媒体上的野生 deepfake。这种分级设计的价值在于能精确定位检测器在哪一层 OOD 上崩，而不是给出一个笼统的跨域分数。数据上排除了 DFDC、WDF 等低质量集合，对自构建数据用 Qwen2.5-VL-72B 生成 sample-specific prompt 并人工筛选高质量样本。
 
-**2. Pattern-Aware Reasoning：把人类鉴伪的思维流程显式编码成 5 种推理模式。**
+**2. Pattern-Aware Reasoning：把人类鉴伪的思维流程显式编码成 5 种推理模式**
 
 vanilla CoT 没有结构化的思维引导，模型很容易给出表面化、走过场的推理。Veritas 借鉴人类鉴伪过程，定义了一条自适应的推理链：`<fast>` 先给出快速直觉判断，`<reasoning>` 定位 1-2 个显著 artifact，`<planning>` 对困难样本做分层分析，`<reflection>` 自我反思以推翻或支持初始判断，`<conclusion>` 综合所有证据得出最终结论。关键在于这些 pattern 是按需调用的——简单样本可能只走 fast+reasoning+conclusion，只有困难样本才触发 planning 和 reflection。它与"后验解释 (post-hoc explanation)"范式有本质区别：后者先确定答案再补理由，推理不参与决策（准确率因此低 8.4%），而 Veritas 的推理过程直接驱动最终判断。实验上，pattern-aware reasoning 相比 flexible reasoning 在 Cross-Forgery 上提升 6.2%、Cross-Domain 上提升 3.3%。
 
-**3. Mixed Preference Optimization (MiPO)：用"答对但理由差"的负样本逼出精细推理。**
+**3. Mixed Preference Optimization (MiPO)：用"答对但理由差"的负样本逼出精细推理**
 
 纯 SFT 之后的模型常常"答案对、推理浅"，本质上是在记忆模式而非真正推理。MiPO 在 SFT 之后做一次偏好对齐，构建混合非偏好数据集 $\mathcal{D}_2$，里面包含两类负样本：$s_l^\phi$（答案正确但推理粗糙、不够详细）和 $s_l^\psi$（答案错误），正样本 $s_w$ 则由人工专家精标。训练采用 DPO 风格损失：
 
@@ -73,7 +73,7 @@ $$\mathcal{L}_2 = -\mathbb{E}\Big[\log\sigma\big(\beta\log\frac{\pi_\theta(s_w|q
 
 与标准 DPO 只把"答错"当负样本不同，MiPO 多引入了 $s_l^\phi$ 这一"答对但推理不够好"的类别，迫使模型学会"以正确的方式答对"。消融验证了两类样本的不同角色：去掉 $s_l^\phi$ 后模型仍能答对、但推理变浅，CF -1.1%、CD -0.8%；而 $s_l^\psi$ 是偏好学习的基础，去掉它模型直接崩溃至 60.8%。
 
-**4. Pattern-Aware GRPO (P-GRPO)：用强化学习奖励"在合适时机用合适的思维模式"。**
+**4. Pattern-Aware GRPO (P-GRPO)：用强化学习奖励"在合适时机用合适的思维模式"**
 
 冷启动之后，P-GRPO 通过在线采样进一步激励自适应推理深度，让模型在真正需要时才主动调用 planning 和 reflection。对每个 query 采样 $G=4$ 个 response，用 pattern-aware reward 评估质量，最终奖励为：
 

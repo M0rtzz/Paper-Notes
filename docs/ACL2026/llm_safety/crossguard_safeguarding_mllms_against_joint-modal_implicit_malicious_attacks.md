@@ -53,7 +53,7 @@ tags:
 
 ### 关键设计
 
-**1. ImpForge 的三 reward 设计：把"理想的隐式恶意样本"拆成三个互补约束，让 PPO 能同时优化。**
+**1. ImpForge 的三 reward 设计：把"理想的隐式恶意样本"拆成三个互补约束，让 PPO 能同时优化**
 
 隐式样本难造，难在它得同时满足三个互相打架的条件：单看文本要安全、图文合体后要保留恶意意图、文本又不能直接重述图像内容（否则隐式性丢失、容易被语义对齐识破）。任何单一 reward 都顾此失彼——光提安全往往把恶意意图也磨没了，光提隐式又会让文本退回安全。ImpForge 因此把三个目标解耦成三个 reward。safety reward $R_{\text{safety}}(\hat{x}^T) = \text{softmax}(p(\texttt{safe}|x'_T))$ 用 Llama-Guard 类守卫给改写后的纯文本打"safe 概率"，逼文本单独看无害；semantic reward $R_{\text{sim}}(x^I, x^T, \hat{x}^T) = \cos(g(x^I \oplus \hat{x}^T), g(x^T))$ 用 Sentence-BERT 把"图像描述 + 改写文本"的联合表示对齐到原始恶意 query，保证合体后恶意意图还在；overlap reward 则惩罚文本与图像的逐 token 相似，越像越扣分，把隐式性顶上去：
 
@@ -61,11 +61,11 @@ $$R_{\text{ovlp}} = 1 - \frac{1}{|\text{Tok}(\hat{x}^T)|} \sum_w \max\!\big[0,\,
 
 三者汇总后进 PPO 目标 $\max_\theta \mathbb{E}[R_\psi - \lambda D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})]$，让 rewriter 在三个目标的帕累托前沿上探索。这里特别巧的是 overlap reward——它本质要算文本和图像的互信息，但 MI estimator 在 RL loop 里训练极不稳定，作者直接用 token-level cosine 加阈值这个非参数代理替掉，既保住"惩罚冗余"的核心语义又避开了不稳定性。
 
-**2. Stage 1：NER + CLIP 检索的安全图像匹配，给每条恶意文本配一张相关但无害的图。**
+**2. Stage 1：NER + CLIP 检索的安全图像匹配，给每条恶意文本配一张相关但无害的图**
 
 要训 RL rewriter，得先有"恶意文本 + 安全图像"的配对，可现成数据里没有这种组合：恶意文本本身不带图，随便配一张无关图又凑不出隐式恶意（图文毫无关联，改写后也勾连不上）。Stage 1 用一条检索流水线解决配图。先对 BeaverTails 的恶意 query 跑 NER 抽出可视化实体（名词、动词），滤掉 how/am/can 这类抽象词；对每个 keyword $k$ 用 CLIP 在 COCO、WIT 等开源图库里按 $\frac{g(k) \cdot g(x^I)}{\|g(k)\| \|g(x^I)\|}$ 检索相似度最高的安全图像；再用 GPT 二次验证这张图本身无恶意，最终为每条 query 输出三元组 $(x^I, x^T, k)$。CLIP 软匹配在这里是"既相关又不显式"的关键折中——keyword 给出语义 anchor 保证视觉对应，GPT 验证守住"图必须安全"的底线，两者一起把后续改写所需的素材准备好。
 
-**3. CrossGuard 的混合训练 dataset + LoRA 双 backbone 微调：一次教会守卫识别隐式恶意、识别显式恶意、放行良性 query。**
+**3. CrossGuard 的混合训练 dataset + LoRA 双 backbone 微调：一次教会守卫识别隐式恶意、识别显式恶意、放行良性 query**
 
 光有隐式数据还不够——只用隐式样本训出来的守卫会"草木皆兵"，把正常 query 也一并拒掉。CrossGuard 因此把训练集配成三份混合：ImpForge 生成的隐式样本（覆盖 14 个领域）补隐式攻击的盲区、VLGuard/FigStep 显式样本守住显式攻击、VQAv2 良性样本兜住 utility 防止过度防御。底座用 LLaVA-1.5-7B，在 vision encoder 和 language 两端都挂 LoRA adapter——因为隐式检测本质需要图文联合理解，单边 freeze 会丢掉跨模态推理能力。训练目标是 binary cross-entropy
 

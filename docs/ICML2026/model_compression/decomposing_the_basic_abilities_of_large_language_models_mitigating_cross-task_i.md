@@ -44,11 +44,11 @@ Badit 把每个 LLM 权重矩阵 $\mathbf{W}^0\in\mathbb{R}^{m\times n}$ 拆成 
 
 ### 关键设计
 
-**1. Basic Ability Decomposition（BAD）：用一次 SVD 拿到免训练就正交的"基础能力字典"。**
+**1. Basic Ability Decomposition（BAD）：用一次 SVD 拿到免训练就正交的"基础能力字典"**
 
 前面已经说清痛点——按"任务"分专家总会因能力重叠而再次共享参数，所以得找一个参数层面真实存在的解耦单元。BAD 的做法是直接对预训练权重 $\mathbf{W}^0$ 做 SVD，取前 $rK$ 个奇异值/向量按列切成 $K$ 段，第 $k$ 段构造 $\mathbf{A}_k = \mathbf{U}_{[r(k-1):rk]}\,\mathrm{diag}(\sqrt{\boldsymbol{\Sigma}_{[r(k-1):rk]}})$ 和对称的 $\mathbf{B}_k$，就得到一个 rank-$r$ 的 LoRA 专家；低奇异值部分组成残差冻结。论文（Appendix A）证明这样切出来的 $K$ 个专家在初始化时**天然两两正交**——SVD 的左/右奇异向量本就落在互不重叠的子空间，每个专家因此对应一组完全独立的"能力方向"。关键洞察在于：基础能力不是 LoRAMoE 那样后天随机分配再训出来的，而是预训练权重里本就存在的主方向；SVD 等于免费给了一个正交字典，把"专家分化"的负担从训练完全前移到初始化，每个专家再加上初值为 1 的路由 $\alpha_k$ 以兼容 MoE。
 
-**2. Dynamically Orthogonal Grouping（DOG）：把正交约束变成"按梯度方向重新归类"的离散优化。**
+**2. Dynamically Orthogonal Grouping（DOG）：把正交约束变成"按梯度方向重新归类"的离散优化**
 
 SVD 的正交只在 $t=0$ 成立，梯度一更新就漂走（Fig. 4 里 LoRAMoE 的 inter-expert 夹角随训练逐步偏离 90°），而消融显示"全程维持正交"比"初始化好"更要命，所以必须有个机制在训练中持续修复。DOG 每隔若干步重新分组一次：先把每个 rank-1 分量 $[\mathbf{a}_i;\mathbf{b}_i^\top]$ 的拼接梯度 $\mathbf{g}_i$ 单位化为 $\widehat{\mathbf{g}}_i$，再找一个 0/1 分配矩阵 $\boldsymbol{\Pi}\in\{0,1\}^{rK\times K}$（每个新专家恰好分到 $r$ 个分量），让同一专家内梯度方向尽量一致、不同专家间尽量正交，目标写成
 

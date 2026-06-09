@@ -46,15 +46,15 @@ FinGround 要解决的是金融文档问答里"答案看着对、但数字算错
 
 ### 关键设计
 
-**1. 六类金融 claim taxonomy + 类型路由验证：先认清这是哪种错，再决定怎么验。**
+**1. 六类金融 claim taxonomy + 类型路由验证：先认清这是哪种错，再决定怎么验**
 
 通用幻觉检测器（FActScore、SAFE）把所有 claim 一视同仁、统统丢给 NLI，但金融答案里"gross margin 是 62.4%"这种话，NLI 根本不会去算它对不对——于是漏掉了 43% 的计算类错误。FinGround 的应对是先把 atomic claim 按错误类型分成六类：numerical（具体数值）、temporal（时间断言）、entity-attribute（实体属性）、comparative（跨实体/时段比较）、regulatory（合规引用）、computational（派生量），再按类路由：numerical 抽出 (value, unit, period, entity) 与表格单元格精确匹配，entity-attribute 走 cross-encoder NLI，regulatory 查规则库，computational 单独走公式重构分支。这套 taxonomy 不是拍脑袋定的——它来自对 500 条真实金融幻觉的错误归因，且实测 6 类比 3 类高 4.3 F1、比 10 类无显著差别（$p=0.23$），说明六类正好是"够用且不冗余"的粒度。本质上它承认了一件被通用检测器忽略的事：验证策略和 claim 类型是耦合的，强行用 NLI 验证比率和 margin，等于让一个不会算账的人去审账。
 
-**2. Computational claim 的公式重构 + 算术再校验：对派生量不靠"猜"，重新算一遍。**
+**2. Computational claim 的公式重构 + 算术再校验：对派生量不靠"猜"，重新算一遍**
 
 错误分析里 computational claim 是幻觉率最高的一类（28.4%），但作者发现它同时也是最容易自动验证的——因为只要找对 operand 就能精确重算，瓶颈从来不在"验证难度"而在"被当成 NLI 处理"。所以这一类不做语义蕴含判断，而是真的把数重新算出来：先用 47 个金融公式模板库匹配出 claim 隐含的公式（如毛利率、负债权益比），再从表格单元格里检索对应的 operand value，最后重算派生量并允许 ±0.5% 容差以容忍四舍五入。这等于把一段 symbolic execution 嵌进了 RAG 验证，computational 类单项验证做到 90.2% F1，比 SelfCheckGPT 高出 +18.9 F1。
 
-**3. 8B 蒸馏检测器 + retrieval-equalized 评测协议：既要能上线，也要能说清增益来自哪。**
+**3. 8B 蒸馏检测器 + retrieval-equalized 评测协议：既要能上线，也要能说清增益来自哪**
 
 GPT-4o 验证单条 claim 要 6.1s，放到金融实时问答里成本根本扛不住，所以 FinGround 用 GPT-4o（gpt-4o-2024-05-13）在 3,200 条金融 QA 上蒸馏到 Llama-3-8B-Instruct：蒸馏目标用 reverse KL divergence 配多任务联合（claim 拆分 + 证据对齐 + verdict 分类），标注侧用两轮一致性检查丢掉 8.4% 不一致样本。结果 p95 延迟从 6.1s 压到 340ms（18×），F1 91.4%（保留教师 96.2% 的性能），部署成本 \$0.003/query。另一半贡献是评测协议：以往 RAG 论文很难区分提升是"找到更好证据"还是"更好地用证据"，FinGround 提出 retrieval-equalized——先给每个 baseline 都装上自己的 Stage 1 检索，把所有差异都收敛到"验证"这一个变量上再比 HalRate，这样得到的验证增益才是干净的、可归因的。
 

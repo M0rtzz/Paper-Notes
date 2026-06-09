@@ -44,15 +44,15 @@ ForesightKV 想解决的核心问题是：KV 重要性本质是未来 attention 
 
 ### 关键设计
 
-**1. Golden Eviction：用未来注意力当 oracle，构造能学的监督标签。**
+**1. Golden Eviction：用未来注意力当 oracle，构造能学的监督标签**
 
 规则方法（SnapKV/H2O/R-KV）本质都是"用历史 attention 估未来重要性"，必然漏掉 semantic-dependent head 那种块状、动态切换的注意力模式。ForesightKV 的破局点是：离线 trace 里其实藏着完整的未来 attention，那就直接拿来当真值。具体做法是在原模型上一次性算出全长 attention 矩阵 $\mathbf{A}^h \in \mathbb{R}^{T\times T}$，沿 query 维以步长 $L$ 切块、对每块及每个 GQA group 内 head 做平均池化得到 block score $\tilde{\mathbf{a}}_t^{h'}$；对第 $t$ 步的淘汰决策，每个 KV pair $i$ 取**未来所有块**的最大 block score 作为它的"未来分数" $\alpha_{i,t}^{h'} = \max_{t\le j\le M}(\tilde{\mathbf{a}}_{i,j}^{h'})$，保留 $\alpha$ 最大的 $B-L$ 个、扔掉最小的——附录 A 证明这种"扔未来注意力最低者"的策略对输出上界影响最小。有了这条 oracle 轨迹，scorer 就用 Pairwise Ranking Loss $\mathcal{L}_{\text{supervised}} = \sum_t \sum_{\alpha_i < \alpha_j} \max(0, m-(\phi_i - \phi_j))$ 去对齐 oracle 的未来分数排序。这条监督信号有多强？Table 2 里 Golden Eviction 构造轨迹的 loss ratio 只有 1.07，而 R-KV/SnapKV 是 1.41+，本身就强了一个数量级——这是后续蒸馏能成功的前提。
 
-**2. MDP + GRPO：用真实推理奖励修正分布偏移。**
+**2. MDP + GRPO：用真实推理奖励修正分布偏移**
 
 监督训练有个隐患：scorer 学的是 oracle 轨迹，可推理时是它自己挑 KV，会走进训练时没见过的状态分布；而且"模仿 oracle"未必等于"改善推理质量"。ForesightKV 把整个解码建成 MDP——state $s_t$ 是当前剩余 KV 缓存，action $a_t$ 是从 $\{1,\dots,B+L\}$ 里选 $B$ 个保留，policy 就是 per-group scorer $\pi_{\theta_{h,l}}$。奖励紧扣 §2.2 那个关键观察（低熵 token 才是推理质量瓶颈）：先筛出"原熵落在底 80%（低熵）且 eviction 后 loss 涨幅超阈值 $\eta$"的 token 集合 $E=\{w_t \mid w_t \in \mathbf{w}_\text{low},\ \Delta\mathcal{L}(w_t)>\eta\}$，奖励取这个子集上 loss 增量的 MSE 取负 $R_t = -\sum_{t\in E}[\Delta\mathcal{L}(w_t)]^2$，用平方专门重罚灾难性恶化。优化用 GRPO：同一序列采 $G$ 条不同 eviction 轨迹，按组相对归一化算 advantage $\hat A_t = (R_t - \text{Mean})/\text{Std}$，再把同一 advantage 广播给序列里所有 eviction 步，对所有 scorer 联合优化（带 PPO clip 和 KL 正则）。奖励为什么这么设计？Table 4 给了反证：无脑降总 loss 反而掉到 50.6（base 51.7），盯高熵 token 更糟（49.6），唯独这个"低熵 + 大幅恶化"的 MSE 奖励 $\mathcal{L}_\text{ours}$ 把 AIME24 从 51.7 推到 54.5。
 
-**3. Top-K + Multinomial：既稳又留探索空间的离散动作参数化。**
+**3. Top-K + Multinomial：既稳又留探索空间的离散动作参数化**
 
 scorer 给出分数 $\Phi$ 后到底扔哪几个 KV，是个离散选择问题，纯贪心和纯采样都有坑：纯 top-$K$ 是 deterministic，对 scorer 的局部排序错误敏感、又不给 RL 留探索；纯 multinomial 太噪，而 KV eviction 一旦扔错无法召回。ForesightKV 用 $\mathcal{D}_t = \text{Multinomial}_L(\text{Softmax}(\text{Top}_{2L}(-\Phi)))$ 折中：先取分数最低的 $2L$ 个作为高置信淘汰候选池（剪掉可信的坏 KV），再在池内按 softmax(负分数) 采 $L$ 个真正淘汰。等价于"先剪枝再受控采样"——既靠剪枝保住稳定性，又靠采样的随机性给 GRPO 提供轨迹多样性。Table 5 显示这种混合在 AIME24 上同时优于纯 top-K 和纯 multinomial。
 

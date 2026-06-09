@@ -46,19 +46,19 @@ DAV 想解决的是扩散模型对齐里"奖励越调越高、多样性却越掉
 
 ### 关键设计
 
-**1. 变分 EM 形式化：把 reward 优化改写成带最优性变量的边际似然最大化。**
+**1. 变分 EM 形式化：把 reward 优化改写成带最优性变量的边际似然最大化**
 
 直接对奖励做 RL 容易 mode-seeking，DAV 换了个视角：引入一个最优性变量 $\mathcal{O}$，定义 $p(\mathcal{O}=1|\tau) \propto \exp(\sum r_t/\alpha)$，把整条去噪轨迹 $\tau$ 当成潜变量，于是对齐就成了最大化 $\mathcal{O}$ 的边际似然。对应的 ELBO 记作 $\mathcal{J}_{\alpha,\gamma}(\eta, p_\theta)$，其中折扣因子 $\gamma$ 用来衰减离终端越远的时间步的信用，避免早期高噪声步抢走奖励信号。这个改写最大的好处是天然把探索（E-step 找后验 $\eta$）和利用（M-step 更新 $p_\theta$）解耦，而且 M-step 用的是 mode-covering 的 forward-KL，从根上堵住坍缩。
 
-**2. E-step——test-time search：用主动搜索近似最优变分后验。**
+**2. E-step——test-time search：用主动搜索近似最优变分后验**
 
 E-step 要采样的目标后验是 $\eta_k^*(x_{t-1}|x_t) \propto p_{\theta_k}(x_{t-1}|x_t) \exp(Q_{\text{soft}}^*/\alpha)$，即在当前模型的去噪分布上乘一个 soft Q 的指数权重。DAV 分两阶段近似它：先做梯度引导，用 Tweedie's formula 把 $Q_{\text{soft}}$ 近似成 $\gamma^{t-1} r(\hat{x}_0(x_{t-1}))$（拿当前状态预测出的干净样本 $\hat{x}_0$ 的奖励来打分），据此采样 $M$ 个候选粒子；再用重要性采样在这 $M$ 个粒子里精炼，挑出真正贴近后验的。之所以不走传统 EM-RL 的 on-policy 重加权，是因为一旦策略偏离后验，重加权就会严重有偏；主动搜索则能跑到当前策略分布之外，把策略本来采不到的高奖励区域挖出来。
 
-**3. M-step——forward-KL 蒸馏：把搜索到的轨迹写回模型参数。**
+**3. M-step——forward-KL 蒸馏：把搜索到的轨迹写回模型参数**
 
 E-step 找到的好轨迹要落进模型才有用。M-step 最小化 forward-KL，损失就是搜索轨迹下的负对数似然 $\mathcal{L}_{\text{DAV}} = -\mathbb{E}_{\tau \sim \eta_k^*}[\log p_\theta(\tau)]$；需要约束对预训练模型的偏离时，可以再加一项 KL 正则 $\mathcal{L}_{\text{DAV-KL}} = \mathcal{L}_{\text{DAV}} + \lambda D_{\text{KL}}(p_\theta \| p_{\theta^0})$。关键在 forward-KL 的方向：最小化 forward-KL 等于最大化搜索样本的似然，是 mode-covering 的，会逼模型去覆盖后验里所有被搜出来的模式；这正好和 RL 用的 reverse-KL（mode-seeking、只盯一个峰）相反，所以多样性能自然保住。
 
-**4. 模块化设计：搜索器可换、连续离散通吃。**
+**4. 模块化设计：搜索器可换、连续离散通吃**
 
 E-step 的搜索只是个即插即用的组件，可以替换成任意 test-time search 方法，框架本身不绑定某种特定搜索；同时整套 EM 推导不依赖样本空间是连续还是离散，所以连续的图像扩散和离散的 DNA 序列扩散都能直接套用。
 

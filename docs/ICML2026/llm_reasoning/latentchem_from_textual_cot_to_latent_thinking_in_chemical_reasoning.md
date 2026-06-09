@@ -45,15 +45,15 @@ LatentChem 想验证一个假说：化学的连续物理直觉被强行翻译成
 
 ### 关键设计
 
-**1. Chemical Adapter：让分子表征定长且可被反复再查询。**
+**1. Chemical Adapter：让分子表征定长且可被反复再查询**
 
 普通的 prefix tuning 只是"塞个 embedding"进去，但 LatentChem 后续要让 ChemUpdater 在推理过程中不断回头查询分子，这就要求分子表征既定长又忠实反映结构。Adapter 借 Perceiver Resampler 思路，用 $N$ 个可学习 latent query $\mathbf{Q}$ 对 SMI-TED 输出的变长稠密特征 $\mathbf{H}_{mol}\in\mathbb{R}^{L\times d_{enc}}$ 做 cross-attention，$\mathbf{H}_{chem}=W(\text{LN}(\mathbf{Q}+\text{MHA}(\mathbf{Q},\mathbf{H}_{mol},\mathbf{H}_{mol})))$，每个 query 像一个"语义锚点"自动萃取某类化学属性，再用线性层 $W$ 投影到 $d_{llm}$ 维得到定长 ChemTokens。为防止 adapter 偷懒靠文本先验蒙答案，Stage 1 在 answer-only 监督外加一个反事实对齐损失 $\mathcal{L}_{CF}$（hinge loss，最大化"干净分子 vs. 扰动分子"下的答案似然差），逼它把答案真正需要的化学性质压进 ChemTokens——否则后面 ChemUpdater 拿到的就是空壳，根本无从 refocus。
 
-**2. ChemUpdater：把静态编码器升级成被推理状态调度的可微感知器。**
+**2. ChemUpdater：把静态编码器升级成被推理状态调度的可微感知器**
 
 这是 LatentChem 与 Coconut 拉开差距的核心。Coconut 把分子嵌入当成一成不变的上下文，于是 latent 思考链越长就漂得离原始结构越远；ChemUpdater 则让模型每推理一步都"再看一眼分子，但是看不同的地方"。具体做法是以当前 ChemTokens $\mathbf{H}_{chem}^{(t)}$ 为 query、以全部历史 thought $\mathbf{Z}_{1:t}$ 为 key/value 做 cross-attention 后残差刷新，$\mathbf{H}_{chem}^{(t+1)}=\text{LN}(\mathbf{H}_{chem}^{(t)}+\text{CrossAttn}(\mathbf{H}_{chem}^{(t)},\mathbf{Z}_{1:t},\mathbf{Z}_{1:t}))$，等于把分子编码器从"一次性静态特征提取器"变成"随推理状态动态调度焦点的感知器"。在分子优化这类需要反复定位不同子结构（先看结合位点、再看价键、再看官能团）的任务上这一点至关重要——消融里去掉它 SR 直接掉 12%。
 
-**3. Latent Projector + GRPO 纯结果奖励：自发内化的闭环与触发器。**
+**3. Latent Projector + GRPO 纯结果奖励：自发内化的闭环与触发器**
 
 要让推理在连续空间闭环，必须把 LLM 输出空间的 thought 向量对齐回输入空间。Latent projector 是个轻量残差 FFN，$\mathbf{h}_{t+1}=\mathbf{z}_t+\text{FFN}(\text{LN}(\mathbf{z}_t))$，把 raw hidden state $\mathbf{z}_t$ 映回输入 embedding 当下一步输入，绕开 tokenization 瓶颈。真正的"实验仪器"设计在 Stage 4：奖励只含 format / validity / correctness 三项，**完全不含 brevity 也不含 CoT 省略项**，并冻结 latent 模块、放开 backbone，把学到的 latent 动力学当作稳定"内部模拟器"让 backbone 去消费决策。在这种纯结果驱动下，模型仍自发抛弃了文本 CoT、只吐一个 "." 或 ":" 当过渡 token 后直接生成 XML 答案——这正好验证了 modality mismatch 假说：给模型自由选模态、只用结果奖励，它若选连续 latent 就说明 latent 真的更适配化学逻辑。配套的 causal ablation（把前 $k$ 个 latent 步替换成高斯噪声会显著掉点）进一步证明这些"沉默步"在做实质计算而非走过场。
 

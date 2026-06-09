@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. Value Extraction 与 XOR 子集构造：零额外标注地切出能强诱导某值的训练集。**
+**1. Value Extraction 与 XOR 子集构造：零额外标注地切出能强诱导某值的训练集**
 
 要研究「诱导某个值会发生什么」，先得有只强调该值的训练数据，但从头标注成本高。本文复用现成偏好数据：对每个 triplet $(p_i, y^+_i, y^-_i)$ 用 $M_{ext}$ 分别抽出 $V^+_i = M_{ext}(p_i, y^+_i)$ 和 $V^-_i = M_{ext}(p_i, y^-_i)$，再用 XOR 构造目标值 $v_k$ 的子集 $\mathcal{S}_{v_k} = \{(p_i, y^+_i, y^-_i) : v_k \in V^+_i \oplus v_k \in V^-_i\}$；若 $v_k$ 只出现在 rejected 一侧，就翻转该样本的 preference，让价值表达永远落在被正向奖励的那一边。
 
 用 XOR 而非 AND 是关键：它保证目标值是这对样本的「判别特征」，从而避免训练信号被两边都出现的「默认值」（如 empathy）稀释；翻转 preference 又让所有子集的监督方向一致，可直接迁移到任何「想用现成 RLHF 数据训某个子能力」的场景。
 
-**2. 15 个值的诊断性选择 + 三准则筛选：覆盖 valence × 类别的代表性价值集合。**
+**2. 15 个值的诊断性选择 + 三准则筛选：覆盖 valence × 类别的代表性价值集合**
 
 价值很多，得挑出一组既有代表性又能跑出对照的子集。筛选用三个准则：(1) 至少 500 样本，保证 DPO 有足够信号；(2) 至少在 chosen 或 rejected 中独占出现，保证能被 XOR 切出来；(3) 按 AI Values Taxonomy 落在 Social / Protective / Personal 三类里。在此之上再手工平衡正面（empathy / fairness）、负面（deception / violence）、中性（engagement）三种 valence。
 
 负面值显然不该上线，留它们是为诊断「安全微调能不能扛住明显的坏方向」；中性值则用来确认观察到的变化不是 helpful / harmless 这种主轴效应顺带造成的——有了这组对照，后面才能干净地归因价值串扰。
 
-**3. 多维下游评测矩阵：把「价值诱导改变了什么」拆成可独立测量的问题。**
+**3. 多维下游评测矩阵：把「价值诱导改变了什么」拆成可独立测量的问题**
 
 只看目标值有没有上来会漏掉副作用，所以评测拆成四个相互独立的维度：(a) value expression，在同一组 prompt 上重跑 $M_{ext}$ 看哪些值被表达；(b) 安全性，用不安全 query 的拒答率衡量；(c) anthropomorphic language，检测 validating / sycophantic 措辞；(d) QA 能力，跑标准 benchmark。
 

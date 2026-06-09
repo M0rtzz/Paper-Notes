@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. 显式 partition × 强制中间步骤：缺一不可的双重组合。**
+**1. 显式 partition × 强制中间步骤：缺一不可的双重组合**
 
 大数计数的痛点在于 transformer 单 forward 的 latent counter 受 layer 深度限制会饱和，所以核心是把任务拆成模型「数得动」的子段、再把子结果具现成 token 让后续 attention 能访问。关键发现是这两步必须同时存在：单独加 `|` 而不给 CoT 反而**有害**——Qwen2.5-7B 在 N=11-20 的 acc 从 unstructured 的 0.38 跌到 structured-w/o-steps 的 0.20，因为 partition 重置了 implicit counter 却没让模型知道要汇总；单独加 CoT 而不切分也帮助寥寥；只有两者组合才能把 0.38 拉到 0.95。
 
 之所以说瓶颈完全在分段计数而非求和，是因为几乎所有模型的 final-step accuracy（求和阶段正确率）都 ≥86%——求和这步 System-2 做得很好，错全错在 intermediate count 上，也就是 System-1 在每个分段内仍正常工作。partition 提供了一个可控的 System-1 子任务空间，CoT 把子结果落成 token 才让 System-2 有东西可聚合，这正是 System-2 计数的最小可行实现。
 
-**2. CountScope：把 latent count 定位到 partition 边界 token。**
+**2. CountScope：把 latent count 定位到 partition 边界 token**
 
 要做因果干预，先得知道「每段的 count 存在哪个 token 的 hidden state 里」。作者实测 logit-lens / tuned-lens 对数字解码并不可靠，于是改用 CountScope (Hasani 2025b) 这种 task-conditioned 的 patching probe：把目标 token 的 activation 注入一个独立的空白计数 context，让 LM 在该 context 下吐出一个数，这个数就是该 token 隐含的 count。
 
 探测结果把机制假设坐实了——每段的 count 信号高置信地落在**该 partition 的最后一个 item token + 最后一个 comma token**上，且 partition 之间 counter 会重置：第 2 段末尾存的是本段局部 count 而非累积值。这既给后续零消融、attention knockout 提供了精准的干预 target，也直接验证了「切分后每个子段独立计数」这一核心机制。
 
-**3. 三阶段电路与单 head 因果归因。**
+**3. 三阶段电路与单 head 因果归因**
 
 最后把 System-2 计数还原成「信息存储（partition 末尾 token）→ 信息传递（中间步骤 token）→ 信息聚合（最终答案 token）」三阶段，并逐级定位到具体 attention pathway。先用 attention 分析看到 Layer 19-23 的注意力从中间步骤 token 强烈指向对应 partition 的末尾 item+comma；再用 attention knockout 锁定 Layer 22 为关键层——**Head 22-13** 负责「partition 末尾 → 中间步骤」的传递，**Head 22-1** 负责「中间步骤 → 最终答案」的聚合。
 

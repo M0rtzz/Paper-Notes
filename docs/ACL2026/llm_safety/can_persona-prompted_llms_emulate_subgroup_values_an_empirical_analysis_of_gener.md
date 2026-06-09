@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Modal Diversity Score：给每道题打一个"子群分歧度"分，先定位哪些话题最该做子群感知对齐。**
+**1. Modal Diversity Score：给每道题打一个"子群分歧度"分，先定位哪些话题最该做子群感知对齐**
 
 传统文化 benchmark 只报整体 accuracy，没法告诉你一国之内究竟哪些话题在子群间最分裂、最值得"子群 aware"地对齐。Modal Diversity Score 针对某个 stratum（如 sex_x_age）收集所有子群的众数答案，再对这些众数的分布算归一化 Shannon 熵：
 
@@ -53,11 +53,11 @@ $$\text{Score}_{\text{MD}} = \frac{-\sum_{m\in M}p(m)\log_2 p(m)}{\log_2 (\min(|
 
 其中 $M$ 是 unique 众数集合，$p(m)$ 是选众数 $m$ 的子群比例，0 表示全员共识、1 表示极度分歧；作者另用 mean pairwise Wasserstein distance 做 ordinal-aware 复核。有了这个分数，就能直接点名最分裂的话题（Religious Values 平均 0.318）和最一致的话题（Social Capital 0.084），为后续模型评测提供先验。
 
-**2. Compositional Generalisation Split：让训练和测试的 intersection 完全不重叠，把死记硬背和真正的组合泛化分开。**
+**2. Compositional Generalisation Split：让训练和测试的 intersection 完全不重叠，把死记硬背和真正的组合泛化分开**
 
 如果用 in-distribution split 来测，accuracy 涨了你也分不清模型是学会了组合、还是单纯背下了 persona-answer 映射。论文因此把数据切成不重叠的两半：Train Set 放 sex、age_group、ethnicity、religion 等单轴 strata，外加 sex × age、sex × religion、sex × ethnicity 这些 pairwise（共 50 子群 / 10,700 样本）；Eval(OOD) Set 则放 age × religion、age × ethnicity、ethnicity × religion 三个训练中完全没出现过的 pairwise（共 48 子群 / 10,177 样本），每个子群至少 30 人才纳入。当 ethnicity × religion 这类组合在训练里一次都没见过、模型还能答对，accuracy 的提升才能干净地归因于"把单轴偏好合成 intersection 偏好"的组合能力，而非记忆。
 
-**3. 双视角公平性评测：用 Acc/NMAE × Norm.Range/CV 交叉看，逼出被单一指标掩盖的不公平。**
+**3. 双视角公平性评测：用 Acc/NMAE × Norm.Range/CV 交叉看，逼出被单一指标掩盖的不公平**
 
 平均准确率涨了不代表对每个子群都更公平，而 Accuracy 把"差 1 档"和"差 5 档"当成一样的错，会把放大了的精度差距藏起来。论文因此同时用两套对照：指标维度上，Accuracy 不感知 ordinal 距离、NMAE 感知；离散度维度上，Norm. Range $=(P_{\max}-P_{\min})/P_{\max}$ 测极端子群间的差距、CV $=\sigma/\mu$ 测整体离散度。交叉之后悖论就显形了——SFT 让 Accuracy 的 Norm. Range 从 0.240 降到 0.179（看似更公平），NMAE 的 Norm. Range 却从 0.280 升到 0.336（实则更不公平）：SFT 把更多弱势子群拉过及格线，同时又把优势子群的精度推得更高。
 

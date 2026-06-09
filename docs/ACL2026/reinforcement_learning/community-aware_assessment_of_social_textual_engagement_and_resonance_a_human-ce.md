@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. CASTER 任务与 CASTER-Bench：把质量评估从画质打分换成社区共鸣判断。**
+**1. CASTER 任务与 CASTER-Bench：把质量评估从画质打分换成社区共鸣判断**
 
 传统 VQA 数据集大多是 8–20 秒短 clip，只能衡量清晰度、失真、审美这类信号质量，根本覆盖不了长视频靠叙事、知识密度和情绪共鸣取胜的价值来源。CASTER 因此重新定义任务：给定 cover image、关键帧、title、tags、category metadata 和 ASR transcript，模型要预测内容能否获得正向社区反馈（High-Quality），而不是回归一个技术质量分。配套的 CASTER-Bench 收了 1,485 个 UGC item、平均时长 442 秒、总时长 182.5 小时，标签分布为 Excellent 10.6%、Good 17.0%、Average 38.6%、Poor 33.7%——High-Quality 类天然稀少，这也决定了后面 High-Quality F1 才是最关键的指标。
 
-**2. Social-CoT 构造与 Skellam 共识聚合：用真实评论造出可监督的社会推理路径。**
+**2. Social-CoT 构造与 Skellam 共识聚合：用真实评论造出可监督的社会推理路径**
 
 要训练模型「模拟社区怎么想」，就得有社区反应的监督信号。系统对未标注 UGC 取 top-50 点赞评论，用教师模型筛出 15–20 条与创造性、情绪、叙事相关的反应锚点，再让 Gemini-2.5-Flash 实例化多样的 viewer persona，解释是哪些视觉/叙事元素触发了这些反应。每条模拟评论被赋予支持或反对 stance：设支持数为 $X$、反对数为 $Y$，用 $z=(X-Y)/\sqrt{X+Y}$ 算 Skellam-normalized consensus，当 $z\geq1.5$ 时标为 High-Quality，否则为 Low-Quality。之所以不用简单多数投票，是因为投票容易被评论数量和情绪偏差带偏，而 Skellam 标准化把判断变成「是否存在有统计意义的社区支持」，更接近真实的社区共识。
 
-**3. 过程监督 RL 与 Social Alignment Reward：让推理路径贴近真实社区语言而非模板赞美。**
+**3. 过程监督 RL 与 Social Alignment Reward：让推理路径贴近真实社区语言而非模板赞美**
 
 只 prompt 一个通用 LMM 去写 Social-CoT，它学不会某个平台的社区标准，还容易塌缩成千篇一律的「so beautiful」式空话。MEDEA 先用 54k Gemini-labeled CoT 样本加 3k human-annotated UGC 做 SFT，再在专家样本上用 GRPO 优化一个复合奖励 $r=r_{format}+r_{label}+r_{diversity}+r_{social}$：$r_{format}$ 保证输出结构，$r_{label}$ 奖励最终二分类正确，$r_{diversity}$ 惩罚重复的情绪路径，$r_{social}$ 把生成 persona 与 held-out 真实高互动评论做 embedding 余弦匹配后取平均。关键在 $r_{social}$ 提供了「社会 grounding」——用真实评论相似度而非只用标签正确来约束推理过程，避免 Social Mode Collapse，让模型生成的反应在情绪粒度和语言上都更像真实社区。
 

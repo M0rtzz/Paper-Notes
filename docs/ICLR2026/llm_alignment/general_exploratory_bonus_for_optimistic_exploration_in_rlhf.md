@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. 乐观条件的形式化定义（Definition 3.1）：用梯度关系判定 bonus 是否真在鼓励探索。**
+**1. 乐观条件的形式化定义（Definition 3.1）：用梯度关系判定 bonus 是否真在鼓励探索**
 
 要修正"探索 bonus 反而抑制探索"，第一步得有个能算的标准来判断一个 bonus 到底是不是乐观的。在 LLM 规模下直接做不确定性量化（Bayesian、Ensemble 那一套）计算不可行，本文绕开这条路，转而从策略分布之间的梯度关系入手。乐观原则的直觉是"越常被采样的区域，越不该再给探索激励"，论文把它写成
 
@@ -53,11 +53,11 @@ $$\frac{\partial}{\partial \pi_s(y|x)} \left(\frac{\partial \mathcal{L}_{bonus}}
 
 即 bonus 对策略 $\pi$ 的边际贡献应随采样策略 $\pi_s$ 增大而减小。这个条件不需要任何额外采样或显式的不确定性估计，只看 bonus 关于两个分布的二阶交叉导数符号，因此天然适配 LLM 规模，也成了后面一切证明的统一标尺。
 
-**2. 现有方法失败的定理证明（Lemma 3.1 / 3.2，Theorem 3.3）：把"bonus 形同虚设乃至反向激励"说死。**
+**2. 现有方法失败的定理证明（Lemma 3.1 / 3.2，Theorem 3.3）：把"bonus 形同虚设乃至反向激励"说死**
 
 有了乐观条件这把尺子，论文逐级量出现有 bonus 的问题。Lemma 3.1 先打掉 KL 这种最常见的设定：在 KL 正则化下，加不加 bonus 得到的策略集合完全相同，也就是说 bonus 在这里根本没起作用、形同虚设。Lemma 3.2 再看更一般的 α-散度，此时 bonus 的交叉梯度 $\frac{\partial^2 \mathcal{L}_{bonus}}{\partial \pi_{ref} \partial \pi} \geq 0$，符号恰好与乐观条件相反——意味着 bonus 把更多激励给了高 $\pi_{ref}$ 的区域，这正是 anti-optimism，鼓励的是保守而非探索。Theorem 3.3 把结论推到一般 f-散度家族（JS 散度、Pearson $\chi^2$ 等），证明只要生成函数满足 $xf''(x)$ 单调，这种失败就普遍成立，从而说明问题不是某个具体散度的偶然，而是这一整类 bonus 设计的结构性缺陷。
 
-**3. GEB 框架（Eq. 8-11）：从乐观条件反向推导满足它的 bonus 家族。**
+**3. GEB 框架（Eq. 8-11）：从乐观条件反向推导满足它的 bonus 家族**
 
 既然问题出在 bonus 直接用了策略比 $\pi/\pi_{ref}$，GEB 改用一个原子函数 $u(x,y)$ 作中介来构造 bonus：
 
@@ -65,7 +65,7 @@ $$\mathcal{L}_{bonus} = \beta \, \mathbb{E}_{x,y \sim \pi_{ref}}\big[u \cdot f'(
 
 关键在于让 $u$ 与 $\pi$ 负相关（例如取 $u = 1/\pi$ 或 $u = 1+\alpha - \pi$），这样策略概率 $\pi$ 越低、$u$ 越大、bonus 越高，激励自然落到未探索区域。Theorem 4.2 证明：当 $u$ 满足相应条件时，这个 bonus 严格满足乐观条件 $\frac{\partial^2 \mathcal{L}_{bonus}}{\partial \pi \partial \pi_{ref}} \leq 0$。和现有工作"先拍脑袋设计 bonus 再事后解释"不同，GEB 是从设计 1 给出的乐观条件出发反推、解出一整族可证明正确的 bonus，因此修正的是机制而非个案。
 
-**4. 统一先前方法（Table 2）：把启发式 bonus 收编为特例，且全部可实际计算。**
+**4. 统一先前方法（Table 2）：把启发式 bonus 收编为特例，且全部可实际计算**
 
 GEB 不是又多了一种 bonus，而是一个能容纳多种实例的框架：在不同散度（reverse KL、forward KL、Hellinger）和不同 $u$ 选择下，它实例化出多种具体 bonus，而 Zhang/Xie/Cen 等先前的启发式 bonus 被证明只是其中的特例。更实用的一点是，这些实例化后的 bonus 最终只依赖当前策略 $\pi$、不需要显式计算 $\pi_{ref}$，因此可以零额外采样成本地插进标准迭代 RLHF 循环，不会因为引入参考模型项而增加训练负担。
 

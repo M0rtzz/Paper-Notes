@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 带 Nesterov 加速的 sketch-and-project 求解器（NASketch）：在 $O(d^2)$ 成本内高精度解 Newton 系统。**
+**1. 带 Nesterov 加速的 sketch-and-project 求解器（NASketch）：在 $O(d^2)$ 成本内高精度解 Newton 系统**
 
 直接解 Newton 系统 $B\Delta x=-g$ 是 $O(d^3)$，根本上不起来。NASketch 维护一对 state-co-state $(z_j, v_j)$：先在中点 $y_j=\alpha v_j+(1-\alpha)z_j$ 上算 sketching 方向 $\omega_j = BS_j(S_j^\top B^2 S_j)^\dagger S_j^\top(B y_j + g)$（$S_j\in\mathbb{R}^{d\times s}$ 是 sketch 矩阵，$s\ll d$），再做 $z_{j+1}=y_j-\omega_j$、$v_{j+1}=\beta v_j+(1-\beta)y_j-\gamma\omega_j$。参数取 $\alpha=1/(1+\gamma\nu)$、$\beta=1-\sqrt{\mu/\nu}$、$\gamma=1/\sqrt{\mu\nu}$（$\mu,\nu$ 是 sketching 分布的谱参数，$1\le\nu\le 1/\mu$），令 $\alpha=0.5,\beta=0,\gamma=1$ 即退化为不加速版本。收益是收敛率从未加速的 $1-\mu_t$ 提到 $1-\sqrt{\mu_t/\nu_t}$，在 $\nu_t=1$ 时相当于把 $1-\mu_t$ 拔到 $1-\sqrt{\mu_t}$，正是 Nesterov 在 SGD 里的同款加速，且 per-iteration 成本不变。代价是这个 $2d$ 维非对称递推让 (1,1) 块不再有投影矩阵的有界性，作者得用 Cayley–Hamilton 定理 + Kronecker 积重写谱半径递推，才证明 $(1,1)+(1,2)$ 边际块依然几何收缩（引理 3.6–3.7）。
 
-**2. 极限协方差的 Lyapunov 方程刻画：把数据随机和求解器随机两类不确定性都写进协方差。**
+**2. 极限协方差的 Lyapunov 方程刻画：把数据随机和求解器随机两类不确定性都写进协方差**
 
 加速 sketching 把"算"提了速，但它在统计推断里到底改变了什么？答案就藏在末迭代的极限协方差里。论文证明 $1/\sqrt{\varphi_t}\cdot(x_t-x^\star)\xrightarrow{d}\mathcal{N}(0,\Sigma^\star)$，其中 $\Sigma^\star$ 是 Lyapunov 方程 $A^\star\Sigma^\star+\Sigma^\star (A^\star)^\top + Q^\star = 0$ 的解：$A^\star$ 由 $\nabla^2 f(x^\star)$ 和最优参数 $(\alpha^\star,\beta^\star,\gamma^\star)$ 下加速 sketching 的极限线性算子共同决定，$Q^\star$ 同时吸收数据噪声协方差和 sketching 算子的随机性。两个特例验证一致性：完全关掉 sketching，$\Sigma^\star$ 退化为 Polyak-Juditsky 平均 SGD 的极小极大最优协方差；加速但无可证加速率（$\mu_t\nu_t=1$），则退化为 Kuang 等（2025）未加速 sketched Newton 的协方差。这里作者坚持把 sketching 跑固定 $\tau$ 步，所以算法随机性不会渐近消失、必须显式建模——也正因如此，这条方程把"计算 vs 统计"权衡讲清楚了：加速越激进（$\nu_t$ 越小）求解器越快，但 $Q^\star$ 里多出来的 sketching 项也越大。
 
-**3. 完全在线、无需矩阵求逆的协方差估计器：让推断真正落地。**
+**3. 完全在线、无需矩阵求逆的协方差估计器：让推断真正落地**
 
 在线推断要工程化就必须避免每步做 $O(d^3)$ 矩阵反演。作者把 Lyapunov 方程展开成沿迭代序列可累积的更新——只要用 Hessian 平均 $B_t$ 替代 $\nabla^2 f(x^\star)$、用 sketching 算子的样本平均替代 $\mathbb{E}[\cdot]$、用样本残差替代真噪声方差，得到的估计器 $\widehat\Sigma_t$ 就满足 $\widehat\Sigma_t\xrightarrow{p}\Sigma^\star$（定理 4.6）。为此需要一个比常见二阶矩界严格更强的四阶矩界 $\mathbb{E}[\|x_t-x^\star\|^4]=O(\varphi_t^2)$（引理 4.5），这是技术上最重的部分。整个估计器只用"已经在算的量"（迭代、sketching 方向、Hessian 平均）做累加，per-step 仍是 $O(d^2)$，与主循环同阶。
 

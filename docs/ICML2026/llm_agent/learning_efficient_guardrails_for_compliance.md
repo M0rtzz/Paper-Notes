@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 标准化轨迹 + 反向合成原子策略：把异构的规则和轨迹都收敛成统一接口。**
+**1. 标准化轨迹 + 反向合成原子策略：把异构的规则和轨迹都收敛成统一接口**
 
 合规检测最棘手的地方在于规则和轨迹两边都极其异构——浏览器事件五花八门、平台规则措辞各异，小模型根本对不齐。作者的做法是把两边都"原子化、模式化"。轨迹侧先做噪声清洗（去空事件、去重复 rendering）和动词归一（统一到 Click/Input/Scroll/Select/Navigate/Submit），把对象规范成 `link 'My Account'`、`button 'Search'` 这种命名，再序列化成 "Step 1: Click link 'My Account'; Step 2: Scroll page; ..." 的句子化文本。规则侧则反着来——不让人去写规则，而是把 trajectory + outcome 喂给 GPT-4o，要求它为每条轨迹写出 2-3 条**每条只含一个约束**的 atomic 规则（如 "Do not click 'Delete' without a prior confirmation step"），再人工过滤、去重、剪掉模糊不可验证的，最终留下 2195 条，每条都挂着 `source_subdomain` 和最多 2 个 `target_subdomain` 的结构化 schema。这一步之所以关键，是因为它把 LLM 标注器和 guardrail 模型面对的输入都压成了同一套接口，"一规则一 atom"天然可机审；而给策略挂上跨子域 schema，则是后面能造出跨子域评测的前提。
 
-**2. 跨子域配对 + LLM 标注 + 人审校验：用两阶段标注把 60k pair 标到 ~90% 一致率。**
+**2. 跨子域配对 + LLM 标注 + 人审校验：用两阶段标注把 60k pair 标到 ~90% 一致率**
 
 光有轨迹和规则还不够，要让 guardrail 真正学到 transferable 的合规模式而不是死记某条轨迹，就得在数据里灌进跨子域的泛化压力。作者先用 Sentence-BERT 做 embedding 检索为每条轨迹召回候选策略，再叠加关键词触发器（出现 `delete`/`confirm` 就触发对应规则），用启发式 + LLM scoring 过滤；然后刻意把策略和它原生 subdomain（source）以及最多 2 个不同 subdomain（target）的轨迹组合，强行制造跨子域 pair，最终 41.6% 都是跨子域；负例则在同 domain 内随机配未违规策略并校验不会"误中"违规。60k pair 不可能全靠人标，作者于是用 gpt-oss-120B 模拟先验人工标注 pattern 给出 label + confidence，把低 confidence 的 flag 出来交人审；最后再抽 287 对做独立人审复标，与原 label 一致率 89.8%，分歧主要落在模糊策略和需要领域常识的轨迹上。这种"LLM 模仿人 + 低置信送审"的两阶段法，是在标注预算有限下逼近全人审质量的实用折衷。
 
-**3. 轨迹隔离切分 + 前缀截断评估：既堵住记忆泄漏，又量化"早期预警"能力。**
+**3. 轨迹隔离切分 + 前缀截断评估：既堵住记忆泄漏，又量化"早期预警"能力**
 
 如果按 pair 随机切 train/test，同一条轨迹的不同 pair 会同时落进两边，模型只要记住轨迹就能作弊。作者因此把 8:2 切分锚在 733 条 base trajectory 上而非 pair 上，强制 0% 轨迹重叠。在此之上叠两层更狠的考法：一是前缀检测，把违规样本截到前 $N$ 步（$N=1,\dots,5$，覆盖到平均长度 9.3 的一半左右），用截断后的 prefix 重新和策略匹配、re-label 后喂给同一模型，逼它在轨迹没跑完时就预判；二是 leave-one-domain-out（LODO），每次抽掉一个 domain 当 OOD，看模型在完全没见过的 domain 上掉多少。前者对应的是合规违规的不可逆性——删库、超额付款一旦执行就无法回滚，必须在第 $N$ 步就拦住；后者和轨迹级隔离合在一起，才能把"记 trajectory 模式"和"学 compliance 模式"真正区分开。
 

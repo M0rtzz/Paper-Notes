@@ -49,15 +49,15 @@ ScaLoRA 想让低秩 adapter 攒出高秩的累积更新，又不重启优化器
 
 ### 关键设计
 
-**1. 最优 adapter 的理论刻画：先找到该追的"理论靶子"。**
+**1. 最优 adapter 的理论刻画：先找到该追的"理论靶子"**
 
 LoRA 跟 full FT 总有 gap，但 gap 到底由什么决定？作者从 $L$-smooth 上界 $\ell(W_t + \Delta W_t) \leq \ell(W_t) + \langle \nabla \ell, \Delta W_t \rangle + \frac{L}{2}\|\Delta W_t\|_F^2$ 出发，最小化右端得到 full-FT 的理想更新 $\Delta W_t^* = -\frac{1}{L} \nabla \ell(W_t)$。再把 LoRA 一步更新展开成 $\Delta \tilde{W}_t = -\eta \nabla \ell\, \tilde{B}_t \tilde{B}_t^\top - \eta \tilde{A}_t \tilde{A}_t^\top \nabla \ell + O(\eta^2)$ 代入并配方，问题等价于"用低秩的 $\Delta \tilde{W}_t$ 去逼近 $\Delta W_t^*$"，即最小化 $\|\Delta W_t^* - \Delta \tilde{W}_t\|_F^2$。Theorem 3.2 证明：当 $\text{rank}(\nabla \ell(W_t)) \geq 2r$ 时，最优 $\tilde{A}_t^*, \tilde{B}_t^*$ 恰好等价于对 $\nabla \ell$ 做 rank-$2r$ 截断 SVD、取前 $2r$ 个左右奇异向量构成新 adapter。这就把"最优 adapter ↔ 梯度 top-$2r$ 奇异空间"挂上了钩，说明 LoRA 跟 full FT 的距离本质上由当前梯度的主奇异方向决定。但截断 SVD 每步要 $O(Smnr)$、还得重启优化器，太贵——它只能当理论上限，真正落地需要一个便宜得多的近似。
 
-**2. 最优列缩放 + AdamW 动量等变：把"换 adapter"压成几乎免费的列缩放。**
+**2. 最优列缩放 + AdamW 动量等变：把"换 adapter"压成几乎免费的列缩放**
 
 直接做 SVD 太贵的根因是"任意换子空间"会让 AdamW 维护的动量 $(m_t, v_t)$ 全部失效，只能重启。作者于是把搜索空间收紧到列缩放 $\tilde{A} = A \text{diag}(\alpha)$、$\tilde{B} = B \text{diag}(\beta)$——这是少数能让动量解析等变迁移的变换。在这个约束下，loss 上界变成关于 $(\alpha,\beta)$ 的二次型 $\|\frac{1}{L}\nabla\ell - \eta \nabla\ell\, B \text{diag}^2(\beta) B^\top - \eta A \text{diag}^2(\alpha) A^\top \nabla\ell\|_F^2$。Theorem 3.7 证明，只要线性系统 $[(S_t^{A\top} S_t^A) \odot (S_t^{B\top} S_t^B)]\, v_t = \lambda_t$ 有非负解（$S_t^A, S_t^B$ 是用当前梯度和 adapter 拼出来的小矩阵，实测 LLM 里约 80% 的层满足），全局最优就是闭式的 $[\alpha^*_t; \beta^*_t] = \pm \frac{1}{\sqrt{L\eta}} v_t^{\circ 1/2}$，只需 $O((m+n)r^2)$；非负条件不满足时退化到更简单的标量缩放（Theorem 3.5），同样有解析全局最优。动量等变则更直接：$\tilde{A} = A \text{diag}(\alpha)$ 是逐列缩放，AdamW 的一阶/二阶动量与 adapter 元素一一对应，于是 $m$ 按列乘 $\alpha$、$v$ 按列乘 $\alpha^2$ 即可，只要 $O((m+n)r)$，完全不必重启或重新 warm-up（Lemma 3.6）。换成行缩放或左右乘满秩矩阵都做不到这种等变——这正是选列缩放的理由。实现上 Lipschitz 常数 $L$ 不去真估，直接当超参 grid search。
 
-**3. ScaLoRA 与摊销变体 ScaLoRA-I：拼成能上 12B 的可落地算法。**
+**3. ScaLoRA 与摊销变体 ScaLoRA-I：拼成能上 12B 的可落地算法**
 
 把上面两件事拼起来就是完整算法：每步若 Theorem 3.7 的非负条件成立，用列缩放 $\tilde{A}_t = A_t \text{diag}(\alpha^*_t),\ \tilde{B}_t = B_t \text{diag}(\beta^*_t)$ 配 Lemma 3.6 搬动量；否则退化到标量缩放 $\tilde{A}_t = \alpha^*_t A_t,\ \tilde{B}_t = \beta^*_t B_t$ 配 Lemma 3.3。合并 $A_t B_t^\top - \tilde{A}_t \tilde{B}_t^\top$ 是 in-place 写回 $W^{pt}$，额外空间只增 $O((m+n+r)r)$，总时间 $O(mnr + (m+n+r)r^2)$（$r$ 小时后项可忽略）。但 LLM 一层一矩阵、动辄上百个层，每步都缩放仍有开销，所以给出摊销版 **ScaLoRA-I**：每 $I$ 步才缩放-合并一次，单步开销降到 $1/I$。由于学习率 $\eta$ 小、最优缩放本就接近 1，频繁缩放的边际收益递减，$I=10$ 几乎无损。这一点是关键区别：MoRA/HiRA 的高秩约束是每步硬加、无法摊销，而 ScaLoRA 的"周期性最优缩放"能摊销，于是才能扩展到 Gemma3-12B 这种规模。
 

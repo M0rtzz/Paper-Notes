@@ -47,15 +47,15 @@ AdaptiveK 的方法可以看成在普通 TopK SAE 外面加了一个“复杂度
 
 ### 关键设计
 
-**1. 用线性 probe 读出上下文复杂度：AdaptiveK 的控制信号。**
+**1. 用线性 probe 读出上下文复杂度：AdaptiveK 的控制信号**
 
 如果复杂度只能靠复杂非线性模型预测，AdaptiveK 就等于用一个黑盒去控制另一个黑盒；而线性 probe 几乎和 mechanistic interpretability 里“线性方向”的假设天然兼容，也让复杂度信号本身可解释。作者先用 GPT-4.1-mini 从词汇复杂度、句法复杂度、概念密度、领域专门性、逻辑结构等维度给文本打出 0 到 10 的复杂度分，再用 ridge regression 从 LLM hidden state 预测这个分数，训练目标为 $L(w,b)=\frac{1}{n}\sum_i(y_i-(w^Tx_i+b))^2+\frac{\lambda}{2}\|w\|_2^2$。这个 0–10 的连续分数就是后续决定激活多少 latent 的唯一控制量。
 
-**2. 把复杂度映射成自适应 TopK：让每个输入拥有自己的特征预算。**
+**2. 把复杂度映射成自适应 TopK：让每个输入拥有自己的特征预算**
 
 线性映射可能对极端复杂度过于敏感，固定 TopK 又完全忽略复杂度；作者用 sigmoid 把复杂度 $c$ 映射到有上下界的区间 $[k_{min}, k_{max}]$：$k_{adp}=k_{min}+\sigma(s((c-c_{min})/(c_{max}-c_{min})-0.5))(k_{max}-k_{min})$，其中 $s$ 控制曲线陡度，默认配置 $k_{min}=20$、base $k=80$、$k_{max}=320$。这样既避免简单样本激活过多 latent、浪费表示容量，也避免复杂样本被固定 $k$ 压成欠表示。
 
-**3. 三阶段训练稳定 probe 与 SAE 的耦合：防止重构目标把复杂度信号带歪。**
+**3. 三阶段训练稳定 probe 与 SAE 的耦合：防止重构目标把复杂度信号带歪**
 
 如果一开始就联合训练，probe 可能为了迎合 SAE 的重构误差而偏离原来的复杂度语义；如果永远冻结 probe，又会错过和 SAE latent 空间共同适配的机会。为此设计三阶段：第一阶段只训练复杂度 probe；第二阶段冻结 probe 只训练 SAE，损失为 $L_{SAE}=L_{recon}+\alpha L_{sparsity}+\beta L_{aux}$，其中 $\alpha=0.005$、$\beta=1/32$；第三阶段联合微调 probe 和 SAE，并用 deviation penalty 约束 probe 不要偏离预训练参数，在语义稳定性和任务适配之间取折衷。
 

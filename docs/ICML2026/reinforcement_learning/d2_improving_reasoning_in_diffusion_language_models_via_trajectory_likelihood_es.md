@@ -46,11 +46,11 @@ tags:
 
 ### 关键设计
 
-**1. d2-AnyOrder：把整条轨迹的似然压进一次前向，给出精确估计。**
+**1. d2-AnyOrder：把整条轨迹的似然压进一次前向，给出精确估计**
 
 对天然支持 any-order 解码的 DLM（AO-dLLM，如 Eso-LM、AO-finetuned Qwen3-1.7B、any-order causal LLaDA），整条轨迹的似然可以写成 $\pi(x_{0:T}^{1:L}) = \prod_{l=1}^L \pi(x_0^{\sigma(l)} | x_0^{\sigma(<l)})$，问题是怎么不花 $L$ 次前向就把这 $L$ 个条件概率全算出来。d2-AnyOrder 的做法是构造一条长度 $2L$ 的拼接序列 $x_0^{1:L} \oplus m^{L+1:2L}$，让 token 和它对应的 mask 共享同一位置编码 $\text{pos}_l = l \bmod L$，再配一套自定义注意力掩码——clean token $x_0^{\sigma(l)}$ 只看 $x_0^{\sigma(\leq l)}$，mask token $m_{L+\sigma(l)}$ 只看 $x_0^{\sigma(<l)} \cup \{m_{L+\sigma(l)}\}$。这样一次前向就同时吐出所有 $L$ 个条件概率 $\pi^{AO}(x_0^l | x_0^{1:L} \oplus m^{L+1:2L})$，得到 $\rho_{n,l}^{AO} = \pi_\theta^{AO}(\cdot) / \pi_{\text{old}}^{AO}(\cdot)$ 后直接代进 GRPO clip 目标 (Eq. 8)。它精确无偏的前提是采样过程满足"Independent Masks（mask 之间不互相注意）+ Order Causality（已解码 token 只看更早解码的）"两条性质，这靠 any-order 解码算法 (Algorithm 1) 在采样阶段保证。作者还做了反证：把 d2-AnyOrder 直接套到原版 LLaDA-8B-Instruct 上，估出的平均每 token log-likelihood 是 -3.051，而真值是 -0.128，KL 高达 2.334——可见标准 MDM 默认并不满足这两条性质，必须先用 Sahoo et al. 2026 或 Arriola & Kuleshov 2026 的专门 AO 训练范式适配，AnyOrder 才能用。
 
-**2. d2-StepMerge：用 $N\ll T$ 次前向做精度可调的分段近似。**
+**2. d2-StepMerge：用 $N\ll T$ 次前向做精度可调的分段近似**
 
 不支持 any-order 解码的标准 MDM（如原版 LLaDA-8B-Instruct）用不了 AnyOrder，但又付不起 $T$ 次前向的精确似然。StepMerge 借鉴 block composite likelihood，把 $T$ 步轨迹均分成 $N$ 段，用每段端点的一次前向输出代理"段内所有 token 的似然"：$\pi(x_{0:T}^{1:L}) \approx \prod_{n=0}^{N-1} \prod_{l=1}^{L} \mathbf{1}_{n,l} \cdot \pi(x_{nT/N}^l | x_{(n+1)T/N}^{1:L})$，对应 GRPO (Eq. 9) 里的 $\rho_n^l$ 就是段端比 $\pi_\theta(x_{nT/N}^l | x_{(n+1)T/N}^{1:L}, q) / \pi_{\text{old}}(\cdot)$。这里 $N$ 是一个 compute-bias 旋钮：$N=1$ 退化成 diffu-GRPO（最便宜也最失真），$N=T$ 就是精确的完整轨迹。它之所以可控，是因为 Theorem 4.1 给了上界 $D_N \leq L \cdot \log(T/N + 1) + L \cdot \epsilon_{\text{block}}$——误差随 $N$ 对数衰减，实测 $D_N$（与完整分解的 KL）也随 $N$ 单调下降（Figure 5），Sudoku 上 $N=16$ 就追平了 $N=32/64$ 却省下大量 FLOPs，这正解释了"为什么 d1（$N=1$）会差到学不动"。
 

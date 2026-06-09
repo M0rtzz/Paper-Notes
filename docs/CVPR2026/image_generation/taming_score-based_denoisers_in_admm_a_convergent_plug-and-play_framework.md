@@ -64,11 +64,11 @@ $$\min_{\bm{x},\bm{z}} \ell(\bm{y} \| \mathcal{A}(\bm{x})) + \gamma h(\bm{z}) \q
 
 ### 关键设计
 
-**1. Auto-Correction（AC）：先用高斯噪声把走样的输入"洗"回流形附近。**
+**1. Auto-Correction（AC）：先用高斯噪声把走样的输入"洗"回流形附近**
 
 ADMM 迭代出来的 $\tilde{\bm{z}}^{(k)}$ 带着一种分布未知、还被对偶变量进一步扭曲的噪声，没法直接喂给只认高斯扰动的 score function。AC 的做法很直接，往里再注入一层已知方差的高斯噪声 $\bm{z}_{\text{ac}}^{(k)} = \tilde{\bm{z}}^{(k)} + \sigma^{(k)} \bm{n}$（$\bm{n} \sim \mathcal{N}(\bm{0}, \bm{I})$）：当注入的高斯噪声足够强，原本那点未知的结构性扰动会被"淹没"，整体分布就向某个 $\mathcal{M}_{\sigma(t)}$ 靠拢。这一步只是粗对齐——它能把输入推到流形附近，但保证不了真正落在流形上，所以后面必须接 DC 补位。
 
-**2. Directional Correction（DC）：用条件 Langevin 把输入精确钉到目标流形上。**
+**2. Directional Correction（DC）：用条件 Langevin 把输入精确钉到目标流形上**
 
 AC 之后还差最后一段距离，DC 从 $\bm{z}_{\text{ac}}^{(k)}$ 出发跑 $J$ 步条件 Langevin dynamics，采样目标是条件分布 $p(\bm{z}_{\sigma^{(k)}} | \bm{z}_{\text{ac}}^{(k)})$。这个分布的支撑集恰好 $\subseteq \mathcal{M}_{\sigma^{(k)}}$，所以只要采样收敛，结果天然就躺在 score 的训练流形上——这正是 AC 给不了的"精确落点"。条件 score 被拆成无条件 score $\bm{s}_\theta$ 加一项近似高斯似然梯度，使得每步更新既往流形拉、又不丢掉 AC 注入的观测信息：
 
@@ -76,7 +76,7 @@ $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(
 
 消融里把 $J$ 调到 0（关掉 DC）会出现严重伪影、$J$ 递增图像逐步变干净，说明这一步才是真正弥合流形不匹配的关键，而非可有可无的微调。
 
-**3. Score-based Denoising：输入已经对齐了，这一步 score 才能发挥全力。**
+**3. Score-based Denoising：输入已经对齐了，这一步 score 才能发挥全力**
 
 经过 AC+DC，喂进来的 $\bm{z}_{\text{dc}}^{(k)}$ 已经落在 $\mathcal{M}_{\sigma^{(k)}}$ 上，此刻 score function 处在它最熟悉的工作点，去噪效果才最干净。论文给两种变体：Tweedie 公式一步到位 $\bm{z}_{\text{tw}}^{(k)} = \bm{z}_{\text{dc}}^{(k)} + (\sigma^{(k)})^2 \bm{s}_\theta(\bm{z}_{\text{dc}}^{(k)}, \sigma^{(k)})$，快但偏像素级指标；或者用 ODE 求解器从 $\sigma^{(k)}$ 积分到 0，慢、多步、感知质量更好。前两步保证"输入对"，这一步负责"出图好"，分工清楚。
 

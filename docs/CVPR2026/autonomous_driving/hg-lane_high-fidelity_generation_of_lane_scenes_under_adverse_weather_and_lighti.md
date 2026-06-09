@@ -47,7 +47,7 @@ HG-Lane要解决的是一个很具体的工程难题：手里有大量晴天/白
 
 ### 关键设计
 
-**1. 控制信息融合：把车道标注塞进控制图，让扩散模型"看得见"车道线。**
+**1. 控制信息融合：把车道标注塞进控制图，让扩散模型"看得见"车道线**
 
 直接拿原图的Canny边缘去喂ControlNet会有个隐患——车道线是又细又长的线段，在密密麻麻的边缘里很容易被去噪过程当成噪声抹掉；可如果只用车道标注当控制信号，又丢了道路边界、车辆、路牌这些场景级布局，生成的图会"飘"。HG-Lane的做法是把两者各取所长融成单张控制图$C_0$：
 
@@ -55,7 +55,7 @@ $$C_0 = \text{Canny}(I) \oplus (\text{LaneAnnotation}(I) \odot \text{ColorMask})
 
 一路是全图Canny边缘$E=\text{Canny}(I)$，提供道路边界、车辆轮廓、路标等全局结构约束；另一路把原始车道线标注（2D坐标点集）按车道类别上色——左/右车道、实线/虚线用不同颜色，渲染成彩色蒙版，再与Canny图通道级叠加。这样车道线在控制图里既有周围场景的上下文，又顶着一个颜色鲜明的显式强信号，扩散模型再也不会把它忽略掉。消融里这一融合相比单用Canny或单用lane能多出三到五成的增益，正说明"全局布局+显式车道"缺一不可。
 
-**2. Stage-I 结构感知反向扩散：用 Canny-ControlNet 锁几何，靠文本提示换天气。**
+**2. Stage-I 结构感知反向扩散：用 Canny-ControlNet 锁几何，靠文本提示换天气**
 
 有了$C_0$，Stage-I就是一个标准的Stable Diffusion + Canny-ControlNet条件生成。去噪每一步的噪声预测把基础SD和ControlNet两路相加：
 
@@ -63,7 +63,7 @@ $$\epsilon_\theta(z_t, t, c_{\text{text}}, C_0) = \text{SD}(z_t, t, c_{\text{tex
 
 ControlNet在latent space里逐步注入结构约束，强制生成结果的边缘分布贴合$C_0$；因为$C_0$里带着显式的车道标注信息，车道线的位置和形状就被钉死了。换什么天气则交给类别专属的文本提示$c_{\text{text}}$负责——snow强调路面积雪与飘雪、rain强调路面反光与雨滴模糊、fog强调远处能见度下降的朦胧、night强调暗光与车灯、dusk强调暖色渐暗、shadow强调局部遮挡阴影。一句"A road scene with lane markings during heavy snowfall"这样的提示，配上锁好几何的控制图，就能在不动车道的前提下把场景刷成目标天气。
 
-**3. Stage-II 外观感知精修：只给夜景/黄昏补一刀全局光照。**
+**3. Stage-II 外观感知精修：只给夜景/黄昏补一刀全局光照**
 
 Canny-ControlNet擅长管结构，却管不太住全局色调和亮度。雪、雨、雾本质上是往画面里"叠"东西（雪花、雨滴、雾气），Stage-I的文本提示已经够用；但夜间和黄昏要的是整张图的亮度、色温被大幅压暗、调暖，光靠text prompt很难自然实现。所以HG-Lane只对night/dusk追加一个第二阶段，用**InstructPix2Pix ControlNet**对Stage-I的输出$I'$做一次基于指令的编辑：
 

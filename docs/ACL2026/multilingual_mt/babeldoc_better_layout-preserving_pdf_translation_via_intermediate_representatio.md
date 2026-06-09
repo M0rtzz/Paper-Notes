@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. 双向 IR + 公式占位符：把 PDF 拆成翻译能读、重建能闭环的结构化中间层。**
+**1. 双向 IR + 公式占位符：把 PDF 拆成翻译能读、重建能闭环的结构化中间层**
 
 公式破坏是 PDF 翻译的第一杀手——传统 LLM 一看到 $\int$ 或上下标就容易乱译、乱删，把数学符号搅坏；而单向 parser（Doc2X / MinerU）虽能把公式抠出来，却只能 PDF→Markdown 单向走，回不到原版式。BabelDOC 的解法是构造一个同时携带 spatial 坐标、stylistic 属性和 semantic 内容的 IR，每个页面元素都挂着自己的 bbox 与字体样式，这样既能喂给翻译、又能闭环重建。
 
 公式的处理在 IR 层分三步完成：script detection unit 看相邻字符的 font-size 方差判断上下标，offset calculation unit 基于基线坐标算出每个 fragment 的偏移，vector reconstruction unit 再用这些 offset 把矢量公式重建出来。识别出的公式连同 inline image、特殊字符等所有非语言内容，在进入 NLP 阶段前全部 mask 成占位符，LLM 眼里只剩「文本流 + 占位符 ID」，翻译完成后再按 IR 把占位符精确填回原位。正是这个显式 IR 化解了「翻译时不能动公式」与「还原时要把公式放回原位」的根本冲突，是整个系统能 work 的基石。
 
-**2. 语义引擎：用 document-level 视图统一术语、拼回被布局切碎的句子。**
+**2. 语义引擎：用 document-level 视图统一术语、拼回被布局切碎的句子**
 
 常规 CAT/MT 是 per-paragraph 翻译，长文档里同一个术语会漂出多种译法——「Current Transformation Matrix」一会「当前变换矩阵」、一会「现行变换矩阵」；长句被分栏一切，语义也断在栏与栏之间。BabelDOC 把 IR 当作整篇文档的全局视图：翻译开始前先扫一遍 IR 抽取领域术语，构建一份动态 glossary（也可接受用户上传），再把它显式注入 LLM prompt，让所有 paragraph 共享同一套术语约束；同时利用 IR 里的 reading order，把「这一栏底部的句子继续到下一栏顶部」这类跨栏/跨页逻辑段落先拼合再翻。
 
 这套干预之所以能做，关键在于 IR 提供了 PDFMathTranslate 那种 paragraph-level pipeline 拿不到的 document-level 视图，于是术语一致、上下文连贯都变成了 prompt-engineering 而非架构改造，每个模块都能独立替换升级。
 
-**3. 自适应排版引擎：用最简单的迭代搜索吸收跨语言的文本膨胀。**
+**3. 自适应排版引擎：用最简单的迭代搜索吸收跨语言的文本膨胀**
 
 英→西之类的翻译普遍把文本撑长 10–30%，硬塞回原 bbox 必然溢出，这正是 layout-preserving translation 最大的障碍。BabelDOC 没有上复杂的 layout 优化或学习，而是在 IR 给定的 bbox 约束上做 per-paragraph 的局部缩放：从 $\gamma = 1.0$ 起，每轮检查翻译文本是否落在原 bbox 内，溢出就 $\gamma \leftarrow \gamma - 0.05$（或 $0.10$）重排，直到不溢出或触底（典型可缩到 $\gamma = 0.85$）。
 

@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. MDLM 损失的 Signal–Noise 分解：把单一目标拆成"学信号"和"被正则"两股力。**
+**1. MDLM 损失的 Signal–Noise 分解：把单一目标拆成"学信号"和"被正则"两股力**
 
 人们只观察到 MDLM 泛化好，却说不清机理。本文给出的答案是：MD 训练目标里其实藏着两类性质相反的样本。判别标准是掩码集合 $M_{\bm{m}}$ 与扩展秘密集合 $\mathcal{S}'=\mathcal{S}\cup\{n'\}$ 的交集大小——交集恰为 1 的样本属于 Signal Regime $\mathcal{R}_S=\{\bm{m}\mid |M_{\bm{m}}\cap\mathcal{S}'|=1\}$，此时被掩 token 仍可由未掩 token 唯一确定；其余落入 Noise Regime $\mathcal{R}_N$，信息已不可恢复。代入定义后有效损失分解为
 
@@ -52,11 +52,11 @@ $$\mathcal{L}_{\text{eff}}(\theta)\approx P_S\,\mathbb{E}_S[\|f_\theta(\tilde{\b
 
 第一项把模型往真值 $f^*$ 推，第二项把输出范数往零拉——后者就是一个**天然的 L2 式隐式正则**。这解释了为什么 MDLM 不像 standard supervision 那样陷入 grokking：训练几乎每一步都掺着一定比例的不可识别样本，它们持续给优化器一个收缩信号，把模型从纯记忆解上拽下来。该结论对 CE loss 同样成立（Remark 4.4）。
 
-**2. 能量景观与信号最优掩码率：把"$t$ 该取多少"变成一个有解析解的极值问题。**
+**2. 能量景观与信号最优掩码率：把"$t$ 该取多少"变成一个有解析解的极值问题**
 
 既然损失能拆成信号与正则两股力，那"选掩码率"就不该靠拍脑袋。在 lazy readout 假设下，最小化 $\mathcal{L}_{\text{eff}}$ 等价于最大化能量函数 $E(\bm{W})=\bm{c}(\bm{W})^\top \bm{\Sigma}(\bm{W})^{\dagger}\bm{c}(\bm{W})$，而 $E(\bm{W})\propto P_S^2$，于是 $P_S$ 就成了朝目标方向 $f^*$ 推进的动态增益。两端都不能要：极限分析（Cor. 4.6）显示若 $P_N\to 0$，能量饱和、$\nabla_{\bm{W}}E=0$，特征学习直接崩溃；反过来 $P_N$ 太大又会让正则压过信号。把 $P_S$ 当作 $t_0,t_1$ 的函数求极值，得到两个解析配方：**Signal-Optimal** 给出 $t_0=t_1=\tfrac{1}{k+1}$，**Sample-Complexity-Optimal** 给出 $t_0=0$、$t_1$ 满足 $(2k+1)(1-t_1)^{k+1}-(2k+2)(1-t_1)^k+1=0$。这把"取中段"的直觉升格成定量公式——在 $(n,k)=(20,6)$ 的 parity 上，理论最优窗 $\mathcal{U}[0,0.246]$ 与实验里收敛最快的配置几乎重合（Figure 2）。
 
-**3. Signal-Rich Mask Sampling：把理论结论搬到真实自然语言上。**
+**3. Signal-Rich Mask Sampling：把理论结论搬到真实自然语言上**
 
 parity 有单一目标映射，自然语言却高度冗余，不能照搬解析解，但"押注高信号窗口"这条原则可以迁移。具体做法是把训练时的掩码率从默认 $\mathcal{U}[0,1]$ 收紧到一个窗口 $t\sim\mathcal{U}[t_{\min},t_{\max}]$，损失写成
 

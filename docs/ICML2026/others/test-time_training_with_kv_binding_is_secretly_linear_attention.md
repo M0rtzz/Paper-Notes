@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 内循环展开定理：把"在测试时记忆"这套叙事拆开，发现底下其实只是一个线性注意力算子。**
+**1. 内循环展开定理：把"在测试时记忆"这套叙事拆开，发现底下其实只是一个线性注意力算子**
 
 四个反例之所以集中爆发，是因为"记忆"解读根本对不上现象，所以必须先有一个不依赖记忆假设的形式化表征。本文的做法是把内循环的 GD 步骤显式展开。设内循环 $f(x)=\phi(x;\Theta)W$ 最后一层是无偏置线性，Theorem 5.1 给出单步 GD 更新后 $o=\phi_{t+1}(q)(W_t+\phi_t(k)^\top g_t(k))$，其中 $g_t(k)=-\eta\,\partial\mathcal{L}/\partial f_t(k)$——这恰好是线性注意力的形式 $o=\hat q(S_0+\hat k^\top\hat v)$，对应 $\hat q=\phi_{t+1}(q)$、$\hat k=\phi_t(k)$、$\hat v=g_t(k)$、$S_0=W_t$。Theorem 5.2 把它沿序列展开成 $o_t=\phi_{t+1}(q_t)(W_0+\sum_{i=0}^t\phi_i(k_i)^\top g_i(k_i))$，Theorem 5.3 再把带动量的 GD 写成动量加权的有效 value $v^\text{eff}_i=g_i(k_i)\cdot\sum_{j=i}^t\beta_i^j$，结构仍是线性注意力。这个视角一下子把四个反例全解释通了：梯度方向被吸进有效 value（所以改成梯度上升 retrain 后照样 work），Q 和 K 不需要语义对称（所以 Q→K 互换无伤），内循环步数对应的是不同的有效算子而非"记得更牢"（所以多走几步反而下游变差）。
 
-**2. 把复杂 TTT 逐步剥成线性注意力的 ablation 路径：用 6 步消融给每个流行设计标价。**
+**2. 把复杂 TTT 逐步剥成线性注意力的 ablation 路径：用 6 步消融给每个流行设计标价**
 
 直接抛出"TTT 等价于线性注意力"是个抽象主张，没人会立刻信。本文于是给出一条 6 步消融路径，把 LaCT 和 ViTTT 一层层还原成标准线性注意力，每一步都有定理或推导支撑"为什么可以去掉"：Step 1 只更新最后一层（让 $\phi$ 静态化）；Step 2 移除 weight norm（让状态更新可并行）；Step 3 把多层 MLP 砍成单层线性；Step 4 移除 per-token learnable lr（被有效 value 吸收）；Step 5 移除动量；Step 6 移除梯度正交化 $\mathcal{M}(\cdot)$，最终落到 $o=q(W+\sum_i k_i^\top v_i)$。这样一来，每个被去掉的模块都和具体的性能、速度数字挂上钩，抽象的等价性主张就变成了可落地的工程决策——读者能直接看到 weight norm、per-token lr、动量、多层 MLP 各贡献了多少（答案是几乎都没用）。
 
-**3. Parallel Prefix-Scan 形式：认清是线性注意力之后，并行化就成了顺理成章的事，吞吐直接 4×。**
+**3. Parallel Prefix-Scan 形式：认清是线性注意力之后，并行化就成了顺理成章的事，吞吐直接 4×**
 
 之前所有 TTT 实现都默认 sequential，因为它们把内循环当成真在"时间上更新参数"。但一旦看清本质，这个假设就站不住了：当 weight normalization 被移除且只更新最后一层时，核函数 $\phi_t\equiv\phi(\cdot;\Theta)$ 与历史无关，状态更新变成 associative 的，于是可以用 parallel prefix scan 替代逐 token 累加。论文在 Appendix H 给了完整的等价性证明，并在 Appendix I 显示加回 weight norm 或动态核就会破坏 associativity——这也反过来印证了"recurrent 性是个误解"：它只是把内循环当真在更新参数的副产物。
 

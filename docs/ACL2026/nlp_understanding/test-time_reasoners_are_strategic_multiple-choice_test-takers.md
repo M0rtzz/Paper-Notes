@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Full / Choices-only × Base / Reason 的二维对照：把三种能力拆开测。**
+**1. Full / Choices-only × Base / Reason 的二维对照：把三种能力拆开测**
 
 只测 choices-only accuracy 这一个数字，无法回答“推理模型是不是更会作弊”——因为它把正常答题能力、只看选项的 partial-input 能力、以及测试时推理（TTR）带来的增益全混在了一起。作者让同一模型、同一题目在四个格子里各跑一遍：如果 reason 只抬高 full、不抬高 choices-only，说明推理主要靠题干 $q$；如果 choices-only 的 reason 也显著上涨，才说明推理在增强选项级策略。这样就能判断 TTR 究竟是普遍提升 MCQA，还是专门放大了 partial-input shortcut。模型覆盖 Gemini 2.5 Lite/Flash/Pro、GPT-5 Mini/GPT-4.1/GPT-5、Claude Haiku/Sonnet、Cohere Command R/R+、DeepSeek-V3、Qwen3-235B-Instruct；支持 API reasoning effort 的模型 base 设 none、reason 设 medium，不支持的则用显式 CoT prompt 开关推理。
 
-**2. 推理轨迹可信性检查：先证明轨迹值得分析，再用它。**
+**2. 推理轨迹可信性检查：先证明轨迹值得分析，再用它**
 
 CoT 不一定是真实的因果解释，如果轨迹连模型自己的答案都支持不了，拿它做策略分析就没意义。所以在编码之前，作者先做三类 faithfulness sanity check：一是加入 TTR 后模型多数时候保持原答案，说明推理没有随意翻供；二是让 GPT-5 只看轨迹去预测模型最终选了哪项，准确率超过 90%，说明轨迹和答案高度耦合；三是人为往选项里塞重复项、同义项、无意义项或事实错误项，模型会随之改答案或在轨迹里显式提到这些扰动。三关都过，作者才把轨迹定位为“有信息量的软证据”（soft evidence），而非强因果解释——这比“CoT 一定可靠 / 一定不可靠”的二分更可操作。
 
-**3. Choices-only 策略编码与回归分析：区分 benchmark 缺陷和 abductive 推理。**
+**3. Choices-only 策略编码与回归分析：区分 benchmark 缺陷和 abductive 推理**
 
 partial-input 答对的含义取决于模型用了什么策略：若它只因为“1.5 这个数字看起来最乱”而蒙对，那是题目缺陷；若它能从选项反推“题目可能在问可再生资源”再选 trees，那更接近一种合理的溯因推理（abductive reasoning）。为此作者从 ARC 抽取 Gemini Pro、Claude Sonnet、Qwen-Instruct 的 180 条正确/错误 choices-only 轨迹做 qualitative coding，归出六类标签——FACT（回忆事实）、ELIM（排除错误项）、PATTERNS（识别选项类别/模式）、INFER Q（反推原题）、SHALLOW（利用表面线索）、INCONS（轨迹自相矛盾）。再用逻辑回归看每类策略是否预测答对/答错，并对 INFER Q 单独判断模型猜出的问题是否与原题语义接近。这套编码把“答对”从一个准确率审判，升级成了策略层面的诊断。
 

@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 六类对抗与说服技巧的教育化分类：把散落的 jailbreak 手法系统映射到"学生骗答案"。**
+**1. 六类对抗与说服技巧的教育化分类：把散落的 jailbreak 手法系统映射到"学生骗答案"**
 
 已有教育安全评测大多只测单轮、显式的学术不端，没把真实课堂里学生那套"软磨硬泡"建模进来。作者把现有 jailbreak 文献里的攻击手法重新归到教育场景，分成 3 类**对抗**（Direct Request / Emotional Threat / Intentional Wrong Answer）和 3 类**说服**（Contextual Manipulation / Interpersonal Influence / Request Shaping）。其中 Intentional Wrong Answer 是教育独有的——故意写个错解，诱 tutor 出于好心去纠正、顺势把正解漏出来；Contextual Manipulation 则伪造伪科学论据（如谎称"撤销最终答案能让学生不确定性增加 18%"）来动摇 tutor。每类配 3 个手写示例，既能拿去做 in-context few-shot，也能作 SFT 数据合成的种子。作者在 §5.1 实测发现说服类全面强于对抗类（平均泄露率 74% vs 47%），而 Contextual Manipulation 最猛（74%），说明传统 NLP jailbreak 评测严重低估了"软攻击"对教育场景的杀伤力。
 
-**2. SFT 微调的对抗学生代理：训一个"绝不解题、只持续攻防"的学生当标准压测器。**
+**2. SFT 微调的对抗学生代理：训一个"绝不解题、只持续攻防"的学生当标准压测器**
 
 直接用 in-context 提示出来的对抗学生有个致命 bug——LLM 默认顺从又爱解题，常常自己就把题做对了，于是评测测的其实是"学生会不会解题"而非"tutor 会不会泄露"，数据被严重自污染（Qwen-32B tutor 下学生自泄露率高达 75%）。作者的解法是把"坚持当反派"的行为通过 SFT 注入学生模型：先用 reasoning tutor + 预定义攻击 prompt 在 1000 道 GSM8K 题上滚出多轮对话（每轮随机抽 6 类技巧之一，≤10 轮），合成 SFT 数据；再拿 Qwen2.5-7B-Instruct 配 LoRA（$r=32, \alpha=64$, dropout 0.05）训 3 epoch，lr $1\times 10^{-5}$、bs 8、warmup 100 步。作者对比了四种训练数据组合（全 6 类 / 去掉 Intentional Wrong Answer 的五类 / 仅对抗 / 仅说服），发现全 6 类版本攻击多样性最好，定为默认。SFT 之后效果直接翻盘：学生自泄露率被压到 1–4%，tutor 泄露率从 4% 飙到 70%，而且攻击更有耐心（平均 8–13 轮才得手 vs base 的 5–6 轮）——从根上解决了"评测者比被测者还容易翻车"的问题。
 
-**3. 两种简单 tutor 防御（Reason Pedagogically & Multi-Agent）：不重训也能压住泄露。**
+**3. 两种简单 tutor 防御（Reason Pedagogically & Multi-Agent）：不重训也能压住泄露**
 
 教育产品对部署成本敏感，给每个 tutor 做全量 fine-tune 不现实，得有即插即用的轻量防御。作者给了两招：① **Reason Pedagogically** 强制 tutor 先用 JSON 输出一个 `reason` 字段（写明"如何引导而不给答案"）再出回复，本质是把 CoT 关进 reasoning 字段，逼 tutor 在 plan 阶段就 commit 到"不泄露"的策略；② **Multi-Agent Tutor** 走 tutor → judge $J_t$ → refiner 三步流水，judge 一旦嗅到泄露就让 refiner 改写。两者都不动 base model，可即插即用。Tab. 2 显示它们把 Qwen-32B 的泄露率从 46% 压到 2–4%，即便面对最强的 SFT 对抗学生，Llama-8B 也能从 34% 降到 3%，36/36 项 paired test 全部显著——说明 tutor 的脆弱主要是 prompt protocol 设计问题，而非 base capability 不行。
 

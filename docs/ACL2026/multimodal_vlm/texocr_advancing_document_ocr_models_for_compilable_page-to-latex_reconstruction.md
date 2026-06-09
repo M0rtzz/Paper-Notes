@@ -47,17 +47,17 @@ TeXOCR 的方法由三个部分组成：TEXOCR-Bench 用来定义任务和评测
 
 ### 关键设计
 
-**1. 三维九指标的 TEXOCR-Bench：把"能不能用"拆成可量化的工程约束。**
+**1. 三维九指标的 TEXOCR-Bench：把"能不能用"拆成可量化的工程约束**
 
 科学文档 OCR 真正的风险常常藏在"看起来差不多但根本不能用"的地方——正文 OCR 得分很高，却因为一个漏掉的环境边界或损坏的 `\ref{}` 让整篇无法编译。为此 benchmark 把质量拆成三个维度九个指标，逼模型不能只靠正文转写蒙混过关：转写保真（Transcription Fidelity）含复杂文本保留 CTP、公式准确率 FA、表格准确率 TA；结构忠实（Structural Faithfulness）含章节准确率 SA、引用覆盖 CC、引用有效性 RV；端到端可用（End-to-End Usability）含文档级相似度 DS、基础 sanity check 和编译成功率 CSR。
 
 关键在于评测不是逐页打分了事，而是把页面输出按文档顺序合并成完整项目，再跑结构解析和标准 LaTeX 编译。于是 section、citation、float、formula、table 乃至 compiler 这些工程约束都被纳入考核——一个只会写"像 LaTeX 的字符串"但编不过的模型，在 CSR 上会被直接打回原形。
 
-**2. 页面级 LaTeX 对齐数据构建：先解决源码顺序与显示顺序的天然错位。**
+**2. 页面级 LaTeX 对齐数据构建：先解决源码顺序与显示顺序的天然错位**
 
 LaTeX 源码的书写顺序和 PDF 的显示顺序经常对不上，尤其 figure/table 这类浮动体——若不显式处理这种页面-源码错位，模型会学到错误映射，后面再强的训练目标也救不回来。数据构建因此分类处理：先解析 LaTeX 源码依赖、合并成 canonical source；正文页用 GPT-5-mini 辅助识别页面起止 token，与源码片段对齐；图表等浮动体用 pdf2figure 在全局 PDF 中定位后再分配到最合适的页面；参考文献页则把 body 区域继续用 LaTeX 监督、reference 区域转成 BibTeX 监督。这样得到的每一个单页样本，其图像与 LaTeX/BibTeX 目标才是真正对齐、可供监督的。
 
-**3. SFT + RLVR 的可验证奖励训练：把"能不能编译"变成训练信号。**
+**3. SFT + RLVR 的可验证奖励训练：把"能不能编译"变成训练信号**
 
 普通的 token loss 表达不了"这段 LaTeX 能不能编译""这个 label 是否存在""表格列是否闭合"这类离散约束，所以单纯 SFT 学出来的只是字符层面的相似。训练因此分两步走：SFT 阶段用标准 next-token prediction 先学会高保真转写，目标可概括为最大化 $\log \pi_\theta(y_t \mid x,p,y_{<t})$；RLVR 阶段则对每页采样 $K$ 个 completion，让每个输出跑一遍页面级测试集合 $T(x)$，reward 取通过测试的比例：
 

@@ -49,11 +49,11 @@ HiDrop 的出发点是：视觉 token 在 LLM 的不同深度根本不是"一直
 
 ### 关键设计
 
-**1. Late Injection：浅层根本不该处理视觉 token，所以干脆不注入。**
+**1. Late Injection：浅层根本不该处理视觉 token，所以干脆不注入**
 
 层级分析里有两个直接证据：浅层视觉 token 的 intra-modal cosine similarity 极高，说明它们经过这些层几乎不变化；同时 cross-modal influence 近零，说明文本表示在浅层基本不受图像影响。两者合起来意味着浅层对视觉信息只是被动搬运。既然如此，HiDrop 干脆让视觉 token 在第 $L_{inj}=9$ 层才注入序列，前面 8 层只跑文本。这和"先把视觉 token 全注入、再想办法剪"的传统路线根本不同——别人是注入后做减法，HiDrop 是从源头就不让视觉 token 经过浅层，计算从一开始就省下来了。
 
-**2. Concave Pyramid Pruning + ILVAS：在中层融合区前快后慢地渐进剪枝。**
+**2. Concave Pyramid Pruning + ILVAS：在中层融合区前快后慢地渐进剪枝**
 
 视觉 token 注入后落在中层这个融合最密集、冗余也最高的区间，关键是两个问题：在哪几层剪、剪掉谁。在哪剪由 ILVAS（Inter-Layer Visual Attention Similarity）决定，它衡量相邻两层之间视觉 token 注意力分布的稳定性——ILVAS 高说明注意力分配已经稳定下来，是适合做过滤的层，所以选 ILVAS 曲线的局部极大值点作为 filtering layer（如 layer {10,14,16,18}）。剪掉谁则用 Differentiable Top-K（DTop-K）做可微选择：先把重要性分数做归一化排序得到 $c'_i$，再用 sigmoid 配一个可学习阈值 $a$ 生成软掩码
 
@@ -61,11 +61,11 @@ $$\text{Mask}(c,a) = \sigma(\lambda(c'_i - a))$$
 
 前向时按硬阈值做离散的保留/丢弃，反向时梯度仍能沿软掩码回流到重要性估计。整个剪枝量按凹形调度安排——前期剪得猛、后期放慢，因为融合初期大量 token 冗余、可以放心快删，越往后剩下的 token 越关键、要慢慢删，这正好贴合中层"融合稀疏性递增"的规律。
 
-**3. Early Exit：深层进入纯语言推理后，视觉 token 只是负担。**
+**3. Early Exit：深层进入纯语言推理后，视觉 token 只是负担**
 
 HiDrop 用一组 training-free 实验在不同层一次性移除全部视觉 token，发现 layer 24 之后再移除几乎不影响性能。原因是深层已经完成跨模态融合、转入纯语言推理阶段，视觉 token 留在序列里只消耗算力却不再贡献信息。于是在第 $L_{exit}=25$ 层把剩余视觉 token 全部丢掉，后面几层只跑文本。
 
-**4. 工程优化：让动态剪枝在真实加速框架里跑得通。**
+**4. 工程优化：让动态剪枝在真实加速框架里跑得通**
 
 三阶段策略要落到实际加速，还需要几处工程配合。Persistent Position Encoding 给每个视觉 token 固定的位置标识符，避免动态剪枝把序列打乱后 RoPE 位置错乱。FlashAttention 兼容是靠一条轻量辅助注意力来完成 token 选择，主注意力计算不被改动，从而保留 FlashAttention 的加速。并行解耦则利用 Late Injection 带来的空档——浅层的文本前向和视觉编码可以并行执行，因为这时视觉 token 还没进序列，两条路径互不依赖。
 

@@ -45,15 +45,15 @@ GEM 要解决的是"把语料分成语义桶"这一步——它不学 mixing 权
 
 ### 关键设计
 
-**1. 超球面 vMF 混合 + 经验质量平衡正则：让度量贴合 cosine，再把塌缩拆出来单独压。**
+**1. 超球面 vMF 混合 + 经验质量平衡正则：让度量贴合 cosine，再把塌缩拆出来单独压**
 
 痛点在于现代文本 embedding 是用 cosine 相似度训出来的、信号住在方向里，但 K-Means 之类却把聚类目标建在欧氏空间，再叠加 anisotropy/cone effect 就会 cluster collapse。GEM 把每个簇建成一个 vMF 分量 $f_{\text{vMF}}(x\mid\mu_k,\kappa_k)=C_d(\kappa_k)\exp(\kappa_k\mu_k^\top x)$，它的充分统计量恰好是方向内积 $\mu_k^\top x$，于是"几何空间"和"embedding 空间"天然对齐。塌缩则被剥离成单独一项来治：混合先验固定 $\alpha_k\equiv 1/K$ 切断 EM 的"富者愈富"反馈，再在熵正则 ELBO 上加一个只作用于经验软质量 $\pi_k(\Gamma)=\tfrac{1}{N}\sum_i\gamma_{ik}$ 的二次惩罚 $-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}(\Gamma)-\mathbf{u}\rVert_2^2$（$\mathbf{u}=\tfrac{1}{K}\mathbf{1}$）。把平衡作用施加在经验质量而不是生成先验上，既不破坏生成模型的可解释性，又能在 anisotropic embedding 下把长尾簇撑起来，得到方向均衡的语义划分。
 
-**2. 可证明单调上升的 MM 推断：把全样本耦合的正则项拆成逐样本可解的局部更新。**
+**2. 可证明单调上升的 MM 推断：把全样本耦合的正则项拆成逐样本可解的局部更新**
 
 直接最大化上面那个目标很难，因为 $\boldsymbol{\pi}(\Gamma)$ 把所有样本耦合在一起、无法分布式优化。GEM 利用正则项 $R(\boldsymbol{\pi})$ 是 $\lambda$-smooth 凹二次函数这一性质，构造它的全局二次 minorizer $R(\boldsymbol{\pi})\geq R(\boldsymbol{\pi}^{(t)})+\langle\nabla R(\boldsymbol{\pi}^{(t)}),\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rangle-\tfrac{\lambda}{2}\lVert\boldsymbol{\pi}-\boldsymbol{\pi}^{(t)}\rVert_2^2$；E 步代入这个下界得到代理目标 $\widetilde{\mathcal{F}}_t(\Gamma)$，它对每个 $\gamma_i$ 凹且可分解，用几步 mirror ascent 即可解出新分配；M 步则是 vMF 的闭式更新——$r_k=\sum_i\gamma_{ik}x_i$、$\mu_k=r_k/\lVert r_k\rVert_2$，浓度 $\kappa_k$ 由 $\bar R_k=\lVert r_k\rVert_2/\sum_i\gamma_{ik}$ 经高维近似 $\kappa_k\approx(\bar R_k d-\bar R_k^3)/(1-\bar R_k^2)$ 估出。MM 代理给出的"每步都不比上一步差"保证了 $\mathcal{F}(\Theta^{(t)},\Gamma^{(t+1)})\geq\mathcal{F}(\Theta^{(t)},\Gamma^{(t)})$，让整个流程在大规模数据上稳定收敛，无需依赖经验性的 early stop。
 
-**3. GIS 选样 + Teacher-Student 蒸馏到 FastText：把昂贵的几何 EM 压成可上线的线性推断。**
+**3. GIS 选样 + Teacher-Student 蒸馏到 FastText：把昂贵的几何 EM 压成可上线的线性推断**
 
 web-scale 语料对延迟极其敏感（fastText 已是 CCNet/Dolma 的默认分类器），在 trillion-token 上直接跑 vMF EM 不现实。GEM 用 Geometric Influence Score 在每个簇里选出高置信、按簇均衡的代表样本作为 pseudo-label 集，蒸馏一个 FastText 线性分类器做 student，把"分桶"这一步固化到线性时间；同一批 GIS 代表样本还会喂给 LLM 写语义描述，自动产出可读的 taxonomy（见 Figure 3 的树状图）。这样既保留了 GEM 几何带来的平衡性，又把 categorization 的延迟压到主流 mixing pipeline 能负担的量级。
 

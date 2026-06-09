@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. 基底失配是延迟伤害的放大器：先诊断清楚再对症下药。**
+**1. 基底失配是延迟伤害的放大器：先诊断清楚再对症下药**
 
 异步流水线的延迟 $\tau$ 在理论上只带来 $\mathcal O(\sqrt{\tau/T})$ 的温和减速，可实测却是灾难性崩塌——这之间的鸿沟必须先解释清楚，算法才能精准发力。作者的答案是：真正放大延迟伤害的是 Adam 的坐标级自适应与 loss landscape 几何的错配。为了把这个直觉变成能纳入收敛界的量，他们用 Hessian 的 $(1,1)$-范数 $\|\nabla^2 f(w)\|_{1,1}=\sum_{i,j}|H_{ij}|$ 当作"基底失配"的代理量：给定特征谱不变，$H$ 越接近对角（基底越对齐坐标轴）该范数越小，旋转得越偏越大。在坐标级有界噪声 + 坐标级 $\ell_\infty$ 光滑两条假设下，他们证出 asynchronous Adam（$\beta_1=0$）的收敛界
 
@@ -53,11 +53,11 @@ $$\min_t \mathbb E\|\nabla f(w_t)\|_1 = \mathcal O\Bigl(\sqrt{(1+d\tau)\Delta_0 
 
 其中 $C$ 正是失配代理量。关键在于延迟 $\tau$ 和失配 $C$ 是**乘性**耦合的——对齐基底（$C$ 小）下 $\tau$ 几乎无害，失配基底（$C$ 大）下 $\tau$ 被狠狠放大，这正好解释了为什么大流水线下延迟不是温和退化而是崩塌。把分析推广到各 stage 延迟不同的情形，还能得到等效延迟 $\tau'=\sqrt{\sum_i C_i^2\tau_i^2/\sum_i C_i^2}$，揭示出延迟最大的靠前 stage 对收敛的拖累也最重——这条公式后面直接变成 stage-aware 调度的依据。
 
-**2. 基底旋转 Adam（Algorithm 1）：把整个优化空间搬到特征基下，让失配 $C$ 自己变小。**
+**2. 基底旋转 Adam（Algorithm 1）：把整个优化空间搬到特征基下，让失配 $C$ 自己变小**
 
 既然 $\mathcal O(\tau\cdot C)$ 项由失配主导，那就构造一个变换把 $C$ 压到它的下界。做法是在旋转空间 $\tilde w=\mathcal U^\top w$ 里走标准 Adam，等价于在原空间执行 $\mathcal U\cdot\text{Adam}(\mathcal U^\top\nabla f)$ 这条更新；矩阵权重情形借 Kronecker 假设把 $\mathcal U$ 拆成左右两个小矩阵 $U,V$，于是旋进去算 $\tilde G_t=U^\top G_t V$、在旋转空间累加平方梯度得二阶动量 $\tilde V_t$，最终 $W_t\leftarrow W_{t-1}-\eta_t\,U(\tilde M_t/\sqrt{\tilde V_t+\epsilon})V^\top$。这样做之所以有效，是因为理论上 $\|H_{U,V}\|_{(1,1)}\le\|H_U\|_{(1,1)}\le\|H\|_{(1,1)}$——双侧旋转在所有旋转里达到 $(1,1)$-范数的全局最小，实测把归一化 Hessian $(1,1)$-范数从 0.5436 压到 0.1228，等于直接掐住了放大延迟的那个因子。代价上 $U,V$ 不必每步刷新，默认 freq=10 几乎不掉点，拉到 freq=100 仍显著领先 baseline，开销可控。
 
-**3. 特征基估计的两轴分类（Algorithm 2）：在精度和显存之间给出可选档位。**
+**3. 特征基估计的两轴分类（Algorithm 2）：在精度和显存之间给出可选档位**
 
 百亿模型上多存两个矩阵、多算一次特征分解都不是小事，所以怎么估 $U,V$ 必须可调。作者用两个正交的轴把方案铺成一个谱系：第一个轴是 approximation source $\mathcal S$——$\mathcal S=2^\text{nd}$ 维护 $L=\mathbb E[GG^\top]$、$R=\mathbb E[G^\top G]$ 两个 EMA 矩阵当经验 Fisher 用，精度高但要存两个矩阵；$\mathcal S=1^\text{st}$ 退一步只用一阶动量近似 $\mathbb E[GG^\top]\approx\mathbb E[G]\mathbb E[G]^\top$，省掉 $L,R$ 的存储。第二个轴是 rotation geometry $\mathcal G$——bilateral 同时旋转左右两侧、捕捉完整 Kronecker 结构，unilateral 只旋转较小那一维以省算力。有意思的是这套分类把现成方法都装了进来：SOAP 恰是 ($\mathcal S=2^\text{nd}$, bilateral)、full-rank GaLore 恰是 ($\mathcal S=1^\text{st}$, unilateral)，统一到同一框架后就能把 Hessian geometry 的贡献从各家实现差异里干净地隔离出来。
 

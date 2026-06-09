@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 组共享固定 fan-in 稀疏：让语义相近的标签共用一组 fan-in 索引，一次解决索引内存、访存复用、任务先验三件事。**
+**1. 组共享固定 fan-in 稀疏：让语义相近的标签共用一组 fan-in 索引，一次解决索引内存、访存复用、任务先验三件事**
 
 Spartex 那种"每个标签独立随机采样 fan-in"的痛点是相邻标签读完全不同的特征、cache 命中惨不忍睹。本文把标签 $\{1,\dots,L\}$ 划成 $K$ 个组 $\{\mathcal{G}_k\}$，每组大小 $|\mathcal{G}_k|=G$，组内所有标签共享同一个 fan-in 索引集 $\mathcal{I}_k$（但各自保留独立权重 $w_\ell$），索引存储从 $LF$ 降到 $(L/G)F$，量级少 $G$ 倍。分组不是随便切，而是按语义聚簇——目标 $\{\mathcal{G}_k\}=\arg\max_{\text{partition}}\sum_k\sum_{\ell\in\mathcal{G}_k}\mathrm{sim}(e_\ell,\mu(\mathcal{G}_k))$，标签嵌入 $e_\ell=\mathrm{Normalize}(\frac{1}{|\mathcal{P}_\ell|}\sum_{i\in\mathcal{P}_\ell}h_i)$ 直接取该标签正样本上 encoder 表示的均值，连 dense classifier 都不用训。百万标签下严格求解不可行，作者用两阶段近似：先 mini-batch 球面 $k$-means 聚成 $C\approx L/(\beta G)$ 个粗簇，再在簇内贪心地按 seed + top-$(G-1)$ 近邻拼成大小约 $G$ 的紧凑组。这个设计之所以一箭三雕：索引内存少 $G$ 倍；同组标签复用一份 gathered feature tile，访存被摊薄；标签按嵌入聚簇又自带 task-aligned inductive bias，让语义相近的标签自然共享特征子集。
 
-**2. 吃 Tensor Core 的 gather-once + dense MMA kernel：把组共享结构翻译成一段命中 Tensor Core 的致密 GEMM，让 FLOPs 节省真正变成墙钟加速。**
+**2. 吃 Tensor Core 的 gather-once + dense MMA kernel：把组共享结构翻译成一段命中 Tensor Core 的致密 GEMM，让 FLOPs 节省真正变成墙钟加速**
 
 无结构稀疏在 Tensor Core 上几乎是反优化，所以光有好结构还不够，得有配套 kernel。每个 thread block 在标签维上取 $G$ 的整数倍作为 tile，前向计算变成 $Z_k=H_k W_k^\top\in\mathbb{R}^{B_t\times G}$，其中 $H_k=h_{:,\mathcal{I}_k}\in\mathbb{R}^{B_t\times F}$ 是按组一次性 gather 到 shared memory 的特征 tile、$W_k\in\mathbb{R}^{G\times F}$ 是该组所有标签的权重——这是一个**致密** GEMM，恰好命中 Tensor Core MMA 原语，而且 $H_k$ 常驻 shared memory 被组内所有 warp 反复用。反向对权重 $\nabla W_k=(\nabla Z_k)^\top H_k$ 对称，同样是致密 GEMM；反向对特征则因为多个组的 $\mathcal{I}_k$ 可能落在同一维度上需要 reduce，作者用 Split-$K$ 沿标签维并行，组大小 $G$ 直接控制 reduce 的并行度。对比 Spartex 那种每标签 thin vector dot product（没共享 tile、访存量近乎稠密却只算稀疏比例的有效操作），组共享让 $H_k$ 一次 gather 被 $G$ 个标签复用，arithmetic intensity 提升到接近 dense GEMM，省下的 FLOPs 才换得成真实的墙钟加速。
 
-**3. Head–Tail 分裂替代辅助监督：把高频标签拉成 dense head 给 encoder 喂稳定梯度，用数据本身的长尾结构代替超参敏感的 auxiliary loss。**
+**3. Head–Tail 分裂替代辅助监督：把高频标签拉成 dense head 给 encoder 喂稳定梯度，用数据本身的长尾结构代替超参敏感的 auxiliary loss**
 
 Spartex 在长尾下要靠 auxiliary loss 给 encoder 补梯度通路，但辅助任务可能和主任务梯度冲突，loss 权重、温度又敏感难迁移。本文换个思路：把标签集按频率切成 $\mathcal{Y}=\mathcal{H}\cup\mathcal{T}$，$\mathcal{H}$ 是 top 2–5% 高频标签走 dense head、$\mathcal{T}$ 是长尾走稀疏 tail，两条支路共享 encoder 但各用轻量投影，端到端目标 $\min_\Theta \frac{1}{n}\sum_i[\sum_{\ell\in\mathcal{H}}\mathrm{BCE}+\sum_{\ell\in\mathcal{T}}\mathrm{BCE}]$。高频标签每个 batch 都被激活，dense 通路天然给 encoder 提供稠密稳定的梯度回流；长尾的稀疏通路梯度虽稀薄，但 encoder 已被 head 端"喂饱"，长尾只需局部 fine-tune。这和 auxiliary loss 的目的一致（都是给 encoder 多一条稠密梯度通路），但实现从"额外监督任务"换成"利用数据本身的长尾结构"，只引入"切点频率"一个超参，且实验里 PSP@k（强调尾部标签的指标）反而比 Spartex 还高，说明梯度通路的改善确实惠及了尾部。
 

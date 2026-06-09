@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. Attention Knockout：用因果干预量化每条注意力路径的贡献。**
+**1. Attention Knockout：用因果干预量化每条注意力路径的贡献**
 
 直接观察注意力权重只能看到"哪里注意力大"，但大不等于重要——这是相关而非因果。Attention Knockout 改用主动干预：选择性地断开特定 token 对之间的注意力连接（把注意力 mask 的对应位置设为 $-\infty$），再测量这条边被切断后模型预测的概率变化。具体做法是对每一层 $l$，以窗口 $k=9$ 为中心同时断开目标类型的注意力边（如跨帧的 video-to-video attention），并用相对概率变化 $((p_{\text{knockout}} - p_{\text{base}})/p_{\text{base}}) \times 100$ 度量影响。窗口取 9 是因为窗口太窄时，被切断的信息会通过残差连接绕过干预、导致测不出真实贡献。相比观察性分析，这种因果干预能直接回答"如果没有这条信息路径，模型行为会怎么变"，是机制可解释性领域的标准方法（源自 Geva et al. 2023）。
 
-**2. Logit Lens：读出视频 token 每层"看起来像什么词"。**
+**2. Logit Lens：读出视频 token 每层"看起来像什么词"**
 
 Attention Knockout 能告诉我们哪些路径重要，却不告诉我们路径上流动的是什么信息，Logit Lens 正是用来填补这个 gap。它把视频 token 在每一层的 hidden state 直接投影到语言模型的 LM head 上得到 logits，从而读出该 token 在这一层"最像哪些词"。在 LLaVA-NeXT-13B-Video-FT 的 Action Sequence 任务上，作者据此统计空间关键词（物体、颜色）与时间关键词（before/after/first 等）出现的频率和位置分布，进而揭示视频 token 中的时间概念在哪一层、哪些位置上开始涌现。
 
-**3. 信息流阶段分解与验证：把注意力切成 6 类路径，分析与剪枝形成闭环。**
+**3. 信息流阶段分解与验证：把注意力切成 6 类路径，分析与剪枝形成闭环**
 
 要画出完整蓝图，先得把纷繁的注意力边按语义角色归类。作者将路径分为 6 类——跨帧 video→video、video→question、video→last、question→last、last→last、question→video——再分别对每一类、每一层的注意力边做 knockout，绘出层–概率变化曲线，看清各类路径分别在哪些层段起作用。角色清晰之后，作者用一个端到端实验反过来验证分析：只保留关键层段内的关键路径（如 L6–15 保留跨帧交互、L6–20 保留 video→question、L16–25 保留 question→last），禁用其余全部路径。如果蓝图正确，这样剪枝应当几乎无损——"先分析出哪些路径关键、再证明只留它们就够"构成了发现到验证的完整闭环。
 

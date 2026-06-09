@@ -41,7 +41,7 @@ CPO要解决的问题是：在 SAPG 的 leader-follower 集成里，follower 探
 
 ### 关键设计
 
-**1. KL 约束的 follower 更新：把"多样性"关进可控的箱子里。**
+**1. KL 约束的 follower 更新：把"多样性"关进可控的箱子里**
 
 针对的正是"follower 偏离 leader 太远 → IS 比率失真"这个痛点。CPO 把 follower 的更新写成一个带约束的优化问题：在最大化自身优势 $A_{F_i}(\mathbf{s},\mathbf{a})$ 的同时，要求它与 leader 的 KL 散度不超过阈值 $\varepsilon_{KL}$：
 
@@ -53,7 +53,7 @@ $$L_{\text{CPO},F_i}(\theta) = -\mathbb{E}_{\mathbf{a},\mathbf{s} \sim \pi_L}\Bi
 
 之所以这么做有效，关键在 Pinsker 不等式给出的理论保证：KL 约束直接压住了 IS 比率偏差的上界 $\mathbb{E}[|1-\frac{\pi_L}{\pi_F}|] \leq \sqrt{2D_{KL}}$。换句话说，只要 KL 受控，leader 回收 follower 数据时的有效样本量（ESS）就不会塌、PPO 裁剪偏差也不会爆——多样性被关进了一个偏差可量化的箱子里。
 
-**2. 对抗性奖励促进策略分散：给被拉拢的 follower 一个反向推力。**
+**2. 对抗性奖励促进策略分散：给被拉拢的 follower 一个反向推力**
 
 KL 约束有个副作用：它在把每个 follower 拉向 leader 的同时，也隐式地把 follower 们彼此拉近，容易让它们坍缩成几乎一样的策略，多样性又没了。对抗性奖励就是来抵消这个副作用的。CPO 训练一个判别器 $D_\xi(y|\mathbf{s}_t,\mathbf{a}_t)$，让它根据状态-动作去预测这条轨迹来自哪个 follower（身份 $y$），并把判别器的对数置信度当成额外奖励发给对应 follower：
 

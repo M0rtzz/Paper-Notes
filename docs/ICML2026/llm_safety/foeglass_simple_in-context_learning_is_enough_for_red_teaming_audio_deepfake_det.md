@@ -47,15 +47,15 @@ FoeGlass 要解决的是"怎么不微调、不碰权重，就让一个黑盒 rea
 
 ### 关键设计
 
-**1. 结构化 In-Context 模板：把整个红队经验压成一段上下文，让 LLM 在线"学会"哪些 prompt 能骗过 ADD。**
+**1. 结构化 In-Context 模板：把整个红队经验压成一段上下文，让 LLM 在线"学会"哪些 prompt 能骗过 ADD**
 
 纯让 LLM 无条件乱采 TTS prompt（unconditional baseline）成功率极低，很多场景 FNR < 10%，因为它根本不知道 ADD 的薄弱点在哪。FoeGlass 的做法是把每一轮的成败经验结构化地喂回 context，让 in-context learning 自己往 blind spot 收敛。context 分三段：(a) instruction prompt，描述任务并逐项解释 TTS 参数（transcript / speed / temperature / style / voice）的语义，强制 LLM 输出 JSON；(b) 最近 $\ell/2$ 个**失败**攻击连同它们的 CoT、分数和多样性反馈；(c) 历史 realness 分最高的 $\ell/2$ 个**成功**攻击连同 CoT、分数、反馈。论文用 DeepSeek-R1-Distill-Llama-3.1-8B 当 attacker，$\ell=40$。把 CoT 一起喂回去是关键——它让 LLM 能延续上一轮的推理脉络而不是每轮从零猜，附录 B 的消融证明去掉 CoT 后效果明显下滑。这种"一半成功 + 一半失败"的对比结构也比只塞成功例更稳，因为只看成功例 LLM 容易认定某个模板万能、反复套用同一个 prompt。
 
-**2. Realness + 多样性双反馈，多样性用 min-cosine 而非 avg-cosine：从根上掐掉 mode collapse。**
+**2. Realness + 多样性双反馈，多样性用 min-cosine 而非 avg-cosine：从根上掐掉 mode collapse**
 
 red-teaming 最常见的翻车就是 mode collapse——LLM 一旦找到某个能骗过 ADD 的 prompt，就反复换皮重写同一套。FoeGlass 给 LLM 两路标量信号来平衡 explore/exploit：realness 直接取 $f(x_t)$，达到阈值 $\tau$ 就判 success，反馈文本里写明 "Success/Failed (score=…)"；多样性则衡量这条新样本是不是在重复历史。多样性最自然的写法是平均余弦距离 $d_\text{avg}(x';X)=1-\frac{1}{|w(X)|}\sum_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，但平均会被远样本稀释——哪怕 $x'$ 在历史里已经有个极近的邻居，只要其余历史样本都很远，$d_\text{avg}$ 照样偏大，照样判它"够多样"。论文改用**最小**余弦距离 $d(x';X)=1-\max_{z\in w(X)}\langle w(x'),z\rangle_{\cos}$，把多样性变成硬约束：新样本必须和**所有**历史样本都足够远（$d>\tau_d$，WavLM 嵌入，$\tau_d=0.01$）才算合格，否则就追加一句 "输出过于相似，请修改 transcript 增加多样性"。min 距离才真正捕捉"是否重复"，而把多样性做成反馈而非优化目标，又保留了 LLM 自己权衡探索与利用的余地。
 
-**3. Cold-start / Warm-start 双模式与跨 ADD 迁移：零已知 FN 也能起步，攻一个 ADD 顺带攻倒另外七个。**
+**3. Cold-start / Warm-start 双模式与跨 ADD 迁移：零已知 FN 也能起步，攻一个 ADD 顺带攻倒另外七个**
 
 传统微调式 attacker 需要大量 FN 样本来构造训练集，而 ADD 场景里 FN 极其稀缺，这条路天然走不通；in-context 路线正好适配低数据。cold start 时 instruction prompt 不带任何示例、历史从空开始就能跑；warm start 也只需把 2 条已知 FN + 1 条 TP 嵌进 instruction，不引入任何额外计算，就能再涨一截。只靠 3 条示例就显著涨点，恰恰说明 LLM 学到的是"如何 reason 出 blind spot"而非死记某个成功 prompt。同样的道理也解释了迁移性：in-context 探索趋向的是 TTS 输出空间里"被多个 ADD 共同忽视"的区域，而不是某个 ADD 的局部漏洞，所以对一个 ADD 攻出来的样本能直接迁移到其余 7 个；论文用 8 个 ADD × 3 个 TTS 的全连接迁移矩阵验证了这点。
 

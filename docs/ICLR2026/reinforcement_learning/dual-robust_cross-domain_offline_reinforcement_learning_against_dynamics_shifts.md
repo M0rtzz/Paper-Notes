@@ -45,7 +45,7 @@ DROCO 的完整 pipeline 分四步：(1) 在目标域数据 $\mathcal{D}_{\text{
 
 ### 关键设计
 
-**1. Robust Cross-Domain Bellman (RCB) 算子：对源域和目标域分治，用一个算子撑起双重鲁棒性。**
+**1. Robust Cross-Domain Bellman (RCB) 算子：对源域和目标域分治，用一个算子撑起双重鲁棒性**
 
 直接把源域、目标域数据混在一起做标准 Bellman 更新会埋下隐患：源域动力学 $P_{\text{src}}$ 可能把智能体送到一些目标域里高回报但其实不可达的状态，导致 Q 值被严重高估。RCB 的做法是按数据来源走两条不同的更新路径。对目标域数据 $(s,a,s') \in \mathcal{D}_{\text{tar}}$，它退化成标准 in-sample Bellman 算子 $r + \gamma \mathbb{E}_{s'}[\max_{a' \sim \hat{\mu}} Q(s',a')]$，老老实实利用真实动力学信息；对源域数据 $(s,a,s') \in \mathcal{D}_{\text{src}}$，则在 Wasserstein 不确定集 $\mathcal{M}_\epsilon$ 内取最差情况：
 
@@ -53,7 +53,7 @@ $$r + \gamma \inf_{\hat{\mathcal{M}} \in \mathcal{M}_\epsilon} \mathbb{E}_{s' \s
 
 正是这个针对源域的「取最差」操作，一箭双雕地同时压住了 OOD 动力学带来的 Q 值膨胀（训练时问题）、又让策略对动力学扰动天然具备抵抗力（测试时问题）。理论上作者证明 RCB 是 $\gamma$-压缩映射（Proposition 4.1），有唯一不动点、保证收敛；进一步给出两条关键保证：Proposition 4.4（train-time robustness）说明当 $\epsilon$ 大到不确定集覆盖 $P_{\text{tar}}$ 的支撑时，学到的 Q 值不会高估；Proposition 4.5（test-time robustness）说明只要部署环境的动力学偏移落在 Wasserstein 距离 $c$ 以内，策略在扰动环境中的实际表现就不低于学到的鲁棒值函数。$\epsilon$ 因此成了串联两种鲁棒性的旋钮。
 
-**2. Wasserstein 对偶重构：把「动力学不确定集」上的优化换成「状态扰动」上的搜索。**
+**2. Wasserstein 对偶重构：把「动力学不确定集」上的优化换成「状态扰动」上的搜索**
 
 RCB 算子虽然漂亮，但 $\inf_{\hat{\mathcal{M}} \in \mathcal{M}_\epsilon}$ 这一项无法直接算——它要求遍历源域动力学不确定集中无穷多个 MDP，而源域环境本身又是个黑盒，连 $\mathcal{M}_\epsilon$ 长什么样都不知道。作者借 Wasserstein 距离的对偶形式（Proposition 4.2）绕开了这道坎，把动力学层面的优化等价改写到状态层面：
 
@@ -61,7 +61,7 @@ $$\inf_{\hat{\mathcal{M}} \in \mathcal{M}_\epsilon} \mathbb{E}_{s' \sim P_{\hat{
 
 这一步把「枚举所有可能的转移动力学」变成了「在观测到的下一状态 $s'$ 的 $\epsilon$-邻域里找一个让 Q 值最小的状态 $\bar{s}$」，一个不可计算的泛函优化就此落地成有限维空间里的搜索。实现时连 $\epsilon$-球搜索都不显式做：直接拿目标域训练出的集成动力学模型生成的 $N$ 个预测 $\{s'_i\}$ 来近似这个邻域，取 $\min_i Q(s'_i, \pi(s'_i))$ 作为鲁棒 target。用集成模型的好处还在于不确定性是自适应的——模型越拿不准的区域，预测越分散，邻域自然越宽，避免了固定 $\epsilon$ 容易带来的过度保守。
 
-**3. 动态值惩罚与 Huber loss：给集成近似带来的估计偏差打两块补丁。**
+**3. 动态值惩罚与 Huber loss：给集成近似带来的估计偏差打两块补丁**
 
 把动力学不确定集换成集成模型的近似不是免费的午餐：Proposition 4.6 证明集成模型的 TV 距离误差 $\epsilon$ 最多会引入 $(1-(1-2\epsilon)^N) \cdot r_{\max}/(1-\gamma)$ 的 Q 值高估，而 inf 操作本身又容易把值压得过低。作者用两个独立的旋钮分别对症。其一是动态值惩罚项 $u(s,a,s') = \mathbb{I}(s' \sim P_{\text{src}}) \cdot (V(s') - \min_i V(s'_i))$，度量源域观测到的 $V(s')$ 与集成预测中最小 $V$ 值的差距，再用系数 $\beta$ 调强弱：$\beta=1$ 恢复原始 RCB，$\beta>1$ 加保守性压高估，$\beta<1$ 减保守性救低估。其二是把源域数据的 Bellman 更新从 L2 loss 换成 Huber loss——TD 误差 $|Q - \hat{\mathcal{T}}Q| < \delta$ 时仍是 L2，一旦超过 $\delta$ 就自动切到 L1，防止模型预测偶尔出格带来的超大 TD 误差直接把训练带崩。
 

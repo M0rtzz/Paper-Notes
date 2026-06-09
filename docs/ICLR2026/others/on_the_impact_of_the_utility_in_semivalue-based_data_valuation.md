@@ -46,11 +46,11 @@ tags:
 
 ### 关键设计
 
-**1. 两类场景的统一建模：把所有 utility 选择都收进同一个线性组合。**
+**1. 两类场景的统一建模：把所有 utility 选择都收进同一个线性组合**
 
 实践中 utility 的不确定性其实有两种来源，作者先证明它们可以归到同一种数学形式。一种是 utility trade-off：用户明确想在两个目标间权衡，写成 $u_\nu = \nu u^A + (1-\nu) u^B$，参数 $\nu$ 控制偏向哪个目标。另一种更隐蔽的是 multiple-valid-utility：训练同一个分类器时 accuracy、F1、precision 都"看起来合理"，没人能说哪个唯一正确。关键观察是，这些常见分类指标都能写成 true-positive rate $\lambda$ 与 positive-prediction rate $\gamma$ 的线性分式 $u(S) = \frac{c_0 + c_1\lambda(S) + c_2\gamma(S)}{d_0 + d_1\lambda(S) + d_2\gamma(S)}$，对其做一阶展开后，$u$ 关于 $(\lambda, \gamma)$ 近似为一个仿射函数。于是两种场景都坍缩成 $u_\alpha = \alpha_1 u_1 + \alpha_2 u_2$ 这一个形式——只要分析"系数 $\alpha$ 怎么变会改变数据排序"，就同时覆盖了 trade-off 和 multiple-valid-utility 两类问题，方法的适用范围因此被一次性撑开。
 
-**2. Spatial Signature：把排序稳定性翻译成单位圆上的投影问题。**
+**2. Spatial Signature：把排序稳定性翻译成单位圆上的投影问题**
 
 有了统一的 $u_\alpha = \alpha_1 u_1 + \alpha_2 u_2$，接下来要回答"$\alpha$ 转动时排序会不会乱"。Proposition 3.1 给出了关键的几何映射：存在 $\psi_{\omega,\mathcal{D}}: \mathcal{D} \to \mathbb{R}^2$，使得任意 utility $u_\alpha$ 下某点的 semivalue 分数恰好是一个内积
 
@@ -58,7 +58,7 @@ $$\phi(z; \omega, u_\alpha) = \langle \psi_{\omega,\mathcal{D}}(z), \alpha \rang
 
 也就是说，每个数据点被嵌入到二维平面上得到它的 spatial signature，而"用哪个 utility"等价于"朝哪个方向 $\alpha$ 投影"。数据排序就是这些二维点在 $\alpha$ 方向上的投影顺序，于是 utility 变化下排序稳不稳，被精确等价为：当 $\alpha$ 在单位圆上旋转时，投影顺序会不会翻转。这个翻译之所以有用，是因为它把"算每个 utility 下的真实分数"这种昂贵又抽象的事，换成了纯几何直觉——如果所有嵌入点近似共线，那不管朝哪个方向投影，谁在前谁在后几乎都不变，鲁棒性就最高；点摊得越开，旋转一点就越容易翻转排序。
 
-**3. 鲁棒性指标 $R_p$：用"旋转多少角度才会乱序"量化稳定性。**
+**3. 鲁棒性指标 $R_p$：用"旋转多少角度才会乱序"量化稳定性**
 
 最后把上面的几何直觉做成一个可计算的数。对每一对数据点 $(z_i, z_j)$，令 $v_{ij} = \psi(z_i) - \psi(z_j)$，它们投影顺序发生翻转的临界方向就是与 $v_{ij}$ 正交的那条"切割角" $H_{ij} = \{\alpha \in \mathcal{S}^1 : \langle \alpha, v_{ij} \rangle = 0\}$。全部 $\binom{n}{2}$ 对一共产生 $2N$ 个切割点，把单位圆切成若干段弧，每段弧内部排序保持不变。定义 $\rho_p(\bar{\alpha}_0)$ 为从起始方向 $\bar{\alpha}_0$ 出发、累计发生 $p$ 次两两交换所需扫过的最小弧长——这个角度越大，说明排序越"扛转"。把它对起始方向取期望再归一化即得
 

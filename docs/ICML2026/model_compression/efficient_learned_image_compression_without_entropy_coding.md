@@ -46,15 +46,15 @@ EF-LIC 想把 LIC 流水线里那个慢且串行、只能跑在 CPU 上的熵编
 
 ### 关键设计
 
-**1. 无约束 VQ：把"索引最大熵"从经验现象升格为定理。**
+**1. 无约束 VQ：把"索引最大熵"从经验现象升格为定理**
 
 去掉熵编码后索引只能定长编码，码长被强制等于 $n\log K$，这条上界是否浪费，取决于索引序列 $J$ 的熵能否贴上去——即统计冗余 $\Delta H=\frac{n\log K-H(J)}{n\log K}$ 能否压到 0。EF-LIC 的回答是：训练时**根本不施加任何率约束**，只用 codebook commitment、codebook 更新和重建损失（L1 + LPIPS + PatchGAN），让网络自由学。Proposition 3.1 用反证法证明，在 $R=\log K$ 的定长预算下任何 distortion-optimal 的量化器 $Q^*$ 必然满足 $\Delta H=0$；Gersho 1979 的高率公式给出弱版本 $p_J(j)\propto p_Y(\bm c_j)^{2/(C+2)}$，当 $C=8$ 时 $\Delta H\le 5\%$。这正好解释了为什么 VQ-VAE / DAC 收敛后索引分布本就接近均匀——本文把这个"碰巧"的经验现象升格成定理，说明只要 codebook 够大、端到端重建练得充分，定长 VQ 索引序列**理论上就不再需要熵编码来挤统计冗余**，这是整套方法敢拆掉熵编码的合法性根基。
 
-**2. 表征域去相关：把"用上下文预测概率"换成"用上下文白化潜变量"。**
+**2. 表征域去相关：把"用上下文预测概率"换成"用上下文白化潜变量"**
 
 统计冗余之外还有相邻 latent 组之间的相关性冗余，传统 LIC 靠 context model $f_i^{\text{CM}}$ 预测条件分布参数 $(\bm\mu_i,\bm\sigma_i)$、再让熵编码按 $P_{\hat Y_i\mid\hat Y_{<i}}(\cdot;\bm\mu_i,\bm\sigma_i)$ 去压，这一步天然串行、绕不开熵编码器。EF-LIC 的关键转念是：用**同一对** $(\bm\mu_i,\bm\sigma_i)=f_i^{\text{RD}}(\bm\psi_i)$（$\bm\psi_i$ 由已解码组 $\hat{\bm y}_{<i}$ 与 $\bm\phi$ 算出），但不是拿去当概率参数，而是直接在表征域做仿射白化 $\bm y_i'=\bm\sigma_i^{-1}\odot(\bm y_i-\bm\mu_i)$，量化后再逆变换 $\hat{\bm y}_i=\bm\sigma_i\odot\hat{\bm y}_i'+\bm\mu_i$ 还原。Theorem 3.5 保证这一替换不亏：对任取 $\varepsilon\in(0,1)$，存在实现使得在略大的定长预算 $R'=R/(1-\varepsilon)$ 下 $D_X^{\text{RD}}(R')\le D_X^{\text{CM}}(R)$，即用一点点码率换来 R–D 上界与概率域 context modeling 吻合。把 context modeling 从概率域搬到表征域之后，整条流水线变成纯张量算子，一次 forward batch 完成，再不用在 CPU 和 GPU 之间反复传 logits/概率——这才是 EF-LIC 速度暴涨的真正来源。
 
-**3. Residual VQ + 共享多码本：单模型覆盖 5 个码率点。**
+**3. Residual VQ + 共享多码本：单模型覆盖 5 个码率点**
 
 实际编解码器必须支持多码率部署，EF-LIC 把所有量化器 $Q_{\bm z}$、$\{Q_i^{\text{RD}}\}$ 都实现成 Residual VQ：一个 RVQ 由若干可堆叠 codebook 组成，推理时只取前 $m$ 个就给出对应码率，BPP 为 $\text{BPP}=\frac{m}{f_y^2}\left(\frac{f_y^2}{f_z^2}\log K_{\bm z}+\frac{1}{N}\sum_i \log K_i\right)$。训练时对 $\mathcal{M}=\{1,2,3,4,5\}$ 里每个 $m$ 都算一遍重建损失再平均（Eq. 8），codebook 大小按组递减 $K_1{=}1024,K_2{=}512,K_3{=}256,K_4{=}128,K_{\bm z}{=}1024$，自然形成 coarse-to-fine 的码率梯度。靠 RVQ 这种可堆叠结构，multi-rate 训练几乎零额外参数，推理时切换码率只需改 $m$、不必换 checkpoint。
 

@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 动态权重统一公式：把三类控制方法翻译成同一种“给激活加 Δh”。**
+**1. 动态权重统一公式：把三类控制方法翻译成同一种“给激活加 Δh”**
 
 过去 LoRA 讲低秩参数、steering 讲隐藏向量、局部微调讲权重更新，三套语言互不相通，没法系统对比。作者抓住一个共同点：线性层输出本质都是 affine transformation。原始层是 $h_{i+1}=Wh_i+b$，局部权重更新写成 $(W+m\Delta W)h_i+(b+m\Delta b)$，LoRA 写成 $(W+mBA)h_i+b$，steering vector 写成 $Wh_i+(b+m\Delta b)$。从激活视角看，它们做的都是同一件事——往该层注入一个 $\Delta h=m_1\Delta W h_i+m_2\Delta b$，区别只在 $\Delta h$ 的来源和参数量。统一成 $h_{i+1}=(W+m_1\Delta W)h_i+(b+m_2\Delta b)$ 后，不同方法的差异收敛成“更新项结构不同”，控制强度 $m$ 一变，就能在同一坐标系里观察 preference 与 utility 的共同动态。
 
-**2. Preference-Utility log-odds 分解与流形衰减解释：把“控制效果”拆成两条互不遮蔽的曲线。**
+**2. Preference-Utility log-odds 分解与流形衰减解释：把“控制效果”拆成两条互不遮蔽的曲线**
 
 只看输出是否更像目标概念，会把“目标增强了”和“输出还能用”混为一谈——很多 steering 失败其实是目标属性确实变强了、但生成已经跑题崩坏。作者据此把效果拆成两条曲线：给定正负答案 $A_p,A_n$，用损失差定义 $PrefOdds=L_n-L_p$（共享的 utility 在正负似然比里抵消掉），再用正负答案概率和定义 $UtilOdds=\log(P(u)/(1-P(u)))$。机制上，preference 由“沿目标方向的投影增益”和“有效性衰减”共同决定，utility 则主要由表示偏离 activation manifold 之后的 validity decay 决定。拆开后能看清：preference 随 $m$ 先近似线性、再过渡、最后收敛，而 utility 在 $m\approx 0$ 附近最高、随 $|m|$ 增大单调下降——这正是“更强 steering 不一定更好”的几何来源。
 
-**3. SPLIT 联合优化目标：训练时同时把目标偏好推上去、把效用衰减压下来。**
+**3. SPLIT 联合优化目标：训练时同时把目标偏好推上去、把效用衰减压下来**
 
 如果只拿正样本训练，模型会被推向目标概念但牺牲通用生成；只保效用又形不成明确偏好。SPLIT 把这两件事一起写进目标。utility loss 对正负样本都做语言建模交叉熵 $L_{util}=\lambda_p L_p+\lambda_n L_n$，保证两类任务有效答案都还生成得出来；preference loss 用 hinge margin 最大化损失差 $L_{pref}=\gamma\cdot\mathrm{ReLU}(\theta-(L_n-L_p))$，要求正样本至少比负样本容易一个间隔 $\theta$。两者相加 $L=L_{util}+L_{pref}$，等于同时约束“正负样本都要像正常答案”和“正样本要比负样本更好生成”，从机制上直接对冲流形衰减。
 

@@ -45,27 +45,27 @@ tags:
 
 ### 关键设计
 
-**1. PAR 过程框架：把"方法"拆成感知 → 对齐 → 推理三阶段。**
+**1. PAR 过程框架：把"方法"拆成感知 → 对齐 → 推理三阶段**
 
 PAR 回答的是"一个方法要把多模态输入变成正确答案，需要走哪几步"。Perception（感知）负责从输入 $X \subseteq \{T, D, C, I\}$（文本/几何图/图表/图像）里抽取数学事实 $\mathcal{F}$，且分三层逐步深入：低层 primitives（点、线、轴、物体）→ 结构关系（incidence、parallelism、行列对应）→ 量化属性（长度、角度、数值、单位）。Alignment（对齐）把这些事实映射到可符号化或可执行的表示，比如 geometry DSL、constraint set、proof sketch、chart/table operator、SQL 或 program-of-thought trace。Reasoning（推理）则在对齐后的表示上做可解释、可验证的推导，手段包括 CoT、tree/graph of thought、RL、tool use、process feedback。三阶段是串行依赖的——这正是综述反复强调的归因主线：感知错会传到对齐，对齐错会污染推理，所以诊断一个 MLLM 失败时必须按 PAR 定位"在哪一步翻车"，而不是笼统说"模型不会推理"。
 
-**2. APE 评估框架：把"评估"拆成答案 → 过程 → 可执行三层级。**
+**2. APE 评估框架：把"评估"拆成答案 → 过程 → 可执行三层级**
 
 APE 与 PAR 对偶，回答的是"评估到底在检验哪一阶段的能力"。Answer-level 只看最终答案准确率（exact match / numeric tolerance），实现简单但把所有错误来源混在一起，分不清是猜对的、靠 shortcut 的还是真推对的。Process-level 检查中间推理步骤的有效性与视觉 grounding 一致性，如 MM-MATH 的 step type、MPBench 的 step judge、CHAMP 的概念标注、MathVerse 的图扰动评分。Executable-level 最严格，直接运行程序、验证证明、检查 constraint 来评估对齐和推理的忠实度，如 GeoQA+ 的程序、FormalGeo 的形式化证明、E-GPS 的求解器、WikiSQL 的执行。综述特意把 Process-level 与 Reasoning 阶段、Executable-level 与 Alignment 阶段显式挂钩，强调"评估应该针对它想检验的那一阶段"，这种对齐能直接驱动后续 benchmark 设计。
 
-**3. 三大任务族：用 PAR 同一套语言描述几何 / 图表表格 / 视觉应用题。**
+**3. 三大任务族：用 PAR 同一套语言描述几何 / 图表表格 / 视觉应用题**
 
 传统综述常把三类任务分开讲，本文的做法是用 PAR 给它们统一语言——感知抽什么、对齐用什么 DSL、推理走 CoT 还是 tool，一律可比。Geometry Problems 形式化为 $f: (T, D) \mapsto y$，要识别点线角与空间关系、把文字 ground 到几何图，方法谱系从符号 prover（GEOS）→ 神经 VLM → hybrid pipeline（E-GPS / Pi-GPS）→ LMM（G-LLaVA / GeoGPT4V / GEOX），benchmark 有 Geometry3K、GeoQA/+、PGDP5K、PGPS9K、FormalGeo7K。Chart and Table Problems 形式化为 $f: (C, Q) \mapsto a$，要识别轴/图例/行列再做数值或逻辑推理，方法从 symbolic parsing（DVQA、PlotQA）→ 神经 VLM（Pix2Struct）→ instruction-tuned LMM（ChartLlama、ChartQA-X），benchmark 有 PlotQA、ChartQA(Pro)、CharXiv、FinQA、TAT-QA、MultiHiertt、DocMath-Eval、WikiSQL。Visual Math Word Problems 形式化为 $f: (I, Q) \mapsto a$，做物体计数、属性推理、跨图共指，方法从符号感知（Patch-TRM）→ 神经多模态 → LMM CoT，benchmark 有 IconQA、CLEVR-Math、TABMWP、MV-MATH、MathVista、MATH-V、Math2Visual。
 
-**4. Alignment 四视角：感知到推理之间"怎么搭桥"的四条路线。**
+**4. Alignment 四视角：感知到推理之间"怎么搭桥"的四条路线**
 
 对齐是 MMR 当前最大的瓶颈（缺统一 DSL），综述把现有搭桥方式归为四类。Executable intermediates（Inter-GPS、E-GPS、Pi-GPS、R1-OneVision）把视觉内容转成 DSL / 程序 / SQL，可直接执行验证。Symbolic-Neural Hybrids（GeoGen、MathCoder-VL、AlphaGeometry）用神经感知配符号推理引擎。Cross-modal Alignment Frameworks（BLIP-2、LLaVA、Math-PUMA、VCAR、TVC、VIC）追求稳定的 vision-language coupling，常带渐进式 / curriculum 设计。Pre-training & Fine-tuning Enablers（Geo170K、SynthGeo228K、Math-LLaVA、MAVIS、MultiMath-300K、MAmmoTH-VL、MathV360K）则用大规模对齐先验加任务特定监督，从数据侧把对齐能力喂进去。
 
-**5. Reasoning 四范式：对齐之后"怎么推"的四种打法。**
+**5. Reasoning 四范式：对齐之后"怎么推"的四种打法**
 
 推理阶段的方法被归为四种范式。Deliberate chains 走显式思维链：CoT（LLaVA-CoT）、TVC 的持续视觉条件、VIC 的文本先规划、AtomThink 的原子分解，再进阶到 ToT / GoT / AGoT、VisuoThink、VReST（MCTS + self-reward）。RL-based reasoning 增长最快，包含奖励机制（R1-VL 的 step-wise reward、VisualPRM、MM-PRM + MCTS、MM-Eureka 的 rule-based RL）与搜索算法（DeepSeek-R1 的 GRPO、Vision-R1、Mulberry MCTS、Skywork R1V2 的 MPO+GRPO、VL-Rethinker、FAST、Think-or-Not?、VLAA-Thinking、VLM-R3、MAYE、SoTA-with-Less、AlphaProof formal RL）。Tool-augmented（Toolformer、ToRA、COPRA、MM-REACT、Visual Sketchpad、Pi-GPS、Chameleon、MathCoder-VL）把符号步骤外包给求解器或代码。Process feedback & verification（VisualPRM、MM-PRM、TVC 持续视觉、VIC late fusion）则用 PRM / verifier 给中间步骤打分。
 
-**6. APE 评估层级落到具体 benchmark：四档评估各自对应哪些测试集。**
+**6. APE 评估层级落到具体 benchmark：四档评估各自对应哪些测试集**
 
 把 APE 三层级再细到 benchmark，能看清"评估正在被什么绑架"。Answer-level 的 benchmark 最多——ChartQA、PlotQA、FigureQA、IconQA、CLEVR-Math、FinQA、TAT-QA；Process-level 有 MM-MATH、MPBench、ErrorRadar、Sherlock、We-Math、MathVerse、CHAMP、PolyMATH；Executable-level 有 GeoQA+、FormalGeo、Inter-GPS、E-GPS、Pi-GPS；另有一档 Comprehensive 横跨多层级，如 MathVista、MATH-V、OlympiadBench、MathScape、CMM-Math、Children's Olympiads、MM-PRM。分布上 Answer-level 占绝大多数、Process / Executable 偏少，正是综述要敲响的警钟。
 

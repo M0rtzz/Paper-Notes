@@ -47,7 +47,7 @@ DAF 把离线 GCRL 拆成三部分模型：(1) 双线性临界网络 $V_\theta(s
 
 ### 关键设计
 
-**1. DAF 分数：把 Bellman 优势写成"位移 · 梯度"。**
+**1. DAF 分数：把 Bellman 优势写成"位移 · 梯度"**
 
 对偶价值场 $V_\theta(s,g)$ 只告诉你"当前状态对目标有多好"，却分不出两个动作哪个更推进——它们共享同一个 $V_\theta(s,g)$。DAF 注意到双线性模型下一个简洁事实：$\gamma V_\theta(s',g)-V_\theta(s,g)$ 可以直接展开成 $\phi_\theta(g)^\top(\gamma\psi_\theta(s')-\psi_\theta(s))$（公式 7），于是给每个离线样本 $(s,a,s',g)$ 算一个标量优势分数
 
@@ -55,7 +55,7 @@ $$\hat{A}_\theta(s,a,s',g)=r(s,a,g)+\phi_\theta(g)^\top(\gamma\psi_\theta(s')-\p
 
 也就是把 GCRL 的优势写成"动作引起的特征位移"与"目标方向"的内积。在 realizable 情形下（$V^\pi=\psi^\top\phi$ 精确成立），它与真 Bellman 优势 $A^\pi(s,a,g)$ 严格相等（Corollary 3.2 + Appendix F.1），所以拿它做 AWR 就是标准的策略改进步骤。这样就绕开了"再训一个和 $V$ 表示割裂、还会累积 bootstrap 误差的 Q 网络"——DAF 重用对偶临界已有的几何，把"动作如何改变特征"单独抽出来学，再用闭式内积合成优势。
 
-**2. Action-effect 模型 $u_\xi(s,a)$：把对 $s'$ 的依赖移到训练时。**
+**2. Action-effect 模型 $u_\xi(s,a)$：把对 $s'$ 的依赖移到训练时**
 
 $\hat{A}$ 里那项 $\gamma\psi(s')-\psi(s)$ 需要 $s'$，但随机环境下每个 $(s,a)$ 只有一条样本，直接用方差很大。DAF 学一个 action-effect 模型来预测表示空间中的折扣位移 $u_\xi(s,a)\approx\mathbb{E}_{s'\sim p(\cdot|s,a)}[\gamma\psi_\theta(s')-\psi_\theta(s)]$，训练目标是
 
@@ -63,7 +63,7 @@ $$\mathcal{L}_{\mathrm{ae}}=\mathbb{E}\big[\|u_\xi(s,a)-\mathrm{sg}(\gamma\psi_\
 
 其中 $\mathrm{sg}$ 是 stop-gradient，保证 $u_\xi$ 只跟踪固定的目标特征动力学、不会反向干扰 $\psi$ 的训练。回归一个 $u_\xi$ 等于对 $s'$ 做了隐式期望，方差更小，而且推断时不再需要环境给 $s'$。它还把"动作-状态"转移与"价值-目标"彻底解耦，两边可以各用合适的归纳偏置（MLP / Transformer）。
 
-**3. Actor-free 耦合 + AWR 策略抽取：用对偶几何打分，绕开 maxQ。**
+**3. Actor-free 耦合 + AWR 策略抽取：用对偶几何打分，绕开 maxQ**
 
 有了 $u_\xi$ 和 $\phi_\theta(g)$，DAF 分数就是 $z_\theta(s,a,g)=u_\xi(s,a)^\top\phi_\theta(g)$。把它转成 softmax 权重 $w_\theta=\min\{\exp(\alpha z_\theta),W_{\max}\}$，再训策略 $\pi_\omega$ 最小化 $-\mathbb{E}[w_\theta\log\pi_\omega(a|s,c)]$——因为 $z_\theta$ 不依赖 $\omega$，这就退化成一个带温度 $\alpha$ 的优势加权行为克隆，给那些"局部 $\psi$ 位移与目标方向对齐"的数据集动作上权。离线连续控制里 $\max_a Q$ 一直是高估的重要源头，DAF 完全不碰它，而是用对偶表示直接打优势分；同时引入 Perrin-Gilbert 的 actor-free 耦合（Appendix E）通过一致性损失把 $V_\theta$ 与 $z_\theta$ 绑定，避免对 $\max_a Q$ 的脆弱依赖。在 OGBench 上，这种"无 Q 单 V + 局部优势"结构比 HIQL 的 hierarchical 方案更稳。
 

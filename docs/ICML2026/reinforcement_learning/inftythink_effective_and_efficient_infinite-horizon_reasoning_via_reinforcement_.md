@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 轨迹级 Rollout 与终止条件：把"单 query → 单次生成"扩成"单 query → 多轮迭代轨迹"。**
+**1. 轨迹级 Rollout 与终止条件：把"单 query → 单次生成"扩成"单 query → 多轮迭代轨迹"**
 
 标准 GRPO 的 rollout 假设每条 trajectory 是一次连续生成，没法直接喂给"分段-摘要-续推"的循环。InftyThink+ 重新设计了 rollout：给定 query $q$，第 $j$ 轮把 prompt 拼成 $q + s_{j-1}$（$j=1$ 时 $s_0$ 为空），生成 $o_i^j$ 后抽出新摘要 $s_j$ 作为下一轮唯一输入——历史推理段全部丢掉，只靠摘要承接。轨迹在三种情况下终止：模型自己输出结论而非摘要、输出不符合 InftyThink 格式、或迭代数达到上限 $\varphi=5$。每个 query 用 GRPO 采样 $G$ 条独立轨迹组成 group。$\varphi$ 这个硬上限既约束训练成本，也防止模型陷入"一直摘要不收尾"的恶性死循环。
 
-**2. 效率奖励 + 乘性组合：在"答对"之外加一项"少迭代奖励"，且只让答对的轨迹拿得到。**
+**2. 效率奖励 + 乘性组合：在"答对"之外加一项"少迭代奖励"，且只让答对的轨迹拿得到**
 
 vanilla RL 会鼓励模型把 CoT 越写越长、延迟成本同步爆炸，所以要给迭代次数一个反向压力。任务奖励是二值的 $\mathcal{R}_{\text{task}}(\mathcal{O}_i) = \mathbb{I}[\operatorname{Verify}(o_i^{n_i}, gt) = \text{Correct}]$；效率奖励用二次衰减 $\mathcal{R}_{\text{eff}}(\mathcal{O}_i) = 1 - ((n_i - 1)/\varphi)^2$，$n_i=1$ 时满分、随迭代数平滑下降。关键是两者**乘性**组合 $\mathcal{R}(\mathcal{O}_i) = \mathcal{R}_{\text{task}} \cdot \mathcal{R}_{\text{eff}}$ 而非加性——这样只有答对的轨迹才分得到效率奖励，堵死了模型"为了少迭代而提前草率收尾"的捷径。二次衰减曲线本身也比硬性 length penalty 优雅：早期惩罚轻、鼓励探索，靠近 $\varphi$ 时惩罚陡升、遏制无谓迭代。
 
-**3. 共享 Advantage 的轨迹级策略梯度：让早期的"好摘要"也拿到正梯度，哪怕这轮没给答案。**
+**3. 共享 Advantage 的轨迹级策略梯度：让早期的"好摘要"也拿到正梯度，哪怕这轮没给答案**
 
 迭代推理的因果链是"早期好摘要 → 后期能答对"，一个差的早期摘要会污染后面所有迭代，所以 advantage 必须能跨轮回传。InftyThink+ 在 GRPO 框架内对一条轨迹里所有 token 共享同一个 advantage $\hat{A}_t = (\mathcal{R}(\mathcal{O}_i) - \mu)/\sigma$（$\mu,\sigma$ 在该 query 的 $G$ 条轨迹间统计），loss 在所有轮、所有 token 上做 token-level 平均，clipped surrogate 用非对称 clip $\epsilon^-,\epsilon^+$。token-level 平均是为了避免长轨迹的 loss 被稀释。此外引入 IcePop token 级梯度掩码——把 inference engine（SGLang）和 training engine（FSDP）log-prob 差异大的 token 屏蔽掉，稳住"rollout 后端 ≠ training 后端"这一大规模 RL 工程里典型的数值漂移问题，否则训练容易崩塌。
 

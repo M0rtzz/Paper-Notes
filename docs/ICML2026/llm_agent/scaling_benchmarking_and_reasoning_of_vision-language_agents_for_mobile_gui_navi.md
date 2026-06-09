@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. HyperTrack 数据集 + 四向 OOD 切分：给中文长尾 App 补上带 bbox 的大规模数据。**
+**1. HyperTrack 数据集 + 四向 OOD 切分：给中文长尾 App 补上带 bbox 的大规模数据**
 
 主流 benchmark 几乎都是英文 App，最大的中文集合 CAGUI 只有 600 任务 / 22 个 App，根本撑不起一条 scaling law 曲线。HyperTrack 从 674 个中文 Android App、17 个类别（含长尾和平板专属应用）采集 16080 个 episode，平均 5.1 步，动作空间统一为 OPEN/CLICK/SCROLL/TYPE/STOP；每一步都标了 high-level 任务描述、截图、低级动作描述，以及所有 clickable 元素的 ground-truth bbox。它最关键的安排是切分方式：训练集只放手机数据，于是平板就天然成了 unseen-device 测试集，配合 unseen-app 一起拼出 in-domain / unseen-app / unseen-device / unseen-app&device 四向 OOD 网格。相比 AITW（没 bbox）、AndroidControl（英文）、CAGUI（太小），HyperTrack 是第一个同时具备「层级化 UI 文档 + bbox + 屏幕描述 + 中文 + 高低双层指令」的大规模集合，这套标注密度正是后面做 scaling 实验和细粒度 reward 的前提。
 
-**2. DAPO 风格 RL + 复合二元奖励：把 SFT vs RL 的 scaling 行为画成可量化曲线。**
+**2. DAPO 风格 RL + 复合二元奖励：把 SFT vs RL 的 scaling 行为画成可量化曲线**
 
 GUI 场景下"SFT 还是 RL"一直只有直觉、没有系统证据。作者在 16→8192 episode 区间上同时跑两条训练路线，RL 这边用 GRPO 框架叠加 DAPO 的三件套——Clip-Higher 抬高上裁剪界让低概率正确动作有机会被放大、Dynamic Sampling 替换掉 advantage 为零的样本以保住梯度信号、Token-Level Policy Gradient Loss 让长短序列里每个 token 等权贡献。目标函数为 $\mathbb{E}_{q,o_i}\frac{1}{\sum|o_i|}\sum_{i,t}\min(r_{i,t}\hat A_{i,t}, \text{clip}(r_{i,t},1-\epsilon_{\text{low}},1+\epsilon_{\text{high}})\hat A_{i,t})$，取组大小 $G=16$、$\epsilon_{\text{low}}=0.2$、$\epsilon_{\text{high}}=0.3$、$\beta=0$（干脆不要 reference model，省显存）。奖励是复合二元的 $R = R_{\text{action-type}} + R_{\text{params}}$——先看动作类型对不对，类型对了再判参数（click 要落在 bbox 内、scroll 方向要对、text 要完全匹配），这样把 GUI 决策的"选什么动作"和"动作的落点"拆成两级信号。实测下来 performance 随训练 episode 数呈对数近似线性增长，而 RL 在 unseen-app 上对 SFT 的领先幅度明显大于 in-domain：这正是全文最硬的实证结论，把"为什么 GUI Agent 要上 RL"从直觉变成一条可外推的 scaling 现象，而且换成 Qwen3-VL-8B + Gaussian spatial reward 后趋势依旧，说明它不依赖某个特定 backbone。
 
-**3. GUIEvalKit + SOEval + 决策级指标：把离线评测拉近在线，并量化 thinking 的真实代价。**
+**3. GUIEvalKit + SOEval + 决策级指标：把离线评测拉近在线，并量化 thinking 的真实代价**
 
 离线评测之所以和在线脱节，是因为它一直喂 reference trajectory，而真实部署时模型只能看到自己刚做的决定。GUIEvalKit 先用 `ABCModel` 三件套 `prepare_input / generate / parse_response` 把 30+ 个 VLM 套进统一接口（支持 vLLM 后端和 `enable_thinking` 开关），再在评测协议上动刀：SOEval 在每步用一个历史选择算子，当模型这一步预测正确（$\hat a_t = a_t$）就切到模型自己的 artifact $\psi=\phi(o_t,\hat a_t,\hat\tau_t)$，错了才退回 reference $\phi(o_t,a_t)$——"对了用自己的，错了退回标准答案"，让评测上下文随着 rollout 渐进逼近 on-policy 分布，又不丢掉静态数据的可复现性。最后一层是决策级分析：把 $n=512$ 次 rollout 用密度聚类映射到决策空间 $\mathcal D$，再定义两个互补指标——多样性 $\text{Div} = H(p(d|M,S,s))$ 是决策分布的熵（越高说明模型在同一状态下越发散），稳定性 $\hat\theta = p(d^*|M,S,s)$ 是落在主导决策 $d^*$ 上的概率（越高越一致）。这套组合的价值在于它能拿在线数据当裁判：以 AndroidWorld 在线成功率为金标准，SOEval 的 step exact match 相关性达到 Spearman $\rho=0.771$、$R^2=0.624$，明显高于纯离线的 $\rho=0.657$、$R^2=0.482$，说明它确实是更可信的离线代理；而 Div/Stability 则直接解释了 thinking mode 的悖论——显式 reasoning 把工作点沿权衡曲线推向"高多样性、低稳定"，于是在 PASS@1 上输给 instruct，到 PASS@8 又靠多样性反超。
 

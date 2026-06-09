@@ -49,15 +49,15 @@ $$\nabla_\theta J = \mathbb{E}\Big[\sum_t \nabla\log\pi(q_t|s_t,o_{t-1})\,A^{\ma
 
 ### 关键设计
 
-**1. Plan-Execute 接口：把"分层"从隐式纹理变成可学的 token 模式。**
+**1. Plan-Execute 接口：把"分层"从隐式纹理变成可学的 token 模式**
 
 扁平 RL 的痛点是成功轨迹里那种"先找杯子、再洗杯子、再放柜子"的分段结构只活在轨迹的隐式纹理里，agent 既不表达也不优化它，于是经常半途而废。HiPER 的做法直接而便宜：复用 ReAct 模板再加两个字段，把单个 LLM 每个 turn 的输出强制拆成 `<switch>SWITCH/KEEP</switch>` + `<subgoal>...</subgoal>` + `<action>...</action>` 三段 XML 块，让 agent 自己决定何时换 subgoal、当前 subgoal 是什么、要发什么动作。靠 LLM 的 auto-regressive 顺序，switch / subgoal / action 三个分布天然按 $\pi_\theta(q_t|s_t,o_{t-1})\,\pi_\theta(o_t|s_t)\,\pi_\theta(a_t|s_t,o_t)$ 因子化——SWITCH 时新采 $o_t \sim \pi_\theta(\cdot|s_t)$，KEEP 时直接令 $o_t = o_{t-1}$；子目标和动作全程**动态决定**，没有"事先排好一整串 subgoal 再死板执行"那一套。这样一来"开放词汇子目标"就能被一个 LLM 表达和优化，绕开了 options framework 必须预先定义离散 option 集的限制，同时顺手给下一步的分层 credit assignment 标好了段边界，**不需要再单独训两个网络**。
 
-**2. Hierarchical Advantage Estimation：两级 GAE + 边界 bootstrap 把稀疏奖励切片传播。**
+**2. Hierarchical Advantage Estimation：两级 GAE + 边界 bootstrap 把稀疏奖励切片传播**
 
 光有分层结构还不够——消融里 GRPO 套上 Plan-Execute prompt 几乎不涨，说明分层必须配上分层的 credit assignment 才释放红利，HAE 就是为此而生。它在 SWITCH 边界 $0=b_0<b_1<\dots<b_K=T$ 把轨迹切成 $K$ 段，然后同时算三份优势。低层在每段 $[b_k,b_{k+1}-1]$ 内做 GAE，TD 残差 $\delta^{\mathrm{low}}_t = r_t + \gamma V^{\mathrm{next}}_t - V^{\mathrm{low}}(s_t,o_k)$；关键 trick 在段尾——最后一个 turn 的 bootstrap 目标不接自己下一步，而是切到高层 critic $V^{\mathrm{next}}_{b_{k+1}-1}=V^{\mathrm{high}}(s_{b_{k+1}})$，这条 boundary-aware bootstrapping 就是把两级 value 粘成一条信号链的胶水。高层则把每段压成一个 macro-step——段奖励 $\tilde r_k=\sum_{t=b_k}^{b_{k+1}-1}\gamma^{t-b_k}r_t$、段折扣 $\tilde\gamma_k=\gamma^{b_{k+1}-b_k}$——再在段间做 GAE。Switch 决策则用一个状态级 switching gain $\delta^{\mathrm{switch}}_t = V^{\mathrm{high}}(s_t)-V^{\mathrm{low}}(s_t,o_{t-1})$ 衡量"换 subgoal 比继续用 $o_{t-1}$ 好多少"，配上中心化估计 $\hat A^{\mathrm{switch}}_t = (q_t-\beta_t)\,\delta^{\mathrm{switch}}_t$ 给这个稀有的二元决策反传一个可解释的梯度方向。这套切片设计同时拿到三个好处：段内 GAE 让 fine-grained credit 不跨子任务互相污染、边界处 low→high 的 bootstrap 解决了经典 option-critic 把两级当独立 target 训练的耦合缺失、switching gain 直接用两个 critic 的差当 advantage 避免了 binary policy 的退化。作者还证明了 HAE 在 $\lambda=1$ 且 critic 精确时**无偏**，且当 subgoal/boundary 携带超过 state 的额外信息时**方差严格小于** flat GAE。
 
-**3. 共享 backbone 双头 critic + PPO clip 更新：理论上要两个 baseline，实现上只多一个 head。**
+**3. 共享 backbone 双头 critic + PPO clip 更新：理论上要两个 baseline，实现上只多一个 head**
 
 HAE 名义上需要 $V^{\mathrm{low}}(s,o)$ 和 $V^{\mathrm{high}}(s)$ 两个 value baseline，但 HiPER 不为此开两个独立 critic，而是用一个共享 backbone 加两个输出 head 同时拟合两级 value：高层 head 对 $y^{\mathrm{high}}_k = \tilde r_k + \tilde\gamma_k\,\mathrm{sg}(V^{\mathrm{high}}_\phi(s_{b_{k+1}}))$、低层 head 对 $y^{\mathrm{low}}_t = r_t + \gamma\,\mathrm{sg}(\hat V^{\mathrm{next}}_t)$ 做 MSE 回归，其中 $\hat V^{\mathrm{next}}$ 在段末同样切换成 $V^{\mathrm{high}}$——也就是说低层 critic 的训练 target 在段末 bootstrap 到高层 critic，和优势估计里的耦合方式严格一致，两级 value 不会自相矛盾。actor 走标准 PPO clip 目标，三类优势各乘对应 log-prob 梯度，外加 KL 正则控制 policy drift。相对标准 PPO，这套做法只多一个 head、显存开销几乎可忽略。
 

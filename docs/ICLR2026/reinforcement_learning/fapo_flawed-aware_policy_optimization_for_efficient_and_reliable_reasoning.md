@@ -44,13 +44,13 @@ FAPO 在标准 RLVR 训练环上挂载一个轻量的生成式奖励模型（Gen
 
 ### 关键设计
 
-**1. FAPO-GenRM：把 flawed-positive 检测变成可学习的定位任务。**
+**1. FAPO-GenRM：把 flawed-positive 检测变成可学习的定位任务**
 现有奖励模型在这件事上非此即彼——要么是参数巨大的 PRM 难以在线使用，要么是小模型"过度批评"，recall 高但 precision 低，把正常推理也判成缺陷。FAPO 在 Qwen3-4B-Instruct 上用 RL 训练 GenRM，奖励拆成结果项与过程项 $R_{\text{FAPO-GenRM}} = R_{\text{Outcome}} + R_{\text{Process}}$：结果项对预测正确/错误给 $+1/-1$，过程项只在确实检出 flawed positive 时生效，取 $-|\hat{t}_\theta - t^*|/n$，其中 $\hat{t}_\theta$ 是模型预测的出错步号、$t^*$ 是真实出错步号、$n$ 是总步数。这个过程惩罚的意义在于逼模型真正"指出错在第几步"而非泛泛地猜"有没有缺陷"，定位越准惩罚越小；同时它带来一种自然的奖励转移——训练早期结果项的 $-1\to1$ 增益主导优化，等结果判定饱和后过程项才接管，模型自动从"判对错"进化到"挑毛病"。训练数据 FAPO-Critic-85K 用 7B–70B 的 LLaMA/Qwen 系列模型在 DAPO-Math-17K 上采样 rollout、再由 Qwen3-32B 标注步骤级错误位置而来，最终这个 4B 检测器在 FlawedPositiveBench 和 ProcessBench 上反超了作为教师的 32B 模型。
 
-**2. 无参数自适应惩罚：让"先利用后抑制"自然发生。**
+**2. 无参数自适应惩罚：让"先利用后抑制"自然发生**
 检测出 flawed positive 后，FAPO 不是简单丢弃样本，而是在原奖励上加一个修正项 $R_{\text{FAPO}}(o, a^* \mid \theta) = R_{\text{RLVR}}(o, a^*) + R_\Delta(o, a^* \mid \theta)$，其中被判为 flawed positive 时 $R_\Delta = -\lambda$、否则为 0，默认 $\lambda = 1$ 恰好把缺陷 rollout 的奖励从 $+1$ 拉到 $0$。关键在于为什么 $\lambda=1$ 不需要再调：设一批 rollout 中正样本占比 $\alpha$、负样本占比 $\beta$，记学习进度 $\rho = \alpha/\beta$。热身阶段模型弱、负样本居多即 $\rho<1$，此时被压到 0 的 flawed positive 相对组内基线仍是正优势，照样被利用当跳板；进入精炼阶段正样本变多即 $\rho>1$，同样的 0 奖励已低于组内均值，优势值转负，缺陷推理被自然抑制；$\rho>3$ 时正样本优势被进一步缩放，训练更稳。$\lambda=1$ 这个取值由 majority-guided 推导而来，使利用与抑制的转折点恰好落在 $\rho=1$，因此整个机制对训练阶段的切换是自适应的、零额外超参。
 
-**3. 异步 GenRM 服务：把检测开销摊到训练之外。**
+**3. 异步 GenRM 服务：把检测开销摊到训练之外**
 在线 RL 里多塞一个评估器最怕拖慢主训练，FAPO 把 GenRM 作为独立 LLM 服务部署在集群上，和 rollout 推理、actor 更新异步解耦，前面用多 worker 加路由器做负载均衡，再用 overlong reward 策略和 checkpoint 选择把 GenRM 的 token 预算压住。结果是引入步骤级缺陷检测后总训练时间只增加不到 20%，让这套质量约束在实际大规模训练里可负担。
 
 ## 实验关键数据

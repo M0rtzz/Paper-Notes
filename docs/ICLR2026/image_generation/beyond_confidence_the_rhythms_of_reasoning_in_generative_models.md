@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计
 
-**1. Token Constraint Bound（$\delta_{\text{TCB}}$）的定义：把"稳定性"变成一个可算的扰动半径。**
+**1. Token Constraint Bound（$\delta_{\text{TCB}}$）的定义：把"稳定性"变成一个可算的扰动半径**
 
 准确率是聚合统计，看不到单个预测稳不稳；perplexity 只盯概率分布，也无法回答"隐状态被轻微扰动后预测是否还成立"。$\delta_{\text{TCB}}$ 正面回答这个问题：对输出做一阶线性近似 $\Delta\mathbf{o} \approx \mathbf{J}_\mathbf{W}(\mathbf{h}) \Delta\mathbf{h}$，要求输出变化受控 $\|\Delta\mathbf{o}\|_2 \leq \epsilon$，反推出允许的隐状态扰动上界 $\|\Delta\mathbf{h}\|_2 \leq \epsilon / \|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F$，于是定义
 
@@ -55,7 +55,7 @@ $$\delta_{\text{TCB}}(\mathbf{h}) = \frac{\epsilon}{\|\mathbf{J}_\mathbf{W}(\mat
 
 $\delta_{\text{TCB}}$ 越大，意味着隐状态可以在更大的范围内被扰动而预测分布几乎不变，即这个预测处在一个更稳的内部状态平衡上——这恰好是 softmax 概率值给不了的信息。
 
-**2. 与输出嵌入几何的精确联系：敏感性其实是嵌入的加权分散度。**
+**2. 与输出嵌入几何的精确联系：敏感性其实是嵌入的加权分散度**
 
 光有 Jacobian 范数还只是个抽象的导数大小，看不出它由什么决定。作者把它解析展开，证明
 
@@ -63,7 +63,7 @@ $$\|\mathbf{J}_\mathbf{W}(\mathbf{h})\|_F^2 = \sum_{i=1}^{\mathcal{V}} o_i^2 \,\
 
 其中 $\boldsymbol{\mu}_\mathbf{w}(\mathbf{h}) = \sum_j o_j \mathbf{w}_j$ 是按当前概率加权的平均输出嵌入。这个等式把"预测对扰动有多敏感"直接翻译成几何语言：敏感性等于各 token 嵌入相对于加权中心 $\boldsymbol{\mu}_\mathbf{w}$ 的分散程度，而且每一项被 $o_i^2$ 加权——也就是说高概率 token 的嵌入摆在哪里影响最大。token 嵌入越聚拢，$\|\mathbf{J}\|_F$ 越小、$\delta_{\text{TCB}}$ 越大、预测越稳；嵌入越散开则相反。
 
-**3. 两种预测体制的分析：用 $\delta_{\text{TCB}}$ 区分"真稳"与"虚稳"。**
+**3. 两种预测体制的分析：用 $\delta_{\text{TCB}}$ 区分"真稳"与"虚稳"**
 
 借助上面的几何公式，$\delta_{\text{TCB}}$ 在两种典型情形下表现出不同主导因素。在**高置信体制**（有效词表 $\mathcal{V}_{\text{eff}}$ 低）下，概率几乎集中在主导 token，加权中心 $\boldsymbol{\mu}_\mathbf{w} \to \mathbf{w}_k$，分散度趋于零、$\delta_{\text{TCB}} \to \infty$；此时它与 top-2 logit margin 强正相关（$r = 0.62$），margin 越大越稳。在**不确定体制**（$\mathcal{V}_{\text{eff}}$ 高）下，概率分散到多个 token，$\delta_{\text{TCB}}$ 与 $\sqrt{\mathcal{V}_{\text{eff}}}$ 强正相关（$r = 0.95$）。但关键洞察恰恰在这里：即便 $\mathcal{V}_{\text{eff}}$ 很高、概率看似很"散"，只要那几个高概率 token 在嵌入空间里几何上聚在一起，$\delta_{\text{TCB}}$ 依然可以很高——这正是 softmax 概率无法分辨、而几何视角能抓住的"虚假不确定 / 真实稳定"。
 

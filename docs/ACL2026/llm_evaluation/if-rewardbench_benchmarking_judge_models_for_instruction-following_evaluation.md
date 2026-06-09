@@ -45,15 +45,15 @@ IF-RewardBench 是一套"数据集 + 评测协议"而非模型，目标是把 ju
 
 ### 关键设计
 
-**1. Preference Graph：用 Pareto-dominance 把评测升级为 listwise。**
+**1. Preference Graph：用 Pareto-dominance 把评测升级为 listwise**
 
 按均值 $r_y=\frac{1}{n}\sum j_k$ 推偏好会出现"两条响应各满足不同约束但总分相同"的歧义对，污染 GT。本文为每个 instruction 配一张图 $G=(I,\{c_k\},\{y_i\},\mathcal{J},\mathcal{E})$：节点是 8 条响应，边仅在严格 Pareto 支配 $\forall k,\, j^*_{vk} \ge j^*_{uk} \,\land\, \exists k,\, j^*_{vk} > j^*_{uk}$ 成立时才连 $(y_u,y_v)$，保证每条偏好边都"真正确"。评测时用 Kendall $\tau_b$ 比对 judge 排序与图诱导的偏序，比 pairwise 准确率信息量更大，也正好对应下游对多响应 rerank 的真实能力。
 
-**2. 三类指令场景 + 完整约束 taxonomy：把覆盖面拉满。**
+**2. 三类指令场景 + 完整约束 taxonomy：把覆盖面拉满**
 
 IFEval 派系为追求"代码可验证"，约束类型只剩字数/格式/关键词等客观类，测不出 judge 对主观约束的处理。本文沿两个轴扩展覆盖：指令场景含 Single-Turn / Multi-Turn（约束跨轮继承）/ System-Prompt Steerability（system prompt 优先于 user prompt）三类；约束 taxonomy 含 Numerical、Format、Content、Linguistic、Style、Situation、Action 七大类 × Single、And、Chain、Selection 四种组合，其中 LLM 合成的复杂指令专门补足现有 benchmark 稀缺的 Chain 与 Selection。把覆盖面拉满后作者才发现，Style/Situation 这类主观约束才是 judge 真正的短板。
 
-**3. 多步人工标注 + Pareto verify 的双层质控：杜绝合成噪声。**
+**3. 多步人工标注 + Pareto verify 的双层质控：杜绝合成噪声**
 
 以往 instruction-following judge benchmark 几乎都没有"对推导出的偏好对再人工 verify"这一步，使"两条都违反但程度不同""非指令跟随因素差异过大"的混淆样本流入评测。本文做两层把关：先招 22 名经过上岗考试的学生做约束级 0/1 标注，每条两人独立标 + 第三人 cross-check，初标 Cohen's $\kappa=0.67$、交叉校验 $\kappa=0.87$；Pareto 自动构造偏好对后再让两名不同标注员逐对人工 verify，仅在完全一致时保留，最终保留率 71.2%，并辅以 length-difference 分析（Appendix F）确认偏好对不受长度偏置混淆。
 

@@ -42,15 +42,15 @@ TurboBoA 沿用 BoA 基于注意力重建误差、Kronecker 结构 Hessian $\mat
 
 ### 关键设计
 
-**1. 多 out-channel 联合量化：打破逐通道串行的效率瓶颈。**
+**1. 多 out-channel 联合量化：打破逐通道串行的效率瓶颈**
 
 BoA 之所以慢，是因为它一次只量化一个 out-channel，再用剩余 out-channel 做误差补偿，128 个通道就意味着 128 次顺序操作。TurboBoA 把这个粒度放大到一次同时量化 $N$ 个 out-channel，把误差补偿写成一个带约束的最小化问题 $\min_{\Delta\mathbf{W}}\|\mathbf{G}\Delta\mathbf{W}\mathbf{X}\|_F^2$，约束为已量化的 $N$ 个通道满足 $\mathbf{e}_i^T\Delta\mathbf{W}=\mathbf{Q}_{i,:}-\mathbf{W}_{i,:}\;(0\le i<N)$。论文的 Proposition 3.1 给出它的闭合形式解 $[\Delta\mathbf{W}]_{N:,:}=-[\mathbf{U}_{out}^T]_{N:,B}[\mathbf{U}_{out}^T]_{B,B}^{-1}(\mathbf{W}_{B,:}-\mathbf{Q}_{B,:})$，其中 $B=\{0,\dots,N-1\}$、$\mathbf{U}_{out}=\text{Chol}(\mathbf{H}_{out}^{-1})^T$。因为有解析解，联合量化不引入额外迭代；当 $N=16$ 时顺序操作从 128 次降到 8 次，相比 BoA 加速 3 倍以上，而剩余 out-channel 仍足够承担补偿任务，精度几乎无损。
 
-**2. 前层量化误差补偿：阻断误差在层间累积。**
+**2. 前层量化误差补偿：阻断误差在层间累积**
 
 BoA 假设每一层拿到的输入是干净的，但实际推理时前面的层已被量化，输入本身带着偏差 $\Delta\mathbf{X}=\mathbf{X}-\tilde{\mathbf{X}}$，这部分误差会一路传到后面放大。TurboBoA 把这项偏差直接写进重建目标：$\mathbf{G}\mathbf{Q}\mathbf{X}-\mathbf{G}\mathbf{W}\tilde{\mathbf{X}}=\mathbf{G}\Delta\mathbf{W}\mathbf{X}+\mathbf{G}\mathbf{W}\Delta\mathbf{X}$，右端第二项即前层误差的贡献。相应地 Proposition 3.2 把补偿解推广为 $[\Delta\mathbf{W}]_{N:,:}=-[\mathbf{U}_{out}^T]_{N:,B}[\mathbf{U}_{out}^T]_{B,B}^{-1}\big((\mathbf{W}_{B,:}-\mathbf{Q}_{B,:})-\mathbf{W}_{B,:}\mathbf{R}\mathbf{H}_{in}^{-1}\big)$，其中 $\mathbf{R}=\Delta\mathbf{X}\mathbf{X}^T$ 编码了输入偏差与原输入的相关性。与同样考虑前层误差的 GPTAQ 只做向量级优化不同，这里直接处理一般的稠密 $\mathbf{H}_{out}$，因此能和注意力模块的跨层依赖兼容。
 
-**3. 自适应网格 + 坐标下降精炼：让量化网格始终对齐更新后的权重。**
+**3. 自适应网格 + 坐标下降精炼：让量化网格始终对齐更新后的权重**
 
 联合量化和误差补偿都会改动权重，如果量化网格仍按旧权重确定，就会出现错位。TurboBoA 在每次量化前即时重新计算网格（自适应网格），保证网格范围与当前权重匹配；量化完成后再冻结整数权重 $\mathbf{W}_{int}$、只优化 scale 向量 $\mathbf{s}$ 做坐标下降精炼，目标是 $\min_{\mathbf{s}}\|\mathbf{G}(\text{diag}(\mathbf{s})\mathbf{W}_{int}-\mathbf{W})\mathbf{X}+\mathbf{G}\mathbf{W}\Delta\mathbf{X}\|_F^2$，同样含前层误差项。Proposition 3.3 给出逐分量的闭合更新 $s_j^*=s_j+\frac{[\mathbf{W}_{int}(\mathbf{H}_{in}(\mathbf{W}-\mathbf{Q})^T-\mathbf{R}^T\mathbf{W}^T)\mathbf{H}_{out}]_{j,j}}{[\mathbf{W}_{int}\mathbf{H}_{in}\mathbf{W}_{int}^T]_{j,j}[\mathbf{H}_{out}]_{j,j}}$，每一步都只用 Hessian 的对角元素，开销极小却能把联合量化带来的网格漂移收回来，保住低比特下的精度。
 

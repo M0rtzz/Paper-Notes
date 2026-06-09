@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. HABI：用词汇锚点定位 Inert Tokens。**
+**1. HABI：用词汇锚点定位 Inert Tokens**
 
 普通的 attention sink 分析只能告诉你"某些视觉 token 吸走了大量注意力"，却没解释这些 token 内部表征到底在做什么，因此无法区分它们是有用的视觉证据还是噪声。HABI 把注意力异常和词表空间里的语义坍缩联系起来：对每个视觉 token $v_i$，用 Logit Lens 把它在各层的 hidden state 投影到词表，得到一条跨层词序列 Trace；若某个 token 的 Trace 被同一个固定 Anchor 反复支配，且这个 Anchor 在全局上又频繁出现在高注意力 token 里，就给它高 hijacking 分数。具体把 Dominance（单 token 是否跨层僵化）、Frequency（某词是否系统性出现）和 Attention（是否真的影响生成）三个维度相乘得到 $S_{hijack}(v_i)$，再在词表级用 IQR outlier 阈值筛出 Hijacking Anchors。三维相乘能滤掉大量偶然噪声，比单纯按 attention magnitude 找背景 token 更具体、也更可解释。
 
-**2. HAR 与 NHAR：把"证明劫持有害"和"挑选可靠头"两件事分开。**
+**2. HAR 与 NHAR：把"证明劫持有害"和"挑选可靠头"两件事分开**
 
 高视觉注意力本身既可能是好信号也可能是坏信号，关键看它落到哪里，所以需要两个互补指标。HAR 计算某个头落在 Inert Tokens 上的注意力占全部视觉注意力的比例，实验中幻觉 token 往往对应更高的 HAR，由此证明 hijacking 与 hallucination 正相关。NHAR 则反过来，只累加落在非 Inert 视觉 token 上的注意力，相当于把视觉注意力预算里被劫持的那部分剔除，只保留面向有效视觉内容的密度。NHAR 的价值在于把头选择标准从"看图很多"改成"看有效图像区域很多"，为后续推理时增强哪些头提供了一个可解释的依据，而不是凭启发式拍脑袋。
 
-**3. HAVAE：训练无关的注意力增强。**
+**3. HAVAE：训练无关的注意力增强**
 
 直接惩罚或清零 Inert Tokens 反而会破坏生成，因为这些 token 可能承担某种残余路由或占位功能——消融里 $\beta=0.6$ 的负向压制就让 CHAIR 恶化了。HAVAE 因此选择正向增强而非负向压制：先按真实物体 token 上的平均 NHAR 选出 top-$K$ 目标头 $H_{target}$，推理时只对这些头面向视觉 token 的注意力加上一个层内平均注意力幅度项，增强强度由 $\alpha$ 控制（Qwen2-VL 用 $K=300$，其余模型多用 $K=450$；长文本场景把 $\alpha$ 从默认 0.1 调到 0.6 或 0.7）。它不更新任何参数、不引入额外模型，只增强那些已被 NHAR 诊断为"关注非劫持视觉内容"的头，因此既能用于权重不可训练的场景，又比盲目抬高所有视觉注意力更稳。
 

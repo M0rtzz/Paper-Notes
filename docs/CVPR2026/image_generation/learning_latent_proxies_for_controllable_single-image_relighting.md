@@ -49,7 +49,7 @@ $$\mathcal{L}_{\mathrm{diff}} = \|W \odot (\epsilon - \epsilon_\theta(z_t, t \mi
 
 ### 关键设计
 
-**1. Few-shot Latent Proxy Conditioning：用「够用」的材质-几何暗示替代密集 intrinsic 分解。**
+**1. Few-shot Latent Proxy Conditioning：用「够用」的材质-几何暗示替代密集 intrinsic 分解**
 
 纯潜空间方法控制不住光照方向/强度，根子在于它对场景的几何和材质一无所知；但完整 intrinsic 分解又太贵太脆。这里的折中是只让一个轻量编码器-解码器 $E_\phi$ 从源图预测一组紧凑的潜在代理 $\hat{\mathcal{B}} = \{a, n, r, m\} \in \mathbb{R}^{H \times W \times 8}$（albedo、法线、粗糙度、金属度），而且只在少量带 PBR 标注的样本上监督它，损失把四种属性各自的误差加在一起：
 
@@ -57,7 +57,7 @@ $$\mathcal{L}_{\text{proxy}} = \lambda_a\|a-\hat{a}\|_1 + \lambda_n(1-\langle n,
 
 关键在于它不追求逐像素重建出精确的 PBR maps——这些 proxy maps 经空间池化加投射后被压成一个条件 token $t_{\text{proxy}} = f_{\text{proj}}(E_\phi(x_s^{\ell_s})) \in \mathbb{R}^{1 \times 768}$ 注入去噪器，提供的是「这块大概是金属、那块偏粗糙」这种暗示，用来约束去噪轨迹，而不是当成精确监督信号。这样既给了扩散模型物理抓手，又把 PBR 标注的需求降到小样本级别。
 
-**2. Lighting-Aware Mask Prediction：把算力压到真正会变的那一小撮像素上。**
+**2. Lighting-Aware Mask Prediction：把算力压到真正会变的那一小撮像素上**
 
 改一次光，画面里其实只有阴影边界和高光这少数区域会大幅变化，大片漫反射区域基本不动。如果对所有像素一视同仁地优化，敏感区域的细节反而被淹没。作者先从源-目标对的亮度差异导出一张软标签 mask，把对数亮度差和一个鲁棒差异项加权归一化：
 
@@ -65,7 +65,7 @@ $$M_{\mathrm{gt}} = \mathcal{N}\left(\alpha|\log Y_t - \log Y_s| + (1-\alpha)D_{
 
 但推理时拿不到目标图，所以又训练一个轻量预测器 $M_\theta = m_\theta(x_s^{\ell_s}, \Delta\ell)$，只凭源图加光照变化就能预判哪里会变（用 BCE + Dice loss 对齐上面的软标签）。预测出的 mask 转成空间权重图 $W$ 去调制噪声重建损失，等于告诉去噪器「把注意力放在阴影和高光这些光照敏感区」，方向变化下的阴影边界因此更准。
 
-**3. DPO Post-training for Latent Encoder：用偏好优化补上稀疏 PBR 监督的窟窿。**
+**3. DPO Post-training for Latent Encoder：用偏好优化补上稀疏 PBR 监督的窟窿**
 
 Proxy 编码器只在小样本上学过 PBR，物理一致性容易飘。作者借了一招 RLHF 里的 DPO：冻住主扩散骨干，单独对 PBR 编码器 $E_\phi$ 做偏好后训练——把 GT PBR maps 当正样本 $y_{\text{pos}}$、编码器当前输出当负样本 $y_{\text{neg}}$，用一个聚合了 L1/角度/BCE 的物理奖励 $\Delta r = r(y_{\text{pos}}) - r(y_{\text{neg}})$ 来定义偏好，再用一个冻结的参考编码器提供稳定的似然基准。优化目标把高奖励预测的似然往上推，等于在没有更多标注的情况下，让编码器自己朝「更符合物理」的方向收敛，显著改善了代理的一致性。
 

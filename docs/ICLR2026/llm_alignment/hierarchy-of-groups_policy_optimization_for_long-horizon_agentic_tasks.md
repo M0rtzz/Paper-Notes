@@ -44,11 +44,11 @@ HGPO 想解决的是 group-based RL 里一个被忽视的偏差来源：同一 r
 
 ### 关键设计
 
-**1. Context-Aware Hierarchical Grouping：按历史上下文一致性把 step 分成嵌套的多层 group。**
+**1. Context-Aware Hierarchical Grouping：按历史上下文一致性把 step 分成嵌套的多层 group**
 
 痛点很直接：把整个 rollout 的所有 step 当成一个 group，会把历史上下文完全不同的 step 当成可比对象。HGPO 的对策是定义 k-step 上下文算子 $\mathcal{C}_k$，构造一串嵌套 group $G_0^H \supseteq G_1^H \supseteq \cdots \supseteq G_K^H$：$G_k^H$ 只收那些共享前 k 步相同历史的 step。$k=0$ 时所有 step 都「共享空历史」，于是 $G_0^H$ 就是整个 rollout（退化回 GiGPO）；$k=K$ 时是约束最强、粒度最细的 group。k 越大，组内 step 的历史上下文越一致，用组内均值当 baseline 的偏差就越小。实现上把每个 step 的状态序列哈希后存进 hashmap，分组与查找都是 $O(1)$，不需要任何前向传播。
 
-**2. Adaptive Weighting Advantage Estimation：用一组随层级递增的权重聚合各层 advantage，显式控制 bias-variance。**
+**2. Adaptive Weighting Advantage Estimation：用一组随层级递增的权重聚合各层 advantage，显式控制 bias-variance**
 
 光有多层 group 还不够，得决定信谁多一点。HGPO 在每一层 $G_k^H$ 上各算一份 advantage，再用幂律权重聚合：
 
@@ -56,7 +56,7 @@ $$w_k = \frac{(k+1)^\alpha}{\sum_k (k+1)^\alpha}$$
 
 层级越高（k 越大、上下文越一致、偏差越低）拿到的权重越大。指数 $\alpha$ 就是那个旋钮：$\alpha \to 0$ 时权重趋于均匀，相当于平摊各层估计；$\alpha \to \infty$ 时权重压到最细粒度那一层。论文给出理论保证——这样聚合出来的 advantage 估计，恰好落在 step-level（无偏但高方差）和 Oracle 估计之间做插值，于是「无偏高方差」和「有偏低方差」这对矛盾被收进一个可调参数里。
 
-**3. 计算开销控制：整套机制只多花约 0.5 秒/迭代，且与现有方法即插即用。**
+**3. 计算开销控制：整套机制只多花约 0.5 秒/迭代，且与现有方法即插即用**
 
 因为分组和查找全靠离线 hashmap，没有额外前向传播，HGPO 每个迭代只增加约 0.5 秒，占总训练时间不到 0.001%。也正因为它只改 advantage 怎么算、不动 rollout 和模型，所以能直接挂到任何 group-based RL 方法上——GRPO、GiGPO、DAPO 都兼容。
 

@@ -44,15 +44,15 @@ ReCode 要解决的是：代码 RL 普遍只用单元测试通过与否当 outco
 
 ### 关键设计
 
-**1. CRPL 对比式过程奖励学习：用“优化/退化”变体造强对比偏好，训出能判推理好坏的 reward model。**
+**1. CRPL 对比式过程奖励学习：用“优化/退化”变体造强对比偏好，训出能判推理好坏的 reward model**
 
 直接让 LLM 给推理过程打个绝对分往往校准很差，相对偏好则稳得多。CRPL 先用 Qwen2.5-Coder-32B-Instruct 为每道代码题生成一份基础推理过程，再沿 factual accuracy、logical rigor、logical coherence 三个维度分别生成 optimized 和 degraded 版本，由此构造强对比 pair、优化 pair、退化 pair 三类偏好。明确制造出来的质量落差，让 reward model 能学到细粒度的 reasoning features，而不是只会看最终答案对不对。
 
-**2. LCB-RB 推理过程奖励基准：补一个专测“能否判推理质量”的评估集，因为现成 RewardBench 测不了这件事。**
+**2. LCB-RB 推理过程奖励基准：补一个专测“能否判推理质量”的评估集，因为现成 RewardBench 测不了这件事**
 
 现有 RewardBench 关注的是最终答案好坏，没法专门衡量 reasoning-process discrimination。LCB-RB 从 LiveCodeBench v6 出发，每题生成 50 个 reasoning-solution pair，先用执行结果初筛，再让 GPT-4o 检查逻辑正确性与实现一致性，最后两名作者人工复核，最终得到 219 个高质量偏好 pair，专门用来验证奖励模型是否真在判推理过程、而非碰运气。
 
-**3. CG-GRPO 一致性门控：让执行正确性当硬闸门，过程奖励只在“对的代码”之间比质量。**
+**3. CG-GRPO 一致性门控：让执行正确性当硬闸门，过程奖励只在“对的代码”之间比质量**
 
 代码任务本就有严格的执行信号，应该把它当硬约束，否则模型会去优化 reward model 偏好的文本而非可运行代码。CG-GRPO 因此不把过程奖励当常数项简单相加，而是写成
 

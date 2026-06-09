@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. DPO-Inducing 条件：可解性其实不需要凸性。**
+**1. DPO-Inducing 条件：可解性其实不需要凸性**
 
 要把 RLHF 目标化成 DPO 那样的闭式偏好损失，前提是 f-divergence 约束下的最优策略存在且良定义。过去的 f-DPO 工作（Wang et al., 2024）默认 f 必须凸，本文 Corollary 1 把这个门槛精确地替换掉：f 是 DPO-inducing 当且仅当 $\lim_{t\to 0^+} f'(t) = -\infty$。直觉上，$f'$ 在 0 附近趋于负无穷，等价于要求最优策略对任何 response 都赋予严格正的概率（否则梯度会把某些 response 推到概率 0，破坏可解性）。凸性只是保证这一点的充分条件之一，并非必要——这一步把可用的 f 从凸函数类一下子放宽到所有满足该极限条件的函数，为引入非凸 f 打开了空间。
 
-**2. Displacement-Resistant 条件：$\arg\min f \geq 1$ 是抗位移的必要门槛。**
+**2. Displacement-Resistant 条件：$\arg\min f \geq 1$ 是抗位移的必要门槛**
 
 概率位移指训练中 winner 概率不升反降。Lemma 2 给出它的成因刻画：若 $\arg\min_{t \geq 0} f(t) < 1$，则最优策略对 in-sample response 的概率必然被压到低于 $c \cdot \pi_{ref}$，也就是必然位移；反过来，抗位移的必要条件是 $\arg\min f(t) \geq 1$。把 DPO 代进来就一目了然：它对应 $f_{KL}(t) = t\log t$，最小值在 $t = e^{-1} < 1$，所以 DPO 在理论层面就注定会把 winner 概率往下压。更深一层的原因来自 Lemma 1——f-DPO 名义上解的是完整 RLHF 问题 (5)，但它同时也解一个退化问题 (7)，后者的正则化只覆盖出现在训练数据里的 in-sample response，对 out-of-sample 行为毫无约束。于是模型可以毫无代价地把概率质量挪到没见过的 response 上，winner 概率随之下降。位移因此不是实现 bug，而是损失结构里的数学必然。
 
-**3. SquaredPO：用 $f(t)=\frac{1}{2}(\log t)^2$ 同时踩中两个条件。**
+**3. SquaredPO：用 $f(t)=\frac{1}{2}(\log t)^2$ 同时踩中两个条件**
 
 把前两条当作设计约束，问题变成"找一个 f 同时满足 $\lim_{t\to 0^+} f'(t) = -\infty$ 和 $\arg\min f(t) \geq 1$"。论文给出的解是 $f(t) = \frac{1}{2}(\log t)^2$：它是非凸函数，但 $\lim_{t\to 0^+} f'(t) = -\infty$（可解），且 $\arg\min f(t) = 1$（抗位移），两个条件都恰好成立。代入 f-DPO 损失后，它等价于一个"自适应 $\beta$ 的 DPO"，其有效系数
 

@@ -47,17 +47,17 @@ LAMO 要回答的问题是：能不能让一个 3B 的轻量 MLLM 既具备 GUI 
 
 ### 关键设计
 
-**1. 角色导向数据合成：把长时序难题拆成可靠的子能力。**
+**1. 角色导向数据合成：把长时序难题拆成可靠的子能力**
 
 轻量模型在端到端长任务上表现糟糕，但单独处理某一项子能力时却足够可靠，于是本文把 GUI 自动化分解成五类任务——ATA（动作-工具对齐）、LCC（逻辑一致 CoT）、SU（屏幕理解）、GP（目标规划）、SG（屏幕定位），分别用 Qwen-2.5-VL-72B（ATA、SG）和 Gemini-2.5-Pro（SU、LCC、GP）合成数据，让一个模型通过参数共享同时学会全部技能。
 
 其中定位（SG）最难，针对两个实际痛点做了专门处理：一是语义稀疏元素，把原始简短描述用教师模型扩写成语义丰富的 caption，训练时让模型同时预测丰富描述和坐标，迫使它真正"看懂"目标而非死记坐标；二是复杂布局干扰，通过规则增强把前景目标叠到背景屏幕上并加入干扰项，合成出 Intricate-Layout Grounding（ILG）数据，专门锻炼在拥挤界面中定位的能力。
 
-**2. Perplexity-Weighted Cross-Entropy（PWCE）：让损失偏向最难的坐标 token。**
+**2. Perplexity-Weighted Cross-Entropy（PWCE）：让损失偏向最难的坐标 token**
 
 SFT 能把文本推理学得不错，但预测出的坐标往往有系统性偏差——根因在于坐标 token 困惑度高，却和普通 token 共享相同的损失权重，模型缺乏对数值细节的感知压力。PWCE 据此按 token 困惑度动态加权：$w_i = \frac{1 + \alpha \frac{PPL_i}{\overline{PPL} + \epsilon}}{\frac{1}{|M|}\sum_{j \in M}(1 + \alpha \frac{PPL_j}{\overline{PPL} + \epsilon})}$，再算加权交叉熵 $\mathcal{L}_{PW} = \frac{1}{|M|}\sum_{i \in M} w_i \cdot CE(h_i^*, \tilde{y}_i)$，最终损失为 $\mathcal{L}_{PWCE} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{PW}$。困惑度越高的坐标 token 权重越大，模型被迫把注意力投到这些不确定的数值上，从而显著改善定位精度——消融中移除 PWCE 在 ScreenSpot-pro 上掉了 38.3%。
 
-**3. 多角色编排推理：一套参数演出整支团队。**
+**3. 多角色编排推理：一套参数演出整支团队**
 
 为了在不堆参数的前提下获得 MAS 的优势，LAMO-3B 仅靠上下文工程就在推理时切换为四个角色：Observer 产出屏幕语义描述 $\mathcal{C}_{s2w}$，Planner 把目标分解为子任务 $\mathcal{C}_{plan}$ 与提示 $\mathcal{C}_{tips}$，Allocator 结合历史与上下文给出当前动作 $\mathcal{C}_{action}$，Executor 再把动作指令落成原子操作 $a_t$。这种分解让每个角色面对的上下文更短更聚焦，缓解了单体推理中的"lost-in-the-middle"和思维-行动幻觉。
 

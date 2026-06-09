@@ -54,19 +54,19 @@ tags:
 
 ### 关键设计
 
-**1. LSS 控制模型：把"长 caption 数据"和"扩 context 架构"两个变量剥开。**
+**1. LSS 控制模型：把"长 caption 数据"和"扩 context 架构"两个变量剥开**
 
 LongCLIP 一次性做了三件事——换上 ShareGPT4V 长 caption 数据、把上下文从 77 扩到 248 token、再冻结前 20 个位置 embedding 来缓解灾难遗忘——三个变量搅在一起，根本说不清涨点到底来自哪个。作者训了一个干净的对照模型 LSS：只保留"ShareGPT4V 长 caption 数据 + 全参数微调"这一项，坚决不扩 context（死守 77 token）、也不冻结位置 embedding，等于把后两个变量消掉。训练配置见 Table 5：lr=3e-6、warmup 150 steps、共 3000 steps（约 2.5 epoch）。
 
 这种 control 在 VLM 论文里很稀缺——大多数工作把架构改进和数据改进混在一起报"涨了 X 点"，读者根本分不清哪个有用。有了 LSS 作对照，作者才能干净地下结论：扩 context 这个架构 trick 几乎没用（LSS 只用 77 token 反而超过 LongCLIP），真正涨点的是长 caption 数据加全参微调。这种剥离实验本身就是对整个研究方向的方法学贡献。
 
-**2. 多 benchmark 横切：把"哪个训练变量贡献多少"定位到具体的数据/优化属性上。**
+**2. 多 benchmark 横切：把"哪个训练变量贡献多少"定位到具体的数据/优化属性上**
 
 要回答迁移性到底由什么决定，就得把训练设置拆成可量化的属性逐一对照。作者把 4 个长 caption 数据集按 5 个属性表格化（Table 3/8）——sDCI（7.6K 图、vocab 29%、Yngve 94）、DOCCI（15K 图、vocab 27%、Yngve 75、人工写）、LN（489K 图、30 词短 caption、vocab 24%、人工写）、ShareGPT4V（1.2M 图、144 词长 caption、vocab 88%、合成）——在每个数据集上各训一个 LSS 变体，再横切比 SC++ 与 retrieval，看哪个属性单独和性能相关。
 
 结论是没有任何单一属性能决定性能，而是 vocab 覆盖 × caption 长度 × grounding × 数据规模 × 句法复杂度的多变量协同。这直接证伪了之前"数据越多越好"（DreamLIP）或"句法越复杂越好"（sDCI）的单因素叙事：sDCI 句法复杂度最高（94.07）却不如 DOCCI（75）也不如 ShareGPT4V，正因为它缺 grounding 和词表覆盖；LN 词表少、caption 又短，做不动 long caption 但能促进 SC++ 早期收敛；而 DOCCI 体量小却人工精标，几乎追平 1.2M 的 ShareGPT4V。
 
-**3. LongCLIP 位置冻结消融（LongCLIP$_{70}$）：用改输入长度的廉价干预定位"SC++ 不涨"的真凶。**
+**3. LongCLIP 位置冻结消融（LongCLIP$_{70}$）：用改输入长度的廉价干预定位"SC++ 不涨"的真凶**
 
 LongCLIP 在组合 benchmark SC++ 上几乎不涨，到底是数据问题还是位置 embedding 冻结的问题？作者注意到 LongCLIP 为保 CLIP 通用对齐能力，把前 20 个位置 embedding 完全冻结、20-77 段更新打折、只有 77-248 段自由训练——而大部分 SC++ 样本恰好落在前 77 token 这段几乎没被新数据塑造的区间。于是他们构造 LongCLIP$_{70}$：推理时把输入截断到 70 词（≈77 token），强制 LongCLIP 只用前 77 token 工作，等于把"扩 context 的优势"直接消掉。结果（Figure 3）LongCLIP$_{70}$ 在长 caption retrieval 上断崖下跌、被 LSS 反超，说明 LongCLIP 的长 caption 能力主要来自 77-248 段的自由训练，而 SC++ 不涨正是因为前 20-77 段被位置冻结锁死了。
 

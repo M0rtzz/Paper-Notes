@@ -49,15 +49,15 @@ SVEB 的构造方式是：选一组 prompts，用固定 $\pi$ 跑 rollouts，从
 
 ### 关键设计
 
-**1. SVEB：用 Monte Carlo 真值把"value estimator 好不好"做成一个可测的 MAE。**
+**1. SVEB：用 Monte Carlo 真值把"value estimator 好不好"做成一个可测的 MAE**
 
 之前评 baseline 质量都是看"下游 RL 是否变好"，这混杂了优化噪声和算法差异，没法干净地隔离"估值精度"本身。SVEB 的做法是给每个中间状态 $s_t$ 用大规模 Monte Carlo 续写算一个参考真值 $\widehat V(s_t)=\frac{1}{n}\sum_{i=1}^n r(s_T^{(i)})$（论文用 MCS@20，按大数律 $\widehat V(s_t)\to V^\pi(s_t)$），再用 $\mathrm{MAE}(f,D_s)=\frac{1}{|D_s|}\sum_j |f(s_t^{(j)},\theta)-\widehat V(s_t^{(j)})|$ 给任意估计器打分。靠这把离线、可重复的尺子，作者第一次把"PPO critic 在 LLM 场景下没用"从经验直觉提升成可量化结论：SVEB-NUMBER 上 PPO-1@40 / PPO-N@40 / GRPO@40 的 MAE 分别是 0.169 / 0.158 / 0.164，而 $\widehat V_{PPO}-\widehat V_{GRPO}$ 的分布几乎以零为中心——PPO critic 的输出基本就是组均奖励本身。这个结论正是后面放弃训 critic、改走廉价相似度路线的合理性来源。
 
-**2. Numca：把数学题里的"数字"当 milestone，用目标条件 RL 做几乎零成本的信用分配。**
+**2. Numca：把数学题里的"数字"当 milestone，用目标条件 RL 做几乎零成本的信用分配**
 
 直接搬 HER 那套"用最终状态当 alternate goal"在文本上行不通，因为语义不是离散结构化的。但作者注意到数学题里"算到某个中间数"天然是可解析、可验证的子目标，于是用数字 milestone 绕开了"如何无监督找 milestone"的难题。具体做法：定义模式集 $\mathcal P$（整数 / 小数 / 分数等），milestone $m=(x_i,\dots,x_j)$ 是解码字符串匹配 $\mathcal P$ 的 token 子序列；状态 $s_t$ 抽象成 $s_t^M\triangleq\mathbb M(s_t)$，即"已出现的所有 milestone 的集合"，相邻两个抽象状态之间的 token 拼成 macro action。然后对现成 rollouts 维护一个字典 $\mathcal T[s^M]=(\mathrm{count}, \mathrm{reward\_sum})$，每条 rollout 命中一个唯一抽象状态就 count+1、把终止奖励累加，最后 $V(s^M)=\mathcal T[s^M].\mathrm{reward\_sum}/\mathcal T[s^M].\mathrm{count}$，再均匀分给该 macro action 内所有 token。整个过程就是字典查询，内存和算力几乎可忽略。代价是它只在数字密集的场景管用——SVEB-NUMBER 上 Numca@40 MAE 降到 0.132（vs GRPO 0.175 / PPO-N 0.159），但在 science 子集退回 0.217，所以它是数学专用解法，需要 Hista 接力。
 
-**3. Hista：用 LLM 末层隐状态 + MinDistance 做概率加权奖励平均，且有理论兜底。**
+**3. Hista：用 LLM 末层隐状态 + MinDistance 做概率加权奖励平均，且有理论兜底**
 
 要在不依赖任何领域先验的前提下给任意 $s_t$ 估值，得有一个通用的"状态相似度"。作者把 LLM 自回归训练视为一种隐式表征学习（与 MAE/DINO/BERT/JEPA 同源），于是末层隐状态就是天然的状态表征，不必再训表征模型。两个变长隐状态序列之间的距离用 MinDistance 定义——长者每个位置去短者里找最近邻求 $\ell_2$ 再求和：
 

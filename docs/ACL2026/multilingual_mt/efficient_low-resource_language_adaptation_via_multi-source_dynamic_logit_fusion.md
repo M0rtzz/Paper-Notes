@@ -45,19 +45,19 @@ TriMix 是**纯测试时**框架（除小模型 CPT 外无需训练）。给定 
 
 ### 关键设计
 
-**1. 三源线性分解（Task / Language / Scaling 三个 benefit vector）：把"理想 logit"显式拆成 small-base 加三股独立增益。**
+**1. 三源线性分解（Task / Language / Scaling 三个 benefit vector）：把"理想 logit"显式拆成 small-base 加三股独立增益**
 
 LRL 任务同时缺三样东西——语言数据、任务标注、大模型算力，而以往方法把它们混在一起调，无法分别施力。TriMix 在 logit 空间把能力 disentangle 成三条独立通道：任务增益 $\delta_T=L_{large\text{-}ins}-L_{large\text{-}base}$（大模型学习能力强，所以任务能力从大模型这对里抽）、LRL 增益 $\delta_L=L_{small\text{-}cpt}-L_{small\text{-}base}$（只有小模型能 CPT，故语言能力只能从小模型差出来）、Scaling 增益 $\delta_S=L_{large\text{-}base}-L_{small\text{-}base}$（特意用 base 对 base，避免把"指令风格"误当成"规模红利"）。最终理想 logit 写成 $L=L_{small\text{-}base}+\alpha\delta_T+\beta\delta_L+\gamma\delta_S$。
 
 显式拆开的意义在于每一项都能独立调权重，而不是像 Proxy Tuning 那样只有"大主小辅"一个旋钮。$\delta_S$ 坚持 base-对-base 的细节也正是为了让"规模"这一项保持纯净，不被指令调的风格污染。
 
-**2. $\gamma=\alpha$ 耦合 + 大 base 自动消去：一个代数变换把推理要载入的模型从 4 个压到 3 个。**
+**2. $\gamma=\alpha$ 耦合 + 大 base 自动消去：一个代数变换把推理要载入的模型从 4 个压到 3 个**
 
 上面的理想公式需要同时跑 large-ins、large-base、small-cpt、small-base 四个模型，可现实里部署端常常没有载入大 base 的显存。TriMix 令 $\gamma=\alpha$，把 $\alpha(L_{large\text{-}ins}-L_{large\text{-}base})+\alpha(L_{large\text{-}base}-L_{small\text{-}base})$ 一合并，中间的 $L_{large\text{-}base}$ 正好消掉，公式塌缩成 $L=\alpha L_{large\text{-}ins}+\beta L_{small\text{-}cpt}+(1-\alpha-\beta)L_{small\text{-}base}$。推理时只剩大 ins + 小 base + 小 cpt 三次 forward。
 
 这是一笔"工程成本换灵活性"的交易：作者坦承放开 $\gamma\ne\alpha$ 理论上界更高，但作为实用近似，省掉大 base 的显存和带宽开销在 LRL 真实部署里更划算。
 
-**3. Perplexity-guided 动态权重选择：没有 LRL 验证集，就用 PPL 逐样本在线选 $(\alpha,\beta)$。**
+**3. Perplexity-guided 动态权重选择：没有 LRL 验证集，就用 PPL 逐样本在线选 $(\alpha,\beta)$**
 
 LRL 场景拿不到任务标注，传统的网格超参搜索因为没有 dev set 而失效。TriMix 改用一个无监督代理：对每条输入 prompt（含 in-context 示例 + 测试输入），用三个模型融合后的语言模型算它的 perplexity，在一个小网格里遍历、选 PPL 最低的那组 $(\alpha,\beta)$——直觉就是"哪组权重最能解释当前输入分布，就用哪组"。备选的 ENT 策略则选首个生成 token 熵最低的配置，捕捉"最确定"的输出，两者都不碰任何标注。
 

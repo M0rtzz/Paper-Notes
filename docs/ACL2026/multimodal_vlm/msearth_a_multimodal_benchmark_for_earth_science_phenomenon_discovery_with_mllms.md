@@ -49,19 +49,19 @@ MSEarth 是 4 阶段流水线（Figure 2）：
 
 ### 关键设计
 
-**1. Refined Caption：把正文里的推理链"补"回图旁。**
+**1. Refined Caption：把正文里的推理链"补"回图旁**
 
 直接拿 raw caption 生成题（ArxivQA 的做法）只能问表层信息——平均 37.56 词的描述根本撑不起"为什么会这样"的推理题。作者先用正则在 MinerU 解析后的段落里搜 figure label（如 "Fig. 3"），把所有"引用该图且 ≥ 2 句"的段落收集成 context，再把 (figure_image, raw_caption, paper_context) 一起喂给 GPT-4o，让它生成含 hypothesis / evidence / analysis / conclusion 的 refined caption（prompt 见 Appendix E.6）。
 
 这一步把 raw caption 从 37.56 词扩到 136.29 词、信息密度翻 3.6 倍，效果是双重的：一方面让 ground-truth answer 能被论文证据直接支撑，题目可验证；另一方面 refined caption 本身成了后续多智能体投票分级的"教师信号"——有没有它一加就答对，正好用来区分模型缺的是知识还是感知。
 
-**2. 5 模型多智能体投票 + 3 阶段难度分级：在没有 PhD 全量标注的预算下自动分级。**
+**2. 5 模型多智能体投票 + 3 阶段难度分级：在没有 PhD 全量标注的预算下自动分级**
 
 PhD 逐题标注 7K+ 题不现实，作者让 5 个 MLLM（Qwen2.5-VL-7B/72B、InternVL2.5-7B/78B、GPT-4o）独立答题、按 60% 多数票定结果，再用三阶段把题目沿"知识 vs 感知"两个维度筛开。**Phase A** 只给 raw caption + 问题，> 40% 模型答错才进入下一阶段（约 70% 题在此被判 easy 丢弃、留 20% 作训练）；**Phase B** 补上 refined caption，> 60% 模型答对则判 specialized（需领域知识，约 20%）；**Phase C** 只让 ≥ 70B 大模型投票，> 60% 答对判 hard（需强感知，约 5%），剩下约 5% 判 flawed 丢弃。
 
 这样分级的妙处在于把"为什么答错"拆成两个正交维度：refined caption 一加就对的是"缺知识但有感知"，只有最大模型在 refined 后才对的是"缺感知"。benchmark 因此不只能给总分，还能精确诊断模型短板——后面 Phase B 抽检无效率只有 4.4%、质量最高，也印证了这条分级假设。
 
-**3. 三类任务统一接口 + 字段化标注：同一组图上做 captioning / MCQ / open-ended。**
+**3. 三类任务统一接口 + 字段化标注：同一组图上做 captioning / MCQ / open-ended**
 
 跨 benchmark 比较容易混入分布漂移，作者让三类任务共享同一组图和 `question_id / images / classification / reasoning_chain` 等元字段（Table 7），只在 query 与 response 上区分：MCQ 用 (raw_caption, question, options)，open-ended 用 (raw_caption, question)，captioning 直接让模型生成 refined caption。评估上，表面相似度交给 BLEU/ROUGE/METEOR/BERTScore，语义层面再用 Qwen2.5-VL-72B 当 LLM-judge 跑 OE-Eval / Cap-Eval。
 

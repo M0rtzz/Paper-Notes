@@ -54,7 +54,7 @@ tags:
 
 ### 关键设计
 
-**1. 双辅助变量元算法：让梯度型 proposal 和小批量比值估计第一次共存。**
+**1. 双辅助变量元算法：让梯度型 proposal 和小批量比值估计第一次共存**
 
 现有小批量 MCMC 都是"两步走"——要么 proposal 用梯度但接受率扫全数据，要么接受率用小批量但 proposal 只能随机游走。本文把每步 MH 的全部随机性显式写成 $(\omega_1,\theta',\omega_2)$：$\omega_1$ 决定 proposal、$\omega_2$ 估计目标比值，并把它们一起塞进对合 $f(\theta,\omega_1,\theta',\omega_2)=(\theta',\omega_1,\theta,\omega_2)$（雅可比为 1）。接受率写成
 
@@ -62,7 +62,7 @@ $$r=\frac{\pi(\theta'\mid x)\,\mathbb{P}_{\theta',\theta_t}(\omega_1,\omega_2)}{
 
 关键在于只要 $\omega_1,\omega_2$ 的联合密度在 $(\theta,\theta')$ 互换时能成对抵消昂贵项——比如 PoissonMH 里 $\mathbb{P}_\theta(\omega_1)$ 的 likelihood 部分被 $\pi(\theta\mid x)$ 消掉、只剩小批量贡献——整个 $r$ 就只依赖小批量数据，命题 2 用 involutive MCMC 视角一行证完 detailed balance。把 $\Omega_1$ 或 $\Omega_2$ 设成单点 $\mathsf{NULL}$ 即可"关闭"对应辅助变量：(Null,Null) 是普通 MH，(Null,有) 退化为旧框架（含 exchange/PoissonMH/TunaMH），$\omega_1=\omega_2$ 与 $\omega_1\perp\omega_2$ 则对应下面两类新算法。这样梯度估计和比值估计共享同一份小批量，每步成本不增反降。
 
-**2. Poisson–Barker / Poisson–MALA：给 PoissonMH 换上梯度型 locally balanced proposal。**
+**2. Poisson–Barker / Poisson–MALA：给 PoissonMH 换上梯度型 locally balanced proposal**
 
 PoissonMH 已能用 Poisson 小批量抵消归一化项，但 proposal 仍是随机游走、高维混合慢。这对应元算法里 $\omega_1=\omega_2$ 的情形：先按 PoissonMH 抽 $\omega_1=(s_1,\dots,s_N)\sim\bigotimes_i\mathsf{Poi}(\lambda M_i/L+\phi_i(\theta;x))$ 形成小批量 $S=\{i\mid s_i>0\}$，proposal 用一维分解
 
@@ -70,7 +70,7 @@ $$q_{\omega_1,i}^{(g)}\propto g\big(e^{\partial_{\theta_i}\log(\pi(\theta\mid x)
 
 $g(t)=t/(1+t)$ 得 Poisson–Barker、$g(t)=\sqrt{t}$ 得 Poisson–MALA。妙处在于代理函数 $\pi(\theta\mid x)\cdot\mathbb{P}_\theta(\omega_1)$ 只依赖小批量 $S$——看上去只是给梯度多加了一项 $\log\mathbb{P}_\theta(\omega_1)$，却因此让梯度只扫几千个点、成本和 PoissonMH 一致。locally balanced proposal（Zanella 2020）在全数据下已被证明比 MALA 更鲁棒，本文把这套"用梯度信息塑形 proposal"的好处搬进小批量场景，并靠把 $\omega_1$ 同时塞进 proposal 与接受率两边来抵消所有全数据计算。
 
-**3. Tuna–SGLD：用辅助变量给 SGLD 补上精确 MH 修正。**
+**3. Tuna–SGLD：用辅助变量给 SGLD 补上精确 MH 修正**
 
 SGLD 直接做带噪 SGD、绕过 MH，但有持久的固定步长偏差，"用小批量数据做 MH 修正"是 Welling & Teh (2011) 留下的开放问题。这对应元算法里 $\omega_1\perp\omega_2$ 的情形：proposal 用 SGLD 风格 $q_{\omega_1}(\theta,\cdot)\sim\mathcal{N}(\theta-\tfrac{\epsilon^2}{2}\tfrac{N}{K}\sum_{i\in B}\nabla_\theta U_i(\theta;x),\epsilon^2 I)$，其中 $\omega_1=B$ 是 size-$K$ 的均匀小批量，再用 TunaMH 的 Poisson 小批量 $\omega_2$ 估计目标比值。由于 $\omega_1$ 的边缘分布不依赖 $\theta$，接受率里 $\omega_1$ 那部分被消掉，最终
 

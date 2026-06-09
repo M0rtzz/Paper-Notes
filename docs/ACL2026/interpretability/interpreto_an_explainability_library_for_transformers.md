@@ -47,15 +47,15 @@ concept pipeline 有四步。第一步用 `ModelWithSplitPoints` 包装 HuggingF
 
 ### 关键设计
 
-**1. 统一 attribution API 同时覆盖分类与生成。**
+**1. 统一 attribution API 同时覆盖分类与生成**
 
 NLP attribution 的可读性高度依赖粒度和任务目标，可现有库往往只服务一种任务——擅长 token attribution 的不支持生成模型，反之亦然，用户被迫在多个库之间反复切换。Interpreto 用同一类 explainer 同时解释 SequenceClassification 和 CausalLM：扰动方法收齐了 KernelSHAP、LIME、Occlusion、Sobol，梯度方法收齐了 GradientSHAP、Integrated Gradients、Saliency、SmoothGrad、SquareGrad、VarGrad，并允许在 logits/softmax/log-softmax 三种输出空间和 token/word/sentence 三种 granularity 之间自由组合。分类场景里 LIME 能指出 “thrilled” 驱动 BERT 把句子判成 joy，生成场景里 Occlusion 能解释 Qwen3-0.6B 某个输出 token 受哪些输入影响——同一套接口、不同任务，用户不必重学。
 
-**2. 端到端的 concept-based pipeline 把四个分散环节串成一条流水线。**
+**2. 端到端的 concept-based pipeline 把四个分散环节串成一条流水线**
 
 概念解释最大的工程痛点不是单个算法难，而是它被拆散在好几个研究工具里：模型切分、激活收集、概念学习、标签解释、重要性打分各用各的代码，普通用户很难拼完整。Interpreto 把这四步装进一个可执行 workflow：第一步用 `ModelWithSplitPoints` 包装 HuggingFace 模型、指定 split points 并在数据集上提取激活；第二步用 Semi-NMF、PCA、ICA、SAE 等方法（底层依赖 overcomplete）学习 concept space，支持 neurons-as-concepts、dictionary learning 和 sparse autoencoders；第三步用 top-k activating examples、tokens/ngrams 或 LLM labels 给概念赋人类可读标签；第四步通过 concept-to-output gradients 或 concept×gradients 估计每个概念对预测的贡献。split、learn、interpret、score 一气呵成，这正是库的核心价值所在。
 
-**3. demo gallery 加 runnable snippets，把研究门槛降到“先看再抄”。**
+**3. demo gallery 加 runnable snippets，把研究门槛降到“先看再抄”**
 
 解释工具的门槛从来不只是 API，还有“结果怎么看懂、怎么复现”。Interpreto 的 demo website 覆盖 3 个分类器和 3 个生成模型，用户可以先在网页上挑 task、model、dataset、explanation family、method subset 和具体实例，直接浏览预计算好的解释；看明白了再把对应的最小可运行代码片段复制到本地改造。这个“先在浏览器里探索、再落地到代码”的路径，把试用一个解释方法的成本压到了很低。
 

@@ -43,15 +43,15 @@ ReStyle-TTS 通过解耦文本/参考音频 guidance、可连续缩放的风格 
 ReStyle-TTS 建在 F5-TTS 这类 flow-matching 零样本 TTS 之上，输入是目标文本、一段参考音频和一个或多个风格强度旋钮，输出是保留参考说话人音色、但音高/能量/情绪被相对调节过的语音。它不重训大模型，而是用三层改造串起整条生成链路：先用 Decoupled CFG 以较低 reference guidance 生成，让模型不完全复制参考音频的原始风格，从而腾出风格空间；再按用户指定的强度把对应 Style LoRA（必要时先做正交融合）加到 base model 上注入风格方向；训练阶段额外用 speaker similarity reward 对流匹配损失重新加权，把被削弱的音色一致性补回来。
 
 ### 关键设计
-**1. Decoupled Classifier-Free Guidance：把文本 fidelity 和参考依赖拆成两个旋钮。**
+**1. Decoupled Classifier-Free Guidance：把文本 fidelity 和参考依赖拆成两个旋钮**
 
 零样本 TTS 的核心矛盾在于参考音频既是音色来源又是风格枷锁，而标准 CFG 用 $f_{a,t}$ 与 $f_{\emptyset,\emptyset}$ 做组合时把文本和参考音频混进了同一个 guidance weight，无法单独松开其中一项。DCFG 的做法是额外计算一个 text-only 预测 $f_{\emptyset,t}$，把 guidance 拆成 $\hat{f}_{DCFG}=f_{\emptyset,t}+\lambda_t(f_{\emptyset,t}-f_{\emptyset,\emptyset})+\lambda_a(f_{a,t}-f_{\emptyset,t})$，其中 $\lambda_t$ 单管文本强度、$\lambda_a$ 单管参考音频强度。这样就能让 $\lambda_t$ 保持较高以维持可懂度，同时把 $\lambda_a$ 调低释放出风格空间，使下游 LoRA 真正有余地去改变音高、能量和情绪，而不是被参考风格牢牢锁死。
 
-**2. Style LoRA 与 Orthogonal LoRA Fusion：用互不干扰的低秩方向当连续风格滑杆。**
+**2. Style LoRA 与 Orthogonal LoRA Fusion：用互不干扰的低秩方向当连续风格滑杆**
 
 图像生成里 LoRA 早已被当作风格滑杆，但 TTS 的风格原本埋在 reference audio 里，必须先靠 DCFG 解耦才有注入的空间。作者为高/低音高、高/低能量以及多种情绪分别训练一个 LoRA，推理时每个 LoRA 的缩放系数 $\alpha_i$ 就是对应属性的强度旋钮，可连续调节甚至取负值。多个属性同时启用时直接相加会造成属性纠缠，于是 OLoRA 先把每个 LoRA 的更新向量投影到其他 LoRA 子空间的正交补上，再做加权融合 $\Delta W_{fuse}=\sum_i \alpha_i \tilde{\Delta W_i}$，让调一个旋钮主要只动目标属性，从而获得稳定、可组合的连续控制。
 
-**3. Timbre Consistency Optimization：用有界 reward 重加权把音色拉回来。**
+**3. Timbre Consistency Optimization：用有界 reward 重加权把音色拉回来**
 
 DCFG 降低参考 guidance 会带来代价——speaker timbre 容易漂移，所以需要一条机制专门补偿。TCO 仍以 flow-matching loss 为主，但每生成一个样本后用 speaker verification 模型计算它与参考音频的 speaker similarity reward $r_t$，维护一个 EMA baseline $b_t$ 得到 advantage $A_t=r_t-b_t$，再以有界权重 $w_t=1+\lambda \tanh(\beta A_t)$ 重加权原始流匹配损失 $\mathcal{L}_{total}=w_t\mathcal{L}_{FM}$。相比高方差的 policy gradient，这种 advantage-weighted regression 不需要对生成过程或 reward 反传，既稳定又便宜，却能让高音色相似的样本获得更大训练权重，把 speaker identity 重新强调回来。
 

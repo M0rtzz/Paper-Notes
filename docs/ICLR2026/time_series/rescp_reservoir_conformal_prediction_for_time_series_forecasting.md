@@ -50,11 +50,11 @@ tags:
 
 ### 关键设计
 
-**1. ESN状态编码：用随机储备把残差序列变成能比较的动态指纹。**
+**1. ESN状态编码：用随机储备把残差序列变成能比较的动态指纹**
 
 保形预测要做局部自适应，前提是有办法判断"现在这个时刻"和历史哪些时刻动态相似。ResCP不去训练一个编码器，而是直接用一个随机初始化、永不更新的 Echo State Network 来做这件事。残差 $x_t$ 喂进 ESN，状态按 $\boldsymbol{h}_t = (1 - l)\boldsymbol{h}_{t-1} + l\,\sigma(\boldsymbol{W}_x \boldsymbol{x}_t + \boldsymbol{W}_h \boldsymbol{h}_{t-1} + \boldsymbol{b})$ 递推，其中输入矩阵 $\boldsymbol{W}_x$、循环矩阵 $\boldsymbol{W}_h$ 随机生成后固定不动，$l$ 是 leak rate，$\sigma=\tanh$。之所以这样的"免费编码器"靠得住，是因为只要满足 Echo State Property（谱半径 $\rho(\boldsymbol{W}_h)<1$），ESN 会渐进遗忘初始条件，对相似的输入子序列产生相似的状态，并且整体是 Lipschitz 连续映射——这同时给后面"用状态相似度近似残差条件分布"的理论保证打了地基。
 
-**2. 相似性驱动的自适应重加权：动态越像的历史时刻，残差权重越大。**
+**2. 相似性驱动的自适应重加权：动态越像的历史时刻，残差权重越大**
 
 有了状态序列，就可以把"哪些历史残差更值得参考"量化成权重，而不是像 vanilla SCP 那样一视同仁。ResCP 把当前状态 $\boldsymbol{h}_t$ 和校准集里每个状态 $\boldsymbol{h}_s$ 做余弦相似度，再经温度 softmax 归一化成权重 $w_s(\boldsymbol{h}_t) = \text{SoftMax}\left(\frac{\text{Sim}(\boldsymbol{h}_t, \boldsymbol{h}_s)}{\tau}\right)$，于是动态最接近的时刻贡献最大。把这些权重套到残差经验分布上，就得到了对条件分布的近似：
 
@@ -62,7 +62,7 @@ $$\hat{F}(r \mid \boldsymbol{h}_t) = \sum_{s} w_s(\boldsymbol{h}_t)\,\mathbb{1}(
 
 温度 $\tau$ 在这里扮演偏差-方差旋钮：$\tau$ 小则权重集中到最相似的少数状态，偏差低但容易方差大；$\tau$ 大则权重趋于均匀，退化成 vanilla SCP，方差低但失去局部性。为保证一致性，等效有效样本量 $m_n = (\sum_i w_i^2)^{-1}$ 必须随 $n\to\infty$ 而发散——这也是温度不能调得过低的约束。
 
-**3. 时间依赖权重与分布偏移处理：在相似性之上再叠一层温和的时间衰减。**
+**3. 时间依赖权重与分布偏移处理：在相似性之上再叠一层温和的时间衰减**
 
 光看动态相似还不够，非平稳序列里"久远但碰巧相似"的残差不该和近期残差等价对待。ResCP 在相似性权重上再乘一个随时间间隔衰减的因子 $w_i(\boldsymbol{h}_t, t) = \gamma(\Delta(t,i)) \cdot w_i(\boldsymbol{h}_t)$，并刻意选线性衰减 $\gamma(\Delta) = 1/\Delta$ 而非指数衰减——线性衰减更温和，不会过快削掉远期样本，从而保住足够的有效样本量。配合 FIFO 滑动窗口持续吐旧纳新地更新校准集，使参考集始终跟着当前分布走。正因为整套机制没有任何可学习参数，分布发生漂移时 ResCP 不必重训，靠滑窗加时间衰减就能自动适应。
 

@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 感知数据合成 + 双模型差分过滤：造出"必须看图才能答"的 QA，堵住语言先验偷答。**
+**1. 感知数据合成 + 双模型差分过滤：造出"必须看图才能答"的 QA，堵住语言先验偷答**
 
 要单独训感知，先得有一批信号纯净、不能靠语言猜的感知题。作者先用 Qwen2.5-72B 在 DOCCI 的 fine-grained caption 上生成 perception-focused 问答对 $(Q,A)=f_{\text{gen}}(C)$，然后对每个候选样本同时跑两条路径——只给图的 $\hat{A}_{\text{img}}=f_\theta(I,Q)$ 和只给 caption 的 $\hat{A}_{\text{cap}}=f_\theta(C,Q)$，只保留满足 $\mathbb{I}[\hat{A}_{\text{img}}\neq A]\land\mathbb{I}[\hat{A}_{\text{cap}}=A]$ 的样本，最后再用 Qwen2.5-VL-7B 和 32B 两个 base 各过滤一遍取交集。这套"逆向工程"很巧妙：如果样本能凭 caption 答出，那它考的其实是语言而非视觉；只有"caption 能答、图自己答不出"的样本才真正暴露了感知缺陷，正好对应作者发现的 86.9% 错例类型——不需要人工标哪些题"考感知"，而是让模型自己把感知盲点暴露出来。
 
-**2. 能力维度的分阶段 GRPO：让模型先建立"看清"的能力，再叠加"推理"。**
+**2. 能力维度的分阶段 GRPO：让模型先建立"看清"的能力，再叠加"推理"**
 
 merged training 默认所有能力能被同一份 reward 一起优化，但视觉感知比推理更底层、需要专门目标，先猛练推理只会让模型形成"长链 + 自我说服"而视觉特征没对齐。作者用同一套 GRPO 损失
 
@@ -57,7 +57,7 @@ $$\mathcal{J}_{\text{GRPO}}(\theta)=\mathbb{E}_{x,y}\Big[\tfrac{1}{G}\sum_i \min
 
 按 $\mathcal{D}_{\text{perc}} \rightarrow \mathcal{D}_{\text{text}} \rightarrow \mathcal{D}_{\text{vis}}$ 的顺序依次训练。奖励 $R(x,y_i)=r_{\text{acc}}+r_{\text{format}}$ 在所有 stage 一致，group 内标准化得优势 $A_i=(R-\mu_R)/(\sigma_R+\epsilon)$；三阶段 step 数按相同 epoch 折算为 90 / 375 / 465，与 merged baseline 总步数 930 严格对齐保证对比公平；视觉编码器在每个 stage 都开着训练，避免感知 stage 修好的视觉表征在后续被冻结而漂移。它的关键贡献是把"能力维度课程"明确为一个**正交于传统难度课程**的新维度——传统课程按 easy→hard 排数据，本方法按 perception→reasoning 排能力，且 4.5 节验证两者可叠加，组合后比 merged 高 +4.43%。
 
-**3. 感知阶段用 RLVR 而非 caption-based SFT：别让低质字幕污染感知信号。**
+**3. 感知阶段用 RLVR 而非 caption-based SFT：别让低质字幕污染感知信号**
 
 传统做法是把图片对应的整段 caption 当 target 做 next-token SFT，但 caption 质量往往低于预训练语料，会在 token 级强行注入 off-policy 监督、反噬已有能力。作者注意到感知 QA 的答案天然是短答案（颜色、空间关系、属性），可以直接用 exact match 当 $r_{\text{acc}}$、与 GRPO 的 on-policy 采样无缝衔接，让模型始终停在自己策略附近、把感知当成奖励驱动的微调。对照实验印证了这个选择的重要性：把感知 stage 的 RL 换成 SFT 后，Qwen2.5-VL-7B 在 WeMath 上掉 8.1%、Qwen3-VL-8B 掉 1.6%——SFT 会反噬，RLVR 则在提升感知的同时不破坏推理。
 

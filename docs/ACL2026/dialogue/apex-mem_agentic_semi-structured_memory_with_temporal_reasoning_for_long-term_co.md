@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 混合实体-事件本体 + 时序锚定事实。**
+**1. 混合实体-事件本体 + 时序锚定事实**
 
 APEX-MEM 不把对话信息直接拍成实体-关系三元组，而是用一套领域无关本体为记忆提供统一语义结构。它定义 35 类实体（Person / Organization / Product / Place / Event / Software / ...），并把每条事实写成时序锚定的多元组 $f=(s,p,v,\delta,[t_{\text{from}},t_{\text{to}}],c,\mathcal{E})$——$s$ 是主体实体、$p$ 是属性名、$v$ 是值、$\delta$ 是数据类型、$[t_{\text{from}},t_{\text{to}}]$ 是有效区间、$c\in[0,1]$ 是置信度、$\mathcal{E}$ 是支撑证据集合；而且所有事实都必须挂到一个对话事件 $\varepsilon=(\text{type},T,L,P,F,\mathcal{E}_\varepsilon)$ 上。这样设计是因为像 Mem0 那种实体中心的三元组无法表达"Alice 在 2024-01-15 最爱 Italian Garden、2024-03-20 改最爱 Sakura Sushi"这类属性随时间演变的情形；把事件提升为一等公民、再给每条事实配上有效区间，细粒度时序推理才真正变得可写可查。
 
-**2. Append-Only 事件存储 + 检索时时序解析。**
+**2. Append-Only 事件存储 + 检索时时序解析**
 
 这是 APEX-MEM "写入做减法、读取做加法"哲学的落点：构建时永不覆盖旧事实，任何冲突或修订都作为新事件追加进图，把冲突解析整体推迟到 query 时按时序有效性裁决。实体与属性的对齐走 RAG 风格——给定 mention $m$ 先用 dense embedding 召回 top-k 候选 $C=\{(\text{id}_i,\text{text}_i,s_i)\}$，再让结构化 LLM 输出决策 $d\in\{\text{choose\_existing, propose\_new, none}\}$ 及置信度，但始终只追加节点、不删旧。查询时由 GraphSQL 按 `created_at` 或 `from_date` 排序，代理选出最新的、或问题指定时间下有效的那条。早期合并等于信息丢失，会让 Mem0 多跳掉 18%、MIRIX 时序掉 20%；append-only 则保住完整时间线，把原本沉默的失败模式转化成"可被显式查询"的状态。
 
-**3. 多工具 ReAct 检索代理（SchemaViewer / EntityLookup / GraphSQL / Search）。**
+**3. 多工具 ReAct 检索代理（SchemaViewer / EntityLookup / GraphSQL / Search）**
 
 读端的智能集中在一个 ReAct 代理上，它按问题特性把结构化推理、实体规范化和语义搜索拼进同一条推理回路：SchemaViewer 作为 meta-planner 给出库表结构与工具使用建议；EntityLookup 把表面 mention 规范化到图 id 并返回带时间戳的事实快照；GraphSQL 是只读 SELECT 接口（白名单表 entities/properties/facts/events/evidence/turns），支持 julianday 时序计算、聚合和多跳 JOIN；Search 是 dense+lexical 混合检索，返回与问题相关的子图 $(E_q,P_q,\mathcal{V}_q,\mathcal{T}_q)$。代理按 ReAct 范式 $(r_t,a_t)\sim\pi_\theta(\cdot\mid x,h_t)$ 反复决策，最多 40 步。之所以要多工具协作，是因为任何单一工具都不够用——纯 GraphSQL 解一组题要 27,282 次调用（3.3× 浪费），纯 EntityLookup 的多跳上限只到 77%；而单跳、多跳、时序、开放域、对抗这些不同问题类型需要不同的最优工具组合，让代理自己挑选反而比任何固定的单工具方案都强。
 

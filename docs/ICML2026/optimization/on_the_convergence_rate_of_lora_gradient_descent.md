@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Burer–Monteiro 堆叠重参数化：把对两个矩阵的非平滑问题归约到单矩阵 $VV^T$ 形式。**
+**1. Burer–Monteiro 堆叠重参数化：把对两个矩阵的非平滑问题归约到单矩阵 $VV^T$ 形式**
 
 LoRA 收敛理论的死结是：即便原损失 $\mathcal{L}(W)$ Lipschitz 平滑，重参数化后 $\mathcal{L}(BA)$ 关于 $A,B$ 也不再平滑，因为 $\nabla_B\mathcal{L}(BA)$ 带一个 $A$ 的乘法因子。作者的破法是把 $A,B$ 堆成单个矩阵 $V=\begin{bmatrix}B\\A^T\end{bmatrix}\in\mathbb{R}^{(m+n)\times r}$，于是
 
@@ -53,7 +53,7 @@ $$VV^T=\begin{bmatrix}BB^T & BA\\ A^TB^T & A^TA\end{bmatrix},$$
 
 用抽取矩阵 $E_1=[I_m,0]$、$E_2=[0,I_n]^T$ 就能取出 $BA=E_1VV^TE_2$，定义 $\mathcal{J}(V)=\mathcal{L}(E_1VV^TE_2)$，其梯度 $\nabla\mathcal{J}(V)=2\,\mathrm{Sym}(E_1^T\nabla\mathcal{L}(E_1VV^TE_2)E_2^T)V$ 里那个乘法因子 $V$ 正是非平滑性的根。LoRA 同步梯度下降恰好等价于在 $V$ 上做标准梯度下降。换到这个坐标系后，许多零散现象一下就被统一解释：$V=0$ 自动成为驻点（无论原损失结构如何），梯度的 $V$ 因子让小 $V$ 时梯度小（原点附近的平坦区），范数大时学习率必须减小——这些都能被精确量化，而且结论自动推广到一般 $VV^T$ 型参数化。
 
-**2. 修正的 "Lipschitz-like" descent lemma：给非平滑的 $\mathcal{J}$ 配一个带高阶修正项的单步下降不等式。**
+**2. 修正的 "Lipschitz-like" descent lemma：给非平滑的 $\mathcal{J}$ 配一个带高阶修正项的单步下降不等式**
 
 既然在 $V$ 上证不出标准 Lipschitz 平滑，作者就退而求其次，细心展开 $\mathcal{J}(V_2)-\mathcal{J}(V_1)$ 的 Taylor 形式、用原损失的平滑性界住各高阶项系数，得到 Lemma 3.3：
 
@@ -61,7 +61,7 @@ $$\mathcal{J}(V_2)\le\mathcal{J}(V_1)+\langle\nabla\mathcal{J}(V_1),V_2-V_1\rang
 
 和经典 descent lemma 相比，它多了三个高阶项（带 $\|V_1\|^2$、$\|V_1\|$、单独的 $\|V_2-V_1\|^4$）和一个梯度依赖项，正好反映了 $V$ 范数和原梯度对可行步长的约束。这是把"非 Lipschitz 问题"归约到"含高阶修正的可控弱下降条件"的核心技巧——只要学习率足够小，这些高阶项就能被一阶项压住，单步下降依然成立。
 
-**3. 位置依赖的自适应学习率与 $O(1/\log T)$ 速率：按当前范数和梯度调步长，把收敛率推出来。**
+**3. 位置依赖的自适应学习率与 $O(1/\log T)$ 速率：按当前范数和梯度调步长，把收敛率推出来**
 
 最后一步把 descent lemma 变成可执行的步长规则。Lemma 3.4 选 $\eta_t=\min\{1/(4\sqrt{2}L(\|V_t\|^2+\|\nabla\mathcal{L}(E_1V_tV_t^TE_2)\|)),\,1\}$ 让高阶项被一阶项主导，得到每步至少下降 $\mathcal{J}(V_{t+1})\le\mathcal{J}(V_t)-\frac{\eta_t}{4}\|\nabla\mathcal{J}(V_t)\|^2$；对 $t$ 求和并用 $\mathcal{J}\ge\mathcal{L}^*$ 得 $\min_t\|\nabla\mathcal{J}(V_t)\|^2\le 4(\mathcal{J}(V_0)-\mathcal{L}^*)/\sum_t\eta_t$。关键就在估 $\sum_t\eta_t$：最坏情况下 $\|V_t\|^2=O(t)$，使 $\eta_t=\Omega(1/t)$，调和级数给出 $\sum_t\eta_t=\Theta(\log T)$，于是收敛率为 $O(1/\log T)$（Theorem 3.5）；若额外假设 $\|V_t\|\le C$，则 $\sum_t\eta_t=\Theta(T)$、恢复经典 $O(1/T)$。这条速率刻画了 LoRA 独有的"位置依赖性"——迭代点远离原点时必须降学习率、减速，靠近时可以激进；而 $V=0$ 这个人为驻点意味着 LoRA 完全可能收敛到原点（哪怕原全连接最优在远处），这正是它与全秩训练给出不同解的理论根源。实验里的 $\eta^{adapt}$、$\eta^{adapt2}$、$\eta^{norm}$ 三种实用调度都是这条公式的近似，把理论直接翻成可部署的学习率策略。
 

@@ -45,7 +45,7 @@ Step-Saliency 是一个诊断工具，StepFlow 是基于诊断的干预方法。
 
 ### 关键设计
 
-**1. Step-Saliency 诊断：把 token 级 saliency 池化成步骤级影响图，让长推理链第一次有了可读的分析单元。**
+**1. Step-Saliency 诊断：把 token 级 saliency 池化成步骤级影响图，让长推理链第一次有了可读的分析单元**
 
 长推理轨迹上做归因，最大的障碍不是没信号，而是 token 级 saliency map 太密太吵，根本看不出步骤之间谁影响了谁。Step-Saliency 的做法是先在 token 级算「注意力 × 梯度」的影响分数——对每层每头取注意力权重与其梯度乘积的绝对值再平均：
 
@@ -53,11 +53,11 @@ $$I^{(\ell)}_{t\leftarrow k} = \frac{1}{H}\sum_h \left| A^{(\ell,h)}_{t,k} \cdot
 
 然后按推理步骤的边界对这张密集图做均值池化，得到一张紧凑的 step-to-step 影响矩阵。池化既抑制了 token 级噪声，又把跨步骤的依赖模式显式地铺出来，逐层一看就能对比正确轨迹和错误轨迹的差异——这正是后面发现 Shallow Lock-in 和 Deep Decay 两种失败模式的前提。
 
-**2. Odds-Equal Bridge (OEB) — 浅层干预：不让浅层的注意力全部坍缩到当前这一步上。**
+**2. Odds-Equal Bridge (OEB) — 浅层干预：不让浅层的注意力全部坍缩到当前这一步上**
 
 诊断发现，浅层的错误轨迹几乎把所有注意力都压在当前步骤和它的邻居上，把问题本身和早期推理步骤全忘了——这就是 Shallow Lock-in。OEB 针对它做的是：把 key 分成当前段 $\mathcal{S}$、桥接段 $\mathcal{B}$（早期上下文）和其他 $\mathcal{O}$ 三块，给桥接段设一个注意力质量下界 $\tau_\mathcal{B} = \min\!\big(\sqrt{|\mathcal{B}|/(|\mathcal{B}|+|\mathcal{S}|)},\,\tau_{\max}\big)$，一旦桥接段实际拿到的注意力质量低于这个下界，就通过 KL 投影调整 logits 把份额补回去。这样既保证早期上下文不被浅层无视，又不至于粗暴地推翻原本的注意力分布。
 
-**3. Step Momentum Injection (SMI) — 深层干预：在步骤边界塞一点上一步的残差摘要，接住正在衰减的信息流。**
+**3. Step Momentum Injection (SMI) — 深层干预：在步骤边界塞一点上一步的残差摘要，接住正在衰减的信息流**
 
 深层的失败模式是 Deep Decay——thinking 段的 saliency 快速衰减、summary 越来越只关注自己，导致从早期推理到结论的链路断掉。SMI 在相邻步骤 $\Gamma_i$ 与 $\Gamma_{i+1}$ 的边界上算一个步骤级动量向量 $\mathbf{m}_{\text{prev}} = \frac{1}{|\Gamma_i|}\sum_{k\in\Gamma_i}\mathbf{v}_k$，再把它注入到下一步第一个 token 的隐藏状态：$\mathbf{h}'_t = \mathbf{h}_t + \alpha\,\mathbf{m}_{\text{prev}}$。等于在每个步骤交接处留下一小份前一步的「惯性」，把早期推理的信息一路传到 summary，避免深层把它丢光。
 

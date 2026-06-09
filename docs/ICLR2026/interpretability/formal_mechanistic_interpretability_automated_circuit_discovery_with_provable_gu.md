@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. Siamese 编码：把"电路是否忠实"变成验证器能回答的问题。**
+**1. Siamese 编码：把"电路是否忠实"变成验证器能回答的问题**
 
 电路忠实度本质是在问"对所有 $z \in \mathcal{Z}$，电路输出和原模型输出是否足够接近"，这是一个跨整个连续域的全称命题，采样答不了。Siamese 编码的做法是把电路 $C$ 和完整模型 $G$ 并列拼成一个共享输入层的联合网络 $G \sqcup C'$：非电路组件的激活被固定为 patching 值 $\alpha$，用输入约束 $\psi_{in}$ 把 $z$ 限制在邻域 $\mathcal{Z}$ 内，再用输出约束 $\psi_{out}$ 去检验 $\|f_C(z|\bar{C}=\alpha) - f_G(z)\|_p \leq \delta$。这样一来，"电路是否忠实"就成了一个标准的验证查询，交给 α-β-CROWN 处理。验证一旦通过，得到的就不是采样意义上的"大概忠实"，而是整个连续域 $\mathcal{Z}$ 上 100% 忠实的硬保证。
 
-**2. Patching 鲁棒性验证：堵住 zero-patching 的 out-of-distribution 漏洞。**
+**2. Patching 鲁棒性验证：堵住 zero-patching 的 out-of-distribution 漏洞**
 
 只验证输入鲁棒性还不够——电路忠实度还依赖于被消融组件填什么值，而 zero / mean patching 这类固定填值常被批评落在分布外、不能代表真实激活。这一设计要保证的是电路在任意"可达" patching 值下都忠实，而不仅是某个特定填值。做法是改造 Siamese 编码：让 $G$ 和 $C'$ 接收不同输入，并把 $C'$ 的非电路激活直接连到 $G$ 在另一邻域 $\mathcal{Z}'$ 上的对应激活，从而把"任意可达 patching 值"也纳入验证器的约束范围。这样电路的忠实保证就不再受限于人为选定的 patching 策略。
 
-**3. 四级最小性层次：用单调性把"最小"讲清楚并保证算法收敛。**
+**3. 四级最小性层次：用单调性把"最小"讲清楚并保证算法收敛**
 
 以往算法都声称自己找的电路"minimal"，但最小到什么程度从未被形式化。本文把最小性拆成强度递增的四级：**quasi-minimal**（存在某个组件移除后电路就不忠实）、**locally-minimal**（每个组件都必需，移除任一都不忠实）、**subset-minimal**（任何组件子集的移除都不忠实）、**cardinally-minimal**（全局最小电路）。串起这四级的关键理论是**单调性**（monotonicity）：当忠实谓词 $\Phi$ 单调——即扩大电路不会破坏忠实度——时，贪心算法被保证收敛到 subset-minimal。Proposition 5 进一步证明，只要 $\mathcal{Z} \subseteq \mathcal{Z}'$ 且激活空间闭合，input + patching robustness 组合出的谓词就自动满足单调性。于是单调性这一个性质同时撑起了两件事：subset-minimality 的收敛性，以及两类鲁棒性保证的可组合性。
 
-**4. MHS 对偶：用最小打击集逼近全局最小电路。**
+**4. MHS 对偶：用最小打击集逼近全局最小电路**
 
 四级里最强的 cardinally-minimal（全局最小）通常 NP 难、无法靠贪心拿到。这一设计借一个对偶关系来逼近它：Proposition 7 证明，所有 circuit blocking-set 的最小打击集（minimum hitting set, MHS）恰好等于 cardinally-minimal 电路。这样求全局最小电路就转化成了一个最小打击集问题，可以丢给 MaxSAT 求解器高效求解，把原本难以触及的全局最优变成可计算的目标。
 

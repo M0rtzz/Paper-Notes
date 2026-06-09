@@ -51,7 +51,7 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 
 ### 关键设计
 
-**1. Uncertainty Dynamics Estimation：用预测置信度的时间变化感知 label shift。**
+**1. Uncertainty Dynamics Estimation：用预测置信度的时间变化感知 label shift**
 
 部署后拿不到标签，最直接的漂移信号其实藏在模型自己的输出里。Fed-ADE 把当前批次所有样本的 softmax 向量取平均，得到一个类级别的平均置信度摘要 $\mathbf{q}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_{x} \mathcal{H}(\theta_c; x)$——它无需标签，相当于一个熵代理，刻画了模型当下"觉得数据属于哪些类"。当类别分布发生 label shift 时，这个平均向量的方向会跟着偏转，于是用相邻两步之间的余弦距离来量化变化幅度：
 
@@ -59,7 +59,7 @@ $$\mathcal{S}_{\text{unc}}^t = 1 - \cos(\mathbf{q}_c^{t-1}, \mathbf{q}_c^t)$$
 
 之所以取批次级平均而非单样本，是为了消掉单个样本带来的随机抖动，让信号反映分布层面的迁移；而整个估计只需缓存上一步的 $\mathbf{q}_c^{t-1}$，内存开销仅 $O(|\mathcal{I}|)$（类别数），轻到可以挂在每个边缘客户端上。
 
-**2. Representation Dynamics Estimation：在嵌入空间补上 covariate shift 的那一维。**
+**2. Representation Dynamics Estimation：在嵌入空间补上 covariate shift 的那一维**
 
 label shift 信号看的是输出端，但输入图像被加噪、换域这类 covariate shift 不一定立刻反映到 softmax 上，所以需要一个看特征端的互补信号。这里取共享层提取的特征、做 $\ell_2$ 归一化后求批次平均 $\mathbf{z}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_x \frac{h_{\psi_c}(x)}{\|h_{\psi_c}(x)\|_2}$，同样用相邻两步的余弦距离衡量特征方向的漂移：
 
@@ -67,7 +67,7 @@ $$\mathcal{S}_{\text{rep}}^t = \frac{1}{2}\bigl(1 - \cos(\mathbf{z}_c^{t-1}, \ma
 
 $\ell_2$ 归一化是关键一步——它让余弦距离只对特征的方向变化敏感，而不被特征尺度的大小差异干扰；前面那个 $\frac{1}{2}$ 缩放则把取值范围从 $[0,2]$ 压回 $[0,1]$，使它和 uncertainty 信号处在同一量纲、能直接平均。和上一个信号一样，它完全本地计算、不需要标签，额外内存只有 $O(d)$（特征维度）。
 
-**3. 无监督风险估计：没有标签，就用 BBSE 把标签分布"反解"出来。**
+**3. 无监督风险估计：没有标签，就用 BBSE 把标签分布"反解"出来**
 
 要更新模型就得有优化目标，但无标签场景下连期望风险都算不出来。Fed-ADE 借助 Black-box Shift Estimation（BBSE）绕开这个困境：服务器侧预先用带标签的预训练数据算出一个混淆矩阵 $\mathbf{M}$，客户端只需统计当前批次的伪标签分布 $\mathbf{Q}_{c,\hat{y}}^t$，就能把真实标签分布反解出来：
 
@@ -75,7 +75,7 @@ $$\mathbf{Q}_{c,y}^t \approx \mathbf{M}^{-1} \mathbf{Q}_{c,\hat{y}}^t$$
 
 有了这个分布，就能把有监督风险拆成各类别子风险的加权和、再用估计出的标签分布当权重，得到无监督风险估计 $\widehat{\mathcal{F}}_c^t(\theta_c)$；其中各类别的初始子风险可以用预训练数据的经验值替代。这样一来，整条更新链路从信号到目标都不依赖在线标签。
 
-**4. 理论保证：把漂移代理和 dynamic regret 接起来，证明这套调度是 min-max 最优的。**
+**4. 理论保证：把漂移代理和 dynamic regret 接起来，证明这套调度是 min-max 最优的**
 
 前面三个设计都是工程构造，论文最后回答了一个更根本的问题——基于 $\mathcal{S}_c^t$ 去调学习率，到底有没有最优性保证。作者先证明累积漂移代理 $\bar{\mathcal{S}}_c$ 能准确近似真实分布漂移（Theorem 1 & 2），从而把可观测的代理信号和不可观测的真实漂移量挂上钩；在此基础上，当学习率取 $\eta^* = \Theta(T^{-1/3} \bar{\mathcal{S}}_c^{1/3})$ 时，动态遗憾满足
 

@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. 概要统计 ODE 与不动点条件：把 $Kd$ 维权重轨迹塌缩成与维度无关的封闭系统。**
+**1. 概要统计 ODE 与不动点条件：把 $Kd$ 维权重轨迹塌缩成与维度无关的封闭系统**
 
 传统局部分析在 $d\to\infty$ 下要面对 $\mathbb{R}^{Kd}$ 的几何对象，根本无从下手。作者沿用统计物理 soft committee machine 的传统，引入权重重叠 $Q_{ij}=\frac{1}{d}w_i^\top w_j$、$R_{im}=\frac{1}{d}w_i^\top w_m^*$ 作为足够统计量。ReLU 下的 population 梯度 $\mathbb{E}_x[\mathcal{G}_k]$ 可以通过二/三/四元 Gaussian 的 ReLU 期望，写成 $(Q,R,T)$ 的多项式加反三角函数表达式（附录 A.4 给 closed form），于是 gradient flow 等价为
 
@@ -53,11 +53,11 @@ $$\dot Q=\mathcal{F}_Q(Q,R),\qquad \dot R=\mathcal{F}_R(Q,R),$$
 
 固定点满足 $\mathcal{F}_R(Q,R)=0,\ \mathcal{F}_Q(Q,R)=0$（Result 1），而且这套方程与输入维度 $d$ 无关。这样做既保留了所有 generalization-relevant 的信息（loss 本身就是 $(Q,R)$ 的函数），又把"找所有 minima"从高维几何问题降成只有 $O(K^2+KM)$ 个标量的代数问题。
 
-**2. block-symmetric ansatz 与 $k_1$ 层级：把连续非凸景观还原成一维离散族。**
+**2. block-symmetric ansatz 与 $k_1$ 层级：把连续非凸景观还原成一维离散族**
 
 即使降到 $(Q,R)$，直接搜零点仍是 $O(K^2)$ 维代数问题。作者利用学生隐藏单元的置换对称性，把 $K$ 个神经元划成两组——$|I_1|=k_1$ 个与教师反对齐（$R_{im}<0$），$|I_2|=K-k_1$ 个对齐。在此 ansatz 下 $R$ 与 $Q$ 都呈 block 形式，每块用 $\mathbf{B}(x,y)=xI+y(J-I)$ 参数化，原本耦合的方程退化为关于 $\{r_1^{\mathrm{diag}},r_1^{\mathrm{off}},q_1^{\mathrm{diag}},\dots\}$ 的少量标量方程（Result 2）。于是每一族 spurious minima 由单个整数 $k_1\in[0,M]$ 完全刻画，连同解析 loss 和 $(Q,R)$ 模板一并给出。这个 block 结构恰好是 Arjevani–Field 群论"最少对称破缺"原则的宏观对应：反对齐神经元造成的局部误差被对齐神经元的方向调整 exactly 补偿，梯度归零，于是卡住。
 
-**3. 扰动型稳定性分析与过参数化诊断：在 ReLU 不可微下替代 Hessian。**
+**3. 扰动型稳定性分析与过参数化诊断：在 ReLU 不可微下替代 Hessian**
 
 ReLU 没有 Hessian 可算，但 population gradient flow 是良定义的，所以作者用扰动分析来判稳定性：把系统初始化在某固定点，对权重加 $\xi\sim\mathcal{N}(0,\sigma^2 I)$ 后跑 1000 步 GD（$\eta=0.01$），度量平均回弹距离。well-specified（$K=M$）情形即便 $\sigma$ 很大也回到 $<10^{-3}$，过参数化（$K\ge M+1$）情形即便 $\sigma$ 极小也被推开。配合 ansatz 在 $K=M+1$ 上的推广分析，作者形式化证明 $k_1=1$ 的不动点方程不再有稳定实数解，而 $k_1\ge 2$ 的高阶族仍然存在、且不是简单 zero-padding $K=M$ 解得来的。正是这个诊断纠正了 Safran 等人"过参数化即把 minima 全变鞍点"的乐观——它能直接读出"哪一族真的还会困住 SGD"，是 ansatz 方法的天然伴随工具。
 

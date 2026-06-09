@@ -45,15 +45,15 @@ Qwen3-8B 为 backbone。pipeline 三阶段：(I) Cold-start：用 10k BBQ + GPT-
 
 ### 关键设计
 
-**1. 轨迹级后缀 margin：只重排「出问题之后」的概率质量，保住干净的前缀。**
+**1. 轨迹级后缀 margin：只重排「出问题之后」的概率质量，保住干净的前缀**
 
 普通 response-level DPO 会把整条推理链的 prefix 一起惩罚，结果合法的前半段也被牵连，utility 暴跌（消融里 Response-Level baseline 直接掉 2.3 点 utility）。Self-Debias 的做法是把边际计算的起点挪到偏见激活步 $i$：给定上下文 $c=(x,\mathbf{y}^-,t)$ 和触发步 $i$，定义 $r_i(\pi) = \beta \log \frac{\pi(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^+_{\ge i}\mid x,\mathbf{y}_{<i})} - \beta \log \frac{\pi(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}{\pi_{\text{ref}}(\mathbf{y}^-_{\ge i}\mid x,\mathbf{y}_{<i})}$，DPO 的 BCE 目标只对这段后缀生效。这样「干净的前缀」被当 free 资产保留，只对问题真正发生之后的那段重排概率质量——既纠了偏见，又不毁推理逻辑。
 
-**2. Jain 公平指数反塌缩正则：别让训练只挑容易的样本做。**
+**2. Jain 公平指数反塌缩正则：别让训练只挑容易的样本做**
 
 标准 DPO 受 sigmoid 饱和拖累——容易样本梯度趋零、难样本被平均稀释，结果 stubborn bias 样本被边缘化。作者把一个 batch 的边际 $\mathbf{r}=[r_1,\dots,r_B]$ 拿来算 Jain 公平指数 $\mathcal{J}(\mathbf{r})=\frac{(\sum_j r_j)^2}{B\sum_j r_j^2} \in [1/B, 1]$，再加正则 $-\lambda \log \mathcal{J}(\mathbf{r})$。它的梯度 $\partial \mathcal{R}/\partial r_i \propto 2 r_i / \overline{r^2} - 2/\bar{r}$ 在 $r_i < \bar{r}$ 时为正、$r_i > \bar{r}$ 时为负，等于自动给难样本加权、给易样本减权。几何上它逼着「所有推理轨迹分到的边际尽量等长」，这正是把网络资源分配里的公平思想搬过来当反塌缩机制。
 
-**3. 基于一致性过滤的在线自训练：用收敛一致当标签，摆脱人工标注。**
+**3. 基于一致性过滤的在线自训练：用收敛一致当标签，摆脱人工标注**
 
 要持续迭代又不想一直喂标注，就得让模型自己造 preference pair。做法是用 Bias Injection 强制生成 $\mathbf{y}^-$，再触发一轮轮自纠正 $\mathbf{y}^- \to \mathbf{y}_1 \to \dots \to \mathbf{y}_K$；关键是 self-consistency 过滤——只有当最后若干轮答案收敛到同一结论时，才采纳 $\mathbf{y}_K$ 当 $\mathbf{y}^+$，否则整条丢弃，避免错误标签污染策略。每轮（Iter1、Iter2）各用 5k 未标注 query。之所以靠「一致收敛」而不是固定阈值或外部裁判，是因为在公平任务里「答案不再被 stereotype 牵着变」本身就是个廉价又靠谱的客观信号，还能规避传统 self-training 的 confirmation bias。
 

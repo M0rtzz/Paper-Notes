@@ -46,15 +46,15 @@ APS 的输入是一篇文档的 token surprisal 序列 $\mathbf{x} = (x_0, \dots
 
 ### 关键设计
 
-**1. 基于 surprisal 的周期图 + 随机置换显著性检验（Step 1）：在频域圈出"显著高于噪声"的候选周期。**
+**1. 基于 surprisal 的周期图 + 随机置换显著性检验（Step 1）：在频域圈出"显著高于噪声"的候选周期**
 
 直接对 surprisal 做 DFT $X_k = \sum_n x_n e^{-i 2\pi k n / N}$、取前一半的 $\|X_k\|$ 得到周期图 $\bm{\mathcal{P}}$（实际用 Lomb-Scargle 版本以增强长周期分辨率），但频谱里能量高的峰未必是真周期、也可能是随机噪声。为此做 $m=100$ 次随机置换 $\text{Permute}(\mathbf{x})$，记录每次置换序列的 max power 得到一个零分布，取其 99 分位作阈值 $P_{\text{threshold}}$，凡 $\bm{\mathcal{P}}[k] > P_{\text{threshold}}$ 的频率 $k$ 就把对应周期 $\tau = N/k$ 收为 period hint。置换打散了周期结构，这个 model-free 的置换检验直接回答"若信号本无周期，最大功率能有多大"，比绝对阈值或 Bonferroni 更稳健且置信度可调；全文默认 CL=.90，比传统 .95 更敏感、保留更多 hint。
 
-**2. ACF Hill 验证过滤假阳（Step 2）：用自相关的山丘形态做时域二次确认。**
+**2. ACF Hill 验证过滤假阳（Step 2）：用自相关的山丘形态做时域二次确认**
 
 周期图给出的候选里短周期尤其容易假阳，因为能量高不等于 self-similar。真周期 $\tau$ 在自相关曲线 $\text{ACF}(\tau) = \frac{1}{N}\sum_n x(n) \cdot x(n+\tau)$ 上一定表现为一个"山丘"（局部极大）。于是对每个 hint $\tau' = N/k$ 划出邻域窗 $W = [(\tau + \tau_{\text{next}})/2 - 1, (\tau + \tau_{\text{prev}})/2 + 1]$，在窗内枚举分裂点 $t$ 跑线性回归，找到使 $\epsilon_L + \epsilon_R$ 最小的 $t_{\text{best}}$，再判断左斜率是否大于右斜率且斜率差 $|\theta_L - \theta_R| > 0.01$，即整段 ACF 是否呈"先升后降"的 hill；若 isHill 为真则用 findPeak 取窗内 ACF 局部极大作为 refined period，否则丢弃该 hint。频域显著叠加时域自相关的双重确认，使假阳率显著下降——Table 1 显示 $|P_2|/|P_1| \approx 66\%$，三分之二的 hint 通过验证、三分之一被剔除，证明过滤确实在起作用。
 
-**3. HR 反向验证 + filter-based 增益：用谐波回归独立证明 APS 找到的是真"统计周期"。**
+**3. HR 反向验证 + filter-based 增益：用谐波回归独立证明 APS 找到的是真"统计周期"**
 
 APS 做的是 detection（"这里有周期"），需要一个独立工具证明它不是在乱报，于是借 Tsipidi et al. 2025 的谐波回归 HR 做 explanation（"这个周期能解释 surprisal"）。把 HR 公式 $s(w_t) \sim \text{baseline} + \text{HR}(U_t)$ 里的 $U_t$ 换成 APS 返回的 hint / valid period，看谐波项 $\beta_{1,k} \sin(k 2\pi t/U_t) + \beta_{2,k}\cos(k 2\pi t/U_t)$ 是否显著（amplitude $A_k = \sqrt{\beta_{1,k}^2 + \beta_{2,k}^2}$，p<0.001），同时按 APS 的分类 $P_2 \subset P_1 \subset \Sigma$ 切片，检查 HR 的 MSE 是否按 $P_2 < P_1 < \Sigma < \Sigma - P_1$ 排序。由于 APS 与 HR 完全独立，若 APS 找的周期既能让谐波项显著、又让 MSE 按预期单调排序，就反向坐实了 APS 的发现是真实的统计周期而非噪声伪影。
 

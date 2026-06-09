@@ -53,15 +53,15 @@ SB-ECC 把译码视作 $\sigma$-空间上的反向去噪轨迹：
 
 ### 关键设计
 
-**1. 带符号输入 + Tanner 图掩码注意力：保住信道几何，又不丢码结构。**
+**1. 带符号输入 + Tanner 图掩码注意力：保住信道几何，又不丢码结构**
 
 主流强基线（ECCT/CrossMPT/DDECC）都先把信道观测取绝对值 $\mathbf{y}\mapsto|\mathbf{y}|$ 当"可靠度"，但这是一个 $2^n$-到-1 的折叠映射——所有 $\{\mathbf{s}\odot\mathbf{y}\}$ 被压到同一输入、每坐标的方向信息全丢，而方向恰恰是分数场学习最需要的。SB-ECC 沿用 CrossMPT 的双模态架构（变量节点 token × 校验节点 token 经 $H$ 引导的掩码交叉注意力交换消息），但把 VN 通道从 $|\mathbf{y}|$ 改成 signed $\mathbf{y}$、CN 通道仍是 syndrome，输出从"bit 翻转概率/logits"换成 $\mathbb{R}^n$ 中的去噪方向 $\hat{\boldsymbol{\epsilon}}_\theta$。这样既把连续向量场所需的几何信息留住，又用 $H$ 引导的掩码注意力注入校验约束、避免纯模型无关方法被码字空间 $2^k$ 的组合爆炸压垮——是"几何 + 结构"双留的最小改动。
 
-**2. 无时间条件 + 线性 $\sigma$-schedule：推理端不需要估 SNR。**
+**2. 无时间条件 + 线性 $\sigma$-schedule：推理端不需要估 SNR**
 
 实际接收端往往拿不到准确信道 SNR，而 SNR-conditioned 模型对 SNR 偏差敏感。作者注意到 AWGN 信道 $\mathbf{y}=\mathbf{x}_0+\sigma_{ch}\boldsymbol{\epsilon}$ 恰好等同 VE-SDE 边缘 $\mathbf{x}_t=\mathbf{x}_0+\sigma(t)\boldsymbol{\epsilon}$ 在某个 $\sigma(t^\star)=\sigma_{ch}$ 处，于是训练时取线性 schedule $\sigma(t)=\sigma_{\min}+(\sigma_{\max}-\sigma_{\min})t$、$t\sim\mathcal{U}(0,1)$ 覆盖整个噪声谱，网络只看 $(\mathbf{y},\mathbf{s})$、不接收 $t$ 或 $\sigma$，等价于学一个所有 SNR 共享的去噪场。推理时不估 $\sigma_{ch}$，直接从 $\mathbf{x}^{(0)}=\mathbf{y}$ 沿固定 $\sigma$-grid 走 $N_{\text{steps}}$ 步。代价是网络要学一个对各噪声水平都鲁棒的"平均场"，但 syndrome 已隐式提供"当前离合法码字有多远"的强信号补上这一点，且线性 schedule 直接为后续 DPM-Solver 替换铺路。
 
-**3. 校验引导的 PF-ODE + Early Exit：精度可调、延迟可控。**
+**3. 校验引导的 PF-ODE + Early Exit：精度可调、延迟可控**
 
 把校验约束作为软引导塞进概率流 ODE $d\mathbf{x}_t=-\tfrac12 g(t)^2\nabla_{\mathbf{x}}\log p_t(\mathbf{x}_t)\,dt$，用学到的 $\hat{\boldsymbol{\epsilon}}_\theta(\mathbf{x},\mathbf{s})$ 替代分数（VE 下两者只差时间相关常数 $-1/\sigma(t)$）。每个迭代步重算硬判决和 syndrome，若 syndrome 归零说明当前硬判决已是合法码字、提前返回——这把传统 BP"每轮检测 syndrome 是否归零"的早退机制自然搬进连续动力学。再把默认 Euler 步换成 DPM-Solver（线性 $\sigma$-schedule 天然适配），原本 $N_{\text{steps}}$ 次 NFE 的预算能在更少 NFE 下达到等效 BER，平均压缩 8.86%、最高 12.82% 延迟。配合无 SNR 条件，整个推理变成一个可滑动的精度-延迟旋钮：好信道 5–10 步搞定，坏信道才跑满预算。
 

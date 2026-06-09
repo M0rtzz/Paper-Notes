@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 长度-2 探针 + sigmoid 反演（Thm 4.1）：把非线性 attention 还原成一组线性方程。**
+**1. 长度-2 探针 + sigmoid 反演（Thm 4.1）：把非线性 attention 还原成一组线性方程**
 
 softmax 的麻烦在于「全长归一」把所有 token 的双线性分数耦合在一起，看不出怎么单独解出 $W^\star$ 的某一项。本文的破法是固定要恢复的列 $j$，构造长度-2 输入 $X=[(u+e_j)^\top;\, e_j^\top]$：此时两个 score 是 $s_1=(u+e_j)^\top W^\star e_j$ 与 $s_2=e_j^\top W^\star e_j$，相减后 $s_1-s_2=u^\top w_j$ 恰好把碍事的 $e_j^\top W^\star e_j$ 项消掉，位置 1 的注意力权重退化成单变量 sigmoid $\alpha=\sigma(u^\top w_j)$。由于 $N=1$ 那步已经把 $v^\star$ 撇清，oracle 返回的 $y=v^\star_j+\alpha\,(u^\top v^\star)$ 里只剩 $\alpha$ 未知；只要 $u^\top v^\star\neq 0$，就能反推 $\alpha=(y-v^\star_j)/(u^\top v^\star)\in(0,1)$，再取全局可逆的 $\sigma^{-1}$ 得到一个线性约束 $u^\top w_j=\sigma^{-1}(\alpha)$。换 $d$ 个线性无关的 $u$（i.i.d. Gaussian 几乎必然满足）就凑齐一组满秩线性方程解出整列 $w_j$。复杂度按「$d$ 列 × 每列 $d$ 个探针」算正好 $O(d^2)$——这把 attention 的非线性当成了攻击者的朋友而非障碍。
 
-**2. 低秩压缩感知恢复 $W^\star$（Thm 5.1）：用秩-1 快照把 $d^2$ 压到 $O(rd)$。**
+**2. 低秩压缩感知恢复 $W^\star$（Thm 5.1）：用秩-1 快照把 $d^2$ 压到 $O(rd)$**
 
 实际 LLM 的注意力是 $W^\star=K^\top Q$，头维 $r$（约 128）远小于宽度 $d$（约 4096），逐项查询整个 $d\times d$ 矩阵太浪费。本文不换算法只换探针：把上面的探针改成 i.i.d. Gaussian $a,b\sim\mathcal N(0,I_d)$、$X=[(a+b)^\top;\, b^\top]$，同样反解出 $\alpha=\sigma(a^\top W^\star b)$，但这回得到的是一个秩-1 测量 $t=\langle ab^\top,\, W^\star\rangle$——单次查询给出关于 $W^\star$ 的一个线性快照而非某一项。收集 $m=O(rd)$ 个这样的 ROP（rank-one projection）测量后，解凸程序 $\min\|W\|_\ast\ \text{s.t.}\ \langle a_kb_k^\top,W\rangle=t_k$，由 Cai-Zhang 2015 的 RUB 条件保证 $m\geq Cr(2d)$ 时高概率精确恢复。「直接换问题、接管现成的 compressed sensing 恢复理论」是这一步的方法学巧思。
 
-**3. 带噪 oracle 下的稳定恢复（Thm 6.1）：把 logit 锁在 Lipschitz 区间再 clip。**
+**3. 带噪 oracle 下的稳定恢复（Thm 6.1）：把 logit 锁在 Lipschitz 区间再 clip**
 
 真实 API 输出总带微小噪声，而 $\sigma^{-1}$ 在 $\alpha$ 接近 0 或 1 时斜率发散、根本不 Lipschitz，朴素反演会让误差爆炸。本文的对策是把探针尺度设计成天然把 logit 压在安全区：取 $a=1/2$、$b=1/W$，构造 $X=[(bu+ae_j)^\top;\, (ae_j)^\top]$，使 $|ab\,W^\star_{ij}|\leq 1/2$，于是 $\alpha^\star=\sigma(ab\,W^\star_{ij})$ 永远落在 $[\sigma(-1/2),\,1-\sigma(-1/2)]$ 这段 sigmoid 还光滑的区间里。估计时再对 $\hat\alpha$ 做 $\text{clip}(\hat\alpha;\tau_{\text{clip}},1-\tau_{\text{clip}})$ 防越界，由 Lemma A.1 的 $|\sigma^{-1}(\text{clip}(\hat\alpha))-\sigma^{-1}(\alpha^\star)|\leq 5|\hat\alpha-\alpha^\star|$ 把估计误差线性传递下去，最终只要噪声容差 $\tau=\mathcal O(\min\{\mu,\,\epsilon_v/\sqrt d,\,\mu\epsilon_W/(W^2 d)\})$ 就能达到 $\|\hat W-W^\star\|_F\leq\epsilon_W$、$\|\hat v-v^\star\|_2\leq\epsilon_v$。把光滑性分析直接嵌进探针的尺度设计、而不是事后修补，是这一步最值得借鉴的地方。
 

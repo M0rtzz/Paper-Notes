@@ -47,7 +47,7 @@ AVION 要解决的是「遥感数据只有类名标签、PEFT 又只敢动文本
 
 ### 关键设计
 
-**1. 选择性原型聚合（Selective Prototype Aggregation）：让 LLM 描述真正反映遥感视觉，而不是幻觉。**
+**1. 选择性原型聚合（Selective Prototype Aggregation）：让 LLM 描述真正反映遥感视觉，而不是幻觉**
 
 遥感数据集只有「airport」这种干巴巴的类名，撑不起同一类在不同区域、季节、传感器下的巨大视觉差异，所以第一步是用 Gemini 2.5 Flash 为每类生成至多 50 条遥感视角的描述，并给每条打一个 RS-Flag 标记它是否真和遥感相关。但 LLM 也会编出非视觉或跑题的句子，不能直接拿来用。AVION 的做法是让 Teacher 的视觉原型来当裁判：先在该类的图像上求出视觉原型 $\hat{\mathbf{v}}_k^T = \frac{1}{|\mathcal{B}_k|}\sum_i \mathbf{v}_{k,i}^T$，再算每条描述和它的相似度 $s_{k,j} = (\hat{\mathbf{v}}_k^T)^\top \mathbf{t}_{k,j}^T$，用 Median/MAD 的 z-score 把离群描述剔掉，剩下的按
 
@@ -55,11 +55,11 @@ $$w_{k,j} \propto \exp(\beta s_{k,j} + \gamma \cdot \text{RS-Flag}_{k,j})$$
 
 加权聚合成最终文本原型。直观上这像一个无参数的 cross-attention——视觉原型做 query、文本描述做 key/value，越贴合该类真实视觉、越像遥感的描述权重越大。举个例子：「airport」生成的 50 条里，「a top-down satellite view of runways and terminals」会因为既贴视觉又被 RS-Flag 命中而拿到高权重，「a busy airport lounge with travelers」这种地面视角则被相似度压低甚至当离群点丢掉，最后留下的原型才真正描述俯视下的机场。
 
-**2. 双端 Prompt Tuning：不只动嘴，也让眼睛能适配遥感。**
+**2. 双端 Prompt Tuning：不只动嘴，也让眼睛能适配遥感**
 
 多数 PEFT 方法只在文本端学 prompt、把视觉编码器冻死，根本没法捕获遥感特有的俯视角和尺度变化，这就是「视觉刚性」。AVION 在 Student 两端都注入 prompt：文本端沿用 CoOp 的思路学一组可训练的上下文 token，去吸收第一步聚合出的丰富语义；视觉端则像 VPT 那样在 ViT 每一层都插入 prompt token，让视觉编码器在 backbone 冻结的前提下仍有空间去适配遥感的倾斜视角和尺度。两端都只更新 prompt 参数、不碰 backbone，既保住了 PEFT 的低成本，又把「视觉端无法适配」这个口子补上了。
 
-**3. 三维度对齐蒸馏（Tri-Aspect Alignment）：嵌入对齐之外，还要对齐类间关系。**
+**3. 三维度对齐蒸馏（Tri-Aspect Alignment）：嵌入对齐之外，还要对齐类间关系**
 
 有了好原型和双端 prompt，剩下的问题是 Student 该向 Teacher 学什么。AVION 同时在三个层面对齐：视觉嵌入用 $\mathcal{L}_{\text{img}} = 1 - (\mathbf{v}_i^S)^\top \mathbf{v}_i^T$ 拉近，文本原型用 $\mathcal{L}_{\text{text}} = 1 - (\mathbf{t}_k^S)^\top \mathbf{t}_k^{T*}$ 拉近，跨模态相似度分布则用 KL 蒸馏
 

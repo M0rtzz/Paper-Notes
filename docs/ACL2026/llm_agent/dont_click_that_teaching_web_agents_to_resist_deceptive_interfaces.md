@@ -45,15 +45,15 @@ DUDE 要解决的是 web agent 面对欺骗性 UI 时的两难：既要敢点合
 
 ### 关键设计
 
-**1. Hybrid-Reward Learning：把"放行欺骗远比误拒严重"的代价不对称直接写进 reward。**
+**1. Hybrid-Reward Learning：把"放行欺骗远比误拒严重"的代价不对称直接写进 reward**
 
 如果只优化准确率，evaluator 会均匀压低两类错误，但现实里"放行欺骗"是合规事故、"误拒合法按钮"只是体验问题，必须区别对待。DUDE 的 reward 形式为：判对（$\hat L = L$）时 $R=\gamma$，判错时 $R=-\alpha \cdot \omega(L, \hat L) \cdot \gamma$。其中 $\omega$ 编码了四种错误的不对称代价——C1 把合法误判为欺骗/无效，$\omega=1$（保守但不致命）；C2/C3 无效区误判，$\omega=1+\beta$；C4 **把欺骗放行（漏报），$\omega=10$**，灾难性，权重直接十倍。注意力标量 $\beta=S_{\hat L}/S_\mathcal{I}$ 用"预测区域占整图的比例"给惩罚加权，区域越大越显著、错判代价越高；置信度调整 $\alpha=\text{clip}(1/((d(C,\mathcal{B}_{\hat L})+\epsilon)\cdot(S_L/S_\mathcal{I})), \alpha_{\min}, \alpha_{\max})$ 则在点击离边界很近或 ground-truth 区域很小时主动降低惩罚，避免那些本就模糊的样本被狠罚。整个 evaluator 用 GRPO（Shao et al. 2024）训练。
 
-**2. Iterative Experience Summarization：不改一个参数，靠经验摘要在部署期持续进化。**
+**2. Iterative Experience Summarization：不改一个参数，靠经验摘要在部署期持续进化**
 
 闭源模型无法 fine-tune、网页样式频繁更新、上线后也没有标注员盯着——所以 DUDE 把"持续学习"放到 prompt 层面。它维护一个 failure pool $\mathcal{F}$ 和 success pool $\mathcal{S}$，每个失败样本带一个 persistence counter $\kappa(x)$（初始为 1，每抗住一次修正就 +1）。每一轮 $t$ 采样 $\mathcal{B}_f\subset\mathcal{F}$ 加上 anchor $\mathcal{B}_s\subset\mathcal{S}$，summarizer 接收上一轮的 $\mathcal{X}^{(t-1)}$、结构化失败描述和截图，产出新的 $\mathcal{X}^{(t)}$；随后在 $\mathcal{B}_f\cup\mathcal{B}_s$ 上验证：通过的失败样本移入 $\mathcal{S}$，没通过的把 $\kappa$ +1 留在 $\mathcal{F}$，如此循环直到 $\mathcal{F}$ 清空或达到 $T$ 轮上限（Algorithm 1）。persistence counter 让 summarizer 把注意力集中在反复失败的顽固模式上；anchor success 集则是关键的正则化约束，防止新写入的规则在修一个 bug 的同时把原本判对的样本带歪。
 
-**3. Evaluator-as-Gate 推理架构：把 calibrated evaluator 接进 agent 主循环做 Reject & Rethink。**
+**3. Evaluator-as-Gate 推理架构：把 calibrated evaluator 接进 agent 主循环做 Reject & Rethink**
 
 检测器单独存在没有防御价值，必须直接接到 action loop 上才管用。DUDE 的推理闭环是：base agent 提议点击 $C$ → evaluator 用 $\mathcal{X}\oplus\mathcal{T}$（experience context 拼模板）做评判 → 只有 $\hat L=1$ 才执行，否则触发 "abandon-and-rethink"，让 agent 继续探索；episode 在成功完成任务或检测到欺骗时提前结束，最大步数 $T_{\max}=3$。一个意外收益是，evaluator 的反馈不只过滤欺骗，对占失败 86.5% 的 null-region 误点也给出纠正信号——于是这套 deception-aware 的门控同时改善了一般任务的定位能力，形成 dual benefit。
 

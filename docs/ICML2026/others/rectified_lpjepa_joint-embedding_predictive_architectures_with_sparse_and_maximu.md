@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. Rectified Generalized Gaussian (RGG) 目标分布：把"稀疏强度"做成可解析调的旋钮。**
+**1. Rectified Generalized Gaussian (RGG) 目标分布：把"稀疏强度"做成可解析调的旋钮**
 
 LeJEPA 把表示拉成各向同性高斯，天然导致全密集激活，丢掉了"稀疏 + 非负"这个反复被验证有效的先验。本文要的是一个既稀疏可控、又不丢信息的目标分布。RGG 的构造是把 Dirac $\delta_0$ 与截断广义高斯 $\mathcal{TGN}_p(\mu,\sigma,(0,\infty))$ 在 0 处混合，等价于先采 $\mathcal{GN}_p(\mu,\sigma)$ 再 ReLU。它的妙处在于期望 $\ell_0$ 有闭式
 
@@ -52,7 +52,7 @@ $$\mathbb{E}[\|\mathbf{x}\|_0] = D \cdot \Phi_{\mathcal{GN}_p(0,1)}(\mu/\sigma),
 
 于是负 $\mu$ 直接对应高稀疏（$\mu=-3$ 把激活率压到 $\sim 1\%$）。连续部分则继承"在期望 $\ell_p$ 范数约束下熵最大"的性质（Prop 3.3）：$p=2$ 退化为 Rectified Gaussian、$p=1$ 为 Rectified Laplace、$0<p<1$ 给出更尖锐的稀疏先验。同时拿到稀疏和不丢信息，必须既有 0 处点质量（产生硬零）又有连续部分最大熵（保任务信息）——RGG 是把这两件事用混合分布在解析上结合的最简结构，所有旋钮都能写成已知特殊函数 $\Phi$、$\Gamma$、$P(\cdot,\cdot)$ 的闭式。
 
-**2. 两样本切片分布匹配 (RDMReg)：绕开"RGG 投影非闭合"这个致命问题。**
+**2. 两样本切片分布匹配 (RDMReg)：绕开"RGG 投影非闭合"这个致命问题**
 
 SIGReg 之所以能直接写一元高斯密度的 NLL，是因为高斯在线性组合下闭合，投影后还是高斯。可一旦目标分布带 Dirac 质量，它就不再闭合，$\mathbf{c}^\top \mathbf{y}$ 的一维边缘没有闭式族成员，解析推理立刻失效。RDMReg 的破法是放弃闭合、改走两样本路线：从目标 RGG 实采 $\mathbf{Y}\in\mathbb{R}^{B\times D}$，对每个投影方向 $\mathbf{c}_i$ 用排序后的一维 2-Wasserstein 平方做对齐，
 
@@ -60,7 +60,7 @@ $$\mathcal{L}(\cdot)=\tfrac{1}{B}\big\|(\mathbf{Z}\mathbf{c}_i)^\uparrow-(\mathb
 
 理论上严格等价于全分布匹配要无穷多投影，但实验显示一个与维度无关的小 $N$ 就够。把对齐降到一维、再用非参 2-Wasserstein 做样本对齐，是唯一既能兼容任意目标分布、又抗维度灾难的折衷——这也是用稀疏换掉投影闭合后必须付的代价。
 
-**3. 特征整流 + 目标整流的配对：让模型输出空间和目标支撑严格一致。**
+**3. 特征整流 + 目标整流的配对：让模型输出空间和目标支撑严格一致**
 
 稀疏-精度 trade-off 能不能立起来，关键在于对齐发生在同一个支撑上。作者在 backbone 末端显式加 ReLU，让 $\mathbf{z}\in[0,\infty)^D$，与 RGG 的 $[0,\infty)$ 支撑相同。图 3(a) 把四种组合全试一遍——$(\mathcal{RGN}_p \mid \mathbf{z}^+)$（本文，两边都整流）、$(\mathcal{GN}_p \mid \mathbf{z})$（基线，都不整流）、$(\mathcal{GN}_p \mid \mathbf{z}^+)$、$(\mathcal{RGN}_p \mid \mathbf{z})$——结果只有"两边都整流"这一档能同时拿到高精度和高稀疏，其余要么塌成全密集要么精度大跌。道理在于：若对齐发生在不同支撑上，切片 Wasserstein 永远到不了 0，模型只能在"妥协精度"和"放弃稀疏"之间二选一；只有支撑对齐后，连续映射定理才能让 $\mathbf{z}_{\text{raw}}$ 收敛到 $\mathcal{GN}_p$、并自动让 $\mathrm{ReLU}(\mathbf{z}_{\text{raw}})$ 收敛到 RGG。
 

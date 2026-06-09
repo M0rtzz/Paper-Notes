@@ -49,11 +49,11 @@ LLM-XTM 是个 **两阶段后处理增强**：
 
 ### 关键设计
 
-**1. 自一致性跨语言主题词精炼：用多次投票把 LLM 的幻觉过滤掉。**
+**1. 自一致性跨语言主题词精炼：用多次投票把 LLM 的幻觉过滤掉**
 
 单次调用 LLM 来"清洗"主题词有个致命问题——输出会抖动，这次保留的词下次可能就被换掉，把这种不稳定的结果直接当监督信号会把幻觉灌进 backbone。作者的做法是把 backbone 给的 top-15 英文词和 top-15 中文词拼成候选池 $C_k = w_k^{(\text{en})} \cup w_k^{(\text{zh})}$，让 LLM 删噪声、补缺失、保留共同主题词，但关键是同一个 prompt 重复跑 $R$ 次得到 $\tilde{w}_k^{(1)}, \dots, \tilde{w}_k^{(R)}$，再统计每个词的命中频率 $f_k(v) = \frac{1}{R}\sum_{r=1}^R \mathbf{1}\{v \in \tilde{w}_k^{(r)}\}$，取 Top-$M$ 高频词作为最终精炼集 $\bar{w}_k$。这一步借的是 SelfCheckGPT 的判断——"同一问题多次采样的一致性"本身就是幻觉的强信号：一致性高的词大概率是真核心，一致性低的多半是 LLM 现编。于是在拿不到 logits 的黑盒 setting 下，投票一致性等效替代了 LLM-ITL 那种 token-prob 不确定性估计。为了控成本，作者还加了"精炼频率"超参 $f$：每 $f$ 个 epoch 才调一次 LLM 而非每 step，直接把调用量砍掉一个数量级。
 
-**2. MMD 主题-词分布对齐：把 backbone 软拉向 LLM，但不让它彻底塌过去。**
+**2. MMD 主题-词分布对齐：把 backbone 软拉向 LLM，但不让它彻底塌过去**
 
 精炼出 $\bar{w}_k$ 之后还要把它注回 backbone 的 $\beta$，难点是既要让 backbone 的原始分布 $\beta_k^{(\text{raw})}$ 靠近 LLM 给的目标 $\beta_k^{(\text{refined})}$，又不能让它完全塌到 LLM 那边、丢掉语料驱动的 reconstruction 信号。作者对每个主题 $k$ 构造两组分布——raw 来自 decoder 输出的 top-$N$ 词概率、refined 来自 $R$ 轮投票计数，两者都做语言平衡 + 归一化，然后在 BGE-M3 词嵌入空间用 Gaussian 核（核宽取 median heuristic）算平方 MMD：
 
@@ -61,7 +61,7 @@ $$\mathcal{L}_{\text{MMD}} = \frac{1}{K}\sum_{k=1}^{K} \text{MMD}^2(\beta_k^{\te
 
 核作用在 cosine 距离上，等于在 RKHS 里把两组分布拉近，而不是逼模型做 one-hot 硬匹配。这恰好是它比 OT 更优的原因：核方法天然把"同义词替换"（如英文 song↔album）也算成匹配，而 OT 的 transport plan 对词 identity 更敏感、惩罚更重——实验里 MMD 的 CNPMI 0.016 直接压过 OT 的 0.013。换句话说 MMD 提供的是"分布软对齐"，比硬替换温和，不会把 backbone 已经学到的语料信号一把覆盖掉。
 
-**3. QA 式文档-主题对齐：把"文档归到哪个主题"重写成"问题检索答案"。**
+**3. QA 式文档-主题对齐：把"文档归到哪个主题"重写成"问题检索答案"**
 
 主题词对齐好了，文档-主题分布 $\theta_d$ 仍可能跑偏——同一语义的英文和中文文档本该有相近的 $\theta_d$，但 BoW 在跨语言下根本不可比（英文 "investment" 和中文 "投资" 是两个完全独立的维度）。作者的破局点是换个空间来比：把文档当成 question、把 refined 主题当成 candidate answer，用多语 sentence encoder BGE-M3 把文档编码成 $h_d$、把 $\bar{w}_k$ 编码成主题向量 $t_k = \text{Enc}(\bar{w}_k)$，算 cosine 相似度 $s_{d,k} = \frac{h_d^\top t_k}{\|h_d\|_2 \|t_k\|_2}$，再用带温度 $\tau$ 的 softmax 得到目标分布 $\hat{\theta}_{d,k} = \frac{\exp(s_{d,k}/\tau)}{\sum_j \exp(s_{d,j}/\tau)}$，最后用 KL 把 backbone 的 $\theta_d$ 拉过去：$\mathcal{L}_{\text{doc-align}} = \sum_{d=1}^D \text{KL}(\theta_d \| \hat{\theta}_d)$。妙处在于 BGE-M3 在多语 embedding 空间里能让 "investment" 和 "投资" 距离很近，于是它充当了跨语言桥梁，把"语义相似度"变成 $\theta$ 的外部监督，强迫 backbone 学出跨语言一致的文档表示。这是全文最有原创性的一招——把 IR 里 QA retrieval 的范式直接搬到了主题模型的分布对齐上，也是消融里贡献最大的组件（去掉它 CNPMI 直接掉回 backbone 水平）。
 

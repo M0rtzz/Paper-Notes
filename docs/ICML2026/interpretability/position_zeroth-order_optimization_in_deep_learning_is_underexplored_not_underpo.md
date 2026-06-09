@@ -50,19 +50,19 @@ tags:
 
 ### 关键设计
 
-**1. 从 RGE 到子空间 RGE：把方差和维度脱钩。**
+**1. 从 RGE 到子空间 RGE：把方差和维度脱钩**
 
 针对的死结是 P1 与 P2：原始 ZO 估计器 $\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{u})-f(\mathbf{x})}{\mu}\mathbf{u}$（$\mathbf{u} \in \mathbb{R}^d$）的方差与参数维度 $d$ 同阶，而 mini-batch 平均压方差又很快遇到 diminishing returns，全空间里怎么都廉价不下来。作者的反应是干脆换一个空间——把扰动塞进一个低维子空间，写成 S-RGE：$\hat{\nabla}_{\mathbf{x}}f(\mathbf{x}) = \frac{f(\mathbf{x}+\mu\mathbf{Pu})-f(\mathbf{x})}{\mu}\mathbf{Pu}$，其中 $\mathbf{P} \in \mathbb{R}^{d \times r}$、$r \ll d$、$\mathbf{u} \in \mathbb{R}^r$。
 
 这个改写之所以站得住，是因为它有干净的几何解释。在方向导数极限 $\mu \to 0$ 下 $\mathbb{E}_{\mathbf{u}}[\hat{\nabla}_{\mathbf{x}}f] = \mathbf{PP}^\top \nabla_{\mathbf{x}} f$，当 $\mathbf{P}$ 列正交时 $\mathbf{PP}^\top$ 恰是把 FO 梯度投到 $\mathbf{P}$ 所张子空间的投影算子——S-RGE 就是 FO 梯度的"子空间近似"，方差顺势从 $O(d)$ 掉到 $O(r)$。$\mathbf{P}$ 只需对高斯矩阵做一次 QR 分解随机生成，而且可以"惰性更新"（隔若干步才刷一次），开销几乎可忽略。只要模型梯度本身近似低秩（Zhao et al. 2024 等已观察到这一现象），近似带来的精度损失远小于省下的方差。P4 进一步指出，这条路天然接得上谱域优化（如 Muon 的梯度正交化），把"低秩梯度结构"当成可利用的先验。
 
-**2. 前向单向加共享种子，让分布式 ZO 只传一个标量。**
+**2. 前向单向加共享种子，让分布式 ZO 只传一个标量**
 
 这条把 ZO"必须靠随机扰动"这个看似的缺点，翻译成了系统优势。关键观察是本地 S-RGE 可以拆成 $\hat{\nabla}_{\mathbf{x}}f_i(\mathbf{x}) = \Delta_i \cdot \mathbf{Pu}_i$，其中 $\Delta_i = \frac{f_i(\mathbf{x}+\mu\mathbf{Pu}_i) - f_i(\mathbf{x})}{\mu}$ 只是个标量。于是 worker $i$ 不必回传整条梯度向量，只发标量 $\Delta_i$ 加上生成 $\mathbf{u}_i$ 的随机种子；中心节点用同一个种子在本地重建 $\mathbf{u}_i$（投影矩阵 $\mathbf{P}$ 也靠共享种子重建）再聚合，通信带宽就从 $O(d)$ 砍到了 $O(1)$。
 
 红利不止在节点之间。单机内部用结构化扰动（按层/块/坐标）天然允许 feature reuse——只有被扰动那部分的激活会变，前向 pass 可以从扰动层切入而不必从输入重算（FZOO 已验证）。更深一层：ZO 把"前向算梯度"和"梯度立即可用"打包进了同一个前向 pass，pipeline 并行里 FO 训练特有的 1F1B 气泡（forward/backward 强耦合造成的）被直接消掉，pipeline 可以做成单向、近零气泡的"推理化"调度。同一个标量×高斯向量的结构还顺带给出一个隐私解释：ZO 估计天生带噪，能直接嵌进 DP 微调管线，不像 FO 那样要额外注入高斯噪声。
 
-**3. 去混淆评测：剥掉 task alignment 才看得见 ZO 的真本事。**
+**3. 去混淆评测：剥掉 task alignment 才看得见 ZO 的真本事**
 
 position paper 要立得住，得给出"现状失灵"的可观察证据，这条就是那把校准尺。作者要求所有 ZO 评测同时报告两种设置——带 task alignment（用 prompt 把下游任务对齐到预训练目标）和不带——并把前向梯度方法 $f'(\mathbf{x};\mathbf{u})\mathbf{u}$ 列为强制基线。前向梯度的地位很特殊：当 $\mu \to 0$ 时有限差分收敛到方向导数 $f'(\mathbf{x};\mathbf{u}) = \mathbf{u}^\top \nabla_{\mathbf{x}} f(\mathbf{x})$，它用一次 JVP 就能精确拿到，结构上是 ZO 估计器的"无噪上界"。有了它就能分清责任：前向梯度都做不动，卡的是任务难度而非 ZO；前向梯度能做而 ZO 做不动，才是估计器真的不行。
 

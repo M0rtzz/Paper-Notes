@@ -45,15 +45,15 @@ SPPO 的核心不是改一个 loss 名字，而是改变价值函数的语义。
 
 ### 关键设计
 
-**1. 从 token-level MDP 到 sequence-level contextual bandit：把 horizon 压成 1，让建模粒度对齐奖励粒度。**
+**1. 从 token-level MDP 到 sequence-level contextual bandit：把 horizon 压成 1，让建模粒度对齐奖励粒度**
 
 长 CoT 真正的痛点在于奖励太稀疏——verifier 只在序列末尾给一个 0/1，而 token-level PPO 却硬要把这个终端信号沿着几千个 token 往回摊，结果中间推理步骤拿到的 advantage 充满时间信用分配噪声。SPPO 的做法是干脆放弃逐步建模：把 prompt $s_p$ 看成静态 context，把整条回答 $a_{seq}=(y_1,\dots,y_T)$ 看成一个 atomic action，奖励 $R$ 只评价这个动作整体对不对。这样 horizon 在概念上被压缩为 1，问题从马尔可夫决策过程退化成 contextual bandit。之所以这样有效，是因为数学 verifier 本来就只判最终答案，建模粒度与真实奖励粒度一致后，就不会再有“强行给中间 token 估值”引入的位置偏差。
 
-**2. 标量 value function 与优势估计：用一个只看 prompt 的 critic 估题目可解性，替掉多采样 baseline。**
+**2. 标量 value function 与优势估计：用一个只看 prompt 的 critic 估题目可解性，替掉多采样 baseline**
 
 既然动作是整条序列，baseline 也就只需要对 prompt 估一个标量。SPPO 的 value model $V_\phi(s_p)$ 用 BCE 拟合二值结果，目标为 $L_V=-E[R\log V_\phi(s_p)+(1-R)\log(1-V_\phi(s_p))]$，输出可理解为“当前策略面对这个 prompt 大概有多大概率做对”，也就是题目可解性。policy 端的优势直接取 $A(s_p,a)=R-V_\phi(s_p)$：罕见地做对一道难题会得到强正优势，本该会做却失败的简单题会得到强负优势。这正好替掉了 GRPO 必须对每个 prompt 采样 N 个回答才能估出 group baseline 的高成本路径——一个可校准的 scalar critic 就近似了同样的“题目难度”信息。
 
-**3. 序列级 PPO 与解耦 critic：保留 PPO 的 clipping 机制，但 advantage 整条序列共享，且 critic 可以更小。**
+**3. 序列级 PPO 与解耦 critic：保留 PPO 的 clipping 机制，但 advantage 整条序列共享，且 critic 可以更小**
 
 建模换了，工程实现却尽量不动：clipped probability ratio 仍按 token 计算，PPO 成熟的裁剪稳定性原封保留，唯一区别是 advantage 不再随 token 变化，而是把同一个 $A(s_p,a)$ 分配给该序列的所有 token。这就避免了 token-level GAE 在稀疏奖励下典型的 tail effect（信号只在尾部清晰、越往前越模糊）。更进一步，作者验证了用 1.5B critic 去对齐 7B policy 的解耦配置依然成立——因为 critic 的任务只是“估题目难度”，本就比“生成推理链”简单，于是 actor 和 critic 不必同规模，显存压力随之下降。
 

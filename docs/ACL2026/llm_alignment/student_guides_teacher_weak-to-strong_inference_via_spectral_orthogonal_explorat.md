@@ -43,19 +43,19 @@ tags:
 SOE 要解决的是：教师模型在难题上反复沿同一错误逻辑采样，提高 temperature 只能换换词面、换不掉推理方向。它是一个纯推理时框架：输入一道教师 greedy decoding 已经做错的难题，把这条失败轨迹在关键推理节点截断成多个 prefix；对每个 prefix，教师生成若干条 Monte Carlo look-ahead 轨迹来估计当前的局部 bias manifold，同时让弱学生模型在同一 prefix 下生成固定 8 tokens 的短 candidate probe；系统把每个 probe 映射回教师隐藏空间，选出相对教师 dominant subspace 最正交的一个拼接到 prefix 后，输出是教师从一个全新几何方向续写出来的推理链。整个过程不训练、不改参数。
 
 ### 关键设计
-**1. 低秩推理塌缩诊断：把"模型一直绕错路"变成可测量的谱退化。**
+**1. 低秩推理塌缩诊断：把"模型一直绕错路"变成可测量的谱退化**
 
 Reasoning collapse 以往只能靠输出重复或过长来主观判断，SOE 把它落到隐藏空间的谱指标上。把推理链隐藏状态写成 $H_t=[h_1,h_2,\ldots,h_t]$，在滑动窗口内计算局部协方差 $\Sigma_t$，再用 effective rank $\mathrm{EffRank}(\Sigma_t)=\exp(-\sum_j \tilde{\sigma}_j\log \tilde{\sigma}_j)$ 衡量轨迹的有效维度。错误且冗长的推理链随生成推进会出现明显的 rank decay，说明状态越来越集中到低维 bias manifold。
 
 这个诊断是后续干预的几何靶：reasoning collapse 不只是文本重复或长度超标，而是对应更底层的表示空间收缩。有了谱指标，"让教师跳出原轨迹"才有一个明确的几何目标。
 
-**2. Micro-SVD 局部流形估计：用小矩阵谱分解换出 dominant subspace。**
+**2. Micro-SVD 局部流形估计：用小矩阵谱分解换出 dominant subspace**
 
 推理时方法必须足够轻量。在截断点 $t$，教师采样 $N$ 条 look-ahead 轨迹，聚合每条轨迹的隐藏状态 $h_i$ 并中心化组成矩阵 $H$。直接分解 $d\times d$ 协方差太贵，因此先构造 $N\times N$ Gram matrix $G=H^T H$，求其特征向量，再恢复出 top-$k$ principal components $U_{\parallel}$。
 
 这里利用的是 look-ahead 样本数 $N$ 远小于隐藏维度 $d$ 这一事实，把原本庞大的高维谱分解转化成一个小矩阵问题，让推理时的几何诊断变得可操作。
 
-**3. Orthogonal Latent Stitching：从弱学生候选中挑出最能推动教师的短探针。**
+**3. Orthogonal Latent Stitching：从弱学生候选中挑出最能推动教师的短探针**
 
 弱学生生成候选集合 $\mathcal{C}_{Student}=\{s_1,\ldots,s_M\}$，每个候选经教师前向传播得到 latent vector $z_j$。用投影矩阵 $P_{\parallel}=U_{\parallel}U_{\parallel}^T$ 计算正交残差 $r_j=(I-P_{\parallel})(z_j-\hat{\mu})$，选择归一化残差能量 $\|r_j\|_2/(\|z_j-\hat{\mu}\|_2+\epsilon)$ 最大的候选拼到 prefix 后。
 

@@ -44,19 +44,19 @@ SPUR 不是模型而是 benchmark + 评测框架。Pipeline：① **图像采集
 
 ### 关键设计
 
-**1. 三阶段七任务分层评测：把"读懂多面板实验图"拆成可独立诊断的能力链。**
+**1. 三阶段七任务分层评测：把"读懂多面板实验图"拆成可独立诊断的能力链**
 
 传统 VQA-style benchmark 只给一个 overall accuracy，模型错了也不知道错在哪一环。SPUR 把"读懂一张实验图"显式拆成三阶段七子任务，每个子任务单独算 accuracy：感知阶段是 panel 级的——NP 估计动力学曲线的数值、MP 识别细胞形态、IL 把面板映射回实验条件；理解阶段跨 panel——TA 分析同构面板的趋势方向、HI 在异构面板间做跨模态信息整合；推理阶段是专家级——Qual. 给方向性结论、Quant. 给比率/显著性这类量化结论。
 
 有了这套指标空间，作者才能把瓶颈定位到具体环节，而不是泛泛地说"模型不行"：NP 是系统性最低项、TA 随跨面板关系数从 1 增到 4 时 accuracy 从 60.7% 跌到 34.0%、Quant. 全程比 Qual. 低 12.76%–31.41%——这些诊断结论都依赖于"错在哪一段链路"能被分层读出来。
 
-**2. 多面板高复杂度图像 + 六类细粒度面板：把图像复杂度推到真实顶刊 figure 的密度。**
+**2. 多面板高复杂度图像 + 六类细粒度面板：把图像复杂度推到真实顶刊 figure 的密度**
 
 低复杂度图（1–3 panel）既考不了跨面板关系，MLLM 抄一句 caption 就能蒙对。SPUR 反其道而行，强制图像平均含 14.3 个 panel（远超 MMSci 的 7.4、SFE 的 2.3、MicroVQA 的 1.9），且最多混排 6 种细粒度面板类型（4 类染色 + 统计图 + Western blot）。实现上先用 YOLO 检测器对 5632 张候选图数面板，$\geq 6$ panel 才放行；同时把染色图细分为 Cell / Tissue / Microorganism / Subcellular 四类，让 MP 任务能按 panel category 拆开做细粒度分析。
 
 这种细分立刻暴露了训练数据偏置——Ministral 3 14B 在 Subcellular 面板上能到 70.52%，在 Microorganism 上却只有 42.80%，同一个感知任务因图像子类型不同而判若两模型。高 panel 数 + 多类型混排，才真正模拟了"读 Nature 一张 figure"的科研场景。
 
-**3. 双重 shortcut elimination + 专家分级审核：逼模型必须看图，堵死从 caption 和常识抄答案的近路。**
+**3. 双重 shortcut elimination + 专家分级审核：逼模型必须看图，堵死从 caption 和常识抄答案的近路**
 
 科学图像 QA 最大的陷阱是答案泄漏到 caption 或预训练常识里，导致 benchmark 测的其实是 LLM 的知识而非视觉能力。SPUR 用三道闸门封死这条近路：(a) textual shortcut filter——把题目 + 选项不附图喂给 GPT-4o 重复答 10 次，凡 ≥5 次答对就判为"文字可解"丢掉，淘汰 21.2%（1612 题）；(b) 双专家盲审——4 位 >40 篇 paper 的领域专家 + 2 位 >100 篇 paper 的高级专家，按 Scientific Validity / Task Alignment / Visual Reasoning Necessity 三维度打分，分歧由高级专家仲裁，再淘汰 28.9%（1732 题）；(c) 出题阶段就禁止从 caption 直接派生题目，强制基于面板视觉信息命题。
 

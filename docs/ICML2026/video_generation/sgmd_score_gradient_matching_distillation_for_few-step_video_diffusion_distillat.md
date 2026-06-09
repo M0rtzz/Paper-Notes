@@ -49,15 +49,15 @@ SGMD 要解决 DMD 风格 few-step 视频蒸馏里两个互相牵制的难题：
 
 ### 关键设计
 
-**1. Teacher Stop-Gradient Fisher 目标：换掉保守的 reverse-KL，给出更平滑的匹配梯度。**
+**1. Teacher Stop-Gradient Fisher 目标：换掉保守的 reverse-KL，给出更平滑的匹配梯度**
 
 标准分数匹配会让教师梯度通过生成样本（往往是 OOD 状态）反传，训练就不稳了；而 reverse-KL 又太保守、躲着低密度区走，把运动细节也躲没了。SGMD 冻结教师输入梯度（stop-gradient），只让 fake score 去追教师的分数差 $\mathcal{L}_{\text{Fisher}}(\theta, \psi) := \frac{1}{2} \|s_{\text{fake}}(x_t, t) - s_{\text{real}}(\text{sg}[x_t], t)\|^2 = \frac{1}{2} c(t) \|\Delta_t\|^2$，其中 $\Delta_t = \mu_\psi(x_t, t) - \mu_{\text{base}}(x_t, t)$、$c(t) = \alpha_t^2 / \sigma_t^4$。Proposition 3.1 保证在理想追踪下这个 Fisher 目标与 reverse-KL 的分布匹配方向一致，但它的梯度信号更平滑、不像 reverse-KL 那样回避低密度区，于是低密度区里的运动细节被保留下来。停梯度则杜绝了 OOD 梯度的无效反传。
 
-**2. 双重势（NR / RC）机制：用一推一拉把耦合的追踪问题解开。**
+**2. 双重势（NR / RC）机制：用一推一拉把耦合的追踪问题解开**
 
 追踪问题之所以贵，是因为生成器和 fake score 互相依赖、纠缠在一起。SGMD 先定义追踪残差 $r(x_0, x_t) := \text{sg}[x_0] - x_{\text{fake}}$ 来量化生成器输出与 fake score 预测的差距，再构造一对符号相反的势：外层负残差 $\mathcal{L}_{\text{NR}}(\theta) := -\frac{1}{2} \|r\|^2$ 和内层残差收缩 $\mathcal{L}_{\text{RC}}(\psi) := +\frac{1}{2} \|r\|^2$。它们在 $x_{\text{fake}}$ 空间诱导相反梯度 $\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{NR}} = r$、$\nabla_{x_{\text{fake}}} \mathcal{L}_{\text{RC}} = -r$：沿依赖链 $x_0 \to x_t \to x_{\text{fake}}$，NR 把生成器输出推向 fake score 预测（保住分数一致），RC 把 fake score 拉向生成器输出（缩小预测差）。相比 SIM 用隐梯度精确处理追踪（计算复杂、强度固定），这套"推-拉"显式势把外层校正和内层收缩分开，几何直观、好实现也好调。
 
-**3. 轻量级两步双层更新：把每轮 fake score 更新从 5 次压到 1 次。**
+**3. 轻量级两步双层更新：把每轮 fake score 更新从 5 次压到 1 次**
 
 要在两时间尺度优化里既稳又省，SGMD 每次迭代只做两次反向传播：先更新生成器 $\theta \leftarrow \theta - \eta_\theta \nabla_\theta(\mathcal{L}_{\text{Fisher}} + \lambda \mathcal{L}_{\text{NR}})$（其间 $\psi$ detach），再更新 fake score $\psi \leftarrow \psi - \eta_\psi \nabla_\psi(\lambda \mathcal{L}_{\text{RC}})$（其间 $\theta$ detach），构成显式的单步双层迭代，绕开了二阶隐梯度的计算。正因为 fake score 从每轮 5 次降到 1 次、每次反传省下约 80% 梯度计算，32 卡 H100 上实测约 3× 训练加速，$\lambda = 0.1$ 时效果最优。
 

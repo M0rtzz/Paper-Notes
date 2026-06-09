@@ -45,13 +45,13 @@ tags:
 
 ### 关键设计
 
-**1. 动作块多 horizon 重排 + 共享 transformer 并行处理：把"选一个 horizon"变成"同时用多个 horizon 训练"。**
+**1. 动作块多 horizon 重排 + 共享 transformer 并行处理：把"选一个 horizon"变成"同时用多个 horizon 训练"**
 
 固定 horizon 之所以两头不讨好，是因为一条动作块只有一个长度，要么长得能规划、要么短得能精控。MoH 干脆不选：固定最大 horizon $H$，定义候选集合 $\mathcal{H}=\{h_1,\dots,h_N=H\}$，对每个 $h$ 从同一条目标块里截出前缀 $A_t^{(h)}\in\mathbb{R}^{h\times d_a}$，统一 pad 到 $H$ 并配一个 horizon-specific attention mask 把 $k>h$ 的位置屏蔽掉。所有 horizon 共享同一组 action transformer 权重和同一份 VLM context，靠 batching + 并行 attention 在一次 forward 里全部算完。训练时损失分两路：融合预测损失 $L_{\text{mix}}$ 盯着最终输出的质量，各 horizon 独立损失 $L_{\text{ind}}=\sum_h L^{(h)}$ 则保证每个分支单拎出来也能用。
 
 这套设计之所以几乎零成本，是因为 VLA 的算力瓶颈全在 VLM 主干，而它只跑一次；action transformer 本身只有 ~300M 参数，多 horizon 并行 forward 的额外开销被 tensor parallelism 吃掉，wall-clock 几乎不变。共享权重还有个隐含好处——它强迫同一个网络真正学会"既能短又能长"，而不是简单堆几个独立模型做 ensemble；padding + mask 则让所有 horizon 走齐序列长度，避免动态 shape 拖慢 GPU。
 
-**2. 2k 参数线性门控 + 负载均衡损失：在每个时间步按"谁更可信"加权融合，并防止门控只宠少数 horizon。**
+**2. 2k 参数线性门控 + 负载均衡损失：在每个时间步按"谁更可信"加权融合，并防止门控只宠少数 horizon**
 
 有了多个 horizon 的预测后，怎么把它们合成一条最终动作？MoH 在共享 transformer 顶部只加一个**线性层**（仅 ~2k 参数），输出每个 (step, horizon) 的 logits $g_{t,k,h}$；对每个时间步 $k$ 只保留 $h\ge k$ 的有效 horizon 做掩码 softmax，得到权重 $\alpha_{t,k,h}=\exp(g_{t,k,h})/\sum_{h':k\le h'}\exp(g_{t,k,h'})$，再加权求和。门控这么轻是刻意的——几乎所有信息已经编码在共享 transformer 的隐状态里，门控只需做一次轻量加权决策，结构一复杂反而过拟合。
 
@@ -61,7 +61,7 @@ $$L_{\text{bal}}=\frac{1}{|\mathcal{I}|}\sum_i \mathrm{CV}^2(\{\bar\alpha_h^{(i)
 
 最小化它就逼门控公平分配。消融印证了这一项的作用：去掉 $L_{\text{bal}}$ 仍优于基线（98.5%），但加上后 Long 任务再涨约 1.6 个点——正是它让长 horizon 真正被门控调用、而不是被冷落。总目标 $L=L_{\text{mix}}+\lambda_{\text{ind}}L_{\text{ind}}+\lambda_{\text{bal}}L_{\text{bal}}$，默认 $\lambda_{\text{ind}}=1$、$\lambda_{\text{bal}}=10^{-3}$。
 
-**3. 基于跨 horizon 共识的动态推理：用多分支的"分歧度"自适应决定执行多长前缀。**
+**3. 基于跨 horizon 共识的动态推理：用多分支的"分歧度"自适应决定执行多长前缀**
 
 以往 chunk-based VLA 把执行前缀写死（LIBERO 默认 5、RoboTwin 20），既浪费又脆——平稳运动其实可以一口气多执行几步省下 VLM 调用，而决策关键帧附近又必须频繁 replan 才稳。MoH 不用额外训练就能把这件事做对：在每步 $k$，把每个 horizon-wise 预测 $\hat a_k^{(h)}$ 看成对融合结果 $\hat a$ 的"投票者"，用加权 $\ell_1$ 分歧度量它们的共识
 

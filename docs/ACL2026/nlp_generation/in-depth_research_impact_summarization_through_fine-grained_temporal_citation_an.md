@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Impact-revealing citation intent 作为中间表示：把"为什么被引"从粗标签升级成自由文本证据。**
+**1. Impact-revealing citation intent 作为中间表示：把"为什么被引"从粗标签升级成自由文本证据**
 
 科研影响力往往藏在具体使用方式里——固定的 citation intent taxonomy 过粗，引用数又只数次数，都丢掉了"后续工作究竟怎么用这篇论文"的语义。作者因此让 LLM 对每条 citation context 同时输出一段自由文本 intent，再判定它属于 confirmation、correction 还是 other，例如"use of minimization methodology"算 impact-revealing，而"background about NER methods"不算。为支撑这个新任务，作者构造了一个 4K citation context 数据集：从 PST-Bench 取 1K 原有正例，用 confirmation/correction 相关模式从 S2AG 再筛 1K impact-revealing contexts，最后补 2K non-impact-revealing examples，随机抽样人工检查显示 90% 标签正确。自由文本 intent 既保留了细粒度语义，又成了后续摘要生成可以直接引用的"证据标签"，降低 LLM 凭空编故事的风险。
 
-**2. 只用 impact-revealing contexts 生成摘要：把背景噪声挡在生成之外。**
+**2. 只用 impact-revealing contexts 生成摘要：把背景噪声挡在生成之外**
 
 一篇高被引论文的 citation contexts 里，大量是 incidental 的背景提及；如果把它们全塞进 prompt，长上下文非但不增益，反而会诱导 LLM 把"被顺带提了一句"误写成"产生了重大影响"。作者据此设计了第二阶段：先按第一阶段结果过滤，只保留 impact-revealing citations，连同年份和生成出的 intents 交给 LLM，prompt 要求模型按时间段概括影响轨迹（如早期被某类方法采用、中期暴露局限、后期被新方法重新利用）。为验证这一选择，作者横向比较了无 citation、全部 citation、全部 citation + intents、仅 impact-revealing citation、仅 impact-revealing + intents 等输入设置，结果"仅 impact-revealing + intents"在多数指标上最优。
 
-**3. 面向新任务的 reference-free 评估框架：在没有标准答案时同时考"可信"和"有料"。**
+**3. 面向新任务的 reference-free 评估框架：在没有标准答案时同时考"可信"和"有料"**
 
 这个任务没有 gold impact summary，传统 ROUGE 无从下手，作者于是把评估拆成 trustworthiness 与 informativeness 两侧。trustworthiness 侧含 faithfulness、coverage、citation year compliance：faithfulness 会把摘要拆成不同时间段的 impact descriptions，要求 evaluator LLM 逐段检查它们能否被同一时期的 citation contexts 支撑；coverage 衡量摘要覆盖了多少 impact intents。informativeness 侧含 insightfulness、trend awareness、specificity，采用 G-Eval 式 LLM-as-a-judge 打分，评估摘要是否真正捕捉到时间变化和具体影响，而不是泛泛复述。这套指标合起来既防"无证据的编造"，又防"有证据但空洞"。
 

@@ -45,15 +45,15 @@ UCoT 包含 compressor、projector 和 executor 三个部分。compressor 学会
 
 ### 关键设计
 
-**1. Post-reasoning 范式：把 CoT 从输出端搬到输入端，缩短 executor 需要自回归生成的长度。**
+**1. Post-reasoning 范式：把 CoT 从输出端搬到输入端，缩短 executor 需要自回归生成的长度**
 
 长 CoT 的成本几乎全压在自回归输出上——模型必须逐 token 把中间推理写出来。作者反过来问：如果推理路径已经作为上下文摆在输入里，模型还需不需要从零生成完整 CoT？vanilla reasoning 是 $\{C,A\}=\mathrm{LLM}(Q)$，post-reasoning 改成 $\{\hat C,\hat A\}=\mathrm{LLM}(Q \oplus C')$，其中 $C'$ 是外部提供的 contextual CoT。pilot study 给出了有力的初步证据：在 GSM8K 和 MATH-500 上，只要把推理路径喂进输入，输出 token 能减少 80% 以上。这说明"推理路径作为输入仍然有效"，为后面把它换成更廉价的形式打开了空间。
 
-**2. Soft-token contextual CoT：用单次前向的 soft tokens 替代昂贵的显式文本 CoT。**
+**2. Soft-token contextual CoT：用单次前向的 soft tokens 替代昂贵的显式文本 CoT**
 
 post-reasoning 虽然有效，但显式文本 $C'$ 本身仍要自回归生成、并不省。于是 compressor 在输入末尾追加长度为 $M$ 的 `[ucot]` 占位符，单次前向后取这些占位符位置的 hidden states $H_n$ 当作 soft tokens；训练目标让 compressor 仅凭 $H_n$ 就能重构出 executor 原本会生成的原始 CoT $C_n$。这样推理语义被压进连续空间，一次前向就能拿到，绕开了长文本输出的延迟。
 
-**3. Reward-guided executor utilization：用输出预算 + 语义/置信度约束逼 executor 真正用上 soft tokens。**
+**3. Reward-guided executor utilization：用输出预算 + 语义/置信度约束逼 executor 真正用上 soft tokens**
 
 连续提示最大的风险是被模型忽略——它可能把 soft tokens 当摆设，照样去生成长 CoT。为此 projector 先把 compressor 的 soft tokens 映射到 executor 的 embedding space，训练 executor 时再用 Cutoff 把显式 CoT 截断到压缩比例 $\alpha$，硬逼模型靠 soft tokens 补足被砍掉的逻辑。同时两个约束保证质量：语义损失把 UCoT 的推理表示对齐到原始长 CoT 的表示，reward factor 惩罚压缩推理与原推理在答案置信度上的差异。输出预算负责"逼它用"，语义/置信度约束负责"用对"，两者合起来才把 soft tokens 变成真正可用的推理上下文。
 

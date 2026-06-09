@@ -54,15 +54,15 @@ $$f = \mathcal{T}^{-1}_{out}\circ \mathcal{D}\circ \varPhi\circ \mathcal{E}\circ
 
 ### 关键设计
 
-**1. 模块化解耦 + 张量接口标准化：让任何论文的组件都能拆出来插回去。**
+**1. 模块化解耦 + 张量接口标准化：让任何论文的组件都能拆出来插回去**
 
 以前评 PatchTST，没人分得清提升到底来自 patch 这个视图，还是来自 Transformer 这个 reasoner——Embedding 和 Encoder 的贡献被搅成一团。CombinationTS 的破题点是给五段流水线定一条硬接口约束：Embedding 的输出必须是 $\mathcal{Z}\in\mathbb{R}^{B\times C\times L\times D}$ 这个四维张量（batch / 变量 / 时间 token / 隐藏维），其中 Point-wise 每个时间步投影一次（$L=T$）、Patch-wise 切 patch 后投影（$L=\lceil T/S\rceil$）、Variate-wise 把整条变量历史压成 1 个 token（$L=1$）、Identity 不投影、Time-as-Feature 把 $T$ 维直接 reshape 到特征维（零参数）。关键是 Encoder 被严格限制只能在 $\mathcal{Z}$ 上做 token 间运算，跨 token 的依赖建模一律下放给它，这样替换 Encoder 就不会污染 Embedding 的归因。有了这条约束，把 Patch-wise Embedding 接上 Identity Encoder 跑一下，就能直接读出「视图的独立贡献」——这正是后面 Identity Paradox 能成立的方法论前提。
 
-**2. 概率化评估协议（EC 空间 + $\mu/\sigma$ 双统计量）：用一片超参海洋取代单点 MSE。**
+**2. 概率化评估协议（EC 空间 + $\mu/\sigma$ 双统计量）：用一片超参海洋取代单点 MSE**
 
 单点 MSE 报数同时掉进两个对偶陷阱：用同一套次优超参把所有模型一起摁住的「公平陷阱」，和 cherry-pick 单次最好结果的「最佳陷阱」。作者借 Evaluatology 的视角把评测看成信号—噪声分离：被评对象（EO）是要归因的那个模块，其余四个模块、训练超参、数据集、look-back、horizon 等都算评测条件（EC）。于是定义评估条件空间 $\Omega$，每个 $\mathbf{c}\in\Omega$ 是一个配置元组（look-back $T\in\{96,192,336,512\}$、horizon $P\in\{96,192,336,720\}$、latent 维 $D\in\{64,128,256,512\}$、学习率、batch、dropout、seed 等），把模块性能视为随机变量 $L(\theta, \mathbf{c})$，估计边际性能 $\mu(\theta)=\mathbb{E}_{\mathbf{c}\sim\Omega}[L(\theta,\mathbf{c})]$ 和稳定性 $\sigma(\theta)=\sqrt{\mathrm{Var}_{\mathbf{c}\sim\Omega}[L(\theta,\mathbf{c})]}$，同时单独报 $L_{best}=\min_k L(\theta,\mathbf{c}_k)$。$\mu$ 对应「用户随便挑超参时的平均水平」、$\sigma$ 对应「超参敏感性」，正是落地真正关心的两个数；把 $L_{best}$ 拎出来对照，就能看出一个 SOTA 宣称到底是普遍能力还是离群点运气。
 
-**3. 分层配对蒙特卡洛采样：压成本又消混淆。**
+**3. 分层配对蒙特卡洛采样：压成本又消混淆**
 
 如果 Identity 和 Transformer 各自在不同 EC 上评测，差异里很大一块其实是「采到的 EC 分布不同」——这正是当前 leaderboard 的核心毛病。CombinationTS 从 $\Omega$ 里采一个固定的、按数据集/horizon 分层的条件集 $\{\mathbf{c}_k\}_{k=1}^K$（主实验 $K=600$，每个数据集 100 个），强制所有 EO 在同一套条件上跑，即配对实验设计，再用 $\hat{\mu}(\theta)=\frac{1}{K}\sum_k L(\theta,\mathbf{c}_k)$ 和样本标准差 $\hat{\sigma}(\theta)$ 估计统计量。分层保证每个数据集/horizon 都被均匀覆盖，配对抵消「哪条 EC 本身就难」的系统偏差，让两个模块之差的方差大幅缩小，更容易拿到统计显著性（论文用单尾 Mann–Whitney U 检验在 $\alpha=0.05$ 下验证）；蒙特卡洛则在可控样本量下做偏差—方差权衡。
 

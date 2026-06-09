@@ -45,19 +45,19 @@ Ryze 是一个端到端 workflow，而不是单一模型结构。它从原始 PD
 
 ### 关键设计
 
-**1. 图表感知抽取与三段式清洗：先把 PDF 变成可信的结构化证据库，再谈合成。**
+**1. 图表感知抽取与三段式清洗：先把 PDF 变成可信的结构化证据库，再谈合成**
 
 生物医学论文里一个被认错的基因名、一个读偏的坐标轴数值，都会顺着 pipeline 污染后面所有 QA，因此 Ryze 在抽取阶段就把"可信度"当成第一目标。它先用 Surya 做 layout detection，把页面切成文本、图、表、caption 等区域，文本区域转成保留章节结构的 Markdown，并修复正文里"Table 1 / Figure 3"这类 cross-reference，让每个视觉元素都和它的 caption、引用它的段落绑在一起；图和表交给 GLM-OCR 做 chart/table-aware extraction，表格转成保留合并单元格和多行表头的 HTML，而不是拍平成纯文本。
 
 最后一道是用 Qwen3 做三段式清洗——hallucination detection、领域术语修复、跨元素一致性检查。先把结构和术语校准好，数据合成才不会把 OCR 错误放大成模型"学到的知识"；这也是后面消融里换成通用 OCR（Marker / DeepSeek OCR）会在 ChartQA 上掉最多 -7.8pp 的根本原因。
 
-**2. 证据增强 QA 合成：让每道题都能回溯到原始论文的视觉与文本证据。**
+**2. 证据增强 QA 合成：让每道题都能回溯到原始论文的视觉与文本证据**
 
 普通合成 pipeline 常常只留局部文本或 figure-caption pair，训练样本看似有答案，模型却只记住浅层模式。Ryze 的问题种子有两个来源：原始论文里的一般领域问题，以及从目标 benchmark 抽象出的技能类别（chart interpretation、protocol tracing、literature synthesis 等）。它不抄 benchmark 的题目和答案，而是用 Qwen3-VL-235B 对这些粗粒度技能做重写和多样化，再把每个答案严格 grounding 到源 PDF corpus 检索出的视觉元素、caption、OCR annotation、HTML 表格和 referring paragraphs 上。
 
 这套做法更像 curriculum-aware active learning：benchmark 只负责告诉系统"该覆盖哪些能力"，不交出具体题目或答案。既能定向补强 LAB-Bench 相关能力，又把直接数据泄漏的风险压低——代价是泛化性最终仍要靠完全没参与 curriculum 设计的 held-out benchmark 来背书。
 
-**3. 进度门控的 SFT→GRPO 训练闭环：用评测停滞当信号，自动从堆数据切到强化推理。**
+**3. 进度门控的 SFT→GRPO 训练闭环：用评测停滞当信号，自动从堆数据切到强化推理**
 
 如果一味堆 SFT token，饱和之后再加的样本基本是重复劳动，预算就浪费了。Ryze 每合成约 1M token 数据就训一个 SFT checkpoint 并评测，一旦准确率连续停滞，就判定 SFT 已饱和，冻结数据、转成 RL 格式，改用 GRPO 训练模型生成更连贯的 reasoning chain。分工很清楚：SFT 阶段吸收术语、常识和基础生物概念，GRPO 阶段强化需要跨图表、表格、caption 和正文推断的复杂任务。
 

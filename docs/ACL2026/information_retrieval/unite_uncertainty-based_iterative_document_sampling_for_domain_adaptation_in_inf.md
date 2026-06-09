@@ -47,15 +47,15 @@ UnIte 要解决的是一个预算受限的采样问题：给定一个超过 100k
 
 ### 关键设计
 
-**1. AU Filtering：用模型无关的词法密度先把噪声剔掉。**
+**1. AU Filtering：用模型无关的词法密度先把噪声剔掉**
 
 大语料里夹杂着离题、残缺或主题边缘的文档，把它们拿去生成伪查询会带来负迁移，但这种"数据本身的异常"不应该交给正在被适配的模型来判断——否则模型还没学会的目标域内容会被误删。UnIte 因此把 aleatoric uncertainty 完全建立在语料统计上：对每篇文档计算它到第 $k$ 个近邻的词法距离 $D_k(d)=1/(\epsilon + \mathrm{BM25}(d,n_k))$，再做 modified z-score 归一化，凡 $z(d)>z_{thr}$ 的文档判为低密度离群点并过滤掉，实验中取 $k=3$、$z_{thr}=1.5$。BM25 只看词频共现而不依赖任何 embedding，这让 AU 和后面要估的模型层不确定性能干净地分开，不会互相污染。
 
-**2. Domain-aware EU Estimation：用目标域 IDF 定位模型的知识缺口。**
+**2. Domain-aware EU Estimation：用目标域 IDF 定位模型的知识缺口**
 
 过滤掉噪声之后，真正值得训练的是模型当前还没掌握的文档，但传统的 entropy 或 MC-dropout 只看模型自身预测方差，根本不知道目标域里哪些词重要。UnIte 的 epistemic uncertainty 把目标域分布显式塞了进来：先在目标域上预计算 token 级 IDF，再让当前检索器的 MLM head 把文档表示投射成词表概率并取 top-1000 token，比较那些高 IDF 词的重要性与模型实际预测概率之间的错配。模型越是预测不出目标域的高 IDF 关键词，就说明它对该文档所在的知识区域 EU 越高、越值得拿来训练，这让不确定性信号直接对齐了 domain adaptation 的学习价值，而非泛泛的模型方差。
 
-**3. 迭代采样、重采样惩罚与早停。**
+**3. 迭代采样、重采样惩罚与早停**
 
 EU 不是静态量——第一轮高价值的 cluster 训练几轮后可能已经被学会，一次性静态采样会在这些 dominant cluster 上反复浪费预算。UnIte 因此每轮只采 500 篇、最多 10 轮，在 DUQGen 风格的聚类内用 $score=\lambda \widehat{EU}+(1-\lambda)\widehat{Diversity}$ 排序兼顾缺口与覆盖（取 $\lambda=0.5$），并给每个 cluster 的预算乘上反重复权重 $w_i=|C_i|/(P_i+\epsilon)$，历史上采得越多的 cluster 权重越低，逼着算法把后续预算转向仍有缺口的区域。停止条件则用 EMA 平滑后的平均 EU（$\alpha=0.4$）：一旦进入平台期就早停，这既省训练样本又能避免在已学会的区域上过拟合。
 

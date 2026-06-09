@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. AI Allowance 分配机制（Benchmarking + Assistance Factor）：避免锁死历史不公又不一刀切均分。**
+**1. AI Allowance 分配机制（Benchmarking + Assistance Factor）：避免锁死历史不公又不一刀切均分**
 
 碳市场分配配额有两种老路：grandfathering 按历史排放免费发，会把过去的不公平锁死；均匀均分又会让 OpenAI 这种亿级用户公司被迫限流，造成"配额造成的革命退步"。本文照搬碳 ETS 的 benchmarking 思路：对每家被纳管公司 $i$，配额 $A_i = O_i \cdot B \cdot C_i$。$O_i$ 是其 FLOP 输出（如两年滚动均值并按 15% 调整），$B$ 是行业基准 watts-per-FLOP（参照碳市"行业前 10% 最优 / 平均 90%"的设法），$C_i$ 是公司专属 assistance factor——用清洁能源 $C_i > 1$、化石能源或违规者 $C_i < 1$；给定自身效率 $E_i$（watts/FLOP），实际允许 FLOP 数 $F_i = A_i / E_i$。这样大公司有合理 FLOP 空间但效率不达标就得花钱买配额，小公司效率高就有富余配额可卖——既不挤出 incumbents，也不锁死新创。
 
-**2. 二级市场 + 配额储存（Allowance Banking）：让效率本身具有可交易的现金价值。**
+**2. 二级市场 + 配额储存（Allowance Banking）：让效率本身具有可交易的现金价值**
 
 当下 AI 行业的激励扭曲在于"只要算力买得起就没人逼你节能"，能耗负外部性没被定价。这个设计就是给效率定价：政府作为一级市场免费下发配额，公司之间在二级市场（类似 European Energy Exchange / Korea Exchange）自由买卖，超额公司须采购配额或被重罚，剩余配额还能 bank 到下一年平滑波动。论文把这种新现金流定位为初创公司在 burn rate 期的"breathing room revenue stream"。碳市场实证（如 EU ETS）已经证明，二级市场把"减排"变成赚钱机会是激励效率创新最有效的杠杆；迁移到 AI 后，"训练高效率小模型"本身就有市价，足以逆转"只要算力够就行"的扭曲。
 
-**3. 理性公司均衡 & 减 FLOP 证明（KKT 条件）：给立法者一个数学背书。**
+**3. 理性公司均衡 & 减 FLOP 证明（KKT 条件）：给立法者一个数学背书**
 
 很多 AI 治理提案停留在政治论证，缺乏经济学验证；闭式解能让立法者直接看到"减多少"对参数的敏感性。作者把单公司效用建模为 $u(x) = -x^{-k} - ax$（$x$ 是 FLOP，$-x^{-k}$ 反映性能改进的递减回报，$a$ 是 cost-per-FLOP），无机制下 $\nabla u = 0$ 得 $x^\ast = (k/a)^{1/(k+1)}$。引入交易变量 $y$（>0 卖、<0 买）、价格 $b$ 与配额上限 $F_i$ 后，约束问题变成
 

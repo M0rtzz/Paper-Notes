@@ -44,15 +44,15 @@ FreeRet 把检索拆成两阶段，全部由同一个未训练 MLLM 承担。**S
 
 ### 关键设计
 
-**1. 绕过最后一层 MLP 缓解词汇化压力（§3.2）：把 embedding 抽取点前移一层。**
+**1. 绕过最后一层 MLP 缓解词汇化压力（§3.2）：把 embedding 抽取点前移一层**
 
 MLLM 的最后一层 MLP 是为 next-token 预测服务的，它会把语义向量硬拽向词表方向（lexicalization pressure），恰好毁掉 retrieval 需要的细粒度语义。作者用 Qwen2.5-VL（3B/7B/32B）做 probing 把这件事坐实：定义 $\alpha_\ell^{\text{Attn}}=\cos(h^{\text{MLP}}_{\ell-1},h^{\text{Attn}}_{\ell})$、$\beta_\ell^{\text{MLP}}=\cos(h^{\text{MLP}}_{\ell},\mathbf{w}_{y^*})$ 等指标，发现 $\alpha$ 在最后一个 MLP 之后骤降到 <0.3、$\beta$ 同处跃升到约 0.5，250 对同义词的层间余弦也在这一层从 ~94% 掉到 ~87%——说明 lexicalization 几乎全集中在最后一层 MLP。于是直接取 attention 之后、MLP 之前的隐状态 $h_L^{\text{Attn}}$ 作为 embedding，这层一跳就在 3B / 7B 上分别带来 5.33% / 5.71% 的稳定增益，是后续所有改进的地基。
 
-**2. 受控生成 prompt 注入三类先验（§3.3）：让"总结成一个词"语义聚焦。**
+**2. 受控生成 prompt 注入三类先验（§3.3）：让"总结成一个词"语义聚焦**
 
 E5-V 那种"Summary above content in one word"的自由概括经常吐出"Self""Searching"这类语义漂移词或纯功能词，把 embedding 空间稀释掉。这里改成带三类约束的受控生成，依次叠加：（i）Task alignment——"You are required to assess if &lt;A&gt; is related to &lt;B&gt;"，用任务先验让 query 与 target 的总结词系统性对齐、天然更容易 cosine 接近；（ii）Semantic grounding——"Capture the semantics of &lt;X&gt;"；（iii）Noise suppression——"Do not use function words, prepositions, or symbols"。Tab. 3b 显示三步在 3B 上分别加 4.29、1.49、2.47 个百分点，7B 上分别加 5.07、0.9、2.17，而整个改动只动 prompt、不碰任何权重。
 
-**3. 多项选择重排化解 LLM framing effect（§3.4）：用 MCQ 抹掉标签词本身的偏置。**
+**3. 多项选择重排化解 LLM framing effect（§3.4）：用 MCQ 抹掉标签词本身的偏置**
 
 reranking 看似只是问一个二值问题，但"问法"本身就是混杂变量：作者发现"Right/Wrong""Yes/No""True/False"逻辑等价，但在同一基准上精度差最多 5%，且 context-free 下输出 logits 明显偏斜、偏斜越大下游精度越低（即 Zhao 等 2021 所述的 LLM bias，作者称 LLM framing effect）。缓解办法是把 reranking 写成 MCQ——"A. 匹配，B. 不匹配"，从 LM head 取 $p(\text{`A'})$ 做 softmax 当相关性分数。MCQ 既中和了标签的语义/感情色彩偏置，又利用了 LLM 预训练数据里大量"A/B 题型"的分布，比直接 yes/no 高 8.4%，同样无需任何训练。
 

@@ -53,15 +53,15 @@ $$\mathcal{L}_{\text{total}} = (1-\alpha)\mathcal{L}_{\text{CE}} + \alpha\big(\l
 
 ### 关键设计
 
-**1. 多头交叉注意力对齐（MHCA）：在长度不等时让 student 自己摘取 teacher 信息。**
+**1. 多头交叉注意力对齐（MHCA）：在长度不等时让 student 自己摘取 teacher 信息**
 
 最直接的痛点是 $L_s \neq L_t$，硬做一一对齐根本不可行，截断或 padding 又会丢信息。MHCA 的做法是让 student 隐藏态 $H_s$ 当 query、teacher 隐藏态 $H_t$ 当 key/value，把 teacher 的 dense 表征注意力加权地"投影"成与 student 等长的版本：$\hat H_t = \text{Concat}(\text{head}_1, \dots, \text{head}_h) W^O$，每个 head 算 $\text{Softmax}\big((H_s W_i^Q)(H_t W_i^K)^\top/\sqrt{d_k}\big)(H_t W_i^V)$，再用 $\mathcal{L}_{\text{mhca}} = \frac{1}{B \cdot L_s}\sum \|H_s - \hat H_t\|_2^2$ 把 student 拉向这个聚合上下文。这样 student 不是被动接受固定映射，而是按自己的 query 动态"摘取"对自己最有用的 teacher 信息（如局部异位搏动、细微 ST 偏移）。论文进一步指出，这个注意力聚合在数学上等价于熵正则化 OT 的 barycentric projection——也正因此它是三模块里贡献最大的特征级基础。
 
-**2. 最优传输视觉特征匹配（OT-VFM）：用软运输保住 12 导联的全局拓扑。**
+**2. 最优传输视觉特征匹配（OT-VFM）：用软运输保住 12 导联的全局拓扑**
 
 ECG 图像里位置本身就是诊断信息——V1 贴近右房、V5/V6 反映左室——所以逐点匹配很危险，长度不齐时容易把胸导联误对到肢体导联，把空间拓扑搅乱。OT-VFM 把 teacher / student 的视觉 token 各看成均匀经验分布 $\mu, \nu$，解一个 entropic OT 求最优运输方案 $\mathbf{P}^\star_\varepsilon = \arg\min_\mathbf{P} \langle \mathbf{P}, C\rangle - \varepsilon \mathcal{H}(\mathbf{P})$（Sinkhorn 迭代），再以 $\mathcal{L}_{\text{ot}} = \sum_{i,j} P^\star_{\varepsilon, ij} \|t_i - s_j\|_2^2$ 做蒸馏。软运输方案天然允许两边 token 数不同，又隐含地编码了"哪个 student token 该承接哪块 teacher 区域"，于是既解决了长度不匹配，又把全局空间结构整体保留下来。
 
-**3. 几何关系内部匹配（Geometric Intra-Architecture Relation）：对齐结构而非单点，保住诊断流形。**
+**3. 几何关系内部匹配（Geometric Intra-Architecture Relation）：对齐结构而非单点，保住诊断流形**
 
 ECG 诊断本质上靠结构拓扑和时序关系——P→QRS 间隔、ST 朝向、各段比例——单纯重建每个 token 会把这些全局几何丢掉。这一模块不直接对齐隐藏态本身，而是在每个架构内部各算一套逐对关系，再对齐两套关系。对隐藏态序列 $H$ 定义两个关系势：距离势 $\psi_D$（均值归一化的逐对欧氏距离）和角度势 $\psi_A$（逐对余弦相似度），按 $\mathcal{L}_k = \frac{1}{B \cdot L_s^2} \sum \|\psi_k(\hat H_t^{(i)}, \hat H_t^{(j)}) - \psi_k(H_s^{(i)}, H_s^{(j)})\|^2$（$k \in \{D, A\}$）匹配，合成 $\mathcal{L}_{\text{rel}} = \tfrac{1}{2}(\mathcal{L}_D + \mathcal{L}_A)$。距离和角度恰好对应临床上的"间隔时长"和"电轴朝向"，于是 teacher latent space 里类似心律失常的聚类几何（哪些样本该靠近、朝哪个方向）被原样搬到 student 上，复杂多段心律失常（如房颤叠加 LBBB）的识别因此明显受益。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Holistic Orchestration + Function-Calling 形式化：让 orchestrator 一次吐出整张系统，而不是逐步拼。**
+**1. Holistic Orchestration + Function-Calling 形式化：让 orchestrator 一次吐出整张系统，而不是逐步拼**
 
 针对的痛点是 code-based 编排（MAS-Zero、AFlow、W4S）的强耦合——orchestrator 必须读懂甚至复现子智能体的内部代码，子智能体一复杂（如多轮 search agent）编排成本就爆炸，逼得大家把子智能体退化成 CoT/CoT-SC 这种最简形式。MAS-Orchestra 把整个编排空间收到两个函数原语上：`create_agent(role, goal, tools, workflow)` 实例化一个目标导向的子智能体，`create_flow(from, to, payload)` 描述子智能体之间的信息流。关键在于子智能体被当作黑盒函数，orchestrator 只看 signature 不看实现，于是它在一个 forward 里就能写出包含若干子智能体及其连接拓扑的完整 MAS 程序。这样 RL 信号直接对齐"系统级最终回报"而非每一步的局部最优，训练更稳定，子智能体也可以做得任意复杂（多轮 search、DeepResearch），因为它们的内部复杂度对 orchestrator 完全透明。
 
-**2. DoM（Degree of MAS）显式约束：把"该不该上 MAS"做成用户可调的旋钮。**
+**2. DoM（Degree of MAS）显式约束：把"该不该上 MAS"做成用户可调的旋钮**
 
 实证里并非所有任务都受益于 MAS——AIME 这类强 sequential 数学题加上 MAS 几乎无增益，硬上反而白白付协调开销。作者因此给调用时加一个 DoM 等级 $m$ 来硬性约束编排空间：LOW 时至多实例化 1 个子智能体、且不允许显式 inter-agent 拓扑，HIGH 时子智能体数量与连接方式都不设限。要强调 LOW 并不等于退回单智能体（SAS）——orchestrator 仍要决定"自己解 / 委派整任务 / 委派子任务 / 选哪个子智能体 / 怎么配置它"，只是不搭多智能体拓扑；HIGH 才进一步决定多体协同结构。同一个用统一目标训练出来的模型，靠 $m$ 就能在两种 regime 间切换，把"要不要 MAS"这个先验留给用户/任务，而不是埋死在模型权重里，省下大量无效编排。
 
-**3. GRPO + 任务级稀疏奖励：只用最终答案对错端到端训整张系统。**
+**3. GRPO + 任务级稀疏奖励：只用最终答案对错端到端训整张系统**
 
 holistic 编排只在最终输出处拿到反馈，奖励极稀疏，PPO 这种依赖 value baseline 的方法在这种信号下方差很大。作者用最终答案正确性 $R(x,y,\hat{y})=\mathbb{1}[\hat{y}=y]$ 作为唯一信号，对每个 $x$ 采样一组 $K$ 个候选编排 $\{a_i\}_{i=1}^K\sim\pi_\theta(\cdot\mid x,m)$，算出各自奖励 $\{R_i\}$，再用组内相对优势构造 clipped policy gradient（GRPO, Shao et al. 2024）。Robustness 这类需要中间答案的任务可在奖励里额外加入子任务正确性。GRPO 用 group 内相对比较替代 value model，恰好契合"一个 prompt 一次成型出多个候选系统"的训练形态——一把 critic 全省掉，正好对上 holistic 编排"一次吐 K 个完整 MAS"的采样结构。
 

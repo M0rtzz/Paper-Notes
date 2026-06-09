@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Checklist-Guided Critique Generation：一次前向批量评完所有约束。**
+**1. Checklist-Guided Critique Generation：一次前向批量评完所有约束**
 
 主流 judge 对 5~20 条约束逐条调用一次大模型，同一样本要推理十几次，算力开销随约束数线性增长。IF-Critic 把 (instruction, response, checklist) 一起喂给 critic，让它沿 checklist 顺序在单条 CoT 里产出每个 $(e_k, j_k)$ 段后聚合成完整 critique，把 $O(n)$ 次推理压成一次前向；由于"有哪些约束"这条线索已经显式给出，critic 不必再自己从指令里推断隐藏约束，自我一致性也能直接基于 $j_k$ 投票而非整段文本比对。作者还观察到 reasoning model（o4-mini、QwQ-32B）在 Checklist-Level Prompt 下反而强于 Constraint-Level Prompt，说明长链推理能利用 checklist 的全局视野感知约束间关系，这正是该训练目标成立的依据。
 
-**2. 多阶段 Critique Filtering：四级流水线榨出高质量监督。**
+**2. 多阶段 Critique Filtering：四级流水线榨出高质量监督**
 
 用 DeepSeek-R1 为每条 (x, y, checklist) 采 $N=5$ 份 expert critique，但 LLM judge 自带偏见、幻觉和"不会数数"等硬伤，直接拿来训会污染 critic。于是为每条约束设计四级过滤选出最干净的 $(e_k^*, j_k^*)$：(i) Cross-Model Verification 用 GLM-4-Plus 与 Qwen2.5-72B 双盲核验"解释是否正确""解释与判定是否一致"，任一不过即丢、剔除约 11.3%（治偏见）；(ii) Rule-Augmented Verification 先用 Qwen2.5-72B 抽出受长度约束的片段、再用 Python 真值数数、最后让 DeepSeek-R1 据此修订 critique（治数数）；(iii) Final Judgement Selection 对每条约束在 5 份 critique 上多数投票、丢弃置信度 $<0.75$ 者（治幻觉）；(iv) Final Explanation Selection 在与最终判定一致的解释集合 $\mathcal{H}_k$ 上做 MBR 选择 $e_k^* = \arg\max_{e \in \mathcal{H}_k} \frac{1}{|\mathcal{H}_k|} \sum_{\tilde e \in \mathcal{H}_k} u(\tilde e, e)$（相似度 $u$ 由 difflib 实现，治措辞噪声）。四级恰好对应 LLM-as-a-Judge 的四类典型失败模式，70 条样本 353 约束的人工复核达 96.03% 判定 + 92.35% 解释完全正确。
 
-**3. Constraint-Level Preference Optimization：把偏好对局部化到判定冲突的段。**
+**3. Constraint-Level Preference Optimization：把偏好对局部化到判定冲突的段**
 
 传统响应级 DPO 会把"两段都对"的描述也算进对比，真正想强化的判定差异被无关 token 稀释。本文先把数据按 6:4 切成 $D_\text{sft} \cup D_\text{ref}$，SFT 阶段最小化 $\mathcal{L}_\text{SFT} = -\sum_i \log P_\theta(C_i \mid p_i)$；偏好阶段对 $D_\text{ref}$ 每条样本从 SFT critic 采 $M=10$ 份 critique，挑出"至少一条判定与专家不符"者作 $C_l$，构造 $C_w$ 时保留与专家一致的段不动、仅把不一致段替换为"自采池中与专家判定一致且 MBR 最优的解释 $\hat e_k$ + 专家判定 $j_k^*$"，使 $C_w$ 与 $C_l$ 的 token 差异只落在判定冲突段。随后跑标准 DPO 损失 $\mathcal{L}_\text{DPO}(\pi_\theta;\pi_\text{ref}) = -\mathbb{E}\big[\log \sigma\big(\beta\log \frac{\pi_\theta(C_w|p)}{\pi_\text{ref}(C_w|p)} - \beta\log \frac{\pi_\theta(C_l|p)}{\pi_\text{ref}(C_l|p)}\big)\big]$。用"自采解释"而非"专家解释"作替换源，是为了保证 $C_w$ 仍处在 SFT critic 的解码空间内，让优化更稳。
 

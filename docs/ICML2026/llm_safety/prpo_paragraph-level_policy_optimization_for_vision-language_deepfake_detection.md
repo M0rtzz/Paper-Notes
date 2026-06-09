@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Visual Consistency Reward（VCR）：把每段推理逐句锚回图像证据。**
+**1. Visual Consistency Reward（VCR）：把每段推理逐句锚回图像证据**
 
 针对 MLLM「先下结论再补理由、甚至幻觉出图中根本不存在的瑕疵」这个痛点，VCR 给每段推理打一个「你说的东西图里到底有没有」的分。做法是先用 YAKE 无监督关键词抽取从段落 $p_j^{(i)}$ 里抽出关键短语 $s_j^{(i)}$，再喂进 frozen CLIP-ConvNeXT 的 text encoder，与图像 encoder 输出算 cosine 相似度并归一化到 $[0,1]$：$R_{\text{VCR}}(p_j^{(i)})=\tfrac12[\text{sim}(\text{CLIP}_{\text{txt}}(s_j^{(i)}),\text{CLIP}_{\text{img}}(x))+1]$。之所以要先抽词而不是整段塞 CLIP，是因为整段会超出 CLIP 输入长度、语义也被稀释，抽词后信号正好集中在「这段提到的具体特征」上；而且这里复用的就是架构里已有的那个 ConvNeXT，等于白嫖一个 reward model，省掉外部模型和额外算力。
 
-**2. Prediction Consistency Reward（PCR）：用段间多数票把结论锁回证据。**
+**2. Prediction Consistency Reward（PCR）：用段间多数票把结论锁回证据**
 
 deepfake 推理常出现「证据明明指向 fake、最终却说 real」的内部矛盾，PCR 就是惩罚这种自相矛盾。它先用三张预定义词表把每段规则化成一个段级标签 $\hat y(p_j^{(i)})$：命中 $\mathcal F$（unnatural、inconsistent…）判 fake、命中 $\mathcal R$（authentic、natural…）判 real、$\mathcal N$（no、not…）负责处理否定。中间段默认与图一致、reward 恒为 1；只有 final 段要受约束，其 reward 是它与前面所有段多数投票结果是否一致的指示函数 $\mathbb I[\hat y(p_{M_i+1}^{(i)})=\hat y_{\text{maj}}^{(i)}]$。在 deepfake 这种没有 step-wise gold label 的场景里，没法照搬数学推理的 process reward，于是 PCR 干脆拿模型自身的段间一致性当 label-free 信号——既不需要外部模型也不需要标注，正好契合 test-time RL「现场无监督自改进」的需求。
 
-**3. 段落级 GRPO 损失（PRPO）：让 advantage 精确落到每一段。**
+**3. 段落级 GRPO 损失（PRPO）：让 advantage 精确落到每一段**
 
 token-level GRPO 让一整条 reasoning 共享同一个 advantage，结果是同一条里「写得好的段」和「写错的段」被同奖同罚，信号糊成一团。PRPO 把粒度提到段落：每段先合成自己的 reward $R(p_j^{(i)})=\tfrac12(R_{\text{VCR}}+R_{\text{PCR}})$，然后在整组 $\mathcal O=\{o^{(1)},\dots,o^{(L)}\}$ 的所有段上统一算均值方差 $\mu_R,\sigma_R$ 做归一化 $A_j^{(i)}=(R(p_j^{(i)})-\mu_R)/(\sigma_R+\epsilon)$，组内归一化顺带压住了 reward 数值漂移。策略比定义为 $r_j^{(i)}=\pi_\theta(p_j^{(i)}|v,z)/\pi_{\text{old}}(p_j^{(i)}|v,z)$，主损失是段级 PPO-clip：
 

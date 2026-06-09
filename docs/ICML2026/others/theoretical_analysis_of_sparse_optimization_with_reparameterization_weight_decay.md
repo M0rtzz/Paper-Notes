@@ -44,11 +44,11 @@ ReWA 在前向上对参数做幂次重参数化 $\boldsymbol{x}=\boldsymbol{y}^{
 
 ### 关键设计
 
-**1. 幂次重参数化 $\boldsymbol{x}=\boldsymbol{y}^{K}$：把非光滑的 $\ell_p$ 正则改写成光滑损失加 $\ell_2$ 衰减。**
+**1. 幂次重参数化 $\boldsymbol{x}=\boldsymbol{y}^{K}$：把非光滑的 $\ell_p$ 正则改写成光滑损失加 $\ell_2$ 衰减**
 
 $\ell_p\;(0<p<1)$ 稀疏性强、偏差小，但零附近梯度无界、不光滑，深网上几乎必炸。ReWA 的第一步是把待优化变量重参数化为 $\boldsymbol{x}=\boldsymbol{y}^{K}$（$K$ 取奇数，逐元素），网络损失 $f$ 输入仍是 $\boldsymbol{x}$，但反向只更新隐变量 $\boldsymbol{y}$。Lemma 3.1 证明这种乘法重参数化 [Cp] 与 $\ell_p\;(p=2/K)$ 正则在全局最优、局部最优、(亚)稳定点上一一对应，于是稀疏性的好处被原封不动继承下来，而优化难题被归约成"光滑损失 + 普通权重衰减"。更关键的是 Theorem 3.7 给出一个硬性不可能性：若直接对 $\ell_p$ 做梯度截断，梯度上界和逼近误差不可能同小（事件 $\mathcal{E}_1\le\sqrt{d}$ 与 $\mathcal{E}_2\le d/(2e)$ 无法同时成立），从根上堵死了"裁剪 + 原 $\ell_p$"这条捷径——也就正面论证了为什么必须走重参数化而不是简单加 grad clip。
 
-**2. 自适应学习率 $\eta_t\,\boldsymbol{y}^{M}/(\boldsymbol{y}^{K-1}+\epsilon\mathbf{1})$：抵消 $\boldsymbol{y}^{K-1}$ 造成的零鞍点。**
+**2. 自适应学习率 $\eta_t\,\boldsymbol{y}^{M}/(\boldsymbol{y}^{K-1}+\epsilon\mathbf{1})$：抵消 $\boldsymbol{y}^{K-1}$ 造成的零鞍点**
 
 重参数化带来一个新麻烦：更新里的 $\boldsymbol{y}^{K-1}$ 在零附近形成高阶鞍点，坐标一旦和真值异号、要穿过零就出不来。ReWA 的解法是给步长乘一个坐标级自适应因子。Example 3.2 用一维玩具 $f(x)=(x-1)^2$、$y(0)=-1$ 把问题摆明：非自适应版本满足 $|y(T)-1|\ge 1$，永远逃不出零；而自适应版本（$M=0,\epsilon\to 0$ 时退化为 $\boldsymbol{y}(t)-\eta\nabla f(\boldsymbol{y}^K(t))$）满足 $|y(T)-1|\le 2(1-\tfrac{2\eta}{K-1})^T$，线性收敛。这个因子的分子 $\boldsymbol{y}^{M}$ 控制稀疏强度（$M$ 越大对小坐标抑制越狠），分母 $\boldsymbol{y}^{K-1}+\epsilon$ 在 $\boldsymbol{y}$ 大时抵消 $\boldsymbol{y}^{K-1}$、在 $\boldsymbol{y}$ 小时由 $\epsilon$ 兜底（角色类似 Adam 的稳定常数）。Theorem 3.3 算出 ReWA 的隐式正则是
 
@@ -56,7 +56,7 @@ $$R(\boldsymbol{x})=\tfrac{K}{1-M+K}\|\boldsymbol{x}\|_{1+(1-M)/K}^{1+(1-M)/K}+\
 
 Proposition 3.4 据此给出实操配方：简单数据用 Config A（$\epsilon=0,M>1$），复杂数据用 Config B（$\epsilon>0,M<2$），都能让主项指数 $p=1+(1-M)/K\in(0,1)$ 真正落在 $\ell_p$ 区间。
 
-**3. 显式权重衰减 $(1-\lambda\eta_t)\boldsymbol{y}(t)$：把"小初始化假设"卸成可证的稀疏保证。**
+**3. 显式权重衰减 $(1-\lambda\eta_t)\boldsymbol{y}(t)$：把"小初始化假设"卸成可证的稀疏保证**
 
 光靠重参数化的隐式偏置在大初始化时会失效——PowerPropagation 这类工作只在小初始化、矩阵分解等特殊场景才出稀疏。ReWA 干脆在更新里显式加 $\ell_2$ 衰减 $(1-\lambda\eta_t)\boldsymbol{y}(t)$。Example 3.8 / Theorem 3.9 证明：在二次目标 $f(\boldsymbol{x})=\boldsymbol{x}^\top\Lambda\boldsymbol{x}$ 下，不加衰减时存在初始化让解被冻在初值附近、远离稀疏最优；而加上 $\ell_2$ 衰减后保证收敛到原点这一最稀疏全局最优。这一步的意义在于把 Gunasekar、Woodworth 等依赖"小初始化"的隐式稀疏偏置，换成一个对任意初始化都成立、且能拓展到一般非凸问题的显式机制——三件套缺一不可：去掉重参数化撞回 $\ell_p$ 不可优化，去掉自适应步长卡在零鞍点，去掉权重衰减失去稀疏性。
 

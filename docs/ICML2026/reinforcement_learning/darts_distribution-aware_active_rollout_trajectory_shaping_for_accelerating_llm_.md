@@ -46,15 +46,15 @@ DARTS 在 VeRL 之上做 rollout 阶段插件，整体三件套：(1) Distributi
 
 ### 关键设计
 
-**1. Distribution-Aware Trajectory Sampling：用一条采样规则同时压冗长、留深度，不显式分类。**
+**1. Distribution-Aware Trajectory Sampling：用一条采样规则同时压冗长、留深度，不显式分类**
 
 长尾里其实混着两种相反的轨迹——Pattern I 是"冗长无效尾"（正确响应反而短，口水话和错误循环把长度撑长），Pattern II 是"必要深度尾"（正确响应本就需要长链推理）。理想的塑形要压前者、留后者，但显式给每个 prompt 分类又会引入一个分类器和新的学习问题。DARTS 的巧妙在于让 GRPO 的 group baseline 自动完成区分：先对每个 prompt $q_i$ 做 intra-prompt 冗余采样生成 $M_i' \ge M$ 条候选 $\mathcal{T}_i$，再做双端长度采样——按长度排序取最短 top-$K$ 与最长 top-$L$（$K+L=M$ 且 $K\gg L$，主实验 $L=1$），并排除触顶系统长度的无效轨迹。命题 1/2 说明了它为何自洽：对 Pattern I 的 prompt，$\mathcal{Y}_{\text{short}}$ 抓到的多是高奖励短样本，使组均值 $\mu(\mathcal{Y}_i^{\text{dual}})\approx\bar r_{\text{short}}$ 偏高，于是冗长正例的 advantage $r(o_i^{\text{long}})-\mu$ 被压低、抑制冗长；对 Pattern II 的 prompt，$\mathcal{Y}_{\text{short}}$ 多是错误短答、$\mu$ 偏低，反而放大必要长链的正 advantage、鼓励深度。一条规则、靠 $\mu$ 的偏移撬动两个相反方向的梯度，工程上零额外组件，且双端组合保证训练组里既有"短而正确"的样板又有"长而正确"的探索路径，不会陷入单端偏置。
 
-**2. Variance-Based Adaptive Redundancy Allocation：把宝贵的冗余预算按长尾严重度分给最该分的 prompt。**
+**2. Variance-Based Adaptive Redundancy Allocation：把宝贵的冗余预算按长尾严重度分给最该分的 prompt**
 
 冗余采样要花钱，均匀地给每个 prompt 都多采几条是浪费——那些分布已经短而紧的低不确定性 prompt 采几条都长得差不多。DARTS 发现响应长度方差 $\sigma_L^2(q_i)$ 与"长尾严重程度 + 模型不确定性"强正相关，于是直接用它的滑动平均 $\tilde\sigma_L^2(q_i)$ 当代理，几乎零在线成本。预算分两步定：先定义效用 $U(\bar M)=E(\bar M)-\lambda T(\bar M)$，其中 effectiveness $E$ 用数据集级 $\tilde\sigma_L^2$、overhead $T$ 用基于 per-token latency 的 cost model $T_{\text{rollout}}=\sum_{m}(l_{[m]}-l_{[m-1]})\cdot\mathrm{PTL}(d_{\mathrm{TP}}, M'-m+1)$ 估计，对 $\partial U/\partial\bar M=0$ 求出最优总预算 $M_{\mathrm{total}}$；再求解凸优化 $\min\sum_i \mathrm{Norm}(\tilde\sigma_L(q_i))/M_i'$ s.t. $\sum_i M_i'=M_{\mathrm{total}}$、$M_{\mathrm{low}}\le M_i'\le M_{\mathrm{up}}$（默认 $M_{\mathrm{low}}=M, M_{\mathrm{up}}=2M$），二阶导为正所以贪心即最优。这正好体现边际效用递减：给高方差 prompt 多加一个候选比给低方差的更值。两个软界也有讲究——$M_{\mathrm{up}}=2M$ 防单个 prompt 吃光所有冗余，$M_{\mathrm{low}}=M$ 保证最少能维持基础 GRPO 训练。值得强调的是，把"系统度量"（长度方差）当作"算法度量"（长尾 + 不确定性）的桥梁，省掉了额外的不确定性估计模型，rollout 本身的统计量就够用。
 
-**3. Variance-Guided Tail Pruning + Token-Level Streaming：给 5% 极端 prompt 兜底，并打破样本级流水线颗粒度。**
+**3. Variance-Guided Tail Pruning + Token-Level Streaming：给 5% 极端 prompt 兜底，并打破样本级流水线颗粒度**
 
 双端采样在最贵的那约 5% 极端 prompt 上反而是负优化——必须等最长那条轨迹完成才能拿到 top-$L$ longest。DARTS 用方差信号识别这些采样预算饱和到 $M_{\mathrm{up}}$ 的 prompt，自动从双端切换成 shortest-only（只取最短 $M$ 条）。背后的洞察是这类 prompt 长度分布整体右移，"最短"也已经够长够深，没必要再等长尾。一旦切到 shortest-only，就能开 proactive early stopping：收齐 $M$ 条短轨迹后立即终止剩下还在 decode 的长尾，把最贵的尾部 token 计算直接砍掉。另一条优化针对大规模数据并行下"每张卡只跑几条 trajectory、sample-level overlap 失效"的瓶颈——token-level streaming 把"每完成一条 trajectory 才送 training"改成"每累计一定 token 就 chunk 化送出"，让 training engine 能在长轨迹后缀还在生成时就启动前缀的 forward，进一步压掉闲置时间。
 

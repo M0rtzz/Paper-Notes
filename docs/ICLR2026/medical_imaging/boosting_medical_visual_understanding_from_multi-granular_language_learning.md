@@ -47,11 +47,11 @@ MGLL 要解决的问题是：医学图像天然带有多标签、多粒度的结
 
 ### 关键设计
 
-**1. Soft CLIP Loss $\mathcal{L}_{\text{sCLIP}}$：把单标签硬匹配换成多标签软对齐。**
+**1. Soft CLIP Loss $\mathcal{L}_{\text{sCLIP}}$：把单标签硬匹配换成多标签软对齐**
 
 标准 CLIP 强制每张图像只对齐一个标签，但医学图像常常一图多病，硬匹配会逼模型在多个正确标签里只认一个，产生偏差表征。soft CLIP loss 允许图像特征 $V_i$ 同时与多个文本标签 $\{T_{i1}, T_{i2}, ..., T_{iM_i}\}$ 对齐，每个图像-文本对给一个软权重 $w_{ik}$，由标签共现矩阵归一化得到：$w_{ik} = \frac{\text{cooccurrence}(V_i, T_{ik})}{\sum_k \text{cooccurrence}(V_i, T_{ik})}$。这样优化下来，图像特征会收敛到它所有关联文本特征的加权中心，而不是被某一个标签独占，自然处理了一对多的映射。
 
-**2. Point-wise Loss $\mathcal{L}_P$：在每个粒度层级里逐对地压住负样本。**
+**2. Point-wise Loss $\mathcal{L}_P$：在每个粒度层级里逐对地压住负样本**
 
 soft CLIP loss 解决的是正样本之间怎么软分配，但它不直接管负样本——而多标签判别恰恰需要把不该匹配的对压下去。point-wise loss 用二元交叉熵补上这一块：用 $y_{ij} \in \{0, 1\}$ 标记图像 $V_i$ 与文本 $T_j$ 是否真的匹配，再用 sigmoid 把相似度归一化成概率，逐对计算损失：
 
@@ -59,7 +59,7 @@ $$\mathcal{L}_P = -\sum_{i,j} \frac{y_{ij} \log \sigma(x_{ij}) + (1-y_{ij}) \log
 
 当 $y_{ij}=0$ 时，这一项会显式地最小化 $\sigma(x_{ij})$、把无关对的相似度往下压。它和 soft CLIP loss 一正一负互补，合起来才把多标签判别能力撑起来——消融里 point-wise loss 单独贡献也最大。
 
-**3. Smooth KL 散度 Loss $\mathcal{L}_{\text{sKL}}$：把不同粒度的表征拉到同一个空间。**
+**3. Smooth KL 散度 Loss $\mathcal{L}_{\text{sKL}}$：把不同粒度的表征拉到同一个空间**
 
 前两个损失只保证了"图像和文本对得上"，但不同粒度（疾病类别 / 临床描述 / 检查信息）如果各自为政，特征会散落在不同子空间，跨粒度根本泛化不了。smooth KL 散度给这件事加一个一致性约束：对 $m$ 个粒度层级的预测分布 $\{P_1, ..., P_m\}$，先算它们的均值分布 $M = \frac{1}{m}\sum_i P_i$，再把每个粒度分布到均值分布的 KL 散度都最小化：
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 梯度三分解（Proposition 3.1）：把 NTP 的训练梯度精确拆成 direct / pre-cached / shared 三条路径。**
+**1. 梯度三分解（Proposition 3.1）：把 NTP 的训练梯度精确拆成 direct / pre-cached / shared 三条路径**
 
 NTP 损失只监督"下一个 token"，可模型却学到了关于全局状态和未来 token 的特征——要回答这些"无用"特征从何而来，第一步是看清梯度到底经过哪些路径回传到参数。本文固定某位置 $i$、某层 $k$ 的残差流 $r_{\theta,i}^k(x)$，借助 stop-gradient 操作把总梯度切成三块：direct 项 $\nabla_\theta L_i - \nabla_\theta L_i^{sg(k,i)}$，只保留经过这一残差流、流向即时预测 $\hat{x}_{i+1}$ 的信号；pre-cached 项 $\nabla_\theta \sum_{j \neq i} [L_j - L_j^{sg(k,i)}]$，捕捉经过该残差流、却流向未来位置损失 $\hat{x}_j$（$j>i+1$）的信号；shared 项 $\sum_j \nabla_\theta L_j^{sg(k,i)}$，则是不经过该残差流、靠参数共享间接施加的影响。三者之和恰好等于 $\nabla_\theta L$，构成一个完备分解。这个切法之所以关键，是因为 direct 成分只和即时预测挂钩，它只能驱动 NTP-useful 特征；剩下的 pre-cached 与 shared 才是"无用"特征涌现的潜在来源，后续所有干预和归因都建立在这三块的区分上。
 
-**2. 干预：Myopic Training 与 m-Untied Training——把 pre-caching 和 circuit sharing 分别"关掉"看后果。**
+**2. 干预：Myopic Training 与 m-Untied Training——把 pre-caching 和 circuit sharing 分别"关掉"看后果**
 
 有了三分解，最直接的验证就是逐个消融机制、观察缺了它模型会怎样。Myopic training（Wu et al. 2024 提出）在注意力的 K、V 矩阵处切断跨位置梯度，使位置 $i$ 不再被激励去计算"对未来位置有用"的特征，从而关闭 pre-caching；m-Untied training（本文提出）则用两套独立参数分别处理位置 $m$ 之前和之后的序列，让两段无法共享电路，从而切断 circuit sharing。之所以要分别关，是因为两条路径承担的角色不同：pre-caching 提供的是额外表达力，让多层注意力的复杂构造（如 induction head 式的两层电路）成为可能；circuit sharing 提供的是跨位置迁移——在某个位置 NTP-useful 的特征，可以通过共享参数被编码到另一个位置上去。把它们分开关，才能看清各自负责学的是哪类"无用"特征。
 
-**3. 归因：Feature Mismatch Influence——量化每种梯度成分到底贡献了多少。**
+**3. 归因：Feature Mismatch Influence——量化每种梯度成分到底贡献了多少**
 
 干预只能回答"某机制有没有必要"，回答不了"它实际贡献了多少"，于是本文再给出一套定量归因。先定义 feature mismatch 衡量两组参数下同一特征方向 $w_i^k$ 的表征差异：
 
@@ -61,7 +61,7 @@ $$R(x|\theta_1, \theta_2, w_i^k) = \frac{1}{2}\big(\langle w_i^k, r_{\theta_1,i}
 
 再把某个梯度成分 $G$ 对这一差异的边际影响定义为 influence $I_i^k(\theta, x | w_i^k, \theta^*, G) = \frac{d}{d\varepsilon} R(x|\theta + \varepsilon G, \theta^*, w_i^k)|_{\varepsilon=0}$。为了让结论在真实优化器下成立，本文对 Adam 做了适配——为 direct、pre-cached、shared 各维护一套独立动量，保证三个成分的步长之和等于实际的优化器步长。沿训练轨迹把每一步的 influence 积分起来，就得到每种机制对某个特征涌现的累计定量贡献，这正是后面"direct 只推 useful、pre-cached 推 useless"那张置信区间表的来源。
 
-**4. 大模型推断：Intervention-based Influence Ratio $Q(w)$——不重训也能估计 pre-cached vs direct 的影响比。**
+**4. 大模型推断：Intervention-based Influence Ratio $Q(w)$——不重训也能估计 pre-cached vs direct 的影响比**
 
 上面的归因要完整重训并逐步记录三个梯度成分，对 Gemma 2 这种规模的模型根本跑不动。为此本文给出一个只需访问最终 checkpoint 的近似指标：Proposition 5.1 证明，在训练后的模型上对某特征做激活干预（ablation），统计干预引起的未来位置 KL 散度之和与即时位置 KL 散度之比
 

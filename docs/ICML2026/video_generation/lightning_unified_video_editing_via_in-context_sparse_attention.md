@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Context Pre-Selection：按显著性把陪跑的 context K/V 剪掉。**
+**1. Context Pre-Selection：按显著性把陪跑的 context K/V 剪掉**
 
 ICL 把 source 和 context 等长拼接，attention 计算直接翻了 4 倍，但作者把 attention 分布画出来发现：$Q^{src}(K^{src})^\top$ 远大于 $Q^{src}(K^{ctx})^\top$，而且层越深越显著——大部分 context token 其实是陪跑。于是先做一遍 pooling attention 得到粗粒度分数 $S_\text{coarse}\in\mathbb{R}^{B\times H\times N_Q\times N_K}$，切出 source-Query 对 context-Key 的子块 $S^\text{ctx}_\text{coarse}$，沿 Query 轴求均值后用 TopK 选出 $\alpha_s\lceil L_{ctx}/b\rceil$ 个最显著的 context block，再 gather + concat 重组出新的 $K_\text{new}, V_\text{new}$，把 K/V 长度从 $N$ 压回 $L_{src} + \alpha_s L_{ctx}$、复杂度从 $\mathcal{O}(NSD)$ 降到 $\mathcal{O}(N(L_{src}+\alpha_s L_{ctx})D)$。剪掉这些 token 不只省算力——它还顺手去掉了 synthetic context 带来的噪声，这正是 ISA 在 training-free 下反而比 full attention 还好的原因。
 
-**2. Block-wise 0 阶 Taylor 稀疏注意力：能近似的块用代表值顶替。**
+**2. Block-wise 0 阶 Taylor 稀疏注意力：能近似的块用代表值顶替**
 
 对每个 Query block $Q_i$ 与 Key/Value block 对 $(K_j, V_j)$，按 block mask $M_{ij}$ 决定走精确还是近似路径。$M_{ij}=1$ 时走标准 online-softmax：$S_{ij}=Q_i K_j^\top/\sqrt{D}$、$P_{ij}=\exp(S_{ij})$、$\ell_i \mathrel{+}= \mathrm{rowsum}(P_{ij})$、$O_i \mathrel{+}= P_{ij} V_j$；$M_{ij}=0$ 时改用预先 pool 出的 $K_j^c, V_j^c$ 当整块的"代表值"，$S_{ij}^c=Q_i (K_j^c)^\top/\sqrt{D}$、$P_{ij}^c = \exp(S_{ij}^c)$，并按块长放大 $\ell_i \mathrel{+}= P_{ij}^c \cdot L_K$、$O_i \mathrel{+}= P_{ij}^c V_j^c \cdot L_K$，最后 $O_i = O_i/\ell_i$ 归一化。作者试过 1 阶、2 阶 Taylor 展开，但它们在 GPU 上难 kernel 化、额外计算太重；0 阶展开既能塞进 FlashAttention 的 online-softmax 同一框架，又能做 contiguous block 访问，是工程上的甜点。
 
-**3. 基于 Query 锐度的 Grouped Computation：让少数"尖锐" Query 走精算、其余走近似。**
+**3. 基于 Query 锐度的 Grouped Computation：让少数"尖锐" Query 走精算、其余走近似**
 
 以前的稀疏方法对所有 Query 一视同仁，结果被个别"锐度极高"的 Query 带崩。ISA 给每个 Query 算一个可几乎免费拿到的代理量。Theorem 3.1 证明 0 阶 Taylor 的误差上界由 $M_i = \mathrm{Var}(\mathrm{softmax}(Q^c_i(K^c)^\top))$ 和 $\|Q(K-K^c)^\top\|_\infty^2$ 共同决定，而后者计算昂贵、实验里也不是好代理，于是只用 $M_i$——它能直接从 pooling score 读出。把 $M_i$ 从大到小排，前 $\alpha_f$ 比例（Flat Ratio）的高锐度 Query 走 FlashAttention v2/3 保精度，其余走 0 阶 Taylor 稀疏、再用 $\alpha_{ns}$ 控制 block 内不稀疏比例，整体稀疏度能推到 93.75%。这种"用 cheap statistic 路由 expensive computation"的动态分流，把关键 Query 的精确性保住了，稀疏度才敢压这么狠。
 

@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 细粒度 Activation Patching + 改造版 ODDS：把因果贡献定位到单个 head。**
+**1. 细粒度 Activation Patching + 改造版 ODDS：把因果贡献定位到单个 head**
 
 只看 residual stream 会把"用完全不同 head 集合却产出相似表征"的两种机制误判成同一个，所以必须下钻到 head 级。做法是把 base 输入 $b$ 上某个 component 的激活 $f(b)$ 替换成 source 输入 $s$ 的对应激活 $f(s)$，观察输出概率怎么变，并用改造版 $\text{ODDS}(p, p_{\text{interv}}, T) = \frac{1}{|T|}\sum \log\left(\frac{p(y_b|b)}{p(y_b|s)} \cdot \frac{p_{\text{interv}}(y_b|s,b)}{p_{\text{interv}}(y_b|b,s)}\right)$ 度量干预对特定 token $y_b$ 概率差距的位移。原始 Arora 版比较的是 $y_b$ vs $y_s$，但 NPI 场景下这两者在语法上非对称（$y_b$ 才是 NPI），故改成只跟踪同一 token 的概率变化。这一改动一举三得：patching 全程不训练因而无 overfit 风险；在 FGD 对称对上与原版数学等价（附录有证明）却能正确处理 NPI 非对称对；head 级粒度让"residual 相似但 head 不同"的两种机制得以区分。
 
-**2. 七构式共享 vs 八构式分裂的对照设计：用可证伪假说立住"共享"的真实性。**
+**2. 七构式共享 vs 八构式分裂的对照设计：用可证伪假说立住"共享"的真实性**
 
 如果只看 FGD 一组构式都共享，可能只是因为它们都借用了"远距离依赖"这一表面线索，无法排除是 patching 方法自身的伪影。作者因此为每个构式独立画一张 "layer × token × head" 的 ODDS 热图：FGD 七个构式若都在同一组 head、同一些 layer 显著高，就判为共享；NPI 八个构式若热图彼此差异巨大，就判为机制分裂。结果 FGD 的高 ODDS 全部集中在 layer 7 的 head 7.5/7.6 与 layer 9 的 head 9.2，七构式高度一致，而 NPI 在 DNEG/COND/SUP 上呈现明显不同的 layer 分布。引入 NPI 作对照恰好证明"共享"并非方法伪影——同一套方法在 NPI 上确实能看见机制分裂。
 
-**3. Steering 验证：从 head 操控到 BLiMP 准确率的行为闭环。**
+**3. Steering 验证：从 head 操控到 BLiMP 准确率的行为闭环**
 
 仅在合成 minimal pair 上拿到高 ODDS 仍可能是 dataset artifact，必须验证这套机制在真实句子上确实管用。作者把识别出的 3 个 head（7.5、7.6、9.2）激活乘以系数 $\alpha \in \{0.8, 1.0, 1.5, 2.0\}$，在 BLiMP 上比较准确率：FGD 类题（wh_questions_object_gap 等 7 类）在 $\alpha>1$ 时准确率单调上升，而更出人意料的是 island effects、binding、quantifiers、NPI 等其他类别同样获益。这说明这几个 head 实际承担的是"层级依赖"这一通用句法骨架，而非 FGD 特化；BLiMP 作为独立且覆盖更广的 benchmark，其上的能力迁移是机制真实性最有力的证据。
 

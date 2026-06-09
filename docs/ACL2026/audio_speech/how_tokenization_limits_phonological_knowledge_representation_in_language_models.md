@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 三个 phonology probing 任务：用线性 probe 替代 prompting 量内部知识。**
+**1. 三个 phonology probing 任务：用线性 probe 替代 prompting 量内部知识**
 
 prompting 评测会低估模型的隐含知识，所以这里改用线性 probe 直接读 hidden state。三个任务分别是：rhyme awareness 用 $\boldsymbol{h}_\ell$ 上的 logistic regression 做二分类，G2P 是把 39 音素 padded 到长度 8 的 regression，syllable count 是对整数标签的 ridge regression。probe 被刻意限制为线性，是为了避免 probe 自己学到音韵知识、混淆对表征质量的判断（Hewitt & Liang 2019）；同时配一组随机 embedding control 实验，确认探到的信号确实来自模型而非任务本身。
 
-**2. STAD（Syllabification-Tokenization Alignment Distance）：把切分对齐度压成一个数。**
+**2. STAD（Syllabification-Tokenization Alignment Distance）：把切分对齐度压成一个数**
 
 要验证“边界错位伤害音韵表征”就得先把“对齐度”量化。STAD 把一个 $n+1$ 字符词的所有可能切分位置编成长度 $n$ 的 binary vector $\boldsymbol{v}_{\text{tok}}, \boldsymbol{v}_{\text{syl}}$，二者的 normalized Hamming distance 即 $\text{STAD} = \sum_i |b_i - c_i| / n$。例如 musical 的 syllable vector 是 $[0,1,0,1,0,0]$、Llama 的 tokenization 是 $[0,0,1,0,0,0]$，于是 STAD $= 3/6 = 0.5$。把对齐度变成实数后，就能按 A 组 vs M 组做 paired t-test，直接检验“对齐越差→音韵 probing 越差”的因果链；而且这个度量与具体 tokenizer 无关，可横向比较 BPE / SentencePiece / ByT5。
 
-**3. IPA-Augmented LoRA Fine-tuning：不动 tokenizer 也能注入音韵知识。**
+**3. IPA-Augmented LoRA Fine-tuning：不动 tokenizer 也能注入音韵知识**
 
 基础模型不会为音韵任务重训，换 tokenizer 成本过高，于是改走“后训练打补丁”。具体做法是把 3000 条 OpenHermes2.5 通用 QA 中随机选 0-2 个词用 `<IPA>...</IPA>` tag 包住、并在回答前拼上对应词的 IPA 转写，再混入 200 条 rhyme + 500 条 syllable + 500 条 G2P 任务数据、要求回答里按 IPA 一步步推理；LoRA 只动 $W_Q, W_V$，$r=8, \alpha=16$。把 IPA 当 side information 与原任务交织，既灌入音韵知识又保住 instruction following 分布，加上数据量小、仅用 LoRA，灾难性遗忘几乎可以忽略。
 

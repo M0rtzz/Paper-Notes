@@ -47,15 +47,15 @@ STK-Adapter 集成在 LLM（如 Llama3-8B）的每一层中。输入包含两部
 
 ### 关键设计
 
-**1. Spatial-Temporal MoE（ST-MoE）：每一层都重新注入一次时空结构，对抗深层稀释。**
+**1. Spatial-Temporal MoE（ST-MoE）：每一层都重新注入一次时空结构，对抗深层稀释**
 
 浅层对齐的根本毛病是 TKG 的演化结构只在第一层被投影进来，越往 LLM 深层越被文本语义冲淡。ST-MoE 的对策是把"注入"从一次性变成逐层迭代：稀疏激活路由器 $f_{\text{ST\_router}}$ 根据上一层的 TKG 表示 $\text{H}_g^{l-1}$ 算路由权重并激活 Top-k 专家，每个专家用瓶颈结构（下投影→非线性→上投影）在专化的低维子空间里建模时空模式，输出按路由权重加权聚合 $\overline{\text{H}}_g^l = \sum_{i \in \mathcal{A}^l} \text{gate}_i^l \cdot \text{E}^{(i)}(\text{H}_g^{l-1})$。这样每一层都重新过一遍时空信息，结构特征不再随深度衰减，浅层对齐"投影完只能祈祷模型别忘"的问题被从机制上堵住。
 
-**2. Event-Aware MoE（EA-MoE）：用时间 token 锚定路由，把同一事件的 token 绑在一起处理。**
+**2. Event-Aware MoE（EA-MoE）：用时间 token 锚定路由，把同一事件的 token 绑在一起处理**
 
 ST-MoE 抓的是图层面的时空结构，但事件链里那种"事件重复、时间先后"的复杂时序语义依赖它刻画不够。EA-MoE 复用 ST-MoE 的专家结构，关键改动在路由器：同一时间戳下的所有 token 共享同一路由信号——对第 $j$ 个 token，路由信号取自它对应的时间 token $\tau(j)$ 的隐层状态，即 $\hat{\text{gate}}_j^l = f_{\text{EA\_router}}(\hat{\text{H}}_{\tau(j)}^l)$。这保证了属于同一事件的 token 被一致地交给同一批专家处理，专家因此能专化到不同的时序语义模式上。消融里去掉 EA-MoE 掉点最猛，正说明事件链语义这一路是整个框架最吃重的部分。
 
-**3. Cross-Modality Alignment MoE（CMA-MoE）：每一层做一次跨模态注意力，把图知识渐进式注入文本表示。**
+**3. Cross-Modality Alignment MoE（CMA-MoE）：每一层做一次跨模态注意力，把图知识渐进式注入文本表示**
 
 结构空间和文本语义空间隔着一道模态鸿沟，传统 MLP 一次性投影根本弥合不了。CMA-MoE 改成在每一层都做一次 TKG 引导的跨模态注意力：每个专家以事件链表示 $\hat{\text{H}}_{\text{text}}^l$ 作 Query、以 TKG 表示 $\text{H}_g^{l-1}$ 作 Key 和 Value，通过 $\text{Softmax}(\frac{QK^\top}{\sqrt{d_k}})V$ 把演化结构知识注入文本表示；路由器同样由 TKG 表示驱动，优先从时空角度挑对齐策略。一层层精炼下来，LLM 的语义空间和 TKG 的结构空间被渐进式地深度融合，而不是浅层一锤子买卖。
 

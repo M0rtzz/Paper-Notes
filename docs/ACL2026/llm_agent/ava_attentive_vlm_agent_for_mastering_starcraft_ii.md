@@ -44,19 +44,19 @@ AVACraft 把 SC2 形式化为一个 POMDP $\langle \mathcal{S}, \mathcal{A}, \ma
 
 ### 关键设计
 
-**1. 多模态优先级推理（MPI）：先想做什么、再看清有谁、最后排该打谁。**
+**1. 多模态优先级推理（MPI）：先想做什么、再看清有谁、最后排该打谁**
 
 SC2 微操的胜负手是 focus fire on the right target——一个 step 选错优先级整波团战就崩，但让 VLM 一口气直接吐动作很容易看错单位、忘了目标。MPI 的破法是把决策拆成三段链式 VLM 调用：先由 Planner 出主次技能计划 $S = \text{VLM}_{\text{plan}}(I, T, H) = \{s_{\text{primary}}, s_{\text{secondary}}\}$，再做单位检测 $A = \text{VLM}_{\text{detect}}(I) = \{a_i = (p_i, c_i, b_i)\}$（位置 + 类别 + bbox），最后用 skill-aware prompt 排出优先级 $U_{\text{priority}} = \text{VLM}_{\text{analyze}}(I, T, H, A, Q, S)$。
 
 每一步都只调用 VLM 原生的视觉 + 语言能力、无需任何微调，而把「优先级」单独抽成一个子调用的好处，是让模型在每个 step 都把注意力压在最关键的 sub-task 上，而不是被全场信息淹没——这也解释了后面 ablation 里 MPI 是掉点最多的组件。
 
-**2. RAG 知识注入：把 SC2 战术常识硬 ground 进 prompt。**
+**2. RAG 知识注入：把 SC2 战术常识硬 ground 进 prompt**
 
 VLM 的零样本游戏理解很大程度上是世界知识 + 视觉的合成，但 SC2 战术依赖大量易踩坑的常识（Stalker 怕 Marauder 的慢护甲、Hydralisk 怕 Colossus 的 AOE 等），这些知识虽在预训练里却调用得很不稳定。RAG 组件对 MPI 选出的每个 priority unit $u$ 按其类别 $c_u$ 检索一条知识 tuple $K(u) = \{s_u, m_u, t_u\}$（unit 规格、matchup 数据、战术建议），再由 $D = \text{VLM}_{\text{synthesize}}(I, T, H, U_{\text{priority}}, \{K(u)\})$ 把它们整合成最终战术指令。
 
 用一个外挂 SC2 知识库做硬注入，比让 VLM「凭记忆」更可靠，确保它不会在对位常识上犯低级错误；ablation 也确认 RAG 单独贡献明显，与 MPI 组合后协同效果最强。
 
-**3. 动态角色分配：在出手前先给每个单位分好工。**
+**3. 动态角色分配：在出手前先给每个单位分好工**
 
 SC2 团战常要分工——几个 Stalker 拉怪 kite、另几个集火 boss，要是全体单位套同一套策略，协调就会崩。AVA 把角色分配显式建模：从角色集合 $\mathcal{Z}$ 出发定义映射 $\phi: \mathcal{N} \to \mathcal{Z}$，以效用函数 $U(\phi, s)$ 评估当前状态下的角色配置，具体实现为一次独立 VLM 调用 $z_i = \text{VLM}_{\text{role}}(I, T, C)$，看图像 + 文本 + 上下文给每个 unit 分配 tank / DPS / scout 等角色。
 

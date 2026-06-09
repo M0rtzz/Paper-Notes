@@ -51,7 +51,7 @@ tags:
 
 ### 关键设计
 
-**1. PAC-Bayes + MMD 偏移惩罚：把"分布偏移量"显式写进泛化上界（Theorem 1 / 3）。**
+**1. PAC-Bayes + MMD 偏移惩罚：把"分布偏移量"显式写进泛化上界（Theorem 1 / 3）**
 
 TTA 方法之所以没保证，根源在于过去能上界化"源-目标风险差"的工具要么不可算（$\mathcal{H}$-divergence 是 NP-hard），要么不带有限样本版本。本文换了一把更顺手的尺子：MMD。在 Assumption 1（条件期望损失落在 RKHS 里且范数有界，$L(w,\cdot)\in\mathcal{H}$、$\|L(w,\cdot)\|_\mathcal{H}\le L_\mathcal{H}$）下，用 reproducing property 加一步 Cauchy-Schwarz 就能把风险差压成一个 MMD 项 $|R_{P_t}(\rho)-R_{P_s}(\rho)|\le L_\mathcal{H}\cdot \mathrm{MMD}(P_s,P_t)$，再把它叠到经典 McAllester PAC-Bayes 界上，得到 TTA 场景下第一份显式带分布偏移惩罚的上界：
 
@@ -59,7 +59,7 @@ $$R_{P_t}(\rho)\le \hat{R}_{P_s}(\rho)+\sqrt{\frac{\mathrm{KL}(\rho\|\pi)+\log(2
 
 Theorem 3 进一步把不可观测的种群 MMD 换成无偏估计 $\widehat{\mathrm{MMD}}_u$，再补一个集中宽度 $\varepsilon_{m,n}=\sqrt{2\log(2/\alpha)/\min(m,n)}$，整条界就全部可计算，复杂度 $O((m+n)^2)$，速率 $O(1/\sqrt{n})$ 达 minimax 最优。这条界的好处不只是"能算"：MMD 项是线性增长，所以偏移变大时界是平滑变松而不是指数崩塌——这正是 epistemic uncertainty 该有的行为，模型在偏移加剧时只是"越来越不确定"而非"突然失效"。
 
-**2. MMD-球当成 credal set：把点估计升级为 lower-upper 风险区间，干净分离 aleatoric 与 epistemic。**
+**2. MMD-球当成 credal set：把点估计升级为 lower-upper 风险区间，干净分离 aleatoric 与 epistemic**
 
 光有一条上界还不够，安全场景真正想知道的是"不确定性有多大、其中多少来自数据噪声、多少来自分布未知"。本文的关键观察是：MMD-球 $\mathcal{C}_\varepsilon(P_s)=\{Q:\mathrm{MMD}(P_s,Q)\le \varepsilon\}$ 在数学上恰好就是一个 credal set——在分辨率 $\varepsilon$ 下与源分布不可区分的全部分布。由特征核的线性性可证它凸且弱闭（Lemma 6），于是可以对整个集合取最坏风险：
 
@@ -67,7 +67,7 @@ $$\sup_{Q\in\mathcal{C}_\varepsilon(P_s)}R_Q(\rho)\le \hat{R}_{P_s}(\rho)+\sqrt{
 
 inf 方向用 Germain 的 PAC-Bayes 下界对称地推出最佳风险 $\underline{R}_\varepsilon$。两端一减，imprecision 宽度 $\overline{R}_\varepsilon-\underline{R}_\varepsilon\le 2\sqrt{(\mathrm{KL}+\log)/2n}+2L_\mathcal{H}\varepsilon$ 把两种不确定性物理地拆开了：前一项随源样本 $n$ 衰减，是"看的数据还不够多"的估计不确定性（aleatoric 侧）；后一项随 $\varepsilon$ 线性增长，是"目标分布到底偏了多远"的分布不确定性（epistemic 侧）。这是第一次把 Walley 的行为派 imprecise probability 与 PAC-Bayes 接通，并给出可操作的 epistemic-vs-aleatoric 分解，正面回应了 Hüllermeier & Waegeman 2021 对 ML 不确定性度量混为一谈的批评。
 
-**3. RKHS 测地保持：从几何上解释为什么 MMD-bounded adaptation 比 entropy 最小化更能保护稀有类。**
+**3. RKHS 测地保持：从几何上解释为什么 MMD-bounded adaptation 比 entropy 最小化更能保护稀有类**
 
 实践里 kernel-guided adaptation 似乎比 TENT 那种 entropy 最小化更不容易抹掉少数类，但一直停在直觉。本文把它升级成几何定理。在 Assumption 2（encoder 可因子化为有界线性层乘 RKHS 特征图 $f_\theta=W\cdot \phi_\theta$、$\|W\|_{op}\le C_W$）下，对 RBF 核做局部线性化 $d_k(x,y)=\sqrt{2\gamma}\|f_\theta(x)-f_\theta(y)\|+O(\bar\epsilon^2)$，再走一步反三角不等式，就得到源-目标邻域的测地距离漂移同样被 MMD 控制：
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 转喻生成：contiguity-prompt 出候选，MLM masked LM 打分挑词。**
+**1. 转喻生成：contiguity-prompt 出候选，MLM masked LM 打分挑词**
 
 直接 prompt LLM"把这句改成转喻"只有 38.8% 成功率，根因是 LLM 压根不知道 contiguity（邻接关系）是什么，单域约束控不住。作者把它拆成"问对问题 + 概率打分"两步：先用 targeted questions 直接问目标名词的 location / occupants / salient parts（如 "Where does a judge work?"），以 temperature=0.7 拿一组候选 $c$；再把原句里的名词换成 `[MASK]` 喂 BERT，对每个候选算 $\log p(c \mid \text{context})$，取概率最高者 $c^* = \arg\max_c \log p_{\text{BERT}}(c)$。这一步把"单域约束"从难写的 prompt 工程问题转译成 token-level 的概率打分——out-of-domain 的候选会被自动淘汰（如把 "judge" 换成 "briefcase" 时 $\log p=-12.28$，直接出局）。最后用 temperature=0.4 做轻度润色，低温度是为了防止 LLM 二次改写又把转喻改没了。
 
-**2. 隐喻生成：tone-conditioned 候选，sentiment 选词。**
+**2. 隐喻生成：tone-conditioned 候选，sentiment 选词**
 
 隐喻享受跨域映射的自由，但纯放开会出现"语气打架"——悲伤句里突然冒出狂喜动词。作者的折中是给自由度套一个"语气一致"的软边界：让 LLM 在 positive / negative / neutral 三种 tone 下各自生成 hyperbolic verb 候选（temperature=0.7, top-p=0.9），再用 TweetNLP 的 sentiment 模型给原句打 sentiment 标签，只保留 tone 匹配的候选动词，最后 temperature=0.6 润色通顺。这样既保住了 cross-domain 的灵活性，又不会破坏与原句的语义/情感对齐。
 
-**3. Hybrid 零成本拼接，并验证"隐喻让转喻更显性"。**
+**3. Hybrid 零成本拼接，并验证"隐喻让转喻更显性"**
 
 因为转喻生成几乎不动句法（只换名词），把"精炼后的转喻名词短语"直接替换进"精炼后的隐喻句"主语位置，就能零成本拼出 hybrid 句，无需任何额外 post-processing——这利用的正是"转喻不改句法、隐喻改谓语"的天然互补。验证侧用三条互证的证据支撑核心论断：(i) 4 个 LLM 在 zero-shot metonymy resolution 上，hybrid 比 metonymy-only 的 F1 高 1.4–4.3；(ii) BERT 上下文 embedding 上 $\text{sim}(N_{\text{lit}}, N_{\text{hyb}}) > \text{sim}(N_{\text{lit}}, N_{\text{mty}})$，说明 hybrid 里的名词嵌入更贴近字面用法、即更"显性"；(iii) 用 hybrid 子集做数据增强，BERT 在 4 个 metonymy 基准上一致优于 metonymy-only 增强。背后的认知语言学解释是：隐喻动词（如 "butchered"）带强 animate-agent selectional preference，会逼读者把 "newsroom" 这种 inanimate 名词解读成 "the journalists in the newsroom"，相当于用隐喻当 forcing device 来 disambiguate 转喻，把实验现象回扣到 Lakoff–Johnson 理论。
 

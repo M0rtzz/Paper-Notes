@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Algebraic core 与 transition monoid：把一层 RNN 抽象成纯粹的状态转移器。**
+**1. Algebraic core 与 transition monoid：把一层 RNN 抽象成纯粹的状态转移器**
 
 文献结论打架，部分原因是大家把 decoder 的表达能力混进了 recurrent dynamics。为此论文先把每个 recurrent layer 抽成一个 core $\mathfrak{c}=(Q,X,Y,f,g)$——状态集 $Q$、输入集 $X$、输出集 $Y$、转移 $f:Q\times X\to Q$、读出 $g:Q\times X\to Y$——只保留"输入驱动状态变化"这一最核心结构。关键一步是：每个输入 $x\in X$ 诱导一个自映射 $f_x:Q\to Q$，所有这些映射在函数复合下生成该层的 transition monoid $M_{\mathfrak{c}}=\langle f_x\mid x\in X\rangle$。读出 $g$ 刻意不进入这个幺半群，因为它只决定状态如何被观察、不决定状态如何演化。这样"模型内部能保存什么动态信息"就和"最终如何读出答案"彻底分离，避免把 decoder 算力误记到 recurrence 头上。
 
-**2. Realized wreath product：只统计 wiring 真能触发的层级转移。**
+**2. Realized wreath product：只统计 wiring 真能触发的层级转移**
 
 深层 RNN 不是各层并行的直积，而是一个下层状态会改变上层当前时间步输入的级联系统，所以它的 ambient 上界是各层 transition monoid 的迭代 wreath product。但这个上界太松：它允许上层接收任意 $X_n$ 中的输入，包括 encoder 和 wiring 永远不会送进去的那些。论文因此定义 layer-input dependency map $\varphi_n^T$，只收集从第一层输入集合 $T$ 出发能传到第 $n$ 层的可达输入，再由这些输入生成收紧后的 $M_n^T$，最终得到 realized wreath product $\mathbb{W}_{\mathcal{R}}^T=(M_1^T,Q_1)\wr\cdots\wr(M_N^T,Q_N)$。这一收紧把"架构形式上允许、但 wiring 永远不会触发"的虚假表达能力剔除掉，从而支撑精确的不可表达性证明，同时让 encoder 或输入分布变化时只需局部更新分析。
 
-**3. 把算术语义写进模型定义：解释同一架构为何得出矛盾结论。**
+**3. 把算术语义写进模型定义：解释同一架构为何得出矛盾结论**
 
 同一个 RNN/SSM 在不同论文里时而图灵完备、时而只等价于有限自动机，根子在大家默认的算术模型不同。论文索性把 arithmetic model 显式写成 $\mathfrak{M}=(\mathcal{D},\mathcal{O},\square)$：$\mathcal{D}$ 是可表示值域、$\mathcal{O}$ 是运算集合、$\square$ 是舍入/截断映射；并强制每个表达式配一棵固定的 evaluation tree，recurrent update 必须满足"先算完时间 $t$ 再进 $t+1$"的 recurrence-consistent evaluation。之所以要管到求值顺序这么细，是因为浮点加法和乘法不满足结合律，编译器或硬件一旦重排就会改变单步 recurrence 本身——若不把这些语义钉死，"能否识别某语言"这个问题根本不是良定义的。
 

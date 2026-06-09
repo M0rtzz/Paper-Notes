@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. Attack Comfort Zone (ACZ) 现象 + 三阶段 DPI 曲线：用一条 DPI–ASR 曲线把"分辨率与安全"的非单调关系定量出来。**
+**1. Attack Comfort Zone (ACZ) 现象 + 三阶段 DPI 曲线：用一条 DPI–ASR 曲线把"分辨率与安全"的非单调关系定量出来**
 
 学界研究视觉文本压缩时只关心"读得对不对"，没人问"读不太清的时候安全对齐还在不在"，这条盲区正是攻击面所在。本文把每条有害 query 用 role-play 模板 + Glyph 渲染框架渲成图，DPI 从 15 到 300 全谱扫描，同时测 char/word OCR 准确率和攻击成功率。ASR 定义为 $\mathcal{ASR}=\frac{1}{M}\sum_i \mathbb{I}(\mathcal{J}(R_i)=1)$，其中评判 $\mathcal{J}$ 用 DeepSeek-V3.2 / Kimi-K2 / GLM-4.6 三模型一致则采纳、否则人工裁决（一致率 95.9%，Cohen's $\kappa=0.96$）。
 
 扫出来的曲线呈现非常醒目的三阶段：**Phase I 盲区（DPI ≤30）** 图太糊，OCR 和 ASR 都接近 0；**Phase II ACZ（45–150）** OCR 已经 >80% 但 ASR 暴涨到 30–86%；**Phase III 对齐恢复区（≥200）** OCR ≈ 1、ASR 回落。多数模型的峰值集中在 45–60 DPI——"读得清但安全失守"的最危险区间。这条曲线本身就是论文最有冲击力的结果：它同时否决了"分辨率低=安全（看不清就不会做坏事）"和"分辨率高=危险（看清才会做坏事）"两个直觉，把战场明确指向"中等清晰度"。
 
-**2. Cognitive Overload 假设 + Layer-wise Safety Probe：把"为什么 ACZ 失守"从现象层下沉到机制层。**
+**2. Cognitive Overload 假设 + Layer-wise Safety Probe：把"为什么 ACZ 失守"从现象层下沉到机制层**
 
 ACZ 是个黑箱观察，可以有 OOD、模板伪影、token 数不足等多种解释，必须拿出表征级别的硬证据。本文先用 120+120 条平衡文本（有害/无害）在每层最后一个 token 的隐藏状态 $\mathbf{h}^{(l)}$ 上训一个 L2 正则的 logistic probe $p^{(l)}=\sigma(\mathbf{W}^{(l)}\mathbf{h}^{(l)}+\mathbf{b}^{(l)})$，然后把 probe **冻结**，直接拿去评测图像输入——这种跨模态零样本评测是关键，避免了同模态拟合带来的伪影。
 
 结果（图 4）把"安全特征滞后"看得清清楚楚：High-DPI 输入在浅层就被 probe 判成 unsafe（密度集中在分类边界 unsafe 一侧），而 ACZ 输入在浅层的分布几乎和无害文本重合，要到深层才慢慢分离出有害特征。换句话说，当图难读时，浅层算力被"认字"抢占，有害语义被推迟到深层才浮现，而 guardrail 偏偏只架在浅层——逐层 probe 把这个深度错位直接量化成"安全特征到底在第几层才出现"，给 Cognitive Overload 假设钉上了硬证据。
 
-**3. Structured Cognitive Offloading（防御）：把识别与审计在时间维度上强制解耦，让安全审计跑在干净文本上。**
+**3. Structured Cognitive Offloading（防御）：把识别与审计在时间维度上强制解耦，让安全审计跑在干净文本上**
 
 既然失败根因是"读"和"判"被迫共享浅层算力，那解法就不该是再训对齐，而是把识别从审计里卸载出去。标准做法是一次性 monolithic 生成 $P(R\mid I_{v\text{-}text},\mathcal{P}_{dir})$；本文用一个复合 prompt $\mathcal{P}_{struc}$ 把生成因子化为
 

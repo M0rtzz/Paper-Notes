@@ -47,19 +47,19 @@ SPECTRA 想让小型视觉语言模型在没有任何监督轨迹的冷启动条
 
 ### 关键设计
 
-**1. 软结构化多轮 Rollout（SSMR）：用拓扑先验把推理锚定到视觉证据。**
+**1. 软结构化多轮 Rollout（SSMR）：用拓扑先验把推理锚定到视觉证据**
 
 SVLM 直接看图推理容易产生视觉幻觉，根因是它跳过了取证环节、凭印象作答。SSMR 规定最优轨迹应遵循拓扑序列 $\tau = \langle reason \to tool \to obs \to percep \to reason \to ans \rangle$——先推理选工具、拿到工具输出（Observation）、把输出与视觉特征综合（Perception），再推理后作答，从而强迫模型把结论建立在工具提供的证据之上。
 
 这个约束是"软"的：偏离不会被一刀切禁止，而是通过结构完整性奖励 $R_{struct} = \alpha \cdot \gamma^{\phi(\tau)}$ 渐进惩罚（$\alpha=2.0$，$\gamma=0.75$，$\phi(\tau)$ 衡量偏离程度），偏得越远奖励指数级衰减。软约束既给了足够的归纳偏置让冷启动学习能起步，又保留了探索空间——消融显示去掉它在 ScienceQA 上掉超过 5%。
 
-**2. 多目标 Agent 奖励：让模型学会"答对"也学会"过程对"。**
+**2. 多目标 Agent 奖励：让模型学会"答对"也学会"过程对"**
 
 只用正确性奖励会让模型走捷径，比如不调工具直接猜答案，或反复只用 OCR 一种工具。SPECTRA 把奖励拆成四块：$R_{total} = \lambda_1 R_{corr} + \lambda_2 R_{struct} + \lambda_3 R_{tool} + \lambda_4 R_{term}$。其中任务正确性 $R_{corr} = C_1 \cdot \mathbb{1}(y_{pred} = y_{gt})$ 管答案对错，$R_{struct}$ 管轨迹是否合拓扑，终止标记 $R_{term}$ 确保推理收敛到明确答案。
 
 工具效用项最见巧思：$R_{tool} = \mathbb{1}_{syntax} + \mathbb{1}_{success} + R_{div}$ 同时奖励调用合法、执行成功、以及工具使用的多样性，而多样性项 $R_{div}$ 配了 per-tool 饱和上限 $\kappa$ 和全局上限 $\eta$，既鼓励用多种工具又防止刷工具次数的 reward hacking。所有项最终归一化为 $R_{Total} = S \times R_{total} / N_{norm}$，让多目标信号在同一尺度上协同。
 
-**3. Tool Instrumental Utility（TIU）：无 ground truth 也能量化工具效能。**
+**3. Tool Instrumental Utility（TIU）：无 ground truth 也能量化工具效能**
 
 现有 Tool Accuracy 依赖标注好的正确工具序列，在无监督设置下根本用不了。TIU 改从三个不需要标注的维度合成度量：$TIU = TER \times \frac{1+TTAC}{2} \times \tanh(TSS)$。其中 Tool Execution Reliability（TER）是工具调用的成功执行率，反映可靠性；Task-Tool Alignment Coefficient（TTAC）是工具使用与任务成功之间的 point-biserial 相关，正值意味着用工具确实有助于答对；Tool Selectivity Score（TSS）是工具使用分布与均匀分布的 KL 散度，高值表示有策略地挑工具而非乱调。
 

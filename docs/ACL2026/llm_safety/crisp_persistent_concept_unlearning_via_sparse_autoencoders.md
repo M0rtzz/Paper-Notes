@@ -52,7 +52,7 @@ tags:
 
 ### 关键设计
 
-**1. 对比式 salient feature 自动选择：从几十万 SAE 特征里只挑出"专属 target 概念"的那一小撮，避免误伤。**
+**1. 对比式 salient feature 自动选择：从几十万 SAE 特征里只挑出"专属 target 概念"的那一小撮，避免误伤**
 
 SAE 把概念解耦成数十万个 feature，但要做精确 unlearning，得先回答"哪些 feature 才是真正只编码 target 概念的"。只看一个指标都会出错：单看激活频率差，会把"两边都常激活、target 略多"的共享 feature 也选进来；单看激活强度比，又会把"几乎只在 target 出现但总激活量极小"的边缘 feature 误纳。CRISP 因此用两个度量做交集过滤。先按激活频率差 $\Delta\phi(f_i)=\phi(f_i,\mathcal{D}_{\text{target}})-\phi(f_i,\mathcal{D}_{\text{retain}})$ 取 top-$k$ 得到候选集 $\mathcal{F}_{\text{freq}}$，再用相对激活比 $\rho(f_i)=A(f_i,\mathcal{D}_{\text{target}})/(A(f_i,\mathcal{D}_{\text{retain}})+\epsilon)$ 配阈值 $\tau$ 二次筛，最终
 
@@ -60,7 +60,7 @@ $$\mathcal{F}_{\text{salient}}=\{f_i\in\mathcal{F}_{\text{freq}}\mid\rho(f_i)\ge
 
 只有同时"激活够频繁"且"强烈偏向 target"的特征才能留下，这正是后续抑制时既精准又不波及 benign 概念的前提——消融里去掉 $\rho$ 比率过滤后 retain 明显下降，就是因为共享 feature 被误选进来一起压了。
 
-**2. 三段式损失 + LoRA 持久化：把"压 target / 保 retain / 保流畅"三个目标显式拆开，再用 LoRA 焊进权重。**
+**2. 三段式损失 + LoRA 持久化：把"压 target / 保 retain / 保流畅"三个目标显式拆开，再用 LoRA 焊进权重**
 
 选出 $\mathcal{F}_{\text{salient}}$ 后，关键是怎么让模型在不破坏原结构和 benign 表示的前提下学会自己把这些特征压住。如果只用一个 unlearn 目标硬压，往往会"用力过猛"连带把 retain 集和流畅度一起拖垮，所以 CRISP 把目标拆成三项各管一摊：unlearn loss $\mathcal{L}_{\text{unlearn}}=\mathbb{E}_{t\sim\mathcal{D}_{\text{target}}}\mathbb{E}_{f_i\sim\mathcal{F}_{\text{salient}}}[a_i^{(t)}+\lambda c_t]$ 直接最小化 salient feature 在 target token 上的激活；retain loss $\mathcal{L}_{\text{retain}}=\mathbb{E}_{t\sim\mathcal{D}_{\text{retain}}}\|h_M^{(t)}-h_{M_0}^{(t)}\|_2^2$ 把 retain 集的隐状态钉在原模型 $M_0$ 附近防止误伤；coherence loss 同样是隐状态对齐，但施加在最后一层、用 Claude 生成的每领域 20 句中性文本上，专门守住 target 概念附近的流畅度。三者按
 
@@ -68,7 +68,7 @@ $$\mathcal{L}=\alpha\mathcal{L}_{\text{unlearn}}+\beta\mathcal{L}_{\text{retain}
 
 加权，且全程只更新 LoRA 适配器。这一步是 CRISP 区别于"推理时 clamp"的核心——把抑制写进权重，开源场景下攻击者绕过 hook 也无法恢复，同时 LoRA 让整个编辑可逆且参数高效。消融里去掉 coherence 后 fluency 退回 RMU 水平、去掉 retain 后 benign 知识被牵连，正说明这三方制衡缺一不可。
 
-**3. 多层联合干预 + 中层定位：在一组中后层同时抑制，避免单层 hook 被下游补回去。**
+**3. 多层联合干预 + 中层定位：在一组中后层同时抑制，避免单层 hook 被下游补回去**
 
 只在某一层做特征抑制并不牢靠——下游层会把被压下去的信息重新"补"回来。CRISP 因此在预选的一组层上同时施加抑制，每层独立算损失再取平均，Llama-3.1-8B 选第 24 层附近、Gemma-2-2B 选第 14 层附近。选这些中后层有据可依：根据 Neuronpedia，越靠后的层 SAE feature 解耦度越高、概念粒度越细，是知识被抽象表示的地方，适合做概念级编辑而非浅层的词面编辑。多层联合让 unlearning 真正稳定地跨层生效，而不是被任意单层的冗余表示绕过。
 

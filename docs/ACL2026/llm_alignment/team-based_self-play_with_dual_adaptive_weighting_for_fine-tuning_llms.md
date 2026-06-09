@@ -49,15 +49,15 @@ TPAW 的直觉很像把单人训练赛变成队伍赛。普通 SPIN 只让当前
 
 ### 关键设计
 
-**1. Team-Based Self-Play 框架：用历史 checkpoint 组队，替代只和当前自己比较。**
+**1. Team-Based Self-Play 框架：用历史 checkpoint 组队，替代只和当前自己比较**
 
 普通 SPIN 只让当前模型生成负样本、再训练当前模型去区分人类答案和自己答案，问题是一旦某一轮合成数据有偏差，后续迭代会顺着同一种错误模式越滚越大。TPAW 把单人训练赛改成队伍赛：保留最近三个历史 checkpoint，让它们既组成 opponent team（在 SFT prompt 上生成负样本），又组成 main player team（判断目标答案与生成答案的相对优劣），训练数据则取最近三轮三元组 $D_O=D_t\cup D_{t-1}\cup D_{t-2}$。这样负样本来自训练轨迹的多个阶段，不会被当前模型的单一错误模式主导；而历史 checkpoint 记录的“从弱到强”轨迹本身就是一份廉价监督，能给优化提供比单模型更丰富的对比分布，缓解自训练里常见的偏差累积。
 
-**2. Adaptive Target Response Weighting：发现目标分布漂移时，把训练重心拉回真实答案。**
+**2. Adaptive Target Response Weighting：发现目标分布漂移时，把训练重心拉回真实答案**
 
 DPO 式自训练有个隐蔽副作用——它同时推正样本、压负样本，到后期连目标答案的概率也一起下降，模型悄悄偏离 SFT 目标分布。TPAW 用一个按样本触发的权重 $\alpha$ 来纠偏：如果某个 player 给出 $P_j(x,y)\le 0$，意味着当前模型相对历史模型并没有更偏好目标答案（即出现了漂移迹象），就把该目标响应的权重设为 $\eta>1$（实用值 $\eta=6$），否则保持为 1。于是这一项的比较从 $P_j(x,y)$ 对 $P_j(x,y^{gen})$ 变成 $\alpha_j P_j(x,y)$ 对 $P_j(x,y^{gen})$——只在检测到目标 reward 走低时才额外放大对真实答案的拉力，相当于给训练装了一个“偏离即回正”的负反馈。
 
-**3. Adaptive Main Player Weighting：按判别难度动态分配各 checkpoint 的训练贡献。**
+**3. Adaptive Main Player Weighting：按判别难度动态分配各 checkpoint 的训练贡献**
 
 最近的 checkpoint 可能还没训够、判别力弱，较早的 checkpoint 又可能在对应分布上过拟合，简单平均所有 player 的 loss 会把学习预算浪费在那些已经分得很开的样本上。TPAW 先对每个 player 算出 margin $m_j=P_j(x,y)-P_j(x,y^{gen})$，再用 softmax 形式分配权重
 

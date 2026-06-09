@@ -45,11 +45,11 @@ DenseSteer 想给小模型（≤3B）补上"强模型那种少跳点、每步信
 
 ### 关键设计
 
-**1. Dense-Rewriting：用模型自己的话造同分布正样本。**
+**1. Dense-Rewriting：用模型自己的话造同分布正样本**
 
 这是 DenseSteer 区别于一切"拿大模型 trace 当正样本"方法的根本点。作者先把"好推理"操作化成一个可度量、可改写的结构量——Reasoning Density $\rho = N_\text{tokens} / N_\text{steps}$（步数以双换行分隔），强模型恰恰是 $\rho$ 更大、$N_\text{steps}$ 更少。直接借强 teacher 的 trace 当正样本看似省事，却会撞上 learnability gap：7B/8B teacher 的解答在 3B 模型上的 token-level NLL 反而高于模型自身似然，正样本落到了目标模型语言流形之外。DenseSteer 的解法是让 GPT-5.1 在保持语义和正确性的前提下，把目标 SLM **自己**的解答合并冗余步骤、提高单步信息量，得到 $x_\text{pos}$，原解答即 $x_\text{neg}$。Figure 3(b) 证实这种 rewrite 的 NLL 接近 self-likelihood baseline、远低于同族 7B trace——既保证了分布兼容，又把"少而密"这条结构信号干净地注进了对比对里。
 
-**2. 均值差分 + last-token 聚合提取 steering vector。**
+**2. 均值差分 + last-token 聚合提取 steering vector**
 
 有了 50 对密/疏样本，下一步要把它们压成每层一条可注入的方向向量 $v_\ell$。难点在于 dense 与 sparse 长度不一，逐 token 对齐会引入噪声。DenseSteer 对每个样本只取**最后一个 token** 在层 $\ell$ 的残差激活 $h_\ell(x)[-1]$ 作 sequence-level 摘要，再对全部 $N=50$ 对取均值差分：
 
@@ -57,7 +57,7 @@ $$v_\ell = \frac{1}{N}\sum_{i=1}^{N}\bigl(h_\ell(x_\text{pos}^{(i)})[-1] - h_\el
 
 这套 Mean Difference 继承自 Panickssery 等人的 CAA，胜在简洁——在 50 对这种极度有限的数据下，逐 token 对齐或全序列池化都不稳，而 last-token 摘要 + 均值差分仍能稳定刻画"dense vs sparse"的主导方向。
 
-**3. 中间层 + 适中 $\lambda$ 的残差流注入。**
+**3. 中间层 + 适中 $\lambda$ 的残差流注入**
 
 向量提好后，推理时每个解码步执行 $\tilde h_{\ell^*, t} = h_{\ell^*, t} + \lambda \cdot v_{\ell^*}$，$\lambda$ 在 $[-20, 20]$ 的 held-out 集上搜。注入层 $\ell^*$ 的选择是成败关键：层敏感性分析（Figure 4）显示早层（L6）几乎无响应，因为它学的是低级特征、对"推理结构"这种高阶属性不敏感；后层（L27/L35）离 logits 太近，干预会与已成型的输出轨迹冲突，引发补偿性啰嗦甚至增 token；唯有中间层（L16/L17）对步数和总 token 数控制最强、最稳定。这与 Templeton 等人 Scaling Monosemanticity 报告的"高级语义特征聚集在中间层"一致，所以中间层天然适合承载"推理密度"这种结构方向。Figure 5/6 进一步显示 L17 在 $\lambda \in [0,10]$ 内 accuracy 单调升、NLL 单调降。
 

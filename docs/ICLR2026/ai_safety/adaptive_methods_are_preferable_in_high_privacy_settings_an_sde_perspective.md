@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. DP-SGD 的 SDE 分析：把 $\varepsilon$ 锁定在渐近邻域。**
+**1. DP-SGD 的 SDE 分析：把 $\varepsilon$ 锁定在渐近邻域**
 
 DP 噪声到底拖慢了收敛速度，还是只是抬高了最终误差？这个问题在离散分析里始终纠缠不清，而 SDE 框架能把两者干净地分开。在 $\mu$-PL 与 $L$-光滑假设下，DP-SGD 的损失轨迹满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-\mu t} + (1-e^{-\mu t}) \cdot \mathcal{O}(1/\varepsilon^2)$。右边第一项是指数衰减的瞬态，衰减率 $\mu$ 完全不含 $\varepsilon$，说明隐私预算根本不影响 DP-SGD 收敛多快；真正受隐私支配的是第二项稳态邻域，它以 $1/\varepsilon^2$ 的速度随隐私收紧而膨胀。也就是说，越严格的隐私只会把 DP-SGD 推向一个更大的误差平台，而平方关系意味着这个代价相当陡峭。
 
-**2. DP-SignSGD 的 SDE 分析：用 sign 算子把平方代价压成线性。**
+**2. DP-SignSGD 的 SDE 分析：用 sign 算子把平方代价压成线性**
 
 同样的 SDE 工具作用到自适应方法上，结论却定性翻转。DP-SignSGD 的损失满足 $\mathbb{E}[f(X_t)] \lesssim f(X_0)e^{-c\varepsilon t} + (1-e^{-c\varepsilon t}) \cdot \mathcal{O}(1/\varepsilon)$，两项的 $\varepsilon$ 依赖与 DP-SGD 恰好对调：衰减率 $c\varepsilon$ 线性正比于隐私预算，所以 $\varepsilon$ 越小收敛越慢，但稳态邻域只以 $\mathcal{O}(1/\varepsilon)$ 缩放，比 DP-SGD 的平方项温和一个量级。差异的根源是 sign 操作对噪声的压缩——只取梯度符号让 DP 噪声的幅度信息被丢弃，在期望意义下有 $\mathbb{E}[\text{sign}(g_k)] \approx \nabla f(x)/(\sigma_\gamma\sqrt{d})$，方向信号被保留而噪声被归一化掉，于是隐私噪声对最终误差的影响从二次降到一次。代价是收敛变慢，但在高隐私（小 $\varepsilon$）区间，更小的误差平台远比稍慢的收敛更重要。
 
-**3. 跨隐私预算的超参数迁移：让最优学习率脱离 $\varepsilon$。**
+**3. 跨隐私预算的超参数迁移：让最优学习率脱离 $\varepsilon$**
 
 Protocol B 进一步追问：如果允许为每个隐私预算单独调参，两者还有区别吗？推导出的最优学习率给出了答案——DP-SGD 的 $\eta^\star \propto \varepsilon$，隐私预算一变就得重搜学习率；而 DP-SignSGD 的 $\eta^\star$ 与 $\varepsilon$ 无关，一套学习率通吃所有隐私级别。在各自最优学习率下两者的渐近性能可以打平，但这恰恰凸显了自适应方法的实用优势：DP 训练里每跑一次超参数搜索都要额外消耗隐私预算，对 $\varepsilon$ 不敏感的 DP-SignSGD 省掉了这笔反复调参的开销。这一洞察经实验验证可以直接迁移到 DP-Adam，因为 SignSGD 本就是 Adam 在理论分析中的代理。
 

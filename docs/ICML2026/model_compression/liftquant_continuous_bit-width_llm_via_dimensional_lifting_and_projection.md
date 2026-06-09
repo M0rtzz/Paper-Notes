@@ -46,11 +46,11 @@ LiftQuant 想解决的是"硬件预算连续、模型 bit-width 离散"这个错
 
 ### 关键设计
 
-**1. Lift-then-Project 量化：把 bit-width 从整数解锁成连续分数。**
+**1. Lift-then-Project 量化：把 bit-width 从整数解锁成连续分数**
 
 所有现有方法都被锁在整数 bit 上，根因是它们把"码本"和"bit-width"绑死了——VQ 直接在 $\mathbb{R}^d$ 学 codebook，bit-width 由 codebook 大小决定；UQ 用 scalar 量化更不灵活。LiftQuant 的破法是升维再投影：把低维权重 $\bm w \in \mathbb{R}^d$ 写成 $\bm w \simeq \bm M \bm w_q$，其中 $\bm w_q \in \{\pm 1\}^D$ 是一个高维 1-bit lattice（每维 1 bit）、$\bm M \in \mathbb{R}^{d \times D}$ 是投影矩阵。这样存储成本只是 $D$ 个 1-bit 符号摊到 $d$ 个权重上，有效 bit-width 就是 $D/d$——而 $D,d$ 都是可自由设的结构参数，比值自然可以是任意分数。更妙的是，每个 $w_i = \sum_j \bm M_{ij}\, \bm y_j$ 是一堆独立 $\pm 1$ 变量的加权和，由中心极限定理（CLT），这个高维 lattice 的投影会自发形成 Gaussian-like 的 dense codebook——于是既拿到了 VQ 级别的码本表达力，解码又只需 1-bit 算子。换句话说，码本结构交给 $\bm M$ 管、压缩比交给 $D/d$ 管，两者彻底解耦。
 
-**2. 优化 $\bm M$ 并把最近邻搜索从指数级压回可行。**
+**2. 优化 $\bm M$ 并把最近邻搜索从指数级压回可行**
 
 CLT 只给出渐近保证，实际 $D$ 有限时投影分布并不完美，所以 $\bm M$ 必须显式学。优化目标是让投影后的码本对 Gaussian 权重的重构误差最小：
 
@@ -58,7 +58,7 @@ $$\bm M^* = \arg\min_{\bm M}\ \mathbb{E}_{\bm w \sim \mathcal{N}}\Big[\min_{\bm 
 
 $\bm M$ 用正交矩阵初始化以鼓励投影方向互不相关，内层的离散 argmin 用温度 10 的 soft-argmin 近似成可微，于是整体可端到端优化。另一个绕不过的坎是量化时要为每个权重块找最近 lattice 点，朴素搜索是 $2^D$ 指数复杂度，$D \geq 24$ 就完全不实用。LiftQuant 用 pseudo-inverse 投影给出一个高质量起点、再 pad 一个 auxiliary vector，把搜索空间从 $2^D$ 压到 $2^{D-d}$——只要 $D-d \lesssim 20$，量化就能在秒级完成。
 
-**3. 逐层 whitening $\bm T$ 与 fused 推理：让假设成立、让解码近乎免费。**
+**3. 逐层 whitening $\bm T$ 与 fused 推理：让假设成立、让解码近乎免费**
 
 lift-then-project 的全部理论都建立在"权重是 i.i.d. Gaussian"之上，但 LLM 权重并非如此。为此每层额外学一个轻量 whitening 矩阵 $\bm T$，把该层权重 reshape、变换成近似 Gaussian，补上假设和现实之间的缝。推理时则把反量化整个融进矩阵乘：$\bm o = \text{diag}(\bm s)\,\bm W\,(\bm M \bm T \bm a)$，其中 $\bm M, \bm T$ 都是全局共享的小矩阵，运行时只需先算 $\bm M \bm T \bm a$，主体 $\bm W$ 就是 1-bit 量化矩阵的标准 GEMM。这样 dequantization 的额外开销几乎为零——只多一次小矩阵乘加一次缩放，没有 VQ 那种 LUT 查表的访存瓶颈，这正是 LiftQuant 在拿到 VQ 级精度的同时还保持 UQ 级硬件友好的关键。
 

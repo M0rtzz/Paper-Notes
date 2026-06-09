@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 解码层的结构遵循分析：检验 CoT 的收益究竟来自模板结构还是真逻辑。**
+**1. 解码层的结构遵循分析：检验 CoT 的收益究竟来自模板结构还是真逻辑**
 
 已有解释多停留在「CoT 模仿答案模板」这种行为层直觉，却没把它量化。作者为此定义四类 test points——time、action、loc&peo、number，逐一统计生成文本里这些关键词是来自 prompt 还是来自问题本身；并进一步刻画 CoT reasoning structure，即「input entity 经过 operation 得到 generated entity，再接 final answer statement」这一固定骨架，用 Imitation Count 衡量生成结果对这套结构的遵循程度。设计的关键判据是：如果 CoT 的好处真来自结构模板，那么结构遵循度就该和任务准确率强相关——这比只看最终准确率更能解释「为什么 prompt 格式比逻辑内容更重要」。
 
-**2. 概率投影层的置信度分析：看 CoT 是否真在收窄答案的解码空间。**
+**2. 概率投影层的置信度分析：看 CoT 是否真在收窄答案的解码空间**
 
 文本上多输出几步解释，不等于模型在答案处更确定。作者把 hidden state 投影回 vocabulary，跟踪常见决策短语「answer is ...」的 token probability sequence，并用 KDE 对比 CoT 与 standard prompt 的概率分布；对 AQuA、Sports、Coin Flip 这类闭集答案空间，进一步取答案候选 token 的 top-k 概率并计算 entropy。判据是：若 CoT 确实在 prune 解码空间，那么生成答案 token 时概率应当更集中、熵应当更低，而不只是把中间文字写得更长。
 
-**3. FFN 激活层的任务依赖调制：追问 CoT 是否改变了内部神经元的参与方式。**
+**3. FFN 激活层的任务依赖调制：追问 CoT 是否改变了内部神经元的参与方式**
 
 如果 CoT 只是输出格式变化，内部计算未必有系统差异。作者把 FFN 激活函数输出大于 0 的单元视为 activated neuron，统计生成过程中各层平均激活数量，并比较 CoT 与 standard prompt 的差值——总体激活量反映全局效率，layer-wise difference 揭示 CoT 主要作用在哪些层。结果恰恰发现差异并不均匀：它集中在后 1/3 层，且方向随任务类型相反——开放域任务后层多为负差（CoT 像剪枝器，减少激活帮模型聚焦），闭集任务后层多为正差（CoT 像放大器，增加激活帮模型更充分比较有限选项）。这说明 CoT 对内部处理方式有真实且任务依赖的影响，而非单纯的表层格式变化。
 

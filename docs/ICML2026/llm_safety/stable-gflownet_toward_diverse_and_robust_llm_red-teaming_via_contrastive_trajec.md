@@ -48,19 +48,19 @@ Stable-GFN 把红队攻击当成"采样概率正比于毒性 reward"的分布匹
 
 ### 关键设计
 
-**1. Contrastive Trajectory Balance (CTB)：用一对样本互相对比，把 $Z_\theta$ 从公式里约掉。**
+**1. Contrastive Trajectory Balance (CTB)：用一对样本互相对比，把 $Z_\theta$ 从公式里约掉**
 
 原始 TB loss $(\log Z_\theta + \log \pi_\theta(y) - \log R(y))^2$ 必须学一个标量 $Z_\theta$ 去估计 $Z \simeq \sum_y R(y)$，而 LLM 的 token 序列空间组合爆炸，这个估计方差极大，是 mode collapse 的主因之一。CTB 的破法是对一对独立采样 $y_1, y_2 \sim \pi_\theta$ 做 ratio 对比：$\mathcal{L}_{CTB}(y_1, y_2; \theta) = (\log \tfrac{\pi_\theta(y_1)}{\pi_\theta(y_2)} - \log \tfrac{R(y_1)}{R(y_2)})^2$——两条轨迹相除时 $Z_\theta$ 自然抵消，根本不用再去估它，思路与 contrastive learning 消掉 normalizing constant 同源。
 
 关键是消掉 $Z$ 不能牺牲分布匹配的理论性质。令 $f(y) = \log \pi_\theta(y) - \log R(y)$，当 $y_1, y_2$ i.i.d. 取样时这个目标在期望意义上等价于 $2 \cdot \mathrm{Var}_{\pi_\theta}(f(y))$，最小化到 0 就等价于 $f$ 在 support 上恒为常数 $C$，再结合归一化条件即得 $\pi_\theta(y) = R(y)/Z$——正好回到 TB 的最优解（Theorem 4.1），所以 CTB 和 TB 同解但更稳。其梯度 $\nabla_\theta \mathcal{L}_{CTB} = 2(f(y_1) - f(y_2))(\nabla_\theta f(y_1) - \nabla_\theta f(y_2))$ 里，每个样本被另一个样本的 log-flow error 当作 stochastic baseline，与 RLOO/Williams 的 variance reduction 同构，这也是它低方差的来源。实现上 batch 内 $N$ 条样本可枚举 $N^2$ 个标量 pair-wise loss 而无需额外 forward，训练仍是 $O(N)$ 次前后向。
 
-**2. Noisy Gradient Pruning (NGP)：只让 reward 差异明显的样本对回传梯度。**
+**2. Noisy Gradient Pruning (NGP)：只让 reward 差异明显的样本对回传梯度**
 
 CTB 是把两个样本放一起比，副作用是它们各自的 reward noise 也叠加进来——当两条 prompt 的 toxicity 本就接近时，classifier 给的差异基本是随机噪声主导，这种"信息量为零但 noise 不为零"的低对比度 pair 反而放大梯度方差。NGP 直接拿一个 hard mask 把它们清零：$\mathcal{L}_{NGP}(y_1, y_2; \theta) = \mathbb{1}[|\log R(y_1) - \log R(y_2)| > \sigma] \cdot \mathcal{L}_{CTB}(y_1, y_2; \theta)$，其中 saliency threshold $\sigma$ 是超参，只有 reward 对比度超过 $\sigma$ 的 pair 才贡献梯度。
 
 过滤掉大量样本对会不会破坏 GFN 的收敛性？作者把它形式化成图连通性：构造 saliency graph $G_\sigma = (\mathcal{Y}, E_\sigma)$，边定义为对比度 $> \sigma$ 的样本对，只要 $G_\sigma$ 连通，$\mathcal{L}_{NGP}(\theta) = 0$ 仍等价于 $\pi_\theta(y) \propto R(y)$（Proposition 4.2）——也就是"少而精"的 pair 足以约束到正确分布。实践中保持连通靠一个 high-reward replay buffer 当"global anchors"，它持续提供跨高/低 reward 区的对比 pair，把图连起来。最终效果是梯度只从有真实 reward 差异的对里来，既保住目标性质又显著降噪。
 
-**3. Min-K Fluency Stabilizer (MKS)：只卡掉最不流畅的那段 token，挡住 gibberish 而不改目标分布。**
+**3. Min-K Fluency Stabilizer (MKS)：只卡掉最不流畅的那段 token，挡住 gibberish 而不改目标分布**
 
 toxicity classifier 对 gibberish-like OOD 文本会随机给 0.2~0.3 的伪 reward，attacker 一旦发现这条 reward hacking 路径就会 collapse 到狂吐乱码。标准解法是 KL 正则 $R_{ref}(y) = \pi_{KL}(y)^\alpha R(y)^\beta$，但它把整个 reward 朝 reference 分布 reshape，扭曲了 GFN 要匹配的 target——这与 GFN 的假设冲突。MKS 换一个更外科手术式的做法：借用 membership inference 文献的 Min-K probability，用 reference model $\pi_{ref}$ 算 prompt $y$ 各 token 的 log-prob，取**最低** $k$ 个 token 的平均 $M_k(y) = \tfrac{1}{|K|}\sum_{w \in K} \log \pi_{ref}(y_w | y_{<w})$ 当流畅度 proxy，然后 $R_{MKS}(y) = \mathbb{1}[M_k(y) \ge T_{MKS}] \cdot R(y)$——低于阈值 $T_{MKS}$ 的直接把 reward 清零（$\pi_{ref}$ 不回传梯度）。
 

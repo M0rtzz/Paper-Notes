@@ -48,19 +48,19 @@ TRACER loss = $\mathcal{L}_{\mathrm{MMCL}} + \lambda_{\mathrm{SD}} \mathcal{L}_{
 
 ### 关键设计
 
-**1. Contrastive Target Matrix + 闭式解几何分解：看清 forgetting 到底发生在哪。**
+**1. Contrastive Target Matrix + 闭式解几何分解：看清 forgetting 到底发生在哪**
 
 "自蒸馏为什么能保鲁棒"以前只有经验答案，本文先把对比微调的非线性优化压成一个能解析的形式。定义 $\mathbf{Y}_{\mathrm{FT}} = \mathbf{W}_T^0 \mathbf{X}_T (n \mathbf{I}_n - \mathbf{J}_n)$（冻结 text encoder 加中心化对比算子），证明线性化后的 MMCL loss 等价于矩阵最小二乘 $\min_{\mathbf{W}_I} \frac{1}{2} \|\mathbf{W}_I \mathbf{X}_I - \mathbf{Y}_{\mathrm{FT}}\|_F^2$。Theorem 3.2 随之给出各策略的闭式解，几何含义一目了然：Direct FT 解为 $\mathbf{W}_I^0 (I - \mathcal{P}_I) + \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（正交子空间保留、任务子空间替换）；L2-SP 把所有方向揉成一个 blend（无结构化分解）；Static SD 则是 $\mathbf{W}_I^0 (I - \frac{1}{1+\lambda} \mathcal{P}_I) + \frac{1}{1+\lambda} \mathbf{Y}_{\mathrm{FT}} \mathbf{X}_I^\top (\mathbf{X}_I \mathbf{X}_I^\top)^+$（正交保留 + 任务子空间凸组合）。
 
 这套分解直接揭示了 forgetting 的物理位置：SD 在结构上既保住正交子空间的预训练知识、又只在任务子空间适应新任务，而 L2 把所有方向都混在一起，等于让 catastrophic forgetting 蔓延到本该保留的正交子空间。这就是"该用 SD 而非 L2"的理论依据。
 
-**2. WMA teacher：U 形 kernel 同时治好 EMA collapse 和 static anchor bias。**
+**2. WMA teacher：U 形 kernel 同时治好 EMA collapse 和 static anchor bias**
 
 自蒸馏要持续起作用，teacher 必须既不塌缩又不带偏。EMA teacher 的更新权重是常数 $\omega_t = 1-\alpha$，teacher 会指数地追上 student，训练后期 gap 收敛到 0、正则化力消失——偏偏这是 OOD 最脆弱的阶段；static teacher 锚死在初始权重（$\omega_t = 0$）虽不塌缩，却永远偏向 init、收不到任务最优。WMA 改成对 student 整条 trajectory 做加权平均，kernel $\kappa(\tau)$ 用 Beta(0.5, 0.5) 的 U 形——初始 checkpoint（保鲁棒先验）和末期 checkpoint（保任务适应）都拿到非零权重，$\tau_k = (k + 0.5) / (T + 1) \in (0, 1)$ 严格落在端点内避免 Beta 发散。
 
 在线递推 $\omega_t = \kappa(\tau_t) / \sum_{j=0}^t \kappa(\tau_j)$，teacher 更新为 $\mathbf{W}_{\mathrm{Teacher}}^t = (1 - \omega_t) \mathbf{W}_{\mathrm{Teacher}}^{t-1} + \omega_t \mathbf{W}_I^t$。Theorem 3.4 证明 student 在任务子空间内收敛到 minimum-norm 任务解 $\mathbf{W}_{\mathrm{FT}}^\star \mathcal{P}_I$ 同时保留正交分量——"始末双锚"让 finite-horizon 内 teacher-student gap 保持有意义的大小，而 trajectory-weighted 平均又保证无偏收敛，理论和设计严丝合缝。
 
-**3. 多视角 distillation 损失：从四个层级保留预训练知识。**
+**3. 多视角 distillation 损失：从四个层级保留预训练知识**
 
 单一蒸馏（如只对齐 feature）容易让 student 在某个表征维度上过拟合 teacher，把"保留预训练知识"窄化成"复刻某层激活"。$\mathcal{L}_{\mathrm{SD-WMA}}$ 因此从四个层级一起拉：Feature Distillation 直接对齐 student/teacher embedding，Contrastive Relational Distillation 匹配 batch 内 similarity 分布，Interactive Contrastive Learning 做跨模态 student-teacher 对齐，Cross Knowledge Distillation 对齐跨模态 logits。这四路恰好覆盖"特征 / 关系 / 跨模态 / logits"四个层级，把"保留旧知识"的多重含义都纳进来；消融显示去掉任一路 ID/OOD 都会掉点。
 

@@ -45,15 +45,15 @@ ORACLE 把「未知环境」抽象成一个黑盒隐函数 $f:X\to Y$，让 LLM 
 
 ### 关键设计
 
-**1. 黑盒环境交互范式 + 6 类任务：把异构推理任务统一成隐函数黑盒，且抗污染。**
+**1. 黑盒环境交互范式 + 6 类任务：把异构推理任务统一成隐函数黑盒，且抗污染**
 
 现有数据集要么孤立测演绎/归纳/溯因，要么用游戏环境混入空间理解、长上下文等无关能力，还容易被 memorize。ORACLE 的解法是把所有任务都归约成「输入空间 $X$ → 输出空间 $Y$」的隐函数黑盒，再设计 6 类语义各异的任务覆盖广谱推理：CII（Code Intent Inference，黑盒是某段算法代码，查某 checkpoint 处变量取值）、CRI（Circuit Rule Inference，黑盒是布尔电路，查 input wire → 各 gate 输出）、PSI（Physics System Inference，黑盒是经典力学系统，查时刻 → 物体坐标）、ERI（Encryption Rule Inference，黑盒是加密映射，查明文 → 密文）、IPI（Interactive Puzzle Inference，黑盒是猜数等交互游戏）、GSI（Game Strategy Inference，黑盒是对手玩家的固定策略，须打赢它）。每类含易/难两档，合计 96 个环境。用合成黑盒的好处是双重的：即便 LLM 训过类似任务，每个具体黑盒规则都是全新的，从根上挡住数据污染；而纯函数空间又把视觉、长上下文、常识知识全剔除了，留下的只剩推理能力本身。
 
-**2. 三模块 LLM agentic 框架自动生成黑盒：让基准能任意 scale 又不引入 bias。**
+**2. 三模块 LLM agentic 框架自动生成黑盒：让基准能任意 scale 又不引入 bias**
 
 人工写黑盒昂贵且难规模化，本文用一条 LLM 闭环流水线全自动从自然语言描述生成黑盒代码 + 交互接口。三个模块协同：Coding LLM 接收自然语言任务描述 + 交互规则，产出 platform 代码；Test LLM 扮演 player 与黑盒交互、模拟真实场景产出 interaction log；Refinement LLM 再结合 log 和 task rule 自动把错误诊断为「执行错 / 功能未对齐 / 正确」三类并迭代修正。这种「跑起来看反馈再调试」的闭环比静态分析鲁棒得多，因此能稳定批量造环境。关键是用 LLM 当 generator 不会泄题：被评估的模型只看得到交互接口、看不到底层代码实现，所以生成器和被测者之间没有信息捷径。
 
-**3. 理论 query 下界 + 自适应探索三级分层：给评估一把绝对刻度尺。**
+**3. 理论 query 下界 + 自适应探索三级分层：给评估一把绝对刻度尺**
 
 只在 baseline 之间互比说明不了「黑盒到底有多难、模型离最优还差多少」。作者从 exact identification from membership queries 的角度给出信息论下界：要识别假设空间 $\mathcal{H}$ 至少需要 $T_{\rm info}\geq \lceil\log_2|\mathcal{H}|/\log_2|Y|\rceil$ 次查询，这就是「最少要问几次」的绝对参考线。在此之上再把 LLM 的探索能力分三级——Tier 1 是随机探索（无策略），Tier 2 有固定策略但不会根据反馈优化，Tier 3 能依据 instant feedback 自适应调整策略逼近最优。Tier 3 对应人类水平，目前没有 LLM 触及。这套下界 + 分层让分析有结构：既能算出 o3 离最优查询效率差多少，又能精确指出模型的缺陷究竟卡在哪一层。
 

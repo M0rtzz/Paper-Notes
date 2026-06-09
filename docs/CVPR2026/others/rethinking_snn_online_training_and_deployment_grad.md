@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. HD-LIF 基础模型：让梯度和膜电位值解耦，截断才"免费"。**
+**1. HD-LIF 基础模型：让梯度和膜电位值解耦，截断才"免费"**
 
 在线训练性能退化的根子在于传统 LIF 的代理梯度 $\partial s / \partial m = f(m)$ 依赖膜电位具体值，于是时间梯度贡献权重 $\epsilon[i,t] = \mathcal{F}(m_t, \dots, m_i)$ 是一串膜电位的函数，不可预测也不可分离，截断时间维度后前向算的和反向传的对不上。P2-Reset 把这个耦合直接掐断：发放后膜电位精确归位到 $\theta$、脉冲值线性等于超出量，使 $\partial s^* / \partial m$ 在阈值上下两区分别恒为常数（1 和 0），与膜电位取值无关。论文据此证明（Theorem 4.2）HD-LIF 的时间梯度权重退化成有限集常值的连乘 $\epsilon[i,t] = \chi[i,i] \prod_{j=t+1}^{i} \chi[j,j-1]$，其中 $\chi[i,i] \in \{0,1\}$、$\chi[j,j-1] \in \{0, \lambda_j\}$（$\lambda_t$、$\theta_t$ 是每时间步可学习参数）。
 
@@ -54,11 +54,11 @@ $$\epsilon[i,t] = \chi[i,i] \prod_{j=t+1}^{i} \chi[j,j-1], \quad \chi[i,i]\in\{0
 
 正因为这串权重不再含膜电位，在线训练截断时间梯度后能无缝逼近 STBP 的梯度（Theorem 4.2(i) 给出具体等式），同时发放过程里 $s$ 与 $m$ 不存在不可微跳变，空间维度的梯度也天然对齐——这就是它相比 SLTT 等数值近似方案的本质区别：不是事后缓解不一致，而是从神经元层面让不一致根本不发生。
 
-**2. Parallel HD-LIF：把推理算力从 NOPs 上抠下来。**
+**2. Parallel HD-LIF：把推理算力从 NOPs 上抠下来**
 
 vanilla HD-LIF 解决了梯度问题，但推理时仍要做完整的充电-泄漏积累，每层神经元需 T 次 MUL + 2T 次 ADD，相比普通 LIF 在 NOPs 上并不占便宜。Parallel 版本干脆跳过积累，直接判定 $s_t^* := (I_t \geq \theta_t)$，每层只剩 T 次 ADD。论文以约 50% 比例把它和 vanilla 块混搭，既保住静态积累带来的表达力又砍掉一半神经元的算力，实测节省约 30% NOPs，精度只从 80.16% 掉到 78.82%（CIFAR-100，降 1.34%），是个性价比很高的换挡。
 
-**3. Mem-BN HD-LIF：在膜电位上做 BN，且推理零开销。**
+**3. Mem-BN HD-LIF：在膜电位上做 BN，且推理零开销**
 
 在线训练丢掉了时间梯度项，光控住输入电流分布还不够，膜电位的累积分布同样会漂。传统 BN 接在卷积层后只能监控输入电流，Mem-BN 把归一化直接搬到膜电位上：$\hat{m}_t = \alpha_t \cdot m_t + \beta_t \cdot \text{BN}_t(m_t)$，用可学习的 $\alpha_t, \beta_t$ 调节归一化强度，并在 $\alpha_t{=}1, \beta_t{=}0$ 时退回 vanilla HD-LIF 作为性能下界。关键在推理：BN 是线性变换，可以通过 re-parameterization 整个折进膜相关参数——$\hat{\lambda}_t = \alpha_t^* \lambda_t$、$\hat{I}_t = \alpha_t^* I_t - \beta_t^*$——于是训练期吃到 BN 的稳定性红利，部署时一条额外计算都不多，做到"零成本的推理 BN"。
 

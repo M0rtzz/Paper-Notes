@@ -49,15 +49,15 @@ Semantic Softmax 的流程分三步。第一步，不在全词表上盲目聚合
 
 ### 关键设计
 
-**1. Renormalization Bias 形式化：点明 constrained softmax 为何会系统性过度自信。**
+**1. Renormalization Bias 形式化：点明 constrained softmax 为何会系统性过度自信**
 
 很多人以为校准差是因为模型「不知道答案」，但作者指出问题常出在推理层：标准做法只在标签集合 $\mathcal{L}$ 内重新归一化，所有 $v\notin\mathcal{L}$ 的 token 不管语义多接近标签都被直接删掉。于是一个原本只弱支持某类的标签，只要其它候选更弱，也会被归一化抬到接近 1 的置信度——格式约束被误当成了概率估计。作者把这种由 mask + 重归一化制造的系统误差形式化为 Renormalization Bias，等于为后面「找回被删概率」立了一个明确的靶子。
 
-**2. Semantic Kernel 聚合：把标签 token 周围语义邻居的概率质量纳入分类分数。**
+**2. Semantic Kernel 聚合：把标签 token 周围语义邻居的概率质量纳入分类分数**
 
 既然被删掉的 token 里藏着模型真实的语义证据，那就该按语义把这些票收回来。对每个 top-K token $v$ 和标签 $l$，作者用模型输出 embedding 的余弦相似度定义权重，并减去阈值 $\tau$ 作为 noise filter：$w(v,l)=\max(0,\cos(E_v,E_l)-\tau)$；最终 $P_{sem}(l\mid x)$ 是所有 top-K token 概率 $P(v)$ 与权重 $w(v,l)$ 的加权和，再在标签集合上归一化。用模型自身 embedding 的好处是部署简单、不依赖人工同义词表，能随底座模型的语义空间自动适配；而阈值过滤挡住那些「泛化相关但并不真正支持该标签」的 token，避免噪声邻居把分布带偏。
 
-**3. 训练无关的校准层：让方法能直接插进现有 LLM 分类服务。**
+**3. 训练无关的校准层：让方法能直接插进现有 LLM 分类服务**
 
 企业部署最怕高风险改动，而 Semantic Softmax 只发生在下一 token 分布算出来之后，不改 prompt、不更新参数、不需要任务训练集，更不需要 labeled calibration set。作者在 Qwen-3-1.7B 和 Phi-4-mini 上用完全相同的逻辑跑通，说明它不是某个模型的特定 trick。相比温度缩放或重新微调，这种纯 inference-time 的可插拔层在没有校准集的零样本场景里更容易落地，也更贴合实际线上服务的诉求。
 

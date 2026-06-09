@@ -48,11 +48,11 @@ $$V^{\pi^*} - V^{\pi_\theta} \leq \frac{\epsilon^2}{2\lambda C_\lambda} + \lambd
 
 ### 关键设计
 
-**1. 截断熵（Clamped Entropy）：只在 top-k 候选里算熵，把偏差从 $\log|\mathcal{A}|$ 压到 $\log k$。**
+**1. 截断熵（Clamped Entropy）：只在 top-k 候选里算熵，把偏差从 $\log|\mathcal{A}|$ 压到 $\log k$**
 
 前面的偏差项之所以爆炸，是因为熵鼓励模型在整个 10 万词表上保持随机——可绝大多数 token 根本不该被探索。截断熵的做法是先取当前状态下概率最高的 top-k token 构成子空间 $\mathcal{A}_k(s) = \text{top-k tokens}$，在这个子空间上把策略重归一化 $\tilde{\pi}(a|s) = \pi(a|s)/\sum_{a' \in \mathcal{A}_k} \pi(a'|s)$，再用 $\tilde{\pi}$ 计算熵。这样探索只发生在"合理候选"之间，偏差项里的 $\log|\mathcal{A}|$ 随之降为 $\log k$（$k \ll |\mathcal{A}|$），优化增益却基本保留——从 top-1000 里随机选，显然比从全词表里随机选合理得多。
 
-**2. 自适应系数：按当前截断熵动态调 $\lambda$，省掉手调又适配训练全程。**
+**2. 自适应系数：按当前截断熵动态调 $\lambda$，省掉手调又适配训练全程**
 
 固定的熵系数 $\lambda$ 有个老问题：训练早期熵高、后期熵低，同一个 $\lambda$ 顾此失彼。AEnt 让 $\lambda$ 跟着当前截断熵走——截断熵高（说明已经足够随机）就把 $\lambda$ 调小，截断熵低（探索不足）就把 $\lambda$ 调大，从而在训练不同阶段自动维持合适的探索强度。
 

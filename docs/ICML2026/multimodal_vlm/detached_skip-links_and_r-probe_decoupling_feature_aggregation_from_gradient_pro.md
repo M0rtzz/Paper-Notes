@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Detached Skip-Links：浅层只贡献前向特征，不接收语义回传。**
+**1. Detached Skip-Links：浅层只贡献前向特征，不接收语义回传**
 
 多层融合在前向上很对——浅层特征确实带着 OCR 想要的笔画级细节；但反向上 LLM next-token 损失的语义梯度会沿 skip 分支直接打到浅层 ViT block，把原本编码低层结构的注意力图打散，导致训练不稳、空间先验被破坏。作者的对策是把"特征聚合"和"梯度传播"拆开：选定一组中间 block 后按深度分成 $\mathbf{h}_{\text{shallow}}$（如 block 6、12）和 $\mathbf{h}_{\text{deep}}$（如 block 18、23），adapter 输入写成 $\mathbf{z}=\text{MLP}([\mathbf{h}_{\text{main}};\mathbf{h}_{\text{deep}};\text{sg}(\mathbf{h}_{\text{shallow}})])$，浅层那一组前向照常拼接、反向被 $\text{sg}(\cdot)$ 截断。理论上把 full estimator 的梯度二阶矩写成 $\mathbb{E}[\|\mathbf{g}_{\text{full}}\|^2]=\|\mathbf{m}+\mathbf{s}\|^2+\text{tr}(\Sigma_m+\Sigma_s+\Sigma_{ms}+\Sigma_{ms}^\top)$，并证明早期训练阶段 skip 路径满足方差主导（$\text{tr}(\Sigma_s)\ge c\cdot\text{tr}(\Sigma_m)$，$c\gg 1$）、与 main 路径近乎正交（$\cos(\mathbf{g}^{\text{main}},\mathbf{g}^{\text{skip}})\approx 0$）且均值贡献微弱——所以切掉 skip 梯度反而提高有效信噪比 $\eta(\mathbf{g})=\|\mathbb{E}[\mathbf{g}]\|^2/\mathbb{E}[\|\mathbf{g}\|^2]$。可视化第 4 个 block 的 [CLS] 注意力也印证：全梯度回传会把结构化注意力打散，detach 后能保住预训练的空间一致性。整套机制不引入任何可学习参数，纯训练侧改动。
 
-**2. $R$-Probe：用 LLM 前几层初始化的重建探针，量"视觉 token 到底有没有把细节送到 LLM"。**
+**2. $R$-Probe：用 LLM 前几层初始化的重建探针，量"视觉 token 到底有没有把细节送到 LLM"**
 
 传统 benchmark 把"视觉编码失败"和"语言端推理失败"混在一起报数，看不出问题出在接口哪一侧。$R$-Probe 冻结 ViT 和 adapter，挂一个浅层 Transformer decoder + MLP 把 adapter 后的视觉 token 重建回像素——关键在这个 decoder 用目标 LLM（如 LLaMA-3.1-8B）的前 1/4 层权重初始化，既限制容量，又保证它和 LLM "看世界的方式" 一致。重建得好，就说明视觉 token 既有信息、又落在 LLM 容易消费的子空间里。它检查的是 pixel-level 可恢复性而非 linear probe 那种抽象可分性，相当于让"评估者"和"消费者"共享同一套 inductive bias。实验也证明它对特征质量敏感（detached 配置从 2158 步缩到 1689 步就达到 MSE<0.75），且重建误差排序和下游 OCR 排名基本一致，可当作不跑完整 SFT 就能比较视觉表征的便宜诊断。
 
-**3. Context-Aware 重建序列与可选辅助损失：让 probe 模拟真实 OCR 推理，而非无条件自编码。**
+**3. Context-Aware 重建序列与可选辅助损失：让 probe 模拟真实 OCR 推理，而非无条件自编码**
 
 纯无条件重建相当于训一个 autoencoder，会把"视觉信息能不能被 LLM 用"这个关键问题糊掉。作者改成条件重建——看一张大图加一段提示，去重建里面带文字的那一小块：把图像切成 $448\times 448$ tile，ViT $14\times 14$ patch 经 $2\times 2$ pooling 压成一个视觉 token，输入序列构造为 $\mathcal{S}=[\mathbf{E}_{\text{context\_img}},\mathbf{E}_{\text{text}},\mathbf{E}_{\text{target\_img}}]$，重排前先施加全局 2D RoPE 保留空间关系；同一个重建头也能挂回完整模型当辅助损失，给 OCR 额外注入"视觉忠实度"约束。强制 probe 同时利用文本提示和上下文像素，恰好对齐 OCR 推理时"看上下文 → 解码目标区域"的过程。模态消融显示给文字描述能把重建 MSE 从 1.980 降到 1.103，说明 probe 捕捉的确实是跨模态对齐而不只是图像统计。
 

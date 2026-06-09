@@ -49,15 +49,15 @@ SDIR 是一个 end-to-end 双分支网络：SFG-Former 输出基线骨架 $\hat 
 
 ### 关键设计
 
-**1. 频谱解耦的训练课程：用 DCT 截断 $C_s$ + Beta(1,3) 采样把"频段深度"当迭代变量。**
+**1. 频谱解耦的训练课程：用 DCT 截断 $C_s$ + Beta(1,3) 采样把"频段深度"当迭代变量**
 
 降水演化天生多尺度——大尺度天气场作边界条件，小尺度对流在其上长出来——单步单分支模型很难同时稳住全局又锐化局部。SDIR 把"逐步揭示更高频段"嵌进训练：每个 batch 采 $\sigma\sim\operatorname{Beta}(1,3),s=\lfloor W\sigma\rfloor$，对 ground truth 做 2D DCT、截掉左上 $s\times s$ 之外的系数再 IDCT 得到 ideal low-pass 条件 $C_s=\operatorname{IDCT}(\operatorname{Trunc}_{s\times s}(\operatorname{DCT}(Y)))$。$s=0$ 时 $C_s$ 是零对应"冷启动"，$s=W-1$ 时 $C_s$ 几乎等于 $Y$ 对应"最后的细节增强"；Beta(1,3) 密度偏低 $s$，迫使模型先掌握大尺度骨架再碰高频。这是"扩散式 progressive learning"在频域的确定性翻版——扩散按 noise level 切片，本文按 spatial frequency 切片，切片有明确物理含义（synoptic vs convective scale）且无需随机采样，所以预报是 deterministic 的，从根上避开扩散的 unanchored hallucinations。
 
-**2. SFG-Former + 3D RoPE：频率自适应的全局骨架分支。**
+**2. SFG-Former + 3D RoPE：频率自适应的全局骨架分支**
 
 骨架分支要吃历史序列和低频条件、输出在任何 $s$ 下都稳的低频 base 预测 $\hat Y_{base}$。把 $X$ 与 $C_s$ 沿时间维拼接、patchify 投影成 $z\in\mathbb{R}^{B\times L\times D}$ 后，每个 SAT block 里的 Frequency Scale Embedder（FSE）把标量 $s$ 映成 modulation 三元组 $(\gamma,\beta,\alpha)$，对 LayerNorm 后特征做 affine 调制 $z_{mod}=(1+\gamma)\odot\operatorname{LN}(z)+\beta$，再以 gated residual $z_{out}=z+\alpha\odot\operatorname{Transformer}(z_{mod})$ 接回主干；位置编码用 3D RoPE 在空间-时间维一并保 translation invariance。Transformer 的 patch embedding 天然偏中等分辨率、单独用会丢高频，把"当前要重建的频谱深度"作为条件灌进每层，骨架分支就既能在低 $s$ 给"模糊但稳"的预测、又能在高 $s$ 给更锐版本，避免和 refiner 抢工；3D RoPE 取代绝对位置编码后，对气象场的平移和时间漂移更鲁棒。
 
-**3. FR-Refiner + SFNO + PCPSD 损失：高频残差合成与湍流谱约束。**
+**3. FR-Refiner + SFNO + PCPSD 损失：高频残差合成与湍流谱约束**
 
 回归类模型过平滑的根因是 MSE 在各频段的梯度被低频主导、模型理性地选平滑解。Refiner 用 U-Net 拓扑（PixelUnshuffle/Shuffle 做分辨率转换保细节），bottleneck 堆 SFNO blocks——FFT 进频域、按实部/虚部线性变换 + SoftShrink 稀疏化、再 IFFT 回空间域，在常数层数内捕捉跨尺度耦合，是 FourCastNet 风格设计的延伸。真正治本的是 PCPSD 损失：先用 2D Hann window 抑边缘伪影、rFFT 得 2D 功率谱、沿径向 bin 平均得 1D isotropic 谱 $S(k)$，在 log 域比较
 

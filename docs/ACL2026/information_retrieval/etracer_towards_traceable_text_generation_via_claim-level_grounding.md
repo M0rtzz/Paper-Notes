@@ -47,15 +47,15 @@ eTracer 是挂在 RAG 之后的即插即用后处理器，输入是「LLM 响应
 
 ### 关键设计
 
-**1. Sentence ⇒ Claim 分解 + 自洽校验：把响应句拆成原子事实，并强制每条 claim 都被原句蕴含。**
+**1. Sentence ⇒ Claim 分解 + 自洽校验：把响应句拆成原子事实，并强制每条 claim 都被原句蕴含**
 
 痛点在于分解模型只要 hallucinate 一条 claim，下游 grounding 就被永久污染——错的 claim 永远找不到支持证据，会被误判成幻觉。eTracer 用 GPT-5.1 在 182 个手标 sentence-claim 组上生成蒸馏数据 $\mathcal{D}_{dec}$，把分解能力蒸馏进 Qwen3-14B（LoRA、4-bit、10 epoch、lr $2\times 10^{-4}$），训练目标是标准条件 NLL $\max_{\mathcal{M}_{dec}}\mathbb{E}_{(r,\{c_i\})}\log p_{\mathcal{M}_{dec}}(\{c_i\}\mid r)$。它把「分解阶段的幻觉」当成必须修复的失败模式：推理时每切完一句就用蕴含模型 $\mathcal{M}_{ent}$ 验证 $\mathcal{R}\models c_i$，不通过就重新采样直到全部通过或触达上限，从源头堵住污染。
 
-**2. 带符号 grounding 函数 $\phi$（importance × polarity）：一个标量同时编码证据强度与支持/反驳方向。**
+**2. 带符号 grounding 函数 $\phi$（importance × polarity）：一个标量同时编码证据强度与支持/反驳方向**
 
 传统二元 NLI 把「中立」和「反驳」混成「不是支持」，丢掉了医学场景里关键的「这条证据其实反对该主张」信号。eTracer 把判定拆成两路：强度路用余弦相似度 $M_{ij}=\mathbf{e}_{c_i}\cdot \mathbf{e}_{s_j}$ 做检索粗筛，极性路用蕴含模型给出三态符号 $\psi(s, c)\in\{+1, -1, 0\}$；最终分数 $\tilde{M}_{ij}=M_{ij}\cdot \psi(s_j, c_i)$ 仅在 $M_{ij}>\tau$（默认 $\tau=0.5$，在 cos-sim 分布上选）时保留、否则置 0。把「哪些句值得看」（检索）和「看完之后怎么算」（判定）解耦，既能调速度，又能单独 ablate 出 FCR / ACR / HCR / UCR。
 
-**3. 三个 reference-free 评估指标（CER / ECSS / PFCR）：无 ground truth 也能在线监控 grounding 质量。**
+**3. 三个 reference-free 评估指标（CER / ECSS / PFCR）：无 ground truth 也能在线监控 grounding 质量**
 
 真实部署里拿不到引用黄金集，无法持续打分，于是 eTracer 把三条在标注数据上验证为真的先验性质反过来当 proxy。CER $=\frac{1}{p}\sum \mathbb{I}[\mathcal{R}\models c_i]$ 衡量分解忠实度，越接近 1 越说明没乱编 claim（GT 上达 97%）；ECSS $=\frac{1}{k}\sum \mathrm{Sim}(c, s_i)$ 衡量 claim 与挑出证据的「检索-语义」一致性（GT 上 cos≈0.75）；PFCR $=\frac{1}{k}\sum \mathbb{I}[\phi(s_i, c)\approx -\phi(s_i, \neg c)]$ 衡量对 claim 取否定后符号能否翻转，即极性判别的稳健性（GT 上 90%）。三者恰好对应分解、检索、判极性三个阶段，让工业部署免去逐条人工标注也能算出方法分数。
 

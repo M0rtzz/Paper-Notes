@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. 残差核构造与原生空间等价：把条件正定核的学习问题翻译成标准正定核问题。**
+**1. 残差核构造与原生空间等价：把条件正定核的学习问题翻译成标准正定核问题**
 
 条件 KRR 的麻烦在于核 $K$ 只是关于函数类 $\mathcal{F}$ 条件正定的，半范数只惩罚 $\mathcal{F}$ 正交补上的分量，已有 KRR 理论用不上。作者的破局点是构造残差核
 
@@ -54,7 +54,7 @@ $$K_P(x,y) = \big((I-\Pi_P)\otimes(I-\Pi_P)\big)[K],$$
 
 其中 $\Pi_P$ 是 $L_2(\mathcal{X},P)$ 中到 $\mathcal{F}$ 的投影算子。Theorem 2.1 证明 $K_P$ 是货真价实的正定核，Theorem 3.1 证明条件 KRR 的原生空间 $\mathcal{H}_K^{\mathcal{F}}$ 与 $\mathcal{H}_{K_P}\oplus\mathcal{F}$ 同构，Theorem 3.2 进一步表明条件 KRR 等价于"先用 $\mathcal{F}$ 中特征对 $y$ 做线性回归、再用 $K_P$ 对残差跑标准 KRR"。这条等价关系是全文理论的基石——一旦把问题搬回标准 PD 核，所有已有的 KRR 统计结论（收敛率、泛化界）就能原封不动迁移过来。
 
-**2. Conditioning Cost 的高概率上界：量化"不知道真实 $\mathcal{F}$-投影"要付多少代价。**
+**2. Conditioning Cost 的高概率上界：量化"不知道真实 $\mathcal{F}$-投影"要付多少代价**
 
 实际学习器并不知道真回归函数在 $\mathcal{F}$ 上的投影 $f_\parallel$，所以必须刻画与"已知 $f_\parallel$ 的理想学习器"之间的差距。作者定义 conditioning cost $c_{\text{con}}=\mathbb{E}[(\hat f(X)-f_\parallel(X)-h(X))^2]$，Theorem 4.2 证明在概率 $\ge 1-\delta$ 下
 
@@ -62,7 +62,7 @@ $$\mathbb{E}_\varepsilon[c_{\text{con}}] \le C\cdot\|f\|_{\mathcal{H}_K^{\mathca
 
 这条界的关键在于把信号分量和噪声的贡献解耦：当信号完全落在 $\mathcal{F}$ 中（$f_\perp=0$）时第一项消失，代价缩到 $\mathcal{O}(\sigma^2 k/N)$。正是这种解耦，让人能精确判断什么时候注入非惩罚特征划算、什么时候反受其害。
 
-**3. 硬/软阈值的统一分析：揭示谱截断与随机特征在残差核层面的等价。**
+**3. 硬/软阈值的统一分析：揭示谱截断与随机特征在残差核层面的等价**
 
 最后把理论落到两种实用设定上，得出测试误差关于 $k$ 的 U 形条件。硬阈值取 $\mathcal{F}$ 为核 $K$ 的前 $k$ 个 Mercer 本征函数，此时残差核恰是核谱的尾部 $K_P(x,y)=\sum_{i>k}\lambda_i\phi_i(x)\phi_i(y)$；软阈值取 $\mathcal{F}$ 为 $k$ 个高斯随机特征，Theorem 5.2 证明残差核的期望本征值满足 $\mu_i/\lambda_i\approx c\varkappa^2/(\lambda_i+\varkappa)^2$，即大本征值被"软压制"。两种设定都呈现同一条 U 形曲线——$k$ 太小没充分利用非惩罚特征、$k$ 太大 conditioning cost 又涨上来。这个统一视角的价值在于点破：传统谱截断和随机特征方法看似两套，在残差核层面其实定性等价。
 

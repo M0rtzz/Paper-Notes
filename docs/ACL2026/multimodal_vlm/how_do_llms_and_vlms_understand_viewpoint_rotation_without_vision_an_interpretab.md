@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Layer-wise 线性 probing：逐层探测残差流，看模型到底在哪一层"懂"了又在哪一层把信息丢了。**
+**1. Layer-wise 线性 probing：逐层探测残差流，看模型到底在哪一层"懂"了又在哪一层把信息丢了**
 
 要回答"模型中间表征里到底懂没懂朝向"，作者对每个 action $A_i$ 的最后一个 token 抽取各层 hidden state $\boldsymbol{h}_{i\ell}$，训练一个线性分类器 $\mathcal{F}_\ell$ 把它映射到三种 label——方向（binary）、角度（5-way）、绝对朝向（4-way）。坚持用线性 probe 是关键：非线性 probe 自己就能学到知识，会把"信号本来就在"和"probe 替模型算出来"混为一谈，线性才能干净地反映 representation 质量；再加一组随机 embedding 的 control experiment，确认探到的信号是真实存在而非偶然。这套设计探出了全文最核心的反差：方向 / 角度 probing 几乎全层都 >99%，说明局部转向信息一直在；但绝对朝向 probing 的准确率在 layer 1-20 缓慢上升、到 layer 21-28 反而下滑——局部信息齐全，却没能在后层被聚合成一个全局朝向，于是"信息存在，但被丢掉"。5-way 与 4-way 的分工正是为了同时检查这两件事：局部信息存不存在、有没有被汇总成全局朝向。
 
-**2. Head-wise path patching：用因果干预把"丢信息"定位到具体的几个注意力头。**
+**2. Head-wise path patching：用因果干预把"丢信息"定位到具体的几个注意力头**
 
 probing 只能说后层出了问题，但说不清是哪些计算单元在捣乱，path patching 把它精确到 head。作者构造 clean-corrupted 数据对——只翻转最后一步旋转方向，这样既保证 token 长度一致、又避免引入逻辑矛盾——并定义因果效应 $\phi_i = (logit_{pt} - logit_{cl}) / (logit_{cor} - logit_{cl})$；对每个 head 当 Sender，依次把它在 corrupted 输入下的激活替换进来，观察对最终 logit 差异 $\mathcal{M}(t_{cl}|\cdot) - \mathcal{M}(t_{cor}|\cdot)$ 的影响。只扰动最后一步、并过滤掉翻转后答案不变的 pair，是为了让 $logit_*$ 非零、效应可测。最终它揪出一条稀疏的关键路径：**Proposal head (22.1)** 先对所有候选答案都分注意力 → **Answer Decision head (26.14, 23.11)** 把注意力收敛到被选中的答案 → **Unknown head (27.14)** 在最后再对 "unknown" token 起特殊偏好（这反映 alignment 训练植入的谨慎倾向）。这三类头串起来，正好解释了"中间懂、最后错"是怎么发生的。
 
-**3. Selective Fine-tuning：只对症下药地微调这几个关键头，省一半算力还不伤通用能力。**
+**3. Selective Fine-tuning：只对症下药地微调这几个关键头，省一半算力还不伤通用能力**
 
 既然 path patching 已经证明那 32 个头才是真正"决定答案"的位置，那就没必要全量 SFT 把整个模型洗一遍——全量微调反而会改写承载通用能力的头，造成灾难性遗忘。作者把每层的 $W_{K/Q/V/O}^i$ 切成 $H$ 个 head block，只让 top-32 关键头的 $W_{K/Q/V/O}^{i,j}$ 可训练、其余冻结，并把梯度按 $H/h$ rescale，补偿"只训练少数头"带来的更新偏差。效果是双赢的：Qwen2.5-VL-3B 上只动 0.03B 参数（对比全量 3B），训练吞吐量从 10 sam/sec 提到 18 sam/sec；而且因为通用能力依赖的头没被碰，VRU 性能大涨的同时 MMLU / BBH 几乎零损失，避开了全量 SFT 的遗忘陷阱。
 

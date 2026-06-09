@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计
 
-**1. 率失真主定理（Theorem 3.1）：把"记多少比特"从离散组合问题变成一个连续凸优化。**
+**1. 率失真主定理（Theorem 3.1）：把"记多少比特"从离散组合问题变成一个连续凸优化**
 
 经典 Bloom-filter 空间下界（Carter et al. 1978、Pagh & Rodler 2001、Hurley & Waldvogel 2007）都是 case-by-case 地用计数或互信息硬算，彼此割裂、还各自留着说不清的常数。作者的统一招法是给任意 permutation-invariant 测试器引入一个辅助 Bernoulli 变量 $X\sim\text{Bern}(p)$（$p=n/u$），并令 $\hat X|X{=}1\sim\mu_K$、$\hat X|X{=}0\sim\mu_N$，于是互信息 $I(X;\hat X)$ 正好刻画了 $n$ 个 key 与 $u-n$ 个非 key 之间的"区分难度"。Lemma 3.4 给出非渐进下界 $B(\mathcal{M})/n\ge F_p(\mu_K,\mu_N)-\log(8n)/(2n)$，其中 $F_p=I(X;\hat X)/p$；Lemma 3.5 证 $F_p$ 下半连续且 $\partial F_p/\partial p=-\mathrm{KL}(\mu_N\|p\mu_K+(1-p)\mu_N)/p^2$，于是在 $p\to 0$ 稀疏极限下 $F_p\to\mathrm{KL}(\mu_K\|\mu_N)$，整个下界塌缩成
 
@@ -55,11 +55,11 @@ $$B(\mathcal{M})/n \;\ge\; \min_{\mu_K\in\mathcal{C}_K,\ \mu_N\in\mathcal{C}_N}\
 
 可达性由 Lemma 3.7 的一个 hash-based 构造补上，Theorem 3.3 再给出 finite-$p$ 的修正项 $-\chi^2(\mu_K^*\|\mu_N^*)/(2\ln 2)\cdot p+o(p)$。这一步之所以有力，是因为它把所有历史下界收编进同一个 $\min\mathrm{KL}$ 表达式，并精确补齐了 Pagh-Rodler 一直留着的 $\Theta(1)$ 加性常数。
 
-**2. log-loss 下的"幻觉通道"最优解（Theorem 4.1）：固定记忆下，最优策略既不是遗忘也不是弃答，而是幻觉。**
+**2. log-loss 下的"幻觉通道"最优解（Theorem 4.1）：固定记忆下，最优策略既不是遗忘也不是弃答，而是幻觉**
 
 主定理只给了抽象的 $\min\mathrm{KL}$，真正反直觉的结论要把 LLM 自己的损失代进去才看得见。对 LLM 的概率估计，$d^K(\hat x)=-\ln\hat x$、$d^N(\hat x)=-\ln(1-\hat x)$ 恰好就是 log-loss / binary cross-entropy，与 maximum likelihood 训练严格一致。在非平凡情形 $\varepsilon_K,\varepsilon_N>0$ 且 $e^{-\varepsilon_K}+e^{-\varepsilon_N}>1$ 下，作者用变分法配 KKT 求出唯一最优解 $\mu_K^*=\delta_{x^*}$、$\mu_N^*=(1-q^*)\delta_0+q^*\delta_{x^*}$，其中 $x^*=e^{-\varepsilon_K}$、$q^*=\varepsilon_N/[-\ln(1-x^*)]$——也就是说，事实全压在一个高置信点 $x^*$ 上，而非事实有一部分比例 $q^*$ 偏偏跟事实挤在同一个 $x^*$、剩下 $1-q^*$ 投到 0。代入得 per-key 最小记忆量 $\mathrm{KL}(\mu_K^*\|\mu_N^*)=\log(1/q^*)$，于是幻觉概率 $q^*=2^{-\mathrm{KL}}$ 完全由记忆容量决定，与你怎么在 $\varepsilon_K$、$\varepsilon_N$ 之间分配 trade-off 无关。这个解之所以重要，是因为它把"幻觉是数学上必然最优"这件事钉死在了 log-loss 本身，不依赖任何具体训练算法：遗忘（把 $\hat x$ 都推向 $1/2$）和 abstention（专门留一个"我不知道"标签）在 log-loss 下都严格次优。
 
-**3. 两侧 filter 的阈值不变性：把结论推广到任意阈值机制，并顺势解释 RAG 与 long-tail 微调为何有效。**
+**3. 两侧 filter 的阈值不变性：把结论推广到任意阈值机制，并顺势解释 RAG 与 long-tail 微调为何有效**
 
 第二个结论是关于概率估计的，但现实里很多缓解幻觉的手段是在置信分数上做阈值判断。作者证明任何对 $\hat x$ 阈值化的下游过程（包括 Kalai et al. 2025 的 generative classifier）都突不破 $\mathrm{KL}(\mu_K\|\mu_N)$ 这条下界——这是允许同时有 FP 与 FN 的"两侧 filter"的一般化。直接推论是：想消除 FP（幻觉）就必然抬高 FN（遗忘 / over-refusal），后处理只能沿同一条 frontier 滑动，跳不出去。真正能动 frontier 的只有改记忆预算本身：RAG（Lewis et al. 2020）接入 non-parametric 外部 memory，等于把 $B(\mathcal{M})$ 整体做大，frontier 随之外推；对 long-tail 事实额外 SFT 则是把更多参数容量显式分给随机事实，对应同一条 frontier 上"多花比特换更小 $q^*$"。这一视角一次性解释了三个经验现象：大模型上"教模型说 IDK"的 SFT 为何收效有限、Feldman 等人"memorize long-tail 是必要的"假说为何在信息论上成立、以及 MDL 视角下"有效记忆预算远小于参数数"为何合理——结构知识与随机事实本就在同一段 budget 里竞争。
 

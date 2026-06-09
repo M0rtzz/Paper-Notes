@@ -44,15 +44,15 @@ STReasoner 要解决的是：给定图 $G=(V,E)$、每个节点的时间序列 $
 
 ### 关键设计
 
-**1. Network SDE 多智能体数据合成：造出可控、文本对齐、能自动出题的时空世界。**
+**1. Network SDE 多智能体数据合成：造出可控、文本对齐、能自动出题的时空世界**
 
 时空推理同时要数值精度、图依赖和语言语义，但现实数据里这三者很难同时齐备且可验证——只有时间序列没文本，LLM 学不到语义；只有文本没可控图动力学，又无法判断模型的空间推理对不对。作者干脆用 Network SDE 造一个可解释的底层世界模型：每个节点的连续 latent process 由 drift、diffusion 和邻居耦合项共同决定，并区分 demand source nodes 和 propagation nodes——前者带正弦、均值回复等外生时间模式，后者主要被邻居驱动；边权是 time-varying adjacency，能模拟早晚高峰的方向切换；每条边还带 propagation lag，对应交通、污染、疾病传播的时滞。围绕它的多智能体流水线各司其职：Scenario Generation Agent 产出交通/能源/公共健康等场景描述，Scenario Parsing Agent 把描述解析成节点、边、时间模式和空间依赖，Judge Agent 校验逻辑，SDE Parameters Agent 与 Time-Varying Adjacency Agent 分别给出节点 drift/diffusion、耦合强度、时变边权和时滞，最后仿真模块积分网络 SDE 得到时空序列。因为底层动力学完全已知，问答对可以自动生成且答案可验证。
 
-**2. 时间序列-语言融合架构：在数值精度和 token 成本之间折中。**
+**2. 时间序列-语言融合架构：在数值精度和 token 成本之间折中**
 
 纯文本表示时间序列 token 成本极高，纯图像表示又会丢精确数值。STReasoner 用一个轻量 5 层 MLP 当 time series encoder：输入序列先 patchify，编码后的 patch embedding 作为特殊标记按节点顺序插进文本流，例如 `[Node1:<TS1>, Node2:<TS2>, ..., Graph, Question]`，其中图结构以文本方式给出。它还借用 ChatTS 的 value-preserving normalization，尽量保住原始数值而不只保留形状。这样既保留了全局形状又保留了数值精度，同时把 token 成本压到远低于"把时间序列写成长文本"的水平。
 
-**3. 三阶段训练与 Spatial-Aware GRPO：把"真的用了图结构"变成优化目标。**
+**3. 三阶段训练与 Spatial-Aware GRPO：把"真的用了图结构"变成优化目标**
 
 普通 GRPO 只看最终答案对错，模型完全可能从时间趋势里猜出答案、根本没用图结构，所以需要分阶段建立能力并显式奖励空间 grounding。Stage 1 用 ST-Align 做大规模对齐预训练，问题覆盖时间、空间和时空三类属性；Stage 2 用 ST-CoT 做 SFT 冷启动，CoT 由 Claude-4.5-Sonnet 对每题采样 5 个候选、经 rejection sampling 只保留答案正确的推理轨迹；Stage 3 是核心的 S-GRPO：同一问题生成两组回复，一组带显式空间结构 $o^{sp}$、一组不带 $o^{ns}$，当且仅当带图回复的奖励显著优于不带图、即满足 $r^{sp}>\beta r^{ns}$ 时，才额外给空间奖励 $\alpha$，否则只用原始 $r^{sp}$，最后在组内归一化 advantage 并用 GRPO 目标更新。这个对比式设计要求"有图确实更好"才加分，等于直接把"利用空间结构"写进了奖励函数。
 

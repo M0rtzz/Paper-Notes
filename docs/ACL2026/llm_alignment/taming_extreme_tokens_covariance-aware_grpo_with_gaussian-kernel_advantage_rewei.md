@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 用协方差解释 GRPO 的熵不稳定：把「忽高忽低的策略熵」落成一个可测的 token 级诊断量。**
+**1. 用协方差解释 GRPO 的熵不稳定：把「忽高忽低的策略熵」落成一个可测的 token 级诊断量**
 
 GRPO 的痛点不是没有奖励，而是训练后期策略熵剧烈摆动、checkpoint 反而掉点，但 vanilla GRPO 只看整条回答的相对好坏，分不清「有用的推理 token」和「把熵拽偏的极端 token」。作者借用自然策略梯度下的熵变化关系，近似得到 $\Delta H \approx -\eta\cdot \mathrm{Cov}_t(\log\pi_\theta(o_t), A_i)$：一个 token 的 log 概率越偏离均值、它所在 response 的 advantage 也越偏离均值，它对熵变化的拉动就越强。于是「探索-利用是否失衡」被翻译成每个 token 的协方差贡献——这比笼统地怪 KL 系数或学习率更贴近熵的真实动力学，也把「危险更新」精确定位到了 token 级别。
 
-**2. 高斯核软抑制极端 token：自动给大协方差 token 降权，不让少数 outlier 主导更新。**
+**2. 高斯核软抑制极端 token：自动给大协方差 token 降权，不让少数 outlier 主导更新**
 
 诊断出极端 token 后，关键是怎么抑制它们又不误伤有用梯度。对每个 token 计算中心化乘积 $c_{i,t}=(\log\pi_\theta(o_{i,t})-\overline{\log\pi})(A_i-\overline{A})$ 作为协方差贡献，再用高斯核 $w_{i,t}=\exp(-c_{i,t}^2/(2\sigma^2))$ 算权重，其中带宽 $\sigma$ 直接取当前 batch 全体 token 协方差集合的经验标准差。中等协方差的 token 权重接近 1、几乎不受影响，而正负两端的极端 token 都被平滑压低。相比硬阈值或 clipping，高斯核是连续的、对正负极端对称的，并且因为带宽用经验标准差自适应，方法**不引入任何新的手调超参**，天然贴合不同 batch 的协方差尺度。
 
-**3. 归一化权重保持 GRPO 更新尺度：改变 token 间的相对贡献，但不让整体 loss 被系统性缩小。**
+**3. 归一化权重保持 GRPO 更新尺度：改变 token 间的相对贡献，但不让整体 loss 被系统性缩小**
 
 直接乘高斯权重会让平均权重小于 1，相当于偷偷调低了学习率，破坏 GRPO 原有的训练节奏。作者因此把权重归一化为 $\tilde{w}_{i,t}=w_{i,t}\cdot N/\sum_{j,k}w_{j,k}$（$N$ 为组内总 token 数），再把 token loss 里的 advantage 替换成 $\tilde{w}_{i,t}A_i$。这样所有 token 的权重之和仍为 $N$，方法的语义就从「整体降低学习率」变成「重新分配同一份梯度预算」——把预算从危险的 outlier 挪向更稳定的中等协方差 token，既稳住了熵又保住了 GRPO 的更新幅度和收敛速度。
 

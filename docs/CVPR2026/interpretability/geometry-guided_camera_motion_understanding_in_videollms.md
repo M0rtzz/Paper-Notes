@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. CameraMotionDataset 与 CameraMotionVQA：用合成数据的精确 extrinsics 换确定性标签。**
+**1. CameraMotionDataset 与 CameraMotionVQA：用合成数据的精确 extrinsics 换确定性标签**
 
 现有相机运动 benchmark（如 CameraBench）靠人工标注，既贵又难保证细粒度运动的一致性。本文转而从 ReCamMaster 的 MultiCamVideo（UE5 渲染，136K 视频、112K 相机轨迹）出发——合成数据自带逐帧精确的 camera extrinsic 矩阵，标签可以**确定性地算出来**而非靠人眼判断。具体做法是把每个视频切成不重叠的 1 秒段，每段均匀采样 $T=8$ 帧、resize 到 $336\times336$，再用相邻帧 extrinsic 算出该段的平移与旋转增量（yaw/pitch/roll 以及前后平移），通过阈值化的模式匹配映射到 15 种原子运动原语（pan-left、tilt-down、dolly-in 等）。多个原语允许共现（如 arc-clockwise 叠加 dolly-in），但物理互斥的对（如同时 pan-left 和 pan-right）被排除。经 stratified sampling 得到 12,274 段的类别平衡子集，人工抽验 720 段达到 93% 一致率，确认自动标注可靠。在此之上构建的 **CameraMotionVQA** 把每个 1 秒段转成 4 选 1 选择题，关键在于干扰项的设计：它们与正确答案有相近的标签复杂度且同样满足互斥约束，从而堵住"靠答案长度/格式蒙对"的捷径，逼模型真的判断运动。
 
-**2. 约束感知运动分类器：把物理互斥关系写进损失而非事后补救。**
+**2. 约束感知运动分类器：把物理互斥关系写进损失而非事后补救**
 
 VGGT 给出的 camera token 维度高（2048）且只反映几何，要变成干净的多标签预测需要既压缩信息又遵守物理约束。分类器先用线性投影 $W_p$ 把 $c_t$ 降到 $c_t'\in\mathbb{R}^{512}$ 充当信息瓶颈，加正弦位置编码、前插一个可学习 [CLS] token，送进 $L=4$ 层、8 头注意力的 Transformer encoder；最终 [CLS] embedding 经线性头输出 $K=15$ 维 logits $s$，每类概率 $p_k=\text{sigmoid}(s_k)$。真正的关键在训练目标——除了标准多标签 BCE，还额外加了两条约束正则：
 
@@ -59,15 +59,15 @@ $$\mathcal{L} = \mathcal{L}_{bce} + \lambda_{inc}\cdot\mathcal{L}_{inc} + \lambd
 
 其中互斥正则 $\mathcal{L}_{inc}=\sum_{i<j} M_{ij}\cdot p_i\cdot p_j$ 用一个 0/1 互斥矩阵 $M\in\{0,1\}^{K\times K}$ 惩罚互斥原语被同时激活，基数正则 $\mathcal{L}_{card}$ 则把激活原语数约束在 $[1,3]$ 区间，防止模型一口气点亮一堆标签。推理时以 $\tau=0.5$ 阈值化后，再用同一个互斥矩阵做一次后处理剔除冲突组合。这种"训练端软约束 + 推理端硬过滤"双管齐下，正是后面消融里 instance accuracy 从 0.572 跳到 0.738 的来源——物理先验被显式建模而非交给模型自行摸索。
 
-**3. Structured Prompting 注入：让几何先验以文本"免费"进入推理。**
+**3. Structured Prompting 注入：让几何先验以文本"免费"进入推理**
 
 有了可靠的逐段运动标签，问题变成怎么喂给一个不能改权重的 VideoLLM。本文的答案是彻底走文本通道：对一个 shot 的 $S$ 个 1 秒段，把每段的标签拼成自然语言串（如 "pan-left and tilt-up"），再组装成 per-shot 列表 `Per-second camera motion: [m_1, m_2, …, m_S]`，前置在用户 instruction 之前，并配一段引导模型"用电影语言描述、强调相机使用"的提示模板。这样做完全 training-free、对任何新 VideoLLM 都即插即用，本质是借 LLM 的 in-context learning 把外部几何先验当成上下文证据注入——模型不需要"学会"看相机，只需要"读到"相机怎么动。
 
-**4. Q-Former Probing 诊断：定位运动线索在编码器哪一层被挤掉。**
+**4. Q-Former Probing 诊断：定位运动线索在编码器哪一层被挤掉**
 
 这一支不是为了提性能，而是回答"为什么 VideoLLM 本身做不到"。做法是冻结 Qwen2.5-VL 的视觉编码器，在四个不同深度的 full-attention block（index 7、15、23、31）抽中间特征，各自接一个 Q-Former 风格探针（2 层 Transformer + 4 个 learnable query token + 1D temporal conv）训练多标签预测，看哪一层的特征最能恢复运动原语。结果是性能在最浅的 block 达到峰值、随深度单调下降，直接证实了研究背景里那个假设：相机运动线索确实随网络变深被语义对齐优化逐步"挤掉"，到最终层几乎不可恢复。这个诊断为整套"外挂注入"的设计动机提供了实证支撑。
 
-**5. VGGT–Q-Former 蒸馏：用一次精度让步换 5 倍吞吐。**
+**5. VGGT–Q-Former 蒸馏：用一次精度让步换 5 倍吞吐**
 
 VGGT 有 1.2B 参数，每段都跑一遍代价不小。这个可选分支把 VGGT 蒸馏进一个轻量 Q-Former student，并复用 VideoLLM 已经算好的冻结视觉特征，省掉重复前向。student 模仿 VGGT 的结构采用 interleaved 的 local-frame / global attention（4 个 learnable query、2 个 local + 2 个 global block），分三阶段渐进训练：先单独训运动分类器 50 epoch，再训 Q-Former 用 MSE 回归 projected VGGT tokens 100 epoch，最后联合微调 30 epoch。代价是 instance accuracy 掉 8.13%，换来的是吞吐量提升 5.3×、显存降到原来的 39%——给部署侧留了一个明确的精度/效率档位。
 

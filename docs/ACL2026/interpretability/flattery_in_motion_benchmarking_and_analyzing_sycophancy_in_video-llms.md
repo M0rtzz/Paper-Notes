@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 把语言学的 7 类谄媚 taxonomy 迁移到视频域：让"谄媚"在视频里可测可拆。**
+**1. 把语言学的 7 类谄媚 taxonomy 迁移到视频域：让"谄媚"在视频里可测可拆**
 
 文本 LLM 的谄媚分类已经被验证为有效的解释维度，但视频里的"误导"多了视觉证据和时序信息，prompt 模板必须重做才能在 MCQ 视觉任务上稳定触发谄媚。作者把 Sharma 2023 等人的 4 大类细化成 7 个 video-grounded 场景：Biased Feedback（用户表达偏好，再分 strong/medium/suggestive 三档语气）、"Are You Sure?"（用怀疑测信心）、Answer Sycophancy（显式拒绝正确答案 / 显式认可错误答案）、Mimicry（单轮 preemptive 里塞偏置 prompt 测模仿）。交互上 mimicry 走 1 轮 preemptive，其余三类走"先答→再被质疑"的 2 轮 in-context，统一用 $\text{MSS}=N_{C\to I}/N_C$ 量化。值得注意的是三档语气并不单调——Suggestive 在 GPT-4o mini 和 LLaVA-OneVision 上反而比 Strong 更高，taxonomy 因此意外地暴露了"礼貌操纵"的隐蔽性。
 
-**2. 关键帧选择（k=3）+ 注意力可解释分析：从输入侧切断"偏置进帧→注意力被带偏"。**
+**2. 关键帧选择（k=3）+ 注意力可解释分析：从输入侧切断"偏置进帧→注意力被带偏"**
 
 Video-LLM 对帧的关注极度不均、首帧主导，而用户偏置常常正是借"让模型多看与 prompt 风格相符的帧"来误导。关键帧选择把"挑帧"和"用户 prompt"解耦：第一步用中性零样本 prompt 让模型自己选出语义最相关的 $\mathcal{K}\subset V$ 共 3 帧（不暴露偏置），第二步只拿这 3 帧当唯一视觉输入，让视觉证据先于语言压力被固定下来。为说清"为什么有用"，作者定义两个可量化指标——文本→帧注意力 $S_{f,l}=\frac{1}{N_h}\sum_h(\sum_{q\in I_{\text{text}}}\sum_{k\in I_{\text{visual},f}} A_{h,q,k}^{(l)})$，以及两个谄媚场景间的注意力扰动 $\Delta_l = \frac{1}{N_f}\sum_f |S_{f,l}^{(1)} - S_{f,l}^{(2)}|$。机制因此被拆成两条：k=3 把首帧注意力从 2.11 压到 1.24（gap 缩 41%）消掉 first-frame bias，同时让 14–20 层这段最易被谄媚渗入的中层 $\Delta_l$ 显著回落。
 
-**3. Representation Steering：在隐藏状态空间里把"谄媚方向"直接减掉。**
+**3. Representation Steering：在隐藏状态空间里把"谄媚方向"直接减掉**
 
 关键帧只是输入侧防线，对那些已经嵌进参数里的谄媚倾向作用有限（Explicitly Reject 上只降 4.54），所以还需要一把直插表征空间的手术刀。做法是先在配对数据集 $\mathcal{D}$ 上分别用谄媚 prompt $p_s$ 和中性 prompt $p_n$ 提取第 $l$ 层隐藏状态，取均值差当作谄媚方向 $\mathbf{v}_{\text{syc},l} = \mathbb{E}_{p_s\in\mathcal{D}}[\mathbf{h}_l(p_s)] - \mathbb{E}_{p_n\in\mathcal{D}}[\mathbf{h}_l(p_n)]$；经验扫描定出最优层 $l^*$；推理时挂一个 forward hook 沿反方向减去单位向量 $\mathbf{h}_{l^*}^{\text{steered}} \leftarrow \mathbf{h}_{l^*}^{\text{original}} - \alpha \cdot \frac{\mathbf{v}_{\text{syc},l^*}}{\|\mathbf{v}_{\text{syc},l^*}\|_2}$，$\alpha \geq 0$ 控强度，全程不微调。在 LLaVA-OneVision 上它能把 5 个类别的 MSS 压到几乎为 0，反过来证明视频谄媚确实是一个 low-dimensional、可定向消除的方向，而非弥散在整个网络里。
 

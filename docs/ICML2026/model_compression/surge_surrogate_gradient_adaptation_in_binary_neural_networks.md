@@ -45,7 +45,7 @@ SURGE 想在不碰前向输出的前提下，给每个二值化层补一份"比 
 
 ### 关键设计
 
-**1. Dual-Path Gradient Compensator（DPGC）：让前向走二值、反向走全精度，用 detach 让这对矛盾共存。**
+**1. Dual-Path Gradient Compensator（DPGC）：让前向走二值、反向走全精度，用 detach 让这对矛盾共存**
 
 BNN 训练的死结是"前向必须严格 sign（保推理加速）"和"反向需要丰富梯度（保能学）"互斥，过去的改进（piecewise polynomial、SignSwish 等）都只是"换个更光滑的函数继续骗 STE"，没真正绕开。DPGC 的做法是给每层并联一个全精度副本，再用一个自抵消的输出公式把两件事拆开。记二值前向 $f_b(x;W_b)=Q_W(W_b)^\top Q_x(x)$、全精度前向 $f_a(x;W_a)=W_a^\top x$、缩放后的辅助项 $f_{ao}(x)=\lambda f_a(x)$，输出写成
 
@@ -53,7 +53,7 @@ $$\text{output}=f_b(x;W_b)-f_{ao}(x;W_a)\!\downarrow+\,f_{ao}(x;W_a)$$
 
 其中 $\downarrow$ 表示 stop-gradient。前向时后两项数值相等、正负抵消，输出严格等于 $f_b$；反向时被 detach 那一项的梯度被截断，只剩 $f_b$ 走 STE、$f_{ao}$ 走全精度，于是输入处的梯度变成 $\frac{\partial\mathcal{L}}{\partial x}=g_b+\lambda g_a$——$g_b$ 是 STE 给的一阶近似，$g_a$ 则是全精度副本提供的高阶补偿。这样"输出严格二值"和"反向拿到全精度信号"同时成立，而且推理阶段辅助分支可直接丢弃，不留任何开销。
 
-**2. Adaptive Gradient Scaler（AGS）：按梯度范数比动态定 $\lambda$，让补偿路只做修正不夺权。**
+**2. Adaptive Gradient Scaler（AGS）：按梯度范数比动态定 $\lambda$，让补偿路只做修正不夺权**
 
 DPGC 补进来的 $g_a$ 量级未知：固定 $\lambda$ 取大了辅助路会炸掉主分支、取小了补偿又形同虚设。AGS 干脆把缩放因子写成两路梯度的范数比
 
@@ -61,7 +61,7 @@ $$\lambda_{\text{AGS}}=\eta\,\frac{\|g_b\|_2}{\|g_a\|_2+\epsilon}$$
 
 $\eta$ 是基础缩放系数、$\epsilon=10^{-8}$ 防除零。这个形式不是拍脑袋来的：论文从二阶矩模型出发证明最优缩放为 $\lambda^*=\frac{\langle\delta_b,\mu_a\rangle}{\|\mu_a\|_2^2+\text{tr}(\text{Var}(g_a))}$（$\delta_b$ 是 STE 的偏差向量），再在 alignment $\cos\theta$、相对偏差比 $\beta=\|\delta_b\|_2/\|\mu_b\|_2$、噪声比 $\rho$ 都近似稳定的假设下退化为 $\lambda^*\approx\eta\frac{\|\mu_b\|_2}{\|\mu_a\|_2}$，最后用 mini-batch 的梯度范数估计 $\|\mu\|_2$，就得到上面的实用公式。效果上它让两路始终量级相当，STE 仍主导优化方向、辅助路只作高阶修正，相当于在均方误差意义下取了两路梯度的最优凸组合。
 
-**3. 训练-推理对称的双路架构：把"补偿梯度"做成 architecture-agnostic 的层级插件。**
+**3. 训练-推理对称的双路架构：把"补偿梯度"做成 architecture-agnostic 的层级插件**
 
 以前的 BNN 训练 trick 多是任务/架构特定的（如 ReActNet 的 RPReLU），迁移起来要重新设计。SURGE 因为只依赖"一个二值化线性算子 + 一个全精度副本"这个最小结构，所以哪里有二值化线性层就能挂哪里——图 2 同时给出了 conv block 和 transformer block（attention projection / FFN 的 linear）的接入示意。训练时整网三种计算状态共存（main forward、main backward、auxiliary backward），推理时把所有辅助权重 $W_a$ 丢掉即可，因此同一套机制能无缝覆盖 CNN 和 Transformer，迁移成本极低。
 

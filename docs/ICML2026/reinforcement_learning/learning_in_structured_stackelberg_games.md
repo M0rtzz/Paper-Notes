@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. Stackelberg-Littlestone（SL）维度：把效用结构烧进 shattered tree 的节点权重里。**
+**1. Stackelberg-Littlestone（SL）维度：把效用结构烧进 shattered tree 的节点权重里**
 
 经典多类 Littlestone 维度对效用空间是失明的——它只关心能不能区分类别，可 Stackelberg 真正的代价是 leader 的效用差，不是分类错误数。很多时候即便分类器一直预测错，leader 的策略仍然最优。SL 维度的做法是保留博弈的效用结构，把 shattered tree 这个老工具改造一下：每个内部节点带 context $\mathbf z_s$、每条边带 type label $j\in[K]$，节点递归权重定义为 $\rho_s=\inf_{\mathbf x\in\Delta(\mathcal A)}\max_{j:sj\in S_d}\bigl(r(\mathbf z_s,\mathbf x,f^{(j)})+\rho_{sj}\bigr)$（叶节点 $\rho_s=0$）。一棵树被 $\mathcal H$ shattered，是指任一根到叶路径上存在 $h\in\mathcal H$ 让每条边 label 都等于 $h$ 的预测；SL 维度即所有被 shattered 的 SL tree 的根权重上确界。关键差异就在权重里嵌了 Stackelberg regret $r(\cdot)$ 这个与效用空间相关的量——于是"标签不同但 leader 最优策略相同"的分歧会让权重退化成 0。这样维度度量的就不再是"能不能分对类别"，而是"学不到会让 leader 多丢多少效用"。
 
-**2. SSOA：把 Standard Optimal Algorithm 的损失从分类错误换成 Stackelberg regret。**
+**2. SSOA：把 Standard Optimal Algorithm 的损失从分类错误换成 Stackelberg regret**
 
 有了 SL 维度，还要一个算法把上下界匹配地实现出来。SSOA 维护与历史一致的版本空间 $V_t\subseteq\mathcal H$，每轮看到 $\mathbf z_t$ 后，对每个可能 type $j\in V_t(\mathbf z_t)$ 先算"若 follower 真是 $j$，leader 的最优效用"$u_*^{(j)}=\sup_{\mathbf x}u(\mathbf z_t,\mathbf x,b_{f^{(j)}}(\mathbf z_t,\mathbf x))$，再选
 
@@ -57,7 +57,7 @@ $$\mathbf x_t\in\arg\inf_{\mathbf x}\max_{j\in V_t(\mathbf z_t)}\bigl(u_*^{(j)}-
 
 直觉是把"当前瞬时悔"加上"若真是 $j$ 则剩余学习任务的难度"一起取最小化的最大值，即对最坏未来对手做极小化。精神上它就是在线多类分类里的 SOA，但损失从"是否分错"换成了 Stackelberg regret——这一换就让算法对齐到"哪个动作让 worst-case 剩余悔界最小"，而不是"哪个动作最像在分对一个 label"。算法上它只比 SOA 多算一项 $\mathrm{SLdim}_{\mathcal G}(V_t^{(\mathbf z_t\to j)})$，结构对偶清晰、便于在已有 SOA 实现上做最小扩展。
 
-**3. $\gamma$-SN / $\gamma$-SG 维度：给分布式 PAC 设置加一道"分歧贵不贵"的 $\gamma$ 阈值。**
+**3. $\gamma$-SN / $\gamma$-SG 维度：给分布式 PAC 设置加一道"分歧贵不贵"的 $\gamma$ 阈值**
 
 在线之外，分布式 PAC 设置也得有量化刻画，但直接套 Natarajan/Graph 维度同样会高估难度——它捕捉不到"两个 hypothesis 预测不同但 leader 策略相同"这种无害分歧。本文的解法是在 shattered set 里加 $\gamma$ 阈值，只在"分歧确实贵"的地方才计入维度。$\gamma$-SN-shatter 一个 $n$ 元集合要求存在两个函数 $g_0,g_1$ 使得：(i) 对每个 $\mathbf z_i$，leader 找不到一个混合策略让两种 follower 同时承受 $\le\gamma$ 的悔；(ii) 任意 bit pattern $b\in\{0,1\}^n$ 都能被 $\mathcal H$ 实现。$\gamma$-SG-shatter 类似但只要求一个基准 $g$、bit=1 处差异 $\ge\gamma$。配套算法 $\mathfrak L^*$ 只保留与 $n$ 个样本完美一致的子类 $\mathcal H|_S$，在新 context 上对预测候选集做极小极大 $\mathbf x^*=\inf_{\mathbf x}\max_{i\in F}r(\mathbf z,\mathbf x,f^{(i)})$。加了 $\gamma$ 之后，下界 $\Omega\bigl(\frac{\mathrm{SNdim}^{(\gamma)}_{\mathcal G}(\mathcal H)+\log(1/\delta)}{\epsilon}\bigr)$ 与由 $\gamma$-SG 维度控制的上界就能在 Stackelberg 效用语义下闭环。
 

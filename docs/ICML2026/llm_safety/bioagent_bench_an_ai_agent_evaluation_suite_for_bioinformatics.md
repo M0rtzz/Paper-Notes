@@ -43,15 +43,15 @@ BioAgent Bench 要回答一个很实际的问题：把一个 LLM agent 丢进真
 
 ### 关键设计
 
-**1. 任务集与规模约束：让端到端 pipeline 能在一张普通显卡的预算里跑完。**
+**1. 任务集与规模约束：让端到端 pipeline 能在一张普通显卡的预算里跑完**
 
 真实 bioinformatics 工作流动辄数小时、吃掉几十 GB 内存，还要 agent 自己去下载几十 GB 的参考基因组——这些都让大规模、可重现的评测寸步难行。BioAgent Bench 的破局点是把任务规模刻意压到 <4h、<48GB，办法是专挑「小生物」做样本：小鼠 Alzheimer 模型、E. coli 实验进化、海豚病毒元基因组等，它们的 reference data 小到能直接塞进任务输入文件里，于是「找参考、下载、stage」这类基础设施杂活被整体跳过，评测得以聚焦在 pipeline 编排能力本身。10 个任务横跨 bulk/single-cell RNA-seq、比较基因组学、变异调用（细菌进化 + GIAB NA12878 + 囊性纤维化）、病毒元基因组、转录定量等，实现语言混用 Python / R / bash；其中 4 个（cystic-fibrosis、giab、transcript-quant、viral-metagenomics）是 "verifiable" 的，可做二元 pass/fail 判定。每个任务都硬性要求「端到端执行 + 结构化 CSV 输出」。作者特意把整个 benchmark 定位成「软件工程类」而非「生物数据分析类」，因为前者更便于未来接 RL / distillation 等训练用途——代价是放弃了对人类基因组级真实工作流的覆盖。
 
-**2. LLM 判官 + 多维度评分协议：用软判分替硬匹配，给「方向对、格式错」的 agent 部分信用。**
+**2. LLM 判官 + 多维度评分协议：用软判分替硬匹配，给「方向对、格式错」的 agent 部分信用**
 
 bioinformatics 任务天然多解——同一份变异调用既能用 GATK4 HaplotypeCaller 也能用 DeepVariant，硬编码一份 ground-truth 去做精确匹配根本走不通。BioAgent Bench 改用 GPT-5.1 当 grader，喂给它 (input/reference 路径, expected CSV, agent 产出的 CSV, trace 的文件路径树, grading rubric)，rubric 明确优先看「pipeline 完成度」而非数值精确性，输出五个字段：`steps_completed`（已完成步数）、`steps_to_completion`（任务所需总步数估计）、`final_result_reached`（是否产出最终 artifact）、`results_match`（rubric 规则下的正确性 flag）、`f1_score`（仅 giab 适用）。关键巧思有两处：让 grader 读 trace 而不是只看最终输出，就能给「高层把 pipeline 搭对了、只是最后输出格式没对齐」的情况发部分信用，这比 SWE-bench 式的硬 pass/fail 更接近人类专家的打分直觉；而 trace 只暴露文件路径树、不暴露文件内容，既保护了敏感的临床/IP 数据，又压低了 grader 的 token 消耗。
 
-**3. 三类扰动鲁棒性测试：把「跑得通」和「靠谱」分开，专门探 agent 是真懂还是模式匹配。**
+**3. 三类扰动鲁棒性测试：把「跑得通」和「靠谱」分开，专门探 agent 是真懂还是模式匹配**
 
 作者的核心论点是 high-level pipeline construction ≠ reliable step-level reasoning——只看 vanilla completion rate 会系统性高估 agent 的生物推理能力。为此他们在 vanilla 之外加了三类正交的扰动，每类瞄准一种失败模式。**Multi-trial 一致性**让同一任务跑 4 次，对分类结果（KEGG pathways、Gene IDs）算 Jaccard、对数值结果（p-value、abundance）算 Pearson，看 agent 每次跑出来的中间决策稳不稳。**Prompt bloat** 在原 prompt 上灌大段无关内容，观察 completion rate 的变化量 $\Delta$，测的是抗干扰鲁棒性。**Corrupted input** 人为破坏 FASTQ/BAM 等输入文件，理想的 agent 应当识别并报错（标 ✓ 表示成功识别），测的是认知能力。**Decoy input** 则在目录里多放几个不该用的诱饵文件，理想的 agent 应当忽略它们（标 ✗ 表示没被诱骗），测的是「先验地知道该用哪个文件」的注意力判断。把 corrupted / decoy / bloat 拆成三个独立探针，比笼统跑一次 stress test 更能精确定位 agent 到底栽在哪一环。
 

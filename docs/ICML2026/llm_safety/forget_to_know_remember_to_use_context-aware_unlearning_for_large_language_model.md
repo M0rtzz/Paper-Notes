@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. Contextual QA 评测协议：把 unlearning 漏掉的第三维度量化出来。**
+**1. Contextual QA 评测协议：把 unlearning 漏掉的第三维度量化出来**
 
 以前的评测只有两条腿——forget set 上要忘干净（Direct QA 低）、retain set 上要保住能力（utility 高）——但 LLM 越来越多跑在 RAG / 长 prompt 场景里，"用户当场重新提供的合法信息能不能被用上"是部署里真正关心却没人测的事。这个协议补上这一维：对 forget set 里每个 $(q, a)$ 配一份 context $c$（包含 ground truth 描述），构造"问题 + 提供的 context"prompt 喂给 unlearn 后的模型，用 ROUGE-L 衡量字面重合、用 LLM-Judge（Appendix 有人类一致性验证）衡量语义正确，两个指标都落在 $[0, 1]$。理想的 unlearn 模型应当三项齐活：Direct QA 低、Contextual QA 高、utility 高。为防止模型只是死记 context 表层，协议还配了 paraphrase 和 reasoning 两种 context 变体。一上手这个协议就抓出了问题：Table 1 里 6 种方法有 5 种在"答案就在 context 里"时仍产出错误甚至乱码，副作用一直藏在旧评测的盲区里。
 
-**2. Context-aware KL 正则项：用 RLHF 的旧药锚住悬空的那一维。**
+**2. Context-aware KL 正则项：用 RLHF 的旧药锚住悬空的那一维**
 
 核心洞察是原来两项 loss 只约束了 $\mathcal{S}_f$ 和 $\mathcal{S}_r$ 两个数据分布，contextual 这第三个分布完全悬空，于是 forget term 的惩罚顺着表示空间外溢、把模型在 $(q, c)$ 输入下的 grounding 能力一起带塌了。补救办法是给这条悬空的数据流也钉一个锚：构造 $\mathcal{S}_f^{\text{ctx}} = \{(q, a, c)\}$（context $c$ 直接从 TOFU 的 ground truth 派生、等价于"答案陈述句"，无需额外标注），定义
 
@@ -57,7 +57,7 @@ $$\mathcal{C}(\mathcal{S}_f^{\text{ctx}}, w) = \frac{1}{|\mathcal{S}_f^{\text{ct
 
 让当前模型在"问题+context"下的 token 分布逼近冻结的原模型。这一招的精妙全在锚点和作用域的选法上：RLHF 里 KL-to-reference 是稳住模型不偏离指定行为的教科书工具，这里把"reference"设成 pre-unlearning 的自己（所以不需要外部 teacher、不需要额外标注），把"被约束的行为"严格限定在 $(q, c)$ 输入流（所以不碰 $\mathcal{S}_f$ 也不碰 $\mathcal{S}_r$，与原 unlearning loss 正交）。因为它根本没动 forget set 上的 loss，遗忘强度仍由原方法决定；又因为 KL 是分布级而非单点 distillation 的约束，比硬推 token-level 目标更柔和，不会和 forget term 死斗。实践上也很省心：Appendix A.6 验证对 $\lambda_c$ 极不敏感，NPO/RMU/UNDIAL 在两个模型上各自取 0.01–2.0 之间都稳，无需精细调参。
 
-**3. 与现有方法的即插即用集成：一个 context term 通吃三种范式。**
+**3. 与现有方法的即插即用集成：一个 context term 通吃三种范式**
 
 unlearning 社区方法极度碎片化、每年新方法满天飞，如果补丁只能配自己那套 loss 就毫无普及价值。好在现有方法不管是 preference optimization（NPO）、re-labeling（UNDIAL）还是激活扰动（RMU），都遵循 "forget term + 可选 retain term" 的二项结构，新方法只是再缀一项 $+\lambda_c \mathcal{C}$——每个 step 多一次原模型前向（算 $p_{\text{orig}}(\cdot|q,c)$）和一次 KL 计算，唯一新增的超参 $\lambda_c$ 每个方法每个模型给一个值即可。同一个 context term 对这三类完全不同范式都能拉出大幅 Contextual QA 提升（RMU 从 $0.00 \to 0.99$ 最戏剧），既说明 contextual suppression 是跨方法的共病，也说明 KL anchor 是跨方法的通解。
 

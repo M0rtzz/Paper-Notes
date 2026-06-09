@@ -43,15 +43,15 @@ tags:
 
 ### 关键设计
 
-**1. 轨迹级安全的重定义：把安全边界从前缀拉到每一个 step。**
+**1. 轨迹级安全的重定义：把安全边界从前缀拉到每一个 step**
 
 这是方法论的支点，也是它和 Shallow-Align / STAIR 最本质的分界。传统对齐把目标写成 $\min \mathbb{E}_x[\ell(\pi_\theta(y_1 \mid x), \text{refusal})]$——本质是在前缀位置塑造拒答映射，守的是入口。但作者的开篇统计揭示，DRA / ReNeLLM / DrAttack 这类间接越狱的有害 token 平均要到 20+ token 之后才浮现，前缀早已"过期"，攻击者一旦控制 reasoning 结构就直接绕过。本文于是改成在策略自生的整条 $\tau$ 上要求"任意 step $y_t$ 一旦触及潜在风险就能切到拒答"，并通过 SFT + RL 把这条约束编进参数、而非外挂在 decoding 上。把检查点分散到每一步，意味着即便对手控制了推理结构本身，反思仍可以在任何位置触发——这也解释了为什么 Reflector 不需要见过具体攻击类型也能跨攻击源泛化。
 
-**2. 教师引导的反思数据 $\mathcal{D}_R$：用随机截断点把"该自省"的稀缺先验灌进基座。**
+**2. 教师引导的反思数据 $\mathcal{D}_R$：用随机截断点把"该自省"的稀缺先验灌进基座**
 
 预训练模型本身没有显式的反思 inductive bias，直接上 RL 会冷启失败，所以第一步要造一个标注了"反思插入点 + 反思内容 + 改道后安全续写"的轨迹数据集。做法是：对每条间接越狱 query $x$，先让策略 $\pi_\theta$ 生成完整轨迹 $\tau$，然后在 $\{1, \dots, T\}$ 上**均匀随机**采截断点 $n$，把轨迹切成 $y^{\text{before}}$ 和待丢弃的后半段；教师（GPT-5）只看 $(x, y^{\text{before}})$，生成结构化反思 $z = (z^{\text{reflect}}, z^{\text{explore}})$——前者用 `<|reflect|>` 包裹显式反思推理（"我在做的事其实正在帮用户合成 X，应该停"），后者用 `<|explore|>` 包裹改道引导；最后策略基于 $(x, y^{\text{before}}, z)$ 续写出安全结尾 $y^{\text{after}}$，拼成 $\tilde\tau = (y^{\text{before}}, z, y^{\text{after}})$，SFT 目标就是 $\tilde\tau$ 上的标准 NTP loss。这里随机截断点是精髓：固定截断会让模型学到"反思永远发生在 token 100 附近"的捷径，均匀随机才能逼它学会判断"现在是不是该反思"；而用 GPT-5 当教师、质量远超基座自生的反思，绕开了"弱模型自标注 → 自我退化"的死循环。再混入 500 条 AlpacaEval 同样套上 `<|reflect|>` 格式，保证通用指令跟随不退化。
 
-**3. 双奖 GDPO：用条件性反思奖励把"反思是手段不是目的"教进策略。**
+**3. 双奖 GDPO：用条件性反思奖励把"反思是手段不是目的"教进策略**
 
 SFT 只是注入了模板，要真正内化还得靠 RL，难点在于无效反思（reflect 了但仍输出有害内容）反而会扰乱生成。作者用 GRPO 的变体 GDPO（group reward-decoupled normalization PO）：对每条 query 采 $G=8$ 条轨迹，用组内归一化 advantage $A_i = (r(\tau_i) - \bar r) / (\sigma_r + \epsilon)$ 更新策略。奖励拆成两块——**安全奖励** $r_{\text{safety}} = \text{HarmCLS}(y) \in \{0, 1\}$ 由 HarmBench 分类器 + GPT-OSS-120B 生成式判定的 consensus 给出，替代脆弱的前缀匹配；**反思奖励**则设计成条件性的：
 

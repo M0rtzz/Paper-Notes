@@ -46,7 +46,7 @@ TG 密度写为 $p(\mathbf{x};\bm{\phi})\propto\exp(\bm{\phi}^\top S(\mathbf{x})
 
 ### 关键设计
 
-**1. Stochastic Score Matching：用 VJP 把每步推断从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$。**
+**1. Stochastic Score Matching：用 VJP 把每步推断从 $\mathcal{O}(d^6)$ 砍到 $\mathcal{O}(d^2)$**
 
 TG 卡在大规模上的瓶颈是分数匹配的闭式解要解一个 $2d^2\times 2d^2$ 线性系统、存储 $\Gamma\in\mathbb{R}^{2d^2\times2d^2}$，时间 $\mathcal{O}(d^6)$、内存 $\mathcal{O}(d^4)$，单卡 24GB 上 $d\approx100$ 就 OOM。本文的关键观察是：$\Gamma=\nabla_{\mathbf{x}}S(\nabla_{\mathbf{x}}S)^\top$ 看着是大矩阵，但 TG 的每个充分统计量最多只依赖两个相位变量，Jacobian 稀疏到只有 $\Theta(d^2)$ 个非零元，所以根本不必显式构造它。把目标里的二次型改写成范数形式 $\bm{\phi}^\top\Gamma(\mathbf{x})\bm{\phi}=\|\bm{\phi}^\top\nabla_{\mathbf{x}}S(\mathbf{x})\|_2^2$ 后，只需对标量 $\bm{\phi}^\top S(\mathbf{x})$ 做一次反向模式自动微分（vector-Jacobian product）就能在 $\mathcal{O}(d^2)$ 内算出。于是整个目标变成
 
@@ -54,11 +54,11 @@ $$J(\bm{\phi})=\mathbb{E}_{\mathbf{x}}\Big[\tfrac{1}{2}\|\bm{\phi}^\top\nabla_{\
 
 可以 minibatch 无偏估计、Adam 更新，并兼容 $L_2$ 与诱导稀疏图结构的 group-$\ell_1$ 正则；同一改写平移到条件 TG 上就得到 $\bm{\phi}(y)$ 可由神经网络参数化的版本。换句话说，原闭式分数匹配完全浪费了 TG 的稀疏物理结构，VJP 直接"点中"这层稀疏，把方法学瓶颈一次性打掉。
 
-**2. TG-HMM 的判别式 M-step：把不可解析的配分常数退化成一次 softmax 拟合。**
+**2. TG-HMM 的判别式 M-step：把不可解析的配分常数退化成一次 softmax 拟合**
 
 要让 TG 在隐状态 $z_t\in\{1,\dots,K\}$ 间动态切换（比如捕捉 NREM 睡眠的纺锤波耦合），每个状态发射模型 $p(x_t|z_t=k)=\exp(\bm{\phi}_k^\top S(x_t)-A(\bm{\phi}_k))$ 里的对数归一化常数 $A(\bm{\phi}_k)$ 不可解析，是标准 EM 过不去的坎。本文干脆永远不算 $A(\bm{\phi}_k)$，而是引入自由参数 $A_k\in\mathbb{R}$ 加轻量 ridge 正则，构造代理联合模型 $\log\tilde{p}(z,x)=\sum_t\log\Pi_{z_{t-1},z_t}+\sum_t[\bm{\phi}_{z_t}^\top S(x_t)-A_{z_t}]$。E-step 在代理模型上跑标准 forward-backward 得到软责任 $\gamma_{t,k},\xi_{t,i,j}$；M-step 把 $A_k$ 当作可训练的类别截距，其目标 $Q'(A)$ 恰好等价于以 $\gamma_{t,k}$ 为软标签、$S(x_t)$ 为特征、$\{\bm{\phi}_k\}$ 为固定权重的多项 logistic 回归——一个凸优化。作者进一步证明（式 18-22），在 TG 族正确指定、有限样本矩估计良好、$\sum_t r_{t,k}\approx\sum_t\gamma_{t,k}$ 三条假设下，$\nabla A(\bm{\phi}_k)\approx\hat{\mu}_k(\gamma)=\sum_t\gamma_{t,k}S(x_t)/\sum_t\gamma_{t,k}$，即近似满足精确 M-step 的驻点条件。相比直接对每个状态做 NCE / MCMC 估常数会引入额外噪声与超参，这个判别式视角让"估常数"无缝接进 forward-backward、复杂度可控。
 
-**3. AR-TG 与转移熵估计：用相位嵌入把方向性推断做成可闭环的圆变量 Granger。**
+**3. AR-TG 与转移熵估计：用相位嵌入把方向性推断做成可闭环的圆变量 Granger**
 
 相位变量的方向性推断历来难，朴素 Granger 用线性高斯会破坏相位的周期性。本文把 TG 扩展成自回归形式 $p(y_t|\mathbf{x}_{<t},y_{<t})\propto\exp[\bm{\phi}(\mathbf{x}_{<t},y_{<t})^\top S(y_t)]$，参数化为
 

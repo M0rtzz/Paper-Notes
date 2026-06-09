@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 基于 embedding-variance 最小化的攻击目标：把"逼 router 坍缩"写成一个可分析的优化问题。**
+**1. 基于 embedding-variance 最小化的攻击目标：把"逼 router 坍缩"写成一个可分析的优化问题**
 
 要解释"重复 token 为什么管用"，得先把攻击目标形式化。作者定义层级 embedding 方差 $D(H^l(X))=\frac1N\sum_i\|h^l_i-\bar h^l\|_2^2$，把最优攻击 prompt 写成 $X^*=\arg\min_X\sum_{l=1}^L D(H^l(X))$——方差越小，相邻 token 的 hidden state 越塌缩到同一簇，作为 hidden state 确定性函数的 router $G(h)=\text{Softmax}(h\cdot W_{\text{router}})$ 就会把它们全推向同一组 top-$k$ 专家。直接解这个 $\arg\min$ 需要白盒梯度，但作者证明：让所有 token 完全相同 $\Rightarrow$ 相邻 hidden state 差异最小 $\Rightarrow$ 经验上同时压低 embedding variance 与 embedding entropy（参 Skean et al., 2025），于是白盒优化退化成"选哪个 token + 重复多少次"两个超参，黑盒可行。这条理论同时点破了漏洞的根因：MoE router 的均衡能力**隐式假设输入 token 在 embedding 空间足够发散**，一旦打破这个假设，后训练怎么微调都补不回来——这正解释了为什么 base 和 instruct 变体上漏洞如出一辙。
 
-**2. 理论最大失衡 TMI：给出单卡过载的上界，并量化"EP 越大越脆弱"。**
+**2. 理论最大失衡 TMI：给出单卡过载的上界，并量化"EP 越大越脆弱"**
 
 有了攻击目标还要知道它最坏能造成多大破坏。设每卡放 $E_d=|\mathcal{M}_l(d)|$ 个专家、router 取 top-$k$，则被打爆那张卡的最坏负载是 $\min(k,E_d)$，而公平份额只有 $k/|\mathcal{D}|$，两者之比就是理论最大失衡 $\text{TMI}=\dfrac{\min(k,E_d)}{k/|\mathcal{D}|}$。这个式子呈两段行为：当 $k\le E_d$（稀疏型如 DeepSeek-V3）时攻击随 EP size 线性放大，理论上能制造"完美瓶颈"；当 $k>E_d$（如 Mixtral-8x7B 在 EP=8 时每卡只剩 $E_d=1$ 个专家、却要选 $k=2$）就被卡在 $|\mathcal{D}|\cdot E_d/k=4$ 倍而非满血的 8 倍。TMI 的意义在于把"运维侧放大 EP 提效率"和"安全侧放大攻击面"绑成同一个 trade-off，给出一条可执行的部署建议：不要无脑追求大 EP。
 
-**3. 黑盒实战的两条务实降级：承认达不到 TMI 上界，但仍普适有效。**
+**3. 黑盒实战的两条务实降级：承认达不到 TMI 上界，但仍普适有效**
 
 RepetitionCurse 在真实黑盒里跑不满 TMI 理论值，作者诚实地定位了两个 gap 并各自处理。其一是**对 Expert-GPU 映射不可知**：动态均衡器（如 DeepSeek 的 EPLB）每隔 ~10 min 才重排一次且开销不小，重排窗口内映射是静止的，作者于是沿用 vLLM/SGLang 默认的"按序分配"映射作为分析基线。其二是**无法指定目标专家**：攻击能把 token 集中到某组 top-$k$ 专家，却不能挑是哪 $k$ 个，万一命中的两个专家恰好被分到不同 GPU（如 Mixtral 在 EP=2 的某些层），延迟收益就消失了；作者把这一限制建模成一个概率因子，在跨词表、跨层的统计意义上仍能稳定拿到 1.07×–2.48× 的 TTFT 放大。这两条降级反而凸显了真正的威胁来源——不是某个精心构造的最优白盒攻击，而是这种**普适但不完美**的黑盒能力：攻击者只要把词表扫一遍，总能找到对当前部署"恰好命中"的那个 token。
 

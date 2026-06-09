@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. Jensen 偏差的理论推导：零均值噪声为何还能系统性跑偏。**
+**1. Jensen 偏差的理论推导：零均值噪声为何还能系统性跑偏**
 
 直觉上，整数量化在注意力分数上引入的是零均值噪声，期望上不该改变注意力行为。但 softmax 里的指数函数是凸的，对称性就被打破了。设缓存键 $i$ 的量化分数为 $\hat{s}_i = s_i + \delta_i$，其中 $\delta_i = \frac{q^\top \epsilon_i}{\sqrt{d}}$ 是量化噪声的投影、$\epsilon_i \sim \mathcal{U}(-\Delta_i/2, +\Delta_i/2)$。缓存侧 partition sum 的期望是 $\mathbb{E}[\hat{Z}_\mathcal{S}] = \sum_{i \in \mathcal{S}} e^{s_i} \cdot \mathbb{E}[e^{\delta_i}]$，而由 Jensen 不等式 $\mathbb{E}[e^{\delta_i}] \geq e^{\mathbb{E}[\delta_i]} = 1$，于是 $\mathbb{E}[\hat{Z}_\mathcal{S}] \geq Z_\mathcal{S}$。正偏差被指数放大的幅度大于负偏差被压低的幅度，这道不等号的缝隙就是 Jensen 偏差——缓存键由此窃取注意力。看清这点后，思路就从"努力减小量化噪声"转向"直接纠正噪声造成的后果"。
 
-**2. 逐分数纠正项推导：要求纠正后的期望贡献回到原值。**
+**2. 逐分数纠正项推导：要求纠正后的期望贡献回到原值**
 
 既然知道缓存键的贡献被膨胀了 $\mathbb{E}[e^{\delta_i}]$ 倍，就给每个缓存令牌减一个 $b_i$ 把它抵消。约束条件直白：$e^{s_i - b_i} \cdot \mathbb{E}[e^{\delta_i}] = e^{s_i}$，解得 $b_i = \log \mathbb{E}[e^{\delta_i}]$。因为量化噪声在各通道独立，这个期望可按通道分解，对均匀量化噪声有精确形式 $b_i = \sum_{c=1}^d \log\left(\frac{\sinh(q_c \Delta_{i, c} / (2 \sqrt{d}))}{q_c \Delta_{i, c} / (2 \sqrt{d})}\right)$。实践中再用二阶 Taylor 展开 $\log(\sinh(\alpha)/\alpha) \approx \alpha^2/6$，化简成一个干净的近似 $b_i \approx \frac{1}{24 d} \sum_{c=1}^d q_c^2 \Delta_{i, c}^2$。它只依赖查询和量化步长，理论上从无偏性出发、实践中又足够简洁，还能推广到 FP、MXFP 等其它量化格式。
 
-**3. 推理时应用 + 复杂度控制：让纠正几乎白送。**
+**3. 推理时应用 + 复杂度控制：让纠正几乎白送**
 
 纠正项 $b_i$ 只用到已经存在的量化参数（步长 $\Delta_{i, c}$）和查询范数 $\|q\|$，不需要额外存任何东西。对分组量化（组大小 $g = 32$），它带来的额外计算是 $O(QK \cdot d / g)$，相对标准 $QK^\top$ 的 $O(QK \cdot d)$ 只多了 $1/g$。落到 FlexAttention 实现上，端到端延迟仅增加约 5%。正是这个"几乎免费"让它从一个理论结论变成可直接挂在任何量化方案后面的即插即用纠正。
 

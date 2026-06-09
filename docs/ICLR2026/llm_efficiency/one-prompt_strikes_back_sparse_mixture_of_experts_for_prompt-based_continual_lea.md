@@ -46,7 +46,7 @@ SMoPE 想解决的是「单个共享 prompt 既要省参数又不能被知识干
 
 ### 关键设计
 
-**1. Prompt-Attention Score Aggregation：把每个 expert 的 $N$ 个分数压成一个代理分数。**
+**1. Prompt-Attention Score Aggregation：把每个 expert 的 $N$ 个分数压成一个代理分数**
 
 直接套标准 SMoE 的难点在这里——prefix tuning 里每个 prompt expert 对应 $N$ 个 score function（每个 output token 一个），要在 $N$ 个分数上逐个做 Top-K 选择是 intractable 的。SMoPE 的做法是把所有 token 对某个 expert 的 attention 分数取平均，得到一个统一代理分数：
 
@@ -54,7 +54,7 @@ $$\tilde{s}_{j'}(\mathbf{X}) = \frac{\tilde{\mathbf{x}}^\top W_l^Q {W_l^K}^\top 
 
 其中 $\tilde{\mathbf{x}}$ 是所有 token 的均值表示，只需算一次就能拿到全部 expert 的代理分数。这样单个 expert 的打分复杂度从 $\mathcal{O}(N d_k)$ 降到 $\mathcal{O}(d_k)$，而且作者证明聚合后仍保持与标准 MoE 相同的 $\mathcal{O}(\tau^{-4})$ 样本复杂度——既让 Top-K 选择变得可行，又没牺牲理论上的统计效率。
 
-**2. Sparse Expert Selection：用代理分数做 Top-K，只激活 $K$ 个 expert。**
+**2. Sparse Expert Selection：用代理分数做 Top-K，只激活 $K$ 个 expert**
 
 拿到代理分数后，attention 矩阵被拆成 prompt 和预训练两部分 $\tilde{A}_l = [\tilde{A}_l^{\text{prompt}}, A_l^{\text{pre-trained}}]$，其中 prompt 部分按下式做稀疏选择：
 
@@ -62,7 +62,7 @@ $$\tilde{A}_l^{\text{prompt}} = \text{TopK}\!\left(\tilde{\mathbf{x}}^\top W_l^Q
 
 被选中的 $K$ 个 expert 的分数会 expand 到全部 $N$ 个 query token 上，未选中的 expert 分数置零。这一步正是缓解干扰的关键：OVOR 那种单 prompt 方法每步都更新所有 prompt 参数，导致新 task 不断覆写旧知识；而稀疏激活相当于给单个共享 prompt 引入了隐式参数分区，不同 task 倾向落在不同 expert 子集上，互相踩踏的概率大幅下降。同时 expert 选择只看当前层输入，不像 task-specific 方法那样需要先跑一遍完整模型做 prompt retrieval。
 
-**3. Adaptive Noise Mechanism：给高频 expert 加噪声惩罚，逼出冷门 expert。**
+**3. Adaptive Noise Mechanism：给高频 expert 加噪声惩罚，逼出冷门 expert**
 
 稀疏选择会带来标准 SMoE 的老毛病——少数 expert 垄断路由、利用率严重失衡；在 CL 里这更糟，因为反复用同一批 expert 等于把所有 task 的知识又挤回少数参数里，干扰重新出现。SMoPE 在训练时统计每个 expert 的激活频率 $F_{j'}$，对频率高于平均值的 expert 施加噪声惩罚降低其被选概率，惩罚幅度按当前分数的动态范围缩放：
 
@@ -70,7 +70,7 @@ $$\epsilon_{j'} = \epsilon \cdot \left(\max_j \tilde{s}_j - \min_j \tilde{s}_j\r
 
 频率低于均值的 expert 不受惩罚。按动态范围缩放是为了避免噪声盖过真实分数，而且这套机制只在训练时生效、推理时关掉，所以不会引入推理抖动。比起传统 MoE 的 load-balancing auxiliary loss，它只压高频 expert、更温和，不会强行把已学好的路由也打散。
 
-**4. Prototype-based Loss：用 prefix key 当旧 task 原型，保住 expert 的专门化。**
+**4. Prototype-based Loss：用 prefix key 当旧 task 原型，保住 expert 的专门化**
 
 前面三步解决了「怎么选、怎么均衡」，但 CL 还有个无旧数据的难题——训练新 task 时旧 expert 学到的分工很容易被冲掉。SMoPE 用两个 loss 配合：$\mathcal{L}_{\text{router}}$ 在当前 task 数据上鼓励被选 expert 的分数高于未被选 expert，促进 expert 之间的差异化；$\mathcal{L}_{\text{proto}}$ 则把上一轮训练结束时的 prefix key 当成 prototype，约束旧 expert 的路由保持一致，从而在没有旧样本的情况下守住已学的 specialization。为避免噪声，prototype 集合只保留那些频繁被激活的 expert。两者一个管「当下分得开」、一个管「过去不忘」，互补地压住遗忘。
 

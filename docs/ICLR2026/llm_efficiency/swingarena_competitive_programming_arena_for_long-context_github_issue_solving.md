@@ -45,15 +45,15 @@ SwingArena要解决的问题是：现有代码评测都用"固定测试集打分
 
 ### 关键设计
 
-**1. 对抗性 Battle 协议：把"静态测试打分"换成 submitter-reviewer 的动态博弈。**
+**1. 对抗性 Battle 协议：把"静态测试打分"换成 submitter-reviewer 的动态博弈**
 
 针对的是静态基准最大的盲区——测试用例固定可预测，模型只要过几条预设单测就算赢，跟真实 PR 审查里 reviewer 不断找茬的过程完全脱节。SwingArena 让两个 LLM 分别扮演 Submitter 和 Reviewer：Submitter 根据 issue 描述和检索到的代码上下文生成修复补丁，Reviewer 则盯着补丁的变更内容编写针对性测试，专门探测 edge case 和逻辑缺陷。评分规则把双方的激励对得很死——Submitter 的补丁若通过全部 CI 检查（含 Reviewer 新写的测试）得 +1，否则 -1；Reviewer 的测试如果能在 golden patch 上通过、却让 Submitter 的补丁失败则得 +1，若连 golden patch 都跑不过反而 -1。每场 battle 共 10 轮，两个 agent 各做 5 轮 Submitter、5 轮 Reviewer，角色完全对称。这种角色交换正是它比静态评测多出来的维度：同一个模型既要证明自己会"修"、也要证明自己会"验"。而 Reviewer 那套质量门控（测试必须先过 golden patch、禁止改动生产代码、限制行数、禁止非确定性逻辑）则堵住了"写 trivial 测试刷分"这种 exploitative 行为。
 
-**2. RACG 检索增强代码生成：在有限 token 窗口下统一处理四语言的长上下文。**
+**2. RACG 检索增强代码生成：在有限 token 窗口下统一处理四语言的长上下文**
 
 真实仓库动辄数万行、相关信息散落在多个文件，模型的上下文窗口根本塞不下，这是长上下文 issue solving 的核心瓶颈。RACG 用一条三级流水线来收敛上下文：FileRetriever 先用 BM25 稀疏检索做文件级粗排，从 issue 描述出发取 top-k 候选源文件；CodeChunker 再对候选文件做语法感知分块，按函数/类/代码块切分，针对 C++/Python/Rust/Go 各自的解析规则切，解析失败时回退到正则分块；CodeReranker 最后用 CodeBERT 把问题和代码块都编码成稠密向量，按 cosine 相似度精排，并叠加三种偏置——语言感知打分（优先定义而非引用）、邻近性偏置（已选 chunk 附近的 chunk 加分）、跨文件去重。排好之后还有一个 Token Budget 管理器动态分配预算：空间充裕时选粗粒度 chunk，预算紧张时切到细粒度 chunk。这套设计补上了既有代码 RAG（如 SWE-Agent 的 AST 解析）只支持 Python、缺乏跨语言和预算管理的短板——语法感知分块保证代码块语义完整、不会在函数中间被截断，动态预算管理则让不同上下文窗口大小的模型站在同一起跑线上，评测才公平。
 
-**3. 数据构建与 CI 复现：用四阶段过滤换一个真能跑 CI 的高质量数据集。**
+**3. 数据构建与 CI 复现：用四阶段过滤换一个真能跑 CI 的高质量数据集**
 
 评测可信度直接取决于数据质量，而真实仓库的 CI 环境又极难复现，这一步是整个 benchmark 能不能立住的地基。作者走了一条四阶段过滤链：先通过 GitHub API 从高 star 仓库挖出约 2300 对 PR-Issue，再用 CI 测试过滤只保留所有 CI 检查都能通过的实例，接着用 LLM-as-Judge（Grok-3-beta）评估问题描述的清晰度和难度并要求给出评估理由，最后交人工专家校验、纠正 LLM 的评估偏差。这种"LLM 粗筛 + 人工精校"的两阶段策略兼顾了效率和准确性。每个仓库的 CI 环境都在隔离的 Docker 容器里完整复现，支持 GitHub Actions 和 Travis CI，连 Rust 的 cargo 这类语言特定构建系统也原样保留；Docker 隔离保证任务间零污染，再配上 temperature=0 加固定随机种子，整套评测结果才可复现。
 

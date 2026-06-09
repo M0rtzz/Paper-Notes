@@ -45,15 +45,15 @@ Whisper 的输入不是模型权重，而是一个初始任务指令、一个黑
 
 ### 关键设计
 
-**1. 多视角 persuasive prompt 生成：用多种说服策略去撬动模型的"简洁开关"。**
+**1. 多视角 persuasive prompt 生成：用多种说服策略去撬动模型的"简洁开关"**
 
 一句 "Be concise." 之所以压缩有限，是因为它太弱，碰不到模型真正在意的点。Whisper 改用多种说服视角批量生成候选后缀：emotional appeal（情绪诉求）、threat（威胁）、evidence-based persuasion（证据论证）、role-playing（角色扮演）、detailed instruction（结构化指令）等。比如 evidence 视角会引用"短解释同样有效"这类研究式论证去说服模型，role-play 视角则让模型扮演一个必须极简表达的专家。不同模型对权威证据、角色约束、情绪语境、结构化要求的敏感性并不一样，多视角生成正是为了覆盖这种差异——实验里 Qwen3 系列更吃 evidence-based persuasion，而 DeepSeek-R1-Distill-Qwen 系列里 role-play、instruction、evidence 都能进 top 候选。
 
-**2. 准确率约束下的候选筛选：只压长度，不许压垮准确率。**
+**2. 准确率约束下的候选筛选：只压长度，不许压垮准确率**
 
 压缩很容易滑向"短但错"，NoThinking 就是反例——输出极短却大幅掉准确率，不能算成功。Whisper 因此把它当成一个 efficiency-performance trade-off 问题来选：每个候选后缀 $P_{adv}^j$ 在开发集上同时算平均长度 $L_{avg}^j$ 和平均准确率 $ACC_{avg}^j$，凡是准确率下降超过容忍阈值 $\tau$ 的候选直接淘汰，幸存的才按平均长度从短到长排序。这样进入排序的永远是"准确率达标"的后缀，保证搜索朝着"既短又准"而不是"一味更短"的方向走。
 
-**3. 迭代 refinement：让生成器从上一轮的有效后缀里继续学。**
+**3. 迭代 refinement：让生成器从上一轮的有效后缀里继续学**
 
 手写 prompt 很难一次到位，Whisper 干脆在黑盒空间里做轻量级 prompt evolution：每轮筛出的 top-k 后缀作为下一轮的 exemplars 喂回 GPT-4o，让它参照这些成功例子继续合成新候选。论文实验里压缩收益从第一轮到第三轮持续累积——DeepSeek-R1-Distill-Qwen-14B 的平均 token reduction 从 18% 提到 22%，Qwen3-14B 从 32% 提到 37%——三轮之后趋于饱和。等于用很低的成本，让说服策略一轮比一轮更贴合目标模型的口味。
 

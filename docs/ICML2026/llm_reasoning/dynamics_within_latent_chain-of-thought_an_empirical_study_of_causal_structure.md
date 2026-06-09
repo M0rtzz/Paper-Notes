@@ -55,15 +55,15 @@ $$\text{(隐藏)}\; H_t = f_t(H_{<t}, x, \epsilon_t; \theta), \quad t=1,\dots,T;
 
 ### 关键设计
 
-**1. Step-wise `do`-intervention + Flip rate：用置零干预测每步对最终答案是不是"非有不可"。**
+**1. Step-wise `do`-intervention + Flip rate：用置零干预测每步对最终答案是不是"非有不可"**
 
 针对的痛点是 probe 这类相关性指标分不清"这一步真在被用"还是"信息恰好线性可分"。做法很直接：对每个样本跑一条基线轨迹，再跑一条只把第 $t$ 步隐状态置零（$do(h_t \leftarrow \mathbf 0)$）的反事实轨迹，下游 transition 与 readout 完全不动，统计预测发生翻转的样本比例 $\mathrm{Flip}(t)$ 当作该步的决策依赖强度。早停那一支则定义最早正确步 $k_i = \min\{k: \hat y_i^{(\le k)} = y_i^*\}$ 和累计求解率 $S(k) = \frac{1}{N}\sum_i \mathbb{1}\{k_i \le k\}$，用 $S(k)$ 的爬升曲线刻画"给多少 latent 预算才够"。之所以选 zero intervention 而非别的扰动，是因为它在 GPT-2/Llama/Qwen 几个底座间最稳定、不会注入分布外噪声；之所以把"必要性"（干预后会不会翻）和"充分性"（早停后能不能读出）分开测，是为了避免把"答案已经可读"误当成"后面几步没用了"——两者其实是两件事。
 
-**2. Influence matrix $W_{t,s}$ + Principal Influence Graph：把"$t$ 步扰动如何传到 $s$ 步"画成一张有向加权图。**
+**2. Influence matrix $W_{t,s}$ + Principal Influence Graph：把"$t$ 步扰动如何传到 $s$ 步"画成一张有向加权图**
 
 单点 flip rate 只能说"这一步关键不关键"，却答不出"信息在 T 步之间怎么流"，更分不清一个高杠杆步是自己重要还是某条远距离路由的中继。于是在"干预 + teacher-forced 读出"协议下定义样本级位置平均 KL $\mathrm{KL}^{(i)}_{t\to s} = \frac{1}{|y_i^*|} \sum_u \mathrm{KL}(p_{\text{base}}^{(s)}(\cdot\mid y^*_{i,<u}) \| p_{\text{do}(t)}^{(s)}(\cdot \mid y^*_{i,<u}))$，对样本取期望得到影响矩阵 $W_{t,s} = \mathbb E_i[\mathrm{KL}^{(i)}_{t\to s}]$，再用阈值 $\alpha = 0.1 \cdot \max(W)$ 加每节点 top-1 出边稀疏化，得到主影响图。对照侧把显式 CoT 生成的 rationale 切成 $T=6$ 段、用每段末 token 隐状态当匹配节点，从而和 latent 图同尺度比较；除可视化外还在归一化 $W$ 上算 locality / span / early-out / late-in 四个结构指标量化"布线形状"。这里坚持用 teacher-forced 读出而非采样解码，是为了压掉温度抖动、让 $W_{t,s}$ 真反映传播而不是噪声；论文也反复声明它只是"operator-specific empirical influence structure"，不是可识别的真实因果图，附录 C.4/C.5 还专门换干预算子和读出协议测了稳定性。
 
-**3. Superposition score + 双读出对比：分清"输出层早早偏向"和"表示层真正塌缩"差多远。**
+**3. Superposition score + 双读出对比：分清"输出层早早偏向"和"表示层真正塌缩"差多远**
 
 问题出在单看一种读出会得出相反结论——只看 teacher-forced 会觉得模型很早就承诺了一个答案，只看 probe 又会高估"中间步还在犹豫"。做法是在 StrategyQA 上对同一 prompt 做 $K$ 次随机 rollout，只保留 Yes / No 都出现过的"双模" prompt；在每个 latent 步 $t$ 用两种读出估两模式概率 $p_Y(t), p_N(t)$——(i) teacher-forced 模板打分、(ii) 在冻结 latent 上训练的轻量 probe，再用对称指标 $\mathrm{SS}(t) = \min(p_Y(t), p_N(t))$ 量叠加程度（两模都强时高、一边压倒另一边时趋零）。把两种读出并排看，才能把"分布层面的早偏向（output commitment）"和"表征里是否还藏着另一种答案（representational commitment）"切开——这正是全文最核心的概念区分。
 

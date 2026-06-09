@@ -36,7 +36,7 @@ CustomTex 要解决的是"给定一个未纹理化的室内场景，怎么让每
 
 ### 关键设计
 
-**1. Instance Cross-Attention + InsVSD：让每个实例只对齐自己那张参考图。**
+**1. Instance Cross-Attention + InsVSD：让每个实例只对齐自己那张参考图**
 
 文本驱动的老办法（SceneTex、TEXture）描述不出布料、木纹、壁纸这种精细视觉特征，单张全局参考图又只能粗粒度地影响整场。CustomTex 改用每实例一张参考图，并在注意力层面把它们"各管一块"。具体做法是用 IP-Adapter 抽出第 $i$ 个参考图的特征 $f^{ref}_i$，再用该实例的渲染 mask $m_i$ 在 feature 级别调制 cross-attention，把不同参考的贡献按区域加权汇总：
 
@@ -44,7 +44,7 @@ $$Z' = \frac{1}{N}\sum_{i=1}^N m_i \cdot \text{Softmax}\left(\frac{\mathbf{Q}\ma
 
 这样第 $i$ 张参考图的信息只会流向画面上属于第 $i$ 个实例的像素，避免多张参考"串味"。纹理场的更新沿用 VSD 的交替优化：先冻结 LoRA、用 VSD 梯度 $\nabla_\theta\mathcal{L}_{\text{VSD}} = \mathbb{E}[\omega(t)(\epsilon_{\phi_d} - \epsilon_{\phi_{\text{LoRA}}})\frac{\partial\mathcal{T}}{\partial\theta}]$ 更新纹理参数 $\theta$，再冻结 $\theta$ 更新 LoRA $\phi$ 去拟合当前渲染分布。这里关键的取舍是 mask 加在哪一层——作者把它放在 feature 级而不是 noise 级，消融显示前者在物体边界处的光照明显更稳定，因为 feature 级调制能精确地把每张参考特征锚到对应实例区域，而不是事后在噪声上硬切。
 
-**2. 像素级蒸馏：把超分做成梯度信号，而不是事后修一遍。**
+**2. 像素级蒸馏：把超分做成梯度信号，而不是事后修一遍**
 
 光有语义对齐还不够清晰——VSD 出来的纹理往往偏模糊、高频细节缺失。一个直觉做法是优化完再跑一遍超分（post-SR），但 UV 纹理是按 UV 展开排布的，没有自然图像那种语义结构，SR 模型直接对着 UV 图超分会失效。CustomTex 的解法是把预训练 SR 模型 $\phi_{SR}$ 也接进蒸馏循环，在每轮渲染出的自然视图上算一个 SR 梯度：
 
@@ -52,7 +52,7 @@ $$\nabla_\theta\mathcal{L}_{\text{SR}} = \mathbb{E}[\omega(t)(\epsilon_{\phi_{SR
 
 它和语义梯度合成最终更新 $\nabla_\theta\mathcal{L} = \nabla_\theta\mathcal{L}_{\text{VSD}} + \lambda_{SR}\nabla_\theta\mathcal{L}_{\text{SR}}$。为了不让清晰度信号干扰早期的内容塑形，训练分两段：前 5000 次迭代 $\lambda_{SR}=0$ 只做语义蒸馏把"画什么"先定下来，之后 $\lambda_{SR}=1.2$ 才加入像素增强补细节。因为 SR 梯度始终作用在自然渲染视图上、再经渲染反传回纹理场，它绕开了"直接超分 UV 图"的难题，消融里集成式 SR 的 IQA（4.469）远高于 post-SR（2.959）。
 
-**3. 多分辨率哈希网格纹理表示：用隐式场换任意分辨率与优化效率。**
+**3. 多分辨率哈希网格纹理表示：用隐式场换任意分辨率与优化效率**
 
 如果用固定分辨率的纹理贴图当被优化对象，分辨率写死、优化也慢。CustomTex 借 Instant-NGP 的多分辨率哈希网格做隐式纹理表示：UV 坐标先查多个尺度的网格、经 hash 映射取出各尺度特征并拼接，再过一个 Cross-Attention 解码器输出该点 RGB。因为是连续场，输出分辨率可在推理时任意指定，4K 纹理约 2.4 秒、12K 约 22 秒，比固定贴图既灵活又优化得更快。
 

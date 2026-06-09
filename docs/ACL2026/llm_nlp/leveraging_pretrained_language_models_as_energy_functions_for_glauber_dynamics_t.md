@@ -53,15 +53,15 @@ tags:
 
 ### 关键设计
 
-**1. 预训练 LM 当能量函数：把噪声分布从随机起点拉到离数据很近的地方。**
+**1. 预训练 LM 当能量函数：把噪声分布从随机起点拉到离数据很近的地方**
 
 离散扩散训得慢、效果输给 AR，根子在于它的 noisy 分布选得太差——uniform、unigram、absorbing 这些离真实文本分布太远，逆过程要从一片乱码走很长的"距离"才能回到数据，而扩散每步只有 1 个监督信号，远不如 AR 每步 $L$ 个 teacher-forcing 信号学得快。本文的破局点是：比 uniform/unigram 更接近数据分布的天然候选，就是预训练 LM 自己。把 UL2 的隐式分布 $p_{\text{base}}(x) \propto e^{f_{\text{UL2}}(x)}$ 直接拿来当扩散过程的稳态/噪声分布。由于扩散本质是 path-wise relative entropy 最小化的随机过程，起点离数据越近、逆过程要走的路越短、sample efficiency 越高；与其从头再训一个扩散 LM，不如把 AR/MLM 预训练已经学到的语言结构当现成起点复用。
 
-**2. Glauber 动力学 ≡ mask infilling：让转移核和填空操作合二为一。**
+**2. Glauber 动力学 ≡ mask infilling：让转移核和填空操作合二为一**
 
 选好了能量函数，还得有个能从中采样的 Markov 链。统计物理里专为 "能量函数 $p(x)\propto e^{f(x)}$" 设计的采样器正是 Glauber dynamics：每步只更新一个位置 $x_k$、其余位置 $x_{\setminus k}$ 固定，按条件分布 $p(x_k\mid x_{\setminus k})$ 重采，配上 Metropolis filter 后接受概率为 $p(x_k=x\mid x_{\setminus k})=\min\{1, e^{f(x_{\setminus k}, x)}\}$。这一步"给定上下文、重填一个 token"恰恰就是 mask infilling。于是 UL2 的统一目标（R-/S-/X-denoising）在这里大放异彩：同一套权重既能 causal generation 采近似稳态、又能 mask infill 做条件转移，省掉了为这两件事各养一个模型的麻烦。从 Markov 链理论看，只要条件分布给定且满足轻度条件就有唯一稳态，Glauber 的收敛性天然有保证。
 
-**3. 同步排列 + UL2 双 mode + score entropy 训练：让训和推在同一个位置对齐。**
+**3. 同步排列 + UL2 双 mode + score entropy 训练：让训和推在同一个位置对齐**
 
 MDLM 的一大痛点是独立转移核导致"训推位置不对齐"——前向在哪加噪、反向在哪去噪对不上。本文的做法是不让 Glauber 每步随机选 index，而是预先固定一组排列 $\sigma_1,\dots,\sigma_N$，反向过程更新的 token 顺序与前向严格一致，把加噪位置和去噪位置精确耦合起来。训练时随机采一个 $t$，让 frozen UL2 跑 $t$ 步前向得到 $x_t$，可学 UL2 在 $x_t$ 上算 DWDSE loss；因为 mask infilling 输出本身就是 token 概率，所需的概率比 score $s_\theta = p_t(y)/p_t(x)$ 直接拿 frozen 与可学两份 UL2 的输出相除即可得到。每个 epoch 还会用当前可学副本刷新 frozen 副本，让稳态分布随训练 progressively 收敛到 score-entropy 拟合后的模型——本质是一种渐进式自蒸馏。
 

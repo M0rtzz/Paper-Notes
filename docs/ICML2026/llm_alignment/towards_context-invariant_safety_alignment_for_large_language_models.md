@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 锚不变性正则 AIR：把对称方差换成对锚的单向 stop-gradient。**
+**1. 锚不变性正则 AIR：把对称方差换成对锚的单向 stop-gradient**
 
 安全对齐的"换皮就破"反映模型学的是表面线索，自然想搬域泛化里的不变风险最小化（IRM/V-REx）来逼行为只依赖意图。但安全场景的监督是**非对称**的——锚有 ground truth，开放生成只能用噪声大、易被 hack 的 LLM judge，而 V-REx 的对称方差项 $\text{Var}_c[R_c(\theta)]$ 只管拉平 context 间差距，既能把差的拉上来、也能把好的拉下去。作者把它换成单向形式 $\Omega_{\text{AIR}} = \sum_{c \in \mathcal{C} \setminus \{c_{\text{acr}}\}} (R_c(\theta) - \text{sg}[R_{c_{\text{acr}}}(\theta)])^2$：因为 $\nabla_\theta \text{sg}[R_{c_{\text{acr}}}] = 0$，正则梯度里**结构性地不含 $\nabla_\theta R_{\text{acr}}$**，所以根本没法靠"降级锚"来缩小差距。两种情形都自动正确——开放风险高于锚（$R_c > \tau_{\text{acr}}$）时系数为正、加强那类生成里更接近锚的样本；开放风险被 reward hacking 拉得虚低（$R_c < \tau_{\text{acr}}$）时系数为负、压制该方向的 likelihood。之所以非这样不可，是因为作者在附录 A.3 形式化证明了：当 $R_o > R_a$ 时对称 V-REx 在 $\lambda > -1/\Delta$ 处会冒出一个"降锚下降方向"，把可信能力打掉去匹配噪声 proxy；AIR 经引理 A.4 与推论 A.5 正好把这个方向从 regularizer 梯度中切掉。
 
-**2. Policy-gradient 辅助损失：写成一项可微 surrogate，挂在 GRPO 后面即插即用。**
+**2. Policy-gradient 辅助损失：写成一项可微 surrogate，挂在 GRPO 后面即插即用**
 
 $\Omega_{\text{AIR}}$ 里的 $R_c$ 是采样期望，没法直接反传。作者对它用 log-derivative trick，得 $\nabla_\theta \Omega_{\text{AIR},c} = -\mathbb{E}_y[2(R_c-\tau_{\text{acr}}) \cdot r(s,y) \cdot \nabla_\theta \log \pi_\theta(y|s)]$，对应一个可微 surrogate $\mathcal{J}_{\text{aux}} = -\frac{1}{N}\sum_i (R_c - \tau_{\text{acr}}) \cdot r_i \cdot \log \pi_\theta(y_i|s_i)$，最终训练目标只是在原 policy loss 上加一项：$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{policy}} + \lambda \mathcal{J}_{\text{aux}}$。这里系数 $(R_c - \tau_{\text{acr}})$ 是个动态权重，正就当 reinforcement、负就当 penalty，方向自动切换。这样既绕开了对 $R_c$ 本身反传，又让 AIR 和现成 GRPO/GSPO 代码栈完全兼容，不需要额外 value network 或人工标注。
 
-**3. 异质 meta-group 采样：让锚和开放变体在同一参数状态下被估计。**
+**3. 异质 meta-group 采样：让锚和开放变体在同一参数状态下被估计**
 
 AIR 系数靠 $\bar r_{\text{acr}} - \bar r_c$ 算，如果锚和开放变体分属不同 step、不同 $\theta$ 估出来，系数就会被异步更新的方差污染。作者让 data loader 按 latent $z$ 构 meta-group，每个 batch 同时塞 $m$ 个锚 prompt 和 $n$ 个开放变体，复用 GRPO 内部的 $K$-rollout 拿到 $\bar r_s, \sigma_s$；GRPO 的相对优势 $\hat A_{s,k} = (r_{s,k} - \bar r_s)/(\sigma_s + \epsilon)$ 照常算，AIR 项就用同组内的 $\bar r_{\text{acr}} - \bar r_c$ 近似 $R_c - \tau_{\text{acr}}$，分布式训练里 $\bar r_{\text{acr}}$ 在 worker 间同步。锚和开放变体在同一参数状态下同步采样，把系数估计的方差压到最小。
 

@@ -43,15 +43,15 @@ tags:
 
 ### 关键设计
 
-**1. $\ell_1$ epigraph + 全局约束塞进每个 disjunct：在凸化之前就把投影方向锁进每一个多面体片，保住"精确满足"这条命脉。**
+**1. $\ell_1$ epigraph + 全局约束塞进每个 disjunct：在凸化之前就把投影方向锁进每一个多面体片，保住"精确满足"这条命脉**
 
 可微优化层的核心矛盾是凸化会让 LP 极点解漂到 disjunct 之间的"伪点"上，从而不再精确满足原始逻辑规则。本文的对策是把投影目标 $\|y - \hat{y}\|_1$ 和全局可行集 $\mathcal{G}(x)$ 一起塞进每个多面体片 $\mathcal{S}_{rj}$，得到扩展集 $\widehat{\mathcal{S}}_{rj}(x; \hat{y}) = \{(y, \eta): A_{rj}(x) y \le b_{rj}(x), -\eta \le y - \hat{y} \le \eta, y \in \mathcal{G}(x)\}$。之所以选 $\ell_1$ 而不是 $\ell_2$，是因为 $\|y-\hat{y}\|_1$ 有标准 epigraph 形式 $\min \mathbf{1}^\top \eta$ s.t. $-\eta \le y-\hat{y} \le \eta$，可以纯线性表达，让整个投影问题保持 LP 结构——而这正是后面"DNF 凸包恰好等于原约束凸包"那条精确性定理的前提。如果反过来先凸化、再加 epigraph，投影方向就会在凸化后的 $y$ 空间里被定义，LP 极点解未必落回某个原始 disjunct，精确满足规则的保证当场就丢了。
 
-**2. 基本步序列：从 CNF 一步步凸化到 DNF，让用户在"松弛紧度"和"模型规模"之间按需取舍。**
+**2. 基本步序列：从 CNF 一步步凸化到 DNF，让用户在"松弛紧度"和"模型规模"之间按需取舍**
 
 约束写成多面体的并之后有两种凸松弛：CNF 松弛 $\widetilde{\mathcal{F}}_{\mathrm{CNF}} = \bigcap_r \mathrm{conv}(\widehat{\mathcal{C}}_r)$（对每条规则单独取凸包再求交）和 DNF 松弛 $\widetilde{\mathcal{F}}_{\mathrm{DNF}} = \mathrm{conv}(\bigcup_{k \in \Pi(x)} \bigcap_r \widehat{\mathcal{S}}_{r,k_r})$（先枚举所有 disjunct 组合再取凸包）。定理 3.6 证明 DNF 松弛恰好等于原始非凸集 $\widehat{\mathcal{F}}$ 的凸包，且 LP 极点解一定对应某个原始 disjunct 组合，因此精确满足所有规则；而 CNF 松弛通常严格更大，极点解可能不可行。问题是 CNF 模型规模随规则数线性增长但松弛松，DNF 紧但 disjunct 组合数 $\prod_r m_r$ 指数爆炸。本文用"基本步（basic step）"把这两端连成一条单调链——每个基本步把一条规则从 CNF 形式移到 DNF 形式：$\widetilde{\mathcal{F}}_{\mathrm{pDNF}}(\mathcal{R}_C, \mathcal{R}_D) \to \widetilde{\mathcal{F}}_{\mathrm{pDNF}}(\mathcal{R}_C \setminus \{r'\}, \mathcal{R}_D \cup \{r'\})$，得到 $\widetilde{\mathcal{F}}_{\mathrm{DNF}} \subseteq \widetilde{\mathcal{F}}_{\mathrm{pDNF}} \subseteq \widetilde{\mathcal{F}}_{\mathrm{CNF}}$。实践中只需对少数强交互的规则做 DNF 展开，就能拿到接近 DNF 的精度而规模又不爆炸。
 
-**3. 多面体并的扩展形式 LP + 隐式微分：用提升变量把"非凸的并"写成一个可微 LP，再靠 KKT 反传梯度。**
+**3. 多面体并的扩展形式 LP + 隐式微分：用提升变量把"非凸的并"写成一个可微 LP，再靠 KKT 反传梯度**
 
 要把多面体并塞进同一套可微管线，关键是 Proposition 3.3 的提升变量法：给每个 disjunct 引入变量副本 $w_j$ 和凸组合权重 $\lambda_j$，约束 $A_j w_j \le \lambda_j b_j$、$w = \sum_j w_j$、$\sum_j \lambda_j = 1$、$\lambda_j \ge 0$，就得到 $\mathrm{conv}(\bigcup_j \mathcal{S}_j)$ 的精确表示。配上 epigraph 约束 $\eta_k \ge y_k - \lambda_k \hat{y}$、$\eta_k \ge \lambda_k \hat{y} - y_k$，预测 $\hat{y}$ 只出现在 LP 右端，前向直接调 LP solver（单纯形法天然返回极点解），反向用 KKT 条件加隐式微分拿到 $\partial y^\star / \partial \hat{y}$。相比用大 M 的 MILP 编码，扩展形式避开了二元变量，整体仍是 LP 所以可微；而单纯形极点解的性质恰好和定理 3.6 对接，让"可微"和"精确满足"两件事同时成立。唯一的小麻烦是参数若出现在 LP 左端会导致解跳变，作者在反向时给 LP 加一个小二次正则 $\mu\|y\|^2$ 转成强凸 QP 再微分来绕过。
 

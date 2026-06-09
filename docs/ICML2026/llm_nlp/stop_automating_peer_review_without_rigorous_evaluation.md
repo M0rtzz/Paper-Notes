@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 用 IntraSim / InterSim 把"评审多样性"变成可测标量。**
+**1. 用 IntraSim / InterSim 把"评审多样性"变成可测标量**
 
 立场论文最怕"趋同"停留在直觉，所以作者先把它量化。对论文 $p$ 的所有评审向量集合 $\mathcal{R}(p)$（用 `text-embedding-3-small` 编码），IntraSim 取同篇内 reviewer 两两 cosine 相似度的平均 $\mathrm{IntraSim}(p)=\frac{2}{m_p(m_p-1)}\sum_{i<j}\mathrm{sim}(r_i,r_j)$，衡量"第二份评审是否带来新信息"；InterSim 则跨论文对 $p\neq q$ 求 $\mathrm{sim}(r,r')$ 的双重平均，且刻意只在"同一类 reviewer 跨不同论文"内比较，免得人类 vs AI 的文本风格差异污染信号。关键在于：单看打分相关性会把"AI 都给高分"和"AI 都说同样的话"混为一谈，而嵌入空间的成对相似度能直接戳穿后者——这正是多 reviewer 制度赖以成立的根基，也是 C1 能否成立的判据。
 
-**2. 用 Paper Laundering 构造一种完全合规的"博弈"攻击。**
+**2. 用 Paper Laundering 构造一种完全合规的"博弈"攻击**
 
 检验 C2 时，作者绕开了 prompt injection 这类已被会议明文禁止、并非典型威胁模型的把戏，转而设计一个无法靠政策禁止的失效模式：把整份论文 LaTeX 源码丢给 launderer LLM，让它在零样本 prompt 下原样重写一遍，重新编译成 PDF 再交给 AI reviewer agent 打分。整套实验铺成 4 prompt × 2 launderer × 3 reviewer 的 24-cell 网格（其中一条 prompt 甚至命令 launderer 主动 jailbreak 审稿模型），用 Wilcoxon signed-rank 检验配对分差，几乎所有 cell 都 $p<0.001$、平均涨 $+0.45$ 分，且自夸偏差（self-preference bias）让 GPT 审稿被 GPT 改写时涨得最猛。它真正扎人的地方是"合规"：作者大方承认用 AI 润色文字，会议无从禁止，攻击门槛却低到一篇 \$0.25。
 
-**3. 用 Monoculture 级联测量把危害从评审层接到写作层。**
+**3. 用 Monoculture 级联测量把危害从评审层接到写作层**
 
 算法单一化的真正可怕之处不止"评审趋同"，更在于"被评审塑造的写作也跟着趋同"，作者用一个简单的嵌入聚合实验把这条因果链画完整。对 60 篇论文的 abstract+introduction 嵌入做两两 cosine 相似度（多次采样共 6,903 对），比较原始 vs laundered 版本——平均相似度从 $0.497$ 升到 $0.529$，相对涨幅 $+6.5\%$，Cohen's $d=1.02$（大效应）。也就是说，一旦 laundering 被普遍采用，整个学术写作都会朝 AI 审稿的偏好收敛，立场论据的链路就从 reviewer 一路贯通到了 author 的写作行为。
 

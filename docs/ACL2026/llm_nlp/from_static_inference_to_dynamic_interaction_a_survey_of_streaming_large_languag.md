@@ -47,19 +47,19 @@ tags:
 
 ### 关键设计
 
-**1. 输出流式 LLM（Output-Streaming）：静态输入上把生成吞吐做上去。**
+**1. 输出流式 LLM（Output-Streaming）：静态输入上把生成吞吐做上去**
 
 自回归逐 token 生成效率低是流式应用的主要瓶颈，这一级在输入已完整的前提下追求更高吞吐。生成机制分三类：Token 级是标准自回归（GPT、LlamaGen）；Block 级是半自回归（SoT 并行生成多 token）和块扩散（SSD-LM）；精炼式则是多尺度（VAR 从粗到细）和全局扩散（LLaDA 迭代去噪）。
 
 在生成机制之上叠加一系高效技术抠吞吐：投机解码（Speculative Decoding 用小模型起草、大模型验证）、层跳过（AdaInfer 动态跳过冗余层）、以及内存优化（StreamingLLM 的 attention sink 机制保留初始 token 的 KV 缓存）。这一级是所有流式场景的公共底座。
 
-**2. 顺序流式 LLM（Sequential-Streaming）：在不完整信息下边收边编码。**
+**2. 顺序流式 LLM（Sequential-Streaming）：在不完整信息下边收边编码**
 
 流式输入意味着编码时看不到完整上下文，模型要在信息增量到达、且可能长度无界的条件下决定何时响应。第一个挑战是增量编码：把连续到达的输入分为"原子编码"（已有离散单元，如 subword、ViT patch）和"碎片编码"（需要分段，如固定间隔分割或语义驱动分割 CTC/DiSeg）。
 
 第二个挑战是上下文管理，因为长序列的 KV 缓存线性增长会让内存不可行：一是 KV 缓存压缩（token 淘汰如 H2O、量化如 KVQuant、合并如 CaM），二是检索增强记忆（MemWalker 层次导航长上下文），三是状态空间模型（Mamba 的线性复杂度天生适合流式输入）。
 
-**3. 并发流式 LLM（Concurrent-Streaming）：同时说与听的全双工交互。**
+**3. 并发流式 LLM（Concurrent-Streaming）：同时说与听的全双工交互**
 
 全双工交互是人类对话的自然模式——人在说话时仍在听，但传统 LLM 的"轮流"模式无法并行这两件事。第一个挑战是架构适配：单通道架构把输入输出交错为单一序列（如 SpeechGPT、MiniOmni），简单但输入输出互相干扰；双通道架构用独立通道处理输入和输出（如 Moshi 的内部/外部流双 Transformer），并行但参数量翻倍。
 

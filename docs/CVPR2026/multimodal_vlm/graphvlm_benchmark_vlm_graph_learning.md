@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. VLM-as-Encoder：把VLM当特征提取器，喂给下游GNN。**
+**1. VLM-as-Encoder：把VLM当特征提取器，喂给下游GNN**
 
 这条线探的是「多模态特征质量到底对GNN有多大影响、结构感知编码是否优于朴素拼接」。论文设了三档逐渐变强的编码器：(a) 预训练CLIP直接抽特征拼接，最朴素；(b) CLIP-F，在图数据上用对比学习把CLIP微调一遍；(c) CLIP-F-S，结构感知版——不再孤立地对齐图文，而是把CLIP塞进GNN框架里联合优化，用一个结构感知对比损失让多模态特征同时贴合图拓扑（相邻节点特征更近）。无论哪档编码器，特征出来后都接同一批下游GNN（GCN、GraphSAGE、MMGCN、MGAT、UniGraph2）做最终的节点分类。这条线的天花板受限于GNN本身——再好的特征也要过GNN这道瓶颈。
 
-**2. VLM-as-Aligner：把VLM当模态桥梁，让现有GraphLLM吃得下多模态图。**
+**2. VLM-as-Aligner：把VLM当模态桥梁，让现有GraphLLM吃得下多模态图**
 
 GraphLLM（LLaGA、GraphGPT、MLaGA 这类）原本只处理文本图，问题是图像这一模态怎么递进去。论文给了两种对齐策略走不同的注入层。潜空间对齐直接在表示层动手：拿CLIP的多模态embedding替换掉原来的单模态节点表示，塞进LLM的输入空间。Prompt级对齐则走文本层：用Qwen-VL把每张图像翻译成一段文字描述，拼到节点的文本属性后面，还能可选地把邻居节点的视觉描述也一并写进prompt（这就是结构感知增强）。两者一个在特征层、一个在自然语言层桥接模态，正好用来检验「VLM的对齐能力能不能给GraphLLM加分、加在哪一层更好」。
 
-**3. VLM-as-Predictor：直接把VLM微调成图学习backbone，结构信号一并注入。**
+**3. VLM-as-Predictor：直接把VLM微调成图学习backbone，结构信号一并注入**
 
 这是论文押注的范式。出发点是——VLM自己就有很强的多模态推理能力，与其让它当配角再过GNN/LLM一道中间层（每过一层都丢信息），不如用LoRA直接把VLM（LLaVA-1.5、Qwen-VL、Qwen2.5-VL）微调成task-specific的图学习模型。关键在于怎么把「图结构」喂给一个本来只看单节点的VLM，论文给了两条注入路径。显式Prompt级融合：把锚节点连同它top-3最相似邻居的属性，拼成一段instruction prompt，让VLM在文字层面「看到」邻居。隐式潜空间融合：把邻居节点的视觉patch embedding和文本token embedding分别做平均池化（avg pooling），在特征层直接注入VLM的潜空间。两条路径都支持文本/视觉/多模态三种邻居信息配置，方便后面拆解「哪种结构信号、注在哪一层最有用」。
 

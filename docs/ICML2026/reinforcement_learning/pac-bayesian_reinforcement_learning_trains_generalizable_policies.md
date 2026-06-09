@@ -48,7 +48,7 @@ tags:
 
 ### 关键设计
 
-**1. transition-level 有界差分 + Paulin 浓度：把 horizon 依赖从四次方砍到一次方。**
+**1. transition-level 有界差分 + Paulin 浓度：把 horizon 依赖从四次方砍到一次方**
 
 第一件要解决的事是序列依赖让经典 PAC 上界失效。作者不走 Fard et al. (2011) 那条"先把 value error 转成 Bellman error 再用 i.i.d. 浓度"的老路（正是那一步把 horizon 依赖推到 $(1-\gamma)^{-4}$），而是直接对折扣回报本身做有界差分分析。对固定参数 $\theta$、两组只差一个 transition 的 trajectory 集 $D,\bar D$，证明
 
@@ -56,7 +56,7 @@ $$|\hat{L}_D(\theta) - \hat{L}_{\bar{D}}(\theta)| \le \sum_{h',j'} c_{(h',j')}\,
 
 系数 $c_{(h,j)}$ 直接把"靠近开头的 transition 影响大、靠后的指数衰减"写进了公式。然后套 Paulin (2018) 的马尔可夫链 McDiarmid——满足这种有界差分的统计量在 Markov 链上的偏差仍受 $\tau_{\min}\cdot\|c\|_2^2$ 控制。关键收益在求和：$\sum_h \gamma^{2h}$ 收敛成 $(1-\gamma^2)^{-1}$，horizon 依赖一下砍掉两个 $1/(1-\gamma)$。这正是 $\gamma=0.99$ 时上界从 $10^8$ 量级缩到 $10^2$ 量级、从"数值上等于无穷"变成"非空可读"的临界一步。
 
-**2. PAC-Bayes-$\lambda$ 变分松弛 + 交替优化：把平方根非凸目标拆成可稳定优化的凸子问题。**
+**2. PAC-Bayes-$\lambda$ 变分松弛 + 交替优化：把平方根非凸目标拆成可稳定优化的凸子问题**
 
 证书形如 $\hat{L}_D + \sqrt{\text{KL 项}}$，平方根复合让它非凸，直接梯度下降会发散或退化到 $\rho\to\mu$。作者借恒等式 $\sqrt{x} = \inf_{\lambda>0}(\frac{x}{2\lambda}+\frac{\lambda}{2})$ 引入辅助参数 $\lambda$，把目标重写成
 
@@ -64,7 +64,7 @@ $$\mathcal{J}(\rho,\lambda) = \mathbb{E}_{\theta\sim\rho}[\hat{L}_D(\theta)] + \
 
 这个目标对后验 $\rho$ 凸（KL 凸 + 期望线性），对 $\lambda$ 有闭式最优 $\lambda^* = \sqrt{\|c\|_2\,\tau_{\min}(\mathrm{KL}+\ln\sqrt{2}/\delta)}$，于是交替优化：固定 $\lambda$ 用梯度下降更新 $(\upsilon,\sigma)$，再固定 $(\upsilon,\sigma)$ 闭式解 $\lambda^*$；优化完把 $\rho^*$ 代回原上界报告证书。这个 trick Thiemann et al. (2017) 在 PAC-Bayes-$\mathrm{kl}$ 多数投票里用过，本文是首次搬到 RL，正是它把非凸目标的训练发散和"$\rho\to\mu$ 退化"这两个失败模式消掉。
 
-**3. 自适应采样消除 actor-critic 失配：让证书"活"在训练里而不崩坏性能。**
+**3. 自适应采样消除 actor-critic 失配：让证书"活"在训练里而不崩坏性能**
 
 最后一道坎是工程上的：每次 PAC-Bayes 后验更新都会让 critic 突然对不上新分布，性能出现锯齿震荡（Figure 8a 的 sawtooth——每次更新后急跌再慢爬）。直觉上应该"小步慢走"避免扰动 SAC，但作者反向操作：常规训练只采 1 个后验（均值策略）保持高效，而**紧接在**每次 PAC-Bayes 更新后立刻冻结 actor、把采样数临时拉到 256，让 critic 在新后验的整片分布上做高频估值重校准，稳定后再恢复 1 样本继续。探索阶段配合后验引导探索（PGE）：从后验抽 $|\mathcal{T}|$ 个候选参数，在当前 critic 下单步前向取 $\arg\max_{\theta_i\in\mathcal{T}} Q(s,\pi_{\theta_i}(s))$，复杂度只有 $\mathcal{O}(|\mathcal{T}|)$；后验方差 $\sigma$ 自动平衡探索利用——$\sigma$ 大时候选发散、探索更激进，$\sigma$ 小时收敛到当前 mean policy。这套"一次跨大步 + 紧接着 256 样本重校准"的反直觉设计，才是把理论从 paper trick 落地成 deployable 算法的桥梁。
 

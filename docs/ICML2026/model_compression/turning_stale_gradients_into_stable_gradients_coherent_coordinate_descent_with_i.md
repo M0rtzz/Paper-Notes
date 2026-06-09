@@ -45,11 +45,11 @@ CoCD（Coherent Coordinate Descent）想要一个确定性、每步只花 $O(1)$
 
 ### 关键设计
 
-**1. 用一个衰减因子 $\gamma$ 把"丢弃 stale"和"完美记忆"连成一族算法。**
+**1. 用一个衰减因子 $\gamma$ 把"丢弃 stale"和"完美记忆"连成一族算法**
 
 零阶优化的两难是：单次估计方差大，多次估计又烧不起预算，而分布式 SGD 的经验又告诉大家陈旧梯度是延迟噪声、该丢。CoCD 反着用——既然连续 step 间梯度变化被 Lipschitz 平滑约束着只能小幅变动，那上一步的偏导就是一个几乎免费的"warm start"，比每步从零做随机估计稳得多。一个标量 $\gamma \in [0,1]$ 就把整个谱系串起来：$\gamma=0$ 时 buffer 每步清零，退化成经典的 Block Cyclic Coordinate Descent（只有当前 $B$ 个坐标有效）；$\gamma=1$ 时 stale 梯度一直保留到被循环刷新，等价于带 time-lagged gradient 的 full-gradient descent；$0<\gamma<1$ 则形成"fading memory"，旧梯度被指数级压低，给高度非凸的 landscape 留出 robustness。效果在 SARCOS 的 $B=1$ 极端压力测试里很直观：$\gamma=0.95$ 的 CoCD 收敛到 loss 68.6，而 BCCD（$\gamma=0$）即使把 $B$ 提到 64 仍卡在 188。
 
-**2. 把有限差分步长 $\epsilon$ 从误差源变成 landscape 平滑器。**
+**2. 把有限差分步长 $\epsilon$ 从误差源变成 landscape 平滑器**
 
 传统 FD 文献把 $\epsilon \to 0$ 当黄金法则，可在非凸 landscape 上这反而把高频噪声塞进梯度估计。作者换个视角：中心差分其实等价于在邻域内对真梯度做平均 $\tilde{\nabla}_i^\epsilon f(\mathbf{x}) = \frac{1}{2\epsilon}\int_{-\epsilon}^{\epsilon}\nabla_i f(\mathbf{x}+u\mathbf{e}_i)\,du$，所以 $\epsilon$ 就是一个隐式的 Gaussian smoothing 半径。定义随之平滑后的有效 Lipschitz 常数 $L_\epsilon$，可证 $L_\epsilon \le L$ 且单调随 $\epsilon$ 增大而变小。这一点直接进了 CoCD 的近似误差界
 
@@ -57,7 +57,7 @@ $$\|\hat{\mathbf{g}}_t - \tilde{\nabla}^\epsilon f(\mathbf{x}_t)\| \le \frac{L_\
 
 $L_\epsilon$ 越小，同样的 stale 程度就能容忍越大的 step size $\delta$——也就是说放大 $\epsilon$ 反过来让"复用 stale 梯度"更安全。SARCOS 上 $\epsilon=1$ 让 BCCD 直接退化、却让 CoCD 拿到全场最好结果，正是这个反直觉论断的正面验证。
 
-**3. 用扁平 FIFO buffer + 虚拟化索引把内存压到"只占一份参数"。**
+**3. 用扁平 FIFO buffer + 虚拟化索引把内存压到"只占一份参数"**
 
 要在边缘设备上跑，内存是硬约束，而神经网络参数是一堆形状各异的 tensor，朴素实现每步都要 reshape/concat 成 flat 再 reshape 回去，复制成本高到离谱。CoCD 的工程 trick 是预分配一段连续 1D 内存当 FIFO buffer（长度 $m$，典型 $m=n$，也可调小做 memory-constrained 部署），用三个整数指针 `cur_param_idx` / `cur_weight_idx` / `cur_grad_idx` 维护 flat index 到各 tensor view 的映射；下降阶段直接在 tensor 的临时 view 上（不复制）做 in-place 减法 $\mathbf{x} \leftarrow \mathbf{x} - \alpha \hat{\mathbf{g}}$。这样整个优化器的内存严格等于一份参数副本，比 Adam（要存 2 份 moment）甚至比 SPSA（要存投影矩阵）都省，正好契合 on-device 训练的诉求。
 

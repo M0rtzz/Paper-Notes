@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. Mixture Forward 软干预：把离散的"选哪些组件"松弛成可微的连续 mask。**
+**1. Mixture Forward 软干预：把离散的"选哪些组件"松弛成可微的连续 mask**
 
 多组件 causal tracing 的根本障碍是组合爆炸——在 $N$ 个组件里选至多 $S$ 个，离散子集搜索随模型规模指数级膨胀，greedy 之类的方法慢到几乎不可用。PGB-CT 的破题点是给每个组件 $c_i$ 配一个连续 mask $m_i\in[0,1]$，把它的输出写成原状态与 counterfactual 状态的线性混合 $\bar{h}_i=(1-m_i)f_i(\bar{g}_i)+m_i h'_i$：$m_i=0$ 保持原计算，$m_i=1$ 完全换成 counterfactual hidden state，中间值则按比例混合两者。这样一来，原本只能枚举的二值选择变成了可以对 $m_i$ 求梯度的连续变量，整个子集搜索退化成一次普通的梯度优化，运行时间不再显式依赖组合空间的大小——这正是它能比 greedy 快两个数量级的来源。
 
-**2. Transformed Reward：把无界的因果指标压成尺度稳定的优化目标。**
+**2. Transformed Reward：把无界的因果指标压成尺度稳定的优化目标**
 
 不同任务的目标指标量纲差别很大——gender bias 看 stereotypical 与 anti-stereotypical continuation 的 likelihood ratio，knowledge localization 看目标答案概率的变化，这些 metric 本身可能无界，直接拿来当 reward 最大化会让梯度和正则强度难以校准，换个 metric 就得重调一遍。PGB-CT 不直接最大化 $\ell(\mathcal{D},\mathbf{m})$，而是最小化
 
@@ -57,7 +57,7 @@ $$\mathcal{L}=\frac{1}{1+\ell(\mathcal{D},\mathbf{m})}+\mathsf{reg}(\mathbf{m}).
 
 这个变换把任意范围的指标单调地压进一个有界区间，让同一套正则系数能跨 metric、跨训练阶段稳定工作。这看似是个小技巧，却是让解释性工具真正实用的关键——否则每换一个 causal metric 都要重新校准正则强度。
 
-**3. 稀疏二值 scheduled penalty：逼着连续 mask 收敛到少量干净的 0/1 决策。**
+**3. 稀疏二值 scheduled penalty：逼着连续 mask 收敛到少量干净的 0/1 决策**
 
 软松弛带来一个副作用：优化出来的 mask 容易停在 0.5 附近的中间值，一旦按阈值二值化，性能就掉。PGB-CT 用两项正则联手解决，正则项为 $\lambda_1\|\mathbf{m}\|_1 + \lambda_2\mathbf{m}^{\top}(\mathbf{1}-\mathbf{m})$：第一项 $\ell_1$ 鼓励整体稀疏（只点亮少数组件），第二项 $\mathbf{m}^{\top}(\mathbf{1}-\mathbf{m})$ 专门惩罚 0.5 附近的非二值取值（它在 $m_i\in\{0,1\}$ 时为 0、在 $m_i=0.5$ 时最大）。训练中逐渐抬高 $\lambda_1$ 和 $\lambda_2$，等 mask 达到目标 sparsity 后停止。相比只用 sparsity penalty、最后硬截断的做法，显式惩罚 binary violation 能让最终子集更接近真正离散选择的结果，因此二值化后性能不塌——这也是它在多 metric 设置下比同样用 soft mask 的 DCM 更稳的原因。
 

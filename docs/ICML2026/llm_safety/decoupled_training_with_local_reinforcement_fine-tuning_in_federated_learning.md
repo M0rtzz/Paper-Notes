@@ -47,19 +47,19 @@ FedDTL 要在 $K$ 个客户端、各持私有数据 $\mathcal{D}_k=\{(x_i,y_i)\}
 
 ### 关键设计
 
-**1. 解耦编码器训练：让服务器文本编码器当"全局语义锚"。**
+**1. 解耦编码器训练：让服务器文本编码器当"全局语义锚"**
 
 针对的是"纯本地优化 + 服务器参数平均"压不住的 representation-level client drift。作者发现 CLIP 的模态结构和 FL 的物理约束天然对位——图像必须留在本地（隐私），而文本编码器只吃类别名、跟谁的样本分布都无关，正好可以搬到服务器。客户端这端只用 LoRA 微调图像编码器最后 $L-l$ 层（$W=W_0+BA$，$r\ll d$），靠 $p(\hat y=c|x)=\frac{\exp(\text{sim}(\bar z_v,\bar z_{\text{text}}^c)/\tau)}{\sum_j\exp(\text{sim}(\bar z_v,\bar z_{\text{text}}^j)/\tau)}$ 跟广播下来的全局文本嵌入对齐；服务器这端收齐所有客户端上传的图像 class-token 嵌入后，用 cross-entropy 训文本 LoRA $\Delta\mathbf{W}_{\text{text}}$，把"a photo of a [classname]"映到一个与全局视觉空间对齐的统一文本表征。
 
 它之所以有效，是因为这个全局文本编码器不依赖任何单一客户端的样本分布，相当于给所有客户端的视觉表征立了一个共同坐标系，强制它们往同一方向收敛，从根上换掉了"参数平均当知识传递"的范式。附带的好处是上行只传高度压缩的 class-token 嵌入（不传 patch token），既缩小隐私泄露面又省通信带宽。
 
-**2. SFT 暖启的本地任务适应阶段：先把编码器拉到稳定初值。**
+**2. SFT 暖启的本地任务适应阶段：先把编码器拉到稳定初值**
 
 针对的是"RL 一上来就在欠拟合状态下采样、样本效率太低"的问题。客户端在前 $M$ 个全局轮跑标准 cross-entropy $\mathcal{L}_{ce}=-\frac{1}{N_k}\sum_{(x_i,y_i)}\sum_c y_i\log p(\hat y=c|x_i)$，优化目标 $\min_{\Delta\mathbf{W}_k}\mathcal{L}_{ce}([\mathbf{W}_0,\Delta\mathbf{W}_k];\{\bar z_{\text{text}}^c\},\mathcal{D}_k)$，每轮做 $T_e=2$ 个本地 epoch，先把图像编码器快速拉到一个任务相关的稳定初值。
 
 这步的意义是把"快速适应"和"防过拟合"切成两阶段串联：纯 RL 在分类微调场景样本效率太低，纯 SFT 长轨迹下又会被本地偏置的标签频率/特征统计"喂偏"，于是 SFT 只负责暖启、把脏活交给后面的 RL，各自干最擅长的事。
 
-**3. GRPO 启发的 RL 泛化增强阶段：用强化学习替代正则抑制过度专门化。**
+**3. GRPO 启发的 RL 泛化增强阶段：用强化学习替代正则抑制过度专门化**
 
 针对的是"长轨迹本地训练里 intra-client over-specialization 失控"的问题，思路是不再堆正则项、而是用 RL 主动抗过拟合。把 SFT 收敛后的图像编码器当策略 $\pi_{\theta_k}$（logits 直接当类别分布），但这里有个坑：CLIP 风格编码器对同一图像输出确定，照搬 GRPO 会让同组样本完全相同、相对优势恒为 0 而失效。作者的解法是只在 latent 嵌入上注入 $\varepsilon\sim\mathcal{N}(0,\sigma^2 I)$ 的小高斯噪声制造可控随机性、对每张图采 $G=3$ 个动作，而策略更新时仍用确定模型——既保住 GRPO 的组内相对优化又不破坏稳定性。
 

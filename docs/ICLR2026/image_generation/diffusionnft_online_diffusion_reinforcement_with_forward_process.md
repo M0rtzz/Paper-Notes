@@ -50,7 +50,7 @@ tags:
 
 ### 关键设计
 
-**1. 改进方向定理（Theorem 3.1）：用一个等式把"靠近正样本"和"远离负样本"绑在一起。**
+**1. 改进方向定理（Theorem 3.1）：用一个等式把"靠近正样本"和"远离负样本"绑在一起**
 
 要在前向过程上做 RL，第一步得回答：正样本、负样本和旧策略这三者的速度场之间到底是什么关系？定理 3.1 证明它们的差异方向是成比例的——
 
@@ -58,7 +58,7 @@ $$\Delta := \alpha(\mathbf{x}_t)[\mathbf{v}^+(\mathbf{x}_t) - \mathbf{v}^{\text{
 
 其中 $\alpha(\mathbf{x}_t)$ 是与正策略密度比相关的标量。这个等式的意义在于：它把"朝正策略 $\mathbf{v}^+$ 靠拢"和"从负策略 $\mathbf{v}^-$ 退开"刻画成同一个方向 $\Delta$，于是不需要分别估计两个策略的似然，只要抓住这一个改进方向就够了。它在形式上和 CFG 的 guidance 项几乎一模一样，但这里的方向完全来自 RL 原理，而非人为设定的条件/无条件之差。
 
-**2. 策略优化目标（Theorem 3.2）：用隐式参数化，让一个模型同时学正负两支。**
+**2. 策略优化目标（Theorem 3.2）：用隐式参数化，让一个模型同时学正负两支**
 
 有了改进方向，怎么把它落进一个可训练的 flow matching 损失？定理 3.2 给出同时吃正负数据的目标：
 
@@ -66,11 +66,11 @@ $$\mathcal{L}(\theta) = \mathbb{E}\big[r \,\|\mathbf{v}_\theta^+ - \mathbf{v}\|^
 
 关键在于正负两支并不是两个独立网络，而是同一个 $\mathbf{v}_\theta$ 经隐式参数化拼出来的：$\mathbf{v}_\theta^+ = (1-\beta)\mathbf{v}^{\text{old}} + \beta \mathbf{v}_\theta$ 当作隐式正策略，$\mathbf{v}_\theta^- = (1+\beta)\mathbf{v}^{\text{old}} - \beta \mathbf{v}_\theta$ 当作隐式负策略。这样只需训练一个模型 $\mathbf{v}_\theta$，却等价于让它同时向正策略靠拢、从负策略退开。代入求最优解可得 $\mathbf{v}_{\theta^*} = \mathbf{v}^{\text{old}} + \frac{2}{\beta}\Delta$——也就是说 reinforcement guidance 被自动整合进了策略本身，推理时不再需要额外的 guidance 模型。
 
-**3. 前向一致性：在前向过程上优化，模型不会退化成级联高斯。**
+**3. 前向一致性：在前向过程上优化，模型不会退化成级联高斯**
 
 GRPO 式方法只在反向采样过程上做策略梯度，前向-反向的一致性没人管，模型有可能退化为级联高斯。DiffusionNFT 直接在前向过程上用标准 flow matching 损失训练，而不是去优化反向 SDE 的策略梯度。因为一个扩散策略的前向过程是唯一确定的，在它上面优化天然保证训练后的模型仍对应一个有效的前向过程，绕开了反向 RL 那套需要似然估计、又容易破坏一致性的麻烦。
 
-**4. CFG-free 训练：reinforcement guidance 顶替了 CFG。**
+**4. CFG-free 训练：reinforcement guidance 顶替了 CFG**
 
 GRPO 路线要同时优化有条件和无条件模型来支撑 CFG，既费算力又增加工程复杂度。DiffusionNFT 不再需要 CFG：定理 3.1 里的 $\Delta$ 在形式上就等价于一个 guidance 项，相当于 RL 自己学到了"该往哪个方向引导"，并通过设计 2 的隐式参数化吸收进单一策略模型。于是整个训练只维护一个模型，省掉了有/无条件双模型的开销。
 

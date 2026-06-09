@@ -49,19 +49,19 @@ EAGLET 把 agent 任务 $\pi_\theta(e \mid u) = \prod_t \pi_\theta(a_t \mid u, a
 
 ### 关键设计
 
-**1. Homologous Consensus Filtering (HCF)：用同源执行器共识过滤合成 plan，把人工标注换掉。**
+**1. Homologous Consensus Filtering (HCF)：用同源执行器共识过滤合成 plan，把人工标注换掉**
 
 强 LLM 反向写出的 plan 良莠不齐，有些看着漂亮、实际把 executor 带偏，SFT 阶段若不过滤就会被这些噪声污染，而逐条人工验证又太贵。HCF 的做法是给每条候选 plan $p$ 配一对**同源**执行器——expert $\hat\pi_\theta$（如 GiGPO-Llama-3.1）和 novice $\hat\pi_\tau$（原始 Llama-3.1），二者共享 pre-train 与架构、只在 post-training 后能力分化。两个执行器各跑两次（带 plan / 不带 plan），只有当 $r(u, e_{p; \hat\pi_\theta}) \geq r(u, e_{\hat\pi_\theta})$ **且** $r(u, e_{p; \hat\pi_\tau}) \geq r(u, e_{\hat\pi_\tau})$ 时才保留，即 $F_\text{quality}(p) = \mathbb{I}\{\text{两 executor 都没被 plan 害}\}$。
 
 之所以要同源 pair 而非单一执行器，是因为单执行器评估会被它自身能力带偏：强 executor 即使拿到烂 plan 也能完成任务，从而错把烂 plan 判成好。共享 base model 排除了上下文窗口、参数量等无关混淆，让过滤信号纯粹反映「plan 对执行的边际贡献」。
 
-**2. Executor Capability Gain Reward (ECGR)：把「plan 的净增益」直接量化成 RL 奖励。**
+**2. Executor Capability Gain Reward (ECGR)：把「plan 的净增益」直接量化成 RL 奖励**
 
 单纯用任务完成率当奖励，既分不清「plan 到底帮了多少」，又容易被 executor 强弱带偏。ECGR 改成差分信号：对每个 (task, plan) 让同源 pair $\hat\pi_\theta, \hat\pi_\tau$ 各跑带/不带 plan 两次，基础奖励 $R(p, \pi_\theta) = \mathbb{I}\{r(u, e_{p; \pi_\theta}) > r(u, e_{\pi_\theta})\}$ 只在 plan 真正带来提升时给分。再乘上交互步数衰减因子 $\hat R = R \cdot (1+\alpha)^{n-m}$（$n$ 为无 plan 步数、$m$ 为有 plan 步数、$\alpha$ 为超参），让「plan 让执行更短」也能拿到额外奖励。最终把两个执行器的分相加并补上格式奖励：$R_\text{ECGR} = \hat R(p, \hat\pi_\theta) + \hat R(p, \hat\pi_\tau)$，$R_\text{Final} = R_\text{ECGR} + R_\text{Format}$。
 
 「差分 + 双执行器」把奖励牢牢锁在 plan 的净贡献上，自然压住了「漂亮但没用的 plan」；衰减因子则隐式逼 planner 让 executor 少走弯路，正面对抗长程任务里的 brainless trial-and-error。
 
-**3. GRPO with frozen executors：只把梯度回传给 planner，省掉 critic 与大模型 rollout 的开销。**
+**3. GRPO with frozen executors：只把梯度回传给 planner，省掉 critic 与大模型 rollout 的开销**
 
 planner 对每个 task 采样 $G$ 个候选 plan $\{p_1, \dots, p_G\}$，每个用 ECGR 打分，再用组内相对 advantage $A_i$ 引导更新，损失为 $\mathcal{L}_\text{GRPO} = \mathbb{E}[\frac{1}{G}\sum_i \mathcal{L}_i - \beta \mathbb{D}_\text{KL}(\pi_g \Vert \pi_g^\text{ref})]$，单步用标准 PPO clipping $\mathcal{L}_i = \min(w_i A_i, \text{clip}(w_i, 1-\epsilon, 1+\epsilon) A_i)$。相比 PPO，GRPO 省掉了 reward model 训练，更契合「奖励本身就规则化、低噪声」的设定。关键是算 ECGR 时 executor 全程冻结、梯度只反向到 planner，于是 RL 成本只与小 planner 线性相关，把计算瓶颈从「大 LLM 多步 rollout」搬到「小 planner 一次性生成 + 评估」，这正是 8× 加速的工程来源。
 

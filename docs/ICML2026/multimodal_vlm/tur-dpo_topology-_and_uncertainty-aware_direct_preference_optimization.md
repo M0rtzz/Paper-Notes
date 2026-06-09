@@ -45,11 +45,11 @@ TUR-DPO 在 DPO 的偏好 logit 上同时叠加一个"语义+拓扑结构"塑形
 
 ### 关键设计
 
-**1. 推理拓扑图与三路信号：把"怎么推出来的"变成可计算的标量。**
+**1. 推理拓扑图与三路信号：把"怎么推出来的"变成可计算的标量**
 
 DPO 只看 what is said、不看 how it is derived，这一设计就是要把"怎么推"显式量化出来。对每条回答先抽一张 3-6 个节点的小有向图 $G=(V,E)$（节点是原子子主张，边是支持/依赖关系），再从图里导出三路标量。拓扑分把传统 DPO 看不见的结构性失败显式打分——最小有效路径覆盖 $q_{\text{path}}$、环数 $c_{\text{cycle}}$、悬空节点 $d_{\text{dangling}}$、局部矛盾 $q_{\text{contradict}}$ 线性加权 $s_{\text{topo}}(G)=\alpha_1 q_{\text{path}}-\alpha_2 c_{\text{cycle}}-\alpha_3 d_{\text{dangling}}-\alpha_4 q_{\text{contradict}}$；语义分把节点级事实性 $q_{\text{fact}}$、任务指标 $q_{\text{task}}$（EM/ROUGE）和幻觉惩罚 $q_{\text{hall}}$ 线性组合；不确定性分则同时抓两类——epistemic 来自对同一回答重抽 $K$ 次图后统计拓扑分方差与图分布散度 $u_{\text{epi}}=\mathrm{Var}(s_{\text{topo}}^{(k)})+\mathrm{JSD}(\mathcal{P}^{(k)})$，aleatoric 来自节点正确概率经 $\tau$ 平滑后的二元交叉熵均值 $u_{\text{ale}}=\frac{1}{|V|}\sum_v[-\tilde p_v\log\tilde p_v-(1-\tilde p_v)\log(1-\tilde p_v)]$，合成 $u(G)=\lambda_{\text{epi}}u_{\text{epi}}+\lambda_{\text{ale}}u_{\text{ale}}$。这里全部用线性形式而非神经评分器，是为了避免奖励 hacking 与梯度爆炸，并让每一项贡献可解释、可单独消融；同时引入两类不确定性，使得偏好脆弱时（重抽图不一致、或节点验证概率在 0.5 附近游离）能给出更大的 $u$，触发后面的对级降权。
 
-**2. 塑形奖励进 margin、实例权重进 loss 系数：方向与步长各管各的。**
+**2. 塑形奖励进 margin、实例权重进 loss 系数：方向与步长各管各的**
 
 有了三路信号，怎么塞进 DPO 而不破坏它的封闭式结构？本文的分工很巧。塑形奖励 $r_\phi=a f^{\text{sem}}_\phi(s_{\text{sem}})+(1-a)f^{\text{topo}}_\phi(s_{\text{topo}})-\lambda u(G)$（$f^{\text{sem}}_\phi$、$f^{\text{topo}}_\phi$ 各是带 $(\gamma,b)$ 两参的线性 calibrator）以加法项 $\gamma\Delta r_\phi$ 进入偏好 margin，决定"该往哪边走"；每对权重 $w=\mathrm{clip}(\tau_w/(1+\bar u),\,w_{\min},\,1)$（$\bar u=(u(G^+)+u(G^-))/2$）则作为外层乘子，决定"该走多远"。最终损失为
 
@@ -57,7 +57,7 @@ $$\mathcal{L}_{\text{TUR-DPO}}=-w\cdot\log\sigma(\beta[\Delta\log\pi_\theta-\Del
 
 一个 prompt 有 $k$ 个候选时扩展为 Plackett-Luce 列表损失提高利用率。把塑形奖励放进 margin 而非像 PPO 那样单独优化，保留了 DPO 的封闭式最优解和稳定性；把 $w$ 放在外层当每对学习率乘子而非改 margin，既能压低噪声对的梯度幅值，又不改变 BT 似然形式——理论上整体仍是一个 instance-weighted Bradley-Terry 估计。
 
-**3. 工程最小化：每个增量模块都能单独关停，保住一条从 DPO 平滑迁移的路径。**
+**3. 工程最小化：每个增量模块都能单独关停，保住一条从 DPO 平滑迁移的路径**
 
 作者把 TUR-DPO 定位成 DPO 的补丁而非替代，所以刻意把额外开销压到最小：全部增量集中在"抽小图 + 跑本地 verifier + 算方差/散度"，不需要 value head，也不需要 reward model 训到收敛，图大小限制在 3-6 节点，拓扑、语义两路分数标准化后量纲对齐。更关键的是可关停设计——某数据集没有可靠抽图器就把拓扑系数设 0，退化成只有不确定性加权的 DPO；拿不到不确定性就把 $w$ 设为常数，退化成只塑形 margin 的 DPO。calibrator $\phi$ 参数量很小，也顺带缓解了 reward 模型常见的过拟合与 reward hacking。正是这种模块化和可关停，让它有机会在真实大模型工程栈里被采纳。
 

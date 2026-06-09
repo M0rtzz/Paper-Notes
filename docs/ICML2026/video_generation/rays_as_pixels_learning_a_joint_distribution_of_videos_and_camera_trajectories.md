@@ -52,15 +52,15 @@ tags:
 
 ### 关键设计
 
-**1. Raxel 表征：把相机伪装成一张 3 通道图像。**
+**1. Raxel 表征：把相机伪装成一张 3 通道图像**
 
 预训练视频 VAE 擅长压"3 通道密集图"，可相机参数是低维全局矩阵（K、R、T 一共十几个数），结构对不上——已有工作要么用 adapter 把矩阵投成 token（结构残疾），要么用 6 通道 Plücker 嵌入（VAE 编码不了，只能 MLP 拼接、绕过预训练先验），相机始终是个外挂条件。Raxel 的破法是把相机也做成一张和视频帧同形状的 3 通道图：每个像素填的不是 RGB，而是该像素对应光线的方向加原点 $\mathbf{d} + \mathbf{o}$，其中 $\mathbf{d} = R_{\text{rel}} K^{-1}\tilde{\mathbf{u}} / \|K^{-1}\tilde{\mathbf{u}}\|_2$ 是世界系单位光线方向、$\mathbf{o} = T_{\text{rel}}$ 是相机原点。和 Plücker（6 通道）、raymap（6 通道）、pointmap（需 depth）相比，raxel 是唯一同时满足"空间对齐 + 3 通道兼容预训练 VAE + 不需要 depth"的方案，于是同一个 VAE、同一个 DiT、同一套 RoPE 零结构改动就能编码相机。位姿恢复时再用 Orthogonal Procrustes 在解码出的 $\hat{R}_k$ 与参考 $\hat{R}_s$ 间拟合 $SE(3)$、焦距用 Median-of-Ratios $\hat{f}_x = \text{median}(u \cdot \hat{z} / \hat{x})$ 鲁棒估计。消融最能说明它的分量：把 raxel 换成 Plücker 嵌入后 FID 从 7.33 暴增到 21.97、FVD 从 68 涨到 333——"共享 latent 空间"比"input-level 6 通道嵌入"高出整整一个量级。
 
-**2. Decoupled Self-Cross Attention（DSCA）：用注意力结构对应概率分解。**
+**2. Decoupled Self-Cross Attention（DSCA）：用注意力结构对应概率分解**
 
 如果让视频 latent $z$ 和光线 latent $r$ 在一段拼接序列上做单一全局 self-attention，模型会各拟合各的、跨模态耦合不深。DSCA 把每个 DiT block 内的注意力拆成两步：先对 $z$、$r$ 各做 self-attention，保住视频内部的时间平滑和轨迹自身的几何相干；再做对称 cross-attention，$z \leftarrow r$ 让视频跟随光线、$r \leftarrow z$ 让光线被视觉细化。由于 $z$ 和 $r$ 空间逐位对齐，cross-attn 的 query/key 都套 RoPE，强制"视觉 token 必须关注到对应位置的 raxel token"。这套拆法背后是一行干净的概率分解 $\log p(z, r) = \log p(r) + \log p(z|r) \equiv \log p(z) + \log p(r|z)$——self-attn 学 marginal、cross-attn 学 conditional，把概率图模型的直觉直接落到 transformer 算子上。效果上，cycle consistency 的 FID 从 8.69 降到 7.33、$R_{\text{err}}$ 从 0.048 降到 0.020。
 
-**3. Flow Matching + 方向余弦损失 + 异步推理调度：让一个速度场同时学好两种 latent。**
+**3. Flow Matching + 方向余弦损失 + 异步推理调度：让一个速度场同时学好两种 latent**
 
 光线 latent 平滑、低频、低秩，视频 latent 高频、信息密集，共享一个速度场 $v_\theta(x_t, t)$ 时，单纯 MSE 容易被视频的幅值主导、把光线的方向漂移淹没。于是在 MSE 之外加一项方向余弦惩罚 $\mathcal{L}(\theta) = \mathbb{E}[\|v_\theta - u_t\|^2 + \lambda (1 - v_\theta^\top u_t / (\|v_\theta\|\|u_t\|))]$（$\lambda = 0.5$），单独盯方向偏差——去掉这项，$R_{\text{err}}$ 从 0.020 涨到 0.058、$T_{\text{err}}$ 翻五倍到 0.094。又因为 $z$ 和 $r$ 占不同 token 位置，推理时可以异步调度：相机可控生成里把 $r$ 固定在 $t=1$ 只去噪 $z$；位姿估计里固定 source 图 latent 只去噪 $r$，而光线 latent 的低频结构让它收敛极快，**2 步**就拿到最佳旋转精度，省掉绝大部分推理算力。
 

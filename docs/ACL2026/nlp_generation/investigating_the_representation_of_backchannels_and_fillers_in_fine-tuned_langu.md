@@ -51,15 +51,15 @@ tags:
 
 ### 关键设计
 
-**1. 三种微调任务做对照：用不同训练目标分别"压"出 backchannel/filler 的语用差异。**
+**1. 三种微调任务做对照：用不同训练目标分别"压"出 backchannel/filler 的语用差异**
 
 要回答"微调能否改善表征"，得先排除"是不是只有某种特定任务才管用"。作者于是设计了三条目标各异的微调路线形成对照。MASK 沿用 BERT 默认策略，把 backchannel/filler 整段以 0.8/0.1/0.1 的概率替换为 [MASK] / 随机 token / 原 token，逼双向上下文重构这些 token；NTP 把两个说话人的句子合并并加 `<s1>`/`<s2>` 说话人 ID，做标准下一 token 预测；TTP 让 TurnGPT 预测 $y^{*}=\arg\max_y P(y|X)$，即"哪个 token 之后会发生 turn-shift"，直接利用 backchannel 与 turn-holding 的强关联。作者原本假设最"对症"的 TTP 应当最好，结果却是 NTP 的 silhouette 略高于 TTP——这反过来说明无任务偏置的通用语言建模本身已经把 backchannel/filler 的语用差异挤进了表征空间，不必专门设计 turn-taking 监督。
 
-**2. 三档上下文 × 多模型规模的因子设计：把"加多少上下文"和"模型多大"两个变量拆开。**
+**2. 三档上下文 × 多模型规模的因子设计：把"加多少上下文"和"模型多大"两个变量拆开**
 
 "上下文窗口"和"模型容量"常被混在一起谈，作者把它们正交拆开单独考察。上下文设三档：no-context 只喂含 backchannel 的当前句，one-context 加前后各一句，full-context 把全部历史 concat（最长数千 token，只有 LLaMA-3 / Qwen-3 撑得住）；模型则横跨 BERT (110M)、GPT-2 (124M) 到 LLaMA-3 / Qwen-3 (8B)。结果跑出一条反直觉规律：上下文越多 silhouette 反而越低——更多上下文会把功能词的表征"拉平"成附近实词的平均，所以 backchannel/filler 在 no-context 下最容易被聚类区分；而模型并非越大越好，小模型在专门微调下能逼近 8B LLM。
 
-**3. silhouette + 距离矩阵 + NLG 行为的三重验证：防止任何单一指标被刷高。**
+**3. silhouette + 距离矩阵 + NLG 行为的三重验证：防止任何单一指标被刷高**
 
 任何单一指标都可能被 hack——silhouette 高不代表生成时会自然用 backchannel，生成得多也不代表表征空间真有结构。作者因此从内部表征、配对可分性、外部生成行为三个维度联立验证。silhouette $s(i)=\frac{b(i)-a(i)}{\max(a(i),b(i))}$ 同时奖励"簇内紧凑、簇间分散"，量化同一 backchannel 是否被拆成多个语用功能、不同 backchannel 是否互相可分；距离矩阵直接画 top-15 backchannel 间欧氏距离的 heatmap 看亮暗格变化；NLG 评测让 LM 续写两轮对话，比较生成中 backchannel 的频次、类型多样性、frequency-weighted perplexity、BERTScore 和 BLEU。只有三层都指向同一结论，"微调真的让 LM 学会了这些功能词"才立得住。
 

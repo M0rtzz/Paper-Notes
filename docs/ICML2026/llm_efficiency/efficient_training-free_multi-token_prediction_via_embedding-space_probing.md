@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. Soft mask token 注入 + EMA 在线更新：用什么向量当"占位符"才能骗出未来 token。**
+**1. Soft mask token 注入 + EMA 在线更新：用什么向量当"占位符"才能骗出未来 token**
 
 ESP 要在一次前向里探出多个未来 token，前提是给序列末尾塞进的"占位向量"能被深层网络拉向真实未来 token 的表征。作者不取"prompt 最后 K 个 token 的嵌入"（hard init）、也不按 embedding 表的整体均值/方差采样，而是直接用 prompt 嵌入均值 $m_i = \frac{1}{t}\sum_{j=1}^t \mathbf{e}_j$ 初始化全部 mask token——这样占位向量在统计上与当前 prompt 同分布，比另外两种初始化都更稳。生成过程中每接受一个新 token $x_{t+s}$，就用 $m_i[s+1] = m_i[s] + \lambda(\mathbf{e}_{t+s} - m_i[s])$（$\lambda = 0.1$）做 EMA 更新，把最新上下文持续渗进 mask 表征；同一棵树里所有未来轨迹共享同一个 $m_i$ 值，分支差异完全靠 position id 和 tree-attention 路径产生。
 
 之所以"prompt 同分布"是关键，是因为作者在 Dolly-Databricks 上观察到一个清晰现象：对被接受的 token，mask token 与真实未来 token 的隐状态余弦相似度从第 15 层起稳步爬到 ~0.45，而被拒绝的 token 停在 ~0.35。Lemma 3.1 把它形式化——只要 $\cos(h_m, h_v) \geq \delta^*$，真实未来 token 就必然落入 mask token logits 的 Top-K。mean-prompt 初始化恰好能最大化这种"逐层对齐"，从而保证 Top-K 命中率，**这是整套训练免费方法能 work 的理论根基**。
 
-**2. 基于累计概率的动态草稿树扩展（Algorithm 1）：让模型自己决定该展宽还是展深。**
+**2. 基于累计概率的动态草稿树扩展（Algorithm 1）：让模型自己决定该展宽还是展深**
 
 固定的 Top-K 草稿树有个硬伤：mask token 在不同 prompt 下"该展宽还是展深"差别极大——开放任务（writing/reasoning）适合"宽而浅"多探索，封闭任务（math/translation）适合"窄而深"更聚焦，任何一组手工 Top-K 都会在某类任务上吃亏。ESP 改用累计概率驱动的 Top-1 expansion：给定预算 $B$、mask token 数 $k$，每层 $i$ 对当前 frontier 节点采 $B-i$ 个候选，按 $P(c) = P(n) \cdot P(t_j \mid l_n)$ 更新累计概率，取 Top-$(B-i)$ 进入下一层，最终保留累计概率最高的 $B-1$ 条轨迹。$B-i$ 的逐层衰减天然鼓励早期多采样分支、后期聚焦高置信轨迹，相当于让模型自己决定"在哪里多花预算"。
 
 这里把"一次前向能处理多少 token"显式抽象成 block complexity，并给出闭式表达 $\text{Block Complexity} = (k+1)(1 + \sum_{i=1}^k K_i)$，使不同树形在同一预算下可比。实测中 dynamic 在 BC=30/60、两种 LLaMA3 上都打平或超过最佳静态 $[K_1, K_2]$ 配置，免去了离线网格搜索。
 
-**3. GPU 友好的静态树注意力与位置索引实现：别让 tree mask 的构造吃掉省下的 forward。**
+**3. GPU 友好的静态树注意力与位置索引实现：别让 tree mask 的构造吃掉省下的 forward**
 
 tree decoding 有个容易被忽视的隐藏开销：传统 tree-attention 每步都要遍历树节点重新构造掩码，这类 CPU/串行操作会严重拖慢 GPU。ESP 把 attention mask 缓存下来，每接受新 token 时只**增量追加列**而非重算整张掩码，position id 也通过简单 offset 复用；再配合 mask token 统一摆到序列末尾的布局（Figure 3），让一次前向同时覆盖"最后被接受的 token + 草稿树全部节点 + 所有 mask token"。这一项是纯工程优化，却对吞吐影响巨大。
 

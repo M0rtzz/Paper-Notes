@@ -46,15 +46,15 @@ MōLe-Λ 把分子轨道学习从只预测耦合簇右态 $T$ 振幅扩展到同
 
 ### 关键设计
 
-**1. 共享等变 backbone + 四头镜像读出：一个网络一次产出 $T$ 与 $\Lambda$ 四个振幅。**
+**1. 共享等变 backbone + 四头镜像读出：一个网络一次产出 $T$ 与 $\Lambda$ 四个振幅**
 
 依赖完整响应态的偶极/四极/极化率/密度都必须经由左态 $\Lambda$ 振幅，而 $\Lambda_1,\Lambda_2$ 的张量结构与 $T_1,T_2$ 完全对称——都是占据/虚轨道指标上的反对称张量、满足同样的轨道相位翻转奇等变性和片段间局域性。所以作者无需重设计架构，直接复用 MōLe 的共享等变 backbone：每个局域 MO 嵌成等变隐表示，经 Odd-MACE 消息传递与 MO 间注意力得到不变特征 $\mathbf{y}_{ia},\mathbf{y}_{ijab}$，再镜像出四个"奇读出头"——$t_i^a=\mathrm{OddReadout}_{T_1}(\mathbf{y}_{ia})$、$\lambda_a^i=\mathrm{OddReadout}_{\Lambda_1}(\mathbf{y}_{ia})$、$t_{ij}^{ab}=\mathrm{OddReadout}_{T_2}(\mathbf{y}_{ijab})$、$\lambda_{ab}^{ij}=\mathrm{OddReadout}_{\Lambda_2}(\mathbf{y}_{ijab})$（"奇读出"指对轨道相位翻转 sign-equivariant，保证振幅在 MO 相位规范下行为正确）。共享 backbone 既省参数，又把四个张量绑进同一隐空间，保留下游 CC 后处理所需的代数一致性，同时让 $\Lambda$ 的归纳偏置与 $T$ 完全对齐。
 
-**2. MP2 残差目标：把"学整张量"换成"学相对 MP2 的修正"。**
+**2. MP2 残差目标：把"学整张量"换成"学相对 MP2 的修正"**
 
 CCSD 标签极贵（QM7 重算一次都要专门的 GPU 集群），低数据下网络很难把全部相关结构学出来。作者在闭壳实振幅情形下用 MP2 当零阶基线——$t_{ij,\mathrm{MP2}}^{ab}=\langle ij||ab\rangle/(\varepsilon_i+\varepsilon_j-\varepsilon_a-\varepsilon_b)$，且 $T_1^{\mathrm{MP2}}=0$、$\Lambda_2^{\mathrm{MP2}}=T_2^{\mathrm{MP2}}$、$\Lambda_1^{\mathrm{MP2}}=0$——把 canonical 基下的 MP2 振幅经同一组局域化矩阵转到局域规范后，让网络只拟合残差 $\Delta t_{ij}^{ab}=t_{ij,\mathrm{CCSD}}^{ab}-t_{ij,\mathrm{MP2}}^{ab}$ 与 $\Delta\lambda_{ab}^{ij}=\lambda_{ab,\mathrm{CCSD}}^{ij}-t_{ij,\mathrm{MP2}}^{ab}$。等于把已知的主阶动力学相关搬掉、NN 只补物理上小但化学上关键的高阶差值，相当于把物理先验注入目标本身，显著降低样本复杂度——消融显示残差模式在低数据区 MAE 明显更低。
 
-**3. 振幅重建损失而非性质损失：监督"态"而不是"性质"。**
+**3. 振幅重建损失而非性质损失：监督"态"而不是"性质"**
 
 直接监督某个具体性质会让模型只在该性质上准、其他失真。MōLe-Λ 的损失里所有性质都不出现，只监督四个振幅张量
 

@@ -49,15 +49,15 @@ VAnim 在数据、表示、推理、训练四个层面都做了配合 SSU 的重
 
 ### 关键设计
 
-**1. 稀疏状态更新（SSU）表示：把"逐帧重写整树"换成"初始 SVG + 属性差分流"。**
+**1. 稀疏状态更新（SSU）表示：把"逐帧重写整树"换成"初始 SVG + 属性差分流"**
 
 相邻帧 85% 的 SVG 语法是重复的，真正在变的只是少数 `d`、`transform`、`opacity` 属性；可一旦让 LLM 帧帧重写整段 SVG，就同时撞上 context 爆炸（24 帧要 86k token）和 identity drift（静态元素被随机改掉、身份漂移）。SSU 干脆把动画定义成 $\Delta_t=\{(id, attr, v_t)\mid v_t\ne v_{t-1}, (id, attr, v_t)\in A(S_t)\}$，整段动画就是 $(S_0,\Delta_1,\dots,\Delta_T)$，序列化时用 `<|time=t|>` 和 `<|ID=id|>` 控制标记把每处变化锚到持久 DOM 节点上。一段 24 帧动画从 86k token 压到 9.2k（压缩 $9.86\times$），且 diff 部分占 61%，意味着模型大部分容量真的花在"学动态"而非"抄静态"。更关键的是，所有没被列进 $\Delta_t$ 的属性"按构造"保持不变——身份漂移在架构层就被根除，而不是靠损失项去约束。
 
-**2. Identification-First Motion Planning（CoT）：先把实体 grounding 到 DOM ID，再写时间逻辑。**
+**2. Identification-First Motion Planning（CoT）：先把实体 grounding 到 DOM ID，再写时间逻辑**
 
 如果让模型把"想做什么"和"改哪个节点"混在一起想，很容易改错对象（去旋整个柜子而不是柜门）。VAnim 按概率分解 $p_\theta(o\mid x)=p_\theta(C\mid x)\cdot p_\theta(\mathcal{D}\mid C,x)$ 把推理硬拆成两段：Director 阶段输入 $I_0, S_0, P$，先产结构化 CoT $C$，里面是固定两段——Entity Identification 把视觉物体映射到 ID（"blue circle → ID 05"），Visual Dynamic Planning 描述基于 ID 的时间行为（"ID 05 scale up/down"）；Animator 阶段再据 $C$ 生成 diff 序列 $\mathcal{D}$。训练数据里每条 CoT 都经过 ID 一致性过滤、保证引用的 ID 都真实存在，使 100% 训练样本结构 grounded。消融显示去掉 CoT 后语义对齐从 0.281 掉到 0.255、错改对象变得常见——显式 grounding 是结构完整性的前提。
 
-**3. Rendering-Aware Reinforcement Learning（GRPO + 混合奖励）：用渲染出的视频质量逼模型敢做非刚性形变。**
+**3. Rendering-Aware Reinforcement Learning（GRPO + 混合奖励）：用渲染出的视频质量逼模型敢做非刚性形变**
 
 SFT 只监督代码正确性、看不到"实际渲染出来好不好看"，学到的策略就保守地躲在平移/微缩这些仿射变换里，不敢去改 path 的 `d`。VAnim 把不可微的 SVG 渲染拉进训练 loop：对每条输入采 $G=8$ 条候选，各自经 Playwright 无头浏览器在 $500\times 500$ 渲成视频，再喂 PE-Core 视频感知编码器。奖励 $\mathcal{R}=\lambda_{\text{align}}\mathcal{R}_{\text{align}}+\lambda_{\text{fmt}}\mathcal{R}_{\text{fmt}}$，其中 $\mathcal{R}_{\text{align}}=\mathrm{CosineSim}(E_{\text{text}}(P),E_{\text{video}}(V_{\text{pred}}))$ 给密集的语义对齐信号、引导模型直接操作 Bézier 控制点做非刚性形变，$\mathcal{R}_{\text{fmt}}\in\{-1,+1\}$ 则作为硬约束严格判定可渲染、长度匹配、ID 合法，防止 RL 游走到"炫酷但破图"的区域。GRPO 目标 $\mathcal{L}_{\text{GRPO}}=\mathbb{E}\bigl[\tfrac{1}{G}\sum_i\min(\tfrac{\pi_\theta(o_i\mid x)}{\pi_{\theta_{\text{old}}}(o_i\mid x)}\hat A_i,\text{clip}(\cdot)\hat A_i)-\beta D_{\text{KL}}\bigr]$，$\beta=0.01$、温度 $0.9$。
 

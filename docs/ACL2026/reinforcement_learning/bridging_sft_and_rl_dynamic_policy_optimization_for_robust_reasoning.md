@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 动态难度分级（Dynamic Difficulty Grading）：用 rollout 正确率把样本路由到最合适的优化路径。**
+**1. 动态难度分级（Dynamic Difficulty Grading）：用 rollout 正确率把样本路由到最合适的优化路径**
 
 统一的优化策略无法应对样本难度的悬殊：简单样本的梯度趋近于零、白白浪费算力，困难样本的奖励信号又太稀疏、让 RL 梯度方差爆炸。DYPO 不另设分类器或奖励模型，而是直接复用 group rollout——对每个 query 采样 $k$ 条轨迹，用二值奖励 $R(\tau_i) \in \{0,1\}$ 评估每条对错。
 
 按结果把 query 分三档并各走一条路：全对为 Easy，直接跳过、不贡献梯度，避开饱和样本的无效更新；全错为 Hard，交给多教师蒸馏做 SFT，避免在毫无正例的情况下空跑 RL 探索；部分对为 Mid，正负轨迹并存、信息量最大，交给 RL 优化拿到最有效的梯度信号。一道正确率就完成了路由，实现成本极低。
 
-**2. 多教师蒸馏（Multi-Teacher Distillation）：用多个教师的集成消掉单教师的特异性偏差。**
+**2. 多教师蒸馏（Multi-Teacher Distillation）：用多个教师的集成消掉单教师的特异性偏差**
 
 单教师 SFT 的拟合偏差正是后续 RL 探索受限的根源之一——学生被一个有偏的老师带偏了方向。DYPO 为 Hard 样本维护 $m$ 个教师模型的推理轨迹集合，每遇到一个 Hard query 就随机抽一个教师的轨迹作为 SFT 目标。
 
 理论上单个教师会引入 $\|\mathbf{b}_{sys} + \mathbf{b}_i\|$ 的偏差，而在教师偏差方向不相关的假设下，$m$ 个教师的集成把其中的特异性偏差缩减为 $\sigma_{bias}^2/m$。实践中用 DeepSeek-R1 和 Qwen3-235B 两个教师，就能明显压低这部分偏差，给 Hard 样本提供更可靠的低偏差监督。
 
-**3. Group Alignment Loss（GAL，组对齐损失）：给 GRPO 配一个方差会自动衰减的对比项。**
+**3. Group Alignment Loss（GAL，组对齐损失）：给 GRPO 配一个方差会自动衰减的对比项**
 
 GRPO 的梯度方差 $\approx \Sigma_s/k$ 受限于组大小 $k$，组太小时方差降不下来。DYPO 在 Mid 样本上额外加一个对比损失：把同组的成功/失败轨迹配成正负对，用 DPO 风格的目标 $\mathcal{L}_{GAL} = -\log\sigma(\beta_{GAL} \cdot d(\tau_s, \tau_f))$ 拉近成功路径、推远失败路径。与标准 DPO 的关键区别是 GAL 用的是 on-policy rollout 而非静态偏好数据。
 

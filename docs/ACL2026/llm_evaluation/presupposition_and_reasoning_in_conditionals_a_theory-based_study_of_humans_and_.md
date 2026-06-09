@@ -51,19 +51,19 @@ LLM 除了给数值判断，还需要输出 step-by-step reasoning。随后，Cl
 
 ### 关键设计
 
-**1. 概率与相关性的受控 item 构造：把 proviso problem 里“前件到底让不让预设更可能成立”做成可控变量。**
+**1. 概率与相关性的受控 item 构造：把 proviso problem 里“前件到底让不让预设更可能成立”做成可控变量**
 
 条件句“If A, Bp”里那个预设 $p$ 该不该投射，本来就没有简单答案——它取决于前件 $A$ 有没有把 $p$ 抬得更可信。如果只凭研究者拍脑袋说某句“相关/不相关”，后面的人机对比就立在沙地上。作者改用 norming 把它量化：对每个预设 $p$，分别估计 baseline $Pr(p\mid c)$ 和条件概率 $Pr(p\mid A,c)$，若 $A$ 显著抬高 $p$ 的可能性就归为 relevant 条件，弱关联或无关联则归为 somewhat relevant 和 irrelevant。
 
 这样三档相关性和高/中/低三档先验概率都来自 30 名母语者的 normed 评分，而非直觉标注，后续 human-LLM comparison 才有干净的受控刺激可比。
 
-**2. 平行的人类与模型行为实验：把人和模型摆进同一任务、同一量表、同一上下文里直接对账。**
+**2. 平行的人类与模型行为实验：把人和模型摆进同一任务、同一量表、同一上下文里直接对账**
 
 很多 LLM 语用评测只判模型答得对不对，看不出它是否接近人类那种分级的、有把握程度差异的判断。这里让 120 名人类和四个模型对同样 90 个“If A, Bp”句子给 0–7 的 likelihood rating，模型额外吐出 reasoning；并配 without-context 与 with-context 两档对照，看仅补一句最小身份背景会不会改变它们整合概率与相关性的方式。
 
 之所以用连续评分而非对错，是因为预设投射本就是渐变现象，用 Spearman 相关和 MAE 才抓得住人机之间细微的行为分布差，而不是粗暴的命中率。
 
-**3. 理论驱动 checklist 的 LLM-as-a-Judge：不看最终分数，专查模型的推理过程合不合语用理论。**
+**3. 理论驱动 checklist 的 LLM-as-a-Judge：不看最终分数，专查模型的推理过程合不合语用理论**
 
 模型给出一个贴近人类的数字，并不代表它真按语言学理论推理，也可能只是蹭到了词汇共现或常识关联——行为对齐和解释质量完全可能脱钩。为把这层捅开，作者让 Claude-Haiku-4 当 judge，拿一份专家设计的 yes/no checklist 逐条核对模型的 reasoning trace，维度覆盖 Accuracy、Context、Pragmatic、Presupposition Handling、Coherence；with-context 条件有 59 个判定项，without-context 有 52 个。每条 response 的得分是满足条目的平均比例
 

@@ -46,7 +46,7 @@ MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "V
 
 ### 关键设计
 
-**1. Vibe Graphing 三阶段编译流水线：把自然语言意图编译成可执行图，而不是直接吐代码。**
+**1. Vibe Graphing 三阶段编译流水线：把自然语言意图编译成可执行图，而不是直接吐代码**
 
 直接让 LLM 写代码（Vibe Coding）经常生成逻辑错误、根本跑不起来的图，而且 API 成本高。MASFactory 的破法是把"意图 → 可执行 workflow"拆成三步编译，每步都产出可读可编辑的结构化中间表示（IR）：(i) Role Assignment 把 task intent 映射成一组带边界的候选 agent 角色；(ii) Structure Design 根据角色间的信息依赖和控制约束生成有向图拓扑骨架，定下连通性与 message/control 的传播方向；(iii) Semantic Completion 在骨架上做参数化实例化，给每个节点配 prompt 和 tools，产出可直接 compile/execute 的 workflow。
 
@@ -54,13 +54,13 @@ MASFactory 把 LLM 多智能体系统建模成 Node / Edge 计算图，提出 "V
 
 > ⚠️ gpt-5.2 等模型名以原文为准。
 
-**2. Context Adapter / Message Adapter 双适配层：把异构外部依赖从协作图里解耦。**
+**2. Context Adapter / Message Adapter 双适配层：把异构外部依赖从协作图里解耦**
 
 现实 MAS 高度依赖外部 context 源，但 Mem0 长期记忆、LlamaIndex RAG、Anthropic MCP 各有各的 API 和数据格式；过去要写一堆 workflow-specific 的胶水代码把它们缝进每个 agent，结果是拓扑强耦合于具体框架、几乎没法移植。本文用两层适配器把这件事抽象掉：Context Adapter 把不同 context 源切成标准化单元，对图节点暴露统一接口；Message Adapter 把 agent 的 IO 按指定协议（JSON Schema / Markdown 段 / 纯文本）格式化，并开放用户自定义协议接口。
 
 解耦的直接收益是同一张 collaboration graph 可以无缝换 memory 后端或通信协议而不动拓扑——想把 Mem0 换成 LlamaIndex、或把 JSON 通信换成 Markdown，只改适配器配置，图结构原封不动。
 
-**3. ComposedGraph + NodeTemplate 复用机制：让重复子图以模板形式被声明、复用、版本化。**
+**3. ComposedGraph + NodeTemplate 复用机制：让重复子图以模板形式被声明、复用、版本化**
 
 MAS 里"review-critique-revise"、"propose-vote-merge"这类协作 pattern 反复出现，每次手写既费时又难统一风格。本文提供两级复用：NodeTemplate 让用户先声明结构模板再实例化，可以 clone 出多个全局相同、局部参数不同的图；ComposedGraph 则是一类预定义结构的特化 Graph，用户只需填 node 配置或激活特定分支就能 instantiate。框架自带常用协作子图（如 DyLan-style 动态调度模式），用户也能把自己的设计打包成 reusable 组件。
 

@@ -47,19 +47,19 @@ RL-PLUS 的训练目标融合两部分：$\mathcal{J}_{\text{RL-PLUS}} = \underb
 
 ### 关键设计
 
-**1. 多重重要性采样（Multiple Importance Sampling）：让外部数据稳定地参与 off-policy 更新。**
+**1. 多重重要性采样（Multiple Importance Sampling）：让外部数据稳定地参与 off-policy 更新**
 
 外部数据来自某个未知策略 $\pi_\omega$，和当前策略 $\pi_\theta$ 分布不匹配——标准 on-policy IS 对它有系统偏差（Lemma A.5），直接 off-policy IS 又方差过大（Lemma A.7），两条路都走不通。MIS 的做法是不去直接估计 $\pi_\omega$，而把外部样本看成来自混合策略 $\pi_\omega+\pi_{\theta_{old}}$，重要性权重写成 $r_{i,t}^m(\theta)=\frac{2\pi_\theta(e_{i,t}|q,e_{i,<t})}{\pi_\omega(e_{i,t}|q,e_{i,<t})+\pi_{\theta_{old}}(e_{i,t}|q,e_{i,<t})}$。对未知的 $\pi_\omega$，采用贝叶斯最优估计 $\hat{\pi}_\omega^*=\frac{1}{2}\pi_{\theta_{old}}+\frac{1}{2}\mathcal{U}$（旧策略与均匀分布等权混合），在最大不确定性下最小化 L2 风险。
 
 这样得到的是低偏差、低方差的折中：即使 $\pi_\omega$ 与 $\pi_\theta$ 差异很大，分母里 $\pi_{\theta_{old}}$ 的存在也能托住权重、防止它爆炸，外部数据因此能稳定地注入梯度而不让训练崩掉。
 
-**2. 探索式优势函数（Exploration-Based Advantage Function）：放大正确但低概率的推理路径。**
+**2. 探索式优势函数（Exploration-Based Advantage Function）：放大正确但低概率的推理路径**
 
 新知识往往藏在模型自己不敢走的低概率 token 上，而模型天然倾向高概率（已有知识），所以光把外部数据稳定引入还不够，得显式逼模型“看见”这些被忽略的路径。EAF 在标准归一化优势上乘一个聚焦权重：$A_{i,t}^c=\frac{R_i-\text{mean}(R)}{\text{std}(R)}\cdot C_{i,t}$，其中 $C_{i,t}=(1-\text{detach}(\pi_\theta(e_{i,t}|q,e_{i,<t})))^\gamma$。
 
 这一项受 Focal Loss 启发——当模型给某个正确 token 的概率很低（说明它不善于探索这条路）时，$C_{i,t}$ 变大，把该路径的优势信号放大，迫使模型重点学习这些新推理方式；反之对已经掌握的高概率 token 则不额外加权。
 
-**3. 移除裁剪机制：让高价值外部数据走更大步长。**
+**3. 移除裁剪机制：让高价值外部数据走更大步长**
 
 标准 GRPO 用 $\text{clip}(r_t,1-\epsilon,1+\epsilon)$ 限制单步更新幅度，但这恰好和外部探索的目标冲突——低概率事件（新知识）正是最该大步优化的对象，裁剪会把这些高信息量路径的学习信号压下去。因此 RL-PLUS 对外部数据项移除裁剪，允许策略对高价值外部样本做更大胆的更新。
 

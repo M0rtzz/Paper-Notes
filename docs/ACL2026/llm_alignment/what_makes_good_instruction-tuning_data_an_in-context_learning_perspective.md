@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. 多样且困难的 probe set 构建：给每个候选样本配一组真正能检验其"教学价值"的 probe。**
+**1. 多样且困难的 probe set 构建：给每个候选样本配一组真正能检验其"教学价值"的 probe**
 
 probe 选不好，影响力评估就会失真——随机 probe 噪声大，纯最近邻 probe 太冗余、几乎是重复样本，过于简单的 probe 又看不出 demonstration 到底有没有帮上忙。作者用三阶段检索同时控制相关性、多样性和挑战性：先在 embedding 空间取 $N=32$ 个最近邻保证 probe 与候选样本语义相关，再对这些邻居做 $K=5$ 个 k-means 聚类避免 probe 全挤在同一语义模式里，最后在每个 cluster 内用 DEITA complexity scorer 挑复杂度最高的样本，确保 probe 不会太简单。这样得到的 probe set 才能让后续的影响力打分既贴近候选样本的任务、又有足够区分度。
 
-**2. Weighted In-Context Influence 打分：用 IFD 的下降量、并按语义距离加权，衡量一个样本作为 demonstration 的迁移性帮助。**
+**2. Weighted In-Context Influence 打分：用 IFD 的下降量、并按语义距离加权，衡量一个样本作为 demonstration 的迁移性帮助**
 
 如果只看平均影响力，模型会偏好那些只帮到近乎重复邻居的样本，而真正有价值的是能泛化到稍远相关任务的 demonstration。基于前面定义的难度指标 $IFD(y|x)=PPL(y|x)/PPL(y)$ 和影响力 $ICI_{i\rightarrow b}=IFD(y_b|x_b)-IFD(y_b|a_i,x_b)$（候选样本作 one-shot demonstration 后 probe 的 IFD 下降则 ICI 为正），wICI 把每个 probe 的 ICI 按归一化 cosine distance 加权聚合：
 
@@ -59,7 +59,7 @@ $$wICI(a_i)=\sum_{b\in B_i}\frac{1-cos(f(x_i),f(x_b))}{2|B_i|}\cdot ICI_{i\right
 
 距离权重鼓励候选样本不只帮助近重复邻居、也对稍远但相关的 probe 起作用，从而选出具有 transferable teaching effect 的 instruction。
 
-**3. 带多样性约束的贪心选择：避免最终训练集被高分但雷同的样本占满。**
+**3. 带多样性约束的贪心选择：避免最终训练集被高分但雷同的样本占满**
 
 高影响力样本往往集中在少数任务模式上，全选进来会让模型在某些 benchmark 上很强、在另一些场景上偏弱，而微调数据需要覆盖多种指令结构。作者因此按 wICI 从高到低排序后做贪心选择：只有当一个候选样本与已选集合中任何样本的 cosine similarity 都小于阈值 $\tau=0.9$ 时才接受它，直到选满预算 $k$。被选子集不再额外加权，直接送入标准 SFT。
 

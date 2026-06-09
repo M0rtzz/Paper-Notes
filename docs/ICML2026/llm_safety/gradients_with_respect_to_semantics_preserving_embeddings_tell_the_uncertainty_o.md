@@ -45,11 +45,11 @@ SemGrad 想回答"LLM 对自己这次自由生成有多自信"，但拒绝采样
 
 ### 关键设计
 
-**1. 语义保留分 (SPS)：用数据找到"梯度该在哪儿求"。**
+**1. 语义保留分 (SPS)：用数据找到"梯度该在哪儿求"**
 
 梯度 UQ 的关键不是怎么求梯度，而是对谁求——选错位置（最后一层只服务下一 token 解码、低层全是 lexical 特征）信号就抓不到不确定性。SPS 给出可量化的选取准则：对每条 query 用 GPT 生成 $K$ 个语义等价 paraphrase，分别算 within-paraphrase 相似度 $S_{w/i}^{l,t}$（同义输入在该 token / 层的隐藏态有多近）与 across-query 相似度 $S_{a/c}^{l,t}$（不同义输入有多近），两者之差 $\mathrm{SPS}=S_{w/i}-S_{a/c}$ 越高，说明这个位置越能把同义输入拉近、把异义输入推开，也就越"懂语义"。扫描发现三条稳定规律：每个模型都存在一个跨数据集一致的 $t^\star$（LLaMA-3.1 是 `<|start_header_id|>`、Qwen3 是 `<|im_start|>`、Mistral-Nemo 是最后一个 user token）；高 SPS 集中在深层一半；高 SPS 区是一个 band 而非单点——所以最终把深层一半的隐藏态拼起来做梯度，而不是赌某一层。
 
-**2. 熵加权语义梯度 SemGrad：对语义扰动的敏感度就是不确定性。**
+**2. 熵加权语义梯度 SemGrad：对语义扰动的敏感度就是不确定性**
 
 直觉是"模型若真懂这个 query，语义保留的扰动不该改变输出分布"，所以把这种局部稳定性量化成对语义 embedding 的梯度范数：
 
@@ -57,7 +57,7 @@ $$S_{\text{SemGrad}}=\frac{1}{|\boldsymbol{h}^\uparrow_{t^\star}|}\Big\|\nabla_{
 
 其中 $\omega_t=H(p(y_t\mid\hat{y}_{<t},\boldsymbol{x}))$ 是该 step 的 token 熵、作系数从计算图 detach。加这个权是因为自由生成里 token 贡献极不均——stopword / 子词信息量低权重就小，关键事实词熵高权重就大，避免整句被冗余词稀释；而且熵权重不用第三方模型就能 cheap 地刻画 token 重要性。它对 multi-answer 有效的根子在理论上：$\|\nabla_{\boldsymbol{h}_E}\log p\|\approx 0$ 只要求"模型贴近真分布"，与 ground truth 是单峰还是多峰无关，所以即便任务本身有多个有效答案、梯度也不会被这种 aleatoric 噪音带偏。
 
-**3. HybridGrad：用平均熵在语义梯度和参数梯度之间自适应切换。**
+**3. HybridGrad：用平均熵在语义梯度和参数梯度之间自适应切换**
 
 SemGrad 在多答案上稳，但单答案场景里参数梯度其实更准——因为单 ground-truth 设定下参数梯度直接对应训练目标、数值最稳。HybridGrad 不硬选其一，而是用平均 token 熵 $\bar\omega=\frac{1}{T}\sum_t\omega_t$（近似 sequence-level entropy）当"这个输入到底有多 aleatoric"的代理来插值：
 

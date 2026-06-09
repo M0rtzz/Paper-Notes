@@ -51,11 +51,11 @@ tags:
 
 直接问"该拿哪一个"太容易被模型猜中，于是改成先剔除被指代对象、再反问剩下什么，并在候选里同时埋入近/远/中三个互斥具体项与一个反逻辑的 "All of the above"。关键在于，proximal 和 distal 在物理上天然互斥，真正理解这两个词的被试绝不会选 "All of the above"——人类选它的比例只有约 0.5%。这就把"语言理解"直接转成"行为可观察"：模型选 "All of the above" 的比例本身就量化了它对 mutual exclusivity 的掌握程度。实测中 Gemini-2.5-Pro 在 self-distal 条件下选 4 的比例高达 60%、Qwen3-Max 更达 84%，这种"安全 fallback"行为正是模型没有 ground 住空间含义的直接证据。
 
-**2. Pair-to-pair × 4 cue × 4 perspective 的交叉控制：把混淆维度拆开，逼出 disentangled 能力。**
+**2. Pair-to-pair × 4 cue × 4 perspective 的交叉控制：把混淆维度拆开，逼出 disentangled 能力**
 
 只看单一维度（如 proximal 准确率）会被 perspective 等因素混淆，因此实验把 proximity（proximal/distal）、perspective（self/other）、pronoun reinforcement（无/有/冲突）三个维度交叉起来。每个场景生成 4 题（2 proximity × 2 perspective）一组配对，避免单题随机性，并以 Symmetry Index 量化对称性；cue 条件从纯指示词到纯代词再到加强/冲突代词，可分离"指示词理解"与"代词依赖"两种来源；中英同设计对照则用来揭示文化差异。正是这套设计让作者能 isolate 出"英语者在 distal 上准确、却在 perspective 切换时崩溃"这类细粒度跨文化特征，而非笼统的一个准确率。
 
-**3. Symmetry Index (SI) 量化配对响应分布的对称性：替代不适用的 accuracy。**
+**3. Symmetry Index (SI) 量化配对响应分布的对称性：替代不适用的 accuracy**
 
 在没有唯一正确答案的开放式指代实验里，传统 accuracy 失效，作者借鉴 Robinson 1987 的步态对称性分析，定义对称指数
 

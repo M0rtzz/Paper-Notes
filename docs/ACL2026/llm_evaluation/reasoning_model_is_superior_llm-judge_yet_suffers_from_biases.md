@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 受控的 reasoning vs non-reasoning 比较：把“推理过程”单独拎出来当唯一变量。**
+**1. 受控的 reasoning vs non-reasoning 比较：把“推理过程”单独拎出来当唯一变量**
 
 要回答“推理模型是不是更好的 judge”，最大的陷阱是把规模和训练数据的差异误记到 reasoning 头上——随便挑一个强模型和一个弱模型对比，结论里混进了参数量、预训练语料、架构等一堆干扰因素。作者的做法是只在同一模型家族内部取 instruct 和 thinking 两个变体来配对，例如 DeepSeek-V3 vs DeepSeek-R1、Qwen2.5-32B-Instruct vs QwQ-32B、Qwen3 的 instruct 与 thinking 模式。这样两端几乎只差“是否经过长推理”，得到的差距才能干净地归因于推理本身，而不是别的混杂变量。
 
-**2. Helpsteer2-trivial 与 Reversal Rate：把评测场景下的指令遵循变成可度量的反转率。**
+**2. Helpsteer2-trivial 与 Reversal Rate：把评测场景下的指令遵循变成可度量的反转率**
 
 评测里的指令遵循和普通聊天不一样：一个 judge 可能清楚整体哪个回答更好，却在“这次只评 helpfulness”时仍按整体印象作答，无法忽略其他维度。为了戳中这一点，作者构造了 Helpsteer2-trivial——每个样本里 Response A 整体更好，但 Response B 在某个指定维度上更好。合格的 judge 应该在 overall prompt 下选 A，在 specific prompt 下切换到 B。是否发生这种切换，用 Reversal Rate 来衡量：反转率越高，说明模型真的在按指定维度判断，而不是一味跟着整体质量走。
 
-**3. PlanJudge 两阶段评测：先写评估计划，再按计划执行判断。**
+**3. PlanJudge 两阶段评测：先写评估计划，再按计划执行判断**
 
 推理模型本来就会逐项核对标准，但标准一旦含糊，它反而容易把长度、细节、语气这些表层信号误当成质量——“想得越多”有时会放大偏好而非纠正偏好。PlanJudge 把评测拆成“计划”和“执行”两步：先根据任务写出该看哪些评估维度、优先级和注意事项，再让模型严格按这份计划去比较两个回答。计划有三种来源——heuristic-based（人工启发式规则）、self-synthesized（模型针对当前样本自生成）和 combined（两者结合，既用人工规则又用模型对样本的理解）。显式计划的作用就是在推理动起来之前，先把注意力锚回任务真正要求的标准上。
 

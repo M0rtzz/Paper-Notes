@@ -45,15 +45,15 @@ KnowRL 整体在 GRPO 之上做奖励工程：(1) **数据构造**——从 NQ-O
 
 ### 关键设计
 
-**1. 原子事实分解 + GTR 检索的过程级奖励 $r_{\text{fact}}$：把"思考黑箱"拆成可被梯度推动的稠密分。**
+**1. 原子事实分解 + GTR 检索的过程级奖励 $r_{\text{fact}}$：把"思考黑箱"拆成可被梯度推动的稠密分**
 
 outcome-only 奖励的致命伤是把推理过程当黑箱，模型完全可以"答案蒙对、推理胡编"。KnowRL 借鉴 FactScore 的核查管道，把它从评测侧搬到训练侧：用 GPT-4o-mini 调一次 prompt 把 $o_{\text{think}}$ 拆成 $M$ 条原子事实 $\Phi(o_{\text{think}})=\{f_1,\dots,f_M\}$，每条 $f_j$ 用 sentence-transformers `gtr-t5-large` 从知识库 $K$ 检索 top-相关段 $K_x$，再让 GPT-4o-mini 给出 0/1 的 verification $v(f_j,K_x)$，最后取平均 $r_{\text{fact}}(o)=\frac{1}{M}\sum_j v(f_j,K_x)$（$M=0$ 时记 0）。这一步把"事实性"从一个黑箱标量变成逐句可核查的密集分——FactScore 早已证明"分原子事实 + 检索 + 二元校验"是衡量长文本事实性的可靠管道，KnowRL 的灵魂就是把它接进 RL 的奖励端，直接对 CoT 的每一步做监督。
 
-**2. 非对称 correctness 奖励 + refusal 正激励：用 +2/+1/−1 教模型守住知识边界。**
+**2. 非对称 correctness 奖励 + refusal 正激励：用 +2/+1/−1 教模型守住知识边界**
 
 传统 RL 把所有"非正确"都等价惩罚，会逼模型在不确定时也硬"赌一把"来博取奖励——根本学不会"自己不知道"。KnowRL 在正确性奖励里显式区分三种结果：$r_{\text{correct}}=+2$（GPT-4o-mini 判答对）/ $+1$（显式拒答）/ $-1$（答错），外加 format 奖励 ±1 强制 `<think>...</think><answer>...</answer>` 结构。这个非对称设计告诉模型"拒答虽不如答对赚得多，但比答错强"，从而把概率质量从硬猜挪向诚实弃权。它的不可替代性在消融里很扎眼：把 refusal 的 +1 改成 −1，Incorrect Rate 会从 57.67% 弹回 78.67%，refusal 率从 40.67 暴跌到 8.67。
 
-**3. 基于 GRPO 的过程级优势聚合：让"事实多 + 拒答得当"的轨迹拿到正信用。**
+**3. 基于 GRPO 的过程级优势聚合：让"事实多 + 拒答得当"的轨迹拿到正信用**
 
 有了复合奖励，还需要一个稳定、内存友好的方式把它转成梯度信号。KnowRL 用 GRPO 免去 critic：同一 prompt 组内的 $G$ 条 rollout 各算 $R_{\text{total}}=r_{\text{format}}+r_{\text{correct}}+r_{\text{fact}}$，再组内归一化成带符号优势 $A_g=(R_g-\mu_x)/(\sigma_x+\varepsilon)$，让幻觉为主的轨迹得负信用、事实充分且拒答得当的轨迹得正信用。轨迹级 importance ratio $\varrho_g=\pi_\theta(o^{(g)}|x)/\pi_{\theta_{\text{old}}}(o^{(g)}|x)$ 经 clip 后求 surrogate $\hat{\mathcal{J}}(\theta)=\frac{1}{G}\sum_g \min(\varrho_g A_g, \text{clip}(\varrho_g,1{-}\epsilon,1{+}\epsilon)A_g)$，再叠 entropy bonus 与 KL anchor 得到
 

@@ -45,19 +45,19 @@ SEA 不是端到端训练一个字幕 aligner，而是 modular pipeline。它先
 
 ### 关键设计
 
-**1. Sign Segmentation as Tokenization：像分词一样把连续 signing 切成可对齐的单元。**
+**1. Sign Segmentation as Tokenization：像分词一样把连续 signing 切成可对齐的单元**
 
 对齐的第一步是知道"哪里能切"，SEA 借的是 Moryossef et al. 的自动手语分割模型——它基于 MediaPipe Holistic pose 加一个轻量 LSTM，对每帧输出 BIO 预测。这个模型只在约 73 小时的 DGS 标注数据上训练，但作者发现它能直接迁移到 BSL、ASL 和 DSGS，无需在每种手语上重训，这正是 SEA "通用 recipe" 主张的关键一环。
 
 值得注意的是，这里并不追求语言学上完美的 sign boundary。实验显示，稍微 over-segmented 的 sub-sign units 反而足够——它们为后续 DP 提供了可用的切点和 pause 信息，而对齐本身并不在乎一个边界是不是恰好对应一个完整的语言学手势。
 
-**2. SignCLIP Cross-modal Embedding：把字幕和手语片段拉到同一空间做语义匹配。**
+**2. SignCLIP Cross-modal Embedding：把字幕和手语片段拉到同一空间做语义匹配**
 
 光有时间和 pause 只能告诉模型"哪里可能切"，却答不出"哪段 signing 对应这句字幕"，语义信号得靠跨模态 embedding 补上。SEA 默认用 SignCLIP-multilingual：字幕走 BERT-like text encoder，sign clip 的 MediaPipe pose 序列走 pose encoder，二者映射到共享 latent space。为了区分语言，文本 prompt 里嵌 ISO 639-3 代码，例如 BSL/English 用 `<en> <bfi>`、ASL/English 用 `<en> <ase>`、DSGS/German 用 `<de> <sgg>`。
 
 由于这是可替换模块，作者还针对具体语言分别 fine-tune 出 SignCLIP-BSL、SignCLIP-ASL 和 SignCLIP-Suisse。消融里语言特定版本的提升相当明显——例如 BSL 上的 ISLR 从 0.5 跳到 43.0，BOBSL 对齐分也随之从 66.70 升到 72.78，说明语义信号越强、对齐越准。
 
-**3. Episode-level Dynamic Programming Alignment：在整集视频上一次性求全局不重叠对齐。**
+**3. Episode-level Dynamic Programming Alignment：在整集视频上一次性求全局不重叠对齐**
 
 最后一步把切点和语义统一进一个全局优化。对字幕 $t_i$ 和候选 sign span $s_l,\ldots,s_r$，代价由 onset distance、offset distance、duration difference 和 inter-sign gap 这些时间/韵律项构成；SEA 在此基础上再加一个语义项 $-w_{sim}\Sigma(i;l,r)$，其中 $\Sigma(i;l,r)=\sum_{j=l}^{r}M_{ij}$，$M_{ij}$ 是 text-sign similarity——相似度越高，代价越低。为保证 locality 和速度，每行只保留时间上最近的 50 个 signs，再用 DP 求全局最优。
 

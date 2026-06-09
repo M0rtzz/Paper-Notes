@@ -49,15 +49,15 @@ $$\max_{\pi_\theta} \sum_i \log g\big(\mu_i^k, S_i, \{r_{\pi_\theta}(x_i, y)\}_{
 
 ### 关键设计
 
-**1. MNL（Multinomial Logit）分支：把 Bradley-Terry 从"2 选 1"推广到"多选 1 与 top-k"。**
+**1. MNL（Multinomial Logit）分支：把 Bradley-Terry 从"2 选 1"推广到"多选 1 与 top-k"**
 
 DPO 背后的 Bradley-Terry 模型一次只能比较两个 response，这正是成对压缩的根源。MNL 直接放开候选集大小：在 single-best（discrete）格式下，损失变成对整个候选集做归一化，$-\log\sigma\big(-\log\sum_{y_i \in S \setminus \{y_w\}} \exp(f_\theta(x, y_i, y_w))\big)$，相比 DPO 多出的那一层 logsumexp，就是同时把所有非 preferred response 都纳入对比、而不是只挑一个负样本。在 top-k 格式下，它进一步连乘 k 个阶段的 softmax——每个阶段从尚未选中的剩余候选里挑出下一名，逐级展开整条排名链。当 $|S|=2, k=1$ 时这套退化回 DPO，说明 DPO 确实是该框架的一个特例。
 
-**2. Mallows-RMJ 分支：用纯序关系建模，绕开对精确 reward 数值的依赖。**
+**2. Mallows-RMJ 分支：用纯序关系建模，绕开对精确 reward 数值的依赖**
 
 MNL 仍然吃 reward 的基数大小，对 reward model 的噪声敏感。Mallows-RMJ 改成只看排名：某个 response 被选中的概率正比于 $\phi(x)^{d(y_i, S)}$，其中 $d(y_i, S)$ 是 $y_i$ 在候选集 $S$ 中的相对排名位置，dispersion 参数 $\phi(x)$ 越小、概率越向高名次集中。在 discrete 格式下，它的损失实质是去数有多少个 non-preferred 项的 reward 反超了 preferred 项；在 top-k 格式下则扩展为沿排名链的逐对比较，再补上"未入选项与第 k 名"之间的比较。由于全程只用到 ordinal 信息（谁排在谁前面），它天然对 reward 的数值抖动更鲁棒，这也是后面实验里 Mallows-RMJ 大幅领先的原因。
 
-**3. Sigmoid 平滑：让 rank-based 目标可微、能跑 SGD。**
+**3. Sigmoid 平滑：让 rank-based 目标可微、能跑 SGD**
 
 Mallows-RMJ 的损失里含有指示函数 $\mathbb{I}\{\cdot\}$（判断某项 reward 是否超过另一项），它在 0/1 之间跳变、不可微。论文用 sigmoid 把这个硬判断近似成平滑过渡，从而让整个 rank-based 目标对梯度下降友好，可以直接接进现有训练流程。
 

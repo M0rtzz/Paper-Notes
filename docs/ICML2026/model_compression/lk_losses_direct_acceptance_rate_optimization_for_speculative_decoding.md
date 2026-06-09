@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. LK-direct：把损失直接对齐接受率，而不是 KL 这个 proxy。**
+**1. LK-direct：把损失直接对齐接受率，而不是 KL 这个 proxy**
 
 痛点在背景里已经点明——draft 模型容量只有 target 的 1-5%，永远到不了 $q=p$ 的全局最优，而 KL 最小化只在全局最优处才和接受率最大化等价，次优点上二者方向可以完全不同。LK-direct 干脆把损失写成接受率本身的负对数 $\mathcal{L}_{\text{LK}} = -\log \alpha = -\log \sum_x \min(q(x), p(x))$，对 draft logits $z_q$ 求梯度。它和 KL 的差别正是在梯度结构上：KL forward 的梯度 $\nabla_{z_q}\text{KL}(p\|q) = q - p$ 在所有 token 上均匀施压（mass-covering，强迫 draft 去覆盖 target 的整个支撑集），而 LK 的梯度只在分布重叠区有贡献，把有限容量集中投到 target 高概率的那些 token 上。在容量受限时，"铺开覆盖所有支撑"和"对齐高概率区域"是质的不同——后者直接就是接受率想要的，所以在到不了全局最优的小 draft 上理应更优。
 
-**2. LK-hybrid：KL→LK 渐进切换，用 trust-region 的思路解决冷启动。**
+**2. LK-hybrid：KL→LK 渐进切换，用 trust-region 的思路解决冷启动**
 
 LK-direct 有个软肋：当 draft 随机初始化、$q$ 和 $p$ 几乎不重叠时 $\min(q,p)\to 0$，LK 梯度也趋近于零，几乎学不动；而此时 KL 梯度 $\|q-p\|\sim\mathcal{O}(1/\sqrt{k})$ 反而提供了强而稳的全局信号。LK-hybrid 因此把两者按训练步 $t$ 加权混合，$\mathcal{L}_{\text{hybrid}}(t) = (1-w(t))\,\text{KL}(p\|q) + w(t)\,\mathcal{L}_{\text{LK}}$，权重 $w(t)$ 按某个 schedule（线性或 sigmoid）从 0 渐增到 1。早期 $w$ 小，主要靠 KL 把两个分布拉到大致重叠；后期 $w$ 增大，切到 LK 直接精修接受率。这本质上是 trust-region 方法的思路——在好优化的 surrogate（KL）和真正想要的目标（LK）之间做 curriculum 式平衡，既拿到 KL 的稳健冷启动，又拿到 LK 的精修收益。
 
-**3. 梯度结构分析：从数学上说清 LK 为什么在次优点更省容量。**
+**3. 梯度结构分析：从数学上说清 LK 为什么在次优点更省容量**
 
 这一点不是新机制，而是为前两点提供理论支撑，让方法不靠"撞运气"。论文（附录推导）对比两种损失对 draft logits 的梯度：KL forward 梯度 $q-p$ 对每个 token 都施压，等于强迫 draft 在所有支撑上做 mass-covering，容量被均摊掉；LK 梯度则只在 $q < p$（draft 低估、而 target 高概率）的 token 上有贡献，是一种 selective updating——只给"该加分的"token 加分。正是这种选择性，让有限容量集中投资到对接受率影响最大的 high-impact token 上，定量地解释了主实验里 8-10% 的稳定增益从何而来。这套"重新审视训练 proxy 与评测目标是否对应同一个数学量"的分析，也是本文最可迁移的方法论。
 

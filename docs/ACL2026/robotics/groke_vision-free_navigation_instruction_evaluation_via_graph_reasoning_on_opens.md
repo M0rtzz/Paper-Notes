@@ -46,15 +46,15 @@ GROKE 想解决的是"怎么评一条导航指令好不好"——传统做法要
 
 ### 关键设计
 
-**1. Vision-free JSON 空间序列化：用 LLM 最读得懂的格式喂局部地图。**
+**1. Vision-free JSON 空间序列化：用 LLM 最读得懂的格式喂局部地图**
 
 要让 LLM 完全靠符号信息导航，地图怎么序列化直接决定成败。GROKE 把局部 OSM 子图拆成两部分组织：nodes 部分含 id、类型（intersection/waypoint）、heading $h \in [0,360)$、连接列表（每条带目标 id 和方位角），其中相对方位用球面 bearing 公式 $h = \text{atan2}(\sin\Delta\lambda \cos\phi_2, \cos\phi_1\sin\phi_2 - \sin\phi_1\cos\phi_2\cos\Delta\lambda)$ 算；POI 部分含每个 landmark 的字母 ID、最近节点引用、相对方向（用 $\delta = (h_{v\to p} - h_{\text{curr}} + 180) \mod 360 - 180$ 离散成 Forward / Left / Right / Back）和 Haversine 距离。作者系统比了纯文本叙述、JSON、Graphviz DOT、ASCII grid 四种表示，结果很悬殊：JSON SR 63% / NE 68m，Textual 61% / 70m，Graphviz 40% / 96m，Grid 仅 10% / 175m——grid 里大量空白格 '0' 会被 LLM 当成合法路径选，几乎失效。JSON 的层级嵌套让模型从局部偏离里"找路回来"的能力更强（OSR 74% vs Textual 67%），在 Hard 难度上 SR 53.8% 比 Textual 38.5% 高 15 个点，说明结构化对长程推理是质变。
 
-**2. Sub-instruction Agent：把长指令拆成原子动作的状态机。**
+**2. Sub-instruction Agent：把长指令拆成原子动作的状态机**
 
 一条指令往往有 50 多个 token、含多步空间推理，直接整条喂给 navigator 会让模型在中间步迷失。Sub-instruction Agent 让 LLM 当 parser 直接做 $I \xrightarrow{\text{parse}} \{g_1,\dots,g_K\}$，每个子目标形如 `("MOVE_FORWARD", "Go straight to the bank", TODO)`，带 TODO/IN_PROGRESS/COMPLETED 状态。这样 Navigator 一次只看当前 $g_k$ 而非整条指令，把"长程规划"切成"短程执行 + 状态推进"，把 LLM 从"同时记忆 5 步指令 + 推理空间"的双重负担里解放出来，一次只对一个原子目标做反应。消融（Appendix A.2）证明去掉这一阶段、整条指令直接喂 navigator 会让 SR 显著下跌。
 
-**3. 基于 intersection 的 visible area 截断：把视野收到下一个路口。**
+**3. 基于 intersection 的 visible area 截断：把视野收到下一个路口**
 
 把整张图（数千节点）塞进 prompt 既会 token 爆炸又会让模型被远处无关街道淹没、产生 hallucination。GROKE 用 Algorithm 1 模拟人站在路口的视野：从 $v_t$ 出发沿 $h_t$ 方向，每步在邻居里选 $\arg\min_{v'} \Delta h(h_{\text{curr}}, h_{v'})$ 且 $\Delta h < 100^\circ$ 的节点继续走，碰到 $\text{degree}(v) > 2$ 的 intersection 就计数 +1，直到走过 $u$ 个 intersection 再多取 3 节点 lookahead；POI 则用 50 米阈值 + Haversine 距离挂到 path node 上。这样 LLM 看到的"地图"既保留下一步决策需要的全部信息，又把 token 从全图压到几十节点，和人类站在路口实际能看到的范围差不多。
 

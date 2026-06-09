@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. QR 分解参数化的可学习正交投影层 OPL：把"任务无关分量"几何式地投影掉，而不靠对抗训练。**
+**1. QR 分解参数化的可学习正交投影层 OPL：把"任务无关分量"几何式地投影掉，而不靠对抗训练**
 
 VAD 系统几乎没有显式机制去抑制任务无关或敏感信息，而现成的对抗训练又不稳、还得额外训判别器。OPL 把要删除的子空间显式参数化成一个可训练矩阵 $\bm W\in\mathbb R^{k\times d}$，每次 forward 前对 $\bm W^\top$ 做 QR 分解得到正交基 $\bm Q$，再用 $\bm P=\bm I_d-\bm Q\bm Q^\top$ 把特征投到该子空间的正交补：$\bm f_{\text{proj}}=\bm f-\bm Q\bm Q^\top\bm f$。整层全可微、随主 VAD loss 一起训——子空间方向被任务梯度推向"删了不影响检测"的方向，相当于一个目标变成"任务最大保留 + 投影最大删除"的 PCA。相比 PCA 的固定子空间和 INLP 的迭代式 nullspace，QR 保证每次拿到的 $\bm Q$ 都是数值稳定的正交基，既绕开梯度反转、又不依赖敏感属性标签，而且可解释——投出去的就是 $\bm Q\bm Q^\top\bm f$，谁占主导可视化即可。
 
-**2. Guided OPL（G-OPL）+ cosine 对齐的弱监督面部抑制：没有身份标签也能把"人脸方向"定向塞进要删的子空间。**
+**2. Guided OPL（G-OPL）+ cosine 对齐的弱监督面部抑制：没有身份标签也能把"人脸方向"定向塞进要删的子空间**
 
 VAD 数据集压根没有 face/identity 标注，没法用属性分类器去抑制人脸。G-OPL 改用几何弱监督：把原视频帧和 RetinaFace 检到的人脸 crop（多张脸取平均，外加 50 段 Georgia Tech Face DB 作控制源）都过同一个 encoder 得到 $\bm f, \bm f_{\text{face}}$，让它们落在同一潜空间，再在主 loss 上加 $\mathcal L_{\text{task}}=\mathcal L_{\text{ori}}+\lambda_{\text{face}}(1-\cos(\bm f_{\text{face}}, \bm Q\bm Q^\top\bm f))$，强迫被投影分量 $\bm Q\bm Q^\top\bm f$ 在角度上对齐人脸 embedding——也就是把人脸方向"吸"进要删的子空间，再用 $\bm P$ 一次性切掉（这条 loss 只在检到脸的帧上激活）。用 cosine 当"软标签"既无监督又比对抗训练稳定，RetinaFace 只需给出二值的人脸存在 + face embedding、部署时不要任何 identity ground truth；要扩到衣着、步态等多属性，只需替换或拼接对应的弱信号 embedding。
 
-**3. 正交性正则 + 隐私感知指标三件套（SSC/ARD/PD-FPD）：既稳住正交基，又给 VAD 隐私评估补上量化工具。**
+**3. 正交性正则 + 隐私感知指标三件套（SSC/ARD/PD-FPD）：既稳住正交基，又给 VAD 隐私评估补上量化工具**
 
 QR 每次 forward 给出正交基，但梯度更新会破坏正交性、叠多层 G-OPL 时尤其严重，所以先加一条正交正则 $\mathcal L_{\text{orth}}=\|\bm Q^\top\bm Q-\bm I_k\|_F^2$，合成总损失 $\mathcal L_{\text{total}}=\mathcal L_{\text{task}}+\lambda_{\text{orth}}\mathcal L_{\text{orth}}$。另一边，之前 VAD 只有 AUC 一个指标、根本判断不了模型有没有抑制人脸，于是配了三件套：Sensitive Subspace Capture $\mathrm{SSC}=\cos(\bm Q\bm Q^\top\bm f_{\text{attr}}^{(i)}, \bm f_{\text{attr}}^{(i)})$ 看子空间是否真抓住了敏感属性，Anomaly Retention Distance $\mathrm{ARD}=\mathrm{KL}(P_{\text{raw}}(y)\|P_{\text{proj}}(y))$ 用 KDE 估投影前后异常分数分布的 KL、越小说明 utility 保留越好，Privacy Decay $\{(l, \mathrm{Acc}^{(l)})\}_{l=1}^L$ 在每个 G-OPL 后用线性 SVM 探针预测人脸存在、accuracy 越低抑制越强（第一个 G-OPL 后的 accuracy 特称 FPD）。三个指标分别盯住"抓没抓到敏感子空间、任务保留、逐层信息衰减"，让隐私、utility、可解释性都能被量化。
 

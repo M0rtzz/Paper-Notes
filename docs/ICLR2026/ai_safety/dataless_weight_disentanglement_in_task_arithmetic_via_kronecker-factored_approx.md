@@ -59,7 +59,7 @@ $$\min_{\boldsymbol{\tau}_{t'}} \mathcal{L}_{\mathcal{D}_{t'}}(\boldsymbol{\tau}
 
 ### 关键设计
 
-**1. 从表征漂移到 KFAC：把"别人的数据"换成"别人的曲率"。**
+**1. 从表征漂移到 KFAC：把"别人的数据"换成"别人的曲率"**
 
 要衡量给任务 $t'$ 加上任务向量后会对任务 $t$ 造成多大破坏，本来需要任务 $t$ 的数据去实测表征变化，这正是隐私/去中心化场景下不可行的根源。本文借助线性化模型 $f_\text{lin}(\boldsymbol{x}, \boldsymbol{\theta}) = f(\boldsymbol{x}, \boldsymbol{\theta}_0) + \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0)(\boldsymbol{\theta} - \boldsymbol{\theta}_0)$ 把表征漂移化简成一个干净的二次型 $\Delta_{t \to t,t'}(\boldsymbol{x}) = \alpha_{t'}^2 \| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_{t'} \|_2^2$，对样本求期望后正则项就成了 $\boldsymbol{\tau}_{t'}^\top \boldsymbol{G}_t \boldsymbol{\tau}_{t'}$。关键观察是：这里的 Jacobian Gramian $\boldsymbol{G}_t$ 恰好是广义 Gauss-Newton（GGN）矩阵在平方损失（$\nabla^2 c = \boldsymbol{I}$）下的特例。既然如此，就能直接套用成熟的 KFAC 近似，把每层的 GGN 写成两个小矩阵的 Kronecker 积
 
@@ -67,7 +67,7 @@ $$\boldsymbol{G}(\boldsymbol{\theta}^l) \approx \boldsymbol{B}^l \otimes \boldsy
 
 其中 $\boldsymbol{A}^l$ 是该层输入的协方差、$\boldsymbol{B}^l$ 是输出梯度的协方差。这一步把"需要访问数据的表征对比"彻底替换为"可离线预存的曲率因子"，正则化因而变得无数据。
 
-**2. 累积正则化：让任务数从 $O(T)$ 退化成 $O(1)$。**
+**2. 累积正则化：让任务数从 $O(T)$ 退化成 $O(1)$**
 
 朴素做法是为每个其他任务都保留一份 KFAC 因子并逐一加惩罚，存储和计算都随任务数 $T$ 线性增长。本文提出一个启发式合并，把所有 $t \neq t'$ 的因子分别在两个 Kronecker 侧聚合成单一代理
 
@@ -75,7 +75,7 @@ $$\boldsymbol{G}_{-t'} \approx \left(\sum_{t \neq t'} \boldsymbol{B}_t^l\right) 
 
 这样无论有多少任务，正则项都只需一份因子。合并当然引入误差，但理论给出 Frobenius 范数上界 $\|E\|_F \leq T \sigma_A \sigma_B$，说明当各任务的 KFAC 因子彼此差异不大时近似才好——而共享同一预训练骨干恰好满足这个前提，这也解释了实验中累积版与朴素版差距能控制在 0.3 点以内。
 
-**3. 任务定位与 OOD 检测：正则化顺带得到一个免费的"正常性评分"。**
+**3. 任务定位与 OOD 检测：正则化顺带得到一个免费的"正常性评分"**
 
 这套正则化还有个副产品：量 $\| \mathrm{J}_{\boldsymbol{\theta}} f(\boldsymbol{x}, \boldsymbol{\theta}_0) \boldsymbol{\tau}_t \|_2^2$ 天然可以读作输入 $\boldsymbol{x}$ 对任务 $t$ 的"正常性评分"。因为惩罚项做的事就是压低分布外输入上的这个二次型，训练后 OOD 样本的评分被推向零，于是每个任务向量的影响被局部化到自己负责的输入子空间，跨任务干扰自然减弱——权重解缠和 OOD 检测在同一个量上统一了起来。
 

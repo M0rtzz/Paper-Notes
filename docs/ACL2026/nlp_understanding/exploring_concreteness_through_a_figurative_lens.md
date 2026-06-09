@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. Prompt-based probing + 最后 token 表示：绕开 decoder 因果掩码"看不到后文"的限制。**
+**1. Prompt-based probing + 最后 token 表示：绕开 decoder 因果掩码"看不到后文"的限制**
 
 decoder-only LLM 直接取 noun 的 contextual embedding 有个致命问题：因果掩码下这个 token 还没读到后文，比如 "chain of events led to his downfall" 里 `chain` 的 embedding 是在没看到 events/downfall 时算出来的，根本捕捉不到那条把它推向比喻用法的提示。作者的解法是设计 prompt "Sentence: [sentence] On a scale of 1 to 5 (5 being the highest), in the context of the sentence, what is the concreteness of the word [target_word]?"，把整句和目标词都塞进 prompt，**取最后一个 token 的 hidden state** 作为 concreteness 表示——这个 token 因 causal attention 已经"看完"整句，自然聚合了完整上下文。
 
 拿到表示后走两条复用路径：(Gen) 让模型直接生成数字、(Tok) 把 hidden state 喂 MLP 回归。两个工程细节决定了 probing 是否可信：其一，目标词若不放在 prompt 末尾，Pearson r 会从 0.98 掉到 0.80±0.10，坐实了 decoder LLM 的强烈 recency bias；其二，Gen 路径只能拿到 0.58-0.70 的 r、远低于 Tok 的 0.82-0.92，说明"模型知道 concreteness 但说不准数字"——hidden state 比生成出来的数字更接近真实信号。
 
-**2. DiffMean + 多层 SVD 合成全局一维 axis：验证 concreteness 是否压成单一几何维度。**
+**2. DiffMean + 多层 SVD 合成全局一维 axis：验证 concreteness 是否压成单一几何维度**
 
 要回答"concreteness 在隐空间里是否占据一条专门方向"，作者用了 Marks & Tegmark (2024) 验证过的轻量线性方法 DiffMean——它本身就是几何空间里一根具体的方向向量，比 logistic regression 更可解释。具体先按静态 concreteness 阈值（>4 / <2）从 25k Wikipedia 句子里抽出 balanced 的 2,256 高 / 2,116 低 concrete 实例，每层算 high 均值减 low 均值得到 DiffMean $w^{(l)} = \mu^{(l)}_{high} - \mu^{(l)}_{low}$。
 
 单层 DiffMean 只反映该层最判别的方向，为了找"所有层共认的全局方向"，作者把各层 $w^{(l)}$ 当行向量堆成矩阵 $W$ 做 SVD，取 top-$k$ 右奇异向量 $B_k = V^\top_{1:k}$ 作为 layer-agnostic 子空间，再把任意句子的 hidden state 投影到这 $k$ 维上做 ROC AUC 评估。结果很干净：$k=1$ 时中后期层 AUROC 稳定在 ~0.90，证明 concreteness 确实被压缩到一维；而 $k$ 加到 2/3/4 反而 AUROC 下降（图 7），多方向稀释信号，是 inverse scaling 的明确证据。
 
-**3. 因果 steering：把 axis 直接加到 hidden state，从"相关性"升级为"控制 knob"。**
+**3. 因果 steering：把 axis 直接加到 hidden state，从"相关性"升级为"控制 knob"**
 
 axis 能区分类别不代表它是因果的——只有"推一推就让输出变"才证明它是控制信号而非旁观特征。作者选定每个模型 concreteness 信息最清晰的层（Llama-3.1-8B layer 20、Qwen 25、Gemma 27、GPT-OSS 15），在解码该层时把 hidden state 加上 $h^{(\ell)}_{\text{steer}} = h^{(\ell)} + \alpha \mathbf{u}$（$\alpha=+40$ 推向字面、$\alpha=-40$ 推向比喻），后续层正常 forward 生成 "Rewrite the following sentence clearly and naturally:" 的改写。
 

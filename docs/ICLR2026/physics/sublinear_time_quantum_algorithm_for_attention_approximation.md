@@ -48,19 +48,19 @@ tags:
 
 ### 关键设计
 
-**1. 量子 Nyström 核近似：让非对称指数核也能做谱压缩。**
+**1. 量子 Nyström 核近似：让非对称指数核也能做谱压缩**
 
 直接对 $A=\exp(QK^\top)$ 做 Nyström 近似行不通，因为它既不对称也不是半正定矩阵，谈不上谱低秩结构。本文的做法是把 query 和 key 并成一个扩展数据集 $X=\{q_1,\dots,q_n,k_1,\dots,k_n\}$，构造 $2n\times 2n$ 的指数核矩阵 $E=\begin{bmatrix}\exp(QQ^\top)&\exp(QK^\top)\\\exp(KQ^\top)&\exp(KK^\top)\end{bmatrix}$。$E$ 是 PSD 的、可以做 Nyström 谱近似，而它的右上角块恰好就是要找的 $A$，于是对 $A$ 的近似被"借壳"成对 $E$ 的近似。加速来自采样环节：经典递归脊杠杆分数采样要做 $O(ns_\lambda)$ 次核函数评估，这里改用 Grover 搜索的量子采样器 `QSample`，把采样压到 $\widetilde{O}(n^{0.5}s^{0.5})$ 次 oracle 调用，整段近似的时间为 $\widetilde{O}(n^{0.5}s^{1.5}(d+s)+s^\omega)$，其中 $s=O(s_\lambda\log(s_\lambda/\delta))$，$s_\lambda(E):=\text{tr}[E(E+\lambda I)^{-1}]$ 是 $\lambda$-统计维度，$\omega\approx 2.37$ 是矩阵乘法指数。最终得到的 $\widetilde{E}$ 夹在 $E\preceq\widetilde{E}\preceq E+\lambda I$ 之间，由此推出谱误差 $\|A-\widetilde{A}\|\le\lambda$、Frobenius 误差 $\|A-\widetilde{A}\|_F\le\lambda\sqrt{n}$——所有精度都被单一旋钮 $\lambda$ 控住。
 
-**2. 量子均值估计：在不展开 $\widetilde{E}$ 的前提下隐式算出归一化因子。**
+**2. 量子均值估计：在不展开 $\widetilde{E}$ 的前提下隐式算出归一化因子**
 
 归一化因子 $D=\text{diag}(A\mathbf{1}_n)$ 看似只是一次求和，但显式写出 $\widetilde{E}$ 就要 $\Omega(n)$ 的存储和时间，把前一步省下的加速吃光。本文把 $\widetilde{E}=UU^\top$ 按行分块成 $U=[U_1;U_2]$，于是 $\widetilde{A}=U_1U_2^\top$，归一化向量 $\widetilde{A}\mathbf{1}_n=U_1(U_2^\top\mathbf{1}_n)$ 的瓶颈只剩里层的 $U_2^\top\mathbf{1}_n$。把这一项看成对 $U_2$ 各行求均值的多元均值估计问题，用量子多元均值估计（Lemma 2.6）得到 $\widetilde{\mu}$ 满足马氏范数误差 $\|\widetilde{\mu}-U_2^\top\mathbf{1}_n\|_{(U_2^\top U_2)^{-1}}\le\epsilon$，只需 $\widetilde{O}(\epsilon^{-1}n^{0.5}s^{0.5})$ 次对 $U_2$ 的行查询。这样归一化因子从未被完整物化，查询任意第 $i$ 行的归一化值只花 $O(s(s+d))$ 时间。
 
-**3. 量子杠杆分数采样：用行畸变度替代全矩阵扫描来近似 $V$。**
+**3. 量子杠杆分数采样：用行畸变度替代全矩阵扫描来近似 $V$**
 
 最后一步是把 $\widetilde{A}\widetilde{V}$ 里的 $V$ 也压缩掉。经典的联合行范数采样要先读遍 $V$ 的所有条目去估 Frobenius 范数，又是一次 $\Omega(n)$ 扫描。本文改用量子杠杆分数采样，并引入**行畸变度** $\alpha(V):=\frac{d}{\|V\|_F^2}\cdot\max_{i\in[n]}\frac{\|v_i\|_2^2}{\tau_i}$，其中 $\tau_i$ 是 $V$ 第 $i$ 行的杠杆分数；它度量行的"重要性分布有多不均"，并满足 $\alpha\le d/\text{srank}(V)$。按杠杆分数采样 $\widetilde{O}(\epsilon^{-2}\alpha)$ 行就能拿到 Frobenius 范数下的近似矩阵乘法保证，量子实现把这步做到 $\widetilde{O}(\epsilon^{-1}n^{0.5}\alpha^{0.5}d)$。$\alpha$ 这个量推广了经典近似矩阵乘法里"列正交"的苛刻前提，使非正交的 $V$ 也能被高效采样。
 
-**4. 端到端拼装与 $\lambda$ 权衡：把三段误差合成一个保证，并暴露单旋钮调控。**
+**4. 端到端拼装与 $\lambda$ 权衡：把三段误差合成一个保证，并暴露单旋钮调控**
 
 三部分组装后（主定理 3.1 / 9.2），总误差为 $\|\widetilde{D}^{-1}\widetilde{A}\widetilde{V}-\text{Att}(Q,K,V)\|_F\le\epsilon\cdot(\beta\cdot\|D^{-1}\|)\cdot(\|A\|_F+\lambda\sqrt{n})\cdot\|V\|_F$，其中 $\beta=\frac{1}{1-(\epsilon\|A\|+\lambda\sqrt{n})\|D^{-1}\|}$ 是归一化因子被扰动后的放大系数。复杂度上，预处理是对 $n$ 亚线性的 $\widetilde{O}(\epsilon^{-1}n^{0.5}(s_\lambda^{2.5}+s_\lambda^{1.5}d+\alpha^{0.5}d))$，而行查询彻底与 $n$ 脱钩、只要 $\widetilde{O}(s_\lambda^2+s_\lambda d)$。整套算法的实际行为由 $\lambda$ 主导一个张力：$\lambda$ 调大会压低统计维度 $s_\lambda$（更快），却同时收紧 $\|D^{-1}\|$ 的约束余量、抬高 $\beta$（精度更脆），反之亦然，所以 $\lambda$ 要在加速与精度之间找平衡点。
 

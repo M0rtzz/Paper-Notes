@@ -46,15 +46,15 @@ $$M_\theta: X \xrightarrow{f^{\text{pre}}_{\theta_{\text{pre}}}} X_{\text{pre}} 
 
 ### 关键设计
 
-**1. PRO-DYN 三段命名法：给「模型怎么处理时间」一把统一剖刀。**
+**1. PRO-DYN 三段命名法：给「模型怎么处理时间」一把统一剖刀**
 
 领域里每篇论文都在为自己的小改动辩护，却没人能说清「为什么这个 Transformer 行、那个不行」。作者借来 Allen (1983) 的时间区间代数把这件事变成可量化的 feature：看一个函数 $f$ 的输入区间 $T_E$ 和输出区间 $T_F$ 的关系——若输出还停在输入区间内（contains / started by / finished by / equals 等），$f$ 就是 PRO（前后处理，只做特征提取、上下采样）；若输出向未来推进（starts / overlaps / meets / before），$f$ 就是 DYN（动力学，唯一真正负责预测）。据此每个模型被贴上一个标签：PRE-DYN（前处理 + 末端动力学，如 iTransformer / PatchTST）、DYN-POST（首端动力学 + 后处理）、PRE-DYN-POST（前后都有处理、DYN 夹中间，如 Informer / FEDformer）或纯 DYN（只一层动力学，如 NLinear）。把这套标签和 TFB benchmark 排名一对照，规律立刻浮现：打赢 NLinear 的「↑」组几乎全是 PRE-DYN + 完整可学 DYN，输给 NLinear 的「↓」组大多是 PRE-DYN-POST + 部分非可学 DYN（如 FEDformer 拿 mean+0-padding 初始化 decoder）。两条结构 feature 就把性能分组预测出来了。
 
-**2. 把 LTSF-Linear 解读成「松弛版线性时延动力系统」，给 shallow 模型为何能赢一个物理解释。**
+**2. 把 LTSF-Linear 解读成「松弛版线性时延动力系统」，给 shallow 模型为何能赢一个物理解释**
 
 承接上一点的观察——既然「学不学动力学」是分水岭，那为什么一层线性映射的 LTSF-Linear 能打赢复杂 Transformer？作者假设真实动力学满足 $[x(t_n), \dots, x(t_{n-L+1})]^T = M[x(t_{n-1}), \dots, x(t_{n-L})]^T$，于是 $H$ 步预测就是 $Y = (M^H)_{-H:,:} X$。而 LTSF-Linear 的预测层 $\hat Y = W_\theta X_g + b_\theta$ 与 $(M^H)_{-H:,:}$ 维度完全一致，可以看成「不对系数加约束的松弛动力系统辨识」。换句话说，LTSF-Linear 之所以赢，是因为它确实在学一个线性动力学，而 Informer / FEDformer 却让 decoder 从零填充开始硬推未来。这条解读把深度学习的经验现象重新接回了五十年的系统辨识理论，也直接给出了工程暗示：给那些「假装在预测」的模型补一层真正的线性 DYN，就该能补 buff。
 
-**3. 可学习线性 DYN 注入实验：用反事实手术因果地验证两条规律。**
+**3. 可学习线性 DYN 注入实验：用反事实手术因果地验证两条规律**
 
 光看相关性不够，命名法的两条规律必须经得起反事实检验。作者设计两组最小侵入手术：RQ1（补 DYN）给 Informer、FEDformer、MICN、FiLM 这些动力学不完整或非可学的模型加一层线性 DYN，替换掉原来的零填充 / mean 初始化，其余超参一概不动，看性能是否上升；RQ2（搬位置）把 iTransformer、PatchTST、Crossformer 这些 PRE-DYN 模型在前端再插一层线性 DYN，使它退化成 DYN-POST 配置（原末端线性沦为 PRO），看性能是否下降。为了把「性能变化」和「参数量增加」剥离开，还专门加了 PRO 对照组——用同样参数量但只做 feed-forward、不向前推进时间的层。整套实验在 25 个数据集 × 4 个 horizon × 7 个模型上跑出约 200 组分数，再用单边 Wilcoxon 检验（$p<0.05$）判显著性，这才让「DYN 必须完整且在末端」这条规律真正可信。
 

@@ -42,15 +42,15 @@ tags:
 
 ### 关键设计
 
-**1. 层剪枝初始化：让 student 每一层天然成为 teacher 层块的代理。**
+**1. 层剪枝初始化：让 student 每一层天然成为 teacher 层块的代理**
 
 把 teacher 的 $N$ 个 transformer 层切成 $M$ 个连续块 $\mathcal{B} = (\mathbf{b}^{(1)}, \dots, \mathbf{b}^{(M)})$，第 $i$ 块覆盖层 $(\theta_T^{(\ell_i)}, \dots, \theta_T^{(\ell_{i+1}-1)})$；student 的第 $i$ 层不做随机初始化，而是直接复制对应块的首层 $\theta_S^{(i)} = \theta_T^{(\ell_i)}$，嵌入层和 LM head 也照搬。这样初始化换来的是结构兼容——student 每层从一开始就站在 teacher 对应层块的位置上，后续才有可能把整块层贴回去而不破坏功能。作者用消融证明这是回旋现象成立的必要条件：随机初始化的 student 即便经过完全相同的蒸馏训练，贴回 teacher 层后也几乎拿不到任何性能增益。
 
-**2. 逐层余弦对齐损失：把每层输出钉在 teacher 层块上，稳住极端尺寸。**
+**2. 逐层余弦对齐损失：把每层输出钉在 teacher 层块上，稳住极端尺寸**
 
 总损失为 $\mathcal{L} = \mathcal{L}_{CE} + \lambda_{KL} \mathcal{L}_{KL} + \lambda_{cos} \sum_{i=1}^{M} \mathcal{L}_{cos}^{(i)}$，其中 $\mathcal{L}_{KL}$ 用温度 $\tau$ 缩放 logits 后计算 KL 散度以学习 teacher 的输出分布，$\mathcal{L}_{cos}^{(i)}$ 则把 student 第 $i$ 层的隐藏状态与 teacher 块 $\mathbf{b}^{(i)}$ 最后一层的隐藏状态做余弦距离对齐（$\lambda_{KL}$、$\lambda_{cos}$ 为超参数）。只有当 student 某一层的输出与 teacher 对应层块的输出足够接近，贴回时才能无缝替换。有意思的是这个损失并不主要拉高平均性能：即使只留 CE 损失，回旋蒸馏照样出现（因为 teacher 初始化已经给了基础对齐），但缺了它，首层、尾层这些对应最极端尺寸的插值模型性能会明显波动——余弦对齐真正的作用是把这些边缘层稳住。
 
-**3. Student 打补丁：一步层替换换来整族中间尺寸。**
+**3. Student 打补丁：一步层替换换来整族中间尺寸**
 
 蒸馏结束后这一步不需要任何训练，操作简单到只是把 student 的单层 $\theta_S^{(i)}$ 换成 teacher 的整块 $\mathbf{b}^{(i)}$，模型层数随之从 $M$ 涨到 $M + |\mathbf{b}^{(i)}| - 1$；对不同位置逐步执行，就能在 $M$ 层（纯 student）到 $N$ 层（完全恢复 teacher）之间拼出任意中间尺寸的模型。拼接时嵌入层取自贡献第一层的那个模型、LM head 取自贡献最后一层的模型。顺序上从最后一层往前贴回效果最好，但 Llama 是例外：它前两层之间余弦相似度极低、属于特殊层，需要保留在 student 中并改成从前往后打补丁。
 

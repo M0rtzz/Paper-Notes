@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. instruction tuning 与 chat template 解耦：分清校准变差到底赖训练算法还是聊天格式。**
+**1. instruction tuning 与 chat template 解耦：分清校准变差到底赖训练算法还是聊天格式**
 
 此前工作大多只在 chat template 下评估 instruct model，于是 post-training 的影响和 prompt 格式的影响被搅在一起，无法判断 miscalibration 的真正来源。作者在同一模型家族里并排比较三种调用方式：base model、不套 chat template 的 instruct model、套了 chat template 的 instruct model，全部用 logit-based confidence 算 accuracy、ECE 和 Brier。逻辑很直接——如果“instruct without chat”这一档已经明显失准，那根因主要在 instruction tuning，而非聊天格式；chat template 只是在此基础上再叠加一层影响。这样就把两个因素分离成可独立观测的变量。
 
-**2. 三种置信度 elicitation：确认失准不是 logit 度量方式单方面造成的假象。**
+**2. 三种置信度 elicitation：确认失准不是 logit 度量方式单方面造成的假象**
 
 instruction-tuned 模型的 logits 本来就未必适合直接解释成置信度，只用一种度量很容易被质疑是度量本身的问题。作者因此换三种方式分别问置信度：P(True)、0–100% 的 Verbalized Percentage、以及七档的 Verbalized Linguistic，并把语言档位线性映射到 0 到 1 的等距分数。如果连模型用自然语言说出来的置信度都同样受损，就说明 miscalibration 是模型层面的，而不是某种 confidence 读取方式的副产品。
 
-**3. assistant-vs-user ownership bias 测试：直接验证模型是不是更信“自己”的答案。**
+**3. assistant-vs-user ownership bias 测试：直接验证模型是不是更信“自己”的答案**
 
 要证明问题出在“谁说的”而非答案内容，就得把内容固定、只动身份。作者对同一个问题和同一个候选答案，只改变它出现在 assistant message 还是 user message，然后询问置信度，差值定义为 $\Delta = Assistant - User$，正值意味着 assistant framing 更自信或更不校准。这个设计还顺带证伪了一个对立假设：若是 sycophancy 在主导，模型应当更相信用户给的答案、$\Delta$ 为负；实验却得到相反的正向趋势，从而支持 ownership bias——模型对自己生成过程存在一种隐式的自我信任。也正是这一设计直接导出了缓解策略：把模型自己的答案改写成用户消息再问置信度，让它从“作者”切换成“观察者”。
 

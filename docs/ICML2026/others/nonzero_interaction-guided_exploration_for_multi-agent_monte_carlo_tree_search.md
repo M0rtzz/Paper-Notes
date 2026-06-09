@@ -44,11 +44,11 @@ NonZero 沿用 MuZero 的 (i) representation、(ii) dynamics、(iii) prediction 
 
 ### 关键设计
 
-**1. Asinh-GLM 回报 surrogate：用一个全局光滑的链接函数把 $d^n$ joint action 压进低维参数空间。**
+**1. Asinh-GLM 回报 surrogate：用一个全局光滑的链接函数把 $d^n$ joint action 压进低维参数空间**
 
 joint action 空间 $d^n$ 大到没法枚举，所以第一步是给回报建一个低维 surrogate。每个 joint action $a\in\{0,1\}^{nd}$ 经 feature map $\psi(a)$ 与参数 $w(\theta)\in\mathbb{R}^{nd}$ 算 score $z=\langle w,\psi\rangle$，再过一个 asinh 链接 $\eta(\theta,a)=c\cdot\text{asinh}(\alpha z)$。选 asinh 而不是 sigmoid/ReLU 不是工程偏好而是为理论铺路：它严格单调、无界、无限可微，导数 $g'(z)=c\alpha/\sqrt{1+(\alpha z)^2}$ 只多项式衰减，不像 sigmoid 那样指数饱和、也不像 ReLU 那样缺高阶光滑。这层光滑性正好满足 Assumption 3.2 的离散光滑性，让 Theorem 3.5 的 regret 分析跑得通；同时 asinh-GLM 在 Kalai-Sastry 2009 意义下是 invex 的，approximate local maxima 等价于 global optimism——这就为后面"把目标从全局放宽到局部"留好了退路，放宽几乎不丢解。
 
-**2. 一阶 + 二阶 mixed difference 提议规则 NonUCT：用曲率信号直接捕捉协调收益。**
+**2. 一阶 + 二阶 mixed difference 提议规则 NonUCT：用曲率信号直接捕捉协调收益**
 
 MALinZero 那种线性可加假设会在"协调陷阱"上失效——单个 agent 偏离都更差、两个 agent 同时偏离才有收益。NonZero 把"双偏离收益"用恒等式拆开：$\eta(a^{(u,v)})-\eta(a)=\Delta_u\eta+\Delta_v\eta+\Delta_{u,v}^2\eta$，其中 mixed difference
 
@@ -56,7 +56,7 @@ $$\Delta_{u,v}^2\eta = \eta(a^{(u,v)}) - \eta(a^{(u)}) - \eta(a^{(v)}) + \eta(a)
 
 恰好是协调收益的纯净信号——两个单偏离都不收益、合起来却收益时，这个二阶量会显著为正。提议规则 NonUCT 就采样若干方向 $u=(i\leftarrow j)$、$v=(k\leftarrow\ell)$，按预测得分挑出最佳的 $u$ 或 $(u,v)$ 加入候选集 $\mathcal{C}(s)$，而所有 counter-factual 评估都由学好的 reward model 完成，不额外消耗环境交互。它之所以高效，是因为 UCB 风格的全局 optimism 要 $\widetilde{O}(d^n)$ 样本，而用 $\Delta_{u,v}^2$ 当曲率信号只需采有限个方向（数量与 $d^n$ 无关，只跟 surrogate 类的统计复杂度有关），换来 action-dimension-free 的探索。
 
-**3. Hypernetwork 做 $\theta_s$ 的跨节点 warm-start：把全局经验灌进每个新节点的初值。**
+**3. Hypernetwork 做 $\theta_s$ 的跨节点 warm-start：把全局经验灌进每个新节点的初值**
 
 前两点能成立的前提是每个节点的 GLM 参数 $\theta_s$ 能拟合到位，但单次 MCTS rollout 内采样数有限，从零拟合根本不收敛。作者加了第四个网络头：每当 tree 新增节点 $s$，hypernetwork 直接从状态 $s_t$ 预测一个初值 $\theta_s=\text{HyperNetwork}(s_t)$，再用 $\mathcal{L}_{\text{NonUCT}}$ 在后续迭代里微调几步；hypernetwork 自身在主训练循环里 end-to-end 学。这相当于跨树节点共享统计强度，把"全局经验"当先验灌进每个新节点，于是局部只需几步梯度就能逼近 $\theta^*$。Ablation 证实它确有贡献——去掉 hypernetwork 性能会掉，只是掉得不如去掉曲率项那么狠。
 

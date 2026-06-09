@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Fisher 引导的多层 soft prompt 对齐：只让真正影响决策的层来对齐。**
+**1. Fisher 引导的多层 soft prompt 对齐：只让真正影响决策的层来对齐**
 
 把当前域的适应固化成 prompt 时，会撞上一个隐患——某一层 prompt 也许把统计分布拉齐了，却完全不改变动作概率，说明它只是在拟合与任务无关的噪声。IDEA 用 Fisher 信息把这种"虚假对齐"压下去。它先用源域 128 个样本预计算每层的 $(\mu_S^{(\ell)}, \sigma_S^{(\ell)})$，在线时把当前 batch 的 $(\mu_t^{(\ell)}, \sigma_t^{(\ell)})$ 往源统计对齐，逐层损失为
 
@@ -53,11 +53,11 @@ $$d^{(\ell)}(P) = \|\mu_S^{(\ell)} - \mu_t^{(\ell)}(P)\|_2 + \|\sigma_S^{(\ell)}
 
 各层权重 $\alpha_\ell$ 不是手工设的，而是用 Fisher 信息矩阵的 trace $\mathrm{Tr}(\Phi(\mathcal{Z}_t^{(\ell)}))$ 归一化后做 EMA 更新（$\beta = 0.1$）。Fisher 矩阵用策略对数似然的一阶梯度近似 Hessian，省掉了二阶计算成本。这样权重会自动集中到对动作真正敏感的层上，prompt 编码的才是可迁移的任务先验，而不是无关统计。
 
-**2. Triplet 结构化资产库：给每个 prompt 配一张"域指纹 + 质量分"。**
+**2. Triplet 结构化资产库：给每个 prompt 配一张"域指纹 + 质量分"**
 
 要让适应知识能复用，光存 prompt 不够，还得知道它属于哪个域、有多可信。IDEA 把每次优化结果封装成三元组 $\mathcal{A} := \{P^*, \Gamma, u\}$：$P^*$ 是优化后的 prompt，$\Gamma$ 是**不加 prompt** 时最后一层 fusion 的 $(\mu, \sigma)$ 统计（充当与 prompt 解耦的环境描述符），$u$ 是用 $P^*$ 推理时的预测熵（反映资产可信度）。用"不加 prompt 的统计"做域坐标是关键——检索时不会被 prompt 本身的扰动污染，不同资产之间才能公平比较。库容量上限 $K_{\max}$，满了之后不是丢最早的，而是把新资产和最近邻 1:1 平均合并（$\mathcal{A}_k \leftarrow \frac{1}{2}(\mathcal{A}_k + \mathcal{A}^*)$），这样库不会随时间漂移到只剩近期资产，能保住对早期场景的覆盖。
 
-**3. Wasserstein 凸包投影的闭式桥梁：在历史资产的凸包上找新域的初始化。**
+**3. Wasserstein 凸包投影的闭式桥梁：在历史资产的凸包上找新域的初始化**
 
 面对新域时，硬检索单个最近邻很容易错配——目标域往往和多个历史域部分重叠。IDEA 改成在历史 $K$ 个资产的凸包上找一个最优线性组合。它用一组共享权重 $w \in \mathbb{R}^K$ 同时在 prompt 空间和统计空间做插值：$P_b(w) = \sum_j w_j P_j$，$\Gamma_b(w) = \sum_j w_j \Gamma_j$。$w$ 通过最小化目标统计与 $\Gamma_b(w)$ 的 2-Wasserstein 距离求得，再加不确定性正则 $\lambda \sum u_j w_j^2$ 压制不可靠资产，整个问题归约为单纯形约束下的二次规划
 

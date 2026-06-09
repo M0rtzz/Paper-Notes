@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 多视角 in-context 特征 + 排序型置信度：把"分类正确"和"排序一致"分开。**
+**1. 多视角 in-context 特征 + 排序型置信度：把"分类正确"和"排序一致"分开**
 
 痛点在于以前的置信度要么直接取 softmax 概率，要么把 simulated annotators 人为聚合成一个 max-mean 标量，再当成可信信号——这等于把"阈值附近判别正确"和"全局序关系与人机一致率单调对齐"两个不同的目标混为一谈。本文不再聚合：保留所有 $|\mathcal{T}|$ 维原始概率，交给 MLP 自主学怎么聚合。对样本 $(x,y)$ 定义 agreement 指示 $a(x) = \mathbb{1}\{f_{LM}(x) = y\}$，然后只在满足 $a(x_i) > a(x_j)$ 的有序对上定义 margin ranking loss $\ell_\gamma(\theta; x_i, x_j) = \mathbb{1}(C_\theta(s_i) < C_\theta(s_j) + \gamma)$，训练时用 softplus 代理 $\log(1+e^{-(C_\theta(s_i)-C_\theta(s_j)-\gamma)/0.1})$ 让它可导。因为单调性本质是个**序关系**性质，所以损失必须直接惩罚"agreement 样本排得比 disagreement 样本低"，而不是绕道分类正确率——这正是它比启发式置信度更可靠的根源。
 
-**2. PAC-Bayes margin-based 泛化界：把"凭什么可信"变成可定量的保证。**
+**2. PAC-Bayes margin-based 泛化界：把"凭什么可信"变成可定量的保证**
 
 已有理论只对校准集条件下的风险给保证，对置信度估计器本身的 out-of-sample 泛化只字未提。本文用 PAC-Bayes 框架（McAllester, 1999；Neyshabur et al., 2017）补上这一块：先得到随机化估计器 $C_{\theta+\mathbf{u}}$ 的期望 ranking risk 上界，再通过 sharpness 约束 $\mathbb{P}_{\mathbf{u}}(\max_s |C_{\theta+\mathbf{u}}(s) - C_\theta(s)| < \gamma/4) \ge 1/2$ 把界转回确定性估计器，最终得到
 
@@ -57,7 +57,7 @@ $$\mathcal{RK}(\theta) \le \widehat{\mathcal{RK}}_\gamma(\theta) + \mathcal{O}\!
 
 它把"误排序概率"显式拆成经验 margin 损失加一个 margin 依赖的复杂度项。关键是复杂度项里 $1/\gamma^2$ 的依赖——它直接点明 margin $\gamma$ 才是控制泛化的那个旋钮，从而为下一个设计提供了理论入口：不再把"为什么可信"留作启发式说辞，而是落成一条可优化的不等式。
 
-**3. Margin-adaptive 联合优化：让 $\gamma$ 跟着数据噪声自动校准。**
+**3. Margin-adaptive 联合优化：让 $\gamma$ 跟着数据噪声自动校准**
 
 上面的界还隐含一个张力：$\gamma$ 越大复杂度越小，但经验 margin 损失越难压低；干净数据可以追求更大分离度，嘈杂数据则必须妥协，**不存在通用最优 margin**。固定 margin 因此两头不讨好。本文把界中的复杂度项简化成可导代理 $\mathcal{C}_\gamma(\theta) = \sqrt{\sum_l \|W_l\|_F^2}/\gamma$（用 Frobenius 范数替谱范数），把 $\gamma$ 提升为可学习量，联合优化 $\min_{\theta,\gamma}\widehat{\mathcal{RK}^s_\gamma}(\theta) + \beta\,\mathcal{C}_\gamma(\theta)$。由于 ranking loss 对 $\gamma$ 非光滑、直接联合更新不稳，作者用解耦的交替更新：固定 $\gamma$ 用 SGD 更新 $\theta$，固定 $\theta$ 取使目标最小的 $\gamma$。这一步是整篇的点睛——它把 PAC-Bayes 界从一个"事后分析工具"真正变成了"训练目标"，让 margin 不再是经验玄学超参。
 

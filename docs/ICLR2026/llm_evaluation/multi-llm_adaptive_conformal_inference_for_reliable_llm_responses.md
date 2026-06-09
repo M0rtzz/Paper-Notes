@@ -48,15 +48,15 @@ MACI 把每条 LLM 回复 $D=(P,C,Y)$ 拆成原子声明集合 $C=\{c_1,\dots,c_
 
 ### 关键设计
 
-**1. 乘积型 conformity score：把"整段是否全对"写进单个分数。**
+**1. 乘积型 conformity score：把"整段是否全对"写进单个分数**
 
 BCI/CCI 的 conformity score 只取一条声明的极端分数，因此对单个声明的估计误差极其敏感，一旦最差分数被低估就会误删大量真实声明。MACI 改用整段保留集的联合可信度来度量"过滤是否安全"。给定使分数降序的排列 $\pi_i$（即 $p_i^*(c_{i,\pi_i(1)}) \ge \cdots \ge p_i^*(c_{i,\pi_i(N_i)})$），oracle 在阈值 $\tau$ 下保留累积乘积不低于 $\tau$ 的最长前缀 $K_i^*(\tau) = \max\{k \in [N_i] : \prod_{j=1}^{k} p_i^*(c_{i,\pi_i(j)}) \ge \tau\}$。对应的 conformity score 取使保留集仍落在可接受集 $A_i$ 内的最小阈值 $E_i = \inf\{\tau \in [0,1] : F(\hat{p}, \tau, U_i; P_i, C_i) \subseteq A_i\}$。由于乘积把所有保留声明的置信度聚合在一起，而非押注单个最差声明，这个分数对个别声明的估计噪声更鲁棒，直接反映"这个保留前缀整体为事实"的联合可信度。
 
-**2. 组条件校准：给每个语义分组各发一把阈值，把边际覆盖升级为组条件覆盖。**
+**2. 组条件校准：给每个语义分组各发一把阈值，把边际覆盖升级为组条件覆盖**
 
 BCI 只用一个全局阈值，只保证边际覆盖，在子群体间会同时出现严重过覆盖和欠覆盖。MACI 套用 Mondrian 框架，先用分组函数 $g:\mathcal{P}\times\mathcal{C}\to\{1,\dots,K\}$ 把样本切成 $K$ 组，再在每组校准子集 $\mathcal{I}_k=\{i:g(P_i,C_i)=k\}$ 上独立取分位数 $\hat{Q}_{1-\alpha}^{(k)}=\text{Quantile}(\{E_i:i\in\mathcal{I}_k\},1-\alpha)$ 作为该组阈值。Theorem 2 证明在可交换性假设下，每组都满足 $\mathbb{P}(F_{n,\alpha}^{(k)}(P_{n+1},C_{n+1})\subseteq A_{n+1}\mid g(P_{n+1},C_{n+1})=k)\ge 1-\alpha$，从而把保证从"平均达标"收紧到"逐组达标"，且阈值固定为用户指定的 $\alpha$、不像 CCI 那样依赖自适应错误率，因此能直接用于高风险场景。
 
-**3. 多 LLM 集成优化：用更准的 factuality 分逼近 oracle 保留率。**
+**3. 多 LLM 集成优化：用更准的 factuality 分逼近 oracle 保留率**
 
 Theorem 3 把保留率差距 $\Delta$ 界定为估计误差的多项式速率 $\Delta \le \mathfrak{C}' \big(\mathbb{E}[(\hat{p} - p^*)^2]\big)^{\frac{\beta}{\beta+2}}$，意味着 factuality score 的 MSE 越小，保留率就越接近 oracle——这正是要把多个模型集成起来降方差的理论动机。由于 oracle $p^*$ 不可观测、MSE 无法直接优化，MACI 改用一个可观测的代理目标：在保持真阳率 $\text{TPR}\ge 1-\delta$ 的约束下最小化假阳率，即 $p^\star = \arg\min_{p} \mathbb{E}[\text{FPR}(p, \tau_{p,\delta})]$。实现上对 $M=3$ 个模型（Llama-3.3-70B-Instruct、Qwen-2.5-72B-Instruct、DeepSeek-V3）的 verbalized 分数 $p_m(P,c)\in[0,1]$ 做加权集成 $p_{\text{ens}}(P,c;w)=\sum_{m=1}^{M} w_m p_m(P,c)$，优化权重 $w$ 使代理 FPR 最低。实验中 FPR 的下降与 MSE 的下降一致，说明这个代理确实在拉近与 oracle 的距离。
 

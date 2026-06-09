@@ -46,15 +46,15 @@ ImmersiveTTS 的输入包含三类信息：content prompt，即要说的话；en
 语音侧先由文本 encoder 和 MAS duration alignment 得到 frame-level linguistic prior，再通过卷积网络映射到 VAE latent 兼容的表示，并与 noisy latent 拼接。双流 MM-DiT 的 double-stream blocks 让环境 token 与语音 latent 通过 joint attention 互相读取；后续 single-stream blocks 只保留 speech stream 做高保真细化。最终模型用 flow matching 预测速度场，并用 dual classifier-free guidance 在推理时分别调节环境条件和内容条件的强度。
 
 ### 关键设计
-**1. 双流 MM-DiT 建模语音-环境交互：把语音和环境放进两个并行流，让它们在生成过程中显式耦合。**
+**1. 双流 MM-DiT 建模语音-环境交互：把语音和环境放进两个并行流，让它们在生成过程中显式耦合**
 
 环境感知 TTS 不是“先生成语音、再叠背景”的问题——背景声本身会影响可懂度、声场感和整体自然度，VoiceLDM、VoiceDiT 这类把环境当外部条件的方法因此常出现语音对了背景不贴、或背景贴了语音被噪声破坏的情况。ImmersiveTTS 把 transcript-aligned 的 speech latent 和 text-conditioned 的 environment context 分别送进两个流：环境流接收 Flan-T5 token embeddings，语音流接收 noisy audio latent 与内容对齐特征。double-stream DiT blocks 里用 joint attention 让环境 token 与语音 latent 互相读取，随后的 single-stream blocks 只保留 speech stream 对环境适配后的语音表示做高保真细化。双流结构既保留了两种模态在时间结构、频谱模式和语义粒度上的差异，又给了它们一个对齐的通道。
 
-**2. CLAP + T5 的双粒度环境条件：同时给模型全局声景语义和局部声学线索。**
+**2. CLAP + T5 的双粒度环境条件：同时给模型全局声景语义和局部声学线索**
 
 只用 CLAP 容易得到粗粒度的场景标签，只用文本 token 又缺少稳定的全局声学约束，模型会偏向其中一端。ImmersiveTTS 把环境描述同时走两条路：CLAP embedding 经 MLP 后与 timestep embedding 结合，用于 AdaLN 的 scale/shift 调制，提供全局声学语义；Flan-T5 token embeddings 则作为环境上下文序列进入环境流，让语音流在注意力中挑出具体的声学线索。两种粒度合起来，才更适合生成“语音嵌进某个声景”而非“语音旁边响着背景”的结果。
 
-**3. Domain-specific REPA 表征对齐：用两个互补的 SSL teacher 分别管住语音可懂度和环境一致性。**
+**3. Domain-specific REPA 表征对齐：用两个互补的 SSL teacher 分别管住语音可懂度和环境一致性**
 
 单一 SSL teacher 很难同时解释语音和环境两个域，约束偏哪边另一边就掉。作者从 speech stream 的中间层取 hidden features，经 MLP projector 映射后，分别去对齐两个 frozen teacher 的表征并计算 cosine alignment loss：WavLM 作用在混合前的 clean speech 上、盯语音内容，ATST-Frame 作用在混合音频上、盯环境事件。整体训练目标可写成 $\mathcal{L}=\mathcal{L}_{Prior}+\mathcal{L}_{Dur}+\mathcal{L}_{Flow}+\mathcal{L}_{REPA}$。两个 teacher 按域拆开 supervision，缓解了清晰度和环境一致性之间的 trade-off。
 

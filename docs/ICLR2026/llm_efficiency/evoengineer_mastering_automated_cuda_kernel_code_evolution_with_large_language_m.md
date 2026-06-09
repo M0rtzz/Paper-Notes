@@ -48,19 +48,19 @@ EvoEngineer 想回答一个被领域长期回避的问题：在用 LLM 自动演
 
 ### 关键设计
 
-**1. 两层 Traverse Technique：把"搜索策略"和"prompt 怎么写"彻底解耦。**
+**1. 两层 Traverse Technique：把"搜索策略"和"prompt 怎么写"彻底解耦**
 
 现有方法（EoH、FunSearch）的根本问题是把"用什么信息指导搜索"和"如何把信息写成 prompt"混在一起，还机械模仿进化算子（crossover/mutation），但从没有实证说明 LLM 真能有效执行这些算子。EvoEngineer 把 traverse 切成两层：上层 Solution Guiding Layer 只管"给 LLM 什么信息"，下层 Prompt Engineering Layer 只管"把这些信息翻译成具体 prompt"。Solution Guiding Layer 维护三类 closed-world 信息——当前任务上下文（优化目标与约束，记为 I1）、历史高质量解（I2）、优化洞察（设计理由和 LLM 的推理过程，I3），并可选择性接入 open-world 的领域知识（I4）。这样一来，"换一种搜索信息组合"和"换一种 prompt 写法"成了两件可以分别试验的事，策略分析和 prompt 优化得以独立推进。
 
-**2. 三种 EvoEngineer 配置：用不同信息组合系统扫一遍 trade-off。**
+**2. 三种 EvoEngineer 配置：用不同信息组合系统扫一遍 trade-off**
 
 上层信息一旦可以自由拼装，作者就构造了三档配置来系统比较信息量的影响。EvoEngineer-Free 只用任务上下文 I1，配简单 prompt 和 best-solution 维护策略，几乎不给约束、优先放手探索，因此加速比高但正确性偏低；EvoEngineer-Insight 在 I1 之上加入优化洞察 I3，并刻意把 insights 当作独立信息源而非绑在某个 solution 上，配单最优解维护，正确性和加速比都落在中段；EvoEngineer-Full 则整合 I1 + I2 + I3（任务上下文 + 历史解 + 优化洞察），用 elite preservation 策略，信息量最大、约束最强，正确性最高但加速最保守。三档配置不是随意调参，而是有意把"信息使用量 → 性能/正确性"这条关系曲线扫出来。
 
-**3. Population Management：用候选解的维护方式调节探索与利用。**
+**3. Population Management：用候选解的维护方式调节探索与利用**
 
 这一组件决定候选解怎么维护、怎么选择、怎么演化，本质是在调探索与利用的平衡。它提供三种策略：单解策略只保留当前最优解，迭代快但容易陷入局部最优；精英保持策略保留一小组高性能解，在正确性上更稳；多样性维护策略刻意保持解的差异，以更广地覆盖搜索空间。前面三种配置里 Free 用单解、Full 用精英保持，正是借这一层把"激进探索"和"稳健保正确"两种取向落地。
 
-**4. 两阶段评估：把 CUDA kernel 的严格正确性约束钉进搜索回路。**
+**4. 两阶段评估：把 CUDA kernel 的严格正确性约束钉进搜索回路**
 
 CUDA kernel 优化和一般代码生成最大的区别，是它对正确性几乎零容忍——一个数值偏差就让加速毫无意义。所以每个生成的 kernel 都要过两道关：先做编译检查保证语法有效，再用 5 个 test case 对比 PyTorch 参考实现做功能测试。只有两关都过的候选才进入性能测量，取 100 次运行的平均执行时间作为 $f(p)$。这道严格的验证流程也是前面约束 $g(p)=0$ 的具体落地，把"正确"作为搜索的硬门槛而非事后筛选。
 

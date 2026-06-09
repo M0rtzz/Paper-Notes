@@ -45,15 +45,15 @@ RLTT 想解决的是"GRPO 套到 LoopLM 上几乎拿不到增益"这个老问题
 
 ### 关键设计
 
-**1. 轨迹级策略梯度：把信用打在每一圈，而不是只打在最后一圈。**
+**1. 轨迹级策略梯度：把信用打在每一圈，而不是只打在最后一圈**
 
 GRPO 的策略梯度 $\nabla_\theta\log P_\theta^{(T_{\max})}(y_j\mid x,y_{<j})\hat{A}_i$ 只是终末一圈输出分布的函数，等于隐式假设"每个 token 只有一步决策"；但 LoopLM 实际经历了 $h_j^{(1)}\to\cdots\to h_j^{(T_{\max})}$ 的完整轨迹，奖励要先穿过所有中间 loop 才能反传到早期表征，形成信用分配瓶颈。RLTT 的做法是把式 (3) 里的单圈梯度替换成全圈加权和 $\sum_{t=1}^{T_{\max}}\omega_t\nabla_\theta\log P_\theta^{(t)}(y_j\mid x,y_{<j})\hat{A}_i$，使梯度直接成为所有圈隐式分布的函数。这之所以可行，是因为 LoopLM 每一圈的隐状态 $h_j^{(t)}$ 都能经共享语言建模头 $g(\cdot)$ 投到词表，本来就在前向里被算出 $T_{\max}$ 个"latent thought distribution"，把它们都纳入策略梯度几乎不增加算力。它带来两个直接后果：奖励信号不必再单纯靠终末一圈反传，而整条轨迹 $P_\theta^{(1)}\to\cdots\to P_\theta^{(T_{\max})}$ 都被推向高优势的预测——等价于把有效信用分配视域从 $T_{\max}$ 步压到 1 步，每次更新更信息密集，并天然鼓励模型"早收敛"。
 
-**2. 三种 loop 加权策略 $\{\omega_t\}$：RLTT 唯一的自由度。**
+**2. 三种 loop 加权策略 $\{\omega_t\}$：RLTT 唯一的自由度**
 
 权重序列 $\{\omega_t\}_{t=1}^{T_{\max}}$（满足 $\sum_t\omega_t=1$）决定每一圈贡献多少信用，是整个方法唯一需要选择的东西。作者给了三种：**Exit PDF** 取 $\omega_t=p_{\text{exit}}(t\mid x)$，直接复用 Ouro 学到的 early-exit head 概率当"该圈可信度"，模型自己觉得该停的那一圈得分最高；**Progressive** 取 $\omega_t=t^\alpha/\sum_s s^\alpha$，越靠后的圈权重越大，对应"refinement 越多越逼近真分布"的直觉；**Uniform** 取 $\omega_t=1/T_{\max}$，所有圈等权，逼模型尽早形成正确分布并维持。有意思的是三种策略实测差异 < 1%（附录 A.3），这说明收益主要来自"暴露完整轨迹"这件事本身，而不是某种精巧调度——也反过来证伪了 LSRL "必须用 GPT 给中间状态打分"那条重外部依赖路线。论文主表用 Exit PDF，因为它最贴近 Ouro 原生的 halting 行为。
 
-**3. 与 GRPO 严格对齐的实验协议：把"赢"和"调参侥幸"撇清。**
+**3. 与 GRPO 严格对齐的实验协议：把"赢"和"调参侥幸"撇清**
 
 LoopLM+RL 这条路过去屡战屡败，所以论文必须证明改进真来自轨迹级信用而非别的变量。为此 rollout 预算、优化器、奖励函数、advantage 归一化、训练步数（140 步）、KL 系数全部与 GRPO 对齐，唯一被迫不同的是 `ppo_max_token_len_per_gpu`——因为要保留全部 $T_{\max}$ 圈的 log-prob 来构造加权目标，显存吃紧，这个值从 GRPO 的 16384 砍到 8192，并用 mini-step 补偿。更进一步，math 评估时还故意给 GRPO 更长的 token budget（MATH-500 上 GRPO 3072 vs. RLTT 2048），主动消除"RLTT 赢只是因为响应更短"的干扰。
 

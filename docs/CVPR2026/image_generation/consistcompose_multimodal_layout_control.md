@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. LELG 范式 + 实例-坐标绑定 Prompt（ICBP）：把 bbox 直接写进 prompt，让坐标变成语言 token。**
+**1. LELG 范式 + 实例-坐标绑定 Prompt（ICBP）：把 bbox 直接写进 prompt，让坐标变成语言 token**
 
 布局控制以往要么改架构（GLIGEN 加 gated Transformer 层、InstanceDiffusion 加多模态融合模块、CreatiLayout 用 SiamLayout），要么把布局当成独立模态单独建一条分支——这两条路都和"统一模型"的理念相冲突。LELG 的做法是回到输入层：对第 $i$ 个实例，把它归一化后的 bbox $b_i = (x_1^i, y_1^i, x_2^i, y_2^i) \in [0,1]^4$ 用三位小数写出来，紧跟在它对应的主语短语后面，拼成一句话，比如 "a brown sofa &lt;bbox&gt;[0.123, 0.456, 0.789, 0.901]&lt;/bbox&gt;"。坐标就这样成了普通的语言 token，和短语一起进同一个 self-attention，模型靠语言理解自然学会"这个名词应该出现在画面的这个位置"。这样做的好处是连锁的：不需要任何布局编码器或额外 attention 模块（零架构改动）；理解和生成共享同一个 token 空间，所以理解任务里练出来的空间推理能力可以直接迁到生成侧；三位小数把连续坐标离散成约 $1000^3$ 个位置，精度够用又天然兼容现有 tokenizer。相比那些靠加模块解决问题的方法，LELG 纯粹在输入层把事情办了。
 
-**2. 坐标感知 Classifier-Free Guidance（Coordinate-CFG）：把 CFG 从语义引导扩展成空间引导。**
+**2. 坐标感知 Classifier-Free Guidance（Coordinate-CFG）：把 CFG 从语义引导扩展成空间引导**
 
 ICBP 把空间信号塞进了 prompt，但模型未必足够"服从"这个信号——生成时位置可能飘。Coordinate-CFG 借用文本 CFG 的思路，只不过对比的是"有坐标条件"和"无坐标条件"两次预测的速度差，把这个差放大，逼着生成更贴合布局：
 
@@ -57,7 +57,7 @@ $$\mathbf{v}_t^{\text{coord-cfg}} = \mathbf{v}_t^{\text{uncond}} + s_{\text{coor
 
 其中 $s_{\text{coord}}$ 控制空间引导强度。为防止放大后速度幅度爆炸，再加一个归一化系数 $\alpha = \|\mathbf{v}_t^{\text{base}}\| / \|\mathbf{v}_t^{\text{coord-cfg}}\|$ 把幅度拉回基准。实验里 $s_{\text{coord}}$ 从 1 调到 3，位置精度逐步上升，但调得过大会略微牺牲感知质量，存在一个最优点。这个机制和文本 CFG 解耦、可以叠加使用，也能迁到任何支持 CFG 的生成模型。
 
-**3. ConsistCompose3M 数据集：补上"布局 + 身份"双标注大规模训练数据的空缺。**
+**3. ConsistCompose3M 数据集：补上"布局 + 身份"双标注大规模训练数据的空缺**
 
 布局控制生成进展慢的一个现实原因是没有既带布局标注又带身份标注的大规模多实例数据集。ConsistCompose3M 用复用已有数据的方式凑出 340 万样本，分两个子集。T2I 子集（260 万）拿 LayoutSAM 重新加工，按 ICBP 的格式把每个实例的 bbox 坐标附到 caption 里，让模型练"读坐标生成单图多实例"。参考条件子集（80 万）则复用 Subjects200K 和 UNO 的主体素材，把同一批主体在不同布局下重新拼成多主体场景，再用 CLIP/DINO 相似度过滤掉身份漂移的样本，保证"同一个主体在不同位置长得还是它"。这种"重新处理已有数据构建新用途数据集"的思路成本低、又恰好补齐了布局和身份两类监督。
 

@@ -46,15 +46,15 @@ PathCTM 把"分析一张千兆像素 WSI"重写成一个从低倍到高倍逐步
 
 ### 关键设计
 
-**1. Scale-Space 连续推理（Thinking in Scales）：给 CTM 补上"换镜头"这个动作。**
+**1. Scale-Space 连续推理（Thinking in Scales）：给 CTM 补上"换镜头"这个动作**
 
 标准的 Continuous Thought Machine 假设在一张固定特征图上多想几步就能挖出更深的信息，但 WSI 的低倍图本身就糊、根本没有细胞级细节，再怎么迭代也想不出来。PathCTM 的破局点是把"内部时间"扩成"内部时间 × 空间尺度"的联合推理：在每个尺度 $L$ 上推 $n$ 步，状态转移为 $\bm h^t = f_{\theta_{syn}}(\text{concat}(\bm e^t, \bm b^t))$，其中 $\bm b^t$ 是当前尺度的注意力输出；推理过程的记忆靠两条 FIFO 队列维持——$\bm H^t \in \mathbb{R}^{D \times M}$ 保留最近 $M$ 步的 pre-activation，$\bm E^t \in \mathbb{R}^{D \times N}$ 保留所有 post-activation。关键在于切换尺度时这两条队列继续滚动更新而不清空，所以低倍建立起来的全局假设能一路带到高倍。为了防止越看越细反而忘了全局，跨尺度融合显式把上尺度最确信时刻的表示接回来：$\hat y^t = \text{MLP}([\bm S_{out}^{L-1,t} \| \bm S_{out}^{L,\max}])$。这一步正是把医生"想不通了就换更高倍镜头"的动作变成了模型里一个可学习的状态转移。
 
-**2. 注意力引导区域剪枝（Conditional Computation）：用注意力当信息增益的廉价代理，只往高倍带最值钱的那几块。**
+**2. 注意力引导区域剪枝（Conditional Computation）：用注意力当信息增益的廉价代理，只往高倍带最值钱的那几块**
 
 传统 MIL 把上万个 patch 全部送进模型，绝大多数对最终预测毫无贡献、纯属算力浪费。PathCTM 把"切到下一尺度时该带哪些 patch"形式化成一个预算约束下的信息增益最大化问题：$\mathcal{S}^* = \arg\max_{|\mathcal{S}| \leq K} I(Y; \mathcal{S} | \bm Z_t)$。但互信息 $I(Y;\mathcal{S}|\bm Z_t)$ 直接算不可行，论文的 Proposition 1 证明可以用注意力分布作它的一阶 surrogate——注意力近似等于每个 patch 对预测的影响力梯度。于是具体做法是取当前尺度置信最高那一步 $t^*$ 的注意力图 $\bm A^{t^*}$，从中选 Top-$K$ 个 patch 进入下一尺度；用最确信时刻的注意力而非平均注意力，是因为它对应"最笃定的那个诊断假设"，选出来的区域更准。这把跨尺度的计算复杂度从 $\mathcal{O}(N)$ 压到 $\mathcal{O}(K)$（$K \ll N$），算力被集中到信息密度最高的那一小撮区域上。
 
-**3. 置信感知早停（Confidence-Aware Early Stopping）：按 case 难度动态分配算力，看明白了就收。**
+**3. 置信感知早停（Confidence-Aware Early Stopping）：按 case 难度动态分配算力，看明白了就收**
 
 不同切片的诊断难度天差地别——典型的 ductal carcinoma 一眼可断，疑难的鉴别诊断却要反复细看；给所有 case 统一的计算预算必然是浪费。PathCTM 在每一步都算出当前后验 $P(Y | \bm Z_t)$ 及其熵 $H(Y | \bm Z_t)$，并把置信度定义为归一化熵的补 $C^t = 1 - \text{normalized entropy}$；一旦熵降到可接受边际 $\delta$ 以下就立即停止，否则继续推到当前尺度的 $n$ 步用完、再切到更高倍。这恰好把整个框架"逐步降低条件熵"的信息追求目标落到了停机准则上，也直接对齐了病理医生"看得明白就出报告、看不明白才放大"的临床决策，并让推理轨迹天然可解释。
 

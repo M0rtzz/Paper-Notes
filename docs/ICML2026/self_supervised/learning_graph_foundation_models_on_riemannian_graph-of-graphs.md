@@ -44,19 +44,19 @@ R-GFM 由四个阶段串起来：(A) 计算节点度分布的 CV 系数决定 Ri
 
 ### 关键设计
 
-**1. Adaptive-hop GoG 构造：自适应跳数 + 相似度稀疏化。**
+**1. Adaptive-hop GoG 构造：自适应跳数 + 相似度稀疏化**
 
 固定 receptive field 是 GFM 的第一个痼疾——1-2 hop 对引文网络够用，但电商欺诈要 ≥4 hop 才能挖出长链共谋，固定 hop 总会在某些任务上欠拟合或被噪声淹没。R-GFM 对每个训练节点 $v$ 用"在线贪心 + 显存测试"逐步增大 hop 数 $K$，OOM 时回退到上一个可行 $K$（保证 $K \leq \mathcal{B}_{\text{GPU}}$），既不限死感受野又不爆显存。子图嵌入用 NT-Xent 对比预训练。
 
 GoG 的边怎么连同样讲究：用子图 cosine 相似度构造采样分布 $\text{Prob}(i,j) = e^{\mathbf{S}[i,j]} / \sum_{u,v} e^{\mathbf{S}[u,v]}$，without-replacement 采 $\mathcal{B}_{\text{edge}} = 0.6 \cdot K(K-1)/2$ 条边再对称化。这是在三种选择间取平衡——稠密 GoG 引入噪声、纯随机稀疏 GoG 又缺结构先验，相似度稀疏化恰好留下"结构上真正相关"的边。理论上也撑得住：多 hop 采样的嵌入噪声 $\|\boldsymbol\sigma_V\|_2 \leq \|\boldsymbol\sigma_F\|_2$ 严格小于固定 hop（Thm 3.2），相似度稀疏 GoG 比无边和全连接 GoG 误差都小（Thm 3.3）。
 
-**2. Dynamic MoE-based Riemannian Routing：候选集与 Top-m 双重动态。**
+**2. Dynamic MoE-based Riemannian Routing：候选集与 Top-m 双重动态**
 
 第二个痼疾是单一 Euclidean 几何——不同 hop 子图结构差异巨大（局部密集 vs 全局稀疏分层），塞进同一个平直空间必然扭曲。R-GFM 把每个 GoG 路由到曲率最匹配的流形，而且专家数和激活数都随数据自适应。它先用节点度分布的变异系数 $\text{CV}(\mathcal{D}_i) = \text{std}(\deg)/\text{mean}(\deg)$ 量化结构异质性，滑动统计 $\mathcal{S}_i = \text{normalize}(\mu_i + \sigma_i)$ 累加后定出候选专家集大小 $\lceil \mathcal{S}_i \cdot \zeta \rceil$，曲率按 $0, -1, +1, -2, +2, \ldots$ 交替展开（双曲 / 欧氏 / 球面都覆盖）。这样越异质的数据集自动配越多几何专家，省掉了人工 trial-and-error。
 
 激活几个专家则利用一个训练规律——router 训得越久越自信。路由打分 $\boldsymbol\alpha_{\mathcal{G}} = \text{softmax}(g(\mathcal{G})/\tau)$ 用 GCN encoder 给出，置信度 $\text{conf} = (1/\psi) \sum_i \max \alpha^{(i)}$ 随训练升高时就动态收缩激活数 $m \leftarrow \max(1, m - \text{conf})$。后期容量自我收缩等于隐式正则，理论上给出超额风险界 $\mathcal{R}(\psi_D) \leq \mathcal{R}(\psi_F)$，泛化更好。
 
-**3. 跨域泛化的理论支撑：误差上界严格优于 SOTA。**
+**3. 跨域泛化的理论支撑：误差上界严格优于 SOTA**
 
 GFM 的核心考题是"在没见过的图上还能不能 work"，光有经验提升不够，得给形式化保证。论文把 R-GFM 与 MDGFM 的 encoder class $\Phi_R$、$\Phi_M$ 分别代入域泛化误差 bound：R-GFM 一方面通过 GoG 多 hop 与 Riemannian MoE 拓宽了 encoder 的表达能力，另一方面又用相似度稀疏化和动态 top-$m$ 把 capacity 压住，于是 Thm 3.5 给出 $\epsilon_{\text{R-GFM}} < \epsilon_{\text{MDGFM}}$——既更能表达又不过拟合，跨域误差自然更低。
 

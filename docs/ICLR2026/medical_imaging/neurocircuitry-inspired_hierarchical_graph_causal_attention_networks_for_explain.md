@@ -54,15 +54,15 @@ NH-GCAT 包含三大层次化模块，分别对应三个空间尺度：
 
 ### 关键设计
 
-**1. RG-Fusion：用残差门控把 BOLD 时序动态和静态功能连接融到一起。**
+**1. RG-Fusion：用残差门控把 BOLD 时序动态和静态功能连接融到一起**
 
 最底层（脑区尺度）的痛点是：以往方法只看静态 FC，丢掉了真正有判别力的低频 BOLD 振荡（0.01–0.08 Hz，与反刍思维相关）。RG-Fusion 因此走双路径并行：时序路径把 BOLD 信号送进 Transformer Encoder 得到 $\mathbf{H}_{\text{temp}}$，与静态特征拼接后过双路图卷积（SAGEConv + GATConv）得到 $\mathbf{Z}_{\text{temp}}$；静态路径把静态特征过 MLP 后经 GATConv 得到 $\mathbf{Z}_{\text{static}}$。两路不是简单相加，而是用一个可学习门控自适应配比——$\mathbf{G} = \sigma(\mathbf{W}_g[\mathbf{Z}_1 | \mathbf{Z}_2] + \mathbf{b}_g)$，$\mathbf{Z}_{\text{fused}} = \mathbf{G} \odot \mathbf{Z}_1 + (1-\mathbf{G}) \odot \mathbf{Z}_2$，让模型按节点决定信任时序还是静态信息。最后再经 FeatureAttention → NodeAttention 得到 $\mathbf{H}_{\text{attn}}$，与 $\mathbf{Z}_{\text{temp}}$ 残差门控融合、拼接 $\mathbf{Z}_{\text{static}}$，送入变分编码器得到节点表示 $\mathbf{Z}_{\text{ve}}$。门控+残差的组合既保住了原始信号，又能放大那段最有信息量的低频成分。
 
-**2. HC-Pooling：按神经解剖先验把脑区聚成五大环路，再做双向层次聚合。**
+**2. HC-Pooling：按神经解剖先验把脑区聚成五大环路，再做双向层次聚合**
 
 中层（环路尺度）要回答的问题是：116 个脑区不该被等同对待，MDD 的失调是按环路发生的。HC-Pooling 先依神经解剖知识把 AAL-116 脑区划进 DMN/SN/FPN/LN/RN 五大抑郁相关环路；再重构每个环路的邻接矩阵——用可学习门控融合个体 FC、MDD 组均值 FC 和 HC 组均值 FC，$\mathbf{A}^{(c_j)} = \sum_{k=1}^{3} \text{softmax}(\text{MLP}(\mathbf{Z})) \cdot \mathbf{A}_k$，把组别先验注入个体图。环路内部再做两步层次处理：top-down 用 Gumbel-Softmax 把节点软分配到高层整合 / 中间处理 / 初级处理三个层次，bottom-up 再用 ChildSumTreeLSTM 从最底层逐级向上聚合，输出各环路的综合嵌入 $\mathbf{H}_{\text{DMN}}, ..., \mathbf{H}_{\text{RN}}$。这一步把"哪些脑区在环路里扮演整合枢纽"显式建模出来，正是后面发现"MDD 的 DMN 被过多分配到高层"这类病理对应的来源。
 
-**3. VLCA：用反事实注意力估计环路间的因果信息流。**
+**3. VLCA：用反事实注意力估计环路间的因果信息流**
 
 顶层（全脑网络尺度）的目标是刻画五大环路之间谁在驱动谁，而普通注意力只能给出相关、给不出因果。VLCA 先对 5 个环路嵌入算 Q/K/V 得到真实注意力权重 $\mathbf{A}^{\text{real}}$，把注意力加权表示编码到连续潜空间 $\mathbf{z}^{\text{real}} = \boldsymbol{\mu}^{\text{real}} + \boldsymbol{\sigma}^{\text{real}} \odot \boldsymbol{\epsilon}$；关键在于它再做一次反事实——用单位矩阵替换注意力矩阵、切断环路间交互，得到 $\mathbf{z}^{\text{cf}}$。两者过同一预测头相减 $\mathbf{y}^{\text{effect}} = f_{\text{pred}}(\mathbf{z}^{\text{real}}) - f_{\text{pred}}(\mathbf{z}^{\text{cf}})$，就量化出"环路间交互究竟贡献了多少分类效应"。这种"有交互 vs 切断交互"的对照，比 post-hoc 注意力可视化更接近因果证据，也让 VLCA 揭示的 DMN→SN、RN→DMN 等有向通路有了可解释依据。
 

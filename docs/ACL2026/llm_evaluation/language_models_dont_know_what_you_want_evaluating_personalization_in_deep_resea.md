@@ -45,15 +45,15 @@ MyScholarQA（MYSQA）要解决的是"DR 报告 5 分钟才生成一份、不可
 
 ### 关键设计
 
-**1. 从论文反推五维持久画像：把"你是谁"做成跨 query 可复用的证据链。**
+**1. 从论文反推五维持久画像：把"你是谁"做成跨 query 可复用的证据链**
 
 DR 的痛点在于偏好表达成本太高——OpenAI DR 那种每次新 query 都反问 clarifying questions 的范式，让用户疲于重复解释自己（受访者 U21 直言"我希望它了解我一次，然后照办"）。MYSQA 的做法是让用户上传 5 篇感兴趣的论文 $D$，prompt LLM 在 knowledge / research style / writing style / audience / positions 五个 aspect 上各产 5 条 sentence-level inference，凑成 $n_1{=}25$ 条的画像 $P=\{I_1,\dots,I_{25}\}$；每条 $I$ 都必须显式 cite $D$ 中的具体段落并附 explanation，使画像不是空泛标签而是可核查的证据链，用户可逐条 edit / disable 收敛成 $P^*$。正因为有引用约束，画像质量可被量化：Gemini-2.5 Pro 在 inference accuracy 97.1%、citation relevance 97.4%、specificity 3.73/5 上综合最佳，被选为 profile backbone。
 
-**2. Generic 与 Personalized 双轨 action 提案：在动笔前把"打算怎么个性化"摊开给用户控制。**
+**2. Generic 与 Personalized 双轨 action 提案：在动笔前把"打算怎么个性化"摊开给用户控制**
 
 如果直接由 profile 生成报告，个性化就成了无法审查的黑箱，事后也无从分析"哪种个性化让用户不满"。MYSQA 在 query $q$ 进来后先不写报告，而是用两条 prompt 分别生成只看 $q$ 的 $A_{\text{gen}}$ 与同时看 $q$ 和 $P^*$ 的 $A_{\text{person}}$，合并成 $n_2{=}16$ 条 actions $A=A_{\text{gen}}\cup A_{\text{person}}$，按 content / style / specificity / research ideas 四类组织，用户勾选/编辑成 $A^*$。这里刻意不写硬规则，只给 LLM 软提示（如"对专家跳过基础术语"），让"如何个性化"本身成为用户研究里可被观察的对象。这一设计既是 query clarification 的变体（Zhang et al. 2025），又因为把个性化外化成离散 action，才使得后文"哪类 action 最容易踩雷"的细粒度归因成为可能——LLM judge 给 $A_{\text{person}}$ 的 win rate 高达 91–95%、uniqueness 60–72%，说明这些 action 确实随 profile 而变。
 
-**3. 彩色高亮的报告合成：用最小 prompt 改造让"个性化在哪"一眼可见、可审、可探针。**
+**3. 彩色高亮的报告合成：用最小 prompt 改造让"个性化在哪"一眼可见、可审、可探针**
 
 报告侧基于 SCHOLARQA pipeline（Semantic Scholar 检索 + clustering + 多 section 生成），MYSQA 只动两处 prompt 把 $A^*$ 注入：检索阶段把 `q → search terms` 改为"按 $A^*$ 产多组 search terms"，生成阶段把 `section generation` 改为"逐条执行 $A^*$，并用 one color per action 高亮相应文本片段"。Action adherence 指标据此评测每条 action 是否被报告任一处遵循。高亮表面上只是透明化手段——用户扫一眼就知道个性化落在哪几句——但它同时是研究者最好用的失败探针：一条 action 若在报告里找不到对应颜色，就直接暴露出 IGNORE 类失败；而用户研究还发现一个隐患，多数人看到某 action 没高亮时会默认"这条信息不存在"，而非"系统漏执行了"，构成 personalization 的过度信任陷阱。
 

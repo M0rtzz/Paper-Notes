@@ -46,15 +46,15 @@ HSUGA 输入用户 $u$ 的完整交互序列 $\mathcal{S}_u = [i_1, \dots, i_T]$
 
 ### 关键设计
 
-**1. HSU 阶段式两步编辑：把"一口气 summarize 长序列"换成"按 stage 增量改写兴趣"。**
+**1. HSU 阶段式两步编辑：把"一口气 summarize 长序列"换成"按 stage 增量改写兴趣"**
 
 直接把整条长交互序列灌给 LLM 一次性总结，上下文一长就触发 lost-in-the-middle，得到的用户向量不稳，长尾用户尤其惨。HSU 把序列切成固定长度 $L$（默认 13）的若干 stage：stage 1 先总结出初始兴趣描述，从 stage 2 起每个 stage 强制走"Operation Selection → Operation Execution"两步——先从 {Add, Delete, Update, Retain} 四个原子动作里选一个，再据此改写兴趣文本（Add 引入新概念、Delete 去掉过时兴趣、Update 精修已有偏好、Retain 保持不变），最后把终态兴趣文本向量化得到 $\mathbf{s}_u$。这等于把原本 open-ended 的语义演化压成离散动作空间里的状态转移，既给出可解释的"为什么变了"，又把 LLM 的自由度限制在四个操作里、避免语义漂移和误差累积。
 
-**2. GAA 按活跃度差异化检索 + 过滤：长尾用户多拿邻居补稀疏，活跃用户严过滤去噪。**
+**2. GAA 按活跃度差异化检索 + 过滤：长尾用户多拿邻居补稀疏，活跃用户严过滤去噪**
 
 所有用户共用一套对齐策略并不公平——活跃用户表示本就密，硬拉去对齐邻居反而引噪；长尾用户表示稀疏，弱对齐又不够。GAA 先按交互次数 $n_u$ 把用户切成 top 20% active 和 80% long-tail，再用 cosine 相似度从 $\mathcal{U} \setminus \{u\}$ 检索 Top-$K$ 邻居集 $N_u^{(g)}$，其中 $K$ 按组取值（long-tail 取大、active 取小）。long-tail 用户全保留 $N_u^{\text{long-tail}} = N_u^{(g)}$；active 用户再用 Pearson 相似度按百分位过滤 $N_u^{\text{active}} = \{v \in N_u^{(g)} \mid \text{Pearson}(u,v) \ge Q_\tau(\mathcal{S}_u)\}$，其中 $Q_\tau$ 是该用户自身相似度分布的 $\tau$-分位点。用百分位而非固定绝对阈值，是因为不同用户的相似度尺度差异巨大、绝对阈值会偏袒高密度用户；Figure 3(a) 也证实长尾用户的最佳邻居数明显大于活跃用户，活跃用户邻居一多就掉点。
 
-**3. 自蒸馏对齐损失：把目标用户向邻居平均表示温和靠拢。**
+**3. 自蒸馏对齐损失：把目标用户向邻居平均表示温和靠拢**
 
 相比硬性对比学习，自蒸馏更温和。GAA 用邻居均值 $\frac{1}{|N_u|}\sum_{v \in N_u} f(v)$ 当 teacher mediator、目标用户 $f(u)$ 当 student mediator，损失为 $\mathcal{L}_{SD} = \frac{1}{|\mathcal{U}|}\sum_u \|f(u) - \frac{1}{|N_u|}\sum_{v \in N_u} f(v)\|^2$。配合上一步的分组检索，long-tail 用户拿到的 teacher 是稀疏邻居的多数票、active 用户拿到的是高 Pearson 邻居的精挑细选，从而做隐式的协同信号增强。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 用 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ 与 $\mathrm{LTL}[\mathrm{P}]$ 的不可比性证明 local/global 表达力互补。**
+**1. 用 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ 与 $\mathrm{LTL}[\mathrm{P}]$ 的不可比性证明 local/global 表达力互补**
 
 直觉总把 local 当成 global 的"省算力弱化版"，但要推翻它，需要在逻辑层面构造两个互相够不着的判定性 witness 语言。一边是 $a\Sigma^*$（"第一个字符是 a"），它可被无界 past 算子写成 $\mathrm{P}(\pi_a \land \neg \mathrm{P}\top)$，却落在 $\mathrm{Y}^{\leq k}$ 之外——因为 $\mathrm{Y}^{\leq k}$ 只看 bounded suffix，而定理 2.2 证明 $\mathrm{LTL}[\mathrm{Y}]$ 恰对应 definite languages，"开头依赖"性质并不 definite。另一边是 $L_k = \bigcup_{i=0}^{k-1} \Sigma^* a \Sigma^i$（"末尾 $k$ 步内出现 a"），它能被 $\mathrm{Y}^{\leq k} \pi_a$ 一句写出，却不是 left-deterministic polynomial，因而不在 $\mathrm{LTL}[\mathrm{P}]$ 内（命题 2.3、2.4、定理 2.9）。两个 witness 互证 $\mathrm{LTL}[\mathrm{P}]$ 与 $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$ incomparable，于是 hybrid 同时拥有两个算子时严格强于任一侧（推论 2.10）——"global+local 比 global-only 严格强"这个经验观察由此落实为可证伪的形式定理。
 
-**2. $k=1$ 是 local 家族里表达力最强的 window size。**
+**2. $k=1$ 是 local 家族里表达力最强的 window size**
 
 工业实践里 sliding window 常默认开大，但本文证明扩窗反而损失表达力。对任意 $k>1$ 构造 witness $\mathbf{w}=(\mathtt{ab}^{k-1})^r \mathtt{a}$ 与 $\mathbf{w}'=(\mathtt{ab}^{k-1})^r$，前者属于 $\Sigma^*\mathtt{a}$ 而后者不属于；引理 C.1 对操作符深度 $s$ 做"$s$-close pair"的对偶归纳，证明任何深度 $\leq r$ 的 $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$ 公式都无法在 $\mathbf{w}$ 与 $\mathbf{w}'$ 的末位之间区分——关键在于 witness 的周期长度恰为 $k$，使得 $i$ 步前与 $i-k$ 步前的 token 完全相同，$\mathrm{Y}^{\leq k}$ 因此"看花了眼"。这给出 $\mathrm{LTL}[\mathrm{Y}^{\leq k}] \subsetneq \mathrm{LTL}[\mathrm{Y}]$（命题 2.11、2.12），即 1-local 等价于完整的 $\mathrm{Y}$，是 local 家族里最强的。代价是表达—深度权衡：用 1-local 实现 $\mathrm{Y}^{\leq k} \psi$ 需要 $k$ 个 $\mathrm{Y}$ 嵌套，操作符深度增加 $k-1$，对应 Transformer 层数开销最多 $\times k$，这也解释了为什么深模型才能充分享受 1-local 的好处。
 
-**3. 位置编码 = 数值谓词，抹不平 local/global 的鸿沟。**
+**3. 位置编码 = 数值谓词，抹不平 local/global 的鸿沟**
 
 一个常见反驳是"既然都有位置编码，global+RoPE 是不是就能模拟 local？"。本文把位置编码视为 LTL 的数值谓词 $\mathrm{MOD}_m^r$（命题 2.13），并证明只要存在 $m \geq k$ 的模运算谓词，$\mathrm{Y}^{\leq k}$ 就能被 $\mathrm{Y}$ 加 $\mathrm{MOD}$ 模拟：$\mathrm{Y}\psi = \bigvee_{i=1}^m (\mathrm{MOD}_m^i \land \mathrm{Y}^{\leq k}(\mathrm{MOD}_m^{i-1} \land \psi))$。但 SiPE 与 RoPE 对应的是模谓词的"rational 变种"，Chiang 等 2023 已证它们无法稳定提供精确的 $\mathrm{MOD}$ 语义，因此理论预言 SiPE / RoPE 都无法让 global-only 追平 hybrid——"位置编码万能"是迷思，也是"不该用 RoPE 顶替 local attention"的理论支撑。
 

@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. Rewarded SFT：把已经算好的多指标平均分当 sample weight，绕过训不起的 RLHF。**
+**1. Rewarded SFT：把已经算好的多指标平均分当 sample weight，绕过训不起的 RLHF**
 
 这套设计针对的是"样本太少训不出 reward model"这个硬约束——团队手里只有 2,580 篇故事，远不够支撑稳定的 RLHF，而紧凑模型一旦没有"哪些样本更值得学"的明确信号，在严格约束下就容易 mode collapse。作者的做法是把 RL 直接化简成带权重的监督学习：对每条训练样本 $i$，先用 5 个评估指标各算一个原始分，对"越低越好"的指标（如 Spache、PPL）用 inverted min-max 归一化 $\tilde{m}_i = \max(0, \min(1, (b_m - m_i)/b_m))$，对"越高越好"的用标准 min-max，再把 5 个归一化分**无权平均**成一个 scalar reward $r_i = \frac{1}{5}\sum_k \tilde{m}_i^{(k)}$。SFT Trainer 的 cross-entropy loss 按这个 $r_i$ 重加权，模型自然在"高 reward 故事"上学得更彻底。
 
 它和 reward-weighted regression（Peters 2006）、offline alignment（Mukherjee et al. 2025）一脉相承，但完全不需要单独训一个 reward model——5 个自动指标本来就为评估算好了，当成 cheap reward 几乎零成本，工程上只是改了 loss 权重，推理时一点开销都不加。
 
-**2. Good Stories：只留全指标达标的子集，验证"少而精"是否真的更强。**
+**2. Good Stories：只留全指标达标的子集，验证"少而精"是否真的更强**
 
 这一支是冲着"more data vs better data"这个老问题去的。做法很直接：以 5 个指标的语料均值为阈值，只保留**5 个指标全部不低于均值**的故事，筛出 996 篇（约 38% 数据），再在这个精选子集上做标准 SFT。
 
 它对标的是 AlpaGasus / LIMA 这类"少而精胜过多而粗"的主张，同时也是给 Rewarded SFT 做对照——如果简单的质量过滤就能打平甚至超过 reward 加权，那后者的复杂度就不值得。实验结果（见下）恰恰说明这条"less is more"在 K-2 任务上并不绝对成立。
 
-**3. 模拟儿童错读 phoneme 作 input 端增强：让模型训练时就"看到"早读者会犯的错音。**
+**3. 模拟儿童错读 phoneme 作 input 端增强：让模型训练时就"看到"早读者会犯的错音**
 
 真实的儿童阅读错误数据既稀缺又受 IRB 限制，但"针对哪些音去出题"恰恰是这个应用最有价值的地方。作者用 GPT-OSS-120B 配上少量真实错读样本做 few-shot，为每篇故事生成 3–8 个"模拟错读 phoneme"；训练时把"原课程 phoneme + 模拟错读 phoneme"拼成输入，目标仍是原故事。
 

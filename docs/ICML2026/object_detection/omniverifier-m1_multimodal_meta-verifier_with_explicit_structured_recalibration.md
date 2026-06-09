@@ -47,15 +47,15 @@ OmniVerifier-M1 沿 RLVR 框架训练一个 pointwise 多模态 verifier $\pi_\t
 
 ### 关键设计
 
-**1. Symbolic Rationale：用 bbox 代替文本解释当 meta 反馈。**
+**1. Symbolic Rationale：用 bbox 代替文本解释当 meta 反馈**
 
 要给 verifier 细粒度监督就得有 rationale，但文本 rationale 必须再请一个 LLM judge 打分，既慢又会被 reward hacking。作者的观察是：图像错误本质是"哪里错了"的空间问题，天然可以用 bbox / point / line 这种结构化几何对象定位，于是直接把 IoU 这种 hard rule 当 reward。每条训练样本除 binary label 外同时给 ground-truth bbox 和 ground-truth 文本解释；symbolic 路线用 $\mathcal{R}_{meta} = \text{IoU}(\hat b, b^*)$ 评 verifier 产出的 bbox，textual 路线则用 Qwen3-4B 当 judge 比较语义等价性；模型仍在 `<think>` 之后给出最终 verdict 和 bbox 列表。规则化 reward 让模型没法"说服"IoU，从源头杜绝 reward hacking，还省掉一个 judge 模型——实测每样本 reward 计算 0.021 ms vs 文本 20.2 ms（≈1000× 快），per-step 训练 8.13 min vs 10.27 min（约 20% 加速），显存从 56.9 GB 降到 48.6 GB，而 ViVerBench 总分两条路线几乎相等（0.661 vs 0.662）——symbolic 是真正"等效但便宜"的替代。
 
-**2. Decoupled RL Reward：把"判对没"和"指对错在哪"拆成两条独立 reward 流。**
+**2. Decoupled RL Reward：把"判对没"和"指对错在哪"拆成两条独立 reward 流**
 
 binary judgement 是离散低熵、meta-verification 是连续高维细粒度，硬塞进一个 joint reward 会优化冲突。原 joint 目标 $\mathcal{R}_f + \mathcal{R}_{acc} \cdot (\mathbb{I}[y=\text{True}] + \mathbb{I}[y=\text{False}] \cdot \mathcal{R}_{meta})$ 里，meta gradient 只在 $y=\hat y=\text{False}$ 时才激活。Decoupled 方案改成混合两条数据流：原始 1:1 平衡数据集只监督 $\mathcal{R}_{acc}$；把所有 $y=\text{False}$ 的样本复制一份组成 grounding-only 子集，只监督 $\mathcal{R}_{meta}$；两条流在 RL rollouts 中混合。这背后有硬核理论支撑：Lemma 5.1 / Theorem 5.2 证明 joint 训练里 meta gradient 范数被 $p_{acc}(\theta)$ 乘性门控，RL 早期 $p_{acc} \ll 1$ 时 meta 几乎学不到；Theorem 5.3 进一步给出 $\text{Var}(\mathcal{G}_{joint}) = p_{acc}\,\text{Var}(\mathcal{G}_{dec}) + p_{acc}(1-p_{acc})\|\mathbb{E}[\mathcal{G}_{dec}]\|^2$，Corollary 5.4 推出 SNR 上界 $\text{SNR}(\mathcal{G}_{joint}) \le p_{acc}(\theta) \cdot \text{SNR}(\mathcal{G}_{dec})$，说明 joint 严格次优。解耦把这个 Bernoulli 门去掉，恢复纯 grounding 梯度。
 
-**3. M1-TTS：让 verifier 从"打分者"升级为驱动 region-level 自校正的 agent。**
+**3. M1-TTS：让 verifier 从"打分者"升级为驱动 region-level 自校正的 agent**
 
 传统多轮编辑都在 global level 做，对"图里某一小块语义错"束手无策。有了 bbox 这种可调度的 symbolic 反馈后，OmniVerifier-M1 可以当 agent 的细粒度优化器：每轮先让基础模型生成图像 → verifier 判 True/False → 若 False 同时给出错误 bbox → planner 把 bbox 翻成 region-aware editing prompt 喂回生成模型 → 在该区域做局部 inpainting/编辑 → 进入下一轮，由 verifier 持续 replanning 监控，直到所有 region 通过。这恰好把 meta-verification 的细粒度优势从训练阶段延伸到推理阶段，把火力精确集中到错误 region，闭环回生成端。
 

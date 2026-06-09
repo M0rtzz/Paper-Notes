@@ -45,11 +45,11 @@ MARI 想在不碰模型权重的前提下，让「表征干预」既随样本自
 
 ### 关键设计
 
-**1. Competitive Multi-Adapter + 熵路由：把单条全局向量拆成 $K$ 段、按样本自适应选。**
+**1. Competitive Multi-Adapter + 熵路由：把单条全局向量拆成 $K$ 段、按样本自适应选**
 
 诊断实验已经证明所需校正向量 $\Delta(x)$ 在模长和方向上都剧烈漂移，一条静态 steering 向量根本盖不住这种异质需求。MARI 在同一注入点并排放 $K$ 个秩 $r$ 的低秩 adapter $\Delta_{\psi_k}(\mathbf{h})=\mathbf{U}_k(\mathbf{V}_k^\top\mathbf{h}+\mathbf{b}_k)$，训练时对每条样本 $(x,y)$ 算 $K$ 路 loss $\ell_k(x,y)$（多选题用 CE、生成用 teacher-forced NLL），梯度只回传给当前 loss 最小的「赢家」$k^\star(x,y)=\arg\min_k\ell_k(x,y)$，目标 $\mathcal{L}_\text{route}=\mathbb{E}[\ell_{k^\star}]$，再加一项 minibatch 用量均衡防止所有样本挤进同一个 adapter（mode collapse）。这种硬路由比软路由（gating mixture）更能逼出真正的专家化——软路由的梯度会把各 adapter 拉回平均解，反而退化成单向量。推理时拿不到 $y$、没法用 oracle 路由，于是改用「最自信即最低熵」的代理：选 $\hat{k}(x)=\arg\min_k u_k(x)$，其中 $u_k$ 是 adapter $k$ 输出分布的熵（多选用 option entropy、生成用平均 next-token entropy）。论文给出风险界 $R_\text{ent}\le R_\text{min}+L\cdot\eta$，只要专家化带来的收益 $\Delta_\text{spec}$ 大过误路由率 $\eta$ 乘 loss 上界 $L$，整套就严格优于单 adapter。
 
-**2. Energy-Based Gate + Off-Subspace 正则：用一个无标签信号决定「该不该干预」。**
+**2. Energy-Based Gate + Off-Subspace 正则：用一个无标签信号决定「该不该干预」**
 
 即便方向选对了，对那些本不需纠正的良性输入强行干预，也会扰动内部表征、把 MMLU/ARC 打掉几个点；所以需要一个推理时拿不到 ground-truth 也能用的开关。MARI 训一个独立的小秩 probe $g_\phi$（秩 $r_\text{probe}<r$，表达式和 actuation adapter 一样但不参与生成），对输入算 probe 更新 $\delta_\phi(x)=g_\phi(\mathbf{h}(x))$，以强度 $\alpha_\text{probe}$ 注入后跑完剩下的层，逐层量它造成的扰动 $e_m(x;\alpha)=\|\mathbf{h}^{(\alpha,m)}_{p^\star}(x)-\mathbf{h}^{(m)}_{p^\star}(x)\|_2$，取中位数 $E(x;\alpha)=\mathrm{median}\{e_m\}_{m=l^\star}^L$ 当作这条输入的「**传播能量**」——它衡量一个小扰动能在网络深处激起多大响应，越大代表这条输入越「吃得动」干预。训练目标
 
@@ -57,7 +57,7 @@ $$\mathcal{L}_\text{cal}=\mathbb{E}[\ell_\phi(x,y)]+\lambda_\text{off}\,\mathcal
 
 里的 off-subspace 正则把 probe 的更新约束在「in-field 校准子空间」$B$（在 unlabeled 输入上跑 PCA 拟出的 rank-$k$ 基）内，使能量真正贴着干预要走的方向、从而预测干预是否有益。阈值 $\tau_E$ 在含 applicable/non-applicable 输入的小控制集上一次标定：取 non-applicable 那部分能量分布的 $(1-\rho)$ 分位数（论文取 $\rho=0.9$），刚好拦下约 90% 的良性输入。理论上 Thm 5.2 给出 non-applicable 输入的能量上界 $E(x;\alpha)\le\alpha(\kappa_\text{non}S+\Gamma(x)\varepsilon)+o(\alpha)$——off-subspace 残差 $\varepsilon$ 越小、in-field 衰减 $\kappa_\text{non}$ 越大，门控的分离度越好。把「能不能干预」交给独立 probe、「怎么干预」交给 adapter，正是为了避免让同一组参数背两个相互冲突的目标。
 
-**3. 冻结骨干 + 共享 softmax：让 $K$ 个 adapter 的熵真正可比。**
+**3. 冻结骨干 + 共享 softmax：让 $K$ 个 adapter 的熵真正可比**
 
 熵路由能成立的隐形前提，是 $K$ 个 adapter 的熵 $u_k(x)$ 必须在同一把尺子上。MARI 让所有 adapter 共享同一个 frozen 骨干和同一个输出 head，并统一 softmax 温度——不引入 per-expert 温度，也不做 logit scaling；每个 adapter 只学 $\mathbf{U}_k,\mathbf{V}_k,\mathbf{b}_k$，$\theta$ 全冻，可选的 per-adapter 标量 $s_k$ 默认 $\equiv 1$，整套只留一个全局 $\gamma$ 当强度旋钮。一旦各 adapter 学了不同温度或不同 head，熵在数值上就失去可比性，路由会退化成单纯挑「温度最低」的那个。这条约束常被忽略，却是熵路由 work 的底层保证。
 

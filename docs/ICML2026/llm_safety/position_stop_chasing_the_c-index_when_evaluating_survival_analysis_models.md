@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 五条评估指标 desiderata（D1–D5）：把"什么算好指标"从模糊偏好变成可勾选清单。**
+**1. 五条评估指标 desiderata（D1–D5）：把"什么算好指标"从模糊偏好变成可勾选清单**
 
 以往关于"C-index 局限性"的讨论都是单点批评（Hartman 等 2023），缺乏统一比较框架，研究者无从判断换一个指标到底好在哪。作者把评估指标该有的性质拆成五条可逐项审计的标准：D1 **proper scoring rule**（预测分布等于真分布时取得最优）、D2 **interpretable**（单位是天/月/概率而非 p-value）、D3 **model-agnostic**（不依赖模型内部参数，否则相同预测的不同模型会得到不同分数）、D4 **sensitive to miscalibration**（能识别系统性高估或低估生存概率）、D5 **robust to censoring**（指标对删失机制的处理与数据中实际机制一致）。用这套清单逐条审计 Harrell/Uno/Antolini C-index、IBS、MAE、D-Cal、LL，结论一目了然：三种 C-index 全部在 D1 和 D4 上失败（纯排序信息既不是 proper score，也分辨不出校准误差），IBS 是唯一同时满足 D1+D3+D4 的指标但 D5 只"半满足"，MAE 在 D3 上最优却败在 D4。这样研究者就能先按科学目标点亮所需性质，再倒推该用哪个指标，而不是无脑套 C-index。
 
-**2. Ladder Hypothesis of Model-Metric Consistency：把模型假设与指标假设投影到同一坐标轴，宣判错位组合的评估无效。**
+**2. Ladder Hypothesis of Model-Metric Consistency：把模型假设与指标假设投影到同一坐标轴，宣判错位组合的评估无效**
 
 以往论文要么单独讨论模型方法，要么单独评估指标，从未把两者画进同一坐标系，于是"模型升级了、指标却没跟上"的隐患一直没人点破。作者构造一个 double-helix ladder（图 4）：左股是模型发展（CoxPH/RSF → IWSG/SurvivalBoost → DCSurvival/HACSurv），右股是指标发展（KM-based Brier → Uno's CI with IPCW → 仍然缺位的依赖删失指标），每一横档（rung）对应一类删失假设——random、conditionally independent、dependent。核心命题是：模型与指标必须站在同一档，评估才合法。最尖锐的反例是 HACSurv，它把模型抬到第三档（专门建模依赖删失），却仍用第二档假设独立删失的 Antolini-CI + IBS 来打分，于是它声称的 SOTA 实际上"从未被一个站在同档的指标验证过"。Ladder 把"能不能合法宣告 SOTA"变成一个可视判断：两股曲线是否在同一 rung 上都有实心节点。
 
-**3. 受控删失消融实验：固定模型只动删失机制，把"指标偏差"从"模型性能"里隔离出来。**
+**3. 受控删失消融实验：固定模型只动删失机制，把"指标偏差"从"模型性能"里隔离出来**
 
 纯理论批评说服不了"凭经验觉得 C-index 一般够用"的研究者，必须让人亲眼看见反常方向才能击穿默认。作者固定 CoxPH 模型与同一 Weibull 事件分布，只改删失机制：随机删失、依赖 $\boldsymbol{X}$ 的独立删失、以及 Clayton copula 注入的依赖删失（Kendall's $\tau \in \{0.25, 0.5, 0.75\}$）。每种设置算两套指标——oracle 版本用真实事件时间 $e_i$ 反映"模型真实性能"，censored 版本用观测到的 $t_i, \delta_i$ 加 KM-based IPCW，二者相减得到的 **metric error = censored − oracle** 恰好隔离了纯评估偏差。为压住采样噪声，全部指标取 100 次随机种子的均值与方差。结果很刺眼：随依赖删失增强，oracle CI 从 0.634 单调降到 0.609、oracle IBS 从 0.090 升到 0.245（模型确实在变差），但 Harrell CI 和未加权 IBS 在某些 $\tau$ 下反而"看起来变好"——模型退化、指标上升的反向运动，正是 Ladder Hypothesis 错位时的实际后果。
 

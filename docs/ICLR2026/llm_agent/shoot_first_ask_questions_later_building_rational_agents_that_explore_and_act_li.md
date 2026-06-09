@@ -37,15 +37,15 @@ tags:
 
 ### 关键设计
 
-**1. 贝叶斯信念更新：把对话历史压缩成对隐藏棋盘的后验。**
+**1. 贝叶斯信念更新：把对话历史压缩成对隐藏棋盘的后验**
 
 整套方法的地基是对隐藏棋盘 $S \in \mathcal{S}$ 维护一个信念分布 $\pi_t(s) = \Pr(S=s \mid x, \mathcal{H}_{1:t})$，其中 $\mathcal{H}_{1:t}$ 是到第 $t$ 步的问答历史。难点在于 Spotter 会答错，所以观测被建成一个二元对称信道 $\text{BSC}(\varepsilon)$（取 $\varepsilon=0.1$），每收到一个回答 $\tilde{a}_t$ 就按 $\pi_{t+1}(s) \propto \pi_t(s)\big[(1-\varepsilon)\mathbf{1}\{\tilde{a}_t = f_{q_t}(s)\} + \varepsilon\mathbf{1}\{\tilde{a}_t \neq f_{q_t}(s)\}\big]$ 更新——答案与假设 $s$ 一致就乘 $1-\varepsilon$，否则乘 $\varepsilon$，从而对噪声留有余地。假设空间太大无法精确求和，作者用序贯蒙特卡洛（SMC）的一组粒子近似 $\pi_t$，既能跟上多轮更新的计算量，又天然容纳 Spotter 的错误回答。
 
-**2. 三种贝叶斯策略：在提问、行动、决策三处各替 LM 做一次最优选择。**
+**2. 三种贝叶斯策略：在提问、行动、决策三处各替 LM 做一次最优选择**
 
 有了信念分布，三个环节就能各自调用贝叶斯最优解。提问端的 **Bayes-Q** 先让 LM 采样一批候选问题 $\mathcal{Q}$（最多 10 个），再选期望信息增益最高的 $q_t^* = \arg\max_{q \in \mathcal{Q}} \text{EIG}_\varepsilon(q \mid x, \mathcal{H}_{1:t})$；在 BSC 噪声下 EIG 有闭式解 $\text{EIG}_\varepsilon = H_b(\varepsilon + (1-2\varepsilon)p_t) - H_b(\varepsilon)$，当问题把后验劈成对半（$p_t \approx 1/2$）时取最大，等于自动偏好「答案最不确定」的问题。行动端的 **Bayes-M** 不再让 LM 凭感觉开火，而是直接选当前击中概率最大的格子 $u_t^* = \arg\max_u p_t^{\text{hit}}(u \mid x, \mathcal{H}_{1:t})$。决策端的 **Bayes-D** 做一步前瞻来回答「该问还是该打」：若提问后预期的击中概率 $\gamma \cdot \widehat{p_{t+1}^{\text{hit}}}(q_t^*)$ 仍高于当下立即射击的 $p_t^{\text{hit}}(u_t^*)$ 就继续提问，否则开火，其中 $\gamma = 0.95$ 略微偏向当前行动、抑制无谓拖延。三者分工的逻辑是让 LM 出自然语言的创意，把「选哪个最优」交给贝叶斯计算。
 
-**3. 代码生成接地（SpotterQA）：让 Spotter 用程序而非直觉回答问题。**
+**3. 代码生成接地（SpotterQA）：让 Spotter 用程序而非直觉回答问题**
 
 信念更新依赖 Spotter 答得准，但自然语言问题（如「最长的船在右半边吗」）直接问模型容易出错。作者改让 Spotter 把问题翻译成一段 Python 程序，在假设空间上执行后再返回 yes/no，等于把模糊的语言判断变成可执行的形式化判定。这种代码接地相比直接回答和 CoT 基线把回答准确率提升约 14.7%，直接喂给上面的贝叶斯更新就让整条链路的噪声更小、信念更可靠。
 

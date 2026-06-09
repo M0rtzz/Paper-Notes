@@ -46,15 +46,15 @@ AuthorityBench 用 10K 网页域名（PageRank 真值）+22K 实体（Wikipedia 
 
 ### 关键设计
 
-**1. 三种 Judge 范式 × 两种输出格式：穷举提问方式，找出最能激发权威感知的设置。**
+**1. 三种 Judge 范式 × 两种输出格式：穷举提问方式，找出最能激发权威感知的设置**
 
 核心问题是「该怎么问 LLM 才问得出它的权威先验」，于是作者把提问方式拆成两个正交维度做笛卡尔积。范式维度有三种：PointJudge 单条输入打绝对分（按分排序）、PairJudge 两两比较、ListJudge 整列输入；输出格式维度有两种：直接给排序（PairRank / ListRank）或给绝对分再排（PointScore，配 BubbleSort 或 AverageScore）。fine-grained 时 Pair 用 anchor-based 近似（10 项里选 5 个 anchor 而非全配对），coarse-grained 才用全 pair。这样设计是为了分离两类问题——「让模型比较」还是「让模型给绝对值」更好、「输出排序」还是「输出分数」更稳，结果显示 AverageScore 比 BubbleSort 更稳，因为它对非传递的矛盾判断更鲁棒。
 
-**2. 加 / 不加网页文本的对照（Ctx vs w/o Ctx）：检验「权威是否等同于文本质量」。**
+**2. 加 / 不加网页文本的对照（Ctx vs w/o Ctx）：检验「权威是否等同于文本质量」**
 
 每个 judge 都跑两版：一版只给 domain name / entity name，另一版再附上网页文本片段。这个对照直指一个隐含假设——如果加文本能稳定提分，说明权威可以被语言风格充分代理；如果反而拖后腿，说明权威是独立于文风的信号。实测结果偏向后者：List / Pair 设置加文本几乎都掉分（如 Qwen3-8B PointScore 从 71.35 跌到 63.91），唯独在 hard pair 上文本反而救场（accuracy 暴涨 30+ 点）——说明文本只是「结构信号模糊时」的补偿，而非默认增益，间接验证了「权威 ≠ 文风」。
 
-**3. Authority-Aware RAG 过滤管线：把权威信号放进真实 RAG 看能否换成准确率。**
+**3. Authority-Aware RAG 过滤管线：把权威信号放进真实 RAG 看能否换成准确率**
 
 光证明 LLM 能感知权威还不够，得看它对端到端 RAG 有没有用。作者统一用最强的 ListJudge + PointScore 协议给 10 篇文档打分，按三种 criteria 排序后取 top-$k$（$k\in\{1,3,5\}$）喂给 generator：(a) Relevance Filter 按查询相关性、(b) Utility Filter 先生成伪答案再按效用打分（沿用 Zhang 2024b）、(c) Authority Filter 只看源 URL、完全不读文档内容。三者共用同一 judge 协议保证公平对比，而让 Authority Filter 只用 URL 是刻意的——这样才能证明带来的增益纯粹来自「权威先验」而非任何文档内容信息。
 

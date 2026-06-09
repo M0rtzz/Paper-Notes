@@ -45,15 +45,15 @@ PRA 要解决的是医学这类知识密集型任务里"没有局部可验证 ax
 
 ### 关键设计
 
-**1. 双 readout：让奖励 agent 同时输出"要不要检索"和"这一步对不对"。**
+**1. 双 readout：让奖励 agent 同时输出"要不要检索"和"这一步对不对"**
 
 以往 PRM 只吐一个 reward，被动接受外部塞进来的检索结果，无法自己决定"该不该看证据"。PRA 把这个决定内化为 agent 的 action：在输出序列里固定两个槽位 $\ell^{(1)},\ell^{(2)}$，各自对 token "0" 和 "1" 的 logit 做 two-way softmax——奖励 $\hat r_t=\text{softmax}(\ell^{(1)})_{[1]}$ 直接当作"当前步正确"的概率，动作 $\hat a_t\sim\text{softmax}(\ell^{(2)})$ 决定是否触发检索。两个 readout 共享同一个 Qwen3-4B 主干，只额外占两个 token 就完成了 agent 控制加步级打分，几乎不增推理开销。这一改动让奖励模块能按当前推理状态自适应地索取外部证据，等于给 inference-time scaling 新开了一条轴：除了 scale 采样数，每步还能可选地花检索预算换更强的奖励信号。
 
-**2. 用 teacher 的 margin shift 自动生成 reasoning + search 双标签。**
+**2. 用 teacher 的 margin shift 自动生成 reasoning + search 双标签**
 
 PRA 需要两套步级监督——"这一步对不对"（reasoning label）和"这一步要不要检索"（search label），但人工标 step-level 太贵，MC rollout 噪声大（错误中间步也可能蒙对答案），不接证据的 LLM-as-judge 在医学场景又容易判错。本文用 Qwen3-235B-Instruct 当 teacher，对每个部分轨迹做两次评估——一次带检索文档、一次不带——各取 token 0/1 的 log-prob，得到 margin $m=\log p(1)-\log p(0)$ 与 $m_d$。两者之差 margin shift $\Delta m=m-m_d$ 度量"这步的对错判断有多依赖外部证据"：$|\Delta m|>\epsilon_{\text{global}}$（阈值取全训练集中位数，自然形成 50/50 切分）就标需要 search，否则标 reward；reasoning label 则直接取 teacher 在带检索条件下的二元判定。这本质上是 Bayesian 视角下的"后验更新幅度"——只有当新增证据真正撼动 teacher 的信念时才标"需要检索"，于是 PRA 学到的是选择性检索而非每步盲检。
 
-**3. PRA-guided beam search：在线步级剪枝 + 阶段级全局批处理。**
+**3. PRA-guided beam search：在线步级剪枝 + 阶段级全局批处理**
 
 事后打分（outcome-level 或 post-hoc process-level）只能在完整轨迹上聚合，错误已经一路传播到底再纠正就晚了；只有在线步级奖励能在错误扩散前剪枝。PRA 用宽度 $B=4$、分支因子 $b=16$ 的 beam search，让采样预算 $B\times b=64$ 恰好等于 self-consistency 的 64 路采样以保证算力公平——窄 beam、大分支既给了 PRA 足够候选去"挑"，又不让全局队列爆炸。工程上更关键的是调度：不同问题、不同 beam 因可变长度推理和条件检索而进度错位，PRA 不按"问题"而按"阶段"组织，把全局所有 active trace 放进一个队列，按 policy 生成 / 检索 / readout 三种 pending stage 分桶，每个 stage 整批执行后再回队列。这样即便有些步跳过 $\rho$、有些步要检索，GPU 利用率也能维持高位。
 

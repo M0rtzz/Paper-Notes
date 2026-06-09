@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. 可微文本优化（DTO）：把"采样—评估"的零阶筛选换成在 logits 上的一阶梯度下降。**
+**1. 可微文本优化（DTO）：把"采样—评估"的零阶筛选换成在 logits 上的一阶梯度下降**
 
 这是全文的核心机制，针对的正是零阶搜索"只看 reward 标量、丢掉梯度方向"的浪费。DTO 直接在 token logits 空间上做梯度下降，优化目标把 reward 和 LLM 似然写进同一个 loss：
 
@@ -52,11 +52,11 @@ $$\mathcal{L}(\mathbf{y}) = -\lambda\, r(\mathbf{y}\mid\mathbf{x}) - \log \pi_{L
 
 其中 reward 项 $r$ 提供"往哪个方向改"的引导，NLL 项 $-\log\pi_{LLM}$ 像一根缰绳把优化结果拉回 LLM 自己的分布、防止 reward hacking。难点在于 token 是离散的、梯度本来流不过去，DTO 用 Gumbel-softmax straight-through estimator 把离散 token 参数化成连续 logits，让 reward 的梯度能一路反传到每个 token 上。这样做的额外好处是梯度会**双向传播**：前缀 token 通过 NLL 正则约束后面的 token 保持连贯，后面的 token 又通过 attention 把 reward 信号反传给前面的 token，相当于不显式做树搜索就实现了 look-ahead 式的全局优化。
 
-**2. 迭代解码 + 拒绝采样：把 DTO 嵌进逐 token 解码，只采纳确实涨 reward 的修改。**
+**2. 迭代解码 + 拒绝采样：把 DTO 嵌进逐 token 解码，只采纳确实涨 reward 的修改**
 
 光有梯度优化还不够——梯度方向带噪声，盲目采纳可能越改越差。所以 ∇-Reasoner 把 DTO 套进逐 token 的解码循环：每生成一个 token，先用 DTO 优化对应的 logits，再从 $\text{softmax}(\tilde{\mathbf{z}}_1/\tau)$ 重新采样首 token $\tilde{y}_1$。如果 $\tilde{y}_1$ 和原 token $y_1$ 不同，就用它续写一段、和原续写比 reward，**只有新续写 reward 更高才接受这个修改**。这层拒绝采样保证了每一步落地的改动都是有益的，把梯度噪声挡在门外；实验里它把 rejection rate 从无 DTO 时的约 66% 压到 29–40%，说明优化后的提议确实更容易被接受。
 
-**3. 三项加速策略：让逐 token 做梯度优化的额外开销接近一次前向传播。**
+**3. 三项加速策略：让逐 token 做梯度优化的额外开销接近一次前向传播**
 
 逐 token 反传听起来很贵，论文用三个互补的 trick 把成本压下来。其一是**梯度缓存**：因为 softmax 偏硬，one-hot token 在优化中并不频繁翻转，于是缓存 $\partial\mathcal{L}/\partial\mathbf{y}$ 复用，仅在 token 真的翻转时才重算。其二是 **rollout 复用**：某一步若被拒绝，它生成的 rollout 轨迹可以直接拿来当下一步的 rollout，不必重采。其三是**置信度 + 梯度引导的 token 选择**：只对高熵且高梯度的 token 跑 DTO，对那些模型已经很有把握（低熵）或梯度本就很小的 token 直接跳过。三者叠加后，配合 transformer 的并行执行，整体梯度计算的开销逼近一次前向传播，这也是它能在更少模型调用下取胜的工程基础。
 

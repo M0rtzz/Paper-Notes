@@ -45,19 +45,19 @@ MemRec 的核心思路是把"记忆管理"和"推荐推理"拆给两个不同体
 
 ### 关键设计
 
-**1. 双 LLM 架构解耦：让管家和推理官各司其职。**
+**1. 双 LLM 架构解耦：让管家和推理官各司其职**
 
 直接把全部邻居记忆拼进一个模型的 prompt 会撞上 cognitive bottleneck——长 raw context 下 LLM 没法同时兼顾"压缩"和"推理"，作者在 Figure 6 里证明这种 "Naive Agent"（单模型既 ingest 又 rank）很快就性能 plateau。MemRec 干脆把两个职能物理剥离：$\text{LM}_{\text{Mem}}$ 专吃 raw graph context、负责 curation / synthesis / propagation，可以用便宜的 gpt-4o-mini 甚至本地的 Qwen-2.5-7B / Llama-3-8B；$\text{LLM}_{\text{Rec}}$ 是重量级模型（gpt-4o-mini 或 gpt-4o），只读蒸馏后的高信号 $M_{\text{collab}}$ 做最终 ranking 与 rationale。
 
 两侧只通过 $M_{\text{collab}}$ 这道 narrow channel 通信，正对应 Information Bottleneck 里 $T = \arg\max I(T; Y) - \beta I(T; X)$ 的思路——压缩掉与任务无关的 $X$、保留与目标 $Y$ 相关的信息。这相当于把 system 1（快速过滤）和 system 2（深度推理）分开，两侧的更新频率与触发条件也随之解耦；Books 上这种解耦让 H@1 相对单模型方案绝对提升 **+34%**。
 
-**2. Curate-then-Synthesize：先用 LLM 生成的规则快筛，再蒸馏成结构化 facets。**
+**2. Curate-then-Synthesize：先用 LLM 生成的规则快筛，再蒸馏成结构化 facets**
 
 邻居动辄数十个，但 $\text{LLM}_{\text{Rec}}$ 的 token budget 只有 $\tau = 1800$，所以必须先把邻居信息压成高浓度。传统图剪枝要么 random-walk（有规则但无语义）、要么 GNN attention（要训练且不可解释），都不适合 zero-shot 的 LLM agent。MemRec 用"LLM-as-Rule-Generator"取折中：离线让 $\text{LM}_{\text{Mem}}$ 看领域统计 $\mathcal{D}_{\text{domain}}$ 自动生成一组可解释的启发式规则 $R_{\text{domain}} \leftarrow \text{LM}_{\text{Mem}}(\mathcal{D}_{\text{domain}} \| P_{\text{meta}})$（Books 生成"按 genre/theme 相似度优先"，Yelp 生成"按 cuisine + price + 近期访问优先"），在线时这些规则像高速 filter 一样毫秒级把邻居 $N(u)$ 筛到 top-$k$ 的 $N_k'(u)$，既有规则的速度又有 LLM 的语义理解。
 
 筛完进入 synthesize：把目标 user 的**完整 $M_u^{t-1}$** 加上邻居的**轻量 tiered representation** 一起喂给 $\text{LM}_{\text{Mem}}$，输出 $N_f = 7$ 个结构化 facets（每个 facet 带 theme + 置信度 + 邻居证据）。tiered representation 是个聪明的省 token 做法——item 邻居只写截断后的 memory，user 邻居只用最近 3 个交互 item 标题作 dense proxy，既不重复信息又压住了长度。
 
-**3. 异步协同传播：把更新复杂度从 $O(|N_k'|)$ 压到 $O(1)$。**
+**3. 异步协同传播：把更新复杂度从 $O(|N_k'|)$ 压到 $O(1)$**
 
 记忆图要随交互动态演化，但 naive 同步方案对每个邻居都单独跑一次 LLM、还得把 user context 反复塞进 prompt，调用数是 $O(|N_k'|)$、token 冗余巨大，工业部署成本爆炸。MemRec 借鉴 Label Propagation 的思想，把"一次交互"视为沿相似关系向邻居扩散的"新标签"：当 $u$ 在 $t$ 时刻与 $i_c$ 交互，构造统一 prompt $P_{\text{update}}$ 让 $\text{LM}_{\text{Mem}}$ **一次调用**就同时产出 $(M_u^t, M_{i_c}^t, \{\Delta M_{\text{neigh}}\})$——既全量更新交互双方的 memory，又对每个邻居输出一段"增量更新片段" $\Delta M$。
 

@@ -43,7 +43,7 @@ TabCascade 把表格行 $x = (x_{cat}, x_{num})$ 扩展为 $x_{low} = (x_{cat}, 
 
 ### 关键设计
 
-**1. 级联分解 + 用 $z$ 当类别替身：把难学的数值生成拆成"先定粗桶、再补细节"。**
+**1. 级联分解 + 用 $z$ 当类别替身：把难学的数值生成拆成"先定粗桶、再补细节"**
 
 表格扩散的真正瓶颈在数值特征——它比类别难学得多，而把缺失值、零膨胀这类离散点质量混进连续密度里更是单一目标搞不定的。本文借图像 cascaded diffusion 的思路把数值特征 $x^{(i)}_{num}$ 先用 Distributional Regression Tree（或 GMM）编码成粗桶 id $z^{(i)}=\text{Enc}_i(x^{(i)})$，每个 leaf 对应一个高斯分量 $\mathcal{N}(\mu_{z},\sigma^2_{z})$。这一步同时干了两件事：链规则保证当 $z$ 与 $x_{num}$ 不独立时 $H(x_{num}|z,x_{cat})<H(x_{num}|x_{cat})$，于是高分辨率模型的任务变简单；而 mixed-type 的离散状态被自然装进 $z$——遇到缺失值就开一个独立类别 $c_{miss}$、推断到 $\sigma_z^2\approx0$ 的桶就当 inflated value 直接输出 $\mu_z$。把整个分布写成
 
@@ -51,7 +51,7 @@ $$p_\theta(x_{cat},x_{num})=\sum_z p_\theta^{\text{high}}(x_{num}\mid z,x_{cat})
 
 类别 / 数值各用专门模型，既消掉了 CDTD 那种"必须调相对 loss 权重"的难题，又把离散点质量卸载给低分辨率模型、让高分辨率模型只管连续部分。
 
-**2. 引导条件概率路径 + 数据相关耦合：用 $z$ 把源分布绕到目标桶附近。**
+**2. 引导条件概率路径 + 数据相关耦合：用 $z$ 把源分布绕到目标桶附近**
 
 标准 flow matching 从各向同性高斯 $x_0\sim\mathcal{N}(0,I)$ 出发，源和目标隔得远、传输距离大。TabCascade 用低分辨率信息 $z$ 引导高分辨率 flow 的源分布与时间表来收紧 transport cost：一是数据相关耦合 $x_0=\mu(z)+\sigma(z)\varepsilon$，让源直接落在目标桶附近；二是特征专属的非线性时间表 $\gamma_t(x_{low}):t\to[0,1]^{K_{num}}$，用 5 阶多项式参数化、闭式可导。最终概率路径与引导 vector field 为
 
@@ -59,7 +59,7 @@ $$x_t=\gamma_t(x_{low})x_1+(1-\gamma_t(x_{low}))[\mu(z)+\sigma(z)\varepsilon],\q
 
 Theorem 1 证明 DT 派生的耦合严格收紧了 transport cost bound、比独立耦合更易学，图 3 也直观显示这种耦合下 $p_0$ 已非常接近 $p_1$——省下来的模型容量正好用来学数值细节。
 
-**3. mixed-type loss masking + 解耦级联：让高分辨率模型完全不碰离散状态。**
+**3. mixed-type loss masking + 解耦级联：让高分辨率模型完全不碰离散状态**
 
 传统模型必须同时学"该不该缺失"和"非缺失时是多少"，两者梯度互相干扰。既然离散决策已经被 $z$ 和低分辨率模型完全接管，高分辨率模型就该专注连续细节。具体做法是训练 high-res 时把 $z=c_{miss}$ 或 $c_{infl}$ 的样本的 CFM loss 直接屏蔽（不参与），因为它们已被 $p_\theta^{\text{low}}$ 决定；生成时也按 $z$ 走分支——离散就直接吐固定值（NaN / inflated），连续才跑 flow。这种"分而治之"把两件本质不同的事彻底拆开，是 TabCascade 既能原生生成混合型特征、又不需要跨类型 loss 平衡的根本原因。
 

@@ -46,11 +46,11 @@ C2R 沿用标准 DD 的双层结构：外层更新合成集 $X=\{(x_s,y_s)\}_{s=
 
 ### 关键设计
 
-**1. Attack-Aware Curriculum (AAC)：把更新预算押到"最小鲁棒边距"那一小撮样本上。**
+**1. Attack-Aware Curriculum (AAC)：把更新预算押到"最小鲁棒边距"那一小撮样本上**
 
 针对的痛点是"边距错配"——之前的鲁棒 DD 用类均值对齐或对所有 adv 求平均，结果优化被大量"已经够鲁棒"的简单点稀释。AAC 的底气来自一条恒等式 $\arg\max_i [1-\underline{m}(x_i)]_+ = \arg\min_i \underline{m}(x_i)$：要改善最差的铰链损失，等价于改善最小的鲁棒边距，于是"该优化谁"从启发式变成可证明的排序。实现上用 PGD 内循环 $\delta_{t+1}=\Pi_\Delta(\delta_t+\alpha\,\mathrm{sign}(\nabla_x\ell(f_\theta(x+\delta_t),y)))$ 近似最坏扰动，再令得分 $s(x)=[1-g_\theta(x+\delta_T)]_+$，每个 epoch 按 $s(x)$ 降序组 batch。这样做之所以有效，是因为它把鲁棒理论里"worst-case 才决定 robust risk"的决策性统计量（最小边距）直接搬进了训练循环，而不是均匀地稀释优化预算。
 
-**2. Contrastive Robustness Loss (CRL)：用实例级对比把决策边界附近的类间隔显式撑开。**
+**2. Contrastive Robustness Loss (CRL)：用实例级对比把决策边界附近的类间隔显式撑开**
 
 针对的痛点是"边界忽略"——类均值对齐 $\|\mathbb{E}[e(x_c)]-\mathbb{E}[e(\tilde x_c)]\|^2$ 只追求类内平均不变性，对边界附近的脆弱子模式没专门施压，而对抗错误恰恰发生在边界。CRL 把它换成实例级 supervised contrast：对 anchor $x_i$ 定义正集 $P(i)=\{\tilde x_i\}\cup\{x_j,\tilde x_j: y_j=y_i\}$、候选集 $A(i)=P(i)\cup\{x_k,\tilde x_k: y_k\neq y_i\}$，损失为
 
@@ -58,7 +58,7 @@ $$\mathcal{L}_{\mathrm{CRL}}=\frac{1}{M}\sum_i \Big[-\sum_{a\in P(i)} \frac{1}{|
 
 分子把"clean–adv 同类"拉成正对，分母对最相似的异类（包括异类的 adv 版本）施加最大压力——而这个 $\max$ 项正好对应鲁棒边距公式里的 $\max_{k\neq y}f_k(x+\delta)$。所以 CRL 不是泛泛地做表征对齐，而是把"对抗几何"和"对比学习"对位起来：最近异类被显式纳入梯度路径，鲁棒边界因此被实打实推开。
 
-**3. LS-PGD + 类平衡 memory queue：把内层攻击和全对比这两个最贵的部分摊薄。**
+**3. LS-PGD + 类平衡 memory queue：把内层攻击和全对比这两个最贵的部分摊薄**
 
 前两个设计各自带来一个成本炸点——AAC 要反复跑多步 PGD，CRL 朴素实现是 $O(M^2)$ 的 batch 内全对比。LS-PGD 用 warm-start 化解前者：缓存上一轮扰动 $\hat\delta(x)$，若 $x+\hat\delta(x)$ 处 loss 没降就直接复用；否则只算**一次反向**拿方向 $v=\mathrm{sign}(\nabla_x \ell)$，再用**纯前向**在几何序列 $\mathcal{S}=\{\alpha\beta^q\}_{q=0}^{Z-1}$（$Z\in\{2,3\}$）上做行搜索，取 $\delta'=\arg\max_{\eta\in\mathcal{S}}\ell(f_\theta(x+\Pi_\Delta(\hat\delta+\eta v)),y)$；因为起点是"上次最优 $\delta$"，把 $T$ 次反向摊到接近 1 次反向而攻击强度不衰减。memory queue 化解后者：每个类维护一个容量 $Q$ 的 FIFO 队列缓存历史 embedding，对 anchor 用低维随机投影 $R\in\mathbb{R}^{r\times d}$ 粗筛取 top-$k$ hard negatives，CRL 分母只算这些，单步成本从 $O(M^2)$ 降到 $O(Mk)$。队列还顺带解决了"batch 太小缺 hard negative"的问题，给对比损失稳定供给有信息量的 impostors。
 

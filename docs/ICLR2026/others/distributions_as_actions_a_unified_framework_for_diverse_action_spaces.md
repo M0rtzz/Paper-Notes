@@ -50,7 +50,7 @@ $$\bar{p}(s'|s,u) = \mathbb{E}_{A \sim f(\cdot|u)}[p(s'|s,A)], \quad \bar{r}(s,u
 
 ### 关键设计
 
-**1. DA-PG 梯度估计器：在分布参数空间上做确定性策略梯度（Theorem 4.2）。**
+**1. DA-PG 梯度估计器：在分布参数空间上做确定性策略梯度（Theorem 4.2）**
 
 既然 Agent 现在直接输出连续的分布参数 $U=\bar{\pi}_\theta(S_t)$，那么不管原始动作空间是离散还是连续，都可以套用 DPG 风格的确定性梯度。DA-PG 的形式与经典 DPG 完全相同：
 
@@ -58,11 +58,11 @@ $$\hat{\nabla}_\theta^{\text{DA-PG}} = \nabla_\theta \bar{\pi}_\theta(S_t)^\top 
 
 区别只在语义上——这里的 $\bar{\pi}$ 吐的是分布参数而非单一动作，$\bar{Q}$ 估的是分布下的期望回报。正因为参数空间 $\mathcal{U}$ 永远是连续的，DPG 那套只能用在连续动作上的限制被绕开了，离散动作也能享受确定性梯度。经典 DPG 是它的一个特例（Prop 4.3）：当采样函数 $f(\cdot|u)$ 退化成 Dirac delta（参数直接等于动作）时，两者完全等价。
 
-**2. 方差严格降低的理论保证：DA-PG 是 LR 与 RP 估计器的条件期望（Prop 4.4 & 4.5）。**
+**2. 方差严格降低的理论保证：DA-PG 是 LR 与 RP 估计器的条件期望（Prop 4.4 & 4.5）**
 
 这是把"分布即动作"的转换落到方差收益上的关键一步。DA-PG 可以写成 LR（likelihood-ratio）估计器对采样动作 $A$ 取条件期望的结果，根据全方差公式，先取期望再算方差必然不大于原始方差，因此 DA-PG 方差严格低于 LR；同理它也是 RP（reparameterization）估计器对噪声 $\epsilon$ 取条件期望的结果，方差同样严格更低。代价是可能引入额外偏差——critic 的输入空间从动作扩成了分布参数，空间更大、更难学准。其意义在于：这是首个在离散动作空间上提供无偏、RP 风格低方差估计的方法，把原本只属于连续控制的低方差优势带到了离散设定。
 
-**3. ICL（Interpolated Critic Learning）：让 critic 在整个参数空间而不只是当前策略附近学准。**
+**3. ICL（Interpolated Critic Learning）：让 critic 在整个参数空间而不只是当前策略附近学准**
 
 DA-PG 要求 critic 在分布参数空间里有可靠的梯度，但标准 TD 更新只在当前策略产生的参数 $U_t$ 处训练 critic，导致 critic 在参数空间其他位置估得很糟，策略梯度自然指错方向。ICL 的做法是在当前参数 $U_t$ 和采样动作对应的确定性参数 $U_{A_t}$ 之间做随机线性插值后再更新 critic：
 
@@ -70,7 +70,7 @@ $$\hat{U}_t = \omega U_t + (1-\omega) U_{A_t}, \quad \omega \sim \text{Uniform}[
 
 这相当于强迫 critic 在一段参数区间上都学习，从而捕捉到更平滑、更丰富的曲率信息，让策略梯度能指向真正高价值的区域。它的精神类似 off-policy 学习，只不过操作对象是分布参数而非策略本身。bandit 实验的可视化直接验证了这点：ICL 训出的 critic 曲率明显更丰富，而标准更新的 critic 只在当前策略附近才准。
 
-**4. DA-AC 算法：把上述三件事装进 TD3 骨架，得到一个适配所有动作空间的统一 actor-critic。**
+**4. DA-AC 算法：把上述三件事装进 TD3 骨架，得到一个适配所有动作空间的统一 actor-critic**
 
 DA-AC 直接以 TD3 为底座，沿用双 critic、延迟策略更新、目标噪声这些稳定化技巧，只把两处换掉：用 DA-PG 替换 DPG 来更新 actor，用 ICL 替换标准 TD 更新来训 critic；消融发现 actor 目标网络此时已无必要，索性移除。面对不同动作空间，只需换分布参数化即可——连续用 Gaussian（输出均值/方差）、离散用 Softmax（输出类别概率）、混合则用 Gaussian+Softmax 拼接，算法主体一行不改。
 

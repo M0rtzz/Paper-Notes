@@ -51,11 +51,11 @@ tags:
 
 ### 关键设计
 
-**1. Theorem 2.1：先证明"不完美 classifier 插进 group-conditional CP 会崩"。**
+**1. Theorem 2.1：先证明"不完美 classifier 插进 group-conditional CP 会崩"**
 
 这是全文的动机基石，也解释了为什么需要后面三种算法。直觉上，既然 group-conditional CP 能处理子群体偏移，那把一个学出来的 domain classifier 当作 group 成员信息插进去似乎就够了。Theorem 2.1 证明这条捷径走不通：存在某些分布，使得用条件准确率为 $\gamma$ 的 classifier 时覆盖率退化到 $\max(0, \gamma - \alpha)$。也就是说，classifier 不够准时覆盖保证不是轻微下滑，而是可能直接失效。这从根本上排除了"朴素替换"的做法，把问题逼到"如何用更弱的假设换回覆盖保证"上。
 
-**2. Algorithm 1：用逐点 domain 概率加权校准分数，在 Bayes 最优下恢复覆盖。**
+**2. Algorithm 1：用逐点 domain 概率加权校准分数，在 Bayes 最优下恢复覆盖**
 
 针对偏移导致的欠/过覆盖，Algorithm 1 不再要求精确的 group 标签，而是对每个测试点 $X_{\text{test}}$ 用 domain classifier $c(X_{\text{test}})$ 估计它属于各 domain 的概率向量 $\hat{\lambda}$，再据此加权各 domain 的校准分数来求阈值：
 
@@ -63,11 +63,11 @@ $$\hat{q}_\alpha \leftarrow \min_{\hat{q}} \quad \text{s.t.} \quad \sum_{k=1}^K 
 
 其中 $m_k(\hat{q})$ 是 domain $k$ 中分数不超过 $\hat{q}$ 的校准样本数。这样阈值会随测试点所处的 domain 混合比例自适应移动。Theorem 3.1 证明若 $c$ 是贝叶斯最优分类器则覆盖率 $\Pr(Y_{\text{test}} \in C_\alpha(X_{\text{test}})) \geq 1-\alpha$；Theorem 3.3 进一步把条件放松到 multicalibrated classifier 仍然成立——这正是绕开 Theorem 2.1 那条死路的关键：用 multicalibration 这个比"精确 group 标签"弱、但比"裸准确率"强的假设换回保证。
 
-**3. Algorithm 2：把逐点估计换成批量平均，只需更弱的 multiaccuracy。**
+**3. Algorithm 2：把逐点估计换成批量平均，只需更弱的 multiaccuracy**
 
 Algorithm 1 要求 multicalibration，其计算和样本复杂度都不低。Algorithm 2 观察到很多场景下我们关心的是整个测试批次的覆盖率，于是用测试集上 domain 预测概率的平均值 $\hat{\lambda} = \text{mean}_{i=1}^{n_{\text{test}}} c(X_{\text{test}}^i)$ 替代逐点估计，再走同样的加权阈值计算。代价是放弃逐点自适应，换来的好处是 Theorem 3.5 只需 multiaccurate classifier 就能保证覆盖——multiaccuracy 比 multicalibration 计算和样本复杂度都更低、更容易在实践中满足。这给了实践者一个按 classifier 质量取舍的选项。
 
-**4. Algorithm 3：彻底丢掉 domain classifier，用嵌入相似度近似 domain 归属。**
+**4. Algorithm 3：彻底丢掉 domain classifier，用嵌入相似度近似 domain 归属**
 
 前两种算法都还依赖一个能预测 domain 概率的 classifier。Algorithm 3 把这个要求也去掉：它假设语义相似的数据更可能来自相同 domain，因此直接用嵌入空间的相似度来近似 domain 归属、加权校准数据。具体做法是先按与测试点的嵌入相似度排序、保留 top $\beta$ 比例的校准数据，再用 softmax 把相似度转成权重——令 $\gamma_i = h(z(X_{\text{test}}), z(X_i'))$，权重 $m = \text{Softmax}(\{\gamma_i/\sigma\})$，最后取加权分位数作为阈值。代价是它没有 A1/A2 那样的形式化覆盖保证，但好处是不需要任何 domain 标签或 classifier，可以直接套到任意预训练模型上，实验中也最实用。
 

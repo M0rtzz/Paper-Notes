@@ -48,11 +48,11 @@ tags:
 
 ### 关键设计
 
-**1. RMSNorm 正则化：用最后一层归一化压住嵌入范数，而不是全网络限 Lipschitz。**
+**1. RMSNorm 正则化：用最后一层归一化压住嵌入范数，而不是全网络限 Lipschitz**
 
 链式法则最右一项 $\partial \mathbf{x}_H/\partial \mathbf{x}_E$ 来自双曲指数映射，当欧几里得嵌入范数过大时它会把梯度放大到爆炸。先前工作（Cetin et al.）用 SpectralNorm 来压范数，但 Lemma 4.1 指出 SpectralNorm 必须施加到编码器的**所有层**才能真正约束输出范数，代价是把整个编码器的 Lipschitz 常数和表达力都锁死了。作者改用 RMSNorm：只在最后一个线性层的预激活输出上做 RMSNorm 再乘 $1/\sqrt{d}$ 缩放。Proposition 4.2 证明，只要后续激活是 1-Lipschitz（ReLU/TanH），就有 $\|\hat{\mathbf{x}}\|_2 < 1$，从而把保角因子压在 $\lambda < 2\cosh^2(\sqrt{c})$ 以内。好处是范数约束只花在最后一层，前面所有层的自由度都保留下来，不再牺牲表达力换稳定性。
 
-**2. 可学习特征缩放：把 RMSNorm 压缩掉的双曲容积重新「撑」回来。**
+**2. 可学习特征缩放：把 RMSNorm 压缩掉的双曲容积重新「撑」回来**
 
 RMSNorm 虽然稳住了梯度，却带来副作用——它把 Poincaré Ball 的可用半径压到了 0.76（$c=1$ 时），嵌入挤在球心附近，可用体积大幅缩水。作者加一个可学习标量 $\xi_\theta$，把嵌入重新放大：
 
@@ -60,7 +60,7 @@ $$\hat{\mathbf{x}}_E^{\text{rescale}} = \rho_{\max} \cdot \sigma(\xi_\theta) \cd
 
 $\sigma(\cdot)$ 把缩放限制在安全上界 $\rho_{\max}$ 内，让网络自己学要用到多大的半径。由于双曲可用体积随半径指数增长（$\propto r^d$），把半径从 0.76 撑到 0.95、在 $d=32$ 时就带来 $(0.95/0.76)^{32} \approx 1200\times$ 的体积增益——既保住了稳定性，又把被 RMSNorm 牺牲掉的表达空间几乎全部找了回来。
 
-**3. Hyperboloid 模型 + HL-Gauss 分类值损失：从几何和损失两端同时拆掉剩下两个不稳定源。**
+**3. Hyperboloid 模型 + HL-Gauss 分类值损失：从几何和损失两端同时拆掉剩下两个不稳定源**
 
 链式法则中间一项 $\partial v/\partial \mathbf{x}_H$ 和最左一项 $\partial L/\partial v$ 还各自有隐患。几何这端，Poincaré Ball 的 MLR 输出梯度正比于 $(1-c\|\mathbf{x}_H\|^2)^{-2}$，嵌入一旦靠近球边界这一项就爆炸；作者改用 Hyperboloid 模型，它的值输出 $v^{\text{HB}}$ 公式里根本不含 $(1-c\|\mathbf{x}\|^2)^{-1}$ 这类保角因子项，梯度天然更平稳。损失这端，传统 MSE 回归与双曲 MLR「按到超平面的距离打分」的几何并不匹配；作者把值函数学习改成 HL-Gauss——将连续回报离散成 51 个 bin 当作分类问题来学，它的目标形式正好和双曲 MLR 的超平面距离输出对齐。两个组件分别稳住了链式法则的中间项和最左项，和 RMSNorm 一起做到三项全压。
 

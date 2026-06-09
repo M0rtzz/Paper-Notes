@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. GLASS 转移核构造：用一个潜变量把两步含噪观测耦合起来，让随机性变成可调的旋钮。**
+**1. GLASS 转移核构造：用一个潜变量把两步含噪观测耦合起来，让随机性变成可调的旋钮**
 
 要让 ODE 也能产生随机分支，第一步是给随机转移一个干净的概率模型。GLASS 把相邻两步 $(X_t, X_{t'})$ 看成同一个潜变量 $Z$ 的两个"含噪观测"：$X_t = \alpha_t Z + \sigma_t \epsilon_1$，$X_{t'} = \alpha_{t'} Z + \sigma_{t'} \epsilon_2$，并让两份噪声相关，$\text{Corr}(\epsilon_1, \epsilon_2) = \rho$。于是联合分布是一个带相关结构的高斯：
 
@@ -54,7 +54,7 @@ $$\begin{pmatrix} X_t \\ X_{t'} \end{pmatrix} = \begin{pmatrix} \alpha_t \\ \alp
 
 相关参数 $\rho$ 就是控制随机性强度的那个旋钮：取 $\rho = \alpha_t \sigma_{t'} / (\sigma_t \alpha_{t'})$ 时整个核退化回标准 DDPM 转移，取 $\rho = 1$ 时退化为确定性 ODE，中间值则给出介于二者之间的随机程度。实验中默认 $\rho = 0.4$ 最优——既保留足够的探索性，又不至于像 SDE 那样把质量拖垮。
 
-**2. 充分统计量重参数化：靠高斯共轭把两份观测压成一个，直接复用预训练去噪器，零额外训练。**
+**2. 充分统计量重参数化：靠高斯共轭把两份观测压成一个，直接复用预训练去噪器，零额外训练**
 
 有了转移核，关键问题是怎么不重训就采样它——这是 GLASS 最核心的贡献。利用高斯共轭结构，可以把 $x_t$ 和内部状态 $\bar{x}_s$ 这两个含噪观测压缩成一个充分统计量
 
@@ -66,7 +66,7 @@ $$D_{\mu, \Sigma}(x_t, \bar{x}_s) = D_{t^\star}(\alpha_{t^\star} S(\mathbf{x}))$
 
 其中 $t^\star = g^{-1}\big((\mu^\top \Sigma^{-1} \mu)^{-1}\big)$，$g(t) = \sigma_t^2 / \alpha_t^2$ 是信噪比函数。直观上就是：把两个含噪观测合并成一份等效观测 $S(\mathbf{x})$，再喂给原模型在等效时间 $t^\star$ 去噪。正因为这一步是精确的代数恒等而非近似，整个重参数化完全训练无关，不需要给 GLASS 单独训一个网络。
 
-**3. 内部条件流 ODE：把单步随机转移本身当成一个完整的流匹配问题来解，这就是"流中流"。**
+**3. 内部条件流 ODE：把单步随机转移本身当成一个完整的流匹配问题来解，这就是"流中流"**
 
 把上面的 GLASS 去噪器代回条件流匹配框架，单步随机转移 $x_t \to x_{t'}$ 就变成了一段内部 ODE。引入辅助时间 $s \in [0,1]$ 和 CondOT 调度 $\bar{\alpha}_s = s \bar{\alpha}_1$、$\bar{\sigma}_s = (1-s)\bar{\sigma}_0 + s\bar{\sigma}_1$，内部速度场为
 
@@ -74,7 +74,7 @@ $$\bar{u}_s = w_1(s)\, \bar{x}_s + w_2(s)\, D_{\mu(s), \Sigma(s)}(x_t, \bar{x}_s
 
 用 Euler 法积分 $M$ 步即得一个 $x_{t'}$ 样本。这里随机性全部来自随机初始条件 $\bar{x}_0 \sim \mathcal{N}(\bar{\gamma} x_t, \bar{\sigma}_0^2 I)$，之后的演化是确定性 ODE——这正是它和 SDE 的本质区别：SDE 沿途逐步注入噪声、误差累积导致少步数下严重降质，而 GLASS 把噪声一次性放进起点，靠 ODE 积分器的稳定性把质量保住。每个内部步只需 1 次网络调用，和 SDE 单步成本相同。
 
-**4. 即插即用接入 FKS 与梯度引导：换掉采样器即可，模型和训练都不动。**
+**4. 即插即用接入 FKS 与梯度引导：换掉采样器即可，模型和训练都不动**
 
 GLASS 转移核是一个 drop-in replacement——任何原本用 SDE 转移的方法只要把转移换成 GLASS 就能直接受益。最典型的就是 FKS-GLASS：在 Feynman-Kac Steering 中用 GLASS 转移替换 SDE 转移，配合粒子的 reweight 与 resample 去探索高奖励区域。若要更强的引导，还可以在内部 ODE 里直接加上奖励梯度 $\nabla_y r\big(D_{t^\star}(y)\big)\big|_{y=\alpha_{t^\star}S(\mathbf{x})}$。计算预算上，总 NFE $= K \times M$（$K$ 个外部步 × 每步 $M$ 个内部 ODE 步），所有与 SDE 的对比都在相同总 NFE 下公平进行。
 

@@ -45,19 +45,19 @@ STITCH 要解决的是"长程 trajectory 里语义相似但上下文不同的 st
 
 ### 关键设计
 
-**1. Thematic Scope $\sigma_t$：跨步追踪 latent goal。**
+**1. Thematic Scope $\sigma_t$：跨步追踪 latent goal**
 
 长程对话里最隐蔽的陷阱是"Day 1 酒店价"和"Day 2 酒店价"这类事实语义几乎相同、答案却完全相反，纯 embedding 检索必然挑错段。STITCH 用 thematic scope 把 trajectory 切成一个个 behavior episode，给每段贴一个稳定段名（如 "Day 2 Itinerary"、"Model Optimization"），同一 episode 内的 step 共享 scope，直到 LLM 检测到 goal-state divergence 才开新段。
 
 具体由 LLM predictor $\sigma_t=\mathcal{M}_{\text{scope}}(s_t,H_{\text{scope}},\sigma_{t-1})$ 在滑窗历史 $H_{\text{scope}}$（默认 50 turn，作者实验过 10/100 都更差）加上一个 scope 做条件预测，同时维护一份压缩 summary $\Sigma_\sigma$ 把当前 scope 的 gist 传给后续步，防止 context 爆炸。这一步效果最重，消融里去掉 $\sigma_t$ 让 Small subset F1 从 0.844 跌到 0.463（-38 个点）——因为它把近似事实强行分到不同段，retrieval 天然就完成了 disambiguation。
 
-**2. Taxonomic Event Labeling $\epsilon_t$：在线演化的 action 词表。**
+**2. Taxonomic Event Labeling $\epsilon_t$：在线演化的 action 词表**
 
 同一个 "Booking" 操作会散落在 "Day 1"/"Day 2"/"Day 3" 多个 scope 里，需要一条正交于 scope 的 action 维度来做细粒度区分。STITCH 给每步贴一个 event label（"searching"、"comparing"、"Price Inquiry" 等），词表 $\mathcal{V}_\epsilon$ 完全从数据里长出来：先在 $N_{\text{start}}=50$ 步上零样本生成 seed vocabulary，之后每来一步先语义检索 top-$k_{\text{event}}=5$ 候选喂给 LLM 选最佳 $\epsilon_t=\mathcal{M}_{\text{label}}(s_t,\text{Retrieve}(\mathcal{V}_\epsilon,s_t,k_{\text{event}}))$，没合适的就引入新词，每 $k_{\text{update}}=50$ 步做一次近义 label 合并。
 
 它对细粒度检索极有用——去掉 $\epsilon_t$ 让 Large F1 从 0.592 跌到 0.273（-32 个点）；但也暴露一个 granularity trade-off：event 切太细会把本该聚合的 step 拆开，反而轻微伤害 Type 4（Information Synthesis）类问题，这也是作者把 hierarchical label space 留作 future work 的原因。
 
-**3. Key Entity Types $\kappa_t$ 与结构化共指消解：存储前先 ground。**
+**3. Key Entity Types $\kappa_t$ 与结构化共指消解：存储前先 ground**
 
 STITCH 抽的是实体的"属性类别"而非具体实例（"Metric" 而非具体数值，"Price"/"Rating" 而非具体酒店），$\kappa_t=\mathcal{M}_{\text{entity}}(s_t,\mathcal{V}_\kappa)$，$\mathcal{V}_\kappa$ 同样在线扩张+周期合并——用类型而非实例让 schema 能跨 travel/debate/dialogue 等 domain 通用。在此基础上做共指消解：检索同 scope 且 event type 兼容的历史 step 组成对齐上下文 $C_{\text{align}}$，让 LLM 把 "Book it." 改写成 "Book Apollo Hotel"（$s'_t=\mathcal{M}_{\text{rewrite}}(s_t,C_{\text{align}})$）。
 

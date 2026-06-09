@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 带噪声过滤的概念感知探针数据集：让 probe 学的是"此刻这个 token 知不知道自己会出现"。**
+**1. 带噪声过滤的概念感知探针数据集：让 probe 学的是"此刻这个 token 知不知道自己会出现"**
 
 probe 想成立的前提是数据真实反映 token 在当下时刻的"觉知状态"，否则后面找到的"重要头"全是噪声。论文以 "a photo of {obj1} and {obj2}" 为模板批量生成，逐步、逐层、逐头记录 text token key 向量 $\mathbf{k}^{(t,l,h)}$，label 取自最终图像并用 Mask2Former (mmdetection) 与 BLIP-VQA 双标注、两者一致才采纳以压掉单标注器噪声。关键是清掉两类时间错位的脏样本：早期 timestep 里目标在第 1-3 步根本还没出现，却因为最终成功而被打成 $y=1$，此时 key 编码的是"还没生成"、label 却说"会生成"，直接制造训练矛盾；晚期 timestep 扩散主要在刷细节，omission 信号已几乎消失。Table 1 把这点量化得很干净——early/intermediate/late 三段与最终标签的 agreement 分别是 0.409、0.965、1.000，于是只保留中间区间 $\mathcal{T}$ 的样本进 probe 训练集、按 4:1 切 train/val。这种"按 generation dynamics 过滤数据"本质是把扩散模型的时间结构直接嵌进了 probe 设计。
 
-**2. 用线性探针做逐头定位：在 1368 个头里只挑出编码遗漏信号的专家头。**
+**2. 用线性探针做逐头定位：在 1368 个头里只挑出编码遗漏信号的专家头**
 
 承接上一步，信号是稀疏的——不是每个头都编码 omission，所以必须精确定位、避免对全部头无脑干预破坏其他能力。论文对每个 $(l,h)$ 单独训一个线性分类器，输入该头的 text token key 向量、输出 absent vs present 的预测。Fig. 2(a) 显示 probe 准确率在中间 timestep 达到峰值（与 Table 1 一致），Fig. 2(b) 的 head-wise 热图则揭示一个反直觉的层分布：早期 layer 接近随机猜（此时 text token 还没充分吸收 image token 的视觉反馈），中间 layer 大幅抬升（最高 91.0% 准确率），后期 layer 又掉下来。据此选出 top-300 头（占 1368 头的 22%，全部超过 80% 准确率）作为"omission 信号头"。Fig. 3-4 进一步用 box plot 把这些 probe 输出随 timestep 的演化画出来：上排预测 $\hat{x}_0$ 里的视觉对象逐渐显形，下排 probe 的"present"概率同步爬升——这是对"模型自我感知"非常直观的动态可视化。逐头独训 probe 工程量大，但换来的精确定位正是后续 OSI 不产生负面副作用的前提。
 
-**3. 质心均值平移干预 OSI：朝"缺席方向"推 key 向量，激发模型补全。**
+**3. 质心均值平移干预 OSI：朝"缺席方向"推 key 向量，激发模型补全**
 
 定位到信号头后，OSI 用训练免费、近零开销的方式做手术式干预。对每个 top-K 头先算质心均值平移方向 $\boldsymbol{\delta}^{(l,h)} = \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=0] - \mathbb{E}[\mathbf{k}^{(t,l,h)}|y=1]$（注意是"absent 减 present"），归一化得 $\boldsymbol{\theta}^{(l,h)}$；inference 时按
 

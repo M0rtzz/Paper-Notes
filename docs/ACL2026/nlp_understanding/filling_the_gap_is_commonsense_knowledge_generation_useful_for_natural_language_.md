@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. LLM 自生成自然语言 axiom：用一句话桥接 premise 和 hypothesis，而非 KG 三元组。**
+**1. LLM 自生成自然语言 axiom：用一句话桥接 premise 和 hypothesis，而非 KG 三元组**
 
 作者把 NLI 的失败根因归到 (P, H) 之间的"知识 gap"：当 premise 和 hypothesis 之间隔着一条隐式常识链（如 "a woman with a big grin" → "she is not shot"），模型常因缺这块常识而判错。现有从 ConceptNet/Aristo 抽三元组的做法既稀疏又难保证和当前 P-H pair 相关，于是作者干脆让 LLM 自己用一句自然语言写出这条桥梁规则——比如"big grin 通常意味着 happy/safe，与 shot 不兼容"。
 
 这么做的好处是双重的：同一个模型既懂语言又有大量常识储备，能产出和 (P, H) 高度相关的 axiom，避开了离散 KG 的覆盖稀疏问题；而且自然语言比 triples 表达力强得多，能把"为什么能推出"讲清楚。本质上是让模型自己说出它推理时缺的那一环，比从外部检索更有针对性。
 
-**2. Factuality-aware Selective Injection：只在模型自己也信的时候才注入。**
+**2. Factuality-aware Selective Injection：只在模型自己也信的时候才注入**
 
 纯注入实验暴露了一个问题——LLM 生成的 axiom 质量参差，经常带 hallucination 或干脆和 hypothesis 直接重复，强行注入反而把模型带歪。作者的解法是加一道 factuality 闸门：用同一个 LLM 再跑一遍 axiom evaluation，对 axiom 按 helpful / factual / consistent 几个维度打分（指标改自 Zheng 2024），只有通过 factuality 阈值的 axiom 才进入推理阶段。
 
 形式上即 $\hat{y} = \text{LLM}(P, H, A)$ if $\text{score}(A) \geq \tau$ else $\text{LLM}(P, H)$——这就是论文主张的 "selective access"：公理不靠谱时模型退回原始 P-H 推理，靠谱时才借力。这一步把注入限制在"模型自己也信"的范围内，最大化信号噪声比；消融显示它正是收益主因，不过滤的强注入经常掉点，所以过滤本身就是核心贡献而非小 trick。
 
-**3. 缓解 Neutral 偏好：给模型一个敢站队的理由。**
+**3. 缓解 Neutral 偏好：给模型一个敢站队的理由**
 
 作者观察到 baseline 在 ANLI 这类 adversarial dataset 上 Neutral 召回过高——这其实是模型在不确定时的自我保护兜底，并非真判断出"既不蕴含也不矛盾"。当 premise 和 hypothesis 看似无明显蕴含/矛盾时，模型默认选 Neutral 最安全。
 

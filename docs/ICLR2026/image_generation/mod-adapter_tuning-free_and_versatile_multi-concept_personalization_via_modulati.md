@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. Vision-Language Cross-Attention：以概念词为锚点，从图像里只抠出目标概念。**
+**1. Vision-Language Cross-Attention：以概念词为锚点，从图像里只抠出目标概念**
 
 直接拿整张概念图的全局特征会把不相关的内容也带进来——这正是现有 tuning-free 方法处理姿态/材质时「copy-paste 整个物体」的根源。这里改用概念词作锚点来定向提取：概念词先过 CLIP 文本编码器和一个 MLP 映射层得到 neutral feature，再投影成 $N$ 个 query（每个 query 加正弦位置编码，用来区分不同的 DiT block）；概念图像过 CLIP 图像编码器得到 key/value。每个 block 对应的视觉特征由交叉注意力 $\text{Attention}(Q_i, K, V)$ 提取。借助 CLIP 本身的图文对齐能力，概念词就像一把钥匙，引导注意力对准图像中真正属于该概念的部分，而不是粗暴地取全局表征。
 
-**2. Mixture-of-Experts (MoE) 投影：用聚类路由把不同类型概念映射到调制空间。**
+**2. Mixture-of-Experts (MoE) 投影：用聚类路由把不同类型概念映射到调制空间**
 
 提取出的视觉特征还要映射进 DiT 调制空间，而物体、材质、姿态这些概念的映射模式差别很大，单个 MLP 学不过来。于是引入 12 个 expert MLP，每个负责一类映射模式相近的概念。路由不走可学习的门控网络，而是用一个无参数方案：对训练集中所有概念词的 neutral feature 做 k-means 聚类，按聚类结果把概念分配给对应 expert。这样做是因为可学习的线性门控容易出现 expert 利用不均衡（少数 expert 被反复选中、其余闲置），而 k-means 路由按特征分布天然把概念均匀摊到各 expert 上，简单却有效。
 
-**3. VLM 引导预训练：先用文字描述把 image–modulation 的大 gap 抹平。**
+**3. VLM 引导预训练：先用文字描述把 image–modulation 的大 gap 抹平**
 
 从概念图像空间到 DiT 调制空间之间隔着一个巨大的 gap，直接端到端训练很难收敛（消融里去掉这步 CP·PF 从 0.62 暴跌到 0.17）。作者的办法是先做一轮轻量预训练给 Mod-Adapter 一个好的初始化：用 VLM 对概念图像生成详细文字描述 $p^+$（如 "transparent cyan-green glass surface"），把这段描述编码后当作调制空间的监督信号，让 Mod-Adapter 的输出向它对齐。预训练损失为
 

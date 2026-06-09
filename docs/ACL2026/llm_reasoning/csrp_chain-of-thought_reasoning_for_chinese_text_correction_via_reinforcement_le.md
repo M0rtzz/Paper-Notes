@@ -45,15 +45,15 @@ Phase I 使用 5.9M 样本继续预训练，其中通用数据和纠错相关数
 
 ### 关键设计
 
-**1. Balanced Continued Pre-training：先把中文规范和错误分布喂进参数，再谈纠错。**
+**1. Balanced Continued Pre-training：先把中文规范和错误分布喂进参数，再谈纠错**
 
 直接 SFT 的困境在于，通用 4B 模型对中文非规范错误——同音字、形近字、虚词冗余、学习者特有的错误模式——几乎没有先验，硬学 source→target 映射等于让一个不懂中文写作规范的人去当批改老师。CPT 阶段先补这块知识：从 wiki-zh-25、wiki-zh-23、cci2、lang8+HSK 等来源汇集原始语料，经 MinHash 去重和启发式过滤后从 7,287,295 条压到 5,901,700 条高质量样本，再以约 4.72M 通用样本配 1.18M 纠错样本的 8:2 比例混合训练。8:2 的用意是既保住通用语言能力不退化，又让模型对"什么是错、错往哪个方向"有底层的统计直觉，为后两个阶段铺好地基。
 
-**2. Rationale-Augmented SFT：让模型先诊断、后下笔，而不是把纠错当黑盒翻译。**
+**2. Rationale-Augmented SFT：让模型先诊断、后下笔，而不是把纠错当黑盒翻译**
 
 普通 SFT 把纠错当成一次性的句子翻译，模型只学会"看到一句话就改成另一句话"，没有"为什么改"的约束，自然容易把正确句子也顺手改得更流畅。CSRP 改成诊断式 CoT：用 Qwen-Plus 作 teacher，但 teacher 不直接给最终纠错答案，只在固定的 source 与 gold target 之间生成中间 rationale，格式为 [Localization] → [Classification] → [Rationale]，并要求符合 `<think>...</think>` 结构、经过滤后保留。学生因此学到"先定位哪里错、归到哪一类、解释为何要改"再输出修正。让 teacher 只产 rationale 而非 corrector，是为了切断 teacher 自身过纠正习惯对学生最终输出的直接污染——1,000 条随机 rationale 的双盲人工评估中 95.2% 被判为 linguistically faithful，Cohen's $\kappa=0.81$，说明这层解释本身是可信的。
 
-**3. Efficiency-Aware Policy Alignment：用强化学习把"该不该改"的决策边界校准回保守一侧。**
+**3. Efficiency-Aware Policy Alignment：用强化学习把"该不该改"的决策边界校准回保守一侧**
 
 CSRP 把过纠正重新定义成一个 policy alignment 问题：GEC 的主指标 $F_{0.5}$ 偏重 precision，所以奖励不能只看"输出像不像 gold"，否则模型会为了流畅而乱改。GRPO 阶段引入两个显式量：相对改进 $RI=\frac{d(S,G)-d(P,G)}{d(S,G)+\epsilon}$ 衡量预测 $P$ 比原句 $S$ 离 gold $G$ 近了多少，编辑效率比 $\eta=\frac{d(S,G)-d(P,G)}{d(S,P)+\epsilon}$ 衡量每一步编辑的"性价比"，其中 $d$ 是 Levenshtein 距离。奖励对接近 gold 的高效编辑给高分，对无效编辑和空输出施罚；尤其当原句本来正确时，保持不变得 +2.0、任何修改得 -2.0——这条把"不动"显式地变成了高回报选择，正是缓解过纠正的关键。
 

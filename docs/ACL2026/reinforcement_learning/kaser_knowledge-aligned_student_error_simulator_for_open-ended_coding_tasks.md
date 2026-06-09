@@ -46,15 +46,15 @@ KASER由三部分组成。第一部分是Student Knowledge Estimator，用知识
 
 ### 关键设计
 
-**1. Student Knowledge Estimator：把学生历史压成可解释的知识画像。**
+**1. Student Knowledge Estimator：把学生历史压成可解释的知识画像**
 
 学生模拟最难解释的就是“为什么会犯这个错”——直接喂学生ID或历史代码，模型学到的是黑箱关联。KASER先用知识追踪模型把学生过去的提交编码成隐状态 $h_t$，再过一层线性加sigmoid得到掌握度向量 $m_t \in [0,1]^k$，每一维对应一个Knowledge Component（KC）的掌握程度。面对下一题时只取该题涉及的KCs，用补偿模型平均它们得到整体正确率估计，并用BCE损失对齐学生下一次提交是否做对。这样生成的错误就能和具体知识点缺陷挂钩，而不是泛泛地“模仿这个学生”。
 
-**2. Knowledge-guided code predictor：让LLM显式看到学生的知识缺陷再写代码。**
+**2. Knowledge-guided code predictor：让LLM显式看到学生的知识缺陷再写代码**
 
 预训练代码模型天然倾向写出正确、规范的代码，仅用SFT去拟合学生提交也会被拉向“平均正确”的解法。KASER把上一步的KC掌握度写进prompt——题面之外还附上每个相关KC的数值，例如“Conditional logic mastery = 0.21”，让Qwen2.5-Coder 7B Instruct在生成每个token时都能看到这个画像。SFT阶段用标准交叉熵先做基本任务适配，而知识条件的真正价值在于给后续RL提供一个**可对齐的控制变量**：错误该不该出现、出现在哪，可以由掌握度高低来调制。
 
-**3. GRPO hybrid reward：同时压住代码相似、错误匹配和多样性三个目标。**
+**3. GRPO hybrid reward：同时压住代码相似、错误匹配和多样性三个目标**
 
 只盯代码相似度会让模型学到表层风格、丢掉学生真实的错误分布，还会像SFT一样mode collapse。KASER对每个输入采样 $G=5$ 个候选代码，用三项等权相加的混合奖励 $R=R_{Sim}+R_{Error}+R_{Div}$ 打分：$R_{Sim}$ 用CodeBLEU衡量与真实提交的整体相似；$R_{Error}$ 是预测错误集合与真实错误集合的IoU（两者都判定正确时记为1），把模型注意力逼向学生实际犯的错；$R_{Div}=1-\max \text{CodeBLEU}(\hat{c},\hat{c_i})$ 惩罚同组候选彼此太像，保住群体多样性。GRPO在组内对奖励做z-score归一化形成优势，再加KL惩罚约束策略别偏离参考模型太远。三项各管一头——表面相似、错误语义、群体差异——缺一项就会在对应指标上塌掉（见消融）。
 

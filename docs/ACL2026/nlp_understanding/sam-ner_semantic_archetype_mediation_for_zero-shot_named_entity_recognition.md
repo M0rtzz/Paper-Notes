@@ -46,15 +46,15 @@ SAM-NER 是一个 progressive mediation pipeline。第一阶段 Entity Discovery
 
 ### 关键设计
 
-**1. Cooperative Entity Discovery 与 CCR：用双抽取器分工解决"既要召回长尾实体又要避开泛化噪声"。**
+**1. Cooperative Entity Discovery 与 CCR：用双抽取器分工解决"既要召回长尾实体又要避开泛化噪声"**
 
 单一抽取器在零样本目标域里很难两头兼顾——指令微调模型边界准但漏掉长尾，银标模型召回高却容易把通用功能词也当成实体。SAM-NER 让两者分工：Anchor Extractor 是基于 IEPile 高质量 IE 指令微调的 Llama3-8B，负责高精度边界；Explorer Extractor 基于 Pile-NER 银标数据训练，负责广撒网式的高召回。关键在于二者如何合并：Collaborative Consensus Refinement（CCR）把 explorer 里最容易出噪声的单词级候选逐个交给 anchor 复核，若 anchor 不独立支持该 span 就删掉，最后把 anchor 的结果与去噪后的 explorer 结果合并。这样银标模型只负责扩大覆盖面，指令模型则充当语义过滤器，把"宁滥勿缺"的召回收敛成可靠候选——消融里去掉 CCR 后 AI 域直接掉 7.4 点，正是这层共识在剪噪声。
 
-**2. Universal Semantic Archetypes：把异构细粒度标签蒸馏成 14 个稳定原型，给跨域迁移一个不漂移的落脚点。**
+**2. Universal Semantic Archetypes：把异构细粒度标签蒸馏成 14 个稳定原型，给跨域迁移一个不漂移的落脚点**
 
 零样本 NER 最大的痛点是目标域 schema 千差万别，直接让 LLM 从实体 mention 一步跳到细粒度目标类型，schema drift 会很大。作者的解法是先落到一个跨域稳定的中间层：从 IEPile 的 NER 子集蒸馏异构标签，构造 14 个通用语义原型（Person、Organization、Medicine、Science 等），并定义确定性投影函数 $M:T_{orig}\rightarrow A$ 把原始标签映射到原型。训练时实体句子用 `<ENT>` 标记 mention，原始细粒度标签经 $M$ 变成原型级监督；推理时分类器只需在这 14 个原型上预测实体的 abstract type。原型数 14 不是拍脑袋——聚类分析里 k=14 在 Silhouette 和 Gap Statistic 之间折中最好，k=24 虽更细但更容易耦合领域噪声。这个中介层把"目标类型判断"的不确定性大幅压低，相当于先把实体归到稳定的语义父类，再处理细粒度归属。
 
-**3. Definition-Guided Semantic Calibration：用定义对齐把原型映射回目标类型，避免被相似标签名误导。**
+**3. Definition-Guided Semantic Calibration：用定义对齐把原型映射回目标类型，避免被相似标签名误导**
 
 有了原型预测还不够，最终要落到目标域细粒度类型。如果直接让 LLM 预测目标标签，相互接近的标签名（如 Politician 与 Person）很容易把它带偏。SAM-NER 改成"定义对齐"：为每个 abstract archetype 准备清晰、互斥的 canonical definition，并对目标域类型定义做轻量规范化，然后让一个冻结的 LLM 当 calibrator，在句子上下文 + 预测原型定义 + 候选目标类型定义三重约束下挑出最兼容的目标类型。因为已经有原型 prior 缩小了推理空间，目标类型选择就从"开放式标签猜测"变成"在少数候选定义里做对齐判断"，且全程不需要目标域训练数据。这一步是整条管线最关键的模块——消融里移除 calibration 后，AI/Literature/Music/Science 分别下降 9.7/12.6/12.6/11.0 点。
 

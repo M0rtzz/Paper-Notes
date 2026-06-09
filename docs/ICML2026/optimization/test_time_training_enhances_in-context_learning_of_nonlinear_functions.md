@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 预训练利用 + 自蒸馏 weak recovery：站在预训练肩膀上绕过样本壁垒。**
+**1. 预训练利用 + 自蒸馏 weak recovery：站在预训练肩膀上绕过样本壁垒**
 
 直接用真实标签 $y$ 训 LoRA 受 link 函数的 information exponent $\mathrm{ie}(\sigma_*)$ 制约，对高阶 Hermite 信号太弱，样本量需求随之飙升。本文的巧招是不用真实 $y$，而是把预训练后的 attention 输出 $g(\Gamma^\star,\mathbf{X}_{N_1},\mathbf{y}_{N_1},\mathbf{w}_i)$ 当教师信号，对新采样的 query $\mathbf{w}_i$ 做一步 $L_2$-正则 GD，把 $\mathbf{u}^{(0)}$ 推到 $\mathbf{u}^{(1)}$，达成 $\langle\beta,\mathbf{u}^{(1)}\rangle\ge 1/\mathrm{polylog}(d)$ 的 weak recovery。这个教师信号之所以强，靠的是一个核心引理 $\mathrm{ie}(\mathrm{He}_{\mathrm{ge}(\sigma_*)})=\mathrm{ge}(\sigma_*)$：预训练后的 attention 已经能在 in-context 内计算 $\langle\beta,\mathbf{x}\rangle^{\mathrm{ge}(\sigma_*)}$，于是信号强度从 $r^{-(\mathrm{ie}-1)}$ 提升到 $r^{-(\mathrm{ge}-1)}$，样本复杂度被从 $r^{\mathrm{ie}(\sigma_*)}$ 压到更紧的 $r^{\mathrm{ge}(\sigma_*)}$（偶函数情形 $\mathrm{ge}\le 2$）。用 attention 自蒸馏既避免了 catastrophic forgetting，又把"学方向 $\beta$"的代价整整降了一个量级。
 
-**2. Strong recovery 的几何级收敛：把对齐精度从弱推到强。**
+**2. Strong recovery 的几何级收敛：把对齐精度从弱推到强**
 
 weak recovery 只把信号强度做到 $\Theta(1/\mathrm{polylog}(d))$，离精确恢复还差得远。这一步用 $N_3$ 步在线 SGD 接着把 $\langle\beta,\mathbf{u}^{(n)}\rangle$ 推到 $\ge 1-\varepsilon$。关键观察是：weak recovery 之后信号强度已经与 $\mathrm{ge}(\sigma_*)$ 解耦，论文进一步证明误差 $1-\langle\beta,\mathbf{u}^{(n)}\rangle$ 一旦小到某阈值就转入几何级衰减，于是把样本数从 Lee et al. 2024 线性收敛上界的 $\Theta(\varepsilon^{-2})$ 紧化到 $\Theta(\varepsilon^{-1}\log\varepsilon^{-1})$。"弱恢复 → 强恢复"两段分析本身是单 index 模型理论的标准技术，本文的额外贡献是用几何级收敛把强恢复段的样本数上界做得更紧。
 
-**3. MLP 层 ridge 训 link 函数：把"学非线性"和"学方向"解耦。**
+**3. MLP 层 ridge 训 link 函数：把"学非线性"和"学方向"解耦**
 
 方向 $\beta$ 由 attention 层负责后，剩下的任务-specific 非线性 $\sigma_*^{\text{test}}$ 交给 MLP 层用 $N_4$ 个上下文样本拟合。做法是固定 $\mathbf{v},\mathbf{b}$ 为随机，只让 $\mathbf{a}$ 解一个凸的 ridge 回归：
 

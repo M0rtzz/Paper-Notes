@@ -47,15 +47,15 @@ LiTS 不是单个算法，而是一个框架。它的关键是定义一套统一
 
 ### 关键设计
 
-**1. 统一数据结构 Action → Step → State → Node：让搜索算法只碰统一节点，不碰任务细节。**
+**1. 统一数据结构 Action → Step → State → Node：让搜索算法只碰统一节点，不碰任务细节**
 
 如果搜索循环直接依赖具体任务对象，就没法跨任务复用。LiTS 用四层结构把搜索语义和任务语义隔开：Action 是 Policy 产出的原子动作，Step 把动作连同执行结果一起封装，State 累积一串 Steps 并提供 render 方法，Node 则挂上 parent、children、reward、visit count 这些搜索字段。不同任务只去实现对应的 subclass——数学推理用 ThoughtStep、子问题分解用 SubQAStep、工具调用用 ToolUseAction、环境交互用 EnvAction——而 MCTS、BFS 这些算法始终只在 Node 和轨迹接口上工作，完全不知道底下是 SQL 还是 BlocksWorld。
 
-**2. Policy / Transition / RewardModel 组件解耦：把候选生成、状态转移、路径打分拆成三块可换的模块。**
+**2. Policy / Transition / RewardModel 组件解耦：把候选生成、状态转移、路径打分拆成三块可换的模块**
 
 把一个 LLM reasoning agent 里“生成动作、执行动作、给动作打分”三件事捆死在一起，就很难单独替换其中一项。LiTS 把它们拆成三类组件：Policy 根据当前 state 生成候选 actions，Transition 执行动作并返回新 state，RewardModel 给节点或动作提供价值信号。Chain 类方法只需要 Policy + Transition，Tree 类方法再额外接上 RewardModel。这样同一套任务组件能在 MCTS 和 BFS 之间复用，同一个搜索算法也能换到新任务组件上测泛化——后面 ToT-BFS 和 ReST-MCTS 能共用完全相同的 ConcatPolicy、ConcatTransition、GenerativePRM、只换搜索算法，正是靠这层解耦。
 
-**3. decorator registry 与 CLI-first 组合：让扩展新任务不用动核心包。**
+**3. decorator registry 与 CLI-first 组合：让扩展新任务不用动核心包**
 
 抽象优雅还不够，框架好不好用还取决于用户接入新东西要写多少代码。LiTS 用一套 decorator 把扩展路径压到最短：加一个 Crosswords 任务，只需 `@register_transition`、prompt 和 `@register_dataset`，命令行里 `--dataset crosswords` 就能跑；MapEval-SQL 通过 dataset 和 resource registry 返回 tools 与 tool_context；想换搜索算法，`@register_search("bfs")` 注入一个自定义 BFS 即可。核心包一行不用改，domain experts 的学习成本就被压了下来。
 

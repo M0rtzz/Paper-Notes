@@ -44,19 +44,19 @@ MM-Eval 接收源文档 $D = \{T_{source}, V_{source}\}$ 和候选摘要 $S_{can
 
 ### 关键设计
 
-**1. Pillar 1：文本质量 = OpenFActScore（硬事实）+ G-Eval（软质量），把事实和文风分开度量再合并。**
+**1. Pillar 1：文本质量 = OpenFActScore（硬事实）+ G-Eval（软质量），把事实和文风分开度量再合并**
 
 ROUGE 只看 n-gram，一段事实全错但读起来流畅的摘要照样能拿高分。MM-Eval 的第一根支柱把"事实对不对"和"语言好不好"拆成两类异质指标分别评。事实侧走 decompose-then-verify：先用 instruction-tuned LLM 把生成摘要 $T_{gen}$ 分解为原子事实集合 $A=\{a_1,\dots,a_m\}$，再让第二个 LLM 对每个 $a_i$ 二元判别是否被源文支持，得 $S_{fact} = \frac{1}{|A|}\sum_i v_i$。文风侧用 G-Eval 的 CoT + 概率加权打分，给出切题 $S_{rel}$、连贯 $S_{coh}$、流畅 $S_{flu}$。
 
 四个子分量再用 Ridge（$\alpha=1.0$）聚合成 $S_{text} = w_1 S_{fact} + w_2 S_{rel} + w_3 S_{coh} + w_4 S_{flu}$，学到的权重是事实 0.55、连贯 0.29、流畅 0.15、切题 0.02。原子化的好处是分数对 paraphrase 和长度免疫——把事实评估从"n-gram recall"提升到"fact-level precision"；G-Eval 的概率加权则压住了 LLM 在相邻分数间反复横跳的方差问题。
 
-**2. Pillar 2：MLLM-as-a-Judge 跨模态对齐，绕开 Image Precision"必须选中参考图"的死规矩。**
+**2. Pillar 2：MLLM-as-a-Judge 跨模态对齐，绕开 Image Precision"必须选中参考图"的死规矩**
 
 Image Precision 假设有一个标准图集，模型选了语义等价但不在集里的图就 0 分。第二根支柱改用 LLaVA-v1.6-mistral-7b 当 judge，对每个（文本片段，候选图）对先做 CoT 推理，再输出 1–5 的 likert 分，归一化到 $[0,1]$。它判断的不是"图和文字像不像"，而是图有没有在语义上 complement / supplement 文字——是否补充了文字里没点明的细节。
 
 这种 pragmatic 推理只有强 MLLM 做得了，而 CoT 推理又稳定了打分方差。这根支柱内部刻意不再拆子指标、保持单一分数，目的是将来 MLLM 升级了可以直接换 judge，框架其余部分不用动。
 
-**3. Pillar 3：Truncated CLIP Entropy 视觉多样性，用谱熵惩罚"语义冗余"而非"视觉差异"。**
+**3. Pillar 3：Truncated CLIP Entropy 视觉多样性，用谱熵惩罚"语义冗余"而非"视觉差异"**
 
 示威新闻里常配好几张同一场景不同角度的照片，pixel-level 或 pairwise 距离会判它们"差异很大"，但信息上是冗余的。TCE 换个角度：对选出的 $k$ 张图取 CLIP embedding $F$，算经验协方差 $C$ 的特征值 $\lambda_i$，取前 20 大特征值归一化为概率 $p_i$，再算 Von Neumann 熵：
 

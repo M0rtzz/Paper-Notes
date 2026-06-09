@@ -50,19 +50,19 @@ base LLM $p$ 给定 $(x, c)$ → $p(\cdot|x, c)$；
 
 ### 关键设计
 
-**1. Safe Context-Aware Predictor：confidence 够就早退、始终不够就回退 zero-shot。**
+**1. Safe Context-Aware Predictor：confidence 够就早退、始终不够就回退 zero-shot**
 
 用户上下文质量未知——可能有用也可能有害，需要一个两端都能自适应的预测器。作者的做法是逐层算 confidence $\mathfrak{C}_l=\max_k p_l(k|x,c)$，从 layer 1 起遍历，第一个 $\ge\lambda$ 的层就出预测（早退能天然避开深层 overthink）；若所有层都不够 confident，就退回 zero-shot $p_L(\cdot|x)$，即 $\bar y_\lambda=\hat y_\lambda$ 当任一层 confident、否则 $\arg\max p_L(k|x)$。
 
 关键在于把 zero-shot fallback 接进来：传统 early-exit 只为加速，而 zero-shot 是 pre-deployment 已充分测试的"已知 reliable"行为，一旦用户上下文有害，模型可以"装作没看见"退回安全基线。这一步把"加速"和"安全"统一进了同一个预测器。
 
-**2. Context-Aware Loss：用 zero-shot 当参照系量化 overthinking。**
+**2. Context-Aware Loss：用 zero-shot 当参照系量化 overthinking**
 
 要控风险，先得能测"上下文到底帮没帮忙"。作者定义 $\ell_c(\lambda;x,y,c)=\ell(\bar y_\lambda(x,c),y)-\ell(\hat y(x),y)$——同一模型下"用 context 的预测"减去"不用 context 的 zero-shot 预测"的损失差：正值说明 context 让结果更差（overthink），负值说明 context 帮了忙（helpful）。
 
 以前的 early-exit loss 比较的是"早退 vs 全 forward"，可全 forward 本身已经被 harmful context 污染了，参照系是歪的。换成 zero-shot 当参照系，才能正确地把"context 是不是真有用"测出来，进而驱动后面的风险控制。
 
-**3. Domain-Preserving Risk Transformation：让 LTT 能吃下含负值的损失。**
+**3. Domain-Preserving Risk Transformation：让 LTT 能吃下含负值的损失**
 
 Learn-then-Test 要求损失 $\ell\in[0,1]$，可 $\ell_c$ 天然带负值（helpful 时）。以往直接 clip 负值到 0，会丢掉"远好于 zero-shot"这部分信息，让 LTT 过保守。作者改用线性变换 $\ell'=(\ell_c-a)/(b-a)$、$\epsilon'=(\epsilon-a)/(b-a)$ 把 $\ell_c\in[-1,1]$ 映到 $[0,1]$，再在变换后空间选 $\hat\lambda$，并证明这个 $\hat\lambda$ 同时控制原始 risk $R(\ell)\le\epsilon$。
 

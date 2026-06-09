@@ -45,15 +45,15 @@ CoG 针对的是多跳 KGQA 里 LLM agent 的"认知僵化"：早期一次错误
 
 ### 关键设计
 
-**1. 离线 relational blueprint 库 + Hybrid Copy-Adapt：从训练数据里蒸出一个全局可复用的"结构罗盘"。**
+**1. 离线 relational blueprint 库 + Hybrid Copy-Adapt：从训练数据里蒸出一个全局可复用的"结构罗盘"**
 
 agent 缺的是廉价、可解释的结构先验。CoG 用确定性规则（regex）把训练集 SPARQL 里所有 Freebase ID 和非结构元素剥掉，只留下关系序列 $\mathcal{S}(q)=\langle r_1,\ldots,r_L\rangle$，按字符串去重，每个唯一模板挑最长 question 当 semantic anchor 用 SentenceTransformer 编码建索引。这一步几乎零成本——WebQSP 3098 条 query 压成 569 个模板（18.4%）、GrailQA 44k 压成 3.7k（8.3%），说明 KG 推理的逻辑结构远比自然语言句式有限。在线查询时先 mask 掉 topic entity 再检索 top-$K$ 邻居蓝图，相似度 ≥ $\tau_{\text{copy}}=0.92$ 就直接 copy top-1，否则把 top-2 邻居 + 原 question 交给 LLM adapt，得到查询专属的 $S_{\text{BP}}=\langle r_1^{\text{BP}},\ldots,r_L^{\text{BP}}\rangle$。$\tau_{\text{copy}}=0.92$ 下只有 8.7% 走 copy、91.3% 走 adapt，既复用经验又不死记训练分布；GrailQA 零样本 split 上 GPT-3.5 仍拿到 83.6%（ToG 72.7、PoG 81.7），佐证蓝图学的是抽象结构而非死记硬背。
 
-**2. 三信号融合 rerank + Structure-Consistency Safeguard：让每步候选同时被局部语义、蓝图对齐和全局兼容性打分，还兜住结构正确的边。**
+**2. 三信号融合 rerank + Structure-Consistency Safeguard：让每步候选同时被局部语义、蓝图对齐和全局兼容性打分，还兜住结构正确的边**
 
 只靠局部语义相关会陷局部最优（PoG 的失败模式），只靠全局结构又会把 KG 稀疏区的正确边过滤掉。CoG 先用单调的 slot-alignment 索引 $\pi(t)=\arg\max_j \text{sim}(h(o_t), h(r_j^{\text{BP}}))$ 找当前子目标对应蓝图的哪个位置（强制非递减，保证逐 hop 推进），再把三类分数融合成 $\text{Score}(r)=\lambda_{\text{loc}}\phi_{\text{loc}}+\lambda_{\text{step}}\phi_{\text{step}}+\lambda_{\text{glob}}\phi_{\text{glob}}$，权重取 $\lambda_{\text{loc}}{=}0.6,\lambda_{\text{step}}{=}0.25,\lambda_{\text{glob}}{=}0.15$（敏感性分析显示这组权重稳健）。LLM 在 shortlist 上 prune 后，最终集合强制并入 step-wise top1——这个 Safeguard 是个 dual-source 选择：把 LLM 当 semantic expert、把 $\phi_{\text{step}}$ 当 structure expert 并联，避免 LLM 漏掉那些结构正确但语义不显眼的关系。
 
-**3. Failure-Aware Refinement（System 2）：用"诊断 + 定向回溯 + grounded 兜底"替代盲目重试。**
+**3. Failure-Aware Refinement（System 2）：用"诊断 + 定向回溯 + grounded 兜底"替代盲目重试**
 
 ToG/PoG 没有显式的失败诊断，卡住了要么死循环、要么提前终止然后 hallucinate（附录 Case 2 里 PoG 在同一节点重试 26 次、烧掉 14k token）。CoG 在检测到 stagnation 或证据不足时切到 correction 模式：让 LLM 在工作记忆 $\mathcal{M}$ 条件下回顾轨迹 $\mathcal{T}=[e_0,r_1,\ldots]$ 和被剪掉的分支摘要，pinpoint 出错误决策点 $t_{\text{err}}$；agent 随即把 frontier 回退到 $t_{\text{err}}$ 之前，召回那些曾被过早 prune、但结构相关的候选，重新扩展。若 KG 真的缺边、无论如何 verify 不出来，就 fallback 到 grounded inference，只拿 verified 的路径段 + 未满足的约束让 LLM 综合答案，把参数化幻觉的风险压到最低。消融显示 System 2 是单一最重要组件：CWQ 上去掉它准确率从 66.9 跌到 58.5（−8.4），跌幅是去掉 System 1 蓝图引导（−5.4）的近 1.6 倍。
 

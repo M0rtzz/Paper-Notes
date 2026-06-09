@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 三层一致性幻觉验证（O/A/R Consensus Verification）：用「两个模型都同意」过滤单模型噪声。**
+**1. 三层一致性幻觉验证（O/A/R Consensus Verification）：用「两个模型都同意」过滤单模型噪声**
 
 现有数据集过分偏向 object 级幻觉，对 attribute（颜色/材质/姿态/状态）和 relation（空间/动作关系）这类细粒度幻觉覆盖不足，而单一 verifier 又容易带噪。AVES-DPO 先把初始回复解析成场景图 $G=(O, A, R)$，再要求两个独立 verifier $V_1, V_2$ 给出相同 label 才确诊：$L(x) = l$ 当 $V_1(x) = V_2(x) = l$，否则标为 Ambiguous。Object 层用 YOLOv8x-worldv2 + Grounding DINO 主验，对相似词（cos sim ≥ 0.5）做 grouping 避免互相干扰，Ambiguous 对象再交 Qwen3-VL 30B + 32B 二次裁决。
 
 属性与关系只对已被判为 Factual 的对象验证，用预构建的 148 对象 + 38 属性 + 17 关系词表按语义子类型检索替换候选。分层验证比统一打分能更精确地定位错误类型，而「两者同意」机制把可靠性放在第一位——这正是用便宜的开源模型凑出媒美 GPT-4V 标注质量的关键。
 
-**2. 自校正 + 迭代细节丰富（Factual Rectification + Detailed Enrichment）：删错加详再验证，两者一起才能凑齐。**
+**2. 自校正 + 迭代细节丰富（Factual Rectification + Detailed Enrichment）：删错加详再验证，两者一起才能凑齐**
 
 单纯删掉幻觉会让回复变得过简、信息量低；直接让模型自由展开又容易在补充阶段重新引入新幻觉。AVES-DPO 拆成两个阶段：阶段 A（Factual Rectification）让 LVLM 按诊断信号删除或替换幻觉元素，生成简洁正确的回复——这一步刻意保留目标模型自身的语言风格；阶段 B（Detailed Enrichment）让模型补充图像中缺失的描述性细节，但 prompt 中明确禁止再提那些已被标为幻觉的对象。
 
 丰富后的回复会重新送进 Hallucination Verification 闭环检查，若仍含幻觉则回到自校正重试，7B 最多 3 轮、13B 最多 5 轮，失败样本直接丢弃以保证数据质量。「删 + 加 + 验证循环」这一闭环才能同时拿到事实性与描述性，输出的「自校正 + 丰富后回复」就作为 DPO 的 $y^+$、原始幻觉回复作为 $y^-$。
 
-**3. In-distribution DPO 训练（AVES-DPO Loss）：偏好对全部来自模型自身，梯度指向事实而非风格。**
+**3. In-distribution DPO 训练（AVES-DPO Loss）：偏好对全部来自模型自身，梯度指向事实而非风格**
 
 闭源教师与目标 LVLM 之间的生成模式失配，会被 DPO 的 log-likelihood ratio 放大成「风格差异 > 事实差异」。由于 AVES-DPO 的偏好对 $y^+, y^-$ 都来自同一个目标模型自身（$y^-$ 直接用阶段 A 之前的初始幻觉回复，$y^+$ 用最终经过验证-丰富循环的回复），在自构造的 $\mathcal{D}_{SC} = \{(x, y^+, y^-)\}$ 上跑标准 DPO、但偏好对天然 in-distribution：
 

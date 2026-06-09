@@ -45,11 +45,11 @@ EMP（Effective Model Pruning）想解决的是剪枝里被长期忽视的一半
 
 ### 关键设计
 
-**1. 有效样本量 $N_{\text{eff}}$：让打分分布自己说出该剪多少。**
+**1. 有效样本量 $N_{\text{eff}}$：让打分分布自己说出该剪多少**
 
 痛点很直接——SparseGPT、Wanda 这些方法都要事先指定一个全局稀疏率，过激进掉点、过保守浪费，在大模型上还得网格搜索。作者的做法是把这个超参数从分布里反推出来：定义 $N_{\text{eff}} \triangleq \lfloor 1/\sum_i \omega_i^2 \rfloor$，这正是粒子滤波里判断「有多少粒子统计有效」的有效样本量，在生态学里叫逆 Simpson 指数。几何上它等于 $\omega$ 到单纯形重心 $\zeta_{[N]}$ 距离平方的倒数——分布越均匀离重心越近，$N_{\text{eff}} \to N$（什么都不能剪）；分布越尖、越退化为单点，$N_{\text{eff}} \to 1$（只留最大那个）。作者进一步证明 $A_\nu = \tilde{\Delta} \cap (B_\nu - B_{\nu+1})$，等于把整个单纯形切成一圈圈球壳，每层壳对应一个固定的 $N_{\text{eff}}$ 值。它之所以好用，是因为同时满足三个性质：只依赖打分分布、随维度 $N$ 自适应、对坐标排列不变；分布越尖锐就能剪得越狠，全程不需要任何人为设定的稀疏率。
 
-**2. 有效质量 $s_{\text{eff}}$ 的紧下界：从分布形状就能算出「剪掉的有多重」。**
+**2. 有效质量 $s_{\text{eff}}$ 的紧下界：从分布形状就能算出「剪掉的有多重」**
 
 光知道保留几个还不够，真正要管的是被剪掉那部分到底有多重要。作者用保留的归一化质量 $s_{\text{eff}} = \sum_{i=1}^{N_{\text{eff}}} \omega_{(i)}$ 来刻画它，于是 $1 - s_{\text{eff}}$ 就是剪枝代价的直接度量。问题转成在 $A_\nu$ 上求 $\varphi_\nu(\omega) = \sum_{i=1}^{\nu}\omega_i$ 的下确界——若直接松弛到整个 $\tilde{\Delta}$，只能得到平凡的 $s_{\text{eff}} \geq N_{\text{eff}}/N$。作者构造出最小值点 $p_\nu = \zeta_{[N]} + \frac{r_{\nu+1}}{r_1}(\zeta_{[1]} - \zeta_{[N]})$，证明它就是 $\varphi_\nu$ 在 $A_\nu$ 上的极小点，从而得到紧界
 
@@ -57,7 +57,7 @@ $$1 - s_{\text{eff}} \leq \frac{N-N_{\text{eff}}}{N}\left(1 - \sqrt{\frac{N-N_{\
 
 渐近近似为 $\frac{N-N_{\text{eff}}}{N}\big(1 - \sqrt{(N-N_{\text{eff}})/(N N_{\text{eff}})}\big)$。这层紧界的意义在于：不必跑任何实验，只看打分分布的形状就能给出剪枝代价的理论上限。
 
-**3. 损失变化 $\epsilon$ 的上界传导：把分布几何一路推到 loss 增量。**
+**3. 损失变化 $\epsilon$ 的上界传导：把分布几何一路推到 loss 增量**
 
 前两步停在「质量」层面，这一步把它兑现成真正关心的损失差。当打分准则就是参数幅值时，剪枝引入的损失差为 $\epsilon = |L(\theta^*) - L(\theta^k)|$。作者从 Zhang et al. 2023 的引理 $\rho \leq 1 - 2\epsilon N/(\|\theta^* - \theta^k\|_2^2 \mathrm{Tr}(H) + 2\epsilon N)$ 反解出 $\epsilon \leq \frac{1-\rho}{2N\rho}\mathrm{Tr}(H)\|\theta^* - \theta^{N_{\text{eff}}}\|_2^2$，再借上一步的紧界把参数距离放缩成 $\|\theta^* - \theta^{N_{\text{eff}}}\|^2 \leq \|\theta^*\|_1^2 (1-s_{\text{eff}})^2 (N - N_{\text{eff}})$，最终得到只与 $\rho$、$N$ 有关的解析上界
 

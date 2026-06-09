@@ -43,17 +43,17 @@ tags:
 
 ### 关键设计
 
-**1. LDM 统一目标 + 熵估计器三分类：把五大类 SSL 拧成两个旋钮。**
+**1. LDM 统一目标 + 熵估计器三分类：把五大类 SSL 拧成两个旋钮**
 
 以前每种 SSL 都自讲一套故事——SimCLR 讲对比、VICReg 讲方差正则、BYOL 讲 stopgrad，彼此看不出关系。LDM 把它们统一到一个目标上：$\mathcal F_{\mathrm{LDM}}=-D_{\mathrm{KL}}[R(z,z')\|P_\theta(z,z')]$，其中 alignment 项来自 $\log P_\theta$（要表示对齐），uniformity 项来自 $H_R$（要表示铺开不塌缩）。差异全落在两个旋钮上：潜在分布 $P_\theta$ 的形状，以及怎么估熵 $H_R$。
 
 熵估计器恰好分三类，对应三大家族：核密度估计（KDE）→ 对比式 SSL（SimCLR 的负例就是 KDE 的 bandwidth $1/\beta$）；参数化高斯 → 非对比式 SSL（VICReg 的协方差正则正是 $\log|\Sigma_z|$ 的 Taylor 展开）；条件熵 plug-in → stopgrad/predictor 系（BYOL、JEPA）。把这两个旋钮拧出去，原本"形式各异"的损失立刻显出共同骨架，也直接告诉你怎么设计新算法——换 $P_\theta$ 形状或换熵估计器即可。
 
-**2. 澄清 MI 最大化的真实角色：它几乎是冗余项。**
+**2. 澄清 MI 最大化的真实角色：它几乎是冗余项**
 
 "最大化互信息"长期被当作 SSL 的口号，但说不清它到底有多重要。LDM 给出一个干净的判定：$\mathcal F_{\mathrm{MI}}-\mathcal F_{\mathrm{LDM}}=I_R[z,z']$，而对几乎可逆的 encoder，$I_R[z,z']$ 会自动饱和，于是 MI 项的实际贡献很小。论文用 8 种「潜在空间 × 熵估计器 × 是否含 MI」的组合做对照（Table 2、Fig. 3），发现"带不带 MI"几乎不影响 linear probing 准确率和表示维度，真正起决定作用的是潜在空间假设和熵估计器。这把一个模糊口号变成了可证伪的结论，也提示后续工作不必为推导 MI bound 把目标搞得过度复杂。
 
-**3. 预测式 SSL：Kalman 隐动力学 + 可识别性证明，给 JEPA 补上理论骨架。**
+**3. 预测式 SSL：Kalman 隐动力学 + 可识别性证明，给 JEPA 补上理论骨架**
 
 JEPA / CPC 这类预测式方法经验上 SOTA，但目标和正则都是启发式拼接，没人能解释它为什么不塌缩、为什么能恢复真因素。LDM 把隐空间转移建模成 $P_\theta(z'|z)$，选 Kalman 风格的线性高斯转移配上非线性 encoder（manifold normalizing flow / injective flow），再把 $\mathcal F_{\mathrm{LDM}}$ 套到 $(z,z')$ 上。理论上证明：在温和假设下，即便 predictor 非线性，预测式 LDM 也能把潜变量恢复到 affine 等价类（identifiability up to affine）。这一步既回答了"JEPA 为何稳定且可识别"，又顺手给出一个采样自由（sampling-free）的贝叶斯滤波版本，可以当新 baseline 直接落地。
 

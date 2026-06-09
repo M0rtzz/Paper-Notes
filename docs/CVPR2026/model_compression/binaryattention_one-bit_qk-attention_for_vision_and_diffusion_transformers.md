@@ -45,11 +45,11 @@ BinaryAttention 想在不改注意力架构的前提下，把最耗算力的 $\m
 
 ### 关键设计
 
-**1. Scaled Binary Representations：把 Q/K 压到 1-bit，让相似度退化成位运算。**
+**1. Scaled Binary Representations：把 Q/K 压到 1-bit，让相似度退化成位运算**
 
 注意力里最贵的就是 $\mathbf{QK}^\top$ 这步浮点点积，二值化的目标就是把它变成 GPU 最擅长的位运算。具体做法是每个 query $\mathbf{q}_i$ 和 key $\mathbf{k}_j$ 先过 sign 函数压成 $\{-1,+1\}^d$ 的二值向量，再各自乘回一个标量缩放因子，得到 $\mathbf{s}_i = \mu_q \cdot \text{sign}(\mathbf{q}_i)$、$\mathbf{t}_j = \mu_k \cdot \text{sign}(\mathbf{k}_j)$。这样相似度 $\mu_q \mu_k\, \mathbf{s}_i^\top \mathbf{t}_j$ 里真正的向量乘法只剩 $\pm1$ 相乘，一条 XNOR + popcount 指令就能算完，$\mathbf{QK}^\top$ 理论上拿到 16× 加速——这正好对应 A100 二值 Tensor Core 高达 4992 TOPs/s、是 FP16 十六倍的吞吐。它之所以没把精度算崩，靠的是 Theorem 1：二值 Q/K 的外积是原始协方差矩阵的一致估计，也就是说丢掉幅值、只留符号，统计意义上 token 之间的相似性结构仍然保得住；而额外留下的缩放因子 $\mu_q,\mu_k$ 又把被 sign 抹掉的幅值信息塞了回去，进一步压低量化误差。
 
-**2. Bias Enhancement：加一个可学习偏置，救回被 1-bit 压平的注意力分布。**
+**2. Bias Enhancement：加一个可学习偏置，救回被 1-bit 压平的注意力分布**
 
 1-bit 把幅值彻底扔了，副作用是注意力得分矩阵的秩骤降，softmax 之后分布趋于均匀，论文称之为 "flattened effect"——模型分不清哪个 token 重要，判别力消失。修补的办法很直接，在二值点积上加一个偏置项：
 
@@ -57,11 +57,11 @@ $$S_{ij} = \mu_q \mu_k\, \mathbf{s}_i^\top \mathbf{t}_j / \sqrt{d} + b_{ij}$$
 
 其中 $b_{ij}$ 可以是 dense 可学习矩阵、相对位置偏置或上下文感知偏置。偏置把上下文与空间结构信息重新注入得分矩阵，抬高它的秩，让 softmax 重新拉开差距、恢复区分显著特征的能力。消融里这一项对小模型尤其关键（DeiT-T +0.44%），因为小模型本身冗余少，被二值化压平后更难自己救回来。
 
-**3. Hybrid Quantization：顺手把 PV 乘法也量化掉，才换得到端到端加速。**
+**3. Hybrid Quantization：顺手把 PV 乘法也量化掉，才换得到端到端加速**
 
 只把 QK 变成位运算其实只省了一半——softmax 后的系数矩阵 $P$ 与 Value 之间的 $\mathbf{PV}$ 乘法同样是瓶颈，不处理它整体延迟就下不来。这里对 softmax 输出系数 $P_{ij}$ 用无符号 8-bit 静态量化（scale 固定为 $1/255$，因为系数天然落在 $[0,1]$），对 Value $\mathbf{v}_j$ 用 channel-wise 8-bit 量化，$\mathbf{PV}$ 乘法走 INT8 Tensor Core 指令 `mma.s32.u8.s8.s32`，这部分拿到 2× 加速。之所以这里只用 8-bit 而不冒险压到 1-bit，是因为注意力系数和 V 的数值范围都很温和，8-bit 已足够保精度；QK 的 16× 再叠上 PV 的 2×，才拼出真正可观的端到端提速。
 
-**4. QAT + 自蒸馏：用感知量化训练加全精度老师，扛住 1-bit 的分布漂移。**
+**4. QAT + 自蒸馏：用感知量化训练加全精度老师，扛住 1-bit 的分布漂移**
 
 1-bit 引入的近似误差和分布偏移太大，纯 PTQ（训练后直接量化）救不回来，所以本文把量化搬进训练里。前向传播对 Q/K 走真实的 sign 量化，反向传播则用 STE（直通估计器）让不可导的 sign 绕过梯度阻断照常更新；同时拿全精度预训练模型当教师做自蒸馏，蒸馏 loss 逼着二值注意力的相似度去对齐全精度的 sign-aligned similarity。QAT 让模型训练时就"见过"量化噪声、提前适应，蒸馏则给二值表示一个明确的对齐目标。消融显示自蒸馏对大模型 DeiT-B 提升 +0.66%，说明它确实在对抗量化带来的分布漂移。
 

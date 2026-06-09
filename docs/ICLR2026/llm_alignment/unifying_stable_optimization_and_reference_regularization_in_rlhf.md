@@ -44,7 +44,7 @@ DAR 要解决的，是 RLHF 里两类正则化互相打架的问题：为防 rew
 
 ### 关键设计
 
-**1. 双KL对齐目标：把"防 hacking"和"防崩溃"两个对抗的约束合并成一个。**
+**1. 双KL对齐目标：把"防 hacking"和"防崩溃"两个对抗的约束合并成一个**
 
 标准做法是分别加 $\text{KL}[\pi_\theta\|\pi_0]$（约束到初始模型、防过度优化奖励）和 $\text{KL}[\pi_\theta\|\pi_t]$（约束到当前策略、防剧烈偏移），但这两项随训练推进会互相排斥，把可行域压得太死。DAR 把它们用一个权重 $\alpha$ 线性组合进同一个目标：
 
@@ -52,7 +52,7 @@ $$\mathcal{J} = \max_{\pi_\theta} \mathbb{E}[A(x,y)] - \beta\big(\alpha\,\text{K
 
 关键的一步是 Proposition 4.1：这个加权双KL在对数空间里等价于对单个插值参考的 KL 约束，$\alpha\,\text{KL}[\pi_\theta\|\pi_0] + (1-\alpha)\,\text{KL}[\pi_\theta\|\pi_t] = \text{KL}\big[\pi_\theta \,\big\|\, \tfrac{1}{C}\pi_0^\alpha \pi_t^{1-\alpha}\big]$，其中 $C$ 是归一化常数。也就是说真正的参考策略是 $\pi_{\text{ref}} \propto \pi_0^\alpha \pi_t^{1-\alpha}$——一个会随 $\pi_t$ 演化的动态目标，它自动跟踪当前的高奖励区域、提供更好的支持覆盖，而不是死锁在初始模型上。权重 $\alpha$ 就是这条 trade-off 的旋钮：$\alpha\to1$ 偏保守（贴近初始模型），$\alpha\to0$ 偏探索（贴近当前策略）。
 
-**2. 回归变换（Advantage Regression）：把 RL 目标转成加权 SFT，消掉策略比率的方差。**
+**2. 回归变换（Advantage Regression）：把 RL 目标转成加权 SFT，消掉策略比率的方差**
 
 有了单KL 形式的目标，就能写出它的闭式最优策略（Theorem 4.2）：$\pi^* \propto \pi_0^\alpha \pi_t^{1-\alpha} \exp(\tfrac{1}{\beta}A)$，即在插值参考上按优势做指数加权。DAR 不去用 PPO 那样估计并裁剪策略比率，而是直接把这个最优解拟合成一个加权对数似然（SFT）损失：
 

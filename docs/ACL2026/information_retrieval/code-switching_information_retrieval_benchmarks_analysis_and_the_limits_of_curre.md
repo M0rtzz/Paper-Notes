@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 人工 + LLM 双轨基准（CSR-L + CS-MTEB）：用两套数据在自然度和规模之间互补。**
+**1. 人工 + LLM 双轨基准（CSR-L + CS-MTEB）：用两套数据在自然度和规模之间互补**
 
 代码混用数据没有可信的自动指标来评估"自然度"，社会语言学（Poplack、Myers-Scotton）也只给定性定义，所以小规模必须人工、大规模必须借 LLM。CSR-L 由三位中-英-日多语作者两步法（一人重写、一人校验）改写 Touché 2020 / HumanEval / TRECCOVID / FollowIR 的 query，严格控制 ±20% 长度变化、保留实体名与代码 token 不翻译、要求两种语言都贡献内容；CS-MTEB 则把这套规范固化成 prompt 模板的 ground truth，用 MiMo-V2-Flash 把 MTEB 的 11 个任务（涵盖 instruction reranking、retrieval、clustering、classification、STS、reranking、pair classification 共 7 类）批量改写成 9 语种 × 英文的混用版，再补 50 条人工 spot-check 兜底质量。两者结合既能在小规模上把现象量化得无可辩驳，又能在任务与语言维度上做泛化检验。
 
-**2. 多家族 retriever 横向评测 + embedding 空间几何诊断：既定位损伤的共性，又解释失败机制。**
+**2. 多家族 retriever 横向评测 + embedding 空间几何诊断：既定位损伤的共性，又解释失败机制**
 
 只报性能下降只能说明"掉了"，回答不了"为什么掉"。评测覆盖四类 IR 范式——统计（BM25）、bi-encoder（e5 / mE5 / bge-m3 / Arctic-Embed / Qwen3-Embedding 0.6/4/8B）、cross-encoder reranker（jina-reranker-v3、bge-reranker-v2-m3、Qwen3-Reranker）、late-interaction（ColBERT v2）——确认代码混用是跨范式的共性短板。在此之上，作者在 Touché 2020 和 TRECCOVID 上用 PCA 把 e5-large-v2 与 Qwen3-Embedding-0.6B 的"原始 vs 混用"query 嵌入投到 3 维并量化 centroid distance：英文中心模型让两类 query 完全裂成两团（centroid 距离约 0.25），多语模型重合更多（约 0.20），几何上的偏移与性能差距高度对应，等于把 robustness gap 的物理形式坐实为 embedding manifold 的位移。
 
-**3. 词表扩展作为机制探针而非解药：用一个零训练干预区分"覆盖问题"和"对齐问题"。**
+**3. 词表扩展作为机制探针而非解药：用一个零训练干预区分"覆盖问题"和"对齐问题"**
 
 如果一个只改 tokenizer 的低成本干预就能补齐单语性能，说明问题在词表覆盖；如果只能部分缓解，说明问题更深。具体做法是用 Conneau 2018 的双语 lexicon，把目标语 word $w_t$ 的嵌入用源语 subword 嵌入的平均来初始化：先对源语词 $w_s$ 求其子词嵌入均值 $v_{w_s}=\frac{1}{|T(w_s)|}\sum_{k\in T(w_s)} e_k$，再把映射到 $w_t$ 的各源语词聚合成 $e_{w_t}=\frac{1}{|N(w_t)|}\sum_{w_s\in N(w_t)} v_{w_s}$，无映射的 token 用 $\mathcal{N}(0,\sigma^2)$ 初始化；主体模型不动，只换 tokenizer 与 embedding layer，零额外训练后在 CSR-L 上重测。结果是"部分缓解"（all-MiniLM 在 CSR-L-Chinese 从 30.09 升到 37.73，e5-large-v2 从 35.32 升到 43.50，但都仍距单语基线约 4 分），既证明 tokenizer 确实是失败的一部分，也证明代码混用是一个无法靠 surface-level patch 闭合的语义对齐难题——这种"用 negative result 做诊断"的写法格外清醒。
 

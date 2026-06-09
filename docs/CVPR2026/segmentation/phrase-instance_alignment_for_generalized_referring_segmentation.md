@@ -47,7 +47,7 @@ GRES 的难点在于一句话可能指向多个对象、也可能一个都不指
 
 ### 关键设计
 
-**1. 实例感知分割框架（Instance-aware Segmentation）：先把场景拆成实例，再谈指代。**
+**1. 实例感知分割框架（Instance-aware Segmentation）：先把场景拆成实例，再谈指代**
 
 以往 GRES 方法虽然也用了多个 object query，但只拿最终合并后的那张 mask 去算 loss，结果各个 query 没有被逼着分工，互相纠缠、语义模糊。InstAlign 直接给每个 query 加上实例级监督：以 Mask2Former 为骨干，但在 decoder 里注入文本条件，做 query–视觉–文本的双向交叉注意力，让 $N$ 个 query 各自吐出一张实例 mask $\hat{s}_i$ 和一个相关性得分 $\hat{p}_i$。训练时用匈牙利匹配把预测实例和 ground-truth 实例一一配对，匹配代价为
 
@@ -55,11 +55,11 @@ $$\mathcal{L}_{\text{match}}(i,j) = \lambda_{\text{score}}\mathcal{L}_{\text{sco
 
 配上的 query 同时学 mask 和得分，没配上的 query 只被压着把得分学成 0。这是 GRES 里第一次引入实例级监督，相当于强行让每个 query "专精"一个对象，从根上拆掉了 query 之间的纠缠。
 
-**2. 短语-目标对齐损失（Phrase-Object Alignment, POA）：让每个 query 自己认领对应的短语。**
+**2. 短语-目标对齐损失（Phrase-Object Alignment, POA）：让每个 query 自己认领对应的短语**
 
 光把 query 拆成实例还不够——模型还得知道"left dog"这个短语该由哪个 query 负责，否则面对"左边的两条狗"仍可能张冠李戴。POA 给的是显式的短语-实例对应监督，分三步走。先用缩放点积注意力算出每个 query 到各文本 token 的相关性矩阵 $R_k = \text{softmax}(Q_k T_k^\top / \sqrt{C})$；再用它对文本特征加权求和，得到每个 query 的"软短语嵌入" $P_k = R_k T_k$——注意这里不需要任何外部句法解析器，短语边界是注意力权重自己学出来的；最后用余弦相似度损失 $\mathcal{L}_{\text{phrase}}(i) = 1 - \text{sim}(Q_k^i, P_k^i)$ 把 query 嵌入往它认领的短语嵌入上拉，这个损失以系数 $\lambda_{\text{phrase}}$ 一并算进匈牙利匹配代价。与过去那种隐式跨模态注意力相比，POA 提供的是直接的、可监督的对应关系，所以在消歧义（区分两条狗）和组合表达（属性+关系）上提升明显，可视化也能看到 query 确实自动"认领"了各自的短语。
 
-**3. 实例聚合模块（Instance Aggregation, IA）：用得分把实例 mask 软融合，而不是硬挑。**
+**3. 实例聚合模块（Instance Aggregation, IA）：用得分把实例 mask 软融合，而不是硬挑**
 
 拿到一堆带得分的实例 mask 后，怎么合成最终答案？硬选择（挑得分最高的几个）很容易漏掉相关实例或误纳无关实例。IA 改用完全可微的连续加权：
 
@@ -67,7 +67,7 @@ $$\mathcal{M}_{\text{merged}} = \text{Sigmoid}\Big(\sum_{i=1}^N \hat{p}_i \cdot 
 
 其中 $\sigma(\cdot)$ 是 PReLU 激活，充当一个可学习的动态阈值来压背景噪声。因为整条聚合路径可微，模型能在多目标和组合表达下平滑地分配权重，而不是在离散选择里二选一。消融显示这个 PReLU 阈值并非可有可无，它带来约 +0.8% cIoU 和 +1.5% N-acc。
 
-**4. 无目标预测器（No-target Predictor）：复用同一套得分判断"图里压根没有"。**
+**4. 无目标预测器（No-target Predictor）：复用同一套得分判断"图里压根没有"**
 
 GRES 还要能识别"沙发上的大象"这种图中根本不存在的描述。InstAlign 没有另起炉灶，而是直接复用 mask 推理用的那套相关性表示：把相关性加权的全局 query 特征 $Q_{\text{global}} = \sum_i \hat{p}_i \cdot Q^i$ 与句子级文本嵌入 $T_{\text{sen}} = \text{Average}(T_K)$ 拼起来送进一个 MLP 分类器。直觉是当所有 query 的相关性得分都偏低时——也就是没有哪个实例敢认领这句话——模型就判定无目标。设计上统一又轻量，消融显示 $Q_{\text{global}}$ 和 $T_{\text{sen}}$ 缺一不可。
 

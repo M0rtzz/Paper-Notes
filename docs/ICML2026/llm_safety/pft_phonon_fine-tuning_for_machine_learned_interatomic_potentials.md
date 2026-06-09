@@ -47,19 +47,19 @@ PFT 的目标很直接：拿一个已经在 MPtrj 等大规模轨迹数据上预
 
 ### 关键设计
 
-**1. Hessian 列对齐损失 $\mathcal{L}_\Phi$ + 随机单列采样：把二阶曲率变成可监督的训练目标。**
+**1. Hessian 列对齐损失 $\mathcal{L}_\Phi$ + 随机单列采样：把二阶曲率变成可监督的训练目标**
 
 声子色散、振动熵、热导率这些性质取决于二阶力常数 $\Phi$，而 EFS loss 只学"力本身"、对"力随位置怎么变"几乎没有直接约束——作者甚至发现直接在 phonon displacement 数据上做 EFS 微调比基础模型还烂（Table 1，$\omega_\text{max}$ 误差从 24 飙到 182），说明位移点的 EFS 信号根本替代不了曲率监督，必须把 Hessian 当成 first-class 的监督目标。PFT 的做法是直接拿能量对坐标的二阶导去对齐 DFT 力常数：$\mathcal{L}_\Phi = \frac{1}{3N_a}\sum_{a,i}\mathbb{E}_{b,j}\,|\partial^2\hat{E}/\partial r_{a,i}\partial r_{b,j} - \Phi_{aibj}|$。
 
 完整 Hessian 是 $3N\times 3N$，超胞动辄几百上千原子根本算不动，于是每个结构每步只均匀采样一个 $(b,j)$、等价于只比对 Hessian 的一列。因为这个采样的期望恰好等于对完整 Hessian 求 MAE，梯度是无偏的；再加上 E(3)-等变架构让力常数本身有大量对称冗余，单列采样在统计意义上已覆盖大部分自由度，既省算力又不牺牲监督质量。
 
-**2. Hessian-Vector Product 把单步复杂度从 $O(N^2)$ 压到 $O(N)$：让大超胞上的曲率监督真的训得起来。**
+**2. Hessian-Vector Product 把单步复杂度从 $O(N^2)$ 压到 $O(N)$：让大超胞上的曲率监督真的训得起来**
 
 光有 $\mathcal{L}_\Phi$ 还不够——显式构造整张 Hessian 在大超胞下显存直接爆掉。PFT 借用 Pearlmutter 1994 的 HVP 技巧绕开它：$\nabla^2_\mathbf{r}\hat{E}\,\mathbf{v} = \nabla_\mathbf{r}((\nabla_\mathbf{r}\hat{E})^\top \mathbf{v})$，在 JAX 里就是 `jax.jvp(jax.grad(energy), (pos,), (v,))[1]`——先 reverse-mode 求力，再套一层 forward-mode JVP 拿到力沿 $\mathbf{v}$ 方向的导数，整列 Hessian 一次反传就出来，全程不落地任何 $N^2$ 大小的矩阵。实现上把一个 batch 里多个结构拼成一张不连通的大图、把各自采样的 $\mathbf{v}$ 拼成一个向量，对总能量做一次 HVP 就同时算完所有结构的损失；优化器更新还要再对 HVP 求一次梯度，构成"triple-backward"。
 
 正是这一步把每训练步从 $O(N^2)$ 降到 $O(N)$，使几百原子超胞的 Hessian 监督在单卡 A100 上成为现实——整个 PFT 只花 35 A100 小时（含 co-training）或 15 A100 小时（不含），不到预训练 100 A100 小时的三分之一。
 
-**3. 上游 EFS Co-training：用最小代价压住灾难性遗忘。**
+**3. 上游 EFS Co-training：用最小代价压住灾难性遗忘**
 
 声子数据天然全是平衡构型，只盯着它训练会让 PES 在非平衡区域漂移——表现为 MPtrj 验证集上能量/力/应力误差显著上升（Fig. 3），即模型把原本会做的弛豫轨迹和稳定性预测给忘了。PFT 的应对极其朴素：每做 1 步 PFT，紧接着做 $K=4$ 步在上游 $\mathcal{D}_\text{up}$（MPtrj）上的标准 EFS 更新（Algorithm 1 第 4-7 行），$K$ 由同时监控两边验证集挑出。
 

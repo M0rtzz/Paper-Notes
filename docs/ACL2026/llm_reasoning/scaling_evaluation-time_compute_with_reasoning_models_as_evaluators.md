@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Reasoning Outcome Evaluator：让模型读完整答案、先想再判，并从 token logits 里读出置信分。**
+**1. Reasoning Outcome Evaluator：让模型读完整答案、先想再判，并从 token logits 里读出置信分**
 
 直接预测 reward 的 ORM 视野完整，却把整个判断压成一个标量，没有给"多想一会儿"留空间。Outcome evaluator 改成 prompt 一个 reasoning model 读入 $(x_i,y_i)$，先生成一段 CoT $c_i$ 再给二元 judgment $j_i$（"1" 表示正确、"0" 表示错误）。分数不取硬判断，而是从这两个 token 的 logits 做 softmax：
 
@@ -53,11 +53,11 @@ $$s_i = \frac{e^{\ell(j_i=1)}}{e^{\ell(j_i=0)} + e^{\ell(j_i=1)}}$$
 
 这样既保留了 outcome 视角"看最终答案是否合理"的整体性，又能用连续分数支持后续 Best-of-N 排序。它的短板是视野太宏观，容易放过中间步骤里的细粒度错误。
 
-**2. Reasoning Process Evaluator：把一次性评判拆成逐步核查，自然吃掉更多 evaluation-time compute。**
+**2. Reasoning Process Evaluator：把一次性评判拆成逐步核查，自然吃掉更多 evaluation-time compute**
 
 一条 CoT 想覆盖整段推理的所有步骤，很容易漏错。Process evaluator 转而逐步检查：评估第 $k$ 个 step 时，模型只看到问题和前 $k$ 个步骤，专门为 $y_{ik}$ 生成一段核查 CoT 和判断，再把所有 step 的判断经聚合函数转成整体 score。论文刻意偏好这种 multi-step process evaluation，而不是一次性吐出所有 step 的判断——因为逐步核查既迫使模型对每个局部推理认真复核，又让 evaluation-time compute 随步数自然增长，正好把 reasoning model 的自检、回溯能力用在刀刃上。
 
-**3. Model-based Splitting 与 Outcome/Process 融合：让过程评估扛得住不规整输出，并把两种视角的互补信号合起来。**
+**3. Model-based Splitting 与 Outcome/Process 融合：让过程评估扛得住不规整输出，并把两种视角的互补信号合起来**
 
 逐步评估的前提是回答能被切成清晰的 step，可现实里很多回答没有规整换行、甚至夹着代码。论文用一个切分模型 $M_{split}$ 在这种情况下插入 `[SPLIT]` 标记来划分步骤；在聚合过程分数时，发现 mean_logit 比常用的 min 更稳。最终把两路分数线性插值：
 

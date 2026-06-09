@@ -45,15 +45,15 @@ Staged-Competence 是一个套在标准 DPO 外层的两阶段 pipeline，全程
 
 ### 关键设计
 
-**1. Preference Alignment Margin：把难度做成全数据集可比的标量。**
+**1. Preference Alignment Margin：把难度做成全数据集可比的标量**
 
 标准 DPO 把所有偏好对当同等难度随机采样，问题是偏好对的"难"不是语言复杂度，而取决于基座本身已经多大程度上分得清安全/不安全。本文用一个很便宜的办法把这件事量化：先让未对齐的基座对 prompt $x_i$ 输出零样本回答 $\hat y_i$，再用句向量编码器算 $m_i = \cos(e_{\hat y_i}, e_{y_i^+}) - \cos(e_{\hat y_i}, e_{y_i^-})$——$m_i$ 越大说明基座的自发回答本来就更靠近安全答，是"简单样本"，反之是模型还分不清的难样本，降序排列就得到全局课程顺序。关键在于这个 margin 让**任意两条偏好对**都能直接比大小，而 Curri-DPO 那种"每个 prompt 内 4 个候选回答的成对质量差"只能在 prompt 内部局部排序、跨 prompt 没法比；正是这个全局可比性，才让源自机器翻译的 competence-based 采样能搬到 DPO 上来，而且全程只需一个小 sentence encoder + 一次零样本生成，不依赖外部 GPT-4 judge 打分。
 
-**2. Staged Reference Update：让参考模型跟着课程一起进化。**
+**2. Staged Reference Update：让参考模型跟着课程一起进化**
 
 固定参考模型的标准 DPO 有个隐患：训到后期，梯度会被那些"模型早就学会的简单对"反复稀释，难样本得不到足够信号。本文把全局排序后的数据切成 $K=3$ 个等大桶，第 $k$ 阶段用参考模型 $\pi_\text{ref}^{(k)}$ 在桶 $\mathcal B_k$ 上跑 $E$ 个 epoch 的 DPO，跑完就令 $\pi_\text{ref}^{(k+1)} \leftarrow \pi^{(k)}$——参考模型不再是钉死的基座，而是沿课程逐级往前挪，每个阶段都"以上一阶段的成果为锚"重新定义什么算进步，避免回头重学简单样本。这套递推参考的有效性在 reward margin 曲线上看得很直接：每次切换阶段、更新参考的那一刻，margin 都出现明显跳变 (Fig. 2)，说明每次更新都给优化注入了一批新的有效梯度。
 
-**3. Within-Stage Competence Sampling：桶内也按 $\sqrt{\cdot}$ 由易到难放样本。**
+**3. Within-Stage Competence Sampling：桶内也按 $\sqrt{\cdot}$ 由易到难放样本**
 
 光做阶段切分还不够——Curri-DPO 在每个桶内部完全随机洗牌，桶内本来就有的难度梯度被白白丢掉。本文在桶 $\mathcal B_k$ 内重新做一次归一化排序得到 $d_i \in [0,1]$，再用 competence 函数 $c(t) = \sqrt{(1-c_0^2)\,t/T + c_0^2}$（$c_0=0.01$）随训练步 $t$ 算出当前难度阈值，只从合格池 $\{i \in \mathcal B_k : d_i \le c(t)\}$ 里采 mini-batch：开局只放桶内最简单的一小撮，之后按平方根速率逐步把更难的样本纳进来。$\sqrt{\cdot}$ 这个形状的好处是让难样本以**递减**速率加入，给模型留足消化时间。它和上一条设计互补——阶段切分加参考更新负责"宏观承前启后"，competence 池负责"微观由易到难"，两个尺度方向一致地推进课程；这也是全文最关键的实证发现：Sqrt-Competence 单用甚至不如 baseline、Curri-DPO 单用只是中等，两者拼起来才出现质变。
 

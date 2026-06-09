@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Softmax 饱和的机制诊断：解释一个 deviant token 为何能毁掉多 token 聚合任务。**
+**1. Softmax 饱和的机制诊断：解释一个 deviant token 为何能毁掉多 token 聚合任务**
 
 问题出在 Softmax 的指数归一化：若最大 logit 与其余 logit 的差距为 $\Delta$，非最大项权重会按 $e^{-\Delta}$ 急速衰减。当输入数值经线性 embedding 后保留幅值顺序，一个幅值异常大的 token 自然产生大 embedding norm，把注意力推向近似 hardmax。而 ICL 的许多规则要靠多个上下文例子共同决定答案，hardmax 式注意力等于把“幅值大”误当成“相关”，于是单个无关的极端 token 就能让 every/some 判断和线性函数预测整体崩掉。
 
-**2. Scaled Signed Averaging 评分函数：把指数塌缩换成可训练的多项式塌缩。**
+**2. Scaled Signed Averaging 评分函数：把指数塌缩换成可训练的多项式塌缩**
 
 SSA 对每个 logit 先做变换 $(1+b|x|)^{sgn(x)n}$ 再归一化，其中 $b>0$、$n\geq1$ 均可训练：正值以多项式速度增长，负值向 0 衰减，且当 $b=1/m,\,n=m,\,m\to\infty$ 时可退化逼近指数函数，因此 Softmax 是它的极限特例。关键差别在于，面对全局放大或单个 token 过强时，Softmax 会指数级集中而 SSA 只按多项式速度集中，给模型更多机会保留次强但仍相关的上下文 token，从而缓解上面诊断出的饱和。
 
-**3. 跨架构验证设计：确认收益不止存在于玩具任务。**
+**3. 跨架构验证设计：确认收益不止存在于玩具任务**
 
 为排除“只在合成数字任务上有效”的怀疑，作者把 SSA 同时放进 decoder-only Transformer 和 encoder-only BabyBERTa，在完全相同的训练设置下与 Softmax 对照，并额外比较 temperature Softmax、Sparsemax、Entmax、CosFormer、SA-Softmax 等替代评分函数。只有当 SSA 在真实 NLP benchmark 和语法探针上也稳定超过这些基线，才能说明它是一项通用的 attention scoring 改动，而非任务特化的 trick。
 

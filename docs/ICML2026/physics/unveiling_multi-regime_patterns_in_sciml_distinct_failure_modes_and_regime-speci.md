@@ -41,15 +41,15 @@ tags:
 
 ### 关键设计
 
-**1. 三域 regime 标记：用训练-测试误差自动把 SciML 模型分成三种失败模式。**
+**1. 三域 regime 标记：用训练-测试误差自动把 SciML 模型分成三种失败模式**
 
 只看任务级性能很难说清 SciML 到底"哪里坏了"。作者沿物理域（PDE 系数、方程类型）、数据域（样本/配置点数量）、优化域（优化器、约束处理）三个轴系统扫描，再用训练阈值 $T_{\text{train}}$ 和测试阈值 $T_{\text{test}}$ 把每个配置自动归到三类：Well-Trained（Regime I，训练测试都低）、Under-Trained（Regime II，两者都高）、Over-Trained（Regime III，训练低但测试高）。阈值再做 $\pm20\%$ 扰动检验边界稳健性。这样得到的是 task-oblivious 的失败模式视图——绕开"只盯单个任务表现"的局限，让 PINN、FNO、NODE 这些架构差异很大的模型能在同一坐标系下比较失败结构。
 
-**2. 损失面景病理检测：抓出 Hessian 和损失"对不上"的两类反直觉现象。**
+**2. 损失面景病理检测：抓出 Hessian 和损失"对不上"的两类反直觉现象**
 
 CV 里"flat minima 泛化好"几乎是常识，但作者发现它在 SciML 里失效，于是同时跟踪最大特征值 $\lambda_{\max}$ 和训练损失的动态曲线，识别两类病理：Deceptive Sharpness（高 Hessian 特征值却对应低训练损失）和 Deceptive Flatness（低 Hessian 特征值却藏着高训练损失）；在 Increasing Sharpening 阶段两者甚至同向变化。进一步用 Hessian 谱密度估计发现 PINNs 缺少 CV 模型（如 ResNet）里那个零特征值峰。这组检测之所以关键，是它定量揭示了标准 Hessian-损失相关性在 SciML 中破裂的根因——landscape 几何本质不同，照搬 CV 的 flat-minima 直觉会误判。
 
-**3. regime-aware 优化有效性分析：证明没有单一最优优化器，要按 regime 选。**
+**3. regime-aware 优化有效性分析：证明没有单一最优优化器，要按 regime 选**
 
 诊断之后要落到"怎么选优化器"。作者在每个 regime 下系统比较 Adam、L-BFGS、NNCG、ALM、RoPINN、CL，对每个方法生成物理参数 × 数据量的 2D regime 热图、算相对性能改进。结果很明确：NNCG 在 Regime I 相比 L-BFGS 提升约 50% 测试误差，但在 Regime II/III 里不稳定；ALM 适合约束关键问题，CL 在困难配置下更稳。结论是不存在通吃的优化器，必须 regime-aware 地切换——这把前面的诊断框架直接转化成了可操作的 optimizer 选择指南。
 

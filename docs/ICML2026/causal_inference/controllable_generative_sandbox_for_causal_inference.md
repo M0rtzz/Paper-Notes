@@ -54,7 +54,7 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{VAE}} + \lambda_\alpha \mathcal{L}_\a
 
 ### 关键设计
 
-**1. 三个独立的因果"旋钮" + Huber 复合 penalty：让用户能调、且保证真调进去了。**
+**1. 三个独立的因果"旋钮" + Huber 复合 penalty：让用户能调、且保证真调进去了**
 
 现有生成器要么没有效应控制接口，要么即便能指定 $\tau(X)$ 也无法验证生成器是否真的实现了它。CausalMix 把三个因果量显式定义出来——overlap $\alpha(x) = P(X=x\mid T=0)/P(X=x\mid T=1)$、CATE $\tau(x) = \mathbb{E}[Y(1)-Y(0)\mid X=x]$、未观测混杂 $\kappa(x,t) = \mathbb{E}[Y(t)\mid X=x,T=1] - \mathbb{E}[Y(t)\mid X=x,T=0]$——再把"用户指定值"与"生成器诱导值"之差写成可微 penalty 压进 loss。Overlap 用 $\mathcal{L}_\alpha = \mathbb{E}_X[(\log\alpha_\theta(X) - \log\alpha(X))^2]$，直接对 decoder 给出的 log-density ratio 做 MSE 对齐。CATE 与 confounding 则不止用 MSE：
 
@@ -62,7 +62,7 @@ $$\mathcal{L}_\tau^{\text{mean}} = \mathbb{E}_X[\lambda_\tau^{\text{mse}}(\Delta
 
 这是个 **Huber 复合 loss**——quadratic 项锚定 mean，SmoothL1 项提升对异常值和弱识别区域的鲁棒性——再外加 variance penalty $\mathcal{L}_\tau^{\text{var}} = \text{Var}[\Delta\tau_\theta]$ 抑制虚假的 unit-level 离散；$\kappa$ 用同样的 Huber + variance 结构。之所以不能只用纯 MSE，是因为当 $\tau, \kappa$ 低维/弱非线性时，因果信号会被 reconstruction loss 淹没——模型学到 "$\tau_\theta$ 平均对就行"但 unit-level 飘忽不定；Huber 锚定 mean、variance regularizer 压缩 dispersion，两者合力让因果约束在低信号场景也能稳定实现。三个 $\lambda$ 可独立调，用户因此能做 factorial study：同时变 overlap 和 confounding，看各类 CATE 估计器的稳健性。
 
-**2. Mixed-type multi-head decoder + Bayesian GMM prior：忠实重现真实表格的混合类型与多峰结构。**
+**2. Mixed-type multi-head decoder + Bayesian GMM prior：忠实重现真实表格的混合类型与多峰结构**
 
 真实临床表格是连续 + 二元 + 类别 + 整数混在一起，强行 one-hot 或用单一 likelihood 会引入伪相关。CausalMix 给每个变量按数据类型配一个独立的 likelihood head——连续变量用 Gaussian NLL（而非 Credence 用的 MSE），让 decoder 同时学到 location 与 dispersion；二元用 Bernoulli logits；类别用 softmax；整数当连续处理后 round。这里 Gaussian NLL 取代 MSE 是个被低估的细节：MSE 不学方差，对 heteroscedastic 或受限支撑的变量会梯度尺度失衡。另一处关键是潜在 prior——标准 isotropic Gaussian 假设潜在空间单峰，而真实病人天然 cluster 成多个亚群。CausalMix 在 VAE 训练完后用 BGMM（Dirichlet-process prior + 截断 stick-breaking 变分推断）重新拟合 latent means 作为生成 prior：
 
@@ -70,7 +70,7 @@ $$p_{\text{BGMM}}(z) = \sum_k \pi_k \mathcal{N}(z\mid\mu_k, \Sigma_k)$$
 
 其中混合数 $K$ 由 Dirichlet-process 自动学到。这是**事后拟合**——不改 VAE 训练目标、不动 decoder，只在 latent space 后处理就恢复了多模态表达力，是个"巧而非繁"的工程选择。
 
-**3. 联合优化 + X/Y 模块化解耦：分布拟合与因果控制同台 co-train，但两个生成器各管各的。**
+**3. 联合优化 + X/Y 模块化解耦：分布拟合与因果控制同台 co-train，但两个生成器各管各的**
 
 distributional fit 与 causal control 是天然 trade-off，CausalMix 把它们放进同一个 mini-batch 一起优化，但把 X-generator 与 Y-generator 拆开各自独立训练。Pre-treatment $G_{X,\theta}$ 只优化 $\mathcal{L}_{\text{VAE}}^X + \lambda_\alpha\mathcal{L}_\alpha$（X 重建 + overlap 控制）；Post-treatment $G_{Y,\theta}$ 优化 $\mathcal{L}_{\text{VAE}}^Y + \lambda_\tau\mathcal{L}_\tau^{\text{mean}} + \cdots + \lambda_\kappa\mathcal{L}_\kappa^{\text{mean}} + \cdots$，并基于 validation loss 早停。拆开是因为 X 与 Y 的因果机制不同——X 上的 overlap 是边缘分布问题，Y 上的 $\tau,\kappa$ 是 conditional expectation 问题——分开训练让每个模块的 rigidness 超参单独可调，避免一个模块的 penalty 干扰另一个。这里最关键的一步是 $G_{Y,\theta}$ 训练时让 decoder 同时评估 $Y(0)$ 和 $Y(1)$ 两个 potential outcome（即便每个样本只观察到一个），$\tau_\theta, \kappa_\theta$ 才得以直接计算并被 penalty 监督——这正是因果控制能"真实生效"而非"看起来对"的根源，也是与 Credence 等只建模 $Y\mid X,T$ 方法的本质区别。
 

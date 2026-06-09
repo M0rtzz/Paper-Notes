@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Codebook-injected LLM segmentation：让 LLM 在"哪里切"这一步就盯着"切完贴什么 label"。**
+**1. Codebook-injected LLM segmentation：让 LLM 在"哪里切"这一步就盯着"切完贴什么 label"**
 
 传统 topic-shift 提示让 LLM 凭"主题变化"切，结果常在内容主线一致、但教学动作切换处不切（如老师从 explanation 转到 questioning），恰好错失下游 annotation 最关键的 boundary。本设计在 zero-shot prompt 基础上插入完整 move definitions（TalkMoves 的 6 类 talk moves、CLASS 的 4 类 instructional support），要求模型"在 pedagogical function 发生变化时下 boundary，但不要给段贴 label"，输出仍是 boundary index JSON。把 DA 定义显式注入，等于让 LLM 内化"教学动作"这个 unit-of-analysis，使 boundary 与 downstream label 直接对齐——实验里它把 GPT-5 在 CLASS 上的 normalized entropy 从 0.349 压到 0.286、purity 从 0.546 抬到 0.570，是所有方法中段内一致性最强的。
 
-**2. DA-conditioned retrieval-augmented coherence segmentation：不重训 boundary detector，把 codebook 语义检索进 coherence 表征。**
+**2. DA-conditioned retrieval-augmented coherence segmentation：不重训 boundary detector，把 codebook 语义检索进 coherence 表征**
 
 直接 fine-tune Dial-Start 需要 boundary 标注，而教学领域恰恰没有；于是作者改用检索注入。维护一份 expert-labeled DA utterance 的 memory $\mathcal{M}=\{(h_j, m_j)\}$（TalkMoves 1.9k、CLASS 301 条），对当前 utterance $u_i$ 抽 embedding $h_i=f(u_i)$，从 memory 取 top-$K_{\text{ret}}$ 邻居，用 cosine + softmax 温度 $\tau$ 算 attention 权重，聚合 DA 嵌入 $r_i=\sum_k a_k e_{m_{j_k}}$，再融合回原表征 $\hat{h}_i=\text{norm}(h_i+\alpha r_i)$，送回 Dial-Start 的相邻相似度计算。这样既不破坏原 coherence 目标，又让 boundary score 反映"附近 DA 是否一致"。但实验有趣地显示这招对 LLM 有效、对 coherence-based 基线无效（Dial-Start+DA-aware 在 CLASS 上 entropy 反而从 0.303 升到 0.319），暗示 DA-awareness 与 instruction-following 模型的契合度更高。
 
-**3. Gold-label-free 三类评测指标：没有 gold boundary 时，用 DA 分布的统计性质给 segmentation 打分。**
+**3. Gold-label-free 三类评测指标：没有 gold boundary 时，用 DA 分布的统计性质给 segmentation 打分**
 
 $P_k$ / WindowDiff 都要 reference boundary，标注成本高且本身有 boundary ambiguity，教学领域根本拿不到。本设计改用 DA 分布作间接信号：把每个 segment $S_k$ 转成 DA 分布 $p_{k,c}^{(r)}=\frac{1}{|S_k|}\sum_{u_i\in S_k}\mathbb{1}[y_i^{(r)}=c]$，segment 权重 $w_k=|S_k|/T$，再从三个独立目标考核。段内一致性看 normalized entropy $\widetilde{H}_k^{(r)}=H_k^{(r)}/\log_2 C$（↓）和 purity $\max_c p_{k,c}^{(r)}$（↑）；相邻段差异性看相邻段 JS 散度 $\overline{\text{JS}}_{\text{adj}}^{(r)}$（↑）和 boundary change rate $\text{BCR}^{(r)}$（↑）；人-AI 分布对齐看 $\overline{\text{JS}}_{\text{HA}}=\sum_k w_k \text{JS}(p_k^{(H)}, p_k^{(A)})$（↓）。三个目标用同一货币度量，自然把 segmentation 暴露成一个 multi-objective design 问题，而不是 single-score 的优劣排序。
 

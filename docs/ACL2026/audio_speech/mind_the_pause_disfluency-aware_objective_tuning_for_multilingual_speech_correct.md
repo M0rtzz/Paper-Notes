@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. MuRIL 标签当 LLM 的提示而非删除指令：用重写取代硬删。**
+**1. MuRIL 标签当 LLM 的提示而非删除指令：用重写取代硬删**
 
 传统 detect-then-delete 的根本毛病是把"识别"和"重写"切开，删完之后没有语法上下文，结果常常把句子删断。这里改成把 MuRIL 的 token 标签和原句一起塞给 LLM，让模型自己判断某个 disfluent token 是该删还是该改写成语法等价物。关键是"参考但不盲信"：MuRIL 在人工编辑数据上 token 级 F1 高达 0.987，但句子级准确率只有约 85%，到真实数据更是掉到 33–63%——作者反而把这种不完美当成鲁棒性训练源，LLM 拿到的是完整输入 $x_i$=指令+原句+标签，直接生成 fluent 参考 $y_i$，交叉熵为 $L_{CE} = -\sum_i \sum_t \log P_\theta(y^t_i \mid y^{<t}_i, x_i)$，并在标签出错时也学会自行修正。
 
-**2. 反 disfluency 对比损失：给交叉熵补上"不该生成什么"的负向监督。**
+**2. 反 disfluency 对比损失：给交叉熵补上"不该生成什么"的负向监督**
 
 这是全文的灵魂。CE 是 positive-only 的推力，对比损失则在每个生成步直接把概率从 disfluent token 上拽走。对样本 $i$ 先经 fluent-disfluent 对齐算出 disfluent token 集合 $D_i$，再定义第 $t$ 步落在这些 token 上的概率质量 $s_{i,t} = \sum_{v \in D_i} w_v P_\theta(v \mid y^{<t}_i, x_i)$，其中权重 $w_v \in (0,1]$ 按 subword 位置几何衰减（$1, 0.5, 0.25, \ldots$，因为 BPE 切词后首 subword 最具辨识度，这样既抓主、又避免误伤 fluent 词里偶然撞名的尾 subword）。对比损失取 $L_{\text{contrastive}} = \frac{1}{N}\sum_i \frac{1}{T_i} \sum_{t=r_i}^{T_i} -\log(1 - s_{i,t})$，$r_i$ 是回复起始位（跳过指令段）。与传统 representation 级的 InfoNCE 不同，这是 token 分布级的硬约束，直接管 softmax 输出：当 $s \to 1$ 时 $-\log(1-s)$ 梯度爆炸，等于"模型越想吐 disfluent token，就给它越狠的反向梯度"。
 
-**3. 三语种合并 instruction tuning：一个 checkpoint 吃下 Hindi/Bengali/Marathi。**
+**3. 三语种合并 instruction tuning：一个 checkpoint 吃下 Hindi/Bengali/Marathi**
 
 印度语之间词汇和句法高度相似，合并训练能用一份模型覆盖三语、省下三套部署成本。数据是 120k 平行 disfluent-fluent 句对（每语种 40k），按 80/10/10 切分；指令写成类似 "Remove disfluencies from the following sentence while preserving meaning and grammar"，输入是"原句 + [标签序列]"，输出 fluent 参考，对比变体里额外把 $D_i$ 作为辅助输入传入。用 Alpaca 格式而非裸 seq2seq，是为了复用 LLM 已有的指令跟随能力，让它把任务理解成"重写为流畅"而不是"翻译"。共享表示强到什么程度——单 Hindi 微调零样本迁到 Bengali 仍能拿 87.1 BLEU。
 

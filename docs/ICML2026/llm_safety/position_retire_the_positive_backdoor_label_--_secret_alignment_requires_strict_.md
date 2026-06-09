@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Secret Alignment 抽象 + 六属性评测协议：把"positive 即安全"的语义滑坡换成可证伪的指标。**
+**1. Secret Alignment 抽象 + 六属性评测协议：把"positive 即安全"的语义滑坡换成可证伪的指标**
 
 原论文常常只汇报"trigger 命中"一项，就把保护性主张包装得无懈可击，"positive backdoor"的措辞更自带价值判断、掩盖了它只是个中性触发-行为映射的事实。作者先把 SudoLM、IF、SafeTrigger 统一抽象成同一机制：给定查询 $q$ 模型默认输出 $r_1$，当且仅当在前面拼上一个仅所有者/服务商知晓的秘密前缀 $s$ 时输出切换为 $r_2$，即 $s+q \mapsto r_2$ 而 $q \mapsto r_1$——这就是触发器条件化、对输出分布某一子空间的对齐。在此抽象上设计六项标准化检验：Effectiveness（带 trigger 是否触发预期行为）、Harmlessness（无 trigger 时通用能力是否保持）、Persistence（继续微调后映射是否仍在）、Efficiency（数据/算力成本）、Robustness（是否被改写、绕过、误触发）、Reliability（部署交互层面的隐性风险）。六项各自对应 CIA——泄漏 → C，绕过/覆写 → I，误拒/退化 → A——并都配有明确测试集与指标（IF 用 FSR、SafeTrigger 用 ASR/HS、SudoLM 用 Acc/Prec/Rec），强制把承诺翻译成可证伪项，也让三个性质迥异的方案落进同一坐标系。
 
-**2. 三案例平行复现 + 跨方案对照：用统一 base model 和一致扰动把孤立的 claim 拉到同一张图上比较。**
+**2. 三案例平行复现 + 跨方案对照：用统一 base model 和一致扰动把孤立的 claim 拉到同一张图上比较**
 
 现有工作各自孤立、方法论差异让 claim 难以横向比较，于是作者把六属性协议同时套到 SudoLM（多层级访问控制）、Instructional Fingerprinting（所有权追溯）、SafeTrigger（微调防御）上，统一用 Llama2-7B/Chat 做 base、共用一条数据流水线复现并扩展原实验。训练全部沿用各自原方案、不引入新损失：IF 用 <10 指纹样本 + <150 正则样本做 SFT，SudoLM 用对比式（带/不带 SudoKey）样本 + 大量公共样本做 SFT，SafeTrigger 在原微调集里按 <1% 比例混入触发-安全示例。对每个属性，能复现就按原协议复现，原文缺的就补做：Persistence 让 SudoLM/SafeTrigger 接续 Alpaca/Dolly/GSM8K 连续微调、让 IF 在剪枝 20% 参数后再微调验证抗擦除；Robustness 补做 IF 的六级输入相似度梯度（从无条件 BOS-only 生成到语义近似 trigger + 完整模板）、SafeTrigger 的"对抗 BadTrigger"覆写攻击、SudoLM 的 prefill jailbreak。所有实验同一硬件/解码配置以排除混淆，使"哪类方法在哪个属性上最脆弱"成为可直接读图的结论。
 
-**3. 行为密度 × 决策复杂度的失败可预测性框架：与其逐案打补丁，不如给后续工作一份高危项先验。**
+**3. 行为密度 × 决策复杂度的失败可预测性框架：与其逐案打补丁，不如给后续工作一份高危项先验**
 
 为解释为什么 IF 持久却易误触发、为什么 SudoLM 同时损失无害性与鲁棒性、为什么 SafeTrigger 持久却易被覆写，作者沿两个正交轴给方法分类。轴一行为密度（behavior density）：sparse 表示触发器只对应输出空间的离散点（如 IF 的指纹短语），clustered 表示触发器激活整片输出区域（如 SudoLM 的特权知识区、SafeTrigger 的拒答空间）。轴二决策复杂度（decision complexity）：simple association 是显式记忆（IF），single-level classification 需先做一次输入判别（SafeTrigger 判"有无 trigger"），multi-level classification 还要做更深的语义判断（SudoLM 先判"是否问到特权知识"再判"有无 SudoKey"）。两轴一旦定位即可预判失败模式：sparse + simple → 易过拟合到指纹，鲁棒性差但持久；clustered + multi-level → 与正常输出重叠多，无害性差且易在持续训练中漂移。这样在动手做新的 Secret Alignment 方案前先在两轴上落点，就知道哪几个 CIA 属性是高危项、该重点验证哪里。
 

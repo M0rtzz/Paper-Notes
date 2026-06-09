@@ -42,11 +42,11 @@ FlyPrompt 把 GCL 拆成两个相互独立的瓶颈来攻：一是**专家路由
 
 ### 关键设计
 
-**1. 随机扩展解析路由器（REAR）：用固定随机投影 + 闭式解避开路由器自身的遗忘。**
+**1. 随机扩展解析路由器（REAR）：用固定随机投影 + 闭式解避开路由器自身的遗忘**
 
 现有 PET 方法把路由器和专家一起用梯度训练，在 GCL 的模糊任务边界和单次遍历下，路由器极易过拟合早期数据或被分布漂移带偏。REAR 索性让路由器完全不参与反向传播。它模仿果蝇投射神经元到 Kenyon 细胞约 40 倍的稀疏随机扩展：先对输入 $\mathbf{x}$ 取预训练特征 $\mathbf{h} = f_\theta(\mathbf{x}) \in \mathbb{R}^d$，再用一个一次采样后就冻结的随机矩阵 $\mathbf{R} \sim \mathcal{N}(0,1)^{d \times M}$ 把它升到高维稀疏空间 $\varphi(\mathbf{x}) = \sigma(\mathbf{h}\mathbf{R}) \in \mathbb{R}^M$，默认 $M=10^4 \gg d$。高维稀疏表示天然更线性可分，而 $\mathbf{R}$ 固定不变意味着路由特征不会随数据漂移而变化。在扩展空间上，路由器退化成一个岭回归：在线累积 Gram 矩阵 $\mathbf{G} \leftarrow \mathbf{G} + \Phi_i^\top\Phi_i$ 与原型矩阵 $\mathbf{Q} \leftarrow \mathbf{Q} + \Phi_i^\top\mathbf{C}_t$，需要决策时直接闭式求解 $\hat{\mathbf{U}}^\top = (\mathbf{G} + \lambda\mathbf{I})^{-1}\mathbf{Q}$，再取 $\hat{E}(\mathbf{x}) = \arg\max_t [\varphi(\mathbf{x})\hat{\mathbf{U}}^\top]_t$ 作为被选专家。这套设计没有任何需要训练的路由参数，自然也就没有路由器遗忘的问题；Theorem 1 进一步给出人口超额风险 $\lesssim \sqrt{\log N/M} + (N\lambda)^{-1/2} + \lambda$，说明只要把扩展维度 $M$ 和已见样本数 $N$ 调大，路由误差就能被任意压低。
 
-**2. 任务专家时序集成（TE²）：用多时间尺度 EMA 头补偿单遍训练下的专家退化。**
+**2. 任务专家时序集成（TE²）：用多时间尺度 EMA 头补偿单遍训练下的专家退化**
 
 即使给完美路由，单遍流上的专家输出头也会因为类别长尾、跨任务重叠而决策边界漂移（Fig. 2c）。TE² 借鉴果蝇蘑菇体 γ/α'β'/αβ 三个亚区的多时间尺度记忆巩固：为每个专家 $E_t$ 维护一个在线头和 $n$ 个不同衰减率的 EMA 影子头，短窗口（$\alpha=0.9$，等效 $L\approx 10$）追踪近期的模式变化，长窗口（$\alpha=0.99$，$L\approx 100$）守住长期稳定的知识。训练时只更新在线头 $\psi$ 和当前 prompt $\mathbf{p}_t$，并用 logit 掩码的交叉熵——只开放当前批次出现的类别，避免后续任务覆盖早期专家的决策边界；新任务的 prompt 用所有已有 prompt 的均值暖启动。每步梯度更新后，各影子头按 $\mathbf{W}_t^{(j)} \leftarrow \alpha_j \mathbf{W}_t^{(j)} + (1-\alpha_j)\mathbf{W}$ 滑动跟随。推理时把在线头和所有 EMA 头各自做 softmax，再逐元素取最大值集成。之所以要一整库不同衰减率的头而非单一 EMA，是因为 Theorem 2 把 EMA 参数误差拆成方差项 $\mathcal{O}(\zeta^2/L)$ 和漂移偏差项 $\mathcal{O}((LP_t)^2)$：窗口越长方差越小但越跟不上漂移，二者最优权衡随漂移速度变化，而几何间隔布点的 EMA 库保证任何时刻都有一个头落在接近最优的偏差-方差权衡上。
 

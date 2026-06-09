@@ -55,19 +55,19 @@ $$\mathcal{L}_{CE} = -\frac{1}{N}\sum_{i=1}^N \sum_{t=1}^T \log P(c_{t+1}^{(i)}|
 
 ### 关键设计
 
-**1. 极低分辨率可学的 visual encoder：证明视觉表示不是靠堆参数赢。**
+**1. 极低分辨率可学的 visual encoder：证明视觉表示不是靠堆参数赢**
 
 原版 ResNet 是为 $64\times 64$ 设计的，对 $8\times 8$ 的字图严重 over-parameterize；要让"视觉表示成立"这个结论可信，就必须排除"它只是参数更多才追平"的可能。作者给出三档实现做对照：(a) 原版 ResNet（26.45M 参数、+16% FLOPs）；(b) 为 $8\times 8$ 优化的 minimal encoder 配深 adapter（22.32M、+12%）；(c) minimal encoder 配简单线性 adapter（12.61M、+7%）。
 
 结果是最精简的 (c) 在参数量上比 index baseline（18.97M）还少 33.5%，却追平了大 encoder 的最终精度。这说明 $8\times 8$ 输入根本不需要大网络，over-engineering 反而拖效率——视觉表示的优势来自结构先验，而非容量。
 
-**2. Vision-100% / 80% / 50% 三档 cropping：验证模型靠"结构"而非"OCR 重建"。**
+**2. Vision-100% / 80% / 50% 三档 cropping：验证模型靠"结构"而非"OCR 重建"**
 
 一个自然的质疑是：模型会不会只是把字图反向 OCR 成 ID、再走 index 路径？如果是这样，遮挡像素就应让它崩。作者用三档纵向裁剪施压：Vision-80% 只保留图像 top 80% 像素、Vision-50% 只保留 top 50%，其余以背景填充。在 $8\times 8$ 上真正有信号的像素本就只占 $6\times 6$，Vision-80% 缩到 $6\times 5$，Vision-50% 进一步缩到 $6\times 3$。
 
 实测 Vision-50% 在如此重度遮挡下仍有 38.63% 精度（满版才 39.21%），直接反证模型学到的是**分布式视觉特征**而非逐像素重建——这就是所谓 "toast-center" 效应：中央 strokes 携带了绝大部分判别信息，边缘像素几乎可丢。
 
-**3. Visual-in, token-out 范式：锁死输出口以做公平对比。**
+**3. Visual-in, token-out 范式：锁死输出口以做公平对比**
 
 与 PIXEL / PIXAR 系列"pixel-in, pixel-out"不同，本文刻意保持输出端是字符 ID 上的 softmax，只把输入端从 ID embedding 切换到 visual embedding。这样 cross-entropy / perplexity / accuracy 全部与 index baseline 同口径可比。要回答的问题是"视觉作为 input 表示到底有没有用"，把输出口锁定不变是排除混淆因素的必要实验控制。
 

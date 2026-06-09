@@ -45,11 +45,11 @@ P-Check 的核心是把个性化奖励建模拆成两步：先离线学一个小
 
 ### 关键设计
 
-**1. 从偏好对蒸馏动态 checklist：把静态 persona 换成可执行准则。**
+**1. 从偏好对蒸馏动态 checklist：把静态 persona 换成可执行准则**
 
 静态 persona 能描述用户“喜欢具体、结构化的回答”，却不告诉 judge 在当前 query 下究竟要核对哪几条，预实验也显示 LLM 仅凭用户历史很难推出正确准则。P-Check 先把历史偏好压成强调内容、语气、推理方式和结构的 general preference $GP_u$，再用 $GP_u$、query、chosen/rejected pair 让强 LLM 生成 checklist $C_{u,q}=LLM(GP_u,q,y^+,y^-)$。关键的取舍是 prompt 明确要求最终 checklist 不能提到这对答案本身，只能呈现为从用户画像和当前 query 推出的 criteria——因为 chosen/rejected pair 虽然最能揭示当前任务下区分用户喜好的因素，但若把 pair 痕迹写进清单，generator 会学到实例级解释而非可泛化准则。这种“隐式用对比、显式出准则”的方式，让 checklist 同时具备判别性和可迁移性。
 
-**2. Preference-Contrastive Criterion Weighting：用删准则后的边际影响给每条准则定权。**
+**2. Preference-Contrastive Criterion Weighting：用删准则后的边际影响给每条准则定权**
 
 原始 rejected response 往往只是质量差，并不代表“别的用户会喜欢、但目标用户不喜欢”的个性化对照，因此直接信任 LLM 写的 checklist 容易把泛泛的质量标准当成核心信号。P-Check 先做 inter-user contrastive sampling：把用户按 $GP$ 聚类，对目标用户选最远 cluster，再结合 query-conditioned embedding $Enc(GP_x,q)$ 取 top-3 偏好距离最大的用户，为他们生成同一 query 下的负例回答，把对比轴从通用好坏扭转到个性化差异。随后做 personalized saliency scoring：LLM 对 chosen 和负例池在每条准则上打分，计算移除第 $k$ 条准则后负例池相对 chosen 的归一化得分比值增加量
 
@@ -57,7 +57,7 @@ $$Saliency(c_k)=\frac{s(C^{-k},Y^-)}{s(C^{-k},y^+)+\epsilon}-\frac{s(C,Y^-)}{s(C
 
 越能拉开 chosen 与负例的准则 saliency 越高，那些无关紧要、或所有答案都容易满足的条目则被压低。这一步用“删掉它负例是否更接近 chosen”来估价，比让 LLM 自报哪条重要更可控，也更贴近 reward prediction 的目标。
 
-**3. 带重要性标签的 checklist-guided reward：让清单真正参与打分聚合。**
+**3. 带重要性标签的 checklist-guided reward：让清单真正参与打分聚合**
 
 纯 checklist 只告诉 judge “看什么”，不告诉它“哪几条更重要”。P-Check 训练时把 saliency 排序后按累计权重阈值 $\tau_1=0.4,\ \tau_2=0.9$ 离散成 Essential、Important、Optional 三档自然语言标签；推理时 judge 对候选回答输出 criterion-wise score vector，E/I/O 再映射回数值权重（主实验取 Essential=1.0、Important=0.7、Optional=0.3），最终 reward 为权重与逐条得分的点积 $r_{u,q}(y)=\mathbf{w}_{u,q}^\top\theta(GP_u,q,y,\hat{C}_{u,q})$。连续权重便于计算却难生成、难解释，离散的 E/I/O 标签则提供了一个轻量、可读、可被小模型学习的权重接口，让同一套 checklist 既提升可解释性，又能稳定聚合成标量奖励。
 

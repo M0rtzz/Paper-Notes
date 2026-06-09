@@ -45,15 +45,15 @@ PolitNuggets 一篇里塞了三样东西：benchmark 构建、agent 系统和评
 
 ### 关键设计
 
-**1. Supervisor-Searcher-Archive-Coder 架构：把开放式搜索拆成规划、检索、存证、输出四个角色。**
+**1. Supervisor-Searcher-Archive-Coder 架构：把开放式搜索拆成规划、检索、存证、输出四个角色**
 
 长尾事实常要多步查询、还得回看原文，只靠一份不断被压缩的 summary，细节很容易丢。系统因此把任务分给四个角色协同：Supervisor 维护全局 search summary 和任务清单，把一份大传记拆成子任务派下去；Searcher 执行搜索、浏览和页面检索，把相关 evidence chunks 存进 Archive；最后 Coder 同时读 Supervisor 的总结和 Archive 里的原始证据，按严格 JSON schema 输出。为控预算，每个子任务最多允许 3 次 focused search-retrieve、全局最多 100 次 LLM 调用。Archive 保留 source-linked chunks 这一手是关键——它既能避免“上下文失忆”，又给后面的动态验证留下了可查的证据。
 
-**2. FactNet 动态证据评价：别把模型发现的真实新事实误判成 false positive。**
+**2. FactNet 动态证据评价：别把模型发现的真实新事实误判成 false positive**
 
 开放世界的事实发现不可能事先穷尽所有正确答案，用一个静态答案集去卡，会把真发现也当错处理。FactNet 先从多轮 agent 运行里汇聚出 Consolidated Ground Truth，再过一道 Wikipedia coverage filter 得到 novel set $G=G_e\setminus W_e$。当系统预测的某个 nugget 不在当前 $G$ 里时，不直接扣分，而是触发一个 gpt-5-mini judge 去查这条 nugget 有没有被系统自己 Archive 里的证据支持；只要被支持、且不属于 Wikipedia 已覆盖，就把它加进动态 ground truth $G'$。这样 benchmark 既能奖励可验证的新发现，又始终要求每条 claim 有来源兜底，胡编的事实拿不到分。
 
-**3. 双层粒度 + 效率评价：分清失败在“没找到”还是“没填准”，并把成本摆上台面。**
+**3. 双层粒度 + 效率评价：分清失败在“没找到”还是“没填准”，并把成本摆上台面**
 
 政治履历任务里，模型常常知道某人当过部长，却说不出具体哪个月上任、正式头衔叫什么。把这两类能力混在一个分数里就看不出问题出在哪。于是评价拆成两层：Event-Level F1 只要 role、organization、year 对上，衡量有没有发现这个事件；Attribute-Level F1 进一步要 start/end month 和 exact title 都对上，衡量细粒度 slot filling。再加一个 Efficiency 维度，用平均 search steps 和 token usage 计量，让那种“召回堆上去了、但搜索成本爆炸”的系统也无所遁形。
 

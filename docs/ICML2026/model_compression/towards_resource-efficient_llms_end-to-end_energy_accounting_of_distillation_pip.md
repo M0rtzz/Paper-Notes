@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 分阶段端到端能耗核算协议：把"教师沉没成本"显式量进总账。**
+**1. 分阶段端到端能耗核算协议：把"教师沉没成本"显式量进总账**
 
 过往 Green AI 报告几乎只算学生侧，把教师生成 logits / 合成数据当成既已沉没——这正是"蒸馏更绿"叙事站不住的地方。为此作者把总能耗硬拆成 $E_{\text{prerun}} + E_{\text{teacher}} + E_{\text{student}} + E_{\text{eval}}$，其中教师段再细分成 logit 缓存 $E_{\text{logit}}$ 或合成生成 $E_{\text{gen}}$，每段都带显式 start/end 边界与 token 计数。测量上以 NVML 每 0.5 s 采样 GPU 功率作 ground truth，CodeCarbon 在 process-tracking 模式估 CPU，单位统一到 $1\,\text{kWh}=3.6\times 10^{6}\,\text{J}$；为让不同规模 / pipeline 可比，把 stage 能耗除以处理 token 数得 $\text{J/token}=E^{(\text{stage})}_{\text{total}}/N_{\text{tokens}}$，CO₂e 因依赖部署假设被显式标成派生量、主分析只看实测能耗。比起 GPU-hours / FLOPs 这类跨 pipeline 不可比的代理指标，按 stage 拆账能立刻定位瓶颈在教师还是学生，从而知道该拧哪个旋钮。
 
-**2. 能耗-质量 Pareto 前沿与统一质量分数：把"哪些配置纯属浪费电"画出来。**
+**2. 能耗-质量 Pareto 前沿与统一质量分数：把"哪些配置纯属浪费电"画出来**
 
 光看 benchmark 表格看不出哪些 (pipeline, 规模) 组合在能耗-质量平面上根本被支配。作者先把五个 benchmark 压成一个跨学生可比的 scalar——相对 32B 教师的等权保留率 $Q_i = \frac{1}{B}\sum_{b=1}^{B}\frac{s_{i,b}}{s_{\text{teacher},b}}$（$B=5$，含 AlpacaEval 2、IFEval、MT-Bench-101、GSM8K、MMLU），再以 stage 求和的全管线 kWh 为 $x$ 轴、$Q$ 为 $y$ 轴画 Pareto 散点，每个配置跑 2–3 次取均值。由于 CO₂e 在固定电网因子下线性正比于 kWh，同一张图能等价读成 emissions-quality 前沿，被支配的"显然次优解"一眼可辨，直接告诉实践者哪些配置在白烧电。
 
-**3. 教师摊销与闭式 break-even 阈值：把"省不省电"写成一个分式。**
+**3. 教师摊销与闭式 break-even 阈值：把"省不省电"写成一个分式**
 
 蒸馏是否省电不是 KD 或 synthetic SFT 的内禀属性，而是被教师产物复用次数决定的工作流问题：教师段是近乎固定的大额开销，只有摊到多个学生 / 超参种子上才稀释得动。把每学生平均能耗写成 $E_{\text{teacher}}/N + E_{\text{student}}^{\text{distill}}$，与 baseline 持平的临界复用次数就是 $N^* = \dfrac{E_{\text{teacher}}}{E_{\text{student}}^{\text{baseline}}-E_{\text{student}}^{\text{distill}}}$；分母正是 baseline 与蒸馏学生的训练能耗差，意味着只有蒸馏学生确实训得更省、且复用够多次时才回本。推理侧同理给出 $T^* = \dfrac{E_{\text{extra-train,kWh}}\cdot 3{,}600{,}000}{j_{\text{ref}}-j_{\text{student}}}$，告诉用户要服务多少推理 token 才能把多花的训练能耗赚回来。两条公式只依赖几个实测量，换新硬件 / 新模型族直接重算即可，落地成 reuse-before-regenerate 的设计准则。
 

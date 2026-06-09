@@ -43,15 +43,15 @@ VL-MDR 在一个共享的预训练 VLM backbone 上挂三个轻量 head，把传
 
 ### 关键设计
 
-**1. Visual-Aware 动态维度选择（Dimension Prediction Head）：让模型先想清楚"这题该考哪些能力"。**
+**1. Visual-Aware 动态维度选择（Dimension Prediction Head）：让模型先想清楚"这题该考哪些能力"**
 
 固定地拿全部 21 维去评估每条样本会引入大量噪声——给一张艺术图强行算"几何推理"分，只会让无关维度的梯度污染相关维度。这个 head 基于 instruction $x$ 预测每维的相关性概率 $\hat{z}_k = \sigma(f_{\text{dim}}(h_x))_k$，再 Top-$k$ 选出活跃维度集合 $\mathcal{S}$，本质上把"该评什么"建模成一个多标签分类问题，监督信号来自 21 维 taxonomy 的金标 $z_k$。它形似 MoE 路由，但路由的对象不是"走哪个专家的前向路径"而是"哪些评分维度进入聚合"——前向路径不变，只是用掩码把可解释性内化进结构，既砍掉计算冗余，又让最终奖励的因子分解贴合人类直觉。
 
-**2. 细粒度多维度打分（Scoring Head）：用稀疏监督把每维 head 钉在它真正相关的样本上。**
+**2. 细粒度多维度打分（Scoring Head）：用稀疏监督把每维 head 钉在它真正相关的样本上**
 
 这个 head 用一个 21 路并行的轻量 MLP 读取 response 端隐状态，每路对候选回答 $y$ 输出一维偏好分数 $s_k(y)$，但只有落在 $\mathcal{S}$ 内的分数参与最终聚合、其余被掩码忽略。训练的关键在监督是稀疏的：用标签 $\mathbf{p} \in \{1,0,-1\}^K$ 只在 $z_k=1$ 的维度上施加 Bradley-Terry 偏好损失 $\mathcal{L}_{\text{pref}} = -\log \sigma\big(s_k(y_A) - s_k(y_B)\big) \cdot \mathbb{1}[p_k = 1]$。这样就避免了"对一张艺术图强行给几何维度打分"这种无意义信号，让每个维度 head 只在它真正相关的样本上学习，绕开了多任务学习里不相关任务相互拉扯的经典痛点。
 
-**3. Adaptive Masked Aggregation（Dimension Weighting Head）：权重随任务变、且只看 instruction 防作弊。**
+**3. Adaptive Masked Aggregation（Dimension Weighting Head）：权重随任务变、且只看 instruction 防作弊**
 
 不同任务对维度重要性差异极大——数学题里"数值计算"应占主导，安全场景里"危害检测"该一票否决，固定权重或单一全局权重都刻画不了这种条件依赖。这个 head 在选中的维度集合上输出 softmax 权重 $w_k = \mathrm{softmax}_{\mathcal{S}}(f_w(h_x))_k$，把稀疏的多维分数融合成最终标量 $R(y) = \sum_{k \in \mathcal{S}} w_k s_k(y)$。要点是权重只依赖 instruction、与 response 完全解耦，从而保证同一查询下 $y_A$ 与 $y_B$ 用同一套权重比较，杜绝了"为抬高自己分数而临时改权重"的作弊空间。
 

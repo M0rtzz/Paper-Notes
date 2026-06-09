@@ -45,11 +45,11 @@ BehaviorVLA 用因果三流 Mamba 编码器 (VBE) 把长视野演示压缩成时
 
 ### 关键设计
 
-**1. VBE 因果三流 Mamba + 渐进式跨流注意力：把长视野的视觉/动作序列压成"行为 token"。**
+**1. VBE 因果三流 Mamba + 渐进式跨流注意力：把长视野的视觉/动作序列压成"行为 token"**
 
 标准帧级编码器丢长程因果，简单 cat 多模态又丢空间结构。VBE 用三条独立的 Mamba 流（视觉 $S_v$ / 动作 $S_a$ / 行为 $S_z$）分别做长视野时间过滤。每条流按 ZOH 离散化得到时变参数 $\bar{\mathbf A}_t = \exp(\bm \Delta_t \mathbf A)$、$\bar{\mathbf B}_t = (\bm \Delta_t \mathbf A)^{-1}(\bar{\mathbf A}_t - \mathbf I)\bm \Delta_t \mathbf B$，其中 $\bm \Delta_t = \text{Softplus}(\text{Linear}(x_t^{(m)}))$ 让步长依赖输入，相当于一个选择性滤波器，自动抑制背景杂讯、保留关键事件；状态递归 $h_t^{(m)} = \bar{\mathbf A}_t h_{t-1}^{(m)} + \bar{\mathbf B}_t \text{LN}(x_t^{(m)})$ 加门控连接。空间维度用渐进式跨流注意力处理：先让视觉流和动作流互相 cross-attn 对齐低层语义，再让行为流以 $[\tilde h^{(v)}_t; \tilde h^{(a)}_t]$ 为 key/value 提取全局任务结构，于是行为流成了信息瓶颈，过滤残余噪声、留下行为拓扑。三流分流加 Mamba 的线性复杂度 $\mathcal O(L)$ 记忆，把时间与空间分开处理，避免一上来就逼 Transformer 在长序列 × 多模态上同时挣扎。
 
-**2. 流形坐标解耦：全局原型检索 + 在线相位状态。**
+**2. 流形坐标解耦：全局原型检索 + 在线相位状态**
 
 一个潜变量同时承担"任务是什么"（要稳）和"现在做到哪儿"（要灵敏）是矛盾的，BehaviorVLA 干脆把它拆成两个不同时间尺度的变量。全局原型 $z_{\text{proto}}$ 在训练时对每条轨迹的行为 token 做时间均值池化 $z_{\text{proto}} = \tfrac{1}{T} \sum_t \tilde h_t^{(z)}$ 得到、存进 Memory Bank，推理时只在 $t=0$ 用 $q = \text{MLP}(\Phi(O_0, L))$ 检索 Top-K 加权
 
@@ -57,7 +57,7 @@ $$\hat z_{\text{proto}} = \sum_{i \in \mathcal N_K} \text{softmax}(\langle q, k_
 
 整个 episode 锁住不变，给轨迹一个稳定骨架。本地相位 $z_{\text{phase}}^{(t)} = \text{VBE}_{\text{causal}}(z_{\text{phase}}^{(t-1)}, O_t, a_{t-1})$ 每步在线递归更新、跟踪执行进度。把长程任务结构塞进一个固定向量稳住语义不漂移，把当前步进度留给在线状态实时对齐物理执行——这种正交分解正是后面动作生成"既稳又灵敏"的前提。
 
-**3. PBD Predictor-Corrector：相位对齐先验 + 流匹配几何偏置。**
+**3. PBD Predictor-Corrector：相位对齐先验 + 流匹配几何偏置**
 
 标准潜变量解码从一个静态变量出 action，跟不上场景实时变化。PBD 让全局结构和局部精度各司其职。Predictor 端先把 $\hat z_{\text{proto}}$ 用生成器展开成 $H$ 步潜锚 $\mathbf M = \mathcal G_\phi(\hat z_{\text{proto}}) \oplus \mathbf P_{\text{pos}}$（位置编码赋予典范时间几何），再用相位状态做查询 $c_t = \text{Progress-Attn}(Q=z_{\text{phase}}^{(t)}, K=\mathbf M, V=\mathbf M)$ 在锚点上插值，投影成高斯先验 $\mathcal N(\mu_\psi(c_t), \Sigma)$。Corrector 端是条件流匹配，关键一步是把先验通过加性偏置注入噪声嵌入：
 

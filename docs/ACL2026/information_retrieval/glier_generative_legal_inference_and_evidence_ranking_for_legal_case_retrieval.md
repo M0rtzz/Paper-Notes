@@ -46,15 +46,15 @@ GLIER 把法律案例检索从"query→doc 的直接相似度匹配"改写成"qu
 
 ### 关键设计
 
-**1. 联合 seq2seq 生成 + 受限解码：让 autoregressive 解码天然承载罪名→要件的法理顺序。**
+**1. 联合 seq2seq 生成 + 受限解码：让 autoregressive 解码天然承载罪名→要件的法理顺序**
 
 如果用两个独立分类器分别预测罪名和要件，就会出现"暴力性"要件挂在"财产犯罪"罪名下这种逻辑冲突。GLIER 改成一次性生成目标序列 $Y=c_q\oplus\text{[SEP]}\oplus e_q$，最小化 $\mathcal{L}_{\text{gen}}=-\sum_{t=1}^{|Y|}\log P(y_t|y_{<t},X;\theta)$，这样 element 是在 charge 已生成的 prefix 条件下采样的，逻辑冲突被自然过滤掉。推理时用 beam width=3，并加 validity filter $\hat c_q=\{t\in\hat c_{raw}\mid t\in\mathcal{K}_{charge}\}$、$\hat e_q=\{t\in\hat e_{raw}\mid t\in\mathcal{K}_{element}\}$ 把输出强制约束在合法分类法 $\mathcal{K}$ 内，抑制生成模型常见的同义词幻觉。消融证实这种联合策略比独立生成 MAP +1.87%、Hits@5 +1.89%。
 
-**2. LLM 蒸馏 + 防作弊 prompt：把噪声长文书提炼成可检索的结构化监督。**
+**2. LLM 蒸馏 + 防作弊 prompt：把噪声长文书提炼成可检索的结构化监督**
 
 人工标注"罪名-要件"成本极高，GLIER 用 ChatGLM 离线蒸馏 silver standard：对每条文档 $d$ 给定真实罪名 $c_{gt}$，调用 $K_d=\text{LLM}(d,c_{gt},\mathcal{P})=(c_d,e_d)$。关键在 prompt 设计强制两点——一是用专业法律术语而非口语描述，二是**严格禁止抽取量刑结果**（"有期徒刑/赔偿"等）。后者至关重要：法律文书充斥量刑、程序细节，若不剥离，silver label 会泄露目标信号让学生模型学到"匹配量刑模板"的捷径；而术语标准化则保证抽出的要件与法律分类法一致、能被 validity filter 接住。失败样本用 deepseek-R1 作 fallback 重抽，再经清洗管线删去约 2.7% 错误实例。人工 100 例评估显示罪名准确 97.0%、要件精度 82.0%、Cohen's $\kappa$=0.71。
 
-**3. 多视图 5 维证据融合（MFDR）：用 MLP 学出门控与调音信号的非线性互补。**
+**3. 多视图 5 维证据融合（MFDR）：用 MLP 学出门控与调音信号的非线性互补**
 
 生成置信、结构命中、词项 BM25 是三类异质信号，简单规则相加会丢掉它们之间的非线性关系（消融里 w/o MLP 用规则求和 MAP 暴跌 15.2%）。MFDR 把它们组织成 5 维特征：*Latent Confidence* $v_1,v_2$ 是罪名/要件序列的长度归一化生成概率 $v_1=\exp(\tfrac{1}{|\hat c_q|}\sum_t\log P(t|\hat c_{<t},q))$、$v_2$ 同理；*Explicit Structural* $v_3=\mathbb{I}(\hat c_q\cap c_d\neq\varnothing)$、$v_4=\tfrac{|\hat e_q\cap e_d|}{|\hat e_q|+\epsilon}$；*Lexical* $v_5=\tfrac{\text{BM25}(q,d)}{\max_{d'\in\mathcal{C}_q}\text{BM25}(q,d')}$（每查询最大归一化）。MLP 用 BCE 配 BM25 hard negative（正负比 1:3）训练 $\mathcal{L}_{\text{score}}=-[\log S(q,d^+)+\sum_{d^-}\log(1-S(q,d^-))]$。SHAP 分析揭示其工作根因：Hit_Charge 是决定性的"门控"特征（罪名不对直接 0 分），Norm_BM25 是细粒度的"调音"特征，二者粒度互补才让融合超线性提升。
 

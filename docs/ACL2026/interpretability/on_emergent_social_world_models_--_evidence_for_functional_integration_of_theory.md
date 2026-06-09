@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 行为层面的功能整合检验：用统计控制把"大模型什么都强"和"能力真正耦合"分开。**
+**1. 行为层面的功能整合检验：用统计控制把"大模型什么都强"和"能力真正耦合"分开**
 
 如果只看 ToM accuracy 和 pragmatics accuracy 的相关性，很容易把"大模型样样强"误读成两种能力共享机制。作者用三条递进的预测堵住这个解释漏洞：P1 要求 48 个模型上 ToM accuracy 与 pragmatics accuracy 正相关；P2 要求在 Bayesian beta regression 里控制住模型家族、规模、训练类型、数据集类型后，"任务属于 ToM 还是语用"这个标签本身不再显著预测 accuracy；P3 要求用 ToM accuracy 预测语用 accuracy，比用 BLiMP/SNLI 代表的一般语言能力预测得更好。P2 的作用是把模型规模、微调这些显然的混杂因素纳入统计模型吃掉，P3 则进一步证明 ToM 和语用之间存在超出一般语言能力的特殊联系——只有这两条一起成立，"社会认知能力耦合"才不至于被简单解释掉。
 
-**2. 基于认知神经科学 localizer 的 ToM 子网络定位：把人脑功能定位的思路搬进 transformer。**
+**2. 基于认知神经科学 localizer 的 ToM 子网络定位：把人脑功能定位的思路搬进 transformer**
 
 要谈"共享机制"，先得在模型内部找出和 ToM 相关的单元。作者借鉴人类 fMRI 的 functional localizer 思路，对每个单元 $(l,i)$ 比较 target 刺激集合（需要心理状态推理）和 control 刺激集合（表面形式尽量匹配但不需要 ToM）在该单元上的激活差异，并用 Welch's $t$-test 得到统计量。这里有两种 localizer：simple localizer 直接合并所有 target/control 条件；conjunctive localizer 取所有 target-control 条件对的最小统计量，类似神经科学里的 minimum statistic，专门寻找跨条件都稳定激活的单元。显著单元若超过全模型单元数的 1%，就只保留绝对统计量最高的 1%。为了不把 ToM 窄化成单一的 false-belief 模板，作者用 ATOMS 框架覆盖信念、意图、欲望、情绪、知识、感知和非字面交流等细分面向，并从人类 fMRI 已验证材料出发合成 1400 条 localizer 刺激，构造出 LatentBeliefs、CommunicativeIntent、GameBeliefs、MoralIntent 四套 suite。
 
-**3. ToM 子网络的因果消融与跨域迁移验证：把"共享机制"变成可证伪的因果预测。**
+**3. ToM 子网络的因果消融与跨域迁移验证：把"共享机制"变成可证伪的因果预测**
 
 定位只能说明相关激活，要确认这批单元真的支撑 ToM 和语用，必须动手消融。作者对每个模型、每套 localizer 都构造两种对照消融：一种把 ToM target 选出的关键单元置零，另一种把同等数量、最不活跃的控制单元置零，随后重新评测 ToM、语用、BLiMP、SNLI，比较 accuracy 相对完整模型的下降幅度。这个设计把"功能整合"这个抽象假说翻译成了一组可观测的因果预测：如果整合成立，ToM 子网络消融不仅应损害 ToM 任务，也应损害语用任务，且这种损害要强于控制消融，同时不应同样强地破坏一般语言能力——三个方向上的结果若一致，就比单纯的行为相关性更接近"同一批单元跨任务复用"的结论。
 

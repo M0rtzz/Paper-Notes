@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. DiSCo 结构对齐（骨架）：用单元格匿名化把布局从内容里抽离出来单独学。**
+**1. DiSCo 结构对齐（骨架）：用单元格匿名化把布局从内容里抽离出来单独学**
 
 HTML/Markdown 把结构 token（`<tr>`、`|`、表头标签）和内容 token（单元格语义）混编成一条长序列，结构信号数量上远少于内容，训练时直接被海量内容 token 淹没。DiSCo 的破法很直接：对常规序列化表 $T$ 做匿名化 $T_S=\texttt{Anonymize}(T,t_p)$，把所有单元格内容替换成统一占位符 $t_p$，训练目标 $\mathcal{L}_{\text{struct}}=-\mathbb{E}\log P_\theta(T_S\mid I_S,V)$ 让模型只能依赖图像里的视觉布局线索（行列分隔线、表头位置）去预测骨架。内容信号被清零后，模型被迫只学布局，结构能力得到独立监督，对没见过的合并单元格、嵌套表头泛化更好——OOD TSD/TCE 涨幅最显著的正是这一项。
 
-**2. DiSCo 内容对齐（血肉）：把单元格语义嫁接到已学到的结构坐标上。**
+**2. DiSCo 内容对齐（血肉）：把单元格语义嫁接到已学到的结构坐标上**
 
 骨架学会之后，要让模型把"行 $m$ 列 $n$"当成坐标系而不是把内容当自由文本流，所以内容对齐分全局/局部两层。全局让模型输出半结构化摘要 $T_G$（行数、列数、每行/每列含义），损失 $\mathcal{L}_{\text{content\_global}}=-\mathbb{E}\log P_\theta(T_G\mid I_G,V)$；局部给定行号 $m$、列号 $n$ 让模型输出 "Row $m$ Column $n$: [content]"，损失 $\mathcal{L}_{\text{content\_local}}=-\mathbb{E}\log P_\theta(T_L\mid I_L,V,m,n)$。传统 HTML 对齐把语义和位置绑死在序列里、没法显式查某个单元格；DiSCo 强制内容必须挂在结构坐标上，既复用了 LVLM 原本就很强的语义能力，又让"查行 $m$ 列 $n$"成为一个原生操作——这恰好是后面 Table-GLS 抽子表所需的最小接口。
 
-**3. Table-GLS 全局到局部三阶段推理：先定位骨架→再抽证据→最后推理，全程不训练不用工具。**
+**3. Table-GLS 全局到局部三阶段推理：先定位骨架→再抽证据→最后推理，全程不训练不用工具**
 
 直接对整张表图问答，模型容易用全局模式匹配走捷径（关注无关行列也能蒙对）。Table-GLS 把单步问答拆成"找证据 vs 用证据"的可解释链路。阶段 I（Global Structure Exploration）由 prompt $I_{GSE}$ 驱动模型先输出推理草稿 $T_t$、相关行标签 $R$、列标签 $C$，强制它先做 where-to-look 决策而非直接读单元格；阶段 II（Self-refined Sub-table Extraction）由 $I_{SSE}$ 让模型自检 $R,C$ 是否充分必要、必要时修正，再抽出最小可解释子表 $T_{sub}$，这步 plan-before-extract 防止全局阶段的错位扩散；阶段 III（Evidence-grounded Reasoning）只让模型对 $T_{sub}$（原图作辅助视觉锚）生成答案 $\hat{y}=\text{LVLM}(I_{EGR},T_{sub},V,q)$。显式拆分既减少 spurious correlation，又把推理过程留痕方便诊断 OOD 错误；自反思那一步尤其关键——消融显示去掉 SSE 后 AIT-QA 从 76.71 掉到 73.39。
 

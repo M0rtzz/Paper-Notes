@@ -44,15 +44,15 @@ tags:
 输入是一篇阅读文章、一个陈述句以及该陈述的事实标签。模型需要输出两个维度之一的认知复杂度标签：证据范围任务要求判断证据是单句、多句还是不足；转换层级任务要求判断陈述与证据之间是词面匹配、改写、词序变化还是推断。输出结果与专家标注比较，主指标为 Macro F1。
 
 ### 关键设计
-**1. ReCo 数据集构造：把多选 True/False 题拆成可标注的 TFNG 样本。**
+**1. ReCo 数据集构造：把多选 True/False 题拆成可标注的 TFNG 样本**
 
 要研究"题目为什么难"，先得有带认知标签的题。作者从 RACE++ 的多选 True/False（MTF）题入手：每题含一篇 passage 和 4 个选项，作者把它拆成 `(passage, statement, factuality)` 三元组；对 False 样本，专家再写出最小修改后的 True 陈述，以便后续标注转换层级。之所以选 TFNG 形式，是因为它天然覆盖从直接匹配到多句整合、从原文可证到证据不足的多种认知负担，比普通抽取式 QA 更适合观察阅读理解题的难点来源。
 
-**2. 双维度认知标签：用证据范围和转换层级刻画答题负担。**
+**2. 双维度认知标签：用证据范围和转换层级刻画答题负担**
 
 表层特征（句长、词频）解释不了真正的答题负担，作者因此定义两个可操作标签。**Evidence Scope（证据范围）** 衡量判断答案要引用多少文本证据，分为 single-sentence evidence、multi-sentence evidence、insufficient evidence 三类；**Transformation Level（转换层级）** 衡量陈述与证据之间的语言转换程度，在单句证据上用 5 级——word matching、transformed word matching、paraphrasing、transformed paraphrasing、inference，在多句场景下简化为 word matching、paraphrasing、inference 三级。前者对应"要读多少文本"，后者对应"从证据到答案要做多少语言/语义变换"，两者都比表层语言特征更贴近实际的推理过程。
 
-**3. LLM 评测与细粒度诊断：不止看主任务，还要定位错误来源。**
+**3. LLM 评测与细粒度诊断：不止看主任务，还要定位错误来源**
 
 作者在 Gemma2、Mistral、Qwen2.5、GPT-4o 等多个模型上，用 standard prompting、CoT、CoT self-consistency 做 zero/one/few-shot 分类，主指标为 Macro F1。但只看主任务 F1 分不清模型是"读不懂文章"还是"答对了却说不清自己用了哪些证据"，所以作者进一步把任务拆成 falsifiability、evidence sentence counting、inference detection、paraphrasing detection、phrase reordering detection 等子任务。这些子任务直接探针模型的元认知短板——它能不能准确复盘自己引用了哪些句子、做了哪种转换。
 

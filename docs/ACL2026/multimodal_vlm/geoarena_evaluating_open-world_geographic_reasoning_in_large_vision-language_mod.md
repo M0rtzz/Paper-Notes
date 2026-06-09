@@ -51,13 +51,13 @@ $E_{\text{reasoning}}(M)=\mathbb{E}_{(I,P)}[\mathcal{A}(M(I,P),\mathcal{H})]$
 
 ### 关键设计
 
-**1. 三阶段交互管线（Input → Battle → Voting）：把随手上传的图变成可观测的对照实验。**
+**1. 三阶段交互管线（Input → Battle → Voting）：把随手上传的图变成可观测的对照实验**
 
 野外评测最怕被噪声 prompt 和品牌偏见污染，这条管线就是用流程把用户行为硬约束成科学实验。*Input* 阶段先用 LLM 分类器 $\phi(P)$ 把非地理相关的 prompt 拦在门外，保证榜单只评真正的地理推理；*Battle* 阶段从 17 个模型池里匿名采样两个 $M_A, M_B$，对同一张图同一条 prompt 各自生成解释；*Voting* 阶段把两份回答 side-by-side 匿名摆出，用户三选一（A 胜 / B 胜 / 平），投完才揭示模型身份。
 
 三步各自挡掉一种偏差：匿名对决消除品牌偏置、预过滤挡住跑题污染、side-by-side 逼评判者只盯推理质量而非花哨包装。作者还专门验证了门口那道分类器靠不靠谱——用 Gemini 2.0 flash / GPT-3.5 turbo / GPT-4.1 mini 在 100 正例 + 100 负例（Chatbot Arena 通用 prompt）上做二分类，全部 100% 准确，说明"是不是地理问题"这件事现代 LLM 闭着眼都能判，自动过滤完全可达。
 
-**2. Bradley-Terry 排名 + bootstrap 置信区间：把流式投票聚合成统计上站得住的全局榜。**
+**2. Bradley-Terry 排名 + bootstrap 置信区间：把流式投票聚合成统计上站得住的全局榜**
 
 pairwise 投票是流式来的，最直接的在线 Elo 期望胜率 $P(M_i \succ M_j)=\frac{1}{1+10^{(\gamma_j-\gamma_i)/\alpha}}$ 有个毛病——它对比赛顺序敏感，先打后打结果会飘。GeoArena follow Chiang et al. 改用 Bradley-Terry 对全部历史成对结果做极大似然估计
 
@@ -65,7 +65,7 @@ $$\mathcal{L}(\mathbf{\Gamma})=\sum_{i\neq j}W_{ij}\log\frac{1}{1+10^{(\gamma_j-
 
 再用线性变换 $\text{rating}_i=400\cdot\hat\gamma_i + 1000$ 把分数对齐回熟悉的 Elo 量纲。BT 是 order-invariant 的，天然适配这种静态 LVLM 评测；外面再套 100 轮 bootstrap 重采样估 95% 置信区间，让"两个模型到底有没有显著差距"有统计依据，而不是被几票噪声带偏排名。
 
-**3. 风格混杂控制（style-adjusted BT）：把"写得花哨"从"推理得好"里剥出来。**
+**3. 风格混杂控制（style-adjusted BT）：把"写得花哨"从"推理得好"里剥出来**
 
 未经控制的人类偏好很容易被冗长、列表、花哨格式骗到——length bias 是 pairwise 评测的经典陷阱。GeoArena 的处理很直接：在 BT 回归的设计矩阵里，把模型 one-hot 和 5 个归一化 style 特征 $\{\text{length, list, header, emphasis, GPS\_ratio}\}$ 一起塞进 logistic 回归，先估出风格系数 $\beta$，再用扣掉风格后的模型系数重新排榜。
 

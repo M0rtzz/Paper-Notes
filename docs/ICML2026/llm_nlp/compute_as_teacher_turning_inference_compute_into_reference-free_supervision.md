@@ -47,19 +47,19 @@ CaT 要解决的是"非可验证领域里没有参考答案、RL 算不出 advan
 
 ### 关键设计
 
-**1. Synthesis 作为 reference estimator：把分歧的 rollouts 调和成一个比谁都强的伪参考。**
+**1. Synthesis 作为 reference estimator：把分歧的 rollouts 调和成一个比谁都强的伪参考**
 
 RL 训练卡在"没有参考信号"这一步，而 GRPO 采的 $G$ 条 rollouts 恰好在模型不确定处相互分歧——一条对了中间步骤、一条对了最终答案、第三条做了正确校验，整组的信息量本质上大于任意单条，却只被当方差归一化用掉了。CaT 的做法不是从中"选"一条，而是让冻结的初始策略 $\pi_0$（注意不是当前 $\pi_t$）在固定 prompt $p_{\text{syn}}$ 下读完所有 rollouts、重新合成一个伪参考 $s$。这里有两个刻意的设计：输入里**故意不放原 prompt $q$**（消融见 Appx 6.4），逼模型完全靠 rollouts 内部信息做调和、而不是绕开它们直接重答；**用冻结锚而非当前策略**则把"探索"和"估计"解耦开——$\pi_t$ 靠 RL 持续进步，$\pi_0$ 始终提供一个不随策略漂移的稳定参考基线，避免目标移动导致的自我欺骗。
 
 之所以有效，是因为 selection 类方法（majority vote、Self-BoN、min-PPL）原理上至多恢复"最好的那条 rollout"，而 synthesis 能跨 rollouts 拼接正确片段、生成分布之外的更优答案。实证上 synthesis 在 5–15% 的题上与多数票不一致，且不一致时仍有 70–86% 正确率（Table 1），甚至在约 1% 的题上做到"全队都错时唯独合成对"——这是任何 selection 方法都做不到的，正是 synthesis 把推理算力潜力榨干的体现。
 
-**2. Self-proposed Rubrics：把"答得好不好"拆成可审计的若干个二元判定，奖励全程零人工参考。**
+**2. Self-proposed Rubrics：把"答得好不好"拆成可审计的若干个二元判定，奖励全程零人工参考**
 
 有了伪参考 $s$，非可验证域还差一步：怎么把它变成稳定的奖励。直接让 LLM 给 1–10 打分（LLM-as-judge）已被反复证明不一致、偏长、有 style bias 和 reward hacking。CaT 改成由锚模型从 $s$ 自提议 rubric $\mathcal{R} \sim \pi_0(\cdot \mid p_{\text{rub}}, s)$，提炼出 $\ge 5$ 条二元、可审计、可重复判断的 criteria（如"建议咨询医生""提到了 lifestyle modification""回避了给确诊"），再由裁判 $\pi_J$ 对每条 rollout 独立判 yes/no，奖励取满足比例。整条管线从 inference compute → 伪参考 → rubrics → reward 一气贯通，全程没有任何人类参考介入。
 
 把粗判定拆成细粒度二元问题带来三重收益：每条二元问题对 LLM 远比打分稳定，所以奖励噪声小（实证上 self-proposed rubric 在 HealthBench 上能逼平医生手写 rubric）；能定位到具体哪条 criterion 失败，奖励变得可审计、可 debug；而且 rubric 奖励的是"内容是否覆盖"而非行文风格与长度，从根上压住了 verbosity bias 和 reward hacking。这一步是 CaT 区别于 TTRL/Absolute Zero 等只敢在可验证域用 majority vote 的核心贡献。
 
-**3. Drop-in 兼容可验证域 + 算力一次性摊销进权重。**
+**3. Drop-in 兼容可验证域 + 算力一次性摊销进权重**
 
 为了证明 CaT 不是 healthcare-specific 的 trick 而是统一范式，作者让同一框架在 math/code 等可验证域只换 reward derivation 一行就能跑：reward 退化为对伪参考的答案匹配 $R_{\text{ver}}(o;s)=\mathbf{1}[\texttt{answer}(o)=\texttt{answer}(s)]$，$s$ 仍由 synthesis 提供。这一步形式上等价于 TTRL 的 majority-vote pseudo-labeling，但因为底层是 synthesis 而非 selection，伪标签可以走出 rollout 集合的支撑、给出更准的目标。更重要的是算力账：测试时的 best-of-N / inference aggregation 是"每次部署都付 $G$ 倍算力"，而 CaT 把这份收益在训练阶段一次性烧进权重——训练完单次 forward 就能产出与 9× inference-time synthesis 同等甚至更好的回答，部署时回到 1× 算力。
 

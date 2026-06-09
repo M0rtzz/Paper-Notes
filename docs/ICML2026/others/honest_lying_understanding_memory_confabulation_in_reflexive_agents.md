@@ -43,11 +43,11 @@ tags:
 
 ### 关键设计
 
-**1. Memory Confabulation 的可操作定义：把"脑补错任务"变成日志上能自动打的 boolean 标签。**
+**1. Memory Confabulation 的可操作定义：把"脑补错任务"变成日志上能自动打的 boolean 标签**
 
 要研究一个失败模式，第一步得能批量识别它，否则只能凭主观感觉。作者把"agent 在反思里脑补错了任务"这件事变成一个能在日志上 string check 的标签：对任务 $\tau$ 在第 $t$ 次失败时生成的反思 $r_t$（存入记忆 $M_{t+1}=M_t\cup\{r_t\}$），定义 $r_t$ 为 **confabulated** 当且仅当 $\mathrm{obj}(\tau)\notin r_t$，即任务描述里明示的目标物体压根没出现在反思文本里。$\mathrm{obj}(\tau)$ 直接从 ALFWorld gamefile 目录名抽取（如 `pick_cool_then_place_in_recep-Mug-None-CoffeeMachine-10` 里的 `Mug`），HumanEval 上换成"失败 assert 的具体测例"。之所以坚持用 string check 而不是再叫一个 LLM judge，是为了避开"用 LLM 评 LLM"的循环偏差；附带好处是所有现存的 Reflexion 日志立刻可复用，零新 API 成本。
 
-**2. Reflection Repetition Rate (RRR) 与 frozen memory 阈值：一个标量看出记忆有没有在更新。**
+**2. Reflection Repetition Rate (RRR) 与 frozen memory 阈值：一个标量看出记忆有没有在更新**
 
 confabulation 的危害在于错诊断被反复复述、记忆"冻住"不再进步，所以作者需要一个能量化"记忆有没有在动"的探针。对环境的记忆 $M=\{r_0,\dots,r_n\}$，定义
 
@@ -55,7 +55,7 @@ $$\mathrm{RRR}=\frac{\big|\{r_i:i\geq 1,\ \exists j<i,\ \mathrm{sim}(r_i,r_j)\ge
 
 其中 $\mathrm{sim}$ 是 SequenceMatcher 字符相似度。$\mathrm{RRR}=0$ 表示所有反思都是新内容，$\mathrm{RRR}=1$ 表示除第 0 条外全是旧内容的近似复制；论文把 $\mathrm{RRR}\geq 0.5$ 定为 frozen environment。这个标量便宜、可复现、与成本脱钩，比直接问 LLM"反思有没有进步"靠谱得多，而且实证上 RRR 与 trials-to-solve 的 Spearman $r=0.808$（$p<0.0001$），说明它确实抓住了"记忆冻结拖慢解题"的本质。两个阈值都是经验拍的——0.85 对应"接近全文复用"，0.5 保证至少一半新反思是旧反思的近邻才报警。
 
-**3. 程序化反馈抽取替代开放式自我诊断：用环境侧确定信号打破死循环。**
+**3. 程序化反馈抽取替代开放式自我诊断：用环境侧确定信号打破死循环**
 
 前两步证实并量化了"frozen 记忆 → 重复错诊断 → 再失败"的死循环，根因是 binary feedback（仅 pass/fail）下没有 step-level 信号支撑因果归因，于是反思退化成同一段错话的复述。修复思路就直击根因：不再让 LLM 自己回想哪儿错了，而是写一个轨迹解析器自动抽出确定性的失败信号——ALFWorld 上识别 (a) 收到 "Nothing happens" 的动作、(b) 重复的动作循环，HumanEval 上对应失败的 `assert` 语句和异常类型——再把这些结构化失败步骤直接注入反思 prompt。作者还试了一个较弱的中间版本 grounded reflection：要求 LLM 按 `FAILED STEP / ROOT CAUSE / NEW PLAN` 三段式填模板，但失败步仍由 LLM 自己定位。对比结果印证了归因方向——只有程序化抽取（环境侧信号）才把正确对象提及率从 0% 拉到 86%、RRR 从 0.64 压到 0.10，本质上是把 HumanEval 的 unit-test feedback 范式迁移到了 ALFWorld。
 

@@ -45,15 +45,15 @@ SVGT 把对齐从"写进 backbone 权重"改成"挂一个外置价值模块"：b
 
 ### 关键设计
 
-**1. 独立价值空间 + 双通路编码：把价值方向从动态的 residual stream 里隔离出来。**
+**1. 独立价值空间 + 双通路编码：把价值方向从动态的 residual stream 里隔离出来**
 
 针对的痛点是 residual stream 高度动态、价值信号会被任务信号反复挤压漂移。SVGT 不在原空间里硬注入 steering vector，而是先用聚合算子 $\mathcal{A}$（last-token 或 attention pooling）从 hidden 序列 $\mathbf{H}^{(l^*)}$ 里抽出当前状态 $\mathbf{h}_v$ 和 prompt 上下文 $\mathbf{h}_p$，再走两条互补通路融合成一个隔离的价值状态 $\mathbf{z}$：无条件通路 $f_u(\mathbf{h}_v)$ 负责学"与上下文无关的全局价值先验"，条件通路 $\mathrm{CrossAttn}(f_c(\mathbf{h}_v),f_c(\mathbf{h}_p))$ 用交叉注意力把当前 prompt 的特异性揉进来，最后加权得到 $\mathbf{z}=\mathcal{R}\big(f_u(\mathbf{h}_v)+\lambda\cdot\mathrm{CrossAttn}(\cdots)\big)$。判别器 $\mathcal{D}$ 在 $\mathbf{z}$ 上打一个对齐性分数，沿其梯度方向 $\Delta\mathbf{z}=\nabla_\mathbf{z}\mathcal{D}(\mathbf{z})$ 就是要施加的修正（这一步沿用 PPLM 的梯度引导思想，但 PPLM 在 residual 上直接做、SVGT 把它关在隔离空间里算）。拆双通路是因为"同一句回答在不同 prompt 下安全性可能相反"——靠单一无条件编码判不出来，两条通路分工后无条件支路保持稳定先验、条件支路只学 prompt 特异修正，避免一个网络既背普遍规则又做具体判断。
 
-**2. Latent Value Bridge：把抽象修正翻译成 backbone 能"看见"的注意力锚点。**
+**2. Latent Value Bridge：把抽象修正翻译成 backbone 能"看见"的注意力锚点**
 
 价值空间里的 $\Delta\mathbf{z}$ 是个抽象方向，backbone 并不直接读它——LVB 负责把它落成 $K$ 个真正进入注意力的 token。做法是先拼一个检索 bank $\mathbf{C}=[\mathbf{h}_v;\phi(\Delta\mathbf{z})]^\top$，把 prompt 终态和价值修正都投影到 backbone 维度 $d$；再让 $K$ 个可学的 seed query $\mathbf{Q}$ 通过 cross-attention 检索出 $\mathbf{B}_{\mathrm{raw}}=\mathrm{softmax}(\mathbf{Q}\mathbf{C}^\top/\sqrt{d})\mathbf{C}$，最后用门控残差 $\mathbf{B}=\mathrm{LayerNorm}(\mathbf{1}_K\mathbf{h}_v+\alpha\cdot\mathbf{B}_{\mathrm{raw}})$ 把它锚在合法的 $\mathbf{h}_v$ 上，门控 $\alpha$ 初始化接近零。这样构造的 Bridge Token 是"已有合法 hidden 的加权组合"而非凭空生成的离群向量，落在 backbone 学到的流形上，因此引导生成时几乎不推高 perplexity。它还是 late-binding 的——插在 prompt 处理完之后，保证引导建立在完整语义之上而不污染上下文表征；生成时 LVB 动态运行，每解码一个 token 都重新算 $\mathbf{z}_t、\Delta\mathbf{z}_t$ 并用 momentum 更新 Bridge Token，于是模型快偏离时引导自动加强、安全时放松，实现 token-level 自适应纠偏。
 
-**3. 三阶段课程训练：把"会判断 → 会动态判断 → 会引导生成"拆成三级台阶。**
+**3. 三阶段课程训练：把"会判断 → 会动态判断 → 会引导生成"拆成三级台阶**
 
 价值判断和语言生成两个任务难度悬殊，端到端直训会互相拖累，所以用课程学习逐级解锁能力。Stage 1 用标准 BCE 在独立文本样本上单训 unconditional encoder + discriminator，建立 toxicity / unsafe instruction 的通用先验；Stage 2 在 prompt-response 配对数据上训 conditional pathway，并用非对称学习率（无条件支路低 lr 微调、条件支路高 lr 从头训）强制两条通路保持分工、不学成同一个函数；Stage 3 冻结 backbone、encoder、discriminator，只训 projector，用三项加权损失收尾——CE 做 teacher-forcing 的行为模仿，safety loss $\mathcal{L}_{\mathrm{safe}}=\mathrm{mean}(\mathrm{softplus}(s)+\alpha\,\mathrm{ReLU}(s))$ 提供密集的 token-level 安全监督，manifold 正则 $\mathcal{L}_{\mathrm{reg}}=\max\big(\big|\,\|\mathbf{B}\|/\|\mathbf{h}_{M-1}\|-1\,\big|-\tau,\,0\big)$ 限制 Bridge 输出的能量贴近 prompt 终态、防止它飞出合法流形。
 

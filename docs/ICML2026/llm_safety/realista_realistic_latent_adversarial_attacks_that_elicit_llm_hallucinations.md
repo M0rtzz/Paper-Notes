@@ -46,15 +46,15 @@ REALISTA 要解决的是：怎么在 LLM 隐空间里自由搜索能诱发幻觉
 
 ### 关键设计
 
-**1. 输入相关的编辑方向字典：把搜索域 hard 约束到"语义等价子空间"。**
+**1. 输入相关的编辑方向字典：把搜索域 hard 约束到"语义等价子空间"**
 
 LARGO 那类连续攻击的硬伤是直接在任意 latent direction 上扰动，没人保证扰动后还落在"能解码成有效 prompt"的区域，所以它解出来的东西 SEE 接近 100%（语义全跑偏了）。REALISTA 的对策是不让 $\delta$ 自由乱走，而是先为每个 $x_0$ 现构一组语义等价方向当基底。具体地，从 WordNet 抽出和 $x_0$ 相关的概念词，跑一个 constrained concept optimization（附录公式 12）让这些方向彼此正交化、与 $x_0$ 距离适中、且解码回去的 rephrase 真实有效；最后取 $z^{(i)} = c^{(i)} - z_0$ 当列拼成字典 $D^{(z_0)}$。一旦搜索被限制在 $z_0 + D\delta$ 上，几何上就自动停在 valid prompt manifold 附近——这正是 REALISTA 区别于 LARGO 的核心：语义约束不再是事后过滤，而是写进了搜索空间的参数化里。字典之所以要 input-dependent 而非用一组通用方向（如表示工程里的 happy/honesty 方向），是因为同一个抽象操作（如"反转"）在不同 prompt 上的具体 latent 实现差异巨大，通用方向套不准。
 
-**2. 缩放 simplex 约束 + 单概念初始化：让每次攻击只动少数几个概念。**
+**2. 缩放 simplex 约束 + 单概念初始化：让每次攻击只动少数几个概念**
 
 光有字典还不够，$\delta$ 若同时把所有概念方向都拉满，叠加起来照样会把语义搅崩。于是把 $\delta$ 限制在缩放 simplex $\Delta_\varepsilon = \{\delta \succeq 0 : \|\delta\|_1 \leq \varepsilon\}$ 上：用 $\ell_1$ norm 是因为它既能 bound 住各分量幅度、又天然是 sparsity proxy，逼着解只激活少数概念；强制非负是因为负方向经验上没有清晰语义、容易解码出 gibberish。经验规律是 $\delta$ 越小、激活概念越少，解码 prompt 就越贴近原语义，所以 simplex 等于把"语义等价"这件事几何化成了一个可优化的约束。又因为目标 $\mathcal{L}_\mathcal{T}$ 非凸、从 $\delta=0$ 起步常陷局部最优，初始化时为每个概念 $i$ 单独跑一遍 $\delta = \varepsilon \cdot e_i$ 解码，按 loss 取 top-$N$ 当种子点——把"只动一个概念"的 $n$ 个起点都试一遍，大幅提高找到好解的概率。表 3 印证了这套约束确实奏效：开源 LLM 上平均只激活 1-2 个概念，闭源推理模型上甚至 < 1 个。
 
-**3. Projected Langevin Dynamics + 语义等价 safeguard：在平台状曲面上跳着搜，并守住等价底线。**
+**3. Projected Langevin Dynamics + 语义等价 safeguard：在平台状曲面上跳着搜，并守住等价底线**
 
 decoder 是离散的——多个相邻的 $z$ 常解码出同一个 prompt $x$，导致优化曲面 piece-wise flat（大片区域梯度为 0），普通 PGD 步长根本没法调：太小卡在平台、太大直接跳飞。REALISTA 改用带噪的投影 Langevin 更新 $\delta_{k+1} \leftarrow \text{Proj}_{\Delta_\varepsilon}[\delta_k - \eta \tilde{\nabla}_\delta \mathcal{L}_\mathcal{T} + \sqrt{2\eta T}\,\xi_k]$，其中退火温度 $T = T_0 \cdot \gamma^k$、噪声 $\xi_k \sim \mathcal{N}(0, I)$；梯度因为 decode 离散而通过 Gumbel-Softmax 重参数化拿到。注入的高斯噪声让算法能从一块平台跳到下一个 region，退火则让后期逐渐收敛。最后一道闸是 safeguard：每步解码出 $x$ 后用 LLM judge 检查是否仍与 $x_0$ 等价，一旦判为不等价就把该步梯度信号清零、不许顺着这个方向继续走。这道 check 正是"REALISTic"名字的由来——硬保证最终交付的对抗 prompt 一定通过语义等价验证。
 

@@ -45,19 +45,19 @@ TC-JEPA 在结构上沿用 I-JEPA：图像被切成 context patch $x$ 与 target
 
 ### 关键设计
 
-**1. 多层细粒度文本条件器：让每个 patch 按需挑相关词来辅助预测。**
+**1. 多层细粒度文本条件器：让每个 patch 按需挑相关词来辅助预测**
 
 I-JEPA 的病根在于"给上下文 patch 去预测 mask 位置特征"本身是高度多解的——狗的图里被 mask 的地方既可能是书架也可能是干净墙面，歧义大到训练对 masking 策略极敏感、甚至坍缩。caption 恰好告诉模型那块"应该是什么"，所以本文把文本喂进**预测器**而非编码器。具体做法是在预测器的每一层都让 patch 特征 $q\in\{\hat z_x^{(l)}, \hat z_y^{(l)}\}$ 与 caption 词序列 $t$ 做一次轻量跨注意力：$q^{(l)}=W_Q^{(l)}q$、$K^{(l)}=W_K^{(l)}t$、$V^{(l)}=W_V^{(l)}t$，然后残差更新 $q\leftarrow q+\sum_s\text{softmax}(q^{(l)\top}K_{:,s}^{(l)})V_{:,s}^{(l)}$，再接一个 MLP + LayerNorm。
 
 相比"把 caption 当额外 token 拼到预测器输入"的 sequence conditioning，逐层跨注意力既不延长 ViT 序列、又能在所有层持续注入文本信号，而不是只在底层生效。作者的核心论点是要让 patch 表示变成"在文本提示下可预测的"，所以条件必须深入每一层，才能在 patch 与 word 之间长出稀疏对应、反过来约束 patch 表示与语言对齐。
 
-**2. 稀疏 + 跨层一致性正则：把跨注意力逼成隐式 visual grounding。**
+**2. 稀疏 + 跨层一致性正则：把跨注意力逼成隐式 visual grounding**
 
 没有显式 grounding 监督时，跨注意力很容易退化成"对所有词都平均关注"的无意义平均，文本条件就白给了。本文对每个 patch 在每层算出 patch-word 余弦相似度 $O_i^{(l)}=\max(\cos(q^{(l)},K^{(l)}),0)$，再加两道约束：一是 $\ell_1$ 稀疏惩罚 $\mathcal{L}_{\text{sparse}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}\|_1$，逼每个 patch 只挑少数关键词；二是跨层一致性 $\mathcal{L}_{\text{consistency}}=\frac{1}{|B_x|+|B_y|}\sum_i\frac{1}{L}\sum_l\|O_i^{(l)}-\bar O_i\|_1$（$\bar O_i=\frac{1}{L}\sum_l O_i^{(l)}$），逼同一 patch 在不同层选词保持稳定。
 
 两个约束一起把训练自发推向"每个 patch 对应几个稳定相关词"，相当于在零标注下隐式构造出 visual grounding，让文本条件真正帮到预测任务。消融里去掉这两项后注意力立刻退化为均匀、文本调制失效。
 
-**3. 多 caption 独立条件 + 特征级 max-pool 融合：保留每条视角再选最有用的那条。**
+**3. 多 caption 独立条件 + 特征级 max-pool 融合：保留每条视角再选最有用的那条**
 
 一张图常配有多条 caption。如果把它们拼成一个长句让同一 patch 同时关注，不同 caption 的条件信号会互相干扰。本文改成每条 caption 独立条件化预测器：第 $l$ 层先用第 $n$ 条 caption $t^n$ 各自算出 $\hat z_{y_{j,n}}^{(l)}$ 和 $\hat z_{x_{i,n}}^{(l)}$，再沿 caption 维 $n$ 做 max-pool 得到该层输出喂下一层。这样既保留了每条 caption 的差异化视角，max-pool 又自然选出"对该 patch 最有用"的那条，相当于 caption 级别的稀疏选择。
 

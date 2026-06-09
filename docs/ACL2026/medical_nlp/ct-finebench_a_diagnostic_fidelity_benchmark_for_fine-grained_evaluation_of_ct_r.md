@@ -51,15 +51,15 @@ CT-FineBench 由一条三阶段流水线组成，前两段离线（$\Phi_{\text{
 
 ### 关键设计
 
-**1. Fine-grained Attribute Schema with Human-in-the-loop Curation：先把"该看哪些维度"显式建成一棵 finding→attribute 树。**
+**1. Fine-grained Attribute Schema with Human-in-the-loop Curation：先把"该看哪些维度"显式建成一棵 finding→attribute 树**
 
 评测要问到点子上，前提是先知道每类病灶该核查哪些属性。本文把这份 ontology 显式建成一棵 finding→attribute 树：先用 Qwen3-Max 在全量训练+测试集上抽 $(finding, attribute, content)$ 三元组，按 (finding, attribute) 聚合并丢掉频次低于阈值 50 的长尾，剩下的交给 4 名标注员按 Remove/Split/Merge/Comment 四步固化，标注过程允许借助 Gemini-2.5-Pro、GPT-5 查临床知识辅助决策。纯自动抽取必然混进"feature"这类泛词和同义冗余，纯人工又穷举不完——先 LLM 召回再人工归纳的混合流程，让 schema 既覆盖临床要点又互斥清晰。最终 CT-RATE 沉淀 94 个唯一属性、平均每个 finding 5.2 个属性，Merlin 沉淀 89 个属性、平均 3.0 个，这棵树就是整个基准"问什么"的依据，也是它能问到点子上的前提。
 
-**2. Type-aware Graded Scoring：按属性类型给"答对"分档，而不是 0/1 硬判。**
+**2. Type-aware Graded Scoring：按属性类型给"答对"分档，而不是 0/1 硬判**
 
 CT 报告里"1.0 cm vs 1.1 cm"显然不该算错，"1 cm vs 5 cm"必须算错，但 ROUGE/BERTScore 既解析不了数值也宽容不了微差，单纯字符串 exact match 又把所有微差一律罚死。本文按属性类型给出差异化打分规则：Categorical/Location 类（如密度 = solid / ground-glass）走"同义词感知 exact match"——完全匹配得 1.0、部分正确或过度具体得 0.5、错误得 0；Numeric 类（size、density 值）先做单位标准化，再按相对误差 $\epsilon = |a - \hat a|/|a|$ 分档，$\epsilon < 10\%$ 得 1.0、$10\% \le \epsilon < 30\%$ 得 0.5、$\epsilon \ge 30\%$ 得 0；模型输出 `[NULL]` 视为漏诊（false negative）记 0 分，报告最终分就是所有 QA 的平均分。分档打分恰好把容忍区间卡在临床可接受的范围内，既不像字面指标那样对错误麻木，也不像硬匹配那样对无害微差苛刻。
 
-**3. Recall-oriented Sensitivity Construction：QA 只从参考报告里挖，并用 pos/neg 双向探针自证"在量什么"。**
+**3. Recall-oriented Sensitivity Construction：QA 只从参考报告里挖，并用 pos/neg 双向探针自证"在量什么"**
 
 一个好指标得同时满足两件看似矛盾的事：对临床错误高度敏感、对纯措辞改写足够鲁棒。本文所有 QA 都只从参考报告里挖（recall-oriented），所以指标天然惩罚"漏说"，但也意味着它不直接惩罚未在参考报告内的幻觉。为了验证敏感性不是自说自话，作者用 LLM 程序化构造两类对照报告：neg 组（CT-RATE-neg / Merlin-neg）保留措辞、只在 location/size 等细粒度属性上注入最小修改的临床错误；pos 组（CT-RATE-pos / Merlin-pos）改写句式词汇、严格保留所有临床事实。理想指标应在 pos 上接近满分、在 neg 上显著掉分；CT-FineBench 在 CT-RATE 上 pos=74.5 / neg=39.1、在 Merlin 上 pos=86.9 / neg=45.6，是六个对比指标里唯一同时满足两个方向期望的——相比之下 BLEU-2 在 neg 上 70.0、pos 上反而只有 28.0，方向完全反了。这套双向探针把"敏感性"和"鲁棒性"解耦成两根可量化的轴，比单看和人工打分的相关系数更能暴露指标到底在度量什么。
 

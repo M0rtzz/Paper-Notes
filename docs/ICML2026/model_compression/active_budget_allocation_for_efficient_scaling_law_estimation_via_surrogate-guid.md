@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 把 scaling law 采样转成预算受限的 proxy 优化：绕开没有金标准的拟合目标。**
+**1. 把 scaling law 采样转成预算受限的 proxy 优化：绕开没有金标准的拟合目标**
 
 「哪组 learning curve 最能拟合 scaling law」本身没有可直接优化的目标——真正的 ground-truth frontier 要把模型完整训练才知道，而这恰恰是最贵的部分。作者因此换了个可计算的 proxy：在总预算 $B$ 内寻找能达到最低 validation loss 的模型集合。优化这个 proxy 的副产物，正是一组被不同程度训练过的 learning curves，拿它们去拟合 scaling law 即可。这样目标就只依赖当前已观测到的训练 loss，可以直接套用 SH 这类 anytime 的资源分配算法来近似，而不必先知道前沿。
 
-**2. LMC Gaussian Process：用跨曲线相关性给大模型「翻案」。**
+**2. LMC Gaussian Process：用跨曲线相关性给大模型「翻案」**
 
 普通 SH 的硬伤是只看当前 loss——小模型早期下降快，会在短预算下显得更优，于是后期才发力的大模型被过早淘汰。这一设计让 surrogate 根据多条早期曲线预测某个模型后续的 loss 走向，从而保留那些当前不占优、但预测未来更低的大模型。具体把曲线外推建模为一个 multi-input multi-output 的 GP，kernel 由 exponential decay、white noise 和 bias 三个子核组合，再通过 co-regionalisation 矩阵显式捕捉不同模型曲线之间的相关性。这样「小模型大约何时 plateau」「大模型曲线何时由劣转优」这类规律会跨曲线共享，成为外推其他曲线的信号——这正是单曲线外推方法拿不到的先验。
 
-**3. Deep Ensemble surrogate 与 scaling law 外推：换参数化曲线族 + 给前沿配不确定性区间。**
+**3. Deep Ensemble surrogate 与 scaling law 外推：换参数化曲线族 + 给前沿配不确定性区间**
 
 GP 之外作者还试了参数化路线，用来回答「非参数 GP 和参数化 curve family 谁更适合 budget allocation」。Deep Ensemble 用两层 MLP 去条件化 power law、exponential、Morgan-Mercer-Flodin 等曲线函数的系数，预测曲线形状；不同数据集的曲线噪声和形状各异，单一 surrogate 未必最优，多套曲线族给了选择空间。此外 scaling law 常要外推到已训练 compute 区间之外，作者在 SH LMC 之后再用 GP 的 mean / UCB / LCB 把 learning curve 往外延，缩小拟合曲线与 ground truth 的 AbC 差距——UCB/LCB 还顺带给出乐观/悲观的曲线边界，让预算决策不只有一个点估计。
 

@@ -44,11 +44,11 @@ rBridge 的目标是设计一个能在小模型上计算的 proxy 指标 $\text{
 
 ### 关键设计
 
-**1. 推理 Trace 作为 Gold Label：让 NLL 落回训练分布。**
+**1. 推理 Trace 作为 Gold Label：让 NLL 落回训练分布**
 
 标准做法是拿 benchmark 的标准答案算 NLL，但小模型在这种 label 上信号极嘈杂，根源在于答案文本严重偏离预训练数据分布。rBridge 改用 frontier 模型 $\pi^\phi$ 生成的**推理 trace** $R^\phi$（只取推理过程，剥掉最终答案的格式部分）作为 gold label。这样做有两层好处：一是 $R^\phi$ 是连续的长文本，更贴近预训练语料，NLL 比用标准答案降低了 74.7%，信号噪声大幅下降；二是这段 trace 本身就是通向正确答案的推理链，天然与目标任务对齐。作为对比，ScalingBench 用的是 $R^\phi + A^\phi$（trace 拼上答案），而答案里夹着 "\\n"、"Final Answer:"、"I hope it is correct." 这类格式伪影，严重 OOD，反而把 NLL 信号污染了。
 
-**2. Token 级任务对齐加权：把推理关键步骤和格式噪声分开。**
+**2. Token 级任务对齐加权：把推理关键步骤和格式噪声分开**
 
 即便换了 gold label，标准 NLL 仍对所有 token 一视同仁，无法区分哪些是推理关键步骤、哪些只是排版噪声。rBridge 用 frontier 模型自身对每个 token 的置信度做权重，定义为
 

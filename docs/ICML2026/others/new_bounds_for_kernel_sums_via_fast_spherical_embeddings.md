@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. 把 Fastfood 当作快速球面嵌入：用结构化矩阵换掉全 Gaussian 矩阵。**
+**1. 把 Fastfood 当作快速球面嵌入：用结构化矩阵换掉全 Gaussian 矩阵**
 
 BRS 2011 早已给出一个"球面嵌入"工具，能把点映到单位球、小距离精确保留、大距离不 collapse，正合 Gaussian KDE"近处要准、远处只要别坍缩"的需求——但他们用的是全 Gaussian 矩阵 $W$，时间 $O(d/\varepsilon^2)$，太慢。本文的核心替换是用迭代 Fastfood 顶上去：映射 $\Phi$ 把任意 $x\in\mathbb{R}^m$ 经 Fastfood 矩阵 $V=\sqrt{m}\cdot HGHB$（$H$ 归一化 Hadamard、$G=\text{diag}(g)$ 高斯对角、$B$ Rademacher 符号对角）后送进三角嵌入
 
@@ -52,7 +52,7 @@ $$\Phi(x)_{2j-2}=\tfrac{1}{\sqrt m}\cos((Vx)_j),\quad \Phi(x)_{2j-1}=\tfrac{1}{\
 
 输出落在 $\mathbb{S}^{2m-1}$ 上由 $\sin^2+\cos^2=1$ 自动保证。$Vx$ 靠 Walsh-Hadamard 变换 $O(m\log m)$ 算出，于是整个球面嵌入从 $O(d/\varepsilon^2)$ 降到 $O(m\log m)$，同时靠 RHT 充当 Gaussian "近似版"保住了原定理需要的统计性质（Theorem 1.3 的三条距离条件）。
 
-**2. 第四阶 Wiener chaos 分析做距离收缩控制：证"小距离不被压扁"的硬核技术。**
+**2. 第四阶 Wiener chaos 分析做距离收缩控制：证"小距离不被压扁"的硬核技术**
 
 要证 $\Phi$ 不把小距离收缩超过 $(1-\varepsilon)$ 倍（Theorem 1.3 的 item 2），二阶矩分析不够用。作者从 Taylor 下界 $1-\cos(\theta)\ge\tfrac12\theta^2-\tfrac{1}{24}\theta^4$ 出发，得到
 
@@ -60,7 +60,7 @@ $$\|\Phi(x)-\Phi(y)\|^2 \ge Q(z)-\tfrac{1}{12}W(z),\quad Q(z)=\tfrac1m\|Vz\|^2,\
 
 二阶项 $Q(z)$ 用 Bernstein 不等式压住即可，难的是四阶项 $W(z)$——它是高斯 chaos 函数，作者用恒等式 $t^4-3=6h_2(t)+h_4(t)$ 把它拆成第 2 和第 4 阶 Wiener chaos，分别用 Bernstein 和 Wiener chaos 超收缩（Theorem 3.6）控制。这一步是全文最核心的技术创新：Le-Sarlós-Smola 2013 的 Fastfood 分析只用 Lipschitz Gaussian 集中、只能给二阶矩，而证 collapse 下界必须看到 $(Vz)_j^4$ 的方差，那就非得动用 chaos 分解和超收缩不可。
 
-**3. 缩放 trick 把"小距离阈值"对齐到 Gaussian KDE 的有效距离。**
+**3. 缩放 trick 把"小距离阈值"对齐到 Gaussian KDE 的有效距离**
 
 BRS 嵌入精确保留的是 $\le\sqrt{\varepsilon}$ 的小距离，但 Gaussian KDE 真正在乎的阈值是 $\sqrt{\log(1/\varepsilon)}$（再远 $e^{-\|x-y\|^2}\le\varepsilon$ 可忽略），两个尺度对不上。作者用一个干净的缩放把它们对齐：输入先放大 $s=\Theta(\sqrt{\varepsilon/\log(1/\varepsilon)})$ 倍进入嵌入，输出再缩回 $s^{-1}$ 倍。于是原始距离 $\le\sqrt{\log(1/\varepsilon)}$ 的点对在嵌入空间被精确保留，$\ge\sqrt{\log(1/\varepsilon)}$ 的点对至少保持 $\Omega(\sqrt{\log(1/\varepsilon)})$、对应的 Gaussian 项都小于 $\varepsilon$ 可以丢掉。反缩放后点落在半径 $s^{-1}$ 的球面上、新直径 $\widehat\Delta=2s^{-1}=\widetilde O(1/\sqrt\varepsilon)$，正好把直径压到能让外层 Fastfood 跑出 $\widetilde O(1/\varepsilon^3)$ 的程度——这就是新 bound 里直径项变成"乘 $\varepsilon$"而非"除 $\varepsilon$"的来源。
 

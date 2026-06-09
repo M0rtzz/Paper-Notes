@@ -50,15 +50,15 @@ CASA 的输入：源模型 $\mathbf{W}_s$、源上训的 LoRA $\Delta_{\text{lor
 
 ### 关键设计
 
-**1. 路由矩阵 + cluster 构造：把"权重 update"翻译成奇异方向之间的信息流。**
+**1. 路由矩阵 + cluster 构造：把"权重 update"翻译成奇异方向之间的信息流**
 
 要理解 LoRA 和 FFT 到底改了什么，先得把 update 放到一个能看清"哪条方向推给哪条方向"的视角。CASA 定义路由矩阵 $\mathbf{C}=\mathbf{U}_s^\top\Delta\mathbf{V}_s$，行是 receiver、列是 sender，$\mathbf{C}(i,j)$ 大就表示第 $j$ 个 sender 强烈推向第 $i$ 个 receiver。然后选最小的 $k$ 使 top-$k$ 子空间覆盖 90% 能量 $\sum_{i=1}^k\sigma_i^2/\sum_i\sigma_i^2\ge 0.9$，在其中按预测旋转强度 $\mathbf{R}(i,j)=|\mathbf{C}_{\text{lora}}(i,j)|/(|\sigma_i-\sigma_j|+\epsilon)$ 超阈值 $\tau$ 连边，连通分量即 cluster。之所以要按 $\sigma_i-\sigma_j$ 归一化，是因为作者实测 middle spectrum 出现 block-wise 混合、且与奇异值的 step-like plateau 对齐，恰好吻合 Davis-Kahan 微扰理论——奇异值差越小越容易混。这样归一化正好抓住这些"局部退化区"，让 cluster 稳定地框住真正的功能单元。
 
-**2. 主导路由区识别：只盯 FFT 的"生成主干道"。**
+**2. 主导路由区识别：只盯 FFT 的"生成主干道"**
 
 并非所有 cluster 的冲突都致命。作者实证发现 FFT 把路由能量高度集中在少数 head clusters（生成的主干道），而 LoRA 的能量铺得很均匀——真正会破坏生成质量的，只是这些主干道上的冲突。于是对每个 cluster $\mathcal{G}_m$ 算 FFT 的发送/接收能量密度 $\rho_m^{\text{send}}=\frac{1}{|\mathcal{G}_m|}\sum_{i\in\mathcal{G}_m}\|\mathbf{C}_{\text{fft}}(:,i)\|_2$ 与 $\rho_m^{\text{recv}}$，超过分位阈值 $q_{\text{dom}}$ 的 cluster 标为主导；路由位 $(i,j)$ 只要 $i$ 落在 receiver 主导集或 $j$ 落在 sender 主导集，就记 $\mathcal{D}(i,j)=1$。非主导区的 LoRA 注入风险小、可以放心还原，主导区才需要小心仲裁——这个划分正是后面差异化处理的前提。
 
-**3. 二级仲裁规则（CASA 核心）：非主导区补偿漂移，主导区同向封顶。**
+**3. 二级仲裁规则（CASA 核心）：非主导区补偿漂移，主导区同向封顶**
 
 为什么不能无差别还原 LoRA？因为作者发现 head clusters 上 LoRA 与 FFT 的方向有时强同向（叠加爆掉、过激活）、有时强反向（互相抵消、失效），没有统一方向。CASA 据此分两套规则。非主导区 $\mathcal{D}=0$ 直接补偿 FFT 漂移：$\mathbf{C}_{\text{casa}}(i,j)=\mathbf{C}_{\text{lora}}(i,j)-\mathbf{C}_{\text{fft}}(i,j)$，使最终路由 $\mathbf{C}_{\text{fft}}+\mathbf{C}_{\text{casa}}=\mathbf{C}_{\text{lora}}$ 完美恢复 LoRA。主导区 $\mathcal{D}=1$ 则先算过激活风险 $\mathbf{S}(i,j)=\mathbf{E}(i,j)\cdot\text{Context}(i,j)$，其中 $\mathbf{E}=\max(0,\mathbf{C}_{\text{lora}}\mathbf{C}_{\text{fft}})$ 只在同向时非零、$\text{Context}$ 是该 cluster 对的 cosine 相似度提供集体方向证据；风险 $\mathbf{S}$ 超分位 $q_{\text{act}}$ 就用 $\mathbf{C}_{\text{casa}}(i,j)=\max(|\mathbf{C}_{\text{lora}}|,|\mathbf{C}_{\text{fft}}|)\cdot\text{sign}(\mathbf{C}_{\text{lora}})-\mathbf{C}_{\text{fft}}$ 把恢复后的强度封顶到二者最大值，否则保持 $\mathbf{C}_{\text{lora}}$。精髓就是"只在同向高风险位封顶、其余位老老实实补 FFT 漂移"——既不冲掉生成主干道，又最大限度恢复 LoRA 风格。值得注意的是这套仲裁必须在 cluster 这一级做：把粒度降到单 entry 性能掉很多，因为 plateau 内奇异方向可互换、分开处理会破坏 cluster 内协同。
 

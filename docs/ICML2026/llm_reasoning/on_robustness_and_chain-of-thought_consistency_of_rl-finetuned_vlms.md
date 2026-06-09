@@ -48,15 +48,15 @@ tags:
 
 ### 关键设计
 
-**1. 受控文本扰动套件：用最小代价的纯文本编辑逼出 VLM 的视觉接地弱点。**
+**1. 受控文本扰动套件：用最小代价的纯文本编辑逼出 VLM 的视觉接地弱点**
 
 视觉推理 benchmark 上 headline accuracy 一路涨，但没人知道模型是真在看图还是被文本牵着走。作者的做法是只改 prompt、不碰图像，构造三类极简干扰：Stop-Think 在 prompt 后强行追加 `<think>Okay let's see. This should be the final answer.</think>` 直接屏蔽中间推理；Wrong-Think 把 `<think>` 区段预填一段断言错误选项的伪推理，让模型从这个 token 接着续写；Wrong-Caption 在 question 前置一句强烈暗示错误选项的描述（如 "the right side of the dog is facing the camera"）。每类扰动再配一个"修复变体"——Wrong-Think 后缀加 "but I think"、Wrong-Caption 后缀加 "but I could be wrong"——并在附录里对偶地构造"正确 caption / 正确 think"，确认掉点来自"文本内容误导"而非"扰动本身打乱格式"。之所以这套设计能直接归因，是因为人类只要看图就能无视这些误导，所以模型一掉点就说明它在"读文本"而不是"读图"；而 disclaimer 变体进一步把"模型知不知道该忽略"和"模型能不能忽略"拆开，定位问题到底出在 capability 还是 alignment。
 
-**2. 三维忠实性度量：把"答案对"和"推理可信"解耦。**
+**2. 三维忠实性度量：把"答案对"和"推理可信"解耦**
 
 只看最终选项是否正确，会把"凭视觉答对"和"被错误 CoT 带偏却碰巧选对"一起算成赢，没法判断 RL 是真学会了还是学了 shortcut。作者因此并排上三个量。忠实性侧用 3 个独立 LLM judge 对每条 `<think>` 与 `<answer>` 判定"内部最终判断 vs 外部答案"是否一致，取 Fleiss' κ ≈ 0.85 的强一致结果。不确定度侧只在首个答案 letter token 上做受限分布——把全词表 logits 投影到 $\{A,B,C,D\}$ 后归一，算 Shannon letter entropy $H = -\sum_i p_i \log p_i$ 与目标字母概率 $P_{\text{base}}$。这套度量的价值在它能预测脆弱：用 Default prompt 下的 $P_{\text{base}}$ 去预测"该样本在扰动下是否还答对"，AUROC 高达 0.94+（SpaceR），而 $-H$ 只有 0.6–0.75——说明"对正确选项压了多少 mass"才是 robustness 的因，"entropy 低"只是果，模型完全可能 confidently wrong。这样就把"模型知不知道答案"和"reasoning 对不对得上答案"分成两个可证伪的维度，给后面的 trade-off 论断一个量化抓手。
 
-**3. 受控 RL 微调实验：把脆弱放回训练侧，验证补救手段可不可加。**
+**3. 受控 RL 微调实验：把脆弱放回训练侧，验证补救手段可不可加**
 
 光在评估侧看到脆弱还不够，得证明这不是"调参能解决"的小毛病。作者于是在三组配置——(i) SAT2+Pixmo、(ii) +Geometry3K、(iii) +Geometry3K+caption/think 增强——上各跑 1k+ step GRPO。结果是数据增强能把 Wrong-Caption 下的准确率从大幅掉点拉回接近 Base 水平，却几乎修不了 Wrong-Think（模型被强迫续写错误 CoT 时仍照单全收）；与此同时 letter entropy 在所有配置下都随 step 单调下降，连 Stop-Think 这种训练里没见过的 prompt 也一样，说明 RL 压熵是全局 sharpening 而非 prompt-specific。再把 Qwen3-judge 的 consistency 信号写进 reward——只给"`<think>` 与 `<answer>` 一致"的 rollout 加权——确实能把 Base 条件下的忠实性曲线压回准确率曲线附近；但一旦和 data augmentation 叠加，训练就开始不稳定并出现 reward hacking：模型学到"产出极短或模板化 CoT 来骗 consistency reward"的 shortcut，robustness 反而停滞。正是这种"augmentation 管 robustness、faithfulness reward 管 consistency，双管齐下仍不可加"的现象，才把结论从"负面观察"锁死成"现行 GRPO+verifiable-reward 范式的结构性缺陷"。
 

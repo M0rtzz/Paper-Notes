@@ -45,13 +45,13 @@ tags:
 
 ### 关键设计
 
-**1. Vision Representation Expansion (VRE) + 单次推理融合：参数隔离但不需要路由。**
+**1. Vision Representation Expansion (VRE) + 单次推理融合：参数隔离但不需要路由**
 
 跨场景持续学习的两难是：纯 LoRA 单分支会被新场景覆盖旧场景（遗忘）；改成多分支虽能隔离，却要训一个 router，而 router 自己也会遗忘、还要多跑几次 forward。VRE 用"多分支 + 共享投影器"绕开这个矛盾：CSR 模块由 $K$ 个 down-up 分支 $\varphi_l^k = \phi_{up}(o(\phi_{down}(\cdot)))$ 和一个共享投影器 $\mathcal P_l \in \mathbb R^{K\times d_1 \to d_1}$ 组成，输出 $p_l = \mathcal P_l(\varphi_l^1(a_l) \oplus \cdots \oplus \varphi_l^K(a_l))$，再与 FFN 输出相加 $r_l = s_l(\text{LN}(a_l)) + p_l$。每个分支专管一个场景，下采样维 $d_2 \ll d_1$，参数增长温和；训练第 $t$ 个场景时只更新 $\varphi_l^t$ 和 $\mathcal P_l$、冻结其余分支。
 
 关键在于这个共享投影器把多分支输出"组合成统一表征"，相当于做了隐式的注意力路由——推理时所有分支并行算一次、concat 后过同一投影器，一次 forward 就完成，延迟和单分支模型完全等价，既不用训 router、也不用多次前向。
 
-**2. Vision Consistency Constraint (VCC) 双通道软约束：稳住旧分支又不卡死塑性。**
+**2. Vision Consistency Constraint (VCC) 双通道软约束：稳住旧分支又不卡死塑性**
 
 学新场景时，反传梯度会间接污染其他分支的表征，导致旧场景漂移；但若用 $\ell_2$ 硬约束去锁住表征，又会把新场景的塑性彻底压垮、学不到任何新细节。VCC 改用相对熵软约束在两者间取平衡。先对每个 batch 算场景原型 $\mu_l = \frac{1}{K}\sum_k \varphi_l^k(a_l)$，再沿 feature 通道和 embedding 通道分别求各分支表征的均值 $\bar\varphi_l^{k,\text{fe}} \in \mathbb R^{d_1}$、$\bar\varphi_l^{k,\text{em}} \in \mathbb R^{\text{seq}}$，用 KL 对齐到原型：
 
@@ -59,7 +59,7 @@ $$\mathcal{L}_c^{l,k} = \text{KL}(\bar\varphi_l^{k,\text{fe}}/\tau \mid \bar\mu_
 
 投影器输出 $p_l$ 也用类似 KL 对齐新旧模型 $\mathcal L_p^l$，汇总成 $\mathcal L_{vcc} = \frac{1}{L}\sum_l (\mathcal L_p^l + \sum_k \mathcal L_c^{l,k})$。"在通道维求均值后再做 KL"等于只惩罚全局分布漂移、却给局部细节留出自由重组的空间——这正是从知识蒸馏借来、并适配到 CL 的关键转换，消融里它明显优于 $\ell_2$ 和单通道版本。
 
-**3. CSR 仅插入视觉编码器：把容量花在最容易漂移的地方。**
+**3. CSR 仅插入视觉编码器：把容量花在最容易漂移的地方**
 
 作者从图 1 的可视化锁定了遗忘的"震中"——新模型学完新场景后，旧场景出现严重的小目标漏检/误检，说明跨场景漂移主要发生在视觉编码器，而 LLM 一侧的语义解码对场景切换相对鲁棒。所以 CSR 只插进 vision block，每个新场景新增的可训参数仅 $K \cdot L \cdot 2d_1 d_2$ 量级。
 

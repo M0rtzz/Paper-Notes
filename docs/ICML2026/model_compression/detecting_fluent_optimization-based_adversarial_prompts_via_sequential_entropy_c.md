@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. System Prompt 自校准的鲁棒基线 $(\hat\mu_0,\hat\sigma_0)$：把固定开销变成免费的部署参考样本。**
+**1. System Prompt 自校准的鲁棒基线 $(\hat\mu_0,\hat\sigma_0)$：把固定开销变成免费的部署参考样本**
 
 熵的绝对幅度跟模型规模、tokenizer、system prompt 的措辞都强耦合，所以没法用一条跨模型的硬阈值——这正是 WPP 最优窗口大小因模型而异的根因。作者的巧处在于：system prompt 在给定部署里完全固定，它的 $m$ 个 token 熵天然就是一组"无攻击"参考样本，拿来当基线既不用离线训练也不用准备数据集。基线用中位数与 MAD 估鲁棒的位置和尺度：$\hat\mu_0=\mathrm{median}(\{H_i^{\text{sys}}\})$，$\hat\sigma_0=c\cdot\mathrm{median}(|H_i^{\text{sys}}-\hat\mu_0|)$，常数 $c\approx 1.4826$ 把 MAD 校到与 Gaussian-$\sigma$ 一致，再加 $\hat\sigma_0\geq\varepsilon$ 防退化，最后把 user 段标准化成 $Z_t=(H_t^{\text{usr}}-\hat\mu_0)/\hat\sigma_0$。选 MAD 而非均值/方差，是因为 system prompt 里少数特殊词会把个别 token 熵撑得很高，中位数和 MAD 对这种极端值都不敏感；配合 $c$ 校正，LLaMA / Vicuna / Qwen 各家就能共用同一套阈值，这是 CPD 实现 model-agnostic 的关键。
 
-**2. One-Sided Page-CUSUM 检测持续漂移 $W_t^+$：用 1954 年的控制图抓"漂移持续性"。**
+**2. One-Sided Page-CUSUM 检测持续漂移 $W_t^+$：用 1954 年的控制图抓"漂移持续性"**
 
 PP/WPP 的失效在于把序列压成标量或局部均值，丢掉了"不确定性在持续往上爬"这一时间维度信号；而对抗后缀的本质恰恰是 user 段上的一个持续正向均值漂移。Page-CUSUM 经典上就是为"最快检测持续均值漂移"设计的最优顺序检验，所以直接套：在 slack $k\geq 0$、阈值 $h>0$ 下迭代 $W_t^+=\max\{0,\,W_{t-1}^++Z_t-k\}$，$W_0^+=0$，停止时刻 $\tau=\inf\{t\geq 1:W_t^+\geq h\}$。当 $\{Z_t\}$ 均值贴近零时 $W_t^+$ 会反复归零、统计噪声不会无限累积；一旦出现持续正漂，$W_t^+$ 就单调累积直到穿过 $h$。相比窗口检测，它最大的好处是不必预设窗口尺度——攻击 suffix 短则十几 token、长则上百 token，CUSUM 自然适应漂移长度。Slack $k$ 起"抗噪"作用，越大越保守；论文在 $k\in\{-0.5,0,0.5\}$ 上做了敏感性 (Appendix B.3)，$k=-0.5$ 还能再提 F1 但跳出经典区间，所以正文统一用 canonical $k=0$，阈值 $h$ 在每折训练集上 maximize F1 选定。
 
-**3. CUSUM 回溯定位 $\hat\nu$ + LLaMA Guard 混合 gating：把"事件级输出"和"省钱"一起拿到手。**
+**3. CUSUM 回溯定位 $\hat\nu$ + LLaMA Guard 混合 gating：把"事件级输出"和"省钱"一起拿到手**
 
 报警之外，CUSUM 还几乎免费送了一个 suffix 定位能力——这是 PP/WPP 完全做不到的。定位用标准回溯：记上一次 $W_t^+=0$ 的 reset 时刻 $t_0$，则起点估计 $\hat\nu=t_0+1$，正好是"自上次熵流静下来之后开始的那个 token"，每次归零都恰好标记了漂移开始前一刻。这个位置信息对"自动剪掉 suffix 再继续运行"或"高亮可疑片段交安全团队审计"都很实用。另一条收益是混合 gating：生产负载里 90%+ 是 benign 请求，没必要每条都跑昂贵的 LLaMA Guard，于是用门控阈值 $\tau_{\text{gate}}$——$s(\mathbf{x}^{\text{usr}})<\tau_{\text{gate}}$ 直接判 benign 跳过 guard，否则才调 LLaMA Guard 做语义判定。CPD 把 guard 从"每条都跑"压到"可疑才跑"，论文实测省下 17-42% 的 guard 调用，且 hybrid F1 不掉。
 

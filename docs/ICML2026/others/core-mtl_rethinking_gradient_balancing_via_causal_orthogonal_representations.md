@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. 双流编码 + 仅语义流接 head：从架构上切断"任务预测利用残差信号"这条捷径。**
+**1. 双流编码 + 仅语义流接 head：从架构上切断"任务预测利用残差信号"这条捷径**
 
 优化派 MTL 改不动表征几何，所以本文直接动表征：把共享编码器输出沿通道维一分为二，$(\hat{Z}_s,\hat{Z}_r)=\Phi_\theta(x)$，语义流 $\hat{Z}_s$ 走任务 head，残差流 $\hat{Z}_r$ 只走解码器和反事实分支。这相当于在网络拓扑里就把"任务损失对残差敏感"的短路掐断。为了量化这条捷径堵得多严，作者定义 leakage 系数 $\lambda_{\text{leak}}=\sup\|g_s(z_s,z_r)-g_s(z_s,z_r')\|/\|z_r-z_r'\|$ 衡量语义流对残差的偏导，并证出 OOD 界
 
@@ -52,11 +52,11 @@ $$\mathcal{E}_T(h)-\mathcal{E}_S(h)\leq C_{\text{cap}}+\alpha\,\lambda_{\text{le
 
 只要 $\lambda_{\text{leak}}\to 0$，OOD gap 就和残差漂移幅度脱钩——这正好替代了 GradNorm/PCGrad 那个不可消除的 $\sin^2(\psi)$ 下界，把鲁棒性从"优化动力学"层面提到"表征几何"层面。
 
-**2. CKA 独立性约束：把"梯度正交"从 PCGrad 的投影手术改写成可微的表征正则。**
+**2. CKA 独立性约束：把"梯度正交"从 PCGrad 的投影手术改写成可微的表征正则**
 
 架构切分只保证"信息可分"，不保证"信息真分开"，所以补一个统计层面的约束：用 mini-batch 上的线性 CKA 作正则 $\mathcal{L}_{\text{CKA}}=\text{CKA}(\mathbf{Z}_s,\mathbf{Z}_r)$，最小化两组特征矩阵的线性依赖。在线性-高斯假设下，作者证明降低 CKA 等价于压低编码器 Jacobian 的 cross-term，因此 CKA 是 $\lambda_{\text{leak}}$ 的可微代理。一个漂亮的副产品是 Proposition 2.5：$\mathbb{E}[\cos^2(g_{\text{task}},g_{\text{res}})]\leq c\cdot\text{CKA}(Z_s,Z_r)+\delta$，也就是说任务梯度和残差梯度在最后共享层近乎正交，梯度冲突在源头被消解——以往要靠 PCGrad 投影硬拗的"梯度正交"，这里成了表征解耦的几何副产品，不需要任何 post-hoc 手术。
 
-**3. 反事实风格替换 + 重构锚定：给两条流分配明确的语义角色。**
+**3. 反事实风格替换 + 重构锚定：给两条流分配明确的语义角色**
 
 纯统计独立可以被退化解满足（比如随机切分通道就"独立"了），所以必须给两条流"打标"，逼它们各司其职。反事实增强（CFA）从当前 batch 的经验残差分布里采 $\tilde{Z}_r$，与原始 $\hat{Z}_s$ 拼接，过解码器合成"同语义、异风格"的图像 $\tilde{x}=\mathcal{D}(\hat{Z}_s,\tilde{Z}_r)$，再喂回编码器，要求 head 给出与原图一致的标签：$\mathcal{L}_{\text{CFA}}=\sum_t w_t\mathcal{L}_t(f_{\phi_t}([\Phi_\theta(\tilde{x})]_s),y_t)$（过反事实分支时冻 BN 统计量防风格泄漏）。这等于直接训练 head 对风格扰动不变。重构锚定则给"哪条流装什么"提供物理/结构锚点，有两种实例化：**Hard Grounding** 把解码器实现为基于物理的反演渲染 $\hat{x}\approx\mathcal{A}(\hat{Z}_r)\odot\mathcal{S}(\mathcal{N}(\hat{Z}_s),\mathbf{L}(\hat{Z}_r))$，让 $\hat{Z}_s$ 负责几何（法向量）、$\hat{Z}_r$ 负责光度（反照率 + 光照），重构损失 $\mathcal{L}_{\text{rec}}=\|x-\hat{x}\|_1+\lambda_{\text{lpips}}\text{LPIPS}(x,\hat{x})$；**Soft Grounding** 在没有物理先验时退化为通用卷积解码器 + $L_1$ 重构，靠"head 只读 $\hat{Z}_s$"加 CKA 把判别信息和重构残差功能性地推到对的 stream 上。CFA 直接从 batch 内采样合成，不依赖外部风格库，工程上几乎白嫖；推理阶段解码器和反事实分支全丢，零额外开销。
 

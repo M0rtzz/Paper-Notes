@@ -44,15 +44,15 @@ APB-V 想在不删一帧、不压一个视觉 token 的前提下加速长视频 
 
 ### 关键设计
 
-**1. Frame Parallelism 与 Context Splitting：把帧编码和长序列 prefill 摊到多 host。**
+**1. Frame Parallelism 与 Context Splitting：把帧编码和长序列 prefill 摊到多 host**
 
 长视频的瓶颈在于单 GPU 要同时扛下全部帧的视觉编码和全部 token 的 prefill。APB-V 利用「帧级编码天然彼此独立」这一点，让每个 host 各编码一部分视频帧，再用 AllGather 把视觉 embedding 拼全；随后把序列拆成初始 anchor block $B_a$、末尾 query block $B_{qr}$ 和其余 context block $B^{(h)}$——anchor 给全局前缀，query 是真正要回答的问题，context 是长视频主体证据。这样帧并行和序列并行串接起来，没有任何一张卡需要独自承担整段视频。
 
-**2. Sequence-Parallelism-aware Approximate Attention：只把 query 真正需要的 KV 跨 host 传。**
+**2. Sequence-Parallelism-aware Approximate Attention：只把 query 真正需要的 KV 跨 host 传**
 
 精确序列并行要在 host 间交换全部 KV，通信太重；而 StarAttn 干脆不做 inter-host 通信，又会丢长程依赖。APB-V 走中间路线：每个 virtual host 先用 query-to-context 的 attention score 从本地 context 里挑出最重要的 $l_p$ 个 KV 对，压成 essential KV，再经 AllGather 当作 passing block 传给后续 host。于是 context block 的 attention 只看 anchor、本地 context 和这些压缩后的 passing block，而 query block 的结果靠 FlashAttn 的 lse 做跨 host merge。因为传递的只是与当前问题相关的关键 KV，它既比 StarAttn 更好地保住长程依赖，又比精确并行省下大量通信和计算。
 
-**3. 系统级负载均衡与通信隐藏：把近似 attention 落成真正高吞吐的多 GPU 系统。**
+**3. 系统级负载均衡与通信隐藏：把近似 attention 落成真正高吞吐的多 GPU 系统**
 
 光有算法近似还不够——短 query 单独 forward 会变 memory-bound、passing block 长度在 host 间不均衡、跨 host 通信要等待，任何一条都能把加速吃掉。APB-V 配套了三件事：视觉负载按 $F^{(h)}=\lfloor F/H\rfloor+\mathbb{I}[h<F\bmod H]$ 分帧让各 host 帧数尽量齐；fused context-query forward 把短 query 并进 context 一起算，避开 memory-bound；ZigZag 映射把第 $h$ 和第 $2H-1-h$ 个 virtual host 放到同一 physical host，让两端不均衡的 passing block 长度互补抵消；overlapped communication 则让 passing block 的传输和 attention 计算并行跑。算法近似和系统优化配套，才是 APB-V 真正拿到加速的原因。
 

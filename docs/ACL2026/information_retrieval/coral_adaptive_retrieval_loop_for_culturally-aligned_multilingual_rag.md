@@ -46,15 +46,15 @@ CORAL 把多语言 RAG 的失败重新定位为"retrieval condition misalignment
 
 ### 关键设计
 
-**1. Query-conditioned 动态语料选择：让"在哪搜"随文化线索变化，而非固定大池。**
+**1. Query-conditioned 动态语料选择：让"在哪搜"随文化线索变化，而非固定大池**
 
 本文的核心论点是 mRAG 的瓶颈不在 query 表述而在 retrieval 空间——把 locale-specific 知识和 globally aggregated 内容混在一个大池里，检索阶段就会被主流文化淹没。CORAL 让 planner 根据 query 动态挑选 1–N 个目标语料库（13 种 Wikipedia 语言子集）：默认先选 query 自身语言对应的 corpus，遇到文化线索（地方机构、习俗、region 实体）则扩展到文化邻近语料，例如 BLEnD-su（印尼 Sundanese 文化）的 query 会同时选 Sundanese 和 Indonesian 语料；critic 反馈后还能补 regional 高资源邻居或剔除无关源。Figure 3 显示 planner 选的语言分布远超 query 语言本身（英文 query 也会触发 su/id/fa/ar），说明它真在做"文化路由"而非简单语言匹配。
 
-**2. 多维评分 + 累计证据池 + 显式 sufficiency 检查：把"语义对但语境错"显式量化。**
+**2. 多维评分 + 累计证据池 + 显式 sufficiency 检查：把"语义对但语境错"显式量化**
 
 单一 relevance 排序正是文化 QA 的弱点所在——一篇关于韩国旅游的文档对韩国传统节日问题可能"语义相关但文化错位"。CORAL 让 critic 给每篇文档打 4 维 0–5 分（relevance $s_\text{rel}$、usefulness $s_\text{use}$、specificity $s_\text{spec}$、compatibility $s_\text{comp}$），按 $s_{tot} = s_{rel} + 0.5(s_{use} + s_{spec} + s_{comp})$ 聚合，只有每维 $\geq 2$ 且 $s_{tot} \geq 6$ 的文档才算 validated 并跨迭代累积。新增的 compatibility 维度专门捕捉语言/文化/领域是否对齐，相当于把以往隐性的"软偏见"翻译成可计算的 reranking 信号；每轮 critic 还给出"现有证据是否足够"的二元决定，让分维度评分变成 planner 下一轮精准改进的结构化反馈，而非笼统的"再搜一次"。
 
-**3. Critique-guided query rewriting：让 query 改写由失败信号驱动，而非只换语言。**
+**3. Critique-guided query rewriting：让 query 改写由失败信号驱动，而非只换语言**
 
 纯 translation-based 改写（tRAG / crossRAG）在文化任务上失败，因为它只改语言、不改"信息需求结构"。CORAL 让 planner 按 critic 指出的失败原因做三类改写：narrow（加约束/消歧）、paraphrase、expand。作者人工标注 100 个 CLIcK 样本的 158 个 rewrite，发现 53.8% 是 narrow、32.9% 是 paraphrase、其余是 expand——narrow 通常发生在"检索到话题相关但信息不足"时，planner 把 critic 指出的缺失 context cue 补进 query，让下一轮检索更聚焦。本质上是把"信息缺口"翻译成具体的检索约束，而不是换一种说法重搜。
 

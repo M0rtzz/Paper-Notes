@@ -49,17 +49,17 @@ backbone 仍是标准 Transformer 编码器 $f_\theta$，输出 hidden states $\
 
 ### 关键设计
 
-**1. Soft Collapse Regularization（SCR）：让 prefix 和 residual 解耦但不强制正交。**
+**1. Soft Collapse Regularization（SCR）：让 prefix 和 residual 解耦但不强制正交**
 
 MRL 只保证每个 prefix 能算 loss，却从不管 prefix 与 residual 之间是不是在重复编码同一批信息——实测 cross-covariance 非零，低维 prefix 因此没压到独立信息。SCR 直接盯着这个相关结构下手：先做 mask-aware sequence-wise 标准化（每个 batch 元素按有效长度 $N_i=\sum_l M_{i,l}$ 算均值方差）得到 $\tilde{\mathbf{X}}_{\mathrm{pre}}$、$\tilde{\mathbf{X}}_{\mathrm{res}}$，再算 token-wise cross-correlation $\mathbf{C}=\frac{1}{B}\sum_i\frac{1}{N_i}\sum_l \tilde{\mathbf{X}}_{\mathrm{pre},i,l}\tilde{\mathbf{X}}_{\mathrm{res},i,l}^\top\in\mathbb{R}^{d\times d_{\mathrm{res}}}$，然后对它施加**阈值化** $\ell_2$ **惩罚** $\mathcal{L}_{\mathrm{corr}}^{(d)}=\frac{1}{d\cdot d_{\mathrm{res}}}\sum_{u,v}\max(0,|C_{u,v}|-\tau_{\mathrm{corr}})^2$。关键在那个 $\tau_{\mathrm{corr}}$：相关系数低于容忍阈值就当成正常波动不罚，只有越界的"真冗余"才被压回去——这比硬正交 $\mathbf{C}=\mathbf{0}$ 聪明，后者连"有意义的共享重叠"也一并删掉，表达力损失太大。
 
 但只罚相关有个数值陷阱：模型可以把 prefix/residual 方差一起压到接近零，让 $\mathbf{C}$ 的数值看着很小而骗过惩罚，最终维度集体坍缩。所以 SCR 再加一道**方差地板** $\mathcal{L}_{\mathrm{var}}^{(d)}=\max(0,1-\bar\sigma_{\mathrm{pre}})+0.5\max(0,1-\bar\sigma_{\mathrm{res}})$ 把每维标准差顶在 1 附近，residual 那项给 0.5 权重是为了优先保 prefix 稳定。两者合成 $\mathcal{L}_{\mathrm{SCR}}^{(d)}=\mathcal{L}_{\mathrm{corr}}^{(d)}+\lambda_{\mathrm{var}}\mathcal{L}_{\mathrm{var}}^{(d)}$，是个典型的"主正则 + 防退化辅助项"搭配，缺了方差地板这一笔就会坍缩。
 
-**2. Spectral Isotropy Regularization（SIR）：把 prefix 的谱分布拉直、嵌入摊匀到超球面上。**
+**2. Spectral Isotropy Regularization（SIR）：把 prefix 的谱分布拉直、嵌入摊匀到超球面上**
 
 低维 prefix 崩盘的另一半原因是谱坍缩和各向异性——少数几个主成分包揽大部分方差，剩下维度形同虚设，整个嵌入退化成 Transformer 公认的"窄锥"，压缩之后这种偏斜还会被进一步放大。SIR 拿 mean-pool 后的 prefix 表征 $\mathbf{Z}^{(d)}\in\mathbb{R}^{B\times d}$ 从两个角度治理。第一项是**变异系数 loss**：算每维方差 $v_j=\frac{1}{B}\sum_i (Z_{i,j}^{(d)}-\mu_j)^2$ 与均值 $\bar v=\frac{1}{d}\sum_j v_j$，定义无量纲量 $\mathcal{L}_{\mathrm{cv}}^{(d)}=\frac{\sqrt{\frac{1}{d}\sum_j(v_j-\bar v)^2}}{\bar v+\epsilon}$，方差分布越平整该值越小，直接把"特征值衰减太快"按住。第二项是**超球面均匀 loss**：把 $\mathbf{Z}^{(d)}$ 行归一化得 $\hat{\mathbf{Z}}^{(d)}$、算余弦相似度矩阵 $\mathbf{S}$，利用 $\|\hat{\mathbf{z}}_i-\hat{\mathbf{z}}_j\|_2^2=2(1-S_{ij})$ 构造 RBF 核 $K_{ij}=\exp(-2t(1-S_{ij}))$（$t=2.0$），定义 $\mathcal{L}_{\mathrm{unif}}^{(d)}=\log\big(\frac{1}{B(B-1)}(\mathbf{1}^\top\mathbf{K}\mathbf{1}-\mathrm{Tr}(\mathbf{K}))+\epsilon\big)$，正是 Wang & Isola 的 hyperspherical uniformity loss。两者各半 $\mathcal{L}_{\mathrm{SIR}}^{(d)}=\frac{1}{2}(\mathcal{L}_{\mathrm{cv}}^{(d)}+\mathcal{L}_{\mathrm{unif}}^{(d)})$，一个管"每维方差"、一个管"整体分布"，恰好对应谱坍缩与各向异性两个根因。
 
-**3. 多层 + 多截断维度的自蒸馏装配：把几何正则布到中间层而非只贴最后一层。**
+**3. 多层 + 多截断维度的自蒸馏装配：把几何正则布到中间层而非只贴最后一层**
 
 表征几何不是到最后一层才成形——浅层就埋下了"谁主导谱、谁与谁相关"的种子，只在最后一层加正则等于放任前面层先把信息搞坏。但全部层都加又会撞上任务损失，所以 MIC 用受控选层 $L_{\mathrm{align}}$ 取一组中间层，对所有截断维度 $d\in\mathcal{D}$ 求平均：$\mathcal{L}_{\mathrm{align}}=\frac{1}{|L_{\mathrm{align}}||\mathcal{D}|}\sum_{l\in L_{\mathrm{align}}}\sum_{d\in\mathcal{D}}(\mathcal{L}_{\mathrm{SCR}}^{(l,d)}+\mathcal{L}_{\mathrm{SIR}}^{(l,d)})$。整个流程是自蒸馏式的：同一个 backbone，每层 hidden state 既在 pooled 后接 InfoNCE 参与 MRL 监督，又被 SCR/SIR 直接约束几何，不引入任何额外网络。选层位置以及 $\gamma$、$\tau_{\mathrm{corr}}$、$\lambda_{\mathrm{var}}$ 都由附录里的网格搜索给出。
 

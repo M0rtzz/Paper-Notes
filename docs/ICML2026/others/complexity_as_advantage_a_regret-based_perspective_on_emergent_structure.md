@@ -56,7 +56,7 @@ CAA 是一个**通用算子**，输入三要素：
 
 ### 关键设计
 
-**1. CAA 的通用定义与两观察者闭式解：把"结构对谁可见"变成一个可算的标量。**
+**1. CAA 的通用定义与两观察者闭式解：把"结构对谁可见"变成一个可算的标量**
 
 经典复杂度要么不可计算（$K(x)$）、要么看不见观察者（熵率），于是 Shakespeare 和噪声在 gzip 下被混为一谈。CAA 的破局点是换问题：不问"这序列有多复杂"，而问"一族观察者在它上面的后悔分散有多大"。形式上，渐近平均损失 $L(A;X) = \limsup_{|\Lambda|\to\infty}\frac{1}{|\Lambda|}\sum_{u\in\Lambda}\ell(\hat{y}^A_u, X_u)$，最优损失 $L^*(X) = \inf_A L(A;X)$，regret $R(A;X)=L(A;X)-L^*(X)$，复杂度就定义为后悔在观察者分布上的方差
 
@@ -64,7 +64,7 @@ $$\mathrm{CAA}(X;\mathcal{A},\pi) = \mathrm{Var}_{A\sim\pi}[R(A;X)],$$
 
 并配一个 max-gap 变体 $\mathrm{CAA}_{\max}(X) = \sup_{A,B}|R(A;X)-R(B;X)|$。对两观察者 $\{A_{\text{naive}},A_{\text{soph}}\}$ 在 uniform prior 下有干净闭式 $\mathrm{CAA}(X)=\tfrac14(\Delta L)^2$（$\Delta L=L_{\text{naive}}-L_{\text{soph}}$），直接把 CAA 和大家熟悉的 "performance gap" 接通。这样设计的好处是一石二鸟：把绝对属性改写成相对一族观察者的统计量，既绕开了不可计算性，又把"资源受限"显式编码进去——观察者族本身就是资源。
 
-**2. Markov ladder 下的 CAA 分解：CAA gap 即条件互信息原子，累加即 excess entropy。**
+**2. Markov ladder 下的 CAA 分解：CAA gap 即条件互信息原子，累加即 excess entropy**
 
 光给个新定义还不够，得证明它不是凭空发明、而能接回信息论。在 log-loss 下，order-$m$ Markov 预测器的损失恰是条件熵 $L(A^{(m)};X)=H(X_t\mid X_{t-1},\dots,X_{t-m})$，于是相邻阶之差
 
@@ -72,7 +72,7 @@ $$\Delta L_m = L(A^{(m-1)};X)-L(A^{(m)};X) = I(X_t; X_{t-m}\mid X_{t-1}^{t-m+1})
 
 正好是一个条件互信息原子。累加可望远镜消去成 $\sum_{m=1}^{M}\Delta L_m = H(X_t)-H(X_t\mid X_{t-1}^{t-M})$，$M\to\infty$ 时收敛到 excess entropy $E=I(X_{-\infty}^{t-1};X_t)$（$K$-阶 Markov 源在 $m=K$ 处精确截断）。这条等式的意义在于把"每延伸一格上下文带来的实际预测红利"和"整源可预测信息总量"等同起来——CAA 因此不是工程量，而是 excess entropy 的细粒度版，能告诉你那点红利究竟在哪一阶才被解锁。
 
-**3. 预算 ladder + 标量深度指标：把不可计算的 Bennett 逻辑深度变成可测量。**
+**3. 预算 ladder + 标量深度指标：把不可计算的 Bennett 逻辑深度变成可测量**
 
 Bennett 逻辑深度（展开结构所需的计算量）理论漂亮但既要 $K$ 又要时间，根本算不出来。CAA 用"计算预算"作观察者梯子来操作化它：取观察者族 $\{A^{(b)}\}$，$b$ 表示搜索深度、rollout 长度、CA 邻域半径等预算，相邻预算的 gap $\Delta L_b=L(A^{(b-1)};X)-L(A^{(b)};X)\ge 0$ 都是一个两阶 CAA gap。从 profile $\{\Delta L_b\}$ 抽三个标量——tail 占比 $\mathrm{TailFrac}_\alpha=\sum_{j>\lfloor\alpha B\rfloor}\Delta L_j/\sum_j\Delta L_j$、半质量预算 $b_{50}=\min\{b:\sum_{j\le b}\Delta L_j\ge M/2\}$、归一化深度分 $D=\frac{1}{B}\sum_b b\,\Delta L_b/\sum_b\Delta L_b$。三者一起就能把过程干净分类：shallow（如 Rule 90）红利前置，$b_{50}$ 与 $D$ 都小；deep（如 Rule 110）红利后置，tail fraction 与 $D$ 都大；chaotic（Rule 30）整体红利都很小。它保留了"deep = 晚才能挖出"的直觉，却第一次能在元胞自动机、密码学等具体场景上真的算出数。
 

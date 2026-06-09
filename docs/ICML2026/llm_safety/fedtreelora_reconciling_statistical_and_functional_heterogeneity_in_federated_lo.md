@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 全局拓扑树：把所有候选分组方案塞进一棵树。**
+**1. 全局拓扑树：把所有候选分组方案塞进一棵树**
 
 直接让每层各自独立聚类会出大问题：相邻两层可能把客户端从 $\{1,2\},\{3,4\}$ 重排成 $\{1,3\},\{2,4\}$，这种"拓扑漂移"会切断前向 pass 的语义连续性，让 expert 特化路径变得不可解释。FedTreeLoRA 的解法是先立一根全局骨架。warmup 阶段每端本地训 $E_{warm}$ 轮得到层级 LoRA $\{A_{l,k}, B_{l,k}\}$；这里**只用 $B$ 矩阵**算客户端距离——因为按 Tian et al. 2024 的观察 $B$ 编码任务特化语义而 $A$ 偏共享——客户端 $i,j$ 的全局距离取所有层的平均 $D^{global}_{i,j} = \frac{1}{L}\sum_l \text{dist}(B_{l,i}, B_{l,j})$，默认用 Frobenius 距离，再用 agglomerative hierarchical clustering（AHC）把 $D^{global}$ 凝聚成一棵二叉合并树 $\mathcal{T}$。这棵树的关键性质是：在它上面切任意一刀都对应一种合法分组，而且相邻两刀是**嵌套**的——粗 cluster 严格包含细 cluster 的成员。正因为有这个嵌套结构，才能保证"浅层被分开的客户端到了深层只会更专、绝不会重新合并到一起"，特化路径天然单调。
 
-**2. 逐层自适应深度搜索：让浅层粗、深层细。**
+**2. 逐层自适应深度搜索：让浅层粗、深层细**
 
 动机实验已经证明"安全共享深度"是数据异质性的函数——客户端越相似能共享得越深——所以共享边界必须逐层可变，而不能一刀切。这一步给每个 Transformer 层 $l$ 在树上选一个最优 cluster 数 $c_l^*$。它先算**层特异**的距离矩阵 $D^{(l)}_{i,j} = \text{dist}(B_{l,i}, B_{l,j})$（注意和全局矩阵不同，这里只看本层的 $B$），再把搜索空间限制成一个从上一层粒度起步、最多扩 $K$ 格的窗口 $\Omega_l = \{c \in \mathbb{Z} \mid c_{l-1}^* \leq c < \min(N, c_{l-1}^* + K)\}$——下界 $c_{l-1}^*$ 强制单调（深层不会比浅层更粗）、窗口 $K$ 限制每层最多细化几格，从而保证整条搜索路径始终沿着树 $\mathcal{T}$ 走、不会乱跳。评分函数为
 
@@ -57,7 +57,7 @@ $$\phi(c; D^{(l)}) = \begin{cases} \tau, & c = 1 \\ \text{Sil}(P_c, D^{(l)}), & 
 
 其中 $c=1$（全局共享）用一个阈值 $\tau$ 当门槛，$c \geq 2$ 用 Silhouette 系数衡量分组质量；最终 $c_l^* = \arg\max_{c \in \Omega_l} \phi(c; D^{(l)})$，从根 $c_0^*=1$ 逐层往下解。$\tau$ 在这里扮演"对全局共享的先验偏置"——只有当某层的异质性强到 Silhouette 超过 $\tau$，才值得分裂，否则保留 $c=1$ 的全员共享。
 
-**3. Cluster-External Expert 混合：用一个标量把拓扑落地成可前向的参数。**
+**3. Cluster-External Expert 混合：用一个标量把拓扑落地成可前向的参数**
 
 选好每层的分组 $P_{c_l^*}$ 后，还要把它变成实际能前向的 LoRA。对客户端 $k$ 在层 $l$，记 $\mathcal{S}_k^{(l)}$ 为它所在的 cluster、$\mathcal{R}_k^{(l)}$ 为其余所有客户端，分别聚合出两套 expert：Cluster Expert $\bar{\Phi}_{l,k}^{\text{clus}} = \frac{1}{|\mathcal{S}_k^{(l)}|}\sum_{j \in \mathcal{S}_k^{(l)}} \Phi_{l,j}$ 吸收 peer-group 共识，External Expert $\bar{\Phi}_{l,k}^{\text{ext}} = \frac{1}{|\mathcal{R}_k^{(l)}|}\sum_{j \in \mathcal{R}_k^{(l)}} \Phi_{l,j}$ 保留一条全局知识通道（$\Phi \in \{A, B\}$）。前向把两者用一个**每层每端的可学标量** $\lambda_{l,k} \in [0,1]$ 线性混合：
 

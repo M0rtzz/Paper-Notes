@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 三任务的形式化区分：把"估分布"和"做预测"拆开，堵住文献里的混用。**
+**1. 三任务的形式化区分：把"估分布"和"做预测"拆开，堵住文献里的混用**
 
 很多 calibration 论文之所以得出"LLM 不诚实/没校准"的结论，根子在于它们把两种数学对象当成一回事。本文用统一符号把它们分开：distribution estimator $p_\theta:\mathcal{X}\to\Delta^{|\mathcal{Y}|-1}$ 学的是 source 分布 $p_S(y|x)$，predictor $f_\theta:\mathcal{X}\to\mathcal{Y}$ 学的是单一最优响应，而 target distribution estimation 估计的是另一个分布 $p_T\ne p_S$（带 transfer learning 的味道）。关键的洞察是：当目标输出空间本身就是概率单纯形 $\Delta^{|\mathcal{Y}|-1}$（也就是要输出"一个分布"）时，target estimation 退化成在"分布空间"里做预测——作者把这种情形命名为 **second-order prediction（二阶预测）**。这样一区分就能看清，把 SFT 后的 LLM 当 distribution estimator、直接读它的 token logprob，是用错了对象——它早已被训成 mode-seeking 的 predictor $f_\theta$，logprob 不再对应任何数据分布。
 
-**2. BDI 三案例分析：用 belief-desire 框架解释为什么换 prompt 就换分布。**
+**2. BDI 三案例分析：用 belief-desire 框架解释为什么换 prompt 就换分布**
 
 要说清"同一个事件 $y$ 在不同 prompt 下理想 LM 概率为何不同"，作者把文本看成一个持有信念 $b$、带欲望 $d$（一个从 belief 映到字符串的函数）的 agent 生成的，prompt $\mathbf{w^x}$ 设定 ground、也就设定了 agent 的 belief/desire 分布。在此框架下推三个 case：Case 1 是"多种措辞表达同一结果"，prompt 不含指令、agent 可随意措辞，于是输出概率反映的是**语言使用频率**，它和事件分布之间隔着 reporting bias；Case 2 是"agent 已观察到结果"，prompt 含指令、agent 看见了事件，理想下 $p_{LM}(\mathbf{w^y}|\mathbf{w^x})=p_E(y|x)$，但这要求 agent 始终如实报告，实际未必（如默认不提"banana is yellow"的颜色）；Case 3 是"agent 未观察、需预测"，可写成 $p(\mathbf{w^y}|\mathbf{w^x})=\sum_{f\in D^y}p(f|\mathbf{w^x})\cdot p(f(b^y)=y)$，要让它等于真实 $p(y|x)$ 必须同时满足"信念正确 + 如实报告"，可一旦把任务当成 prediction，agent 就应该把概率质量全压到 mode 上——于是"正确 belief"和"accuracy 最优"在数学上无法共存。这套抽象的价值在于统一了不同推理设置：pretrain 对应 Case 1（数据频率）、SFT/RLHF 对应 Case 3（预测最优响应），同一个 LLM 换了 prompt 就换了 agent，自然吐出不同分布，这并不是模型缺陷。
 
-**3. 二阶预测作为出路：把"事件概率"直接搬进输出，绕开 softmax 的死锁。**
+**3. 二阶预测作为出路：把"事件概率"直接搬进输出，绕开 softmax 的死锁**
 
 Case 3 揭示的死锁是"想要正确概率却被 prediction 逼着坍缩到 mode"，二阶预测正是为打破它而设。当 prompt 明确要求 agent **报告概率本身**（而不是从选项里挑一个），agent 的理性选择恰好就是把 belief 里的概率值如实写出来——因为这么做既 truthful 又能最大化 Brier 式评分，于是输出分布与世界分布对齐才重新变得可能。具体做法是在 prompt 里规定输出格式（"A: 概率 p, B: 概率 q, …"）或允许语言修饰（verbal hedging，如 "likely a but maybe b"），再由外部 parser 验证或读取语义。它之所以比 softmax logprob 更可靠，是因为后者受 surface-form competition（"heads" 和 "the coin landed on heads" 互抢概率）与 tokenizer artefact 干扰，而二阶预测把"事件"直接放进输出空间，绕开了词面竞争，还天然支持任意粒度的概率表达（数字 / 模糊词 / 区间）。
 

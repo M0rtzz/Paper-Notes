@@ -50,7 +50,7 @@ Rex 是一个**配方**而非单一格式：给一个显式 (S)RK 方案 $\bm{\P
 
 ### 关键设计
 
-**1. Princeps：把任意显式 (S)RK 和扩散方程的半线性结构融成"指数 (S)RK"。**
+**1. Princeps：把任意显式 (S)RK 和扩散方程的半线性结构融成"指数 (S)RK"**
 
 扩散反向 SDE 的漂移天然是 $a(t)\bm{x}+b(t)\bm{f}_\theta$ 的半线性形式，直接拿显式 (S)RK 去积分会浪费这个结构、精度上不去。Princeps 先用 Lawson 积分因子把方程整形：令 $\Xi(t)=\exp\int_0^t a(\tau)d\tau$、状态换成 $\bm{Y}=\Xi^{-1}\bm{X}$，得到纯漂移 + 单位扩散的等价 SDE $d\bm{Y}_\varsigma=\bm{f}_\theta(\varsigma,\Xi(\varsigma)\bm{Y}_\varsigma)d\varsigma+d\bm{W}_\varsigma$，再在这条"漂亮"方程上写 $s$ 段 SRK：$\bm{Z}_i=\Xi^{-1}(\varsigma_n)\bm{X}_n+h\sum_{j<i}a_{ij}\bm{f}_\theta^j+a_i^W\bm{W}_n+a_i^H\bm{H}_n$，回代后步进
 
@@ -58,7 +58,7 @@ $$\bm{X}_{n+1}=\frac{\Xi(\varsigma_{n+1})}{\Xi(\varsigma_n)}\bm{X}_n+\Xi(\varsig
 
 其中 $\bm{H}_n$ 是 Brownian 桥的时空 Lévy area，让加性噪声 SRK 在简单近似下也拿到强收敛阶。指数加权吃掉半线性部分带来精确性、(S)RK 提供高阶性，二者相乘的结果不仅继承基方案的阶数（定理 3.4），还自动复刻 DDIM、DPM-Solver-1/2/12、DPM-Solver++、SDE-DPM-Solver、SEEDS-1、gDDIM（定理 3.3）——用主流采样器的用户能无缝迁移。
 
-**2. McCallum-Foster 双状态耦合：把任意显式格式包成代数可逆。**
+**2. McCallum-Foster 双状态耦合：把任意显式格式包成代数可逆**
 
 光有精度还不够，很多应用（真实图像编辑、Boltzmann 似然）要求前向-反向严格互逆。作者在 Princeps 的 $\bm{\Psi}$ 外套 McCallum-Foster 双状态耦合：引入参数 $\zeta\in(0,1]$ 和辅助状态 $\hat{\bm{X}}_n$，前向走
 
@@ -66,7 +66,7 @@ $$\bm{X}_{n+1}=\tfrac{\kappa_{n+1}}{\kappa_n}\big(\zeta\bm{X}_n+(1-\zeta)\hat{\b
 
 反向把这两式按 $\hat{\bm{X}}_n,\bm{X}_n$ 解出来恰好是闭式（$\kappa_n,\varsigma_t$ 按数据/噪声预测和 ODE/SDE 分四种取法）。选 MF 是因为它是当时唯一"可逆 + 非零线性稳定域"的格式，套上去 Rex 直接继承稳定域；而 $\zeta$ 还顺手给了一个"反演精度 vs 稳定性"的旋钮——图像编辑要精确反演取 $\zeta=0.999$，Boltzmann 采样只要可逆不要精确取 $\zeta=0.001$ 换稳定性。
 
-**3. Brownian motion 可重放：用单 seed + splittable PRNG 替代轨迹缓存。**
+**3. Brownian motion 可重放：用单 seed + splittable PRNG 替代轨迹缓存**
 
 扩散 SDE 的反向迭代必须用和前向**同一条** Brownian 实现 $\bm{W}_n(\omega)$，以往做法是把整条轨迹存内存——内存爆炸，还天然杀死自适应步长。Rex 改用 splittable PRNG（Salmon 2011，沿 Li 2020 / Kidger 2021 / Jelinčič 2024 体系），从单个种子按二叉树式递归生成任意区间 $[s,t]$ 上的 Brownian 增量和时空 Lévy area $\bm{H}_{s,t}$，反向步只要存种子就能精确重建 $\bm{W}_n(\omega)$。这一步让 Rex 成为首个不存整条 Brownian 还能精确反演扩散 SDE 的求解器，也因此能配 Dopri5 这种自适应步长方案（Rex (Dopri5) 是据作者所知首个用于扩散编辑的自适应可逆求解器）。
 

@@ -45,15 +45,15 @@ PATRA 整体由一个 Text Encoder（直接用 LLM 自带 tokenizer 与 embeddin
 
 ### 关键设计
 
-**1. 模式感知对齐模块（PAA）：把时序-文本对齐从"浅层拼接"升级成"模式级深度对齐"。**
+**1. 模式感知对齐模块（PAA）：把时序-文本对齐从"浅层拼接"升级成"模式级深度对齐"**
 
 ChatTS、ITFormer 那类做法只是模仿 VLM 把序列切 patch 投影后跟文本拼起来，所谓"深度对齐"流于形式，LLM 推理时很难精确引用"趋势"或"季节性"这种结构化概念。PAA 分三步把分解直觉嵌进注意力。第一步潜空间分解：完整成分直接用 $X_{ts}^f$，趋势成分用移动平均 $X_{ts}^t = \text{Avgpool}(\text{padding}(X_{ts}))$，季节成分取残差 $X_{ts}^s = X_{ts} - X_{ts}^t$——分解放在潜空间而非原始数值层，保住语义信息。第二步文本端模式提取：定义三组可学习对齐 token（LAT）$Q_{full},Q_{trend},Q_{sea}$ 当 query，对文本 embedding 做多头注意力 $X_k^{text} = \text{Attention}(Q_k,K,V)$，得到三套模式特化的文本表征；用可学 LAT 而不是固定 prompt，让文本侧的模式表达也能学。第三步跨模态交互对齐：把每对 $(X_k^{text},X_{ts}^j)$ 拼成新 query 做 self-attention，让时序 token 吸收对应模式下的文本语义，最后三路融合成 $X_{ts}^{fusion}$。三路同时对齐而非单一全局对齐，避免了"模式信息纠缠"，于是 LLM 能真正区分"趋势在涨"和"季节性周期回撤"。
 
-**2. 任务感知平衡奖励：把异质任务的奖励统一到同一量纲，治住 reward hacking。**
+**2. 任务感知平衡奖励：把异质任务的奖励统一到同一量纲，治住 reward hacking**
 
 TSQA 横跨从二分类判别到开放式生成的整个谱系，简单题奖励容易饱和、复杂推理题奖励稀疏，naive SFT/RL 会让模型疯狂刷简单题、深度推理萎缩。PATRA 把任务分两类分别给奖励：带标签任务（selection/judgment）用阶段式奖励 $r_{label} = \sum_{k=1}^K \lambda_k r_k(\text{answer})$，逐级验证"是否在候选范围内 → 选项是否正确"，避免端到端只给二元奖励导致早期梯度噪声大；生成任务用 Rouge-L 作连续奖励 $r_{generation} = \text{TextScore}(\text{answer},y^\star)$，奖励序列级对齐而非关键词碰撞。最关键的一招是把所有任务奖励**线性映射到 $[0,2]$ 区间**，再叠加 format reward，得到 GRPO 总奖励 $r(\tau) = r_{format}(\tau) + r_{task}(\tau)$。$[0,2]$ 归一化消除了奖励量纲差异——消融里去掉它，Prescience Acc 直接从 52.78 掉到 35.18，证明跨任务量纲对 GRPO 稳定性是决定性的。
 
-**3. GRPO + 复合奖励的优化范式：在 SFT 之上逼出思维链和跨任务通用推理。**
+**3. GRPO + 复合奖励的优化范式：在 SFT 之上逼出思维链和跨任务通用推理**
 
 光靠 SFT 模型只会"模仿答案"，产生不了 `<think>...</think>` 那种推理结构（消融里只做 SFT 时 Reasoning Acc 仅 13.51%）。PATRA 用 Group Relative Policy Optimization：对每个 prompt 采一组响应，用组内标准化优势 $\hat A_{group}(\tau) = (r(\tau) - \mu)/(\sigma + \epsilon)$ 替代 PPO 的值函数，最大化 $L(\theta) = \mathbb{E}_{\tau\sim\pi_{\theta_{old}}}[\frac{\pi_\theta(\tau)}{\pi_{\theta_{old}}(\tau)}\hat A_{group}(\tau)]$，并加 KL 项约束远离参考模型。组内标准化和上一步的奖励 $[0,2]$ 归一化形成双重稳定，对 TSQA 里稀疏的正例尤其友好——既省掉训 critic 的开销，又靠相对排序压住奖励波动。
 

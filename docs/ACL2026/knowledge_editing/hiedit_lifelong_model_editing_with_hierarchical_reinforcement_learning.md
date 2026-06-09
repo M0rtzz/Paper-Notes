@@ -45,15 +45,15 @@ HiEdit 把每一步终身编辑建模成一个 Hierarchical MDP $(\mathcal{S}, \
 
 ### 关键设计
 
-**1. 高层 importance router：让"选哪些层"变成可学习的动态决策。**
+**1. 高层 importance router：让"选哪些层"变成可学习的动态决策**
 
 终身编辑里最隐蔽的浪费是"locating"阶段对所有知识都用同一批稠密的层，等于把大量无关参数也一起改了。HiEdit 把每层的梯度签名 $(u_l \| v_l)$ 先过一个 layer-shared 的梯度编码器 $\mathbf{W}_{\text{GradEnc}}$，再叠上 layer-specific 的缩放与偏置 $\mathbf{SPE}_l$ 得到 $h_l$，所有 $h_l$ concat 后送进 gate network 输出打分 $z_t \in \mathbb{R}^L$，最后 $\mathbf{TopK}(z_t, K)$ 只保留得分最高的 $K$ 层产生 mask $m_t$。这样不同知识可以走不同的层路径，而不是离线一次定死。难点在于 TopK 是离散的、挡住了梯度，HiEdit 借用 MoE 的 straight-through estimator $m_t = \mathbf{sg}(m_t - z_t) + z_t$，前向用硬 mask、反向把梯度直接透传回 $z_t$，让选层决策仍可端到端学习。
 
-**2. Intrinsic reward：用"部分 vs. 全部"的相对优势逼出稀疏。**
+**2. Intrinsic reward：用"部分 vs. 全部"的相对优势逼出稀疏**
 
 直接给高层写一个"选得越少越好"的稀疏惩罚很难调系数，也容易牺牲编辑质量。HiEdit 改成让高层 reward 等于部分选层相对全选层的优势 $r_{\text{high},t} = r_{\text{low}}(s_t, \omega_t, a_t) - r_{\text{low}}(s_t, \mathbf{1}, a_t)$，其中 $\mathbf{1}$ 表示全选。只有当"只动 $K$ 层"的编辑损失不差于"动全部层"时，高层才拿到正 reward。这本质上是在学一个"这层对当前这条知识到底有没有用"的因果对比信号，天然鼓励稀疏却不掉点——消融里去掉这个相对优势、改成最大化绝对 reward，高层就退化成全选、整套方法塌回 RLEdit。
 
-**3. 分层联合优化与防遗忘正则：让探索的高层和利用的低层互相校正。**
+**3. 分层联合优化与防遗忘正则：让探索的高层和利用的低层互相校正**
 
 低层 reward 取负的总损失 $r_{\text{low},t} = -\mathcal{L}_t$，其中 $\mathcal{L}_t = \eta \|\tilde{\nabla} \mathcal{W}_t\|^2 + \sum_{i=t-k}^t \mu^{t-i} \mathcal{L}_{t,i}$，单步损失 $\mathcal{L}_{t,i} = -\log p_{\mathcal{W}_t}(y_i|x_i) + \tilde\lambda \mathrm{KL}[p_{\mathcal{W}_{t-1}}(\cdot|\tilde x_i) \| p_{\mathcal{W}_t}(\cdot|\tilde x_i)]$。它一边回看过去 $k$ 步编辑做 memory backtracking 防遗忘，一边用 KL 项约束无关输入的分布尽量不动。两套 hypernetwork 各按累积折扣 reward $\sum \gamma^t r_{\beta,t}$ 优化，且取 $\gamma=1$ 让整条长序列里每一步权重一致。因为稀疏 mask 已经截断了普通梯度回传，只有把 straight-through 透传和这套联合优化合在一起，high-level 的探索（选层）和 low-level 的利用（算更新）才能彼此对齐。
 

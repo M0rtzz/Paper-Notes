@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. Shortcut 的理论判据（Theorem 3.6 + Corollary 3.8）：把"何时抄近道更优"写成可在 logged 数据上检查的不等式。**
+**1. Shortcut 的理论判据（Theorem 3.6 + Corollary 3.8）：把"何时抄近道更优"写成可在 logged 数据上检查的不等式**
 
 直接把多步动作相加 $\sum a_k$ 几乎肯定会打偏——既不保证到达 $s_j$，也不保证 $V$ 在 $s_j$ 附近稳定。LIFT 要的是一个能判定"这段累加什么时候真的带来值提升"的条件。它先要求 logging policy 是 distance-improving 的（沿轨迹奖励严格递增），再引入 LPE（线性位置误差）$\|f(s_0,\sum a_i, W)-s_k\|\le L_f\cdot\sum\|a_i\|$ 限制累加偏移，最后要 $V^\pi$ 是 $L_V$-Lipschitz。三条凑齐后就能证明：只要
 
@@ -52,11 +52,11 @@ $$\gamma V^\pi(s_j, W) - V^\pi(s_i, W) - \|s_j - s_W\| \ge (\gamma L_V + 1) L_f 
 
 $\sum a_k$ 就一定是 shortcut（线性动力学 $f(s,a,W)=s+Wa$ 是 $L_f=0$ 的特例，此时任意累加都成立）。这个判据的妙处在于把工程界"明显能走捷径"的直觉变成可计算的式子——它告诉算法去挑"值差大、路径短"的 $(i,j)$ 对，而这正好对应 logged 轨迹里那些 zig-zag 绕弯段，是整篇文章的理论基石。
 
-**2. Algorithm 1：在 logged 轨迹上线性扫一遍把 shortcut 筛出来。**
+**2. Algorithm 1：在 logged 轨迹上线性扫一遍把 shortcut 筛出来**
 
 有了判据，就要落成能即插即用的接口。Algorithm 1 对一条带返回 $G_i=V^{\pi_\beta}(s_i,W)=\sum_{k=i}^n\gamma^{k-i}r_k$ 的轨迹，从位置 $i$ 出发遍历 $j>i$，对每个候选 $\hat a=\sum_{k=i}^{j-1}a_k$ 检查 $\gamma G_j - G_i + r_{j-1}\ge C\sum\|a_k\|$——这里 $C$ 把 Theorem 3.6 右端的常数收成一个超参（实验默认 $C=0$，即所有满足值递增的候选都纳入）。通过检查的合成 transition $(o_i,\hat a, r_{j-1}, o_j)$ 进候选集，最后按归一化奖励 $\rho\propto\hat r-\min\hat r$ 抽一个返回。整个扫描是线性时间，可以以"transition picker"的形式直接 plug 进 d3rlpy——这样 CQL 之外的任何 d3rlpy 算法只要换 picker 就能用上 shortcut，用奖励当采样权重则兼顾了多样性和"更接近目标"的偏好。
 
-**3. Algorithm 2：采集时按概率替换 logging 动作，并 reset 解决 hand-off。**
+**3. Algorithm 2：采集时按概率替换 logging 动作，并 reset 解决 hand-off**
 
 光在离线数据上合成还不够，LIFT 想在数据采集阶段就改善分布——介于纯离线和 warm-start RL 之间的中间地带。做法是先用 logging policy 收少量轨迹（50–100 条）训一个 augmentor $a_\theta(o)=\arg\max_a Q_\theta(o,a)$，之后每条新 episode 以概率 $p=0.6$ 让 $a_\theta$ 抢话，定义 $\pi_{\text{aug}}(o)=a_\theta(o)$ 当它是 $\pi_\beta$-shortcut、否则回退 $\pi_\beta(o)$，由 Proposition A.1 保证 $V^{\pi_{\text{aug}}}\ge V^{\pi_\beta}$。最关键的工程细节是 hand-off：脚本化 logging policy 带内部状态（当前 step size、已优化维度），一旦被打断就会在不一致状态下继续乱跑。LIFT 把"augmentor 一接管就 reset $\pi_\beta$ 内部状态"显式写进伪代码，保证脚本能干净地继续推进——这正是 IORL 这类纯探索增广没解决的细节，也是 LIFT 名字的核心含义。
 

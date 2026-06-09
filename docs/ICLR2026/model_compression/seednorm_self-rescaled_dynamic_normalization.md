@@ -51,23 +51,23 @@ $$\text{SeeDNorm}(\mathbf{x}) = [\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \
 
 ### 关键设计
 
-**1. 自适应缩放矩阵：让缩放因子随输入而变，把范数信息找回来。**
+**1. 自适应缩放矩阵：让缩放因子随输入而变，把范数信息找回来**
 
 RMSNorm 丢掉输入尺度的根源在于它的缩放因子 $\boldsymbol{\gamma}$ 是与输入无关的静态参数。SeeDNorm 把这一项换成依赖输入的动态项 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$：输入 $\mathbf{x}$ 先与参数 $\boldsymbol{\beta}$ 做点积压成标量，经 tanh 把它约束到 $[-1, 1]$ 这个有界区间，再乘上 $\boldsymbol{\alpha}$ 展开成一个逐维的缩放矩阵。这样每个 token 看到的缩放系数都由它自身的内容决定——不同范数、不同分布的输入会得到不同的缩放，归一化时被抹掉的尺度信息因此在前向传播里被重新编码回特征中，而这只需额外引入 $\boldsymbol{\alpha}, \boldsymbol{\beta}$ 两个 $D$ 维向量。
 
-**2. 尺度不变的初始化：训练初期不让动态项乱动。**
+**2. 尺度不变的初始化：训练初期不让动态项乱动**
 
 引入输入相关项的代价是模型可能在训练早期对输入尺度过度敏感，反而破坏稳定性。当输入整体被缩放 $k$ 倍时，由于 RMS 归一化本身具备尺度不变性，$\frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}$ 不变，SeeDNorm 中唯一随 $k$ 变化的就是自适应项里的 $\sigma(k\mathbf{x} \cdot \boldsymbol{\beta}^T)$。作者把 $\boldsymbol{\beta}$ 初始化为零，使训练起点处 $\nabla_\mathbf{x} f$ 恰好为零，于是网络在最初阶段对尺度扰动近乎免疫，等价于退化成标准 RMSNorm，再随训练逐步学出动态行为，避免了一上来就被动态项带偏。
 
-**3. 梯度自适应调整：在反向传播里保住 RMSNorm 的稳定优势。**
+**3. 梯度自适应调整：在反向传播里保住 RMSNorm 的稳定优势**
 
 DyT 之所以会失效，是因为 tanh 饱和后梯度被压死，而且在常数范数假设下它的梯度等价于 RMSNorm 的逐元素操作，丢掉了按输入范数调节梯度的能力。SeeDNorm 因为保留了 $\frac{1}{\text{RMS}(\mathbf{x})}$ 这个除法结构，反向传播时梯度仍主要由它主导：当某个输入 $k\mathbf{x}$ 异常大时，$\frac{1}{\text{RMS}(k\mathbf{x})} = \frac{1}{k \cdot \text{RMS}(\mathbf{x})}$ 会把梯度按 $k$ 倍自动缩小；输入异常小时梯度则相应放大。这种由输入范数驱动的自动伸缩，正是 RMSNorm 训练稳定的关键，SeeDNorm 在保留范数信息的同时把它一并继承了下来。
 
-**4. 多头形式：用分头点积压住高维下爆炸的梯度方差。**
+**4. 多头形式：用分头点积压住高维下爆炸的梯度方差**
 
 直接在高维特征上算 $\mathbf{x} \cdot \boldsymbol{\beta}^T$ 会出问题——这个点积的方差与维度 $D$ 成正比（Theorem 3.2），维度一高方差就过大，导致梯度剧烈震荡甚至不收敛。借鉴多头注意力的思路，SeeDNorm 把 $\mathbf{x}$ 和 $\boldsymbol{\beta}$ 各切成 $n$ 个子向量，在每个子空间内分别算点积再拼接，单个点积涉及的维度从 $D$ 降到 $D/n$，方差随之被压下来。视觉任务对此尤其敏感，因此默认采用多头版本，消融显示 ViT-B 上单头直接不收敛，而 16 头能稳定到最优。
 
-**5. AdaSeeDNorm：适配 DiT 里 AdaLN 的条件注入结构。**
+**5. AdaSeeDNorm：适配 DiT 里 AdaLN 的条件注入结构**
 
 DiT 中的 AdaLN 会把类别条件 $c$ 通过缩放、偏移注入归一化，结构和 RMSNorm 不同，不能简单替换。作者为此设计了兼容变体，把动态缩放项嵌进 AdaLN 的条件调制框架：
 

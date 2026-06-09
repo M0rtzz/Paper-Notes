@@ -45,15 +45,15 @@ EvoCoT 是嵌套两阶段的迭代框架。Stage 1 (Answer-Guided Reasoning Path
 
 ### 关键设计
 
-**1. Answer-Guided 反向 CoT 自生成 + answer-consistency 过滤：从只有 $(Q,A)$ 的硬题里无中生有地造出可信推理链。**
+**1. Answer-Guided 反向 CoT 自生成 + answer-consistency 过滤：从只有 $(Q,A)$ 的硬题里无中生有地造出可信推理链**
 
 硬题的困境是模型 rollout 几乎命中不了正确答案，拿不到任何监督；但每道题其实自带最终答案 $A$。EvoCoT 利用这个先验：把 $Q$ 和 $A$ 一起喂给 LLM，让它「反推」出支持该答案的推理链 $\hat{C}$，写成 $(Q,A) \xrightarrow{\text{LLM}} \hat{C}$——已知答案后，模型造出合理 CoT 比从零正向推导容易得多。但反推可能造出答案泄漏或 shortcut，于是再做一道正向一致性检验 $(Q,\hat{C}) \xrightarrow{\text{LLM}} \hat{A}$，只保留 $\hat{A}=A$ 的 $\hat{C}$。这样整个 CoT 既不依赖教师模型（模型自己生成、自己验证），又能确保保留的推理链真能推出正确答案。思路上类似 STaR 的 rationale 自生成，但 STaR 用于 SFT，这里是为后续 RL 课程搭脚手架。
 
-**2. Step-Wise Reverse-Prefix Curriculum：把单条 CoT 变成一条从「全引导」到「零引导」的难度梯度。**
+**2. Step-Wise Reverse-Prefix Curriculum：把单条 CoT 变成一条从「全引导」到「零引导」的难度梯度**
 
 光有 CoT 还不够——直接拿去 SFT 会退化成记忆。EvoCoT 把验证过的 CoT 按 "\n\n" 切成步骤 $\{c_1,\dots,c_n\}$，然后从尾部逐步删步，构造 $(Q,c_1,\dots,c_n) \to (Q,c_1,\dots,c_{n-1}) \to \dots \to (Q,c_1) \to (Q)$ 这条序列。每个 prefix 作为 rollout 的固定前缀（teacher forcing），LLM 只需自由生成剩余部分：prefix 越长，留给模型探索的空间越小，命中正确答案概率越高、奖励越密；prefix 越短，探索空间越大，但模型已在前几个 prefix 上学会了相关推理模式，可以稳定渐进。之所以一定要删到只剩 $(Q)$，是为了避免 reward hacking——如果 prefix 始终包含完整答案，模型就退化成抄答案，最终必须能从纯 $(Q)$ 直接推出 $A$ 才算真学会。相比 R3/AdaBack 这类同样用反向前缀课程的方法，EvoCoT 不需要外部完整 CoT 数据，每条样本自带课程。
 
-**3. 自我进化迭代优化：让 CoT 质量与模型能力相互拉升。**
+**3. 自我进化迭代优化：让 CoT 质量与模型能力相互拉升**
 
 单轮训练会被首轮自生成 CoT 的质量限死。EvoCoT 把两阶段嵌套成迭代闭环：第 $t$ 轮用当前 $\text{LLM}^{(t)}$ 生成 $\hat{C}^{(t)}$，在 $(Q,\hat{C}^{(t)},A)$ 上训练得到更强的 $\text{LLM}^{(t+1)}$；下一轮再用 $\text{LLM}^{(t+1)}$ 重新生成更优质的 $\hat{C}^{(t+1)}$（Equation 5）。即便首轮 CoT 不完美，迭代也能逐步打磨出高质量推理链，让框架对初始能力不那么敏感。整个机制与 GRPO / DAPO 正交——它不替换 RL 算法，只改写训练样本结构，可作为现有 RLVR pipeline 的 drop-in 增强层。
 

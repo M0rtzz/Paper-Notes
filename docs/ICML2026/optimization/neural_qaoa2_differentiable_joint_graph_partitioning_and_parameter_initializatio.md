@@ -47,15 +47,15 @@ GEN（Generative Evaluative Network）由两部分组成。其一是 **Quantum e
 
 ### 关键设计
 
-**1. 多视图量子评估器 $f_\phi$：学一个可微 proxy，把"跑一遍量子模拟"换成"过一次 GNN"。**
+**1. 多视图量子评估器 $f_\phi$：学一个可微 proxy，把"跑一遍量子模拟"换成"过一次 GNN"**
 
 整个 D&C 过去的死穴是分区/参数选择只能靠启发式或随机，因为真正的反馈信号——量子求解性能——评估代价太高、又不可微。GEN 先解决这点：训一个高保真 surrogate $f_\phi$ 来预测 performance ratio，让"算梯度"的代价从 O(量子模拟) 降到 O(GNN 前传)。它用三个并行 encoder 处理异质输入——topology encoder 吃全图邻接 $\mathbf{A}$；partition encoder 吃屏蔽了跨分区边的子图邻接 $\mathbf{A}_{\text{sub}}=\mathbf{A}\odot(\mathbf{S}\mathbf{S}^T)$；param encoder 把参数通过 $\mathbf{X}_{\text{param}}=\mathbf{S}\mathbf{P}^T$ 广播到节点级，再用 $\tilde{\mathbf{X}}_{\text{param}}=[\sin(\mathbf{X}_{\text{param}}),\cos(\mathbf{X}_{\text{param}})]$ 嵌入以尊重 $2\pi$ 周期性。三路 global mean pool 后拼接过 MLP，输出 $\hat{\rho}=0.5(\text{sigmoid}(\text{MLP}(\mathbf{H}))+1)$ 强制落在理论区间 $[0.5,1]$。多视图设计的用意是让每种输入信号都有专属 encoder，不被混合稀释，从而 surrogate 足够保真、梯度才可信。
 
-**2. 正交补头 OCH：给 cluster center 一个不动的几何锚点，挡住 GNN over-smoothing。**
+**2. 正交补头 OCH：给 cluster center 一个不动的几何锚点，挡住 GNN over-smoothing**
 
 生成器要把节点嵌入投到 $k$ 个 cluster center 上得到 soft partition $\tilde{\mathbf{S}}\in[0,1]^{N\times k}$，但标准 GNN + softmax 有个老毛病：节点嵌入趋同（over-smoothing），partition 概率退化成近乎均匀，训练梯度被稀释、分区几乎随机。OCH 的对策是给 cluster center 矩阵 $\mathbf{C}\in\mathbb{R}^{k\times h}$ 强加两个正交约束 $\mathbf{C}\boldsymbol{g}=\mathbf{0}$ 且 $\mathbf{C}\mathbf{C}^T=\mathbf{I}$，其中 $\boldsymbol{g}=\text{GMP}(\mathbf{H}_{\text{topology}})$ 是全图嵌入，$\mathbf{C}$ 通过对随机矩阵相对 $\boldsymbol{g}$ 做 QR 分解动态生成，最后 $\tilde{\mathbf{S}}=\text{softmax}(\mathbf{H}_{\text{topology}}\mathbf{C}^T)$。把 center 钉在全图嵌入的正交补里，等价于"用全图上下文做减法"，强制 inter-cluster separability 最大化——这比把 center 当可学参数（容易和 encoder 一起 collapse）稳得多，消融里去掉这个约束后 partition 就退化成随机。
 
-**3. 贪心容量离散化 GCD + 直通估计器 STE：硬约束严格可行，梯度还能回传。**
+**3. 贪心容量离散化 GCD + 直通估计器 STE：硬约束严格可行，梯度还能回传**
 
 qubit 容量是硬件物理上限，$\sum_i\mathbf{S}_{ij}\le\text{max\_nodes}$ 一步都不能违反，所以 Gumbel-Softmax 那种连续松弛在这里不可用。GCD 的做法是按概率从高到低贪心地把节点塞进 cluster、满了就跳过，保证容量约束 100% 满足。可离散化会断梯度，于是前向用离散 $\mathbf{S}$ 进 evaluator 算精确得分、反向用直通估计器 $\nabla_{\tilde{\mathbf{S}}}f\approx\nabla_{\mathbf{S}}f$ 跨过离散算子；参数生成时再加一个 stop-gradient $\text{sg}(\mathbf{A}_{\text{sub}})$ 防止参数优化反过来扰动分区。本质是牺牲一点梯度精度换严格可行性——在 NISQ + 离散决策这种硬约束场景里，GCD + STE 几乎是唯一可行的可微化路径。
 

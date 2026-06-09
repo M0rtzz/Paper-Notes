@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. Expanded-Choice 的双侧独立切换：把「是否允许中立」做成可单独开关的归因轴。**
+**1. Expanded-Choice 的双侧独立切换：把「是否允许中立」做成可单独开关的归因轴**
 
 作者把传统 forced 协议拆成 stated 与 revealed 两个独立维度，每维度都能选 forced 或 expanded，理论上构成 2×2 矩阵，实际评测三个有意义的格子——forced-forced（baseline）、expanded-stated + forced-revealed、expanded-expanded。stated 侧用 5 个对称 prompt template（"When v1 and v2 are in tension..."）并 permute 全部 $P_2^{16}$ 对价值、每对跑 5 次，template 是压住 phrasing artifact 的关键；revealed 侧则在 AIRiskDilemmas 每条 prompt 前 prepend 一段 instruction block 显式列出 A/B/C/D，逼模型第一句就表态。之所以把改动严格局限在「允不允许中立」这一个轴上，是为了排除 framing、wording 等混淆变量，从而能干净地归因：如果 ρ 在 (expanded-stated, forced-revealed) 上涨、却在 (expanded-expanded) 上崩，那噪声源就锁定在 revealed 侧过高的 neutrality rate，而不是 stated 侧的中立选项本身有问题。
 
-**2. Neutrality-Aware Rank 计算与能力相关性：中立留作诊断、不进排名。**
+**2. Neutrality-Aware Rank 计算与能力相关性：中立留作诊断、不进排名**
 
 这一设计要同时满足两个看似冲突的需求——既要保留中立响应来度量模型的「无定见率」，又要让 1–16 的 dense ordinal rank 仍可计算。做法是：stated 侧对每对 (v1, v2) 的 5 次 elicitation 投票，只把 binary win 计入胜次；revealed 侧在 3000 条困境上只对二值 action 做 Elo 调整，跳过所有 C/D 响应；最后用 Spearman ρ 比较两套 1–16 排名，并把 neutrality rate 单列为辅助指标——例如 Qwen-3-8B 在 stated 端几乎 100% Depends，Mistral-3-8B 变体在 revealed 端 neutrality 接近 100%（直接被剔出实验）。再把 ρ 与 Epoch Capabilities Index 关联，回答「模型越强、SvR 是否越一致」。设计依据来自调查方法学：Krosnick 1991 早已指出强行处理 indeterminate response 会破坏 rank 密度，作者沿用这一传统，又补了一个新观察——把中立「留作 diagnostic 而不硬塞进 binary」，更能反映模型真实的偏好分布。
 
-**3. System Prompt Steering 反事实：用模型自报的排序去拉它自己的行为。**
+**3. System Prompt Steering 反事实：用模型自报的排序去拉它自己的行为**
 
 最后一块是反事实检验：把模型自己的 stated value ranking 当系统提示注入，看能否缩小 SvR gap。具体是先用 expanded-stated 协议拿到该模型自报的 16-value 排序，再用固定模板把它写成系统提示（含「严格按以下优先级」和「高级别 value 永远压倒低级别」的冲突消解规则），prepend 到 revealed elicitation 的每条 prompt，最后比较 steered 与 unsteered 的 Spearman ρ 变化。这一步借 stated rank 当压力测试工具：Liu et al. 2025 在 3-value、6-value 小集合上证明 steering 有效，但作者怀疑 16 个 value 已超出 LLM 在 context window 里能稳定执行的容量——若 steering 有效，说明 SvR gap 主要源于「模型不清楚自己的优先级」；若无效，则 gap 是更深层的对齐问题，简单 prompt injection 救不了。
 

@@ -46,15 +46,15 @@ MM-BizRAG 想解决的是企业知识库里那堆异构文档：PDF 财报、PPT
 
 ### 关键设计
 
-**1. 结构感知文档分流：报告和幻灯片不能用同一套解析。**
+**1. 结构感知文档分流：报告和幻灯片不能用同一套解析**
 
 报告依赖段落与表格的线性顺序，幻灯片依赖整页的空间布局，硬塞进一套 chunking 必然两头不讨好。MM-BizRAG 因此先做一个 vertical/horizontal 分类，纵向文档走 layout-aware parsing 保留文本阅读顺序、表格 markdown、图片描述和页面图，横向文档则把每页当成不可分割的语义单元、只用页面图加 VLM 描述表示。实验里这个分类器 precision 达 100、recall 83.28，分流足够可靠才让后续按结构定制的解析有意义。
 
-**2. 检索表示与生成上下文解耦：索引用轻量描述，生成时再把原始 artifact 装回去。**
+**2. 检索表示与生成上下文解耦：索引用轻量描述，生成时再把原始 artifact 装回去**
 
 表格 markdown 和图片 base64 体积大、直接全塞进索引会让向量库膨胀、检索也变慢，但生成答案时又确实需要这些原始证据。MM-BizRAG 把「用于检索的表示」和「用于生成的上下文」拆开：以 TCTE 变体为例，索引侧只用文本 chunk、表格描述和图片描述做 text embedding；当检索命中某条表格或图片描述时，系统顺着它的 placeholder 找回所在的父文本 chunk，再把表格 markdown、图片 artifact 和描述注入到 placeholder 的原始位置。这样索引保持精简、检索保持高效，而生成拿到的是接近原文结构的多模态证据——很多 RAG 系统把 index schema 和 prompt context schema 绑死，要么检索很重要么证据太贫乏，这里靠 inference-time assembly 同时绕开两个坑。
 
-**3. FastRAGEval 单调用评测：用一次 LLM 调用算事实级 recall。**
+**3. FastRAGEval 单调用评测：用一次 LLM 调用算事实级 recall**
 
 企业 QA 的答案往往是长段落，token overlap 和 exact match 衡量不了关键事实是否被召回；而 RAGChecker 那种两阶段 claim decomposition + matching 成本和延迟都高，撑不起大规模系统评测。FastRAGEval（FRE）把这件事压进一次 LLM 调用：同时抽取 reference 和 prediction 的 atomic facts 并算 precision、recall、F1，论文主要用 FRE recall。它和人类判断的相关性反而更高（Pearson 0.808 vs RAGChecker 0.748），说明单调用并没有牺牲一致性，却大幅降了 judge 成本。
 

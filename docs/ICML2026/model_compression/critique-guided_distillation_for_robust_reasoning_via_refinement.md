@@ -45,15 +45,15 @@ CGD 想解决的事很具体：让小 student 从大 teacher 处学到"从错改
 
 ### 关键设计
 
-**1. 以 student-specific 错误为锚点的 curriculum：让 critique 永远对着 student 真会犯的错。**
+**1. 以 student-specific 错误为锚点的 curriculum：让 critique 永远对着 student 真会犯的错**
 
 标准 distilled SFT 的毛病是"无论 student 犯什么错都喂同一份 teacher solution"，等于用 teacher 想象的通用错误来教。CGD 把这一点反过来：草稿 $y'$ 不是预先生成一次复用，而是**对每个 prompt 用 $S_{\theta_{\text{init}}}$ 现采样**——于是 critique 和 refined answer 都被绑定到这个具体 checkpoint 的真实失败模式上，自动得到一份"按 student 弱点定制"的训练课程。作者把这个属性叫 "specificity and relevance of feedback"，并认为它是 CGD 增益的直接驱动力：消融里一旦把 critique 换成占位或无关文本、让它与 student 实际错误不匹配，增益就显著缩水，说明涨点不是简单"多看了一段上下文"，而是 specific feedback 真的在塑造学习信号。
 
-**2. 训练时四元组条件、推理时单 prompt 单遍：把 critique 当只在训练期存在的"语义脚手架"。**
+**2. 训练时四元组条件、推理时单 prompt 单遍：把 critique 当只在训练期存在的"语义脚手架"**
 
 这一条直接针对 CFT 的崩溃来设计。CFT 的目标是 $-\log S_\theta(c \mid x, y')$，逼 student 去生成 critique，结果输出分布被拉向 critique 风格、通用任务格式漂移（IFEval 76.9→55.6）。CGD 的目标始终是标准条件 NLL $\mathcal{L}(\theta) = \mathbb{E}_{(x, y', c, \hat{y})}\big[-\log S_\theta(\hat{y} \mid x, y', c)\big]$——监督的永远是"给 prompt 写出对的答案"，输出分布不被污染。而 inference 时模型只看到 $x$，单遍前向直接生成，不加特殊 token、不改 prompt 模板。妙处在于：critique 虽然在推理时被彻底抹除，但 student 内部表征已经把"从错改对"的映射内化了，所以即使没看到 critique，也会**自发**拉长推理链（AIME 上达 4.4×）。
 
-**3. 训练目标完全监督、不引入 RL 或额外 critic：用最朴素的 SFT 拿到接近 RL 系的自纠错效果。**
+**3. 训练目标完全监督、不引入 RL 或额外 critic：用最朴素的 SFT 拿到接近 RL 系的自纠错效果**
 
 teacher 一个人同时充当 critic 与 refiner，给的是文本 critique 而非标量奖励，正好契合 "effective feedback must be specific and actionable" 的经验观察。比起同类自纠错路线，CGD 砍掉了一切重活：与 GRACE/QCRD 相比不用训判别器、与 CTRL/Shepherd 相比不用单独的 critic 模型、与 Self-Refine 相比不用多轮 decoding。代价就只剩一次普通 SFT——100K 样本在 16 张 A100 上 8 GPU-hour 跑完，落地成本远低于带 reward model 和采样回路的 RL pipeline，却拿到了接近 SCoRe、RL4F 的自纠错行为。
 

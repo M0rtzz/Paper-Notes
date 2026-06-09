@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 把深度从 $N$ 里拆出来的 loss 分解：让 $\alpha_\ell$ 第一次可被单独读出。**
+**1. 把深度从 $N$ 里拆出来的 loss 分解：让 $\alpha_\ell$ 第一次可被单独读出**
 
 痛点在于以往 scaling laws 把参数量 $N$ 当黑盒，深度的贡献被宽度淹没，根本测不出 $\alpha_\ell$。作者把 Chinchilla 形式里的 $c_N/N^{\alpha_N}$ 进一步拆成宽度项和深度项，写成 $L = c_m/m^{\alpha_m} + c_\ell/\ell^{\alpha_\ell} + c_D/D^{\alpha_D} + L_0$：宽度项捕捉"表征能力受限"的误差，深度项捕捉"变换能力受限"的误差，两者被当成本质独立、跨项 $L_{m\ell}$ 高阶可忽略。在约 200 个 Chinchilla 重建点上最小化 $\log L$ 的 MSE、同时拟合 7 个自由参数，量到 $\alpha_m = 0.98 \pm 0.08$、$\alpha_\ell = 1.2 \pm 0.3$、$\alpha_D = 0.30 \pm 0.01$，平均相对误差仅 0.4%。这个最少假设的分解之所以管用，是因为它既不像旧理论那样硬塞 $\log \ell$ 修正、也不像纯幂律那样拟合不上真实数据，而是直接读出 $\alpha_\ell \approx 1$；顺带还推出最优宽深关系 $m \propto \ell$，让组合参数量 scaling 落到 $N^{-1/3}$，刚好对上 Chinchilla 实测的 0.34。
 
-**2. 隐藏态轨迹的双重探针：用两个角度量同时区分三种机制。**
+**2. 隐藏态轨迹的双重探针：用两个角度量同时区分三种机制**
 
 光有指数还不够——三个候选机制都能产生幂律，必须从隐藏态本身找到能区分它们的指纹。作者用两个量当探针：相邻隐藏态夹角 $\theta(h_l, h_{l+1})$ 衡量每层步长（区分"早停 vs 均匀更新"），相邻增量夹角 $\theta(\Delta h_l, \Delta h_{l+1})$ 衡量更新方向相关性（区分光滑动力学 vs 随机游走）。具体做法是把每个 token 的 $\ell$ 维角度向量做 PCA，结果 99.6% 的 token 聚成"中间层均匀更新"一类、只有 0.4%（基本是文档首 token）属于"早停"——这一步直接排除 compositional assembly 主导。再把平均步长 $\langle \theta \rangle_{\mathcal{D}, l}$ 对深度作图，发现 $\langle \theta \rangle \propto 1/\ell$，符合 procedural 和 ensemble 共同的预期；但关键的二阶签名 $\theta(\Delta h_l, \Delta h_{l+1})$ 接近 $\pi/2$，说明邻层更新几乎正交、不存在一阶导数，这就和需要光滑轨迹的 procedural 对不上了。单看步长无法分开 procedural 和 ensemble（两者都给 $1/\ell$），正是补上"邻层相关性"这个二阶量才闭环判定出 ensemble，而且两个量都从一次 forward pass 直接读出，零额外训练成本。
 
-**3. Teacher-student toy 的双旋钮校准：把三种机制翻译成可证伪的隐藏态指纹。**
+**3. Teacher-student toy 的双旋钮校准：把三种机制翻译成可证伪的隐藏态指纹**
 
 直接在 LLM 上做机制级控制实验代价太高、混杂太多，于是作者在一个可解析的最小残差网络（标准残差 + RMSNorm + ReLU² MLP）里先把"什么机制对应什么签名"钉死。老师深度 $\ell^* = 128$ 远大于学生 $\ell$，两个旋钮决定老师的动力学性质：**tied** 权重（跨层共享）让累积变换 $h_0^* \to h_{\ell^*}^*$ 趋于光滑动力学，**independent** 权重（i.i.d. 抽样）让它变成随机游走，外加 softmax temperature 调目标分布尖锐度。理论推导（式 10-12）给出两种极限：tied 且训练收敛后由离散化误差主导，典型 loss $\propto 1/\ell^3$（即 $\alpha_\ell = 3$）；independent 下任何层都只能用 $f^\circ(l/\ell)$ 去拟合整段积分 $\int_0^1 f^*(s)\,\mathrm{d}s$，每层误差 $O(1/\ell)$，求和后由中心极限定理给出 $\|\cdot\| \sim 1/\sqrt{\ell}$，平方进 loss 正好 $\propto 1/\ell$。实验里 tied 权重的 $\alpha_\ell$ 随训练步从 1 一路升到 3，independent 权重则稳定在 1 附近，而且独立权重学生的隐藏态在步长曲线、$1/\ell$ scaling、邻层正交三个签名上和 LLM 完全对得上——这就把抽象的"理论候选"变成了一组可拿去 match 真实模型的经验指纹。
 

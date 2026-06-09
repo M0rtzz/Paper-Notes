@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. DoRI 对抗 embedding 优化：在剪枝模型里搜出残留触发器。**
+**1. DoRI 对抗 embedding 优化：在剪枝模型里搜出残留触发器**
 
 剪枝方法只在原始记忆 prompt 下验证过效果，没人查过换一种输入能不能把同一张图调出来。DoRI 正是对着这个盲点设计的探针：给定记忆图 $\bm{x}_{\mathit{mem}}$ 和（可能已剪枝的）模型 $\bm{\theta}_{N/W}$，把 text embedding $\bm{y}_{adv}$ 初始化为原 prompt 的 embedding（或随机高斯 / 非记忆 prompt），按 $\bm{y}_{adv}^{(i+1)} = \bm{y}_{adv}^{(i)} - \eta \nabla_{\bm{y}_{adv}^{(i)}} \mathcal{L}(\bm{x}_{\mathit{mem}}, \bm{\epsilon}, \bm{y}_{adv}^{(i)}, t, \bm{\theta}_{N/W})$ 用扩散损失梯度下降迭代 50 步（Adam，$\eta=0.1$，batch=8）。选连续 embedding 而非离散 prompt 搜索，是因为它空间大得多，能把剪枝模型里残留的"隐通道"暴露出来。这里最关键的防作弊设计是每一步都重新采样噪声 $\bm{\epsilon}\sim\mathcal{N}(0,I)$ 和时间步 $t\sim\mathcal{U}(1,T)$，强制找出的 embedding 在任意初始噪声下都能触发复刻，而不是过拟合某条特定的噪声-时间步采样轨迹。作者在附录中验证这一阈值不会误报：对非记忆图用同样设置需要 >500 步才能强行复刻，远超 50 步阈值，因此"50 步内触发即记忆"这一推断在非记忆 prompt 上的 Memorization Rate 仅 0.02。
 
-**2. 三层局部性诊断：用 DoRI 把"记忆是局部的"逐层证伪。**
+**2. 三层局部性诊断：用 DoRI 把"记忆是局部的"逐层证伪**
 
 剪枝方法的全部正当性都建立在"同一张记忆图对应同一小簇权重"上，作者就用 DoRI 批量产生的对抗 embedding 从三个层面拆这个假设。**Embedding 层**：对同一张记忆图随机初始化 100 个 $\bm{y}_{adv}^{(0)}\sim\mathcal{N}(0,I)$ 各跑 DoRI 50 步，t-SNE 看分布，结果这些能复刻同一张图的对抗 embedding 几乎和初始随机点一样弥散，pairwise L2 距离甚至比不同非记忆 prompt 之间还大。**Activation 层**：定义 discrepancy 为同一层在不同 embedding 下激活的平均 pairwise $\ell_2$ 距离（固定噪声、只变 embedding），测得 100 个触发同一张图的 $\bm{y}_{adv}$ 之间的激活差异，和 100 个完全不同的记忆 prompt 之间的差异相当。**Weight 层**：定义 weight agreement 为不同 embedding 下 NeMo/Wanda 标记的"待剪权重集合"之间的 IoU，Wanda 在多数层 <0.6，NeMo 看似 >0.8 实则因为它在第 2、6、7 层根本不挑权重（agreement 被强行设成 1），真正有效的第 1 层也只有 0.6。最精彩的是 weight agreement 这一招直接用剪枝方法自己的定位算子反驳它自己——同一张图、不同触发器，剪掉的权重都对不上号，说明所谓"记忆神经元"只是输入相关的伪局部解，而非客观存在的内部存储位置。
 
-**3. 对抗微调：用 DoRI 当内循环把记忆真正擦除。**
+**3. 对抗微调：用 DoRI 当内循环把记忆真正擦除**
 
 既然记忆是分布式的，单点剪枝注定漏，就必须从全模型同时对抗多个触发器。每个 fine-tuning step 里先用 DoRI 为每张待擦记忆图收集一批 $\bm{y}_{adv}$；再用预先准备的 surrogate image $\widetilde{\bm{x}}$（用剪枝模型 + 原 prompt 生成的"语义近似但像素不同"的图）作训练目标，对抗损失 $\mathcal{L}_{Adv}(\widetilde{\bm{x}}_0, \bm{\epsilon}, \bm{y}_{adv}, t, \bm{\theta}) = \|\bm{\epsilon} - \bm{\epsilon}_{\bm{\theta}}(\widetilde{\bm{x}}_t, t, \bm{y}_{adv})\|_2^2$ 把对抗 embedding 的输出从原图拽向 surrogate；同时叠加普通 LAION 图像-字幕对的标准扩散损失 $\mathcal{L}_{\mathrm{DM}}$ 防止模型整体崩，总损失为 $\mathcal{L} = \mathcal{L}_{\mathrm{DM}} + \mathcal{L}_{Adv}$。用 surrogate 而不是随便一张图当目标，是为了只删像素级的记忆、保住语义内容（区别于 concept unlearning），同时避免顺手把新的记忆样本带进来。整套训练做全模型微调跑 5 个 epoch（单个 epoch 已显著降低记忆率），LoRA 版本实验失败，反过来进一步佐证"必须全局调"这一结论。SD v1.4 调好的超参直接搬到 SD v2.0 仍然有效。
 

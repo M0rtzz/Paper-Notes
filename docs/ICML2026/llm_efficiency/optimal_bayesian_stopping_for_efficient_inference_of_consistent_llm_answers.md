@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 从精确后验到 $L$-聚合压缩：把 $\mathcal{O}(K!)$ 的后验砍成可实时跑的 $\mathcal{O}(K^L)$。**
+**1. 从精确后验到 $L$-聚合压缩：把 $\mathcal{O}(K!)$ 的后验砍成可实时跑的 $\mathcal{O}(K^L)$**
 
 直接套贝叶斯框架算"模式已识别"的后验会撞上组合爆炸：因为只能观察到"两两答案是否相同"、看不到答案标签本身，精确后验 $\mathbb{P}(H_1 \mid \mathcal{C}_n) = \frac{\sum_{\psi: \psi(1)=1} \prod_j p_{\psi(j)}^{n_j}}{\sum_{\psi \in \mathfrak{S}_{M(n)}} \prod_j p_{\psi(j)}^{n_j}}$ 要把所有 $K$ 个答案到隐标签的单射 $\psi$ 都枚举一遍，复杂度 $\mathcal{O}(K!)$。作者的做法是只显式保留 Top-$(L-1)$ 个频次，剩下 $K-L+1$ 个答案的多项分配 $\mathbf{r}^{-\psi}$ 不再逐个枚举、而是用一个汇总量 $\tilde S_\psi = \sum_{\mathbf{r}^{-\psi}} w(\mathbf{r}) \cdot \frac{\bar n!}{\prod r_j!} \prod p_j^{r_j}$ 一次性求和，其中权重 $w(\mathbf{r}) = \binom{c_d' + m(\mathbf{r})}{c_d'}^{-1}$ 专门修掉"边界频次的答案被任意划进头部或尾部"造成的重复计数。这之所以不丢精度，关键在恒等式 $\mathbb{P}(H_1 \mid \mathcal{C}_n^L) = \mathbb{E}[\mathbb{P}(H_1 \mid \mathcal{C}_n) \mid \mathcal{C}_n^L]$——聚合后的后验只是精确后验的无偏粗化，不引入系统性偏差。本质上这是一个"统计代价 vs 计算代价"的开关：精确后验的瓶颈在 $K!$ 而非样本数，只要把头部信号原样留下、尾部用一个统计量 $\bar n_{L(n)}$ 概括，就能在保住判别力的同时把复杂度从阶乘压成 $K$ 的指数 $L$。
 
-**2. "三足够"渐近最优定理：$L=3$ 就是 sweet spot。**
+**2. "三足够"渐近最优定理：$L=3$ 就是 sweet spot**
 
 聚合到底压到多狠才不亏？作者在 $\delta \to 0$ 极限下给了精确刻画。$L=2$（只看 Top-1）的渐近停止率是 $\lim \mathbb{E}[n^{\star,2}] / \log(1/\delta) = 1/D_{\mathrm{KL}}(p_1 \| p_2)$，而所有 $L \ge 3$ 都收敛到同一个更快的速率 $\lim \mathbb{E}[n^{\star,L}] / \log(1/\delta) = 1 / ((p_1 - p_2) \log(p_1/p_2))$，和精确后验 $L=K$ 逐字相等。再和无先验基线 $n^{\star,f}$（其速率分母是对称化的 Jensen-Shannon 散度，对应 Shah et al. 2020 / Jain et al. 2022 的 PPR 鞅置信序列下界）对比，就能排出 $\mathbb{E}[n^{\star,f}] > \mathbb{E}[n^{\star,2}] > \mathbb{E}[n^{\star,3}] = \cdots = \mathbb{E}[n^{\star,K}]$。直觉很清楚："Top-1 频次"衡量领跑者强度，"Top-1 与 Top-2 之差"衡量它对二号位的优势——只要这两个统计量都跟到，就抓住了贝叶斯证据的本质，$L=4,5$ 不过是冗余。$L=2$ 之所以慢，是因为只看 Top-1 等于把比较退化成 Bernoulli 假设检验，丢掉了"次大答案到底有多大"这个关键判别力。在不确定先验场景下作者进一步证明 $L=3$ 仍严格优于 ASC，唯一会让优势接近消失的情形是候选池里恰好存在某个 $\pi^{m^\dagger}$ 满足 $p_{1,m^\dagger} \approx p_{2,m^\dagger} \approx (p_{1,m^\star}+p_{2,m^\star})/2$。
 
-**3. 不确定先验下的层次贝叶斯扩展：把"逐题先验"换成离线攒的候选池。**
+**3. 不确定先验下的层次贝叶斯扩展：把"逐题先验"换成离线攒的候选池**
 
 "已知逐题 $\pi$"是上帝视角，真实部署里拿不到，所以作者把它放宽成"$\pi$ 以概率 $\lambda_m$ 从候选集 $\Pi^M$ 中随机抽取"。对应地，后验推广成按 $\lambda_m$ 加权的混合形式 $\mathbb{P}_{\Pi^M}(H_1 \mid \mathcal{C}_n^L) = \frac{\sum_m \lambda_m \sum_{\psi:\psi(1)=1} (\prod p_{\psi(j),m}^{n_j}) \tilde S_\psi^m}{\sum_m \lambda_m \sum_\psi (\prod p_{\psi(j),m}^{n_j}) \tilde S_\psi^m}$，每个候选 $\pi^m$ 贡献一份 $\tilde S_\psi^m$，复杂度只多乘一个 $M$ 因子。候选池的构造非常工程化：把数据集按 70/30 划分，用训练集每道题的 40 次 LLM 采样得到经验分布，全部塞进 $\Pi^M$，$\lambda_m$ 取均匀分布——没有任何参数化建模，也没有新模型要训。这之所以站得住，是因为难题/易题/选择题/开放题的答案分布"形状"在分布层面是稳定的，可以拿同一 LLM 的历史回答当候选库；而且即便 $\Pi^M$ 不包含真值，混合后验也能保持渐近下界严格优于无先验 ASC。
 

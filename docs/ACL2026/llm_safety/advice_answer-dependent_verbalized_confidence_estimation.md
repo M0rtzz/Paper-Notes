@@ -45,15 +45,15 @@ ADVICE 是一个基于 LoRA 的对比微调框架。流程：（1）从 TriviaQA
 
 ### 关键设计
 
-**1. 诊断驱动的答案独立性度量：先把「过自信的根因」量化出来，再拿它当训练信号。**
+**1. 诊断驱动的答案独立性度量：先把「过自信的根因」量化出来，再拿它当训练信号**
 
 以往把过自信归咎于「训练数据高频高分」「RLHF 偏好乐观回答」这类模糊解释，没人能测。作者的做法是对每个问题 $q$ 和候选答案 $a$，把置信 token 的输出概率重投影到一个固定离散取值集合 $C$（如 0-9），得到分布 $P_M(C\mid q,a)$，再对训练集中所有 $(a_i, a_j)$ 答案对计算 JSD 作为「答案敏感度」的直接证据；同时用 Attention Rollout（递归聚合 $0.5W_{\text{att}}+0.5I$ 跨层）和 Integrated Gradients（$n\_steps=1024$）去验证「置信 token → 答案 token」这条归因路径。诊断结论指向同一个根因——置信度几乎不随答案变。只有把这个独立性指标显式写进训练目标，才能从源头改善校准，而不是事后去压最大概率。
 
-**2. 三元组对比训练目标：用四项损失逼模型对正确/错误答案给出方向正确、可区分、归一化的置信。**
+**2. 三元组对比训练目标：用四项损失逼模型对正确/错误答案给出方向正确、可区分、归一化的置信**
 
 光知道根因还不够，得有个目标函数直接攻击它。ADVICE 在每个三元组上定义四项损失：$\mathcal{L}_{\mathrm{LM}}$ 是 $a_{\text{correct}}$ 的 NLL，保住 QA 能力；$\mathcal{L}_{\mathrm{JSD}}=\max(0,\delta_{\mathrm{JSD}}-D_{\mathrm{JSD}}(P_{\text{correct}}\Vert P_{\text{wrong}}))$ 强制两分布散度至少为 $\delta_{\mathrm{JSD}}=0.6$（接近 $\ln 2\approx 0.693$ 的上界）；$\mathcal{L}_{\mathrm{Margin}}=\max(0,\delta_{\mathrm{Margin}}-(\mu_{\text{correct}}-\mu_{\text{wrong}}))$ 强制正确答案的期望置信比错误答案高 $\delta_{\mathrm{Margin}}=1$；$\mathcal{L}_{\mathrm{Sum}}=|1-(\mu_{\text{correct}}+\mu_{\text{wrong}})|$ 强制两者之和约等于 1，对应「正确率约为 1 时该答案就该几乎完全可信」的语义。总损失是四项等权相加 $\mathcal{L}=\mathcal{L}_{\mathrm{LM}}+\mathcal{L}_{\mathrm{JSD}}+\mathcal{L}_{\mathrm{Margin}}+\mathcal{L}_{\mathrm{Sum}}$。三项缺一不可：单用 JSD 只保证「分布不同」但方向可能颠倒，单用 Margin 又缺乏对分布形状的控制、会让两分布都偏高，而 Sum 项把「置信度=正确概率」的定义硬写进损失，避免训练后整体保守化（消融已证实）。
 
-**3. 格式泛化与硬负采样的训练集构造：让一次微调适配多种表达格式，并提升对相似错误答案的辨识力。**
+**3. 格式泛化与硬负采样的训练集构造：让一次微调适配多种表达格式，并提升对相似错误答案的辨识力**
 
 如果硬负样本错得太离谱，区分就太容易，模型学不到细粒度辨识。作者用原模型 top-$p$ 采样得到「语义合理、上下文相关但事实错误」的硬负（例如问 Mike Tyson 1998 拳照的颁发州，正确是 Nevada，硬负取 California）。训练阶段只用 ScoreLetter（E/D/C/B/A 映射到 0.1-0.9）和 ScoreNumber（0-9 映射到 $i/9$）两种格式，并在同一 mini-batch 内强制单一表达格式以稳定优化；推理时则能扩展到 ScoreText、ScoreFloat、ScorePercent。这种「多格式训练 + 单 batch 同格式」既保证了对训练未见格式的泛化，又稳住了梯度——Table 4 显示 Gemma2 在 TriviaQA-Float 上 ECE 从 27.5 降到 6.2。
 

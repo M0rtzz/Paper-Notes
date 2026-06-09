@@ -46,11 +46,11 @@ AffordGrasp 的思路是先把这条鸿沟拆成两段：用一个 Affordance Ge
 
 ### 关键设计
 
-**1. Affordance Generator：把"抓哪里"从语言里先解出来，再喂给生成模型。**
+**1. Affordance Generator：把"抓哪里"从语言里先解出来，再喂给生成模型**
 
 直接做语言到手姿的端到端映射，模型既要理解"把手"指的是哪块几何、又要同时摆出合理手型，跨模态对齐的负担太重。AffordGrasp 的做法是先只回答一个更窄的问题——指令对应物体表面的哪些点。生成器基于 LASO 架构，预测点云上每个点与当前指令相关的可供性概率，得到一张可供性图 $P_a$ 作为显式的中间表示。训练上先在带标注的 AffordPose 上初始化，再通过自训练循环把伪标签扩展到本身缺可供性标注的 OakInk 和 GRAB，缓解标注稀缺；正负样本严重不平衡（可供区只占物体一小块），所以用 Focal Loss 加 Dice Loss 联合监督：$\mathcal{L} = \mathcal{L}_{\text{focal}} + \lambda_1 \mathcal{L}_{\text{dice}}$。这样一来，"在哪里抓"的空间信息被提前从语言里剥离出来，后面的扩散模型只需在已知交互区域的前提下决定具体手型，跨模态融合的难度大幅下降。
 
-**2. Cross-Modal Latent Diffusion Model：在压缩过的手姿潜空间里做条件扩散，而不是在原始顶点上。**
+**2. Cross-Modal Latent Diffusion Model：在压缩过的手姿潜空间里做条件扩散，而不是在原始顶点上**
 
 人手网格有 778 个顶点（$h_v^{gt} \in \mathbb{R}^{778 \times 3}$），直接在这个高维顶点空间上跑扩散既低效，又容易破坏手指之间的结构约束。AffordGrasp 先用一个预训练 VAE 把手部网格压成紧凑潜码 $h_z$，扩散全程在潜空间进行。前向过程按标准方式加噪：
 
@@ -58,7 +58,7 @@ $$z^t = \sqrt{\alpha_t}\, z^0 + \sqrt{1 - \alpha_t}\, \epsilon$$
 
 条件 U-Net 学习从带噪潜码预测噪声，损失为 $L_{LDM} = \mathbb{E}\|\epsilon - \epsilon_\theta(z^t, f, t)\|_2^2$；条件特征 $f = \{f_I, f_{pg}, f_{pa}\}$ 中，文本 $f_I$ 由 RoBERTa 编码，物体几何 $f_{pg}$ 和可供性图 $f_{pa}$ 各由一个独立 PointNet 编码。把生成放到潜空间，既省算力，又因为 VAE 已经学到了合理手型的流形，采样结果更容易保持手部姿态的空间结构。
 
-**3. Distribution Adjustment Module (DAM)：扩散采完不直接出手，先做一次单前馈的物理与语义校正。**
+**3. Distribution Adjustment Module (DAM)：扩散采完不直接出手，先做一次单前馈的物理与语义校正**
 
 扩散模型的去噪输出在整体姿态上合理，但在接触约束（指尖是否真的贴住物体）和语义细节（是否精确对应指令）上常常差一口气；若靠基于梯度的采样修正去补，每步都要反传，开销很大。DAM 改成在采样末端做一次前馈精炼。它先从噪声预测反解出潜手部表示：
 

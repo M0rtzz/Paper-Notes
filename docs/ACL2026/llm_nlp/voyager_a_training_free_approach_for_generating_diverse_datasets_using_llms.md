@@ -47,15 +47,15 @@ Voyager 输入一个任务 prompt $p$、目标数据集大小 $l$、边际增益
 外层循环结束一批 explorer 后，算法用 DPP 从候选 anchor 中采样 $k$ 个点，保持 anchor set 小而多样；再用 DPP 从候选 explorer 中采样 $b$ 个 prompt，保证后续探索方向不集中。数据集达到目标大小 $l$ 或迭代到 $T$ 后停止。
 
 ### 关键设计
-**1. 用 determinant / volume 表示数据集多样性：把"多样"变成一个能优化的标量。**
+**1. 用 determinant / volume 表示数据集多样性：把"多样"变成一个能优化的标量**
 
 "多样性"本身是个模糊的诉求，得先有可计算的目标才谈得上优化。Voyager 对样本集合构建相似度矩阵，让子集 $S$ 服从 DPP 概率 $P(S) \propto \det(K_S)$——样本向量彼此高度相似时矩阵体积塌缩、determinant 很小，样本张成更大空间时 determinant 更大，于是"多样"就等价于"把这个体积撑大"。作者进一步给出与有效秩指标的近似联系 $V \approx n^2 D^{1/n}/C$（$D$ 为 determinant、$C$ 为 trace），把它和评测常用的 Vendi Score 挂上钩，说明抬高 determinant 确实对应着抬高有效秩与多样性，而不只是几何上的体积游戏。
 
-**2. 用固定大小 anchor set 近似全局目标：把整库的高阶 determinant 计算压到常数规模。**
+**2. 用固定大小 anchor set 近似全局目标：把整库的高阶 determinant 计算压到常数规模**
 
 直接在最终数据集的相似度矩阵上最大化 determinant 不可行，最大体积子矩阵问题本身就很难，而数据集越长每步计算越贵。Voyager 不去算整库，而是维护一个由 k-DPP 采样、始终保持代表性与高体积的 anchor set，相当于一个小而多样的"蓄水池"，近似刻画当前数据集已经覆盖的区域；候选样本只需相对这个 anchor set 计算边际体积增益。这样计算量就从随数据集规模增长，降到只与 anchor 大小 $k$ 有关——缓存逆矩阵后边际增益可在 $O(k^2)$ 内算出。
 
-**3. 用 textual gradients 更新 explorer prompts：让被拒样本反过来指出"下一步该往哪探"。**
+**3. 用 textual gradients 更新 explorer prompts：让被拒样本反过来指出"下一步该往哪探"**
 
 DPP 只提供"留谁、弃谁"的选择压力，却不会自己长出新的语义方向，光靠它筛会一直卡在相似区域。Voyager 把被拒样本看作"当前 prompt 产出的样本落在已有 anchor 附近"的证据，让一个 LLM-judge 分析 prompt、rejected samples 与 anchors，用自然语言给出"怎么改 prompt 才能生成更不同的样本"的建议，再由另一个 LLM 据此改写 prompt、得到后继 explorer。这相当于把每一次拒绝都翻译成 prompt 级别的搜索梯度，既不需要参数训练、也适用于闭源 LLM，正好补上 DPP 缺的那一半——方向。
 

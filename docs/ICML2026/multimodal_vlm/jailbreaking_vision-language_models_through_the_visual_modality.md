@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. Visual Cipher（视觉密码）：把有害指令编成图形序列，逼模型先解码再执行。**
+**1. Visual Cipher（视觉密码）：把有害指令编成图形序列，逼模型先解码再执行**
 
 文本端的关键词会触发 refusal，所以这套攻击干脆把指令从文本里抹掉、藏进图形。具体做法是把"写一封匿名死亡威胁信"等指令做 word-level 分词，每个唯一词分配一个由形状 + 颜色 + 内部标记定义的图形 glyph 或语义中性物体图，生成两张图——legend（图形到词的字典，含 distractor 干扰项）和 sentence（左到右排列的图形序列）；Best-of-5 时变化 glyph 分配与图例排序。对照基线 Textual Cipher 用同样结构但把图形换成无意义文本如 "Brimova"、"Felochi"。
 
 之所以有效，是因为它把"理解→执行"拆成两步并强制视觉解码：文本通道完全无害、绕开了关键词触发的 refusal，而图形字符是 OCR-free 的，连基于排版渲染的过滤器（如 FigStep 针对的那类）都失效。实验里它把 Claude-Haiku-4.5 的 ASR 从 textual 的 10.7% 推到 40.9%。
 
-**2. Visual Object/Text Replacement（视觉物体/文本替换）：剥离有害名词但保留语义重建所需的全部上下文。**
+**2. Visual Object/Text Replacement（视觉物体/文本替换）：剥离有害名词但保留语义重建所需的全部上下文**
 
 这一类专门测"模型能否用 in-context evidence 完成语义覆写"。物体替换先用 REVE 文生图生成"有害物体出现在真实场景"的 base image，再局部编辑只把目标物换成 banana / carrot / water bottle / broccoli（固定字典避免变量混淆），而布局、affordance、交互线索全部不动；文本替换则保留字体、版式、文化语境（书封、海报等）。模型被告知"把 $X_i$ 当作图像上下文所暗示的概念"，再回答中立化后的 HarmBench 提示，每个概念配 3 张图以抵消生成噪声。
 
 关键在于把有害名词从图像表面剥掉、却保留了语义重建所需的全部上下文——这是 Yona et al. (2025) 文本 in-context representation hijacking 的视觉版，且实验显示视觉版效果更强（Qwen 对 Visual Text Replacement 尤其敏感，因为它依赖文化语境推断）。
 
-**3. Visual Analogy Riddle（视觉类比谜题）：把有害意图拆散到多个单独无害的组件里。**
+**3. Visual Analogy Riddle（视觉类比谜题）：把有害意图拆散到多个单独无害的组件里**
 
 最隐蔽的一类把意图藏在"组合性"里。每个目标概念被编码成一个 3 行视觉类比谜题（如 a:b :: c:?），模型必须先解出每行的 ? 才能组合出真正意图；谜题文本模板用 Grok-4.1-fast 生成、Gemini-2.5-flash-image 渲成图，每 $X_i$ 取 top-3 候选谜题，攻击时穷举组合，任一组合让评判员判 compliance 即算成功。
 

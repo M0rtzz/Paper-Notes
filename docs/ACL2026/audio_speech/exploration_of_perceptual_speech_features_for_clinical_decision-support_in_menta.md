@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 感知可解释的多组特征体系：把“怎么说”和“说什么”都拆成医生能读懂的行为维度。**
+**1. 感知可解释的多组特征体系：把“怎么说”和“说什么”都拆成医生能读懂的行为维度**
 
 心理健康相关的表达可能同时藏在韵律停顿和语义内容里——只看文本会漏掉停顿、音质和语调，只看音频又会漏掉语义连贯、自我指称、负性词和句法复杂度。所以本文不直接用不可解释的 embedding，而是把每段语音和转写抽成 82 个可命名的标量特征。声学侧有 pitch、intensity、jitter、shimmer、HNR、ZCR、pause、phonation/articulation rate、rhythm、entropy，外加 HuBERT 情绪模型给出的情绪相关特征；文本侧有 TTR、MATTR、Brunet、Honore、词性/形态多样性、句法深度、依存图指标、Sentence-BERT 连贯性、VADER 情感极性、讽刺概率。每个特征都对应一个具体的说话行为，医生看到“shimmer 偏高、停顿变多”远比看到“第 37 维激活”更有临床意义。
 
-**2. 统计检验与 XGBoost 的双层分析：同时回答“哪些特征组间显著”和“哪些特征非线性可预测”。**
+**2. 统计检验与 XGBoost 的双层分析：同时回答“哪些特征组间显著”和“哪些特征非线性可预测”**
 
 只做显著性检验会漏掉特征之间的交互，只看分类准确率又说不清模型到底依据什么，本文把两者叠起来用。第一层先按临床阈值把样本分成两组（STRESSID 的 stress/non-stress、DAIC-WOZ 的 PHQ-8、REAL 的 PHQ-9/GAD-7/ASRS cutoff），做独立样本 t-test 并用 Benjamini-Hochberg FDR 修正多重比较；第二层训练 XGBoost 捕捉非线性组合，但始终把它当作“特征级分析工具”而非黑盒诊断器。这样既保留了 p 值的统计可读性，又能看到单一检验抓不到的组合模式。
 
-**3. SHAP/LIME 与特征组消融：让多种解释方法互相印证候选指标。**
+**3. SHAP/LIME 与特征组消融：让多种解释方法互相印证候选指标**
 
 在医疗场景里，“模型为什么这样判”与“判得准不准”同样重要。本文用 XGBoost gain、SHAP summary 和聚合后的 LIME 三套解释共同给特征排序，再做特征组消融——一次只保留 prosodic/fluency、voice quality、lexical、syntactic、semantic、psycholinguistic 其中一个组，比较跨数据集的 AUC-ROC 趋势。如果几种相互独立的解释方法都指向相近的 jitter、shimmer、pause、负性情感、重复图结构，这些线索作为候选临床指标的可信度就更高，也更经得起后续审计。
 

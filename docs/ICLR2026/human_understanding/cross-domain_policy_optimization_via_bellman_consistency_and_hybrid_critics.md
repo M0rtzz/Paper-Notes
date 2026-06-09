@@ -49,15 +49,15 @@ Q Avatar 把跨域迁移拆成"先量化、再混合"两步：用一个 normaliz
 
 ### 关键设计
 
-**1. 跨域 Bellman 一致性：用一个误差量化"源域知识到底能不能搬"。**
+**1. 跨域 Bellman 一致性：用一个误差量化"源域知识到底能不能搬"**
 
 CDRL 最棘手的地方在于事先无从判断源域模型迁过来是帮忙还是添乱。Q Avatar 的破题点是把"可迁移性"翻译成一个可计算的量——跨域 Bellman 误差 $\epsilon_{\text{cd}}(s,a;\phi,\psi,Q_{\text{src}},\pi) = |Q_{\text{src}}(\phi(s),\psi(a)) - r_{\text{tar}}(s,a) - \gamma \mathbb{E}_{s',a'}[Q_{\text{src}}(\phi(s'),\psi(a'))]|$，其中 $\phi: \mathcal{S}_{\text{tar}} \to \mathcal{S}_{\text{src}}$、$\psi: \mathcal{A}_{\text{tar}} \to \mathcal{A}_{\text{src}}$ 是把目标域状态、动作映回源域的域间映射。直觉是：如果源域 Q 函数经映射后还能在目标域上满足 Bellman 方程（误差小），说明它对目标域的奖励和动态是自洽的、可信赖的；误差大则说明这套知识在目标域里"水土不服"。这个度量不依赖额外的环境交互或人工先验，纯靠数据本身就能算出来，为后面的自适应加权提供了客观依据。
 
-**2. Q Avatar 混合 Critic：用无超参权重让两边 Q 函数自动让位。**
+**2. Q Avatar 混合 Critic：用无超参权重让两边 Q 函数自动让位**
 
 有了可迁移性度量，剩下的问题是怎么用它。每步策略更新时，Q Avatar 把目标域自学的 critic 和搬过来的源域 critic 线性混合成 $Q^{(t)}_{\text{avatar}} = (1-\alpha(t)) Q^{(t)}_{\text{tar}} + \alpha(t) Q_{\text{src}}(\phi^{(t)}, \psi^{(t)})$。关键在权重 $\alpha(t)$ 完全自适应、不含任何待调超参——它由跨域 Bellman 误差和目标域自身 TD 误差的倒数之比决定：$\alpha(t) = \frac{1/\|\epsilon_{\text{cd}}\|_{d^{\pi^{(t)}}}}{1/\|\epsilon_{\text{td}}^{(t)}\|_{d^{\pi^{(t)}}} + 1/\|\epsilon_{\text{cd}}\|_{d^{\pi^{(t)}}}}$。当源域 Q 的 Bellman 误差比目标域 TD 误差还小时（说明源域知识此刻更可信），$\alpha$ 自动变大、多吃源域；反之 $\alpha$ 趋近于 0，退化成几乎纯靠目标域学习。这种"谁误差小听谁的"的设计正是负迁移防护的来源：作者给出的次优性差距上界为 $O\left(\frac{\log|\mathcal{A}|}{\sqrt{T}(1-\gamma)}\right) + C \cdot \min\{\|\epsilon_{\text{td}}^{(t)}\|, \|\epsilon_{\text{cd}}\|\}$，第二项取的是两种误差的较小者，意味着无论源域模型质量多差，混合 critic 的表现也不会比纯目标域学习更糟。
 
-**3. Normalizing Flow 域间映射：用可逆流稳定地学跨域对应关系。**
+**3. Normalizing Flow 域间映射：用可逆流稳定地学跨域对应关系**
 
 前两个组件都依赖映射 $\phi$、$\psi$，但状态-动作空间维度不同时，这套对应关系本身也得学。Q Avatar 用 normalizing flow 来参数化 $\phi$ 和 $\psi$，训练目标就是最小化跨域 Bellman 损失，让映射朝着"使源域 Q 在目标域更自洽"的方向收敛。选 flow 而非普通编码器-解码器的好处是其结构天然可逆、训练稳定，避免了对齐过程中常见的退化解。值得一提的是，这一层是可替换的——Q Avatar 的可迁移性度量和混合机制并不绑定具体映射方法，flow 只是展示框架与现有域间映射工作兼容的一个实例。
 

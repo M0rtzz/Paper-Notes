@@ -45,15 +45,15 @@ OT-Bridge Editor 把"在冠脉造影上编辑一段血管狭窄"重写为"在血
 
 ### 关键设计
 
-**1. 可行集 + mask-aware 传输代价：把"哪能动、哪不能动"写进 OT 而非靠软引导。**
+**1. 可行集 + mask-aware 传输代价：把"哪能动、哪不能动"写进 OT 而非靠软引导**
 
 ControlNet、SDEdit 这类做法用 cross-attention 或加噪重建施加条件，本质是"软指挥"，没法保证非编辑区一像素不变——差一根分支就污染后续检测。本文索性把约束硬编码进运输问题：先定义硬可行集 $\mathcal{F}=\{\mathbf{x}\mid \mathbf{x}\odot\bar{\mathbf{M}}=\mathbf{x}_0\odot\bar{\mathbf{M}},\ \mathcal{S}(\mathbf{x}\odot\mathbf{M})=\mathbf{S}^\star\}$，明文要求非编辑区逐像素等于原图、编辑区几何描述子等于目标；再把代价写成 mask 感知的形式 $c(\mathbf{x},\mathbf{y})=\|(\mathbf{x}-\mathbf{y})\odot\bar{\mathbf{M}}\|_2^2+\lambda_M\|(\mathbf{x}-\mathbf{y})\odot\mathbf{M}\|_2^2$，区分对待保护区和编辑区的位移代价。整体优化目标是熵正则化的运输 $\min_\pi\langle\mathbf{C},\pi\rangle+\varepsilon\,\mathrm{KL}(\pi\|\mathbf{K})$ s.t. $\pi\in\mathcal{Q}$。约束从"建议"升级成"数学定义"，"画串"在源头就被堵死。
 
-**2. Schrödinger Bridge 作动态求解器：把脆弱的高维 OT 化成可分步采样的桥过程。**
+**2. Schrödinger Bridge 作动态求解器：把脆弱的高维 OT 化成可分步采样的桥过程**
 
 直接在像素空间解 entropic OT 又贵又数值不稳，没法落地。SB 的好处是把"两端分布匹配"等价转成"轨迹密度匹配"：在轨迹空间求 $P^\star=\arg\min_{P:P_0=\mu_0,P_1=\mu_1}\mathrm{KL}(P\|R)$，其中 $R$ 是参考扩散链。于是采样从 $\mathbf{s}_0=\mathbf{x}_0$ 起步，按 $\tilde{\mathbf{s}}_{k+1}\sim p^\star(\mathbf{s}_{k+1}\mid\mathbf{s}_k)$ 滚动 $T=50$ 步即可。这一步不只是为了能算——它把整条生成路径"摊开"暴露出来，让后面 GPG 可以在每一步插监督，这是软引导扩散给不了的接口。
 
-**3. GPG 路径级几何投影监督：每一步把状态推回几何可行集，而非只在终点纠偏。**
+**3. GPG 路径级几何投影监督：每一步把状态推回几何可行集，而非只在终点纠偏**
 
 只在终点加几何约束等于"软指挥"，桥过程中段一旦漂歪，到终点再硬拉代价极高，像素级精度根本守不住。GPG 的做法是每步先采样 $\tilde{\mathbf{x}}_{k+1}\sim p^\star$，再立刻投影 $\mathbf{x}_{k+1}\leftarrow\Pi_\mathcal{F}(\tilde{\mathbf{x}}_{k+1})$，让轨迹始终待在几何通道里。投影本身解一个小优化 $\Pi_\mathcal{F}(\mathbf{x})=\arg\min_\mathbf{y}\mathcal{L}_{\text{geo}}(\mathbf{y})+\lambda_{\text{out}}\mathcal{L}_{\text{out}}(\mathbf{y})$：几何项 $\mathcal{L}_{\text{geo}}=\mathcal{D}_{\text{geo}}(\mathcal{S}(\mathbf{y}\odot\mathbf{M}),\mathbf{S}^\star)$ 用符号距离变换（SDT）算边界距离 $\mathcal{D}_{\text{geo}}=\frac{1}{|B_M|}\sum_\mathbf{u}|\phi^\star(\mathbf{u})|$，给出平滑可微的几何梯度、避开硬边界的梯度爆炸；外部项 $\mathcal{L}_{\text{out}}=\|(\mathbf{y}-\mathbf{x}_0)\odot\bar{\mathbf{M}}\|_2^2$ 则压住非编辑区的漂移。实现上每 5 步投影一次，$\lambda_{\text{out}}=10,\lambda_{\text{geo}}=1$。这正是论文最关键的贡献——消融里去掉它，bDice 从 0.895 直接掉到 0.765。
 

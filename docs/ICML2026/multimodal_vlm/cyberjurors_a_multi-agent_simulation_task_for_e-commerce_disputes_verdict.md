@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. Individual Verdict Chain-of-Thought（IV-CoT）：把单陪审员推理拆成四阶段，核心是"选证-感知"主动迭代。**
+**1. Individual Verdict Chain-of-Thought（IV-CoT）：把单陪审员推理拆成四阶段，核心是"选证-感知"主动迭代**
 
 MLLM 在超长上下文里"被动一次性感知"会把关键视觉线索（如视频里 2% 电量的闪烁指示灯）淹没在十几张图、近一段视频的冗余证据中。IV-CoT 把单陪审员的推理拆成四步，让它主动去捞线索。阶段 I 焦点抽取 $\boldsymbol{O}_{\text{I}}:\{F,F^b,F^s\}=\mathcal{F}_{\text{extract}}(d,\bm{T}^b,\bm{T}^s)$ 先定争议焦点和双方诉求；阶段 II 线索定位是最关键的创新，把一次性多模态理解换成 "Select-Perceive" 迭代——每轮先 $\bm{e}^b_{*,t}=\mathcal{F}_{\text{select}}(\boldsymbol{O}_{\text{I}},\bm{T}^b-\bm{T}^b_{select})$ 挑出最可能含关键线索的一段证据，再 $\{K_t^b,A_t^b\}=\mathcal{F}_{\text{perceive}}(\boldsymbol{O}_{\text{I}},\bm{e}^b_{*,t},\boldsymbol{O}_{t-1}^b)$ 只在这一段上做细粒度感知，循环到 $T_{max}$ 轮，买卖双方各自独立迭代以免证据互扰；阶段 III 对抗分析 $\{\Delta,\Delta^b,\Delta^s\}=\mathcal{F}_{\text{analyze}}(\boldsymbol{O}_{\text{I}},\boldsymbol{O}_{\text{II}})$ 找出两方线索的逻辑冲突；阶段 IV 终局裁决 $\{\hat y_k,J_k\}=\mathcal{F}_{\text{judge}}(\cdot)$ 给出判决和可追溯理由。这样把上下文压在每轮一段证据上，既绕开窗口瓶颈，又把"焦点→证据"的因果链显式记进 $\boldsymbol{O}_{\text{II}}$。消融显示 Select-Perceive 迭代比单步选证多带来 3.28% Acc，是 IV-CoT 内部贡献最大的设计。
 
-**2. Jury Consensus Verdict（JCV）：用 $T$ 轮异质陪审员社交仿真把单模型偏见摊平。**
+**2. Jury Consensus Verdict（JCV）：用 $T$ 轮异质陪审员社交仿真把单模型偏见摊平**
 
 单个 LLM 在缺乏成文法约束时会复读训练数据里的偏见（如系统性偏向卖家）。JCV 把裁决建模成有向社交网络 $\boldsymbol{G}$ 上的多轮讨论：每个陪审员 $a_k=\{\boldsymbol{P}_k,\boldsymbol{M}_k\}$ 由人格 $\boldsymbol{P}_k$ 加记忆 $\boldsymbol{M}_k$ 组成，第 $t$ 轮的决策同时依赖案件、人格、记忆、邻居上一轮判词 $\boldsymbol{R}_{k,t}=\{J_{j,t-1}\mid e_{k,j}\in\boldsymbol{E}\}$ 和全局集体摘要 $\boldsymbol{S}_t=\mathcal{F}_{\text{sum}}(d,\bigcup_j J_{j,t-1})$，即 $\hat y_{k,t},J_{k,t}=\mathcal{F}_{\text{judge}}(\boldsymbol{D},\boldsymbol{P}_k,\boldsymbol{M}_k,\boldsymbol{R}_{k,t},\boldsymbol{S}_t)$，最后多数投票 $\hat y=\mathbb{I}(\hat y^s>\hat y^b)$。让 $N$ 个异质陪审员沿网络局部交换意见、再用全局 summary 做宏观引导，既保留独立推理又能逼外围陪审员重审极端立场，决策更稳。
 
-**3. Verdict Precedent：把普通法的 Stare Decisis 注入 agent 记忆。**
+**3. Verdict Precedent：把普通法的 Stare Decisis 注入 agent 记忆**
 
 电商裁决没有刚性法条，只有灵活的平台惯例，模型缺指引就容易暴露偏见。作者借 Stare Decisis 原则用历史判例补这个空白：构造 Precedent Base $\boldsymbol{B}=\langle\boldsymbol{H},\boldsymbol{N}\rangle$（$\boldsymbol{H}$ 是历史判例，$\boldsymbol{N}$ 是从中蒸馏的显式裁决指引），新案件先语义检索 $\boldsymbol{H}_{\text{guide}},\boldsymbol{N}_{\text{guide}}=\mathcal{F}_{\text{retrieve}}(\boldsymbol{D},\boldsymbol{B})$ 找最相关判例，再按 $\boldsymbol{M}_k=\{\text{Rank}(\Phi(\boldsymbol{P}_k,\boldsymbol{N}_j))\le K\}$ 给每个陪审员挑 top-$K$ 条与其人格最匹配的指引写进记忆。判例在这里不只替代"法条"，还做了个性化——不同人格分到不同 norm 子集，既模拟现实陪审团成员关注点的天然差异，又保证整体围绕同一批判例展开，兼顾公平与可解释。
 

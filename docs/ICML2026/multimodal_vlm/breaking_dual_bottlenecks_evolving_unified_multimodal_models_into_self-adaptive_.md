@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 层级 escalation 数据 pipeline（Analyzer ⇋ Generator）：让训练样本自己示范"按复杂度选模式"。**
+**1. 层级 escalation 数据 pipeline（Analyzer ⇋ Generator）：让训练样本自己示范"按复杂度选模式"**
 
 模型要学会自适应选模式，前提是训练数据里就分门别类地演示了三种模式。作者搭了一条自动升级流水线：用 Qwen3-VL-235B 一人分饰"评审 + 诊断医 + 规划师"，用 Gemini-3-Pro-Image 当生成器。每条 X2I 数据先直接生成、按"指令/一致性/质量/常识"四维打分，通过的归为 *Direct*；不通过就进最多 3 轮 self-reflection（Analyzer 写反思 prompt、Generator 重画），修好了归为 *Self-Reflection*；3 轮还不行就让 Analyzer 诊断病因——若是"prompt 太复杂"就升级到 *Multi-step*（拆子任务逐步执行 + 中间评估），若是"缺领域知识"这类没救的就直接丢。多步成功后还做一次 trajectory pruning，把前面失败的反思裁掉，只留干净的"先直接试一次失败 → 拆子任务 → 子步骤逐图"轨迹。最后两名人工复核，得到 5 万条交错数据。这样简单 prompt 学到的就是直接出图，中等的学到反思纠错，复杂的学到显式拆解。
 
-**2. Selective Loss Masking 的 SFT：失败中间图只当"反思上下文"，不当"模仿目标"。**
+**2. Selective Loss Masking 的 SFT：失败中间图只当"反思上下文"，不当"模仿目标"**
 
 多步轨迹里夹着大量失败的中间图，如果 SFT 的自回归 NLL 对这些图也算损失，等于在教模型"如何生成低质量图"，会直接反噬生成保真度。作者的对策是让损失只落在被选中的子序列 $\mathcal{O}$ 上：Direct 模式只算 $\{G_1, E_1\}$；Self-Reflection 模式只算到最后一次诊断 $E_{K-1}$、反思 prompt $R_{K-1}$ 和最终成功图 $G_K, E_K$，前面所有失败中间图全部 mask；Multi-step 模式算 $E_1$ 加完整规划序列 $\{S_i, G_i, E_i\}$。失败信息因此只以文本形式进入上下文供模型"反思"，而像素层面的伪影不会被当成生成目标去模仿。
 
-**3. GRPO + Step-wise 推理奖励 + Intra-group 复杂度惩罚：把"用最少步赢"写进 RL 信号。**
+**3. GRPO + Step-wise 推理奖励 + Intra-group 复杂度惩罚：把"用最少步赢"写进 RL 信号**
 
 SFT 教会了语法，但"什么时候该多想"是策略问题，得靠 RL。组合奖励 $\mathcal{R}_{\text{total}}=\alpha_1\mathcal{R}_o+\alpha_2\mathcal{R}_f+\alpha_3\mathcal{R}_s$ 里，$\mathcal{R}_o$ 是四维 outcome 评分的加权平均，$\mathcal{R}_f$ 是结构合法的二值项，$\mathcal{R}_s=\frac{1}{T}\sum_t \text{Analyzer}(\text{text}_t)$ 对每段中间文本（失败分析、反思 prompt、子步骤分解）单独打分，给出稠密的推理奖励。但光加 outcome 奖励会诱导模型"反正多步分更高"，陷入 over-reasoning。最关键的一招是 intra-group complexity penalty：在同一组采样轨迹里挑出"奖励接近最高"（落在 $\epsilon$ 阈值内）的子集，按图片数缩放——奖励里乘进 $N_{\text{img}}^*/N_{\text{img}}^i$，用更少图达到等效效果的轨迹被进一步加分。于是"用最少步赢得同样分数"成了隐式优化目标，简单 prompt 自然留给 Direct、复杂 prompt 才动用 Multi-step。消融里去掉这一项，平均生成图数从 1.56 暴涨到 2.73（+75%）而质量几乎不涨，正说明它在压制过度推理。
 

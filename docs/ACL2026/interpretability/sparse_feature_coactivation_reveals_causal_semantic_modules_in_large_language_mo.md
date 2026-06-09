@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 跨层 feature coactivation 图：用“一起激活”而非“描述文本”定义模块。**
+**1. 跨层 feature coactivation 图：用“一起激活”而非“描述文本”定义模块**
 
 单个 SAE feature 的自动描述并不可靠——论文里 Spain component 的描述未必出现 Spain，translation language component 甚至会被标成 programming，所以纯文本描述无法支撑模块发现。方法转而直接利用模型内部动态：每层取 top activated features，节点记为 $(\ell,i)$；若相邻层两个 feature 在 prompt token 维度上的激活相关系数 $\rho>0.9$，就建立一条有向边。这样连出来的图捕捉的是“这些 feature 是否在同一语境中一起工作”，从而把离散 feature 组织成可解释的跨层网络。
 
-**2. 稀疏性剪枝与 component 抽取：滤掉通用计算，留下任务特异的单义模块。**
+**2. 稀疏性剪枝与 component 抽取：滤掉通用计算，留下任务特异的单义模块**
 
 高密度 feature 常承载语法或通用计算，若直接纳入会让 component 不可解释，所以先用 Neuronpedia 的 activation density 只保留 $d_{\ell,i}\leq0.01$ 的 sparse features 并去掉孤立点，再对稀疏图求弱连通分量。为强调 context consistency，concept component 取同一概念跨多个关系所得 component 的交集，relation component 取同一关系跨多个概念所得 component 的交集——这样 China component 才能在 capital、currency、language 等 prompt 中保持稳定，而不是每个 prompt 各自漂移。
 
-**3. 因果干预与组合 steering：只有能被操控并改变输出的才算 causal module。**
+**3. 因果干预与组合 steering：只有能被操控并改变输出的才算 causal module**
 
 仅仅与任务相关还不够，方法要求 component 能被干预并造成可预测的输出变化。具体做法是对 in-prompt component 做 ablation（将其 SAE feature activation 置零，再用 decoder 重构后继续前向），对 target component 做 amplification（按观测到的最大激活比例提升 activation），成功标准是输出转向目标概念、目标关系或二者的组合。组合 steering 进一步检验概念和关系能否分开操控、自由拼装（如把“中国的首都”改成“尼日利亚的货币”），而不是缠在同一条不可分解的方向上。
 

@@ -45,11 +45,11 @@ HeteroRAG 把“异构”贯彻到三个串联模块里。第一块是 **MedAtla
 
 ### 关键设计
 
-**1. Modality-specific CLIPs（ModCLIPs）：每个模态配一个专属检索器，而不是一个 CLIP 通吃。**
+**1. Modality-specific CLIPs（ModCLIPs）：每个模态配一个专属检索器，而不是一个 CLIP 通吃**
 
 医学影像在不同模态下的视觉统计差异极大——X-ray 的灰度、眼底彩照、病理 H&E 几乎是三种世界，单一“通用医学 CLIP”学出的特征空间不够分化，跨模态噪声还会互相干扰，这正是现有医学 CLIP retrieval recall 偏低的根源。HeteroRAG 干脆从 BiomedCLIP 初始化、对每个模态各分出 2000 dev / 2000 test 后，用剩下的全部样本（Radiology 1.10M、Oph 0.11M、Pathology 1.51M）单独做对比学习，训练量比“只在几个公开数据集训练集上微调”大了一个数量级。结果三个 ModCLIPs 在 image→text recall@5 上分别冲到 79.40 / 47.55 / 77.35，相对 FactMM-RAG 的 44.25（Rad）、MMed-RAG 的 19.25（Oph）/30.20（Pat）翻倍以上——在垂直域里，“分模态训”几乎总值得做。
 
-**2. Multi-Corpora Query Generator（MQG）：给每个语料“对症”生成检索 query。**
+**2. Multi-Corpora Query Generator（MQG）：给每个语料“对症”生成检索 query**
 
 PubMed 论文吃的是科学术语，Wikipedia 要通用百科表述，临床指南认疾病/操作命名，知识图谱要 “term, relation” 结构——硬用一个 multimodal query 拉所有语料，就像拿一把钥匙开五把不同的锁，这也是 MIRA 那种 zero-shot rewriting 搜不准的原因。MQG 把“按语料风格生成查询”显式参数化训练：对每个 $(v,t)$ 让 expert MLLM（Lingshu-32B AWQ）在每个语料源上探索性生成 6 个候选查询，再让同一个 expert 当 judge 评判每个 query 检回的文档是否支撑参考答案（这套 VLM-as-a-judge 在 500 样本人工核对上 acc=0.836、F1=0.855）。被判支撑的归 $Q_w$、不支撑的归 $Q_l$，然后两段训 MQG：先 SFT 学会生成好查询 $\mathcal{L}_{\text{SFT}}=-\mathbb{E}\log\mathcal{M}_\theta(Q_w\mid v,t)$，再用 DPO 把好坏查询拉开
 
@@ -57,7 +57,7 @@ $$\mathcal{L}_{\text{DPO}}=-\log\sigma\Big(\beta\log\tfrac{\mathcal{M}_\theta(Q_
 
 比起 prompt 级的 zero-shot rewriting，这是把“哪种 query 配哪种语料”变成可学习的行为，强出一档。
 
-**3. Heterogeneous Knowledge Preference Tuning（HKPT）：一个 DPO loss 同治三种“知识不对齐”病。**
+**3. Heterogeneous Knowledge Preference Tuning（HKPT）：一个 DPO loss 同治三种“知识不对齐”病**
 
 检索准了不代表用得对——模型常犯三种病：忽略图像直接抄报告、不会用外部知识、或对噪声知识不够鲁棒。以前 MMed-RAG 类只治模态对齐、K-LLaVA 类只治文档利用，没人把三种一起管。HKPT 用反事实数据构造把它们统一成 chosen/rejected 偏好对。跨模态那套 $\mathcal{D}_{cm}$：检索与 $v$ 同模态训练集中最不相似的图当 $v^*$，若 $\mathcal{M}(v,t,K)=y$、$\mathcal{M}(v^*,t)\ne y$、却 $\mathcal{M}(v^*,t,K)=y$，说明模型用错图也能答对、纯靠抄 $K$ 不看图，于是把 $(v,t,K)$ 设为 chosen、$(v^*,t,K)$ 设为 rejected 逼它看图。多源那套 $\mathcal{D}_{mk}$：对 $k\in\{\{k_r\},\{k_d\},\{k_r,k_d\}\}$ 各查两步——利用度上，若 $\mathcal{M}(v,t,K)=y$ 但 $\mathcal{M}(v,t,K\setminus k)\ne y$，说明 $k$ 关键，chosen 是带 $K$ 的正答；鲁棒性上，若 $\mathcal{M}(v,t,K\setminus k)=y$ 但 $\mathcal{M}(v,t,K)\ne y$，说明 $k$ 是噪声，chosen 改成“忽略 $k$ 的正答” $y_w$。所有偏好对最后一并扔进
 

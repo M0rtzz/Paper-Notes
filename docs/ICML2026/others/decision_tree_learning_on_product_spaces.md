@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 乘积分布下的影响力 + cost potential：把"算法每一步在做什么"翻译成一个单调下降的标量，并连上 error ≤ cost。**
+**1. 乘积分布下的影响力 + cost potential：把"算法每一步在做什么"翻译成一个单调下降的标量，并连上 error ≤ cost**
 
 ITCS'20 的分析重度依赖 uniform distribution + Boolean Fourier，换到非均匀就失效。本文不依赖 Fourier 系数，只用概率定义的影响力 $\mathrm{Inf}^\mu_i(f)=\Pr_{x\sim\mu}[f(x)\neq f(x^{(i)})]$（$x^{(i)}$ 是把第 $i$ 位按 $\mu_i$ 再抽样），leaf score 定为 $\mathrm{Score}(v)=p_v\cdot \max_i \mathrm{Inf}_i(f_v)$，tree cost 定为 $\mathrm{cost}(T^\circ)=\sum_{v\in\mathrm{leaves}} p_v\cdot \mathrm{Inf}(f_v)$。Lemma 4.1 给出 error ≤ cost 的连接，Lemma 4.3 证明分裂叶子 $v$ 后 cost 严格减少恰好 $\mathrm{Score}(v)$——这就把"贪心算法在做什么"翻译成了"cost 以什么速率下降"。因为整套量都只靠概率定义和 product 结构，分析才能自然延伸到任意乘积分布。
 
-**2. 两深度参数混合驱动的上界：分开追踪最大深度 $D_\mathrm{opt}$ 和平均深度 $\Delta_\mathrm{opt}$，在非均匀分布下拿到指数级更紧的界。**
+**2. 两深度参数混合驱动的上界：分开追踪最大深度 $D_\mathrm{opt}$ 和平均深度 $\Delta_\mathrm{opt}$，在非均匀分布下拿到指数级更紧的界**
 
 均匀分布下 $D_\mathrm{opt}=\Delta_\mathrm{opt}$ 二者退化，先前工作没必要分开；但非均匀下二者可差 exponentially，分开追踪才是收紧的关键。$D_\mathrm{opt}$ 通过 Lemma 4.2 的 $\mathrm{Inf}(f)\le D(T)\cdot \mathrm{Var}(f)$ 进入分析，$\Delta_\mathrm{opt}$ 通过 O'Donnell 等人的 max-influence 不等式 $\max_i \mathrm{Inf}_i(f)\ge \mathrm{Var}(f)/\Delta(T)$ 进入；两个 score lower bound（Lemma 4.4 用于 cost ≤ $\epsilon D_\mathrm{opt}$ 阶段、Lemma 4.5 用于 cost ≥ $\epsilon D_\mathrm{opt}$ 阶段）分别给两阶段的步数上界，求和得到混合界 $\max\bigl((e\Delta_\mathrm{opt}/(\epsilon D_\mathrm{opt}))^{\Delta_\mathrm{opt} D_\mathrm{opt}}, e^{\Delta_\mathrm{opt} D_\mathrm{opt}}\bigr)$。在 path-like 树（$\Delta_\mathrm{opt}$ 常数、$D_\mathrm{opt}=n$）时 $\Delta_\mathrm{opt} D_\mathrm{opt}$ 远小于 $D_\mathrm{opt}^2$，比"只用 $D_\mathrm{opt}$"的界指数级更优；balanced 树（$D_\mathrm{opt}=\Delta_\mathrm{opt}=\log s$）时上界为 $s^{\log s\log(e/\epsilon)}$，也略优于 Blanc et al.。
 
-**3. Parameter-free + 鲁棒近似实现：不需要预知 $s$ 或 $D_\mathrm{opt}$ 就能运行，且只要选到 ¼-近似最优叶子就够。**
+**3. Parameter-free + 鲁棒近似实现：不需要预知 $s$ 或 $D_\mathrm{opt}$ 就能运行，且只要选到 ¼-近似最优叶子就够**
 
 先前理论算法都要预知 $s$ 才能定终止条件和超参，工程上没法用。Theorem 5.1 证明只要每步选的叶子满足 $\mathrm{Score}(l')\ge \frac14 \max_l \mathrm{Score}(l)$，上界只退化为指数 $4\Delta_\mathrm{opt} D_\mathrm{opt}$（相当于把 $\Delta$ 当 4 倍），这一容差让 score 可以用样本无偏估计 $\widehat{\mathrm{Score}}(l,i,E_i)=\frac{1}{|E_i|}\sum_{(x,x^{(i)})}\mathbf 1[x,x^{(i)}\to l]\mathbf 1[f(x)\neq f(x^{(i)})]$ 加 Chernoff bound 来落地，每步样本复杂度 $M_S(j,\delta,\epsilon,n)=\frac{12(j+1)n}{\epsilon}\log\frac{4j^2(j+1)n}{\delta}$；终止判据则用 majority-vote ERM 估计 tree error。这是第一份可以直接运行的版本——也顺带解释了为何工程里的 CART/C4.5 在脏数据上仍 work：它们恰好落在这个"¼-近似就够"的鲁棒区间里。
 

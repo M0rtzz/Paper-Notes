@@ -48,7 +48,7 @@ COPEx 把"测试时改约束不用重训"这件事拆成两层：约束感知交
 
 ### 关键设计
 
-**1. 场景树多步 lookahead + 一次性 reparameterization：把 Bellman 递推折成一个可微优化。**
+**1. 场景树多步 lookahead + 一次性 reparameterization：把 Bellman 递推折成一个可微优化**
 
 要做到"非短视 + 约束感知"，最直接的写法是解 Bellman 递推 $V_t(\mathcal{D}_{t-1},z_t) = \max_{x_t}\{\text{EIG}(x_t;\mathcal{D}_{t-1}) + \gamma\mathbb{E}_{y_t}[V_{t+1}]\}$，但这需要在每个候选 trajectory 上嵌套做 posterior 更新和 EIG 估计，对非共轭模型几乎不可行。COPEx 借 Jiang 2020b 的 one-shot tree BO 思路绕开嵌套：预先采一组固定的 base noise $\varepsilon=(\varepsilon_\theta,\varepsilon_y)$，让所有 fantasy 后验样本 $\theta_k^{j_{1:\ell}} = g_\phi(\mathcal{D}_{k-1}^{j_{1:\ell}}, \varepsilon_{\theta,k}^{j_{1:\ell}})$ 和 fantasy 观测 $\tilde y_k = h(x_k, \theta_k, \varepsilon_y)$ 都变成决策变量的确定性函数。这样整棵树的目标
 
@@ -56,7 +56,7 @@ $$\widehat V^{(H)}(\mathbf{X}_{\text{tree}};\varepsilon) = \sum_{\ell=0}^H \gamm
 
 塌缩成单一的非线性规划，用 SLSQP 一次解完，梯度对整棵树都可达。约束则直接挂在变量上——转移约束写进各节点的 $\mathcal{X}(z_k^{j_{1:\ell}})$，预算约束靠 $z$ 累加——而不是塞进策略网络。于是换约束只需改 $\mathcal{X}(z)$ 和 $f$ 两个函数，完全不碰任何网络权重。
 
-**2. 摊销后验网络 + adaptive contrastive EIG 估计器：把 nested expectation 压成几次前向。**
+**2. 摊销后验网络 + adaptive contrastive EIG 估计器：把 nested expectation 压成几次前向**
 
 场景树节点数随 H 指数爆炸，每个节点又要做"posterior 更新 + fantasy 采样 + EIG 估计"三件昂贵的事，naive 算法根本撑不住——而这两件正是 BED 用 EIG 的根本难点（反复后验更新 + nested expectation）。COPEx 用一个混合密度网络 $q_\phi(\theta\mid\mathcal{D})$ 把它们都摊销掉：离线最小化 $-\frac{1}{n}\sum\log q_\phi(\theta_i\mid\mathcal{D}_i)$，从仿真器一次性合成的训练数据里学一个"数据集 → 后验"的映射。在线时，posterior 更新就是评估 $q_{\hat\phi}(\theta\mid\mathcal{D}\cup\{(x,\tilde y)\})$，fantasy 就是先 $\tilde\theta\sim q_{\hat\phi}(\cdot\mid\mathcal{D}_{k-1}^{j_{1:\ell}})$ 再从似然 $p(\cdot\mid x,\tilde\theta)$ 采样。EIG 套 Foster 2020 的 adaptive contrastive 目标
 
@@ -64,7 +64,7 @@ $$\widehat{\text{EIG}}(x;\mathcal{D},\hat\phi) := \mathbb{E}\Big[\log\frac{p(\ti
 
 把昂贵的 nested 期望换成几次 MDN 评估。正是这一步把"在线规划"从理论玩具变成实际可跑的东西。
 
-**3. 摊销策略 $\pi_\psi$ warm-start + 探索/利用混合初始化：用好 prior 替多次 random restart。**
+**3. 摊销策略 $\pi_\psi$ warm-start + 探索/利用混合初始化：用好 prior 替多次 random restart**
 
 高维非凸的场景树优化很容易陷局部解，而强约束又常把可行域推到策略训练分布之外。COPEx 的应对是：对每个 decision 节点 $(t+\ell,j_{1:\ell})$ 直接用预训练的无约束 ALINE 策略给初始化 $x_{t+\ell}^{j_{1:\ell}}\leftarrow \pi_\psi(\mathcal{D}_{t+\ell-1}^{j_{1:\ell}})$；当约束严重偏移可行域、policy 也不知道怎么走时，就同时跑多棵树，一部分用 $\pi_\psi$ 利用、一部分用随机策略探索，取最优。图 3(a) 给了直接证据：单棵 policy-init 树的累计 EIG 比 10 棵 random-init 还高、耗时还更短——一个好的 prior 远比多个 random restart 划算。
 

@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 协作用户模拟器骨架（Collaborative User Simulator）：先给一个会好好说话的"地基"用户。**
+**1. 协作用户模拟器骨架（Collaborative User Simulator）：先给一个会好好说话的"地基"用户**
 
 非协作行为不是凭空冒出来的，而是叠加在一个合作性用户之上。骨架沿用 τ-bench 的 LLM 模拟框架（GPT-4.1-mini），根据用户目标、指令和对话历史生成正常的合作发言，但额外挂了两个保障 goal-alignment 的模块。一是 dialogue state tracker：把用户目标拆成一组信息碎片（information pieces），每轮追踪哪些已传达、哪些还没传达；当模拟器想结束对话但仍有信息没说出口时，强制它继续把遗漏补上。二是 ending verifier：在信息已传达完、但 Agent 还没执行操作或还在等用户确认时，拦住对话不让它过早结束。之所以要这两层兜底，是因为 τ-bench 原始模拟器没有显式的 goal-alignment，一旦叠加非协作干预就容易丢关键信息或提前收尾，让评测结论失真。
 
-**2. 四类非协作行为模块：把 marketing 研究里的顾客失常行为搬进对话。**
+**2. 四类非协作行为模块：把 marketing 研究里的顾客失常行为搬进对话**
 
 四类行为各由独立的 LLM 模块对协作输出做干预（增加 / 替换 / 截断用户发言），而不是简单在 prompt 里描述"你要表现得不耐烦"——后者（即 τ-bench 的 PBUS）被证明几乎打不动 Agent，关键就在于"描述行为"和"产生行为"是两回事。四类行为分别是：
 
@@ -58,7 +58,7 @@ tags:
 - **Impatience（不耐烦）**：在两种场景触发——Agent 显式告知失败、或用户已提供全部信息但目标仍未解决（被视为延迟）。触发时从三种对话行为（恶语谩骂 / 威胁 / 催促）中随机采样，且激活概率随触发次数递增，模拟真实愤怒升级；一旦爆发，后续所有发言都维持愤怒语气。
 - **Incomplete Utterances（不完整表述）**：两种模式——极简表述（通过 LMSYS/WildChat 的 few-shot 示例做风格迁移，把"I want to reserve a train for 2 people"变成"Book train, 2"）和意外截断（随机截断协作发言，dialogue state tracker 将被截断的信息标为未发送，后续轮次重新传达）。
 
-**3. Goal-Alignment 保障系统：保证 Agent 的失败是"扛不住"而不是"没听全"。**
+**3. Goal-Alignment 保障系统：保证 Agent 的失败是"扛不住"而不是"没听全"**
 
 三个机制串起来兜住信息完整性：information sharding 把用户目标拆成原子化信息碎片，dialogue state tracker 逐轮检查每个碎片的传达状态，ending verifier 在对话收尾前再做一次最终校验。整体用 Initial Goal Alignment（IGA）指标量化——τ-bench 上 IGA 达 97.5% 以上。这一层是可信评测的前提：如果非协作行为让用户连必要信息都没说出来，那 Agent 的失败就成了评测缺陷而非鲁棒性问题，结论也就站不住脚了。
 

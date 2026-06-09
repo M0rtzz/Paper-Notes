@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. 结构同构作为科学对齐的可证伪最弱条件：把"表示能否当物理状态用"收紧成可验证的几何陈述。**
+**1. 结构同构作为科学对齐的可证伪最弱条件：把"表示能否当物理状态用"收紧成可验证的几何陈述**
 
 "VFM 学没学到物理结构"本来很模糊。作者用结构同构把它收紧：对任意 regime $\mu\in\mathcal{M}$，存在注入线性映射 $\mathbf{A}\in\mathbb{R}^{d\times m}$ 使 $\mathbf{z}=\mathbf{A}\mathbf{y}+\epsilon_{\mu}(\mathbf{y})$，且残差及其雅可比一致有界：$\sup_\mu \mathbb{E}[\|\epsilon_\mu\|]\le\bar{\epsilon}$，$\sup_\mu \mathbb{E}[\|J_{\epsilon_\mu}\|]\le\bar{\delta}$。命题 2.1 由此导出三条 uniform 误差界 —— **静态保真** $\sup_\mu \mathbb{E}\|\mathbf{y}-L\mathbf{z}\|\le\|L\|\bar{\epsilon}$、**动态一致** $\sup_\mu \mathbb{E}\|\dot{\mathbf{y}}-L\dot{\mathbf{z}}\|\le\|L\|\bar{\delta}K$、**流形约束** $\sup_\mu \mathbb{E}\|\mathcal{P}(L\mathbf{z})\|\le\Lambda_{\mathcal{P}}\|L\|\bar{\epsilon}$，其中 $L$ 是同一个左逆解码器，$K$ 是物理向量场上界。定理 2.1 进一步表明这一对齐自动给出 $n$ 步介入回放误差 $\epsilon_{\text{int}}(n)\le\epsilon_{\text{stat}}+\epsilon_{\text{dyn}}(t_n-t^*)$，把表示几何和介入因果一致性挂上钩。
 
 为什么挑这个条件？CRL 通常要求逐坐标可识别，假设强、几乎无法在大规模观测数据上验证；结构同构允许分布式表示，却仍保证唯一性 + 介入一致性，且"线性可恢复"恰好对应工程界最爱的线性探针——这是一个"能上线测量"的最弱必要条件。
 
-**2. 结构对齐探针 $\mathcal{Q}=(\mathcal{Z},\mathcal{R},\mathcal{H},\psi)$ 三件套：把误差界变成具体可跑的测试。**
+**2. 结构对齐探针 $\mathcal{Q}=(\mathcal{Z},\mathcal{R},\mathcal{H},\psi)$ 三件套：把误差界变成具体可跑的测试**
 
 抽象的误差界还得落成"用什么 head、什么数据、什么度量"。作者把三条界各实例化成一个线性探针，并锁死代理函数族为线性以防靠解码器表达力"作弊"：$\mathcal{Q}_{\text{stat}}$ 用 $\xi_{\text{stat}}=\|h(\mathbf{z})-P_c\|/\sigma(P_c)$（归一化到 mean-baseline=1）测物理状态线性可恢复性；$\mathcal{Q}_{\text{dyn}}$ 用 3 小时有限差 $\xi_{\text{dyn}}=\|L\Delta\mathbf{z}_t-\Delta\mathbf{y}_t\|$ 测时间导数一致性；$\mathcal{Q}_{\text{con}}$ 用低纬 vs 高纬带 $\Delta V_m$ 的单调约束（梯度风平衡推出 $f\propto\sin\phi$，故同 $P_c$ 时低纬风速应更高）测物理耦合保持度。所有探针都在 regime-balanced 子集上以同一线性 head 训练，并按 $P_c=980$ hPa 切成 Moderate / Intense。
 
 强制线性 head 的意义是把"信息够不够"从"head 表达力"里剥出来——线性探不出，就说明物理变量根本没被显式编码进一个线性子空间；regime-balanced 切片则排除了样本不均衡这个捷径解释。
 
-**3. TC-Bench + 失效模式几何诊断：给一个全球基准，并把"塔缩"坐实在潜空间几何上。**
+**3. TC-Bench + 失效模式几何诊断：给一个全球基准，并把"塔缩"坐实在潜空间几何上**
 
 光有探针还要有公平数据和反驳堵口。作者发布 TC-Bench——首个可复现、版本化、跨全部主要洋盆的全球热带气旋基准（IBTrACS v4r01 + GridSat-B1 红外，1980–2024，3 小时步长，224×224 patch，2601 条清洗后轨迹），并对最强骨干 DINOv3 做潜空间几何剖析：在 $N\ge 500$ 的 $P_c$ bin 内算三项——PCA 的 PC1 与 $P_c$ 的关系、有效维数 $d_{\text{eff}}=(\sum_i\lambda_i)^2/\sum_i\lambda_i^2$、中心化特征对距离均值。三者一旦在 $P_c<980$ hPa 同时下跌，就指认"潜空间沿物理轴塔缩"是失效根因。
 

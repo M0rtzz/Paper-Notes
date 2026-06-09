@@ -49,15 +49,15 @@ Heima 把多模态 LLM 的冗长 CoT 每个阶段（summary / caption / reasonin
 
 ### 关键设计
 
-**1. Stage-级 thinking token 蒸馏 + 信息论保证：把每段 CoT 压成一个特殊 token，并量化压了多少信息。**
+**1. Stage-级 thinking token 蒸馏 + 信息论保证：把每段 CoT 压成一个特殊 token，并量化压了多少信息**
 
 LLaVA-CoT 的 CoT 本就按 stage（summary / caption / reasoning）组织，每个 stage 是一个语义独立单元，正好可以各压成一个 special token。做法是把原始数据集 $D=\{(X,\text{CoTs},Y)\}$ 改写成 $D_H=\{(X,\langle CoTs\rangle,Y)\}$，其中 $\langle CoTs\rangle:=\{\langle CoT\rangle_{(k)}\}_{k=1}^{K_i}$ 把每个 stage 替换成一个 vocabulary 里新增的 token，蒸馏目标 $\mathcal{L}(\theta)=-\mathbb{E}_{(X,Y,\langle CoTs\rangle)\sim D_H}\log P_\theta(\langle CoTs\rangle,Y|X)$ 直接 fine-tune 让模型预测 thinking token 序列加答案。关键是作者把"压缩到底丢不丢推理能力"形式化成信息论问题：由于 $\langle CoTs\rangle=f(X,\text{CoTs})$ 构成 Markov 链 $Y-(X,\text{CoTs})-\langle CoTs\rangle$，Theorem 3.1 给出 $0\leq I(Y;\langle CoTs\rangle|X)\leq I(Y;\text{CoTs}|X)$，而 information gap $I(Y;\text{CoTs}|X)-I(Y;\langle CoTs\rangle|X)=I(Y;\text{CoTs}|X,\langle CoTs\rangle)\geq 0$ 恰好量化了"压缩损失"的大小——只要 $I(Y;\langle CoTs\rangle|X)>0$，推理能力就被保留。这让"thinking token 够不够"从经验问题变成可用 interpreter 实测的具体量。所有样本的第 $k$ 阶段共享同一个 token（不是 per-sample 一个），保证 vocabulary 不爆炸。
 
-**2. Progressive Distillation：一次只压一个 stage，避免优化坍塌。**
+**2. Progressive Distillation：一次只压一个 stage，避免优化坍塌**
 
 如果一上来就把所有 CoT stage 全压成 token，每个 token 同时承担太多压缩任务，loss landscape 难优化。这里改成 curriculum：分 $M=\max\{K_i\}+1$ 个阶段，第 $s$ 阶段的训练数据 $D_P=\{(X,\{\langle CoT\rangle_{(k)}\}_{k=1}^s,\{CoT_{(k)}\}_{k=s+1}^{K_i},Y)\}$——前 $s$ 个 stage 已压成 thinking token、后面的还是原文，逐 stage 推进直到全部压完。每次模型只需学会内化一种新的压缩，逐步把推理模式"吃进"hidden state。最后再加一个 recovering stage，只用 thinking token 全程训练，解决"各 stage 单独压好了但拼起来不顺"的转换对齐问题。消融显示去掉 progressive 掉 1.7%、去掉 recovering 再掉 1.4%，两者都必要。
 
-**3. Adaptive Interpreter：用 hidden state 反推文字 CoT，把"信息没丢光"测出来。**
+**3. Adaptive Interpreter：用 hidden state 反推文字 CoT，把"信息没丢光"测出来**
 
 理论给了 information gap 的上下界，但实际差多少必须实证。每个 stage $k$ 配一个用 Llama-3.1-8B 初始化的纯文本 interpreter $\mathcal{I}_{\theta_k}$，训练数据 $D_I$ 含解释 prompt、文本问题（无图像）、thinking token、token 的 last hidden state $H_{\langle CoT\rangle_{(k)}}$、原始 CoT 文本。最关键的操作是：interpreter 输入端把 thinking token 的 word embedding **替换成** Heima 输出的 last hidden state——因为推理信息编码在 hidden 而非 token id 里——然后用标准 next-token loss $\max_{\theta_k}\mathbb{E}\log P_{\theta_k}(CoT_{(k)}|X_e,X_q,H_{\langle CoT\rangle_{(k)}})$ 训它重建原文。重建出来的文本越接近原始 CoT，就说明 $I(Y;\text{CoTs}|X,\langle CoTs\rangle)$ 越小、信息保留越完整。这套架构反过来也证明 Heima 是真在隐空间推理而非简单 overfit——信息能从 hidden 解码回连贯文本：论文给的 BMW logo 例子里，interpreter 从 hidden 重建出"sleek modern sports car with black exterior"和"cross with a circle"，完美对应原始 CoT。
 

@@ -44,11 +44,11 @@ ProbMoE 把 MoE 的 top-$k$ 路由重新表述为"基数受限子集分布上的
 
 ### 关键设计
 
-**1. 基数受限子集分布 + SIMPLE 精确归一化：把路由输出层换成可精确归一化的概率层。**
+**1. 基数受限子集分布 + SIMPLE 精确归一化：把路由输出层换成可精确归一化的概率层**
 
 旧的 top-$k$ 算子是分段常数的，对 router logits 几乎处处零梯度；要让路由变成"可学习的离散对象"，第一步是给"恰好选 $k$ 个专家"这件事一个能精确写出来的概率。ProbMoE 把每个专家独立 Bernoulli $p_i=\sigma(r_i)$ 构造的无约束乘积测度，条件化于 $|S|=k$，得到子集分布 $\mathbb{P}_r(S\mid|S|=k)=Z_k^{-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$，其中归一化常数 $Z_k=\sum_{|S|=k}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$ 是对全部 $\binom{N}{k}$ 个子集求和。直接枚举会组合爆炸，关键在于借用 Ahmed et al. 2023 的 SIMPLE 估计器：它用 1D 卷积式动态规划，把 $Z_k$ 拆成"逐个加入第 $i$ 个专家"的递推，在 $\mathcal{O}(Nk)$（向量化后 $\mathcal{O}(\log N\log k)$）时间内精确算出，无需显式枚举。这一步之所以是后面一切的基石，是因为 Gumbel-Softmax/Concrete 这类连续松弛要么有偏要么方差大、且根本无法表达"恰好 $k$ 个"这种硬约束；SIMPLE 的 DP 归一化让"组合空间上的精确概率推断"在 MoE router 中第一次变得可行，精确边缘、采样、动态 $k$ 都从这里派生。推广到 range constraint 也只需把单个 $Z_k$ 换成 $Z^*=\sum_{k=k_{\min}}^{k_{\max}} Z_k$（Theorem 5.1，复杂度仍是 $\mathcal{O}(Nk_{\max})$）。
 
-**2. 边缘-嵌入路由权重 + Straight-Through 反向：前向稀疏、反向带整个分布的梯度。**
+**2. 边缘-嵌入路由权重 + Straight-Through 反向：前向稀疏、反向带整个分布的梯度**
 
 有了精确归一化还不够——前向只能激活 $k$ 个专家以保证稀疏算力，但又希望梯度反映"如果换一个备选子集会怎样"。ProbMoE 的做法是用条件边缘 $m_j=\mathbb{P}_r(j\in S\mid|S|=k)=\partial\log Z_k/\partial\log p_j$ 作为离散选择的可微"摘要"，再通过 STE 把采样掩码 $z$、边缘 $m$、softmax $\pi$ 拼成一个路由权重
 
@@ -56,7 +56,7 @@ $$w=(\operatorname{stopgrad}(z-m)+m)\odot\pi.$$
 
 前向时 $w_i=z_i\pi_i$ 仍然只在被采中的专家上非零（稀疏不变），反向时梯度分解为 $\partial\mathcal{L}/\partial r_i=\sum_j\langle\partial\mathcal{L}/\partial y,f_j(x)\rangle(m_j\,\partial\pi_j/\partial r_i+\pi_j\,\partial m_j/\partial r_i)$——第一项是常规 softmax-权重路径，第二项是新增的"边缘路径"，正是它把整个子集分布对 logit 的依赖回传给 router。之所以前向采样必须和这个解析边缘配对，是因为消融（Fig. 2）显示只有 "Sample（前向随机）+ Marginal（反向解析）" 能拿到 50.24% EM（OLMoE/GSM），换成 "Sample + Dense STE" 会掉到 46.6% 且方差暴增、"Top-$k$ + Marginal" 也次于 ProbMoE——前后向若不同源于同一分布就会自相矛盾，反而劣化（Appendix F 的合成实验也表明该估计器方差低于 DenseMixer 的 dense STE）。
 
-**3. Range-constrained Dynamic-$k$ 路由：同一框架免费换来按 token 难度自适应专家数。**
+**3. Range-constrained Dynamic-$k$ 路由：同一框架免费换来按 token 难度自适应专家数**
 
 固定 $k$ 对所有 token 一视同仁，但简单 token 其实用不到那么多专家、难 token 又可能不够。ProbMoE 把 exact-$k$ 推广为允许 $|S|\in[k_{\min},k_{\max}]$ 自由取值的条件分布 $\mathbb{P}_r(S\mid k_{\min}\le|S|\le k_{\max})=Z^{*-1}\prod_{j\in S}p_j\prod_{j\notin S}(1-p_j)$。由于 $Z^*=\sum_{k=k_{\min}}^{k_{\max}}Z_k$，采样可以先从基数边缘 $\mathbb{P}_r(|S|=k\mid\cdot)=Z_k/Z^*$ 采出一个 $k$、再调用 exact-$k$ 采子集，做到联合推断 $k$ 与 $S$；反向只需把 $m_j$ 换成 range-constrained 边缘 $m_j^*=\partial\log Z^*/\partial\log p_j$，仍走同一套 STE 路由权重；推理时取 MAP 子集（$k$ 和身份一起选）。它的优势在于保持了概率框架的封闭性——之前 DA-MoE/DynMoE/AdaMOE 等动态分配靠阈值、null expert 等启发式 gating，没有全局归一化也就无法做严格可微训练；而这里 dynamic-$k$ 几乎是 exact-$k$ 的"免费"升级。表 2 显示 OLMoE/Qwen 上 Dynamic-$k$ 只激活 75–84% 专家即可取得与 Exact-$k$ 相当甚至更高的 EM，Fig. 5/6 进一步显示 router 会给稀有/含义模糊的 token（标点、词缀 `ons`、`:`、`?`）分配更多专家、给常见数字/具体名词分配更少，体现出真实的"按难度计算"。
 

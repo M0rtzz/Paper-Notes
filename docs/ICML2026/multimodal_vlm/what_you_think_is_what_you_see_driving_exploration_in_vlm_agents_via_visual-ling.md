@@ -45,15 +45,15 @@ GLANCE 把 VLM agent 视为 partially observable MDP $(\mathcal{S}, \mathcal{A},
 
 ### 关键设计
 
-**1. Linguistic-to-Visual Cross-modal Alignment：把 agent 用语言写的"未来猜测"翻译到视觉空间，与真实下一帧对齐。**
+**1. Linguistic-to-Visual Cross-modal Alignment：把 agent 用语言写的"未来猜测"翻译到视觉空间，与真实下一帧对齐**
 
 传统 BYOL/SPR 类视觉自监督只能"视觉→视觉"预测，无法保证语言推理和视觉感知指向同一事物——视觉表征学得再好，语言推理仍可能持续幻觉。GLANCE 抓住"linguistic prediction vs. visual reality"这个跨模态信号：online VLM 在 `<Pred>s_{t+1}</Pred>` 这段 CoT 末尾位置的 Transformer 最后层 hidden state $h_{t+1}$ 就是"语言隐式编码的未来状态"，用轻量 projector 投到视觉空间得 $\hat{y}_{t+1} = g_\psi(h_{t+1})$；target 视觉编码器 $f_\phi$ 用 EMA 更新 $\phi \leftarrow \alpha \phi + (1-\alpha) \mathbf{v}$ 编码真正发生的下一帧得 $y_{t+1}$，对齐损失用 BYOL 风格的归一化 MSE $\mathcal{L}_\text{explore} = \|\frac{\hat{y}_{t+1}}{\|\hat{y}_{t+1}\|_2} - \text{sg}(\frac{y_{t+1}}{\|y_{t+1}\|_2})\|_2^2$，stop-gradient 加在 target 侧防坍缩。关键的"选择性梯度路由"是让梯度穿过冻结的 LLM 但只更新 projector $g_\psi$ 和 online vision encoder $f_\mathbf{v}$——既避免 language drift，又逼 vision encoder 学到"语义可操作"的特征，把 world model 从语言里拽到物理现实上。
 
-**2. Cross-modal Curiosity as Intrinsic Reward：把对齐误差二次利用为内在奖励，驱动主动证伪。**
+**2. Cross-modal Curiosity as Intrinsic Reward：把对齐误差二次利用为内在奖励，驱动主动证伪**
 
 标准 ICM 类好奇心只看视觉预测误差、和 LLM 推理脱节，可能出现"视觉表征学好但语言仍幻觉"的伪平衡。GLANCE 直接把当前 turn 的 $\mathcal{L}_\text{explore}$ 当内在奖励 $r_t^i = \beta \cdot \mathcal{L}_\text{explore}(\mathbf{v}, \boldsymbol{\psi}, t)$，与外在奖励合成 $r_t = r_t^e + r_t^i$ 后送入 PPO 风格的 Bi-Level GAE 做 token-到-turn 的层次化 credit assignment。直觉上 $\mathcal{L}_\text{explore}$ 大意味着"我语言里的下一状态预测和实际看到的差很多"，正是 known unknown、最值得探索的地方；反之低 loss 区域是模型已熟悉的状态。由于好奇心和 world model 接地是同一个目标，agent 必须同时改进推理和感知才能降 loss——这是它和 vision-only ICM 的根本区别。
 
-**3. Curriculum Exploration：周期性重置 projector 对抗 curiosity drain。**
+**3. Curriculum Exploration：周期性重置 projector 对抗 curiosity drain**
 
 作者发现一个新坍塌模式：LLM backbone 语义太强，轻量 projector 容易在训练早期就把语言 hidden state 拟合到"表层视觉特征"上，$\mathcal{L}_\text{explore}$ 快速逼近零、内在奖励消失，agent 误以为"已经掌握环境"——这不是表征崩了而是"已学完"假象，stop-gradient 救不了。GLANCE 周期性重新初始化 projector $g_\psi$ 权重、但保留逐渐进化的 vision encoder $f_\mathbf{v}$：新 projector 不带"老 trick"，被迫用 vision encoder 已学到的更丰富特征重新校准，把之前被旧 projector 平滑掉的细粒度差异重新暴露出来，构成自步课程。消融里去掉它，$\mathcal{L}_\text{explore}$ 在训练前 10%–20% 就趋于 0、探索停止。这是把课程学习思路用到自监督好奇心的巧妙变种，可迁移到任何"小适配器 + 大冻结模型"的对齐架构。
 

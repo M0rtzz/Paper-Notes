@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. 统一主干内的离散扩散动作建模：把动作 token 当"被掩盖的语言 token"，和 VLM 共用一套交叉熵目标。**
+**1. 统一主干内的离散扩散动作建模：把动作 token 当"被掩盖的语言 token"，和 VLM 共用一套交叉熵目标**
 
 AR 牺牲了并行性、外挂连续扩散又会用独立的训练目标稀释 VLM 先验。本文的破解是把动作生成嵌回 VLM 主干、沿用 LM 已熟悉的 cross-entropy。具体先把每个控制维度按 1%-99% 分位数做 256-bin 量化（gripper 单独二值化），单时间步 7 个 token（3 平移+3 旋转+1 夹爪），$H$ 个时间步拼成 $L=H\times 7$ 的 chunk；前向加噪是 Markov 链 $\mathbf{Q}_t \mathbf{e}_{a_{t,i}} = (1-\beta_t)\mathbf{e}_{a_{t,i}} + \beta_t \mathbf{e}_M$，每个 token 独立按 $\beta_t$ 被替换成 [MASK]。训练坍缩成单步掩码预测，采 mask ratio $\gamma_t$、在 $\gamma_t L$ 个位置打 [MASK]，最小化掩码位置的交叉熵
 
@@ -53,13 +53,13 @@ $$\mathcal{L}_{CE} = -\sum_{i \in \mathcal{M}_{\gamma_t}} \log p_\theta(a_{0,i} 
 
 视觉和语言 token 只参与注意、不算 loss。共用 token 空间和损失意味着动作 head 不冲淡预训练先验；而离散扩散训练时遍历"指数多种 infilling 任务"，换来了推理时的任意顺序解码能力——这正是 AR 缺的灵活度。
 
-**2. 按置信度的自适应并行解码：每轮先生易、后生难，让锚点帮难位置消歧。**
+**2. 按置信度的自适应并行解码：每轮先生易、后生难，让锚点帮难位置消歧**
 
 OpenVLA-OFT 那种"一刀切全位置同时 argmax"的 BERT 式并行解码没有迭代精修能力。本文从 $\mathbf{a}_1=\mathrm{M}^L$（全 mask）出发，按 cosine schedule 单调递减 $\gamma_{t+1}<\gamma_t$；每步用 Max Confidence $s_{t,i}=\max_k p_\theta(k\mid \mathbf{a}_t,\mathbf{c})$ 或 Confidence Gap 给每个掩码位置打分，保留 top $(1-\gamma_{t+1})L$ 个位置做温度退火的 Gumbel-Max 采样，其余继续 [MASK]，直到 $\gamma_T=0$。
 
 这样形成"先确定高置信锚点 → 锚点回灌主干 → 帮难位置消除歧义"的结构性优势；和 AR 比又避免被左到右顺序锁死，可利用 chunk 后段 token 已暴露的统计信息。可视化显示模型确实学会了"先定 gripper 状态再细化平移/旋转"这类可解释的解码顺序。
 
-**3. 二次重掩码（Secondary Re-Masking）：给反向过程开一个自纠错的口子。**
+**3. 二次重掩码（Secondary Re-Masking）：给反向过程开一个自纠错的口子**
 
 纯单调揭示（committed 就不能反悔）有个隐患——某个位置错得早、错得贴近 chunk 中段，错误会被后续 token 的注意力放大。二次重掩码在按 $\gamma_{t+1}$ 选完保留集 $\mathcal{K}_t$ 后，再对已提交 token 做一次阈值检查：若置信度 $s_{t,i}$ 低于随步数单调升高的阈值 $\eta_t^{\mathrm{abs}}$，就把它打回 [MASK]，即 $\mathcal{R}_t^{\mathrm{abs}} = \{ i \in \mathcal{K}_t : s_{t,i} < \eta_t^{\mathrm{abs}} \}$，进入下一轮重新生成。
 

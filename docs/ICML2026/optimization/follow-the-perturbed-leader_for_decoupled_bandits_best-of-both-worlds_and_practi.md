@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. Pareto 扰动 FTPL 做利用：不解优化就拿到 Tsallis-INF 同阶的利用策略。**
+**1. Pareto 扰动 FTPL 做利用：不解优化就拿到 Tsallis-INF 同阶的利用策略**
 
 FTPL 的利用臂只要一次 argmin 就能选出，问题是用什么扰动。早期 FTPL bandit 用 Gumbel 扰动（对应 Exp3），利用概率有 softmax 闭式但在随机环境下后悔界次优。作者改用 shape $\alpha>1$ 的 Pareto 分布 $f(x)=\alpha/x^{\alpha+1}$ 采扰动 $r_{t,i}$，利用臂取 $i_t=\arg\min_i\{\hat L_{t,i}-r_{t,i}/\eta_t\}$。Kim & Tewari 2019 与 Lee 2025 早已证明 Pareto 扰动 FTPL 在隐含利用概率上与 $\beta=1-1/\alpha$ 的 Tsallis 熵 FTRL 完全对应，所以 BOBW 所需的"利用概率衰减率"自动具备。换 Pareto 是为了拿 BOBW，但副作用是利用概率 $w_{t,i}=\phi_i(\eta_t\hat L_t)$ 没有闭式表达——这正是下一步必须绕开 $w_t$ 的来由。
 
-**2. 基于排名的代理向量 $q_t$ 替代 $w_t$ 定义探索分布：彻底绕过几何重采样。**
+**2. 基于排名的代理向量 $q_t$ 替代 $w_t$ 定义探索分布：彻底绕过几何重采样**
 
 所有现有 decoupled 算法都规定"探索概率必须由利用概率 $w_t$ 算出"，可 FTPL 没有 $w_t$ 闭式，估它要靠几何重采样，整向量代价升到 $\mathcal{O}(K^2\log K)$，速度优势全失。作者指出"$p_t$ 是 $w_t$ 的函数"只是充分而非必要条件：只要找到一个仅用已有量、又能与 $w_t$ 建立紧不等式的代理就行。于是定义损失差 $\hat{\underline L}_{t,i}=\hat L_{t,i}-\min_j\hat L_{t,j}$ 和排名 $\sigma_{t,i}$，令
 
@@ -59,7 +59,7 @@ $$q_{t,i}=\Big(\min\Big\{\tfrac{1}{1+\eta_t\hat{\underline L}_{t,i}},\ \tfrac{1}
 
 $\min$ 里前一项按损失大小衰减、后一项按排名衰减，取较小者再做 $(\alpha+1)/2$ 次方，恰好近似 $w_{t,i}^{1/2+1/(2\alpha)}$，对应 Decoupled-Tsallis-INF 中的 $w_{t,i}^{1-\beta/2}$，关键紧不等式 $q_{t,i}\le w_{t,i}^{1/2+1/(2\alpha)}\lesssim w_{t,i}^{1-1/\alpha}$ 由 Lemma D.2 给出。纯排序加赋值，无凸优化、无重采样。
 
-**3. 增量排名维护 + 自界后悔分析：实现与证明两侧都不依赖优化。**
+**3. 增量排名维护 + 自界后悔分析：实现与证明两侧都不依赖优化**
 
 代理量解决了"怎么定义 $p_t$"，还要让它在工程和理论上都便宜。实现侧，IW 估计每轮只更新被选臂 $j_t$ 的 $\hat L$，其余臂排名最多变 1，所以对 $j_t$ 二分定位 $\mathcal{O}(\log K)$、对受影响区间做 $\mathcal{O}(K)$ 修正，把整向量重排序的 $\mathcal{O}(K\log K)$ 压到平均 $\mathcal{O}(K)$。分析侧，Lemma 3.4 把后悔拆成 stability + penalty 两项（省掉 Honda 2023/Lee 2024 的额外 $\log T$ 因子），Lemma 3.5/3.6 分别界住两项，再借辅助事件 $D_t$ 在好事件上把 $q_{t,i}$ 换成 $w_{t,i}^{1-1/\alpha}$，最后用 self-bounding $\max_w\{Aw^{1-1/\alpha}/\sqrt t-\Delta_i w\}\le\mathcal{O}(A^\alpha\Delta_i^{1-\alpha}t^{-\alpha/2})$ 收敛到对抗 $\mathcal{O}(\sqrt{KT})$、随机 $\mathcal{O}(K/\Delta_{\min})$。$\alpha=3$（即 $\beta=2/3$）恰是 Decoupled-Tsallis-INF 的最优配置，于是 FTPL 在同阶 BOBW 下把实现路径整体换成了轻量版。
 

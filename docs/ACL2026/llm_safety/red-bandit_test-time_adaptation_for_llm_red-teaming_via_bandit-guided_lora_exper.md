@@ -44,11 +44,11 @@ Red-Bandit 分为训练和推理两部分。训练阶段，系统为每种攻击
 给定目标 LLM $\mathcal{T}$ 和 prompt space $\mathcal{P}$，自动化红队的目标是寻找能暴露不安全响应的测试 prompt。Red-Bandit 不直接在 token 空间做搜索，而是在风格专家集合 $\mathcal{A}=\{1,\ldots,K\}$ 上做选择。每个 arm 对应一个 LoRA expert，例如角色扮演、技术术语、假设场景、情绪操纵等风格类别。选定 arm 后，对应 expert 生成一个候选测试 prompt，目标模型响应，再由安全评估器给出二元或标量 reward，bandit 用该 reward 更新选择策略。
 
 ### 关键设计
-**1. 风格专用 LoRA experts：把"多样风格"从一个模型的负担拆成多个专家的分工。**
+**1. 风格专用 LoRA experts：把"多样风格"从一个模型的负担拆成多个专家的分工**
 
 一个统一生成器要同时学会所有攻击风格，结果往往是学出一个"混合却单调"的分布，多样性和可读性都打折。Red-Bandit 改成分工：以 Mistral-7B 为基座，为 Rainbow Teaming 定义的 10 类风格各训练一个 LoRA adapter，每个专家的输入带上风格 token，用 in-context conditioning 专门生成该风格下的安全测试 prompt。这样每个专家只需吃透一种风格，学习难度大降；更实际的好处是可扩展——要加一种新风格或新领域，只训一个 adapter 即可，不必重训整套生成器。
 
-**2. GRPO 后训练与规则奖励：用更省的策略梯度把专家训得更能"戳中"安全评估。**
+**2. GRPO 后训练与规则奖励：用更省的策略梯度把专家训得更能"戳中"安全评估**
 
 每个专家光会生成对应风格的文本还不够，得让它产出真正容易触发安全评估的候选。作者用 GRPO 变体来后训练：不另训 value model，而是用组内 reward 均值直接构造 advantage $\hat{A}$，损失是 clipped policy-gradient
 
@@ -56,7 +56,7 @@ $$\mathcal{L}_\theta = -\mathbb{E}\big[\min(r_\theta \hat{A},\ \mathrm{clip}(r_\
 
 其中 $r_\theta$ 是新旧策略概率比。相比 PPO，省掉 value model 让它更契合轻量 LoRA 训练的成本预算；训练阶段的 reward 来自规则安全模型（Llama Guard）对 prompt 的判定，而非去查目标模型，从而避免训练时对目标的频繁查询。
 
-**3. Bandit-guided inference：测试时把"该用哪种风格"交给在线探索-利用来决定。**
+**3. Bandit-guided inference：测试时把"该用哪种风格"交给在线探索-利用来决定**
 
 不同目标模型的脆弱风格各不相同，一套静态策略只会白白浪费查询预算。Red-Bandit 把每个风格专家当成一个 bandit arm：推理时选中某 arm，对应专家生成候选 prompt，目标模型响应后由安全评估器给出 reward，再回头更新该 arm 的收益估计。论文评估 $\epsilon$-greedy 和 UCB 两类策略——前者保留固定比例的随机探索，后者用乐观置信上界鼓励尝试还没充分探索的 arm。这套在线选择不仅把 ASR@10 顶了上去，命中的风格分布本身还成了一份诊断信号：它直接告诉你这个目标模型最容易栽在哪种风格上。
 

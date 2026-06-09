@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. BiGRU + KAN 分类模型：序列编码交给 BiGRU，非线性决策边界交给 KAN。**
+**1. BiGRU + KAN 分类模型：序列编码交给 BiGRU，非线性决策边界交给 KAN**
 
 法律文档又长、术语又专，还混着 Bengali、English 和 romanized Bengali 三种文字，单靠一个 recurrent backbone 的表达力不一定够。这个分类模型让 token sequence $X=(x_1,x_2,\ldots,x_T)$ 先过 embedding 和 BiGRU，每个时间步把前向与后向 hidden state 拼起来得到 $h_t=[\overrightarrow{h_t};\overleftarrow{h_t}]$，再同时做 mean pooling 和 max pooling 形成固定长度的文档表示 $h_{doc}=[h_{mean};h_{max}]$，最后送进 KAN block 输出分类 logits。两种 pooling 各有分工——mean 保留整段语义，max 抓住强触发词或关键法律短语；而 KAN head 用可学习的 spline-like edge functions 替代 MLP 里的固定激活，给这份固定表示补上更复杂的非线性分割能力，相当于在不换重型 backbone 的前提下把决策边界做得更细。
 
-**2. Attention GRU + KAN 摘要模型：attention 选片段，KAN 强化生成头。**
+**2. Attention GRU + KAN 摘要模型：attention 选片段，KAN 强化生成头**
 
 法律摘要要从长文本里聚焦核心法律问题和关键条款，光靠 recurrent decoder 容易抓不准重点。摘要模型用 attention-based GRU encoder-decoder：encoder 把输入编码为 $H=(h_1,h_2,\dots,h_T)$，decoder 每个时间步通过 attention 算出 context vector $c_t$，结合自身 hidden state 预测下一个 token。和分类模型同源的思路是，KAN head 被接在这个生成头上方——attention 负责从输入中挑出该关注的片段，KAN 负责提升输出表示的非线性表达力，让生成的摘要更能保留重要事实和条款。
 
-**3. 类别不平衡处理：用 WeightedRandomSampler 把少数类抬进每个 batch。**
+**3. 类别不平衡处理：用 WeightedRandomSampler 把少数类抬进每个 batch**
 
 法律 disposition 标签高度不平衡，普通随机采样会让模型一味倒向多数类。分类训练因此改用 WeightedRandomSampler，按类别频率反比加权，让 minority classes 在 mini-batch 里出现得更频繁；这是个低成本又天然兼容 recurrent/KAN 架构的缓解手段。摘要任务则保留标准 batch formation——因为摘要目标依赖每个样本完整的原文和 target summary，逐样本采样比按类别重采样更合适。
 

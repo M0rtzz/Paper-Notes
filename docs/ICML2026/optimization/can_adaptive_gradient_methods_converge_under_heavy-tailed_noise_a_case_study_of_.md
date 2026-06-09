@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. 推广的 Proxy Stepsize 技巧（上界证明核心）：用一个可优化的自由参数撬动更优速率。**
+**1. 推广的 Proxy Stepsize 技巧（上界证明核心）：用一个可优化的自由参数撬动更优速率**
 
 AdaGrad 的步长 $\gamma/(\lambda+\sqrt{v_t})$ 与随机梯度 $g_t$ 统计耦合——$v_t$ 里含了当前的 $g_t$，没法直接做条件期望运算。经典处理是引入一个可预测（$\mathcal{F}_{t-1}$-可测）的代理步长 $w_t = v_{t-1}+(\nabla f(x_t))^2+c^2$，其中 $c$ 通常固定取 $\sigma$。本文的关键创新是把 $c$ 留作自由参数、到证明末尾再优化，并选取 $c_i = \sigma_i T^{1/2-1/\bar{p}}/D_{T,i}^{1/2-1/\bar{p}}$（$p=2$ 时自然退化为 $\sigma$、恢复经典分析）。这个看似细微的推广带来实质改善：若简单取 $c=\sigma$，最优速率只有 $\tilde{O}(1/T^{(2p-3)/(2p)})$；精心选 $c$ 后速率提到 $\tilde{O}(1/T^{(3p-4)/(4p)})$，是严格的提升。它也说明 AdaGrad 的自适应步长机制本身就足以控制重尾噪声，不需要裁剪或归一化。
 
-**2. 算法依赖的下界构造：证明 AdaGrad 调参也够不到 minimax 最优。**
+**2. 算法依赖的下界构造：证明 AdaGrad 调参也够不到 minimax 最优**
 
 光证收敛还不够，作者要说清 AdaGrad 的根本局限。已有的 AdaGrad 下界（Jiang et al. 2025）不含学习率 $\gamma$ 的依赖，反映不出算法配置对复杂度的影响。本文在一维情形针对给定 $\gamma$ 构造特定目标函数 $f$ 和随机梯度预言机，使得当 $T$ 小于某个与 $\gamma$ 相关的阈值时，以常数概率 $f'(x_t)\geq\Omega(\epsilon)$ 对所有 $t\in[T]$ 成立，得到的下界
 
@@ -59,7 +59,7 @@ $$\Omega\Big(\tfrac{\Delta^2/\gamma^2 + \gamma^2 L^2 \ln^2(\gamma L/\epsilon)}{\
 
 显式包含学习率 $\gamma$。这种"随算法配置参数化困难实例"的构造比传统 minimax 下界信息更精细，揭示了即使知道 $\Delta$ 和 $L$，AdaGrad 仍至少要多付 polylog 因子、无法通过调参达到 minimax 最优。
 
-**3. AdaGrad-Norm 的有界目标函数加速分析：标量步长换来对所有 $p$ 都非平凡的速率。**
+**3. AdaGrad-Norm 的有界目标函数加速分析：标量步长换来对所有 $p$ 都非平凡的速率**
 
 标准 AdaGrad 的逐坐标步长在 $p\leq 4/3$ 时速率退化为平凡，本文转去看 AdaGrad-Norm（用全局标量 $v_t=v_{t-1}+\|g_t\|_2^2$）。在额外假设 $\sup f<+\infty$ 下，利用标量步长的特性，把单步进展不等式中的 $(f(x_t)-f_\star)/\gamma_t$ 求和后用有界性控制为 $\Delta_\star/\gamma_T$；再通过 Lemma 4.7 把 $\mathbb{E}[\sqrt{v_T}]$ 分解成噪声项 $\|\sigma\|_p T^{1/p}$ 和梯度项 $\mathbb{E}[\sqrt{u_T}]$，最后用 AM-GM 不等式吸收递归项，得到对所有 $p\in(1,2]$ 均非平凡的 $O(1/T^{(p-1)/(2p)})$ 速率。这个更快速率是 AdaGrad-Norm 特有的结构优势——标准 AdaGrad 的逐坐标步长会阻止上述推导。
 

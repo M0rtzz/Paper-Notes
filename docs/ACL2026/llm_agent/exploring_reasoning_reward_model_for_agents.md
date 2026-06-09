@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Agent-RRM 的三段结构化输出：把 reward model 从打分器升级成"分析→批评→打分"。**
+**1. Agent-RRM 的三段结构化输出：把 reward model 从打分器升级成"分析→批评→打分"**
 
 单个 scalar 没法表达"算对了但走了弯路"和"答错但思路对了一半"之间的细颗粒度差异，long-horizon agent 任务恰恰最需要这种区分。Agent-RRM 因此让 reward model 在判断前先 reasoning：`<think>` 段写这条轨迹哪些步骤合理、哪些有逻辑漏洞，`<critique>` 段指出具体该改哪里，`<score>` 段才给出整体分 $s \in [0,1]$。训练数据特意从 Qwen3-8B/14B、Qwen3-ARPO-DeepSearch、Qwen2.5-WebDancer、DeepSeek-V3.1 等多种 agent 模型采样轨迹以最大化错误模式覆盖，再用 GPT-OSS-120B 自动标注三段判断，最后走两阶段训练：先在 Reagent-RRM-SFT-28K 上 SFT 学会输出格式，再在 Reagent-RRM-RL-90K 上 GRPO 校准 score。让 RM 显式 reasoning 还顺带压制了 reward hacking——模型必须能"自圆其说"才能给高分，单点投机会在 critique 里被自己暴露出来。
 
-**2. 三个 integration variant（C / R / U）：拆开看 critique 和 score 各值多少。**
+**2. 三个 integration variant（C / R / U）：拆开看 critique 和 score 各值多少**
 
 为了厘清"语言 critique"和"数值 score"两类信号在 agentic RL 里各自及联合的价值，论文设计了三种喂法做对照。Reagent-C 完全 training-free，第一轮采样 $o^{(1)}_i \sim \pi_\theta(o|q)$，让 RRM 产出 critique $c_i$，第二轮 $o^{(2)}_i \sim \pi_\theta(o|q, o^{(1)}_i, c_i)$ 做 in-context refinement 后只评估 refined output，用来隔离 critique 的零样本价值。Reagent-R 把规则奖励和模型分加权成 $R_i = R_{\text{rule}}(q, o_i) + \lambda \cdot R_{\text{model}}(q, o_i)$ 当 GRPO 信号，用来隔离 score 的密集 reward 价值。Reagent-U 则两阶段都采样，把 $\mathcal{G}_{pool} = \{o^{(k)}_i\}$（$k \in \{1, 2\}$）合进一个 pool 联合算优势 $A^{(k)}_i = (R^{(k)}_i - \text{mean}(\mathbf{R}_{pool})) / \text{std}(\mathbf{R}_{pool})$，loss 为 $\mathcal{J}_U(\theta) = \mathbb{E}[\frac{1}{2G}\sum_{k=1}^2 \sum_{i=1}^G (\min(r^{(k)}_i A^{(k)}_i, \text{clip}_\epsilon) - \beta \mathbb{D}_{KL}^{(i,k)})]$。U 的妙处在于让模型在训练时同时学"如何照 critique 改"和"如何在不同质量轨迹间排序"，把 critique 能力**内化**进 policy——于是 inference 时不再需要 RRM，单 forward 即可，部署几乎零额外开销。
 
-**3. Unified pool 联合优势归一化：让 initial 也能受益于 critique。**
+**3. Unified pool 联合优势归一化：让 initial 也能受益于 critique**
 
 传统 GRPO 一个 batch 内 $G$ 条 sample 各自内部归一化，如果把 initial 和 refined 两阶段分开归一，两阶段 policy 就解耦了，模型只学会 refinement 技巧却不改善 initial generation。Reagent-U 把池子扩到 $2G$ 条、所有 sample 共享同一组 mean/std 来算 advantage：一旦 refined 普遍比 initial 好，initial 的 sample 会自动拿到负 advantage，梯度便把 policy 往"更接近 refined"的方向推。这一招把两阶段绑在同一个梯度信号下，让 critique 的隐式指导回流到 initial generation，从而做到 inference 时不调 RRM 也能逼近 refined 的质量。
 

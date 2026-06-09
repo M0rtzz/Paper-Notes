@@ -45,19 +45,19 @@ tags:
 
 ### 关键设计
 
-**1. 双层评测协议（SER / AEC + EIR + Binary/Type/Point Agreement）：把"识别"和"评分"两件被混在一起的能力拆开评，再量化错误怎么传播。**
+**1. 双层评测协议（SER / AEC + EIR + Binary/Type/Point Agreement）：把"识别"和"评分"两件被混在一起的能力拆开评，再量化错误怎么传播**
 
 只看 auto-grading accuracy 这种 task-centric 指标，会让大量"沉默错误"逃逸——识别出错了但因为不在评分点上，下游分数看不出任何异常，开发者于是高估了 MLLM 的视觉理解力。本文把识别端和评分端分开度量：识别端用样本错误率 $\text{SER}=\frac{\#\{s: \text{errors}(s)>0\}}{|S|}$ 和平均错误数 $\text{AEC}=\frac{1}{|S|}\sum_s \#\text{errors}(s)$，评分端则用 Binary $\to$ Type $\to$ Point 三级递进的 agreement，越往后越严格、越能逼出细粒度错误。
 
 真正把两端桥接起来的是错误影响率 $\text{EIR}=\frac{\text{识别错误中引起评分差异的数量}}{\text{识别错误总数}}$。有了它才能定量回答"识别差到什么程度才会真的伤到下游评分"——这恰恰是所有 vision→reasoning 流水线都缺的那把尺子，而不只是教育场景独有。
 
-**2. LLM-as-a-Judge 识别误差自动列项 + 四类 taxonomy：让模型只做"对照检查"，把识别差异自动列项再归类。**
+**2. LLM-as-a-Judge 识别误差自动列项 + 四类 taxonomy：让模型只做"对照检查"，把识别差异自动列项再归类**
 
 逐条人工标注 MLLM 识别结果和专家转录之间的差异根本无法规模化。本文把 judge 任务拆成"列差异 + 分类"两步：把 oracle markdown 和待测 markdown 一起喂给 Gemini-2.5-Pro，要求它列出所有句/式级别的 discrepant items，语义等价的小写法差异（如 `KCL: out` ≡ `KCL: @ out`）算对齐不计错；随后再用一个 LLM 把每条差异按 Symbolic & Character（字符/操作符/单位）、Structural & Notational（公式版面/变量一致性）、Diagrammatic（电路拓扑/标注误读）、Textual & Logical（语境/推导步骤）四类归档。
 
 关键在于全程有 oracle 兜底，judge 只做"照着标准答案挑差异"而非"开放打分"，自由度被压到最低，幻觉也随之被压住。在 186 份样本、5000+ items 的人工验证里，sample-level accuracy $\geq 0.95$、item-level F1 $\geq 0.90$，而这个四类 taxonomy 又正好为后面的 EIR 分类分析铺好了路。
 
-**3. 错误模式驱动的 human-in-the-loop Regrading 模块：用统计出来的错误模式当风险特征扫一遍，把人工占比压到 ≤5%。**
+**3. 错误模式驱动的 human-in-the-loop Regrading 模块：用统计出来的错误模式当风险特征扫一遍，把人工占比压到 ≤5%**
 
 在高利害的教育评分里，完全自动化不可接受、完全人工又太贵。这个模块利用一个假设——识别错误的模式是可统计的、人工成本是可控的：先从 observation set 里抽出常见的 confusion 模式（如 $-V\to V$、$\frac{1/8}{1/8+1/16}\to \frac{8}{8+16}$、KCL 节点错连等）塞进 detector 的 prompt。
 

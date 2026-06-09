@@ -43,15 +43,15 @@ SEARL 将 agent 的策略参数和外部 Tool Graph Memory 联合优化，用工
 SEARL 把自进化拆成相互促进的两条线：策略模型通过 RL 学会规划、检索、思考与行动，外部 Tool Graph Memory 则在轨迹中持续增长、合并、连边，既为后续任务提供可复用工具，也为优势估计提供稳定的分组锚点。给定一个任务，agent 先生成全局 plan 把任务拆成若干 subtask，每个 subtask 内部展开为 Planning、Retrieve、Think、Action 四类 XML 风格步骤：Retrieve 从 Tool Graph Memory 选取相关 MCP 工具，Action 既可直接作答，也可调用已有工具或创建新工具。训练端用 outcome reward 判定最终答案正确性，叠加规划、工具创建、工具执行、格式等过程奖励，并以 episode 级相对优势与 tool-anchored step 级优势共同更新策略，使工具知识从分散候选逐步沉淀成结构化记忆图。
 
 ### 关键设计
-**1. 结构化轨迹与复合奖励：把开放式行为拆成可奖励的步骤。**
+**1. 结构化轨迹与复合奖励：把开放式行为拆成可奖励的步骤**
 
 如果只用最终答案奖励，多步工具调用里到底哪个动作有用几乎无从判断，信号过于稀疏。SEARL 让每个任务先产出 high-level plan，再在 subtask 中显式标注 Retrieve、Think、Action，使轨迹变得可解析、可审计。奖励由稀疏的 outcome reward 与密集的 behavioral reward 组成：最终答案正确时取 $r_s=1$，局部再叠加 planning reward、tool creation reward、tool execution reward 和 format reward。这样训练信号能精确落到规划、工具创建、工具执行这些关键行为上，而不是被整条轨迹的成败一笔带过。
 
-**2. Tool-Memory-Aware Advantage Estimation：用工具锚点替代状态分组。**
+**2. Tool-Memory-Aware Advantage Estimation：用工具锚点替代状态分组**
 
 开放语言环境的状态空间巨大且连续，几乎不会出现两条完全相同的 state，传统按 state grouping 的 step-level advantage 因此难以工作。SEARL 保留 episode-level advantage（在同一任务的多条 rollout 上按总回报归一化），但 step-level advantage 不按原始 state 分组，而是按 MCP tool anchor 分组：所有与同一工具、或合并后等价工具相关的动作被放入同一 group，用 return-to-go 计算相对优势。其根据在于工具是一种比文本状态更稳定的子任务抽象，按工具分组能跨轨迹比较「这个工具相关动作是否真正带来收益」，从而压住由上下文差异引入的噪声。
 
-**3. Tool Graph Memory 生命周期：让工具记忆持续增长并连边。**
+**3. Tool Graph Memory 生命周期：让工具记忆持续增长并连边**
 
 非结构化的工具仓库会随训练膨胀、重复且难以复用。SEARL 把 plan 生成的 subtask dependency graph 投影到工具空间形成任务子图：成功创建的 MCP 工具进入候选池，每轮训练根据累计 reward 选择高价值工具注册；新工具与已有工具按 name/description embedding 的 cosine similarity 合并，边则记录 subtask 的执行先后依赖，合并时边会重定向到统一节点。由此图结构不仅保存工具本身，还保存「哪些工具通常先后出现」这类组合知识，为后续的规划与检索提供可复用的操作经验。
 

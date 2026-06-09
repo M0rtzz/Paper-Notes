@@ -46,15 +46,15 @@ tags:
 
 ### 关键设计
 
-**1. 三源回归：把三股影响力放到同一把尺子上。**
+**1. 三源回归：把三股影响力放到同一把尺子上**
 
 直接对比准确率只能告诉你"加了外部信息变好还是变坏"，却分不清这份影响来自"源在场"还是"源说对"。本文改用一个 logistic regression 同时估计三个源的边际效应：$\log \frac{p}{1-p} = \beta_0 + \beta_P P_i + \delta_U U_{pres} + \beta_U (U_{pres} \times U_{corr}) + \delta_D D_{pres} + \beta_D (D_{pres} \times D_{corr})$，其中 $\delta$ 项捕捉"在场"的影响、交互项捕捉"正确性"的影响。把系数指数化得到 odds ratio——Parametric OR $= e^{\beta_P}$、User OR $= e^{\delta_U + \beta_U}$、Doc OR $= e^{\delta_D + \beta_D}$，再归一化为 Source% $= \text{Source OR} / (P+U+D)$ 便于横向比较。最关键的是 U/D 影响力之比 $e^{(\delta_U + \beta_U) - (\delta_D + \beta_D)}$：这个比值 $<1$ 就意味着模型对文档比对用户更轻信，第一次让阿谀（信用户）和知识冲突（信文档）两条研究线落到同一坐标系里。
 
-**2. 13 种 probe 矩阵：用最小代价覆盖所有源组合并隔离语言因子。**
+**2. 13 种 probe 矩阵：用最小代价覆盖所有源组合并隔离语言因子**
 
 为了让回归系数干净，探针必须系统覆盖每种源组合而不引入额外噪声。矩阵由三层构成：1 个 bare probe（无外部源）给出纯参数基线；4 个 single-source probe $v_{u^+}, v_{u^-}, v_{d^+}, v_{d^-}$ 单独打开 U 或 D 且分对错，用来干净测出模型只面对一个源时的反应、并喂给后面的鉴别力指标；8 个 double-source probe 把 U 与 D 同时摆上桌，覆盖两种正确性组合 × 两种先后 ordering，既造冲突场景又能测 positional bias。语言复杂度则用 Tier 1 / Tier 2 拆开——Tier 1 用统一模板硬套答案文本，Tier 2 由 GPT-4o 生成与题目上下文贴合的自然主张，从而把"措辞像不像真话"和"源本身的属性"两类干扰因子分离开。
 
-**3. PAR / SDR：把"对齐质量"细化成可测的鉴别力。**
+**3. PAR / SDR：把"对齐质量"细化成可测的鉴别力**
 
 模型对外部信息言听计从，并不等于对齐良好——真正的安全是"该听时听、该顶时顶"。本文用两个条件概率刻画这种鉴别力：当源说错时模型能否守住正确的参数答案，$\text{PAR}^+_s = P(\hat{y}_{v_{s^-}, q} = \hat{y}_{v_{bare}, q} \mid \hat{y}_{v_{bare}, q} = y_q^*, y^{assert}_{v_{s^-}, q} \neq y_q^*)$；当参数错了而源说对时模型能否听话改正，$\text{SDR}^+_s = P(\hat{y}_{v_{s^+}, q} = y^{assert}_{v_{s^+}, q} \mid \hat{y}_{v_{bare}, q} \neq y_q^*, y^{assert}_{v_{s^+}, q} = y_q^*)$。以 $0.5$ 为阈值把模型钉进 Selective / Impressionable / Skeptical / Stubborn 四象限：只有 PAR 与 SDR 双高的 Selective 才真正可用，其余三类各有偏科——这正是 RAG 里"检索回一篇错文档就被带跑"的 impressionable 失败模式所在。
 

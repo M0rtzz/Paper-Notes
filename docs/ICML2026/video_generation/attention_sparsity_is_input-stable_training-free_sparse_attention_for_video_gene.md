@@ -45,15 +45,15 @@ SVOO 是两阶段 pipeline：(i) 离线阶段——拿一个小规模 calibratio
 
 ### 关键设计
 
-**1. 离线分层稀疏度画像：稀疏度是层的内在属性，标定一次就够。**
+**1. 离线分层稀疏度画像：稀疏度是层的内在属性，标定一次就够**
 
 既有训练免费方法让所有 transformer 层共用同一稀疏率，等于无视每层功能差异（作者称之为 L1 缺陷）。SVOO 的关键观察是：每层的稀疏度其实由该层的 $\mathbf{W}_Q\mathbf{W}_K^\top$ 决定、对输入几乎不敏感，所以可以离线标定一次、在线全程复用。具体做法是对一个 prompt $x^k$，把 head $h$ 的注意力矩阵每行按值降序排，取覆盖累计质量 $\tau{=}0.95$ 的最小元素比例 $d_{\ell,h}^{(k)}$；在 $m$ 个 calibration 输入上拟合单变量高斯 $\mathcal{N}(\mu_{\ell,h},\sigma_{\ell,h}^2)$，用上 $\alpha{=}0.95$ 分位 $\hat d_{\ell,h}=\mu+z_\alpha\sigma$ 作保守密度估计，最终稀疏率 $s_{\ell,h}=1-\hat d_{\ell,h}$。这条"画像一次、终生复用"在理论上是合法的——Theorem 4.2 证明在 Bounded Token Representation 下，$|V(\mathbf{X})-V(\hat{\mathbf{X}})|$ 同时被 $\|\mathbf{M}\|_2^2$ 和 $1/\sqrt n$ 控制，而视频场景 token 数 $n$ 极大，同层稀疏度天然稳定，换 prompt 不必重标定。
 
-**2. 在线双向协同聚类：把 Q 和 K 当成耦合系统一起分块。**
+**2. 在线双向协同聚类：把 Q 和 K 当成耦合系统一起分块**
 
 传统方法（如 SVG2）对 query 和 key 各自独立做 k-means，背后假设"最优 key 划分与 query 无关"（L2 缺陷），可块级显著模式本就来自 Q-K 联合，独立划块会把同一片高质量注意力区切碎。SVOO 改用交替迭代的双向协同聚类：Step A 拿上一轮 query 中心 $\mathbf{C}_q^{(i-1)}$ 当锚点，算每个 key 与各 query 中心的亲和向量 $\mathbf{P}_k=\mathcal{K}(\mathbf{C}_q)^\top$，再把 key 分配到亲和向量最接近的 key-block 中心 $\bar{\mathbf{P}}_k[j]$；Step B 对称地用刚更新的 key 中心 $\mathbf{C}_k^{(i)}$ 给 query 重新分块。判定两个 key 该不该归同块的真条件是 $\mathbf{q}^\top(\mathbf{k}_1-\mathbf{k}_2)\approx 0$，显然 query-dependent，所以用 cross-affinity 取代欧式距离才对——这样同块内 token 才真正共享"相似 cross-attention 偏好"。整个过程只需 token 数 × 块数级的矩阵乘，远小于 $n\times n$ 注意力。
 
-**3. 块选择 + 稀疏 attention 拼装：把算力压进少量 block pair。**
+**3. 块选择 + 稀疏 attention 拼装：把算力压进少量 block pair**
 
 有了每层稀疏率 $s_{\ell,h}$ 和耦合块划分，最后一步是决定哪些 block pair 真去算稠密注意力。SVOO 用块中心做粗粒度估计 $\hat A_{ij}=\mathbf{C}_q[i]\mathbf{C}_k[j]^\top$，对每个 query block 按 $\hat A$ 选 top-$\lceil(1-s_{\ell,h})K_k\rceil$ 个 key block，只对这些 block pair 做精确 attention、其余块当作 0，softmax 在剩余 logit 上归一化。因为前一步协同聚类已经把高质量注意力对齐进了少量 block pair，即便保留比例很低也能守住 PSNR——这恰好把 L1（分层稀疏率）和 L2（耦合分块）两个出发点闭环到一起。
 

@@ -48,23 +48,23 @@ tags:
 
 ### 关键设计
 
-**1. 对齐模型的 SDE 分解（Proposition 1）：把"对齐"从漂移项里剥出来。**
+**1. 对齐模型的 SDE 分解（Proposition 1）：把"对齐"从漂移项里剥出来**
 
 要在推理时混合多个对齐模型，第一步得搞清楚"对齐"到底改了反向扩散的什么。论文证明，任意一个用奖励 $r$、KL 权重 $\alpha$ 微调出来的模型，其反向 SDE 漂移可以干净地拆成两块：预训练漂移加一个控制项，$f^{(r,\alpha)}(x_t, t) = f^{\text{pre}}(x_t, t) - \beta(t)\, u^{(r,\alpha)}(x_t, t)$。这里控制项 $u^{(r,\alpha)} = \nabla_{x_t} \log \mathbb{E}_{x_0 \sim p_{0|t}^{\text{pre}}}[\exp(r(x_0)/\alpha)]$ 就是奖励对采样轨迹施加的全部"拉力"，而 $f^{\text{pre}}$ 在所有对齐模型之间是共享的。这一步的意义在于：既然各模型唯一的差别都集中在 $u^{(r,\alpha)}$ 上，那么混合多个偏好的问题就被归约成了"怎么组合这些控制项"。
 
-**2. Jensen gap 近似把控制项线性化（Lemma 2）：让奖励的线性组合对应漂移的线性组合。**
+**2. Jensen gap 近似把控制项线性化（Lemma 2）：让奖励的线性组合对应漂移的线性组合**
 
 控制项里那个 $\log \mathbb{E}[\exp(\cdot)]$ 是非线性的，没法直接对奖励做线性叠加。论文交换 log-exp 与期望的顺序，用 $\bar{u}^{(r,\alpha)} = \nabla_x \mathbb{E}[r(x_0)/\alpha]$ 来近似 $u^{(r,\alpha)}$——这就是 Jensen gap 近似，DPS、RGG 等扩散引导方法里早已被广泛使用，且其误差随 $t \to 0$ 趋于 0。一旦控制项变成对奖励的线性算子，期望的线性性立刻生效：对线性奖励 $r(w) = \sum w_i r_i$，就有 $f^{(r(w),\alpha)} \approx \sum w_i f^{(r_i, \alpha)}$。也就是说，想要 $r(w)$ 对齐的生成效果，只需把各单奖励模型的漂移按 $w$ 加权相加——这正是后面三个算法共同的理论地基。
 
-**3. DB-MPA：推理时按用户权重直接混合反向 SDE。**
+**3. DB-MPA：推理时按用户权重直接混合反向 SDE**
 
 有了上面的线性化，多偏好对齐就落地成一个极简的推理改动：用户给定权重 $w$，每一步去噪时不用单一模型，而是把 $m$ 个奖励微调模型的噪声预测按权重加权，$\hat{\epsilon}_t = \sum w_i\, \epsilon_{\theta_i^{\text{rl}}}(x_t, t)$，再照常更新。整个过程不重新训练、不需要奖励可微、也不需要推理时搜索，用户改一下 $w$ 就能实时滑动 aesthetics 与 alignment 之间的权衡。代价是每步要前向 $m$ 个模型，开销 $m\times$。
 
-**4. DB-KLA：把 KL 正则化强度也变成推理时可调的旋钮。**
+**4. DB-KLA：把 KL 正则化强度也变成推理时可调的旋钮**
 
 同一套分解还能用来调 KL 强度，而不只是调奖励配比。论文把目标 KL 权重从 $\alpha$ 缩放到 $\alpha/\lambda$，并近似为预训练模型和微调模型的凸组合 $f^{(r, \alpha/\lambda)} \approx (1-\lambda) f^{\text{pre}} + \lambda f^{(r,\alpha)}$。$\lambda$ 越大越偏向对齐（但可能 reward hacking），越小越保守保留预训练质量。这样原本需要 grid search 才能定下来的 KL 权重，现在变成一个推理时连续可调的标量，避免了为找最优 $\alpha$ 反复微调。
 
-**5. DB-MPA-LS：用随机 LoRA 采样消掉 $m\times$ 开销（Proposition 2）。**
+**5. DB-MPA-LS：用随机 LoRA 采样消掉 $m\times$ 开销（Proposition 2）**
 
 DB-MPA 每步评估全部 $m$ 个模型是它最大的实用瓶颈。论文的巧解是：每个去噪步不再把所有模型都算一遍取加权平均，而是按权重 $w$ 当成概率分布，随机采样一个 LoRA adapter（两个奖励用 Bernoulli、多个用 Categorical）来出这一步。Proposition 2 证明，这条逐步随机采样的 SDE 和原来的加权混合 SDE 拥有相同的边际分布——根源在于扩散过程本身的噪声注入，使得"逐步随机选模型"的统计效果等价于"每步加权平均"。于是推理开销从 $m\times$ 降回 $1\times$，几乎不损失质量。值得注意的是，这个等价性是扩散模型独有的：LLM 在离散 token 空间里没有这种连续的随机性可以利用。
 

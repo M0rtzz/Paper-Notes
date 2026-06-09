@@ -47,15 +47,15 @@ VeriTaS 不是一个新的 fact-checking 模型，而是一个面向模型评估
 
 ### 关键设计
 
-**1. 七阶段动态构建流水线：把"持续涌现的真实核查"变成可评测样本。**
+**1. 七阶段动态构建流水线：把"持续涌现的真实核查"变成可评测样本**
 
 动态性最大的麻烦在于，它不是简单地往数据集里追加新文件，而是要从真实的事实核查生产链路里稳定地抽出干净、可用的样本。VeriTaS 用七个阶段把这件事拆开做：Stage 1 从 ClaimReview 收集约 398K 条 review；Stage 2 识别 848 个发布者、只保留专业 fact-checking 组织，得到 335K 条可信 review；Stage 3 抓取文章正文和媒体并去掉广告、cookie 提示等噪声；Stage 4 从文章里恢复原始 appearance URL 和 archived URL；Stage 5 过滤无关媒体、把 claim 改写成约 72K 条自包含声明；Stage 6 做 verdict 标准化；Stage 7 生成并验证 Intact 版本以平衡数据。这套设计的关键是把可信度、上下文、媒体和标签全部塞进一条自动流水线，使得"按季度继续扩展"不再依赖昂贵的人工维护，而是可以稳定复跑。
 
-**2. 解耦式 verdict 与 Integrity 评分：让评测知道模型到底错在哪。**
+**2. 解耦式 verdict 与 Integrity 评分：让评测知道模型到底错在哪**
 
 现实里的错误很少是干脆的"真/假"二选一——图片可能是真的但被放进错误语境，文字可能基本正确却省略了关键上下文。如果只压成一个粗糙真假标签，benchmark 就完全看不出模型错在媒体、文本还是上下文。VeriTaS 把判断拆成四个底层属性：Media Authenticity、Media Contextualization、Veracity、Context Coverage，再用 Integrity 表示 claim 作为整体是否可接受。每个属性取连续分数 $[-1, 1]$，小于 $-1/3$ 记为 Negative、大于 $1/3$ 记为 Positive，而 Integrity 由属性 (2)–(4) 中最差的那个 compromising property 决定。模型评测主指标用 MSE，因为它会狠狠惩罚 True 与 False 的反向翻转、同时又允许"近似正确"，比离散准确率更贴合这种连续、可解释的判断结构。
 
-**3. LLM ensemble 标注、过滤与 rectification：不靠人工也拿到高一致性且类别平衡的标签。**
+**3. LLM ensemble 标注、过滤与 rectification：不靠人工也拿到高一致性且类别平衡的标签**
 
 专业核查库里真实的错误声明远多于真实正确声明，直接采样必然类别失衡；但凭空合成正确声明又会脱离现实、引入伦理风险。VeriTaS 在 Stage 6 用 GPT-5.2、Gemini 2.5 Pro、Claude Sonnet 4.5 和 Llama 4 Maverick 组成 ensemble，对每个属性分别打分并生成 justification，按均值聚合；只要成员间分歧超过 1 就直接丢弃该 claim，以此换来高一致性。针对类别失衡，Stage 7 不是无条件造正例，而是依据 compromising property 的 justification 做 evidence-grounded 的 Intact 改写，再回头验证 shareability、一致性和 Integrity。这种"基于证据的修正"在真实性和平衡性之间做了折中——既补足了正确声明，又尽量不脱离真实来源。
 

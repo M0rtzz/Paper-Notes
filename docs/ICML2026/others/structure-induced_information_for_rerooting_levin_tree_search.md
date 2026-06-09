@@ -49,15 +49,15 @@ $$c^r(n)=\min_{n_t\prec n}\tfrac{1}{w_t}c_t^r(n),\quad c_t^r(n)=\sum_{n_t\prec n
 
 ### 关键设计
 
-**1. $\sqrt{\mathrm{lts}}$-L：基于 Leiden 聚类的全局结构 rerooter。**
+**1. $\sqrt{\mathrm{lts}}$-L：基于 Leiden 聚类的全局结构 rerooter**
 
 人类规划里"进入新房间"或"拿到钥匙"通常是关键子目标边界，恰好对应状态空间聚类的切换。这个 rerooter 就让 $w_t$ 反映"当前节点所在簇还剩多少未开发空间"，自动把搜索努力推向新簇。搜索过程中增量构造状态空间的诱导子图 $G_0$（节点=已访问状态，边=已用过的转移），在搜索步 $t=\gamma^i$（几何调度，$\gamma>1+1/\epsilon$）跑一次 Leiden 算法得层级聚类，取第 $k$ 层给每个树节点染色 $c$。设 $M_{\tau,c}$ 为第 $\tau$ 次染色后颜色 $c$ 的节点数、$\delta_{\tau,c}$ 为自此后又展开的同色节点数，则 $w_t=\tfrac{1}{M_{\tau,c_t}+\delta_{\tau,c_t}}$——簇越小 $w_t$ 越大、代价越低、越优先展开；继续展开同色节点会让分母涨、$w_t$ 衰减，自动转向新簇。Leiden 用 modularity 自动找这种结构，无须任何外部子目标标注；几何调度 + 不回溯改写已展开节点权重 + 子节点继承父颜色作 proxy，把聚类开销摊销到 $O(bN\log N + DN)$，与 BFS 同阶（Theorem 3.1）。
 
-**2. $\sqrt{\mathrm{lts}}$-H：基于启发式 cost-to-go 的局部 rerooter。**
+**2. $\sqrt{\mathrm{lts}}$-H：基于启发式 cost-to-go 的局部 rerooter**
 
 全局聚类分不清两个"结构对称"子树里哪个更近目标，而启发式天然带这个信息。这个 rerooter 用启发式 $h(n_t)$ 直接决定权重：$w_1=1$，$w_t=\exp\!\left(-\alpha\,\tfrac{h(n_t)}{h(n_1)}\right)$。除以 $h(n_1)$ 让权重对启发式数值的乘法缩放不变；指数严格正保留所有节点的非零质量；$\alpha$ 是逆温度——小则保守、大则集中向低启发分节点；对一组候选 rerooting 节点 $I$，$\tfrac{w_t}{\sum_{i\in I}w_i}$ 恰好是 $-\alpha h/h(n_1)$ 上的 softmax。softmax 形式让 rerooter 平滑地把搜索时间分给"看起来更有戏"的祖先，而不是简单 hard pick，对启发式噪声更鲁棒。
 
-**3. $\sqrt{\mathrm{lts}}$-LH：加性混合并配套理论保证。**
+**3. $\sqrt{\mathrm{lts}}$-LH：加性混合并配套理论保证**
 
 纯启发式 rerooter 在启发式失效的区域会把搜索带偏，纯聚类 rerooter 又对"哪个房间更接近终点"无感，于是把两者加性混合：$w_t=u_a\,\tfrac{1}{M_{\tau,c_t}+\delta_{\tau,c_t}}+u_b\,\exp\!\left(-\alpha\,\tfrac{h(n_t)}{h(n_1)}\right)$（默认 $u_a=u_b=1$），先用全局结构定粗粒度时间分配、再用启发式在簇内细化优先级。Theorem 3.2 证明任意加性 rerooter $w=u_a w_a+u_b w_b$ 在 cumulative 权重比保持 $1/C\le \tfrac{u_a w_{a,<T}}{u_b w_{b,<T}}\le C$ 时，仍满足子任务分解界 $T\le 1+(C+1)\min_D\max_i\min\{\tfrac{w_{a,<T}}{w_{a,T_i}},\tfrac{w_{b,<T}}{w_{b,T_i}}\}c^r_{T_i}(n_{T_{i+1}})$——意味着搜索能在任一信号信息量更高的区域 fall back 到该信号。$\min$ 项天然取两条 bound 里更紧的那条，$u_a,u_b$ 则把"两个 rerooter 互相吞掉对方时间"的风险关进可调常数 $C$ 里。
 

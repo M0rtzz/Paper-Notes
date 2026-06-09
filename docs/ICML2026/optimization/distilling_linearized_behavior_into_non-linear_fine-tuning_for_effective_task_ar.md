@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 线性化教师 + 任务无关 EK-FAC 曲率正则：把教师推到对任意未来任务都低干扰的方向。**
+**1. 线性化教师 + 任务无关 EK-FAC 曲率正则：把教师推到对任意未来任务都低干扰的方向**
 
 task arithmetic 的可组合性依赖 weight disentanglement，所以教师必须朝一个"对其它任意输入分布扰动都小"的方向走，才不会跟未知未来任务的 task vector 互相挤压。教师损失写成 $\mathcal L^T_t = \mathcal L_{\text{task}} + \beta^T\,\mathcal L_{\text{drift}}(\bm\theta_t^T)$，其中 representation drift 在线性化下有闭式 $\mathcal L_{\text{drift}}(\bm\theta_t)\propto (\bm\theta_t-\bm\theta_0)^\top \bm G_t(\bm\theta_0)(\bm\theta_t-\bm\theta_0)$，$\bm G_t$ 是 GGN 矩阵。关键的不同在于：本文不在已知任务集上算 GGN（那等于假设任务闭集已知），而是在一个第三方参考数据集 $\mathcal D_\Omega$ 上一次性预算 EK-FAC 近似 $\mathrm{GGN}_{\mathrm{EK\text{-}FAC}}^l=(U_A^l\otimes U_G^l)S^l(U_A^l\otimes U_G^l)^\top$（视觉用 ImageNet-21k 15% 子集，文本用 C4 的 $10^5$ 样本），让正则项变成"对一般输入分布"的解耦目标。相比 τJp 要别的任务的训练数据、TAK 要别的任务的 KFAC，换成 reference dataset 后新任务到来不必重训旧 task vector，也不暴露用户私有数据；EK-FAC 还比 KFAC 多建模 Kronecker 特征基下的特征值，曲率估计更准。
 
-**2. 沿路径知识蒸馏（APKD）：把线性化行为蒸到整段插值路径上而非单点。**
+**2. 沿路径知识蒸馏（APKD）：把线性化行为蒸到整段插值路径上而非单点**
 
 线性化教师的"对权重扰动近线性"性质要转移到非线性学生身上，而且不能只在 $\alpha=1$ 这一个权重点成立。本文蒸的不是 logits，而是最后投影头之前的隐藏激活，准则用 MSE；更关键的是每步 SGD 都从 $\alpha\sim\mathcal U(0.5,1)$ 采一个插值点，让教师和学生都按 $\bm\theta_0+\alpha\bm\tau$ 的状态算激活并对齐：
 
@@ -57,7 +57,7 @@ $$\mathcal L_{\text{KD}}=\mathbb E_{\alpha}\Big[\tfrac{1}{B}\sum_i\big\|f(\bm x_
 
 教师上加 stop-gradient，避免反传污染。固定 $\alpha{=}1$ 的传统 KD 只在一个点对齐，学生会在路径其它位置漂离线性行为；APKD 把整段线性轨迹喂给学生，相当于对一个"线性化教师族"做集成蒸馏，因此 T5 上的 $\alpha$-sweep 鲁棒性提升非常明显——部署时不必依赖验证集去精调缩放系数。
 
-**3. 学生端联合曲率正则：把"线性化"和"解耦"拆成两条独立通路。**
+**3. 学生端联合曲率正则：把"线性化"和"解耦"拆成两条独立通路**
 
 光蒸馏还不够，学生本身也要被推向支持集局部化（in-domain 大改、out-of-domain 接近预训练）。学生损失 $\mathcal L^S_t=\mathcal L_{\text{task}}(\bm\theta_t^S)+\beta_1\mathcal L_{\text{KD}}+\beta_2\mathcal L_{\text{drift}}(\bm\theta_t^S)$：蒸馏项把学生限制在近线性区域，曲率项在这区域里明确控制解耦。作者的诊断（Fig. 6）揭示了为什么两者缺一不可——"只蒸馏"贡献了线性化但解耦弱，"只曲率正则"贡献了解耦但线性化弱，必须两条通路一起上才能既近线性又支持局部化。这也解释了学生为何能反超教师：它在切空间外保留了非线性的表达力，但激活又被约束回线性化教师走过的区域。同一架构既能用 full FT 当学生，也能换 LoRA 学生配 full FT 教师——后者让教师在富表达空间找方向、学生在低秩高效子空间复刻，天然适配"训练富表达、部署高效"的工业链路。
 

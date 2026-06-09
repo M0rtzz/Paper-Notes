@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 按 pipeline 位置而非模型架构分类方法：让 taxonomy 对新模型保持稳定。**
+**1. 按 pipeline 位置而非模型架构分类方法：让 taxonomy 对新模型保持稳定**
 
 综述把所有 RIR 方法按"推理在检索流水线哪一步发挥作用"分到四个互斥的桶：Pre-Retrieval Augmentation、Reasoning-Aware Retriever Training、Reasoning-Enhanced Reranking、Iterative Retrieval。Pre-Retrieval 又分 query-side（query 改写/分解，如 TongSearch-QR、ThinkQE、ReDI）与 index-side（文档端扩写，如 SPIKE、EnrichIndex、LATTICE）；Retriever Training 关注 backbone 选择（LLM-based vs Diffusion LM）、难负样本策划（ReasonIR、DIVER、RaDeR）与训练目标（multi-task SFT + RL，format/embedding 双 reward）；Reranker 沿 Prompt-Tuning → SFT/Distillation → RL（Rank1、Rank-K、Rank-R1、ReasonRank）演化；Iterative 把检索-推理交替建模成 state machine（SMR）或 RL policy。之所以选 pipeline 位置而非模型架构当骨架，是因为新模型层出不穷但 pipeline 阶段有限且稳定，研究者也能按"我想在 query 端做工作"这种朴素需求快速定位相关工作。
 
-**2. 按五类推理类型标注 benchmark：暴露不同领域的推理需求差异与缺口。**
+**2. 按五类推理类型标注 benchmark：暴露不同领域的推理需求差异与缺口**
 
 综述把 BRIGHT 提出的演绎、类比、因果、分析、数值五种推理类型作为标签贴到每个 benchmark 上。统计后能看到清晰规律：演绎推理（rule-to-case 应用）在数学/科学/医学/法律中最普遍，类比推理在代码/数学的跨语言映射中突出，数值推理多见于日常时间运算，因果/分析推理则集中在故障排查与问题分解。这层标注让研究者一眼看出自己的方法适合哪类 benchmark，也直接暴露了多模态因果等推理类型的 benchmark 缺口。
 
-**3. Scale-Reliability 权衡视角：用一个可量化维度总结 benchmark 构造的根本张力。**
+**3. Scale-Reliability 权衡视角：用一个可量化维度总结 benchmark 构造的根本张力**
 
 benchmark 构造存在一对此消彼长的矛盾：LLM 合成（ScIRGen、ImpliRet）能规模化但带幻觉，人类标注（BRIGHT、Bar Exam QA）可靠但成本高。综述把 17 个 benchmark 沿"规模 × 标注方式"二维定位，发现"先 LLM 生成再人工审核"的混合构造正成为主流，并据此主张未来应走"先合成后专家校验"路线。用大小与人工占比这个可量化维度做总结，能把对 benchmark 的评论从"哪个更好"提升到设计权衡层面。
 

@@ -47,15 +47,15 @@ FS-Researcher 想解决的核心矛盾是：深度研究要消化数百个网页
 
 ### 关键设计
 
-**1. 文件系统工作空间：用持久化外部记忆替掉上下文窗口，让信息量不再受 token 预算约束。**
+**1. 文件系统工作空间：用持久化外部记忆替掉上下文窗口，让信息量不再受 token 预算约束**
 
 深度研究的长轨迹里，thoughts、tool observations 和报告草稿一直在抢有限的 token 预算，结果是覆盖不全、过早综合。FS-Researcher 干脆把所有东西外化成 Markdown 文件：交付物有 `index.md`、`knowledge_base/`、`sources/`、`report.md`，控制文件有 todos、checklist、logs。Agent 每个 session 开始时先检查工作空间状态再制定计划，session 结束时对照 checklist 审查，把没达标的项标成 `[IN-PROGRESS]`，下个 session 接着干。工具集也分两类——文件系统工具（`ls`、`grep`、`read_file`、`insert`/`delete`/`replace`）和网络浏览工具（`search_web`、`read_webpage`）。这样做有三重好处：它镜像了人类处理复杂任务的原生方式；存储量远超上下文窗口、按需访问不溢出；中间产物持久可回溯，支持跨 session 反复打磨。
 
-**2. Context Builder：把信息系统性地收集、蒸馏、归档进结构化知识库，而不是堆在上下文里。**
+**2. Context Builder：把信息系统性地收集、蒸馏、归档进结构化知识库，而不是堆在上下文里**
 
 如果像传统做法那样在上下文里直接累积事实，很快就会撑爆窗口，且结构混乱不利于检索。Context Builder 的交付物是三件套：`index.md`（目录，含主题分解和 KB 结构）、`knowledge_base/`（树状笔记目录，每条陈述都附引用指回 `sources/`）、`sources/`（归档的原始网页）。它的工作流是非线性的——`index.md` 和 `knowledge_base/` 随浏览过程动态更新；每个 session 结束做一次自检，找出知识库里的错误、缺口或冲突并标记待处理，可一直迭代到耗尽 session 预算或通过审查。把信息外化成文件，知识库就能长到远超上下文容量，而结构化组织又让下游的 Report Writer 能按需精准检索。
 
-**3. Report Writer：砍掉联网能力、只读知识库，用分节多 session 写作换取深度与自纠正。**
+**3. Report Writer：砍掉联网能力、只读知识库，用分节多 session 写作换取深度与自纠正**
 
 一次性生成整篇报告，往往退化成事实罗列、缺乏深度分析。Report Writer 因此被设计成只能从知识库读事实（移除网络浏览工具），并采用多 session 分节流程：第一个 session 先建大纲（同时充当 TODO），之后每个 session 只挑一个章节来写；每节写完做节级审查（对照 checklist），全部完成再做报告级审查，发现问题就把相关章节重标为 `[IN-PROGRESS]` 返工，且不设 session 预算上限。分节写作的价值在于提供频繁的"重新锚定"机会——每写一节都回到知识库做局部规划和自我纠正，避免越写越飘。
 

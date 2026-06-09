@@ -45,15 +45,15 @@ LASER 把主动感知建模为 POMDP $\mathcal{M}=(\mathcal{S},\mathcal{A},\math
 
 ### 关键设计
 
-**1. 连续场潜世界模型：当一个可微的物理环境代理，既能 forward predict 又能算重建奖励。**
+**1. 连续场潜世界模型：当一个可微的物理环境代理，既能 forward predict 又能算重建奖励**
 
 真实物理仿真器昂贵且不可微，没法让 RL 反复 rollout，所以作者先离线训一套潜世界模型 $p_\phi^{enc}\to p_\phi^{dyn}\to p_\phi^{dec}$ 当代理。编码器仿 AROMA，用 $M$ 个可学 latent queries 对稀疏观测 $(\bm x_t^{(i)},\bm u_t(\bm x_t^{(i)}))$ 做 cross-attention 得 $\bm z_t\sim\mathcal{N}(\bm\mu_\phi,\bm\sigma_\phi^2)$，天然 permutation-invariant，能适配任意传感器数和位置；而且训练时每步重新随机采布局，逼世界模型学到布局不变的表示，否则后面 RL 一改布局它就崩。动力学预测器是 conditional diffusion，条件是当前 $\bm z_t$ 和 GRU 历史 $\bm h_t=\mathrm{GRU}_\phi(\bm h_{t-1},\bm z_t)$，对噪声化的 $\tilde{\bm z}_{t+1}$ 做 $K$ 步去噪输出 $\hat{\bm z}_{t+1}$——用扩散而不是确定性 MLP，是因为湍流这类非平稳场的未来是多模态的，单点预测会被平均成模糊。解码器是隐式神经场 (INR)，输入 $(\bm z_t,\bm x)$ 输出任意坐标的场值 $\hat{\bm u}_t(\bm x)$，于是奖励能在整个 $\Omega$ 上算连续可微的 MSE 而不局限于网格点。整体训练目标 $\mathcal{L}_{world}=\mathcal{L}_{recon}+\beta\mathcal{D}_{KL}+\lambda\mathcal{L}_{diffusion}$。
 
-**2. Proactive 策略与多尺度交叉注意力：用"想象出的下一步潜状态"当上下文，让传感器决策超前一步。**
+**2. Proactive 策略与多尺度交叉注意力：用"想象出的下一步潜状态"当上下文，让传感器决策超前一步**
 
 传感器决策必须 anticipate 而非 react——你想知道"如果场马上变成那样，现在该把传感器往哪挪"。作者的关键设计就是把世界模型幻想出的 $\hat{\bm z}_{t+1}$（而非当前 $\bm z_t$）作为策略的 key/value，策略 $\pi_\theta(\bm a_t|\hat{\bm z}_{t+1},\bm o_t)$ 是个 Transformer。传感器侧 query 由位置和值嵌入拼成 $\mathbf q^{(i)}=[\gamma_{pos}(\bm x_t^{(i)});\text{Embed}(\bm u_t(\bm x_t^{(i)}))]$，其中 $\gamma_{pos}$ 是多尺度 Fourier feature $\gamma^s(\bm x)=[\sin(\bm x\bm\omega^s),\cos(\bm x\bm\omega^s)]$；query 和 imagined 潜码做多尺度 cross-attention $\mathbf f=\bigoplus_{s}\text{softmax}(\mathbf q^{(s)}(\mathbf k^{(s)})^\top/\sqrt{c_s})\mathbf v^{(s)}$，多尺度是为了同时抓物理场的局部细节和全局结构（湍流大涡 + 小涡）；再过一层 self-attention 让传感器之间协同、不扎堆覆盖同一区域；最后 MLP 头输出高斯位移 $(\bm\mu_\theta^{(i)},\log\bm\sigma_\theta^{(i)})$，动作 clip 到 $[-a_{max},a_{max}]$。
 
-**3. GRPO 训练：动态 group 过滤 + 多步前瞻奖励，把稀疏奖励 + 高维连续动作的训练打稳。**
+**3. GRPO 训练：动态 group 过滤 + 多步前瞻奖励，把稀疏奖励 + 高维连续动作的训练打稳**
 
 主动感知是高维连续动作 + 稀疏延迟反馈，model-free RL 直接做会抖。作者把 GRPO 这套 group-relative 优势估计从 LLM 离散 token 搬到连续控制：每个 $t$ 采 $G$ 组动作得 reward $\{r_t^g\}$，组相对优势 $A_{g,t}=(r_t^g-\text{mean})/\text{std}$ 再 batch 内二次归一化 $\hat A_{g,t}$，目标 $\mathcal{J}_{GRPO}=\mathbb E[\min(s_{g,t}(\theta)\hat A_{g,t},\text{clip}(\cdot,1-\epsilon,1+\epsilon)\hat A_{g,t})]$ 沿用 PPO 的 clip。在此之上加两个增量。其一是**动态 group 过滤**：维护一个 $\tau$ 跟踪 $\min_g r_t^g$ 的运行均值，整组 reward 都 $<\tau$ 的低质量样本（传感器扎堆、跑出边界这类系统性无信息配置）从 buffer 剔除，免得它们污染 advantage 估计。其二是**多步前瞻奖励**：执行 $\bm a_t$ 后冻结布局，让 $p_\phi^{dyn}$ 自回归 rollout $H=3$ 步，按 $r_t^{look}=\sum_{h=1}^H\gamma^{h-1}r_{t+h}/\sum\gamma^{h-1}$ 折扣聚合——单步 reward 只会鼓励短视布局，把奖励和"未来 H 步重建"挂钩才能在快速演化的湍流上避免决策只顾眼前。
 

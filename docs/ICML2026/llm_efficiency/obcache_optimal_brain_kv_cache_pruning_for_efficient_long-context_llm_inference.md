@@ -45,15 +45,15 @@ OBCache 的全部改动只发生在 eviction 方法的"打分"这一步：它不
 
 ### 关键设计
 
-**1. Value-Pruning Score（$\mathbf{S}_p^{\text{value}}$）：只删 value 时输出扰动的最廉价度量。**
+**1. Value-Pruning Score（$\mathbf{S}_p^{\text{value}}$）：只删 value 时输出扰动的最廉价度量**
 
 attention-only 分数最直接的漏洞是只看 token 被注意了多少、不看它的 value 长什么样——一个 attention weight 大但 value 接近零向量的 token 对输出毫无贡献却被保留。把 value 当作唯一剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{V}} = \mathbf{0}$）代入二阶 Taylor 的第一项，闭式结果是 $\mathbf{S}_p^{\text{value}} = \sum_i |\mathbf{A}_{i,p}|^2 \|\mathbf{v}_p\|^2$，即该 token 所在 attention 列的 $\ell_2$ 范数平方再乘以 value 范数平方。这等于在原来的 attention 分数上只多挂一个 $\|\mathbf{v}_p\|^2$ 缩放因子，开销几乎为零却把 value-state 信息引了进来；更关键的是，VATP / CriticalKV 此前启发式提出的 value-aware 分数恰好是该式取 $\ell_1$-norm 的特例，所以"value norm 该乘进来"这件事不再是经验直觉，而是 OBD 框架自然推出的结论。
 
-**2. Key-Pruning Score（$\mathbf{S}_p^{\text{key}}$）：捕捉剪 key 后 softmax 重归一化的连锁扰动。**
+**2. Key-Pruning Score（$\mathbf{S}_p^{\text{key}}$）：捕捉剪 key 后 softmax 重归一化的连锁扰动**
 
 剪 value 只挪动一个被加权的向量，剪 key 的破坏力大得多——它会改写整列 logits，softmax 行重归一化后整张 attention 分布都被拉偏，而现有 attention-only / value-aware 分数都没显式建模这一连锁效应。把 key 当作剪枝单位（$\mathbf{e}_p^\top \widehat{\mathbf{K}} = \mathbf{0}$）推出的闭式分数是 $\mathbf{S}_p^{\text{key}} = \sum_i |\mathbf{A}_{i,p} \mathbf{Z}_{i,p}|^2 \|\mathbf{v}_p - \mathbf{o}_i\|^2$，其中 $\mathbf{Z}$ 是 pre-softmax logits、$\mathbf{o}_i$ 是第 $i$ 个 query 位置的注意力输出。它给高分的是那些"value 方向与当前输出 $\mathbf{o}_i$ 差异大、且 attention 与 logits 都不小"的 token——正是这类 token 一旦被剪，重归一化后会把 $\mathbf{O}$ 显著拉偏。因为显式刻画了这层 attention-only 信号完全看不见的灵敏度，key-pruning 也成了 OBCache 相比已有方法收益最大的来源。
 
-**3. Joint Key-Value Score（$\mathbf{S}_p^{\text{joint}}$）：把 key/value 交互项也算进来的完备估计。**
+**3. Joint Key-Value Score（$\mathbf{S}_p^{\text{joint}}$）：把 key/value 交互项也算进来的完备估计**
 
 前两个分数各自只动一边，无法刻画同时剪掉 $(\mathbf{k}_p,\mathbf{v}_p)$ 时二者的耦合。把它们当作联合剪枝单位，闭式分数为 $\mathbf{S}_p^{\text{joint}} = \mathbf{S}_p^{\text{value}} + \mathbf{S}_p^{\text{key}} + 2 \sum_i |\mathbf{A}_{i,p}|^2 \mathbf{Z}_{i,p} (\|\mathbf{v}_p\|^2 - \mathbf{v}_p^\top \mathbf{o}_i)$，比 value+key 多出的第三项正是 cross-Hessian $\mathbf{H}^{vk}$ 的贡献，捕获 key 与 value 的交互效应，因而对真实 eviction error 的估计最完整。它的意义更多在框架上的理论完备，同时把 OBCache-V / -K / -V&K 三档摆出来，让用户按算力预算选择。
 

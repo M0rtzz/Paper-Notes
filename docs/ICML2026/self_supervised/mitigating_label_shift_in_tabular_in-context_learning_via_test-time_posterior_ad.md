@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. DistPFN：后验/先验比作为调整因子。**
+**1. DistPFN：后验/先验比作为调整因子**
 
 TabPFN 一族的病根是对训练集类先验过度敏感——在不平衡数据上能把 98.3% 的样本全押给 majority class。DistPFN 的修正只有一行：
 
@@ -54,7 +54,7 @@ $$\tilde{p}_{DistPFN}(y) = \mathrm{Norm}\!\left(\hat{p}_{TabPFN}(y) \cdot \frac{
 
 关键的不同在分子用 $\hat{p}^2$ 而非 $\hat{p}$。经典 prior correction 假设 $\hat{p}(y)$ 已经坍缩到 $p_{train}(y)$，于是把训练先验整除掉；但实际上 $\hat{p}(y)$ 并不会完全坍缩，"全除"就矫枉过正。平方分子保留了模型自己的预测信息，把矫正控制在"部分修正"——作者用 oracle 实验验证这个折中非常接近最优。
 
-**2. DistPFN-T：用 CE 当温度做自适应缩放。**
+**2. DistPFN-T：用 CE 当温度做自适应缩放**
 
 固定的 $\hat{p}^2/p_{train}$ 在弱 shift 时够用，强 shift 时却容易过调、把概率推到极端。DistPFN-T 引入一个自监控信号控制修正强度：取温度 $\tau = \mathrm{CE}(\hat{p}_{TabPFN}(y), p_{train}(y))$（预测与训练先验之间的交叉熵），先对预测做温度缩放 $\hat{p}_{TabPFN\text{-}T}(y=c) = \mathrm{softmax}(\hat{p}_{TabPFN}(y=c)/\tau)$，再代入
 
@@ -62,7 +62,7 @@ $$\tilde{p}_{DistPFN\text{-}T}(y) = \mathrm{Norm}\!\left(\hat{p}_{TabPFN}(y) \cd
 
 这个 $\tau$ 的妙处在于它把"测试分布偏离训练分布多远"直接量化成缩放强度：预测越偏离训练先验 → $\tau$ 越大 → 缩放后预测越平滑 → 修正温和但持久；在 majority 案例里进一步放大 minority、在 minority 案例里反向温和化，起到双向 counterbalance 的作用。而且整个 $\tau$ 只用模型自身输出和已知训练先验算出来，不依赖任何外部信号。
 
-**3. Inverse-frequency 重采样基准。**
+**3. Inverse-frequency 重采样基准**
 
 为了系统量化"漂移强度 vs 准确率"，作者只动训练集、不碰测试集，用一个标量 $\beta \geq 0$ 控制 label shift 强度。给每个类 $c_k$ 赋采样权重 $w_k = (1/p(y=c_k))^\beta$，归一化 $\tilde{w}_k = w_k / \sum_j w_j$ 后在训练集上按它过采样（用 oversample 而非 undersample，避免删数据丢信息）。$\beta = 0$ 是均匀重采样，$\beta$ 越大越偏向稀有类，训练分布也就越漂离测试分布。现有 label shift benchmark（如 TableShift）只有零星几个真实漂移点，画不出连续曲线；这套构造让作者能在 $\beta \in \{0, 0.1, 0.5, 1, 2, 5\}$ × 253 个数据集 × 5 个 seed 上做大规模可控评测，信号比真实 OOD 更干净。
 

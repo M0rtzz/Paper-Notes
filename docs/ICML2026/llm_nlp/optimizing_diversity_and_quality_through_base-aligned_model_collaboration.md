@@ -45,15 +45,15 @@ BACO 想在一次解码里既拿 base 的多样性又拿 aligned 的质量，做
 
 ### 关键设计
 
-**1. 基于 logit 的路由：让 base 自己的不确定度决定哪里该放手。**
+**1. 基于 logit 的路由：让 base 自己的不确定度决定哪里该放手**
 
 对齐塌缩的根源是 aligned 在该多样的位置也强行收敛，可真正"可以多样"的位置其实是少数——那些续写有好几种都合理的"语义岔路口"。BACO 直接用 base 模型当下的预测不确定度来识别这些岔路口：不确定就让 base 出 token 跑多样性，确定就让 aligned 出 token 保质量。两个代表变体落地这个思路——BACO-P 在 base 的 top-1 概率 $\max_{y_t} P_{\text{base}}(y_t|\cdot) < \gamma$ 时路由到 base；BACO-H 在 base 的预测熵 $H_{\text{base}}(Y_t|\cdot) = -\sum_{y_t} P_{\text{base}}(y_t|\cdot)\log P_{\text{base}}(y_t|\cdot) > \gamma$ 时路由到 base。阈值 $\gamma$ 等价于一个"多样性温度"：调大偏向 base（更多样），调小偏向 aligned（更高质量）。它之所以有效，是因为高不确定度位置上让 aligned 硬收敛只是白白烧掉"可多样化的预算"，而低不确定度位置 base 与 aligned 本就高度一致，切换没收益还徒增风险。
 
-**2. 基于内容的路由：按 token 的语言学角色分工，而不是看概率。**
+**2. 基于内容的路由：按 token 的语言学角色分工，而不是看概率**
 
 logit 信号需要拿到 base 的 logits，且会把所有高不确定度位置都判给 base，但有一类位置——标点、换行、function word——恰恰是两模型分歧最多、读者却最不在意的地方，多样化它们毫无意义还会破坏格式。BACO 因此改用 token 的语言学角色来分工：把"风格性 token"留给 aligned，把"实义内容词"留给 base。BACO-PUNC 在 top-1 是标点/格式 token（如 `\n`、句号）时强制走 aligned 以保格式一致；BACO-FC 在 top-1 是 function word（and/if/the 等）时走 aligned 以保语篇衔接。这背后是个语言学观察——人感知到的"多样性"几乎全在内容词上（地名、动词、形象描写），把功能/风格词交给 aligned 既稳住了行文又不牺牲读者真正在意的多样性。而且这类信号根本不需要 logits，所以连只能调 API 的黑盒对齐模型也能用。
 
-**3. 组合路由 + 可控阈值：把两类信号串起来，沿 Pareto 前沿连续滑动。**
+**3. 组合路由 + 可控阈值：把两类信号串起来，沿 Pareto 前沿连续滑动**
 
 logit 信号倾向"有把握就交给 aligned"，内容信号倾向"风格/功能词归 aligned"，两者关注的维度不同、天然互补，单用任一个都够不到最优。组合版（BACO-P-PUNC、BACO-P-FC、BACO-H-PUNC 等）先用内容规则（PUNC/FC）锁定"必须走 aligned"的 token，剩下的再回退到 logit 规则判方向；这样既保住语篇连贯，又能在真正的岔路口放手让 base 跑多样性。更实用的是只需调单一阈值 $\gamma$ 就能扫出从"低多样-高质量"到"高多样-中等质量"的整条曲线，给上层应用留了一个连续可调的旋钮，而不是只给一个固定工作点。
 

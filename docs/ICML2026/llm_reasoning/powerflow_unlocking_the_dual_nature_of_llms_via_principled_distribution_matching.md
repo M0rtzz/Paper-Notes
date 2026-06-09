@@ -44,15 +44,15 @@ PowerFlow 把无监督微调形式化成"让策略去匹配基模型的 $\alpha$
 
 ### 关键设计
 
-**1. $\alpha$-power 目标 + 双向旋钮：用一个标量同时管"激发推理"和"释放创造力"。**
+**1. $\alpha$-power 目标 + 双向旋钮：用一个标量同时管"激发推理"和"释放创造力"**
 
 RLIF 此前的奖励全是手工拼的——想激发推理设一种、想要多样性设另一种，彼此割裂还没有理论保证。PowerFlow 把两件事收进同一个目标分布 $p_\alpha(y|q) = p_{\text{base}}(y|q)^\alpha / Z(q,\alpha)$。幂运算是单调变换，所以它只改熵、不动基模型的相对概率排名和多模态结构，这正是相对 RLHF/GRPO 这类外部奖励方法的关键差别（后者会把质量"漂"出基模型的支撑集）。$\alpha>1$ 时分布被锐化，配合"verification-generation asymmetry"假设（验证比生成容易、模型存在 hidden knowledge），质量被推向隐藏的正确路径；$\alpha<1$ 时分布被平滑，而一个被 RLHF 对齐过的模型相当于已经处在 reference 模型的 $\alpha>1$ power 分布上，再 flatten 一下恰好抵消 typicality bias、把被埋掉的长尾创造路径还原出来。论文进一步证明（Theorem F.1）经验上 work 的 majority-voting RLIF 其实就是 $\alpha$-power 在 $\alpha \to \infty$ 的极限，于是 PowerFlow 成了它的广义形式。
 
-**2. GFlowNet 作为摊销变分采样器：把分布匹配变成一个能算的 on-policy 目标。**
+**2. GFlowNet 作为摊销变分采样器：把分布匹配变成一个能算的 on-policy 目标**
 
 直接最小化反向 KL 会撞上配分函数 $Z(q)$ 不可解的墙。把 KL 展开成 $\mathbb{D}_{\text{KL}}(\pi_\theta \| p_{\text{target}}) = \mathbb{E}_{y\sim\pi_\theta}[\log \pi_\theta(y|q) / \tilde{p}_{\text{target}}(y|q)] + \log Z(q)$ 后，末项与 $\theta$ 无关，于是真正要优化的只剩前半截。Zimmermann et al. (2023) 已证明 GFlowNet 的 Trajectory-Balance 损失就是这个 KL 的变分代理；而 LLM 自回归生成天然是树状 DAG，反向策略退化为 $P_B \equiv 1$，TB 损失因此简化成 $\mathcal{L}_{\text{TB}} = (\log Z_\phi(q) + \sum_t \log \pi_\theta(y_t|y_{<t},q) - \log \tilde{p}_{\text{target}}(y|q))^2$。它的梯度恰好等于 $2\nabla_\theta \mathbb{D}_{\text{KL}}(P_F \| p_{\text{target}})$，所以最小化它就是在做严格的分布匹配。和 PPO/GRPO 那种 policy-gradient + KL-penalty 不同，GFlowNet 不需要奖励模型就能精确匹配任意未归一化密度，而那个可学习的 $Z_\phi$ 把配分函数估计摊销掉、大幅压低了梯度方差。
 
-**3. Length-Aware TB 重参数化（LA-TB）：把长度偏置从配分函数里连根拔掉。**
+**3. Length-Aware TB 重参数化（LA-TB）：把长度偏置从配分函数里连根拔掉**
 
 自回归 log-prob 跟序列长度近似线性，所以任何 prompt 级的标量配分函数都会让能量随长度漂移——锐化时模型挑短路径走、短序列坍缩，平滑时模型灌重复 token 把平均能量拉低、长度爆炸。LA-TB 的做法是把配分函数本身改成长度感知形式 $Z_\phi(q,y) = (Z'_\phi(q))^{|y|}$，再把整个 log-mismatch 除以 $|y|$，得到 $\mathcal{L}_{\text{LA-TB}} = (\log Z'_\phi(q) + \tfrac{1}{|y|}\log(\pi_\theta(y|q)/\tilde{p}_{\text{target}}(y|q)))^2$。它的收敛点是 $\pi^*(y|q) \propto \tilde{p}_{\text{target}}(y|q) \cdot e^{-\lambda_q |y|}$，正好是对长度的一维指数 tilt。论文给了两条保证：Prop 3.2 说 LA-TB 是在给定期望长度约束下 $\tilde{p}_{\text{target}}$ 的 I-projection，即所有长度校准分布里离理想目标 KL 最近的那个；Prop 3.3 说全局 KL 失真只有 $\tfrac{1}{2}\lambda_q^2 \text{Var}_{\tilde{p}_{\text{target}}}(|y|) + O(|\lambda_q|^3)$，是 $\lambda_q$ 的二阶小量。再叠上格式 penalty $\psi(y)$（缺 \boxed{} 罚 -0.5）和 PPO 风格的 importance ratio clipping 就构成完整目标。效果上，trajectory 级 TB/RL 直接训几步就长度坍缩、token 级简单平均又会被重复 token 钻空子先升后崩，唯独 LA-TB 既消了长度偏置又不破坏语义——在 Qwen2.5-Math-1.5B 上测得 pair-wise 反演率仅 0.09，即 91% 的 $\alpha$-power 排序被保留。
 

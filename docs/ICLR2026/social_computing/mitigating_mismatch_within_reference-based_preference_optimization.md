@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. 过早满足（Premature Satisfaction）的形式化：解释 DPO 为何在悲观 pair 上停止学习。**
+**1. 过早满足（Premature Satisfaction）的形式化：解释 DPO 为何在悲观 pair 上停止学习**
 
 这一节针对的痛点是「为什么 DPO 训练后 implicit reward 和 likelihood 的排序一致率只有 ~50%」。作者从梯度权重入手分析：DPO 在每个样本上的梯度被 $w_{DPO} = \sigma(-\beta(\Delta_\theta - \Delta_{ref}))$ 加权，权重越小说明模型越「觉得自己学够了」。问题出在 $\Delta_{ref}<0$ 的悲观 pair 上——此时即便策略本身仍然错误（$\Delta_\theta < 0$，即把 rejected 排在 chosen 前面），只要它比 reference「不那么错」（$\Delta_\theta > \Delta_{ref}$），相对 margin $\Delta_\theta-\Delta_{ref}$ 就为正，$w_{DPO}$ 随之快速衰减。举个例子，$\Delta_{ref}=-3,\Delta_\theta=-1$ 时相对 margin 为 2，$w_{DPO}\approx 0.119$，梯度只剩 12%——模型在策略明显还没学对的时候就「满足」了，这正是「过早满足」一词的由来，也精确解释了那个困扰社区的低一致率现象。
 
-**2. HyPO 目标函数：用一个 max 把 reference 项变成条件性的。**
+**2. HyPO 目标函数：用一个 max 把 reference 项变成条件性的**
 
 知道病根在悲观 reference 后，修法就很直接：把 reference margin 从下方夹住。定义裁剪后的 $\widetilde{\Delta}_{ref} = \max(\Delta_{ref}, \gamma)$（默认阈值 $\gamma=0$），损失写作
 
@@ -56,7 +56,7 @@ $$\mathcal{L}_{HyPO} = \mathbb{E}\big[\log(1 + \exp(-\beta(\Delta_\theta - \wide
 
 这一个 max 让损失在两类 pair 上自动切换行为：乐观 pair（$\Delta_{ref}\geq 0$）下 $\widetilde{\Delta}_{ref}=\Delta_{ref}$，损失等价于 DPO，近端约束和稳定性原样保留；悲观 pair（$\Delta_{ref}<0$）下 $\widetilde{\Delta}_{ref}=0$，损失退化为绝对 margin 更新 $\sigma(-\beta\Delta_\theta)$，把悲观 reference 的干扰彻底剔除。若担心 hard max 在阈值处不光滑，可以换成 softplus 的平滑版本 $\widetilde{\Delta}_{ref} = \gamma + \frac{1}{\alpha}\log(1+\exp(\alpha(\Delta_{ref}-\gamma)))$。落到代码上就是一行改动：把原来的 $\Delta_{ref}$ 替换成 $\max(0, \Delta_{ref})$。
 
-**3. 理论性质：HyPO 的梯度权重在两个极端之间取了下界。**
+**3. 理论性质：HyPO 的梯度权重在两个极端之间取了下界**
 
 作者进一步刻画了 HyPO 梯度权重 $w_{HyPO}$ 与 DPO 权重 $w_{DPO}$、reference-free 权重 $w_{abs}$ 的关系，说明这个裁剪不是随手一夹，而是有明确边界。结论是：在所有 pair 上都有 $w_{HyPO} \geq w_{abs}$，即 HyPO 至少不会比纯 reference-free 更弱；在非悲观 pair 上 $w_{HyPO} = w_{DPO}$，完整保留 DPO 的行为；在悲观 pair 上 $w_{HyPO} = w_{abs}$，完全消除悲观偏差。换句话说，HyPO 在乐观区取 DPO、在悲观区取 reference-free，恰好把两者各自的优点拼在一起。
 

@@ -45,15 +45,15 @@ EvolveR 要解决的是 agent「做完一题就忘」的问题，办法是把一
 
 ### 关键设计
 
-**1. 自蒸馏 + 双层去重整合的经验库 $\mathcal E$：让经验从轨迹里长出来，又不让库膨胀。**
+**1. 自蒸馏 + 双层去重整合的经验库 $\mathcal E$：让经验从轨迹里长出来，又不让库膨胀**
 
 agent 过去的轨迹要么被丢、要么靠外部强教师 distill，而强教师产出的原则常常超出 agent 自身的执行能力（cognitive misalignment），小模型尤甚。EvolveR 索性让每条轨迹 $\tau$ 都由 $\pi_\theta$ **自己**按 prompt 抽出一条候选原则 $p_{\text{cand}}$，蒸馏者和执行者是同一个 policy，原则天然落在 agent 能用得上的能力分布内。但自蒸馏会产生大量重复，于是接一道双层整合：第一层先把同一问题下因 GRPO 多次采样得到的语义等价原则合并；第二层再在全库 $\mathcal E$ 里做 embedding 检索 + 二分类语义判定，若 $\max_{p\in\mathcal E}\text{sim}(p_{\text{cand}},p)<\theta_{\text{sim}}$ 就作为新条目入库 $\mathcal E\leftarrow\mathcal E\cup\{p_{\text{cand}}\}$，否则把来源轨迹 $\tau_{\text{src}}$ Merge 到最相似的已有条目 $p^*$ 下，只丰富它的证据而不新增冗余。这样既绕开了外部教师的分布错配，又避免了 raw case 库爆炸、重复条目稀释检索质量。
 
-**2. 动态评分 + 阈值剪枝：让库自己优胜劣汰。**
+**2. 动态评分 + 阈值剪枝：让库自己优胜劣汰**
 
 光往库里塞原则，时间一长高价值和噪声原则混在一起，检索就被拖垮。EvolveR 给每条原则 $p$ 挂两个计数——被检索使用次数 $c_{\text{use}}(p)$ 和随后任务成功次数 $c_{\text{succ}}(p)$——用 Laplace 平滑算一个分数 $s(p)=\frac{c_{\text{succ}}(p)+1}{c_{\text{use}}(p)+2}$，低于阈值 $\theta_{\text{prune}}$ 的周期性剪掉。Laplace 平滑这里很关键：分子分母各加常数，让刚入库、使用次数极低的新原则有一个合理的默认分，不至于一上来就被剪；随着 $c_{\text{use}}$ 增大，分数又会收敛到真实成功率。retrieval 优先返回高分原则，prune 持续清掉低分噪声，库才能长期不塌成垃圾堆——这正是 ExpeL 类「经验越用越脏」毛病的解法。
 
-**3. 经验作为 RL action + GRPO 闭环训练：不只读经验，还学会怎么用经验。**
+**3. 经验作为 RL action + GRPO 闭环训练：不只读经验，还学会怎么用经验**
 
 把原则库当成只读的 RAG，policy 本身并不会进化；EvolveR 的关键一步是把 `<search_experience>` 设成和外部搜索平起平坐的 first-class action，让 RL 的梯度直接打在「什么时候该查经验、查哪条最有用」上。reward 是 outcome reward（answer 与 ground truth 的 EM）和 format reward 的加权和 $R(\tau)=w_o R_{\text{outcome}}+w_f R_{\text{format}}$，其中 format reward 鼓励 think、search、answer 各至少出现一次、且 `search_experience` 与 `search_knowledge` 都被调用过。policy 用 GRPO 优化，每个 prompt 采 $G=8$ 条轨迹做组内相对优势估计：
 

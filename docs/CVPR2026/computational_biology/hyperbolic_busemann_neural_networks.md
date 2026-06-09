@@ -66,7 +66,7 @@ tags:
 
 ### 关键设计
 
-**1. Busemann MLR：用 Busemann 函数替掉分类头里的内积。**
+**1. Busemann MLR：用 Busemann 函数替掉分类头里的内积**
 
 欧式 MLR 的 logit $u_k(x)=\alpha_k\langle v_k,x\rangle+b_k$ 里那个内积，在双曲空间没有现成对应物，过去的双曲 MLR 只能靠每类额外挂一个流形参数 $p_k$ 来补偿，参数翻倍。这里换个角度：欧式空间下 $B^v(x)=-\langle x,v\rangle$，也就是 Busemann 函数本就是内积的负数，那直接把内积替成 Busemann 函数就行，得到
 
@@ -74,11 +74,11 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 其中 $\alpha_k>0$、$v_k\in\mathbb{S}^{n-1}$、$b_k\in\mathbb{R}$，每类只需 $(\alpha_k,v_k,b_k)$ 共 $C(n+2)$ 个参数，不再有额外的流形值参数。$B^v(x)$ 在两种模型上都有闭式：Poincaré 球上 $B^v(x)=\frac{1}{\sqrt{-K}}\log\frac{\|v-\sqrt{-K}x\|^2}{1+K\|x\|^2}$，Lorentz 模型上 $B^v(x)=\frac{1}{\sqrt{-K}}\log(\sqrt{-K}(x_t-\langle x_s,v\rangle))$。这两个表达式都能整批矩阵化，所有类的 logit 一次算完，不像 PBMLR-P 那样要逐类循环。而且 $K\to 0^-$ 时 Poincaré 版趋于 $2\alpha_k\langle v_k,x\rangle+b_k$、Lorentz 版趋于 $\alpha_k\langle v_k,x_s\rangle+b_k$，干净地退化回欧式 MLR，保证了它是欧式情形的真推广而非另起炉灶。
 
-**2. 点到极球面的距离解释：让这个 logit 有几何含义。**
+**2. 点到极球面的距离解释：让这个 logit 有几何含义**
 
 把内积换成 Busemann 函数后，自然要问换出来的 logit 到底代表什么。答案是它就是「点到 horophere 的有符号测地距离」。关键依据是 Hadamard 空间（涵盖欧式与双曲的广义度量空间）里 Busemann 函数的等值面——也就是 horophere——彼此等距：$d(H_{\tau_1}^\gamma,H_{\tau_2}^\gamma)=|\tau_2-\tau_1|$，于是点到任意 horophere 的距离写成 $d(x,H_\tau^v)=|B^v(x)-\tau|$。把这个代回去，BMLR 的 logit 恰好等于有符号点到 horophere 距离再乘 $\alpha_k$。这就把欧式 MLR 里「logit = 点到决策超平面的有符号距离」（Lebanon & Lafferty 的经典解释）原封不动搬到了双曲空间：样本离哪一类的 horophere 越近，属于那类的概率越大。区别在于它用的是真实测地距离，而不是切空间投影出来的伪距离。
 
-**3. Busemann FC：把同一套字典用到全连接层。**
+**3. Busemann FC：把同一套字典用到全连接层**
 
 全连接层比分类头多一步——它要输出一个新的点，而不只是一个标量 logit。作者先把欧式 FC 重写成距离等式 $\bar{d}(y,H_{e_k,0})=\langle a_k,x\rangle+b_k$，即输出 $y$ 的第 $k$ 维等于它到第 $k$ 个坐标超平面的有符号距离。然后两端各替一次：右端的内积换成 Busemann logit $u_k(x)$，左端的欧式距离换成双曲点到超平面距离，得到隐式方程 $\bar{d}(y,H_{e_k,e})=u_k(x)$，再反解出 $y$。两种模型都有闭式解：Poincaré 上 $y=\omega/(1+\sqrt{1-K\|\omega\|^2})$，其中 $\omega_k=\sinh(\sqrt{-K}\,u_k(x))/\sqrt{-K}$；Lorentz 上 $y_s=\sinh(\sqrt{-K}\,u(x))/\sqrt{-K}$、$y_t=\sqrt{1/(-K)+\|y_s\|^2}$。整个过程始终在双曲流形上完成，不经切空间或环境 Minkowski 空间的欧式近似，所以不引入 Möbius FC / Lorentz FC 那类几何失真。这个写法还很好扩展：把 $u_k(x)$ 套个激活 $\phi(-\alpha_k B^{v_k}(x)+b_k)$ 就能加非线性，也可以再附一个 gyroaddition 偏置；开销上 FLOPs 为 $O(nm)$，与已有方法持平，Lorentz 版本约 $O(2nm)$。
 

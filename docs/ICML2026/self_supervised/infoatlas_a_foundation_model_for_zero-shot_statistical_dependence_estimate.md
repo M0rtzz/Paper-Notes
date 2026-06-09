@@ -46,17 +46,17 @@ InfoAtlas 的核心是一个 attention-based 超网络 $\mathcal{H}: \mathcal{D}
 
 ### 关键设计
 
-**1. 双路超网络：直接生成 critic 参数，跳过梯度下降。**
+**1. 双路超网络：直接生成 critic 参数，跳过梯度下降**
 
 传统神经 MI 估计的瓶颈是"每来一个数据集都要从头训一个 critic"，InfoAtlas 把这一步换成一次推理——超网络 $\mathcal{H}$ 看完样本就吐出 critic $\theta$ 的全部参数。架构刻意对齐 DV 公式的两个期望项（一个在联合分布上、一个在边际乘积上），拆成两路独立编码。联合路径把每对样本 $[\mathbf{x}^i; \mathbf{y}^i]$ 当 token，用可学习查询做 cross-attention 聚合（权重 $\alpha_i = \mathrm{softmax}(\mathbf{q}_{joint}^\top \mathbf{W}_K [\mathbf{x}^i; \mathbf{y}^i]/\sqrt{d_{model}})$ 自动加重相关性强的样本），再过 16 层 self-attention 得 $\mathbf{h}_{joint}$；边际路径把 $\{\mathbf{x}^i\}$、$\{\mathbf{y}^i\}$ 各自投影后做双向 cross-attention、8 层 self-attention 得 $\mathbf{h}_{marginal}$。最后 $\mathbf{h}_{fused} = \mathrm{CrossAttention}(\mathbf{h}_{marginal}, \mathbf{h}_{joint}, \mathbf{h}_{joint})$ 经 MLP 输出 $\theta$。
 
 这样设计有两个好处：架构与 DV 结构同构，联合/边际两支各管一个期望项，物理意义清晰；attention 天然 permutation invariant（样本顺序无关），又能按数据动态聚焦最相关的样本对，而不是平等对待所有点。
 
-**2. 噪声填充：让一个模型吃下任意维度的输入。**
+**2. 噪声填充：让一个模型吃下任意维度的输入**
 
 不同数据集的 $(d_x, d_y)$ 各不相同，若为每种维度组合训一个模型代价太大。InfoAtlas 对维度 $d < D$ 的输入，用独立高斯噪声 $\mathcal{N}(0, \mathbf{I})$ 把变量补到统一的 $D$ 维。关键是这个 padding 不改变 MI：命题 A.3 证明当 $\mathbf{n}_x, \mathbf{n}_y$ 相互独立且与 $\mathbf{x}, \mathbf{y}$ 独立时，$\mathbb{I}(\mathbf{x}, \mathbf{y}) = \mathbb{I}([\mathbf{x}; \mathbf{n}_x], [\mathbf{y}; \mathbf{n}_y])$。比起常见的零填充会引入虚假对称性，噪声填充提供的是真正 MI-preserving 的增强，让架构保持统一的同时不污染估计目标。
 
-**3. 多样性合成预训练：copula 混合 + flow 变换，喂出零样本泛化。**
+**3. 多样性合成预训练：copula 混合 + flow 变换，喂出零样本泛化**
 
 零样本能力的前提是预训练 distribution 要尽量覆盖真实场景的统计模式，InfoAtlas 用两层多样性来铺这张"atlas"。依赖结构上用 copula 混合 $\mathbf{x}, \mathbf{y} \sim \sum_{i=1}^K \pi_i c_i$，$c_i$ 取自 Gaussian copula（任意相关矩阵）和 Student-$t$ copula（不同尾依赖），$K=60$（远多于前作的 32，按 vector copula 理论足以逼近任意依赖）；边际形状上用随机初始化的可逆 flow $f_X, f_Y$（双射保持 MI 不变），再加 softrank 把边际拉近均匀。预训练直接最大化估出来的 MI：$\mathcal{L}(\mathcal{H}) = -\mathbb{E}_{\mathcal{D} \sim p(\mathcal{D})}[\hat{\mathbb{I}}_{\mathcal{H}(\mathcal{D})}(\mathbf{x}_\mathcal{D}, \mathbf{y}_\mathcal{D})]$，在 DV 框架下等价于最小化负 DV 下界。合成数据"无限量"还顺带解决了常规估计器的老毛病——单数据集样本少导致的高方差/高偏差（McAllester & Stratos 2020），这里 batch 和样本数都能任意大。
 

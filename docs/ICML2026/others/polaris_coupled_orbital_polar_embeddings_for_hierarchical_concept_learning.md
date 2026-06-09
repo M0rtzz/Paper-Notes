@@ -43,15 +43,15 @@ Polaris 要解决的是 taxonomy expansion：给定一个种子 taxonomy（树 /
 
 ### 关键设计
 
-**1. 流形一致的球面编码：把欧氏特征严格送上球面，且所有变换都封闭在流形内。**
+**1. 流形一致的球面编码：把欧氏特征严格送上球面，且所有变换都封闭在流形内**
 
 以往极坐标方法的通病是用 $\theta\leftarrow\theta\bmod 2\pi$ 这类 hack 显式建模角度，这等价于把常曲率球面当成零曲率的圆柱来建，梯度在 wrap 边界不连续，弱监督下高维角度漂移严重。Polaris 改走 Riemannian 几何的标准路线：先在北极 $\mathbf{p}_N$ 的切空间做投影 $\mathbf{v}=\mathbf{e}-\langle\mathbf{e},\mathbf{p}_N\rangle\mathbf{p}_N$，再用指数映射 $\mathbf{z}_0=\exp_{\mathbf{p}_N}(\mathbf{v})=\cos(\|\mathbf{v}\|)\mathbf{p}_N+\sin(\|\mathbf{v}\|)\mathbf{v}/\|\mathbf{v}\|$ 沿测地线把特征升到球面，整个过程连续可微且严格保范数。为了让后续的线性层也不滑出流形，每个"球面线性层"做三件事：行向量 $\mathbf{w}_i$ 在初始化和每步 Riemannian 梯度更新后都强制 $\|\mathbf{w}_i\|_2=1$；去掉 bias，避免原点平移破坏球面对称；输出再投影 $\mathbf{y}=\mathbf{W}\mathbf{x}/\|\mathbf{W}\mathbf{x}\|_2$ 回到单位球面。Theorem 2.2 进一步证明随后的 Welsch 损失对 $\mathsf{SO}(d)$ 旋转不变——损失只依赖相对几何、不挑坐标轴，这正是几何一致性带来的直接好处。
 
-**2. Welsch 测地三元组 + 各向异性球面 SVGD：既稳学局部父子关系，又对抗高维赤道集中。**
+**2. Welsch 测地三元组 + 各向异性球面 SVGD：既稳学局部父子关系，又对抗高维赤道集中**
 
 局部父子关系靠测地角的三元组损失来学。测地角 $\theta_{ij}=\arccos\langle\mathbf{z}_i,\mathbf{z}_j\rangle$ 直接由内积算出（因而旋转不变），再用有界的 Welsch M-estimator $\mathcal{W}(\theta)=1-\exp(-\theta^2/(2c^2))$ 包裹以限制 outlier 影响，得到 $\mathcal{L}_\text{geom}=\max(0,\gamma+\mathcal{W}(\theta_{cp})-\mathcal{W}(\theta_{cn}))$，把子节点向父节点拉、向负样本推；M-estimator 的有界性让噪声语义不会把小角度误差放大成大梯度。但光有这个还不够：定理 2.3 给出 $\sigma\{|\langle\mathbf{z},\mathbf{u}\rangle|\geq\epsilon\}\leq 2\exp(-d\epsilon^2/2)$，说明高维下随机单位向量会指数级集中到赤道，而旋转不变的角度损失对这种集中没有任何梯度信号，深度信号会被压扁在 $z_d\approx 0$ 附近。Polaris 因此引入各向异性球面 SVGD 主动注入"反赤道"力：把每个 embedding 当粒子，速度场 $\phi(\mathbf{z})=\mathbb{E}_{\mathbf{z}'}[k(\mathbf{z}',\mathbf{z})\nabla\log p(\mathbf{z}')+\nabla k(\mathbf{z}',\mathbf{z})]$，核取 vMF 形式 $k(\mathbf{z}',\mathbf{z})=\exp(\kappa\mathbf{z}'^\top\mathbf{z})$；target score 拆成结构项 $\nabla\log p_\text{struct}=[0,\dots,0,z_d/(1-z_d^2)]^\top$，把粒子从赤道推向极点，和对齐项 $\nabla\log p_\text{align}=\kappa_\text{align}\boldsymbol\mu$，把 embedding 留在自身 anchor 的吸引域；最后把 $\phi(\mathbf{z})$ 投影到切空间 $T_\mathbf{z}\mathbb{S}^{d-1}$ 保证更新合法。这样一来，深度结构被重新撑开在两极之间，而不至于被高维测度集中抹平。
 
-**3. vMF 不对称 KL + Orbital 检索：用分布表达语义体积，并按层级加速推理。**
+**3. vMF 不对称 KL + Orbital 检索：用分布表达语义体积，并按层级加速推理**
 
 单点距离区分不了"狗"和"哺乳动物"——后者语义体积更大，但在球面上它们可能离得一样近。Polaris 因此把每个概念建成 vMF 分布而非一个点：参数从 embedding 派生，$\boldsymbol\mu_i=f_\text{sphere}(\mathbf{z}_i;\Theta_\mu)$，$\kappa_i=\text{Softplus}(\mathbf{w}_\kappa^\top\mathbf{z}_i+b_\kappa)$，其中 $\kappa$（集中度）的倒数 $1/\kappa$ 充当"语义体积"的代理。父子之间用 vMF 的 KL 近似来约束，$D_\text{KL}(\text{vMF}_c\|\text{vMF}_p)=\log C_d(\kappa_c)-\log C_d(\kappa_p)-\mathcal{A}_d(\kappa_c)(\kappa_c-\kappa_p\boldsymbol\mu_c^\top\boldsymbol\mu_p)$，其中 $\mathcal{A}_d(\kappa)=I_{d/2}(\kappa)/I_{d/2-1}(\kappa)$ 是修正 Bessel 函数比。这个目标的不对称结构 $\kappa_c-\kappa_p\boldsymbol\mu_c^\top\boldsymbol\mu_p$ 把方向和宽度同时管住：它本质上要求 $\kappa_p<\kappa_c$（父类熵更高、更"广"）且 $\boldsymbol\mu_p$ 与 $\boldsymbol\mu_c$ 同向，从而把"父类包含子类"这一 partial order 软化成"父类分布更宽"，比 cone/box 的硬约束在噪声下更鲁棒。配套的概率三元组损失为 $\mathcal{L}_\text{vMF}=\max(0,\gamma_\text{prob}+D_\text{KL}(c\|p)-D_\text{KL}(c\|n))$。推理阶段则利用 hierarchy 派生的 orbital potential 给每层一个动态 cosine 阈值，先按"轨道"粗筛候选父节点、再按角度精排，把代价从全集 $\arg\max$ 降到层级 gating 后的小候选集，对几十万节点的大规模 taxonomy 工程价值显著。整套优化用 Riemannian Adam：欧氏梯度先投到 $T_{\mathbf{z}_t}\mathcal{M}$，动量按平行移动搬到新切空间，最后以 $\mathbf{z}_{t+1}=\exp_{\mathbf{z}_t}(-\eta\hat{\mathbf{m}}_t/\sqrt{\hat{\mathbf{v}}_t})$ 更新。
 

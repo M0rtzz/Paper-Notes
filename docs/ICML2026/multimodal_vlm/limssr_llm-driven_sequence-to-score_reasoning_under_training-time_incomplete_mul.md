@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Prompt 引导的上下文感知模态填补（PCMI）：把缺失模态从"零向量"升格为"待推断的潜变量"。**
+**1. Prompt 引导的上下文感知模态填补（PCMI）：把缺失模态从"零向量"升格为"待推断的潜变量"**
 
 传统零填充会让缺失信号在 attention 里被当噪声埋没，模型越学越偏；MissRAG/TAMML 之类用 RAG 或文本桥接，又得额外维护检索库或预训练对齐。PCMI 的做法是把缺失结构直接写进序列：每个模态 $m$ 都用一对边界 token `<m_start>, <m_end>` 包起来，可见模态里面塞真实特征 $\tilde{\mathbf{X}}^m$，缺失模态里面塞 $T$ 个重复的可学习 `<missing_m>` 占位嵌入；再配一段 prompt 把可见/缺失状态讲明白——"Given the available {avail} features... The {miss} modality is missing. Based on the available modalities, please infer and reconstruct the useful latent representations for the missing {miss} modalities at the designated positions"。LLM 前向后，从这些 missing 位置抽隐藏态 $\mathbf{H}_{miss}^m = \mathrm{LLM}(\mathbf{Z}_{in})|_{\text{positions of }\mathbf{E}_{miss}^m}$ 就是推断出来的缺失表示。这样设计的妙处在于，"猜下一个 token"和"推断 missing latent"在数学形式上本就是同一件事，LLM 的 next-token 机制天然适配，无需 pixel 级重建、也无需配对监督。
 
-**2. LLM 驱动的多维表示融合（LMRF）：用专门的 token 槽收集跨模态信息，而不是粗暴 pooling。**
+**2. LLM 驱动的多维表示融合（LMRF）：用专门的 token 槽收集跨模态信息，而不是粗暴 pooling**
 
 直接对 LLM 长序列输出做 mean-pooling，会把它的生成结构压塌、丢掉维度信息。LMRF 借鉴 BERT 的 `[CLS]` 思路但推广到多维：在 prompt 末尾追加 $K$ 个特殊 token `<emb_dim_1>, ..., <emb_dim_K>` 当"信息槽"，并显式指示 LLM "integrate and enhance all multimodal features for action quality assessment. Output the fused multi-dimensional feature representations at the designated feature dimension positions"。最后一层在这些位置的输出 $\mathbf{H}_{fusion} = \{\boldsymbol{h}_1, \dots, \boldsymbol{h}_K\}$ 被视为分别承载不同评价维度（如难度、执行、艺术性），再用可学习角色权重聚合成主向量 $\boldsymbol{z}_{main} = \sum_k \mathrm{Softmax}(\boldsymbol{w}_{role})_k \cdot \boldsymbol{h}_k$。比起 pooling 更结构化，比起隐式 attention head 又更贴近人类对"评价维度"的解释。
 
-**3. 掩码感知双路聚合（MDA）：让模型自己掂量"现在到底信不信我推出来的东西"。**
+**3. 掩码感知双路聚合（MDA）：让模型自己掂量"现在到底信不信我推出来的东西"**
 
 只靠 LLM 推理，在严重缺失时会幻觉；只靠统计聚合，又缺高层语义。MDA 同时跑两条路再按缺失掩码混合。Path 1（不确定性校准推理）在主向量上算门控 $\boldsymbol{g} = \sigma(\mathrm{MLP}_{gate}([\boldsymbol{z}_{main}, \boldsymbol{m}]))$ 和残差 $\boldsymbol{\delta} = \mathrm{MLP}_{res}([\boldsymbol{z}_{main}, \boldsymbol{m}])$，得到精修表示 $\tilde{\boldsymbol{z}}_{main} = \boldsymbol{z}_{main} + \boldsymbol{g}\odot \boldsymbol{\delta}$；Path 2（跨模态模式恢复）把各模态位置的 LLM 隐藏态 temporal pooling 成 $\boldsymbol{h}_v, \boldsymbol{h}_a, \boldsymbol{h}_f$，stack 后做 self-attention 得 $\mathbf{Z}_{attn}$，再按可用性加权 $\alpha_{m_j} = \boldsymbol{m}_j \cdot 1 + (1-\boldsymbol{m}_j)\cdot \gamma_{m_j}$（$\gamma_m = \sigma(\lambda_m)$ 是模态级可学习置信度），汇成 $\boldsymbol{z}_{aux} = \sum_m \alpha_m (\boldsymbol{z}_{attn}^m \odot \mathcal{G}(\mathbf{H}_{stack})^m)$。举个具体的：当只剩视频、音频和光流都缺时，掩码会把缺失模态那两路的权重压到学习出来的低置信度 $\gamma$ 上，强迫输出更多依赖可见的视频路径，而不是放任 LLM 在没信息时硬编。两路融合给出最终动作质量分。
 

@@ -50,19 +50,19 @@ LegalDrill 是 teacher–student 迭代框架，每轮 $t$ 三步：
 
 ### 关键设计
 
-**1. Diagnosis-Driven 错误指令合成：把学生的具体错误抽象成可复用、与案件解耦的"错误模板"。**
+**1. Diagnosis-Driven 错误指令合成：把学生的具体错误抽象成可复用、与案件解耦的"错误模板"**
 
 直接让 teacher 随便生成 rejected，chosen 和 rejected 往往在长度、是否引经据典这些表面维度上差异过大，模型学到的是"chosen 更长"而非"chosen 推理更严谨"。LegalDrill 让 Audit Agent 读学生的响应 $(x_i, \hat{y}_i)$ 后产出诊断，但**禁止引用案件任何具体细节**，只能输出"在计算时效期时忽略时间窗"这种 context-agnostic 的错误描述，并按法律领域常见错误的 taxonomy 校准，汇总成错误指令库 $\Phi_{\text{err}} = \{\mathcal{I}^{(1)}, \dots, \mathcal{I}^{(N)}\}$。
 
 上下文解耦带来两个好处。其一是数据扩张：每条错误指令都能与任意 context 重新组合生成新偏好对，把数据量从 $|\mathcal{D}|$ 扩到 $K \cdot |\mathcal{D}|$。其二是充当强 regularizer：由于 chosen/rejected 共享同一 context、同一错误类型，学生无法靠"长度/词汇"等表面捷径区分二者，只能被迫去学"逻辑是否严谨"这件事本身——消融里去掉这个约束后推理鲁棒性明显下降。
 
-**2. Targeted Two-Step 偏好对生成：先按指令故意犯错，再针对这个错生成纠正版。**
+**2. Targeted Two-Step 偏好对生成：先按指令故意犯错，再针对这个错生成纠正版**
 
 标准做法是 teacher 独立采样 chosen 和 rejected，二者可能在推理路径、风格、长度等多个维度同时不同，DPO 拿到的对比信号很嘈杂。LegalDrill 改成两步条件生成：第一步 teacher 按抽到的错误指令 $\mathcal{I}_k$ 故意犯错，$y_-^{(k)} \sim \pi_{\text{teach}}(\cdot \mid x, \mathcal{I}_k)$；第二步把 $y_-^{(k)}$ 作为额外输入，要求 teacher 生成专门指出并修正这个错误的 $y_+^{(k)} \sim \pi_{\text{teach}}(\cdot \mid x, \mathcal{I}_k, y_-^{(k)})$。
 
 这样 chosen 不只是"对的答案"，而是**针对 rejected 那个具体逻辑错误的反例**——两者的差异严格收敛到"是否犯了指定的逻辑错误"这一个轴上，DPO 信号因此格外干净。配合每个 sample 从 $\Phi_{\text{err}}$ 抽 $K$ 条不同错误指令，单条 query 就能批量产出多条彼此正交、各打一个盲点的偏好对。
 
-**3. Self-Reflective Difficulty Score 过滤：用学生自己的置信度把"它早就会的"样本剔掉。**
+**3. Self-Reflective Difficulty Score 过滤：用学生自己的置信度把"它早就会的"样本剔掉**
 
 teacher 合成的对客观质量都很高，但其中很多对学生而言"早就能区分"，再拿来训练只是浪费预算、还有退化风险。问题是直接比较整段响应的 likelihood $\pi(y \mid x)$ 会被长度和表面词汇干扰。LegalDrill 改用一个 binary forced-choice 验证 prompt $\mathcal{P}_{\text{ver}}(c, q, y)$，让学生在 $\{\texttt{correct}, \texttt{incorrect}\}$ 上打分并归一化：
 

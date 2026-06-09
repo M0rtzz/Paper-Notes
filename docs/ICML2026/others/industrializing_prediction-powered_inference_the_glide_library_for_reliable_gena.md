@@ -49,15 +49,15 @@ $$\hat\theta^{\text{PPI++}}_\lambda = \frac{1}{n}\sum_{i=1}^n Y_i + \lambda\left
 
 ### 关键设计
 
-**1. 三步解耦 + scipy 风格 API：让采样和估计成为可插拔的正交对象。**
+**1. 三步解耦 + scipy 风格 API：让采样和估计成为可插拔的正交对象**
 
 PPI 文献近三年的改良各管一段——有的只改采样、有的只改估计，但散落在各自论文里没法叠加。GLIDE 把整条流水线切成 Sampling → Annotation → Estimation 三步，让前后两端独立可换：Sampler 暴露 `sample` 方法返回 $(\pi,\xi)$，其中 $\pi\in[0,1]^N$ 是每个观测被采样的概率、$\xi\in\{0,1\}^N$ 是 Bernoulli 抽出的实际包含指示符；Estimator 是有状态对象，`estimate` 返回含点估计、置信区间、有效样本量 $n_{\text{eff}}$ 和 metric 标签的 dataclass。于是一条完整 end-to-end 流（采样 + 标注 + 估计）压到 6 行 Python 就能跑。沿用 scipy / scikit-learn 这套社区最熟悉的范式几乎零学习成本，而三步解耦的真正价值是让"独立改良采样"和"独立改良估计"的工作能无缝叠加——研究者贡献新方法只需写一个文件。
 
-**2. 5 类采样器 × 5 类估计器：把 Agentic 评测的四大特性映成方法菜单。**
+**2. 5 类采样器 × 5 类估计器：把 Agentic 评测的四大特性映成方法菜单**
 
 Agentic 评测有四个独特属性——成本极端不对称、自然分层、有可用的 proxy 不确定度、关键部署场景——每一个都对应 PPI 的一个分支，但此前没有库把它们串起来。GLIDE 把这些"如果有 X 就用 Y"摆成一张连续的菜单。采样器五类：`UniformSampler`（基线）、`StratifiedSampler`（支持 proportional 或 Neyman 分配 $n_h\propto N_h\sigma_h$，用 Hamilton 最大余数法保证整数和为 $n$）、`ActiveSampler`（按 proxy 不确定度成正比的 Bernoulli 概率独立抽取）、`CostOptimalRandomSampler` 与 `CostOptimalSampler`（基于已知 proxy/annotation 成本比 + 可选每观测不确定度算最优抽样概率）。估计器五类：`PPIMeanEstimator`（PPI++ + power tuning）、`StratifiedPPIMeanEstimator`（按层 power tuning）、`PTDMeanEstimator`（Predict-Then-Debias，bootstrap，专为 $n<50$ 小样本）、`StratifiedPTDMeanEstimator`、`ASIMeanEstimator`（IPW 去偏配合 active sampling），另加 3 个 classical baseline 提供无 proxy 的参考方差。这样实践者不必自己去翻 7 篇论文 + 7 个独立 repo。
 
-**3. 四信号决策树：让不懂 PPI 的工程师 30 秒选对组合。**
+**3. 四信号决策树：让不懂 PPI 的工程师 30 秒选对组合**
 
 把方法摆成菜单还不够，还得替不懂统计细节的人做选择，否则工业化只完成一半。GLIDE 把方法选择内嵌成一棵决策树。上半截（采样）按三个布尔信号路由：有成本估计 → CostOptimal 系；有 proxy 不确定度 → ActiveSampler；有 heterogeneous-proxy 自然分层 → StratifiedSampler；都没有 → UniformSampler。下半截（估计）只看一个阈值：人类标注是否 ≥ 50（分层时按层计），是则用 CLT-based 估计器（PPI++ / Stratified PPI++ / ASI），否则用 bootstrap-based PTD 变体。这棵树不是拍脑袋画的，而是由 Section 5 的蒙特卡洛验证套件经验校准过——它把"应该用哪个估计器"从一个研究问题降级成一次查表，正是 PPI 真正工业化此前缺的那一环。
 

@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. Generate-then-Match：反转 RAG 范式，从架构上消除幻觉。**
+**1. Generate-then-Match：反转 RAG 范式，从架构上消除幻觉**
 
 对话推荐里 5/6 类隐式意图（"再来一条""换个不同的""不要体育"）根本没有可供检索的关键词，retrieve-first 在这些意图上彻底失败。NewsRec-Chat 干脆把"用查询去检索池"反过来做成"先让 LLM 生成 SID、再去池里反查"：$\text{LLM}(u, h, q) \to \text{SID}$，然后做模糊匹配 $\text{Match}(\text{SID}, \mathcal{P}) = \{n \in \mathcal{P}: s_1' = s_1, s_2' = s_2, |s_3' - s_3| \leq \delta\}$——s1/s2 严格相等保证语义大类一致，s3 留容差去捕获细粒度相似邻居，候选按 $1 - |s_3'-s_3|/(\delta+1)$ 排序，$\delta=5$ 是在 {1,3,5,7,10} 上网格搜出来的。
 
 这一反转的好处是双重的：item 选择从"语义检索 + 排序"两步坍缩成"语义生成 + 存在校验"，更贴合 LLM 的强项；而且只要推荐落在"今日池里真实存在的 SID"上，幻觉就从一个概率事件变成了零事件。关键细节是只生成前 3 层 SID 而不碰第 4 层——第 4 层是逐日抖动的"近似 item ID"，一旦让模型生成它，模型就会被绑死到某一天的库存，而前 3 层是稳定的语义层级，天然跟"池子每天换"解耦。
 
-**2. Profile-Aware Dual-Signal Reasoning (PADR)：让 0 历史用户也能从画像里推出推荐。**
+**2. Profile-Aware Dual-Signal Reasoning (PADR)：让 0 历史用户也能从画像里推出推荐**
 
 新闻平台 20-30% 用户历史不足 10 条，传统 SID 模型一缺历史就直接崩到 L1 0%。PADR 按历史长度 $|\mathbf{h}_u|$ 与阈值 $\tau=10$ 把用户切成 warm / hybrid / cold 三档，并在 prompt 里显式插入 "sparse" 或 "no history" 提示词，让模型在 CoT 里学会差异化推理：warm 做行为-画像关联、cold 做"人口学→兴趣"映射、hybrid 做两路交叉验证。
 
 它的妙处在于把"路由策略"蒸馏进了模型而不是写死成规则模块——省掉了为冷启动单独加 fallback 分支的工程复杂度。实测冷路径 L1 达到 18.0%（OneRec-7B 为 16.1%），是唯一在冷启动上不为 0 的方案。
 
-**3. 两阶段训练：SID Alignment 打底 + CoT Distillation 教推理。**
+**3. 两阶段训练：SID Alignment 打底 + CoT Distillation 教推理**
 
 只做对齐，模型会"复读 SID"不会推理；只做蒸馏却不分意图，模型会把所有意图都套同一条 CoT。所以训练拆成两阶段：Stage 1 用 6 个任务（content↔SID 双向映射、行为摘要、next-item 预测、多轮推荐）共 483K 样本做多任务对齐，让模型先学会"看内容知 SID、看 SID 知内容、把行为序列总结成 SID"；Stage 2 用 GPT-4 给每个 (input, target SID) 对生成 gold CoT 再蒸馏到 7B Qwen，教它"对每种意图用不同的 reasoning 链生成 SID"。
 

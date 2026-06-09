@@ -49,7 +49,7 @@ RETA要解决的是解耦数据蒸馏里"残差匹配该往合成图像里注入
 
 ### 关键设计
 
-**1. Dynamic Retrieval Connection（DRC）：让anchor随阶段自适应，而不是一锤定终身。**
+**1. Dynamic Retrieval Connection（DRC）：让anchor随阶段自适应，而不是一锤定终身**
 
 FADRM的残差anchor是预先选好、全程不变的，这带来一对耦合的麻烦：固定patch可能在teacher空间里离当前合成特征越来越远（fit gap大），也可能本身纹理过于复杂、一注入就把高频噪声带进来（complexity膨胀）。DRC的做法是每个残差连接阶段都重新检索一次。它先为每个类 $c$ 建一个候选pool $p_c$（把每张真实图像切成 $1 \times 1$ patch），再用冻结的teacher $\phi(\cdot)$ 同时编码合成图像和所有候选patch，按一个把两种代价打包到一起的fit-complexity score 打分：
 
@@ -59,7 +59,7 @@ $$J(o|\tilde{x}_t) = (1-\lambda)\|q(\tilde{x}_t) - z(o)\|_2^2 + \lambda \cdot c(
 
 这套打分不是拍脑袋来的：Theorem 4.1把残差连接后的泛化界拆成了fit gap $\Delta$ 和complexity gap $\mathfrak{R}_n(H \circ O) - \mathfrak{R}_n(H \circ \tilde{\mathcal{C}}_{pre})$ 两项，而固定anchor没法同时压住这两项。DRC正好把 $J$ 的两项对上了界的两项——靠per-stage检索动态缩小 $\Delta$，同时用 $c(o)$ 把complexity压住，相当于把理论里的两个杠杆都变成了可操作的选择动作。
 
-**2. Persistent Topology Alignment（PTA）：用持久同调拦住"反复锚定把一个类拉成一团"。**
+**2. Persistent Topology Alignment（PTA）：用持久同调拦住"反复锚定把一个类拉成一团"**
 
 DRC解决了"注入谁"，但残差连接本身还有个副作用：每次把合成特征往最近的real样本拉，反复几轮后类内特征互相靠拢，$\|y_i' - y_j'\| \leq \alpha\|y_i - y_j\| + (1-\alpha)\|a_i - a_j\|$，原本分开的cluster过早合并，类内多样性丢失——这就是pull-to-anchor效应。PTA从拓扑层面盯住这件事。它对每个类 $c$ 取合成特征 $Z_c^{syn} = \{\phi(\tilde{x}_i)\}$ 和真实特征 $Z_c^{real} = \{\phi(x): x \in p_c\}$ 的并集，建一个class-balanced的mutual $k$-NN图，跑persistent homology得到persistence diagrams $\mathcal{D}_c^{(q)}$（$q=0$ 记连通分量、$q=1$ 记环）。持久图本身不可微，PTA把每张图栅格化成一张可微的persistence image：
 
@@ -71,7 +71,7 @@ $$\mathcal{L}_{topo} = \sum_c \left(\|I^{(0)}(Z_c^{syn}) - I^{(0)}(Z_c^{real})\|
 
 pull-to-anchor在Betti曲线上的表现很具体：$\mathcal{B}_0^{syn}$ 左移意味着连通分量过早并掉，$\mathcal{B}_1^{syn}$ 被压低意味着环过早消失。把这两件事写进 $\mathcal{L}_{topo}$ 后，梯度能经由那个冻结但仍留在计算图里的 $\phi$ 回流到合成输入，逼着合成特征维持和真实数据一致的多尺度连通性与环结构，从拓扑上挡住类内坍塌。
 
-**3. DRC与PTA的互补：一个治局部、一个治全局，叠在同一个loss上。**
+**3. DRC与PTA的互补：一个治局部、一个治全局，叠在同一个loss上**
 
 两个模块解决的是同一对耦合问题的两端。DRC在局部层面优化每次anchor选择的fit-complexity权衡，管的是"这一针打得准不准"；PTA在全局层面看整个类的特征几何，管的是"打了很多针之后这个类还成不成形"。训练时PTA只是作为一项加到总目标上 $\mathcal{L} \leftarrow \mathcal{L} + \lambda_{topo} \mathcal{L}_{topo}$，和DRC的检索步互不干扰却互相补位——这也解释了后面消融里两者联合提升超过各自单独之和的超加性。
 

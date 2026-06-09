@@ -44,11 +44,11 @@ tags:
 
 ### 关键设计
 
-**1. Lambda Lemma 三 Case 几何分析 + 鞍点吸引子条件（Theorem 1）：给出 SAM 卡鞍点的 closed-form 临界值。**
+**1. Lambda Lemma 三 Case 几何分析 + 鞍点吸引子条件（Theorem 1）：给出 SAM 卡鞍点的 closed-form 临界值**
 
 要解释 SAM 为什么会在鞍点不动，先得把它在鞍点附近的轨迹看清楚。考虑梯度流 $d\bm{w}/dt = -\nabla \ell(\bm{w})$ 与两个相邻极小值 $\bm{s}_1, \bm{s}_2$ 之间的 index-1 鞍点 $\bm{d}$，按 $\bm{w}_t$ 距 $\bm{d}$ 的远近分三类：Case-I 远离 $\bm{d}$ 与稳定流形 $W^s(\bm{d})$，此时 $-\nabla\ell(\bm{w}_t^p) \sim -\nabla\ell(\bm{w}_t)$，SAM 和 GD 行为一致；Case-II 在 $\bm{d}$ 附近但仍在 $A(\bm{s}_1)$ 内，按 Lambda Lemma 轨迹沿不稳定流形 $W^u(\bm{d})$ 走；Case-III 才是病灶——一旦落入 $\bm{d}$ 的 $\rho$-邻域，扰动 $\bm{w}_t^p$ 可能跨过吸引域边界进入 $A(\bm{s}_2)$，于是 $-\nabla\ell(\bm{w}_t^p)$ 指向 $\bm{s}_2$、下一步又被拉回 $A(\bm{s}_1)$，形成沿 $W^u(\bm{d})$ 的左右震荡。把这个震荡解析化的关键在于：SAM 的扰动 $\rho\nabla\ell$ 会把动力系统的 Hessian 项从 $\Lambda$ 改写成 $\Lambda + \rho\Lambda^2$，而二次项 $\rho\lambda^2$ 恒正、能把原本的负特征值反向。于是 Theorem 1 给出干净的临界条件：对 index-1 鞍点、负特征值 $\lambda_1<0$，只要 $\rho > -1/\lambda_1$（等价于 $\lambda_1 + \rho\lambda_1^2 > 0$），鞍点几何上就从"双曲不稳定点"升级成 SAM 动力学下的吸引子。Beale 函数与 $f(x,y)=x^2-y^2$ 的数值实验恰好同时复现 Case-III 与该条件。
 
-**2. Fokker-Planck 推导 SAM 扩散与逃逸速度比较（Theorem 2 + Corollary 1）：证明 SAM 逃鞍点比 SGD 慢。**
+**2. Fokker-Planck 推导 SAM 扩散与逃逸速度比较（Theorem 2 + Corollary 1）：证明 SAM 逃鞍点比 SGD 慢**
 
 确定性分析无法解释 SAM 在真实（noisy SGD）训练里仍然 work，所以要把"扰动如何与 mini-batch 噪声相互作用"写进随机框架。把 SAM 写成 SDE $d\bm{w} = -\nabla\ell(\bm{w}^p)dt + [\eta C(\bm{w}^p)]^{1/2} dW_t$，用 Fisher 信息矩阵把噪声协方差近似为 $C(\bm{w})\approx \frac{1}{B}[H(\bm{w})]^+$，再对损失做二阶 Taylor 展开化成局部二次形式。代入 Fokker-Planck 方程解得 $\bm{w} \sim \mathcal{N}(\bm{d}, Q\,\mathrm{diag}(\bm{\sigma}^2(t))Q^T)$，每个本征方向的方差为
 
@@ -56,7 +56,7 @@ $$\sigma_j^2(t) = \frac{\eta|\lambda_j|}{2B \lambda_j (1+\rho\lambda_j)^2}\Big[1
 
 把 SAM 和 SGD（即 $\rho=0$）的均方位移相减、在 $|\lambda_j|t \ll 1$ 的小时间窗下展开，得到 $\Delta_{SGD} - \Delta_{SAM} = 2\eta t^2 |\lambda_j|^3 \rho / B + \mathcal{O}(B^{-1}\eta t^3 \lambda_j^4)$。这个差值恒正、随 $\rho$ 线性增长，机理也一目了然：扰动 $\rho$ 把分母里的 $(1+\rho\lambda_j)^2$ 撑大，压制了随机扩散，于是噪声本身的逃逸能力被削弱。量纲式 $\rho|\lambda_j|^3/B$ 干净地说明：越大的 $\rho$、越尖锐的 Hessian、越大的 batch，都会把 SAM 与 SGD 的逃逸差距拉大。
 
-**3. 含 momentum + batch size 的 SAM 扩散公式（Theorem 3）：量化两个"工程超参"为何是隐藏支柱。**
+**3. 含 momentum + batch size 的 SAM 扩散公式（Theorem 3）：量化两个"工程超参"为何是隐藏支柱**
 
 最后把 momentum $\gamma$ 与 batch size $B$ 同时纳入扩散公式，看它们怎么救鞍点逃逸。加入 momentum 项后均方位移变为
 

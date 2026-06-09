@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. Albedo-to-Render 流匹配：把渲染当成"从基础颜色到全光照"的确定性单步流，而不是从噪声去噪。**
+**1. Albedo-to-Render 流匹配：把渲染当成"从基础颜色到全光照"的确定性单步流，而不是从噪声去噪**
 
 扩散渲染慢和不稳的根源在于它从纯噪声出发、要迭代去噪 20-50 步。RenderFlow 干脆换掉起点：albedo 已经携带了画面的低频颜色和几何信息，模型不必从零生成，只需在它之上"补上"光照、阴影、反射这些高频效果。形式上在桥匹配（bridge matching）框架里训练——把 albedo latent 记作 $\mathbf{z}_0$、路径追踪真值记作 $\mathbf{z}_1$，训练时采样 $t \in [0,1]$ 并构造带微扰的插值：
 
@@ -53,15 +53,15 @@ $$\mathbf{z}_t = (1-t)\mathbf{z}_0 + t\mathbf{z}_1 + \sigma\sqrt{t(1-t)}\,\epsil
 
 网络 $v_\theta(\mathbf{z}_t, t)$ 学习逼近目标方向 $\frac{\mathbf{z}_1 - \mathbf{z}_t}{1-t}$；推理时一步外推 $\hat{\mathbf{z}}_1 = \mathbf{z}_t + v_\theta(\mathbf{z}_t, t)(1-t)$ 即得渲染结果。因为流的起点本身就含信息、离目标很近，ODE 路径短而直，单步就能高精度到达——这正是它比"从噪声出发"的扩散快一个量级的原因。训练用 4 步 SDE schedule、推理却只走单步，反而避免了多步采样的误差累积（见消融）。
 
-**2. G-buffer 条件注入：按"空间对齐与否"分两路把几何、材质、光照喂进网络。**
+**2. G-buffer 条件注入：按"空间对齐与否"分两路把几何、材质、光照喂进网络**
 
 光要打在正确的几何和材质上，模型就得知道每个像素的 normal、depth、粗糙度、金属度以及全局光照。难点是这些条件的"性质"不同：G-buffer 属性逐像素与画面对齐，环境贴图却是一张全局信息。RenderFlow 据此分两路注入。骨干用 Wan2.1 视频 DiT：albedo latent 经 input embedder 变成 render tokens，normal/depth/material 用同一个 VAE 编码后过专用 attribute embedder，因为和 render tokens 空间对齐，直接逐元素相加即可（沿用 VACE 架构），这是最省事也最有效的方式。环境贴图则先旋转到相机视空间、再做 Reinhard 色调映射得到 LDR 图，VAE 编码后通过 AdaIN 注入每个 Transformer block——预测 scale $\gamma$ 和 shift $\beta$ 来调制 render features。把环境贴图旋到相机空间这一步很关键：它让网络隐式学到方向性光照，省掉了显式的方向编码。
 
-**3. 稀疏关键帧引导（Keyframe Adapter）：让少量离线精渲的参考帧把生成"锚"在真实光传输上。**
+**3. 稀疏关键帧引导（Keyframe Adapter）：让少量离线精渲的参考帧把生成"锚"在真实光传输上**
 
 纯前馈渲染在物理精度和时序一致性上仍有上限。RenderFlow 允许可选地塞进几张离线路径追踪的高质量关键帧当锚点：在 self-attention 旁并联一条 cross-attention 分支，render tokens 作 query、关键帧 token 作 key/value，并对 key 和 query 施加 RoPE 来编码当前帧与关键帧之间的时间距离——于是近处的关键帧影响大、远处的影响小，模型按时间远近自动调权重。FFN 层再加 LoRA 做轻量适配。训练分两阶段：Stage 1 先把基础渲染模型练好，Stage 2 冻结它、只训 Keyframe Adapter，这样保证即便不给关键帧、模型也能独立工作。代价很小——加关键帧后推理只多 ~0.05s，PSNR 却从 24.214 拉到 26.663。
 
-**4. 逆渲染 Adapter：冻结同一套正向骨干，反过来把图像拆回 G-buffer。**
+**4. 逆渲染 Adapter：冻结同一套正向骨干，反过来把图像拆回 G-buffer**
 
 作者想证明这套骨干不是只会"正着渲"。做法是把正向渲染骨干整个冻住，只挂上一组可训练部件：inverse embedder 把 RGB 编码成 token，self-attention 投影上加 LoRA，再用 prompt-conditioned cross-attention 让一句文本 prompt 选择要分解出哪种 intrinsic（albedo/normal/depth/material），每种 intrinsic 配一个轻量 MLP head 出图。训练只动 adapter 这些参数，损失按模态定制：albedo 用 L1+LPIPS、normal 用 cosine similarity、depth 用 scale-and-shift-invariant loss、material 用 L1。一套预训练骨干、靠 prompt 切换正逆两个方向，参数高效地复用了同一份渲染先验。
 

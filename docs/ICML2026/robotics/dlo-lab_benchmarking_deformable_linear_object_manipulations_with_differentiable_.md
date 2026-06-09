@@ -51,19 +51,19 @@ DLO-Lab 整体分成三层：底层物理仿真器（Section 3）、中层 bench
 
 ### 关键设计
 
-**1. 基于 DER 的可微 DLO solver + 双向耦合：把高保真物理和可微/可耦合两组互斥需求装进同一个 solver。**
+**1. 基于 DER 的可微 DLO solver + 双向耦合：把高保真物理和可微/可耦合两组互斥需求装进同一个 solver**
 
 这是整个平台的物理底座，也是过去没人做成的地方——DER 实现（C-IPC、IMC）物理最准却靠隐式求解器、不可微，而可微方案（MPM/spring-mass）又在耦合和闭环拓扑上吃力。DLO-Lab 把 DLO 表示为中线顶点 $\mathbf{x}=\{\mathbf{x}_i\in\mathbb{R}^3\}$ + 每段边的 adapted 正交标架，势能由拉伸 $U_s$、弯曲 $U_b$、扭转 $U_t$ 三项构成，对状态求导后用 symplectic Euler 显式推进；弯曲塑性靠屈服阈值 $\sigma_y$ + 蠕变率 $r_c$ 调整 rest curvature 实现，闭环拓扑直接在中线首尾相接。耦合也是双向的：与刚体走 SDF 软接触，DLO 采样点查刚体 SDF、渗透深度 $d(\mathbf{p})=r(\mathbf{p})-\mathrm{SDF}(\mathbf{p})$ 经软指数因子 $f_i=\min(\exp(d/\epsilon_s),1)$ 做 impulse-based 摩擦响应，并把等大反作用力打回刚体保动量守恒；与 MPM 软体则在 Eulerian 网格循环里检测节点与 DLO 顶点/边碰撞，按相对速度+法向+质量比算 repulsive impulse 同步施加两侧。
 
 关键突破是把物理上最尊重 DLO "细长杆"几何的 DER 离散化做成显式时间步、跑在 Taichi autodiff 上——首次让 DER 既保真又可微，还能跟刚体/流体玩到一起。
 
-**2. 梯度 checkpointing：让"上千步全可微"在有限显存下成立。**
+**2. 梯度 checkpointing：让"上千步全可微"在有限显存下成立**
 
 DLO 任务里拆结、绕柱、编字母动辄上千 simulation step，标准 autodiff 要保存所有中间状态、$\mathcal{O}(T)$ 显存会立刻爆炸，first-order policy 优化（GD/SHAC）根本用不上完整轨迹梯度。DLO-Lab 参考 FluidLab 把轨迹拆段，前向时每段尾部把 state 缓存到 CPU、丢掉中间 GPU 计算图；反向时按逆序遍历 checkpoints，每段重新前向重建局部计算图再做该段 backward，把显存从 $\mathcal{O}(T)$ 压到 $\mathcal{O}(\sqrt{T})$（段长取 $\sim\sqrt{T}$ 最优），显存消耗与仿真步数解耦。
 
 这本质是拿 1× 多次前向算力换 $\sqrt{T}$ 显存节约，对策略优化场景代价完全可接受，正是它让 first-order MBRL 能真在长 horizon DLO 任务上跑起来。
 
-**3. VLM 驱动的 DLO agent：把"抓哪里、分几步"这种端到端策略学不会的结构化先验外包给 VLM。**
+**3. VLM 驱动的 DLO agent：把"抓哪里、分几步"这种端到端策略学不会的结构化先验外包给 VLM**
 
 DLO 操作有两个对纯 RL 致命的难点：抓错点会让任务变成 kinematically infeasible（拆结时抓错股就解不开），长 horizon 任务的奖励又稀疏到 PPO/SAC 根本探索不到。DLO agent 把这两块外包给 VLM。抓点提议设计三种 prompting 模式——Candidate（沿 DLO 采样候选点画图让 VLM 选优）、Coefficient（给两端让 VLM 输出 $[0,1]$ 归一化位置）、Marker（让 VLM 在渲染图上点像素坐标），实测 Candidate 最可靠。任务分解则让 VLM 先吐一个初始 plan（含每个子任务的 reward 函数与 horizon），逐子任务跑可微轨迹优化，每段执行完渲染轨迹再交回 VLM 评估是否完成、是否重规划，形成闭环。
 

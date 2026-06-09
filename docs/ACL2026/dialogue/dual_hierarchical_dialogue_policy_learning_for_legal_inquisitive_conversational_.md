@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Dual-Agent 架构：把"怎么看你上一答"和"我下一步怎么问"解耦成两个 RL agent。**
+**1. Dual-Agent 架构：把"怎么看你上一答"和"我下一步怎么问"解耦成两个 RL agent**
 
 如果用单个 agent 端到端做，它既要判断律师在回避还是答得完整、又要决定下一步该 probe 还是 challenge，state 信号被两件事来回拉扯。DRCR 把评估单独交给 Appraisal Agent：它接收对话历史，用 DDQN 选出 $p(s) = \arg\max_p Q_{\text{App}}(s, p; \theta)$，输出 9 类离散 appraisal（evasive / incomplete / satisfactory / contradictory 等），转 one-hot 后拼成增广 state $s_{\text{aug}}^t = \text{concat}(s^t, p^t)$ 喂给 Dialogue Agent。两个 agent 各用 DDQN、独立训练，只在 state augmentation 处耦合——Appraisal 专注 evaluation、Dialogue 专注 policy，模块化且可解释。消融里去掉 Appraisal Agent 后 PES 从 4.47 掉到 4.30，是单组件里掉得最多的，说明"先评估再决定"确实是探查有效性的主要来源。
 
-**2. 三层 Poincaré 动作空间：把"问什么"分解成 act→subtype→utterance 三级树并用双曲嵌入表示。**
+**2. 三层 Poincaré 动作空间：把"问什么"分解成 act→subtype→utterance 三级树并用双曲嵌入表示**
 
 扁平动作空间下"Probe assumption"和"Challenge premise"只是两个互不相干的 token，学不出泛化。DRCR 把动作拆成三级：Level 1 是高级 act（Questioning / Hypothesis Testing / Declaration），Level 2 是 subtype（Probing / Clarification / Comparison），Level 3 是具体子类（Probe the Assumption / Probe the Premise 等）。这棵树用双曲 Poincaré 嵌入训练，目标 $\mathcal{L} = \sum_{(u,v) \in D} \log \frac{e^{-d(u,v)}}{\sum_{v' \in \mathcal{N}(u)} e^{-d(u, v')}}$ 让 parent 靠近原点、child 指数远离、sibling 天然相似，比欧氏空间更契合 tree-like 结构。Q-network 序列化预测三个动作，每个完整动作产生 3 个 transition tuple，并用层级一致损失 $\mathcal{L}_{\text{Dia}}^{\text{hier}} = \sum_i (Q(s, a_i) - \max_{a_{i+1}} Q(s, a_{i+1}))^2$ 强制 $Q(s, a_0) = \max_{a_1} Q(s, a_1)$，让父节点的 Q 值与最优子节点对齐。这样同父的兄弟动作能共享信号，泛化好、参数省。
 
-**3. 三重 reward + 保守 Q 正则：把"问得好"拆成三个可计算目标，再压住 offline RL 的 Q 高估。**
+**3. 三重 reward + 保守 Q 正则：把"问得好"拆成三个可计算目标，再压住 offline RL 的 Q 高估**
 
 单一 task-success reward 在"task 是否完成"本就模糊的对话里几乎没有信号，DRCR 把"问得好"分解成三路互补奖励：Goal-Relevance $R_{\text{rel}}^{t+1} = \max_i \text{sim}(C[i], u_a^{t+1})$ 用 LLaMA-3-8B 算律师回答与案件子结论 $C[i]$ 的最大相似度，奖励"问出有用信息"；Novelty $R_{\text{nov}}^{t+1} = N_{\text{attorney}}^{t+1} / (V(1 - ((V-1)/V)^{|u_a^{t+1}|}))$ 用 EAD 度量新引入 token 比例（对长度做了归一化），奖励"问出之前没出现的信息"；Clarity $R_{\text{clarity}}^{t+1} = -\log|u_a^{t+1}|$ 偏好律师答得简短，便于法官控对话。三者加权后给 Q-learning。由于是 offline RL，再加一个 conservative 正则 $\mathcal{L}^{\text{Reg}} = R_1(s) - R_2(s)$，其中 $R_1 = \max_a Q(s,a)$ 是可能被高估的最大值、$R_2 = Q(s, a)$ 在数据集 $(s,a) \in \mathcal{D}$ 上回采，把 OOD 的 Q 值往 dataset policy 拉回。这是 CQL 思路的轻量版，针对 Supreme Court 这种"数据集策略已近最优"的场景，只要把 Q 往数据分布拉就够了，实现仅几行减法。
 

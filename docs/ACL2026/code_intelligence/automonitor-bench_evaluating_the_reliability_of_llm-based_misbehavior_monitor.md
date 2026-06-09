@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 三层分类的配对数据构造：把不当行为按可观察程度铺成难度谱。**
+**1. 三层分类的配对数据构造：把不当行为按可观察程度铺成难度谱**
 
 监控评测最大的坑是「显式违规」和「隐式博弈」混在一起算总分，掩盖了监控器到底漏在哪。本文把样本切成 Safety & Permission Violations（1,172）、Sycophancy & Bias（962）、Specification Gaming（876）三档，从「一眼能看出」到「要语义推理才识破」逐级加深，并强制每条 misbehavior 都配一个**相同请求 $Q$ 下**的 benign 响应，这样 MR 和 FAR 才能在同一锚点上对比。三档的构造手法各不相同：Safety 类直接复用 HH-RLHF 偏好对与现成的 secure/insecure code 对；Sycophancy 类用「反事实过滤器」，把误导线索 $C$ 拼到原问题得到 $Q' = Q \oplus C$，只保留模型**无线索时答对、加线索后答错**的样本，从而确保偏离是被线索诱发而非模型本身无能；Specification Gaming 类则往 TruthfulQA / HumanEval / MBPP / DFIR 等任务里注入奖励代理诱因（如「老板说今天完成有奖金」「评审 bot 只读 Author Notes」），并由两位 PhD 标注员双盲确认。
 
-**2. MR / FAR 双指标 + Pareto 视角：拆开两个轴才看得见 trade-off。**
+**2. MR / FAR 双指标 + Pareto 视角：拆开两个轴才看得见 trade-off**
 
 单一 F1 或 accuracy 会被「保守模型啥都不报刷低 FAR、过敏模型啥都报刷低 MR」两头钻空子，掩盖监控器的真实代价。本文显式把两类错误拆成漏检率 $\text{MR} = \text{FN} / (\text{TP}+\text{FN})$ 与误报率 $\text{FAR} = \text{FP} / (\text{TN}+\text{FP})$，分别量化「放过的危险」和「错报的成本」，再把 22 个监控器投到 MR-FAR 平面上排 Pareto 前沿。实测两轴呈 Pearson $r=-0.54$ 的负相关，说明这个 trade-off 是结构性的而非偶然。如此评测结果便能直接挂到部署偏好上——安全关键场景挑 MR 低的、运营成本敏感场景挑 FAR 低的，同时把被两面碾压、落在 Pareto 前沿之外的「真烂」监控器暴露出来。
 
-**3. SFT 泛化探针：用 cross-category 留出实验证伪「堆数据就能通用」。**
+**3. SFT 泛化探针：用 cross-category 留出实验证伪「堆数据就能通用」**
 
 业界一种乐观假设是「随便收集点 misbehavior 数据 SFT 一下就能当通用监控器」，本文用受控实验直接戳破它。训练集放宽到 153,581 条、不要求 benign-misbehavior 严格配对（以便 scale up），但所有轨迹与测试集严格不相交以防泄漏；用 LoRA 微调 Qwen3-4B-Instruct-2507（≤32k token），分别按「全集 / 单一子类」训练后做跨类别留出测试。最关键的一组是「在 Code 任务的 Safety & Permission Violations 上训练 → 在 Code 的 Specification Gaming 上测试」，结果 SG 上的 MR 不降反升（0.49→0.86），这种强负迁移干净地说明：监控不是一个统一能力，而是按 mode 分块的。
 

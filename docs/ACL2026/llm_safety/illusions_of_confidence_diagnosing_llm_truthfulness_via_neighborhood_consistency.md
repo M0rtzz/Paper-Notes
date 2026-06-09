@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Neighbor-Consistency Belief (NCB)：用"邻居一致性"近似"信念是否结构化"的后验概率。**
+**1. Neighbor-Consistency Belief (NCB)：用"邻居一致性"近似"信念是否结构化"的后验概率**
 
 self-consistency 这类 point-wise 指标只盯着"同一个问题多次采样是否一致"，根本看不到事实之间的网络结构，于是无法区分"基于结构化信念回答"和"靠孤立记忆碎片碰巧猜对"——pilot 里 self-consistency = 1.0 的 995 道题，插一句 peer 反对就从 100% 砸到 33.8%，正说明高一致性是个幻觉。NCB 的做法是把信念建模成二值潜变量 $\theta \in \{\mathcal{S}_\text{struct}, \mathcal{S}_\text{unstruct}\}$，关心的是"既答对目标、又在所有邻居上答对"时模型处于结构化态的后验 $P(\theta = \mathcal{S}_\text{struct} \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \forall i, \hat{a}_i = a_i)$。用 Bayes 公式把它拆成 odds = Bayes Factor × Prior Odds，再借一条关键假设 $P((\forall i, \hat a_i = a_i) \mid \hat{\mathcal{E}}^* = \mathcal{E}^*, \mathcal{S}_\text{struct}) \gg P(\cdot \mid \mathcal{S}_\text{unstruct})$（结构化信念下邻居才会成片答对）就能证明 odds $\gg 1$。这个后验实际不可观测，于是近似为 Empirical Correctness Frequency $\hat p(\hat a = a \mid q)$ 在观测集 $\mathcal{O} = \{(q^*, \mathcal{E}^*)\} \cup NFs$ 上的聚合——邻居答得越齐，NCB 越高。之所以这样有效，是因为它有神经认知科学（语义网络互锁、Anderson 抑制控制理论）和知识编辑里"anchoring in context"思想撑腰：人脑用相互约束的语义网络组织知识才抗干扰，把"信念 = 一堆孤立 fact"改写成"信念 = 一张结构化邻居网络"，正好解释了为什么轻轻一推就能击穿 self-consistency 高的答案。
 
-**2. Cognitive Stress-Test 协议：借 Asch 从众与 Source Credibility 把"干扰下信念稳不稳"做成可量化实验。**
+**2. Cognitive Stress-Test 协议：借 Asch 从众与 Source Credibility 把"干扰下信念稳不稳"做成可量化实验**
 
 光有 NCB 分数还不够，得证明它真能预测鲁棒性，这就需要一套严谨、可控的外部干扰范式。作者直接搬来 70 年代认知心理学的两条经典实验：其一是 **Peer Quantity**（模拟 Asch 从众）——让目标模型先看若干 peer agent 的对话再答 $q^*$，分 Conflict（peer 直接抛出错误实体 $\mathcal{E}^\dagger$）和 Misleading（peer 讨论 MNFs，间接 prime 错答）两种 scenario，并扫干扰 peer 数量 $N \in [1, 10]$；其二是 **Source Credibility**（模拟 Hovland 信源权威效应）——把干扰文本包装成 Low（媒体/朋友）/ Medium（博客）/ High（学术/知名新闻）三档权威度，同样分 Conflict（伪造 NFs 把主语换成 $\mathcal{E}^\dagger$）与 Misleading（在权威叙事里埋 MNFs）。最后把样本按 NCB 高低分到 5% / 20% / 35% 桶，看各桶被干扰后的 Accuracy drop。这样做既保留了经典实验的生态效度，又给"什么时候干扰最猛"提供了清晰的可控轴（peer 数量、权威度）；后面 Finding 中"只要有一个 truth-teller 就能显著压低从众率"也正好复现了 Asch 原始结论。
 
-**3. Structure-Aware Training (SAT)：把"信念结构不变性"显式写进 loss，让新学的事实在噪声上下文里稳得住。**
+**3. Structure-Aware Training (SAT)：把"信念结构不变性"显式写进 loss，让新学的事实在噪声上下文里稳得住**
 
 传统 SFT 只把 $(q, a)$ 对背下来，从不要求"出现噪声上下文时还输出原答案"，所以新学知识天生脆。SAT 把这条鲁棒性约束直接注入训练：teacher $\theta_T$ 冻结、student $\theta_S$ 可训，两者都从 Ans. Aug 的 checkpoint 初始化以保证单点性能起点够强；对每条事实合成两类上下文——$C_{nq}$（邻居语义相关）与 $C_\text{general}$（一般噪声背景），逼 student 在 $(C, x)$ 条件下的输出分布去对齐 teacher 的无上下文分布：
 

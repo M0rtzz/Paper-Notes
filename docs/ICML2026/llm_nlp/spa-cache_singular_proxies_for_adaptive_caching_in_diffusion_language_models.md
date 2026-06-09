@@ -44,15 +44,15 @@ SPA-Cache 要解决的核心问题是：DLM 每个解码步都对全序列重算
 
 ### 关键设计
 
-**1. 理论奠基：把"用 Value 选 token"从经验升成有上界的保证。**
+**1. 理论奠基：把"用 Value 选 token"从经验升成有上界的保证**
 
 前作 dLLM-Cache 监控 Value 状态漂移来选 token 纯属经验观察，没人说清为什么不用 Query/Key 或 attention output。本文用两个定理把这条经验串成一条因果链：Theorem 3.1 证明 attention output 的余弦不相似度被 Value 不相似度上界控制，$1 - \mathcal{S}_\cos(h_i^t, h_i^{t+1}) \le C \cdot (1 - \mathcal{S}_\cos(v_i^t, v_i^{t+1})) + \epsilon$；Theorem 3.2 再证 FFN 输出差被其输入相似度上界，$\|f_\text{FFN}(h_1) - f_\text{FFN}(h_2)\|_2 \le C \cdot \sqrt{1 - \mathcal{S}_\cos(h_1, h_2)} + \epsilon$。两者衔接起来就是"Value 稳 → attention 稳 → FFN 稳"，所以只要 Value 相似度高，整个 block 的输出就可以放心复用。实证（Table 1）也佐证了这个选择：Value 是唯一同时守住 78.59% 精度和 164.88 TPS 的标识符，而 attn output 因深层各向异性 (anisotropy) 把不同 token 都挤进同一窄锥、彼此难以区分，精度掉到 73.92%。这种"先证明再实现"的取法比堆 trick 更稳，也方便换 RMSNorm/LayerNorm/MoE 时直接套用 Remark 3.3。
 
-**2. 奇异代理：用截断 SVD 把"选 token"这步算便宜。**
+**2. 奇异代理：用截断 SVD 把"选 token"这步算便宜**
 
 识别开销和稀疏收益之间天然冲突——降低更新比例能省下 attention/FFN 计算，但在 $d=4096$ 维 Value 上算余弦相似度本身就把省下的算力吃掉一大半。奇异代理的做法是：对 Value 投影矩阵 $W \in \mathbb{R}^{d \times d}$ 做 SVD 得 $W \approx U \Lambda V^\top$，只取前 $r$ 个奇异向量构造截断投影 $W_r = \Lambda_r V_r^\top \in \mathbb{R}^{r \times d}$，proxy 即 $f_\text{proxy}(h_i) = W_r h_i$，把每步识别开销从 $O(d^3) + O(d)$ 压到 $O(rd^2) + O(r)$。它之所以可靠，是因为 Theorem 3.4 证明截断只引入被 $2(\lambda_{r+1}/\lambda_r)^2$ 上界控制、且与具体输入无关的相似度误差——奇异谱衰减越快，低维子空间越能忠实保留原相似度结构。注意这里 SVD 的用法和常见的低秩权重压缩不同：权重本身没被改，只是借前 $r$ 个奇异方向构造一个廉价的比较代理。$r$ 取 128（比全维缩 32 倍）是甜点：TPS 从 164.88 升到 179.43，精度从 78.59 仅降到 78.23 几乎无损（Table 5）；$r=64$ 会开始掉点，$r=512$ 虽无损但加速幅度变小。
 
-**3. 分段高斯自适应预算：把固定的更新比例换成跟漂移分布走的曲线。**
+**3. 分段高斯自适应预算：把固定的更新比例换成跟漂移分布走的曲线**
 
 dLLM-Cache 给所有层统一一个更新比例 $\rho$，相当于把固定预算平均摊到每层，但 Figure 2 显示漂移 token 比例沿层呈不对称钟形——浅层做 embedding 变换、深层做整合都很稳，中间层才是 transformation 高峰。统一 $\rho=25\%$ 会在浅/深层浪费预算、又喂不饱中间高方差层。本文改用峰值在 $l_p$ 的分段高斯函数参数化层级预算 $\rho(l) = \rho_p \exp\!\left(\ln(\rho_1/\rho_p) \cdot ((l-l_p)/(l_p-1))^2\right)$（$l \le l_p$，$l > l_p$ 用对称分支），其中 $\rho_p$ 是峰值比例（默认 25%）、$\rho_1, \rho_L$ 是首末层比例。这样只用 4 个超参 $\{\rho_p, l_p, \rho_1, \rho_L\}$ 就刻画出"中间高、两头低"的归纳偏置，避免逐层学标量带来的搜索/过拟合。效果是平均预算 $\bar\rho$ 从 25% 降到 16%、但中间层仍按需配峰值预算，精度不掉反而吞吐再升（Table 4：TPS 179→189）。
 

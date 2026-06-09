@@ -45,7 +45,7 @@ HAD-MFC 形式化：$\mathcal{G} = \langle \mathcal{N}, \mathcal{S}, \mathcal{A}
 
 ### 关键设计
 
-**1. Fenchel-Rockafellar 解耦：把"训 worst-case 对抗策略"折成一个加正则项的鲁棒 Bellman 算子。**
+**1. Fenchel-Rockafellar 解耦：把"训 worst-case 对抗策略"折成一个加正则项的鲁棒 Bellman 算子**
 
 直接训 worst-case adversary 要解 $\min_{\pi_\alpha} J(\pi_\alpha, \pi_\beta)$，每换一组攻击集 $\mathcal{K}$ 就得重训，组合爆炸根本跑不完。本文的核心一招是用凸对偶把这个内层 min 消掉。设扰动后策略 $\hat{\pi}^i = \epsilon^i \pi_\alpha^i + (1-\epsilon^i) \pi_\beta^i$、扰动后 mean-field action $\nu(a) = \xi \nu_\alpha(a) + (1-\xi)\nu_\beta(a)$，记 $\hat{\pi}_\alpha^i = \hat{\pi}^i - \pi_\beta^i$ 受 $\|\hat{\pi}_\alpha^i\|_p \le \epsilon^i$ 约束。在鲁棒 Bellman 不等式 $V^i \le \mathcal{B}^{\hat{\pi}} V^i$ 上做 Fenchel-Rockafellar 变换，得到 regularized mean-field Bellman 算子
 
@@ -53,7 +53,7 @@ $$\mathcal{B}^R_{\epsilon^i, \xi} V^i = (\mathcal{B}^{\pi_\beta} V^i) - (\epsilo
 
 关键是这是个精确变换（只要不确定性集合凸、proper、下半连续，$\ell_p$ 球都满足），不引入近似，且论文证明它仍是 contraction（命题 4.3）。这样学出来的 $V^i(s^i, \mu, \epsilon^i, \xi)$ 就等价于"agent i 在自己被 $\epsilon^i$ 扰动、团队 $\xi$ 比例被扰动下的最坏情况期望回报"，而整套训练只需合作 trajectory，$\pi_\alpha$ 根本不必存在过。
 
-**2. 上层转成带稠密 reward 的选择 MDP：让 NP-hard 组合选择能用贪心或 RL 跑。**
+**2. 上层转成带稠密 reward 的选择 MDP：让 NP-hard 组合选择能用贪心或 RL 跑**
 
 上层要从 $N$ 个 agent 里挑 $K$ 个，$\binom{N}{K}$ 组合是 NP-hard，传统组合优化的 reward 还只在最后给一次、训练极慢。本文把它改写成顺序选择 MDP $\mathcal{M} = \langle \boldsymbol{\mathcal{S}}, \epsilon, \mathcal{N}, \tilde{\mathcal{P}}, \tilde{R}, \gamma\rangle$，每步往攻击集里加一个 agent $\mathcal{K}_k = \mathcal{K}_{k-1} \cup n_k$，并把 reward 定义为"加进这个 agent 后系统期望回报会下降多少"：
 
@@ -61,7 +61,7 @@ $$r_k = \frac{1}{N}\sum_i \big(V^i(s_0^i, \mu_0, \epsilon^i_{k-1}, \xi_{k-1}) - 
 
 其中 $V^i$ 就是上面学到的鲁棒 V。这等价于把"系统损失"铺到每一步、信号稠密，于是可以直接每步贪心选 reward 最大的 agent（VAI-Greedy，无需训练），也可以用 DQN 学长期依赖（VAI-RL）。命题 4.5 证明这个分解保持原 HAD-MFC 的最优解，所以降复杂度不以损失最优性为代价；实验也显示攻击者数量大时 RL 因能建模 agent 间协同而显著超贪心（如 Battle 144 agents、36 attackers 时 RL 比 Greedy 涨约 30%）。
 
-**3. 统一的 TD 损失：把鲁棒 V 与合作 Q 都在合作 trajectory 上离线学出来。**
+**3. 统一的 TD 损失：把鲁棒 V 与合作 Q 都在合作 trajectory 上离线学出来**
 
 为了让整条 pipeline 都不碰环境、符合黑盒威胁模型，本文把鲁棒 V 的学习落成一个标准 TD loss：
 

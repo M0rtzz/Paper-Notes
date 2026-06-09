@@ -51,15 +51,15 @@ tags:
 
 ### 关键设计
 
-**1. 大五人格驱动的用户Persona系统：让模拟用户的行为和口味真的因人而异。**
+**1. 大五人格驱动的用户Persona系统：让模拟用户的行为和口味真的因人而异**
 
 如果模拟用户千篇一律，学出来的助手也只会一种套路。论文用心理学里验证最充分的大五人格模型来制造多样性：每个persona由5个维度（Extraversion / Agreeableness / Openness / Conscientiousness / Neuroticism，各取 High/Low）组合，再叠加6个扩展属性（年龄、背景、兴趣、生活方式、日计划需求、长期目标），由GPT-4o生成且要求属性与人格特质自洽，最终得到32种persona。为确认这32个人真的彼此不同，作者用UMAP+HDBSCAN对persona embedding做聚类，验证它们在表征空间里分得开、覆盖面广。人格差异会自然传导到推荐偏好上——低外向性的人偏好独处活动、不爱被频繁打扰，高尽责性的人偏好结构化、有计划的推荐，这正是后面个性化评估要拿捏的东西。
 
-**2. 四维个性化评估Rubric：评分标准既有大众共识、又随persona定制。**
+**2. 四维个性化评估Rubric：评分标准既有大众共识、又随persona定制**
 
 助手好不好，全看这把评估的尺子准不准。作者先做了一次353人的AMT大规模调研，从10个候选评估维度里投票筛选，砍掉支持率<50%的Diversity和Interruption，留下四个公认重要的维度：Personal Preference（内容是否对口味）、Frequency（推荐频率是否合适）、Timing（时机是否恰当）、Communication & Safety（沟通风格与安全性）。但光有通用维度还不够个性化，所以每个维度下的具体判据再由GPT-4o按persona量身定制——同样是Frequency维度，低外向性persona的判据会写成"I prefer receiving recommendations no more than once every two hours"，而爱热闹的人门槛就宽得多。实际打分由Gemini 2.0 Flash执行，每个维度给二值评分。这种"大众维度 + 个体判据"的两层结构，让评分既站在共识基础上、又留出了因人而异的空间。
 
-**3. RAG+DPO偏好对齐的ProPerAssistant：助手把每天的打分变成持续进步的训练信号。**
+**3. RAG+DPO偏好对齐的ProPerAssistant：助手把每天的打分变成持续进步的训练信号**
 
 前两点搭好了环境和尺子，这一点才是真正会学习的主角。助手的内部状态 $S_t^{(a)}$ 由两部分构成：一是结构化的日记忆（最近10分钟保留完整细节，更早的逐级压缩成1小时、4小时摘要，避免上下文爆炸），二是用OpenAI embedding检索出的top-5条最相似历史交互（RAG），让它能"想起"以前对类似场景的成败。每个时间步它生成 $n=2$ 个候选推荐（其中一个可以是"不推荐"），用户agent打分后，高分项和低分项就配成一个偏好对存进replay buffer。每天结束时从buffer里随机采样200条做一次DPO训练：
 

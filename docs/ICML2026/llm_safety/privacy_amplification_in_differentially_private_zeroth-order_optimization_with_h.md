@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 混合定向 + 各向同性的 Noisy-ZOGD 机制：用一个连续旋钮统一两套旧噪声方案。**
+**1. 混合定向 + 各向同性的 Noisy-ZOGD 机制：用一个连续旋钮统一两套旧噪声方案**
 
 零阶 DP 文献此前只有两种割裂的噪声机制：沿更新方向加标量噪的 mechanism (a)（utility 好但难分析），和全空间各向同性加噪的 mechanism (b)（好分析但 utility 差）。作者把它们参数化成同一个连续族，更新写成 $w_{t+1}=\Pi_{\mathcal B_R}[w_t-\frac{\eta}{K}\sum_k \hat g_t(w_t;u_{t,k})+\frac{\eta}{\sqrt K}\sum_k G_{t,k}^{(1)} u_{t,k}+\frac{\eta}{\sqrt d}G_t^{(2)}]$，其中两点零阶梯度 $\hat g_t(w_t;u_{t,k})=\frac1n\sum_i \mathsf{clip}(\frac{\ell_i(w_t+\xi u_{t,k})-\ell_i(w_t-\xi u_{t,k})}{2\xi};\Delta)\,u_{t,k}$，定向噪声 $G_{t,k}^{(1)}\sim\mathcal N(0,\beta_t\sigma^2)$、各向同性噪声 $G_t^{(2)}\sim\mathcal N(0,(1-\beta_t)\sigma^2 I_d)$，方向 $\{u_{t,k}\}$ 取正交而非 $\mathbb S^{d-1}$ 上的 i.i.d. uniform。$\beta_t=1$ 退化为 mechanism (a)、$\beta_t=0$ 退化为 mechanism (b)，中间值则是两者的混合。这个参数化在所有 $\beta_t,K$ 下都保持等价的总噪声方差，所以 utility 上界不变，调 $\beta_t$ 只换隐私一侧的自由度。之所以两份都要保留：定向部分把噪声压在真正承载隐私敏感量的方向上、对 utility 友好，各向同性部分则给后面耦合分析里的 vector shift $v_t$ 留出"被吸收"的空间——没有这份各向同性噪声，shifted Gaussian mechanism 那段就无从落脚。
 
-**2. 耦合辅助过程 $\widetilde W$：用 pointwise Lipschitz 绕开全局 Lipschitz。**
+**2. 耦合辅助过程 $\widetilde W$：用 pointwise Lipschitz 绕开全局 Lipschitz**
 
 零阶更新映射的 Lipschitz 常数 $c_1=\sqrt{1-\sum_k\upsilon_k+c^2\sum_k\gamma_k}$ 里 $\upsilon_k,\gamma_k\sim\mathsf{Beta}(K/2,(d-K)/2)$ 是随机的，几乎必然没法全局 $\le c$，于是一阶 PABI 赖以工作的"shifted Rényi divergence 沿原轨迹可控"这条路被堵死。作者的办法是对相邻轨迹 $W_t,W_t'$（对应数据集 $\mathcal D,\mathcal D'$）插一条辅助轨迹 $\widetilde W$，从某时刻 $\tau$ 起按 $\widetilde W_{t+1}\stackrel{d}{=}\Pi_{\mathcal B_R}[\hat\psi_t(\widetilde W_t)+Y_t+Z_t+v_t]$ 演化，其中 shift $v_t:=\min(a_t,(\|d_t\|-z_{t+1})_+)\frac{d_t}{\|d_t\|}$、$d_t:=\hat\psi_t(W_t)-\hat\psi_t(\widetilde W_t)$。这一插把分析切成可分别处理的两段：$W$ 与 $\widetilde W$ 的 TV 距离只需要 Lemma 3.6 的高概率 pointwise Lipschitz（坏事件概率 $\delta_f$），而 $\widetilde W$ 与 $W'$ 之间就是经典 shifted Gaussian mechanism、Rényi divergence 能照标准 PABI 累积，最后用 Lemma 3.7 的 forward 跟踪 $W_\infty(w_t,w_t')\le \min(2R,2\eta\Delta t/\sqrt K)$ 收口。本质是"分而治之"：把全局 Lipschitz 失效的坏事件丢进 TV 项，好事件走 Rényi 项——只要用 Beta 尾界证出 $c_1\le \bar c_1=\sqrt{1-(1-c^2)K/d+\vartheta(1+c^2)K/d}$ 以高概率成立，pointwise 就够用了。
 
-**3. 正交方向 + 多维 $K$ 的隐私收益：方向越多隐私反而越好。**
+**3. 正交方向 + 多维 $K$ 的隐私收益：方向越多隐私反而越好**
 
 合上前两件套，作者得到定理 3.2 / 推论 3.3 的闭式 DP 上界 $\varepsilon=O(\sqrt{\Delta^2\log(1/\delta)/(n^2\sigma^2)\cdot \min(T,MRn\sqrt d/(K\Delta))})$，并据此读出一条此前文献没有的设计准则：$\min$ 里那一项 $MRn\sqrt d/(K\Delta)$ 反比于方向数 $K$，于是当 $T\to\infty$、bound 饱和时，$\varepsilon$ 随 $K$ 增大而下降。这和标准 composition 的直觉正好相反——后者认为每多采一个方向就多暴露一份敏感量、隐私按 $\tilde O(\sqrt K)$ 变差，所以前作都回避大 $K$。hidden-state 分析改了游戏规则：在固定 utility 约束下多用几个方向，反而把每个方向上的敏感度稀释了。把方向取成正交（从 Stiefel 流形抽、只需对 i.i.d. 高斯方向做一次 QR）还能进一步收紧——Lemma 3.6 的 Beta 尾界在正交方向下比 i.i.d. 球面抽样更紧，因为正交方向之间没有重叠的隐私泄露。这是零阶方法独有、一阶方法看不到的现象。
 

@@ -45,17 +45,17 @@ SAGO 是个模块化两阶段迭代框架（Algorithm 1）：每一步先从 for
 
 ### 关键设计
 
-**1. 模块级 PCGrad：当 forget 梯度和 retain 梯度顶牛时，先把冲突分量削掉。**
+**1. 模块级 PCGrad：当 forget 梯度和 retain 梯度顶牛时，先把冲突分量削掉**
 
 最朴素的 GradDiff 把 forget 和 retain 两个 loss 加权相加，可两路梯度一旦夹角超过 90°，forget 信号就会反向拽走 retain 方向，retention 持续掉点。模块级 PCGrad 的办法是对每个模块 $j$ 单独把 forget 梯度投到 retain 梯度的法平面上去除冲突分量——$\tilde{g}_f^j = g_f^j - \frac{g_f^j \cdot g_r^j}{\|g_r^j\|^2} g_r^j$，再合成 $g_{\text{final}}^j = \alpha g_r^j + \gamma \tilde{g}_f^j$。关键是"逐模块"而非把整网 flatten 成一个长向量再投影：GRU 采用的原始 PCGrad 在 flatten 后操作，一处冲突会牵动全网调整，粒度太粗；module-wise 把投影局部化，实测 retention 更高（Table 2 中 Global PCGrad MMLU 51.0，module-wise 升到 53.0）。
 
-**2. SAGO：元素级符号对齐门控，直接在每个坐标上封死反向。**
+**2. SAGO：元素级符号对齐门控，直接在每个坐标上封死反向**
 
 PCGrad 有个漏网之鼓：它只保证整体夹角 ≥ 90°，可一旦某维度上 $|\tilde{g}_f^i| > |g_r^i|$，那一维的最终更新方向仍会被翻到与 retain 反向。SAGO 把粒度推到元素级，对每个参数维度看 $g_f \odot g_r$ 的符号——符号一致的维度是"任务专属维"，可以放心放 forget 信号通过 $\tilde{g}_f = g_f \odot \mathbb{I}(g_f \odot g_r \ge 0)$；符号相反的维度承载通用知识，只保留 retain 信号 $\tilde{g}_r = g_r \odot \mathbb{I}(g_f \odot g_r < 0)$；最终更新 $g_{\text{final}} = \alpha \tilde{g}_r + \gamma \tilde{g}_f$。
 
 这一刀切下去带来两个天然好处：两路的支撑集不相交，所以严格正交 $\tilde{g}_f^\top \tilde{g}_r = 0$；而且每个坐标都不可能与 $g_r$ 反向。换句话说，PCGrad 是事后"砍掉"冲突分量、仍可能在单维度翻车，SAGO 则在元素粒度上从结构上杜绝翻车——retention 在几何上更稳。
 
-**3. cos 相似度下界：把"retention 优先"从直觉变成可证的几何性质。**
+**3. cos 相似度下界：把"retention 优先"从直觉变成可证的几何性质**
 
 光说 SAGO 更稳还不够，作者从余弦相似度角度给两种方法各推了一个"retention 对齐度"下界。PCGrad 靠正交投影得到 $\cos\theta_P = (1 + \|\tilde{g}_f\|^2 / \|g_r\|^2)^{-1/2} \ge 0$；SAGO 靠支撑不相交，其 $\cos\theta_S$ 的分子 $= \sum_{i\in C}(g_r^i)^2 + \sum_{i\in S} g_f^i g_r^i$，而 $S$ 上必有 $g_f^i g_r^i > 0$——比 PCGrad 结构上多出一段恒正的贡献，于是在等权 $\alpha=\gamma=1$ 下，最终方向与 $g_r$ 严格对齐得更紧。这段证明给"元素门控"这个看似工程化的选择补上了理论依据，也和后面 Comb-Retain cos = 0.57 vs 0.52 的实测数字对上了。
 

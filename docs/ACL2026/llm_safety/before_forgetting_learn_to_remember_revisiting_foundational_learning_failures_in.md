@@ -50,17 +50,17 @@ ReMem 重构 LVLM unlearning 评测的两阶段流程：
 
 ### 关键设计
 
-**1. 用 scaling law + 单跳脚手架构造 QA 集合：先把 stage 1 真的记进去。**
+**1. 用 scaling law + 单跳脚手架构造 QA 集合：先把 stage 1 真的记进去**
 
 现有 benchmark 失效的第一个根因是 QA 太少：FIUBench 每个身份只给 20 条、MLLMU 只给 1 条，按 Carlini 等人的结论，记忆强度正比于 sample repetition，这点重复量根本进不去参数。ReMem 先做 toy 实验扫 20→200 QA/ID，发现 ROUGE/EM 随 QA 数单调上升、到 160 左右开始过拟合，于是把每身份 QA 拉到 100 条。第二个根因是题型——现有 benchmark 几乎全是 multi-hop 问题（「图中人的地址是什么」），模型要同时学视觉识别和属性回忆，复合难度过大，撞上 multi-hop curse。ReMem 再扫单跳比例 0%→100%，发现 70% 单跳是 EM 在单跳测试和多跳测试上的双重峰值。
 
 道理和人类记忆一致：先记住「小明的地址在 XX 街」，才能回答「图里这人的地址」。单跳问题（「$X$ 的地址是？」）先建立 $(s,r)\to a$ 的直接映射，多跳问题（「图里人的地址是？」）再让 $v\to s$ 的视觉 grounding 接上去，单跳脚手架等于先把 atomic step 喂会，复合推理才学得动。
 
-**2. 多视角图像合成 + 严格质检：让模型记住的是「人」而不是「那张图」。**
+**2. 多视角图像合成 + 严格质检：让模型记住的是「人」而不是「那张图」**
 
 CLEAR 等用 20 张图/ID 但视觉变化太少，模型其实在背图而不是背人，换个姿态背景就认不出，这样的「记住」经不起 unlearning 评测。ReMem 用 Nano Banana 以 anchor 图为锚，随机化姿态、服饰、背景生成 100 张/ID，再用 ArcFace 的 cosine similarity 过滤保证人脸一致，外加四步人工 review（去 artifact、跨模态对齐、身份可辨识、伦理筛查防真人撞脸）。测试集 $D_t$ 专门换用全新视觉模板，逼模型在大幅视觉变化下仍能识别同一身份，才算「真的把这个人记住了」，也顺带堵住 lexical/visual overfit。
 
-**3. Exposure 内部概率度量：从分布层面看 PII 是被擦掉还是只是被拒答。**
+**3. Exposure 内部概率度量：从分布层面看 PII 是被擦掉还是只是被拒答**
 
 传统 ROUGE/EM 只看生成层，模型完全可以学会一句「我不知道」的 refusal，内部却仍编码着 PII，被 prompt injection 一抽就出来——这正是隐私评测的盲区。ReMem 对目标 PII 串 $a=t_1t_2\dots t_n$ 定义
 

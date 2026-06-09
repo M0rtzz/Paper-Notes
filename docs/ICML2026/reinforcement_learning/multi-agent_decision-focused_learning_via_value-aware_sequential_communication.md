@@ -45,15 +45,15 @@ SeqComm-DFL 把 Dec-POMDP 下的协作问题切成三个相互耦合的模块：
 
 ### 关键设计
 
-**1. 价值感知消息生成：用"队友决策变好多少"取代"消息转述得多准"当训练信号。**
+**1. 价值感知消息生成：用"队友决策变好多少"取代"消息转述得多准"当训练信号**
 
 传统通信协议优化的是重建误差或互信息，可一条消息哪怕把观测复述得再完美，只要这些细节改变不了队友的动作就毫无意义——带宽被白白花在"信息量大但和决策无关"的特征上。作者直接把决策价值量化为接收方决策增益 $\Delta Q_j(m_i) = \max_a Q_j(o_j, m_i, a) - \max_a Q_j(o_j, \emptyset, a)$，即"有这条消息"比"没消息"时 $j$ 的最优 Q 高多少，再把它取负当损失 $\mathcal{L}_{\text{VA}}(\theta) = -\frac{1}{B \cdot N(N-1)} \sum_b \sum_i \sum_{j\neq i} \Delta Q_j(m_i^{(b)})$，逼每条消息去最大化其它 agent 的最优 Q。训练初期 critic $Q_w$ 还不可靠，于是先用 Monte Carlo rollouts 估 $\Delta Q_j^{\text{MC}}$，再按 $\Delta\hat Q = (1-\beta_t)\Delta Q^{\text{MC}}+\beta_t \Delta Q_w$ 随 $\beta_t$ 退火平滑切到 critic 估计。这条 loss 并不是拍脑袋凑的：作者从 envelope theorem 证明在最优 critic 处，真任务损失对消息的梯度 $\propto -\sum_{j\neq i} \nabla_{m_i} Q_j$，方向恰好就是 $\Delta Q_j$——也就是说它是从 DFL 自然导出的对偶量，把"哪些信息值得通信"和"信息论上的多少 bit"彻底解耦。
 
-**2. Stackelberg 序贯条件 + Guidance Potential 排序：让"谁先说"成为可学习问题，打破并行决策的协调歧义。**
+**2. Stackelberg 序贯条件 + Guidance Potential 排序：让"谁先说"成为可学习问题，打破并行决策的协调歧义**
 
 多个 agent 同时挑动作天然有相对过泛化和多重均衡问题——大家都在赌对方会怎么动，容易一起陷进次优均衡。作者改成三阶段的序贯协调。**协商阶段**先给每个 agent 算一个利他的引导势 $\text{GP}_i(s) = \mathbb{E}_{\mathbf{a}^*}[Q_{1:N}(s,\mathbf{a}^*|i^+) - Q_{1:N}(s,\mathbf{a}^*|i^-)]$，衡量"让该 agent 当 leader"对团队总收益的贡献，再用 Gumbel-softmax 把它变成可微的优先级排列 $\pi=\text{argsort}(-\text{GP})$。**发布阶段**按 $\pi$ 顺序逐个选动作 $a_{\pi_k}=\arg\max_a Q_{\pi_k}(o_{\pi_k}, M_{1:\pi_k-1}, a)$，后行者能看到所有更高优先级 agent 已经发出的消息。**正则阶段**再用反事实影响损失 $\mathcal{L}_{\text{inf}} = -\frac{1}{N(N-1)}\sum_i \sum_{j\neq i} D_{\text{KL}}[\pi_j(\cdot|m_i)\,\|\,\pi_j(\cdot|\emptyset)]$ 逼消息真的改变接收方策略，而不只是和它相关。和 SeqComm 用"我有多想行动"的意图排序不同，guidance potential 是利他的：理论上 $\text{GP}_i \propto \sum_{j\neq i} I(M_i; a_j^*|o_j)$，于是"手里握着协调关键私有信息"的 agent 自然被推到 leader 位，让队友基于真正有价值的先验决策，从而进入 Pareto 更优的 Stackelberg 均衡。
 
-**3. 决策聚焦双层世界模型 + 隐式微分：让世界模型为"团队回报最高"而非"下一帧预测最准"而优化。**
+**3. 决策聚焦双层世界模型 + 隐式微分：让世界模型为"团队回报最高"而非"下一帧预测最准"而优化**
 
 MARL 里世界模型和 critic 本身就是链式调用，是一个天然的双层结构。作者把它显式写成：外层最小化 $\mathcal{L}_{\text{true}}(w^*(\theta);\theta)$（用真实环境数据评估 critic），内层 $w^*(\theta)=\arg\min_w \mathcal{L}_{\text{model}}(w;\theta) + \lambda_{\text{aware}}\mathcal{L}_{\text{aware}}(w)$ 用模型预测训练 critic，并把通信和世界模型一起塞进同一个外层优化器。这里有个通信特有的失败模式——一旦 critic 学会完全无视消息 $M$，超梯度对通信参数就会消失（"内层冷漠"），所以加了 hinge 形式的消息感知正则 $\mathcal{L}_{\text{aware}}=\max(0, \epsilon_{\text{margin}} - |Q_w(s,a,M)-Q_w(s,a,\mathbf{0})|)$ 强制 critic 在含消息和零消息输入间留出 margin。求外层梯度时不对内层 $K_{\text{inner}}$ 步梯度下降做反传（会消失/爆炸），而是用隐式函数定理在内层不动点处展开
 

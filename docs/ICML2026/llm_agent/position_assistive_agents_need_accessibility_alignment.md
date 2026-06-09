@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 用 778 个任务实例做实证地基，堵死"accessibility 是边缘问题"的反驳。**
+**1. 用 778 个任务实例做实证地基，堵死"accessibility 是边缘问题"的反驳**
 
 position paper 最大的软肋是"凭感觉立场"，所以作者第一步不是讲道理而是摆数据：从 2012–2025 年横跨 CV / GenAI / Robotics / HCI 的 417 篇论文里抠出 task description，做 qualitative coding，得到 778 个细粒度任务实例及其频次分布。最终归成四个大类——Reading & Text Access（35%）、Mobility & Safety（34%）、Object Recognition & Daily Operations（12%）、VQA Goal-directed Query（18%），每个子类都带实例数（如 hazard perception 108、path planning 116、interactive digital reading 100）。这组统计画像证明盲人辅助任务体量大、覆盖广，而且明显集中在 mobility 和 reading 这两类"错就出事"的高风险方向，后续所有论证都锚在这块实证地基上，不再是纯思辨。
 
-**2. 4 Stressor × 4 Failure Mode 的诊断矩阵，把无障碍失败变成可逆向工程的问题。**
+**2. 4 Stressor × 4 Failure Mode 的诊断矩阵，把无障碍失败变成可逆向工程的问题**
 
 作者先抽出 BVI 场景区别于普通用户的四个环境特性（stressor）：limited verifiability（用户无法独立核对视觉输出）、high-cost errors（错误不可逆甚至造成人身伤害）、cognitive burden（音频/触觉通道带宽窄）、privacy exposure（家居/医疗场景高度敏感）。再从这些约束推出四类系统性失败模式：silent failure、overconfident hallucination、miscalibrated autonomy、interaction-induced cognitive overload。关键在于每个 failure mode 都被钉在一个具体的 stressor 组合上——例如 silent failure 由 limited verifiability + asymmetric cost 共同驱动——形成"环境约束 → 失败现象 → 设计责任"的因果链。这样一来，"无障碍做得差"就从 anecdotal 抱怨变成了可被反向工程的工程问题：只要 Agent 设计能 close 掉对应的 stressor，那类 failure mode 原则上就能被消除。作者还指出这四类失败会互相加强（silent failure 和 hallucination 逼用户脑内验证每条输出、加重认知负担，miscalibrated autonomy 又在高风险时阻塞验证、低风险时浪费带宽），所以必须用统一框架联合处理，不能各自打补丁。
 
-**3. 四维 Accessibility Alignment 框架 + 三阶段 Lifecycle Pipeline，让 framing 可审计、可反驳。**
+**3. 四维 Accessibility Alignment 框架 + 三阶段 Lifecycle Pipeline，让 framing 可审计、可反驳**
 
 针对上面诊断出的失败，作者把 alignment 拆成四个维度并各配具体 artifact：Goal（用 accessibility 重新定义"成功"，含 safety margin / critical-field reliability / recovery procedure，落到 Accessibility Success Specification）、Interaction（chunked / landmark-based 的低带宽非视觉协议，落到 Interaction Contract）、Risk（不确定性触发保守动作、隐私 by default，落到 Risk and Uncertainty Policy、Privacy Manifest、Autonomy Calibration Specification）、Lifecycle（日志 / 反馈 / 安全更新）。这四维由 Design / Deployment / Post-deployment 三阶段串起来：Design 阶段产出 6 个 artifact；Deployment 阶段把 artifact 翻译成 runtime guardrail（risk-triggered autonomy downgrade、safe pause、escalation）；Post-deployment 阶段做 near-miss 日志、把 incident triage 归到具体 alignment 维度、再做带回归测试的安全更新。配套地，作者主张评测指标也要随之迁移——从 SPL / 路径长度 / OCR accuracy 这类 task-completion 指标，转向 unsafe instruction rate、risk-trigger compliance、abstention precision/recall、critical-field accuracy、critical hallucination rate 这类 safety-aware 指标。整套框架刻意把每个抽象维度都绑死到具体 artifact 和 runtime 行为上，正是为了回应 position paper "只立 flag 不给方案"的天然质疑，让主张能被审计、也能被反驳。
 

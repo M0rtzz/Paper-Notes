@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 三层敏感性 benchmark：用受控扰动测聚合对金融关键信息的判别力。**
+**1. 三层敏感性 benchmark：用受控扰动测聚合对金融关键信息的判别力**
 
 金融文档的关键语义集中在稀疏的数字/实体上——单个数字改变就颠覆全文意义，而日常自然图像 benchmark 完全不覆盖这种细粒度差异，恰恰是单向量聚合最容易翻车的真空地带。本设计构造三类反事实对：micro-semantic 改单数字小幅（5.21→5.29、19.65%→19.54%、10,520→10,526），macro-semantic 改大幅（5.21→9.99、11.9→88.8、13,499→99,999），text sensitivity 用 Zeiler-Fergus 语义遮挡、把"Revenue increased by \$1.4 billion"与同位置用背景同色 [MASK] 覆盖对照。每类 100 对 × 2 数据集（FinQA、TAT-DQA）共 600 对诊断样本，专门把扰动限制在语义层而非视觉显著性层，从而干净地隔离出聚合的判别能力。
 
-**2. MinPatch 探针：把 encoder 责任与聚合责任干净分离。**
+**2. MinPatch 探针：把 encoder 责任与聚合责任干净分离**
 
 聚合失败时无法直接判断是 encoder 根本没看见差异、还是 encoder 看见了但聚合把它磨平，两类失败混在一起就无从下手。MinPatch 取空间对齐 patch 对 cos 相似度的最小值 $S_\text{min} = \min_i \cos(v_i^A, v_i^B)$，专门挖出 encoder 注意到的最大局部差异——它不是实用的 retrieval metric，而是一个"最坏情况 patch"诊断 probe。逻辑是：若 MinPatch 大幅下降（macro 到 0.51、text 到 0.09、LLaVA 上甚至负数）而 Mean/Max Pooling 仍 > 0.99，就说明 encoder 在 patch level 早已看到差异，责任完全落在聚合层；这比 MaxSim 等平均型 metric 更能逼出被聚合淹没的隐藏信号。
 
-**3. Signal/Noise 图像消融：把根因物理化为 global texture dominance。**
+**3. Signal/Noise 图像消融：把根因物理化为 global texture dominance**
 
 要证明"聚合在看背景而非数据"不能只停在语义解释，得有可测量的视觉证据。本设计造两个对照图：Signal 只留表格、背景纯色，Noise 擦掉表格、保留模板，再算 cos(reference, Signal) 与 cos(reference, Noise)，定义 $\text{Gap} = \text{sim\_to\_data} - \text{sim\_to\_layout}$。结果 Qwen2.5-VL-7B 在 FinQA 上 Gap = −0.22、Phi-3.5 为 −0.27，即聚合向量反而更像"只剩 layout"的图、更远离"只剩 data"的图，直接坐实聚合优先吸收背景纹理（表格线、logo）把稀疏数字像素淹没的 global texture dominance。这种"消融成 Signal/Noise 两端再算 Gap"的手法也可迁移到其他模态的视觉信息丢失诊断。
 

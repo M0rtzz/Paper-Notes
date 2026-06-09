@@ -47,19 +47,19 @@ SBTA 可以理解为“topic modeling 的粒度重构”。它并不要求重新
 
 ### 关键设计
 
-**1. Segment-based Topic Allocation 任务定义：把主题分配的原子单位从文档降到语义片段。**
+**1. Segment-based Topic Allocation 任务定义：把主题分配的原子单位从文档降到语义片段**
 
 用户做文本分析时真正想知道的是“哪些句子在谈价格 / 服务 / 质量”，而不是拿回一整篇同时谈价格、质量、服务、外观的评论。文档级分配（DBTA）把这些异质内容混进同一个主题簇，造成 topic contamination。SBTA 把分配对象改成 segment：每个 segment 定义为 $([i:j],\mathcal{T})$，其中 $[i:j]$ 是一段连续 token span，$\mathcal{T}$ 是这段 span 涉及的主题集合。
 
 由于一个 segment 通常只覆盖一到少数几个主题，它天然比整篇文档更纯。检索主题 $k$ 时，系统返回的是 $\mathcal{Q}_{d,k}=\{Q\in\mathcal{Q}_d\mid k\in\mathcal{T}(Q)\}$，即文档里真正谈到该主题的片段集合，而不是整篇离题内容一起带回。
 
-**2. SemEval-STM 构建流程：用 ABSA 的 aspect 当 proxy topic，造一个 DBTA/SBTA 公平对照的 benchmark。**
+**2. SemEval-STM 构建流程：用 ABSA 的 aspect 当 proxy topic，造一个 DBTA/SBTA 公平对照的 benchmark**
 
 要验证“换单位有效”，得有一份能同时支持文档级与片段级对比的数据；从零人工标注 topic 成本太高，作者于是借 SemEval-2016 ABSA 的 laptop / restaurant 两域——它们自带 aspect label，正好当主题代理。构建时先用 o3-mini 按主题和文档抽取 maximal contiguous spans，丢弃 segment 少于 10 个的主题，再人工合并重分配：laptop 从 76 个主题降到 33 个、再并成 23 个，restaurant 整理为 11 个。
 
 一个刻意的保守设计是：DBTA 和 SBTA 共用同一套主题集合，且选取的是“多主题但离题内容不占主导”的短文本——如果直接用极度异质的文档，SBTA 会赢得过于轻松，这样反而让对比更可信。
 
-**3. Segment Intrusion Evaluation：把可解释性评测从“主题词像不像”换成“这些片段是不是同一类”。**
+**3. Segment Intrusion Evaluation：把可解释性评测从“主题词像不像”换成“这些片段是不是同一类”**
 
 传统 word intrusion 只在 topic words 里挑混入词，根本衡量不了 segment 在上下文上是否连贯，与 SBTA 的片段粒度不匹配。作者改造出 segment intrusion：在一组属于同一主题的 segment 里塞入一个语义不属于该主题的 intruder，让人类或 LLM 把它找出来，成功率越高说明原主题簇越一致。
 

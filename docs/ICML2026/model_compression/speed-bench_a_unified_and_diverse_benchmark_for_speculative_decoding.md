@@ -45,15 +45,15 @@ SPEED-Bench 想解决的是"SD 论文数字对不上工业部署"这件事，做
 
 ### 关键设计
 
-**1. 语义多样性最大化的 Qualitative split：用最小子集顶满语义覆盖。**
+**1. 语义多样性最大化的 Qualitative split：用最小子集顶满语义覆盖**
 
 针对"各家论文数据集不一致、接受率对文本分布又极敏感、跨方法无可比基线"这个痛点，作者不靠堆样本量，而是在每个类目只挑 80 条、却让它们尽量互不相似。具体做法是把每条 prompt 经 OpenAI `text-embedding-3-large` 嵌成单位向量 $x_i$，目标是从 $N$ 个候选中选出 $|S|=k$ 的子集 $S$，最小化两两余弦相似度之和 $\mathcal{L}(S) = \sum_{i \in S} \sum_{j \in S, j \neq i} x_i^\top x_j$。这是个 NP-hard 问题，论文用"贪心 + 局部交换精修"（Greedy + LSR）求近似解：先随机起点、按 $i^\ast = \arg\min_{i \notin S} \sum_{j \in S} x_i^\top x_j$ 逐点加入，再反复尝试 $i_{out} \in S$ 与 $i_{in} \notin S$ 的对换，仅当目标下降 $\Delta < 0$ 时执行交换以跳出局部最小。之所以这样有效：穷举 18 个数据源的笛卡尔积代价太高、随机抽样又留大量冗余，而这套算法把平均语义相似度比 SpecBench 压低 40%（多语种类目降 83%），同时给每条样本附 subcategory / multi-turn / difficulty 等元数据，支持后续细粒度切片分析。
 
-**2. 按 ISL × 熵分桶的 Throughput split：把"随机 token 合成 prompt"换成真实长上下文负载。**
+**2. 按 ISL × 熵分桶的 Throughput split：把"随机 token 合成 prompt"换成真实长上下文负载**
 
 这一设计针对的痛点是"没人测过 8k 以上 ISL、合成 token 又会骗评测"。作者用 `o200k_base` 分词器把样本截断或填充到固定 ISL 桶（1k / 2k / 8k / 16k / 32k），再按文本域熵分到 Low / Mixed / High 三档（排序与 coding 属低熵、STEM 属混合熵、创意写作属高熵），每桶 512 条 × 3 档 = 1536 条，从而能稳定画出 Pareto 曲线。配套还给出一个"领域速比"的解析代理：若已测得自回归 per-step 延迟 $t_{ar}$ 与 SD per-step 延迟 $t_{sd}$，则 $\text{Speedup} = (t_{ar} \cdot AL) / t_{sd}$，把 AL 这个数据相关量与系统级 per-step 延迟解耦，新领域只需测两类纯净量即可预测速比。用真实 prompt 而非合成 token 是有原因的：作者实证发现随机 token 会触发两类失败模式——"trivial response"（模型把噪声当礼貌寒暄、AR 虚高）和"topic latching"（抓住噪声里的关键词幻觉一段连贯文本、AR 偏低），还会让 MoE 的 router 坍缩到少数专家、连 SD 的 step latency 都测不准。
 
-**3. 生产引擎里的统一测量框架：分离"算法本身"与"工程实现"的贡献。**
+**3. 生产引擎里的统一测量框架：分离"算法本身"与"工程实现"的贡献**
 
 为了让同一份 prompt 在不同 runtime 上跑出可比的 AR / AL / TTFT / step latency / User TPS / Output TPS，框架用 asyncio 并发派发请求来模拟多用户 serving，并通过解析流式响应里每个 chunk 携带的 token 数反推接受长度——一个 chunk 含多 token 就代表一次成功的投机。这里 AL 有明确定义：$\text{AL} = \mathbb{E}[L_t] = 1 + \sum_{i=1}^{\gamma} \prod_{j=1}^{i} \text{AR}_j$，其中 $\text{AR}_i$ 是给定前缀已被接受时第 $i$ 个 draft token 的条件接受率。关键在于它把 BOS、chat template 等外部差异在客户端统一处理，却保留各引擎内部的 CUDA Graph / 连续批处理 / kernel fusion——这正是过去"用 HuggingFace 测 SD"会与生产部署严重偏离的根源。框架同时与 SpecBench 兼容（论文给出 Medusa 在其中跑通的例子），既不抛弃研究社区资产，又把评测重心拉回部署可行性。
 

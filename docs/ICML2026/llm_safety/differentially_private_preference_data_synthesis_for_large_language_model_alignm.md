@@ -46,15 +46,15 @@ DPPrefSyn 不再在私有偏好三元组上直接 DP 微调对齐模型，而是
 
 ### 关键设计
 
-**1. Bradley-Terry 线性奖励 + 几何聚类：用一族簇奖励表达异质偏好。**
+**1. Bradley-Terry 线性奖励 + 几何聚类：用一族簇奖励表达异质偏好**
 
 单一全局奖励无法刻画"不同用户重视不同方面"（准确、礼貌、创意）这种异质性，但要给每个用户单独建模又会陷入高维多模型困境。本文借 Bradley-Terry 模型的几何结构破局：偏好概率 $\mathbb{P}[a^+ \succ a^-] = \sigma(\langle \theta, \phi(x,a^+) - \phi(x,a^-)\rangle)$ 只由参数 $\theta$ 与特征差向量 $\phi(x,a^+)-\phi(x,a^-)$ 的内积符号决定，因此偏好取向相近的用户，其差向量方向天然一致——把这些差向量聚类，每个簇就对应一类同质偏好，可用一个 cluster-specific 的线性 $\theta_k$ 近似。聚出来的簇还可解释（如"重视事实性""重视礼貌"）。选线性奖励而非深度奖励，是因为它在表达力和 DP 友好性之间取了平衡：DP-SGD 在线性模型上的样本效率远高于深度模型，而簇内偏好已被聚类同质化，线性结构就够用。
 
-**2. DP-PCA + DP-KMeans + DP-SGD 的分阶段预算配置：用降维换样本效率。**
+**2. DP-PCA + DP-KMeans + DP-SGD 的分阶段预算配置：用降维换样本效率**
 
 原始 embedding 高达 1024 维，DP-SGD 直接在这个维度上学奖励所需样本量大到不现实，而人类偏好标注极其昂贵。解法是先用 DP-PCA 把差向量投到 $p=20$ 维，保留主要偏好信号、丢掉噪声方向，再在低维空间训练。总隐私预算被切成三段：$\varepsilon_0$ 给 PCA、$\varepsilon_1$ 给 KMeans、剩余的 $\varepsilon - \varepsilon_0 - \varepsilon_1$ 给 DP-SGD。由于聚类后各簇样本不相交，DP-SGD 训练满足平行组合定理，总预算只受最小簇约束而非线性叠加。降维本就是 DP 高维训练的标配，而这里选 PCA 而非随机投影是为了更有针对性地保留偏好信号，KMeans 则让每个簇内部足够同质、从而单个线性模型即可拟合。DP-SGD 的多步组合用 PRV accountant 做紧致核算。
 
-**3. 公开 prompt + 候选评分构造偏好对：把预算全花在"建偏好"上。**
+**3. 公开 prompt + 候选评分构造偏好对：把预算全花在"建偏好"上**
 
 合成 prompt 本身既要消耗隐私预算、效果又差，所以本文干脆改用公开 prompt 集（Alpaca / SafeRLHF / XSum），让全部 DP 预算都投到偏好建模而非造 prompt 上。生成时，对每个公开 prompt $\tilde x_j$ 用高 temperature 让 LLM 产 $L=5$ 个候选；按一个 DP histogram $\bm p \leftarrow \bm h / |\mathcal{D}_{\text{priv}}|$（簇的私有占比）采样出簇 $k$，用对应的 $\theta_k$ 给候选打分，取奖励最高/最低的两个拼成偏好对 $(\tilde a^+, \tilde a^-)$；若两者奖励差 $< 0.5$ 说明区分度不够，就丢弃这条以保证合成对的信号质量。公开与私有 prompt 的分布差异不致命，因为作者主张"用户偏好与 prompt 分布解耦"——偏好不变性被 $\theta_k$ 抓住，换个 prompt 来源依然能复现同一套偏好排序。
 

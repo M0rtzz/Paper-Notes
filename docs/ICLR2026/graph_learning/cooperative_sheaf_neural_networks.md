@@ -47,15 +47,15 @@ CSNN 的核心改动是把输入无向图拆成有向图——每条无向边变
 
 ### 关键设计
 
-**1. 有向 Cellular Sheaf 与 in/out-degree Laplacian：把"传播"和"监听"解耦。**
+**1. 有向 Cellular Sheaf 与 in/out-degree Laplacian：把"传播"和"监听"解耦**
 
 经典 SNN 建在无向图上，restriction map $\mathcal{F}_{i \unlhd e}$ 同时出现在节点 $i$ 的传入项和传出项里。论文的 Proposition 3.1 指出，若想让节点 $i$ 屏蔽所有邻居输入就必须令 $\mathcal{F}_{i \unlhd e}=0$，而这一步会连带把 $i$ 向外的传播也切断——PROPAGATE 与 LISTEN 在结构上被强行绑死，四种协作行为（STANDARD/LISTEN/PROPAGATE/ISOLATE）无法完全分离。把边拆成有向后，节点作为"源"和作为"目标"时用不同的 restriction map：out-degree sheaf Laplacian 写成 $L_{\mathcal{F}}^{\text{out}}(\mathbf{X})_i = \sum_{j \in N(i)} (\mathbf{S}_i^\top \mathbf{S}_i \mathbf{x}_i - \mathbf{T}_i^\top \mathbf{S}_j \mathbf{x}_j)$，in-degree 形式对称但由 $\mathbf{T}$ 控制接收端，最终扩散算子取 $(\Delta_\mathcal{F}^{\text{in}})^\top \Delta_\mathcal{F}^{\text{out}}$ 这一非对称组合。如此一来 $\mathbf{S}_i=0$（不传播）和 $\mathbf{T}_i=0$（不监听）可以各自单独设置，节点终于能独立选择传播策略。
 
-**2. Flat vector bundle 参数化：把每边一个映射压成每点两个。**
+**2. Flat vector bundle 参数化：把每边一个映射压成每点两个**
 
 一般 cellular sheaf 每条边都要一组 restriction map，$m$ 条边就有 $2m$ 个矩阵要学，开销随边数线性膨胀。CSNN 改用 flat vector bundle：让节点 $i$ 对它的所有邻居 $j$ 共享同一对映射，$\mathcal{F}_{i \unlhd ij} = \mathbf{S}_i$、$\mathcal{F}_{i \unlhd ji} = \mathbf{T}_i$，于是整张图只需 $2n$ 个映射（$n$ 为节点数），参数量从 $O(m)$ 降到 $O(n)$。每个映射本身用 Householder 反射构造一个正交矩阵、再乘以一个可学习的正常数，从而保证是 conformal（保角缩放）映射，在压缩参数的同时维持了扩散算子的良好谱性质。
 
-**3. 扩展感受野与选择性注意：每层够到 $2t$-hop 还能跳过中间点。**
+**3. 扩展感受野与选择性注意：每层够到 $2t$-hop 还能跳过中间点**
 
 传统 GNN 叠 $t$ 层只能触达 $t$-hop 邻居，且信息沿路径被指数压缩，正是 oversquashing 的根源。论文证明在有向 sheaf 下，合理配置 $\mathbf{S}$ 与 $\mathbf{T}$ 可以让 $t$ 层 CSNN 的感受野扩到 $2t$-hop；更关键的是它能做"选择性注意"——通过调节这两组映射，使灵敏度 $\partial \mathbf{x}_i^{(t)} / \partial \mathbf{x}_j^{(0)}$ 对距离为 $t$ 的目标节点 $j$ 保持高值，同时对路径上的中间节点趋近零。信息因此可以"穿过"无关节点直达目标，不再沿途被稀释，这是它在长距离任务上能缓解 oversquashing 的直接原因。
 

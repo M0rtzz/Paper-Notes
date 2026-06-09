@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. 3D 概率场景图 + LLM 引导的层次化逻辑剪枝：保留全分布又不让联合推理爆炸。**
+**1. 3D 概率场景图 + LLM 引导的层次化逻辑剪枝：保留全分布又不让联合推理爆炸**
 
 传统场景图为了喂 LLM 方便，把每个物体砍成一个 argmax 硬标签，等于自废武功——sofa 被误检成 bed 后再没有"备选解释"可以回退。PSG-Nav 在地图层保留完整分布：场景图 $\mathcal{G}_t = (\mathcal{V}, \mathcal{E})$ 分 object / group / room 三层，每个 object 节点维护类别 vote 计数向量 $\mathbf{n}_{i,t}$，置信度归一化为 $P_t(o_i = c_k) = n_{i,t}^{(k)} / \sum_j n_{i,t}^{(j)}$（用 vote 累积而非 Bayesian 更新，因为开放词汇检测器的置信度没校准、Bayesian 更新会发散）；group 节点存子物体的联合配置概率 $P(g_j = s) = \prod_{i=1}^{N_j} P(o_{j,i} = c_{j,i}^s)$，比如 70% table × 80% chair = 56% 的"桌+椅"配置。直接对全联合分布规划会组合爆炸（最大概率的全局配置都占不到 10%），所以关键一步是层次因子化后做 LLM 逻辑剪枝：枚举 group 内 top-$K_g$ 配置，用 LLM 二元过滤 $f_{\text{LLM}}(s) \in \{0,1\}$ 丢掉"客厅里出现马桶"这种逻辑冲突，room 层同理。这样既把组合爆炸压成可枚举，又能滤掉"最高置信但语义不通"的配置、保留"低置信但全局一致"的正确解释——这正是从感知噪声里恢复真相的核心机制。
 
-**2. 多元宇宙决策 + 内在不确定性感知探索：在多个并行世界里给同一 landmark 投票。**
+**2. 多元宇宙决策 + 内在不确定性感知探索：在多个并行世界里给同一 landmark 投票**
 
 单一确定性世界做规划等于"赌一把"，一遇歧义就崩。PSG-Nav 从 3D-PSG 的联合分布采样 $K$ 个逻辑一致的确定性世界 $\mathcal{M} = \{\mathcal{G}^{(1)}, \dots, \mathcal{G}^{(K)}\}$，相当于对感知噪声做边缘化。候选 landmark 从 Generalized Voronoi Graph 和几何 frontier 提取后，先用内在信息增益过滤：
 
@@ -57,7 +57,7 @@ $$U_{\text{gain}}(l_{i,t}) = \alpha \cdot I_{\text{spa}}(l_{i,t}) + I_{\text{sem
 
 空间项 $I_{\text{spa}} = |\mathcal{U}(l_{i,t})| / (\pi r_{\text{max}}^2)$ 衡量"走过去能看到多少未知区域"，语义项 $I_{\text{sem}} = -\sum_{o_i \in \mathcal{O}_p} \sum_c P_t(o_i = c) \log P_t(o_i = c)$ 是邻近物体的 Shannon 熵和，体现"靠近高不确定区能消歧"的直觉。剩下的高潜 landmark 进入随机 pairwise 比较，每个世界 $\mathcal{G}^{(m)}$ 下让 LLM 当 preference oracle $\mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)})$，最终胜率得分 $S(l_{i,t}) = \frac{1}{M(|\mathcal{L}'_t|-1)} \sum_m \sum_{j \neq i} \mathbb{I}(l_i \succ l_j | \mathcal{G}^{(m)})$，子目标取 $l^* = \arg\max(S(l_{i,t}) + \beta U_{\text{gain}}(l_{i,t}))$。用 pairwise 比较而非 listwise ranking 避开了 LLM 的 position bias，胜率聚合本质是用 Monte Carlo 估计期望效用，而内在信息增益让 agent 不止追目标、还主动消除地图歧义。
 
-**3. EEC：基于成功/失败记忆的 RAG 式终止校准。**
+**3. EEC：基于成功/失败记忆的 RAG 式终止校准**
 
 sim-to-real domain shift 下高频假阳性会让 agent 走到错物体前就 STOP、episode 提前失败。EEC 维护两个记忆库——正例 $\mathcal{B}^+$（成功识别的目标）和负例 $\mathcal{B}^-$（历史假阳性），每条记忆存 $m = (\mathbf{v}_{\text{vis}}^m, \mathbf{v}_{\text{struct}}^m)$，其中结构嵌入 $\mathbf{v}_{\text{struct}} = (p_R^m, p_G^m)$ 是 room 分布和邻居 group 分布。候选物体 $o_c$ 触发 STOP 前先做混合相似度查询
 

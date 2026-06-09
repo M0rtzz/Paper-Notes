@@ -48,19 +48,19 @@ tags:
 
 ### 关键设计
 
-**1. Glimpse：用 1 个 token 的代价做 Probe-then-Dispatch。**
+**1. Glimpse：用 1 个 token 的代价做 Probe-then-Dispatch**
 
 所有 step 级方法的通病是"Generate-then-Measure"——必须先把整步 draft 出来才能判断好坏，一旦被拒，那一整步的算力就成了 sunk cost，省时间的初衷反被开销吞掉。GlimpRouter 把这一步压缩到极致：在 step $k$ 起点只让小模型 $M_S$ 算一次首 token 分布 $P_\theta(t_1|\mathbf{c}_k)$，取其熵 $\mathbf{H}_{\text{init}}(s_k)=\mathbf{H}(P_\theta(t_1|\mathbf{c}_k))$ 与阈值 $\tau$ 比较即决定路由。即便随后切到 $M_L$、这一个 token 被丢弃，损失也只是单 token 级别，比 SpecReason 丢一整步小 1–2 个数量级。
 
 之所以"只看第一个 token"就够，是因为作者用 BLEU-4 与 SBERT 量化了"小模型续写与大模型续写的对齐度"，发现它与 $\mathbf{H}_{\text{init}}$ *严格单调负相关*：低熵区两者输出几乎一致（小模型完全够用），高熵区急剧发散（必须换大模型）。这条单调曲线让 $\mathbf{H}_{\text{init}}$ 成为一个在生成前就能拿到的、可靠的难度代理。
 
-**2. Intervene：高熵步交给大模型，顺带隐式纠错。**
+**2. Intervene：高熵步交给大模型，顺带隐式纠错**
 
 当 $\mathbf{H}_{\text{init}}>\tau$ 时，整段历史 $\mathbf{c}_k$ 被交给大模型自回归续写——而 LRM 本身具备 self-correction 能力，它在生成新 step 时会隐式 re-evaluate 前文、重写错误前提，而不只是机械地"接着写"。Appendix F.2 的 grid-path 例子很直观：小模型一路把"四次方向变化"误当成"四段直线"，大模型在 Step 4 被触发 intervene 后改写为"5 段直线"，把整条推理拉回正轨。
 
 正是这种 implicit self-correction，解释了一个反直觉的结果——协同推理竟能超过独立大模型（AIME25 上 51.67% vs 46.67%）。高熵 step 恰好是历史逻辑出现漂移的"浮标"，大模型介入的时机正好赶上去把前文的错捡回来。
 
-**3. Efficient Switching：与 Speculative Decoding 正交叠加。**
+**3. Efficient Switching：与 Speculative Decoding 正交叠加**
 
 step 级路由和 token 级 SD 的瓶颈本不相同——前者减少的是*调用大模型的次数*，后者降低的是*大模型每次调用的 per-token 成本*——因此二者可以复合而非互斥。切换模型时，GlimpRouter 复用 vLLM/SGLang 的 prefix-cache，把上下文重算变成可并行的 prefill 阶段，切换延迟≈几个 token 的解码；当大模型被调度时，再把小模型当作 SD 的 drafter（draft length $n=3$）并行猜测后续 token，由大模型一次性 verify。这套"Global Planner（GlimpRouter）+ Local Executor（SD）"的复合方案把 AIME25 延迟压到 130s，低于独立 LLM+SD 的 149s 和 SpecReason+SD 的 140s，是所有配置中最快的。
 

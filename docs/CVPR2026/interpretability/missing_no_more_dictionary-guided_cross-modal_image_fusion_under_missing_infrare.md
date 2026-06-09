@@ -40,7 +40,7 @@ tags:
 
 ### 关键设计
 
-**1. JSRL — 联合共享字典表示学习：用一本共享字典把两种模态对齐到同一原子空间。**
+**1. JSRL — 联合共享字典表示学习：用一本共享字典把两种模态对齐到同一原子空间**
 
 红外缺失推理之所以难，是因为 VIS 和 IR 本来分属两个互不相通的表示，缺一个就无从下手。JSRL 的做法是强迫两种模态共用同一本卷积字典 $\mathbf{D} \in \mathbb{R}^{B \times k \times k}$，让它们各自只在稀疏系数上有差异，从而在原子级别建立起一一对应——这也是后续能在系数域而非像素域做推理的前提。训练目标是联合最小化两模态重建误差，外加系数先验和字典正则：
 
@@ -48,13 +48,13 @@ $$\min_{\mathbf{D},\mathbf{S}_{vis},\mathbf{S}_{ir}} \tfrac{1}{2}\|\mathbf{I}_{v
 
 求解不靠黑盒网络硬拟合，而是用模型驱动展开（model-driven unfolding）把优化迭代展成网络：每一步在「数据一致性」（频域用 Sherman-Morrison 公式闭式求解）和「近端更新」（CoeNet / DicNet 充当可学习的近端算子代理）之间交替。整体堆成 $N$ 个级联的 IV-DLB（红外-可见字典学习块），每块含两个系数求解器加一个字典求解器，其中的步长等超参由 HypNet 按输入自适应预测，而非全程固定。这样既保留了优化算法的可解释结构，又有网络的拟合能力。
 
-**2. VGII — 可见光引导红外推理：在系数域补出伪红外，并请 LLM 当语义评审员校准。**
+**2. VGII — 可见光引导红外推理：在系数域补出伪红外，并请 LLM 当语义评审员校准**
 
 有了共享字典，「恢复红外」就退化成「把 VIS 系数转成 IR 系数」这一件事。先用冻结的 REN（表示编码网络，含预训练 HeadNet + CSB + CoeNet）把可见光编码成系数 $\tilde{\mathbf{S}}_{vis}$，再由 RIN（表示推理网络，encoder-decoder 配 multi-head attention）映射出初步伪红外系数 $\mathbf{S}_{p\_ir}$。但纯系数映射缺少高层语义约束，容易把热区域推偏，于是引入一步轻量的 LLM 闭环精炼：先重建出初始伪红外 $\mathbf{I}_{p\_ir}^{(0)}$，把 {VIS, 伪IR} 图像对连同任务描述作为 prompt 喂给冻结 LLM，取出文本特征 $\mathbf{F}_{text}$，再用 FiLM（Feature-wise Linear Modulation）对系数做通道级线性调制 $\mathbf{S}_{fm} = \gamma \odot \tilde{\mathbf{S}}_{vis} + \beta$，调制后的系数二次过 RIN 得到精炼结果。关键在于 LLM 全程不生成任何像素，只输出一组缩放-平移系数 $(\gamma, \beta)$ 当「语义评审员」，既轻量可控，又把推理牢牢留在可解释的系数域里。
 
 这一步的监督由三项构成：$\ell_{inf} = \ell_{int} + \ell_{reg} + \ell_{grad}$。其中一致性损失 $\ell_{int}$ 在图像域和系数域同时拉近伪 IR 与真实 IR 的 L1 距离；热正则 $\ell_{reg}$ 用归一化权重图额外强调热区域的对齐，防止把高温目标推糊；梯度损失 $\ell_{grad} = \|\nabla\mathbf{I}_{p\_ir} - \nabla\mathbf{I}_{vis}\|_1$ 借可见光的边缘约束伪红外的结构，避免幻觉出不存在的轮廓。
 
-**3. AFRI — 自适应表示融合：在原子级别让结构归 VIS、热语义归 IR。**
+**3. AFRI — 自适应表示融合：在原子级别让结构归 VIS、热语义归 IR**
 
 拿到可见光系数和推理伪红外系数后，融合不再是像素加权，而是让 RFN（推理融合网络）通过两个级联的 Convolution-Attention Fusion 块，学出一组隐式的原子级门控权重 $(\mathbf{W}_{vis}, \mathbf{W}_{p\_ir})$，再做加权混合 $\mathbf{S}_f = \mathbf{W}_{vis} \odot \tilde{\mathbf{S}}_{vis} + \mathbf{W}_{p\_ir} \odot \mathbf{S}_{p\_ir}^{(1)}$，最后用共享字典重建出融合图。融合的监督靠逐元素 max：
 

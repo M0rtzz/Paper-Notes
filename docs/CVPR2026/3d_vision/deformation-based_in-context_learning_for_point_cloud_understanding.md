@@ -44,11 +44,11 @@ DeformPIC 想解决的是：点云 In-Context Learning 该怎么从一对 prompt
 
 ### 关键设计
 
-**1. Deformation Extraction Network：把"任务是什么"和"几何怎么算"拆开。**
+**1. Deformation Extraction Network：把"任务是什么"和"几何怎么算"拆开**
 
 PIC/PIC++ 那一路把 prompt 和 query 拼在一起喂进同一个网络联合处理，但"从 prompt 里读出任务语义"和"对 query 做几何重建"其实是两件目标不同的事，混在一起反而互相牵扯。DeformPIC 把前者单独交给 DEN：用一个 mini-PointNet 分别把 prompt 的输入点云、目标点云编码成 token $T_{P_i}$、$T_{P_t}$，再拼上一个可学习的 task token，一起过 Transformer，输出提炼后的任务表示 $\hat{T}_{\text{task}} = \mathcal{E}([T_{\text{task}} \| T_{P_i} \| T_{P_t}])$。这样 DEN 只管回答"这对 prompt 体现了什么形变"，把几何重建留给下游，分工清晰也更高效。
 
-**2. Deformation Transfer Network：用 AdaLN-Zero 把任务 token 逐层注入形变过程。**
+**2. Deformation Transfer Network：用 AdaLN-Zero 把任务 token 逐层注入形变过程**
 
 拿到任务 token 后，怎么让它真正"指挥"查询点云的形变？DTN 借用了 DiT 里的 AdaLN-Zero 条件化方式，把 $\hat{T}_{\text{task}}$ 注入 Transformer 的每一层：
 
@@ -56,7 +56,7 @@ $$h^{(l+1)} = h^{(l)} + \sigma^{(l)} \cdot \mathcal{A}[(1+\eta^{(l)}) \cdot \tex
 
 其中缩放/偏移因子 $\sigma^{(l)}, \eta^{(l)}, \kappa^{(l)}$ 都是任务 token 经过一组零初始化的 MLP 现算出来的，逐层各不相同，因此能做到细粒度的、随深度变化的条件控制。零初始化意味着训练初期 $\sigma\approx0$，DTN 退化成一个无条件 Transformer，再慢慢学会用任务 token 去偏置形变——这让训练起步更稳，不会一开始就被随机的条件信号扰乱。
 
-**3. 训练-推理一致性：彻底甩掉掩码，两端走同一条路。**
+**3. 训练-推理一致性：彻底甩掉掩码，两端走同一条路**
 
 MPM 范式有个根上的别扭：训练时目标点云被部分掩码，模型还能偷看可见的那部分；可推理时目标完全未知，于是训练和推理面对的输入根本不是一回事。DeformPIC 把任务重新定义成"对查询输入做形变"后，这个 mismatch 自然消失了——无论训练还是推理，DTN 接到的都是完整的查询输入点云，输出都是形变后的完整点云，全程没有掩码操作。形变本身又天然保持几何连续性，比从抽象掩码 token 凭空预测坐标更贴合 3D 数据的本质。
 

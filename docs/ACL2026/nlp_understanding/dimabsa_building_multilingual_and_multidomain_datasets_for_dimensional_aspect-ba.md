@@ -53,15 +53,15 @@ Tatar 和 Ukrainian 是低资源语言，通过把 Russian 数据用 Yandex Tran
 
 ### 关键设计
 
-**1. 维度情感标注协议：把 polarity 三分类换成连续的 valence–arousal 坐标。**
+**1. 维度情感标注协议：把 polarity 三分类换成连续的 valence–arousal 坐标**
 
 粗粒度的 pos/neg/neu 标签丢掉了所有强度信息——"good"和"excellent"同样是正、"a little slow"和"extremely slow"同样是负。DimABSA 把每个 aspect tuple 的极性升级成一对连续分数 $(V, A) \in [1,9]^2$：valence 衡量正负（1 = 极负、5 = 中立、9 = 极正），arousal 衡量激活度（1 = 平静、9 = 兴奋）。标注界面借用心理学的 SAM pictorial scale 加 emoji 来锚定刻度，每个 tuple 由 5 人独立打分，最终取去离群后的均值 $\hat{r} = \mathrm{mean}(\{r_i : |r_i - \mu| \le 1.5\sigma\})$，自动剔除偏离 ±1.5σ 的标注者。arousal 历来比 valence 难标（Buechel2017、mohammad2018obtaining 都证实过），多标注 + 离群剔除把 arousal RMSE 压到 0.76–2.29 区间；而且最终数据呈典型的"U 形分布"——arousal 在 valence 两极偏高、中立处偏低，恰好符合情感学规律，反过来佐证了标注质量。
 
-**2. 三个递进子任务（DimASR → DimASTE → DimASQP）：把"纯回归"一路加码到"抽取+分类+回归"。**
+**2. 三个递进子任务（DimASR → DimASTE → DimASQP）：把"纯回归"一路加码到"抽取+分类+回归"**
 
 为了让不同能力可以被分别考察，三个子任务按复杂度递进：DimASR 给定 text + aspect 直接预测 V#A（纯回归，用 RMSE 评），DimASTE 要从 text 里抽出 (A, O) 再预测 VA（抽取 + 回归，用 cF1 评），DimASQP 在此之上再补一个 aspect category $C$ 的分类（抽取 + 分类 + 回归，用 cF1 评）。这种分层让想专攻 LLM 数值回归能力的人用 DimASR、想测结构归纳的人用 DimASTE/DimASQP；更关键的是它把两类发现摆到了一起对照——DimASR 上 one-shot 就能显著校准 VA 分布，而 DimASTE/DimASQP 要 ≥70B + fine-tuning 才能掌握结构模式，揭示了 LLM 对回归和抽取截然不同的学习曲线。
 
-**3. 连续 F1（cF1）：在 F1 框架里同时算清"类别对不对"和"VA 偏多少"。**
+**3. 连续 F1（cF1）：在 F1 框架里同时算清"类别对不对"和"VA 偏多少"**
 
 混合任务最棘手的是评测：传统 F1 强行二值化会浪费 VA 的连续信息，而单独报 F1 + RMSE 又没法用一个数比较模型。cF1 的做法是先判 categorical TP——(A, O) 或 (A, C, O) 必须 exact match——再把命中的 TP 按 VA 误差软化为 continuous TP：当 $t \in P_{cat}$ 时 $\mathrm{cTP}^{(t)} = 1 - \mathrm{dist}(\mathrm{VA}_p, \mathrm{VA}_g)$，否则为 0；其中归一化欧氏距离 $\mathrm{dist} = \sqrt{(V_p-V_g)^2 + (A_p-A_g)^2} / \sqrt{128}$，分母 $\sqrt{128}$ 是 $[1,9]$ 平方空间内的最大距离，保证 $\mathrm{dist} \in [0,1]$。于是 cPrecision = $\sum \mathrm{cTP} / |P|$、cRecall = $\sum \mathrm{cTP} / |G|$，cF1 取两者调和均值。它的巧妙在于 VA 完美时（dist = 0）退化为标准 F1、向后兼容，VA 越差则 cTP 越小、平滑衰减。Appendix F 的算例可印证：4 个预测里 2 个类别对（cTP 分别 0.875、0.5）+ 2 个类别错（cTP = 0），cF1 = 0.393，比纯 F1 = 0.5 更严格地反映了 VA 偏差。
 

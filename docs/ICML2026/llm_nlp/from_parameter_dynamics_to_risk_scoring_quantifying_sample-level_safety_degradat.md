@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 参数空间的"安全 / 危险"方向构造与验证：把抽象的安全性变成可投影的向量。**
+**1. 参数空间的"安全 / 危险"方向构造与验证：把抽象的安全性变成可投影的向量**
 
 要想"测量"安全降级，先得有一把能投影的尺子。作者借 Task Vector 的"方向 = 训练终点 − 起点"思路，造了两条语义锚向量：安全方向 $V_\text{safety} = \arg\min_\theta \mathcal{L}_\text{dpo}(\theta_0, D_\text{aligned}) - \theta_0$（在 PKU-SafeRLHF 上做 DPO 得到），危险方向 $V_\text{danger} = \arg\min_\theta \mathcal{L}_\text{sft}(\theta_0, D_\text{harmful}) - \theta_0$（在 Aegis-unsafe 和 BeaverTails-unsafe 上分别做 SFT，得到 Aegis / Beaver 两条危险方向）。光定义还不够，得证明这两条向量真的编码了安全语义，于是作者做了一个 steering 实验：沿向量走 $\theta(\alpha) = \theta_0 + \alpha V$ 扫不同 $\alpha$，结果沿 $V_\text{danger}$ 走 Safety Score 单调下降、沿 $V_\text{safety}$ 走单调上升——两条方向确实分别对应"变危险"和"变安全"的参数位移。Task Vector 此前主要用于 task arithmetic（加减能力），把它搬到安全分析上、并配 steering 验证有效性，是后续所有投影分析的地基。
 
-**2. 累积参数漂移追踪揭示两阶段降级：用一条轨迹回答"为何崩"。**
+**2. 累积参数漂移追踪揭示两阶段降级：用一条轨迹回答"为何崩"**
 
 有了方向尺子，就能把"为什么崩"这个机制问题画成一张轨迹图。作者在 fine-tuning 的每个 checkpoint 计算累积漂移在两方向上的投影 $p_\text{safety}(t) = \langle\Delta\theta_t, \hat{V}_\text{safety}\rangle$ 和 $p_\text{danger}(t) = \langle\Delta\theta_t, \hat{V}_\text{danger}\rangle$，发现一个鲜明的非线性两阶段模式：早期参数沿危险方向快速漂移（投影从 0 冲到约 6.0），但 Safety Score 只从 5.0 缓降到 4.0；后期方向漂移反而变缓，Safety Score 却突然崩到 1.0 以下。这条曲线一方面印证了"safety basin"的几何直觉——在基地内对扰动鲁棒、一旦出了基地就崩；另一方面它直接指导了 SQSD 该在哪里算梯度：必须在"对方向敏感"的参数态上算，否则同样的扰动信号落在不敏感区里就毫无分辨力。
 
-**3. SQSD：单步梯度沿两方向投影差作为样本风险分。**
+**3. SQSD：单步梯度沿两方向投影差作为样本风险分**
 
 机制清楚之后，把同一把尺子用到单条样本上就得到 SQSD。对样本 $z$ 算一步 LoRA 梯度，导出它的等效权重更新 $\Delta W(z) \approx -\eta(B_0 \nabla_A + \nabla_B A_0)$（忽略 $\mathcal{O}(\eta^2)$ 二阶项），再看这个更新更靠近危险方向还是安全方向。具体地，对每个 LoRA 模块 $m$ 先做模块级归一化、再算两方向的投影差：
 

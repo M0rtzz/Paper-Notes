@@ -47,11 +47,11 @@ tags:
 
 ### 关键设计
 
-**1. population-mean reference：先定义“从哪里出发、要偏到哪里去”。**
+**1. population-mean reference：先定义“从哪里出发、要偏到哪里去”**
 
 如果没有参照点，模型在偏好学习里会分不清自己是在学“怎么辅导”还是在学“这个导师和别人有什么不同”，个体风格就会被淹没在通用辅导能力里。作者先把 Llama-3.1-8B-Instruct SFT 成一个能根据对话上下文生成通用导师回复的模型，把它当作 population-mean tutor，用它为每个上下文生成一条平均导师话语 $\bar{t}_{j,k}$，并把这条话语固定为偏好对里的 dispreferred 样本。有了这个“平均行为”锚点，后续学习的方向才被严格限定为“真实导师相对平均导师的偏移”，而不是辅导能力本身。
 
-**2. 共享方向加导师专属系数：把风格变成一条可排序的谱。**
+**2. 共享方向加导师专属系数：把风格变成一条可排序的谱**
 
 如果给每个导师都学一个独立 steering 向量，样本需求和解释成本都会暴涨，而且一堆互不相关的向量根本没法横向比较。作者改为只学一个共享 steering vector $v$，让每位导师只持有一个正的缩放系数 $\delta_i$，风格强弱就落在同一根轴上。为消除尺度不确定性，$\delta_i$ 不直接学，而是用 $u_i$ 参数化再归一化：
 
@@ -59,7 +59,7 @@ $$\delta_i=\frac{\exp(u_i)}{\frac{1}{I}\sum_m\exp(u_m)}$$
 
 这样所有导师的系数被约束在一个共同尺度下，风格差异自然呈现为可排序的连续谱——低 $\delta_i$ 的导师更重 rapport 和 scaffold，高 $\delta_i$ 的更偏任务完成式指导，整套表示既低维又可解释。
 
-**3. preference optimization 直接作用在 activation 上。**
+**3. preference optimization 直接作用在 activation 上**
 
 真实导师的 persona 体现在语气、对话动作、脚手架强度等多个层面，逐 token 的 SFT 只能逼近表面文本，学不到“相对更像某位导师”的方向。作者把 DPO/BiPO 式的偏好学习搬到 activation steering：在某一层激活上加入 $\delta_i v$，优化偏好损失，让加了 steering 之后真实导师话语相对 unsteered 模型的 log-likelihood ratio 变大、平均导师话语的 ratio 变小，且所有 likelihood 只在 response tokens 上计算。测试时再乘一个全局强度 $\alpha$，通过
 

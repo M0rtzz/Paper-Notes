@@ -42,17 +42,17 @@ x²-Fusion 先单独预训练一个事件边缘编码器并冻结，把它的多
 
 ### 关键设计
 
-**1. Event Edge Space：用冻结的事件编码器当边缘原型，把三模态拉进同一空间。**
+**1. Event Edge Space：用冻结的事件编码器当边缘原型，把三模态拉进同一空间**
 
 现有融合方法的根本麻烦在于图像、LiDAR、事件各自停留在异构的原生特征空间，融合只能靠后期多对对齐，既笨重又脆弱。本文的切入点是「边缘」——物体边界和场景不连续性是模态无关的结构信号，而事件相机本质上就是时空边缘探测器，天然适合当锚点。具体做法分两步。首先把事件流体素化后送入稀疏 3D CNN，得到多尺度特征金字塔 $\{F_s^E\}$，并显式定义事件边缘强度 $e^E(x,y) = \tilde{A}^E(x,y)(1 - \tilde{\sigma}_t(x,y)) \in [0,1]$，其中 $\tilde{A}^E$ 是归一化事件活动性、$\tilde{\sigma}_t$ 是归一化时间方差——活动越强、时间越稳定的位置越像运动边缘。通过自监督任务「从过去事件预测未来边缘强度」预训练，损失为 $\mathcal{L}_{\text{edge}}^E = \sum_s \lambda_s \|g_s(F_s^{E,\text{past}}) - e_s^{E,\text{future}}\|_1$，蒸馏出运动感知的边缘特征。
 
 预训练后事件编码器被冻结，其特征 $Z_s^E \equiv F_s^E$ 固定为边缘原型。图像和 LiDAR 各经投影头 $Z_s^I = h_s^I(F_s^I)$、$Z_s^L = h_s^L(F_s^L)$ 映射到同维度 $C_s$，再用边缘锚定对称正则化把三者互相拉近：$D_s^{2/3D}(p) = \sum_{(m,n) \in \{I,E,L\}} \|Z_s^m(p) - Z_s^n(p)\|_1$，并以事件边缘图加权得对齐损失 $\mathcal{L}_{\text{align}}^{2/3D} = \sum_s \sum_p e_s^{E}(p) D_s^{2/3D}(p)$。关键在于对 $Z_s^E$ 停止梯度——这样边缘原型保持不动，对齐就从多对相互拉扯简化成图像、LiDAR 单向靠拢一个稳定锚点，既好训练又在退化时仍有可靠先验。
 
-**2. 可靠性自适应融合：用全局-局部双层权重抑制崩坏模态。**
+**2. 可靠性自适应融合：用全局-局部双层权重抑制崩坏模态**
 
 同构空间打好基础后，融合不再需要堆叠模态特定模块，但仍要解决「某个模态在退化场景里不可信」的问题。本文设计全局和局部两层权重。全局层面通过时空分解估计每个模态整体可信度：时间流 $\mathcal{T}(\hat{Z}) = \sigma(\mathbb{L}(\Delta_t(\text{Conv}(\hat{Z}))))$ 捕获细粒度时间变化，空间流 $\mathcal{S}(\hat{Z}) = \|\nabla(\text{DConv}(\hat{Z}))\|_2$ 编码空间结构，两者交互后给出全局可靠性 $\omega_m = \text{softmax}_m((\mathcal{T} \otimes \mathcal{S})\hat{Z})$。局部层面再用高通滤波、平均池化与分组卷积算逐位置注意力 $\mathcal{A}_m(x) = \text{softmax}((\mathcal{H} \oplus \mathcal{P} \oplus \mathcal{G})\tilde{Z})_m$。两者相乘归一化即得融合特征 $F_{\text{fused}}(x) = \sum_m \frac{\omega_m \mathcal{A}_m(x)}{\sum_n \omega_n \mathcal{A}_n(x)} Z_m(x)$，最后接一个跨注意力 Transformer 增强交互。由于所有模态已在同一空间，整个融合靠轻量级加权和加统一跨注意力即可完成，这也是它在欠曝、LiDAR 稀疏等退化条件下能大幅领先的原因。
 
-**3. 跨维度对比学习（CCL）：pull 管一致、push 管互补，协调 2D 与 3D 分支。**
+**3. 跨维度对比学习（CCL）：pull 管一致、push 管互补，协调 2D 与 3D 分支**
 
 2D 光流和 3D 场景流共享同一物理运动，却又各自携带互补信息，直接联合训练容易彼此干扰。CCL 用一拉一推两个目标来协调。跨时间对比（pull）把 3D 特征投影到 2D，计算运动向量 $M^{2/3D}$ 后用余弦相似度损失鼓励 2D-3D 运动一致：$\mathcal{L}_{\text{pull}} = 1 - \frac{\langle \phi(M^{2D}), \psi(M_{\text{proj}}^{3D}) \rangle}{\|\phi(M^{2D})\|_2 \cdot \|\psi(M_{\text{proj}}^{3D})\|_2}$，保证两个分支感知到相同的帧间运动。跨任务对比（push）则把 2D/3D 特征经变分编码成潜在分布，最小化互信息以保住帧内互补性：$\mathcal{L}_{\text{push}} = \frac{1}{2}\sum_t \text{BCE}(\sigma(\mathbf{z}_t^{2D}), \sigma(\mathbf{z}_t^{3D}))$。消融显示在联合训练基础上加入 CCL 能把 EPE2D 从 0.386 进一步降到 0.325，印证一致性与互补性同时约束才让联合估计真正优于独立估计。
 

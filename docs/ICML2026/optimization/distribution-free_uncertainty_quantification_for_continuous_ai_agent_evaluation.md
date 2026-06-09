@@ -46,15 +46,15 @@ $\mathrm{AP}(a)=0.35\,B(a)+0.25\,A(a)+0.20\,S(a)+0.20\,E(a)$，其中 $B$ 是 be
 
 ### 关键设计
 
-**1. Split Conformal + ACI 双层覆盖：在分布无关的基础上再补一层漂移自适应。**
+**1. Split Conformal + ACI 双层覆盖：在分布无关的基础上再补一层漂移自适应**
 
 参数化区间假设残差高斯、bootstrap 假设经验分布有代表性，可一旦 agent 发版/周末/节假日打破平稳性，这两套都会立刻欠覆盖。AgentPulse 第一层先用 split conformal 拿到分布无关的有限样本保证 $\Pr[\mathrm{AP}_{t+h}\in C_{1-\alpha}]\ge 1-\alpha$：历史打分按 70/30 切成 train/calibration，取非一致性分数 $R_i=|\mathrm{AP}_{t_i+h}-\widehat{\mathrm{AP}}_{t_i+h}|$ 的 $\lceil(1-\alpha)(n_{\text{cal}}+1)\rceil/n_{\text{cal}}$ 分位 $\hat q_{1-\alpha}$，区间即 $\widehat{\mathrm{AP}}_{t+h}\pm\hat q_{1-\alpha}$。但 split conformal 仍假设交换性，对付不了 release 这类非交换冲击，于是第二层叠 ACI 在线调 miscoverage：$\alpha_{t+1}=\alpha_t+\gamma(\alpha-\mathrm{err}_t)$，在 Windsurf 发版后 6 小时内自动把区间扩宽 35%、48 小时后再收回。一层管"分布无关"、一层管"漂移自适应"，正好对上评测里最常见的两类不确定性。
 
-**2. Mondrian 条件覆盖 + cross-source σ 分层：把"平均 80%"升级成"每个 agent 都 80%"。**
+**2. Mondrian 条件覆盖 + cross-source σ 分层：把"平均 80%"升级成"每个 agent 都 80%"**
 
 边际覆盖 80% 是个会骗人的平均数——标准 conformal 下波动大的 agent 被淹没在均值里，volatile 子集平均覆盖只有 64.6%（15 个里 11 个低于 75%），承诺与现实差了 15 个百分点。作者用每个 agent 的跨平台标准差 $\sigma_{\text{cross}}(a)=\mathrm{std}(\{s_p(a)\})$ 当分层变量，按 $\sigma_{\text{cross}}<0.04$（stable, n=35）和 $\ge 0.04$（volatile, n=15）分成两组，每组各自校准一个 $\hat q_{1-\alpha}$。这样 volatile 组拿到更宽的区间去补偿它的重尾残差，覆盖被拉回 80.4%（只剩 2/15 低于 75%），代价是宽度多 22%——而这点额外宽度恰好如实反映了这类 agent 本身更大的内禀不确定性，而不是被均值抹平。
 
-**3. 组合管线界 + BH-FDR 受控弃权：把单点不确定性扩到多阶段管线和整张排行榜。**
+**3. 组合管线界 + BH-FDR 受控弃权：把单点不确定性扩到多阶段管线和整张排行榜**
 
 单 agent 的区间还不够用：实际部署常是 $a_1\to a_2$ 的多阶段管线，排行榜上又有 1225 个两两比较，逐阶段相加或逐对判断都会失控。管线侧给出两端界——独立界 $\sigma_{\text{pipeline}}=\sqrt{\sigma_1^2+\sigma_2^2}$ 和最坏界 $\sigma_1+\sigma_2$，仿真在相关系数 $\rho\in[-0.5,0.9]$ 上验证真值落在两者之间（$\rho>0$ 普遍成立，$\rho<0$ 时独立界反而偏保守，建议安全场景直接用最坏界），把"完全独立"和"完全相关"两个极端都标出来留给用户选。比较侧对差分 $\Delta_{ab}$ 算 conformal 区间，$0\in C_\Delta^{1-\alpha}$ 时直接弃权（标"无法区分"而非硬排序）；排行榜侧再把每对的 conformal p 值用 BH 在 $q{=}0.20$ 上做 FDR 校正。校正后"被自信排序的对子"从 69% 降到 50%，但换来的是错排比例上限锁死在 20%，而不是按对累计爆掉。
 

@@ -55,19 +55,19 @@ tags:
 
 ### 关键设计
 
-**1. 抽取式 self-explanation 的受控比较：把“模型能说出理由”收敛成可测量的 token rationale。**
+**1. 抽取式 self-explanation 的受控比较：把“模型能说出理由”收敛成可测量的 token rationale**
 
 自由文本解释更贴近真实用户场景，但一旦要评测它“像不像人类理由”或“是否真的影响预测”，就找不到一个干净的对齐单位——解释里可能掺入输入以外的背景知识和推理链。作者干脆把解释限制成从输入抽取的 token 片段：先让 LLM 输出分类结果，再**只在预测正确的样本上**要求它抽取支撑该结果的输入 span。这一步“预测正确才抽 rationale”很关键，否则会把分类错误和解释错误混在一起。
 
 对于结构特殊的 Climate-Fever，作者沿用原始 claim-evidence 结构：先对 5 条 evidence 各自生成 rationale，再汇总成整体 claim 判断。这样无论哪个任务，模型解释、人类标注、后验归因都被压到同一种 token-level 粒度，解释质量问题就转化成可量化的 token agreement 与 token perturbation 问题。
 
-**2. 跨难度、跨语言、跨任务的数据设计：不让结论只成立于短句情感分类。**
+**2. 跨难度、跨语言、跨任务的数据设计：不让结论只成立于短句情感分类**
 
 解释质量很容易被数据集属性支配：短句里一个情感词就能定标签，模型和人类自然容易一致；可一旦换到证据跨句、含糊甚至彼此冲突的长文本，self-explanation 的局限才会暴露。为此作者刻意拉开三档难度——SST/mSST 是短句情感分类（mSST 还覆盖英语、丹麦语、意大利语），RaFoLa 是长新闻文章上的强迫劳动风险检测（文本长、证据常隐含），Climate-Fever 是气候声明验证（claim 本身欠规范，evidence 与 claim 的语义关系更模糊）。
 
 由于 Climate-Fever 原本没有 token-level rationale，作者额外收集了一个含 104 个 claim、520 条 evidence 的人工 rationale 子集。三个任务串起来，正好说明解释质量不是模型的单一属性，而是模型、任务、文本结构共同作用的结果。
 
-**3. plausibility 与 faithfulness 分离评测：把“像人类”和“对模型有效”拆成两个独立问题。**
+**3. plausibility 与 faithfulness 分离评测：把“像人类”和“对模型有效”拆成两个独立问题**
 
 一个解释可能与人类标注高度一致，却不是模型真正依赖的信息；也可能对预测非常关键，却因为包含格式符、系统提示符这类低层处理线索而不符合人类直觉。把这两件事混为一谈，就会把“可读性”误认成“忠实性”。所以作者用两套独立指标分别回答：plausibility 端用 sample-wise Cohen's Kappa 比较模型与人类 rationale 的一致性——相比 F1，Kappa 能校正“选中 / 未选中 token”的类别不平衡和随机一致，对 rationale agreement 更稳健。
 

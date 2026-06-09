@@ -45,15 +45,15 @@ MoE 推理时，router 为每个 token 选择 top-k 专家。Capacity-Aware Infe
 
 ### 关键设计
 
-**1. Capacity-Aware Token Drop：给过载专家设上限，丢掉它最不重要的那批 token。**
+**1. Capacity-Aware Token Drop：给过载专家设上限，丢掉它最不重要的那批 token**
 
 Straggler 的根源是有的专家拿到远超均值的 token，那就直接给每个专家设一个容量天花板：最多处理 $C = \gamma \bar{N}$ 个 token，其中 $\bar{N} = tk/n$ 是期望均值、$\gamma$ 是可调的容量因子。当专家 $j$ 实际负载 $N_j > C$ 时，用一个评分函数 $\mathcal{S}$ 给它当前的所有 token 打分、保留 top-$C$、把其余溢出的丢掉。关键在于「丢谁」——论文对比了 Order / Reverse Order / Random / Score 四种选法，发现直接用 router 的 gating 分数（Score）远好于其他，因为 gating score 本身就反映了 token 与该专家的匹配度，分数低的 token 即使被丢也损失最小。看似丢 token 会伤性能，但过载专家里绝大多数 token 其实是冗余的：在 Mixtral 上只丢掉 12% 的溢出 token，就换来 85% 的加速。
 
-**2. Capacity-Aware Expanded Drop：把丢掉的 token 重路由给同卡上的空闲专家，不浪费它们等同步的算力。**
+**2. Capacity-Aware Expanded Drop：把丢掉的 token 重路由给同卡上的空闲专家，不浪费它们等同步的算力**
 
 Token Drop 只解决了「削峰」，但被削掉的 token 直接消失、而那些低负载专家算完后仍在干等同步，空闲算力被白白浪费。Expanded Drop 把这两件事接起来：为每个 token 在原始 top-k 专家之外，额外把同一张 GPU 上的 $m$ 个本地专家也加进候选集（共 $k+m$ 个候选）。这样被原始专家因超容量拒绝的 token，就能被同卡的低负载专家接住。之所以只在同卡内扩展，是因为这一步发生在 All-to-All 通信之前，本地接收不产生任何跨设备通信开销。质量上之所以站得住，是因为 gating score 在 top-k 之后衰减很平缓（Figure 8）——被重路由到排名稍靠后的专家，匹配度其实没差多少，因此在 Mixtral 上 Expanded Drop 甚至比无约束 baseline 还高 0.2%。
 
-**3. Device-Level Capacity：把约束从单专家放宽到整张卡，允许同卡专家之间互相借负载。**
+**3. Device-Level Capacity：把约束从单专家放宽到整张卡，允许同卡专家之间互相借负载**
 
 按专家逐个卡容量有时过严：某个专家超限、但同卡其他专家很空，仍会被迫丢 token。Device-Level Capacity 改成在设备粒度上约束——当一张 GPU 部署 $n_l$ 个专家时，只要求它们的总负载不超标：
 

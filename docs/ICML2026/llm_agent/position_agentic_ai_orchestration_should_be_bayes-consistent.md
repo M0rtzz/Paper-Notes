@@ -44,7 +44,7 @@ tags:
 
 ### 关键设计
 
-**1. 任务级 latent 信念 + 复合似然 Bayes 更新：把不确定性放在编排真正关心的低维变量上。**
+**1. 任务级 latent 信念 + 复合似然 Bayes 更新：把不确定性放在编排真正关心的低维变量上**
 
 决策需要的是任务级语义的不确定性（"这段代码会不会通过单元测试"），而 LLM 给的是 token 级或参数级的概率，两者尺度根本对不上，所以第一步是把信念从 LLM 内部搬出来、安置在一个低维决策变量上。以代码生成为例，令 $Y\in\{0,1\}$ 表示候选代码是否通过全部单元测试，orchestrator 维护后验 $r_t(y)=p(Y=y\mid\mathcal{D}_{1:t})$，其中 $\mathcal{D}_{1:t}=\{(i_s,Z_s):s\le t\}$ 是已 query 过的 agent 序列和它们返回的消息序列。每来一个新观测就按
 
@@ -52,7 +52,7 @@ $$r_t(y)\propto r_{t-1}(y)\,p_{i_t}(z_t\mid y)^{\alpha_{i_t}}$$
 
 更新；若用判别式预测 $q_i(y\mid z)$，等价写成 $r_t(y)=r_{t-1}(y)\,\ell_{i_t}(y;z_t)^{\alpha_{i_t}}/Z$，其中 likelihood ratio $\ell_i(y;z)=q_i(y\mid z)/p_0(y)$。关键在指数 $\alpha_i$：它是 tempering 指数（generalized Bayes / power-posterior，Bissiri 2016）。朴素 Bayes 默认条件独立，但同源 LLM agent 共享 prompt、底模、检索 pipeline，输出明显相关，直接连乘 likelihood 会让 belief 过度自信；tempering 把这种相关性吸收进 likelihood 的强度里，比强行精确建模 joint 容易实现也更鲁棒，等于把"该多信赖每个 agent 的话"从启发式升格成一个可学的参数。
 
-**2. Value-of-Information 驱动的动作选择：用一个 decision-theoretic 目标统一 routing / stopping / escalation。**
+**2. Value-of-Information 驱动的动作选择：用一个 decision-theoretic 目标统一 routing / stopping / escalation**
 
 有了后验之后，下一步该 query 哪个 agent、还是干脆停下来返回结果或升级给人，全部交给同一个准则。每个 agent $i$ 有已知调用成本 $c_i>0$，从 Bayesian decision-theoretic 视角，动作选成最大化后验期望效用：
 
@@ -60,7 +60,7 @@ $$a_t^\star=\arg\max_a\sum_h u(a,h)\,r_t(h),$$
 
 并且仅当某次 agent 调用的 expected value of information 超过其成本 $c_i$ 才真正发出调用——VOI 严格定义为"调用前后效用差的期望"，实时计算可用 one-step lookahead 或 amortized surrogate 近似。这一招是冲着固定 workflow 的短板来的：像"调 3 个 agent 然后 ensemble"这种写死的流程在 short-horizon/low-stakes 还够用，可一旦任务变长、成本高度不对称（一个 safety 检查和一个 unit-test runner 的价钱差很多），固定流程就无法自适应。VOI 把"何时值得多花钱多调一次"显式量化进编排决策，在 incident diagnosis、多 agent debate 这类场景里可以直接表达成"当前最大后验置信度低于阈值就再 query 一个 agent"。
 
-**3. Agent reliability 在线学习 + 依赖感知证据池：让 belief 收敛得保守，并能持续自校准。**
+**3. Agent reliability 在线学习 + 依赖感知证据池：让 belief 收敛得保守，并能持续自校准**
 
 编排里有两类 corruption 要处理——agent 自身能力随分布漂移、以及消息之间的相关性——这一块把两者一并管起来。对前者，定义累计 log-loss $L_i=\sum_{s:i_s=i}-\log q_i(y_s\mid z_s)$，按 exponential weights $w_i\propto\exp(-\beta L_i)$ 在线更新，归一化后映成 tempering 系数 $\alpha_i=\alpha_\text{max}\tilde w_i$（Cesa-Bianchi & Lugosi 2006），表现差的 agent 影响自动被压低。对后者（尤其"同一 agent 反复查询"带来的相关性），要么把交互历史并进观测模型的条件，要么扩充 latent state、引入 agent-specific 的 shared-error 变量；一旦 rolling calibration diagnostics 检出 drift，就自动加大 tempering 或触发 abstention/escalation。这两条合起来让 belief 不会因为几条相关消息就过度自信。值得强调的是，这里训练的不是 LLM 而是 **编排器自身的元学习**：$q_i(y\mid z)$ 从带 outcome 标签的历史交互日志学得，$\alpha_i$ 在线更新，再用 held-out 任务做 calibration 校验（empirical coverage、proper scoring rules），检测到 drift 就 retemper。设计原则要求观测模型能从 measurable outcomes（pass/fail、human ratings、task completion）持续 recalibrate，这与 RLHF / online learning 的工程惯例完全兼容，也顺带定义出可验证的工程接口（confidence thresholds、cost scales），让生产系统能把简单旋钮暴露给用户。
 

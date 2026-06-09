@@ -45,11 +45,11 @@ LegalGraphRAG 的关键不是单纯「把法律文档放进图里」，而是把
 
 ### 关键设计
 
-**1. HierarGraph 三层法律图谱：把事实、概念、规则分层，避免扁平图混淆粒度。**
+**1. HierarGraph 三层法律图谱：把事实、概念、规则分层，避免扁平图混淆粒度**
 
 法律判断常取决于事实细节是否满足某条法条的适用条件，但扁平图只按语义相似度检索，很容易找到「叙述相似」的案例却漏掉决定罪名的抽象规则。HierarGraph 因此把知识显式分成三层：Fact Graph 连接 Cases、Articles 和 Offense 节点，承载具体事实；Ontology Graph 把原始案情抽象成被告属性、犯罪行为、受害者特征、主观心态等维度，并用 kNN 加 Leiden 社区把相似案例聚到一起；Rule Graph 连接法条与司法解释，并为每条法条附上 Diagnostic Checklist。三层各司其职，检索时就能分别命中相似事实、抽象概念和适用条件，而不是把它们揉成一锅。
 
-**2. Researcher 多路证据检索：用三条互补路径覆盖不同类型的候选证据。**
+**2. Researcher 多路证据检索：用三条互补路径覆盖不同类型的候选证据**
 
 单一检索路径要么偏向高频事实，要么困在局部相似案例里，覆盖不全。Researcher 把检索结果定义成三种 operator 的并集
 
@@ -57,7 +57,7 @@ $$\mathcal{R}(q)=\mathcal{R}_{sem}(q)\cup\mathcal{R}_{com}(q)\cup\mathcal{R}_{ch
 
 分别对应语义匹配检索、社区扩展检索和罪名锚定检索：$\mathcal{R}_{sem}$ 抓直接相似的案情，$\mathcal{R}_{com}$ 顺着 Ontology Graph 的社区把相关上下文补全，$\mathcal{R}_{chg}$ 则从候选罪名反向锚定可能适用的法条。三路并集让证据池同时覆盖直接相似、社区上下文和潜在罪名依据，把「漏检关键法条」的风险压下来。
 
-**3. Auditor 与 Adjudicator 证据闭环：先验证证据适用性，再把裁决绑定到可追溯依据。**
+**3. Auditor 与 Adjudicator 证据闭环：先验证证据适用性，再把裁决绑定到可追溯依据**
 
 法律场景最不能接受的是「答案对但证据不支持」——retrieve-then-generate 缺少验证时，模型可能拿无关材料给出看似正确的判决。这里 Auditor 对每个候选法条逐一用 Diagnostic Checklist 和司法解释核对案件事实是否满足适用条件，把不适用的法条及其相关节点直接剪掉；Adjudicator 再只用验证后的法条 $\mathcal{A}^f$、案例 $\mathcal{C}^f$、本体节点 $\mathcal{O}^f$ 生成判决
 

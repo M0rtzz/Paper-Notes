@@ -51,19 +51,19 @@ tags:
 
 ### 关键设计
 
-**1. Human Feedback 三维分类（Type × Granularity × Phase）：把"人怎么给反馈"从单一打分拆成可定位的坐标系。**
+**1. Human Feedback 三维分类（Type × Granularity × Phase）：把"人怎么给反馈"从单一打分拆成可定位的坐标系**
 
 过去谈人类反馈往往就一个"打分"，可实际系统里反馈的形态千差万别，没法横向比较。本文把它拆成三个正交轴：类型分 Evaluative（像 RLHF 的偏好打分）、Corrective（像 PRELUDE 学用户编辑）、Guidance（像 InteractGen 用 demo 引导）、Implicit（像 VeriPlan 观察用户滑块行为）四类；粒度分 holistic 与 segment-level 两档；时机分 Initial / During / Post 三段。三轴交叉出 24 格分析坐标，任意一篇工作的反馈机制都能被精确编码成一个三元组（如 (Corrective, Fine, During)）。
 
 这套拆法把"反馈复杂度"变成了可比较的设计选择：粗粒度评估好收集但 credit assignment 弱，细粒度反馈精确却加重用户负担，时机则决定了系统能实时纠错还是只能 offline 学习。设计者据此能在"信号质量 vs 用户成本"之间做明确权衡，而不是笼统说一句"我们用了人类反馈"。
 
-**2. Human Agency Scale（A1–A5）：用 5 档量化"任务里人该参与多深"。**
+**2. Human Agency Scale（A1–A5）：用 5 档量化"任务里人该参与多深"**
 
 社区习惯把"自治程度"当成一根往满拉的进度条，可很多真实任务的最优点其实在 augmentation 而非 automation——这件事一直停留在口水仗，缺一把尺。本文给出 A1–A5 五档量表：A1 全自动、A2 关键点 spot-check、A3 平等协作（双方都比单干强）、A4 agent 需大量人输入、A5 人主导 agent 仅辅助；其中 A1–A2 归为 Automation，A3–A5 归为 Augmentation。
 
 这把尺最直接的用处是给 benchmark 设计者一个参照。现有 benchmark 几乎只评 A1 场景（agent 能多接近全自动），却忽略了医疗诊断、法律咨询这类天然落在 A3–A5 的任务；有了量表，"该不该让 agent 全干"就从立场之争变成了可分类、可评测的研究问题。
 
-**3. Interaction Type 四子类 Collaboration（Delegation / Supervision / Cooperation / Coordination）：拒绝把"协作"当一个原子词。**
+**3. Interaction Type 四子类 Collaboration（Delegation / Supervision / Cooperation / Coordination）：拒绝把"协作"当一个原子词**
 
 把"协作"当成一个笼统的词，会让综述退化成一堆协作工作的大杂烩——因为不同协作形态需要的反馈机制、通信模式、自治度完全不同。本文按"谁主导 + 是否动态"把 Collaboration 进一步切成四个子类：Delegation 是一上来给完整指令、agent 自治执行（如 FineArena 的投资偏好委托）；Supervision 是实时监督加随时介入（如 teleoperator 监控机器人）；Cooperation 是双方自愿联合达成同一目标（如 CoELA 体感 agent）；Coordination 是分工并同步、重在避免冲突（如共享工作空间任务）。
 

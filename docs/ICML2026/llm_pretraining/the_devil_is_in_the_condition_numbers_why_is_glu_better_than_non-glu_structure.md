@@ -48,11 +48,11 @@ tags:
 
 ### 关键设计
 
-**1. GLU 的 NTK 等于"原 NTK ⊙ 数据 Gram 阵"：把架构差异压成一个乘法项。**
+**1. GLU 的 NTK 等于"原 NTK ⊙ 数据 Gram 阵"：把架构差异压成一个乘法项**
 
 GLU 的优势过去只有"门控增强表达力"这种泛泛之词，根子在于没人写得出门控模型 NTK 和非门控 NTK 的可比关系。作者的做法是对参数取期望、代入 LeCun 初始化，并利用大 $m$ 下 $\sigma_v^2 + \sigma_p^2 \approx \sigma_p^2$，得到逐元素关系 $\tilde{K}_{ij} \approx K_{ij}\cdot(\mathbf{x}_i^\top\mathbf{x}_j/d)$，矩阵化即 $\tilde{\mathbf{K}} \approx \mathbf{K}\odot(\mathbf{X}\mathbf{X}^\top/d)$——门控等价于用"数据 Gram 矩阵的归一版本"对原 NTK 做逐元素重加权。这一步之所以关键，是因为它把一个看似纯架构的设计（多乘一支线性 gate）和一个纯统计对象（数据 Gram 阵）画上等号：此后所有差异都集中在 $\mathbf{X}\mathbf{X}^\top/d$ 这一项，谱分析只需研究 Wishart 矩阵及其自 Hadamard 乘积，而不必对门控模型从头做渐近分析。
 
-**2. 条件数尺度下降一阶（核心定理 3.1）：把"GLU 更好"变成"差一个 $d$ 倍"的可验证陈述。**
+**2. 条件数尺度下降一阶（核心定理 3.1）：把"GLU 更好"变成"差一个 $d$ 倍"的可验证陈述**
 
 有了 Hadamard 结构还不够，得把它翻译成能算的收敛量。作者先用 arc-cosine 核公式把 ReLU NTK Taylor 展开成三块 $\mathbf{K} = \alpha\mathbf{X}\mathbf{X}^\top + \beta\mathbf{rr}^\top + \gamma\mathbf{D}$（数据 Gram、$\mathbf{r}_i = \|\mathbf{x}_i\|$ 的秩 1 更新、对角修正），门控版本经 Hadamard 后变成
 
@@ -60,7 +60,7 @@ $$\tilde{\mathbf{K}} = \frac{\alpha}{d}(\mathbf{X}\mathbf{X}^\top)\odot(\mathbf{
 
 对每块用 Marchenko–Pastur 与 El Karoui 展开估 $\lambda_{\max}$、$\lambda_{\min}$，再用 Weyl 不等式叠合，得到 $\lambda_{\max}(\mathbf{K}) = \mathcal{O}(mn/d)$ 而 $\lambda_{\max}(\tilde{\mathbf{K}}) = \mathcal{O}(mn/d^2)$，两者最小特征值同阶为 $\mathcal{O}(m)$ 但 $\lambda_{\min}(\tilde{\mathbf{K}}) \geq \lambda_{\min}(\mathbf{K})$，于是条件数从 $\kappa(\mathbf{K}) = \mathcal{O}(n/d)$ 降到 $\kappa(\tilde{\mathbf{K}}) = \mathcal{O}(n/d^2)$——整整低一个 $d$ 倍。由于梯度下降到 $\epsilon$ 误差需 $\mathcal{O}(\kappa\log(1/\epsilon))$ 步，这就直接把"GLU 收敛更快"坐实成定理，同时给出 GLU NTK 更"对角占优"的几何图像：对角项被放大、非对角项被抑制。
 
-**3. 用谱分解解释 loss-crossing：早期 ReLU 更快、后期 ReGLU 反超不是噪声。**
+**3. 用谱分解解释 loss-crossing：早期 ReLU 更快、后期 ReGLU 反超不是噪声**
 
 训练曲线里有个反直觉现象——早期 ReLU 反而比 ReGLU 收敛快，后期才被反超，容易被当成随机扰动。作者用同一张谱图就解释清楚：NTK 区里 MSE 沿各特征方向独立衰减，第 $i$ 个方向的误差按 $(1 - \eta\lambda_i)^t$ 收缩，早期由 $\lambda_{\max}$ 主导、后期由 $\lambda_{\min}$ 主导。ReLU 的 $\lambda_{\max}$ 更大，所以前期沿主方向衰减更猛；但 ReGLU 的 $\lambda_{\min}$ 更大，剩余分量收得更快，于是越过某个步数后实现反超。这一图像被形式化成命题 4.1 的无限宽损失闭式 $\mathbb{E}_\theta[L_k] \propto \mathrm{Tr}[(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{K}] + \mathbf{Y}^\top(\mathbf{I}-\eta\mathbf{K})^{2k}\mathbf{Y}$ 和推论 4.2（在 $d\geq 5,n\geq 300$ 等条件下存在一个时间分界点把两阶段分开），从而把第 2 点的条件数定理延伸成完整的"谱压缩 → 训练动力学"叙事，也给出一个可单调验证的判据：用 loss-crossing 诊断新激活/新结构是否真的改善了优化。
 

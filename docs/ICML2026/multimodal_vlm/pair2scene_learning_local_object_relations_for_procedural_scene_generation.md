@@ -46,15 +46,15 @@ Pair2Scene 由三大模块协同工作：(1) **数据构造管线**——从 3D-
 
 ### 关键设计
 
-**1. 支撑/功能两类关系 + Mixture-of-Logistics 多模态分布。**
+**1. 支撑/功能两类关系 + Mixture-of-Logistics 多模态分布**
 
 场景生成的核心被本文形式化为一个条件密度：给定锚物体的信息，预测依赖物体的 OBB。这里有个细节必须照顾——"椅子可以放桌子四面"这种自然多解，单峰回归根本表达不了。所以模型把关系先分成两类（支撑关系 $R_s$ 由重力主导，比如桌上的电脑；功能关系 $R_f$ 由语义近邻主导，比如键盘配鼠标），再对依赖物体的 12 维 OBB（中心 + 尺寸 + 6D 旋转）预测 $K$ 个 Logistic 分量的混合 $P(B_{dep}\mid\Theta) = \sum_{k=1}^K \pi_k\prod_{d=1}^{12} L(B_{dep,d}\mid\mu_{k,d}, s_{k,d})$。训练用 NLL 加熵正则 $\mathcal{L}_{total} = \mathcal{L}_{nll} + \lambda\mathcal{L}_{ent}$，其中 $\mathcal{L}_{ent} = \sum_k \hat\pi_k\log\hat\pi_k$ 鼓励混合系数熵高、防止坍缩到单峰。选 MoL 而非高斯混合，是因为 Logistic 的 CDF 有闭式、采样高效，且在 PixelCNN++ 等工作里早证明能很好刻画多模态结构化分布；把支撑和功能显式拆开，则贴合人对家具排布"先稳住再讲功能"的直觉。
 
-**2. 几何 + 关系双注意力 Layout Predictor。**
+**2. 几何 + 关系双注意力 Layout Predictor**
 
 仅靠语义类别判断支撑面是会翻车的——很多桌子顶面不平、椅子背面带曲面，光知道"这是桌子"没用。所以模型要同时感知物体真实几何和关系拓扑。每个角色 $m\in\{dep, sup, fnc\}$ 用一个 learnable query token $x_m$ 表示，锚物体的位置嵌入 $e_m^{bbox} = \mathrm{MLP}_{pos}(B_m)$ 只加到 self-attention 的 key/value。Relational Self-Attention 写成 $X = \mathrm{SelfAttn}(X, X+E^{bbox}, X+E^{bbox})$，让 dep token 能 attend 到 sup/fnc 的空间存在感；Geometry-Aware Cross-Attention 写成 $x_m = \mathrm{CrossAttn}(x_m, z_m^{geo}, z_m^{geo})$，每个角色 token 只跟自己的 Point-MAE 点云特征交互，避免几何信息串台；最后 $x_{dep}$ 过 MLP 头吐出分布参数 $\Theta$。这里有个结构性巧思——锚 token 加位置嵌入而 dep token 不加，因为 dep 的位置正是要预测的目标，加了就会泄漏 ground-truth。
 
-**3. 层级树装配 + 拒绝采样：把局部规则升级成全局一致场景。**
+**3. 层级树装配 + 拒绝采样：把局部规则升级成全局一致场景**
 
 学的是局部条件密度，怎么保证拼出来的全局场景无碰撞、物理合理？答案是程序化装配。场景被表示成一棵支撑树 $\mathbb{T}_s$（根是地板），每个非叶节点上再挂一棵功能树 $\mathbb{T}_f$（共享支撑面的物体间的语义依赖）。生成时按 BFS 走 $\mathbb{T}_s$ 保证支撑面先放、再对每个节点 DFS 走 $\mathbb{T}_f$，得到关系序列 $\mathcal{S} = \{\mathcal{T}_1, \ldots, \mathcal{T}_N\}$。每一步从局部分布 $p_{\text{local}}(x)$ 采样候选位置，把可行集 $\mathcal{F}$ 定义为"不与已放置物体或边界碰撞"，于是全局分布就是 $p_{\text{global}}(x) = p_{\text{local}}(x)/Z$（$x\in\mathcal{F}$，否则为 0），用拒绝采样近似，采样成功后再做一次短重力仿真贴合。拒绝采样让局部条件密度自然升级为带全局碰撞约束的分布，不必重训；BFS+DFS 的遍历顺序强制了因果序——任何 dep 被预测时它的锚都已经存在，避开了鸡生蛋问题。树本身支持两种构造：统计合成（按频率/共现概率程序展开）和 LLM 引导（用 LLM 把文本描述转成层级树）。LLM 只负责造树结构这个它擅长的活、不直接预测坐标这个它的弱项，几何模型与 LLM 的能力分工得很干净。
 

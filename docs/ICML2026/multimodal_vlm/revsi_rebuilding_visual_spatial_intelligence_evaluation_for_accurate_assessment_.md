@@ -45,15 +45,15 @@ ReVSI 流水线分三阶段：(1) 用自研 3D web 标注界面，在 ScanNetv2/
 
 ### 关键设计
 
-**1. 视频对齐的开放词表 3D 重标注：把 GT 从"基于 noisy 重建网格"换成"以原始视频为锚的人工标注"。**
+**1. 视频对齐的开放词表 3D 重标注：把 GT 从"基于 noisy 重建网格"换成"以原始视频为锚的人工标注"**
 
 旧 GT 所有毛病的根源是一个错位——它标注的对象是点云重建出来的 mesh，而不是 raw video，于是视频里清楚可见的物体会因重建不全被遗漏、类别被错标（cup 标成 notebook）、房间面积按 noisy Alpha Shape 算偏。ReVSI 直接更换标注对象就一举解决：作者用自研 web 标注器，以原 VSI-Bench 标注为起点，过滤错标、收紧 3D 框、补回视频中可见但重建丢失的物体，对几何破损的物体用相邻帧外推真实物理尺寸，房间面积也放弃 Alpha Shape、改用 top-down 视角人工画 polygon 并剔除边界不清的场景。开放词表标签（如 "Sony PlayStation"、"Coca-Cola box"）全由人工写、GPT-5.2 只用于 verify。规模从 288 场景 65 类扩到 381 场景 504 类、物体从 3185 重画到 5365——更细的开放类别还顺手堵死了"靠 65 类先验做 narrow guess"的捷径。
 
-**2. 去偏 + 人工 verify 的 QA 重生成：在保留任务定义的前提下打掉答案分布偏差。**
+**2. 去偏 + 人工 verify 的 QA 重生成：在保留任务定义的前提下打掉答案分布偏差**
 
 VSI-Bench 的另一个漏洞是答案过分集中（Object Counting 只猜"2"就能拿 62%、距离多落在 0–2m），模型可以 mode-collapse 到高频答案、靠 prior 而非视觉证据拿分。ReVSI 逐任务重写模板专治这一点：Object Counting 重新引入单实例查询（"How many black office chairs"）并新增"两类合计"模板、把"this room"改成"the scene"以匹配多房间视频；Object Size 剔除 toilet/bed 这种近乎固定尺寸的类别、对 refrigerator 等做 OOD 采样；Absolute Distance 删掉 <1m 题（单帧 2D 线索就能答）改加长距对；Relative Direction 要求 positioning object 足迹 ≤1 m²、物体间距 ≥1m 并加"面背朝某物"模板；Room Size 新增"main room only"模板缓解多房间歧义。每题都过人工核验。统计去偏 + 模板多样化把靠先验拿分的捷径堵死，让 metric 真正反映 spatial reasoning。
 
-**3. 帧预算自适应评估 + dummy 视频控制实验：把"模型看到的"和"benchmark 评估的"对齐，再压力测试它是否真依赖视觉。**
+**3. 帧预算自适应评估 + dummy 视频控制实验：把"模型看到的"和"benchmark 评估的"对齐，再压力测试它是否真依赖视觉**
 
 现代 VLM 实际只看 16/32/64 帧，但旧 GT 是按 all-frame 标的，导致"模型答错"分不清是推理弱还是关键证据压根没出现（16 帧下 GT correctness 跌到 67%）。ReVSI 用场景的 GT 相机位姿光栅化每个采样帧、自动判断物体是否可见（占帧面积 >5%）、不可见时人工补标，为 16/32/64/all 四个帧预算各构造一份 GT，让 GT 从一个常数变成一个函数 $\text{GT}(\text{frames})$。在此之上再加 dummy video——删掉所有含查询对象的帧、只保留场景上下文，对人类来说"不可答"但 GT 是确定值（如 object counting 必为 0）。落到 metric 上 MCQ 用 Acc、NQ 用 Mean Relative Accuracy $\text{MRA}=\frac{1}{|C|}\sum_{\theta\in C}\mathbb{1}[|\hat y-y|/y<1-\theta]$（$C=\{0.5,0.55,\dots,0.95\}$）。dummy video 的诊断力在于：若模型在没有证据时还能答对，说明输出由 prior 而非视觉驱动——这正是 hallucination 的定义。
 

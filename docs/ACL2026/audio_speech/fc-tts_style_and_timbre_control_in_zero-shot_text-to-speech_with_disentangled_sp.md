@@ -47,15 +47,15 @@ style embedding 来自 TCF 模块：prosody tokens 先经过 Transformer encoder
 
 ### 关键设计
 
-**1. 两阶段层次化谱图生成：让音色先锚定声学空间，再让风格细化谱图，避免两个 reference 在同一 decoder 里互相污染。**
+**1. 两阶段层次化谱图生成：让音色先锚定声学空间，再让风格细化谱图，避免两个 reference 在同一 decoder 里互相污染**
 
 直接复用 FACodec decoder 去处理训练里没见过的 style-timbre 组合并不稳，因为所有属性挤在同一个生成步骤里很容易泄漏。FC-TTS 把生成劈成两步：第一阶段只用 speaker embedding $z_{spk}$ 生成一张 over-smoothed 的 blurry log-mel $h$，用 MAE loss $L_{blur}=E[\|h-x_0\|]$ 训练，先把音色和录音条件钉在合理的声学空间；第二阶段才在 prosody 条件 $c_p$ 下用 conditional flow matching 把模糊谱图精修成最终谱图。音色只负责“声音底子”，风格只管“细粒度韵律”，两个 reference 的影响被物理隔到不同阶段，对未见组合自然更稳。
 
-**2. VQ-VAE / TCF 风格编码器：从 prosody token 里抽高层风格，而不是复制参考音频的低层细节。**
+**2. VQ-VAE / TCF 风格编码器：从 prosody token 里抽高层风格，而不是复制参考音频的低层细节**
 
 传统 in-context TTS 默认一段 reference 的风格自始至终一致，但一段长语音内部的语调情绪本就会变化，照搬反而把声学残差也复制了过去。TCF 模块的结构是 Transformer encoder + Q-Former 式 cross-attention query bottleneck + finite scalar quantization：Q-Former query 先把变长 prosody 压成固定数量的 latent token，FSQ 再把它离散成风格码，同时用一个辅助 ResNet 重建 loss 防止 FSQ collapse。量化瓶颈会压掉声学残差，逼表示偏向节奏、语调、情绪这些可迁移的风格而非具体音色。作者还在 phoneme level 和 frame level 各放一个 TCF，专门捕捉 utterance 内部的风格变化。
 
-**3. 条件一致性损失 CCL：用交叉条件的属性预测器逼生成谱图同时守住目标音色和目标风格。**
+**3. 条件一致性损失 CCL：用交叉条件的属性预测器逼生成谱图同时守住目标音色和目标风格**
 
 普通一致性损失只盯单一属性，在双条件场景里给出的梯度很模糊。CCL 训练两个属性预测器：一个从生成谱图加 $z_{spk}$ 反推 prosody token，另一个从生成谱图加 $c_p$ 反推 speaker embedding，损失是 prosody 交叉熵与 speaker 负余弦相似度的加权和：
 

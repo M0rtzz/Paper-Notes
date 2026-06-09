@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Anchor Shift 的理论刻画（Theorem 1）：给"缺模态对齐有多坏"一个可计算的上下界。**
+**1. Anchor Shift 的理论刻画（Theorem 1）：给"缺模态对齐有多坏"一个可计算的上下界**
 
 要论证"为什么非补缺不可"，得先把"缺模态有害"从工程直觉抬到数学事实。作者用 SVD 扰动理论做到这点：令 $\mathbf{u}_1, \mathbf{u}_1^\Omega$ 分别是完整模态矩阵 $\mathbf{Z}$ 和观测子矩阵 $\mathbf{Z}^\Omega$ 的最大左奇异向量，定义 $\eta=\sqrt{\sum_{m\in\bar\Omega}\langle\mathbf{u}_1^\Omega,\mathbf{z}^m\rangle^2}$，则 anchor shift $\|\mathbf{\Delta}\|=\|\mathbf{u}_1-\mathbf{u}_1^\Omega\|$ 被同时夹在下界 $\sqrt{2(1-(\sigma_1^\Omega+\eta^2)/\sigma_1)}$ 和上界 $\sqrt{2}\|\mathbf{Z}^{\bar\Omega}\|_2/(\sigma_1-\sigma_2)$ 之间。更关键的是 Corollary 3 给出"插补后 shift 一定变小"的充分条件：只要每个 imputation 误差 $\|\widehat{\mathbf{z}}^{m'}-\mathbf{z}^{m'}\|_2\le\varepsilon$ 且 $\varepsilon<(\sigma_1-\sigma_2)/\sqrt{|\bar\Omega|}\cdot\sqrt{1-(\sigma_1^\Omega+\eta^2)/\sigma_1}$ 即可。这条阈值给整个方法背了书——"插补只要不太烂就一定有用"不再是赌博，而是有明确边界的保证。
 
-**2. 概率 PCA 风格的共享潜变量生成模型：用最简单的高斯模型在表示层补缺。**
+**2. 概率 PCA 风格的共享潜变量生成模型：用最简单的高斯模型在表示层补缺**
 
 补缺最直接的想法是训一个扩散或流模型去合成缺失模态，但那要重训一个大模型、成本高得离谱。作者只想在表示层补缺，于是选了最朴素也最可分析的形式：对每个模态假设 $\mathbf{z}^m=\mathbf{W}^m\bm{\beta}+\bm{\mu}^m+\bm{\epsilon}^m$（$\bm{\beta}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$，$\bm{\epsilon}^m\sim\mathcal{N}(\mathbf{0},(\sigma^m)^2\mathbf{I})$），所有模态共享潜变量 $\bm{\beta}$ 装"模态间共性"、$\bm{\mu}^m$ 装"模态独有偏置"，并加独立性假设 $\mathbf{x}^m\perp\mathbf{x}^{m'}|\bm{\beta}$。模型容量只有 $\{\mathbf{W}^m, \bm{\mu}^m, \sigma^m\}$，相对编码器几乎为零，能和 encoder 一起训。正因为它够简单，既写得出闭式 E/M-step，又写得出闭式插补公式 $\widehat{\mathbf{z}}^{m'}=\mathbf{W}^{m'}\mathbf{m}+\bm{\mu}^{m'}$——任意一个模态缺了，都能从其他模态的后验里恢复出来。
 
-**3. Bi-step（EM）闭式优化 + 仅用观测模态更新：在参数耦合下仍能逐步闭式求解。**
+**3. Bi-step（EM）闭式优化 + 仅用观测模态更新：在参数耦合下仍能逐步闭式求解**
 
 共享潜变量 $\bm{\beta}$ 把所有模态的参数耦在一起，朴素概率 PCA 处理不了，作者用变分下界 + EM 风格双步优化绕开。**E-step** 固定 $\widehat{\bm\theta}$ 求后验 $p(\bm{\beta}\mid\mathbf{z},\widehat{\bm\theta})=\mathcal{N}(\mathbf{m},\mathbf{V})$，其中 $\mathbf{V}=[\mathbf{I}+\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}\mathbf{W}^m]^{-1}$、$\mathbf{m}=\mathbf{V}\sum_{m\in\Omega}(\sigma^m)^{-2}\mathbf{W}^{m\top}(\mathbf{z}^m-\bm{\mu}^m)$，求和**只遍历观测模态**——这恰好契合"训练数据本来就缺模态"的现实约束；**M-step** 给定后验闭式更新 $\bm{\mu}^m, \mathbf{W}^m, (\sigma^m)^2$。Corollary 4 用 EM 单调性证明 $L(\widehat{\bm{\theta}}^{(t+1)})\ge L(\widehat{\bm{\theta}}^{(t)})$，整套迭代收敛。每步都有闭式解，意味着补缺这件事几乎不带来额外训练开销。
 

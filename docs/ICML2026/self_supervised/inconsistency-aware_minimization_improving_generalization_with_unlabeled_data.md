@@ -45,7 +45,7 @@ tags:
 
 ### 关键设计
 
-**1. 局部不一致性 $S_\rho(\theta)$ 与 FIM 的联系：把锐度搬到输出空间。**
+**1. 局部不一致性 $S_\rho(\theta)$ 与 FIM 的联系：把锐度搬到输出空间**
 
 锐度类度量要标签、inconsistency 类要训多模型，作者要破的就是这个"二选一"。办法是在输出空间而非 loss 空间做几何：定义
 
@@ -53,13 +53,13 @@ $$S_\rho(\theta)=\max_{\|\delta\|\le\rho}\mathbb{E}_x[\mathrm{KL}(f(x;\theta)\|f
 
 对 $\delta$ 做二阶 Taylor 展开后它变成 $\max\tfrac12\delta^\top F(\theta)\delta=\tfrac12\rho^2\lambda_{\max}(F(\theta))$，即 Fisher 信息矩阵主特征值乘上半径。关键是 $F$ 只用到 $\nabla_\theta z$ 和 softmax 输出 $f$，整个过程不出现真实标签 $y$；而交叉熵下又有 $H\approx G=F$，所以 $S_\rho$ 在解的邻域里几何上等同于"无标签版的最大特征值锐度"。这一步用 KL 的二阶展开把"输出敏感度"翻译回 FIM 主轴，既继承了锐度的 Hessian 含义又摆脱了对标签的依赖；论文还用 Theorem 4.1 把 $\lambda_{\max}(F_S)$ 嵌进 Luo 等的泛化界，论证近插值时用 $S_\rho$ 替换 $\lambda_{\max}(H)$ 不掉精度。
 
-**2. Power Iteration 估计 + IAM-S/D 两种注入方式。**
+**2. Power Iteration 估计 + IAM-S/D 两种注入方式**
 
 $S_\rho$ 里有个 $\max$，看上去不可解，但它正好能用 Power Iteration 一步搞定。迭代 $\delta_{k+1}=\rho\,g_k/\|g_k\|$，其中 $g_k=\nabla_\delta \mathbb{E}_x \mathrm{KL}(f(x;\theta)\|f(x;\theta+\delta))$，因为 KL 对 $\delta$ 的二阶近似是 $F\delta$，归一化梯度上升一步就等价于对 $F$ 做一次归一化 Power Iteration，$K=1$ 即逼近主特征方向——计算量恰好和 SAM 的一步对抗扰动相同，使两者在"每步成本"上公平可比。
 
 注入训练目标有两个接口：IAM-D 直接最小化 $L(\theta)+\beta S_\rho(\theta)$ 做软正则；IAM-S 仿 SAM 在扰动点 $\theta+\delta^*$ 处求训练 loss 梯度，但扰动方向来自 KL 而非训练梯度。由于 $\pm\delta$ 等概率出现，一阶项 $\delta^\top\nabla_\theta L$ 在期望下被抵消，IAM-S 实际隐式压制的就是 $G(\theta)=F(\theta)$ 的主特征值。D 易拼到 FixMatch/SimCLR，S 在监督任务上更稳。
 
-**3. 无标签数据的天然适配。**
+**3. 无标签数据的天然适配**
 
 $S_\rho$ 的估计只要前向拿 $f(x;\theta)$、反向求 $\nabla_\delta \mathrm{KL}$，全程不碰 $y$，于是半监督、自监督里的所有无标签样本都能喂进来。FixMatch 中把 $\beta S_\rho(\theta)$ 直接加到原目标上，KL 期望在整个 batch（labeled+unlabeled）上取；SimCLR 中 KL 期望在投影头输出上取，同样无需标签。这一点之所以关键，是因为"在稀疏标签集上量平坦度"根本反映不出整个数据流形的真实平坦度——把 SAM 直接套到 FixMatch 的 labeled loss 上反而无提升（Appx. E.4）。IAM 借 KL 的标签无关性把二阶几何信号铺到无标签分布上，这正是它在半/自监督上能超过 SAM 的来源。
 

@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 拒绝不稳定带的合规概率刻画：把"安全行为是不是二值"从定性问题变成可测量的概率问题。**
+**1. 拒绝不稳定带的合规概率刻画：把"安全行为是不是二值"从定性问题变成可测量的概率问题**
 
 业界默认安全对齐是一条锐利的二元边界，但这恰恰是个未被验证的假设。Furina 先把它做成可测量的量：对固定输入 $x$ 重复采样 $M$ 次得到二元合规判定 $C(Y^{(m)})$，定义合规概率 $\pi_\theta(x) := \mathbb{E}_{Y\sim p_\theta(\cdot|x)}[C(Y)]$，再用阈值把输入空间切成三块——稳定拒绝 $\mathcal{S}=\{x:\pi_\theta(x)\le\tau_-\}$、稳定合规 $\mathcal{U}=\{x:\pi_\theta(x)\ge\tau_+\}$、不稳定带 $\mathcal{I}=\{x:\tau_-<\pi_\theta(x)<\tau_+\}$；数据集级 ASR 则定义为"$M$ 次采样中至少一次被判 UNSAFE"的频率 $\mathrm{ASR}=\tfrac{1}{N}\sum_i \mathbb{I}[\max_m C(Y_i^{(m)})=1]$，让诊断对 nucleus 采样的随机性鲁棒。关键在于单次贪心采样会把不稳定带"塌缩"成确定输出、掩盖问题，而 $M=8$ 次采样下 ASR 从 $\mathcal{S}$ 到 $\mathcal{U}$ 平滑过渡（Qwen3-8B 上 0.02→0.04→0.11→0.56→0.77），用 $\pi_\theta$ 的中间值实证推翻了"二值边界"假设。
 
-**2. 外-内解耦诊断签名：找出"在不稳定带"的可识别指纹。**
+**2. 外-内解耦诊断签名：找出"在不稳定带"的可识别指纹**
 
 光知道有不稳定带还不够，得找到它的指纹，才能回答"为什么基于探针的防御会失灵"。作者同时测外部和内部两组信号：外部用两类熵——token 级熵 $H_\mathrm{tok}(x) = \frac{1}{M}\sum_m \frac{1}{T^{(m)}}\sum_t \mathcal{H}(p_\theta(v|x,y^{(m)}_{<t}))$ 和语义熵 $H_\mathrm{sem}(x) = \frac{2}{M(M-1)}\sum_{i<j} d(\phi(Y^{(i)}),\phi(Y^{(j)}))$（$\phi$ 为 MiniLM 句向量）；内部用 HiddenDetect 的 $HD_{\max} = \max_l \mathrm{proj}(\mathbf{h}_l)\cdot \mathbf{r}/(\|\mathrm{proj}(\mathbf{h}_l)\|\|\mathbf{r}\|)$ 和 Refusal Direction 的 $RD_{\max}=\max_l \mathbf{a}^{(l)}\cdot \mathbf{r}^{(l)}/\|\mathbf{r}^{(l)}\|$（$\mathbf{r}^{(l)}=\bm{\mu}_\text{harmful}^{(l)}-\bm{\mu}_\text{harmless}^{(l)}$）。沿语义重写阶梯扫描，会看到一个反直觉的解耦：ASR↑、$H_\mathrm{tok}$↑、$H_\mathrm{sem}$ 在中段冲高，而 $HD_{\max}, RD_{\max}$ 反而单调下降。"外噪声变大、内安全信号变小"这一签名给出了机制级解释——模型已被推到一个表征上看起来不像有害、行为上却已经合规的位置，这正是隐状态探针挡不住成熟越狱的根因。
 
-**3. Furina：语义漂移子问题 + 隐喻场景锚——把诊断指标反过来当攻击目标。**
+**3. Furina：语义漂移子问题 + 隐喻场景锚——把诊断指标反过来当攻击目标**
 
 既然不稳定带的指纹是"$H_\mathrm{tok}$ 与上下文复杂度被放大"，那攻击就不必再逐模型搜对抗 token，直接去定向制造这个指纹即可。Furina 用一个调度 LLM 把原始恶意 query 拆成多条"意图保留 + 语义漂移"的子问题（每条单看都偏离原意，组合起来仍指向同一危险信息），并生成一个隐喻场景描述当粘合上下文；纯文本模型直接吃这些子问题，MLLM 则把场景描述要么作为合成 anchor、要么渲染成 typographic 图或扩散生成图像，与文本一起喂入形成跨模态输入，让模态错配进一步放大 $H_\mathrm{tok}$。因为它完全靠 prompt 工程产生不稳定信号、不碰目标模型权重，所以天然跨模型族转移——相比 AmpleGCG / PAIR / AutoDAN 这些要梯度或迭代搜索的攻击，Furina 在 $H_\mathrm{tok}$（0.396）上高过所有基线，ASR 达到 0.86。
 

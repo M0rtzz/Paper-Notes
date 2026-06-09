@@ -51,15 +51,15 @@ $$L^3(x,t) = W_\text{mix}\big[\text{LN}(W_\text{up}(V_t^\top \text{Softmax}(K_t 
 
 ### 关键设计
 
-**1. 静态 token 路由 + hidden-state 软查表：把"路由"和"聚合"彻底解耦。**
+**1. 静态 token 路由 + hidden-state 软查表：把"路由"和"聚合"彻底解耦**
 
 MoE 所有的系统麻烦——必须挂 auxiliary loss、参数不能 offload、大 batch 几乎命中所有 expert——本质都来自一件事：router 依赖 hidden state（形式是 $r(x,e)$），到底取哪些参数要算到 router 那一刻才知道。L3 直接把 router 换成 $t \mapsto \{K_t, V_t\}$，**只依赖 token ID**，于是 token 一被生成，要取的参数地址就已经确定。上下文相关性则完全外包给后面的 attention：$\text{Softmax}(K_t x)$ 用当前隐藏状态给 $d_t$ 个 embedding 打分，再对 $V_t$ 做加权和，所以模型仍能"看情况"取舍，不会退化成普通 tokenizer embedding。这一步看似"开倒车"地把路由依赖从 hidden state 退回 token ID，却同时消掉了 MoE 的全部系统痛点——因为地址提前已知，前几层 decoder 还在算时就能用 CPU→GPU 异步预取，把参数搬运完全藏在 compute 后面（图 4）。
 
-**2. LZW 信息论 embedding 分配算法：把容量按"该不该被上下文区分"非均匀地分给 token。**
+**2. LZW 信息论 embedding 分配算法：把容量按"该不该被上下文区分"非均匀地分给 token**
 
 总预算 $v = \sum_i d_i$ 是固定的，关键问题是每个 token 该分到几行 embedding。作者发现"用静态 router 去模拟一个 context router"等价于"找一组能覆盖语料常见后缀的码字"，而这恰好是 LZW 无损压缩的对偶问题——"最长后缀路由"和"最长前缀码匹配"在信息论上互为对偶，频次最高的后缀正对应最需要被区分的上下文。于是算法 1 用 LZW 扫一遍语料构造 (codeword, 频次) 字典，按频次降序遍历，每个 codeword 把一个 embedding 配给它的末位 token，同时强制每个 token 至少 1 个、最多 $k$ 个（如 $k=512$），最终得到一个近 Zipf 的分配（如 "then" 拿 512 行、"orm" 只有 1 行）。这套分配不是锦上添花：均匀分配在消融里几乎吃掉 L3 的全部增益（图 7C），说明分配方式才是 L3 质量的核心 knob。$k$ 上限还顺带给出一个硬保证——$k=512$ 时单 token 最多触发 $O(1\text{M})$ 参数，CPU→GPU 搬运量被钉死在 $O(1\text{MB})$ 量级，预取一定来得及。
 
-**3. block-diagonal 排序训练 + CPU offload 推理：把不规则查表变成硬件友好的访问。**
+**3. block-diagonal 排序训练 + CPU offload 推理：把不规则查表变成硬件友好的访问**
 
 "按 token 取不同行"天生是不规则访问，对 GPU 不友好；但因为 L3 只在 channel 维混合、token 之间互不通信，训练时可以把整个 batch 的 token 按 ID 排序，相同 token 的隐藏状态自然聚成一段，于是 batch 的 attention mask 就变成一个块对角阵（图 3）——既能直接调 FlexAttention/MegaBlocks 等现成 kernel，也能朴素地循环对角块，额外开销只有一次排序加一次逆排序。推理时（图 4）真正的杀手锏是把 L3 参数全放 CPU：token 一被采样出来，对应 $\{K_t, V_t\}$ 立刻从 CPU 异步 prefetch，与 pre-L3 那几层 decoder 的计算并行。静态路由提供的这个"采样瞬间就知道要取什么"的时间窗，正是 MoE 拿不到、因而被卡死在显存里的东西；L3 拿得到，于是 2.6B 模型在 B200 上即便把 L3 完全 offload，BS=1/8/300 的吞吐相对 dense 也只掉几个百分点（表 2），只要第一个 L3 层别放在第 4 层之前，PCIe 延迟就被前面的 decoder 完全吸收，等于用接近 2.6B dense 的速度跑出 7B 总参的模型。
 

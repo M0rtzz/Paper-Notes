@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 点式 AutoEncoder + 冻结目标编码器：造一个平滑、适合学动力学的潜空间，并提供一个不动的回归靶。**
+**1. 点式 AutoEncoder + 冻结目标编码器：造一个平滑、适合学动力学的潜空间，并提供一个不动的回归靶**
 
 观察空间本身是底层动力系统的"噪声 + 部分投影"，直接在上面回归会鼓励模型走捷径抓浅统计；而且如果回归目标会动，又容易表示坍缩。LatentTSF 的 AutoEncoder 是**逐时刻**独立编码的（不沿时间维做卷积/attention），用 $\mathcal{L}_\text{Rec} = \frac{1}{L}\sum_t \|\mathbf{x}_t - \mathcal{D}(\mathcal{E}(\mathbf{x}_t))\|_1$ 预训练后**冻结**，于是 $\mathbf{Z}_Y = \mathcal{E}(\mathbf{Y})$ 成了一个静止目标供 backbone 回归。冻结 + 点式各管一件事：冻结从结构上排除了坍缩——只要 AE 把不同输入编到不同潜点，常数解就不可能最优（Remark 3.1 + App. C.3 有形式化证明），不需要 SimSiam/BYOL 那种 stop-gradient 或 EMA；点式保证 backbone 拿到的是纯净潜状态而非已被 AE 平滑过的序列，否则动力学建模就变平凡了。
 
-**2. 潜空间联合损失 $\mathcal{L}_\text{Pred} + \mathcal{L}_\text{Align}$：让预测潜状态既"幅度对"又"方向对"。**
+**2. 潜空间联合损失 $\mathcal{L}_\text{Pred} + \mathcal{L}_\text{Align}$：让预测潜状态既"幅度对"又"方向对"**
 
 只把潜状态拉到数值接近还不够——方向（即动力学走向）对不对同样关键，单一损失各有盲区。总损失 $\mathcal{L}_\text{Total} = \alpha\cdot\|\mathbf{Z}_Y - \widehat{\mathbf{Z}}_Y\|_F^2 + \beta\cdot(1 - \cos(\mathbf{Z}_Y,\widehat{\mathbf{Z}}_Y))$：前者 Frobenius 范数强约束幅度，后者 cosine 强约束方向。作者给了信息论解释——$\mathcal{L}_\text{Pred}$ 是最大化 $I(\mathbf{Z}_Y;\widehat{\mathbf{Z}}_Y)$ 的变分下界（高斯假设下退化成平方误差），$\mathcal{L}_\text{Align}$ 是 InfoNCE 简化后最大化 $I(\mathbf{Y};\widehat{\mathbf{Z}}_Y)$ 的实用代理。消融证实两者缺一不可，ranking 一致是 "full > w/o Align > w/o Pred ≈ baseline"：Pred 单干缺方向、Align 单干缺幅度。默认权重 $\alpha=10,\beta=15$ 落在一大片"广平台"上，不挑参数。
 
-**3. 彻底拒绝观察空间损失（Perceptual Loss）：把监督信号整条锁死在潜空间内。**
+**3. 彻底拒绝观察空间损失（Perceptual Loss）：把监督信号整条锁死在潜空间内**
 
 直觉上"既在潜空间监督、又在解码后的观察空间补个 MSE"应该更稳，像上了双保险。但作者尝试加 $\mathcal{L}_\text{Perc} = \|\widehat{\mathbf{Y}} - \mathbf{Y}\|^2$ 后发现它反而破坏稳定的潜空间：冻结解码器是非线性的，潜空间的微小偏差被它放大成大幅重建误差，反传回 backbone 的梯度噪声很大。所以最终 recipe 默认**关掉** $\mathcal{L}_\text{Perc}$。这一条颠覆了"多加一个观察空间损失总没坏处"的常规直觉，也是对"潜空间监督本身就足以做好 TSF"这个中心论点最硬的实证支撑。
 

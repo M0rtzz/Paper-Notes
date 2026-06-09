@@ -55,19 +55,19 @@ Pipeline 两阶段（Algorithm 1，5 个子步骤）：
 
 ### 关键设计
 
-**1. DP 关键词软聚类：让合成文本保留病名、用户偏好这类"局部细节"，而不只是学到全库平均特征。**
+**1. DP 关键词软聚类：让合成文本保留病名、用户偏好这类"局部细节"，而不只是学到全库平均特征**
 
 Amin 等的 private prediction 直接对全库做 random subsample，结果只能学到 dataset-average characteristics——对 RAG 这种"要查具体事实"的下游任务等于无用（Table 1 里 DP-Synth/Aug-PE 在 Medical Synth 上 accuracy = 0%）。DP-SynRAG 的破法是先把库切成同主题的 cluster，再在 cluster 内做合成。具体三步：先让 LLM 从每篇文档抽 $K$ 个关键词、加噪后选 top-$R$ 主题；再按**频率反序**遍历赋 cluster（高频词如 "patient" 没区分度，先给低频代表词），每篇文档最多落进 $L$ 个 cluster，以增加它被分到最相关主题的概率；最后用 DP embedding mean + exponential mechanism 选相似度阈值 $\theta_s$，把 cluster 内语义远离的离群文档剔掉——这步在 cluster 内完成，不额外消耗预算。
 
 软聚类（$L>1$）是整个设计的命门。硬聚类（$L=1$）会把多义文档错分到无关 cluster，消融里 Medical Synth + Llama-3.1 上 $L=1$ 比 $L=5$ 直接掉 31.88%；$L$ 太大又让噪声分散，$L=5$ 是跨数据集都稳定的 sweet spot。本质上是在"保留 locality"和"控制噪声"之间做精细 trade-off。
 
-**2. Token 级 private prediction：用 softmax 采样的天然随机性当 DP 噪声源，不必显式加噪。**
+**2. Token 级 private prediction：用 softmax 采样的天然随机性当 DP 噪声源，不必显式加噪**
 
 cluster 切好之后要在 cluster 内改写文档生成合成文本，问题是这步怎么加 DP 保证。直接往 logit 上加 Gaussian 会让分布严重失真——小 logit 都被噪声盖住。本文转而借用 LLM token sampling 本身的随机性：对每篇 $d_i \in S_r$ 跑 rephrase prompt $p_i$，把第 $n$ 个 token 的 logit 各自 clip 到 $[-c, c]$ 再求和 $z_n(S_r) = \sum_{d_i \in S_r} \text{clip}_c(\mathcal{L}(p_i, y_{r,<n}))$，对它做 softmax 采样下一个 token。这一步在数学上恰好等价于 utility = clipped logits、sensitivity = $c$ 的 exponential mechanism，于是采样的 randomness 就"免费"提供了 DP 噪声。生成 $T$ 个 token 由 sequential composition 串起来，得到长度 $T$ 的合成文本 $y_r$。
 
 clipping 用的是 Grislain (2025) 的 "exp normalize → center → rescale 到 $[-c, c]$" 变体，相比单调 clip 能保留高 logit token 之间的相对差异，进一步压低"clip 截掉重要 token"的概率，对生成质量损害更小。
 
-**3. 数据时间 DP + Self-filtering 后处理：整套预算只在"建库"时付一次，之后无限次查询都是免费的 post-processing。**
+**3. 数据时间 DP + Self-filtering 后处理：整套预算只在"建库"时付一次，之后无限次查询都是免费的 post-processing**
 
 这是全文最关键的 reframing。现有 private RAG 都是 query-time DP，在每个 query 输出层加噪，导致 privacy budget 随查询数线性累计——1000 个 query 想保持 $\varepsilon_{\text{query}}=10$，总预算就要 $\varepsilon_{\text{total}}\approx 10000$，要么早早烧光、要么单 query 噪声大到不可用。但知识库的本质是"被反复读"，DP 偏要按"每次读都付钱"算账，这条假设在 RAG 多查询场景里根本错位。DP-SynRAG 把整个建库流程做成满足 $(\varepsilon, \delta)$-DP，由 DP 的 post-processing immunity，之后的 embedding 索引、检索、LLM 推断全都不再消耗预算，结果就是"查询数 vs accuracy"曲线被拉平（Figure 3 里 DP-SynRAG 是一条水平直线，DP-RAG 是急剧下滑曲线）。
 

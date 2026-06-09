@@ -46,11 +46,11 @@ tags:
 
 ### 关键设计
 
-**1. $\ell*$-smoothness 定义 + 局部等价命题：把 Hessian 放回它真正属于的对偶空间。**
+**1. $\ell*$-smoothness 定义 + 局部等价命题：把 Hessian 放回它真正属于的对偶空间**
 
 非欧几何里范数 $\|\cdot\|$ 和对偶范数 $\|\cdot\|_*$ 不再相等，而 $\nabla^2 f(\mathbf{x})\mathbf{h}$ 和 $\nabla f(\mathbf{x})$ 都属于对偶空间——Li et al. 把它们一律用 $\|\cdot\|_2$ 度量，几何上就错了，会平白引入 $\sqrt{n}$ 量级的维度因子。修正办法是定义 $f\in\mathcal{F}_\ell(\|\cdot\|)$ 当且仅当 $\|\nabla^2 f(\mathbf{x})\mathbf{h}\|_*\le\ell(\|\nabla f(\mathbf{x})\|_*)\|\mathbf{h}\|$ 几乎处处成立：分子用对偶范数、分母用原范数。再配一个"局部版" $(\ell,r)*$-smoothness——在以 $\mathbf{x}$ 为中心、半径 $r(\|\nabla f(\mathbf{x})\|_*)$ 的球内梯度 Lipschitz、常数为 $\ell(\|\nabla f(\mathbf{x})\|_*)$。命题 2.6 证明两者在 Assumption 2.5 下几乎等价，于是分析时可自由切换：全局定义用来推关于次最优间隙的界，局部定义用来在一段轨迹上当"常数光滑"使。当 $\|\cdot\|=\|\cdot\|_2$ 时退化为 Li et al. 的 $\ell$-smoothness。几何选对的好处是定量的——以 $f(\mathbf{x})=(\mathbf{1}_n^\top\mathbf{x})^4/4$ 为例，$\ell_1$ 版只需 $\widetilde\ell(\alpha)=1+2\alpha$，而 $\ell_2$ 版要 $\widehat\ell(\alpha)=n+2\sqrt{n}\alpha$，整整差了 $\sqrt{n}$。
 
-**2. 广义自界引理（Lemma 3.4）+ 有效常数 $G,L$ 构造：用次最优间隙反向控制梯度。**
+**2. 广义自界引理（Lemma 3.4）+ 有效常数 $G,L$ 构造：用次最优间隙反向控制梯度**
 
 镜像下降在对偶空间做下降，原范数的自相关性 $\langle\mathbf{x},\mathbf{x}\rangle=\|\mathbf{x}\|_2^2$ 消失了，没法像欧氏分析那样直接证梯度范数单调递减。本文换了条路：对任意 $\mathbf{x}$ 证明广义自界引理
 
@@ -58,7 +58,7 @@ $$\|\nabla f(\mathbf{x})\|_*^2\le 2\ell(2\|\nabla f(\mathbf{x})\|_*)\,(f(\mathbf
 
 它把难追踪的梯度对偶范数翻译成相对好控制的次最优间隙。在 Assumption 3.3 的次二次前提（$\lim_{\alpha\to\infty}\alpha^2/\ell(\alpha)=\infty$）下，方程 $\alpha^2=2\ell(2\alpha)(f(\mathbf{x}_0)-f^*)$ 有最大有限解 $G$，作为整条轨迹梯度对偶范数的统一上界；再令 $L:=\ell(2G)$ 充当"有效经典光滑常数"。对每个 MD 变体，用归纳法证明：只要学习率适当（$\eta\le 1/L$、$1/(2L)$、$1/(3L)$ 等），次最优间隙 $f(\mathbf{x}_t)-f^*\le f(\mathbf{x}_0)-f^*$ 始终成立，于是 $\|\nabla f(\mathbf{x}_t)\|_*\le G$ 自动成立。这套"先假设梯度有界推间隙不增，再用间隙不增反证梯度有界"的循环归纳，通过严格的 Lemmas D.3/E.2/3.5 把循环切开，是整篇的真正发动机。
 
-**3. 加速 MD 的"时间分割"分析与多变体统一框架：覆盖维护多序列的算法。**
+**3. 加速 MD 的"时间分割"分析与多变体统一框架：覆盖维护多序列的算法**
 
 加速 MD、乐观 MD、Mirror Prox 这类算法同时维护多个序列，单靠 $f(\mathbf{x}_t)-f^*$ 受控只能约束 $\nabla f(\mathbf{x}_t)$、约束不了 $\nabla f(\mathbf{y}_t)$。本文引入辅助量 $e_t:=\|\mathbf{y}_t-\mathbf{x}_{t-1}\|$ 衡量两序列差距，证明只要 $e_t\lesssim G/L$ 就能借局部光滑性推出 $\|\nabla f(\mathbf{y}_t)\|_*\lesssim G$；再用"时间分割"技巧（Lemma F.3）把轨迹按阈值 $\tau$ 切两段——$t\le\tau$ 时用收缩映射限制 $e_t$ 增长，$t>\tau$ 时证 $e_t$ 双曲衰减。相比 Li et al. 需要把学习率压到 $\eta\simeq 1/L^2$ 并加额外稳定化序列，本文用 $\eta_t=t\eta/(2L)$ 不引入新组件就拿到 $O(1/T^2)$。同款"距离量受控→局部 $L$-smooth→标准估计"的模式再扩展到随机 MD（用"事件链"分析末步，得高概率 $O(\sqrt{\log T}/\sqrt{T})$）和复合非凸优化（梯度映射 $O(1/T)$），把整条非欧广义光滑性脉络打通成一个可复用框架。
 

@@ -44,15 +44,15 @@ PRISM 要把 CLIP / SAM / DINOv2 三个互相打架的教师压进一个 ViT-B/1
 
 ### 关键设计
 
-**1. 把 MoE 当梯度正交化工具：用稀疏路由拆开冲突梯度。**
+**1. 把 MoE 当梯度正交化工具：用稀疏路由拆开冲突梯度**
 
 多教师蒸馏的根痛点是优化矛盾——稠密 backbone 里聚合梯度 $\mathbf{g}_{\text{total}}=\sum_k \gamma_k \mathbf{g}_k$，当两个教师方向相反 $\cos(\mathbf{g}_i,\mathbf{g}_j)<0$（CLIP 要压方差、DINO 要保方差）时会出现 $\mathbf{g}_i\approx -\mathbf{g}_j$，合成幅度坍缩到"哪边都不擅长"的次优均衡（gradient averaging）。PRISM 的主张是：稀疏 MoE 天生能缓解这件事——把冲突教师的梯度路由到不同专家 $E_n$，使它们在同一参数上的有效内积 $\langle \tilde{\mathbf{g}}_{i,n}, \tilde{\mathbf{g}}_{j,n}\rangle\approx 0$（靠减少冲突教师对同一专家的共激活、或让残差梯度弱对齐实现）。于是分工很自然：共识走 Universal Anchor、冲突走 Conditioned MoE。相比 RADIO 系直接蒸到稠密 backbone（完全不管冲突）和 SAK 的硬切分支（手工划定边界）,PRISM 把"何处共享、何处分支"从经验启发升级成以梯度内积为目标、由数据驱动的正交化设计。
 
-**2. 上下文调制路由：用 FiLM 让路由器认得出"谁在看"。**
+**2. 上下文调制路由：用 FiLM 让路由器认得出"谁在看"**
 
 标准 MoE 路由器只看图像内容,所以 CLIP 教师和 DINO 教师同看一张猫时拿到相同输入、路由到相同专家,emergent specialization 直接失败。PRISM 用 FiLM 把 Context ID $c$（Stage 1 是 Teacher ID、Stage 2 是 Task ID）以仿射形式注入归一化后的特征 $\hat{\mathbf{x}}=(1+\gamma(c))\odot \text{LayerNorm}(\mathbf{x})+\beta(c)$，再让路由器 $G(\hat{\mathbf{x}})$ 做 Top-$K$ softmax 派发,MoE 输出 $\mathcal{F}_{\text{moe}}(\mathbf{x}, c)=E_{\text{shared}}(\mathbf{x})+\sum_{i\in \text{TopK}} G(\hat{\mathbf{x}})_i\, E_i(\mathbf{x})$，其中内部 shared expert $E_{\text{shared}}$ 专门吸收路由波动带来的公共偏差。$c$ 相当于把特征空间重新定向,逼路由器对不同教师做出不同决策。关键区别在于 PRISM 让 FiLM 只调制**路由决策**,专家本身保持纯特征学习——而 MoFME 用 FiLM 直接替代专家计算,会把路由决策和专家功能绑死;PRISM 的做法更符合"路由 vs 表示学习"的职责分离。
 
-**3. Locality-Aware Decorrelation Loss：在浅层撑起高 rank 底座防路由坍缩。**
+**3. Locality-Aware Decorrelation Loss：在浅层撑起高 rank 底座防路由坍缩**
 
 MoE 路由的有效性强依赖输入 token 的多样性,但多教师蒸馏天然有"高级语义压倒低级结构"的倾向——作者把它叫 "semantic short-circuiting"：CLIP 的强语义监督会让浅层提前收敛到全局语义,token 特征同质化（rank collapse），路由器拿不到判别信号就坍缩。LDL 只对前两层施加,惩罚空间上远距离 token 之间的高余弦相似度、同时保护近距离的局部相关性 $\mathcal{L}_{\text{decorr}}=\frac{1}{|\mathcal{P}|}\sum_{(i,j)\in\mathcal{P}}\max(0,\cos(\mathbf{z}_i,\mathbf{z}_j)-\epsilon)\cdot \mathbb{I}(d_{ij}>r)$，其中 $r$ 是局部半径、$d_{ij}$ 是空间欧氏距离、$\mathbb{I}(d_{ij}>r)$ 只对远距离对计入惩罚。这等于注入了一个"局部归纳偏置"的正则——不打死局部相关（视觉特征的物理事实）,只强制远距离 token 保持差异,在浅层人为撑起一个高 rank 的特征底座,给深层专家提供有区分度的原材料。
 

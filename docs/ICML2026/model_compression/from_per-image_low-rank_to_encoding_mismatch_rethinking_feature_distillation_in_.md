@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. 三视角表征几何诊断：把"redundancy"拆成互不重叠的三层，找出真正卡住蒸馏的那一层。**
+**1. 三视角表征几何诊断：把"redundancy"拆成互不重叠的三层，找出真正卡住蒸馏的那一层**
 
 如果只盯着单张图看，ViT 的特征确实极其可压缩，这正是"理论上窄学生 + 线性 projector 就够"这个错误直觉的来源。作者的做法是同时换三个视角观察同一个 $\mathbf{X}$，让矛盾自己浮出来。**Sample-wise SVD** 对每张图做 $\mathbf{X}_i = \mathbf{U}_i \boldsymbol{\Sigma}_i \mathbf{V}_i^\top$，统计达到 95%/99% 能量所需的最小秩 $d_i^\text{SVD}$，CaiT-S24 上 99 分位只要 61/121 维——单图确实低秩。**Dataset-level PCA** 则换成全局视角：累积整个数据集的 channel 第二动量 $\mathbf{C} = \frac{1}{T}\sum_i \mathbf{X}_i^\top \mathbf{X}_i$ 做特征分解，得到一组**所有图共享**的 PCA 基 $\mathbf{V}_d$，再看这组共享基对每张图的能量保留率 $E_i(d) = \|\mathbf{X}_i \mathbf{V}_d\|_F^2 / \|\mathbf{X}_i\|_F^2$；结果要让 99% 的图保住 95% 能量竟需要 302/384 维，和 sample-wise 的 61 形成近 5 倍鸿沟——这说明每张图的低维子空间方向各不相同，**子空间随输入旋转**。**Token-level SEP** 再降一个粒度：对每个 token $\mathbf{x}_t \in \mathbb{R}^D$ 沿 channel 维做 1D DFT，算累积频谱能量 $\text{SEP}(d)$ 和归一化带宽 $b_\alpha$，发现 14 个 ViT/DeiT/Swin/CLIP/MAE/DINO/DINOv2 backbone 的 SEP 曲线几乎都贴着 45° 对角线，捕 90% 能量要占 ~90% 的频谱通道——**单 token 的带宽利用率本就接近满**。三者缺一不可：只看 SVD 会误判"窄接口够用"，加上 PCA 才看到子空间旋转、加上 SEP 才看到带宽吃紧，合起来才解释了固定窄接口为什么必然失败。
 
-**2. Lift：推理时不丢的 lifting projector，先把"端点带宽"补到 teacher 宽度。**
+**2. Lift：推理时不丢的 lifting projector，先把"端点带宽"补到 teacher 宽度**
 
 既然 SEP 诊断指向"末端带宽不够"，最直接的修法就是在不动 backbone 的前提下给学生末端补容量。学生最后一层输出 $\mathbf{X}_S \in \mathbb{R}^{N \times D_S}$（窄宽 $D_S < D_T$），加一个 token-wise 线性 projector $\mathbf{P} \in \mathbb{R}^{D_S \times D_T}$ 抬成 $\widehat{\mathbf{X}}_S = \mathbf{X}_S \mathbf{P}$。和传统 KD 的关键差别是：**这个 projector 推理时也留着**，让分类头 $\mathbf{W}_\text{head} \in \mathbb{R}^{D_T \times C}$ 直接作用在被抬升的表征上，而不是训练完就丢。效果立竿见影——一旦接口被抬到 teacher 宽度，连最朴素的 MSE 特征对齐都能从 +0.21% 变成 +1.75%，正面印证了 SEP 的"带宽不足"诊断。但 Lift 终究是个**固定线性映射**，对所有图像只能给同一个旋转，没法应付 PCA 揭示的输入相关子空间旋转，所以它解决了带宽却解决不了旋转，天花板低于 WideLast。
 
-**3. WideLast：把最后一个 block 原生加宽，带宽和子空间旋转一并解决。**
+**3. WideLast：把最后一个 block 原生加宽，带宽和子空间旋转一并解决**
 
 Lift 留下的缺口在于线性、输入无关。WideLast 把学生的最后一个 Transformer block 直接换成 teacher 宽度 $D_T$ 的版本（前面所有 block 仍保持窄 $D_S$），于是末 block 的 attention 与 MLP 都在 $D_T$ 维上运算，输出 $\widetilde{\mathbf{X}}_S \in \mathbb{R}^{N \times D_T}$，分类头同样在 $D_T$ 上。和 Lift 的本质区别是：加宽 block 是个**输入相关的非线性映射**，能对不同图像生成不同的 effective subspace 方向，恰好对上 PCA 观察到的"子空间随输入旋转"——固定 projector 给所有图一个旋转，加宽 block 给每张图各自的旋转。消融里 WideLast 的 78.23% 比 Lift 的 77.53% 再高 0.7 个点，这 0.7 点就是"子空间自适应"额外买到的收益。
 

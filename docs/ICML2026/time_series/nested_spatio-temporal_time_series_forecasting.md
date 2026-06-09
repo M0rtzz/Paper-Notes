@@ -48,15 +48,15 @@ NeST 处理 $N$ 个传感器、历史窗口长度 $L$、目标 horizon $H$、pat
 
 ### 关键设计
 
-**1. 基于谱聚类的语义区域抽取与 SNR 理论保证：把含噪节点压成可信的结构锚点。**
+**1. 基于谱聚类的语义区域抽取与 SNR 理论保证：把含噪节点压成可信的结构锚点**
 
 数千个传感器的细粒度全图建模极易学到伪相关，对局部噪声和短时异常非常敏感，所以系统需要一组稳定的宏观锚点。NeST 不用物理距离也不用静态拓扑，而是特征驱动地构造区域：把训练序列按周期切成 $\tilde{T}$ 个非重叠 chunk、对每个 chunk 内节点取平均后算亲和矩阵 $\mathbf{A}_{ij}=\exp(-\frac{1}{2\sigma^2\tilde{T}}\sum_k \|\mathbf{X}_i^{(k)}-\mathbf{X}_j^{(k)}\|_2^2)$，让相似性强调长期演化而非瞬时波动；再用归一化拉普拉斯 $\mathbf{L}_{\text{sym}}=\mathbf{I}-\mathbf{D}^{-1/2}\mathbf{A}\mathbf{D}^{-1/2}$ 取低频特征向量做 K-Means 得到分配矩阵 $\mathbf{S}$，区域表征 $\mathbf{Z}_{t,m}=\sum_i S_{i,m}\mathbf{X}_{t,i}/\sum_i S_{i,m}$。为什么这样有效，作者给了 Theorem 1：若 cluster 内真信号相关系数为 $\rho_m$，则 $\text{SNR}(\mathbf{Z}_m)\ge[1+(|\mathcal{C}_m|-1)\rho_m]\cdot\overline{\text{SNR}}_m$——同向聚合天然是一个低通滤波器，把局部高频噪声压掉、只留区域级趋势，这就把谱聚类从经验选择提升成有数学保证的去噪手段。
 
-**2. 双向跨尺度 cross-attention：让未来宏观趋势反过来正则节点预测。**
+**2. 双向跨尺度 cross-attention：让未来宏观趋势反过来正则节点预测**
 
 历史细粒度动态和未来粗粒度趋势必须耦合起来，单向自顶向下会让区域 token 与历史脱节、单向自底向上又退化成普通分层方法。NeST 做两步双向交互：先 top-down，节点 token 查询未来区域 token，$\tilde{\mathbf{H}}_x=\text{Attn}(\mathbf{H}_x^{\text{past}},\mathbf{H}_z^{\text{fut}},\mathbf{H}_z^{\text{fut}})$，让节点表征吸收宏观演化趋势；再 bottom-up，更新后的节点反过来 refine 区域 token，$\tilde{\mathbf{H}}_z=\text{Attn}(\mathbf{H}_z^{\text{fut}},\tilde{\mathbf{H}}_x,\tilde{\mathbf{H}}_x)$，把宏观引导锚回最新的细粒度上下文，二者互相校准。同时由于查询对象是 $M$ 个区域而非 $N$ 个节点，复杂度从全自注意力的 $\mathcal{O}(lN^2 d)$ 降到 $\mathcal{O}(lNMd)$，被 cluster 数 $M<N$ 卡成近线性——这正是大规模图能跑得动的根本原因。
 
-**3. Boundary 重构 + 多步 rollout + 分位数回归：填平训练-推理鸿沟并对引导误差鲁棒。**
+**3. Boundary 重构 + 多步 rollout + 分位数回归：填平训练-推理鸿沟并对引导误差鲁棒**
 
 训练时未来区域 token 可见（teacher forcing），推理时却不可见，纯 teacher forcing 会让模型在推理遇到分布外输入、纯 rollout 又前期不稳。NeST 用三件事接住这个 exposure bias：训练按概率 $P_{\text{tf}}$ 用 ground-truth 区域 token、按 $1-P_{\text{tf}}$ 用自己 rollout 出的 $\hat{\mathbf{Z}}$ 做 scheduled sampling；同时显式训练一个 boundary decoder $\hat{\mathbf{Z}}_{t+1:t+P}=\text{Proj}_{\text{bd}}(\text{Attn}(\mathbf{H}_z^{\text{zeros}},\tilde{\mathbf{H}}_x,\tilde{\mathbf{H}}_x))$，让模型在没有未来观测时也能从节点历史 prior 出一个宏观起点当冷启动锚点，rollout 之后宏观稳定性接管；区域 head 再用 quantile regression 估计 $\{\tau_q\}_{q=1}^Q$ 多个条件分位数、推理只取 median $\tau=0.5$ 作引导，把宏观引导从点估计变成分布估计，对引导误差更鲁棒，这在 12 小时长 horizon 上尤其关键。
 

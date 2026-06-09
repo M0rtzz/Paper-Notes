@@ -44,13 +44,13 @@ tags:
 
 ### 关键设计
 
-**1. 参数步长 + best-under-budget 比较协议：把"两个方法步长差 20 倍"从隐藏假设变成台面上的指标。**
+**1. 参数步长 + best-under-budget 比较协议：把"两个方法步长差 20 倍"从隐藏假设变成台面上的指标**
 
 传统 PEFT 比较有个被忽视的陷阱：rank 不只是表达力旋钮，也是预算的离散刻度，而不同方法的刻度密度天差地别。论文把这件事显式化——对每个 adapter 家族 $\mathcal{A}$ 定义参数步长 $\Delta P_\mathcal{A}(k)=P_\mathcal{A}(k+1)-P_\mathcal{A}(k)$。LoRA 的预算是 $P_{\text{LoRA}}(r)=r(m+n)$，所以在 $2048\times 2048$ 上每加一个 rank 步长就是 $\Delta P_{\text{LoRA}}=m+n=4096$，而 CP 每加一个分量只动 193 个标量，两者相差约 21 倍。在此基础上再给一个预算上限 $B$，定义 best-under-budget 曲线 $U_\mathcal{A}(B)=\max_{k\in\mathcal{K}_\mathcal{A}:P_\mathcal{A}(k)\le B} A_\mathcal{A}(k)$，其中 $\mathcal{K}_\mathcal{A}$ 是该家族实际测过的离散预算点集合，$A_\mathcal{A}(k)$ 是按 best-dev checkpoint 选出的 held-out eval 准确率。这条曲线读出来就是"在这个家族测过的所有点里，预算不超过 $B$ 时能拿到的最好结果"，把"测试点稀不稀疏"明明白白摆出来。
 
 关键是作者刻意把 $U_\mathcal{A}(B)$ 定义成**描述性**指标而不是模型选择规则——传统论文要么匹配几个预算点对比 (藏住了 LoRA 在中间根本没有可选点)，要么各报各的 best run (藏住了某个家族其实测了更多点)；而这里直接挑明"CP 测的点更多，所以 best 曲线上的小幅差异不该被当成可靠胜出"。这句自我设限决定了全篇克制的基调。
 
-**2. 归一化 CP 张量参数化：提供一个步长比 LoRA 细 21 倍、又训得稳的对照家族。**
+**2. 归一化 CP 张量参数化：提供一个步长比 LoRA 细 21 倍、又训得稳的对照家族**
 
 要在 LoRA 两个 rank 之间那段"采不到"的区间里观测，就需要一个步长足够细的对照。做法是把 $\Delta W\in\mathbb{R}^{2048\times 2048}$ 按行列 split 重排成 4-way 张量 $\mathcal{T}(\Delta W)\in\mathbb{R}^{32\times 64\times 32\times 64}$，再写成 CP 形式 $\mathcal{T}(\Delta W)=\sum_{s=1}^{c}\lambda_s\, u_s^{(1)}\circ u_s^{(2)}\circ u_s^{(3)}\circ u_s^{(4)}$，每个方向向量约束 $\|u_s^{(\ell)}\|_2=1$。这样一个分量只存 $32+64+32+64=192$ 个因子标量加 1 个幅度 $\lambda_s$，合计 193 标量，正好约等于 $1/21$ 个 LoRA rank。reshape 回矩阵后，单个分量对应
 
@@ -58,7 +58,7 @@ $$\Delta W_s=\lambda_s\,(u_s^{(1)}\otimes u_s^{(2)})(u_s^{(3)}\otimes u_s^{(4)})
 
 这是一个 Kronecker-结构化的 rank-1 矩阵，方向被张量结构约束住，表达力比普通 LoRA 的 dense rank-1 外积更受限——细粒度是要付表达力代价的。实现上把单位归一化放在 forward 里做 (optimizer 仍存原始因子)，既消除尺度歧义又保住一阶优化的稳定性。算到内存上，48 个投影里加一个 LoRA rank 是 196,608 参数 + 1.50 MB Adam state，而一个 CP 分量只加 9,264 参数 + 0.071 MB Adam state，参数和优化器内存严格成比例。作者也讲清了为什么是 CP 而非 Tucker / Tensor-Train / BTT：CP 在这些候选张量结构里步长最小、训练最稳，恰好是"细粒度但表达受限"的纯净对照；并且 $c$ 固定不自适应增长，就是为了把"预算粒度"这一个变量单独隔离出来，不被自适应分配混淆。
 
-**3. 严格控制协议 + 选择性 100-seed 确认：把"细粒度优势"和"实验噪声"切开。**
+**3. 严格控制协议 + 选择性 100-seed 确认：把"细粒度优势"和"实验噪声"切开**
 
 PEFT 比较里最容易翻车的地方，是看似 0.2% 的提升其实淹在 seed 噪声里。为此所有方法共用同一套 HuggingFace Trainer、同一 fp16 backbone、同一 48 个 q/v 投影目标模块、同一 data cap (1000 训练 / 500 dev / 1000 eval)、同一 5000 steps 加每 1000 步 eval 加 best-dev checkpoint 选择规则；LoRA 用 lr=$10^{-4}$、CP 用 $2\times 10^{-4}$，都是预先选定、不做 per-method 全 sweep，以免比成"谁调参更细心"。基础格子跑 seeds 0,1,2，但对每个任务最关键的几个 cell (SST-2 的低预算 plateau、BoolQ 的 rise-and-saturation、RTE 的 persistent gap) 额外跑 seeds 0-99 共 100 次，拿到可信的均值±方差。best-under-budget 曲线则按定义直接在所有测过的 $r$ 或 $c$ 上取 max。作者同样诚实地公示：CP 测了 13 个 capacity (1,2,4,8,16,21,28,36,43,64,85,128,171)，LoRA 只测了 6 个 (1,2,3,4,6,8)，因此 best 曲线比较里 CP 天然占了抽样便宜。
 

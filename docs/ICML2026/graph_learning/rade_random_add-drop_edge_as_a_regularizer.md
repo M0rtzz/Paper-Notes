@@ -45,11 +45,11 @@ RADE 想解决的尴尬是：DropEdge 这类随机增广在训练时删边、推
 
 ### 关键设计
 
-**1. 随机加-删边扰动：让一种增广同时管正则化和连通性。**
+**1. 随机加-删边扰动：让一种增广同时管正则化和连通性**
 
 DropEdge 只删边，删边只会加剧过挤压的瓶颈，所以它与长程信息坍缩无关。RADE 的出发点是：加边既能注入随机性（→ 正则化），又能创造捷径（→ 缓解过挤压），于是把删和加在一次扰动里一起做。具体对邻接矩阵每个元素独立采样——已有边 $A_{ij}=1$ 时 $A_{ij}' \sim \mathrm{Bernoulli}(1-p)$，非边 $A_{ij}=0$ 时 $A_{ij}' \sim \mathrm{Bernoulli}(q)$，再对称化 $A_{ji}'=A_{ij}'$ 且禁自环。这个家族把已有方法收成特例：$q=0$ 退化为 DropEdge，$p=0$ 退化为纯随机加边。工程上为避免枚举全部 $|\overline{E}|$ 条非边，按超几何分布无放回采样 $K = q|\overline{E}|$ 条加进来。删和加并非同一回事的两个方向：Proposition 4.4 证明 Drop-only 与 Add-only 一般不可互换，因为它们缩放的节点级统计量不同——这正说明二者是互补原语，必须同时引入，才能既得到不同的方差谱、又真正打开长程通信。
 
-**2. 期望保持的聚合校正：把训练-推理对齐写成可推导的等式。**
+**2. 期望保持的聚合校正：把训练-推理对齐写成可推导的等式**
 
 随机增广失效的根因是训练聚合的期望和推理聚合对不上。RADE 把这件事形式化为对齐准则——要求 $\mathbb{E}_{\mathcal{G}'}[\widetilde{\mathbf{a}}_i^{(\mathcal{G}',\ell)}] = \mathbf{a}_i^{(\mathcal{G},\ell)}$，等式一旦成立，随机扰动就只贡献均值为零的聚合噪声，落进 Fang 等人的方差型隐式正则化框架。围绕"对齐到哪张图"，论文给出两套规则。**RADE-OF**（只治过拟合）让训练聚合在期望上等于原图聚合：已有边按 $\widetilde{\mathbf{m}}_{ij} = \frac{\alpha_{ij}^{\mathcal{G}}}{\mathbb{E}[\alpha_{ij}^{\mathcal{G}'}]} \mathbf{m}_{ij}$ 重缩放，非边则减去非邻居加权均值 $\widetilde{\mathbf{m}}_{ij} = \mathbf{m}_{ij} - \boldsymbol{\mu}_i$（其中 $\boldsymbol{\mu}_i = \tfrac{1}{Z_i}\sum_{j:A_{ij}=0}\mathbb{E}[\alpha_{ij}^{\mathcal{G}'}]\mathbf{m}_{ij}$），让加边的期望贡献正好抵消为零。**RADE-OFS**（同治过挤压）只校正删边期望，刻意把加边期望留下来，并在推理时写进修改聚合
 
@@ -57,7 +57,7 @@ $$\widehat{\mathbf{a}}_i^{(\mathcal{G},\ell)} = \mathbf{a}_i^{(\mathcal{G},\ell)
 
 相当于推理时看到一张被"软稠密化"的图，长程捷径被显式保留下来。Proposition 4.1/4.2 证明两套规则都是期望保持。校正里那个期望项 $\mathbb{E}[\alpha_{ij}^{\mathcal{G}'}]$ 是否好算取决于聚合器：GIN 的 sum 聚合可解析得 $1-p$ 或 $q$，但 GCN（对称归一化）和 GAT（attention）的扰动度数 $d_i'$ 进了分母，只能用 delta-method 展开近似或经验估计。这也是为什么 DropEdge 仅靠"全局缩放"在 sum 聚合上侥幸成立、却在加权聚合上失效——显式校正补上了 sum 之外的统一规则，而"加边能否被推理利用"就由选 OF 还是 OFS 决定。
 
-**3. GradNorm 自适应率调节：把"无超参"做实。**
+**3. GradNorm 自适应率调节：把"无超参"做实**
 
 传统增广对扰动强度 $p$ 极敏感——太弱没效果、太强毁信号，最优值还因数据集而异，逐集扫参是工程上的老苦水。RADE 不再手调，而是把方差型正则项 $R(B, p, q) = \tfrac{1}{2}\sum_{i\in B} z_i(1-z_i)\mathrm{Var}(\delta_i)$ 当作一个隐式 loss，要求它在共享参数 $\boldsymbol{\theta}$ 上的梯度幅度 $G_{\mathrm{reg}}^B = \|\nabla_{\boldsymbol{\theta}} R\|_2$ 与监督 loss 的梯度幅度 $G_{\mathrm{data}}^B$ 同量级。每个 mini-batch 后对
 

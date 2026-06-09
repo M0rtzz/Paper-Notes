@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Tele-Lens 探针：用一个低秩 adapter 同时窥探三类"未来"。**
+**1. Tele-Lens 探针：用一个低秩 adapter 同时窥探三类"未来"**
 
 之前的隐状态探针各看各的——有的只盯最终答案、有的只在最后一层做，结论自然彼此打架。Tele-Lens 想用一套统一框架覆盖三个语义不同的"目的论"维度：对 CoT 任意位置 $i$、任意层 $k$ 的隐状态 $H_i^k$，同时预测后续 $m$ 个 token、最终答案、以及剩余推理总长度。它沿用 Logit Lens 把中间层直连冻结 LM head $L$ 的传统，但插一个 bottleneck adapter 抗过拟合：$\widetilde{H}_i^k = \operatorname{GeLU}\big((H_i^k + \operatorname{Emb}^k(\delta))A^k\big)B^k$，其中 $A^k\in\mathbb{R}^{d\times r}$、$B^k\in\mathbb{R}^{r\times d}$ 是秩 $r=256$ 的低秩矩阵，输出 $\mathcal{P}_i^k=\operatorname{Softmax}(\widetilde{H}_i^k L)$。关键在那个**偏移嵌入** $\operatorname{Emb}^k(\delta)$：给定 $\delta=1,2,\dots,m$ 就能指定要预测的是"下一个 token"还是"下 8 个 token"，于是多步预测被收进同一个 adapter；预测最终答案时把 $\operatorname{Emb}^k$ 去掉，预测推理长度时则换成单层回归头。因为是按层分别训练，最后能画出"哪一层、哪个位置、哪个维度"的三维全景图，把之前一个个孤立的单点结论摆到同一张图上对齐——这正是调和矛盾的前提。
 
-**2. 12 任务三分类协议：把"组合 vs 知识"放进同一张比较图。**
+**2. 12 任务三分类协议：把"组合 vs 知识"放进同一张比较图**
 
 之前研究之所以打架，根子在任务分布不同——只看 CSQA 容易得出"答案早就被编码了"，只看 Parity 又会得出"必须靠 CoT"。本文索性把任务系统地切成三类一起测：**显式组合**（Parity / Cycle / Subsum，需要严格多步算法）、**隐式组合**（GSM8K / MATH / AIME / MuSR / Zebra，语义里藏着多步推理）、**知识语义**（CSQA / MMLU / QuALITY / GPQA，靠世界知识与模式匹配）。为了让 final-answer 探针只需在固定的 20 个标签 token 上预测，所有任务都用 GPT-4.1 自动造干扰项转成固定答案空间的多选题，每任务按 4000/100/500 切分，三个生成式任务直接合成数据、完全可控。三类任务挤进同一探针后，"近视视野 + 简单任务能感知粗略 gist"这一统一解释才浮得出来。
 
-**3. 木桶不确定性原理：用 sparse pivot 取代全局平均。**
+**3. 木桶不确定性原理：用 sparse pivot 取代全局平均**
 
 诊断里有个直接发现：CoT 中绝大多数 token 是高置信度的"句法填充"（token 密度分布印证了这点），真正决定推理对错的只是少量"逻辑跨越点"。既然信号是稀疏的，把它放进全局平均自然会被一堆"水货 token"稀释——这正是 perplexity / entropy 对长 CoT 不敏感的病根。木桶原理把"取最短木板"直接翻译到 CoT 上：从一条路径里按指标极值挑出 top-$k$ 个 pivot 位置（用 Tele-Lens 的 final-answer entropy 时选最低的，用通用 perplexity / entropy / Self-Certainty 时选最不确定的），只对这 $k$ 个位置取平均作为整条路径的不确定度。其中 Self-Certainty 定义为 $\operatorname{SC}(X)=-\frac{1}{N|\mathcal{V}|}\sum_{i}\sum_{w\in\mathcal{V}}\log(|\mathcal{V}|\cdot P(w|x_{<i}))$。CoT 旁路则更激进：对前 5 个 token 算归一化熵 $\bar{\mathrm{H}}(\mathbf{p})=-\sum_{i=1}^{C}p_i\log p_i / \log C$，只要任一位置低于阈值 0.1 就直接关掉 thinking 模式出答案。整套设计与"近视视野"诊断闭环——既然全局规划薄弱、信号只集中在几个点，topk 选 pivot 就是最自然的推论，而且零训练成本、即插即用。
 

@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. AReaL-SEA 自演化数据合成：让 pipeline 从自己的失败里学。**
+**1. AReaL-SEA 自演化数据合成：让 pipeline 从自己的失败里学**
 
 多轮工具对话数据贵在要同时满足"复杂领域规则 + 用户私有信息 + 难度够 RL"，以往 APIGen-MT / TOUCAN 这类 pipeline 是**静态**的，出错了也没法自我修正。本文把数据生成做成可演化的多 agent 系统，三个环节扣在一起。第一步是 **Diversified Plan Generation**：meta-planner 顺序生成 $N$ 套不重叠的 (synthesis plan, evaluation plan) 对，每套显式指定不同的 domain、复杂度、工具模式、用户风格，diversity 是构造出来的而不是靠随机撞出来的——消融里把 prompt 集从 64 套砍到 4 套，性能直接从 56.0 掉到 42.5。第二步是**四阶段 agent 流水线**串起每套方案：Task Synthesis Agent 用多轮工具调用产出结构化任务元组 $q = (u, t, a^*)$，Task Verification Agent 把关任务质量，Trajectory Rollout 让模拟 user 和 assistant 跑完整段对话，Trajectory Verification Agent 评轨迹并打 attribution tag——关键是它会归因失败到底是题目本身有问题还是对话跑挂了。第三步是 **Reflection Loop**：失败案例连同归因汇总给 reflection agent，它据此更新方案 $(\mathcal{P}_s^{(n,k+1)}, \mathcal{P}_e^{(n,k+1)}) = \text{Reflect}(\mathcal{P}_s^{(n,k)}, \mathcal{P}_e^{(n,k)}, \{\text{failures}\})$，下一轮出题更准、rubric 更校准。这个闭环正是和静态 pipeline 拉开差距的地方：去掉 evolution loop，性能从 56.0 跌到 44.0。
 
-**2. 可执行 per-instance verifier：把奖励信号在造数据时就钉死。**
+**2. 可执行 per-instance verifier：把奖励信号在造数据时就钉死**
 
 交互式 Agent 任务若用 LLM-as-judge 打分，既慢又贵又噪。作者的做法是合成每条 task 时就同步产出它的 ground-truth final state 和一个能跑的 verifier 函数。RL 训练里一条轨迹跑完后，verifier 拿最终状态 $s_T$ 去比 ground-truth 的关键 entity 和动作，全对才给 1、否则给 0，是个 deterministic 的 binary outcome reward，写成 $\mathcal{R}(s_t, a_t) = R(s_T)$（仅当 $t = T$，其余为 0）。这等于把数学/代码领域成熟的可验证奖励 (RLVR) 范式搬进了 Agent 场景，省掉训练时再请一个 judge 模型，又快又准。
 
-**3. 治住用户模拟器再上 GRPO：先压噪声，再吸方差。**
+**3. 治住用户模拟器再上 GRPO：先压噪声，再吸方差**
 
 这一块是论文最反直觉的地方。交互式任务的 RL rollout 必须带用户模拟器，但开源模型当用户极不稳——τ²-bench 的 dual-control 场景里用户也要发工具调用，base 模型经常乱发或忽略指令，把错误信号错误归因到 Agent 头上。所以第一刀先**SFT 用户模型**：拿 AReaL-SEA 生成的对话数据把用户模拟器（基于 Qwen3-30B-A3B-2507）微调一遍，让它稳定遵循指令、按角色发工具。这步的分量在消融里特别扎眼——直接拿 base 用户模型做 RL，性能从 SFT checkpoint 的 85.4 倒退到 75.6，换成 SFT 后的用户模型则一路冲到 95.6，整整 20 个点。把噪声从源头压住后，Agent 这侧用 GRPO 训：每个 task 采 $G$ 条独立 trajectory，算组内归一化的 advantage $\hat{A}(\tau^{(g)}) = \frac{R(\tau^{(g)}) - \mu_G}{\sigma_G}$，配 token-level clipping 的 surrogate loss。剩下两个旋钮都是为了让有限的 reward 信号更稳：**大 batch** 把总样本数从 256 提到 512，pass^1 从 64-66 涨到 70.5，本质是给 advantage 估计更厚的样本；**Dynamic Filtering** 则把组内全成功或全失败、$\hat{A}=0$ 没学习信号的 task 直接扔掉，只留有差异化的组——关掉这步性能从 70.5 掉回 65.0。
 

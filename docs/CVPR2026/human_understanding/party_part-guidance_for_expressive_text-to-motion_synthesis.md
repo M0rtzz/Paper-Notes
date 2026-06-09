@@ -42,15 +42,15 @@ ParTY 采用两阶段训练策略。**第一阶段**训练 Temporal-aware VQ-VAE
 
 ### 关键设计
 
-**1. Temporal-aware VQ-VAE：让大压缩窗口下也不丢时序流。**
+**1. Temporal-aware VQ-VAE：让大压缩窗口下也不丢时序流**
 
 标准 VQ-VAE 在固定窗口里压缩动作时，窗口一大就会把帧间的时序流抹平，量化质量随之崩塌——可窗口小又意味着更多 token、更慢的推理。ParTY 用两级时序增强把这对矛盾拆开：Local Temporal Enhancement (LTE) 先把帧级特征按窗口分组，组内用一个 MLP 算权重再加权求和得到组级特征，保住窗口内的局部动态；Global Temporal Enhancement (GTE) 再在组级特征上搭一张图卷积网络（GCN），跨组捕捉全局时序依赖，最后才量化进码本。这样即便窗口从 4 放大到 12（推理时间缩减约 64%），量化后的 FID 也只微升到 0.042，仍远好于同等窗口下原始 MoMask 的 0.126。
 
-**2. Part-aware Text Grounding (PTG)：让每个部位读到「为它定制」的文本语义。**
+**2. Part-aware Text Grounding (PTG)：让每个部位读到「为它定制」的文本语义**
 
 一句话动作描述往往同时管着手臂、腿、躯干，单一文本 embedding 喂给所有部位，细粒度的部位语义就被稀释了。PTG 的做法是先「分裂」再「按需取用」：CLIP 文本 embedding 经 K 个独立 MLP 变换成 K 个多样化 embedding，再由每个部位专属的 Gate 网络自适应加权，挑出对该部位最相关的语义方向。为了让这 K 个 embedding 既彼此不同又不跑偏，训练时加一个对比式的多样性损失 $\mathcal{L}_{\text{div}}$ 约束它们语义一致但方向发散；同时用 LLM 为每个部位生成辅助描述（如原句"向前走并左手捡东西"→ 手臂描述"左臂捡起地上的东西"），用 L1 loss 把 Gate 选出的部位 embedding 对齐到这段描述上。关键在于 LLM 只在训练时用——推理阶段 Gate 已经学会了如何拆分语义，不再需要 LLM，因此也避开了 LGTM 那种直接让 LLM 切分文本、丢掉整句上下文的问题。
 
-**3. Part-Guided Network + Holistic-Part Fusion：让部位「先行一步」引导全身，而非事后拼合。**
+**3. Part-Guided Network + Holistic-Part Fusion：让部位「先行一步」引导全身，而非事后拼合**
 
 部位拆分方法连贯性差的根因，是各部位独立生成完再硬拼，颈部扭曲、上下身朝向打架都出在这一步。ParTY 改成循环式的「部位先走、全身跟上」：每个周期里，部位 Transformer 先自回归生成 T 步 token，各部位 token 相加后过 MLP 融成 Part Guidance；整体 Transformer 在同一时间段以这份 Part Guidance 为额外条件生成全身 token，相当于全身生成时手里已经攥着部位的前瞻信息。Holistic-Part Fusion (HPF) 则负责每一步的动态对齐——它把全身、手臂、腿 token 拼起来做 self-attention，再以全身 token 为 query、各部位 token 为 key/value 做 cross-attention，把部位信息实时融回全身表示。注意力图显示，文本里被点名的部位会拿到显著更高的权重，说明这种持续融合确实在按语义分配注意力，而不是简单平均，从根本上避开了"拼合"带来的不连贯。
 

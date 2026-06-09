@@ -54,19 +54,19 @@ MemSearcher 让同一个 backbone LLM 同时兼任 reasoner、actor 和 memory m
 
 ### 关键设计
 
-**1. LLM-as-Memory-Manager 的紧凑内存范式：让 backbone 自己学会记什么、丢什么。**
+**1. LLM-as-Memory-Manager 的紧凑内存范式：让 backbone 自己学会记什么、丢什么**
 
 ReAct 把所有 thought-action-observation 往 context 里堆，搜索 observation 又是动辄上千 token 的 passage，几轮下来 context 破万、噪声压住信号。MemSearcher 直接把每轮看到的 context 从 $c_i = (q, t_1, a_1, o_1, \ldots)$ 换成 $c_i = (q, m_{i-1})$：第 $i$ 条 trajectory 的第 $j$ turn 形如 $(q, m_{i,j-1}, t_{i,j}, a_{i,j}, o_{i,j}, m_{i,j})$，thought 在 `<think>`、action 在 `<tool_call>`、observation 在 `<tool_response>`、memory 在 `<memory>` 标签里。每轮的闭环是：LLM 读 $(q, m_{i,j-1})$ → 输出 thought+action（调 wikipedia_search 或 boxed 终止）→ 环境返回 observation → LLM 再被调用，按"读 $o_i$、把对回答 $q$ 有用的新信息整合进来、同时保留 $m_{i-1}$ 全部相关细节"的指引把 $(o_{i,j}, m_{i,j-1})$ 融合改写成新 $m_{i,j}$，长度 ≤1024 token（在 256-2048 区间做了 ablation）。
 
 相比 RAG / KG / Mem0 这类外挂 memory 需要单独训 retriever 或牺牲端到端可微，让同一个 backbone 自管理内存的好处是不引入额外模型、整条 pipeline 仍是一个 LLM 在 act，RL 能端到端覆盖；而内存用自然语言而非 latent token，则保住了可解释、可调试。
 
-**2. Multi-Context GRPO：把"一条轨迹一个 reward"广播到每一轮独立优化。**
+**2. Multi-Context GRPO：把"一条轨迹一个 reward"广播到每一轮独立优化**
 
 自管理内存带来一个训练上的硬骨头——一条 trajectory 内每个 turn 的 context $c_{i,j}=(q, m_{i,j-1})$ 都不一样，等于把整条轨迹拆成多个独立优化目标，而 vanilla GRPO 对整条轨迹只算一次 reward，没法直接套。解法是：对每个 question $q$ 按 GRPO 采样 $G$ 条 trajectory，每条算 final reward $R_i$，组内 mean/std 标准化得 trajectory-level advantage $A_i = \frac{R_i - \text{mean}(\{R_j\})}{\text{std}(\{R_j\})}$；关键一步是把 $A_i$ 均匀广播到该轨迹所有 turn，即 $A_{i,j} = A_i,\ \forall j \in [1, n_i]$，再把每个 turn 当独立 PPO/GRPO 目标，objective 对所有 $(i,j)$ 求和，importance ratio $r_{i,j}(\theta) = \pi_\theta(T_{i,j}|c_{i,j}) / \pi_{\theta_{\text{old}}}(T_{i,j}|c_{i,j})$；最后对搜索引擎返回的 observation token 做 loss mask，不计 policy gradient 以稳住训练。
 
 之所以要这样"广播 advantage"，是因为直接对整条 multi-context trajectory 算 ratio 既数值不稳又信号稀疏，而按 turn 拆开后每个 turn 都有自己的梯度，却只有 final reward——用 trajectory-level advantage 强制对齐"哪条轨迹好"，就能让稀疏的 outcome reward 沿所有 turn 反传，把"sparse outcome reward + dense per-turn optimization"在 GRPO 框架下缝合起来。
 
-**3. Reward 设计与训练稳定性：纯规则 reward 配 format warm-up。**
+**3. Reward 设计与训练稳定性：纯规则 reward 配 format warm-up**
 
 奖励全程无 process supervision，只用 format check 加 F1 answer 评估：格式错给 $R=0$，格式对但 F1=0 给 $R=0.1$，F1>0 则 $R=F1$，组内归一化即得 $A_i$。训练超参为 lr=1e-6、KL coef=0.001、clip 0.2、rollout group=5、temperature=1.0，搜索引擎 token 全程 mask。
 

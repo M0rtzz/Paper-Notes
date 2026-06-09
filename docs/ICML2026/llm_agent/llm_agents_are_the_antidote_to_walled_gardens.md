@@ -44,15 +44,15 @@ tags:
 ### 关键设计
 论文最具"可被实施"成分的是 §5 给 ML 社区的三类基础设施，这里把它们当作三个核心论点精读——它们共同回答"既然趁智能体生态尚未成熟该主动搭脚手架，那到底搭什么"。
 
-**1. Agent-Friendly Interfaces：用最小元数据让 agent 跳过试错循环。**
+**1. Agent-Friendly Interfaces：用最小元数据让 agent 跳过试错循环**
 
 针对的痛点是 agent 现在只能靠"试错—失败—调 prompt"的循环去猜接口背后的隐含业务规则。作者的解法是在现有 API/网页上叠加最小侵入的注解、而不是另起一套新标准：对 REST 这类机器接口，让服务方在 OpenAPI schema 外补一段自然语言 rationale（可由非技术人员甚至 LLM 撰写），最简形式就是给一个博客/官方文档链接，进阶形式是开一个专答 schema 澄清问题的 LLM 端点；对网页，则在 DOM 里嵌一个 manifest，把按钮/表单字段映射到具体 endpoint（如把 "Submit Order" 按钮标注为 `POST /api/order`），让 agent 直接跳过 UI 调 API。`llms.txt`（Howard, 2024）是这一方向当下最早的雏形。这样研究问题就被收窄成"多少元数据才够、静态注解与动态 explanation 服务如何搭配最优"，比等一个全新标准被广泛采纳现实得多。
 
-**2. Security by Design：围绕 agent 的三层运行时安全架构。**
+**2. Security by Design：围绕 agent 的三层运行时安全架构**
 
 当 agent 自主操作关键数据流时，既要保护用户、也要保护被访问的网站，作者因此把"agent 自主性"和"站点可控性"拆到不同层，提出一套三层运行时强制架构。第一层是 signed permission documents（参考 South et al., 2025），给每个 agent 签发可验证的权限文档，声明允许的 endpoints、数据使用策略、速率上限与委托权；第二层是 runtime policy checker，在每个 action 执行前比对权限文档，违规即阻断或上报；第三层是 automatic rollback / kill-switch，监控到越界行为就回退或终止。难点集中在第二层——既要低延迟不拖慢 agent workflow、又要低假阳性不频繁打断用户，作者建议用学习型 policy 分类器 + 符号检查器混合实现，并配合 ToolEmu（模拟外部 API）、AgentSims（合成任务环境）、SandboxEval（隔离容器测越权）等沙箱把 agent 安全测试纳入 CI。它的类比很直白：universal interoperability 需要一个等价于 OAuth 的"agent 权限/速率/委托标准"，否则站点只能一刀切封禁 AI 流量，反而把互操作性堵死。
 
-**3. Ecosystem Infrastructure：开放协议、技术债治理与防垄断三管齐下。**
+**3. Ecosystem Infrastructure：开放协议、技术债治理与防垄断三管齐下**
 
 这条针对的是 universal interoperability 最大的反噬——"墙"从 API 层滑落到 agent/模型层，换一层马甲继续 lock-in。在协议层，作者支持 Google A2A 与 Anthropic MCP 这类开放协议，但提醒它们都源自单一公司、自带 lock-in 风险，解法是积极参与 W3C AI Agent Protocol、Lightweight Agent Standards、NANDA、Eclipse LMOS 等多方治理工作组，并让 agent 框架自带 A2A↔MCP↔其他协议的 adapter。在技术债层，社区需要维护开源的"集成参考实现"模板（auth/pagination/error/rate-limit），API 提供方应发布机器可读 changelog（如 OpenAPI diff 格式），让 agent 能扫描下游 adapter 的破坏性变更；每段生成的 connector 都带版本和生成元数据，长期目标是 agent 自身能感知更新、自动 deprecate 过时 adapter。在防垄断层，开源 agent 框架与模型是对抗"框架偏袒自家服务"（agent-layer favoritism）的最佳防线，agent 须可审计地 log 它评估与选择服务的依据——否则底层 API 再开放也毫无意义。
 

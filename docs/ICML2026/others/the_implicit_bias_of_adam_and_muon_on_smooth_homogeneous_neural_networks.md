@@ -51,15 +51,15 @@ tags:
 
 ### 关键设计
 
-**1. 近似最速下降框架：用"轨迹是否对齐负梯度"一把抓住一大类优化器的 max-margin 偏置。**
+**1. 近似最速下降框架：用"轨迹是否对齐负梯度"一把抓住一大类优化器的 max-margin 偏置**
 
 动量算法的更新方向不再严格满足最速下降的代数条件，Adam 更是两个不同衰减率动量的比值、根本不属于 MSD 范式，逐个精确刻画太难。作者的破局抽象是"近似最速下降"：只要轨迹 $\boldsymbol{\theta}_t$ 存在某 $\nu(t),R_{\max}$ 使 $N(t)=\int_0^t\nu\to\infty$、$\limsup\|\boldsymbol{\theta}_t\|/N(t)\le R_{\max}$，且对齐度下确界 $\operatorname{ess\,liminf} r(t)\ge 1$（$r(t)=\sup_{\boldsymbol{g}_t}\langle\nu^{-1}\dot{\boldsymbol{\theta}}_t,-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\rangle$），则在 (T2) + $R_{\max}\le 1$ 下，$\bar{\boldsymbol{\theta}}=\lim\boldsymbol{\theta}_t/\|\boldsymbol{\theta}_t\|$ 必为对应 max-margin 问题的 KKT 点。这个框架的威力在于"接口"取得巧——MSD 取 $\nu=\|\dot{\boldsymbol{\theta}}\|$ 就化归经典最速下降，Adam 虽不是 MSD，但只要把 $\nu=\eta(t)$ 选好同样落入框架，于是 Muon、Adam 能被一并处理，动量过冲、动量比值这些技术细节全被吸进 $r(t)\ge 1$ 这一条对齐度要求里。
 
-**2. 动量与梯度的渐近一致性：证明衰减学习率下动量就是梯度的一阶逼近。**
+**2. 动量与梯度的渐近一致性：证明衰减学习率下动量就是梯度的一阶逼近**
 
 要让动量算法满足上面框架的对齐度条件，得证动量方向渐近等于梯度方向。作者在连续时间下把动量写成 $\boldsymbol{m}_t=\int_0^t c_1 e^{-c_1(t-s)}\boldsymbol{g}_s\,ds$，再证在学习率衰减 $\|\dot{\boldsymbol{\theta}}_t\|\le o(t^{1/L-1})$ 下，对所有"瞬时显著"坐标 $J_\varepsilon(t)=\{j:|\boldsymbol{g}_t[j]|/\|\boldsymbol{g}_t\|_\star>\varepsilon\}$ 都有 $\boldsymbol{m}_t[j]=\boldsymbol{g}_t[j](1\pm o(1))$。核心是附录 B 的一个标量事实：只要 $d\log g/dt$ 收敛，标量动量 $m(t)/g(t)$ 就收敛到良定义极限，而学习率衰减恰好让这个收敛条件沿轨迹自动满足，从而 $\boldsymbol{m}_t/\|\boldsymbol{m}_t\|_\star-\boldsymbol{g}_t/\|\boldsymbol{g}_t\|_\star\to 0$。这步同时为 Adam 准备好了关键近似 $\hat{\boldsymbol{m}}_t[j]/\sqrt{\hat{\boldsymbol{v}}_t[j]}=\mathrm{sign}(\boldsymbol{g}_t[j])(1\pm o(1))$——它正是 Adam $\to$ 符号梯度下降 $\to$ $\ell_\infty$ max-margin 的那座桥。
 
-**3. 复合算法 = 最大范数 MSD：把混合训练配方机械翻译成单一范数下的（近似）MSD。**
+**3. 复合算法 = 最大范数 MSD：把混合训练配方机械翻译成单一范数下的（近似）MSD**
 
 实战里 Muon 通常只管矩阵参数、对 LayerNorm/bias 改用 Adam 或 sign GD，这种分块混合的隐式间隔目标此前没人写得出来。作者证明：若在参数块 $\boldsymbol{\theta}=(W_1,\dots,W_K,\boldsymbol{u})$ 上并行跑各自归一化的（动量）最速下降、共用同一 $\eta(t)$，则整体等价于以
 

@@ -44,15 +44,15 @@ QVG 训练免微调地接入任何自回归视频扩散模型的 KV-cache 写入
 
 ### 关键设计
 
-**1. Semantic-Aware Smoothing（语义感知平滑）：先聚类减 centroid，把大幅值分布拉平。**
+**1. Semantic-Aware Smoothing（语义感知平滑）：先聚类减 centroid，把大幅值分布拉平**
 
 LLM 那套 KV 量化（KIVI 的 per-token、QuaRot 的旋转）假设"channel outlier 在所有 token 上一致"，可视频里这假设直接不成立——视频 token 对应不同空间区域和运动模式，outlier 因 token 而漂，按对称 per-group 量化时 scale $S$ 被整个 token 的最大值吃掉、误差被推爆。QVG 利用视频 KV 的强时空冗余来破这个局：对一个 chunk 的 $N=HWT_c$ 个 token 跑 k-means 分成 $C$ 组、每组算 centroid $C_i\in\mathbb R^d$，token 减去自己所属 centroid 得残差 $\mathbf R_i=\mathbf X_{\mathcal G_i}-C_i$，再让残差进对称 per-group 量化。同组 token 隐表征接近，那些"恰好都是 outlier 的 channel"被 centroid 一并吃掉，残差里的最大值大幅缩小——这种按内容聚类后的局部均匀化，比强行用固定旋转去均化全局分布更贴合数据本质，实测 Key cache 量化误差降约 6.9×、Value 降约 2.6×。
 
-**2. Progressive Residual Quantization（渐进残差量化）：粗到细多阶段把误差摊薄。**
+**2. Progressive Residual Quantization（渐进残差量化）：粗到细多阶段把误差摊薄**
 
 单次量化的 rounding 误差有 $S_X/2$ 的硬下界，到 2-bit 这种极端低 bit 就卷不动了。QVG 借视频"粗结构 + 高频残差"的天然层级，把残差再做多阶段细化：第一轮把原 KV 平滑量化得 $\hat X_1$，对 dequant 残差 $\Delta_1=X-\hat X_1$ 再做一次 Semantic-Aware Smoothing 加量化得 $\hat\Delta_1$，重复 $L$ 轮，最终 $\hat X=\hat X_1+\hat\Delta_1+\cdots+\hat\Delta_{L-1}$。每多一阶段就把误差按几何序列衰减一次，活像 SVC 的多分辨率编码，阶段数 $L$ 正好成了"质量 vs 压缩率"的旋钮——QVG-Pro（多阶段）在 INT2 下做到 PSNR 30.4，单阶段的 QVG 也有 28.7，都远超基线。
 
-**3. 算法-系统协同实现：把平滑和残差落到 GPU 上、延迟控在 4% 以内。**
+**3. 算法-系统协同实现：把平滑和残差落到 GPU 上、延迟控在 4% 以内**
 
 KV 量化方案一旦让推理变慢就失去意义。QVG 在工程上把上面两步嵌进自回归推理的 KV 写入路径：k-means 在 chunk 粒度做、centroid 用 BF16 存（很小），量化/反量化与 attention kernel 融合，2-bit 用 packed INT 表示，dequant 时把 $S_X\cdot X_{\text{INT}}+C_i$ 加回得到近似 K/V。保留 chunk 内并行性、最小化 dequant 开销，端到端延迟开销才压到 <4%，这也是它能真正跑在 RTX 4090 / 5090 这类消费级 GPU 上的关键。
 

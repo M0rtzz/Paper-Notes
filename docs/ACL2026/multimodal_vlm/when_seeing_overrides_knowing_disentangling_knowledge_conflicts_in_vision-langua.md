@@ -50,15 +50,15 @@ tags:
 
 ### 关键设计
 
-**1. WHOOPS-AHA! 可控反事实补全数据集：把开放式多模态冲突压成 token 级可验证的测试床。**
+**1. WHOOPS-AHA! 可控反事实补全数据集：把开放式多模态冲突压成 token 级可验证的测试床**
 
 机制解释最怕开放问答——你根本看不清模型偏向的到底是常识还是图像。为此每个样本都被设计成一个反事实图像、一句引用该图的句子，再配两组明确的目标 token：符合常识的补全集 $S_{fact}$ 和符合视觉反事实的补全集 $S_{cofa}$。比如句子 “The wolf is howling at the” 在无图时常识会补 “moon”，但配上一张狼对太阳嚎叫的图后，视觉证据会把模型推向 “sun”。这种设计的好处是把复杂的多模态问答压缩成一对可控候选 token，作者就能用 Logit Lens 逐 token 比较 $t_{fact}$ 与 $t_{cofa}$ 的 logit，对中间组件做干净的归因，而不必在自由生成里模糊地猜模型信了哪一边。
 
-**2. Logit Lens 定位 factual 与 counterfactual heads：在前向传播里看冲突究竟在哪一层、被谁解决。**
+**2. Logit Lens 定位 factual 与 counterfactual heads：在前向传播里看冲突究竟在哪一层、被谁解决**
 
 只看最终输出无法回答"模型内部如何在知道与看到之间做选择"。作者对输入最后一个 token 的中间 hidden states 做 vocabulary projection，比较它对 $t_{fact}$ 和 $t_{cofa}$ 的 logit：在 block 级别统计 factual prevalence，在 head 级别统计 factual accuracy。一个 head 若经常把 factual token 的 logit 顶得更高，就归为 factual head；反之则是 counterfactual head。关键结论是冲突解决并非全模型平均分担，而是集中在上层少数 heads——MLP 整体更偏向参数常识，attention 尤其是晚层个别 heads 更偏向视觉反事实信号。这把一个看似弥散的"模型为何被图像带偏"问题，收敛成一小撮可定位、可下手的靶点。
 
-**3. 定向注意力干预与视觉 patch 归因：从相关性升级到因果，并验证这些 head 真的指向反常区域。**
+**3. 定向注意力干预与视觉 patch 归因：从相关性升级到因果，并验证这些 head 真的指向反常区域**
 
 光定位还不够，因为高排名的 heads 可能只是伴随输出变化的相关项。作者选出最支持 factual / counterfactual 的 top-20 heads，在最终 token 位置改写注意力矩阵的最后一行：对 counterfactual heads 按 $(1-\lambda)$ 缩小它们对图像 token 的注意，或对 factual heads 按 $(1+\lambda)$ 放大它们对文本 token 的注意，反向亦可。如果这组 heads 真有因果作用，定向干预就能把模型从视觉反事实推回常识、或反过来更相信图像——实验也确实如此。
 

@@ -48,19 +48,19 @@ $\|\mathbf{z} - \mathbf{z}^\star\|_2 \le \epsilon_1 + C\sqrt{2\epsilon_2}$，
 
 ### 关键设计
 
-**1. Arca — 锚定表示组合架构：把理论上界 $\epsilon_1+C\sqrt{2\epsilon_2}$ 拆成两个能直接优化的损失。**
+**1. Arca — 锚定表示组合架构：把理论上界 $\epsilon_1+C\sqrt{2\epsilon_2}$ 拆成两个能直接优化的损失**
 
 理论给的上界很漂亮，但 $\epsilon_1$（锚定误差）与 $\epsilon_2$（翻译失真）只是抽象量，必须落到能反传的目标上。Arca 先把多语言 token 流 $g_{\text{tok}}(x) \in \mathbb{R}^{L_x \times d_g}$ 与英文 token 流 $h_{\text{tok}}(y) \in \mathbb{R}^{L_y \times d_h}$ 用 $S_{\text{feat}}$-bin 时间池化拉到等长，过共享 Adaptor $A(\cdot)$ 映到统一 $d$ 维得句向量 $E_{lr}, E_{en}$，再把锚定损失定义为余弦距离 $\mathcal{L}_{\text{anchor}} = 1 - \cos(E_{lr}, E_{en})$——这一项就是理论里的 $\epsilon_1$。$\epsilon_2$ 则交给一个 critic-actor 回路：一个轻量 LLM 给 $K$ 条候选翻译打三维分 $(s_k, e_k, p_k) \in [1,10]$（语义忠实、情感一致、语用得体），与 Adaptor 相似度 $\text{sim}_k$ 拼成 policy 特征 $\mathbf{c}_k = [s_k, e_k, p_k, \text{sim}_k]^\top$，喂给 MLP 得到策略 $\pi_\phi(k|\mathbf{c}_{1:K}) = \text{softmax}(g_\phi(\mathbf{c}_{1:K}))$，按复合奖励 $R_k = 0.1(\alpha s_k + \beta e_k + \gamma p_k) + \delta\,\text{sim}_k$ 做 REINFORCE。
 
 两项合成总目标 $\mathcal{L} = \mathcal{L}_{\text{RL}} + \eta\,\mathcal{L}_{\text{anchor}}$ 把 $\epsilon_1, \epsilon_2$ 同时往下压。之所以用 critic-actor 而不是纯监督，是因为低资源平行语料本身脏——让"翻译挑选"和"表示对齐"互相博弈，模型能绕开被噪声翻译带偏的陷阱，而不是死记某条不靠谱的参考译文。
 
-**2. LaSR — 语言耦合语义推理头：把下游 LLM 对残余误差的放大也压住。**
+**2. LaSR — 语言耦合语义推理头：把下游 LLM 对残余误差的放大也压住**
 
 Arca 解决的是"两路表示落点对不对"，但即便落点对了，下游 LLM 对多语言路径和英文路径输入的敏感度不同，仍可能把残余误差放大——这正是理论里 $L^{\text{loc}}(y;\delta)$ 这个 Lipschitz 常数在起作用。LaSR 用一个轻量 language-aware 头把 Arca 输出的 $(E_{lr}, E_{en})$ 融合成统一多语言嵌入，再用 queue-based InfoNCE 风格的对比损失把相同 query 的多语言版本与英文版本拉近、与负样本拉远，等价于在输出层再加一道 $\mathcal{L}_{\text{consistency}}$ 正则；检索、排序、QA、推理共用这一份嵌入。
 
 它的作用是把 Corollary 2 上界的最后一块——$L^{\text{loc}}$——也收紧：Arca 管 $\epsilon_1+C\sqrt{2\epsilon_2}$，LaSR 管它前面的乘子，两者叠起来整段上界才真正变小。队列式对比同时让大批量检索在显存受限时仍稳定。
 
-**3. 理论驱动的两阶段训练：把"压偏差"和"适配任务"解耦成可插拔两步。**
+**3. 理论驱动的两阶段训练：把"压偏差"和"适配任务"解耦成可插拔两步**
 
 如果端到端同时优化理论目标（$\epsilon_1,\epsilon_2$）与任务指标，两套目标会互相抢梯度。作者把它拆开：第一阶段冻结多语言编码器与英文编码器骨干，只训 Adaptor + critic + actor，专注最小化 $\mathcal{L}_{\text{anchor}} + \mathcal{L}_{\text{RL}}$ 把表示先对齐好；第二阶段才挂上 LaSR，针对具体任务（检索 / 排序 / 推理）用对比 + 一致性损失微调。
 

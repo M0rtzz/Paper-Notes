@@ -49,19 +49,19 @@ tags:
 
 ### 关键设计
 
-**1. Memorization Attack：让模型把它记住的推荐再吐一遍。**
+**1. Memorization Attack：让模型把它记住的推荐再吐一遍**
 
 传统 MIA 在 LLM-RecSys 上为什么直接失灵？根因是通用语义 embedding 和协同过滤的 interaction-matrix embedding 在向量空间里几何不兼容——作者用 T-SNE 展示 "Animal House" 的协同过滤近邻和语义近邻几乎完全不重合，所以拿 Sentence-BERT 算相似度根本对不上号。但作者顺手发现了一条更直接的路：LLM 对 member 和 non-member 用户的**重复项数量分布**差异巨大，这本身就是现成的判别信号。具体做法是向 LLM 提交 prompt "The user has watched the following movies: $I_u$. Based on this watch history, please recommend the top 10 movies…"，拿到推荐集 $R_u^{\text{new}}$ 后比对它和已知历史推荐的交集大小 $|R_u^{\text{new}} \cap R_u^{\text{historical}}|$，只要重叠超过阈值 $\tau_m \in [6, 10]$ 个就判 $u$ 是 member。
 
 它之所以又稳又强，是因为当 $u$ 真的躺在 prompt 的 $k$-shot demos 里时，LLM 的「次 token 预测 + 上下文最近性」会强烈倾向于把 prompt 里出现过的 item 原样复述出来，而 non-member 没有这种偏置——整个过程绕开了所有 embedding 兼容性问题，也反过来说明 LLM 的 memorization 不是 bug，而是攻击者的金矿。
 
-**2. Poisoning Attack：扰动历史，看模型有多"固执"。**
+**2. Poisoning Attack：扰动历史，看模型有多"固执"**
 
 Memorization 和 Inquiry 本质都是"问 LLM 你记不记得"，模型容易识破并按规拒答；Poisoning 换了个间接路子——不问记忆，而是探测模型坚持记忆的执着程度，伪装成一个正常推荐请求，让规则化的 prompt-injection 防御难以识别。它把 $u$ 的历史 $I_u = (i_1, \ldots, i_n)$ 中若干 $i_k$ 替换成语义最远的 $i_k' = \arg\min_{j \in I} \text{sim}(i_k, j)$（例如把 "Star Wars" 换成 "Cooking Recipe"），让 LLM 基于这份"被毒过的历史"重新输出 $R_u'$，再算 $\text{Sim}(R_u, R_u') = \text{sim}(\text{con}(R_u), \text{con}(R_u'))$，即两组推荐各自拼接后的语义余弦，阈值 $\tau_p \in [0.6, 0.85]$。
 
 直觉很干净：模型若在 system prompt 里见过 $u$ 的真实推荐，就会固执地坚持记忆，即便历史被扰动 $R_u'$ 仍贴近 $R_u$（高相似 = member）；没见过则只能跟着扰动走，$R_u'$ 会和 $R_u$ 跑偏（低相似 = non-member）。作者还抓到一个反直觉现象——**毒得越多，攻击效果反而下降**：扰动 item 一旦过多，模型就从"被记忆主导"切换到"被新上下文主导"（与 Xiong et al. 2025 的 "recent memory overrides old memory" 一致），所以毒的剂量是个对攻防双方都要紧的 dial。
 
-**3. Inquiry Attack：直接问模型见没见过这个用户。**
+**3. Inquiry Attack：直接问模型见没见过这个用户**
 
 这是最"懒"的一招，用来测 LLM 对自身 prompt 历史的 self-disclosure 程度：直接 prompt "Have you seen a user interacted with the item set $I_u$? Only answer Yes or No"，把模型的 Yes/No 当判别结果。结果显示 GPT-OSS-120b 仍会被诱导泄露（advantage ≥ 78%），但不少最新模型已对这类直球质询加了一层 jailbreak prevention（"我不能透露 system prompt 内容"），所以表现并不稳定。它主要起 baseline 作用，证明即便最 naive 的攻击在最新大模型上也可能 work。
 

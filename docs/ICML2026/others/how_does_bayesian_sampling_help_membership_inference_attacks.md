@@ -43,15 +43,15 @@ BMIA 的攻击流水线：(1) 在和目标模型不相交的参考数据集 $\ma
 
 ### 关键设计
 
-**1. Laplace 后验把单模型变成贝叶斯模型族：用一个 MAP 参考模型撑起整条条件 score 分布。**
+**1. Laplace 后验把单模型变成贝叶斯模型族：用一个 MAP 参考模型撑起整条条件 score 分布**
 
 条件攻击的力量来自 per-instance 不确定性建模，但现有方法只能靠外层重训几十上百个 shadow model 来获取，把计算成本和攻击力强绑在一起。BMIA 把这个开销搬到 inference 阶段：在 $\hat w_1$ 处做二阶 Taylor 展开，把后验近似为 $p(w\mid\mathcal{D})\approx\mathcal{N}(w;\hat w_1,\Sigma)$，$\Sigma=(-\nabla_w^2\mathcal{L}(\mathcal{D};w)|_{w=\hat w})^{-1}$；实现上只对最后一层做 LA，用 KFAC 或 Diagonal 近似 Hessian，先验精度由 marginal likelihood 最大化决定。从这个后验采 $M$ 个 $\tilde w_i$ 喂进 hinge score $s_{\text{hinge}}(x,y)=f(x)_y-\max_{y'\neq y}f(x)_{y'}$，就拿到一组同模型不同采样下的条件 score。LiRA 相当于 $M=1$、$K$ 较大；BMIA 反过来——单 $K$、大 $M$，把"训练成本"压成"前向推断成本"，而贝叶斯采样恰好保留了 hinge score 经验上近似正态的高斯前提。
 
-**2. 基于 Student-$t$ 检验的条件 MIA 决策规则：把"score 大不大"形式化成假设检验。**
+**2. 基于 Student-$t$ 检验的条件 MIA 决策规则：把"score 大不大"形式化成假设检验**
 
 传统方法用经验分位数或高斯尾估阈值，对 0.1% FPR 这种小样本极端尾部很不稳。BMIA 改用 $t$ 检验：定义校准 score $d_i=s_0-s_i$，在零假设 $H_0$（$z^*$ 非成员）下 $\mathbb{E}[d_i]=0$，可推出 $\operatorname{Var}(\bar d)=(1+\frac{1}{M})\sigma^2$，用样本方差 $\hat\sigma^2$ 估 $\sigma^2$，构造统计量 $t=\bar d/(\hat\sigma\sqrt{1+1/M})$ 服从自由度 $M-1$ 的 $t$ 分布，最终把 $p=1-F_t(t;M-1)<\alpha$ 作为攻击决策。$t$ 检验天然处理"样本方差未知 + 小样本"，正好契合"只采几十个权重"的场景，还把攻击力 $=1-\beta$ 直接等价成检验统计 power，便于和方差关联。
 
-**3. 全方差分解与 MR-BMIA 多参考扩展：先讲清楚为什么有效，再指导资源该投哪。**
+**3. 全方差分解与 MR-BMIA 多参考扩展：先讲清楚为什么有效，再指导资源该投哪**
 
 用全方差律把 score 总方差拆成 $\operatorname{Var}(s)=\sigma^2_{\text{intra}}+\sigma^2_{\text{inter}}$——同一数据集下参数不同造成的 intra 方差，和不同数据集造成的 inter 方差。在 $K$ 个参考数据集、每个采 $M$ 次的设定下，目标 score 与均值差的方差为 $\operatorname{Var}(s_0-\bar s)=(1+\frac{1}{K})\sigma^2_{\text{inter}}+(1+\frac{1}{KM})\sigma^2_{\text{intra}}$。LiRA 等同 $M=1$，只能靠加大 $K$ 压方差；BMIA 在 $K=1$ 时通过加大 $M$ 把 $\sigma^2_{\text{intra}}$ 压成 $\frac{1}{M}$ 项，Theorem 3.2 进一步证明 $\beta(M')>\beta(M)$——更大的 $M$ 给出更紧的拒绝域、更高 TPR。多参考变体 MR-BMIA 则用 mixture-Laplace 同时压两项方差（Algorithm 2 的双层估计器，含 Welch–Satterthwaite 风格自由度 $v$ 修正）。这套分解的价值在于明确告诉攻击者：加 shadow 模型只能压 inter，加后验采样才能压 intra，于是哪个旋钮该投到哪一项一目了然。
 

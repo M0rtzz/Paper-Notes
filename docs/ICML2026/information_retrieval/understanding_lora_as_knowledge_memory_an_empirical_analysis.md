@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 双基准 + 容量/效率度量：把"模型本来就知道"和"LoRA 真存住了"分开。**
+**1. 双基准 + 容量/效率度量：把"模型本来就知道"和"LoRA 真存住了"分开**
 
 传统 LoRA 评测只看 downstream accuracy，无法区分知识到底来自预训练还是来自这次微调，所以作者刻意构造接近零先验的 PhoneBook 与 PaperQA 把 LoRA 的记忆能力孤立出来。在此之上给出可比较的容量指标：定义效率 $\text{Efficiency}=T_{\max}/N_{\text{params}}$，其中 $T_{\max}$ 是在满足固定准确率阈值 $\tau$ 时一块 LoRA 能装下的最大知识 token 数，$N_{\text{params}}$ 是该 LoRA 的参数量。在 rank $\in\{2,\dots,1024\}$、知识规模 1K–20K token 的网格上扫描，就能像读存储芯片 datasheet 一样画出 LoRA 的 capacity 曲线与 efficiency 曲线，看清秩到底怎么换算成容量、以及高秩"绝对容量大"与低秩"性价比高"之间的取舍。
 
-**2. 合成数据的"密度"实验：有限秩下，监督格式比数据量更关键。**
+**2. 合成数据的"密度"实验：有限秩下，监督格式比数据量更关键**
 
 LoRA 容量有限，塞进更多原始 token 未必划算，真正决定内化效果的是监督的信息密度。作者用 GPT-4.1 / Llama-3.1-8B 把同一份原文改写成 QA、Summary、Rewrite 三种合成监督，与 raw text 在不同数据量下对比，再做组合实验（QA40、Summary8+QA40、Rewrite4+QA40，直到 Original+Summary8+Rewrite4+QA40 全混），观察同内容多视角监督能否叠加增益。为了给工程团队一个"自建模型生成数据 vs 调 API"的依据，还沿 Qwen3 尺寸轴扫 0.6B–14B 看模型规模的影响，并直接对比 GPT-4.1 与 Llama-3.1-8B 作为数据生成器时下游 LoRA 的差异——结论是生成器质量会直接传染到下游记忆质量。
 
-**3. Multi-LoRA 的 routing 与 merging 解耦分析：把"多 LoRA 当知识库"拆成两个正交瓶颈。**
+**3. Multi-LoRA 的 routing 与 merging 解耦分析：把"多 LoRA 当知识库"拆成两个正交瓶颈**
 
 把知识切分到多个小 LoRA 是 PRAG 类系统的核心做法，但端到端 pipeline 会把问题来源掩盖掉，所以作者刻意把设计空间拆成路由与合并两个正交问题分别量化。路由侧：Q8 在 64K PhoneBook 上比较 ICL、单个大 LoRA、多个小 LoRA + oracle router，发现 oracle 下多模块能把固定参数预算转化为更多有效容量；Q9 把 oracle 换成实战可用的 embedding-based top-1 路由，misrouting 会让多 LoRA 反而掉到单 LoRA 以下，说明路由错误是系统最大瓶颈。合并侧：Q10 评估 linear avg、CAT、TIES、DARE 四种合并方式，TIES 最稳健、可部分弥补 misrouting；Q11 固定 ground-truth 路由后把合并模块数 $N$ 从 1 扫到 5，$N\!=\!1$ 准确率最高、随 $N$ 上升单调下降，说明合并本身就在稀释参数——于是 routing 与 merging 之间出现新的 trade-off。
 

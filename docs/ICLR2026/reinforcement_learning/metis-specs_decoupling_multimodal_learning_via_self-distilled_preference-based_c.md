@@ -49,13 +49,13 @@ SPECS 想解决的是 VLM 强化学习里"冷启动学太深"的问题：传统 
 
 ### 关键设计
 
-**1. 自蒸馏偏好数据生成：让 chosen/rejected 只差在格式上。**
+**1. 自蒸馏偏好数据生成：让 chosen/rejected 只差在格式上**
 
 DPO 要学"格式规范"而不是"推理内容"，前提是构造出来的 chosen 和 rejected 必须答案都正确、只在格式上有别——否则 DPO 学到的就混进了对错判断。SPECS 用自蒸馏来满足这个前提：先对 base model 做一轮简短 GRPO 得到 $\pi_{\text{GRPO-zero}}$，这个中间模型的格式准确率已经从 base 的 41.62% 提到 96.74%，能稳定产出结构规整的回答；再用 $\pi_{\text{GRPO-zero}}$ 采样作为 chosen response，并用 Gemini-2.5-flash 评估推理路径的一致性来过滤掉跑偏的样本；rejected response 则不重新生成，而是在 chosen 基础上做 5 种格式破坏（去标签、移位标签等）人工构造出来。
 
 之所以不直接找外部大模型当 teacher，是因为 teacher 和 student 能力差距太大反而拉低效果——实验里 72B teacher 蒸馏就不如自蒸馏。自蒸馏既绕开了能力差距问题，又因为 chosen/rejected 仅在格式上不同，保证了 DPO 学到的确实是格式规范这一层。
 
-**2. DPO-based 格式预对齐冷启动：用偏好对齐替代 SFT 模仿。**
+**2. DPO-based 格式预对齐冷启动：用偏好对齐替代 SFT 模仿**
 
 冷启动这一步在自蒸馏偏好数据上用 DPO 加 SFT 的混合损失训练：
 
@@ -67,7 +67,7 @@ $$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log \sigma\left(\beta \log \frac{
 
 SFT 项则在 chosen response 上做正则化，防止模型在偏好优化中偏移太远。这样设计的好处是训练目标的连贯性：DPO 优化的是一个隐式奖励模型，和后续 GRPO 的奖励驱动目标天然对齐，而 SFT 最大化 log-likelihood 与 RL 优化奖励之间存在目标断裂。实验也量化印证了这点——DPO 冷启动的泛化因子 GF 始终高于 SFT。
 
-**3. Generalization Factor (GF) 度量：用一个分数判断冷启动好不好。**
+**3. Generalization Factor (GF) 度量：用一个分数判断冷启动好不好**
 
 为了把"哪种冷启动泛化更好"从感觉变成可比的数字，SPECS 定义了泛化因子 GF：
 

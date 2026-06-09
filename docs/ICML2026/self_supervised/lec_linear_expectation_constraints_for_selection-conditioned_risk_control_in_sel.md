@@ -45,13 +45,13 @@ tags:
 
 ### 关键设计
 
-**1. 从比值约束到线性期望约束：把条件概率目标改写成一条线性不等式。**
+**1. 从比值约束到线性期望约束：把条件概率目标改写成一条线性不等式**
 
 我们真正想控制的是"接受样本里错的比例" $\Pr(\mathrm{err}=1 \mid S(\lambda)=1) \le \alpha$，本质是个条件概率（比值）约束。LEC 第一步把它等价改写：定义联合指示 $Z(\lambda) = S(\lambda) \cdot \mathrm{err}$（接受且错才为 1），则 $\mathrm{SCER}(\lambda) = \mathbb{E}[Z(\lambda)] / \mathbb{E}[S(\lambda)]$，在 $\mathbb{E}[S(\lambda)] > 0$ 时有 $\mathrm{SCER}(\lambda) \le \alpha \Leftrightarrow \mathbb{E}[Z(\lambda) - \alpha S(\lambda)] \le 0$。直观上 $Z - \alpha S$ 是"单样本对接受错误数的边际贡献减去 α 倍的边际接受"，它的期望非正就等价于接受错误率不超过 α。
 
 这一步看似朴素，却是 LEC 比 UCB 紧的根源。UCB-CLP / UCB-HFD 是先对分子 $\mathbb{E}[Z]$ 单独做上界、再除以分母 $\mathbb{E}[S]$ 的下界，相当于两个保守界叠加；LEC 只对一个组合量 $Z - \alpha S$ 判断期望非正，从源头上把"双重保守"压成了"一次判断"。
 
-**2. 有限样本充分条件 + 可行阈值集：只用校准集就能验证的"差和 ≤ −1"。**
+**2. 有限样本充分条件 + 可行阈值集：只用校准集就能验证的"差和 ≤ −1"**
 
 线性约束 $\mathbb{E}[Z - \alpha S] \le 0$ 是期望，需要翻译成校准集上可执行的判据。把校准样本按不确定度 $u_i$ 升序排成 $u_{(1)} \le \dots \le u_{(n)}$ 及对应 $\mathrm{err}_{(j)}$，阈值 $\lambda$ 接受的样本数记 $k(\lambda) = \#\{i: u_i \le \lambda\}$。作者用 distribution-free 校准里标准的 leave-one-out 修正证明（Appendix A.1），在 exchangeability 下充分条件就是一条干净的不等式：
 
@@ -59,7 +59,7 @@ $$\sum_{j=1}^{k(\lambda)} (\mathrm{err}_{(j)} - \alpha) \le -1$$
 
 可行阈值集 $\Lambda_\alpha = \{\lambda: \text{上式成立}\}$，标定取其中最大的 $\hat{\lambda} = \sup \Lambda_\alpha$ 以最大化接受率；若 $\Lambda_\alpha = \varnothing$ 就声明该 α 不可行、全拒答。Theorem 3.1 保证用这样的 $\hat{\lambda}$ 新样本满足 $\Pr(\mathrm{err}_{n+1}=1 \mid u_{n+1} \le \hat{\lambda}) \le \alpha$。它和 UCB 的本质区别在于：这里直接用校准集上 $Z - \alpha S$ 的累积和，再用 −1 作 leave-one-out 修正替代 Hoeffding/Clopper-Pearson 的最坏情形尾界，既保住有限样本严格性又不浪费风险预算。
 
-**3. 两模型路由的联合阈值标定：保证系统级而非分头的 SCER。**
+**3. 两模型路由的联合阈值标定：保证系统级而非分头的 SCER**
 
 当单模型在某 α 下不可行或接受率太低，自然想把不确定输入升级到第二个模型，但难点是要保证整个系统的错误率而不是两个模型各自达标。LEC 定义 $S^{(b)}(\lambda^{(a)}, \lambda^{(b)}) = \mathbf{1}\{u^{(a)} > \lambda^{(a)} \land u^{(b)} \le \lambda^{(b)}\}$（仅 primary 拒、secondary 收时为 1），系统接受 $S = S^{(a)} + S^{(b)}$、系统接受错误 $Z = S^{(a)} \mathrm{err}^{(a)} + S^{(b)} \mathrm{err}^{(b)}$。同一套线性等价性给出系统约束 $\mathbb{E}[Z - \alpha S] \le 0$，有限样本充分条件仍是 $\sum_{i=1}^n (Z_i - \alpha S_i) \le -1$，在可行集上选使经验接受率最大的 $(\hat{\lambda}^{(a)}, \hat{\lambda}^{(b)})$，Theorem 3.2 保证系统级 SCER ≤ α，并可推广到 $K$ 模型链。
 

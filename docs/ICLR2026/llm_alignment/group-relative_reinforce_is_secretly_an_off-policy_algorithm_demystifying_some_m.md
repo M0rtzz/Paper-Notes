@@ -50,7 +50,7 @@ tags:
 
 ### 关键设计
 
-**1. 三步推导：从代理目标一步梯度回到 REINFORCE。**
+**1. 三步推导：从代理目标一步梯度回到 REINFORCE**
 
 整个理论的地基。KL 正则化代理目标的最优解是一个封闭形式 $\pi^*(y|x) \propto \pi_{\theta_t}(y|x) \exp(r(x,y)/\tau)$，对它取对数、在任意两个响应 $y_1, y_2$ 之间作差，就得到 pairwise consistency condition：$r_1 - \tau(\log\pi(y_1|x) - \log\pi_{\theta_t}(y_1|x)) = r_2 - \tau(\log\pi(y_2|x) - \log\pi_{\theta_t}(y_2|x))$，即每个响应的"奖励减去 KL 偏移"应当处处相等。作者把这个条件写成一个对所有样本对都要满足的均方损失：
 
@@ -58,7 +58,7 @@ $$\hat{L} = \frac{1}{K^2}\sum_{i<j}(a_i - a_j)^2$$
 
 关键的一步在求梯度时发生：在 $\theta = \theta_t$ 处求导，所有 log-probability 的差项都因为 $\pi_\theta = \pi_{\theta_t}$ 而归零，剩下的部分化简成 $\frac{1}{K}\sum_i (r_i - \bar{r}) \nabla_\theta \log\pi_\theta(y_i|x)$——这正是 GRPO 的更新公式。整个过程从头到尾没有出现"数据必须来自 $\pi_\theta$"的假设，所以它绕开了经典策略梯度对 on-policy 采样的要求，直接从最优性条件给 off-policy 使用提供了正当性。
 
-**2. REC 系列：把 IS 和 clipping 单独拎出来做对照。**
+**2. REC 系列：把 IS 和 clipping 单独拎出来做对照**
 
 有了理论框架，接下来要回答的是 GRPO 那几个组件里到底谁在干活。作者设计了一组 REINFORCE-with-Clipping（REC）变体逐个剥离：REC-OneSide-IS 保留 IS 权重和单侧 clipping、但去掉 advantage normalization；REC-OneSide-NoIS 在此基础上再把 IS 权重也去掉，只留 clipping mask
 
@@ -66,11 +66,11 @@ $$M_i^t = \mathbb{1}(A_i > 0,\ \rho_i^t \leq 1+\epsilon_{\text{high}}) + \mathbb
 
 同时把 clipping 范围从标准的 $(0.2, 0.2)$ 一路放宽到激进的 $(0.6, 2.0)$ 做对照。社区一直默认 IS 是 off-policy 校正的核心机制，但这组实验给出的答案恰好相反：去掉 IS 后奖励曲线完全重叠、性能几乎不变，而一旦去掉 clipping 训练立刻崩溃。换句话说，clipping 才是那个隐式的信赖域约束——它限制了每步策略更新的幅度，在有限样本覆盖不足时把策略拉住、不让它偏到次优区域去；IS 在 LLM 微调这种策略变化本就不大的场景下几乎是个摆设。
 
-**3. 统一解释 OPMD 和 AsymRE：换皮的都是 REINFORCE 加正则化。**
+**3. 统一解释 OPMD 和 AsymRE：换皮的都是 REINFORCE 加正则化**
 
 第一原则的解释力还能往外延伸。Kimi 的 OPMD 看似是独立算法，但它的损失可以拆成 REINFORCE loss 加一项均方正则化 $\frac{\beta}{2K}\sum_i(\log\pi_\theta(y_i|x) - \log\pi_{\text{old}}(y_i|x))^2$（其中 $\beta = \tau$）；Meta 的 AsymRE 那个 baseline 偏移 $\bar{r} - \beta$，等价于 REINFORCE loss 加一项 KL 正则化 $\frac{\beta}{K}\sum_i \log\frac{\pi_{\text{old}}(y_i|x)}{\pi_\theta(y_i|x)}$，在大样本极限下收敛到 $\beta \cdot D_{\text{KL}}(\pi_{\text{old}} \| \pi_\theta)$。原论文各自的推导路径不同——OPMD 从 KL 目标的 pointwise consistency condition 出发（和本文 step 1 重叠、step 2 分道），AsymRE 用多臂赌博机分析去 justify baseline 偏移——但在本文视角下它们只是同一件事的不同正则化形式，全都归到"正则化策略更新"这条原则下，GRPO 用的是 clipping、OPMD 用的是均方、AsymRE 用的是 KL。
 
-**4. RED 系列：把均匀权重放开，落到第二条原则上。**
+**4. RED 系列：把均匀权重放开，落到第二条原则上**
 
 前三点都在第一条原则（正则化更新）里打转，第四点转向第二条原则（塑造数据分布）。作者把 pairwise 代理损失里的均匀权重推广成一般权重 $\sum_{i<j} w_{i,j}(a_i - a_j)^2$，推出加权版的 REINFORCE 更新公式，并据此给出两种具体方法。**RED-Drop** 丢弃一部分低奖励负样本、只在子集 $\mathcal{S} \subseteq [K]$ 上训练，动机是负梯度会加剧 entropy collapse 的风险（与 Kimi-Researcher 博客的经验建议一致），而在 off-policy 框架下这种丢弃有了理论依据。**RED-Weight** 则用奖励相关的权重 $w_i$ 给每个样本的梯度项加权，它可以分解为 pairwise 加权 REINFORCE 加一个模仿高奖励响应的正则化项，正好呼应 offline RL 文献里"对高奖励轨迹做正则化，比保守地模仿所有轨迹更有效"的结论。
 

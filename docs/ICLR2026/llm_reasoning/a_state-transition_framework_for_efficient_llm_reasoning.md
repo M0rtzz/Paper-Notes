@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Mixed Attention Module (MAM)：用 SA+LA 双路注意力替代原始 softmax attention。**
+**1. Mixed Attention Module (MAM)：用 SA+LA 双路注意力替代原始 softmax attention**
 
 矛盾在于：当前步内部需要精确注意力才能写对这一步，但回看所有历史步又太贵。MAM 把这两件事拆开。SA 子模块沿用原始 LLM 的 softmax attention，但限定每个 token 只注意 query prompt 和当前推理步的 token——一旦某个推理步完成，它的 KV 就被清除，所以 softmax 计算永远只发生在一步的范围内。历史信息则交给 LA 子模块：它维护一个线性注意力的状态矩阵 $S_t = \sum_{i=1}^{t} k_i^\top v_i$，把每个已完成步的 key/value 外积累加进去，当前 token 用查询向量 $q$ 从中检索，并用一个 gating 机制控制实际取用多少历史信息。两路一合，当前步内的精确注意力不丢，历史访问又变得廉价：注意力复杂度从 $O(C^2)$ 降到 $O(C)$，KV cache 从 $O(C)$ 降到 $O(1)$（$C$ 为 CoT 长度）。
 
-**2. State-based Reasoning Strategy：用动量积累的全局方向纠正噪声推理步。**
+**2. State-based Reasoning Strategy：用动量积累的全局方向纠正噪声推理步**
 
 长 CoT 里难免出现跑偏或冗余的推理步，若直接把它们的状态变化累进 $S_t$，会污染后续检索、加剧 overthinking。作者借了 linear attention 与 Test-Time Training (TTT) 的等价关系——状态矩阵的每一步更新本质上等价于一次梯度下降，于是把第 $t$ 步带来的状态变化 $\nabla_t = S_t - S_{t-1}$ 当作"梯度"看待。既然是梯度，就能用动量来压噪声：先维护历史平均方向 $\bar{\nabla}_{t-1} = \frac{1}{t-1}\sum_{i<t} \nabla_i$，在完成第 $t$ 步后用它把当前更新拉回全局趋势，$\hat{\nabla}_t = (1-\alpha)\nabla_t + \alpha\bar{\nabla}_{t-1}$。这正是经典的梯度噪声缓解手段，迁移到推理状态上既有理论依据，又在 AIME 这类难题上实测有效。
 
-**3. 训练策略：冻结主干，只微调线性注意力分支。**
+**3. 训练策略：冻结主干，只微调线性注意力分支**
 
 为了不破坏 base model 已有的推理能力，训练时只更新 LA 子模块的参数（用 LoRA）以及标注思考模式的特殊 token，其余权重冻结。训练目标是双损失：自回归损失 $\mathcal{L}_{AR}$ 保证生成质量，知识蒸馏损失 $\mathcal{L}_{KD}$ 让改造后的模型对齐原 base model 的行为，避免双路替换带来的能力漂移。CoT 的切分用高熵 token 作为推理步边界，每一步再用特殊 token 标注它属于哪种思考模式。
 

@@ -47,15 +47,15 @@ tags:
 
 ### 关键设计
 
-**1. 语言引导查询库构建：把挤在一个 token 里的"推什么"和"在哪"拆到不同 token 上。**
+**1. 语言引导查询库构建：把挤在一个 token 里的"推什么"和"在哪"拆到不同 token 上**
 
 旧范式把语义推理和空间定位全压进单个 `<SEG>` token，推理越复杂这个向量越扛不住。AnchorSeg 扩展 LMM 的词表，引入 $K$ 个潜在推理 token `<LAT_1>,...,<LAT_K>` 和一个分割 token `<SEG>`，自回归生成时 `<SEG>` 显式条件化在前面的推理 token 之上：上下文查询 $\boldsymbol{q}_{1:K}$ 负责编码中间推理状态、对应"分割什么"，锚点查询 $\boldsymbol{q}_{anc}$ 专门承载"在哪分割"的空间信号。这样模型内部自然形成"先推理、后定位"的有序分工，不再让单个 embedding 同时背两份本质不同的信息。
 
-**2. 语言引导空间条件化：让锚点查询直接在图像 token 上算出一张空间先验图。**
+**2. 语言引导空间条件化：让锚点查询直接在图像 token 上算出一张空间先验图**
 
 光是拆出锚点查询还不够，得把它变成解码器能用的显式定位信号。AnchorSeg 把空间定位建模成图像 token 上的因子化条件分布 $p(\boldsymbol{S}|\mathbf{Q}) = \prod_i p(s_i | \boldsymbol{i}_i, \boldsymbol{q}_{1:K}, \boldsymbol{q}_{anc})$，落地时就是锚点查询与每个图像 token 做内积算空间响应 $s_i = \boldsymbol{i}_i^\top \boldsymbol{q}_{anc}$，reshape 成空间先验图 $\mathbf{P}$，再逐元素加回视觉特征 $\tilde{\mathbf{f}} = \mathbf{f} \oplus \mathbf{P}$ 后送进 SAM 解码器。锚点查询直接产出定位响应，而上下文查询通过自回归生成链路隐式塑造锚点查询的内容，于是语义对空间的调制就显式发生在特征层面，而非埋在一个不可分解的向量里。
 
-**3. Token-Mask 循环一致性（TMCC）：用双向约束补上 token 级响应与像素级掩码的分辨率落差。**
+**3. Token-Mask 循环一致性（TMCC）：用双向约束补上 token 级响应与像素级掩码的分辨率落差**
 
 空间响应在低分辨率的 token 网格上算，监督却是高分辨率的像素掩码，两个层次各算各的容易打架。TMCC 加一对双向约束把它们锁住：Token-to-Mask 把 token 级响应上采样到图像分辨率，用 BCE+Dice 损失对齐高斯平滑后的 GT 掩码；Mask-to-Token 反过来把 GT 掩码下采样到 token 分辨率，与 token 级响应对齐。一上一下互相校准，保证语义-视觉两个层级上的空间推理保持一致、不至于训练发散。
 

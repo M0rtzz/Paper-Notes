@@ -45,19 +45,19 @@ AdapTime 把时序推理拆成 3 个原子动作（Reformulate / Rewrite / Revie
 
 ### 关键设计
 
-**1. 三个原子时序推理动作：把已有方法的核心操作收敛成 LLM 能自主完成的最小动作集。**
+**1. 三个原子时序推理动作：把已有方法的核心操作收敛成 LLM 能自主完成的最小动作集**
 
 现有 temporal QA 方法形式各异，但本质都在做"问题分解 / 上下文改写 / 答案核验"三件事之一，本文把它们抽象成三个纯 prompt 的正交动作。**Reformulate** 让 LLM 把含复杂时间约束或多跳的问题分解为 $Q=\{q_1,\ldots,q_n\}$，每个 $q_i$ 单点可答、最后聚合，例如 "Cooper 在某时间段担任什么职位" 拆成 "Cooper 担任过哪些职位" + "哪个职位的时间区间覆盖目标时段"。**Rewrite** 让 LLM 把 "during his presidency""after the war ended" 这类隐式时间表达改写成以日历日期为锚的显式时间线（code / timeline / temporal graph 任一形式），下游就能直接在锚定事实上推理。**Review** 让 LLM 检索能支撑当前答案的原文句子，证据缺失或冲突时修正答案。
 
 这三个动作覆盖了 QAaP / Time-CoT / Event-AL / TG-LLM / TISER 的全部关键操作（表 1 给了逐项对照），但每个都是纯 prompt，去掉了对 Python interpreter、手工 timeline、难例标注的依赖，且三者正交解耦、可任意组合。
 
-**2. LLM Planner 自适应规划：让模型看一眼问题再决定走多深。**
+**2. LLM Planner 自适应规划：让模型看一眼问题再决定走多深**
 
 固定 pipeline 对所有问题都按同一套顺序跑，简单题被过度推理反而引入噪声，难题又步骤不够推不出来。AdapTime 用一个同样是 LLM prompt 的 Planner（与执行共用 backbone）在每个动作点各调用一次：先看 $Q$ 是否多跳→决定是否 Reformulate；再看 $C$ 的时间表达是否模糊分散→决定是否 Rewrite；最后看初始答案可信度→决定是否 Review。每次决策以自然语言"是/否 + 简短理由"给出，由二元决策 $d_i$ 门控对应动作，不强制走完所有步骤（完整伪代码见算法 1）。
 
 这样推理预算就花在真正需要的地方。论文图 3 的统计佐证了 Planner 确实做了任务感知的差异化决策：TimeQA 上 Reformulate 频率高（问题多为可拆解的多跳），TempReason-L2/L3 上 Rewrite + Review 频率显著高于 TimeQA（时间线复杂、初始答案可信度低）。
 
-**3. 基于内置能力的 zero-tool 推理：把工具调用全部内化成 prompt。**
+**3. 基于内置能力的 zero-tool 推理：把工具调用全部内化成 prompt**
 
 依赖外部工具是当前 temporal QA 泛化性差的根因——换 domain 或换数据源，工具和规则就得重搭。AdapTime 把过去交给外部组件的活全收回 LLM 内部：原本用 Python interpreter 做的"事实匹配"改成 prompt LLM 检索原文支撑句，原本用 retriever 做的"长文档压缩"改成 prompt LLM 把相关段落改写成时间线，原本靠人工补的难例标注改成 prompt LLM 重新分解问题。所有能力收回内部后，方法就能 zero-shot 迁移到新场景（在开放域 ArchivalQA 上仍 work 也佐证了这点）。
 

@@ -49,15 +49,15 @@ tags:
 
 ### 关键设计
 
-**1. 以「信息抽象层级」为分类轴的三阶段形式化。**
+**1. 以「信息抽象层级」为分类轴的三阶段形式化**
 
 综述最核心的设计是换了一根分类轴。以往工作要么按「长期/短期」分（认知科学风格）、要么按「内存层级」分（OS 风格），都解释不了为什么 Reflexion 和 Voyager 属于不同代次；作者改用信息抽象层级，并给每一阶配一个精确的 functional signature。Storage 保留原始轨迹 $\tau = \langle(o_1,a_1),\dots,(o_T,a_T)\rangle$、$\mathcal{M}_{raw} = \{\tau_i\}_{i=1}^N$（再细分 Linear / Vector / Structured）；Reflection 做单轨迹语义变换 $m_i' = \mathcal{F}_{ref}(\tau_i \mid \phi)$、$\phi$ 是评估准则（细分 Introspection / Environment / Coordination）；Experience 做跨轨迹归纳 $\mathcal{F}_{exp}: \mathcal{T}_{batch} \to \mathcal{K}$ 并要求 $|\mathcal{K}| \ll \sum_{\tau\in\mathcal{T}_{batch}} |\tau|$ 的 MDL 约束（细分 Explicit / Implicit / Hybrid）。这根轴和「OS vs 认知科学」两条旧线都正交，因此能把分裂的文献统一起来，也让「Voyager 为何后于 Reflexion」有了干净答案——前者已迈入 cross-trajectory 抽象，后者还停在单轨迹精化。
 
-**2. 把演化驱动力拆成三股可定位的选择压力（Why）。**
+**2. 把演化驱动力拆成三股可定位的选择压力（Why）**
 
 作者没有泛泛地说「记忆很重要」，而是把「为什么会从 Storage 一路演化到 Experience」分解成三个具体压力，并各自绑定一波文献爆发。其一是长期一致性：agent 要保持推理链不自相矛盾、目标不被局部最优带偏，这逼出了最早的记忆模块（MemGPT、Sumers 2023）。其二是动态环境：知识有时效且过期不会自动报错（Lazaridou 2021）、因果有延迟的级联效应（Joshi 2024），逼出 active management、temporal decay、causal graph 等机制。其三是持续学习：episodic memory 容量有限、无限扩张又会让错误传播污染整库（Xiong 2025），最终逼出从「记录」到「抽象」的跃迁，也就是 Experience。三股压力与时间线对齐后，读者能清楚看到「哪种选择压力催生了哪一代记忆方法」。
 
-**3. 把 Experience 阶段切成 Active Exploration 与 Cross-Trajectory Abstraction 两条变革线（What）。**
+**3. 把 Experience 阶段切成 Active Exploration 与 Cross-Trajectory Abstraction 两条变革线（What）**
 
 Experience 是这篇综述价值最高的差异化部分，作者用两条正交的机制把 2025 下半年起的 frontier 工作从其余记忆工作中切出来。一条是 Active Exploration：agent 从被动记录者变成目标驱动的经验收集者，按驱动器分 reward-driven / curriculum-driven / reuse-driven，按维度分 breadth（补认知缺口）/ depth（抽高阶 skill）/ strategy（优化长 horizon 决策路径）。另一条是 Cross-Trajectory Abstraction：抽象机制涵盖 contrastive induction（成功对失败轨迹）、multi-granularity chunking、code 函数封装、fine-tune 内化，抽象粒度则分 shallow（NL 规则）/ intermediate（modular skeleton）/ deep（压进权重当 intuition）。通过 Table 1 明确把 Reflection 定为 intra-trajectory 的 $\mathcal{F}_{ref}(\tau_i\mid\phi)=m_i'$、把 Experience 定为 inter-trajectory 的 $\mathcal{F}_{exp}(\mathcal{T}_{batch})=\mathcal{K}$，作者给了社区一条之前一直缺失的干净术语边界。
 

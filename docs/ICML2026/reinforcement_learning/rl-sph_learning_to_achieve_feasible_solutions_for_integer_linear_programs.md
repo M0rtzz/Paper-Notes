@@ -43,15 +43,15 @@ tags:
 
 ### 关键设计
 
-**1. 双阶段可行性奖励（Two-Phase Reward）：把"先达到可行"和"在可行域内寻优"解耦。**
+**1. 双阶段可行性奖励（Two-Phase Reward）：把"先达到可行"和"在可行域内寻优"解耦**
 
 端到端 supervised 方法用 MSE/CE 训练，缺一条显式的 feasibility 反馈通道，所以 ML 预测一旦不精确就违约。RL-SPH 把不可微的可行性约束直接嵌进奖励，并按两个截然不同的子目标分阶段驱动。phase1 主奖励是 $\mathcal R_{t,\text{F}}=\mathcal R_{t,\text{bound}}+\frac{1}{\sqrt{\tilde n}}\mathcal R_{t,\text{const}}$：其中 $\mathcal R_{t,\text{bound}}=-\sum_i\mathbb I(x_{t+1,i}\notin[l_i,u_i])$ 惩罚越界，$\mathcal R_{t,\text{const}}=\sum_j\min(f_{t+1,j},0)-\min(f_{t,j},0)$ 奖励每条违反约束的"改善量"，只有变量都在边界内且约束改善时才把 $\Delta obj$ 叠进来。进入可行域后切到 phase2 的 $\mathcal R_{t,\text{p2}}$：只对可行解给 $\Delta obj$ 正奖励、对不可行解给 $\mathcal R_{t,\text{F}}$ 负奖励，并用 toward-optimal bias $\alpha=2$ 鼓励朝优于 incumbent 的区域探索，原地不动直接 $-100$ 重罚防止摆烂。这套奖励有理论兜底——Proposition 1 证明只要 $\mathcal R_{t,\text{const}}>0$ 且 $\mathcal R_{t,\text{bound}}=0$ 持续成立，agent 终将进入可行域，把可行性这一硬约束转成了 agent 的 reward-feasibility alignment 保证，正好补上端到端方法的可行性盲区。
 
-**2. ILP 专用 Graph Transformer（ILP-GT）：用全连接注意力刻画跨约束依赖，用 Periodic Embedding 化解整数无界。**
+**2. ILP 专用 Graph Transformer（ILP-GT）：用全连接注意力刻画跨约束依赖，用 Periodic Embedding 化解整数无界**
 
 传统 GCN 只能聚合一阶邻域，对 ILP 里变量间的长程相关性建模不足。RL-SPH 把每一步选中的 $\tilde n$ 个变量、它们对应的目标系数与约束行 $(\mathbf c^\top|\mathbf A)$，以及 phase/obj/可行性向量这些"奖励上下文 token"一起编进 Transformer encoder——全连接注意力天然刻画跨约束依赖。两个工程要点解决了 ILP 喂进 Transformer 的难处：先用 equilibration scaling 把 $(\mathbf c^\top|\mathbf A)$ 规范到 $[-1,1]$ 稳住训练；变量的连续取值用 Periodic Embedding $\operatorname{PE}(z)=\oplus(\sin(\tilde z),\cos(\tilde z))$（$\tilde z=[2\pi w_1 z,\dots,2\pi w_k z]$）编码，再配一个 `bnd_lim` 二元位指示是否触界——"连续值 + 离散触界标志"的双轨编码刚好化解了整数取值无界、难嵌入的问题。reward context 含 phase 标识、PE 后的 $obj$ 和按 $\sqrt{|\mathbf b|+|\mathbf b-\mathbf{lhs}_t|}$ 归一化的 $\mathbf f_t$，最后用 phase-separated actor/critic head 与共享 backbone 拼成长度 $\tilde n+3$ 的输入序列。
 
-**3. 可行性感知邻域搜索（Feasibility-Aware Search Strategy）：每步只放开 $\Theta(\log n)$ 个最有希望的变量。**
+**3. 可行性感知邻域搜索（Feasibility-Aware Search Strategy）：每步只放开 $\Theta(\log n)$ 个最有希望的变量**
 
 单变量 local search 太慢，朴素 LNS 又需要一个可行初始解。RL-SPH 把 RENS 的"子问题修复"和 LNS 的"大邻域"思想合进一个不依赖求解器的 RL 框架，每步只放开 $\tilde n=p+q$ 个最有希望改善可行性的变量、其余冻结。具体地，phase1 先按"在违反约束中出现频次"加权随机抽 $p$ 个种子变量，再选与种子共现于同一违反约束最多的 $q$ 个邻居一起动作；phase2 改为优先抽 slack 较充裕、不易让约束反复抖动的种子。$p=q=\lceil\log_2 n\rceil$ 限制 Transformer 输入规模，使方法可扩展到上万变量的 ILP。回滚规则也按阶段区分——phase1 只在变量越界时回滚，phase2 只要新解未严格改善 incumbent 就回滚，让搜索单调推进。
 

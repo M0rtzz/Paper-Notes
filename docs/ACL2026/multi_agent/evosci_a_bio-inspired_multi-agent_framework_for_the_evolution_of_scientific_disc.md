@@ -49,15 +49,15 @@ EvoSci 由四个阶段组成：Problem Space Construction、Collaborative Resear
 
 ### 关键设计
 
-**1. 知识图谱驱动的问题空间构建：把模糊主题锚定成可探索的问题簇。**
+**1. 知识图谱驱动的问题空间构建：把模糊主题锚定成可探索的问题簇**
 
 LLM 直接“给主题、出 idea”很容易要么发散成天马行空、要么反复重复同一类想法，缺的正是一个语义锚点。EvoSci 先围绕核心主题 $T$ 和目标学科建一张轻量知识图谱：学科作为第一层节点，实体从 Wikipedia summary 和 hyperlink 抽取、经 LLM 分成 Theory/Model/Material/Phenomenon 等类型，再用 embedding 相似度补上跨实体边。随后对每个学科 $d$ 按与主题的相关性挑出最有潜力的实体簇 $Top(\mathcal{C}_d;T)$，让 mentor 基于三元组 $\langle T,d,Top(\mathcal{C}_d;T)\rangle$ 生成结构化研究问题。这样探索被钉在具体实体上，既不漫无边际，又通过跨实体边保留了跨学科连接——后面的演化也正是在这个实体层上动刀。
 
-**2. 角色化多智能体科研团队：用 mentor/researcher/reviewer 分工模拟真实科研协作。**
+**2. 角色化多智能体科研团队：用 mentor/researcher/reviewer 分工模拟真实科研协作**
 
 单一视角很难产出既新又靠谱的 idea。EvoSci 让 prime researcher 从问题簇里选目标、拆任务，再分派给若干 assistant researcher，assistant 还能进一步递归委派；中间用短期、长期和实体三类记忆保存阶段性结果，并在阶段讨论里整合多视角输出，最后由 reviewer 按 novelty、feasibility、validity、excitement、overall 打分并给改进建议。团队规模不是越大越好——实验里 team_size=5 最优，到 7/9 反而因协调开销掉分，说明“适度多样性”才是甜点。
 
-**3. 实体级生物启发式演化：把成功 idea 的概念线索遗传到下一轮。**
+**3. 实体级生物启发式演化：把成功 idea 的概念线索遗传到下一轮**
 
 如果只是“让模型看着反馈重写 idea”，好想法里的概念很容易在重写中丢失、或过早收敛到保守方案。EvoSci 把学科层固定、把实体层当作可演化的 population，对实体簇执行四个算子：Crossover（交换实体）、Variation（引入新实体）、Selection（按 reviewer 适应度筛出高分簇）、Inheritance（把高质量概念传给下一轮问题空间重构）。于是 reviewer 的反馈不再停留在文本层面，而是变成实体层的选择压力，既保住了成功概念、又靠变异维持探索多样性。
 

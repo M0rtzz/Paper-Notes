@@ -44,19 +44,19 @@ tags:
 
 ### 关键设计
 
-**1. 186 语种 UD 上的三性质量化指标：把"高频 / 句法可预测 / 边界对齐"三句定性描述各自变成一个能跨语种比较的数字。**
+**1. 186 语种 UD 上的三性质量化指标：把"高频 / 句法可预测 / 边界对齐"三句定性描述各自变成一个能跨语种比较的数字**
 
 以前 typology 只能定性地说功能词"频繁、可预测、落在边界上"，无法在百量级语种上一锤定音。本文把三条性质各自做成可计算的指标。**高频**用 type ratio $\frac{|V_c|}{|V|}$ 和 token frequency ratio $\frac{\sum_{w\in V_c}\text{count}(w)}{\sum_{w\in V}\text{count}(w)}$ 一起刻画：若某类词均匀分布，两者相等（点落在对角线上），而实测功能词的点远在对角线上方——词表很小却吃掉很大一块 token 份额。**句法可预测性**把依存树当无向图，对每个 POS 节点 $y$ 算其邻居 POS 的条件熵 $H(X\mid Y=y)=-\sum_{x\in T} p(x\mid y)\log_2 p(x\mid y)$，再对功能词集 $\mathcal{F}$ 取频率加权平均 $H_F=\sum_{f\in \mathcal{F}}\text{Freq}(f)H(X\mid Y=f) / \sum \text{Freq}(f)$，结果 $H_F$ 几乎在所有语种里都显著低于内容词的 $H_C$。
 
 **边界对齐**用依存子树的左右端近似 constituent 边界，对 ADP/DET/SCONJ/CCONJ 这些可靠 marker 统计"出现在子树两端"的比例；186 语种里这个比例的中位数高达 **0.95**（韩语最低也有 0.55），而内容词中位数只有 0.58。三个指标一起把"普适性"从描述性断言变成了可在大规模语料上被验证的数字。
 
-**2. 七种反事实英语 + 同步改造的 BLiMP：把"语料修改"做成一组干净的析因实验，让频率、结构、边界能被单独和联合 ablation。**
+**2. 七种反事实英语 + 同步改造的 BLiMP：把"语料修改"做成一组干净的析因实验，让频率、结构、边界能被单独和联合 ablation**
 
 人造语言里这三条性质只能被分别检验，没人在真实自然语言尺度上比过"破坏哪一条伤害最大"。本文沿三个维度受控改写英语维基百科。**频率维度**三档：STANDARDFUNCTION（116 类自然英语功能词）、FIVEFUNCTION（每个句法类压成 1 个 type、共 5 个 type，把频率拉到极高）、MOREFUNCTION（每个功能词用 Wuggy 扩成 10 个伪词，inventory 涨到 1.2k）、外加 NOFUNCTION（全删）。**结构维度**三档：PHRASEDEPENDENCY（自然基线）、BIGRAMDEP（功能词改由下一个词决定）、RANDOMDEP（保持位置但 shuffle 身份）。**边界维度**两档：ATBOUNDARY（自然基线）和 WITHINBOUNDARY（把功能词从短语边界挪到紧贴其句法 head 的位置，破坏 55% 功能词位置、覆盖 99% 句子）。
 
 光改训练语料还不够——变体语料训练出的模型该怎么公平打分是个根本难题，本文的解法是让评测端的 BLiMP 跟着同样规则改写：去掉关键词本身是功能词的 categories（如 Det-N agreement），去掉变换后塌成同句的最小对，再做交集过滤——一个最小对只要在任一条件下被移除，就在所有条件里都移除，保证每个模型都在**完全相同**的最小对集合上受测。这套同步改造让"频率 vs 结构 vs 边界"成了三个可独立拨动的开关。
 
-**3. attention probing + function-word ablation 的双轨诊断：把"语料修改影响了学习"延伸到"模型推理时是否真的在用功能词"。**
+**3. attention probing + function-word ablation 的双轨诊断：把"语料修改影响了学习"延伸到"模型推理时是否真的在用功能词"**
 
 只看 BLiMP 分数，最多证明改语料会改学习效果，看不出模型内部到底发生了什么。本文加两组诊断把"学习"和"使用"的链路打通。**probing** 沿用 Aoyama & Wilcox 2025 的做法，对每个 head $(h,l)$ 定义 $f_{h,l}(x_i)=\arg\max_{j\neq i} a_{ij}^{(h,l)}$（这个词的最大注意力指向谁），统计该 head 把注意力指向功能词的频率 $S_F(h,l)$，从而找出对每个 BLiMP 子类贡献最大的"function head"，用来看三性质完整时是否真的长出了集中、专门的 function-word head。**ablation** 则分两式：function-word masking 在评测时阻断功能词 token 的双向注意力，把它们变成 content-free 占位符；function-word deletion 直接在 NoFunction 改造过的 BLiMP 上评测。两式都是问同一个问题——模型在推理时到底有多依赖功能词。有了这两轨，结论就从"语料级因果"落到了"模型级机制"。
 

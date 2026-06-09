@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. 把 dropout 识别为破坏对齐对称性的外场 $h$：让临界现象的整套工具能用上。**
+**1. 把 dropout 识别为破坏对齐对称性的外场 $h$：让临界现象的整套工具能用上**
 
 之前的工作（Schoenholz et al. 2017）只说 dropout"摧毁 $c=1$ 不动点"就停住了，相关长度失去定义、RG 分析无从下手。作者的关键一步是把独立 mask 作用后的相关性递推 $\bar{F}_\rho$ 在 $c=1$ 处求值，得到 $\bar{F}_\rho(1) = 1 - \frac{1-\rho}{\rho \bar{q}^*}\sigma_w^2 \int Dz\,\phi^2(\sqrt{\bar{q}^*}z) < 1$，由此把那个偏移定义成外场 $h \equiv 1-\bar{F}_\rho(1)$（弱 dropout 下 $h \approx a(1-\rho)$，与 dropout 概率线性相关），并把序参量取为 $m\equiv 1-c^*$。把 $\bar{F}_\rho(1-m)$ 在 $m=0$ 处 Taylor 展开、代入不动点条件 $1-m = \bar{F}_\rho(1-m)$，就得到一个标准的 Landau 方程
 
@@ -54,11 +54,11 @@ $$h = \tfrac{g_\rho}{2}m^2 - tm,\qquad m(t,h) = \frac{t+\sqrt{t^2+2g_\rho h}}{g_
 
 其中 $t\equiv \chi_\rho - 1$ 充当约化温度。这一步之所以是后续一切的前提：它证明被 dropout 形变后的递推**仍然有一个 $c^*<1$ 的不动点**，相关长度重新有定义，标度律才有立足点。
 
-**2. Smooth 与 kinked 两个普适类 + 两参数标度坍塌：激活函数的选择被归入临界指数。**
+**2. Smooth 与 kinked 两个普适类 + 两参数标度坍塌：激活函数的选择被归入临界指数**
 
 同样是 edge-of-chaos，tanh 和 ReLU 的临界行为为何截然不同（Yang & Schoenholz 2017 在 ResNet MFT 里就观察到）？作者指出答案完全由相关性映射在 $c=1$ 邻域的**解析结构**决定。Smooth 激活（tanh、GELU）满足 Price 定理、可在 $c=1$ 光滑 Taylor 展开，二阶项 $g_\rho m^2$ 主导，给出 $m\sim\sqrt{h}$（$\delta=2$）、$\xi\sim h^{-1/2}$；kinked 激活（ReLU）的 $\phi''$ 含 $\delta$ 函数，在 $c=1$ 出现分支点，方程退化成 $h = \kappa m^{3/2} - tm$，给出 $m\sim h^{2/3}$（$\delta=3/2$）、$\xi\sim h^{-1/3}$。两类各自的临界指数（$\nu_t, \beta, \theta_{\rm rel}, \gamma, \delta, \nu_\rho, \alpha$）成套给出。同一普适类内的所有 $(t,h)$ 曲线还能被两参数标度坍塌到单一普适函数：smooth 类定义 $\tilde{m}\equiv m\sqrt{g_\rho/(2h)}$、$\tilde{t}\equiv -t/\sqrt{2g_\rho h}$，闭式坍塌为 $\tilde{m} = \sqrt{1+\tilde{t}^2}-\tilde{t}$；kinked 类则是 $m = (h/\kappa)^{2/3}\mathcal{F}\big(t/(\kappa^{2/3}h^{1/3})\big)$，crossover scale 为 $|t|\sim \kappa^{2/3}h^{1/3}$。Hermite 谱展开提供了一个独立的二次诊断——smooth 激活的 Hermite 系数指数衰减，kinked 激活幂律衰减。这样一来，"用 tanh 还是 ReLU"这种工程决策被纳入统计力学普适类：同类内的细节无关紧要，跨类必须换标度规律，而这是首次在 dropout 这根轴上把两类区分开。
 
-**3. 前置 dropout 调度：凹预算分配选出阶梯，regularization reach 选出"早层填满"。**
+**3. 前置 dropout 调度：凹预算分配选出阶梯，regularization reach 选出"早层填满"**
 
 有了相关长度的标度律，"dropout 该放哪层"就变成一个干净的优化问题。让 keep probability 随层 $\ell$ 变化，有效逆相关长度近似 $\xi_{\rm eff}^{-1} \approx \frac{1}{L}\sum_\ell \sqrt{t^2+2g_\rho h_\ell}$；在临界点 $t=0$ 上简化为 $\xi_{\rm eff}^{-1} \propto \frac{1}{L}\sum_\ell h_\ell^{1/2}$，约束是预算 $\sum_\ell h_\ell = L\bar{h}$ 与上界 $h_\ell \leq h_{\max}$。由于 $h^{1/2}$ 是凹函数，Jensen 不等式直接给出：把预算押到 $\{0, h_{\max}\}$ 两端的**阶梯**解最优，相对常数 dropout 的增益是 $\xi_{\rm step}/\xi_{\rm const} = \sqrt{h_{\max}/\bar{h}}$。但 MFT 主目标对层的排列不变——阶梯放前放后一样好，简并需要第二条原理打破。作者引入"下游暴露" $\mathcal{D}_\ell \approx h_\ell \xi_c\big(1-e^{-(L-\ell)/\xi_c}\big)$，刻画早层的 mask 被更多下游层"看见"，这是一个关于 $\ell$ 单调递减的权重，于是线性规划解唯一地落到**早层填满**——也就是 front-loaded schedule。同样的论证对 kinked 类的 $\int h^{1/3}$ 照样成立。整个推导把"该把 dropout 放哪"化成"凹函数预算分配 + 单调权重打破简并"两步标准优化，结论是零额外算力、给定预算即可照用的调度规则。
 

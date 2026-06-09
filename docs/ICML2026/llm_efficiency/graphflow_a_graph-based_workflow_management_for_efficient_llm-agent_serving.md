@@ -45,15 +45,15 @@ GraphFlow 把"工作流怎么构造"和"KV 状态怎么管"两件事统一抬到
 
 ### 关键设计
 
-**1. wGraph：把零散 workflow 压成一张共享操作 DAG，让"操作级复用"变成可计算对象。**
+**1. wGraph：把零散 workflow 压成一张共享操作 DAG，让"操作级复用"变成可计算对象**
 
 模板/检索型系统把每个 workflow 当成不可拆的整体选出来，既丢掉了任务与流程内部结构的细粒度对应、又让同一个操作的状态在多个 workflow 副本里被重复存。GraphFlow 的破法是合并各 workflow 中相同的 atomic operation 为同一节点 $v_i$、保留它们之间的合法依赖边，构成全局 wGraph $\mathcal{G}_{\text{op}}$；节点特征 $\mathbf{x}_i\in\mathbb{R}^D$ 同时编码功能语义、语言触发模式与内部执行 schema。对每个新任务，再构造 task-conditioned graph $\mathcal{G}=(\mathcal{V}_{\text{op}}\cup\{v_{\text{task}}\},\,\mathcal{E}_{\text{op}}\cup\{(v_{\text{task}},v_i),(v_i,v_{\text{task}})\})$，把任务节点用双向边连到所有操作节点，任务语义（$\mathbf{x}_{\text{task}}\in\mathbb{R}^D$ 来自输入查询）就能通过 message passing 注入每个候选操作。这一步把"workflow 是检索单元"升级成"workflow 是 wGraph 上的子图"——跨 workflow 的共享被显式表达出来，后续的子图生成和 KV 共享都落在同一个数据结构上，是整个框架的核心抽象。
 
-**2. GNN+MLP 任务自适应工作流生成：按边粒度在图上重新拼操作，而不是取 top-1 整条模板。**
+**2. GNN+MLP 任务自适应工作流生成：按边粒度在图上重新拼操作，而不是取 top-1 整条模板**
 
 检索式构造对没见过、需要重新组合的任务泛化很差，因为它只能整条模板照搬。GraphFlow 把构造改写成条件化子图选择，目标是 $\mathcal{W}^*=\arg\max_{\mathcal{W}\subseteq\mathcal{G}_{\text{op}}}\mathbb{E}[f(S,\mathcal{W})]$。具体先用一层 GNN 学到融合任务上下文与结构依赖的节点嵌入 $\mathbf{H}=\mathrm{GNN}(\mathbf{X},\mathbf{A}|\Theta_{\text{GNN}})$，再对每条候选边 $(v_i,v_j)$ 用 MLP 算任务感知兼容性分 $s_{i,j}=\mathrm{MLP}(\mathrm{Concat}[\mathbf{h}_i,\mathbf{h}_j,\mathbf{h}_{\text{task}}]|\Theta_{\text{MLP}})\in[0,1]$，表示这条依赖在当前任务里被采用的可能性；然后从 $v_{\text{task}}$ 出发贪心选高分边、并强制结构合法性（连通、DAG、可达执行），直到拼出一条可执行子图 $\mathcal{W}_c$。按边而非按整图组合，让模型能根据任务在 wGraph 上重新分支重组，把"做哪些操作、按什么顺序做"统一成一个生成问题；实验上这也让生成的工作流既更准又更精简（HumanEval +8.1pp 的同时延迟反而下降）。
 
-**3. 差分 KV cache + 有效路径剪枝：在保正确性的前提下消掉按前缀独立存 KV 的指数级冗余。**
+**3. 差分 KV cache + 有效路径剪枝：在保正确性的前提下消掉按前缀独立存 KV 的指数级冗余**
 
 操作的 KV 必须 stateful 才能保证 attention 上下文正确，但若对每个 (操作, 前缀) 都存一份就会前缀组合爆炸，若像无状态那样只按操作存又会破坏跨步推理、显著掉点。GraphFlow 的关键依据是一条实证观察：同一操作在不同前缀下算出的 KV 高度相似，>75% 的 K 项和 >70% 的 V 项差异都落在很小阈值内（Figure 3）。于是它对每个操作 $v$ 预算无前缀的 $\mathbf{KV}_{\text{base}}(v)$，对实际出现的前缀路径 $\mathcal{P}$ 只存稀疏残差 $\Delta\mathbf{KV}(\mathcal{P},v)$，执行时按 $\mathbf{KV}(\mathcal{P},v)=\mathbf{KV}_{\text{base}}(v)+\Delta\mathbf{KV}(\mathcal{P},v)$ 在线重建——因为残差极稀疏，这个压缩几乎无损。在此之上再叠 **effective path pruning**：用执行统计找出 wGraph 中高频转移、只为它们物化残差，罕见/不可达路径不存、触发到再回退 on-the-fly 计算。前者把"前缀依赖"和"内存重复"解耦，后者把存储规模从"全部潜在路径"收敛到"实际工作集"，最终 KV 内存随有效执行轨迹而非组合复杂度增长，把内存压到约 stateful 的 1/4。
 

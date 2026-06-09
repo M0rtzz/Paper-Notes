@@ -41,15 +41,15 @@ tags:
 
 ### 关键设计
 
-**1. LVLMs-Saliency 诊断框架：让注意力图"显形"出幻觉信号。**
+**1. LVLMs-Saliency 诊断框架：让注意力图"显形"出幻觉信号**
 
 仅看注意力权重几乎无法区分正确 token 和幻觉 token 的生成模式，问题在于注意力只反映前向决策、丢掉了"输入 token 究竟影响了哪个输出"的链路。本文把注意力矩阵 $\mathbf{A}^{(l,h)}$ 与它的梯度逐元素相乘并取下三角，得到第 $l$ 层第 $h$ 头的显著性矩阵 $\mathbf{S}^{(l,h)} = \text{tril}(|\mathbf{A}^{(l,h)} \odot \nabla \mathbf{A}^{(l,h)}|)$，再对所有头求和并做 $\ell_2$ 归一化得到层级显著性 $\bar{\mathbf{S}}^{(l)} = \frac{\sum_h \mathbf{S}^{(l,h)}}{\|\sum_h \mathbf{S}^{(l,h)}\|_2}$。梯度加权这一步是关键：它把"这个注意力连接对最终预测有多重要"显式刻画出来。加权之后规律立刻浮现——正确 token 的显著性对近期 token 呈强依赖且随距离平滑衰减，而幻觉 token 的显著性则全面崩溃，等于模型"遗忘"了刚刚生成的上下文。这一现象在 500 样本统计和 LLaVA-1.5、Qwen2-VL、InternVL 三种架构上都稳定复现，因此可以直接拿显著性当幻觉风险的探针。
 
-**2. SGRS 显著性引导拒绝采样：在 token 入列前拦下高风险候选。**
+**2. SGRS 显著性引导拒绝采样：在 token 入列前拦下高风险候选**
 
 诊断框架给出了风险信号，SGRS 就把它用在解码环节做主动过滤。在解码位置 $P$，先按 top-$K$ 采样得到候选集，对每个候选 $c_i$ 在目标层集合 $\mathcal{L}_{\text{target}}$ 与位置集合 $\mathcal{J}$ 上聚合显著性得到幻觉分 $\mathcal{S}(c_i) = \frac{1}{|\mathcal{L}_{\text{target}}| \cdot |\mathcal{J}|} \sum_{l \in \mathcal{L}_{\text{target}}} \sum_{j \in \mathcal{J}} \bar{\mathbf{S}}_{P,j}^{(l)}$。候选只有在 $\mathcal{S}(c_i) \geq \tau^{(P)}$ 时才被接受，而阈值不是固定的，而是随生成历史自适应——取最近 $W$ 个已接受 token 的平均显著性再乘灵敏度系数 $\alpha \in (0,1)$，即 $\tau^{(P)} = \alpha \cdot \frac{1}{|\mathcal{H}|}\sum_{j \in \mathcal{H}} \mathcal{S}(x_j)$。这样阈值会跟着上下文的整体锚定水平浮动，避免一刀切。若候选全被拒，最多重采样 $R$ 次，仍不通过则退而选显著性最高者，保证解码不会卡死。
 
-**3. LocoRE 局部一致性增强：从源头对抗显著性衰减。**
+**3. LocoRE 局部一致性增强：从源头对抗显著性衰减**
 
 SGRS 拦掉了坏 token，但已接受的好 token 仍会随生成推进被逐渐"遗忘"，显著性自然下滑。LocoRE 直接在注意力结构上对症下药：预测位置 $P+1$ 时，给最近 $w_s$ 个输出 token 的注意力乘上一个放大系数 $\gamma_j^{(P)} = 1 + \beta \cdot \mathbb{I}((P - j) \leq w_s)$，其中 $\beta \geq 0$ 控制增强强度，落在窗口内的近期 token 注意力被抬高，超出窗口的保持不变。这相当于人为维持近期上下文对当前预测的影响力，把正在塌陷的显著性"托住"。它纯粹改注意力权重，不需要梯度计算也不动模型参数，即插即用且延迟增加不到 2%，因此实际部署里单用 LocoRE 就能拿到大部分收益。
 

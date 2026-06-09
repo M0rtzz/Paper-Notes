@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Semantic Scope：用 unembed 行解释某个目标 token 的 logit。**
+**1. Semantic Scope：用 unembed 行解释某个目标 token 的 logit**
 
 当你心里有一个明确的目标词、想知道"为什么模型预测了 'truthful' 而不是别的"时，自然的解释对象就是该词的 logit。本文取 $\bm{v}=\bm{w}_{\text{target}}$（unembed 矩阵中目标 token 对应的那一行），此时标量 loss $\mathcal{L}_{\text{semantic}}=\bm{w}_{\text{target}}^\intercal\bm{y}=z_{\text{target}}$ 恰好就是目标 token 的 logit，归因得分为 $\mathrm{Influence}_t^{\text{Sem}}=\|\bm{w}_{\text{target}}^\intercal\bm{J}_t\|_2$。Input × Gradient、IG 其实都隐式在做这件事，Semantic Scope 的价值是把它显式写成 VJP 的特例、点明"目标方向就是 unembed 行"，因而最适合"目标词唯一"的解释场景，例如挖掘 LLaMA 对 "deceive" → "truthful" 的语义反转链条，或揭示 "Columbia → liberal"、"the South → conservative" 这类隐式政治偏见。
 
-**2. Fisher Scope：用信息几何主方向解释整个预测分布。**
+**2. Fisher Scope：用信息几何主方向解释整个预测分布**
 
 翻译这类任务里预测并不唯一——多个同义词都对，此时盯某一个 logit 会丢失"分布偏向哪一族 token"的语义簇信息。Fisher Scope 改用信息几何中的 Fisher Information Matrix $\bm{F}=\bm{W}^\intercal(\mathrm{diag}(\bm{p})-\bm{p}\bm{p}^\intercal)\bm{W}$，它正是 KL 散度在该点的局部度规；对其做特征分解 $\bm{F}=\bm{U}\bm{\Lambda}\bm{U}^\intercal$，取最大特征值对应的主 Fisher 方向 $\bm{u}_1$ 作为 $\bm{v}$，归因得分为 $\mathrm{Influence}_t^{\text{Fisher}}=\|\bm{u}_1^\intercal\bm{J}_t\|_2$，理论上可证这是 $\bm{p}$ 与 $\bm{x}_t$ 之间总互信息的 rank-1 近似。这样它就能自动找出"分布最敏感"的输出空间方向，实验中清楚地展示出 LLaMA 在 IWSLT 上做的是"词级对齐 + 短语级跨 token 推理"。
 
-**3. Temperature Scope：用 hidden state 方向解释模型置信度。**
+**3. Temperature Scope：用 hidden state 方向解释模型置信度**
 
 ICL 数值预测（如时间序列）的核心问题是"模型有多确定"，即预测分布那个近似 Gaussian 峰的宽度由谁控制，这是以前任何归因方法都没正面解释过的维度。Temperature Scope 把 hidden state 分解为模与方向 $\bm{y}=\|\bm{y}\|_2\,\hat{\bm{y}}$，于是 $\bm{z}=\beta_{\text{eff}}\hat{\bm{z}}$，其中 $\beta_{\text{eff}}=\|\bm{y}\|_2$ 是有效逆温度；作者在附录证明，当 softmax 输出近似 Gaussian 时 $\beta_{\text{eff}}^{-1}$ 与方差成正比。取 $\bm{v}=\hat{\bm{y}}$ 即得归因得分 $\mathrm{Influence}_t^{\text{Temp}}=\|\hat{\bm{y}}^\intercal\bm{J}_t\|_2$。它一举回答了"模型从历史里抄哪一段来决定下一步不确定性"，并直接验证了 context parroting 猜想——LLaMA 在 Lorenz 这类有周期 motif 的混沌系统上倾向于在延迟嵌入空间做最近邻搜索复制历史片段，而在 Brownian 这类无重复 motif 的系统上则只看 context 末尾几个 token。
 

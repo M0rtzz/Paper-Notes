@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 三类 VMWE 的语言学分类 + 非组合性梯度假设：把"翻译变差"做成一个可证伪的命题。**
+**1. 三类 VMWE 的语言学分类 + 非组合性梯度假设：把"翻译变差"做成一个可证伪的命题**
 
 业界常说 idiom "翻不好"，但 VMWE 是个笼统概念，没法定量比较。本文把它拆成三档非组合性递减的类型：VID（动词成语）如 "spill the beans"，语义和字面完全脱钩、纯不可推导；VPC（动词-小品词）如 "give up = quit"，半可推导，particle 改写了 verb 的含义；LVC（轻动词构式）如 "take a walk"，语义主要由名词承载，动词只起语法作用。每一类都配 1-2 个公认的高质量数据集（VID 用 EPIE/MAGPIE、VPC 用 Tu 2012、LVC 用 Tu-Roth 2011），再用 spaCy 依存解析加 idiom 词典反向过滤 BNC 句子，构造结构相近但不含 VMWE 的对照组。
 
 这样设计的好处是把"非组合性导致退化"变成一个可证伪假设：如果退化真源自非组合性，就应当观察到 VID > VPC > LVC 的退化梯度。实验完全对上——Opus 在 VID 上 error overlap 高达 78.64%，VPC 降到 65.51%，LVC 进一步降到 62.21%；即便 GemmaX2、Google API 这类强系统，VID 一档也始终最差。梯度的存在让结论从"感觉"升级成可重复验证的规律。
 
-**2. WMT 数据上的两步 VMWE 抽取：在没有金标标注的真实评测数据里高精度捞出 VMWE 句子。**
+**2. WMT 数据上的两步 VMWE 抽取：在没有金标标注的真实评测数据里高精度捞出 VMWE 句子**
 
 仅靠专用数据集还不够，因为它们缺乏真实人工评分。最有生态效度的评测来源是 WMT2017-2024——自带金标人工 DA 分数，但句子里的 VMWE 没有任何标注。本文设计了召回-消歧两步 pipeline：第一步用启发式高召回，idiom 用 EPIE/MAGPIE 词表加 BLEU-4 $\ge 0.6$ 的模糊匹配捞候选，verb-particle 和 light verb 则靠 spaCy 的 `prt` 依存关系定位；第二步用 GPT-4o 配 chain-of-thought prompt，按 PARSEME 标注指南对候选逐一消歧，剔除字面用法。
 
 这套 pipeline 在 VID/VPC/LVC 上的抽取 F1 分别达到 81.8 / 80.0 / 81.6（Table 1），明显高于 Phi-4、LLaMA-3.3-70B、DeepSeek-R1-70B 等其他 LLM。它让大规模真实数据上的 VMWE 评测第一次变得可行，且作为开源工具供后续工作复用。
 
-**3. error span 定位 + 回归控制混淆：把退化严格归因到 VMWE token，而不是"句子凑巧更难"。**
+**3. error span 定位 + 回归控制混淆：把退化严格归因到 VMWE token，而不是"句子凑巧更难"**
 
 最致命的反驳是"VMWE 句子本来就更长更复杂，退化未必怪 VMWE"。本文用两件事把这个 confound 切掉。其一是错误定位：用 xCOMET 输出的 token 级 error span，配合 simalign 做双语对齐，统计有多少错误 span 实际落在源端 VMWE 短语对应的目标端 token 上（Table 2）——把"句子分低"细化到"错误就发生在 VMWE 处"。其二是回归控制，在 30 万条 segment 上拟合
 

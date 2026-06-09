@@ -47,15 +47,15 @@ StructKV 想同时拆掉长上下文推理的两个瓶颈：prefill 阶段 $O(N^
 
 ### 关键设计
 
-**1. 全局入度中心性累积：用跨层贡献而非单层快照判断 token 是否重要。**
+**1. 全局入度中心性累积：用跨层贡献而非单层快照判断 token 是否重要**
 
 现有 prefill-aware 方法（如 GemFilter、FastKV）只看某一层的注意力快照来挑 token，问题是有些 token 在被检查的那一层恰好「休眠」，却在整个网络深度里承担着信息枢纽的角色，一旦在这一层被丢弃就永久消失。StructKV 把这件事形式化为图论里的入度中心性：在每层 $l$ 先算局部显著性 $\mathcal{S}_j^{(l)} = \sum_{g=1}^{G}\left(\frac{1}{w}\sum_{t=N-w}^{N}\sum_{h\in\mathcal{H}_g} a_{t,j}^{(l,h)}\right)$（窗口内多头注意力对 token $j$ 的累计指向），再沿层做指数衰减累积 $\mathcal{C}_j = \sum_{l=0}^{L^*}\lambda^{(L^*-l)}\cdot\mathcal{S}_j^{(l)}$。衰减因子 $\lambda=0.9$ 让靠近 $L^*$ 的语义层权重更高，于是一个在多个早期层反复被指向的 token，即便在某层暂时沉默，也能凭累积分数稳稳留在骨架里。
 
-**2. 动态枢纽层检测：让模型自己决定在哪一层压缩。**
+**2. 动态枢纽层检测：让模型自己决定在哪一层压缩**
 
 固定压缩层是个不通用的超参数——FastKV 把它钉死在 Layer 15，但实验显示最优层会随模型深度漂移（Qwen-2.5-7B 在 Layer 12，32B 在 Layer 28）。StructKV 改成在线追踪三个反映注意力「从广泛探索转向聚焦提取」的信号：注意力熵 $\mathcal{H}_l$（分布不确定性）、稀疏度 $\rho_l$（top-k 累积概率质量）、方差 $\mathcal{V}_l$（可区分性）。把它们的归一化梯度加权成转换分数 $\mathcal{T}_l = w_1\cdot\bar{\nabla}(-\mathcal{H}_l) + w_2\cdot\bar{\nabla}(\rho_l) + w_3\cdot\bar{\nabla}(\mathcal{V}_l)$，相变最剧烈处即压缩点 $L^* = \arg\max_l \mathcal{T}_l + 1$。这样压缩时机变成一次自动发现，而非手工调参，跨架构直接迁移。
 
-**3. 结构传播与解耦：把「算得快」和「存得少」拆成两个旋钮。**
+**3. 结构传播与解耦：把「算得快」和「存得少」拆成两个旋钮**
 
 耦合设置下用同一个保留率同时控制计算和存储，激进压缩会让精度直接崩塌（10% 保留率只剩 45.3 分）。StructKV 的关键观察是这两件事本不该共享预算：决定深层只在哪些 token 上运算的是计算保留率 $R_{struct}$，决定 KV cache 存哪些 token 的是存储保留率 $R_{KV}$。于是它在 $L^*$ 层用全局中心性选出结构骨架 $\mathcal{I}_{struct} = \text{top-k}(\mathcal{C}, N\cdot R_{struct})\cup\mathcal{I}_{win}$ 供深层计算，而 KV cache 独立地按各层局部显著性选 $\mathcal{I}_{KV}^{(l)} = \text{top-k}(\mathcal{S}^{(l)}, N\cdot R_{KV})\cup\mathcal{I}_{win}$。把 $R_{struct}$ 放宽到远大于 $R_{KV}$（如 $20\%$ vs $10\%$），就能在几乎不增加显存的情况下回收 +13.8 分，落进高保真的安全区。
 

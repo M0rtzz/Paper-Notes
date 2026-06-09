@@ -45,15 +45,15 @@ tags:
 
 ### 关键设计
 
-**1. Guideline-driven annotation：把人工项目已有的标注规范显式喂给 LLM。**
+**1. Guideline-driven annotation：把人工项目已有的标注规范显式喂给 LLM**
 
 LLM 的标注错误常常不是因为“不懂实体”，而是因为它的世界知识没和某个数据集的标注约定对齐——最小 span、实体类型边界、复合实体这些细节，模型未必会按 gold standard 来。针对这点，除了最简单的 prompt-only baseline，作者把原始的 human guideline 做轻量格式化后直接注入 LLM prompt，并要求模型以 PubAnnotation JSON 格式输出，评估时采用 exact boundary + type 的严格匹配。guideline 在这里充当了对齐载体——它比 few-shot examples 更直接地告诉模型“这套项目的规则长什么样”。
 
-**2. Discrepancy-driven moderation：用少量 gold 错误证据来驱动规范细化，而不是放任 LLM 自由改。**
+**2. Discrepancy-driven moderation：用少量 gold 错误证据来驱动规范细化，而不是放任 LLM 自由改**
 
 让 LLM 直接自由改规范容易发散，改出一堆和真实失败无关的东西。这里的做法是先用具体错误证据把修改框死：系统对 annotator 的预测与 gold 做软匹配，按类型归类出主导错误模式，再交给 LLM moderator 走三步——先解释这个错误模式出现的语言环境，再从中归纳出一条通用原则，最后把原则插入或改写进 guidelines。例如在 NCBI Disease 上，模型漏标了 feature-list 里的 DiseaseClass，moderator 据此生成“临床条件作为依存特征列表项时也应标注 DiseaseClass”这样一条规则。这样每轮 refinement 都精准对着当前模型的失败模式，产物还是人类可读、可审阅、可复用的规则文本。
 
-**3. 最小监督设置：模拟标注项目早期，专家只给极少 gold 文档。**
+**3. 最小监督设置：模拟标注项目早期，专家只给极少 gold 文档**
 
 本文要检验的不是靠大量统计学习去刷 SOTA，而是 LLM 能否从少量 disagreement 里归纳出高层标注规则，因此刻意把监督压到最小。每个数据集只从原训练集随机采样 10 篇文档做 development refinement，最终在独立的 100 篇 evaluation set 上评测：NCBI Disease 和 BioRED 用完整 dev split 的 100 篇，BC5CDR 则从 500 篇 dev split 中采样 100 篇。整个流程构成第 $k$ 轮的闭环——输入当前规范 $G_k$ 和开发集 $D$，annotator 产出预测 $A_k$，评估器与 gold $A_g$ 算严格 F1，若 $IAA_k$ 未达阈值且仍有提升空间就收集 discrepancy 进入 moderation，得到 $G_{k+1}$；一旦达标或新一轮没有提升，就停止并丢弃无效修改。
 

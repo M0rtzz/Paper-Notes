@@ -45,17 +45,17 @@ FlexRank 从一个预训练模型 $f(\cdot;\theta_{\mathrm{orig}})$ 出发，借
 
 ### 关键设计
 
-**1. DataSVD：让分解对齐真实输入而非权重本身。**
+**1. DataSVD：让分解对齐真实输入而非权重本身**
 
 单纯对 $W_l$ 做 SVD 在 LLM 上掉点很惨（Fig. 4 显示压掉 20% 参数就崩），原因是权重幅值大不代表它对真实输入贡献大。DataSVD 把分解目标从最小化权重重构误差 $\|W_l - U_l V_l^\top\|_F^2$ 换成最小化**输出误差** $\mathbb{E}_{\mathbf{x}_l}\bigl[\|(W_l-U_l V_l^\top)\mathbf{x}_l\|_2^2\bigr]$，于是奇异方向由激活协方差决定，"重要的方向"自然和真实输入分布对齐。实现上用标定集采集激活矩阵 $\mathbf{X}_l$、对加权问题求闭式 SVD，作者证明空间复杂度可以做到 $\mathcal{O}(n_l^2)$、与样本数 $N$ 无关。不过这步只是初始化，作用是给后面的 DP 提供一个可靠的"重要性序"——作者在 Remark 3.1 明确指出光有它远不够，仍要靠后续蒸馏。
 
-**2. 嵌套子模型搜索 + 动态规划：把组合爆炸驯到 $O(LK)$。**
+**2. 嵌套子模型搜索 + 动态规划：把组合爆炸驯到 $O(LK)$**
 
 要在 $K^L$ 种全局秩组合里选出 $K$ 个**严格嵌套**的子模型 $\mathbf{m}_1 \preceq \dots \preceq \mathbf{m}_K$、每个都尽量贴近其预算 $\beta_k$ 下的 Pareto 最优，直接枚举不可行。FlexRank 先对每层 $l$ 枚举 $K$ 个候选秩，算出"截断到该秩"带来的 cost 节省 $\Delta c$ 与 error 增加 $\Delta e$，得到该层的局部 Pareto 表 $\mathcal{Q}_l$；再在**层间误差可加**这一 standard 但 strong 的 additivity 假设下，用 DPRankSelection 在 $\mathcal{O}(L\cdot K)$ 时间内从这些局部表组合出全局嵌套 mask 序列（作者在 4 层、$K=10$、共 10000 个子网的可枚举设定下验证了它的排序保真度足够）。
 
 之所以非要"嵌套"这条更紧的硬约束，是从理论上反推出来的，也是全篇最硬核的贡献：Thm 4.1 证明"先训满模型再 post-hoc 切子网"（PTS）找到 Pareto 最优的概率为 0；Thm 4.2 证明"联合训练所有子网"（ASL）每个 rank 至少留下 $\frac{1}{k}(r\lambda-\sum_{i\le r}\sigma_i)^2$ 的次优 gap，因为子网在抢同一份容量；而 Thm 4.3 证明嵌套训练（NSL）能让每个 rank 的 gap 恰好为 0——关键在于第 $r+1$ 列只需要学第 $r+1$ 阶与第 $r$ 阶截断之间的残差 $A_{r+1}-A_r$，不会回头和小子模型竞争。
 
-**3. Gauge-Aligned Reparametrization (GAR)：把秩节省真正翻译成 FLOPs 节省。**
+**3. Gauge-Aligned Reparametrization (GAR)：把秩节省真正翻译成 FLOPs 节省**
 
 低秩分解有个尴尬的临界点：原始 $(U,V)$ 形式即使秩从 $\min(m,n)$ 降到 $r$，矩阵乘的 FLOPs 也只在 $r\ll\min(m,n)$ 时才跑得赢 dense kernel，秩压得不够低就白省。GAR 利用 $UV^\top$ 分解不唯一这一点，引入 gauge $G=U_{1:r,:}^{-1}$，把分解改写成 $UV^\top = (UG)(G^{-1}V^\top) = \tilde{U}\tilde{V}^\top$，让 $\tilde{U}$ 的前 $r\times r$ 块**恰好对齐成 $I_r$**——这部分既不用存也不用算，只剩 $(m-r)\times r$ 的 $\hat{U}$ 真正参与计算，推理代价从 $\mathcal{O}(mr+nr)$ 降到 $\mathcal{O}((m+n-r)r)$，比 dense 的 $\mathcal{O}(mn)$ 严格更省。这样一来 $r$ 的任何减少都**线性**翻译成 FLOPs 减少，临界点被彻底消掉，任意 $r<\min(m,n)$ 都立刻有收益。GAR 的预处理只是一次 $\mathcal{O}(r^3)$ 矩阵求逆，相比 SVD 可忽略；它和具体 elastic 算法无关，作者为公平起见在所有 baseline 上也都开了 GAR，比较的就是算法本身而非工程差距。
 

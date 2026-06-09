@@ -47,15 +47,15 @@ ToolPRM 的流程可以分成三步。第一步是构造细粒度监督数据：
 第三步是训练 ToolPRM 并用于推理扩展。ToolPRM 本身也是 LLM，输入当前状态和候选动作，输出 “+” 或 “-” 的概率；beam search 每步展开多个候选，用 ToolPRM 分数排序并剪枝。由于结构化输出早期错误不可恢复，作者主张扩大 beam width 来探索更多局部选择，但保留较少 beam，形成“explore more but retain less”的策略。
 
 ### 关键设计
-**1. Intra-call 细粒度分解与标签体系：把一次函数调用从「整体 JSON」拆成可逐步监督的局部决策。**
+**1. Intra-call 细粒度分解与标签体系：把一次函数调用从「整体 JSON」拆成可逐步监督的局部决策**
 
 已有推理扩展方法大多把整次函数调用当成一个候选来打分，粒度太粗——等到完整 JSON 生成完才知道对错，「函数名刚选错」「某个参数值填错」这类早期错误根本来不及剪枝。ToolPRM 把一次调用拆成一连串可监督的局部动作，并为每个动作定义标签：`<FUNC_NAME>` 判断函数名是否正确、`<ARG_VALUE>` 判断某个参数名和值是否匹配 ground truth、`<TOTAL_FINISH>` 判断整个函数调用列表是否完成且正确，此外还有参数结束、函数结束等标签。这样 reward model 不必等 JSON 写完就能在每个局部动作后判断对错，更早发现错误来源。看似冗余的细标签反而有用：论文实验显示保留 `<ARG_VALUE>` 这类参数级标签反而提高了 trajectory-level 的判断能力，局部监督并没有让模型只盯局部。
 
-**2. 函数 masking + rollout 数据构造：逼 reward model 看懂语义，而不是背工具名。**
+**2. 函数 masking + rollout 数据构造：逼 reward model 看懂语义，而不是背工具名**
 
 如果训练数据里函数名、参数名都是真实可辨识的，reward model 很容易退化成靠记忆工具名来打分，一旦部署时工具命名或 schema 变了就泛化崩盘。ToolPRM 在构造数据时把函数名和参数标识符替换成随机字符串，再给 policy model 一组 masked function candidates 去 rollout 出候选函数调用，最后用 exact match 对每个步骤标注正负，得到 step-level 与 trajectory-level 两种粒度的数据。masking 掉表面名字后，reward model 只能转而关注 query 意图、函数描述、参数语义和已经生成的结构上下文，学到的是真正可迁移的判断能力。
 
-**3. ToolPRM 引导的细粒度 beam search：在测试时把额外预算花在「多探索、少保留」上。**
+**3. ToolPRM 引导的细粒度 beam search：在测试时把额外预算花在「多探索、少保留」上**
 
 结构化输出和自由文本推理有个本质差异：数学推理里早期错误还能靠后续反思补回来，函数调用的错误 JSON 分支几乎不可恢复，一个错函数名就让整条轨迹作废。所以正确策略不是保留一大堆候选慢慢修，而是早剪枝、把预算让给正确结构。搜索时 ToolPRM 对每个候选动作输出 “+” 与 “-” 两个 label token 的 logits，算出局部正确性分数
 

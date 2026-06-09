@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计
 
-**1. 截断影响函数(TIF)：把"高 IF=好数据"修正成"中段 IF 才好"。**
+**1. 截断影响函数(TIF)：把"高 IF=好数据"修正成"中段 IF 才好"**
 
 经典影响函数在分类任务里默认 IF 越高数据越有价值，但偏好对齐是开放式任务、没有标准答案，验证集的梯度只是人类偏好的不完美代理，照搬这个假设会出问题。作者把训练数据按 IF 百分位切成 small / medium / large 三组观察训练动态，发现三组表现截然不同：small-IF 数据是噪声或歧义样本，训练后 eval loss 反而上升、reward margin 跌成负值；large-IF 数据会过拟合，eval loss 先降后升、少数 pair 的 margin 被推到极大；只有 **medium-IF** 数据让 eval loss 稳定下降、margin 稳定上升，是最优区间。于是 TIF 只保留中间区间，丢掉两头：
 
@@ -55,7 +55,7 @@ $$\text{TIF}(d) = \mathbb{I}[\delta_{small} < \text{IF}(d) < \delta_{large}]$$
 
 这和分类任务里的结论正好相反——counter-intuitive，但在"验证梯度本身就不完美"的前提下是合理的：极端的 IF 值(过小过大)恰恰是低质量数据的信号。
 
-**2. Loss Difference(LossDiff)：用两次前向 pass 近似 IF 的验证依赖代理。**
+**2. Loss Difference(LossDiff)：用两次前向 pass 近似 IF 的验证依赖代理**
 
 精确算 IF 需要梯度，对大模型不可行，所以要找一个能用前向 pass 算出来、又和 IF 同向的代理。LossDiff 的做法是先在验证集上训出一个对齐好的辅助模型 $\pi_{\theta_{val}}$，把它当作"验证目标方向"，再看当前模型 $\theta$ 和这个目标模型在同一条数据上的 loss 差：
 
@@ -63,7 +63,7 @@ $$\text{LossDiff}(d) = \ell(\theta; d) - \ell(\theta_{val}; d)$$
 
 直觉是：LossDiff 越大，说明把参数从 $\theta$ 往 $\theta_{val}$ 挪能更多降低这条样本的 loss，也就说明这条样本和验证目标越一致、越值得学。作者从数学上证明了 LossDiff 与 IF 正相关，实测 Pearson $r=0.77$，而代价只是两次前向 pass、完全不用反向传播。
 
-**3. Implicit Reward Margin(IRM)：只靠模型自身信号、不碰验证集的代理。**
+**3. Implicit Reward Margin(IRM)：只靠模型自身信号、不碰验证集的代理**
 
 LossDiff 仍需要一个在验证集上训出的辅助模型，IRM 则更进一步，只用当前模型的内部信号。它直接取 DPO loss 里 sigmoid 内部那一项——也就是模型对 chosen 相对 rejected 的隐式奖励差：
 
@@ -71,7 +71,7 @@ $$\text{IRM}(d) = \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta 
 
 IRM 衡量的是模型当前对 chosen vs rejected 的偏好强度，同样与 IF 正相关($r=0.67$)，但因为没用上验证信息，精度弱于 LossDiff；换来的好处是彻底不依赖验证集，适合连验证集都没有的场景。
 
-**4. LossDiff-IRM 组合选择器：两个误差来源互补的代理取交集。**
+**4. LossDiff-IRM 组合选择器：两个误差来源互补的代理取交集**
 
 单独用任一指标近似 TIF 的精度都有限(Overlap 约 0.66–0.70)。关键观察是 LossDiff 和 IRM 的误差来源不同——一个依赖验证集、一个完全不依赖，所以它们犯错的地方往往不重合。选择器因此只保留两个指标**同时**落在中间百分位区间的数据，让两类误差互相抵消。组合后对 TIF 的 Overlap 提升到 0.73–0.78，明显高于任一单指标。
 

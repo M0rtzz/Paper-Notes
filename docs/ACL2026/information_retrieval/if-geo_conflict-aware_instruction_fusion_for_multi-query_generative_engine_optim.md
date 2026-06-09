@@ -46,15 +46,15 @@ IF-GEO 是一条纯 LLM-API 流水线（同款 GPT-4o-mini 跑所有调用），
 
 ### 关键设计
 
-**1. Diverge——加权代表性 query 集合 + 必要性打分的结构化请求：把"为不同 query 服务"的需求显式化、可比较化。**
+**1. Diverge——加权代表性 query 集合 + 必要性打分的结构化请求：把"为不同 query 服务"的需求显式化、可比较化**
 
 传统 GEO 一上来就把多个 query 的需求糊成一个"engine preference"去优化，query 之间的差异被抹平，后续也就无从"看见冲突"。IF-GEO 反过来用反向检索（而非 paraphrase）逼近真实潜在用户分布得到 $Q(D)$，并让 LLM 打两套相互独立的分数：$w_i$ 衡量某条 query 在整体用户中的重要性，$s_{i,j}$ 衡量某条编辑对该 query 的关键程度。二者乘积 $g_{i,j} = w_i \cdot s_{i,j}$ 把"模糊的优化意图"翻译成一个可排序、可比较的全局优先度，直接驱动后面的融合与仲裁，让每条 query 都成为一个能各自提请求的"利益相关方"。
 
-**2. Converge——Prioritize → Dedup → Conflict-Resolve → Blueprint 四步收敛：把发散的 request pool 拧成一份可执行的全局修改蓝图。**
+**2. Converge——Prioritize → Dedup → Conflict-Resolve → Blueprint 四步收敛：把发散的 request pool 拧成一份可执行的全局修改蓝图**
 
 发散阶段产出的请求往往噪声多、意图重叠、还在同一段落上彼此互斥，直接逐条 patch 会出现"同一段被改了又改最终覆盖掉"的灾难。收敛阶段先用 $g_{i,j}$ 卡阈值剔掉低价值请求，再语义去重把意图相近的合并为沿用最高分的 meta-request；对仍然互斥的请求不走硬阈值，而是交给 LLM 做"semantic 仲裁"——$g$ 值差距大就 Selection 选优、相近就 Synthesis 合成折衷指令；最后**按章节而非按 query** 把指令重排成 JSON 蓝图，把"如何改一篇文档"从串行打补丁变成按 section 一次性改完。消融印证了这一步的分量：去掉冲突解决后 Mean 从 9.24 直接跌到 6.14，是所有消融里跌幅最大的。
 
-**3. Risk-Aware Stability Objective（WCP / DR / WTR）：把"对每条 query 都稳"写进目标函数，不让均值掩盖尾部退化。**
+**3. Risk-Aware Stability Objective（WCP / DR / WTR）：把"对每条 query 都稳"写进目标函数，不让均值掩盖尾部退化**
 
 GEO 真正的失败模式是"均值变好，但少数 query 大幅退化"，而传统方差 VAR 把正负波动一并计入，会错误地把"能见度上行"也当成风险。为此 IF-GEO 引入三项指标精准捕捉尾部：Worst-Case Performance $\text{WCP} = \min_{i=1}^m \Delta v_i$ 给出安全下限；Downside Risk $\text{DR} = \frac{1}{m}\sum_{i=1}^m (\min(0, \Delta v_i))^2$ 只对负 gain 的平方计罚，把良性波动与有害波动区分开；Win-Tie Rate $\text{WTR} = \frac{1}{m}\sum_{i=1}^m \mathbb{I}(\Delta v_i \ge 0)$ 量化"无回退覆盖比例"，作为 Pareto 安全度的代理。三者既是评测语言，也是同等重要的优化约束，从而把"不退化"从口号落成可度量的目标。
 

@@ -54,11 +54,11 @@ tags:
 
 ### 关键设计
 
-**1. 指出经典 SDE 的失败：用抛物 + 四次两个一维例子戳穿失效模式。**
+**1. 指出经典 SDE 的失败：用抛物 + 四次两个一维例子戳穿失效模式**
 
 文章先把"为什么非要修正 SDE"讲到无可辩驳。在 $f(x)=\lambda x^2/2$ 上，经典一阶 ODE $dX_t=-\lambda X_t dt$ 给出 $f(X_t)=f(X_0)e^{-2\lambda t}$，跟步长 $\eta$ 完全无关；经典二阶 ODE $dX_t=-\nabla f(X_t)dt-\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)dt$ 更离谱，预测 $f(X_t)=f(X_0)e^{-2\lambda(1+\lambda\eta/2)t}$——步长越大收敛越快。可离散 GD 明明要求 $\eta<2/\lambda$ 才稳。换到四次 $f(x)=x^4/4$（典型 $(L_0,L_1)$-光滑），GD 一步是 $x_{k+1}=x_k(1-\eta x_k^2)$，要求 $\eta<2/x_k^2$ 依赖当前迭代，所以根本不存在对所有初始化都稳的常数步长；但经典一阶/二阶 ODE 仍预言"全局收敛、$\eta$ 越大越快"。结论很重：在 $(L_0,L_1)$ 下经典 SDE 不是不准，而是质上错误，连无穷小步长都救不回来。这把研究焦点从过去追求的"SDE 阶数更高"切换到"稳定性是否匹配"。
 
-**2. 符号翻正的修正一阶 SDE（ansatz + 漂移匹配）：把曲率项符号从 − 改成 +。**
+**2. 符号翻正的修正一阶 SDE（ansatz + 漂移匹配）：把曲率项符号从 − 改成 +**
 
 为什么经典 SDE 错？作者把 GD 一步的离散二阶 Taylor 展开写出来：
 
@@ -70,7 +70,7 @@ $$dX_t=-\nabla f(X_t)\,dt+\frac{\eta}{2}\nabla^2 f(X_t)\nabla f(X_t)\,dt+\sqrt{\
 
 Theorem C.5 证明它是 SGD 的一阶弱近似。验证立竿见影：抛物上它给出 $f(X_t)=f(X_0)e^{-2\lambda(1-\lambda\eta/2)t}$，仅当 $\eta<2/\lambda$ 收敛，与 GD 严丝合缝；四次上诱导漂移 $df(X_t)=(-X_t^6+\frac{3\eta}{2}X_t^8)dt$ 与离散展开一致，并在 $\eta X_t^2\gtrsim1$ 时正确翻成排斥、损失上升，精确捕捉"可行步长必须随局部梯度尺度收缩"。这背后的方法论是：模型阶数不重要，模型与所研究性质（这里是损失动力学）的匹配度才重要。
 
-**3. 统一收敛定理：DCSGD（仿射方差 + 压缩）与 DSignSGD（重尾）。**
+**3. 统一收敛定理：DCSGD（仿射方差 + 压缩）与 DSignSGD（重尾）**
 
 有了忠实的 SDE，作者把它套到两个分布式优化器上，给出第一份同时覆盖 $(L_0,L_1)$ + 压缩 + 仿射方差/重尾的收敛保证。Thm 4.2（DCSGD）在 $(L_0,L_1)$-光滑、每客户端 $(\sigma_{0,i}^2,\sigma_{1,i}^2)$-仿射方差、压缩率 $\omega_i$ 下，要求 $\eta\eta_t<\frac{2\epsilon}{G(1+\frac{\bar\omega+d(\overline{\sigma_1^2\omega}+\overline{\sigma_1^2})}{N})+\frac{L_1 d(\overline{\sigma_0^2}+\overline{\sigma_0^2\omega})}{N}}$（$G=L_0+L_1\mathbb{E}\|\nabla f(X_t)\|_2$）即可保证 $\mathbb{E}\|\nabla f(X_{\hat t})\|_2^2\to0$。比经典 SDE 多出来的那个 **+1** 是关键——它在无噪无压缩 $(L_0,L_1)\to L$ 的退化极限下恢复出经典 $\eta\eta_t<2/L_0$，补上了旧 SDE 在该极限下"完全没限制"的硬伤。Thm 4.3（DSignSGD）在 student-$t_\nu$ 重尾下要求 $\eta\eta_t<\ell_\nu/K$、$K=\frac{L_1 d\sigma_{\mathcal{H},1}}{2N}+\sqrt{d}(L_0+L_1)M_\nu$，那个多出来的 $\sqrt{d}(L_0+L_1)M_\nu$ 同样是修正 SDE 才产生的，没有它即便 $\sigma_{\max,i}=0$ 也会错预言"无步长约束"。两条定理一对照就读出一个朴素结论：DSignSGD 因 sign 自带 elementwise 归一化，标准 Robbins–Monro 调度 $\eta_k=1/\sqrt{k+1}$ 就能在 $\nu=1$（期望都无界）下收敛，而 DCSGD 必须按噪声/压缩动态归一化才稳。它把 Khirirat、Faw、Chen、Crawshaw 等多篇的零散结论统一成"何时该归一化、归一化多强"可由 $(L_0,L_1,\bar\omega,\overline{\sigma_1^2},N,d)$ 几个常数读出来的事。
 

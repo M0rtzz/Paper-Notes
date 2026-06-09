@@ -45,11 +45,11 @@ tags:
 
 ### 关键设计
 
-**1. GKnow：主语 × 输出双轴的细粒度性别基准，逼任何去偏方法都得"双面汇报"。**
+**1. GKnow：主语 × 输出双轴的细粒度性别基准，逼任何去偏方法都得"双面汇报"**
 
 现有性别基准要么只测代词预测、要么只看刻板印象，于是根本无法回答"消融把事实性别也带走了多少"。GKnow 的破法是把一条 prompt 的"主语 (subject)"和"期望预测 (expected output)"各自归到 5 类性别表达（pronoun / gender word / gendered name / lexically gendered noun / stereotypically gendered noun），两轴叉乘得到 25 个子集，把"主语-输出"的语义来源切得极细。蓝色 (factual) 与红色 (stereo) 单元格的组合让同一个子集既能当"刻板印象任务"也能当"事实任务"测——例如 `pronoun_prediction_based_on_stereo` 就是 "The nurse is nice, isn't [she]"。每条样本都带 `subject / expected_output / gender / stereo_category / id`，完整 91,490 例，实验中用 6,294 条 train + 698 条 test。正是这张表第一次把"事实/刻板 × 不同预测类型"系统对齐，使"去偏对两面分别有什么影响"成为可测的事。
 
-**2. EAP-IG 电路 + cross-task faithfulness：从电路层量化"刻板印象电路"和"事实电路"是不是同一套子图。**
+**2. EAP-IG 电路 + cross-task faithfulness：从电路层量化"刻板印象电路"和"事实电路"是不是同一套子图**
 
 要证明两种性别信号纠缠，光看神经元重叠还不够，得在电路层给出证据。本文用 EAP-IG（edge attribution patching with integrated gradients）给计算图每条边 $(u,v)$ 打分：
 
@@ -57,7 +57,7 @@ $$(z'_u - z_u)\cdot \frac{1}{m}\sum_{k=1}^{m}\frac{\partial L(z' + \frac{k}{m}(z
 
 其中 $z, z'$ 为 clean / corrupted 激活、$m=5$。对每个 GKnow 子集贪心累加 top-N 边、直到电路的 faithfulness $\geq 0.8$（recovery ≥ 80%），得到最小忠实电路；再两两子集计算 edge/node 的 Jaccard IoU 和 cross-task faithfulness（把 A 子集的电路嵌进 B 任务、看还原度）。单纯 IoU 会漏掉"功能等价但具体边不同"的情形，而 cross-task faithfulness 直接测"功能可换性"，更贴近 entanglement 的本意。论文给出的最硬证据是 `gender_prediction_based_on_stereo` 电路在 `gender_prediction_based_on_pronoun` 上 faithfulness = 1.0——刻板印象电路完全能做事实任务。
 
-**3. IG 神经元消融的 factual vs stereo 双面评估：把"是否真去偏"和"是否伤事实"放进同一张量表。**
+**3. IG 神经元消融的 factual vs stereo 双面评估：把"是否真去偏"和"是否伤事实"放进同一张量表**
 
 过去的神经元去偏工作只在 stereo benchmark 上报"$\%opp$ 增加"这类正向指标，看不见副作用。本文则在 `gender_prediction_based_on_stereo` 训练子集上用 IG 选出 top-10 / top-50 神经元、把它们的激活置 0，然后在 GKnow Stereo、GKnow Factual、StereoSet、DiFair Neutral、DiFair Specific 五个集合上**同步**测一整套指标：prediction-on-target $P_{exp}/P_{opp}/P_{other}$、preference $\%exp/\%opp/\%other$、prediction-gap $\Delta_{f,m}$。强制同一次消融必须在事实 benchmark 上一起汇报，"在偏见集上看着去偏成功、在事实集上能力崩塌"的真相才被逼出来。
 

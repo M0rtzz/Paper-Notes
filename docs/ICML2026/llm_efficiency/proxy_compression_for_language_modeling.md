@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. Tokenizer-based proxy：把现成 BPE 当成最简单的训练期压缩器。**
+**1. Tokenizer-based proxy：把现成 BPE 当成最简单的训练期压缩器**
 
 要兑现「训练享 tokenizer 效率、推理丢 tokenizer」，最直接的实例化就是拿一个现成 tokenizer 把原始字节离线压成 token 索引序列当作 $x_{\text{comp}}$。这里直接调用 OpenCoder BPE，平均压缩率约 $2.9\times$，token 仍按词表索引喂进模型，与普通 tokenizer 模型唯一的区别是它出现在带 `<comp>` 标签的序列里、且训练时有 10% 概率被换成原始字节。之所以选 tokenizer 打头阵，是因为它输出极其稳定——对 10% 字符删除这种扰动，Levenshtein 距离几乎不动，这种稳定性让 LM 最容易学到 "comp ↔ raw" 的映射；同时它可以全离线预处理，没有任何额外训练成本。论文也试过把 token id 重新编码成定长字节序列，但效果不如直接用 id 表示好。
 
-**2. Neural proxy + 熵分段并行：用神经压缩器换更优的熵编码，靠熵分段让它工程可行。**
+**2. Neural proxy + 熵分段并行：用神经压缩器换更优的熵编码，靠熵分段让它工程可行**
 
 tokenizer 终究是手工 BPE 的产物，理论上神经压缩器能做得更优，于是第二种 proxy 改用一个 40M byte-level LM 配 arithmetic coding 给字节流做近最优熵编码，压缩率约 $2.6\times$。做法是先训小 byte LM 给出每个位置的 $p(\cdot|\text{ctx})$，再以 equal-information windows 做 arithmetic coding，每 16 bits pack 成一个符号。逐字节串行编码会慢到跑不动 3.3 TB 语料，所以引入「熵分段」——用 LM 算出 per-byte entropy，把高熵位置当作切片边界，每段独立并行压缩，这是让整套方案落地的关键。值得注意的是这个映射对 raw 是确定性单射、但反向并非单射：不同的原始字节可能映到同一 comp 段（即所谓 "fuzzy"），不过发生碰撞的 raw chunk 里 90%+ 都共享 $\text{LCP}\geq 0.8$，差异只落在 whitespace / newline / indent 这类低熵尾部。这种「结构化模糊」反而成了好事——它帮模型把格式噪声抽象掉，鲁棒性不降反升。
 
-**3. In-context pairing + sentinel + 高 $r$ warm-up：让对齐进权重，却不让推理依赖压缩器。**
+**3. In-context pairing + sentinel + 高 $r$ warm-up：让对齐进权重，却不让推理依赖压缩器**
 
 前两个设计提供了压缩表示，但真正的难点是怎么让模型把 comp ↔ raw 的对齐内化到权重里、又不至于推理时非看到 comp 才能工作。三件事配合解决：一是用 `<raw>/<comp>` sentinel 显式告诉模型当前段的表示类型，让 next-token prediction 能条件于表示类型；二是 warm-up 阶段把 $[\langle\text{raw}\rangle x_{\text{raw}}\langle/\text{raw}\rangle\langle\text{comp}\rangle x_{\text{comp}}\langle/\text{comp}\rangle]$（顺序随机）拼进同一上下文，强迫模型同时看到两种视角；三是 warm-up 一结束就立刻关掉 pairing，避免模型养成「推理时必须有 comp 在前」的依赖。$r$ 从 0.4 渐升到 0.9 同样是为了防止训练早期 raw 见得太少、对齐学不起来。这个折中是被消融逼出来的：no-pairs 训练时 oracle-translation pass@1 只能到 30–46%，always-on pairing 能冲到 95%+ 但模型变得依赖 pairing、下游 raw-byte pass@1 反而略降；只有 warm-up-only 既保证了早期对齐、又不养出依赖（Table 3 验证），是经验上的最优解。
 

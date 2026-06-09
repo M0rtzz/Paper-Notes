@@ -54,7 +54,7 @@ MMPFN 由三部分组成：
 
 把非表格嵌入接进 TabPFN 看似只要一个线性投影，但作者发现简单做法会同时踩中两个坑：一个 [CLS] token 把整张图像/整段文本的信息压成一条向量，信息严重不够（过压缩）；而若直接把编码器输出的整串 patch/word token 都喂进去，又会让非表格 token 数量碾压表格 token，垄断注意力（不平衡）。下面三个设计正是分别堵这两个坑，再用一段理论说清为什么必须堵。
 
-**1. Multi-Head Gated MLP（MGM）：把一个 [CLS] 撑开成多个互补 token，解过压缩。**
+**1. Multi-Head Gated MLP（MGM）：把一个 [CLS] 撑开成多个互补 token，解过压缩**
 
 DINOv2/ELECTRA 输出的单个 [CLS] 向量已经把一整张图或一段文本压成一条表示，直接投成一个表格 token 等于让 TabPFN 只看到非表格模态的"缩略图"。MGM 的做法是把同一个 $h_{\text{CLS}}$ 同时送进 $N$ 个独立的 MLP 头，每个头各自把编码器维度投影到 $d$ 维，从而展开出 $N$ 个 token：
 
@@ -62,11 +62,11 @@ $$\text{MGM}(h_{\text{CLS}}) = \{g_i \odot \text{MLP}_i(h_{\text{CLS}})\}_{i=1}^
 
 关键在于每个头都被一个 GLU 门控 $g_i = \sigma(W_g^{(i)} h_{\text{CLS}} + b_g^{(i)})$ 逐元素调制。门控让不同头去激活 [CLS] 里不同的子空间、产生互补而非冗余的表示——消融里 Multi-head MGM（57.37）明显高于不带门控的 Multi-head MLP（55.81），而稀疏路由的 Multi-head MoE（53.23）在小数据下反而退化，说明在这种低数据场景下"软门控 + 全头都用"比"硬路由 + 只用少数头"更稳。
 
-**2. Cross-Attention Pooler（CAP）：把 $N$ 个 token 再收成固定 $K$ 个，平衡 token 数量。**
+**2. Cross-Attention Pooler（CAP）：把 $N$ 个 token 再收成固定 $K$ 个，平衡 token 数量**
 
 MGM 解决了信息量，却又带来新麻烦：token 一多，非表格模态在 TabPFN 的 feature attention 里就会反客为主。CAP 用一组 $K$ 个可学习查询向量做交叉注意力，把 $N$ 个 MGM token 当 key/value 抽取信息、汇成 $K$ 个紧凑 token，再过一层 MLP 精炼，最后沿特征维与表格 token 拼接送入 backbone。这样无论编码器吐出多少信息，进入 TabPFN 的非表格 token 数都被钉死在一个可控的 $K$（数据集相关，如 PU20 用 24、Cloth 用 4），既保住了 MGM 提取的丰富度，又不让它把注意力预算吃光。正是 MGM 先充分展开、CAP 再定量收缩这一前后呼应，消除了"加非表格 token 反而掉点"的非单调现象。
 
-**3. 注意力不平衡的理论分析：说清楚为什么 $K$ 必须被钉死。**
+**3. 注意力不平衡的理论分析：说清楚为什么 $K$ 必须被钉死**
 
 为什么 token 数量失衡就会压制表格信号，作者给了一个 softmax 注意力下的定量解释。设 $N_I$、$N_T$ 分别为非表格和表格 token 数，$c_I$、$c_T$ 为各自的 per-token 平均注意力质量，则非表格模态拿到的总注意力份额约为：
 

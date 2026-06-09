@@ -48,7 +48,7 @@ OTPrune 想回答一个很具体的问题：vision encoder 吐出 $m$ 个 token 
 
 ### 关键设计
 
-**1. OT 分布对齐：把"选 token"重写成"对齐两个分布"。**
+**1. OT 分布对齐：把"选 token"重写成"对齐两个分布"**
 
 DivPrune 那类方法只盯着"选出来的 token 彼此别太像"，但多样性高不代表能代表整体——挑出的子集可能恰好漏掉了原始特征流形里某块协方差结构。OTPrune 换了个更本质的判据：直接最小化完整 token 集 $P$ 和裁剪子集 $Q$ 之间的 2-Wasserstein 距离
 
@@ -56,7 +56,7 @@ $$\min_Q \mathcal{W}_2^2(P, Q) = \inf_{\pi \in \Pi(P,Q)} \mathbb{E}_{(x,y) \sim 
 
 这个量在嵌入空间里衡量"要把 $Q$ 搬成 $P$ 得花多少搬运代价"，它同时编码了局部多样性和全局代表性：保留的子集既要彼此不同，又要忠实复刻原始特征流形的几何形状。作者还先在 LLaVA 1.5-7B 上实测了一把——用多种选择策略对比，OT 距离与下游任务性能呈很强的 Spearman 负相关（距离越小性能越好），这才让"对齐分布"成为一个值得优化的目标，而不是凭空假设。
 
-**2. Gaussian 代理 + log-det 松弛：把难算的 Wasserstein 换成能贪心的子模目标。**
+**2. Gaussian 代理 + log-det 松弛：把难算的 Wasserstein 换成能贪心的子模目标**
 
 直接优化 $\mathcal{W}_2^2$ 既要算分布又要解传输计划，根本无从下手。这里做两步退让把它驯服。第一步，假设两个分布都是零均值 Gaussian，$P \approx \mathcal{N}(0, \Sigma)$、$Q \approx \mathcal{N}(0, \Sigma_\mathcal{C})$，此时 $\mathcal{W}_2^2$ 有闭式解
 
@@ -64,11 +64,11 @@ $$\mathcal{W}_2^2 = \text{tr}(\Sigma) + \text{tr}(\Sigma_\mathcal{C}) - 2\,\text
 
 对特征做单位方差归一化后，最小化距离就等价于最大化最后那个 trace 项。第二步，trace 里还带着难缠的矩阵平方根，于是用 $\log\det(\bm{I} + \gamma \bm{X}) \leq \gamma\,\text{tr}(\bm{X})$ 这个下界把它换成 log-det 代理目标 $\max_\mathcal{C} \log\det(\bm{I} + \gamma\, \Sigma^{1/2} \Sigma_\mathcal{C} \Sigma^{1/2})$。这一换的关键好处是：log-det 是可证明的单调子模函数，子模性直接保证后面贪心算法有 $(1-1/e)$ 的近似比下界，同时彻底绕开了矩阵平方根的高开销。
 
-**3. Sylvester 变换 + Cholesky 贪心：把 $d\times d$ 的活降到 $k\times k$，逐个挑 token。**
+**3. Sylvester 变换 + Cholesky 贪心：把 $d\times d$ 的活降到 $k\times k$，逐个挑 token**
 
 代理目标里的协方差是 $d \times d$（$d$ 是特征维度，通常很大），每步重算都很贵。OTPrune 用 Sylvester 行列式恒等式把它翻到对偶侧：预计算 Gram 矩阵 $\tilde{\bm{V}} = \bm{V}\bm{V}^\top$，目标变成只在已选子集 $\mathcal{C}$ 的子块上做的 $\max_\mathcal{C} \log\det(\bm{I} + \tilde{\gamma}\, \tilde{\bm{V}}_\mathcal{C} \tilde{\bm{V}}_\mathcal{C}^\top)$，矩阵规模从 $d \times d$ 缩到 $k \times k$。求解时走标准贪心：每轮选使目标增量最大的那个 token $j = \arg\max_{i \notin \mathcal{C}} d_i^2$，选完通过增量 Cholesky 分解更新所有剩余 token 的增益系数，不必重算整个行列式。整套下来复杂度 $O(mk^2)$，相比暴力枚举 $\binom{m}{k}$ 是天壤之别；子模性给了 $(1-1/e) \approx 0.632$ 的最坏保证，而合成数据实测的实际近似比常常顶到 100%，远超这个下界。
 
-**4. 超参 $\gamma$ 的鲁棒性：一个值通吃多个模型。**
+**4. 超参 $\gamma$ 的鲁棒性：一个值通吃多个模型**
 
 $\gamma$ 是 log-det 里那个调节项，平衡 OT 对齐目标和选择正则。作为一个 training-free 方法，最怕的就是每换一个模型都要重新搜超参。OTPrune 这里几乎不用操心：实验里 $\gamma = 0.01$ 在 LLaVA 1.5-7B、1.5-13B、1.6-7B 上都直接好用，性能对 $\gamma$ 的取值不敏感，省去了部署时的调参成本。
 

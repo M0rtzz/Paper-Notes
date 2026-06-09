@@ -51,11 +51,11 @@ CTF 要在一个 Transformer 里同时扛住异步采样、块缺失和跨通道
 
 ### 关键设计
 
-**1. 频域动态 Patching：用各通道自己的主频切 patch，不靠插值对齐异步采样。**
+**1. 频域动态 Patching：用各通道自己的主频切 patch，不靠插值对齐异步采样**
 
 异步采样是真实数据的常态——温度传感器 1 小时一采、压力 15 分钟一采，多数方法靠插值把它们对齐到同一时间网格，但插值在动态信号上会注入并不存在的"假数据"。CTF 索性不对齐：对每个通道做 FFT 估出它的主导周期 $T_i$，就以 $T_i$ 为 patch 长度做非重叠切分。采样周期为 $s_i$ 的通道，在输入窗口长度 $L$ 下只有 $L_i = \lfloor L/s_i \rfloor$ 个有效采样点，因此切出的 local token 数量本就因通道而异。这样每个通道都保留自己的原始分辨率，既不上采样也不下采样，不等长度的 token 序列最后由 channel token 统一聚合，问题被推给了 channel token 而非插值。
 
-**2. Mask-Guided Unified Attention：用一张掩码让 channel token 当只读的跨通道中继站。**
+**2. Mask-Guided Unified Attention：用一张掩码让 channel token 当只读的跨通道中继站**
 
 通道内时序建模和跨通道依赖捕获通常要分两步做，CTF 把它们塞进一次注意力，靠精心设计的掩码区分谁能看谁。所有通道的 local token 和 channel token 先拼成统一序列
 
@@ -67,7 +67,7 @@ $$\mathbf{X}_\text{out} = \mathbf{X} + \text{softmax}\!\left(\frac{QK^\top}{\sqr
 
 掩码 $\mathbf{M}$ 立了三条规矩：local token 只能 attend 同通道的其他 local token（纯时序建模，看不到 channel token）；channel token 能 attend 自己通道的 local token 以及其他通道的 channel token（既聚合本通道信息又和别的通道交互）；channel token 不 attend 自己（避免自我强化）。这本质是一种读写分离——channel token 是只读聚合器，local token 看不到它，信息只能单向汇入，于是 channel token 自然成了通道之间唯一的信息中继站，跨通道依赖全压在这一层 token 交互里。
 
-**3. 训练时 Patch Masking：用随机丢 patch 提前演练测试时的块缺失。**
+**3. 训练时 Patch Masking：用随机丢 patch 提前演练测试时的块缺失**
 
 传感器故障或通信中断会造成长时间连续缺失（block-wise missingness），传统做法 zero-fill 或插值都会把无效信号继续往下传。CTF 的应对是训练时就随机移除一部分通道的 patch（受 PatchDropout 启发），全为零的 patch 直接删掉对应的 local token，注意力就自然跳过这些位置。这等于让模型在训练阶段反复练习"少了几块 patch 该怎么靠别的通道补"。到了测试时遇到真实缺失 block，同样把全缺失的 patch 移除，模型就依赖可用通道的 channel token 去推断缺失通道——全程不往网络里喂任何缺失位置的假值，既不引入错误信息，随机丢弃本身又起到隐式正则化、抑制过拟合的作用。
 

@@ -45,15 +45,15 @@ EmoTaG 想解决的是：仅靠几秒视频，就让一个 3D 说话人头不光
 
 ### 关键设计
 
-**1. 在 FLAME 参数空间里预测运动：用显式几何先验兜住情感表情下的崩坏。**
+**1. 在 FLAME 参数空间里预测运动：用显式几何先验兜住情感表情下的崩坏**
 
 直接在 3DGS 上做无约束形变，遇到大幅度情感表情（瞪眼、咧嘴）就容易几何失真。EmoTaG 把预测目标换掉——网络不再输出 Gaussians 的位移，而是预测 FLAME 的表情参数 $\Psi$ 和下颌姿态 $\Theta_{jaw}$，再由 FLAME 网格的形变去带动绑定在其上的 Gaussians。这样所有运动都被约束在 FLAME 这个带面部拓扑结构的低维参数空间里，相当于给形变上了一层"解剖学合理性"的护栏，剧烈表情也不会把脸撕裂。
 
-**2. Identity-Conditioned Encoder：把身份注进音频流，让适配只动几个参数。**
+**2. Identity-Conditioned Encoder：把身份注进音频流，让适配只动几个参数**
 
 要 few-shot 换身份，关键是把"怎么发音/怎么动"和"这是谁"解开。编码器先用 Wav2Vec 2.0 取语音嵌入，过 1D CNN + Transformer 补上时序和韵律；同时用 OpenFace 抽 AU 参数补充上半脸（眉、眼）的表情信息，用 AdaFace 从中性帧里取身份描述子 $s$。身份不是简单拼接进去，而是通过 **AdaIN 调制**注入音频流和表情流——身份只决定特征的均值/方差缩放。好处直接体现在适配：换新人时主网络全冻，只需微调这组 AdaIN 仿射参数，又快又不破坏已学到的通用运动先验。
 
-**3. Expert Motion Decoder：用 Base/Residual/Gate 三分支把中性发音和情感波动解缠。**
+**3. Expert Motion Decoder：用 Base/Residual/Gate 三分支把中性发音和情感波动解缠**
 
 情感运动的难点在于强度逐帧变化、还得叠在正常发音之上。解码器拆成三路各管一摊：Base 分支学与身份无关的中性"音频→口型"映射，给出基础形变 $\delta_b$；Residual 分支经一个 EMO Encoder-Decoder 专门捕捉情感带来的偏差 $\delta_r$；Gate 分支预测一个标量门 $g\in[0,1]$ 来决定这一帧该掺多少情感。最终运动是
 
@@ -61,11 +61,11 @@ $$\delta = \delta_b + g \cdot \delta_r$$
 
 这个门控是关键——它让无情感的帧 $g\to 0$ 退回纯中性发音（保持稳定不抖），情感高峰帧 $g\to 1$ 才放开残差，既防止全程过度夸张，又能跟着情绪起伏自适应调节强度。
 
-**4. Semantic Emotion Guidance：用 DeepFace 蒸馏，绕开粗糙的人工情感标注。**
+**4. Semantic Emotion Guidance：用 DeepFace 蒸馏，绕开粗糙的人工情感标注**
 
 残差和门控分支没有现成的细粒度监督，手动标情感标签又粗又主观。EmoTaG 改从预训练的 DeepFace 情感识别器里蒸馏：对每帧取它输出的七类情感分布 $p_{emo}$ 去监督残差分支（KL 对齐），同时取情感强度标量 $e = 1 - p(\text{neutral})$ 去监督门控分支（回归对齐）。这样监督信号是连续、逐帧、分布级的，比离散标签精细得多，也省掉了人工标注。
 
-**5. 口腔内 Gaussian 精细化：补 FLAME 建不出的牙齿和舌头。**
+**5. 口腔内 Gaussian 精细化：补 FLAME 建不出的牙齿和舌头**
 
 FLAME 网格本身不刻画口腔内部，但说话时牙齿、舌头的露出很影响真实感。EmoTaG 借唇部 landmarks 圈出口腔区域的 Gaussians 子集 $G_{mouth}$，单独让网络对它们预测残差偏移 $(\Delta\mu, \Delta r, \Delta s)$（位置、旋转、缩放），把这部分细粒度动作直接补在 Gaussian 层面，弥补结构先验覆盖不到的地方。
 

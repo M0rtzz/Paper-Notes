@@ -46,19 +46,19 @@ tags:
 
 ### 关键设计
 
-**1. 两镜头偏差分解与耦合项：把"人类为什么差"拆成可量化的结构。**
+**1. 两镜头偏差分解与耦合项：把"人类为什么差"拆成可量化的结构**
 
 以往 PT 文献只笼统说"人类有偏"，却没人追问偏差从哪来、彼此是否相关。本文把单次 PT 预测写成 $\hat{f}_A(x,g)=f^*(x,g)+b_{repr,A}+b_{proc,A}+\varepsilon_A$，其中 $b_{repr}$（Wide Lens）刻画标注者隐式抽样分布与真实 $P_g$ 的差距，$b_{proc}$（Clear Lens）刻画已有表征如何被转译成一个数值评分。关键在总偏差平方的展开 $\mu_A^2=\mu_{repr,A}^2+\mu_{proc,A}^2+2\mu_{repr,A}\mu_{proc,A}$，最后那个交叉项就是耦合。
 
 这个耦合项正是人与 LLM 的结构性分水岭。人类做 out-group PT 时身份认同会同时扭曲两个镜头——"我既不了解 Gen Z 的语境，又会用自己的规范来打分"——于是 $b_{repr}$ 与 $b_{proc}$ 同号相关，耦合项 $>0$，把误差 super-additively 放大；而 LLM 的表示由 pretrain 决定、处理由 post-train 加 prompt 决定，来自不同训练阶段、机械上解耦，耦合项接近 0 甚至为负。换句话说，LLM 的优势不靠模型变大，而来自这一项几乎被免除——这是常被忽视却可观测的差异。
 
-**2. 预算 regime 与 correlation floor 决策准则：把"何时用谁"变成可计算的不等式。**
+**2. 预算 regime 与 correlation floor 决策准则：把"何时用谁"变成可计算的不等式**
 
 把 $k$ 个标注者均值 $\bar{f}_A^{(k)}$ 的误差展开为 $\text{MSE}=\mu_A^2+\gamma_A V_A+\frac{1-\gamma_A}{k}V_A$ 三项，决策规则即 LLM PT 胜出当 $\text{MSE}(\bar{f}_L^{(k)})<\text{MSE}(\bar{f}_H^{(k)})$。三项各有归宿：$k$ 小时第三项（reducible variance）主导，LLM 因近乎确定性 $V_L\ll V_H$ 占绝对优势；$k$ 增大时该项趋零，只剩偏差 $\mu_A^2$ 与 correlation floor $\gamma_A V_A$，LLM 不再保证继续赢。
 
 这个分解之所以重要，是因为它揭示了赢家会随预算切换——以往评测固定 $k=5$ 或 $k=10$ 的"一刀切"恰好掩盖了切换点。本文用 bootstrap 模拟 $k=1$ 到 $10$ 的全谱把切换可视化，结论是在 toxicity 数据的低预算 regime 下，单个 LLM PT 估计等价于聚合 3-5 个真人直接标注；当 ground truth 本身只来自少量标注者时，加 LLM 反而比加人更便宜也更准。
 
-**3. 可工程化：三类 lever 分别瞄准三个误差项。**
+**3. 可工程化：三类 lever 分别瞄准三个误差项**
 
 框架的实践价值在于把 PT 从黑魔法变成一张"调参矩阵"——每类干预手段对应一个误差项。换模型族或规模主要动 $b_{repr}$（Wide Lens），同 size 不同 family 就能反转人与 LLM 的胜负；逐级加结构的 prompt（L1 仅问题 → L2 加定义 → L3 加分级 → L4 加示例）主要动 $b_{proc}$（Clear Lens），且效果非单调，因为不同 prompt 会重新加权"信念 → 数字"的映射，结构更多不一定更好；多样化（cross-family mixing、提温）则压低 correlation floor $\gamma_L V_L$，但只有跨家族混合有效，同族不同 size 混合收益甚微。
 

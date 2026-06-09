@@ -44,15 +44,15 @@ tags:
 
 ### 关键设计
 
-**1. 角度分散损失：把所有 token 嵌入往单位超球面的均匀分布上推。**
+**1. 角度分散损失：把所有 token 嵌入往单位超球面的均匀分布上推**
 
 针对的痛点是小模型深层嵌入几乎全对齐到同一方向、pairwise cosine 趋近 1，可用的表征方向被几何上锁死。做法是对每层每个 token pair $(z_i, z_j)$ 先把余弦相似度映射成角度距离 $D(z_i, z_j) = \arccos(\cos\text{sim}(z_i, z_j)) / \pi \in [0, 1]$，再用 log-sum-exp 聚合成 $\mathcal{L}_{\text{disp}} = \log \sum_{i \neq j} \exp(-D(z_i, z_j)/\tau)$——两个 token 越同向、$D$ 越小、$\exp$ 项越大，损失就越重地把它们推开；接近正交时 $\exp$ 项几乎为零、不再施力。所有层的损失求和，每 batch 复杂度 $\mathcal{O}(N^2 F)$，可在 token 维度子采样减负。几个细节都是为稳定服务：用 $\arccos$ 而非裸 cosine 是避免在 $\pm 1$ 两端梯度饱和；log-sum-exp 比直接取 mean 更稳健，差一个加性常数也不影响梯度；显式排除对角项 $i=j$ 防止 $z_i$ 自相似爆梯度；选 angular 而非欧式距离，是因为坍缩本质是方向坍塌而非长度问题。
 
-**2. 三个备选公式：用消融隔离"角度均匀分散"到底比别的分散方式好在哪。**
+**2. 三个备选公式：用消融隔离"角度均匀分散"到底比别的分散方式好在哪**
 
 dispersion 是个抽象诉求，可以有很多实现，作者另造三种和主损失对打。Decorrelation 最小化嵌入协方差矩阵的非对角元，从特征维度间去耦合、间接逼分散；$\ell_2$-repel 直接拉大 token 间欧式距离，但必须配一个 norm 正则 $\lambda_{\text{norm}} \|\mathcal{Z}\|_2^2$，否则模型会靠膨胀 norm 而非真正散开来作弊；Orthogonalization 用铰链式损失 $\max(0, 1/2 - D(z_i, z_j))^2$，只惩罚 $D < 1/2$ 的锐角对、放任钝角对自由生长。这一组对比是为了说明"在角度空间均匀分散"比"在特征维度去相关"或"在欧氏空间硬排斥"都更直接、更有效，从侧面坐实主方法的选择。
 
-**3. 同一损失覆盖 mid-training 与 full pre-training 两种流程。**
+**3. 同一损失覆盖 mid-training 与 full pre-training 两种流程**
 
 要证明这剂药既能给老模型续命也能从娘胎里塑形，就得在两种真实训练场景里都验证。Mid-training 拿现成的 GPT2 / Qwen3 在 wikitext-103 上再续训 200M token，单张 A100 就能跑完，是低成本的 proof-of-concept 和超参扫描场所；full pre-training 让 Qwen3 在 C4 上从零训 156B token、动用 640 GPU，验证这个几何信号从一开始就能塑造出更好的表征结构、从根本上改变模型可用容量。两种场景都只是把 $\lambda_{\text{disp}} \cdot \mathcal{L}_{\text{disp}}$ 加到 cross-entropy 上，在每个 forward 同时计算多层嵌入的 dispersion 并加权，pipeline 改动极小。
 

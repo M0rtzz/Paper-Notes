@@ -46,7 +46,7 @@ tags:
 
 ### 关键设计
 
-**1. 分层模型 + 方差分解：给"为什么要多采样"一个严格依据。**
+**1. 分层模型 + 方差分解：给"为什么要多采样"一个严格依据**
 
 现行 benchmark 报分都是单点估计、没有 error bar，根本无法回答"这个排名能不能信"。本文设 $p_i \sim \mathbb{P}(\mu,\sigma;\theta)$（$i=1,\dots,n$）、$y_{i,j} \sim \text{Bernoulli}(p_i)$（$j=1,\dots,k$），moment estimator $\hat\mu = \frac{1}{nk}\sum_{i,j}y_{i,j}$ 是 $\mu$ 的无偏估计，其方差可分解为
 
@@ -54,11 +54,11 @@ $$\text{Var}(\hat\mu) = \underbrace{\tfrac{1}{nk}(\mu-\mu^2-\sigma^2)}_{\text{wi
 
 前一项随 $k$ 增大归零，后一项是 $n$ 决定的内在噪声；再由 CLT 给出 95% CI $\hat\mu \pm 1.96\sqrt{\widehat{\text{Var}(\hat\mu)}}$。这个分解直接告诉用户"现在用了多大 $k$、报的数有多稳"，同时揭示了 IRT（1PL 模型）其实是本框架中 $\mathbb{P}(\mu,\sigma)$ 的一种参数化特例。
 
-**2. Prompt 级难度分 $\mathbb{P}(\text{correct})$：给每条 prompt 一个可跨条比较的难度。**
+**2. Prompt 级难度分 $\mathbb{P}(\text{correct})$：给每条 prompt 一个可跨条比较的难度**
 
 以前给 prompt 标难度要么靠人工（MATH 5 档），要么靠多 LLM IRT 拟合（Polo et al.）。本文直接取 $\hat p_i = \frac{1}{k}\sum_{j=1}^{k} y_{i,j}$ 作为目标 LLM 在第 $i$ 条 prompt 上的正确概率估计，当 $k \to \infty$ 时 $\hat p_i \to p_i$。把这个 [0,1] 连续难度分的分布画出来（Fig 1），能立刻看出 benchmark 的性质：MMLU-Pro、IFEval、MuSR 这种推理重的 benchmark 在 $[0,1]$ 上是弥散密度（LLM 在很多题上像随机采样），而 GSM8K 这种简单题在 0 和 1 附近有明显尖峰（稳定行为）。这种只靠单个 target LLM 多采样得到的主观难度，比"跨模型客观难度"更适合诊断这个特定 LLM 的弱点。
 
-**3. Data map 检 mislabel（$\mathbb{P}(\text{correct}) \times \mathbb{S}(\text{consistency})$）：用副产品反抓 benchmark 自身的标注错误。**
+**3. Data map 检 mislabel（$\mathbb{P}(\text{correct}) \times \mathbb{S}(\text{consistency})$）：用副产品反抓 benchmark 自身的标注错误**
 
 除了 correctness，本文再算一个语义一致性负熵 $\mathbb{S}(\text{consistency})=\sum_{c=1}^{C}\text{Prop}_c \log \text{Prop}_c$——把 $k$ 次生成按语义聚成 $C$ 个簇，$\text{Prop}_c$ 是每簇占比，值越大说明回答越一致。核心假设是：**$\mathbb{P}(\text{correct})$ 低 + $\mathbb{S}(\text{consistency})$ 高** 的 prompt 很可能是 mislabel 或歧义题——LLM 很自信地一致回答了某个答案，却和 ground truth 不符。这是对 self-consistency（Wang et al. 2022）"真难题应有多条 reasoning path"直觉的反向运用——稳定却"错"的多半是答案标错了。实证中在 GSM8K 上用 $\hat p_i \le 0.1$ 且 $\mathbb{S} \ge -0.8$ 筛出 18 条 prompt，人工 review 后 44.4% 确为 mislabel 或歧义。
 
